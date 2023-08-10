@@ -1,6 +1,7 @@
 package Obj;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -17,6 +18,9 @@ public class ItemObj {
 	GamePanel gp;
 	
 	public int worldX, worldY;
+	
+	public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
+	public int solidAreaDefaultX, solidAreaDefaultY = 0;
 	
 	public ItemObj(GamePanel gp) {
 		

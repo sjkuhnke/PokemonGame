@@ -106,6 +106,8 @@ public class PlayerCharacter extends Entity {
 			
 			gp.cChecker.checkEntity(this, gp.npc);
 			
+			gp.cChecker.checkObject(this);
+			
 			if (!collisionOn) {
 				switch(direction) {
 				case "up":
@@ -181,9 +183,23 @@ public class PlayerCharacter extends Entity {
 			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Trainer) gp.startBattle(gp.npc[gp.currentMap][npcIndex].trainer);
 			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_GymLeader) gp.startBattle(gp.npc[gp.currentMap][npcIndex].trainer);
 			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_PC) gp.openBox();
+			
+			int objIndex = gp.cChecker.checkObject(this);
+			if (objIndex != -1) pickUpObject(objIndex);
 		}
 	}
 	
+	private void pickUpObject(int objIndex) {
+		keyH.pause();
+		
+		p.bag.add(gp.obj[gp.currentMap][objIndex].item);
+		JOptionPane.showMessageDialog(null, "You found 1 " + gp.obj[gp.currentMap][objIndex].item.toString() + "!");
+		gp.player.p.itemsCollected[gp.currentMap][objIndex] = true;
+		gp.obj[gp.currentMap][objIndex] = null;
+		keyH.resume();
+		
+	}
+
 	private void showMenu() {
 		JPanel menu = new JPanel();
 	    menu.setLayout(new GridLayout(6, 1));

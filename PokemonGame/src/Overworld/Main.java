@@ -45,7 +45,7 @@ public class Main {
 	        ois.close();
 	    } catch (IOException | ClassNotFoundException e) {
 	        // If there's an error reading the file, create a new Player object
-	        gamePanel.player.p = new Player();
+	        gamePanel.player.p = new Player(gamePanel);
 
 	        String[] options = {"Twigle", "Lagma", "Lizish"};
 	        JPanel optionPanel = new JPanel(new GridLayout(1, options.length));
@@ -86,11 +86,11 @@ public class Main {
 	        // Add the chosen starter to the player's team
 	        if (gamePanel.player.p.starter <= 0) gamePanel.player.p.starter = (int)(Math.random() * options.length) + 1;
 	        if (gamePanel.player.p.starter == 1) {
-	            gamePanel.player.p.catchPokemon(new Pokemon(1, 5, true, false));
+	            gamePanel.player.p.catchPokemon(new Pokemon(1, 10, true, false));
 	        } else if (gamePanel.player.p.starter == 2) {
-	            gamePanel.player.p.catchPokemon(new Pokemon(4, 5, true, false));
+	            gamePanel.player.p.catchPokemon(new Pokemon(4, 10, true, false));
 	        } else if (gamePanel.player.p.starter == 3) {
-	            gamePanel.player.p.catchPokemon(new Pokemon(7, 5, true, false));
+	            gamePanel.player.p.catchPokemon(new Pokemon(7, 10, true, false));
 	        }
 	        
 	        //gamePanel.player.p.bag.add(new Item(22), 999);

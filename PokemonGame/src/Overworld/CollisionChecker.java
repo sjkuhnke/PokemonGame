@@ -91,6 +91,60 @@ public class CollisionChecker {
 		}
 	}
 	
+	public int checkObject(Entity entity) {
+		int index = -1;
+		
+		for (int i = 0; i < gp.obj[1].length; i++) {
+			if (gp.obj[gp.currentMap][i] != null) {
+				
+				entity.solidArea.x = entity.worldX + entity.solidArea.x;
+				entity.solidArea.y = entity.worldY + entity.solidArea.y;
+				
+				gp.obj[gp.currentMap][i].solidArea.x = gp.obj[gp.currentMap][i].worldX + gp.obj[gp.currentMap][i].solidArea.x;
+				gp.obj[gp.currentMap][i].solidArea.y = gp.obj[gp.currentMap][i].worldY + gp.obj[gp.currentMap][i].solidArea.y;
+				
+				switch(entity.direction) {
+				case "up":
+					entity.solidArea.y -= entity.speed;
+					if (entity.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)) {
+						entity.collisionOn = true;
+						index = i;
+					}
+					break;
+				case "down":
+					entity.solidArea.y += entity.speed;
+					if (entity.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)) {
+						entity.collisionOn = true;
+						index = i;
+					}
+					break;
+				case "left":
+					entity.solidArea.x -= entity.speed;
+					if (entity.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)) {
+						entity.collisionOn = true;
+						index = i;
+					}
+					break;
+				case "right":
+					entity.solidArea.x += entity.speed;
+					if (entity.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)) {
+						entity.collisionOn = true;
+						index = i;
+					}
+					break;
+				}
+				
+				entity.solidArea.x = entity.solidAreaDefaultX;
+				entity.solidArea.y = entity.solidAreaDefaultY;
+				gp.obj[gp.currentMap][i].solidArea.x = gp.obj[gp.currentMap][i].solidAreaDefaultX;
+				gp.obj[gp.currentMap][i].solidArea.y = gp.obj[gp.currentMap][i].solidAreaDefaultY;
+				
+			}
+		}
+		
+		return index;
+	}
+	
 	public int checkEntity(Entity entity, Entity[][] target) {
 	    int index = 999;
 

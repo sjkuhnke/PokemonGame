@@ -25,9 +25,17 @@ public class AssetSetter {
 	public void setObject() {
 		int mapNum = 0;
 		
-		gp.obj[gp.currentMap][0] = ObjSetup(85, 47, 1);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 45, 4, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(2, 54, 9, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 31, 1, mapNum);
 		
-		gp.obj[gp.currentMap][1] = ObjSetup(74, 51, 1);
+		mapNum = 4;
+		gp.obj[mapNum][objIndex] = ObjSetup(86, 56, 131, mapNum); // taunt, false swipe, flash
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 59, 5, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 74, 68, mapNum); // flash
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 57, 9, mapNum); // leaf blade
+		gp.obj[mapNum][objIndex] = ObjSetup(9, 72, 0, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(9, 75, 2, mapNum);
 	}
 	
 	public void setNPC() {
@@ -111,9 +119,11 @@ public class AssetSetter {
 	
 	public void updateNPC() {
 		boolean[] flags = gp.player.p.flags;
+		// flags[0] is true after walking into first gate
+		// flags[1] is true after beating Scott 1
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
+		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(4, 72, 48, 0);
 		if (flags[1]) gp.npc[3][11] = null;
-		if (flags[0]) gp.npc[0][0] = NPCSetup(4, 72, 48, 0);
 	}
 	
 	
@@ -165,7 +175,12 @@ public class AssetSetter {
 		return result;
 	}
 	
-	private ItemObj ObjSetup(int x, int y, int id) {
+	private ItemObj ObjSetup(int x, int y, int id, int mapNum) {
+		if (gp.player.p.itemsCollected[mapNum][objIndex] == true) {
+			objIndex++;
+			return null;
+		}
+		
 		ItemObj result = new ItemObj(gp);
 		
 		result.worldX = gp.tileSize*x;

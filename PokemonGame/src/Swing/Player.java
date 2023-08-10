@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 
+import Overworld.GamePanel;
 import Overworld.Main;
 
 public class Player implements Serializable{
@@ -25,12 +26,13 @@ public class Player implements Serializable{
 	public int[] pokedex = new int[239];
 	public int currentMap;
 	public boolean[] trainersBeat = new boolean[Main.trainers.length];
+	public boolean[][] itemsCollected;
 	public boolean[] flags = new boolean[10];
 	public boolean random = false;
 	public boolean ghost = false;
 	public int steps;
 	
-	public Player() {
+	public Player(GamePanel gp) {
 		team = new Pokemon[6];
 		box1 = new Pokemon[30];
 		box2 = new Pokemon[30];
@@ -40,6 +42,8 @@ public class Player implements Serializable{
 		bag = new Bag();
 		posX = 90;
 		posY = 46;
+		
+		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 	}
 	
 	public Pokemon getCurrent() {
