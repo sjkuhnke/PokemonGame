@@ -7,18 +7,28 @@ import Entity.NPC_GymLeader;
 import Entity.NPC_Nurse;
 import Entity.NPC_PC;
 import Entity.NPC_Trainer;
+import Obj.ItemObj;
+import Swing.Item;
 
 public class AssetSetter {
 
 	GamePanel gp;
 	int index;
+	int objIndex;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
 		index = 0;
+		objIndex = 0;
 	}
 	
-	public void setObject() {}
+	public void setObject() {
+		int mapNum = 0;
+		
+		gp.obj[gp.currentMap][0] = ObjSetup(85, 47, 1);
+		
+		gp.obj[gp.currentMap][1] = ObjSetup(74, 51, 1);
+	}
 	
 	public void setNPC() {
 		boolean[] flags = gp.player.p.flags;
@@ -153,5 +163,19 @@ public class AssetSetter {
 		index++;
 		
 		return result;
+	}
+	
+	private ItemObj ObjSetup(int x, int y, int id) {
+		ItemObj result = new ItemObj(gp);
+		
+		result.worldX = gp.tileSize*x;
+		result.worldY = gp.tileSize*y;
+		result.item = new Item(id);
+		
+		objIndex++;
+		
+		return result;
+		
+		
 	}
 }

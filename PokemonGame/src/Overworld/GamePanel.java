@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import Entity.Entity;
 import Entity.PlayerCharacter;
+import Obj.ItemObj;
 import tile.TileManager;
 import Swing.Battle;
 import Swing.Battle.BattleCloseListener;
@@ -50,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public PlayerCharacter player = new PlayerCharacter(this,keyH);
 	public Entity npc[][] = new Entity[maxMap][90];
+	public ItemObj obj[][] = new ItemObj[maxMap][10];
 	
 	TileManager tileM = new TileManager(this);
 	
@@ -114,6 +116,12 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		for (int i = 0; i < npc[1].length; i++) {
 			if (npc[currentMap][i] != null) {
 				npc[currentMap][i].draw(g2);
+			}
+		}
+		
+		for (int i = 0; i < obj[1].length; i++) {
+			if (obj[currentMap][i] != null) {
+				obj[currentMap][i].draw(g2);
 			}
 		}
 		
@@ -193,6 +201,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 
 	public void setupGame() {
 		aSetter.setNPC();
+		aSetter.setObject();
 	}
 	
 	public void setSlots() {
