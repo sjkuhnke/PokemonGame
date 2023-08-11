@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -212,11 +215,24 @@ public class Pokemon implements Serializable {
 	            validMoves.add(move);
 	        }
 	    }
+	    
+	    if (this.vStatuses.contains(Status.TAUNTED)) {
+	    	validMoves.removeIf(move -> move.cat == 2);
+	    }
+	    
+	    if (this.vStatuses.contains(Status.TORMENTED)) {
+	    	validMoves.removeIf(move -> move == this.lastMoveUsed);
+	    }
 
 	    // Pick a random move from the validMoves list
 	    Random rand = new Random();
-	    int index = rand.nextInt(validMoves.size());
-	    return validMoves.get(index);
+	    
+	    if (validMoves.size() > 0) {
+	    	int index = rand.nextInt(validMoves.size());
+	    	return validMoves.get(index);
+	    } else {
+	    	return Move.STRUGGLE;
+	    }	    
 	}
 	
 	public Move bestMove(Pokemon foe, Field field, boolean first) {
@@ -228,61 +244,51 @@ public class Pokemon implements Serializable {
 	            validMoves.add(move);
 	        }
 	    }
+	    
+        // Calculate and store the damage values of each move
+        Map<Move, Integer> moveToDamage = new HashMap<>();
 
-	    ArrayList<Move> statusMoves = new ArrayList<>();
-	    ArrayList<Move> damagingMoves = new ArrayList<>();
+        for (Move move : validMoves) {
+            int damage = calcWithTypes(foe, move, first, field);
+            if (damage > foe.currentHP) damage = foe.currentHP;
+            if (this.vStatuses.contains(Status.TORMENTED) && move == this.lastMoveUsed) {
+            	// nothing: don't add
+            } else {
+            	moveToDamage.put(move, damage);
+            }
+        }
+        
+        // Find the maximum damage value
+        int maxDamage = Collections.max(moveToDamage.values());
+        
+        // Filter moves based on conditions and max damage
+        ArrayList<Move> bestMoves = new ArrayList<>();
+        for (Map.Entry<Move, Integer> entry : moveToDamage.entrySet()) {
+        	Move move = entry.getKey();
+        	int damage = entry.getValue();
+        	
+        	if (damage >= maxDamage) {
+        		bestMoves.add(move);
+        		bestMoves.add(move);
+        		bestMoves.add(move);
+        	}
+        	if (move.cat == 2) {
+        		bestMoves.add(move);
+        	}
+        }
+        
+        if (this.vStatuses.contains(Status.TAUNTED)) {
+        	bestMoves.removeIf(move -> move.cat == 2);
+        }
 
-	    // Split the moves into status and damaging moves
-	    for (Move move : validMoves) {
-	        if (move.cat == 2) {
-	            statusMoves.add(move);
-	        } else {
-	            damagingMoves.add(move);
-	        }
-	    }
-
-	    // Determine if a status move should be used
-	    boolean useStatusMove = false;
-	    if (!statusMoves.isEmpty()) {
-	        int randomChance = (int) (Math.random() * 4); // 25% chance
-	        useStatusMove = randomChance == 0;
-	    }
-
-	    if (useStatusMove && !statusMoves.isEmpty()) {
-	        // If a status move should be used, randomly select one
-	        int randomIndex = (int) (Math.random() * statusMoves.size());
-	        return statusMoves.get(randomIndex);
-	    } else {
-	        // Otherwise, find the move with the highest damage
-	        int maxDamage = 0;
-	        ArrayList<Move> bestMoves = new ArrayList<>();
-
-	        for (Move move : damagingMoves) {
-	            int damage = calcWithTypes(foe, move, first, field);
-	            if (damage > foe.currentHP) damage = foe.currentHP;
-	            if (damage > maxDamage) {
-	                maxDamage = damage;
-	                bestMoves.clear();
-	                bestMoves.add(move);
-	            } else if (damage == maxDamage) {
-	                bestMoves.add(move);
-	            }
-	        }
-
-	        // If all valid moves have the same damage, randomly select one of them
-	        if (bestMoves.isEmpty()) {
-	            // Fallback: Choose a random status move
-	            int randomIndex = (int) (Math.random() * statusMoves.size());
-	            return statusMoves.get(randomIndex);
-	        } else if (bestMoves.size() > 1) {
-	            int randomIndex = (int) (Math.random() * bestMoves.size());
-	            return bestMoves.get(randomIndex);
-	        }
-
-	        // Otherwise, return the move with the highest damage
-	        return bestMoves.get(0);
-	    }
-	}
+        if (bestMoves.isEmpty()) {
+            // Fallback: Struggle
+            return Move.STRUGGLE;
+        }
+        
+        int randomIndex = (int) (Math.random() * bestMoves.size());
+        return bestMoves.get(randomIndex);
+    }
 
 
 
@@ -3952,6 +3958,10 @@ public class Pokemon implements Serializable {
 				move != Move.DESTINY_BOND && move != Move.DETECT && move != Move.PROTECT && move != Move.MOLTEN_LAIR && move != Move.OBSTRUCT &&
 				move != Move.SPIKY_SHIELD) this.lastMoveUsed = move;
 		
+		if (move == Move.STRUGGLE) {
+			this.lastMoveUsed = null;
+		}
+		
 		if (move == Move.FAILED_SUCKER) this.lastMoveUsed = Move.SUCKER_PUNCH;
 		if (this.vStatuses.contains(Status.ENCORED)) move = this.lastMoveUsed;
 		
@@ -4040,6 +4050,14 @@ public class Pokemon implements Serializable {
 			this.vStatuses.remove(Status.CHARGING);
 			return;
 		}
+		
+		if (this.vStatuses.contains(Status.TAUNTED) && move.cat == 2) {
+			System.out.println("\n" + this.nickname + " can't use " + move + " after the taunt!");
+			this.lastMoveUsed = null;
+			this.impressive = false;
+			return;
+		}
+		
 		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN)) || this.vStatuses.contains(Status.CHARGING) || move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY) {
 			if (!this.vStatuses.contains(Status.CHARGING)) {
 				System.out.println("\n" + this.nickname + " used " + move + "!");
@@ -4134,6 +4152,7 @@ public class Pokemon implements Serializable {
 				return;
 			}
 		}
+		
 		if (foe.vStatuses.contains(Status.REFLECT) && (move != Move.BRICK_BREAK && move != Move.MAGIC_FANG && move != Move.PSYCHIC_FANGS)) {
 			this.move(this, move, player, field, team, false);
 			System.out.println(move + " was reflected on itself!");
@@ -4544,10 +4563,11 @@ public class Pokemon implements Serializable {
 			int recoil = 0;
 			if ((move == Move.BRAVE_BIRD || move == Move.FLARE_BLITZ || move == Move.HEAD_SMASH || move == Move.TAKE_DOWN || move == Move.VOLT_TACKLE ||
 					move == Move.ROCK_WRECKER || move == Move.GENESIS_SUPERNOVA || move == Move.LIGHT_OF_RUIN || move == Move.SUBMISSION || move == Move.WAVE_CRASH ||
-					move == Move.STEEL_BEAM) && (ability != Ability.ROCK_HEAD && ability != Ability.MAGIC_GUARD)) {
+					move == Move.STEEL_BEAM || move == Move.STRUGGLE) && (ability != Ability.ROCK_HEAD && ability != Ability.MAGIC_GUARD)) {
 				recoil = Math.max(Math.floorDiv(damage, 3), 1);
 				if (damage >= foe.currentHP) recoil = Math.max(Math.floorDiv(foe.currentHP, 3), 1);
 				if (move == Move.STEEL_BEAM) recoil = this.getStat(0) / 2;
+				if (move == Move.STRUGGLE) recoil = this.getStat(0) / 4;
 			}
 			
 			boolean fullHP = foe.currentHP == foe.getStat(0);
@@ -4571,7 +4591,10 @@ public class Pokemon implements Serializable {
 					System.out.println(foe.nickname + " took its attacker down with it!");
 					this.faint(true, player, foe);
 				}
-				if (this.ability == Ability.MOXIE) {System.out.print("[" + this.nickname + "'s Moxie]: "); stat(this, 0, 1); }
+				if (this.ability == Ability.MOXIE) {
+					System.out.print("[" + this.nickname + "'s Moxie]: ");
+					stat(this, 0, 12);
+				}
 			}
 			
 			if (recoil != 0) {
@@ -5874,6 +5897,22 @@ public class Pokemon implements Serializable {
 			foe.confuse(true);
 		} else if (move == Move.SWEET_SCENT) {
 			stat(foe, 6, -2);
+		} else if (move == Move.TAUNT) {
+			if (!(foe.vStatuses.contains(Status.TAUNTED))) {
+			    foe.vStatuses.add(Status.TAUNTED);
+			    foe.tauntCount = 4;
+			    System.out.println(foe.nickname + " was taunted!");
+			} else {
+			    fail = fail();
+			}
+		} else if (move == Move.TORMENT) {
+			if (!(foe.vStatuses.contains(Status.TORMENTED))) {
+			    foe.vStatuses.add(Status.TORMENTED);
+			    foe.tormentCount = 4;
+			    System.out.println(foe.nickname + " was tormented!");
+			} else {
+			    fail = fail();
+			}
 		} else if (move == Move.TAIL_GLOW) {
 			stat(this, 2, 3);
 		} else if (move == Move.TAILWIND) {
@@ -11463,7 +11502,9 @@ public class Pokemon implements Serializable {
 		} else if (this.ability == Ability.GRAVITATIONAL_PULL) { field.setEffect(field.new FieldEffect(Effect.GRAVITY));
 		
 		} else if (this.ability == Ability.INTIMIDATE) { System.out.print("[" + this.nickname + "'s Intimidate]: "); stat(foe, 0, -1);
-		} else if (this.ability == Ability.MOUTHWATER) { foe.vStatuses.add(Status.TAUNTED);
+		} else if (this.ability == Ability.MOUTHWATER) { 
+			foe.vStatuses.add(Status.TAUNTED);
+			System.out.println("[" + this.nickname + "'s Mouthwater]: " + foe.nickname + " was taunted!");
 		} else if (this.ability == Ability.REGENERATOR) {
 			this.currentHP += this.getStat(0);
 			verifyHP();

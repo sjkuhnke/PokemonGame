@@ -606,6 +606,8 @@ public enum Move {
 	LAVA_SURF(95,100,0,0,1,0,PType.FIRE,"A normal attack",false), 
 	BOOSTED_PURSUIT(80,100,0,0,0,0,PType.DARK,"If you're seeing this something went wrong",true),
 	
+	STRUGGLE(40,1000,0,0,0,0,PType.UNKNOWN,"",true),
+	
 	;
 	
 	public static Move getMove(String moveName) {
