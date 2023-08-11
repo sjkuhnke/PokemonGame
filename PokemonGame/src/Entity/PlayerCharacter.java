@@ -26,6 +26,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import Obj.Cut_Tree;
+import Obj.Tree_Stump;
 import Overworld.GamePanel;
 import Overworld.KeyHandler;
 import Swing.Bag.Entry;
@@ -108,6 +110,8 @@ public class PlayerCharacter extends Entity {
 			
 			gp.cChecker.checkObject(this);
 			
+			gp.cChecker.checkEntity(this, gp.iTile);
+			
 			if (!collisionOn) {
 				switch(direction) {
 				case "up":
@@ -186,9 +190,12 @@ public class PlayerCharacter extends Entity {
 			
 			int objIndex = gp.cChecker.checkObject(this);
 			if (objIndex != -1) pickUpObject(objIndex);
+			
+			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
+			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Cut_Tree) interactCutTree(iTileIndex);
 		}
 	}
-	
+
 	private void pickUpObject(int objIndex) {
 		keyH.pause();
 		
@@ -865,6 +872,28 @@ public class PlayerCharacter extends Entity {
             partyHP.setVisible(false);
         }
 		return partyHP;
+	}
+	
+	private void interactCutTree(int i) {
+		keyH.pause();
+		if (p.hasMove(Move.CUT)) {
+			int option = JOptionPane.showOptionDialog(null,
+					"This tree looks like it can be cut down!\nDo you want to cut it?",
+		            "Evolution",
+		            JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE,
+		            null, null, null);
+			if (option == JOptionPane.YES_OPTION) {
+				Cut_Tree temp = (Cut_Tree) gp.iTile[gp.currentMap][i];
+				gp.iTile[gp.currentMap][i] = new Tree_Stump(gp);
+				gp.iTile[gp.currentMap][i].worldX = temp.worldX;
+				gp.iTile[gp.currentMap][i].worldY = temp.worldY;
+			}
+		} else {
+			JOptionPane.showInternalMessageDialog(null, "This tree looks like it can be cut down!");
+		}
+		keyH.resume();
+		
 	}
 
 	public void draw(Graphics2D g2) {

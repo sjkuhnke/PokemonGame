@@ -206,6 +206,7 @@ public class Player implements Serializable{
 	
 	public boolean hasMove(Move m) {
 		boolean result = false;
+		if (m == Move.CUT && badges < 1) return false;
 		for (Pokemon p : team) {
 			if (p != null) {
 				if (p.knowsMove(m)) {

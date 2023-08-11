@@ -131,5 +131,6 @@ public class EventHandler {
 		p.currentMap = map;
 		
 		gp.aSetter.updateNPC();
+		gp.aSetter.setInteractiveTile();
 	}
 }

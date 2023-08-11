@@ -26,6 +26,7 @@ public class Entity {
 	public boolean inTallGrass;
 	
 	public int trainer;
+	public boolean collision = true;
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;

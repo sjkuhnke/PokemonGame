@@ -172,7 +172,7 @@ public class CollisionChecker {
 	                    break;
 	            }
 
-	            if (entityRange.intersects(targetRange)) {
+	            if (entityRange.intersects(targetRange) && target[gp.currentMap][i].collision) {
 	                entity.collisionOn = true;
 	                index = i;
 	            }

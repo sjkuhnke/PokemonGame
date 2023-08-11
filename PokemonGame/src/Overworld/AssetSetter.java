@@ -10,6 +10,7 @@ import Entity.NPC_Trainer;
 import Obj.Cut_Tree;
 import Obj.InteractiveTile;
 import Obj.ItemObj;
+import Obj.Tree_Stump;
 import Swing.Item;
 
 public class AssetSetter {
@@ -129,6 +130,7 @@ public class AssetSetter {
 	}
 	
 	public void setInteractiveTile() {
+		iIndex = 0;
 		int mapNum = 4;
 		gp.iTile[mapNum][iIndex] = ITileSetup(17, 63, 0);
 		gp.iTile[mapNum][iIndex] = ITileSetup(16, 68, 0);
@@ -223,6 +225,7 @@ public class AssetSetter {
 			//result = new Smash_Rock(gp);
 			break;
 		case 2:
+			result = new Tree_Stump(gp);
 			break;
 		case 3:
 			break;

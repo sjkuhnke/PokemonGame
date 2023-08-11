@@ -13,5 +13,6 @@ public class Cut_Tree extends InteractiveTile {
 		
 		down1 = setup("/npc/cut_tree");
 		destructible = true;
+		collision = true;
 	}
 }
