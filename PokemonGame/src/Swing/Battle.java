@@ -1225,10 +1225,10 @@ public class Battle extends JFrame {
 	}
 	
 	private void wipe(PlayerCharacter p, GamePanel gp) {
-		dispose();
 		p.p.money -= 500;
 		p.p.money = p.p.money < 0 ? 0 : p.p.money;
 		JOptionPane.showMessageDialog(null, "You have no more Pokemon that can fight!\nYou lost $500!");
+		dispose();
 		p.worldX = gp.tileSize * 90;
 		p.worldY = gp.tileSize * 46;
 		gp.currentMap = 0;

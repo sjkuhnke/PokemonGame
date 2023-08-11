@@ -203,5 +203,18 @@ public class Player implements Serializable{
 		}
 		return result;
 	}
+	
+	public boolean hasMove(Move m) {
+		boolean result = false;
+		for (Pokemon p : team) {
+			if (p != null) {
+				if (p.knowsMove(m)) {
+					result = true;
+					break;
+				}
+			}
+		}
+		return result;
+	}
 
 }

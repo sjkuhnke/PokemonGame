@@ -7,6 +7,8 @@ import Entity.NPC_GymLeader;
 import Entity.NPC_Nurse;
 import Entity.NPC_PC;
 import Entity.NPC_Trainer;
+import Obj.Cut_Tree;
+import Obj.InteractiveTile;
 import Obj.ItemObj;
 import Swing.Item;
 
@@ -15,11 +17,13 @@ public class AssetSetter {
 	GamePanel gp;
 	int index;
 	int objIndex;
+	private int iIndex;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
 		index = 0;
 		objIndex = 0;
+		iIndex = 0;
 	}
 	
 	public void setObject() {
@@ -32,8 +36,8 @@ public class AssetSetter {
 		mapNum = 4;
 		gp.obj[mapNum][objIndex] = ObjSetup(86, 56, 131, mapNum); // taunt, false swipe, flash
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 59, 5, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(42, 74, 68, mapNum); // flash
-		gp.obj[mapNum][objIndex] = ObjSetup(15, 57, 9, mapNum); // leaf blade
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 74, 168, mapNum); // flash
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 57, 109, mapNum); // leaf blade
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 72, 0, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 75, 2, mapNum);
 	}
@@ -74,6 +78,13 @@ public class AssetSetter {
 		}
 		
 		mapNum = 4;
+		
+		if (!flags[2]) {
+			gp.npc[mapNum][index] = NPCSetup(81, 61, "The gym is currently closed because the\nLeader is trying to help the Warehouse\nowner get rid of Team Nuke.\nCome back later.");
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
+		
 		gp.npc[mapNum][index] = NPCSetup(4, 32, 62, 18);
 		gp.npc[mapNum][index] = NPCSetup(4, 23, 65, 19); // make way lower levels
 		gp.npc[mapNum][index] = NPCSetup(4, 32, 68, 20); // make way lower levels
@@ -117,6 +128,13 @@ public class AssetSetter {
 		
 	}
 	
+	public void setInteractiveTile() {
+		int mapNum = 4;
+		gp.iTile[mapNum][iIndex] = ITileSetup(17, 63, 0);
+		gp.iTile[mapNum][iIndex] = ITileSetup(16, 68, 0);
+		gp.iTile[mapNum][iIndex] = ITileSetup(10, 68, 0);
+	}
+
 	public void updateNPC() {
 		boolean[] flags = gp.player.p.flags;
 		// flags[0] is true after walking into first gate
@@ -124,6 +142,7 @@ public class AssetSetter {
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(4, 72, 48, 0);
 		if (flags[1]) gp.npc[3][11] = null;
+		if (flags[2]) gp.npc[4][12] = null;
 	}
 	
 	
@@ -192,5 +211,28 @@ public class AssetSetter {
 		return result;
 		
 		
+	}
+	
+	private InteractiveTile ITileSetup(int x, int y, int type) {
+		InteractiveTile result = null;
+		switch (type) {
+		case 0:
+			result = new Cut_Tree(gp);
+			break;
+		case 1:
+			//result = new Smash_Rock(gp);
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		}
+		
+		result.worldX = gp.tileSize*x;
+		result.worldY = gp.tileSize*y;
+		
+		iIndex++;
+		
+		return result;
 	}
 }

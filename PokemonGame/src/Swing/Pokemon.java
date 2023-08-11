@@ -57,7 +57,7 @@ public class Pokemon implements Serializable {
 	public PType type1;
 	public PType type2;
 	
-	// ability field
+	// ability fields
 	public Ability ability;
 	public int abilitySlot;
 	
@@ -302,7 +302,8 @@ public class Pokemon implements Serializable {
 		setBaseStats();
 		getStats();
 		setType();
-		setAbility(pokemon.abilitySlot);
+		this.abilitySlot = pokemon.abilitySlot;
+		setAbility(abilitySlot);
 		this.weight = setWeight();
 		
 		this.slot = pokemon.slot;
@@ -4552,9 +4553,9 @@ public class Pokemon implements Serializable {
 			boolean fullHP = foe.currentHP == foe.getStat(0);
 			
 			// Damage foe
-			//int dividend = Math.min(damage, foe.currentHP);
+			int dividend = Math.min(damage, foe.currentHP);
 			foe.currentHP -= damage;
-			double percent = damage * 100.0 / foe.getStat(0); // change damage to dividend
+			double percent = dividend * 100.0 / foe.getStat(0); // change dividend to damage
 			String formattedPercent = String.format("%.1f", percent);
 			System.out.println("(" + foe.nickname + " lost " + formattedPercent + "% of its HP.)");
 			if (foe.currentHP <= 0 && (move == Move.FALSE_SWIPE || foe.vStatuses.contains(Status.ENDURE) || (fullHP && foe.ability == Ability.STURDY))) {

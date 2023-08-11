@@ -86,11 +86,11 @@ public class Main {
 	        // Add the chosen starter to the player's team
 	        if (gamePanel.player.p.starter <= 0) gamePanel.player.p.starter = (int)(Math.random() * options.length) + 1;
 	        if (gamePanel.player.p.starter == 1) {
-	            gamePanel.player.p.catchPokemon(new Pokemon(1, 10, true, false));
+	            gamePanel.player.p.catchPokemon(new Pokemon(1, 5, true, false));
 	        } else if (gamePanel.player.p.starter == 2) {
-	            gamePanel.player.p.catchPokemon(new Pokemon(4, 10, true, false));
+	            gamePanel.player.p.catchPokemon(new Pokemon(4, 5, true, false));
 	        } else if (gamePanel.player.p.starter == 3) {
-	            gamePanel.player.p.catchPokemon(new Pokemon(7, 10, true, false));
+	            gamePanel.player.p.catchPokemon(new Pokemon(7, 5, true, false));
 	        }
 	        
 	        //gamePanel.player.p.bag.add(new Item(22), 999);
@@ -158,7 +158,7 @@ public class Main {
 				new Trainer("TN 6", new Pokemon[]{new Pokemon(73, 10, false, true)}, 100), // 10
 				new Trainer("TN 7", new Pokemon[]{new Pokemon(90, 10, false, true)}, 100),
 				new Trainer("TN 8", new Pokemon[]{new Pokemon(52, 12, false, true)}, 100),
-				new Trainer("Rick 1", new Pokemon[]{new Pokemon(66, 11, false, true), new Pokemon(111, 12, false, true), new Pokemon(44, 13, false, true), new Pokemon(120, 10, false, true)}, 400, new Item(93)),
+				new Trainer("Rick 1", new Pokemon[]{new Pokemon(66, 11, false, true), new Pokemon(111, 12, false, true), new Pokemon(44, 13, false, true), new Pokemon(120, 10, false, true)}, 400, new Item(93), 2),
 				new Trainer("1 Gym A", new Pokemon[]{new Pokemon(13, 7, false, true), new Pokemon(13, 9, false, true), new Pokemon(13, 11, false, true)}, 200),
 				new Trainer("1 Gym B", new Pokemon[]{new Pokemon(10, 11, false, true), new Pokemon(10, 11, false, true)}, 200), // 15
 				new Trainer("1 Gym C", new Pokemon[]{new Pokemon(13, 12, false, true), new Pokemon(10, 14, false, true)}, 200),

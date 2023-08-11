@@ -31,6 +31,15 @@ public class Trainer {
 		currentIndex = 0;
 	}
 	
+	public Trainer(String name, Pokemon[] team, int money, Item item, int index) {
+		this.name = name;
+		this.team = team;
+		this.money = money;
+		this.item = item;
+		this.flagIndex = index;
+		currentIndex = 0;
+	}
+	
 	public Trainer(boolean placeholder) {
 		if (placeholder) {
 			name = "[SELECT]";
