@@ -302,7 +302,9 @@ public class Battle extends JFrame {
 		 * Set battled status
 		 */
 		me.clearBattled();
-		me.getCurrent().clearVolatile();
+		for (Pokemon p : me.team) {
+			if (p != null) p.clearVolatile();
+		}
 		me.getCurrent().battled = true;
 		
 		/*
