@@ -162,7 +162,7 @@ public class Main {
 				new Trainer("1 Gym A", new Pokemon[]{new Pokemon(13, 11, false, true), new Pokemon(13, 12, false, true), new Pokemon(13, 13, false, true)}, 200),
 				new Trainer("1 Gym B", new Pokemon[]{new Pokemon(10, 12, false, true), new Pokemon(10, 13, false, true)}, 200), // 15
 				new Trainer("1 Gym C", new Pokemon[]{new Pokemon(13, 13, false, true), new Pokemon(10, 14, false, true)}, 200),
-				new Trainer("1 Gym Leader 1", new Pokemon[]{new Pokemon(13, 14, false, true), new Pokemon(10, 15, false, true), new Pokemon(153, 14, false, true), new Pokemon(14, 16, false, true),}, 500, new Item(152)),
+				new Trainer("1 Gym Leader 1", new Pokemon[]{new Pokemon(13, 15, false, true), new Pokemon(10, 16, false, true), new Pokemon(153, 15, false, true), new Pokemon(14, 17, false, true),}, 500, new Item(152)),
 				new Trainer("E", new Pokemon[]{new Pokemon(19, 13, false, true)}, 100),
 				new Trainer("F", new Pokemon[]{new Pokemon(32, 8, false, true), new Pokemon(32, 9, false, true)}, 100),
 				new Trainer("G", new Pokemon[]{new Pokemon(13, 10, false, true)}, 100), // 20
@@ -180,6 +180,11 @@ public class Main {
 				new Trainer("R", new Pokemon[]{new Pokemon(64, 19, false, true)}, 100),
 				new Trainer("S", new Pokemon[]{new Pokemon(137, 16, false, true), new Pokemon(137, 16, false, true), new Pokemon(137, 16, false, true), new Pokemon(71, 19, false, true)}, 100),
 				new Trainer("Fred 1", new Pokemon[]{new Pokemon(1, 7, false, true)}, 400),
+				new Trainer("T", new Pokemon[]{new Pokemon(42, 16, false, true), new Pokemon(52, 17, false, true)}, 100), // 35
+				new Trainer("U1", new Pokemon[]{new Pokemon(104, 15, false, true), new Pokemon(94, 15, false, true)}, 100),
+				new Trainer("U2", new Pokemon[]{new Pokemon(106, 15, false, true), new Pokemon(94, 15, false, true)}, 100),
+				new Trainer("V", new Pokemon[]{new Pokemon(85, 17, false, true), new Pokemon(82, 16, false, true), new Pokemon(80, 17, false, true), new Pokemon(75, 18, false, true)}, 100),
+				new Trainer("W", new Pokemon[]{new Pokemon(138, 20, false, true)}, 100),
 //				new Trainer("2 Gym A", new Pokemon[]{new Pokemon(-11, 16, false, true)}, 200),
 //				new Trainer("2 Gym B", new Pokemon[]{new Pokemon(-10, 10, false, true), new Pokemon(-10, 10, false, true)}, 200),
 //				new Trainer("2 Gym Leader 1", new Pokemon[]{new Pokemon(-10, 10, false, true), new Pokemon(-12, 10, false, true), new Pokemon(-11, 19, false, true)}, 500),

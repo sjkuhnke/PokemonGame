@@ -52,7 +52,7 @@ public class Encounter {
 				encounters.add(new Encounter(32, 2, 3, 0.20));
 				encounters.add(new Encounter(38, 3, 5, 0.06));
 				encounters.add(new Encounter(41, 2, 3, 0.08));
-			} else if ((area == 4 || (area == 11 && x > 43)) && type.equals("Standard")) {
+			} else if ((area == 4) && type.equals("Standard")) {
 				encounters.add(new Encounter(19, 5, 5, 0.10));
 				encounters.add(new Encounter(29, 3, 5, 0.10));
 				encounters.add(new Encounter(44, 3, 5, 0.15));
@@ -62,6 +62,15 @@ public class Encounter {
 				encounters.add(new Encounter(73, 4, 5, 0.05));
 				encounters.add(new Encounter(85, 3, 5, 0.10));
 				encounters.add(new Encounter(114, 4, 6, 0.05));
+			} else if (area == 11 && x > 43 && type.equals("Standard")) {
+				encounters.add(new Encounter(10, 5, 5, 0.30));
+				encounters.add(new Encounter(55, 3, 5, 0.03));
+				encounters.add(new Encounter(75, 3, 5, 0.12));
+				encounters.add(new Encounter(90, 3, 5, 0.10));
+				encounters.add(new Encounter(174, 4, 6, 0.05));
+				encounters.add(new Encounter(62, 4, 5, 0.05));
+				encounters.add(new Encounter(151, 3, 5, 0.20));
+				encounters.add(new Encounter(22, 4, 6, 0.15));
 			} else if (area == 11 && x <= 43 && type.equals("Standard")) {
 				encounters.add(new Encounter(22, 12, 14, 0.15));
 				encounters.add(new Encounter(26, 13, 17, 0.12));
@@ -77,7 +86,7 @@ public class Encounter {
 				encounters.add(new Encounter(82, 14, 17, 0.01));
 				encounters.add(new Encounter(129, 12, 15, 0.05));
 				encounters.add(new Encounter(160, 14, 17, 0.05));
-				encounters.add(new Encounter(151, 16, 17, 0.09));
+				encounters.add(new Encounter(153, 16, 17, 0.09));
 			} else if (area == 3 && type.equals("Standard")) {
 				encounters.add(new Encounter(13, 2, 2, 0.25));
 				encounters.add(new Encounter(22, 2, 3, 0.6));

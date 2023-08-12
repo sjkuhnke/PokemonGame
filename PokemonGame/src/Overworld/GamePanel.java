@@ -51,8 +51,8 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public PlayerCharacter player = new PlayerCharacter(this,keyH);
-	public Entity npc[][] = new Entity[maxMap][90];
-	public ItemObj obj[][] = new ItemObj[maxMap][10];
+	public Entity npc[][] = new Entity[maxMap][15];
+	public ItemObj obj[][] = new ItemObj[maxMap][25];
 	public InteractiveTile iTile[][] = new InteractiveTile[maxMap][5];
 	
 	TileManager tileM = new TileManager(this);

@@ -35,12 +35,41 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(25, 31, 1, mapNum);
 		
 		mapNum = 4;
-		gp.obj[mapNum][objIndex] = ObjSetup(86, 56, 131, mapNum); // taunt, false swipe, flash
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(86, 56, 131, mapNum); // false swipe
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 59, 5, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(42, 74, 168, mapNum); // flash
 		gp.obj[mapNum][objIndex] = ObjSetup(15, 57, 109, mapNum); // leaf blade
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 72, 0, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 75, 2, mapNum);
+		
+		mapNum = 11;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(91, 55, 26, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 66, 0, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(61, 62, 16, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 76, 2, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 75, 5, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 67, 12, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 57, 1, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 68, 19, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 78, 4, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 82, 5, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 81, 9, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(30, 87, 4, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 90, 20, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(16, 81, 14, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 69, 0, mapNum); // drain punch, taunt, 
+		
+		gp.obj[mapNum][objIndex] = ObjSetup(4, 43, 117, mapNum); // solar beam
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 60, 1, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 52, 10, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(34, 50, 5, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(33, 47, 11, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 46, 0, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 34, 16, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 38, 19, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 44, 14, mapNum);
 	}
 	
 	public void setNPC() {
@@ -86,6 +115,7 @@ public class AssetSetter {
 			gp.npc[mapNum][index++] = null;
 		}
 		
+		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(4, 32, 62, 18);
 		gp.npc[mapNum][index] = NPCSetup(4, 23, 65, 19); // make way lower levels
 		gp.npc[mapNum][index] = NPCSetup(4, 32, 68, 20); // make way lower levels
@@ -94,12 +124,14 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(4, 15, 70, 23);
 		
 		mapNum = 7;
+		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(6, 30, 42, 5);
 		gp.npc[mapNum][index] = NPCSetup(5, 33, 42, 6);
 		gp.npc[mapNum][index] = NPCSetup(3, 36, 39, 7);
 		gp.npc[mapNum][index] = NPCSetup(4, 36, 42, 8);
 		
 		mapNum = 8;
+		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(5, 30, 39, 9);
 		gp.npc[mapNum][index] = NPCSetup(4, 28, 41, 10);
 		gp.npc[mapNum][index] = NPCSetup(3, 32, 39, 11);
@@ -107,12 +139,14 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(8, 35, 41, 13);
 		
 		mapNum = 9;
+		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(5, 34, 42, 14);
 		gp.npc[mapNum][index] = NPCSetup(6, 27, 39, 15);
 		gp.npc[mapNum][index] = NPCSetup(5, 42, 34, 16);
 		gp.npc[mapNum][index] = NPCSetup(8, 38, 28, 17);
 		
 		mapNum = 11;
+		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(4, 69, 65, 24);
 		gp.npc[mapNum][index] = NPCSetup(4, 50, 72, 25);
 		gp.npc[mapNum][index] = NPCSetup(4, 59, 74, 26);
@@ -135,6 +169,9 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(17, 63, 0);
 		gp.iTile[mapNum][iIndex] = ITileSetup(16, 68, 0);
 		gp.iTile[mapNum][iIndex] = ITileSetup(10, 68, 0);
+		
+		mapNum = 11;
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 77, 0);
 	}
 
 	public void updateNPC() {

@@ -290,6 +290,18 @@ public class PlayerCharacter extends Entity {
 	    		} else if (code.equals("Ben")) {
 	    			p.catchPokemon(new Pokemon(238, 5, true, false));
 	    			SwingUtilities.getWindowAncestor(cheats).dispose();
+	    		} else if (code.startsWith("anyi")) {
+	    			String[] parts = code.split(" ");
+	    		    if (parts.length >= 2) {
+	    		        try {
+	    		            int id = Integer.parseInt(parts[1]);
+	    		            p.bag.add(new Item(id));
+	    		            SwingUtilities.getWindowAncestor(cheats).dispose();
+	    		        } catch (NumberFormatException g) {
+	    		            // Handle invalid input (e.g., if the entered value is not a valid integer)
+	    		            System.out.println("Invalid item ID.");
+	    		        }
+	    		    }
 	    		}
 	    	});
 	    	
@@ -516,10 +528,13 @@ public class PlayerCharacter extends Entity {
 		        	    	if (p.team[j] != null && p.team[j].isFainted()) party.setBackground(Color.red);
 		        	    	JProgressBar partyHP = setupHPBar(j);
 		        	        final int index = j;
-		        	        final Status finalTarget = target == null && p.team[index] != null && p.team[index].status != Status.HEALTHY ? p.team[index].status : target;
+		        	        Status finalTarget = target == null && p.team[index] != null && p.team[index].status != Status.HEALTHY ? p.team[index].status : target;
+		        	        final Status fFinalTarget = p.team[index] != null && p.team[index].status == Status.TOXIC && target == Status.POISONED ? Status.TOXIC : finalTarget;
+		        	        
+		        	        
 
 		        	        party.addActionListener(g -> {
-		        	        	if (p.team[index].status != finalTarget || p.team[index].isFainted()) {
+		        	        	if (p.team[index].status != fFinalTarget || p.team[index].isFainted()) {
 		        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
 		        	        	} else {
 		        	        		Status temp = p.team[index].status;
@@ -646,7 +661,7 @@ public class PlayerCharacter extends Entity {
 		        	}
 		        	
 		        	// EVOLUTION ITEMS
-		        	if (i.getItem().getID() >= 20 && i.getItem().getID() < 27) {
+		        	if (i.getItem().getID() >= 20 && i.getItem().getID() < 26) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 		        	    
@@ -768,6 +783,46 @@ public class PlayerCharacter extends Entity {
 		        	        partyPanel.add(memberPanel);
 		        	    }
 		        	    JOptionPane.showMessageDialog(null, partyPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
+		        	}
+		        	// Ability Capsule
+		        	if (i.getItem().getID() == 26) {
+		        		JPanel partyPanel = new JPanel();
+		        	    partyPanel.setLayout(new GridLayout(6, 1));
+		        	    
+		        	    for (int j = 0; j < 6; j++) {
+		        	    	JButton party = setUpPartyButton(j);
+		        	        final int index = j;
+		        	        
+		        	        if (p.team[index] != null) {
+			        	        Pokemon test = new Pokemon(p.team[index].id, 1, false, false);
+			        	        test.setAbility(1 - p.team[index].abilitySlot);
+			        	        boolean swappable = p.team[index].ability != test.ability;
+			        	        if (swappable) {
+			        	        	party.setBackground(Color.GREEN);
+			        	        } else {
+			        	        	party.setBackground(Color.YELLOW);
+			        	        }
+			        	        
+			        	        party.addActionListener(g -> {
+			        	        	if (!swappable) {
+			        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+			        	        	} else {
+			        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s ability was swapped from " + p.team[index].ability + " to " + test.ability + "!");
+			        	        		p.team[index].abilitySlot = 1 - p.team[index].abilitySlot;
+			        	        		p.team[index].setAbility(p.team[index].abilitySlot);
+			        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
+				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+				        	        	showBag();
+			        	        	}
+			        	        });
+		        	        }
+		        	        
+		        	        JPanel memberPanel = new JPanel(new BorderLayout());
+		        	        memberPanel.add(party, BorderLayout.NORTH);
+		        	        partyPanel.add(memberPanel);
+		        	    }
+		        	    JOptionPane.showMessageDialog(null, partyPanel, "Swap Abilities?", JOptionPane.PLAIN_MESSAGE);
 		        	}
 		        });
 		        itemDesc.add(description);
