@@ -102,6 +102,8 @@ public class Player implements Serializable{
 	public void swap(Pokemon pokemon, int index) {
 		System.out.println("\n" + current.nickname + ", come back!");
 		Pokemon lead = current;
+		if (lead.vStatuses.contains(Status.HEALING)) team[index].vStatuses.add(Status.HEALING);
+		if (lead.vStatuses.contains(Status.WISH)) team[index].vStatuses.add(Status.WISH);
 		lead.clearVolatile();
 		this.current = pokemon;
 		this.team[0] = pokemon;
@@ -111,6 +113,7 @@ public class Player implements Serializable{
 			this.current.battled = true;
 		}
 		System.out.println("Go " + current.nickname + "!");
+		if (this.current.vStatuses.contains(Status.HEALING)) this.current.heal();
 		
 	}
 	

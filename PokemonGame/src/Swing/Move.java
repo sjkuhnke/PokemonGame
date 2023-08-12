@@ -226,7 +226,7 @@ public enum Move {
 	HEAD_SMASH(150,80,0,0,0,0,PType.ROCK,"User takes 1/3 of damage inflicted",true),
 	HEADBUTT(70,100,30,0,0,0,PType.NORMAL,"% chance of causing foe to flinch",true),
 	HEAL_PULSE(0,1000,0,0,2,0,PType.PSYCHIC,"Heals foe by 50% HP",false),
-	HEALING_WISH(0,1000,0,0,2,0,PType.PSYCHIC,"",false), // TODO
+	HEALING_WISH(0,1000,0,0,2,0,PType.PSYCHIC,"",false),
 	HEAT_CRASH(-1,100,0,0,0,0,PType.FIRE,"",true),
 	HEAT_WAVE(95,90,10,0,1,0,PType.FIRE,"% to Burn foe",false),
 	HEAVY_SLAM(-1,100,0,0,0,0,PType.STEEL,"",true),
@@ -254,7 +254,6 @@ public enum Move {
 	ICICLE_SPEAR(25,100,0,0,0,0,PType.ICE,"",false),
 	ICY_WIND(55,95,100,0,1,0,PType.ICE,"",false),
 	//IGNITE(0,75,0,0,2,0,PType.FIRE,"Burns foe",false),
-	IMPRISON(0,1000,0,0,2,0,PType.PSYCHIC,"",false), // TODO
 	INCINERATE(60,100,0,0,1,0,PType.FIRE,"",false),
 	INFERNO(100,50,100,0,1,0,PType.FIRE,"",false),
 	INFESTATION(20,100,100,0,1,0,PType.BUG,"",true),
@@ -291,7 +290,7 @@ public enum Move {
 	LOVELY_KISS(0,75,0,0,2,0,PType.NORMAL,"",false),
 	LOW_KICK(-1,100,0,0,0,0,PType.FIGHTING,"Damage is based on how heavy foe is",true),
 	LOW_SWEEP(65,100,100,0,0,0,PType.FIGHTING,"",true),
-	LUNAR_DANCE(0,1000,0,0,2,0,PType.PSYCHIC,"",false), // TODO
+	LUNAR_DANCE(0,1000,0,0,2,0,PType.PSYCHIC,"",false),
 	LUSTER_PURGE(70,100,50,0,1,0,PType.LIGHT,"",false),
 	MACH_PUNCH(40,100,0,0,0,1,PType.FIGHTING,"Always goes first",true),
 	MACHETE_JAB(75,80,100,0,0,0,PType.STEEL,"% to cause foe to Bleed",true),
@@ -400,7 +399,7 @@ public enum Move {
 	RED_NOSE_BOOST(0,1000,0,0,2,0,PType.MAGIC,"",false),
 	REFLECT(0,1000,0,0,2,0,PType.PSYCHIC,"",false),
 	REST(0,1000,0,0,2,0,PType.PSYCHIC,"",false),
-	RETURN(-1,100,0,0,0,0,PType.NORMAL,"",true), // TODO
+	RETURN(-1,100,0,0,0,0,PType.NORMAL,"",true),
 	REVENGE(-1,100,0,0,0,0,PType.FIGHTING,"Power is doubled if user is slower than foe",true),
 	REVERSAL(-1,100,0,0,2,0,PType.FIGHTING,"",true),
 	ROAR(0,1000,0,0,2,-6,PType.NORMAL,"",false), // TODO
@@ -411,7 +410,7 @@ public enum Move {
 	ROCK_THROW(50,90,0,0,0,0,PType.ROCK,"A normal attack",false),
 	ROCK_TOMB(60,95,100,0,0,0,PType.ROCK,"% to lower foe's Speed by 1",false),
 	ROCK_WRECKER(150,90,0,0,0,0,PType.ROCK,"User takes 1/3 of damage dealt as recoil",false),
-	ROCKFALL_FRENZY(0,100,0,0,2,0,PType.ROCK,"",false), // TODO
+	ROCKFALL_FRENZY(75,95,100,0,1,0,PType.ROCK,"",false), // TODO
 	//ROCKET(120,75,50,0,0,0,PType.STEEL,"% to Paralyze foe",false),
 	ROLLOUT(-1,90,0,0,0,0,PType.ROCK,"Attacks up to 5 times, damage doubles each time. While active, user cannot switch out",true),
 	ROOST(0,1000,0,0,2,0,PType.FLYING,"Restores 1/2 of user's max HP",false),
@@ -527,7 +526,7 @@ public enum Move {
 	TAILWIND(0,1000,0,0,2,0,PType.FLYING,"",false),
 	TAKE_DOWN(90,85,0,0,0,0,PType.NORMAL,"User takes 1/3 of damage dealt as recoil",true),
 	TAKE_OVER(0,100,0,0,2,0,PType.GHOST,"Foe's next attack is used on itself. Can be used once every other turn",false),
-	TAUNT(0,100,0,0,2,0,PType.DARK,"",false), // TODO
+	TAUNT(0,100,0,0,2,0,PType.DARK,"",false),
 	TEETER_DANCE(0,100,0,0,2,0,PType.NORMAL,"",false),
 	TELEPORT(0,1000,0,0,2,-6,PType.PSYCHIC,"",false),
 	THRASH(120,100,0,0,0,0,PType.NORMAL,"",true),
@@ -540,7 +539,7 @@ public enum Move {
 	THUNDERBOLT(95,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false), // recoil
 	THUNDERSHOCK(40,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false),
 	TOPSY_TURVY(0,1000,0,0,2,0,PType.DARK,"",false),
-	TORMENT(0,100,0,0,2,0,PType.DARK,"",false), // TODO
+	TORMENT(0,100,0,0,2,0,PType.DARK,"",false),
 	//TIDAL_WAVE(-1,100,0,0,1,0,PType.WATER,"Picks a random tide level from the time of day. Morning = 90, Day = 50, and Evening = 130 Base Power",false),
 	TORNADO_SPIN(60,95,100,0,0,0,PType.FIGHTING,"% to raise user's Speed and Accuracy by 1, and frees user of being Spun",true),
 	TOXIC(0,90,0,0,2,0,PType.POISON,"Badly poisons foe",false),
@@ -579,7 +578,7 @@ public enum Move {
 	WHIRLWIND(0,1000,0,0,2,-6,PType.WATER,"",false), // TODO
 	WILL_O_WISP(0,80,0,0,2,0,PType.FIRE,"Burns foe",false),
 	WING_ATTACK(60,100,0,0,0,0,PType.FLYING,"A normal attack",true),
-	WISH(0,1000,0,0,2,0,PType.NORMAL,"",false), // TODO
+	WISH(0,1000,0,0,2,0,PType.NORMAL,"",false),
 	WITHDRAW(0,1000,0,0,2,0,PType.WATER,"",false),
 	WORRY_SEED(0,100,0,0,2,0,PType.GRASS,"",false),
 	//WOOD_FANG(50,100,50,0,0,0,PType.ROCK,"% to cause foe to flinch",false), // recoil

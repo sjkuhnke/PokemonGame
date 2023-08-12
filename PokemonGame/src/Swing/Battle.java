@@ -183,8 +183,18 @@ public class Battle extends JFrame {
 			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
 			        	if (foe.trainerOwned()) {
+			        		if ((me.getCurrent().vStatuses.contains(Status.TAUNTED) && me.getCurrent().moveset[index].cat == 2)
+			        			|| me.getCurrent().vStatuses.contains(Status.TORMENTED) && me.getCurrent().moveset[index] == me.getCurrent().lastMoveUsed) {
+			        			JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index] + " cannot be used!");
+			        			return;
+			        		}
 			        		turn(me.getCurrent(), foe, me.getCurrent().moveset[index], foe.bestMove(me.getCurrent(), field, false), pl, gp);
 			        	} else {
+			        		if ((me.getCurrent().vStatuses.contains(Status.TAUNTED) && me.getCurrent().moveset[index].cat == 2)
+				        			|| me.getCurrent().vStatuses.contains(Status.TORMENTED) && me.getCurrent().moveset[index] == me.getCurrent().lastMoveUsed) {
+			        			JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index] + " cannot be used!");
+			        			return;
+			        		}
 			        		turn(me.getCurrent(), foe, me.getCurrent().moveset[index], foe.randomMove(), pl, gp);
 			        	}
 			        }

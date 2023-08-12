@@ -70,10 +70,12 @@ public class Field {
 	public class FieldEffect {
 		int turns;
 		Effect effect;
+		int layers;
 		
 		public FieldEffect(Effect effect) {
 			this.effect = effect;
 			turns = effect.turns;
+			layers = 0;
 		}
 		
 		@Override
@@ -87,16 +89,16 @@ public class Field {
 	}
 	
 	public void setWeather(FieldEffect weather) {
-		if (weather.effect.isWeather) {
-			if (this.weather == null) System.out.println("The weather became " + weather.toString() + "!");
+		if (weather.effect.isWeather && this.weather != weather) {
+			System.out.println("The weather became " + weather.toString() + "!");
 			this.weather = weather;
 			this.weatherTurns = weather.turns;
 		}
 	}
 	
 	public void setTerrain(FieldEffect terrain) {
-		if (terrain.effect.isTerrain) {
-			if (this.weather == null) System.out.println("The terrain became " + terrain.toString() + "!");
+		if (terrain.effect.isTerrain && this.weather != terrain) {
+			System.out.println("The terrain became " + terrain.toString() + "!");
 			this.terrain = terrain;
 			this.terrainTurns = terrain.turns;
 		}
@@ -110,6 +112,49 @@ public class Field {
 			}
 		}
 		fieldEffects.add(effect);
+	}
+	
+	public boolean setHazard(ArrayList<FieldEffect> side, FieldEffect hazard) {
+		if (hazard.effect == Effect.STEALTH_ROCKS && !contains(side, Effect.STEALTH_ROCKS)) {
+			System.out.println("Pointed rocks were scattered everywhere!");
+			side.add(hazard);
+			return true;
+		} else if (hazard.effect == Effect.STICKY_WEBS && !contains(side, Effect.STICKY_WEBS)) {
+			System.out.println("Sticky webs were scattered at the Pokemon's feet!");
+			side.add(hazard);
+			return true;
+		} else if (hazard.effect == Effect.TOXIC_SPIKES) {
+			if (getLayers(side, Effect.TOXIC_SPIKES) == 0) {
+				System.out.println("Poisonous Spikes were put at the Pokemon's feet!");
+				hazard.layers++;
+				side.add(hazard);
+				return true;
+			} else if (getLayers(side, Effect.TOXIC_SPIKES) == 1) {
+				System.out.println("Poisonous Spikes were put at the Pokemon's feet!");
+				addLayer(side, Effect.TOXIC_SPIKES);
+				return true;
+			} else if (getLayers(side, Effect.TOXIC_SPIKES) == 2) {
+				System.out.println("But it failed!");
+				return false;
+			}
+			
+		} else if (hazard.effect == Effect.SPIKES) {
+			if (getLayers(side, Effect.SPIKES) == 0) {
+				System.out.println("Spikes were scattered at the Pokemon's feet!");
+				hazard.layers++;
+				side.add(hazard);
+				return true;
+			} else if (getLayers(side, Effect.SPIKES) == 1 || getLayers(side, Effect.SPIKES) == 2) {
+				System.out.println("Spikes were scattered at the Pokemon's feet!");
+				addLayer(side, Effect.SPIKES);
+				return true;
+			} else if (getLayers(side, Effect.SPIKES) == 3) {
+				System.out.println("But it failed!");
+				return false;
+			}
+			
+		}
+		return false;
 	}
 
 	public boolean contains(ArrayList<FieldEffect> side, Effect effect) {
@@ -178,6 +223,30 @@ public class Field {
 			if (fe.effect == Effect.STEALTH_ROCKS || fe.effect == Effect.SPIKES || fe.effect == Effect.TOXIC_SPIKES || fe.effect == Effect.STICKY_WEBS) result.add(fe);
 		}
 		return result;
+	}
+	
+	public int getLayers(ArrayList<FieldEffect> side, Effect effect) {
+		for (FieldEffect e : side) {
+			if (e.effect == effect) return e.layers;
+		}
+		return 0;
+	}
+	
+	public void addLayer(ArrayList<FieldEffect> side, Effect effect) {
+		for (FieldEffect e : side) {
+			if (e.effect == effect) e.layers++;
+			return;
+		}
+	}
+	
+	public boolean remove(ArrayList<FieldEffect> side, Effect effect) {
+		for (FieldEffect e : side) {
+			if (e.effect == effect) {
+				side.remove(e);
+				return true;
+			}
+		}
+		return false;
 	}
 
 

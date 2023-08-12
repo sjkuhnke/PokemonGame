@@ -3953,6 +3953,8 @@ public class Pokemon implements Serializable {
 		PType moveType = move.mtype;
 		int critChance = move.critChance;
 		
+		
+		
 		if (!this.vStatuses.contains(Status.CHARGING) && !this.vStatuses.contains(Status.SEMI_INV) && !this.vStatuses.contains(Status.LOCKED) &&
 				!this.vStatuses.contains(Status.ENCORED) && move != Move.MAGIC_REFLECT && move != Move.TAKE_OVER && move != Move.ABDUCT &&
 				move != Move.DESTINY_BOND && move != Move.DETECT && move != Move.PROTECT && move != Move.MOLTEN_LAIR && move != Move.OBSTRUCT &&
@@ -4245,7 +4247,7 @@ public class Pokemon implements Serializable {
 		for (int hit = 1; hit <= numHits; hit++) {
 			if (hit > 1) bp = move.basePower;
 			if (foe.isFainted() || this.isFainted()) {
-				System.out.println("Hit " + (hit - 1) + " times!");
+				System.out.println("Hit " + (hit - 1) + " time(s)!");
 				break;
 			}
 			
@@ -4281,7 +4283,7 @@ public class Pokemon implements Serializable {
 				return;
 			}
 			
-			if (moveType == PType.GROUND && !foe.isGrounded(field, foe)) {
+			if (moveType == PType.GROUND && !foe.isGrounded(field) && move.cat != 2) {
 				if (foe.ability == Ability.LEVITATE) System.out.print("[" + foe.nickname + "'s Levitate]: ");
 				System.out.println("It doesn't effect " + foe.nickname + "...");
 				endMove();
@@ -5580,8 +5582,10 @@ public class Pokemon implements Serializable {
 			stat(this, 0, 1);
 		} else if (move == Move.HYPNOSIS) {
 			foe.sleep(true);
-//		} else if (move == Move.IGNITE) {
-//			foe.burn(true);
+		} else if (move == Move.HEALING_WISH || move == Move.LUNAR_DANCE) {
+			this.faint(true, player, foe);
+			foe.awardxp((int) Math.ceil(this.level * trainer), player);
+			this.vStatuses.add(Status.HEALING);
 		} else if (move == Move.INGRAIN) {
 			if (!(this.vStatuses.contains(Status.AQUA_RING))) {
 			    this.vStatuses.add(Status.AQUA_RING);
@@ -5833,47 +5837,23 @@ public class Pokemon implements Serializable {
 			field.setTerrain(field.new FieldEffect(Effect.SPARKLY));
 		} else if (move == Move.SPIKES) {
 			if (!this.trainerOwned) {
-				if (!(field.contains(field.playerSide, Effect.SPIKES))) {
-					field.playerSide.add(field.new FieldEffect(Effect.SPIKES));
-				} else {
-					fail = fail();
-				}
+				fail = field.setHazard(field.playerSide, field.new FieldEffect(Effect.SPIKES));
 			} else {
-				if (!(field.contains(field.foeSide, Effect.SPIKES))) {
-					field.foeSide.add(field.new FieldEffect(Effect.SPIKES));
-				} else {
-					fail = fail();
-				}
+				fail = field.setHazard(field.foeSide, field.new FieldEffect(Effect.SPIKES));
 			}
 		} else if (move == Move.SPLASH) {
 			System.out.println("But nothing happened!");
 		} else if (move == Move.STEALTH_ROCK) {
 			if (!this.trainerOwned) {
-				if (!(field.contains(field.playerSide, Effect.STEALTH_ROCKS))) {
-					field.playerSide.add(field.new FieldEffect(Effect.STEALTH_ROCKS));
-				} else {
-					fail = fail();
-				}
+				fail = field.setHazard(field.playerSide, field.new FieldEffect(Effect.STEALTH_ROCKS));
 			} else {
-				if (!(field.contains(field.foeSide, Effect.STEALTH_ROCKS))) {
-					field.foeSide.add(field.new FieldEffect(Effect.STEALTH_ROCKS));
-				} else {
-					fail = fail();
-				}
+				fail = field.setHazard(field.foeSide, field.new FieldEffect(Effect.STEALTH_ROCKS));
 			}
 		} else if (move == Move.STICKY_WEB) {
 			if (!this.trainerOwned) {
-				if (!(field.contains(field.playerSide, Effect.STICKY_WEBS))) {
-					field.playerSide.add(field.new FieldEffect(Effect.STICKY_WEBS));
-				} else {
-					fail = fail();
-				}
+				fail = field.setHazard(field.playerSide, field.new FieldEffect(Effect.STICKY_WEBS));
 			} else {
-				if (!(field.contains(field.foeSide, Effect.STICKY_WEBS))) {
-					field.foeSide.add(field.new FieldEffect(Effect.STICKY_WEBS));
-				} else {
-					fail = fail();
-				}
+				fail = field.setHazard(field.foeSide, field.new FieldEffect(Effect.STICKY_WEBS));
 			}
 		} else if (move == Move.STOCKPILE) {
 			stat(this, 1, 1);
@@ -5953,17 +5933,9 @@ public class Pokemon implements Serializable {
 			foe.toxic(true, this);
 		} else if (move == Move.TOXIC_SPIKES) {
 			if (!this.trainerOwned) {
-				if (!(field.contains(field.playerSide, Effect.TOXIC_SPIKES))) {
-					field.playerSide.add(field.new FieldEffect(Effect.TOXIC_SPIKES));
-				} else {
-					fail = fail();
-				}
+				fail = field.setHazard(field.playerSide, field.new FieldEffect(Effect.TOXIC_SPIKES));
 			} else {
-				if (!(field.contains(field.foeSide, Effect.TOXIC_SPIKES))) {
-					field.foeSide.add(field.new FieldEffect(Effect.TOXIC_SPIKES));
-				} else {
-					fail = fail();
-				}
+				fail = field.setHazard(field.foeSide, field.new FieldEffect(Effect.TOXIC_SPIKES));
 			}
 		} else if (move == Move.TRICK_ROOM) {
 			field.setEffect(field.new FieldEffect(Effect.TRICK_ROOM));
@@ -5977,6 +5949,12 @@ public class Pokemon implements Serializable {
 			System.out.println(this.nickname + " fire's power was weakened!");
 		} else if (move == Move.WILL_O_WISP) {
 			foe.burn(true, this);
+		} else if (move == Move.WISH) {
+			if (this.vStatuses.contains(Status.WISH)) {
+				fail();
+			} else {
+				this.vStatuses.add(Status.WISH);
+			}
 		} else if (move == Move.WITHDRAW) {
 			stat(this, 1, 1);
 		} else if (move == Move.WORRY_SEED) {
@@ -10525,6 +10503,17 @@ public class Pokemon implements Serializable {
 				}
 				System.out.println("\n" + this.nickname + " restored HP.");
 			}
+		} if (this.vStatuses.contains(Status.WISH) && this.lastMoveUsed != Move.WISH) {
+			if (this.currentHP < this.getStat(0)) {
+				this.currentHP += Math.max(this.getStat(0) / 2, 1);
+				if (this.currentHP > this.getStat(0)) {
+					this.currentHP = this.getStat(0);
+				}
+				System.out.println("\n" + this.nickname + "'s wish came true!");
+			} else {
+				System.out.println("\n" + this.nickname + "'s HP is full!");
+			}
+			this.vStatuses.remove(Status.WISH);
 		} if (this.vStatuses.contains(Status.SPUN)) {
 			if (this.spunCount == 0) {
 				System.out.println("\n" + this.nickname + " was freed from wrap!");
@@ -10579,7 +10568,7 @@ public class Pokemon implements Serializable {
 		}
 		if (this.vStatuses.contains(Status.TAUNTED) && --this.tauntCount == 0) {
 			this.vStatuses.remove(Status.TAUNTED);
-			System.out.println(this.nickname + "shook off the taunt!");
+			System.out.println(this.nickname + " shook off the taunt!");
 		}
 		if (this.vStatuses.contains(Status.TORMENTED) && --this.tormentCount == 0) {
 			this.vStatuses.remove(Status.TORMENTED);
@@ -10681,7 +10670,7 @@ public class Pokemon implements Serializable {
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.PARALYZED;
 			System.out.println(this.nickname + " was paralyzed!");
-			if (this.ability == Ability.SYNCHRONIZE) foe.paralyze(false, this);
+			if (this.ability == Ability.SYNCHRONIZE && this != foe) foe.paralyze(false, this);
 		} else {
 			if (announce) fail();
 		}
@@ -10698,7 +10687,7 @@ public class Pokemon implements Serializable {
 				return;
 			}
 			this.status = Status.BURNED;
-			if (this.ability == Ability.SYNCHRONIZE) foe.burn(false, this);
+			if (this.ability == Ability.SYNCHRONIZE && this != foe) foe.burn(false, this);
 			System.out.println(this.nickname + " was burned!");
 		} else {
 			if (announce) fail();
@@ -10713,7 +10702,7 @@ public class Pokemon implements Serializable {
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.POISONED;
 			System.out.println(this.nickname + " was poisoned!");
-			if (this.ability == Ability.SYNCHRONIZE) foe.poison(false, this);
+			if (this.ability == Ability.SYNCHRONIZE && this != foe) foe.poison(false, this);
 		} else {
 			if (announce) fail();
 		}
@@ -10727,7 +10716,7 @@ public class Pokemon implements Serializable {
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.TOXIC;
 			System.out.println(this.nickname + " was badly poisoned!");
-			if (this.ability == Ability.SYNCHRONIZE) foe.toxic(false, this);
+			if (this.ability == Ability.SYNCHRONIZE && this != foe) foe.toxic(false, this);
 		} else {
 			if (announce) fail();
 		}
@@ -10781,7 +10770,7 @@ public class Pokemon implements Serializable {
 			hpRatio *= 150;
 			bp = Math.max((int) hpRatio, 1);
 		} else if (move == Move.EXPANDING_FORCE) {
-			if (field.equals(field.terrain, Effect.PSYCHIC) && this.isGrounded(field, foe)) {
+			if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded(field)) {
 				bp = 120;
 			} else {
 				bp = 80;
@@ -11520,6 +11509,38 @@ public class Pokemon implements Serializable {
 			}
 			if (shuddered) System.out.println("[" + this.nickname + "'s Anticipation]: " + this.nickname + " shuddered!");
 		}
+		ArrayList<FieldEffect> side = trainerOwned ? field.playerSide : field.foeSide;
+		if (field.contains(side, Effect.STEALTH_ROCKS)) {
+			int multiplier = getEffectiveMultiplier(PType.ROCK, this);
+			this.currentHP -= (this.getStat(0) / 8) * multiplier;
+			System.out.println("Pointed stones dug into " + this.nickname + "!");
+		}
+		if (field.contains(side, Effect.SPIKES) && this.isGrounded(field)) {
+			double layers = field.getLayers(side, Effect.SPIKES);
+			this.currentHP -= (this.getStat(0) / 8) * ((layers + 1) / 2);
+			System.out.println(this.nickname + " was hurt by Spikes!");
+		}
+		
+		if (field.contains(side, Effect.TOXIC_SPIKES) && this.isGrounded(field)) {
+			int layers = field.getLayers(side, Effect.TOXIC_SPIKES);
+			if (layers == 1) this.poison(false, this);
+			if (layers == 2) this.toxic(false, this);
+			
+			if (this.type1 == PType.POISON || this.type2 == PType.POISON) {
+				field.remove(side, Effect.TOXIC_SPIKES);
+				System.out.println("The toxic spikes disappeared from " + this.nickname + "'s feet!");
+			}
+		}
+		
+		if (field.contains(side, Effect.STICKY_WEBS) && this.isGrounded(field)) {
+			stat(this, 4, -1);
+		}
+		
+		if (this.currentHP <= 0) {
+			this.faint(true, me, foe);
+			foe.awardxp((int) Math.ceil(this.level * this.trainer), me);
+		}
+		
 		if (me.pokedex[this.id] < 1) me.pokedex[this.id] = 1;
 		
 	}
@@ -11547,11 +11568,11 @@ public class Pokemon implements Serializable {
 		return multiplier;
 	}
 
-	private boolean isGrounded(Field field, Pokemon foe) {
+	private boolean isGrounded(Field field) {
 		boolean result = true;
 		if (this.type1 == PType.FLYING || this.type2 == PType.FLYING) result = false;
 		if (this.ability == Ability.LEVITATE) result = false;
-		if (foe.magCount > 0) result = false;
+		if (this.magCount > 0) result = false;
 		if (this.vStatuses.contains(Status.SMACK_DOWN)) result = true;
 		if (field.contains(field.fieldEffects, Effect.GRAVITY)) result = true;
 		return result;
