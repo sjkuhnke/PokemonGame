@@ -94,6 +94,43 @@ public class EventHandler {
 			if (hit(10,37,40,"any")) teleport(4, 8, 68);
 			if (hit(10,22,40,"any")) teleport(11, 91, 61);
 			if (hit(11,92,61,"any")) teleport(10, 23, 40);
+			
+			// Route 25 gate
+			if (hit(11,24,29,"any")) teleport(12, 31, 45);
+			if (hit(12,31,46,"any")) teleport(11, 24, 30);
+			if (hit(12,31,33,"any")) teleport(13, 25, 89);
+			if (hit(13,25,90,"any")) teleport(12, 31, 34);
+			
+			// Energy Plant A
+			if (hit(13,16,85,"any")) teleport(14, 31, 49);
+			if (hit(14,31,50,"any")) teleport(13, 16, 86);
+			if (hit(14,21,37,"any")) teleport(15, 50, 40);
+			if (hit(15,51,40,"any")) teleport(14, 22, 37);
+			
+			// Energy Plant B
+			if (hit(15,32,9,"any")) teleport(16, 32, 46);
+			if (hit(16,31,46,"any")) teleport(15, 31, 9);
+			
+			// Office
+			if (hit(13,45,57,"any")) teleport(17, 53, 56);
+			if (hit(17,53,57,"any")) teleport(13, 45, 58);
+			
+			if (hit(17,48,53,"any")) teleport(18, 54, 51);
+			if (hit(18,55,51,"any")) teleport(17, 49, 53);
+			if (hit(17,58,53,"any")) teleport(18, 42, 51);
+			if (hit(18,41,51,"any")) teleport(17, 57, 53);
+			
+			// Sicab PC
+			if (hit(13,35,85,"any")) teleport(19, 31, 45);
+			if (hit(19,31,46,"any")) teleport(13, 35, 86);
+			
+			// Sicab Shop
+			if (hit(13,9,85,"any")) teleport(20, 31, 45);
+			if (hit(20,31,46,"any")) teleport(13, 9, 86);
+			
+			// Gym 2
+			if (hit(13,12,56,"any")) teleport(21, 63, 62);
+			if (hit(21,63,63,"any")) teleport(13, 12, 57);
 		}
 	}
 	

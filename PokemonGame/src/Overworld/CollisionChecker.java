@@ -6,6 +6,8 @@ import Entity.Entity;
 import Entity.NPC_Clerk;
 import Entity.NPC_Nurse;
 import Entity.NPC_Trainer;
+import tile.BuildingTile;
+import tile.CaveTile;
 import tile.GrassTile;
 
 public class CollisionChecker {
@@ -31,7 +33,9 @@ public class CollisionChecker {
 		
 		tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
 	    tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
-	    if (gp.tileM.tile[tileNum1] instanceof GrassTile || gp.tileM.tile[tileNum2] instanceof GrassTile) {
+	    if (gp.tileM.tile[tileNum1] instanceof GrassTile || gp.tileM.tile[tileNum2] instanceof GrassTile
+	    	|| gp.tileM.tile[tileNum1] instanceof BuildingTile || gp.tileM.tile[tileNum2] instanceof BuildingTile
+	    	|| gp.tileM.tile[tileNum1] instanceof CaveTile || gp.tileM.tile[tileNum2] instanceof CaveTile) {
 	        entity.inTallGrass = true;
 	    } else {
 	        entity.inTallGrass = false;

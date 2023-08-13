@@ -40,7 +40,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	
 	public final int maxWorldCol = 100;
 	public final int maxWorldRow = 100;
-	public final int maxMap = 20;
+	public final int maxMap = 30;
 	public int currentMap = 0;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public PlayerCharacter player = new PlayerCharacter(this,keyH);
-	public Entity npc[][] = new Entity[maxMap][15];
+	public Entity npc[][] = new Entity[maxMap][20];
 	public ItemObj obj[][] = new ItemObj[maxMap][25];
 	public InteractiveTile iTile[][] = new InteractiveTile[maxMap][5];
 	

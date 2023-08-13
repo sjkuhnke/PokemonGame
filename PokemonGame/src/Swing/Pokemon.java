@@ -2359,7 +2359,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 139 && area == -3) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 143 && level >= 25) {
+		} else if (id == 143 && happiness >= 160) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 144 && happiness >= 160) {
 			result = new Pokemon(id + 1, this);
@@ -7674,9 +7674,6 @@ public class Pokemon implements Serializable {
 			movebank[6] = new Node(Move.SLASH);
 			movebank[9] = new Node(Move.PURSUIT);
 			movebank[16] = new Node(Move.BUG_BITE);
-			movebank[20] = new Node(Move.FEINT_ATTACK);
-			movebank[29] = new Node(Move.MOONLIGHT);
-			movebank[34] = new Node(Move.LEECH_LIFE);
 			movebank[19] = new Node(Move.NIGHT_SLASH);
 			movebank[22] = new Node(Move.BOUNCE);
 			movebank[24] = new Node(Move.FURY_CUTTER);

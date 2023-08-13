@@ -96,10 +96,13 @@ public class AssetSetter {
 		gp.npc[1][index] = NPCSetup(0, 35, 36, -1);
 		gp.npc[5][index] = NPCSetup(1, 31, 37, -1);
 		gp.npc[5][index] = NPCSetup(0, 35, 36, -1);
+		gp.npc[19][index] = NPCSetup(1, 31, 37, -1);
+		gp.npc[19][index] = NPCSetup(0, 35, 36, -1);
 		
 		// Clerks
 		gp.npc[2][index] = NPCSetup(2, 27, 39, -1);
 		gp.npc[6][index] = NPCSetup(2, 27, 39, -1);
+		gp.npc[20][index] = NPCSetup(2, 27, 39, -1);
 		
 		if (!flags[1]) {
 			gp.npc[3][index] = NPCSetup(31, 40, "I saw a boy named Scott near New\nMinnow town saying he was looking\nfor a young man that looked like you.\nMaybe you should check it out?");
@@ -161,6 +164,56 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(5, 36, 79, 32);
 		gp.npc[mapNum][index] = NPCSetup(4, 34, 89, 33);
 		
+		gp.npc[mapNum][index] = NPCSetup(7, 19, 61, -1);
+		
+		gp.npc[mapNum][index] = NPCSetup(6, 28, 55, 35);
+		gp.npc[mapNum][index] = NPCSetup(6, 15, 49, 36);
+		gp.npc[mapNum][index] = NPCSetup(5, 19, 49, 37);
+		gp.npc[mapNum][index] = NPCSetup(6, 21, 45, 38);
+		gp.npc[mapNum][index] = NPCSetup(6, 22, 33, 39);
+		
+		mapNum = 14;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(5, 33, 41, 44);
+		gp.npc[mapNum][index] = NPCSetup(3, 26, 29, 40);
+		gp.npc[mapNum][index] = NPCSetup(5, 39, 39, 41);
+		gp.npc[mapNum][index] = NPCSetup(6, 22, 43, 42);
+		gp.npc[mapNum][index] = NPCSetup(4, 26, 49, 43);
+		
+		mapNum = 16;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(6, 22, 29, 45);
+		gp.npc[mapNum][index] = NPCSetup(6, 26, 29, 46);
+		gp.npc[mapNum][index] = NPCSetup(5, 46, 29, 47);
+		gp.npc[mapNum][index] = NPCSetup(6, 20, 39, 48);
+		
+		mapNum = 17;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(6, 50, 45, 49);
+		gp.npc[mapNum][index] = NPCSetup(5, 56, 45, 50);
+		gp.npc[mapNum][index] = NPCSetup(6, 50, 44, 51);
+		gp.npc[mapNum][index] = NPCSetup(5, 56, 44, 52);
+		gp.npc[mapNum][index] = NPCSetup(6, 50, 43, 53);
+		gp.npc[mapNum][index] = NPCSetup(5, 56, 43, 54);
+		
+		mapNum = 18;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(4, 48, 45, 55);
+		
+		mapNum = 21;
+		gp.npc[mapNum][index] = NPCSetup(3, 55, 60, 56);
+		gp.npc[mapNum][index] = NPCSetup(4, 55, 62, 57);
+		gp.npc[mapNum][index] = NPCSetup(3, 72, 52, 58);
+		gp.npc[mapNum][index] = NPCSetup(4, 72, 54, 59);
+		gp.npc[mapNum][index] = NPCSetup(6, 73, 57, 60);
+		gp.npc[mapNum][index] = NPCSetup(5, 75, 57, 61);
+		gp.npc[mapNum][index] = NPCSetup(3, 72, 46, 62);
+		gp.npc[mapNum][index] = NPCSetup(4, 72, 48, 63);
+		gp.npc[mapNum][index] = NPCSetup(3, 54, 46, 64);
+		gp.npc[mapNum][index] = NPCSetup(4, 54, 48, 65);
+		
+		gp.npc[mapNum][index] = NPCSetup(8, 63, 39, 66);
+		
 	}
 	
 	public void setInteractiveTile() {
@@ -180,8 +233,8 @@ public class AssetSetter {
 		// flags[1] is true after beating Scott 1
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(4, 72, 48, 0);
-		if (flags[1]) gp.npc[3][11] = null;
-		if (flags[2]) gp.npc[4][12] = null;
+		if (flags[1]) gp.npc[3][15] = null;
+		if (flags[2]) gp.npc[4][16] = null;
 	}
 	
 	
@@ -193,7 +246,7 @@ public class AssetSetter {
 			result = new NPC_PC(gp);
 			break;
 		case 1:
-			result = new NPC_Nurse(gp);
+			result = new NPC_Nurse(gp, "down");
 			break;
 		case 2:
 			result = new NPC_Clerk(gp);
@@ -209,6 +262,9 @@ public class AssetSetter {
 			break;
 		case 6:
 			result = new NPC_Trainer(gp, "right", team);
+			break;
+		case 7:
+			result = new NPC_Nurse(gp, "up");
 			break;
 		case 8:
 			result = new NPC_GymLeader(gp, "down", team);
