@@ -183,8 +183,6 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 
 	@Override
 	public void onBattleClosed(int trainer) {
-		inBattle = false;
-		keyH.resume();
 		if (trainer > -1 && !player.p.wiped()) player.p.trainersBeat[trainer] = true;
 		Pokemon[] teamTemp = Arrays.copyOf(player.p.team, 6);
 		for (int i = 0; i < 6; i++) {
@@ -201,10 +199,13 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 					teamTemp[i].currentHP = teamTemp[i].currentHP > teamTemp[i].getStat(0) ? teamTemp[i].getStat(0) : teamTemp[i].currentHP;
 				}
 				player.p.team[teamTemp[i].slot] = teamTemp[i];
-				if (teamTemp[i].slot == 0) player.p.current = player.p.team[0];
 				teamTemp[i].setType();
 			}
 		}
+		player.p.current = player.p.team[0];
+		
+		inBattle = false;
+		keyH.resume();
 	}
 
 	public void setupGame() {

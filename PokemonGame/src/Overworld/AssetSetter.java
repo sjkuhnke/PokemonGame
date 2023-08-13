@@ -178,7 +178,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(3, 26, 29, 40);
 		gp.npc[mapNum][index] = NPCSetup(5, 39, 39, 41);
 		gp.npc[mapNum][index] = NPCSetup(6, 22, 43, 42);
-		gp.npc[mapNum][index] = NPCSetup(4, 26, 49, 43);
+		gp.npc[mapNum][index] = NPCSetup(4, 26, 48, 43);
 		
 		mapNum = 16;
 		index = 0;
@@ -233,8 +233,8 @@ public class AssetSetter {
 		// flags[1] is true after beating Scott 1
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(4, 72, 48, 0);
-		if (flags[1]) gp.npc[3][15] = null;
-		if (flags[2]) gp.npc[4][16] = null;
+		if (flags[1]) gp.npc[3][14] = null;
+		if (flags[2]) gp.npc[4][15] = null;
 	}
 	
 	

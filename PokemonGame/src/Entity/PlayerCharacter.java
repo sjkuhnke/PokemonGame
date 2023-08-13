@@ -810,6 +810,8 @@ public class PlayerCharacter extends Entity {
 			        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s ability was swapped from " + p.team[index].ability + " to " + test.ability + "!");
 			        	        		p.team[index].abilitySlot = 1 - p.team[index].abilitySlot;
 			        	        		p.team[index].setAbility(p.team[index].abilitySlot);
+			        	        		p.bag.remove(i.getItem());
+			        	        		
 			        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
 				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
 				        	        	SwingUtilities.getWindowAncestor(panel).dispose();

@@ -37,7 +37,7 @@ public class Player implements Serializable{
 		box1 = new Pokemon[30];
 		box2 = new Pokemon[30];
 		box3 = new Pokemon[30];
-		money = 0;
+		money = 100;
 		current = null;
 		bag = new Bag();
 		posX = 90;

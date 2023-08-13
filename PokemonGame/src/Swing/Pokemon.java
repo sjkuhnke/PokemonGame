@@ -2211,7 +2211,7 @@ public class Pokemon implements Serializable {
 	private Pokemon checkEvo(Player player) {
 		Pokemon result = null;
 		int area = player.currentMap;
-		if (id == 1 && level >= 18) {
+		if (id == 1 && level >= 16) {
 			result = new Pokemon(2, this);
 		} else if (id == 2 && level >= 36) {
 			result = new Pokemon(3, this);
@@ -2219,11 +2219,11 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(5, this);
 		} else if (id == 5 && level >= 36) {
 			result = new Pokemon(6, this);
-		} else if (id == 7 && level >= 16) {
+		} else if (id == 7 && level >= 17) {
 			result = new Pokemon(8, this);
 		} else if (id == 8 && level >= 36) {
 			result = new Pokemon(9, this);
-		} else if (id == 10 && level >= 16) {
+		} else if (id == 10 && level >= 18) {
 			result = new Pokemon(11, this);
 		} else if (id == 11 && level >= 36) {
 			result = new Pokemon(id + 1, this);		
@@ -5661,6 +5661,8 @@ public class Pokemon implements Serializable {
 			this.currentHP = 0;
 			this.faint(true, player, foe);
 			foe.awardxp((int) Math.ceil(this.level * trainer), player);
+		} else if (move == Move.METAL_SOUND) {
+			stat(foe, 3, -2);
 		} else if (move == Move.MINIMIZE) {
 			stat(this, 6, 2);
 		} else if (move == Move.MORNING_SUN || move == Move.MOONLIGHT || move == Move.SYNTHESIS) {
@@ -6478,18 +6480,18 @@ public class Pokemon implements Serializable {
 			movebank = new Node[18];
 			movebank[0] = new Node(Move.POUND);
 			movebank[0].next = new Node(Move.WITHDRAW);
-			movebank[6] = new Node(Move.ABSORB);
-			movebank[10] = new Node(Move.RAZOR_LEAF);
-			movebank[14] = new Node(Move.SAND_ATTACK);
+			movebank[6] = new Node(Move.RAZOR_LEAF);
+			movebank[10] = new Node(Move.SAND_ATTACK);
+			movebank[14] = new Node(Move.SMACK_DOWN);
 			movebank[17] = new Node(Move.HEADBUTT);
 			break;
 		case 2:
 			movebank = new Node[31];
 			movebank[0] = new Node(Move.POUND);
 			movebank[0].next = new Node(Move.WITHDRAW);
-			movebank[6] = new Node(Move.ABSORB);
-			movebank[10] = new Node(Move.RAZOR_LEAF);
-			movebank[14] = new Node(Move.SAND_ATTACK);
+			movebank[6] = new Node(Move.RAZOR_LEAF);
+			movebank[10] = new Node(Move.SAND_ATTACK);
+			movebank[14] = new Node(Move.SMACK_DOWN);
 			movebank[17] = new Node(Move.HEADBUTT);
 			movebank[20] = new Node(Move.SLEEP_POWDER);
 			movebank[24] = new Node(Move.MEGA_DRAIN);
@@ -6500,9 +6502,9 @@ public class Pokemon implements Serializable {
 		    movebank = new Node[75];
 		    movebank[0] = new Node(Move.POUND);
 			movebank[0].next = new Node(Move.WITHDRAW);
-			movebank[6] = new Node(Move.ABSORB);
-			movebank[10] = new Node(Move.HIDDEN_POWER);
-			movebank[14] = new Node(Move.SAND_ATTACK);
+			movebank[6] = new Node(Move.RAZOR_LEAF);
+			movebank[10] = new Node(Move.SAND_ATTACK);
+			movebank[14] = new Node(Move.SMACK_DOWN);
 			movebank[17] = new Node(Move.HEADBUTT);
 			movebank[20] = new Node(Move.SLEEP_POWDER);
 			movebank[24] = new Node(Move.MEGA_DRAIN);
@@ -6654,8 +6656,8 @@ public class Pokemon implements Serializable {
 		    movebank = new Node[15];
 		    movebank[0] = new Node(Move.TACKLE);
 		    movebank[4] = new Node(Move.SAND_ATTACK);
-		    movebank[8] = new Node(Move.LEER);
-		    movebank[12] = new Node(Move.PECK);
+		    movebank[8] = new Node(Move.PECK);
+		    movebank[12] = new Node(Move.LEER);
 		    movebank[14] = new Node(Move.AIR_CUTTER);
 		    break;
 		case 14:
@@ -6887,10 +6889,10 @@ public class Pokemon implements Serializable {
 			movebank[2] = new Node(Move.LEER);
 			movebank[4] = new Node(Move.ABSORB);
 			movebank[7] = new Node(Move.HEADBUTT);
-			movebank[9] = new Node(Move.ROOT_KICK);
+			movebank[9] = new Node(Move.ROCK_THROW);
 			movebank[12] = new Node(Move.LEAF_TORNADO);
 			movebank[15] = new Node(Move.MAGICAL_LEAF);
-			movebank[17] = new Node(Move.ROCK_THROW);
+			movebank[17] = new Node(Move.ROOT_KICK);
 			movebank[20] = new Node(Move.INGRAIN);
 			movebank[23] = new Node(Move.ROCK_TOMB);
 			break;

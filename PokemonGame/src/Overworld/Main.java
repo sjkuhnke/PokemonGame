@@ -217,7 +217,7 @@ public class Main {
 				new Trainer("2 Gym H", new Pokemon[]{new Pokemon(19, 23, false, true), new Pokemon(19, 23, false, true)}, 200),
 				new Trainer("2 Gym I", new Pokemon[]{new Pokemon(16, 22, false, true)}, 200),
 				new Trainer("2 Gym J", new Pokemon[]{new Pokemon(14, 22, false, true)}, 200), // 65
-				new Trainer("2 Gym Leader 1", new Pokemon[]{new Pokemon(16, 23, false, true), new Pokemon(126, 23, false, true), new Pokemon(92, 23, false, true), new Pokemon(20, 24, false, true)}, 500, new Item(101)),
+				new Trainer("2 Gym Leader 1", new Pokemon[]{new Pokemon(16, 24, false, true), new Pokemon(126, 23, false, true), new Pokemon(92, 24, false, true), new Pokemon(20, 25, false, true)}, 500, new Item(101)),
 //				new Trainer("H", new Pokemon[]{new Pokemon(-71, 17, false, true)}, 100),
 //				new Trainer("I", new Pokemon[]{new Pokemon(-106, 14, false, true), new Pokemon(-107, 15, false, true)}, 100),
 //				new Trainer("Rival 2", new Pokemon[]{new Pokemon(-131, 18, false, true), new Pokemon(-24, 12, false, true)}, 500),
