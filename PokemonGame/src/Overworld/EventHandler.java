@@ -131,6 +131,12 @@ public class EventHandler {
 			// Gym 2
 			if (hit(13,12,56,"any")) teleport(21, 63, 62);
 			if (hit(21,63,63,"any")) teleport(13, 12, 57);
+			
+			// Bannana Grove to Route 40 gate
+			if (hit(0,17,58,"any")) teleport(23, 31, 34);
+			if (hit(23,31,33,"any")) teleport(0, 17, 57);
+			if (hit(23,31,46,"any")) teleport(22, 76, 8);
+			if (hit(22,76,7,"any")) teleport(23, 31, 45);
 		}
 	}
 	

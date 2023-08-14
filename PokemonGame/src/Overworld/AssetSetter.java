@@ -70,6 +70,13 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(32, 34, 16, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(35, 38, 19, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(35, 44, 14, mapNum);
+		
+		mapNum = 22;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 15, 128, mapNum); // flame charge
+		gp.obj[mapNum][objIndex] = ObjSetup(94, 15, 19, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(72, 18, 11, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(82, 14, 4, mapNum);
 	}
 	
 	public void setNPC() {
@@ -213,6 +220,13 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(4, 54, 48, 65);
 		
 		gp.npc[mapNum][index] = NPCSetup(8, 63, 39, 66);
+		
+		mapNum = 22;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(3, 80, 8, 67);
+		gp.npc[mapNum][index] = NPCSetup(4, 78, 12, 68);
+		gp.npc[mapNum][index] = NPCSetup(3, 72, 10, 69);
+		gp.npc[mapNum][index] = NPCSetup(4, 69, 14, 70);
 		
 	}
 	

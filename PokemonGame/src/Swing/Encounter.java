@@ -105,10 +105,15 @@ public class Encounter {
 				encounters.add(new Encounter(123, 12, 12, 0.10));
 				encounters.add(new Encounter(163, 15, 15, 0.45));
 				encounters.add(new Encounter(205, 15, 15, 0.05));
-			} else if (area == 4 && type.equals("Standard")) {
-				encounters.add(new Encounter(10, 2, 3, 0.4));
-				encounters.add(new Encounter(12, 3, 3, 0.2));
-				encounters.add(new Encounter(14, 2, 3, 0.3));
+			} else if (area == 22 && type.equals("Standard")) {
+				encounters.add(new Encounter(10, 2, 3, 0.15));
+				encounters.add(new Encounter(94, 2, 2, 0.20));
+				encounters.add(new Encounter(73, 2, 3, 0.06));
+				encounters.add(new Encounter(52, 3, 3, 0.02));
+				encounters.add(new Encounter(104, 2, 3, 0.24));
+				encounters.add(new Encounter(163, 2, 3, 0.08));
+				encounters.add(new Encounter(166, 3, 3, 0.05));
+				encounters.add(new Encounter(174, 2, 2, 0.20));
 			} else if (area == 5 && type.equals("Standard")) {
 				encounters.add(new Encounter(10, 2, 3, 0.05));
 				encounters.add(new Encounter(13, 3, 4, 0.36));

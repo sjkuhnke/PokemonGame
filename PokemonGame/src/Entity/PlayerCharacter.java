@@ -837,7 +837,7 @@ public class PlayerCharacter extends Entity {
 
 		        JOptionPane.showMessageDialog(null, itemDesc, "Item details", JOptionPane.PLAIN_MESSAGE);
 		    });
-		    item.setBackground(new Color(202, 210, 255));
+		    item.setBackground(i.getItem().getColor());
 		    if (i.getItem().getMove() != null) item.setBackground(i.getItem().getMove().mtype.getColor());
 		    panel.add(item);
 		}

@@ -1,5 +1,6 @@
 package Swing;
 
+import java.awt.Color;
 import java.io.Serializable;
 
 public class Item implements Serializable {
@@ -888,6 +889,37 @@ public class Item implements Serializable {
 		else if (id == 15) return null;
 		else return Status.AUTO;
 		
+	}
+	
+	public Color getColor() {
+		if (id == 0) return new Color(0, 92, 5);
+		else if (id == 1) return new Color(176, 0, 12);
+		else if (id == 2) return new Color(0, 0, 148);
+		else if (id == 3) return new Color(148, 171, 0);
+		else if (id == 4) return new Color(124, 0, 219);
+		else if (id == 5) return new Color(140, 24, 8);
+		else if (id == 6) return new Color(255, 0, 191);
+		else if (id == 7) return new Color(0, 21, 255);
+		else if (id == 8) return new Color(255, 196, 0);
+		else if (id == 9) return new Color(157, 0, 255);
+		else if (id == 10) return new Color(63, 83, 92);
+		else if (id == 11) return new Color(133, 15, 19);
+		else if (id == 12) return new Color(176, 158, 0);
+		else if (id == 13) return new Color(0, 170, 189);
+		else if (id == 14) return new Color(255, 247, 0);
+		else if (id == 15) return new Color(0, 55, 255);
+		else if (id == 16) return new Color(219, 194, 0);
+		else if (id == 17) return new Color(219, 194, 0);
+		else if (id == 18) return new Color(124, 54, 255);
+		else if (id == 19) return new Color(138, 237, 255);
+		else if (id == 20) return new Color(0, 120, 20);
+		else if (id == 21) return new Color(64, 64, 64);
+		else if (id == 22) return new Color(0, 176, 179);
+		else if (id == 23) return new Color(176, 244, 245);
+		else if (id == 24) return new Color(72, 75, 219);
+		else if (id == 25) return new Color(204, 61, 140);
+		else if (id == 26) return new Color(102, 7, 143);
+		else return getMove().mtype.getColor();
 	}
 
 	public boolean getEligible(int pid) {

@@ -45,7 +45,11 @@ public class Bag implements Serializable {
 		ArrayList<Entry> items = new ArrayList<>();
 		for (int i = 0; i < bag.length; i++) {
 			if (bag[i] == null) continue;
-			items.add(new Entry(bag[i], count[i]));
+			if (i == 18) {
+				items.add(0, new Entry(bag[i], count[i]));
+			} else {
+				items.add(new Entry(bag[i], count[i]));
+			}
 		}
 		return items;
 	}

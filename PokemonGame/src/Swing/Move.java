@@ -293,7 +293,7 @@ public enum Move {
 	LUNAR_DANCE(0,1000,0,0,2,0,PType.PSYCHIC,"",false),
 	LUSTER_PURGE(70,100,50,0,1,0,PType.LIGHT,"",false),
 	MACH_PUNCH(40,100,0,0,0,1,PType.FIGHTING,"Always goes first",true),
-	MACHETE_JAB(75,80,100,0,0,0,PType.STEEL,"% to cause foe to Bleed",true),
+	MACHETE_JAB(75,80,100,0,0,0,PType.STEEL,"% to lower foe's Attack by 1",true),
 	MAGIC_BLAST(30,100,0,0,1,0,PType.MAGIC,"A random Rock, Ground or Grass move is also used",false),
 	MAGIC_CRASH(110,80,100,0,0,0,PType.MAGIC,"% to inflict foe with a random Status condition. User must rest after using",true),
 	MAGIC_FANG(70,95,75,0,0,0,PType.MAGIC,"% to flinch foe if this move is Super-Effective against it",true),

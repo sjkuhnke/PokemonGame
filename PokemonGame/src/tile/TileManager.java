@@ -43,6 +43,8 @@ public class TileManager {
 		loadMap("/maps/pc.txt", 19);
 		loadMap("/maps/mart.txt", 20);
 		loadMap("/maps/gym02.txt", 21);
+		loadMap("/maps/map07.txt", 22);
+		loadMap("/maps/gate01.txt", 23);
 	}
 	
 	public void getTileImage() {
@@ -271,16 +273,99 @@ public class TileManager {
 		setup(233, true);
 		setup(234, true);
 		
-//		setup(236, true);
-//		setup(237, true);
-//		setup(238, false);
-//		setup(239, false);
+		setup(236, true);
+		setup(237, true);
+		setup(238, true);
+		setup(239, true);
+		setup(240, true);
+		setup(241, true);
+		setup(242, true);
+		setup(243, true);
+		setup(244, true);
+		setup(245, true);
+		setup(246, true);
+		setup(247, true);
+		setup(248, true);
+		setup(249, true);
+		setup(250, true);
+		setup(251, true);
+		setup(252, true);
+		setup(253, true);
+		setup(254, false);
+		setup(255, false);
+		setup(256, true);
+		setup(257, true);
+		setup(258, true);
+		setup(259, false);
+		setup(260, true);
+		setup(261, true);
+		setup(262, true);
+		setup(263, true);
+		setup(264, true);
+		setup(265, true);
+
+		setup(267, true);
+		setup(268, true);
+		setup(269, true);
+		setup(270, true);
+		setup(271, true);
+		setup(272, true);
+		setup(273, true);
+		setup(274, true);
+		setup(275, true);
+		setup(276, false);
+		setup(277, false);
+		setup(278, true);
+		setup(279, true);
+		setup(280, true);
+		setup(281, false);
+		setup(282, true);
+		setup(283, false);
+		setup(284, true);
+		setup(285, true);
+		setup(286, true);
+		setup(287, true);
+		setup(288, true);
+		setup(289, true);
+		setup(290, false);
+		setup(291, false);
+		setup(292, true);
+		setup(293, false);
+		setup(294, false);
+		setup(295, false);
+		setup(296, true);
+		setup(297, true);
+		setup(298, false);
+		setup(299, true);
+		setup(300, true);
+		setup(301, true);
+		setup(302, true);
+		setup(303, true);
+		setup(304, true);
+		setup(305, true);
+		setup(306, true);
+		setup(307, true);
+		setup(308, true);
+		setup(309, true);
+		setup(310, true);
+		setup(311, true);
+		setup(312, true);
+//		setup(313, false);
+//		setup(314, false);
+//		setup(315, false);
+//		setup(316, true);
+//		setup(317, true);
+//		setup(318, false);
+//		setup(319, true);
 		try {
 			tile[7] = new GrassTile();
 			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/007.png"));
 			
 			tile[235] = new BuildingTile();
 			tile[235].image = ImageIO.read(getClass().getResourceAsStream("/tiles/235.png"));
+			
+			tile[235] = new CaveTile();
+			tile[235].image = ImageIO.read(getClass().getResourceAsStream("/tiles/266.png"));
 			
 			tile[37] = new Tile();
 			tile[37].image = ImageIO.read(getClass().getResourceAsStream("/tiles/037.png"));
