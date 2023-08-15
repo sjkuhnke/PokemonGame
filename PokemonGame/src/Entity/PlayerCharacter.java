@@ -229,6 +229,9 @@ public class PlayerCharacter extends Entity {
 	    save.setBackground(Color.green.darker());
 	    JButton player = new JGradientButton("Player");
 	    player.setBackground(Color.yellow.darker());
+	    JButton map = new JGradientButton("Map");
+	    map.setBackground(new Color(255, 165, 0).darker());
+	    
 	    
 	    dex.addActionListener(e -> {
 	    	showDex();
@@ -351,11 +354,18 @@ public class PlayerCharacter extends Entity {
 	    	
 	    	JOptionPane.showMessageDialog(null, playerInfo, "Player Info", JOptionPane.PLAIN_MESSAGE);
 	    });
+	    map.addActionListener(e -> {
+	    	SwingUtilities.getWindowAncestor(menu).dispose();
+	    	gp.openMap();
+	    	
+	    });
+	    
 	    menu.add(dex);
 	    menu.add(party);
 	    menu.add(bag);
 	    menu.add(save);
 	    menu.add(player);
+	    menu.add(map);
 	    
 	    JOptionPane.showMessageDialog(null, menu, "Menu", JOptionPane.PLAIN_MESSAGE);
 	    keyH.resume();
@@ -398,6 +408,10 @@ public class PlayerCharacter extends Entity {
 					if (member != null) member.heal();
 				}
 		    	JOptionPane.showMessageDialog(null, "Your Pokemon were healed to full health!");
+		    	
+		    	if (gp.currentMap == 1) p.locations[1] = true;
+		    	if (gp.currentMap == 5) p.locations[2] = true;
+		    	if (gp.currentMap == 19) p.locations[3] = true;
 		    	
 		    }
 		    keyH.resume();

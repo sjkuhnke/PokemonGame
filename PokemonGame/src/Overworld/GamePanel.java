@@ -191,6 +191,13 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 
 	    box.setVisible(true);
 	}
+	
+	public void openMap() {
+		PMap map = new PMap(this);
+		
+		
+		map.setVisible(true);
+	}
 
 
 	@Override
