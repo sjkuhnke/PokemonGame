@@ -43,8 +43,9 @@ public class TileManager {
 		loadMap("/maps/pc.txt", 19);
 		loadMap("/maps/mart.txt", 20);
 		loadMap("/maps/gym02.txt", 21);
-		loadMap("/maps/map07.txt", 22);
+		loadMap("/maps/map05.txt", 22);
 		loadMap("/maps/gate01.txt", 23);
+		loadMap("/maps/splinkty01A.txt", 24);
 	}
 	
 	public void getTileImage() {
@@ -350,13 +351,19 @@ public class TileManager {
 		setup(310, true);
 		setup(311, true);
 		setup(312, true);
-//		setup(313, false);
-//		setup(314, false);
-//		setup(315, false);
-//		setup(316, true);
-//		setup(317, true);
-//		setup(318, false);
-//		setup(319, true);
+		
+		setup(313, true);
+		setup(314, true);
+		setup(315, true);
+		setup(316, true);
+		setup(317, true);
+		setup(318, true);
+		setup(319, true);
+		setup(320, true);
+		setup(321, true);
+		setup(322, true);
+		setup(323, true);
+		setup(324, true);
 		try {
 			tile[7] = new GrassTile();
 			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/007.png"));
@@ -364,8 +371,8 @@ public class TileManager {
 			tile[235] = new BuildingTile();
 			tile[235].image = ImageIO.read(getClass().getResourceAsStream("/tiles/235.png"));
 			
-			tile[235] = new CaveTile();
-			tile[235].image = ImageIO.read(getClass().getResourceAsStream("/tiles/266.png"));
+			tile[266] = new CaveTile();
+			tile[266].image = ImageIO.read(getClass().getResourceAsStream("/tiles/266.png"));
 			
 			tile[37] = new Tile();
 			tile[37].image = ImageIO.read(getClass().getResourceAsStream("/tiles/037.png"));
@@ -426,6 +433,67 @@ public class TileManager {
 			tile[48].image = ImageIO.read(getClass().getResourceAsStream("/tiles/048.png"));
 			tile[48].collisionDirection = "left";
 			tile[48].collision = true;
+			
+			
+			tile[325] = new Tile();
+			tile[325].image = ImageIO.read(getClass().getResourceAsStream("/tiles/325.png"));
+			tile[325].collisionDirection = "down";
+			tile[325].collision = true;
+			
+			tile[326] = new Tile();
+			tile[326].image = ImageIO.read(getClass().getResourceAsStream("/tiles/326.png"));
+			tile[326].collisionDirection = "down";
+			tile[326].collision = true;
+			
+			tile[327] = new Tile();
+			tile[327].image = ImageIO.read(getClass().getResourceAsStream("/tiles/327.png"));
+			tile[327].collisionDirection = "down";
+			tile[327].collision = true;
+			
+			tile[328] = new Tile();
+			tile[328].image = ImageIO.read(getClass().getResourceAsStream("/tiles/328.png"));
+			tile[328].collisionDirection = "up";
+			tile[328].collision = true;
+			
+			tile[329] = new Tile();
+			tile[329].image = ImageIO.read(getClass().getResourceAsStream("/tiles/329.png"));
+			tile[329].collisionDirection = "up";
+			tile[329].collision = true;
+			
+			tile[330] = new Tile();
+			tile[330].image = ImageIO.read(getClass().getResourceAsStream("/tiles/330.png"));
+			tile[330].collisionDirection = "up";
+			tile[330].collision = true;
+			
+			tile[331] = new Tile();
+			tile[331].image = ImageIO.read(getClass().getResourceAsStream("/tiles/331.png"));
+			tile[331].collisionDirection = "right";
+			tile[331].collision = true;
+			
+			tile[332] = new Tile();
+			tile[332].image = ImageIO.read(getClass().getResourceAsStream("/tiles/332.png"));
+			tile[332].collisionDirection = "right";
+			tile[332].collision = true;
+			
+			tile[333] = new Tile();
+			tile[333].image = ImageIO.read(getClass().getResourceAsStream("/tiles/333.png"));
+			tile[333].collisionDirection = "right";
+			tile[333].collision = true;
+			
+			tile[334] = new Tile();
+			tile[334].image = ImageIO.read(getClass().getResourceAsStream("/tiles/334.png"));
+			tile[334].collisionDirection = "left";
+			tile[334].collision = true;
+			
+			tile[335] = new Tile();
+			tile[335].image = ImageIO.read(getClass().getResourceAsStream("/tiles/335.png"));
+			tile[335].collisionDirection = "left";
+			tile[335].collision = true;
+			
+			tile[336] = new Tile();
+			tile[336].image = ImageIO.read(getClass().getResourceAsStream("/tiles/336.png"));
+			tile[336].collisionDirection = "left";
+			tile[336].collision = true;
 			
 		} catch (IOException e) {
 			e.printStackTrace();

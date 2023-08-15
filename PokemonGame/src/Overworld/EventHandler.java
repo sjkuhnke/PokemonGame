@@ -141,6 +141,10 @@ public class EventHandler {
 			if (hit(23,31,33,"any")) teleport(0, 17, 57);
 			if (hit(23,31,46,"any")) teleport(22, 76, 8);
 			if (hit(22,76,7,"any")) teleport(23, 31, 45);
+			
+			// Route 26 to Mt. Splinkty
+			if (hit(13,24,5,"any")) teleport(24, 56, 84);
+			if (hit(24,56,85,"any")) teleport(13, 24, 6);
 		}
 	}
 	

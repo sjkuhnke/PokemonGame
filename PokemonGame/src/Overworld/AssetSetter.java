@@ -265,6 +265,12 @@ public class AssetSetter {
 		mapNum = 13;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(23, 7, 1);
+		gp.iTile[mapNum][iIndex] = ITileSetup(22, 9, 0);
+		gp.iTile[mapNum][iIndex] = ITileSetup(23, 9, 0);
+		gp.iTile[mapNum][iIndex] = ITileSetup(24, 9, 0);
+		
+		mapNum = 24;
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 70, 1);
 	}
 
 	public void updateNPC() {

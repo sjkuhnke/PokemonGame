@@ -87,6 +87,11 @@ public class Encounter {
 				encounters.add(new Encounter(129, 12, 15, 0.05));
 				encounters.add(new Encounter(160, 14, 17, 0.05));
 				encounters.add(new Encounter(153, 16, 17, 0.09));
+			} else if (area == 11 && type.equals("Fishing")) { // gelb forest
+				encounters.add(new Encounter(90, 15, 18, 0.15));
+				encounters.add(new Encounter(132, 15, 17, 0.20));
+				encounters.add(new Encounter(137, 15, 16, 0.35));
+				encounters.add(new Encounter(146, 16, 17, 0.30));
 			} else if (area == 11 && y < 55 && type.equals("Standard")) { // route 25
 				encounters.add(new Encounter(16, 12, 12, 0.25));
 				encounters.add(new Encounter(19, 13, 13, 0.20));
@@ -95,6 +100,12 @@ public class Encounter {
 				encounters.add(new Encounter(80, 11, 13, 0.05));
 				encounters.add(new Encounter(163, 11, 11, 0.05));
 				encounters.add(new Encounter(166, 10, 12, 0.05));
+			} else if (area == 13 && type.equals("Fishing")) { // sicab city
+				encounters.add(new Encounter(137, 15, 18, 0.35));
+				encounters.add(new Encounter(90, 15, 17, 0.25));
+				encounters.add(new Encounter(146, 15, 16, 0.20));
+				encounters.add(new Encounter(148, 15, 17, 0.10));
+				encounters.add(new Encounter(139, 15, 17, 0.10));
 			} else if (area == 14 && type.equals("Standard")) { // energy plant A
 				encounters.add(new Encounter(111, 12, 14, 0.50));
 				encounters.add(new Encounter(123, 12, 12, 0.30));
@@ -105,6 +116,10 @@ public class Encounter {
 				encounters.add(new Encounter(123, 12, 12, 0.10));
 				encounters.add(new Encounter(163, 15, 15, 0.45));
 				encounters.add(new Encounter(205, 15, 15, 0.05));
+			} else if (area == 16 && type.equals("Fishing")) { // energy plant B
+				encounters.add(new Encounter(137, 15, 15, 0.40));
+				encounters.add(new Encounter(209, 15, 15, 0.10));
+				encounters.add(new Encounter(148, 13, 17, 0.45));
 			} else if (area == 22 && type.equals("Standard")) { // route 40
 				encounters.add(new Encounter(10, 2, 3, 0.15));
 				encounters.add(new Encounter(94, 2, 2, 0.20));

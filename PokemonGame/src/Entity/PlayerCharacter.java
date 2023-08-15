@@ -144,7 +144,7 @@ public class PlayerCharacter extends Entity {
 				Random r = new Random();
 				int random = r.nextInt(150);
 				if (random < speed) {
-					gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize);
+					gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, "Standard");
 				}
 			}
 			if (p.steps == 202 && repel) {
@@ -198,7 +198,9 @@ public class PlayerCharacter extends Entity {
 		}
 		if (keyH.aPressed) {
 			int result = gp.cChecker.checkTileType(this);
-			System.out.println(result + " ");
+			if (result == 3 || (result >= 24 && result <= 36)) {
+				gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, "Fishing");
+			}
 		}
 	}
 

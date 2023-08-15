@@ -147,19 +147,31 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		keyH.pause();
 		setSlots();
 		
-		Battle frame = new Battle(player, Main.trainers[trainer], trainer, this, -1, -1, -1);
+		Battle frame = new Battle(player, Main.trainers[trainer], trainer, this, -1, -1, -1, null);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setBattleCloseListener(this);
         frame.setVisible(true);
 	}
 	
-	public void startWild(int area, int x, int y) {
+	public void startWild(int area, int x, int y, String type) {
 	    // Create the Battle instance and set the window listener to save on close
 		inBattle = true;
 		keyH.pause();
 		setSlots();
 		
-		Battle frame = new Battle(player, null, -1, this, area, x, y);
+		Battle frame = new Battle(player, null, -1, this, area, x, y, type);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setBattleCloseListener(this);
+        frame.setVisible(true);
+	}
+	
+	public void startFish(int area, int x, int y) {
+	    // Create the Battle instance and set the window listener to save on close
+		inBattle = true;
+		keyH.pause();
+		setSlots();
+		
+		Battle frame = new Battle(player, null, -1, this, area, x, y, null);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setBattleCloseListener(this);
         frame.setVisible(true);

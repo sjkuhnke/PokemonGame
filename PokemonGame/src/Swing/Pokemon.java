@@ -330,6 +330,7 @@ public class Pokemon implements Serializable {
 		trainer = 1;
 		
 		happiness = pokemon.happiness;
+		headbuttCrit = pokemon.headbuttCrit;
 	}
 	
 	public boolean isFainted() {
@@ -4522,7 +4523,7 @@ public class Pokemon implements Serializable {
 			
 			if (foe.ability == Ability.WONDER_GUARD && multiplier <= 1) {
 				System.out.println("\n" + this.nickname + " used " + move + "!");
-				System.out.println("It doesn't effect " + foe.nickname + "...");
+				System.out.println("[" + foe.nickname + "'s Wonder Guard]: " + "It doesn't effect " + foe.nickname + "...");
 				endMove();
 				return; // Check for immunity
 			}
@@ -4612,7 +4613,7 @@ public class Pokemon implements Serializable {
 				}
 				if (this.ability == Ability.MOXIE) {
 					System.out.print("[" + this.nickname + "'s Moxie]: ");
-					stat(this, 0, 12);
+					stat(this, 0, 1);
 				}
 			}
 			
@@ -5913,6 +5914,8 @@ public class Pokemon implements Serializable {
 			foe.confuse(true);
 		} else if (move == Move.SWEET_SCENT) {
 			stat(foe, 6, -2);
+		} else if (move == Move.SWORDS_DANCE) {
+			stat(this, 0, 2);
 		} else if (move == Move.TAUNT) {
 			if (!(foe.vStatuses.contains(Status.TAUNTED))) {
 			    foe.vStatuses.add(Status.TAUNTED);
@@ -10336,7 +10339,6 @@ public class Pokemon implements Serializable {
             movebank[43] = new Node(Move.HI_JUMP_KICK);
             movebank[44] = new Node(Move.FOCUS_ENERGY);
             movebank[47] = new Node(Move.SWORDS_DANCE);
-            movebank[49] = new Node(Move.HEAD_SMASH);
             movebank[52] = new Node(Move.DRAGON_RUSH);
             movebank[54] = new Node(Move.CLOSE_COMBAT);
             movebank[59] = new Node(Move.ROOST);
@@ -11575,7 +11577,7 @@ public class Pokemon implements Serializable {
 		
 		} else if (this.ability == Ability.GRAVITATIONAL_PULL) { field.setEffect(field.new FieldEffect(Effect.GRAVITY));
 		
-		} else if (this.ability == Ability.INTIMIDATE || this.ability == Ability.SCALY_SKIN) { System.out.print("[" + this.nickname + "'s " + ability.toString() + "]:"); stat(foe, 0, -1);
+		} else if (this.ability == Ability.INTIMIDATE || this.ability == Ability.SCALY_SKIN) { System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: "); stat(foe, 0, -1);
 		} else if (this.ability == Ability.MOUTHWATER) {
 			foe.vStatuses.add(Status.TAUNTED);
 			System.out.println("[" + this.nickname + "'s Mouthwater]: " + foe.nickname + " was taunted!");
