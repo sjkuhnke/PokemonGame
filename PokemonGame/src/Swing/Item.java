@@ -132,6 +132,19 @@ public class Item implements Serializable {
 		else if (id == 24) return "Valiant Gem";
 		else if (id == 25) return "Petticoat Gem";
 		else if (id == 26) return "Ability Capsule";
+		else if (id == 27) return "Bottle Cap";
+		else if (id == 28) return "Gold Battle Cap";
+		else if (id == 29) return "Adamant Mint";
+		else if (id == 30) return "Bold Mint";
+		else if (id == 31) return "Brave Mint";
+		else if (id == 32) return "Calm Mint";
+		else if (id == 33) return "Careful Mint";
+		else if (id == 34) return "Impish Mint";
+		else if (id == 35) return "Jolly Mint";
+		else if (id == 36) return "Modest Mint";
+		else if (id == 37) return "Quiet Mint";
+		else if (id == 38) return "Serious Mint";
+		else if (id == 39) return "Timid Mint";
 		else if (id == 93) return "HM01";
 		else if (id == 94) return "HM02";
 		else if (id == 95) return "HM03";
@@ -919,6 +932,9 @@ public class Item implements Serializable {
 		else if (id == 24) return new Color(72, 75, 219);
 		else if (id == 25) return new Color(204, 61, 140);
 		else if (id == 26) return new Color(102, 7, 143);
+		else if (id == 27) return new Color(192, 192, 192);
+		else if (id == 28) return new Color(255, 215, 0);
+		else if (id >= 29 && id <= 39) return new Color(113, 84, 255);
 		else return getMove().mtype.getColor();
 	}
 

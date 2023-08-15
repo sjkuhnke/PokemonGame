@@ -591,11 +591,11 @@ public enum Move {
 	ZING_ZAP(80,100,30,0,2,0,PType.ELECTRIC,"",true),
 	
 	TERRAIN_PULSE(-1,100,0,0,1,0,PType.NORMAL,"",false),
-	FACADE(-1,100,0,0,1,0,PType.NORMAL,"",true),
-	SLEEP_TALK(-1,100,0,0,1,0,PType.NORMAL,"",false),
-	CAPTIVATE(-1,100,0,0,1,0,PType.NORMAL,"",false),
+	FACADE(-1,100,0,0,0,0,PType.NORMAL,"",true),
+	SLEEP_TALK(-1,100,0,0,2,0,PType.NORMAL,"",false),
+	CAPTIVATE(-1,100,0,0,2,0,PType.NORMAL,"",false),
 	BATON_PASS(-1,100,0,0,2,0,PType.NORMAL,"",false),
-	FLIP_TURN(60,100,0,0,1,0,PType.WATER,"",true),
+	FLIP_TURN(60,100,0,0,0,0,PType.WATER,"",true),
 	CUT(50,95,0,2,0,0,PType.NORMAL,"Extra-boosted crit rate",true),
 	ROCK_SMASH(40,100,50,0,0,0,PType.FIGHTING,"% to lower foe's Defense by 1",true),
 	VINE_CROSS(70,95,100,0,0,0,PType.WATER,"% chance to lower foe's Speed by 1",false),
@@ -604,6 +604,9 @@ public enum Move {
 	ROCK_CLIMB(80,95,20,0,1,0,PType.ROCK,"% chance to confuse foe",false),
 	LAVA_SURF(95,100,0,0,1,0,PType.FIRE,"A normal attack",false), 
 	BOOSTED_PURSUIT(80,100,0,0,0,0,PType.DARK,"If you're seeing this something went wrong",true),
+	
+	ABYSSAL_CHOP(-1,90,50,0,0,0,PType.DRAGON,"% chance to paralyse foe. Damage is doulbed if foe is paralyzed",true),
+	SUMMIT_STRIKE(70,95,100,0,0,0,PType.FIGHTING,"% to lower foe's Defense Stats by one stage. 30% to flinch foe",true),
 	
 	STRUGGLE(40,1000,0,0,0,0,PType.UNKNOWN,"",true),
 	

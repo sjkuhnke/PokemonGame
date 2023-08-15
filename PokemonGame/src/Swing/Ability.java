@@ -67,6 +67,7 @@ public enum Ability {
 	SAND_VEIL("When SANDSTORM is active, this Pokemon is evasive."),
 	SAP_SIPPER("Raises Attack if hit by an GRASS move."),
 	SERENE_GRACE("Boosts the likelihood of additional effects occurring when attacking."),
+	SCALY_SKIN("Lowers the foe's Attack, and this Pokemon only takes damage from attacks."),
 	SHED_SKIN("The Pokemon may heal its own status conditions."),
 	SHEER_FORCE("Removes additional effects to increase the power of moves when attacking."),
 	SHIELD_DUST("Blocks the added effects of attacks taken."),

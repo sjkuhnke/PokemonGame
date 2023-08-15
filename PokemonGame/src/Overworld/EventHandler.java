@@ -115,6 +115,10 @@ public class EventHandler {
 			if (hit(13,45,57,"any")) teleport(17, 53, 56);
 			if (hit(17,53,57,"any")) teleport(13, 45, 58);
 			
+			if (hit(17,52,46,"down")) gp.aSetter.updateNPC();
+			if (hit(17,53,46,"down")) gp.aSetter.updateNPC();
+			if (hit(17,54,46,"down")) gp.aSetter.updateNPC();
+			
 			if (hit(17,48,53,"any")) teleport(18, 54, 51);
 			if (hit(18,55,51,"any")) teleport(17, 49, 53);
 			if (hit(17,58,53,"any")) teleport(18, 42, 51);

@@ -10,6 +10,7 @@ import Entity.NPC_Trainer;
 import Obj.Cut_Tree;
 import Obj.InteractiveTile;
 import Obj.ItemObj;
+import Obj.Rock_Smash;
 import Obj.Tree_Stump;
 import Swing.Item;
 
@@ -179,6 +180,18 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(6, 21, 45, 38);
 		gp.npc[mapNum][index] = NPCSetup(6, 22, 33, 39);
 		
+		mapNum = 13;
+		index = 0;
+		if (!flags[4]) {
+			gp.npc[mapNum][index] = NPCSetup(12, 56, "The gym leader is stuck in the\noffice upstairs trying to help\nScott with Team Nuke.\nGo find Scott and help!");
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
+		gp.npc[mapNum][index] = NPCSetup(5, 28, 34, 71);
+		gp.npc[mapNum][index] = NPCSetup(5, 16, 37, 72);
+		gp.npc[mapNum][index] = NPCSetup(6, 32, 24, 73);
+		gp.npc[mapNum][index] = NPCSetup(6, 25, 18, 74);
+		
 		mapNum = 14;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(5, 33, 41, 44);
@@ -202,6 +215,14 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(5, 56, 44, 52);
 		gp.npc[mapNum][index] = NPCSetup(6, 50, 43, 53);
 		gp.npc[mapNum][index] = NPCSetup(5, 56, 43, 54);
+		
+		if (!flags[3]) {
+			gp.npc[mapNum][index] = NPCSetup(49, 53, "Quick! Team Nuke is taking over\nour office! Please help!");
+			gp.npc[mapNum][index] = NPCSetup(57, 53, "Quick! Team Nuke is taking over\nour office! Please help!");
+		} else {
+			gp.npc[mapNum][index++] = null;
+			gp.npc[mapNum][index++] = null;
+		}
 		
 		mapNum = 18;
 		index = 0;
@@ -239,6 +260,11 @@ public class AssetSetter {
 		
 		mapNum = 11;
 		gp.iTile[mapNum][iIndex] = ITileSetup(39, 77, 0);
+		gp.iTile[mapNum][iIndex] = ITileSetup(13, 52, 1);
+		
+		mapNum = 13;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(23, 7, 1);
 	}
 
 	public void updateNPC() {
@@ -249,6 +275,11 @@ public class AssetSetter {
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(4, 72, 48, 0);
 		if (flags[1]) gp.npc[3][14] = null;
 		if (flags[2]) gp.npc[4][15] = null;
+		if (flags[3]) {
+			gp.npc[17][6] = null;
+			gp.npc[17][7] = null;
+		}
+		if (flags[4]) gp.npc[13][0] = null;
 	}
 	
 	
@@ -329,7 +360,7 @@ public class AssetSetter {
 			result = new Cut_Tree(gp);
 			break;
 		case 1:
-			//result = new Smash_Rock(gp);
+			result = new Rock_Smash(gp);
 			break;
 		case 2:
 			result = new Tree_Stump(gp);

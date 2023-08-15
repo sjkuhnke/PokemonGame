@@ -23,7 +23,7 @@ public class Player implements Serializable{
 	public Bag bag;
 	public int badges;
 	public int starter;
-	public int[] pokedex = new int[239];
+	public int[] pokedex = new int[241];
 	public int currentMap;
 	public boolean[] trainersBeat = new boolean[Main.trainers.length];
 	public boolean[][] itemsCollected;
@@ -210,6 +210,13 @@ public class Player implements Serializable{
 	public boolean hasMove(Move m) {
 		boolean result = false;
 		if (m == Move.CUT && badges < 1) return false;
+		if (m == Move.ROCK_SMASH && badges < 2) return false;
+		if (m == Move.VINE_CROSS && badges < 3) return false;
+		if (m == Move.SURF && badges < 4) return false;
+		if (m == Move.SLOW_FALL && badges < 5) return false;
+		if (m == Move.FLY && badges < 6) return false;
+		if (m == Move.ROCK_CLIMB && badges < 7) return false;
+		if (m == Move.LAVA_SURF && badges < 8) return false;
 		for (Pokemon p : team) {
 			if (p != null) {
 				if (p.knowsMove(m)) {

@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import Obj.Cut_Tree;
+import Obj.Rock_Smash;
 import Obj.Tree_Stump;
 import Overworld.GamePanel;
 import Overworld.KeyHandler;
@@ -193,6 +194,11 @@ public class PlayerCharacter extends Entity {
 			
 			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
 			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Cut_Tree) interactCutTree(iTileIndex);
+			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Rock_Smash) interactRockSmash(iTileIndex);
+		}
+		if (keyH.aPressed) {
+			int result = gp.cChecker.checkTileType(this);
+			System.out.println(result + " ");
 		}
 	}
 
@@ -302,6 +308,38 @@ public class PlayerCharacter extends Entity {
 	    		            System.out.println("Invalid item ID.");
 	    		        }
 	    		    }
+	    		} else if (code.startsWith("Shae")) {
+	    			String[] parts = code.split(" ");
+	    		    if (parts.length >= 3) {
+	    		        try {
+	    		            int id = Integer.parseInt(parts[1]);
+	    		            int level = Integer.parseInt(parts[2]);
+	    		            p.catchPokemon(new Pokemon(id, level, true, false));
+	    		            SwingUtilities.getWindowAncestor(cheats).dispose();
+	    		        } catch (NumberFormatException g) {
+	    		            // Handle invalid input (e.g., if the entered value is not a valid integer)
+	    		            System.out.println("Invalid Pokemon ID/Level.");
+	    		        }
+	    		    }
+	    		} else if (code.startsWith("ben")) {
+	    			JPanel pPanel = new JPanel();
+	    			pPanel.setLayout(new GridLayout(6, 1));
+
+	        	    for (int j = 0; j < 6; j++) {
+	        	    	JButton partyB = setUpPartyButton(j);
+	        	        final int index = j;
+	        	        
+	        	        partyB.addActionListener(g -> {
+	        	        	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has hit " + p.team[index].headbuttCrit + " headbutt crit(s).");
+	        	        });
+	        	        
+	        	        JPanel mPanel = new JPanel(new BorderLayout());
+	        	        mPanel.add(partyB, BorderLayout.NORTH);
+	        	        pPanel.add(mPanel);
+	        	        
+	        	    }
+	        	    
+	        	    JOptionPane.showMessageDialog(null, pPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 	    		}
 	    	});
 	    	
@@ -826,7 +864,172 @@ public class PlayerCharacter extends Entity {
 		        	    }
 		        	    JOptionPane.showMessageDialog(null, partyPanel, "Swap Abilities?", JOptionPane.PLAIN_MESSAGE);
 		        	}
+		        	
+		        	// Bottle Caps
+		        	if (i.getItem().getID() == 27 || i.getItem().getID() == 28) {
+		        		JPanel partyPanel = new JPanel();
+		        	    partyPanel.setLayout(new GridLayout(6, 1));
+		        	    
+		        	    for (int j = 0; j < 6; j++) {
+		        	    	JButton party = setUpPartyButton(j);
+		        	        final int index = j;
+		        	        
+		        	        if (p.team[index] != null) {
+			        	        
+			        	        party.addActionListener(g -> {
+			        	        	if (i.getItem().getID() == 27) {
+			        	        		JPanel ivPanel = new JPanel();
+			        	        		ivPanel.setLayout(new GridLayout(6, 1));
+			        	        		int[] ivs = p.team[index].getIVs();
+			        	        		for (int k = 0; k < 6; k++) {
+			        	        			final int kndex = k;
+			        	        			JButton iv = new JButton();
+		        	        	        	String type;
+		        	        	        	switch (k) {
+		        	        	        	case 0:
+		        	        	        		type = "HP ";
+		        	        	        		break;
+		        	        	        	case 1:
+		        	        	        		type = "Atk ";
+		        	        	        		break;
+		        	        	        	case 2:
+		        	        	        		type = "Def ";
+		        	        	        		break;
+		        	        	        	case 3:
+		        	        	        		type = "SpA ";
+		        	        	        		break;
+		        	        	        	case 4:
+		        	        	        		type = "SpD ";
+		        	        	        		break;
+		        	        	        	case 5:
+		        	        	        		type = "Spe ";
+		        	        	        		break;
+		        	                		default:
+		        	                			type = "ERROR ";
+		        	                			break;
+		        	        	        	}
+			        	        			iv.setText(type + " : " + ivs[k]);
+			        	        			final String finalType = type;
+			        	        			
+			        	        			iv.addActionListener(h -> {
+			        	        				JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s " + finalType + "IV was maxed out!");
+			        	        				p.team[index].ivs[kndex] = 31;
+			        	        				p.team[index].stats = p.team[index].getStats();
+			        	        				p.bag.remove(i.getItem());
+					        	        		
+			        	        				SwingUtilities.getWindowAncestor(ivPanel).dispose();
+					        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
+						        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+						        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+						        	        	showBag();
+			        	        			});
+			        	        			
+			        	        			ivPanel.add(iv);
+			        	        		}
+			        	        		JOptionPane.showMessageDialog(null, ivPanel, "Which IV?", JOptionPane.PLAIN_MESSAGE);
+			        	        	} else {
+			        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s IVs were maxed out!");
+			        	        		p.team[index].ivs = new int[] {31, 31, 31, 31, 31, 31};
+			        	        		p.team[index].stats = p.team[index].getStats();
+	        	        				p.bag.remove(i.getItem());
+			        	        		
+			        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
+				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+				        	        	showBag();
+			        	        	}
+		        	        		
+			        	        });
+		        	        }
+		        	        
+		        	        JPanel memberPanel = new JPanel(new BorderLayout());
+		        	        memberPanel.add(party, BorderLayout.NORTH);
+		        	        partyPanel.add(memberPanel);
+		        	    }
+		        	    JOptionPane.showMessageDialog(null, partyPanel, "Change IVs?", JOptionPane.PLAIN_MESSAGE);
+		        	}
+		        	
+		        	// Nature Mints
+		        	if (i.getItem().getID() >= 29 && i.getItem().getID() <= 39) {
+		        		JPanel partyPanel = new JPanel();
+		        	    partyPanel.setLayout(new GridLayout(6, 1));
+		        	    
+		        	    for (int j = 0; j < 6; j++) {
+		        	    	JButton party = setUpPartyButton(j);
+		        	        final int index = j;
+		        	        
+		        	        if (p.team[index] != null) {
+		        	        
+		        	        	party.addActionListener(h -> {
+		        	        		double nature[];
+			        	        	switch (i.getItem().getID()) {
+	    	        	        	case 29:
+	    	        	        		nature = new double[] {1.1,1.0,0.9,1.0,1.0,-1.0};
+	    	        	        		break;
+	    	        	        	case 30:
+	    	        	        		nature = new double[] {0.9,1.1,1.0,1.0,1.0,-1.0};
+	    	        	        		break;
+	    	        	        	case 31:
+	    	        	        		nature = new double[] {1.1,1.0,1.0,1.0,0.9,-1.0};
+	    	        	        		break;
+	    	        	        	case 32:
+	    	        	        		nature = new double[] {0.9,1.0,1.0,1.1,1.0,-1.0};
+	    	        	        		break;
+	    	        	        	case 33:
+	    	        	        		nature = new double[] {1.0,1.0,0.9,1.1,1.0,-1.0};
+	    	        	        		break;
+	    	        	        	case 34:
+	    	        	        		nature = new double[] {1.0,1.1,0.9,1.0,1.0,-1.0};
+	    	        	        		break;
+	    	        	        	case 35:
+	    	        	        		nature = new double[] {1.0,1.0,0.9,1.0,1.1,-1.0};
+	    	        	        		break;
+	    	        	        	case 36:
+	    	        	        		nature = new double[] {0.9,1.0,1.1,1.0,1.0,-1.0};
+	    	        	        		break;
+	    	        	        	case 37:
+	    	        	        		nature = new double[] {1.0,1.0,1.1,1.0,0.9,-1.0};
+	    	        	        		break;
+	    	        	        	case 38:
+	    	        	        		nature = new double[] {1.0,1.0,1.0,1.0,1.0,4.0};
+	    	        	        		break;
+	    	        	        	case 39:
+	    	        	        		nature = new double[] {0.9,1.0,1.0,1.0,1.1,-1.0};
+	    	        	        		break;
+	    	                		default:
+	    	                			nature = null;
+	    	                			break;
+	    	        	        	}
+		        	        		
+		        	        		String natureOld = p.team[index].getNature();
+			        	        	p.team[index].nature = nature;
+			        	        	p.team[index].stats = p.team[index].getStats();
+			        	        	JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s nature was changed from " + natureOld + " to " + p.team[index].getNature() + "!");
+			        	        	
+			        	        	
+	        	        			p.bag.remove(i.getItem());
+			        	        		
+			        	        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+				        	        SwingUtilities.getWindowAncestor(itemDesc).dispose();
+				        	        SwingUtilities.getWindowAncestor(panel).dispose();
+				        	        showBag();
+		        	        		
+		        	        	});
+		        	        	
+		        	        }
+		        	        
+		        	        JPanel memberPanel = new JPanel(new BorderLayout());
+		        	        memberPanel.add(party, BorderLayout.NORTH);
+		        	        partyPanel.add(memberPanel);
+		        	    }
+		        	    JOptionPane.showMessageDialog(null, partyPanel, "Change Nature?", JOptionPane.PLAIN_MESSAGE);
+		        	}
+		        	
+		        	
 		        });
+		        
+		     
+		        
 		        itemDesc.add(description);
 		        if (i.getItem().getMove() != null) {
 		        	itemDesc.add(moveButton);
@@ -936,7 +1139,7 @@ public class PlayerCharacter extends Entity {
 		if (p.hasMove(Move.CUT)) {
 			int option = JOptionPane.showOptionDialog(null,
 					"This tree looks like it can be cut down!\nDo you want to cut it?",
-		            "Evolution",
+		            "Cut Tree",
 		            JOptionPane.YES_NO_OPTION,
 		            JOptionPane.QUESTION_MESSAGE,
 		            null, null, null);
@@ -947,7 +1150,26 @@ public class PlayerCharacter extends Entity {
 				gp.iTile[gp.currentMap][i].worldY = temp.worldY;
 			}
 		} else {
-			JOptionPane.showInternalMessageDialog(null, "This tree looks like it can be cut down!");
+			JOptionPane.showMessageDialog(null, "This tree looks like it can be cut down!");
+		}
+		keyH.resume();
+		
+	}
+	
+	private void interactRockSmash(int i) {
+		keyH.pause();
+		if (p.hasMove(Move.ROCK_SMASH)) {
+			int option = JOptionPane.showOptionDialog(null,
+					"This rock looks like it can be broken!\nDo you want to use Rock Smash?",
+		            "Rock Smash",
+		            JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE,
+		            null, null, null);
+			if (option == JOptionPane.YES_OPTION) {
+				gp.iTile[gp.currentMap][i] = null;
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "This rock looks like it can be broken!");
 		}
 		keyH.resume();
 		

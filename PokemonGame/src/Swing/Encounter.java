@@ -105,7 +105,7 @@ public class Encounter {
 				encounters.add(new Encounter(123, 12, 12, 0.10));
 				encounters.add(new Encounter(163, 15, 15, 0.45));
 				encounters.add(new Encounter(205, 15, 15, 0.05));
-			} else if (area == 22 && type.equals("Standard")) {
+			} else if (area == 22 && type.equals("Standard")) { // route 40
 				encounters.add(new Encounter(10, 2, 3, 0.15));
 				encounters.add(new Encounter(94, 2, 2, 0.20));
 				encounters.add(new Encounter(73, 2, 3, 0.06));
@@ -114,13 +114,14 @@ public class Encounter {
 				encounters.add(new Encounter(163, 2, 3, 0.08));
 				encounters.add(new Encounter(166, 3, 3, 0.05));
 				encounters.add(new Encounter(174, 2, 2, 0.20));
-			} else if (area == 5 && type.equals("Standard")) {
-				encounters.add(new Encounter(10, 2, 3, 0.05));
-				encounters.add(new Encounter(13, 3, 4, 0.36));
-				encounters.add(new Encounter(16, 4, 4, 0.40));
-				encounters.add(new Encounter(32, 2, 3, 0.03));
-				encounters.add(new Encounter(38, 3, 5, 0.15));
-				encounters.add(new Encounter(41, 2, 3, 0.01));
+			} else if (area == 13 && type.equals("Standard")) { // route 26
+				encounters.add(new Encounter(26, 14, 18, 0.20));
+				encounters.add(new Encounter(19, 16, 18, 0.10));
+				encounters.add(new Encounter(47, 15, 15, 0.15));
+				encounters.add(new Encounter(48, 14, 18, 0.15));
+				encounters.add(new Encounter(80, 15, 17, 0.15));
+				encounters.add(new Encounter(85, 15, 17, 0.20));
+				encounters.add(new Encounter(106, 16, 17, 0.05));
 			} else if (area == 6 && type.equals("Standard")) {
 				encounters.add(new Encounter(10, 2, 3, 0.4));
 				encounters.add(new Encounter(12, 3, 3, 0.2));

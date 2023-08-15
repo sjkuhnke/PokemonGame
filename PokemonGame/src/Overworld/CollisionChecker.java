@@ -268,6 +268,42 @@ public class CollisionChecker {
 	    }
 	    return result;
 	}
+	
+	public int checkTileType(Entity entity) {
+		int[] coords = new int[2];
+				
+		switch(entity.direction) {
+		case "up":
+			coords[0] = entity.worldX;
+			coords[1] = entity.worldY - gp.tileSize;
+			break;
+		case "down":
+			coords[0] = entity.worldX;
+			coords[1] = entity.worldY + gp.tileSize;
+			break;
+		case "left":
+			coords[0] = entity.worldX - gp.tileSize;
+			coords[1] = entity.worldY;
+			break;
+		case "right":
+			coords[0] = entity.worldX + gp.tileSize;
+			coords[1] = entity.worldY;
+			break;
+		}
+		
+		double xD = coords[0];
+		xD /= gp.tileSize;
+		int x = (int) Math.round(xD);
+		
+		double yD = coords[1];
+		yD /= gp.tileSize;
+		int y = (int) Math.round(yD);
+		
+		int result = gp.tileM.mapTileNum[gp.currentMap][x][y];
+		
+		return result;
+			
+	}
 
 
 

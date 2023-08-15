@@ -128,17 +128,17 @@ public class Main {
 		if (gp.player.p.starter == 1) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(7, 7, false, true)}, 400, 1);
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 15, false, true), new Pokemon(5, 18, false, true)}, 400);
-			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(8, 22, false, true), new Pokemon(166, 22, false, true)}, 400, 3);
+			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(8, 22, false, true), new Pokemon(166, 22, false, true)}, 400, 4);
 		}
 		else if (gp.player.p.starter == 2) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(1, 7, false, true)}, 400, 1);
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 15, false, true), new Pokemon(8, 18, false, true)}, 400);
-			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(2, 22, false, true), new Pokemon(166, 22, false, true)}, 400, 3);
+			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(2, 22, false, true), new Pokemon(166, 22, false, true)}, 400, 4);
 		}
 		else if (gp.player.p.starter == 3) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(4, 7, false, true)}, 400, 1);
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 15, false, true), new Pokemon(2, 18, false, true)}, 400);
-			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(5, 22, false, true), new Pokemon(166, 22, false, true)}, 400, 3);
+			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(5, 22, false, true), new Pokemon(166, 22, false, true)}, 400, 4);
 		}
 		
 		trainers[17].getTeam()[2].moveset = new Move[]{Move.MEGA_DRAIN, Move.SUPERSONIC, Move.AERIAL_ACE, Move.MEAN_LOOK};
@@ -205,7 +205,7 @@ public class Main {
 				new Trainer("TN O3", new Pokemon[]{new Pokemon(95, 19, false, true)}, 100),
 				new Trainer("TN O4", new Pokemon[]{new Pokemon(104, 19, false, true)}, 100),
 				new Trainer("TN O5", new Pokemon[]{new Pokemon(52, 20, false, true), new Pokemon(141, 20, false, true)}, 100),
-				new Trainer("TN O6", new Pokemon[]{new Pokemon(90, 20, false, true), new Pokemon(144, 20, false, true)}, 100),
+				new Trainer("TN O6", new Pokemon[]{new Pokemon(90, 20, false, true), new Pokemon(144, 20, false, true)}, 100, 3),
 				new Trainer("Scott 2", new Pokemon[]{new Pokemon(10, 5, false, true)}, 100), // 55
 				new Trainer("2 Gym A", new Pokemon[]{new Pokemon(16, 22, false, true)}, 200),
 				new Trainer("2 Gym B", new Pokemon[]{new Pokemon(16, 22, false, true)}, 200),
@@ -222,8 +222,10 @@ public class Main {
 				new Trainer("SB", new Pokemon[]{new Pokemon(44, 9, false, true)}, 100),
 				new Trainer("SC", new Pokemon[]{new Pokemon(35, 9, false, true)}, 100),
 				new Trainer("SD", new Pokemon[]{new Pokemon(153, 8, false, true)}, 100), // 70
-//				new Trainer("H", new Pokemon[]{new Pokemon(-71, 17, false, true)}, 100),
-//				new Trainer("I", new Pokemon[]{new Pokemon(-106, 14, false, true), new Pokemon(-107, 15, false, true)}, 100),
+				new Trainer("X", new Pokemon[]{new Pokemon(132, 24, false, true), new Pokemon(102, 25, false, true)}, 100),
+				new Trainer("Y", new Pokemon[]{new Pokemon(11, 24, false, true), new Pokemon(134, 27, false, true)}, 100),
+				new Trainer("Z", new Pokemon[]{new Pokemon(105, 27, false, true)}, 100),
+				new Trainer("AA", new Pokemon[]{new Pokemon(131, 28, false, true)}, 100),
 //				new Trainer("Rival 2", new Pokemon[]{new Pokemon(-131, 18, false, true), new Pokemon(-24, 12, false, true)}, 500),
 //				new Trainer("3 Gym A", new Pokemon[]{new Pokemon(-37, 12, false, true), new Pokemon(-37, 14, false, true), new Pokemon(-37, 16, false, true)}, 200),
 //				new Trainer("3 Gym B", new Pokemon[]{new Pokemon(-41, 21, false, true)}, 200),
