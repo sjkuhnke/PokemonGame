@@ -9947,30 +9947,26 @@ public class Pokemon implements Serializable {
 			movebank[69] = new Node(Move.LIGHT_OF_RUIN);
 			break;
 		case 209:
-			movebank = new Node[26];
-			movebank[0] = new Node(Move.CHARGE);
-			movebank[2] = new Node(Move.THUNDERSHOCK);
-			movebank[4] = new Node(Move.GROWL);
-			movebank[6] = new Node(Move.BABY_DOLL_EYES);
-			movebank[9] = new Node(Move.FLASH);
-			movebank[12] = new Node(Move.MUD_BOMB);
-			movebank[15] = new Node(Move.SHOCK_WAVE);
-			movebank[21] = new Node(Move.DRAINING_KISS);
-			movebank[22] = new Node(Move.HEADBUTT);
-			movebank[25] = new Node(Move.THUNDER_WAVE);
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.SPARK);
+			movebank[14] = new Node(Move.TACKLE);
+			movebank[24] = new Node(Move.BOLT_STRIKE);
 			break;
 		case 210:
-			movebank = new Node[26];
-			movebank[0] = new Node(Move.CHARGE);
-			movebank[2] = new Node(Move.THUNDERSHOCK);
-			movebank[4] = new Node(Move.GROWL);
-			movebank[6] = new Node(Move.BABY_DOLL_EYES);
-			movebank[9] = new Node(Move.FLASH);
-			movebank[12] = new Node(Move.MUD_BOMB);
-			movebank[15] = new Node(Move.SHOCK_WAVE);
-			movebank[21] = new Node(Move.DRAINING_KISS);
-			movebank[22] = new Node(Move.HEADBUTT);
-			movebank[25] = new Node(Move.THUNDER_WAVE);
+			movebank = new Node[50];
+			movebank[0] = new Node(Move.SPARK);
+			movebank[14] = new Node(Move.TACKLE);
+			movebank[19] = new Node(Move.THUNDER_FANG);
+			movebank[22] = new Node(Move.DRAGON_RAGE);
+			movebank[25] = new Node(Move.CRUNCH);
+			movebank[30] = new Node(Move.ZING_ZAP);
+			movebank[33] = new Node(Move.AQUA_TAIL);
+			movebank[36] = new Node(Move.DRAGON_RUSH);
+			movebank[39] = new Node(Move.BOUNCE);
+			movebank[43] = new Node(Move.VOLT_TACKLE);
+			movebank[49] = new Node(Move.COMET_CRASH);
+			movebank[54] = new Node(Move.WATERFALL);
+			movebank[59] = new Node(Move.DRAGON_DANCE);
 			break;
 		case 211:
 			movebank = new Node[25];

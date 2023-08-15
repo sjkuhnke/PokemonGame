@@ -60,7 +60,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(30, 87, 4, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(25, 90, 20, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(16, 81, 14, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(26, 69, 0, mapNum); // drain punch, taunt, 
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 69, 0, mapNum);
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(4, 43, 117, mapNum); // solar beam
 		gp.obj[mapNum][objIndex] = ObjSetup(32, 60, 1, mapNum);
@@ -71,6 +71,32 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(32, 34, 16, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(35, 38, 19, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(35, 44, 14, mapNum);
+		
+		mapNum = 13;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 35, 14, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(17, 48, 161, mapNum); // smack down
+		gp.obj[mapNum][objIndex] = ObjSetup(17, 45, 13, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 30, 37, mapNum); // quiet
+		
+		mapNum = 14;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(22, 48, 157, mapNum); // charge beam
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 35, 14, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(36, 30, 31, mapNum); // brave
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 32, 0, mapNum);
+		
+		mapNum = 15;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(33, 39, 16, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 15, 12, mapNum);
+
+		mapNum = 16;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 33, 5, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(20, 37, 3, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(22, 27, 114, mapNum); // taunt
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 27, 127, mapNum); // drain punch
 		
 		mapNum = 22;
 		objIndex = 0;
@@ -249,6 +275,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(3, 72, 10, 69);
 		gp.npc[mapNum][index] = NPCSetup(4, 69, 14, 70);
 		
+		mapNum = 32;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(31, 40, "Take my spare fishing rod!\nLook at water and press\n'A' to fish!", true);
+		
 	}
 	
 	public void setInteractiveTile() {
@@ -330,7 +360,18 @@ public class AssetSetter {
 	}
 	
 	private Entity NPCSetup(int x, int y, String message) {
-		Entity result = new NPC_Block(gp, message);
+		Entity result = new NPC_Block(gp, message, false);
+		
+		result.worldX = gp.tileSize*x;
+		result.worldY = gp.tileSize*y;
+		
+		index++;
+		
+		return result;
+	}
+	
+	private Entity NPCSetup(int x, int y, String message, boolean a) {
+		Entity result = new NPC_Block(gp, message, a);
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;

@@ -137,10 +137,17 @@ public class Encounter {
 				encounters.add(new Encounter(80, 15, 17, 0.15));
 				encounters.add(new Encounter(85, 15, 17, 0.20));
 				encounters.add(new Encounter(106, 16, 17, 0.05));
-			} else if (area == 6 && type.equals("Standard")) {
-				encounters.add(new Encounter(10, 2, 3, 0.4));
-				encounters.add(new Encounter(12, 3, 3, 0.2));
-				encounters.add(new Encounter(33, 2, 3, 0.3));
+			} else if (area == 24 && type.equals("Standard")) { // Mt. Splinkty 1A
+				encounters.add(new Encounter(48, 17, 20, 0.55));
+				encounters.add(new Encounter(52, 18, 20, 0.2));
+				encounters.add(new Encounter(156, 18, 20, 0.25));
+			} else if (area == 24 && type.equals("Fishing")) { // Mt. Splinkty 1A
+				encounters.add(new Encounter(90, 17, 20, 0.3));
+				encounters.add(new Encounter(137, 16, 18, 0.15));
+				encounters.add(new Encounter(132, 18, 20, 0.20));
+				encounters.add(new Encounter(146, 16, 20, 0.15));
+				encounters.add(new Encounter(148, 18, 21, 0.15));
+				encounters.add(new Encounter(150, 20, 20, 0.05));
 			}
 		}
 		

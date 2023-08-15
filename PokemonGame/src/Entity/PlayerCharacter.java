@@ -197,9 +197,11 @@ public class PlayerCharacter extends Entity {
 			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Rock_Smash) interactRockSmash(iTileIndex);
 		}
 		if (keyH.aPressed) {
-			int result = gp.cChecker.checkTileType(this);
-			if (result == 3 || (result >= 24 && result <= 36)) {
-				gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, "Fishing");
+			if (p.fish) {
+				int result = gp.cChecker.checkTileType(this);
+				if (result == 3 || (result >= 24 && result <= 36) || (result >= 313 && result <= 324)) {
+					gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, "Fishing");
+				}
 			}
 		}
 	}
@@ -457,6 +459,7 @@ public class PlayerCharacter extends Entity {
 		if (keyH.wPressed) {
 			keyH.pause();
 			JOptionPane.showMessageDialog(null, npc.message);
+			if (npc.fish) p.fish = true;
 		    keyH.resume();
 		}
 	}

@@ -128,17 +128,17 @@ public class Main {
 		if (gp.player.p.starter == 1) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(7, 7, false, true)}, 400, 1);
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 15, false, true), new Pokemon(5, 18, false, true)}, 400);
-			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(8, 22, false, true), new Pokemon(166, 22, false, true)}, 400, 4);
+			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(8, 22, false, true), new Pokemon(166, 22, false, true)}, 400, new Item(94), 4);
 		}
 		else if (gp.player.p.starter == 2) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(1, 7, false, true)}, 400, 1);
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 15, false, true), new Pokemon(8, 18, false, true)}, 400);
-			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(2, 22, false, true), new Pokemon(166, 22, false, true)}, 400, 4);
+			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(2, 22, false, true), new Pokemon(166, 22, false, true)}, 400, new Item(94), 4);
 		}
 		else if (gp.player.p.starter == 3) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(4, 7, false, true)}, 400, 1);
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 15, false, true), new Pokemon(2, 18, false, true)}, 400);
-			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(5, 22, false, true), new Pokemon(166, 22, false, true)}, 400, 4);
+			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(5, 22, false, true), new Pokemon(166, 22, false, true)}, 400, new Item(94), 4);
 		}
 		
 		trainers[17].getTeam()[2].moveset = new Move[]{Move.MEGA_DRAIN, Move.SUPERSONIC, Move.AERIAL_ACE, Move.MEAN_LOOK};

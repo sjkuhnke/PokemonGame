@@ -132,6 +132,10 @@ public class EventHandler {
 			if (hit(13,9,85,"any")) teleport(20, 31, 45);
 			if (hit(20,31,46,"any")) teleport(13, 9, 86);
 			
+			// Sicab Fishing House
+			if (hit(13,41,75,"any")) teleport(32, 31, 45);
+			if (hit(32,31,46,"any")) teleport(13, 41, 76);
+			
 			// Gym 2
 			if (hit(13,12,56,"any")) teleport(21, 63, 62);
 			if (hit(21,63,63,"any")) teleport(13, 12, 57);

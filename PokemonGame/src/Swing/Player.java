@@ -32,6 +32,7 @@ public class Player implements Serializable{
 	public boolean random = false;
 	public boolean ghost = false;
 	public int steps;
+	public boolean fish;
 	
 	public Player(GamePanel gp) {
 		team = new Pokemon[6];
