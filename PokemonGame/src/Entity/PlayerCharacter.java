@@ -185,7 +185,7 @@ public class PlayerCharacter extends Entity {
 			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Nurse) interactNurse();
 			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Clerk) interactClerk();
 			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Block) interactBlock((NPC_Block) gp.npc[gp.currentMap][npcIndex]);
-			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Trainer) gp.startBattle(gp.npc[gp.currentMap][npcIndex].trainer);
+			if (npcIndex != 999 && (gp.npc[gp.currentMap][npcIndex] instanceof NPC_Trainer || gp.npc[gp.currentMap][npcIndex] instanceof NPC_TN || gp.npc[gp.currentMap][npcIndex] instanceof NPC_Rival || gp.npc[gp.currentMap][npcIndex] instanceof NPC_Rival2)) gp.startBattle(gp.npc[gp.currentMap][npcIndex].trainer);
 			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_GymLeader) gp.startBattle(gp.npc[gp.currentMap][npcIndex].trainer);
 			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_PC) gp.openBox();
 			

@@ -6,8 +6,12 @@ import Entity.NPC_Clerk;
 import Entity.NPC_GymLeader;
 import Entity.NPC_Nurse;
 import Entity.NPC_PC;
+import Entity.NPC_Rival;
+import Entity.NPC_Rival2;
+import Entity.NPC_TN;
 import Entity.NPC_Trainer;
 import Obj.Cut_Tree;
+import Obj.GymBarrier;
 import Obj.InteractiveTile;
 import Obj.ItemObj;
 import Obj.Rock_Smash;
@@ -111,7 +115,7 @@ public class AssetSetter {
 		int mapNum = 0;
 		
 		if (flags[0]) {
-			gp.npc[mapNum][index] = NPCSetup(4, 72, 48, 0);
+			gp.npc[mapNum][index] = NPCSetup(10, 72, 48, 0);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -162,17 +166,17 @@ public class AssetSetter {
 		
 		mapNum = 7;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(6, 30, 42, 5);
-		gp.npc[mapNum][index] = NPCSetup(5, 33, 42, 6);
-		gp.npc[mapNum][index] = NPCSetup(3, 36, 39, 7);
-		gp.npc[mapNum][index] = NPCSetup(4, 36, 42, 8);
+		gp.npc[mapNum][index] = NPCSetup(14, 30, 42, 5);
+		gp.npc[mapNum][index] = NPCSetup(13, 33, 42, 6);
+		gp.npc[mapNum][index] = NPCSetup(11, 36, 39, 7);
+		gp.npc[mapNum][index] = NPCSetup(12, 36, 42, 8);
 		
 		mapNum = 8;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(5, 30, 39, 9);
-		gp.npc[mapNum][index] = NPCSetup(4, 28, 41, 10);
-		gp.npc[mapNum][index] = NPCSetup(3, 32, 39, 11);
-		gp.npc[mapNum][index] = NPCSetup(4, 32, 45, 12);
+		gp.npc[mapNum][index] = NPCSetup(13, 30, 39, 9);
+		gp.npc[mapNum][index] = NPCSetup(12, 28, 41, 10);
+		gp.npc[mapNum][index] = NPCSetup(11, 32, 39, 11);
+		gp.npc[mapNum][index] = NPCSetup(12, 32, 45, 12);
 		gp.npc[mapNum][index] = NPCSetup(8, 35, 41, 13);
 		
 		mapNum = 9;
@@ -192,7 +196,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(4, 53, 65, 29);
 		gp.npc[mapNum][index] = NPCSetup(4, 76, 59, 30);
 		
-		gp.npc[mapNum][index] = NPCSetup(4, 43, 73, 34);
+		gp.npc[mapNum][index] = NPCSetup(16, 43, 73, 34);
 		
 		gp.npc[mapNum][index] = NPCSetup(5, 40, 78, 31);
 		gp.npc[mapNum][index] = NPCSetup(5, 36, 79, 32);
@@ -235,12 +239,12 @@ public class AssetSetter {
 		
 		mapNum = 17;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(6, 50, 45, 49);
-		gp.npc[mapNum][index] = NPCSetup(5, 56, 45, 50);
-		gp.npc[mapNum][index] = NPCSetup(6, 50, 44, 51);
-		gp.npc[mapNum][index] = NPCSetup(5, 56, 44, 52);
-		gp.npc[mapNum][index] = NPCSetup(6, 50, 43, 53);
-		gp.npc[mapNum][index] = NPCSetup(5, 56, 43, 54);
+		gp.npc[mapNum][index] = NPCSetup(14, 50, 45, 49);
+		gp.npc[mapNum][index] = NPCSetup(13, 56, 45, 50);
+		gp.npc[mapNum][index] = NPCSetup(14, 50, 44, 51);
+		gp.npc[mapNum][index] = NPCSetup(13, 56, 44, 52);
+		gp.npc[mapNum][index] = NPCSetup(14, 50, 43, 53);
+		gp.npc[mapNum][index] = NPCSetup(13, 56, 43, 54);
 		
 		if (!flags[3]) {
 			gp.npc[mapNum][index] = NPCSetup(49, 53, "Quick! Team Nuke is taking over\nour office! Please help!");
@@ -252,7 +256,7 @@ public class AssetSetter {
 		
 		mapNum = 18;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(4, 48, 45, 55);
+		gp.npc[mapNum][index] = NPCSetup(10, 48, 45, 55);
 		
 		mapNum = 21;
 		gp.npc[mapNum][index] = NPCSetup(3, 55, 60, 56);
@@ -274,6 +278,9 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(4, 78, 12, 68);
 		gp.npc[mapNum][index] = NPCSetup(3, 72, 10, 69);
 		gp.npc[mapNum][index] = NPCSetup(4, 69, 14, 70);
+		
+		mapNum = 24;
+		gp.npc[mapNum][index] = NPCSetup(5, 65, 63, 75);
 		
 		mapNum = 32;
 		index = 0;
@@ -299,7 +306,16 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(23, 9, 0);
 		gp.iTile[mapNum][iIndex] = ITileSetup(24, 9, 0);
 		
+		mapNum = 21;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 60, 3);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 52, 3);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 50, 3);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 45, 3);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 43, 3);
+		
 		mapNum = 24;
+		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(63, 70, 1);
 	}
 
@@ -308,7 +324,7 @@ public class AssetSetter {
 		// flags[0] is true after walking into first gate
 		// flags[1] is true after beating Scott 1
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
-		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(4, 72, 48, 0);
+		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(10, 72, 48, 0);
 		if (flags[1]) gp.npc[3][14] = null;
 		if (flags[2]) gp.npc[4][15] = null;
 		if (flags[3]) {
@@ -349,6 +365,32 @@ public class AssetSetter {
 			break;
 		case 8:
 			result = new NPC_GymLeader(gp, "down", team);
+			break;
+		case 9:
+			result = new NPC_Rival(gp, "down", team); // scott down
+			break;
+		case 10:
+			result = new NPC_Rival(gp, "up", team); // scott up
+			break;
+		case 11:
+			result = new NPC_TN(gp, "down", team);
+			break;
+		case 12:
+			result = new NPC_TN(gp, "up", team);
+			break;
+		case 13:
+			result = new NPC_TN(gp, "left", team);
+			break;
+		case 14:
+			result = new NPC_TN(gp, "right", team);
+			break;
+		case 15:
+			result = new NPC_Rival2(gp, "down", team); // fred down
+			break;
+		case 16:
+			result = new NPC_Rival2(gp, "up", team); // fred up
+			break;
+			
 		}
 		
 		result.worldX = gp.tileSize*x;
@@ -413,6 +455,7 @@ public class AssetSetter {
 			result = new Tree_Stump(gp);
 			break;
 		case 3:
+			result = new GymBarrier(gp);
 			break;
 		}
 		

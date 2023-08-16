@@ -226,6 +226,11 @@ public class Main {
 				new Trainer("Y", new Pokemon[]{new Pokemon(11, 24, false, true), new Pokemon(134, 27, false, true)}, 100),
 				new Trainer("Z", new Pokemon[]{new Pokemon(105, 27, false, true)}, 100),
 				new Trainer("AA", new Pokemon[]{new Pokemon(131, 29, false, true)}, 100),
+				new Trainer("MS A", new Pokemon[]{new Pokemon(53, 30, false, true)}, 100), // 75
+				new Trainer("MS B", new Pokemon[]{new Pokemon(92, 31, false, true)}, 100),
+				new Trainer("MS C", new Pokemon[]{new Pokemon(115, 30, false, true)}, 100),
+				new Trainer("MS D", new Pokemon[]{new Pokemon(155, 51, false, true), new Pokemon(161, 53, false, true)}, 100),
+				new Trainer("TN MS 1", new Pokemon[]{new Pokemon(53, 30, false, true)}, 100),
 //				new Trainer("Rival 2", new Pokemon[]{new Pokemon(-131, 18, false, true), new Pokemon(-24, 12, false, true)}, 500),
 //				new Trainer("3 Gym A", new Pokemon[]{new Pokemon(-37, 12, false, true), new Pokemon(-37, 14, false, true), new Pokemon(-37, 16, false, true)}, 200),
 //				new Trainer("3 Gym B", new Pokemon[]{new Pokemon(-41, 21, false, true)}, 200),

@@ -140,6 +140,12 @@ public class EventHandler {
 			if (hit(13,12,56,"any")) teleport(21, 63, 62);
 			if (hit(21,63,63,"any")) teleport(13, 12, 57);
 			
+			if (hit(21,54,61,"any")) gp.iTile[21][0] = null;
+			if (hit(21,74,58,"any")) gp.iTile[21][1] = null;
+			if (hit(21,75,53,"any")) gp.iTile[21][2] = null;
+			if (hit(21,73,47,"any")) gp.iTile[21][3] = null;
+			if (hit(21,53,47,"any")) gp.iTile[21][4] = null;
+			
 			// Bannana Grove to Route 40 gate
 			if (hit(0,17,58,"any")) teleport(23, 31, 34);
 			if (hit(23,31,33,"any")) teleport(0, 17, 57);
@@ -149,6 +155,12 @@ public class EventHandler {
 			// Route 26 to Mt. Splinkty
 			if (hit(13,24,5,"any")) teleport(24, 56, 84);
 			if (hit(24,56,85,"any")) teleport(13, 24, 6);
+			
+			// Mt. Splinkty
+			if (hit(24,73,63,"any")) teleport(25, 73, 68);
+			if (hit(25,73,69,"any")) teleport(24, 73, 64);
+			if (hit(25,74,62,"any")) teleport(26, 58, 72);
+			if (hit(26,58,72,"any")) teleport(25, 74, 63);
 		}
 	}
 	
