@@ -282,6 +282,15 @@ public class AssetSetter {
 		mapNum = 24;
 		gp.npc[mapNum][index] = NPCSetup(5, 65, 63, 75);
 		
+		mapNum = 25;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(6, 70, 65, 76);
+		gp.npc[mapNum][index] = NPCSetup(6, 70, 80, 77);
+		gp.npc[mapNum][index] = NPCSetup(4, 66, 87, 78);
+		
+		mapNum = 26;
+		gp.npc[mapNum][index] = NPCSetup(11, 58, 70, 79);
+		
 		mapNum = 32;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(31, 40, "Take my spare fishing rod!\nLook at water and press\n'A' to fish!", true);
@@ -317,6 +326,9 @@ public class AssetSetter {
 		mapNum = 24;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(63, 70, 1);
+		
+		mapNum = 25;
+		gp.iTile[mapNum][iIndex] = ITileSetup(73, 73, 1);
 	}
 
 	public void updateNPC() {

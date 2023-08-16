@@ -159,8 +159,14 @@ public class EventHandler {
 			// Mt. Splinkty
 			if (hit(24,73,63,"any")) teleport(25, 73, 68);
 			if (hit(25,73,69,"any")) teleport(24, 73, 64);
+			
 			if (hit(25,74,62,"any")) teleport(26, 58, 72);
-			if (hit(26,58,72,"any")) teleport(25, 74, 63);
+			if (hit(26,58,73,"any")) teleport(25, 74, 63);
+			
+			if (hit(25,76,81,"any")) teleport(27, 74, 67);
+			if (hit(27,74,68,"any")) teleport(25, 76, 82);
+			if (hit(27,76,70,"any")) teleport(28, 8, 46);
+			if (hit(28,8,45,"any")) teleport(27, 76, 69);
 		}
 	}
 	

@@ -138,9 +138,10 @@ public class Encounter {
 				encounters.add(new Encounter(85, 15, 17, 0.20));
 				encounters.add(new Encounter(106, 16, 17, 0.05));
 			} else if (area == 24 && type.equals("Standard")) { // Mt. Splinkty 1A
-				encounters.add(new Encounter(48, 17, 20, 0.55));
-				encounters.add(new Encounter(52, 18, 20, 0.2));
-				encounters.add(new Encounter(156, 18, 20, 0.25));
+				encounters.add(new Encounter(48, 17, 20, 0.5));
+				encounters.add(new Encounter(52, 18, 20, 0.15));
+				encounters.add(new Encounter(153, 18, 20, 0.25));
+				encounters.add(new Encounter(156, 18, 20, 0.10));
 			} else if (area == 24 && type.equals("Fishing")) { // Mt. Splinkty 1A
 				encounters.add(new Encounter(90, 17, 20, 0.3));
 				encounters.add(new Encounter(137, 16, 18, 0.15));
@@ -148,6 +149,18 @@ public class Encounter {
 				encounters.add(new Encounter(146, 16, 20, 0.15));
 				encounters.add(new Encounter(148, 18, 21, 0.15));
 				encounters.add(new Encounter(150, 20, 20, 0.05));
+			} else if (area == 25 && type.equals("Standard")) { // Mt. Splinkty 2B
+				encounters.add(new Encounter(48, 18, 20, 0.30));
+				encounters.add(new Encounter(52, 19, 21, 0.25));
+				encounters.add(new Encounter(156, 18, 20, 0.10));
+				encounters.add(new Encounter(153, 17, 20, 0.15));
+				encounters.add(new Encounter(95, 18, 20, 0.10));
+				encounters.add(new Encounter(66, 19, 20, 0.10));
+			} else if (area == 26 && type.equals("Standard")) { // Mt. Splinkty 3B
+				encounters.add(new Encounter(156, 16, 20, 1.0));
+			} else if (area == 27 && type.equals("Standard")) { // Mt. Splinkty 3A
+				encounters.add(new Encounter(73, 17, 19, 0.8));
+				encounters.add(new Encounter(160, 16, 20, 0.2));
 			}
 		}
 		

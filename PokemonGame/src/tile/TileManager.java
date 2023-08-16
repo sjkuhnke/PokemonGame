@@ -47,8 +47,9 @@ public class TileManager {
 		loadMap("/maps/gate01.txt", 23);
 		loadMap("/maps/splinkty01A.txt", 24);
 		loadMap("/maps/splinkty02B.txt", 25);
-//		loadMap("/maps/splinkty03A.txt", 26);
-//		loadMap("/maps/splinkty03B.txt", 27);
+		loadMap("/maps/splinkty03B.txt", 26);
+		loadMap("/maps/splinkty03A.txt", 27);
+		loadMap("/maps/map06.txt", 28);
 		loadMap("/maps/13house01.txt", 32);
 	}
 	
