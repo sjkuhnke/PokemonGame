@@ -345,63 +345,47 @@ public class Battle extends JFrame {
                     return;
 		    	}
 		        Random rand = new Random();
-		        double catchRate = 0;
-		        double statusBonus = 1;
-		        
-		        //if (foe.id == 103 || foe.id == 104 || foe.id == 105 || foe.id == 91 || foe.id == 133 || foe.id == 134 ||foe.id == 135 || foe.id == 136 || foe.id == 137 ||foe.id == 138 || foe.id == 139 || foe.id == 140) statusBonus = 0.25; // if legendary
+		        double ballBonus = 0;
 		        
 		        if (pokeballButton.isSelected()) {
 		        	if (me.bag.count[1] <= 0) {
 		        		JOptionPane.showMessageDialog(null, "No balls remaining!");
                         return;
 		        	}
-		            catchRate = 1.0 / 6.0;
-		            if (foe.currentHP <= (foe.getStat(0) / 4)) {
-		                catchRate = 0.5;
-		            } else if (foe.currentHP <= (foe.getStat(0) / 2)) {
-		                catchRate = 1.0 / 4.0;
-		            }
-		            if (foe.status != Status.HEALTHY) {
-		                statusBonus *= 2.0;
-		            }
 		            System.out.println("\nUsed a Pokeball!");
 		            me.bag.remove(new Item(1));
+		            ballBonus = 1;
 		        } else if (greatballButton.isSelected()) {
 		        	if (me.bag.count[2] <= 0) {
 		        		JOptionPane.showMessageDialog(null, "No balls remaining!");
                         return;
 		        	}
-		            catchRate = 1.0 / 5.0;
-		            if (foe.currentHP <= (foe.getStat(0) / 4)) {
-		                catchRate = 0.75;
-		            } else if (foe.currentHP <= (foe.getStat(0) / 2)) {
-		                catchRate = 1.0 / 3.0;
-		            }
-		            if (foe.status != Status.HEALTHY) {
-		                statusBonus *= 2.0;
-		            }
 		            System.out.println("\nUsed a Great Ball!");
 		            me.bag.remove(new Item(2));
+		            ballBonus = 1.5;
 		        } else if (ultraballButton.isSelected()) {
 		        	if (me.bag.count[3] <= 0) {
 		        		JOptionPane.showMessageDialog(null, "No balls remaining!");
                         return;
 		        	}
-		            catchRate = 1.0 / 3.0;
-		            if (foe.currentHP <= (foe.getStat(0) / 4)) {
-		                catchRate = 1.0;
-		            } else if (foe.currentHP <= (foe.getStat(0) / 2)) {
-		                catchRate = 2.0 / 3.0;
-		            }
-		            if (foe.status != Status.HEALTHY) {
-		                statusBonus *= 2.0;
-		            }
 		            System.out.println("\nUsed an Ultra Ball!");
 		            me.bag.remove(new Item(3));
+		            ballBonus = 2;
 		        }
 		        
-		        double randomValue = rand.nextDouble();
-		        double modifiedCatchRate = catchRate * statusBonus;
+		        int quotient = 3 * foe.getStat(0) - 2 * foe.currentHP;
+		        double modQuotient = quotient * foe.catchRate * ballBonus;
+		        double catchRate = modQuotient / (3 * foe.getStat(0));
+		        
+		        double statusBonus = 1;
+		        if (foe.status != Status.HEALTHY) statusBonus = 1.5;
+		        if (foe.status == Status.ASLEEP) statusBonus = 2;
+		        
+		        catchRate *= statusBonus;
+		        int modifiedCatchRate = (int) Math.round(catchRate);
+		        
+		        int randomValue = rand.nextInt(255);
+		        
 		        if (randomValue <= modifiedCatchRate) {
 		            //me.catchPokemon(new Pokemon(foe.id, foe.getLevel(), true, false));
 		        	foe.trainerOwned = true;
@@ -829,6 +813,30 @@ public class Battle extends JFrame {
 		foeText.setFont(getScaledFontSize(foeText));
 		
 		foeSprite.setIcon(getSprite(foe));
+		foeSprite.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseClicked(MouseEvent e) {
+				JGradientButton type1 = new JGradientButton("");
+				JGradientButton type2 = new JGradientButton("");
+				
+				type1.setText(foe.type1.toString());
+				type1.setBackground(foe.type1.getColor());
+				
+				if (foe.type2 != null) {
+					type2.setText(foe.type2.toString());
+					type2.setBackground(foe.type2.getColor());
+				} else {
+					type2.setText("None");
+					type2.setBackground(null);
+				}
+
+		        JPanel buttonPanel = new JPanel();
+		        buttonPanel.add(type1);
+		        buttonPanel.add(type2);
+
+		        JOptionPane.showMessageDialog(null, buttonPanel, "Click Actions", JOptionPane.PLAIN_MESSAGE);
+            }
+		});
 		
 		// Foe healthbar
 		foeHealthBar = new JProgressBar(0, 100);

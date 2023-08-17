@@ -205,5 +205,6 @@ public class EventHandler {
 		
 		gp.aSetter.updateNPC();
 		gp.aSetter.setInteractiveTile();
+		gp.player.cross = false;
 	}
 }

@@ -125,8 +125,8 @@ public class Encounter {
 				encounters.add(new Encounter(94, 2, 2, 0.20));
 				encounters.add(new Encounter(73, 2, 3, 0.06));
 				encounters.add(new Encounter(52, 3, 3, 0.02));
-				encounters.add(new Encounter(104, 2, 3, 0.24));
-				encounters.add(new Encounter(163, 2, 3, 0.08));
+				encounters.add(new Encounter(104, 2, 3, 0.20));
+				encounters.add(new Encounter(101, 2, 3, 0.12));
 				encounters.add(new Encounter(166, 3, 3, 0.05));
 				encounters.add(new Encounter(174, 2, 2, 0.20));
 			} else if (area == 13 && type.equals("Standard")) { // route 26

@@ -185,6 +185,13 @@ public class Player implements Serializable{
 		bag.add(item);
 		return true;
 	}
+	
+	public boolean buy(Item item, int amt) {
+		if (item.getCost() * amt > money) return false;
+		money -= item.getCost() * amt;
+		bag.add(item, amt);
+		return true;
+	}
 
 	public boolean hasValidMembers() {
 		boolean result = false;

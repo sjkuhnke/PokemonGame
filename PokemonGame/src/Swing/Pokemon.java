@@ -54,6 +54,7 @@ public class Pokemon implements Serializable {
 	public int[] ivs;
 	public double[] nature;
 	public double weight;
+	public int catchRate;
 	public int happiness;
 	
 	// type fields
@@ -106,7 +107,6 @@ public class Pokemon implements Serializable {
 	private double trainer;
 	public int slot;
 	
-	
 	public Pokemon(int i, int l, boolean o, boolean t) {
 		id = i;
 		name = getName();
@@ -152,6 +152,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		happiness = 70;
+		catchRate = setCatchRate();
 		
 	}
 	
@@ -331,6 +332,7 @@ public class Pokemon implements Serializable {
 		
 		happiness = pokemon.happiness;
 		headbuttCrit = pokemon.headbuttCrit;
+		catchRate = setCatchRate();
 	}
 	
 	public boolean isFainted() {
@@ -9953,7 +9955,7 @@ public class Pokemon implements Serializable {
 			movebank[24] = new Node(Move.BOLT_STRIKE);
 			break;
 		case 210:
-			movebank = new Node[50];
+			movebank = new Node[60];
 			movebank[0] = new Node(Move.SPARK);
 			movebank[14] = new Node(Move.TACKLE);
 			movebank[19] = new Node(Move.THUNDER_FANG);
@@ -11951,7 +11953,253 @@ public class Pokemon implements Serializable {
 		} else if (id == 202) { return 97.4;
 		} else if (id == 203) { return 301.3;
 		} else if (id == 204) { return 345.0;
-		}else if (id == 205) { return 94.4;
+		} else if (id == 205) { return 94.4;
+		} else if (id == 206) { return 246.3;
+		} else if (id == 207) { return 357.4;
+		} else if (id == 208) { return 770.5;
+		} else if (id == 209) { return 16.5;
+		} else if (id == 210) { return 510.9;
+		} else if (id == 211) { return 102.6;
+		} else if (id == 212) { return 237.6;
+		} else if (id == 213) { return 145.8;
+		} else if (id == 214) { return 394.5;
+		} else if (id == 215) { return 2.5;
+		} else if (id == 216) { return 94.2;
+		} else if (id == 217) { return 5.6;
+		} else if (id == 218) { return 46.6;
+		} else if (id == 219) { return 165.2;
+		} else if (id == 220) { return 0.4;
+		} else if (id == 221) { return 36.5;
+		} else if (id == 222) { return 80.5;
+		} else if (id == 223) { return 19.4;
+		} else if (id == 224) { return 78.5;
+		} else if (id == 225) { return 205.3;
+		} else if (id == 226) { return 3.9;
+		} else if (id == 227) { return 17.5;
+		} else if (id == 228) { return 800.4;
+		} else if (id == 229) { return 20.6;
+		} else if (id == 230) { return 100.9;
+		} else if (id == 231) { return 2.3;
+		} else if (id == 232) { return 86.5;
+		} else if (id == 233) { return 750.5;
+		} else if (id == 234) { return 705.2;
+		} else if (id == 235) { return 956.4;
+		} else if (id == 236) { return 999.9;
+		} else if (id == 237) { return 895.4;
+		} else if (id == 238) { return 26.0;
+		} else if (id == 239) { return 66.1;
+		} else if (id == 240) { return 92.6;
+		} else {
+			return 0;
+		}
+	}
+	
+	public int setCatchRate() {
+		if (id == 1) { return 45;
+		} else if (id == 2) { return 40;
+		} else if (id == 3) { return 35;
+		} else if (id == 4) { return 50;
+		} else if (id == 5) { return 40;
+		} else if (id == 6) { return 35;
+		} else if (id == 7) { return 40;
+		} else if (id == 8) { return 35;
+		} else if (id == 9) { return 30;
+		} else if (id == 10) { return 180;
+		} else if (id == 11) { return 150;
+		} else if (id == 12) { return 90;
+		} else if (id == 13) { return 245;
+		} else if (id == 14) { return 150;
+		} else if (id == 15) { return 85;
+		} else if (id == 16) { return 255;
+		} else if (id == 17) { return 190;
+		} else if (id == 18) { return 100;
+		} else if (id == 19) { return 125;
+		} else if (id == 20) { return 100;
+		} else if (id == 21) { return 50;
+		} else if (id == 22) { return 255;
+		} else if (id == 23) { return 200;
+		} else if (id == 24) { return 125;
+		} else if (id == 25) { return 125;
+		} else if (id == 26) { return 75;
+		} else if (id == 27) { return 50;
+		} else if (id == 28) { return 30;
+		} else if (id == 29) { return 255;
+		} else if (id == 30) { return 150;
+		} else if (id == 31) { return 75;
+		} else if (id == 32) { return 255;
+		} else if (id == 33) { return 120;
+		} else if (id == 34) { return 45;
+		} else if (id == 35) { return 255;
+		} else if (id == 36) { return 120;
+		} else if (id == 37) { return 45;
+		} else if (id == 38) { return 230;
+		} else if (id == 39) { return 85;
+		} else if (id == 40) { return 100;
+		} else if (id == 41) { return 200;
+		} else if (id == 42) { return 85;
+		} else if (id == 43) { return 50;
+		} else if (id == 44) { return 255;
+		} else if (id == 45) { return 120;
+		} else if (id == 46) { return 45;
+		} else if (id == 47) { return 80;
+		} else if (id == 48) { return 200;
+		} else if (id == 49) { return 130;
+		} else if (id == 50) { return 40;
+		} else if (id == 51) { return 35;
+		} else if (id == 52) { return 120;
+		} else if (id == 53) { return 65;
+		} else if (id == 54) { return 30;
+		} else if (id == 55) { return 100;
+		} else if (id == 56) { return 35;
+		} else if (id == 57) { return 65;
+		} else if (id == 58) { return 45;
+		} else if (id == 59) { return 50;
+		} else if (id == 60) { return 45;
+		} else if (id == 61) { return 35;
+		} else if (id == 62) { return 190;
+		} else if (id == 63) { return 75;
+		} else if (id == 64) { return 135;
+		} else if (id == 65) { return 30;
+		} else if (id == 66) { return 100;
+		} else if (id == 67) { return 30;
+		} else if (id == 68) { return 255;
+		} else if (id == 69) { return 120;
+		} else if (id == 70) { return 45;
+		} else if (id == 71) { return 85;
+		} else if (id == 72) { return 45;
+		} else if (id == 73) { return 135;
+		} else if (id == 74) { return 50;
+		} else if (id == 75) { return 235;
+		} else if (id == 76) { return 120;
+		} else if (id == 77) { return 45;
+		} else if (id == 78) { return 75;
+		} else if (id == 79) { return 45;
+		} else if (id == 80) { return 75;
+		} else if (id == 81) { return 40;
+		} else if (id == 82) { return 125;
+		} else if (id == 83) { return 75;
+		} else if (id == 84) { return 25;
+		} else if (id == 85) { return 235;
+		} else if (id == 86) { return 120;
+		} else if (id == 87) { return 45;
+		} else if (id == 88) { return 45;
+		} else if (id == 89) { return 65;
+		} else if (id == 90) { return 190;
+		} else if (id == 91) { return 80;
+		} else if (id == 92) { return 75;
+		} else if (id == 93) { return 50;
+		} else if (id == 94) { return 195;
+		} else if (id == 95) { return 100;
+		} else if (id == 96) { return 50;
+		} else if (id == 97) { return 80;
+		} else if (id == 98) { return 55;
+		} else if (id == 99) { return 35;
+		} else if (id == 100) { return 15;
+		} else if (id == 101) { return 230;
+		} else if (id == 102) { return 110;
+		} else if (id == 103) { return 50;
+		} else if (id == 104) { return 120;
+		} else if (id == 105) { return 45;
+		} else if (id == 106) { return 50;
+		} else if (id == 107) { return 25;
+		} else if (id == 108) { return 110;
+		} else if (id == 109) { return 35;
+		} else if (id == 110) { return 35;
+		} else if (id == 111) { return 255;
+		} else if (id == 112) { return 100;
+		} else if (id == 113) { return 35;
+		} else if (id == 114) { return 255;
+		} else if (id == 115) { return 120;
+		} else if (id == 116) { return 45;
+		} else if (id == 117) { return 255;
+		} else if (id == 118) { return 120;
+		} else if (id == 119) { return 45;
+		} else if (id == 120) { return 100;
+		} else if (id == 121) { return 65;
+		} else if (id == 122) { return 35;
+		} else if (id == 123) { return 100;
+		} else if (id == 124) { return 65;
+		} else if (id == 125) { return 35;
+		} else if (id == 126) { return 100;
+		} else if (id == 127) { return 65;
+		} else if (id == 128) { return 35;
+		} else if (id == 129) { return 255;
+		} else if (id == 130) { return 120;
+		} else if (id == 131) { return 5;
+		} else if (id == 132) { return 200;
+		} else if (id == 133) { return 45;
+		} else if (id == 134) { return 140;
+		} else if (id == 135) { return 140;
+		} else if (id == 136) { return 75;
+		} else if (id == 137) { return 255;
+		} else if (id == 138) { return 45;
+		} else if (id == 139) { return 225;
+		} else if (id == 140) { return 60;
+		} else if (id == 141) { return 45;
+		} else if (id == 142) { return 10;
+		} else if (id == 143) { return 30;
+		} else if (id == 144) { return 30;
+		} else if (id == 145) { return 10;
+		} else if (id == 146) { return 120;
+		} else if (id == 147) { return 45;
+		} else if (id == 148) { return 95;
+		} else if (id == 149) { return 35;
+		} else if (id == 150) { return 25;
+		} else if (id == 151) { return 255;
+		} else if (id == 152) { return 90;
+		} else if (id == 153) { return 16.5;
+		} else if (id == 154) { return 121.3;
+		} else if (id == 155) { return 165.3;
+		} else if (id == 156) { return 0.2;
+		} else if (id == 157) { return 200.5;
+		} else if (id == 158) { return 3.4;
+		} else if (id == 159) { return 20.7;
+		} else if (id == 160) { return 0.5;
+		} else if (id == 161) { return 199.1;
+		} else if (id == 162) { return 600.3;
+		} else if (id == 163) { return 27.6;
+		} else if (id == 164) { return 88.2;
+		} else if (id == 165) { return 191.8;
+		} else if (id == 166) { return 49.5;
+		} else if (id == 167) { return 295.1;
+		} else if (id == 168) { return 489.1;
+		} else if (id == 169) { return 29.0;
+		} else if (id == 170) { return 55.1;
+		} else if (id == 171) { return 40.3;
+		} else if (id == 172) { return 100.6;
+		} else if (id == 173) { return 185.3;
+		} else if (id == 174) { return 6.6;
+		} else if (id == 175) { return 16.5;
+		} else if (id == 176) { return 88.2;
+		} else if (id == 177) { return 12.9;
+		} else if (id == 178) { return 75.1;
+		} else if (id == 179) { return 27.6;
+		} else if (id == 180) { return 178.8;
+		} else if (id == 181) { return 99.9;
+		} else if (id == 182) { return 149.9;
+		} else if (id == 183) { return 199.9;
+		} else if (id == 184) { return 10.0;
+		} else if (id == 185) { return 100.0;
+		} else if (id == 186) { return 292.3;
+		} else if (id == 187) { return 50.2;
+		} else if (id == 188) { return 103.4;
+		} else if (id == 189) { return 247.2;
+		} else if (id == 190) { return 100.2;
+		} else if (id == 191) { return 759.2;
+		} else if (id == 192) { return 1000.5;
+		} else if (id == 193) { return 90.3;
+		} else if (id == 194) { return 378.2;
+		} else if (id == 195) { return 632.5;
+		} else if (id == 196) { return 1000.5;
+		} else if (id == 197) { return 1.0;
+		} else if (id == 198) { return 45.2;
+		} else if (id == 199) { return 94.9;
+		} else if (id == 200) { return 144.9;
+		} else if (id == 201) { return 194.9;
+		} else if (id == 202) { return 97.4;
+		} else if (id == 203) { return 301.3;
+		} else if (id == 204) { return 345.0;
+		} else if (id == 205) { return 94.4;
 		} else if (id == 206) { return 246.3;
 		} else if (id == 207) { return 357.4;
 		} else if (id == 208) { return 770.5;
@@ -12013,6 +12261,28 @@ public class Pokemon implements Serializable {
 			return 10;
 		}
 	}
+	
+	public static boolean arrayEquals(int[] arr1, int[] arr2) {
+        if (arr1 == arr2) {
+            return true;
+        }
+
+        if (arr1 == null || arr2 == null) {
+            return false;
+        }
+
+        if (arr1.length != arr2.length) {
+            return false;
+        }
+
+        for (int i = 0; i < arr1.length; i++) {
+            if (arr1[i] != arr2[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 
 

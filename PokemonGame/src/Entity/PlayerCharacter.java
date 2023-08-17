@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,6 +31,8 @@ import javax.swing.SwingUtilities;
 import Obj.Cut_Tree;
 import Obj.Rock_Smash;
 import Obj.Tree_Stump;
+import Obj.Vine;
+import Obj.Vine_Crossable;
 import Overworld.GamePanel;
 import Overworld.KeyHandler;
 import Swing.Bag.Entry;
@@ -49,6 +53,8 @@ public class PlayerCharacter extends Entity {
 	public final int screenY;
 	public Player p;
 	public boolean repel;
+
+	public boolean cross = false;
 	
 	public PlayerCharacter(GamePanel gp, KeyHandler keyH) {
 		super(gp);
@@ -195,6 +201,7 @@ public class PlayerCharacter extends Entity {
 			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
 			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Cut_Tree) interactCutTree(iTileIndex);
 			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Rock_Smash) interactRockSmash(iTileIndex);
+			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Vine_Crossable) interactVines(iTileIndex);
 		}
 		if (keyH.aPressed) {
 			if (p.fish) {
@@ -440,14 +447,27 @@ public class PlayerCharacter extends Entity {
 	    for (int i = 0; i < available; i++) {
 	    	JButton item = new JButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
 	    	int index = i;
-	    	item.addActionListener(e -> {
-	    		if (p.buy(shopItems[index])) {
-	    			JOptionPane.showMessageDialog(null, "Purchased 1 " + shopItems[index].toString() + " for $" + shopItems[index].getCost());
-	    			SwingUtilities.getWindowAncestor(shopPanel).dispose();
-		    		interactClerk();
-	    		} else {
-	    			JOptionPane.showMessageDialog(null, "Not enough money!");
-	    		}
+	    	item.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+			    	if (SwingUtilities.isRightMouseButton(e)) { // Right-click
+			    		if (p.buy(shopItems[index], 5)) {
+		    	            JOptionPane.showMessageDialog(null, "Purchased 5 " + shopItems[index].toString() + " for $" + shopItems[index].getCost() * 5);
+		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
+		    	            interactClerk();
+		    	        } else {
+		    	            JOptionPane.showMessageDialog(null, "You don't have enough items to sell!");
+		    	        }
+		    	    } else { // Left-click
+		    	    	if (p.buy(shopItems[index])) {
+		    	            JOptionPane.showMessageDialog(null, "Purchased 1 " + shopItems[index].toString() + " for $" + shopItems[index].getCost());
+		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
+		    	            interactClerk();
+		    	        } else {
+		    	            JOptionPane.showMessageDialog(null, "Not enough money!");
+		    	        }
+		    	    }
+			    }
 	    	});
 	    	shopPanel.add(item);
 	    }
@@ -1186,6 +1206,28 @@ public class PlayerCharacter extends Entity {
 		            null, null, null);
 			if (option == JOptionPane.YES_OPTION) {
 				gp.iTile[gp.currentMap][i] = null;
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "This rock looks like it can be broken!");
+		}
+		keyH.resume();
+		
+	}
+	
+	private void interactVines(int i) {
+		keyH.pause();
+		if (p.hasMove(Move.ROCK_SMASH)) { // TODO
+			int option = JOptionPane.showOptionDialog(null,
+					"This rock looks like it can be broken!\nDo you want to use Rock Smash?",
+		            "Rock Smash",
+		            JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE,
+		            null, null, null);
+			if (option == JOptionPane.YES_OPTION) {
+				Vine_Crossable temp = (Vine_Crossable) gp.iTile[gp.currentMap][i];
+				gp.iTile[gp.currentMap][i] = new Vine(gp);
+				gp.iTile[gp.currentMap][i].worldX = temp.worldX;
+				gp.iTile[gp.currentMap][i].worldY = temp.worldY;
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "This rock looks like it can be broken!");

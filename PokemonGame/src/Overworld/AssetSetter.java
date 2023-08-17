@@ -16,6 +16,8 @@ import Obj.InteractiveTile;
 import Obj.ItemObj;
 import Obj.Rock_Smash;
 import Obj.Tree_Stump;
+import Obj.Vine;
+import Obj.Vine_Crossable;
 import Swing.Item;
 
 public class AssetSetter {
@@ -329,6 +331,29 @@ public class AssetSetter {
 		
 		mapNum = 25;
 		gp.iTile[mapNum][iIndex] = ITileSetup(73, 73, 1);
+		
+		mapNum = 28;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(23, 42, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(23, 41, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(23, 40, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(26, 39, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 39, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(28, 39, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(29, 39, 4);
+		
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 40, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 39, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 38, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 37, 4);
+		
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 36, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 37, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 38, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 39, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 40, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 41, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 42, 4);
 	}
 
 	public void updateNPC() {
@@ -468,6 +493,14 @@ public class AssetSetter {
 			break;
 		case 3:
 			result = new GymBarrier(gp);
+			break;
+		case 4:
+			result = new Vine_Crossable(gp);
+			break;
+		case 5:
+			result = new Vine(gp);
+			break;
+		case 6:
 			break;
 		}
 		

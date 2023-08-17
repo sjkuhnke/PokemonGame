@@ -383,6 +383,7 @@ public class TileManager {
 		setup(347, true);
 		setup(348, true);
 		setup(349, true);
+		setup(350, false);
 		try {
 			tile[7] = new GrassTile();
 			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/007.png"));
