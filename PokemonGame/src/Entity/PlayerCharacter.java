@@ -467,7 +467,7 @@ public class PlayerCharacter extends Entity {
 		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
 		    	            interactClerk();
 		    	        } else {
-		    	            JOptionPane.showMessageDialog(null, "You don't have enough items to sell!");
+		    	            JOptionPane.showMessageDialog(null, "Not enough money!");
 		    	        }
 		    	    } else { // Left-click
 		    	    	if (p.buy(shopItems[index])) {

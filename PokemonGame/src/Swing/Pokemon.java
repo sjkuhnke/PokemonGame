@@ -4647,7 +4647,7 @@ public class Pokemon implements Serializable {
 				if (move != Move.FALSE_SWIPE) System.out.println(foe.name + " endured the hit!");
 			}
 			if (foe.currentHP <= 0) { // Check for kill
-				foe.faint(true, player, this);
+				foe.faint(true, player, foe);
 				if (move == Move.FELL_STINGER) stat(this, 0, 3);
 				this.awardxp((int) Math.ceil(foe.level * foe.trainer), player);
 				if (this.vStatuses.contains(Status.BONDED)) {
@@ -5049,8 +5049,10 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.IRON_TAIL) {
 			stat(foe, 1, -1);
 		} else if (move == Move.JAW_LOCK) {
-			foe.vStatuses.add(Status.LOCKED);
-			System.out.println(foe.nickname + " was trapped!");
+			if (!foe.vStatuses.contains(Status.TRAPPED)) {
+				foe.vStatuses.add(Status.TRAPPED);
+				System.out.println(foe.nickname + " was trapped!");
+			}
 		} else if (move == Move.LAVA_PLUME) {
 			foe.burn(false, this, field);
 //		} else if (move == Move.LEAF_KOBE) {
@@ -5721,8 +5723,10 @@ public class Pokemon implements Serializable {
 				fail = fail();
 			}
 		} else if (move == Move.MEAN_LOOK) {
-			foe.vStatuses.add(Status.TRAPPED);
-			System.out.println(foe.nickname + " can no longer escape!");
+			if (!foe.vStatuses.contains(Status.TRAPPED)) {
+				foe.vStatuses.add(Status.TRAPPED);
+				System.out.println(foe.nickname + " can no longer escape!");
+			}
 		} else if (move == Move.MEMENTO) {
 			stat(foe, 0, -2);
 			stat(foe, 2, -2);

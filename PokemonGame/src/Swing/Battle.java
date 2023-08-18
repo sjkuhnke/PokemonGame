@@ -560,6 +560,7 @@ public class Battle extends JFrame {
 				}
 				updateCurrent(pl);
 				updateBars(true);
+				updateField(field);
 				displayParty();
 				updateStatus();
 				if (foe.isFainted()) {
