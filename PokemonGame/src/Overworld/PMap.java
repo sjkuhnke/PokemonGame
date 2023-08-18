@@ -417,6 +417,7 @@ public class PMap extends JFrame {
 		case 3:
 			return 3;
 		case 4:
+			if (y <= 43) return 16;
 			if (x > 57) return 4;
 			if (x <= 57) return 5;
 			break;
@@ -466,6 +467,31 @@ public class PMap extends JFrame {
 			return 21;
 		case 24:
 			return 11;
+		case 25:
+			return 11;
+		case 26:
+			return 11;
+		case 27:
+			return 11;
+		case 28:
+			if (y > 57) return 14;
+			if (x <= 61) return 12;
+			if (x > 61) return 13;
+		case 29:
+			return 13;
+		case 30:
+			return 13;
+		case 31:
+			return 13;
+		case 32:
+			return 9;
+		case 33:
+			if (y <= 22) return 17;
+			if (y > 22) return 15;
+		case 34:
+			return 17;
+		case 35:
+			return 18;
 		}
 		
 		return -1;

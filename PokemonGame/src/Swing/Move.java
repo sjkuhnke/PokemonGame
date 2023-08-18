@@ -588,7 +588,7 @@ public enum Move {
 	ZAP_CANNON(120,50,100,0,1,0,PType.ELECTRIC,"",false),
 	//ZAP(20,100,0,0,0,0,PType.ELECTRIC,"A normal attack",false),
 	ZEN_HEADBUTT(80,90,30,0,0,0,PType.PSYCHIC,"% of causing foe to flinch",true),
-	ZING_ZAP(80,100,30,0,2,0,PType.ELECTRIC,"",true),
+	ZING_ZAP(80,100,30,0,0,0,PType.ELECTRIC,"",true),
 	
 	TERRAIN_PULSE(-1,100,0,0,1,0,PType.NORMAL,"",false),
 	FACADE(-1,100,0,0,0,0,PType.NORMAL,"",true),
@@ -598,7 +598,7 @@ public enum Move {
 	FLIP_TURN(60,100,0,0,0,0,PType.WATER,"",true),
 	CUT(50,95,0,2,0,0,PType.NORMAL,"Extra-boosted crit rate",true),
 	ROCK_SMASH(40,100,50,0,0,0,PType.FIGHTING,"% to lower foe's Defense by 1",true),
-	VINE_CROSS(70,95,100,0,0,0,PType.WATER,"% chance to lower foe's Speed by 1",false),
+	VINE_CROSS(70,95,100,0,0,0,PType.GRASS,"% chance to lower foe's Speed by 1",false),
 	SURF(95,100,0,0,1,0,PType.WATER,"A normal attack",false),
 	SLOW_FALL(75,90,100,0,1,0,PType.PSYCHIC,"% chance to change user's ability to LEVITATE",false),
 	ROCK_CLIMB(80,95,20,0,1,0,PType.ROCK,"% chance to confuse foe",false),
@@ -715,6 +715,13 @@ public enum Move {
 		} else {
 			return 1;
 		}
+	}
+	public boolean isHMmove() {
+		if (this == Move.CUT || this == Move.ROCK_SMASH || this == Move.VINE_CROSS || this == Move.SURF || this == Move.SLOW_FALL || this == Move.FLY
+			|| this == Move.ROCK_CLIMB || this == Move.LAVA_SURF) {
+			return true;
+		}
+		return false;
 	}
 
 }

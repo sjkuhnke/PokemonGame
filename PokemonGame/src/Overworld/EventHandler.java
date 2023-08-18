@@ -167,6 +167,28 @@ public class EventHandler {
 			if (hit(27,74,68,"any")) teleport(25, 76, 82);
 			if (hit(27,76,70,"any")) teleport(28, 8, 46);
 			if (hit(28,8,45,"any")) teleport(27, 76, 69);
+			
+			// Kleine Village PC
+			if (hit(28,76,51,"any")) teleport(29, 31, 45);
+			if (hit(29,31,46,"any")) teleport(28, 76, 52);
+			
+			// Kleine Market
+			if (hit(28,75,44,"any")) teleport(30, 31, 45);
+			if (hit(30,31,46,"any")) teleport(28, 75, 45);
+			
+			// Kleine Gym
+			if (hit(28,87,44,"any")) teleport(31, 51, 81);
+			if (hit(31,51,82,"any")) teleport(28, 87, 45);
+			
+			// Kleine Village Gate
+			if (hit(28,93,46,"any")) teleport(34, 23, 40);
+			if (hit(34,22,40,"any")) teleport(28, 92, 46);
+			if (hit(34,37,40,"any")) teleport(33, 8, 13);
+			if (hit(33,7,13,"any")) teleport(34, 36, 40);
+			
+			// Electric Tunnel
+			if (hit(33,62,16,"any")) teleport(35, 11, 72);
+			if (hit(35,11,73,"any")) teleport(33, 62, 17);
 		}
 	}
 	

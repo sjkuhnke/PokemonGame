@@ -4,6 +4,7 @@ import Entity.Entity;
 import Entity.NPC_Block;
 import Entity.NPC_Clerk;
 import Entity.NPC_GymLeader;
+import Entity.NPC_Market;
 import Entity.NPC_Nurse;
 import Entity.NPC_PC;
 import Entity.NPC_Rival;
@@ -45,7 +46,7 @@ public class AssetSetter {
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(86, 56, 131, mapNum); // false swipe
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 59, 5, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(42, 74, 168, mapNum); // flash
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 74, 126, mapNum); // hidden power
 		gp.obj[mapNum][objIndex] = ObjSetup(15, 57, 109, mapNum); // leaf blade
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 72, 0, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 75, 2, mapNum);
@@ -110,6 +111,29 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(94, 15, 19, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 18, 11, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(82, 14, 4, mapNum);
+		
+		mapNum = 24;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(69, 84, 169, mapNum); // rock polish
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 75, 6, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(78, 52, 168, mapNum); // flash
+		
+		mapNum = 25;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(77, 68, 3, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(58, 74, 14, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(59, 79, 18, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(45, 84, 27, mapNum);
+		
+		mapNum = 26;
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 69, 0, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 69, 34, mapNum); // impish
+		
+		mapNum = 28;
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 43, 9, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 46, 183, mapNum); // captivate
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 43, 6, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(82, 23, 189, mapNum); // acrobatics
 	}
 	
 	public void setNPC() {
@@ -165,6 +189,15 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(4, 34, 76, 21); // make way lower levels
 		gp.npc[mapNum][index] = NPCSetup(4, 45, 75, 22); // make way lower levels
 		gp.npc[mapNum][index] = NPCSetup(4, 15, 70, 23);
+		
+		gp.npc[mapNum][index] = NPCSetup(6, 72, 37, 98);
+		gp.npc[mapNum][index] = NPCSetup(5, 77, 34, 99);
+		gp.npc[mapNum][index] = NPCSetup(5, 76, 30, 100);
+		gp.npc[mapNum][index] = NPCSetup(6, 72, 28, 101);
+		
+//		gp.npc[mapNum][index] = NPCSetup(4, 15, 70, 23);
+//		gp.npc[mapNum][index] = NPCSetup(4, 15, 70, 23);
+//		gp.npc[mapNum][index] = NPCSetup(4, 15, 70, 23);
 		
 		mapNum = 7;
 		index = 0;
@@ -282,7 +315,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(4, 69, 14, 70);
 		
 		mapNum = 24;
-		gp.npc[mapNum][index] = NPCSetup(5, 65, 63, 75);
+		gp.npc[mapNum][index] = NPCSetup(6, 65, 63, 75);
 		
 		mapNum = 25;
 		index = 0;
@@ -292,6 +325,45 @@ public class AssetSetter {
 		
 		mapNum = 26;
 		gp.npc[mapNum][index] = NPCSetup(11, 58, 70, 79);
+		
+		index = 0;
+		// Nurses/PCs
+		gp.npc[29][index] = NPCSetup(1, 31, 37, -1);
+		gp.npc[29][index] = NPCSetup(0, 35, 36, -1);
+		
+		// Clerks
+		gp.npc[30][index] = NPCSetup(17, 31, 41, -1);
+		
+		mapNum = 28;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(3, 12, 52, 85);
+		gp.npc[mapNum][index] = NPCSetup(4, 13, 55, 86);
+		gp.npc[mapNum][index] = NPCSetup(3, 30, 50, 80);
+		gp.npc[mapNum][index] = NPCSetup(6, 50, 52, 87);
+		gp.npc[mapNum][index] = NPCSetup(4, 52, 55, 81);
+		gp.npc[mapNum][index] = NPCSetup(3, 56, 46, 82);
+		gp.npc[mapNum][index] = NPCSetup(5, 60, 49, 88);
+		gp.npc[mapNum][index] = NPCSetup(6, 29, 34, 83);
+		gp.npc[mapNum][index] = NPCSetup(5, 55, 35, 84);
+		
+		if (!flags[5]) {
+			gp.npc[mapNum][index] = NPCSetup(15, 87, 45, 89);
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
+		
+		
+		gp.npc[mapNum][index] = NPCSetup(6, 77, 26, 95);
+		gp.npc[mapNum][index] = NPCSetup(3, 82, 20, 96);
+		gp.npc[mapNum][index] = NPCSetup(5, 87, 26, 97);
+		
+		mapNum = 31;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(3, 48, 50, 90);
+		gp.npc[mapNum][index] = NPCSetup(5, 65, 61, 91);
+		gp.npc[mapNum][index] = NPCSetup(3, 45, 63, 92);
+		gp.npc[mapNum][index] = NPCSetup(6, 38, 70, 93);
+		gp.npc[mapNum][index] = NPCSetup(8, 51, 61, 94);
 		
 		mapNum = 32;
 		index = 0;
@@ -305,6 +377,9 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(17, 63, 0);
 		gp.iTile[mapNum][iIndex] = ITileSetup(16, 68, 0);
 		gp.iTile[mapNum][iIndex] = ITileSetup(10, 68, 0);
+		
+		gp.iTile[mapNum][iIndex] = ITileSetup(74, 43, 0);
+		gp.iTile[mapNum][iIndex] = ITileSetup(75, 24, 1);
 		
 		mapNum = 11;
 		gp.iTile[mapNum][iIndex] = ITileSetup(39, 77, 0);
@@ -354,6 +429,37 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(54, 40, 4);
 		gp.iTile[mapNum][iIndex] = ITileSetup(54, 41, 4);
 		gp.iTile[mapNum][iIndex] = ITileSetup(54, 42, 4);
+		
+		gp.iTile[mapNum][iIndex] = ITileSetup(15, 53, 0);
+		gp.iTile[mapNum][iIndex] = ITileSetup(29, 53, 0);
+		
+		mapNum = 35;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 60, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 60, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 60, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(65, 62, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(66, 62, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(67, 62, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(68, 62, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(69, 62, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(81, 63, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(82, 63, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(83, 63, 4);
+		
+		gp.iTile[mapNum][iIndex] = ITileSetup(76, 68, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(76, 69, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(76, 70, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(68, 75, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(69, 75, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 75, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(71, 75, 4);
+		
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 53, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 52, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 47, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 47, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 47, 4);
 	}
 
 	public void updateNPC() {
@@ -369,6 +475,7 @@ public class AssetSetter {
 			gp.npc[17][7] = null;
 		}
 		if (flags[4]) gp.npc[13][0] = null;
+		if (flags[5]) gp.npc[28][9] = null;
 	}
 	
 	
@@ -426,6 +533,9 @@ public class AssetSetter {
 			break;
 		case 16:
 			result = new NPC_Rival2(gp, "up", team); // fred up
+			break;
+		case 17:
+			result = new NPC_Market(gp);
 			break;
 			
 		}

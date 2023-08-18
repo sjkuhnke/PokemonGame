@@ -183,19 +183,21 @@ public class Battle extends JFrame {
 			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
 			        	if (foe.trainerOwned()) {
-			        		if ((me.getCurrent().vStatuses.contains(Status.TAUNTED) && me.getCurrent().moveset[index].cat == 2)
-			        			|| me.getCurrent().vStatuses.contains(Status.TORMENTED) && me.getCurrent().moveset[index] == me.getCurrent().lastMoveUsed) {
+			        		if (!me.getCurrent().moveUsable(me.getCurrent().moveset[index]) && !me.getCurrent().movesetEmpty()) {
 			        			JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index] + " cannot be used!");
 			        			return;
 			        		}
-			        		turn(me.getCurrent(), foe, me.getCurrent().moveset[index], foe.bestMove(me.getCurrent(), field, false), pl, gp);
+			        		Move move = me.getCurrent().moveset[index];
+			        		if (me.getCurrent().movesetEmpty()) move = Move.STRUGGLE;
+			        		turn(me.getCurrent(), foe, move, foe.bestMove(me.getCurrent(), field, false), pl, gp);
 			        	} else {
-			        		if ((me.getCurrent().vStatuses.contains(Status.TAUNTED) && me.getCurrent().moveset[index].cat == 2)
-				        			|| me.getCurrent().vStatuses.contains(Status.TORMENTED) && me.getCurrent().moveset[index] == me.getCurrent().lastMoveUsed) {
+			        		if (!me.getCurrent().moveUsable(me.getCurrent().moveset[index]) && !me.getCurrent().movesetEmpty()) {
 			        			JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index] + " cannot be used!");
 			        			return;
 			        		}
-			        		turn(me.getCurrent(), foe, me.getCurrent().moveset[index], foe.randomMove(), pl, gp);
+			        		Move move = me.getCurrent().moveset[index];
+			        		if (me.getCurrent().movesetEmpty()) move = Move.STRUGGLE;
+			        		turn(me.getCurrent(), foe, move, foe.randomMove(), pl, gp);
 			        	}
 			        }
 			    }
@@ -238,7 +240,7 @@ public class Battle extends JFrame {
 		foeParty = new JRadioButton[6];
 		
 		userSprite = new JLabel("");
-		userSprite.setBounds(193, 10, 200, 200);
+		userSprite.setBounds(193, 0, 200, 200);
 		
 		foeSprite = new JLabel("");
 		foeSprite.setBounds(543, 60, 200, 200);
@@ -1027,7 +1029,7 @@ public class Battle extends JFrame {
 		            }
 		            if (foeTrainer.item != null) {
 		            	me.bag.add(foeTrainer.item);
-		            	message += "\nYou were given " + foeTrainer.item.toString();
+		            	message += "\nYou were given " + foeTrainer.item.toString() + "!";
 		            }
 		            if (foeTrainer.flagIndex != 0) {
 		            	me.flags[foeTrainer.flagIndex] = true;

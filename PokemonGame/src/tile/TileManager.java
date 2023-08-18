@@ -50,7 +50,13 @@ public class TileManager {
 		loadMap("/maps/splinkty03B.txt", 26);
 		loadMap("/maps/splinkty03A.txt", 27);
 		loadMap("/maps/map06.txt", 28);
+		loadMap("/maps/pc.txt", 29);
+		loadMap("/maps/market01.txt", 30);
+		loadMap("/maps/gym03.txt", 31);
 		loadMap("/maps/13house01.txt", 32);
+		loadMap("/maps/map07.txt", 33);
+		loadMap("/maps/gate02.txt", 34);
+		loadMap("/maps/electric01.txt", 35);
 	}
 	
 	public void getTileImage() {
@@ -384,6 +390,7 @@ public class TileManager {
 		setup(348, true);
 		setup(349, true);
 		setup(350, false);
+		setup(351, false);
 		try {
 			tile[7] = new GrassTile();
 			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/007.png"));

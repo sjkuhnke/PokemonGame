@@ -72,4 +72,8 @@ public class Bag implements Serializable {
 		}
 	}
 
+	public boolean contains(int id) {
+		return bag[id] != null;
+	}
+
 }

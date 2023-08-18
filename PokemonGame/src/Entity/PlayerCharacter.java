@@ -35,6 +35,7 @@ import Obj.Vine;
 import Obj.Vine_Crossable;
 import Overworld.GamePanel;
 import Overworld.KeyHandler;
+import Overworld.Main;
 import Swing.Bag.Entry;
 import Swing.Battle.JGradientButton;
 import Swing.Battle;
@@ -52,7 +53,6 @@ public class PlayerCharacter extends Entity {
 	public final int screenX;
 	public final int screenY;
 	public Player p;
-	public boolean repel;
 
 	public boolean cross = false;
 	
@@ -146,18 +146,18 @@ public class PlayerCharacter extends Entity {
 				spriteCounter = 0;
 				p.steps++;
 			}
-			if (spriteCounter % 4 == 0 && inTallGrass && !repel) {
+			if (spriteCounter % 4 == 0 && inTallGrass && !p.repel) {
 				Random r = new Random();
 				int random = r.nextInt(150);
 				if (random < speed) {
 					gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, "Standard");
 				}
 			}
-			if (p.steps == 202 && repel) {
+			if (p.steps == 202 && p.repel) {
 				keyH.pause();
 				JOptionPane.showMessageDialog(null, "Repel's effects wore off.");
 				keyH.resume();
-				repel = false;
+				p.repel = false;
 			}
 			if (p.steps % 129 == 0) {
 				for (Pokemon p : p.team) {
@@ -190,6 +190,7 @@ public class PlayerCharacter extends Entity {
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Nurse) interactNurse();
 			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Clerk) interactClerk();
+			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Market) interactMarket();
 			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Block) interactBlock((NPC_Block) gp.npc[gp.currentMap][npcIndex]);
 			if (npcIndex != 999 && (gp.npc[gp.currentMap][npcIndex] instanceof NPC_Trainer || gp.npc[gp.currentMap][npcIndex] instanceof NPC_TN || gp.npc[gp.currentMap][npcIndex] instanceof NPC_Rival || gp.npc[gp.currentMap][npcIndex] instanceof NPC_Rival2)) gp.startBattle(gp.npc[gp.currentMap][npcIndex].trainer);
 			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_GymLeader) gp.startBattle(gp.npc[gp.currentMap][npcIndex].trainer);
@@ -354,6 +355,15 @@ public class PlayerCharacter extends Entity {
 	        	    }
 	        	    
 	        	    JOptionPane.showMessageDialog(null, pPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+	    		} else if (code.equals("UPDATE")) {
+	    			boolean[] temp = p.trainersBeat.clone();
+	    			p.trainersBeat = new boolean[Main.trainers.length];
+	    			for (int i = 0; i < temp.length; i++) {
+	    				p.trainersBeat[i] = temp[i];
+	    			}
+	        	    
+	        	    JOptionPane.showMessageDialog(null, "Player successfully updated!");
+	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		}
 	    	});
 	    	
@@ -421,6 +431,7 @@ public class PlayerCharacter extends Entity {
 		    	if (gp.currentMap == 1) p.locations[1] = true;
 		    	if (gp.currentMap == 5) p.locations[2] = true;
 		    	if (gp.currentMap == 19) p.locations[3] = true;
+		    	if (gp.currentMap == 29) p.locations[4] = true;
 		    	
 		    }
 		    keyH.resume();
@@ -793,8 +804,8 @@ public class PlayerCharacter extends Entity {
 		        	
 		        	// REPEL
 		        	if (i.getItem().getID() == 0) {
-		        		if (!repel) {
-		        			repel = true;
+		        		if (!p.repel) {
+		        			p.repel = true;
 		        			p.steps = 1;
 		        			p.bag.remove(i.getItem());
 	        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
@@ -1132,6 +1143,32 @@ public class PlayerCharacter extends Entity {
 	    JOptionPane.showMessageDialog(null, dexScrollPane, "Pokedex", JOptionPane.PLAIN_MESSAGE);
 	    keyH.resume();
 	}
+	
+	private void interactMarket() {
+		keyH.pause();
+		
+		JPanel shopPanel = new JPanel();
+	    shopPanel.setLayout(new GridLayout(6, 1));
+	    Item[] shopItems = new Item[] {new Item(0), new Item(1), new Item(15), new Item(27), new Item(149), new Item(151)};
+	    for (int i = 0; i < 6; i++) {
+	    	JButton item = new JButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
+	    	int index = i;
+	    	item.addActionListener(e -> {
+    	    	if (p.buy(shopItems[index])) {
+    	            JOptionPane.showMessageDialog(null, "Purchased 1 " + shopItems[index].toString() + " for $" + shopItems[index].getCost());
+    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
+    	            interactMarket();
+    	        } else {
+    	            JOptionPane.showMessageDialog(null, "Not enough money!");
+    	        }
+	    	});
+	    	shopPanel.add(item);
+	    	if (i == 4 && p.bag.contains(149)) shopPanel.remove(item);
+	    	if (i == 5 && p.bag.contains(151)) shopPanel.remove(item);
+	    }
+		JOptionPane.showMessageDialog(null, shopPanel, "Money: $" + p.money, JOptionPane.PLAIN_MESSAGE);
+		keyH.resume();
+	}
 
 
 	public JButton setUpPartyButton(int j) {
@@ -1216,9 +1253,9 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactVines(int i) {
 		keyH.pause();
-		if (p.hasMove(Move.ROCK_SMASH)) { // TODO
+		if (p.hasMove(Move.VINE_CROSS)) {
 			int option = JOptionPane.showOptionDialog(null,
-					"This rock looks like it can be broken!\nDo you want to use Rock Smash?",
+					"This gap can be crossed!\nDo you want to use Vine Cross?",
 		            "Rock Smash",
 		            JOptionPane.YES_NO_OPTION,
 		            JOptionPane.QUESTION_MESSAGE,
@@ -1230,7 +1267,7 @@ public class PlayerCharacter extends Entity {
 				gp.iTile[gp.currentMap][i].worldY = temp.worldY;
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "This rock looks like it can be broken!");
+			JOptionPane.showMessageDialog(null, "This gap looks like it can be crossed!");
 		}
 		keyH.resume();
 		
