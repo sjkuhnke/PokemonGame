@@ -173,8 +173,8 @@ public class PBox extends JFrame {
 
                                 // Swap the selected party member with the selected box member
                                 if (jndex == 0) {
-                                	if (box[index] == null) {
-                                		JOptionPane.showMessageDialog(null, "You cannot remove the lead from your party.");
+                                	if (box[index] == null && me.team[jndex + 1] == null) {
+                                		JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
         	                            return;
                                 	}
                                     me.current = box[index];
@@ -185,6 +185,17 @@ public class PBox extends JFrame {
                                 }
                                 me.team[jndex] = box[index];
                                 box[index] = temp;
+                                
+                                if (me.team[jndex] == null) {
+                                	Pokemon[] teamTemp = me.team.clone();
+                                	for (int i = jndex + 1; i < me.team.length; i++) {
+                                    	teamTemp[i - 1] = me.team[i];
+                                    }
+                                	me.team = teamTemp;
+                                	me.current = me.team[0];
+                                	me.team[5] = null;
+                                }
+                                
 
                                 // Update the display
                                 SwingUtilities.getWindowAncestor(partyPanel).dispose();

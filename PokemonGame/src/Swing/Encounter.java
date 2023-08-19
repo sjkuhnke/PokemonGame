@@ -193,7 +193,7 @@ public class Encounter {
 				encounters.add(new Encounter(57, 15, 15, 0.15));
 				encounters.add(new Encounter(82, 14, 15, 0.1));
 				encounters.add(new Encounter(94, 16, 17, 0.15));
-				encounters.add(new Encounter(101, 16, 18, 0.15));
+				encounters.add(new Encounter(101, 15, 17, 0.15));
 				encounters.add(new Encounter(108, 18, 19, 0.05));
 			} else if (area == 4 && y < 43 && type.equals("Fishing")) { // Route 36
 				encounters.add(new Encounter(90, 16, 18, 0.20));

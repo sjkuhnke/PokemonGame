@@ -693,18 +693,45 @@ public class PlayerCharacter extends Entity {
 		        	    	JProgressBar partyHP = setupHPBar(j);
 		        	        final int index = j;
 		        	        
-		        	        party.addActionListener(g -> {
-		        	        	if (p.team[index].getLevel() == 100) {
-		        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
-		        	        	} else {
-		        	        		p.elevate(p.team[index]);
-		        	        		p.bag.remove(i.getItem());
-		        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
-			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-			        	        	showBag();
-		        	        	}
+		        	        party.addMouseListener(new MouseAdapter() {
+		        			    @Override
+		        			    public void mouseClicked(MouseEvent e) {
+		        			    	if (SwingUtilities.isRightMouseButton(e)) { // Right-click
+		        			    		if (p.team[index].getLevel() == 100) {
+				        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+		        			    		} else {
+		        			    			String input = JOptionPane.showInputDialog("Enter the number of Rare Candies to use:");
+		        			                if (input != null) {
+		        			                	int numCandies = 0;
+		        			                	try {
+		        			                		numCandies = Integer.parseInt(input);
+		        			                	} catch (NumberFormatException n) {
+		        			                		numCandies = 1;
+		        			                	}
+		        			                    
+		        			                    useRareCandies(p.team[index], numCandies, i.getItem());
+		        			                    SwingUtilities.getWindowAncestor(partyPanel).dispose();
+						        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+						        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+						        	        	showBag();
+		        			                }
+		        			    		}
+		        			    		
+		        		    	    } else { // Left-click
+		        		    	    	if (p.team[index].getLevel() == 100) {
+				        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+		        		    	    	} else {
+		        		    	    		p.elevate(p.team[index]);
+				        	        		p.bag.remove(i.getItem());
+				        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
+					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+					        	        	showBag();
+		        		    	    	}
+		        			    	}
+		        			    }
 		        	        });
+		        	    	
 		        	        
 		        	        JPanel memberPanel = new JPanel(new BorderLayout());
 		        	        memberPanel.add(party, BorderLayout.NORTH);
@@ -1208,6 +1235,17 @@ public class PlayerCharacter extends Entity {
             partyHP.setVisible(false);
         }
 		return partyHP;
+	}
+	
+	private void useRareCandies(Pokemon pokemon, int numCandies, Item item) {
+		boolean evolved = false;
+	    for (int i = 0; i < numCandies; i++) {
+	        if (pokemon.getLevel() == 100 || p.bag.count[item.getID()] <= 0 || evolved) {
+	            break; // Stop using Rare Candies if level 100 or out of candies
+	        }
+	        evolved = p.elevate(pokemon);
+	        p.bag.remove(item);
+	    }
 	}
 	
 	private void interactCutTree(int i) {

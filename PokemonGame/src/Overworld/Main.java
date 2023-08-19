@@ -248,7 +248,7 @@ public class Main {
 				new Trainer("AD", new Pokemon[]{new Pokemon(98, 30, false, true), new Pokemon(102, 31, false, true), new Pokemon(105, 31, false, true)}, 100),
 				new Trainer("AE", new Pokemon[]{new Pokemon(96, 37, false, true)}, 100),
 				new Trainer("AF", new Pokemon[]{new Pokemon(110, 38, false, true)}, 100),
-				new Trainer("AG", new Pokemon[]{new Pokemon(74, 29, false, true), new Pokemon(91, 30, false, true)}, 100), // 85
+				new Trainer("AG", new Pokemon[]{new Pokemon(73, 29, false, true), new Pokemon(91, 30, false, true)}, 100), // 85
 				new Trainer("AH", new Pokemon[]{new Pokemon(97, 30, false, true)}, 100),
 				new Trainer("AI", new Pokemon[]{new Pokemon(89, 30, false, true), new Pokemon(47, 31, false, true)}, 100),
 				new Trainer("AJ", new Pokemon[]{new Pokemon(46, 30, false, true), new Pokemon(27, 31, false, true)}, 100),

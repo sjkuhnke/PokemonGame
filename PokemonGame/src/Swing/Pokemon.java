@@ -2276,7 +2276,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(25, this);
 		} else if (id == 23 && level >= 32) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 25 && level >= 28) {
+		} else if (id == 26 && level >= 28) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 29 && happiness >= 160) {
 			result = new Pokemon(id + 1, this);
@@ -2348,9 +2348,9 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 99 && level >= 55) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 101 && level >= 15) {
+		} else if (id == 101 && level >= 20) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 102 && level >= 35) {
+		} else if (id == 102 && level >= 40) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 104 && level >= 24) {
 			result = new Pokemon(id + 1, this);
@@ -2622,7 +2622,7 @@ public class Pokemon implements Serializable {
 		} else if (this.id == 40) { this.baseStats = new int[]{70,45,80,130,95,100};
 		} else if (this.id == 41) { this.baseStats = new int[]{40,60,65,30,50,70};
 		} else if (this.id == 42) { this.baseStats = new int[]{53,95,85,30,53,85};
-		} else if (this.id == 43) { this.baseStats = new int[]{68,120,100,72,80,105};
+		} else if (this.id == 43) { this.baseStats = new int[]{63,120,90,62,65,105};
 		} else if (this.id == 44) { this.baseStats = new int[]{40,30,30,40,50,30};
 		} else if (this.id == 45) { this.baseStats = new int[]{60,50,50,60,70,50};
 		} else if (this.id == 46) { this.baseStats = new int[]{80,70,70,90,100,70};
@@ -2720,11 +2720,11 @@ public class Pokemon implements Serializable {
 		} else if (this.id == 138) { this.baseStats = new int[]{95,125,79,60,100,81};
 		} else if (this.id == 139) { this.baseStats = new int[]{30,45,55,70,55,85};
 		} else if (this.id == 140) { this.baseStats = new int[]{60,75,85,100,85,115};
-		} else if (this.id == 141) { this.baseStats = new int[]{95,125,80,45,55,60};
+		} else if (this.id == 141) { this.baseStats = new int[]{90,120,80,45,55,60};
 		} else if (this.id == 142) { this.baseStats = new int[]{105,130,80,75,55,95};
 		} else if (this.id == 143) { this.baseStats = new int[]{35,35,35,100,45,45};
-		} else if (this.id == 144) { this.baseStats = new int[]{81,103,63,113,90,75};
-		} else if (this.id == 145) { this.baseStats = new int[]{100,100,90,100,90,100};
+		} else if (this.id == 144) { this.baseStats = new int[]{81,93,63,93,70,60};
+		} else if (this.id == 145) { this.baseStats = new int[]{100,95,90,95,90,90};
 		} else if (this.id == 146) { this.baseStats = new int[]{42,52,67,39,56,50};
 		} else if (this.id == 147) { this.baseStats = new int[]{72,105,115,54,86,68};
 		} else if (this.id == 148) { this.baseStats = new int[]{55,60,64,62,55,49};
@@ -4002,7 +4002,42 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.FAILED_SUCKER) this.lastMoveUsed = Move.SUCKER_PUNCH;
-		if (this.vStatuses.contains(Status.ENCORED)) move = this.lastMoveUsed;
+		if (this.vStatuses.contains(Status.ENCORED)) {
+			move = this.lastMoveUsed;
+			bp = move.basePower;
+			acc = move.accuracy;
+			secChance = move.secondary;
+			moveType = move.mtype;
+			critChance = move.critChance;
+		}
+		
+		if (this.status == Status.ASLEEP) {
+			if (this.sleepCounter > 0) {
+				System.out.println("\n" + this.nickname + " is fast asleep.");
+				this.sleepCounter--;
+				if (move == Move.SLEEP_TALK) {
+					System.out.println("\n" + this.nickname + " used " + move + "!");
+					ArrayList<Move> moves = new ArrayList<>();
+					for (Move m : this.moveset) {
+						if (m != null && m != Move.SLEEP_TALK) moves.add(m);
+					}
+					move = moves.get(new Random().nextInt(moves.size()));
+					bp = move.basePower;
+					acc = move.accuracy;
+					secChance = move.secondary;
+					moveType = move.mtype;
+					critChance = move.critChance;
+				} else {
+					this.impressive = false;
+					this.vStatuses.remove(Status.LOCKED);
+					this.vStatuses.remove(Status.CHARGING);
+					return;
+				}
+			} else {
+				System.out.println("\n" + this.nickname + " woke up!");
+				this.status = Status.HEALTHY;
+			}
+		}
 		
 		if (this.vStatuses.contains(Status.CONFUSED)) {
 			if (this.confusionCounter == 0) {
@@ -4040,34 +4075,6 @@ public class Pokemon implements Serializable {
 			this.vStatuses.remove(Status.LOCKED);
 			this.vStatuses.remove(Status.CHARGING);
 			return;
-		}
-		
-		if (this.status == Status.ASLEEP) {
-			if (this.sleepCounter > 0) {
-				System.out.println("\n" + this.nickname + " is fast asleep.");
-				this.sleepCounter--;
-				if (move == Move.SLEEP_TALK) {
-					System.out.println("\n" + this.nickname + " used " + move + "!");
-					ArrayList<Move> moves = new ArrayList<>();
-					for (Move m : this.moveset) {
-						if (m != null && m != Move.SLEEP_TALK) moves.add(m);
-					}
-					move = moves.get(new Random().nextInt(moves.size()));
-					bp = move.basePower;
-					acc = move.accuracy;
-					secChance = move.secondary;
-					moveType = move.mtype;
-					critChance = move.critChance;
-				} else {
-					this.impressive = false;
-					this.vStatuses.remove(Status.LOCKED);
-					this.vStatuses.remove(Status.CHARGING);
-					return;
-				}
-			} else {
-				System.out.println("\n" + this.nickname + " woke up!");
-				this.status = Status.HEALTHY;
-			}
 		}
 		
 		if (this.status != Status.TOXIC) toxic = 0;
@@ -4228,7 +4235,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if ((move == Move.FIRST_IMPRESSION || move == Move.BELCH || move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT) && !this.impressive) {
-			System.out.print("\n" + this.nickname + " used " + move + "!");
+			System.out.println("\n" + this.nickname + " used " + move + "!");
 			fail();
 			return;
 		}
@@ -4565,7 +4572,6 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (foe.ability == Ability.WONDER_GUARD && multiplier <= 1) {
-				System.out.println("\n" + this.nickname + " used " + move + "!");
 				System.out.println("[" + foe.nickname + "'s Wonder Guard]: " + "It doesn't effect " + foe.nickname + "...");
 				endMove();
 				return; // Check for immunity
@@ -4647,7 +4653,7 @@ public class Pokemon implements Serializable {
 				if (move != Move.FALSE_SWIPE) System.out.println(foe.name + " endured the hit!");
 			}
 			if (foe.currentHP <= 0) { // Check for kill
-				foe.faint(true, player, foe);
+				foe.faint(true, player, this);
 				if (move == Move.FELL_STINGER) stat(this, 0, 3);
 				this.awardxp((int) Math.ceil(foe.level * foe.trainer), player);
 				if (this.vStatuses.contains(Status.BONDED)) {
@@ -5799,7 +5805,8 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.STUN_SPORE) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
 				System.out.println("It doesn't effect " + foe.nickname);
-				fail = fail();
+				success = false;
+				fail = true;
 				return;
 			}
 			foe.paralyze(true, this, field);
@@ -5903,7 +5910,8 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SLEEP_POWDER) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
 				System.out.println("It doesn't effect " + foe.nickname);
-				fail = fail();
+				success = false;
+				fail = true;
 				return;
 			}
 			foe.sleep(true, field);
@@ -6084,8 +6092,10 @@ public class Pokemon implements Serializable {
 				stat(this, i, amt);
 				return;
 			} else if (p.ability == Ability.DEFIANT && a < 0) {
+				System.out.print("[" + p.nickname + "'s Defiant]: " );
 				stat(p, 0, 2);
 			} else if (p.ability == Ability.COMPETITIVE && a < 0) {
+				System.out.print("[" + p.nickname + "'s Competitve]: " );
 				stat(p, 2, 2);
 			} else if (p.ability == Ability.CLEAR_BODY && a < 0) {
 				System.out.println("[" + p.nickname + "'s Clear Body]: " + this.nickname + "'s " + type + " was not lowered!");
@@ -6101,7 +6111,11 @@ public class Pokemon implements Serializable {
 		p.statStages[i] += a;
 		if (p.statStages[i] > 6 && a > 0) {
 			p.statStages[i] = 6;
-			if (a != 12) System.out.println(p.nickname + "'s " + type + " won't go any higher!");
+			if (a != 12) {
+				System.out.println(p.nickname + "'s " + type + " won't go any higher!");
+			} else {
+				System.out.println(p.nickname + "'s " + type + " was raised to the max!");
+			}
 		} else if (p.statStages[i] < -6 && a < 0){
 			p.statStages[i] = -6;
 			if (a != 12) System.out.println(p.nickname + "'s " + type + " won't go any lower!");
@@ -8205,13 +8219,15 @@ public class Pokemon implements Serializable {
 			movebank[84] = new Node(Move.HYPER_BEAM);
 			break;
 		case 101:
-			movebank = new Node[15];
+			movebank = new Node[20];
 			movebank[0] = new Node(Move.TACKLE);
 			movebank[0].next = new Node(Move.HARDEN);
 			movebank[5] = new Node(Move.WILL_O_WISP);
 			movebank[8] = new Node(Move.EMBER);
 			movebank[11] = new Node(Move.ROCK_THROW);
 			movebank[14] = new Node(Move.INCINERATE);
+			movebank[17] = new Node(Move.ROCK_POLISH);
+			movebank[19] = new Node(Move.SCREECH);
 			break;
 		case 102:
 			movebank = new Node[33];
@@ -8221,9 +8237,9 @@ public class Pokemon implements Serializable {
 			movebank[8] = new Node(Move.EMBER);
 			movebank[11] = new Node(Move.ROCK_THROW);
 			movebank[14] = new Node(Move.INCINERATE);
-			movebank[14].next = new Node(Move.ROCK_POLISH);
-			movebank[16] = new Node(Move.SCREECH);
-			movebank[19] = new Node(Move.RECOVER);
+			movebank[17] = new Node(Move.ROCK_POLISH);
+			movebank[19] = new Node(Move.SCREECH);
+			movebank[19].next = new Node(Move.RECOVER);
 			movebank[22] = new Node(Move.SMACK_DOWN);
 			movebank[25] = new Node(Move.PROTECT);
 			movebank[27] = new Node(Move.BURN_UP);
@@ -8238,9 +8254,9 @@ public class Pokemon implements Serializable {
 			movebank[8] = new Node(Move.EMBER);
 			movebank[11] = new Node(Move.ROCK_THROW);
 			movebank[14] = new Node(Move.INCINERATE);
-			movebank[14].next = new Node(Move.ROCK_POLISH);
-			movebank[16] = new Node(Move.SCREECH);
-			movebank[19] = new Node(Move.RECOVER);
+			movebank[17] = new Node(Move.ROCK_POLISH);
+			movebank[19] = new Node(Move.SCREECH);
+			movebank[19].next = new Node(Move.RECOVER);
 			movebank[22] = new Node(Move.SMACK_DOWN);
 			movebank[25] = new Node(Move.PROTECT);
 			movebank[27] = new Node(Move.BURN_UP);
@@ -10579,13 +10595,14 @@ public class Pokemon implements Serializable {
 			}
 			
 		}
-		if (this.vStatuses.contains(Status.LEECHED) && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
+		if (this.vStatuses.contains(Status.LEECHED) && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN && !f.isFainted()) {
 			int hp = Math.max(this.getStat(0) / 8, 1);
 			if (hp >= this.currentHP) hp = this.currentHP;
 			if (f.currentHP > f.getStat(0)) f.currentHP = f.getStat(0);
 			this.currentHP -= hp;
 			System.out.println("\n" + f.nickname + " sucked health from " + this.nickname + "!");
 			f.currentHP += hp;
+			f.verifyHP();
 			if (this.currentHP <= 0) {
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
@@ -10611,7 +10628,7 @@ public class Pokemon implements Serializable {
 				}
 				System.out.println("\n" + this.nickname + " restored HP.");
 			}
-		} if (field.equals(field.weather, Effect.GRASSY) && isGrounded(field)) {
+		} if (field.equals(field.terrain, Effect.GRASSY) && isGrounded(field)) {
 			if (this.currentHP < this.getStat(0)) {
 				this.currentHP += Math.max(this.getStat(0) / 16, 1);
 				if (this.currentHP > this.getStat(0)) {
@@ -11012,22 +11029,22 @@ public class Pokemon implements Serializable {
 			if (mag <= 5) {
 				bp = 10;
 				System.out.println("Magnitude 4!");
-			} else if (mag <= 15) {
+			} else if (mag > 5 && mag <= 15) {
 				bp = 30;
 				System.out.println("Magnitude 5!");
-			} else if (mag <= 35) {
+			} else if (mag > 15 && mag <= 35) {
 				bp = 50;
 				System.out.println("Magnitude 6!");
-			} else if (mag <= 65) {
+			} else if (mag > 35 && mag <= 65) {
 				bp = 70;
 				System.out.println("Magnitude 7!");
-			} else if (mag <= 85) {
+			} else if (mag > 65 && mag <= 85) {
 				bp = 90;
 				System.out.println("Magnitude 8!");
-			} else if (mag <= 95) {
+			} else if (mag > 85 && mag <= 95) {
 				bp = 110;
 				System.out.println("Magnitude 9!");
-			} else if (mag <= 100) {
+			} else if (mag > 95 && mag <= 100) {
 				bp = 150;
 				System.out.println("Magnitude 10!");
 			}
@@ -11245,7 +11262,9 @@ public class Pokemon implements Serializable {
 	    JPanel barPanel = new JPanel(new GridLayout(6, 1));
 	    JPanel statsPanel = new JPanel(new GridLayout(1, 2));
 	    JGradientButton type1B, type2B;
+	    JProgressBar expBar = new JProgressBar();
 	    JPanel movesPanel = new JPanel(new GridLayout(2, 2));
+	    JPanel bottomPanel = new JPanel(new GridLayout(1, 2));
 	    type1B = new JGradientButton("");
 	    type2B = new JGradientButton("");
 	    if (this != null) {
@@ -11347,6 +11366,14 @@ public class Pokemon implements Serializable {
 	        } else {
 	            statusLabel.setForeground(this.status.getColor());
 	        }
+	        expBar = new JProgressBar(0, this.expMax);
+	        expBar.setForeground(new Color(0, 128, 255));
+	        expBar.setValue(exp);
+	        expBar.setString(expMax - exp + " points to lv. up");
+	        expBar.setStringPainted(true);
+	        
+	        bottomPanel.add(expBar);
+	        bottomPanel.add(statusLabel);
 	    }
 	    
 	    JPanel nicknameLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -11388,9 +11415,11 @@ public class Pokemon implements Serializable {
 	    
 	    teamMemberPanel.add(movesPanel);
 	    
-	    JPanel statusLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    statusLabelPanel.add(statusLabel);
-	    teamMemberPanel.add(statusLabelPanel);
+	    JPanel gap = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    gap.add(new JLabel(""));
+	    teamMemberPanel.add(gap);
+	    
+	    teamMemberPanel.add(bottomPanel);
 	    
 	    teamMemberPanel.add(Box.createHorizontalGlue());
 
@@ -11682,12 +11711,14 @@ public class Pokemon implements Serializable {
 		ArrayList<FieldEffect> side = trainerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.STEALTH_ROCKS)) {
 			int multiplier = getEffectiveMultiplier(PType.ROCK, this);
-			this.currentHP -= (this.getStat(0) / 8) * multiplier;
+			double damage = (this.getStat(0) / 8.0) * multiplier;
+			this.currentHP -= (int) Math.floor(damage);
 			System.out.println("Pointed stones dug into " + this.nickname + "!");
 		}
 		if (field.contains(side, Effect.SPIKES) && this.isGrounded(field)) {
 			double layers = field.getLayers(side, Effect.SPIKES);
-			this.currentHP -= (this.getStat(0) / 8) * ((layers + 1) / 2);
+			double damage = (this.getStat(0) / 8.0) * ((layers + 1) / 2);
+			this.currentHP -= (int) Math.floor(damage);
 			System.out.println(this.nickname + " was hurt by Spikes!");
 		}
 		

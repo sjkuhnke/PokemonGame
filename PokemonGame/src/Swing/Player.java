@@ -83,6 +83,7 @@ public class Player implements Serializable{
 	            }
 	        }
 	    } else {
+	    	p.heal();
 	        int index = -1;
 	        Pokemon[][] boxes = {box1, box2, box3};  // Array of box references
 	        for (int i = 0; i < boxes.length; i++) {
@@ -160,7 +161,8 @@ public class Player implements Serializable{
 		return bag;
 	}
 	
-	public void elevate(Pokemon pokemon) {
+	public boolean elevate(Pokemon pokemon) {
+		boolean result = false;
 		int expAmt = pokemon.expMax - pokemon.exp;
     	pokemon.exp += expAmt;
     	while (pokemon.exp >= pokemon.expMax) {
@@ -173,10 +175,12 @@ public class Player implements Serializable{
                 if (index == 0) this.current = evolved;
                 evolved.checkMove();
                 pokemon = evolved;
+                result = true;
             }
         }
     	pokemon.fainted = false;
     	JOptionPane.showMessageDialog(null, pokemon.nickname + " was elevated to " + pokemon.getLevel());
+    	return result;
 		
 	}
 	

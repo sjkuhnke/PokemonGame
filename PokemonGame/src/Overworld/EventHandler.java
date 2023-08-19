@@ -193,7 +193,7 @@ public class EventHandler {
 	}
 	
 	public boolean hit(int map, int col, int row, String reqDirection) {
-		
+		if (map != gp.currentMap) return false;
 		boolean hit = false;
 		
 		if (map == gp.currentMap) {

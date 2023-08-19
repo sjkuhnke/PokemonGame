@@ -50,6 +50,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(15, 57, 109, mapNum); // leaf blade
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 72, 0, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 75, 2, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(17, 29, 199, mapNum); // return (need cut)
 		
 		mapNum = 11;
 		objIndex = 0;
