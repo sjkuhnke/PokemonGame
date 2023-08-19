@@ -164,6 +164,16 @@ public class Field {
 		return false;
 	}
 	
+	public boolean removeEffect(ArrayList<FieldEffect> side, Effect effect) {
+		for (FieldEffect e : side) {
+			if (e.effect == effect) {
+				side.remove(e);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean equals(FieldEffect fe, Effect e) {
 		if (fe == null) return false;
 		if (fe.effect == e) return true;

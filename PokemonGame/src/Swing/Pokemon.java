@@ -97,7 +97,7 @@ public class Pokemon implements Serializable {
 	public int headbuttCrit;
 	
 	// boolean fields
-	public boolean trainerOwned;
+	public boolean playerOwned;
 	public boolean impressive;
 	public boolean battled;
 	public boolean success;
@@ -143,7 +143,7 @@ public class Pokemon implements Serializable {
 		status = Status.HEALTHY;
 		vStatuses = new ArrayList<Status>();
 		
-		trainerOwned = o;
+		playerOwned = o;
 		impressive = true;
 		trainer = 1;
 		if (t) {
@@ -327,7 +327,7 @@ public class Pokemon implements Serializable {
 		status = Status.HEALTHY;
 		vStatuses = new ArrayList<Status>();
 		
-		trainerOwned = true;
+		playerOwned = true;
 		impressive = true;
 		trainer = 1;
 		
@@ -3990,6 +3990,8 @@ public class Pokemon implements Serializable {
 		PType moveType = move.mtype;
 		int critChance = move.critChance;
 		
+		ArrayList<FieldEffect> userSide = this.playerOwned ? field.playerSide : field.foeSide;
+		ArrayList<FieldEffect> enemySide = this.playerOwned ? field.foeSide : field.playerSide;
 		
 		
 		if (!this.vStatuses.contains(Status.CHARGING) && !this.vStatuses.contains(Status.SEMI_INV) && !this.vStatuses.contains(Status.LOCKED) &&
@@ -4369,7 +4371,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (move.cat == 2) {
-				statusEffect(foe, move, player, field, team);
+				statusEffect(foe, move, player, field, team, userSide, enemySide);
 				this.impressive = false;
 				return;
 			}
@@ -4524,13 +4526,8 @@ public class Pokemon implements Serializable {
 			if ((foe.ability == Ability.ICY_SCALES && !move.isPhysical()) || (foe.ability == Ability.MULTISCALE && foe.currentHP == foe.getStat(0))) damage /= 2;
 			
 			// Screens
-			if (this.trainerOwned) {
-				if (move.isPhysical() && field.contains(field.foeSide, Effect.REFLECT)) damage /= 2;
-				if (!move.isPhysical() && field.contains(field.foeSide, Effect.LIGHT_SCREEN)) damage /= 2;
-			} else {
-				if (move.isPhysical() && field.contains(field.playerSide, Effect.REFLECT)) damage /= 2;
-				if (!move.isPhysical() && field.contains(field.playerSide, Effect.LIGHT_SCREEN)) damage /= 2;
-			}
+			if (move.isPhysical() && field.contains(enemySide, Effect.REFLECT)) damage /= 2;
+			if (!move.isPhysical() && field.contains(enemySide, Effect.LIGHT_SCREEN)) damage /= 2;
 			
 			double multiplier = 1;
 			// Check type effectiveness
@@ -4714,7 +4711,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (!foe.isFainted() && checkSecondary(secChance)) {
-			secondaryEffect(foe, move, field, first);
+			secondaryEffect(foe, move, field, first, userSide, enemySide);
 		}
 		
 		if (move == Move.VOLT_SWITCH || move == Move.FLIP_TURN || move == Move.U_TURN) {
@@ -4764,7 +4761,7 @@ public class Pokemon implements Serializable {
 
 	public void awardxp(int amt, Player player) {
 	    if (this.fainted) return;
-	    if (!this.trainerOwned) return;
+	    if (!this.playerOwned) return;
 
 	    ArrayList<Pokemon> teamCopy = new ArrayList<>(Arrays.asList(player.getTeam()));
 	    int numBattled = player.getBattled();
@@ -4807,7 +4804,7 @@ public class Pokemon implements Serializable {
 		this.happiness = this.happiness > 255 ? 255 : this.happiness;
 	}
 
-	private void secondaryEffect(Pokemon foe, Move move, Field field, boolean first) {
+	private void secondaryEffect(Pokemon foe, Move move, Field field, boolean first, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide) {
 		if (move == Move.ABYSSAL_CHOP) {
 		    foe.paralyze(false, this, field);
 		} else if (move == Move.ACID) {
@@ -4859,8 +4856,10 @@ public class Pokemon implements Serializable {
 			foe.paralyze(false, this, field);
 		} else if (move == Move.BOLT_STRIKE) {
 			foe.paralyze(false, this, field);
-//		} else if (move == Move.BOULDER_CRUSH && first) {
-//			foe.vStatuses.add(Status.FLINCHED);
+		} else if (move == Move.BRICK_BREAK || move == Move.PSYCHIC_FANGS) {
+			if (field.remove(enemySide, Effect.REFLECT)) System.out.println(foe.nickname + "'s Reflect wore off!");
+			if (field.remove(enemySide, Effect.LIGHT_SCREEN)) System.out.println(foe.nickname + "'s Light Screen wore off!");
+			if (field.remove(enemySide, Effect.AURORA_VEIL)) System.out.println(foe.nickname + "'s Aurora Veil wore off!");
 		} else if (move == Move.BOUNCE) {
 			foe.paralyze(false, this, field);
 		} else if (move == Move.BUBBLEBEAM) {
@@ -5220,10 +5219,9 @@ public class Pokemon implements Serializable {
 				System.out.println(this.nickname + " was freed!");
 				this.spunCount = 0;
 			}
-			ArrayList<FieldEffect> side = this.trainerOwned ? field.playerSide : field.foeSide;
-			for (FieldEffect fe : field.getHazards(side)) {
+			for (FieldEffect fe : field.getHazards(userSide)) {
 				System.out.println(fe.toString() + " disappeared from " + this.nickname + "'s side!");
-				side.remove(fe);
+				userSide.remove(fe);
 			}
 		} else if (move == Move.RAZOR_SHELL) {
 			stat(foe, 1, -1);
@@ -5423,7 +5421,7 @@ public class Pokemon implements Serializable {
 		}
 	}
 
-	private void statusEffect(Pokemon foe, Move move, Player player, Field field, Pokemon[] team) {
+	private void statusEffect(Pokemon foe, Move move, Player player, Field field, Pokemon[] team, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide) {
 		boolean fail = false;
 		if (move == Move.ABDUCT) {
 			if (this.lastMoveUsed != Move.ABDUCT) {
@@ -5461,18 +5459,10 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.AURORA_VEIL) {
 			if (field.equals(field.weather, Effect.SNOW)) {
-				if (this.trainerOwned) {
-					if (!(field.contains(field.playerSide, Effect.AURORA_VEIL))) {
-						field.playerSide.add(field.new FieldEffect(Effect.AURORA_VEIL));
-					} else {
-						fail = fail();
-					}
+				if (!(field.contains(userSide, Effect.AURORA_VEIL))) {
+					userSide.add(field.new FieldEffect(Effect.AURORA_VEIL));
 				} else {
-					if (!(field.contains(field.foeSide, Effect.AURORA_VEIL))) {
-						field.foeSide.add(field.new FieldEffect(Effect.AURORA_VEIL));
-					} else {
-						fail = fail();
-					}
+					fail = fail();
 				}
 			} else { fail = fail(); }
 		} else if (move == Move.AUTOMOTIZE) {
@@ -5537,15 +5527,13 @@ public class Pokemon implements Serializable {
 			stat(this, 1, 1);
 		} else if (move == Move.DEFOG) {
 			stat(foe, 6, -1);
-			ArrayList<FieldEffect> side = this.trainerOwned ? field.playerSide : field.foeSide;
-			for (FieldEffect fe : field.getHazards(side)) {
+			for (FieldEffect fe : field.getHazards(userSide)) {
 				System.out.println(fe.toString() + " disappeared from " + this.nickname + "'s side!");
-				side.remove(fe);
+				userSide.remove(fe);
 			}
-			side = foe.trainerOwned ? field.playerSide : field.foeSide;
-			for (FieldEffect fe : field.getHazards(side)) {
+			for (FieldEffect fe : field.getHazards(enemySide)) {
 				System.out.println(fe.toString() + " disappeared from " + this.nickname + "'s side!");
-				side.remove(fe);
+				enemySide.remove(fe);
 			}
 		} else if (move == Move.DESTINY_BOND) {
 			if (this.lastMoveUsed != Move.DESTINY_BOND) {
@@ -5693,18 +5681,10 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.LEER) {
 			stat(foe, 1, -1);
 		} else if (move == Move.LIGHT_SCREEN) {
-			if (this.trainerOwned) {
-				if (!(field.contains(field.playerSide, Effect.LIGHT_SCREEN))) {
-					field.playerSide.add(field.new FieldEffect(Effect.LIGHT_SCREEN));
-				} else {
-					fail = fail();
-				}
+			if (!(field.contains(userSide, Effect.LIGHT_SCREEN))) {
+				userSide.add(field.new FieldEffect(Effect.LIGHT_SCREEN));
 			} else {
-				if (!(field.contains(field.foeSide, Effect.LIGHT_SCREEN))) {
-					field.foeSide.add(field.new FieldEffect(Effect.LIGHT_SCREEN));
-				} else {
-					fail = fail();
-				}
+				fail = fail();
 			}
 		} else if (move == Move.LOCK_ON) {
 			System.out.println(this.nickname + " took aim at " + foe.nickname + "!\n");
@@ -5832,18 +5812,10 @@ public class Pokemon implements Serializable {
 			stat(this, 2, 2);
 			stat(this, 3, 1);
 		} else if (move == Move.REFLECT) {
-			if (this.trainerOwned) {
-				if (!(field.contains(field.playerSide, Effect.REFLECT))) {
-					field.playerSide.add(field.new FieldEffect(Effect.REFLECT));
-				} else {
-					fail = fail();
-				}
+			if (!(field.contains(userSide, Effect.REFLECT))) {
+				userSide.add(field.new FieldEffect(Effect.REFLECT));
 			} else {
-				if (!(field.contains(field.foeSide, Effect.REFLECT))) {
-					field.foeSide.add(field.new FieldEffect(Effect.REFLECT));
-				} else {
-					fail = fail();
-				}
+				fail = fail();
 			}
 		} else if (move == Move.REST) {
 			if (this.currentHP == this.getStat(0)) {
@@ -5875,18 +5847,10 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SAND_ATTACK) {
 			stat(foe, 5, -1);
 		} else if (move == Move.SAFEGUARD) {
-			if (this.trainerOwned) {
-				if (!(field.contains(field.playerSide, Effect.SAFEGUARD))) {
-					field.playerSide.add(field.new FieldEffect(Effect.SAFEGUARD));
-				} else {
-					fail = fail();
-				}
+			if (!(field.contains(userSide, Effect.SAFEGUARD))) {
+				userSide.add(field.new FieldEffect(Effect.SAFEGUARD));
 			} else {
-				if (!(field.contains(field.foeSide, Effect.SAFEGUARD))) {
-					field.foeSide.add(field.new FieldEffect(Effect.SAFEGUARD));
-				} else {
-					fail = fail();
-				}
+				fail = fail();
 			}
 		} else if (move == Move.SANDSTORM) {
 			field.setWeather(field.new FieldEffect(Effect.SANDSTORM));
@@ -5928,25 +5892,13 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SPARKLING_TERRAIN) {
 			field.setTerrain(field.new FieldEffect(Effect.SPARKLY));
 		} else if (move == Move.SPIKES) {
-			if (!this.trainerOwned) {
-				fail = field.setHazard(field.playerSide, field.new FieldEffect(Effect.SPIKES));
-			} else {
-				fail = field.setHazard(field.foeSide, field.new FieldEffect(Effect.SPIKES));
-			}
+			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.SPIKES));
 		} else if (move == Move.SPLASH) {
 			System.out.println("But nothing happened!");
 		} else if (move == Move.STEALTH_ROCK) {
-			if (!this.trainerOwned) {
-				fail = field.setHazard(field.playerSide, field.new FieldEffect(Effect.STEALTH_ROCKS));
-			} else {
-				fail = field.setHazard(field.foeSide, field.new FieldEffect(Effect.STEALTH_ROCKS));
-			}
+			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.STEALTH_ROCKS));
 		} else if (move == Move.STICKY_WEB) {
-			if (!this.trainerOwned) {
-				fail = field.setHazard(field.playerSide, field.new FieldEffect(Effect.STICKY_WEBS));
-			} else {
-				fail = field.setHazard(field.foeSide, field.new FieldEffect(Effect.STICKY_WEBS));
-			}
+			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.STICKY_WEBS));
 		} else if (move == Move.STOCKPILE) {
 			stat(this, 1, 1);
 			stat(this, 3, 1);
@@ -5990,20 +5942,11 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.TAIL_GLOW) {
 			stat(this, 2, 3);
 		} else if (move == Move.TAILWIND) {
-			if (this.trainerOwned) {
-				if (!(field.contains(field.playerSide, Effect.TAILWIND))) {
-					field.playerSide.add(field.new FieldEffect(Effect.TAILWIND));
-					System.out.println("A strong wind blew behind your team!");
-				} else {
-					fail = fail();
-				}
+			if (!(field.contains(userSide, Effect.TAILWIND))) {
+				userSide.add(field.new FieldEffect(Effect.TAILWIND));
+				System.out.println("A strong wind blew behind your team!");
 			} else {
-				if (!(field.contains(field.foeSide, Effect.TAILWIND))) {
-					field.foeSide.add(field.new FieldEffect(Effect.TAILWIND));
-					System.out.println("A strong wind blew behind the opposing team!");
-				} else {
-					fail = fail();
-				}
+				fail = fail();
 			}
 		} else if (move == Move.TAIL_WHIP) {
 			stat(foe, 1, -1);
@@ -6026,11 +5969,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.TOXIC) {
 			foe.toxic(true, this, field);
 		} else if (move == Move.TOXIC_SPIKES) {
-			if (!this.trainerOwned) {
-				fail = field.setHazard(field.playerSide, field.new FieldEffect(Effect.TOXIC_SPIKES));
-			} else {
-				fail = field.setHazard(field.foeSide, field.new FieldEffect(Effect.TOXIC_SPIKES));
-			}
+			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.TOXIC_SPIKES));
 		} else if (move == Move.TRICK_ROOM) {
 			field.setEffect(field.new FieldEffect(Effect.TRICK_ROOM));
 		} else if (move == Move.VENOM_DRENCH) {
@@ -6708,7 +6647,10 @@ public class Pokemon implements Serializable {
 		    break;
 		case 10:
 		    movebank = new Node[17];
-		    movebank[0] = new Node(Move.FLASH);
+		    movebank[0] = new Node(Move.REFLECT);
+		    movebank[0].next = new Node(Move.LIGHT_SCREEN);
+		    movebank[0].next.next = new Node(Move.SNOWSCAPE);
+		    movebank[0].next.next.next = new Node(Move.AURORA_VEIL);
 		    movebank[4] = new Node(Move.LEER);
 		    movebank[7] = new Node(Move.FLASH_RAY);
 		    movebank[9] = new Node(Move.GUST);
@@ -7992,11 +7934,11 @@ public class Pokemon implements Serializable {
 			movebank[27] = new Node(Move.CHARM);
 			movebank[29] = new Node(Move.DAZZLING_GLEAM);
 			movebank[34] = new Node(Move.CALM_MIND);
-			movebank[41] = new Node(Move.PSYCHIC);
-			movebank[44] = new Node(Move.HEAL_PULSE);
-			movebank[48] = new Node(Move.DREAM_EATER);
-			movebank[54] = new Node(Move.MOONBLAST);
-			movebank[59] = new Node(Move.FUTURE_SIGHT);
+			movebank[41] = new Node(Move.GLITZY_GLOW);
+			movebank[44] = new Node(Move.PSYCHIC);
+			movebank[48] = new Node(Move.MOONBLAST);
+			movebank[54] = new Node(Move.HEAL_PULSE);
+			movebank[59] = new Node(Move.DREAM_EATER);
 			movebank[64] = new Node(Move.BLACK_HOLE_ECLIPSE);
 			break;
 		case 88:
@@ -9551,9 +9493,9 @@ public class Pokemon implements Serializable {
 			movebank[47] = new Node(Move.PISTOL_POP);
 			movebank[49] = new Node(Move.IRON_HEAD);
 			movebank[49].next = new Node(Move.LOAD_FIREARMS);
-			movebank[51] = new Node(Move.IRON_BLAST);
-			movebank[53] = new Node(Move.SHIFT_GEAR);
-			movebank[55] = new Node(Move.IRON_HEAD);
+			movebank[51] = new Node(Move.FLAMETHROWER);
+			movebank[53] = new Node(Move.IRON_BLAST);
+			movebank[55] = new Node(Move.HYDRO_PUMP);
 			movebank[57] = new Node(Move.MAGIC_BLAST);
 			movebank[59] = new Node(Move.SHIFT_GEAR);
 			movebank[64] = new Node(Move.PRISMATIC_LASER);
@@ -9638,7 +9580,7 @@ public class Pokemon implements Serializable {
 			movebank[23] = new Node(Move.SLAM);
 			movebank[25] = new Node(Move.TWISTER);
 			movebank[29] = new Node(Move.DRAGON_BREATH);
-			movebank[32] = new Node(Move.GLITZY_GLOW);
+			movebank[32] = new Node(Move.LUSTER_PURGE);
 			movebank[35] = new Node(Move.DRAGON_TAIL);
 			movebank[38] = new Node(Move.GLITZY_GLOW);
 			movebank[41] = new Node(Move.SCALE_SHOT);
@@ -10013,7 +9955,7 @@ public class Pokemon implements Serializable {
 			movebank = new Node[25];
 			movebank[0] = new Node(Move.SPARK);
 			movebank[14] = new Node(Move.TACKLE);
-			movebank[24] = new Node(Move.BOLT_STRIKE);
+			movebank[31] = new Node(Move.BOLT_STRIKE);
 			break;
 		case 210:
 			movebank = new Node[60];
@@ -10442,7 +10384,7 @@ public class Pokemon implements Serializable {
 		this.vStatuses.remove(Status.TRAPPED);
 		foe.vStatuses.remove(Status.SPUN);
 		foe.vStatuses.remove(Status.TRAPPED);
-		if (player != null && this.trainerOwned) {
+		if (player != null && this.playerOwned) {
 			player.setBattled(player.getBattled() - 1);
 		}
 		if (announce) System.out.println("\n" + this.nickname + " fainted!");
@@ -11708,7 +11650,7 @@ public class Pokemon implements Serializable {
 			}
 			if (shuddered) System.out.println("[" + this.nickname + "'s Anticipation]: " + this.nickname + " shuddered!");
 		}
-		ArrayList<FieldEffect> side = trainerOwned ? field.playerSide : field.foeSide;
+		ArrayList<FieldEffect> side = playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.STEALTH_ROCKS)) {
 			int multiplier = getEffectiveMultiplier(PType.ROCK, this);
 			double damage = (this.getStat(0) / 8.0) * multiplier;
@@ -12482,7 +12424,7 @@ public class Pokemon implements Serializable {
 	    clonedPokemon.headbuttCrit = this.headbuttCrit;
 	    
 	    // Clone boolean fields
-	    clonedPokemon.trainerOwned = this.trainerOwned;
+	    clonedPokemon.playerOwned = this.playerOwned;
 	    clonedPokemon.impressive = this.impressive;
 	    clonedPokemon.battled = this.battled;
 	    clonedPokemon.success = this.success;

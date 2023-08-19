@@ -390,7 +390,7 @@ public class Battle extends JFrame {
 		        
 		        if (randomValue <= modifiedCatchRate) {
 		            //me.catchPokemon(new Pokemon(foe.id, foe.getLevel(), true, false));
-		        	foe.trainerOwned = true;
+		        	foe.playerOwned = true;
 		        	me.catchPokemon(foe);
 		        	updateCurrent(pl);
 					updateStatus();
@@ -741,7 +741,7 @@ public class Battle extends JFrame {
 		
 		Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
 		
-		if (p.trainerOwned) scaledImage = flipHorizontal(scaledImage);
+		if (p.playerOwned) scaledImage = flipHorizontal(scaledImage);
 		
 		ImageIcon scaledIcon = new ImageIcon(scaledImage);
 		

@@ -53,7 +53,7 @@ public enum Move {
 	//BRANCH_WHACK(50,95,0,0,0,0,PType.ROCK,"A normal attack",false),
 	BRANCH_POKE(40,100,0,0,0,0,PType.GRASS,"",true),
 	BRAVE_BIRD(120,100,0,0,0,0,PType.FLYING,"User takes 1/3 of damage inflicted",true), // recoil
-	BRICK_BREAK(75,100,100,0,0,0,PType.FIGHTING,"Breaks Screen effects",true), //TODO
+	BRICK_BREAK(75,100,100,0,0,0,PType.FIGHTING,"Breaks Screen effects",true),
 	BRINE(-1,100,0,0,1,0,PType.WATER,"Damage is doubled if foe is below 50% HP",false), 
 	BRUTAL_SWING(60,100,0,0,0,0,PType.DARK,"A normal attack",true),
 	BUBBLE(20,100,0,0,1,0,PType.WATER,"A normal attack",false),
@@ -192,7 +192,6 @@ public enum Move {
 	FURY_SWIPES(18,80,0,0,0,0,PType.NORMAL,"Attacks 2-5 times",true),
 	FUSION_BOLT(100,100,0,0,0,0,PType.ELECTRIC,"",false),
 	FUSION_FLARE(100,100,0,0,1,0,PType.FIRE,"",false),
-	FUTURE_SIGHT(0,100,0,0,2,0,PType.PSYCHIC,"",false), // TODO
 	//GALAXY_ATTACK(115,90,30,0,0,0,PType.MAGIC,"% chance to inflict the foe with a random Status condition",false),
 	GALAXY_BLAST(90,100,0,0,1,0,PType.GALACTIC,"",false),
 	GASTRO_ACID(0,100,0,0,2,0,PType.POISON,"",false),
@@ -380,7 +379,7 @@ public enum Move {
 	PROTECT(0,1000,0,0,2,4,PType.NORMAL,"",false),
 	PSYBEAM(65,100,10,0,1,0,PType.PSYCHIC,"",false),
 	PSYCHIC(90,100,10,0,1,0,PType.PSYCHIC,"",false),
-	PSYCHIC_FANGS(85,100,100,0,0,0,PType.PSYCHIC,"",true), // TODO
+	PSYCHIC_FANGS(85,100,100,0,0,0,PType.PSYCHIC,"",true),
 	PSYCHIC_TERRAIN(0,1000,0,0,2,0,PType.PSYCHIC,"",false),
 	PSYCHO_CUT(70,100,0,1,0,0,PType.PSYCHIC,"Boosted Crit rate",false),
 	PSYSHOCK(80,100,0,0,1,0,PType.PSYCHIC,"",false),
