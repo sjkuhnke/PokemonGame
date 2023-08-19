@@ -432,7 +432,7 @@ public enum Move {
 	SEISMIC_TOSS(0,100,0,0,0,0,PType.FIGHTING,"Damage dealt is equal to the user's level",true),
 	SELF_DESTRUCT(200,100,0,0,0,0,PType.NORMAL,"User faints",false),
 	SHADOW_BALL(80,100,30,0,1,0,PType.GHOST,"% to lower foe's Sp.Def by 1",false),
-	SHADOW_CLAW(70,100,0,1,0,0,PType.GHOST,"",true),
+	SHADOW_CLAW(80,100,0,1,0,0,PType.GHOST,"",true),
 	SHADOW_PUNCH(60,1000,0,0,0,0,PType.GHOST,"",true),
 	SHADOW_SNEAK(40,100,0,0,0,1,PType.GHOST,"Always attacks first",true),
 	SHEER_COLD(0,30,0,0,1,0,PType.ICE,"",false),
