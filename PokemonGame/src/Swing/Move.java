@@ -459,7 +459,7 @@ public enum Move {
 	SMOG(20,70,50,0,1,0,PType.POISON,"% to Poison foe",false),
 	SMOKESCREEN(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's accuracy by 1",false),
 	SNARL(55,95,100,0,1,0,PType.DARK,"",false),
-	SNORE(50,100,0,0,1,0,PType.NORMAL,"",false), // TODO
+	SNORE(50,100,0,0,1,0,PType.NORMAL,"",false),
 	SOLAR_BEAM(120,100,0,0,1,0,PType.GRASS,"User must charge up on the first turn, attacks on the second",false),
 	SOLAR_BLADE(125,100,0,0,0,0,PType.GRASS,"",true),
 	SPACE_BEAM(60,100,30,0,1,0,PType.GALACTIC,"",false),
@@ -574,7 +574,7 @@ public enum Move {
 	WEATHER_BALL(-1,100,0,0,1,0,PType.NORMAL,"",false),
 	WHIP_SMASH(120,100,0,0,0,0,PType.NORMAL,"A normal attack",true),
 	WHIRLPOOL(35,85,100,0,1,0,PType.WATER,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/16 HP in damage, and cannot switch",false),
-	WHIRLWIND(0,1000,0,0,2,-6,PType.FLYING,"",false), // TODO
+	WHIRLWIND(0,1000,0,0,2,-6,PType.FLYING,"",false),
 	WILL_O_WISP(0,80,0,0,2,0,PType.FIRE,"Burns foe",false),
 	WING_ATTACK(60,100,0,0,0,0,PType.FLYING,"A normal attack",true),
 	WISH(0,1000,0,0,2,0,PType.NORMAL,"",false),

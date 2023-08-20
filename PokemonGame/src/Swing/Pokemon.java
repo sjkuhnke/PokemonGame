@@ -5987,6 +5987,8 @@ public class Pokemon implements Serializable {
 			boolean result = false;
 			if (foe.trainerOwned() && enemy != null) {
 				result = enemy.swapRandom();
+			} else if (foe.playerOwned) {
+				result = player.swapRandom();
 			}
 			if (!result) fail = fail();
 		} else if (move == Move.WILL_O_WISP) {
@@ -6656,10 +6658,7 @@ public class Pokemon implements Serializable {
 		    break;
 		case 10:
 		    movebank = new Node[17];
-		    movebank[0] = new Node(Move.REFLECT);
-		    movebank[0].next = new Node(Move.LIGHT_SCREEN);
-		    movebank[0].next.next = new Node(Move.SNOWSCAPE);
-		    movebank[0].next.next.next = new Node(Move.AURORA_VEIL);
+		    movebank[0] = new Node(Move.WHIRLWIND);
 		    movebank[4] = new Node(Move.LEER);
 		    movebank[7] = new Node(Move.FLASH_RAY);
 		    movebank[9] = new Node(Move.GUST);

@@ -2,6 +2,7 @@ package Swing;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 
@@ -241,6 +242,21 @@ public class Player implements Serializable{
 			}
 		}
 		return result;
+	}
+	
+	public boolean swapRandom() {
+		if (!hasValidMembers()) return false;
+		Random rand = new Random();
+		int index = rand.nextInt(team.length);
+		while (team[index] == null || team[index].isFainted() || team[index] == current) {
+			index = rand.nextInt(team.length);
+		}
+		
+		swap(team[index], index);
+		
+		System.out.println(current.nickname + " was dragged out!");
+		return true;
+		
 	}
 
 }
