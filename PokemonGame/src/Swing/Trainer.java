@@ -1,5 +1,7 @@
 package Swing;
 
+import java.util.Random;
+
 public class Trainer {
 	private String name;
 	private Pokemon[] team;
@@ -7,20 +9,23 @@ public class Trainer {
 	int currentIndex;
 	Item item;
 	int flagIndex;
+	private Pokemon current;
 	
 	public Trainer(String name, Pokemon[] team, int money) {
 		this.name = name;
 		this.team = team;
 		this.money = money;
 		currentIndex = 0;
+		current = team[0];
 	}
-	
+
 	public Trainer(String name, Pokemon[] team, int money, Item item) {
 		this.name = name;
 		this.team = team;
 		this.money = money;
 		this.item = item;
 		currentIndex = 0;
+		current = team[0];
 	}
 	
 	public Trainer(String name, Pokemon[] team, int money, int index) {
@@ -29,6 +34,7 @@ public class Trainer {
 		this.money = money;
 		this.flagIndex = index;
 		currentIndex = 0;
+		current = team[0];
 	}
 	
 	public Trainer(String name, Pokemon[] team, int money, Item item, int index) {
@@ -38,6 +44,7 @@ public class Trainer {
 		this.item = item;
 		this.flagIndex = index;
 		currentIndex = 0;
+		current = team[0];
 	}
 	
 	public Trainer(boolean placeholder) {
@@ -48,8 +55,6 @@ public class Trainer {
 			currentIndex = 0;
 		}
 	}
-	
-	
 
 	public Pokemon[] getTeam() {
 		return team;
@@ -70,14 +75,52 @@ public class Trainer {
 	}
 	
 	public Pokemon next() {
-		return team[++currentIndex];
+		Pokemon result = team[++currentIndex];
+		while (result == null) {
+			result = team[++currentIndex];
+		}
+		current = result;
+		return result;
 	}
 	
 	public Pokemon getCurrent() {
-		return team[currentIndex];
+		return current;
 	}
 	
 	public int getMoney() {
 		return money;
+	}
+	
+	public boolean swapRandom() {
+		if (!hasValidMembers()) return false;
+		Random rand = new Random();
+		int index = rand.nextInt(team.length);
+		while (team[index] == null || team[index].isFainted() || team[index] == current) {
+			index = rand.nextInt(team.length);
+		}
+		
+		Pokemon newCurrent = current;
+		
+		newCurrent.clearVolatile();
+		current = team[index];
+		this.team[currentIndex] = team[index];
+		this.team[index] = newCurrent;
+		
+		System.out.println(current.nickname + " was dragged out!");
+		return true;
+		
+	}
+	
+	public boolean hasValidMembers() {
+		boolean result = false;
+		for (int i = 0; i < team.length; i++) {
+			if (this.team[i] != null) {
+				if (this.team[i] != current && !this.team[i].isFainted()) {
+					result = true;
+					break;
+				}
+			}
+		}
+		return result;
 	}
 }

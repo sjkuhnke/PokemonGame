@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -401,11 +402,7 @@ public class Battle extends JFrame {
 					dispose();
 		        } else {
 		            System.out.println("Oh no! " + foe.name + " broke free!");
-		            if (foeTrainer != null) {
-		            	foe.move(me.getCurrent(),foe.randomMove(), me, field, foeTrainer.getTeam(), false);
-		            } else {
-		            	foe.move(me.getCurrent(),foe.randomMove(), me, field, null, false);
-		            }
+		            foe.move(me.getCurrent(),foe.randomMove(), me, field, null, null, false);
 					foe.endOfTurn(me.getCurrent(), me, field);
 					me.getCurrent().endOfTurn(foe, me, field);
 					field.endOfTurn();
@@ -459,7 +456,7 @@ public class Battle extends JFrame {
 					}
 					
 					System.out.println("\nCouldn't escape!");
-	        		foe.move(me.getCurrent(),foe.randomMove(), me, field, null, false);
+	        		foe.move(me.getCurrent(),foe.randomMove(), me, field, null, null, false);
 	        	}
 				foe.endOfTurn(me.getCurrent(), me, field);
 				me.getCurrent().endOfTurn(foe, me, field);
@@ -509,9 +506,9 @@ public class Battle extends JFrame {
 				if (move == Move.PURSUIT && !me.getCurrent().isFainted()) {
 					move = Move.BOOSTED_PURSUIT;
 					if (foeTrainer != null) {
-	        			foe.move(me.getCurrent(), move, me, field, foeTrainer.getTeam(), false);
+	        			foe.move(me.getCurrent(), move, me, field, foeTrainer.getTeam(), null, false);
 	        		} else {
-	        			foe.move(me.getCurrent(), move, me, field, null, false);
+	        			foe.move(me.getCurrent(), move, me, field, null, null, false);
 		        	}
 				}
 				if (move == Move.BOOSTED_PURSUIT && me.getCurrent().isFainted()) {
@@ -545,9 +542,9 @@ public class Battle extends JFrame {
 	            }
 				if (!me.team[index].isFainted() && !swapping && move != Move.BOOSTED_PURSUIT) {
 	        		if (foeTrainer != null) {
-	        			foe.move(me.getCurrent(), move, me, field, foeTrainer.getTeam(), false);
+	        			foe.move(me.getCurrent(), move, me, field, foeTrainer.getTeam(), null, false);
 	        		} else {
-	        			foe.move(me.getCurrent(), move, me, field, null, false);
+	        			foe.move(me.getCurrent(), move, me, field, null, null, false);
 		        	}
 					foe.endOfTurn(me.getCurrent(), me, field);
 					me.getCurrent().endOfTurn(foe, me, field);
@@ -816,6 +813,11 @@ public class Battle extends JFrame {
 		foeText.setFont(getScaledFontSize(foeText));
 		
 		foeSprite.setIcon(getSprite(foe));
+		MouseListener[] listeners = foeSprite.getMouseListeners();
+		for (MouseListener listener : listeners) {
+			foeSprite.removeMouseListener(listener);
+		}
+		
 		foeSprite.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
@@ -837,7 +839,7 @@ public class Battle extends JFrame {
 		        buttonPanel.add(type1);
 		        buttonPanel.add(type2);
 
-		        JOptionPane.showMessageDialog(null, buttonPanel, "Click Actions", JOptionPane.PLAIN_MESSAGE);
+		        JOptionPane.showMessageDialog(null, buttonPanel, "Foe's Typing:", JOptionPane.PLAIN_MESSAGE);
             }
 		});
 		
@@ -986,18 +988,25 @@ public class Battle extends JFrame {
 		Pokemon slower = faster == p1 ? p2 : p1;
 		
 		if (faster == p1) {
-			faster.move(slower, m1, me, field, me.getTeam(), true);
+			Pokemon[] team = me.getTeam();
+			Pokemon[] enemyTeam = foeTrainer == null ? null : foeTrainer.getTeam();
+			faster.move(slower, m1, me, field, team, foeTrainer, true);
 			// Check for swap
 			if (faster.vStatuses.contains(Status.SWITCHING)) faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS);
 			
-	        if (foeTrainer != null) slower.move(faster, m2, me, field, foeTrainer.getTeam(), false);
-	        else slower.move(faster, m2, me, field, null, false);
+	        else slower.move(faster, m2, me, field, enemyTeam, null, false);
 		} else {
-			if (foeTrainer != null) { faster.move(slower, m2, me, field, foeTrainer.getTeam(), true); }
-			else { faster.move(slower, m2, me, field, null, true); }
-	        slower.move(faster, m1, me, field, me.getTeam(), false);
+			Pokemon[] enemyTeam = me.getTeam();
+			Pokemon[] team = foeTrainer == null ? null : foeTrainer.getTeam();
+			faster.move(slower, m2, me, field, team, null, true);
+			
+	        slower.move(faster, m1, me, field, enemyTeam, foeTrainer, false);
 	        // Check for swap
 	        if (slower.vStatuses.contains(Status.SWITCHING)) slower = getSwap(pl, slower.lastMoveUsed == Move.BATON_PASS);
+		}
+		if (foeTrainer != null) {
+			foe = foeTrainer.getCurrent();
+			showFoe();
 		}
         faster.endOfTurn(slower, me, field);
 		slower.endOfTurn(faster, me, field);
@@ -1051,6 +1060,46 @@ public class Battle extends JFrame {
 	    if (me.wiped()) {
 			wipe(pl, gp);
 		}
+	}
+
+	private void showFoe() {
+		foeSprite.setIcon(getSprite(foe));
+		MouseListener[] listeners = foeSprite.getMouseListeners();
+		for (MouseListener listener : listeners) {
+			foeSprite.removeMouseListener(listener);
+		}
+		
+		foeSprite.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseClicked(MouseEvent e) {
+				JGradientButton type1 = new JGradientButton("");
+				JGradientButton type2 = new JGradientButton("");
+				
+				type1.setText(foe.type1.toString());
+				type1.setBackground(foe.type1.getColor());
+				
+				if (foe.type2 != null) {
+					type2.setText(foe.type2.toString());
+					type2.setBackground(foe.type2.getColor());
+				} else {
+					type2.setText("None");
+					type2.setBackground(null);
+				}
+
+		        JPanel buttonPanel = new JPanel();
+		        buttonPanel.add(type1);
+		        buttonPanel.add(type2);
+
+		        JOptionPane.showMessageDialog(null, buttonPanel, "Foe's Typing:", JOptionPane.PLAIN_MESSAGE);
+            }
+		});
+		
+		foeText.setText(foe.nickname + "  lv " + foe.getLevel());
+		foeText.setBounds(569, 37, 184, 20);
+		foeText.setHorizontalAlignment(SwingConstants.LEFT);
+		foeText.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		foeText.setFont(getScaledFontSize(foeText));
+		
 	}
 
 	private Pokemon getSwap(PlayerCharacter pl, boolean baton) {
