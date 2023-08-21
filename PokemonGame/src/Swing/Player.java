@@ -167,6 +167,7 @@ public class Player implements Serializable{
 		int expAmt = pokemon.expMax - pokemon.exp;
     	pokemon.exp += expAmt;
     	while (pokemon.exp >= pokemon.expMax) {
+    		if (pokemon.happiness < 255) pokemon.happiness -= 3;
             // Pokemon has leveled up, check for evolution
             Pokemon evolved = pokemon.levelUp(this);
             if (evolved != null) {

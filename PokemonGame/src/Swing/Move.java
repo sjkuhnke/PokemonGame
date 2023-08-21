@@ -1,5 +1,7 @@
 package Swing;
 
+import java.util.ArrayList;
+
 public enum Move {
 	ABDUCT(0,100,0,0,2,0,PType.GALACTIC,"Abducts the foe and forces their next move to be used on themselves. Can be used once every other turn",false),
 	ABSORB(20,100,0,0,1,0,PType.GRASS,"Heals 50% of damage dealt to foe",false),
@@ -70,7 +72,7 @@ public enum Move {
 	CHARGE(0,1000,0,0,2,0,PType.ELECTRIC,"User's next electric-type attack damage is doubled. Raises user's Sp.Def by 1",false),
 	CHARGE_BEAM(50,90,50,0,1,0,PType.ELECTRIC,"",false),
 	CHARM(0,100,0,0,2,0,PType.LIGHT,"Lowers foe's Attack by 2",false),
-	CIRCLE_THROW(60,90,0,0,0,-6,PType.FIGHTING,"",true), // TODO
+	CIRCLE_THROW(60,90,100,0,0,-6,PType.FIGHTING,"",true),
 	//CHOMP(70,100,30,0,0,0,PType.DARK,"% chance to lower foe's Speed by 1",false),
 	CLOSE_COMBAT(120,100,100,0,0,0,PType.FIGHTING,"Lowers user's Defense and Sp.Def by 1",true),
 	COIL(0,1000,0,0,2,0,PType.POISON,"Raises user's Atk, Def, and Acc by 1",false),
@@ -119,7 +121,7 @@ public enum Move {
 	DRAGON_PULSE(85,100,0,0,1,0,PType.DRAGON,"A normal attack",false),
 	DRAGON_RAGE(0,100,0,0,1,0,PType.DRAGON,"Always does 40 HP damage",false),
 	DRAGON_RUSH(100,75,20,0,0,0,PType.DRAGON,"% chance of causing foe to flinch",true),
-	DRAGON_TAIL(60,90,0,0,0,-6,PType.DRAGON,"",true), // TODO
+	DRAGON_TAIL(60,90,100,0,0,-6,PType.DRAGON,"",true),
 	DRAIN_PUNCH(75,100,0,0,0,0,PType.FIGHTING,"",true),
 	DRAINING_KISS(50,100,0,0,1,0,PType.LIGHT,"",true),
 	DREAM_EATER(100,100,0,0,1,0,PType.PSYCHIC,"Only works if target is asleep. Heals 50% of damage dealt to foe",false),
@@ -284,7 +286,7 @@ public enum Move {
 	LIGHT_OF_RUIN(140,90,0,0,1,0,PType.LIGHT,"",false),
 	LIGHT_SCREEN(0,1000,0,0,2,0,PType.PSYCHIC,"",false),
 	LIQUIDATION(85,100,20,0,0,0,PType.WATER,"",true),
-	LOAD_FIREARMS(0,100,0,0,2,0,PType.STEEL,"",false), // TODO
+	LOAD_FIREARMS(0,100,0,0,2,0,PType.STEEL,"",false),
 	LOCK_ON(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Accuracy by 6",false),
 	LOVELY_KISS(0,75,0,0,2,0,PType.NORMAL,"",false),
 	LOW_KICK(-1,100,0,0,0,0,PType.FIGHTING,"Damage is based on how heavy foe is",true),
@@ -401,7 +403,7 @@ public enum Move {
 	RETURN(-1,100,0,0,0,0,PType.NORMAL,"",true),
 	REVENGE(-1,100,0,0,0,0,PType.FIGHTING,"Power is doubled if user is slower than foe",true),
 	REVERSAL(-1,100,0,0,2,0,PType.FIGHTING,"",true),
-	ROAR(0,1000,0,0,2,-6,PType.NORMAL,"",false), // TODO
+	ROAR(0,1000,0,0,2,-6,PType.NORMAL,"",false),
 	//ROCK_BLADE(80,100,0,1,0,0,PType.ROCK,"Boosted Crit rate",false),
 	ROCK_BLAST(25,90,0,0,0,0,PType.ROCK,"Hits 2-5 times",false),
 	ROCK_POLISH(0,1000,0,0,2,0,PType.ROCK,"Raises user's Speed by 2",false),
@@ -409,7 +411,7 @@ public enum Move {
 	ROCK_THROW(50,90,0,0,0,0,PType.ROCK,"A normal attack",false),
 	ROCK_TOMB(60,95,100,0,0,0,PType.ROCK,"% to lower foe's Speed by 1",false),
 	ROCK_WRECKER(150,90,0,0,0,0,PType.ROCK,"User takes 1/3 of damage dealt as recoil",false),
-	ROCKFALL_FRENZY(75,95,100,0,1,0,PType.ROCK,"",false), // TODO
+	ROCKFALL_FRENZY(75,95,100,0,1,0,PType.ROCK,"",false),
 	//ROCKET(120,75,50,0,0,0,PType.STEEL,"% to Paralyze foe",false),
 	ROLLOUT(-1,90,0,0,0,0,PType.ROCK,"Attacks up to 5 times, damage doubles each time. While active, user cannot switch out",true),
 	ROOST(0,1000,0,0,2,0,PType.FLYING,"Restores 1/2 of user's max HP",false),
@@ -418,7 +420,7 @@ public enum Move {
 	ROUND(60,100,0,0,1,0,PType.NORMAL,"",false),
 	SACRED_FIRE(100,95,50,0,0,0,PType.FIRE,"",false),
 	SACRED_SWORD(90,100,0,0,0,0,PType.FIGHTING,"",true),
-	SAFEGUARD(0,1000,0,0,2,0,PType.NORMAL,"",false), // TODO
+	SAFEGUARD(0,1000,0,0,2,0,PType.NORMAL,"",false),
 	SAND_ATTACK(0,100,0,0,2,0,PType.GROUND,"Lowers foe's Accuracy by 1",false),
 	SANDSTORM(0,1000,0,0,2,0,PType.ROCK,"",false),
 	SCALD(80,100,30,0,2,0,PType.WATER,"",false),
@@ -529,7 +531,7 @@ public enum Move {
 	TEETER_DANCE(0,100,0,0,2,0,PType.NORMAL,"",false),
 	TELEPORT(0,1000,0,0,2,-6,PType.PSYCHIC,"",false),
 	THRASH(120,100,0,0,0,0,PType.NORMAL,"",true),
-	THROAT_CHOP(80,100,100,0,0,0,PType.DARK,"",true), // TODO
+	THROAT_CHOP(80,100,100,0,0,0,PType.DARK,"",true),
 	THUNDER(120,70,30,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false),
 	THUNDER_FANG(65,95,10,0,0,0,PType.ELECTRIC,"% of Paralyzing and/or flinching foe",true),
 	//THUNDER_KICK(80,90,10,0,0,0,PType.ELECTRIC,"% of Paralyzing foe",true),
@@ -721,6 +723,27 @@ public enum Move {
 			return true;
 		}
 		return false;
+	}
+	public static ArrayList<Move> getSound() {
+		ArrayList<Move> result = new ArrayList<>();
+		
+		result.add(Move.BUG_BUZZ);
+		result.add(Move.GRASS_WHISTLE);
+		result.add(Move.GROWL);
+		result.add(Move.HOWL);
+		result.add(Move.METAL_SOUND);
+		result.add(Move.NOBLE_ROAR);
+		result.add(Move.PERISH_SONG);
+		result.add(Move.ROAR);
+		result.add(Move.ROUND);
+		result.add(Move.SCREECH);
+		result.add(Move.SNORE);
+		result.add(Move.SNARL);
+		result.add(Move.SPARKLING_ARIA);
+		result.add(Move.SPARKLING_WATER);
+		result.add(Move.SUPERSONIC);
+		
+		return result;
 	}
 
 }

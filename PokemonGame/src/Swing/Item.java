@@ -891,7 +891,7 @@ public class Item implements Serializable {
 		else if (id == 13) return Status.FROSTBITE;
 		else if (id == 14) return null;
 		else if (id == 15) return null;
-		else return Status.AUTO;
+		else return Status.CONFUSED; // lol
 		
 	}
 	

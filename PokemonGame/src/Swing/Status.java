@@ -16,14 +16,12 @@ public enum Status {
 	NIGHTMARE("NGT", new Color(0, 0, 0), Color.WHITE), 
 	FLINCHED("FLN", new Color(32, 37, 61), Color.WHITE),
 	AQUA_RING("AQR", new Color(84, 117, 247), Color.BLACK), 
-	CHARGED("CRG", new Color(219, 216, 15), Color.BLACK),
 	SPUN("SPN", new Color(32, 37, 61), Color.WHITE),
 	RECHARGE("SPN", new Color(32, 37, 61), Color.WHITE),
 	POSESSED("SPN", new Color(32, 37, 61), Color.WHITE),
 	CHARGING("CRG", new Color(219, 216, 15), Color.BLACK),
 	LOCKED("LCK", new Color(219, 216, 15), Color.BLACK),
 	REFLECT("RFL", new Color(219, 216, 15), Color.BLACK),
-	AUTO("AUT", new Color(219, 216, 15), Color.BLACK),
 	BONDED("AUT", new Color(219, 216, 15), Color.BLACK), 
 	TRAPPED("AUT", Color.BLACK, Color.BLACK),
 	PROTECT("AUT",Color.BLACK,Color.BLACK),
@@ -39,6 +37,7 @@ public enum Status {
 	SWITCHING("AUT",Color.BLACK,Color.BLACK),
 	WISH("AUT",Color.BLACK,Color.BLACK),
 	HEALING("AUT",Color.BLACK,Color.BLACK),
+	MUTE("AUT",Color.BLACK,Color.BLACK),
 	;
 	
 	Status(String name, Color color, Color textColor) {

@@ -226,6 +226,10 @@ public class Pokemon implements Serializable {
 	    if (this.vStatuses.contains(Status.TORMENTED)) {
 	    	validMoves.removeIf(move -> move == this.lastMoveUsed);
 	    }
+	    
+	    if (this.vStatuses.contains(Status.MUTE)) {
+	    	validMoves.removeIf(move -> Move.getSound().contains(move));
+	    }
 
 	    // Pick a random move from the validMoves list
 	    Random rand = new Random();
@@ -254,7 +258,7 @@ public class Pokemon implements Serializable {
         for (Move move : validMoves) {
             int damage = calcWithTypes(foe, move, first, field);
             if (damage > foe.currentHP) damage = foe.currentHP;
-            if (this.vStatuses.contains(Status.TORMENTED) && move == this.lastMoveUsed) {
+            if ((vStatuses.contains(Status.TORMENTED) && move == this.lastMoveUsed) || (vStatuses.contains(Status.MUTE) && Move.getSound().contains(move))) {
             	// nothing: don't add
             } else {
             	moveToDamage.put(move, damage);
@@ -2368,15 +2372,15 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 120 && level >= 30) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 121 && happiness >= 160) {
+		} else if (id == 121 && happiness >= 250) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 123 && level >= 30) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 124 && happiness >= 160) {
+		} else if (id == 124 && happiness >= 250) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 126 && level >= 30) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 127 && happiness >= 160) {
+		} else if (id == 127 && happiness >= 250) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 129 && level >= 20) {
 			result = new Pokemon(id + 1, this);
@@ -2390,9 +2394,9 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 139 && area == -3) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 143 && happiness >= 160) {
+		} else if (id == 143 && area == -3 && happiness >= 160) { // ?? maybe stone???? idfk
 			result = new Pokemon(id + 1, this);
-		} else if (id == 144 && happiness >= 160) {
+		} else if (id == 144 && happiness >= 250) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 146 && level >= 39) {
 			result = new Pokemon(id + 1, this);
@@ -2408,7 +2412,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 158 && level >= 23) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 161 && happiness >= 160) {
+		} else if (id == 161 && happiness >= 250) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 163 && level >= 25) {
 			result = new Pokemon(id + 1, this);
@@ -2472,7 +2476,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 219 && level >= 45) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 221 && happiness >= 160) {
+		} else if (id == 221 && happiness >= 250) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 223 && level >= 16) {
 			result = new Pokemon(id + 1, this);
@@ -4108,6 +4112,13 @@ public class Pokemon implements Serializable {
 			return;
 		}
 		
+		if (this.vStatuses.contains(Status.MUTE) && Move.getSound().contains(move)) {
+			System.out.println("\n" + this.nickname + " can't use " + move + " after the throat chop!");
+			this.lastMoveUsed = null;
+			this.impressive = false;
+			return;
+		}
+		
 		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN)) || this.vStatuses.contains(Status.CHARGING) || move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY) {
 			if (!this.vStatuses.contains(Status.CHARGING)) {
 				System.out.println("\n" + this.nickname + " used " + move + "!");
@@ -4495,10 +4506,10 @@ public class Pokemon implements Serializable {
 			if (moveType == PType.STEEL && this.ability == Ability.STEELWORKER) bp *= 1.5;
 			
 			// Charged
-			if (moveType == PType.ELECTRIC && this.vStatuses.contains(Status.CHARGED)) {
-				bp *= 2;
-				this.vStatuses.remove(Status.CHARGED);
-			}
+			if (moveType == PType.ELECTRIC && lastMoveUsed == Move.CHARGE) bp *= 2;
+			
+			// Load Firearms
+			if (move.mtype == PType.STEEL && lastMoveUsed == Move.LOAD_FIREARMS) bp *= 2;
 			
 			// Crit Check
 			if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
@@ -4713,8 +4724,8 @@ public class Pokemon implements Serializable {
 			if (hit == numHits && hit > 1) System.out.println("Hit " + hit + " times!");
 		}
 		
-		if (!foe.isFainted() && checkSecondary(secChance)) {
-			secondaryEffect(foe, move, field, first, userSide, enemySide, enemy);
+		if ((!foe.isFainted() || move == Move.ROCKFALL_FRENZY) && checkSecondary(secChance)) {
+			secondaryEffect(foe, move, field, first, userSide, enemySide, player, enemy);
 		}
 		
 		if (move == Move.VOLT_SWITCH || move == Move.FLIP_TURN || move == Move.U_TURN) {
@@ -4807,7 +4818,7 @@ public class Pokemon implements Serializable {
 		this.happiness = this.happiness > 255 ? 255 : this.happiness;
 	}
 
-	private void secondaryEffect(Pokemon foe, Move move, Field field, boolean first, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide, Trainer enemy) {
+	private void secondaryEffect(Pokemon foe, Move move, Field field, boolean first, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide, Player player, Trainer enemy) {
 		if (move == Move.ABYSSAL_CHOP) {
 		    foe.paralyze(false, this, field);
 		} else if (move == Move.ACID) {
@@ -4876,6 +4887,12 @@ public class Pokemon implements Serializable {
 			stat(foe, 4, -1);
 		} else if (move == Move.CHARGE_BEAM) {
 			stat(this, 2, 1);
+		} else if (move == Move.CIRCLE_THROW || move == Move.DRAGON_TAIL) {
+			if (foe.trainerOwned() && enemy != null) {
+				enemy.swapRandom();
+			} else if (foe.playerOwned) {
+				player.swapRandom();
+			}
 		} else if (move == Move.CLOSE_COMBAT) {
 			stat(this, 1, -1);
 			stat(this, 3, -1);
@@ -5234,8 +5251,8 @@ public class Pokemon implements Serializable {
 			stat(foe, 1, -1);
 		} else if (move == Move.ROCK_TOMB) {
 			stat(foe, 4, -1);
-//		} else if (move == Move.ROCKET) {
-//			foe.paralyze(false, this, field);
+		} else if (move == Move.ROCKFALL_FRENZY) {
+			field.setHazard(enemySide, field.new FieldEffect(Effect.STEALTH_ROCKS));
 //		} else if (move == Move.ROOT_CRUSH) {
 //			foe.paralyze(false, this, field);
 		} else if (move == Move.SACRED_FIRE) {
@@ -5332,9 +5349,8 @@ public class Pokemon implements Serializable {
 //			stat(foe, 0, -1);
 		} else if (move == Move.SWORD_SPIN) {
 			stat(this, 0, 1);
-//		} else if (move == Move.SWORD_STAB && foe.status == Status.HEALTHY) {
-//			foe.status = Status.BLEEDING;
-//			System.out.println(foe.nickname + " is bleeding!");
+		} else if (move == Move.THROAT_CHOP) {
+			if (!foe.vStatuses.contains(Status.MUTE)) foe.vStatuses.add(Status.MUTE);
 		} else if (move == Move.THUNDER) {
 			foe.paralyze(false, this, field);
 		} else if (move == Move.THUNDERBOLT) {
@@ -5471,12 +5487,9 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.AUTOMOTIZE) {
 			stat(this, 4, 2);
 		} else if (move == Move.LOAD_FIREARMS) {
-			if (!(this.vStatuses.contains(Status.AUTO))) {
-				this.vStatuses.add(Status.AUTO);
-				System.out.println(this.nickname + " upgraded its weapon!");
-			} else {
-				System.out.println("But it failed!");
-			}
+			System.out.println(this.nickname + " upgraded its weapon!");
+			stat(this, 5, 1);
+			stat(this, 6, 1);
 		} else if (move == Move.BABY_DOLL_EYES) {
 			stat(foe, 0, -1);
 		} else if (move == Move.BATON_PASS || move == Move.TELEPORT) {
@@ -5491,7 +5504,6 @@ public class Pokemon implements Serializable {
 			stat(foe, 2, -2);
 		} else if (move == Move.CHARGE) {
 			System.out.println(this.nickname + " became charged with power!");
-			this.vStatuses.add(Status.CHARGED);
 			stat(this, 3, 1);
 		} else if (move == Move.CHARM) {
 			stat(foe, 0, -2);
@@ -5983,7 +5995,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.WATER_SPORT) {
 			field.setEffect(field.new FieldEffect(Effect.WATER_SPORT));
 			System.out.println(this.nickname + " fire's power was weakened!");
-		} else if (move == Move.WHIRLWIND) {
+		} else if (move == Move.WHIRLWIND || move == Move.ROAR) {
 			boolean result = false;
 			if (foe.trainerOwned() && enemy != null) {
 				result = enemy.swapRandom();
@@ -6658,7 +6670,7 @@ public class Pokemon implements Serializable {
 		    break;
 		case 10:
 		    movebank = new Node[17];
-		    movebank[0] = new Node(Move.WHIRLWIND);
+		    movebank[0] = new Node(Move.SPARKLING_ARIA);
 		    movebank[4] = new Node(Move.LEER);
 		    movebank[7] = new Node(Move.FLASH_RAY);
 		    movebank[9] = new Node(Move.GUST);
@@ -10471,7 +10483,10 @@ public class Pokemon implements Serializable {
 		if (move.mtype == this.type2) damage *= 1.5;
 		
 		// Charged
-		if (move.mtype == PType.ELECTRIC && this.vStatuses.contains(Status.CHARGED)) damage *= 2;
+		if (move.mtype == PType.ELECTRIC && lastMoveUsed == Move.CHARGE) damage *= 2;
+		
+		// Load Firearms
+		if (move.mtype == PType.STEEL && lastMoveUsed == Move.LOAD_FIREARMS) damage *= 2;
 		
 		double multiplier = 1;
 		// Check type effectiveness
@@ -10735,6 +10750,11 @@ public class Pokemon implements Serializable {
 
 
 	public void confuse(boolean announce, Field field) {
+		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		if (field.contains(side, Effect.SAFEGUARD)) {
+			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			return;
+		}
 		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
@@ -10750,6 +10770,11 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void sleep(boolean announce, Field field) {
+		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		if (field.contains(side, Effect.SAFEGUARD)) {
+			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			return;
+		}
 		if (isGrounded(field) && field.equals(field.terrain, Effect.ELECTRIC)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Electric Terrain!");
 			return;
@@ -10774,6 +10799,11 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void paralyze(boolean announce, Pokemon foe, Field field) {
+		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		if (field.contains(side, Effect.SAFEGUARD)) {
+			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			return;
+		}
 		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
@@ -10792,6 +10822,11 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void burn(boolean announce, Pokemon foe, Field field) {
+		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		if (field.contains(side, Effect.SAFEGUARD)) {
+			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			return;
+		}
 		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
@@ -10814,6 +10849,11 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void poison(boolean announce, Pokemon foe, Field field) {
+		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		if (field.contains(side, Effect.SAFEGUARD)) {
+			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			return;
+		}
 		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
@@ -10832,6 +10872,11 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void toxic(boolean announce, Pokemon foe, Field field) {
+		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		if (field.contains(side, Effect.SAFEGUARD)) {
+			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			return;
+		}
 		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
@@ -10850,6 +10895,11 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void freeze(boolean announce, Field field) {
+		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		if (field.contains(side, Effect.SAFEGUARD)) {
+			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			return;
+		}
 		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
@@ -11365,9 +11415,17 @@ public class Pokemon implements Serializable {
 	    
 	    teamMemberPanel.add(movesPanel);
 	    
-	    JPanel gap = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    gap.add(new JLabel(""));
-	    teamMemberPanel.add(gap);
+	    JPanel happinessPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    happinessPanel.add(new JLabel(getHappinessDesc()));
+	    teamMemberPanel.add(happinessPanel);
+	    
+	    Pokemon p = this;
+	    happinessPanel.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseClicked(MouseEvent e) {
+		        JOptionPane.showMessageDialog(null, "Happiness: " + p.happiness);
+            }
+		});
 	    
 	    teamMemberPanel.add(bottomPanel);
 	    
@@ -11376,6 +11434,24 @@ public class Pokemon implements Serializable {
 	    return teamMemberPanel;
 	}
 	
+	private String getHappinessDesc() {
+		if (happiness < 70) {
+			return "It's quite wary of you.";
+		} else if (happiness >= 70 && happiness < 100) {
+			return "It's not used to you yet.";
+		} else if (happiness >= 100 && happiness < 130) {
+			return "It's warming up to you. Trust must be growing between you.";
+		} else if (happiness >= 130 && happiness < 160) {
+			return "It's quite friendly with you. Keep being good to it!";
+		} else if (happiness >= 160 && happiness < 200) {
+			return "It looks very happy. It's very comfortable around you.";
+		} else if (happiness >= 200 && happiness < 250) {
+			return "It really trusts you.";
+		} else {
+			return "It looks really happy! It must love you a lot.";
+		}
+	}
+
 	public JPanel getDexSummary(int id, int pokedex) {
 	    JPanel dexPanel = new JPanel();
 	    dexPanel.setLayout(new BoxLayout(dexPanel, BoxLayout.Y_AXIS));
@@ -12359,7 +12435,7 @@ public class Pokemon implements Serializable {
 		ArrayList<Move> validMoves = new ArrayList<>();
 		for (Move m : moveset) {
 			if (m != null) {
-				if (vStatuses.contains(Status.TORMENTED) && m == this.lastMoveUsed) {
+				if ((vStatuses.contains(Status.TORMENTED) && m == this.lastMoveUsed) || (vStatuses.contains(Status.MUTE) && Move.getSound().contains(m))) {
 	            	// nothing: don't add
 	            } else {
 	            	validMoves.add(m);
