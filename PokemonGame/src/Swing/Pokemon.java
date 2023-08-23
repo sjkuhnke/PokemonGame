@@ -6670,7 +6670,7 @@ public class Pokemon implements Serializable {
 		    break;
 		case 10:
 		    movebank = new Node[17];
-		    movebank[0] = new Node(Move.SPARKLING_ARIA);
+		    movebank[0] = new Node(Move.FLASH);
 		    movebank[4] = new Node(Move.LEER);
 		    movebank[7] = new Node(Move.FLASH_RAY);
 		    movebank[9] = new Node(Move.GUST);

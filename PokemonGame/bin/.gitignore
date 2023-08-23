@@ -1,9 +1,12 @@
+/battle/
+/field/
+/maps/
 /npc/
+/player/
+/sprites/
+/Entity/
 /Obj/
 /Overworld/
-/Entity/
 /Swing/
-/maps/
-/tiles/
 /tile/
-/sprites/
+/tiles/
