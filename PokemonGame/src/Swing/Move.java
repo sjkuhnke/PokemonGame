@@ -28,7 +28,7 @@ public enum Move {
 	//AUTO_SHOT(0,1000,0,0,2,0,PType.STEEL,"Causes all of user's \"Shooting\" moves to hit twice",false),
 	AURORA_BEAM(65,100,10,0,1,0,PType.ICE,"% chance to lower foe's Attack by 1",false),
 	AUTOMOTIZE(0,1000,0,0,2,0,PType.STEEL,"Raises user's Speed by 2",false),
-	BABY_DOLL_EYES(0,100,0,0,2,1,PType.LIGHT,"",false),
+	BABY$DOLL_EYES(0,100,0,0,2,1,PType.LIGHT,"",false),
 	//BAWL(0,100,0,0,2,0,PType.DARK,"Lowers foe's Attack by 2",false),
 	BEAT_UP(20,100,0,0,0,0,PType.DARK,"Attacks once per healthy Pokemon on your team",false),
 	BEEFY_BASH(100,85,50,0,0,-1,PType.FIGHTING,"% chance to paralyze foe, moves last",true),
@@ -105,7 +105,7 @@ public enum Move {
 	DISCHARGE(80,100,30,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false),
 	DIVE(80,100,0,0,0,0,PType.WATER,"A normal attack",true),
 	//DOUBLE_BLAST(-1,60,30,0,1,0,PType.NORMAL,"% chance to Confuse foe",false),
-	//DOUBLE_EDGE(120,100,0,0,0,0,PType.NORMAL,"User takes 1/3 of damage inflicted",false),
+	//DOUBLE$EDGE(120,100,0,0,0,0,PType.NORMAL,"User takes 1/3 of damage inflicted",false),
 	DOUBLE_HIT(35,90,0,0,0,0,PType.NORMAL,"Attacks twice",true),
 	//DOUBLE_JET(-1,85,0,0,0,0,PType.WATER,"Attacks 2-5 times",false),
 	DOUBLE_KICK(30,100,0,0,0,0,PType.FIGHTING,"Attacks twice",true),
@@ -185,7 +185,7 @@ public enum Move {
 	FORESIGHT(0,1000,0,0,2,0,PType.MAGIC,"Indentifies foe, replacing their Ghost typing with Normal if they have it. It also raises user's Accuracy by 1 stage",false),
 	FORESTS_CURSE(0,100,0,0,2,0,PType.GRASS,"",false),
 	FOUL_PLAY(95,100,0,0,0,0,PType.DARK,"",true),
-	FREEZE_DRY(70,100,10,0,1,0,PType.ICE,"",false),
+	FREEZE$DRY(70,100,10,0,1,0,PType.ICE,"",false),
 	FREEZING_GLARE(90,100,20,0,1,0,PType.PSYCHIC,"",false),
 	FRENZY_PLANT(150,90,0,0,1,0,PType.GRASS,"User must rest after using this move",false),
 	FRUSTRATION(-1,100,0,0,0,0,PType.NORMAL,"A normal attack",true),
@@ -287,7 +287,7 @@ public enum Move {
 	LIGHT_SCREEN(0,1000,0,0,2,0,PType.PSYCHIC,"",false),
 	LIQUIDATION(85,100,20,0,0,0,PType.WATER,"",true),
 	LOAD_FIREARMS(0,100,0,0,2,0,PType.STEEL,"",false),
-	LOCK_ON(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Accuracy by 6",false),
+	LOCK$ON(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Accuracy by 6",false),
 	LOVELY_KISS(0,75,0,0,2,0,PType.NORMAL,"",false),
 	LOW_KICK(-1,100,0,0,0,0,PType.FIGHTING,"Damage is based on how heavy foe is",true),
 	LOW_SWEEP(65,100,100,0,0,0,PType.FIGHTING,"",true),
@@ -328,7 +328,7 @@ public enum Move {
 	MORNING_SUN(0,1000,0,0,2,0,PType.LIGHT,"",false),
 	MUD_BOMB(65,85,30,0,1,0,PType.GROUND,"% to lower foe's Accuracy by 1",false),
 	MUD_SHOT(55,95,100,0,1,0,PType.GROUND,"",false),
-	MUD_SLAP(20,100,100,0,1,0,PType.GROUND,"% to lower foe's Accuracy by 1",false),
+	MUD$SLAP(20,100,100,0,1,0,PType.GROUND,"% to lower foe's Accuracy by 1",false),
 	MUD_SPORT(0,1000,0,0,2,0,PType.GROUND,"",false),
 	MUDDY_WATER(90,85,30,0,1,0,PType.WATER,"",false),
 	MYSTICAL_FIRE(75,100,100,0,1,0,PType.FIRE,"",false),
@@ -376,7 +376,7 @@ public enum Move {
 	POWDER_SNOW(40,100,30,0,1,0,PType.ICE,"",false),
 	POWER_GEM(80,100,0,0,1,0,PType.ROCK,"",false),
 	POWER_WHIP(120,85,0,0,0,0,PType.GRASS,"",true),
-	POWER_UP_PUNCH(40,100,100,0,0,0,PType.FIGHTING,"",true),
+	POWER$UP_PUNCH(40,100,100,0,0,0,PType.FIGHTING,"",true),
 	PRISMATIC_LASER(100,100,0,0,1,0,PType.LIGHT,"",false),
 	PROTECT(0,1000,0,0,2,4,PType.NORMAL,"",false),
 	PSYBEAM(65,100,10,0,1,0,PType.PSYCHIC,"",false),
@@ -431,7 +431,7 @@ public enum Move {
 	SCREECH(0,85,0,0,2,0,PType.NORMAL,"Lowers foe's Defense by 2",false),
 	SEA_DRAGON(0,1000,0,0,2,0,PType.MAGIC,"",false),
 	SEISMIC_TOSS(0,100,0,0,0,0,PType.FIGHTING,"Damage dealt is equal to the user's level",true),
-	SELF_DESTRUCT(200,100,0,0,0,0,PType.NORMAL,"User faints",false),
+	SELF$DESTRUCT(200,100,0,0,0,0,PType.NORMAL,"User faints",false),
 	SHADOW_BALL(80,100,30,0,1,0,PType.GHOST,"% to lower foe's Sp.Def by 1",false),
 	SHADOW_CLAW(80,100,0,1,0,0,PType.GHOST,"",true),
 	SHADOW_PUNCH(60,1000,0,0,0,0,PType.GHOST,"",true),
@@ -504,7 +504,7 @@ public enum Move {
 	SUNNY_DAY(0,1000,0,0,2,0,PType.FIRE,"",false),
 	SUNSTEEL_STRIKE(100,100,0,0,0,0,PType.STEEL,"",true),
 	//SUPER_CHARGE(90,50,100,0,0,0,PType.ELECTRIC,"% of causing foe to flinch, user takes 1/3 of damage dealt as recoil",false),
-	SUPER_FANG(0,100,0,0,0,0,PType.NORMAL,"Halves foe's remaining HP",true),
+	SUPER_FANG(0,90,0,0,0,0,PType.NORMAL,"Halves foe's remaining HP",true),
 	SUPERCHARGED_SPLASH(10,100,50,0,1,0,PType.WATER,"% chance to raise user's Sp.Atk by 1. Turns into Thunder when used by Kissyfishy-D",false),
 	SUPERNOVA_EXPLOSION(200,100,0,0,1,0,PType.GALACTIC,"",false),
 	SUPERPOWER(120,100,100,0,0,0,PType.FIGHTING,"% of lowering user's Attack and Defense by 1",true),
@@ -539,7 +539,7 @@ public enum Move {
 	THUNDER_WAVE(0,90,0,0,2,0,PType.ELECTRIC,"Paralyzes foe",false),
 	THUNDERBOLT(95,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false), // recoil
 	THUNDERSHOCK(40,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false),
-	TOPSY_TURVY(0,1000,0,0,2,0,PType.DARK,"",false),
+	TOPSY$TURVY(0,1000,0,0,2,0,PType.DARK,"",false),
 	TORMENT(0,100,0,0,2,0,PType.DARK,"",false),
 	//TIDAL_WAVE(-1,100,0,0,1,0,PType.WATER,"Picks a random tide level from the time of day. Morning = 90, Day = 50, and Evening = 130 Base Power",false),
 	TORNADO_SPIN(60,95,100,0,0,0,PType.FIGHTING,"% to raise user's Speed and Accuracy by 1, and frees user of being Spun",true),
@@ -551,7 +551,7 @@ public enum Move {
 	TWINEEDLE(25,100,30,0,0,0,PType.BUG,"",false),
 	TWISTER(40,100,10,0,1,0,PType.DRAGON,"% of causing foe to flinch",false),
 	UNSEEN_STRANGLE(60,100,100,0,0,0,PType.DARK,"",true),
-	U_TURN(70,100,0,0,0,0,PType.BUG,"",true),
+	U$TURN(70,100,0,0,0,0,PType.BUG,"",true),
 	VACUUM_WAVE(40,100,0,0,1,1,PType.FIGHTING,"",false),
 	V_CREATE(180,95,100,0,0,0,PType.FIRE,"",true),
 	VENOM_DRENCH(0,100,0,0,2,0,PType.POISON,"",false),
@@ -561,7 +561,7 @@ public enum Move {
 	VOLT_SWITCH(70,100,0,0,1,0,PType.ELECTRIC,"",false),
 	VITAL_THROW(60,1000,0,0,0,-1,PType.FIGHTING,"This attack never misses, but goes last",false),
 	VOLT_TACKLE(120,100,10,0,0,0,PType.ELECTRIC,"% to Paralyze foe. User takes 1/3 of damage dealt as recoil",true),
-	WAKE_UP_SLAP(-1,100,0,0,0,0,PType.FIGHTING,"If foe is asleep, power is doubled, but the foe wakes up",true),
+	WAKE$UP_SLAP(-1,100,0,0,0,0,PType.FIGHTING,"If foe is asleep, power is doubled, but the foe wakes up",true),
 	WATER_CLAP(20,100,20,0,0,0,PType.WATER,"% to Paralyze foe. Turns into Dragon Darts when used by Kissyfishy-D",true),
 	WATER_FLICK(0,100,0,0,2,0,PType.WATER,"Lowers foe's Attack by 1. Turns into Flamethrower when used by Kissyfishy-D",false),
 	WATER_KICK(75,100,0,0,0,0,PType.WATER,"A normal attack. Turns into Hi Jump Kick when used by Kissyfishy-D",true),
@@ -577,7 +577,7 @@ public enum Move {
 	WHIP_SMASH(120,100,0,0,0,0,PType.NORMAL,"A normal attack",true),
 	WHIRLPOOL(35,85,100,0,1,0,PType.WATER,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/16 HP in damage, and cannot switch",false),
 	WHIRLWIND(0,1000,0,0,2,-6,PType.FLYING,"",false),
-	WILL_O_WISP(0,85,0,0,2,0,PType.FIRE,"Burns foe",false),
+	WILL$O$WISP(0,85,0,0,2,0,PType.FIRE,"Burns foe",false),
 	WING_ATTACK(60,100,0,0,0,0,PType.FLYING,"A normal attack",true),
 	WISH(0,1000,0,0,2,0,PType.NORMAL,"",false),
 	WITHDRAW(0,1000,0,0,2,0,PType.WATER,"",false),
@@ -585,7 +585,7 @@ public enum Move {
 	//WOOD_FANG(50,100,50,0,0,0,PType.ROCK,"% to cause foe to flinch",false), // recoil
 	WRAP(15,90,100,0,0,0,PType.NORMAL,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/16 HP in damage, and cannot switch",true),
 	//WRING_OUT(-1,100,0,0,0,0,PType.NORMAL,"Attack's power is greater the more HP the foe has",true),
-	X_SCISSOR(80,100,0,1,0,0,PType.BUG,"Boosted Crit rate",true),
+	X$SCISSOR(80,100,0,1,0,0,PType.BUG,"Boosted Crit rate",true),
 	ZAP_CANNON(120,50,100,0,1,0,PType.ELECTRIC,"",false),
 	//ZAP(20,100,0,0,0,0,PType.ELECTRIC,"A normal attack",false),
 	ZEN_HEADBUTT(80,90,30,0,0,0,PType.PSYCHIC,"% of causing foe to flinch",true),
@@ -677,11 +677,32 @@ public enum Move {
 	@Override // implementation
 	public String toString() {
 	    String name = super.toString();
-	    name = name.toLowerCase().replace('_', ' ');
+	    name = name.replace('$', '-'); // Replace '$' with '-'
+	    name = name.toLowerCase().replace('_', ' '); // Convert underscores to spaces
 	    String[] words = name.split(" ");
 	    StringBuilder sb = new StringBuilder();
-	    for (String word : words) {
-	        sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+	    for (int i = 0; i < words.length; i++) {
+	        String word = words[i];
+	        if (word.contains("-")) {
+	            String[] hyphenWords = word.split("-");
+	            for (int j = 0; j < hyphenWords.length; j++) {
+	                sb.append(Character.toUpperCase(hyphenWords[j].charAt(0)))
+	                  .append(hyphenWords[j].substring(1));
+	                if (j < hyphenWords.length - 1) {
+	                    sb.append('-');
+	                }
+	            }
+	        } else {
+	            sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1));
+	        }
+	        if (i < words.length - 1) { // Check if there's a next word
+	            char nextChar = name.charAt(name.indexOf(word) + word.length());
+	            if (nextChar == ' ' || nextChar == '-') {
+	                sb.append(nextChar); // Keep the space or hyphen
+	            } else {
+	                sb.append(" "); // Add a space if the next character is not space or hyphen
+	            }
+	        }
 	    }
 	    return sb.toString().trim();
 	}

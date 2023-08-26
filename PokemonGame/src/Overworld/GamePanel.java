@@ -208,7 +208,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 			if (teamTemp[i] != null) {
 				if (teamTemp[i].id == 237) {
 					teamTemp[i].id = 150;
-					teamTemp[i].name = teamTemp[i].getName();
+					teamTemp[i].nickname = teamTemp[i].nickname.equals("Kissyfishy-D") ? teamTemp[i].nickname = teamTemp[i].getName() : teamTemp[i].nickname;
 					
 					teamTemp[i].setBaseStats();
 					teamTemp[i].getStats();

@@ -65,7 +65,7 @@ public class Item implements Serializable {
 		else if (id == 23) return 1000;
 		else if (id == 24) return 2000;
 		else if (id == 25) return 2000;
-		else if (id == 27) return 5000;
+		else if (id == 27) return 1000;
 		else if (id == 112) return 600;
 		else if (id == 113) return 500;
 		else if (id == 115) return 900;
@@ -667,7 +667,7 @@ public class Item implements Serializable {
 			result = Move.LIQUIDATION;
 			break;
 		case 130:
-			result = Move.U_TURN;
+			result = Move.U$TURN;
 			break;
 		case 131:
 			result = Move.FALSE_SWIPE;
@@ -712,7 +712,7 @@ public class Item implements Serializable {
 			result = Move.PLAY_ROUGH;
 			break;
 		case 145:
-			result = Move.WILL_O_WISP;
+			result = Move.WILL$O$WISP;
 			break;
 		case 146:
 			result = Move.FIRE_BLAST;
@@ -757,7 +757,7 @@ public class Item implements Serializable {
 			result = Move.BRICK_BREAK;
 			break;
 		case 160:
-			result = Move.FREEZE_DRY;
+			result = Move.FREEZE$DRY;
 			break;
 		case 161:
 			result = Move.SMACK_DOWN;
@@ -835,7 +835,7 @@ public class Item implements Serializable {
 			result = Move.ROCK_SLIDE;
 			break;
 		case 186:
-			result = Move.X_SCISSOR;
+			result = Move.X$SCISSOR;
 			break;
 		case 187:
 			result = Move.POISON_JAB;

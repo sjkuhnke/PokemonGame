@@ -762,6 +762,7 @@ public class Battle extends JFrame {
 	        if (moveset[i] != null) {
 	            moveButtons[i].setText(moveset[i].toString());
 	            moveButtons[i].setFont(new Font("Tahoma", Font.PLAIN, 9));
+	            moveButtons[i].setFont(getScaledFontSize(moveButtons[i]));
 	            moveButtons[i].setBackground(moveset[i].mtype.getColor());
 	            moveButtons[i].setVisible(true);
 	        } else {

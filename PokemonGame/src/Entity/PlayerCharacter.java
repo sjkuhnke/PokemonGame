@@ -364,6 +364,24 @@ public class PlayerCharacter extends Entity {
 	        	    
 	        	    JOptionPane.showMessageDialog(null, "Player successfully updated!");
 	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
+	    		} else if (code.equals("HP")) {
+	    			String message = "";
+	    			for (Pokemon p : p.team) {
+	    				if (p != null) {
+	    	    			message += p.nickname + " : ";
+	    	    			message += p.determineHPType();
+	    	    			message += "\n";
+	    				}
+	    			}
+	    			
+	        	    
+	        	    JOptionPane.showMessageDialog(null, message);
+	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
+	    		} else if (code.equals("nei")) {
+	    			p.itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
+	        	    
+	        	    JOptionPane.showMessageDialog(null, "Player successfully updated!");
+	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		}
 	    	});
 	    	
