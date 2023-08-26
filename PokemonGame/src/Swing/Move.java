@@ -577,7 +577,7 @@ public enum Move {
 	WHIP_SMASH(120,100,0,0,0,0,PType.NORMAL,"A normal attack",true),
 	WHIRLPOOL(35,85,100,0,1,0,PType.WATER,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/16 HP in damage, and cannot switch",false),
 	WHIRLWIND(0,1000,0,0,2,-6,PType.FLYING,"",false),
-	WILL_O_WISP(0,80,0,0,2,0,PType.FIRE,"Burns foe",false),
+	WILL_O_WISP(0,85,0,0,2,0,PType.FIRE,"Burns foe",false),
 	WING_ATTACK(60,100,0,0,0,0,PType.FLYING,"A normal attack",true),
 	WISH(0,1000,0,0,2,0,PType.NORMAL,"",false),
 	WITHDRAW(0,1000,0,0,2,0,PType.WATER,"",false),
