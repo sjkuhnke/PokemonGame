@@ -1314,6 +1314,7 @@ public class Battle extends JFrame {
 				pokemon.heal();
 			}
 			foeTrainer.currentIndex = 0;
+			foeTrainer.current = foeTrainer.getTeam()[0];
 		}
 		
 	}

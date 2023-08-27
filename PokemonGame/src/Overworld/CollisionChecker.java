@@ -189,6 +189,7 @@ public class CollisionChecker {
 	}
 
 	public boolean checkTrainer(Entity entity, Entity target, int trainer) {
+		if (trainer >= gp.player.p.trainersBeat.length) return false;
 		if (gp.player.p.trainersBeat[trainer]) return false;
 	    int visionRange = 4 * gp.tileSize;
 	    boolean result = false;

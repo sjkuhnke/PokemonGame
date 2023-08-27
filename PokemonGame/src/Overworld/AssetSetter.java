@@ -164,7 +164,41 @@ public class AssetSetter {
 		
 		mapNum = 36;
 		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(12, 52, 3, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(21, 32, 6, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(49, 56, 36, mapNum); // modest
+		gp.obj[mapNum][objIndex] = ObjSetup(61, 28, 14, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 45, 19, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(58, 51, 0, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(66, 52, 5, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(68, 54, 12, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(89, 52, 16, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(64, 20, 102, mapNum); // dragon claw
 		
+		mapNum = 38;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(16, 34, 38, mapNum); // serious
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 34, 6, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 7, 23, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 30, 13, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 30, 13, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(34, 75, 26, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 77, 148, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 78, 29, mapNum); // adamant
+		
+		mapNum = 41;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 45, 3, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(48, 45, 0, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(22, 45, 162, mapNum); // bug buzz
+		gp.obj[mapNum][objIndex] = ObjSetup(16, 41, 3, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(9, 18, 5, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 17, 14, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(30, 29, 27, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(48, 17, 3, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 18, 5, mapNum);
+		
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 42, 12, 43);
 	}
 	
 	public void setNPC() {
@@ -431,6 +465,11 @@ public class AssetSetter {
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
+		
+		gp.npc[mapNum][index] = NPCSetup(5, 35, 74, 138);
+		gp.npc[mapNum][index] = NPCSetup(5, 51, 74, 139);
+		gp.npc[mapNum][index] = NPCSetup(6, 46, 85, 140);
+		gp.npc[mapNum][index] = NPCSetup(6, 36, 84, 141);
 		
 		mapNum = 43;
 		index = 0;

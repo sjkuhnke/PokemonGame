@@ -9,7 +9,7 @@ public class Trainer {
 	int currentIndex;
 	Item item;
 	int flagIndex;
-	private Pokemon current;
+	Pokemon current;
 	
 	public Trainer(String name, Pokemon[] team, int money) {
 		this.name = name;
