@@ -55,7 +55,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	public ItemObj obj[][] = new ItemObj[maxMap][25];
 	public InteractiveTile iTile[][] = new InteractiveTile[maxMap][25];
 	
-	TileManager tileM = new TileManager(this);
+	public TileManager tileM = new TileManager(this);
 	
 	int FPS = 60;
 	private volatile boolean inBattle;

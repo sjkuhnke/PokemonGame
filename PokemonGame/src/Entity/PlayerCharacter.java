@@ -92,6 +92,11 @@ public class PlayerCharacter extends Entity {
 		left2 = setup("/player/red3_1");
 		right1 = setup("/player/red4");
 		right2 = setup("/player/red4_1");
+		
+		surf1 = setup("/player/surf1");
+		surf2 = setup("/player/surf2");
+		surf3 = setup("/player/surf3");
+		surf4 = setup("/player/surf4");
 	}
 	
 	public void update() {
@@ -169,6 +174,20 @@ public class PlayerCharacter extends Entity {
 			}
 			
 			gp.eHandler.checkEvent();
+			
+			if (surf) {
+				double surfXD =  worldX / 48.0;
+				int surfX = (int) Math.round(surfXD);
+				
+				double surfYD =  worldY / 48.0;
+				int surfY = (int) Math.round(surfYD);
+				if (!gp.tileM.getWaterTiles().contains(gp.tileM.mapTileNum[gp.currentMap][surfX][surfY])) {
+					surf = false;
+					for (Integer i : gp.tileM.getWaterTiles()) {
+						gp.tileM.tile[i].collision = true;
+					}
+				}
+			}
 		}
 		if (keyH.dPressed) {
 			keyH.pause();
@@ -183,10 +202,11 @@ public class PlayerCharacter extends Entity {
 			gp.ticks = 0;
 		}
 		for (int i = 0; i < gp.npc[1].length; i++) {
-			if (gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i]) && gp.npc[gp.currentMap][i].direction == "down" && gp.ticks == 0) gp.startBattle(gp.npc[gp.currentMap][i].trainer);
-			if (gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i]) && gp.npc[gp.currentMap][i].direction == "up" && gp.ticks == 1) gp.startBattle(gp.npc[gp.currentMap][i].trainer);
-			if (gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i]) && gp.npc[gp.currentMap][i].direction == "left" && gp.ticks == 2) gp.startBattle(gp.npc[gp.currentMap][i].trainer);
-			if (gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i]) && gp.npc[gp.currentMap][i].direction == "right" && gp.ticks == 3) gp.startBattle(gp.npc[gp.currentMap][i].trainer);
+			int trainer = gp.npc[gp.currentMap][i] == null ? 0 : gp.npc[gp.currentMap][i].trainer;
+			if (gp.ticks == 0 && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "down") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
+			if (gp.ticks == 1 && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "up") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
+			if (gp.ticks == 2 && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "left") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
+			if (gp.ticks == 3 && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "right") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
 		}
 		if (keyH.wPressed) {
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
@@ -205,6 +225,36 @@ public class PlayerCharacter extends Entity {
 			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Cut_Tree) interactCutTree(iTileIndex);
 			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Rock_Smash) interactRockSmash(iTileIndex);
 			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Vine_Crossable) interactVines(iTileIndex);
+			
+			if (p.hasMove(Move.SURF) && !surf) {
+				int result = gp.cChecker.checkTileType(this);
+				if (gp.tileM.getWaterTiles().contains(result)) {
+					keyH.pause();
+					int answer = JOptionPane.showConfirmDialog(null, "The water is a deep blue!\nDo you want to Surf?");
+					if (answer == JOptionPane.YES_OPTION) {
+						switch (direction) {
+						case "down":
+							worldY += gp.tileSize;
+							break;
+						case "up":
+							worldY -= gp.tileSize;
+							break;
+						case "left":
+							worldX -= gp.tileSize;
+							break;
+						case "right":
+							worldX += gp.tileSize;
+							break;
+						}
+						surf = true;
+						for (Integer i : gp.tileM.getWaterTiles()) {
+							gp.tileM.tile[i].collision = false;
+						}
+						
+					}
+					keyH.resume();
+				}
+			}
 		}
 		if (keyH.aPressed) {
 			if (p.fish) {
@@ -457,7 +507,7 @@ public class PlayerCharacter extends Entity {
 		    	if (gp.currentMap == 5) p.locations[2] = true;
 		    	if (gp.currentMap == 19) p.locations[3] = true;
 		    	if (gp.currentMap == 29) p.locations[4] = true;
-		    	
+		    	if (gp.currentMap == 39) p.locations[6] = true;
 		    }
 		    keyH.resume();
 		}
@@ -471,13 +521,13 @@ public class PlayerCharacter extends Entity {
 	    int available = 8;
 	    if (p.badges > 7) available += 3;
 	    if (p.badges > 6) available ++;
-	    if (p.badges > 4) available += 2;
+	    if (p.badges > 3) available += 2;
 	    if (p.badges > 2) available += 2;
 	    if (p.badges > 0) available += 2;
 	    Item[] shopItems = new Item[] {new Item(0), new Item(1), new Item(4), new Item(9), new Item(10), new Item(11), new Item(12), new Item(13), // 0 badges
 	    		new Item(2), new Item(5), // 1 badge
 	    		new Item(14), new Item(16), // 3 badges
-	    		new Item(3), new Item(6), // 5 badges
+	    		new Item(3), new Item(6), // 4 badges
 	    		new Item(7), // 7 badges
 	    		new Item(8), new Item(17), new Item(22)}; // 8 badges
 	    for (int i = 0; i < available; i++) {
@@ -560,6 +610,10 @@ public class PlayerCharacter extends Entity {
 						partyPanel.add(party);
 					}
 					JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+				}
+				if (p.flags[8] && p.flags[9] && gp.currentMap == 41 && !p.bag.contains(96)) {
+					JOptionPane.showMessageDialog(null, "Oh you have?! Thank you so much!\nHere, take this as a reward!\n\nObtained HM04 Surf!");
+					p.bag.add(new Item(96));
 				}
 			}
 		    keyH.resume();
@@ -1247,13 +1301,15 @@ public class PlayerCharacter extends Entity {
 		
 		JPanel shopPanel = new JPanel();
 	    shopPanel.setLayout(new GridLayout(6, 1));
-	    Item[] shopItems = new Item[] {new Item(0), new Item(1), new Item(15), new Item(27), new Item(149), new Item(151)};
-	    for (int i = 0; i < 6; i++) {
+	    Item[] shopItems = new Item[1];
+	    if (gp.currentMap == 30) shopItems = new Item[] {new Item(0), new Item(1), new Item(15), new Item(27), new Item(149), new Item(151)};
+	    if (gp.currentMap == 40) shopItems = new Item[] {new Item(112), new Item(113), new Item(115), new Item(116), new Item(123), new Item(124)};
+	    for (int i = 0; i < shopItems.length; i++) {
 	    	JButton item = new JButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
-	    	int index = i;
+	    	Item curItem = shopItems[i];
 	    	item.addActionListener(e -> {
-    	    	if (p.buy(shopItems[index])) {
-    	            JOptionPane.showMessageDialog(null, "Purchased 1 " + shopItems[index].toString() + " for $" + shopItems[index].getCost());
+    	    	if (p.buy(curItem)) {
+    	            JOptionPane.showMessageDialog(null, "Purchased 1 " + curItem.toString() + " for $" + curItem.getCost());
     	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
     	            interactMarket();
     	        } else {
@@ -1261,8 +1317,7 @@ public class PlayerCharacter extends Entity {
     	        }
 	    	});
 	    	shopPanel.add(item);
-	    	if (i == 4 && p.bag.contains(149)) shopPanel.remove(item);
-	    	if (i == 5 && p.bag.contains(151)) shopPanel.remove(item);
+	    	if (curItem.getID() > 100 && p.bag.contains(curItem.getID())) shopPanel.remove(item);
 	    }
 		JOptionPane.showMessageDialog(null, shopPanel, "Money: $" + p.money, JOptionPane.PLAIN_MESSAGE);
 		keyH.resume();
@@ -1403,18 +1458,22 @@ public class PlayerCharacter extends Entity {
 		case "up":
 			if (spriteNum == 1) image = up1;
 			if (spriteNum == 2) image = up2;
+			if (surf) image = surf2;
 			break;
 		case "down":
 			if (spriteNum == 1) image = down1;
 			if (spriteNum == 2) image = down2;
+			if (surf) image = surf1;
 			break;
 		case "left":
 			if (spriteNum == 1) image = left1;
 			if (spriteNum == 2) image = left2;
+			if (surf) image = surf3;
 			break;
 		case "right":
 			if (spriteNum == 1) image = right1;
 			if (spriteNum == 2) image = right2;
+			if (surf) image = surf4;
 			break;
 		}
 		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);

@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -413,14 +414,14 @@ public class TileManager {
 		setup(361, false);
 		setup(362, false);
 
-//		setup(364, true);
-//		setup(365, true);
-//		setup(366, true);
-//		setup(367, true);
-//		setup(368, true);
-//		setup(369, true);
-//		setup(370, true);
-//		setup(371, true);
+		setup(364, false);
+		setup(365, false);
+		setup(366, false);
+		setup(367, true);
+		setup(368, true);
+		setup(369, true);
+		setup(370, true);
+		setup(371, true);
 //		setup(372, true);
 //		setup(373, true);
 //		setup(374, true);
@@ -449,6 +450,7 @@ public class TileManager {
 //		setup(397, true);
 //		setup(398, true);
 //		setup(399, true);
+
 		try {
 			tile[7] = new GrassTile();
 			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/007.png"));
@@ -663,5 +665,18 @@ public class TileManager {
 				worldRow++;
 			}
 		}
+	}
+	
+	public ArrayList<Integer> getWaterTiles() {
+		ArrayList<Integer> result = new ArrayList<>();
+		result.add(3);
+		for (int i = 24; i < 37; i++) {
+			result.add(i);
+		}
+		for (int i = 313; i < 325; i++) {
+			result.add(i);
+		}
+		
+		return result;
 	}
 }

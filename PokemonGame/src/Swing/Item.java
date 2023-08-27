@@ -24,7 +24,7 @@ public class Item implements Serializable {
 					healAmount = 60;
 					break;
 				case 6:
-					healAmount = 120;
+					healAmount = 200;
 					break;
 				case 7:
 					healAmount = -1;
@@ -66,13 +66,12 @@ public class Item implements Serializable {
 		else if (id == 24) return 2000;
 		else if (id == 25) return 2000;
 		else if (id == 27) return 1000;
-		else if (id == 112) return 600;
-		else if (id == 113) return 500;
-		else if (id == 115) return 900;
-		else if (id == 116) return 1100;
+		else if (id == 112) return 750;
+		else if (id == 113) return 5000;
+		else if (id == 115) return 1000;
+		else if (id == 116) return 1000;
 		else if (id == 123) return 800;
 		else if (id == 124) return 900;
-		else if (id == 126) return 250;
 		else if (id == 138) return 1500;
 		else if (id == 141) return 1000;
 		else if (id == 142) return 1000;
@@ -267,6 +266,7 @@ public class Item implements Serializable {
 		int index1 = p.id - 1;
 		int index2 = this.id - 93;
 		boolean[][] tm = new boolean[][] {
+			
 			
 			
 			

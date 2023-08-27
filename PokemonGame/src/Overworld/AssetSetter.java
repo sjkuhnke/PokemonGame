@@ -371,6 +371,7 @@ public class AssetSetter {
 		
 		// Clerks
 		gp.npc[30][index] = NPCSetup(17, 31, 41, -1);
+		gp.npc[40][index] = NPCSetup(17, 31, 41, -1);
 		
 		mapNum = 28;
 		index = 0;
@@ -425,12 +426,31 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(53, 7, "Do you have an ICE type to show me?\nAlso, say hi to my brother in the\nRADIO TOWER if you haven't yet!", true);
 		
+		if (!flags[8] || !flags[9]) {
+			gp.npc[mapNum][index] = NPCSetup(62, 41, "What is going on at the school?!\nWhere is everybody?!?!");
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
+		
 		mapNum = 43;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(31, 42, "Do you have an GROUND type to show me?\nAlso, say hi to my brother in the\nICY FIELDS if you haven't yet!", true);
 		
 		mapNum = 41;
 		index = 0;
+		
+		if (!flags[7]) {
+			gp.npc[mapNum][index] = NPCSetup(13, 24, "This room is locked!\nWhere could the key be?");
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
+		
+		if (!flags[6]) {
+			gp.npc[mapNum][index] = NPCSetup(50, 24, "This room is locked!\nWhere could the key be?");
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
+		
 		gp.npc[mapNum][index] = NPCSetup(11, 51, 21, 117);
 		gp.npc[mapNum][index] = NPCSetup(12, 51, 27, 118);
 		gp.npc[mapNum][index] = NPCSetup(11, 12, 21, 119);
@@ -447,6 +467,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(12, 40, 21, 130);
 		gp.npc[mapNum][index] = NPCSetup(14, 36, 17, 131);
 		gp.npc[mapNum][index] = NPCSetup(12, 32, 18, 132);
+		
+		gp.npc[mapNum][index] = NPCSetup(29, 18, "Who are these people??\nHave you cleared both rooms yet?", true);
 		
 		mapNum = 44;
 		index = 0;
@@ -570,6 +592,10 @@ public class AssetSetter {
 		}
 		if (flags[4]) gp.npc[13][0] = null;
 		if (flags[5]) gp.npc[28][9] = null;
+		
+		if (flags[7]) gp.npc[41][0] = null;
+		if (flags[6]) gp.npc[41][1] = null;
+		if (flags[8] && flags[9]) gp.npc[38][1] = null;
 	}
 	
 	

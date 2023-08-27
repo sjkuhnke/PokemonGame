@@ -5,6 +5,7 @@ import java.awt.Color;
 
 import javax.swing.*;
 
+import Swing.Move;
 import Swing.Battle.JGradientButton;
 import java.awt.Font;
 
@@ -44,7 +45,12 @@ public class PMap extends JFrame {
 	    JButton NMT = new JButton("");
 	    NMT.setToolTipText("New Minnow Town");
 	    NMT.setBounds(336, 312, 26, 23);
-	    if (locations[0]) NMT.setBackground(Color.red);
+	    if (locations[0]) {
+	    	NMT.setBackground(Color.red);
+	    	NMT.addActionListener(e -> {
+	    		fly("New Minnow Town", 0, 90, 46);
+	    	});
+	    }
 	    if (loc == 0) NMT.setBackground(Color.yellow);
 	    getContentPane().add(NMT);
 	    
@@ -58,7 +64,12 @@ public class PMap extends JFrame {
 	    JButton BVT = new JButton("");
 	    BVT.setToolTipText("Bananaville Town");
 	    BVT.setBounds(221, 312, 26, 23);
-	    if (locations[1]) BVT.setBackground(Color.red);
+	    if (locations[1]) {
+	    	BVT.setBackground(Color.red);
+	    	BVT.addActionListener(e -> {
+	    		fly(BVT.getToolTipText(), 0, 35, 45);
+	    	});
+	    }
 	    if (loc == 2) BVT.setBackground(Color.yellow);
 	    getContentPane().add(BVT);
 	    
@@ -72,7 +83,12 @@ public class PMap extends JFrame {
 	    JButton PG = new JButton("");
 	    PG.setToolTipText("Poppy Grove");
 	    PG.setBounds(215, 234, 38, 31);
-	    if (locations[2]) PG.setBackground(Color.red);
+	    if (locations[2]) {
+	    	PG.setBackground(Color.red);
+	    	PG.addActionListener(e -> {
+	    		fly(PG.getToolTipText(), 4, 69, 72);
+	    	});
+	    }
 	    if (loc == 4) PG.setBackground(Color.yellow);
 	    getContentPane().add(PG);
 	    
@@ -121,14 +137,24 @@ public class PMap extends JFrame {
 	    JButton RC = new JButton("");
 	    RC.setToolTipText("Rawwar City");
 	    RC.setBounds(44, 334, 50, 38);
-	    if (locations[9]) RC.setBackground(Color.red);
+	    if (locations[9]) {
+	    	RC.setBackground(Color.red);
+	    	RC.addActionListener(e -> {
+	    		fly(RC.getToolTipText(), 0, 35, 45); // TODO
+	    	});
+	    }
 	    if (loc == 35) RC.setBackground(Color.yellow);
 	    getContentPane().add(RC);
 	    
 	    JButton IT = new JButton("");
 	    IT.setToolTipText("Iron Town");
 	    IT.setBounds(51, 402, 33, 23);
-	    if (locations[10]) IT.setBackground(Color.red);
+	    if (locations[10]) {
+	    	IT.setBackground(Color.red);
+	    	IT.addActionListener(e -> {
+	    		fly(IT.getToolTipText(), 0, 35, 45); // TODO
+	    	});
+	    }
 	    if (loc == 39) IT.setBackground(Color.yellow);
 	    getContentPane().add(IT);
 	    
@@ -149,7 +175,12 @@ public class PMap extends JFrame {
 	    JButton SC = new JButton("");
 	    SC.setToolTipText("Sicab City");
 	    SC.setBounds(44, 129, 50, 38);
-	    if (locations[3]) SC.setBackground(Color.red);
+	    if (locations[3]) {
+	    	SC.setBackground(Color.red);
+	    	SC.addActionListener(e -> {
+	    		fly(SC.getToolTipText(), 13, 35, 86);
+	    	});
+	    }
 	    if (loc == 9) SC.setBackground(Color.yellow);
 	    getContentPane().add(SC);
 	    
@@ -184,7 +215,12 @@ public class PMap extends JFrame {
 	    JButton KV = new JButton("");
 	    KV.setToolTipText("Kleine Village");
 	    KV.setBounds(143, 41, 26, 23);
-	    if (locations[4]) KV.setBackground(Color.red);
+	    if (locations[4]) {
+	    	KV.setBackground(Color.red);
+	    	KV.addActionListener(e -> {
+	    		fly(KV.getToolTipText(), 28, 76, 52);
+	    	});
+	    }
 	    if (loc == 13) KV.setBackground(Color.yellow);
 	    getContentPane().add(KV);
 	    
@@ -247,7 +283,12 @@ public class PMap extends JFrame {
 	    JButton SRC = new JButton("");
 	    SRC.setToolTipText("Schrice City");
 	    SRC.setBounds(329, 34, 50, 38);
-	    if (locations[6]) SRC.setBackground(Color.red);
+	    if (locations[6]) {
+	    	SRC.setBackground(Color.red);
+	    	SRC.addActionListener(e -> {
+	    		fly(SRC.getToolTipText(), 38, 49, 55);
+	    	});
+	    }
 	    if (loc == 20) SRC.setBackground(Color.yellow);
 	    getContentPane().add(SRC);
 	    
@@ -402,6 +443,17 @@ public class PMap extends JFrame {
 	    getContentPane().add(lblNewLabel);
 	}
 
+	private void fly(String loc, int map, int x, int y) {
+		if (gp.player.p.hasMove(Move.CUT)) {
+			int answer = JOptionPane.showConfirmDialog(null, "Would you like to fly to " + loc + "?");
+    		if (answer == JOptionPane.YES_OPTION) {
+    			gp.eHandler.teleport(map, x, y);
+    			this.dispose();
+    		}
+		}
+		
+	}
+
 	private int getLoc(int map, int x, int y) {
 		switch (map) {
 		case 0:
@@ -492,6 +544,25 @@ public class PMap extends JFrame {
 			return 17;
 		case 35:
 			return 18;
+		case 36:
+			return 19;
+		case 37:
+			return 19;
+		case 38:
+			if (y <= 63) return 20;
+			if (y > 63) return 22;
+		case 39:
+			return 20;
+		case 40:
+			return 20;
+		case 41:
+			return 20;
+		case 42:
+			return 20;
+		case 43:
+			return 20;
+		case 44:
+			return 20;
 		}
 		
 		return -1;
