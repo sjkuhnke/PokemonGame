@@ -41,6 +41,7 @@ import Swing.Battle.JGradientButton;
 import Swing.Battle;
 import Swing.Item;
 import Swing.Move;
+import Swing.PType;
 import Swing.Player;
 import Swing.Pokemon;
 import Swing.Pokemon.Node;
@@ -55,6 +56,7 @@ public class PlayerCharacter extends Entity {
 	public Player p;
 
 	public boolean cross = false;
+	public boolean surf = false;
 	
 	public PlayerCharacter(GamePanel gp, KeyHandler keyH) {
 		super(gp);
@@ -305,6 +307,11 @@ public class PlayerCharacter extends Entity {
 	    				}
 	    			}
 	    			SwingUtilities.getWindowAncestor(cheats).dispose();
+	    		} else if (code.equals("LIGMA")) {
+	    			for (Pokemon pokemon : p.team) {
+	    				if (pokemon != null) pokemon.heal();
+	    			}
+	    			SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		} else if (code.equals("KANY3")) {
 	    			p.money = 1000000;
 	    			SwingUtilities.getWindowAncestor(cheats).dispose();
@@ -507,8 +514,54 @@ public class PlayerCharacter extends Entity {
 	private void interactBlock(NPC_Block npc) {
 		if (keyH.wPressed) {
 			keyH.pause();
-			JOptionPane.showMessageDialog(null, npc.message);
-			if (npc.fish) p.fish = true;
+			if (!p.fish || gp.currentMap != 32) JOptionPane.showMessageDialog(null, npc.message);
+			if (gp.currentMap == 32) p.fish = true;
+			if (npc.more) {
+				if (!p.flags[6] && gp.currentMap == 43) {
+					JPanel partyPanel = new JPanel();
+					partyPanel.setLayout(new GridLayout(6, 1));
+					
+					for (int j = 0; j < 6; j++) {
+						JButton party = setUpPartyButton(j);
+						final int index = j;
+						party.addActionListener(e -> {
+							if (p.team[index].type1 == PType.GROUND || p.team[index].type2 == PType.GROUND) {
+								p.flags[6] = true;
+								JOptionPane.showMessageDialog(null, "Thank you! Here, take this as a reward!");
+								JOptionPane.showMessageDialog(null, "Obtained A Key!\nGot 1 Valiant Gem!");
+								p.bag.add(new Item(24));
+							} else {
+								JOptionPane.showMessageDialog(null, "That's not a GROUND type!");
+							}
+							SwingUtilities.getWindowAncestor(partyPanel).dispose();
+						});
+						partyPanel.add(party);
+					}
+					JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+				}
+				if (!p.flags[7] && gp.currentMap == 38) {
+					JPanel partyPanel = new JPanel();
+					partyPanel.setLayout(new GridLayout(6, 1));
+					
+					for (int j = 0; j < 6; j++) {
+						JButton party = setUpPartyButton(j);
+						final int index = j;
+						party.addActionListener(e -> {
+							if (p.team[index].type1 == PType.ICE || p.team[index].type2 == PType.ICE) {
+								p.flags[7] = true;
+								JOptionPane.showMessageDialog(null, "Thank you! Here, take this as a reward!");
+								JOptionPane.showMessageDialog(null, "Obtained B Key!\nGot 1 Petticoat Gem!");
+								p.bag.add(new Item(25));
+							} else {
+								JOptionPane.showMessageDialog(null, "That's not an ICE type!");
+							}
+							SwingUtilities.getWindowAncestor(partyPanel).dispose();
+						});
+						partyPanel.add(party);
+					}
+					JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+				}
+			}
 		    keyH.resume();
 		}
 	}
@@ -1308,25 +1361,39 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	private void interactVines(int i) {
-		keyH.pause();
-		if (p.hasMove(Move.VINE_CROSS)) {
-			int option = JOptionPane.showOptionDialog(null,
-					"This gap can be crossed!\nDo you want to use Vine Cross?",
-		            "Rock Smash",
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.QUESTION_MESSAGE,
-		            null, null, null);
-			if (option == JOptionPane.YES_OPTION) {
+		
+		if (cross) {
+			if (p.hasMove(Move.VINE_CROSS)) {
 				Vine_Crossable temp = (Vine_Crossable) gp.iTile[gp.currentMap][i];
 				gp.iTile[gp.currentMap][i] = new Vine(gp);
 				gp.iTile[gp.currentMap][i].worldX = temp.worldX;
 				gp.iTile[gp.currentMap][i].worldY = temp.worldY;
+			} else {
+				JOptionPane.showMessageDialog(null, "This gap looks like it can be crossed!");
+				cross = false;
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "This gap looks like it can be crossed!");
+			if (p.hasMove(Move.VINE_CROSS)) {
+				keyH.pause();
+				int option = JOptionPane.showOptionDialog(null,
+						"This gap can be crossed!\nDo you want to use Vine Cross?",
+			            "Rock Smash",
+			            JOptionPane.YES_NO_OPTION,
+			            JOptionPane.QUESTION_MESSAGE,
+			            null, null, null);
+				if (option == JOptionPane.YES_OPTION) {
+					Vine_Crossable temp = (Vine_Crossable) gp.iTile[gp.currentMap][i];
+					gp.iTile[gp.currentMap][i] = new Vine(gp);
+					gp.iTile[gp.currentMap][i].worldX = temp.worldX;
+					gp.iTile[gp.currentMap][i].worldY = temp.worldY;
+					cross = true;
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "This gap looks like it can be crossed!");
+				cross = false;
+			}
+			keyH.resume();
 		}
-		keyH.resume();
-		
 	}
 
 	public void draw(Graphics2D g2) {

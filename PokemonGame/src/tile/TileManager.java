@@ -57,6 +57,15 @@ public class TileManager {
 		loadMap("/maps/map07.txt", 33);
 		loadMap("/maps/gate02.txt", 34);
 		loadMap("/maps/electric01.txt", 35);
+		loadMap("/maps/map08.txt", 36);
+		loadMap("/maps/gate02.txt", 37);
+		loadMap("/maps/map09.txt", 38);
+		loadMap("/maps/pc.txt", 39);
+		loadMap("/maps/market01.txt", 40);
+		loadMap("/maps/school01.txt", 41);
+		loadMap("/maps/radio_tower01.txt", 42);
+		loadMap("/maps/radio_tower02.txt", 43);
+		loadMap("/maps/gym04.txt", 44);
 	}
 	
 	public void getTileImage() {
@@ -391,6 +400,55 @@ public class TileManager {
 		setup(349, true);
 		setup(350, false);
 		setup(351, false);
+		
+		setup(352, false);
+		setup(353, false);
+		setup(354, false);
+		setup(355, false);
+		setup(356, false);
+		setup(357, false);
+		setup(358, false);
+		setup(359, false);
+		setup(360, false);
+		setup(361, false);
+		setup(362, false);
+
+//		setup(364, true);
+//		setup(365, true);
+//		setup(366, true);
+//		setup(367, true);
+//		setup(368, true);
+//		setup(369, true);
+//		setup(370, true);
+//		setup(371, true);
+//		setup(372, true);
+//		setup(373, true);
+//		setup(374, true);
+//		setup(375, true);
+//		setup(376, true);
+//		setup(377, true);
+//		setup(378, true);
+//		setup(379, true);
+//		setup(380, true);
+//		setup(381, true);
+//		setup(382, true);
+//		setup(383, true);
+//		setup(384, true);
+//		setup(385, true);
+//		setup(386, true);
+//		setup(387, true);
+//		setup(388, true);
+//		setup(389, true);
+//		setup(390, true);
+//		setup(391, true);
+//		setup(392, true);
+//		setup(393, true);
+//		setup(394, true);
+//		setup(395, true);
+//		setup(396, true);
+//		setup(397, true);
+//		setup(398, true);
+//		setup(399, true);
 		try {
 			tile[7] = new GrassTile();
 			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/007.png"));
@@ -400,6 +458,9 @@ public class TileManager {
 			
 			tile[266] = new CaveTile();
 			tile[266].image = ImageIO.read(getClass().getResourceAsStream("/tiles/266.png"));
+			
+			tile[363] = new GrassTile();
+			tile[363].image = ImageIO.read(getClass().getResourceAsStream("/tiles/363.png"));
 			
 			tile[37] = new Tile();
 			tile[37].image = ImageIO.read(getClass().getResourceAsStream("/tiles/037.png"));

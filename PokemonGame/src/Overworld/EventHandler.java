@@ -189,6 +189,38 @@ public class EventHandler {
 			// Electric Tunnel
 			if (hit(33,62,16,"any")) teleport(35, 11, 72);
 			if (hit(35,11,73,"any")) teleport(33, 62, 17);
+			
+			if (hit(35,90,69,"any")) teleport(36, 15, 46);
+			if (hit(36,15,45,"any")) teleport(35, 90, 68);
+			
+			// Schrice City Gate
+			if (hit(36,93,41,"any")) teleport(37, 23, 40);
+			if (hit(37,22,40,"any")) teleport(36, 92, 41);
+			if (hit(37,37,40,"any")) teleport(38, 7, 47);
+			if (hit(38,6,47,"any")) teleport(37, 36, 40);
+			
+			// Schrice PC
+			if (hit(38,49,54,"any")) teleport(39, 31, 45);
+			if (hit(39,31,46,"any")) teleport(38, 49, 55);
+						
+			// Schrice Supermarket
+			if (hit(38,18,58,"any")) teleport(40, 31, 45);
+			if (hit(40,31,46,"any")) teleport(38, 18, 59);
+			
+			// Schrice School
+			if (hit(38,28,55,"any")) teleport(41, 31, 45);
+			if (hit(41,31,46,"any")) teleport(38, 28, 56);
+			
+			// Radio Tower
+			if (hit(38,62,57,"any")) teleport(42, 31, 45);
+			if (hit(42,31,46,"any")) teleport(38, 62, 58);
+			
+			if (hit(42,31,33,"any")) teleport(43, 31, 45);
+			if (hit(43,31,46,"any")) teleport(42, 31, 34);
+			
+			// Kleine Gym
+			if (hit(38,62,41,"any")) teleport(44, 63, 67);
+			if (hit(44,63,68,"any")) teleport(38, 62, 42);
 		}
 	}
 	

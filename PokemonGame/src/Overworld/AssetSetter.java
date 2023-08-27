@@ -139,6 +139,32 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(25, 46, 183, mapNum); // captivate
 		gp.obj[mapNum][objIndex] = ObjSetup(52, 43, 6, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(82, 23, 189, mapNum); // acrobatics
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 37, 28, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(83, 14, 6, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 32, 22, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(89, 34, 2, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(71, 34, 10, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(64, 23, 0, mapNum);
+		
+		mapNum = 33;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(22, 6, 6, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(38, 21, 13, mapNum);
+		
+		mapNum = 35;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(7, 56, 12, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(30, 62, 6, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 77, 18, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(46, 68, 16, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(59, 76, 27, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 73, 3, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(64, 78, 7, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(91, 57, 0, mapNum);
+		
+		mapNum = 36;
+		objIndex = 0;
+		
 	}
 	
 	public void setNPC() {
@@ -340,6 +366,8 @@ public class AssetSetter {
 		// Nurses/PCs
 		gp.npc[29][index] = NPCSetup(1, 31, 37, -1);
 		gp.npc[29][index] = NPCSetup(0, 35, 36, -1);
+		gp.npc[39][index] = NPCSetup(1, 31, 37, -1);
+		gp.npc[39][index] = NPCSetup(0, 35, 36, -1);
 		
 		// Clerks
 		gp.npc[30][index] = NPCSetup(17, 31, 41, -1);
@@ -377,8 +405,56 @@ public class AssetSetter {
 		
 		mapNum = 32;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 40, "Take my spare fishing rod!\nLook at water and press\n'A' to fish!", true);
+		gp.npc[mapNum][index] = NPCSetup(31, 40, "Take my spare fishing rod!\nLook at water and press\n'A' to fish!");
 		
+		mapNum = 36;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(3, 20, 45, 106);
+		gp.npc[mapNum][index] = NPCSetup(5, 39, 47, 107);
+		gp.npc[mapNum][index] = NPCSetup(3, 42, 27, 108);
+		gp.npc[mapNum][index] = NPCSetup(6, 44, 32, 109);
+		gp.npc[mapNum][index] = NPCSetup(3, 60, 31, 110);
+		gp.npc[mapNum][index] = NPCSetup(6, 53, 44, 111);
+		gp.npc[mapNum][index] = NPCSetup(4, 65, 48, 112);
+		gp.npc[mapNum][index] = NPCSetup(5, 82, 39, 113);
+		gp.npc[mapNum][index] = NPCSetup(6, 67, 30, 114);
+		gp.npc[mapNum][index] = NPCSetup(3, 76, 25, 115);
+		gp.npc[mapNum][index] = NPCSetup(4, 91, 43, 116);
+		
+		mapNum = 38;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(53, 7, "Do you have an ICE type to show me?\nAlso, say hi to my brother in the\nRADIO TOWER if you haven't yet!", true);
+		
+		mapNum = 43;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(31, 42, "Do you have an GROUND type to show me?\nAlso, say hi to my brother in the\nICY FIELDS if you haven't yet!", true);
+		
+		mapNum = 41;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(11, 51, 21, 117);
+		gp.npc[mapNum][index] = NPCSetup(12, 51, 27, 118);
+		gp.npc[mapNum][index] = NPCSetup(11, 12, 21, 119);
+		gp.npc[mapNum][index] = NPCSetup(12, 12, 27, 120);
+		gp.npc[mapNum][index] = NPCSetup(11, 14, 22, 121);
+		gp.npc[mapNum][index] = NPCSetup(12, 14, 26, 122);
+		gp.npc[mapNum][index] = NPCSetup(13, 19, 24, 123);
+		gp.npc[mapNum][index] = NPCSetup(14, 21, 22, 124);
+		gp.npc[mapNum][index] = NPCSetup(13, 25, 22, 125);
+		gp.npc[mapNum][index] = NPCSetup(11, 23, 16, 126);
+		gp.npc[mapNum][index] = NPCSetup(14, 32, 24, 127);
+		gp.npc[mapNum][index] = NPCSetup(13, 37, 24, 128);
+		gp.npc[mapNum][index] = NPCSetup(11, 40, 18, 129);
+		gp.npc[mapNum][index] = NPCSetup(12, 40, 21, 130);
+		gp.npc[mapNum][index] = NPCSetup(14, 36, 17, 131);
+		gp.npc[mapNum][index] = NPCSetup(12, 32, 18, 132);
+		
+		mapNum = 44;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(6, 60, 61, 133);
+		gp.npc[mapNum][index] = NPCSetup(5, 66, 57, 134);
+		gp.npc[mapNum][index] = NPCSetup(6, 60, 52, 135);
+		gp.npc[mapNum][index] = NPCSetup(5, 66, 46, 136);
+		gp.npc[mapNum][index] = NPCSetup(8, 63, 39, 137);
 	}
 	
 	public void setInteractiveTile() {
@@ -476,6 +552,14 @@ public class AssetSetter {
 		boolean[] flags = gp.player.p.flags;
 		// flags[0] is true after walking into first gate
 		// flags[1] is true after beating Scott 1
+		// flags[2] is true after beating Rick 1
+		// flags[3] is true after beating all TN Grunts in the office
+		// flags[4] is true after beating Scott 2
+		// flags[5] is true after beating Fred 2
+		// flags[6] is true after key A
+		// flags[7] is true after key B
+		// flags[8] is true after clearing room A
+		// flags[9] is true after clearing room B
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(10, 72, 48, 0);
 		if (flags[1]) gp.npc[3][14] = null;

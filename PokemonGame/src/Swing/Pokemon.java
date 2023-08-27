@@ -4281,7 +4281,7 @@ public class Pokemon implements Serializable {
 			double accuracy = acc * asAccModifier(accEv);
 			if ((field.equals(field.weather, Effect.SANDSTORM) && foe.ability == Ability.SAND_VEIL) ||
 					(field.equals(field.weather, Effect.SNOW) && foe.ability == Ability.SNOW_CLOAK)) accuracy *= 0.8;
-			if (!hit(accuracy) || foe.vStatuses.contains(Status.SEMI_INV)) {
+			if (!hit(accuracy) || foe.vStatuses.contains(Status.SEMI_INV) && move.accuracy <= 100) {
 				System.out.println("\n" + this.nickname + " used " + move + "!");
 				System.out.println(this.nickname + "'s attack missed!");
 				if (move == Move.HI_JUMP_KICK) {
@@ -5824,7 +5824,7 @@ public class Pokemon implements Serializable {
 			this.status = Status.HEALTHY;
 			removeBad(this.vStatuses);
 			stat(this, 4, 1);
-		} else if (move == Move.RED_NOSE_BOOST) {
+		} else if (move == Move.RED$NOSE_BOOST) {
 			stat(this, 1, 1);
 			stat(this, 2, 2);
 			stat(this, 3, 1);
@@ -7531,7 +7531,7 @@ public class Pokemon implements Serializable {
 			movebank[4] = new Node(Move.HEADBUTT);
 			movebank[9] = new Node(Move.POWDER_SNOW);
 			movebank[14] = new Node(Move.HORN_LEECH);
-			movebank[19] = new Node(Move.RED_NOSE_BOOST);
+			movebank[19] = new Node(Move.RED$NOSE_BOOST);
 			movebank[22] = new Node(Move.ICE_SHARD);
 			movebank[24] = new Node(Move.MAGIC_BLAST);
 			movebank[29] = new Node(Move.LIGHT_BEAM);
@@ -7661,7 +7661,7 @@ public class Pokemon implements Serializable {
 			movebank[25] = new Node(Move.BODY_SLAM);
 			movebank[30] = new Node(Move.REST);
 			movebank[30].next = new Node(Move.SNORE);
-			movebank[31] = new Node(Move.SWAGGER);
+			movebank[31] = new Node(Move.AURORA_VEIL);
 			movebank[37] = new Node(Move.SNOWSCAPE);
 			movebank[42] = new Node(Move.BLIZZARD);
 			break;
@@ -7679,7 +7679,7 @@ public class Pokemon implements Serializable {
 			movebank[25] = new Node(Move.BODY_SLAM);
 			movebank[30] = new Node(Move.REST);
 			movebank[30].next = new Node(Move.SNORE);
-			movebank[31] = new Node(Move.SWAGGER);
+			movebank[31] = new Node(Move.AURORA_VEIL);
 			movebank[37] = new Node(Move.SNOWSCAPE);
 			movebank[42] = new Node(Move.BLIZZARD);
 			movebank[43] = new Node(Move.ICE_FANG);

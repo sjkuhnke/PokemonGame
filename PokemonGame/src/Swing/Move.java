@@ -397,7 +397,7 @@ public enum Move {
 	RAZOR_SHELL(75,95,50,0,0,0,PType.WATER,"",true),
 	REBOOT(0,1000,0,0,2,0,PType.STEEL,"Clears user or any Status condition, and raises user's Speed by 1",false),
 	RECOVER(0,1000,0,0,2,0,PType.NORMAL,"",false),
-	RED_NOSE_BOOST(0,1000,0,0,2,0,PType.MAGIC,"",false),
+	RED$NOSE_BOOST(0,1000,0,0,2,0,PType.MAGIC,"",false),
 	REFLECT(0,1000,0,0,2,0,PType.PSYCHIC,"",false),
 	REST(0,1000,0,0,2,0,PType.PSYCHIC,"",false),
 	RETURN(-1,100,0,0,0,0,PType.NORMAL,"",true),

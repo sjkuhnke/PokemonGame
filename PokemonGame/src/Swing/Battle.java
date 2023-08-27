@@ -97,7 +97,6 @@ public class Battle extends JFrame {
 		setTitle("Battle");
 		
 		foe = new Pokemon(10, 5, false, false);
-	    foe.currentHP = 0;
 	    
 	    field = new Field();
 		

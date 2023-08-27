@@ -208,7 +208,7 @@ public class Encounter {
 				encounters.add(new Encounter(117, 15, 16, 0.40));
 				encounters.add(new Encounter(123, 16, 18, 0.05));
 				encounters.add(new Encounter(129, 17, 18, 0.05));
-			} else if (area == 35 && type.equals("Standard")) { // Electric Tunner 01
+			} else if (area == 35 && type.equals("Standard")) { // Electric Tunnel 01
 				encounters.add(new Encounter(153, 19, 20, 0.20));
 				encounters.add(new Encounter(114, 18, 19, 0.10));
 				encounters.add(new Encounter(123, 17, 18, 0.10));
@@ -216,6 +216,36 @@ public class Encounter {
 				encounters.add(new Encounter(199, 17, 19, 0.07));
 				encounters.add(new Encounter(202, 20, 20, 0.03));
 				encounters.add(new Encounter(205, 18, 19, 0.40));
+			} else if (area == 36 && type.equals("Standard")) { // Route 29
+				encounters.add(new Encounter(11, 20, 22, 0.12));
+				encounters.add(new Encounter(29, 18, 21, 0.12));
+				encounters.add(new Encounter(47, 21, 21, 0.19));
+				encounters.add(new Encounter(75, 19, 22, 0.10));
+				encounters.add(new Encounter(86, 19, 22, 0.08));
+				encounters.add(new Encounter(114, 19, 21, 0.04));
+				encounters.add(new Encounter(117, 16, 18, 0.25));
+				encounters.add(new Encounter(62, 18, 20, 0.06));
+				encounters.add(new Encounter(59, 19, 20, 0.04));
+			} else if (area == 38 && y <= 31 && type.equals("Standard")) { // Icy Fields
+				encounters.add(new Encounter(59, 22, 22, 0.25));
+				encounters.add(new Encounter(61, 22, 22, 0.15));
+				encounters.add(new Encounter(62, 22, 22, 0.20));
+				encounters.add(new Encounter(64, 22, 22, 0.20));
+				encounters.add(new Encounter(71, 22, 22, 0.12));
+				encounters.add(new Encounter(158, 22, 22, 0.08));
+			} else if (area == 38 && y > 61 && type.equals("Standard")) { // Route 30
+				encounters.add(new Encounter(11, 24, 25, 0.15));
+				encounters.add(new Encounter(126, 22, 24, 0.20));
+				encounters.add(new Encounter(47, 24, 24, 0.25));
+				encounters.add(new Encounter(82, 23, 25, 0.15));
+				encounters.add(new Encounter(89, 25, 25, 0.25));
+			} else if (area == 38 && y > 61 && type.equals("Fishing")) { // Route 30
+				encounters.add(new Encounter(90, 19, 19, 0.10));
+				encounters.add(new Encounter(137, 16, 18, 0.25));
+				encounters.add(new Encounter(134, 16, 18, 0.30));
+				encounters.add(new Encounter(132, 18, 19, 0.10));
+				encounters.add(new Encounter(146, 18, 19, 0.15));
+				encounters.add(new Encounter(71, 19, 20, 0.10));
 			}
 			
 		}
