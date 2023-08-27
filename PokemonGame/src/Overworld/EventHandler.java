@@ -204,8 +204,10 @@ public class EventHandler {
 			if (hit(39,31,46,"any")) teleport(38, 49, 55);
 						
 			// Schrice Supermarket
-			if (hit(38,18,58,"any")) teleport(40, 31, 45);
-			if (hit(40,31,46,"any")) teleport(38, 18, 59);
+			if (hit(38,18,58,"any")) teleport(45, 31, 45);
+			if (hit(45,31,46,"any")) teleport(38, 18, 59);
+			if (hit(45,36,38,"any")) teleport(40, 27, 38);
+			if (hit(40,26,38,"any")) teleport(45, 35, 38);
 			
 			// Schrice School
 			if (hit(38,28,55,"any")) teleport(41, 31, 45);
