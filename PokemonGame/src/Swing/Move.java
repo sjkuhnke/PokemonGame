@@ -385,7 +385,7 @@ public enum Move {
 	PSYCHIC_TERRAIN(0,1000,0,0,2,0,PType.PSYCHIC,"",false),
 	PSYCHO_CUT(70,100,0,1,0,0,PType.PSYCHIC,"Boosted Crit rate",false),
 	PSYSHOCK(80,100,0,0,1,0,PType.PSYCHIC,"",false),
-	PSYWAVE(0,100,0,0,2,0,PType.PSYCHIC,"",false),
+	PSYWAVE(0,100,0,0,1,0,PType.PSYCHIC,"",false),
 	//PUNCH(40,90,0,0,0,0,PType.FIGHTING,"A normal attack",false),
 	PURSUIT(40,100,0,0,0,0,PType.DARK,"A normal attack",true),
 	QUICK_ATTACK(40,100,0,0,0,1,PType.NORMAL,"Always attacks first",true),

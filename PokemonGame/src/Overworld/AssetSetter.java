@@ -89,6 +89,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(17, 48, 161, mapNum); // smack down
 		gp.obj[mapNum][objIndex] = ObjSetup(17, 45, 13, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(32, 30, 37, mapNum); // quiet
+		gp.obj[mapNum][objIndex] = ObjSetup(28, 8, 172, mapNum); // ice spinner (v.cross)
 		
 		mapNum = 14;
 		objIndex = 0;
@@ -235,21 +236,21 @@ public class AssetSetter {
 		gp.npc[6][index] = NPCSetup(2, 27, 39, -1);
 		gp.npc[20][index] = NPCSetup(2, 27, 39, -1);
 		
+		mapNum = 3;
+		index = 0;
 		if (!flags[1]) {
-			gp.npc[3][index] = NPCSetup(31, 40, "I saw a boy named Scott near New\nMinnow town saying he was looking\nfor a young man that looked like you.\nMaybe you should check it out?");
+			gp.npc[mapNum][index] = NPCSetup(31, 40, "I saw a boy named Scott near New\nMinnow town saying he was looking\nfor a young man that looked like you.\nMaybe you should check it out?");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
 		
 		mapNum = 4;
-		
 		if (!flags[2]) {
 			gp.npc[mapNum][index] = NPCSetup(81, 61, "The gym is currently closed because the\nLeader is trying to help the Warehouse\nowner get rid of Team Nuke.\nCome back later.");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
 		
-		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(4, 32, 62, 18);
 		gp.npc[mapNum][index] = NPCSetup(4, 23, 65, 19); // make way lower levels
 		gp.npc[mapNum][index] = NPCSetup(4, 32, 68, 20); // make way lower levels
@@ -322,7 +323,7 @@ public class AssetSetter {
 		}
 		gp.npc[mapNum][index] = NPCSetup(5, 26, 49, 104);
 		gp.npc[mapNum][index] = NPCSetup(6, 20, 49, 105);
-		gp.npc[mapNum][index] = NPCSetup(5, 28, 34, 71);
+		gp.npc[mapNum][index] = NPCSetup(5, 26, 34, 71);
 		gp.npc[mapNum][index] = NPCSetup(5, 16, 37, 72);
 		gp.npc[mapNum][index] = NPCSetup(6, 32, 24, 73);
 		gp.npc[mapNum][index] = NPCSetup(6, 25, 18, 74);
@@ -540,6 +541,10 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(23, 9, 0);
 		gp.iTile[mapNum][iIndex] = ITileSetup(24, 9, 0);
 		
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 10, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 9, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 8, 4);
+		
 		mapNum = 21;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(63, 60, 3);
@@ -624,8 +629,8 @@ public class AssetSetter {
 		// flags[9] is true after clearing room B
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(10, 72, 48, 0);
-		if (flags[1]) gp.npc[3][14] = null;
-		if (flags[2]) gp.npc[4][15] = null;
+		if (flags[1]) gp.npc[3][0] = null;
+		if (flags[2]) gp.npc[4][1] = null;
 		if (flags[3]) {
 			gp.npc[17][6] = null;
 			gp.npc[17][7] = null;

@@ -292,8 +292,6 @@ public class Pokemon implements Serializable {
             return Move.STRUGGLE;
         }
         
-        System.out.println(bestMoves.toString() + " " + maxDamage);
-        
         int randomIndex = (int) (Math.random() * bestMoves.size());
         return bestMoves.get(randomIndex);
     }
@@ -4131,6 +4129,11 @@ public class Pokemon implements Serializable {
 				return;
 			} else {
 				move = this.lastMoveUsed;
+				bp = move.basePower;
+				acc = move.accuracy;
+				secChance = move.secondary;
+				moveType = move.mtype;
+				critChance = move.critChance;
 				this.vStatuses.remove(Status.CHARGING);
 			}
 		}
@@ -4148,6 +4151,11 @@ public class Pokemon implements Serializable {
 				return;
 			} else {
 				move = this.lastMoveUsed;
+				bp = move.basePower;
+				acc = move.accuracy;
+				secChance = move.secondary;
+				moveType = move.mtype;
+				critChance = move.critChance;
 				this.vStatuses.remove(Status.SEMI_INV);
 			}
 		}
@@ -4173,7 +4181,7 @@ public class Pokemon implements Serializable {
 		
 		if (this.vStatuses.contains(Status.LOCKED) && (lastMoveUsed == Move.OUTRAGE || lastMoveUsed == Move.PETAL_DANCE || lastMoveUsed == Move.THRASH ||
 				lastMoveUsed == Move.ROLLOUT || lastMoveUsed == Move.ICE_BALL)) {
-			move = lastMoveUsed;
+			move = this.lastMoveUsed;
 			bp = move.basePower;
 			acc = move.accuracy;
 			secChance = move.secondary;
@@ -4213,6 +4221,11 @@ public class Pokemon implements Serializable {
 				this.impressive = false;
 				return;
 			}
+			bp = move.basePower;
+			acc = move.accuracy;
+			secChance = move.secondary;
+			moveType = move.mtype;
+			critChance = move.critChance;
 		}
 		
 		if (foe.vStatuses.contains(Status.REFLECT) && (move != Move.BRICK_BREAK && move != Move.MAGIC_FANG && move != Move.PSYCHIC_FANGS)) {
