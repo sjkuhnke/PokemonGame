@@ -603,7 +603,7 @@ public enum Move {
 	SURF(90,100,0,0,1,0,PType.WATER,"A normal attack",false),
 	SLOW_FALL(75,90,100,0,1,0,PType.PSYCHIC,"% chance to change user's ability to LEVITATE",false),
 	ROCK_CLIMB(80,95,20,0,1,0,PType.ROCK,"% chance to confuse foe",false),
-	LAVA_SURF(95,100,0,0,1,0,PType.FIRE,"A normal attack",false), 
+	LAVA_SURF(90,100,0,0,1,0,PType.FIRE,"A normal attack",false),
 	BOOSTED_PURSUIT(80,100,0,0,0,0,PType.DARK,"If you're seeing this something went wrong",true),
 	
 	ABYSSAL_CHOP(-1,90,50,0,0,0,PType.DRAGON,"% chance to paralyse foe. Damage is doulbed if foe is paralyzed",true),
