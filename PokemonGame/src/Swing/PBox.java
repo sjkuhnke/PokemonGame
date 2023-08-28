@@ -398,12 +398,7 @@ public class PBox extends JFrame {
 	        	@Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
-			            String message = "Move: " + pokemon.moveset[index].toString() + "\n";
-			            message += "Type: " + pokemon.moveset[index].mtype + "\n";
-			            message += "BP: " + pokemon.moveset[index].getbp() + "\n";
-			            message += "Accuracy: " + pokemon.moveset[index].accuracy + "\n";
-			            message += "Category: " + pokemon.moveset[index].getCategory() + "\n";
-			            message += "Description: " + pokemon.moveset[index].getDescription();
+			    		String message = pokemon.moveset[index].getDescriptor();
 			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
 			        	choice[0] = index;
@@ -418,12 +413,7 @@ public class PBox extends JFrame {
         	@Override
 		    public void mouseClicked(MouseEvent e) {
 		    	if (SwingUtilities.isRightMouseButton(e)) {
-		            String message = "Move: " + move.toString() + "\n";
-		            message += "Type: " + move.mtype + "\n";
-		            message += "BP: " + move.getbp() + "\n";
-		            message += "Accuracy: " + move.accuracy + "\n";
-		            message += "Category: " + move.getCategory() + "\n";
-		            message += "Description: " + move.getDescription();
+		    		String message = move.getDescriptor();
 		            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 		        } else {
 		        	choice[0] = JOptionPane.CLOSED_OPTION;

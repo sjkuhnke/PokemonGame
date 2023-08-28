@@ -49,7 +49,7 @@ public class Pokemon implements Serializable {
 	// stat fields
 	public int[] baseStats;
 	public int[] stats;
-	private int level;
+	public int level;
 	public int[] statStages;
 	public int[] ivs;
 	public double[] nature;
@@ -196,6 +196,7 @@ public class Pokemon implements Serializable {
 
 	public void setMoves() {
 		int index = 0;
+		moveset = new Move[4];
 		for (int i = 0; i < level && i < movebank.length; i++) {
 			Node node = movebank[i];
 	        while (node != null) {
@@ -2579,6 +2580,18 @@ public class Pokemon implements Serializable {
 	        }
 	    }
 	    sb.append("]");
+	    return sb.toString();
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+	    sb.append(nickname);
+	    if (!nickname.equals(name)) {
+	    	sb.append(" (");
+		    sb.append(name);
+		    sb.append(")");
+	    }
 	    return sb.toString();
 	}
 	
@@ -10325,6 +10338,27 @@ public class Pokemon implements Serializable {
 			movebank[22] = new Node(Move.HEADBUTT);
 			movebank[25] = new Node(Move.THUNDER_WAVE);
 			break;
+		case 237:
+			movebank = new Node[60];
+			movebank[0] = new Node(Move.SPLASH);
+			movebank[0].addToEnd(new Node(Move.SWEET_KISS));
+			movebank[0].addToEnd(new Node(Move.LOVELY_KISS));
+			movebank[4] = new Node(Move.DRAINING_KISS);
+			movebank[6] = new Node(Move.DOUBLE_SLAP);
+			movebank[11] = new Node(Move.WATER_GUN);
+			movebank[15] = new Node(Move.AQUA_RING);
+			movebank[19] = new Node(Move.FLASH);
+			movebank[24] = new Node(Move.AQUA_JET);
+			movebank[28] = new Node(Move.PSYBEAM);
+			movebank[31] = new Node(Move.SEA_DRAGON);
+			movebank[35] = new Node(Move.SPARKLING_WATER);
+			movebank[39] = new Node(Move.WATER_FLICK);
+			movebank[43] = new Node(Move.WATER_SMACK);
+			movebank[47] = new Node(Move.WATER_CLAP);
+			movebank[51] = new Node(Move.WATER_KICK);
+			movebank[55] = new Node(Move.SUPERCHARGED_SPLASH);
+			movebank[59] = new Node(Move.DEEP_SEA_BUBBLE);
+			break;
 		case 238:
             movebank = new Node[55];
             movebank[0] = new Node(Move.LEER);
@@ -10447,6 +10481,10 @@ public class Pokemon implements Serializable {
 	}
 	
 	public int calc(double attackStat, double defenseStat, double bp, int level) {
+		return calc(attackStat, defenseStat, bp, level, 0);
+	}
+	
+	public int calc(double attackStat, double defenseStat, double bp, int level, int mode) {
 		double num = 2* (double) level / 5 + 2;
 		double stat = attackStat / defenseStat / 50;
 		double damageDouble = Math.floor(num * bp * stat);
@@ -10457,6 +10495,8 @@ public class Pokemon implements Serializable {
 		rollAmt += 85;
 		rollAmt /= 100;
 		
+		if (mode == -1) rollAmt = 0.85;
+		if (mode == 1) rollAmt = 1.0;
 		// Roll
 		damageDouble *= rollAmt;
 		// Convert to integer
@@ -10465,6 +10505,10 @@ public class Pokemon implements Serializable {
 	}
 	
 	public int calcWithTypes(Pokemon foe, Move move, boolean first, Field field) {
+		return calcWithTypes(foe, move, first, field, 0);
+	}
+	
+	public int calcWithTypes(Pokemon foe, Move move, boolean first, Field field, int mode) {
 		double attackStat;
 		double defenseStat;
 		int damage = 0;
@@ -10517,7 +10561,7 @@ public class Pokemon implements Serializable {
 		
 		if (move == Move.TOXIC && (this.type1 == PType.POISON || this.type2 == PType.POISON)) acc = 1000;
 		
-		if (this.ability != Ability.NO_GUARD && foe.ability != Ability.NO_GUARD) {
+		if (mode == 0 && this.ability != Ability.NO_GUARD && foe.ability != Ability.NO_GUARD) {
 			int accEv = this.statStages[5] - foe.statStages[6];
 			if (move == Move.DARKEST_LARIAT || move == Move.SACRED_SWORD) accEv += foe.statStages[6];
 			accEv = accEv > 6 ? 6 : accEv;
@@ -10693,7 +10737,7 @@ public class Pokemon implements Serializable {
 		// Crit Check
 		if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 		if (this.ability == Ability.SUPER_LUCK) critChance++;
-		if (critCheck(critChance) && critChance >= 1) {
+		if (mode == 0 && critCheck(critChance) && critChance >= 1) {
 			if (move.isPhysical() && attackStat < this.getStat(1)) {
 				attackStat = this.getStat(1);
 				if (this.status == Status.BURNED) attackStat /= 2;
@@ -10704,11 +10748,11 @@ public class Pokemon implements Serializable {
 			}
 			if (move.isPhysical() && defenseStat > foe.getStat(2)) defenseStat = foe.getStat(2);
 			if (!move.isPhysical() && defenseStat > foe.getStat(4)) defenseStat = foe.getStat(4);
-			damage = calc(attackStat, defenseStat, bp, this.level);
+			damage = calc(attackStat, defenseStat, bp, this.level, mode);
 			damage *= 1.5;
 			if (this.ability == Ability.SNIPER) damage *= 1.5;
 		} else {
-			damage = calc(attackStat, defenseStat, bp, this.level);
+			damage = calc(attackStat, defenseStat, bp, this.level, mode);
 		}
 		
 		if ((foe.ability == Ability.ICY_SCALES && !move.isPhysical()) || (foe.ability == Ability.MULTISCALE && foe.currentHP == foe.getStat(0))) damage /= 2;
@@ -10793,7 +10837,7 @@ public class Pokemon implements Serializable {
 		damage = Math.max(damage, 1);
 		
 
-		if (damage >= foe.currentHP) damage = foe.currentHP; // Check for kill
+		if (mode == 0 && damage >= foe.currentHP) damage = foe.currentHP; // Check for kill
 		
 		if (move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) {
 			Random rand = new Random();
@@ -11637,12 +11681,7 @@ public class Pokemon implements Serializable {
 	                moveButton.setBackground(moveset[i].mtype.getColor());
 	                int index = i;
 	                moveButton.addActionListener(e -> {
-	                	String message = "Move: " + moveset[index].toString() + "\n";
-			            message += "Type: " + moveset[index].mtype + "\n";
-			            message += "BP: " + moveset[index].getbp() + "\n";
-			            message += "Accuracy: " + moveset[index].accuracy + "\n";
-			            message += "Category: " + moveset[index].getCategory() + "\n";
-			            message += "Description: " + moveset[index].getDescription();
+	                	String message = moveset[index].getDescriptor();
 			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 	                });
 	            }
@@ -11864,12 +11903,7 @@ public class Pokemon implements Serializable {
 		            moveButton.setHorizontalAlignment(SwingConstants.LEFT);
 		            moveButton.setBackground(move.mtype.getColor());
 		            moveButton.addActionListener(f -> {
-		                String message = "Move: " + move.toString() + "\n";
-		                message += "Type: " + move.mtype + "\n";
-		                message += "BP: " + move.getbp() + "\n";
-		                message += "Accuracy: " + move.accuracy + "\n";
-		                message += "Category: " + move.getCategory() + "\n";
-		                message += "Description: " + move.getDescription();
+		                String message = move.getDescriptor();
 		                JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 		            });
 		        }
@@ -12127,12 +12161,7 @@ public class Pokemon implements Serializable {
 	        	@Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
-			            String message = "Move: " + pokemon.moveset[index].toString() + "\n";
-			            message += "Type: " + pokemon.moveset[index].mtype + "\n";
-			            message += "BP: " + pokemon.moveset[index].getbp() + "\n";
-			            message += "Accuracy: " + pokemon.moveset[index].accuracy + "\n";
-			            message += "Category: " + pokemon.moveset[index].getCategory() + "\n";
-			            message += "Description: " + pokemon.moveset[index].getDescription();
+			    		String message = moveset[index].getDescriptor();
 			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
 			        	if (!moveset[index].isHMmove()) {
@@ -12152,12 +12181,7 @@ public class Pokemon implements Serializable {
         	@Override
 		    public void mouseClicked(MouseEvent e) {
 		    	if (SwingUtilities.isRightMouseButton(e)) {
-		            String message = "Move: " + move.toString() + "\n";
-		            message += "Type: " + move.mtype + "\n";
-		            message += "BP: " + move.getbp() + "\n";
-		            message += "Accuracy: " + move.accuracy + "\n";
-		            message += "Category: " + move.getCategory() + "\n";
-		            message += "Description: " + move.getDescription();
+		    		String message = move.getDescriptor();
 		            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 		        } else {
 		        	choice[0] = JOptionPane.CLOSED_OPTION;

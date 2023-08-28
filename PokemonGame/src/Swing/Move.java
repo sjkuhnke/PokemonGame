@@ -600,7 +600,7 @@ public enum Move {
 	CUT(50,95,0,2,0,0,PType.NORMAL,"Extra-boosted crit rate",true),
 	ROCK_SMASH(40,100,50,0,0,0,PType.FIGHTING,"% to lower foe's Defense by 1",true),
 	VINE_CROSS(70,95,100,0,0,0,PType.GRASS,"% chance to lower foe's Speed by 1",false),
-	SURF(95,100,0,0,1,0,PType.WATER,"A normal attack",false),
+	SURF(90,100,0,0,1,0,PType.WATER,"A normal attack",false),
 	SLOW_FALL(75,90,100,0,1,0,PType.PSYCHIC,"% chance to change user's ability to LEVITATE",false),
 	ROCK_CLIMB(80,95,20,0,1,0,PType.ROCK,"% chance to confuse foe",false),
 	LAVA_SURF(95,100,0,0,1,0,PType.FIRE,"A normal attack",false), 
@@ -664,6 +664,17 @@ public enum Move {
         	return desc;
         }
 		
+	}
+	
+	public String getDescriptor() {
+		String message = "Move: " + toString() + "\n";
+        message += "Type: " + mtype + "\n";
+        message += "BP: " + getbp() + "\n";
+        message += "Accuracy: " + accuracy + "\n";
+        message += "Category: " + getCategory() + "\n";
+        message += "Description: " + getDescription();
+        
+        return message;
 	}
 	
 	public boolean isAttack() {

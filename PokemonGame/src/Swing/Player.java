@@ -49,6 +49,7 @@ public class Player implements Serializable{
 		
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 		locations[0] = true;
+		bag.add(new Item(200));
 	}
 	
 	public Pokemon getCurrent() {

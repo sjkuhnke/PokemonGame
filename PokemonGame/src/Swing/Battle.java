@@ -174,12 +174,7 @@ public class Battle extends JFrame {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
-			            String message = "Move: " + me.getCurrent().moveset[index].toString() + "\n";
-			            message += "Type: " + me.getCurrent().moveset[index].mtype + "\n";
-			            message += "BP: " + me.getCurrent().moveset[index].getbp() + "\n";
-			            message += "Accuracy: " + me.getCurrent().moveset[index].accuracy + "\n";
-			            message += "Category: " + me.getCurrent().moveset[index].getCategory() + "\n";
-			            message += "Description: " + me.getCurrent().moveset[index].getDescription();
+			    		String message = me.getCurrent().moveset[index].getDescriptor();
 			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
 			        	if (foe.trainerOwned()) {

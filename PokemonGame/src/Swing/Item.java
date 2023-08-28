@@ -255,6 +255,7 @@ public class Item implements Serializable {
 		else if (id == 197) return "TM97";
 		else if (id == 198) return "TM98";
 		else if (id == 199) return "TM99";
+		else if (id == 200) return "Calculator";
 		return "";
 	}
 
@@ -926,6 +927,7 @@ public class Item implements Serializable {
 		else if (id == 27) return new Color(192, 192, 192);
 		else if (id == 28) return new Color(255, 215, 0);
 		else if (id >= 29 && id <= 39) return new Color(113, 84, 255);
+		else if (id == 200) return Color.black;
 		else return getMove().mtype.getColor();
 	}
 
