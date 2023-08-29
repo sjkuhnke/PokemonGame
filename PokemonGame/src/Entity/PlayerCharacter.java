@@ -1554,7 +1554,6 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	private void interactVines(int i) {
-		keyH.pause();
 		if (cross) {
 			if (p.hasMove(Move.VINE_CROSS)) {
 				Vine_Crossable temp = (Vine_Crossable) gp.iTile[gp.currentMap][i];
@@ -1562,14 +1561,17 @@ public class PlayerCharacter extends Entity {
 				gp.iTile[gp.currentMap][i].worldX = temp.worldX;
 				gp.iTile[gp.currentMap][i].worldY = temp.worldY;
 			} else {
+				keyH.pause();
 				JOptionPane.showMessageDialog(null, "This gap looks like it can be crossed!");
 				cross = false;
+				keyH.resume();
 			}
 		} else {
+			keyH.pause();
 			if (p.hasMove(Move.VINE_CROSS)) {
 				int option = JOptionPane.showOptionDialog(null,
 						"This gap can be crossed!\nDo you want to use Vine Cross?",
-			            "Rock Smash",
+			            "Vine Cross",
 			            JOptionPane.YES_NO_OPTION,
 			            JOptionPane.QUESTION_MESSAGE,
 			            null, null, null);
@@ -1584,8 +1586,9 @@ public class PlayerCharacter extends Entity {
 				JOptionPane.showMessageDialog(null, "This gap looks like it can be crossed!");
 				cross = false;
 			}
+			keyH.resume();
 		}
-		keyH.resume();
+		
 	}
 
 	public void draw(Graphics2D g2) {

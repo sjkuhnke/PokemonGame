@@ -162,12 +162,12 @@ public class Battle extends JFrame {
 		 * Set current movebuttons
 		 */
 		moveButtons = new JGradientButton[4];
-		int[] xPositions = {171, 270, 171, 270};
-		int[] yPositions = {242, 242, 275, 275};
+		int[] xPositions = {176, 275, 176, 275};
+		int[] yPositions = {247, 247, 280, 280};
 		for (int i = 0; i < moveButtons.length; i++) {
 			final int index = i;
 			moveButtons[i] = new JGradientButton("");
-			moveButtons[i].setBounds(xPositions[i], yPositions[i], 89, 23);
+			moveButtons[i].setBounds(xPositions[i], yPositions[i], 99, 33);
 			playerPanel.add(moveButtons[i]);
 			
 			moveButtons[i].addMouseListener(new MouseAdapter() {
@@ -208,7 +208,7 @@ public class Battle extends JFrame {
 		userStatus.setText(me.getCurrent().status.getName());
 		userStatus.setForeground(me.getCurrent().status.getTextColor());
 		userStatus.setBackground(me.getCurrent().status.getColor());
-		userStatus.setBounds(193, 179, 21, 20);
+		userStatus.setBounds(203, 179, 21, 20);
 		userStatus.setVisible(true);
 		userStatus.setOpaque(true);
 		playerPanel.add(userStatus);
@@ -235,7 +235,7 @@ public class Battle extends JFrame {
 		foeParty = new JRadioButton[6];
 		
 		userSprite = new JLabel("");
-		userSprite.setBounds(193, 0, 200, 200);
+		userSprite.setBounds(203, 0, 200, 200);
 		
 		foeSprite = new JLabel("");
 		foeSprite.setBounds(543, 60, 200, 200);
@@ -268,7 +268,7 @@ public class Battle extends JFrame {
         slashLabel = new JLabel("/");
 		slashLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		slashLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		slashLabel.setBounds(256, 222, 21, 14);
+		slashLabel.setBounds(266, 222, 21, 14);
 		playerPanel.add(slashLabel);
 		
 		/*
@@ -284,13 +284,13 @@ public class Battle extends JFrame {
 		currentHPLabel = new JLabel(me.getCurrent().getCurrentHP() + "");
 		currentHPLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		currentHPLabel.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		currentHPLabel.setBounds(213, 222, 46, 14);
+		currentHPLabel.setBounds(223, 222, 46, 14);
 		playerPanel.add(currentHPLabel);
 		
 		maxHPLabel = new JLabel(me.getCurrent().getStat(0) + "");
 		maxHPLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		maxHPLabel.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		maxHPLabel.setBounds(273, 222, 46, 14);
+		maxHPLabel.setBounds(283, 222, 46, 14);
 		playerPanel.add(maxHPLabel);
 		
 		updateBars(false);
@@ -690,7 +690,7 @@ public class Battle extends JFrame {
 	    Font newFont = originalFont;
 
 	    int textWidth = button.getFontMetrics(originalFont).stringWidth(text);
-	    int maxWidth = button.getWidth() - 30;
+	    int maxWidth = button.getWidth() - 34;
 
 	    while (textWidth > maxWidth && newFont.getSize() > 1) {
 	        newFont = newFont.deriveFont((float) newFont.getSize() - 1);
@@ -707,7 +707,7 @@ public class Battle extends JFrame {
 		currentText = new JLabel("ERROR");
 		currentText.setText(me.getCurrent().nickname + "  lv " + me.getCurrent().getLevel()); 
 		currentText.setHorizontalAlignment(SwingConstants.LEFT);
-		currentText.setBounds(219, 179, 140, 20);
+		currentText.setBounds(229, 179, 140, 20);
 		currentText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		currentText.setFont(getScaledFontSize(currentText));
 		
@@ -755,7 +755,7 @@ public class Battle extends JFrame {
 	    for (int i = 0; i < moveButtons.length; i++) {
 	        if (moveset[i] != null) {
 	            moveButtons[i].setText(moveset[i].toString());
-	            moveButtons[i].setFont(new Font("Tahoma", Font.PLAIN, 9));
+	            moveButtons[i].setFont(new Font("Tahoma", Font.PLAIN, 11));
 	            moveButtons[i].setFont(getScaledFontSize(moveButtons[i]));
 	            moveButtons[i].setBackground(moveset[i].mtype.getColor());
 	            moveButtons[i].setVisible(true);
@@ -1178,12 +1178,12 @@ public class Battle extends JFrame {
 		} else {
 			healthBar.setForeground(new Color(255, 0, 0));
 		}
-		healthBar.setBounds(193, 201, 146, 14);
+		healthBar.setBounds(203, 201, 146, 14);
 		playerPanel.add(healthBar);
 			
 		expBar.setMaximum(me.getCurrent().expMax);
 		expBar.setValue(me.getCurrent().exp);
-		expBar.setBounds(193, 216, 146, 7);
+		expBar.setBounds(203, 216, 146, 7);
 		playerPanel.add(expBar);
 		
 		foeHealthBar.setMaximum(foe.getStat(0));

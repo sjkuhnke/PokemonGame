@@ -2290,19 +2290,19 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 35 && level >= 20) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 36 && area == -2) {
+		} else if (id == 36 && area == 35) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 41 && level >= 15) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 42 && level >= 25) {
+		} else if (id == 42 && level >= 39) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 44 && level >= 16) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 48 && level >= 22) {
 			result = new Pokemon(id + 1, this);
+		} else if (id == 49 && area == 35) {
+			result = new Pokemon(id + 2, this);
 		} else if (id == 49 && level >= 36 && knowsMove(Move.ROCK_BLAST)) {
-			result = new Pokemon(id + 1, this);
-		} else if (id == 49 && area == -2) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 52 && level >= 30) {
 			result = new Pokemon(id + 1, this);
@@ -2362,7 +2362,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 111 && level >= 30) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 112 && area == -2) {
+		} else if (id == 112 && area == 35) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 114 && level >= 28) {
 			result = new Pokemon(id + 1, this);
@@ -2462,7 +2462,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 205 && level >= 22) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 206 && area == -2) {
+		} else if (id == 206 && area == 35) {
 			result = new Pokemon(208, this);
 		} else if (id == 206 && level >= 36 && knowsMove(Move.ROCK_BLAST)) {
 			result = new Pokemon(id + 1, this);
@@ -2470,7 +2470,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 212 && area == -1) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 213 && area == -2) {
+		} else if (id == 213 && area == 35) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 218 && level >= 20) {
 			result = new Pokemon(id + 1, this);
@@ -2708,7 +2708,7 @@ public class Pokemon implements Serializable {
 		} else if (this.id == 110) { this.baseStats = new int[]{70,40,55,120,115,110};
 		} else if (this.id == 111) { this.baseStats = new int[]{55,62,46,73,75,49};
 		} else if (this.id == 112) { this.baseStats = new int[]{83,65,92,105,80,50};
-		} else if (this.id == 113) { this.baseStats = new int[]{85,85,100,92,93,55};
+		} else if (this.id == 113) { this.baseStats = new int[]{85,65,120,92,98,55};
 		} else if (this.id == 114) { this.baseStats = new int[]{54,32,53,65,58,33};
 		} else if (this.id == 115) { this.baseStats = new int[]{65,80,55,45,60,50};
 		} else if (this.id == 116) { this.baseStats = new int[]{90,128,72,35,97,98};
@@ -4589,7 +4589,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (foe.ability == Ability.FALSE_ILLUMINATION) {
-				PType[] lightResist = new PType[]{PType.GHOST, PType.GALACTIC, PType.LIGHT};
+				PType[] lightResist = new PType[]{PType.GHOST, PType.GALACTIC, PType.LIGHT, PType.DARK};
 				for (PType type : lightResist) {
 					if (moveType == type) multiplier /= 2;
 				}
@@ -5047,7 +5047,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.GLITTERING_TORNADO) {
 			stat(foe, 5, -1);
 		} else if (move == Move.GLITZY_GLOW) {
-			stat(foe, 3, 1);
+			stat(this, 3, 1);
 		} else if (move == Move.GUNK_SHOT) {
 			foe.poison(false, this, field);
 		} else if (move == Move.HAMMER_ARM) {
@@ -6343,12 +6343,15 @@ public class Pokemon implements Serializable {
 				resistantTypes.add(PType.FIRE);
 	            resistantTypes.add(PType.POISON);
 	            resistantTypes.add(PType.FLYING);
+	            resistantTypes.add(PType.FIGHTING);
+	            resistantTypes.add(PType.GHOST);
 	            resistantTypes.add(PType.STEEL);
 	            resistantTypes.add(PType.GALACTIC);
 	            break;
 			case DARK:
 				resistantTypes.add(PType.FIGHTING);
 	            resistantTypes.add(PType.DARK);
+	            resistantTypes.add(PType.LIGHT);
 	            resistantTypes.add(PType.GALACTIC);
 	            break;
 			case DRAGON:
@@ -6364,6 +6367,7 @@ public class Pokemon implements Serializable {
 				resistantTypes.add(PType.GALACTIC);
 	            resistantTypes.add(PType.POISON);
 	            resistantTypes.add(PType.FLYING);
+	            resistantTypes.add(PType.BUG);
 	            resistantTypes.add(PType.MAGIC);
 	            resistantTypes.add(PType.PSYCHIC);
 	            break;
@@ -7230,6 +7234,8 @@ public class Pokemon implements Serializable {
 			movebank[18] = new Node(Move.BUG_BITE);
 			movebank[22] = new Node(Move.SLASH);
 			movebank[26] = new Node(Move.SACRED_SWORD);
+			movebank[29] = new Node(Move.U$TURN);
+			movebank[31] = new Node(Move.AGILITY);
 			movebank[34] = new Node(Move.X$SCISSOR);
 			break;
 		case 43:
@@ -7242,12 +7248,13 @@ public class Pokemon implements Serializable {
 			movebank[14] = new Node(Move.SWORD_SPIN);
 			movebank[18] = new Node(Move.BUG_BITE);
 			movebank[22] = new Node(Move.SLASH);
-			movebank[24] = new Node(Move.SPEEDY_SHURIKEN);
-			movebank[24].addToEnd(new Node(Move.MACHETE_JAB));
-			movebank[24].addToEnd(new Node(Move.PISTOL_POP));
-			movebank[24].addToEnd(new Node(Move.SACRED_SWORD));
+			movebank[26] = new Node(Move.SACRED_SWORD);
 			movebank[29] = new Node(Move.U$TURN);
-			movebank[34] = new Node(Move.AGILITY);
+			movebank[31] = new Node(Move.AGILITY);
+			movebank[34] = new Node(Move.X$SCISSOR);
+			movebank[38] = new Node(Move.SPEEDY_SHURIKEN);
+			movebank[38].addToEnd(new Node(Move.MACHETE_JAB));
+			movebank[38].addToEnd(new Node(Move.PISTOL_POP));
 			movebank[41] = new Node(Move.FIRST_IMPRESSION);
 			movebank[44] = new Node(Move.DETECT);
 			movebank[49] = new Node(Move.NO_RETREAT);
@@ -10779,7 +10786,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (foe.ability == Ability.FALSE_ILLUMINATION) {
-			PType[] lightResist = new PType[]{PType.GHOST, PType.GALACTIC, PType.LIGHT};
+			PType[] lightResist = new PType[]{PType.GHOST, PType.GALACTIC, PType.LIGHT, PType.DARK};
 			for (PType type : lightResist) {
 				if (moveType == type) multiplier /= 2;
 			}

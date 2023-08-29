@@ -179,6 +179,10 @@ public class PBox extends JFrame {
                                 	}
                                     me.current = box[index];
                                 }
+                                if (box[index] == null && checkFaintedTeam(jndex)) {
+                                	JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
+    	                            return;
+                                }
                                 Pokemon temp = me.team[jndex];
                                 if (temp != null) {
                                     temp.heal();
@@ -472,6 +476,15 @@ public class PBox extends JFrame {
 	    dialog.setVisible(true);
 	    int result = choice[0];
 	    return result == JOptionPane.CLOSED_OPTION ? JOptionPane.CLOSED_OPTION : choice[0];
+	}
+	
+	private boolean checkFaintedTeam(int jndex) {
+		for (Pokemon p : me.team) {
+			if (p != null && p != me.team[jndex] && !p.isFainted()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 }

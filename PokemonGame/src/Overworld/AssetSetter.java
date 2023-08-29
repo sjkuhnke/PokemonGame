@@ -418,7 +418,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(4, 52, 55, 81);
 		gp.npc[mapNum][index] = NPCSetup(3, 56, 46, 82);
 		gp.npc[mapNum][index] = NPCSetup(5, 60, 49, 88);
-		gp.npc[mapNum][index] = NPCSetup(6, 29, 34, 83);
+		gp.npc[mapNum][index] = NPCSetup(4, 38, 36, 83);
 		gp.npc[mapNum][index] = NPCSetup(5, 55, 35, 84);
 		
 		if (!flags[5]) {
