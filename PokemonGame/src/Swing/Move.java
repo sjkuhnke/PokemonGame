@@ -670,7 +670,7 @@ public enum Move {
 		String message = "Move: " + toString() + "\n";
         message += "Type: " + mtype + "\n";
         message += "BP: " + getbp() + "\n";
-        message += "Accuracy: " + accuracy + "\n";
+        message += "Accuracy: " + getAccuracy() + "\n";
         message += "Category: " + getCategory() + "\n";
         message += "Description: " + getDescription();
         
@@ -683,6 +683,17 @@ public enum Move {
 
 	public boolean isPhysical() {
 		return cat == 0;
+	}
+	
+	public String getAccuracy() {
+		String result = "";
+		if (accuracy > 100) {
+			result += "--";
+		} else {
+			result += accuracy;
+		}
+		
+		return result;
 	}
 	
 	@Override // implementation

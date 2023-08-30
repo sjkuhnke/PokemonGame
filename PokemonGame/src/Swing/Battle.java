@@ -475,8 +475,111 @@ public class Battle extends JFrame {
         });
 		
 		infoButton.addActionListener(e -> {
-            JPanel teamMemberPanel = me.getCurrent().showSummary();
-            JOptionPane.showMessageDialog(null, teamMemberPanel, "Party member details", JOptionPane.PLAIN_MESSAGE);
+			JPanel teamMemberPanel = new JPanel();
+			teamMemberPanel.setLayout(new GridBagLayout());
+		    
+		    GridBagConstraints gbc = new GridBagConstraints();
+	        gbc.gridx = 0;
+	        gbc.gridy = 0;
+	        gbc.insets = new Insets(5, 5, 5, 5); // Add space between components
+		    
+		    JLabel spriteLabel = new JLabel();
+		    ImageIcon spriteIcon = new ImageIcon(me.getCurrent().getSprite());
+		    spriteLabel.setIcon(spriteIcon);
+		    
+		    JLabel fSpriteLabel = new JLabel();
+		    ImageIcon fSpriteIcon = new ImageIcon(foe.getSprite());
+		    fSpriteLabel.setIcon(fSpriteIcon);
+
+		    JLabel nicknameLabel;
+		    nicknameLabel = new JLabel("N/A");
+		    JLabel fNicknameLabel;
+		    fNicknameLabel = new JLabel("N/A");
+		    
+		    JLabel[] statStages = new JLabel[7];
+		    JPanel statPanel = new JPanel(new GridLayout(7, 1));
+		    
+		    JLabel[] fStatStages = new JLabel[7];
+		    JPanel fStatPanel = new JPanel(new GridLayout(7, 1));
+		    
+		    if (this != null) {
+		        nicknameLabel = new JLabel(me.getCurrent().nickname);
+		        nicknameLabel.setFont(new Font(nicknameLabel.getFont().getName(), Font.BOLD, 18));
+		        fNicknameLabel = new JLabel(foe.nickname);
+		        fNicknameLabel.setFont(new Font(fNicknameLabel.getFont().getName(), Font.BOLD, 18));
+		        
+		        for (int i = 0; i < 7; i++) {
+		        	String type;
+		        	switch (i) {
+		        	case 0:
+		        		type = "Atk : ";
+		        		break;
+		        	case 1:
+		        		type = "Def : ";
+		        		break;
+		        	case 2:
+		        		type = "SpA : ";
+		        		break;
+		        	case 3:
+		        		type = "SpD : ";
+		        		break;
+		        	case 4:
+		        		type = "Spe : ";
+		        		break;
+		        	case 5:
+		        		type = "Acc : ";
+		        		break;
+		        	case 6:
+		        		type = "Eva : ";
+		        		break;
+	        		default:
+	        			type = "ERROR ";
+	        			break;
+		        	}
+		        	String amt = "";
+		        	if (me.getCurrent().statStages[i] > 0) amt += "+";
+		        	amt = me.getCurrent().statStages[i] + "";
+		        	
+		        	statStages[i] = new JLabel(type + amt);
+		        	statStages[i].setFont(new Font(statStages[i].getFont().getName(), Font.BOLD, 14));
+		        	statStages[i].setSize(50, statStages[i].getHeight());
+		        	
+		        	statPanel.add(statStages[i]);
+		        	
+		        	String fAmt = "";
+		        	if (foe.statStages[i] > 0) fAmt += "+";
+		        	fAmt = foe.statStages[i] + "";
+		        	
+		        	fStatStages[i] = new JLabel(type + fAmt);
+		        	fStatStages[i].setFont(new Font(fStatStages[i].getFont().getName(), Font.BOLD, 14));
+		        	fStatStages[i].setSize(50, fStatStages[i].getHeight());
+		        	
+		        	fStatPanel.add(fStatStages[i]);
+		        }
+		        
+		    
+		    JPanel idLabel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		    idLabel.add(nicknameLabel);
+		    idLabel.add(spriteLabel);
+		    teamMemberPanel.add(idLabel, gbc);
+		    gbc.gridx++;
+		    
+		    JPanel fIdLabel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		    fIdLabel.add(fNicknameLabel);
+		    fIdLabel.add(fSpriteLabel);
+		    teamMemberPanel.add(fIdLabel, gbc);
+		    gbc.gridx = 0;
+		    gbc.gridy++;
+		    
+		    teamMemberPanel.add(statPanel, gbc);
+		    gbc.gridx++;
+		    
+		    teamMemberPanel.add(fStatPanel, gbc);
+		    gbc.gridx = 0;
+		    gbc.gridy++;
+		    
+            JOptionPane.showMessageDialog(null, teamMemberPanel, "Battle Info", JOptionPane.PLAIN_MESSAGE);
+		    }
 		});
 		
 		/*
@@ -712,6 +815,18 @@ public class Battle extends JFrame {
 		currentText.setFont(getScaledFontSize(currentText));
 		
 		userSprite.setIcon(getSprite(me.getCurrent()));
+		MouseListener[] listeners = userSprite.getMouseListeners();
+		for (MouseListener listener : listeners) {
+			userSprite.removeMouseListener(listener);
+		}
+		
+		userSprite.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseClicked(MouseEvent e) {
+				JPanel teamMemberPanel = me.getCurrent().showSummary();
+	            JOptionPane.showMessageDialog(null, teamMemberPanel, "Party member details", JOptionPane.PLAIN_MESSAGE);
+            }
+		});
 		
 		setMoveButtons();
 		

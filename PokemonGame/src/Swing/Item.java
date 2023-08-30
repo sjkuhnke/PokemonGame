@@ -1,7 +1,21 @@
 package Swing;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
+
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import Swing.Battle.JGradientButton;
 
 public class Item implements Serializable {
 	/**
@@ -44,10 +58,10 @@ public class Item implements Serializable {
 		else if (id == 2) return 25;
 		else if (id == 3) return 50;
 		else if (id == 4) return 50;
-		else if (id == 5) return 150;
-		else if (id == 6) return 300;
-		else if (id == 7) return 500;
-		else if (id == 8) return 750;
+		else if (id == 5) return 125;
+		else if (id == 6) return 275;
+		else if (id == 7) return 400;
+		else if (id == 8) return 500;
 		else if (id == 9) return 25;
 		else if (id == 10) return 25;
 		else if (id == 11) return 25;
@@ -957,5 +971,142 @@ public class Item implements Serializable {
 		}
 		
 		return result;
+	}
+
+	public void useCalc(Player p) {
+		JPanel calc = new JPanel();
+	    calc.setLayout(new GridBagLayout());
+	    
+	    GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(5, 5, 5, 5); // Add space between components
+        
+        JComboBox<Pokemon> userMons = new JComboBox<>();
+        JLabel userLevel = new JLabel();
+        JGradientButton[] userMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
+        JLabel[] userDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
+        for (int k = 0; k < p.team.length; k++) {
+        	if (p.team[k] != null) userMons.addItem(p.team[k]);
+        }
+        
+        JComboBox<Pokemon> foeMons = new JComboBox<>();
+        JTextField foeLevel = new JTextField();
+        JGradientButton[] foeMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
+        JLabel[] foeDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
+        for (int k = 1; k < 241; k++) {
+        	foeMons.addItem(new Pokemon(k, 50, false, true));
+        }
+        
+        userMons.addActionListener(l -> {
+        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+            userLevel.setText(userCurrent.getLevel() + "");
+            updateMoves(userCurrent, userMoves, userDamage, foeCurrent);
+            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent);
+        });
+        
+        foeMons.addActionListener(l -> {
+        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+        	foeLevel.setText(foeCurrent.getLevel() + "");
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent);
+        });
+        
+        foeLevel.addActionListener(l ->{
+        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+        	try {
+        		int level = Integer.parseInt(foeLevel.getText());
+    			if (level >= 1 && level <= 100) {
+    				foeCurrent.level = level;
+    			} else {
+    				foeCurrent.level = 50;
+    			}
+    		} catch (NumberFormatException e1) {
+    			foeCurrent.level = 50;
+    		}
+        	foeCurrent.stats = foeCurrent.getStats();
+        	foeCurrent.setMoves();
+        	
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent);
+        });
+        
+        Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+        Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+        
+        userLevel.setText(userCurrent.getLevel() + "");
+        updateMoves(userCurrent, userMoves, userDamage, foeCurrent);
+        
+        foeLevel.setText(foeCurrent.getLevel() + "");
+        updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent);
+        
+        
+        calc.add(userMons, gbc);
+        gbc.gridx++;
+        calc.add(foeMons, gbc);
+        gbc.gridx = 0;
+        gbc.gridy++;
+        
+        calc.add(userLevel, gbc);
+        gbc.gridx++;
+        JPanel foeLevelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        foeLevelPanel.add(foeLevel);
+        calc.add(foeLevelPanel, gbc);
+        gbc.gridx = 0;
+        gbc.gridy++;
+        
+        JPanel userMovesPanel = new JPanel(new GridLayout(4,2));
+        for (int k = 0; k < userMoves.length; k++) {
+        	userMovesPanel.add(userMoves[k]);
+        	userMovesPanel.add(userDamage[k]);
+        }
+        calc.add(userMovesPanel, gbc);
+        gbc.gridx++;
+        JPanel foeMovesPanel = new JPanel(new GridLayout(4,2));
+        for (int k = 0; k < userMoves.length; k++) {
+        	foeMovesPanel.add(foeMoves[k]);
+        	foeMovesPanel.add(foeDamage[k]);
+        }
+        calc.add(foeMovesPanel, gbc);
+        gbc.gridy++;
+        
+        JOptionPane.showMessageDialog(null, calc, "Damage Calculator", JOptionPane.PLAIN_MESSAGE);
+		
+	}
+	
+	private void updateMoves(Pokemon current, JGradientButton[] moves, JLabel[] damages, Pokemon foe) {
+        for (int k = 0; k < moves.length; k++) {
+        	if (current.moveset[k] != null) {
+        		moves[k].setText(current.moveset[k].toString());
+        		ActionListener[] listeners = moves[k].getActionListeners();
+        		for (ActionListener listener : listeners) {
+        			moves[k].removeActionListener(listener);
+        		}
+        		final int kndex = k;
+        		moves[k].addActionListener(f -> {
+        			if (current.moveset[kndex] != null) {
+        				String message = current.moveset[kndex].getDescriptor();
+    	                JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+        			}
+	            });
+        		moves[k].setBackground(current.moveset[k].mtype.getColor());
+        		int minDamage = current.calcWithTypes(foe, current.moveset[k], false, new Field(), -1);
+        		int maxDamage = current.calcWithTypes(foe, current.moveset[k], false, new Field(), 1);
+        		double minDamageD = minDamage * 1.0 / foe.getStat(0);
+        		minDamageD *= 100;
+        		String formattedMinD = String.format("%.1f", minDamageD);
+        		double maxDamageD = maxDamage * 1.0 / foe.getStat(0);
+        		maxDamageD *= 100;
+        		String formattedMaxD = String.format("%.1f", maxDamageD);
+        		damages[k].setText(formattedMinD + "% - " + formattedMaxD + "%");
+        	} else {
+        		moves[k].setText("[NO MOVE]");
+        		moves[k].setBackground(null);
+        		damages[k].setText("0% - 0%");
+        	}
+        }
 	}
 }

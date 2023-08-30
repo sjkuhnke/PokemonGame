@@ -694,7 +694,7 @@ public class Pokemon implements Serializable {
 			this.type2 = null;
 		} else if (id == 112) {
 			this.type1 = PType.ELECTRIC;
-			this.type2 = PType.STEEL;
+			this.type2 = null;
 		} else if (id == 113) {
 			this.type1 = PType.ELECTRIC;
 			this.type2 = PType.STEEL;
@@ -5782,7 +5782,7 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.MUD_SPORT) {
 			field.setEffect(field.new FieldEffect(Effect.MUD_SPORT));
-			System.out.println(this.nickname + " electric's power was weakened!");
+			System.out.println("Electric's power was weakened!");
 		} else if (move == Move.NASTY_PLOT) {
 			stat(this, 2, 2);
 		} else if (move == Move.NOBLE_ROAR) {
@@ -6028,7 +6028,7 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.WATER_SPORT) {
 			field.setEffect(field.new FieldEffect(Effect.WATER_SPORT));
-			System.out.println(this.nickname + " fire's power was weakened!");
+			System.out.println("Fire's power was weakened!");
 		} else if (move == Move.WHIRLWIND || move == Move.ROAR) {
 			boolean result = false;
 			if (foe.trainerOwned() && enemy != null) {

@@ -39,18 +39,25 @@ public class Encounter {
 			int id = rand.nextInt(197);
 			encounters.add(new Encounter(id, 2, 5, 1));
 		} else {
-			if (area == 0 && type.equals("Standard") && y > 38) { // route 22
+			if (area == 0 && type.equals("Standard") && x <= 73 && y > 38) { // route 22
 				encounters.add(new Encounter(13, 2, 2, 0.26));
 				encounters.add(new Encounter(16, 2, 4, 0.18));
 				encounters.add(new Encounter(22, 2, 3, 0.22));
 				encounters.add(new Encounter(26, 2, 4, 0.10));
 				encounters.add(new Encounter(29, 3, 3, 0.24));
-			} else if (area == 0 && type.equals("Standard") && y <= 38) { // route 23
+			} else if (area == 0 && type.equals("Standard") && x <= 73 && y <= 38) { // route 23
 				encounters.add(new Encounter(10, 2, 3, 0.18));
 				encounters.add(new Encounter(13, 3, 4, 0.24));
 				encounters.add(new Encounter(16, 4, 4, 0.24));
 				encounters.add(new Encounter(32, 2, 3, 0.20));
 				encounters.add(new Encounter(38, 3, 5, 0.06));
+				encounters.add(new Encounter(41, 2, 3, 0.08));
+			} else if (area == 0 && type.equals("Standard") && x > 73) { // route 42
+				encounters.add(new Encounter(171, 2, 3, 0.18));
+				encounters.add(new Encounter(217, 3, 4, 0.24));
+				encounters.add(new Encounter(166, 4, 4, 0.24));
+				encounters.add(new Encounter(179, 2, 3, 0.20));
+				encounters.add(new Encounter(129, 3, 5, 0.06));
 				encounters.add(new Encounter(41, 2, 3, 0.08));
 			} else if (area == 4 && y >= 43 && type.equals("Standard")) { // route 24
 				encounters.add(new Encounter(19, 5, 5, 0.10));
