@@ -727,11 +727,7 @@ public class Battle extends JFrame {
 		});
 		
 		calcButton.addActionListener(e ->{
-			try {
-				me.bag.bag[200].useCalc(me);
-			} catch (CloneNotSupportedException e1) {
-				e1.printStackTrace();
-			}
+			me.bag.bag[200].useCalc(me);
 		});
 		
 		/*

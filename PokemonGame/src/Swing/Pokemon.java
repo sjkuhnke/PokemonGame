@@ -12854,7 +12854,7 @@ public class Pokemon implements Serializable {
 	}
 
 	@Override
-	protected Pokemon clone() throws CloneNotSupportedException {
+	protected Pokemon clone() {
 	    Pokemon clonedPokemon = new Pokemon(1, 0, true, false);
 	    
 	    // Clone id fields

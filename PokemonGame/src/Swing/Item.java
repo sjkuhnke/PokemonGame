@@ -978,7 +978,7 @@ public class Item implements Serializable {
 		return result;
 	}
 
-	public void useCalc(Player p) throws CloneNotSupportedException {
+	public void useCalc(Player p) {
 		JPanel calc = new JPanel();
 	    calc.setLayout(new GridBagLayout());
 	    
@@ -1191,7 +1191,6 @@ public class Item implements Serializable {
 	}
 	
 	private void updateMoves(Pokemon current, JGradientButton[] moves, JLabel[] damages, Pokemon foe, JLabel[] statLabels, JComboBox<Integer>[] stages, JLabel speed) {
-		System.out.println("update");
         for (int k = 0; k < moves.length; k++) {
         	if (current.moveset[k] != null) {
         		moves[k].setText(current.moveset[k].toString());
@@ -1240,8 +1239,6 @@ public class Item implements Serializable {
 			    	}
 			    }
             });
-    		
-    		System.out.println(current.name);
 
     		for (int i = 0; i < 6; i++) {
     			statLabels[i].setText(current.getStat(i) + "");

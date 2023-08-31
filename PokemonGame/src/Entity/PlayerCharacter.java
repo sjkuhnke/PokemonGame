@@ -1231,11 +1231,7 @@ public class PlayerCharacter extends Entity {
 		        	
 		        	// Calc
 		        	if (i.getItem().getID() == 200) {
-		        		try {
-							i.getItem().useCalc(p);
-						} catch (CloneNotSupportedException e1) {
-							e1.printStackTrace();
-						}
+		        		i.getItem().useCalc(p);
 		        	}
 		        	
 		        });

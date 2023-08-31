@@ -132,6 +132,8 @@ public class PBox extends JFrame {
 	    	}
             JGradientButton swapButton = new JGradientButton("Swap with a party member");
             swapButton.setBackground(new Color(0, 227, 252));
+            JGradientButton forgetButton = new JGradientButton("Forget a Move");
+            forgetButton.setBackground(new Color(26, 199, 40));
             JGradientButton moveButton = new JGradientButton("Teach Move");
             moveButton.setBackground(new Color(255, 251, 0));
             JGradientButton seeForgottenMoves = new JGradientButton("See Forgotten Moves");
@@ -215,36 +217,18 @@ public class PBox extends JFrame {
                     JOptionPane.showMessageDialog(null, scrollPane, "Swap with a party member", JOptionPane.PLAIN_MESSAGE);
                 }
             });
-            moveButton.addActionListener(new ActionListener() {
+            forgetButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                 	if (box[index] == null) {
-                		JOptionPane.showMessageDialog(null, "No Pokemon to teach.");
+                		JOptionPane.showMessageDialog(null, "No Pokemon to forget a move.");
                         return;
                 	}
-                    // Prompt the player to enter the name of the move they want to teach
-                    String moveName = JOptionPane.showInputDialog(null, "Enter the name of the move you want to teach:");
-
-                    // Find the move in the move database
-                    Move move = Move.getMove(moveName);
-                    if (move == null) {
-                        JOptionPane.showMessageDialog(null, "Invalid move name.");
-                        return;
-                    }
-                    for (int l = 0; l < box[index].moveset.length; l++) {
-                    	if (move == box[index].moveset[l]) {
-                    		JOptionPane.showMessageDialog(null, box[index].nickname + " already knows " + move.toString() + "!");
-                            return;
-                    	}
-                    }
-
-                 // Add a boolean flag to keep track of whether an empty move slot has been found
-                    boolean foundEmptySlot = false;
 
                     // Display the moveset and allow the player to select a move to replace
                     JPanel moveset = new JPanel();
                     moveset.setLayout(new BoxLayout(moveset, BoxLayout.Y_AXIS));
-                    JLabel titleLabel = new JLabel("Select a move to override:");
+                    JLabel titleLabel = new JLabel("Select a move to forget:");
                     moveset.add(titleLabel);
                     for (int j = 0; j < box[index].moveset.length; j++) {
                         JButton moveslot;
@@ -252,14 +236,7 @@ public class PBox extends JFrame {
                             moveslot = new JGradientButton(box[index].moveset[j].toString());
                             moveslot.setBackground(box[index].moveset[j].mtype.getColor());
                         } else {
-                            // Only display the first empty move slot
-                            if (!foundEmptySlot) {
-                                moveslot = new JGradientButton("EMPTY");
-                                foundEmptySlot = true;
-                            } else {
-                                // Don't display any more empty move slots
-                                continue;
-                            }
+                            break;
                         }
                         moveslot.setVisible(true);
 
@@ -268,20 +245,110 @@ public class PBox extends JFrame {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 // Replace the selected move with the new move
-                                box[index].moveset[moveIndex] = move;
+                            	if (moveIndex == 0 && box[index].moveset[moveIndex + 1] == null) {
+                            		JOptionPane.showMessageDialog(null, "Can't forget your last move!");
+                            	} else {
+                            		int result = JOptionPane.showConfirmDialog(
+                            	            null,
+                            	            "Are you sure you want to forget " + box[index].moveset[moveIndex].toString() + "?",
+                            	            "Confirm Move Forget",
+                            	            JOptionPane.YES_NO_OPTION
+                            	        );
 
-                                // Update the display
-                                SwingUtilities.getWindowAncestor(moveset).dispose();
-                                SwingUtilities.getWindowAncestor(boxMemberPanel).dispose();
-                                displayBox();
+                        	        if (result == JOptionPane.YES_OPTION) {
+                        	            box[index].moveset[moveIndex] = null;
+                        	            for (int k = moveIndex + 1; k < 4; k++) {
+                        	                box[index].moveset[k - 1] = box[index].moveset[k];
+                        	            }
+                        	            box[index].moveset[3] = null;
+
+                    	            // Update the display
+                    	            SwingUtilities.getWindowAncestor(moveset).dispose();
+                    	            SwingUtilities.getWindowAncestor(boxMemberPanel).dispose();
+                    	            displayBox();
+                        	        }
+                            	}
                             }
                         });
                         moveset.add(moveslot);
                     }
                     JScrollPane scrollPane = new JScrollPane(moveset);
                     scrollPane.setPreferredSize(new Dimension(300, 200));
-                    JOptionPane.showMessageDialog(null, scrollPane, "Override move", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, scrollPane, "Forget move", JOptionPane.PLAIN_MESSAGE);
+                }
+            });
+            moveButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                	if (box[index] == null) {
+                		JOptionPane.showMessageDialog(null, "No Pokemon to teach.");
+                        return;
+                	}
+                	String pass = JOptionPane.showInputDialog(null, "This function is password protected because it is a developer\ntool. Enter password: ");
+                	if (pass != null && pass.equals("abner")) {
+                		// Prompt the player to enter the name of the move they want to teach
+                        String moveName = JOptionPane.showInputDialog(null, "Enter the name of the move you want to teach:");
 
+                        // Find the move in the move database
+                        Move move = Move.getMove(moveName);
+                        if (move == null) {
+                            JOptionPane.showMessageDialog(null, "Invalid move name.");
+                            return;
+                        }
+                        for (int l = 0; l < box[index].moveset.length; l++) {
+                        	if (move == box[index].moveset[l]) {
+                        		JOptionPane.showMessageDialog(null, box[index].nickname + " already knows " + move.toString() + "!");
+                                return;
+                        	}
+                        }
+
+                        // Add a boolean flag to keep track of whether an empty move slot has been found
+                        boolean foundEmptySlot = false;
+
+                        // Display the moveset and allow the player to select a move to replace
+                        JPanel moveset = new JPanel();
+                        moveset.setLayout(new BoxLayout(moveset, BoxLayout.Y_AXIS));
+                        JLabel titleLabel = new JLabel("Select a move to override:");
+                        moveset.add(titleLabel);
+                        for (int j = 0; j < box[index].moveset.length; j++) {
+                            JButton moveslot;
+                            if (box[index].moveset[j] != null) {
+                                moveslot = new JGradientButton(box[index].moveset[j].toString());
+                                moveslot.setBackground(box[index].moveset[j].mtype.getColor());
+                            } else {
+                                // Only display the first empty move slot
+                                if (!foundEmptySlot) {
+                                    moveslot = new JGradientButton("EMPTY");
+                                    foundEmptySlot = true;
+                                } else {
+                                    // Don't display any more empty move slots
+                                    continue;
+                                }
+                            }
+                            moveslot.setVisible(true);
+
+                            int moveIndex = j;
+                            moveslot.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    // Replace the selected move with the new move
+                                    box[index].moveset[moveIndex] = move;
+
+                                    // Update the display
+                                    SwingUtilities.getWindowAncestor(moveset).dispose();
+                                    SwingUtilities.getWindowAncestor(boxMemberPanel).dispose();
+                                    displayBox();
+                                }
+                            });
+                            moveset.add(moveslot);
+                        }
+                        JScrollPane scrollPane = new JScrollPane(moveset);
+                        scrollPane.setPreferredSize(new Dimension(300, 200));
+                        JOptionPane.showMessageDialog(null, scrollPane, "Override move", JOptionPane.PLAIN_MESSAGE);
+
+                	} else {
+                		JOptionPane.showMessageDialog(null, "Incorrect Password.");
+                	}
                 }
             });
 
@@ -332,6 +399,7 @@ public class PBox extends JFrame {
                 }
             });
             boxMemberPanel.add(swapButton);
+            boxMemberPanel.add(forgetButton);
             boxMemberPanel.add(moveButton);
             boxMemberPanel.add(seeForgottenMoves);
             boxMemberPanel.add(releaseButton);
