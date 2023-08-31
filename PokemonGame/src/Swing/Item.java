@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -1077,9 +1078,11 @@ public class Item implements Serializable {
         		int index = i;
         		userStages[i].addActionListener(e -> {
         			Pokemon current = ((Pokemon) userMons.getSelectedItem());
+        			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
         			int amt = (int) userStages[index].getSelectedItem();
         			current.statStages[index - 1] = amt;
-        			updateMoves(current, userMoves, userDamage, foeC, userStatLabels, userStages, userSpeed);
+        			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed);
+        			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed);
         			if (index == 5) userSpeed.setText((current.getSpeed()) + "");
         		});
         		statsPanel.add(userStages[i]);
@@ -1109,9 +1112,11 @@ public class Item implements Serializable {
         		int index = i;
         		foeStages[i].addActionListener(e -> {
         			Pokemon current = ((Pokemon) foeMons.getSelectedItem());
+        			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         			int amt = (int) foeStages[index].getSelectedItem();
         			current.statStages[index - 1] = amt;
-        			updateMoves(current, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed);
+        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed);
+        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed);
         			if (index == 5) foeSpeed.setText((current.getSpeed()) + "");
         		});
         		fStatsPanel.add(foeStages[i]);
@@ -1186,6 +1191,7 @@ public class Item implements Serializable {
 	}
 	
 	private void updateMoves(Pokemon current, JGradientButton[] moves, JLabel[] damages, Pokemon foe, JLabel[] statLabels, JComboBox<Integer>[] stages, JLabel speed) {
+		System.out.println("update");
         for (int k = 0; k < moves.length; k++) {
         	if (current.moveset[k] != null) {
         		moves[k].setText(current.moveset[k].toString());
@@ -1225,7 +1231,7 @@ public class Item implements Serializable {
 			    		setMovePanel.add(new JLabel("Select a move:"));
 			            setMovePanel.add(moveComboBox);
 			            
-			    		int result = JOptionPane.showConfirmDialog(null, setMovePanel, "Set Move Panel", JOptionPane.OK_OPTION);
+			    		int result = JOptionPane.showConfirmDialog(null, setMovePanel, "Set Move", JOptionPane.OK_OPTION);
 			    		if (result == JOptionPane.OK_OPTION) {
 			    			Move selectedMove = (Move) moveComboBox.getSelectedItem();
 			    			current.moveset[kndex] = selectedMove;
@@ -1234,10 +1240,21 @@ public class Item implements Serializable {
 			    	}
 			    }
             });
+    		
+    		System.out.println(current.name);
 
     		for (int i = 0; i < 6; i++) {
     			statLabels[i].setText(current.getStat(i) + "");
-    			if (i != 0) stages[i].setSelectedIndex(current.statStages[i-1] + 6);
+    			
+    			if (i != 0) {
+	    			ActionListener stagesListener = stages[i].getActionListeners()[0];
+	    		    stages[i].removeActionListener(stagesListener);
+	    		    
+	    		    if (i != 0) stages[i].setSelectedIndex(current.statStages[i-1] + 6);
+	    		    
+	    		    stages[i].addActionListener(stagesListener);
+    			}
+
     			if (i == 5) speed.setText(current.getSpeed() + "");
     		}
     		
