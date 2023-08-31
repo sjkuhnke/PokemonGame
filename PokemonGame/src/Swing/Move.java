@@ -55,6 +55,7 @@ public enum Move {
 	//BRANCH_WHACK(50,95,0,0,0,0,PType.ROCK,"A normal attack",false),
 	BRANCH_POKE(40,100,0,0,0,0,PType.GRASS,"",true),
 	BRAVE_BIRD(120,100,0,0,0,0,PType.FLYING,"User takes 1/3 of damage inflicted",true), // recoil
+	BREAKING_SWIPE(60,100,100,0,0,0,PType.DRAGON,"",true),
 	BRICK_BREAK(75,100,100,0,0,0,PType.FIGHTING,"Breaks Screen effects",true),
 	BRINE(-1,100,0,0,1,0,PType.WATER,"Damage is doubled if foe is below 50% HP",false), 
 	BRUTAL_SWING(60,100,0,0,0,0,PType.DARK,"A normal attack",true),

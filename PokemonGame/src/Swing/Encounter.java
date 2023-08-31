@@ -53,12 +53,19 @@ public class Encounter {
 				encounters.add(new Encounter(38, 3, 5, 0.06));
 				encounters.add(new Encounter(41, 2, 3, 0.08));
 			} else if (area == 0 && type.equals("Standard") && x > 73) { // route 42
-				encounters.add(new Encounter(171, 2, 3, 0.18));
-				encounters.add(new Encounter(217, 3, 4, 0.24));
-				encounters.add(new Encounter(166, 4, 4, 0.24));
-				encounters.add(new Encounter(179, 2, 3, 0.20));
-				encounters.add(new Encounter(129, 3, 5, 0.06));
-				encounters.add(new Encounter(41, 2, 3, 0.08));
+				encounters.add(new Encounter(171, 2, 2, 0.20));
+				encounters.add(new Encounter(217, 2, 3, 0.16));
+				encounters.add(new Encounter(223, 2, 2, 0.13));
+				encounters.add(new Encounter(166, 2, 3, 0.17));
+				encounters.add(new Encounter(179, 2, 3, 0.11));
+				encounters.add(new Encounter(129, 2, 2, 0.15));
+				encounters.add(new Encounter(143, 2, 2, 0.08));
+			} else if (area == 0 && type.equals("Fishing") && x > 73) { // route 42
+				encounters.add(new Encounter(132, 11, 12, 0.25));
+				encounters.add(new Encounter(137, 10, 11, 0.15));
+				encounters.add(new Encounter(141, 12, 14, 0.10));
+				encounters.add(new Encounter(146, 11, 12, 0.10));
+				encounters.add(new Encounter(215, 10, 12, 0.40));
 			} else if (area == 4 && y >= 43 && type.equals("Standard")) { // route 24
 				encounters.add(new Encounter(19, 5, 5, 0.10));
 				encounters.add(new Encounter(29, 3, 5, 0.10));

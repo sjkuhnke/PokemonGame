@@ -4882,8 +4882,8 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.BITE && first) {
 			foe.vStatuses.add(Status.FLINCHED);
-//		} else if (move == Move.BLACK_HOLE) {
-//			stat(foe, 5, -1);
+		} else if (move == Move.BREAKING_SWIPE) {
+			stat(foe, 0, -1);
 //		} else if (move == Move.BLAST_FLAME) {
 //			foe.burn(false, this, field);
 		} else if (move == Move.BLAZE_KICK) {
@@ -5547,16 +5547,22 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.COTTON_GUARD) {
 			stat(this, 1, 3);
 		} else if (move == Move.CURSE) {
-			if (!foe.vStatuses.contains(Status.CURSED)) {
-				foe.vStatuses.add(Status.CURSED);
-				System.out.println(foe.nickname + " was afflicted with a curse!");
-				this.currentHP -= (this.getStat(0) / 2);
-				if (this.currentHP <= 0) {
-					this.faint(true, player, foe);
-					foe.awardxp((int) Math.ceil(this.level * trainer), player);
+			if (this.type1 == PType.GHOST || this.type2 == PType.GHOST) {
+				if (!foe.vStatuses.contains(Status.CURSED)) {
+					foe.vStatuses.add(Status.CURSED);
+					System.out.println(foe.nickname + " was afflicted with a curse!");
+					this.currentHP -= (this.getStat(0) / 2);
+					if (this.currentHP <= 0) {
+						this.faint(true, player, foe);
+						foe.awardxp((int) Math.ceil(this.level * trainer), player);
+					}
+				} else {
+					fail = fail();
 				}
 			} else {
-				fail = fail();
+				stat(this, 0, 1);
+				stat(this, 1, 1);
+				stat(this, 4, -1);
 			}
 		} else if (move == Move.DETECT || move == Move.PROTECT || move == Move.MOLTEN_LAIR || move == Move.OBSTRUCT || move == Move.SPIKY_SHIELD) {
 			if ((lastMoveUsed == Move.DETECT || lastMoveUsed == Move.PROTECT || lastMoveUsed == Move.MOLTEN_LAIR || lastMoveUsed == Move.OBSTRUCT ||
@@ -10036,127 +10042,194 @@ public class Pokemon implements Serializable {
 			movebank[59] = new Node(Move.DRAGON_DANCE);
 			break;
 		case 211:
-			movebank = new Node[25];
-			movebank[0] = new Node(Move.ABSORB);
-			movebank[0].next = new Node(Move.SUPERSONIC);
-			movebank[4] = new Node(Move.ASTONISH);
-			movebank[9] = new Node(Move.MEAN_LOOK);
-			movebank[14] = new Node(Move.POISON_FANG);
-			movebank[19] = new Node(Move.BITE);
-			movebank[24] = new Node(Move.WING_ATTACK);
+			movebank = new Node[39];
+			movebank[0] = new Node(Move.THUNDER_FANG);
+			movebank[2] = new Node(Move.COIL);
+			movebank[4] = new Node(Move.BITE);
+			movebank[8] = new Node(Move.SLAM);
+			movebank[11] = new Node(Move.DRAGON_RAGE);
+			movebank[14] = new Node(Move.BREAKING_SWIPE);
+			movebank[18] = new Node(Move.CRUNCH);
+			movebank[21] = new Node(Move.GLARE);
+			movebank[25] = new Node(Move.NUZZLE);
+			movebank[29] = new Node(Move.FIRE_FANG);
+			movebank[32] = new Node(Move.ZING_ZAP);
+			movebank[35] = new Node(Move.ICE_FANG);
+			movebank[38] = new Node(Move.POISON_FANG);
 			break;
 		case 212:
-			movebank = new Node[25];
-			movebank[0] = new Node(Move.ABSORB);
-			movebank[0].next = new Node(Move.SUPERSONIC);
-			movebank[4] = new Node(Move.ASTONISH);
-			movebank[9] = new Node(Move.MEAN_LOOK);
-			movebank[14] = new Node(Move.POISON_FANG);
-			movebank[19] = new Node(Move.BITE);
-			movebank[24] = new Node(Move.WING_ATTACK);
+			movebank = new Node[60];
+			movebank[0] = new Node(Move.THUNDER_FANG);
+			movebank[0].addToEnd(new Node(Move.SCALE_SHOT));
+			movebank[0].addToEnd(new Node(Move.DRAGON_DANCE));
+			movebank[0].addToEnd(new Node(Move.DUAL_CHOP));
+			movebank[2] = new Node(Move.COIL);
+			movebank[4] = new Node(Move.BITE);
+			movebank[8] = new Node(Move.SLAM);
+			movebank[11] = new Node(Move.DRAGON_RAGE);
+			movebank[14] = new Node(Move.BREAKING_SWIPE);
+			movebank[18] = new Node(Move.CRUNCH);
+			movebank[21] = new Node(Move.GLARE);
+			movebank[25] = new Node(Move.NUZZLE);
+			movebank[29] = new Node(Move.FIRE_FANG);
+			movebank[32] = new Node(Move.ZING_ZAP);
+			movebank[35] = new Node(Move.ICE_FANG);
+			movebank[38] = new Node(Move.POISON_FANG);
+			movebank[39] = new Node(Move.FATAL_BIND);
+			movebank[44] = new Node(Move.DRAGON_RUSH);
+			movebank[49] = new Node(Move.STONE_EDGE);
+			movebank[54] = new Node(Move.VOLT_TACKLE);
+			movebank[59] = new Node(Move.OUTRAGE);
 			break;
 		case 213:
-			movebank = new Node[25];
-			movebank[0] = new Node(Move.ABSORB);
-			movebank[0].next = new Node(Move.SUPERSONIC);
-			movebank[4] = new Node(Move.ASTONISH);
-			movebank[9] = new Node(Move.MEAN_LOOK);
-			movebank[14] = new Node(Move.POISON_FANG);
-			movebank[19] = new Node(Move.BITE);
-			movebank[24] = new Node(Move.WING_ATTACK);
+			movebank = new Node[39];
+			movebank[0] = new Node(Move.PAYBACK);
+			movebank[2] = new Node(Move.BULK_UP);
+			movebank[4] = new Node(Move.BREAKING_SWIPE);
+			movebank[8] = new Node(Move.TAKE_DOWN);
+			movebank[11] = new Node(Move.DRAGON_RAGE);
+			movebank[14] = new Node(Move.SUCKER_PUNCH);
+			movebank[18] = new Node(Move.CRUNCH);
+			movebank[21] = new Node(Move.SCARY_FACE);
+			movebank[25] = new Node(Move.DRAGON_TAIL);
+			movebank[29] = new Node(Move.FALSE_SURRENDER);
+			movebank[32] = new Node(Move.JAW_LOCK);
+			movebank[35] = new Node(Move.ICE_FANG);
+			movebank[38] = new Node(Move.IRON_HEAD);
 			break;
 		case 214:
-			movebank = new Node[26];
-			movebank[0] = new Node(Move.CHARGE);
-			movebank[2] = new Node(Move.THUNDERSHOCK);
-			movebank[4] = new Node(Move.GROWL);
-			movebank[6] = new Node(Move.BABY$DOLL_EYES);
-			movebank[9] = new Node(Move.FLASH);
-			movebank[12] = new Node(Move.MUD_BOMB);
-			movebank[15] = new Node(Move.SHOCK_WAVE);
-			movebank[21] = new Node(Move.DRAINING_KISS);
-			movebank[22] = new Node(Move.HEADBUTT);
-			movebank[25] = new Node(Move.THUNDER_WAVE);
+			movebank = new Node[60];
+			movebank[0] = new Node(Move.PAYBACK);
+			movebank[0].addToEnd(new Node(Move.SCALE_SHOT));
+			movebank[0].addToEnd(new Node(Move.DRAGON_DANCE));
+			movebank[0].addToEnd(new Node(Move.DUAL_CHOP));
+			movebank[2] = new Node(Move.BULK_UP);
+			movebank[4] = new Node(Move.BREAKING_SWIPE);
+			movebank[8] = new Node(Move.TAKE_DOWN);
+			movebank[11] = new Node(Move.DRAGON_RAGE);
+			movebank[14] = new Node(Move.SUCKER_PUNCH);
+			movebank[18] = new Node(Move.CRUNCH);
+			movebank[21] = new Node(Move.SCARY_FACE);
+			movebank[25] = new Node(Move.DRAGON_TAIL);
+			movebank[29] = new Node(Move.FALSE_SURRENDER);
+			movebank[32] = new Node(Move.JAW_LOCK);
+			movebank[35] = new Node(Move.ICE_FANG);
+			movebank[38] = new Node(Move.IRON_HEAD);
+			movebank[39] = new Node(Move.FATAL_BIND);
+			movebank[44] = new Node(Move.OBSTRUCT);
+			movebank[49] = new Node(Move.DRAGON_CLAW);
+			movebank[54] = new Node(Move.NIGHT_SLASH);
+			movebank[59] = new Node(Move.OUTRAGE);
 			break;
 		case 215:
-			movebank = new Node[26];
-			movebank[0] = new Node(Move.CHARGE);
-			movebank[2] = new Node(Move.THUNDERSHOCK);
-			movebank[4] = new Node(Move.GROWL);
-			movebank[6] = new Node(Move.BABY$DOLL_EYES);
-			movebank[9] = new Node(Move.FLASH);
-			movebank[12] = new Node(Move.MUD_BOMB);
-			movebank[15] = new Node(Move.SHOCK_WAVE);
-			movebank[21] = new Node(Move.DRAINING_KISS);
-			movebank[22] = new Node(Move.HEADBUTT);
-			movebank[25] = new Node(Move.THUNDER_WAVE);
+			movebank = new Node[45];
+			movebank[0] = new Node(Move.FLASH);
+			movebank[2] = new Node(Move.FAKE_TEARS);
+			movebank[5] = new Node(Move.HEX);
+			movebank[8] = new Node(Move.MUD$SLAP);
+			movebank[11] = new Node(Move.MUD_SHOT);
+			movebank[14] = new Node(Move.FLASH_RAY);
+			movebank[17] = new Node(Move.FEINT_ATTACK);
+			movebank[20] = new Node(Move.MUD_BOMB);
+			movebank[23] = new Node(Move.ZING_ZAP);
+			movebank[26] = new Node(Move.SHADOW_SNEAK);
+			movebank[29] = new Node(Move.TAIL_GLOW);
+			movebank[32] = new Node(Move.SHADOW_BALL);
+			movebank[35] = new Node(Move.EARTH_POWER);
+			movebank[38] = new Node(Move.MUDDY_WATER);
+			movebank[41] = new Node(Move.DRAGON_DANCE);
+			movebank[44] = new Node(Move.PHANTOM_FORCE);
 			break;
 		case 216:
-			movebank = new Node[26];
-			movebank[0] = new Node(Move.CHARGE);
-			movebank[2] = new Node(Move.THUNDERSHOCK);
-			movebank[4] = new Node(Move.GROWL);
-			movebank[6] = new Node(Move.BABY$DOLL_EYES);
-			movebank[9] = new Node(Move.FLASH);
-			movebank[12] = new Node(Move.MUD_BOMB);
-			movebank[15] = new Node(Move.SHOCK_WAVE);
-			movebank[21] = new Node(Move.DRAINING_KISS);
-			movebank[22] = new Node(Move.HEADBUTT);
-			movebank[25] = new Node(Move.THUNDER_WAVE);
+			movebank = new Node[60]; // GIVE FELL STINGER VIA TM
+			movebank[0] = new Node(Move.MAGIC_FANG);
+			movebank[0].addToEnd(new Node(Move.BITE));
+			movebank[0].addToEnd(new Node(Move.CRUNCH));
+			movebank[0].addToEnd(new Node(Move.FEINT_ATTACK));
+			movebank[4] = new Node(Move.FAKE_OUT);
+			movebank[7] = new Node(Move.PURSUIT);
+			movebank[11] = new Node(Move.SHADOW_SNEAK);
+			movebank[14] = new Node(Move.DRAGON_CLAW);
+			movebank[18] = new Node(Move.SHADOW_CLAW);
+			movebank[22] = new Node(Move.TAUNT);
+			movebank[22].next = new Node(Move.TORMENT);
+			movebank[24] = new Node(Move.TAKE_DOWN);
+			movebank[28] = new Node(Move.NIGHT_SLASH);
+			movebank[30] = new Node(Move.PHANTOM_FORCE);
+			movebank[35] = new Node(Move.BREAKING_SWIPE);
+			movebank[39] = new Node(Move.UNSEEN_STRANGLE);
+			movebank[43] = new Node(Move.DARKEST_LARIAT);
+			movebank[46] = new Node(Move.SUCKER_PUNCH);
+			movebank[49] = new Node(Move.OUTRAGE);
+			movebank[52] = new Node(Move.MAGIC_CRASH);
+			movebank[56] = new Node(Move.EARTHQUAKE);
+			movebank[59] = new Node(Move.SPECTRAL_THIEF);
 			break;
 		case 217:
-			movebank = new Node[26];
-			movebank[0] = new Node(Move.CHARGE);
-			movebank[2] = new Node(Move.THUNDERSHOCK);
-			movebank[4] = new Node(Move.GROWL);
-			movebank[6] = new Node(Move.BABY$DOLL_EYES);
-			movebank[9] = new Node(Move.FLASH);
-			movebank[12] = new Node(Move.MUD_BOMB);
-			movebank[15] = new Node(Move.SHOCK_WAVE);
-			movebank[21] = new Node(Move.DRAINING_KISS);
-			movebank[22] = new Node(Move.HEADBUTT);
-			movebank[25] = new Node(Move.THUNDER_WAVE);
+			movebank = new Node[19];
+			movebank[0] = new Node(Move.POUND);
+			movebank[0].next = new Node(Move.TAIL_WHIP);
+			movebank[2] = new Node(Move.SAND_ATTACK);
+			movebank[8] = new Node(Move.PURSUIT);
+			movebank[12] = new Node(Move.WRAP);
+			movebank[18] = new Node(Move.MUD_BOMB);
 			break;
 		case 218:
-			movebank = new Node[26];
-			movebank[0] = new Node(Move.CHARGE);
-			movebank[2] = new Node(Move.THUNDERSHOCK);
-			movebank[4] = new Node(Move.GROWL);
-			movebank[6] = new Node(Move.BABY$DOLL_EYES);
-			movebank[9] = new Node(Move.FLASH);
-			movebank[12] = new Node(Move.MUD_BOMB);
-			movebank[15] = new Node(Move.SHOCK_WAVE);
-			movebank[21] = new Node(Move.DRAINING_KISS);
-			movebank[22] = new Node(Move.HEADBUTT);
-			movebank[25] = new Node(Move.THUNDER_WAVE);
+			movebank = new Node[42];
+			movebank[0] = new Node(Move.POUND);
+			movebank[0].next = new Node(Move.TAIL_WHIP);
+			movebank[2] = new Node(Move.SAND_ATTACK);
+			movebank[8] = new Node(Move.PURSUIT);
+			movebank[12] = new Node(Move.WRAP);
+			movebank[18] = new Node(Move.MUD_BOMB);
+			movebank[19] = new Node(Move.DIG);
+			movebank[22] = new Node(Move.BRUTAL_SWING);
+			movebank[24] = new Node(Move.SNARL);
+			movebank[27] = new Node(Move.MUD$SLAP);
+			movebank[33] = new Node(Move.DARK_PULSE);
+			movebank[35] = new Node(Move.GLARE);
+			movebank[38] = new Node(Move.FISSURE);
+			movebank[41] = new Node(Move.SANDSTORM);
 			break;
 		case 219:
-			movebank = new Node[26];
-			movebank[0] = new Node(Move.CHARGE);
-			movebank[2] = new Node(Move.THUNDERSHOCK);
-			movebank[4] = new Node(Move.GROWL);
-			movebank[6] = new Node(Move.BABY$DOLL_EYES);
-			movebank[9] = new Node(Move.FLASH);
-			movebank[12] = new Node(Move.MUD_BOMB);
-			movebank[15] = new Node(Move.SHOCK_WAVE);
-			movebank[21] = new Node(Move.DRAINING_KISS);
-			movebank[22] = new Node(Move.HEADBUTT);
-			movebank[25] = new Node(Move.THUNDER_WAVE);
+			movebank = new Node[70];
+			movebank[0] = new Node(Move.POUND);
+			movebank[0].next = new Node(Move.TAIL_WHIP);
+			movebank[2] = new Node(Move.SAND_ATTACK);
+			movebank[8] = new Node(Move.PURSUIT);
+			movebank[12] = new Node(Move.WRAP);
+			movebank[18] = new Node(Move.MUD_BOMB);
+			movebank[19] = new Node(Move.DIG);
+			movebank[22] = new Node(Move.BRUTAL_SWING);
+			movebank[24] = new Node(Move.SNARL);
+			movebank[27] = new Node(Move.MUD$SLAP);
+			movebank[33] = new Node(Move.DARK_PULSE);
+			movebank[35] = new Node(Move.GLARE);
+			movebank[38] = new Node(Move.FISSURE);
+			movebank[41] = new Node(Move.SANDSTORM);
+			movebank[44] = new Node(Move.EARTH_POWER);
+			movebank[49] = new Node(Move.EARTHQUAKE);
+			movebank[53] = new Node(Move.SUCKER_PUNCH);
+			movebank[56] = new Node(Move.BREAKING_SWIPE);
+			movebank[59] = new Node(Move.DRAGON_PULSE);
+			movebank[64] = new Node(Move.FATAL_BIND);
+			movebank[69] = new Node(Move.DRACO_METEOR);
 			break;
 		case 220:
-			movebank = new Node[26];
-			movebank[0] = new Node(Move.CHARGE);
-			movebank[2] = new Node(Move.THUNDERSHOCK);
-			movebank[4] = new Node(Move.GROWL);
-			movebank[6] = new Node(Move.BABY$DOLL_EYES);
-			movebank[9] = new Node(Move.FLASH);
-			movebank[12] = new Node(Move.MUD_BOMB);
-			movebank[15] = new Node(Move.SHOCK_WAVE);
-			movebank[21] = new Node(Move.DRAINING_KISS);
-			movebank[22] = new Node(Move.HEADBUTT);
-			movebank[25] = new Node(Move.THUNDER_WAVE);
+			movebank = new Node[40];
+			movebank[0] = new Node(Move.SMOKESCREEN);
+			movebank[2] = new Node(Move.SMOG);
+			movebank[4] = new Node(Move.POISON_GAS);
+			movebank[8] = new Node(Move.TORMENT);
+			movebank[12] = new Node(Move.HEX);
+			movebank[16] = new Node(Move.CURSE);
+			movebank[19] = new Node(Move.SLUDGE);
+			movebank[23] = new Node(Move.NASTY_PLOT);
+			movebank[28] = new Node(Move.TOXIC_SPIKES);
+			movebank[34] = new Node(Move.SLUDGE_BOMB);
+			movebank[39] = new Node(Move.DARK_PULSE);
 			break;
-		case 221:
+		case 221: // TODO
 			movebank = new Node[25];
 			movebank[0] = new Node(Move.ABSORB);
 			movebank[0].next = new Node(Move.SUPERSONIC);
@@ -10166,7 +10239,7 @@ public class Pokemon implements Serializable {
 			movebank[19] = new Node(Move.BITE);
 			movebank[24] = new Node(Move.WING_ATTACK);
 			break;
-		case 222:
+		case 222: // TODO
 			movebank = new Node[25];
 			movebank[0] = new Node(Move.ABSORB);
 			movebank[0].next = new Node(Move.SUPERSONIC);
@@ -10177,40 +10250,50 @@ public class Pokemon implements Serializable {
 			movebank[24] = new Node(Move.WING_ATTACK);
 			break;
 		case 223:
-			movebank = new Node[25];
-			movebank[0] = new Node(Move.ABSORB);
-			movebank[0].next = new Node(Move.SUPERSONIC);
-			movebank[4] = new Node(Move.ASTONISH);
-			movebank[9] = new Node(Move.MEAN_LOOK);
-			movebank[14] = new Node(Move.POISON_FANG);
-			movebank[19] = new Node(Move.BITE);
-			movebank[24] = new Node(Move.WING_ATTACK);
+			movebank = new Node[15];
+			movebank[0] = new Node(Move.FAKE_TEARS);
+			movebank[0].next = new Node(Move.WILL$O$WISP);
+			movebank[4] = new Node(Move.EMBER);
+			movebank[9] = new Node(Move.FIRE_SPIN);
+			movebank[14] = new Node(Move.MEMENTO);
 			break;
 		case 224:
-			movebank = new Node[26];
-			movebank[0] = new Node(Move.CHARGE);
-			movebank[2] = new Node(Move.THUNDERSHOCK);
-			movebank[4] = new Node(Move.GROWL);
-			movebank[6] = new Node(Move.BABY$DOLL_EYES);
-			movebank[9] = new Node(Move.FLASH);
-			movebank[12] = new Node(Move.MUD_BOMB);
-			movebank[15] = new Node(Move.SHOCK_WAVE);
-			movebank[21] = new Node(Move.DRAINING_KISS);
-			movebank[22] = new Node(Move.HEADBUTT);
-			movebank[25] = new Node(Move.THUNDER_WAVE);
+			movebank = new Node[33];
+			movebank[0] = new Node(Move.FAKE_TEARS);
+			movebank[0].next = new Node(Move.WILL$O$WISP);
+			movebank[4] = new Node(Move.EMBER);
+			movebank[9] = new Node(Move.FIRE_SPIN);
+			movebank[14] = new Node(Move.MEMENTO);
+			movebank[15] = new Node(Move.MACH_PUNCH);
+			movebank[18] = new Node(Move.BEAT_UP);
+			movebank[21] = new Node(Move.FURY_SWIPES);
+			movebank[25] = new Node(Move.FEINT_ATTACK);
+			movebank[28] = new Node(Move.BRICK_BREAK);
+			movebank[32] = new Node(Move.THROAT_CHOP);
 			break;
 		case 225:
-			movebank = new Node[26];
-			movebank[0] = new Node(Move.CHARGE);
-			movebank[2] = new Node(Move.THUNDERSHOCK);
-			movebank[4] = new Node(Move.GROWL);
-			movebank[6] = new Node(Move.BABY$DOLL_EYES);
-			movebank[9] = new Node(Move.FLASH);
-			movebank[12] = new Node(Move.MUD_BOMB);
-			movebank[15] = new Node(Move.SHOCK_WAVE);
-			movebank[21] = new Node(Move.DRAINING_KISS);
-			movebank[22] = new Node(Move.HEADBUTT);
-			movebank[25] = new Node(Move.THUNDER_WAVE);
+			movebank = new Node[65];
+			movebank[0] = new Node(Move.FAKE_TEARS);
+			movebank[0].next = new Node(Move.WILL$O$WISP);
+			movebank[4] = new Node(Move.EMBER);
+			movebank[9] = new Node(Move.FIRE_SPIN);
+			movebank[14] = new Node(Move.MEMENTO);
+			movebank[15] = new Node(Move.MACH_PUNCH);
+			movebank[18] = new Node(Move.BEAT_UP);
+			movebank[21] = new Node(Move.FURY_SWIPES);
+			movebank[25] = new Node(Move.FEINT_ATTACK);
+			movebank[28] = new Node(Move.BRICK_BREAK);
+			movebank[32] = new Node(Move.THROAT_CHOP);
+			movebank[35] = new Node(Move.DRAIN_PUNCH);
+			movebank[37] = new Node(Move.TAUNT);
+			movebank[41] = new Node(Move.CIRCLE_THROW);
+			movebank[44] = new Node(Move.FOUL_PLAY);
+			movebank[47] = new Node(Move.WAKE$UP_SLAP);
+			movebank[49] = new Node(Move.CROSS_POISON);
+			movebank[52] = new Node(Move.NIGHT_SLASH);
+			movebank[54] = new Node(Move.CLOSE_COMBAT);
+			movebank[59] = new Node(Move.NO_RETREAT);
+			movebank[64] = new Node(Move.DARKEST_LARIAT);
 			break;
 		case 226:
 			movebank = new Node[26];
