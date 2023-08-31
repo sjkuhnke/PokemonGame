@@ -418,6 +418,13 @@ public class PlayerCharacter extends Entity {
 	    			for (int i = 0; i < temp.length; i++) {
 	    				p.trainersBeat[i] = temp[i];
 	    			}
+	    			boolean[][] tempObj = p.itemsCollected.clone();
+	    			p.itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
+	    			for (int i = 0; i < tempObj.length; i++) {
+	    				for (int j = 0; j < tempObj[1].length; j++) {
+	    					p.itemsCollected[i][j] = tempObj[i][j];
+	    				}
+	    			}
 	        	    
 	        	    JOptionPane.showMessageDialog(null, "Player successfully updated!");
 	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
@@ -1224,7 +1231,11 @@ public class PlayerCharacter extends Entity {
 		        	
 		        	// Calc
 		        	if (i.getItem().getID() == 200) {
-		        		i.getItem().useCalc(p);
+		        		try {
+							i.getItem().useCalc(p);
+						} catch (CloneNotSupportedException e1) {
+							e1.printStackTrace();
+						}
 		        	}
 		        	
 		        });

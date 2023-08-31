@@ -1,5 +1,6 @@
 package Swing;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -86,6 +87,56 @@ public class Field {
 		public String toLowerCaseString() {
 			return effect.toString().toLowerCase();
 		}
+
+		public Color getColor() {
+			switch (effect) {
+			case AURORA_VEIL:
+				return new Color(150, 217, 214);
+			case ELECTRIC:
+				return new Color(247, 208, 44);
+			case GRASSY:
+				return new Color(122, 199, 76);
+			case GRAVITY:
+				return new Color(138, 30, 106);
+			case LIGHT_SCREEN:
+				return new Color(249, 85, 135);
+			case MUD_SPORT:
+				return new Color(226, 191, 101);
+			case PSYCHIC:
+				return new Color(249, 85, 135);
+			case RAIN:
+				return new Color(99, 144, 240);
+			case REFLECT:
+				return new Color(249, 85, 135);
+			case SAFEGUARD:
+				return new Color(168, 167, 122);
+			case SANDSTORM:
+				return new Color(182, 161, 54);
+			case SNOW:
+				return new Color(150, 217, 214);
+			case SPARKLY:
+				return new Color(254, 1, 77);
+			case SPIKES:
+				return new Color(226, 191, 101);
+			case STEALTH_ROCKS:
+				return new Color(182, 161, 54);
+			case STICKY_WEBS:
+				return new Color(166, 185, 26);
+			case SUN:
+				return new Color(238, 129, 48);
+			case TAILWIND:
+				return new Color(169, 143, 243);
+			case TOXIC_SPIKES:
+				return new Color(163, 62, 161);
+			case TRICK_ROOM:
+				return new Color(249, 85, 135);
+			case WATER_SPORT:
+				return new Color(99, 144, 240);
+			default:
+				return new Color(150, 217, 214);
+			
+			}
+		}
 	}
 	
 	public void setWeather(FieldEffect weather) {
@@ -106,22 +157,28 @@ public class Field {
 	
 	public void setEffect(FieldEffect effect) {
 		if (effect.effect == Effect.TRICK_ROOM) {
-			if (fieldEffects.contains(effect)) {
-				fieldEffects.remove(effect);
+			if (contains(fieldEffects, effect.effect)) {
+				removeEffect(fieldEffects, effect.effect);
 				System.out.println("The twisted dimensions returned to normal!");
+				return;
 			}
 		}
-		fieldEffects.add(effect);
+		if (!contains(fieldEffects, effect.effect)) {
+			fieldEffects.add(effect);
+			System.out.println(effect.toString() + " took effect!");
+		}
 	}
 	
 	public boolean setHazard(ArrayList<FieldEffect> side, FieldEffect hazard) {
 		if (hazard.effect == Effect.STEALTH_ROCKS && !contains(side, Effect.STEALTH_ROCKS)) {
 			System.out.println("Pointed rocks were scattered everywhere!");
 			side.add(hazard);
+			hazard.layers = 1;
 			return true;
 		} else if (hazard.effect == Effect.STICKY_WEBS && !contains(side, Effect.STICKY_WEBS)) {
 			System.out.println("Sticky webs were scattered at the Pokemon's feet!");
 			side.add(hazard);
+			hazard.layers = 1;
 			return true;
 		} else if (hazard.effect == Effect.TOXIC_SPIKES) {
 			if (getLayers(side, Effect.TOXIC_SPIKES) == 0) {

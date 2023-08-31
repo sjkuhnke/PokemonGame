@@ -4,6 +4,7 @@ import javax.swing.border.EmptyBorder;
 
 import Entity.PlayerCharacter;
 import Overworld.GamePanel;
+import Swing.Field.Effect;
 import Swing.Field.FieldEffect;
 
 import java.awt.*;
@@ -80,6 +81,7 @@ public class Battle extends JFrame {
 	//private JComboBox<Trainer> trainerSelect;
 	//private Trainer[] trainers;
 	private JButton infoButton;
+	private JButton calcButton;
 //	private JButton exitButton; // debug
 	private int trainerIndex;
 	
@@ -310,8 +312,9 @@ public class Battle extends JFrame {
 //		addButton = createJButton("ADD", new Font("Tahoma", Font.BOLD, 9), 645, 430, 75, 23);
 		catchButton = createJButton("CATCH", new Font("Tahoma", Font.BOLD, 11), 638, 340, 89, 23);
 //		healButton = createJButton("HEAL", new Font("Tahoma", Font.BOLD, 9), 645, 460, 75, 23);
-		runButton = createJButton("RUN", new Font("Tahoma", Font.BOLD, 9), 645, 460, 75, 23);
-		infoButton = createJButton("INFO", new Font("Tahoma", Font.BOLD, 9), 645, 490, 75, 23);
+		runButton = createJButton("RUN", new Font("Tahoma", Font.BOLD, 9), 645, 430, 75, 23);
+		infoButton = createJButton("INFO", new Font("Tahoma", Font.BOLD, 9), 645, 460, 75, 23);
+		calcButton = createJButton("CALC", new Font("Tahoma", Font.BOLD, 9), 645, 490, 75, 23);
 //		exitButton = createJButton("EXIT", new Font("Tahoma", Font.BOLD, 9), 645, 400, 75, 23);
 		
 		/*
@@ -538,9 +541,11 @@ public class Battle extends JFrame {
 		        	}
 		        	String amt = "";
 		        	if (me.getCurrent().statStages[i] > 0) amt += "+";
-		        	amt = me.getCurrent().statStages[i] + "";
+		        	amt += me.getCurrent().statStages[i] + "";
 		        	
 		        	statStages[i] = new JLabel(type + amt);
+		        	if (me.getCurrent().statStages[i] > 0) statStages[i].setForeground(Color.red.darker());
+		        	if (me.getCurrent().statStages[i] < 0) statStages[i].setForeground(Color.blue.darker());
 		        	statStages[i].setFont(new Font(statStages[i].getFont().getName(), Font.BOLD, 14));
 		        	statStages[i].setSize(50, statStages[i].getHeight());
 		        	
@@ -548,9 +553,11 @@ public class Battle extends JFrame {
 		        	
 		        	String fAmt = "";
 		        	if (foe.statStages[i] > 0) fAmt += "+";
-		        	fAmt = foe.statStages[i] + "";
+		        	fAmt += foe.statStages[i] + "";
 		        	
 		        	fStatStages[i] = new JLabel(type + fAmt);
+		        	if (foe.statStages[i] > 0) fStatStages[i].setForeground(Color.red.darker());
+		        	if (foe.statStages[i] < 0) fStatStages[i].setForeground(Color.blue.darker());
 		        	fStatStages[i].setFont(new Font(fStatStages[i].getFont().getName(), Font.BOLD, 14));
 		        	fStatStages[i].setSize(50, fStatStages[i].getHeight());
 		        	
@@ -578,8 +585,153 @@ public class Battle extends JFrame {
 		    gbc.gridx = 0;
 		    gbc.gridy++;
 		    
-            JOptionPane.showMessageDialog(null, teamMemberPanel, "Battle Info", JOptionPane.PLAIN_MESSAGE);
+		    JPanel vStatusPanel = new JPanel();
+		    vStatusPanel.setLayout(new BoxLayout(vStatusPanel, BoxLayout.Y_AXIS));
+		    for (Status s : me.getCurrent().vStatuses) {
+		    	JLabel statusLabel = new JLabel(s.toString());
+		    	statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.BOLD, 13));
+		    	vStatusPanel.add(statusLabel);
 		    }
+		    teamMemberPanel.add(vStatusPanel, gbc);
+		    gbc.gridx++;
+		    
+		    JPanel fStatusPanel = new JPanel();
+		    fStatusPanel.setLayout(new BoxLayout(fStatusPanel, BoxLayout.Y_AXIS));
+		    for (Status s : foe.vStatuses) {
+		    	JLabel statusLabel = new JLabel(s.toString());
+		    	statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.BOLD, 13));
+		    	fStatusPanel.add(statusLabel);
+		    }
+		    teamMemberPanel.add(fStatusPanel, gbc);
+		    gbc.gridx = 0;
+		    gbc.gridy++;
+		    
+		    JPanel effectsPanel = new JPanel();
+		    effectsPanel.setLayout(new BoxLayout(effectsPanel, BoxLayout.Y_AXIS));
+		    
+		    JLabel fieldEffectsLabel = new JLabel("Field Effects:");
+		    fieldEffectsLabel.setFont(new Font(fieldEffectsLabel.getFont().getName(), Font.BOLD, 18));
+		    JPanel fieldLabel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		    fieldLabel.add(fieldEffectsLabel);
+		    effectsPanel.add(fieldLabel);
+		    
+		    if (field.weather != null) {
+		    	JPanel weatherPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		    	JLabel weatherLabel = new JLabel(field.weather.toString());
+		    	weatherLabel.setForeground(field.weather.getColor());
+		    	JLabel turnsLabel = new JLabel(" " + field.weatherTurns + "/" + field.weather.effect.turns);
+		    	weatherLabel.setFont(new Font(weatherLabel.getFont().getFontName(), Font.BOLD, 16));
+		    	turnsLabel.setFont(new Font(turnsLabel.getFont().getFontName(), Font.BOLD, 16));
+		    	weatherPanel.add(weatherLabel);
+		    	weatherPanel.add(turnsLabel);
+		    	effectsPanel.add(weatherPanel);
+		    }
+		    
+		    if (field.terrain != null) {
+		    	JPanel terrainPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		    	JLabel terrainLabel = new JLabel(field.terrain.toString());
+		    	terrainLabel.setForeground(field.terrain.getColor());
+		    	JLabel turnsLabel = new JLabel(" " + field.terrainTurns + "/" + field.terrain.effect.turns);
+		    	terrainLabel.setFont(new Font(terrainLabel.getFont().getFontName(), Font.BOLD, 16));
+		    	turnsLabel.setFont(new Font(turnsLabel.getFont().getFontName(), Font.BOLD, 16));
+		    	terrainPanel.add(terrainLabel);
+		    	terrainPanel.add(turnsLabel);
+		    	effectsPanel.add(terrainPanel);
+		    }
+		    
+		    for (FieldEffect fe : field.fieldEffects) {
+		    	JPanel effectPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		    	JLabel effectLabel = new JLabel(fe.toString());
+		    	effectLabel.setForeground(fe.getColor());
+		    	JLabel turnsLabel = new JLabel(" " + fe.turns + "/" + fe.effect.turns);
+		    	effectLabel.setFont(new Font(effectLabel.getFont().getFontName(), Font.BOLD, 16));
+		    	turnsLabel.setFont(new Font(turnsLabel.getFont().getFontName(), Font.BOLD, 16));
+		    	effectPanel.add(effectLabel);
+		    	effectPanel.add(turnsLabel);
+		    	effectsPanel.add(effectPanel);
+		    }
+		    
+		    JPanel effectSidePanel = new JPanel();
+		    effectSidePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		    
+	        JPanel playerSidePanel = new JPanel();
+	        playerSidePanel.setLayout(new BoxLayout(playerSidePanel, BoxLayout.Y_AXIS));
+	        JPanel foeSidePanel = new JPanel();
+		    foeSidePanel.setLayout(new BoxLayout(foeSidePanel, BoxLayout.Y_AXIS));
+		    
+		    JPanel line1 = new JPanel();
+		    line1.add(new JLabel("------------------------         "));
+		    JPanel line2 = new JPanel();
+		    line2.add(new JLabel("         ------------------------"));
+		    playerSidePanel.add(line1);
+		    foeSidePanel.add(line2);
+		    
+		    for (FieldEffect fe : field.playerSide) {
+		    	JPanel effectPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		    	JLabel effectLabel = new JLabel(fe.toString());
+		    	effectLabel.setForeground(fe.getColor());
+		    	JLabel turnsLabel = new JLabel(" " + fe.turns + "/" + fe.effect.turns);
+		    	if (field.getHazards(field.playerSide).contains(fe)) {
+		    		int layers = field.getLayers(field.playerSide, fe.effect);
+		    		int maxLayers = 1;
+		    		if (fe.effect == Effect.SPIKES) maxLayers = 3;
+		    		if (fe.effect == Effect.TOXIC_SPIKES) maxLayers = 2;
+		    		turnsLabel.setText("( " + layers + " / " + maxLayers + " )");
+		    	}
+		    	effectLabel.setFont(new Font(effectLabel.getFont().getFontName(), Font.BOLD, 12));
+		    	turnsLabel.setFont(new Font(turnsLabel.getFont().getFontName(), Font.BOLD, 12));
+		    	effectPanel.add(effectLabel);
+		    	effectPanel.add(turnsLabel);
+		    	playerSidePanel.add(effectPanel);
+		    }
+		    
+		    
+		    
+		    for (FieldEffect fe : field.foeSide) {
+		    	JPanel effectPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		    	JLabel effectLabel = new JLabel("         " + fe.toString());
+		    	effectLabel.setForeground(fe.getColor());
+		    	JLabel turnsLabel = new JLabel(" " + fe.turns + "/" + fe.effect.turns);
+		    	if (field.getHazards(field.foeSide).contains(fe)) {
+		    		int layers = field.getLayers(field.foeSide, fe.effect);
+		    		int maxLayers = 1;
+		    		if (fe.effect == Effect.SPIKES) maxLayers = 3;
+		    		if (fe.effect == Effect.TOXIC_SPIKES) maxLayers = 2;
+		    		turnsLabel.setText("( " + layers + " / " + maxLayers + " )");
+		    	}
+		    	effectLabel.setFont(new Font(effectLabel.getFont().getFontName(), Font.BOLD, 12));
+		    	turnsLabel.setFont(new Font(turnsLabel.getFont().getFontName(), Font.BOLD, 12));
+		    	effectPanel.add(effectLabel);
+		    	effectPanel.add(turnsLabel);
+		    	foeSidePanel.add(effectPanel);
+		    }
+		    
+		    effectSidePanel.add(playerSidePanel);
+		    effectSidePanel.add(foeSidePanel);
+		    
+		    JPanel line3 = new JPanel();
+		    line3.add(new JLabel("------------------------         "));
+		    JPanel line4 = new JPanel();
+		    line4.add(new JLabel("         ------------------------"));
+		    playerSidePanel.add(line3);
+		    foeSidePanel.add(line4);
+		    
+		    JPanel info = new JPanel();
+		    info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
+		    info.add(teamMemberPanel);
+		    info.add(effectsPanel);
+		    info.add(effectSidePanel);
+		    
+            JOptionPane.showMessageDialog(null, info, "Battle Info", JOptionPane.PLAIN_MESSAGE);
+		    }
+		});
+		
+		calcButton.addActionListener(e ->{
+			try {
+				me.bag.bag[200].useCalc(me);
+			} catch (CloneNotSupportedException e1) {
+				e1.printStackTrace();
+			}
 		});
 		
 		/*

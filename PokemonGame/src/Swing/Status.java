@@ -61,4 +61,16 @@ public enum Status {
 	public Color getTextColor() {
 		return textColor;
 	}
+	
+	@Override
+	public String toString() {
+		String name = super.toString();
+	    name = name.toLowerCase().replace('_', ' ');
+	    String[] words = name.split(" ");
+	    StringBuilder sb = new StringBuilder();
+	    for (String word : words) {
+	        sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+	    }
+	    return sb.toString().trim();
+	}
 }

@@ -6396,6 +6396,7 @@ public class Pokemon implements Serializable {
 	            resistantTypes.add(PType.BUG);
 	            resistantTypes.add(PType.DRAGON);
 	            resistantTypes.add(PType.STEEL);
+	            resistantTypes.add(PType.GALACTIC);
 	            break;
 			case GROUND:
 				resistantTypes.add(PType.GRASS);
@@ -12771,7 +12772,7 @@ public class Pokemon implements Serializable {
 
 	@Override
 	protected Pokemon clone() throws CloneNotSupportedException {
-	    Pokemon clonedPokemon = (Pokemon) super.clone();
+	    Pokemon clonedPokemon = new Pokemon(1, 0, true, false);
 	    
 	    // Clone id fields
 	    clonedPokemon.id = this.id;
