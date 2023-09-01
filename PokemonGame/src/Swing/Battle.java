@@ -84,6 +84,7 @@ public class Battle extends JFrame {
 	private JButton calcButton;
 //	private JButton exitButton; // debug
 	private int trainerIndex;
+	private JRadioButton caughtIndicator;
 	
 	private BattleCloseListener battleCloseListener;
 	
@@ -225,6 +226,22 @@ public class Battle extends JFrame {
 		foeStatus.setVisible(true);
 		foeStatus.setOpaque(true);
 		playerPanel.add(foeStatus);
+		
+		/*
+		 * Initialize caught indicator
+		 */
+		caughtIndicator = new JRadioButton(); // Create a new JRadioButton for each iteration
+		caughtIndicator.setEnabled(false); // Make the JRadioButton unchangeable by the user
+		caughtIndicator.setSelected(true);
+		caughtIndicator.setBounds(513, 37, 20, 20);
+
+	    if (foeTrainer == null && pl.p.pokedex[foe.id] == 2) {
+	    	caughtIndicator.setBackground(Color.red);
+	    } else {
+	    	caughtIndicator.setVisible(false);
+	    }
+	    
+	    playerPanel.add(caughtIndicator);
 		
 		/*
 		 * Set Pokeball buttons and labels

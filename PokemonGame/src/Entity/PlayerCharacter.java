@@ -622,6 +622,19 @@ public class PlayerCharacter extends Entity {
 					JOptionPane.showMessageDialog(null, "Oh you have?! Thank you so much!\nHere, take this as a reward!\n\nObtained HM04 Surf!");
 					p.bag.add(new Item(96));
 				}
+				if (gp.currentMap == 46) {
+					String message = "";
+	    			for (Pokemon p : p.team) {
+	    				if (p != null) {
+	    	    			message += p.nickname;
+	    	    			if (p.nickname != p.name) message += (" (" + p.name + ")");
+	    	    			message += " : ";
+	    	    			message += p.determineHPType();
+	    	    			message += "\n";
+	    				}
+	    			}
+					JOptionPane.showMessageDialog(null, message, "Party Hidden Power Types", JOptionPane.PLAIN_MESSAGE);
+				}
 			}
 		    keyH.resume();
 		}

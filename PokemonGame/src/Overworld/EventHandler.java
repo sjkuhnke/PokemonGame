@@ -223,6 +223,10 @@ public class EventHandler {
 			// Kleine Gym
 			if (hit(38,62,41,"any")) teleport(44, 63, 67);
 			if (hit(44,63,68,"any")) teleport(38, 62, 42);
+			
+			// Poppy Grove HP House
+			if (hit(4,80,71,"any")) teleport(46, 31, 45);
+			if (hit(46,31,46,"any")) teleport(4, 80, 72);
 		}
 	}
 	

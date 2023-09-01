@@ -457,10 +457,11 @@ public class PMap extends JFrame {
 	private int getLoc(int map, int x, int y) {
 		switch (map) {
 		case 0:
-			if (x > 73) return 0;
-			if (x <= 73 && x > 41) return 1;
+			if (x > 73 && y > 37) return 0;
+			if (x <= 73 && x > 41 && y > 37) return 1;
 			if (x <= 41 && y > 41) return 2;
-			if (y <= 41) return 3;
+			if (x <= 40 && y <= 41) return 3;
+			if (x > 40 && y <= 37) return 26;
 			break;
 		case 1:
 			return 2;
@@ -563,6 +564,10 @@ public class PMap extends JFrame {
 			return 20;
 		case 44:
 			return 20;
+		case 45:
+			return 20;
+		case 46:
+			return 4;
 		}
 		
 		return -1;

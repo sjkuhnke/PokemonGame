@@ -54,7 +54,7 @@ public class TileManager {
 		loadMap("/maps/pc.txt", 29);
 		loadMap("/maps/market01.txt", 30);
 		loadMap("/maps/gym03.txt", 31);
-		loadMap("/maps/13house01.txt", 32);
+		loadMap("/maps/house01.txt", 32);
 		loadMap("/maps/map07.txt", 33);
 		loadMap("/maps/gate02.txt", 34);
 		loadMap("/maps/electric01.txt", 35);
@@ -68,6 +68,7 @@ public class TileManager {
 		loadMap("/maps/radio_tower02.txt", 43);
 		loadMap("/maps/gym04.txt", 44);
 		loadMap("/maps/supermarket01.txt", 45);
+		loadMap("/maps/house01.txt", 46);
 	}
 	
 	public void getTileImage() {

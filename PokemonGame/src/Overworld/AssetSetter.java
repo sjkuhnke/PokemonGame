@@ -206,7 +206,7 @@ public class AssetSetter {
 		boolean[] flags = gp.player.p.flags;
 		int mapNum = 0;
 		
-		if (flags[0]) {
+		if (flags[0] && !flags[1]) {
 			gp.npc[mapNum][index] = NPCSetup(10, 72, 48, 0);
 		} else {
 			gp.npc[mapNum][index++] = null;
@@ -518,6 +518,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(6, 60, 52, 135);
 		gp.npc[mapNum][index] = NPCSetup(5, 66, 46, 136);
 		gp.npc[mapNum][index] = NPCSetup(8, 63, 39, 137);
+		
+		mapNum = 46;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Check your team's Hidden Power types here!", true);
 	}
 	
 	public void setInteractiveTile() {
