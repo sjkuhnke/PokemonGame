@@ -159,6 +159,9 @@ public class Main {
 		trainers[94].getTeam()[4].moveset = new Move[]{Move.BUG_BITE, Move.MOONLIGHT, Move.FEINT_ATTACK, Move.FELL_STINGER};
 		trainers[94].getTeam()[5].moveset = new Move[]{Move.AURORA_BEAM, Move.BUG_BUZZ, Move.SNOWSCAPE, Move.QUIVER_DANCE};
 		
+		trainers[104].getTeam()[0].moveset = new Move[]{Move.HYPNOSIS, Move.PLAY_NICE, Move.MOONLIGHT, Move.HIDDEN_POWER};
+		trainers[105].getTeam()[0].moveset = new Move[]{Move.HYPNOSIS, Move.FAKE_TEARS, Move.NASTY_PLOT, Move.SNARL};
+		
 		trainers[137].getTeam()[1].moveset = new Move[]{Move.SNOWSCAPE, Move.AURORA_VEIL, Move.BLIZZARD, Move.SCALD};
 		trainers[137].getTeam()[1].ability = Ability.ICE_BODY;
 		trainers[137].getTeam()[2].moveset = new Move[]{Move.RED$NOSE_BOOST, Move.MAGIC_BLAST, Move.ICE_SHARD, Move.BLIZZARD};

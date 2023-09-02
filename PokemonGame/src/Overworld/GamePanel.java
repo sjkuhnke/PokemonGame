@@ -59,6 +59,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	
 	int FPS = 60;
 	private volatile boolean inBattle;
+	public boolean mapOpen = false;
 	public int ticks;
 
 	
@@ -193,8 +194,17 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	}
 	
 	public void openMap() {
-		PMap map = new PMap(this);
+		keyH.pause();
+		mapOpen = true;
 		
+		PMap map = new PMap(this);
+		map.addWindowListener(new WindowAdapter() {
+	        @Override
+	        public void windowClosing(WindowEvent e) {
+	        	keyH.resume();
+	        	mapOpen = false;
+	        }
+	    });
 		
 		map.setVisible(true);
 	}

@@ -469,7 +469,7 @@ public class PlayerCharacter extends Entity {
 	    menu.add(map);
 	    
 	    JOptionPane.showMessageDialog(null, menu, "Menu", JOptionPane.PLAIN_MESSAGE);
-	    keyH.resume();
+	    if (!gp.mapOpen) keyH.resume();
 	}
 
 	private void saveGame() {
