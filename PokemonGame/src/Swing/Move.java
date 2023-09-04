@@ -538,7 +538,7 @@ public enum Move {
 	//THUNDER_KICK(80,90,10,0,0,0,PType.ELECTRIC,"% of Paralyzing foe",true),
 	THUNDER_PUNCH(75,100,10,0,0,0,PType.ELECTRIC,"% of Paralyzing foe",true),
 	THUNDER_WAVE(0,90,0,0,2,0,PType.ELECTRIC,"Paralyzes foe",false),
-	THUNDERBOLT(95,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false), // recoil
+	THUNDERBOLT(90,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false), // recoil
 	THUNDERSHOCK(40,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false),
 	TOPSY$TURVY(0,1000,0,0,2,0,PType.DARK,"",false),
 	TORMENT(0,100,0,0,2,0,PType.DARK,"",false),

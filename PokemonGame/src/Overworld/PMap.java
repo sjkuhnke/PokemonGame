@@ -449,6 +449,7 @@ public class PMap extends JFrame {
     		if (answer == JOptionPane.YES_OPTION) {
     			gp.eHandler.teleport(map, x, y);
     			this.dispose();
+    			gp.keyH.resume();
     		}
 		}
 		

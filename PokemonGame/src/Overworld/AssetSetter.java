@@ -107,8 +107,8 @@ public class AssetSetter {
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(44, 33, 5, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 37, 3, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(22, 27, 114, mapNum); // taunt
-		gp.obj[mapNum][objIndex] = ObjSetup(26, 27, 127, mapNum); // drain punch
+		gp.obj[mapNum][objIndex] = ObjSetup(22, 27, 127, mapNum); // taunt
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 27, 114, mapNum); // drain punch
 		gp.obj[mapNum][objIndex] = ObjSetup(46, 28, 27, mapNum);
 		
 		mapNum = 22;

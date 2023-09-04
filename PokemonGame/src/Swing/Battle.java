@@ -646,7 +646,7 @@ public class Battle extends JFrame {
 		    
 		    if (field.terrain != null) {
 		    	JPanel terrainPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		    	JLabel terrainLabel = new JLabel(field.terrain.toString());
+		    	JLabel terrainLabel = new JLabel(field.terrain.toString() + " Terrain");
 		    	terrainLabel.setForeground(field.terrain.getColor());
 		    	JLabel turnsLabel = new JLabel(" " + field.terrainTurns + "/" + field.terrain.effect.turns);
 		    	terrainLabel.setFont(new Font(terrainLabel.getFont().getFontName(), Font.BOLD, 16));
@@ -1283,9 +1283,9 @@ public class Battle extends JFrame {
 			foe = foeTrainer.getCurrent();
 			showFoe();
 		}
-        faster.endOfTurn(slower, me, field);
-		slower.endOfTurn(faster, me, field);
-		field.endOfTurn();
+        if (hasAlive()) faster.endOfTurn(slower, me, field);
+        if (hasAlive()) slower.endOfTurn(faster, me, field);
+        if (hasAlive()) field.endOfTurn();
 		updateBars(true);
 		updateCurrent(pl);
 		updateStatus();
@@ -1335,6 +1335,16 @@ public class Battle extends JFrame {
 	    if (me.wiped()) {
 			wipe(pl, gp);
 		}
+	}
+
+	private boolean hasAlive() {
+		if (!foe.isFainted()) return true;
+		
+		if (foeTrainer != null && foeTrainer.getTeam() != null) {
+			if (foeTrainer.hasNext()) return true;
+		}
+
+		return false;
 	}
 
 	private void showFoe() {

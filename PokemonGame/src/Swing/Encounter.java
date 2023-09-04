@@ -157,12 +157,12 @@ public class Encounter {
 				encounters.add(new Encounter(153, 18, 19, 0.25));
 				encounters.add(new Encounter(156, 18, 19, 0.10));
 			} else if (area == 24 && type.equals("Fishing")) { // Mt. Splinkty 1A
-				encounters.add(new Encounter(90, 17, 19, 0.3));
-				encounters.add(new Encounter(137, 16, 18, 0.15));
-				encounters.add(new Encounter(132, 18, 19, 0.20));
-				encounters.add(new Encounter(146, 16, 19, 0.15));
-				encounters.add(new Encounter(148, 18, 20, 0.15));
-				encounters.add(new Encounter(150, 20, 19, 0.05));
+				encounters.add(new Encounter(90, 17, 19, 0.15));
+				encounters.add(new Encounter(137, 16, 18, 0.10));
+				encounters.add(new Encounter(132, 18, 19, 0.15));
+				encounters.add(new Encounter(146, 16, 19, 0.10));
+				encounters.add(new Encounter(148, 18, 20, 0.10));
+				encounters.add(new Encounter(150, 20, 19, 0.40));
 			} else if (area == 25 && type.equals("Standard")) { // Mt. Splinkty 2B
 				encounters.add(new Encounter(48, 18, 19, 0.30));
 				encounters.add(new Encounter(52, 19, 20, 0.25));

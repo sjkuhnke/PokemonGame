@@ -4752,7 +4752,7 @@ public class Pokemon implements Serializable {
 			if (hit == numHits && hit > 1) System.out.println("Hit " + hit + " times!");
 		}
 		
-		if ((!foe.isFainted() || move == Move.ROCKFALL_FRENZY) && checkSecondary(secChance)) {
+		if ((!foe.isFainted() || move == Move.ROCKFALL_FRENZY || move == Move.ICE_SPINNER) && checkSecondary(secChance)) {
 			secondaryEffect(foe, move, field, first, userSide, enemySide, player, enemy);
 		}
 		
@@ -5199,7 +5199,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.MIRROR_SHOT) {
 			stat(this, 5, -1);
 		} else if (move == Move.MIST_BALL) {
-			stat(this, 2, -1);
+			stat(foe, 2, -1);
 		} else if (move == Move.MOLTEN_STEELSPIKE) {
 			foe.burn(false, this, field);
 		} else if (move == Move.MOLTEN_CONSUME) {
@@ -5833,7 +5833,7 @@ public class Pokemon implements Serializable {
 			foe.poison(true, this, field);
 		} else if (move == Move.STUN_SPORE) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
-				System.out.println("It doesn't effect " + foe.nickname);
+				System.out.println("It doesn't effect " + foe.nickname + "...");
 				success = false;
 				fail = true;
 				return;
@@ -6100,7 +6100,7 @@ public class Pokemon implements Serializable {
 				System.out.print("[" + p.nickname + "'s Competitve]: " );
 				stat(p, 2, 2);
 			} else if (p.ability == Ability.CLEAR_BODY && a < 0) {
-				System.out.println("[" + p.nickname + "'s Clear Body]: " + this.nickname + "'s " + type + " was not lowered!");
+				System.out.println("[" + p.nickname + "'s Clear Body]: " + p.nickname + "'s " + type + " was not lowered!");
 				return;
 			} else if (p.ability == Ability.KEEN_EYE && a < 0 && i == 5) {
 				System.out.println("[" + p.nickname + "'s Keen Eye]: " + this.nickname + "'s " + type + " was not lowered!");
@@ -10652,7 +10652,7 @@ public class Pokemon implements Serializable {
 		
 		if (move == Move.TOXIC && (this.type1 == PType.POISON || this.type2 == PType.POISON)) acc = 1000;
 		
-		if (mode == 0 && this.ability != Ability.NO_GUARD && foe.ability != Ability.NO_GUARD) {
+		if (mode == 0 && this.ability != Ability.NO_GUARD && foe.ability != Ability.NO_GUARD && acc < 100) {
 			int accEv = this.statStages[5] - foe.statStages[6];
 			if (move == Move.DARKEST_LARIAT || move == Move.SACRED_SWORD) accEv += foe.statStages[6];
 			accEv = accEv > 6 ? 6 : accEv;
@@ -12135,7 +12135,7 @@ public class Pokemon implements Serializable {
 			foe.vStatuses.add(Status.TAUNTED);
 			System.out.println("[" + this.nickname + "'s Mouthwater]: " + foe.nickname + " was taunted!");
 		} else if (this.ability == Ability.REGENERATOR) {
-			this.currentHP += this.getStat(0);
+			this.currentHP += this.getStat(0) / 3;
 			verifyHP();
 		} else if (this.ability == Ability.ANTICIPATION) {
 			boolean shuddered = false;
