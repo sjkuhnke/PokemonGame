@@ -36,8 +36,8 @@ public class Encounter {
 		ArrayList<Encounter> encounters = new ArrayList<>();
 		if (random) {
 			Random rand = new Random();
-			int id = rand.nextInt(197);
-			encounters.add(new Encounter(id, 2, 5, 1));
+			int id = rand.nextInt(225);
+			encounters.add(new Encounter(id + 1, 2, 5, 1));
 		} else {
 			if (area == 0 && type.equals("Standard") && x <= 73 && y > 38) { // route 22
 				encounters.add(new Encounter(13, 2, 2, 0.26));

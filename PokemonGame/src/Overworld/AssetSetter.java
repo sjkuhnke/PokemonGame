@@ -522,6 +522,18 @@ public class AssetSetter {
 		mapNum = 46;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(31, 41, "Check your team's Hidden Power types here!", true);
+		
+		mapNum = 47;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Here, take this as a gift!", true);
+		
+		mapNum = 48;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(6, 29, 42, 142);
+		gp.npc[mapNum][index] = NPCSetup(5, 33, 42, 143);
+		gp.npc[mapNum][index] = NPCSetup(3, 31, 36, 144);
+		gp.npc[mapNum][index] = NPCSetup(6, 28, 39, 145);
+		gp.npc[mapNum][index] = NPCSetup(24, 37, "Here, take this as a gift!", true);
 	}
 	
 	public void setInteractiveTile() {
@@ -631,6 +643,8 @@ public class AssetSetter {
 		// flags[7] is true after key B
 		// flags[8] is true after clearing room A
 		// flags[9] is true after clearing room B
+		// flags[10] is true after getting gift starter
+		// flags[11] is true after getting gift dog
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(10, 72, 48, 0);
 		if (flags[1]) gp.npc[3][0] = null;

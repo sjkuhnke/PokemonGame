@@ -157,6 +157,48 @@ public class Pokemon implements Serializable {
 		
 	}
 	
+	public Pokemon(int i, Pokemon pokemon) {
+		id = i;
+		name = getName();
+		nickname = pokemon.nickname;
+		if (pokemon.nickname == pokemon.name) nickname = name;
+		
+		baseStats = new int[6];
+		stats = new int[6];
+		level = pokemon.level;
+		statStages = pokemon.statStages.clone();
+		ivs = pokemon.ivs;
+		nature = pokemon.nature;
+		
+		setBaseStats();
+		getStats();
+		setType();
+		this.abilitySlot = pokemon.abilitySlot;
+		setAbility(abilitySlot);
+		this.weight = setWeight();
+		
+		this.slot = pokemon.slot;
+		
+		expMax = setExpMax();
+		exp = 0;
+		
+		currentHP = this.getStat(0);
+		setMoveBank();
+		moveset = pokemon.moveset;
+		
+		status = Status.HEALTHY;
+		vStatuses = new ArrayList<Status>();
+		
+		playerOwned = true;
+		impressive = true;
+		trainer = 1;
+		lastMoveUsed = pokemon.lastMoveUsed;
+		
+		happiness = pokemon.happiness;
+		headbuttCrit = pokemon.headbuttCrit;
+		catchRate = setCatchRate();
+	}
+	
 	public BufferedImage getSprite() {
 		BufferedImage image = null;
 		
@@ -296,49 +338,6 @@ public class Pokemon implements Serializable {
         int randomIndex = (int) (Math.random() * bestMoves.size());
         return bestMoves.get(randomIndex);
     }
-
-
-
-	public Pokemon(int i, Pokemon pokemon) {
-		id = i;
-		name = getName();
-		nickname = pokemon.nickname;
-		if (pokemon.nickname == pokemon.name) nickname = name;
-		
-		baseStats = new int[6];
-		stats = new int[6];
-		level = pokemon.level;
-		statStages = new int[7];
-		ivs = pokemon.ivs;
-		nature = pokemon.nature;
-		
-		setBaseStats();
-		getStats();
-		setType();
-		this.abilitySlot = pokemon.abilitySlot;
-		setAbility(abilitySlot);
-		this.weight = setWeight();
-		
-		this.slot = pokemon.slot;
-		
-		expMax = setExpMax();
-		exp = 0;
-		
-		currentHP = this.getStat(0);
-		setMoveBank();
-		moveset = pokemon.moveset;
-		
-		status = Status.HEALTHY;
-		vStatuses = new ArrayList<Status>();
-		
-		playerOwned = true;
-		impressive = true;
-		trainer = 1;
-		
-		happiness = pokemon.happiness;
-		headbuttCrit = pokemon.headbuttCrit;
-		catchRate = setCatchRate();
-	}
 	
 	public boolean isFainted() {
 		return this.fainted;

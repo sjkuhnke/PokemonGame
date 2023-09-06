@@ -635,6 +635,27 @@ public class PlayerCharacter extends Entity {
 	    			}
 					JOptionPane.showMessageDialog(null, message, "Party Hidden Power Types", JOptionPane.PLAIN_MESSAGE);
 				}
+				if (gp.currentMap == 48 && !p.flags[11]) {
+					Random dog = new Random();
+					int id = dog.nextInt(3);
+					id = 120 + (id * 3);
+					p.flags[11] = true;
+					JOptionPane.showMessageDialog(null, "You adopted a gift dog!");
+					p.catchPokemon(new Pokemon(id, 5, true, false));
+				}
+				if (gp.currentMap == 47 && !p.flags[10]) {
+					Random starter = new Random();
+					int id = starter.nextInt(3);
+					while (id + 1 == p.starter) {
+						id = starter.nextInt(3);
+					}
+					id *= 3;
+					id += 1;
+					Pokemon result = new Pokemon(id, 5, true, false);
+					p.flags[10] = true;
+					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+					p.catchPokemon(result);
+				}
 			}
 		    keyH.resume();
 		}

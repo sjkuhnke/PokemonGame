@@ -28,7 +28,7 @@ public class Player implements Serializable{
 	public int currentMap;
 	public boolean[] trainersBeat = new boolean[Main.trainers.length];
 	public boolean[][] itemsCollected;
-	public boolean[] flags = new boolean[10];
+	public boolean[] flags = new boolean[20];
 	public boolean[] locations = new boolean[12]; // NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
 	public boolean random = false;
 	public boolean ghost = false;

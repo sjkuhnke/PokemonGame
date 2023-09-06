@@ -227,6 +227,14 @@ public class EventHandler {
 			// Poppy Grove HP House
 			if (hit(4,80,71,"any")) teleport(46, 31, 45);
 			if (hit(46,31,46,"any")) teleport(4, 80, 72);
+			
+			// Poppy Grove Hotel
+			if (hit(4,64,55,"any")) teleport(48, 31, 45);
+			if (hit(48,31,46,"any")) teleport(4, 64, 56);
+			
+			// Bananaville Town Barn
+			if (hit(0,8,55,"any")) teleport(47, 31, 45);
+			if (hit(47,31,46,"any")) teleport(0, 8, 56);
 		}
 	}
 	
