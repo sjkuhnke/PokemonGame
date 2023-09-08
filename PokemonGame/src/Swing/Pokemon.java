@@ -4713,16 +4713,16 @@ public class Pokemon implements Serializable {
 				}
 			}
 			
-			if (move.contact && checkSecondary(30)) {
+			if (move.contact && checkSecondary(30) && this.status == null) {
 				if (foe.ability == Ability.FLAME_BODY) {
 					System.out.print("[" + foe.nickname + "'s Flame Body]: ");
 					burn(false, this, field);
 				}
-				if (foe.ability == Ability.STATIC) {
+				if (foe.ability == Ability.STATIC && this.status == null) {
 					System.out.print("[" + foe.nickname + "'s Static]: ");
 					paralyze(false, this, field);
 				}
-				if (foe.ability == Ability.POISON_POINT) {
+				if (foe.ability == Ability.POISON_POINT && this.status == null) {
 					System.out.print("[" + foe.nickname + "'s Poison Point]: ");
 					poison(false, this, field);
 				}
