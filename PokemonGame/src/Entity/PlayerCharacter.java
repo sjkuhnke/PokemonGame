@@ -425,6 +425,11 @@ public class PlayerCharacter extends Entity {
 	    					p.itemsCollected[i][j] = tempObj[i][j];
 	    				}
 	    			}
+	    			boolean[] tempFlag = p.flags.clone();
+	    			p.flags = new boolean[20];
+	    			for (int i = 0; i < tempFlag.length; i++) {
+	    				p.flags[i] = tempFlag[i];
+	    			}
 	        	    
 	        	    JOptionPane.showMessageDialog(null, "Player successfully updated!");
 	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
@@ -653,6 +658,34 @@ public class PlayerCharacter extends Entity {
 					id += 1;
 					Pokemon result = new Pokemon(id, 5, true, false);
 					p.flags[10] = true;
+					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+					p.catchPokemon(result);
+				}
+				if (gp.currentMap == 18 && !p.flags[12]) {
+					Random gift = new Random();
+					int id = gift.nextInt(3); // Dualmoose, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie
+					switch (id) {
+					case 0:
+						id = 61;
+						break;
+					case 1:
+						id = 106;
+						break;
+					case 2:
+						id = 143;
+						break;
+					case 3:
+						id = 150;
+						break;
+					case 4:
+						id = 177;
+						break;
+					case 5:
+						id = 184;
+						break;
+					}
+					Pokemon result = new Pokemon(id, 15, true, false);
+					p.flags[12] = true;
 					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
 					p.catchPokemon(result);
 				}

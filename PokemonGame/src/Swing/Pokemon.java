@@ -321,7 +321,7 @@ public class Pokemon implements Serializable {
         		bestMoves.add(move);
         		bestMoves.add(move);
         	}
-        	if (move.cat == 2) {
+        	if (move.cat == 2 || move == Move.NUZZLE) {
         		bestMoves.add(move);
         	}
         }
@@ -5927,7 +5927,7 @@ public class Pokemon implements Serializable {
 
 		} else if (move == Move.SLEEP_POWDER) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
-				System.out.println("It doesn't effect " + foe.nickname);
+				System.out.println("It doesn't effect " + foe.nickname + "...");
 				success = false;
 				fail = true;
 				return;

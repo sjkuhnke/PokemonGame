@@ -45,7 +45,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
 	
-	KeyHandler keyH = new KeyHandler();
+	public KeyHandler keyH = new KeyHandler();
 	public AssetSetter aSetter = new AssetSetter(this);
 	public EventHandler eHandler = new EventHandler(this);
 	Thread gameThread;

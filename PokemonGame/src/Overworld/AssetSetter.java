@@ -86,7 +86,7 @@ public class AssetSetter {
 		mapNum = 13;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(32, 35, 14, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(17, 48, 161, mapNum); // smack down
+		gp.obj[mapNum][objIndex] = ObjSetup(17, 48, 137, mapNum); // rock tomb
 		gp.obj[mapNum][objIndex] = ObjSetup(17, 45, 13, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(32, 30, 37, mapNum); // quiet
 		gp.obj[mapNum][objIndex] = ObjSetup(28, 8, 172, mapNum); // ice spinner (v.cross)
@@ -110,6 +110,17 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(22, 27, 127, mapNum); // taunt
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 27, 114, mapNum); // drain punch
 		gp.obj[mapNum][objIndex] = ObjSetup(46, 28, 27, mapNum);
+		
+		mapNum = 17;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 38, 161, mapNum); // smack down
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 38, 41, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(63, 38, 6, mapNum);
+		
+		mapNum = 18;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 33, 40, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 35, 18, mapNum);
 		
 		mapNum = 22;
 		objIndex = 0;
@@ -363,6 +374,8 @@ public class AssetSetter {
 		mapNum = 18;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(10, 48, 45, 55);
+		gp.npc[mapNum][index] = NPCSetup(6, 45, 38, 146);
+		gp.npc[mapNum][index] = NPCSetup(46, 33, "That was an impressive battle!\nI found a rare MAGIC Pokemon,\nbut after watching that, you'd\nbe a better trainer. Here!", true);
 		
 		mapNum = 21;
 		gp.npc[mapNum][index] = NPCSetup(3, 55, 60, 56);
@@ -561,6 +574,10 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(27, 9, 4);
 		gp.iTile[mapNum][iIndex] = ITileSetup(27, 8, 4);
 		
+		mapNum = 18;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 40, 1);
+		
 		mapNum = 21;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(63, 60, 3);
@@ -645,6 +662,8 @@ public class AssetSetter {
 		// flags[9] is true after clearing room B
 		// flags[10] is true after getting gift starter
 		// flags[11] is true after getting gift dog
+		// flags[12] is true after getting gift magic pokemon
+		// flags[13] is true after getting gift electric form (? maybe fossil)
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(10, 72, 48, 0);
 		if (flags[1]) gp.npc[3][0] = null;

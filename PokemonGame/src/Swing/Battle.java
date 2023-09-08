@@ -465,6 +465,7 @@ public class Battle extends JFrame {
 					
 					if (chance >= Math.random()) {
 						JOptionPane.showMessageDialog(null, "Got away safely!");
+						gp.keyH.resume();
 						dispose();
 						return;
 					}
