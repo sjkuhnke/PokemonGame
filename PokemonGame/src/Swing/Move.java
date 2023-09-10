@@ -242,7 +242,7 @@ public enum Move {
 	HOWL(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Attack by 1",false),
 	HURRICANE(110,70,30,0,1,0,PType.FLYING,"",false),
 	HYDRO_CANNON(150,90,0,0,1,0,PType.WATER,"User must rest after using this move",false),
-	HYDRO_PUMP(120,80,0,0,1,0,PType.WATER,"A normal attack",false),
+	HYDRO_PUMP(110,80,0,0,1,0,PType.WATER,"A normal attack",false),
 	HYPER_BEAM(150,90,0,0,1,0,PType.NORMAL,"User must rest after using this move",false),
 	HYPER_FANG(80,90,10,0,0,0,PType.NORMAL,"% of causing foe to flinch",true),
 	HYPNOSIS(0,60,0,0,2,0,PType.PSYCHIC,"Causes foe to sleep",false),

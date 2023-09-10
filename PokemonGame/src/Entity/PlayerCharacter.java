@@ -447,9 +447,9 @@ public class PlayerCharacter extends Entity {
 	        	    JOptionPane.showMessageDialog(null, message);
 	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		} else if (code.equals("nei")) {
-	    			p.itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
-	        	    
-	        	    JOptionPane.showMessageDialog(null, "Player successfully updated!");
+	    			for (int i = 0; i < p.pokedex.length; i++) {
+	    				p.pokedex[i] = 2;
+	    			}
 	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		}
 	    	});
