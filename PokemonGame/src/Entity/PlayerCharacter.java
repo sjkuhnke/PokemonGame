@@ -430,6 +430,18 @@ public class PlayerCharacter extends Entity {
 	    			for (int i = 0; i < tempFlag.length; i++) {
 	    				p.flags[i] = tempFlag[i];
 	    			}
+	    			for (Pokemon p : p.team) {
+	    				if (p != null) p.setBaseStats();
+	    			}
+	    			for (Pokemon p : p.box1) {
+	    				if (p != null) p.setBaseStats();
+	    			}
+	    			for (Pokemon p : p.box2) {
+	    				if (p != null) p.setBaseStats();
+	    			}
+	    			for (Pokemon p : p.box3) {
+	    				if (p != null) p.setBaseStats();
+	    			}
 	        	    
 	        	    JOptionPane.showMessageDialog(null, "Player successfully updated!");
 	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
