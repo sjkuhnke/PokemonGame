@@ -30,13 +30,13 @@ public enum Move {
 	AUTOMOTIZE(0,1000,0,0,2,0,PType.STEEL,"Raises user's Speed by 2",false),
 	BABY$DOLL_EYES(0,100,0,0,2,1,PType.LIGHT,"",false),
 	//BAWL(0,100,0,0,2,0,PType.DARK,"Lowers foe's Attack by 2",false),
-	BEAT_UP(20,100,0,0,0,0,PType.DARK,"Attacks once per healthy Pokemon on your team",false),
+	BEAT_UP(10,100,0,0,0,0,PType.DARK,"Attacks once per healthy Pokemon on your team",false),
 	BEEFY_BASH(100,85,50,0,0,-1,PType.FIGHTING,"% chance to paralyze foe, moves last",true),
 	BELCH(120,100,0,0,1,0,PType.POISON,"Only works on the first turn out",false),
 	//BIG_BULLET(70,90,30,0,0,0,PType.STEEL,"% chance to Paralyze foe",false),
 	BIND(15,85,100,0,0,0,PType.NORMAL,"",true),
 	BITE(60,100,30,0,0,0,PType.DARK,"% chance of causing foe to flinch",true),
-	//BLACK_DUST(0,100,0,0,2,0,PType.FIRE,"Lowers foe's Accuracy by 2",false),
+	BITTER_MALICE(75,100,30,0,1,0,PType.GHOST,"% chance to Frostbite foe",false),
 	//BLACK_HOLE(90,90,100,0,1,0,PType.DARK,"% chance of lowering foe's Accuracy by 1",false),
 	BLACK_HOLE_ECLIPSE(140,100,100,0,1,0,PType.GALACTIC,"",false),
 	BLAZE_KICK(85,90,10,1,0,0,PType.FIRE,"",true),
@@ -245,6 +245,7 @@ public enum Move {
 	HYDRO_PUMP(110,80,0,0,1,0,PType.WATER,"A normal attack",false),
 	HYPER_BEAM(150,90,0,0,1,0,PType.NORMAL,"User must rest after using this move",false),
 	HYPER_FANG(80,90,10,0,0,0,PType.NORMAL,"% of causing foe to flinch",true),
+	HYPER_VOICE(90,100,0,0,1,0,PType.NORMAL,"A normal attack",true),
 	HYPNOSIS(0,60,0,0,2,0,PType.PSYCHIC,"Causes foe to sleep",false),
 	ICE_BALL(-1,90,0,0,0,0,PType.ICE,"",true),
 	ICE_BEAM(90,100,10,0,1,0,PType.ICE,"",false),
@@ -752,7 +753,7 @@ public enum Move {
 				team = new Pokemon[1];
 			}
 			for (Pokemon p : team) {
-				if (p != null) {
+				if (p != null && !p.isFainted()) {
 					result++;
 				}
 			}
