@@ -10301,7 +10301,7 @@ public class Pokemon implements Serializable {
 			movebank[19] = new Node(Move.COIL);
 			movebank[22] = new Node(Move.AIR_CUTTER);
 			movebank[25] = new Node(Move.HEX);
-			movebank[29].addToEnd(new Node(Move.TOXIC));
+			movebank[29] = new Node(Move.TOXIC);
 			movebank[29].addToEnd(new Node(Move.THUNDER_WAVE));
 			movebank[29].addToEnd(new Node(Move.WILL$O$WISP));
 			break;
@@ -11350,7 +11350,7 @@ public class Pokemon implements Serializable {
 		        bp = 70;
 		    }
 		} else if (move == Move.BRINE) {
-			if (foe.currentHP / foe.getStat(0) < 0.5) {
+			if (foe.currentHP / foe.getStat(0) >= 0.5) {
 				bp = 65;
 			} else {
 				bp = 130;

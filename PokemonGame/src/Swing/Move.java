@@ -787,6 +787,7 @@ public enum Move {
 		result.add(Move.SPARKLING_ARIA);
 		result.add(Move.SPARKLING_WATER);
 		result.add(Move.SUPERSONIC);
+		result.add(Move.HYPER_VOICE);
 		
 		return result;
 	}
