@@ -675,7 +675,7 @@ public class PlayerCharacter extends Entity {
 				}
 				if (gp.currentMap == 18 && !p.flags[12]) {
 					Random gift = new Random();
-					int id = gift.nextInt(3); // Dualmoose, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie
+					int id = gift.nextInt(6); // Dualmoose, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie
 					switch (id) {
 					case 0:
 						id = 61;
@@ -698,6 +698,52 @@ public class PlayerCharacter extends Entity {
 					}
 					Pokemon result = new Pokemon(id, 15, true, false);
 					p.flags[12] = true;
+					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+					p.catchPokemon(result);
+				}
+				if (gp.currentMap == 49 && !p.flags[13]) {
+					JOptionPane.showMessageDialog(null, "I encountered this very\nstrong Pokemon, and I\ndon't think I'm strong\nenough to train it. Here!");
+					Random gift = new Random();
+					int id = gift.nextInt(5); // Pebblepup, Fightorex, Tricerpup, Shockfang, Nightrex
+					switch (id) {
+					case 0:
+						id = 55;
+						break;
+					case 1:
+						id = 57;
+						break;
+					case 2:
+						id = 66;
+						break;
+					case 3:
+						id = 211;
+						break;
+					case 4:
+						id = 213;
+						break;
+					}
+					while (p.pokedex[id] == 2) {
+						id = gift.nextInt(5); // Pebblepup, Fightorex, Tricerpup, Shockfang, Nightrex
+						switch (id) {
+						case 0:
+							id = 55;
+							break;
+						case 1:
+							id = 57;
+							break;
+						case 2:
+							id = 66;
+							break;
+						case 3:
+							id = 211;
+							break;
+						case 4:
+							id = 213;
+							break;
+						}
+					}
+					Pokemon result = new Pokemon(id, 15, true, false);
+					p.flags[13] = true;
 					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
 					p.catchPokemon(result);
 				}

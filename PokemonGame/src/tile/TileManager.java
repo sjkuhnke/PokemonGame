@@ -71,6 +71,7 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 46);
 		loadMap("/maps/house01.txt", 47);
 		loadMap("/maps/house02.txt", 48);
+		loadMap("/maps/house01.txt", 49);
 	}
 	
 	public void getTileImage() {
@@ -426,7 +427,7 @@ public class TileManager {
 		setup(369, true);
 		setup(370, true);
 		setup(371, true);
-//		setup(372, true);
+
 //		setup(373, true);
 //		setup(374, true);
 //		setup(375, true);
@@ -588,6 +589,11 @@ public class TileManager {
 			tile[336].image = ImageIO.read(getClass().getResourceAsStream("/tiles/336.png"));
 			tile[336].collisionDirection = "left";
 			tile[336].collision = true;
+			
+			tile[372] = new Tile();
+			tile[372].image = ImageIO.read(getClass().getResourceAsStream("/tiles/372.png"));
+			tile[372].collisionDirection = "down";
+			tile[372].collision = true;
 			
 		} catch (IOException e) {
 			e.printStackTrace();

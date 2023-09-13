@@ -235,6 +235,10 @@ public class EventHandler {
 			// Bananaville Town Barn
 			if (hit(0,8,55,"any")) teleport(47, 31, 45);
 			if (hit(47,31,46,"any")) teleport(0, 8, 56);
+			
+			// Kleine Village House
+			if (hit(28,68,50,"any")) teleport(49, 31, 45);
+			if (hit(49,31,46,"any")) teleport(28, 68, 51);
 		}
 	}
 	

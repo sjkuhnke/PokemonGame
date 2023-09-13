@@ -547,6 +547,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(3, 31, 36, 144);
 		gp.npc[mapNum][index] = NPCSetup(6, 28, 39, 145);
 		gp.npc[mapNum][index] = NPCSetup(24, 37, "Here, take this as a gift!", true);
+		
+		mapNum = 49;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Deep below ELECTRIC TUNNEL there's\na secret trail called SHADOW PATH.", true);
 	}
 	
 	public void setInteractiveTile() {
@@ -663,7 +667,7 @@ public class AssetSetter {
 		// flags[10] is true after getting gift starter
 		// flags[11] is true after getting gift dog
 		// flags[12] is true after getting gift magic pokemon
-		// flags[13] is true after getting gift electric form (? maybe fossil)
+		// flags[13] is true after getting gift fossil/ancient pokemon
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(10, 72, 48, 0);
 		if (flags[1]) gp.npc[3][0] = null;

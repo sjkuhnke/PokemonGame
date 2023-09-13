@@ -9037,7 +9037,7 @@ public class Pokemon implements Serializable {
 			movebank[8] = new Node(Move.BITE);
 			movebank[11] = new Node(Move.GLARE);
 			movebank[16] = new Node(Move.SCREECH);
-			movebank[19] = new Node(Move.ACID);
+			movebank[19] = new Node(Move.POISON_FANG);
 			movebank[24] = new Node(Move.STOCKPILE);
 			movebank[27] = new Node(Move.ACID_SPRAY);
 			break;
@@ -9052,7 +9052,7 @@ public class Pokemon implements Serializable {
 			movebank[0].addToEnd(new Node(Move.BITE));
 			movebank[0].addToEnd(new Node(Move.GLARE));
 			movebank[0].addToEnd(new Node(Move.SCREECH));
-			movebank[19] = new Node(Move.ACID);
+			movebank[19] = new Node(Move.POISON_FANG);
 			movebank[26] = new Node(Move.STOCKPILE);
 			movebank[31] = new Node(Move.ACID_SPRAY);
 			movebank[38] = new Node(Move.MUD_BOMB);
@@ -11280,7 +11280,7 @@ public class Pokemon implements Serializable {
 			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
 		}
-		if (this.type1 == PType.POISON || this.type2 == PType.POISON) {
+		if (this.type1 == PType.POISON || this.type2 == PType.POISON || this.type1 == PType.STEEL || this.type2 == PType.STEEL) {
 			if (announce) System.out.println("It doesn't effect " + this.nickname + "...");
 			return;
 		}
