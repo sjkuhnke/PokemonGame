@@ -3,6 +3,7 @@ import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -99,6 +100,8 @@ public class Main {
 		
 		modifyTrainers(gamePanel);
 		
+		writeTrainers();
+		
 		gamePanel.setupGame();
 		
 		window.add(gamePanel);
@@ -125,6 +128,62 @@ public class Main {
 		gamePanel.eHandler.p = gamePanel.player.p;
 	}
 	
+	private static void writeTrainers() {
+		try {
+			FileWriter writer = new FileWriter("TrainerInfo.txt");
+			
+			for (Trainer tr : trainers) {
+				String name = "Trainer " + tr.getName();
+				while (name.length() < 28) {
+					name += " ";
+				}
+				writer.write(name);
+				for (int i = 0; i < tr.getTeam().length; i++) {
+					Pokemon p = tr.getTeam()[i];
+					writer.write(p.name + " Lv. " + p.level);
+					if (i != tr.getTeam().length - 1) writer.write(", ");
+				}
+				writer.write("\n");
+				
+				if (tr.getName().contains("Leader") || tr.getName().contains("Rick") || tr.getName().contains("Scott") || tr.getName().contains("Fred")) {
+					writer.write("\n");
+					writer.write(tr.getName() + "\n");
+					for (Pokemon p : tr.getTeam()) {
+						String pName = p.name + " (Lv. " + p.level + ")";
+						while (pName.length() < 25) {
+							pName += " ";
+						}
+						pName += "/";
+						writer.write(pName);
+						
+						String aName = "   " + p.ability.toString();
+						while (aName.length() < 19) {
+							aName += " ";
+						}
+						aName += "/";
+						writer.write(aName);
+						
+						String mName = "   ";
+						for (int i = 0; i < 4; i++) {
+							if (p.moveset[i] != null) {
+								mName += p.moveset[i].toString();
+								if (i != 3) mName += ", ";
+							}
+						}
+						writer.write(mName);
+						writer.write("\n");
+					}
+					writer.write("\n");
+				}
+			}
+			
+			writer.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+
 	private static void modifyTrainers(GamePanel gp) {
 		if (gp.player.p.starter == 1) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(7, 7, false, true)}, 400, 1);

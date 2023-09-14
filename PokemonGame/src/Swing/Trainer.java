@@ -62,11 +62,11 @@ public class Trainer {
 	
 	@Override // implementation
 	public String toString() {
-		if (name != "[SELECT]") {
-			if (!name.contains("Leader") && !name.contains("Rival")) return name + " trainer";
-			return name;
+		if (getName() != "[SELECT]") {
+			if (!getName().contains("Leader") && !getName().contains("Rival")) return getName() + " trainer";
+			return getName();
 		} else {
-			return name;
+			return getName();
 		}
 	}
 
@@ -122,5 +122,9 @@ public class Trainer {
 			}
 		}
 		return result;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

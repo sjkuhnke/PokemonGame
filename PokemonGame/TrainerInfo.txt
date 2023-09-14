@@ -1,0 +1,212 @@
+Trainer Scott 1             Lizish Lv. 7
+
+Scott 1
+Lizish (Lv. 7)           /   Torrent         /   Scratch, Growl, Water Gun, 
+
+Trainer A                   Hammo Lv. 5
+Trainer B                   Pigo Lv. 4
+Trainer C                   Sewaddle Lv. 5, Budew Lv. 4
+Trainer D                   Bealtle Lv. 2, Bealtle Lv. 3, Bealtle Lv. 4
+Trainer TN 1                Bealtle Lv. 9
+Trainer TN 2                Bealtle Lv. 9
+Trainer TN 3                Budew Lv. 10
+Trainer TN 4                Kleinowl Lv. 11
+Trainer TN 5                Bugik Lv. 10
+Trainer TN 6                Bugop Lv. 10
+Trainer TN 7                Inkay Lv. 10
+Trainer TN 8                Carinx Lv. 12
+Trainer Rick 1              Tricerpup Lv. 11, Shookwat Lv. 12, Lotad Lv. 13, Magie Lv. 10
+
+Rick 1
+Tricerpup (Lv. 11)       /   Rock Head       /   Headbutt, Beat Up, Feint Attack, Iron Defense
+Shookwat (Lv. 12)        /   Static          /   Thundershock, Charge, Wrap, 
+Lotad (Lv. 13)           /   Swift Swim      /   Haze, Mega Drain, Absorb, Water Gun
+Magie (Lv. 10)           /   Tough Claws     /   Scratch, Defense Curl, Quick Attack, Growl
+
+Trainer 1 Gym A             Pigo Lv. 11, Pigo Lv. 12, Pigo Lv. 13
+Trainer 1 Gym B             Hummingspark Lv. 12, Hummingspark Lv. 13
+Trainer 1 Gym C             Pigo Lv. 13, Hummingspark Lv. 14
+Trainer 1 Gym Leader 1      Hummingspark Lv. 16, Zubat Lv. 16, Daray Lv. 16, Ekans-S Lv. 16, Minishoo Lv. 16, Pigonat Lv. 17
+
+1 Gym Leader 1
+Hummingspark (Lv. 16)    /   Keen Eye        /   Quick Attack, Leer, Flash Ray, Gust
+Zubat (Lv. 16)           /   Inner Focus     /   Mega Drain, Supersonic, Aerial Ace, Poison Fang
+Daray (Lv. 16)           /   Unaware         /   Aqua Ring, Supersonic, Double Slap, Water Gun
+Ekans-S (Lv. 16)         /   Lightning Rod   /   Gust, Glare, Night Shade, Shadow Sneak
+Minishoo (Lv. 16)        /   Natural Cure    /   Calm Mind, Wish, Magic Blast, Gust
+Pigonat (Lv. 17)         /   Insomnia        /   Sand Attack, Leer, Aerial Ace, Quick Attack
+
+Trainer E                   Sheabear Lv. 16, Poov Lv. 16
+Trainer F                   Sewaddle Lv. 8, Sewaddle Lv. 9
+Trainer G                   Pigo Lv. 10
+Trainer H                   Sapwin Lv. 10
+Trainer I                   Bluebunn Lv. 10, Pebblepup Lv. 11
+Trainer J1                  Ralts Lv. 15, Hummingspark Lv. 16
+Trainer K                   Nincada Lv. 17, Busheep Lv. 18
+Trainer L                   Sheabear Lv. 18
+Trainer M                   Ali Lv. 18
+Trainer N                   Swordik Lv. 18
+Trainer O1                  Magikarp-E Lv. 19, Posho Lv. 18
+Trainer O2                  Magikarp Lv. 19, Staryu Lv. 18
+Trainer P                   Sapwin Lv. 18
+Trainer Q                   Inkay Lv. 18, Psycorb Lv. 19
+Trainer R                   Grondor Lv. 19
+Trainer S                   Magikarp Lv. 19, Magikarp Lv. 19, Magikarp Lv. 19, Froshrog Lv. 19
+Trainer Fred 1              Otterpor Lv. 18, Maguide Lv. 20
+
+Fred 1
+Otterpor (Lv. 18)        /   Water Veil      /   Baby-Doll Eyes, Detect, Aqua Ring, Razor Shell
+Maguide (Lv. 20)         /   Blaze           /   Body Slam, Harden, Flame Wheel, Smokescreen
+
+Trainer T                   Swordik Lv. 16, Carinx Lv. 17
+Trainer U1                  Houndour Lv. 15, Iglite Lv. 15
+Trainer U2                  Sparkdust Lv. 15, Iglite Lv. 15
+Trainer V                   Ralts Lv. 17, Psycorb Lv. 16, Florline Lv. 17, Hatenna Lv. 18
+Trainer W                   Gyarados Lv. 20
+Trainer EP-AA               Inkay Lv. 22
+Trainer EP-AB               Charjabug Lv. 21, Psycorb Lv. 21, Florline Lv. 21
+Trainer EP-AC               Elelamb Lv. 20
+Trainer EP-AD               Droid Lv. 22
+Trainer EP-AE               Whiskie Lv. 21, Vupp Lv. 22, Magie Lv. 21
+Trainer EP-BA               Gyarados Lv. 21, Gyarados Lv. 21
+Trainer EP-BB               Durfish Lv. 22
+Trainer EP-BC               Staryu Lv. 22, Starmie Lv. 22
+Trainer EP-BD               Shomp Lv. 21
+Trainer TN O1               Centatle Lv. 19
+Trainer TN O2               Bugop Lv. 19
+Trainer TN O3               Blaxer Lv. 19
+Trainer TN O4               Houndour Lv. 19
+Trainer TN O5               Carinx Lv. 20, Ali Lv. 20
+Trainer TN O6               Inkay Lv. 20, Shomp Lv. 20
+Trainer Scott 2             Ninjask Lv. 21, Iguaton Lv. 22, Rhypo Lv. 22
+
+Scott 2
+Ninjask (Lv. 21)         /   Speed Boost     /   False Swipe, Mud-Slap, Fury Cutter, Harden
+Iguaton (Lv. 22)         /   Torrent         /   Mud Sport, Bite, Mean Look, Bubblebeam
+Rhypo (Lv. 22)           /   Rattled         /   Fury Attack, Defense Curl, Growl, Tail Whip
+
+Trainer 2 Gym A             Hammo Lv. 22
+Trainer 2 Gym B             Hammo Lv. 22
+Trainer 2 Gym C             Pigonat Lv. 20
+Trainer 2 Gym D             Pigonat Lv. 20
+Trainer 2 Gym E             Dualbear Lv. 21
+Trainer 2 Gym F             Dualbear Lv. 21
+Trainer 2 Gym G             Sheabear Lv. 22, Sheabear Lv. 23
+Trainer 2 Gym H             Sheabear Lv. 22, Sheabear Lv. 23
+Trainer 2 Gym I             Hammo Lv. 22
+Trainer 2 Gym J             Pigonat Lv. 22
+Trainer 2 Gym Leader 1      Hammo Lv. 24, Whiskie Lv. 24, Zorua Lv. 24, Flameruff Lv. 24, Tigrette Lv. 24, Dualbear Lv. 25
+
+2 Gym Leader 1
+Hammo (Lv. 24)           /   Mouthwater      /   Super Fang, Bite, Headbutt, Bulk Up
+Whiskie (Lv. 24)         /   Guts            /   Power-Up Punch, Fury Swipes, Double Team, Charm
+Zorua (Lv. 24)           /   Adaptability    /   Will-O-Wisp, Hex, Round, Taunt
+Flameruff (Lv. 24)       /   Flash Fire      /   Super Fang, Metal Claw, Flame Wheel, Body Slam
+Tigrette (Lv. 24)        /   Simple          /   Light Beam, Flash Cannon, Thunderbolt, Tail Glow
+Dualbear (Lv. 25)        /   Adaptability    /   Headbutt, Hypnosis, Feint Attack, Swift
+
+Trainer SA                  Ekans Lv. 8
+Trainer SB                  Lotad Lv. 9
+Trainer SC                  Grubbin Lv. 9
+Trainer SD                  Zubat Lv. 8
+Trainer X                   Sheltor Lv. 24, Timburr Lv. 25
+Trainer Y                   Flashclaw Lv. 24, Lilyray Lv. 27
+Trainer Z                   Houndoom Lv. 27
+Trainer AA                  Shedinja Lv. 29
+Trainer MS A                Dualmoose Lv. 29
+Trainer MS B                Flameruff Lv. 29, Cluuz Lv. 30
+Trainer MS C                Electroram Lv. 30
+Trainer MS D                Crobat Lv. 51, Zurrclu Lv. 53
+Trainer TN MS 1             Carinator Lv. 30
+Trainer AB                  Kirlia Lv. 28, Psycorb Lv. 30, Kirlia Lv. 29, Hatenna Lv. 30, Psylotter Lv. 30
+Trainer AC                  Boulder Lv. 30, Carinator Lv. 31
+Trainer AD                  Flamehox Lv. 30, Magwoo Lv. 31, Houndoom Lv. 31
+Trainer AE                  Pyrator Lv. 37
+Trainer AF                  Flamebless Lv. 38
+Trainer AG                  Bugop Lv. 29, Malamar Lv. 30
+Trainer AH                  Magmaclang Lv. 30
+Trainer AI                  Tigrette Lv. 30, Bluebunn Lv. 31
+Trainer AJ                  Ludicolo Lv. 30, Treewin Lv. 31
+Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Maguide Lv. 30, Psylotter Lv. 31
+
+Fred 2
+Flamehox (Lv. 29)        /   Flame Body      /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
+Gyarados-E (Lv. 30)      /   Electric Surge  /   Crunch, Tackle, Thunder Fang, Dragon Rage
+Maguide (Lv. 30)         /   Blaze           /   Mud Bomb, Harden, Flame Wheel, Headbutt
+Psylotter (Lv. 31)       /   Water Veil      /   Psybeam, Rollout, Confuse Ray, Hypnosis
+
+Trainer 3 Gym A             Swadloon Lv. 29, Bugop Lv. 29, Swadloon Lv. 30, Leavanny Lv. 31
+Trainer 3 Gym B             Centatle Lv. 30, Charjabug Lv. 31, Swordik Lv. 32
+Trainer 3 Gym C             Snom Lv. 31, Frosmoth Lv. 31
+Trainer 3 Gym D             Curlatoral Lv. 31, Millistone Lv. 31
+Trainer 3 Gym Leader 1      Millistone Lv. 31, Vikavolt Lv. 32, Leavanny Lv. 32, Swordik Lv. 32, Opwing Lv. 32, Frosmoth Lv. 33
+
+3 Gym Leader 1
+Millistone (Lv. 31)      /   Compound Eyes   /   Fell Stinger, Aqua Tail, Iron Tail, Stealth Rock
+Vikavolt (Lv. 32)        /   Levitate        /   Sticky Web, Thunderbolt, Bug Buzz, Thunder Wave
+Leavanny (Lv. 32)        /   Swarm           /   Leaf Blade, X-Scissor, Fell Stinger, Swords Dance
+Swordik (Lv. 32)         /   Hyper Cutter    /   First Impression, Fell Stinger, Sacred Sword, Agility
+Opwing (Lv. 32)          /   Technician      /   Bug Bite, Moonlight, Feint Attack, Fell Stinger
+Frosmoth (Lv. 33)        /   Icy Scales      /   Aurora Beam, Bug Buzz, Snowscape, Quiver Dance
+
+Trainer RR A                Froshrog Lv. 30, Spheal Lv. 31
+Trainer RR B                Treewin Lv. 30, Roselia Lv. 31
+Trainer RR C                Sparkitten Lv. 30, Splame Lv. 31
+Trainer CR                  Kirlia Lv. 18, Lombre Lv. 19
+Trainer CS                  Charjabug Lv. 20
+Trainer CT                  Spheal Lv. 20
+Trainer CU                  Swordik Lv. 20
+Trainer E                   Lilyray Lv. 5, Twigzap Lv. 6
+Trainer K                   Twigle Lv. 15, Lagma Lv. 15, Lizish Lv. 15
+Trainer AB                  Poof Lv. 20
+Trainer AC                  Poov Lv. 20
+Trainer AG                  Pigoga Lv. 34, Roserade Lv. 34
+Trainer AH                  Wormite Lv. 35, Wormbot Lv. 36
+Trainer AI                  Fightorex Lv. 35, Cumin Lv. 35
+Trainer AJ                  Psyballs Lv. 35, Hattrem Lv. 35, Florline Lv. 36, Gardevoir Lv. 34
+Trainer AK                  Gyarados Lv. 35, Kissyfishy Lv. 36
+Trainer AL                  Cluuz Lv. 36, Gurdurr Lv. 36, Leavanny Lv. 36
+Trainer AM                  Golbat Lv. 36, Starmie Lv. 35, Drillatron Lv. 35
+Trainer AN                  Magwoo Lv. 35, Blaxer Lv. 35, Pyrator Lv. 36, Clefairy Lv. 37
+Trainer AO                  Sheltor Lv. 37, Posho Lv. 40, Daray Lv. 37, Shelnado Lv. 37
+Trainer AP                  Whiskers Lv. 36, Gurdurr Lv. 37, Armoid Lv. 36, Zoroark Lv. 37
+Trainer AQ                  Minishoo Lv. 38, Consodust Lv. 39, Shawar Lv. 37, Magestiflash Lv. 37
+Trainer TN S1               Hootowl Lv. 36, Vikavolt Lv. 37
+Trainer TN S2               Roserade Lv. 36, Opwing Lv. 37
+Trainer TN S3               Golbat Lv. 36, Arbok Lv. 37
+Trainer TN S4               Cluuz Lv. 36, Grust Lv. 37
+Trainer TN S5               Malamar Lv. 37, Magmaclang Lv. 37
+Trainer TN S6               Binacle Lv. 38, Pyrator-S Lv. 37
+Trainer TN S7               Psyballs Lv. 37, Gardevoir Lv. 38
+Trainer TN S8               Ramant Lv. 38, Treewin Lv. 38
+Trainer TN S9               Durfish Lv. 38, Dompster Lv. 38
+Trainer TN S10              Gurdurr Lv. 39, Shomp Lv. 38
+Trainer TN S11              Grust Lv. 37, Magmaclang Lv. 37
+Trainer TN S12              Clefable Lv. 37, Armoid Lv. 38
+Trainer TN S13              Curlatoral Lv. 38, Opwing Lv. 37
+Trainer TN S14              Boulderoar Lv. 37, Millistone Lv. 38
+Trainer TN S15              Houndoom Lv. 39, Fireshard Lv. 38
+Trainer TN S16              Ali Lv. 38, Batorali Lv. 37
+Trainer 4 Gym A             Frosmoth Lv. 37, Frosmoth Lv. 38, Sealeo Lv. 39, Sealeo Lv. 40
+Trainer 4 Gym B             Bipedice Lv. 40
+Trainer 4 Gym C             Kleinowl Lv. 40, Hootowl Lv. 39, Dualmoose Lv. 40, Hootowl Lv. 39
+Trainer 4 Gym D             Frosmoth Lv. 41
+Trainer 4 Gym Leader 1      Consodust Lv. 41, Sealeo Lv. 41, Dualmoose Lv. 41, Hootowl Lv. 41, Bipedice Lv. 40, Cosmocrash Lv. 42
+
+4 Gym Leader 1
+Consodust (Lv. 41)       /   Snow Warning    /   Freeze-Dry, Ice Ball, Cosmic Power, Space Beam
+Sealeo (Lv. 41)          /   Ice Body        /   Snowscape, Aurora Veil, Blizzard, Scald
+Dualmoose (Lv. 41)       /   Snow Cloak      /   Red-Nose Boost, Magic Blast, Ice Shard, Blizzard
+Hootowl (Lv. 41)         /   Snow Cloak      /   Psychic, Ice Beam, Freeze-Dry, Calm Mind
+Bipedice (Lv. 40)        /   Guts            /   Ice Punch, Close Combat, Ice Shard, Swords Dance
+Cosmocrash (Lv. 42)      /   Snow Warning    /   Ice Spinner, Comet Crash, Brave Bird, Head Smash
+
+Trainer AR                  Pigoga Lv. 40, Hootowl Lv. 40, Pigoga Lv. 40, Magestiflash Lv. 40, Glittleshoo Lv. 40, Fireshard-E Lv. 40
+Trainer AS                  Malamar Lv. 42, Psylotter Lv. 43, Starmie Lv. 41, Spinaquata Lv. 42
+Trainer AT                  Gyarados Lv. 41, Gyarados Lv. 42, Spinaquata Lv. 43, Dompster Lv. 42
+Trainer AU                  Crobat Lv. 43, Suvinero Lv. 43, Thunderzap Lv. 42
+Trainer BVA                 Whiskie Lv. 12, Magie Lv. 12
+Trainer BVB                 Vupp Lv. 12, Whiskie Lv. 12
+Trainer BVC                 Magie Lv. 12, Vupp Lv. 12
+Trainer BVD                 Whiskie Lv. 14, Magie Lv. 14, Vupp Lv. 14
+Trainer O1                  Glittleshoo Lv. 28, Dragee Lv. 29, Shomp Lv. 28
