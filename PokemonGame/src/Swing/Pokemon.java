@@ -150,6 +150,8 @@ public class Pokemon implements Serializable {
 			trainer = 1.5;
 			ivs = new int[] {31, 31, 31, 31, 31, 31};
 			nature = new double[] {1.0,1.0,1.0,1.0,1.0,0.0};
+			getStats();
+			currentHP = this.getStat(0);
 		}
 		
 		happiness = 70;
@@ -10846,8 +10848,8 @@ public class Pokemon implements Serializable {
 		if ((foe.ability == Ability.ICY_SCALES && !move.isPhysical()) || (foe.ability == Ability.MULTISCALE && foe.currentHP == foe.getStat(0))) damage /= 2;
 		
 		// Screens
-		if (move.isPhysical() && field.contains(enemySide, Effect.REFLECT)) damage /= 2;
-		if (!move.isPhysical() && field.contains(enemySide, Effect.LIGHT_SCREEN)) damage /= 2;
+		if (move.isPhysical() && field.contains(enemySide, Effect.REFLECT) || field.contains(enemySide, Effect.AURORA_VEIL)) damage /= 2;
+		if (!move.isPhysical() && field.contains(enemySide, Effect.LIGHT_SCREEN) || field.contains(enemySide, Effect.AURORA_VEIL)) damage /= 2;
 		
 		double multiplier = 1;
 		// Check type effectiveness
@@ -10933,7 +10935,6 @@ public class Pokemon implements Serializable {
 				return 0;
 			}
 		}
-		
 		return damage;
 	}
 
@@ -11705,30 +11706,7 @@ public class Pokemon implements Serializable {
 	        }
 	        
 	        for (int i = 0; i < 6; i++) {
-	        	String type;
-	        	switch (i) {
-	        	case 0:
-	        		type = "HP ";
-	        		break;
-	        	case 1:
-	        		type = "Atk ";
-	        		break;
-	        	case 2:
-	        		type = "Def ";
-	        		break;
-	        	case 3:
-	        		type = "SpA ";
-	        		break;
-	        	case 4:
-	        		type = "SpD ";
-	        		break;
-	        	case 5:
-	        		type = "Spe ";
-	        		break;
-        		default:
-        			type = "ERROR ";
-        			break;
-	        	}
+	        	String type = getStatType(i);
 	        	stats[i] = new JLabel(type + this.stats[i]);
 	        	stats[i].setFont(new Font(stats[i].getFont().getName(), Font.BOLD, 14));
 	        	stats[i].setSize(50, stats[i].getHeight());
@@ -11872,18 +11850,20 @@ public class Pokemon implements Serializable {
 	public JPanel getDexSummary(int id, int pokedex) {
 	    JPanel dexPanel = new JPanel();
 	    dexPanel.setLayout(new BoxLayout(dexPanel, BoxLayout.Y_AXIS));
+	    dexPanel.setPreferredSize(new Dimension(500, 750));
 	    
 	    JLabel spriteLabel = new JLabel();
 	    ImageIcon spriteIcon = new ImageIcon(getSprite(id));
 	    spriteLabel.setIcon(spriteIcon);
 
-	    JLabel dexNo, nameLabel, abilityLabel, bst;
-	    nameLabel = abilityLabel = bst = dexNo = new JLabel("???");
+	    JLabel dexNo, nameLabel, abilityLabel, bst, levelUp, tmLearn;
+	    nameLabel = abilityLabel = bst = dexNo = levelUp = tmLearn = new JLabel("???");
 	    JProgressBar[] bars = new JProgressBar[6];
 	    JPanel barPanel = new JPanel(new GridLayout(6, 1));
 	    JLabel[] abilitiesDesc = new JLabel[4];
 	    JGradientButton type1B, type2B;
 	    JPanel movesPanel = new JPanel();
+	    JPanel learnPanel = new JPanel();
 	    type1B = new JGradientButton("");
 	    type2B = new JGradientButton("");
 	    if (this != null) {
@@ -11905,30 +11885,7 @@ public class Pokemon implements Serializable {
 	        test.setBaseStats();
 	        
 	        for (int i = 0; i < 6; i++) {
-	        	String type;
-	        	switch (i) {
-	        	case 0:
-	        		type = "HP ";
-	        		break;
-	        	case 1:
-	        		type = "Atk ";
-	        		break;
-	        	case 2:
-	        		type = "Def ";
-	        		break;
-	        	case 3:
-	        		type = "SpA ";
-	        		break;
-	        	case 4:
-	        		type = "SpD ";
-	        		break;
-	        	case 5:
-	        		type = "Spe ";
-	        		break;
-        		default:
-        			type = "ERROR ";
-        			break;
-	        	}
+	        	String type = getStatType(i);
 	        	
 	        	bars[i] = new JProgressBar();
 	        	bars[i].setMaximum(200);
@@ -11940,10 +11897,10 @@ public class Pokemon implements Serializable {
 	        	
 	        	barPanel.add(bars[i]);
 	        	
-	        	bst = new JLabel("TOTAL : " + test.getBST());
-	        	bst.setFont(new Font(bst.getFont().getName(), Font.BOLD, 14));
-	        	
 	        }
+	        
+	        bst = new JLabel("TOTAL : " + test.getBST());
+        	bst.setFont(new Font(bst.getFont().getName(), Font.BOLD, 14));
 	        
 	        dexNo = new JLabel("No. " + id);
 	        dexNo.setFont(new Font(dexNo.getFont().getName(), Font.BOLD, 18));
@@ -11962,6 +11919,9 @@ public class Pokemon implements Serializable {
 					abilitiesDesc[i] = abLab;
 				}
 			}
+			
+			levelUp = new JLabel("Level Up Moves :");
+			levelUp.setFont(new Font(levelUp.getFont().getName(), Font.PLAIN, 13));
 			
 			test.setMoveBank();
 			ArrayList<Move> moves = new ArrayList<>();
@@ -11997,6 +11957,33 @@ public class Pokemon implements Serializable {
 		        }
 		        movesPanel.add(moveButton);
 		    }
+		    
+		    tmLearn = new JLabel("TM/HM Moves :");
+		    tmLearn.setFont(new Font(tmLearn.getFont().getName(), Font.PLAIN, 13));
+		    
+		    int length = 0;
+		    for (int i = 93; i < 200; i++) {
+		    	Item testItem = new Item(i);
+		    	if (testItem.getLearned(test)) {
+		    		length++;
+		    	}
+		    }
+		    learnPanel.setLayout(new GridLayout(length, 1));
+		    
+			for (int i = 93; i < 200; i++) {
+				Item testItem = new Item(i);
+				JButton moveButton = new JGradientButton("");
+				if (testItem.getLearned(test)) {
+					moveButton.setText(testItem.toString() + " " + testItem.getMove().toString());
+					moveButton.setHorizontalAlignment(SwingConstants.LEFT);
+					moveButton.setBackground(testItem.getColor());
+					moveButton.addActionListener(f -> {
+		                String message = testItem.getMove().getDescriptor();
+		                JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+		            });
+					learnPanel.add(moveButton);
+				}
+			}
 	    }
 	    
 	    if (pokedex == 0) {
@@ -12045,6 +12032,18 @@ public class Pokemon implements Serializable {
 		    bstPanel.add(bst);
 		    dexPanel.add(bstPanel);
 		    
+		    JPanel movesPanelMaster = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		    JPanel moves1Panel = new JPanel();
+		    moves1Panel.setLayout(new BoxLayout(moves1Panel, BoxLayout.Y_AXIS));
+		    moves1Panel.setPreferredSize(new Dimension(240, 225));
+		    JPanel moves2Panel = new JPanel();
+		    moves2Panel.setLayout(new BoxLayout(moves2Panel, BoxLayout.Y_AXIS));
+		    moves2Panel.setPreferredSize(new Dimension(240, 225));
+		    
+	    	JPanel levelUpPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    	levelUpPanel.add(levelUp);
+		    moves1Panel.add(levelUpPanel);
+		    
 		    // Wrap the movesPanel in a JScrollPane
 		    JScrollPane movesScrollPane = new JScrollPane(movesPanel);
 
@@ -12052,7 +12051,25 @@ public class Pokemon implements Serializable {
 		    movesScrollPane.setPreferredSize(new Dimension(100, 200));
 		    movesScrollPane.getVerticalScrollBar().setUnitIncrement(12); // Adjust the value as needed
 
-		    dexPanel.add(movesScrollPane);
+		    moves1Panel.add(movesScrollPane);
+		    
+		    JPanel tmLearnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    	tmLearnPanel.add(tmLearn);
+		    moves2Panel.add(tmLearnPanel);
+		    
+		    JScrollPane learnScrollPane = new JScrollPane(learnPanel);
+		    
+		    learnScrollPane.setPreferredSize(new Dimension(100, 200));
+		    learnScrollPane.getVerticalScrollBar().setUnitIncrement(12);
+		    
+		    moves2Panel.add(learnScrollPane);
+		    
+		    movesPanelMaster.add(moves1Panel);
+		    movesPanelMaster.add(moves2Panel);
+		    
+		    dexPanel.add(movesPanelMaster);
+	    } else {
+	    	dexPanel.setPreferredSize(null);
 	    }
 
 	    dexPanel.add(Box.createHorizontalGlue());
@@ -12921,6 +12938,40 @@ public class Pokemon implements Serializable {
 	    clonedPokemon.slot = this.slot;
 	    
 	    return clonedPokemon;
+	}
+
+	public String getStatType(int i) {
+		String type = "";
+		switch (i) {
+	    	case 0:
+	    		type = "HP ";
+	    		break;
+	    	case 1:
+	    		type = "Atk ";
+	    		break;
+	    	case 2:
+	    		type = "Def ";
+	    		break;
+	    	case 3:
+	    		type = "SpA ";
+	    		break;
+	    	case 4:
+	    		type = "SpD ";
+	    		break;
+	    	case 5:
+	    		type = "Spe ";
+	    		break;
+	    	case 6:
+	    		type = "Acc ";
+	    		break;
+	    	case 7:
+	    		type = "Eva ";
+	    		break;
+			default:
+				type = "ERROR ";
+				break;
+		}
+		return type;
 	}
 
 
