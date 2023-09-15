@@ -747,6 +747,36 @@ public class PlayerCharacter extends Entity {
 					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
 					p.catchPokemon(result);
 				}
+				if (gp.currentMap == 50 && !p.flags[14]) {
+					JOptionPane.showMessageDialog(null, "Great choice young cracka!!!!");
+					Random gift = new Random();
+					int id = gift.nextInt(3); // Otterpor, Florline, Flameruff
+					switch (id) {
+					case 0:
+						id = 78;
+						break;
+					case 1:
+						id = 80;
+						break;
+					case 2:
+						id = 92;
+						break;
+					}
+					if (p.pokedex[id] == 2) {
+						JOptionPane.showMessageDialog(null, "Wait..... you have that\none?!?!? Shit. Well, take\nthis one instead bozo");
+						Random gift2 = new Random();
+						boolean sparkitten = gift2.nextBoolean();
+						if (sparkitten) {
+							id = 108;
+						} else {
+							id = 190;
+						}
+					}
+					Pokemon result = new Pokemon(id, 25, true, false);
+					p.flags[14] = true;
+					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+					p.catchPokemon(result);
+				}
 			}
 		    keyH.resume();
 		}
@@ -1213,31 +1243,8 @@ public class PlayerCharacter extends Entity {
 			        	        		for (int k = 0; k < 6; k++) {
 			        	        			final int kndex = k;
 			        	        			JButton iv = new JButton();
-		        	        	        	String type;
-		        	        	        	switch (k) {
-		        	        	        	case 0:
-		        	        	        		type = "HP ";
-		        	        	        		break;
-		        	        	        	case 1:
-		        	        	        		type = "Atk ";
-		        	        	        		break;
-		        	        	        	case 2:
-		        	        	        		type = "Def ";
-		        	        	        		break;
-		        	        	        	case 3:
-		        	        	        		type = "SpA ";
-		        	        	        		break;
-		        	        	        	case 4:
-		        	        	        		type = "SpD ";
-		        	        	        		break;
-		        	        	        	case 5:
-		        	        	        		type = "Spe ";
-		        	        	        		break;
-		        	                		default:
-		        	                			type = "ERROR ";
-		        	                			break;
-		        	        	        	}
-			        	        			iv.setText(type + " : " + ivs[k]);
+		        	        	        	String type = p.team[index].getStatType(k);
+			        	        			iv.setText(type + ": " + ivs[k]);
 			        	        			final String finalType = type;
 			        	        			
 			        	        			iv.addActionListener(h -> {

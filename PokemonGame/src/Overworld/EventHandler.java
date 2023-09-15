@@ -239,6 +239,10 @@ public class EventHandler {
 			// Kleine Village House
 			if (hit(28,68,50,"any")) teleport(49, 31, 45);
 			if (hit(49,31,46,"any")) teleport(28, 68, 51);
+			
+			// Schrice City House
+			if (hit(38,23,36,"any")) teleport(50, 31, 45);
+			if (hit(50,31,46,"any")) teleport(38, 23, 37);
 		}
 	}
 	

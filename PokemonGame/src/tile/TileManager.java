@@ -72,6 +72,7 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 47);
 		loadMap("/maps/house02.txt", 48);
 		loadMap("/maps/house01.txt", 49);
+		loadMap("/maps/house01.txt", 50);
 	}
 	
 	public void getTileImage() {
