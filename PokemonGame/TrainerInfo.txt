@@ -15,13 +15,13 @@ Trainer TN 5                Bugik Lv. 10
 Trainer TN 6                Bugop Lv. 10
 Trainer TN 7                Inkay Lv. 10
 Trainer TN 8                Carinx Lv. 12
-Trainer Rick 1              Tricerpup Lv. 11, Shookwat Lv. 12, Lotad Lv. 13, Magie Lv. 10
+Trainer Rick 1              Tricerpup Lv. 11, Shookwat Lv. 12, Lotad Lv. 13, Magie Lv. 13
 
 Rick 1
 Tricerpup (Lv. 11)       /   Rock Head       /   Headbutt, Beat Up, Feint Attack, Iron Defense
 Shookwat (Lv. 12)        /   Static          /   Thundershock, Charge, Wrap, 
 Lotad (Lv. 13)           /   Swift Swim      /   Haze, Mega Drain, Absorb, Water Gun
-Magie (Lv. 10)           /   Tough Claws     /   Scratch, Defense Curl, Quick Attack, Growl
+Magie (Lv. 13)           /   Tough Claws     /   Iron Defense, Defense Curl, Quick Attack, Growl
 
 Trainer 1 Gym A             Pigo Lv. 11, Pigo Lv. 12, Pigo Lv. 13
 Trainer 1 Gym B             Hummingspark Lv. 12, Hummingspark Lv. 13

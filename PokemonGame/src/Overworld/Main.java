@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -16,9 +17,11 @@ import javax.swing.SwingUtilities;
 
 import Swing.Player;
 import Swing.Pokemon;
+import Swing.Pokemon.Node;
 import Swing.Trainer;
 import Swing.Ability;
 import Swing.Battle.JGradientButton;
+import Swing.Encounter;
 import Swing.Item;
 import Swing.Move;
 
@@ -100,7 +103,9 @@ public class Main {
 		
 		modifyTrainers(gamePanel);
 		
-		writeTrainers();
+//		writeTrainers();
+//		writePokemon();
+//		writeEncounters();
 		
 		gamePanel.setupGame();
 		
@@ -128,61 +133,7 @@ public class Main {
 		gamePanel.eHandler.p = gamePanel.player.p;
 	}
 	
-	private static void writeTrainers() {
-		try {
-			FileWriter writer = new FileWriter("TrainerInfo.txt");
-			
-			for (Trainer tr : trainers) {
-				String name = "Trainer " + tr.getName();
-				while (name.length() < 28) {
-					name += " ";
-				}
-				writer.write(name);
-				for (int i = 0; i < tr.getTeam().length; i++) {
-					Pokemon p = tr.getTeam()[i];
-					writer.write(p.name + " Lv. " + p.level);
-					if (i != tr.getTeam().length - 1) writer.write(", ");
-				}
-				writer.write("\n");
-				
-				if (tr.getName().contains("Leader") || tr.getName().contains("Rick") || tr.getName().contains("Scott") || tr.getName().contains("Fred")) {
-					writer.write("\n");
-					writer.write(tr.getName() + "\n");
-					for (Pokemon p : tr.getTeam()) {
-						String pName = p.name + " (Lv. " + p.level + ")";
-						while (pName.length() < 25) {
-							pName += " ";
-						}
-						pName += "/";
-						writer.write(pName);
-						
-						String aName = "   " + p.ability.toString();
-						while (aName.length() < 19) {
-							aName += " ";
-						}
-						aName += "/";
-						writer.write(aName);
-						
-						String mName = "   ";
-						for (int i = 0; i < 4; i++) {
-							if (p.moveset[i] != null) {
-								mName += p.moveset[i].toString();
-								if (i != 3) mName += ", ";
-							}
-						}
-						writer.write(mName);
-						writer.write("\n");
-					}
-					writer.write("\n");
-				}
-			}
-			
-			writer.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-	}
+	
 
 	private static void modifyTrainers(GamePanel gp) {
 		if (gp.player.p.starter == 1) {
@@ -204,34 +155,34 @@ public class Main {
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(2, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
 		}
 		
-		trainers[17].getTeam()[1].moveset = new Move[]{Move.MEGA_DRAIN, Move.SUPERSONIC, Move.AERIAL_ACE, Move.POISON_FANG};
-		trainers[17].getTeam()[3].ability = Ability.LIGHTNING_ROD;
-		trainers[17].getTeam()[4].moveset = new Move[]{Move.CALM_MIND, Move.WISH, Move.MAGIC_BLAST, Move.GUST};
-		trainers[17].getTeam()[5].moveset = new Move[]{Move.SAND_ATTACK, Move.LEER, Move.AERIAL_ACE, Move.QUICK_ATTACK};
+		setMoveset("1 Gym Leader 1", 2, Move.MEGA_DRAIN, Move.SUPERSONIC, Move.AERIAL_ACE, Move.POISON_FANG);
+		setAbility("1 Gym Leader 1", 4, Ability.LIGHTNING_ROD);
+		setMoveset("1 Gym Leader 1", 5, Move.CALM_MIND, Move.WISH, Move.MAGIC_BLAST, Move.GUST);
+		setMoveset("1 Gym Leader 1", 6, Move.SAND_ATTACK, Move.LEER, Move.AERIAL_ACE, Move.QUICK_ATTACK);
 		
-		trainers[66].getTeam()[0].moveset = new Move[]{Move.SUPER_FANG, Move.BITE, Move.HEADBUTT, Move.BULK_UP};
-		trainers[66].getTeam()[1].moveset = new Move[]{Move.POWER$UP_PUNCH, Move.FURY_SWIPES, Move.DOUBLE_TEAM, Move.CHARM};
-		trainers[66].getTeam()[2].moveset = new Move[]{Move.WILL$O$WISP, Move.HEX, Move.ROUND, Move.TAUNT};
-		trainers[66].getTeam()[3].moveset = new Move[]{Move.SUPER_FANG, Move.METAL_CLAW, Move.FLAME_WHEEL, Move.BODY_SLAM};
-		trainers[66].getTeam()[5].moveset = new Move[]{Move.HEADBUTT, Move.HYPNOSIS, Move.FEINT_ATTACK, Move.SWIFT};
+		setMoveset("2 Gym Leader 1", 1, Move.SUPER_FANG, Move.BITE, Move.HEADBUTT, Move.BULK_UP);
+		setMoveset("2 Gym Leader 1", 2, Move.POWER$UP_PUNCH, Move.FURY_SWIPES, Move.DOUBLE_TEAM, Move.CHARM);
+		setMoveset("2 Gym Leader 1", 3, Move.WILL$O$WISP, Move.HEX, Move.ROUND, Move.TAUNT);
+		setMoveset("2 Gym Leader 1", 4, Move.SUPER_FANG, Move.METAL_CLAW, Move.FLAME_WHEEL, Move.BODY_SLAM);
+		setMoveset("2 Gym Leader 1", 6, Move.HEADBUTT, Move.HYPNOSIS, Move.FEINT_ATTACK, Move.SWIFT);
 		
-		trainers[94].getTeam()[0].moveset = new Move[]{Move.FELL_STINGER, Move.AQUA_TAIL, Move.IRON_TAIL, Move.STEALTH_ROCK};
-		trainers[94].getTeam()[0].ability = Ability.COMPOUND_EYES;
-		trainers[94].getTeam()[1].moveset = new Move[]{Move.STICKY_WEB, Move.THUNDERBOLT, Move.BUG_BUZZ, Move.THUNDER_WAVE};
-		trainers[94].getTeam()[2].moveset = new Move[]{Move.LEAF_BLADE, Move.X$SCISSOR, Move.FELL_STINGER, Move.SWORDS_DANCE};
-		trainers[94].getTeam()[3].moveset = new Move[]{Move.FIRST_IMPRESSION, Move.FELL_STINGER, Move.SACRED_SWORD, Move.AGILITY};
-		trainers[94].getTeam()[4].moveset = new Move[]{Move.BUG_BITE, Move.MOONLIGHT, Move.FEINT_ATTACK, Move.FELL_STINGER};
-		trainers[94].getTeam()[5].moveset = new Move[]{Move.AURORA_BEAM, Move.BUG_BUZZ, Move.SNOWSCAPE, Move.QUIVER_DANCE};
+		setMoveset("3 Gym Leader 1", 1, Move.FELL_STINGER, Move.AQUA_TAIL, Move.IRON_TAIL, Move.STEALTH_ROCK);
+		setAbility("3 Gym Leader 1", 1, Ability.COMPOUND_EYES);
+		setMoveset("3 Gym Leader 1", 2, Move.STICKY_WEB, Move.THUNDERBOLT, Move.BUG_BUZZ, Move.THUNDER_WAVE);
+		setMoveset("3 Gym Leader 1", 3, Move.LEAF_BLADE, Move.X$SCISSOR, Move.FELL_STINGER, Move.SWORDS_DANCE);
+		setMoveset("3 Gym Leader 1", 4, Move.FIRST_IMPRESSION, Move.FELL_STINGER, Move.SACRED_SWORD, Move.AGILITY);
+		setMoveset("3 Gym Leader 1", 5, Move.BUG_BITE, Move.MOONLIGHT, Move.FEINT_ATTACK, Move.FELL_STINGER);
+		setMoveset("3 Gym Leader 1", 6, Move.AURORA_BEAM, Move.BUG_BUZZ, Move.SNOWSCAPE, Move.QUIVER_DANCE);
 		
-		trainers[104].getTeam()[0].moveset = new Move[]{Move.HYPNOSIS, Move.PLAY_NICE, Move.MOONLIGHT, Move.HIDDEN_POWER};
-		trainers[105].getTeam()[0].moveset = new Move[]{Move.HYPNOSIS, Move.FAKE_TEARS, Move.NASTY_PLOT, Move.SNARL};
+		setMoveset("Trainer AB", 1, Move.HYPNOSIS, Move.PLAY_NICE, Move.MOONLIGHT, Move.HIDDEN_POWER);
+		setMoveset("Trainer AC", 1, Move.HYPNOSIS, Move.FAKE_TEARS, Move.NASTY_PLOT, Move.SNARL);
 		
-		trainers[137].getTeam()[1].moveset = new Move[]{Move.SNOWSCAPE, Move.AURORA_VEIL, Move.BLIZZARD, Move.SCALD};
-		trainers[137].getTeam()[1].ability = Ability.ICE_BODY;
-		trainers[137].getTeam()[2].moveset = new Move[]{Move.RED$NOSE_BOOST, Move.MAGIC_BLAST, Move.ICE_SHARD, Move.BLIZZARD};
-		trainers[137].getTeam()[3].moveset = new Move[]{Move.PSYCHIC, Move.ICE_BEAM, Move.FREEZE$DRY, Move.CALM_MIND};
-		trainers[137].getTeam()[4].moveset = new Move[]{Move.ICE_PUNCH, Move.CLOSE_COMBAT, Move.ICE_SHARD, Move.SWORDS_DANCE};
-		trainers[137].getTeam()[5].moveset = new Move[]{Move.ICE_SPINNER, Move.COMET_CRASH, Move.BRAVE_BIRD, Move.HEAD_SMASH};
+		setMoveset("4 Gym Leader 1", 2, Move.SNOWSCAPE, Move.AURORA_VEIL, Move.BLIZZARD, Move.SCALD);
+		setAbility("4 Gym Leader 1", 2, Ability.ICE_BODY);
+		setMoveset("4 Gym Leader 1", 3, Move.RED$NOSE_BOOST, Move.MAGIC_BLAST, Move.ICE_SHARD, Move.BLIZZARD);
+		setMoveset("4 Gym Leader 1", 4, Move.PSYCHIC, Move.ICE_BEAM, Move.FREEZE$DRY, Move.CALM_MIND);
+		setMoveset("4 Gym Leader 1", 5, Move.ICE_PUNCH, Move.CLOSE_COMBAT, Move.ICE_SHARD, Move.SWORDS_DANCE);
+		setMoveset("4 Gym Leader 1", 6, Move.ICE_SPINNER, Move.COMET_CRASH, Move.BRAVE_BIRD, Move.HEAD_SMASH);
 		
 //		Move[] yes = Move.values();
 //		int max = 0;
@@ -246,6 +197,8 @@ public class Main {
 //		}
 //		System.out.println(max + ", " + result.toString());
 	}
+
+
 
 	private static void setTrainers() {
 		trainers = new Trainer[]{
@@ -262,7 +215,7 @@ public class Main {
 				new Trainer("TN 6", new Pokemon[]{new Pokemon(73, 10, false, true)}, 100), // 10
 				new Trainer("TN 7", new Pokemon[]{new Pokemon(90, 10, false, true)}, 100),
 				new Trainer("TN 8", new Pokemon[]{new Pokemon(52, 12, false, true)}, 100),
-				new Trainer("Rick 1", new Pokemon[]{new Pokemon(66, 11, false, true), new Pokemon(111, 12, false, true), new Pokemon(44, 13, false, true), new Pokemon(120, 10, false, true)}, 400, new Item(93), 2),
+				new Trainer("Rick 1", new Pokemon[]{new Pokemon(66, 11, false, true), new Pokemon(111, 12, false, true), new Pokemon(44, 13, false, true), new Pokemon(120, 13, false, true)}, 400, new Item(93), 2),
 				new Trainer("1 Gym A", new Pokemon[]{new Pokemon(13, 11, false, true), new Pokemon(13, 12, false, true), new Pokemon(13, 13, false, true)}, 200),
 				new Trainer("1 Gym B", new Pokemon[]{new Pokemon(10, 12, false, true), new Pokemon(10, 13, false, true)}, 200), // 15
 				new Trainer("1 Gym C", new Pokemon[]{new Pokemon(13, 13, false, true), new Pokemon(10, 14, false, true)}, 200),
@@ -496,6 +449,269 @@ public class Main {
 //				new Trainer("8 Gym Leader 2", new Pokemon[]{new Pokemon(-79, 82, false, true), new Pokemon(-102, 83, false, true), new Pokemon(-102, 83, false, true), new Pokemon(-122, 85, false, true), new Pokemon(-79, 82, false, true), new Pokemon(-102, 83, false, true)}, 500),
 //				new Trainer("Rival 7", new Pokemon[]{new Pokemon(-132, 90, false, true), new Pokemon(-25, 71, false, true), new Pokemon(-23, 82, false, true), new Pokemon(-41, 74, false, true), new Pokemon(-79, 88, false, true), new Pokemon(-87, 78, false, true)}, 500),
 		};
+	}
+	
+	private static void setMoveset(String string, int i, Move a, Move b, Move c, Move d) {
+		for (Trainer tr : trainers) {
+			if (tr.getName().equals(string)) {
+				tr.getTeam()[i - 1].moveset = new Move[]{a, b, c, d};
+			}
+		}
+		
+	}
+	
+	private static void setAbility(String string, int i, Ability a) {
+		for (Trainer tr : trainers) {
+			if (tr.getName().equals(string)) {
+				tr.getTeam()[i - 1].ability = a;
+			}
+		}
+		
+	}
+	
+	@SuppressWarnings("unused")
+	private static void writePokemon() {
+		try {
+			FileWriter writer = new FileWriter("PokemonInfo.txt");
+			
+			for (int i = 1; i < 241; i++) {
+				Pokemon p = new Pokemon(i, 5, false, false);
+				writer.write("===================\n");
+				String id = p.id + "";
+				while (id.length() < 3) {
+					id = "0" + id;
+				}
+				String name = id + " - " + p.name + "\n";
+				writer.write(name);
+				writer.write("===================\n");
+				
+				writer.write("Type:\n");
+				String type = p.type1.toString() + " / ";
+				type = p.type2 == null ? type + "None" : type + p.type2.toString();
+				writer.write(type + "\n\n");
+				
+				writer.write("Ability:\n");
+				p.setAbility(0);
+				Ability ability1 = p.ability;
+				String ability = ability1.toString() + " / ";
+				p.setAbility(1);
+				ability = p.ability == ability1 ? ability + "None" : ability + p.ability.toString();			
+				writer.write(ability + "\n\n");
+				
+				writer.write("Base Stats:\n");
+				String stats = "";
+				for (int j = 0; j < p.baseStats.length; j++) {
+					stats += p.getBaseStat(j) + " " + p.getStatType(j) + "/ ";
+				}
+				stats += p.getBST() + " BST";
+				writer.write(stats + "\n\n");
+				
+				writer.write("Level Up:\n");
+				for (int j = 0; j < p.movebank.length; j++) {
+					Node n = p.movebank[j];
+					while (n != null) {
+						String move = j + 1 + " - " + n.data.toString() + "\n";
+						n = n.next;
+						writer.write(move);
+					}
+				}
+				writer.write("\n");
+			}
+			
+			writer.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+
+	@SuppressWarnings("unused")
+	private static void writeTrainers() {
+		try {
+			FileWriter writer = new FileWriter("TrainerInfo.txt");
+			
+			for (Trainer tr : trainers) {
+				String name = "Trainer " + tr.getName();
+				while (name.length() < 28) {
+					name += " ";
+				}
+				writer.write(name);
+				for (int i = 0; i < tr.getTeam().length; i++) {
+					Pokemon p = tr.getTeam()[i];
+					writer.write(p.name + " Lv. " + p.level);
+					if (i != tr.getTeam().length - 1) writer.write(", ");
+				}
+				writer.write("\n");
+				
+				if (tr.getName().contains("Leader") || tr.getName().contains("Rick") || tr.getName().contains("Scott") || tr.getName().contains("Fred")) {
+					writer.write("\n");
+					writer.write(tr.getName() + "\n");
+					for (Pokemon p : tr.getTeam()) {
+						String pName = p.name + " (Lv. " + p.level + ")";
+						while (pName.length() < 25) {
+							pName += " ";
+						}
+						pName += "/";
+						writer.write(pName);
+						
+						String aName = "   " + p.ability.toString();
+						while (aName.length() < 19) {
+							aName += " ";
+						}
+						aName += "/";
+						writer.write(aName);
+						
+						String mName = "   ";
+						for (int i = 0; i < 4; i++) {
+							if (p.moveset[i] != null) {
+								mName += p.moveset[i].toString();
+								if (i != 3) mName += ", ";
+							}
+						}
+						writer.write(mName);
+						writer.write("\n");
+					}
+					writer.write("\n");
+				}
+			}
+			
+			writer.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	@SuppressWarnings("unused")
+	private static void writeEncounters() {
+		try {
+			FileWriter writer = new FileWriter("WildPokemon.txt");
+			
+			ArrayList<Encounter> encounters = Encounter.getEncounters(0, 73, 39, "Standard", "", false); // route 22
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(0, 73, 38, "Standard", "", false); // route 23
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(0, 74, 38, "Standard", "", false); // route 42
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(0, 74, 38, "Fishing", "", false); // route 42
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(4, 73, 43, "Standard", "", false); // route 24
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(11, 44, 55, "Standard", "", false); // route 24 pt. 2
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(11, 43, 55, "Standard", "", false); // gelb forest
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(11, 43, 55, "Fishing", "", false); // gelb forest
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(11, 73, 56, "Standard", "", false); // route 25
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(13, 73, 38, "Fishing", "", false); // sicab city
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(14, 73, 38, "Standard", "", false); // energy plant A
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(16, 73, 38, "Standard", "", false); // energy plant B
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(16, 73, 38, "Fishing", "", false); // energy plant B
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(22, 73, 38, "Standard", "", false); // route 40
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(13, 73, 38, "Standard", "", false); // route 26
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(24, 73, 38, "Standard", "", false); // mt. splinkty 1A
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(24, 73, 38, "Fishing", "", false); // mt. splinkty 1A
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(25, 73, 38, "Standard", "", false); // mt. splinkty 2B
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(26, 73, 38, "Standard", "", false); // mt. splinkty 3B
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(27, 73, 38, "Standard", "", false); // mt. splinkty 3A
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(28, 73, 38, "Standard", "", false); // route 27
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(28, 73, 57, "Fishing", "", false); // route 41
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(28, 73, 57, "Standard", "", false); // route 41
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(4, 73, 42, "Standard", "", false); // route 36
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(4, 73, 42, "Fishing", "", false); // route 36
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(33, 73, 21, "Standard", "", false); // route 28
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(35, 73, 42, "Standard", "", false); // electric tunnel 01
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(36, 73, 42, "Standard", "", false); // route 29
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(38, 73, 31, "Standard", "", false); // icy fields
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(38, 73, 62, "Standard", "", false); // route 30
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(38, 73, 62, "Fishing", "", false); // route 30
+			writer.write(writeEncounter(encounters));
+			
+			writer.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+
+
+
+	private static String writeEncounter(ArrayList<Encounter> encounters) {
+		String result = "==================================================================================================================================\n";
+		for (Encounter e : encounters) {
+			Pokemon ep = new Pokemon(e.getId(), 5, false, false);
+			String percent = String.format("%.0f", e.getEncounterChance() * 100);
+			boolean sameLv = e.getMinLevel() == e.getMaxLevel();
+			result += percent;
+			result += "% ";
+			result += ep.name;
+			result += " (Lv. ";
+			if (sameLv) {
+				result += e.getMinLevel();
+			} else {
+				result += e.getMinLevel();
+				result += " - ";
+				result += e.getMaxLevel();
+			}
+			result += ")\n";
+		}
+		result += "\n";
+		return result;
+		
+		
 	}
 
 }
