@@ -1,7 +1,7 @@
-Trainer Scott 1             Lizish Lv. 7
+Trainer Scott 1             Twigle Lv. 7
 
 Scott 1
-Lizish (Lv. 7)           /   Torrent         /   Scratch, Growl, Water Gun, 
+Twigle (Lv. 7)           /   Overgrow        /   Pound, Withdraw, Razor Leaf, 
 
 Trainer A                   Hammo Lv. 5
 Trainer B                   Pigo Lv. 4
@@ -52,11 +52,11 @@ Trainer P                   Sapwin Lv. 18
 Trainer Q                   Inkay Lv. 18, Psycorb Lv. 19
 Trainer R                   Grondor Lv. 19
 Trainer S                   Magikarp Lv. 19, Magikarp Lv. 19, Magikarp Lv. 19, Froshrog Lv. 19
-Trainer Fred 1              Otterpor Lv. 18, Maguide Lv. 20
+Trainer Fred 1              Otterpor Lv. 18, Iguaton Lv. 20
 
 Fred 1
 Otterpor (Lv. 18)        /   Water Veil      /   Baby-Doll Eyes, Detect, Aqua Ring, Razor Shell
-Maguide (Lv. 20)         /   Blaze           /   Body Slam, Harden, Flame Wheel, Smokescreen
+Iguaton (Lv. 20)         /   Torrent         /   Mud Sport, Bite, Mean Look, Bubblebeam
 
 Trainer T                   Swordik Lv. 16, Carinx Lv. 17
 Trainer U1                  Houndour Lv. 15, Iglite Lv. 15
@@ -78,11 +78,11 @@ Trainer TN O3               Blaxer Lv. 19
 Trainer TN O4               Houndour Lv. 19
 Trainer TN O5               Carinx Lv. 20, Ali Lv. 20
 Trainer TN O6               Inkay Lv. 20, Shomp Lv. 20
-Trainer Scott 2             Ninjask Lv. 21, Iguaton Lv. 22, Rhypo Lv. 22
+Trainer Scott 2             Ninjask Lv. 21, Torgged Lv. 22, Rhypo Lv. 22
 
 Scott 2
 Ninjask (Lv. 21)         /   Speed Boost     /   False Swipe, Mud-Slap, Fury Cutter, Harden
-Iguaton (Lv. 22)         /   Torrent         /   Mud Sport, Bite, Mean Look, Bubblebeam
+Torgged (Lv. 22)         /   Overgrow        /   Smack Down, Headbutt, Sleep Powder, Sand Attack
 Rhypo (Lv. 22)           /   Rattled         /   Fury Attack, Defense Curl, Growl, Tail Whip
 
 Trainer 2 Gym A             Hammo Lv. 22
@@ -127,12 +127,12 @@ Trainer AG                  Bugop Lv. 29, Malamar Lv. 30
 Trainer AH                  Magmaclang Lv. 30
 Trainer AI                  Tigrette Lv. 30, Bluebunn Lv. 31
 Trainer AJ                  Ludicolo Lv. 30, Treewin Lv. 31
-Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Maguide Lv. 30, Psylotter Lv. 31
+Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Iguaton Lv. 30, Psylotter Lv. 31
 
 Fred 2
 Flamehox (Lv. 29)        /   Flame Body      /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
 Gyarados-E (Lv. 30)      /   Electric Surge  /   Crunch, Tackle, Thunder Fang, Dragon Rage
-Maguide (Lv. 30)         /   Blaze           /   Mud Bomb, Harden, Flame Wheel, Headbutt
+Iguaton (Lv. 30)         /   Torrent         /   Aqua Jet, Bite, Mean Look, Slam
 Psylotter (Lv. 31)       /   Water Veil      /   Psybeam, Rollout, Confuse Ray, Hypnosis
 
 Trainer 3 Gym A             Swadloon Lv. 29, Bugop Lv. 29, Swadloon Lv. 30, Leavanny Lv. 31

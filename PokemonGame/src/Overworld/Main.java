@@ -103,7 +103,7 @@ public class Main {
 		
 		modifyTrainers(gamePanel);
 		
-//		writeTrainers();
+		writeTrainers();
 //		writePokemon();
 //		writeEncounters();
 		
