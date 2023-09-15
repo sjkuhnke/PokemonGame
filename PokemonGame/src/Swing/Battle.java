@@ -1270,7 +1270,7 @@ public class Battle extends JFrame {
 			// Check for swap
 			if (faster.vStatuses.contains(Status.SWITCHING)) faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS);
 			
-	        else slower.move(faster, m2, me, field, enemyTeam, null, false);
+	        slower.move(faster, m2, me, field, enemyTeam, null, false);
 		} else {
 			Pokemon[] enemyTeam = me.getTeam();
 			Pokemon[] team = foeTrainer == null ? null : foeTrainer.getTeam();
