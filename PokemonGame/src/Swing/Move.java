@@ -26,7 +26,7 @@ public enum Move {
 	AURORA_VEIL(0,1000,0,0,2,0,PType.ICE,"Can only be used in SNOW, reduces both physical and special damage recieved for 5 turns",false),
 	AURA_SPHERE(90,1000,0,0,1,0,PType.FIGHTING,"This attack always hits",false),
 	//AUTO_SHOT(0,1000,0,0,2,0,PType.STEEL,"Causes all of user's \"Shooting\" moves to hit twice",false),
-	AURORA_BEAM(65,100,10,0,1,0,PType.ICE,"% chance to lower foe's Attack by 1",false),
+	AURORA_BEAM(75,100,10,0,1,0,PType.ICE,"% chance to lower foe's Attack by 1",false),
 	AUTOMOTIZE(0,1000,0,0,2,0,PType.STEEL,"Raises user's Speed by 2",false),
 	BABY$DOLL_EYES(0,100,0,0,2,1,PType.LIGHT,"",false),
 	//BAWL(0,100,0,0,2,0,PType.DARK,"Lowers foe's Attack by 2",false),
@@ -39,7 +39,7 @@ public enum Move {
 	BITTER_MALICE(75,100,30,0,1,0,PType.GHOST,"% chance to Frostbite foe",false),
 	//BLACK_HOLE(90,90,100,0,1,0,PType.DARK,"% chance of lowering foe's Accuracy by 1",false),
 	BLACK_HOLE_ECLIPSE(140,100,100,0,1,0,PType.GALACTIC,"",false),
-	BLAZE_KICK(85,90,10,1,0,0,PType.FIRE,"",true),
+	BLAZE_KICK(90,100,10,1,0,0,PType.FIRE,"",true),
 	BLAST_BURN(150,90,0,0,1,0,PType.FIRE,"User must rest after using this move",false), // recharge
 	//BLAST_FLAME(100,100,100,0,1,0,PType.FIRE,"% chance to Burn foe",false),
 	//BLAZING_SWORD(90,90,50,0,0,0,PType.FIRE,"% chance to Burn foe",false),
@@ -87,7 +87,7 @@ public enum Move {
 	COTTON_GUARD(0,1000,0,0,2,0,PType.GRASS,"Raises user's Defense by 3",false),
 	//COUNTER(-1,100,0,0,0,-5,PType.FIGHTING,"",false),
 	CROSS_CHOP(100,80,0,1,0,0,PType.FIGHTING,"",true),
-	CROSS_POISON(70,100,10,1,0,0,PType.POISON,"% chance to Poison foe, boosted Crit rate",true),
+	CROSS_POISON(90,100,10,1,0,0,PType.POISON,"% chance to Poison foe, boosted Crit rate",true),
 	CRUNCH(80,100,30,0,0,0,PType.DARK,"% chance to lower foe's Defense by 1",true),
 	CURSE(0,100,0,0,2,0,PType.GHOST,"User loses half of its total HP. In exchance, foe takes 1/4 of its max HP at the end of every turn",false),
 	DARK_PULSE(80,100,30,0,1,0,PType.DARK,"% chance of causing foe to flinch",false),
@@ -172,14 +172,14 @@ public enum Move {
 	FLAIL(-1,100,0,0,0,0,PType.NORMAL,"Power is higher the lower HP the user has",true),
 	FLAME_BURST(70,100,0,0,1,0,PType.FIRE,"A normal attack",false),
 	FLAME_CHARGE(50,100,100,0,0,0,PType.FIRE,"",true),
-	FLAME_WHEEL(60,100,10,0,0,0,PType.FIRE,"% to Burn foe",true),
+	FLAME_WHEEL(70,100,10,0,0,0,PType.FIRE,"% to Burn foe",true),
 	FLAMETHROWER(90,100,10,0,1,0,PType.FIRE,"% to Burn foe",false),
 	FLARE_BLITZ(120,100,10,0,0,0,PType.FIRE,"% to Burn foe, user takes 1/3 of damage inflicted",true),
 	FLASH(0,100,0,0,2,0,PType.LIGHT,"Lowers foe's Accuracy by 1, and raises user's Sp.Atk by 1",false),
 	FLASH_CANNON(80,100,10,0,1,0,PType.STEEL,"% chance to lower foe's Sp.Def by 1",false),
 	FLASH_RAY(40,100,50,0,1,0,PType.LIGHT,"",false),
 	FLATTER(0,100,100,0,2,0,PType.DARK,"Confuses foe, and raises their Sp.Atk by 2",false),
-	FLY(90,100,0,0,0,0,PType.FLYING,"A normal attack",true),
+	FLY(100,100,0,0,0,0,PType.FLYING,"A normal attack",true),
 	FOCUS_BLAST(120,70,0,0,1,0,PType.FIGHTING,"",false),
 	FOCUS_ENERGY(0,1000,0,0,2,0,PType.NORMAL,"",false),
 	FORCE_PALM(60,100,30,0,0,0,PType.FIGHTING,"",true),
@@ -335,7 +335,7 @@ public enum Move {
 	MUDDY_WATER(90,85,30,0,1,0,PType.WATER,"",false),
 	MYSTICAL_FIRE(75,100,100,0,1,0,PType.FIRE,"",false),
 	NASTY_PLOT(0,1000,0,0,2,0,PType.DARK,"",false),
-	NEEDLE_ARM(60,100,30,0,1,0,PType.GRASS,"",true),
+	NEEDLE_ARM(90,100,30,0,1,0,PType.GRASS,"",true),
 	//NEEDLE_SPRAY(55,95,10,0,0,0,PType.POISON,"% to Poison or Paralyze foe",false),
 	//NIBBLE(10,100,0,0,0,0,PType.NORMAL,"A normal attack",false),
 	NIGHT_DAZE(85,95,40,0,0,0,PType.DARK,"",false),
@@ -369,8 +369,8 @@ public enum Move {
 	POISON_GAS(0,80,0,0,2,0,PType.POISON,"Poisons foe",true),
 	POISON_JAB(80,100,30,0,0,0,PType.POISON,"% to Poison foe",true),
 	//POISON_POWDER(0,75,0,0,2,0,PType.POISON,"Poisons foe",false),
-	//POISON_PUNCH(75,100,10,0,0,0,PType.POISON,"% chance to Poison foe",false),
 	POISON_STING(15,100,30,0,0,0,PType.POISON,"% chance to Poison foe",false),
+	POISON_TAIL(85,100,10,1,0,0,PType.POISON,"% chance to Poison foe. Boosted crit rate",false),
 	POP_POP(70,80,0,0,0,0,PType.STEEL,"",false),
 	//POISONOUS_WATER(95,85,30,0,1,0,PType.POISON,"% chance to Poison foe",false),
 	//POKE(10,100,0,0,0,0,PType.NORMAL,"A normal attack",false),
@@ -436,7 +436,7 @@ public enum Move {
 	SELF$DESTRUCT(200,100,0,0,0,0,PType.NORMAL,"User faints",false),
 	SHADOW_BALL(80,100,30,0,1,0,PType.GHOST,"% to lower foe's Sp.Def by 1",false),
 	SHADOW_CLAW(80,100,0,1,0,0,PType.GHOST,"",true),
-	SHADOW_PUNCH(60,1000,0,0,0,0,PType.GHOST,"",true),
+	SHADOW_PUNCH(80,1000,0,0,0,0,PType.GHOST,"",true), // TODO: give to Poov line
 	SHADOW_SNEAK(40,100,0,0,0,1,PType.GHOST,"Always attacks first",true),
 	SHEER_COLD(0,30,0,0,1,0,PType.ICE,"",false),
 	//SHELL_BASH(70,100,0,1,0,0,PType.NORMAL,"User takes 1/3 of damage dealt as recoil",false),
@@ -454,7 +454,7 @@ public enum Move {
 	//SLAP(20,100,0,0,0,0,PType.NORMAL,"A normal attack",false),
 	SLASH(70,100,0,1,0,0,PType.NORMAL,"Boosted Crit rate",true),
 	SLEEP_POWDER(0,75,0,0,2,0,PType.GRASS,"Foe falls asleep",false),
-	SLUDGE(65,100,30,0,1,0,PType.POISON,"% to Poison foe",false),
+	SLUDGE(75,100,30,0,1,0,PType.POISON,"% to Poison foe",false),
 	SLUDGE_BOMB(90,100,30,0,1,0,PType.POISON,"% to Poison foe",false),
 	SLUDGE_WAVE(95,100,10,0,1,0,PType.POISON,"",false),
 	SMACK_DOWN(50,100,100,0,0,0,PType.ROCK,"",false),
@@ -555,8 +555,9 @@ public enum Move {
 	UNSEEN_STRANGLE(60,100,100,0,0,0,PType.DARK,"",true),
 	U$TURN(70,100,0,0,0,0,PType.BUG,"",true),
 	VACUUM_WAVE(40,100,0,0,1,1,PType.FIGHTING,"",false),
-	V_CREATE(180,95,100,0,0,0,PType.FIRE,"",true),
+	V$CREATE(180,95,100,0,0,0,PType.FIRE,"",true),
 	VENOM_DRENCH(0,100,0,0,2,0,PType.POISON,"",false),
+	VENOM_SPIT(40,100,100,0,1,0,PType.POISON,"",false), // TODO
 	VENOSHOCK(-1,100,0,0,1,0,PType.POISON,"",false),
 	VISE_GRIP(55,100,0,0,0,0,PType.NORMAL,"",true),
 	VINE_WHIP(45,100,0,0,0,0,PType.GRASS,"A normal attack",true),
@@ -790,6 +791,40 @@ public enum Move {
 		result.add(Move.HYPER_VOICE);
 		
 		return result;
+	}
+	
+	public boolean isSlicing() {
+		ArrayList<Move> result = new ArrayList<>();
+		result.add(AERIAL_ACE);
+		result.add(AIR_CUTTER);
+		result.add(AIR_SLASH);
+		result.add(FURY_CUTTER);
+		result.add(LEAF_BLADE);
+		result.add(NIGHT_SLASH);
+		result.add(PSYCHO_CUT);
+		result.add(RAZOR_SHELL);
+		result.add(SACRED_SWORD);
+		result.add(SLASH);
+		result.add(SOLAR_BLADE);
+		result.add(X$SCISSOR);
+		result.add(CROSS_POISON);
+		result.add(CUT);
+		result.add(RAZOR_LEAF);
+		
+		if (result.contains(this)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isTM() {
+		for (int i = 93; i < 200; i++) {
+			Item test = new Item(i);
+			if (test.getMove() == this) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

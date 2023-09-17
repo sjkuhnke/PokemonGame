@@ -98,7 +98,7 @@ public class Player implements Serializable{
 	            if (index >= 0) {
 	                boxes[i][index] = p;
 	                System.out.println("Caught " + p.nickname + ", sent to box " + (i+1) + "!");
-	                return;  // Exit the method after catching the Pokémon
+	                return;  // Exit the method after catching the Pokï¿½mon
 	            }
 	        }
 	        System.out.println("Cannot catch " + p.nickname + ", all boxes are full");
@@ -246,7 +246,7 @@ public class Player implements Serializable{
 		return result;
 	}
 	
-	public boolean swapRandom() {
+	public boolean swapRandom(Pokemon foe, Field field) {
 		if (!hasValidMembers()) return false;
 		Random rand = new Random();
 		int index = rand.nextInt(team.length);
@@ -257,6 +257,7 @@ public class Player implements Serializable{
 		swap(team[index], index);
 		
 		System.out.println(current.nickname + " was dragged out!");
+		current.swapIn(foe, field, this);
 		return true;
 		
 	}

@@ -1952,9 +1952,9 @@ public class Pokemon implements Serializable {
 		} else if (id == 26) { abilities = new Ability[] {Ability.ANGER_POINT, Ability.CHLOROPHYLL};
 		} else if (id == 27) { abilities = new Ability[] {Ability.ANGER_POINT, Ability.CHLOROPHYLL};
 		} else if (id == 28) { abilities = new Ability[] {Ability.COMPETITIVE, Ability.CHLOROPHYLL};
-		} else if (id == 29) { abilities = new Ability[] {Ability.NATURAL_CURE, Ability.POISON_POINT};
-		} else if (id == 30) { abilities = new Ability[] {Ability.NATURAL_CURE, Ability.POISON_POINT};
-		} else if (id == 31) { abilities = new Ability[] {Ability.NATURAL_CURE, Ability.TECHNICIAN};
+		} else if (id == 29) { abilities = new Ability[] {Ability.POISON_POINT, Ability.NATURAL_CURE};
+		} else if (id == 30) { abilities = new Ability[] {Ability.POISON_POINT, Ability.NATURAL_CURE};
+		} else if (id == 31) { abilities = new Ability[] {Ability.TECHNICIAN, Ability.NATURAL_CURE};
 		} else if (id == 32) { abilities = new Ability[] {Ability.SWARM, Ability.CHLOROPHYLL};
 		} else if (id == 33) { abilities = new Ability[] {Ability.SWARM, Ability.CHLOROPHYLL};
 		} else if (id == 34) { abilities = new Ability[] {Ability.SWARM, Ability.CHLOROPHYLL};
@@ -2010,8 +2010,8 @@ public class Pokemon implements Serializable {
 		} else if (id == 84) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.LEVITATE};
 		} else if (id == 85) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.NATURAL_CURE};
 		} else if (id == 86) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.NATURAL_CURE};
-		} else if (id == 87) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.NATURAL_CURE};
-		} else if (id == 88) { abilities = new Ability[] {Ability.JUSTIFIED, Ability.NO_GUARD};
+		} else if (id == 87) { abilities = new Ability[] {Ability.EMPATHIC_LINK, Ability.NATURAL_CURE};
+		} else if (id == 88) { abilities = new Ability[] {Ability.SHARPNESS, Ability.NO_GUARD};
 		} else if (id == 89) { abilities = new Ability[] {Ability.SIMPLE, Ability.NORMALIZE};
 		} else if (id == 90) { abilities = new Ability[] {Ability.CONTRARY, Ability.CONTRARY};
 		} else if (id == 91) { abilities = new Ability[] {Ability.CONTRARY, Ability.CONTRARY};
@@ -2627,7 +2627,7 @@ public class Pokemon implements Serializable {
 		} else if (this.id == 28) { this.baseStats = new int[]{120,75,80,115,80,90};
 		} else if (this.id == 29) { this.baseStats = new int[]{40,30,35,50,70,55};
 		} else if (this.id == 30) { this.baseStats = new int[]{50,60,45,100,80,65};
-		} else if (this.id == 31) { this.baseStats = new int[]{60,70,65,125,105,90};
+		} else if (this.id == 31) { this.baseStats = new int[]{70,60,65,125,105,90};
 		} else if (this.id == 32) { this.baseStats = new int[]{45,53,70,40,60,42};
 		} else if (this.id == 33) { this.baseStats = new int[]{55,63,90,50,80,42};
 		} else if (this.id == 34) { this.baseStats = new int[]{75,108,80,60,80,97};
@@ -2681,8 +2681,8 @@ public class Pokemon implements Serializable {
 		} else if (this.id == 82) { this.baseStats = new int[]{25,20,63,55,62,25};
 		} else if (this.id == 83) { this.baseStats = new int[]{50,70,90,70,90,30};
 		} else if (this.id == 84) { this.baseStats = new int[]{100,140,100,70,100,40};
-		} else if (this.id == 85) { this.baseStats = new int[]{28,25,25,45,35,40};
-		} else if (this.id == 86) { this.baseStats = new int[]{38,35,35,65,55,50};
+		} else if (this.id == 85) { this.baseStats = new int[]{28,25,25,65,55,40};
+		} else if (this.id == 86) { this.baseStats = new int[]{38,35,35,95,85,50};
 		} else if (this.id == 87) { this.baseStats = new int[]{68,65,65,125,115,80};
 		} else if (this.id == 88) { this.baseStats = new int[]{68,125,65,65,115,63};
 		} else if (this.id == 89) { this.baseStats = new int[]{65,79,67,103,72,69};
@@ -4137,8 +4137,8 @@ public class Pokemon implements Serializable {
 				System.out.println("\n" + this.nickname + " used " + move + "!");
 				System.out.println(this.nickname + " started charging up!");
 				this.vStatuses.add(Status.CHARGING);
-				if (move == Move.SKULL_BASH) stat(this, 1, 1);
-				if (move == Move.BLACK_HOLE_ECLIPSE) stat(this, 3, 1);
+				if (move == Move.SKULL_BASH) stat(this, 1, 1, foe);
+				if (move == Move.BLACK_HOLE_ECLIPSE) stat(this, 3, 1, foe);
 				this.impressive = false;
 				return;
 			} else {
@@ -4178,7 +4178,7 @@ public class Pokemon implements Serializable {
 			System.out.println("\n" + this.nickname + " used " + move + "!");
 			System.out.println(foe.nickname + " protected itself!");
 			if (move.contact) {
-				if (foe.lastMoveUsed == Move.OBSTRUCT) stat(this, 1, -2);
+				if (foe.lastMoveUsed == Move.OBSTRUCT) stat(this, 1, -2, foe);
 				if (foe.lastMoveUsed == Move.MOLTEN_LAIR) burn(false, foe, field);
 				if (foe.lastMoveUsed == Move.SPIKY_SHIELD && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 					this.currentHP -= Math.max(this.getStat(0) / 8, 1);
@@ -4364,9 +4364,9 @@ public class Pokemon implements Serializable {
 			if ((moveType == PType.ELECTRIC && (foe.ability == Ability.MOTOR_DRIVE || foe.ability == Ability.LIGHTNING_ROD)) ||
 					(moveType == PType.GRASS && foe.ability == Ability.SAP_SIPPER)) {
 				System.out.print("[" + foe.nickname + "'s " + foe.ability.toString() + "]: ");
-				if (foe.ability == Ability.MOTOR_DRIVE) stat(foe, 4, 1);
-				if (foe.ability == Ability.LIGHTNING_ROD) stat(foe, 2, 1);
-				if (foe.ability == Ability.SAP_SIPPER) stat(foe, 0, 1);
+				if (foe.ability == Ability.MOTOR_DRIVE) stat(foe, 4, 1, foe);
+				if (foe.ability == Ability.LIGHTNING_ROD) stat(foe, 2, 1, foe);
+				if (foe.ability == Ability.SAP_SIPPER) stat(foe, 0, 1, foe);
 				endMove();
 				return;
 			}
@@ -4448,6 +4448,8 @@ public class Pokemon implements Serializable {
 					|| move == Move.DYNAMIC_PUNCH)) {
 				bp *= 1.3;
 			}
+			
+			if (this.ability == Ability.SHARPNESS && move.isSlicing()) bp *= 1.5;
 			
 			if (this.ability == Ability.STRONG_JAW && (move == Move.BITE || move == Move.CRUNCH || move == Move.FIRE_FANG || move == Move.HYPER_FANG
 					|| move == Move.ICE_FANG || move == Move.JAW_LOCK || move == Move.POISON_FANG || move == Move.PSYCHIC_FANGS || move == Move.THUNDER_FANG)) {
@@ -4561,7 +4563,7 @@ public class Pokemon implements Serializable {
 				if (this.ability == Ability.SNIPER) damage *= 1.5;
 				if (foe.ability == Ability.ANGER_POINT) {
 					System.out.print("[" + foe.nickname + "'s Anger Point]: ");
-					stat(foe, 0, 12); }
+					stat(foe, 0, 12, foe); }
 			} else {
 				damage = calc(attackStat, defenseStat, bp, this.level);
 			}
@@ -4694,7 +4696,7 @@ public class Pokemon implements Serializable {
 			}
 			if (foe.currentHP <= 0) { // Check for kill
 				foe.faint(true, player, this);
-				if (move == Move.FELL_STINGER) stat(this, 0, 3);
+				if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
 				this.awardxp((int) Math.ceil(foe.level * foe.trainer), player);
 				if (this.vStatuses.contains(Status.BONDED)) {
 					System.out.println(foe.nickname + " took its attacker down with it!");
@@ -4702,7 +4704,7 @@ public class Pokemon implements Serializable {
 				}
 				if (this.ability == Ability.MOXIE) {
 					System.out.print("[" + this.nickname + "'s Moxie]: ");
-					stat(this, 0, 1);
+					stat(this, 0, 1, foe);
 				}
 			}
 			
@@ -4735,19 +4737,19 @@ public class Pokemon implements Serializable {
 				System.out.println(this.nickname + " was hurt!");
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, player, foe);
-					if (move == Move.FELL_STINGER) stat(this, 0, 3);
+					if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
 					foe.awardxp((int) Math.ceil(this.level * this.trainer), player);
 				}
 			}
 			
 			if ((moveType == PType.BUG || moveType == PType.GHOST || moveType == PType.DARK) && foe.ability == Ability.RATTLED && !foe.isFainted()) {
 				System.out.print("[" + foe.nickname + "'s " + foe.ability.toString() + "]: ");
-				stat(foe, 4, 1);
+				stat(foe, 4, 1, foe);
 			}
 			
 			if (moveType == PType.DARK && foe.ability == Ability.JUSTIFIED && !foe.isFainted()) {
 				System.out.print("[" + foe.nickname + "'s " + foe.ability.toString() + "]: ");
-				stat(foe, 0, 1);
+				stat(foe, 0, 1, foe);
 			}
 			
 			if (hit == numHits && hit > 1) System.out.println("Hit " + hit + " times!");
@@ -4851,21 +4853,21 @@ public class Pokemon implements Serializable {
 		if (move == Move.ABYSSAL_CHOP) {
 		    foe.paralyze(false, this, field);
 		} else if (move == Move.ACID) {
-			stat(foe, 3, -1);
+			stat(foe, 3, -1, foe);
 		} else if (move == Move.ACID_SPRAY) {
-			stat(foe, 3, -2);
+			stat(foe, 3, -2, foe);
 		} else if (move == Move.ACROBATICS && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.ANCIENT_POWER) {
 			for (int i = 0; i < 5; ++i) {
-				stat(this, i, 1);
+				stat(this, i, 1, foe);
 			}
 		} else if (move == Move.AIR_SLASH && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.ASTONISH && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.AURORA_BEAM) {
-			stat(foe, 0, -1);
+			stat(foe, 0, -1, foe);
 		} else if (move == Move.BEEFY_BASH) {
 			foe.paralyze(false, this, field);
 //		} else if (move == Move.BIG_BULLET) {
@@ -4879,7 +4881,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.BITE && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.BREAKING_SWIPE) {
-			stat(foe, 0, -1);
+			stat(foe, 0, -1, foe);
 //		} else if (move == Move.BLAST_FLAME) {
 //			foe.burn(false, this, field);
 		} else if (move == Move.BLAZE_KICK) {
@@ -4901,36 +4903,36 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.BOUNCE) {
 			foe.paralyze(false, this, field);
 		} else if (move == Move.BUBBLEBEAM) {
-			stat(foe, 4, -1);
+			stat(foe, 4, -1, foe);
 		} else if (move == Move.BUG_BUZZ) {
-			stat(foe, 3, -1);
+			stat(foe, 3, -1, foe);
 		} else if (move == Move.BURN_UP) {
 			if (this.type1 == PType.FIRE) type1 = PType.UNKNOWN; 
 			if (this.type2 == PType.FIRE) type2 = null;
 		} else if (move == Move.BULLDOZE) {
-			stat(foe, 4, -1);
+			stat(foe, 4, -1, foe);
 		} else if (move == Move.CHARGE_BEAM) {
-			stat(this, 2, 1);
+			stat(this, 2, 1, foe);
 		} else if (move == Move.CIRCLE_THROW || move == Move.DRAGON_TAIL) {
 			if (foe.trainerOwned() && enemy != null) {
-				enemy.swapRandom();
+				enemy.swapRandom(foe, field, player);
 			} else if (foe.playerOwned) {
-				player.swapRandom();
+				player.swapRandom(foe, field);
 			}
 		} else if (move == Move.CLOSE_COMBAT) {
-			stat(this, 1, -1);
-			stat(this, 3, -1);
+			stat(this, 1, -1, foe);
+			stat(this, 3, -1, foe);
 		} else if (move == Move.CONFUSION) {
 			foe.confuse(false, field);
 		} else if (move == Move.CORE_ENFORCER) {
-			stat(foe, 0, -1);
-			stat(foe, 2, -1);
+			stat(foe, 0, -1, foe);
+			stat(foe, 2, -1, foe);
 //		} else if (move == Move.CONSTRICT) {
 //			stat(foe, 4, -1);
 		} else if (move == Move.CROSS_POISON) {
 			foe.poison(false, this, field);
 		} else if (move == Move.CRUNCH) {
-			stat(foe, 1, -1);
+			stat(foe, 1, -1, foe);
 		} else if (move == Move.DARK_PULSE && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.DESOLATE_VOID) {
@@ -4944,14 +4946,14 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.DISCHARGE) {
 			foe.paralyze(false, this, field);
 		} else if (move == Move.DIAMOND_STORM) {
-			stat(this, 1, 1);
+			stat(this, 1, 1, foe);
 //		} else if (move == Move.DOUBLE_SLICE) {
 //			if (foe.status == Status.HEALTHY) {
 //				foe.status = Status.BLEEDING;
 //				System.out.println(foe.nickname + " is bleeding!");
 //			}
 		} else if (move == Move.DRACO_METEOR) {
-			stat(this, 2, -2);
+			stat(this, 2, -2, foe);
 		} else if (move == Move.DRAGON_RUSH && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.DRAGON_BREATH) {
@@ -4959,11 +4961,11 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.DYNAMIC_PUNCH) {
 			foe.confuse(false, field);
 		} else if (move == Move.EARTH_POWER) {
-			stat(foe, 3, -1);
+			stat(foe, 3, -1, foe);
 		} else if (move == Move.EMBER) {
 			foe.burn(false, this, field);
 		} else if (move == Move.ENERGY_BALL) {
-			stat(foe, 3, -1);
+			stat(foe, 3, -1, foe);
 		} else if (move == Move.EXTRASENSORY && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.FAKE_OUT && first) {
@@ -4971,7 +4973,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.UNSEEN_STRANGLE && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.FIERY_DANCE) {
-			stat(this, 2, 1);
+			stat(this, 2, 1, foe);
 		} else if (move == Move.FIRE_BLAST) {
 			foe.burn(false, this, field);
 		} else if (move == Move.FATAL_BIND) {
@@ -5019,7 +5021,7 @@ public class Pokemon implements Serializable {
 			foe.burn(false, this, field);
 			this.confuse(false, field);
 		} else if (move == Move.FLAME_CHARGE) {
-			stat(this, 4, 1);
+			stat(this, 4, 1, foe);
 		} else if (move == Move.FLAME_WHEEL) {
 			foe.burn(false, this, field);
 		} else if (move == Move.FLAMETHROWER) {
@@ -5027,9 +5029,9 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.FLARE_BLITZ) {
 			foe.burn(false, this, field);
 		} else if (move == Move.FLASH_CANNON) {
-			stat(foe, 3, -1);
+			stat(foe, 3, -1, foe);
 		} else if (move == Move.FLASH_RAY) {
-			stat(foe, 5, -1);
+			stat(foe, 5, -1, foe);
 		} else if (move == Move.FORCE_PALM) {
 			foe.paralyze(false, this, field);
 		} else if (move == Move.FREEZE$DRY) {
@@ -5037,17 +5039,17 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.FREEZING_GLARE) {
 			foe.freeze(false, field);
 		} else if (move == Move.GLACIATE) {
-			stat(foe, 4, -1);
+			stat(foe, 4, -1, foe);
 		} else if (move == Move.GLITTERING_SWORD) {
-			stat(foe, 1, -1);
+			stat(foe, 1, -1, foe);
 		} else if (move == Move.GLITTERING_TORNADO) {
-			stat(foe, 5, -1);
+			stat(foe, 5, -1, foe);
 		} else if (move == Move.GLITZY_GLOW) {
-			stat(this, 3, 1);
+			stat(this, 3, 1, foe);
 		} else if (move == Move.GUNK_SHOT) {
 			foe.poison(false, this, field);
 		} else if (move == Move.HAMMER_ARM) {
-			stat(this, 4, -1);
+			stat(this, 4, -1, foe);
 		} else if (move == Move.HEADBUTT && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.HEAT_WAVE) {
@@ -5082,7 +5084,7 @@ public class Pokemon implements Serializable {
 				System.out.println("The terrain returned to normal!");
 			}
 		} else if (move == Move.ICY_WIND) {
-			stat(foe, 4, -1);
+			stat(foe, 4, -1, foe);
 		} else if (move == Move.INFERNO) {
 			foe.burn(false, this, field);
 		}  else if (move == Move.INFESTATION) {
@@ -5096,7 +5098,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.IRON_HEAD && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.IRON_TAIL) {
-			stat(foe, 1, -1);
+			stat(foe, 1, -1, foe);
 		} else if (move == Move.JAW_LOCK) {
 			if (!foe.vStatuses.contains(Status.TRAPPED)) {
 				foe.vStatuses.add(Status.TRAPPED);
@@ -5113,13 +5115,13 @@ public class Pokemon implements Serializable {
 //				foe.sleep(false, field);
 //			}
 		} else if (move == Move.LEAF_STORM) {
-			stat(this, 2, -2);
+			stat(this, 2, -2, foe);
 		} else if (move == Move.LEAF_TORNADO) {
-			stat(foe, 5, -1);
+			stat(foe, 5, -1, foe);
 		} else if (move == Move.LICK) {
 			foe.paralyze(false, this, field);
 		} else if (move == Move.LIGHT_BEAM) {
-			stat(this, 2, 1);
+			stat(this, 2, 1, foe);
 //		} else if (move == Move.LIGHTNING_HEADBUTT) {
 //			int randomNum = ((int) Math.random() * 3);
 //			if (randomNum == 0) {
@@ -5132,13 +5134,13 @@ public class Pokemon implements Serializable {
 //				foe.paralyze(false, this, field);
 //			}
 		} else if (move == Move.LIQUIDATION) {
-			stat(foe, 1, -1);
+			stat(foe, 1, -1, foe);
 		} else if (move == Move.LOW_SWEEP) {
-			stat(foe, 4, -1);
+			stat(foe, 4, -1, foe);
 		} else if (move == Move.LUSTER_PURGE) {
-			stat(foe, 3, -1);
+			stat(foe, 3, -1, foe);
     	} else if (move == Move.MACHETE_JAB) {
-    		stat(foe, 0, -1);
+    		stat(foe, 0, -1, foe);
 		} else if (move == Move.MAGIC_CRASH) {
 			int randomNum = ((int) Math.random() * 5);
 			switch (randomNum) {
@@ -5186,32 +5188,32 @@ public class Pokemon implements Serializable {
 //		} else if (move == Move.MEGA_SWORD) {
 //			foe.paralyze(false, this, field);
 		} else if (move == Move.METAL_CLAW) {
-			stat(this, 0, 1);
+			stat(this, 0, 1, foe);
 		} else if (move == Move.METEOR_ASSAULT) {
-			stat(this, 1, -1);
-			stat(this, 3, -1);
+			stat(this, 1, -1, foe);
+			stat(this, 3, -1, foe);
 		} else if (move == Move.METEOR_MASH) {
-			stat(this, 0, 1);
+			stat(this, 0, 1, foe);
 		} else if (move == Move.MIRROR_SHOT) {
-			stat(this, 5, -1);
+			stat(this, 5, -1, foe);
 		} else if (move == Move.MIST_BALL) {
-			stat(foe, 2, -1);
+			stat(foe, 2, -1, foe);
 		} else if (move == Move.MOLTEN_STEELSPIKE) {
 			foe.burn(false, this, field);
 		} else if (move == Move.MOLTEN_CONSUME) {
 			foe.burn(false, this, field);
 		} else if (move == Move.MOONBLAST) {
-			stat(foe, 2, -1);
+			stat(foe, 2, -1, foe);
 		} else if (move == Move.MUD_BOMB) {
-			stat(foe, 5, -1);
+			stat(foe, 5, -1, foe);
 		} else if (move == Move.MUD_SHOT) {
-			stat(foe, 4, -1);
+			stat(foe, 4, -1, foe);
 		} else if (move == Move.MUD$SLAP) {
-			stat(foe, 5, -1);
+			stat(foe, 5, -1, foe);
 		} else if (move == Move.MUDDY_WATER) {
-			stat(this, 5, -1);
+			stat(this, 5, -1, foe);
 		} else if (move == Move.MYSTICAL_FIRE) {
-			stat(this, 2, -1);
+			stat(this, 2, -1, foe);
 		} else if (move == Move.NEEDLE_ARM && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 //		} else if (move == Move.NEEDLE_SPRAY) {
@@ -5222,15 +5224,15 @@ public class Pokemon implements Serializable {
 //				foe.poison(false, this, field);
 //			}
 		} else if (move == Move.NIGHT_DAZE) {
-			stat(this, 5, -1);
+			stat(this, 5, -1, foe);
 		} else if (move == Move.OVERHEAT) {
-			stat(this, 2, -2);
+			stat(this, 2, -2, foe);
 //		} else if (move == Move.POISON_BALL) {
 //			foe.poison(false, this, field);
 		} else if (move == Move.PHOTON_GEYSER) {
-			stat(this, 2, -2);
+			stat(this, 2, -2, foe);
 		} else if (move == Move.PLAY_ROUGH) {
-			stat(foe, 0, -1);
+			stat(foe, 0, -1, foe);
 		} else if (move == Move.POISON_FANG) {
 			int randomNum = ((int) Math.random() * 3);
 			if (randomNum == 0) {
@@ -5251,13 +5253,13 @@ public class Pokemon implements Serializable {
 //		} else if (move == Move.POISONOUS_WATER) {
 //			foe.poison(false, this, field);
 		} else if (move == Move.POWER$UP_PUNCH) {
-			stat(this, 0, 1);
+			stat(this, 0, 1, foe);
 		} else if (move == Move.PSYBEAM) {
 			foe.confuse(false, field);
 		} else if (move == Move.PSYCHIC) {
-			stat(foe, 3, -1);
+			stat(foe, 3, -1, foe);
 		} else if (move == Move.RAPID_SPIN) {
-			stat(this, 4, 1);
+			stat(this, 4, 1, foe);
 			if (this.vStatuses.contains(Status.SPUN)) {
 				this.vStatuses.remove(Status.SPUN);
 				System.out.println(this.nickname + " was freed!");
@@ -5268,13 +5270,13 @@ public class Pokemon implements Serializable {
 				userSide.remove(fe);
 			}
 		} else if (move == Move.RAZOR_SHELL) {
-			stat(foe, 1, -1);
+			stat(foe, 1, -1, foe);
 		} else if (move == Move.ROCK_CLIMB) {
 			foe.confuse(false, field);
 		} else if (move == Move.ROCK_SMASH) {
-			stat(foe, 1, -1);
+			stat(foe, 1, -1, foe);
 		} else if (move == Move.ROCK_TOMB) {
-			stat(foe, 4, -1);
+			stat(foe, 4, -1, foe);
 		} else if (move == Move.ROCKFALL_FRENZY) {
 			field.setHazard(enemySide, field.new FieldEffect(Effect.STEALTH_ROCKS));
 //		} else if (move == Move.ROOT_CRUSH) {
@@ -5286,10 +5288,10 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SCORCHING_SANDS) {
 			foe.burn(false, this, field);
 		} else if (move == Move.SHADOW_BALL) {
-			stat(foe, 3, -1);
+			stat(foe, 3, -1, foe);
 		} else if (move == Move.SILVER_WIND) {
 			for (int i = 0; i < 5; ++i) {
-				stat(this, i, 1);
+				stat(this, i, 1, foe);
 			}
 		} else if (move == Move.SMACK_DOWN && !foe.vStatuses.contains(Status.SMACK_DOWN)) {
 			foe.vStatuses.add(Status.SMACK_DOWN);
@@ -5297,7 +5299,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SLUDGE_WAVE) {
 			foe.poison(false, this, field);
 		} else if (move == Move.SUMMIT_STRIKE) {
-		    stat(foe, 1, -1);
+		    stat(foe, 1, -1, foe);
 		    double random = Math.random();
 		    if (random <= 0.3 && first) {
 		        foe.vStatuses.add(Status.FLINCHED);
@@ -5319,9 +5321,9 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SMOG) {
 			foe.poison(false, this, field);
 		} else if (move == Move.SNARL) {
-			stat(foe, 2, -1);
+			stat(foe, 2, -1, foe);
 		} else if (move == Move.SPACE_BEAM) {
-			stat(foe, 3, -1);
+			stat(foe, 3, -1, foe);
 		} else if (move == Move.SPARK) {
 			foe.paralyze(false, this, field);
 		} else if (move == Move.SPARKLING_ARIA) {
@@ -5331,26 +5333,26 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.SPARKLY_SWIRL) {
 			for (int i = 0; i < 5; ++i) {
-				stat(foe, i, -1);
+				stat(foe, i, -1, foe);
 			}
 		} else if (move == Move.SPECTRAL_THIEF) {
 			for (int i = 0; i < 7; ++i) {
 				if (foe.statStages[i] > 0) {
-					stat(this, i, foe.statStages[i]);
+					stat(this, i, foe.statStages[i], foe);
 					foe.statStages[i] = 0;
 				}
 			}
 //		} else if (move == Move.SPIKE_JAB) {
 //			foe.poison(false, this, field);
 		} else if (move == Move.SPIRIT_BREAK) {
-			stat(foe, 2, -1);
+			stat(foe, 2, -1, foe);
 		} else if (move == Move.STEEL_WING) {
-			stat(this, 1, 1);
+			stat(this, 1, 1, foe);
 //		} else if (move == Move.STING && foe.status == Status.HEALTHY) {
 //			foe.status = Status.BLEEDING;
 //			System.out.println(foe.nickname + " is bleeding!");
 		} else if (move == Move.STRUGGLE_BUG) {
-			stat(foe, 2, -1);
+			stat(foe, 2, -1, foe);
 		} else if (move == Move.STOMP && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 //		} else if (move == Move.STRONG_ARM) {
@@ -5367,12 +5369,12 @@ public class Pokemon implements Serializable {
 //		} else if (move == Move.SUPER_CHARGE && first) {
 //			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.SUPERPOWER) {
-			stat(this, 0, -1);
-			stat(this, 1, -1);
+			stat(this, 0, -1, foe);
+			stat(this, 1, -1, foe);
 //		} else if (move == Move.SWEEP_KICK) {
 //			stat(foe, 0, -1);
 		} else if (move == Move.SWORD_SPIN) {
-			stat(this, 0, 1);
+			stat(this, 0, 1, foe);
 		} else if (move == Move.THROAT_CHOP) {
 			if (!foe.vStatuses.contains(Status.MUTE)) foe.vStatuses.add(Status.MUTE);
 		} else if (move == Move.THUNDER) {
@@ -5407,31 +5409,31 @@ public class Pokemon implements Serializable {
 				foe.freeze(false, field);
 			}
 		} else if (move == Move.TORNADO_SPIN) {
-			stat(this, 4, 1);
-			stat(this, 5, 1);
+			stat(this, 4, 1, foe);
+			stat(this, 5, 1, foe);
 			if (this.vStatuses.contains(Status.SPUN)) {
 				this.vStatuses.remove(Status.SPUN);
 				System.out.println(this.nickname + " was freed!");
 				this.spunCount = 0;
 			}
 		} else if (move == Move.TWINKLE_TACKLE) {
-			stat(foe, 0, -1);
-			stat(foe, 2, -1);
+			stat(foe, 0, -1, foe);
+			stat(foe, 2, -1, foe);
 		} else if (move == Move.TWINEEDLE) {
 			foe.poison(false, this, field);
 		} else if (move == Move.SCALE_SHOT) {
-			stat(this, 1, -1);
-			stat(this, 4, 1);
+			stat(this, 1, -1, foe);
+			stat(this, 4, 1, foe);
 		} else if (move == Move.TWISTER && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.VOLT_TACKLE) {
 			foe.paralyze(false, this, field);
-		} else if (move == Move.V_CREATE) {
-			stat(this, 1, -1);
-			stat(this, 3, -1);
-			stat(this, 4, -1);
+		} else if (move == Move.V$CREATE) {
+			stat(this, 1, -1, foe);
+			stat(this, 3, -1, foe);
+			stat(this, 4, -1, foe);
 		} else if (move == Move.VINE_CROSS) {
-			stat(foe, 4, -1);
+			stat(foe, 4, -1, foe);
 		} else if (move == Move.WATER_PULSE) {
 			foe.confuse(false, field);
 		} else if (move == Move.WATER_CLAP) {
@@ -5439,7 +5441,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.WATER_SMACK && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.SUPERCHARGED_SPLASH) {
-			stat(this, 2, 1);
+			stat(this, 2, 1, foe);
 		} else if (move == Move.WATERFALL && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 //		} else if (move == Move.WOOD_FANG && first) {
@@ -5474,11 +5476,11 @@ public class Pokemon implements Serializable {
 			this.impressive = false;
 			this.lastMoveUsed = move;
 		} else if (move == Move.ACID_ARMOR) {
-			stat(this, 1, 2);
+			stat(this, 1, 2, foe);
 		} else if (move == Move.AGILITY) {
-			stat(this, 4, 2);
+			stat(this, 4, 2, foe);
 		} else if (move == Move.AMNESIA) {
-			stat(this, 3, 2);
+			stat(this, 3, 2, foe);
 		} else if (move == Move.AROMATHERAPY) {
 			System.out.println("A soothing aroma wafted through the air!");
 			if (team == null) {
@@ -5509,39 +5511,39 @@ public class Pokemon implements Serializable {
 				}
 			} else { fail = fail(); }
 		} else if (move == Move.AUTOMOTIZE) {
-			stat(this, 4, 2);
+			stat(this, 4, 2, foe);
 		} else if (move == Move.LOAD_FIREARMS) {
 			System.out.println(this.nickname + " upgraded its weapon!");
-			stat(this, 5, 1);
-			stat(this, 6, 1);
+			stat(this, 5, 1, foe);
+			stat(this, 6, 1, foe);
 		} else if (move == Move.BABY$DOLL_EYES) {
-			stat(foe, 0, -1);
+			stat(foe, 0, -1, foe);
 		} else if (move == Move.BATON_PASS || move == Move.TELEPORT) {
 			this.vStatuses.add(Status.SWITCHING);
 		} else if (move == Move.BULK_UP) {
-			stat(this, 0, 1);
-			stat(this, 1, 1);
+			stat(this, 0, 1, foe);
+			stat(this, 1, 1, foe);
 		} else if (move == Move.CALM_MIND) {
-			stat(this, 2, 1);
-			stat(this, 3, 1);
+			stat(this, 2, 1, foe);
+			stat(this, 3, 1, foe);
 		} else if (move == Move.CAPTIVATE) {
-			stat(foe, 2, -2);
+			stat(foe, 2, -2, foe);
 		} else if (move == Move.CHARGE) {
 			System.out.println(this.nickname + " became charged with power!");
-			stat(this, 3, 1);
+			stat(this, 3, 1, foe);
 		} else if (move == Move.CHARM) {
-			stat(foe, 0, -2);
+			stat(foe, 0, -2, foe);
 		} else if (move == Move.COIL) {
-			stat(this, 0, 1);
-			stat(this, 1, 1);
-			stat(this, 5, 1);
+			stat(this, 0, 1, foe);
+			stat(this, 1, 1, foe);
+			stat(this, 5, 1, foe);
 		} else if (move == Move.CONFUSE_RAY) {
 			foe.confuse(true, field);
 		} else if (move == Move.COSMIC_POWER) {
-			stat(this, 1, 1);
-			stat(this, 3, 1);
+			stat(this, 1, 1, foe);
+			stat(this, 3, 1, foe);
 		} else if (move == Move.COTTON_GUARD) {
-			stat(this, 1, 3);
+			stat(this, 1, 3, foe);
 		} else if (move == Move.CURSE) {
 			if (this.type1 == PType.GHOST || this.type2 == PType.GHOST) {
 				if (!foe.vStatuses.contains(Status.CURSED)) {
@@ -5556,9 +5558,9 @@ public class Pokemon implements Serializable {
 					fail = fail();
 				}
 			} else {
-				stat(this, 0, 1);
-				stat(this, 1, 1);
-				stat(this, 4, -1);
+				stat(this, 0, 1, foe);
+				stat(this, 1, 1, foe);
+				stat(this, 4, -1, foe);
 			}
 		} else if (move == Move.DETECT || move == Move.PROTECT || move == Move.MOLTEN_LAIR || move == Move.OBSTRUCT || move == Move.SPIKY_SHIELD) {
 			if ((lastMoveUsed == Move.DETECT || lastMoveUsed == Move.PROTECT || lastMoveUsed == Move.MOLTEN_LAIR || lastMoveUsed == Move.OBSTRUCT ||
@@ -5569,9 +5571,9 @@ public class Pokemon implements Serializable {
 				this.lastMoveUsed = move;
 			}
 		} else if (move == Move.DEFENSE_CURL) {
-			stat(this, 1, 1);
+			stat(this, 1, 1, foe);
 		} else if (move == Move.DEFOG) {
-			stat(foe, 6, -1);
+			stat(foe, 6, -1, foe);
 			for (FieldEffect fe : field.getHazards(userSide)) {
 				System.out.println(fe.toString() + " disappeared from " + this.nickname + "'s side!");
 				userSide.remove(fe);
@@ -5591,10 +5593,10 @@ public class Pokemon implements Serializable {
 //		} else if (move == Move.DISAPPEAR) {
 //			stat(this, 6, 2);
 		} else if (move == Move.DOUBLE_TEAM) {
-			stat(this, 6, 1);
+			stat(this, 6, 1, foe);
 		} else if (move == Move.DRAGON_DANCE) {
-			stat(this, 0, 1);
-			stat(this, 4, 1);
+			stat(this, 0, 1, foe);
+			stat(this, 4, 1, foe);
 		} else if (move == Move.ELECTRIC_TERRAIN) {
 			field.setTerrain(field.new FieldEffect(Effect.ELECTRIC));
 		} else if (move == Move.ENCORE) {
@@ -5611,18 +5613,18 @@ public class Pokemon implements Serializable {
 				fail = fail();
 			}
 		} else if (move == Move.FLASH) {
-			stat(foe, 5, -1);
-			stat(this, 2, 1);
+			stat(foe, 5, -1, foe);
+			stat(this, 2, 1, foe);
 		} else if (move == Move.ENTRAINMENT) {
 			foe.ability = this.ability;
 			System.out.println(foe.nickname + "'s ability became " + foe.ability.toString() + "!");
 			foe.swapIn(this, field, player);
 		} else if (move == Move.FAKE_TEARS) {
-			stat(foe, 3, -2);
+			stat(foe, 3, -2, foe);
 		} else if (move == Move.FEATHER_DANCE) {
-			stat(foe, 0, -2);
+			stat(foe, 0, -2, foe);
 		} else if (move == Move.FLATTER) {
-			stat(foe, 2, 2);
+			stat(foe, 2, 2, foe);
 			foe.confuse(false, field);
 		} else if (move == Move.FOCUS_ENERGY) {
 			if (!this.vStatuses.contains(Status.FOCUS_ENERGY)) {
@@ -5635,7 +5637,7 @@ public class Pokemon implements Serializable {
 			if (foe.type1 == PType.GHOST) foe.type1 = PType.NORMAL;
 			if (foe.type2 == PType.GHOST) foe.type2 = PType.NORMAL;
 			System.out.println(this.nickname + " identified " + foe.nickname + "!");
-			stat(this, 5, 1);
+			stat(this, 5, 1, foe);
 		} else if (move == Move.FORESTS_CURSE) {
 			foe.type1 = PType.GRASS;
 			foe.type2 = null;
@@ -5644,14 +5646,14 @@ public class Pokemon implements Serializable {
 			foe.ability = Ability.NULL;
 			System.out.println(foe.nickname + "'s ability was supressed!");
 		} else if (move == Move.GEOMANCY) {
-			stat(this, 2, 2);
-			stat(this, 3, 2);
-			stat(this, 4, 2);
+			stat(this, 2, 2, foe);
+			stat(this, 3, 2, foe);
+			stat(this, 4, 2, foe);
 		} else if (move == Move.GLARE) {
 			foe.paralyze(true, this, field);
 		} else if (move == Move.GLITTER_DANCE) {
-			stat(this, 2, 1);
-			stat(this, 4, 1);
+			stat(this, 2, 1, foe);
+			stat(this, 4, 1, foe);
 		} else if (move == Move.GRASS_WHISTLE) {
 			foe.sleep(true, field);
 		} else if (move == Move.GRASSY_TERRAIN) {
@@ -5659,19 +5661,19 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.GRAVITY) {
 			field.setEffect(field.new FieldEffect(Effect.GRAVITY));
 		} else if (move == Move.GROWL) {
-			stat(foe, 0, -1);
+			stat(foe, 0, -1, foe);
 		} else if (move == Move.GROWTH) {
 			if (field.equals(field.weather, Effect.SUN)) {
-				stat(this, 0, 2);
-				stat(this, 2, 2);
+				stat(this, 0, 2, foe);
+				stat(this, 2, 2, foe);
 			} else {
-				stat(this, 0, 1);
-				stat(this, 2, 1);
+				stat(this, 0, 1, foe);
+				stat(this, 2, 1, foe);
 			}
 		} else if (move == Move.SNOWSCAPE) {
 			field.setWeather(field.new FieldEffect(Effect.SNOW));
 		} else if (move == Move.HARDEN) {
-			stat(this, 1, 1);
+			stat(this, 1, 1, foe);
 		} else if (move == Move.HAZE) {
 			this.statStages = new int[7];
 			foe.statStages = new int[7];
@@ -5685,10 +5687,10 @@ public class Pokemon implements Serializable {
 				System.out.println(foe.nickname + " restored HP.");
 			}
 		} else if (move == Move.HONE_CLAWS) {
-			stat(this, 0, 1);
-			stat(this, 5, 1);
+			stat(this, 0, 1, foe);
+			stat(this, 5, 1, foe);
 		} else if (move == Move.HOWL) {
-			stat(this, 0, 1);
+			stat(this, 0, 1, foe);
 		} else if (move == Move.HYPNOSIS) {
 			foe.sleep(true, field);
 		} else if (move == Move.HEALING_WISH || move == Move.LUNAR_DANCE) {
@@ -5703,7 +5705,7 @@ public class Pokemon implements Serializable {
 			}
 			this.vStatuses.add(Status.NO_SWITCH);
 		} else if (move == Move.IRON_DEFENSE) {
-			stat(this, 1, 2);
+			stat(this, 1, 2, foe);
 		} else if (move == Move.LIFE_DEW) {
 			if (this.currentHP == this.getStat(0)) {
 				System.out.println(this.nickname + "'s HP is full!");
@@ -5724,7 +5726,7 @@ public class Pokemon implements Serializable {
 				fail = fail();
 			}
 		} else if (move == Move.LEER) {
-			stat(foe, 1, -1);
+			stat(foe, 1, -1, foe);
 		} else if (move == Move.LIGHT_SCREEN) {
 			if (!(field.contains(userSide, Effect.LIGHT_SCREEN))) {
 				userSide.add(field.new FieldEffect(Effect.LIGHT_SCREEN));
@@ -5733,7 +5735,7 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.LOCK$ON) {
 			System.out.println(this.nickname + " took aim at " + foe.nickname + "!\n");
-			stat(this, 5, 6);
+			stat(this, 5, 6, foe);
 		} else if (move == Move.LOVELY_KISS) {
 			foe.sleep(true, field);
 		} else if (move == Move.MAGIC_POWDER) {
@@ -5759,15 +5761,15 @@ public class Pokemon implements Serializable {
 				System.out.println(foe.nickname + " can no longer escape!");
 			}
 		} else if (move == Move.MEMENTO) {
-			stat(foe, 0, -2);
-			stat(foe, 2, -2);
+			stat(foe, 0, -2, foe);
+			stat(foe, 2, -2, foe);
 			this.currentHP = 0;
 			this.faint(true, player, foe);
 			foe.awardxp((int) Math.ceil(this.level * trainer), player);
 		} else if (move == Move.METAL_SOUND) {
-			stat(foe, 3, -2);
+			stat(foe, 3, -2, foe);
 		} else if (move == Move.MINIMIZE) {
-			stat(this, 6, 2);
+			stat(this, 6, 2, foe);
 		} else if (move == Move.MORNING_SUN || move == Move.MOONLIGHT || move == Move.SYNTHESIS) {
 			if (this.currentHP == this.getStat(0)) {
 				System.out.println(this.nickname + "'s HP is full!");
@@ -5786,18 +5788,18 @@ public class Pokemon implements Serializable {
 			field.setEffect(field.new FieldEffect(Effect.MUD_SPORT));
 			System.out.println("Electric's power was weakened!");
 		} else if (move == Move.NASTY_PLOT) {
-			stat(this, 2, 2);
+			stat(this, 2, 2, foe);
 		} else if (move == Move.NOBLE_ROAR) {
-			stat(foe, 0, -1);
-			stat(foe, 2, -1);
+			stat(foe, 0, -1, foe);
+			stat(foe, 2, -1, foe);
 		} else if (move == Move.NO_RETREAT) {
 			if (!(this.vStatuses.contains(Status.NO_SWITCH))) {
 			    this.vStatuses.add(Status.NO_SWITCH);
-			    stat(this, 0, 1);
-			    stat(this, 1, 1);
-			    stat(this, 2, 1);
-			    stat(this, 3, 1);
-			    stat(this, 4, 1);
+			    stat(this, 0, 1, foe);
+			    stat(this, 1, 1, foe);
+			    stat(this, 2, 1, foe);
+			    stat(this, 3, 1, foe);
+			    stat(this, 4, 1, foe);
 			    System.out.println(this.nickname + " can no longer switch out!");
 			} else {
 			    fail = fail();
@@ -5813,16 +5815,16 @@ public class Pokemon implements Serializable {
 			if (foe.type1 == PType.GHOST) foe.type1 = PType.NORMAL;
 			if (foe.type2 == PType.GHOST) foe.type2 = PType.NORMAL;
 			System.out.println(this.nickname + " identified " + foe.nickname + "!");
-			stat(foe, 6, -1);
+			stat(foe, 6, -1, foe);
 		} else if (move == Move.PERISH_SONG) {
 			this.perishCount = (this.perishCount == 0) ? 3 : this.perishCount;
 			foe.perishCount = (foe.perishCount == 0) ? 3 : foe.perishCount;
 		} else if (move == Move.PLAY_NICE) {
-			stat(foe, 0, -1);
+			stat(foe, 0, -1, foe);
 		} else if (move == Move.SPARKLING_WATER) {
-			stat(this, 3, 1);
+			stat(this, 3, 1, foe);
 		} else if (move == Move.WATER_FLICK) {
-			stat(foe, 0, -1);
+			stat(foe, 0, -1, foe);
 		} else if (move == Move.PSYCHIC_TERRAIN) {
 			field.setTerrain(field.new FieldEffect(Effect.PSYCHIC));
 		} else if (move == Move.POISON_GAS) {
@@ -5836,26 +5838,26 @@ public class Pokemon implements Serializable {
 			}
 			foe.paralyze(true, this, field);
 		} else if (move == Move.QUIVER_DANCE) {
-			stat(this, 2, 1);
-			stat(this, 3, 1);
-			stat(this, 4, 1);
+			stat(this, 2, 1, foe);
+			stat(this, 3, 1, foe);
+			stat(this, 4, 1, foe);
 		} else if (move == Move.SHELL_SMASH) {
-			stat(this, 1, -1);
-			stat(this, 3, -1);
-			stat(this, 0, 2);
-			stat(this, 2, 2);
-			stat(this, 4, 2);
+			stat(this, 1, -1, foe);
+			stat(this, 3, -1, foe);
+			stat(this, 0, 2, foe);
+			stat(this, 2, 2, foe);
+			stat(this, 4, 2, foe);
 		} else if (move == Move.RAIN_DANCE) {
 			field.setWeather(field.new FieldEffect(Effect.RAIN));
 		} else if (move == Move.REBOOT) {
 			if (this.status != Status.HEALTHY || !this.vStatuses.isEmpty()) System.out.println(this.nickname + " became healthy!");
 			this.status = Status.HEALTHY;
 			removeBad(this.vStatuses);
-			stat(this, 4, 1);
+			stat(this, 4, 1, foe);
 		} else if (move == Move.RED$NOSE_BOOST) {
-			stat(this, 1, 1);
-			stat(this, 2, 2);
-			stat(this, 3, 1);
+			stat(this, 1, 1, foe);
+			stat(this, 2, 2, foe);
+			stat(this, 3, 1, foe);
 		} else if (move == Move.REFLECT) {
 			if (!(field.contains(userSide, Effect.REFLECT))) {
 				userSide.add(field.new FieldEffect(Effect.REFLECT));
@@ -5890,7 +5892,7 @@ public class Pokemon implements Serializable {
 				System.out.println(this.nickname + " restored HP.");
 			}
 		} else if (move == Move.SAND_ATTACK) {
-			stat(foe, 5, -1);
+			stat(foe, 5, -1, foe);
 		} else if (move == Move.SAFEGUARD) {
 			if (!(field.contains(userSide, Effect.SAFEGUARD))) {
 				userSide.add(field.new FieldEffect(Effect.SAFEGUARD));
@@ -5900,9 +5902,9 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SANDSTORM) {
 			field.setWeather(field.new FieldEffect(Effect.SANDSTORM));
 		} else if (move == Move.SCARY_FACE) {
-			stat(foe, 4, -2);
+			stat(foe, 4, -2, foe);
 		} else if (move == Move.SCREECH) {
-			stat(foe, 1, -2);
+			stat(foe, 1, -2, foe);
 		} else if (move == Move.SEA_DRAGON) {
 			if (id == 150) {
 				System.out.println(nickname + " transformed into Kissyfishy-D!");
@@ -5931,10 +5933,10 @@ public class Pokemon implements Serializable {
 			}
 			foe.sleep(true, field);
 		} else if (move == Move.SHIFT_GEAR) {
-			stat(this, 0, 1);
-			stat(this, 4, 2);
+			stat(this, 0, 1, foe);
+			stat(this, 4, 2, foe);
 		} else if (move == Move.SMOKESCREEN) {
-			stat(foe, 5, -1);
+			stat(foe, 5, -1, foe);
 //		} else if (move == Move.STARE) {
 //			stat(foe, 0, 1);
 //			if (!foe.vStatuses.contains(Status.CONFUSED)) {
@@ -5951,29 +5953,29 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.STICKY_WEB) {
 			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.STICKY_WEBS));
 		} else if (move == Move.STOCKPILE) {
-			stat(this, 1, 1);
-			stat(this, 3, 1);
+			stat(this, 1, 1, foe);
+			stat(this, 3, 1, foe);
 		} else if (move == Move.STRENGTH_SAP) {
 			int amount = (int) (foe.getStat(1) * foe.asModifier(0));
-			stat(foe, 0, -1);
+			stat(foe, 0, -1, foe);
 			this.currentHP += amount;
 			if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
 			System.out.println(this.nickname + " restored HP.");
 		}  else if (move == Move.STRING_SHOT) {
-			stat(foe, 4, -2);
+			stat(foe, 4, -2, foe);
 		} else if (move == Move.SUNNY_DAY) {
 			field.setWeather(field.new FieldEffect(Effect.SUN));
 		} else if (move == Move.SUPERSONIC) {
 			foe.confuse(true, field);
 		} else if (move == Move.SWAGGER) {
-			stat(foe, 0, 2);
+			stat(foe, 0, 2, foe);
 			foe.confuse(false, field);
 		} else if (move == Move.SWEET_KISS) {
 			foe.confuse(true, field);
 		} else if (move == Move.SWEET_SCENT) {
-			stat(foe, 6, -2);
+			stat(foe, 6, -2, foe);
 		} else if (move == Move.SWORDS_DANCE) {
-			stat(this, 0, 2);
+			stat(this, 0, 2, foe);
 		} else if (move == Move.TAUNT) {
 			if (!(foe.vStatuses.contains(Status.TAUNTED))) {
 			    foe.vStatuses.add(Status.TAUNTED);
@@ -5991,7 +5993,7 @@ public class Pokemon implements Serializable {
 			    fail = fail();
 			}
 		} else if (move == Move.TAIL_GLOW) {
-			stat(this, 2, 3);
+			stat(this, 2, 3, foe);
 		} else if (move == Move.TAILWIND) {
 			if (!(field.contains(userSide, Effect.TAILWIND))) {
 				userSide.add(field.new FieldEffect(Effect.TAILWIND));
@@ -6000,7 +6002,7 @@ public class Pokemon implements Serializable {
 				fail = fail();
 			}
 		} else if (move == Move.TAIL_WHIP) {
-			stat(foe, 1, -1);
+			stat(foe, 1, -1, foe);
 		} else if (move == Move.TAKE_OVER) {
 			if (this.lastMoveUsed != Move.TAKE_OVER) {
 				foe.vStatuses.add(Status.POSESSED);
@@ -6025,8 +6027,8 @@ public class Pokemon implements Serializable {
 			field.setEffect(field.new FieldEffect(Effect.TRICK_ROOM));
 		} else if (move == Move.VENOM_DRENCH) {
 			if (foe.status == Status.POISONED) {
-				stat(foe, 0, -2);
-				stat(foe, 2, -2);
+				stat(foe, 0, -2, foe);
+				stat(foe, 2, -2, foe);
 			}
 		} else if (move == Move.WATER_SPORT) {
 			field.setEffect(field.new FieldEffect(Effect.WATER_SPORT));
@@ -6034,9 +6036,9 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.WHIRLWIND || move == Move.ROAR) {
 			boolean result = false;
 			if (foe.trainerOwned() && enemy != null) {
-				result = enemy.swapRandom();
+				result = enemy.swapRandom(foe, field, player);
 			} else if (foe.playerOwned) {
-				result = player.swapRandom();
+				result = player.swapRandom(foe, field);
 			}
 			if (!result) fail = fail();
 		} else if (move == Move.WILL$O$WISP) {
@@ -6048,12 +6050,12 @@ public class Pokemon implements Serializable {
 				this.vStatuses.add(Status.WISH);
 			}
 		} else if (move == Move.WITHDRAW) {
-			stat(this, 1, 1);
+			stat(this, 1, 1, foe);
 		} else if (move == Move.WORRY_SEED) {
 			foe.ability = Ability.INSOMNIA;
 			System.out.println(foe.nickname + "'s ability became Insomnia!");
 		} if (move == Move.ROCK_POLISH) {
-			stat(this, 4, 2);
+			stat(this, 4, 2, foe);
 		}
 		success = !fail;
 		return;
@@ -6063,7 +6065,7 @@ public class Pokemon implements Serializable {
 		if (currentHP > this.getStat(0)) currentHP = this.getStat(0);
 	}
 
-	private void stat(Pokemon p, int i, int amt) throws IllegalArgumentException {
+	private void stat(Pokemon p, int i, int amt, Pokemon foe) throws IllegalArgumentException {
 		if (amt == 0) throw new IllegalArgumentException("Stat change amount cannot be 0");
 		int a = amt;
 		if (p.ability == Ability.SIMPLE) a *= 2;
@@ -6087,14 +6089,14 @@ public class Pokemon implements Serializable {
 		if (this != p) {
 			if (p.ability == Ability.MIRROR_ARMOR && a < 0) {
 				System.out.print("[" + p.nickname + "'s Mirror Armor]: ");
-				stat(this, i, amt);
+				stat(this, i, amt, foe);
 				return;
 			} else if (p.ability == Ability.DEFIANT && a < 0) {
 				System.out.print("[" + p.nickname + "'s Defiant]: " );
-				stat(p, 0, 2);
+				stat(p, 0, 2, foe);
 			} else if (p.ability == Ability.COMPETITIVE && a < 0) {
 				System.out.print("[" + p.nickname + "'s Competitve]: " );
-				stat(p, 2, 2);
+				stat(p, 2, 2, foe);
 			} else if (p.ability == Ability.CLEAR_BODY && a < 0) {
 				System.out.println("[" + p.nickname + "'s Clear Body]: " + p.nickname + "'s " + type + " was not lowered!");
 				return;
@@ -6105,6 +6107,10 @@ public class Pokemon implements Serializable {
 				System.out.println("[" + p.nickname + "'s Hyper Cutter]: " + this.nickname + "'s " + type + " was not lowered!");
 				return;
 			}
+		}
+		if (foe.ability == Ability.EMPATHIC_LINK && a > 0) {
+			System.out.print("[" + foe.nickname + "'s Empathic Link]: " );
+			foe.stat(foe, 2, 1, this);
 		}
 		p.statStages[i] += a;
 		if (p.statStages[i] > 6 && a > 0) {
@@ -7057,17 +7063,20 @@ public class Pokemon implements Serializable {
 		case 30:
 			movebank = new Node[50];
 			movebank[0] = new Node(Move.ABSORB);
-			movebank[3] = new Node(Move.GROWTH);
-			movebank[6] = new Node(Move.WATER_SPORT);
-			movebank[6].addToEnd(new Node(Move.POISON_STING));
+			movebank[0].addToEnd(new Node(Move.GROWTH));
+			movebank[0].addToEnd(new Node(Move.WATER_SPORT));
+			movebank[0].addToEnd(new Node(Move.POISON_STING));
+			movebank[4] = new Node(Move.EXTRASENSORY);
+			movebank[9] = new Node(Move.SLEEP_POWDER);
 			movebank[15] = new Node(Move.LEECH_SEED);
 			movebank[18] = new Node(Move.MAGICAL_LEAF);
 			movebank[21] = new Node(Move.GRASS_WHISTLE);
 			movebank[24] = new Node(Move.GIGA_DRAIN);
 			movebank[27] = new Node(Move.TOXIC_SPIKES);
+			movebank[27].next = new Node(Move.SPIKES);
 			movebank[30] = new Node(Move.SWEET_SCENT);
 			movebank[33] = new Node(Move.INGRAIN);
-			movebank[36] = new Node(Move.PETAL_BLIZZARD);
+			movebank[36] = new Node(Move.SLUDGE_BOMB);
 			movebank[39] = new Node(Move.TOXIC);
 			movebank[42] = new Node(Move.AROMATHERAPY);
 			movebank[45] = new Node(Move.SYNTHESIS);
@@ -7075,12 +7084,14 @@ public class Pokemon implements Serializable {
 			break;
 		case 31:
 			movebank = new Node[1];
-			movebank[0] = new Node(Move.GRASSY_TERRAIN);
-			movebank[0].addToEnd(new Node(Move.MAGICAL_LEAF));
+			movebank[0] = new Node(Move.LEAF_STORM);
+			movebank[0].addToEnd(new Node(Move.VENOM_DRENCH));
 			movebank[0].addToEnd(new Node(Move.MEGA_DRAIN));
 			movebank[0].addToEnd(new Node(Move.POISON_STING));
 			movebank[0].addToEnd(new Node(Move.SWEET_SCENT));
-			movebank[0].addToEnd(new Node(Move.VENOM_DRENCH));
+			movebank[0].addToEnd(new Node(Move.GRASSY_TERRAIN));
+			movebank[0].addToEnd(new Node(Move.SLUDGE_BOMB));
+			movebank[0].addToEnd(new Node(Move.MAGICAL_LEAF));
 			movebank[0].addToEnd(new Node(Move.WEATHER_BALL));
 			break;
 		case 32:
@@ -7984,9 +7995,11 @@ public class Pokemon implements Serializable {
 			break;
 		case 87:
 			movebank = new Node[65];
-			movebank[0] = new Node(Move.TELEPORT);
-			movebank[0].next = new Node(Move.GROWL);
-			movebank[0].next.next = new Node(Move.FLASH);
+			movebank[0] = new Node(Move.AURA_SPHERE);
+			movebank[0].addToEnd(new Node(Move.HEALING_WISH));
+			movebank[0].addToEnd(new Node(Move.TELEPORT));
+			movebank[0].addToEnd(new Node(Move.GROWL));
+			movebank[0].addToEnd(new Node(Move.FLASH));
 			movebank[2] = new Node(Move.DOUBLE_TEAM);
 			movebank[5] = new Node(Move.CONFUSION);
 			movebank[8] = new Node(Move.HYPNOSIS);
@@ -8000,12 +8013,12 @@ public class Pokemon implements Serializable {
 			movebank[41] = new Node(Move.GLITZY_GLOW);
 			movebank[44] = new Node(Move.PSYCHIC);
 			movebank[48] = new Node(Move.MOONBLAST);
-			movebank[54] = new Node(Move.HEAL_PULSE);
+			movebank[54] = new Node(Move.GLITTER_DANCE);
 			movebank[59] = new Node(Move.DREAM_EATER);
 			movebank[64] = new Node(Move.BLACK_HOLE_ECLIPSE);
 			break;
 		case 88:
-			movebank = new Node[65];
+			movebank = new Node[60];
 			movebank[0] = new Node(Move.TELEPORT);
 			movebank[0].addToEnd(new Node(Move.GROWL));
 			movebank[0].addToEnd(new Node(Move.FLASH));
@@ -8021,13 +8034,15 @@ public class Pokemon implements Serializable {
 			movebank[17] = new Node(Move.PSYBEAM);
 			movebank[19] = new Node(Move.AERIAL_ACE);
 			movebank[22] = new Node(Move.FALSE_SWIPE);
+			movebank[25] = new Node(Move.SLASH);
 			movebank[27] = new Node(Move.PROTECT);
-			movebank[29] = new Node(Move.SLASH);
-			movebank[34] = new Node(Move.SWORDS_DANCE);
-			movebank[41] = new Node(Move.PSYCHO_CUT);
+			movebank[29] = new Node(Move.PSYCHO_CUT);
+			movebank[32] = new Node(Move.SWORDS_DANCE);
+			movebank[36] = new Node(Move.ZEN_HEADBUTT);
+			movebank[44] = new Node(Move.CLOSE_COMBAT);
 			movebank[48] = new Node(Move.HEAL_PULSE);
-			movebank[55] = new Node(Move.SOLAR_BLADE);
-			movebank[62] = new Node(Move.CLOSE_COMBAT);
+			movebank[53] = new Node(Move.FEINT);
+			movebank[59] = new Node(Move.SOLAR_BLADE);
 			break;
 		case 89:
 			movebank = new Node[65];
@@ -9032,19 +9047,21 @@ public class Pokemon implements Serializable {
 			movebank[59] = new Node(Move.DEEP_SEA_BUBBLE);
 			break;
 		case 151:
-			movebank = new Node[28];
+			movebank = new Node[25];
 			movebank[0] = new Node(Move.WRAP);
 			movebank[0].next = new Node(Move.LEER);
 			movebank[3] = new Node(Move.POISON_STING);
-			movebank[8] = new Node(Move.BITE);
+			movebank[6] = new Node(Move.BITE);
+			movebank[9] = new Node(Move.ACID);
 			movebank[11] = new Node(Move.GLARE);
+			movebank[14] = new Node(Move.MUD_BOMB);
 			movebank[16] = new Node(Move.SCREECH);
 			movebank[19] = new Node(Move.POISON_FANG);
-			movebank[24] = new Node(Move.STOCKPILE);
-			movebank[27] = new Node(Move.ACID_SPRAY);
+			movebank[21] = new Node(Move.STOCKPILE);
+			movebank[24] = new Node(Move.ACID_SPRAY);
 			break;
 		case 152:
-			movebank = new Node[63];
+			movebank = new Node[55];
 			movebank[0] = new Node(Move.ICE_FANG);
 			movebank[0].addToEnd(new Node(Move.THUNDER_FANG));
 			movebank[0].addToEnd(new Node(Move.FIRE_FANG));
@@ -9055,14 +9072,16 @@ public class Pokemon implements Serializable {
 			movebank[0].addToEnd(new Node(Move.GLARE));
 			movebank[0].addToEnd(new Node(Move.SCREECH));
 			movebank[19] = new Node(Move.POISON_FANG);
-			movebank[26] = new Node(Move.STOCKPILE);
-			movebank[31] = new Node(Move.ACID_SPRAY);
-			movebank[38] = new Node(Move.MUD_BOMB);
-			movebank[43] = new Node(Move.GASTRO_ACID);
-			movebank[47] = new Node(Move.BELCH);
-			movebank[50] = new Node(Move.HAZE);
-			movebank[55] = new Node(Move.COIL);
-			movebank[62] = new Node(Move.GUNK_SHOT);
+			movebank[21] = new Node(Move.STOCKPILE);
+			movebank[24] = new Node(Move.ACID_SPRAY);
+			movebank[26] = new Node(Move.GASTRO_ACID);
+			movebank[29] = new Node(Move.POISON_TAIL);
+			movebank[32] = new Node(Move.DRAGON_TAIL);
+			movebank[35] = new Node(Move.HAZE);
+			movebank[39] = new Node(Move.COIL);
+			movebank[44] = new Node(Move.SUCKER_PUNCH);
+			movebank[49] = new Node(Move.VENOM_SPIT);
+			movebank[54] = new Node(Move.GUNK_SHOT);
 			break;
 		case 153:
 			movebank = new Node[25];
@@ -11119,7 +11138,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (this.ability == Ability.SPEED_BOOST) {
-			if (this.statStages[4] != 6) stat(this, 4, 1);
+			if (this.statStages[4] != 6) stat(this, 4, 1, f);
 		}
 		
 		if (this.ability == Ability.SHED_SKIN && this.status != Status.HEALTHY) {
@@ -12144,7 +12163,7 @@ public class Pokemon implements Serializable {
 		
 		} else if (this.ability == Ability.GRAVITATIONAL_PULL) {  System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: "); field.setEffect(field.new FieldEffect(Effect.GRAVITY));
 		
-		} else if (this.ability == Ability.INTIMIDATE || this.ability == Ability.SCALY_SKIN) { System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: "); stat(foe, 0, -1);
+		} else if (this.ability == Ability.INTIMIDATE || this.ability == Ability.SCALY_SKIN) { System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: "); stat(foe, 0, -1, foe);
 		} else if (this.ability == Ability.MOUTHWATER) {
 			foe.vStatuses.add(Status.TAUNTED);
 			System.out.println("[" + this.nickname + "'s Mouthwater]: " + foe.nickname + " was taunted!");
@@ -12189,7 +12208,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (field.contains(side, Effect.STICKY_WEBS) && this.isGrounded(field)) {
-			stat(this, 4, -1);
+			stat(this, 4, -1, foe);
 		}
 		
 		if (this.currentHP <= 0) {

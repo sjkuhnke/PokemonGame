@@ -91,7 +91,7 @@ public class Trainer {
 		return money;
 	}
 	
-	public boolean swapRandom() {
+	public boolean swapRandom(Pokemon foe, Field field, Player me) {
 		if (!hasValidMembers()) return false;
 		Random rand = new Random();
 		int index = rand.nextInt(team.length);
@@ -107,6 +107,7 @@ public class Trainer {
 		this.team[index] = newCurrent;
 		
 		System.out.println(current.nickname + " was dragged out!");
+		current.swapIn(foe, field, me);
 		return true;
 		
 	}

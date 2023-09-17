@@ -2,7 +2,9 @@ package Overworld;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -103,7 +105,7 @@ public class Main {
 		
 		modifyTrainers(gamePanel);
 		
-		writeTrainers();
+//		writeTrainers();
 //		writePokemon();
 //		writeEncounters();
 		
@@ -516,6 +518,47 @@ public class Main {
 					}
 				}
 				writer.write("\n");
+			}
+			
+			try {
+				writer.write("Unused moves:\n");
+				ArrayList<Move> unused = new ArrayList<>();
+				ArrayList<Move> unusedButTM = new ArrayList<>();
+				for (Move m : Move.values()) {
+					FileReader fr = new FileReader("PokemonInfo.txt");
+					BufferedReader br = new BufferedReader(fr);
+					String line;
+					boolean found = false;
+					for (int i = 1; i < 6576; i++) {
+						line = br.readLine();
+						if (i == 6247) System.out.println(line);
+						try {
+							if (line.contains(m.toString())) {
+								found = true;
+								break;
+							}
+						} catch (NullPointerException e) {
+							System.out.println(i + " is a null line");
+						}
+					}
+					br.close();
+					if (!found) {
+						if (m.isTM()) {
+							unusedButTM.add(m);
+						} else {
+							unused.add(m);
+						}
+					}
+				}
+				for (Move m : unused) {
+					writer.write(m.toString() + "\n");
+				}
+				writer.write("\nTM Only:\n");
+				for (Move m : unusedButTM) {
+					writer.write(m.toString() + "\n");
+				}
+			} catch (IOException e){
+				e.printStackTrace();
 			}
 			
 			writer.close();
