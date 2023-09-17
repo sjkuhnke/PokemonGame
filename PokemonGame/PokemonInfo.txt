@@ -1643,7 +1643,7 @@ Level Up:
 37 - Ice Beam
 40 - Psychic
 45 - Blizzard
-50 - Aurora Veil
+50 - Freezing Glare
 60 - Luster Purge
 
 ===================
@@ -2848,7 +2848,7 @@ Type:
 Fire / Dark
 
 Ability:
-Early Bird / Flash Fire
+Solar Power / Flash Fire
 
 Base Stats:
 45 HP / 60 Atk / 30 Def / 80 SpA / 50 SpD / 65 Spe / 330 BST
@@ -2856,11 +2856,14 @@ Base Stats:
 Level Up:
 1 - Leer
 1 - Ember
-4 - Howl
+3 - Howl
+6 - Bite
 8 - Smog
-13 - Roar
-16 - Bite
-20 - Odor Sleuth
+11 - Roar
+14 - Thunder Fang
+14 - Fire Fang
+16 - Odor Sleuth
+20 - Beat Up
 
 ===================
 105 - Houndoom
@@ -2869,7 +2872,7 @@ Type:
 Fire / Dark
 
 Ability:
-Early Bird / Flash Fire
+Solar Power / Flash Fire
 
 Base Stats:
 75 HP / 90 Atk / 50 Def / 110 SpA / 80 SpD / 95 Spe / 500 BST
@@ -2877,20 +2880,25 @@ Base Stats:
 Level Up:
 1 - Leer
 1 - Ember
-4 - Howl
+3 - Howl
+6 - Bite
 8 - Smog
-13 - Roar
-16 - Bite
-20 - Odor Sleuth
-26 - Beat Up
-30 - Fire Fang
-35 - Feint Attack
-41 - Incinerate
-45 - Foul Play
-50 - Flamethrower
-56 - Crunch
-60 - Nasty Plot
-65 - Inferno
+11 - Roar
+14 - Thunder Fang
+14 - Fire Fang
+16 - Odor Sleuth
+20 - Beat Up
+22 - Feint Attack
+25 - Incinerate
+28 - Crunch
+32 - Flame Burst
+36 - Dark Pulse
+40 - Flamethrower
+43 - Foul Play
+46 - Sunny Doom
+50 - Nasty Plot
+55 - Heat Wave
+60 - Inferno
 
 ===================
 106 - Sparkdust
@@ -6584,38 +6592,35 @@ Level Up:
 Unused moves:
 Perish Song
 Flatter
-Heat Wave
 Silver Wind
+V-Create
 Blast Burn
+Supernova Explosion
 Belch
+Tornado Spin
 Sludge Wave
 Acid Armor
 Noble Roar
-Struggle
 Expanding Force
 Strength
 Petal Blizzard
-Flame Burst
-Tornado Spin
-Lunar Dance
-V-Create
-Supernova Explosion
 Boosted Pursuit
+Lunar Dance
+Struggle
 Failed Sucker
-Freezing Glare
 Glaciate
 Sacred Fire
 
 TM Only:
-Rock Climb
-Scald
-Surf
-Rock Smash
-Lava Surf
-Sleep Talk
-Vine Cross
-Terrain Pulse
-Psyshock
 Slow Fall
+Terrain Pulse
+Scald
+Vine Cross
 Cut
+Rock Climb
+Rock Smash
+Sleep Talk
+Psyshock
+Surf
+Lava Surf
 Flip Turn
