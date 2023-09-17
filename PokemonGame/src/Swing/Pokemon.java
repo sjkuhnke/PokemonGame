@@ -2027,8 +2027,8 @@ public class Pokemon implements Serializable {
 		} else if (id == 101) { abilities = new Ability[] {Ability.SOLID_ROCK, Ability.SOLID_ROCK};
 		} else if (id == 102) { abilities = new Ability[] {Ability.SOLID_ROCK, Ability.SOLID_ROCK};
 		} else if (id == 103) { abilities = new Ability[] {Ability.SOLID_ROCK, Ability.SOLID_ROCK};
-		} else if (id == 104) { abilities = new Ability[] {Ability.EARLY_BIRD, Ability.FLASH_FIRE};
-		} else if (id == 105) { abilities = new Ability[] {Ability.EARLY_BIRD, Ability.FLASH_FIRE};
+		} else if (id == 104) { abilities = new Ability[] {Ability.SOLAR_POWER, Ability.FLASH_FIRE};
+		} else if (id == 105) { abilities = new Ability[] {Ability.SOLAR_POWER, Ability.FLASH_FIRE};
 		} else if (id == 106) { abilities = new Ability[] {Ability.SHIELD_DUST, Ability.MAGIC_GUARD};
 		} else if (id == 107) { abilities = new Ability[] {Ability.SHIELD_DUST, Ability.MAGIC_GUARD};
 		} else if (id == 108) { abilities = new Ability[] {Ability.ANTICIPATION, Ability.ANTICIPATION};
@@ -4697,6 +4697,7 @@ public class Pokemon implements Serializable {
 			if (foe.currentHP <= 0) { // Check for kill
 				foe.faint(true, player, this);
 				if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
+				if (move == Move.SUNNY_DOOM) field.setWeather(field.new FieldEffect(Effect.SUN));
 				this.awardxp((int) Math.ceil(foe.level * foe.trainer), player);
 				if (this.vStatuses.contains(Status.BONDED)) {
 					System.out.println(foe.nickname + " took its attacker down with it!");
@@ -5058,8 +5059,8 @@ public class Pokemon implements Serializable {
 			foe.confuse(false, field);
 		} else if (move == Move.HYPER_FANG && first) {
 			foe.vStatuses.add(Status.FLINCHED);
-//		} else if (move == Move.INJECT) {
-//			foe.poison(false, this, field);
+		} else if (move == Move.INCINERATE) {
+			stat(foe, 2, -1, foe);
 		} else if (move == Move.ICE_BEAM) {
 			foe.freeze(false, field);
 		} else if (move == Move.ICE_FANG) {
@@ -5879,7 +5880,6 @@ public class Pokemon implements Serializable {
 				}
 				this.sleep(false, field);
 				this.sleepCounter = 2;
-				if (this.ability == Ability.EARLY_BIRD) this.sleepCounter /= 2;
 				this.vStatuses.remove(Status.CONFUSED);
 				System.out.println(this.nickname + " slept and became healthy!");
 			}
@@ -7568,6 +7568,7 @@ public class Pokemon implements Serializable {
 			movebank[39] = new Node(Move.PSYCHIC);
 			movebank[44] = new Node(Move.BLIZZARD);
 			movebank[49] = new Node(Move.AURORA_VEIL);
+			movebank[49] = new Node(Move.FREEZING_GLARE);
 			movebank[59] = new Node(Move.LUSTER_PURGE);
 			break;
 		case 61:
@@ -8296,31 +8297,37 @@ public class Pokemon implements Serializable {
 			movebank = new Node[20];
 			movebank[0] = new Node(Move.LEER);
 			movebank[0].next = new Node(Move.EMBER);
-			movebank[3] = new Node(Move.HOWL);
+			movebank[2] = new Node(Move.HOWL);
+			movebank[5] = new Node(Move.BITE);
 			movebank[7] = new Node(Move.SMOG);
-			movebank[12] = new Node(Move.ROAR);
-			movebank[15] = new Node(Move.BITE);
-			movebank[19] = new Node(Move.ODOR_SLEUTH);
+			movebank[10] = new Node(Move.ROAR);
+			movebank[13] = new Node(Move.THUNDER_FANG);
+			movebank[13].next = new Node(Move.FIRE_FANG);
+			movebank[15] = new Node(Move.ODOR_SLEUTH);
+			movebank[19] = new Node(Move.BEAT_UP);
 			break;
 		case 105:
-			movebank = new Node[65];
+			movebank = new Node[55];
 			movebank[0] = new Node(Move.LEER);
 			movebank[0].next = new Node(Move.EMBER);
-			movebank[3] = new Node(Move.HOWL);
+			movebank[2] = new Node(Move.HOWL);
+			movebank[5] = new Node(Move.BITE);
 			movebank[7] = new Node(Move.SMOG);
-			movebank[12] = new Node(Move.ROAR);
-			movebank[15] = new Node(Move.BITE);
-			movebank[19] = new Node(Move.ODOR_SLEUTH);
-			movebank[25] = new Node(Move.BEAT_UP);
-			movebank[29] = new Node(Move.FIRE_FANG);
-			movebank[34] = new Node(Move.FEINT_ATTACK);
-			movebank[40] = new Node(Move.INCINERATE);
-			movebank[44] = new Node(Move.FOUL_PLAY);
-			movebank[49] = new Node(Move.FLAMETHROWER);
-			movebank[55] = new Node(Move.CRUNCH);
-			movebank[59] = new Node(Move.NASTY_PLOT);
-			movebank[64] = new Node(Move.INFERNO);
-			break;
+			movebank[10] = new Node(Move.ROAR);
+			movebank[13] = new Node(Move.THUNDER_FANG);
+			movebank[13].next = new Node(Move.FIRE_FANG);
+			movebank[15] = new Node(Move.ODOR_SLEUTH);
+			movebank[19] = new Node(Move.BEAT_UP);
+			movebank[21] = new Node(Move.FEINT_ATTACK);
+			movebank[24] = new Node(Move.INCINERATE);
+			movebank[27] = new Node(Move.CRUNCH);
+			movebank[31] = new Node(Move.FLAME_BURST);
+			movebank[35] = new Node(Move.DARK_PULSE);
+			movebank[39] = new Node(Move.FLAMETHROWER);
+			movebank[42] = new Node(Move.FOUL_PLAY);
+			movebank[45] = new Node(Move.SUNNY_DOOM);
+			movebank[49] = new Node(Move.NASTY_PLOT);
+			movebank[54] = new Node(Move.INFERNO);
 		case 106:
 			movebank = new Node[24];
 			movebank[0] = new Node(Move.DOUBLE_TEAM);
@@ -8740,7 +8747,7 @@ public class Pokemon implements Serializable {
 			movebank[34] = new Node(Move.SHELL_SMASH);
 			break;
 		case 133:
-			movebank = new Node[55];
+			movebank = new Node[60];
 			movebank[0] = new Node(Move.GUST);
 			movebank[0].addToEnd(new Node(Move.LEAF_TORNADO));
 			movebank[0].addToEnd(new Node(Move.AQUA_JET));
@@ -8758,6 +8765,7 @@ public class Pokemon implements Serializable {
 			movebank[44] = new Node(Move.AEROBLAST);
 			movebank[49] = new Node(Move.FOCUS_BLAST);
 			movebank[54] = new Node(Move.HURRICANE);
+			movebank[59] = new Node(Move.WATER_SPOUT);
 			break;
 		case 134:
 			movebank = new Node[15];
@@ -11232,7 +11240,6 @@ public class Pokemon implements Serializable {
 			}
 			this.status = Status.ASLEEP;
 			this.sleepCounter = (int)(Math.random() * 3) + 1;
-			if (this.ability == Ability.EARLY_BIRD) this.sleepCounter /= 2;
 			System.out.println(this.nickname + " fell asleep!");
 		} else {
 			if (announce) fail();

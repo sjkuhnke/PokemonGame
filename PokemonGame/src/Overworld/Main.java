@@ -2,13 +2,14 @@ package Overworld;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -106,7 +107,7 @@ public class Main {
 		modifyTrainers(gamePanel);
 		
 //		writeTrainers();
-//		writePokemon();
+		writePokemon();
 //		writeEncounters();
 		
 		gamePanel.setupGame();
@@ -519,54 +520,56 @@ public class Main {
 				}
 				writer.write("\n");
 			}
-			
-			try {
-				writer.write("Unused moves:\n");
-				ArrayList<Move> unused = new ArrayList<>();
-				ArrayList<Move> unusedButTM = new ArrayList<>();
-				for (Move m : Move.values()) {
-					FileReader fr = new FileReader("PokemonInfo.txt");
-					BufferedReader br = new BufferedReader(fr);
-					String line;
-					boolean found = false;
-					for (int i = 1; i < 6576; i++) {
-						line = br.readLine();
-						if (i == 6247) System.out.println(line);
-						try {
-							if (line.contains(m.toString())) {
-								found = true;
-								break;
-							}
-						} catch (NullPointerException e) {
-							System.out.println(i + " is a null line");
-						}
-					}
-					br.close();
-					if (!found) {
-						if (m.isTM()) {
-							unusedButTM.add(m);
-						} else {
-							unused.add(m);
-						}
-					}
-				}
-				for (Move m : unused) {
-					writer.write(m.toString() + "\n");
-				}
-				writer.write("\nTM Only:\n");
-				for (Move m : unusedButTM) {
-					writer.write(m.toString() + "\n");
-				}
-			} catch (IOException e){
-				e.printStackTrace();
-			}
-			
 			writer.close();
+			writeUnusedMoves();
+			
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
 	}
+
+	private static void writeUnusedMoves() {
+		try {
+			FileWriter writer = new FileWriter("PokemonInfo.txt", true);
+			writer.write("Unused moves:\n");
+			ArrayList<Move> unused = new ArrayList<>();
+			ArrayList<Move> unusedButTM = new ArrayList<>();
+			Set<Move> moves = new HashSet<>(Arrays.asList(Move.values()));
+			for (int i = 1; i < 241; i++) {
+				Pokemon p = new Pokemon(i, 5, false, false);
+				ArrayList<Move> movebank = new ArrayList<>();
+				for (int j = 0; j < p.movebank.length; j++) {
+					Node n = p.movebank[j];
+					while (n != null) {
+						movebank.add(n.data);
+						n = n.next;
+					}
+				}
+				moves.removeAll(movebank);
+			}
+			for (Move m : moves) {
+				if (m.isTM()) {
+					unusedButTM.add(m);
+				} else {
+					unused.add(m);
+				}
+			}
+			for (Move m : unused) {
+				writer.write(m.toString() + "\n");
+			}
+			writer.write("\nTM Only:\n");
+			for (Move m : unusedButTM) {
+				writer.write(m.toString() + "\n");
+			}
+			writer.close();
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+		
+	}
+
+
 
 	@SuppressWarnings("unused")
 	private static void writeTrainers() {

@@ -15,7 +15,6 @@ public enum Ability {
 	DEFIANT("Boosts the Pokemon's Attack stat when its stats are lowered."),
 	DRIZZLE("The Pokemon makes it RAIN when it enters a battle."),
 	DROUGHT("Turns the sunlight HARSH when it enters a battle."),
-	EARLY_BIRD("The Pokemon awakens quickly from sleep."),
 	ELECTRIC_SURGE("Turns the ground into ELECTRIC TERRAIN when the Pokemon enters a battle."),
 	EMPATHIC_LINK("The Pokemon gets a boost in Sp.Atk after the foe raises any stat."),
 	FALSE_ILLUMINATION("Grants the user all the resistances from the LIGHT type."),
