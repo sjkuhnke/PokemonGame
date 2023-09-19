@@ -19,6 +19,7 @@ import java.util.Random;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -41,6 +42,7 @@ import Swing.Battle.JGradientButton;
 import Swing.Battle;
 import Swing.Item;
 import Swing.Move;
+import Swing.Moveslot;
 import Swing.PType;
 import Swing.Player;
 import Swing.Pokemon;
@@ -1153,7 +1155,7 @@ public class PlayerCharacter extends Entity {
 		        	        		boolean learnedMove = false;
 		        		            for (int k = 0; k < 4; k++) {
 		        		                if (p.team[index].moveset[k] == null) {
-		        		                	p.team[index].moveset[k] = i.getItem().getMove();
+		        		                	p.team[index].moveset[k] = new Moveslot(i.getItem().getMove());
 		        		                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " learned " + i.getItem().getMove() + "!");
 		        		                    learnedMove = true;
 		        		                    break;
@@ -1165,7 +1167,7 @@ public class PlayerCharacter extends Entity {
 			        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not learn " + i.getItem().getMove() + ".");
 			        	                } else {
 			        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has learned " + i.getItem().getMove().toString() + " and forgot " + p.team[index].moveset[choice] + "!");
-			        	                	p.team[index].moveset[choice] = i.getItem().getMove();
+			        	                	p.team[index].moveset[choice] = new Moveslot(i.getItem().getMove());
 			        	                }
 		        		            }
 		        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
@@ -1359,6 +1361,63 @@ public class PlayerCharacter extends Entity {
 		        	        partyPanel.add(memberPanel);
 		        	    }
 		        	    JOptionPane.showMessageDialog(null, partyPanel, "Change Nature?", JOptionPane.PLAIN_MESSAGE);
+		        	}
+		        	
+		        	// Elixir/Max Elixir
+		        	if (i.getItem().getID() == 40 || i.getItem().getID() == 41) {
+		        		JPanel partyPanel = new JPanel();
+		        	    partyPanel.setLayout(new GridLayout(6, 1));
+		        	    
+		        	    for (int j = 0; j < 6; j++) {
+		        	    	JButton party = setUpPartyButton(j);
+		        	        final int index = j;
+		        	        
+		        	        party.addActionListener(g -> {
+		        	        	if (i.getItem().getID() == 41) {
+		        	        		for (Moveslot m : p.team[index].moveset) {
+		        	        			if (m != null) m.currentPP = m.maxPP;
+		        	        			p.bag.remove(i.getItem());
+		        	        		}
+		        	        	} else {
+		        	        		JPanel movePanel = new JPanel();
+		        	        	    movePanel.setLayout(new BoxLayout(movePanel, BoxLayout.Y_AXIS));
+		        	        		for (Moveslot m : p.team[index].moveset) {
+		        	        			if (m != null) {
+				        	        		JGradientButton move = new JGradientButton("<html><center>" + m.move.toString() + "<br>" + " " + m.showPP() + "</center></html>");
+				        	        		move.setFont(new Font(move.getFont().getName(), Font.PLAIN, 13));
+				        	        		move.setBackground(m.move.mtype.getColor());
+				        	        		move.setForeground(m.getPPColor());
+				        	        		move.addMouseListener(new MouseAdapter() {
+			        	        	        	@Override
+			        	        			    public void mouseClicked(MouseEvent e) {
+			        	        			    	if (SwingUtilities.isRightMouseButton(e)) {
+			        	        			    		String message = m.move.getDescriptor();
+			        	        			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			        	        			        } else {
+			        	        			        	m.currentPP = m.maxPP;
+			        	        			        	SwingUtilities.getWindowAncestor(movePanel).dispose();
+			        	        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+			        			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+			        			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+			        			        	        	p.bag.remove(i.getItem());
+			        			        	        	showBag();
+			        	        			        }
+			        	        			    }
+			        	        	        });
+			        	        	        movePanel.add(move);
+		        	        			}
+			        	        		
+		        		            }
+		        	        		JOptionPane.showMessageDialog(null, movePanel, "Select a move to restore PP:", JOptionPane.PLAIN_MESSAGE);
+		        	        	}
+		        	        	
+		        	        });
+		        	        
+		        	        JPanel memberPanel = new JPanel(new BorderLayout());
+		        	        memberPanel.add(party, BorderLayout.NORTH);
+		        	        partyPanel.add(memberPanel);
+		        	    }
+		        	    JOptionPane.showMessageDialog(null, partyPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
 		        	}
 		        	
 		        	// Calc

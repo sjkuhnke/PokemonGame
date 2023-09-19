@@ -27,6 +27,7 @@ import Swing.Battle.JGradientButton;
 import Swing.Encounter;
 import Swing.Item;
 import Swing.Move;
+import Swing.Moveslot;
 
 public class Main {
 	public static Trainer[] trainers;
@@ -457,7 +458,7 @@ public class Main {
 	private static void setMoveset(String string, int i, Move a, Move b, Move c, Move d) {
 		for (Trainer tr : trainers) {
 			if (tr.getName().equals(string)) {
-				tr.getTeam()[i - 1].moveset = new Move[]{a, b, c, d};
+				tr.getTeam()[i - 1].moveset = new Moveslot[]{new Moveslot(a), new Moveslot(b), new Moveslot(c), new Moveslot(d)};
 			}
 		}
 		

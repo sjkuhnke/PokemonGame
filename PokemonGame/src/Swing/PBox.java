@@ -234,7 +234,7 @@ public class PBox extends JFrame {
                         JButton moveslot;
                         if (box[index].moveset[j] != null) {
                             moveslot = new JGradientButton(box[index].moveset[j].toString());
-                            moveslot.setBackground(box[index].moveset[j].mtype.getColor());
+                            moveslot.setBackground(box[index].moveset[j].move.mtype.getColor());
                         } else {
                             break;
                         }
@@ -296,7 +296,7 @@ public class PBox extends JFrame {
                             return;
                         }
                         for (int l = 0; l < box[index].moveset.length; l++) {
-                        	if (move == box[index].moveset[l]) {
+                        	if (move == box[index].moveset[l].move) {
                         		JOptionPane.showMessageDialog(null, box[index].nickname + " already knows " + move.toString() + "!");
                                 return;
                         	}
@@ -314,7 +314,7 @@ public class PBox extends JFrame {
                             JButton moveslot;
                             if (box[index].moveset[j] != null) {
                                 moveslot = new JGradientButton(box[index].moveset[j].toString());
-                                moveslot.setBackground(box[index].moveset[j].mtype.getColor());
+                                moveslot.setBackground(box[index].moveset[j].move.mtype.getColor());
                             } else {
                                 // Only display the first empty move slot
                                 if (!foundEmptySlot) {
@@ -332,7 +332,7 @@ public class PBox extends JFrame {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
                                     // Replace the selected move with the new move
-                                    box[index].moveset[moveIndex] = move;
+                                    box[index].moveset[moveIndex] = new Moveslot(move);
 
                                     // Update the display
                                     SwingUtilities.getWindowAncestor(moveset).dispose();
@@ -461,7 +461,7 @@ public class PBox extends JFrame {
 	            moves[i] = "";
 	        }
 	        buttons[i] = new JGradientButton(moves[i]);
-	        buttons[i].setBackground(pokemon.moveset[i].mtype.getColor());
+	        buttons[i].setBackground(pokemon.moveset[i].move.mtype.getColor());
 	        if (moves[i].equals("")) {
 	            buttons[i].setEnabled(false);
 	        }
@@ -470,7 +470,7 @@ public class PBox extends JFrame {
 	        	@Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
-			    		String message = pokemon.moveset[index].getDescriptor();
+			    		String message = pokemon.moveset[index].move.getDescriptor();
 			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
 			        	choice[0] = index;

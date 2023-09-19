@@ -1176,11 +1176,11 @@ public class Item implements Serializable {
 	private void updateMoves(Pokemon current, JGradientButton[] moves, JLabel[] damages, Pokemon foe, JLabel[] statLabels, JComboBox<Integer>[] stages, JLabel speed) {
         for (int k = 0; k < moves.length; k++) {
         	if (current.moveset[k] != null) {
-        		moves[k].setText(current.moveset[k].toString());
-        		moves[k].setBackground(current.moveset[k].mtype.getColor());
-        		if (current.moveset[k] == Move.HIDDEN_POWER) moves[k].setBackground(current.determineHPType().getColor());
-        		int minDamage = current.calcWithTypes(foe, current.moveset[k], false, new Field(), -1);
-        		int maxDamage = current.calcWithTypes(foe, current.moveset[k], false, new Field(), 1);
+        		moves[k].setText(current.moveset[k].move.toString());
+        		moves[k].setBackground(current.moveset[k].move.mtype.getColor());
+        		if (current.moveset[k].move == Move.HIDDEN_POWER) moves[k].setBackground(current.determineHPType().getColor());
+        		int minDamage = current.calcWithTypes(foe, current.moveset[k].move, false, new Field(), -1);
+        		int maxDamage = current.calcWithTypes(foe, current.moveset[k].move, false, new Field(), 1);
         		double minDamageD = minDamage * 1.0 / foe.getStat(0);
         		minDamageD *= 100;
         		String formattedMinD = String.format("%.1f", minDamageD);
@@ -1203,7 +1203,7 @@ public class Item implements Serializable {
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
 			    		if (current.moveset[kndex] != null) {
-	        				String message = current.moveset[kndex].getDescriptor();
+	        				String message = current.moveset[kndex].move.getDescriptor();
 	    	                JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 	        			}
 			    	} else {
@@ -1217,7 +1217,7 @@ public class Item implements Serializable {
 			    		int result = JOptionPane.showConfirmDialog(null, setMovePanel, "Set Move", JOptionPane.OK_OPTION);
 			    		if (result == JOptionPane.OK_OPTION) {
 			    			Move selectedMove = (Move) moveComboBox.getSelectedItem();
-			    			current.moveset[kndex] = selectedMove;
+			    			current.moveset[kndex] = new Moveslot(selectedMove);
 			    		}
 			    		updateMoves(current, moves, damages, foe, statLabels, stages, speed);
 			    	}

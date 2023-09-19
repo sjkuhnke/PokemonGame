@@ -67,7 +67,7 @@ public class Pokemon implements Serializable {
 	
 	// move fields
 	public Node[] movebank;
-	public Move[] moveset;
+	public Moveslot[] moveset;
 	
 	// status fields
 	public Status status;
@@ -135,7 +135,7 @@ public class Pokemon implements Serializable {
 		exp = 0;
 		
 		currentHP = this.getStat(0);
-		moveset = new Move[4];
+		moveset = new Moveslot[4];
 		setMoveBank();
 		setMoves();
 		moveMultiplier = 1;
@@ -240,11 +240,11 @@ public class Pokemon implements Serializable {
 
 	public void setMoves() {
 		int index = 0;
-		moveset = new Move[4];
+		moveset = new Moveslot[4];
 		for (int i = 0; i < level && i < movebank.length; i++) {
 			Node node = movebank[i];
 	        while (node != null) {
-	            moveset[index] = node.data;
+	            moveset[index] = new Moveslot(node.data);
 	            index++;
 	            if (index >= 4) {
 	                index = 0;
@@ -258,10 +258,13 @@ public class Pokemon implements Serializable {
 	    ArrayList<Move> validMoves = new ArrayList<>();
 
 	    // Add all non-null moves to the validMoves list
-	    for (Move move : moveset) {
-	        if (move != null) {
-	            validMoves.add(move);
-	        }
+	    for (Moveslot m : moveset) {
+	    	if (m != null && m.currentPP != 0) {
+	    		Move move = m.move;
+	    		if (move != null) {
+		            validMoves.add(move);
+		        }
+	    	}
 	    }
 	    
 	    if (this.vStatuses.contains(Status.TAUNTED)) {
@@ -291,10 +294,14 @@ public class Pokemon implements Serializable {
 	    ArrayList<Move> validMoves = new ArrayList<>();
 
 	    // Add all non-null moves to the validMoves list
-	    for (Move move : moveset) {
-	        if (move != null) {
-	            validMoves.add(move);
-	        }
+	    for (Moveslot m : moveset) {
+	    	if (m != null && m.currentPP != 0) {
+	    		Move move = m.move;
+	    		if (move != null) {
+		            validMoves.add(move);
+		        }
+	    	}
+	        
 	    }
 	    
         // Calculate and store the damage values of each move
@@ -2223,7 +2230,7 @@ public class Pokemon implements Serializable {
 	            boolean learnedMove = false;
 	            for (int i = 0; i < 4; i++) {
 	                if (this.moveset[i] == null) {
-	                    this.moveset[i] = move;
+	                    this.moveset[i] = new Moveslot(move);
 	                    System.out.println(this.nickname + " learned " + move.toString() + "!");
 	                    learnedMove = true;
 	                    break;
@@ -2235,7 +2242,7 @@ public class Pokemon implements Serializable {
 	                    System.out.println(this.nickname + " did not learn " + move.toString() + ".");
 	                } else {
 		                System.out.println(this.nickname + " has learned " + move.toString() + " and forgot " + this.moveset[choice] + "!");
-		                this.moveset[choice] = move;
+		                this.moveset[choice] = new Moveslot(move);
 	                }
 	            }
 	        }
@@ -4035,10 +4042,13 @@ public class Pokemon implements Serializable {
 				System.out.println("\n" + this.nickname + " is fast asleep.");
 				this.sleepCounter--;
 				if (move == Move.SLEEP_TALK) {
-					System.out.println("\n" + this.nickname + " used " + move + "!");
+					useMove(move);
 					ArrayList<Move> moves = new ArrayList<>();
-					for (Move m : this.moveset) {
-						if (m != null && m != Move.SLEEP_TALK) moves.add(m);
+					for (Moveslot moveslot : this.moveset) {
+						if (moveslot != null) {
+							Move m = moveslot.move;
+							if (m != null && m != Move.SLEEP_TALK) moves.add(m);
+						}
 					}
 					move = moves.get(new Random().nextInt(moves.size()));
 					bp = move.basePower;
@@ -4175,7 +4185,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (foe.vStatuses.contains(Status.PROTECT) && (move.accuracy <= 100 || move.cat != 2) && move != Move.FEINT) {
-			System.out.println("\n" + this.nickname + " used " + move + "!");
+			useMove(move);
 			System.out.println(foe.nickname + " protected itself!");
 			if (move.contact) {
 				if (foe.lastMoveUsed == Move.OBSTRUCT) stat(this, 1, -2, foe);
@@ -4228,7 +4238,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.MIRROR_MOVE) {
-			System.out.print("\n" + this.nickname + " used Mirror Move!");
+			useMove(move);
 			move = foe.lastMoveUsed;
 			if (move == null) {
 				System.out.println("\nBut it failed!");
@@ -4255,13 +4265,13 @@ public class Pokemon implements Serializable {
 			return;
 		}
 		if (move == Move.FAILED_SUCKER) {
-			System.out.println("\n" + this.nickname + " used Sucker Punch!");
+			useMove(Move.SUCKER_PUNCH);
 			fail();
 			this.impressive = false;
 			return;
 		}
 		if (move == Move.METRONOME) {
-			System.out.print("\n" + this.nickname + " used " + move + "!");
+			useMove(move);
 			Move[] moves = Move.values();
 			move = moves[new Random().nextInt(moves.length)];
 			bp = move.basePower;
@@ -4271,14 +4281,14 @@ public class Pokemon implements Serializable {
 			critChance = move.critChance;
 		}
 		if (move == Move.SLEEP_TALK || (move == Move.SNORE && status != Status.ASLEEP)) {
-			System.out.println("\n" + this.nickname + " used " + move + "!");
+			useMove(move);
 			fail();
 			this.impressive = false;
 			return;
 		}
 		
 		if ((move == Move.FIRST_IMPRESSION || move == Move.BELCH || move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT) && !this.impressive) {
-			System.out.println("\n" + this.nickname + " used " + move + "!");
+			useMove(move);
 			fail();
 			return;
 		}
@@ -4309,7 +4319,7 @@ public class Pokemon implements Serializable {
 			if ((field.equals(field.weather, Effect.SANDSTORM) && foe.ability == Ability.SAND_VEIL) ||
 					(field.equals(field.weather, Effect.SNOW) && foe.ability == Ability.SNOW_CLOAK)) accuracy *= 0.8;
 			if (!hit(accuracy) || foe.vStatuses.contains(Status.SEMI_INV) && move.accuracy <= 100) {
-				System.out.println("\n" + this.nickname + " used " + move + "!");
+				useMove(move);
 				System.out.println(this.nickname + "'s attack missed!");
 				if (move == Move.HI_JUMP_KICK) {
 					this.currentHP -= this.getStat(0) / 2;
@@ -4330,7 +4340,7 @@ public class Pokemon implements Serializable {
 		if (move == Move.TERRAIN_PULSE) moveType = determineTPType(field);
 		
 		int numHits = move.getNumHits(team);
-		System.out.println("\n" + this.nickname + " used " + move + "!");
+		useMove(move);
 		for (int hit = 1; hit <= numHits; hit++) {
 			if (hit > 1) bp = move.basePower;
 			if (foe.isFainted() || this.isFainted()) {
@@ -4543,6 +4553,7 @@ public class Pokemon implements Serializable {
 			if (move.mtype == PType.STEEL && lastMoveUsed == Move.LOAD_FIREARMS) bp *= 2;
 			
 			// Crit Check
+			critChance = move.critChance;
 			if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 			if (this.ability == Ability.SUPER_LUCK) critChance++;
 			if (critCheck(critChance)) {
@@ -4792,6 +4803,14 @@ public class Pokemon implements Serializable {
 		}
 		endMove();
 		return;
+	}
+
+	private void useMove(Move move) {
+		System.out.println("\n" + this.nickname + " used " + move + "!");
+		for (Moveslot m : this.moveset) {
+			if (m != null && m.move == move) m.currentPP--;
+		}
+		
 	}
 
 	private void endMove() {
@@ -6333,6 +6352,9 @@ public class Pokemon implements Serializable {
 		this.clearVolatile();
 		this.currentHP = this.getStat(0);
 		this.status = Status.HEALTHY;
+		for (Moveslot m : moveset) {
+			if (m != null) m.currentPP = m.maxPP;
+		}
 		System.out.println(this.nickname + " healed!");
 	}
 	
@@ -11566,10 +11588,14 @@ public class Pokemon implements Serializable {
 	}
 
 	public boolean knowsMove(Move move) {
-		for (Move m : moveset) {
-			if (m == move) {
-				return true;
+		for (Moveslot moveslot : moveset) {
+			if (moveslot != null) {
+				Move m = moveslot.move;
+				if (m == move) {
+					return true;
+				}
 			}
+			
 		}
 		return false;
 	}
@@ -11779,11 +11805,12 @@ public class Pokemon implements Serializable {
 	        for (int i = 0; i < 4; i++) {
 	        	JButton moveButton = new JGradientButton("");
 	            if (moveset[i] != null) {
-	                moveButton.setText(moveset[i].toString());
-	                moveButton.setBackground(moveset[i].mtype.getColor());
+	                moveButton.setText(moveset[i].move.toString() + " " + moveset[i].showPP());
+	                moveButton.setBackground(moveset[i].move.mtype.getColor());
+	                moveButton.setForeground(moveset[i].getPPColor());
 	                int index = i;
 	                moveButton.addActionListener(e -> {
-	                	String message = moveset[index].getDescriptor();
+	                	String message = moveset[index].move.getDescriptor();
 			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 	                });
 	            }
@@ -12189,13 +12216,16 @@ public class Pokemon implements Serializable {
 			verifyHP();
 		} else if (this.ability == Ability.ANTICIPATION) {
 			boolean shuddered = false;
-			for (Move move : foe.moveset) {
-				if (shuddered) break;
-				if (move != null) {
-					int multiplier = getEffectiveMultiplier(move.mtype, this);
-					
-					if (multiplier > 1) shuddered = true;
+			for (Moveslot moveslot : foe.moveset) {
+				if (moveslot != null) {
+					Move move = moveslot.move;
+					if (move != null) {
+						int multiplier = getEffectiveMultiplier(move.mtype, this);
+						
+						if (multiplier > 1) shuddered = true;
+					}
 				}
+				if (shuddered) break;
 			}
 			if (shuddered) System.out.println("[" + this.nickname + "'s Anticipation]: " + this.nickname + " shuddered!");
 		}
@@ -12287,12 +12317,12 @@ public class Pokemon implements Serializable {
 	    panel.add(label2);
 	    for (int i = 0; i < 4; i++) {
 	        if (pokemon.moveset[i] != null) {
-	            moves[i] = pokemon.moveset[i].toString();
+	            moves[i] = pokemon.moveset[i].move.toString();
 	        } else {
 	            moves[i] = "";
 	        }
 	        buttons[i] = new JGradientButton(moves[i]);
-	        if (pokemon.moveset[i] != null) buttons[i].setBackground(pokemon.moveset[i].mtype.getColor());
+	        if (pokemon.moveset[i] != null) buttons[i].setBackground(pokemon.moveset[i].move.mtype.getColor());
 	        
 	        if (moves[i].equals("")) {
 	            buttons[i].setEnabled(false);
@@ -12302,10 +12332,10 @@ public class Pokemon implements Serializable {
 	        	@Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
-			    		String message = moveset[index].getDescriptor();
+			    		String message = moveset[index].move.getDescriptor();
 			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
-			        	if (!moveset[index].isHMmove()) {
+			        	if (!moveset[index].move.isHMmove()) {
 			        		choice[0] = index;
 			                JDialog dialog = (JDialog) SwingUtilities.getWindowAncestor((JButton) e.getSource());
 			                dialog.dispose();
@@ -12888,8 +12918,9 @@ public class Pokemon implements Serializable {
 	
 	private ArrayList<Move> getValidMoveset() {
 		ArrayList<Move> validMoves = new ArrayList<>();
-		for (Move m : moveset) {
-			if (m != null) {
+		for (Moveslot moveslot : moveset) {
+			if (moveslot != null) {
+				Move m = moveslot.move;
 				if ((vStatuses.contains(Status.TORMENTED) && m == this.lastMoveUsed) || (vStatuses.contains(Status.MUTE) && Move.getSound().contains(m))) {
 	            	// nothing: don't add
 	            } else {

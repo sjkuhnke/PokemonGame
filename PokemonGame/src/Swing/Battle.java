@@ -177,23 +177,27 @@ public class Battle extends JFrame {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
-			    		String message = me.getCurrent().moveset[index].getDescriptor();
+			    		String message = me.getCurrent().moveset[index].move.getDescriptor();
 			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
+			        	if (me.getCurrent().moveset[index].currentPP == 0) {
+		        			JOptionPane.showMessageDialog(null, "No more PP remaining!");
+		        			return;
+		        		}
 			        	if (foe.trainerOwned()) {
-			        		if (!me.getCurrent().moveUsable(me.getCurrent().moveset[index]) && !me.getCurrent().movesetEmpty()) {
-			        			JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index] + " cannot be used!");
+			        		if (!me.getCurrent().moveUsable(me.getCurrent().moveset[index].move) && !me.getCurrent().movesetEmpty()) {
+			        			JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index].move + " cannot be used!");
 			        			return;
 			        		}
-			        		Move move = me.getCurrent().moveset[index];
+			        		Move move = me.getCurrent().moveset[index].move;
 			        		if (me.getCurrent().movesetEmpty()) move = Move.STRUGGLE;
 			        		turn(me.getCurrent(), foe, move, foe.bestMove(me.getCurrent(), field, false), pl, gp);
 			        	} else {
-			        		if (!me.getCurrent().moveUsable(me.getCurrent().moveset[index]) && !me.getCurrent().movesetEmpty()) {
-			        			JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index] + " cannot be used!");
+			        		if (!me.getCurrent().moveUsable(me.getCurrent().moveset[index].move) && !me.getCurrent().movesetEmpty()) {
+			        			JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index].move + " cannot be used!");
 			        			return;
 			        		}
-			        		Move move = me.getCurrent().moveset[index];
+			        		Move move = me.getCurrent().moveset[index].move;
 			        		if (me.getCurrent().movesetEmpty()) move = Move.STRUGGLE;
 			        		turn(me.getCurrent(), foe, move, foe.randomMove(), pl, gp);
 			        	}
@@ -1032,15 +1036,17 @@ public class Battle extends JFrame {
 	}
 
 	private void setMoveButtons() {
-	    Move[] moveset = me.getCurrent().moveset;
+	    Moveslot[] moveset = me.getCurrent().moveset;
 	    for (int i = 0; i < moveButtons.length; i++) {
 	        if (moveset[i] != null) {
-	        	moveButtons[i].setText(moveset[i].toString());
+	        	moveButtons[i].setText(moveset[i].move.toString());
 	            moveButtons[i].setFont(new Font("Tahoma", Font.PLAIN, 11));
 	            moveButtons[i].setFont(getScaledFontSize(moveButtons[i]));
+	            moveButtons[i].setForeground(moveset[i].getPPColor());
 	            String text = moveButtons[i].getText();
-	            moveButtons[i].setText("<html><center>" + text + "<br>" + "yo" + "</center></html>");
-	            moveButtons[i].setBackground(moveset[i].mtype.getColor());
+	            String pp = me.getCurrent().moveset[i].currentPP + " / " + me.getCurrent().moveset[i].maxPP;
+	            moveButtons[i].setText("<html><center>" + text + "<br>" + pp + "</center></html>");
+	            moveButtons[i].setBackground(moveset[i].move.mtype.getColor());
 	            moveButtons[i].setVisible(true);
 	        } else {
 	        	moveButtons[i].setText("No Move");
