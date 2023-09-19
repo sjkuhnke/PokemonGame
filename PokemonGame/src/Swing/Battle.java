@@ -1035,9 +1035,11 @@ public class Battle extends JFrame {
 	    Move[] moveset = me.getCurrent().moveset;
 	    for (int i = 0; i < moveButtons.length; i++) {
 	        if (moveset[i] != null) {
-	            moveButtons[i].setText(moveset[i].toString());
+	        	moveButtons[i].setText(moveset[i].toString());
 	            moveButtons[i].setFont(new Font("Tahoma", Font.PLAIN, 11));
 	            moveButtons[i].setFont(getScaledFontSize(moveButtons[i]));
+	            String text = moveButtons[i].getText();
+	            moveButtons[i].setText("<html><center>" + text + "<br>" + "yo" + "</center></html>");
 	            moveButtons[i].setBackground(moveset[i].mtype.getColor());
 	            moveButtons[i].setVisible(true);
 	        } else {

@@ -2086,9 +2086,9 @@ public class Pokemon implements Serializable {
 		} else if (id == 160) { abilities = new Ability[] {Ability.LEVITATE, Ability.LEVITATE};
 		} else if (id == 161) { abilities = new Ability[] {Ability.LEVITATE, Ability.LEVITATE};
 		} else if (id == 162) { abilities = new Ability[] {Ability.LEVITATE, Ability.LEVITATE};
-		} else if (id == 163) { abilities = new Ability[] {Ability.GUTS, Ability.SHEER_FORCE};
-		} else if (id == 164) { abilities = new Ability[] {Ability.GUTS, Ability.SHEER_FORCE};
-		} else if (id == 165) { abilities = new Ability[] {Ability.GUTS, Ability.SHEER_FORCE};
+		} else if (id == 163) { abilities = new Ability[] {Ability.GUTS, Ability.IRON_FIST};
+		} else if (id == 164) { abilities = new Ability[] {Ability.GUTS, Ability.IRON_FIST};
+		} else if (id == 165) { abilities = new Ability[] {Ability.GUTS, Ability.IRON_FIST};
 		} else if (id == 166) { abilities = new Ability[] {Ability.RATTLED, Ability.SAND_FORCE};
 		} else if (id == 167) { abilities = new Ability[] {Ability.SAND_STREAM, Ability.SAND_FORCE};
 		} else if (id == 168) { abilities = new Ability[] {Ability.SAND_STREAM, Ability.SAND_FORCE};
@@ -2115,7 +2115,7 @@ public class Pokemon implements Serializable {
 		} else if (id == 189) { abilities = new Ability[] {Ability.MULTISCALE, Ability.MULTISCALE};
 		} else if (id == 190) { abilities = new Ability[] {Ability.SHIELD_DUST, Ability.LEVITATE};
 		} else if (id == 191) { abilities = new Ability[] {Ability.SHIELD_DUST, Ability.GRAVITATIONAL_PULL};
-		} else if (id == 192) { abilities = new Ability[] {Ability.SHEER_FORCE, Ability.GRAVITATIONAL_PULL};
+		} else if (id == 192) { abilities = new Ability[] {Ability.SNIPER, Ability.GRAVITATIONAL_PULL};
 		} else if (id == 193) { abilities = new Ability[] {Ability.SNOW_WARNING, Ability.SLUSH_RUSH};
 		} else if (id == 194) { abilities = new Ability[] {Ability.SNOW_WARNING, Ability.SLUSH_RUSH};
 		} else if (id == 195) { abilities = new Ability[] {Ability.GRAVITATIONAL_PULL, Ability.HUGE_POWER};
@@ -4756,7 +4756,7 @@ public class Pokemon implements Serializable {
 			if (hit == numHits && hit > 1) System.out.println("Hit " + hit + " times!");
 		}
 		
-		if ((!foe.isFainted() || move == Move.ROCKFALL_FRENZY || move == Move.ICE_SPINNER) && checkSecondary(secChance)) {
+		if (checkSecondary(secChance)) {
 			secondaryEffect(foe, move, field, first, userSide, enemySide, player, enemy);
 		}
 		
@@ -6067,6 +6067,7 @@ public class Pokemon implements Serializable {
 
 	private void stat(Pokemon p, int i, int amt, Pokemon foe) throws IllegalArgumentException {
 		if (amt == 0) throw new IllegalArgumentException("Stat change amount cannot be 0");
+		if (p.isFainted()) return;
 		int a = amt;
 		if (p.ability == Ability.SIMPLE) a *= 2;
 		if (p.ability == Ability.CONTRARY) a *= -1;
@@ -11202,6 +11203,7 @@ public class Pokemon implements Serializable {
 
 
 	public void confuse(boolean announce, Field field) {
+		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
@@ -11222,6 +11224,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void sleep(boolean announce, Field field) {
+		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
@@ -11250,6 +11253,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void paralyze(boolean announce, Pokemon foe, Field field) {
+		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
@@ -11273,6 +11277,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void burn(boolean announce, Pokemon foe, Field field) {
+		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
@@ -11300,6 +11305,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void poison(boolean announce, Pokemon foe, Field field) {
+		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
@@ -11323,6 +11329,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void toxic(boolean announce, Pokemon foe, Field field) {
+		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
@@ -11346,6 +11353,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void freeze(boolean announce, Field field) {
+		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
