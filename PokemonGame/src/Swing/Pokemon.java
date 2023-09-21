@@ -2241,7 +2241,7 @@ public class Pokemon implements Serializable {
 	                if (choice == JOptionPane.CLOSED_OPTION) {
 	                    System.out.println(this.nickname + " did not learn " + move.toString() + ".");
 	                } else {
-		                System.out.println(this.nickname + " has learned " + move.toString() + " and forgot " + this.moveset[choice] + "!");
+		                System.out.println(this.nickname + " has learned " + move.toString() + " and forgot " + this.moveset[choice].move + "!");
 		                this.moveset[choice] = new Moveslot(move);
 	                }
 	            }
@@ -5120,7 +5120,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.IRON_TAIL) {
 			stat(foe, 1, -1, foe);
 		} else if (move == Move.JAW_LOCK) {
-			if (!foe.vStatuses.contains(Status.TRAPPED)) {
+			if (!foe.vStatuses.contains(Status.TRAPPED) && !foe.isFainted()) {
 				foe.vStatuses.add(Status.TRAPPED);
 				System.out.println(foe.nickname + " was trapped!");
 			}
@@ -11292,7 +11292,10 @@ public class Pokemon implements Serializable {
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.PARALYZED;
 			System.out.println(this.nickname + " was paralyzed!");
-			if (this.ability == Ability.SYNCHRONIZE && this != foe) foe.paralyze(false, this, field);
+			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
+				System.out.print("[" + this.nickname + "'s Synchronize]: ");
+				foe.paralyze(false, this, field);
+			}
 		} else {
 			if (announce) fail();
 		}
@@ -11315,12 +11318,15 @@ public class Pokemon implements Serializable {
 		}
 		if (this.status == Status.HEALTHY) {
 			if (this.ability == Ability.WATER_VEIL) {
-				if (announce) System.out.print("[" + this.nickname + "'s Water Veil]: It doesn't effect " + this.nickname);
+				if (announce) System.out.println("[" + this.nickname + "'s Water Veil]: It doesn't effect " + this.nickname);
 				return;
 			}
 			this.status = Status.BURNED;
-			if (this.ability == Ability.SYNCHRONIZE && this != foe) foe.burn(false, this, field);
 			System.out.println(this.nickname + " was burned!");
+			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
+				System.out.print("[" + this.nickname + "'s Synchronize]: ");
+				foe.burn(false, this, field);
+			}
 		} else {
 			if (announce) fail();
 		}
@@ -11344,7 +11350,10 @@ public class Pokemon implements Serializable {
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.POISONED;
 			System.out.println(this.nickname + " was poisoned!");
-			if (this.ability == Ability.SYNCHRONIZE && this != foe) foe.poison(false, this, field);
+			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
+				System.out.print("[" + this.nickname + "'s Synchronize]: ");
+				foe.poison(false, this, field);
+			}
 		} else {
 			if (announce) fail();
 		}
@@ -11368,7 +11377,10 @@ public class Pokemon implements Serializable {
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.TOXIC;
 			System.out.println(this.nickname + " was badly poisoned!");
-			if (this.ability == Ability.SYNCHRONIZE && this != foe) foe.toxic(false, this, field);
+			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
+				System.out.print("[" + this.nickname + "'s Synchronize]: ");
+				foe.toxic(false, this, field);
+			}
 		} else {
 			if (announce) fail();
 		}
@@ -13039,6 +13051,17 @@ public class Pokemon implements Serializable {
 				break;
 		}
 		return type;
+	}
+
+	public void setNickname() {
+		nickname = JOptionPane.showInputDialog(null, "Would you like to nickname " + name + "?");
+	    if (nickname == null || nickname.isBlank()) nickname = name;
+	    while (nickname.length() > 12) {
+	    	JOptionPane.showMessageDialog(null, "Nickname must be no greater than 12 characters.");
+	    	nickname = JOptionPane.showInputDialog(null, "Would you like to nickname " + name + "?");
+	    	if (nickname == null || nickname.isBlank()) nickname = name;
+	    }
+		
 	}
 
 

@@ -48,6 +48,7 @@ public class Battle extends JFrame {
 //	private JTextField levelInput; // debug
 	private JLabel currentText;
 	private JGradientButton[] party;
+	private JLabel partySprites[]; 
 	public Field field;
 	public JLabel userSprite;
 	public JLabel foeSprite;
@@ -757,9 +758,11 @@ public class Battle extends JFrame {
 		 */
 		party = new JGradientButton[5];
 		partyHP = new JProgressBar[5];
+		partySprites = new JLabel[5];
 		for (int i = 0; i < 5; i++) {
 			party[i] = new JGradientButton("");
 			partyHP[i] = new JProgressBar(0, 100);
+			partySprites[i] = new JLabel("");
 			final int index = i + 1;
 			
 			party[i].addActionListener(e -> {
@@ -957,7 +960,7 @@ public class Battle extends JFrame {
 	    return newFont;
 	}
 
-	private Font getScaledFontSize(JButton button) {
+	private int getScaledFontSize(JButton button) {
 	    String text = button.getText();
 	    Font originalFont = button.getFont();
 	    Font newFont = originalFont;
@@ -970,7 +973,7 @@ public class Battle extends JFrame {
 	        textWidth = button.getFontMetrics(newFont).stringWidth(text);
 	    }
 
-	    return newFont;
+	    return newFont.getSize();
 	}
 
 	private void updateCurrent(PlayerCharacter pl) {
@@ -1040,12 +1043,12 @@ public class Battle extends JFrame {
 	    for (int i = 0; i < moveButtons.length; i++) {
 	        if (moveset[i] != null) {
 	        	moveButtons[i].setText(moveset[i].move.toString());
-	            moveButtons[i].setFont(new Font("Tahoma", Font.PLAIN, 11));
-	            moveButtons[i].setFont(getScaledFontSize(moveButtons[i]));
+	            moveButtons[i].setFont(new Font("Tahoma", Font.BOLD, 11));
+	            moveButtons[i].setFont(new Font("Tahoma", Font.PLAIN, getScaledFontSize(moveButtons[i])));
 	            moveButtons[i].setForeground(moveset[i].getPPColor());
 	            String text = moveButtons[i].getText();
 	            String pp = me.getCurrent().moveset[i].currentPP + " / " + me.getCurrent().moveset[i].maxPP;
-	            moveButtons[i].setText("<html><center>" + text + "<br>" + pp + "</center></html>");
+	            moveButtons[i].setText("<html><center><b>" + text + "</b><br>" + pp + "</center></html>");
 	            moveButtons[i].setBackground(moveset[i].move.mtype.getColor());
 	            moveButtons[i].setVisible(true);
 	        } else {
@@ -1223,21 +1226,21 @@ public class Battle extends JFrame {
 		for (int i = 0; i < 5; i++) {
 			party[i].setText("");
 			if (me.team[i + 1] != null && !me.team[i + 1].isFainted()) {
-				party[i].setText(me.team[i + 1].nickname + "  lv " + me.team[i + 1].getLevel());
+				Pokemon p = me.team[i + 1];
+				// Party buttons
+				String top = p.nickname;
+				String bottom = "lv. " + p.getLevel();
 				party[i].setHorizontalAlignment(SwingConstants.CENTER);
-				party[i].setBounds(10, 21 + (i % 5) * 54, 144, 30);
+				party[i].setBounds(60, 21 + (i % 5) * 54, 94, 30);
 				party[i].setFont(new Font("Tahoma", Font.PLAIN, 11));
-				party[i].setFont(getScaledFontSize(party[i]));
-				party[i].setBackground(me.team[i + 1].type1.getColor());
+				party[i].setText("<html><center>" + top + "<br>" + bottom + "</center></html>");
+				party[i].setBackground(p.type1.getColor());
 				playerPanel.add(party[i]);
 				party[i].setVisible(true);
 				
-			} else {
-				party[i].setVisible(false);
-			}
-			if (me.team[i + 1] != null && !me.team[i + 1].isFainted()) {
-				partyHP[i].setMaximum(me.team[i + 1].getStat(0));
-				partyHP[i].setValue(me.team[i + 1].currentHP);
+				// Party HP bars
+				partyHP[i].setMaximum(p.getStat(0));
+				partyHP[i].setValue(p.currentHP);
 				if (partyHP[i].getPercentComplete() > 0.5) {
 					partyHP[i].setForeground(new Color(0, 255, 0));
 				} else if (partyHP[i].getPercentComplete() <= 0.5 && partyHP[i].getPercentComplete() > 0.25) {
@@ -1245,11 +1248,32 @@ public class Battle extends JFrame {
 				} else {
 					partyHP[i].setForeground(new Color(255, 0, 0));
 				}
-				partyHP[i].setBounds(10, 54 + (i % 5) * 54, 144, 7);
-				partyHP[i].setVisible(true);
+				partyHP[i].setBounds(60, 54 + (i % 5) * 54, 94, 7);
 				playerPanel.add(partyHP[i]);
+				partyHP[i].setVisible(true);
+				
+				// Party sprites
+				partySprites[i].setBounds(10, 21 + (i % 5) * 54, 40, 40);
+				
+				ImageIcon originalSprite = new ImageIcon(p.getSprite());
+				Image originalImage = originalSprite.getImage();
+				
+				int scaledWidth = (int) (originalImage.getWidth(null) * 0.5);
+				int scaledHeight = (int) (originalImage.getHeight(null) * 0.5);
+				
+				Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
+				
+				scaledImage = flipHorizontal(scaledImage);
+				
+				ImageIcon scaledIcon = new ImageIcon(scaledImage);
+				
+				partySprites[i].setIcon(scaledIcon);
+				playerPanel.add(partySprites[i]);
+				partySprites[i].setVisible(true);
 			} else {
+				party[i].setVisible(false);
 				partyHP[i].setVisible(false);
+				partySprites[i].setVisible(false);
 			}
 		}
 		

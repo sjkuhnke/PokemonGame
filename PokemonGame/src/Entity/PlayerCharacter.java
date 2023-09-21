@@ -1166,7 +1166,7 @@ public class PlayerCharacter extends Entity {
 			        	                if (choice == JOptionPane.CLOSED_OPTION) {
 			        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not learn " + i.getItem().getMove() + ".");
 			        	                } else {
-			        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has learned " + i.getItem().getMove().toString() + " and forgot " + p.team[index].moveset[choice] + "!");
+			        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has learned " + i.getItem().getMove().toString() + " and forgot " + p.team[index].moveset[choice].move + "!");
 			        	                	p.team[index].moveset[choice] = new Moveslot(i.getItem().getMove());
 			        	                }
 		        		            }

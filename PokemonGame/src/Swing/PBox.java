@@ -3,14 +3,12 @@ package Swing;
 import javax.swing.border.EmptyBorder;
 
 import Entity.PlayerCharacter;
-import Swing.Pokemon.Node;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -136,8 +134,8 @@ public class PBox extends JFrame {
             forgetButton.setBackground(new Color(26, 199, 40));
             JGradientButton moveButton = new JGradientButton("Teach Move");
             moveButton.setBackground(new Color(255, 251, 0));
-            JGradientButton seeForgottenMoves = new JGradientButton("See Forgotten Moves");
-            seeForgottenMoves.setBackground(new Color(252, 147, 0));
+            JGradientButton changeNick = new JGradientButton("Change Nickname");
+            changeNick.setBackground(new Color(252, 147, 0));
             JGradientButton releaseButton = new JGradientButton("Release");
             releaseButton.setBackground(new Color(214, 6, 17));
             swapButton.addActionListener(new ActionListener() {
@@ -233,7 +231,7 @@ public class PBox extends JFrame {
                     for (int j = 0; j < box[index].moveset.length; j++) {
                         JButton moveslot;
                         if (box[index].moveset[j] != null) {
-                            moveslot = new JGradientButton(box[index].moveset[j].toString());
+                            moveslot = new JGradientButton(box[index].moveset[j].move.toString());
                             moveslot.setBackground(box[index].moveset[j].move.mtype.getColor());
                         } else {
                             break;
@@ -250,7 +248,7 @@ public class PBox extends JFrame {
                             	} else {
                             		int result = JOptionPane.showConfirmDialog(
                             	            null,
-                            	            "Are you sure you want to forget " + box[index].moveset[moveIndex].toString() + "?",
+                            	            "Are you sure you want to forget " + box[index].moveset[moveIndex].move.toString() + "?",
                             	            "Confirm Move Forget",
                             	            JOptionPane.YES_NO_OPTION
                             	        );
@@ -296,7 +294,7 @@ public class PBox extends JFrame {
                             return;
                         }
                         for (int l = 0; l < box[index].moveset.length; l++) {
-                        	if (move == box[index].moveset[l].move) {
+                        	if (box[index].moveset[l] != null && move == box[index].moveset[l].move) {
                         		JOptionPane.showMessageDialog(null, box[index].nickname + " already knows " + move.toString() + "!");
                                 return;
                         	}
@@ -313,7 +311,7 @@ public class PBox extends JFrame {
                         for (int j = 0; j < box[index].moveset.length; j++) {
                             JButton moveslot;
                             if (box[index].moveset[j] != null) {
-                                moveslot = new JGradientButton(box[index].moveset[j].toString());
+                                moveslot = new JGradientButton(box[index].moveset[j].move.toString());
                                 moveslot.setBackground(box[index].moveset[j].move.mtype.getColor());
                             } else {
                                 // Only display the first empty move slot
@@ -368,40 +366,51 @@ public class PBox extends JFrame {
                     }
                 }
             });
-            seeForgottenMoves.addActionListener(new ActionListener() {
+//            seeForgottenMoves.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                	if (box[index] == null) {
+//                		JOptionPane.showMessageDialog(null, "No Pokemon to check.");
+//                        return;
+//                	}
+//                    ArrayList<Move> forgottenMoves = new ArrayList<>();
+//                    for (int i = 0; i < box[index].getLevel(); i++) {
+//                    	if (i < box[index].movebank.length) {
+//                    		Node move = box[index].movebank[i];
+//                    		while (move != null) {
+//                    			if (!box[index].knowsMove(move.data)) {
+//                    				forgottenMoves.add(move.data);
+//                    			}
+//                    			move = move.next;
+//                    		}
+//                    	}
+//                    }
+//                    if (forgottenMoves.isEmpty()) {
+//                        JOptionPane.showMessageDialog(boxMemberPanel, "This Pokemon has not forgotten any moves.");
+//                    } else {
+//                        String message = "This Pokemon has forgotten the following moves:\n";
+//                        for (Move move : forgottenMoves) {
+//                            message += "- " + move + "\n";
+//                        }
+//                        JOptionPane.showMessageDialog(boxMemberPanel, message);
+//                    }
+//                }
+//            });
+            changeNick.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                 	if (box[index] == null) {
-                		JOptionPane.showMessageDialog(null, "No Pokemon to check.");
-                        return;
+                		JOptionPane.showMessageDialog(null, "No Pokemon to change nickname.");
+                	} else {
+                		box[index].setNickname();
+                		SwingUtilities.getWindowAncestor(boxMemberPanel).dispose();
                 	}
-                    ArrayList<Move> forgottenMoves = new ArrayList<>();
-                    for (int i = 0; i < box[index].getLevel(); i++) {
-                    	if (i < box[index].movebank.length) {
-                    		Node move = box[index].movebank[i];
-                    		while (move != null) {
-                    			if (!box[index].knowsMove(move.data)) {
-                    				forgottenMoves.add(move.data);
-                    			}
-                    			move = move.next;
-                    		}
-                    	}
-                    }
-                    if (forgottenMoves.isEmpty()) {
-                        JOptionPane.showMessageDialog(boxMemberPanel, "This Pokemon has not forgotten any moves.");
-                    } else {
-                        String message = "This Pokemon has forgotten the following moves:\n";
-                        for (Move move : forgottenMoves) {
-                            message += "- " + move + "\n";
-                        }
-                        JOptionPane.showMessageDialog(boxMemberPanel, message);
-                    }
                 }
             });
             boxMemberPanel.add(swapButton);
             boxMemberPanel.add(forgetButton);
             boxMemberPanel.add(moveButton);
-            boxMemberPanel.add(seeForgottenMoves);
+            boxMemberPanel.add(changeNick);
             boxMemberPanel.add(releaseButton);
             JOptionPane.showMessageDialog(null, boxMemberPanel, "Box member details", JOptionPane.PLAIN_MESSAGE);
 	    });
@@ -456,7 +465,7 @@ public class PBox extends JFrame {
 	    panel.add(label2);
 	    for (int i = 0; i < 4; i++) {
 	        if (pokemon.moveset[i] != null) {
-	            moves[i] = pokemon.moveset[i].toString();
+	            moves[i] = pokemon.moveset[i].move.toString();
 	        } else {
 	            moves[i] = "";
 	        }

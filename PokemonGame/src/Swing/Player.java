@@ -59,13 +59,7 @@ public class Player implements Serializable{
 	public void catchPokemon(Pokemon p) {
 	    if (p.isFainted()) return;
 	    boolean hasNull = false;
-	    p.nickname = JOptionPane.showInputDialog(null, "Would you like to nickname " + p.name + "?");
-	    if (p.nickname == null || p.nickname.isBlank()) p.nickname = p.name;
-	    while (p.nickname.length() > 12) {
-	    	JOptionPane.showMessageDialog(null, "Nickname must be no greater than 12 characters.");
-	    	p.nickname = JOptionPane.showInputDialog(null, "Would you like to nickname " + p.name + "?");
-	    	if (p.nickname == null || p.nickname.isBlank()) p.nickname = p.name;
-	    }
+	    p.setNickname();
 	    pokedex[p.id] = 2;
 	    p.clearVolatile();
 	    for (int i = 0; i < team.length; i++) {
