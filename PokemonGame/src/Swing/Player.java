@@ -102,6 +102,10 @@ public class Player implements Serializable{
 
 	public void swap(Pokemon pokemon, int index) {
 		System.out.println("\n" + current.nickname + ", come back!");
+		if (current.ability == Ability.REGENERATOR) {
+			current.currentHP += current.getStat(0) / 3;
+			current.verifyHP();
+		}
 		Pokemon lead = current;
 		if (lead.vStatuses.contains(Status.HEALING)) team[index].vStatuses.add(Status.HEALING);
 		if (lead.vStatuses.contains(Status.WISH)) team[index].vStatuses.add(Status.WISH);

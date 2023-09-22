@@ -978,6 +978,8 @@ public class Item implements Serializable {
         JLabel[] userStatLabels = new JLabel[6];
         @SuppressWarnings("unchecked")
 		JComboBox<Integer>[] userStages = new JComboBox[6];
+        JButton userCurrentHP = new JButton();
+        JLabel userHPP = new JLabel();
         JLabel userSpeed = new JLabel();
         JGradientButton[] userMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
         JLabel[] userDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
@@ -1001,16 +1003,16 @@ public class Item implements Serializable {
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
             userLevel.setText(userCurrent.getLevel() + "");
-            updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed);
+            updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP);
+            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null);
         });
         
         foeMons.addActionListener(l -> {
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
         	foeLevel.setText(foeCurrent.getLevel() + "");
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed);
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP);
         });
         
         foeLevel.addActionListener(l ->{
@@ -1029,8 +1031,8 @@ public class Item implements Serializable {
         	foeCurrent.stats = foeCurrent.getStats();
         	foeCurrent.setMoves();
         	
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed);
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP);
         });
         
         Pokemon userC = ((Pokemon) userMons.getSelectedItem());
@@ -1059,7 +1061,8 @@ public class Item implements Serializable {
         	JLabel blank = new JLabel("");
         	statsPanel.add(userStatLabels[i]);
         	if (i == 0) {
-        		statsPanel.add(new JButton());
+        		userCurrentHP.setText(userC.currentHP + "");
+        		statsPanel.add(userCurrentHP);
         	} else {
         		int index = i;
         		userStages[i].addActionListener(e -> {
@@ -1067,14 +1070,18 @@ public class Item implements Serializable {
         			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
         			int amt = (int) userStages[index].getSelectedItem();
         			current.statStages[index - 1] = amt;
-        			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed);
-        			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed);
+        			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP);
+        			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, null, null);
         			if (index == 5) userSpeed.setText((current.getSpeed()) + "");
         		});
         		statsPanel.add(userStages[i]);
         	}
         	
-        	if (i == 5) {
+        	if (i == 0) {
+        		double percent = userC.currentHP * 100.0 / userC.getStat(0);
+        		userHPP.setText(String.format("%.1f", percent) + "%");
+        		statsPanel.add(userHPP);
+        	} else if (i == 5) {
         		userSpeed.setText((userC.getSpeed()) + "");
         		statsPanel.add(userSpeed);
         	} else {
@@ -1101,8 +1108,8 @@ public class Item implements Serializable {
         			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         			int amt = (int) foeStages[index].getSelectedItem();
         			current.statStages[index - 1] = amt;
-        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed);
-        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed);
+        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null);
+        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP);
         			if (index == 5) foeSpeed.setText((current.getSpeed()) + "");
         		});
         		fStatsPanel.add(foeStages[i]);
@@ -1118,10 +1125,10 @@ public class Item implements Serializable {
         }
         
         userLevel.setText(userC.getLevel() + "");
-        updateMoves(userC, userMoves, userDamage, foeC, userStatLabels, userStages, userSpeed);
+        updateMoves(userC, userMoves, userDamage, foeC, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP);
         
         foeLevel.setText(foeC.getLevel() + "");
-        updateMoves(foeC, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed);
+        updateMoves(foeC, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed, null, null);
         
         calc.add(statsPanel, gbc);
         gbc.gridx++;
@@ -1153,7 +1160,7 @@ public class Item implements Serializable {
         	for (int i = 0; i < 4; i++) {
         		uCurrent.moveset[i] = p.team[userMons.getSelectedIndex()].moveset[i];
         	}
-        	updateMoves(uCurrent, userMoves, userDamage, fCurrent, userStatLabels, userStages, userSpeed);
+        	updateMoves(uCurrent, userMoves, userDamage, fCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP);
         });
         resetButtonPanel.add(resetButton);
         calc.add(resetButtonPanel, gbc);
@@ -1165,7 +1172,7 @@ public class Item implements Serializable {
         	Pokemon uCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon fCurrent = ((Pokemon) foeMons.getSelectedItem());
         	fCurrent.setMoves();
-        	updateMoves(fCurrent, foeMoves, foeDamage, uCurrent, foeStatLabels, foeStages, foeSpeed);
+        	updateMoves(fCurrent, foeMoves, foeDamage, uCurrent, foeStatLabels, foeStages, foeSpeed, null, null);
         });
         fResetButtonPanel.add(fResetButton);
         calc.add(fResetButtonPanel, gbc);
@@ -1176,7 +1183,8 @@ public class Item implements Serializable {
 		
 	}
 	
-	private void updateMoves(Pokemon current, JGradientButton[] moves, JLabel[] damages, Pokemon foe, JLabel[] statLabels, JComboBox<Integer>[] stages, JLabel speed) {
+	private void updateMoves(Pokemon current, JGradientButton[] moves, JLabel[] damages, Pokemon foe, JLabel[] statLabels, JComboBox<Integer>[] stages,
+			JLabel speed, JButton currentHP, JLabel HPP) {
         for (int k = 0; k < moves.length; k++) {
         	if (current.moveset[k] != null) {
         		moves[k].setText(current.moveset[k].move.toString());
@@ -1222,7 +1230,7 @@ public class Item implements Serializable {
 			    			Move selectedMove = (Move) moveComboBox.getSelectedItem();
 			    			current.moveset[kndex] = new Moveslot(selectedMove);
 			    		}
-			    		updateMoves(current, moves, damages, foe, statLabels, stages, speed);
+			    		updateMoves(current, moves, damages, foe, statLabels, stages, speed, currentHP, HPP);
 			    	}
 			    }
             });
@@ -1239,6 +1247,11 @@ public class Item implements Serializable {
 	    		    stages[i].addActionListener(stagesListener);
     			}
 
+    			if (i == 0 && currentHP != null) {
+    				currentHP.setText(current.currentHP + "");
+    				double percent = current.currentHP * 100.0 / current.getStat(0);
+            		HPP.setText(String.format("%.1f", percent) + "%");
+    			}
     			if (i == 5) speed.setText(current.getSpeed() + "");
     		}
     		

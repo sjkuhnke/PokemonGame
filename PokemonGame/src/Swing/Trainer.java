@@ -106,6 +106,11 @@ public class Trainer {
 		this.team[currentIndex] = team[index];
 		this.team[index] = newCurrent;
 		
+		if (newCurrent.ability == Ability.REGENERATOR) {
+			newCurrent.currentHP += newCurrent.getStat(0) / 3;
+			newCurrent.verifyHP();
+		}
+		
 		System.out.println(current.nickname + " was dragged out!");
 		current.swapIn(foe, field, me);
 		return true;

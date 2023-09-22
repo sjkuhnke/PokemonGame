@@ -181,25 +181,20 @@ public class Battle extends JFrame {
 			    		String message = me.getCurrent().moveset[index].move.getDescriptor();
 			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
-			        	if (me.getCurrent().moveset[index].currentPP == 0) {
+			        	if (me.getCurrent().moveset[index].currentPP == 0 && !me.getCurrent().movesetEmpty()) {
 		        			JOptionPane.showMessageDialog(null, "No more PP remaining!");
 		        			return;
 		        		}
+			        	if (!me.getCurrent().moveUsable(me.getCurrent().moveset[index].move) && !me.getCurrent().movesetEmpty()) {
+		        			JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index].move + " cannot be used!");
+		        			return;
+		        		}
+			        	Move move = me.getCurrent().moveset[index].move;
+		        		if (me.getCurrent().movesetEmpty()) move = Move.STRUGGLE;
+		        		
 			        	if (foe.trainerOwned()) {
-			        		if (!me.getCurrent().moveUsable(me.getCurrent().moveset[index].move) && !me.getCurrent().movesetEmpty()) {
-			        			JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index].move + " cannot be used!");
-			        			return;
-			        		}
-			        		Move move = me.getCurrent().moveset[index].move;
-			        		if (me.getCurrent().movesetEmpty()) move = Move.STRUGGLE;
 			        		turn(me.getCurrent(), foe, move, foe.bestMove(me.getCurrent(), field, false), pl, gp);
 			        	} else {
-			        		if (!me.getCurrent().moveUsable(me.getCurrent().moveset[index].move) && !me.getCurrent().movesetEmpty()) {
-			        			JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index].move + " cannot be used!");
-			        			return;
-			        		}
-			        		Move move = me.getCurrent().moveset[index].move;
-			        		if (me.getCurrent().movesetEmpty()) move = Move.STRUGGLE;
 			        		turn(me.getCurrent(), foe, move, foe.randomMove(), pl, gp);
 			        	}
 			        }
@@ -1046,6 +1041,7 @@ public class Battle extends JFrame {
 	            moveButtons[i].setFont(new Font("Tahoma", Font.BOLD, 11));
 	            moveButtons[i].setFont(new Font("Tahoma", Font.PLAIN, getScaledFontSize(moveButtons[i])));
 	            moveButtons[i].setForeground(moveset[i].getPPColor());
+	            moveButtons[i].setToolTipText(me.getCurrent().moveset[i].move.mtype.effectiveness(foe));
 	            String text = moveButtons[i].getText();
 	            String pp = me.getCurrent().moveset[i].currentPP + " / " + me.getCurrent().moveset[i].maxPP;
 	            moveButtons[i].setText("<html><center><b>" + text + "</b><br>" + pp + "</center></html>");

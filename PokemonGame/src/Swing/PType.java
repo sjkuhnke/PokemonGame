@@ -40,4 +40,13 @@ public enum PType {
 		String name = name().toLowerCase();
         return name.substring(0, 1).toUpperCase() + name.substring(1);
 	}
+
+	String effectiveness(Pokemon foe) {
+		int multiplier = foe.getEffectiveMultiplier(this);
+		
+		if (multiplier > 1) return "Super Effective";
+		if (multiplier < 1) return "Not Very Effective";
+		if (multiplier == 0) return "No Effect";
+		return "Effective";
+	}
 }

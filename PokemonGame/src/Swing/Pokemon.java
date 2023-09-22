@@ -12223,16 +12223,13 @@ public class Pokemon implements Serializable {
 		} else if (this.ability == Ability.MOUTHWATER) {
 			foe.vStatuses.add(Status.TAUNTED);
 			System.out.println("[" + this.nickname + "'s Mouthwater]: " + foe.nickname + " was taunted!");
-		} else if (this.ability == Ability.REGENERATOR) {
-			this.currentHP += this.getStat(0) / 3;
-			verifyHP();
 		} else if (this.ability == Ability.ANTICIPATION) {
 			boolean shuddered = false;
 			for (Moveslot moveslot : foe.moveset) {
 				if (moveslot != null) {
 					Move move = moveslot.move;
 					if (move != null) {
-						int multiplier = getEffectiveMultiplier(move.mtype, this);
+						int multiplier = getEffectiveMultiplier(move.mtype);
 						
 						if (multiplier > 1) shuddered = true;
 					}
@@ -12243,7 +12240,7 @@ public class Pokemon implements Serializable {
 		}
 		ArrayList<FieldEffect> side = playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.STEALTH_ROCKS)) {
-			int multiplier = getEffectiveMultiplier(PType.ROCK, this);
+			int multiplier = getEffectiveMultiplier(PType.ROCK);
 			double damage = (this.getStat(0) / 8.0) * multiplier;
 			this.currentHP -= (int) Math.floor(damage);
 			System.out.println("Pointed stones dug into " + this.nickname + "!");
@@ -12279,22 +12276,22 @@ public class Pokemon implements Serializable {
 		
 	}
 	
-	private int getEffectiveMultiplier(PType mtype, Pokemon pokemon) {
+	int getEffectiveMultiplier(PType mtype) {
 		int multiplier = 1;
 		
-		if (getImmune(pokemon, mtype)) {
+		if (getImmune(this, mtype)) {
 			multiplier = 0;
 		} else {
 			PType[] resistances = getResistances(mtype);
 	        for (PType resistance : resistances) {
-	            if (pokemon.type1 == resistance || pokemon.type2 == resistance) {
+	            if (this.type1 == resistance || this.type2 == resistance) {
 	                multiplier /= 2;
 	            }
 	        }
 	        
 	        PType[] weaknesses = getWeaknesses(mtype);
 	        for (PType weakness : weaknesses) {
-	            if (pokemon.type1 == weakness || pokemon.type2 == weakness) {
+	            if (this.type1 == weakness || this.type2 == weakness) {
 	                multiplier *= 2;
 	            }
 	        }
@@ -12933,7 +12930,7 @@ public class Pokemon implements Serializable {
 		for (Moveslot moveslot : moveset) {
 			if (moveslot != null) {
 				Move m = moveslot.move;
-				if ((vStatuses.contains(Status.TORMENTED) && m == this.lastMoveUsed) || (vStatuses.contains(Status.MUTE) && Move.getSound().contains(m))) {
+				if ((vStatuses.contains(Status.TORMENTED) && m == this.lastMoveUsed) || (vStatuses.contains(Status.MUTE) && Move.getSound().contains(m)) || (moveslot.currentPP == 0)) {
 	            	// nothing: don't add
 	            } else {
 	            	validMoves.add(m);
