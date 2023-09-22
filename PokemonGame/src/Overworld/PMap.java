@@ -444,12 +444,13 @@ public class PMap extends JFrame {
 	}
 
 	private void fly(String loc, int map, int x, int y) {
-		if (gp.player.p.hasMove(Move.FLY)) {
+		if (gp.player.p.hasMove(Move.CUT)) { // TODO
 			int answer = JOptionPane.showConfirmDialog(null, "Would you like to fly to " + loc + "?");
     		if (answer == JOptionPane.YES_OPTION) {
     			gp.eHandler.teleport(map, x, y);
-    			this.dispose();
     			gp.keyH.resume();
+    			this.dispose();
+    			gp.mapOpen = false;
     		}
 		}
 		

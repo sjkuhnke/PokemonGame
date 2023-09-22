@@ -41,12 +41,13 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(60, 45, 4, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(2, 54, 9, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(25, 31, 1, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(89, 24, 40, mapNum);
 		
 		mapNum = 4;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(86, 56, 131, mapNum); // false swipe
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 59, 5, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(39, 60, 18, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 60, 41, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(42, 74, 126, mapNum); // hidden power
 		gp.obj[mapNum][objIndex] = ObjSetup(15, 57, 117, mapNum); // solar beam
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 72, 0, mapNum);
@@ -96,7 +97,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(22, 48, 157, mapNum); // charge beam
 		gp.obj[mapNum][objIndex] = ObjSetup(42, 35, 14, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(36, 30, 31, mapNum); // brave
-		gp.obj[mapNum][objIndex] = ObjSetup(39, 32, 0, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 32, 42, mapNum);
 		
 		mapNum = 15;
 		objIndex = 0;
@@ -157,6 +158,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(89, 34, 2, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(71, 34, 10, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(64, 23, 0, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(28, 29, 42, mapNum);
 		
 		mapNum = 33;
 		objIndex = 0;
@@ -173,6 +175,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(62, 73, 3, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(64, 78, 7, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(91, 57, 0, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(61, 41, 41, mapNum);
 		
 		mapNum = 36;
 		objIndex = 0;
@@ -352,7 +355,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(6, 22, 29, 45);
 		gp.npc[mapNum][index] = NPCSetup(6, 26, 29, 46);
 		gp.npc[mapNum][index] = NPCSetup(5, 46, 29, 47);
-		gp.npc[mapNum][index] = NPCSetup(6, 20, 39, 48);
+		gp.npc[mapNum][index] = NPCSetup(6, 21, 39, 48);
 		
 		mapNum = 17;
 		index = 0;

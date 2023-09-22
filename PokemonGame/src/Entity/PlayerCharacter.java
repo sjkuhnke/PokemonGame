@@ -19,7 +19,6 @@ import java.util.Random;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -155,11 +154,13 @@ public class PlayerCharacter extends Entity {
 				spriteCounter = 0;
 				p.steps++;
 			}
-			if (spriteCounter % 4 == 0 && inTallGrass && !p.repel) {
+			if (spriteCounter % 4 == 0 && (inTallGrass || surf) && !p.repel) {
 				Random r = new Random();
 				int random = r.nextInt(150);
 				if (random < speed) {
-					gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, "Standard");
+					String area = "Standard";
+					if (surf) area = "Surfing";
+					gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, area);
 				}
 			}
 			if (p.steps == 202 && p.repel) {
@@ -372,10 +373,11 @@ public class PlayerCharacter extends Entity {
 	    			SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		} else if (code.startsWith("anyi")) {
 	    			String[] parts = code.split(" ");
-	    		    if (parts.length >= 2) {
+	    		    if (parts.length >= 3) {
 	    		        try {
 	    		            int id = Integer.parseInt(parts[1]);
-	    		            p.bag.add(new Item(id));
+	    		            int amt = Integer.parseInt(parts[2]);
+	    		            p.bag.add(new Item(id), amt);
 	    		            SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		        } catch (NumberFormatException g) {
 	    		            // Handle invalid input (e.g., if the entered value is not a valid integer)
@@ -543,19 +545,21 @@ public class PlayerCharacter extends Entity {
 		keyH.pause();
 		
 		JPanel shopPanel = new JPanel();
-	    shopPanel.setLayout(new GridLayout(6, 1));
 	    int available = 8;
-	    if (p.badges > 7) available += 3;
+	    if (p.badges > 7) available += 2;
 	    if (p.badges > 6) available ++;
 	    if (p.badges > 3) available += 2;
 	    if (p.badges > 2) available += 2;
+	    if (p.badges > 1) available ++;
 	    if (p.badges > 0) available += 2;
 	    Item[] shopItems = new Item[] {new Item(0), new Item(1), new Item(4), new Item(9), new Item(10), new Item(11), new Item(12), new Item(13), // 0 badges
 	    		new Item(2), new Item(5), // 1 badge
+	    		new Item(40), // 2 badges
 	    		new Item(14), new Item(16), // 3 badges
 	    		new Item(3), new Item(6), // 4 badges
 	    		new Item(7), // 7 badges
-	    		new Item(8), new Item(17), new Item(22)}; // 8 badges
+	    		new Item(8), new Item(17)}; // 8 badges
+	    shopPanel.setLayout(new GridLayout((available + 1) / 2, 2));
 	    for (int i = 0; i < available; i++) {
 	    	JButton item = new JButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
 	    	int index = i;
@@ -1376,6 +1380,7 @@ public class PlayerCharacter extends Entity {
 		        	        	if (i.getItem().getID() == 41) {
 		        	        		for (Moveslot m : p.team[index].moveset) {
 		        	        			if (m != null) m.currentPP = m.maxPP;
+		        	        			JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s PP was restored!");
 		        	        			p.bag.remove(i.getItem());
 		        	        		}
 		        	        	} else {
@@ -1395,6 +1400,7 @@ public class PlayerCharacter extends Entity {
 			        	        			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        	        			        } else {
 			        	        			        	m.currentPP = m.maxPP;
+			        	        			        	JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was restored!");
 			        	        			        	SwingUtilities.getWindowAncestor(movePanel).dispose();
 			        	        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
 			        			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
@@ -1410,6 +1416,66 @@ public class PlayerCharacter extends Entity {
 		        		            }
 		        	        		JOptionPane.showMessageDialog(null, movePanel, "Select a move to restore PP:", JOptionPane.PLAIN_MESSAGE);
 		        	        	}
+		        	        	
+		        	        });
+		        	        
+		        	        JPanel memberPanel = new JPanel(new BorderLayout());
+		        	        memberPanel.add(party, BorderLayout.NORTH);
+		        	        partyPanel.add(memberPanel);
+		        	    }
+		        	    JOptionPane.showMessageDialog(null, partyPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
+		        	}
+		        	
+		        	// PP Up/PP Max
+		        	if (i.getItem().getID() == 42 || i.getItem().getID() == 43) {
+		        		JPanel partyPanel = new JPanel();
+		        	    partyPanel.setLayout(new GridLayout(6, 1));
+		        	    
+		        	    for (int j = 0; j < 6; j++) {
+		        	    	JButton party = setUpPartyButton(j);
+		        	        final int index = j;
+		        	        
+		        	        party.addActionListener(g -> {
+		        	        	JPanel movePanel = new JPanel();
+	        	        	    movePanel.setLayout(new BoxLayout(movePanel, BoxLayout.Y_AXIS));
+	        	        		for (Moveslot m : p.team[index].moveset) {
+	        	        			if (m != null) {
+			        	        		JGradientButton move = new JGradientButton("<html><center>" + m.move.toString() + "<br>" + " " + m.showPP() + "</center></html>");
+			        	        		move.setFont(new Font(move.getFont().getName(), Font.PLAIN, 13));
+			        	        		move.setBackground(m.move.mtype.getColor());
+			        	        		move.setForeground(m.getPPColor());
+			        	        		move.addMouseListener(new MouseAdapter() {
+		        	        	        	@Override
+		        	        			    public void mouseClicked(MouseEvent e) {
+		        	        			    	if (SwingUtilities.isRightMouseButton(e)) {
+		        	        			    		String message = m.move.getDescriptor();
+		        	        			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+		        	        			        } else {
+	        	        			        		if (m.maxPP < (m.move.pp * 8 / 5)) {
+	        	        			        			if (i.getItem().getID() == 42) { // PP Up
+	        	        			        				m.maxPP += Math.max((m.move.pp / 5), 1);
+	        	        			        				JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was increased!");
+	        	        			        			} else { // PP Max
+	        	        			        				m.maxPP = (m.move.pp * 8 / 5);
+	        	        			        				JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was maxed!");
+	        	        			        			}
+	        	        			        		} else {
+	        	        			        			JOptionPane.showMessageDialog(null, "It won't have any effect.");
+	        	        			        		}
+		        	        			        	SwingUtilities.getWindowAncestor(movePanel).dispose();
+		        	        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+		        			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+		        			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+		        			        	        	p.bag.remove(i.getItem());
+		        			        	        	showBag();
+		        	        			        }
+		        	        			    }
+		        	        	        });
+		        	        	        movePanel.add(move);
+	        	        			}
+		        	        		
+	        		            }
+	        	        		JOptionPane.showMessageDialog(null, movePanel, "Select a move to increase PP:", JOptionPane.PLAIN_MESSAGE);
 		        	        	
 		        	        });
 		        	        

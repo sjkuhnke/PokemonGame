@@ -85,6 +85,7 @@ public class Item implements Serializable {
 		else if (id == 24) return 2000;
 		else if (id == 25) return 2000;
 		else if (id == 27) return 1000;
+		else if (id == 40) return 300;
 		else if (id == 112) return 750;
 		else if (id == 113) return 5000;
 		else if (id == 115) return 1000;
@@ -169,6 +170,8 @@ public class Item implements Serializable {
 		else if (id == 39) return "Timid Mint";
 		else if (id == 40) return "Elixir";
 		else if (id == 41) return "Max Elixir";
+		else if (id == 42) return "PP Up";
+		else if (id == 43) return "PP Max";
 		else if (id == 93) return "HM01";
 		else if (id == 94) return "HM02";
 		else if (id == 95) return "HM03";
@@ -288,8 +291,6 @@ public class Item implements Serializable {
 		int index1 = p.id - 1;
 		int index2 = this.id - 93;
 		boolean[][] tm = new boolean[][] {
-			
-			
 			
 			
 			
@@ -928,6 +929,8 @@ public class Item implements Serializable {
 		else if (id >= 29 && id <= 39) return new Color(113, 84, 255);
 		else if (id == 40) return new Color(230, 146, 78);
 		else if (id == 41) return new Color(246, 255, 120);
+		else if (id == 42) return new Color(150, 51, 156);
+		else if (id == 43) return new Color(142, 230, 21);
 		else if (id == 200) return Color.black;
 		else return getMove().mtype.getColor();
 	}

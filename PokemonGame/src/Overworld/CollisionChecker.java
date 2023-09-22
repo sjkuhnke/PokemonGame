@@ -12,6 +12,7 @@ import Entity.NPC_Trainer;
 import tile.BuildingTile;
 import tile.CaveTile;
 import tile.GrassTile;
+import tile.TileManager;
 
 public class CollisionChecker {
 	
