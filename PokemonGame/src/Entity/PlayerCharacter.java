@@ -435,7 +435,10 @@ public class PlayerCharacter extends Entity {
 	    				p.flags[i] = tempFlag[i];
 	    			}
 	    			for (Pokemon p : p.team) {
-	    				if (p != null) p.setBaseStats();
+	    				if (p != null) {
+	    					p.setBaseStats();
+	    					p.setAbility(p.abilitySlot);
+	    				}
 	    			}
 	    			for (Pokemon p : p.box1) {
 	    				if (p != null) p.setBaseStats();
@@ -595,7 +598,9 @@ public class PlayerCharacter extends Entity {
 		if (keyH.wPressed) {
 			keyH.pause();
 			if (!p.fish || gp.currentMap != 32) JOptionPane.showMessageDialog(null, npc.message);
-			if (gp.currentMap == 32) p.fish = true;
+			if (gp.currentMap == 32 && !p.fish) {
+				p.fish = true;
+				JOptionPane.showMessageDialog(null, "You got a Fishing Rod!\n(Press 'A' to fish)");			}
 			if (npc.more) {
 				if (!p.flags[6] && gp.currentMap == 43) {
 					JPanel partyPanel = new JPanel();

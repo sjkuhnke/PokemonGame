@@ -2058,7 +2058,7 @@ public class Pokemon implements Serializable {
 		} else if (id == 125) { abilities = new Ability[] {Ability.MOTOR_DRIVE, Ability.MOTOR_DRIVE};
 		} else if (id == 126) { abilities = new Ability[] {Ability.GUTS, Ability.GUTS};
 		} else if (id == 127) { abilities = new Ability[] {Ability.GUTS, Ability.GUTS};
-		} else if (id == 128) { abilities = new Ability[] {Ability.GUTS, Ability.GUTS};
+		} else if (id == 128) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.ADAPTABILITY};
 		} else if (id == 129) { abilities = new Ability[] {Ability.COMPOUND_EYES, Ability.COMPOUND_EYES};
 		} else if (id == 130) { abilities = new Ability[] {Ability.SPEED_BOOST, Ability.SPEED_BOOST};
 		} else if (id == 131) { abilities = new Ability[] {Ability.WONDER_GUARD, Ability.WONDER_GUARD};

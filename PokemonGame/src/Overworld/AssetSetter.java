@@ -423,7 +423,7 @@ public class AssetSetter {
 		// Clerks
 		gp.npc[30][index] = NPCSetup(17, 31, 41, -1);
 		gp.npc[40][index] = NPCSetup(17, 34, 38, -1);
-		gp.npc[45][index] = NPCSetup(2, 31, 39, -1);
+		gp.npc[45][index] = NPCSetup(2, 30, 39, -1);
 		
 		mapNum = 28;
 		index = 0;

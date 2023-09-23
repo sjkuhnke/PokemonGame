@@ -30,10 +30,12 @@ public class Item implements Serializable {
 	private int id;
 	private int cost;
 	private int healAmount;
+	private String desc;
 	
 	public Item(int i) {
 		id = i;
 		cost = setCost();
+		desc = setDesc();
 		if (id >= 4 && id <= 8) {
 			switch(id) {
 				case 4:
@@ -1256,5 +1258,118 @@ public class Item implements Serializable {
     		}
     		
         }
+	}
+	
+	private String setDesc() {
+		switch (id) {
+		case 0:
+			return "Prevents wild Pokemon encounters\nfor 200 steps.";
+		case 1:
+			return "A standard device for capturing\nwild Pokemon";
+		case 2:
+			return "An upgraded device for capturing\nwild Pokemon";
+		case 3:
+			return "A very efficient device for\ncapturing wild Pokemon";
+		case 4:
+			return "Restores 20 HP";
+		case 5:
+			return "Restores 60 HP";
+		case 6:
+			return "Restores 200 HP";
+		case 7:
+			return "Restores a Pokemon's HP to full";
+		case 8:
+			return "Restores a Pokemon's HP to full\nand cures any status conditions";
+		case 9:
+			return "";
+		case 10:
+			return "";
+		case 11:
+			return "";
+		case 12:
+			return "";
+		case 13:
+			return "";
+		case 14:
+			return "";
+		case 15:
+			return "";
+		case 16:
+			return "";
+		case 17:
+			return "";
+		case 18:
+			return "";
+		case 19:
+			return "";
+		case 20:
+			return "";
+		case 21:
+			return "";
+		case 22:
+			return "";
+		case 23:
+			return "";
+		case 24:
+			return "";
+		case 25:
+			return "";
+		case 26:
+			return "";
+		case 27:
+			return "";
+		case 28:
+			return "";
+		case 29:
+			return "";
+		case 30:
+			return "";
+		case 31:
+			return "";
+		case 32:
+			return "";
+		case 33:
+			return "";
+		case 34:
+			return "";
+		case 35:
+			return "";
+		case 36:
+			return "";
+		case 37:
+			return "";
+		case 38:
+			return "";
+		case 39:
+			return "";
+		case 40:
+			return "";
+		case 41:
+			return "";
+		case 42:
+			return "";
+		case 43:
+			return "";
+		case 44:
+			return "";
+		case 45:
+			return "";
+		case 46:
+			return "";
+		case 47:
+			return "";
+		case 48:
+			return "";
+		case 49:
+			return "";
+		case 200:
+			return "";
+		default:
+			return "Teaches a Pokemon this move.";
+		}
+	}
+	
+	public String getDesc() {
+		return desc;
 	}
 }
