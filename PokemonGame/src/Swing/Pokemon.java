@@ -211,7 +211,7 @@ public class Pokemon implements Serializable {
 			image = ImageIO.read(getClass().getResourceAsStream("/sprites/" + imageName + ".png"));
 		} catch (Exception e) {
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/sprites/001.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/sprites/000.png"));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -229,7 +229,25 @@ public class Pokemon implements Serializable {
 			image = ImageIO.read(getClass().getResourceAsStream("/sprites/" + imageName + ".png"));
 		} catch (Exception e) {
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/sprites/001.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/sprites/000.png"));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return image;
+	}
+	
+	public BufferedImage getMiniSprite() {
+		BufferedImage image = null;
+		
+		String imageName = id + "";
+		while (imageName.length() < 3) imageName = "0" + imageName;
+		
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream("/minisprites/" + imageName + ".png"));
+		} catch (Exception e) {
+			try {
+				image = ImageIO.read(getClass().getResourceAsStream("/minisprites/000.png"));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -10783,6 +10801,10 @@ public class Pokemon implements Serializable {
 		
 		if (this.ability == Ability.TOUGH_CLAWS && move.contact) {
 			bp *= 1.3;
+		}
+		
+		if (this.ability == Ability.SHARPNESS && move.isSlicing()) {
+			bp *= 1.5;
 		}
 		
 		if (this.ability == Ability.IRON_FIST && (move == Move.BULLET_PUNCH || move == Move.COMET_PUNCH || move == Move.DRAIN_PUNCH
