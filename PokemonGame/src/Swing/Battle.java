@@ -1251,19 +1251,7 @@ public class Battle extends JFrame {
 				// Party sprites
 				partySprites[i].setBounds(10, 21 + (i % 5) * 54, 40, 40);
 				
-				ImageIcon originalSprite = new ImageIcon(p.getSprite());
-				Image originalImage = originalSprite.getImage();
-				
-				int scaledWidth = (int) (originalImage.getWidth(null) * 0.5);
-				int scaledHeight = (int) (originalImage.getHeight(null) * 0.5);
-				
-				Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
-				
-				scaledImage = flipHorizontal(scaledImage);
-				
-				ImageIcon scaledIcon = new ImageIcon(scaledImage);
-				
-				partySprites[i].setIcon(scaledIcon);
+				partySprites[i].setIcon(getMiniSprite(p));
 				playerPanel.add(partySprites[i]);
 				partySprites[i].setVisible(true);
 			} else {
@@ -1273,6 +1261,17 @@ public class Battle extends JFrame {
 			}
 		}
 		
+	}
+
+	private Icon getMiniSprite(Pokemon p) {
+		ImageIcon originalSprite = new ImageIcon(p.getMiniSprite());
+		Image image = originalSprite.getImage();
+		
+		image = flipHorizontal(image);
+		
+		ImageIcon imageIcon = new ImageIcon(image);
+		
+		return imageIcon;
 	}
 
 	public void turn(Pokemon p1, Pokemon p2, Move m1, Move m2, PlayerCharacter pl, GamePanel gp) {
