@@ -203,6 +203,15 @@ public class Battle extends JFrame {
 		}
 		
 		/*
+		 * Set battled status
+		 */
+		me.clearBattled();
+		for (Pokemon p : me.team) {
+			if (p != null) p.clearVolatile();
+		}
+		me.getCurrent().battled = true;
+		
+		/*
 		 * Initialize status icons
 		 */
 		userStatus = new JLabel("");
@@ -313,15 +322,6 @@ public class Battle extends JFrame {
 		playerPanel.add(maxHPLabel);
 		
 		updateBars(false);
-		
-		/*
-		 * Set battled status
-		 */
-		me.clearBattled();
-		for (Pokemon p : me.team) {
-			if (p != null) p.clearVolatile();
-		}
-		me.getCurrent().battled = true;
 		
 		/*
 		 * Set buttons

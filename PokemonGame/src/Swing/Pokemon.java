@@ -1964,7 +1964,7 @@ public class Pokemon implements Serializable {
 		} else if (id == 31) { abilities = new Ability[] {Ability.TECHNICIAN, Ability.NATURAL_CURE};
 		} else if (id == 32) { abilities = new Ability[] {Ability.SWARM, Ability.CHLOROPHYLL};
 		} else if (id == 33) { abilities = new Ability[] {Ability.SWARM, Ability.CHLOROPHYLL};
-		} else if (id == 34) { abilities = new Ability[] {Ability.SWARM, Ability.CHLOROPHYLL};
+		} else if (id == 34) { abilities = new Ability[] {Ability.SHARPNESS, Ability.CHLOROPHYLL};
 		} else if (id == 35) { abilities = new Ability[] {Ability.SWARM, Ability.SWARM};
 		} else if (id == 36) { abilities = new Ability[] {Ability.STATIC, Ability.STATIC};
 		} else if (id == 37) { abilities = new Ability[] {Ability.LEVITATE, Ability.LEVITATE};
@@ -2608,8 +2608,8 @@ public class Pokemon implements Serializable {
 		} else if (this.id == 2) { this.baseStats = new int[]{73,75,80,48,89,37};
 		} else if (this.id == 3) { this.baseStats = new int[]{95,87,91,95,110,39};
 		} else if (this.id == 4) { this.baseStats = new int[]{60,49,54,74,58,34};
-		} else if (this.id == 5) { this.baseStats = new int[]{85,53,69,90,66,36};
-		} else if (this.id == 6) { this.baseStats = new int[]{89,66,81,111,72,102};
+		} else if (this.id == 5) { this.baseStats = new int[]{80,75,65,75,60,50};
+		} else if (this.id == 6) { this.baseStats = new int[]{109,81,71,101,67,92};
 		} else if (this.id == 7) { this.baseStats = new int[]{45,70,56,46,45,63};
 		} else if (this.id == 8) { this.baseStats = new int[]{60,90,76,49,55,70};
 		} else if (this.id == 9) { this.baseStats = new int[]{85,110,105,65,85,80};
@@ -5079,7 +5079,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.HYPER_FANG && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.INCINERATE) {
-			stat(foe, 2, -1, foe);
+			stat(foe, 3, -1, foe);
 		} else if (move == Move.ICE_BEAM) {
 			foe.freeze(false, field);
 		} else if (move == Move.ICE_FANG) {
@@ -6652,46 +6652,51 @@ public class Pokemon implements Serializable {
 		case 4:
 		    movebank = new Node[14];
 		    movebank[0] = new Node(Move.TACKLE);
-		    movebank[0].next = new Node(Move.LEER);
+		    movebank[0].next = new Node(Move.HARDEN);
 		    movebank[6] = new Node(Move.EMBER);
 		    movebank[10] = new Node(Move.SMOKESCREEN);
-		    movebank[13] = new Node(Move.BODY_SLAM);
+		    movebank[13] = new Node(Move.INCINERATE);
 		    break;
 		case 5:
 		    movebank = new Node[36];
 		    movebank[0] = new Node(Move.TACKLE);
-		    movebank[0].next = new Node(Move.LEER);
+		    movebank[0].next = new Node(Move.HARDEN);
 		    movebank[6] = new Node(Move.EMBER);
 		    movebank[10] = new Node(Move.SMOKESCREEN);
-		    movebank[13] = new Node(Move.BODY_SLAM);
-		    movebank[16] = new Node(Move.HARDEN);
-		    movebank[19] = new Node(Move.FLAME_WHEEL);
-		    movebank[23] = new Node(Move.HEADBUTT);
-		    movebank[26] = new Node(Move.MUD_BOMB);
-		    movebank[31] = new Node(Move.FLAMETHROWER);
-		    movebank[35] = new Node(Move.IRON_DEFENSE);
+		    movebank[13] = new Node(Move.INCINERATE);
+		    movebank[15] = new Node(Move.HEADBUTT);
+		    movebank[17] = new Node(Move.FLAME_WHEEL);
+		    movebank[20] = new Node(Move.IRON_DEFENSE);
+		    movebank[23] = new Node(Move.TAKE_DOWN);
+		    movebank[26] = new Node(Move.BULLDOZE);
+		    movebank[29] = new Node(Move.LAVA_PLUME);
+		    movebank[32] = new Node(Move.PLAY_ROUGH);
+		    movebank[35] = new Node(Move.IRON_HEAD);
 		    break;
 		case 6:
 		    movebank = new Node[75];
 		    movebank[0] = new Node(Move.TACKLE);
-		    movebank[0].next = new Node(Move.LEER);
+		    movebank[0].next = new Node(Move.HARDEN);
 		    movebank[6] = new Node(Move.EMBER);
 		    movebank[10] = new Node(Move.SMOKESCREEN);
-		    movebank[13] = new Node(Move.BODY_SLAM);
-		    movebank[16] = new Node(Move.HARDEN);
-		    movebank[19] = new Node(Move.FLAME_WHEEL);
-		    movebank[23] = new Node(Move.HEADBUTT);
-		    movebank[26] = new Node(Move.MUD_BOMB);
-		    movebank[31] = new Node(Move.FLAMETHROWER);
-		    movebank[35] = new Node(Move.IRON_DEFENSE);
+		    movebank[13] = new Node(Move.INCINERATE);
+		    movebank[15] = new Node(Move.HEADBUTT);
+		    movebank[17] = new Node(Move.FLAME_WHEEL);
+		    movebank[20] = new Node(Move.IRON_DEFENSE);
+		    movebank[23] = new Node(Move.TAKE_DOWN);
+		    movebank[26] = new Node(Move.BULLDOZE);
+		    movebank[29] = new Node(Move.LAVA_PLUME);
+		    movebank[32] = new Node(Move.PLAY_ROUGH);
+		    movebank[35] = new Node(Move.IRON_HEAD);
 		    movebank[35].next = new Node(Move.MOLTEN_STEELSPIKE);
-		    movebank[40] = new Node(Move.LAVA_PLUME);
-		    movebank[45] = new Node(Move.PSYBEAM);
+		    movebank[38] = new Node(Move.FIRE_BLAST);
+		    movebank[42] = new Node(Move.HEAVY_SLAM);
+		    movebank[42].next = new Node(Move.HEAT_CRASH);
+		    movebank[45] = new Node(Move.EARTH_POWER);
 		    movebank[50] = new Node(Move.AURA_SPHERE);
-		    movebank[54] = new Node(Move.ERUPTION);
-		    movebank[59] = new Node(Move.EARTH_POWER);
-		    movebank[69] = new Node(Move.HYPER_BEAM);
-		    movebank[74] = new Node(Move.STEEL_BEAM);
+		    movebank[54] = new Node(Move.STEEL_BEAM);
+		    movebank[59] = new Node(Move.FLARE_BLITZ);
+		    movebank[69] = new Node(Move.ERUPTION);
 		    break;
 		case 7:
 			movebank = new Node[15];
