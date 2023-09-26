@@ -1263,7 +1263,7 @@ public class Item implements Serializable {
 	private String setDesc() {
 		switch (id) {
 		case 0:
-			return "Prevents wild Pokemon encounters\nfor 200 steps.";
+			return "Prevents wild Pokemon encounters\nfor 200 steps";
 		case 1:
 			return "A standard device for capturing\nwild Pokemon";
 		case 2:
@@ -1281,75 +1281,75 @@ public class Item implements Serializable {
 		case 8:
 			return "Restores a Pokemon's HP to full\nand cures any status conditions";
 		case 9:
-			return "";
+			return "Cures a Pokemon of Poison";
 		case 10:
-			return "";
+			return "Cures a Pokemon of Sleep";
 		case 11:
-			return "";
+			return "Cures a Pokemon of Burn";
 		case 12:
-			return "";
+			return "Cures a Pokemon of Paralysis";
 		case 13:
-			return "";
+			return "Cures a Pokemon of Frostbite";
 		case 14:
-			return "";
+			return "Cures a Pokemon of any status\ncondition";
 		case 15:
-			return "";
+			return "Cures a Pokemon of any status\ncondition";
 		case 16:
-			return "";
+			return "Recovers a Pokemon from fainting\nwith 50% HP";
 		case 17:
-			return "";
+			return "Recovers a Pokemon from fainting\nwith full HP";
 		case 18:
-			return "";
+			return "Elevates a Pokemon by 1 level";
 		case 19:
-			return "";
+			return "Grants a Pokemon 50 friendship\npoints";
 		case 20:
-			return "";
+			return "Evolves a certain species of\nPokemon";
 		case 21:
-			return "";
+			return "Evolves a certain species of\nPokemon";
 		case 22:
-			return "";
+			return "Evolves a certain species of\nPokemon";
 		case 23:
-			return "";
+			return "Evolves a certain species of\nPokemon";
 		case 24:
-			return "";
+			return "Grants Masculine energy to\na Pokemon, evolving them\ninto their male evolution";
 		case 25:
-			return "";
+			return "Grants Feminine energy to\na Pokemon, evolving them\ninto their female evolution";
 		case 26:
-			return "";
+			return "Swaps a Pokemon's ability\nwith its other possible\nability";
 		case 27:
-			return "";
+			return "Maxes out an IV of choosing";
 		case 28:
-			return "";
+			return "Maxes out all IVs of a\nPokemon";
 		case 29:
-			return "";
+			return "Changes a Pokemon's nature\n to +Atk, -SpA";
 		case 30:
-			return "";
+			return "Changes a Pokemon's nature\n to +Def, -Atk";
 		case 31:
-			return "";
+			return "Changes a Pokemon's nature\n to +Atk, -Spe";
 		case 32:
-			return "";
+			return "Changes a Pokemon's nature\n to +SpD, -Atk";
 		case 33:
-			return "";
+			return "Changes a Pokemon's nature\n to +SpD, -SpA";
 		case 34:
-			return "";
+			return "Changes a Pokemon's nature\n to +Def, -SpA";
 		case 35:
-			return "";
+			return "Changes a Pokemon's nature\n to +Spe, -SpA";
 		case 36:
-			return "";
+			return "Changes a Pokemon's nature\n to +SpA, -Atk";
 		case 37:
-			return "";
+			return "Changes a Pokemon's nature\n to +SpA, -Spe";
 		case 38:
-			return "";
+			return "Changes a Pokemon's nature\n to Neutral";
 		case 39:
-			return "";
+			return "Changes a Pokemon's nature\n to +Spe, -Atk";
 		case 40:
-			return "";
+			return "Restores PP of a selected\nmove";
 		case 41:
-			return "";
+			return "Restores PP of all moves\non a Pokemon";
 		case 42:
-			return "";
+			return "Increases max PP of a\nselected move by 20%";
 		case 43:
-			return "";
+			return "Increases max PP of a\nselected move by its\nmax PP, which is 160%";
 		case 44:
 			return "";
 		case 45:
@@ -1363,7 +1363,7 @@ public class Item implements Serializable {
 		case 49:
 			return "";
 		case 200:
-			return "";
+			return "Calculates damage simulating\na battle";
 		default:
 			return "Teaches a Pokemon this move.";
 		}

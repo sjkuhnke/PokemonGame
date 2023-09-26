@@ -839,6 +839,7 @@ public class PlayerCharacter extends Entity {
 		        JPanel itemDesc = new JPanel();
 		        itemDesc.setLayout(new BoxLayout(itemDesc, BoxLayout.Y_AXIS));
 		        JLabel description = new JLabel(i.getItem().toString());
+		        description.setFont(new Font(description.getFont().getName(), Font.BOLD, 16));
 		        JGradientButton moveButton = null;
 		        if (i.getItem().getMove() != null) {
 		        	moveButton = new JGradientButton(i.getItem().getMove().toString());
@@ -849,7 +850,11 @@ public class PlayerCharacter extends Entity {
 	                });
 		        }
 		        JLabel count = new JLabel("Count: " + i.getCount());
-
+		        count.setFont(new Font(count.getFont().getName(), Font.ITALIC, 16));
+		        String desc = i.getItem().getDesc();
+		        desc = desc.replace("\n", "<br>");
+		        JLabel descLabel = new JLabel("<html>" + desc + "</html>");
+		        
 		        JButton useButton = new JButton("Use");
 		        useButton.addActionListener(f -> {
 		        	
@@ -1505,6 +1510,7 @@ public class PlayerCharacter extends Entity {
 		        	itemDesc.add(moveButton);
 		        } else {
 		        	itemDesc.add(count);
+		        	itemDesc.add(descLabel);
 		        }
 		        itemDesc.add(useButton);
 
