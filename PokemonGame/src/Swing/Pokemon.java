@@ -4119,7 +4119,7 @@ public class Pokemon implements Serializable {
 		}
 		if (this.status == Status.PARALYZED && Math.random() < 0.25) {
 			System.out.println("\n" + this.nickname + " is fully paralyzed!");
-			this.moveMultiplier = 0;
+			this.moveMultiplier = 1;
 			this.impressive = false;
 			this.vStatuses.remove(Status.LOCKED);
 			this.vStatuses.remove(Status.CHARGING);
