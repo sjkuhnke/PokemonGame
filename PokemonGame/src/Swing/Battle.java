@@ -1041,7 +1041,8 @@ public class Battle extends JFrame {
 	            moveButtons[i].setFont(new Font("Tahoma", Font.BOLD, 11));
 	            moveButtons[i].setFont(new Font("Tahoma", Font.PLAIN, getScaledFontSize(moveButtons[i])));
 	            moveButtons[i].setForeground(moveset[i].getPPColor());
-	            moveButtons[i].setToolTipText(me.getCurrent().moveset[i].move.mtype.effectiveness(foe));
+	            PType moveType = me.getCurrent().moveset[i].move == Move.HIDDEN_POWER ? me.getCurrent().determineHPType() : me.getCurrent().moveset[i].move.mtype;
+	            moveButtons[i].setToolTipText(moveType.effectiveness(foe));
 	            String text = moveButtons[i].getText();
 	            String pp = me.getCurrent().moveset[i].currentPP + " / " + me.getCurrent().moveset[i].maxPP;
 	            moveButtons[i].setText("<html><center><b>" + text + "</b><br>" + pp + "</center></html>");
