@@ -83,7 +83,7 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 58);
 		loadMap("/maps/house01.txt", 59); // sicab city
 		loadMap("/maps/house02.txt", 60);
-		loadMap("/maps/house02.txt", 60);
+		loadMap("/maps/house01.txt", 61); // kleine village
 	}
 	
 	public void getTileImage() {
