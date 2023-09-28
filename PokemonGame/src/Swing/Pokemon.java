@@ -6621,7 +6621,7 @@ public class Pokemon implements Serializable {
 	    return weakTypes.toArray(toReturn);
 	}
 	
-	private void setMoveBank() {
+	public void setMoveBank() {
 		switch(this.id) {
 		case 1:
 			movebank = new Node[18];

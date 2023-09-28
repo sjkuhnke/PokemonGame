@@ -438,6 +438,7 @@ public class PlayerCharacter extends Entity {
 	    				if (p != null) {
 	    					p.setBaseStats();
 	    					p.setAbility(p.abilitySlot);
+	    					p.setMoveBank();
 	    				}
 	    			}
 	    			for (Pokemon p : p.box1) {
