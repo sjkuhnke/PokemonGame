@@ -12256,7 +12256,7 @@ public class Pokemon implements Serializable {
 				if (moveslot != null) {
 					Move move = moveslot.move;
 					if (move != null) {
-						int multiplier = getEffectiveMultiplier(move.mtype);
+						double multiplier = getEffectiveMultiplier(move.mtype);
 						
 						if (multiplier > 1) shuddered = true;
 					}
@@ -12267,7 +12267,7 @@ public class Pokemon implements Serializable {
 		}
 		ArrayList<FieldEffect> side = playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.STEALTH_ROCKS)) {
-			int multiplier = getEffectiveMultiplier(PType.ROCK);
+			double multiplier = getEffectiveMultiplier(PType.ROCK);
 			double damage = (this.getStat(0) / 8.0) * multiplier;
 			this.currentHP -= (int) Math.floor(damage);
 			System.out.println("Pointed stones dug into " + this.nickname + "!");
@@ -12303,8 +12303,8 @@ public class Pokemon implements Serializable {
 		
 	}
 	
-	int getEffectiveMultiplier(PType mtype) {
-		int multiplier = 1;
+	public double getEffectiveMultiplier(PType mtype) {
+		double multiplier = 1.0;
 		
 		if (getImmune(this, mtype)) {
 			multiplier = 0;

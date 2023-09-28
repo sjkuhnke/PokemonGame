@@ -42,7 +42,7 @@ public enum PType {
 	}
 
 	String effectiveness(Pokemon foe) {
-		int multiplier = foe.getEffectiveMultiplier(this);
+		double multiplier = foe.getEffectiveMultiplier(this);
 		
 		if (multiplier == 0) return "No Effect";
 		if (multiplier > 1) return "Super Effective";
