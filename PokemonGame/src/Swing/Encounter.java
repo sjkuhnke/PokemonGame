@@ -114,6 +114,10 @@ public class Encounter {
 				encounters.add(new Encounter(132, 15, 17, 0.20));
 				encounters.add(new Encounter(137, 15, 16, 0.35));
 				encounters.add(new Encounter(146, 16, 17, 0.30));
+			} else if (area == 11 && type.equals("Surfing")) { // gelb forest
+				encounters.add(new Encounter(44, 13, 15, 0.70));
+				encounters.add(new Encounter(71, 16, 17, 0.20));
+				encounters.add(new Encounter(132, 15, 16, 0.10));
 			} else if (area == 11 && y < 55 && type.equals("Standard")) { // route 25
 				encounters.add(new Encounter(16, 12, 12, 0.25));
 				encounters.add(new Encounter(19, 13, 13, 0.20));
@@ -128,6 +132,11 @@ public class Encounter {
 				encounters.add(new Encounter(146, 15, 16, 0.20));
 				encounters.add(new Encounter(148, 15, 17, 0.10));
 				encounters.add(new Encounter(139, 15, 17, 0.10));
+			} else if (area == 13 && type.equals("Surfing")) { // sicab city
+				encounters.add(new Encounter(139, 20, 20, 0.50));
+				encounters.add(new Encounter(134, 20, 20, 0.25));
+				encounters.add(new Encounter(78, 20, 20, 0.20));
+				encounters.add(new Encounter(141, 20, 20, 0.05));
 			} else if (area == 14 && type.equals("Standard")) { // energy plant A
 				encounters.add(new Encounter(111, 12, 14, 0.50));
 				encounters.add(new Encounter(123, 12, 12, 0.30));
@@ -167,10 +176,13 @@ public class Encounter {
 			} else if (area == 24 && type.equals("Fishing")) { // Mt. Splinkty 1A
 				encounters.add(new Encounter(90, 17, 19, 0.15));
 				encounters.add(new Encounter(137, 16, 18, 0.10));
-				encounters.add(new Encounter(132, 18, 19, 0.15));
-				encounters.add(new Encounter(146, 16, 19, 0.10));
 				encounters.add(new Encounter(148, 18, 20, 0.10));
+				encounters.add(new Encounter(143, 18, 20, 0.25));
 				encounters.add(new Encounter(150, 20, 19, 0.40));
+			} else if (area == 24 && type.equals("Surfing")) { // Mt. Splinkty 1A
+				encounters.add(new Encounter(139, 20, 20, 0.60));
+				encounters.add(new Encounter(132, 20, 20, 0.25));
+				encounters.add(new Encounter(143, 18, 19, 0.10));
 			} else if (area == 25 && type.equals("Standard")) { // Mt. Splinkty 2B
 				encounters.add(new Encounter(48, 18, 19, 0.30));
 				encounters.add(new Encounter(52, 19, 20, 0.25));
@@ -199,6 +211,11 @@ public class Encounter {
 				encounters.add(new Encounter(134, 15, 17, 0.25));
 				encounters.add(new Encounter(137, 16, 18, 0.45));
 				encounters.add(new Encounter(141, 19, 20, 0.05));
+			} else if (area == 28 && y >= 57 && type.equals("Surfing")) { // Route 41
+				encounters.add(new Encounter(139, 20, 20, 0.50));
+				encounters.add(new Encounter(134, 20, 20, 0.25));
+				encounters.add(new Encounter(78, 20, 20, 0.20));
+				encounters.add(new Encounter(141, 20, 20, 0.05));
 			} else if (area == 28 && y >= 57 && type.equals("Standard")) { // Route 41
 				encounters.add(new Encounter(35, 17, 19, 0.15));
 				encounters.add(new Encounter(32, 16, 18, 0.1));
@@ -222,6 +239,11 @@ public class Encounter {
 				encounters.add(new Encounter(134, 15, 17, 0.25));
 				encounters.add(new Encounter(137, 16, 18, 0.45));
 				encounters.add(new Encounter(139, 16, 16, 0.10));
+			} else if (area == 4 && y < 43 && type.equals("Surfing")) { // Route 36
+				encounters.add(new Encounter(139, 20, 20, 0.50));
+				encounters.add(new Encounter(134, 20, 20, 0.25));
+				encounters.add(new Encounter(78, 20, 20, 0.20));
+				encounters.add(new Encounter(141, 20, 20, 0.05));
 			} else if (area == 33 && y < 22 && type.equals("Standard")) { // Route 28
 				encounters.add(new Encounter(26, 19, 20, 0.10));
 				encounters.add(new Encounter(14, 18, 19, 0.10));
@@ -268,6 +290,37 @@ public class Encounter {
 				encounters.add(new Encounter(132, 18, 19, 0.10));
 				encounters.add(new Encounter(146, 18, 19, 0.15));
 				encounters.add(new Encounter(71, 19, 20, 0.10));
+			} else if (area == 38 && y > 61 && type.equals("Surfing")) { // Route 30
+				encounters.add(new Encounter(139, 20, 20, 0.20));
+				encounters.add(new Encounter(68, 20, 20, 0.35));
+				encounters.add(new Encounter(134, 20, 20, 0.20));
+				encounters.add(new Encounter(78, 20, 20, 0.10));
+				encounters.add(new Encounter(141, 20, 20, 0.05));
+				encounters.add(new Encounter(71, 20, 20, 0.10));
+			} else if (area == 33 && y > 32 && type.equals("Standard")) { // Peaceful Park
+				encounters.add(new Encounter(23, 23, 25, 0.09)); // centatle
+				encounters.add(new Encounter(26, 25, 26, 0.05)); // sapwin
+				encounters.add(new Encounter(30, 24, 25, 0.05)); // roselia
+				encounters.add(new Encounter(33, 23, 25, 0.06)); // swadloon
+				encounters.add(new Encounter(62, 22, 24, 0.13)); // snom
+				encounters.add(new Encounter(120, 20, 25, 0.10)); // magie
+				encounters.add(new Encounter(123, 20, 25, 0.10)); // vupp
+				encounters.add(new Encounter(126, 20, 25, 0.10)); // whiskie
+				encounters.add(new Encounter(130, 23, 25, 0.02)); // ninjask
+				encounters.add(new Encounter(89, 24, 25, 0.15)); // tigrette
+				encounters.add(new Encounter(92, 23, 26, 0.12)); // flameruff
+				encounters.add(new Encounter(118, 24, 25, 0.03)); // shockbranch
+			} else if (area == 33 && y > 32 && type.equals("Fishing")) { // Peaceful Park
+				encounters.add(new Encounter(137, 15, 18, 0.35));
+				encounters.add(new Encounter(90, 19, 23, 0.25));
+				encounters.add(new Encounter(146, 20, 22, 0.20));
+				encounters.add(new Encounter(148, 21, 24, 0.10));
+				encounters.add(new Encounter(139, 20, 23, 0.10));
+			} else if (area == 33 && y > 32 && type.equals("Surfing")) { // Peaceful Park
+				encounters.add(new Encounter(139, 20, 20, 0.50));
+				encounters.add(new Encounter(134, 20, 20, 0.25));
+				encounters.add(new Encounter(78, 20, 20, 0.20));
+				encounters.add(new Encounter(141, 20, 20, 0.05));
 			}
 			
 		}

@@ -109,7 +109,7 @@ public class Main {
 		
 //		writeTrainers();
 //		writePokemon();
-//		writeEncounters();
+		writeEncounters();
 		
 		gamePanel.setupGame();
 		
@@ -353,6 +353,8 @@ public class Main {
 				new Trainer("BVC", new Pokemon[]{new Pokemon(120, 12, false, true), new Pokemon(123, 12, false, true)}, 100),
 				new Trainer("BVD", new Pokemon[]{new Pokemon(126, 14, false, true), new Pokemon(120, 14, false, true), new Pokemon(123, 14, false, true)}, 100), // 145
 				new Trainer("O1", new Pokemon[]{new Pokemon(178, 28, false, true), new Pokemon(187, 29, false, true), new Pokemon(144, 28, false, true)}, 100),
+				new Trainer("CCA", new Pokemon[]{new Pokemon(174, 30, false, true), new Pokemon(175, 30, false, true), new Pokemon(176, 28, false, true)}, 100),
+				new Trainer("CCB", new Pokemon[]{new Pokemon(179, 29, false, true), new Pokemon(171, 30, false, true), new Pokemon(169, 28, false, true)}, 100),
 //				new Trainer("Rival 3", new Pokemon[]{new Pokemon(-131, 25, false, true), new Pokemon(-24, 16, false, true), new Pokemon(-21, 19, false, true)}, 500),
 //				new Trainer("Q", new Pokemon[]{new Pokemon(-50, 25, false, true)}, 100),
 //				new Trainer("5 Gym A", new Pokemon[]{new Pokemon(-63, 14, false, true), new Pokemon(-63, 16, false, true), new Pokemon(-63, 18, false, true)}, 200),
@@ -658,10 +660,16 @@ public class Main {
 			encounters = Encounter.getEncounters(11, 43, 55, "Fishing", "", false); // gelb forest
 			writer.write(writeEncounter(encounters));
 			
+			encounters = Encounter.getEncounters(11, 43, 55, "Surfing", "", false); // gelb forest
+			writer.write(writeEncounter(encounters));
+			
 			encounters = Encounter.getEncounters(11, 73, 56, "Standard", "", false); // route 25
 			writer.write(writeEncounter(encounters));
 			
 			encounters = Encounter.getEncounters(13, 73, 38, "Fishing", "", false); // sicab city
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(13, 73, 38, "Surfing", "", false); // sicab city
 			writer.write(writeEncounter(encounters));
 			
 			encounters = Encounter.getEncounters(14, 73, 38, "Standard", "", false); // energy plant A
@@ -685,6 +693,9 @@ public class Main {
 			encounters = Encounter.getEncounters(24, 73, 38, "Fishing", "", false); // mt. splinkty 1A
 			writer.write(writeEncounter(encounters));
 			
+			encounters = Encounter.getEncounters(24, 73, 38, "Surfing", "", false); // mt. splinkty 1A
+			writer.write(writeEncounter(encounters));
+			
 			encounters = Encounter.getEncounters(25, 73, 38, "Standard", "", false); // mt. splinkty 2B
 			writer.write(writeEncounter(encounters));
 			
@@ -698,6 +709,9 @@ public class Main {
 			writer.write(writeEncounter(encounters));
 			
 			encounters = Encounter.getEncounters(28, 73, 57, "Fishing", "", false); // route 41
+			writer.write(writeEncounter(encounters));
+			
+			encounters = Encounter.getEncounters(28, 73, 57, "Surfing", "", false); // route 41
 			writer.write(writeEncounter(encounters));
 			
 			encounters = Encounter.getEncounters(28, 73, 57, "Standard", "", false); // route 41

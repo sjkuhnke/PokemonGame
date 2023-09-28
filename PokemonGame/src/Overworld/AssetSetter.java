@@ -188,7 +188,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 52, 5, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(68, 54, 12, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(89, 52, 16, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(64, 20, 102, mapNum); // dragon claw
+		gp.obj[mapNum][objIndex] = ObjSetup(64, 20, 186, mapNum); // x-scissor
 		
 		mapNum = 38;
 		objIndex = 0;
@@ -214,6 +214,12 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 18, 5, mapNum);
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 42, 12, 43);
+		
+		mapNum = 60;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(24, 36, 102, mapNum); // dragon claw
+		gp.obj[mapNum][objIndex] = ObjSetup(38, 44, 173, mapNum); // gyro ball
+		
 	}
 	
 	public void setNPC() {
@@ -558,6 +564,11 @@ public class AssetSetter {
 		mapNum = 50;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(31, 41, "WOAOAOHAOAHOAHOH!!!\nHehehehehe I just\npopped a naughty yerkocet!!\nPick one of these NUTTY\n\"starters\" teheheheheheee", true);
+		
+		mapNum = 60;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(6, 29, 42, 147);
+		gp.npc[mapNum][index] = NPCSetup(5, 33, 42, 148);
 	}
 	
 	public void setInteractiveTile() {
@@ -657,6 +668,14 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(58, 47, 4);
 		gp.iTile[mapNum][iIndex] = ITileSetup(59, 47, 4);
 		gp.iTile[mapNum][iIndex] = ITileSetup(60, 47, 4);
+		
+		mapNum = 60;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(30, 44, 1);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 43, 1);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 43, 1);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 42, 1);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 70, 1);
 	}
 
 	public void updateNPC() {
