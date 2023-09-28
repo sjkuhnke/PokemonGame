@@ -1290,7 +1290,7 @@ public class Battle extends JFrame {
 		
 		Pokemon slower = faster == p1 ? p2 : p1;
 		
-		if (faster == p1) {
+		if (faster == p1) { // player Pokemon is faster
 			Pokemon[] team = me.getTeam();
 			Pokemon[] enemyTeam = foeTrainer == null ? null : foeTrainer.getTeam();
 			faster.move(slower, m1, me, field, team, foeTrainer, true);
@@ -1298,7 +1298,7 @@ public class Battle extends JFrame {
 			if (faster.vStatuses.contains(Status.SWITCHING)) faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS);
 			
 	        slower.move(faster, m2, me, field, enemyTeam, null, false);
-		} else {
+		} else { // enemy Pokemon is faster
 			Pokemon[] enemyTeam = me.getTeam();
 			Pokemon[] team = foeTrainer == null ? null : foeTrainer.getTeam();
 			faster.move(slower, m2, me, field, team, null, true);

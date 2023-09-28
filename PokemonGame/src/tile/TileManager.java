@@ -73,6 +73,17 @@ public class TileManager {
 		loadMap("/maps/house02.txt", 48);
 		loadMap("/maps/house01.txt", 49);
 		loadMap("/maps/house01.txt", 50);
+		loadMap("/maps/house01.txt", 51); // new minnow town
+		loadMap("/maps/house01.txt", 52);
+		loadMap("/maps/house01.txt", 53);
+		loadMap("/maps/house01.txt", 54);
+		loadMap("/maps/house01.txt", 55); // bananaville town
+		loadMap("/maps/house01.txt", 56);
+		loadMap("/maps/house01.txt", 57); // poppy grove
+		loadMap("/maps/house01.txt", 58);
+		loadMap("/maps/house01.txt", 59); // sicab city
+		loadMap("/maps/house02.txt", 60);
+		loadMap("/maps/house02.txt", 60);
 	}
 	
 	public void getTileImage() {

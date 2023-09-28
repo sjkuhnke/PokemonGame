@@ -243,6 +243,44 @@ public class EventHandler {
 			// Schrice City House
 			if (hit(38,23,36,"any")) teleport(50, 31, 45);
 			if (hit(50,31,46,"any")) teleport(38, 23, 37);
+			
+			// New Minnow Town Houses
+			if (hit(0,90,45,"any")) teleport(51, 31, 45);
+			if (hit(51,31,46,"any")) teleport(0, 90, 46);
+			
+			if (hit(0,80,45,"any")) teleport(52, 31, 45);
+			if (hit(52,31,46,"any")) teleport(0, 80, 46);
+			
+			if (hit(0,90,54,"any")) teleport(53, 31, 45);
+			if (hit(53,31,46,"any")) teleport(0, 90, 55);
+			
+			if (hit(0,84,55,"any")) teleport(54, 31, 45);
+			if (hit(54,31,46,"any")) teleport(0, 84, 56);
+			
+			// Bananaville Town Houses
+			if (hit(0,27,44,"any")) teleport(55, 31, 45);
+			if (hit(55,31,46,"any")) teleport(0, 27, 45);
+			
+			if (hit(0,33,52,"any")) teleport(56, 31, 45);
+			if (hit(56,31,46,"any")) teleport(0, 33, 53);
+			
+			// Poppy Grove Houses
+			if (hit(4,68,62,"any")) teleport(57, 31, 45);
+			if (hit(57,31,46,"any")) teleport(4, 68, 63);
+			
+			if (hit(4,63,62,"any")) teleport(58, 31, 45);
+			if (hit(58,31,46,"any")) teleport(4, 63, 63);
+			
+			// Sicab City Houses
+			if (hit(13,46,85,"any")) teleport(59, 31, 45);
+			if (hit(59,31,46,"any")) teleport(13, 46, 86);
+			
+			if (hit(13,23,64,"any")) teleport(60, 31, 45);
+			if (hit(60,31,46,"any")) teleport(13, 23, 65);
+			
+			// Kleine Village House
+			if (hit(28,68,44,"any")) teleport(61, 31, 45);
+			if (hit(61,31,46,"any")) teleport(28, 68, 45);
 		}
 	}
 	
