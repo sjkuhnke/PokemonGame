@@ -84,6 +84,26 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 59); // sicab city
 		loadMap("/maps/house02.txt", 60);
 		loadMap("/maps/house01.txt", 61); // kleine village
+		loadMap("/maps/house01.txt", 62); // schrice city
+		loadMap("/maps/house01.txt", 63);
+		loadMap("/maps/house01.txt", 64);
+		loadMap("/maps/house01.txt", 65);
+		loadMap("/maps/house01.txt", 66);
+		loadMap("/maps/house01.txt", 67);
+		loadMap("/maps/house01.txt", 68);
+		loadMap("/maps/house01.txt", 69);
+		loadMap("/maps/house01.txt", 70);
+		loadMap("/maps/house01.txt", 71);
+		loadMap("/maps/house01.txt", 72);
+		loadMap("/maps/house01.txt", 73);
+		loadMap("/maps/gate01.txt", 74);
+		loadMap("/maps/gate02.txt", 75);
+		loadMap("/maps/gate01.txt", 76);
+		loadMap("/maps/map10.txt", 77);
+		loadMap("/maps/house01.txt", 78); // TODO: mindagan cavern
+		loadMap("/maps/gate01.txt", 79);
+		loadMap("/maps/map11.txt", 80);
+		loadMap("/maps/gate01.txt", 81);
 	}
 	
 	public void getTileImage() {
