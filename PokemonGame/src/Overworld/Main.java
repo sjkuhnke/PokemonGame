@@ -109,7 +109,7 @@ public class Main {
 		
 //		writeTrainers();
 //		writePokemon();
-		writeEncounters();
+//		writeEncounters();
 		
 		gamePanel.setupGame();
 		

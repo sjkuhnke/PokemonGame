@@ -444,7 +444,7 @@ public class PMap extends JFrame {
 	}
 
 	private void fly(String loc, int map, int x, int y) {
-		if (gp.player.p.hasMove(Move.FLY)) {
+		if (gp.player.p.hasMove(Move.CUT)) {
 			int answer = JOptionPane.showConfirmDialog(null, "Would you like to fly to " + loc + "?");
     		if (answer == JOptionPane.YES_OPTION) {
     			gp.eHandler.teleport(map, x, y);
@@ -570,6 +570,113 @@ public class PMap extends JFrame {
 			return 20;
 		case 46:
 			return 4;
+		case 47:
+			return 2;
+		case 48:
+			return 4;
+		case 49:
+			return 13;
+		case 50:
+			return 20;
+		case 51:
+			return 0;
+		case 52:
+			return 0;
+		case 53:
+			return 0;
+		case 54:
+			return 0;
+		case 55:
+			return 2;
+		case 56:
+			return 2;
+		case 57:
+			return 4;
+		case 58:
+			return 4;
+		case 59:
+			return 9;
+		case 60:
+			return 9;
+		case 61:
+			return 13;
+		case 62:
+			return 20;
+		case 63:
+			return 20;
+		case 64:
+			return 20;
+		case 65:
+			return 20;
+		case 66:
+			return 20;
+		case 67:
+			return 20;
+		case 68:
+			return 20;
+		case 69:
+			return 20;
+		case 70:
+			return 20;
+		case 71:
+			return 20;
+		case 72:
+			return 20;
+		case 73:
+			return 20;
+		case 74:
+			return 15;
+		case 75:
+			return 15;
+		case 76:
+			return 22;
+		case 77:
+			return 23;
+		case 78:
+			return 23;
+		case 79:
+			return 24;
+		case 80:
+			if (y <= 41) return 24;
+			if (y > 41) return 25;
+		case 81:
+			return 26;
+		case 82: // TODO from here down
+			return 20;
+		case 83:
+			return 20;
+		case 84:
+			return 20;
+		case 85:
+			return 20;
+		case 86:
+			return 4;
+		case 87:
+			return 20;
+		case 88:
+			return 20;
+		case 89:
+			return 20;
+		case 90:
+			return 20;
+		case 91:
+			return 20;
+		case 92:
+			return 20;
+		case 93:
+			return 20;
+		case 94:
+			return 20;
+		case 95:
+			return 20;
+		case 96:
+			return 4;
+		case 97:
+			return 20;
+		case 98:
+			return 20;
+		case 99:
+			return 20;
 		}
 		
 		return -1;

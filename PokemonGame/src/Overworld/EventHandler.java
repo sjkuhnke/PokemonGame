@@ -281,6 +281,77 @@ public class EventHandler {
 			// Kleine Village House
 			if (hit(28,68,44,"any")) teleport(61, 31, 45);
 			if (hit(61,31,46,"any")) teleport(28, 68, 45);
+			
+			// Schrice City Houses
+			if (hit(38,48,44,"any")) teleport(62, 31, 45);
+			if (hit(62,31,46,"any")) teleport(38, 48, 45);
+			
+			if (hit(38,43,44,"any")) teleport(63, 31, 45);
+			if (hit(63,31,46,"any")) teleport(38, 43, 45);
+			
+			if (hit(38,38,44,"any")) teleport(64, 31, 45);
+			if (hit(64,31,46,"any")) teleport(38, 38, 45);
+			
+			if (hit(38,28,44,"any")) teleport(65, 31, 45);
+			if (hit(65,31,46,"any")) teleport(38, 28, 45);
+			
+			if (hit(38,23,44,"any")) teleport(66, 31, 45);
+			if (hit(66,31,46,"any")) teleport(38, 23, 45);
+			
+			if (hit(38,18,44,"any")) teleport(67, 31, 45);
+			if (hit(67,31,46,"any")) teleport(38, 18, 45);
+			
+			if (hit(38,48,36,"any")) teleport(68, 31, 45);
+			if (hit(68,31,46,"any")) teleport(38, 48, 37);
+			
+			if (hit(38,43,36,"any")) teleport(69, 31, 45);
+			if (hit(69,31,46,"any")) teleport(38, 43, 37);
+			
+			if (hit(38,38,36,"any")) teleport(70, 31, 45);
+			if (hit(70,31,46,"any")) teleport(38, 38, 37);
+			
+			if (hit(38,33,36,"any")) teleport(71, 31, 45);
+			if (hit(71,31,46,"any")) teleport(38, 33, 37);
+			
+			if (hit(38,28,36,"any")) teleport(72, 31, 45);
+			if (hit(72,31,46,"any")) teleport(38, 28, 37);
+			
+			if (hit(38,18,36,"any")) teleport(73, 31, 45);
+			if (hit(73,31,46,"any")) teleport(38, 18, 37);
+			
+			// Route 41/Peaceful park gate
+			if (hit(28,81,89,"any")) teleport(74, 31, 34);
+			if (hit(74,31,33,"any")) teleport(28, 81, 88);
+			if (hit(74,31,46,"any")) teleport(33, 33, 34);
+			if (hit(33,33,33,"any")) teleport(74, 31, 45);
+			
+			// Route 36/Peaceful park gate
+			if (hit(4,17,11,"any")) teleport(75, 36, 40);
+			if (hit(75,37,40,"any")) teleport(4, 18, 11);
+			if (hit(75,22,40,"any")) teleport(33, 55, 84);
+			if (hit(33,56,84,"any")) teleport(75, 23, 40);
+			
+			// Route 30/Mindagan Lake gate
+			if (hit(38,42,90,"any")) teleport(76, 31, 34);
+			if (hit(76,31,33,"any")) teleport(38, 42, 89);
+			if (hit(76,31,46,"any")) teleport(77, 48, 8);
+			if (hit(77,48,7,"any")) teleport(76, 31, 45);
+			
+			// Mindagan Cavern
+			if (hit(77,83,32,"any")) teleport(78, 31, 45);
+			if (hit(78,31,46,"any")) teleport(77, 83, 33);
+			
+			// Route 31/Mindagan Lake gate
+			if (hit(77,56,74,"any")) teleport(79, 31, 34);
+			if (hit(79,31,33,"any")) teleport(77, 56, 73);
+			if (hit(79,31,46,"any")) teleport(80, 32, 8);
+			if (hit(80,32,7,"any")) teleport(79, 31, 45);
+			
+			// Route 42/Shadow Ravine gate
+			if (hit(80,47,85,"any")) teleport(81, 31, 34);
+			if (hit(81,31,33,"any")) teleport(80, 47, 84);
+			if (hit(81,31,46,"any")) teleport(0, 85, 6);
+			if (hit(0,85,5,"any")) teleport(81, 31, 45);
 		}
 	}
 	

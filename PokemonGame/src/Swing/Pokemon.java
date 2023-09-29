@@ -4247,7 +4247,13 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (id == 237) {
+			Move oldMove = move;
 			move = get150Move(move);
+			if (move != oldMove) {
+				for (Moveslot m : this.moveset) {
+					if (m != null && m.move == oldMove) m.currentPP--;
+				}
+			}
 			bp = move.basePower;
 			acc = move.accuracy;
 			secChance = move.secondary;
@@ -11448,7 +11454,7 @@ public class Pokemon implements Serializable {
 		        bp = 70;
 		    }
 		} else if (move == Move.BRINE) {
-			if (foe.currentHP / foe.getStat(0) >= 0.5) {
+			if (foe.currentHP * 1.0 / foe.getStat(0) >= 0.5) {
 				bp = 65;
 			} else {
 				bp = 130;
@@ -11507,7 +11513,7 @@ public class Pokemon implements Serializable {
 			if (this.lastMoveUsed == Move.FURY_CUTTER) {
 				if (announce) this.moveMultiplier *= 2;
 			}
-			bp = Math.min(160, 20 * this.moveMultiplier);
+			bp = Math.min(160, 40 * this.moveMultiplier);
 		} else if (move == Move.GRASS_KNOT || move == Move.LOW_KICK) {
 			if (foe.weight < 21.9) {
 				bp = 20;
