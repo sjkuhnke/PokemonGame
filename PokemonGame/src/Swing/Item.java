@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import Swing.Battle.JGradientButton;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class Item implements Serializable {
 	/**
@@ -985,6 +986,7 @@ public class Item implements Serializable {
         for (int k = 0; k < p.team.length; k++) {
         	if (p.team[k] != null) userMons.addItem(p.team[k].clone());
         }
+        AutoCompleteDecorator.decorate(userMons);
         
         JComboBox<Pokemon> foeMons = new JComboBox<>();
         JTextField foeLevel = new JTextField();
@@ -997,6 +999,7 @@ public class Item implements Serializable {
         for (int k = 1; k < 241; k++) {
         	foeMons.addItem(new Pokemon(k, 50, false, true));
         }
+        AutoCompleteDecorator.decorate(foeMons);
         
         userMons.addActionListener(l -> {
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
@@ -1219,6 +1222,8 @@ public class Item implements Serializable {
 			    	} else {
 			    		Move[] allMoves = Move.values();
 			    		JComboBox<Move> moveComboBox = new JComboBox<>(allMoves);
+			    		
+			    		AutoCompleteDecorator.decorate(moveComboBox);
 			    		
 			    		JPanel setMovePanel = new JPanel();
 			    		setMovePanel.add(new JLabel("Select a move:"));
