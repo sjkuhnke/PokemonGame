@@ -352,6 +352,18 @@ public class EventHandler {
 			if (hit(81,31,33,"any")) teleport(80, 47, 84);
 			if (hit(81,31,46,"any")) teleport(0, 85, 6);
 			if (hit(0,85,5,"any")) teleport(81, 31, 45);
+			
+			// Shadow Ravine/Shadow Ravine 1A gate
+			if (hit(83,6,70,"any")) teleport(82, 36, 40);
+			if (hit(82,37,40,"any")) teleport(83, 7, 70);
+			if (hit(82,22,40,"any")) teleport(80, 92, 51);
+			if (hit(80,93,51,"any")) teleport(82, 23, 40);
+			
+			// Route 32/Frenco City gate
+			if (hit(85,6,47,"any")) teleport(84, 36, 40);
+			if (hit(84,37,40,"any")) teleport(85, 7, 47);
+			if (hit(84,22,40,"any")) teleport(83, 92, 51);
+			if (hit(83,93,51,"any")) teleport(84, 23, 40);
 		}
 	}
 	
