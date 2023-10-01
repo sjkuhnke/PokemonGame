@@ -479,8 +479,7 @@ public class PBox extends JFrame {
 	        	@Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
-			    		String message = pokemon.moveset[index].move.getDescriptor();
-			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			            JOptionPane.showMessageDialog(null, pokemon.moveset[index].move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
 			        	choice[0] = index;
 		                JDialog dialog = (JDialog) SwingUtilities.getWindowAncestor((JButton) e.getSource());
@@ -494,8 +493,7 @@ public class PBox extends JFrame {
         	@Override
 		    public void mouseClicked(MouseEvent e) {
 		    	if (SwingUtilities.isRightMouseButton(e)) {
-		    		String message = move.getDescriptor();
-		            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+		            JOptionPane.showMessageDialog(null, move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 		        } else {
 		        	choice[0] = JOptionPane.CLOSED_OPTION;
 	                JDialog dialog = (JDialog) SwingUtilities.getWindowAncestor((JButton) e.getSource());

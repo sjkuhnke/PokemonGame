@@ -11855,8 +11855,7 @@ public class Pokemon implements Serializable {
 	                moveButton.setForeground(moveset[i].getPPColor());
 	                int index = i;
 	                moveButton.addActionListener(e -> {
-	                	String message = moveset[index].move.getDescriptor();
-			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			            JOptionPane.showMessageDialog(null, moveset[index].move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 	                });
 	            }
 	            movesPanel.add(moveButton);
@@ -12059,8 +12058,7 @@ public class Pokemon implements Serializable {
 		            moveButton.setHorizontalAlignment(SwingConstants.LEFT);
 		            moveButton.setBackground(move.mtype.getColor());
 		            moveButton.addActionListener(f -> {
-		                String message = move.getDescriptor();
-		                JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+		                JOptionPane.showMessageDialog(null, move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 		            });
 		        }
 		        movesPanel.add(moveButton);
@@ -12086,8 +12084,7 @@ public class Pokemon implements Serializable {
 					moveButton.setHorizontalAlignment(SwingConstants.LEFT);
 					moveButton.setBackground(testItem.getColor());
 					moveButton.addActionListener(f -> {
-		                String message = testItem.getMove().getDescriptor();
-		                JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+		                JOptionPane.showMessageDialog(null, testItem.getMove().getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 		            });
 					learnPanel.add(moveButton);
 				}
@@ -12374,8 +12371,7 @@ public class Pokemon implements Serializable {
 	        	@Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
-			    		String message = moveset[index].move.getDescriptor();
-			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			            JOptionPane.showMessageDialog(null, moveset[index].move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
 			        	if (!moveset[index].move.isHMmove()) {
 			        		choice[0] = index;
@@ -12394,8 +12390,7 @@ public class Pokemon implements Serializable {
         	@Override
 		    public void mouseClicked(MouseEvent e) {
 		    	if (SwingUtilities.isRightMouseButton(e)) {
-		    		String message = move.getDescriptor();
-		            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+		            JOptionPane.showMessageDialog(null, move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 		        } else {
 		        	choice[0] = JOptionPane.CLOSED_OPTION;
 	                JDialog dialog = (JDialog) SwingUtilities.getWindowAncestor((JButton) e.getSource());
