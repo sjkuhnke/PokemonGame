@@ -54,7 +54,6 @@ public class Battle extends JFrame {
 	public JLabel foeSprite;
 	public JLabel weather;
 	public JLabel terrain;
-	public JRadioButton[] foeParty;
 	private JPanel foePartyPanel;
 	
 	private JButton catchButton;
@@ -85,7 +84,7 @@ public class Battle extends JFrame {
 	private JButton calcButton;
 //	private JButton exitButton; // debug
 	private int trainerIndex;
-	private JRadioButton caughtIndicator;
+	private JLabel caughtIndicator;
 	
 	private BattleCloseListener battleCloseListener;
 	
@@ -178,8 +177,7 @@ public class Battle extends JFrame {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
-			    		String message = me.getCurrent().moveset[index].move.getDescriptor();
-			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			            JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index].move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
 			        	if (me.getCurrent().moveset[index].currentPP == 0 && !me.getCurrent().movesetEmpty()) {
 		        			JOptionPane.showMessageDialog(null, "No more PP remaining!");
@@ -239,13 +237,11 @@ public class Battle extends JFrame {
 		/*
 		 * Initialize caught indicator
 		 */
-		caughtIndicator = new JRadioButton(); // Create a new JRadioButton for each iteration
-		caughtIndicator.setEnabled(false); // Make the JRadioButton unchangeable by the user
-		caughtIndicator.setSelected(true);
-		caughtIndicator.setBounds(513, 37, 20, 20);
+		caughtIndicator = new JLabel(new ImageIcon(getIcon("/icons/ball.png")));
+		caughtIndicator.setBounds(519, 39, 16, 16);
 
 	    if (foeTrainer == null && pl.p.pokedex[foe.id] == 2) {
-	    	caughtIndicator.setBackground(Color.red);
+	    	caughtIndicator.setVisible(true);
 	    } else {
 	    	caughtIndicator.setVisible(false);
 	    }
@@ -260,8 +256,6 @@ public class Battle extends JFrame {
 		/*
 		 * Set current and foe
 		 */
-		foeParty = new JRadioButton[6];
-		
 		userSprite = new JLabel("");
 		userSprite.setBounds(203, 0, 200, 200);
 		
@@ -1146,29 +1140,20 @@ public class Battle extends JFrame {
 		
 		if (foePartyPanel != null) playerPanel.remove(foePartyPanel);
 		foePartyPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-		foePartyPanel.setBounds(525, 0, 200, 30);
+		foePartyPanel.setBounds(525, 0, 200, 32);
 
 		for (int i = 0; i < 6; i++) {
-		    JRadioButton currentIcon = new JRadioButton(); // Create a new JRadioButton for each iteration
-		    currentIcon.setEnabled(false); // Make the JRadioButton unchangeable by the user
-		    currentIcon.setSelected(true);
+		    JLabel currentIcon = new JLabel(new ImageIcon(getIcon("/icons/ball.png")));
 
 		    if (foeTrainer != null && i < foeTrainer.getTeam().length) {
-		        if (foeTrainer.getTeam()[i] == null) {
-		            currentIcon.setVisible(false);
-		            System.out.print("null ");
-		        } else {
-		            if (foeTrainer.getTeam()[i].isFainted()) {
-		                currentIcon.setBackground(Color.gray);
-		            } else {
-		                currentIcon.setBackground(Color.red);
-		            }
-		            if (foeTrainer.currentIndex == i) {
-		            	currentIcon.setBackground(Color.yellow);
-		            }
+	            if (foeTrainer.getTeam()[i].isFainted()) {
+	                currentIcon.setIcon(new ImageIcon(getIcon("/icons/ballfainted.png")));
+	            }
+	            if (foeTrainer.currentIndex == i) {
+	            	currentIcon.setIcon(new ImageIcon(getIcon("/icons/ballcurrent.png")));
+	            }
 
-		            foePartyPanel.add(currentIcon);
-		        }
+	            foePartyPanel.add(currentIcon);
 		    } else {
 		        currentIcon.setVisible(false);
 		    }
@@ -1711,6 +1696,21 @@ public class Battle extends JFrame {
 	
 	public interface BattleCloseListener {
 	    void onBattleClosed(int trainer);
+	}
+	
+	public Image getIcon(String name) {
+		BufferedImage image = null;
+		
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream(name));
+		} catch (Exception e) {
+			try {
+				image = ImageIO.read(getClass().getResourceAsStream("/sprites/000.png"));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return image;
 	}
 	
 }

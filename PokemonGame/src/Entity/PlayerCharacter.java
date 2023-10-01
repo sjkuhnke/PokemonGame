@@ -846,8 +846,7 @@ public class PlayerCharacter extends Entity {
 		        	moveButton = new JGradientButton(i.getItem().getMove().toString());
 		        	moveButton.setBackground(i.getItem().getMove().mtype.getColor());
 	                moveButton.addActionListener(f -> {
-	                	String message = i.getItem().getMove().getDescriptor();
-			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			            JOptionPane.showMessageDialog(null, i.getItem().getMove().getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 	                });
 		        }
 		        JLabel count = new JLabel("Count: " + i.getCount());
@@ -1407,8 +1406,7 @@ public class PlayerCharacter extends Entity {
 			        	        	        	@Override
 			        	        			    public void mouseClicked(MouseEvent e) {
 			        	        			    	if (SwingUtilities.isRightMouseButton(e)) {
-			        	        			    		String message = m.move.getDescriptor();
-			        	        			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			        	        			            JOptionPane.showMessageDialog(null, m.move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        	        			        } else {
 			        	        			        	m.currentPP = m.maxPP;
 			        	        			        	JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was restored!");
@@ -1459,8 +1457,7 @@ public class PlayerCharacter extends Entity {
 		        	        	        	@Override
 		        	        			    public void mouseClicked(MouseEvent e) {
 		        	        			    	if (SwingUtilities.isRightMouseButton(e)) {
-		        	        			    		String message = m.move.getDescriptor();
-		        	        			            JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+		        	        			            JOptionPane.showMessageDialog(null, m.move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 		        	        			        } else {
 	        	        			        		if (m.maxPP < (m.move.pp * 8 / 5)) {
 	        	        			        			if (i.getItem().getID() == 42) { // PP Up

@@ -1216,8 +1216,7 @@ public class Item implements Serializable {
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
 			    		if (current.moveset[kndex] != null) {
-	        				String message = current.moveset[kndex].move.getDescriptor();
-	    	                JOptionPane.showMessageDialog(null, message, "Move Description", JOptionPane.INFORMATION_MESSAGE);
+	    	                JOptionPane.showMessageDialog(null, current.moveset[kndex].move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 	        			}
 			    	} else {
 			    		Move[] allMoves = Move.values();
