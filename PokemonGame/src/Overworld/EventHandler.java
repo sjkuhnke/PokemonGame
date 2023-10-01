@@ -360,8 +360,8 @@ public class EventHandler {
 			if (hit(80,93,51,"any")) teleport(82, 23, 40);
 			
 			// Route 32/Frenco City gate
-			if (hit(85,6,47,"any")) teleport(84, 36, 40);
-			if (hit(84,37,40,"any")) teleport(85, 7, 47);
+			if (hit(85,6,67,"any")) teleport(84, 36, 40);
+			if (hit(84,37,40,"any")) teleport(85, 7, 67);
 			if (hit(84,22,40,"any")) teleport(83, 92, 51);
 			if (hit(83,93,51,"any")) teleport(84, 23, 40);
 		}
