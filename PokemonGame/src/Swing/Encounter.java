@@ -352,6 +352,18 @@ public class Encounter {
 				encounters.add(new Encounter(158, 25, 28, 0.16));
 				encounters.add(new Encounter(55, 26, 28, 0.25));
 				encounters.add(new Encounter(66, 28, 29, 0.10));
+			} else if (area == 80 && y <= 41 && type.equals("Fishing")) { // Route 31
+				encounters.add(new Encounter(90, 22, 25, 0.20));
+				encounters.add(new Encounter(132, 22, 25, 0.10));
+				encounters.add(new Encounter(146, 22, 25, 0.20));
+				encounters.add(new Encounter(141, 24, 26, 0.25));
+				encounters.add(new Encounter(215, 22, 24, 0.25));
+			} else if (area == 80 && y <= 41 && type.equals("Surfing")) { // Route 31
+				encounters.add(new Encounter(135, 22, 24, 0.20));
+				encounters.add(new Encounter(132, 24, 25, 0.15));
+				encounters.add(new Encounter(143, 22, 25, 0.20));
+				encounters.add(new Encounter(141, 24, 26, 0.20));
+				encounters.add(new Encounter(215, 22, 24, 0.25));
 			} else if (area == 83 && x <= 57 && type.equals("Standard")) { // Shadow Ravine 1A
 				encounters.add(new Encounter(172, 25, 29, 0.15));
 				encounters.add(new Encounter(218, 25, 29, 0.25));
