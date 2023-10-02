@@ -179,11 +179,21 @@ public class PlayerCharacter extends Entity {
 			gp.eHandler.checkEvent();
 			
 			if (surf) {
-				double surfXD =  worldX / 48.0;
+				double surfXD =  worldX / (1.0 * gp.tileSize);
+				double surfYD =  worldY / (1.0 * gp.tileSize);
 				int surfX = (int) Math.round(surfXD);
-				
-				double surfYD =  worldY / 48.0;
 				int surfY = (int) Math.round(surfYD);
+				switch(direction) {
+				case "up":
+					surfY = (int) Math.ceil(surfYD);
+					break;
+				case "down":
+					break;
+				case "left":
+					break;
+				case "right":
+					break;
+				}
 				if (!gp.tileM.getWaterTiles().contains(gp.tileM.mapTileNum[gp.currentMap][surfX][surfY])) {
 					surf = false;
 					for (Integer i : gp.tileM.getWaterTiles()) {
