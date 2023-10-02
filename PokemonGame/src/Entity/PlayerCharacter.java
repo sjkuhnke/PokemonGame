@@ -534,12 +534,14 @@ public class PlayerCharacter extends Entity {
 					if (member != null) member.heal();
 				}
 		    	JOptionPane.showMessageDialog(null, "Your Pokemon were healed to full health!");
-		    	
+		    	// NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
 		    	if (gp.currentMap == 1) p.locations[1] = true;
 		    	if (gp.currentMap == 5) p.locations[2] = true;
 		    	if (gp.currentMap == 19) p.locations[3] = true;
 		    	if (gp.currentMap == 29) p.locations[4] = true;
 		    	if (gp.currentMap == 39) p.locations[6] = true;
+		    	if (gp.currentMap == 86) p.locations[8] = true;
+		    	if (gp.currentMap == 86) p.locations[5] = true; // TODO PP
 		    }
 		    keyH.resume();
 		}
@@ -1576,17 +1578,27 @@ public class PlayerCharacter extends Entity {
 	    Item[] shopItems = new Item[1];
 	    if (gp.currentMap == 30) shopItems = new Item[] {new Item(0), new Item(1), new Item(15), new Item(27), new Item(149), new Item(151)};
 	    if (gp.currentMap == 40) shopItems = new Item[] {new Item(112), new Item(113), new Item(115), new Item(116), new Item(123), new Item(124)};
+	    if (gp.currentMap == 89) shopItems = new Item[] {new Item(145), new Item(150), new Item(154), new Item(174), new Item(175),
+	    		new Item(176), new Item(177), new Item(179), new Item(180), new Item(181), new Item(182), new Item(195)};
 	    for (int i = 0; i < shopItems.length; i++) {
-	    	JButton item = new JButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
+	    	JGradientButton item = new JGradientButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
 	    	Item curItem = shopItems[i];
-	    	item.addActionListener(e -> {
-    	    	if (p.buy(curItem)) {
-    	            JOptionPane.showMessageDialog(null, "Purchased 1 " + curItem.toString() + " for $" + curItem.getCost());
-    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
-    	            interactMarket();
-    	        } else {
-    	            JOptionPane.showMessageDialog(null, "Not enough money!");
-    	        }
+	    	item.setBackground(curItem.getColor());
+	    	item.addMouseListener(new MouseAdapter() {
+	        	@Override
+			    public void mouseClicked(MouseEvent e) {
+	        		if (SwingUtilities.isRightMouseButton(e)) {
+			            if (curItem.getID() > 100) JOptionPane.showMessageDialog(null, curItem.getMove().getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+		    		} else {
+		    	    	if (p.buy(curItem)) {
+		    	            JOptionPane.showMessageDialog(null, "Purchased 1 " + curItem.toString() + " for $" + curItem.getCost());
+		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
+		    	            interactMarket();
+		    	        } else {
+		    	            JOptionPane.showMessageDialog(null, "Not enough money!");
+		    	        }
+		    		}
+	        	}
 	    	});
 	    	shopPanel.add(item);
 	    	if (curItem.getID() > 100 && p.bag.contains(curItem.getID())) shopPanel.remove(item);

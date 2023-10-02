@@ -2,6 +2,7 @@ package Swing;
 
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -685,56 +686,59 @@ public enum Move {
 	public JPanel getMoveSummary() {
 	    JPanel result = new JPanel();
 	    result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
-	    JPanel stuff = new JPanel();
-	    stuff.setLayout(new GridLayout(6, 2));
-	    
+
 	    // Move Name
 	    JLabel nameLabel = new JLabel(toString());
 	    nameLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
 	    JGradientButton typeButton = new JGradientButton(mtype.toString());
 	    typeButton.setBackground(mtype.getColor());
-	    
+
 	    // Category
 	    JLabel categoryLabel = new JLabel("Cat");
-	    
-	    JLabel categoryIconLabel = new JLabel(new ImageIcon(getCategoryIcon()));
-	    
+	    JLabel categoryIconLabel = new JLabel(getScaledIcon(1.5));
+
 	    // Power
 	    JLabel powerLabel = new JLabel("Power");
 	    JLabel powerValueLabel = new JLabel(String.valueOf(getbp()));
-	    
+
 	    // Accuracy
 	    JLabel accuracyLabel = new JLabel("Acc");
 	    JLabel accuracyValueLabel = new JLabel(String.valueOf(getAccuracy()));
-	    
+
 	    // PP
 	    JLabel ppLabel = new JLabel("PP");
 	    JLabel ppValueLabel = new JLabel(String.valueOf(pp));
-	    
+
 	    // Description
 	    JTextArea descriptionArea = new JTextArea(getDescription());
 	    descriptionArea.setWrapStyleWord(true);
 	    descriptionArea.setLineWrap(true);
 	    descriptionArea.setOpaque(false);
 	    descriptionArea.setEditable(false);
-	    
-	    // Add components to the panel
-	    stuff.add(nameLabel);
-	    stuff.add(typeButton);
-	    stuff.add(categoryLabel);
-	    stuff.add(categoryIconLabel);
-	    stuff.add(powerLabel);
-	    stuff.add(powerValueLabel);
-	    stuff.add(accuracyLabel);
-	    stuff.add(accuracyValueLabel);
-	    stuff.add(ppLabel);
-	    stuff.add(ppValueLabel);
-	    
-	    result.add(stuff);
+
+	    // Create a panel for the move summary
+	    JPanel moveSummaryPanel = new JPanel();
+	    moveSummaryPanel.setLayout(new GridLayout(6, 2));
+	    moveSummaryPanel.add(nameLabel);
+	    moveSummaryPanel.add(typeButton);
+	    moveSummaryPanel.add(categoryLabel);
+	    moveSummaryPanel.add(categoryIconLabel);
+	    moveSummaryPanel.add(powerLabel);
+	    moveSummaryPanel.add(powerValueLabel);
+	    moveSummaryPanel.add(accuracyLabel);
+	    moveSummaryPanel.add(accuracyValueLabel);
+	    moveSummaryPanel.add(ppLabel);
+	    moveSummaryPanel.add(ppValueLabel);
+
+	    // Add the move summary panel to the result panel
+	    result.add(moveSummaryPanel);
+
+	    // Add the description area to the result panel
 	    result.add(descriptionArea);
-	    
+
 	    return result;
 	}
+
 	public boolean isAttack() {
 		return cat != 2;
 	}
@@ -897,6 +901,20 @@ public enum Move {
 			}
 		}
 		return image;
+	}
+	
+	public ImageIcon getScaledIcon(double scale) {
+		ImageIcon originalSprite = new ImageIcon(getCategoryIcon());
+		Image originalImage = originalSprite.getImage();
+		
+		int scaledWidth = (int) (originalImage.getWidth(null) * scale);
+		int scaledHeight = (int) (originalImage.getHeight(null) * scale);
+		
+		Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
+		
+		ImageIcon scaledIcon = new ImageIcon(scaledImage);
+		
+		return scaledIcon;
 	}
 
 }

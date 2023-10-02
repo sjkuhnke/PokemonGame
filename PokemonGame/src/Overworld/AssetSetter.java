@@ -425,11 +425,15 @@ public class AssetSetter {
 		gp.npc[29][index] = NPCSetup(0, 35, 36, -1);
 		gp.npc[39][index] = NPCSetup(1, 31, 37, -1);
 		gp.npc[39][index] = NPCSetup(0, 35, 36, -1);
+		gp.npc[86][index] = NPCSetup(1, 31, 37, -1);
+		gp.npc[86][index] = NPCSetup(0, 35, 36, -1);
 		
 		// Clerks
 		gp.npc[30][index] = NPCSetup(17, 31, 41, -1);
 		gp.npc[40][index] = NPCSetup(17, 34, 38, -1);
 		gp.npc[45][index] = NPCSetup(2, 30, 39, -1);
+		gp.npc[87][index] = NPCSetup(2, 27, 39, -1);
+		gp.npc[89][index] = NPCSetup(17, 24, 36, -1);
 		
 		mapNum = 28;
 		index = 0;
@@ -729,6 +733,9 @@ public class AssetSetter {
 		// flags[12] is true after getting gift magic pokemon
 		// flags[13] is true after getting gift fossil/ancient pokemon
 		// flags[13] is true after getting gift "starter" pokemon
+		// flags[14] is true after beating Fred 3
+		// flags[15] is true after talking to Grandpa
+		// flags[16] is true after beating Gym 5
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(10, 72, 48, 0);
 		if (flags[1]) gp.npc[3][0] = null;

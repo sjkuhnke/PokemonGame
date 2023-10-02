@@ -145,18 +145,21 @@ public class Main {
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(5, 20, false, true)}, 400);
 			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(8, 22, false, true), new Pokemon(166, 22, false, true)}, 400, new Item(94), 4);
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(5, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
+			trainers[185] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(99, 47, false, true), new Pokemon(210, 46, false, true), new Pokemon(219, 46, false, true), new Pokemon(6, 47, false, true), new Pokemon(79, 48, false, true)}, 400);
 		}
 		else if (gp.player.p.starter == 2) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(1, 7, false, true)}, 400, 1);
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(8, 20, false, true)}, 400);
 			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(2, 22, false, true), new Pokemon(166, 22, false, true)}, 400, new Item(94), 4);
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(8, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
+			trainers[185] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(99, 47, false, true), new Pokemon(210, 46, false, true), new Pokemon(219, 46, false, true), new Pokemon(9, 47, false, true), new Pokemon(79, 48, false, true)}, 400);
 		}
 		else if (gp.player.p.starter == 3) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(4, 7, false, true)}, 400, 1);
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(2, 20, false, true)}, 400);
 			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(5, 22, false, true), new Pokemon(166, 22, false, true)}, 400, new Item(94), 4);
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(2, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
+			trainers[185] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(99, 47, false, true), new Pokemon(210, 46, false, true), new Pokemon(219, 46, false, true), new Pokemon(3, 47, false, true), new Pokemon(79, 48, false, true)}, 400);
 		}
 		
 		setMoveset("1 Gym Leader 1", 2, Move.MEGA_DRAIN, Move.SUPERSONIC, Move.AERIAL_ACE, Move.POISON_FANG);
@@ -355,6 +358,43 @@ public class Main {
 				new Trainer("O1", new Pokemon[]{new Pokemon(178, 28, false, true), new Pokemon(187, 29, false, true), new Pokemon(144, 28, false, true)}, 100),
 				new Trainer("CCA", new Pokemon[]{new Pokemon(174, 30, false, true), new Pokemon(175, 30, false, true), new Pokemon(176, 28, false, true)}, 100),
 				new Trainer("CCB", new Pokemon[]{new Pokemon(179, 29, false, true), new Pokemon(171, 30, false, true), new Pokemon(169, 28, false, true)}, 100),
+				new Trainer("AV", new Pokemon[]{new Pokemon(69, 42, false, true), new Pokemon(69, 43, false, true), new Pokemon(70, 44, false, true)}, 100),
+				new Trainer("AW", new Pokemon[]{new Pokemon(45, 44, false, true), new Pokemon(72, 43, false, true), new Pokemon(46, 42, false, true)}, 100), // 150
+				new Trainer("AX", new Pokemon[]{new Pokemon(136, 43, false, true), new Pokemon(79, 44, false, true)}, 100),
+				new Trainer("AY", new Pokemon[]{new Pokemon(91, 43, false, true), new Pokemon(147, 44, false, true)}, 100),
+				new Trainer("AZ", new Pokemon[]{new Pokemon(136, 44, false, true), new Pokemon(133, 44, false, true), new Pokemon(139, 45, false, true)}, 100),
+				new Trainer("BA", new Pokemon[]{new Pokemon(141, 44, false, true), new Pokemon(144, 44, false, true)}, 100),
+				new Trainer("BB", new Pokemon[]{new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(145, 44, false, true)}, 100), // 155
+				new Trainer("BC", new Pokemon[]{new Pokemon(138, 44, false, true), new Pokemon(210, 44, false, true)}, 100),
+				new Trainer("BD", new Pokemon[]{new Pokemon(210, 44, false, true), new Pokemon(138, 44, false, true)}, 100),
+				new Trainer("BE", new Pokemon[]{new Pokemon(210, 43, false, true), new Pokemon(119, 44, false, true), new Pokemon(113, 44, false, true)}, 100),
+				new Trainer("BF", new Pokemon[]{new Pokemon(39, 45, false, true)}, 100),
+				new Trainer("BG", new Pokemon[]{new Pokemon(40, 45, false, true)}, 100), // 160
+				new Trainer("BH", new Pokemon[]{new Pokemon(160, 45, false, true), new Pokemon(161, 44, false, true), new Pokemon(160, 45, false, true)}, 100),
+				new Trainer("BI", new Pokemon[]{new Pokemon(165, 44, false, true), new Pokemon(127, 45, false, true), new Pokemon(128, 43, false, true)}, 100),
+				new Trainer("BJ", new Pokemon[]{new Pokemon(167, 46, false, true), new Pokemon(170, 43, false, true), new Pokemon(172, 45, false, true)}, 100),
+				new Trainer("BK", new Pokemon[]{new Pokemon(109, 45, false, true), new Pokemon(97, 45, false, true)}, 100),
+				new Trainer("BL", new Pokemon[]{new Pokemon(219, 45, false, true)}, 100), // 165
+				new Trainer("BM", new Pokemon[]{new Pokemon(220, 47, false, true), new Pokemon(221, 45, false, true), new Pokemon(220, 47, false, true), new Pokemon(221, 46, false, true)}, 100),
+				new Trainer("BN", new Pokemon[]{new Pokemon(148, 47, false, true), new Pokemon(149, 45, false, true), new Pokemon(215, 47, false, true), new Pokemon(216, 45, false, true)}, 100),
+				new Trainer("BO", new Pokemon[]{new Pokemon(12, 48, false, true)}, 100),
+				new Trainer("BP", new Pokemon[]{new Pokemon(74, 46, false, true), new Pokemon(34, 46, false, true)}, 100),
+				new Trainer("BQ", new Pokemon[]{new Pokemon(58, 46, false, true), new Pokemon(77, 46, false, true), new Pokemon(88, 47, false, true), new Pokemon(140, 45, false, true), new Pokemon(145, 46, false, true)}, 100), // 170
+				new Trainer("BR", new Pokemon[]{new Pokemon(165, 46, false, true), new Pokemon(225, 47, false, true), new Pokemon(67, 48, false, true)}, 100),
+				new Trainer("BS1", new Pokemon[]{new Pokemon(56, 47, false, true), new Pokemon(50, 46, false, true)}, 100),
+				new Trainer("BS2", new Pokemon[]{new Pokemon(93, 47, false, true), new Pokemon(51, 46, false, true)}, 100),
+				new Trainer("BT", new Pokemon[]{new Pokemon(167, 48, false, true), new Pokemon(170, 46, false, true), new Pokemon(178, 47, false, true), new Pokemon(170, 47, false, true)}, 100),
+				new Trainer("BU", new Pokemon[]{new Pokemon(37, 45, false, true), new Pokemon(21, 46, false, true)}, 100), // 175
+				new Trainer("BV", new Pokemon[]{new Pokemon(87, 46, false, true), new Pokemon(77, 45, false, true)}, 100),
+				new Trainer("BW1", new Pokemon[]{new Pokemon(96, 45, false, true), new Pokemon(43, 44, false, true)}, 100),
+				new Trainer("BW2", new Pokemon[]{new Pokemon(225, 45, false, true), new Pokemon(34, 45, false, true)}, 100),
+				new Trainer("BX", new Pokemon[]{new Pokemon(115, 46, false, true), new Pokemon(124, 44, false, true), new Pokemon(119, 45, false, true)}, 100),
+				new Trainer("BY", new Pokemon[]{new Pokemon(157, 48, false, true), new Pokemon(25, 48, false, true), new Pokemon(46, 47, false, true)}, 100), // 180
+				new Trainer("BZ", new Pokemon[]{new Pokemon(113, 48, false, true), new Pokemon(115, 48, false, true), new Pokemon(122, 48, false, true)}, 100),
+				new Trainer("CA", new Pokemon[]{new Pokemon(180, 46, false, true), new Pokemon(180, 47, false, true), new Pokemon(180, 48, false, true)}, 100),
+				new Trainer("GTN1", new Pokemon[]{new Pokemon(147, 49, false, true), new Pokemon(96, 48, false, true), new Pokemon(31, 49, false, true)}, 100),
+				new Trainer("GTN2", new Pokemon[]{new Pokemon(165, 49, false, true), new Pokemon(207, 48, false, true), new Pokemon(208, 48, false, true)}, 100),
+				new Trainer("Fred 3", new Pokemon[]{new Pokemon(10, 5, false, true)}, 500), // 185
 //				new Trainer("Rival 3", new Pokemon[]{new Pokemon(-131, 25, false, true), new Pokemon(-24, 16, false, true), new Pokemon(-21, 19, false, true)}, 500),
 //				new Trainer("Q", new Pokemon[]{new Pokemon(-50, 25, false, true)}, 100),
 //				new Trainer("5 Gym A", new Pokemon[]{new Pokemon(-63, 14, false, true), new Pokemon(-63, 16, false, true), new Pokemon(-63, 18, false, true)}, 200),

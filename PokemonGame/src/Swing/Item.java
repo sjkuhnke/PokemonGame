@@ -100,7 +100,7 @@ public class Item implements Serializable {
 		else if (id == 142) return 1000;
 		else if (id == 143) return 1000;
 		else if (id == 144) return 1000;
-		else if (id == 145) return 750;
+		else if (id == 145) return 1000;
 		else if (id == 146) return 1500;
 		else if (id == 149) return 1500;
 		else if (id == 150) return 1250;

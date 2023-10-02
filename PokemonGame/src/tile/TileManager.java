@@ -100,7 +100,7 @@ public class TileManager {
 		loadMap("/maps/gate02.txt", 75);
 		loadMap("/maps/gate01.txt", 76);
 		loadMap("/maps/map10.txt", 77);
-		loadMap("/maps/house01.txt", 78); // TODO: mindagan cavern
+		loadMap("/maps/mindagan01.txt", 78);
 		loadMap("/maps/gate01.txt", 79);
 		loadMap("/maps/map11.txt", 80);
 		loadMap("/maps/gate01.txt", 81);
@@ -108,6 +108,12 @@ public class TileManager {
 		loadMap("/maps/map12.txt", 83);
 		loadMap("/maps/gate02.txt", 84);
 		loadMap("/maps/map13.txt", 85);
+		loadMap("/maps/pc.txt", 86);
+		loadMap("/maps/mart.txt", 87);
+		loadMap("/maps/gym05.txt", 88);
+		loadMap("/maps/house02.txt", 89); // pawn shop
+		loadMap("/maps/shadow0.txt", 90);
+		loadMap("/maps/house01.txt", 91);
 	}
 	
 	public void getTileImage() {
