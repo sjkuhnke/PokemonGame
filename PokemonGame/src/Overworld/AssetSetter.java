@@ -43,6 +43,10 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(25, 31, 1, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(89, 24, 40, mapNum);
 		
+		gp.obj[mapNum][objIndex] = ObjSetup(89, 10, 184, mapNum); // dark pulse
+		gp.obj[mapNum][objIndex] = ObjSetup(79, 11, 30, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(80, 18, 42, mapNum);
+		
 		mapNum = 4;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(86, 56, 131, mapNum); // false swipe
@@ -165,6 +169,14 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(22, 6, 6, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(38, 21, 13, mapNum);
 		
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 80, 6, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(48, 82, 0, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 75, 40, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(16, 76, 20, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(14, 39, 41, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 43, 33, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 39, 105, mapNum); // body slam (change to in house??)
+		
 		mapNum = 35;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(7, 56, 12, mapNum);
@@ -198,8 +210,9 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 30, 13, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(40, 30, 13, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 75, 26, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(35, 77, 148, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 77, 148, mapNum); // scald
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 78, 29, mapNum); // adamant
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 79, 41, mapNum);
 		
 		mapNum = 41;
 		objIndex = 0;
@@ -220,6 +233,68 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 36, 102, mapNum); // dragon claw
 		gp.obj[mapNum][objIndex] = ObjSetup(38, 44, 173, mapNum); // gyro ball
 		
+		mapNum = 77;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 22, 129, mapNum); // liquidation
+		gp.obj[mapNum][objIndex] = ObjSetup(11, 10, 28, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(86, 11, 16, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(90, 12, 0, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(81, 28, 7, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(94, 28, 32, mapNum); // calm
+		gp.obj[mapNum][objIndex] = ObjSetup(69, 43, 27, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(66, 40, 40, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(88, 51, 19, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(86, 44, 6, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(76, 62, 14, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(85, 75, 22, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 76, 41, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(18, 73, 17, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 63, 18, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(7, 63, 42, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 5, 10, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(90, 5, 104, mapNum); // calm mind
+		
+		mapNum = 78;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 69, 32, mapNum); // calm
+		
+		mapNum = 80;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(22, 11, 35, mapNum); // jolly
+		gp.obj[mapNum][objIndex] = ObjSetup(21, 25, 190, mapNum); // iron blast
+		gp.obj[mapNum][objIndex] = ObjSetup(28, 18, 6, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 13, 40, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 11, 27, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(23, 34, 41, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 55, 39, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(27, 72, 42, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(88, 46, 165, mapNum); // shadow claw
+		
+		mapNum = 83;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(24, 79, 39, mapNum); // timid
+		gp.obj[mapNum][objIndex] = ObjSetup(21, 54, 19, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(10, 56, 42, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(33, 57, 40, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 80, 10, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 74, 7, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 73, 41, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(75, 50, 185, mapNum); // rock slide
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 55, 14, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 49, 27, mapNum);
+		
+		mapNum = 85;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(16, 55, 37, mapNum); // quiet
+		gp.obj[mapNum][objIndex] = ObjSetup(47, 60, 155, mapNum); // magic blast
+		gp.obj[mapNum][objIndex] = ObjSetup(45, 70, 7, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 76, 42, mapNum);
+		
+		mapNum = 90;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(56, 20, 21, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(48, 18, 187, mapNum); // poison jab
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 9, 33, mapNum); // careful
 	}
 	
 	public void setNPC() {
@@ -476,6 +551,16 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(31, 40, "Take my spare fishing rod!\nLook at water and press\n'A' to fish!");
 		
+		mapNum = 33;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(3, 49, 78, 195);
+		gp.npc[mapNum][index] = NPCSetup(3, 40, 84, 196);
+		gp.npc[mapNum][index] = NPCSetup(5, 35, 73, 197);
+		gp.npc[mapNum][index] = NPCSetup(6, 22, 81, 198);
+		gp.npc[mapNum][index] = NPCSetup(6, 25, 45, 199);
+		gp.npc[mapNum][index] = NPCSetup(6, 32, 41, 200);
+		gp.npc[mapNum][index] = NPCSetup(5, 41, 44, 201);
+		
 		mapNum = 36;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(3, 20, 45, 106);
@@ -642,6 +727,12 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(14, 29, 45, 183);
 		gp.npc[mapNum][index] = NPCSetup(13, 33, 45, 184);
+		
+		mapNum = 92;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(1, 31, 37, -1);
+		gp.npc[mapNum][index] = NPCSetup(0, 35, 36, -1);
+		gp.npc[mapNum][index] = NPCSetup(17, 22, 37, -1);
 		
 	}
 	

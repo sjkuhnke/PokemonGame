@@ -432,6 +432,10 @@ public class EventHandler {
 			// Grandpa House
 			if (hit(85,23,80)) teleport(91, 31, 45,false);
 			if (hit(91,31,46)) teleport(85, 23, 81,false);
+			
+			// Peaceful park house
+			if (hit(33,32,89)) teleport(92, 31, 45,false);
+			if (hit(92,31,46)) teleport(33, 32, 90,false);
 		}
 	}
 	
