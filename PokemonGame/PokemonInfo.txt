@@ -89,10 +89,10 @@ Base Stats:
 
 Level Up:
 1 - Tackle
-1 - Leer
+1 - Harden
 7 - Ember
 11 - Smokescreen
-14 - Body Slam
+14 - Incinerate
 
 ===================
 005 - Maguide
@@ -104,20 +104,22 @@ Ability:
 Blaze / Solar Power
 
 Base Stats:
-85 HP / 53 Atk / 69 Def / 90 SpA / 66 SpD / 36 Spe / 399 BST
+80 HP / 75 Atk / 65 Def / 75 SpA / 60 SpD / 50 Spe / 405 BST
 
 Level Up:
 1 - Tackle
-1 - Leer
+1 - Harden
 7 - Ember
 11 - Smokescreen
-14 - Body Slam
-17 - Harden
-20 - Flame Wheel
-24 - Headbutt
-27 - Mud Bomb
-32 - Flamethrower
-36 - Iron Defense
+14 - Incinerate
+16 - Headbutt
+18 - Flame Wheel
+21 - Iron Defense
+24 - Take Down
+27 - Bulldoze
+30 - Lava Plume
+33 - Play Rough
+36 - Iron Head
 
 ===================
 006 - Magron
@@ -129,28 +131,31 @@ Ability:
 Blaze / Solar Power
 
 Base Stats:
-89 HP / 66 Atk / 81 Def / 111 SpA / 72 SpD / 102 Spe / 521 BST
+109 HP / 81 Atk / 71 Def / 101 SpA / 67 SpD / 92 Spe / 521 BST
 
 Level Up:
 1 - Tackle
-1 - Leer
+1 - Harden
 7 - Ember
 11 - Smokescreen
-14 - Body Slam
-17 - Harden
-20 - Flame Wheel
-24 - Headbutt
-27 - Mud Bomb
-32 - Flamethrower
-36 - Iron Defense
+14 - Incinerate
+16 - Headbutt
+18 - Flame Wheel
+21 - Iron Defense
+24 - Take Down
+27 - Bulldoze
+30 - Lava Plume
+33 - Play Rough
+36 - Iron Head
 36 - Molten Steelspike
-41 - Lava Plume
-46 - Psybeam
+39 - Fire Blast
+43 - Heavy Slam
+43 - Heat Crash
+46 - Earth Power
 51 - Aura Sphere
-55 - Eruption
-60 - Earth Power
-70 - Hyper Beam
-75 - Steel Beam
+55 - Steel Beam
+60 - Flare Blitz
+70 - Eruption
 
 ===================
 007 - Lizish
@@ -416,7 +421,7 @@ Ability:
 Mouthwater / Thick Fat
 
 Base Stats:
-150 HP / 69 Atk / 65 Def / 43 SpA / 108 SpD / 55 Spe / 490 BST
+150 HP / 79 Atk / 75 Def / 43 SpA / 108 SpD / 35 Spe / 490 BST
 
 Level Up:
 1 - Pound
@@ -449,7 +454,7 @@ Ability:
 Rough Skin / Rock Head
 
 Base Stats:
-150 HP / 95 Atk / 100 Def / 40 SpA / 85 SpD / 55 Spe / 525 BST
+150 HP / 105 Atk / 110 Def / 40 SpA / 85 SpD / 45 Spe / 535 BST
 
 Level Up:
 1 - Pound
@@ -897,7 +902,7 @@ Type:
 Bug / Grass
 
 Ability:
-Swarm / Chlorophyll
+Sharpness / Chlorophyll
 
 Base Stats:
 75 HP / 108 Atk / 80 Def / 60 SpA / 80 SpD / 97 Spe / 500 BST
@@ -3485,7 +3490,7 @@ Type:
 Fighting / Magic
 
 Ability:
-Guts / None
+Adaptability / None
 
 Base Stats:
 95 HP / 130 Atk / 100 Def / 85 SpA / 75 SpD / 55 Spe / 540 BST
@@ -4444,7 +4449,7 @@ Type:
 Fighting / None
 
 Ability:
-Guts / Sheer Force
+Guts / Iron Fist
 
 Base Stats:
 75 HP / 80 Atk / 55 Def / 25 SpA / 35 SpD / 35 Spe / 305 BST
@@ -4466,7 +4471,7 @@ Type:
 Fighting / None
 
 Ability:
-Guts / Sheer Force
+Guts / Iron Fist
 
 Base Stats:
 85 HP / 105 Atk / 85 Def / 40 SpA / 50 SpD / 40 Spe / 405 BST
@@ -4494,7 +4499,7 @@ Type:
 Fighting / None
 
 Ability:
-Guts / Sheer Force
+Guts / Iron Fist
 
 Base Stats:
 105 HP / 140 Atk / 95 Def / 55 SpA / 65 SpD / 45 Spe / 505 BST
@@ -5249,7 +5254,7 @@ Type:
 Galactic / Fighting
 
 Ability:
-Sheer Force / Gravitational Pull
+Sniper / Gravitational Pull
 
 Base Stats:
 170 HP / 135 Atk / 70 Def / 55 SpA / 115 SpD / 50 Spe / 595 BST
@@ -6240,7 +6245,7 @@ Ability:
 Shed Skin / Lightning Rod
 
 Base Stats:
-60 HP / 40 Atk / 90 Def / 115 SpA / 90 SpD / 60 Spe / 455 BST
+80 HP / 40 Atk / 90 Def / 115 SpA / 90 SpD / 75 Spe / 490 BST
 
 Level Up:
 1 - Charge
@@ -6590,37 +6595,37 @@ Level Up:
 75 - Dragon Dance
 
 Unused moves:
-Perish Song
-Flatter
-Silver Wind
-V-Create
-Blast Burn
-Supernova Explosion
-Belch
-Tornado Spin
 Sludge Wave
-Acid Armor
-Noble Roar
-Expanding Force
-Strength
-Petal Blizzard
 Boosted Pursuit
-Lunar Dance
-Struggle
-Failed Sucker
+Expanding Force
+Supernova Explosion
+Flatter
+Petal Blizzard
 Glaciate
+Tornado Spin
+Silver Wind
 Sacred Fire
+Failed Sucker
+Noble Roar
+Blast Burn
+Strength
+V-Create
+Belch
+Acid Armor
+Struggle
+Perish Song
+Lunar Dance
 
 TM Only:
-Slow Fall
 Terrain Pulse
-Scald
 Vine Cross
-Cut
-Rock Climb
-Rock Smash
-Sleep Talk
-Psyshock
+Flip Turn
 Surf
 Lava Surf
-Flip Turn
+Slow Fall
+Rock Smash
+Rock Climb
+Psyshock
+Cut
+Scald
+Sleep Talk
