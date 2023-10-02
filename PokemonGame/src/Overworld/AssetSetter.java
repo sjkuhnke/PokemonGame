@@ -242,6 +242,12 @@ public class AssetSetter {
 		
 		gp.npc[mapNum][index] = NPCSetup(6, 21, 14, 102);
 		
+		gp.npc[mapNum][index] = NPCSetup(5, 88, 7, 175);
+		gp.npc[mapNum][index] = NPCSetup(6, 83, 8, 176);
+		gp.npc[mapNum][index] = NPCSetup(6, 82, 11, 177);
+		gp.npc[mapNum][index] = NPCSetup(5, 88, 11, 178);
+		gp.npc[mapNum][index] = NPCSetup(5, 88, 16, 179);
+		
 		
 		// Nurses/PCs
 		gp.npc[1][index] = NPCSetup(1, 31, 37, -1);
@@ -573,6 +579,70 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(6, 29, 42, 147);
 		gp.npc[mapNum][index] = NPCSetup(5, 33, 42, 148);
+		
+		mapNum = 77;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(6, 46, 18, 149);
+		gp.npc[mapNum][index] = NPCSetup(5, 51, 24, 150);
+		gp.npc[mapNum][index] = NPCSetup(6, 45, 30, 151);
+		gp.npc[mapNum][index] = NPCSetup(6, 52, 64, 152);
+		gp.npc[mapNum][index] = NPCSetup(5, 54, 37, 153);
+		gp.npc[mapNum][index] = NPCSetup(5, 54, 52, 154);
+		gp.npc[mapNum][index] = NPCSetup(5, 86, 33, 155);
+		gp.npc[mapNum][index] = NPCSetup(4, 67, 34, 156);
+		gp.npc[mapNum][index] = NPCSetup(6, 74, 61, 157);
+		gp.npc[mapNum][index] = NPCSetup(5, 32, 45, 158);
+		gp.npc[mapNum][index] = NPCSetup(3, 18, 20, 159);
+		gp.npc[mapNum][index] = NPCSetup(4, 18, 24, 160);
+		gp.npc[mapNum][index] = NPCSetup(5, 87, 15, 161);
+		gp.npc[mapNum][index] = NPCSetup(6, 67, 41, 162);
+		gp.npc[mapNum][index] = NPCSetup(6, 83, 47, 163);
+		gp.npc[mapNum][index] = NPCSetup(6, 23, 60, 164);
+		
+		mapNum = 80;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(5, 33, 19, 165);
+		gp.npc[mapNum][index] = NPCSetup(6, 27, 22, 166);
+		gp.npc[mapNum][index] = NPCSetup(6, 28, 28, 167);
+		gp.npc[mapNum][index] = NPCSetup(16, 35, 41, 185);
+		
+		gp.npc[mapNum][index] = NPCSetup(3, 41, 51, 168);
+		gp.npc[mapNum][index] = NPCSetup(6, 31, 64, 169);
+		gp.npc[mapNum][index] = NPCSetup(4, 75, 57, 170);
+		gp.npc[mapNum][index] = NPCSetup(5, 49, 74, 171);
+		
+		gp.npc[mapNum][index] = NPCSetup(7, 25, 11, -1);
+		
+		mapNum = 83;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(3, 48, 64, 172);
+		gp.npc[mapNum][index] = NPCSetup(4, 48, 67, 173);
+		
+		gp.npc[mapNum][index] = NPCSetup(4, 60, 70, 180);
+		gp.npc[mapNum][index] = NPCSetup(6, 61, 66, 181);
+		gp.npc[mapNum][index] = NPCSetup(5, 65, 65, 182);
+		
+		mapNum = 88;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(5, 75, 57, 186);
+		gp.npc[mapNum][index] = NPCSetup(4, 81, 57, 187);
+		gp.npc[mapNum][index] = NPCSetup(3, 85, 63, 188);
+		gp.npc[mapNum][index] = NPCSetup(5, 45, 67, 189);
+		gp.npc[mapNum][index] = NPCSetup(6, 41, 53, 190);
+		gp.npc[mapNum][index] = NPCSetup(3, 51, 53, 191);
+		gp.npc[mapNum][index] = NPCSetup(4, 41, 47, 192);
+		gp.npc[mapNum][index] = NPCSetup(5, 55, 47, 193);
+		gp.npc[mapNum][index] = NPCSetup(8, 63, 35, 194);
+		
+		mapNum = 90;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(6, 48, 10, 174);
+		
+		mapNum = 91;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(14, 29, 45, 183);
+		gp.npc[mapNum][index] = NPCSetup(13, 33, 45, 184);
+		
 	}
 	
 	public void setInteractiveTile() {

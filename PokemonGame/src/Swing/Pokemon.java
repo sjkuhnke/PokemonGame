@@ -2302,7 +2302,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 22 && level >= 18) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 23 && area == -1) {
+		} else if (id == 23 && (area == 80 || area == 83 || area == 90)) {
 			result = new Pokemon(25, this);
 		} else if (id == 23 && level >= 32) {
 			result = new Pokemon(id + 1, this);
@@ -2418,15 +2418,15 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 137 && level >= 20) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 139 && area == -3) {
+		} else if (id == 139 && area == 77) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 143 && area == -3 && happiness >= 160) { // ?? maybe stone???? idfk
+		} else if (id == 143 && area == 77 && happiness >= 160) { // ?? maybe stone???? idfk
 			result = new Pokemon(id + 1, this);
 		} else if (id == 144 && happiness >= 250) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 146 && level >= 39) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 148 && area == -3) {
+		} else if (id == 148 && area == 77) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 151 && level >= 22) {
 			result = new Pokemon(id + 1, this);
@@ -2496,7 +2496,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 212 && area == -1) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 213 && area == 35) {
+		} else if (id == 213 && area == -2) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 217 && level >= 20) {
 			result = new Pokemon(id + 1, this);
@@ -11403,7 +11403,7 @@ public class Pokemon implements Serializable {
 			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
 		}
-		if (this.type1 == PType.POISON || this.type2 == PType.POISON) {
+		if (this.type1 == PType.POISON || this.type2 == PType.POISON || this.type1 == PType.STEEL || this.type2 == PType.STEEL) {
 			if (announce) System.out.println("It doesn't effect " + this.nickname + "...");
 			return;
 		}
