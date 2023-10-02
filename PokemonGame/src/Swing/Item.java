@@ -88,6 +88,17 @@ public class Item implements Serializable {
 		else if (id == 24) return 2000;
 		else if (id == 25) return 2000;
 		else if (id == 27) return 1000;
+		else if (id == 29) return 2500;
+		else if (id == 30) return 1750;
+		else if (id == 31) return 1000;
+		else if (id == 32) return 1500;
+		else if (id == 33) return 1250;
+		else if (id == 34) return 1750;
+		else if (id == 35) return 2500;
+		else if (id == 36) return 2250;
+		else if (id == 37) return 1000;
+		else if (id == 38) return 1250;
+		else if (id == 39) return 2500;
 		else if (id == 40) return 300;
 		else if (id == 112) return 750;
 		else if (id == 113) return 5000;

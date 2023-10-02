@@ -541,7 +541,7 @@ public class PlayerCharacter extends Entity {
 		    	if (gp.currentMap == 29) p.locations[4] = true;
 		    	if (gp.currentMap == 39) p.locations[6] = true;
 		    	if (gp.currentMap == 86) p.locations[8] = true;
-		    	if (gp.currentMap == 86) p.locations[5] = true; // TODO PP
+		    	if (gp.currentMap == 92) p.locations[5] = true;
 		    }
 		    keyH.resume();
 		}
@@ -1580,6 +1580,8 @@ public class PlayerCharacter extends Entity {
 	    if (gp.currentMap == 40) shopItems = new Item[] {new Item(112), new Item(113), new Item(115), new Item(116), new Item(123), new Item(124)};
 	    if (gp.currentMap == 89) shopItems = new Item[] {new Item(145), new Item(150), new Item(154), new Item(174), new Item(175),
 	    		new Item(176), new Item(177), new Item(179), new Item(180), new Item(181), new Item(182), new Item(195)};
+	    if (gp.currentMap == 92) shopItems = new Item[] {new Item(29), new Item(30), new Item(31), new Item(32), new Item(33), new Item(34),
+	    		new Item(35), new Item(36), new Item(37), new Item(38), new Item(39)};
 	    for (int i = 0; i < shopItems.length; i++) {
 	    	JGradientButton item = new JGradientButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
 	    	Item curItem = shopItems[i];

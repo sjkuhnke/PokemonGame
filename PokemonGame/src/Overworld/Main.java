@@ -410,7 +410,14 @@ public class Main {
 				new Trainer("5 Gym F", new Pokemon[]{new Pokemon(79, 48, false, true), new Pokemon(53, 49, false, true)}, 200),
 				new Trainer("5 Gym G", new Pokemon[]{new Pokemon(91, 49, false, true)}, 200),
 				new Trainer("5 Gym H", new Pokemon[]{new Pokemon(81, 49, false, true), new Pokemon(91, 49, false, true)}, 200),
-				new Trainer("5 Gym Leader 1", new Pokemon[]{new Pokemon(91, 49, false, true), new Pokemon(88, 49, false, true), new Pokemon(83, 49, false, true), new Pokemon(77, 49, false, true), new Pokemon(79, 49, false, true), new Pokemon(89, 50, false, true)}, 500),
+				new Trainer("5 Gym Leader 1", new Pokemon[]{new Pokemon(91, 49, false, true), new Pokemon(88, 49, false, true), new Pokemon(83, 49, false, true), new Pokemon(77, 49, false, true), new Pokemon(79, 49, false, true), new Pokemon(89, 50, false, true)}, 500, new Item(111)),
+				new Trainer("DA", new Pokemon[]{new Pokemon(33, 45, false, true), new Pokemon(34, 44, false, true), new Pokemon(34, 45, false, true)}, 200), // 195
+				new Trainer("DB", new Pokemon[]{new Pokemon(36, 46, false, true), new Pokemon(37, 45, false, true)}, 100),
+				new Trainer("DC", new Pokemon[]{new Pokemon(24, 46, false, true)}, 100),
+				new Trainer("DD", new Pokemon[]{new Pokemon(25, 46, false, true)}, 100),
+				new Trainer("DE", new Pokemon[]{new Pokemon(43, 46, false, true)}, 100),
+				new Trainer("DF", new Pokemon[]{new Pokemon(30, 46, false, true), new Pokemon(31, 45, false, true)}, 100), // 200
+				new Trainer("DG", new Pokemon[]{new Pokemon(39, 45, false, true), new Pokemon(40, 45, false, true)}, 100),
 //				new Trainer("R", new Pokemon[]{new Pokemon(-106, 24, false, true)}, 100),
 //				new Trainer("S", new Pokemon[]{new Pokemon(-92, 20, false, true), new Pokemon(-92, 20, false, true), new Pokemon(-46, 15, false, true)}, 100),
 //				new Trainer("T", new Pokemon[]{new Pokemon(-75, 18, false, true), new Pokemon(-77, 23, false, true)}, 100),

@@ -114,6 +114,7 @@ public class TileManager {
 		loadMap("/maps/house02.txt", 89); // pawn shop
 		loadMap("/maps/shadow0.txt", 90);
 		loadMap("/maps/house01.txt", 91);
+		loadMap("/maps/pphouse.txt", 92);
 	}
 	
 	public void getTileImage() {
