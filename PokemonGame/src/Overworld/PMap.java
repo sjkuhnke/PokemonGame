@@ -210,6 +210,11 @@ public class PMap extends JFrame {
 	    PP.setToolTipText("Peaceful Park");
 	    PP.setBounds(112, 102, 89, 105);
 	    if (loc == 15) PP.setBackground(Color.yellow);
+	    if (locations[5]) {
+	    	PP.addActionListener(e -> {
+	    		fly(PP.getToolTipText(), 33, 32, 90);
+	    	});
+	    }
 	    getContentPane().add(PP);
 	    
 	    JButton KV = new JButton("");
@@ -358,7 +363,12 @@ public class PMap extends JFrame {
 	    JButton FC = new JButton("");
 	    FC.setToolTipText("Frenco City");
 	    FC.setBounds(495, 244, 50, 38);
-	    if (locations[8]) FC.setBackground(Color.red);
+	    if (locations[8]) {
+	    	FC.setBackground(Color.red);
+	    	FC.addActionListener(e -> {
+	    		fly(SRC.getToolTipText(), 85, 43, 76);
+	    	});
+	    }
 	    if (loc == 28) FC.setBackground(Color.yellow);
 	    getContentPane().add(FC);
 	    
@@ -447,7 +457,7 @@ public class PMap extends JFrame {
 		if (gp.player.p.hasMove(Move.CUT)) {
 			int answer = JOptionPane.showConfirmDialog(null, "Would you like to fly to " + loc + "?");
     		if (answer == JOptionPane.YES_OPTION) {
-    			gp.eHandler.teleport(map, x, y);
+    			gp.eHandler.teleport(map, x, y, false);
     			gp.keyH.resume();
     			this.dispose();
     			gp.mapOpen = false;
@@ -641,23 +651,27 @@ public class PMap extends JFrame {
 			if (y > 41) return 25;
 		case 81:
 			return 26;
-		case 82: // TODO from here down
-			return 20;
+		case 82:
+			return 25;
 		case 83:
+			if (x <= 56) return 25;
+			if (x > 56) return 27;
 			return 20;
 		case 84:
-			return 20;
+			return 27;
 		case 85:
+			if (x <= 63) return 28;
+			if (x > 56) return 29;
 			return 20;
 		case 86:
-			return 4;
+			return 28;
 		case 87:
-			return 20;
+			return 28;
 		case 88:
-			return 20;
+			return 28;
 		case 89:
-			return 20;
-		case 90:
+			return 28;
+		case 90: // TODO from here down
 			return 20;
 		case 91:
 			return 20;

@@ -321,7 +321,71 @@ public class Encounter {
 				encounters.add(new Encounter(134, 20, 20, 0.25));
 				encounters.add(new Encounter(78, 20, 20, 0.20));
 				encounters.add(new Encounter(141, 20, 20, 0.05));
+			} else if (area == 77 && type.equals("Surfing")) { // Mindagan Lake
+				encounters.add(new Encounter(68, 20, 25, 0.08));
+				encounters.add(new Encounter(71, 20, 25, 0.15));
+				encounters.add(new Encounter(78, 20, 25, 0.18));
+				encounters.add(new Encounter(134, 20, 25, 0.13));
+				encounters.add(new Encounter(135, 20, 25, 0.05));
+				encounters.add(new Encounter(139, 20, 25, 0.21));
+				encounters.add(new Encounter(143, 20, 25, 0.20));
+			} else if (area == 77 && type.equals("Fishing")) { // Mindagan Lake
+				encounters.add(new Encounter(90, 20, 25, 0.08));
+				encounters.add(new Encounter(132, 20, 25, 0.08));
+				encounters.add(new Encounter(137, 20, 25, 0.15));
+				encounters.add(new Encounter(141, 20, 25, 0.15));
+				encounters.add(new Encounter(143, 20, 25, 0.10));
+				encounters.add(new Encounter(146, 20, 25, 0.07));
+				encounters.add(new Encounter(148, 20, 25, 0.12));
+				encounters.add(new Encounter(150, 20, 25, 0.25));
+			} else if (area == 78 && type.equals("Standard")) { // Mindagan Cavern 1A
+				encounters.add(new Encounter(175, 26, 30, 0.12));
+				encounters.add(new Encounter(177, 26, 30, 0.13));
+				encounters.add(new Encounter(184, 24, 28, 0.25));
+				encounters.add(new Encounter(187, 25, 30, 0.25));
+				encounters.add(new Encounter(190, 24, 28, 0.10));
+				encounters.add(new Encounter(195, 26, 30, 0.15));
+			} else if (area == 80 && y <= 41 && type.equals("Standard")) { // Route 31
+				encounters.add(new Encounter(33, 25, 28, 0.14)); 
+				encounters.add(new Encounter(42, 27, 29, 0.15));
+				encounters.add(new Encounter(73, 25, 28, 0.20));
+				encounters.add(new Encounter(158, 25, 28, 0.16));
+				encounters.add(new Encounter(55, 26, 28, 0.25));
+				encounters.add(new Encounter(66, 28, 29, 0.10));
+			} else if (area == 83 && x <= 57 && type.equals("Standard")) { // Shadow Ravine 1A
+				encounters.add(new Encounter(172, 25, 29, 0.15));
+				encounters.add(new Encounter(218, 25, 29, 0.25));
+				encounters.add(new Encounter(220, 26, 28, 0.08));
+				encounters.add(new Encounter(224, 27, 29, 0.17));
+				encounters.add(new Encounter(226, 26, 28, 0.35));
+			} else if (area == 90 && type.equals("Standard")) { // Shadow Ravine 0
+				encounters.add(new Encounter(169, 26, 28, 0.25));
+				encounters.add(new Encounter(158, 26, 28, 0.10));
+				encounters.add(new Encounter(218, 25, 29, 0.25));
+				encounters.add(new Encounter(220, 26, 28, 0.08));
+				encounters.add(new Encounter(224, 27, 29, 0.17));
+				encounters.add(new Encounter(226, 26, 28, 0.15));
+			} else if (area == 83 && x > 57 && type.equals("Standard")) { // Route 32
+				encounters.add(new Encounter(11, 26, 28, 0.15));
+				encounters.add(new Encounter(14, 27, 29, 0.15));
+				encounters.add(new Encounter(73, 26, 28, 0.15));
+				encounters.add(new Encounter(82, 26, 28, 0.20));
+				encounters.add(new Encounter(57, 27, 28, 0.15));
+				encounters.add(new Encounter(105, 26, 28, 0.20));
+			} else if (area == 83 && x > 57 && type.equals("Fishing")) { // Route 32
+				encounters.add(new Encounter(90, 24, 27, 0.20));
+				encounters.add(new Encounter(132, 24, 27, 0.10));
+				encounters.add(new Encounter(146, 24, 27, 0.20));
+				encounters.add(new Encounter(141, 27, 29, 0.25));
+				encounters.add(new Encounter(215, 25, 27, 0.25));
+			} else if (area == 83 && x > 57 && type.equals("Surfing")) { // Route 32
+				encounters.add(new Encounter(135, 24, 26, 0.20));
+				encounters.add(new Encounter(132, 24, 27, 0.15));
+				encounters.add(new Encounter(143, 24, 27, 0.20));
+				encounters.add(new Encounter(141, 27, 29, 0.20));
+				encounters.add(new Encounter(215, 25, 27, 0.25));
 			}
+			
 			
 		}
 		

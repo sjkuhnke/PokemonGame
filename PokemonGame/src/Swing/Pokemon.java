@@ -2638,8 +2638,8 @@ public class Pokemon implements Serializable {
 		} else if (this.id == 14) { this.baseStats = new int[]{66,76,86,35,60,78};
 		} else if (this.id == 15) { this.baseStats = new int[]{73,85,110,56,90,81};
 		} else if (this.id == 16) { this.baseStats = new int[]{99,61,51,40,79,20};
-		} else if (this.id == 17) { this.baseStats = new int[]{150,69,65,43,108,55};
-		} else if (this.id == 18) { this.baseStats = new int[]{150,95,100,40,85,55};
+		} else if (this.id == 17) { this.baseStats = new int[]{150,79,75,43,108,35};
+		} else if (this.id == 18) { this.baseStats = new int[]{150,105,110,40,85,45};
 		} else if (this.id == 19) { this.baseStats = new int[]{55,55,55,55,55,55};
 		} else if (this.id == 20) { this.baseStats = new int[]{75,75,75,75,75,75};
 		} else if (this.id == 21) { this.baseStats = new int[]{80,60,75,135,85,80};
