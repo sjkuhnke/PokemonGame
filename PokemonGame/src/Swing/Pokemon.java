@@ -10628,6 +10628,7 @@ public class Pokemon implements Serializable {
 		this.vStatuses.remove(Status.CHARGING);
 		this.vStatuses.remove(Status.NO_SWITCH);
 		this.vStatuses.remove(Status.TRAPPED);
+		this.vStatuses.remove(Status.SEMI_INV);
 		foe.vStatuses.remove(Status.SPUN);
 		foe.vStatuses.remove(Status.TRAPPED);
 		if (player != null && this.playerOwned) {

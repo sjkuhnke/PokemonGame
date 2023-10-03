@@ -181,8 +181,8 @@ public class Main {
 		setMoveset("3 Gym Leader 1", 5, Move.BUG_BITE, Move.MOONLIGHT, Move.FEINT_ATTACK, Move.FELL_STINGER);
 		setMoveset("3 Gym Leader 1", 6, Move.AURORA_BEAM, Move.BUG_BUZZ, Move.SNOWSCAPE, Move.QUIVER_DANCE);
 		
-		setMoveset("Trainer AB", 1, Move.HYPNOSIS, Move.PLAY_NICE, Move.MOONLIGHT, Move.HIDDEN_POWER);
-		setMoveset("Trainer AC", 1, Move.HYPNOSIS, Move.FAKE_TEARS, Move.NASTY_PLOT, Move.SNARL);
+		setMoveset("AB1", 1, Move.HYPNOSIS, Move.PLAY_NICE, Move.MOONLIGHT, Move.HIDDEN_POWER);
+		setMoveset("AC1", 1, Move.HYPNOSIS, Move.FAKE_TEARS, Move.NASTY_PLOT, Move.SNARL);
 		
 		setMoveset("4 Gym Leader 1", 2, Move.SNOWSCAPE, Move.AURORA_VEIL, Move.BLIZZARD, Move.SCALD);
 		setAbility("4 Gym Leader 1", 2, Ability.ICE_BODY);
@@ -320,8 +320,8 @@ public class Main {
 				new Trainer("CU", new Pokemon[]{new Pokemon(42, 20, false, true)}, 100),
 				new Trainer("E", new Pokemon[]{new Pokemon(134, 5, false, true), new Pokemon(117, 6, false, true)}, 100),
 				new Trainer("K", new Pokemon[]{new Pokemon(1, 15, false, true), new Pokemon(4, 15, false, true), new Pokemon(7, 15, false, true)}, 100),
-				new Trainer("AB", new Pokemon[]{new Pokemon(156, 20, false, true)}, 100),
-				new Trainer("AC", new Pokemon[]{new Pokemon(158, 20, false, true)}, 100), // 105
+				new Trainer("AB1", new Pokemon[]{new Pokemon(156, 20, false, true)}, 100),
+				new Trainer("AC1", new Pokemon[]{new Pokemon(158, 20, false, true)}, 100), // 105
 				new Trainer("AG", new Pokemon[]{new Pokemon(15, 34, false, true), new Pokemon(31, 34, false, true)}, 100),
 				new Trainer("AH", new Pokemon[]{new Pokemon(171, 35, false, true), new Pokemon(172, 36, false, true)}, 100),
 				new Trainer("AI", new Pokemon[]{new Pokemon(57, 35, false, true), new Pokemon(121, 35, false, true)}, 100),
