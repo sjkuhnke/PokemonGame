@@ -827,6 +827,7 @@ public class Battle extends JFrame {
 							foe.swapIn(me.getCurrent(), field, me);
 							updateField(field);
 							updateFoe();
+							updateCurrent(pl);
 							updateBars(false);
 							me.clearBattled();
 							me.getCurrent().battled = true;
@@ -1312,6 +1313,7 @@ public class Battle extends JFrame {
 					foe.swapIn(me.getCurrent(), field, me);
 					updateField(field);
 					updateFoe();
+					updateCurrent(pl);
 					updateBars(false);
 					me.clearBattled();
 					me.getCurrent().battled = true;
