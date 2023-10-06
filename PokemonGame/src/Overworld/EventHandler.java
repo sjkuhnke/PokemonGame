@@ -339,7 +339,7 @@ public class EventHandler {
 			
 			// Mindagan Cavern
 			if (hit(77,83,32)) teleport(78, 58, 74,false);
-			if (hit(78,58,74)) teleport(77, 83, 33,false);
+			if (hit(78,58,75)) teleport(77, 83, 33,false);
 			
 			// Route 31/Mindagan Lake gate
 			if (hit(77,56,74)) teleport(79, 31, 34,false);

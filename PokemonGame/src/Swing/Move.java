@@ -66,7 +66,7 @@ public enum Move {
 	BRANCH_POKE(40,100,0,0,0,0,PType.GRASS,"",true,35),
 	BRAVE_BIRD(120,100,0,0,0,0,PType.FLYING,"User takes 1/3 of damage inflicted",true,10), // recoil
 	BREAKING_SWIPE(60,100,100,0,0,0,PType.DRAGON,"",true,15),
-	BRICK_BREAK(75,100,100,0,0,0,PType.FIGHTING,"100% chance to break Screen effects",true,15),
+	BRICK_BREAK(75,100,100,0,0,0,PType.FIGHTING,"% chance to break Screen effects",true,15),
 	BRINE(-1,100,0,0,1,0,PType.WATER,"Damage is doubled if foe is below 50% HP",false,10), 
 	BRUTAL_SWING(60,100,0,0,0,0,PType.DARK,"A normal attack",true,20),
 	BUBBLE(20,100,0,0,1,0,PType.WATER,"A normal attack",false,30),
@@ -568,7 +568,7 @@ public enum Move {
 	VACUUM_WAVE(40,100,0,0,1,1,PType.FIGHTING,"",false,30),
 	V$CREATE(180,95,100,0,0,0,PType.FIRE,"",true,5),
 	VENOM_DRENCH(0,100,0,0,2,0,PType.POISON,"",false,20),
-	VENOM_SPIT(40,100,100,0,1,0,PType.POISON,"",false,5), // TODO
+	VENOM_SPIT(40,100,100,0,1,0,PType.POISON,"",false,5),
 	VENOSHOCK(-1,100,0,0,1,0,PType.POISON,"",false,10),
 	VISE_GRIP(55,100,0,0,0,0,PType.NORMAL,"",true,30),
 	VINE_WHIP(45,100,0,0,0,0,PType.GRASS,"A normal attack",true,25),
@@ -664,6 +664,7 @@ public enum Move {
 	}
 	public String getbp() {
 		if (basePower == -1) return "Varies";
+		if (basePower == 0) return "--";
 		return basePower + "";
 	}
 	public String getCategory() {
