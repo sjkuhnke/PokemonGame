@@ -397,7 +397,7 @@ public class Main {
 				new Trainer("BW2", new Pokemon[]{new Pokemon(225, 45, false, true), new Pokemon(34, 45, false, true)}, 100),
 				new Trainer("BX", new Pokemon[]{new Pokemon(115, 46, false, true), new Pokemon(124, 44, false, true), new Pokemon(119, 45, false, true)}, 100),
 				new Trainer("BY", new Pokemon[]{new Pokemon(157, 48, false, true), new Pokemon(25, 48, false, true), new Pokemon(46, 47, false, true)}, 100), // 180
-				new Trainer("BZ", new Pokemon[]{new Pokemon(113, 48, false, true), new Pokemon(115, 48, false, true), new Pokemon(122, 48, false, true)}, 100),
+				new Trainer("BZ", new Pokemon[]{new Pokemon(113, 48, false, true), new Pokemon(116, 48, false, true), new Pokemon(122, 48, false, true)}, 100),
 				new Trainer("CA", new Pokemon[]{new Pokemon(180, 46, false, true), new Pokemon(180, 47, false, true), new Pokemon(180, 48, false, true)}, 100),
 				new Trainer("GTN1", new Pokemon[]{new Pokemon(147, 49, false, true), new Pokemon(96, 48, false, true), new Pokemon(31, 49, false, true)}, 100),
 				new Trainer("GTN2", new Pokemon[]{new Pokemon(165, 49, false, true), new Pokemon(207, 48, false, true), new Pokemon(208, 48, false, true)}, 100),

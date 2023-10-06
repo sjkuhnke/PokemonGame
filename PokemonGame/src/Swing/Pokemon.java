@@ -5470,6 +5470,8 @@ public class Pokemon implements Serializable {
 			stat(this, 4, 1, foe);
 		} else if (move == Move.TWISTER && first) {
 			foe.vStatuses.add(Status.FLINCHED);
+		} else if (move == Move.VENOM_SPIT) {
+			foe.paralyze(false, this, field);
 		} else if (move == Move.VOLT_TACKLE) {
 			foe.paralyze(false, this, field);
 		} else if (move == Move.V$CREATE) {
