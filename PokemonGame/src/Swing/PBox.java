@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.*;
+import Swing.Battle.JGradientButton;
 
 public class PBox extends JFrame {
 
@@ -99,11 +100,12 @@ public class PBox extends JFrame {
 	        boxButtons[i].setText("");
 	        boxButtons[i].setIcon(null);
 	        if (cBox[i] != null) {
-	        	ImageIcon icon = new ImageIcon(cBox[i].getSprite());
+	        	ImageIcon icon = new ImageIcon(cBox[i].getSprite()); // change to getMiniSprite()
 	            boxButtons[i].setIcon(icon);
 	            boxButtons[i].setHorizontalAlignment(SwingConstants.CENTER);
 	            boxButtons[i].setFont(new Font("Tahoma", Font.BOLD, 9));
-	            boxButtons[i].setBackground(cBox[i].type1.getColor());
+	            
+	            boxButtons[i].setBackground(cBox[i].type1.getColor(), cBox[i].type2 == null ? null : cBox[i].type2.getColor());
 	        } else {
 	            boxButtons[i].setText("");
 	            boxButtons[i].setIcon(null);
@@ -414,39 +416,6 @@ public class PBox extends JFrame {
             boxMemberPanel.add(releaseButton);
             JOptionPane.showMessageDialog(null, boxMemberPanel, "Box member details", JOptionPane.PLAIN_MESSAGE);
 	    });
-	}
-
-	
-	public static final class JGradientButton extends JButton{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 639680055516122456L;
-
-		public JGradientButton(String text){
-	        super(text);
-	        setContentAreaFilled(false);
-	    }
-
-		@Override // implementation
-	    protected void paintComponent(Graphics g){
-	        Graphics2D g2 = (Graphics2D)g.create();
-	        g2.setPaint(new GradientPaint(
-	                new Point(0, 0), 
-	                getBackground(), 
-	                new Point(0, getHeight()/3), 
-	                Color.WHITE));
-	        g2.fillRect(0, 0, getWidth(), getHeight()/3);
-	        g2.setPaint(new GradientPaint(
-	                new Point(0, getHeight()/3), 
-	                Color.WHITE, 
-	                new Point(0, getHeight()), 
-	                getBackground()));
-	        g2.fillRect(0, getHeight()/3, getWidth(), getHeight());
-	        g2.dispose();
-
-	        super.paintComponent(g);
-	    }
 	}
 	
 	public static int displayMoveOptions(Pokemon pokemon, Move move) {

@@ -1217,7 +1217,7 @@ public class Battle extends JFrame {
 				party[i].setBounds(60, 21 + (i % 5) * 54, 94, 30);
 				party[i].setFont(new Font("Tahoma", Font.PLAIN, 11));
 				party[i].setText("<html><center>" + top + "<br>" + bottom + "</center></html>");
-				party[i].setBackground(p.type1.getColor());
+				party[i].setBackground(p.type1.getColor(), p.type2 == null ? null : p.type2.getColor());
 				playerPanel.add(party[i]);
 				party[i].setVisible(true);
 				
@@ -1505,32 +1505,57 @@ public class Battle extends JFrame {
 		
 	}
 	
-	public static final class JGradientButton extends JButton{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 639680055516122456L;
+	public static final class JGradientButton extends JButton {
+	    private static final long serialVersionUID = 639680055516122456L;
+	    private Color backgroundColorA;
+	    private Color backgroundColorB;
 
-		public JGradientButton(String text){
+	    public JGradientButton(String text) {
 	        super(text);
 	        setContentAreaFilled(false);
+	        setBackground(Color.WHITE, Color.WHITE); // Default gradient colors
 	    }
 
-	    @Override // implementation
-	    protected void paintComponent(Graphics g){
-	        Graphics2D g2 = (Graphics2D)g.create();
+	    // Set the background gradient colors
+	    public void setBackground(Color a, Color b) {
+	    	if (a == null && b == null) {
+	            throw new NullPointerException("Both colors cannot be null.");
+	        }
+	    	
+	    	if (a == null) {
+	    		a = b;
+	    	} else if (b == null) {
+	    		b = a;
+	    	}
+	    	
+	        this.backgroundColorA = a;
+	        this.backgroundColorB = b;
+	        repaint(); // Repaint to apply the new colors
+	    }
+	    
+	    @Override
+	    public void setBackground(Color c) {
+	    	if (c == null) c = Color.white;
+	    	this.backgroundColorA = c;
+	    	this.backgroundColorB = c;
+	    	repaint();
+	    }
+
+	    @Override
+	    protected void paintComponent(Graphics g) {
+	        Graphics2D g2 = (Graphics2D) g.create();
 	        g2.setPaint(new GradientPaint(
-	                new Point(0, 0), 
-	                getBackground(), 
-	                new Point(0, getHeight()/3), 
+	                new Point(0, 0),
+	                backgroundColorA,
+	                new Point(0, getHeight() / 3),
 	                Color.WHITE));
-	        g2.fillRect(0, 0, getWidth(), getHeight()/3);
+	        g2.fillRect(0, 0, getWidth(), getHeight() / 3);
 	        g2.setPaint(new GradientPaint(
-	                new Point(0, getHeight()/3), 
-	                Color.WHITE, 
-	                new Point(0, getHeight()), 
-	                getBackground()));
-	        g2.fillRect(0, getHeight()/3, getWidth(), getHeight());
+	                new Point(0, getHeight() / 3),
+	                Color.WHITE,
+	                new Point(0, getHeight()),
+	                backgroundColorB));
+	        g2.fillRect(0, getHeight() / 3, getWidth(), getHeight());
 	        g2.dispose();
 
 	        super.paintComponent(g);
