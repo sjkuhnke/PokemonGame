@@ -862,7 +862,7 @@ public class Item implements Serializable {
 			result = Move.IRON_BLAST;
 			break;
 		case 191:
-			result = Move.TRI_ATTACK;
+			result = Move.TRI$ATTACK;
 			break;
 		case 192:
 			result = Move.COMET_CRASH;

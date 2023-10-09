@@ -30,7 +30,7 @@ Trainer 1 Gym Leader 1      Hummingspark Lv. 16, Zubat Lv. 16, Daray Lv. 16, Eka
 
 1 Gym Leader 1
 Hummingspark (Lv. 16)    /   Keen Eye        /   Quick Attack, Leer, Flash Ray, Gust
-Zubat (Lv. 16)           /   Inner Focus     /   Mega Drain, Supersonic, Aerial Ace, Poison Fang
+Zubat (Lv. 16)           /   Strong Jaw      /   Mega Drain, Supersonic, Aerial Ace, Poison Fang
 Daray (Lv. 16)           /   Unaware         /   Aqua Ring, Supersonic, Double Slap, Water Gun
 Ekans-S (Lv. 16)         /   Lightning Rod   /   Gust, Glare, Night Shade, Shadow Sneak
 Minishoo (Lv. 16)        /   Natural Cure    /   Calm Mind, Wish, Magic Blast, Gust
@@ -83,7 +83,7 @@ Trainer Scott 2             Ninjask Lv. 21, Iguaton Lv. 22, Rhypo Lv. 22
 Scott 2
 Ninjask (Lv. 21)         /   Speed Boost     /   False Swipe, Mud-Slap, Fury Cutter, Harden
 Iguaton (Lv. 22)         /   Torrent         /   Mud Sport, Bite, Mean Look, Bubblebeam
-Rhypo (Lv. 22)           /   Rattled         /   Fury Attack, Defense Curl, Growl, Tail Whip
+Rhypo (Lv. 22)           /   Rattled         /   Fury Attack, Rapid Spin, Growl, Tail Whip
 
 Trainer 2 Gym A             Hammo Lv. 22
 Trainer 2 Gym B             Hammo Lv. 22
@@ -158,8 +158,8 @@ Trainer CT                  Spheal Lv. 20
 Trainer CU                  Swordik Lv. 20
 Trainer E                   Lilyray Lv. 5, Twigzap Lv. 6
 Trainer K                   Twigle Lv. 15, Lagma Lv. 15, Lizish Lv. 15
-Trainer AB                  Poof Lv. 20
-Trainer AC                  Poov Lv. 20
+Trainer AB1                 Poof Lv. 20
+Trainer AC1                 Poov Lv. 20
 Trainer AG                  Pigoga Lv. 34, Roserade Lv. 34
 Trainer AH                  Wormite Lv. 35, Wormbot Lv. 36
 Trainer AI                  Fightorex Lv. 35, Cumin Lv. 35
@@ -244,7 +244,7 @@ Trainer BW1                 Pyrator Lv. 45, Ninjakik Lv. 44
 Trainer BW2                 Pyrator-S Lv. 45, Leavanny Lv. 45
 Trainer BX                  Electroram Lv. 46, Vinnie Lv. 44, Thunderzap Lv. 45
 Trainer BY                  Hast Lv. 48, Millistone Lv. 48, Ludicolo Lv. 47
-Trainer BZ                  Megawatt Lv. 48, Electroram Lv. 48, Cinneroph Lv. 48
+Trainer BZ                  Megawatt Lv. 48, Superchargo Lv. 48, Cinneroph Lv. 48
 Trainer CA                  Zoroark Lv. 46, Zoroark Lv. 47, Zoroark Lv. 48
 Trainer GTN1                Barbaracle Lv. 49, Pyrator Lv. 48, Roserade Lv. 49
 Trainer GTN2                Conkeldurr Lv. 49, Blaster-E Lv. 48, Crystallor-E Lv. 48

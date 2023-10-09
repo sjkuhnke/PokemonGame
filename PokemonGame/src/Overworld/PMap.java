@@ -671,13 +671,13 @@ public class PMap extends JFrame {
 			return 28;
 		case 89:
 			return 28;
-		case 90: // TODO from here down
-			return 20;
+		case 90:
+			return 25;
 		case 91:
-			return 20;
+			return 28;
 		case 92:
-			return 20;
-		case 93:
+			return 15;
+		case 93: // TODO from here down
 			return 20;
 		case 94:
 			return 20;

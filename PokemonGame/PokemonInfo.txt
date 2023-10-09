@@ -273,7 +273,8 @@ Level Up:
 10 - Gust
 13 - Quick Attack
 17 - Whirlwind
-22 - Twister
+19 - Twister
+22 - Defog
 25 - Light Beam
 27 - Mirror Move
 30 - Glitter Dance
@@ -298,13 +299,15 @@ Level Up:
 10 - Gust
 13 - Quick Attack
 17 - Whirlwind
-22 - Twister
+19 - Twister
+22 - Defog
 25 - Light Beam
 27 - Mirror Move
 30 - Glitter Dance
 33 - Agility
-37 - Dazzling Gleam
+36 - Dazzling Gleam
 42 - Roost
+44 - Prismatic Laser
 47 - Sunny Day
 52 - Morning Sun
 56 - Hurricane
@@ -380,7 +383,8 @@ Level Up:
 32 - Metal Sound
 35 - Steel Wing
 38 - Drill Peck
-43 - Roost
+41 - Defog
+44 - Roost
 47 - Take Down
 53 - Night Slash
 57 - Gyro Ball
@@ -821,7 +825,8 @@ Level Up:
 10 - Sleep Powder
 16 - Leech Seed
 19 - Magical Leaf
-22 - Grass Whistle
+21 - Sludge
+23 - Grass Whistle
 25 - Giga Drain
 28 - Toxic Spikes
 28 - Spikes
@@ -938,7 +943,8 @@ Level Up:
 1 - Mud-Slap
 5 - String Shot
 10 - Bug Bite
-15 - Bite
+13 - Bite
+16 - Thundershock
 20 - Spark
 25 - Sticky Web
 
@@ -959,10 +965,13 @@ Level Up:
 1 - Mud-Slap
 5 - String Shot
 10 - Bug Bite
-15 - Bite
-20 - Charge
-23 - Spark
+13 - Bite
+16 - Thundershock
+20 - Spark
+23 - Infestation
+26 - Parabolic Charge
 29 - Sticky Web
+32 - Electroweb
 36 - X-Scissor
 43 - Crunch
 50 - Dig
@@ -984,15 +993,20 @@ Base Stats:
 Level Up:
 1 - Vise Grip
 1 - Mud-Slap
-1 - Thunderbolt
 5 - String Shot
 10 - Bug Bite
-15 - Bite
-20 - Charge
-23 - Spark
+13 - Bite
+16 - Thundershock
+20 - Spark
+23 - Infestation
+26 - Parabolic Charge
 29 - Sticky Web
-36 - Bug Buzz
-43 - Guillotine
+32 - Electroweb
+36 - Silver Wind
+39 - Discharge
+41 - Guillotine
+43 - Bug Buzz
+47 - Thunderbolt
 50 - Fly
 57 - Agility
 64 - Zap Cannon
@@ -1270,7 +1284,7 @@ Level Up:
 35 - Sweet Kiss
 38 - Sparkly Swirl
 40 - Glitzy Glow
-42 - Tri Attack
+42 - Tri-Attack
 44 - Magic Blast
 45 - Fiery Dance
 50 - Glitter Dance
@@ -1623,6 +1637,7 @@ Level Up:
 1 - Confusion
 1 - Glare
 10 - Gust
+25 - Defog
 30 - Night Shade
 
 ===================
@@ -2460,7 +2475,7 @@ Level Up:
 45 - Minimize
 50 - Hyper Beam
 55 - Thunder
-60 - Tri Attack
+60 - Tri-Attack
 65 - Moonblast
 
 ===================
@@ -2470,7 +2485,7 @@ Type:
 Psychic / Dark
 
 Ability:
-Contrary / None
+Contrary / False Illumination
 
 Base Stats:
 53 HP / 54 Atk / 53 Def / 37 SpA / 46 SpD / 45 Spe / 288 BST
@@ -2495,7 +2510,7 @@ Type:
 Psychic / Dark
 
 Ability:
-Contrary / None
+Contrary / False Illumination
 
 Base Stats:
 86 HP / 92 Atk / 88 Def / 68 SpA / 75 SpD / 73 Spe / 482 BST
@@ -2956,7 +2971,7 @@ Level Up:
 29 - Flamethrower
 35 - Magic Blast
 40 - Elemental Sparkle
-43 - Tri Attack
+43 - Tri-Attack
 45 - Sparkling Terrain
 50 - Fire Blast
 54 - Magic Reflect
@@ -3064,7 +3079,9 @@ Level Up:
 8 - Wrap
 13 - Thunder Wave
 17 - Slam
-25 - Spark
+21 - Spark
+25 - Scary Face
+27 - Thunder Fang
 
 ===================
 112 - Wattwo
@@ -3084,15 +3101,16 @@ Level Up:
 8 - Wrap
 13 - Thunder Wave
 17 - Slam
-25 - Spark
+21 - Spark
+25 - Scary Face
+27 - Thunder Fang
 30 - Double Hit
-34 - Gyro Ball
-37 - Iron Defense
-44 - Curse
-47 - Magnet Rise
-50 - Thunder Punch
-55 - Bullet Punch
-60 - Volt Tackle
+30 - Parabolic Charge
+34 - Discharge
+37 - Magnet Rise
+42 - Thunder Punch
+45 - Curse
+50 - Thunderbolt
 
 ===================
 113 - Megawatt
@@ -3108,12 +3126,21 @@ Base Stats:
 
 Level Up:
 1 - Gyro Ball
-5 - Iron Defense
-9 - Night Slash
-15 - Thunderbolt
-25 - Superpower
-32 - Volt Tackle
-35 - Automotize
+1 - Iron Defense
+1 - Night Slash
+1 - Slam
+1 - Spark
+1 - Double Hit
+31 - Dynamic Punch
+34 - Iron Defense
+37 - Magnet Rise
+40 - Smart Strike
+43 - Bullet Punch
+46 - Automotize
+50 - Heavy Slam
+55 - Superpower
+60 - Volt Tackle
+65 - Meteor Mash
 
 ===================
 114 - Elelamb
@@ -3280,7 +3307,7 @@ Type:
 Steel / Normal
 
 Ability:
-Tough Claws / None
+Tough Claws / Iron Barbs
 
 Base Stats:
 30 HP / 60 Atk / 73 Def / 30 SpA / 65 SpD / 58 Spe / 316 BST
@@ -3293,6 +3320,8 @@ Level Up:
 12 - Iron Defense
 15 - Gyro Ball
 20 - Metal Sound
+25 - Rollout
+30 - Metal Claw
 
 ===================
 121 - Cumin
@@ -3301,7 +3330,7 @@ Type:
 Steel / Light
 
 Ability:
-Tough Claws / None
+Tough Claws / Iron Barbs
 
 Base Stats:
 60 HP / 80 Atk / 95 Def / 65 SpA / 95 SpD / 95 Spe / 490 BST
@@ -3313,11 +3342,13 @@ Level Up:
 1 - Spiky Shield
 10 - Metal Claw
 15 - Snarl
-19 - Slam
-20 - Flash
+20 - Slam
 25 - Rollout
+30 - Flash
 30 - Flash Cannon
+35 - Play Rough
 40 - Bullet Punch
+45 - Iron Head
 50 - Hone Claws
 55 - Twinkle Tackle
 
@@ -3328,7 +3359,7 @@ Type:
 Steel / Magic
 
 Ability:
-Tough Claws / None
+Tough Claws / Iron Barbs
 
 Base Stats:
 69 HP / 95 Atk / 97 Def / 70 SpA / 95 SpD / 104 Spe / 530 BST
@@ -3358,7 +3389,7 @@ Type:
 Electric / Normal
 
 Ability:
-Motor Drive / None
+Motor Drive / Electric Surge
 
 Base Stats:
 30 HP / 45 Atk / 25 Def / 35 SpA / 40 SpD / 60 Spe / 235 BST
@@ -3370,6 +3401,8 @@ Level Up:
 8 - Charge
 10 - Spark
 15 - Double Team
+20 - Roar
+25 - Discharge
 
 ===================
 124 - Vinnie
@@ -3378,7 +3411,7 @@ Type:
 Electric / Light
 
 Ability:
-Motor Drive / None
+Motor Drive / Electric Surge
 
 Base Stats:
 75 HP / 105 Atk / 60 Def / 85 SpA / 60 SpD / 105 Spe / 490 BST
@@ -3386,21 +3419,20 @@ Base Stats:
 Level Up:
 1 - Howl
 1 - Charge
-3 - Quick Attack
-5 - Tail Whip
-9 - Spark
-12 - Thunder Wave
-15 - Double Team
-18 - Nuzzle
-21 - Roar
-25 - Whip Smash
-29 - Thunder Punch
-33 - Play Rough
-37 - Zen Headbutt
-43 - Twinkle Tackle
-48 - Sparkle Strike
-55 - Volt Tackle
-60 - Plasma Fists
+1 - Quick Attack
+1 - Tail Whip
+10 - Spark
+15 - Thunder Wave
+20 - Double Team
+25 - Roar
+30 - Flash
+30 - Whip Smash
+35 - Thunder Punch
+35 - Play Rough
+40 - Thunderbolt
+45 - Electro Ball
+50 - Volt Tackle
+55 - Plasma Fists
 
 ===================
 125 - Suvinero
@@ -3409,7 +3441,7 @@ Type:
 Electric / Magic
 
 Ability:
-Motor Drive / None
+Motor Drive / Electric Surge
 
 Base Stats:
 75 HP / 125 Atk / 95 Def / 40 SpA / 85 SpD / 125 Spe / 545 BST
@@ -3424,11 +3456,11 @@ Level Up:
 15 - Double Team
 20 - Sky Attack
 25 - Whip Smash
-30 - Thunder Punch
+30 - Play Rough
 35 - Giga Impact
-40 - Zen Headbutt
-45 - Twinkle Tackle
-50 - Sparkle Strike
+40 - Thunder
+45 - Sparkle Strike
+50 - Electro Ball
 55 - Magic Crash
 60 - Plasma Fists
 
@@ -3439,7 +3471,7 @@ Type:
 Fighting / Normal
 
 Ability:
-Guts / None
+Guts / Moxie
 
 Base Stats:
 35 HP / 65 Atk / 45 Def / 15 SpA / 40 SpD / 45 Spe / 245 BST
@@ -3451,6 +3483,8 @@ Level Up:
 8 - Charm
 10 - Fury Swipes
 15 - Double Team
+20 - Power-Up Punch
+25 - Roar
 
 ===================
 127 - Whiskers
@@ -3459,7 +3493,7 @@ Type:
 Fighting / Light
 
 Ability:
-Guts / None
+Guts / Moxie
 
 Base Stats:
 95 HP / 125 Atk / 105 Def / 25 SpA / 75 SpD / 50 Spe / 475 BST
@@ -3467,21 +3501,24 @@ Base Stats:
 Level Up:
 1 - Growl
 1 - Bite
-5 - Tail Whip
-8 - Play Nice
-13 - Mach Punch
-17 - Take Down
-20 - Double Kick
-23 - Roar
-25 - Beefy Bash
-28 - Crunch
-31 - Bulk Up
-35 - Seismic Toss
-38 - Hammer Arm
-42 - Ice Punch
-48 - Twinkle Tackle
+1 - Crunch
+1 - Play Nice
+5 - Take Down
+10 - Double Kick
+15 - Roar
+20 - Power-Up Punch
+25 - Drain Punch
+30 - Flash
+30 - Beefy Bash
+35 - Mach Punch
+35 - Play Rough
+40 - Bulk Up
+40 - Circle Throw
+45 - Seismic Toss
+45 - Hammer Arm
+50 - Ice Punch
+50 - Twinkle Tackle
 55 - Sky Uppercut
-60 - Plasma Fists
 
 ===================
 128 - Whiskeroar
@@ -3490,7 +3527,7 @@ Type:
 Fighting / Magic
 
 Ability:
-Adaptability / None
+Adaptability / Moxie
 
 Base Stats:
 95 HP / 130 Atk / 100 Def / 85 SpA / 75 SpD / 55 Spe / 540 BST
@@ -3508,10 +3545,10 @@ Level Up:
 30 - Aura Sphere
 35 - Superpower
 40 - Calm Mind
-45 - Twinkle Tackle
-50 - Sparkle Strike
+45 - Sparkle Strike
+50 - Vacuum Wave
 55 - Magic Tomb
-60 - Plasma Fists
+60 - Focus Blast
 
 ===================
 129 - Nincada
@@ -3520,7 +3557,7 @@ Type:
 Bug / Ground
 
 Ability:
-Compound Eyes / None
+Compound Eyes / Tinted Lens
 
 Base Stats:
 31 HP / 45 Atk / 90 Def / 30 SpA / 30 SpD / 40 Spe / 266 BST
@@ -3542,7 +3579,7 @@ Type:
 Bug / Flying
 
 Ability:
-Speed Boost / None
+Speed Boost / Tinted Lens
 
 Base Stats:
 61 HP / 90 Atk / 45 Def / 50 SpA / 50 SpD / 160 Spe / 456 BST
@@ -3689,6 +3726,7 @@ Level Up:
 19 - Headbutt
 23 - Wing Attack
 26 - Water Pulse
+30 - Defog
 
 ===================
 136 - Spinaquata
@@ -3712,13 +3750,16 @@ Level Up:
 19 - Headbutt
 23 - Wing Attack
 26 - Water Pulse
-27 - Twister
-29 - Gust
-32 - Glittering Tornado
+30 - Defog
+30 - Twister
+30 - Gust
+30 - Glittering Tornado
+30 - Leaf Tornado
+33 - Breaking Swipe
 36 - Screech
-40 - Leaf Tornado
+40 - Dragon Pulse
 45 - Hurricane
-49 - Agility
+49 - Dragon Dance
 53 - Wave Crash
 60 - Outrage
 
@@ -3811,7 +3852,7 @@ Level Up:
 1 - Luster Purge
 1 - Moonlight
 1 - Swift
-1 - Tri Attack
+1 - Tri-Attack
 1 - Magic Crash
 1 - Cosmic Power
 1 - Gravity
@@ -3961,7 +4002,7 @@ Level Up:
 6 - Bite
 9 - Dragon Breath
 11 - Ice Beam
-14 - Tri Attack
+14 - Tri-Attack
 17 - Megahorn
 20 - Steel Wing
 21 - Crunch
@@ -4044,17 +4085,21 @@ Base Stats:
 
 Level Up:
 1 - Mud Sport
+1 - Flash
 1 - Tail Whip
 6 - Mud-Slap
 9 - Brine
 12 - Mud Shot
 15 - Flash Ray
 19 - Mud Bomb
-24 - Feint Attack
-28 - Liquidation
-33 - Luster Purge
+24 - Life Dew
+28 - Mud Sport
+28 - Water Sport
+31 - Charm
+34 - Luster Purge
 39 - Muddy Water
-45 - Dark Pulse
+42 - Dark Pulse
+45 - Earth Power
 
 ===================
 149 - Dompster
@@ -4069,21 +4114,26 @@ Base Stats:
 70 HP / 115 Atk / 100 Def / 60 SpA / 80 SpD / 60 Spe / 485 BST
 
 Level Up:
+1 - Mud Sport
+1 - Brine
+1 - Mud Shot
+1 - Muddy Water
 1 - Magic Fang
 1 - Feint Attack
-5 - Fell Stinger
-8 - Liquidation
-11 - Night Slash
-15 - Hyper Fang
-20 - Take Down
-24 - Brutal Swing
-28 - Wave Crash
-32 - Shadow Claw
-35 - Earthquake
-38 - Play Rough
+5 - Night Slash
+10 - Hyper Fang
+15 - Take Down
+20 - Brutal Swing
+25 - Liquidation
+30 - Shadow Claw
+35 - Drill Run
+37 - Shadow Claw
+40 - Play Rough
 42 - Sucker Punch
-46 - Darkest Lariat
-49 - Magic Crash
+45 - Earthquake
+48 - Darkest Lariat
+50 - Wave Crash
+53 - Magic Crash
 55 - Phantom Force
 60 - Twinkle Tackle
 65 - Unseen Strangle
@@ -4186,7 +4236,7 @@ Type:
 Poison / Flying
 
 Ability:
-Inner Focus / None
+Strong Jaw / Inner Focus
 
 Base Stats:
 40 HP / 45 Atk / 35 Def / 30 SpA / 40 SpD / 55 Spe / 245 BST
@@ -4207,7 +4257,7 @@ Type:
 Poison / Flying
 
 Ability:
-Inner Focus / None
+Strong Jaw / Inner Focus
 
 Base Stats:
 75 HP / 80 Atk / 70 Def / 65 SpA / 75 SpD / 90 Spe / 455 BST
@@ -4221,12 +4271,16 @@ Level Up:
 20 - Bite
 25 - Wing Attack
 27 - Air Slash
+30 - Fire Fang
+30 - Thunder Fang
+30 - Ice Fang
+30 - Magic Fang
 34 - Crunch
+37 - Confuse Ray
 41 - Haze
 48 - Venoshock
-55 - Confuse Ray
+55 - Leech Life
 62 - Brave Bird
-69 - Leech Life
 
 ===================
 155 - Crobat
@@ -4235,7 +4289,7 @@ Type:
 Poison / Flying
 
 Ability:
-Inner Focus / None
+Strong Jaw / Inner Focus
 
 Base Stats:
 85 HP / 90 Atk / 80 Def / 70 SpA / 80 SpD / 130 Spe / 535 BST
@@ -4248,13 +4302,17 @@ Level Up:
 15 - Poison Fang
 20 - Wing Attack
 27 - Bite
+30 - Fire Fang
+30 - Thunder Fang
+30 - Ice Fang
+30 - Magic Fang
 34 - Crunch
+37 - Confuse Ray
 40 - Cross Poison
 44 - Haze
 48 - Venoshock
-55 - Confuse Ray
+55 - Leech Life
 62 - Brave Bird
-69 - Leech Life
 
 ===================
 156 - Poof
@@ -4277,6 +4335,9 @@ Level Up:
 14 - Play Nice
 19 - Moonlight
 23 - Hex
+25 - Baby-Doll Eyes
+28 - Luster Purge
+30 - Shadow Ball
 
 ===================
 157 - Hast
@@ -4299,14 +4360,17 @@ Level Up:
 14 - Play Nice
 19 - Moonlight
 23 - Hex
-25 - Iron Defense
-29 - Spike Cannon
-31 - Shadow Ball
-34 - Tri Attack
+25 - Baby-Doll Eyes
+28 - Luster Purge
+30 - Shadow Ball
+32 - Iron Defense
+34 - Bullet Punch
 37 - Dream Eater
-40 - Iron Tail
+40 - Shadow Sneak
+43 - Tri-Attack
 46 - Gyro Ball
-55 - Destiny Bond
+50 - Destiny Bond
+55 - Spectral Thief
 
 ===================
 158 - Poov
@@ -4329,6 +4393,8 @@ Level Up:
 14 - Fake Tears
 19 - Nasty Plot
 23 - Hex
+25 - Sucker Punch
+27 - Feint Attack
 
 ===================
 159 - Grust
@@ -4351,12 +4417,13 @@ Level Up:
 14 - Fake Tears
 19 - Nasty Plot
 23 - Hex
-23 - Sucker Punch
-27 - Shadow Ball
-30 - Feint Attack
-33 - Minimize
-36 - Curse
-40 - Night Slash
+25 - Sucker Punch
+27 - Feint Attack
+30 - Hex
+32 - Minimize
+34 - Curse
+37 - Night Slash
+40 - Shadow Ball
 44 - Nightmare
 50 - Take Over
 55 - Destiny Bond
@@ -4538,6 +4605,9 @@ Level Up:
 5 - Growl
 9 - Tail Whip
 15 - Fury Attack
+19 - Rapid Spin
+23 - Stomp
+28 - Stealth Rock
 
 ===================
 167 - Rhynee
@@ -4557,8 +4627,12 @@ Level Up:
 5 - Growl
 9 - Tail Whip
 15 - Fury Attack
-30 - Stomp
-35 - Horn Drill
+19 - Rapid Spin
+23 - Stomp
+28 - Stealth Rock
+30 - Bulldoze
+33 - Spikes
+36 - Horn Drill
 39 - Magnitude
 42 - Stone Edge
 46 - Body Press
@@ -4583,17 +4657,24 @@ Level Up:
 5 - Growl
 9 - Tail Whip
 15 - Fury Attack
-30 - Stomp
-35 - Horn Drill
+19 - Rapid Spin
+23 - Stomp
+28 - Stealth Rock
+30 - Bulldoze
+33 - Spikes
+36 - Horn Drill
 39 - Magnitude
 42 - Stone Edge
 46 - Body Press
 50 - Endeavor
 55 - Giga Impact
 55 - Earthquake
-60 - Rock Blast
+55 - Rock Blast
+58 - Aura Sphere
+60 - Submission
+62 - Hammer Arm
 64 - Scorching Sands
-66 - Hammer Arm
+66 - Heat Crash
 70 - Superpower
 75 - Heavy Slam
 
@@ -4850,7 +4931,7 @@ Level Up:
 34 - Draining Kiss
 39 - Moonblast
 45 - Magic Blast
-50 - Tri Attack
+50 - Tri-Attack
 55 - Glitter Dance
 
 ===================
@@ -4880,7 +4961,7 @@ Level Up:
 37 - Charge Beam
 43 - Magic Blast
 50 - Fiery Dance
-54 - Tri Attack
+54 - Tri-Attack
 60 - Elemental Sparkle
 65 - Moonblast
 
@@ -4949,7 +5030,7 @@ Type:
 Steel / None
 
 Ability:
-Sniper / None
+Sniper / Inner Focus
 
 Base Stats:
 50 HP / 70 Atk / 55 Def / 50 SpA / 50 SpD / 55 Spe / 330 BST
@@ -4969,7 +5050,7 @@ Type:
 Steel / None
 
 Ability:
-Sniper / None
+Sniper / Inner Focus
 
 Base Stats:
 65 HP / 75 Atk / 105 Def / 50 SpA / 75 SpD / 60 Spe / 430 BST
@@ -4982,9 +5063,11 @@ Level Up:
 20 - Automotize
 25 - Lock-On
 25 - Iron Defense
-32 - Take Down
-40 - Reboot
-48 - Pistol Pop
+30 - Reboot
+35 - Bullet Punch
+40 - Iron Head
+45 - Metal Sound
+50 - Meteor Mash
 
 ===================
 183 - Soldrota
@@ -4993,7 +5076,7 @@ Type:
 Steel / None
 
 Ability:
-Sniper / None
+Sniper / Inner Focus
 
 Base Stats:
 70 HP / 115 Atk / 115 Def / 90 SpA / 75 SpD / 65 Spe / 530 BST
@@ -5006,10 +5089,12 @@ Level Up:
 20 - Automotize
 25 - Lock-On
 25 - Iron Defense
-32 - Take Down
-40 - Reboot
-48 - Pistol Pop
-50 - Iron Head
+30 - Reboot
+35 - Bullet Punch
+40 - Iron Head
+45 - Metal Sound
+50 - Meteor Mash
+50 - Pistol Pop
 50 - Load Firearms
 52 - Flamethrower
 54 - Iron Blast
@@ -5037,8 +5122,8 @@ Level Up:
 10 - Glittering Tornado
 13 - Tailwind
 15 - Flash
-18 - Hypnosis
-23 - Dream Eater
+18 - Sparkly Swirl
+23 - Space Beam
 
 ===================
 185 - Shawar
@@ -5059,14 +5144,16 @@ Level Up:
 10 - Glittering Tornado
 13 - Tailwind
 15 - Flash
-18 - Hypnosis
-23 - Dream Eater
-27 - Aqua Jet
-30 - Sparkle Strike
-34 - Magic Blast
+18 - Sparkly Swirl
+23 - Space Beam
+27 - Ancient Power
+30 - Magic Blast
+32 - Sparkle Strike
+34 - Comet Punch
 37 - Moonlight
 40 - Magic Reflect
-44 - Take Down
+42 - Take Down
+45 - Desolate Void
 48 - Magic Tomb
 
 ===================
@@ -5088,20 +5175,23 @@ Level Up:
 10 - Glittering Tornado
 13 - Tailwind
 15 - Flash
-18 - Hypnosis
-23 - Dream Eater
-27 - Aqua Jet
-30 - Sparkle Strike
-34 - Magic Blast
+18 - Sparkly Swirl
+23 - Space Beam
+27 - Ancient Power
+30 - Magic Blast
+32 - Sparkle Strike
+34 - Comet Punch
 37 - Moonlight
 40 - Magic Reflect
-44 - Take Down
+42 - Take Down
+45 - Desolate Void
 48 - Magic Tomb
-50 - Desolate Void
-55 - Comet Crash
-60 - Magic Crash
+50 - Comet Crash
+55 - Magic Crash
+60 - Spacial Rend
 65 - Galaxy Blast
-70 - Spacial Rend
+70 - Meteor Assault
+75 - Supernova Explosion
 
 ===================
 187 - Dragee
@@ -5434,7 +5524,7 @@ Level Up:
 25 - Thunder Punch
 28 - Magnet Rise
 31 - Shadow Ball
-35 - Tri Attack
+35 - Tri-Attack
 38 - Headbutt
 40 - Electro Ball
 44 - Phantom Force
@@ -6595,37 +6685,36 @@ Level Up:
 75 - Dragon Dance
 
 Unused moves:
-Sludge Wave
-Boosted Pursuit
+Struggle
+Belch
 Expanding Force
-Supernova Explosion
-Flatter
-Petal Blizzard
-Glaciate
-Tornado Spin
-Silver Wind
 Sacred Fire
+Glaciate
+Flatter
+V-Create
+Spike Cannon
+Boosted Pursuit
+Petal Blizzard
 Failed Sucker
+Lunar Dance
 Noble Roar
 Blast Burn
 Strength
-V-Create
-Belch
+Tornado Spin
 Acid Armor
-Struggle
 Perish Song
-Lunar Dance
+Sludge Wave
 
 TM Only:
-Terrain Pulse
-Vine Cross
-Flip Turn
-Surf
-Lava Surf
-Slow Fall
-Rock Smash
 Rock Climb
-Psyshock
-Cut
-Scald
 Sleep Talk
+Surf
+Rock Smash
+Lava Surf
+Flip Turn
+Cut
+Vine Cross
+Scald
+Psyshock
+Slow Fall
+Terrain Pulse
