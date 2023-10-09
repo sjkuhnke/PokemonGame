@@ -92,6 +92,7 @@ public enum Ability {
 	SYNCHRONIZE("Passes a burn, poison, or paralysis to the foe."),
 	TECHNICIAN("Powers up the Pokemon's weaker moves."),
 	THICK_FAT("Boosts resistance to FIRE and ICE moves."),
+	TINTED_LENS("Powers up \"not very effective\" moves."),
 	TORRENT("Powers up WATER moves in a pinch."),
 	TOUGH_CLAWS("Powers up moves that make direct contact."),
 	TYPE_MASTER("Grants STAB on all moves."),
@@ -101,7 +102,7 @@ public enum Ability {
 	WATER_ABSORB("Restores HP if hit by a WATER move."),
 	WATER_VEIL("Prevents the Pokemon from getting a burn."),
 	WONDER_GUARD("Only supereffective moves will hit."),
-	NULL("");
+	NULL("No Ability.");
 
 	Ability(String string) {
 		desc = string;

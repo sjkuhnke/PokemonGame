@@ -8,7 +8,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.ImageIcon;
@@ -28,6 +32,7 @@ import Swing.Encounter;
 import Swing.Item;
 import Swing.Move;
 import Swing.Moveslot;
+import Swing.PType;
 
 public class Main {
 	public static Trainer[] trainers;
@@ -110,6 +115,7 @@ public class Main {
 //		writeTrainers();
 //		writePokemon();
 //		writeEncounters();
+		writeMoves();
 		
 		gamePanel.setupGame();
 		
@@ -827,6 +833,51 @@ public class Main {
 		result += "\n";
 		return result;
 		
+		
+	}
+	
+	@SuppressWarnings("unused")
+	private static void writeMoves() {
+		try {
+			FileWriter writer = new FileWriter("MovesInfo.txt");
+			
+			ArrayList<Move> moves = new ArrayList<>(Arrays.asList(Move.values()));
+			Map<PType, List<Move>> movesByType = new HashMap<>();
+			
+			for (Move m : moves) {
+				PType type = m.mtype;
+				movesByType.computeIfAbsent(type, k -> new ArrayList<>()).add(m);
+			}
+			
+			for (List<Move> typeMoves : movesByType.values()) {
+				typeMoves.sort(Comparator.comparing(Move::toString));
+			}
+			
+			List<PType> sortedTypes = new ArrayList<>(movesByType.keySet());
+			sortedTypes.sort(Comparator.comparing(PType::toString));
+			
+			for (PType type : sortedTypes) {
+				
+				writer.write("\n===============\n");
+	            writer.write(type.toString() + "\n");
+	            writer.write("===============\n");
+
+	            List<Move> typeMoves = movesByType.get(type);
+	            for (Move m : typeMoves) {
+	            	String result = m.toString() + " : ";
+					result += m.getCategory() + " / ";
+					result += m.getbp() + " / ";
+					result += m.getAccuracy() + " : ";
+					result += m.getDescription() + "\n";
+					
+					writer.write(result);
+	            }				
+			}
+			writer.close();
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
 	}
 
