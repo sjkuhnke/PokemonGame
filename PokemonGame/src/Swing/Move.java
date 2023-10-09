@@ -558,7 +558,7 @@ public enum Move {
 	TORNADO_SPIN(60,95,100,0,0,0,PType.FIGHTING,"% to raise user's Speed and Accuracy by 1, and frees user of being Spun",true,15),
 	TOXIC(0,90,0,0,2,0,PType.POISON,"Badly poisons foe",false,5),
 	TOXIC_SPIKES(0,1000,0,0,2,0,PType.POISON,"",false,10),
-	TRI_ATTACK(80,100,20,0,1,0,PType.NORMAL,"",false,10),
+	TRI$ATTACK(80,100,20,0,1,0,PType.NORMAL,"",false,10),
 	TRICK_ROOM(0,1000,0,0,2,-7,PType.PSYCHIC,"",false,5),
 	TWINKLE_TACKLE(85,90,20,0,0,0,PType.MAGIC,"",true,10),
 	TWINEEDLE(25,100,30,0,0,0,PType.BUG,"",false,20),
