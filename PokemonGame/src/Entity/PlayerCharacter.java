@@ -1620,15 +1620,15 @@ public class PlayerCharacter extends Entity {
 	}
 
 
-	public JButton setUpPartyButton(int j) {
-		JButton party = new JGradientButton("");
+	public JGradientButton setUpPartyButton(int j) {
+		JGradientButton party = new JGradientButton("");
 		party.setText("");
         if (p.team[j] != null) {
         	if (p.team[j].isFainted()) {
-        		party = new JButton("");
+        		party = new JGradientButton("");
             	party.setBackground(new Color(200, 0, 0));
             } else {
-            	party.setBackground(p.team[j].type1.getColor());
+            	party.setBackground(p.team[j].type1.getColor(), p.team[j].type2 == null ? null : p.team[j].type2.getColor());
             }
             party.setText(p.team[j].nickname + "  lv " + p.team[j].getLevel());
             party.setHorizontalAlignment(SwingConstants.CENTER);

@@ -4,7 +4,7 @@ Bug
 ===============
 Bug Bite : Physical / 60 / 100 : A normal attack
 Bug Buzz : Special / 90 / 100 : 10% chance to lower foe's Sp.Def by 1
-Fatal Bind : Physical / 70 / 85 : 100Causes foe to faint in 3 turns
+Fatal Bind : Physical / 70 / 85 : 100% to cause foe to faint in 3 turns
 Fell Stinger : Physical / 50 / 100 : 
 First Impression : Physical / 90 / 100 : Always attacks first, fails after the first turn a user is out in battle
 Fury Cutter : Physical / Varies / 95 : Power increases the more times this move is used in succession
@@ -36,7 +36,7 @@ Failed Sucker : Physical / -- / 100 : If you're seeing this, something went horr
 Fake Tears : Status / -- / 100 : Lowers foe's Sp.Def by 2
 False Surrender : Physical / 80 / -- : 
 Feint Attack : Physical / 60 / -- : This attack always hits
-Flatter : Status / -- / 100 : 100Confuses foe, and raises their Sp.Atk by 2
+Flatter : Status / -- / 100 : Confuses foe, and raises their Sp.Atk by 2
 Foul Play : Physical / 95 / 100 : 
 Hone Claws : Status / -- / -- : Raises user's Attack and Accuracy by 1
 Jaw Lock : Physical / 80 / 100 : 100

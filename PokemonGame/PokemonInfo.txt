@@ -6685,36 +6685,36 @@ Level Up:
 75 - Dragon Dance
 
 Unused moves:
-Struggle
-Belch
-Expanding Force
+Failed Sucker
+Tornado Spin
+Noble Roar
+Strength
+Flatter
+Perish Song
 Sacred Fire
 Glaciate
-Flatter
 V-Create
-Spike Cannon
-Boosted Pursuit
-Petal Blizzard
-Failed Sucker
-Lunar Dance
-Noble Roar
-Blast Burn
-Strength
-Tornado Spin
-Acid Armor
-Perish Song
 Sludge Wave
+Petal Blizzard
+Boosted Pursuit
+Lunar Dance
+Blast Burn
+Spike Cannon
+Struggle
+Expanding Force
+Acid Armor
+Belch
 
 TM Only:
-Rock Climb
-Sleep Talk
-Surf
-Rock Smash
-Lava Surf
-Flip Turn
-Cut
 Vine Cross
+Cut
+Flip Turn
 Scald
-Psyshock
-Slow Fall
+Lava Surf
 Terrain Pulse
+Rock Smash
+Sleep Talk
+Rock Climb
+Slow Fall
+Psyshock
+Surf
