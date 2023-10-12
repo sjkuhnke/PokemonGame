@@ -156,7 +156,7 @@ public enum Move {
 	EXPANDING_FORCE(-1,100,0,0,1,0,PType.PSYCHIC,"Power is stronger if the terrain is PSYCHIC",false,10),
 	EXPLOSION(250,100,0,0,0,0,PType.NORMAL,"User faints",false,5),
 	EXTRASENSORY(80,100,10,0,1,0,PType.PSYCHIC,"",false,20),
-	METRONOME(-1,1000,0,0,1,0,PType.MAGIC,"Selects a random move!",false,20),
+	METRONOME(-1,1000,0,0,2,0,PType.MAGIC,"Selects a random move!",false,20),
 	EXTREME_SPEED(80,100,0,0,0,2,PType.NORMAL,"Always goes first",true,5),
 	FAKE_OUT(40,100,100,0,0,3,PType.NORMAL,"",true,10),
 	FAKE_TEARS(0,100,0,0,2,0,PType.DARK,"Lowers foe's Sp.Def by 2",false,20),
