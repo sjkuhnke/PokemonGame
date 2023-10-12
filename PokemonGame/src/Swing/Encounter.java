@@ -178,7 +178,7 @@ public class Encounter {
 				encounters.add(new Encounter(137, 16, 18, 0.10));
 				encounters.add(new Encounter(148, 18, 20, 0.10));
 				encounters.add(new Encounter(143, 18, 20, 0.25));
-				encounters.add(new Encounter(150, 20, 19, 0.40));
+				encounters.add(new Encounter(150, 20, 20, 0.40));
 			} else if (area == 24 && type.equals("Surfing")) { // Mt. Splinkty 1A
 				encounters.add(new Encounter(139, 20, 20, 0.60));
 				encounters.add(new Encounter(132, 20, 20, 0.25));
