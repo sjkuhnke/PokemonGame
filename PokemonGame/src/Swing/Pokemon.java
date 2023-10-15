@@ -2427,9 +2427,9 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 139 && area == 77) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 143 && area == 77 && happiness >= 160) { // ?? maybe stone???? idfk
+		} else if (id == 143 && happiness >= 250) { // ?? maybe stone???? idfk
 			result = new Pokemon(id + 1, this);
-		} else if (id == 144 && happiness >= 250) {
+		} else if (id == 144 && area == 77) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 146 && level >= 39) {
 			result = new Pokemon(id + 1, this);
