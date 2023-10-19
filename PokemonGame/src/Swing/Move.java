@@ -436,7 +436,7 @@ public enum Move {
 	SAND_ATTACK(0,100,0,0,2,0,PType.GROUND,"Lowers foe's Accuracy by 1",false,20),
 	SANDSTORM(0,1000,0,0,2,0,PType.ROCK,"",false,10),
 	SCALD(80,100,30,0,1,0,PType.WATER,"",false,15),
-	SCALE_SHOT(25,90,100,0,2,0,PType.DRAGON,"",false,20),
+	SCALE_SHOT(25,90,100,0,0,0,PType.DRAGON,"",false,20),
 	SCARY_FACE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Speed by 2",false,10),
 	SCORCHING_SANDS(70,100,30,0,1,0,PType.GROUND,"",false,15),
 	SCRATCH(40,100,0,0,0,0,PType.NORMAL,"A normal attack",true,35),
