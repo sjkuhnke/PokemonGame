@@ -1479,15 +1479,15 @@ public class PlayerCharacter extends Entity {
 	        	        			        				m.maxPP = (m.move.pp * 8 / 5);
 	        	        			        				JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was maxed!");
 	        	        			        			}
+	        	        			        			SwingUtilities.getWindowAncestor(movePanel).dispose();
+			        	        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+			        			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+			        			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+			        			        	        	p.bag.remove(i.getItem());
+			        			        	        	showBag();
 	        	        			        		} else {
 	        	        			        			JOptionPane.showMessageDialog(null, "It won't have any effect.");
 	        	        			        		}
-		        	        			        	SwingUtilities.getWindowAncestor(movePanel).dispose();
-		        	        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
-		        			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-		        			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-		        			        	        	p.bag.remove(i.getItem());
-		        			        	        	showBag();
 		        	        			        }
 		        	        			    }
 		        	        	        });

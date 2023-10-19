@@ -5270,7 +5270,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.MUDDY_WATER) {
 			stat(this, 5, -1, foe);
 		} else if (move == Move.MYSTICAL_FIRE) {
-			stat(this, 2, -1, foe);
+			stat(foe, 2, -1, foe);
 		} else if (move == Move.NEEDLE_ARM && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 //		} else if (move == Move.NEEDLE_SPRAY) {
@@ -6084,7 +6084,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.TRICK_ROOM) {
 			field.setEffect(field.new FieldEffect(Effect.TRICK_ROOM));
 		} else if (move == Move.VENOM_DRENCH) {
-			if (foe.status == Status.POISONED) {
+			if (foe.status == Status.POISONED || foe.status == Status.TOXIC) {
 				stat(foe, 0, -2, foe);
 				stat(foe, 2, -2, foe);
 			}
@@ -10751,6 +10751,7 @@ public class Pokemon implements Serializable {
 		confusionCounter = 0;
 		magCount = 0;
 		toxic = 0;
+		perishCount = 0;
 		this.lastMoveUsed = null;
 		this.moveMultiplier = 1;
 		this.vStatuses.clear();
