@@ -2483,7 +2483,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 195 && area == -1) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 197 && level >= 25) {
+		} else if (id == 197 && level >= 32) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 199 && level >= 25) {
 			result = new Pokemon(id + 1, this);
@@ -9406,6 +9406,7 @@ public class Pokemon implements Serializable {
 			movebank[15] = new Node(Move.BULK_UP);
 			movebank[19] = new Node(Move.ROCK_SLIDE);
 			movebank[23] = new Node(Move.SLAM);
+			movebank[26] = new Node(Move.MACH_PUNCH);
 			movebank[29] = new Node(Move.SCARY_FACE);
 			movebank[35] = new Node(Move.DYNAMIC_PUNCH);
 			movebank[41] = new Node(Move.HAMMER_ARM);
@@ -9423,6 +9424,7 @@ public class Pokemon implements Serializable {
 			movebank[15] = new Node(Move.BULK_UP);
 			movebank[19] = new Node(Move.ROCK_SLIDE);
 			movebank[23] = new Node(Move.SLAM);
+			movebank[26] = new Node(Move.MACH_PUNCH);
 			movebank[29] = new Node(Move.SCARY_FACE);
 			movebank[35] = new Node(Move.DYNAMIC_PUNCH);
 			movebank[41] = new Node(Move.HAMMER_ARM);
@@ -11936,8 +11938,13 @@ public class Pokemon implements Serializable {
 	        	stats[i].setSize(50, stats[i].getHeight());
 	        	
 	        	if (i != 0) {
-	        		if (this.nature[i-1] == 1.1) stats[i].setForeground(Color.red.darker().darker());
-	    	        if (this.nature[i-1] == 0.9) stats[i].setForeground(Color.blue.darker().darker());
+	        	    if (this.nature[i - 1] == 1.1) {
+	        	        stats[i].setForeground(Color.red.darker().darker());
+	        	        stats[i].setText(type + this.stats[i] + " \u2191"); // Up arrow
+	        	    } else if (this.nature[i - 1] == 0.9) {
+	        	        stats[i].setForeground(Color.blue.darker().darker());
+	        	        stats[i].setText(type + this.stats[i] + " \u2193"); // Down arrow
+	        	    }
 	        	}
 	        	
 	        	statsPanel.add(stats[i]);
