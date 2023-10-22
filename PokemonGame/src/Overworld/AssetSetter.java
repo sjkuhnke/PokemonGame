@@ -228,6 +228,10 @@ public class AssetSetter {
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 42, 12, 43);
 		
+		mapNum = 57;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 40, 44, mapNum); // flame orb
+		
 		mapNum = 60;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 36, 102, mapNum); // dragon claw

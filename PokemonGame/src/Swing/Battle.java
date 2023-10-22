@@ -1509,11 +1509,16 @@ public class Battle extends JFrame {
 	    private static final long serialVersionUID = 639680055516122456L;
 	    private Color backgroundColorA;
 	    private Color backgroundColorB;
+	    private boolean solid = false;
 
 	    public JGradientButton(String text) {
 	        super(text);
 	        setContentAreaFilled(false);
 	        setBackground(Color.WHITE, Color.WHITE); // Default gradient colors
+	    }
+	    
+	    public void setSolid(boolean a) {
+	    	solid = a;
 	    }
 
 	    // Set the background gradient colors
@@ -1543,22 +1548,26 @@ public class Battle extends JFrame {
 
 	    @Override
 	    protected void paintComponent(Graphics g) {
-	        Graphics2D g2 = (Graphics2D) g.create();
-	        g2.setPaint(new GradientPaint(
-	                new Point(0, 0),
-	                backgroundColorA,
-	                new Point(0, getHeight() / 3),
-	                Color.WHITE));
-	        g2.fillRect(0, 0, getWidth(), getHeight() / 3);
-	        g2.setPaint(new GradientPaint(
-	                new Point(0, getHeight() / 3),
-	                Color.WHITE,
-	                new Point(0, getHeight()),
-	                backgroundColorB));
-	        g2.fillRect(0, getHeight() / 3, getWidth(), getHeight());
-	        g2.dispose();
-
-	        super.paintComponent(g);
+	    	if (solid) {
+	    		super.setBackground(backgroundColorA);
+	    	} else {
+	    		Graphics2D g2 = (Graphics2D) g.create();
+		        g2.setPaint(new GradientPaint(
+		                new Point(0, 0),
+		                backgroundColorA,
+		                new Point(0, getHeight() / 3),
+		                Color.WHITE));
+		        g2.fillRect(0, 0, getWidth(), getHeight() / 3);
+		        g2.setPaint(new GradientPaint(
+		                new Point(0, getHeight() / 3),
+		                Color.WHITE,
+		                new Point(0, getHeight()),
+		                backgroundColorB));
+		        g2.fillRect(0, getHeight() / 3, getWidth(), getHeight());
+		        g2.dispose();
+	    	}
+	    	
+	    	super.paintComponent(g);
 	    }
 	}
 	

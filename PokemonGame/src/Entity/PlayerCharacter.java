@@ -1505,7 +1505,34 @@ public class PlayerCharacter extends Entity {
 		        	    }
 		        	    JOptionPane.showMessageDialog(null, partyPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
 		        	}
-		        	
+		        	// Flame Orb
+		        	if (i.getItem().getID() == 44) {
+		        		JPanel partyPanel = new JPanel();
+		        	    partyPanel.setLayout(new GridLayout(6, 1));
+		        	    
+		        	    for (int j = 0; j < 6; j++) {
+		        	    	JButton party = setUpPartyButton(j);
+		        	        final int index = j;
+		        	        
+		        	        party.addActionListener(g -> {
+		        	        	if (p.team[index].status == Status.HEALTHY && p.team[index].type1 != PType.FIRE && p.team[index].type2 != PType.FIRE) {
+		        	        		p.team[index].status = Status.BURNED;
+		        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " successfully burned!");
+		        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
+			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+			        	        	showBag();
+		        	        	} else {
+		        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+		        	        	}
+		        	        });
+		        	        
+		        	        JPanel memberPanel = new JPanel(new BorderLayout());
+		        	        memberPanel.add(party, BorderLayout.NORTH);
+		        	        partyPanel.add(memberPanel);
+		        	    }
+		        	    JOptionPane.showMessageDialog(null, partyPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
+		        	}
 		        	// Calc
 		        	if (i.getItem().getID() == 200) {
 		        		i.getItem().useCalc(p);
@@ -1627,6 +1654,7 @@ public class PlayerCharacter extends Entity {
         	if (p.team[j].isFainted()) {
         		party = new JGradientButton("");
             	party.setBackground(new Color(200, 0, 0));
+            	party.setSolid(true);
             } else {
             	party.setBackground(p.team[j].type1.getColor(), p.team[j].type2 == null ? null : p.team[j].type2.getColor());
             }
