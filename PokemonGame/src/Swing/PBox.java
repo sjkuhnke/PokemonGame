@@ -151,12 +151,13 @@ public class PBox extends JFrame {
                     boolean oneVisible = false;
                     for (int j = 0; j < me.team.length; j++) {
                         final int jndex = j;
-                        JButton partyButton = new JGradientButton("EMPTY");
+                        JGradientButton partyButton = new JGradientButton("EMPTY");
                         partyButton.setVisible(false);
                         if (me.team[j] != null) {
                             partyButton.setText(me.team[j].nickname + "  lv " + me.team[j].getLevel());
                             if (me.team[j].isFainted()) {
                                 partyButton.setBackground(Color.RED);
+                                partyButton.setSolid(true);
                             } else if (me.team[j].status != Status.HEALTHY) {
                                 partyButton.setBackground(Color.YELLOW);
                             } else {

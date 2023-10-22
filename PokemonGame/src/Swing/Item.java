@@ -186,6 +186,7 @@ public class Item implements Serializable {
 		else if (id == 41) return "Max Elixir";
 		else if (id == 42) return "PP Up";
 		else if (id == 43) return "PP Max";
+		else if (id == 44) return "Flame Orb";
 		else if (id == 93) return "HM01";
 		else if (id == 94) return "HM02";
 		else if (id == 95) return "HM03";
@@ -942,6 +943,7 @@ public class Item implements Serializable {
 		else if (id == 41) return new Color(246, 255, 120);
 		else if (id == 42) return new Color(150, 51, 156);
 		else if (id == 43) return new Color(142, 230, 21);
+		else if (id == 44) return new Color(232, 52, 54);
 		else if (id == 200) return Color.black;
 		else return getMove().mtype.getColor();
 	}
@@ -1363,7 +1365,7 @@ public class Item implements Serializable {
 		case 43:
 			return "Increases max PP of a\nselected move by its\nmax PP, which is 160%";
 		case 44:
-			return "";
+			return "Burns a selected Pokemon";
 		case 45:
 			return "";
 		case 46:

@@ -22,27 +22,27 @@ public class Field {
 	}
 	
 	public enum Effect {
-		SUN(5, true, false),
-		RAIN(5, true, false),
-		SANDSTORM(5, true, false),
-		SNOW(5, true, false),
-		GRASSY(5, false, true),
-		ELECTRIC(5, false, true),
-		PSYCHIC(5, false, true),
-		SPARKLY(5, false, true), 
-		REFLECT(5, false, false),
-		LIGHT_SCREEN(5, false, false),
+		SUN(8, true, false),
+		RAIN(8, true, false),
+		SANDSTORM(8, true, false),
+		SNOW(8, true, false),
+		GRASSY(8, false, true),
+		ELECTRIC(8, false, true),
+		PSYCHIC(8, false, true),
+		SPARKLY(8, false, true), 
+		REFLECT(6, false, false),
+		LIGHT_SCREEN(6, false, false),
 		AURORA_VEIL(5, false, false),
-		TRICK_ROOM(5, false, false),
-		GRAVITY(5, false, false), 
-		TAILWIND(4, false, false),
+		TRICK_ROOM(6, false, false),
+		GRAVITY(6, false, false), 
+		TAILWIND(5, false, false),
 		STEALTH_ROCKS(-1, false, false),
 		SPIKES(-1, false, false),
 		TOXIC_SPIKES(-1, false, false),
 		STICKY_WEBS(-1, false, false),
-		SAFEGUARD(5, false, false),
-		WATER_SPORT(5, false, false),
-		MUD_SPORT(5, false, false),
+		SAFEGUARD(8, false, false),
+		WATER_SPORT(8, false, false),
+		MUD_SPORT(8, false, false),
 		;
 		
 		private Effect(int turns, boolean isWeather, boolean isTerrain) {
@@ -148,7 +148,7 @@ public class Field {
 	}
 	
 	public void setTerrain(FieldEffect terrain) {
-		if (terrain.effect.isTerrain && this.weather != terrain) {
+		if (terrain.effect.isTerrain) {
 			System.out.println("The terrain became " + terrain.toString() + "!");
 			this.terrain = terrain;
 			this.terrainTurns = terrain.turns;
