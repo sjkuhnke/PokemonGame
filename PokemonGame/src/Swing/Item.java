@@ -1205,8 +1205,8 @@ public class Item implements Serializable {
         		moves[k].setText(current.moveset[k].move.toString());
         		moves[k].setBackground(current.moveset[k].move.mtype.getColor());
         		if (current.moveset[k].move == Move.HIDDEN_POWER) moves[k].setBackground(current.determineHPType().getColor());
-        		int minDamage = current.calcWithTypes(foe, current.moveset[k].move, false, new Field(), -1);
-        		int maxDamage = current.calcWithTypes(foe, current.moveset[k].move, false, new Field(), 1);
+        		int minDamage = current.calcWithTypes(foe, current.moveset[k].move, false, -1);
+        		int maxDamage = current.calcWithTypes(foe, current.moveset[k].move, false, 1);
         		double minDamageD = minDamage * 1.0 / foe.getStat(0);
         		minDamageD *= 100;
         		String formattedMinD = String.format("%.1f", minDamageD);

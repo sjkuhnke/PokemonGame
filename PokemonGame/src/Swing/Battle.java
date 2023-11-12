@@ -19,7 +19,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -87,6 +86,7 @@ public class Battle extends JFrame {
 	private JLabel caughtIndicator;
 	
 	private BattleCloseListener battleCloseListener;
+	private TextPane console;
 	
 
 	public Battle(PlayerCharacter playerCharacter, Trainer foeT, int trainerIndex, GamePanel gp, int area, int x, int y, String type) {
@@ -102,6 +102,7 @@ public class Battle extends JFrame {
 		foe = new Pokemon(10, 5, false, false);
 	    
 	    field = new Field();
+	    Pokemon.field = field;
 		
 	    // Initializing panel
 	    setResizable(false);
@@ -132,10 +133,10 @@ public class Battle extends JFrame {
         // Initialize frame
         initialize(playerCharacter, gp);
 		
-		Pokemon fasterInit = me.getCurrent().getFaster(foe, field, 0, 0);
+		Pokemon fasterInit = me.getCurrent().getFaster(foe, 0, 0);
 		Pokemon slowerInit = fasterInit == me.getCurrent() ? foe : me.getCurrent();
-		fasterInit.swapIn(slowerInit, field, me);
-		slowerInit.swapIn(fasterInit, field, me);
+		fasterInit.swapIn(slowerInit, me);
+		slowerInit.swapIn(fasterInit, me);
 		
 		updateField(field);
 		displayParty();
@@ -150,16 +151,15 @@ public class Battle extends JFrame {
 		/*
 		 * Set text area
 		 */
-		JTextArea console = new JTextArea();
-		console.setEditable(false);
-		
-		PrintStream printStream = new PrintStream(new CustomOutputStream(console));
-		
-		System.setOut(printStream);
+		console = new TextPane();
 		
 		JScrollPane scrollPane = new JScrollPane(console);
 		scrollPane.setBounds(10, 340, 610, 190);
+		
+		console.setScrollPane(scrollPane);
+		
 		playerPanel.add(scrollPane);
+		Pokemon.console = console;
 		
 		/*
 		 * Set current movebuttons
@@ -177,7 +177,7 @@ public class Battle extends JFrame {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
-			            JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index].move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			            JOptionPane.showMessageDialog(null, me.getCurrent().moveset[index].move.getMoveSummary(me.getCurrent(), foe), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
 			        	if (me.getCurrent().moveset[index].currentPP == 0 && !me.getCurrent().movesetEmpty()) {
 		        			JOptionPane.showMessageDialog(null, "No more PP remaining!");
@@ -191,7 +191,7 @@ public class Battle extends JFrame {
 		        		if (me.getCurrent().movesetEmpty()) move = Move.STRUGGLE;
 		        		
 			        	if (foe.trainerOwned()) {
-			        		turn(me.getCurrent(), foe, move, foe.bestMove(me.getCurrent(), field, false), pl, gp);
+			        		turn(me.getCurrent(), foe, move, foe.bestMove(me.getCurrent(), false), pl, gp);
 			        	} else {
 			        		turn(me.getCurrent(), foe, move, foe.randomMove(), pl, gp);
 			        	}
@@ -363,7 +363,7 @@ public class Battle extends JFrame {
 		        		JOptionPane.showMessageDialog(null, "No balls remaining!");
                         return;
 		        	}
-		            System.out.println("\nUsed a Pokeball!");
+		            console.writeln("\nUsed a Pokeball!");
 		            me.bag.remove(new Item(1));
 		            ballBonus = 1;
 		        } else if (greatballButton.isSelected()) {
@@ -371,7 +371,7 @@ public class Battle extends JFrame {
 		        		JOptionPane.showMessageDialog(null, "No balls remaining!");
                         return;
 		        	}
-		            System.out.println("\nUsed a Great Ball!");
+		            console.writeln("\nUsed a Great Ball!");
 		            me.bag.remove(new Item(2));
 		            ballBonus = 1.5;
 		        } else if (ultraballButton.isSelected()) {
@@ -379,7 +379,7 @@ public class Battle extends JFrame {
 		        		JOptionPane.showMessageDialog(null, "No balls remaining!");
                         return;
 		        	}
-		            System.out.println("\nUsed an Ultra Ball!");
+		            console.writeln("\nUsed an Ultra Ball!");
 		            me.bag.remove(new Item(3));
 		            ballBonus = 2;
 		        }
@@ -409,10 +409,10 @@ public class Battle extends JFrame {
 					JOptionPane.showMessageDialog(null, "You caught " + foe.name + "!");
 					dispose();
 		        } else {
-		            System.out.println("Oh no! " + foe.name + " broke free!");
-		            foe.move(me.getCurrent(),foe.randomMove(), me, field, null, null, false);
-					foe.endOfTurn(me.getCurrent(), me, field);
-					me.getCurrent().endOfTurn(foe, me, field);
+		            console.writeln("Oh no! " + foe.name + " broke free!");
+		            foe.move(me.getCurrent(),foe.randomMove(), me, null, null, false);
+					foe.endOfTurn(me.getCurrent(), me);
+					me.getCurrent().endOfTurn(foe, me);
 					field.endOfTurn();
 					updateCurrent(pl);
 					updateStatus();
@@ -423,8 +423,8 @@ public class Battle extends JFrame {
 						wipe(pl, gp);
 					}
 		        }
-		        System.out.println();
-			    System.out.println("------------------------------");
+		        console.writeln();
+			    console.writeln("------------------------------");
 		    }
 		});
 		
@@ -432,7 +432,7 @@ public class Battle extends JFrame {
 		 * @DEBUG: Used to full heal the party
 		 */
 //		healButton.addActionListener(e -> {
-//			System.out.println();
+//			console.writeln();
 //			for (Pokemon member : me.team) {
 //				if (member != null) member.heal();
 //			}
@@ -441,8 +441,8 @@ public class Battle extends JFrame {
 //			displayParty();
 //			updateStatus();
 //			playerPanel.repaint();
-//			System.out.println();
-//			System.out.println("------------------------------");
+//			console.writeln();
+//			console.writeln("------------------------------");
 //        });
 		
 		/*
@@ -454,7 +454,7 @@ public class Battle extends JFrame {
 					JOptionPane.showMessageDialog(null, "What are you doing?!\nYou can't run from a trainer battle!");
 					return;
 	        	} else {
-	        		Pokemon faster = me.getCurrent().getFaster(foe, field, 0, 0);
+	        		Pokemon faster = me.getCurrent().getFaster(foe, 0, 0);
 					double chance = faster == me.getCurrent() ? 1 : 0.5;
 					
 					if (chance >= Math.random()) {
@@ -464,11 +464,11 @@ public class Battle extends JFrame {
 						return;
 					}
 					
-					System.out.println("\nCouldn't escape!");
-	        		foe.move(me.getCurrent(),foe.randomMove(), me, field, null, null, false);
+					console.writeln("\nCouldn't escape!");
+	        		foe.move(me.getCurrent(),foe.randomMove(), me, null, null, false);
 	        	}
-				foe.endOfTurn(me.getCurrent(), me, field);
-				me.getCurrent().endOfTurn(foe, me, field);
+				foe.endOfTurn(me.getCurrent(), me);
+				me.getCurrent().endOfTurn(foe, me);
 				field.endOfTurn();
 			}
 			updateCurrent(pl);
@@ -485,8 +485,8 @@ public class Battle extends JFrame {
 				}
 				return;
 			}
-			System.out.println();
-		    System.out.println("------------------------------");
+			console.writeln();
+		    console.writeln("------------------------------");
         });
 		
 		infoButton.addActionListener(e -> {
@@ -738,7 +738,7 @@ public class Battle extends JFrame {
 		    }
 		});
 		
-		calcButton.addActionListener(e ->{
+		calcButton.addActionListener(e -> {
 			me.bag.bag[200].useCalc(me);
 		});
 		
@@ -761,24 +761,24 @@ public class Battle extends JFrame {
 				}
 				boolean swapping = me.getCurrent().vStatuses.contains(Status.SWITCHING);
 				
-				Move move = foe.trainerOwned() ? foe.bestMove(me.current, field, false) : foe.randomMove();
+				Move move = foe.trainerOwned() ? foe.bestMove(me.current, false) : foe.randomMove();
 				if (move == Move.PURSUIT && !me.getCurrent().isFainted()) {
 					move = Move.BOOSTED_PURSUIT;
 					if (foeTrainer != null) {
-	        			foe.move(me.getCurrent(), move, me, field, foeTrainer.getTeam(), null, false);
+	        			foe.move(me.getCurrent(), move, me, foeTrainer.getTeam(), null, false);
 	        		} else {
-	        			foe.move(me.getCurrent(), move, me, field, null, null, false);
+	        			foe.move(me.getCurrent(), move, me, null, null, false);
 		        	}
 				}
 				if (move == Move.BOOSTED_PURSUIT && me.getCurrent().isFainted()) {
-					foe.endOfTurn(me.getCurrent(), me, field);
+					foe.endOfTurn(me.getCurrent(), me);
 					field.endOfTurn();
 					updateCurrent(pl);
 					updateBars(true);
 					displayParty();
 					updateStatus();
-					System.out.println();
-				    System.out.println("------------------------------");
+					console.writeln();
+				    console.writeln("------------------------------");
 				    if (me.wiped()) {
 						wipe(pl, gp);
 					}
@@ -786,7 +786,7 @@ public class Battle extends JFrame {
 				}
 				
 				me.swap(me.team[index], index);
-				me.getCurrent().swapIn(foe, field, me);
+				me.getCurrent().swapIn(foe, me);
 				updateField(field);
 				foe.vStatuses.remove(Status.TRAPPED);
 				foe.vStatuses.remove(Status.SPUN);
@@ -801,17 +801,17 @@ public class Battle extends JFrame {
 	            }
 				if (!me.team[index].isFainted() && !swapping && move != Move.BOOSTED_PURSUIT) {
 	        		if (foeTrainer != null) {
-	        			foe.move(me.getCurrent(), move, me, field, foeTrainer.getTeam(), null, false);
+	        			foe.move(me.getCurrent(), move, me, foeTrainer.getTeam(), null, false);
 	        		} else {
-	        			foe.move(me.getCurrent(), move, me, field, null, null, false);
+	        			foe.move(me.getCurrent(), move, me, null, null, false);
 		        	}
-					foe.endOfTurn(me.getCurrent(), me, field);
-					me.getCurrent().endOfTurn(foe, me, field);
+					foe.endOfTurn(me.getCurrent(), me);
+					me.getCurrent().endOfTurn(foe, me);
 					field.endOfTurn();
 				}
 				if (move == Move.BOOSTED_PURSUIT) {
-					foe.endOfTurn(me.getCurrent(), me, field);
-					me.getCurrent().endOfTurn(foe, me, field);
+					foe.endOfTurn(me.getCurrent(), me);
+					me.getCurrent().endOfTurn(foe, me);
 					field.endOfTurn();
 				}
 				updateCurrent(pl);
@@ -823,8 +823,8 @@ public class Battle extends JFrame {
 					if (foeTrainer != null && foeTrainer.getTeam() != null) {
 						if (foeTrainer.hasNext()) {
 							foe = foeTrainer.next();
-							System.out.println("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
-							foe.swapIn(me.getCurrent(), field, me);
+							console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
+							foe.swapIn(me.getCurrent(), me);
 							updateField(field);
 							updateFoe();
 							updateCurrent(pl);
@@ -857,8 +857,8 @@ public class Battle extends JFrame {
 						dispose();
 					}
 				}
-				System.out.println();
-			    System.out.println("------------------------------");
+				console.writeln();
+			    console.writeln("------------------------------");
 			    if (me.wiped()) {
 					wipe(pl, gp);
 				}
@@ -1273,24 +1273,24 @@ public class Battle extends JFrame {
 		if (p1.ability == Ability.STEALTHY_PREDATOR && p1.impressive) ++m1P;
 		if (p2.ability == Ability.STEALTHY_PREDATOR && p2.impressive) ++m2P;
 		
-		Pokemon faster = p1.getFaster(p2, field, m1P, m2P);
+		Pokemon faster = p1.getFaster(p2, m1P, m2P);
 		
 		Pokemon slower = faster == p1 ? p2 : p1;
 		
 		if (faster == p1) { // player Pokemon is faster
 			Pokemon[] team = me.getTeam();
 			Pokemon[] enemyTeam = foeTrainer == null ? null : foeTrainer.getTeam();
-			faster.move(slower, m1, me, field, team, foeTrainer, true);
+			faster.move(slower, m1, me, team, foeTrainer, true);
 			// Check for swap
 			if (faster.vStatuses.contains(Status.SWITCHING)) faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS);
 			
-	        slower.move(faster, m2, me, field, enemyTeam, null, false);
+	        slower.move(faster, m2, me, enemyTeam, null, false);
 		} else { // enemy Pokemon is faster
 			Pokemon[] enemyTeam = me.getTeam();
 			Pokemon[] team = foeTrainer == null ? null : foeTrainer.getTeam();
-			faster.move(slower, m2, me, field, team, null, true);
+			faster.move(slower, m2, me, team, null, true);
 			
-	        slower.move(faster, m1, me, field, enemyTeam, foeTrainer, false);
+	        slower.move(faster, m1, me, enemyTeam, foeTrainer, false);
 	        // Check for swap
 	        if (slower.vStatuses.contains(Status.SWITCHING)) slower = getSwap(pl, slower.lastMoveUsed == Move.BATON_PASS);
 		}
@@ -1298,8 +1298,8 @@ public class Battle extends JFrame {
 			foe = foeTrainer.getCurrent();
 			showFoe();
 		}
-        if (hasAlive()) faster.endOfTurn(slower, me, field);
-        if (hasAlive()) slower.endOfTurn(faster, me, field);
+        if (hasAlive()) faster.endOfTurn(slower, me);
+        if (hasAlive()) slower.endOfTurn(faster, me);
         if (hasAlive()) field.endOfTurn();
 		updateBars(true);
 		updateCurrent(pl);
@@ -1309,8 +1309,8 @@ public class Battle extends JFrame {
 			if (foeTrainer != null && foeTrainer.getTeam() != null) {
 				if (foeTrainer.hasNext()) {
 					foe = foeTrainer.next();
-					System.out.println("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
-					foe.swapIn(me.getCurrent(), field, me);
+					console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
+					foe.swapIn(me.getCurrent(), me);
 					updateField(field);
 					updateFoe();
 					updateCurrent(pl);
@@ -1345,8 +1345,8 @@ public class Battle extends JFrame {
 				dispose();
 			}
 		}
-		System.out.println();
-	    System.out.println("------------------------------");
+		console.writeln();
+	    console.writeln("------------------------------");
 	    updateField(field);
 	    if (me.wiped()) {
 			wipe(pl, gp);
@@ -1416,7 +1416,7 @@ public class Battle extends JFrame {
 		            party.addActionListener(g -> {
 		                if (baton) me.team[index].statStages = me.getCurrent().statStages;
 		                me.swap(me.team[index], index);
-		                me.getCurrent().swapIn(foe, field, me);
+		                me.getCurrent().swapIn(foe, me);
 		                updateField(field);
 		                foe.vStatuses.remove(Status.TRAPPED);
 		                foe.vStatuses.remove(Status.SPUN);
@@ -1548,24 +1548,22 @@ public class Battle extends JFrame {
 
 	    @Override
 	    protected void paintComponent(Graphics g) {
-	    	if (solid) {
-	    		super.setBackground(backgroundColorA);
-	    	} else {
-	    		Graphics2D g2 = (Graphics2D) g.create();
-		        g2.setPaint(new GradientPaint(
-		                new Point(0, 0),
-		                backgroundColorA,
-		                new Point(0, getHeight() / 3),
-		                Color.WHITE));
-		        g2.fillRect(0, 0, getWidth(), getHeight() / 3);
-		        g2.setPaint(new GradientPaint(
-		                new Point(0, getHeight() / 3),
-		                Color.WHITE,
-		                new Point(0, getHeight()),
-		                backgroundColorB));
-		        g2.fillRect(0, getHeight() / 3, getWidth(), getHeight());
-		        g2.dispose();
-	    	}
+	    	Color middle = solid ? backgroundColorA : Color.white;
+	    	
+    		Graphics2D g2 = (Graphics2D) g.create();
+	        g2.setPaint(new GradientPaint(
+	                new Point(0, 0),
+	                backgroundColorA,
+	                new Point(0, getHeight() / 3),
+	                middle));
+	        g2.fillRect(0, 0, getWidth(), getHeight() / 3);
+	        g2.setPaint(new GradientPaint(
+	                new Point(0, getHeight() / 3),
+	                middle,
+	                new Point(0, getHeight()),
+	                backgroundColorB));
+	        g2.fillRect(0, getHeight() / 3, getWidth(), getHeight());
+	        g2.dispose();
 	    	
 	    	super.paintComponent(g);
 	    }

@@ -41,6 +41,9 @@ public class Pokemon implements Serializable {
 	 */
 	private static final long serialVersionUID = 7087373480262097882L;
 	
+	public static TextPane console;
+	public static Field field;
+	
 	// id fields
 	public int id;
 	public String name;
@@ -309,7 +312,7 @@ public class Pokemon implements Serializable {
 	    }	    
 	}
 	
-	public Move bestMove(Pokemon foe, Field field, boolean first) {
+	public Move bestMove(Pokemon foe, boolean first) {
 	    ArrayList<Move> validMoves = new ArrayList<>();
 
 	    // Add all non-null moves to the validMoves list
@@ -327,7 +330,7 @@ public class Pokemon implements Serializable {
         Map<Move, Integer> moveToDamage = new HashMap<>();
 
         for (Move move : validMoves) {
-            int damage = calcWithTypes(foe, move, first, field);
+            int damage = calcWithTypes(foe, move, first);
             if ((vStatuses.contains(Status.TORMENTED) && move == this.lastMoveUsed) || (vStatuses.contains(Status.MUTE) && Move.getSound().contains(move))) {
             	// nothing: don't add
             } else {
@@ -2211,7 +2214,7 @@ public class Pokemon implements Serializable {
 		this.exp -= this.expMax;
 		++level;
 		awardHappiness(5);
-		System.out.println(this.nickname + " leveled Up!");
+		console.writeln(this.nickname + " leveled Up!");
 		checkMove();
 		Pokemon result = this.checkEvo(player);
 		expMax = setExpMax();
@@ -2256,7 +2259,7 @@ public class Pokemon implements Serializable {
 	            for (int i = 0; i < 4; i++) {
 	                if (this.moveset[i] == null) {
 	                    this.moveset[i] = new Moveslot(move);
-	                    System.out.println(this.nickname + " learned " + move.toString() + "!");
+	                    console.writeln(this.nickname + " learned " + move.toString() + "!");
 	                    learnedMove = true;
 	                    break;
 	                }
@@ -2264,9 +2267,9 @@ public class Pokemon implements Serializable {
 	            if (!learnedMove) {
 	                int choice = this.displayMoveOptions(move);
 	                if (choice == JOptionPane.CLOSED_OPTION) {
-	                    System.out.println(this.nickname + " did not learn " + move.toString() + ".");
+	                    console.writeln(this.nickname + " did not learn " + move.toString() + ".");
 	                } else {
-		                System.out.println(this.nickname + " has learned " + move.toString() + " and forgot " + this.moveset[choice].move + "!");
+		                console.writeln(this.nickname + " has learned " + move.toString() + " and forgot " + this.moveset[choice].move + "!");
 		                this.moveset[choice] = new Moveslot(move);
 	                }
 	            }
@@ -2529,7 +2532,7 @@ public class Pokemon implements Serializable {
 		        int hpDif = this.getStat(0) - this.currentHP;
 		        result.currentHP -= hpDif;
 		        result.moveMultiplier = this.moveMultiplier;
-		        System.out.println(this.nickname + " evolved into " + result.name + "!");
+		        console.writeln(this.nickname + " evolved into " + result.name + "!");
 		        result.exp = this.exp;
 		        player.pokedex[result.id] = 2;
 			} else {
@@ -2874,7 +2877,7 @@ public class Pokemon implements Serializable {
 	}
 
 	
-	public void move(Pokemon foe, Move move, Player player, Field field, Pokemon[] team, Trainer enemy, boolean first) {
+	public void move(Pokemon foe, Move move, Player player, Pokemon[] team, Trainer enemy, boolean first) {
 		if (this.fainted || foe.fainted) return;
 
 		double attackStat;
@@ -2889,6 +2892,7 @@ public class Pokemon implements Serializable {
 		ArrayList<FieldEffect> userSide = this.playerOwned ? field.playerSide : field.foeSide;
 		ArrayList<FieldEffect> enemySide = this.playerOwned ? field.foeSide : field.playerSide;
 		
+		if (move != this.lastMoveUsed) this.moveMultiplier = 1;
 		
 		if (!this.vStatuses.contains(Status.CHARGING) && !this.vStatuses.contains(Status.SEMI_INV) && !this.vStatuses.contains(Status.LOCKED) &&
 				!this.vStatuses.contains(Status.ENCORED) && move != Move.MAGIC_REFLECT && move != Move.TAKE_OVER && move != Move.ABDUCT &&
@@ -2911,7 +2915,7 @@ public class Pokemon implements Serializable {
 		
 		if (this.status == Status.ASLEEP) {
 			if (this.sleepCounter > 0) {
-				System.out.println("\n" + this.nickname + " is fast asleep.");
+				console.writeln("\n" + this.nickname + " is fast asleep.");
 				this.sleepCounter--;
 				if (move == Move.SLEEP_TALK) {
 					useMove(move);
@@ -2937,7 +2941,7 @@ public class Pokemon implements Serializable {
 					return;
 				}
 			} else {
-				System.out.print("\n" + this.nickname + " woke up!");
+				console.write("\n" + this.nickname + " woke up!");
 				this.status = Status.HEALTHY;
 			}
 		}
@@ -2945,12 +2949,12 @@ public class Pokemon implements Serializable {
 		if (this.vStatuses.contains(Status.CONFUSED)) {
 			if (this.confusionCounter == 0) {
 				this.vStatuses.remove(Status.CONFUSED);
-		        System.out.print("\n" + this.nickname + " snapped out of confusion!");
+		        console.write("\n" + this.nickname + " snapped out of confusion!");
 			} else {
-				System.out.print("\n" + this.nickname + " is confused!");
+				console.write("\n" + this.nickname + " is confused!");
 				if (Math.random() < 1.0/3.0) {
 			        // user hits themselves
-					System.out.println("\n" + this.nickname + " hit itself in confusion!");
+					console.writeln("\n" + this.nickname + " hit itself in confusion!");
 					attackStat = this.getStat(1);
 					defenseStat = this.getStat(2);
 					attackStat *= this.asModifier(0);
@@ -2972,7 +2976,7 @@ public class Pokemon implements Serializable {
 			}
 		}
 		if (this.status == Status.PARALYZED && Math.random() < 0.25) {
-			System.out.println("\n" + this.nickname + " is fully paralyzed!");
+			console.writeln("\n" + this.nickname + " is fully paralyzed!");
 			this.moveMultiplier = 1;
 			this.impressive = false;
 			this.vStatuses.remove(Status.LOCKED);
@@ -2984,15 +2988,17 @@ public class Pokemon implements Serializable {
 		if (foe.status != Status.TOXIC) foe.toxic = 0;
 		
 		if (this.vStatuses.contains(Status.FLINCHED) && this.ability != Ability.INNER_FOCUS) {
-			System.out.println("\n" + this.nickname + " flinched!");
+			console.writeln("\n" + this.nickname + " flinched!");
 			this.vStatuses.remove(Status.FLINCHED);
+			this.moveMultiplier = 1;
 			this.impressive = false;
 			this.vStatuses.remove(Status.LOCKED);
 			this.vStatuses.remove(Status.CHARGING);
 			return;
 		}
 		if (this.vStatuses.contains(Status.RECHARGE)) {
-			System.out.println("\n" + this.nickname + " must recharge!");
+			console.writeln("\n" + this.nickname + " must recharge!");
+			this.moveMultiplier = 1;
 			this.vStatuses.remove(Status.RECHARGE);
 			this.impressive = false;
 			this.vStatuses.remove(Status.LOCKED);
@@ -3001,14 +3007,14 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (this.vStatuses.contains(Status.TAUNTED) && move.cat == 2) {
-			System.out.println("\n" + this.nickname + " can't use " + move + " after the taunt!");
+			console.writeln("\n" + this.nickname + " can't use " + move + " after the taunt!");
 			this.lastMoveUsed = null;
 			this.impressive = false;
 			return;
 		}
 		
 		if (this.vStatuses.contains(Status.MUTE) && Move.getSound().contains(move)) {
-			System.out.println("\n" + this.nickname + " can't use " + move + " after the throat chop!");
+			console.writeln("\n" + this.nickname + " can't use " + move + " after the throat chop!");
 			this.lastMoveUsed = null;
 			this.impressive = false;
 			return;
@@ -3016,11 +3022,12 @@ public class Pokemon implements Serializable {
 		
 		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN)) || this.vStatuses.contains(Status.CHARGING) || move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY) {
 			if (!this.vStatuses.contains(Status.CHARGING)) {
-				System.out.println("\n" + this.nickname + " used " + move + "!");
-				System.out.println(this.nickname + " started charging up!");
+				announceUseMove(move);
+				console.writeln(this.nickname + " started charging up!");
 				this.vStatuses.add(Status.CHARGING);
 				if (move == Move.SKULL_BASH) stat(this, 1, 1, foe);
 				if (move == Move.BLACK_HOLE_ECLIPSE) stat(this, 3, 1, foe);
+				this.moveMultiplier = 1;
 				this.impressive = false;
 				return;
 			} else {
@@ -3036,13 +3043,14 @@ public class Pokemon implements Serializable {
 		
 		if (move == Move.DIG || move == Move.DIVE || move == Move.FLY || move == Move.BOUNCE || move == Move.PHANTOM_FORCE || this.vStatuses.contains(Status.SEMI_INV)) {
 			if (!this.vStatuses.contains(Status.SEMI_INV)) {
-				System.out.println("\n" + this.nickname + " used " + move + "!");
-				if (move == Move.DIG) System.out.println(this.nickname + " burrowed underground!");
-				if (move == Move.DIVE) System.out.println(this.nickname + " dove underwater!");
-				if (move == Move.FLY) System.out.println(this.nickname + " flew up high!");
-				if (move == Move.BOUNCE) System.out.println(this.nickname + " sprang up!");
-				if (move == Move.PHANTOM_FORCE) System.out.println(this.nickname + " vanished instantly!");
+				announceUseMove(move);
+				if (move == Move.DIG) console.writeln(this.nickname + " burrowed underground!");
+				if (move == Move.DIVE) console.writeln(this.nickname + " dove underwater!");
+				if (move == Move.FLY) console.writeln(this.nickname + " flew up high!");
+				if (move == Move.BOUNCE) console.writeln(this.nickname + " sprang up!");
+				if (move == Move.PHANTOM_FORCE) console.writeln(this.nickname + " vanished instantly!");
 				this.vStatuses.add(Status.SEMI_INV);
+				this.moveMultiplier = 1;
 				this.impressive = false;
 				return;
 			} else {
@@ -3058,13 +3066,13 @@ public class Pokemon implements Serializable {
 		
 		if (foe.vStatuses.contains(Status.PROTECT) && (move.accuracy <= 100 || move.cat != 2) && move != Move.FEINT) {
 			useMove(move);
-			System.out.println(foe.nickname + " protected itself!");
+			console.writeln(foe.nickname + " protected itself!");
 			if (move.contact) {
 				if (foe.lastMoveUsed == Move.OBSTRUCT) stat(this, 1, -2, foe);
-				if (foe.lastMoveUsed == Move.MOLTEN_LAIR) burn(false, foe, field);
+				if (foe.lastMoveUsed == Move.MOLTEN_LAIR) burn(false, foe);
 				if (foe.lastMoveUsed == Move.SPIKY_SHIELD && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 					this.currentHP -= Math.max(this.getStat(0) / 8, 1);
-					System.out.println(this.nickname + " was hurt!");
+					console.writeln(this.nickname + " was hurt!");
 					if (this.currentHP <= 0) { // Check for kill
 						this.faint(true, player, foe);
 						foe.awardxp((int) Math.ceil(this.level * this.trainer), player);
@@ -3072,6 +3080,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			this.impressive = false;
+			this.moveMultiplier = 1;
 			return;
 		}
 		
@@ -3119,8 +3128,9 @@ public class Pokemon implements Serializable {
 			useMove(move);
 			move = foe.lastMoveUsed;
 			if (move == null) {
-				System.out.println("\nBut it failed!");
+				console.writeln("\nBut it failed!");
 				this.impressive = false;
+				this.moveMultiplier = 1;
 				return;
 			}
 			bp = move.basePower;
@@ -3131,21 +3141,22 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (foe.vStatuses.contains(Status.REFLECT) && (move != Move.BRICK_BREAK && move != Move.MAGIC_FANG && move != Move.PSYCHIC_FANGS)) {
-			this.move(this, move, player, field, team, enemy, false);
-			System.out.println(move + " was reflected on itself!");
+			this.move(this, move, player, team, enemy, false);
+			console.writeln(move + " was reflected on itself!");
 			foe.vStatuses.remove(Status.REFLECT);
 			return;
 		}
 		if (this.vStatuses.contains(Status.POSESSED)) {
 			this.vStatuses.remove(Status.POSESSED);
-			this.move(this, move, player, field, team, enemy, false);
-			System.out.println(move + " was used on itself!");
+			this.move(this, move, player, team, enemy, false);
+			console.writeln(move + " was used on itself!");
 			return;
 		}
 		if (move == Move.FAILED_SUCKER) {
 			useMove(Move.SUCKER_PUNCH);
 			fail();
 			this.impressive = false;
+			this.moveMultiplier = 1;
 			return;
 		}
 		if (move == Move.METRONOME) {
@@ -3162,12 +3173,14 @@ public class Pokemon implements Serializable {
 			useMove(move);
 			fail();
 			this.impressive = false;
+			this.moveMultiplier = 1;
 			return;
 		}
 		
 		if ((move == Move.FIRST_IMPRESSION || move == Move.BELCH || move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT) && !this.impressive) {
 			useMove(move);
 			fail();
+			this.moveMultiplier = 1;
 			return;
 		}
 		
@@ -3198,10 +3211,10 @@ public class Pokemon implements Serializable {
 					(field.equals(field.weather, Effect.SNOW) && foe.ability == Ability.SNOW_CLOAK)) accuracy *= 0.8;
 			if (!hit(accuracy) || foe.vStatuses.contains(Status.SEMI_INV) && move.accuracy <= 100) {
 				useMove(move);
-				System.out.println(this.nickname + "'s attack missed!");
+				console.writeln(this.nickname + "'s attack missed!");
 				if (move == Move.HI_JUMP_KICK) {
 					this.currentHP -= this.getStat(0) / 2;
-					System.out.println(this.nickname + " kept going and crashed!");
+					console.writeln(this.nickname + " kept going and crashed!");
 					if (this.currentHP < 0) {
 						this.faint(true, player, foe);
 						foe.awardxp((int) Math.ceil(this.level * trainer), player);
@@ -3209,75 +3222,83 @@ public class Pokemon implements Serializable {
 				}
 				endMove();
 				this.vStatuses.remove(Status.LOCKED);
+				this.moveMultiplier = 1;
 				return; // Check for miss
 			}
 		}
 		
 		if (move == Move.HIDDEN_POWER) moveType = determineHPType();
-		if (move == Move.WEATHER_BALL) moveType = determineWBType(field);
-		if (move == Move.TERRAIN_PULSE) moveType = determineTPType(field);
+		if (move == Move.WEATHER_BALL) moveType = determineWBType();
+		if (move == Move.TERRAIN_PULSE) moveType = determineTPType();
 		
 		int numHits = move.getNumHits(team);
 		useMove(move);
 		for (int hit = 1; hit <= numHits; hit++) {
 			if (hit > 1) bp = move.basePower;
 			if (foe.isFainted() || this.isFainted()) {
-				System.out.println("Hit " + (hit - 1) + " time(s)!");
+				console.writeln("Hit " + (hit - 1) + " time(s)!");
 				break;
 			}
 			
 			if (moveType == PType.FIRE && foe.ability == Ability.FLASH_FIRE) {
-				System.out.println("[" + foe.nickname + "'s Flash Fire]: " + foe.nickname + "'s Fire-Type move's are boosted!");
+				console.writeln("[" + foe.nickname + "'s Flash Fire]: " + foe.nickname + "'s Fire-Type move's are boosted!");
 				foe.vStatuses.add(Status.FLASH_FIRE);
 				endMove();
+				this.moveMultiplier = 1;
 				return;
 			}
 			
 			if ((moveType == PType.WATER && foe.ability == Ability.WATER_ABSORB) || (moveType == PType.ELECTRIC && foe.ability == Ability.VOLT_ABSORB) ||
 					(moveType == PType.BUG && foe.ability == Ability.INSECT_FEEDER)) {
 				if (foe.currentHP == foe.getStat(0)) {
-					System.out.println("[" + foe.nickname + "'s " + foe.ability.toString() + "]: " + "It doesn't effect " + foe.nickname + "...");
+					console.writeln("[" + foe.nickname + "'s " + foe.ability.toString() + "]: " + "It doesn't effect " + foe.nickname + "...");
 					endMove();
+					this.moveMultiplier = 1;
 					return; // Check for immunity
 				} else {
-					System.out.println("[" + foe.nickname + "'s " + foe.ability.toString() + "]: " + foe.nickname + " restored HP!");
-					System.out.println(foe.nickname + " restored HP!");
+					console.writeln("[" + foe.nickname + "'s " + foe.ability.toString() + "]: " + foe.nickname + " restored HP!");
+					console.writeln(foe.nickname + " restored HP!");
 					foe.currentHP += foe.getStat(0) / 4;
 					foe.verifyHP();
 					endMove();
+					this.moveMultiplier = 1;
 					return;
 				}
 			}
 			
 			if ((moveType == PType.ELECTRIC && (foe.ability == Ability.MOTOR_DRIVE || foe.ability == Ability.LIGHTNING_ROD)) ||
 					(moveType == PType.GRASS && foe.ability == Ability.SAP_SIPPER)) {
-				System.out.print("[" + foe.nickname + "'s " + foe.ability.toString() + "]: ");
+				console.write("[" + foe.nickname + "'s " + foe.ability.toString() + "]: ");
 				if (foe.ability == Ability.MOTOR_DRIVE) stat(foe, 4, 1, foe);
 				if (foe.ability == Ability.LIGHTNING_ROD) stat(foe, 2, 1, foe);
 				if (foe.ability == Ability.SAP_SIPPER) stat(foe, 0, 1, foe);
 				endMove();
+				this.moveMultiplier = 1;
 				return;
 			}
 			
-			if (moveType == PType.GROUND && !foe.isGrounded(field) && move.cat != 2) {
-				if (foe.ability == Ability.LEVITATE) System.out.print("[" + foe.nickname + "'s Levitate]: ");
-				System.out.println("It doesn't effect " + foe.nickname + "...");
+			if (moveType == PType.GROUND && !foe.isGrounded() && move.cat != 2) {
+				if (foe.ability == Ability.LEVITATE) console.write("[" + foe.nickname + "'s Levitate]: ");
+				console.writeln("It doesn't effect " + foe.nickname + "...");
 				endMove();
+				this.moveMultiplier = 1;
 				return; // Check for immunity
 			}
 			
 			if (moveType != PType.GROUND && (move.cat != 2 || move == Move.THUNDER_WAVE)) {
 				if (getImmune(foe, moveType) || (moveType == PType.GHOST && foe.ability == Ability.FRIENDLY_GHOST)) {
-					if (foe.ability == Ability.FRIENDLY_GHOST) System.out.print("[" + foe.nickname + "'s Friendly Ghost]: ");
-					System.out.println("It doesn't effect " + foe.nickname + "...");
+					if (foe.ability == Ability.FRIENDLY_GHOST) console.write("[" + foe.nickname + "'s Friendly Ghost]: ");
+					console.writeln("It doesn't effect " + foe.nickname + "...");
 					endMove();
+					this.moveMultiplier = 1;
 					return; // Check for immunity 
 				}
 			}
 			
-			if ((field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded(field)) && ((move.priority >= 1 && acc <= 100) || (move.cat == 2 && this.ability == Ability.PRANKSTER))) {
-				System.out.println(foe.nickname + " is protected by the Psychic Terrain!");
+			if ((field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded()) && ((move.priority >= 1 && acc <= 100) || (move.cat == 2 && this.ability == Ability.PRANKSTER))) {
+				console.writeln(foe.nickname + " is protected by the Psychic Terrain!");
 				endMove();
+				this.moveMultiplier = 1;
 				return; // Check for immunity 
 			}
 			
@@ -3285,8 +3306,10 @@ public class Pokemon implements Serializable {
 			
 			
 			if (move == Move.DREAM_EATER && foe.status != Status.ASLEEP) {
-				System.out.println("It doesn't effect " + foe.nickname + "...");
+				console.writeln("It doesn't effect " + foe.nickname + "...");
 				endMove();
+				this.moveMultiplier = 1;
+				this.impressive = false;
 				return;
 			}
 			
@@ -3296,18 +3319,19 @@ public class Pokemon implements Serializable {
 				} else {
 					this.type1 = moveType;
 					this.type2 = null;
-					System.out.println(this.nickname + "'s type was updated to " + this.type1.toString() + "!");
+					console.writeln(this.nickname + "'s type was updated to " + this.type1.toString() + "!");
 				}
 			}
 			
 			if (move.cat == 2) {
-				statusEffect(foe, move, player, field, team, enemy, userSide, enemySide);
+				statusEffect(foe, move, player, team, enemy, userSide, enemySide);
 				this.impressive = false;
+				this.moveMultiplier = 1;
 				return;
 			}
 			
 			if (move.basePower < 0) {
-				bp = determineBasePower(foe, move, first, field, team, true);
+				bp = determineBasePower(foe, move, first, team, true);
 			}
 			
 			if (moveType == PType.FIRE && this.vStatuses.contains(Status.FLASH_FIRE)) bp *= 1.5;
@@ -3366,21 +3390,21 @@ public class Pokemon implements Serializable {
 				if (move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) bp *= 0.5;
 			}
 			
-			if (field.equals(field.terrain, Effect.ELECTRIC) && isGrounded(field)) {
+			if (field.equals(field.terrain, Effect.ELECTRIC) && isGrounded()) {
 				if (move.mtype == PType.ELECTRIC) bp *= 1.5;
 			}
 			
 			if (field.equals(field.terrain, Effect.GRASSY)) {
-				if (isGrounded(field) && move.mtype == PType.GRASS) bp *= 1.5;
+				if (isGrounded() && move.mtype == PType.GRASS) bp *= 1.5;
 				if (move == Move.EARTHQUAKE || move == Move.BULLDOZE || move == Move.MAGNITUDE) bp *= 0.5;
 			}
 			
 			if (field.equals(field.terrain, Effect.SPARKLY)) {
-				if (move.mtype == PType.DRAGON && foe.isGrounded(field)) bp *= 0.5;
-				if (isGrounded(field)) secChance = 0;
+				if (move.mtype == PType.DRAGON && foe.isGrounded()) bp *= 0.5;
+				if (isGrounded()) secChance = 0;
 			}
 			
-			if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded(field)) {
+			if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded()) {
 				if (move.mtype == PType.PSYCHIC) bp *= 1.5;
 			}
 			
@@ -3437,7 +3461,7 @@ public class Pokemon implements Serializable {
 			if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 			if (this.ability == Ability.SUPER_LUCK) critChance++;
 			if (critCheck(critChance)) {
-				System.out.println("A critical hit!");
+				console.writeln("A critical hit!");
 				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++; 
 				if (move.isPhysical() && attackStat < this.getStat(1)) {
 					attackStat = this.getStat(1);
@@ -3453,7 +3477,7 @@ public class Pokemon implements Serializable {
 				damage *= 1.5;
 				if (this.ability == Ability.SNIPER) damage *= 1.5;
 				if (foe.ability == Ability.ANGER_POINT) {
-					System.out.print("[" + foe.nickname + "'s Anger Point]: ");
+					console.write("[" + foe.nickname + "'s Anger Point]: ");
 					stat(foe, 0, 12, foe); }
 			} else {
 				damage = calc(attackStat, defenseStat, bp, this.level);
@@ -3505,8 +3529,10 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (foe.ability == Ability.WONDER_GUARD && multiplier <= 1) {
-				System.out.println("[" + foe.nickname + "'s Wonder Guard]: " + "It doesn't effect " + foe.nickname + "...");
+				console.writeln("[" + foe.nickname + "'s Wonder Guard]: " + "It doesn't effect " + foe.nickname + "...");
 				endMove();
+				this.impressive = false;
+				this.moveMultiplier = 1;
 				return; // Check for immunity
 			}
 			
@@ -3523,11 +3549,11 @@ public class Pokemon implements Serializable {
 			if (foe.ability == Ability.GALACTIC_AURA && (move.mtype == PType.PSYCHIC || move.mtype == PType.ICE)) damage /= 2;
 			
 			if (multiplier > 1) {
-				System.out.println("It's super effective!");
+				console.writeln("It's super effective!");
 				if (foe.ability == Ability.SOLID_ROCK || foe.ability == Ability.FILTER) damage /= 2;
 			}
 			if (multiplier < 1) {
-				System.out.println("It's not very effective...");
+				console.writeln("It's not very effective...");
 				if (ability == Ability.TINTED_LENS) damage *= 2;
 			}
 			
@@ -3540,12 +3566,13 @@ public class Pokemon implements Serializable {
 			if (move == Move.DRAGON_RAGE) damage = 40;
 			if (move == Move.HORN_DRILL || move == Move.SHEER_COLD || move == Move.GUILLOTINE || move == Move.FISSURE) {
 				if ((move == Move.SHEER_COLD && (foe.type1 == PType.ICE || foe.type2 == PType.ICE)) || foe.ability == Ability.STURDY) {
-					System.out.println("It doesn't effect " + foe.nickname + "...");
+					console.writeln("It doesn't effect " + foe.nickname + "...");
 					endMove();
+					this.moveMultiplier = 1;
 					return;
 				}
 				damage = foe.currentHP;
-				System.out.println("It's a one-hit KO!");
+				console.writeln("It's a one-hit KO!");
 			}
 			
 			if (move == Move.ABSORB || move == Move.DREAM_EATER || move == Move.GIGA_DRAIN || move == Move.MEGA_DRAIN || move == Move.LEECH_LIFE || move == Move.DRAIN_PUNCH || move == Move.DRAINING_KISS || move == Move.HORN_LEECH || move == Move.PARABOLIC_CHARGE) {
@@ -3558,7 +3585,7 @@ public class Pokemon implements Serializable {
 				
 				this.currentHP += healAmount;
 				if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-				System.out.println(this.nickname + " sucked HP from " + foe.nickname + "!");
+				console.writeln(this.nickname + " sucked HP from " + foe.nickname + "!");
 			}
 			
 			damage = Math.max(damage, 1);
@@ -3582,11 +3609,11 @@ public class Pokemon implements Serializable {
 			foe.currentHP -= damage;
 			double percent = dividend * 100.0 / foe.getStat(0); // change dividend to damage
 			String formattedPercent = String.format("%.1f", percent);
-			System.out.println("(" + foe.nickname + " lost " + formattedPercent + "% of its HP.)");
+			console.writeln("(" + foe.nickname + " lost " + formattedPercent + "% of its HP.)");
 			if (foe.currentHP <= 0 && (move == Move.FALSE_SWIPE || foe.vStatuses.contains(Status.ENDURE) || (fullHP && foe.ability == Ability.STURDY))) {
 				foe.currentHP = 1;
-				if (foe.ability == Ability.STURDY) System.out.print("[" + foe.name + "'s Sturdy]: ");
-				if (move != Move.FALSE_SWIPE) System.out.println(foe.name + " endured the hit!");
+				if (foe.ability == Ability.STURDY) console.write("[" + foe.name + "'s Sturdy]: ");
+				if (move != Move.FALSE_SWIPE) console.writeln(foe.name + " endured the hit!");
 			}
 			if (foe.currentHP <= 0) { // Check for kill
 				foe.faint(true, player, this);
@@ -3594,17 +3621,17 @@ public class Pokemon implements Serializable {
 				if (move == Move.SUNNY_DOOM) field.setWeather(field.new FieldEffect(Effect.SUN));
 				this.awardxp((int) Math.ceil(foe.level * foe.trainer), player);
 				if (this.vStatuses.contains(Status.BONDED)) {
-					System.out.println(foe.nickname + " took its attacker down with it!");
+					console.writeln(foe.nickname + " took its attacker down with it!");
 					this.faint(true, player, foe);
 				}
 				if (this.ability == Ability.MOXIE) {
-					System.out.print("[" + this.nickname + "'s Moxie]: ");
+					console.write("[" + this.nickname + "'s Moxie]: ");
 					stat(this, 0, 1, foe);
 				}
 			}
 			
 			if (recoil != 0) {
-				System.out.println(this.nickname + " was damaged by recoil!");
+				console.writeln(this.nickname + " was damaged by recoil!");
 				this.currentHP -= recoil;
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, player, foe);
@@ -3614,22 +3641,22 @@ public class Pokemon implements Serializable {
 			
 			if (move.contact && checkSecondary(30) && this.status == null) {
 				if (foe.ability == Ability.FLAME_BODY) {
-					System.out.print("[" + foe.nickname + "'s Flame Body]: ");
-					burn(false, this, field);
+					console.write("[" + foe.nickname + "'s Flame Body]: ");
+					burn(false, this);
 				}
 				if (foe.ability == Ability.STATIC && this.status == null) {
-					System.out.print("[" + foe.nickname + "'s Static]: ");
-					paralyze(false, this, field);
+					console.write("[" + foe.nickname + "'s Static]: ");
+					paralyze(false, this);
 				}
 				if (foe.ability == Ability.POISON_POINT && this.status == null) {
-					System.out.print("[" + foe.nickname + "'s Poison Point]: ");
-					poison(false, this, field);
+					console.write("[" + foe.nickname + "'s Poison Point]: ");
+					poison(false, this);
 				}
 			}
 			
 			if (move.contact && (foe.ability == Ability.ROUGH_SKIN || foe.ability == Ability.IRON_BARBS)) {
 				this.currentHP -= Math.max(this.getStat(0) / 8, 1);
-				System.out.println(this.nickname + " was hurt!");
+				console.writeln(this.nickname + " was hurt!");
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, player, foe);
 					if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
@@ -3638,20 +3665,20 @@ public class Pokemon implements Serializable {
 			}
 			
 			if ((moveType == PType.BUG || moveType == PType.GHOST || moveType == PType.DARK) && foe.ability == Ability.RATTLED && !foe.isFainted()) {
-				System.out.print("[" + foe.nickname + "'s " + foe.ability.toString() + "]: ");
+				console.write("[" + foe.nickname + "'s " + foe.ability.toString() + "]: ");
 				stat(foe, 4, 1, foe);
 			}
 			
 			if (moveType == PType.DARK && foe.ability == Ability.JUSTIFIED && !foe.isFainted()) {
-				System.out.print("[" + foe.nickname + "'s " + foe.ability.toString() + "]: ");
+				console.write("[" + foe.nickname + "'s " + foe.ability.toString() + "]: ");
 				stat(foe, 0, 1, foe);
 			}
 			
-			if (hit == numHits && hit > 1) System.out.println("Hit " + hit + " times!");
+			if (hit == numHits && hit > 1) console.writeln("Hit " + hit + " times!");
 		}
 		
 		if (checkSecondary(secChance)) {
-			secondaryEffect(foe, move, field, first, userSide, enemySide, player, enemy);
+			secondaryEffect(foe, move, first, userSide, enemySide, player, enemy);
 		}
 		
 		if (move == Move.VOLT_SWITCH || move == Move.FLIP_TURN || move == Move.U$TURN) {
@@ -3672,7 +3699,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			Move[] validMoves = moves.toArray(new Move[moves.size()]);
-			move(foe, validMoves[new Random().nextInt(validMoves.length)], player, field, team, enemy, first);
+			move(foe, validMoves[new Random().nextInt(validMoves.length)], player, team, enemy, first);
 		}
 		if (move == Move.ELEMENTAL_SPARKLE) {
 			ArrayList<Move> moves = new ArrayList<>();
@@ -3682,18 +3709,24 @@ public class Pokemon implements Serializable {
 				}
 			}
 			Move[] validMoves = moves.toArray(new Move[moves.size()]);
-			move(foe, validMoves[new Random().nextInt(validMoves.length)], player, field, team, enemy, first);
+			move(foe, validMoves[new Random().nextInt(validMoves.length)], player, team, enemy, first);
 		}
 		endMove();
 		return;
 	}
 
 	private void useMove(Move move) {
-		System.out.println("\n" + this.nickname + " used " + move + "!");
+		announceUseMove(move);
 		for (Moveslot m : this.moveset) {
 			if (m != null && m.move == move) m.currentPP--;
 		}
-		
+	}
+	
+	private void announceUseMove(Move move) {
+		console.write("\n" + this.nickname, true, 16);
+		console.write(" used ", false, 16);
+		console.write(move.toString(), move.mtype.getColor().darker(), true, 16);
+		console.writeln("!", true, 16);
 	}
 
 	private void endMove() {
@@ -3702,7 +3735,7 @@ public class Pokemon implements Serializable {
 	}
 
 	private boolean fail() {
-		System.out.println("But it failed!");
+		console.writeln("But it failed!");
 		success = false;
 		return true;
 	}
@@ -3727,7 +3760,7 @@ public class Pokemon implements Serializable {
 	            }
 	            if (p.level < 100) {
 	                p.exp += expAwarded;
-	                System.out.println(p.nickname + " gained " + expAwarded + " experience points!");
+	                console.writeln(p.nickname + " gained " + expAwarded + " experience points!");
 	            }
 	            while (p.exp >= p.expMax) {
 	                // Pokemon has leveled up, check for evolution
@@ -3752,9 +3785,9 @@ public class Pokemon implements Serializable {
 		this.happiness = this.happiness > 255 ? 255 : this.happiness;
 	}
 
-	private void secondaryEffect(Pokemon foe, Move move, Field field, boolean first, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide, Player player, Trainer enemy) {
+	private void secondaryEffect(Pokemon foe, Move move, boolean first, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide, Player player, Trainer enemy) {
 		if (move == Move.ABYSSAL_CHOP) {
-		    foe.paralyze(false, this, field);
+		    foe.paralyze(false, this);
 		} else if (move == Move.ACID) {
 			stat(foe, 3, -1, foe);
 		} else if (move == Move.ACID_SPRAY) {
@@ -3772,39 +3805,39 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.AURORA_BEAM) {
 			stat(foe, 0, -1, foe);
 		} else if (move == Move.BEEFY_BASH) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 //		} else if (move == Move.BIG_BULLET) {
-//			foe.paralyze(false, this, field);
+//			foe.paralyze(false, this);
 		} else if (move == Move.BIND) {
 			if (!foe.vStatuses.contains(Status.SPUN)) {
 				foe.vStatuses.add(Status.SPUN);
 				foe.spunCount = (((int) (Math.random() * 4)) + 2);
-				System.out.println(foe.nickname + " was wrapped by " + this.nickname + "!");
+				console.writeln(foe.nickname + " was wrapped by " + this.nickname + "!");
 			}
 		} else if (move == Move.BITE && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.BREAKING_SWIPE) {
 			stat(foe, 0, -1, foe);
 //		} else if (move == Move.BLAST_FLAME) {
-//			foe.burn(false, this, field);
+//			foe.burn(false, this);
 		} else if (move == Move.BLAZE_KICK) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 //		} else if (move == Move.BLAZING_SWORD) {
-//			foe.burn(false, this, field);
+//			foe.burn(false, this);
 		} else if (move == Move.BLIZZARD) {
-			foe.freeze(false, field);
+			foe.freeze(false);
 		} else if (move == Move.BLUE_FLARE) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.BODY_SLAM) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.BOLT_STRIKE) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.BRICK_BREAK || move == Move.PSYCHIC_FANGS) {
-			if (field.remove(enemySide, Effect.REFLECT)) System.out.println(foe.nickname + "'s Reflect wore off!");
-			if (field.remove(enemySide, Effect.LIGHT_SCREEN)) System.out.println(foe.nickname + "'s Light Screen wore off!");
-			if (field.remove(enemySide, Effect.AURORA_VEIL)) System.out.println(foe.nickname + "'s Aurora Veil wore off!");
+			if (field.remove(enemySide, Effect.REFLECT)) console.writeln(foe.nickname + "'s Reflect wore off!");
+			if (field.remove(enemySide, Effect.LIGHT_SCREEN)) console.writeln(foe.nickname + "'s Light Screen wore off!");
+			if (field.remove(enemySide, Effect.AURORA_VEIL)) console.writeln(foe.nickname + "'s Aurora Veil wore off!");
 		} else if (move == Move.BOUNCE) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.BUBBLEBEAM) {
 			stat(foe, 4, -1, foe);
 		} else if (move == Move.BUG_BUZZ) {
@@ -3818,22 +3851,22 @@ public class Pokemon implements Serializable {
 			stat(this, 2, 1, foe);
 		} else if (move == Move.CIRCLE_THROW || move == Move.DRAGON_TAIL) {
 			if (foe.trainerOwned() && enemy != null) {
-				enemy.swapRandom(foe, field, player);
+				enemy.swapRandom(foe, player);
 			} else if (foe.playerOwned) {
-				player.swapRandom(foe, field);
+				player.swapRandom(foe);
 			}
 		} else if (move == Move.CLOSE_COMBAT) {
 			stat(this, 1, -1, foe);
 			stat(this, 3, -1, foe);
 		} else if (move == Move.CONFUSION) {
-			foe.confuse(false, field);
+			foe.confuse(false);
 		} else if (move == Move.CORE_ENFORCER) {
 			stat(foe, 0, -1, foe);
 			stat(foe, 2, -1, foe);
 //		} else if (move == Move.CONSTRICT) {
 //			stat(foe, 4, -1);
 		} else if (move == Move.CROSS_POISON) {
-			foe.poison(false, this, field);
+			foe.poison(false, this);
 		} else if (move == Move.CRUNCH) {
 			stat(foe, 1, -1, foe);
 		} else if (move == Move.DARK_PULSE && first) {
@@ -3842,33 +3875,33 @@ public class Pokemon implements Serializable {
 			Random random = new Random();
 			boolean isHeads = random.nextBoolean();
 			if (isHeads) {
-				foe.paralyze(false, this, field);
+				foe.paralyze(false, this);
 			} else {
-				foe.sleep(false, field);
+				foe.sleep(false);
 			}
 		} else if (move == Move.DISCHARGE) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.DIAMOND_STORM) {
 			stat(this, 1, 1, foe);
 //		} else if (move == Move.DOUBLE_SLICE) {
 //			if (foe.status == Status.HEALTHY) {
 //				foe.status = Status.BLEEDING;
-//				System.out.println(foe.nickname + " is bleeding!");
+//				console.writeln(foe.nickname + " is bleeding!");
 //			}
 		} else if (move == Move.DRACO_METEOR) {
 			stat(this, 2, -2, foe);
 		} else if (move == Move.DRAGON_RUSH && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.DRAGON_BREATH) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.DYNAMIC_PUNCH) {
-			foe.confuse(false, field);
+			foe.confuse(false);
 		} else if (move == Move.EARTH_POWER) {
 			stat(foe, 3, -1, foe);
 		} else if (move == Move.ELECTROWEB) {
 			stat(foe, 4, -1, this);
 		} else if (move == Move.EMBER) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.ENERGY_BALL) {
 			stat(foe, 3, -1, foe);
 		} else if (move == Move.EXTRASENSORY && first) {
@@ -3880,30 +3913,30 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.FIERY_DANCE) {
 			stat(this, 2, 1, foe);
 		} else if (move == Move.FIRE_BLAST) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.FATAL_BIND) {
 			foe.perishCount = (foe.perishCount == 0) ? 3 : foe.perishCount;
 //		} else if (move == Move.FIRE_DASH) {
-//			foe.burn(false, this, field);
+//			foe.burn(false, this);
 		} else if (move == Move.FIRE_FANG) {
 			int randomNum = ((int) Math.random() * 3);
 			if (randomNum == 0) {
-				foe.burn(false, this, field);
+				foe.burn(false, this);
 			} else if (randomNum == 1 && first) {
 				foe.vStatuses.add(Status.FLINCHED);
 			}
 			 else if (randomNum == 2) {
 				if (first) foe.vStatuses.add(Status.FLINCHED);
-				foe.burn(false, this, field);
+				foe.burn(false, this);
 			}
 		} else if (move == Move.FIRE_PUNCH) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.FIRE_SPIN) {
 			if (!foe.vStatuses.contains(Status.SPUN)) {
 				if (foe.type1 != PType.FIRE && foe.type2 != PType.FIRE) {
 					foe.vStatuses.add(Status.SPUN);
 					foe.spunCount = (((int) (Math.random() * 4)) + 2);
-					System.out.println(foe.nickname + " was trapped in a fiery vortex!");
+					console.writeln(foe.nickname + " was trapped in a fiery vortex!");
 				}
 			}
 		} else if (move == Move.WHIRLPOOL) {
@@ -3911,38 +3944,38 @@ public class Pokemon implements Serializable {
 				if (foe.type1 != PType.WATER && foe.type2 != PType.WATER) {
 					foe.vStatuses.add(Status.SPUN);
 					foe.spunCount = (((int) (Math.random() * 4)) + 2);
-					System.out.println(foe.nickname + " was trapped in a whirlpool vortex!");
+					console.writeln(foe.nickname + " was trapped in a whirlpool vortex!");
 				}
 			}
 		} else if (move == Move.WRAP) {
 			if (!foe.vStatuses.contains(Status.SPUN)) {
 				foe.vStatuses.add(Status.SPUN);
 				foe.spunCount = (((int) (Math.random() * 4)) + 2);
-				System.out.println(foe.nickname + " was wrapped by " + this.nickname + "!");
+				console.writeln(foe.nickname + " was wrapped by " + this.nickname + "!");
 			}
 //		} else if (move == Move.FIRE_TAIL) {
-//			foe.burn(false, this, field);
+//			foe.burn(false, this);
 		} else if (move == Move.FLAME_BURST) {
-			foe.burn(false, this, field);
-			this.confuse(false, field);
+			foe.burn(false, this);
+			this.confuse(false);
 		} else if (move == Move.FLAME_CHARGE) {
 			stat(this, 4, 1, foe);
 		} else if (move == Move.FLAME_WHEEL) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.FLAMETHROWER) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.FLARE_BLITZ) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.FLASH_CANNON) {
 			stat(foe, 3, -1, foe);
 		} else if (move == Move.FLASH_RAY) {
 			stat(foe, 5, -1, foe);
 		} else if (move == Move.FORCE_PALM) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.FREEZE$DRY) {
-			foe.freeze(false, field);
+			foe.freeze(false);
 		} else if (move == Move.FREEZING_GLARE) {
-			foe.freeze(false, field);
+			foe.freeze(false);
 		} else if (move == Move.GLACIATE) {
 			stat(foe, 4, -1, foe);
 		} else if (move == Move.GLITTERING_SWORD) {
@@ -3952,51 +3985,51 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.GLITZY_GLOW) {
 			stat(this, 3, 1, foe);
 		} else if (move == Move.GUNK_SHOT) {
-			foe.poison(false, this, field);
+			foe.poison(false, this);
 		} else if (move == Move.HAMMER_ARM) {
 			stat(this, 4, -1, foe);
 		} else if (move == Move.HEADBUTT && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.HEAT_WAVE) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.HURRICANE) {
-			foe.confuse(false, field);
+			foe.confuse(false);
 		} else if (move == Move.HYPER_FANG && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.INCINERATE) {
 			stat(foe, 3, -1, foe);
 		} else if (move == Move.ICE_BEAM) {
-			foe.freeze(false, field);
+			foe.freeze(false);
 		} else if (move == Move.ICE_FANG) {
 			int randomNum = ((int) Math.random() * 3);
 			if (randomNum == 0) {
-				foe.freeze(false, field);
+				foe.freeze(false);
 			} else if (randomNum == 1 && first) {
 				foe.vStatuses.add(Status.FLINCHED);
 			}
 			 else if (randomNum == 2) {
 				if (first) foe.vStatuses.add(Status.FLINCHED);
-				foe.freeze(false, field);
+				foe.freeze(false);
 			}
 		} else if (move == Move.ICE_PUNCH) {
-			foe.freeze(false, field);
+			foe.freeze(false);
 		} else if (move == Move.ICICLE_CRASH && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.ICE_SPINNER) {
 			if (field.terrain != null) {
 				field.terrain = null;
 				field.terrainTurns = 0;
-				System.out.println("The terrain returned to normal!");
+				console.writeln("The terrain returned to normal!");
 			}
 		} else if (move == Move.ICY_WIND) {
 			stat(foe, 4, -1, foe);
 		} else if (move == Move.INFERNO) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		}  else if (move == Move.INFESTATION) {
 			if (!foe.vStatuses.contains(Status.SPUN)) {
 				foe.vStatuses.add(Status.SPUN);
 				foe.spunCount = (((int) (Math.random() * 4)) + 2);
-				System.out.println(foe.nickname + " was infested by " + this.nickname + "!");
+				console.writeln(foe.nickname + " was infested by " + this.nickname + "!");
 			}
 		} else if (move == Move.IRON_BLAST && first) {
 			foe.vStatuses.add(Status.FLINCHED);
@@ -4007,36 +4040,36 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.JAW_LOCK) {
 			if (!foe.vStatuses.contains(Status.TRAPPED) && !foe.isFainted()) {
 				foe.vStatuses.add(Status.TRAPPED);
-				System.out.println(foe.nickname + " was trapped!");
+				console.writeln(foe.nickname + " was trapped!");
 			}
 		} else if (move == Move.LAVA_PLUME) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 //		} else if (move == Move.LEAF_KOBE) {
-//			foe.paralyze(false, this, field);
+//			foe.paralyze(false, this);
 //		} else if (move == Move.LEAF_PULSE) {
 //			stat(foe, 5, -1);
 //			int randomNum = ((int) Math.round(Math.random()));
 //			if (randomNum == 0) {
-//				foe.sleep(false, field);
+//				foe.sleep(false);
 //			}
 		} else if (move == Move.LEAF_STORM) {
 			stat(this, 2, -2, foe);
 		} else if (move == Move.LEAF_TORNADO) {
 			stat(foe, 5, -1, foe);
 		} else if (move == Move.LICK) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.LIGHT_BEAM) {
 			stat(this, 2, 1, foe);
 //		} else if (move == Move.LIGHTNING_HEADBUTT) {
 //			int randomNum = ((int) Math.random() * 3);
 //			if (randomNum == 0) {
-//				foe.paralyze(false, this, field);
+//				foe.paralyze(false, this);
 //			} else if (randomNum == 1 && first) {
 //				foe.vStatuses.add(Status.FLINCHED);
 //			}
 //			 else if (randomNum == 2) {
 //				if (first) foe.vStatuses.add(Status.FLINCHED);
-//				foe.paralyze(false, this, field);
+//				foe.paralyze(false, this);
 //			}
 		} else if (move == Move.LIQUIDATION) {
 			stat(foe, 1, -1, foe);
@@ -4050,24 +4083,24 @@ public class Pokemon implements Serializable {
 			int randomNum = ((int) Math.random() * 5);
 			switch (randomNum) {
 			case 0:
-				foe.burn(false, this, field);
+				foe.burn(false, this);
 				break;
 			case 1:
-				foe.sleep(false, field);
+				foe.sleep(false);
 				break;
 			case 2:
-				foe.paralyze(false, this, field);
+				foe.paralyze(false, this);
 				break;
 			case 3:
 				boolean result = new Random().nextBoolean();
 				if (result) {
-					foe.poison(false, this, field);
+					foe.poison(false, this);
 				} else {
-					foe.toxic(false, this, field);
+					foe.toxic(false, this);
 				}
 				break;
 			case 4:
-				foe.freeze(false, field);
+				foe.freeze(false);
 				break;
 			default:
 				return;
@@ -4089,11 +4122,11 @@ public class Pokemon implements Serializable {
 			}
 			if (multiplier > 1) foe.vStatuses.add(Status.FLINCHED);
 //		} else if (move == Move.MEGA_KICK) {
-//			foe.paralyze(false, this, field); 
+//			foe.paralyze(false, this); 
 //		} else if (move == Move.MEGA_PUNCH) {
-//			foe.paralyze(false, this, field);
+//			foe.paralyze(false, this);
 //		} else if (move == Move.MEGA_SWORD) {
-//			foe.paralyze(false, this, field);
+//			foe.paralyze(false, this);
 		} else if (move == Move.METAL_CLAW) {
 			stat(this, 0, 1, foe);
 		} else if (move == Move.METEOR_ASSAULT) {
@@ -4106,9 +4139,9 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.MIST_BALL) {
 			stat(foe, 2, -1, foe);
 		} else if (move == Move.MOLTEN_STEELSPIKE) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.MOLTEN_CONSUME) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.MOONBLAST) {
 			stat(foe, 2, -1, foe);
 		} else if (move == Move.MUD_BOMB) {
@@ -4126,16 +4159,16 @@ public class Pokemon implements Serializable {
 //		} else if (move == Move.NEEDLE_SPRAY) {
 //			int randomNum = ((int) Math.round(Math.random()));
 //			if (randomNum == 0) {
-//				foe.paralyze(false, this, field);
+//				foe.paralyze(false, this);
 //			} else {
-//				foe.poison(false, this, field);
+//				foe.poison(false, this);
 //			}
 		} else if (move == Move.NIGHT_DAZE) {
 			stat(this, 5, -1, foe);
 		} else if (move == Move.OVERHEAT) {
 			stat(this, 2, -2, foe);
 //		} else if (move == Move.POISON_BALL) {
-//			foe.poison(false, this, field);
+//			foe.poison(false, this);
 		} else if (move == Move.PHOTON_GEYSER) {
 			stat(this, 2, -2, foe);
 		} else if (move == Move.PLAY_ROUGH) {
@@ -4143,43 +4176,43 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.POISON_FANG) {
 			int randomNum = ((int) Math.random() * 3);
 			if (randomNum == 0) {
-				foe.toxic(false, this, field);
+				foe.toxic(false, this);
 			} else if (randomNum == 1 && first) {
 				foe.vStatuses.add(Status.FLINCHED);
 			}
 			 else if (randomNum == 2) {
 				if (first) foe.vStatuses.add(Status.FLINCHED);
-				foe.poison(false, this, field);
+				foe.poison(false, this);
 			}
 		} else if (move == Move.POISON_JAB) {
-			foe.poison(false, this, field);
+			foe.poison(false, this);
 //		} else if (move == Move.POISON_PUNCH) {
-//			foe.poison(false, this, field);
+//			foe.poison(false, this);
 		} else if (move == Move.POISON_STING) {
-			foe.poison(false, this, field);
+			foe.poison(false, this);
 //		} else if (move == Move.POISONOUS_WATER) {
-//			foe.poison(false, this, field);
+//			foe.poison(false, this);
 		} else if (move == Move.POWER$UP_PUNCH) {
 			stat(this, 0, 1, foe);
 		} else if (move == Move.PSYBEAM) {
-			foe.confuse(false, field);
+			foe.confuse(false);
 		} else if (move == Move.PSYCHIC) {
 			stat(foe, 3, -1, foe);
 		} else if (move == Move.RAPID_SPIN) {
 			stat(this, 4, 1, foe);
 			if (this.vStatuses.contains(Status.SPUN)) {
 				this.vStatuses.remove(Status.SPUN);
-				System.out.println(this.nickname + " was freed!");
+				console.writeln(this.nickname + " was freed!");
 				this.spunCount = 0;
 			}
 			for (FieldEffect fe : field.getHazards(userSide)) {
-				System.out.println(fe.toString() + " disappeared from " + this.nickname + "'s side!");
+				console.writeln(fe.toString() + " disappeared from " + this.nickname + "'s side!");
 				userSide.remove(fe);
 			}
 		} else if (move == Move.RAZOR_SHELL) {
 			stat(foe, 1, -1, foe);
 		} else if (move == Move.ROCK_CLIMB) {
-			foe.confuse(false, field);
+			foe.confuse(false);
 		} else if (move == Move.ROCK_SMASH) {
 			stat(foe, 1, -1, foe);
 		} else if (move == Move.ROCK_TOMB) {
@@ -4187,13 +4220,13 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.ROCKFALL_FRENZY) {
 			field.setHazard(enemySide, field.new FieldEffect(Effect.STEALTH_ROCKS));
 //		} else if (move == Move.ROOT_CRUSH) {
-//			foe.paralyze(false, this, field);
+//			foe.paralyze(false, this);
 		} else if (move == Move.SACRED_FIRE) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.SCALD) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.SCORCHING_SANDS) {
-			foe.burn(false, this, field);
+			foe.burn(false, this);
 		} else if (move == Move.SHADOW_BALL) {
 			stat(foe, 3, -1, foe);
 		} else if (move == Move.SILVER_WIND) {
@@ -4202,9 +4235,9 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.SMACK_DOWN && !foe.vStatuses.contains(Status.SMACK_DOWN)) {
 			foe.vStatuses.add(Status.SMACK_DOWN);
-			System.out.println(foe.nickname + " was grounded!");
+			console.writeln(foe.nickname + " was grounded!");
 		} else if (move == Move.SLUDGE_WAVE) {
-			foe.poison(false, this, field);
+			foe.poison(false, this);
 		} else if (move == Move.SUMMIT_STRIKE) {
 		    stat(foe, 1, -1, foe);
 		    double random = Math.random();
@@ -4212,31 +4245,31 @@ public class Pokemon implements Serializable {
 		        foe.vStatuses.add(Status.FLINCHED);
 		    }
 		} else if (move == Move.NUZZLE) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 //		} else if (move == Move.SHURIKEN && foe.status == Status.HEALTHY) {
 //			foe.status = Status.BLEEDING;
-//			System.out.println(foe.nickname + " is bleeding!");
+//			console.writeln(foe.nickname + " is bleeding!");
 		} else if (move == Move.SKY_ATTACK && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.SLOW_FALL) {
 			this.ability = Ability.LEVITATE;
-			System.out.println(this.nickname + "'s ability was changed to Levitate!");
+			console.writeln(this.nickname + "'s ability was changed to Levitate!");
 		} else if (move == Move.SLUDGE) {
-			foe.poison(false, this, field);
+			foe.poison(false, this);
 		} else if (move == Move.SLUDGE_BOMB) {
-			foe.poison(false, this, field);
+			foe.poison(false, this);
 		} else if (move == Move.SMOG) {
-			foe.poison(false, this, field);
+			foe.poison(false, this);
 		} else if (move == Move.SNARL) {
 			stat(foe, 2, -1, foe);
 		} else if (move == Move.SPACE_BEAM) {
 			stat(foe, 3, -1, foe);
 		} else if (move == Move.SPARK) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.SPARKLING_ARIA) {
 			if (status == Status.BURNED) {
 				status = Status.HEALTHY;
-				System.out.println(nickname + " was cured of its burn!");
+				console.writeln(nickname + " was cured of its burn!");
 			}
 		} else if (move == Move.SPARKLY_SWIRL) {
 			for (int i = 0; i < 5; ++i) {
@@ -4250,14 +4283,14 @@ public class Pokemon implements Serializable {
 				}
 			}
 //		} else if (move == Move.SPIKE_JAB) {
-//			foe.poison(false, this, field);
+//			foe.poison(false, this);
 		} else if (move == Move.SPIRIT_BREAK) {
 			stat(foe, 2, -1, foe);
 		} else if (move == Move.STEEL_WING) {
 			stat(this, 1, 1, foe);
 //		} else if (move == Move.STING && foe.status == Status.HEALTHY) {
 //			foe.status = Status.BLEEDING;
-//			System.out.println(foe.nickname + " is bleeding!");
+//			console.writeln(foe.nickname + " is bleeding!");
 		} else if (move == Move.STRUGGLE_BUG) {
 			stat(foe, 2, -1, foe);
 		} else if (move == Move.STOMP && first) {
@@ -4265,13 +4298,13 @@ public class Pokemon implements Serializable {
 //		} else if (move == Move.STRONG_ARM) {
 //			int randomNum = ((int) Math.random() * 3);
 //			if (randomNum == 0) {
-//				foe.paralyze(false, this, field);
+//				foe.paralyze(false, this);
 //			} else if (randomNum == 1 && first) {
 //				foe.vStatuses.add(Status.FLINCHED);
 //			}
 //			 else if (randomNum == 2) {
 //				if (first) foe.vStatuses.add(Status.FLINCHED);
-//				foe.paralyze(false, this, field);
+//				foe.paralyze(false, this);
 //			}
 //		} else if (move == Move.SUPER_CHARGE && first) {
 //			foe.vStatuses.add(Status.FLINCHED);
@@ -4285,58 +4318,58 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.THROAT_CHOP) {
 			if (!foe.vStatuses.contains(Status.MUTE)) foe.vStatuses.add(Status.MUTE);
 		} else if (move == Move.THUNDER) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.THUNDERBOLT) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.THUNDER_FANG) {
 			int randomNum = ((int) Math.random() * 3);
 			if (randomNum == 0) {
-				foe.paralyze(false, this, field);
+				foe.paralyze(false, this);
 			} else if (randomNum == 1 && first) {
 				foe.vStatuses.add(Status.FLINCHED);
 			}
 			 else if (randomNum == 2) {
 				if (first) foe.vStatuses.add(Status.FLINCHED);
-				foe.paralyze(false, this, field);
+				foe.paralyze(false, this);
 			}
 //		} else if (move == Move.THUNDER_KICK) {
-//			foe.paralyze(false, this, field);
+//			foe.paralyze(false, this);
 		} else if (move == Move.THUNDER_PUNCH) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.THUNDERSHOCK) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.TRI$ATTACK) {
 			int randomNum = ((int) Math.random() * 3);
 			if (randomNum == 0) {
-				foe.burn(false, this, field);
+				foe.burn(false, this);
 			} else if (randomNum == 1) {
-				foe.paralyze(false, this, field);
+				foe.paralyze(false, this);
 			}
 			 else if (randomNum == 2) {
-				foe.freeze(false, field);
+				foe.freeze(false);
 			}
 		} else if (move == Move.TORNADO_SPIN) {
 			stat(this, 4, 1, foe);
 			stat(this, 5, 1, foe);
 			if (this.vStatuses.contains(Status.SPUN)) {
 				this.vStatuses.remove(Status.SPUN);
-				System.out.println(this.nickname + " was freed!");
+				console.writeln(this.nickname + " was freed!");
 				this.spunCount = 0;
 			}
 		} else if (move == Move.TWINKLE_TACKLE) {
 			stat(foe, 0, -1, foe);
 			stat(foe, 2, -1, foe);
 		} else if (move == Move.TWINEEDLE) {
-			foe.poison(false, this, field);
+			foe.poison(false, this);
 		} else if (move == Move.SCALE_SHOT) {
 			stat(this, 1, -1, foe);
 			stat(this, 4, 1, foe);
 		} else if (move == Move.TWISTER && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.VENOM_SPIT) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.VOLT_TACKLE) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.V$CREATE) {
 			stat(this, 1, -1, foe);
 			stat(this, 3, -1, foe);
@@ -4344,9 +4377,9 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.VINE_CROSS) {
 			stat(foe, 4, -1, foe);
 		} else if (move == Move.WATER_PULSE) {
-			foe.confuse(false, field);
+			foe.confuse(false);
 		} else if (move == Move.WATER_CLAP) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.WATER_SMACK && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.SUPERCHARGED_SPLASH) {
@@ -4360,7 +4393,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.ROCK_SLIDE && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		}  else if (move == Move.ZAP_CANNON) {
-			foe.paralyze(false, this, field);
+			foe.paralyze(false, this);
 		} else if (move == Move.ZING_ZAP && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		}
@@ -4375,12 +4408,12 @@ public class Pokemon implements Serializable {
 		}
 	}
 
-	private void statusEffect(Pokemon foe, Move move, Player player, Field field, Pokemon[] team, Trainer enemy, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide) {
+	private void statusEffect(Pokemon foe, Move move, Player player, Pokemon[] team, Trainer enemy, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide) {
 		boolean fail = false;
 		if (move == Move.ABDUCT) {
 			if (this.lastMoveUsed != Move.ABDUCT) {
 				foe.vStatuses.add(Status.POSESSED);
-				System.out.println(this.nickname + " posessed " + foe.nickname + "!");
+				console.writeln(this.nickname + " posessed " + foe.nickname + "!");
 			} else { fail = fail(); }
 			this.impressive = false;
 			this.lastMoveUsed = move;
@@ -4391,16 +4424,16 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.AMNESIA) {
 			stat(this, 3, 2, foe);
 		} else if (move == Move.AROMATHERAPY) {
-			System.out.println("A soothing aroma wafted through the air!");
+			console.writeln("A soothing aroma wafted through the air!");
 			if (team == null) {
 				if (this.status != Status.HEALTHY) {
-					System.out.println(this.nickname + " was cured of its " + this.status.getName() + "!");
+					console.writeln(this.nickname + " was cured of its " + this.status.getName() + "!");
 					this.status = Status.HEALTHY;
 				}
 			} else {
 				for (Pokemon p : team) {
 					if (p != null && p.status != Status.HEALTHY) {
-						System.out.println(p.nickname + " was cured of its " + p.status.getName() + "!");
+						console.writeln(p.nickname + " was cured of its " + p.status.getName() + "!");
 						p.status = Status.HEALTHY;
 					}
 				}
@@ -4422,7 +4455,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.AUTOMOTIZE) {
 			stat(this, 4, 2, foe);
 		} else if (move == Move.LOAD_FIREARMS) {
-			System.out.println(this.nickname + " upgraded its weapon!");
+			console.writeln(this.nickname + " upgraded its weapon!");
 			stat(this, 5, 1, foe);
 			stat(this, 6, 1, foe);
 		} else if (move == Move.BABY$DOLL_EYES) {
@@ -4438,7 +4471,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.CAPTIVATE) {
 			stat(foe, 2, -2, foe);
 		} else if (move == Move.CHARGE) {
-			System.out.println(this.nickname + " became charged with power!");
+			console.writeln(this.nickname + " became charged with power!");
 			stat(this, 3, 1, foe);
 		} else if (move == Move.CHARM) {
 			stat(foe, 0, -2, foe);
@@ -4447,7 +4480,7 @@ public class Pokemon implements Serializable {
 			stat(this, 1, 1, foe);
 			stat(this, 5, 1, foe);
 		} else if (move == Move.CONFUSE_RAY) {
-			foe.confuse(true, field);
+			foe.confuse(true);
 		} else if (move == Move.COSMIC_POWER) {
 			stat(this, 1, 1, foe);
 			stat(this, 3, 1, foe);
@@ -4457,7 +4490,7 @@ public class Pokemon implements Serializable {
 			if (this.type1 == PType.GHOST || this.type2 == PType.GHOST) {
 				if (!foe.vStatuses.contains(Status.CURSED)) {
 					foe.vStatuses.add(Status.CURSED);
-					System.out.println(foe.nickname + " was afflicted with a curse!");
+					console.writeln(foe.nickname + " was afflicted with a curse!");
 					this.currentHP -= (this.getStat(0) / 2);
 					if (this.currentHP <= 0) {
 						this.faint(true, player, foe);
@@ -4484,17 +4517,17 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.DEFOG) {
 			stat(foe, 6, -1, foe);
 			for (FieldEffect fe : field.getHazards(userSide)) {
-				System.out.println(fe.toString() + " disappeared from " + this.nickname + "'s side!");
+				console.writeln(fe.toString() + " disappeared from " + this.nickname + "'s side!");
 				userSide.remove(fe);
 			}
 			for (FieldEffect fe : field.getHazards(enemySide)) {
-				System.out.println(fe.toString() + " disappeared from " + this.nickname + "'s side!");
+				console.writeln(fe.toString() + " disappeared from " + this.nickname + "'s side!");
 				enemySide.remove(fe);
 			}
 		} else if (move == Move.DESTINY_BOND) {
 			if (this.lastMoveUsed != Move.DESTINY_BOND) {
 				foe.vStatuses.add(Status.BONDED);
-				System.out.println(this.nickname + " is ready to take its attacker down with it!");
+				console.writeln(this.nickname + " is ready to take its attacker down with it!");
 			} else { fail = fail(); }
 			this.impressive = false;
 			this.lastMoveUsed = move;
@@ -4526,45 +4559,45 @@ public class Pokemon implements Serializable {
 			stat(this, 2, 1, foe);
 		} else if (move == Move.ENTRAINMENT) {
 			foe.ability = this.ability;
-			System.out.println(foe.nickname + "'s ability became " + foe.ability.toString() + "!");
-			foe.swapIn(this, field, player);
+			console.writeln(foe.nickname + "'s ability became " + foe.ability.toString() + "!");
+			foe.swapIn(this, player);
 		} else if (move == Move.FAKE_TEARS) {
 			stat(foe, 3, -2, foe);
 		} else if (move == Move.FEATHER_DANCE) {
 			stat(foe, 0, -2, foe);
 		} else if (move == Move.FLATTER) {
 			stat(foe, 2, 2, foe);
-			foe.confuse(false, field);
+			foe.confuse(false);
 		} else if (move == Move.FOCUS_ENERGY) {
 			if (!this.vStatuses.contains(Status.FOCUS_ENERGY)) {
 				this.vStatuses.add(Status.FOCUS_ENERGY);
-				System.out.println(this.nickname + " is tightening its focus!");
+				console.writeln(this.nickname + " is tightening its focus!");
 			} else {
 				fail = fail();
 			}
 		} else if (move == Move.FORESIGHT) {
 			if (foe.type1 == PType.GHOST) foe.type1 = PType.NORMAL;
 			if (foe.type2 == PType.GHOST) foe.type2 = PType.NORMAL;
-			System.out.println(this.nickname + " identified " + foe.nickname + "!");
+			console.writeln(this.nickname + " identified " + foe.nickname + "!");
 			stat(this, 5, 1, foe);
 		} else if (move == Move.FORESTS_CURSE) {
 			foe.type1 = PType.GRASS;
 			foe.type2 = null;
-			System.out.println(foe.nickname + "'s type was changed to Grass!");
+			console.writeln(foe.nickname + "'s type was changed to Grass!");
 		} else if (move == Move.GASTRO_ACID) {
 			foe.ability = Ability.NULL;
-			System.out.println(foe.nickname + "'s ability was supressed!");
+			console.writeln(foe.nickname + "'s ability was supressed!");
 		} else if (move == Move.GEOMANCY) {
 			stat(this, 2, 2, foe);
 			stat(this, 3, 2, foe);
 			stat(this, 4, 2, foe);
 		} else if (move == Move.GLARE) {
-			foe.paralyze(true, this, field);
+			foe.paralyze(true, this);
 		} else if (move == Move.GLITTER_DANCE) {
 			stat(this, 2, 1, foe);
 			stat(this, 4, 1, foe);
 		} else if (move == Move.GRASS_WHISTLE) {
-			foe.sleep(true, field);
+			foe.sleep(true);
 		} else if (move == Move.GRASSY_TERRAIN) {
 			field.setTerrain(field.new FieldEffect(Effect.GRASSY));
 		} else if (move == Move.GRAVITY) {
@@ -4586,14 +4619,14 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.HAZE) {
 			this.statStages = new int[7];
 			foe.statStages = new int[7];
-			System.out.println("All stat changes were eliminated!");
+			console.writeln("All stat changes were eliminated!");
 		} else if (move == Move.HEAL_PULSE) {
 			if (foe.currentHP == foe.getStat(0)) {
-				System.out.println(foe.nickname + "'s HP is full!");
+				console.writeln(foe.nickname + "'s HP is full!");
 			} else {
 				foe.currentHP += (foe.getStat(0) / 2);
 				if (foe.currentHP > foe.getStat(0)) foe.currentHP = foe.getStat(0);
-				System.out.println(foe.nickname + " restored HP.");
+				console.writeln(foe.nickname + " restored HP.");
 			}
 		} else if (move == Move.HONE_CLAWS) {
 			stat(this, 0, 1, foe);
@@ -4601,7 +4634,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.HOWL) {
 			stat(this, 0, 1, foe);
 		} else if (move == Move.HYPNOSIS) {
-			foe.sleep(true, field);
+			foe.sleep(true);
 		} else if (move == Move.HEALING_WISH || move == Move.LUNAR_DANCE) {
 			this.faint(true, player, foe);
 			foe.awardxp((int) Math.ceil(this.level * trainer), player);
@@ -4617,20 +4650,20 @@ public class Pokemon implements Serializable {
 			stat(this, 1, 2, foe);
 		} else if (move == Move.LIFE_DEW) {
 			if (this.currentHP == this.getStat(0)) {
-				System.out.println(this.nickname + "'s HP is full!");
+				console.writeln(this.nickname + "'s HP is full!");
 			} else {
 				this.currentHP += (this.getStat(0) / 4);
 				if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-				System.out.println(this.nickname + " restored HP.");
+				console.writeln(this.nickname + " restored HP.");
 			}
 		} else if (move == Move.LEECH_SEED) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
-				System.out.println("It doesn't effect " + foe.nickname + "...");
+				console.writeln("It doesn't effect " + foe.nickname + "...");
 				return;
 			}
 			if (!foe.vStatuses.contains(Status.LEECHED)) {
 				foe.vStatuses.add(Status.LEECHED);
-				System.out.println(foe.nickname + " was seeded!");
+				console.writeln(foe.nickname + " was seeded!");
 			} else {
 				fail = fail();
 			}
@@ -4643,14 +4676,14 @@ public class Pokemon implements Serializable {
 				fail = fail();
 			}
 		} else if (move == Move.LOCK$ON) {
-			System.out.println(this.nickname + " took aim at " + foe.nickname + "!\n");
+			console.writeln(this.nickname + " took aim at " + foe.nickname + "!\n");
 			stat(this, 5, 6, foe);
 		} else if (move == Move.LOVELY_KISS) {
-			foe.sleep(true, field);
+			foe.sleep(true);
 		} else if (move == Move.MAGIC_POWDER) {
 			foe.type1 = PType.MAGIC;
 			foe.type2 = null;
-			System.out.println(foe.nickname + "'s type changed to MAGIC!");
+			console.writeln(foe.nickname + "'s type changed to MAGIC!");
 		} else if (move == Move.MAGIC_REFLECT) {
 			if (this.lastMoveUsed != Move.MAGIC_REFLECT) {
 				this.vStatuses.add(Status.REFLECT);
@@ -4660,14 +4693,14 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.MAGNET_RISE) {
 			if (this.magCount == 0) {
 				this.magCount = 5;
-				System.out.println(this.nickname + " floated with electromagnetism!");
+				console.writeln(this.nickname + " floated with electromagnetism!");
 			} else {
 				fail = fail();
 			}
 		} else if (move == Move.MEAN_LOOK) {
 			if (!foe.vStatuses.contains(Status.TRAPPED)) {
 				foe.vStatuses.add(Status.TRAPPED);
-				System.out.println(foe.nickname + " can no longer escape!");
+				console.writeln(foe.nickname + " can no longer escape!");
 			}
 		} else if (move == Move.MEMENTO) {
 			stat(foe, 0, -2, foe);
@@ -4681,7 +4714,7 @@ public class Pokemon implements Serializable {
 			stat(this, 6, 2, foe);
 		} else if (move == Move.MORNING_SUN || move == Move.MOONLIGHT || move == Move.SYNTHESIS) {
 			if (this.currentHP == this.getStat(0)) {
-				System.out.println(this.nickname + "'s HP is full!");
+				console.writeln(this.nickname + "'s HP is full!");
 			} else {
 				if (field.equals(field.weather, Effect.SUN)) {
 					this.currentHP += (this.getStat(0) / 1.5);
@@ -4691,11 +4724,11 @@ public class Pokemon implements Serializable {
 					this.currentHP += (this.getStat(0) / 2);
 				}
 				if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-				System.out.println(this.nickname + " restored HP.");
+				console.writeln(this.nickname + " restored HP.");
 			}
 		} else if (move == Move.MUD_SPORT) {
 			field.setEffect(field.new FieldEffect(Effect.MUD_SPORT));
-			System.out.println("Electric's power was weakened!");
+			console.writeln("Electric's power was weakened!");
 		} else if (move == Move.NASTY_PLOT) {
 			stat(this, 2, 2, foe);
 		} else if (move == Move.NOBLE_ROAR) {
@@ -4709,24 +4742,24 @@ public class Pokemon implements Serializable {
 			    stat(this, 2, 1, foe);
 			    stat(this, 3, 1, foe);
 			    stat(this, 4, 1, foe);
-			    System.out.println(this.nickname + " can no longer switch out!");
+			    console.writeln(this.nickname + " can no longer switch out!");
 			} else {
 			    fail = fail();
 			}
 		} else if (move == Move.NIGHTMARE) {
 			if (foe.status == Status.ASLEEP && !foe.vStatuses.contains(Status.NIGHTMARE)) {
 				foe.vStatuses.add(Status.NIGHTMARE);
-				System.out.println(foe.nickname + " had a nightmare!");
+				console.writeln(foe.nickname + " had a nightmare!");
 			} else {
 				fail = fail();
 			}
 		} else if (move == Move.ODOR_SLEUTH) {
 			if (foe.type1 == PType.GHOST) foe.type1 = PType.NORMAL;
 			if (foe.type2 == PType.GHOST) foe.type2 = PType.NORMAL;
-			System.out.println(this.nickname + " identified " + foe.nickname + "!");
+			console.writeln(this.nickname + " identified " + foe.nickname + "!");
 			stat(foe, 6, -1, foe);
 		} else if (move == Move.POWDER_SNOW) {
-			foe.freeze(false, field);
+			foe.freeze(false);
 		} else if (move == Move.PERISH_SONG) {
 			this.perishCount = (this.perishCount == 0) ? 3 : this.perishCount;
 			foe.perishCount = (foe.perishCount == 0) ? 3 : foe.perishCount;
@@ -4739,15 +4772,15 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.PSYCHIC_TERRAIN) {
 			field.setTerrain(field.new FieldEffect(Effect.PSYCHIC));
 		} else if (move == Move.POISON_GAS) {
-			foe.poison(true, this, field);
+			foe.poison(true, this);
 		} else if (move == Move.STUN_SPORE) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
-				System.out.println("It doesn't effect " + foe.nickname + "...");
+				console.writeln("It doesn't effect " + foe.nickname + "...");
 				success = false;
 				fail = true;
 				return;
 			}
-			foe.paralyze(true, this, field);
+			foe.paralyze(true, this);
 		} else if (move == Move.QUIVER_DANCE) {
 			stat(this, 2, 1, foe);
 			stat(this, 3, 1, foe);
@@ -4761,7 +4794,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.RAIN_DANCE) {
 			field.setWeather(field.new FieldEffect(Effect.RAIN));
 		} else if (move == Move.REBOOT) {
-			if (this.status != Status.HEALTHY || !this.vStatuses.isEmpty()) System.out.println(this.nickname + " became healthy!");
+			if (this.status != Status.HEALTHY || !this.vStatuses.isEmpty()) console.writeln(this.nickname + " became healthy!");
 			this.status = Status.HEALTHY;
 			removeBad(this.vStatuses);
 			stat(this, 4, 1, foe);
@@ -4777,7 +4810,7 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.REST) {
 			if (this.currentHP == this.getStat(0)) {
-				System.out.println(this.nickname + "'s HP is full!");
+				console.writeln(this.nickname + "'s HP is full!");
 			} else if (this.status == Status.ASLEEP) {
 				fail = fail();
 				return;
@@ -4788,18 +4821,18 @@ public class Pokemon implements Serializable {
 					fail = fail();
 					return;
 				}
-				this.sleep(false, field);
+				this.sleep(false);
 				this.sleepCounter = 2;
 				this.vStatuses.remove(Status.CONFUSED);
-				System.out.println(this.nickname + " slept and became healthy!");
+				console.writeln(this.nickname + " slept and became healthy!");
 			}
 		} else if (move == Move.ROOST || move == Move.RECOVER || move == Move.SLACK_OFF) {
 			if (this.currentHP == this.getStat(0)) {
-				System.out.println(this.nickname + "'s HP is full!");
+				console.writeln(this.nickname + "'s HP is full!");
 			} else {
 				this.currentHP += (this.getStat(0) / 2);
 				if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-				System.out.println(this.nickname + " restored HP.");
+				console.writeln(this.nickname + " restored HP.");
 			}
 		} else if (move == Move.SAND_ATTACK) {
 			stat(foe, 5, -1, foe);
@@ -4817,7 +4850,7 @@ public class Pokemon implements Serializable {
 			stat(foe, 1, -2, foe);
 		} else if (move == Move.SEA_DRAGON) {
 			if (id == 150) {
-				System.out.println(nickname + " transformed into Kissyfishy-D!");
+				console.writeln(nickname + " transformed into Kissyfishy-D!");
 				int oHP = this.getStat(0);
 				id = 237;
 				if (nickname == name) nickname = getName();
@@ -4836,12 +4869,12 @@ public class Pokemon implements Serializable {
 
 		} else if (move == Move.SLEEP_POWDER) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
-				System.out.println("It doesn't effect " + foe.nickname + "...");
+				console.writeln("It doesn't effect " + foe.nickname + "...");
 				success = false;
 				fail = true;
 				return;
 			}
-			foe.sleep(true, field);
+			foe.sleep(true);
 		} else if (move == Move.SHIFT_GEAR) {
 			stat(this, 0, 1, foe);
 			stat(this, 4, 2, foe);
@@ -4857,7 +4890,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SPIKES) {
 			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.SPIKES));
 		} else if (move == Move.SPLASH) {
-			System.out.println("But nothing happened!");
+			console.writeln("But nothing happened!");
 		} else if (move == Move.STEALTH_ROCK) {
 			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.STEALTH_ROCKS));
 		} else if (move == Move.STICKY_WEB) {
@@ -4870,18 +4903,18 @@ public class Pokemon implements Serializable {
 			stat(foe, 0, -1, foe);
 			this.currentHP += amount;
 			if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-			System.out.println(this.nickname + " restored HP.");
+			console.writeln(this.nickname + " restored HP.");
 		}  else if (move == Move.STRING_SHOT) {
 			stat(foe, 4, -2, foe);
 		} else if (move == Move.SUNNY_DAY) {
 			field.setWeather(field.new FieldEffect(Effect.SUN));
 		} else if (move == Move.SUPERSONIC) {
-			foe.confuse(true, field);
+			foe.confuse(true);
 		} else if (move == Move.SWAGGER) {
 			stat(foe, 0, 2, foe);
-			foe.confuse(false, field);
+			foe.confuse(false);
 		} else if (move == Move.SWEET_KISS) {
-			foe.confuse(true, field);
+			foe.confuse(true);
 		} else if (move == Move.SWEET_SCENT) {
 			stat(foe, 6, -2, foe);
 		} else if (move == Move.SWORDS_DANCE) {
@@ -4890,7 +4923,7 @@ public class Pokemon implements Serializable {
 			if (!(foe.vStatuses.contains(Status.TAUNTED))) {
 			    foe.vStatuses.add(Status.TAUNTED);
 			    foe.tauntCount = 4;
-			    System.out.println(foe.nickname + " was taunted!");
+			    console.writeln(foe.nickname + " was taunted!");
 			} else {
 			    fail = fail();
 			}
@@ -4898,7 +4931,7 @@ public class Pokemon implements Serializable {
 			if (!(foe.vStatuses.contains(Status.TORMENTED))) {
 			    foe.vStatuses.add(Status.TORMENTED);
 			    foe.tormentCount = 4;
-			    System.out.println(foe.nickname + " was tormented!");
+			    console.writeln(foe.nickname + " was tormented!");
 			} else {
 			    fail = fail();
 			}
@@ -4907,7 +4940,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.TAILWIND) {
 			if (!(field.contains(userSide, Effect.TAILWIND))) {
 				userSide.add(field.new FieldEffect(Effect.TAILWIND));
-				System.out.println("A strong wind blew behind your team!");
+				console.writeln("A strong wind blew behind your team!");
 			} else {
 				fail = fail();
 			}
@@ -4916,21 +4949,21 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.TAKE_OVER) {
 			if (this.lastMoveUsed != Move.TAKE_OVER) {
 				foe.vStatuses.add(Status.POSESSED);
-				System.out.println(this.nickname + " posessed " + foe.nickname + "!");
+				console.writeln(this.nickname + " posessed " + foe.nickname + "!");
 			} else { fail = fail(); }
 			this.impressive = false;
 			this.lastMoveUsed = move;
 		} else if (move == Move.TEETER_DANCE) {
-			foe.confuse(true, field);
+			foe.confuse(true);
 		} else if (move == Move.THUNDER_WAVE) {
-			foe.paralyze(true, this, field);
+			foe.paralyze(true, this);
 		} else if (move == Move.TOPSY$TURVY) {
 			for (int i = 0; i < 7; i++) {
 				foe.statStages[i] *= -1;
 			}
-			System.out.println(foe.nickname + "'s stat changes were flipped!");
+			console.writeln(foe.nickname + "'s stat changes were flipped!");
 		} else if (move == Move.TOXIC) {
-			foe.toxic(true, this, field);
+			foe.toxic(true, this);
 		} else if (move == Move.TOXIC_SPIKES) {
 			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.TOXIC_SPIKES));
 		} else if (move == Move.TRICK_ROOM) {
@@ -4942,17 +4975,17 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.WATER_SPORT) {
 			field.setEffect(field.new FieldEffect(Effect.WATER_SPORT));
-			System.out.println("Fire's power was weakened!");
+			console.writeln("Fire's power was weakened!");
 		} else if (move == Move.WHIRLWIND || move == Move.ROAR) {
 			boolean result = false;
 			if (foe.trainerOwned() && enemy != null) {
-				result = enemy.swapRandom(foe, field, player);
+				result = enemy.swapRandom(foe, player);
 			} else if (foe.playerOwned) {
-				result = player.swapRandom(foe, field);
+				result = player.swapRandom(foe);
 			}
 			if (!result) fail = fail();
 		} else if (move == Move.WILL$O$WISP) {
-			foe.burn(true, this, field);
+			foe.burn(true, this);
 		} else if (move == Move.WISH) {
 			if (this.vStatuses.contains(Status.WISH)) {
 				fail();
@@ -4963,7 +4996,7 @@ public class Pokemon implements Serializable {
 			stat(this, 1, 1, foe);
 		} else if (move == Move.WORRY_SEED) {
 			foe.ability = Ability.INSOMNIA;
-			System.out.println(foe.nickname + "'s ability became Insomnia!");
+			console.writeln(foe.nickname + "'s ability became Insomnia!");
 		} if (move == Move.ROCK_POLISH) {
 			stat(this, 4, 2, foe);
 		}
@@ -5008,43 +5041,43 @@ public class Pokemon implements Serializable {
 		
 		if (this != p) {
 			if (p.ability == Ability.MIRROR_ARMOR && a < 0) {
-				System.out.print("[" + p.nickname + "'s Mirror Armor]: ");
+				console.write("[" + p.nickname + "'s Mirror Armor]: ");
 				stat(this, i, amt, foe);
 				return;
 			} else if (p.ability == Ability.DEFIANT && a < 0) {
-				System.out.print("[" + p.nickname + "'s Defiant]: " );
+				console.write("[" + p.nickname + "'s Defiant]: " );
 				stat(p, 0, 2, foe);
 			} else if (p.ability == Ability.COMPETITIVE && a < 0) {
-				System.out.print("[" + p.nickname + "'s Competitve]: " );
+				console.write("[" + p.nickname + "'s Competitve]: " );
 				stat(p, 2, 2, foe);
 			} else if (p.ability == Ability.CLEAR_BODY && a < 0) {
-				System.out.println("[" + p.nickname + "'s Clear Body]: " + p.nickname + "'s " + type + " was not lowered!");
+				console.writeln("[" + p.nickname + "'s Clear Body]: " + p.nickname + "'s " + type + " was not lowered!");
 				return;
 			} else if (p.ability == Ability.KEEN_EYE && a < 0 && i == 5) {
-				System.out.println("[" + p.nickname + "'s Keen Eye]: " + this.nickname + "'s " + type + " was not lowered!");
+				console.writeln("[" + p.nickname + "'s Keen Eye]: " + this.nickname + "'s " + type + " was not lowered!");
 				return;
 			} else if (p.ability == Ability.HYPER_CUTTER && a < 0 && i == 0) {
-				System.out.println("[" + p.nickname + "'s Hyper Cutter]: " + this.nickname + "'s " + type + " was not lowered!");
+				console.writeln("[" + p.nickname + "'s Hyper Cutter]: " + this.nickname + "'s " + type + " was not lowered!");
 				return;
 			}
 		}
 		if (foe.ability == Ability.EMPATHIC_LINK && a > 0) {
-			System.out.print("[" + foe.nickname + "'s Empathic Link]: " );
+			console.write("[" + foe.nickname + "'s Empathic Link]: " );
 			foe.stat(foe, 2, 1, this);
 		}
 		p.statStages[i] += a;
 		if (p.statStages[i] > 6 && a > 0) {
 			p.statStages[i] = 6;
 			if (a != 12) {
-				System.out.println(p.nickname + "'s " + type + " won't go any higher!");
+				console.writeln(p.nickname + "'s " + type + " won't go any higher!");
 			} else {
-				System.out.println(p.nickname + "'s " + type + " was raised to the max!");
+				console.writeln(p.nickname + "'s " + type + " was raised to the max!");
 			}
 		} else if (p.statStages[i] < -6 && a < 0){
 			p.statStages[i] = -6;
-			if (a != 12) System.out.println(p.nickname + "'s " + type + " won't go any lower!");
+			if (a != 12) console.writeln(p.nickname + "'s " + type + " won't go any lower!");
 		} else {
-			System.out.println(p.nickname + "'s " + type + amount + "!");
+			console.writeln(p.nickname + "'s " + type + amount + "!");
 		}
 		
 		
@@ -5255,7 +5288,7 @@ public class Pokemon implements Serializable {
 		for (Moveslot m : moveset) {
 			if (m != null) m.currentPP = m.maxPP;
 		}
-		System.out.println(this.nickname + " healed!");
+		console.writeln(this.nickname + " healed!");
 	}
 	
 	public PType[] getResistances(PType type) {
@@ -9598,7 +9631,7 @@ public class Pokemon implements Serializable {
 		if (player != null && this.playerOwned) {
 			player.setBattled(player.getBattled() - 1);
 		}
-		if (announce) System.out.println("\n" + this.nickname + " fainted!");
+		if (announce) console.writeln("\n" + this.nickname + " fainted!");
 	}
 
 	public void clearVolatile() {
@@ -9641,11 +9674,11 @@ public class Pokemon implements Serializable {
 		return damage;
 	}
 	
-	public int calcWithTypes(Pokemon foe, Move move, boolean first, Field field) {
-		return calcWithTypes(foe, move, first, field, 0);
+	public int calcWithTypes(Pokemon foe, Move move, boolean first) {
+		return calcWithTypes(foe, move, first, 0);
 	}
 	
-	public int calcWithTypes(Pokemon foe, Move move, boolean first, Field field, int mode) {
+	public int calcWithTypes(Pokemon foe, Move move, boolean first, int mode) {
 		double attackStat;
 		double defenseStat;
 		int damage = 0;
@@ -9712,8 +9745,8 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.HIDDEN_POWER) moveType = determineHPType();
-		if (move == Move.WEATHER_BALL) moveType = determineWBType(field);
-		if (move == Move.TERRAIN_PULSE) moveType = determineTPType(field);
+		if (move == Move.WEATHER_BALL) moveType = determineWBType();
+		if (move == Move.TERRAIN_PULSE) moveType = determineTPType();
 		
 		if (moveType == PType.FIRE && foe.ability == Ability.FLASH_FIRE) {
 			return 0;
@@ -9729,7 +9762,7 @@ public class Pokemon implements Serializable {
 			return 0;
 		}
 		
-		if (moveType == PType.GROUND && !foe.isGrounded(field) && move.cat != 2) {
+		if (moveType == PType.GROUND && !foe.isGrounded() && move.cat != 2) {
 			return 0;
 		}
 		
@@ -9739,7 +9772,7 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded(field) && (move.priority >= 1 || (move.cat == 2 && this.ability == Ability.PRANKSTER))) {
+		if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded() && (move.priority >= 1 || (move.cat == 2 && this.ability == Ability.PRANKSTER))) {
 			return 0;
 		}
 		
@@ -9753,7 +9786,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move.basePower < 0) {
-			bp = determineBasePower(foe, move, first, field, null, false);
+			bp = determineBasePower(foe, move, first, null, false);
 		}
 		
 		if (moveType == PType.FIRE && this.vStatuses.contains(Status.FLASH_FIRE)) bp *= 1.5;
@@ -9813,20 +9846,20 @@ public class Pokemon implements Serializable {
 			if (move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) bp *= 0.5;
 		}
 		
-		if (field.equals(field.terrain, Effect.ELECTRIC) && isGrounded(field)) {
+		if (field.equals(field.terrain, Effect.ELECTRIC) && isGrounded()) {
 			if (move.mtype == PType.ELECTRIC) bp *= 1.3;
 		}
 		
 		if (field.equals(field.terrain, Effect.GRASSY)) {
-			if (isGrounded(field) && move.mtype == PType.GRASS) bp *= 1.3;
+			if (isGrounded() && move.mtype == PType.GRASS) bp *= 1.3;
 			if (move == Move.EARTHQUAKE || move == Move.BULLDOZE || move == Move.MAGNITUDE) bp *= 0.5;
 		}
 		
-		if (field.equals(field.terrain, Effect.SPARKLY) && foe.isGrounded(field)) {
+		if (field.equals(field.terrain, Effect.SPARKLY) && foe.isGrounded()) {
 			if (move.mtype == PType.DRAGON) bp *= 0.5;
 		}
 		
-		if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded(field)) {
+		if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded()) {
 			if (move.mtype == PType.PSYCHIC) bp *= 1.3;
 		}
 		
@@ -9994,12 +10027,12 @@ public class Pokemon implements Serializable {
 		return damage;
 	}
 
-	public void endOfTurn(Pokemon f, Player player, Field field) {
+	public void endOfTurn(Pokemon f, Player player) {
 		if (this.isFainted()) return;
 		if (this.status == Status.TOXIC && toxic < 16) toxic++;
 		if (this.status == Status.FROSTBITE && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			this.currentHP -= Math.max(this.getStat(0) / 16, 1);
-			System.out.println("\n" + this.nickname + " was hurt by frostbite!");
+			console.writeln("\n" + this.nickname + " was hurt by frostbite!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
@@ -10007,7 +10040,7 @@ public class Pokemon implements Serializable {
 			
 		} else if (this.status == Status.BURNED && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			this.currentHP -= Math.max(this.getStat(0) / 16, 1);
-			System.out.println("\n" + this.nickname + " was hurt by its burn!");
+			console.writeln("\n" + this.nickname + " was hurt by its burn!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
@@ -10015,7 +10048,7 @@ public class Pokemon implements Serializable {
 			
 		} else if (this.status == Status.POISONED && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			this.currentHP -= Math.max(this.getStat(0) / 8, 1);
-			System.out.println("\n" + this.nickname + " was hurt by poison!");
+			console.writeln("\n" + this.nickname + " was hurt by poison!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
@@ -10023,7 +10056,7 @@ public class Pokemon implements Serializable {
 			
 		} else if (this.status == Status.TOXIC && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			this.currentHP -= Math.max((this.getStat(0) / 16) * toxic, 1);
-			System.out.println("\n" + this.nickname + " was hurt by poison!");
+			console.writeln("\n" + this.nickname + " was hurt by poison!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
@@ -10032,7 +10065,7 @@ public class Pokemon implements Serializable {
 		}
 		if (this.vStatuses.contains(Status.CURSED) && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			this.currentHP -= Math.max(this.getStat(0) / 4, 1);
-			System.out.println("\n" + this.nickname + " was hurt by the curse!");
+			console.writeln("\n" + this.nickname + " was hurt by the curse!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
@@ -10044,7 +10077,7 @@ public class Pokemon implements Serializable {
 			if (hp >= this.currentHP) hp = this.currentHP;
 			if (f.currentHP > f.getStat(0)) f.currentHP = f.getStat(0);
 			this.currentHP -= hp;
-			System.out.println("\n" + f.nickname + " sucked health from " + this.nickname + "!");
+			console.writeln("\n" + f.nickname + " sucked health from " + this.nickname + "!");
 			f.currentHP += hp;
 			f.verifyHP();
 			if (this.currentHP <= 0) {
@@ -10056,7 +10089,7 @@ public class Pokemon implements Serializable {
 		if (this.vStatuses.contains(Status.NIGHTMARE) && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			if (this.status == Status.ASLEEP) {
 				this.currentHP -= Math.max(this.getStat(0) / 4, 1);
-				System.out.println("\n" + this.nickname + " had a nightmare!");
+				console.writeln("\n" + this.nickname + " had a nightmare!");
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, player, f);
 					f.awardxp((int) Math.ceil(this.level * this.trainer), player);
@@ -10070,15 +10103,15 @@ public class Pokemon implements Serializable {
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
-				System.out.println("\n" + this.nickname + " restored HP.");
+				console.writeln("\n" + this.nickname + " restored HP.");
 			}
-		} if (field.equals(field.terrain, Effect.GRASSY) && isGrounded(field)) {
+		} if (field.equals(field.terrain, Effect.GRASSY) && isGrounded()) {
 			if (this.currentHP < this.getStat(0)) {
 				this.currentHP += Math.max(this.getStat(0) / 16, 1);
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
-				System.out.println("\n" + this.nickname + " restored HP.");
+				console.writeln("\n" + this.nickname + " restored HP.");
 			}
 		} if (this.ability == Ability.RAIN_DISH && field.equals(field.weather, Effect.RAIN)) {
 			if (this.currentHP < this.getStat(0)) {
@@ -10086,7 +10119,7 @@ public class Pokemon implements Serializable {
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
-				System.out.println("\n" + this.nickname + " restored HP.");
+				console.writeln("\n" + this.nickname + " restored HP.");
 			}
 		} if (this.ability == Ability.ICE_BODY && field.equals(field.weather, Effect.SNOW)) {
 			if (this.currentHP < this.getStat(0)) {
@@ -10094,7 +10127,7 @@ public class Pokemon implements Serializable {
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
-				System.out.println("\n" + this.nickname + " restored HP.");
+				console.writeln("\n" + this.nickname + " restored HP.");
 			}
 		} if (this.vStatuses.contains(Status.WISH) && this.lastMoveUsed != Move.WISH) {
 			if (this.currentHP < this.getStat(0)) {
@@ -10102,19 +10135,19 @@ public class Pokemon implements Serializable {
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
-				System.out.println("\n" + this.nickname + "'s wish came true!");
+				console.writeln("\n" + this.nickname + "'s wish came true!");
 			} else {
-				System.out.println("\n" + this.nickname + "'s HP is full!");
+				console.writeln("\n" + this.nickname + "'s HP is full!");
 			}
 			this.vStatuses.remove(Status.WISH);
 		} if (this.vStatuses.contains(Status.SPUN)) {
 			if (this.spunCount == 0) {
-				System.out.println("\n" + this.nickname + " was freed from wrap!");
+				console.writeln("\n" + this.nickname + " was freed from wrap!");
 				this.vStatuses.remove(Status.SPUN);
 			} else {
 				if (this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 					this.currentHP -= Math.max(this.getStat(0) / 16, 1);
-					System.out.println("\n" + this.nickname + " was hurt by being wrapped!");
+					console.writeln("\n" + this.nickname + " was hurt by being wrapped!");
 				}
 				this.spunCount--;
 				if (this.currentHP <= 0) { // Check for kill
@@ -10127,7 +10160,7 @@ public class Pokemon implements Serializable {
 				&& this.ability != Ability.SAND_FORCE && this.ability != Ability.SAND_RUSH && this.ability != Ability.SAND_VEIL && this.type2 != PType.ROCK 
 				&& this.type2 != PType.STEEL && this.type2 != PType.GROUND && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			this.currentHP -= Math.max(this.getStat(0) / 16, 1);
-			System.out.println("\n" + this.nickname + " was buffeted by the sandstorm!");
+			console.writeln("\n" + this.nickname + " was buffeted by the sandstorm!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
@@ -10136,7 +10169,7 @@ public class Pokemon implements Serializable {
 		
 		if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN) && field.weatherTurns > 1) {
 			this.currentHP -= Math.max(this.getStat(0) / 8, 1);
-			System.out.println("\n" + this.nickname + " was hurt!");
+			console.writeln("\n" + this.nickname + " was hurt!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
@@ -10145,27 +10178,27 @@ public class Pokemon implements Serializable {
 		
 		if (this.perishCount > 0) {
 			this.perishCount--;
-			System.out.println("\n" + this.nickname + "'s perish count fell to " + this.perishCount + "!");
+			console.writeln("\n" + this.nickname + "'s perish count fell to " + this.perishCount + "!");
 			if (this.perishCount == 0) {
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
 			}
 		}
 		if (this.vStatuses.contains(Status.LOCKED) && this.outCount == 0 && (this.lastMoveUsed == Move.OUTRAGE || this.lastMoveUsed == Move.PETAL_DANCE || this.lastMoveUsed == Move.THRASH)) {
-			this.confuse(false, field);
+			this.confuse(false);
 			this.vStatuses.remove(Status.LOCKED);
 		}
 		if (this.vStatuses.contains(Status.ENCORED) && --this.encoreCount == 0) {
 			this.vStatuses.remove(Status.ENCORED);
-			System.out.println(this.nickname + "'s encore ended!");
+			console.writeln(this.nickname + "'s encore ended!");
 		}
 		if (this.vStatuses.contains(Status.TAUNTED) && --this.tauntCount == 0) {
 			this.vStatuses.remove(Status.TAUNTED);
-			System.out.println(this.nickname + " shook off the taunt!");
+			console.writeln(this.nickname + " shook off the taunt!");
 		}
 		if (this.vStatuses.contains(Status.TORMENTED) && --this.tormentCount == 0) {
 			this.vStatuses.remove(Status.TORMENTED);
-			System.out.println(this.nickname + "'s torment ended!");
+			console.writeln(this.nickname + "'s torment ended!");
 		}
 		if (this.vStatuses.contains(Status.LOCKED) && this.rollCount == 5) {
 			this.vStatuses.remove(Status.LOCKED);
@@ -10182,7 +10215,7 @@ public class Pokemon implements Serializable {
 			int r = (int)(Math.random() * 3);
 			if (r == 0) {
 				this.status = Status.HEALTHY;
-				System.out.println("[" + this.nickname + "'s Shed Skin]: " + this.nickname + " became healthy!");
+				console.writeln("[" + this.nickname + "'s Shed Skin]: " + this.nickname + " became healthy!");
 			}
 		}
 		
@@ -10198,13 +10231,13 @@ public class Pokemon implements Serializable {
 		return (int) speed;
 	}
 	
-	public Pokemon getFaster(Pokemon other, Field field, int thisP, int otherP) {
+	public Pokemon getFaster(Pokemon other, int thisP, int otherP) {
 		int speed1 = this.getSpeed();
 		if (field.contains(field.playerSide, Effect.TAILWIND)) speed1 *= 2;
-		if (checkAbilitySpeedBoost(this.ability, field)) speed1 *= 2;
+		if (checkAbilitySpeedBoost(this.ability)) speed1 *= 2;
 		int speed2 = other.getSpeed();
 		if (field.contains(field.foeSide, Effect.TAILWIND)) speed2 *= 2;
-		if (checkAbilitySpeedBoost(other.ability, field)) speed2 *= 2;
+		if (checkAbilitySpeedBoost(other.ability)) speed2 *= 2;
 		Pokemon faster = speed1 > speed2 ? this : other;
 		if (speed1 == speed2) {
 			Random random = new Random();
@@ -10219,7 +10252,7 @@ public class Pokemon implements Serializable {
 		return faster;
 	}
 	
-	private boolean checkAbilitySpeedBoost(Ability ability, Field field) {
+	private boolean checkAbilitySpeedBoost(Ability ability) {
 		if (field.equals(field.weather, Effect.SUN) && ability == Ability.CHLOROPHYLL) return true;
 		if (field.equals(field.weather, Effect.RAIN) && ability == Ability.SWIFT_SWIM) return true;
 		if (field.equals(field.weather, Effect.SANDSTORM) && ability == Ability.SAND_RUSH) return true;
@@ -10228,181 +10261,181 @@ public class Pokemon implements Serializable {
 	}
 
 
-	public void confuse(boolean announce, Field field) {
+	public void confuse(boolean announce) {
 		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
+		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
+			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
 		}
 		if (!this.vStatuses.contains(Status.CONFUSED)) {
 			this.vStatuses.add(Status.CONFUSED);
 			this.confusionCounter = (int)(Math.random() * 4) + 1;
-			System.out.println(this.nickname + " became confused!");
+			console.writeln(this.nickname + " became confused!");
 		} else {
 			if (announce) fail();
 		}
 		
 	}
 	
-	public void sleep(boolean announce, Field field) {
+	public void sleep(boolean announce) {
 		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (isGrounded(field) && field.equals(field.terrain, Effect.ELECTRIC)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Electric Terrain!");
+		if (isGrounded() && field.equals(field.terrain, Effect.ELECTRIC)) {
+			if (announce) console.writeln(this.nickname + " is protected by the Electric Terrain!");
 			return;
 		}
-		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
+		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
+			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
 		}
 		if (this.status == Status.HEALTHY) {
 			if (this.ability == Ability.INSOMNIA) {
-				if (announce) System.out.println("[" + this.nickname + "'s Insomnia]: It doesn't effect " + this.nickname + "..."); 
+				if (announce) console.writeln("[" + this.nickname + "'s Insomnia]: It doesn't effect " + this.nickname + "..."); 
 				return;
 			}
 			this.status = Status.ASLEEP;
 			this.sleepCounter = (int)(Math.random() * 3) + 1;
-			System.out.println(this.nickname + " fell asleep!");
+			console.writeln(this.nickname + " fell asleep!");
 		} else {
 			if (announce) fail();
 		}
 		
 	}
 	
-	public void paralyze(boolean announce, Pokemon foe, Field field) {
+	public void paralyze(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
+		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
+			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
 		}
 		if (this.type1 == PType.ELECTRIC || this.type2 == PType.ELECTRIC) {
-			if (announce) System.out.println("It doesn't effect " + this.nickname + "...");
+			if (announce) console.writeln("It doesn't effect " + this.nickname + "...");
 			return;
 		}
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.PARALYZED;
-			System.out.println(this.nickname + " was paralyzed!");
+			console.writeln(this.nickname + " was paralyzed!");
 			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
-				System.out.print("[" + this.nickname + "'s Synchronize]: ");
-				foe.paralyze(false, this, field);
+				console.write("[" + this.nickname + "'s Synchronize]: ");
+				foe.paralyze(false, this);
 			}
 		} else {
 			if (announce) fail();
 		}
 	}
 	
-	public void burn(boolean announce, Pokemon foe, Field field) {
+	public void burn(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
+		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
+			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
 		}
 		if (this.type1 == PType.FIRE || this.type2 == PType.FIRE) {
-			if (announce) System.out.println("It doesn't effect " + this.nickname + "...");
+			if (announce) console.writeln("It doesn't effect " + this.nickname + "...");
 			return;
 		}
 		if (this.status == Status.HEALTHY) {
 			if (this.ability == Ability.WATER_VEIL) {
-				if (announce) System.out.println("[" + this.nickname + "'s Water Veil]: It doesn't effect " + this.nickname);
+				if (announce) console.writeln("[" + this.nickname + "'s Water Veil]: It doesn't effect " + this.nickname);
 				return;
 			}
 			this.status = Status.BURNED;
-			System.out.println(this.nickname + " was burned!");
+			console.writeln(this.nickname + " was burned!");
 			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
-				System.out.print("[" + this.nickname + "'s Synchronize]: ");
-				foe.burn(false, this, field);
+				console.write("[" + this.nickname + "'s Synchronize]: ");
+				foe.burn(false, this);
 			}
 		} else {
 			if (announce) fail();
 		}
 	}
 	
-	public void poison(boolean announce, Pokemon foe, Field field) {
+	public void poison(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
+		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
+			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
 		}
 		if (this.type1 == PType.POISON || this.type2 == PType.POISON || this.type1 == PType.STEEL || this.type2 == PType.STEEL) {
-			if (announce) System.out.println("It doesn't effect " + this.nickname + "...");
+			if (announce) console.writeln("It doesn't effect " + this.nickname + "...");
 			return;
 		}
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.POISONED;
-			System.out.println(this.nickname + " was poisoned!");
+			console.writeln(this.nickname + " was poisoned!");
 			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
-				System.out.print("[" + this.nickname + "'s Synchronize]: ");
-				foe.poison(false, this, field);
+				console.write("[" + this.nickname + "'s Synchronize]: ");
+				foe.poison(false, this);
 			}
 		} else {
 			if (announce) fail();
 		}
 	}
 	
-	public void toxic(boolean announce, Pokemon foe, Field field) {
+	public void toxic(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
+		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
+			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
 		}
 		if (this.type1 == PType.POISON || this.type2 == PType.POISON || this.type1 == PType.STEEL || this.type2 == PType.STEEL) {
-			if (announce) System.out.println("It doesn't effect " + this.nickname + "...");
+			if (announce) console.writeln("It doesn't effect " + this.nickname + "...");
 			return;
 		}
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.TOXIC;
-			System.out.println(this.nickname + " was badly poisoned!");
+			console.writeln(this.nickname + " was badly poisoned!");
 			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
-				System.out.print("[" + this.nickname + "'s Synchronize]: ");
-				foe.toxic(false, this, field);
+				console.write("[" + this.nickname + "'s Synchronize]: ");
+				foe.toxic(false, this);
 			}
 		} else {
 			if (announce) fail();
 		}
 	}
 	
-	public void freeze(boolean announce, Field field) {
+	public void freeze(boolean announce) {
 		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Safeguard!");
+			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (isGrounded(field) && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) System.out.println(this.nickname + " is protected by the Sparkly Terrain!");
+		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
+			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
 		}
 		if (this.type1 == PType.ICE || this.type2 == PType.ICE) {
-			if (announce) System.out.println("It doesn't effect " + this.nickname + "...");
+			if (announce) console.writeln("It doesn't effect " + this.nickname + "...");
 			return;
 		}
 		if (field.equals(field.weather, Effect.SUN)) {
@@ -10410,13 +10443,13 @@ public class Pokemon implements Serializable {
 		}
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.FROSTBITE;
-			System.out.println(this.nickname + " was frostbitten!");
+			console.writeln(this.nickname + " was frostbitten!");
 		} else {
 			if (announce) fail();
 		}
 	}
 	
-	private int determineBasePower(Pokemon foe, Move move, boolean first, Field field, Pokemon[] team, boolean announce) {
+	public int determineBasePower(Pokemon foe, Move move, boolean first, Pokemon[] team, boolean announce) {
 		int bp = 0;
 		if (move == Move.ABYSSAL_CHOP) {
 		    if (foe.status == Status.PARALYZED) {
@@ -10436,6 +10469,7 @@ public class Pokemon implements Serializable {
 			} else {
 				bp = 80;
 			}
+			if (this.id == 1 && this.level == 1 && this.trainer == 1.0) bp = 80;
 		} else if (move == Move.ELECTRO_BALL) {
 			double speedRatio = foe.getSpeed() * 1.0 / this.getSpeed();
 			if (speedRatio > 1) {
@@ -10454,7 +10488,7 @@ public class Pokemon implements Serializable {
 			hpRatio *= 150;
 			bp = Math.max((int) hpRatio, 1);
 		} else if (move == Move.EXPANDING_FORCE) {
-			if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded(field)) {
+			if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded()) {
 				bp = 120;
 			} else {
 				bp = 80;
@@ -10466,7 +10500,7 @@ public class Pokemon implements Serializable {
 				bp = 140;
 			}
 		} else if (move == Move.FLAIL || move == Move.REVERSAL) {
-			double hpRatio = this.currentHP / this.getStat(0);
+			double hpRatio = this.currentHP * 1.0 / this.getStat(0);
 			if (hpRatio >= 0.6875) {
 				bp = 20;
 			} else if (hpRatio >= 0.3542 && hpRatio < 0.6875) {
@@ -10525,25 +10559,25 @@ public class Pokemon implements Serializable {
 			int mag = (int) (Math.random()*100 + 1);
 			if (mag <= 5) {
 				bp = 10;
-				if (announce) System.out.println("Magnitude 4!");
+				if (announce) console.writeln("Magnitude 4!");
 			} else if (mag > 5 && mag <= 15) {
 				bp = 30;
-				if (announce) System.out.println("Magnitude 5!");
+				if (announce) console.writeln("Magnitude 5!");
 			} else if (mag > 15 && mag <= 35) {
 				bp = 50;
-				if (announce) System.out.println("Magnitude 6!");
+				if (announce) console.writeln("Magnitude 6!");
 			} else if (mag > 35 && mag <= 65) {
 				bp = 70;
-				if (announce) System.out.println("Magnitude 7!");
+				if (announce) console.writeln("Magnitude 7!");
 			} else if (mag > 65 && mag <= 85) {
 				bp = 90;
-				if (announce) System.out.println("Magnitude 8!");
+				if (announce) console.writeln("Magnitude 8!");
 			} else if (mag > 85 && mag <= 95) {
 				bp = 110;
-				if (announce) System.out.println("Magnitude 9!");
+				if (announce) console.writeln("Magnitude 9!");
 			} else if (mag > 95 && mag <= 100) {
 				bp = 150;
-				if (announce) System.out.println("Magnitude 10!");
+				if (announce) console.writeln("Magnitude 10!");
 			}
 		} else if (move == Move.RAGE) {
 			if (this.lastMoveUsed == Move.RAGE) {
@@ -10743,6 +10777,7 @@ public class Pokemon implements Serializable {
 		
 		return natureString;
 	}
+	
 
 
 
@@ -11189,7 +11224,7 @@ public class Pokemon implements Serializable {
 		return types[++index];
 	}
 	
-	private PType determineWBType(Field field) {
+	private PType determineWBType() {
 		PType result = PType.NORMAL;
 		if (field.equals(field.weather, Effect.SUN)) result = PType.FIRE;
 		if (field.equals(field.weather, Effect.RAIN)) result = PType.WATER;
@@ -11199,7 +11234,7 @@ public class Pokemon implements Serializable {
 		return result;
 	}
 	
-	private PType determineTPType(Field field) {
+	private PType determineTPType() {
 		PType result = PType.NORMAL;
 		if (field.equals(field.terrain, Effect.GRASSY)) result = PType.GRASS;
 		if (field.equals(field.terrain, Effect.ELECTRIC)) result = PType.ELECTRIC;
@@ -11212,52 +11247,52 @@ public class Pokemon implements Serializable {
 
 
 
-	public void swapIn(Pokemon foe, Field field, Player me) {
+	public void swapIn(Pokemon foe, Player me) {
 		if (this.ability == Ability.DROUGHT && !field.equals(field.weather, Effect.SUN)) {
-			System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: ");
+			console.write("[" + this.nickname + "'s " + ability.toString() + "]: ");
 			field.setWeather(field.new FieldEffect(Effect.SUN));
 			field.weatherTurns = 5;
 		} else if (this.ability == Ability.DRIZZLE && !field.equals(field.weather, Effect.RAIN)) {
-			System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: ");
+			console.write("[" + this.nickname + "'s " + ability.toString() + "]: ");
 			field.setWeather(field.new FieldEffect(Effect.RAIN));
 			field.weatherTurns = 5;
 		} else if (this.ability == Ability.SAND_STREAM && !field.equals(field.weather, Effect.SANDSTORM)) {
-			System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: ");
+			console.write("[" + this.nickname + "'s " + ability.toString() + "]: ");
 			field.setWeather(field.new FieldEffect(Effect.SANDSTORM));
 			field.weatherTurns = 5;
 		} else if (this.ability == Ability.SNOW_WARNING && !field.equals(field.weather, Effect.SNOW)) {
-			System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: ");
+			console.write("[" + this.nickname + "'s " + ability.toString() + "]: ");
 			field.setWeather(field.new FieldEffect(Effect.SNOW));
 			field.weatherTurns = 5;
 		
 		} else if (this.ability == Ability.GRASSY_SURGE && !field.equals(field.terrain, Effect.GRASSY)) {
-			System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: ");
+			console.write("[" + this.nickname + "'s " + ability.toString() + "]: ");
 			field.setTerrain(field.new FieldEffect(Effect.GRASSY));
 			field.terrainTurns = 5;
 		} else if (this.ability == Ability.ELECTRIC_SURGE && !field.equals(field.terrain, Effect.ELECTRIC)) {
-			System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: ");
+			console.write("[" + this.nickname + "'s " + ability.toString() + "]: ");
 			field.setTerrain(field.new FieldEffect(Effect.ELECTRIC));
 			field.terrainTurns = 5;
 		} else if (this.ability == Ability.PSYCHIC_SURGE && !field.equals(field.terrain, Effect.PSYCHIC)) {
-			System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: ");
+			console.write("[" + this.nickname + "'s " + ability.toString() + "]: ");
 			field.setTerrain(field.new FieldEffect(Effect.PSYCHIC));
 			field.terrainTurns = 5;
 		} else if (this.ability == Ability.SPARKLY_SURGE && !field.equals(field.terrain, Effect.SPARKLY)) {
-			System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: ");
+			console.write("[" + this.nickname + "'s " + ability.toString() + "]: ");
 			field.setTerrain(field.new FieldEffect(Effect.SPARKLY));
 			field.terrainTurns = 5;
-		} else if (this.ability == Ability.GRAVITATIONAL_PULL) {  System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: "); field.setEffect(field.new FieldEffect(Effect.GRAVITY));
+		} else if (this.ability == Ability.GRAVITATIONAL_PULL) {  console.write("[" + this.nickname + "'s " + ability.toString() + "]: "); field.setEffect(field.new FieldEffect(Effect.GRAVITY));
 		
 		} else if (this.ability == Ability.INTIMIDATE || this.ability == Ability.SCALY_SKIN) {
-			System.out.print("[" + this.nickname + "'s " + ability.toString() + "]: ");
+			console.write("[" + this.nickname + "'s " + ability.toString() + "]: ");
 			if (foe.ability == Ability.INNER_FOCUS) {
-				System.out.println("[" + foe.nickname + "'s " + foe.ability.toString() + "]: " + foe.nickname + "'s Attack was not lowered!");
+				console.writeln("[" + foe.nickname + "'s " + foe.ability.toString() + "]: " + foe.nickname + "'s Attack was not lowered!");
 			} else {
 				stat(foe, 0, -1, foe);
 			}
 		} else if (this.ability == Ability.MOUTHWATER) {
 			foe.vStatuses.add(Status.TAUNTED);
-			System.out.println("[" + this.nickname + "'s Mouthwater]: " + foe.nickname + " was taunted!");
+			console.writeln("[" + this.nickname + "'s Mouthwater]: " + foe.nickname + " was taunted!");
 		} else if (this.ability == Ability.ANTICIPATION) {
 			boolean shuddered = false;
 			for (Moveslot moveslot : foe.moveset) {
@@ -11271,34 +11306,34 @@ public class Pokemon implements Serializable {
 				}
 				if (shuddered) break;
 			}
-			if (shuddered) System.out.println("[" + this.nickname + "'s Anticipation]: " + this.nickname + " shuddered!");
+			if (shuddered) console.writeln("[" + this.nickname + "'s Anticipation]: " + this.nickname + " shuddered!");
 		}
 		ArrayList<FieldEffect> side = playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.STEALTH_ROCKS)) {
 			double multiplier = getEffectiveMultiplier(PType.ROCK);
 			double damage = (this.getStat(0) / 8.0) * multiplier;
 			this.currentHP -= (int) Math.floor(damage);
-			System.out.println("Pointed stones dug into " + this.nickname + "!");
+			console.writeln("Pointed stones dug into " + this.nickname + "!");
 		}
-		if (field.contains(side, Effect.SPIKES) && this.isGrounded(field)) {
+		if (field.contains(side, Effect.SPIKES) && this.isGrounded()) {
 			double layers = field.getLayers(side, Effect.SPIKES);
 			double damage = (this.getStat(0) / 8.0) * ((layers + 1) / 2);
 			this.currentHP -= (int) Math.floor(damage);
-			System.out.println(this.nickname + " was hurt by Spikes!");
+			console.writeln(this.nickname + " was hurt by Spikes!");
 		}
 		
-		if (field.contains(side, Effect.TOXIC_SPIKES) && this.isGrounded(field)) {
+		if (field.contains(side, Effect.TOXIC_SPIKES) && this.isGrounded()) {
 			int layers = field.getLayers(side, Effect.TOXIC_SPIKES);
-			if (layers == 1) this.poison(false, this, field);
-			if (layers == 2) this.toxic(false, this, field);
+			if (layers == 1) this.poison(false, this);
+			if (layers == 2) this.toxic(false, this);
 			
 			if (this.type1 == PType.POISON || this.type2 == PType.POISON) {
 				field.remove(side, Effect.TOXIC_SPIKES);
-				System.out.println("The toxic spikes disappeared from " + this.nickname + "'s feet!");
+				console.writeln("The toxic spikes disappeared from " + this.nickname + "'s feet!");
 			}
 		}
 		
-		if (field.contains(side, Effect.STICKY_WEBS) && this.isGrounded(field)) {
+		if (field.contains(side, Effect.STICKY_WEBS) && this.isGrounded()) {
 			stat(this, 4, -1, foe);
 		}
 		
@@ -11334,7 +11369,7 @@ public class Pokemon implements Serializable {
 		return multiplier;
 	}
 
-	private boolean isGrounded(Field field) {
+	private boolean isGrounded() {
 		boolean result = true;
 		if (this.type1 == PType.FLYING || this.type2 == PType.FLYING) result = false;
 		if (this.ability == Ability.LEVITATE) result = false;

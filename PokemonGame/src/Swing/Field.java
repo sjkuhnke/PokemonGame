@@ -141,7 +141,7 @@ public class Field {
 	
 	public void setWeather(FieldEffect weather) {
 		if (weather.effect.isWeather && this.weather != weather) {
-			System.out.println("The weather became " + weather.toString() + "!");
+			Pokemon.console.writeln("The weather became " + weather.toString() + "!");
 			this.weather = weather;
 			this.weatherTurns = weather.turns;
 		}
@@ -149,7 +149,7 @@ public class Field {
 	
 	public void setTerrain(FieldEffect terrain) {
 		if (terrain.effect.isTerrain) {
-			System.out.println("The terrain became " + terrain.toString() + "!");
+			Pokemon.console.writeln("The terrain became " + terrain.toString() + "!");
 			this.terrain = terrain;
 			this.terrainTurns = terrain.turns;
 		}
@@ -159,54 +159,54 @@ public class Field {
 		if (effect.effect == Effect.TRICK_ROOM) {
 			if (contains(fieldEffects, effect.effect)) {
 				removeEffect(fieldEffects, effect.effect);
-				System.out.println("The twisted dimensions returned to normal!");
+				Pokemon.console.writeln("The twisted dimensions returned to normal!");
 				return;
 			}
 		}
 		if (!contains(fieldEffects, effect.effect)) {
 			fieldEffects.add(effect);
-			System.out.println(effect.toString() + " took effect!");
+			Pokemon.console.writeln(effect.toString() + " took effect!");
 		}
 	}
 	
 	public boolean setHazard(ArrayList<FieldEffect> side, FieldEffect hazard) {
 		if (hazard.effect == Effect.STEALTH_ROCKS && !contains(side, Effect.STEALTH_ROCKS)) {
-			System.out.println("Pointed rocks were scattered everywhere!");
+			Pokemon.console.writeln("Pointed rocks were scattered everywhere!");
 			side.add(hazard);
 			hazard.layers = 1;
 			return true;
 		} else if (hazard.effect == Effect.STICKY_WEBS && !contains(side, Effect.STICKY_WEBS)) {
-			System.out.println("Sticky webs were scattered at the Pokemon's feet!");
+			Pokemon.console.writeln("Sticky webs were scattered at the Pokemon's feet!");
 			side.add(hazard);
 			hazard.layers = 1;
 			return true;
 		} else if (hazard.effect == Effect.TOXIC_SPIKES) {
 			if (getLayers(side, Effect.TOXIC_SPIKES) == 0) {
-				System.out.println("Poisonous Spikes were put at the Pokemon's feet!");
+				Pokemon.console.writeln("Poisonous Spikes were put at the Pokemon's feet!");
 				hazard.layers++;
 				side.add(hazard);
 				return true;
 			} else if (getLayers(side, Effect.TOXIC_SPIKES) == 1) {
-				System.out.println("Poisonous Spikes were put at the Pokemon's feet!");
+				Pokemon.console.writeln("Poisonous Spikes were put at the Pokemon's feet!");
 				addLayer(side, Effect.TOXIC_SPIKES);
 				return true;
 			} else if (getLayers(side, Effect.TOXIC_SPIKES) == 2) {
-				System.out.println("But it failed!");
+				Pokemon.console.writeln("But it failed!");
 				return false;
 			}
 			
 		} else if (hazard.effect == Effect.SPIKES) {
 			if (getLayers(side, Effect.SPIKES) == 0) {
-				System.out.println("Spikes were scattered at the Pokemon's feet!");
+				Pokemon.console.writeln("Spikes were scattered at the Pokemon's feet!");
 				hazard.layers++;
 				side.add(hazard);
 				return true;
 			} else if (getLayers(side, Effect.SPIKES) == 1 || getLayers(side, Effect.SPIKES) == 2) {
-				System.out.println("Spikes were scattered at the Pokemon's feet!");
+				Pokemon.console.writeln("Spikes were scattered at the Pokemon's feet!");
 				addLayer(side, Effect.SPIKES);
 				return true;
 			} else if (getLayers(side, Effect.SPIKES) == 3) {
-				System.out.println("But it failed!");
+				Pokemon.console.writeln("But it failed!");
 				return false;
 			}
 			
@@ -241,14 +241,14 @@ public class Field {
 	    if (weather != null) {
 	        weatherTurns--;
 	        if (weatherTurns == 0) {
-	            System.out.println("The weather returned to normal!");
+	            Pokemon.console.writeln("The weather returned to normal!");
 	            weather = null;
 	        }
 	    }
 	    if (terrain != null) {
 	        terrainTurns--;
 	        if (terrainTurns == 0) {
-	            System.out.println("The terrain returned to normal!");
+	            Pokemon.console.writeln("The terrain returned to normal!");
 	            terrain = null;
 	        }
 	    }
@@ -258,7 +258,7 @@ public class Field {
 	        FieldEffect effect = iterator.next();
 	        if (effect.turns > 0) effect.turns--;
 	        if (effect.turns == 0) {
-	            System.out.println(effect.effect.toString() + " wore off!");
+	            Pokemon.console.writeln(effect.effect.toString() + " wore off!");
 	            iterator.remove();
 	        }
 	    }
@@ -268,7 +268,7 @@ public class Field {
 	        FieldEffect effect = iterator.next();
 	        if (effect.turns > 0) effect.turns--;
 	        if (effect.turns == 0) {
-	            System.out.println("Your " + effect.effect.toString() + " wore off!");
+	            Pokemon.console.writeln("Your " + effect.effect.toString() + " wore off!");
 	            iterator.remove();
 	        }
 	    }
@@ -278,7 +278,7 @@ public class Field {
 	        FieldEffect effect = iterator.next();
 	        if (effect.turns > 0) effect.turns--;
 	        if (effect.turns == 0) {
-	            System.out.println("Foe's " + effect.effect.toString() + " wore off!");
+	            Pokemon.console.writeln("Foe's " + effect.effect.toString() + " wore off!");
 	            iterator.remove();
 	        }
 	    }
