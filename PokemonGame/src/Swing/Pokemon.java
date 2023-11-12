@@ -4456,8 +4456,8 @@ public class Pokemon implements Serializable {
 			stat(this, 4, 2, foe);
 		} else if (move == Move.LOAD_FIREARMS) {
 			console.writeln(this.nickname + " upgraded its weapon!");
+			stat(this, 4, 1, foe);
 			stat(this, 5, 1, foe);
-			stat(this, 6, 1, foe);
 		} else if (move == Move.BABY$DOLL_EYES) {
 			stat(foe, 0, -1, foe);
 		} else if (move == Move.BATON_PASS || move == Move.TELEPORT) {
@@ -4544,7 +4544,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.ENCORE) {
 			if (!foe.vStatuses.contains(Status.ENCORED) && foe.lastMoveUsed != null) {
 				foe.vStatuses.add(Status.ENCORED);
-				foe.encoreCount = 3;
+				foe.encoreCount = 4;
 			} else {
 				fail = fail();
 			}
@@ -8213,7 +8213,7 @@ public class Pokemon implements Serializable {
 			movebank[22] = new Node(Move.HEX);
 			movebank[24] = new Node(Move.SUCKER_PUNCH);
 			movebank[26] = new Node(Move.FEINT_ATTACK);
-			movebank[29] = new Node(Move.HEX);
+			movebank[29] = new Node(Move.SHADOW_PUNCH);
 			movebank[31] = new Node(Move.MINIMIZE);
 			movebank[33] = new Node(Move.CURSE);
 			movebank[36] = new Node(Move.NIGHT_SLASH);
