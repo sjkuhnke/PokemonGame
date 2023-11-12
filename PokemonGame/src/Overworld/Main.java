@@ -973,7 +973,7 @@ public class Main {
 	            for (Move m : typeMoves) {
 	            	String result = m.toString() + " : ";
 					result += m.getCategory() + " / ";
-					result += m.getbp() + " / ";
+					result += m.getbp(null, null) + " / ";
 					result += m.getAccuracy() + " : ";
 					result += m.getDescription() + "\n";
 					

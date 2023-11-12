@@ -391,7 +391,7 @@ public class PlayerCharacter extends Entity {
 	    		            SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		        } catch (NumberFormatException g) {
 	    		            // Handle invalid input (e.g., if the entered value is not a valid integer)
-	    		            System.out.println("Invalid item ID.");
+	    		            JOptionPane.showMessageDialog(null, "Invalid item ID.");
 	    		        }
 	    		    }
 	    		} else if (code.startsWith("Shae")) {
@@ -404,7 +404,7 @@ public class PlayerCharacter extends Entity {
 	    		            SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		        } catch (NumberFormatException g) {
 	    		            // Handle invalid input (e.g., if the entered value is not a valid integer)
-	    		            System.out.println("Invalid Pokemon ID/Level.");
+	    		        	JOptionPane.showMessageDialog(null, "Invalid Pokemon ID/Level.");
 	    		        }
 	    		    }
 	    		} else if (code.startsWith("ben")) {
@@ -1418,7 +1418,7 @@ public class PlayerCharacter extends Entity {
 			        	        	        	@Override
 			        	        			    public void mouseClicked(MouseEvent e) {
 			        	        			    	if (SwingUtilities.isRightMouseButton(e)) {
-			        	        			            JOptionPane.showMessageDialog(null, m.move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			        	        			            JOptionPane.showMessageDialog(null, m.move.getMoveSummary(p.team[index], null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        	        			        } else {
 			        	        			        	m.currentPP = m.maxPP;
 			        	        			        	JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was restored!");
@@ -1469,7 +1469,7 @@ public class PlayerCharacter extends Entity {
 		        	        	        	@Override
 		        	        			    public void mouseClicked(MouseEvent e) {
 		        	        			    	if (SwingUtilities.isRightMouseButton(e)) {
-		        	        			            JOptionPane.showMessageDialog(null, m.move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+		        	        			            JOptionPane.showMessageDialog(null, m.move.getMoveSummary(p.team[index], null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 		        	        			        } else {
 	        	        			        		if (m.maxPP < (m.move.pp * 8 / 5)) {
 	        	        			        			if (i.getItem().getID() == 42) { // PP Up

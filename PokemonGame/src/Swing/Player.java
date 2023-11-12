@@ -73,7 +73,9 @@ public class Player implements Serializable{
 	            if (team[i] == null) {
 	                team[i] = p;
 	                p.slot = i;
-	                System.out.println("Caught " + p.nickname + ", added to party!");
+                	Pokemon.console.write("Caught ", false, 16);
+                	Pokemon.console.write(p.nickname, true, 16);
+                	Pokemon.console.writeln(", added to party!", false, 16);
 	                current = team[0];
 	                break;
 	            }
@@ -91,17 +93,21 @@ public class Player implements Serializable{
 	            }
 	            if (index >= 0) {
 	                boxes[i][index] = p;
-	                System.out.println("Caught " + p.nickname + ", sent to box " + (i+1) + "!");
-	                return;  // Exit the method after catching the Pok�mon
+                	Pokemon.console.write("Caught ", false, 16);
+                	Pokemon.console.write(p.nickname, true, 16);
+                	Pokemon.console.writeln(", sent to box " + (i+1) + "!", false, 16);
+	                return;  // Exit the method after catching the Pokemon
 	            }
 	        }
-	        System.out.println("Cannot catch " + p.nickname + ", all boxes are full");
+        	Pokemon.console.write("Cannot catch ", false, 16);
+        	Pokemon.console.write(p.nickname, true, 16);
+        	Pokemon.console.writeln(", all boxes are full.", false, 16);
 	    }
 	}
 
 
 	public void swap(Pokemon pokemon, int index) {
-		System.out.println("\n" + current.nickname + ", come back!");
+		Pokemon.console.writeln("\n" + current.nickname + ", come back!", false, 16);
 		if (current.ability == Ability.REGENERATOR) {
 			current.currentHP += current.getStat(0) / 3;
 			current.verifyHP();
@@ -117,7 +123,9 @@ public class Player implements Serializable{
 			numBattled++;
 			this.current.battled = true;
 		}
-		System.out.println("Go " + current.nickname + "!");
+		Pokemon.console.write("Go ", false, 16);
+		Pokemon.console.write(current.nickname, true, 16);
+		Pokemon.console.writeln("!", false, 16);
 		if (this.current.vStatuses.contains(Status.HEALING)) this.current.heal();
 		
 	}
@@ -244,7 +252,7 @@ public class Player implements Serializable{
 		return result;
 	}
 	
-	public boolean swapRandom(Pokemon foe, Field field) {
+	public boolean swapRandom(Pokemon foe) {
 		if (!hasValidMembers()) return false;
 		Random rand = new Random();
 		int index = rand.nextInt(team.length);
@@ -254,8 +262,9 @@ public class Player implements Serializable{
 		
 		swap(team[index], index);
 		
-		System.out.println(current.nickname + " was dragged out!");
-		current.swapIn(foe, field, this);
+		Pokemon.console.write(current.nickname, true, 16);
+		Pokemon.console.writeln(" was dragged out!", false, 16);
+		current.swapIn(foe, this);
 		return true;
 		
 	}

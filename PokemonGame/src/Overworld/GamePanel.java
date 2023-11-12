@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import Entity.Entity;
 import Entity.PlayerCharacter;
@@ -18,8 +19,10 @@ import Obj.ItemObj;
 import tile.TileManager;
 import Swing.Battle;
 import Swing.Battle.BattleCloseListener;
+import Swing.Field;
 import Swing.PBox;
 import Swing.Pokemon;
+import Swing.TextPane;
 
 public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 
@@ -233,6 +236,8 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		}
 		player.p.current = player.p.team[0];
 		
+		Pokemon.field = new Field();
+		
 		inBattle = false;
 		keyH.resume();
 	}
@@ -241,6 +246,9 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		aSetter.setNPC();
 		aSetter.setObject();
 		aSetter.setInteractiveTile();
+		Pokemon.console = new TextPane();
+		Pokemon.console.setScrollPane(new JScrollPane());
+		Pokemon.field = new Field();
 	}
 	
 	public void setSlots() {
