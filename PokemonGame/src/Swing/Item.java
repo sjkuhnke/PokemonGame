@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -1385,5 +1386,101 @@ public class Item implements Serializable {
 	
 	public String getDesc() {
 		return desc;
+	}
+
+	public static JPanel displayGenerator(Player p) {
+		JPanel result = new JPanel();
+		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
+		
+		JComboBox<Pokemon> nameInput = new JComboBox<Pokemon>();
+		for (int k = 1; k < 241; k++) {
+        	nameInput.addItem(new Pokemon(k, 50, false, true));
+        }
+		result.add(nameInput);
+		
+		Integer[] levels = new Integer[100];
+		for (int i = 0; i < 100; i++) {
+			levels[i] = i + 1;
+		}
+		JComboBox<Integer> levelInput = new JComboBox<>(levels);
+		result.add(levelInput);
+		
+		Ability[] abilityOptions = new Ability[2];
+		for (int i = 0; i < 2; i++) {
+			Pokemon test = (Pokemon) nameInput.getSelectedItem();
+			test.setAbility(i);
+			abilityOptions[i] = test.ability;
+		}
+		JComboBox<Ability> abilityInput = new JComboBox<>(abilityOptions);
+		result.add(abilityInput);
+		
+		nameInput.addActionListener(f -> {
+			abilityInput.removeAllItems();
+			for (int i = 0; i < 2; i++) {
+				Pokemon test = (Pokemon) nameInput.getSelectedItem();
+				test.setAbility(i);
+				abilityInput.addItem(test.ability);
+			}
+		});
+		
+		JComboBox<String> natures = new JComboBox<>();
+		Pokemon temp = new Pokemon(1, 1, false, false);
+		for (int i = 0; i < 25; i++) {
+			temp.nature = temp.getNature(i);
+			natures.addItem(temp.getNature());
+		}
+		result.add(natures);
+		
+		@SuppressWarnings("unchecked")
+		JComboBox<Integer>[] ivInputs = new JComboBox[6];
+		Integer[] options = new Integer[32];
+		for (int i = 0; i < 32; i++) {
+			options[i] = i;
+		}
+		for (int i = 0; i < 6; i++) {
+			ivInputs[i] = new JComboBox<Integer>(options);
+			ivInputs[i].setSelectedIndex(31);
+			AutoCompleteDecorator.decorate(ivInputs[i]);
+			result.add(ivInputs[i]);
+		}
+		
+		AutoCompleteDecorator.decorate(nameInput);
+		AutoCompleteDecorator.decorate(levelInput);
+		AutoCompleteDecorator.decorate(abilityInput);
+		AutoCompleteDecorator.decorate(natures);
+		
+		JButton generate = new JButton("GENERATE");
+		generate.addActionListener(e -> {
+			try {
+				int id = ((Pokemon) nameInput.getSelectedItem()).id;
+				int level = (Integer) levelInput.getSelectedItem();
+				int ability = abilityInput.getSelectedIndex();
+				String selectedNature = (String) natures.getSelectedItem();
+				for (int i = 0; i < 25; i++) {
+					temp.nature = temp.getNature(i);
+					if (temp.getNature().equals(selectedNature)) break;
+				}
+				double[] nature = temp.nature;
+				int[] ivs = new int[6];
+				for (int i = 0; i < 6; i++) {
+					ivs[i] = Integer.parseInt(((Integer) ivInputs[i].getSelectedItem()).toString());
+				}
+				
+				Pokemon resultPokemon = new Pokemon(id, level, true, false);
+				resultPokemon.abilitySlot = ability;
+				resultPokemon.setAbility(resultPokemon.abilitySlot);
+				resultPokemon.nature = nature;
+				resultPokemon.ivs = ivs;
+				resultPokemon.getStats();
+				
+				p.catchPokemon(resultPokemon);
+			} catch (NumberFormatException f) {
+				JOptionPane.showMessageDialog(null, "Invalid inputs.");
+			}
+			
+		});
+		result.add(generate);
+		
+		return result;
 	}
 }
