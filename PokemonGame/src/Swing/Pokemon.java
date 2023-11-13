@@ -4972,6 +4972,8 @@ public class Pokemon implements Serializable {
 			if (foe.status == Status.POISONED || foe.status == Status.TOXIC) {
 				stat(foe, 0, -2, foe);
 				stat(foe, 2, -2, foe);
+			} else {
+				fail = fail();
 			}
 		} else if (move == Move.WATER_SPORT) {
 			field.setEffect(field.new FieldEffect(Effect.WATER_SPORT));
@@ -10778,7 +10780,90 @@ public class Pokemon implements Serializable {
 		return natureString;
 	}
 	
-
+	public double[] getNature(int i) {
+		double[] result;
+		switch (i) {
+		case 0:
+			result = new double[] {1.0,1.0,1.0,1.0,1.0,0.0};
+			break;
+		case 1:
+			result = new double[] {1.0,1.0,1.0,1.0,1.0,1.0};
+			break;
+		case 2:
+			result = new double[] {1.0,1.0,1.0,1.0,1.0,2.0};
+			break;
+		case 3:
+			result = new double[] {1.0,1.0,1.0,1.0,1.0,3.0};
+			break;
+		case 4:
+			result = new double[] {1.0,1.0,1.0,1.0,1.0,4.0};
+			break;
+		case 5:
+			result = new double[] {1.1,0.9,1.0,1.0,1.0,-1.0};
+			break;
+		case 6:
+			result = new double[] {1.1,1.0,0.9,1.0,1.0,-1.0};
+			break;
+		case 7:
+			result = new double[] {1.1,1.0,1.0,0.9,1.0,-1.0};
+			break;
+		case 8:
+			result = new double[] {1.1,1.0,1.0,1.0,0.9,-1.0};
+			break;
+		case 9:
+			result = new double[] {0.9,1.1,1.0,1.0,1.0,-1.0};
+			break;
+		case 10:
+			result = new double[] {1.0,1.1,0.9,1.0,1.0,-1.0};
+			break;
+		case 11:
+			result = new double[] {1.0,1.1,1.0,0.9,1.0,-1.0};
+			break;
+		case 12:
+			result = new double[] {1.0,1.1,1.0,1.0,0.9,-1.0};
+			break;
+		case 13:
+			result = new double[] {0.9,1.0,1.1,1.0,1.0,-1.0};
+			break;
+		case 14:
+			result = new double[] {1.0,0.9,1.1,1.0,1.0,-1.0};
+			break;
+		case 15:
+			result = new double[] {1.0,1.0,1.1,0.9,1.0,-1.0};
+			break;
+		case 16:
+			result = new double[] {1.0,1.0,1.1,1.0,0.9,-1.0};
+			break;
+		case 17:
+			result = new double[] {0.9,1.0,1.0,1.1,1.0,-1.0};
+			break;
+		case 18:
+			result = new double[] {1.0,0.9,1.0,1.1,1.0,-1.0};
+			break;
+		case 19:
+			result = new double[] {1.0,1.0,0.9,1.1,1.0,-1.0};
+			break;
+		case 20:
+			result = new double[] {1.0,1.0,1.0,1.1,0.9,-1.0};
+			break;
+		case 21:
+			result = new double[] {0.9,1.0,1.0,1.0,1.1,-1.0};
+			break;
+		case 22:
+			result = new double[] {1.0,0.9,1.0,1.0,1.1,-1.0};
+			break;
+		case 23:
+			result = new double[] {1.0,1.0,0.9,1.0,1.1,-1.0};
+			break;
+		case 24:
+			result = new double[] {1.0,1.0,1.0,0.9,1.1,-1.0};
+			break;
+		default:
+			result = new double[] {};
+			break;
+		}
+		return result;
+	}
 
 
 	public JPanel showSummary() {

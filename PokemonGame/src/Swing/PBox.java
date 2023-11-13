@@ -9,9 +9,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import Swing.Battle.JGradientButton;
+import Swing.Pokemon.Node;
 
 public class PBox extends JFrame {
 
@@ -138,6 +140,8 @@ public class PBox extends JFrame {
             moveButton.setBackground(new Color(255, 251, 0));
             JGradientButton changeNick = new JGradientButton("Change Nickname");
             changeNick.setBackground(new Color(252, 147, 0));
+            JGradientButton seeForgottenMoves = new JGradientButton("See Forgotten Moves");
+            seeForgottenMoves.setBackground(new Color(252, 147, 0));
             JGradientButton releaseButton = new JGradientButton("Release");
             releaseButton.setBackground(new Color(214, 6, 17));
             swapButton.addActionListener(new ActionListener() {
@@ -369,36 +373,36 @@ public class PBox extends JFrame {
                     }
                 }
             });
-//            seeForgottenMoves.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                	if (box[index] == null) {
-//                		JOptionPane.showMessageDialog(null, "No Pokemon to check.");
-//                        return;
-//                	}
-//                    ArrayList<Move> forgottenMoves = new ArrayList<>();
-//                    for (int i = 0; i < box[index].getLevel(); i++) {
-//                    	if (i < box[index].movebank.length) {
-//                    		Node move = box[index].movebank[i];
-//                    		while (move != null) {
-//                    			if (!box[index].knowsMove(move.data)) {
-//                    				forgottenMoves.add(move.data);
-//                    			}
-//                    			move = move.next;
-//                    		}
-//                    	}
-//                    }
-//                    if (forgottenMoves.isEmpty()) {
-//                        JOptionPane.showMessageDialog(boxMemberPanel, "This Pokemon has not forgotten any moves.");
-//                    } else {
-//                        String message = "This Pokemon has forgotten the following moves:\n";
-//                        for (Move move : forgottenMoves) {
-//                            message += "- " + move + "\n";
-//                        }
-//                        JOptionPane.showMessageDialog(boxMemberPanel, message);
-//                    }
-//                }
-//            });
+            seeForgottenMoves.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                	if (box[index] == null) {
+                		JOptionPane.showMessageDialog(null, "No Pokemon to check.");
+                        return;
+                	}
+                    ArrayList<Move> forgottenMoves = new ArrayList<>();
+                    for (int i = 0; i < box[index].getLevel(); i++) {
+                    	if (i < box[index].movebank.length) {
+                    		Node move = box[index].movebank[i];
+                    		while (move != null) {
+                    			if (!box[index].knowsMove(move.data)) {
+                    				forgottenMoves.add(move.data);
+                    			}
+                    			move = move.next;
+                    		}
+                    	}
+                    }
+                    if (forgottenMoves.isEmpty()) {
+                        JOptionPane.showMessageDialog(boxMemberPanel, "This Pokemon has not forgotten any moves.");
+                    } else {
+                        String message = "This Pokemon has forgotten the following moves:\n";
+                        for (Move move : forgottenMoves) {
+                            message += "- " + move + "\n";
+                        }
+                        JOptionPane.showMessageDialog(boxMemberPanel, message);
+                    }
+                }
+            });
             changeNick.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -414,6 +418,7 @@ public class PBox extends JFrame {
             boxMemberPanel.add(forgetButton);
             boxMemberPanel.add(moveButton);
             boxMemberPanel.add(changeNick);
+            boxMemberPanel.add(seeForgottenMoves);
             boxMemberPanel.add(releaseButton);
             JOptionPane.showMessageDialog(null, boxMemberPanel, "Box member details", JOptionPane.PLAIN_MESSAGE);
 	    });

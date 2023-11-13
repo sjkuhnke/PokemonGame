@@ -481,6 +481,10 @@ public class PlayerCharacter extends Entity {
 	    				p.pokedex[i] = 2;
 	    			}
 	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
+	    		} else if (code.equals("GENN")) {
+	    			JPanel panel = Item.displayGenerator(p);
+	    			JOptionPane.showMessageDialog(null, panel);
+	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		}
 	    	});
 	    	
