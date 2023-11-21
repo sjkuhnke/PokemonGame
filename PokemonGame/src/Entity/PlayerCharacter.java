@@ -58,6 +58,8 @@ public class PlayerCharacter extends Entity {
 
 	public boolean cross = false;
 	public boolean surf = false;
+
+	public String currentSave;
 	
 	public PlayerCharacter(GamePanel gp, KeyHandler keyH) {
 		super(gp);
@@ -516,7 +518,7 @@ public class PlayerCharacter extends Entity {
 	            JOptionPane.QUESTION_MESSAGE,
 	            null, null, null);
 	    if (option == JOptionPane.YES_OPTION) {
-	    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("player.dat"))) {
+	    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(currentSave))) {
             	gp.player.p.setPosX(gp.player.worldX);
             	gp.player.p.setPosY(gp.player.worldY);
             	gp.player.p.currentMap = gp.currentMap;

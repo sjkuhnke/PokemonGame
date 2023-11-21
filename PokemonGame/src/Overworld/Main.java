@@ -69,7 +69,7 @@ public class Main {
 	}
 
 	public static void loadSave(JFrame window, GamePanel gamePanel, String fileName, WelcomeMenu welcomeMenu) {
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName + ".dat"))) {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
 	        gamePanel.player.p = (Player) ois.readObject();
 	        for (Pokemon p : gamePanel.player.p.team) {
 	            if (p != null) p.clearVolatile();
