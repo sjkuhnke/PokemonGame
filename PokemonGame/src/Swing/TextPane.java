@@ -85,4 +85,16 @@ public class TextPane extends JTextPane {
 		this.scrollPane = scrollPane;
 	}
 
+	public void writeAbility(Pokemon p) {
+		writeln("[" + p.nickname + "'s " + p.ability + "]:", false, 14);
+	}
+	
+	public void writeAbility(Pokemon p, boolean newLine) {
+		if (newLine) {
+			writeAbility(p);
+		} else {
+			write("[" + p.nickname + "'s " + p.ability + "]:", false, 14);
+		}
+	}
+
 }

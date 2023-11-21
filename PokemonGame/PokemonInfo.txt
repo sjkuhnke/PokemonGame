@@ -82,7 +82,7 @@ Type:
 Fire / None
 
 Ability:
-Blaze / Solar Power
+Blaze / Dry Skin
 
 Base Stats:
 60 HP / 49 Atk / 54 Def / 74 SpA / 58 SpD / 34 Spe / 329 BST
@@ -101,7 +101,7 @@ Type:
 Fire / None
 
 Ability:
-Blaze / Solar Power
+Blaze / Dry Skin
 
 Base Stats:
 80 HP / 75 Atk / 65 Def / 75 SpA / 60 SpD / 50 Spe / 405 BST
@@ -128,7 +128,7 @@ Type:
 Fire / Steel
 
 Ability:
-Blaze / Solar Power
+Blaze / Dry Skin
 
 Base Stats:
 109 HP / 81 Atk / 71 Def / 101 SpA / 67 SpD / 92 Spe / 521 BST
@@ -2083,7 +2083,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Anticipation / Natural Cure
+Magic Bounce / Natural Cure
 
 Base Stats:
 57 HP / 40 Atk / 65 Def / 86 SpA / 73 SpD / 49 Spe / 370 BST
@@ -2109,7 +2109,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Anticipation / Natural Cure
+Magic Bounce / Natural Cure
 
 Base Stats:
 82 HP / 65 Atk / 95 Def / 136 SpA / 103 SpD / 29 Spe / 510 BST
@@ -4419,7 +4419,7 @@ Level Up:
 23 - Hex
 25 - Sucker Punch
 27 - Feint Attack
-30 - Hex
+30 - Shadow Punch
 32 - Minimize
 34 - Curse
 37 - Night Slash
@@ -4552,6 +4552,7 @@ Level Up:
 16 - Bulk Up
 20 - Rock Slide
 24 - Slam
+27 - Mach Punch
 30 - Scary Face
 36 - Dynamic Punch
 42 - Hammer Arm
@@ -4580,6 +4581,7 @@ Level Up:
 16 - Bulk Up
 20 - Rock Slide
 24 - Slam
+27 - Mach Punch
 30 - Scary Face
 36 - Dynamic Punch
 42 - Hammer Arm
@@ -6685,36 +6687,36 @@ Level Up:
 75 - Dragon Dance
 
 Unused moves:
-Failed Sucker
-Tornado Spin
-Noble Roar
-Strength
-Flatter
 Perish Song
+Spike Cannon
+Tornado Spin
 Sacred Fire
-Glaciate
-V-Create
+Strength
+Acid Armor
 Sludge Wave
-Petal Blizzard
 Boosted Pursuit
+Struggle
+Failed Sucker
+Glaciate
+Noble Roar
 Lunar Dance
 Blast Burn
-Spike Cannon
-Struggle
+V-Create
+Flatter
 Expanding Force
-Acid Armor
 Belch
+Petal Blizzard
 
 TM Only:
-Vine Cross
+Psyshock
 Cut
-Flip Turn
-Scald
 Lava Surf
-Terrain Pulse
-Rock Smash
-Sleep Talk
+Scald
 Rock Climb
 Slow Fall
-Psyshock
+Flip Turn
+Sleep Talk
+Terrain Pulse
 Surf
+Vine Cross
+Rock Smash
