@@ -1,4 +1,5 @@
 package Overworld;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import Swing.Player;
 import Swing.Pokemon;
@@ -51,7 +53,23 @@ public class Main {
 		
 		GamePanel gamePanel = new GamePanel();
 		
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("player.dat"))) {
+		showStartupMenu(window, gamePanel);
+	}
+	
+	
+
+	private static void showStartupMenu(JFrame window, GamePanel gp) {
+		WelcomeMenu menu = new WelcomeMenu(window, gp);
+		window.add(menu);
+		
+		window.pack();
+		
+		window.setLocationRelativeTo(null);
+		window.setVisible(true);
+	}
+
+	public static void loadSave(JFrame window, GamePanel gamePanel, String fileName, WelcomeMenu welcomeMenu) {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName + ".dat"))) {
 	        gamePanel.player.p = (Player) ois.readObject();
 	        for (Pokemon p : gamePanel.player.p.team) {
 	            if (p != null) p.clearVolatile();
@@ -116,40 +134,64 @@ public class Main {
 	        //gamePanel.player.p.bag.add(new Item(22), 999);
 	    }
 		
-		modifyTrainers(gamePanel);
-		
-//		writeTrainers();
-		writePokemon();
-//		writeEncounters();
-//		writeMoves();
-		
-		gamePanel.setupGame();
-		
-		window.add(gamePanel);
-		
-		window.pack();
-		
-		window.setLocationRelativeTo(null);
-		window.setVisible(true);
-		
-		gamePanel.startGameThread();
-		
-		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		window.addWindowListener(new WindowAdapter() {
-            @Override // implementation
-            public void windowClosing(WindowEvent e) {
-            	int option = JOptionPane.showConfirmDialog(window, "Are you sure you want to exit?\nAny unsaved progress will be lost!", "Confirm Exit", JOptionPane.YES_NO_OPTION);
-                if (option == JOptionPane.YES_OPTION) {
-                    // Close the application
-                    System.exit(0);
-                }
-            }
-        });
-		
-		gamePanel.eHandler.p = gamePanel.player.p;
+		loadGame(window, gamePanel, welcomeMenu);
 	}
 	
+	private static void loadGame(JFrame window, GamePanel gamePanel, WelcomeMenu welcomeMenu) {
+		window.remove(welcomeMenu);
+        window.repaint();
+        
+		SwingUtilities.invokeLater(() -> {
+			// Create a JPanel for the fade effect
+		    FadingPanel fadePanel = new FadingPanel();
+		    fadePanel.setBackground(Color.BLACK);
+		    fadePanel.setBounds(0, 0, window.getWidth(), window.getHeight());
+		    window.add(fadePanel, 0); // Add the fadePanel at the bottom layer
+		    
+		    modifyTrainers(gamePanel);
+		    gamePanel.setupGame();
+		    gamePanel.startGameThread();
+		    
+		    // Create a Timer to gradually change the opacity of the fadePanel
+		    Timer timer = new Timer(20, null);
+		    timer.addActionListener(e -> {
+		        float alpha = fadePanel.getAlpha();
+		        alpha += 0.02f; // Adjust the fading speed
+		        fadePanel.setAlpha(alpha);
+		        fadePanel.repaint();
 	
+		        if (alpha >= 0.95f) {
+		            timer.stop();
+		    		
+	//	    		writeTrainers();
+	//	    		writePokemon();
+	//	    		writeEncounters();
+	//	    		writeMoves();
+		    		
+		    		window.add(gamePanel);
+		    		gamePanel.requestFocusInWindow();
+		    		
+		    		window.pack();
+		    		
+		    		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		    		window.addWindowListener(new WindowAdapter() {
+		                @Override // implementation
+		                public void windowClosing(WindowEvent e) {
+		                	int option = JOptionPane.showConfirmDialog(window, "Are you sure you want to exit?\nAny unsaved progress will be lost!", "Confirm Exit", JOptionPane.YES_NO_OPTION);
+		                    if (option == JOptionPane.YES_OPTION) {
+		                        // Close the application
+		                        System.exit(0);
+		                    }
+		                }
+		            });
+		    		
+		    		gamePanel.eHandler.p = gamePanel.player.p;
+		        }
+		    });
+			
+			timer.start();
+		});
+	}
 
 	private static void modifyTrainers(GamePanel gp) {
 		if (gp.player.p.starter == 1) {

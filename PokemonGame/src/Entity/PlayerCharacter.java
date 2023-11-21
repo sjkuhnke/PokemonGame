@@ -106,16 +106,12 @@ public class PlayerCharacter extends Entity {
 			spriteCounter++;
 			if (keyH.upPressed) {
 				direction = "up";
-				
 			} else if (keyH.downPressed) {
 				direction = "down";
-				
 			} else if (keyH.leftPressed) {
 				direction = "left";
-				
 			} else if (keyH.rightPressed) {
 				direction = "right";
-				
 			}
 			
 			collisionOn = false;

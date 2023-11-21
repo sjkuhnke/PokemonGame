@@ -53,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	public EventHandler eHandler = new EventHandler(this);
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
-	public PlayerCharacter player = new PlayerCharacter(this,keyH);
+	public PlayerCharacter player = new PlayerCharacter(this, keyH);
 	public Entity npc[][] = new Entity[maxMap][20];
 	public ItemObj obj[][] = new ItemObj[maxMap][25];
 	public InteractiveTile iTile[][] = new InteractiveTile[maxMap][35];
@@ -81,7 +81,6 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 
 	@Override
 	public void run() {
-		
 		double drawInterval = 1000000000/FPS;
 		double nextDrawTime = System.nanoTime() + drawInterval;
 		
