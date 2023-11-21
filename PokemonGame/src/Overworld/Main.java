@@ -68,7 +68,7 @@ public class Main {
 		window.setVisible(true);
 	}
 
-	public static void loadSave(JFrame window, GamePanel gamePanel, String fileName, WelcomeMenu welcomeMenu) {
+	public static void loadSave(JFrame window, GamePanel gamePanel, String fileName, WelcomeMenu welcomeMenu, boolean[] selectedOptions) {
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
 	        gamePanel.player.p = (Player) ois.readObject();
 	        for (Pokemon p : gamePanel.player.p.team) {
@@ -134,10 +134,10 @@ public class Main {
 	        //gamePanel.player.p.bag.add(new Item(22), 999);
 	    }
 		
-		loadGame(window, gamePanel, welcomeMenu);
+		loadGame(window, gamePanel, welcomeMenu, selectedOptions);
 	}
 	
-	private static void loadGame(JFrame window, GamePanel gamePanel, WelcomeMenu welcomeMenu) {
+	private static void loadGame(JFrame window, GamePanel gamePanel, WelcomeMenu welcomeMenu, boolean[] selectedOptions) {
 		window.remove(welcomeMenu);
         window.repaint();
         
@@ -163,10 +163,10 @@ public class Main {
 		        if (alpha >= 0.95f) {
 		            timer.stop();
 		    		
-	//	    		writeTrainers();
-	//	    		writePokemon();
-	//	    		writeEncounters();
-	//	    		writeMoves();
+		    		if (selectedOptions[0]) writeTrainers();
+		    		if (selectedOptions[1]) writePokemon();
+		    		if (selectedOptions[2]) writeEncounters();
+		    		if (selectedOptions[3]) writeMoves();
 		    		
 		    		window.add(gamePanel);
 		    		gamePanel.requestFocusInWindow();
@@ -586,7 +586,6 @@ public class Main {
 		
 	}
 	
-	@SuppressWarnings("unused")
 	private static void writePokemon() {
 		try {
 			FileWriter writer = new FileWriter("PokemonInfo.txt");
@@ -685,7 +684,6 @@ public class Main {
 
 
 
-	@SuppressWarnings("unused")
 	private static void writeTrainers() {
 		try {
 			FileWriter writer = new FileWriter("TrainerInfo.txt");
@@ -742,7 +740,6 @@ public class Main {
 		
 	}
 	
-	@SuppressWarnings("unused")
 	private static void writeEncounters() {
 		try {
 			FileWriter writer = new FileWriter("WildPokemon.txt");
@@ -993,7 +990,6 @@ public class Main {
 		
 	}
 	
-	@SuppressWarnings("unused")
 	private static void writeMoves() {
 		try {
 			FileWriter writer = new FileWriter("MovesInfo.txt");
