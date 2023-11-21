@@ -20,11 +20,13 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import Swing.Player;
 import Swing.Pokemon;
 import Swing.Pokemon.Node;
+import Swing.TextPane;
 import Swing.Trainer;
 import Swing.Ability;
 import Swing.Battle.JGradientButton;
@@ -36,6 +38,7 @@ import Swing.PType;
 
 public class Main {
 	public static Trainer[] trainers;
+	public static ArrayList<Trainer> modifiedTrainers;
 
 	public static void main(String[] args) {
 
@@ -96,7 +99,10 @@ public class Main {
 	            null, 
 	            null
 	        );
-
+	        
+	        Pokemon.console = new TextPane();
+	        Pokemon.console.setScrollPane(new JScrollPane());
+	        
 	        // Add the chosen starter to the player's team
 	        if (gamePanel.player.p.starter <= 0) gamePanel.player.p.starter = (int)(Math.random() * options.length) + 1;
 	        if (gamePanel.player.p.starter == 1) {
@@ -113,7 +119,7 @@ public class Main {
 		modifyTrainers(gamePanel);
 		
 //		writeTrainers();
-//		writePokemon();
+		writePokemon();
 //		writeEncounters();
 //		writeMoves();
 		
@@ -221,6 +227,7 @@ public class Main {
 
 
 	private static void setTrainers() {
+		modifiedTrainers = new ArrayList<>();
 		trainers = new Trainer[]{
 				new Trainer("Scott 1", new Pokemon[]{new Pokemon(1, 100, false, true)}, 400),
 				new Trainer("A", new Pokemon[]{new Pokemon(16, 5, false, true)}, 100),
@@ -522,6 +529,7 @@ public class Main {
 		for (Trainer tr : trainers) {
 			if (tr.getName().equals(string)) {
 				tr.getTeam()[i - 1].moveset = new Moveslot[]{new Moveslot(a), new Moveslot(b), new Moveslot(c), new Moveslot(d)};
+				if (!modifiedTrainers.contains(tr)) modifiedTrainers.add(tr);
 			}
 		}
 		

@@ -330,7 +330,7 @@ public enum Move {
 	METEOR_MASH(90,90,20,0,0,0,PType.STEEL,"% chance to raise user's Attack by 1",true,10),
 	MINIMIZE(0,1000,0,0,2,0,PType.GHOST,"Raises user's Evasion by 2",false,5),
 	MIRROR_SHOT(65,85,100,0,1,0,PType.STEEL,"% chance to lower foe's Accuracy by 1",false,10),
-	MIRROR_MOVE(0,1000,0,0,1,0,PType.FLYING,"Uses the move last used by the foe, fails if foe hasn't used a move yet",false,15),
+	MIRROR_MOVE(0,1000,0,0,2,0,PType.FLYING,"Uses the move last used by the foe, fails if foe hasn't used a move yet",false,15),
 	MIST_BALL(70,100,50,0,1,0,PType.PSYCHIC,"% chance to lower foe's Sp.Atk by 1",false,15),
 	MOLTEN_CONSUME(50,100,100,0,0,1,PType.FIRE,"% chance to Burn foe",true,5),
 	MOLTEN_LAIR(0,100,0,0,2,0,PType.FIRE,"User protects itself, can't be used in succession. Burns foe if they make contact",false,5),

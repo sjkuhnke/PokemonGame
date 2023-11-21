@@ -174,7 +174,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 75, 40, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(16, 76, 20, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(14, 39, 41, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(35, 43, 33, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 43, 33, mapNum); // careful
 		gp.obj[mapNum][objIndex] = ObjSetup(42, 39, 105, mapNum); // body slam (change to in house??)
 		
 		mapNum = 35;
@@ -272,7 +272,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(23, 34, 41, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(25, 55, 39, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(27, 72, 42, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(88, 46, 165, mapNum); // shadow claw
+		gp.obj[mapNum][objIndex] = ObjSetup(87, 46, 165, mapNum); // shadow claw
 		
 		mapNum = 83;
 		objIndex = 0;

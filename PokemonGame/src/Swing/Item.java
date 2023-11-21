@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
+import java.util.Random;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -23,6 +24,8 @@ import javax.swing.SwingUtilities;
 
 import Swing.Battle.JGradientButton;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
+import Overworld.Main;
 
 public class Item implements Serializable {
 	/**
@@ -1013,6 +1016,13 @@ public class Item implements Serializable {
         for (int k = 1; k < 241; k++) {
         	foeMons.addItem(new Pokemon(k, 50, false, true));
         }
+        for (Trainer tr : Main.modifiedTrainers) {
+        	for (Pokemon po : tr.getTeam()) {
+        		Pokemon add = po.clone();
+        		add.nickname = tr.getName();
+        		foeMons.addItem(add);
+        	}
+        }
         AutoCompleteDecorator.decorate(foeMons);
         
         userMons.addActionListener(l -> {
@@ -1444,39 +1454,67 @@ public class Item implements Serializable {
 			result.add(ivInputs[i]);
 		}
 		
+		Integer[] happinessOptions = new Integer[256];
+		for (int i = 0; i < happinessOptions.length; i++) {
+			happinessOptions[i] = i;
+		}
+		JComboBox<Integer> happiness = new JComboBox<>(happinessOptions);
+		happiness.setSelectedIndex(70);
+		result.add(happiness);
+		
 		AutoCompleteDecorator.decorate(nameInput);
 		AutoCompleteDecorator.decorate(levelInput);
 		AutoCompleteDecorator.decorate(abilityInput);
 		AutoCompleteDecorator.decorate(natures);
+		AutoCompleteDecorator.decorate(happiness);
+		
+		JButton randomize = new JButton("RANDOMIZE");
+		randomize.addMouseListener(new MouseAdapter() {
+			@Override
+		    public void mouseClicked(MouseEvent e) {
+				Random random = new Random();
+		    	if (SwingUtilities.isRightMouseButton(e)) {
+		            nameInput.setSelectedIndex(random.nextInt(240));
+		            levelInput.setSelectedIndex(random.nextInt(100));
+		            happiness.setSelectedIndex(random.nextInt(255));
+		        }
+		    	abilityInput.setSelectedIndex(random.nextInt(2));
+		    	natures.setSelectedIndex(random.nextInt(25));
+		    	for (int i = 0; i < 6; i++) {
+		    		ivInputs[i].setSelectedIndex(random.nextInt(32));
+		    	}
+		    	
+		    }
+			
+		});
+		result.add(randomize);
 		
 		JButton generate = new JButton("GENERATE");
 		generate.addActionListener(e -> {
-			try {
-				int id = ((Pokemon) nameInput.getSelectedItem()).id;
-				int level = (Integer) levelInput.getSelectedItem();
-				int ability = abilityInput.getSelectedIndex();
-				String selectedNature = (String) natures.getSelectedItem();
-				for (int i = 0; i < 25; i++) {
-					temp.nature = temp.getNature(i);
-					if (temp.getNature().equals(selectedNature)) break;
-				}
-				double[] nature = temp.nature;
-				int[] ivs = new int[6];
-				for (int i = 0; i < 6; i++) {
-					ivs[i] = Integer.parseInt(((Integer) ivInputs[i].getSelectedItem()).toString());
-				}
-				
-				Pokemon resultPokemon = new Pokemon(id, level, true, false);
-				resultPokemon.abilitySlot = ability;
-				resultPokemon.setAbility(resultPokemon.abilitySlot);
-				resultPokemon.nature = nature;
-				resultPokemon.ivs = ivs;
-				resultPokemon.getStats();
-				
-				p.catchPokemon(resultPokemon);
-			} catch (NumberFormatException f) {
-				JOptionPane.showMessageDialog(null, "Invalid inputs.");
+			int id = ((Pokemon) nameInput.getSelectedItem()).id;
+			int level = (Integer) levelInput.getSelectedItem();
+			int ability = abilityInput.getSelectedIndex();
+			String selectedNature = (String) natures.getSelectedItem();
+			for (int i = 0; i < 25; i++) {
+				temp.nature = temp.getNature(i);
+				if (temp.getNature().equals(selectedNature)) break;
 			}
+			double[] nature = temp.nature;
+			int[] ivs = new int[6];
+			for (int i = 0; i < 6; i++) {
+				ivs[i] = (Integer) ivInputs[i].getSelectedItem();
+			}
+			
+			Pokemon resultPokemon = new Pokemon(id, level, true, false);
+			resultPokemon.abilitySlot = ability;
+			resultPokemon.setAbility(resultPokemon.abilitySlot);
+			resultPokemon.nature = nature;
+			resultPokemon.ivs = ivs;
+			resultPokemon.getStats();
+			
+			resultPokemon.happiness = (Integer) happiness.getSelectedItem();
+			
+			p.catchPokemon(resultPokemon);
 			
 		});
 		result.add(generate);

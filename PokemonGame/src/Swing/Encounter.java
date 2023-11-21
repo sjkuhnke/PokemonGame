@@ -60,7 +60,7 @@ public class Encounter {
 				encounters.add(new Encounter(179, 2, 3, 0.11));
 				encounters.add(new Encounter(129, 2, 2, 0.15));
 				encounters.add(new Encounter(143, 2, 2, 0.08));
-			} else if (area == 0 && type.equals("Surfing") && x > 73) { // route 42
+			} else if (area == 0 && type.equals("Surfing") && x > 73) { // route 42 // TODO
 				encounters.add(new Encounter(171, 2, 2, 0.20));
 				encounters.add(new Encounter(217, 2, 3, 0.16));
 				encounters.add(new Encounter(223, 2, 2, 0.13));
