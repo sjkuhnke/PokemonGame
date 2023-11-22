@@ -29,6 +29,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import Obj.Cut_Tree;
+import Obj.Pit;
 import Obj.Rock_Smash;
 import Obj.Tree_Stump;
 import Obj.Vine;
@@ -266,6 +267,7 @@ public class PlayerCharacter extends Entity {
 					keyH.resume();
 				}
 			}
+			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Pit) interactPit(iTileIndex);
 		}
 		if (keyH.aPressed) {
 			if (p.fish) {
@@ -1776,6 +1778,27 @@ public class PlayerCharacter extends Entity {
 			}
 			keyH.resume();
 		}
+		
+	}
+	
+	private void interactPit(int i) {
+		keyH.pause();
+		if (p.hasMove(Move.CUT)) {
+			int option = JOptionPane.showOptionDialog(null,
+					"This pit can be traversed! Would you like to use Slow Fall?",
+					"Slow Fall",
+		            JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE,
+		            null, null, null);
+			if (option == JOptionPane.YES_OPTION) {
+				Pit pit = (Pit) gp.iTile[gp.currentMap][i];
+				System.out.println(pit.xDest + ", " + pit.yDest);
+				gp.eHandler.teleport(pit.mapDest, pit.xDest, pit.yDest, false);
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "This pit looks deep! I can't even see the bottom!");
+		}
+		keyH.resume();
 		
 	}
 
