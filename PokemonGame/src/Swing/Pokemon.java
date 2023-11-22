@@ -2162,7 +2162,7 @@ public class Pokemon implements Serializable {
 		} else if (id == 207) { abilities = new Ability[] {Ability.STURDY, Ability.LIGHTNING_ROD};
 		} else if (id == 208) { abilities = new Ability[] {Ability.CLEAR_BODY, Ability.MOTOR_DRIVE};
 		} else if (id == 209) { abilities = new Ability[] {Ability.SWIFT_SWIM, Ability.RATTLED};
-		} else if (id == 210) { abilities = new Ability[] {Ability.ELECTRIC_SURGE, Ability.MOTOR_DRIVE};
+		} else if (id == 210) { abilities = new Ability[] {Ability.VOLT_VORTEX, Ability.MOTOR_DRIVE};
 		} else if (id == 211) { abilities = new Ability[] {Ability.STRONG_JAW, Ability.SHED_SKIN};
 		} else if (id == 212) { abilities = new Ability[] {Ability.STRONG_JAW, Ability.SHED_SKIN};
 		} else if (id == 213) { abilities = new Ability[] {Ability.MOXIE, Ability.DEFIANT};
@@ -10305,6 +10305,7 @@ public class Pokemon implements Serializable {
 		if (field.equals(field.weather, Effect.RAIN) && ability == Ability.SWIFT_SWIM) return true;
 		if (field.equals(field.weather, Effect.SANDSTORM) && ability == Ability.SAND_RUSH) return true;
 		if (field.equals(field.weather, Effect.SNOW) && ability == Ability.SLUSH_RUSH) return true;
+		if (field.equals(field.terrain, Effect.ELECTRIC) && ability == Ability.VOLT_VORTEX) return true;
 		return false;
 	}
 
@@ -10591,7 +10592,7 @@ public class Pokemon implements Serializable {
 			double speedRatio = foe.getSpeed() * 1.0 / this.getSpeed();
 			bp = (int) Math.min(150, (25 * speedRatio) + 1);
 		} else if (move == Move.HEAT_CRASH || move == Move.HEAVY_SLAM) {
-			double weightRatio = foe.weight / this.weight;
+			double weightRatio = foe.weight * 1.0 / this.weight;
 			if (weightRatio > 0.5) {
 				bp = 40;
 			} else if (weightRatio >= 0.3335 && weightRatio <= 0.5) {

@@ -131,7 +131,7 @@ Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Torgged Lv. 30, 
 
 Fred 2
 Flamehox (Lv. 29)        /   Flame Body      /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
-Gyarados-E (Lv. 30)      /   Electric Surge  /   Crunch, Tackle, Thunder Fang, Dragon Rage
+Gyarados-E (Lv. 30)      /   Volt Vortex     /   Crunch, Tackle, Thunder Fang, Dragon Rage
 Torgged (Lv. 30)         /   Overgrow        /   Magnitude, Headbutt, Sleep Powder, Mega Drain
 Psylotter (Lv. 31)       /   Water Veil      /   Psybeam, Rollout, Confuse Ray, Hypnosis
 
@@ -252,7 +252,7 @@ Trainer Fred 3              Fireshard Lv. 47, Gyarados-E Lv. 46, Wormatron-S Lv.
 
 Fred 3
 Fireshard (Lv. 47)       /   Intimidate      /   Air Slash, Dragon Breath, Wing Attack, Fire Fang
-Gyarados-E (Lv. 46)      /   Electric Surge  /   Bounce, Volt Tackle, Aqua Tail, Dragon Rush
+Gyarados-E (Lv. 46)      /   Volt Vortex     /   Bounce, Volt Tackle, Aqua Tail, Dragon Rush
 Wormatron-S (Lv. 46)     /   Adaptability    /   Fissure, Sandstorm, Earth Power, Glare
 Tortugis (Lv. 47)        /   Overgrow        /   Power Gem, Dragon Tail, Rockfall Frenzy, Earthquake
 Psylotter (Lv. 48)       /   Water Veil      /   Psychic, Magic Tomb, Light Screen, Hydro Pump
@@ -270,10 +270,10 @@ Trainer 5 Gym Leader 1      Malamar Lv. 51, Gallade Lv. 51, Florlion Lv. 51, Psy
 5 Gym Leader 1
 Malamar (Lv. 51)         /   Contrary        /   Light Screen, Reflect, Psycho Cut, Superpower
 Gallade (Lv. 51)         /   Sharpness       /   Psycho Cut, Swords Dance, Play Rough, Close Combat
-Florlion (Lv. 51)        /   Grassy Surge    /   Hypnosis, Calm Mind, Magnet Bomb, Dream Eater
-Psylotter (Lv. 51)       /   Water Veil      /   Elemental Sparkle, Magic Reflect, Trick Room, Psyshock
-Hatterene (Lv. 51)       /   Magic Bounce    /   Focus Blast, Hydro Pump, Confuse Ray, Hydro Pump
-Psycorboratr (Lv. 52)    /   Psychic Surge   /   Leech Seed, Psyshock, Energy Ball, Detect
+Florlion (Lv. 51)        /   Grassy Surge    /   Leech Seed, Psyshock, Energy Ball, Detect
+Psylotter (Lv. 51)       /   Water Veil      /   Hydro Pump, Confuse Ray, Psyshock, Focus Blast
+Hatterene (Lv. 51)       /   Magic Bounce    /   Elemental Sparkle, Magic Reflect, Trick Room, Psyshock
+Psycorboratr (Lv. 52)    /   Levitate        /   Bullet Punch, Iron Defense, Zen Headbutt, Comet Crash
 
 Trainer DA                  Swadloon Lv. 45, Leavanny Lv. 44, Leavanny Lv. 45
 Trainer DB                  Charjabug Lv. 46, Vikavolt Lv. 45

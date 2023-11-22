@@ -101,6 +101,7 @@ public enum Ability {
 	UNAWARE("Ignores the opposing Pokemon's stat changes."),
 	UNERODIBLE("Reduces damage from GRASS, WATER, and GROUND attacks."),
 	VOLT_ABSORB("Restores HP if hit by a ELECTRIC move."),
+	VOLT_VORTEX("Boosts the Pokemon's speed in ELECTRIC TERRAIN."),
 	WATER_ABSORB("Restores HP if hit by a WATER move."),
 	WATER_VEIL("Prevents the Pokemon from getting a burn."),
 	WONDER_GUARD("Only supereffective moves will hit."),
