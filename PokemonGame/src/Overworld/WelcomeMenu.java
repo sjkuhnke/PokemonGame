@@ -2,7 +2,9 @@ package Overworld;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+
+import Swing.Player;
+import Swing.Pokemon;
 import Swing.Battle.JGradientButton;
 
 public class WelcomeMenu extends JPanel {
@@ -50,7 +55,15 @@ public class WelcomeMenu extends JPanel {
         JPanel checkBoxPanel = new JPanel(new GridLayout(0, 1));
         checkBoxPanel.setOpaque(false);
         
-        JLabel space = new JLabel("<html><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></html>");
+        JPanel iconPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        iconPanel.setOpaque(false);
+        JLabel[] icons = new JLabel[6];
+        for (int i = 0; i < 6; i++) {
+        	icons[i] = new JLabel();
+        	iconPanel.add(icons[i]);
+        }
+        
+        JLabel space = new JLabel("<html><br><br><br><br><br><br><br><br><br><br><br><br><br></html>");
 
         JLabel generateDoc = new JLabel("Generate Documentation?");
         generateDoc.setFont(new Font("Arial", Font.BOLD, 16));
@@ -84,6 +97,26 @@ public class WelcomeMenu extends JPanel {
         ArrayList<String> files = getDatFiles();
         JComboBox<String> fileName = new JComboBox<>(files.toArray(new String[0]));
         optionsPanel.add(fileName);
+        
+        fileName.addActionListener(e -> {
+        	String name = (String) fileName.getSelectedItem();
+        	
+        	if (name != null) {
+        		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(name))) {
+        	        Player current = (Player) ois.readObject();
+        	        for (int i = 0; i < 6; i++) {
+        	        	Pokemon p = current.team[i];
+        	        	icons[i].setIcon(getMiniSprite(p));
+        	        }
+        	        repaint();
+        	        ois.close();
+        	    } catch (IOException | ClassNotFoundException f) {
+        	    	f.printStackTrace();
+        	    }
+        	}
+        });
+        
+        fileName.setSelectedIndex(0);
         
         JGradientButton manageButton = new JGradientButton("Manage");
         optionsPanel.add(manageButton);
@@ -150,6 +183,7 @@ public class WelcomeMenu extends JPanel {
         
         add(titleLabel);
         add(subtitleLabel);
+        add(iconPanel);
         add(space);
         add(checkBoxPanel);
         add(optionsPanel);
@@ -239,5 +273,24 @@ public class WelcomeMenu extends JPanel {
         ArrayList<String> files = getDatFiles();
         fileName.setModel(new DefaultComboBoxModel<>(files.toArray(new String[0])));
     }
+    
+    private Icon getMiniSprite(Pokemon p) {
+    	ImageIcon originalSprite = null;
+    	if (p == null) {
+    		try {
+				originalSprite = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/minisprites/_001.png")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    	} else {
+    		originalSprite = new ImageIcon(p.getMiniSprite());
+    	}
+    	
+		Image image = originalSprite.getImage();
+		
+		ImageIcon imageIcon = new ImageIcon(image);
+		
+		return imageIcon;
+	}
 
 }

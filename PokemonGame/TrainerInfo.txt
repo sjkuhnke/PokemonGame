@@ -257,23 +257,23 @@ Wormatron-S (Lv. 46)     /   Adaptability    /   Fissure, Sandstorm, Earth Power
 Tortugis (Lv. 47)        /   Overgrow        /   Power Gem, Dragon Tail, Rockfall Frenzy, Earthquake
 Psylotter (Lv. 48)       /   Water Veil      /   Psychic, Magic Tomb, Light Screen, Hydro Pump
 
-Trainer 5 Gym A             Psyballs Lv. 48, Psyballs Lv. 48, Psyballs Lv. 49
-Trainer 5 Gym B             Hatterene Lv. 48
-Trainer 5 Gym C             Carinator Lv. 48, Cairnasaur Lv. 47
-Trainer 5 Gym D             Gardevoir Lv. 48, Gallade Lv. 48
-Trainer 5 Gym E             Hootowl Lv. 49, Hootowl Lv. 49
-Trainer 5 Gym F             Psylotter Lv. 48, Carinator Lv. 49
-Trainer 5 Gym G             Malamar Lv. 49
+Trainer 5 Gym A             Psyballs Lv. 49, Psyballs Lv. 49, Psyballs Lv. 50
+Trainer 5 Gym B             Hatterene Lv. 49
+Trainer 5 Gym C             Carinator Lv. 48, Cairnasaur Lv. 49
+Trainer 5 Gym D             Gardevoir Lv. 49, Gallade Lv. 49
+Trainer 5 Gym E             Hootowl Lv. 49, Hootowl Lv. 50
+Trainer 5 Gym F             Psylotter Lv. 49, Carinator Lv. 50
+Trainer 5 Gym G             Malamar Lv. 50
 Trainer 5 Gym H             Florlion Lv. 49, Malamar Lv. 49
-Trainer 5 Gym Leader 1      Malamar Lv. 49, Gallade Lv. 49, Psyballs Lv. 49, Hatterene Lv. 49, Psylotter Lv. 49, Florlion Lv. 50
+Trainer 5 Gym Leader 1      Malamar Lv. 51, Gallade Lv. 51, Florlion Lv. 51, Psylotter Lv. 51, Hatterene Lv. 51, Psycorboratr Lv. 52
 
 5 Gym Leader 1
-Malamar (Lv. 49)         /   Contrary        /   Light Screen, Reflect, Psycho Cut, Superpower
-Gallade (Lv. 49)         /   Sharpness       /   Psycho Cut, Swords Dance, Play Rough, Close Combat
-Psyballs (Lv. 49)        /   Psychic Surge   /   Hypnosis, Calm Mind, Magnet Bomb, Dream Eater
-Hatterene (Lv. 49)       /   Magic Bounce    /   Elemental Sparkle, Magic Reflect, Trick Room, Psyshock
-Psylotter (Lv. 49)       /   Water Veil      /   Focus Blast, Hydro Pump, Confuse Ray, Hydro Pump
-Florlion (Lv. 50)        /   Grassy Surge    /   Leech Seed, Psyshock, Energy Ball, Detect
+Malamar (Lv. 51)         /   Contrary        /   Light Screen, Reflect, Psycho Cut, Superpower
+Gallade (Lv. 51)         /   Sharpness       /   Psycho Cut, Swords Dance, Play Rough, Close Combat
+Florlion (Lv. 51)        /   Grassy Surge    /   Hypnosis, Calm Mind, Magnet Bomb, Dream Eater
+Psylotter (Lv. 51)       /   Water Veil      /   Elemental Sparkle, Magic Reflect, Trick Room, Psyshock
+Hatterene (Lv. 51)       /   Magic Bounce    /   Focus Blast, Hydro Pump, Confuse Ray, Hydro Pump
+Psycorboratr (Lv. 52)    /   Psychic Surge   /   Leech Seed, Psyshock, Energy Ball, Detect
 
 Trainer DA                  Swadloon Lv. 45, Leavanny Lv. 44, Leavanny Lv. 45
 Trainer DB                  Charjabug Lv. 46, Vikavolt Lv. 45

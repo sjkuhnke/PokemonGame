@@ -3582,7 +3582,8 @@ public class Pokemon implements Serializable {
 			if (move == Move.SUPER_FANG) damage = foe.currentHP / 2;
 			if (move == Move.DRAGON_RAGE) damage = 40;
 			if (move == Move.HORN_DRILL || move == Move.SHEER_COLD || move == Move.GUILLOTINE || move == Move.FISSURE) {
-				if ((move == Move.SHEER_COLD && (foe.type1 == PType.ICE || foe.type2 == PType.ICE)) || foe.ability == Ability.STURDY) {
+				if ((move == Move.SHEER_COLD && (foe.type1 == PType.ICE || foe.type2 == PType.ICE)) || foe.ability == Ability.STURDY || foe.level > this.level) {
+					if (foe.ability == Ability.STURDY) console.writeAbility(foe);
 					console.writeln("It doesn't effect " + foe.nickname + "...");
 					endMove();
 					this.moveMultiplier = 1;
@@ -10033,7 +10034,7 @@ public class Pokemon implements Serializable {
 		if (move == Move.SUPER_FANG) damage = foe.currentHP / 2;
 		if (move == Move.DRAGON_RAGE) damage = 40;
 		if (move == Move.HORN_DRILL || move == Move.SHEER_COLD || move == Move.GUILLOTINE || move == Move.FISSURE) {
-			if ((move == Move.SHEER_COLD && (foe.type1 == PType.ICE || foe.type2 == PType.ICE)) || foe.ability == Ability.STURDY) {
+			if ((move == Move.SHEER_COLD && (foe.type1 == PType.ICE || foe.type2 == PType.ICE)) || foe.ability == Ability.STURDY || foe.level > this.level) {
 				return 0;
 			}
 			damage = foe.currentHP;

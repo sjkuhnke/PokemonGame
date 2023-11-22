@@ -102,10 +102,10 @@ public class TileManager {
 		loadMap("/maps/map10.txt", 77);
 		loadMap("/maps/mindagan01.txt", 78);
 		loadMap("/maps/gate01.txt", 79);
-		loadMap("/maps/map11.txt", 80); // shadow ravine
+		loadMap("/maps/map11.txt", 80); // shadow ravine 1
 		loadMap("/maps/gate01.txt", 81);
 		loadMap("/maps/gate02.txt", 82);
-		loadMap("/maps/map12.txt", 83);
+		loadMap("/maps/map12.txt", 83); // shadow ravine 1A
 		loadMap("/maps/gate02.txt", 84);
 		loadMap("/maps/map13.txt", 85);
 		loadMap("/maps/pc.txt", 86);

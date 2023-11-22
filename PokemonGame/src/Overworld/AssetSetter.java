@@ -15,6 +15,8 @@ import Obj.Cut_Tree;
 import Obj.GymBarrier;
 import Obj.InteractiveTile;
 import Obj.ItemObj;
+import Obj.Pit;
+import Obj.PitEdge;
 import Obj.Rock_Smash;
 import Obj.Tree_Stump;
 import Obj.Vine;
@@ -879,6 +881,10 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(32, 71, 4);
 		gp.iTile[mapNum][iIndex] = ITileSetup(42, 74, 4);
 		gp.iTile[mapNum][iIndex] = ITileSetup(43, 74, 4);
+		
+		mapNum = 83;
+		iIndex = 0;
+		SetupPit(mapNum, 15, 78, 0, 90, 46);
 	}
 
 	public void updateNPC() {
@@ -1059,5 +1065,22 @@ public class AssetSetter {
 		iIndex++;
 		
 		return result;
+	}
+	
+	private void SetupPit(int mapNum, int x, int y, int mapDest, int xDest, int yDest) {
+		Pit middle = new Pit(gp, mapDest, xDest, yDest);
+		middle.setCoords(x, y);
+		
+		gp.iTile[mapNum][iIndex] = middle;
+		iIndex++;
+		
+		for (int i = 0; i < 4; i++) {
+			PitEdge current = new PitEdge(gp, middle, i);
+			
+			gp.iTile[mapNum][iIndex] = current;
+			iIndex++;
+		}
+		
+		
 	}
 }
