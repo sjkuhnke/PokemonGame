@@ -732,25 +732,8 @@ public class PlayerCharacter extends Entity {
 				if (gp.currentMap == 49 && !p.flags[13]) {
 					JOptionPane.showMessageDialog(null, "I encountered this very\nstrong Pokemon, and I\ndon't think I'm strong\nenough to train it. Here!");
 					Random gift = new Random();
-					int id = gift.nextInt(5); // Pebblepup, Fightorex, Tricerpup, Shockfang, Nightrex
-					switch (id) {
-					case 0:
-						id = 55;
-						break;
-					case 1:
-						id = 57;
-						break;
-					case 2:
-						id = 66;
-						break;
-					case 3:
-						id = 211;
-						break;
-					case 4:
-						id = 213;
-						break;
-					}
-					while (p.pokedex[id] == 2) {
+					int id;
+					do {
 						id = gift.nextInt(5); // Pebblepup, Fightorex, Tricerpup, Shockfang, Nightrex
 						switch (id) {
 						case 0:
@@ -769,7 +752,7 @@ public class PlayerCharacter extends Entity {
 							id = 213;
 							break;
 						}
-					}
+					} while (p.pokedex[id] == 2);
 					Pokemon result = new Pokemon(id, 15, true, false);
 					p.flags[13] = true;
 					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
@@ -804,6 +787,62 @@ public class PlayerCharacter extends Entity {
 					p.flags[14] = true;
 					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
 					p.catchPokemon(result);
+				} if (gp.currentMap == 41 && !p.bag.contains(97)) {
+					JOptionPane.showMessageDialog(null, "Obtained HM05 Slow Fall!");
+					p.bag.add(new Item(97));
+					JOptionPane.showMessageDialog(null, "Also, if you haven't yet, you should\nbe sure to check out the bottom right\nhouse in the quadrant above.\nI hear he has a gift!");
+				} if (gp.currentMap == 93) {
+					JPanel partyPanel = new JPanel();
+					partyPanel.setLayout(new GridLayout(6, 1));
+					for (int j = 0; j < 6; j++) {
+						JButton party = setUpPartyButton(j);
+						final int index = j;
+						party.addActionListener(e -> {
+							ArrayList<Move> forgottenMoves = new ArrayList<>();
+		                    for (int i = 0; i < p.team[index].getLevel(); i++) {
+		                    	if (i < p.team[index].movebank.length) {
+		                    		Node move = p.team[index].movebank[i];
+		                    		while (move != null) {
+		                    			if (!p.team[index].knowsMove(move.data)) {
+		                    				forgottenMoves.add(move.data);
+		                    			}
+		                    			move = move.next;
+		                    		}
+		                    	}
+		                    }
+		                    if (forgottenMoves.isEmpty()) {
+		                        JOptionPane.showMessageDialog(null, "This Pokemon has not forgotten any moves.");
+		                    } else {
+		                    	JPanel moves = new JPanel();
+		                    	moves.setLayout(new GridLayout(0, 1));
+		                        for (Move move : forgottenMoves) {
+		                            JGradientButton moveButton = new JGradientButton(move.toString());
+		                            moveButton.setBackground(move.mtype.getColor());
+		                            moveButton.addMouseListener(new MouseAdapter() {
+		                			    @Override
+		                			    public void mouseClicked(MouseEvent e) {
+		                			    	if (SwingUtilities.isRightMouseButton(e)) {
+		                			            JOptionPane.showMessageDialog(null, move.getMoveSummary(p.team[index], null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+		                			        } else {
+		                			        	int choice = p.team[index].displayMoveOptions(move);
+					        	                if (choice == JOptionPane.CLOSED_OPTION) {
+					        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not learn " + move + ".");
+					        	                } else {
+					        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has learned " + move + " and forgot " + p.team[index].moveset[choice].move + "!");
+					        	                	p.team[index].moveset[choice] = new Moveslot(move);
+					        	                }
+					        	                SwingUtilities.getWindowAncestor(partyPanel).dispose();
+		                			        }
+		                			    }
+		                			});
+		                            moves.add(moveButton);
+		                        }
+		                        JOptionPane.showMessageDialog(null, moves, "Teach a Move?", JOptionPane.QUESTION_MESSAGE);
+		                    }
+						});
+						partyPanel.add(party);
+					}
+					JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 				}
 			}
 		    keyH.resume();
@@ -931,9 +970,7 @@ public class PlayerCharacter extends Entity {
 		        	    	JProgressBar partyHP = setupHPBar(j);
 		        	        final int index = j;
 		        	        Status finalTarget = target == null && p.team[index] != null && p.team[index].status != Status.HEALTHY ? p.team[index].status : target;
-		        	        final Status fFinalTarget = p.team[index] != null && p.team[index].status == Status.TOXIC && target == Status.POISONED ? Status.TOXIC : finalTarget;
-		        	        
-		        	        
+		        	        final Status fFinalTarget = p.team[index] != null && p.team[index].status == Status.TOXIC && target == Status.POISONED ? Status.TOXIC : finalTarget;		        	        
 
 		        	        party.addActionListener(g -> {
 		        	        	if (p.team[index].status != fFinalTarget || p.team[index].isFainted()) {

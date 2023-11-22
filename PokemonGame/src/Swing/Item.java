@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import Swing.Battle.JGradientButton;
+
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import Overworld.Main;
@@ -1424,15 +1425,6 @@ public class Item implements Serializable {
 		JComboBox<Ability> abilityInput = new JComboBox<>(abilityOptions);
 		result.add(abilityInput);
 		
-		nameInput.addActionListener(f -> {
-			abilityInput.removeAllItems();
-			for (int i = 0; i < 2; i++) {
-				Pokemon test = (Pokemon) nameInput.getSelectedItem();
-				test.setAbility(i);
-				abilityInput.addItem(test.ability);
-			}
-		});
-		
 		JComboBox<String> natures = new JComboBox<>();
 		Pokemon temp = new Pokemon(1, 1, false, false);
 		for (int i = 0; i < 25; i++) {
@@ -1468,6 +1460,54 @@ public class Item implements Serializable {
 		AutoCompleteDecorator.decorate(natures);
 		AutoCompleteDecorator.decorate(happiness);
 		
+		JPanel movesPanel = new JPanel(new GridLayout(2, 2));
+		@SuppressWarnings("unchecked")
+		JComboBox<Move>[] moveInputs = new JComboBox[4];
+		Move[] movebank = Move.values();
+		Pokemon testMoves = (Pokemon) nameInput.getSelectedItem();
+		testMoves.level = 1;
+		testMoves.setMoves();
+		for (int i = 0; i < 4; i++) {
+			moveInputs[i] = new JComboBox<Move>(movebank);
+			moveInputs[i].setSelectedItem(Move.STRUGGLE);
+			Moveslot m = testMoves.moveset[i];
+			Move m1 = m == null ? null : m.move;
+			moveInputs[i].setSelectedItem(m1);
+			AutoCompleteDecorator.decorate(moveInputs[i]);
+			movesPanel.add(moveInputs[i]);
+		}
+		
+		result.add(movesPanel);
+		
+		nameInput.addActionListener(f -> {
+			abilityInput.removeAllItems();
+			Pokemon test = (Pokemon) nameInput.getSelectedItem();
+			test.level = (Integer) levelInput.getSelectedItem();
+			test.setMoves();
+			for (int i = 0; i < 2; i++) {
+				test.setAbility(i);
+				abilityInput.addItem(test.ability);
+			}
+			for (int j = 0; j < 4; j++) {
+				moveInputs[j].setSelectedItem(Move.STRUGGLE);
+				Moveslot m = test.moveset[j];
+				Move m1 = m == null ? null : m.move;
+				moveInputs[j].setSelectedItem(m1);
+			}
+		});
+		
+		levelInput.addActionListener(f -> {
+			Pokemon test = (Pokemon) nameInput.getSelectedItem();
+			test.level = (Integer) levelInput.getSelectedItem();
+			test.setMoves();
+			for (int j = 0; j < 4; j++) {
+				moveInputs[j].setSelectedItem(Move.STRUGGLE);
+				Moveslot m = test.moveset[j];
+				Move m1 = m == null ? null : m.move;
+				moveInputs[j].setSelectedItem(m1);
+			}
+		});
+		
 		JButton randomize = new JButton("RANDOMIZE");
 		randomize.addMouseListener(new MouseAdapter() {
 			@Override
@@ -1477,6 +1517,9 @@ public class Item implements Serializable {
 		            nameInput.setSelectedIndex(random.nextInt(240));
 		            levelInput.setSelectedIndex(random.nextInt(100));
 		            happiness.setSelectedIndex(random.nextInt(255));
+		            for (int i = 0; i < 4; i++) {
+		            	moveInputs[i].setSelectedIndex(random.nextInt(Move.values().length));
+		            }
 		        }
 		    	abilityInput.setSelectedIndex(random.nextInt(2));
 		    	natures.setSelectedIndex(random.nextInt(25));
@@ -1504,6 +1547,10 @@ public class Item implements Serializable {
 			for (int i = 0; i < 6; i++) {
 				ivs[i] = (Integer) ivInputs[i].getSelectedItem();
 			}
+			Move[] moveset = new Move[4];
+			for (int i = 0; i < 4; i++) {
+				moveset[i] = (Move) moveInputs[i].getSelectedItem();
+			}
 			
 			Pokemon resultPokemon = new Pokemon(id, level, true, false);
 			resultPokemon.abilitySlot = ability;
@@ -1512,7 +1559,13 @@ public class Item implements Serializable {
 			resultPokemon.ivs = ivs;
 			resultPokemon.getStats();
 			
+			for (int i = 0; i < 4; i++) {
+				resultPokemon.moveset[i] = moveset[i] == null ? null : new Moveslot(moveset[i]);
+			}
+			
 			resultPokemon.happiness = (Integer) happiness.getSelectedItem();
+			
+			resultPokemon.heal();
 			
 			p.catchPokemon(resultPokemon);
 			

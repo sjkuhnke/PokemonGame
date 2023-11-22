@@ -733,12 +733,17 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(14, 29, 45, 183);
 		gp.npc[mapNum][index] = NPCSetup(13, 33, 45, 184);
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Thank you so much for saving me!\nHere, take this as a gift!", true);
 		
 		mapNum = 92;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(1, 31, 37, -1);
 		gp.npc[mapNum][index] = NPCSetup(0, 35, 36, -1);
 		gp.npc[mapNum][index] = NPCSetup(17, 22, 37, -1);
+		
+		mapNum = 93;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Would you like to remember a move?/nWhich Pokemon should remember?", true);
 		
 	}
 	
