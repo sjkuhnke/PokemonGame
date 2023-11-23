@@ -49,6 +49,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(79, 11, 30, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(80, 18, 42, mapNum);
 		
+		gp.obj[mapNum][objIndex] = ObjSetup(71, 32, 198, mapNum); // flip turn
+		
 		mapNum = 4;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(86, 56, 131, mapNum); // false swipe
@@ -544,6 +546,9 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(6, 77, 26, 95);
 		gp.npc[mapNum][index] = NPCSetup(3, 82, 20, 96);
 		gp.npc[mapNum][index] = NPCSetup(5, 87, 26, 97);
+		
+		gp.npc[mapNum][index] = NPCSetup(6, 75, 69, 202);
+		gp.npc[mapNum][index] = NPCSetup(6, 78, 83, 203);
 		
 		mapNum = 31;
 		index = 0;

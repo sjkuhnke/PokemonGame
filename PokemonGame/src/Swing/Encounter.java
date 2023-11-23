@@ -216,10 +216,10 @@ public class Encounter {
 				encounters.add(new Encounter(134, 20, 20, 0.25));
 				encounters.add(new Encounter(78, 20, 20, 0.20));
 				encounters.add(new Encounter(141, 20, 20, 0.05));
-			} else if (area == 28 && y >= 57 && type.equals("Standard")) { // Route 41
-				encounters.add(new Encounter(35, 17, 19, 0.15));
-				encounters.add(new Encounter(32, 16, 18, 0.1));
-				encounters.add(new Encounter(45, 18, 20, 0.1));
+			} else if (area == 28 && y >= 57 && type.equals("Standard")) { // Route 41 TODO
+				encounters.add(new Encounter(71, 25, 28, 0.15));
+				encounters.add(new Encounter(108, 16, 18, 0.1));
+				encounters.add(new Encounter(14, 18, 20, 0.1));
 				encounters.add(new Encounter(92, 19, 19, 0.15));
 				encounters.add(new Encounter(174, 16, 17, 0.2));
 				encounters.add(new Encounter(171, 16, 18, 0.05));
