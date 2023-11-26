@@ -81,7 +81,7 @@ public enum Move {
 	CALM_MIND(0,1000,0,0,2,0,PType.PSYCHIC,"Raises user's Sp.Atk and Sp.Def by 1",false,10),
 	CHANNELING_BLOW(65,100,0,3,0,0,PType.FIGHTING,"This move always Crits",true,15),
 	CHARGE(0,1000,0,0,2,0,PType.ELECTRIC,"User's next electric-type attack damage is doubled. Raises user's Sp.Def by 1",false,20),
-	CHARGE_BEAM(50,90,50,0,1,0,PType.ELECTRIC,"% chance to raise user's Sp.Atk by 1",false,10),
+	CHARGE_BEAM(50,90,70,0,1,0,PType.ELECTRIC,"% chance to raise user's Sp.Atk by 1",false,10),
 	CHARM(0,100,0,0,2,0,PType.LIGHT,"Lowers foe's Attack by 2",false,15),
 	CIRCLE_THROW(60,90,100,0,0,-6,PType.FIGHTING,"% chance to switch out foe",true,10),
 	//CHOMP(70,100,30,0,0,0,PType.DARK,"% chance to lower foe's Speed by 1",false,1),

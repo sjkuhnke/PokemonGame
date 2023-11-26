@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -1061,6 +1063,13 @@ public class Item implements Serializable {
         	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null);
         	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP);
         });
+        
+		foeLevel.addFocusListener(new FocusAdapter() {
+			@Override // implementation
+	    	public void focusGained(FocusEvent e) {
+	        	foeLevel.selectAll();
+	    	}
+		});
         
         Pokemon userC = ((Pokemon) userMons.getSelectedItem());
         Pokemon foeC = ((Pokemon) foeMons.getSelectedItem());
