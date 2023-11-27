@@ -437,9 +437,13 @@ public class EventHandler {
 			if (hit(33,32,89)) teleport(92, 31, 45,false);
 			if (hit(92,31,46)) teleport(33, 32, 90,false);
 			
-			// Grandpa House
+			// Move Reminder House
 			if (hit(85,23,72)) teleport(93, 31, 45,false);
 			if (hit(93,31,46)) teleport(85, 23, 73,false);
+			
+			// Gift E/S House
+			if (hit(85,23,64)) teleport(94, 31, 45,false);
+			if (hit(94,31,46)) teleport(85, 23, 65,false);
 		}
 	}
 	

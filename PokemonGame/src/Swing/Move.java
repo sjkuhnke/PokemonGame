@@ -106,7 +106,7 @@ public enum Move {
 	DEEP_SEA_BUBBLE(100,100,0,0,1,0,PType.WATER,"A normal attack. Turns into Draco Meteor when used by Kissyfishy-D",false,5),
 	//DARK_VOID(0,80,0,0,2,0,PType.DARK,"Foe falls asleep",false,1),
 	DEFENSE_CURL(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Defense by 1",false,35),
-	DEFOG(0,1000,0,0,2,0,PType.FLYING,"Lowers foe's Evasion by 1, clears all hazards and screens from both sides",false,15), // TODO does this clear screens?
+	DEFOG(0,1000,0,0,2,0,PType.FLYING,"Lowers foe's Evasion by 1, clears all hazards and screens from both sides",false,15),
 	DESOLATE_VOID(65,85,50,0,1,0,PType.GALACTIC,"% chance to Paralyze or Sleep foe",false,10),
 	DESTINY_BOND(0,1000,0,0,2,1,PType.GHOST,"Always goes first; can't be used twice in a row. If foe knocks out user the same turn, foe faints as well",false,5),
 	//DISAPPEAR(0,1000,50,0,2,0,PType.GHOST,"% chance to Confuse foe; raises user's Evasion by 2",false,1),
@@ -149,7 +149,7 @@ public enum Move {
 	EMBER(40,100,10,0,1,0,PType.FIRE,"% chance to Burn foe",false,25),
 	ENCORE(0,100,0,0,2,0,PType.NORMAL,"Causes foe to use their last used move for 4 turns",false,5),
 	ENDEAVOR(0,100,0,0,0,0,PType.NORMAL,"Sets the foe's health equal to the user's, fails if foe's health is greater than user's",true,5),
-	ENDURE(0,1000,0,0,2,4,PType.NORMAL,"The user will survive on at least 1 HP from the next attack. Can't be used in succession",false,10), // TODO: make it so endure can't combo with protect and can't be used twice in a row
+	ENDURE(0,1000,0,0,2,4,PType.NORMAL,"The user will survive on at least 1 HP from the next attack. Can't be used in succession",false,10),
 	ENERGY_BALL(90,100,10,0,1,0,PType.GRASS,"% chance to lower foe's Sp.Def by 1",false,10),
 	ENTRAINMENT(0,100,0,0,2,0,PType.NORMAL,"Changes foe's ability to the user's",false,15),
 	ERUPTION(-1,100,0,0,1,0,PType.FIRE,"Power is higher the more HP the user has",false,5),
@@ -196,15 +196,15 @@ public enum Move {
 	FORESIGHT(0,1000,0,0,2,0,PType.MAGIC,"Indentifies foe, replacing their Ghost typing with Normal if they have it. It also raises user's Accuracy by 1 stage",false,35),
 	FORESTS_CURSE(0,100,0,0,2,0,PType.GRASS,"Changes foe's type to GRASS",false,20),
 	FOUL_PLAY(95,100,0,0,0,0,PType.DARK,"Uses the foe's attack stat instead of the user's",true,15),
-	FREEZE$DRY(70,100,10,0,1,0,PType.ICE,"% chance to Frostbite foe",false,15),
+	FREEZE$DRY(70,100,10,0,1,0,PType.ICE,"% chance to Frostbite foe, super effective against WATER types too",false,15),
 	FREEZING_GLARE(90,100,20,0,1,0,PType.PSYCHIC,"% chance to Frostbite foe",false,1),
 	FRENZY_PLANT(150,90,0,0,1,0,PType.GRASS,"User must rest after using this move",false,10),
 	FRUSTRATION(-1,100,0,0,0,0,PType.NORMAL,"Base Power is based on user's friendship: the lower, the stronger",true,20),
 	FURY_ATTACK(15,85,0,0,0,0,PType.NORMAL,"Attacks 2-5 times",true,20),
 	FURY_CUTTER(-1,95,0,0,0,0,PType.BUG,"Power increases the more times this move is used in succession",true,10),
 	FURY_SWIPES(18,80,0,0,0,0,PType.NORMAL,"Attacks 2-5 times",true,15),
-	FUSION_BOLT(100,100,0,0,0,0,PType.ELECTRIC,"This attack ignores the effects of the foe's ability",false,5), // TODO
-	FUSION_FLARE(100,100,0,0,1,0,PType.FIRE,"This attack ignores the effects of the foe's ability",false,5), // TODO
+	FUSION_BOLT(100,100,0,0,0,0,PType.ELECTRIC,"This attack ignores the effects of the foe's ability",false,5),
+	FUSION_FLARE(100,100,0,0,1,0,PType.FIRE,"This attack ignores the effects of the foe's ability",false,5),
 	//GALAXY_ATTACK(115,90,30,0,0,0,PType.MAGIC,"% chance to inflict the foe with a random Status condition",false,1),
 	GALAXY_BLAST(90,100,0,0,1,0,PType.GALACTIC,"A normal attack",false,10),
 	GASTRO_ACID(0,100,0,0,2,0,PType.POISON,"Supresses the foe's ability",false,20),
@@ -381,7 +381,7 @@ public enum Move {
 	//POISON_POWDER(0,75,0,0,2,0,PType.POISON,"Poisons foe",false,1),
 	POISON_STING(15,100,30,0,0,0,PType.POISON,"% chance to Poison foe",false,35),
 	POISON_TAIL(85,100,10,1,0,0,PType.POISON,"% chance to Poison foe. Boosted crit rate",false,15),
-	POP_POP(70,80,0,0,0,0,PType.STEEL,"Attacks twice",false,5), // TODO: seperate accuracy checks for each hit
+	POP_POP(70,80,0,0,0,0,PType.STEEL,"Attacks twice, seperate accuracy checks for each hit",false,5),
 	//POISONOUS_WATER(95,85,30,0,1,0,PType.POISON,"% chance to Poison foe",false,1),
 	//POKE(10,100,0,0,0,0,PType.NORMAL,"A normal attack",false,1),
 	POUND(40,100,0,0,0,0,PType.NORMAL,"A normal attack",true,30),
@@ -930,6 +930,21 @@ public enum Move {
 		ImageIcon scaledIcon = new ImageIcon(scaledImage);
 		
 		return scaledIcon;
+	}
+	public static ArrayList<Move> getNoComboMoves() {
+		ArrayList<Move> result = new ArrayList<>();
+		result.add(DETECT);
+		result.add(PROTECT);
+		result.add(MOLTEN_LAIR);
+		result.add(OBSTRUCT);
+		result.add(SPIKY_SHIELD);
+		result.add(ENDURE);
+		result.add(ABDUCT);
+		result.add(TAKE_OVER);
+		result.add(MAGIC_REFLECT);
+		result.add(DESTINY_BOND);
+		
+		return result;
 	}
 
 }

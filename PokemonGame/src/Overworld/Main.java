@@ -197,21 +197,21 @@ public class Main {
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(5, 20, false, true)}, 400);
 			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(8, 22, false, true), new Pokemon(166, 22, false, true)}, 400, new Item(94), 4);
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(5, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
-			trainers[185] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(99, 47, false, true), new Pokemon(210, 46, false, true), new Pokemon(219, 46, false, true), new Pokemon(6, 47, false, true), new Pokemon(79, 48, false, true)}, 400, 14);
+			trainers[185] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(99, 47, false, true), new Pokemon(210, 46, false, true), new Pokemon(219, 46, false, true), new Pokemon(6, 47, false, true), new Pokemon(79, 48, false, true)}, 400, 15);
 		}
 		else if (gp.player.p.starter == 2) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(1, 7, false, true)}, 400, 1);
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(8, 20, false, true)}, 400);
 			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(2, 22, false, true), new Pokemon(166, 22, false, true)}, 400, new Item(94), 4);
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(8, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
-			trainers[185] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(99, 47, false, true), new Pokemon(210, 46, false, true), new Pokemon(219, 46, false, true), new Pokemon(9, 47, false, true), new Pokemon(79, 48, false, true)}, 400, 14);
+			trainers[185] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(99, 47, false, true), new Pokemon(210, 46, false, true), new Pokemon(219, 46, false, true), new Pokemon(9, 47, false, true), new Pokemon(79, 48, false, true)}, 400, 15);
 		}
 		else if (gp.player.p.starter == 3) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(4, 7, false, true)}, 400, 1);
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(2, 20, false, true)}, 400);
 			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(5, 22, false, true), new Pokemon(166, 22, false, true)}, 400, new Item(94), 4);
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(2, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
-			trainers[185] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(99, 47, false, true), new Pokemon(210, 46, false, true), new Pokemon(219, 46, false, true), new Pokemon(3, 47, false, true), new Pokemon(79, 48, false, true)}, 400, 14);
+			trainers[185] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(99, 47, false, true), new Pokemon(210, 46, false, true), new Pokemon(219, 46, false, true), new Pokemon(3, 47, false, true), new Pokemon(79, 48, false, true)}, 400, 15);
 		}
 		
 		setMoveset("1 Gym Leader 1", 2, Move.MEGA_DRAIN, Move.SUPERSONIC, Move.AERIAL_ACE, Move.POISON_FANG);
@@ -468,7 +468,7 @@ public class Main {
 				new Trainer("5 Gym F", new Pokemon[]{new Pokemon(79, 49, false, true), new Pokemon(53, 50, false, true)}, 200),
 				new Trainer("5 Gym G", new Pokemon[]{new Pokemon(91, 50, false, true)}, 200),
 				new Trainer("5 Gym H", new Pokemon[]{new Pokemon(81, 49, false, true), new Pokemon(91, 49, false, true)}, 200),
-				new Trainer("5 Gym Leader 1", new Pokemon[]{new Pokemon(91, 51, false, true), new Pokemon(88, 51, false, true), new Pokemon(81, 51, false, true), new Pokemon(79, 51, false, true), new Pokemon(77, 51, false, true), new Pokemon(84, 52, false, true)}, 500, new Item(111)),
+				new Trainer("5 Gym Leader 1", new Pokemon[]{new Pokemon(91, 51, false, true), new Pokemon(88, 51, false, true), new Pokemon(81, 51, false, true), new Pokemon(79, 51, false, true), new Pokemon(77, 51, false, true), new Pokemon(84, 52, false, true)}, 500, new Item(111), 17),
 				new Trainer("DA", new Pokemon[]{new Pokemon(33, 45, false, true), new Pokemon(34, 44, false, true), new Pokemon(34, 45, false, true)}, 200), // 195
 				new Trainer("DB", new Pokemon[]{new Pokemon(36, 46, false, true), new Pokemon(37, 45, false, true)}, 100),
 				new Trainer("DC", new Pokemon[]{new Pokemon(24, 46, false, true)}, 100),
@@ -1120,7 +1120,7 @@ public class Main {
 
 	            List<Move> typeMoves = movesByType.get(type);
 	            for (Move m : typeMoves) {
-	            	String result = m.toString() + " : ";
+            		String result = m.toString() + " : ";
 					result += m.getCategory() + " / ";
 					result += m.getbp(null, null) + " / ";
 					result += m.getAccuracy() + " : ";
