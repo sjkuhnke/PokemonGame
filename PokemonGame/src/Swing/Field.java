@@ -140,19 +140,31 @@ public class Field {
 	}
 	
 	public void setWeather(FieldEffect weather) {
-		if (weather.effect.isWeather && this.weather != weather) {
-			Pokemon.console.writeln("The weather became " + weather.toString() + "!");
-			this.weather = weather;
-			this.weatherTurns = weather.turns;
-		}
+		if (weather != null && weather.effect.isWeather) {
+	        if (this.weather == null || this.weather.effect != weather.effect) {
+	            Pokemon.console.writeln("The weather became " + weather.toString() + "!");
+	            this.weather = weather;
+	            this.weatherTurns = weather.turns;
+	        } else {
+	            Pokemon.console.writeln("The weather is already " + weather.toString() + "!");
+	        }
+	    } else {
+	        Pokemon.console.writeln("Invalid weather effect or weather object is null.");
+	    }
 	}
 	
 	public void setTerrain(FieldEffect terrain) {
-		if (terrain.effect.isTerrain) {
-			Pokemon.console.writeln("The terrain became " + terrain.toString() + "!");
-			this.terrain = terrain;
-			this.terrainTurns = terrain.turns;
-		}
+		if (terrain != null && terrain.effect.isTerrain) {
+	        if (this.terrain == null || this.terrain.effect != terrain.effect) {
+	            Pokemon.console.writeln("The terrain became " + terrain.toString() + "!");
+	            this.terrain = terrain;
+	            this.terrainTurns = terrain.turns;
+	        } else {
+	            Pokemon.console.writeln("The terrain is already " + terrain.toString() + "!");
+	        }
+	    } else {
+	        Pokemon.console.writeln("Invalid terrain effect or terrain object is null.");
+	    }
 	}
 	
 	public void setEffect(FieldEffect effect) {
@@ -170,15 +182,25 @@ public class Field {
 	}
 	
 	public boolean setHazard(ArrayList<FieldEffect> side, FieldEffect hazard) {
-		if (hazard.effect == Effect.STEALTH_ROCKS && !contains(side, Effect.STEALTH_ROCKS)) {
-			Pokemon.console.writeln("Pointed rocks were scattered everywhere!");
-			side.add(hazard);
-			hazard.layers = 1;
-			return true;
-		} else if (hazard.effect == Effect.STICKY_WEBS && !contains(side, Effect.STICKY_WEBS)) {
-			Pokemon.console.writeln("Sticky webs were scattered at the Pokemon's feet!");
-			side.add(hazard);
-			hazard.layers = 1;
+		if (hazard.effect == Effect.STEALTH_ROCKS) {
+			if (!contains(side, Effect.STEALTH_ROCKS)) {
+				Pokemon.console.writeln("Pointed rocks were scattered everywhere!");
+				side.add(hazard);
+				hazard.layers = 1;
+				return true;
+			} else {
+				Pokemon.console.writeln("But it failed!");
+				return false;
+			}
+		} else if (hazard.effect == Effect.STICKY_WEBS) {
+			if (!contains(side, Effect.STICKY_WEBS)) {
+				Pokemon.console.writeln("Sticky webs were scattered at the Pokemon's feet!");
+				side.add(hazard);
+				hazard.layers = 1;
+			} else {
+				Pokemon.console.writeln("But it failed!");
+				return false;
+			}
 			return true;
 		} else if (hazard.effect == Effect.TOXIC_SPIKES) {
 			int layers = getLayers(side, Effect.TOXIC_SPIKES);
@@ -290,6 +312,14 @@ public class Field {
 		ArrayList<FieldEffect> result = new ArrayList<>();
 		for (FieldEffect fe : side) {
 			if (fe.effect == Effect.STEALTH_ROCKS || fe.effect == Effect.SPIKES || fe.effect == Effect.TOXIC_SPIKES || fe.effect == Effect.STICKY_WEBS) result.add(fe);
+		}
+		return result;
+	}
+	
+	public ArrayList<FieldEffect> getScreens(ArrayList<FieldEffect> side) {
+		ArrayList<FieldEffect> result = new ArrayList<>();
+		for (FieldEffect fe : side) {
+			if (fe.effect == Effect.REFLECT || fe.effect == Effect.LIGHT_SCREEN || fe.effect == Effect.AURORA_VEIL) result.add(fe);
 		}
 		return result;
 	}

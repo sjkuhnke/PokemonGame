@@ -498,6 +498,9 @@ public class PlayerCharacter extends Entity {
 	    			JPanel panel = Item.displayGenerator(p);
 	    			JOptionPane.showMessageDialog(null, panel);
 	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
+	    		} else if (code.equals("ASH KETCHUP")) {
+	    			p.trainersBeat = new boolean[Main.trainers.length];
+	    			SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		}
 	    	});
 	    	
@@ -800,10 +803,11 @@ public class PlayerCharacter extends Entity {
 					p.flags[14] = true;
 					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
 					p.catchPokemon(result);
-				} if (gp.currentMap == 91 && !p.bag.contains(97)) {
+				} if (gp.currentMap == 91 && !p.flags[16]) {
 					JOptionPane.showMessageDialog(null, "Obtained HM05 Slow Fall!");
 					p.bag.add(new Item(97));
 					JOptionPane.showMessageDialog(null, "Also, if you haven't yet, you should\nbe sure to check out the bottom right\nhouse in the quadrant above.\nI hear he has a gift!");
+					p.flags[16] = true;
 				} if (gp.currentMap == 93) {
 					JPanel partyPanel = new JPanel();
 					partyPanel.setLayout(new GridLayout(6, 1));
@@ -844,7 +848,7 @@ public class PlayerCharacter extends Entity {
 					        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has learned " + move + " and forgot " + p.team[index].moveset[choice].move + "!");
 					        	                	p.team[index].moveset[choice] = new Moveslot(move);
 					        	                }
-					        	                SwingUtilities.getWindowAncestor(partyPanel).dispose();
+					        	                SwingUtilities.getWindowAncestor(moves).dispose();
 		                			        }
 		                			    }
 		                			});
@@ -856,6 +860,20 @@ public class PlayerCharacter extends Entity {
 						partyPanel.add(party);
 					}
 					JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+				}  if (gp.currentMap == 94 && !p.flags[18]) {
+					JOptionPane.showMessageDialog(null, "Here's a gift of one\nof the Pokemon affected!");
+					int[] ids = new int[] {197, 199, 202, 205, 209, 215, 217, 220, 223, 226};
+					Random gift = new Random();
+					int index = -1;
+					do {
+						index = gift.nextInt(ids.length);
+					} while (p.pokedex[ids[index]] == 2);
+					
+					Pokemon result = new Pokemon(ids[index], 30, true, false);
+					p.flags[18] = true;
+					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+					p.catchPokemon(result);
+					
 				}
 			}
 		    keyH.resume();

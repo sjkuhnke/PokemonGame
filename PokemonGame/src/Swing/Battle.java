@@ -599,20 +599,18 @@ public class Battle extends JFrame {
 		    
 		    JPanel vStatusPanel = new JPanel();
 		    vStatusPanel.setLayout(new BoxLayout(vStatusPanel, BoxLayout.Y_AXIS));
-		    for (Status s : me.getCurrent().vStatuses) {
-		    	JLabel statusLabel = new JLabel(s.toString());
-		    	statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.BOLD, 13));
-		    	vStatusPanel.add(statusLabel);
+		    ArrayList<JLabel> addStatus = getStatusLabels(me.getCurrent());
+		    for (JLabel l : addStatus) {
+		    	vStatusPanel.add(l);
 		    }
 		    teamMemberPanel.add(vStatusPanel, gbc);
 		    gbc.gridx++;
 		    
 		    JPanel fStatusPanel = new JPanel();
 		    fStatusPanel.setLayout(new BoxLayout(fStatusPanel, BoxLayout.Y_AXIS));
-		    for (Status s : foe.vStatuses) {
-		    	JLabel statusLabel = new JLabel(s.toString());
-		    	statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.BOLD, 13));
-		    	fStatusPanel.add(statusLabel);
+		    ArrayList<JLabel> foeAddStatus = getStatusLabels(foe);
+		    for (JLabel l : foeAddStatus) {
+		    	fStatusPanel.add(l);
 		    }
 		    teamMemberPanel.add(fStatusPanel, gbc);
 		    gbc.gridx = 0;
@@ -875,6 +873,36 @@ public class Battle extends JFrame {
 		}
 	}
 	
+	private ArrayList<JLabel> getStatusLabels(Pokemon p) {
+		ArrayList<JLabel> result = new ArrayList<>();
+		for (Status s : p.vStatuses) {
+	    	JLabel statusLabel = new JLabel(s.toString());
+	    	statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.BOLD, 13));
+	    	result.add(statusLabel);
+	    }
+		if (p.magCount > 0) {
+			JLabel statusLabel = new JLabel("Magnet Rise");
+			statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.BOLD, 13));
+			result.add(statusLabel);
+		}
+		if (p.perishCount > 0) {
+			JLabel statusLabel = new JLabel("Perish in " + p.perishCount);
+			statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.BOLD, 13));
+			result.add(statusLabel);
+		}
+		if (p.lastMoveUsed == Move.CHARGE) {
+			JLabel statusLabel = new JLabel("Charged");
+			statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.BOLD, 13));
+			result.add(statusLabel);
+		}
+		if (p.lastMoveUsed == Move.LOAD_FIREARMS) {
+			JLabel statusLabel = new JLabel("Loaded Firearms");
+			statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.BOLD, 13));
+			result.add(statusLabel);
+		}
+		return result;
+	}
+
 	/*
 	 * @DEBUG: Used for efficiently creating the JTextFields for id and level inputs
 	 */

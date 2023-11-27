@@ -229,8 +229,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(30, 29, 27, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(48, 17, 3, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 18, 5, mapNum);
-		
-		gp.obj[mapNum][objIndex] = ObjSetup(29, 42, 12, 43);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 42, 12, mapNum);
 		
 		mapNum = 57;
 		objIndex = 0;
@@ -331,6 +330,13 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(5, 88, 11, 178);
 		gp.npc[mapNum][index] = NPCSetup(5, 88, 16, 179);
 		
+		if (!flags[15]) {
+			gp.npc[mapNum][index] = NPCSetup(85, 5, "The road is closed from\nthis direction, there's a MASSIVE\nsinkhole on the other side\nof this gate. If you come\n from Schrice City straight\nNorth of here it should\nbe clear.");
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
+		
+		index = 0;
 		
 		// Nurses/PCs
 		gp.npc[1][index] = NPCSetup(1, 31, 37, -1);
@@ -718,6 +724,14 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(6, 61, 66, 181);
 		gp.npc[mapNum][index] = NPCSetup(5, 65, 65, 182);
 		
+		mapNum = 85;
+		index = 0;
+		if (!flags[16]) {
+			gp.npc[mapNum][index] = NPCSetup(58, 64, "Talk to Grandpa (bottom\nhouse all the way southwest)");
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
+		
 		mapNum = 88;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(5, 75, 57, 186);
@@ -748,7 +762,11 @@ public class AssetSetter {
 		
 		mapNum = 93;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Would you like to remember a move?/nWhich Pokemon should remember?", true);
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Would you like to remember a move?\nWhich Pokemon should remember?", true);
+		
+		mapNum = 94;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "There have been 2 meteorites\nthat have crashed into our\nregion. One makes Pokemon surge\nwith electricity, and another\ncasts them in a strange\nshadow.", true);
 		
 	}
 	
@@ -913,10 +931,11 @@ public class AssetSetter {
 		// flags[11] is true after getting gift dog
 		// flags[12] is true after getting gift magic pokemon
 		// flags[13] is true after getting gift fossil/ancient pokemon
-		// flags[13] is true after getting gift "starter" pokemon
-		// flags[14] is true after beating Fred 3
-		// flags[15] is true after talking to Grandpa
-		// flags[16] is true after beating Gym 5
+		// flags[14] is true after getting gift "starter" pokemon
+		// flags[15] is true after beating Fred 3
+		// flags[16] is true after talking to Grandpa
+		// flags[17] is true after beating Gym 5
+		// flags[18] is true after getting gift E/S pokemon
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(10, 72, 48, 0);
 		if (flags[1]) gp.npc[3][0] = null;
@@ -931,6 +950,8 @@ public class AssetSetter {
 		if (flags[7]) gp.npc[41][0] = null;
 		if (flags[6]) gp.npc[41][1] = null;
 		if (flags[8] && flags[9]) gp.npc[38][1] = null;
+		if (flags[15]) gp.npc[0][11] = null;
+		if (flags[16]) gp.npc[85][0] = null;
 	}
 	
 	
