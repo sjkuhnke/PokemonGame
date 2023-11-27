@@ -9408,7 +9408,7 @@ public class Pokemon implements Serializable {
 			movebank[29].addToEnd(new Node(Move.THUNDER_WAVE));
 			movebank[29].addToEnd(new Node(Move.WILL$O$WISP));
 			break;
-		case 227:
+		case 227: // TODO
 			movebank = new Node[26];
 			movebank[0] = new Node(Move.CHARGE);
 			movebank[2] = new Node(Move.THUNDERSHOCK);
@@ -10063,6 +10063,7 @@ public class Pokemon implements Serializable {
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+				return;
 			}
 			
 		} else if (this.status == Status.BURNED && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
@@ -10071,6 +10072,7 @@ public class Pokemon implements Serializable {
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+				return;
 			}
 			
 		} else if (this.status == Status.POISONED && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
@@ -10079,6 +10081,7 @@ public class Pokemon implements Serializable {
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+				return;
 			}
 			
 		} else if (this.status == Status.TOXIC && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
@@ -10087,6 +10090,7 @@ public class Pokemon implements Serializable {
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+				return;
 			}
 			
 		}
@@ -10096,6 +10100,7 @@ public class Pokemon implements Serializable {
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+				return;
 			}
 			
 		}
@@ -10110,6 +10115,7 @@ public class Pokemon implements Serializable {
 			if (this.currentHP <= 0) {
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+				return;
 			}
 			
 		}
@@ -10120,6 +10126,7 @@ public class Pokemon implements Serializable {
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, player, f);
 					f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+					return;
 				}
 			} else {
 				this.vStatuses.remove(Status.NIGHTMARE);
@@ -10165,8 +10172,9 @@ public class Pokemon implements Serializable {
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
+				console.writeln();
 				console.writeAbility(this);
-				console.writeln("\n" + this.nickname + " restored HP.");
+				console.writeln(this.nickname + " restored HP.");
 			}
 		} if (this.vStatuses.contains(Status.WISH) && this.lastMoveUsed != Move.WISH) {
 			if (this.currentHP < this.getStat(0)) {
@@ -10192,6 +10200,7 @@ public class Pokemon implements Serializable {
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, player, f);
 					f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+					return;
 				}
 			}
 		}
@@ -10203,6 +10212,7 @@ public class Pokemon implements Serializable {
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+				return;
 			}
 		} if (this.ability == Ability.DRY_SKIN && field.equals(field.weather, Effect.SUN)) {
 			this.currentHP -= Math.max(this.getStat(0) * 1.0 / 8, 1);
@@ -10211,6 +10221,7 @@ public class Pokemon implements Serializable {
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+				return;
 			}
 		}
 		
@@ -10220,6 +10231,7 @@ public class Pokemon implements Serializable {
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+				return;
 			}
 		}
 		
@@ -10229,6 +10241,7 @@ public class Pokemon implements Serializable {
 			if (this.perishCount == 0) {
 				this.faint(true, player, f);
 				f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+				return;
 			}
 		}
 		if (this.vStatuses.contains(Status.LOCKED) && this.outCount == 0 && (this.lastMoveUsed == Move.OUTRAGE || this.lastMoveUsed == Move.PETAL_DANCE || this.lastMoveUsed == Move.THRASH)) {
@@ -11229,7 +11242,7 @@ public class Pokemon implements Serializable {
 				Item testItem = new Item(i);
 				JButton moveButton = new JGradientButton("");
 				if (testItem.getLearned(test)) {
-					moveButton.setText(testItem.toString() + " " + testItem.getMove().toString());
+					moveButton.setText(testItem.toString());
 					moveButton.setHorizontalAlignment(SwingConstants.LEFT);
 					moveButton.setBackground(testItem.getColor());
 					moveButton.addActionListener(f -> {
@@ -11559,14 +11572,9 @@ public class Pokemon implements Serializable {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
 			            JOptionPane.showMessageDialog(null, moveset[index].move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
-			        	if (!moveset[index].move.isHMmove()) {
-			        		choice[0] = index;
-			                JDialog dialog = (JDialog) SwingUtilities.getWindowAncestor((JButton) e.getSource());
-			                dialog.dispose();
-			        	} else {
-			        		JOptionPane.showMessageDialog(null, "HM Moves can't be forgotten now!");
-			        	}
-			        	
+		        		choice[0] = index;
+		                JDialog dialog = (JDialog) SwingUtilities.getWindowAncestor((JButton) e.getSource());
+		                dialog.dispose();
 			        }
 			    }
 	        });

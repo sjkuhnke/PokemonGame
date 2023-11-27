@@ -282,3 +282,5 @@ Trainer DD                  Millistone Lv. 46
 Trainer DE                  Ninjakik Lv. 46
 Trainer DF                  Roselia Lv. 46, Roserade Lv. 45
 Trainer DG                  Ramant Lv. 45, Bushewe Lv. 45
+Trainer CY                  Curlatoral Lv. 43, Millistone Lv. 43
+Trainer CZ                  Swadloon Lv. 45, Charjabug Lv. 46, Swadloon Lv. 46, Leavanny Lv. 44, Vikavolt Lv. 44

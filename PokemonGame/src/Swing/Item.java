@@ -149,160 +149,470 @@ public class Item implements Serializable {
 	
 	@Override
 	public String toString() {
-		if (id == 0) return "Repel";
-		else if (id == 1) return "Pokeball";
-		else if (id == 2) return "Great Ball";
-		else if (id == 3) return "Ultra Ball";
-		else if (id == 4) return "Potion";
-		else if (id == 5) return "Super Potion";
-		else if (id == 6) return "Hyper Potion";
-		else if (id == 7) return "Max Potion";
-		else if (id == 8) return "Full Restore";
-		else if (id == 9) return "Antidote";
-		else if (id == 10) return "Awakening";
-		else if (id == 11) return "Burn Heal";
-		else if (id == 12) return "Paralyze Heal";
-		else if (id == 13) return "Freeze Heal";
-		else if (id == 14) return "Full Heal";
-		else if (id == 15) return "Rage Candy Bar";
-		else if (id == 16) return "Revive";
-		else if (id == 17) return "Max Revive";
-		else if (id == 18) return "Rare Candy";
-		else if (id == 19) return "Euphorian Gem";
-		else if (id == 20) return "Leaf Stone";
-		else if (id == 21) return "Dusk Stone";
-		else if (id == 22) return "Dawn Stone";
-		else if (id == 23) return "Ice Stone";
-		else if (id == 24) return "Valiant Gem";
-		else if (id == 25) return "Petticoat Gem";
-		else if (id == 26) return "Ability Capsule";
-		else if (id == 27) return "Bottle Cap";
-		else if (id == 28) return "Gold Battle Cap";
-		else if (id == 29) return "Adamant Mint";
-		else if (id == 30) return "Bold Mint";
-		else if (id == 31) return "Brave Mint";
-		else if (id == 32) return "Calm Mint";
-		else if (id == 33) return "Careful Mint";
-		else if (id == 34) return "Impish Mint";
-		else if (id == 35) return "Jolly Mint";
-		else if (id == 36) return "Modest Mint";
-		else if (id == 37) return "Quiet Mint";
-		else if (id == 38) return "Serious Mint";
-		else if (id == 39) return "Timid Mint";
-		else if (id == 40) return "Elixir";
-		else if (id == 41) return "Max Elixir";
-		else if (id == 42) return "PP Up";
-		else if (id == 43) return "PP Max";
-		else if (id == 44) return "Flame Orb";
-		else if (id == 93) return "HM01";
-		else if (id == 94) return "HM02";
-		else if (id == 95) return "HM03";
-		else if (id == 96) return "HM04";
-		else if (id == 97) return "HM05";
-		else if (id == 98) return "HM06";
-		else if (id == 99) return "HM07";
-		else if (id == 100) return "HM08";
-		else if (id == 101) return "TM01";
-		else if (id == 102) return "TM02";
-		else if (id == 103) return "TM03";
-		else if (id == 104) return "TM04";
-		else if (id == 105) return "TM05";
-		else if (id == 106) return "TM06";
-		else if (id == 107) return "TM07";
-		else if (id == 108) return "TM08";
-		else if (id == 109) return "TM09";
-		else if (id == 110) return "TM10";
-		else if (id == 111) return "TM11";
-		else if (id == 112) return "TM12";
-		else if (id == 113) return "TM13";
-		else if (id == 114) return "TM14";
-		else if (id == 115) return "TM15";
-		else if (id == 116) return "TM16";
-		else if (id == 117) return "TM17";
-		else if (id == 118) return "TM18";
-		else if (id == 119) return "TM19";
-		else if (id == 120) return "TM20";
-		else if (id == 121) return "TM21";
-		else if (id == 122) return "TM22";
-		else if (id == 123) return "TM23";
-		else if (id == 124) return "TM24";
-		else if (id == 125) return "TM25";
-		else if (id == 126) return "TM26";
-		else if (id == 127) return "TM27";
-		else if (id == 128) return "TM28";
-		else if (id == 129) return "TM29";
-		else if (id == 130) return "TM30";
-		else if (id == 131) return "TM31";
-		else if (id == 132) return "TM32";
-		else if (id == 133) return "TM33";
-		else if (id == 134) return "TM34";
-		else if (id == 135) return "TM35";
-		else if (id == 136) return "TM36";
-		else if (id == 137) return "TM37";
-		else if (id == 138) return "TM38";
-		else if (id == 139) return "TM39";
-		else if (id == 140) return "TM40";
-		else if (id == 141) return "TM41";
-		else if (id == 142) return "TM42";
-		else if (id == 143) return "TM43";
-		else if (id == 144) return "TM44";
-		else if (id == 145) return "TM45";
-		else if (id == 146) return "TM46";
-		else if (id == 147) return "TM47";
-		else if (id == 148) return "TM48";
-		else if (id == 149) return "TM49";
-		else if (id == 150) return "TM50";
-		else if (id == 151) return "TM51";
-		else if (id == 152) return "TM52";
-		else if (id == 153) return "TM53";
-		else if (id == 154) return "TM54";
-		else if (id == 155) return "TM55";
-		else if (id == 156) return "TM56";
-		else if (id == 157) return "TM57";
-		else if (id == 158) return "TM58";
-		else if (id == 159) return "TM59";
-		else if (id == 160) return "TM60";
-		else if (id == 161) return "TM61";
-		else if (id == 162) return "TM62";
-		else if (id == 163) return "TM63";
-		else if (id == 164) return "TM64";
-		else if (id == 165) return "TM65";
-		else if (id == 166) return "TM66";
-		else if (id == 167) return "TM67";
-		else if (id == 168) return "TM68";
-		else if (id == 169) return "TM69";
-		else if (id == 170) return "TM70";
-		else if (id == 171) return "TM71";
-		else if (id == 172) return "TM72";
-		else if (id == 173) return "TM73";
-		else if (id == 174) return "TM74";
-		else if (id == 175) return "TM75";
-		else if (id == 176) return "TM76";
-		else if (id == 177) return "TM77";
-		else if (id == 178) return "TM78";
-		else if (id == 179) return "TM79";
-		else if (id == 180) return "TM80";
-		else if (id == 181) return "TM81";
-		else if (id == 182) return "TM82";
-		else if (id == 183) return "TM83";
-		else if (id == 184) return "TM84";
-		else if (id == 185) return "TM85";
-		else if (id == 186) return "TM86";
-		else if (id == 187) return "TM87";
-		else if (id == 188) return "TM88";
-		else if (id == 189) return "TM89";
-		else if (id == 190) return "TM90";
-		else if (id == 191) return "TM91";
-		else if (id == 192) return "TM92";
-		else if (id == 193) return "TM93";
-		else if (id == 194) return "TM94";
-		else if (id == 195) return "TM95";
-		else if (id == 196) return "TM96";
-		else if (id == 197) return "TM97";
-		else if (id == 198) return "TM98";
-		else if (id == 199) return "TM99";
-		else if (id == 200) return "Calculator";
-		return "";
+		String result = "";
+		switch (id) {
+		case 0:
+			result = "Repel";
+			break;
+		case 1:
+			result = "Pokeball";
+			break;
+		case 2:
+			result = "Great Ball";
+			break;
+		case 3:
+			result = "Ultra Ball";
+			break;
+		case 4:
+			result = "Potion";
+			break;
+		case 5:
+			result = "Super Potion";
+			break;
+		case 6:
+			result = "Hyper Potion";
+			break;
+		case 7:
+			result = "Max Potion";
+			break;
+		case 8:
+			result = "Full Restore";
+			break;
+		case 9:
+			result = "Antidote";
+			break;
+		case 10:
+			result = "Awakening";
+			break;
+		case 11:
+			result = "Burn Heal";
+			break;
+		case 12:
+			result = "Paralyze Heal";
+			break;
+		case 13:
+			result = "Freeze Heal";
+			break;
+		case 14:
+			result = "Full Heal";
+			break;
+		case 15:
+			result = "Rage Candy Bar";
+			break;
+		case 16:
+			result = "Revive";
+			break;
+		case 17:
+			result = "Max Revive";
+			break;
+		case 18:
+			result = "Rare Candy";
+			break;
+		case 19:
+			result = "Euphorian Gem";
+			break;
+		case 20:
+			result = "Leaf Stone";
+			break;
+		case 21:
+			result = "Dusk Stone";
+			break;
+		case 22:
+			result = "Dawn Stone";
+			break;
+		case 23:
+			result = "Ice Stone";
+			break;
+		case 24:
+			result = "Valiant Gem";
+			break;
+		case 25:
+			result = "Petticoat Gem";
+			break;
+		case 26:
+			result = "Ability Capsule";
+			break;
+		case 27:
+			result = "Bottle Cap";
+			break;
+		case 28:
+			result = "Gold Battle Cap";
+			break;
+		case 29:
+			result = "Adamant Mint";
+			break;
+		case 30:
+			result = "Bold Mint";
+			break;
+		case 31:
+			result = "Brave Mint";
+			break;
+		case 32:
+			result = "Calm Mint";
+			break;
+		case 33:
+			result = "Careful Mint";
+			break;
+		case 34:
+			result = "Impish Mint";
+			break;
+		case 35:
+			result = "Jolly Mint";
+			break;
+		case 36:
+			result = "Modest Mint";
+			break;
+		case 37:
+			result = "Quiet Mint";
+			break;
+		case 38:
+			result = "Serious Mint";
+			break;
+		case 39:
+			result = "Timid Mint";
+			break;
+		case 40:
+			result = "Elixir";
+			break;
+		case 41:
+			result = "Max Elixir";
+			break;
+		case 42:
+			result = "PP Up";
+			break;
+		case 43:
+			result = "PP Max";
+			break;
+		case 44:
+			result = "Flame Orb";
+			break;
+		case 93:
+			result = "HM01";
+			break;
+		case 94:
+			result = "HM02";
+			break;
+		case 95:
+			result = "HM03";
+			break;
+		case 96:
+			result = "HM04";
+			break;
+		case 97:
+			result = "HM05";
+			break;
+		case 98:
+			result = "HM06";
+			break;
+		case 99:
+			result = "HM07";
+			break;
+		case 100:
+			result = "HM08";
+			break;
+		case 101:
+			result = "TM01";
+			break;
+		case 102:
+			result = "TM02";
+			break;
+		case 103:
+			result = "TM03";
+			break;
+		case 104:
+			result = "TM04";
+			break;
+		case 105:
+			result = "TM05";
+			break;
+		case 106:
+			result = "TM06";
+			break;
+		case 107:
+			result = "TM07";
+			break;
+		case 108:
+			result = "TM08";
+			break;
+		case 109:
+			result = "TM09";
+			break;
+		case 110:
+			result = "TM10";
+			break;
+		case 111:
+			result = "TM11";
+			break;
+		case 112:
+			result = "TM12";
+			break;
+		case 113:
+			result = "TM13";
+			break;
+		case 114:
+			result = "TM14";
+			break;
+		case 115:
+			result = "TM15";
+			break;
+		case 116:
+			result = "TM16";
+			break;
+		case 117:
+			result = "TM17";
+			break;
+		case 118:
+			result = "TM18";
+			break;
+		case 119:
+			result = "TM19";
+			break;
+		case 120:
+			result = "TM20";
+			break;
+		case 121:
+			result = "TM21";
+			break;
+		case 122:
+			result = "TM22";
+			break;
+		case 123:
+			result = "TM23";
+			break;
+		case 124:
+			result = "TM24";
+			break;
+		case 125:
+			result = "TM25";
+			break;
+		case 126:
+			result = "TM26";
+			break;
+		case 127:
+			result = "TM27";
+			break;
+		case 128:
+			result = "TM28";
+			break;
+		case 129:
+			result = "TM29";
+			break;
+		case 130:
+			result = "TM30";
+			break;
+		case 131:
+			result = "TM31";
+			break;
+		case 132:
+			result = "TM32";
+			break;
+		case 133:
+			result = "TM33";
+			break;
+		case 134:
+			result = "TM34";
+			break;
+		case 135:
+			result = "TM35";
+			break;
+		case 136:
+			result = "TM36";
+			break;
+		case 137:
+			result = "TM37";
+			break;
+		case 138:
+			result = "TM38";
+			break;
+		case 139:
+			result = "TM39";
+			break;
+		case 140:
+			result = "TM40";
+			break;
+		case 141:
+			result = "TM41";
+			break;
+		case 142:
+			result = "TM42";
+			break;
+		case 143:
+			result = "TM43";
+			break;
+		case 144:
+			result = "TM44";
+			break;
+		case 145:
+			result = "TM45";
+			break;
+		case 146:
+			result = "TM46";
+			break;
+		case 147:
+			result = "TM47";
+			break;
+		case 148:
+			result = "TM48";
+			break;
+		case 149:
+			result = "TM49";
+			break;
+		case 150:
+			result = "TM50";
+			break;
+		case 151:
+			result = "TM51";
+			break;
+		case 152:
+			result = "TM52";
+			break;
+		case 153:
+			result = "TM53";
+			break;
+		case 154:
+			result = "TM54";
+			break;
+		case 155:
+			result = "TM55";
+			break;
+		case 156:
+			result = "TM56";
+			break;
+		case 157:
+			result = "TM57";
+			break;
+		case 158:
+			result = "TM58";
+			break;
+		case 159:
+			result = "TM59";
+			break;
+		case 160:
+			result = "TM60";
+			break;
+		case 161:
+			result = "TM61";
+			break;
+		case 162:
+			result = "TM62";
+			break;
+		case 163:
+			result = "TM63";
+			break;
+		case 164:
+			result = "TM64";
+			break;
+		case 165:
+			result = "TM65";
+			break;
+		case 166:
+			result = "TM66";
+			break;
+		case 167:
+			result = "TM67";
+			break;
+		case 168:
+			result = "TM68";
+			break;
+		case 169:
+			result = "TM69";
+			break;
+		case 170:
+			result = "TM70";
+			break;
+		case 171:
+			result = "TM71";
+			break;
+		case 172:
+			result = "TM72";
+			break;
+		case 173:
+			result = "TM73";
+			break;
+		case 174:
+			result = "TM74";
+			break;
+		case 175:
+			result = "TM75";
+			break;
+		case 176:
+			result = "TM76";
+			break;
+		case 177:
+			result = "TM77";
+			break;
+		case 178:
+			result = "TM78";
+			break;
+		case 179:
+			result = "TM79";
+			break;
+		case 180:
+			result = "TM80";
+			break;
+		case 181:
+			result = "TM81";
+			break;
+		case 182:
+			result = "TM82";
+			break;
+		case 183:
+			result = "TM83";
+			break;
+		case 184:
+			result = "TM84";
+			break;
+		case 185:
+			result = "TM85";
+			break;
+		case 186:
+			result = "TM86";
+			break;
+		case 187:
+			result = "TM87";
+			break;
+		case 188:
+			result = "TM88";
+			break;
+		case 189:
+			result = "TM89";
+			break;
+		case 190:
+			result = "TM90";
+			break;
+		case 191:
+			result = "TM91";
+			break;
+		case 192:
+			result = "TM92";
+			break;
+		case 193:
+			result = "TM93";
+			break;
+		case 194:
+			result = "TM94";
+			break;
+		case 195:
+			result = "TM95";
+			break;
+		case 196:
+			result = "TM96";
+			break;
+		case 197:
+			result = "TM97";
+			break;
+		case 198:
+			result = "TM98";
+			break;
+		case 199:
+			result = "TM99";
+			break;
+		case 200:
+			result = "Calculator";
+			break;
+		}
+		if (id >= 93 && id < 200) result += " " + getMove().toString();
+		return result;
 	}
 
 	public int getHealAmount() {

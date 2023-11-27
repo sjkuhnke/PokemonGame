@@ -181,31 +181,33 @@ public class Field {
 			hazard.layers = 1;
 			return true;
 		} else if (hazard.effect == Effect.TOXIC_SPIKES) {
-			if (getLayers(side, Effect.TOXIC_SPIKES) == 0) {
+			int layers = getLayers(side, Effect.TOXIC_SPIKES);
+			if (layers == 0) {
 				Pokemon.console.writeln("Poisonous Spikes were put at the Pokemon's feet!");
-				hazard.layers++;
 				side.add(hazard);
+				addLayer(side, Effect.TOXIC_SPIKES);
 				return true;
-			} else if (getLayers(side, Effect.TOXIC_SPIKES) == 1) {
+			} else if (layers == 1) {
 				Pokemon.console.writeln("Poisonous Spikes were put at the Pokemon's feet!");
 				addLayer(side, Effect.TOXIC_SPIKES);
 				return true;
-			} else if (getLayers(side, Effect.TOXIC_SPIKES) == 2) {
+			} else if (layers == 2) {
 				Pokemon.console.writeln("But it failed!");
 				return false;
 			}
 			
 		} else if (hazard.effect == Effect.SPIKES) {
-			if (getLayers(side, Effect.SPIKES) == 0) {
+			int layers = getLayers(side, Effect.SPIKES);
+			if (layers == 0) {
 				Pokemon.console.writeln("Spikes were scattered at the Pokemon's feet!");
-				hazard.layers++;
 				side.add(hazard);
+				addLayer(side, Effect.SPIKES);
 				return true;
-			} else if (getLayers(side, Effect.SPIKES) == 1 || getLayers(side, Effect.SPIKES) == 2) {
+			} else if (layers == 1 || layers == 2) {
 				Pokemon.console.writeln("Spikes were scattered at the Pokemon's feet!");
 				addLayer(side, Effect.SPIKES);
 				return true;
-			} else if (getLayers(side, Effect.SPIKES) == 3) {
+			} else if (layers == 3) {
 				Pokemon.console.writeln("But it failed!");
 				return false;
 			}
@@ -294,15 +296,19 @@ public class Field {
 	
 	public int getLayers(ArrayList<FieldEffect> side, Effect effect) {
 		for (FieldEffect e : side) {
-			if (e.effect == effect) return e.layers;
+			if (e.effect == effect) {
+				return e.layers;
+			}
 		}
 		return 0;
 	}
 	
 	public void addLayer(ArrayList<FieldEffect> side, Effect effect) {
 		for (FieldEffect e : side) {
-			if (e.effect == effect) e.layers++;
-			return;
+			if (e.effect == effect) {
+				e.layers++;
+				return;
+			}
 		}
 	}
 	

@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -241,15 +242,17 @@ public class WelcomeMenu extends JPanel {
             		}
             		
             	} while (!isValidFileName(newFileName));
-                try {
+            	try {
                     Path oldPath = Paths.get(name);
                     Path newPath = oldPath.resolveSibling(newFileName + ".dat");
                     Files.move(oldPath, newPath);
                     updateFileList(fileNames);
+                } catch (FileAlreadyExistsException e) {
+                    JOptionPane.showMessageDialog(this, "File with the specified name already exists. Please choose a different name.");
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(); // Handle other IOExceptions as needed
                 }
-                break;
+            	break;
             case 1: // Delete
                 int confirm = JOptionPane.showConfirmDialog(this,
                         "Are you sure you want to delete " + name + "?",
