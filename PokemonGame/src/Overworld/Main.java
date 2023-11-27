@@ -11,10 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -252,6 +250,10 @@ public class Main {
 		setMoveset("5 Gym Leader 1", 5, Move.ELEMENTAL_SPARKLE, Move.MAGIC_REFLECT, Move.TRICK_ROOM, Move.PSYSHOCK);
 		setMoveset("5 Gym Leader 1", 6, Move.BULLET_PUNCH, Move.IRON_DEFENSE, Move.ZEN_HEADBUTT, Move.COMET_CRASH);
 		setAbility("5 Gym Leader 1", 6, Ability.LEVITATE);
+		
+		setMoveset("CCA", 1, Move.METRONOME, null, null, null);
+		setMoveset("CCA", 2, Move.METRONOME, null, null, null);
+		setMoveset("CCA", 3, Move.METRONOME, null, null, null);
 		
 //		Move[] yes = Move.values();
 //		int max = 0;
@@ -571,9 +573,14 @@ public class Main {
 	}
 	
 	private static void setMoveset(String string, int i, Move a, Move b, Move c, Move d) {
+		Move[] moves = new Move[] {a, b, c, d};
+		Moveslot[] moveslots = new Moveslot[4];
+		for (int j = 0; j < 4; j++) {
+			moveslots[j] = moves[j] == null ? null : new Moveslot(moves[j]);
+		}
 		for (Trainer tr : trainers) {
 			if (tr.getName().equals(string)) {
-				tr.getTeam()[i - 1].moveset = new Moveslot[]{new Moveslot(a), new Moveslot(b), new Moveslot(c), new Moveslot(d)};
+				tr.getTeam()[i - 1].moveset = moveslots;
 				if (!modifiedTrainers.contains(tr)) modifiedTrainers.add(tr);
 			}
 		}
@@ -651,7 +658,13 @@ public class Main {
 			writer.write("Unused moves:\n");
 			ArrayList<Move> unused = new ArrayList<>();
 			ArrayList<Move> unusedButTM = new ArrayList<>();
-			Set<Move> moves = new HashSet<>(Arrays.asList(Move.values()));
+			Map<Pokemon, Move> sigOne = new HashMap<>();
+			Map<Pokemon, Move> sigTwo = new HashMap<>();
+			Map<Pokemon, Move> sigThree = new HashMap<>();
+			Map<Move, Integer> moveCount = new HashMap<>();
+			for (Move m : Move.values()) {
+				moveCount.put(m, 0);
+			}
 			for (int i = 1; i < 241; i++) {
 				Pokemon p = new Pokemon(i, 5, false, false);
 				ArrayList<Move> movebank = new ArrayList<>();
@@ -662,13 +675,68 @@ public class Main {
 						n = n.next;
 					}
 				}
-				moves.removeAll(movebank);
+
+				for (Move move : movebank) {
+					moveCount.put(move, moveCount.getOrDefault(move, 0) + 1);
+				}
 			}
-			for (Move m : moves) {
-				if (m.isTM()) {
-					unusedButTM.add(m);
-				} else {
-					unused.add(m);
+			for (Map.Entry<Move, Integer> entry : moveCount.entrySet()) {
+				if (entry.getValue() == 0) {
+					if (entry.getKey().isTM()) {
+						unusedButTM.add(entry.getKey());
+					} else {
+						unused.add(entry.getKey());
+					}
+				} else if (entry.getValue() == 3) {
+					int count = 0;
+					for (int i = 1; i < 241 && count < 3; i++) {
+						Pokemon p = new Pokemon(i, 5, false, false);
+						ArrayList<Move> movebank = new ArrayList<>();
+						for (int j = 0; j < p.movebank.length; j++) {
+							Node n = p.movebank[j];
+							while (n != null) {
+								movebank.add(n.data);
+								n = n.next;
+							}
+						}
+						if (movebank.contains(entry.getKey())) {
+							sigThree.put(p, entry.getKey());
+							count++;
+						}
+					}
+				} else if (entry.getValue() == 2) {
+					int count = 0;
+					for (int i = 1; i < 241 && count < 2; i++) {
+						Pokemon p = new Pokemon(i, 5, false, false);
+						ArrayList<Move> movebank = new ArrayList<>();
+						for (int j = 0; j < p.movebank.length; j++) {
+							Node n = p.movebank[j];
+							while (n != null) {
+								movebank.add(n.data);
+								n = n.next;
+							}
+						}
+						if (movebank.contains(entry.getKey())) {
+							sigTwo.put(p, entry.getKey());
+							count++;
+						}
+					}
+				} else if (entry.getValue() == 1) {
+					for (int i = 1; i < 241; i++) {
+						Pokemon p = new Pokemon(i, 5, false, false);
+						ArrayList<Move> movebank = new ArrayList<>();
+						for (int j = 0; j < p.movebank.length; j++) {
+							Node n = p.movebank[j];
+							while (n != null) {
+								movebank.add(n.data);
+								n = n.next;
+							}
+						}
+						if (movebank.contains(entry.getKey())) {
+							sigOne.put(p, entry.getKey());
+							break;
+						}
+					}
 				}
 			}
 			for (Move m : unused) {
@@ -678,6 +746,38 @@ public class Main {
 			for (Move m : unusedButTM) {
 				writer.write(m.toString() + "\n");
 			}
+			writer.write("\nSignature Moves (3):\n");
+			sigThree.entrySet().stream()
+	        .sorted(Map.Entry.comparingByValue(Comparator.comparing(Move::toString)))
+	        .forEach(entry -> {
+				try {
+					writer.write(entry.getValue().toString() + " : " + entry.getKey().name + "\n");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+
+			writer.write("\nSignature Moves (2):\n");
+			sigTwo.entrySet().stream()
+			.sorted(Map.Entry.comparingByValue(Comparator.comparing(Move::toString)))
+			.forEach(entry -> {
+				try {
+					writer.write(entry.getValue().toString() + " : " + entry.getKey().name + "\n");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+		
+			writer.write("\nSignature Moves (1):\n");
+			sigOne.entrySet().stream()
+			.sorted(Map.Entry.comparingByValue(Comparator.comparing(Move::toString)))
+			.forEach(entry -> {
+				try {
+					writer.write(entry.getValue().toString() + " : " + entry.getKey().name + "\n");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
 			writer.close();
 		} catch (IOException e){
 			e.printStackTrace();

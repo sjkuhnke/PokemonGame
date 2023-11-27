@@ -452,13 +452,26 @@ public class PlayerCharacter extends Entity {
 	    				}
 	    			}
 	    			for (Pokemon p : p.box1) {
-	    				if (p != null) p.setBaseStats();
+	    				if (p != null) {
+	    					p.setBaseStats();
+	    					p.setAbility(p.abilitySlot);
+	    					p.setMoveBank();
+	    				}
+	    				
 	    			}
 	    			for (Pokemon p : p.box2) {
-	    				if (p != null) p.setBaseStats();
+	    				if (p != null) {
+	    					p.setBaseStats();
+	    					p.setAbility(p.abilitySlot);
+	    					p.setMoveBank();
+	    				}
 	    			}
 	    			for (Pokemon p : p.box3) {
-	    				if (p != null) p.setBaseStats();
+	    				if (p != null) {
+	    					p.setBaseStats();
+	    					p.setAbility(p.abilitySlot);
+	    					p.setMoveBank();
+	    				}
 	    			}
 	        	    
 	        	    JOptionPane.showMessageDialog(null, "Player successfully updated!");
@@ -787,7 +800,7 @@ public class PlayerCharacter extends Entity {
 					p.flags[14] = true;
 					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
 					p.catchPokemon(result);
-				} if (gp.currentMap == 41 && !p.bag.contains(97)) {
+				} if (gp.currentMap == 91 && !p.bag.contains(97)) {
 					JOptionPane.showMessageDialog(null, "Obtained HM05 Slow Fall!");
 					p.bag.add(new Item(97));
 					JOptionPane.showMessageDialog(null, "Also, if you haven't yet, you should\nbe sure to check out the bottom right\nhouse in the quadrant above.\nI hear he has a gift!");
@@ -889,7 +902,8 @@ public class PlayerCharacter extends Entity {
 		ArrayList<Entry> bag = p.getBag().getItems();
 		for (Entry i : bag) {
 		    JButton item = new JGradientButton("");
-		    item.setText(i.getItem().toString() + " x " + i.getCount());
+		    String text = i.getItem().getMove() == null ? i.getItem().toString() + " x " + i.getCount() : i.getItem().toString();
+		    item.setText(text);
 
 		    item.addActionListener(e -> {
 		        JPanel itemDesc = new JPanel();

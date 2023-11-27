@@ -79,7 +79,7 @@ Electric
 ===============
 Bolt Strike : Physical / 130 / 85 : 20% chance to Paralyze foe
 Charge : Status / -- / -- : User's next electric-type attack damage is doubled. Raises user's Sp.Def by 1
-Charge Beam : Special / 50 / 90 : 50% chance to raise user's Sp.Atk by 1
+Charge Beam : Special / 50 / 90 : 70% chance to raise user's Sp.Atk by 1
 Discharge : Special / 80 / 100 : 30% chance to Paralyze foe
 Electric Terrain : Status / -- / -- : Sets the terrain to ELECTRIC for 8 turns
 Electro Ball : Special / -- / 100 : Power is higher the faster the user is than the target
@@ -423,7 +423,7 @@ Pound : Physical / 40 / 100 : A normal attack
 Protect : Status / -- / -- : Protects user, can't be used in succession
 Quick Attack : Physical / 40 / 100 : Always attacks first
 Rage : Physical / 20 / 100 : Power increases the more times this move is used in succession
-Rapid Spin : Physical / 20 / 100 : 100% to raise user's Speed by 1, and frees user of being Spun
+Rapid Spin : Physical / 50 / 100 : 100% to raise user's Speed by 1, and frees user of being Spun
 Recover : Status / -- / -- : Restores 1/2 of user's max HP
 Return : Physical / -- / 100 : Damage is based on user's friendship: the higher, the stronger
 Roar : Status / -- / -- : Forces foe to switch out into a random teammate
