@@ -383,14 +383,14 @@ public class Pokemon implements Serializable {
 			if (bestMoves.contains(m) && lastMoveUsed == m) bestMoves.remove(m);
 		}
 		
-		if (bestMoves.contains(Move.SUNNY_DAY) && field.weather.effect == Effect.SUN) bestMoves.remove(Move.SUNNY_DAY);
-		if (bestMoves.contains(Move.RAIN_DANCE) && field.weather.effect == Effect.RAIN) bestMoves.remove(Move.RAIN_DANCE);
-		if (bestMoves.contains(Move.SANDSTORM) && field.weather.effect == Effect.SANDSTORM) bestMoves.remove(Move.SANDSTORM);
-		if (bestMoves.contains(Move.SNOWSCAPE) && field.weather.effect == Effect.SNOW) bestMoves.remove(Move.SNOWSCAPE);
-		if (bestMoves.contains(Move.ELECTRIC_TERRAIN) && field.terrain.effect == Effect.ELECTRIC) bestMoves.remove(Move.ELECTRIC_TERRAIN);
-		if (bestMoves.contains(Move.GRASSY_TERRAIN) && field.terrain.effect == Effect.GRASSY) bestMoves.remove(Move.GRASSY_TERRAIN);
-		if (bestMoves.contains(Move.PSYCHIC_TERRAIN) && field.terrain.effect == Effect.PSYCHIC) bestMoves.remove(Move.PSYCHIC_TERRAIN);
-		if (bestMoves.contains(Move.SPARKLING_TERRAIN) && field.terrain.effect == Effect.SPARKLY) bestMoves.remove(Move.SPARKLING_TERRAIN);
+		if (bestMoves.contains(Move.SUNNY_DAY) && !field.equals(field.weather, Effect.SUN)) bestMoves.remove(Move.SUNNY_DAY);
+		if (bestMoves.contains(Move.RAIN_DANCE) && !field.equals(field.weather, Effect.RAIN)) bestMoves.remove(Move.RAIN_DANCE);
+		if (bestMoves.contains(Move.SANDSTORM) && !field.equals(field.weather, Effect.SANDSTORM)) bestMoves.remove(Move.SANDSTORM);
+		if (bestMoves.contains(Move.SNOWSCAPE) && !field.equals(field.weather, Effect.SNOW)) bestMoves.remove(Move.SNOWSCAPE);
+		if (bestMoves.contains(Move.ELECTRIC_TERRAIN) && !field.equals(field.terrain, Effect.ELECTRIC)) bestMoves.remove(Move.ELECTRIC_TERRAIN);
+		if (bestMoves.contains(Move.GRASSY_TERRAIN) && !field.equals(field.terrain, Effect.GRASSY)) bestMoves.remove(Move.GRASSY_TERRAIN);
+		if (bestMoves.contains(Move.PSYCHIC_TERRAIN) && !field.equals(field.terrain, Effect.PSYCHIC)) bestMoves.remove(Move.PSYCHIC_TERRAIN);
+		if (bestMoves.contains(Move.SPARKLING_TERRAIN) && !field.equals(field.terrain, Effect.SPARKLY)) bestMoves.remove(Move.SPARKLING_TERRAIN);
 		
 		if (bestMoves.contains(Move.REFLECT) && field.contains(field.foeSide, Effect.REFLECT)) bestMoves.remove(Move.REFLECT);
 		if (bestMoves.contains(Move.LIGHT_SCREEN) && field.contains(field.foeSide, Effect.LIGHT_SCREEN)) bestMoves.remove(Move.LIGHT_SCREEN);

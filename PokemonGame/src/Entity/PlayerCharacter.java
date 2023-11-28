@@ -198,6 +198,13 @@ public class PlayerCharacter extends Entity {
 					for (Integer i : gp.tileM.getWaterTiles()) {
 						gp.tileM.tile[i].collision = true;
 					}
+					int snapX = (int) Math.round(worldX * 1.0 / gp.tileSize);
+					int snapY = (int) Math.round(worldY * 1.0 / gp.tileSize);
+					snapX *= gp.tileSize;
+					snapY *= gp.tileSize;
+					snapY -= gp.tileSize / 2;
+					this.worldX = snapX;
+					this.worldY = snapY;
 				}
 			}
 		}
