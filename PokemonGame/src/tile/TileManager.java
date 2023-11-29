@@ -117,6 +117,11 @@ public class TileManager {
 		loadMap("/maps/pphouse.txt", 92);
 		loadMap("/maps/house01.txt", 93); // move deletor
 		loadMap("/maps/house01.txt", 94); // gift e/s pokemon
+		loadMap("/maps/electric0.txt", 95);
+		loadMap("/maps/electric-01.txt", 96);
+		loadMap("/maps/electric-02.txt", 97);
+		loadMap("/maps/electric-03.txt", 98);
+		loadMap("/maps/electricH.txt", 99);
 	}
 	
 	public void getTileImage() {
@@ -473,12 +478,13 @@ public class TileManager {
 		setup(370, true);
 		setup(371, true);
 
-//		setup(373, true);
-//		setup(374, true);
-//		setup(375, true);
-//		setup(376, true);
-//		setup(377, true);
-//		setup(378, true);
+		setup(373, false);
+		setup(374, false);
+		setup(375, false);
+		setup(376, false);
+		setup(377, false);
+		setup(378, false);
+		
 //		setup(379, true);
 //		setup(380, true);
 //		setup(381, true);

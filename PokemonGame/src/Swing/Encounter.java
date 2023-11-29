@@ -396,6 +396,34 @@ public class Encounter {
 				encounters.add(new Encounter(143, 24, 27, 0.20));
 				encounters.add(new Encounter(141, 27, 29, 0.20));
 				encounters.add(new Encounter(215, 25, 27, 0.25));
+			} else if (area == 95 && type.equals("Standard")) { // Electric 0
+				encounters.add(new Encounter(124, 32, 35, 0.15));
+				encounters.add(new Encounter(198, 32, 35, 0.20));
+				encounters.add(new Encounter(200, 32, 35, 0.20));
+				encounters.add(new Encounter(202, 30, 34, 0.20));
+				encounters.add(new Encounter(203, 35, 36, 0.05));
+				encounters.add(new Encounter(206, 32, 35, 0.20));
+			} else if ((area == 95 || area == 98) && (type.equals("Surfing") || type.equals("Fishing"))) { // Electric 0/Electric -3
+				encounters.add(new Encounter(209, 15, 15, 0.80));
+				encounters.add(new Encounter(210, 35, 35, 0.20));
+			} else if ((area == 96 || area == 99) && type.equals("Standard")) { // Electric -1/Electric H
+				encounters.add(new Encounter(53, 35, 38, 0.25));
+				encounters.add(new Encounter(198, 35, 38, 0.21));
+				encounters.add(new Encounter(200, 35, 38, 0.19));
+				encounters.add(new Encounter(203, 35, 38, 0.10));
+				encounters.add(new Encounter(206, 32, 35, 0.25));
+			} else if (area == 97 && type.equals("Standard")) { // Electric -2
+				encounters.add(new Encounter(170, 39, 43, 0.20));
+				encounters.add(new Encounter(172, 38, 42, 0.20));
+				encounters.add(new Encounter(198, 39, 43, 0.13));
+				encounters.add(new Encounter(200, 39, 43, 0.12));
+				encounters.add(new Encounter(203, 39, 43, 0.20));
+				encounters.add(new Encounter(206, 39, 43, 0.15));
+			} else if (area == 97 && type.equals("Standard")) { // Electric -3
+				encounters.add(new Encounter(198, 42, 46, 0.40));
+				encounters.add(new Encounter(200, 42, 46, 0.20));
+				encounters.add(new Encounter(203, 42, 46, 0.20));
+				encounters.add(new Encounter(206, 42, 46, 0.20));
 			}
 			
 			

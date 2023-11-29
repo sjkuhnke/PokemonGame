@@ -17,6 +17,7 @@ import Obj.InteractiveTile;
 import Obj.ItemObj;
 import Obj.Pit;
 import Obj.PitEdge;
+import Obj.Rock_Climb;
 import Obj.Rock_Smash;
 import Obj.Tree_Stump;
 import Obj.Vine;
@@ -813,6 +814,10 @@ public class AssetSetter {
 		
 		mapNum = 25;
 		gp.iTile[mapNum][iIndex] = ITileSetup(73, 73, 1);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(65, 85, 0, 1);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(75, 71, 3, 1);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 81, 2, 1);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 80, 1, 1);
 		
 		mapNum = 28;
 		iIndex = 0;
@@ -839,6 +844,10 @@ public class AssetSetter {
 		
 		gp.iTile[mapNum][iIndex] = ITileSetup(15, 53, 0);
 		gp.iTile[mapNum][iIndex] = ITileSetup(29, 53, 0);
+		
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(6, 51, 2, 3);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(6, 50, 2, 3);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(6, 49, 2, 3);
 		
 		mapNum = 35;
 		iIndex = 0;
@@ -867,6 +876,9 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(58, 47, 4);
 		gp.iTile[mapNum][iIndex] = ITileSetup(59, 47, 4);
 		gp.iTile[mapNum][iIndex] = ITileSetup(60, 47, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 56, 4);
+		
+		SetupPit(mapNum, 58, 56, 95, 42, 49);
 		
 		mapNum = 60;
 		iIndex = 0;
@@ -913,6 +925,31 @@ public class AssetSetter {
 		mapNum = 83;
 		iIndex = 0;
 		SetupPit(mapNum, 15, 78, 0, 90, 46);
+		
+		mapNum = 95;
+		iIndex = 0;
+		SetupPit(mapNum, 56, 59, 96, 55, 51);
+		
+		mapNum = 96;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 56, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 56, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 56, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 56, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(44, 56, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 59, 4);
+		SetupPit(mapNum, 48, 61, 97, 45, 58);
+		SetupPit(mapNum, 39, 58, 97, 39, 54);
+		
+		mapNum = 97;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 43, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 44, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 50, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 49, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 53, 4);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 53, 4);
+		SetupPit(mapNum, 48, 37, 98, 47, 48);
 	}
 
 	public void updateNPC() {
@@ -1089,6 +1126,27 @@ public class AssetSetter {
 		case 6:
 			break;
 		}
+		
+		result.worldX = gp.tileSize*x;
+		result.worldY = gp.tileSize*y;
+		
+		iIndex++;
+		
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param type
+	 * 0 = go down, 1 = go left, 2 = go up, 3 = go right
+	 * @param amt 
+	 * @return
+	 */
+	private InteractiveTile SetupRockClimb(int x, int y, int type, int amt) {
+		InteractiveTile result = null;
+		result = new Rock_Climb(gp, type, amt);
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;

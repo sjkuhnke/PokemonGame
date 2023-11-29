@@ -30,6 +30,7 @@ import javax.swing.SwingUtilities;
 
 import Obj.Cut_Tree;
 import Obj.Pit;
+import Obj.Rock_Climb;
 import Obj.Rock_Smash;
 import Obj.Tree_Stump;
 import Obj.Vine;
@@ -275,6 +276,7 @@ public class PlayerCharacter extends Entity {
 				}
 			}
 			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Pit) interactPit(iTileIndex);
+			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Rock_Climb) interactRockClimb(iTileIndex);
 		}
 		if (keyH.aPressed) {
 			if (p.fish) {
@@ -1861,18 +1863,39 @@ public class PlayerCharacter extends Entity {
 		keyH.pause();
 		if (p.hasMove(Move.CUT)) {
 			int option = JOptionPane.showOptionDialog(null,
-					"This pit can be traversed! Would you like to use Slow Fall?",
+					"This pit can be traversed!\nWould you like to use Slow Fall?",
 					"Slow Fall",
 		            JOptionPane.YES_NO_OPTION,
 		            JOptionPane.QUESTION_MESSAGE,
 		            null, null, null);
 			if (option == JOptionPane.YES_OPTION) {
 				Pit pit = (Pit) gp.iTile[gp.currentMap][i];
-				System.out.println(pit.xDest + ", " + pit.yDest);
 				gp.eHandler.teleport(pit.mapDest, pit.xDest, pit.yDest, false);
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "This pit looks deep! I can't even see the bottom!");
+			JOptionPane.showMessageDialog(null, "This pit looks deep!\nI can't even see the bottom!");
+		}
+		keyH.resume();
+		
+	}
+	
+	private void interactRockClimb(int i) {
+		keyH.pause();
+		if (p.hasMove(Move.CUT)) {
+			int option = JOptionPane.showOptionDialog(null,
+					"This wall can be scaled!\nWould you like to use Rock Climb?",
+					"Rock Climb",
+		            JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE,
+		            null, null, null);
+			if (option == JOptionPane.YES_OPTION) {
+				Rock_Climb rc = (Rock_Climb) gp.iTile[gp.currentMap][i];
+				int inverse = this.direction == rc.direction ? 1 : -1;
+				this.worldX += ((rc.deltaX * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaX * inverse));
+				this.worldY += ((rc.deltaY * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaY * inverse));
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "This wall looks like it can be scaled!");
 		}
 		keyH.resume();
 		
