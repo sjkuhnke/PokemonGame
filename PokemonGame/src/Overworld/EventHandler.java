@@ -444,6 +444,28 @@ public class EventHandler {
 			// Gift E/S House
 			if (hit(85,23,64)) teleport(94, 31, 45,false);
 			if (hit(94,31,46)) teleport(85, 23, 65,false);
+			
+			// Electric Tunnel 0 -> 1
+			if (hit(95,52,46)) teleport(35, 65, 42,true);
+			if (hit(35,65,42)) teleport(95, 52, 46,true);
+			
+			// Electric Tunnel -1 -> 0
+			if (hit(96,40,56)) teleport(95, 41, 62,true);
+			if (hit(95,41,62)) teleport(96, 40, 56,true);
+			
+			// Electric Tunnel -2 -> -1
+			if (hit(97,38,58)) teleport(96, 38, 62,true);
+			if (hit(96,38,62)) teleport(97, 38, 58,true);
+			if (hit(97,56,57)) teleport(96, 58, 60,true);
+			if (hit(96,58,60)) teleport(97, 56, 57,true);
+			
+			// Electric Tunnel -3 -> -2
+			if (hit(98,47,45)) teleport(97, 46, 32,true);
+			if (hit(97,46,32)) teleport(98, 47, 45,true);
+			
+			// Electric Tunnel -1 -> H
+			if (hit(96,47,42)) teleport(99, 50, 63,false);
+			if (hit(99,50,64)) teleport(96, 47, 43,false);
 		}
 	}
 	

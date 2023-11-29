@@ -2350,6 +2350,7 @@ public class Pokemon implements Serializable {
 	private Pokemon checkEvo(Player player) {
 		Pokemon result = null;
 		int area = player.currentMap;
+		if (area >= 95 && area <= 99) area = 35;
 		if (id == 1 && level >= 18) {
 			result = new Pokemon(2, this);
 		} else if (id == 2 && level >= 36) {
@@ -2572,9 +2573,9 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 209 && level >= 20) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 212 && area == -1) {
+		} else if (id == 212 && level >= 40) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 213 && area == -2) {
+		} else if (id == 213 && level >= 40) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 217 && level >= 20) {
 			result = new Pokemon(id + 1, this);
