@@ -1861,7 +1861,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactPit(int i) {
 		keyH.pause();
-		if (p.hasMove(Move.CUT)) {
+		if (p.hasMove(Move.SLOW_FALL)) {
 			int option = JOptionPane.showOptionDialog(null,
 					"This pit can be traversed!\nWould you like to use Slow Fall?",
 					"Slow Fall",
@@ -1881,7 +1881,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactRockClimb(int i) {
 		keyH.pause();
-		if (p.hasMove(Move.CUT)) {
+		if (p.hasMove(Move.ROCK_CLIMB)) {
 			int option = JOptionPane.showOptionDialog(null,
 					"This wall can be scaled!\nWould you like to use Rock Climb?",
 					"Rock Climb",
