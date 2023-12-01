@@ -22,6 +22,9 @@ import Obj.Rock_Smash;
 import Obj.Tree_Stump;
 import Obj.Vine;
 import Obj.Vine_Crossable;
+import Obj.Whirlpool;
+import Obj.Whirlpool_Corner;
+import Obj.Whirlpool_Side;
 import Swing.Item;
 
 public class AssetSetter {
@@ -785,6 +788,8 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(39, 77, 0);
 		gp.iTile[mapNum][iIndex] = ITileSetup(13, 52, 1);
 		
+		SetupWhirlpool(mapNum, 12, 92);
+		
 		mapNum = 13;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(23, 7, 1);
@@ -815,9 +820,6 @@ public class AssetSetter {
 		mapNum = 25;
 		gp.iTile[mapNum][iIndex] = ITileSetup(73, 73, 1);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(65, 85, 0, 1);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(75, 71, 3, 1);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 81, 2, 1);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 80, 1, 1);
 		
 		mapNum = 28;
 		iIndex = 0;
@@ -844,10 +846,6 @@ public class AssetSetter {
 		
 		gp.iTile[mapNum][iIndex] = ITileSetup(15, 53, 0);
 		gp.iTile[mapNum][iIndex] = ITileSetup(29, 53, 0);
-		
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(6, 51, 2, 3);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(6, 50, 2, 3);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(6, 49, 2, 3);
 		
 		mapNum = 35;
 		iIndex = 0;
@@ -1170,6 +1168,37 @@ public class AssetSetter {
 			iIndex++;
 		}
 		
+		
+	}
+	
+	private void SetupWhirlpool(int mapNum, int x, int y) {
+		Whirlpool middle = new Whirlpool(gp, x, y);
+		
+		gp.iTile[mapNum][iIndex] = middle;
+		iIndex++;
+		
+		int[][] offsets = {
+	            {-1, -1}, {0, -1}, {1, -1},
+	            {-1, 0},           {1, 0},
+	            {-1, 1},  {0, 1},  {1, 1}
+	    };
+		
+		for (int i = 0; i < 8; i++) {
+			int offsetX = x + offsets[i][0];
+	        int offsetY = y + offsets[i][1];
+			
+			Whirlpool current;
+	        if (i % 2 == 0) {
+	            current = new Whirlpool_Side(gp, offsetX, offsetY);
+	            current.down1 = current.setup("/npc/whirlpool" + (i + 1));
+	        } else {
+	            current = new Whirlpool_Corner(gp, offsetX, offsetY);
+	            current.down1 = current.setup("/npc/whirlpool" + (i + 1));
+	        }
+			
+			gp.iTile[mapNum][iIndex] = current;
+			iIndex++;
+		}
 		
 	}
 }
