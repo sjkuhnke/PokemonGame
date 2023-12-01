@@ -5,7 +5,6 @@ import java.awt.Color;
 
 import javax.swing.*;
 
-import Swing.Move;
 import Swing.Battle.JGradientButton;
 import java.awt.Font;
 
@@ -454,16 +453,13 @@ public class PMap extends JFrame {
 	}
 
 	private void fly(String loc, int map, int x, int y) {
-		if (gp.player.p.hasMove(Move.CUT)) {
-			int answer = JOptionPane.showConfirmDialog(null, "Would you like to fly to " + loc + "?");
-    		if (answer == JOptionPane.YES_OPTION) {
-    			gp.eHandler.teleport(map, x, y, false);
-    			gp.keyH.resume();
-    			this.dispose();
-    			gp.mapOpen = false;
-    		}
+		int answer = JOptionPane.showConfirmDialog(null, "Would you like to fly to " + loc + "?");
+		if (answer == JOptionPane.YES_OPTION) {
+			gp.eHandler.teleport(map, x, y, false);
+			gp.keyH.resume();
+			this.dispose();
+			gp.mapOpen = false;
 		}
-		
 	}
 
 	private int getLoc(int map, int x, int y) {
