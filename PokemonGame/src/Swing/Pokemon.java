@@ -290,7 +290,7 @@ public class Pokemon implements Serializable {
 	    }
 	    
 	    if (this.vStatuses.contains(Status.TAUNTED)) {
-	    	validMoves.removeIf(move -> move.cat == 2);
+	    	validMoves.removeIf(move -> move.cat == 2 && move != Move.METRONOME);
 	    }
 	    
 	    if (this.vStatuses.contains(Status.TORMENTED)) {
@@ -359,7 +359,7 @@ public class Pokemon implements Serializable {
         }
         
         if (this.vStatuses.contains(Status.TAUNTED)) {
-        	bestMoves.removeIf(move -> move.cat == 2);
+        	bestMoves.removeIf(move -> move.cat == 2 && move != Move.METRONOME);
         }
 
         if (bestMoves.isEmpty()) {
@@ -3075,7 +3075,7 @@ public class Pokemon implements Serializable {
 			return;
 		}
 		
-		if (this.vStatuses.contains(Status.TAUNTED) && move.cat == 2) {
+		if (this.vStatuses.contains(Status.TAUNTED) && move.cat == 2 && move != Move.METRONOME) {
 			console.writeln("\n" + this.nickname + " can't use " + move + " after the taunt!");
 			this.lastMoveUsed = null;
 			this.impressive = false;
@@ -11531,7 +11531,7 @@ public class Pokemon implements Serializable {
 		int sum = 0;
 		for (int i = 0; i < 6; i++) {
 			int iv = this.ivs[i];
-			int bit = iv % 2 == 0 ? 0 : 1;
+			int bit = iv % 2;
 			sum += bit << i;
 		}
 		int index = (sum * 18) / 63;
@@ -12331,7 +12331,7 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (vStatuses.contains(Status.TAUNTED)) validMoves.removeIf(mo -> mo != null && mo.cat == 2);
+		if (vStatuses.contains(Status.TAUNTED)) validMoves.removeIf(mo -> mo != null && mo.cat == 2 && mo != Move.METRONOME);
 		
 		return validMoves;
 	}

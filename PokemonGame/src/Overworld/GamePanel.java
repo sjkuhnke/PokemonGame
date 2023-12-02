@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	public PlayerCharacter player = new PlayerCharacter(this, keyH);
 	public Entity npc[][] = new Entity[maxMap][20];
 	public ItemObj obj[][] = new ItemObj[maxMap][25];
-	public InteractiveTile iTile[][] = new InteractiveTile[maxMap][35];
+	public InteractiveTile iTile[][] = new InteractiveTile[maxMap][55];
 	
 	public TileManager tileM = new TileManager(this);
 	
@@ -244,7 +244,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	public void setupGame() {
 		aSetter.setNPC();
 		aSetter.setObject();
-		aSetter.setInteractiveTile();
+		aSetter.setInteractiveTile(currentMap);
 		Pokemon.console = new TextPane();
 		Pokemon.console.setScrollPane(new JScrollPane());
 		Pokemon.field = new Field();

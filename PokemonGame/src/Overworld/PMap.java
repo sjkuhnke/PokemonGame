@@ -5,6 +5,7 @@ import java.awt.Color;
 
 import javax.swing.*;
 
+import Entity.PlayerCharacter;
 import Swing.Battle.JGradientButton;
 import java.awt.Font;
 
@@ -462,216 +463,380 @@ public class PMap extends JFrame {
 		}
 	}
 
-	private int getLoc(int map, int x, int y) {
+	public static int getLoc(int map, int x, int y) {
 		switch (map) {
 		case 0:
-			if (x > 73 && y > 37) return 0;
-			if (x <= 73 && x > 41 && y > 37) return 1;
-			if (x <= 41 && y > 41) return 2;
-			if (x <= 40 && y <= 41) return 3;
-			if (x > 40 && y <= 37) return 26;
+			if (x > 73 && y > 37) {
+				PlayerCharacter.currentMapName = "New Minnow Town";
+				return 0;
+			}
+			if (x <= 73 && x > 41 && y > 37) {
+				PlayerCharacter.currentMapName = "Route 22";
+				return 1;
+			}
+			if (x <= 41 && y > 41) {
+				PlayerCharacter.currentMapName = "Bananville Town";
+				return 2;
+			}
+			if (x <= 40 && y <= 41) {
+				PlayerCharacter.currentMapName = "Route 23";
+				return 3;
+			}
+			if (x > 40 && y <= 37) {
+				PlayerCharacter.currentMapName = "Route 42";
+				return 26;
+			}
 			break;
 		case 1:
+			PlayerCharacter.currentMapName = "Bananville Town";
 			return 2;
 		case 2:
+			PlayerCharacter.currentMapName = "Bananville Town";
 			return 2;
 		case 3:
+			PlayerCharacter.currentMapName = "Route 23";
 			return 3;
 		case 4:
-			if (y <= 43) return 16;
-			if (x > 57) return 4;
-			if (x <= 57) return 5;
+			if (y <= 43) {
+				PlayerCharacter.currentMapName = "Route 36";
+				return 16;
+			}
+			if (x > 57) {
+				PlayerCharacter.currentMapName = "Poppy Grove";
+				return 4;
+			}
+			if (x <= 57) {
+				PlayerCharacter.currentMapName = "Route 24 (pt. 1)";
+				return 5;
+			}
 			break;
 		case 5:
+			PlayerCharacter.currentMapName = "Poppy Grove";
 			return 4;
 		case 6:
+			PlayerCharacter.currentMapName = "Poppy Grove";
 			return 4;
 		case 7:
+			PlayerCharacter.currentMapName = "Poppy Grove";
 			return 4;
 		case 8:
+			PlayerCharacter.currentMapName = "Poppy Grove";
 			return 4;
 		case 9:
+			PlayerCharacter.currentMapName = "Poppy Grove";
 			return 4;
 		case 10:
+			PlayerCharacter.currentMapName = "Route 24 (pt. 2)";
 			return 6;
 		case 11:
-			if (x > 43) return 6;
+			if (x > 43) {
+				PlayerCharacter.currentMapName = "Route 24 (pt. 2)";
+				return 6;
+			}
 			if (x <= 43) {
-				if (y <= 64) return 8;
-				if (y > 64) return 7;
+				if (y <= 64) {
+					PlayerCharacter.currentMapName = "Route 25";
+					return 8;
+				}
+				if (y > 64) {
+					PlayerCharacter.currentMapName = "Gelb Forest";
+					return 7;
+				}
 			}
 		case 12:
+			PlayerCharacter.currentMapName = "Route 25";
 			return 8;
 		case 13:
-			if (y <= 52) return 10;
-			if (y > 52) return 9;
+			if (y <= 52) {
+				PlayerCharacter.currentMapName = "Route 26";
+				return 10;
+			}
+			if (y > 52) {
+				PlayerCharacter.currentMapName = "Sicab City";
+				return 9;
+			}
 		case 14:
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 15:
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 16:
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 17:
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 18:
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 19:
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 20:
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 21:
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 22:
-			if (y <= 18) return 21;
-			if (y > 18) return 40;
+			if (y <= 18) {
+				PlayerCharacter.currentMapName = "Route 40";
+				return 21;
+			}
+			if (y > 18) {
+				PlayerCharacter.currentMapName = "Lava Lake";
+				return 40;
+			}
 		case 23:
+			PlayerCharacter.currentMapName = "Route 40";
 			return 21;
 		case 24:
+			PlayerCharacter.currentMapName = "Mt. Splinkty (1A)";
 			return 11;
 		case 25:
+			PlayerCharacter.currentMapName = "Mt. Splinkty (2B)";
 			return 11;
 		case 26:
+			PlayerCharacter.currentMapName = "Mt. Splinkty (3B)";
 			return 11;
 		case 27:
+			PlayerCharacter.currentMapName = "Mt. Splinkty (3A)";
 			return 11;
 		case 28:
-			if (y > 57) return 14;
-			if (x <= 61) return 12;
-			if (x > 61) return 13;
+			if (y > 57) {
+				PlayerCharacter.currentMapName = "Route 41";
+				return 14;
+			}
+			if (x <= 61) {
+				PlayerCharacter.currentMapName = "Route 27";
+				return 12;
+			}
+			if (x > 61) {
+				PlayerCharacter.currentMapName = "Kleine Village";
+				return 13;
+			}
 		case 29:
+			PlayerCharacter.currentMapName = "Kleine Village";
 			return 13;
 		case 30:
+			PlayerCharacter.currentMapName = "Kleine Village";
 			return 13;
 		case 31:
+			PlayerCharacter.currentMapName = "Kleine Village";
 			return 13;
 		case 32:
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 33:
-			if (y <= 22) return 17;
-			if (y > 22) return 15;
+			if (y <= 22) {
+				PlayerCharacter.currentMapName = "Route 28";
+				return 17;
+			}
+			if (y > 22) {
+				PlayerCharacter.currentMapName = "Peaceful Park";
+				return 15;
+			}
 		case 34:
+			PlayerCharacter.currentMapName = "Route 28";
 			return 17;
 		case 35:
+			PlayerCharacter.currentMapName = "Electric Tunnel (1A)";
 			return 18;
 		case 36:
+			PlayerCharacter.currentMapName = "Route 29";
 			return 19;
 		case 37:
+			PlayerCharacter.currentMapName = "Route 29";
 			return 19;
 		case 38:
-			if (y <= 63) return 20;
-			if (y > 63) return 22;
+			if (y <= 63) {
+				PlayerCharacter.currentMapName = y <= 30 ? "Icy Fields" : "Schrice City";
+				return 20;
+			}
+			if (y > 63) {
+				PlayerCharacter.currentMapName = "Route 30";
+				return 22;
+			}
 		case 39:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 40:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 41:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 42:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 43:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 44:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 45:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 46:
+			PlayerCharacter.currentMapName = "Poppy Grove";
 			return 4;
 		case 47:
+			PlayerCharacter.currentMapName = "Bananaville Town";
 			return 2;
 		case 48:
+			PlayerCharacter.currentMapName = "Poppy Grove";
 			return 4;
 		case 49:
+			PlayerCharacter.currentMapName = "Kleine Village";
 			return 13;
 		case 50:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 51:
+			PlayerCharacter.currentMapName = "New Minnow Town";
 			return 0;
 		case 52:
+			PlayerCharacter.currentMapName = "New Minnow Town";
 			return 0;
 		case 53:
+			PlayerCharacter.currentMapName = "New Minnow Town";
 			return 0;
 		case 54:
+			PlayerCharacter.currentMapName = "New Minnow Town";
 			return 0;
 		case 55:
+			PlayerCharacter.currentMapName = "Bananaville Town";
 			return 2;
 		case 56:
+			PlayerCharacter.currentMapName = "Bananaville Town";
 			return 2;
 		case 57:
+			PlayerCharacter.currentMapName = "Poppy Grove";
 			return 4;
 		case 58:
+			PlayerCharacter.currentMapName = "Poppy Grove";
 			return 4;
 		case 59:
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 60:
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 61:
+			PlayerCharacter.currentMapName = "Kleine Village";
 			return 13;
 		case 62:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 63:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 64:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 65:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 66:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 67:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 68:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 69:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 70:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 71:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 72:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 73:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 74:
+			PlayerCharacter.currentMapName = "Peaceful Park";
 			return 15;
 		case 75:
+			PlayerCharacter.currentMapName = "Peaceful Park";
 			return 15;
 		case 76:
+			PlayerCharacter.currentMapName = "Route 30";
 			return 22;
 		case 77:
+			PlayerCharacter.currentMapName = "Mindagan Lake";
 			return 23;
 		case 78:
+			PlayerCharacter.currentMapName = "Mindagan Cavern (1A)";
 			return 23;
 		case 79:
+			PlayerCharacter.currentMapName = "Route 31";
 			return 24;
 		case 80:
-			if (y <= 41) return 24;
-			if (y > 41) return 25;
+			if (y <= 41) {
+				PlayerCharacter.currentMapName = "Route 31";
+				return 24;
+			}
+			if (y > 41) {
+				PlayerCharacter.currentMapName = "Shadow Ravine (1A)";
+				return 25;
+			}
 		case 81:
+			PlayerCharacter.currentMapName = "Route 42";
 			return 26;
 		case 82:
+			PlayerCharacter.currentMapName = "Shadow Ravine (1A)";
 			return 25;
 		case 83:
-			if (x <= 56) return 25;
-			if (x > 56) return 27;
-			return 20;
+			if (x <= 56) {
+				PlayerCharacter.currentMapName = "Shadow Ravine (1B)";
+				return 25;
+			}
+			if (x > 56) {
+				PlayerCharacter.currentMapName = "Route 32";
+				return 27;
+			}
 		case 84:
+			PlayerCharacter.currentMapName = "Route 32";
 			return 27;
 		case 85:
-			if (x <= 63) return 28;
-			if (x > 56) return 29;
-			return 20;
+			if (x <= 63) {
+				PlayerCharacter.currentMapName = "Frenco City";
+				return 28;
+			}
+			if (x > 64) {
+				PlayerCharacter.currentMapName = "Route 33";
+				return 29;
+			}
 		case 86:
+			PlayerCharacter.currentMapName = "Frenco City";
 			return 28;
 		case 87:
+			PlayerCharacter.currentMapName = "Frenco City";
 			return 28;
 		case 88:
+			PlayerCharacter.currentMapName = "Frenco City";
 			return 28;
 		case 89:
+			PlayerCharacter.currentMapName = "Frenco City";
 			return 28;
 		case 90:
+			PlayerCharacter.currentMapName = "Shadow Ravine (0A)";
 			return 25;
 		case 91:
+			PlayerCharacter.currentMapName = "Frenco City";
 			return 28;
 		case 92:
+			PlayerCharacter.currentMapName = "Peaceful Park";
 			return 15;
 		case 93: // TODO from here down
 			return 20;

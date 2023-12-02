@@ -35,6 +35,7 @@ public class Player implements Serializable{
 	public int steps;
 	public boolean fish;
 	public boolean repel;
+	public boolean surf;
 	
 	public Player(GamePanel gp) {
 		team = new Pokemon[6];
@@ -238,7 +239,7 @@ public class Player implements Serializable{
 		if (m == Move.VINE_CROSS && badges < 3) return false;
 		if (m == Move.SURF && badges < 4) return false;
 		if (m == Move.SLOW_FALL && badges < 5) return false;
-		if (m == Move.FLY && badges < 6) return false;
+		if (m == Move.WHIRLPOOL && badges < 6) return false;
 		if (m == Move.ROCK_CLIMB && badges < 7) return false;
 		if (m == Move.LAVA_SURF && badges < 8) return false;
 		for (Pokemon p : team) {
