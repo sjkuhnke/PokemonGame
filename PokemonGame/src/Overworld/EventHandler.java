@@ -1,5 +1,6 @@
 package Overworld;
 
+import Entity.PlayerCharacter;
 import Swing.Player;
 
 public class EventHandler {
@@ -509,7 +510,10 @@ public class EventHandler {
 		previousEventY = gp.player.worldY;
 		
 		gp.aSetter.updateNPC();
-		gp.aSetter.setInteractiveTile();
+		gp.aSetter.setInteractiveTile(map);
 		gp.player.cross = false;
+		
+		PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
+		Main.window.setTitle("Pokemon Game - " + PlayerCharacter.currentMapName);
 	}
 }

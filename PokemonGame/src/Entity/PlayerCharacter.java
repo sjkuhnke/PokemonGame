@@ -35,9 +35,11 @@ import Obj.Rock_Smash;
 import Obj.Tree_Stump;
 import Obj.Vine;
 import Obj.Vine_Crossable;
+import Obj.Whirlpool;
 import Overworld.GamePanel;
 import Overworld.KeyHandler;
 import Overworld.Main;
+import Overworld.PMap;
 import Swing.Bag.Entry;
 import Swing.Battle.JGradientButton;
 import Swing.Battle;
@@ -59,9 +61,10 @@ public class PlayerCharacter extends Entity {
 	public Player p;
 
 	public boolean cross = false;
-	public boolean surf = false;
 
 	public String currentSave;
+	
+	public static String currentMapName;
 	
 	public PlayerCharacter(GamePanel gp, KeyHandler keyH) {
 		super(gp);
@@ -154,12 +157,12 @@ public class PlayerCharacter extends Entity {
 				spriteCounter = 0;
 				p.steps++;
 			}
-			if (spriteCounter % 4 == 0 && (inTallGrass || surf) && !p.repel) {
+			if (spriteCounter % 4 == 0 && (inTallGrass || p.surf) && !p.repel) {
 				Random r = new Random();
 				int random = r.nextInt(150);
 				if (random < speed) {
 					String area = "Standard";
-					if (surf) area = "Surfing";
+					if (p.surf) area = "Surfing";
 					gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, area);
 				}
 			}
@@ -178,7 +181,7 @@ public class PlayerCharacter extends Entity {
 			
 			gp.eHandler.checkEvent();
 			
-			if (surf) {
+			if (p.surf) {
 				double surfXD =  worldX / (1.0 * gp.tileSize);
 				double surfYD =  worldY / (1.0 * gp.tileSize);
 				int surfX = (int) Math.round(surfXD);
@@ -195,7 +198,7 @@ public class PlayerCharacter extends Entity {
 					break;
 				}
 				if (!gp.tileM.getWaterTiles().contains(gp.tileM.mapTileNum[gp.currentMap][surfX][surfY])) {
-					surf = false;
+					p.surf = false;
 					for (Integer i : gp.tileM.getWaterTiles()) {
 						gp.tileM.tile[i].collision = true;
 					}
@@ -208,6 +211,8 @@ public class PlayerCharacter extends Entity {
 					this.worldY = snapY;
 				}
 			}
+			PMap.getLoc(gp.currentMap, (int) Math.round(worldX * 1.0 / 48), (int) Math.round(worldY * 1.0 / 48));
+			Main.window.setTitle("Pokemon Game - " + currentMapName);
 		}
 		if (keyH.dPressed) {
 			keyH.pause();
@@ -246,7 +251,7 @@ public class PlayerCharacter extends Entity {
 			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Rock_Smash) interactRockSmash(iTileIndex);
 			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Vine_Crossable) interactVines(iTileIndex);
 			
-			if (p.hasMove(Move.SURF) && !surf) {
+			if (p.hasMove(Move.SURF) && !p.surf) {
 				int result = gp.cChecker.checkTileType(this);
 				if (gp.tileM.getWaterTiles().contains(result)) {
 					keyH.pause();
@@ -266,7 +271,7 @@ public class PlayerCharacter extends Entity {
 							worldX += gp.tileSize;
 							break;
 						}
-						surf = true;
+						p.surf = true;
 						for (Integer i : gp.tileM.getWaterTiles()) {
 							gp.tileM.tile[i].collision = false;
 						}
@@ -276,6 +281,7 @@ public class PlayerCharacter extends Entity {
 				}
 			}
 			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Pit) interactPit(iTileIndex);
+			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Whirlpool) interactWhirlpool(iTileIndex);
 			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Rock_Climb) interactRockClimb(iTileIndex);
 		}
 		if (keyH.aPressed) {
@@ -1879,6 +1885,38 @@ public class PlayerCharacter extends Entity {
 		
 	}
 	
+	private void interactWhirlpool(int i) {
+		keyH.pause();
+		if (p.hasMove(Move.WHIRLPOOL)) {
+			int option = JOptionPane.showOptionDialog(null,
+					"This water vortex can be crossed!\nWould you like to use Whirlpool?",
+					"Whirlpool",
+		            JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE,
+		            null, null, null);
+			if (option == JOptionPane.YES_OPTION) {
+				switch (direction) {
+				case "down":
+					worldY += gp.tileSize * 3.75;
+					break;
+				case "up":
+					worldY -= gp.tileSize * 3.75;
+					break;
+				case "left":
+					worldX -= gp.tileSize * 3.75;
+					break;
+				case "right":
+					worldX += gp.tileSize * 3.75;
+					break;
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "This water vortex can be crossed!");
+		}
+		keyH.resume();
+		
+	}
+	
 	private void interactRockClimb(int i) {
 		keyH.pause();
 		if (p.hasMove(Move.ROCK_CLIMB)) {
@@ -1908,22 +1946,22 @@ public class PlayerCharacter extends Entity {
 		case "up":
 			if (spriteNum == 1) image = up1;
 			if (spriteNum == 2) image = up2;
-			if (surf) image = surf2;
+			if (p.surf) image = surf2;
 			break;
 		case "down":
 			if (spriteNum == 1) image = down1;
 			if (spriteNum == 2) image = down2;
-			if (surf) image = surf1;
+			if (p.surf) image = surf1;
 			break;
 		case "left":
 			if (spriteNum == 1) image = left1;
 			if (spriteNum == 2) image = left2;
-			if (surf) image = surf3;
+			if (p.surf) image = surf3;
 			break;
 		case "right":
 			if (spriteNum == 1) image = right1;
 			if (spriteNum == 2) image = right2;
-			if (surf) image = surf4;
+			if (p.surf) image = surf4;
 			break;
 		}
 		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);

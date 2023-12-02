@@ -39,10 +39,11 @@ import Swing.PType;
 public class Main {
 	public static Trainer[] trainers;
 	public static ArrayList<Trainer> modifiedTrainers;
+	public static JFrame window;
 
 	public static void main(String[] args) {
 
-		JFrame window = new JFrame();
+		window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
 		window.setTitle("Pokemon Game");
@@ -75,6 +76,11 @@ public class Main {
 	        gamePanel.player.worldX = gamePanel.player.p.getPosX();
 	        gamePanel.player.worldY = gamePanel.player.p.getPosY();
 	        gamePanel.currentMap = gamePanel.player.p.currentMap;
+	        if (gamePanel.player.p.surf) {
+	        	for (Integer i : gamePanel.tileM.getWaterTiles()) {
+	        		gamePanel.tileM.tile[i].collision = false;
+				}
+	        }
 	        ois.close();
 	    } catch (IOException | ClassNotFoundException e) {
 	        // If there's an error reading the file, create a new Player object
@@ -147,7 +153,7 @@ public class Main {
 		    window.add(fadePanel, 0); // Add the fadePanel at the bottom layer
 		    
 		    modifyTrainers(gamePanel);
-		    gamePanel.setupGame();
+		    gamePanel.setupGame(); // TODO
 		    gamePanel.startGameThread();
 		    
 		    // Create a Timer to gradually change the opacity of the fadePanel
@@ -367,7 +373,7 @@ public class Main {
 				new Trainer("3 Gym A", new Pokemon[]{new Pokemon(33, 29, false, true), new Pokemon(73, 29, false, true), new Pokemon(33, 30, false, true), new Pokemon(34, 31, false, true)}, 200), // 90
 				new Trainer("3 Gym B", new Pokemon[]{new Pokemon(23, 30, false, true), new Pokemon(36, 31, false, true), new Pokemon(42, 32, false, true)}, 200),
 				new Trainer("3 Gym C", new Pokemon[]{new Pokemon(62, 31, false, true), new Pokemon(63, 31, false, true)}, 200),
-				new Trainer("3 Gym D", new Pokemon[]{new Pokemon(24, 31, false, true), new Pokemon(25, 31, false, true)}, 200),
+				new Trainer("3 Gym D", new Pokemon[]{new Pokemon(23, 31, false, true), new Pokemon(25, 31, false, true)}, 200),
 				new Trainer("3 Gym Leader 1", new Pokemon[]{new Pokemon(25, 31, false, true), new Pokemon(37, 32, false, true), new Pokemon(34, 32, false, true), new Pokemon(42, 32, false, true), new Pokemon(74, 32, false, true), new Pokemon(63, 33, false, true)}, 500, new Item(122)),
 				new Trainer("RR A", new Pokemon[]{new Pokemon(71, 30, false, true), new Pokemon(68, 31, false, true)}, 100), // 95
 				new Trainer("RR B", new Pokemon[]{new Pokemon(27, 30, false, true), new Pokemon(30, 31, false, true)}, 100),
