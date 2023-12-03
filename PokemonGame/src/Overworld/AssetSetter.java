@@ -920,10 +920,10 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(42, 74, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(43, 74, 4, mapNum, map);
 		
-		SetupPit(mapNum, 20, 61, 90, 90, 46, map);
-		SetupPit(mapNum, 11, 70, 90, 90, 46, map);
-		SetupPit(mapNum, 50, 64, 90, 90, 46, map);
-		SetupPit(mapNum, 81, 61, 90, 90, 46, map);
+		SetupPit(mapNum, 20, 61, 90, 45, 13, map); // top left
+		SetupPit(mapNum, 11, 70, 90, 30, 16, map); // bottom left
+		SetupPit(mapNum, 50, 64, 90, 58, 17, map); // middle
+		SetupPit(mapNum, 81, 61, 90, 68, 17, map); // right
 		
 		gp.iTile[mapNum][iIndex] = ITileSetup(50, 62, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(20, 59, 4, mapNum, map);
@@ -932,7 +932,33 @@ public class AssetSetter {
 		
 		mapNum = 83;
 		iIndex = 0;
-		SetupPit(mapNum, 15, 78, 0, 90, 46, map);
+		
+		mapNum = 90;
+		iIndex = 0;
+		SetupPit(mapNum, 51, 13, 100, 50, 54, map); // middle
+		SetupPit(mapNum, 29, 10, 101, 90, 46, map); // left
+		SetupPit(mapNum, 78, 11, 101, 90, 46, map); // right
+		
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 14, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 14, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 13, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 13, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 21, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 22, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 28, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 29, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 30, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 17, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 17, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(73, 11, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(74, 11, 4, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 9, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 14, 2, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(69, 15, 2, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(69, 12, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 34, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(57, 36, 3, 1, mapNum, map);
 		
 		mapNum = 95;
 		iIndex = 0;

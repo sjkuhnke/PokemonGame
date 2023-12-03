@@ -29,6 +29,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import Obj.Cut_Tree;
+import Obj.InteractiveTile;
 import Obj.Pit;
 import Obj.Rock_Climb;
 import Obj.Rock_Smash;
@@ -63,6 +64,8 @@ public class PlayerCharacter extends Entity {
 	public boolean cross = false;
 
 	public String currentSave;
+
+	private int cooldown;
 	
 	public static String currentMapName;
 	
@@ -156,11 +159,13 @@ public class PlayerCharacter extends Entity {
 				}
 				spriteCounter = 0;
 				p.steps++;
+				cooldown++;
 			}
-			if (spriteCounter % 4 == 0 && (inTallGrass || p.surf) && !p.repel) {
+			if (spriteCounter % 4 == 0 && (inTallGrass || p.surf) && !p.repel && cooldown > 2) {
 				Random r = new Random();
 				int random = r.nextInt(150);
 				if (random < speed) {
+					cooldown = 0;
 					String area = "Standard";
 					if (p.surf) area = "Surfing";
 					gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, area);
@@ -234,22 +239,49 @@ public class PlayerCharacter extends Entity {
 			if (gp.ticks == 3 && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "right") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
 		}
 		if (keyH.wPressed) {
+			// Check trainers
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
-			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Nurse) interactNurse();
-			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Clerk) interactClerk();
-			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Market) interactMarket();
-			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_Block) interactBlock((NPC_Block) gp.npc[gp.currentMap][npcIndex]);
-			if (npcIndex != 999 && (gp.npc[gp.currentMap][npcIndex] instanceof NPC_Trainer || gp.npc[gp.currentMap][npcIndex] instanceof NPC_TN || gp.npc[gp.currentMap][npcIndex] instanceof NPC_Rival || gp.npc[gp.currentMap][npcIndex] instanceof NPC_Rival2)) gp.startBattle(gp.npc[gp.currentMap][npcIndex].trainer);
-			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_GymLeader) gp.startBattle(gp.npc[gp.currentMap][npcIndex].trainer);
-			if (npcIndex != 999 && gp.npc[gp.currentMap][npcIndex] instanceof NPC_PC) gp.openBox();
+			if (npcIndex != 999) {
+				Entity target = gp.npc[gp.currentMap][npcIndex];
+				if (target instanceof NPC_Nurse) {
+					interactNurse();
+				} else if (target instanceof NPC_Clerk) {
+					interactClerk();
+				} else if (target instanceof NPC_Market) {
+					interactMarket();
+				} else if (target instanceof NPC_Block) {
+					interactBlock((NPC_Block) gp.npc[gp.currentMap][npcIndex]);
+				} else if (target instanceof NPC_Trainer || target instanceof NPC_TN || target instanceof NPC_Rival || target instanceof NPC_Rival2) {
+					gp.startBattle(target.trainer);
+				} else if (target instanceof NPC_GymLeader) {
+					gp.startBattle(target.trainer);
+				} else if (target instanceof NPC_PC) {
+					gp.openBox();
+				}
+			}
 			
+			// Check items
 			int objIndex = gp.cChecker.checkObject(this);
 			if (objIndex != -1) pickUpObject(objIndex);
 			
+			// Check iTiles
 			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
-			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Cut_Tree) interactCutTree(iTileIndex);
-			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Rock_Smash) interactRockSmash(iTileIndex);
-			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Vine_Crossable) interactVines(iTileIndex);
+			if (iTileIndex != 999) {
+				InteractiveTile target = gp.iTile[gp.currentMap][iTileIndex];
+				if (target instanceof Cut_Tree) {
+					interactCutTree(iTileIndex);
+				} else if (target instanceof Rock_Smash) {
+					interactRockSmash(iTileIndex);
+				} else if (target instanceof Vine_Crossable) {
+					interactVines(iTileIndex);
+				} else if (target instanceof Pit) {
+					interactPit(iTileIndex);
+				} else if (target instanceof Whirlpool) {
+					interactWhirlpool(iTileIndex);
+				} else if (target instanceof Rock_Climb) {
+					interactRockClimb(iTileIndex);
+				}
+			}
 			
 			if (p.hasMove(Move.SURF) && !p.surf) {
 				int result = gp.cChecker.checkTileType(this);
@@ -280,9 +312,6 @@ public class PlayerCharacter extends Entity {
 					keyH.resume();
 				}
 			}
-			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Pit) interactPit(iTileIndex);
-			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Whirlpool) interactWhirlpool(iTileIndex);
-			if (iTileIndex != 999 && gp.iTile[gp.currentMap][iTileIndex] instanceof Rock_Climb) interactRockClimb(iTileIndex);
 		}
 		if (keyH.aPressed) {
 			if (p.fish) {
@@ -1486,13 +1515,17 @@ public class PlayerCharacter extends Entity {
 		        	    	JButton party = setUpPartyButton(j);
 		        	        final int index = j;
 		        	        
-		        	        party.addActionListener(g -> {
+		        	        party.addActionListener(g -> { // TODO: make say "won't have any effect" if applicable
 		        	        	if (i.getItem().getID() == 41) {
 		        	        		for (Moveslot m : p.team[index].moveset) {
 		        	        			if (m != null) m.currentPP = m.maxPP;
-		        	        			JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s PP was restored!");
-		        	        			p.bag.remove(i.getItem());
 		        	        		}
+		        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s PP was restored!");
+	        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+	        	        			p.bag.remove(i.getItem());
+	        	        			showBag();
 		        	        	} else {
 		        	        		JPanel movePanel = new JPanel();
 		        	        	    movePanel.setLayout(new BoxLayout(movePanel, BoxLayout.Y_AXIS));
@@ -1877,6 +1910,7 @@ public class PlayerCharacter extends Entity {
 			if (option == JOptionPane.YES_OPTION) {
 				Pit pit = (Pit) gp.iTile[gp.currentMap][i];
 				gp.eHandler.teleport(pit.mapDest, pit.xDest, pit.yDest, false);
+				System.out.println(pit.mapDest + " " + pit.xDest + " " + pit.yDest);
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "This pit looks deep!\nI can't even see the bottom!");
@@ -1919,7 +1953,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactRockClimb(int i) {
 		keyH.pause();
-		if (p.hasMove(Move.ROCK_CLIMB)) {
+		if (p.hasMove(Move.CUT)) {
 			int option = JOptionPane.showOptionDialog(null,
 					"This wall can be scaled!\nWould you like to use Rock Climb?",
 					"Rock Climb",

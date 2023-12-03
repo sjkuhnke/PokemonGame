@@ -118,10 +118,12 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 93); // move deletor
 		loadMap("/maps/house01.txt", 94); // gift e/s pokemon
 		loadMap("/maps/electric0.txt", 95);
-		loadMap("/maps/electric-01.txt", 96);
-		loadMap("/maps/electric-02.txt", 97);
-		loadMap("/maps/electric-03.txt", 98);
+		loadMap("/maps/electric-1.txt", 96);
+		loadMap("/maps/electric-2.txt", 97);
+		loadMap("/maps/electric-3.txt", 98);
 		loadMap("/maps/electricH.txt", 99);
+		loadMap("/maps/shadowH.txt", 100);
+		loadMap("/maps/shadow-1.txt", 101);
 	}
 	
 	public void getTileImage() {
