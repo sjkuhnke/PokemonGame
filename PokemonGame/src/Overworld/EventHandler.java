@@ -49,7 +49,7 @@ public class EventHandler {
 			int xDistance = Math.abs(gp.player.worldX - previousEventX);
 			int yDistance = Math.abs(gp.player.worldY - previousEventY);
 			int distance = Math.max(xDistance, yDistance);
-			if (distance > gp.tileSize) {
+			if (distance >= gp.tileSize) {
 				canTouchEvent = true;
 			}
 		}
@@ -467,6 +467,10 @@ public class EventHandler {
 			// Electric Tunnel -1 -> H
 			if (hit(96,47,42)) teleport(99, 50, 63,false);
 			if (hit(99,50,64)) teleport(96, 47, 43,false);
+			
+			// Shadow Ravine 0 -> H
+			if (hit(90,52,18)) teleport(100, 50, 62,true);
+			if (hit(100,50,62)) teleport(90, 52, 18,true);
 		}
 	}
 	

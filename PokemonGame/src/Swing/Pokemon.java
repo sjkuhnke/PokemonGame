@@ -338,8 +338,13 @@ public class Pokemon implements Serializable {
             }
         }
         
+        // Check if there are no valid moves with non-zero PP
+        if (moveToDamage.isEmpty()) {
+            return Move.STRUGGLE;
+        }
+        
         // Find the maximum damage value
-        int maxDamage = Collections.max(moveToDamage.values());
+        int maxDamage = Collections.max(moveToDamage.values()); // NoSuchElementException when moveToDamage == 0 (i.e. all moves have 0 PP)
         
         // Filter moves based on conditions and max damage
         ArrayList<Move> bestMoves = new ArrayList<>();
