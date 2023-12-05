@@ -161,13 +161,14 @@ public class PlayerCharacter extends Entity {
 				p.steps++;
 				cooldown++;
 			}
-			if (spriteCounter % 4 == 0 && (inTallGrass || p.surf) && !p.repel && cooldown > 2) {
+			if (spriteCounter % 4 == 0 && (inTallGrass || p.surf || p.lavasurf) && !p.repel && cooldown > 2) {
 				Random r = new Random();
 				int random = r.nextInt(150);
 				if (random < speed) {
 					cooldown = 0;
 					String area = "Standard";
 					if (p.surf) area = "Surfing";
+					if (p.lavasurf) area = "Lava";
 					gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, area);
 				}
 			}
@@ -205,6 +206,36 @@ public class PlayerCharacter extends Entity {
 				if (!gp.tileM.getWaterTiles().contains(gp.tileM.mapTileNum[gp.currentMap][surfX][surfY])) {
 					p.surf = false;
 					for (Integer i : gp.tileM.getWaterTiles()) {
+						gp.tileM.tile[i].collision = true;
+					}
+					int snapX = (int) Math.round(worldX * 1.0 / gp.tileSize);
+					int snapY = (int) Math.round(worldY * 1.0 / gp.tileSize);
+					snapX *= gp.tileSize;
+					snapY *= gp.tileSize;
+					snapY -= gp.tileSize / 2;
+					this.worldX = snapX;
+					this.worldY = snapY;
+				}
+			}
+			if (p.lavasurf) {
+				double surfXD =  worldX / (1.0 * gp.tileSize);
+				double surfYD =  worldY / (1.0 * gp.tileSize);
+				int surfX = (int) Math.round(surfXD);
+				int surfY = (int) Math.round(surfYD);
+				switch(direction) {
+				case "up":
+					surfY = (int) Math.ceil(surfYD);
+					break;
+				case "down":
+					break;
+				case "left":
+					break;
+				case "right":
+					break;
+				}
+				if (!gp.tileM.getLavaTiles().contains(gp.tileM.mapTileNum[gp.currentMap][surfX][surfY])) {
+					p.lavasurf = false;
+					for (Integer i : gp.tileM.getLavaTiles()) {
 						gp.tileM.tile[i].collision = true;
 					}
 					int snapX = (int) Math.round(worldX * 1.0 / gp.tileSize);
@@ -264,25 +295,6 @@ public class PlayerCharacter extends Entity {
 			int objIndex = gp.cChecker.checkObject(this);
 			if (objIndex != -1) pickUpObject(objIndex);
 			
-			// Check iTiles
-			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
-			if (iTileIndex != 999) {
-				InteractiveTile target = gp.iTile[gp.currentMap][iTileIndex];
-				if (target instanceof Cut_Tree) {
-					interactCutTree(iTileIndex);
-				} else if (target instanceof Rock_Smash) {
-					interactRockSmash(iTileIndex);
-				} else if (target instanceof Vine_Crossable) {
-					interactVines(iTileIndex);
-				} else if (target instanceof Pit) {
-					interactPit(iTileIndex);
-				} else if (target instanceof Whirlpool) {
-					interactWhirlpool(iTileIndex);
-				} else if (target instanceof Rock_Climb) {
-					interactRockClimb(iTileIndex);
-				}
-			}
-			
 			if (p.hasMove(Move.SURF) && !p.surf) {
 				int result = gp.cChecker.checkTileType(this);
 				if (gp.tileM.getWaterTiles().contains(result)) {
@@ -310,6 +322,54 @@ public class PlayerCharacter extends Entity {
 						
 					}
 					keyH.resume();
+				}
+			}
+			if (p.hasMove(Move.SURF) && !p.lavasurf) {
+				int result = gp.cChecker.checkTileType(this);
+				if (gp.tileM.getLavaTiles().contains(result)) {
+					keyH.pause();
+					int answer = JOptionPane.showConfirmDialog(null, "The lava is a hot, bubbly red!\nDo you want to Lava Surf?");
+					if (answer == JOptionPane.YES_OPTION) {
+						switch (direction) {
+						case "down":
+							worldY += gp.tileSize;
+							break;
+						case "up":
+							worldY -= gp.tileSize;
+							break;
+						case "left":
+							worldX -= gp.tileSize;
+							break;
+						case "right":
+							worldX += gp.tileSize;
+							break;
+						}
+						p.lavasurf = true;
+						for (Integer i : gp.tileM.getLavaTiles()) {
+							gp.tileM.tile[i].collision = false;
+						}
+						
+					}
+					keyH.resume();
+				}
+			}
+			
+			// Check iTiles
+			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
+			if (iTileIndex != 999) {
+				InteractiveTile target = gp.iTile[gp.currentMap][iTileIndex];
+				if (target instanceof Cut_Tree) {
+					interactCutTree(iTileIndex);
+				} else if (target instanceof Rock_Smash) {
+					interactRockSmash(iTileIndex);
+				} else if (target instanceof Vine_Crossable) {
+					interactVines(iTileIndex);
+				} else if (target instanceof Pit) {
+					interactPit(iTileIndex);
+				} else if (target instanceof Whirlpool) {
+					interactWhirlpool(iTileIndex);
+				} else if (target instanceof Rock_Climb) {
+					interactRockClimb(iTileIndex);
 				}
 			}
 		}
@@ -484,7 +544,7 @@ public class PlayerCharacter extends Entity {
 	    				}
 	    			}
 	    			boolean[] tempFlag = p.flags.clone();
-	    			p.flags = new boolean[20];
+	    			p.flags = new boolean[30];
 	    			for (int i = 0; i < tempFlag.length; i++) {
 	    				p.flags[i] = tempFlag[i];
 	    			}
@@ -1910,7 +1970,6 @@ public class PlayerCharacter extends Entity {
 			if (option == JOptionPane.YES_OPTION) {
 				Pit pit = (Pit) gp.iTile[gp.currentMap][i];
 				gp.eHandler.teleport(pit.mapDest, pit.xDest, pit.yDest, false);
-				System.out.println(pit.mapDest + " " + pit.xDest + " " + pit.yDest);
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "This pit looks deep!\nI can't even see the bottom!");
@@ -1980,22 +2039,22 @@ public class PlayerCharacter extends Entity {
 		case "up":
 			if (spriteNum == 1) image = up1;
 			if (spriteNum == 2) image = up2;
-			if (p.surf) image = surf2;
+			if (p.surf || p.lavasurf) image = surf2;
 			break;
 		case "down":
 			if (spriteNum == 1) image = down1;
 			if (spriteNum == 2) image = down2;
-			if (p.surf) image = surf1;
+			if (p.surf || p.lavasurf) image = surf1;
 			break;
 		case "left":
 			if (spriteNum == 1) image = left1;
 			if (spriteNum == 2) image = left2;
-			if (p.surf) image = surf3;
+			if (p.surf || p.lavasurf) image = surf3;
 			break;
 		case "right":
 			if (spriteNum == 1) image = right1;
 			if (spriteNum == 2) image = right2;
-			if (p.surf) image = surf4;
+			if (p.surf || p.lavasurf) image = surf4;
 			break;
 		}
 		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);

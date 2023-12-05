@@ -28,7 +28,7 @@ public class Player implements Serializable{
 	public int currentMap;
 	public boolean[] trainersBeat = new boolean[Main.trainers.length];
 	public boolean[][] itemsCollected;
-	public boolean[] flags = new boolean[20];
+	public boolean[] flags = new boolean[30];
 	public boolean[] locations = new boolean[12]; // NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
 	public boolean random = false;
 	public boolean ghost = false;
@@ -36,6 +36,7 @@ public class Player implements Serializable{
 	public boolean fish;
 	public boolean repel;
 	public boolean surf;
+	public boolean lavasurf;
 	
 	public Player(GamePanel gp) {
 		team = new Pokemon[6];
@@ -178,7 +179,7 @@ public class Player implements Serializable{
     		if (pokemon.happiness < 255) pokemon.happiness -= 3;
             // Pokemon has leveled up, check for evolution
             Pokemon evolved = pokemon.levelUp(this);
-            if (evolved != null) {
+            if (evolved != null && evolved != pokemon) {
                 // Update the player's team with the evolved Pokemon
             	int index = Arrays.asList(this.getTeam()).indexOf(pokemon);
                 this.team[index] = evolved;

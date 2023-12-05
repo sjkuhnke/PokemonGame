@@ -124,6 +124,14 @@ public class TileManager {
 		loadMap("/maps/electricH.txt", 99);
 		loadMap("/maps/shadowH.txt", 100);
 		loadMap("/maps/shadow-1.txt", 101);
+		loadMap("/maps/shadow-2.txt", 102);
+		loadMap("/maps/shadow-3.txt", 103);
+		loadMap("/maps/tn_base.txt", 104);
+		loadMap("/maps/shadow_path.txt", 105);
+		loadMap("/maps/gate01.txt", 106);
+		loadMap("/maps/map14.txt", 107);
+		loadMap("/maps/gate01.txt", 108);
+		loadMap("/maps/map15.txt", 109);
 	}
 	
 	public void getTileImage() {
@@ -487,19 +495,20 @@ public class TileManager {
 		setup(377, false);
 		setup(378, false);
 		
-//		setup(379, true);
-//		setup(380, true);
-//		setup(381, true);
-//		setup(382, true);
-//		setup(383, true);
-//		setup(384, true);
-//		setup(385, true);
-//		setup(386, true);
-//		setup(387, true);
-//		setup(388, true);
-//		setup(389, true);
-//		setup(390, true);
-//		setup(391, true);
+		setup(379, true);
+		setup(380, true);
+		setup(381, true);
+		setup(382, true);
+		setup(383, true);
+		setup(384, true);
+		setup(385, true);
+		setup(386, true);
+		setup(387, true);
+		setup(388, true);
+		setup(389, true);
+		setup(390, true);
+		
+		setup(391, false);
 //		setup(392, true);
 //		setup(393, true);
 //		setup(394, true);
@@ -737,6 +746,18 @@ public class TileManager {
 			result.add(i);
 		}
 		for (int i = 313; i < 325; i++) {
+			result.add(i);
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Integer> getLavaTiles() {
+		ArrayList<Integer> result = new ArrayList<>();
+		for (int i = 236; i < 249; i++) {
+			result.add(i);
+		}
+		for (int i = 379; i < 391; i++) {
 			result.add(i);
 		}
 		
