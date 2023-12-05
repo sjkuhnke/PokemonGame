@@ -1324,7 +1324,7 @@ public class Item implements Serializable {
         JLabel foeSpeed = new JLabel();
         JGradientButton[] foeMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
         JLabel[] foeDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
-        for (int k = 1; k < 241; k++) {
+        for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
         	foeMons.addItem(new Pokemon(k, 50, false, true));
         }
         for (Trainer tr : Main.modifiedTrainers) {
@@ -1721,7 +1721,7 @@ public class Item implements Serializable {
 		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
 		
 		JComboBox<Pokemon> nameInput = new JComboBox<Pokemon>();
-		for (int k = 1; k < 241; k++) {
+		for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
         	nameInput.addItem(new Pokemon(k, 50, false, true));
         }
 		result.add(nameInput);
@@ -1831,7 +1831,7 @@ public class Item implements Serializable {
 		    public void mouseClicked(MouseEvent e) {
 				Random random = new Random();
 		    	if (SwingUtilities.isRightMouseButton(e)) {
-		            nameInput.setSelectedIndex(random.nextInt(240));
+		            nameInput.setSelectedIndex(random.nextInt(Pokemon.MAX_POKEMON));
 		            levelInput.setSelectedIndex(random.nextInt(100));
 		            happiness.setSelectedIndex(random.nextInt(255));
 		            for (int i = 0; i < 4; i++) {

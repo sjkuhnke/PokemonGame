@@ -81,6 +81,11 @@ public class Main {
 	        		gamePanel.tileM.tile[i].collision = false;
 				}
 	        }
+	        if (gamePanel.player.p.lavasurf) {
+	        	for (Integer i : gamePanel.tileM.getLavaTiles()) {
+	        		gamePanel.tileM.tile[i].collision = false;
+				}
+	        }
 	        ois.close();
 	    } catch (IOException | ClassNotFoundException e) {
 	        // If there's an error reading the file, create a new Player object
@@ -153,7 +158,7 @@ public class Main {
 		    window.add(fadePanel, 0); // Add the fadePanel at the bottom layer
 		    
 		    modifyTrainers(gamePanel);
-		    gamePanel.setupGame(); // TODO
+		    gamePanel.setupGame();
 		    gamePanel.startGameThread();
 		    
 		    // Create a Timer to gradually change the opacity of the fadePanel
@@ -203,21 +208,27 @@ public class Main {
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(5, 20, false, true)}, 400);
 			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(8, 22, false, true), new Pokemon(166, 22, false, true)}, 400, new Item(94), 4);
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(5, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
-			trainers[185] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(99, 47, false, true), new Pokemon(210, 46, false, true), new Pokemon(219, 46, false, true), new Pokemon(6, 47, false, true), new Pokemon(79, 48, false, true)}, 400, 15);
+			trainers[185] = new Trainer("Scott 3", new Pokemon[]{new Pokemon(77, 47, false, true), new Pokemon(130, 47, false, true), new Pokemon(9, 47, false, true), new Pokemon(37, 46, false, true), new Pokemon(167, 48, false, true)}, 400, 15);
+			trainers[216] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(100, 56, false, true), new Pokemon(210, 56, false, true), new Pokemon(219, 57, false, true), new Pokemon(6, 57, false, true), new Pokemon(196, 56, false, true), new Pokemon(79, 58, false, true)}, 400);
+			trainers[242] = new Trainer("Scott 4", new Pokemon[]{new Pokemon(77, 59, false, true), new Pokemon(130, 60, false, true), new Pokemon(189, 58, false, true), new Pokemon(9, 60, false, true), new Pokemon(37, 59, false, true), new Pokemon(168, 61, false, true)}, 400);
 		}
 		else if (gp.player.p.starter == 2) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(1, 7, false, true)}, 400, 1);
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(8, 20, false, true)}, 400);
 			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(2, 22, false, true), new Pokemon(166, 22, false, true)}, 400, new Item(94), 4);
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(8, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
-			trainers[185] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(99, 47, false, true), new Pokemon(210, 46, false, true), new Pokemon(219, 46, false, true), new Pokemon(9, 47, false, true), new Pokemon(79, 48, false, true)}, 400, 15);
+			trainers[185] = new Trainer("Scott 3", new Pokemon[]{new Pokemon(77, 47, false, true), new Pokemon(130, 47, false, true), new Pokemon(3, 47, false, true), new Pokemon(37, 46, false, true), new Pokemon(167, 48, false, true)}, 400, 15);
+			trainers[216] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(100, 56, false, true), new Pokemon(210, 56, false, true), new Pokemon(219, 57, false, true), new Pokemon(9, 57, false, true), new Pokemon(196, 56, false, true), new Pokemon(79, 58, false, true)}, 400);
+			trainers[242] = new Trainer("Scott 4", new Pokemon[]{new Pokemon(77, 59, false, true), new Pokemon(130, 60, false, true), new Pokemon(189, 58, false, true), new Pokemon(3, 60, false, true), new Pokemon(37, 59, false, true), new Pokemon(168, 61, false, true)}, 400);
 		}
 		else if (gp.player.p.starter == 3) {
 			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(4, 7, false, true)}, 400, 1);
 			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(2, 20, false, true)}, 400);
 			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(5, 22, false, true), new Pokemon(166, 22, false, true)}, 400, new Item(94), 4);
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(2, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
-			trainers[185] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(99, 47, false, true), new Pokemon(210, 46, false, true), new Pokemon(219, 46, false, true), new Pokemon(3, 47, false, true), new Pokemon(79, 48, false, true)}, 400, 15);
+			trainers[185] = new Trainer("Scott 3", new Pokemon[]{new Pokemon(77, 47, false, true), new Pokemon(130, 47, false, true), new Pokemon(6, 47, false, true), new Pokemon(37, 46, false, true), new Pokemon(167, 48, false, true)}, 400, 15);
+			trainers[216] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(100, 56, false, true), new Pokemon(210, 56, false, true), new Pokemon(219, 57, false, true), new Pokemon(3, 57, false, true), new Pokemon(196, 56, false, true), new Pokemon(79, 58, false, true)}, 400);
+			trainers[242] = new Trainer("Scott 4", new Pokemon[]{new Pokemon(77, 59, false, true), new Pokemon(130, 60, false, true), new Pokemon(189, 58, false, true), new Pokemon(6, 60, false, true), new Pokemon(37, 59, false, true), new Pokemon(168, 61, false, true)}, 400);
 		}
 		
 		setMoveset("1 Gym Leader 1", 2, Move.MEGA_DRAIN, Move.SUPERSONIC, Move.AERIAL_ACE, Move.POISON_FANG);
@@ -465,7 +476,7 @@ public class Main {
 				new Trainer("CA", new Pokemon[]{new Pokemon(180, 46, false, true), new Pokemon(180, 47, false, true), new Pokemon(180, 48, false, true)}, 100),
 				new Trainer("GTN1", new Pokemon[]{new Pokemon(147, 49, false, true), new Pokemon(96, 48, false, true), new Pokemon(31, 49, false, true)}, 100),
 				new Trainer("GTN2", new Pokemon[]{new Pokemon(165, 49, false, true), new Pokemon(207, 48, false, true), new Pokemon(208, 48, false, true)}, 100),
-				new Trainer("Fred 3", new Pokemon[]{new Pokemon(10, 5, false, true)}, 500), // 185
+				new Trainer("Scott 3", new Pokemon[]{new Pokemon(10, 5, false, true)}, 500), // 185
 				new Trainer("5 Gym A", new Pokemon[]{new Pokemon(83, 49, false, true), new Pokemon(83, 49, false, true), new Pokemon(83, 50, false, true)}, 200),
 				new Trainer("5 Gym B", new Pokemon[]{new Pokemon(77, 49, false, true)}, 200),
 				new Trainer("5 Gym C", new Pokemon[]{new Pokemon(53, 48, false, true), new Pokemon(54, 49, false, true)}, 200),
@@ -484,13 +495,48 @@ public class Main {
 				new Trainer("DG", new Pokemon[]{new Pokemon(39, 45, false, true), new Pokemon(40, 45, false, true)}, 100),
 				new Trainer("CY", new Pokemon[]{new Pokemon(24, 43, false, true), new Pokemon(25, 43, false, true)}, 100),
 				new Trainer("CZ", new Pokemon[]{new Pokemon(33, 45, false, true), new Pokemon(36, 46, false, true), new Pokemon(33, 46, false, true), new Pokemon(34, 44, false, true), new Pokemon(37, 44, false, true)}, 100),
-//				new Trainer("R", new Pokemon[]{new Pokemon(-106, 24, false, true)}, 100),
-//				new Trainer("S", new Pokemon[]{new Pokemon(-92, 20, false, true), new Pokemon(-92, 20, false, true), new Pokemon(-46, 15, false, true)}, 100),
-//				new Trainer("T", new Pokemon[]{new Pokemon(-75, 18, false, true), new Pokemon(-77, 23, false, true)}, 100),
-//				new Trainer("U", new Pokemon[]{new Pokemon(-84, 24, false, true)}, 100),
-//				new Trainer("V", new Pokemon[]{new Pokemon(-86, 25, false, true)}, 100),
-//				new Trainer("W", new Pokemon[]{new Pokemon(-61, 23, false, true), new Pokemon(-55, 23, false, true)}, 100),
-//				new Trainer("X", new Pokemon[]{new Pokemon(-8, 24, false, true), new Pokemon(-80, 25, false, true)}, 100),
+				new Trainer("TN B1", new Pokemon[]{new Pokemon(173, 50, false, true), new Pokemon(225, 50, false, true)}, 100),
+				new Trainer("TN B2", new Pokemon[]{new Pokemon(219, 50, false, true), new Pokemon(96, 50, false, true)}, 100), // 205
+				new Trainer("TN B3", new Pokemon[]{new Pokemon(74, 51, false, true), new Pokemon(180, 51, false, true)}, 100),
+				new Trainer("TN B4", new Pokemon[]{new Pokemon(91, 51, false, true), new Pokemon(105, 51, false, true)}, 100),
+				new Trainer("TN B5", new Pokemon[]{new Pokemon(142, 52, false, true), new Pokemon(147, 52, false, true)}, 100),
+				new Trainer("TN B6", new Pokemon[]{new Pokemon(138, 52, false, true), new Pokemon(149, 52, false, true)}, 100),
+				new Trainer("TN B7", new Pokemon[]{new Pokemon(152, 53, false, true), new Pokemon(165, 53, false, true)}, 100), // 210
+				new Trainer("TN B8", new Pokemon[]{new Pokemon(155, 53, false, true), new Pokemon(227, 53, false, true)}, 100),
+				new Trainer("TN B9", new Pokemon[]{new Pokemon(168, 54, false, true), new Pokemon(67, 54, false, true)}, 100),
+				new Trainer("TN B10", new Pokemon[]{new Pokemon(65, 54, false, true), new Pokemon(201, 54, false, true)}, 100),
+				new Trainer("TN B11", new Pokemon[]{new Pokemon(207, 55, false, true), new Pokemon(210, 55, false, true)}, 100),
+				new Trainer("TN B12", new Pokemon[]{new Pokemon(208, 55, false, true), new Pokemon(198, 55, false, true)}, 100), // 215
+				new Trainer("Fred 3", new Pokemon[]{new Pokemon(10, 5, false, true)}, 500),
+				new Trainer("Maxwell 1", new Pokemon[]{new Pokemon(183, 58, false, true), new Pokemon(222, 58, false, true), new Pokemon(216, 58, false, true), new Pokemon(214, 59, false, true), new Pokemon(192, 60, false, true), new Pokemon(186, 60, false, true)}, 400, 20),
+				new Trainer("CB", new Pokemon[]{new Pokemon(27, 52, false, true), new Pokemon(28, 51, false, true)}, 100),
+				new Trainer("CC", new Pokemon[]{new Pokemon(101, 80, false, true), new Pokemon(102, 60, false, true), new Pokemon(103, 52, false, true), new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(145, 44, false, true)}, 100),
+				new Trainer("CD", new Pokemon[]{new Pokemon(209, 100, false, true), new Pokemon(119, 53, false, true)}, 100), // 220
+				new Trainer("CE", new Pokemon[]{new Pokemon(125, 52, false, true), new Pokemon(128, 52, false, true), new Pokemon(122, 52, false, true)}, 100),
+				new Trainer("CF", new Pokemon[]{new Pokemon(133, 53, false, true), new Pokemon(131, 57, false, true)}, 100),
+				new Trainer("CG", new Pokemon[]{new Pokemon(150, 53, false, true), new Pokemon(136, 53, false, true), new Pokemon(147, 53, false, true)}, 100),
+				new Trainer("Grust 1", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
+				new Trainer("Grust 2", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0), // 225
+				new Trainer("Grust 3", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
+				new Trainer("Grust 4", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
+				new Trainer("Grust 5", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
+				new Trainer("Grust 6", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
+				new Trainer("Grust 7", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0), // 230
+				new Trainer("Grust 8", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
+				new Trainer("Grust 9", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
+				new Trainer("Grust 10", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
+				new Trainer("Rick 2", new Pokemon[]{new Pokemon(67, 55, false, true), new Pokemon(162, 54, false, true), new Pokemon(113, 54, false, true), new Pokemon(46, 55, false, true), new Pokemon(74, 55, false, true), new Pokemon(122, 56, false, true)}, 400, 19),
+				new Trainer("CH", new Pokemon[]{new Pokemon(51, 54, false, true), new Pokemon(97, 55, false, true), new Pokemon(18, 54, false, true), new Pokemon(54, 54, false, true)}, 100), // 235
+				new Trainer("CI", new Pokemon[]{new Pokemon(93, 55, false, true), new Pokemon(88, 54, false, true), new Pokemon(107, 55, false, true)}, 100),
+				new Trainer("CJ", new Pokemon[]{new Pokemon(31, 55, false, true), new Pokemon(155, 55, false, true), new Pokemon(160, 57, false, true)}, 100),
+				new Trainer("CK", new Pokemon[]{new Pokemon(170, 54, false, true), new Pokemon(173, 55, false, true)}, 100),
+				new Trainer("CL", new Pokemon[]{new Pokemon(208, 56, false, true)}, 100),
+				new Trainer("CM", new Pokemon[]{new Pokemon(105, 55, false, true), new Pokemon(107, 56, false, true), new Pokemon(6, 56, false, true)}, 100), // 240
+				new Trainer("CN", new Pokemon[]{new Pokemon(157, 56, false, true), new Pokemon(180, 57, false, true), new Pokemon(214, 57, false, true)}, 100),
+				new Trainer("Scott 4", new Pokemon[]{new Pokemon(10, 5, false, true)}, 500),
+				new Trainer("CO", new Pokemon[]{new Pokemon(113, 57, false, true), new Pokemon(119, 58, false, true), new Pokemon(116, 57, false, true), new Pokemon(201, 57, false, true), new Pokemon(125, 57, false, true)}, 100),
+				new Trainer("CP", new Pokemon[]{new Pokemon(165, 58, false, true), new Pokemon(128, 58, false, true)}, 100),
+				new Trainer("CQ", new Pokemon[]{new Pokemon(100, 58, false, true), new Pokemon(189, 58, false, true)}, 100), // 245
 //				new Trainer("6 Gym A", new Pokemon[]{new Pokemon(-90, 32, false, true)}, 200),
 //				new Trainer("6 Gym B", new Pokemon[]{new Pokemon(-87, 30, false, true)}, 200),
 //				new Trainer("6 Gym C", new Pokemon[]{new Pokemon(-89, 24, false, true), new Pokemon(-89, 24, false, true)}, 200),
@@ -606,7 +652,7 @@ public class Main {
 		try {
 			FileWriter writer = new FileWriter("PokemonInfo.txt");
 			
-			for (int i = 1; i < 241; i++) {
+			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
 				Pokemon p = new Pokemon(i, 5, false, false);
 				writer.write("===================\n");
 				String id = p.id + "";
@@ -671,7 +717,7 @@ public class Main {
 			for (Move m : Move.values()) {
 				moveCount.put(m, 0);
 			}
-			for (int i = 1; i < 241; i++) {
+			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
 				Pokemon p = new Pokemon(i, 5, false, false);
 				ArrayList<Move> movebank = new ArrayList<>();
 				for (int j = 0; j < p.movebank.length; j++) {
@@ -695,7 +741,7 @@ public class Main {
 					}
 				} else if (entry.getValue() == 3) {
 					int count = 0;
-					for (int i = 1; i < 241 && count < 3; i++) {
+					for (int i = 1; i <= Pokemon.MAX_POKEMON && count < 3; i++) {
 						Pokemon p = new Pokemon(i, 5, false, false);
 						ArrayList<Move> movebank = new ArrayList<>();
 						for (int j = 0; j < p.movebank.length; j++) {
@@ -712,7 +758,7 @@ public class Main {
 					}
 				} else if (entry.getValue() == 2) {
 					int count = 0;
-					for (int i = 1; i < 241 && count < 2; i++) {
+					for (int i = 1; i <= Pokemon.MAX_POKEMON && count < 2; i++) {
 						Pokemon p = new Pokemon(i, 5, false, false);
 						ArrayList<Move> movebank = new ArrayList<>();
 						for (int j = 0; j < p.movebank.length; j++) {
@@ -728,7 +774,7 @@ public class Main {
 						}
 					}
 				} else if (entry.getValue() == 1) {
-					for (int i = 1; i < 241; i++) {
+					for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
 						Pokemon p = new Pokemon(i, 5, false, false);
 						ArrayList<Move> movebank = new ArrayList<>();
 						for (int j = 0; j < p.movebank.length; j++) {
@@ -853,217 +899,288 @@ public class Main {
 		try {
 			FileWriter writer = new FileWriter("WildPokemon.txt");
 			
+			ArrayList<Encounter> allEncounters = new ArrayList<>();
+			int[] amounts = new int[Pokemon.MAX_POKEMON + 1];
+			double[] chances = new double[Pokemon.MAX_POKEMON + 1];
+			
 			ArrayList<Encounter> encounters = Encounter.getEncounters(0, 73, 39, "Standard", "", false); // route 22
 			writer.write("Route 22");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(0, 73, 38, "Standard", "", false); // route 23
 			writer.write("Route 23");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(0, 74, 38, "Standard", "", false); // route 42
 			writer.write("Route 42");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(0, 74, 38, "Fishing", "", false); // route 42
 			writer.write("Route 42");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(0, 74, 38, "Surfing", "", false); // route 42
 			writer.write("Route 42");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(4, 73, 43, "Standard", "", false); // route 24
 			writer.write("Route 24 pt. 1");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(11, 44, 55, "Standard", "", false); // route 24 pt. 2
 			writer.write("Route 24 pt. 2");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(11, 43, 55, "Standard", "", false); // gelb forest
 			writer.write("Gelb Forest");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(11, 43, 55, "Fishing", "", false); // gelb forest
 			writer.write("Gelb Forest");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(11, 43, 55, "Surfing", "", false); // gelb forest
 			writer.write("Gelb Forest");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(11, 73, 56, "Standard", "", false); // route 25
 			writer.write("Route 25");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(13, 73, 38, "Fishing", "", false); // sicab city
 			writer.write("Sicab City");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(13, 73, 38, "Surfing", "", false); // sicab city
 			writer.write("Sicab City");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(14, 73, 38, "Standard", "", false); // energy plant A
 			writer.write("Energy Plant A");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(16, 73, 38, "Standard", "", false); // energy plant B
 			writer.write("Energy Plant B");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(16, 73, 38, "Fishing", "", false); // energy plant B
 			writer.write("Energy Plant B");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(16, 73, 38, "Surfing", "", false); // energy plant B
 			writer.write("Energy Plant B");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(22, 73, 38, "Standard", "", false); // route 40
 			writer.write("Route 40");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(13, 73, 38, "Standard", "", false); // route 26
 			writer.write("Route 26");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(24, 73, 38, "Standard", "", false); // mt. splinkty 1A
 			writer.write("Mt. Splinkty 1A");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(24, 73, 38, "Fishing", "", false); // mt. splinkty 1A
 			writer.write("Mt. Splinkty 1A");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(24, 73, 38, "Surfing", "", false); // mt. splinkty 1A
 			writer.write("Mt. Splinkty 1A");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(25, 73, 38, "Standard", "", false); // mt. splinkty 2B
 			writer.write("Mt. Splinkty 2B");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(26, 73, 38, "Standard", "", false); // mt. splinkty 3B
 			writer.write("Mt. Splinkty 3B");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(27, 73, 38, "Standard", "", false); // mt. splinkty 3A
 			writer.write("Mt. Splinkty 3A");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(28, 73, 38, "Standard", "", false); // route 27
 			writer.write("Route 27");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(28, 73, 57, "Fishing", "", false); // route 41
 			writer.write("Route 41");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(28, 73, 57, "Surfing", "", false); // route 41
 			writer.write("Route 41");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(28, 73, 57, "Standard", "", false); // route 41
 			writer.write("Route 41");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(4, 73, 42, "Standard", "", false); // route 36
 			writer.write("Route 36");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(4, 73, 42, "Fishing", "", false); // route 36
 			writer.write("Route 36");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(4, 73, 42, "Surfing", "", false); // route 36
 			writer.write("Route 36");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(33, 73, 21, "Standard", "", false); // route 28
 			writer.write("Route 28");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(35, 73, 42, "Standard", "", false); // electric tunnel 01
 			writer.write("Electric Tunnel 01");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(36, 73, 42, "Standard", "", false); // route 29
 			writer.write("Route 29");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(38, 73, 31, "Standard", "", false); // icy fields
 			writer.write("Icy Fields");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(38, 73, 62, "Standard", "", false); // route 30
 			writer.write("Route 30");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(38, 73, 62, "Fishing", "", false); // route 30
 			writer.write("Route 30");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(38, 73, 62, "Surfing", "", false); // route 30
 			writer.write("Route 30");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(33, 0, 33, "Standard", "", false); // peaceful park
 			writer.write("Peaceful Park");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(33, 0, 33, "Fishing", "", false); // peaceful park
 			writer.write("Peaceful Park");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(33, 0, 33, "Surfing", "", false); // peaceful park
 			writer.write("Peaceful Park");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(77, 73, 62, "Surfing", "", false); // mindagan lake
 			writer.write("Mindagan Lake");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(77, 73, 62, "Fishing", "", false); // mindagan lake
 			writer.write("Mindagan Lake");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(78, 73, 62, "Standard", "", false); // mindagan cavern 1A
 			writer.write("Mindagan Cavern 1A");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(80, 73, 41, "Standard", "", false); // route 31
 			writer.write("Route 31");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(80, 73, 41, "Fishing", "", false); // route 31
 			writer.write("Route 31");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(80, 73, 41, "Surfing", "", false); // route 31
 			writer.write("Route 31");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(83, 57, 41, "Standard", "", false); // shadow ravine 1A
 			writer.write("Shadow Ravine 1A");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(90, 73, 41, "Standard", "", false); // shadow ravine 0
 			writer.write("Shadow Ravine 0");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(83, 58, 41, "Standard", "", false); // route 32
 			writer.write("Route 32");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(83, 58, 41, "Fishing", "", false); // route 32
 			writer.write("Route 32");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(83, 58, 41, "Surfing", "", false); // route 32
 			writer.write("Route 32");
 			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			for (Encounter e : allEncounters) {
+				int index = e.getId();
+				amounts[index]++;
+				chances[index] = ((chances[index] * (amounts[index] - 1)) + e.getEncounterChance()) / amounts[index];
+			}
+			
+			Pokemon test = new Pokemon(1, 5, false, false);
+			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
+				int amt = amounts[i];
+				if (amt > 0) {
+					writer.write(test.getName(i) + " : " + amounts[i] + " : " + String.format("%.2f", (chances[i] * 100)) + "%\n");
+				}
+			}
 			
 			writer.close();
 		} catch (IOException e1) {
@@ -1075,7 +1192,7 @@ public class Main {
 
 
 	private static String writeEncounter(ArrayList<Encounter> encounters) {
-		String result = "==================================================================================================================================\n";
+		String result = "===============================================================================================\n";
 		for (Encounter e : encounters) {
 			Pokemon ep = new Pokemon(e.getId(), 5, false, false);
 			String percent = String.format("%.0f", e.getEncounterChance() * 100);

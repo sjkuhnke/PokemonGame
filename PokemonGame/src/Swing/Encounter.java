@@ -60,14 +60,11 @@ public class Encounter {
 				encounters.add(new Encounter(179, 2, 3, 0.11));
 				encounters.add(new Encounter(129, 2, 2, 0.15));
 				encounters.add(new Encounter(143, 2, 2, 0.08));
-			} else if (area == 0 && type.equals("Surfing") && x > 73) { // route 42 // TODO
-				encounters.add(new Encounter(171, 2, 2, 0.20));
-				encounters.add(new Encounter(217, 2, 3, 0.16));
-				encounters.add(new Encounter(223, 2, 2, 0.13));
-				encounters.add(new Encounter(166, 2, 3, 0.17));
-				encounters.add(new Encounter(179, 2, 3, 0.11));
-				encounters.add(new Encounter(129, 2, 2, 0.15));
-				encounters.add(new Encounter(143, 2, 2, 0.08));
+			} else if (area == 0 && type.equals("Surfing") && x > 73) { // route 42
+				encounters.add(new Encounter(68, 28, 31, 0.20));
+				encounters.add(new Encounter(71, 27, 30, 0.25));
+				encounters.add(new Encounter(132, 28, 31, 0.25));
+				encounters.add(new Encounter(215, 28, 31, 0.30));
 			} else if (area == 0 && type.equals("Fishing") && x > 73) { // route 42
 				encounters.add(new Encounter(132, 11, 12, 0.25));
 				encounters.add(new Encounter(137, 10, 11, 0.15));
@@ -149,8 +146,13 @@ public class Encounter {
 				encounters.add(new Encounter(205, 15, 15, 0.05));
 			} else if (area == 16 && type.equals("Fishing")) { // energy plant B
 				encounters.add(new Encounter(137, 15, 15, 0.40));
-				encounters.add(new Encounter(209, 15, 15, 0.10));
+				encounters.add(new Encounter(209, 15, 15, 0.15));
 				encounters.add(new Encounter(148, 13, 17, 0.45));
+			} else if (area == 16 && type.equals("Surfing")) { // energy plant B
+				encounters.add(new Encounter(137, 25, 25, 0.20));
+				encounters.add(new Encounter(138, 25, 25, 0.20));
+				encounters.add(new Encounter(209, 25, 25, 0.30));
+				encounters.add(new Encounter(210, 25, 25, 0.30));
 			} else if (area == 22 && type.equals("Standard")) { // route 40
 				encounters.add(new Encounter(10, 2, 3, 0.15));
 				encounters.add(new Encounter(94, 2, 2, 0.20));
@@ -182,7 +184,7 @@ public class Encounter {
 			} else if (area == 24 && type.equals("Surfing")) { // Mt. Splinkty 1A
 				encounters.add(new Encounter(139, 20, 20, 0.60));
 				encounters.add(new Encounter(132, 20, 20, 0.25));
-				encounters.add(new Encounter(143, 18, 19, 0.10));
+				encounters.add(new Encounter(143, 18, 19, 0.15));
 			} else if (area == 25 && type.equals("Standard")) { // Mt. Splinkty 2B
 				encounters.add(new Encounter(48, 18, 19, 0.30));
 				encounters.add(new Encounter(52, 19, 20, 0.25));
@@ -216,16 +218,14 @@ public class Encounter {
 				encounters.add(new Encounter(134, 20, 20, 0.25));
 				encounters.add(new Encounter(78, 20, 20, 0.20));
 				encounters.add(new Encounter(141, 20, 20, 0.05));
-			} else if (area == 28 && y >= 57 && type.equals("Standard")) { // Route 41 TODO
+			} else if (area == 28 && y >= 57 && type.equals("Standard")) { // Route 41
 				encounters.add(new Encounter(71, 25, 28, 0.15));
-				encounters.add(new Encounter(108, 16, 18, 0.1));
-				encounters.add(new Encounter(14, 18, 20, 0.1));
-				encounters.add(new Encounter(92, 19, 19, 0.15));
-				encounters.add(new Encounter(174, 16, 17, 0.2));
-				encounters.add(new Encounter(171, 16, 18, 0.05));
-				encounters.add(new Encounter(179, 18, 19, 0.05));
-				encounters.add(new Encounter(177, 18, 19, 0.05));
-				encounters.add(new Encounter(75, 16, 18, 0.15));
+				encounters.add(new Encounter(108, 26, 28, 0.20));
+				encounters.add(new Encounter(14, 25, 28, 0.11));
+				encounters.add(new Encounter(152, 26, 29, 0.15));
+				encounters.add(new Encounter(61, 25, 29, 0.10));
+				encounters.add(new Encounter(64, 26, 29, 0.15));
+				encounters.add(new Encounter(80, 25, 28, 0.14));
 			} else if (area == 4 && y < 43 && type.equals("Standard")) { // Route 36
 				encounters.add(new Encounter(22, 12, 13, 0.2));
 				encounters.add(new Encounter(41, 13, 14, 0.2));
@@ -424,12 +424,83 @@ public class Encounter {
 				encounters.add(new Encounter(200, 42, 46, 0.20));
 				encounters.add(new Encounter(203, 42, 46, 0.20));
 				encounters.add(new Encounter(206, 42, 46, 0.20));
+			} else if (area == 101 || area == 100 && type.equals("Standard")) { // Shadow Ravine -1/Shadow Ravine H
+				encounters.add(new Encounter(170, 33, 36, 0.20));
+				encounters.add(new Encounter(74, 33, 36, 0.20));
+				encounters.add(new Encounter(218, 32, 35, 0.25));
+				encounters.add(new Encounter(220, 33, 36, 0.10));
+				encounters.add(new Encounter(224, 32, 35, 0.10));
+				encounters.add(new Encounter(227, 32, 36, 0.15));
+			} else if (area == 101 && type.equals("Fishing")) { // Shadow Ravine -1
+				encounters.add(new Encounter(215, 29, 32, 0.75));
+				encounters.add(new Encounter(216, 35, 40, 0.25));
+			} else if (area == 101 && type.equals("Surfing")) { // Shadow Ravine -1
+				encounters.add(new Encounter(215, 29, 32, 0.90));
+				encounters.add(new Encounter(216, 35, 40, 0.10));
+			} else if (area == 102 && type.equals("Standard")) { // Shadow Ravine -2
+				encounters.add(new Encounter(170, 35, 37, 0.25));
+				encounters.add(new Encounter(218, 34, 36, 0.25));
+				encounters.add(new Encounter(220, 34, 37, 0.30));
+				encounters.add(new Encounter(225, 36, 36, 0.05));
+				encounters.add(new Encounter(227, 34, 37, 0.15));
+			} else if (area == 102 && type.equals("Lava")) { // Shadow Ravine -2
+				encounters.add(new Encounter(223, 30, 30, 0.20));
+				encounters.add(new Encounter(224, 40, 40, 0.70));
+				encounters.add(new Encounter(225, 50, 50, 0.10));
+			} else if (area == 103 && type.equals("Standard")) { // Shadow Ravine -3
+				encounters.add(new Encounter(219, 50, 55, 0.25));
+				encounters.add(new Encounter(220, 46, 49, 0.20));
+				encounters.add(new Encounter(221, 49, 53, 0.15));
+				encounters.add(new Encounter(222, 55, 55, 0.05));
+				encounters.add(new Encounter(225, 49, 55, 0.25));
+				encounters.add(new Encounter(227, 50, 54, 0.10));
+			} else if (area == 105 && type.equals("Standard")) { // Shadow Path
+				encounters.add(new Encounter(198, 40, 45, 0.11));
+				encounters.add(new Encounter(200, 40, 45, 0.10));
+				encounters.add(new Encounter(203, 40, 45, 0.10));
+				encounters.add(new Encounter(206, 40, 45, 0.04));
+				encounters.add(new Encounter(207, 40, 45, 0.05));
+				encounters.add(new Encounter(208, 40, 45, 0.05));
+				
+				encounters.add(new Encounter(218, 40, 44, 0.12));
+				encounters.add(new Encounter(219, 45, 45, 0.02));
+				encounters.add(new Encounter(220, 40, 45, 0.10));
+				encounters.add(new Encounter(221, 40, 45, 0.06));
+				encounters.add(new Encounter(222, 40, 45, 0.02));
+				encounters.add(new Encounter(225, 40, 45, 0.11));
+				encounters.add(new Encounter(227, 40, 45, 0.10));
+				
+				encounters.add(new Encounter(212, 45, 45, 0.01));
+				encounters.add(new Encounter(214, 45, 45, 0.01));
+			} else if (area == 103 && type.equals("Lava")) { // Shadow Ravine -3
+				encounters.add(new Encounter(225, 55, 55, 0.100));
+			} else if (area == 85 && type.equals("Standard")) { // Route 33
+				encounters.add(new Encounter(20, 34, 38, 0.15));
+				encounters.add(new Encounter(80, 34, 38, 0.11));
+				encounters.add(new Encounter(93, 35, 39, 0.16));
+				encounters.add(new Encounter(105, 35, 39, 0.13));
+				encounters.add(new Encounter(107, 35, 39, 0.20));
+				encounters.add(new Encounter(164, 34, 39, 0.25));
+			} else if (area == 85 && type.equals("Surfing")) { // Route 33
+				encounters.add(new Encounter(79, 35, 38, 0.30));
+				encounters.add(new Encounter(133, 34, 38, 0.40));
+				encounters.add(new Encounter(134, 37, 39, 0.15));
+				encounters.add(new Encounter(136, 37, 39, 0.15));
+			} else if (area == 85 && type.equals("Fishing")) { // Route 33
+				encounters.add(new Encounter(137, 15, 25, 0.25));
+				encounters.add(new Encounter(138, 30, 35, 0.10));
+				encounters.add(new Encounter(141, 30, 35, 0.35));
+				encounters.add(new Encounter(148, 20, 30, 0.30));
 			}
 			
 			
 		}
 		
-		
+		double total = 0;
+		for (Encounter e : encounters) {
+			total += e.encounterChance;
+		}
+		if (!String.format("%.2f", total).equals("1.00")) System.out.println("Encounters do not add up to 100: area " + area + ", instead " + total);
 		return encounters;
 	}
 

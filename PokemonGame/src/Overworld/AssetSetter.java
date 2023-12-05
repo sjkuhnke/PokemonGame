@@ -574,6 +574,12 @@ public class AssetSetter {
 		
 		mapNum = 33;
 		index = 0;
+		if (gp.player.p.badges >= 5 && !flags[19]) {
+			gp.npc[mapNum][index] = NPCSetup(62, 17, "There's some SCARY people wearing\nblack in there somewhere.\nI heard one of their leaders\ngo to Ghostly Woods and\nis planning something evil.");
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
+		
 		gp.npc[mapNum][index] = NPCSetup(3, 49, 78, 195);
 		gp.npc[mapNum][index] = NPCSetup(3, 40, 84, 196);
 		gp.npc[mapNum][index] = NPCSetup(5, 35, 73, 197);
@@ -595,6 +601,12 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(6, 67, 30, 114);
 		gp.npc[mapNum][index] = NPCSetup(3, 76, 25, 115);
 		gp.npc[mapNum][index] = NPCSetup(4, 91, 43, 116);
+		
+		if (gp.player.p.badges >= 5 && !flags[19]) {
+			gp.npc[mapNum][index] = NPCSetup(15, 46, "There's some SCARY people wearing\nblack in there somewhere.\nI heard one of their leaders\ngo to Ghostly Woods and\nis planning something evil.");
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
 		
 		mapNum = 38;
 		index = 0;
@@ -710,7 +722,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(5, 33, 19, 165);
 		gp.npc[mapNum][index] = NPCSetup(6, 27, 22, 166);
 		gp.npc[mapNum][index] = NPCSetup(6, 28, 28, 167);
-		gp.npc[mapNum][index] = NPCSetup(16, 35, 41, 185);
+		gp.npc[mapNum][index] = NPCSetup(10, 35, 41, 185);
 		
 		gp.npc[mapNum][index] = NPCSetup(3, 41, 51, 168);
 		gp.npc[mapNum][index] = NPCSetup(6, 31, 64, 169);
@@ -735,6 +747,12 @@ public class AssetSetter {
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
+		gp.npc[mapNum][index] = NPCSetup(3, 67, 69, 218);
+		gp.npc[mapNum][index] = NPCSetup(5, 85, 64, 219);
+		gp.npc[mapNum][index] = NPCSetup(5, 93, 54, 220);
+		gp.npc[mapNum][index] = NPCSetup(6, 83, 51, 221);
+		gp.npc[mapNum][index] = NPCSetup(5, 85, 37, 222);
+		gp.npc[mapNum][index] = NPCSetup(6, 88, 40, 223);
 		
 		mapNum = 88;
 		index = 0;
@@ -771,6 +789,32 @@ public class AssetSetter {
 		mapNum = 94;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(31, 41, "There have been 2 meteorites\nthat have crashed into our\nregion. One makes Pokemon surge\nwith electricity, and another\ncasts them in a strange\nshadow.", true);
+		
+		mapNum = 104;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(14, 44, 47, 204);
+		gp.npc[mapNum][index] = NPCSetup(13, 49, 47, 205);
+		gp.npc[mapNum][index] = NPCSetup(14, 44, 49, 206);
+		gp.npc[mapNum][index] = NPCSetup(13, 49, 49, 207);
+		gp.npc[mapNum][index] = NPCSetup(14, 44, 51, 208);
+		gp.npc[mapNum][index] = NPCSetup(13, 49, 51, 209);
+		gp.npc[mapNum][index] = NPCSetup(14, 44, 53, 210);
+		gp.npc[mapNum][index] = NPCSetup(13, 49, 53, 211);
+		gp.npc[mapNum][index] = NPCSetup(14, 44, 55, 212);
+		gp.npc[mapNum][index] = NPCSetup(13, 49, 55, 213);
+		gp.npc[mapNum][index] = NPCSetup(14, 44, 57, 214);
+		gp.npc[mapNum][index] = NPCSetup(13, 49, 57, 215);
+		
+		gp.npc[mapNum][index] = NPCSetup(16, 44, 62, 216);
+		gp.npc[mapNum][index] = NPCSetup(8, 41, 59, 217);
+		
+		mapNum = 107;
+		index = 0;
+		if (!flags[19]) {
+			gp.npc[mapNum][index] = NPCSetup(8, 46, 60, 234);
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
 		
 	}
 	
@@ -930,14 +974,18 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(13, 70, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(81, 59, 4, mapNum, map);
 		
-		mapNum = 83;
+		mapNum = 85;
 		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(64, 67, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(75, 64, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(83, 65, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(85, 67, 0, mapNum, map);
 		
 		mapNum = 90;
 		iIndex = 0;
 		SetupPit(mapNum, 51, 13, 100, 50, 54, map); // middle
-		SetupPit(mapNum, 29, 10, 101, 90, 46, map); // left
-		SetupPit(mapNum, 78, 11, 101, 90, 46, map); // right
+		SetupPit(mapNum, 29, 10, 101, 26, 51, map); // left
+		SetupPit(mapNum, 78, 11, 101, 75, 52, map); // right
 		
 		gp.iTile[mapNum][iIndex] = ITileSetup(34, 14, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(35, 14, 4, mapNum, map);
@@ -959,6 +1007,7 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(69, 12, 0, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 34, 0, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(57, 36, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 13, 3, 1, mapNum, map);
 		
 		mapNum = 95;
 		iIndex = 0;
@@ -984,6 +1033,65 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(46, 53, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(47, 53, 4, mapNum, map);
 		SetupPit(mapNum, 48, 37, 98, 47, 48, map);
+		
+		mapNum = 101;
+		iIndex = 0;
+		SetupPit(mapNum, 49, 49, 102, 47, 37, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(25, 47, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(25, 48, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(29, 50, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(30, 50, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 48, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 48, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 34, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 35, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 36, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(64, 51, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(65, 51, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(69, 51, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 51, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(71, 51, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 59, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 60, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 65, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 66, 4, mapNum, map);
+		
+		mapNum = 102;
+		iIndex = 0;
+		SetupPit(mapNum, 50, 57, 103, 50, 59, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 41, 2, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(49, 41, 2, 1, mapNum, map);
+		
+		mapNum = 103;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(46, 42, 2, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 38, 2, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(46, 59, 1, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 58, 0, 1, mapNum, map);
+		
+		mapNum = 105;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 16, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 22, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(30, 29, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 35, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 42, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 54, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 53, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 59, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 65, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 72, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 80, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 80, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(29, 39, 1, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(25, 42, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(19, 42, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(40, 49, 3, 1, mapNum, map);
+		
+		mapNum = 107;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 62, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(42, 22, 0, mapNum, map);
 	}
 
 	public void updateNPC() {
@@ -1007,6 +1115,8 @@ public class AssetSetter {
 		// flags[16] is true after talking to Grandpa
 		// flags[17] is true after beating Gym 5
 		// flags[18] is true after getting gift E/S pokemon
+		// flags[19] is true after beating Rick 2
+		// flags[20] is true after beating Maxwell 1
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(10, 72, 48, 0);
 		if (flags[1]) gp.npc[3][0] = null;
@@ -1023,6 +1133,10 @@ public class AssetSetter {
 		if (flags[8] && flags[9]) gp.npc[38][1] = null;
 		if (flags[15]) gp.npc[0][11] = null;
 		if (flags[16]) gp.npc[85][0] = null;
+		if (flags[19]) {
+			gp.npc[33][0] = null;
+			gp.npc[36][11] = null;
+		}
 	}
 	
 	

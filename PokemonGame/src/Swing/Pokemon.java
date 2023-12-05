@@ -43,6 +43,7 @@ public class Pokemon implements Serializable {
 	
 	public static TextPane console;
 	public static Field field;
+	public static final int MAX_POKEMON = 240;
 	
 	// id fields
 	public int id;
@@ -402,10 +403,12 @@ public class Pokemon implements Serializable {
 		if (bestMoves.contains(Move.AURORA_VEIL) && field.contains(field.foeSide, Effect.AURORA_VEIL)) bestMoves.remove(Move.AURORA_VEIL);
 		if (bestMoves.contains(Move.SAFEGUARD) && field.contains(field.foeSide, Effect.SAFEGUARD)) bestMoves.remove(Move.SAFEGUARD);
 		
-		if ((bestMoves.contains(Move.ROOST) || bestMoves.contains(Move.SYNTHESIS) || bestMoves.contains(Move.MOONLIGHT) || bestMoves.contains(Move.MORNING_SUN) ||
+		if (bestMoves.contains(Move.ROOST) || bestMoves.contains(Move.SYNTHESIS) || bestMoves.contains(Move.MOONLIGHT) || bestMoves.contains(Move.MORNING_SUN) ||
 				bestMoves.contains(Move.RECOVER) || bestMoves.contains(Move.SLACK_OFF) || bestMoves.contains(Move.WISH) || bestMoves.contains(Move.REST) ||
-				bestMoves.contains(Move.LIFE_DEW) || bestMoves.contains(Move.STRENGTH_SAP)) && this.getStat(0) == this.currentHP) {
-			bestMoves.removeAll(Arrays.asList(new Move[] {Move.ROOST, Move.SYNTHESIS, Move.MOONLIGHT, Move.MORNING_SUN, Move.RECOVER, Move.SLACK_OFF, Move.WISH, Move.REST, Move.LIFE_DEW, Move.STRENGTH_SAP}));
+				bestMoves.contains(Move.LIFE_DEW) || bestMoves.contains(Move.STRENGTH_SAP)) {
+			if (this.getStat(0) == this.currentHP) {
+				bestMoves.removeAll(Arrays.asList(new Move[] {Move.ROOST, Move.SYNTHESIS, Move.MOONLIGHT, Move.MORNING_SUN, Move.RECOVER, Move.SLACK_OFF, Move.WISH, Move.REST, Move.LIFE_DEW, Move.STRENGTH_SAP}));
+			}
 		}
 		
 		bestMoves.remove(Move.HEALING_WISH);
@@ -441,6 +444,10 @@ public class Pokemon implements Serializable {
 		if (bestMoves.contains(Move.MAGNET_RISE) && this.magCount > 0) bestMoves.remove(Move.MAGNET_RISE);
 		
 		return bestMoves;
+	}
+	
+	public int getID() {
+		return this.id;
 	}
 
 	public boolean isFainted() {
@@ -2355,7 +2362,7 @@ public class Pokemon implements Serializable {
 	private Pokemon checkEvo(Player player) {
 		Pokemon result = null;
 		int area = player.currentMap;
-		if (area >= 95 && area <= 99) area = 35;
+		if (area >= 95 && area <= 99) area = 35; // electric tunnel
 		if (id == 1 && level >= 18) {
 			result = new Pokemon(2, this);
 		} else if (id == 2 && level >= 36) {
@@ -2378,7 +2385,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 16 && level >= 32 && knowsMove(Move.ROLLOUT)) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 17 && area == -1) {
+		} else if (id == 17 && area == 100) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 19 && level >= 20) {
 			result = new Pokemon(id + 1, this);
@@ -2386,7 +2393,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 22 && level >= 18) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 23 && (area == 80 || area == 83 || area == 90)) {
+		} else if (id == 23 && (area == 80 || area == 83 || area == 90 || (area >= 100 && area <= 103))) {
 			result = new Pokemon(25, this);
 		} else if (id == 23 && level >= 32) {
 			result = new Pokemon(id + 1, this);
@@ -2416,7 +2423,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 52 && level >= 30) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 53 && area == -1) {
+		} else if (id == 53 && area == 100) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 55 && level >= 34) {
 			result = new Pokemon(id + 1, this);
@@ -2558,7 +2565,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 191 && level >= 60) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 195 && area == -1) {
+		} else if (id == 195 && area == 100) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 197 && level >= 32) {
 			result = new Pokemon(id + 1, this);
@@ -2830,7 +2837,7 @@ public class Pokemon implements Serializable {
 		} else if (this.id == 122) { this.baseStats = new int[]{69,95,97,70,95,104};
 		} else if (this.id == 123) { this.baseStats = new int[]{30,45,25,35,40,60};
 		} else if (this.id == 124) { this.baseStats = new int[]{75,105,60,85,60,105};
-		} else if (this.id == 125) { this.baseStats = new int[]{75,125,95,40,85,125};
+		} else if (this.id == 125) { this.baseStats = new int[]{75,125,95,40,85,125}; // TODO: not minmax
 		} else if (this.id == 126) { this.baseStats = new int[]{35,65,45,15,40,45};
 		} else if (this.id == 127) { this.baseStats = new int[]{95,125,105,25,75,50};
 		} else if (this.id == 128) { this.baseStats = new int[]{95,130,100,85,75,55};
@@ -4282,7 +4289,7 @@ public class Pokemon implements Serializable {
 //				foe.poison(false, this);
 //			}
 		} else if (move == Move.NIGHT_DAZE) {
-			stat(this, 5, -1, foe);
+			stat(foe, 5, -1, foe);
 		} else if (move == Move.OVERHEAT) {
 			stat(this, 2, -2, foe);
 //		} else if (move == Move.POISON_BALL) {

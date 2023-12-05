@@ -1,5 +1,7 @@
 package Overworld;
 
+import javax.swing.JOptionPane;
+
 import Entity.PlayerCharacter;
 import Swing.Player;
 
@@ -471,6 +473,83 @@ public class EventHandler {
 			// Shadow Ravine 0 -> H
 			if (hit(90,52,18)) teleport(100, 50, 62,true);
 			if (hit(100,50,62)) teleport(90, 52, 18,true);
+			
+			// Electric Tunnel -3 -> Shadow Path
+			if (hit(98,53,63)) teleport(105, 29, 8,true);
+			if (hit(105,29,7)) teleport(98, 53, 62,true);
+			
+			// Shadow Path -> TN Base
+			if (hit(105,45,91)) teleport(104, 47, 43,true);
+			if (hit(104,47,42)) teleport(105, 45, 90,true);
+			
+			// TN Base -> Shadow Ravine -3
+			if (hit(104,47,63)) teleport(103, 47, 35,true);
+			if (hit(103,47,34)) teleport(104, 47, 62,true);
+			
+			// Shadow Ravine 0 -> -1
+			if (hit(90,25,10)) teleport(101, 24, 45,true);
+			if (hit(101,24,45)) teleport(90, 25, 10,true);
+			if (hit(90,55,37)) teleport(101, 57, 70,true);
+			if (hit(101,57,70)) teleport(90, 55, 37,true);
+			
+			// Shadow Ravine -1 -> -2
+			if (hit(101,48,30)) teleport(102, 53, 39,true);
+			if (hit(102,53,39)) teleport(101, 48, 30,true);
+			
+			// Shadow Ravine -2 -> -3
+			if (hit(102,59,53)) teleport(103, 57, 60,true);
+			if (hit(103,57,60)) teleport(102, 59, 53,true);
+			
+			// Route 33 -> Ghostly Woods Gate -> Ghostly Woods
+			if (hit(85,86,22)) teleport(106, 31, 45,true);
+			if (hit(106,31,46)) teleport(85, 86, 23,true);
+			if (hit(106,31,33)) teleport(107, 49, 92,true);
+			if (hit(107,49,93)) teleport(106, 31, 34,true);
+			
+			// Ghostly Woods
+			if (hit(107,57,91)) teleport(107, 26, 81,true); // A
+			if (hit(107,26,81)) teleport(107, 57, 91,true); // A
+			if (hit(107,39,86)) teleport(107, 84, 59,true); // B
+			if (hit(107,84,59)) teleport(107, 39, 86,true); // B
+			if (hit(107,81,55)) teleport(107, 36, 90,true); // C
+			if (hit(107,36,90)) teleport(107, 81, 55,true); // C
+			if (hit(107,17,75)) teleport(107, 57, 78,true); // D
+			if (hit(107,57,78)) teleport(107, 17, 75,true); // D
+			if (hit(107,55,78)) teleport(107, 72, 50,true); // E
+			if (hit(107,72,50)) teleport(107, 55, 78,true); // E
+			if (hit(107,67,35)) teleport(107, 53, 63,true); // F
+			if (hit(107,53,63)) teleport(107, 67, 35,true); // F
+			if (hit(107,47,63)) {
+				if (!gp.player.p.flags[19] || !gp.player.p.flags[20]) {
+					gp.keyH.pause();
+					teleport(107, 42, 57,true);
+					if (!gp.player.p.flags[19]) {
+						JOptionPane.showMessageDialog(null, "This portal seems to be jammed\nby Rick...");
+					} else {
+						JOptionPane.showMessageDialog(null, "This portal seems to be jammed\nby Team Nuke... Rick said\nthat they're at the bottom\nof Electric Tunnel!");
+					}
+					gp.keyH.resume();
+				} else {
+					teleport(107, 24, 48,true); // G
+				}
+			}
+			if (hit(107,24,48)) teleport(107, 47, 63,true); // G
+//			if (hit(107,71,53)) teleport(107, 55, 53,true); // H
+//			if (hit(107,55,53)) teleport(107, 71, 53,true); // H
+//			if (hit(107,75,53)) teleport(107, 51, 43,true); // I
+//			if (hit(107,51,43)) teleport(107, 75, 53,true); // I
+//			if (hit(107,85,53)) teleport(107, 85, 57,true); // J
+//			if (hit(107,85,57)) teleport(107, 85, 53,true); // J
+//			if (hit(107,71,43)) teleport(107, 55, 57,true); // K
+//			if (hit(107,55,57)) teleport(107, 71, 43,true); // K
+//			if (hit(107,75,43)) teleport(107, 41, 63,true); // L
+//			if (hit(107,41,63)) teleport(107, 75, 43,true); // L
+//			if (hit(107,71,47)) teleport(107, 81, 43,true); // M
+//			if (hit(107,81,43)) teleport(107, 71, 47,true); // M
+//			if (hit(107,75,47)) teleport(107, 45, 53,true); // N
+//			if (hit(107,45,53)) teleport(107, 75, 47,true); // N
+//			if (hit(107,45,57)) teleport(107, 85, 43,true); // O
+//			if (hit(107,85,43)) teleport(107, 45, 57,true); // O
 		}
 	}
 	
