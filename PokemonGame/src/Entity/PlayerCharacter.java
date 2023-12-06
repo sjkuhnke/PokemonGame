@@ -538,23 +538,9 @@ public class PlayerCharacter extends Entity {
 	        	    
 	        	    JOptionPane.showMessageDialog(null, pPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 	    		} else if (code.equals("UPDATE")) {
-	    			boolean[] temp = p.trainersBeat.clone();
-	    			p.trainersBeat = new boolean[Main.trainers.length];
-	    			for (int i = 0; i < temp.length; i++) {
-	    				p.trainersBeat[i] = temp[i];
-	    			}
-	    			boolean[][] tempObj = p.itemsCollected.clone();
-	    			p.itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
-	    			for (int i = 0; i < tempObj.length; i++) {
-	    				for (int j = 0; j < tempObj[1].length; j++) {
-	    					p.itemsCollected[i][j] = tempObj[i][j];
-	    				}
-	    			}
-	    			boolean[] tempFlag = p.flags.clone();
-	    			p.flags = new boolean[GamePanel.maxFlags];
-	    			for (int i = 0; i < tempFlag.length; i++) {
-	    				p.flags[i] = tempFlag[i];
-	    			}
+	    			p.updateTrainers();
+	    			p.updateItems(gp.obj.length, gp.obj[1].length);
+	    			p.updateFlags();
 	    			for (Pokemon p : p.team) {
 	    				if (p != null) {
 	    					p.setBaseStats();
@@ -983,6 +969,22 @@ public class PlayerCharacter extends Entity {
 					
 					Pokemon result = new Pokemon(ids[index], 30, true, false);
 					p.flags[18] = true;
+					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+					p.catchPokemon(result);
+					
+				} if (gp.currentMap == 109 && !p.flags[22]) {
+					JOptionPane.showMessageDialog(null, "Here, could you raise it for me?");
+					int[] ids = new int[] {177, 179, 98};
+					Random gift = new Random();
+					int index = gift.nextInt(ids.length - 1);
+					if (p.pokedex[ids[0]] == 2 && p.pokedex[ids[1]] == 2) {
+						Pokemon temp = new Pokemon(5, 5, false, false);
+						JOptionPane.showMessageDialog(null, "Oh, you already have a\n" + temp.getName(ids[index]) + "? Well, take this really\nrare Pokemon instead!");
+						index = 2;
+					}
+					
+					Pokemon result = new Pokemon(ids[index], 1, true, false);
+					p.flags[22] = true;
 					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
 					p.catchPokemon(result);
 					
@@ -2023,7 +2025,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactRockClimb(int i) {
 		keyH.pause();
-		if (p.hasMove(Move.CUT)) {
+		if (p.hasMove(Move.ROCK_CLIMB)) {
 			int option = JOptionPane.showOptionDialog(null,
 					"This wall can be scaled!\nWould you like to use Rock Climb?",
 					"Rock Climb",

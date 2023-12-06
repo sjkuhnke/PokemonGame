@@ -288,6 +288,12 @@ public class Item implements Serializable {
 		case 44:
 			result = "Flame Orb";
 			break;
+		case 45:
+			result = "Thunder Scales Fossil";
+			break;
+		case 46:
+			result = "Dusk Scales Fossil";
+			break;
 		case 93:
 			result = "HM01";
 			break;

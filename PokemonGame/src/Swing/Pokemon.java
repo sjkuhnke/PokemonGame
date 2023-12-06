@@ -8931,7 +8931,7 @@ public class Pokemon implements Serializable {
 			movebank[51] = new Node(Move.AURA_SPHERE);
 			movebank[55] = new Node(Move.METEOR_MASH);
 			movebank[59] = new Node(Move.DRAIN_PUNCH);
-			movebank[59].next = new Node(Move.STAR_STRUCK_ARCHER);
+			movebank[59].next = new Node(Move.STAR$STRUCK_ARCHER);
 			movebank[59].next.next = new Node(Move.CLOSE_COMBAT);
 			movebank[64] = new Node(Move.NO_RETREAT);
 			movebank[69] = new Node(Move.METEOR_ASSAULT);
@@ -9907,9 +9907,13 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if ((move == Move.FIRST_IMPRESSION || move == Move.BELCH || move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT) && !this.impressive) {
-			return -1;
-		}
+		if (move == Move.FIRST_IMPRESSION || move == Move.BELCH || move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT){
+			if (!this.impressive) {
+				return -1;
+			} else {
+				bp *= 6;
+			}
+		} 
 		
 		if (this.ability == Ability.COMPOUND_EYES) acc *= 1.3;
 		if (field.contains(field.fieldEffects, Effect.GRAVITY)) acc = acc * 5 / 3;
@@ -10115,7 +10119,7 @@ public class Pokemon implements Serializable {
 		// Crit Check
 		if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 		if (this.ability == Ability.SUPER_LUCK) critChance++;
-		if (mode == 0 && critCheck(critChance) && critChance >= 1) {
+		if ((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && critChance >= 3)) {
 			if (move.isPhysical() && attackStat < this.getStat(1)) {
 				attackStat = this.getStat(1);
 				if (this.status == Status.BURNED) attackStat /= 2;

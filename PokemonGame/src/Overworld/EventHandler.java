@@ -587,6 +587,10 @@ public class EventHandler {
 			if (hit(110,28,46)) teleport(109, 55, 36,true); // bypass
 			if (hit(109,44,47)) teleport(110, 16, 50,false); // lower exit
 			if (hit(110,16,51)) teleport(109, 44, 48,false); // lower exit
+			if (hit(109,60,48)) teleport(110, 34, 58,true);
+			if (hit(110,34,58)) teleport(109, 60, 48,true);
+			if (hit(109,70,84)) teleport(110, 17, 85,true);
+			if (hit(110,17,85)) teleport(109, 70, 84,true);
 			
 			// Glurg Town PC
 			if (hit(109,34,44)) teleport(111, 31, 45,false);
@@ -595,6 +599,26 @@ public class EventHandler {
 			// Glurg Town Shop
 			if (hit(109,32,34)) teleport(112, 31, 45,false);
 			if (hit(112,31,46)) teleport(109, 32, 35,false);
+			
+			// Route 35
+			if (hit(109,6,36)) teleport(114, 36, 40,false);
+			if (hit(114,37,40)) teleport(109, 7, 36,false);
+			if (hit(114,22,40)) teleport(115, 91, 77,false);
+			if (hit(115,92,77)) teleport(114, 23, 40,false);
+			
+			// Schrice City/Route 35 Gate
+			if (hit(115,19,78)) teleport(116, 36, 40,false);
+			if (hit(116,37,40)) teleport(115, 20, 78,false);
+			if (hit(116,22,40)) teleport(38, 78, 47,false);
+			if (hit(38,79,47)) teleport(116, 23, 40,false);
+			
+			// Gym 6
+			if (hit(109,15,42)) teleport(113, 53, 68,false);
+			if (hit(113,53,69)) teleport(109, 15, 43,false);
+			
+			// Mindagan Cavern
+			if (hit(78,62,69)) teleport(117, 61, 72,true);
+			if (hit(117,61,72)) teleport(78, 62, 69,true);
 		}
 	}
 	
