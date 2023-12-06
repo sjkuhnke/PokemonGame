@@ -328,7 +328,12 @@ public class PMap extends JFrame {
 	    JButton GT = new JButton("");
 	    GT.setToolTipText("Glurg Town");
 	    GT.setBounds(452, 41, 26, 23);
-	    if (locations[7]) GT.setBackground(Color.red);
+	    if (locations[7]) {
+	    	GT.setBackground(Color.red);
+	    	GT.addActionListener(e -> {
+	    		fly(GT.getToolTipText(), 109, 34, 45);
+	    	});
+	    }
 	    if (loc == 32) GT.setBackground(Color.yellow);
 	    getContentPane().add(GT);
 	    
@@ -366,7 +371,7 @@ public class PMap extends JFrame {
 	    if (locations[8]) {
 	    	FC.setBackground(Color.red);
 	    	FC.addActionListener(e -> {
-	    		fly(SRC.getToolTipText(), 85, 43, 76);
+	    		fly(FC.getToolTipText(), 85, 43, 76);
 	    	});
 	    }
 	    if (loc == 28) FC.setBackground(Color.yellow);

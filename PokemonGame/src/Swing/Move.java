@@ -365,7 +365,7 @@ public enum Move {
 	PERISH_SONG(0,1000,0,0,2,0,PType.GHOST,"All Pokemon hearing this song will faint in 3 turns",false,5),
 	PETAL_BLIZZARD(90,100,0,0,0,0,PType.GRASS,"A normal attack",false,15),
 	PETAL_DANCE(120,100,0,0,1,0,PType.GRASS,"User is locked into this move for 2-3 turns, Confuses user when the effect is done",true,10),
-	PHANTOM_FORCE(100,100,0,0,0,0,PType.GHOST,"A two turn attack. User vanishes on the first, and attacks on the second",true,10),
+	PHANTOM_FORCE(100,100,0,0,0,0,PType.GHOST,"A two turn attack. User vanishes on the first, and attacks on the second",true,10), // TODO: make sure this goes through protects
 	PHOTON_GEYSER(130,90,100,0,1,0,PType.LIGHT,"% to lower user's Sp.Atk by 2",false,5),
 	PIN_MISSILE(25,95,0,0,0,0,PType.BUG,"Hits 2-5 times",false,15),
 	PISTOL_POP(110,70,0,0,0,0,PType.STEEL,"A normal attack",false,5),

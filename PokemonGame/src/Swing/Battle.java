@@ -84,6 +84,7 @@ public class Battle extends JFrame {
 //	private JButton exitButton; // debug
 	private int trainerIndex;
 	private JLabel caughtIndicator;
+	public int staticPokemonID = -1;
 	
 	private BattleCloseListener battleCloseListener;
 	private TextPane console;
@@ -1753,11 +1754,11 @@ public class Battle extends JFrame {
 	@Override
 	public void dispose() {
 		super.dispose();
-		if (battleCloseListener != null) battleCloseListener.onBattleClosed(trainerIndex);
+		if (battleCloseListener != null) battleCloseListener.onBattleClosed(trainerIndex, staticPokemonID);
 	}
 	
 	public interface BattleCloseListener {
-	    void onBattleClosed(int trainer);
+	    void onBattleClosed(int trainer, int id);
 	}
 	
 	public Image getIcon(String name) {

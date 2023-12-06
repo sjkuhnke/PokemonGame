@@ -28,7 +28,7 @@ public class Player implements Serializable{
 	public int currentMap;
 	public boolean[] trainersBeat = new boolean[Main.trainers.length];
 	public boolean[][] itemsCollected;
-	public boolean[] flags = new boolean[30];
+	public boolean[] flags = new boolean[GamePanel.maxFlags];
 	public boolean[] locations = new boolean[12]; // NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
 	public boolean random = false;
 	public boolean ghost = false;
@@ -37,6 +37,7 @@ public class Player implements Serializable{
 	public boolean repel;
 	public boolean surf;
 	public boolean lavasurf;
+	public int grustCount;
 	
 	public Player(GamePanel gp) {
 		team = new Pokemon[6];
@@ -269,6 +270,22 @@ public class Player implements Serializable{
 		current.swapIn(foe, this);
 		return true;
 		
+	}
+	
+	public void updateFlags() {
+		boolean[] tempFlag = flags.clone();
+		flags = new boolean[GamePanel.maxFlags];
+		for (int i = 0; i < tempFlag.length; i++) {
+			flags[i] = tempFlag[i];
+		}
+	}
+	
+	public void updateTrainers() {
+		boolean[] temp = trainersBeat.clone();
+		trainersBeat = new boolean[Main.trainers.length];
+		for (int i = 0; i < temp.length; i++) {
+			trainersBeat[i] = temp[i];
+		}
 	}
 
 }

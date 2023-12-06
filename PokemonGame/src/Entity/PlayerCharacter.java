@@ -161,7 +161,7 @@ public class PlayerCharacter extends Entity {
 				p.steps++;
 				cooldown++;
 			}
-			if (spriteCounter % 4 == 0 && (inTallGrass || p.surf || p.lavasurf) && !p.repel && cooldown > 2) {
+			if (gp.ticks == 4 && (inTallGrass || p.surf || p.lavasurf) && !p.repel && cooldown > 2) {
 				Random r = new Random();
 				int random = r.nextInt(150);
 				if (random < speed) {
@@ -250,6 +250,11 @@ public class PlayerCharacter extends Entity {
 			PMap.getLoc(gp.currentMap, (int) Math.round(worldX * 1.0 / 48), (int) Math.round(worldY * 1.0 / 48));
 			Main.window.setTitle("Pokemon Game - " + currentMapName);
 		}
+		if (gp.currentMap == 107 && gp.checkSpin && gp.ticks == 4 && new Random().nextInt(3) == 0) {
+			int index = new Random().nextInt(10);
+			if (gp.grusts[index] != null) gp.grusts[index].turnRandom();
+		}
+		
 		if (keyH.dPressed) {
 			keyH.pause();
 			showMenu();
@@ -259,7 +264,7 @@ public class PlayerCharacter extends Entity {
 		} else {
 			speed = 4;
 		}
-		if (gp.ticks > 3) {
+		if (gp.ticks > 4) {
 			gp.ticks = 0;
 		}
 		for (int i = 0; i < gp.npc[1].length; i++) {
@@ -288,6 +293,8 @@ public class PlayerCharacter extends Entity {
 					gp.startBattle(target.trainer);
 				} else if (target instanceof NPC_PC) {
 					gp.openBox();
+				} else if (target instanceof NPC_Pokemon) {
+					gp.startBattle(target.trainer, ((NPC_Pokemon) target).id);
 				}
 			}
 			
@@ -324,7 +331,7 @@ public class PlayerCharacter extends Entity {
 					keyH.resume();
 				}
 			}
-			if (p.hasMove(Move.SURF) && !p.lavasurf) {
+			if (p.hasMove(Move.LAVA_SURF) && !p.lavasurf) {
 				int result = gp.cChecker.checkTileType(this);
 				if (gp.tileM.getLavaTiles().contains(result)) {
 					keyH.pause();
@@ -544,7 +551,7 @@ public class PlayerCharacter extends Entity {
 	    				}
 	    			}
 	    			boolean[] tempFlag = p.flags.clone();
-	    			p.flags = new boolean[30];
+	    			p.flags = new boolean[GamePanel.maxFlags];
 	    			for (int i = 0; i < tempFlag.length; i++) {
 	    				p.flags[i] = tempFlag[i];
 	    			}
@@ -676,6 +683,7 @@ public class PlayerCharacter extends Entity {
 		    	if (gp.currentMap == 39) p.locations[6] = true;
 		    	if (gp.currentMap == 86) p.locations[8] = true;
 		    	if (gp.currentMap == 92) p.locations[5] = true;
+		    	if (gp.currentMap == 111) p.locations[7] = true;
 		    }
 		    keyH.resume();
 		}
@@ -1794,12 +1802,15 @@ public class PlayerCharacter extends Entity {
 		JPanel shopPanel = new JPanel();
 	    shopPanel.setLayout(new GridLayout(6, 1));
 	    Item[] shopItems = new Item[1];
-	    if (gp.currentMap == 30) shopItems = new Item[] {new Item(0), new Item(1), new Item(15), new Item(27), new Item(149), new Item(151)};
-	    if (gp.currentMap == 40) shopItems = new Item[] {new Item(112), new Item(113), new Item(115), new Item(116), new Item(123), new Item(124)};
-	    if (gp.currentMap == 89) shopItems = new Item[] {new Item(145), new Item(150), new Item(154), new Item(174), new Item(175),
+	    if (gp.currentMap == 30) { shopItems = new Item[] {new Item(0), new Item(1), new Item(15), new Item(27), new Item(149), new Item(151)};
+	    } else if (gp.currentMap == 40) { shopItems = new Item[] {new Item(112), new Item(113), new Item(115), new Item(116), new Item(123), new Item(124)};
+	    } else if (gp.currentMap == 89) { shopItems = new Item[] {new Item(145), new Item(150), new Item(154), new Item(174), new Item(175),
 	    		new Item(176), new Item(177), new Item(179), new Item(180), new Item(181), new Item(182), new Item(195)};
-	    if (gp.currentMap == 92) shopItems = new Item[] {new Item(29), new Item(30), new Item(31), new Item(32), new Item(33), new Item(34),
+	    } else if (gp.currentMap == 92) { shopItems = new Item[] {new Item(29), new Item(30), new Item(31), new Item(32), new Item(33), new Item(34),
 	    		new Item(35), new Item(36), new Item(37), new Item(38), new Item(39)};
+	    } else if (gp.currentMap == 112) { shopItems = new Item[] {new Item(41), new Item(42), new Item(141), new Item(142), new Item(143), new Item(144),
+	    		new Item(191)};
+	    }
 	    for (int i = 0; i < shopItems.length; i++) {
 	    	JGradientButton item = new JGradientButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
 	    	Item curItem = shopItems[i];
