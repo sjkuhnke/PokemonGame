@@ -453,6 +453,7 @@ public class PMap extends JFrame {
 	    getContentPane().add(btnNewButton);
 	    
 	    JLabel lblNewLabel = new JLabel("= YOU ARE HERE");
+	    if (loc == -1) lblNewLabel.setText("= YOU ARE ???");
 	    lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 	    lblNewLabel.setBounds(390, 395, 137, 14);
 	    getContentPane().add(lblNewLabel);
@@ -843,19 +844,242 @@ public class PMap extends JFrame {
 		case 92:
 			PlayerCharacter.currentMapName = "Peaceful Park";
 			return 15;
-		case 93: // TODO from here down
-			return 20;
+		case 93:
+			PlayerCharacter.currentMapName = "Frenco City";
+			return 28;
 		case 94:
-			return 20;
+			PlayerCharacter.currentMapName = "Frenco City";
+			return 28;
 		case 95:
-			return 20;
+			PlayerCharacter.currentMapName = "Electric Tunnel (0A)";
+			return 18;
 		case 96:
-			return 4;
+			PlayerCharacter.currentMapName = "Electric Tunnel (-1A)";
+			return 18;
 		case 97:
-			return 20;
+			PlayerCharacter.currentMapName = "Electric Tunnel (-2A)";
+			return 18;
 		case 98:
-			return 20;
+			PlayerCharacter.currentMapName = "Electric Tunnel (-3A)";
+			return 18;
 		case 99:
+			PlayerCharacter.currentMapName = "Electric Tunnel (H)";
+			return 18;
+		case 100:
+			PlayerCharacter.currentMapName = "Shadow Ravine (H)";
+			return 25;
+		case 101:
+			PlayerCharacter.currentMapName = "Shadow Ravine (-1A)";
+			return 25;
+		case 102:
+			PlayerCharacter.currentMapName = "Shadow Ravine (-2A)";
+			return 25;
+		case 103:
+			PlayerCharacter.currentMapName = "Shadow Ravine (-3A)";
+			return 25;
+		case 104:
+			PlayerCharacter.currentMapName = "Team Nuke Base";
+			return -1;
+		case 105:
+			PlayerCharacter.currentMapName = "Shadow Path";
+			return -1;
+		case 106:
+			PlayerCharacter.currentMapName = "Ghostly Woods";
+			return 30;
+		case 107:
+			PlayerCharacter.currentMapName = "Ghostly Woods";
+			return 30;
+		case 108:
+			PlayerCharacter.currentMapName = "Route 34 (1A)";
+			return 31;
+		case 109:
+			if (x > 55) {
+				PlayerCharacter.currentMapName = "Route 34 (1A)";
+				return 31;
+			}
+			if (x <= 55) {
+				PlayerCharacter.currentMapName = "Glurg Town";
+				return 32;
+			}
+		case 110:
+			PlayerCharacter.currentMapName = "Route 34 (0A)";
+			return 31;
+		case 111:
+			PlayerCharacter.currentMapName = "Glurg Town";
+			return 32;
+		case 112:
+			PlayerCharacter.currentMapName = "Glurg Town";
+			return 32;
+		case 113:
+			PlayerCharacter.currentMapName = "Glurg Town";
+			return 32;
+		case 114:
+			PlayerCharacter.currentMapName = "Route 35";
+			return 33;
+		case 115:
+			PlayerCharacter.currentMapName = "Route 35";
+			return 33;
+		case 116:
+			PlayerCharacter.currentMapName = "Schrice City";
+			return 20;
+		case 117:
+			PlayerCharacter.currentMapName = "Mindagan Cavern (0A)";
+			return 23;
+		case 118:// TODO from here down
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 119:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 120:
+			PlayerCharacter.currentMapName = "";
+			return 28;
+		case 121:
+			PlayerCharacter.currentMapName = "";
+			return 15;
+		case 122:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 123:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 124:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 125:
+			PlayerCharacter.currentMapName = "";
+			return 4;
+		case 126:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 127:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 128:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 129:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 130:
+			PlayerCharacter.currentMapName = "";
+			return 28;
+		case 131:
+			PlayerCharacter.currentMapName = "";
+			return 15;
+		case 132:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 133:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 134:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 135:
+			PlayerCharacter.currentMapName = "";
+			return 4;
+		case 136:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 137:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 138:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 139:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 140:
+			PlayerCharacter.currentMapName = "";
+			return 28;
+		case 141:
+			PlayerCharacter.currentMapName = "";
+			return 15;
+		case 142:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 143:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 144:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 145:
+			PlayerCharacter.currentMapName = "";
+			return 4;
+		case 146:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 147:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 148:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 149:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 150:
+			PlayerCharacter.currentMapName = "";
+			return 28;
+		case 151:
+			PlayerCharacter.currentMapName = "";
+			return 15;
+		case 152:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 153:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 154:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 155:
+			PlayerCharacter.currentMapName = "";
+			return 4;
+		case 156:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 157:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 158:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 159:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 160:
+			PlayerCharacter.currentMapName = "";
+			return 28;
+		case 161:
+			PlayerCharacter.currentMapName = "";
+			return 15;
+		case 162:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 163:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 164:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 165:
+			PlayerCharacter.currentMapName = "";
+			return 4;
+		case 166:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 167:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 168:
+			PlayerCharacter.currentMapName = "";
+			return 20;
+		case 169:
+			PlayerCharacter.currentMapName = "";
 			return 20;
 		}
 		

@@ -288,4 +288,14 @@ public class Player implements Serializable{
 		}
 	}
 
+	public void updateItems(int x, int y) {
+		boolean[][] tempObj = itemsCollected.clone();
+		itemsCollected = new boolean[x][y];
+		for (int i = 0; i < tempObj.length; i++) {
+			for (int j = 0; j < tempObj[1].length; j++) {
+				itemsCollected[i][j] = tempObj[i][j];
+			}
+		}
+	}
+
 }

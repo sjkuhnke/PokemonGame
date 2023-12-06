@@ -260,6 +260,9 @@ public class Main {
 		setMoveset("4 Gym Leader 1", 5, Move.ICE_PUNCH, Move.CLOSE_COMBAT, Move.ICE_SHARD, Move.SWORDS_DANCE);
 		setMoveset("4 Gym Leader 1", 6, Move.ICE_SPINNER, Move.COMET_CRASH, Move.BRAVE_BIRD, Move.HEAD_SMASH);
 		
+		setMoveset("Scott 3", 1, Move.MAGIC_REFLECT, Move.PSYCHIC, Move.MAGIC_TOMB, Move.CALM_MIND);
+		setMoveset("Scott 3", 2, Move.SWORDS_DANCE, Move.LEECH_LIFE, Move.ACROBATICS, Move.POISON_JAB);
+		
 		setMoveset("5 Gym Leader 1", 1, Move.LIGHT_SCREEN, Move.REFLECT, Move.PSYCHO_CUT, Move.SUPERPOWER);
 		setMoveset("5 Gym Leader 1", 2, Move.PSYCHO_CUT, Move.SWORDS_DANCE, Move.PLAY_ROUGH, Move.CLOSE_COMBAT);
 		setMoveset("5 Gym Leader 1", 3, Move.LEECH_SEED, Move.PSYSHOCK, Move.ENERGY_BALL, Move.DETECT);
@@ -267,6 +270,24 @@ public class Main {
 		setMoveset("5 Gym Leader 1", 5, Move.ELEMENTAL_SPARKLE, Move.MAGIC_REFLECT, Move.TRICK_ROOM, Move.PSYSHOCK);
 		setMoveset("5 Gym Leader 1", 6, Move.BULLET_PUNCH, Move.IRON_DEFENSE, Move.ZEN_HEADBUTT, Move.COMET_CRASH);
 		setAbility("5 Gym Leader 1", 6, Ability.LEVITATE);
+		
+		setMoveset("Fred 3", 1, Move.IRON_BLAST, Move.DRAGON_PULSE, Move.FLAMETHROWER, Move.HURRICANE);
+		setMoveset("Fred 3", 5, Move.COSMIC_POWER, Move.STONE_EDGE, Move.METEOR_MASH, Move.COMET_CRASH);
+		setMoveset("Fred 3", 6, Move.BLIZZARD, Move.LIGHT_SCREEN, Move.HYDRO_PUMP, Move.PSYCHIC);
+		
+		setMoveset("Maxwell 1", 1, Move.LOAD_FIREARMS, Move.PISTOL_POP, Move.FLAMETHROWER, Move.ICE_BEAM);
+		setMoveset("Maxwell 1", 2, Move.TOXIC, Move.CURSE, Move.SLUDGE_WAVE, Move.FALSE_SURRENDER);
+		setMoveset("Maxwell 1", 3, Move.PHANTOM_FORCE, Move.SUCKER_PUNCH, Move.BREAKING_SWIPE, Move.UNSEEN_STRANGLE);
+		setMoveset("Maxwell 1", 6, Move.MAGIC_TOMB, Move.COMET_CRASH, Move.MOONLIGHT, Move.EARTHQUAKE);
+		
+		setMoveset("6 Gym Leader 1", 1, Move.PSYCHIC, Move.MOONBLAST, Move.GLITTER_DANCE, Move.WILL$O$WISP);
+		setMoveset("6 Gym Leader 1", 2, Move.EARTH_POWER, Move.GLITTER_DANCE, Move.MOONBLAST, Move.OVERHEAT);
+		setMoveset("6 Gym Leader 1", 3, Move.SPIRIT_BREAK, Move.DRILL_RUN, Move.SWORDS_DANCE, Move.ICE_SPINNER);
+		setAbility("6 Gym Leader 1", 3, Ability.TOUGH_CLAWS);
+		setMoveset("6 Gym Leader 1", 4, Move.MORNING_SUN, Move.HURRICANE, Move.PRISMATIC_LASER, Move.DEFOG);
+		setMoveset("6 Gym Leader 1", 5, Move.ENERGY_BALL, Move.CHARGE_BEAM, Move.THUNDER_WAVE, Move.ICE_BEAM);
+		setMoveset("6 Gym Leader 1", 6, Move.GLITTERING_SWORD, Move.ZING_ZAP, Move.SHELL_SMASH, Move.OVERHEAT);
+		
 		
 		setMoveset("CCA", 1, Move.METRONOME, null, null, null);
 		setMoveset("CCA", 2, Move.METRONOME, null, null, null);
@@ -537,13 +558,16 @@ public class Main {
 				new Trainer("CO", new Pokemon[]{new Pokemon(113, 57, false, true), new Pokemon(119, 58, false, true), new Pokemon(116, 57, false, true), new Pokemon(201, 57, false, true), new Pokemon(125, 57, false, true)}, 100),
 				new Trainer("CP", new Pokemon[]{new Pokemon(165, 58, false, true), new Pokemon(128, 58, false, true)}, 100),
 				new Trainer("CQ", new Pokemon[]{new Pokemon(100, 58, false, true), new Pokemon(189, 58, false, true)}, 100), // 245
-//				new Trainer("6 Gym A", new Pokemon[]{new Pokemon(-90, 32, false, true)}, 200),
-//				new Trainer("6 Gym B", new Pokemon[]{new Pokemon(-87, 30, false, true)}, 200),
-//				new Trainer("6 Gym C", new Pokemon[]{new Pokemon(-89, 24, false, true), new Pokemon(-89, 24, false, true)}, 200),
-//				new Trainer("6 Gym D", new Pokemon[]{new Pokemon(-86, 24, false, true), new Pokemon(-86, 27, false, true)}, 200),
-//				new Trainer("6 Gym E", new Pokemon[]{new Pokemon(-69, 29, false, true)}, 200),
-//				new Trainer("6 Gym F", new Pokemon[]{new Pokemon(-90, 31, false, true)}, 200),
-//				new Trainer("6 Gym Leader 1", new Pokemon[]{new Pokemon(-89, 29, false, true), new Pokemon(-90, 34, false, true), new Pokemon(-87, 36, false, true)}, 500),
+				new Trainer("6 Gym A", new Pokemon[]{new Pokemon(51, 59, false, true), new Pokemon(51, 60, false, true), new Pokemon(51, 60, false, true)}, 200),
+				new Trainer("6 Gym B", new Pokemon[]{new Pokemon(208, 61, false, true)}, 200),
+				new Trainer("6 Gym C", new Pokemon[]{new Pokemon(124, 60, false, true), new Pokemon(127, 60, false, true), new Pokemon(121, 60, false, true)}, 200),
+				new Trainer("6 Gym D", new Pokemon[]{new Pokemon(87, 61, false, true)}, 200),
+				new Trainer("6 Gym E", new Pokemon[]{new Pokemon(12, 59, false, true), new Pokemon(12, 60, false, true)}, 200), // 250
+				new Trainer("6 Gym F", new Pokemon[]{new Pokemon(47, 61, false, true), new Pokemon(72, 60, false, true)}, 200),
+				new Trainer("6 Gym G", new Pokemon[]{new Pokemon(89, 61, false, true), new Pokemon(170, 60, false, true)}, 200),
+				new Trainer("6 Gym H", new Pokemon[]{new Pokemon(40, 60, false, true), new Pokemon(110, 60, false, true)}, 200),
+				new Trainer("6 Gym I", new Pokemon[]{new Pokemon(176, 61, false, true), new Pokemon(189, 60, false, true)}, 200),
+				new Trainer("6 Gym Leader 1", new Pokemon[]{new Pokemon(87, 62, false, true), new Pokemon(110, 62, false, true), new Pokemon(170, 62, false, true), new Pokemon(12, 62, false, true), new Pokemon(40, 62, false, true), new Pokemon(208, 63, false, true)}, 500, new Item(197)), // 255
 //				new Trainer("Y", new Pokemon[]{new Pokemon(-93, 24, false, true), new Pokemon(-89, 23, false, true)}, 100),
 //				new Trainer("Z", new Pokemon[]{new Pokemon(-75, 26, false, true)}, 100),
 //				new Trainer("AA", new Pokemon[]{new Pokemon(-97, 19, false, true), new Pokemon(-98, 26, false, true)}, 100),
@@ -856,19 +880,19 @@ public class Main {
 				}
 				writer.write("\n");
 				
-				if (tr.getName().contains("Leader") || tr.getName().contains("Rick") || tr.getName().contains("Scott") || tr.getName().contains("Fred")) {
+				if (tr.getName().contains("Leader") || tr.getName().contains("Rick") || tr.getName().contains("Scott") || tr.getName().contains("Fred") || tr.getName().contains("Maxwell")) {
 					writer.write("\n");
 					writer.write(tr.getName() + "\n");
 					for (Pokemon p : tr.getTeam()) {
 						String pName = p.name + " (Lv. " + p.level + ")";
-						while (pName.length() < 25) {
+						while (pName.length() < 22) {
 							pName += " ";
 						}
 						pName += "/";
 						writer.write(pName);
 						
 						String aName = "   " + p.ability.toString();
-						while (aName.length() < 19) {
+						while (aName.length() < 22) {
 							aName += " ";
 						}
 						aName += "/";
