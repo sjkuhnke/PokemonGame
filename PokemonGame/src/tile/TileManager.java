@@ -132,6 +132,9 @@ public class TileManager {
 		loadMap("/maps/map14.txt", 107);
 		loadMap("/maps/gate01.txt", 108);
 		loadMap("/maps/map15.txt", 109);
+		loadMap("/maps/map16.txt", 110);
+		loadMap("/maps/pc.txt", 111);
+		loadMap("/maps/market01.txt", 112);
 	}
 	
 	public void getTileImage() {

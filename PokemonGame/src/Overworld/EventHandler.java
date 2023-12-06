@@ -501,10 +501,10 @@ public class EventHandler {
 			if (hit(103,57,60)) teleport(102, 59, 53,true);
 			
 			// Route 33 -> Ghostly Woods Gate -> Ghostly Woods
-			if (hit(85,86,22)) teleport(106, 31, 45,true);
-			if (hit(106,31,46)) teleport(85, 86, 23,true);
-			if (hit(106,31,33)) teleport(107, 49, 92,true);
-			if (hit(107,49,93)) teleport(106, 31, 34,true);
+			if (hit(85,86,22)) teleport(106, 31, 45,false);
+			if (hit(106,31,46)) teleport(85, 86, 23,false);
+			if (hit(106,31,33)) teleport(107, 49, 92,false);
+			if (hit(107,49,93)) teleport(106, 31, 34,false);
 			
 			// Ghostly Woods
 			if (hit(107,57,91)) teleport(107, 26, 81,true); // A
@@ -517,13 +517,15 @@ public class EventHandler {
 			if (hit(107,57,78)) teleport(107, 17, 75,true); // D
 			if (hit(107,55,78)) teleport(107, 72, 50,true); // E
 			if (hit(107,72,50)) teleport(107, 55, 78,true); // E
-			if (hit(107,67,35)) teleport(107, 53, 63,true); // F
-			if (hit(107,53,63)) teleport(107, 67, 35,true); // F
+			if (hit(107,66,50)) teleport(107, 53, 63,true); // F
+			if (hit(107,53,63)) teleport(107, 66, 50,true); // F
 			if (hit(107,47,63)) {
 				if (!gp.player.p.flags[19] || !gp.player.p.flags[20]) {
 					gp.keyH.pause();
 					teleport(107, 42, 57,true);
-					if (!gp.player.p.flags[19]) {
+					if (gp.player.p.grustCount < 10) {
+						JOptionPane.showMessageDialog(null, "This portal seems to be jammed\nby the Ghosts everywhere...\nThere are " + (10 - gp.player.p.grustCount) + " remaining!");
+					} else if (!gp.player.p.flags[19]) {
 						JOptionPane.showMessageDialog(null, "This portal seems to be jammed\nby Rick...");
 					} else {
 						JOptionPane.showMessageDialog(null, "This portal seems to be jammed\nby Team Nuke... Rick said\nthat they're at the bottom\nof Electric Tunnel!");
@@ -534,22 +536,65 @@ public class EventHandler {
 				}
 			}
 			if (hit(107,24,48)) teleport(107, 47, 63,true); // G
-//			if (hit(107,71,53)) teleport(107, 55, 53,true); // H
-//			if (hit(107,55,53)) teleport(107, 71, 53,true); // H
-//			if (hit(107,75,53)) teleport(107, 51, 43,true); // I
-//			if (hit(107,51,43)) teleport(107, 75, 53,true); // I
-//			if (hit(107,85,53)) teleport(107, 85, 57,true); // J
-//			if (hit(107,85,57)) teleport(107, 85, 53,true); // J
-//			if (hit(107,71,43)) teleport(107, 55, 57,true); // K
-//			if (hit(107,55,57)) teleport(107, 71, 43,true); // K
-//			if (hit(107,75,43)) teleport(107, 41, 63,true); // L
-//			if (hit(107,41,63)) teleport(107, 75, 43,true); // L
-//			if (hit(107,71,47)) teleport(107, 81, 43,true); // M
-//			if (hit(107,81,43)) teleport(107, 71, 47,true); // M
-//			if (hit(107,75,47)) teleport(107, 45, 53,true); // N
-//			if (hit(107,45,53)) teleport(107, 75, 47,true); // N
-//			if (hit(107,45,57)) teleport(107, 85, 43,true); // O
-//			if (hit(107,85,43)) teleport(107, 45, 57,true); // O
+			if (hit(107,43,73)) teleport(107, 66, 54,true); // H
+			if (hit(107,66,54)) teleport(107, 43, 73,true); // H
+			if (hit(107,36,48)) teleport(107, 64, 19,true); // I
+			if (hit(107,64,19)) teleport(107, 36, 48,true); // I
+			if (hit(107,60,17)) teleport(107, 38, 90,true); // J
+			if (hit(107,38,90)) teleport(107, 60, 17,true); // J
+			if (hit(107,54,20)) teleport(107, 41, 48,true); // K
+			if (hit(107,41,48)) teleport(107, 54, 20,true); // K
+			if (hit(107,47,44)) teleport(107, 20, 34,true); // L
+			if (hit(107,20,34)) teleport(107, 47, 44,true); // L
+			if (hit(107,47,47)) teleport(107, 79, 63,true); // M
+			if (hit(107,79,63)) teleport(107, 47, 47,true); // M
+			if (hit(107,47,50)) teleport(107, 45, 41,true); // N
+			if (hit(107,45,41)) teleport(107, 47, 50,true); // N
+			if (hit(107,46,53)) teleport(107, 32, 28,true); // O
+			if (hit(107,32,28)) teleport(107, 46, 53,true); // O
+			if (hit(107,45,30)) teleport(107, 18, 39,true); // P
+			if (hit(107,18,39)) teleport(107, 45, 30,true); // P
+			if (hit(107,45,37)) teleport(107, 69, 31,true); // Q
+			if (hit(107,69,31)) teleport(107, 45, 37,true); // Q
+			if (hit(107,54,48)) teleport(107, 50, 20,true); // R
+			if (hit(107,50,20)) teleport(107, 54, 48,true); // R
+			if (hit(107,49,30)) teleport(107, 50, 64,true); // S
+			if (hit(107,50,64)) teleport(107, 49, 30,true); // S
+			if (hit(107,49,37)) teleport(107, 69, 83,true); // T
+			if (hit(107,69,83)) teleport(107, 49, 37,true); // T
+			if (hit(107,56,81)) teleport(107, 55, 40,true); // U
+			if (hit(107,55,40)) teleport(107, 56, 81,true); // U
+			if (hit(107,56,83)) teleport(107, 50, 51,true); // V
+			if (hit(107,50,51)) teleport(107, 56, 83,true); // V
+			if (hit(107,52,59)) teleport(107, 76, 26,true); // W
+			if (hit(107,76,26)) teleport(107, 52, 59,true); // W
+			if (hit(107,74,22)) teleport(107, 49, 83,true); // X'
+			
+			// Ghostly Woods -> Route 34 Gate -> Route 34
+			if (hit(107,45,18)) teleport(108, 31, 45,false);
+			if (hit(108,31,46)) teleport(107, 45, 19,false);
+			if (hit(108,31,33)) teleport(109, 73, 92,false);
+			if (hit(109,73,93)) teleport(108, 31, 34,false);
+			
+			// Route 34
+			if (hit(109,87,84)) teleport(110, 42, 87,false); // bypass
+			if (hit(110,42,88)) teleport(109, 87, 85,false); // bypass
+			if (hit(109,71,72)) teleport(110, 34, 78,true);
+			if (hit(110,34,78)) teleport(109, 71, 72,true);
+			if (hit(109,55,44)) teleport(110, 26, 52,true); // upper exit
+			if (hit(110,26,52)) teleport(109, 55, 44,true); // upper exit
+			if (hit(109,55,36)) teleport(110, 28, 46,true); // bypass
+			if (hit(110,28,46)) teleport(109, 55, 36,true); // bypass
+			if (hit(109,44,47)) teleport(110, 16, 50,false); // lower exit
+			if (hit(110,16,51)) teleport(109, 44, 48,false); // lower exit
+			
+			// Glurg Town PC
+			if (hit(109,34,44)) teleport(111, 31, 45,false);
+			if (hit(111,31,46)) teleport(109, 34, 45,false);
+			
+			// Glurg Town Shop
+			if (hit(109,32,34)) teleport(112, 31, 45,false);
+			if (hit(112,31,46)) teleport(109, 32, 35,false);
 		}
 	}
 	

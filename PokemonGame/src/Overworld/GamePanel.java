@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import Entity.Entity;
+import Entity.NPC_Pokemon;
 import Entity.PlayerCharacter;
 import Obj.InteractiveTile;
 import Obj.ItemObj;
@@ -47,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	public int currentMap = 0;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
+	public static final int maxFlags = 30;
 	
 	public KeyHandler keyH = new KeyHandler();
 	public AssetSetter aSetter = new AssetSetter(this);
@@ -57,6 +59,9 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	public Entity npc[][] = new Entity[maxMap][20];
 	public ItemObj obj[][] = new ItemObj[maxMap][25];
 	public InteractiveTile iTile[][] = new InteractiveTile[maxMap][55];
+	
+	public NPC_Pokemon[] grusts = new NPC_Pokemon[10];
+	public boolean checkSpin = false;
 	
 	public TileManager tileM = new TileManager(this);
 	
@@ -141,11 +146,11 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		g2.dispose();
 	}
 	
-	public void startBattle(int trainer) {
+	public Battle startBattle(int trainer) {
 	    // Create the Battle instance and set the window listener to save on close
-		if (trainer == -1) return;
-		if (player.p.trainersBeat[trainer]) return;
-		if (player.p.wiped()) return;
+		if (trainer == -1) return null;
+		if (player.p.trainersBeat[trainer]) return null;
+		if (player.p.wiped()) return null;
 		inBattle = true;
 		keyH.pause();
 		setSlots();
@@ -154,6 +159,13 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setBattleCloseListener(this);
         frame.setVisible(true);
+        
+        return frame;
+	}
+	
+	public void startBattle(int trainer, int id) {
+		Battle frame = startBattle(trainer);
+		frame.staticPokemonID = id;
 	}
 	
 	public void startWild(int area, int x, int y, String type) {
@@ -213,8 +225,12 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 
 
 	@Override
-	public void onBattleClosed(int trainer) {
+	public void onBattleClosed(int trainer, int id) {
 		if (trainer > -1 && !player.p.wiped()) player.p.trainersBeat[trainer] = true;
+		if (id == 159) {
+			player.p.grustCount++;
+			aSetter.updateNPC();
+		}
 		Pokemon[] teamTemp = Arrays.copyOf(player.p.team, 6);
 		for (int i = 0; i < 6; i++) {
 			if (teamTemp[i] != null) {
@@ -248,6 +264,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		Pokemon.console = new TextPane();
 		Pokemon.console.setScrollPane(new JScrollPane());
 		Pokemon.field = new Field();
+		checkSpin = true;
 	}
 	
 	public void setSlots() {

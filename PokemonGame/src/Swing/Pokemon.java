@@ -4659,7 +4659,7 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.DESTINY_BOND) {
 			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success)) {
-				foe.vStatuses.add(Status.POSESSED);
+				foe.vStatuses.add(Status.BONDED);
 				console.writeln(this.nickname + " is ready to take its attacker down with it!");
 				lastMoveUsed = move;
 			} else { fail = fail(); }

@@ -491,6 +491,33 @@ public class Encounter {
 				encounters.add(new Encounter(138, 30, 35, 0.10));
 				encounters.add(new Encounter(141, 30, 35, 0.35));
 				encounters.add(new Encounter(148, 20, 30, 0.30));
+			} else if (area == 107 && x < 88 && y >= 17 && type.equals("Standard")) { // Ghostly Woods
+				encounters.add(new Encounter(24, 36, 39, 0.05));
+				encounters.add(new Encounter(27, 36, 39, 0.07));
+				encounters.add(new Encounter(159, 37, 40, 0.10));
+				encounters.add(new Encounter(160, 35, 38, 0.12));
+				encounters.add(new Encounter(161, 37, 40, 0.02));
+				encounters.add(new Encounter(74, 36, 39, 0.05));
+				encounters.add(new Encounter(76, 36, 39, 0.02));
+				encounters.add(new Encounter(152, 36, 39, 0.12));
+				encounters.add(new Encounter(154, 35, 38, 0.10));
+				encounters.add(new Encounter(157, 36, 39, 0.06));
+				encounters.add(new Encounter(180, 37, 38, 0.07));
+				encounters.add(new Encounter(220, 35, 39, 0.09));
+				encounters.add(new Encounter(221, 37, 40, 0.02));
+				encounters.add(new Encounter(216, 40, 40, 0.05));
+				encounters.add(new Encounter(227, 36, 39, 0.06));
+			} else if (area == 110 && type.equals("Standard")) { // Route 34
+				encounters.add(new Encounter(53, 40, 42, 0.17));
+				encounters.add(new Encounter(64, 37, 41, 0.13));
+				encounters.add(new Encounter(65, 41, 44, 0.02));
+				encounters.add(new Encounter(56, 40, 43, 0.12));
+				encounters.add(new Encounter(67, 41, 44, 0.10));
+				encounters.add(new Encounter(167, 40, 43, 0.15));
+				encounters.add(new Encounter(182, 40, 43, 0.14));
+				encounters.add(new Encounter(195, 40, 42, 0.17));
+			} else if (area == 110 && type.equals("Lava")) { // Route 34 TODO
+				encounters.add(new Encounter(98, 40, 40, 1.0));
 			}
 			
 			
