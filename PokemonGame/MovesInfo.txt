@@ -220,7 +220,7 @@ Meteor Assault : Physical / 120 / 100 : 100% to lower user's Attack and Defense 
 Space Beam : Special / 60 / 100 : 30% chance to lower foe's Sp.Def
 Spacial Rend : Special / 100 / 95 : Boosted Crit rate
 Star Storm : Special / 110 / 85 : A normal attack
-Star Struck Archer : Physical / 75 / 85 : 
+Star-Struck Archer : Physical / 75 / 85 : This move always crits
 Supernova Explosion : Special / 200 / 100 : User faints
 
 ===============
