@@ -1192,6 +1192,51 @@ public class Main {
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
+			encounters = Encounter.getEncounters(95, 58, 41, "Standard", "", false); // Electric 0
+			writer.write("Electric Tunnel 0");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(95, 58, 41, "Fishing", "", false); // Electric 0
+			writer.write("Electric Tunnel 0");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(95, 58, 41, "Surfing", "", false); // Electric 0
+			writer.write("Electric Tunnel 0");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(96, 58, 41, "Standard", "", false); // Electric -1
+			writer.write("Electric Tunnel -1");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(97, 58, 41, "Standard", "", false); // Electric -2
+			writer.write("Electric Tunnel -2");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(98, 58, 41, "Standard", "", false); // Electric -3
+			writer.write("Electric Tunnel -3");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(98, 58, 41, "Fishing", "", false); // Electric -3
+			writer.write("Electric Tunnel -3");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(98, 58, 41, "Surfing", "", false); // Electric -3
+			writer.write("Electric Tunnel -3");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(99, 58, 41, "Standard", "", false); // Electric H
+			writer.write("Electric Tunnel H");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
 			for (Encounter e : allEncounters) {
 				int index = e.getId();
 				amounts[index]++;

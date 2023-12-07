@@ -9907,7 +9907,7 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (move == Move.FIRST_IMPRESSION || move == Move.BELCH || move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT){
+		if (mode == 0 && (move == Move.FIRST_IMPRESSION || move == Move.BELCH || move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT)) {
 			if (!this.impressive) {
 				return -1;
 			} else {
