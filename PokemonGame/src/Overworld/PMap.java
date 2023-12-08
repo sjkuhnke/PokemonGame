@@ -481,7 +481,7 @@ public class PMap extends JFrame {
 				return 1;
 			}
 			if (x <= 41 && y > 41) {
-				PlayerCharacter.currentMapName = "Bananville Town";
+				PlayerCharacter.currentMapName = "Bananaville Town";
 				return 2;
 			}
 			if (x <= 40 && y <= 41) {
@@ -494,10 +494,10 @@ public class PMap extends JFrame {
 			}
 			break;
 		case 1:
-			PlayerCharacter.currentMapName = "Bananville Town";
+			PlayerCharacter.currentMapName = "Bananaville Town";
 			return 2;
 		case 2:
-			PlayerCharacter.currentMapName = "Bananville Town";
+			PlayerCharacter.currentMapName = "Bananaville Town";
 			return 2;
 		case 3:
 			PlayerCharacter.currentMapName = "Route 23";
@@ -562,19 +562,19 @@ public class PMap extends JFrame {
 				return 9;
 			}
 		case 14:
-			PlayerCharacter.currentMapName = "Sicab City";
+			PlayerCharacter.currentMapName = "Energy Plant (pt. 1)";
 			return 9;
 		case 15:
-			PlayerCharacter.currentMapName = "Sicab City";
+			PlayerCharacter.currentMapName = "Energy Plant (B1F)";
 			return 9;
 		case 16:
-			PlayerCharacter.currentMapName = "Sicab City";
+			PlayerCharacter.currentMapName = "Energy Plant (pt. 2)";
 			return 9;
 		case 17:
-			PlayerCharacter.currentMapName = "Sicab City";
+			PlayerCharacter.currentMapName = "Sicab Office (1A)";
 			return 9;
 		case 18:
-			PlayerCharacter.currentMapName = "Sicab City";
+			PlayerCharacter.currentMapName = "Sicab Office (2A)";
 			return 9;
 		case 19:
 			PlayerCharacter.currentMapName = "Sicab City";
@@ -728,7 +728,7 @@ public class PMap extends JFrame {
 			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 60:
-			PlayerCharacter.currentMapName = "Sicab City";
+			PlayerCharacter.currentMapName = "Control Center";
 			return 9;
 		case 61:
 			PlayerCharacter.currentMapName = "Kleine Village";

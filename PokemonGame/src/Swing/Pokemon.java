@@ -2837,7 +2837,7 @@ public class Pokemon implements Serializable {
 		} else if (this.id == 122) { this.baseStats = new int[]{69,95,97,70,95,104};
 		} else if (this.id == 123) { this.baseStats = new int[]{30,45,25,35,40,60};
 		} else if (this.id == 124) { this.baseStats = new int[]{75,105,60,85,60,105};
-		} else if (this.id == 125) { this.baseStats = new int[]{75,125,95,40,85,125}; // TODO: not minmax
+		} else if (this.id == 125) { this.baseStats = new int[]{75,120,70,80,75,125};
 		} else if (this.id == 126) { this.baseStats = new int[]{35,65,45,15,40,45};
 		} else if (this.id == 127) { this.baseStats = new int[]{95,125,105,25,75,50};
 		} else if (this.id == 128) { this.baseStats = new int[]{95,130,100,85,75,55};
