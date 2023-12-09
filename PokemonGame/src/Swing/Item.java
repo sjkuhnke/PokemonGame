@@ -1267,6 +1267,8 @@ public class Item implements Serializable {
 		else if (id == 42) return new Color(150, 51, 156);
 		else if (id == 43) return new Color(142, 230, 21);
 		else if (id == 44) return new Color(232, 52, 54);
+		else if (id == 45) return new Color(142, 230, 21);
+		else if (id == 46) return new Color(232, 52, 54);
 		else if (id == 200) return Color.black;
 		else return getMove().mtype.getColor();
 	}

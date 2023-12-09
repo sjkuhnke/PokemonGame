@@ -937,7 +937,7 @@ public class PlayerCharacter extends Entity {
 		                			    @Override
 		                			    public void mouseClicked(MouseEvent e) {
 		                			    	if (SwingUtilities.isRightMouseButton(e)) {
-		                			            JOptionPane.showMessageDialog(null, move.getMoveSummary(p.team[index], null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+		                			            JOptionPane.showMessageDialog(null, move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 		                			        } else {
 		                			        	int choice = p.team[index].displayMoveOptions(move);
 					        	                if (choice == JOptionPane.CLOSED_OPTION) {

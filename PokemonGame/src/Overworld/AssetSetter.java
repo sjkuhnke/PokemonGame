@@ -459,8 +459,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(36, 77, 9, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(57, 82, 27, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(77, 88, 41, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(34, 65, 8, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(26, 70, 119, mapNum); // photon geyser
+		gp.obj[mapNum][objIndex] = ObjSetup(34, 65, 119, mapNum); // photon geyser
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 70, 8, mapNum);
 		
 		mapNum = 117;
 		objIndex = 0;
