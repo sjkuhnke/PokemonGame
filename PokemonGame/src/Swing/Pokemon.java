@@ -358,7 +358,7 @@ public class Pokemon implements Serializable {
         		bestMoves.add(move);
         		bestMoves.add(move);
         	}
-        	if (move.cat == 2 || move == Move.NUZZLE) {
+        	if (move.cat == 2 || move == Move.NUZZLE || move == Move.SWORD_SPIN || move == Move.POWER$UP_PUNCH || move == Move.VENOM_SPIT) {
         		bestMoves.add(move);
         	}
         	bestMoves = modifyStatus(bestMoves, foe);
@@ -378,34 +378,34 @@ public class Pokemon implements Serializable {
     }
 	
 	private ArrayList<Move> modifyStatus(ArrayList<Move> bestMoves, Pokemon foe) {
-		if (bestMoves.contains(Move.STICKY_WEB) && field.contains(field.playerSide, Effect.STICKY_WEBS)) bestMoves.remove(Move.STICKY_WEB);
-		if (bestMoves.contains(Move.STEALTH_ROCK) && field.contains(field.playerSide, Effect.STEALTH_ROCKS)) bestMoves.remove(Move.STEALTH_ROCK);
-		if (bestMoves.contains(Move.SPIKES) && field.getLayers(field.playerSide, Effect.SPIKES) == 3) bestMoves.remove(Move.SPIKES);
-		if (bestMoves.contains(Move.TOXIC_SPIKES) && field.getLayers(field.playerSide, Effect.TOXIC_SPIKES) == 2) bestMoves.remove(Move.TOXIC_SPIKES);
-		if (bestMoves.contains(Move.DEFOG) && field.getHazards(field.foeSide).isEmpty() && field.getScreens(field.playerSide).isEmpty()) bestMoves.remove(Move.DEFOG);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.STICKY_WEB) && field.contains(field.playerSide, Effect.STICKY_WEBS)) bestMoves.remove(Move.STICKY_WEB);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.STEALTH_ROCK) && field.contains(field.playerSide, Effect.STEALTH_ROCKS)) bestMoves.remove(Move.STEALTH_ROCK);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPIKES) && field.getLayers(field.playerSide, Effect.SPIKES) == 3) bestMoves.remove(Move.SPIKES);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TOXIC_SPIKES) && field.getLayers(field.playerSide, Effect.TOXIC_SPIKES) == 2) bestMoves.remove(Move.TOXIC_SPIKES);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.DEFOG) && field.getHazards(field.foeSide).isEmpty() && field.getScreens(field.playerSide).isEmpty()) bestMoves.remove(Move.DEFOG);
 		
 		ArrayList<Move> noRepeat = Move.getNoComboMoves();
 		for (Move m : noRepeat) {
-			if (bestMoves.contains(m) && lastMoveUsed == m) bestMoves.remove(m);
+			if (bestMoves.size() > 1 && bestMoves.contains(m) && lastMoveUsed == m) bestMoves.remove(m);
 		}
 		
-		if (bestMoves.contains(Move.SUNNY_DAY) && !field.equals(field.weather, Effect.SUN)) bestMoves.remove(Move.SUNNY_DAY);
-		if (bestMoves.contains(Move.RAIN_DANCE) && !field.equals(field.weather, Effect.RAIN)) bestMoves.remove(Move.RAIN_DANCE);
-		if (bestMoves.contains(Move.SANDSTORM) && !field.equals(field.weather, Effect.SANDSTORM)) bestMoves.remove(Move.SANDSTORM);
-		if (bestMoves.contains(Move.SNOWSCAPE) && !field.equals(field.weather, Effect.SNOW)) bestMoves.remove(Move.SNOWSCAPE);
-		if (bestMoves.contains(Move.ELECTRIC_TERRAIN) && !field.equals(field.terrain, Effect.ELECTRIC)) bestMoves.remove(Move.ELECTRIC_TERRAIN);
-		if (bestMoves.contains(Move.GRASSY_TERRAIN) && !field.equals(field.terrain, Effect.GRASSY)) bestMoves.remove(Move.GRASSY_TERRAIN);
-		if (bestMoves.contains(Move.PSYCHIC_TERRAIN) && !field.equals(field.terrain, Effect.PSYCHIC)) bestMoves.remove(Move.PSYCHIC_TERRAIN);
-		if (bestMoves.contains(Move.SPARKLING_TERRAIN) && !field.equals(field.terrain, Effect.SPARKLY)) bestMoves.remove(Move.SPARKLING_TERRAIN);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SUNNY_DAY) && field.equals(field.weather, Effect.SUN)) bestMoves.remove(Move.SUNNY_DAY);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.RAIN_DANCE) && field.equals(field.weather, Effect.RAIN)) bestMoves.remove(Move.RAIN_DANCE);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SANDSTORM) && field.equals(field.weather, Effect.SANDSTORM)) bestMoves.remove(Move.SANDSTORM);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SNOWSCAPE) && field.equals(field.weather, Effect.SNOW)) bestMoves.remove(Move.SNOWSCAPE);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.ELECTRIC_TERRAIN) && field.equals(field.terrain, Effect.ELECTRIC)) bestMoves.remove(Move.ELECTRIC_TERRAIN);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.GRASSY_TERRAIN) && field.equals(field.terrain, Effect.GRASSY)) bestMoves.remove(Move.GRASSY_TERRAIN);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.PSYCHIC_TERRAIN) && field.equals(field.terrain, Effect.PSYCHIC)) bestMoves.remove(Move.PSYCHIC_TERRAIN);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPARKLING_TERRAIN) && field.equals(field.terrain, Effect.SPARKLY)) bestMoves.remove(Move.SPARKLING_TERRAIN);
 		
-		if (bestMoves.contains(Move.REFLECT) && field.contains(field.foeSide, Effect.REFLECT)) bestMoves.remove(Move.REFLECT);
-		if (bestMoves.contains(Move.LIGHT_SCREEN) && field.contains(field.foeSide, Effect.LIGHT_SCREEN)) bestMoves.remove(Move.LIGHT_SCREEN);
-		if (bestMoves.contains(Move.AURORA_VEIL) && field.contains(field.foeSide, Effect.AURORA_VEIL)) bestMoves.remove(Move.AURORA_VEIL);
-		if (bestMoves.contains(Move.SAFEGUARD) && field.contains(field.foeSide, Effect.SAFEGUARD)) bestMoves.remove(Move.SAFEGUARD);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.REFLECT) && field.contains(field.foeSide, Effect.REFLECT)) bestMoves.remove(Move.REFLECT);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.LIGHT_SCREEN) && field.contains(field.foeSide, Effect.LIGHT_SCREEN)) bestMoves.remove(Move.LIGHT_SCREEN);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_VEIL) && field.contains(field.foeSide, Effect.AURORA_VEIL)) bestMoves.remove(Move.AURORA_VEIL);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SAFEGUARD) && field.contains(field.foeSide, Effect.SAFEGUARD)) bestMoves.remove(Move.SAFEGUARD);
 		
-		if (bestMoves.contains(Move.ROOST) || bestMoves.contains(Move.SYNTHESIS) || bestMoves.contains(Move.MOONLIGHT) || bestMoves.contains(Move.MORNING_SUN) ||
+		if (bestMoves.size() > 1 && (bestMoves.contains(Move.ROOST) || bestMoves.contains(Move.SYNTHESIS) || bestMoves.contains(Move.MOONLIGHT) || bestMoves.contains(Move.MORNING_SUN) ||
 				bestMoves.contains(Move.RECOVER) || bestMoves.contains(Move.SLACK_OFF) || bestMoves.contains(Move.WISH) || bestMoves.contains(Move.REST) ||
-				bestMoves.contains(Move.LIFE_DEW) || bestMoves.contains(Move.STRENGTH_SAP)) {
+				bestMoves.contains(Move.LIFE_DEW) || bestMoves.contains(Move.STRENGTH_SAP))) {
 			if (this.getStat(0) == this.currentHP) {
 				bestMoves.removeAll(Arrays.asList(new Move[] {Move.ROOST, Move.SYNTHESIS, Move.MOONLIGHT, Move.MORNING_SUN, Move.RECOVER, Move.SLACK_OFF, Move.WISH, Move.REST, Move.LIFE_DEW, Move.STRENGTH_SAP}));
 			}
@@ -414,34 +414,34 @@ public class Pokemon implements Serializable {
 		bestMoves.remove(Move.HEALING_WISH);
 		bestMoves.remove(Move.LUNAR_DANCE);
 		
-		if (bestMoves.contains(Move.TRICK_ROOM) && field.contains(field.fieldEffects, Effect.TRICK_ROOM)) bestMoves.remove(Move.TRICK_ROOM);
-		if (bestMoves.contains(Move.TAILWIND) && field.contains(field.foeSide, Effect.TAILWIND)) bestMoves.remove(Move.TAILWIND);
-		if (bestMoves.contains(Move.MUD_SPORT) && field.contains(field.fieldEffects, Effect.MUD_SPORT)) bestMoves.remove(Move.MUD_SPORT);
-		if (bestMoves.contains(Move.WATER_SPORT) && field.contains(field.foeSide, Effect.WATER_SPORT)) bestMoves.remove(Move.WATER_SPORT);
-		if (bestMoves.contains(Move.GRAVITY) && field.contains(field.foeSide, Effect.GRAVITY)) bestMoves.remove(Move.GRAVITY);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TRICK_ROOM) && field.contains(field.fieldEffects, Effect.TRICK_ROOM)) bestMoves.remove(Move.TRICK_ROOM);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAILWIND) && field.contains(field.foeSide, Effect.TAILWIND)) bestMoves.remove(Move.TAILWIND);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MUD_SPORT) && field.contains(field.fieldEffects, Effect.MUD_SPORT)) bestMoves.remove(Move.MUD_SPORT);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.WATER_SPORT) && field.contains(field.foeSide, Effect.WATER_SPORT)) bestMoves.remove(Move.WATER_SPORT);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.GRAVITY) && field.contains(field.foeSide, Effect.GRAVITY)) bestMoves.remove(Move.GRAVITY);
 		
-		if ((bestMoves.contains(Move.AQUA_RING) || bestMoves.contains(Move.INGRAIN)) && this.vStatuses.contains(Status.AQUA_RING)) {
+		if (bestMoves.size() > 1 && (bestMoves.contains(Move.AQUA_RING) || bestMoves.contains(Move.INGRAIN)) && this.vStatuses.contains(Status.AQUA_RING)) {
 			bestMoves.remove(Move.INGRAIN);
 			bestMoves.remove(Move.AQUA_RING);
 		}
 		
-		if (bestMoves.contains(Move.WORRY_SEED) && foe.ability == Ability.INSOMNIA) bestMoves.remove(Move.WORRY_SEED);
-		if (bestMoves.contains(Move.GASTRO_ACID) && foe.ability == Ability.NULL) bestMoves.remove(Move.GASTRO_ACID);
-		if (bestMoves.contains(Move.FORESTS_CURSE) && (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS)) bestMoves.remove(Move.FORESTS_CURSE);
-		if (bestMoves.contains(Move.MAGIC_POWDER) && (foe.type1 == PType.MAGIC || foe.type2 == PType.MAGIC)) bestMoves.remove(Move.MAGIC_POWDER);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.WORRY_SEED) && foe.ability == Ability.INSOMNIA) bestMoves.remove(Move.WORRY_SEED);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.GASTRO_ACID) && foe.ability == Ability.NULL) bestMoves.remove(Move.GASTRO_ACID);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.FORESTS_CURSE) && (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS)) bestMoves.remove(Move.FORESTS_CURSE);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_POWDER) && (foe.type1 == PType.MAGIC || foe.type2 == PType.MAGIC)) bestMoves.remove(Move.MAGIC_POWDER);
 		
-		if (bestMoves.contains(Move.SEA_DRAGON) && this.id != 150) bestMoves.remove(Move.SEA_DRAGON);
-		if (bestMoves.contains(Move.VENOM_DRENCH) && (foe.status != Status.POISONED || foe.status != Status.TOXIC)) bestMoves.remove(Move.VENOM_DRENCH);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SEA_DRAGON) && this.id != 150) bestMoves.remove(Move.SEA_DRAGON);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.VENOM_DRENCH) && (foe.status != Status.POISONED || foe.status != Status.TOXIC)) bestMoves.remove(Move.VENOM_DRENCH);
 		
-		if (bestMoves.contains(Move.MEAN_LOOK) && foe.vStatuses.contains(Status.TRAPPED)) bestMoves.remove(Move.MEAN_LOOK);
-		if (bestMoves.contains(Move.FOCUS_ENERGY) && foe.vStatuses.contains(Status.FOCUS_ENERGY)) bestMoves.remove(Move.FOCUS_ENERGY);
-		if (bestMoves.contains(Move.ENCORE) && foe.vStatuses.contains(Status.ENCORED)) bestMoves.remove(Move.ENCORE);
-		if (bestMoves.contains(Move.NO_RETREAT) && this.vStatuses.contains(Status.NO_SWITCH)) bestMoves.remove(Move.NO_RETREAT);
-		if (bestMoves.contains(Move.MEMENTO) && ((this.currentHP * 1.0 / this.getStat(0))) > 0.25) bestMoves.remove(Move.MEMENTO);
-		if (bestMoves.contains(Move.CURSE) && ((this.currentHP * 1.0 / this.getStat(0))) <= 0.55) bestMoves.remove(Move.CURSE);
-		if (bestMoves.contains(Move.PERISH_SONG) && (this.perishCount > 0 || foe.perishCount > 0)) bestMoves.remove(Move.PERISH_SONG);
-		if (bestMoves.contains(Move.NIGHTMARE) && (foe.status != Status.ASLEEP || foe.vStatuses.contains(Status.NIGHTMARE))) bestMoves.remove(Move.NIGHTMARE);
-		if (bestMoves.contains(Move.MAGNET_RISE) && this.magCount > 0) bestMoves.remove(Move.MAGNET_RISE);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEAN_LOOK) && foe.vStatuses.contains(Status.TRAPPED)) bestMoves.remove(Move.MEAN_LOOK);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.FOCUS_ENERGY) && foe.vStatuses.contains(Status.FOCUS_ENERGY)) bestMoves.remove(Move.FOCUS_ENERGY);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENCORE) && foe.vStatuses.contains(Status.ENCORED)) bestMoves.remove(Move.ENCORE);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.NO_RETREAT) && this.vStatuses.contains(Status.NO_SWITCH)) bestMoves.remove(Move.NO_RETREAT);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEMENTO) && ((this.currentHP * 1.0 / this.getStat(0))) > 0.25) bestMoves.remove(Move.MEMENTO);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.CURSE) && ((this.currentHP * 1.0 / this.getStat(0))) <= 0.55) bestMoves.remove(Move.CURSE);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.PERISH_SONG) && (this.perishCount > 0 || foe.perishCount > 0)) bestMoves.remove(Move.PERISH_SONG);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.NIGHTMARE) && (foe.status != Status.ASLEEP || foe.vStatuses.contains(Status.NIGHTMARE))) bestMoves.remove(Move.NIGHTMARE);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGNET_RISE) && this.magCount > 0) bestMoves.remove(Move.MAGNET_RISE);
 		
 		return bestMoves;
 	}
@@ -2423,7 +2423,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 52 && level >= 30) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 53 && area == 100) {
+		} else if (id == 53 && (area == 80 || area == 83 || area == 90 || (area >= 100 && area <= 103))) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 55 && level >= 34) {
 			result = new Pokemon(id + 1, this);
@@ -10510,10 +10510,6 @@ public class Pokemon implements Serializable {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
-			return;
-		}
 		if (!this.vStatuses.contains(Status.CONFUSED)) {
 			this.vStatuses.add(Status.CONFUSED);
 			this.confusionCounter = (int)(Math.random() * 4) + 1;
@@ -10533,10 +10529,6 @@ public class Pokemon implements Serializable {
 		}
 		if (isGrounded() && field.equals(field.terrain, Effect.ELECTRIC)) {
 			if (announce) console.writeln(this.nickname + " is protected by the Electric Terrain!");
-			return;
-		}
-		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
 		}
 		if (this.status == Status.HEALTHY) {
@@ -10563,10 +10555,6 @@ public class Pokemon implements Serializable {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
-			return;
-		}
 		if (this.type1 == PType.ELECTRIC || this.type2 == PType.ELECTRIC) {
 			if (announce) console.writeln("It doesn't effect " + this.nickname + "...");
 			return;
@@ -10588,10 +10576,6 @@ public class Pokemon implements Serializable {
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
-			return;
-		}
-		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
 		}
 		if (this.type1 == PType.FIRE || this.type2 == PType.FIRE) {
@@ -10624,10 +10608,6 @@ public class Pokemon implements Serializable {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
-			return;
-		}
 		if (this.type1 == PType.POISON || this.type2 == PType.POISON || this.type1 == PType.STEEL || this.type2 == PType.STEEL) {
 			if (announce) console.writeln("It doesn't effect " + this.nickname + "...");
 			return;
@@ -10651,10 +10631,6 @@ public class Pokemon implements Serializable {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
-			return;
-		}
 		if (this.type1 == PType.POISON || this.type2 == PType.POISON || this.type1 == PType.STEEL || this.type2 == PType.STEEL) {
 			if (announce) console.writeln("It doesn't effect " + this.nickname + "...");
 			return;
@@ -10676,10 +10652,6 @@ public class Pokemon implements Serializable {
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
-			return;
-		}
-		if (isGrounded() && field.equals(field.terrain, Effect.SPARKLY)) {
-			if (announce) console.writeln(this.nickname + " is protected by the Sparkly Terrain!");
 			return;
 		}
 		if (this.type1 == PType.ICE || this.type2 == PType.ICE) {
