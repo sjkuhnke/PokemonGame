@@ -295,8 +295,6 @@ public class Main {
 		setMoveset("CCA", 2, Move.METRONOME, null, null, null);
 		setMoveset("CCA", 3, Move.METRONOME, null, null, null);
 		
-		setMoveset("TEST", 1, Move.CIRCLE_THROW, null, null, null);
-		
 //		Move[] yes = Move.values();
 //		int max = 0;
 //		Move result = Move.ABSORB;

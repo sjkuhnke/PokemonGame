@@ -1327,6 +1327,11 @@ public class Battle extends JFrame {
 			Pokemon[] team = foeTrainer == null ? null : foeTrainer.getTeam();
 			if (m2 == Move.SUCKER_PUNCH && m1.cat == 2) m2 = Move.FAILED_SUCKER;
 			faster.move(slower, m2, me, team, foeTrainer, true);
+			// Check for swap (AI)
+	        if (faster.vStatuses.contains(Status.SWITCHING)) {
+	        	foeTrainer.swapRandom(slower, me, false);
+	        	faster = foeTrainer.current;
+	        }
 			
 			if (m1 == Move.SUCKER_PUNCH && m2.cat == 2) m1 = Move.FAILED_SUCKER;
 	        slower.move(faster, m1, me, enemyTeam, foeTrainer, false);
