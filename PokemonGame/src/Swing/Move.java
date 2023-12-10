@@ -85,7 +85,7 @@ public enum Move {
 	CHARM(0,100,0,0,2,0,PType.LIGHT,"Lowers foe's Attack by 2",false,15),
 	CIRCLE_THROW(60,90,100,0,0,-6,PType.FIGHTING,"% chance to switch out foe, always moves last",true,10),
 	//CHOMP(70,100,30,0,0,0,PType.DARK,"% chance to lower foe's Speed by 1",false,1),
-	CLOSE_COMBAT(120,100,100,0,0,0,PType.FIGHTING,"Lowers user's Defense and Sp.Def by 1",true,5),
+	CLOSE_COMBAT(120,100,100,0,0,0,PType.FIGHTING,"% to lower user's Defense and Sp.Def by 1",true,5),
 	COIL(0,1000,0,0,2,0,PType.POISON,"Raises user's Atk, Def, and Acc by 1",false,15),
 	COMET_CRASH(-1,90,0,0,0,0,PType.GALACTIC,"Damage is doubled if user's HP is full",true,5),
 	COMET_PUNCH(55,100,0,0,0,0,PType.GALACTIC,"A normal attack",true,15),

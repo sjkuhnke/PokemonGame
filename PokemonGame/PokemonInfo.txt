@@ -4031,17 +4031,21 @@ Base Stats:
 42 HP / 52 Atk / 67 Def / 39 SpA / 56 SpD / 50 Spe / 306 BST
 
 Level Up:
+1 - Scratch
 1 - Mud-Slap
-4 - Withdraw
-8 - Water Gun
-12 - Fury Cutter
-16 - Fury Swipes
-20 - Ancient Power
-24 - Rock Polish
-28 - Slash
+3 - Water Gun
+5 - Withdraw
+8 - Fury Swipes
+11 - Fury Cutter
+14 - Ancient Power
+17 - Spike Cannon
+20 - Fake Out
+24 - Razor Shell
+27 - Rock Polish
+29 - Slash
 32 - Hone Claws
-36 - Razor Shell
-40 - Shell Smash
+35 - Shell Smash
+38 - Night Slash
 
 ===================
 147 - Barbaracle
@@ -4056,19 +4060,25 @@ Base Stats:
 72 HP / 105 Atk / 115 Def / 54 SpA / 86 SpD / 68 Spe / 500 BST
 
 Level Up:
+1 - Scratch
 1 - Mud-Slap
-4 - Withdraw
-8 - Water Gun
-12 - Fury Cutter
-16 - Fury Swipes
-20 - Ancient Power
-24 - Rock Polish
-28 - Slash
+3 - Water Gun
+5 - Withdraw
+8 - Fury Swipes
+11 - Fury Cutter
+14 - Ancient Power
+17 - Spike Cannon
+20 - Fake Out
+24 - Razor Shell
+27 - Rock Polish
+29 - Slash
 32 - Hone Claws
-36 - Razor Shell
-40 - Shell Smash
-42 - Liquidation
-48 - Cross Chop
+35 - Shell Smash
+38 - Night Slash
+41 - Liquidation
+44 - Rock Slide
+47 - Cross Chop
+50 - Swords Dance
 54 - Stone Edge
 60 - Wave Crash
 

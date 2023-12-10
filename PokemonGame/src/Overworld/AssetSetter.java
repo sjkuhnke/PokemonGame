@@ -413,19 +413,17 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(69, 51, 41, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(69, 32, 18, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 34, 1, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(54, 60, 27, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 60, 27, mapNum); //
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 57, 30, mapNum); // bold
 		gp.obj[mapNum][objIndex] = ObjSetup(50, 57, 22, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 59, 106, mapNum); // shadow ball
 		gp.obj[mapNum][objIndex] = ObjSetup(18, 35, 42, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(20, 32, 41, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(21, 72, 0, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(13, 54, 3, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(17, 37, 16, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(59, 63, 34, mapNum); // impish
 		gp.obj[mapNum][objIndex] = ObjSetup(42, 70, 27, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(47, 48, 43, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(38, 41, 0, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 48, 18, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 43, 41, mapNum);
 		
@@ -790,6 +788,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(5, 51, 74, 139);
 		gp.npc[mapNum][index] = NPCSetup(6, 46, 85, 140);
 		gp.npc[mapNum][index] = NPCSetup(6, 36, 84, 141);
+		
+		gp.npc[mapNum][index] = NPCSetup(6, 36, 44, 256); // TODO test
 		
 		mapNum = 43;
 		index = 0;
