@@ -178,6 +178,8 @@ public class Field {
 		if (!contains(fieldEffects, effect.effect)) {
 			fieldEffects.add(effect);
 			Pokemon.console.writeln(effect.toString() + " took effect!");
+		} else {
+			Pokemon.console.writeln("But it failed!");
 		}
 	}
 	

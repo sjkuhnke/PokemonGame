@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import Entity.PlayerCharacter;
 import Swing.Player;
 import Swing.Pokemon;
 import Swing.Pokemon.Node;
@@ -139,9 +140,10 @@ public class Main {
 	        } else if (gamePanel.player.p.starter == 3) {
 	            gamePanel.player.p.catchPokemon(new Pokemon(7, 5, true, false));
 	        }
-	        
-	        //gamePanel.player.p.bag.add(new Item(22), 999);
 	    }
+		
+		PMap.getLoc(gamePanel.currentMap, (int) Math.round(gamePanel.player.worldX * 1.0 / 48), (int) Math.round(gamePanel.player.worldY * 1.0 / 48));
+		window.setTitle("Pokemon Game - " + PlayerCharacter.currentMapName);
 		
 		loadGame(window, gamePanel, welcomeMenu, selectedOptions);
 	}

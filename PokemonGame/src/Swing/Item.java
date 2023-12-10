@@ -1267,8 +1267,8 @@ public class Item implements Serializable {
 		else if (id == 42) return new Color(150, 51, 156);
 		else if (id == 43) return new Color(142, 230, 21);
 		else if (id == 44) return new Color(232, 52, 54);
-		else if (id == 45) return new Color(142, 230, 21);
-		else if (id == 46) return new Color(232, 52, 54);
+		else if (id == 45) return new Color(201, 169, 81);
+		else if (id == 46) return new Color(45, 47, 51);
 		else if (id == 200) return Color.black;
 		else return getMove().mtype.getColor();
 	}
@@ -1706,9 +1706,9 @@ public class Item implements Serializable {
 		case 44:
 			return "Burns a selected Pokemon";
 		case 45:
-			return "";
+			return "A fossil of an ancient Pokemon\nthat lived in a desert.\nIt appears to have an\nelectric charge ridden\nin the scales.";
 		case 46:
-			return "";
+			return "A fossil of an ancient Pokemon\nthat lived in a forest.\nIt appears to give off\na dark energy within\n the scales.";
 		case 47:
 			return "";
 		case 48:

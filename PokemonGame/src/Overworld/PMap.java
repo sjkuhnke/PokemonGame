@@ -460,7 +460,12 @@ public class PMap extends JFrame {
 	}
 
 	private void fly(String loc, int map, int x, int y) {
-		int answer = JOptionPane.showConfirmDialog(null, "Would you like to fly to " + loc + "?");
+		int answer = JOptionPane.showOptionDialog(null,
+				"Would you like to fly to " + loc + "?",
+	            "Fly?",
+	            JOptionPane.YES_NO_OPTION,
+	            JOptionPane.QUESTION_MESSAGE,
+	            null, null, null);
 		if (answer == JOptionPane.YES_OPTION) {
 			gp.eHandler.teleport(map, x, y, false);
 			gp.keyH.resume();
@@ -925,10 +930,10 @@ public class PMap extends JFrame {
 		case 117:
 			PlayerCharacter.currentMapName = "Mindagan Cavern (0A)";
 			return 23;
-		case 118:// TODO from here down
-			PlayerCharacter.currentMapName = "";
-			return 20;
-		case 119:
+		case 118:
+			PlayerCharacter.currentMapName = "Glurg Town";
+			return 32;
+		case 119: // TODO from here down
 			PlayerCharacter.currentMapName = "";
 			return 20;
 		case 120:

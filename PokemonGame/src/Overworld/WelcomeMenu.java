@@ -1,6 +1,9 @@
 package Overworld;
 
 import javax.swing.*;
+
+import Entity.PlayerCharacter;
+
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -64,6 +67,12 @@ public class WelcomeMenu extends JPanel {
         	iconPanel.add(icons[i]);
         }
         
+        JLabel location = new JLabel("N/A");
+        location.setFont(new Font(location.getFont().getName(), Font.BOLD, 16));
+        JPanel locationPanel = new JPanel(new GridLayout(0, 1));
+        locationPanel.setOpaque(false);
+        locationPanel.add(location);
+        
         JLabel space = new JLabel("<html><br><br><br><br><br><br><br><br><br><br><br><br><br></html>");
 
         JLabel generateDoc = new JLabel("Generate Documentation?");
@@ -109,6 +118,8 @@ public class WelcomeMenu extends JPanel {
         	        	Pokemon p = current.team[i];
         	        	icons[i].setIcon(getMiniSprite(p));
         	        }
+        	        PMap.getLoc(current.currentMap, (int) Math.round(current.getPosX() * 1.0 / 48), (int) Math.round(current.getPosY() * 1.0 / 48));
+        	        location.setText("     " + PlayerCharacter.currentMapName);
         	        repaint();
         	        ois.close();
         	    } catch (IOException | ClassNotFoundException f) {
@@ -184,6 +195,7 @@ public class WelcomeMenu extends JPanel {
         
         add(titleLabel);
         add(subtitleLabel);
+        add(locationPanel);
         add(iconPanel);
         add(space);
         add(checkBoxPanel);
