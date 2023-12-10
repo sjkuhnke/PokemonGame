@@ -1044,6 +1044,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(5, 88, 69, 243);
 		gp.npc[mapNum][index] = NPCSetup(3, 62, 74, 244);
 		gp.npc[mapNum][index] = NPCSetup(6, 41, 72, 245);
+		
+		mapNum = 118;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Hi! I can revive fossils for you!", true);
 	}
 	
 	public void setInteractiveTile(int map) {

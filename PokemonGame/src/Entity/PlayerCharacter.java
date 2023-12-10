@@ -174,9 +174,21 @@ public class PlayerCharacter extends Entity {
 			}
 			if (p.steps == 202 && p.repel) {
 				keyH.pause();
-				JOptionPane.showMessageDialog(null, "Repel's effects wore off.");
-				keyH.resume();
 				p.repel = false;
+				if (p.bag.contains(0)) {
+					int option = JOptionPane.showOptionDialog(null,
+							"Repel's effects wore off.\nWould you like to use another?",
+				            "Repel",
+				            JOptionPane.YES_NO_OPTION,
+				            JOptionPane.QUESTION_MESSAGE,
+				            null, null, null);
+					if (option == JOptionPane.YES_OPTION) {
+						useRepel();
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Repel's effects wore off.");
+				}
+				keyH.resume();
 			}
 			if (p.steps % 129 == 0) {
 				for (Pokemon p : p.team) {
@@ -958,7 +970,7 @@ public class PlayerCharacter extends Entity {
 						partyPanel.add(party);
 					}
 					JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
-				}  if (gp.currentMap == 94 && !p.flags[18]) {
+				} if (gp.currentMap == 94 && !p.flags[18]) {
 					JOptionPane.showMessageDialog(null, "Here's a gift of one\nof the Pokemon affected!");
 					int[] ids = new int[] {197, 199, 202, 205, 209, 215, 217, 220, 223, 226};
 					Random gift = new Random();
@@ -988,6 +1000,55 @@ public class PlayerCharacter extends Entity {
 					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
 					p.catchPokemon(result);
 					
+				} if (gp.currentMap == 118) {
+					JOptionPane.showMessageDialog(null, "Do you have any fossils for me to resurrect?");
+					JPanel options = new JPanel();
+					boolean valid = false;
+					if (p.bag.contains(45)) {
+						JGradientButton button = new JGradientButton(p.bag.bag[45].toString());
+						button.setBackground(p.bag.bag[45].getColor());
+						button.addActionListener(e -> {
+							int answer = JOptionPane.showOptionDialog(null,
+									"Would you like to revive a Shockfang?",
+						            "Revive Fossil?",
+						            JOptionPane.YES_NO_OPTION,
+						            JOptionPane.QUESTION_MESSAGE,
+						            null, null, null);
+							if (answer == JOptionPane.YES_OPTION) {
+								p.catchPokemon(new Pokemon(211, 20, true, false));
+								p.bag.remove(new Item(45));
+								SwingUtilities.getWindowAncestor(options).dispose();
+							}
+						});
+						valid = true;
+						options.add(button);
+					}
+					
+					if (p.bag.contains(46)) {
+						JGradientButton button = new JGradientButton(p.bag.bag[46].toString());
+						button.setBackground(p.bag.bag[46].getColor());
+						button.addActionListener(e -> {
+							int answer = JOptionPane.showOptionDialog(null,
+									"Would you like to revive a Nightrex?",
+						            "Revive Fossil?",
+						            JOptionPane.YES_NO_OPTION,
+						            JOptionPane.QUESTION_MESSAGE,
+						            null, null, null);
+							if (answer == JOptionPane.YES_OPTION) {
+								p.catchPokemon(new Pokemon(213, 20, true, false));
+								p.bag.remove(new Item(46));
+								SwingUtilities.getWindowAncestor(options).dispose();
+							}
+						});
+						valid = true;
+						options.add(button);
+					}
+					
+					if (valid) {
+						JOptionPane.showMessageDialog(null, options, "Revive a fossil?", JOptionPane.QUESTION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "You don't have any fossils to revive!");
+					}
 				}
 			}
 		    keyH.resume();
@@ -1328,16 +1389,11 @@ public class PlayerCharacter extends Entity {
 		        	
 		        	// REPEL
 		        	if (i.getItem().getID() == 0) {
-		        		if (!p.repel) {
-		        			p.repel = true;
-		        			p.steps = 1;
-		        			p.bag.remove(i.getItem());
-	        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-	        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-	        	        	showBag();
-		        	    } else {
-		        	    	JOptionPane.showMessageDialog(null, "It won't have any effect.");
-		        	    }
+		        		if (useRepel()) {
+		        			SwingUtilities.getWindowAncestor(itemDesc).dispose();
+		        			SwingUtilities.getWindowAncestor(panel).dispose();
+			            	showBag();
+		        		}
 		        	}
 		        	
 		        	// TMS/HMS
@@ -2043,6 +2099,18 @@ public class PlayerCharacter extends Entity {
 		}
 		keyH.resume();
 		
+	}
+	
+	private boolean useRepel() {
+		if (!p.repel) {
+			p.repel = true;
+			p.steps = 1;
+			p.bag.remove(new Item(0));
+			return true;
+	    } else {
+	    	JOptionPane.showMessageDialog(null, "It won't have any effect.");
+	    	return false;
+	    }
 	}
 
 	public void draw(Graphics2D g2) {

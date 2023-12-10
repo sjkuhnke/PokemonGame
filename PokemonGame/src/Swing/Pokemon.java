@@ -400,7 +400,7 @@ public class Pokemon implements Serializable {
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.REFLECT) && field.contains(field.foeSide, Effect.REFLECT)) bestMoves.remove(Move.REFLECT);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.LIGHT_SCREEN) && field.contains(field.foeSide, Effect.LIGHT_SCREEN)) bestMoves.remove(Move.LIGHT_SCREEN);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_VEIL) && field.contains(field.foeSide, Effect.AURORA_VEIL)) bestMoves.remove(Move.AURORA_VEIL);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_VEIL) && (field.contains(field.foeSide, Effect.AURORA_VEIL) || !field.equals(field.weather, Effect.SNOW))) bestMoves.remove(Move.AURORA_VEIL);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.SAFEGUARD) && field.contains(field.foeSide, Effect.SAFEGUARD)) bestMoves.remove(Move.SAFEGUARD);
 		
 		if (bestMoves.size() > 1 && (bestMoves.contains(Move.ROOST) || bestMoves.contains(Move.SYNTHESIS) || bestMoves.contains(Move.MOONLIGHT) || bestMoves.contains(Move.MORNING_SUN) ||
@@ -3145,7 +3145,7 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (foe.vStatuses.contains(Status.PROTECT) && (move.accuracy <= 100 || move.cat != 2) && move != Move.FEINT) {
+		if (foe.vStatuses.contains(Status.PROTECT) && (move.accuracy <= 100 || move.cat != 2) && move != Move.FEINT && move != Move.PHANTOM_FORCE) {
 			useMove(move);
 			console.writeln(foe.nickname + " protected itself!");
 			if (move.contact) {
@@ -4691,6 +4691,7 @@ public class Pokemon implements Serializable {
 			if (!foe.vStatuses.contains(Status.ENCORED) && foe.lastMoveUsed != null) {
 				foe.vStatuses.add(Status.ENCORED);
 				foe.encoreCount = 4;
+				console.writeln(foe.nickname + " must do an encore!");
 			} else {
 				fail = fail();
 			}
@@ -4820,6 +4821,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.LIGHT_SCREEN) {
 			if (!(field.contains(userSide, Effect.LIGHT_SCREEN))) {
 				userSide.add(field.new FieldEffect(Effect.LIGHT_SCREEN));
+				console.writeln("Light Screen made" + this.nickname + "'s team stronger against Special moves!");
 			} else {
 				fail = fail();
 			}
@@ -4947,6 +4949,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.REFLECT) {
 			if (!(field.contains(userSide, Effect.REFLECT))) {
 				userSide.add(field.new FieldEffect(Effect.REFLECT));
+				console.writeln("Reflect made" + this.nickname + "'s team stronger against Physical moves!");
 			} else {
 				fail = fail();
 			}
@@ -10397,7 +10400,7 @@ public class Pokemon implements Serializable {
 				this.vStatuses.remove(Status.SPUN);
 			} else {
 				if (this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-					this.currentHP -= Math.max(this.getStat(0) * 1.0 / 16, 1);
+					this.currentHP -= Math.max(this.getStat(0) * 1.0 / 8, 1);
 					console.writeln("\n" + this.nickname + " was hurt by being wrapped!");
 				}
 				this.spunCount--;
