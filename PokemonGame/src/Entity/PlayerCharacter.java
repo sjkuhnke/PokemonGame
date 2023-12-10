@@ -977,7 +977,7 @@ public class PlayerCharacter extends Entity {
 					int[] ids = new int[] {177, 179, 98};
 					Random gift = new Random();
 					int index = gift.nextInt(ids.length - 1);
-					if (p.pokedex[ids[0]] == 2 && p.pokedex[ids[1]] == 2) {
+					if (p.pokedex[ids[0]] == 2 || p.pokedex[ids[1]] == 2) {
 						Pokemon temp = new Pokemon(5, 5, false, false);
 						JOptionPane.showMessageDialog(null, "Oh, you already have a\n" + temp.getName(ids[index]) + "? Well, take this really\nrare Pokemon instead!");
 						index = 2;

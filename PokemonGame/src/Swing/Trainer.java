@@ -91,7 +91,7 @@ public class Trainer {
 		return money;
 	}
 	
-	public boolean swapRandom(Pokemon foe, Player me) {
+	public boolean swapRandom(Pokemon foe, Player me, boolean announce) {
 		if (!hasValidMembers()) return false;
 		Random rand = new Random();
 		int index = rand.nextInt(team.length);
@@ -112,10 +112,18 @@ public class Trainer {
 		}
 		
     	Pokemon.console.write(current.nickname, true, 16);
-    	Pokemon.console.writeln(" was dragged out!", false, 16);
+    	if (announce) {
+    		Pokemon.console.writeln(" was dragged out!", false, 16);
+    	} else {
+    		Pokemon.console.writeln(" was sent out!", false, 16);
+    	}
 		current.swapIn(foe, me);
 		return true;
 		
+	}
+	
+	public boolean swapRandom(Pokemon foe, Player me) {
+		return swapRandom(foe, me, true);
 	}
 	
 	public boolean hasValidMembers() {

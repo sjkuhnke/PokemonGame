@@ -293,6 +293,8 @@ public class Main {
 		setMoveset("CCA", 2, Move.METRONOME, null, null, null);
 		setMoveset("CCA", 3, Move.METRONOME, null, null, null);
 		
+		setMoveset("TEST", 1, Move.CIRCLE_THROW, null, null, null);
+		
 //		Move[] yes = Move.values();
 //		int max = 0;
 //		Move result = Move.ABSORB;
@@ -568,6 +570,7 @@ public class Main {
 				new Trainer("6 Gym H", new Pokemon[]{new Pokemon(40, 60, false, true), new Pokemon(110, 60, false, true)}, 200),
 				new Trainer("6 Gym I", new Pokemon[]{new Pokemon(176, 61, false, true), new Pokemon(189, 60, false, true)}, 200),
 				new Trainer("6 Gym Leader 1", new Pokemon[]{new Pokemon(87, 62, false, true), new Pokemon(110, 62, false, true), new Pokemon(170, 62, false, true), new Pokemon(12, 62, false, true), new Pokemon(40, 62, false, true), new Pokemon(208, 63, false, true)}, 500, new Item(197)), // 255
+				new Trainer("TEST", new Pokemon[]{new Pokemon(198, 55, false, true), new Pokemon(42, 32, false, true), new Pokemon(82, 5, false, true), new Pokemon(12, 20, false, true), new Pokemon(40, 20, false, true), new Pokemon(208, 20, false, true)}, 100)
 //				new Trainer("Y", new Pokemon[]{new Pokemon(-93, 24, false, true), new Pokemon(-89, 23, false, true)}, 100),
 //				new Trainer("Z", new Pokemon[]{new Pokemon(-75, 26, false, true)}, 100),
 //				new Trainer("AA", new Pokemon[]{new Pokemon(-97, 19, false, true), new Pokemon(-98, 26, false, true)}, 100),
