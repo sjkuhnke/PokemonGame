@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -192,7 +193,7 @@ public class PlayerCharacter extends Entity {
 			}
 			if (p.steps % 129 == 0) {
 				for (Pokemon p : p.team) {
-            		if (p != null) p.awardHappiness(1);
+            		if (p != null) p.awardHappiness(1, false);
             	}
 				p.steps++;
 			}
@@ -457,19 +458,13 @@ public class PlayerCharacter extends Entity {
 	    		String code = cheats.getText();
 	    		
 	    		if (code.equals("RAR3")) {
-	    			p.bag.bag[18] = new Item(18);
+	    			p.bag.add(Item.RARE_CANDY);
 	    			p.bag.count[18] = 999;
 	    			SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		} else if (code.equals("M1X3R")) {
 	    			p.random = !p.random;
 	    			String onoff = p.random ? "on!" : "off.";
 	    			JOptionPane.showMessageDialog(null, "Randomizer mode was turned " + onoff);
-	    			SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("BALLZ")) {
-	    			for (int i = 1; i < 4; i++) {
-	    				p.bag.bag[i] = new Item(i);
-		    			p.bag.count[i] = 25;
-	    			}
 	    			SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		} else if (code.equals("GASTLY")) {
 	    			p.ghost = !p.ghost;
@@ -510,7 +505,7 @@ public class PlayerCharacter extends Entity {
 	    		        try {
 	    		            int id = Integer.parseInt(parts[1]);
 	    		            int amt = Integer.parseInt(parts[2]);
-	    		            p.bag.add(new Item(id), amt);
+	    		            p.bag.add(Item.getItem(id), amt);
 	    		            SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		        } catch (NumberFormatException g) {
 	    		            // Handle invalid input (e.g., if the entered value is not a valid integer)
@@ -645,7 +640,17 @@ public class PlayerCharacter extends Entity {
 	            JOptionPane.QUESTION_MESSAGE,
 	            null, null, null);
 	    if (option == JOptionPane.YES_OPTION) {
-	    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(currentSave))) {
+	    	// Check if the directory exists, create it if not
+            Path savesDirectory = Paths.get("./saves/");
+            if (!Files.exists(savesDirectory)) {
+                try {
+					Files.createDirectories(savesDirectory);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+            }
+            
+	    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves/" + currentSave))) {
             	gp.player.p.setPosX(gp.player.worldX);
             	gp.player.p.setPosY(gp.player.worldY);
             	gp.player.p.currentMap = gp.currentMap;
@@ -698,13 +703,13 @@ public class PlayerCharacter extends Entity {
 	    if (p.badges > 2) available += 2;
 	    if (p.badges > 1) available ++;
 	    if (p.badges > 0) available += 2;
-	    Item[] shopItems = new Item[] {new Item(0), new Item(1), new Item(4), new Item(9), new Item(10), new Item(11), new Item(12), new Item(13), // 0 badges
-	    		new Item(2), new Item(5), // 1 badge
-	    		new Item(40), // 2 badges
-	    		new Item(14), new Item(16), // 3 badges
-	    		new Item(3), new Item(6), // 4 badges
-	    		new Item(7), // 7 badges
-	    		new Item(8), new Item(17)}; // 8 badges
+	    Item[] shopItems = new Item[] {Item.REPEL, Item.POKEBALL, Item.POTION, Item.ANTIDOTE, Item.AWAKENING, Item.BURN_HEAL, Item.PARALYZE_HEAL, Item.FREEZE_HEAL, // 0 badges
+	    		Item.GREAT_BALL, Item.SUPER_POTION, // 1 badge
+	    		Item.ELIXIR, // 2 badges
+	    		Item.FULL_HEAL, Item.REVIVE, // 3 badges
+	    		Item.ULTRA_BALL, Item.HYPER_POTION, // 4 badges
+	    		Item.MAX_POTION, // 7 badges
+	    		Item.FULL_RESTORE, Item.MAX_REVIVE}; // 8 badges
 	    shopPanel.setLayout(new GridLayout((available + 1) / 2, 2));
 	    for (int i = 0; i < available; i++) {
 	    	JButton item = new JButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
@@ -757,7 +762,7 @@ public class PlayerCharacter extends Entity {
 								p.flags[6] = true;
 								JOptionPane.showMessageDialog(null, "Thank you! Here, take this as a reward!");
 								JOptionPane.showMessageDialog(null, "Obtained A Key!\nGot 1 Valiant Gem!");
-								p.bag.add(new Item(24));
+								p.bag.add(Item.VALIANT_GEM);
 							} else {
 								JOptionPane.showMessageDialog(null, "That's not a GROUND type!");
 							}
@@ -779,7 +784,7 @@ public class PlayerCharacter extends Entity {
 								p.flags[7] = true;
 								JOptionPane.showMessageDialog(null, "Thank you! Here, take this as a reward!");
 								JOptionPane.showMessageDialog(null, "Obtained B Key!\nGot 1 Petticoat Gem!");
-								p.bag.add(new Item(25));
+								p.bag.add(Item.PETTICOAT_GEM);
 							} else {
 								JOptionPane.showMessageDialog(null, "That's not an ICE type!");
 							}
@@ -791,7 +796,7 @@ public class PlayerCharacter extends Entity {
 				}
 				if (p.flags[8] && p.flags[9] && gp.currentMap == 41 && !p.bag.contains(96)) {
 					JOptionPane.showMessageDialog(null, "Oh you have?! Thank you so much!\nHere, take this as a reward!\n\nObtained HM04 Surf!");
-					p.bag.add(new Item(96));
+					p.bag.add(Item.HM04);
 				}
 				if (gp.currentMap == 46) {
 					String message = "";
@@ -915,7 +920,7 @@ public class PlayerCharacter extends Entity {
 					p.catchPokemon(result);
 				} if (gp.currentMap == 91 && !p.flags[16]) {
 					JOptionPane.showMessageDialog(null, "Obtained HM05 Slow Fall!");
-					p.bag.add(new Item(97));
+					p.bag.add(Item.HM05);
 					JOptionPane.showMessageDialog(null, "Also, if you haven't yet, you should\nbe sure to check out the bottom right\nhouse in the quadrant above.\nI hear he has a gift!");
 					p.flags[16] = true;
 				} if (gp.currentMap == 93) {
@@ -1016,7 +1021,7 @@ public class PlayerCharacter extends Entity {
 						            null, null, null);
 							if (answer == JOptionPane.YES_OPTION) {
 								p.catchPokemon(new Pokemon(211, 20, true, false));
-								p.bag.remove(new Item(45));
+								p.bag.remove(Item.THUNDER_SCALES_FOSSIL);
 								SwingUtilities.getWindowAncestor(options).dispose();
 							}
 						});
@@ -1036,7 +1041,7 @@ public class PlayerCharacter extends Entity {
 						            null, null, null);
 							if (answer == JOptionPane.YES_OPTION) {
 								p.catchPokemon(new Pokemon(213, 20, true, false));
-								p.bag.remove(new Item(46));
+								p.bag.remove(Item.DUSK_SCALES_FOSSIL);
 								SwingUtilities.getWindowAncestor(options).dispose();
 							}
 						});
@@ -1314,7 +1319,7 @@ public class PlayerCharacter extends Entity {
 		        	        	if (p.team[index].happiness >= 255) {
 		        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
 		        	        	} else {
-		        	        		p.team[index].happiness = p.team[index].happiness + 100 >= 255 ? 255 : p.team[index].happiness + 100;
+		        	        		p.team[index].awardHappiness(100, true);
 		        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " looked happier!");
 		        	        		p.bag.remove(i.getItem());
 		        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
@@ -1860,14 +1865,13 @@ public class PlayerCharacter extends Entity {
 		JPanel shopPanel = new JPanel();
 	    shopPanel.setLayout(new GridLayout(6, 1));
 	    Item[] shopItems = new Item[1];
-	    if (gp.currentMap == 30) { shopItems = new Item[] {new Item(0), new Item(1), new Item(15), new Item(27), new Item(149), new Item(151)};
-	    } else if (gp.currentMap == 40) { shopItems = new Item[] {new Item(112), new Item(113), new Item(115), new Item(116), new Item(123), new Item(124)};
-	    } else if (gp.currentMap == 89) { shopItems = new Item[] {new Item(145), new Item(150), new Item(154), new Item(174), new Item(175),
-	    		new Item(176), new Item(177), new Item(179), new Item(180), new Item(181), new Item(182), new Item(195)};
-	    } else if (gp.currentMap == 92) { shopItems = new Item[] {new Item(29), new Item(30), new Item(31), new Item(32), new Item(33), new Item(34),
-	    		new Item(35), new Item(36), new Item(37), new Item(38), new Item(39)};
-	    } else if (gp.currentMap == 112) { shopItems = new Item[] {new Item(41), new Item(42), new Item(141), new Item(142), new Item(143), new Item(144),
-	    		new Item(191)};
+	    if (gp.currentMap == 30) { shopItems = new Item[] {Item.REPEL, Item.POKEBALL, Item.RAGE_CANDY_BAR, Item.BOTTLE_CAP, Item.TM49, Item.TM51};
+	    } else if (gp.currentMap == 40) { shopItems = new Item[] {Item.TM12, Item.TM13, Item.TM15, Item.TM16, Item.TM23, Item.TM24};
+	    } else if (gp.currentMap == 89) { shopItems = new Item[] {Item.TM45, Item.TM50, Item.TM54, Item.TM74, Item.TM75,
+	    		Item.TM76, Item.TM77, Item.TM79, Item.TM80, Item.TM81, Item.TM82, Item.TM95};
+	    } else if (gp.currentMap == 92) { shopItems = new Item[] {Item.ADAMANT_MINT, Item.BOLD_MINT, Item.BRAVE_MINT, Item.CALM_MINT, Item.CAREFUL_MINT, Item.IMPISH_MINT,
+	    		Item.JOLLY_MINT, Item.MODEST_MINT, Item.QUIET_MINT, Item.SERIOUS_MINT, Item.TIMID_MINT};
+	    } else if (gp.currentMap == 112) { shopItems = new Item[] {Item.MAX_ELIXIR, Item.PP_UP, Item.TM41, Item.TM42, Item.TM43, Item.TM44, Item.TM91};
 	    }
 	    for (int i = 0; i < shopItems.length; i++) {
 	    	JGradientButton item = new JGradientButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
@@ -2105,7 +2109,7 @@ public class PlayerCharacter extends Entity {
 		if (!p.repel) {
 			p.repel = true;
 			p.steps = 1;
-			p.bag.remove(new Item(0));
+			p.bag.remove(Item.REPEL);
 			return true;
 	    } else {
 	    	JOptionPane.showMessageDialog(null, "It won't have any effect.");

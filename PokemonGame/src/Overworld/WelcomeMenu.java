@@ -112,7 +112,18 @@ public class WelcomeMenu extends JPanel {
         	String name = (String) fileName.getSelectedItem();
         	
         	if (name != null) {
-        		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(name))) {
+        		try {
+        			// Check if the directory exists, create it if not
+                    Path savesDirectory = Paths.get("./saves/");
+                    if (!Files.exists(savesDirectory)) {
+                        try {
+        					Files.createDirectories(savesDirectory);
+        				} catch (IOException f) {
+        					f.printStackTrace();
+        				}
+                    }
+                    
+        			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./saves/" + name));
         	        Player current = (Player) ois.readObject();
         	        for (int i = 0; i < 6; i++) {
         	        	Pokemon p = current.team[i];
@@ -128,7 +139,7 @@ public class WelcomeMenu extends JPanel {
         	}
         });
         
-        fileName.setSelectedIndex(0);
+        if (fileName.getItemCount() != 0) fileName.setSelectedIndex(0);
         
         JGradientButton manageButton = new JGradientButton("Manage");
         optionsPanel.add(manageButton);
@@ -206,10 +217,17 @@ public class WelcomeMenu extends JPanel {
 	private ArrayList<String> getDatFiles() {
 		ArrayList<String> fileNames = new ArrayList<>();
 
-        // Get the current working directory
-        String currentDirectory = System.getProperty("user.dir");
+		// Check if the directory exists, create it if not
+        Path savesDirectory = Paths.get("./saves/");
+        if (!Files.exists(savesDirectory)) {
+            try {
+				Files.createDirectories(savesDirectory);
+			} catch (IOException f) {
+				f.printStackTrace();
+			}
+        }
 
-        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(currentDirectory), "*.dat")) {
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get("./saves/"), "*.dat")) {
             for (Path path : directoryStream) {
                 fileNames.add(path.getFileName().toString());
             }
@@ -255,7 +273,7 @@ public class WelcomeMenu extends JPanel {
             		
             	} while (!isValidFileName(newFileName));
             	try {
-                    Path oldPath = Paths.get(name);
+                    Path oldPath = Paths.get("./saves/" + name);
                     Path newPath = oldPath.resolveSibling(newFileName + ".dat");
                     Files.move(oldPath, newPath);
                     updateFileList(fileNames);
@@ -272,7 +290,7 @@ public class WelcomeMenu extends JPanel {
                         JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     try {
-                        Files.delete(Paths.get(name));
+                        Files.delete(Paths.get("./saves/" + name));
                         updateFileList(fileNames);
                     } catch (IOException ex) {
                         ex.printStackTrace();

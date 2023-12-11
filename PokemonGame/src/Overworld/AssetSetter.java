@@ -1564,7 +1564,7 @@ public class AssetSetter {
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;
-		result.item = new Item(id);
+		result.item = Item.getItem(id);
 		
 		objIndex++;
 		

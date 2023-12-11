@@ -99,6 +99,7 @@ public class Pokemon implements Serializable {
 	private int tormentCount;
 	private int toxic;
 	public int headbuttCrit;
+	public int happinessCap;
 	
 	// boolean fields
 	public boolean playerOwned;
@@ -161,7 +162,7 @@ public class Pokemon implements Serializable {
 		happiness = 70;
 		if (id == 29 || id == 134 || id == 174) happiness = 100;
 		catchRate = setCatchRate();
-		
+		happinessCap = 50;
 	}
 	
 	public Pokemon(int i, Pokemon pokemon) {
@@ -204,6 +205,7 @@ public class Pokemon implements Serializable {
 		happiness = pokemon.happiness;
 		headbuttCrit = pokemon.headbuttCrit;
 		catchRate = setCatchRate();
+		happinessCap = pokemon.happinessCap;
 	}
 	
 	public BufferedImage getSprite() {
@@ -2293,7 +2295,7 @@ public class Pokemon implements Serializable {
 		int oHP = this.getStat(0);
 		this.exp -= this.expMax;
 		++level;
-		awardHappiness(5);
+		awardHappiness(5, false);
 		console.writeln(this.nickname + " leveled Up!");
 		checkMove();
 		Pokemon result = this.checkEvo(player);
@@ -3908,8 +3910,15 @@ public class Pokemon implements Serializable {
 
 
 
-	public void awardHappiness(int i) {
+	public void awardHappiness(int i, boolean override) {
+		int deduc = 0;
+		if (!override) {
+			this.happinessCap -= i;
+			deduc = happinessCap < 0 ? Math.abs(happinessCap) : 0;
+			this.happinessCap += deduc;
+		}
 		this.happiness += i;
+		this.happiness -= deduc;
 		this.happiness = this.happiness > 255 ? 255 : this.happiness;
 	}
 
@@ -9841,7 +9850,7 @@ public class Pokemon implements Serializable {
 		this.currentHP = 0;
 		this.fainted = true;
 		this.battled = false;
-		awardHappiness(-3);
+		awardHappiness(-3, false);
 		this.vStatuses.remove(Status.LOCKED);
 		this.vStatuses.remove(Status.SPUN);
 		this.vStatuses.remove(Status.RECHARGE);
@@ -11267,7 +11276,8 @@ public class Pokemon implements Serializable {
 	    happinessPanel.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-		        JOptionPane.showMessageDialog(null, "Happiness: " + p.happiness);
+				String happinessCap = p.happiness >= 255 ? 0 + "" : p.happinessCap + "";
+		        JOptionPane.showMessageDialog(null, "Happiness: " + p.happiness + " (" + happinessCap + " remaining)");
             }
 		});
 	    
@@ -11411,7 +11421,7 @@ public class Pokemon implements Serializable {
 		    
 		    int length = 0;
 		    for (int i = 93; i < 200; i++) {
-		    	Item testItem = new Item(i);
+		    	Item testItem = Item.getItem(i);
 		    	if (testItem.getLearned(test)) {
 		    		length++;
 		    	}
@@ -11419,7 +11429,7 @@ public class Pokemon implements Serializable {
 		    learnPanel.setLayout(new GridLayout(length, 1));
 		    
 			for (int i = 93; i < 200; i++) {
-				Item testItem = new Item(i);
+				Item testItem = Item.getItem(i);
 				JButton moveButton = new JGradientButton("");
 				if (testItem.getLearned(test)) {
 					moveButton.setText(testItem.toString());

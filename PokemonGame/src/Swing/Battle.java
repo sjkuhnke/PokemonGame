@@ -365,7 +365,7 @@ public class Battle extends JFrame {
                         return;
 		        	}
 		            console.writeln("\nUsed a Pokeball!");
-		            me.bag.remove(new Item(1));
+		            me.bag.remove(Item.POKEBALL);
 		            ballBonus = 1;
 		        } else if (greatballButton.isSelected()) {
 		        	if (me.bag.count[2] <= 0) {
@@ -373,7 +373,7 @@ public class Battle extends JFrame {
                         return;
 		        	}
 		            console.writeln("\nUsed a Great Ball!");
-		            me.bag.remove(new Item(2));
+		            me.bag.remove(Item.GREAT_BALL);
 		            ballBonus = 1.5;
 		        } else if (ultraballButton.isSelected()) {
 		        	if (me.bag.count[3] <= 0) {
@@ -381,7 +381,7 @@ public class Battle extends JFrame {
                         return;
 		        	}
 		            console.writeln("\nUsed an Ultra Ball!");
-		            me.bag.remove(new Item(3));
+		            me.bag.remove(Item.ULTRA_BALL);
 		            ballBonus = 2;
 		        }
 		        
@@ -838,7 +838,7 @@ public class Battle extends JFrame {
 				            if (foeTrainer.getMoney() == 500 && me.badges < 8) {
 				            	me.badges++;
 				            	for (Pokemon p : me.team) {
-				            		if (p != null) p.awardHappiness(5);
+				            		if (p != null) p.awardHappiness(15, true);
 				            	}
 				            }
 				            if (foeTrainer.item != null) {
@@ -1369,8 +1369,9 @@ public class Battle extends JFrame {
 		            if (foeTrainer.getMoney() == 500 && me.badges < 8) {
 		            	me.badges++;
 		            	for (Pokemon p : me.team) {
-		            		if (p != null) p.awardHappiness(5);
+		            		if (p != null) p.awardHappiness(15, true);
 		            	}
+		            	me.updateHappinessCaps();
 		            }
 		            if (foeTrainer.item != null) {
 		            	me.bag.add(foeTrainer.item);

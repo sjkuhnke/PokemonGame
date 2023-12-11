@@ -12,7 +12,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.BoxLayout;
@@ -30,20 +30,230 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import Overworld.Main;
 
-public class Item implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public enum Item {
+	REPEL(0,25,new Color(0, 92, 5),Item.OTHER,null,"Prevents wild Pokemon encounters\nfor 200 steps"),
+	POKEBALL(1,10,new Color(176, 0, 12),Item.OTHER,null,"A standard device for capturing\nwild Pokemon"),
+	GREAT_BALL(2,25,new Color(0, 0, 148),Item.OTHER,null,"An upgraded device for capturing\nwild Pokemon"),
+	ULTRA_BALL(3,50,new Color(148, 171, 0),Item.OTHER,null,"A very efficient device for\ncapturing wild Pokemon"),
+	POTION(4,50,new Color(124, 0, 219),Item.OTHER,null,"Restores 20 HP"),
+	SUPER_POTION(5,125,new Color(140, 24, 8),Item.OTHER,null,"Restores 60 HP"),
+	HYPER_POTION(6,275,new Color(255, 0, 191),Item.OTHER,null,"Restores 200 HP"),
+	MAX_POTION(7,400,new Color(0, 21, 255),Item.OTHER,null,"Restores a Pokemon's HP to full"),
+	FULL_RESTORE(8,500,new Color(255, 196, 0),Item.OTHER,null,"Restores a Pokemon's HP to full\nand cures any status conditions"),
+	ANTIDOTE(9,25,new Color(157, 0, 255),Item.OTHER,null,"Cures a Pokemon of Poison"),
+	AWAKENING(10,25,new Color(63, 83, 92),Item.OTHER,null,"Cures a Pokemon of Sleep"),
+	BURN_HEAL(11,25,new Color(133, 15, 19),Item.OTHER,null,"Cures a Pokemon of Burn"),
+	PARALYZE_HEAL(12,25,new Color(176, 158, 0),Item.OTHER,null,"Cures a Pokemon of Paralysis"),
+	FREEZE_HEAL(13,25,new Color(0, 170, 189),Item.OTHER,null,"Cures a Pokemon of Frostbite"),
+	FULL_HEAL(14,150,new Color(255, 247, 0),Item.OTHER,null,"Cures a Pokemon of any status\ncondition"),
+	RAGE_CANDY_BAR(15,50,new Color(0, 55, 255),Item.OTHER,null,"Cures a Pokemon of any status\ncondition"),
+	REVIVE(16,500,new Color(219, 194, 0),Item.OTHER,null,"Recovers a Pokemon from fainting\nwith 50% HP"),
+	MAX_REVIVE(17,1500,new Color(219, 194, 0),Item.OTHER,null,"Recovers a Pokemon from fainting\nwith full HP"),
+	RARE_CANDY(18,0,new Color(124, 54, 255),Item.OTHER,null,"Elevates a Pokemon by 1 level"),
+	EUPHORIAN_GEM(19,500,new Color(138, 237, 255),Item.OTHER,null,"Grants a Pokemon 100 friendship\npoints"),
+	LEAF_STONE(20,1000,new Color(0, 120, 20),Item.OTHER,null,"Evolves a certain species of\nPokemon"),
+	DUSK_STONE(21,1000,new Color(64, 64, 64),Item.OTHER,null,"Evolves a certain species of\nPokemon"),
+	DAWN_STONE(22,1000,new Color(0, 176, 179),Item.OTHER,null,"Evolves a certain species of\nPokemon"),
+	ICE_STONE(23,1000,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of\nPokemon"),
+	VALIANT_GEM(24,2000,new Color(72, 75, 219),Item.OTHER,null,"Grants Masculine energy to\na Pokemon, evolving them\ninto their male evolution"),
+	PETTICOAT_GEM(25,2000,new Color(204, 61, 140),Item.OTHER,null,"Grants Feminine energy to\na Pokemon, evolving them\ninto their female evolution"),
+	ABILITY_CAPSULE(26,0,new Color(102, 7, 143),Item.OTHER,null,"Swaps a Pokemon's ability\nwith its other possible\nability"),
+	BOTTLE_CAP(27,1000,new Color(192, 192, 192),Item.OTHER,null,"Maxes out an IV of choosing"),
+	GOLD_BOTTLE_CAP(28,0,new Color(255, 215, 0),Item.OTHER,null,"Maxes out all IVs of a\nPokemon"),
+	ADAMANT_MINT(29,2500,new Color(113, 84, 255),Item.OTHER,null,"Changes a Pokemon's nature\n to +Atk, -SpA"),
+	BOLD_MINT(30,1750,new Color(113, 84, 255),Item.OTHER,null,"Changes a Pokemon's nature\n to +Def, -Atk"),
+	BRAVE_MINT(31,1000,new Color(113, 84, 255),Item.OTHER,null,"Changes a Pokemon's nature\n to +Atk, -Spe"),
+	CALM_MINT(32,1500,new Color(113, 84, 255),Item.OTHER,null,"Changes a Pokemon's nature\n to +SpD, -Atk"),
+	CAREFUL_MINT(33,1250,new Color(113, 84, 255),Item.OTHER,null,"Changes a Pokemon's nature\n to +SpD, -SpA"),
+	IMPISH_MINT(34,1750,new Color(113, 84, 255),Item.OTHER,null,"Changes a Pokemon's nature\n to +Def, -SpA"),
+	JOLLY_MINT(35,2500,new Color(113, 84, 255),Item.OTHER,null,"Changes a Pokemon's nature\n to +Spe, -SpA"),
+	MODEST_MINT(36,2250,new Color(113, 84, 255),Item.OTHER,null,"Changes a Pokemon's nature\n to +SpA, -Atk"),
+	QUIET_MINT(37,1000,new Color(113, 84, 255),Item.OTHER,null,"Changes a Pokemon's nature\n to +SpA, -Spe"),
+	SERIOUS_MINT(38,1250,new Color(113, 84, 255),Item.OTHER,null,"Changes a Pokemon's nature\n to Neutral"),
+	TIMID_MINT(39,2500,new Color(113, 84, 255),Item.OTHER,null,"Changes a Pokemon's nature\n to +Spe, -Atk"),
+	ELIXIR(40,300,new Color(230, 146, 78),Item.OTHER,null,"Restores PP of a selected\nmove"),
+	MAX_ELIXIR(41,250,new Color(246, 255, 120),Item.OTHER,null,"Restores PP of all moves\non a Pokemon"),
+	PP_UP(42,2500,new Color(150, 51, 156),Item.OTHER,null,"Increases max PP of a\nselected move by 20%"),
+	PP_MAX(43,0,new Color(142, 230, 21),Item.OTHER,null,"Increases max PP of a\nselected move by its\nmax PP, which is 160%"),
+	FLAME_ORB(44,0,new Color(232, 52, 54),Item.OTHER,null,"Burns a selected Pokemon"),
+	THUNDER_SCALES_FOSSIL(45,0,new Color(201, 169, 81),Item.OTHER,null,"A fossil of an ancient Pokemon\nthat lived in a desert.\nIt appears to have an\nelectric charge ridden\nin the scales."),
+	DUSK_SCALES_FOSSIL(46,0,new Color(45, 47, 51),Item.OTHER,null,"A fossil of an ancient Pokemon\nthat lived in a forest.\nIt appears to give off\na dark energy within\n the scales."),
+	NULL47(47,0,Color.BLACK,Item.OTHER,null,""),
+	NULL48(48,0,Color.BLACK,Item.OTHER,null,""),
+	NULL49(49,0,Color.BLACK,Item.OTHER,null,""),
+	NULL50(50,0,Color.BLACK,Item.OTHER,null,""),
+	NULL51(51,0,Color.BLACK,Item.OTHER,null,""),
+	NULL52(52,0,Color.BLACK,Item.OTHER,null,""),
+	NULL53(53,0,Color.BLACK,Item.OTHER,null,""),
+	NULL54(54,0,Color.BLACK,Item.OTHER,null,""),
+	NULL55(55,0,Color.BLACK,Item.OTHER,null,""),
+	NULL56(56,0,Color.BLACK,Item.OTHER,null,""),
+	NULL57(57,0,Color.BLACK,Item.OTHER,null,""),
+	NULL58(58,0,Color.BLACK,Item.OTHER,null,""),
+	NULL59(59,0,Color.BLACK,Item.OTHER,null,""),
+	NULL60(60,0,Color.BLACK,Item.OTHER,null,""),
+	NULL61(61,0,Color.BLACK,Item.OTHER,null,""),
+	NULL62(62,0,Color.BLACK,Item.OTHER,null,""),
+	NULL63(63,0,Color.BLACK,Item.OTHER,null,""),
+	NULL64(64,0,Color.BLACK,Item.OTHER,null,""),
+	NULL65(65,0,Color.BLACK,Item.OTHER,null,""),
+	NULL66(66,0,Color.BLACK,Item.OTHER,null,""),
+	NULL67(67,0,Color.BLACK,Item.OTHER,null,""),
+	NULL68(68,0,Color.BLACK,Item.OTHER,null,""),
+	NULL69(69,0,Color.BLACK,Item.OTHER,null,""),
+	NULL70(70,0,Color.BLACK,Item.OTHER,null,""),
+	NULL71(71,0,Color.BLACK,Item.OTHER,null,""),
+	NULL72(72,0,Color.BLACK,Item.OTHER,null,""),
+	NULL73(73,0,Color.BLACK,Item.OTHER,null,""),
+	NULL74(74,0,Color.BLACK,Item.OTHER,null,""),
+	NULL75(75,0,Color.BLACK,Item.OTHER,null,""),
+	NULL76(76,0,Color.BLACK,Item.OTHER,null,""),
+	NULL77(77,0,Color.BLACK,Item.OTHER,null,""),
+	NULL78(78,0,Color.BLACK,Item.OTHER,null,""),
+	NULL79(79,0,Color.BLACK,Item.OTHER,null,""),
+	NULL80(80,0,Color.BLACK,Item.OTHER,null,""),
+	NULL81(81,0,Color.BLACK,Item.OTHER,null,""),
+	NULL82(82,0,Color.BLACK,Item.OTHER,null,""),
+	NULL83(83,0,Color.BLACK,Item.OTHER,null,""),
+	NULL84(84,0,Color.BLACK,Item.OTHER,null,""),
+	NULL85(85,0,Color.BLACK,Item.OTHER,null,""),
+	NULL86(86,0,Color.BLACK,Item.OTHER,null,""),
+	NULL87(87,0,Color.BLACK,Item.OTHER,null,""),
+	NULL88(88,0,Color.BLACK,Item.OTHER,null,""),
+	NULL89(89,0,Color.BLACK,Item.OTHER,null,""),
+	NULL90(90,0,Color.BLACK,Item.OTHER,null,""),
+	NULL91(91,0,Color.BLACK,Item.OTHER,null,""),
+	NULL92(92,0,Color.BLACK,Item.OTHER,null,""),
+	HM01(93,0,Color.BLACK,Item.OTHER,Move.CUT,"Teaches a Pokemon this move."),
+	HM02(94,0,Color.BLACK,Item.OTHER,Move.ROCK_SMASH,"Teaches a Pokemon this move."),
+	HM03(95,0,Color.BLACK,Item.OTHER,Move.VINE_CROSS,"Teaches a Pokemon this move."),
+	HM04(96,0,Color.BLACK,Item.OTHER,Move.SURF,"Teaches a Pokemon this move."),
+	HM05(97,0,Color.BLACK,Item.OTHER,Move.SLOW_FALL,"Teaches a Pokemon this move."),
+	HM06(98,0,Color.BLACK,Item.OTHER,Move.WHIRLPOOL,"Teaches a Pokemon this move."),
+	HM07(99,0,Color.BLACK,Item.OTHER,Move.ROCK_CLIMB,"Teaches a Pokemon this move."),
+	HM08(100,0,Color.BLACK,Item.OTHER,Move.LAVA_SURF,"Teaches a Pokemon this move."),
+	TM01(101,0,Color.BLACK,Item.OTHER,Move.SUPER_FANG,"Teaches a Pokemon this move."),
+	TM02(102,0,Color.BLACK,Item.OTHER,Move.DRAGON_CLAW,"Teaches a Pokemon this move."),
+	TM03(103,0,Color.BLACK,Item.OTHER,Move.ELEMENTAL_SPARKLE,"Teaches a Pokemon this move."),
+	TM04(104,0,Color.BLACK,Item.OTHER,Move.CALM_MIND,"Teaches a Pokemon this move."),
+	TM05(105,0,Color.BLACK,Item.OTHER,Move.BODY_SLAM,"Teaches a Pokemon this move."),
+	TM06(106,0,Color.BLACK,Item.OTHER,Move.SHADOW_BALL,"Teaches a Pokemon this move."),
+	TM07(107,0,Color.BLACK,Item.OTHER,Move.FOCUS_BLAST,"Teaches a Pokemon this move."),
+	TM08(108,0,Color.BLACK,Item.OTHER,Move.BULK_UP,"Teaches a Pokemon this move."),
+	TM09(109,0,Color.BLACK,Item.OTHER,Move.LEAF_BLADE,"Teaches a Pokemon this move."),
+	TM10(110,0,Color.BLACK,Item.OTHER,Move.ICE_BEAM,"Teaches a Pokemon this move."),
+	TM11(111,0,Color.BLACK,Item.OTHER,Move.PSYSHOCK,"Teaches a Pokemon this move."),
+	TM12(112,750,Color.BLACK,Item.OTHER,Move.PROTECT,"Teaches a Pokemon this move."),
+	TM13(113,5000,Color.BLACK,Item.OTHER,Move.BATON_PASS,"Teaches a Pokemon this move."),
+	TM14(114,0,Color.BLACK,Item.OTHER,Move.TAUNT,"Teaches a Pokemon this move."),
+	TM15(115,1000,Color.BLACK,Item.OTHER,Move.GIGA_IMPACT,"Teaches a Pokemon this move."),
+	TM16(116,1000,Color.BLACK,Item.OTHER,Move.HYPER_BEAM,"Teaches a Pokemon this move."),
+	TM17(117,0,Color.BLACK,Item.OTHER,Move.SOLAR_BEAM,"Teaches a Pokemon this move."),
+	TM18(118,0,Color.BLACK,Item.OTHER,Move.IRON_HEAD,"Teaches a Pokemon this move."),
+	TM19(119,0,Color.BLACK,Item.OTHER,Move.PHOTON_GEYSER,"Teaches a Pokemon this move."),
+	TM20(120,0,Color.BLACK,Item.OTHER,Move.EARTHQUAKE,"Teaches a Pokemon this move."),
+	TM21(121,0,Color.BLACK,Item.OTHER,Move.THROAT_CHOP,"Teaches a Pokemon this move."),
+	TM22(122,0,Color.BLACK,Item.OTHER,Move.FELL_STINGER,"Teaches a Pokemon this move."),
+	TM23(123,800,Color.BLACK,Item.OTHER,Move.WEATHER_BALL,"Teaches a Pokemon this move."),
+	TM24(124,900,Color.BLACK,Item.OTHER,Move.TERRAIN_PULSE,"Teaches a Pokemon this move."),
+	TM25(125,0,Color.BLACK,Item.OTHER,Move.THUNDERBOLT,"Teaches a Pokemon this move."),
+	TM26(126,0,Color.BLACK,Item.OTHER,Move.HIDDEN_POWER,"Teaches a Pokemon this move."),
+	TM27(127,0,Color.BLACK,Item.OTHER,Move.DRAIN_PUNCH,"Teaches a Pokemon this move."),
+	TM28(128,0,Color.BLACK,Item.OTHER,Move.FLAME_CHARGE,"Teaches a Pokemon this move."),
+	TM29(129,0,Color.BLACK,Item.OTHER,Move.LIQUIDATION,"Teaches a Pokemon this move."),
+	TM30(130,0,Color.BLACK,Item.OTHER,Move.U$TURN,"Teaches a Pokemon this move."),
+	TM31(131,0,Color.BLACK,Item.OTHER,Move.FALSE_SWIPE,"Teaches a Pokemon this move."),
+	TM32(132,0,Color.BLACK,Item.OTHER,Move.ZING_ZAP,"Teaches a Pokemon this move."),
+	TM33(133,0,Color.BLACK,Item.OTHER,Move.PSYCHIC_FANGS,"Teaches a Pokemon this move."),
+	TM34(134,0,Color.BLACK,Item.OTHER,Move.MAGIC_TOMB,"Teaches a Pokemon this move."),
+	TM35(135,0,Color.BLACK,Item.OTHER,Move.FLAMETHROWER,"Teaches a Pokemon this move."),
+	TM36(136,0,Color.BLACK,Item.OTHER,Move.SLUDGE_BOMB,"Teaches a Pokemon this move."),
+	TM37(137,0,Color.BLACK,Item.OTHER,Move.ROCK_TOMB,"Teaches a Pokemon this move."),
+	TM38(138,1500,Color.BLACK,Item.OTHER,Move.BLIZZARD,"Teaches a Pokemon this move."),
+	TM39(139,0,Color.BLACK,Item.OTHER,Move.PSYCHIC,"Teaches a Pokemon this move."),
+	TM40(140,0,Color.BLACK,Item.OTHER,Move.FACADE,"Teaches a Pokemon this move."),
+	TM41(141,1000,Color.BLACK,Item.OTHER,Move.REFLECT,"Teaches a Pokemon this move."),
+	TM42(142,1000,Color.BLACK,Item.OTHER,Move.LIGHT_SCREEN,"Teaches a Pokemon this move."),
+	TM43(143,1000,Color.BLACK,Item.OTHER,Move.DAZZLING_GLEAM,"Teaches a Pokemon this move."),
+	TM44(144,1000,Color.BLACK,Item.OTHER,Move.PLAY_ROUGH,"Teaches a Pokemon this move."),
+	TM45(145,1000,Color.BLACK,Item.OTHER,Move.WILL$O$WISP,"Teaches a Pokemon this move."),
+	TM46(146,1500,Color.BLACK,Item.OTHER,Move.FIRE_BLAST,"Teaches a Pokemon this move."),
+	TM47(147,0,Color.BLACK,Item.OTHER,Move.STAR_STORM,"Teaches a Pokemon this move."),
+	TM48(148,0,Color.BLACK,Item.OTHER,Move.SCALD,"Teaches a Pokemon this move."),
+	TM49(149,1500,Color.BLACK,Item.OTHER,Move.REST,"Teaches a Pokemon this move."),
+	TM50(150,1250,Color.BLACK,Item.OTHER,Move.TOXIC,"Teaches a Pokemon this move."),
+	TM51(151,400,Color.BLACK,Item.OTHER,Move.SLEEP_TALK,"Teaches a Pokemon this move."),
+	TM52(152,0,Color.BLACK,Item.OTHER,Move.AERIAL_ACE,"Teaches a Pokemon this move."),
+	TM53(153,0,Color.BLACK,Item.OTHER,Move.VOLT_SWITCH,"Teaches a Pokemon this move."),
+	TM54(154,750,Color.BLACK,Item.OTHER,Move.THUNDER_WAVE,"Teaches a Pokemon this move."),
+	TM55(155,0,Color.BLACK,Item.OTHER,Move.MAGIC_BLAST,"Teaches a Pokemon this move."),
+	TM56(156,0,Color.BLACK,Item.OTHER,Move.SPARKLE_STRIKE,"Teaches a Pokemon this move."),
+	TM57(157,0,Color.BLACK,Item.OTHER,Move.CHARGE_BEAM,"Teaches a Pokemon this move."),
+	TM58(158,0,Color.BLACK,Item.OTHER,Move.DRAGON_PULSE,"Teaches a Pokemon this move."),
+	TM59(159,0,Color.BLACK,Item.OTHER,Move.BRICK_BREAK,"Teaches a Pokemon this move."),
+	TM60(160,0,Color.BLACK,Item.OTHER,Move.FREEZE$DRY,"Teaches a Pokemon this move."),
+	TM61(161,0,Color.BLACK,Item.OTHER,Move.SMACK_DOWN,"Teaches a Pokemon this move."),
+	TM62(162,0,Color.BLACK,Item.OTHER,Move.BUG_BUZZ,"Teaches a Pokemon this move."),
+	TM63(163,1500,Color.BLACK,Item.OTHER,Move.THUNDER,"Teaches a Pokemon this move."),
+	TM64(164,1500,Color.BLACK,Item.OTHER,Move.CLOSE_COMBAT,"Teaches a Pokemon this move."),
+	TM65(165,0,Color.BLACK,Item.OTHER,Move.SHADOW_CLAW,"Teaches a Pokemon this move."),
+	TM66(166,2000,Color.BLACK,Item.OTHER,Move.DRACO_METEOR,"Teaches a Pokemon this move."),
+	TM67(167,2000,Color.BLACK,Item.OTHER,Move.OUTRAGE,"Teaches a Pokemon this move."),
+	TM68(168,0,Color.BLACK,Item.OTHER,Move.FLASH,"Teaches a Pokemon this move."),
+	TM69(169,0,Color.BLACK,Item.OTHER,Move.ROCK_POLISH,"Teaches a Pokemon this move."),
+	TM70(170,1500,Color.BLACK,Item.OTHER,Move.HYDRO_PUMP,"Teaches a Pokemon this move."),
+	TM71(171,0,Color.BLACK,Item.OTHER,Move.STONE_EDGE,"Teaches a Pokemon this move."),
+	TM72(172,0,Color.BLACK,Item.OTHER,Move.ICE_SPINNER,"Teaches a Pokemon this move."),
+	TM73(173,0,Color.BLACK,Item.OTHER,Move.GYRO_BALL,"Teaches a Pokemon this move."),
+	TM74(174,900,Color.BLACK,Item.OTHER,Move.SUNNY_DAY,"Teaches a Pokemon this move."),
+	TM75(175,900,Color.BLACK,Item.OTHER,Move.RAIN_DANCE,"Teaches a Pokemon this move."),
+	TM76(176,700,Color.BLACK,Item.OTHER,Move.SNOWSCAPE,"Teaches a Pokemon this move."),
+	TM77(177,700,Color.BLACK,Item.OTHER,Move.SANDSTORM,"Teaches a Pokemon this move."),
+	TM78(178,800,Color.BLACK,Item.OTHER,Move.SWORDS_DANCE,"Teaches a Pokemon this move."),
+	TM79(179,300,Color.BLACK,Item.OTHER,Move.GRASSY_TERRAIN,"Teaches a Pokemon this move."),
+	TM80(180,300,Color.BLACK,Item.OTHER,Move.ELECTRIC_TERRAIN,"Teaches a Pokemon this move."),
+	TM81(181,300,Color.BLACK,Item.OTHER,Move.PSYCHIC_TERRAIN,"Teaches a Pokemon this move."),
+	TM82(182,300,Color.BLACK,Item.OTHER,Move.SPARKLING_TERRAIN,"Teaches a Pokemon this move."),
+	TM83(183,0,Color.BLACK,Item.OTHER,Move.CAPTIVATE,"Teaches a Pokemon this move."),
+	TM84(184,0,Color.BLACK,Item.OTHER,Move.DARK_PULSE,"Teaches a Pokemon this move."),
+	TM85(185,0,Color.BLACK,Item.OTHER,Move.ROCK_SLIDE,"Teaches a Pokemon this move."),
+	TM86(186,0,Color.BLACK,Item.OTHER,Move.X$SCISSOR,"Teaches a Pokemon this move."),
+	TM87(187,0,Color.BLACK,Item.OTHER,Move.POISON_JAB,"Teaches a Pokemon this move."),
+	TM88(188,0,Color.BLACK,Item.OTHER,Move.GALAXY_BLAST,"Teaches a Pokemon this move."),
+	TM89(189,0,Color.BLACK,Item.OTHER,Move.ACROBATICS,"Teaches a Pokemon this move."),
+	TM90(190,0,Color.BLACK,Item.OTHER,Move.IRON_BLAST,"Teaches a Pokemon this move."),
+	TM91(191,1000,Color.BLACK,Item.OTHER,Move.TRI$ATTACK,"Teaches a Pokemon this move."),
+	TM92(192,0,Color.BLACK,Item.OTHER,Move.COMET_CRASH,"Teaches a Pokemon this move."),
+	TM93(193,0,Color.BLACK,Item.OTHER,Move.EARTH_POWER,"Teaches a Pokemon this move."),
+	TM94(194,0,Color.BLACK,Item.OTHER,Move.HURRICANE,"Teaches a Pokemon this move."),
+	TM95(195,500,Color.BLACK,Item.OTHER,Move.TRICK_ROOM,"Teaches a Pokemon this move."),
+	TM96(196,0,Color.BLACK,Item.OTHER,Move.ENERGY_BALL,"Teaches a Pokemon this move."),
+	TM97(197,0,Color.BLACK,Item.OTHER,Move.SPIRIT_BREAK,"Teaches a Pokemon this move."),
+	TM98(198,0,Color.BLACK,Item.OTHER,Move.FLIP_TURN,"Teaches a Pokemon this move."),
+	TM99(199,0,Color.BLACK,Item.OTHER,Move.RETURN,"Teaches a Pokemon this move."),
+	CALCULATOR(200,0,Color.BLACK,Item.OTHER,null,"Calculates damage simulating\na battle"),
+	;
+	
 	private int id;
+	private Color color;
+	private int pocket;
+	private Move move;
 	private int cost;
 	private int healAmount;
 	private String desc;
 	
-	public Item(int i) {
-		id = i;
-		cost = setCost();
-		desc = setDesc();
+	public static final int MEDICINE = 1;
+    public static final int OTHER = 2;
+    public static final int TMS = 3;
+	
+	Item(int id, int cost, Color color, int pocket, Move move, String desc) {
+		this.id = id;
+		this.cost = cost;
+		this.color = color;
+		this.pocket = pocket;
+		this.move = move;
+		this.desc = desc;
+		
 		if (id >= 4 && id <= 8) {
 			switch(id) {
 				case 4:
@@ -67,559 +277,55 @@ public class Item implements Serializable {
 		}
 	}
 	
-	private int setCost() {
-		if (id == 0) return 25;
-		else if (id == 1) return 10;
-		else if (id == 2) return 25;
-		else if (id == 3) return 50;
-		else if (id == 4) return 50;
-		else if (id == 5) return 125;
-		else if (id == 6) return 275;
-		else if (id == 7) return 400;
-		else if (id == 8) return 500;
-		else if (id == 9) return 25;
-		else if (id == 10) return 25;
-		else if (id == 11) return 25;
-		else if (id == 12) return 25;
-		else if (id == 13) return 25;
-		else if (id == 14) return 150;
-		else if (id == 15) return 50;
-		else if (id == 16) return 500;
-		else if (id == 17) return 1500;
-		else if (id == 18) return 0;
-		else if (id == 19) return 500;
-		else if (id == 20) return 1000;
-		else if (id == 21) return 1000;
-		else if (id == 22) return 1000;
-		else if (id == 23) return 1000;
-		else if (id == 24) return 2000;
-		else if (id == 25) return 2000;
-		else if (id == 27) return 1000;
-		else if (id == 29) return 2500;
-		else if (id == 30) return 1750;
-		else if (id == 31) return 1000;
-		else if (id == 32) return 1500;
-		else if (id == 33) return 1250;
-		else if (id == 34) return 1750;
-		else if (id == 35) return 2500;
-		else if (id == 36) return 2250;
-		else if (id == 37) return 1000;
-		else if (id == 38) return 1250;
-		else if (id == 39) return 2500;
-		else if (id == 40) return 300;
-		else if (id == 41) return 250;
-		else if (id == 42) return 2500;
-		else if (id == 112) return 750;
-		else if (id == 113) return 5000;
-		else if (id == 115) return 1000;
-		else if (id == 116) return 1000;
-		else if (id == 123) return 800;
-		else if (id == 124) return 900;
-		else if (id == 138) return 1500;
-		else if (id == 141) return 1000;
-		else if (id == 142) return 1000;
-		else if (id == 143) return 1000;
-		else if (id == 144) return 1000;
-		else if (id == 145) return 1000;
-		else if (id == 146) return 1500;
-		else if (id == 149) return 1500;
-		else if (id == 150) return 1250;
-		else if (id == 151) return 400;
-		else if (id == 154) return 750;
-		else if (id == 163) return 1500;
-		else if (id == 164) return 1500;
-		else if (id == 166) return 2000;
-		else if (id == 167) return 2000;
-		else if (id == 170) return 1500;
-		else if (id == 174) return 900;
-		else if (id == 175) return 900;
-		else if (id == 176) return 700;
-		else if (id == 177) return 700;
-		else if (id == 178) return 800;
-		else if (id == 179) return 300;
-		else if (id == 180) return 300;
-		else if (id == 181) return 300;
-		else if (id == 182) return 300;
-		else if (id == 191) return 1000;
-		else if (id == 195) return 500;
-		else return 0;
-	}
-	
 	public int getCost() { return cost; }
 
 	public int getID() { return id; }
 	
+	public Move getMove() { return move; }
+	
+	public int getPocket() { return pocket; }
+	
+	public Color getColor() {
+		if (getMove() != null) return getMove().mtype.getColor();
+		return color;
+	}
+	
+	public String getDesc() { return desc; }
+	
+	public static Item getItem(int id) {
+		Item[] items = Item.values();
+		return items[id];
+	}
+	
+	public static ArrayList<Move> getTMs() {
+		ArrayList<Move> result = new ArrayList<>();
+		Item[] items = Item.values();
+
+		for (int i = 93; i <= 199; i++) {
+            if (i < items.length) {
+                result.add(items[i].getMove());
+            }
+        }
+		
+		return result;
+	}	
+	
 	@Override
 	public String toString() {
 		String result = "";
-		switch (id) {
-		case 0:
-			result = "Repel";
-			break;
-		case 1:
-			result = "Pokeball";
-			break;
-		case 2:
-			result = "Great Ball";
-			break;
-		case 3:
-			result = "Ultra Ball";
-			break;
-		case 4:
-			result = "Potion";
-			break;
-		case 5:
-			result = "Super Potion";
-			break;
-		case 6:
-			result = "Hyper Potion";
-			break;
-		case 7:
-			result = "Max Potion";
-			break;
-		case 8:
-			result = "Full Restore";
-			break;
-		case 9:
-			result = "Antidote";
-			break;
-		case 10:
-			result = "Awakening";
-			break;
-		case 11:
-			result = "Burn Heal";
-			break;
-		case 12:
-			result = "Paralyze Heal";
-			break;
-		case 13:
-			result = "Freeze Heal";
-			break;
-		case 14:
-			result = "Full Heal";
-			break;
-		case 15:
-			result = "Rage Candy Bar";
-			break;
-		case 16:
-			result = "Revive";
-			break;
-		case 17:
-			result = "Max Revive";
-			break;
-		case 18:
-			result = "Rare Candy";
-			break;
-		case 19:
-			result = "Euphorian Gem";
-			break;
-		case 20:
-			result = "Leaf Stone";
-			break;
-		case 21:
-			result = "Dusk Stone";
-			break;
-		case 22:
-			result = "Dawn Stone";
-			break;
-		case 23:
-			result = "Ice Stone";
-			break;
-		case 24:
-			result = "Valiant Gem";
-			break;
-		case 25:
-			result = "Petticoat Gem";
-			break;
-		case 26:
-			result = "Ability Capsule";
-			break;
-		case 27:
-			result = "Bottle Cap";
-			break;
-		case 28:
-			result = "Gold Battle Cap";
-			break;
-		case 29:
-			result = "Adamant Mint";
-			break;
-		case 30:
-			result = "Bold Mint";
-			break;
-		case 31:
-			result = "Brave Mint";
-			break;
-		case 32:
-			result = "Calm Mint";
-			break;
-		case 33:
-			result = "Careful Mint";
-			break;
-		case 34:
-			result = "Impish Mint";
-			break;
-		case 35:
-			result = "Jolly Mint";
-			break;
-		case 36:
-			result = "Modest Mint";
-			break;
-		case 37:
-			result = "Quiet Mint";
-			break;
-		case 38:
-			result = "Serious Mint";
-			break;
-		case 39:
-			result = "Timid Mint";
-			break;
-		case 40:
-			result = "Elixir";
-			break;
-		case 41:
-			result = "Max Elixir";
-			break;
-		case 42:
-			result = "PP Up";
-			break;
-		case 43:
-			result = "PP Max";
-			break;
-		case 44:
-			result = "Flame Orb";
-			break;
-		case 45:
-			result = "Thunder Scales Fossil";
-			break;
-		case 46:
-			result = "Dusk Scales Fossil";
-			break;
-		case 93:
-			result = "HM01";
-			break;
-		case 94:
-			result = "HM02";
-			break;
-		case 95:
-			result = "HM03";
-			break;
-		case 96:
-			result = "HM04";
-			break;
-		case 97:
-			result = "HM05";
-			break;
-		case 98:
-			result = "HM06";
-			break;
-		case 99:
-			result = "HM07";
-			break;
-		case 100:
-			result = "HM08";
-			break;
-		case 101:
-			result = "TM01";
-			break;
-		case 102:
-			result = "TM02";
-			break;
-		case 103:
-			result = "TM03";
-			break;
-		case 104:
-			result = "TM04";
-			break;
-		case 105:
-			result = "TM05";
-			break;
-		case 106:
-			result = "TM06";
-			break;
-		case 107:
-			result = "TM07";
-			break;
-		case 108:
-			result = "TM08";
-			break;
-		case 109:
-			result = "TM09";
-			break;
-		case 110:
-			result = "TM10";
-			break;
-		case 111:
-			result = "TM11";
-			break;
-		case 112:
-			result = "TM12";
-			break;
-		case 113:
-			result = "TM13";
-			break;
-		case 114:
-			result = "TM14";
-			break;
-		case 115:
-			result = "TM15";
-			break;
-		case 116:
-			result = "TM16";
-			break;
-		case 117:
-			result = "TM17";
-			break;
-		case 118:
-			result = "TM18";
-			break;
-		case 119:
-			result = "TM19";
-			break;
-		case 120:
-			result = "TM20";
-			break;
-		case 121:
-			result = "TM21";
-			break;
-		case 122:
-			result = "TM22";
-			break;
-		case 123:
-			result = "TM23";
-			break;
-		case 124:
-			result = "TM24";
-			break;
-		case 125:
-			result = "TM25";
-			break;
-		case 126:
-			result = "TM26";
-			break;
-		case 127:
-			result = "TM27";
-			break;
-		case 128:
-			result = "TM28";
-			break;
-		case 129:
-			result = "TM29";
-			break;
-		case 130:
-			result = "TM30";
-			break;
-		case 131:
-			result = "TM31";
-			break;
-		case 132:
-			result = "TM32";
-			break;
-		case 133:
-			result = "TM33";
-			break;
-		case 134:
-			result = "TM34";
-			break;
-		case 135:
-			result = "TM35";
-			break;
-		case 136:
-			result = "TM36";
-			break;
-		case 137:
-			result = "TM37";
-			break;
-		case 138:
-			result = "TM38";
-			break;
-		case 139:
-			result = "TM39";
-			break;
-		case 140:
-			result = "TM40";
-			break;
-		case 141:
-			result = "TM41";
-			break;
-		case 142:
-			result = "TM42";
-			break;
-		case 143:
-			result = "TM43";
-			break;
-		case 144:
-			result = "TM44";
-			break;
-		case 145:
-			result = "TM45";
-			break;
-		case 146:
-			result = "TM46";
-			break;
-		case 147:
-			result = "TM47";
-			break;
-		case 148:
-			result = "TM48";
-			break;
-		case 149:
-			result = "TM49";
-			break;
-		case 150:
-			result = "TM50";
-			break;
-		case 151:
-			result = "TM51";
-			break;
-		case 152:
-			result = "TM52";
-			break;
-		case 153:
-			result = "TM53";
-			break;
-		case 154:
-			result = "TM54";
-			break;
-		case 155:
-			result = "TM55";
-			break;
-		case 156:
-			result = "TM56";
-			break;
-		case 157:
-			result = "TM57";
-			break;
-		case 158:
-			result = "TM58";
-			break;
-		case 159:
-			result = "TM59";
-			break;
-		case 160:
-			result = "TM60";
-			break;
-		case 161:
-			result = "TM61";
-			break;
-		case 162:
-			result = "TM62";
-			break;
-		case 163:
-			result = "TM63";
-			break;
-		case 164:
-			result = "TM64";
-			break;
-		case 165:
-			result = "TM65";
-			break;
-		case 166:
-			result = "TM66";
-			break;
-		case 167:
-			result = "TM67";
-			break;
-		case 168:
-			result = "TM68";
-			break;
-		case 169:
-			result = "TM69";
-			break;
-		case 170:
-			result = "TM70";
-			break;
-		case 171:
-			result = "TM71";
-			break;
-		case 172:
-			result = "TM72";
-			break;
-		case 173:
-			result = "TM73";
-			break;
-		case 174:
-			result = "TM74";
-			break;
-		case 175:
-			result = "TM75";
-			break;
-		case 176:
-			result = "TM76";
-			break;
-		case 177:
-			result = "TM77";
-			break;
-		case 178:
-			result = "TM78";
-			break;
-		case 179:
-			result = "TM79";
-			break;
-		case 180:
-			result = "TM80";
-			break;
-		case 181:
-			result = "TM81";
-			break;
-		case 182:
-			result = "TM82";
-			break;
-		case 183:
-			result = "TM83";
-			break;
-		case 184:
-			result = "TM84";
-			break;
-		case 185:
-			result = "TM85";
-			break;
-		case 186:
-			result = "TM86";
-			break;
-		case 187:
-			result = "TM87";
-			break;
-		case 188:
-			result = "TM88";
-			break;
-		case 189:
-			result = "TM89";
-			break;
-		case 190:
-			result = "TM90";
-			break;
-		case 191:
-			result = "TM91";
-			break;
-		case 192:
-			result = "TM92";
-			break;
-		case 193:
-			result = "TM93";
-			break;
-		case 194:
-			result = "TM94";
-			break;
-		case 195:
-			result = "TM95";
-			break;
-		case 196:
-			result = "TM96";
-			break;
-		case 197:
-			result = "TM97";
-			break;
-		case 198:
-			result = "TM98";
-			break;
-		case 199:
-			result = "TM99";
-			break;
-		case 200:
-			result = "Calculator";
-			break;
+		String name = super.toString();
+		if (name.contains("HM") || name.contains("TM") || name.contains("PP")) {
+			result = name + " " + getMove().toString();
+		} else {
+			name = name.toLowerCase().replace('_', ' ');
+		    String[] words = name.split(" ");
+		    StringBuilder sb = new StringBuilder();
+		    for (String word : words) {
+		        sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+		    }
+		    result = sb.toString().trim();
 		}
-		if (id >= 93 && id < 200) result += " " + getMove().toString();
+		
 		return result;
 	}
 
@@ -886,339 +592,6 @@ public class Item implements Serializable {
 		
 	}
 
-	public Move getMove() {
-		if (this.id < 93) return null;
-		Move result;
-		
-		switch (this.id) {
-		case 93:
-			result = Move.CUT;
-			break;
-		case 94:
-			result = Move.ROCK_SMASH;
-			break;
-		case 95:
-			result = Move.VINE_CROSS;
-			break;
-		case 96:
-			result = Move.SURF;
-			break;
-		case 97:
-			result = Move.SLOW_FALL;
-			break;
-		case 98:
-			result = Move.WHIRLPOOL;
-			break;
-		case 99:
-			result = Move.ROCK_CLIMB;
-			break;
-		case 100:
-			result = Move.LAVA_SURF;
-			break;
-		case 101:
-			result = Move.SUPER_FANG;
-			break;
-		case 102:
-			result = Move.DRAGON_CLAW;
-			break;
-		case 103:
-			result = Move.ELEMENTAL_SPARKLE;
-			break;
-		case 104:
-			result = Move.CALM_MIND;
-			break;
-		case 105:
-			result = Move.BODY_SLAM;
-			break;
-		case 106:
-			result = Move.SHADOW_BALL;
-			break;
-		case 107:
-			result = Move.FOCUS_BLAST;
-			break;
-		case 108:
-			result = Move.BULK_UP;
-			break;
-		case 109:
-			result = Move.LEAF_BLADE;
-			break;
-		case 110:
-			result = Move.ICE_BEAM;
-			break;
-		case 111:
-			result = Move.PSYSHOCK;
-			break;
-		case 112:
-			result = Move.PROTECT;
-			break;
-		case 113:
-			result = Move.BATON_PASS;
-			break;
-		case 114:
-			result = Move.TAUNT;
-			break;
-		case 115:
-			result = Move.GIGA_IMPACT;
-			break;
-		case 116:
-			result = Move.HYPER_BEAM;
-			break;
-		case 117:
-			result = Move.SOLAR_BEAM;
-			break;
-		case 118:
-			result = Move.IRON_HEAD;
-			break;
-		case 119:
-			result = Move.PHOTON_GEYSER;
-			break;
-		case 120:
-			result = Move.EARTHQUAKE;
-			break;
-		case 121:
-			result = Move.THROAT_CHOP;
-			break;
-		case 122:
-			result = Move.FELL_STINGER;
-			break;
-		case 123:
-			result = Move.WEATHER_BALL;
-			break;
-		case 124:
-			result = Move.TERRAIN_PULSE;
-			break;
-		case 125:
-			result = Move.THUNDERBOLT;
-			break;
-		case 126:
-			result = Move.HIDDEN_POWER;
-			break;
-		case 127:
-			result = Move.DRAIN_PUNCH;
-			break;
-		case 128:
-			result = Move.FLAME_CHARGE;
-			break;
-		case 129:
-			result = Move.LIQUIDATION;
-			break;
-		case 130:
-			result = Move.U$TURN;
-			break;
-		case 131:
-			result = Move.FALSE_SWIPE;
-			break;
-		case 132:
-			result = Move.ZING_ZAP;
-			break;
-		case 133:
-			result = Move.PSYCHIC_FANGS;
-			break;
-		case 134:
-			result = Move.MAGIC_TOMB;
-			break;
-		case 135:
-			result = Move.FLAMETHROWER;
-			break;
-		case 136:
-			result = Move.SLUDGE_BOMB;
-			break;
-		case 137:
-			result = Move.ROCK_TOMB;
-			break;
-		case 138:
-			result = Move.BLIZZARD;
-			break;
-		case 139:
-			result = Move.PSYCHIC;
-			break;
-		case 140:
-			result = Move.FACADE;
-			break;
-		case 141:
-			result = Move.REFLECT;
-			break;
-		case 142:
-			result = Move.LIGHT_SCREEN;
-			break;
-		case 143:
-			result = Move.DAZZLING_GLEAM;
-			break;
-		case 144:
-			result = Move.PLAY_ROUGH;
-			break;
-		case 145:
-			result = Move.WILL$O$WISP;
-			break;
-		case 146:
-			result = Move.FIRE_BLAST;
-			break;
-		case 147:
-			result = Move.STAR_STORM;
-			break;
-		case 148:
-			result = Move.SCALD;
-			break;
-		case 149:
-			result = Move.REST;
-			break;
-		case 150:
-			result = Move.TOXIC;
-			break;
-		case 151:
-			result = Move.SLEEP_TALK;
-			break;
-		case 152:
-			result = Move.AERIAL_ACE;
-			break;
-		case 153:
-			result = Move.VOLT_SWITCH;
-			break;
-		case 154:
-			result = Move.THUNDER_WAVE;
-			break;
-		case 155:
-			result = Move.MAGIC_BLAST;
-			break;
-		case 156:
-			result = Move.SPARKLE_STRIKE;
-			break;
-		case 157:
-			result = Move.CHARGE_BEAM;
-			break;
-		case 158:
-			result = Move.DRAGON_PULSE;
-			break;
-		case 159:
-			result = Move.BRICK_BREAK;
-			break;
-		case 160:
-			result = Move.FREEZE$DRY;
-			break;
-		case 161:
-			result = Move.SMACK_DOWN;
-			break;
-		case 162:
-			result = Move.BUG_BUZZ;
-			break;
-		case 163:
-			result = Move.THUNDER;
-			break;
-		case 164:
-			result = Move.CLOSE_COMBAT;
-			break;
-		case 165:
-			result = Move.SHADOW_CLAW;
-			break;
-		case 166:
-			result = Move.DRACO_METEOR;
-			break;
-		case 167:
-			result = Move.OUTRAGE;
-			break;
-		case 168:
-			result = Move.FLASH;
-			break;
-		case 169:
-			result = Move.ROCK_POLISH;
-			break;
-		case 170:
-			result = Move.HYDRO_PUMP;
-			break;
-		case 171:
-			result = Move.STONE_EDGE;
-			break;
-		case 172:
-			result = Move.ICE_SPINNER;
-			break;
-		case 173:
-			result = Move.GYRO_BALL;
-			break;
-		case 174:
-			result = Move.SUNNY_DAY;
-			break;
-		case 175:
-			result = Move.RAIN_DANCE;
-			break;
-		case 176:
-			result = Move.SNOWSCAPE;
-			break;
-		case 177:
-			result = Move.SANDSTORM;
-			break;
-		case 178:
-			result = Move.SWORDS_DANCE;
-			break;
-		case 179:
-			result = Move.GRASSY_TERRAIN;
-			break;
-		case 180:
-			result = Move.ELECTRIC_TERRAIN;
-			break;
-		case 181:
-			result = Move.PSYCHIC_TERRAIN;
-			break;
-		case 182:
-			result = Move.SPARKLING_TERRAIN;
-			break;
-		case 183:
-			result = Move.CAPTIVATE;
-			break;
-		case 184:
-			result = Move.DARK_PULSE;
-			break;
-		case 185:
-			result = Move.ROCK_SLIDE;
-			break;
-		case 186:
-			result = Move.X$SCISSOR;
-			break;
-		case 187:
-			result = Move.POISON_JAB;
-			break;
-		case 188:
-			result = Move.GALAXY_BLAST;
-			break;
-		case 189:
-			result = Move.ACROBATICS;
-			break;
-		case 190:
-			result = Move.IRON_BLAST;
-			break;
-		case 191:
-			result = Move.TRI$ATTACK;
-			break;
-		case 192:
-			result = Move.COMET_CRASH;
-			break;
-		case 193:
-			result = Move.EARTH_POWER;
-			break;
-		case 194:
-			result = Move.HURRICANE;
-			break;
-		case 195:
-			result = Move.TRICK_ROOM;
-			break;
-		case 196:
-			result = Move.ENERGY_BALL;
-			break;
-		case 197:
-			result = Move.SPIRIT_BREAK;
-			break;
-		case 198:
-			result = Move.FLIP_TURN;
-			break;
-		case 199:
-			result = Move.RETURN;
-			break;
-		default:
-			result = null;
-			break;
-		}
-		return result;
-	}
-
 	public Status getStatus() {
 		if (id == 9) return Status.POISONED;
 		else if (id == 10) return Status.ASLEEP;
@@ -1230,63 +603,21 @@ public class Item implements Serializable {
 		else return Status.CONFUSED; // lol
 		
 	}
-	
-	public Color getColor() {
-		if (id == 0) return new Color(0, 92, 5);
-		else if (id == 1) return new Color(176, 0, 12);
-		else if (id == 2) return new Color(0, 0, 148);
-		else if (id == 3) return new Color(148, 171, 0);
-		else if (id == 4) return new Color(124, 0, 219);
-		else if (id == 5) return new Color(140, 24, 8);
-		else if (id == 6) return new Color(255, 0, 191);
-		else if (id == 7) return new Color(0, 21, 255);
-		else if (id == 8) return new Color(255, 196, 0);
-		else if (id == 9) return new Color(157, 0, 255);
-		else if (id == 10) return new Color(63, 83, 92);
-		else if (id == 11) return new Color(133, 15, 19);
-		else if (id == 12) return new Color(176, 158, 0);
-		else if (id == 13) return new Color(0, 170, 189);
-		else if (id == 14) return new Color(255, 247, 0);
-		else if (id == 15) return new Color(0, 55, 255);
-		else if (id == 16) return new Color(219, 194, 0);
-		else if (id == 17) return new Color(219, 194, 0);
-		else if (id == 18) return new Color(124, 54, 255);
-		else if (id == 19) return new Color(138, 237, 255);
-		else if (id == 20) return new Color(0, 120, 20);
-		else if (id == 21) return new Color(64, 64, 64);
-		else if (id == 22) return new Color(0, 176, 179);
-		else if (id == 23) return new Color(176, 244, 245);
-		else if (id == 24) return new Color(72, 75, 219);
-		else if (id == 25) return new Color(204, 61, 140);
-		else if (id == 26) return new Color(102, 7, 143);
-		else if (id == 27) return new Color(192, 192, 192);
-		else if (id == 28) return new Color(255, 215, 0);
-		else if (id >= 29 && id <= 39) return new Color(113, 84, 255);
-		else if (id == 40) return new Color(230, 146, 78);
-		else if (id == 41) return new Color(246, 255, 120);
-		else if (id == 42) return new Color(150, 51, 156);
-		else if (id == 43) return new Color(142, 230, 21);
-		else if (id == 44) return new Color(232, 52, 54);
-		else if (id == 45) return new Color(201, 169, 81);
-		else if (id == 46) return new Color(45, 47, 51);
-		else if (id == 200) return Color.black;
-		else return getMove().mtype.getColor();
-	}
 
 	public boolean getEligible(int pid) {
 		int[] check;
 		boolean result = false;
-		if (id == 20) {
+		if (this == Item.LEAF_STONE) {
 			check = new int[] {27, 45, 118};
-		} else if (id == 21) {
+		} else if (this == Item.DUSK_STONE) {
 			check = new int[] {141, 160, 215, 220};
-		} else if (id == 22) {
+		} else if (this == Item.DAWN_STONE) {
 			check = new int[] {30, 175, 177};
-		} else if (id == 23) {
+		} else if (this == Item.ICE_STONE) {
 			check = new int[] {62, 64, 193};
-		} else if (id == 24) {
+		} else if (this == Item.VALIANT_GEM) {
 			check = new int[] {38, 86, 108};
-		} else if (id == 25) {
+		} else if (this == Item.PETTICOAT_GEM) {
 			check = new int[] {38, 108};
 		} else {
 			check = new int[] {};
@@ -1611,119 +942,6 @@ public class Item implements Serializable {
     		}
     		
         }
-	}
-	
-	private String setDesc() {
-		switch (id) {
-		case 0:
-			return "Prevents wild Pokemon encounters\nfor 200 steps";
-		case 1:
-			return "A standard device for capturing\nwild Pokemon";
-		case 2:
-			return "An upgraded device for capturing\nwild Pokemon";
-		case 3:
-			return "A very efficient device for\ncapturing wild Pokemon";
-		case 4:
-			return "Restores 20 HP";
-		case 5:
-			return "Restores 60 HP";
-		case 6:
-			return "Restores 200 HP";
-		case 7:
-			return "Restores a Pokemon's HP to full";
-		case 8:
-			return "Restores a Pokemon's HP to full\nand cures any status conditions";
-		case 9:
-			return "Cures a Pokemon of Poison";
-		case 10:
-			return "Cures a Pokemon of Sleep";
-		case 11:
-			return "Cures a Pokemon of Burn";
-		case 12:
-			return "Cures a Pokemon of Paralysis";
-		case 13:
-			return "Cures a Pokemon of Frostbite";
-		case 14:
-			return "Cures a Pokemon of any status\ncondition";
-		case 15:
-			return "Cures a Pokemon of any status\ncondition";
-		case 16:
-			return "Recovers a Pokemon from fainting\nwith 50% HP";
-		case 17:
-			return "Recovers a Pokemon from fainting\nwith full HP";
-		case 18:
-			return "Elevates a Pokemon by 1 level";
-		case 19:
-			return "Grants a Pokemon 100 friendship\npoints";
-		case 20:
-			return "Evolves a certain species of\nPokemon";
-		case 21:
-			return "Evolves a certain species of\nPokemon";
-		case 22:
-			return "Evolves a certain species of\nPokemon";
-		case 23:
-			return "Evolves a certain species of\nPokemon";
-		case 24:
-			return "Grants Masculine energy to\na Pokemon, evolving them\ninto their male evolution";
-		case 25:
-			return "Grants Feminine energy to\na Pokemon, evolving them\ninto their female evolution";
-		case 26:
-			return "Swaps a Pokemon's ability\nwith its other possible\nability";
-		case 27:
-			return "Maxes out an IV of choosing";
-		case 28:
-			return "Maxes out all IVs of a\nPokemon";
-		case 29:
-			return "Changes a Pokemon's nature\n to +Atk, -SpA";
-		case 30:
-			return "Changes a Pokemon's nature\n to +Def, -Atk";
-		case 31:
-			return "Changes a Pokemon's nature\n to +Atk, -Spe";
-		case 32:
-			return "Changes a Pokemon's nature\n to +SpD, -Atk";
-		case 33:
-			return "Changes a Pokemon's nature\n to +SpD, -SpA";
-		case 34:
-			return "Changes a Pokemon's nature\n to +Def, -SpA";
-		case 35:
-			return "Changes a Pokemon's nature\n to +Spe, -SpA";
-		case 36:
-			return "Changes a Pokemon's nature\n to +SpA, -Atk";
-		case 37:
-			return "Changes a Pokemon's nature\n to +SpA, -Spe";
-		case 38:
-			return "Changes a Pokemon's nature\n to Neutral";
-		case 39:
-			return "Changes a Pokemon's nature\n to +Spe, -Atk";
-		case 40:
-			return "Restores PP of a selected\nmove";
-		case 41:
-			return "Restores PP of all moves\non a Pokemon";
-		case 42:
-			return "Increases max PP of a\nselected move by 20%";
-		case 43:
-			return "Increases max PP of a\nselected move by its\nmax PP, which is 160%";
-		case 44:
-			return "Burns a selected Pokemon";
-		case 45:
-			return "A fossil of an ancient Pokemon\nthat lived in a desert.\nIt appears to have an\nelectric charge ridden\nin the scales.";
-		case 46:
-			return "A fossil of an ancient Pokemon\nthat lived in a forest.\nIt appears to give off\na dark energy within\n the scales.";
-		case 47:
-			return "";
-		case 48:
-			return "";
-		case 49:
-			return "";
-		case 200:
-			return "Calculates damage simulating\na battle";
-		default:
-			return "Teaches a Pokemon this move.";
-		}
-	}
-	
-	public String getDesc() {
-		return desc;
 	}
 
 	public static JPanel displayGenerator(Player p) {
