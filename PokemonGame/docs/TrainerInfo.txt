@@ -29,7 +29,7 @@ Trainer 1 Gym C             Pigo Lv. 13, Hummingspark Lv. 14
 Trainer 1 Gym Leader 1      Hummingspark Lv. 16, Zubat Lv. 16, Daray Lv. 16, Ekans-S Lv. 16, Minishoo Lv. 16, Pigonat Lv. 17
 
 1 Gym Leader 1
-Hummingspark (Lv. 16) /   Keen Eye           /   Quick Attack, Leer, Flash Ray, Gust
+Hummingspark (Lv. 16) /   Keen Eye           /   Quick Attack, Whirlwind, Flash Ray, Gust
 Zubat (Lv. 16)        /   Strong Jaw         /   Mega Drain, Supersonic, Aerial Ace, Poison Fang
 Daray (Lv. 16)        /   Unaware            /   Aqua Ring, Supersonic, Double Slap, Water Gun
 Ekans-S (Lv. 16)      /   Lightning Rod      /   Gust, Glare, Night Shade, Shadow Sneak
@@ -381,3 +381,4 @@ Magestiflash (Lv. 62) /   Magic Guard        /   Morning Sun, Hurricane, Prismat
 Bushewe (Lv. 62)      /   Serene Grace       /   Energy Ball, Charge Beam, Thunder Wave, Ice Beam
 Crystallor-E (Lv. 63) /   Clear Body         /   Glittering Sword, Zing Zap, Shell Smash, Overheat
 
+Trainer TEST                Hast-E Lv. 55, Swordik Lv. 32, Psycorb Lv. 5, Magestiflash Lv. 20, Bushewe Lv. 20, Crystallor-E Lv. 20

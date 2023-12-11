@@ -111,7 +111,7 @@ Brick Break : Physical / 75 / 100 : 100% to break Screen effects
 Bulk Up : Status / -- / -- : Raises user's Attack and Defense by 1
 Channeling Blow : Physical / 65 / 100 : This move always Crits
 Circle Throw : Physical / 60 / 90 : 100% chance to switch out foe, always moves last
-Close Combat : Physical / 120 / 100 : 100Lowers user's Defense and Sp.Def by 1
+Close Combat : Physical / 120 / 100 : 100% to lower user's Defense and Sp.Def by 1
 Cross Chop : Physical / 100 / 80 : Boosted Crit rate
 Detect : Status / -- / -- : Protects user, can't be used in succession
 Diamond Storm : Physical / 100 / 95 : 50% chance to raise user's Defense by 2
@@ -487,7 +487,7 @@ Smog : Special / 20 / 70 : 50% to Poison foe
 Toxic : Status / -- / 90 : Badly poisons foe
 Toxic Spikes : Status / -- / -- : Lays poisonous spikes on opponents side. 1 layer will cause any non-grounded foe switching in to be Poisoned, 2 = Toxic. POISON-types swtiching in removes them
 Venom Drench : Status / -- / 100 : Lowers a Poisoned/Badly Poisoned foe's Attack and Sp.Atk by 2
-Venom Spit : Special / 40 / 100 : 100% to Paralyze foe; always goes first
+Venom Spit : Physical / 40 / 100 : 100% to Paralyze foe; always goes first
 Venoshock : Special / 65 / 100 : Damage is doubled if foe is Poisoned or Badly Poisoned
 
 ===============

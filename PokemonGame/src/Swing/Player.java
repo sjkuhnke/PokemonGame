@@ -52,7 +52,7 @@ public class Player implements Serializable{
 		
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 		locations[0] = true;
-		bag.add(new Item(200));
+		bag.add(Item.CALCULATOR);
 	}
 	
 	public Pokemon getCurrent() {
@@ -129,7 +129,7 @@ public class Player implements Serializable{
 		Pokemon.console.write("Go ", false, 16);
 		Pokemon.console.write(current.nickname, true, 16);
 		Pokemon.console.writeln("!", false, 16);
-		if (this.current.vStatuses.contains(Status.HEALING)) this.current.heal();
+		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
 		
 	}
 	
@@ -177,7 +177,7 @@ public class Player implements Serializable{
 		int expAmt = pokemon.expMax - pokemon.exp;
     	pokemon.exp += expAmt;
     	while (pokemon.exp >= pokemon.expMax) {
-    		if (pokemon.happiness < 255) pokemon.happiness -= 3;
+    		if (pokemon.happiness < 255 && pokemon.happinessCap > 2) pokemon.awardHappiness(-3, false);
             // Pokemon has leveled up, check for evolution
             Pokemon evolved = pokemon.levelUp(this);
             if (evolved != null && evolved != pokemon) {
@@ -296,6 +296,22 @@ public class Player implements Serializable{
 				itemsCollected[i][j] = tempObj[i][j];
 			}
 		}
+	}
+
+	public void updateHappinessCaps() {
+		for (Pokemon p : team) {
+			if (p != null) p.happinessCap = 50;
+		}
+		for (Pokemon p : box1) {
+			if (p != null) p.happinessCap = 50;
+		}
+		for (Pokemon p : box2) {
+			if (p != null) p.happinessCap = 50;
+		}
+		for (Pokemon p : box3) {
+			if (p != null) p.happinessCap = 50;
+		}
+		
 	}
 
 }
