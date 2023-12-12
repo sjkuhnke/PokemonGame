@@ -320,16 +320,16 @@ public class Player implements Serializable{
 
 	public void updateHappinessCaps() {
 		for (Pokemon p : team) {
-			if (p != null) p.happinessCap = 50;
+			if (p != null) p.happinessCap += 50;
 		}
 		for (Pokemon p : box1) {
-			if (p != null) p.happinessCap = 50;
+			if (p != null) p.happinessCap += 50;
 		}
 		for (Pokemon p : box2) {
-			if (p != null) p.happinessCap = 50;
+			if (p != null) p.happinessCap += 50;
 		}
 		for (Pokemon p : box3) {
-			if (p != null) p.happinessCap = 50;
+			if (p != null) p.happinessCap += 50;
 		}
 		
 	}
