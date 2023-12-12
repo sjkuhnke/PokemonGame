@@ -841,6 +841,7 @@ public class Battle extends JFrame {
 				            		if (p != null) p.awardHappiness(15, true);
 				            	}
 				            }
+				            me.updateHappinessCaps();
 				            if (foeTrainer.item != null) {
 				            	me.bag.add(foeTrainer.item);
 				            }
