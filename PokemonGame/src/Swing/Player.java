@@ -1,10 +1,30 @@
 package Swing;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.*;
 import java.util.Arrays;
 import java.util.Random;
 
+import javax.swing.AbstractButton;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import Overworld.GamePanel;
 import Overworld.Main;
@@ -311,6 +331,242 @@ public class Player implements Serializable{
 		for (Pokemon p : box3) {
 			if (p != null) p.happinessCap = 50;
 		}
+		
+	}
+
+	public JPanel displayTweaker() {
+		JPanel result = new JPanel();
+		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
+		
+		JTextField money = new JTextField(this.money + "");
+		JComboBox<Integer> badges = new JComboBox<>();
+		JComboBox<Pokemon> starter = new JComboBox<>();
+		JButton pokedexButton = new JButton("Pokedex");
+		JButton bagButton = new JButton("Bag");
+		JCheckBox[] flags = new JCheckBox[GamePanel.maxFlags];
+		JCheckBox[] locations = new JCheckBox[12];
+		JButton importTrainers = new JButton("Import Trainers");
+		JButton importItems = new JButton("Import ObjectItems");
+		JCheckBox fish = new JCheckBox("Fishing Rod");
+		JComboBox<Integer> grustCount = new JComboBox<>();
+		
+		JButton confirm = new JButton("Confirm");
+		
+		result.add(money);
+		
+		for (int i = 0; i < 9; i++) {
+			badges.addItem(i);
+		}
+		badges.setSelectedIndex(this.badges);
+		result.add(badges);
+		
+		for (int i = 1; i < 8; i += 3) {
+			starter.addItem(new Pokemon(i, 5, true, false));
+		}
+		starter.setSelectedIndex(this.starter - 1);
+		result.add(starter);
+		
+		pokedexButton.addActionListener(e -> {
+			showPokedexModifier();
+		});
+		result.add(pokedexButton);
+		
+		bagButton.addActionListener(e -> {
+			showBagModifier();
+		});
+		result.add(bagButton);
+		
+		String[] flagDesc = new String[] {
+				"First Gate", "Scott 1", "Rick 1", "TN in Office", "Scott 2", "Fred 2", "Key A SC", "Key B SC",
+				"Clear Room A", "Clear Room B", "Gift Starter", "Gift Dog", "Gift Magic", "Gift Ancient", "Gift \"Starter\"",
+				"Fred 3", "Talk to Grandpa", "Gym 5", "Gift E/S", "Rick 2", "Maxwell 1", "Scott 4", "Gift Glurg"
+		};
+		JPanel flagsPanel = new JPanel();
+		flagsPanel.setLayout(new BoxLayout(flagsPanel, BoxLayout.Y_AXIS));
+		for (int i = 0; i < flagDesc.length; i++) {
+		    flags[i] = new JCheckBox(flagDesc[i]);
+		    flags[i].setSelected(this.flags[i]);
+		    flagsPanel.add(flags[i]);
+		}
+		JScrollPane flagsPane = new JScrollPane(flagsPanel);
+		flagsPane.setPreferredSize(new Dimension(150, 100));
+		flagsPane.getVerticalScrollBar().setUnitIncrement(8);
+		result.add(flagsPane);
+		// NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
+		String[] locDesc = new String[] {
+				"NMT", "BVT", "PG", "SC", "KV", "PP", "SRC", "GT", "FC", "RC", "IT", "CC" 
+		};
+		JPanel locationsPanel = new JPanel();
+		locationsPanel.setLayout(new BoxLayout(locationsPanel, BoxLayout.Y_AXIS));
+		for (int i = 0; i < 12; i++) {
+		    locations[i] = new JCheckBox(locDesc[i]);
+		    locations[i].setSelected(this.locations[i]);
+		    locationsPanel.add(locations[i]);
+		}
+		JScrollPane locationsPane = new JScrollPane(locationsPanel);
+		locationsPane.setPreferredSize(new Dimension(150, 100));
+		locationsPane.getVerticalScrollBar().setUnitIncrement(8);
+		result.add(locationsPane);
+		
+		importTrainers.addActionListener(e -> {
+			String filePath = "./docs/trainers.txt";
+
+		    try {
+		        String data = Files.readString(Paths.get(filePath));
+
+		        String[] entries = data.split(",");
+		        for (int i = 0; i < trainersBeat.length; i++) {
+		        	trainersBeat[i] = Boolean.parseBoolean(entries[i]);
+		        }
+		    } catch (IOException ex) {
+		    	JOptionPane.showMessageDialog(null, "Error reading from trainers.txt,\nmake sure it exists in\nthe docs folder and was\nexported correctly!");
+		    }
+		});
+		
+		importItems.addActionListener(e -> {
+			String filePath = "./docs/items.txt";
+
+		    try {
+		        String data = Files.readString(Paths.get(filePath));
+
+		        String[] rows = data.split("\n");
+		        int numRows = rows.length;
+		        int numCols = rows[0].split(",").length;
+
+		        for (int i = 0; i < numRows; i++) {
+		            String[] values = rows[i].split(",");
+		            for (int j = 0; j < numCols; j++) {
+		                this.itemsCollected[i][j] = Boolean.parseBoolean(values[j]);
+		            }
+		        }
+		    } catch (IOException ex) {
+		    	JOptionPane.showMessageDialog(null, "Error reading from items.txt,\nmake sure it exists in\nthe docs folder and was\nexported correctly!");
+		    }
+		});
+		
+		result.add(importTrainers);
+		result.add(importItems);
+		
+		fish.setSelected(this.fish);
+		result.add(fish);
+		
+		for (int i = 0; i < 11; i++) {
+			grustCount.addItem(i);
+		}
+		grustCount.setSelectedIndex(this.grustCount);
+		result.add(grustCount);
+		
+		AutoCompleteDecorator.decorate(badges);
+		AutoCompleteDecorator.decorate(starter);
+		AutoCompleteDecorator.decorate(grustCount);
+		
+		confirm.addActionListener(e -> {
+			this.money = Integer.parseInt(money.getText());
+			this.badges = (int) badges.getSelectedItem();
+			this.starter = starter.getSelectedIndex() + 1;
+			for (int i = 0; i < flagDesc.length; i++) {
+				this.flags[i] = flags[i].isSelected();
+			}
+			for (int i = 0; i < locations.length; i++) {
+				this.locations[i] = locations[i].isSelected();
+			}
+			this.fish = fish.isSelected();
+			this.grustCount = grustCount.getSelectedIndex();
+			SwingUtilities.getWindowAncestor(result).dispose();
+		});
+		result.add(confirm);
+		
+		return result;
+	}
+
+	private void showPokedexModifier() {
+		JPanel result = new JPanel();
+		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+		int pokedex[] = this.pokedex.clone();
+		
+		for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
+			JPanel member = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			member.add(new JLabel(new Pokemon(i, 5, true, false).name));
+			JRadioButton[] buttons = new JRadioButton[3];
+			String[] labels = new String[] {"0", "S", "C"};
+			ButtonGroup buttonLayout = new ButtonGroup();
+			for (int j = 0; j < 3; j++) {
+				buttons[j] = new JRadioButton(labels[j]);
+				buttonLayout.add(buttons[j]);
+				member.add(buttons[j]);
+				
+				buttons[j].setActionCommand(Integer.toString(i));
+				
+				buttons[j].addActionListener(e -> {
+					pokedex[Integer.parseInt(((AbstractButton) e.getSource()).getActionCommand())] = Arrays.asList(buttons).indexOf(e.getSource());
+				});
+			}
+			
+			buttons[this.pokedex[i]].setSelected(true);
+			
+			panel.add(member);
+		}
+		
+		JScrollPane scrollPanel = new JScrollPane(panel);
+		scrollPanel.setPreferredSize(new Dimension(300, 300));
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(8);
+		result.add(scrollPanel);
+		JButton confirmButton = new JButton("Confirm");
+		confirmButton.addActionListener(e -> {
+			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
+				this.pokedex[i] = pokedex[i];
+			}
+			SwingUtilities.getWindowAncestor(result).dispose();
+		});
+		result.add(confirmButton);
+		JOptionPane.showMessageDialog(null, result);
+	}
+	
+	private void showBagModifier() {
+		JPanel result = new JPanel();
+		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+		JTextField[] counts = new JTextField[bag.count.length];
+		Item[] items = Item.values();
+		
+		for (int i = 0; i < counts.length; i++) {
+			final int index = i;
+			JPanel member = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			member.add(new JLabel(items[i].toString()));
+			
+			counts[i] = new JTextField(bag.count[i] + "");
+			counts[i].setPreferredSize(new Dimension(40, counts[i].getPreferredSize().height));
+			counts[i].addFocusListener(new FocusAdapter() {
+				@Override
+		    	public void focusGained(FocusEvent e) {
+		        	counts[index].selectAll();
+		    	}
+			});
+			member.add(counts[i]);
+			
+			panel.add(member);
+		}
+		
+		JScrollPane scrollPanel = new JScrollPane(panel);
+		scrollPanel.setPreferredSize(new Dimension(300, 300));
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(8);
+		result.add(scrollPanel);
+		JButton confirmButton = new JButton("Confirm");
+		confirmButton.addActionListener(e -> {
+			for (int i = 0; i < counts.length; i++) {
+				int count = Integer.parseInt(counts[i].getText().trim());
+				if (count != 0) bag.add(Item.getItem(i));
+				bag.count[i] = count;
+			}
+			SwingUtilities.getWindowAncestor(result).dispose();
+		});
+		result.add(confirmButton);
+		JOptionPane.showMessageDialog(null, result);
 		
 	}
 

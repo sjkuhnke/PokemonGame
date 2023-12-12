@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.file.*;
@@ -493,6 +494,10 @@ public class PlayerCharacter extends Entity {
 	    				if (pokemon != null) pokemon.heal();
 	    			}
 	    			SwingUtilities.getWindowAncestor(cheats).dispose();
+	    		} else if (code.equals("BALLZ")) {
+	    			JPanel panel = p.displayTweaker();
+	    			JOptionPane.showMessageDialog(null, panel);
+	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		} else if (code.equals("KANY3")) {
 	    			p.money = 1000000;
 	    			SwingUtilities.getWindowAncestor(cheats).dispose();
@@ -604,6 +609,37 @@ public class PlayerCharacter extends Entity {
 	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		} else if (code.equals("ASH KETCHUP")) {
 	    			p.trainersBeat = new boolean[Main.trainers.length];
+	    			SwingUtilities.getWindowAncestor(cheats).dispose();
+	    		} else if (code.equals("exptrainer")) {
+	    			StringBuilder result = new StringBuilder();
+	    			for (boolean value : p.trainersBeat) {
+	    				result.append(value).append(",");
+	    			}
+	    			try {
+						FileWriter writer = new FileWriter("./docs/trainers.txt");
+						writer.write(result.toString());
+						writer.close();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+	    			SwingUtilities.getWindowAncestor(cheats).dispose();
+	    		} else if (code.equals("expitem")) {
+	    			StringBuilder result = new StringBuilder();
+
+	    		    for (boolean[] row : p.itemsCollected) {
+	    		        for (boolean value : row) {
+	    		            result.append(value).append(",");
+	    		        }
+	    		        result.append("\n");
+	    		    }
+
+	    			try {
+						FileWriter writer = new FileWriter("./docs/items.txt");
+						writer.write(result.toString());
+						writer.close();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 	    			SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		}
 	    	});
