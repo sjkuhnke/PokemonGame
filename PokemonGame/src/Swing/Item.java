@@ -314,14 +314,18 @@ public enum Item {
 	public String toString() {
 		String result = "";
 		String name = super.toString();
-		if (name.contains("HM") || name.contains("TM") || name.contains("PP")) {
+		if (name.contains("HM") || name.contains("TM")) {
 			result = name + " " + getMove().toString();
 		} else {
 			name = name.toLowerCase().replace('_', ' ');
 		    String[] words = name.split(" ");
 		    StringBuilder sb = new StringBuilder();
 		    for (String word : words) {
-		        sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+		    	if (word.contains("pp")) {
+		    		sb.append(word.toUpperCase()).append(" ");
+		    	} else {
+		    		sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+		    	}
 		    }
 		    result = sb.toString().trim();
 		}
