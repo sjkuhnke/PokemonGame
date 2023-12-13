@@ -641,6 +641,9 @@ public class PlayerCharacter extends Entity {
 						e1.printStackTrace();
 					}
 	    			SwingUtilities.getWindowAncestor(cheats).dispose();
+	    		} else if (code.equals("EDGEMEDADDY")) {
+	    			p.bag.add(Item.EDGE_KIT);
+	    			SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		}
 	    	});
 	    	
@@ -1162,7 +1165,7 @@ public class PlayerCharacter extends Entity {
 		        useButton.addActionListener(f -> {
 		        	
 		        	// POTIONS
-		        	if (i.getItem().getHealAmount() != 0) {
+		        	if (i.getItem().isPotion()) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 
@@ -1204,7 +1207,7 @@ public class PlayerCharacter extends Entity {
 		        	}
 		        	
 		        	// STATUS HEALERS
-		        	if (i.getItem().getID() > 8 && i.getItem().getID() < 16) {
+		        	else if (i.getItem().isStatusHealer()) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 		        	    
@@ -1245,7 +1248,7 @@ public class PlayerCharacter extends Entity {
 		        	}
 		        	
 		        	// REVIVES
-		        	if (i.getItem().getID() == 16 || i.getItem().getID() == 17) {
+		        	else if (i.getItem() == Item.REVIVE || i.getItem() == Item.MAX_REVIVE) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 
@@ -1283,7 +1286,7 @@ public class PlayerCharacter extends Entity {
 		        	}
 		        	
 		        	// RARE CANDY
-		        	if (i.getItem().getID() == 18) {
+		        	else if (i.getItem() == Item.RARE_CANDY) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 
@@ -1342,7 +1345,7 @@ public class PlayerCharacter extends Entity {
 		        	}
 		        	
 		        	// EUPHORIAN GEM
-		        	if (i.getItem().getID() == 19) {
+		        	else if (i.getItem() == Item.EUPHORIAN_GEM) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 
@@ -1375,7 +1378,7 @@ public class PlayerCharacter extends Entity {
 		        	}
 		        	
 		        	// EVOLUTION ITEMS
-		        	if (i.getItem().getID() >= 20 && i.getItem().getID() < 26) {
+		        	else if (i.getItem().isEvoItem()) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 		        	    
@@ -1429,7 +1432,7 @@ public class PlayerCharacter extends Entity {
 		        	}
 		        	
 		        	// REPEL
-		        	if (i.getItem().getID() == 0) {
+		        	else if (i.getItem() == Item.REPEL) {
 		        		if (useRepel()) {
 		        			SwingUtilities.getWindowAncestor(itemDesc).dispose();
 		        			SwingUtilities.getWindowAncestor(panel).dispose();
@@ -1438,7 +1441,7 @@ public class PlayerCharacter extends Entity {
 		        	}
 		        	
 		        	// TMS/HMS
-		        	if (i.getItem().getMove() != null) {
+		        	else if (i.getItem().isTM()) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 		        	    
@@ -1494,7 +1497,7 @@ public class PlayerCharacter extends Entity {
 		        	    JOptionPane.showMessageDialog(null, partyPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
 		        	}
 		        	// Ability Capsule
-		        	if (i.getItem().getID() == 26) {
+		        	else if (i.getItem() == Item.ABILITY_CAPSULE) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 		        	    
@@ -1537,7 +1540,7 @@ public class PlayerCharacter extends Entity {
 		        	}
 		        	
 		        	// Bottle Caps
-		        	if (i.getItem().getID() == 27 || i.getItem().getID() == 28) {
+		        	else if (i.getItem() == Item.BOTTLE_CAP || i.getItem() == Item.GOLD_BOTTLE_CAP) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 		        	    
@@ -1598,7 +1601,7 @@ public class PlayerCharacter extends Entity {
 		        	}
 		        	
 		        	// Nature Mints
-		        	if (i.getItem().getID() >= 29 && i.getItem().getID() <= 39) {
+		        	else if (i.getItem().isMint()) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 		        	    
@@ -1674,7 +1677,7 @@ public class PlayerCharacter extends Entity {
 		        	}
 		        	
 		        	// Elixir/Max Elixir
-		        	if (i.getItem().getID() == 40 || i.getItem().getID() == 41) {
+		        	else if (i.getItem() == Item.ELIXIR || i .getItem() == Item.MAX_ELIXIR) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 		        	    
@@ -1736,7 +1739,7 @@ public class PlayerCharacter extends Entity {
 		        	}
 		        	
 		        	// PP Up/PP Max
-		        	if (i.getItem().getID() == 42 || i.getItem().getID() == 43) {
+		        	else if (i.getItem() == Item.PP_UP || i .getItem() == Item.PP_MAX) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 		        	    
@@ -1794,7 +1797,7 @@ public class PlayerCharacter extends Entity {
 		        	    JOptionPane.showMessageDialog(null, partyPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
 		        	}
 		        	// Flame Orb
-		        	if (i.getItem().getID() == 44) {
+		        	else if (i.getItem() == Item.FLAME_ORB) {
 		        		JPanel partyPanel = new JPanel();
 		        	    partyPanel.setLayout(new GridLayout(6, 1));
 		        	    
@@ -1819,10 +1822,34 @@ public class PlayerCharacter extends Entity {
 		        	        memberPanel.add(party, BorderLayout.NORTH);
 		        	        partyPanel.add(memberPanel);
 		        	    }
-		        	    JOptionPane.showMessageDialog(null, partyPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
+		        	    JOptionPane.showMessageDialog(null, partyPanel, "Burn?", JOptionPane.PLAIN_MESSAGE);
+		        	}
+		        	// Edge Kit
+		        	else if (i.getItem() == Item.EDGE_KIT) {
+		        		JPanel partyPanel = new JPanel();
+		        	    partyPanel.setLayout(new GridLayout(6, 1));
+		        	    
+		        	    for (int j = 0; j < 6; j++) {
+		        	    	JButton party = setUpPartyButton(j);
+		        	        final int index = j;
+		        	        
+		        	        party.addActionListener(g -> {
+		        	        	if (p.team[index].expMax - p.team[index].exp != 1) {
+		        	        		p.team[index].exp = p.team[index].expMax - 1;
+		        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " successfully EDGED!");
+		        	        	} else {
+		        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+		        	        	}
+		        	        });
+		        	        
+		        	        JPanel memberPanel = new JPanel(new BorderLayout());
+		        	        memberPanel.add(party, BorderLayout.NORTH);
+		        	        partyPanel.add(memberPanel);
+		        	    }
+		        	    JOptionPane.showMessageDialog(null, partyPanel, "EDGE?????", JOptionPane.PLAIN_MESSAGE);
 		        	}
 		        	// Calc
-		        	if (i.getItem().getID() == 200) {
+		        	else if (i.getItem() == Item.CALCULATOR) {
 		        		i.getItem().useCalc(p);
 		        	}
 		        	

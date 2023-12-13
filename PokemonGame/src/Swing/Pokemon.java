@@ -9907,10 +9907,10 @@ public class Pokemon implements Serializable {
 	}
 	
 	public int calcWithTypes(Pokemon foe, Move move, boolean first) {
-		return calcWithTypes(foe, move, first, 0);
+		return calcWithTypes(foe, move, first, 0, false);
 	}
 	
-	public int calcWithTypes(Pokemon foe, Move move, boolean first, int mode) {
+	public int calcWithTypes(Pokemon foe, Move move, boolean first, int mode, boolean crit) {
 		double attackStat;
 		double defenseStat;
 		int damage = 0;
@@ -10155,7 +10155,7 @@ public class Pokemon implements Serializable {
 		// Crit Check
 		if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 		if (this.ability == Ability.SUPER_LUCK) critChance++;
-		if ((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && critChance >= 3)) {
+		if ((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 3 || crit))) {
 			if (move.isPhysical() && attackStat < this.getStat(1)) {
 				attackStat = this.getStat(1);
 				if (this.status == Status.BURNED) attackStat /= 2;

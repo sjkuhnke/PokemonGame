@@ -21,12 +21,14 @@ public class PBox extends JFrame {
 	private static final long serialVersionUID = -8943929896582623587L;
 	private JPanel playerPanel;
 	public static Player me;
+	public static PlayerCharacter playerCharacter;
 
 	private JGradientButton[] boxButtons;
 	private int currentBox = 1;
 
 	public PBox(PlayerCharacter playerCharacter) {
 	    me = playerCharacter.p;
+	    PBox.playerCharacter = playerCharacter;
 	    setTitle("Box 1");
 	    
 	    // Initializing panel
@@ -65,6 +67,85 @@ public class PBox extends JFrame {
 		    }
 		});
 		playerPanel.add(nextButton);
+		
+		JButton partyButton = new JButton("Party");
+		partyButton.setBounds(235, 440, 120, 50);
+		partyButton.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	JPanel partyPanel = new JPanel();
+        	    partyPanel.setLayout(new GridLayout(6, 1));
+        	    
+        	    for (int j = 0; j < 6; j++) {
+        	    	JButton party = playerCharacter.setUpPartyButton(j);
+        	        final int index = j;
+        	        
+        	        party.addActionListener(g -> {
+        	        	JPanel summary = me.team[index].showSummary();
+        	        	JButton depositButton = new JButton("Deposit");
+        	        	depositButton.addActionListener(f -> {
+        		            if (me.team[index] != null) {
+        		            	Pokemon[] cBox;
+        		            	if (currentBox == 1) {
+        		        	        cBox = me.box1;
+        		        	    } else if (currentBox == 2) {
+        		        	        cBox = me.box2;
+        		        	    } else {
+        		        	        cBox = me.box3;
+        		        	    }
+        		            	
+        		            	Pokemon head = cBox[0];
+        		            	int count = 0;
+        		            	boolean emptyFound = false;
+        		                for (Pokemon p : cBox) {
+        		                	if (p == null) {
+        		                		emptyFound = true;
+        		                		break;
+        		                	}
+        		                	if (count != 0) {
+        		                		if (p == head) break;
+        		                	}
+        		                	count++;
+        		                }
+        		                if (!emptyFound) {
+        		                	JOptionPane.showMessageDialog(null, "Box is full!");
+        		                } else if (index != me.team.length - 1 && me.team[index + 1] == null) {
+                            		JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
+                            	} else {
+        		                	Pokemon temp = me.team[index];
+                                    if (temp != null) {
+                                        temp.heal();
+                                    }
+                                    me.team[index] = cBox[count];
+                                    cBox[count] = temp;
+                                    
+                                    if (me.team[index] == null) {
+                                    	Pokemon[] teamTemp = me.team.clone();
+                                    	for (int i = index + 1; i < me.team.length; i++) {
+                                        	teamTemp[i - 1] = me.team[i];
+                                        }
+                                    	me.team = teamTemp;
+                                    	me.current = me.team[0];
+                                    	me.team[5] = null;
+                                    }
+        		                }
+                                SwingUtilities.getWindowAncestor(partyPanel).dispose();
+        		                SwingUtilities.getWindowAncestor(summary).dispose();
+        		                displayBox();
+        		            }
+        		        });
+        	            summary.add(depositButton);
+        	            JOptionPane.showMessageDialog(null, summary, "Party member details", JOptionPane.PLAIN_MESSAGE);
+        	        });
+        	        
+        	        JPanel memberPanel = new JPanel(new BorderLayout());
+        	        memberPanel.add(party, BorderLayout.NORTH);
+        	        partyPanel.add(memberPanel);
+        	    }
+        	    JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+		    }
+		});
+		playerPanel.add(partyButton);
 
 		JButton previousButton = new JButton("Prev");
 		previousButton.setBounds(10, 460, 80, 30);
