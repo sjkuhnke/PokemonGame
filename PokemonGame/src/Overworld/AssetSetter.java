@@ -1210,6 +1210,27 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(13, 70, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(81, 59, 4, mapNum, map);
 		
+		mapNum = 83;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(17, 66, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(18, 66, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(19, 66, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(25, 61, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(25, 62, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 73, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 74, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 66, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 66, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 66, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 71, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 71, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 66, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(42, 66, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 66, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 66, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 69, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 70, 4, mapNum, map);
+
 		mapNum = 85;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(64, 67, 0, mapNum, map);

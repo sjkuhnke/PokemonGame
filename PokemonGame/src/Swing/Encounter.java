@@ -60,12 +60,12 @@ public class Encounter {
 				encounters.add(new Encounter(179, 2, 3, 0.11));
 				encounters.add(new Encounter(129, 2, 2, 0.15));
 				encounters.add(new Encounter(143, 2, 2, 0.08));
-			} else if (area == 0 && type.equals("Surfing") && x > 73) { // route 42
+			} else if (area == 0 && type.equals("Surfing")) { // route 42
 				encounters.add(new Encounter(68, 28, 31, 0.20));
 				encounters.add(new Encounter(71, 27, 30, 0.25));
 				encounters.add(new Encounter(132, 28, 31, 0.25));
 				encounters.add(new Encounter(215, 28, 31, 0.30));
-			} else if (area == 0 && type.equals("Fishing") && x > 73) { // route 42
+			} else if (area == 0 && type.equals("Fishing")) { // route 42
 				encounters.add(new Encounter(132, 11, 12, 0.25));
 				encounters.add(new Encounter(137, 10, 11, 0.15));
 				encounters.add(new Encounter(141, 12, 14, 0.10));

@@ -1,7 +1,5 @@
-/Entity/
-/Obj/
-/Overworld/
 /Swing/
-/sprites/
-/tile/
-/tiles/
+/Overworld/
+/Entity/
+/maps/
+/npc/
