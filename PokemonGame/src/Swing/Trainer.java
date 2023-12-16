@@ -106,7 +106,7 @@ public class Trainer {
 		return money;
 	}
 	
-	public boolean swapRandom(Pokemon foe, Player me, boolean announce) {
+	public boolean swapRandom(Pokemon foe, Player me, boolean announce, boolean baton) {
 		if (!hasValidMembers()) return false;
 		Random rand = new Random();
 		int index = rand.nextInt(team.length);
@@ -114,12 +114,12 @@ public class Trainer {
 			index = rand.nextInt(team.length);
 		}
 		
+		if (baton) team[index].statStages = current.statStages;
 		Pokemon newCurrent = current;
 		
 		newCurrent.clearVolatile();
 		current = team[index];
 		//this.team[currentIndex] = team[index];
-		this.team[index] = newCurrent;
 		
 		if (newCurrent.ability == Ability.REGENERATOR) {
 			newCurrent.currentHP += newCurrent.getStat(0) / 3;
@@ -138,7 +138,7 @@ public class Trainer {
 	}
 	
 	public boolean swapRandom(Pokemon foe, Player me) {
-		return swapRandom(foe, me, true);
+		return swapRandom(foe, me, true, false);
 	}
 	
 	public boolean hasValidMembers() {
@@ -160,8 +160,10 @@ public class Trainer {
 
 	public int getNumFainted() {
 		int result = 0;
-		for (Pokemon p : team) {
-			if (p.isFainted()) result++;
+		for (int i = 0; i < team.length; i++) {
+			if (team[i] != null) {
+				if (team[i].isFainted()) result++;
+			}
 		}
 		return result;
 	}
