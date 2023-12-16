@@ -352,12 +352,12 @@ Trainer CN                  Hast Lv. 56, Zoroark Lv. 57, Shadowsaur Lv. 57
 Trainer Scott 4             Hatterene Lv. 59, Ninjask Lv. 60, Drageye Lv. 58, Dragave Lv. 60, Vikavolt Lv. 59, Rhypolar Lv. 61
 
 Scott 4
-Hatterene (Lv. 59)    /   Magic Bounce       /   Healing Wish, Magic Tomb, Elemental Sparkle, Psychic
-Ninjask (Lv. 60)      /   Speed Boost        /   Swords Dance, Fury Swipes, Leech Life, Slash
-Drageye (Lv. 58)      /   Multiscale         /   Dragon Rush, Hydro Pump, Prismatic Laser, Dragon Pulse
+Hatterene (Lv. 59)    /   Magic Bounce       /   Magic Tomb, Nuzzle, Reflect, Light Screen
+Ninjask (Lv. 60)      /   Speed Boost        /   Swords Dance, Leech Life, Baton Pass, Protect
+Drageye (Lv. 58)      /   Multiscale         /   Prismatic Laser, Dragon Pulse, Thunderbolt, Rest
 Dragave (Lv. 60)      /   Torrent            /   Giga Impact, Dragon Rush, Bulk Up, Close Combat
-Vikavolt (Lv. 59)     /   Levitate           /   Fly, Agility, Bug Buzz, Thunderbolt
-Rhypolar (Lv. 61)     /   Sand Stream        /   Earthquake, Rock Blast, Aura Sphere, Submission
+Vikavolt (Lv. 59)     /   Levitate           /   Photon Geyser, Bug Buzz, Volt Switch, Sticky Web
+Rhypolar (Lv. 61)     /   Sand Stream        /   Earthquake, Spikes, Smack Down, Body Press
 
 Trainer CO                  Megawatt Lv. 57, Thunderzap Lv. 58, Superchargo Lv. 57, Soldrota-E Lv. 57, Suvinero Lv. 57
 Trainer CP                  Conkeldurr Lv. 58, Whiskeroar Lv. 58
@@ -381,4 +381,3 @@ Magestiflash (Lv. 62) /   Magic Guard        /   Morning Sun, Hurricane, Prismat
 Bushewe (Lv. 62)      /   Serene Grace       /   Energy Ball, Charge Beam, Thunder Wave, Ice Beam
 Crystallor-E (Lv. 63) /   Clear Body         /   Glittering Sword, Zing Zap, Shell Smash, Overheat
 
-Trainer TEST                Hast-E Lv. 55, Swordik Lv. 32, Psycorb Lv. 5, Magestiflash Lv. 20, Bushewe Lv. 20, Crystallor-E Lv. 20

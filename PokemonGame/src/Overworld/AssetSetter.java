@@ -466,10 +466,10 @@ public class AssetSetter {
 	}
 	
 	public void setNPC() {
-		if (gp.player.p.flags.length != GamePanel.maxFlags) {
+		if (gp.player.p.flags.length < GamePanel.maxFlags) {
 			gp.player.p.updateFlags();
 		}
-		if (gp.player.p.trainersBeat.length != Main.trainers.length) {
+		if (gp.player.p.trainersBeat.length < Main.trainers.length) {
 			gp.player.p.updateTrainers();
 		}
 		boolean[] flags = gp.player.p.flags;
@@ -788,8 +788,6 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(5, 51, 74, 139);
 		gp.npc[mapNum][index] = NPCSetup(6, 46, 85, 140);
 		gp.npc[mapNum][index] = NPCSetup(6, 36, 84, 141);
-		
-		gp.npc[mapNum][index] = NPCSetup(6, 36, 44, 256); // TODO test
 		
 		mapNum = 43;
 		index = 0;

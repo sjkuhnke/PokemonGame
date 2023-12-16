@@ -4821,7 +4821,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.LIGHT_SCREEN) {
 			if (!(field.contains(userSide, Effect.LIGHT_SCREEN))) {
 				userSide.add(field.new FieldEffect(Effect.LIGHT_SCREEN));
-				console.writeln("Light Screen made" + this.nickname + "'s team stronger against Special moves!");
+				console.writeln("Light Screen made " + this.nickname + "'s team stronger against Special moves!");
 			} else {
 				fail = fail();
 			}
@@ -4949,7 +4949,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.REFLECT) {
 			if (!(field.contains(userSide, Effect.REFLECT))) {
 				userSide.add(field.new FieldEffect(Effect.REFLECT));
-				console.writeln("Reflect made" + this.nickname + "'s team stronger against Physical moves!");
+				console.writeln("Reflect made " + this.nickname + "'s team stronger against Physical moves!");
 			} else {
 				fail = fail();
 			}

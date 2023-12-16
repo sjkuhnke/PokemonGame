@@ -801,6 +801,10 @@ public class Battle extends JFrame {
 				if (!me.team[index].isFainted() && !swapping && move != Move.BOOSTED_PURSUIT) {
 	        		if (foeTrainer != null) {
 	        			foe.move(me.getCurrent(), move, me, foeTrainer.getTeam(), foeTrainer, false);
+	        			if (foe.vStatuses.contains(Status.SWITCHING)) {
+	        	        	foeTrainer.swapRandom(me.getCurrent(), me, false, foe.lastMoveUsed == Move.BATON_PASS);
+	        	        	foe = foeTrainer.current;
+	        	        }
 	        		} else {
 	        			foe.move(me.getCurrent(), move, me, null, null, false);
 		        	}
@@ -816,6 +820,7 @@ public class Battle extends JFrame {
 				updateCurrent(pl);
 				updateBars(true);
 				updateField(field);
+				updateFoe();
 				displayParty();
 				updateStatus();
 				if (foe.isFainted()) {
@@ -1322,7 +1327,7 @@ public class Battle extends JFrame {
 	        
 	        // Check for swap (AI)
 	        if (slower.vStatuses.contains(Status.SWITCHING)) {
-	        	foeTrainer.swapRandom(faster, me, false);
+	        	foeTrainer.swapRandom(faster, me, false, slower.lastMoveUsed == Move.BATON_PASS);
 	        	slower = foeTrainer.current;
 	        }
 		} else { // enemy Pokemon is faster
@@ -1332,7 +1337,7 @@ public class Battle extends JFrame {
 			faster.move(slower, m2, me, team, foeTrainer, true);
 			// Check for swap (AI)
 	        if (faster.vStatuses.contains(Status.SWITCHING)) {
-	        	foeTrainer.swapRandom(slower, me, false);
+	        	foeTrainer.swapRandom(slower, me, false, faster.lastMoveUsed == Move.BATON_PASS);
 	        	faster = foeTrainer.current;
 	        }
 			
