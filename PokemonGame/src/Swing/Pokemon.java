@@ -3431,7 +3431,7 @@ public class Pokemon implements Serializable {
 				return;
 			}
 			
-			if (this.ability == Ability.PROTEAN && this.type1 == getType(this.id)[0] && this.type2 == getType(this.id)[1]) {
+			if (this.ability == Ability.PROTEAN) {
 				if (this.type1 == moveType && this.type2 == null) {
 					
 				} else {
@@ -4311,16 +4311,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.PLAY_ROUGH) {
 			stat(foe, 0, -1, foe);
 		} else if (move == Move.POISON_FANG) {
-			int randomNum = ((int) Math.random() * 3);
-			if (randomNum == 0) {
-				foe.toxic(false, this);
-			} else if (randomNum == 1 && first) {
-				foe.vStatuses.add(Status.FLINCHED);
-			}
-			 else if (randomNum == 2) {
-				if (first) foe.vStatuses.add(Status.FLINCHED);
-				foe.poison(false, this);
-			}
+			foe.toxic(false, this);
 		} else if (move == Move.POISON_JAB) {
 			foe.poison(false, this);
 //		} else if (move == Move.POISON_PUNCH) {
@@ -8625,15 +8616,15 @@ public class Pokemon implements Serializable {
 			movebank[69] = new Node(Move.DRACO_METEOR);
 			break;
 		case 174:
-			movebank = new Node[20];
+			movebank = new Node[16];
 			movebank[0] = new Node(Move.SPLASH);
 			movebank[0].next = new Node(Move.POUND);
 			movebank[0].next = new Node(Move.FLASH);
-			movebank[3] = new Node(Move.LOVELY_KISS);
-			movebank[7] = new Node(Move.SWEET_KISS);
-			movebank[11] = new Node(Move.FLASH_RAY);
-			movebank[15] = new Node(Move.ENCORE);
-			movebank[19] = new Node(Move.CHARM);
+			movebank[2] = new Node(Move.LOVELY_KISS);
+			movebank[4] = new Node(Move.SWEET_KISS);
+			movebank[7] = new Node(Move.FLASH_RAY);
+			movebank[11] = new Node(Move.ENCORE);
+			movebank[15] = new Node(Move.CHARM);
 			break;
 		case 175:
 			movebank = new Node[56];
@@ -10859,6 +10850,12 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.ROLLOUT || move == Move.ICE_BALL) {
 			bp = (int) (30 * Math.pow(2, this.rollCount-1));
+		} else if (move == Move.STORED_POWER) {
+			int boosts = 0;
+			for (int i = 0; i < this.statStages.length; i++) {
+				if (this.statStages[i] > 0) boosts += this.statStages[i];
+			}
+			bp = 20 + (20 * boosts);
 		} else if (move == Move.WAKE$UP_SLAP) {
 			bp = 60;
 			if (foe.status == Status.ASLEEP) {
