@@ -109,7 +109,7 @@ public class PBox extends JFrame {
         		                }
         		                if (!emptyFound) {
         		                	JOptionPane.showMessageDialog(null, "Box is full!");
-        		                } else if (index != me.team.length - 1 && me.team[index + 1] == null) {
+        		                } else if (index == 0 && index != me.team.length - 1 && me.team[index + 1] == null) {
                             		JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
                             	} else {
         		                	Pokemon temp = me.team[index];

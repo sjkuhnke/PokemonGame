@@ -55,7 +55,7 @@ public enum Ability {
 	OVERGROW("Powers up GRASS moves in a pinch."),
 	POISON_POINT("Contact with the Pokemon may poison the attacker."),
 	PRANKSTER("Gives priority to a status move."),
-	PROTEAN("Makes the Pokemon's type to the move type it's about to use the first time it's out."),
+	PROTEAN("Makes the Pokemon's type to the move type it's about to use."),
 	PSYCHIC_AURA("Weakens the power of Special moves."),
 	PSYCHIC_SURGE("Turns the ground into PSYCHIC TERRAIN when the Pokemon enters a battle."),
 	RAIN_DISH("The Pokemon gradually regains HP in RAIN."),

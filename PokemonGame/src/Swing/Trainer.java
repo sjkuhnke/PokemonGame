@@ -6,7 +6,6 @@ public class Trainer {
 	private String name;
 	private Pokemon[] team;
 	private int money;
-	int currentIndex;
 	Item item;
 	int flagIndex;
 	Pokemon current;
@@ -15,7 +14,6 @@ public class Trainer {
 		this.name = name;
 		this.team = team;
 		this.money = money;
-		currentIndex = 0;
 		current = team[0];
 	}
 
@@ -24,7 +22,6 @@ public class Trainer {
 		this.team = team;
 		this.money = money;
 		this.item = item;
-		currentIndex = 0;
 		current = team[0];
 	}
 	
@@ -33,7 +30,6 @@ public class Trainer {
 		this.team = team;
 		this.money = money;
 		this.flagIndex = index;
-		currentIndex = 0;
 		current = team[0];
 	}
 	
@@ -43,7 +39,6 @@ public class Trainer {
 		this.money = money;
 		this.item = item;
 		this.flagIndex = index;
-		currentIndex = 0;
 		current = team[0];
 	}
 	
@@ -52,7 +47,6 @@ public class Trainer {
 			name = "[SELECT]";
 			this.team = null;
 			this.money = 0;
-			currentIndex = 0;
 		}
 	}
 
@@ -71,18 +65,39 @@ public class Trainer {
 	}
 
 	public boolean hasNext() {
-		return currentIndex < team.length - 1;
+		return getNumFainted() < team.length;
 	}
 	
-	public Pokemon next() {
-		Pokemon result = team[++currentIndex];
-		while (result == null) {
-			result = team[++currentIndex];
+	public Pokemon next(Pokemon other) {
+		current = getNext(other);
+		return current;
+	}
+	
+	private Pokemon getNext(Pokemon other) {
+		Pokemon result = null;
+		Move highestBPMove = null;
+		int highestBP = Integer.MIN_VALUE;
+		for (Pokemon p : team) {
+			if (!p.isFainted()) {
+				System.out.println("\n" + p.name);
+				for (Moveslot m : p.moveset) {
+					if (m != null) {
+						Move move = m.move;
+						int effectiveBP = (int) (move.getbp(p, other) * other.getEffectiveMultiplier(move.mtype) * ((move.mtype == p.type1 || move.mtype == p.type2) ? 1.5 : 1));
+						if (effectiveBP > highestBP) {
+							highestBPMove = move;
+							highestBP = effectiveBP;
+							result = p;
+						}
+						System.out.println(move + ": " + effectiveBP);
+					}
+				}
+			}
 		}
-		current = result;
+		System.out.println("----------------\n" + result.name + ": " + highestBPMove + "\n----------------");
 		return result;
 	}
-	
+
 	public Pokemon getCurrent() {
 		return current;
 	}
@@ -103,7 +118,7 @@ public class Trainer {
 		
 		newCurrent.clearVolatile();
 		current = team[index];
-		this.team[currentIndex] = team[index];
+		//this.team[currentIndex] = team[index];
 		this.team[index] = newCurrent;
 		
 		if (newCurrent.ability == Ability.REGENERATOR) {
@@ -141,5 +156,13 @@ public class Trainer {
 
 	public String getName() {
 		return name;
+	}
+
+	public int getNumFainted() {
+		int result = 0;
+		for (Pokemon p : team) {
+			if (p.isFainted()) result++;
+		}
+		return result;
 	}
 }

@@ -821,7 +821,7 @@ public class Battle extends JFrame {
 				if (foe.isFainted()) {
 					if (foeTrainer != null && foeTrainer.getTeam() != null) {
 						if (foeTrainer.hasNext()) {
-							foe = foeTrainer.next();
+							foe = foeTrainer.next(me.getCurrent());
 							console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
 							foe.swapIn(me.getCurrent(), me);
 							updateField(field);
@@ -1173,14 +1173,16 @@ public class Battle extends JFrame {
 		foePartyPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
 		foePartyPanel.setBounds(525, 0, 200, 32);
 
+		int yellowIndex = 6;
+		if (foeTrainer != null) yellowIndex = foeTrainer.getNumFainted();
 		for (int i = 0; i < 6; i++) {
 		    JLabel currentIcon = new JLabel(new ImageIcon(getIcon("/icons/ball.png")));
 
 		    if (foeTrainer != null && i < foeTrainer.getTeam().length) {
-	            if (foeTrainer.getTeam()[i].isFainted()) {
+	            if (i < yellowIndex) {
 	                currentIcon.setIcon(new ImageIcon(getIcon("/icons/ballfainted.png")));
 	            }
-	            if (foeTrainer.currentIndex == i) {
+	            if (i == yellowIndex) {
 	            	currentIcon.setIcon(new ImageIcon(getIcon("/icons/ballcurrent.png")));
 	            }
 
@@ -1353,7 +1355,7 @@ public class Battle extends JFrame {
 		if (foe.isFainted()) {
 			if (foeTrainer != null && foeTrainer.getTeam() != null) {
 				if (foeTrainer.hasNext()) {
-					foe = foeTrainer.next();
+					foe = foeTrainer.next(me.getCurrent());
 					console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
 					foe.swapIn(me.getCurrent(), me);
 					updateField(field);
@@ -1692,7 +1694,6 @@ public class Battle extends JFrame {
 			for (Pokemon pokemon : foeTrainer.getTeam()) {
 				pokemon.heal();
 			}
-			foeTrainer.currentIndex = 0;
 			foeTrainer.current = foeTrainer.getTeam()[0];
 		}
 		

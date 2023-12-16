@@ -375,7 +375,7 @@ public enum Move {
 	PLUCK(60,100,0,0,0,0,PType.FLYING,"A normal attack",true,20),
 	//PHASE_SHIFT(0,1000,0,0,2,0,PType.MAGIC,"Switches user's type to Magic and the type of the move that the foe just used",false,1),
 	//POISON_BALL(65,80,100,0,0,0,PType.POISON,"% to Poison foe",false,1),
-	POISON_FANG(50,100,50,0,0,0,PType.POISON,"% to Poison and/or flinch foe",true,15),
+	POISON_FANG(50,100,50,0,0,0,PType.POISON,"% to Toxic foe",true,15),
 	POISON_GAS(0,80,0,0,2,0,PType.POISON,"Poisons foe",true,30),
 	POISON_JAB(80,100,30,0,0,0,PType.POISON,"% to Poison foe",true,20),
 	//POISON_POWDER(0,75,0,0,2,0,PType.POISON,"Poisons foe",false,1),
@@ -505,6 +505,7 @@ public enum Move {
 	//STING(55,100,100,0,0,0,PType.BUG,"% to make foe Bleed",false,1),
 	STOMP(65,100,30,0,0,0,PType.NORMAL,"% of causing foe to flinch",true,20),
 	STONE_EDGE(100,80,0,1,0,0,PType.ROCK,"Boosted Crit rate",false,5),
+	STORED_POWER(-1,100,0,0,1,0,PType.PSYCHIC,"+20 BP for each stat boost",false,10),
 	STRENGTH_SAP(0,100,0,0,2,0,PType.GRASS,"Heals user an HP amount equal to foe's Attack stat; lowers foe's Attack by 1",false,10),
 	STRENGTH(80,100,0,0,0,0,PType.NORMAL,"A normal attack",true,10),
 	STRING_SHOT(0,100,0,0,2,0,PType.BUG,"Lowers foe's Speed by 2",false,25),
@@ -662,21 +663,27 @@ public enum Move {
 		this.contact = contact;
 		this.pp = pp;
 	}
-	public String getbp(Pokemon user, Pokemon foe) {
+	public double getbp(Pokemon user, Pokemon foe) {
 		if (basePower == -1) {
-			if (this == Move.MAGNITUDE) return "--";
+			if (this == Move.STORED_POWER && foe == null) return 20;
 			boolean faster = user == null ? false : user.getFaster(foe, 0, 0) == user;
 			if (user == null) {
 				if (this == Move.ELECTRO_BALL || this == Move.FLAIL || this == Move.REVERSAL || this == Move.GRASS_KNOT || this == Move.LOW_KICK
-						|| this == Move.GYRO_BALL || this == Move.HEAT_CRASH || this == Move.HEAVY_SLAM || this == Move.RETURN || this == Move.FRUSTRATION) return "--";
+						|| this == Move.GYRO_BALL || this == Move.HEAT_CRASH || this == Move.HEAVY_SLAM || this == Move.RETURN || this == Move.FRUSTRATION) return 0;
 				user = new Pokemon(1, 1, false, false);
 			}
 			if (foe == null) foe = new Pokemon(1, 1, false, false);
-			return user.determineBasePower(foe, this, faster, null, false) + "";
+			return user.determineBasePower(foe, this, faster, null, false);
 		}
-		if (basePower == 0) return "--";
-		return basePower + "";
+		return basePower;
 	}
+	
+	public String formatbp(Pokemon user, Pokemon foe) {
+		double bp = getbp(user, foe);
+		if (basePower == 0 || this == Move.MAGNITUDE) return "--";
+		return String.format("%.0f", bp);
+	}
+	
 	public String getCategory() {
 		if (cat == 0) return "Physical";
 		if (cat == 1) return "Special";
@@ -710,7 +717,7 @@ public enum Move {
 
 	    // Power
 	    JLabel powerLabel = new JLabel("Power");
-	    JLabel powerValueLabel = new JLabel(String.valueOf(getbp(user, foe)));
+	    JLabel powerValueLabel = new JLabel(formatbp(user, foe));
 
 	    // Accuracy
 	    JLabel accuracyLabel = new JLabel("Acc");
