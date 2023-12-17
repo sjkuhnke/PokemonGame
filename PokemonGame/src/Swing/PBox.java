@@ -247,6 +247,8 @@ public class PBox extends JFrame {
 	            boxButtons[i].setIcon(null);
 	            boxButtons[i].setBackground(null);
 	        }
+	        MouseListener[] mouseListeners = boxButtons[i].getMouseListeners();
+	        if (mouseListeners.length > 1) boxButtons[i].removeMouseListener(mouseListeners[1]);
 	        setActionListener(boxButtons[i], cBox, i);
 	        boxButtons[i].setVisible(true);
 	        playerPanel.add(boxButtons[i]);
