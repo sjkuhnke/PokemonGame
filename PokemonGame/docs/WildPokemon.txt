@@ -246,13 +246,13 @@ Route 28========================================================================
 5% Nincada (Lv. 17 - 18)
 
 Electric Tunnel 01===============================================================================================
-20% Zubat (Lv. 19 - 20)
+15% Zubat (Lv. 19 - 20)
 10% Elelamb (Lv. 18 - 19)
 10% Vupp (Lv. 17 - 18)
-10% Poof-E (Lv. 18 - 19)
-7% Droid-E (Lv. 17 - 19)
-3% Flamehox-E (Lv. 20)
-40% Rocky-E (Lv. 18 - 19)
+15% Poof-E (Lv. 18 - 19)
+13% Droid-E (Lv. 17 - 19)
+12% Flamehox-E (Lv. 20)
+25% Rocky-E (Lv. 18 - 19)
 
 Route 29===============================================================================================
 12% Flashclaw (Lv. 20 - 22)
@@ -441,6 +441,10 @@ Electric Tunnel -2==============================================================
 15% Boulder-E (Lv. 39 - 43)
 
 Electric Tunnel -3===============================================================================================
+40% Hast-E (Lv. 42 - 46)
+20% Armoid-E (Lv. 42 - 46)
+20% Fireshard-E (Lv. 42 - 46)
+20% Boulder-E (Lv. 42 - 46)
 
 Electric Tunnel -3===============================================================================================
 80% Magikarp-E (Lv. 15)
@@ -457,22 +461,166 @@ Electric Tunnel H===============================================================
 10% Fireshard-E (Lv. 35 - 38)
 25% Boulder-E (Lv. 32 - 35)
 
+Shadow Ravine H===============================================================================================
+20% Drillatron (Lv. 33 - 36)
+20% Opwing (Lv. 33 - 36)
+25% Wormbot-S (Lv. 32 - 35)
+10% Cluuz-S (Lv. 33 - 36)
+10% Blaxer-S (Lv. 32 - 35)
+15% Arbok-S (Lv. 32 - 36)
+
+Shadow Ravine -1===============================================================================================
+20% Drillatron (Lv. 33 - 36)
+20% Opwing (Lv. 33 - 36)
+25% Wormbot-S (Lv. 32 - 35)
+10% Cluuz-S (Lv. 33 - 36)
+10% Blaxer-S (Lv. 32 - 35)
+15% Arbok-S (Lv. 32 - 36)
+
+Shadow Ravine -1===============================================================================================
+20% Drillatron (Lv. 33 - 36)
+20% Opwing (Lv. 33 - 36)
+25% Wormbot-S (Lv. 32 - 35)
+10% Cluuz-S (Lv. 33 - 36)
+10% Blaxer-S (Lv. 32 - 35)
+15% Arbok-S (Lv. 32 - 36)
+
+Shadow Ravine -1===============================================================================================
+20% Drillatron (Lv. 33 - 36)
+20% Opwing (Lv. 33 - 36)
+25% Wormbot-S (Lv. 32 - 35)
+10% Cluuz-S (Lv. 33 - 36)
+10% Blaxer-S (Lv. 32 - 35)
+15% Arbok-S (Lv. 32 - 36)
+
+Shadow Ravine -2===============================================================================================
+25% Drillatron (Lv. 35 - 37)
+25% Wormbot-S (Lv. 34 - 36)
+30% Cluuz-S (Lv. 34 - 37)
+5% Pyrator-S (Lv. 36)
+15% Arbok-S (Lv. 34 - 37)
+
+Shadow Ravine -2===============================================================================================
+20% Iglite-S (Lv. 30)
+70% Blaxer-S (Lv. 40)
+10% Pyrator-S (Lv. 50)
+
+Shadow Ravine -3===============================================================================================
+25% Wormatron-S (Lv. 50 - 55)
+20% Cluuz-S (Lv. 46 - 49)
+15% Zurrclu-S (Lv. 49 - 53)
+5% Zurroaratr-S (Lv. 55)
+25% Pyrator-S (Lv. 49 - 55)
+10% Arbok-S (Lv. 50 - 54)
+
+Shadow Ravine -3===============================================================================================
+100% Pyrator-S (Lv. 55)
+
+Shadow Path===============================================================================================
+11% Hast-E (Lv. 40 - 45)
+10% Armoid-E (Lv. 40 - 45)
+10% Fireshard-E (Lv. 40 - 45)
+4% Boulder-E (Lv. 40 - 45)
+5% Blaster-E (Lv. 40 - 45)
+5% Crystallor-E (Lv. 40 - 45)
+12% Wormbot-S (Lv. 40 - 44)
+2% Wormatron-S (Lv. 45)
+10% Cluuz-S (Lv. 40 - 45)
+6% Zurrclu-S (Lv. 40 - 45)
+2% Zurroaratr-S (Lv. 40 - 45)
+11% Pyrator-S (Lv. 40 - 45)
+10% Arbok-S (Lv. 40 - 45)
+1% Electrocobra (Lv. 45)
+1% Shadowsaur (Lv. 45)
+
+Route 33===============================================================================================
+15% Dualbear (Lv. 34 - 38)
+11% Florline (Lv. 34 - 38)
+16% Barkflare (Lv. 35 - 39)
+13% Houndoom (Lv. 35 - 39)
+20% Splame (Lv. 35 - 39)
+25% Gurdurr (Lv. 34 - 39)
+
+Route 33===============================================================================================
+25% Magikarp (Lv. 15 - 25)
+10% Gyarados (Lv. 30 - 35)
+35% Ali (Lv. 30 - 35)
+30% Durfish (Lv. 20 - 30)
+
+Route 33===============================================================================================
+30% Psylotter (Lv. 35 - 38)
+40% Shelnado (Lv. 34 - 38)
+15% Lilyray (Lv. 37 - 39)
+15% Spinaquata (Lv. 37 - 39)
+
+Ghostly Woods===============================================================================================
+5% Curlatoral (Lv. 36 - 39)
+7% Treewin (Lv. 36 - 39)
+10% Grust (Lv. 37 - 40)
+12% Cluuz (Lv. 35 - 38)
+2% Zurrclu (Lv. 37 - 40)
+5% Opwing (Lv. 36 - 39)
+2% Hattrem (Lv. 36 - 39)
+12% Arbok (Lv. 36 - 39)
+10% Golbat (Lv. 35 - 38)
+6% Hast (Lv. 36 - 39)
+7% Zoroark (Lv. 37 - 38)
+9% Cluuz-S (Lv. 35 - 39)
+2% Zurrclu-S (Lv. 37 - 40)
+5% Dompster-S (Lv. 40)
+6% Arbok-S (Lv. 36 - 39)
+
+Route 34===============================================================================================
+17% Carinator (Lv. 40 - 42)
+13% Grondor (Lv. 37 - 41)
+2% Bipedice (Lv. 41 - 44)
+12% Boulderoar (Lv. 40 - 43)
+10% Tricercil (Lv. 41 - 44)
+15% Rhynee (Lv. 40 - 43)
+14% Armoid (Lv. 40 - 43)
+17% Rockmite (Lv. 40 - 42)
+
+Route 34===============================================================================================
+100% Flamehox (Lv. 40)
+
+Route 35===============================================================================================
+15% Kirlia (Lv. 40 - 42)
+5% Gardevoir (Lv. 37 - 41)
+14% Tigrette (Lv. 41 - 44)
+13% Magestiflash (Lv. 40 - 43)
+14% Busheep (Lv. 41 - 44)
+21% Sparkitten (Lv. 40 - 43)
+9% Cumin (Lv. 40 - 43)
+9% Whiskers (Lv. 40 - 42)
+
+Mindagan Cavern 0===============================================================================================
+12% Clefairy (Lv. 26 - 30)
+13% Minishoo (Lv. 26 - 30)
+25% Tinkie (Lv. 24 - 28)
+25% Dragee (Lv. 25 - 30)
+10% Blobmo (Lv. 24 - 28)
+15% Rockmite (Lv. 26 - 30)
+
 Hummingspark : 4 : 23.25%
 Flashclaw : 3 : 14.00%
+Magestiflash : 1 : 13.00%
 Pigo : 2 : 25.00%
 Pigonat : 3 : 12.00%
 Hammo : 2 : 21.00%
 Sheabear : 2 : 10.00%
+Dualbear : 1 : 15.00%
 Bealtle : 5 : 17.40%
 Centatle : 1 : 9.00%
+Curlatoral : 1 : 5.00%
 Sapwin : 5 : 11.40%
+Treewin : 1 : 7.00%
 Budew : 4 : 13.50%
 Roselia : 2 : 3.50%
 Sewaddle : 3 : 13.33%
 Swadloon : 2 : 10.00%
 Grubbin : 3 : 11.67%
 Charjabug : 1 : 15.00%
-Busheep : 3 : 6.33%
+Busheep : 4 : 8.25%
 Bugik : 3 : 10.67%
 Swordik : 2 : 8.00%
 Lotad : 3 : 32.33%
@@ -480,89 +628,121 @@ Lombre : 1 : 10.00%
 Bluebunn : 4 : 15.50%
 Rocky : 4 : 30.00%
 Carinx : 3 : 14.00%
-Carinator : 2 : 25.00%
+Carinator : 3 : 22.33%
 Pebblepup : 3 : 10.33%
+Boulderoar : 1 : 12.00%
 Fightorex : 2 : 15.00%
 Kleinowl : 2 : 14.50%
 Dualmoose : 2 : 12.50%
 Snom : 5 : 9.80%
-Grondor : 2 : 17.50%
+Grondor : 3 : 16.00%
+Bipedice : 1 : 2.00%
 Tricerpup : 2 : 10.00%
+Tricercil : 1 : 10.00%
 Spheal : 4 : 22.00%
 Froshrog : 7 : 15.29%
 Bugop : 5 : 25.20%
+Opwing : 5 : 17.00%
 Hatenna : 4 : 12.25%
+Hattrem : 1 : 2.00%
 Otterpor : 6 : 18.00%
-Florline : 2 : 14.50%
+Psylotter : 1 : 30.00%
+Florline : 3 : 13.33%
 Psycorb : 4 : 11.50%
 Ralts : 2 : 15.00%
-Kirlia : 1 : 8.00%
-Tigrette : 2 : 20.00%
+Kirlia : 2 : 11.50%
+Gardevoir : 1 : 5.00%
+Tigrette : 3 : 18.00%
 Inkay : 11 : 16.18%
 Flameruff : 2 : 13.50%
+Barkflare : 1 : 16.00%
 Iglite : 2 : 17.50%
 Blaxer : 1 : 10.00%
+Flamehox : 1 : 100.00%
 Tiowoo : 2 : 13.50%
 Houndour : 1 : 20.00%
-Houndoom : 1 : 20.00%
+Houndoom : 2 : 16.50%
 Sparkdust : 1 : 5.00%
-Sparkitten : 2 : 12.50%
+Splame : 1 : 20.00%
+Sparkitten : 3 : 15.33%
 Shookwat : 2 : 45.00%
 Elelamb : 4 : 8.50%
 Twigzap : 2 : 32.50%
 Shockbranch : 1 : 3.00%
 Magie : 1 : 10.00%
+Cumin : 1 : 9.00%
 Vupp : 5 : 13.00%
 Vinnie : 1 : 15.00%
 Whiskie : 2 : 15.00%
+Whiskers : 1 : 9.00%
 Nincada : 3 : 8.33%
 Ninjask : 1 : 2.00%
 Sheltor : 11 : 15.73%
-Lilyray : 9 : 23.67%
+Shelnado : 1 : 40.00%
+Lilyray : 10 : 22.80%
 Daray : 3 : 15.00%
-Magikarp : 11 : 29.09%
-Gyarados : 1 : 20.00%
+Spinaquata : 1 : 15.00%
+Magikarp : 12 : 28.75%
+Gyarados : 2 : 15.00%
 Staryu : 10 : 33.10%
-Ali : 12 : 12.08%
+Ali : 13 : 13.85%
 Posho : 7 : 16.86%
 Binacle : 8 : 17.75%
-Durfish : 5 : 17.40%
+Durfish : 6 : 19.50%
 Kissyfishy : 2 : 32.50%
 Ekans : 2 : 20.00%
-Arbok : 1 : 15.00%
-Zubat : 5 : 25.80%
+Arbok : 2 : 13.50%
+Zubat : 5 : 24.80%
+Golbat : 1 : 10.00%
 Poof : 3 : 20.00%
+Hast : 1 : 6.00%
 Poov : 3 : 11.33%
-Cluuz : 2 : 12.50%
+Grust : 1 : 10.00%
+Cluuz : 3 : 12.33%
+Zurrclu : 1 : 2.00%
 Timburr : 1 : 45.00%
+Gurdurr : 1 : 25.00%
 Rhypo : 2 : 11.00%
+Rhynee : 1 : 15.00%
 Diggie : 1 : 25.00%
-Drillatron : 1 : 20.00%
+Drillatron : 6 : 20.83%
 Wormite : 2 : 12.50%
 Wormbot : 2 : 17.50%
 Cleffa : 4 : 12.50%
-Clefairy : 1 : 12.00%
-Minishoo : 2 : 9.00%
+Clefairy : 2 : 12.00%
+Minishoo : 3 : 10.33%
 Zorua : 2 : 8.00%
+Zoroark : 1 : 7.00%
 Droid : 1 : 15.00%
-Tinkie : 1 : 25.00%
-Dragee : 1 : 25.00%
-Blobmo : 1 : 10.00%
-Rockmite : 1 : 15.00%
-Poof-E : 1 : 10.00%
-Hast-E : 4 : 18.75%
-Droid-E : 2 : 6.00%
-Armoid-E : 4 : 17.50%
-Flamehox-E : 2 : 11.50%
-Fireshard-E : 4 : 11.25%
-Rocky-E : 2 : 22.50%
-Boulder-E : 4 : 21.25%
+Armoid : 1 : 14.00%
+Tinkie : 2 : 25.00%
+Dragee : 2 : 25.00%
+Blobmo : 2 : 10.00%
+Rockmite : 3 : 15.67%
+Poof-E : 1 : 15.00%
+Hast-E : 6 : 21.00%
+Droid-E : 2 : 9.00%
+Armoid-E : 6 : 16.67%
+Flamehox-E : 2 : 16.00%
+Fireshard-E : 6 : 12.50%
+Rocky-E : 2 : 15.00%
+Boulder-E : 6 : 18.17%
+Blaster-E : 1 : 5.00%
+Crystallor-E : 1 : 5.00%
 Magikarp-E : 6 : 60.83%
 Gyarados-E : 5 : 22.00%
+Electrocobra : 1 : 1.00%
+Shadowsaur : 1 : 1.00%
 Durfish-S : 6 : 28.33%
+Dompster-S : 1 : 5.00%
 Wormite-S : 1 : 16.00%
-Wormbot-S : 2 : 25.00%
-Cluuz-S : 2 : 8.00%
-Iglite-S : 1 : 13.00%
-Blaxer-S : 2 : 17.00%
+Wormbot-S : 8 : 23.38%
+Wormatron-S : 2 : 13.50%
+Cluuz-S : 10 : 12.50%
+Zurrclu-S : 3 : 7.67%
+Zurroaratr-S : 2 : 3.50%
+Iglite-S : 2 : 16.50%
+Blaxer-S : 7 : 20.57%
+Pyrator-S : 5 : 30.20%
 Ekans-S : 2 : 25.00%
+Arbok-S : 8 : 12.63%

@@ -283,10 +283,10 @@ public class PlayerCharacter extends Entity {
 		}
 		for (int i = 0; i < gp.npc[1].length; i++) {
 			int trainer = gp.npc[gp.currentMap][i] == null ? 0 : gp.npc[gp.currentMap][i].trainer;
-			if (gp.ticks == 0 && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "down") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
-			if (gp.ticks == 1 && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "up") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
-			if (gp.ticks == 2 && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "left") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
-			if (gp.ticks == 3 && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "right") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
+			if (gp.ticks == 0 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "down") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
+			if (gp.ticks == 1 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "up") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
+			if (gp.ticks == 2 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "left") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
+			if (gp.ticks == 3 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "right") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
 		}
 		if (keyH.wPressed) {
 			// Check trainers
@@ -1685,17 +1685,28 @@ public class PlayerCharacter extends Entity {
 		        	    	JButton party = setUpPartyButton(j);
 		        	        final int index = j;
 		        	        
-		        	        party.addActionListener(g -> { // TODO: make say "won't have any effect" if applicable
+		        	        party.addActionListener(g -> {
 		        	        	if (i.getItem().getID() == 41) {
+		        	        		boolean work = false;
 		        	        		for (Moveslot m : p.team[index].moveset) {
-		        	        			if (m != null) m.currentPP = m.maxPP;
+		        	        			if (m != null && m.currentPP != m.maxPP) {
+		        	        				work = true;
+		        	        				break;
+		        	        			}
 		        	        		}
-		        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s PP was restored!");
-	        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
-			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-	        	        			p.bag.remove(i.getItem());
-	        	        			showBag();
+		        	        		if (work) {
+			        	        		for (Moveslot m : p.team[index].moveset) {
+			        	        			if (m != null) m.currentPP = m.maxPP;
+			        	        		}
+			        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s PP was restored!");
+		        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+		        	        			p.bag.remove(i.getItem());
+		        	        			showBag();
+		        	        		} else {
+		        	        			JOptionPane.showMessageDialog(null, "It won't have any effect.");
+		        	        		}
 		        	        	} else {
 		        	        		JPanel movePanel = new JPanel();
 		        	        	    movePanel.setLayout(new BoxLayout(movePanel, BoxLayout.Y_AXIS));
@@ -1711,14 +1722,18 @@ public class PlayerCharacter extends Entity {
 			        	        			    	if (SwingUtilities.isRightMouseButton(e)) {
 			        	        			            JOptionPane.showMessageDialog(null, m.move.getMoveSummary(p.team[index], null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        	        			        } else {
-			        	        			        	m.currentPP = m.maxPP;
-			        	        			        	JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was restored!");
-			        	        			        	SwingUtilities.getWindowAncestor(movePanel).dispose();
-			        	        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
-			        			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-			        			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-			        			        	        	p.bag.remove(i.getItem());
-			        			        	        	showBag();
+			        	        			        	if (m.currentPP != m.maxPP) {
+			        	        			        		m.currentPP = m.maxPP;
+				        	        			        	JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was restored!");
+				        	        			        	SwingUtilities.getWindowAncestor(movePanel).dispose();
+				        	        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+				        			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+				        			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+				        			        	        	p.bag.remove(i.getItem());
+				        			        	        	showBag();
+			        	        			        	} else {
+			        	        			        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+			        	        			        	}
 			        	        			        }
 			        	        			    }
 			        	        	        });

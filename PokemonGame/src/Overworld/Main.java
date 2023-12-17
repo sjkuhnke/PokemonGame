@@ -269,7 +269,7 @@ public class Main {
 		setAbility("3 Gym Leader 1", 1, Ability.COMPOUND_EYES);
 		setMoveset("3 Gym Leader 1", 2, Move.STICKY_WEB, Move.THUNDERBOLT, Move.BUG_BUZZ, Move.THUNDER_WAVE);
 		setMoveset("3 Gym Leader 1", 3, Move.LEAF_BLADE, Move.X$SCISSOR, Move.FELL_STINGER, Move.SWORDS_DANCE);
-		setMoveset("3 Gym Leader 1", 4, Move.FIRST_IMPRESSION, Move.FELL_STINGER, Move.SACRED_SWORD, Move.AGILITY);
+		setMoveset("3 Gym Leader 1", 4, Move.FIRST_IMPRESSION, Move.U$TURN, Move.CLOSE_COMBAT, Move.ROCK_SLIDE);
 		setMoveset("3 Gym Leader 1", 5, Move.BUG_BITE, Move.MOONLIGHT, Move.FEINT_ATTACK, Move.FELL_STINGER);
 		setMoveset("3 Gym Leader 1", 6, Move.AURORA_BEAM, Move.BUG_BUZZ, Move.SNOWSCAPE, Move.QUIVER_DANCE);
 		
@@ -321,6 +321,13 @@ public class Main {
 		setMoveset("CCA", 1, Move.METRONOME, null, null, null);
 		setMoveset("CCA", 2, Move.METRONOME, null, null, null);
 		setMoveset("CCA", 3, Move.METRONOME, null, null, null);
+		
+		setMoveset("Exp. Trainer", 1, Move.SPLASH, null, null, null);
+		setMoveset("Exp. Trainer", 2, Move.SPLASH, null, null, null);
+		setMoveset("Exp. Trainer", 3, Move.SPLASH, null, null, null);
+		setMoveset("Exp. Trainer", 4, Move.SPLASH, null, null, null);
+		setMoveset("Exp. Trainer", 5, Move.SPLASH, null, null, null);
+		setMoveset("Exp. Trainer", 6, Move.SPLASH, null, null, null);
 		
 //		Move[] yes = Move.values();
 //		int max = 0;
@@ -597,7 +604,8 @@ public class Main {
 				new Trainer("6 Gym H", new Pokemon[]{new Pokemon(40, 60, false, true), new Pokemon(110, 60, false, true)}, 200),
 				new Trainer("6 Gym I", new Pokemon[]{new Pokemon(176, 61, false, true), new Pokemon(189, 60, false, true)}, 200),
 				new Trainer("6 Gym Leader 1", new Pokemon[]{new Pokemon(87, 62, false, true), new Pokemon(110, 62, false, true), new Pokemon(170, 62, false, true), new Pokemon(12, 62, false, true), new Pokemon(40, 62, false, true), new Pokemon(208, 63, false, true)}, 500, Item.TM97), // 255
-//				new Trainer("Y", new Pokemon[]{new Pokemon(-93, 24, false, true), new Pokemon(-89, 23, false, true)}, 100),
+				new Trainer("Exp. Trainer", new Pokemon[]{new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true)}, 100),
+				new Trainer("BP1", new Pokemon[] {new Pokemon(17, 48, false, true), new Pokemon(21, 47, false, true), new Pokemon(93, 48, false, true), new Pokemon(89, 48, false, true), new Pokemon(161, 47, false, true), new Pokemon(188, 48, false, true)}, 100),
 //				new Trainer("Z", new Pokemon[]{new Pokemon(-75, 26, false, true)}, 100),
 //				new Trainer("AA", new Pokemon[]{new Pokemon(-97, 19, false, true), new Pokemon(-98, 26, false, true)}, 100),
 //				new Trainer("BB", new Pokemon[]{new Pokemon(-41, 26, false, true)}, 100),
@@ -1263,6 +1271,91 @@ public class Main {
 			
 			encounters = Encounter.getEncounters(99, 58, 41, "Standard", "", false); // Electric H
 			writer.write("Electric Tunnel H");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(100, 58, 41, "Standard", "", false); // Shadow H
+			writer.write("Shadow Ravine H");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(101, 58, 41, "Standard", "", false); // Shadow -1
+			writer.write("Shadow Ravine -1");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(101, 58, 41, "Fishing", "", false); // Shadow -1
+			writer.write("Shadow Ravine -1");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(101, 58, 41, "Surfing", "", false); // Shadow -1
+			writer.write("Shadow Ravine -1");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(102, 58, 41, "Standard", "", false); // Shadow -2
+			writer.write("Shadow Ravine -2");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(102, 58, 41, "Lava", "", false); // Shadow -2
+			writer.write("Shadow Ravine -2");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(103, 58, 41, "Standard", "", false); // Shadow -3
+			writer.write("Shadow Ravine -3");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(103, 58, 41, "Lava", "", false); // Shadow -3
+			writer.write("Shadow Ravine -3");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(105, 58, 41, "Standard", "", false); // Shadow Path
+			writer.write("Shadow Path");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(85, 58, 41, "Standard", "", false); // Route 33
+			writer.write("Route 33");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(85, 58, 41, "Fishing", "", false); // Route 33
+			writer.write("Route 33");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(85, 58, 41, "Surfing", "", false); // Route 33
+			writer.write("Route 33");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(107, 87, 17, "Standard", "", false); // Ghostly Woods
+			writer.write("Ghostly Woods");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(110, 58, 41, "Standard", "", false); // Route 34
+			writer.write("Route 34");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(110, 58, 41, "Lava", "", false); // Route 34
+			writer.write("Route 34");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(115, 58, 41, "Standard", "", false); // Route 35
+			writer.write("Route 35");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(117, 58, 41, "Standard", "", false); // Mindagan Cavern 0
+			writer.write("Mindagan Cavern 0");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
