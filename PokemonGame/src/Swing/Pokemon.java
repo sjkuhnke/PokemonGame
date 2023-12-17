@@ -8203,7 +8203,7 @@ public class Pokemon implements Serializable {
 			movebank[24] = new Node(Move.LIQUIDATION);
 			movebank[29] = new Node(Move.SHADOW_CLAW);
 			movebank[34] = new Node(Move.DRILL_RUN);
-			movebank[36] = new Node(Move.SHADOW_CLAW);
+			movebank[36] = new Node(Move.AQUA_JET);
 			movebank[39] = new Node(Move.PLAY_ROUGH);
 			movebank[41] = new Node(Move.SUCKER_PUNCH);
 			movebank[44] = new Node(Move.EARTHQUAKE);
