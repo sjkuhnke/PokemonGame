@@ -187,6 +187,9 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(35, 43, 33, mapNum); // careful
 		gp.obj[mapNum][objIndex] = ObjSetup(42, 39, 105, mapNum); // body slam (change to in house??)
 		
+		gp.obj[mapNum][objIndex] = ObjSetup(64, 70, 130, mapNum); // u-turn
+		gp.obj[mapNum][objIndex] = ObjSetup(72, 69, 153, mapNum); // volt switch
+		
 		mapNum = 35;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(7, 56, 12, mapNum);
@@ -282,6 +285,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(25, 55, 39, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(27, 72, 42, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(87, 46, 165, mapNum); // shadow claw
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 69, 26, mapNum);
 		
 		mapNum = 83;
 		objIndex = 0;
@@ -377,6 +381,7 @@ public class AssetSetter {
 		mapNum = 104;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 61, 42, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 61, 98, mapNum);
 		
 		mapNum = 105;
 		objIndex = 0;
@@ -446,6 +451,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(47, 51, 26, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 77, 14, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(32, 51, 11, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(18, 69, 26, mapNum);
 		
 		mapNum = 115;
 		objIndex = 0;
@@ -896,6 +902,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(5, 49, 74, 171);
 		
 		gp.npc[mapNum][index] = NPCSetup(7, 25, 11, -1);
+		gp.npc[mapNum][index] = NPCSetup(3, 17, 68, 257);
 		
 		mapNum = 83;
 		index = 0;
@@ -1120,6 +1127,10 @@ public class AssetSetter {
 		
 		gp.iTile[mapNum][iIndex] = ITileSetup(15, 53, 0, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(29, 53, 0, mapNum, map);
+		
+		mapNum = 33;
+		iIndex = 0;
+		SetupWhirlpool(mapNum, 68, 61, map);
 		
 		mapNum = 35;
 		iIndex = 0;

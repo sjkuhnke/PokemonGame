@@ -75,26 +75,26 @@ public class Trainer {
 	
 	private Pokemon getNext(Pokemon other) {
 		Pokemon result = null;
-		Move highestBPMove = null;
+		//Move highestBPMove = null;
 		int highestBP = Integer.MIN_VALUE;
 		for (Pokemon p : team) {
 			if (!p.isFainted()) {
-				System.out.println("\n" + p.name);
+				//System.out.println("\n" + p.name);
 				for (Moveslot m : p.moveset) {
 					if (m != null) {
 						Move move = m.move;
 						int effectiveBP = (int) (move.getbp(p, other) * other.getEffectiveMultiplier(move.mtype) * ((move.mtype == p.type1 || move.mtype == p.type2) ? 1.5 : 1));
 						if (effectiveBP > highestBP) {
-							highestBPMove = move;
+							//highestBPMove = move;
 							highestBP = effectiveBP;
 							result = p;
 						}
-						System.out.println(move + ": " + effectiveBP);
+						//System.out.println(move + ": " + effectiveBP);
 					}
 				}
 			}
 		}
-		System.out.println("----------------\n" + result.name + ": " + highestBPMove + "\n----------------");
+		//System.out.println("----------------\n" + result.name + ": " + highestBPMove + "\n----------------");
 		return result;
 	}
 

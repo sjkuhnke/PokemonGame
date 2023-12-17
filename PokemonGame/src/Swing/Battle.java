@@ -1323,7 +1323,7 @@ public class Battle extends JFrame {
 			if (faster.vStatuses.contains(Status.SWITCHING)) faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS);
 			
 			if (m2 == Move.SUCKER_PUNCH && m1.cat == 2) m2 = Move.FAILED_SUCKER;
-	        slower.move(faster, m2, me, enemyTeam, foeTrainer, false);
+	        if (!(foeTrainer != null && slower != foeTrainer.getCurrent())) slower.move(faster, m2, me, enemyTeam, foeTrainer, false);
 	        
 	        // Check for swap (AI)
 	        if (slower.vStatuses.contains(Status.SWITCHING)) {
@@ -1342,7 +1342,7 @@ public class Battle extends JFrame {
 	        }
 			
 			if (m1 == Move.SUCKER_PUNCH && m2.cat == 2) m1 = Move.FAILED_SUCKER;
-	        slower.move(faster, m1, me, enemyTeam, foeTrainer, false);
+	        if (slower == me.getCurrent()) slower.move(faster, m1, me, enemyTeam, foeTrainer, false);
 	        // Check for swap
 	        if (slower.vStatuses.contains(Status.SWITCHING)) slower = getSwap(pl, slower.lastMoveUsed == Move.BATON_PASS);
 		}
@@ -1746,30 +1746,7 @@ public class Battle extends JFrame {
 		greatballLabel.setText(pl.p.bag.count[2] + "");
 		ultraballLabel.setText(pl.p.bag.count[3] + "");
 	}
-	
-//	private Trainer[] getUnbeatenTrainers() {
-//		// First, create a list to store trainers that haven't been beaten
-//		ArrayList<Trainer> unbeatenTrainers = new ArrayList<>();
-//
-//		// Iterate through all trainers and add unbeaten trainers to the list
-//		for (Trainer trainer : trainers) {
-//		    if (!me.trainersBeat.contains(trainer.toString())) {
-//		        unbeatenTrainers.add(trainer);
-//		    }
-//		}
-//		// Create a new array with the unbeaten trainers
-//		Trainer[] unbeatenTrainersArray = unbeatenTrainers.toArray(new Trainer[0]);
-//		return unbeatenTrainersArray;
-//	}
-	
-//	private void updateTrainers() {
-//		Trainer[] unbeatenTrainers = getUnbeatenTrainers();
-//	    DefaultComboBoxModel<Trainer> model = new DefaultComboBoxModel<>(unbeatenTrainers);
-//	    model.insertElementAt(new Trainer(true), 0); // Add placeholder at index 0
-//	    trainerSelect.setModel(model);
-//	    trainerSelect.setSelectedIndex(0); // Set placeholder as default selection
-//	}
-	
+
 	public void setBattleCloseListener(BattleCloseListener listener) {
         this.battleCloseListener = listener;
     }

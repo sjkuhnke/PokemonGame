@@ -226,7 +226,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 
 	@Override
 	public void onBattleClosed(int trainer, int id) {
-		if (trainer > -1 && !player.p.wiped()) player.p.trainersBeat[trainer] = true;
+		if (trainer > -1 && !player.p.wiped() && trainer != 256) player.p.trainersBeat[trainer] = true;
 		if (id == 159) {
 			player.p.grustCount++;
 			aSetter.updateNPC();

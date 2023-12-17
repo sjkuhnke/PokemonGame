@@ -253,13 +253,13 @@ public class Encounter {
 				encounters.add(new Encounter(123, 16, 18, 0.05));
 				encounters.add(new Encounter(129, 17, 18, 0.05));
 			} else if (area == 35 && type.equals("Standard")) { // Electric Tunnel 01
-				encounters.add(new Encounter(153, 19, 20, 0.20));
+				encounters.add(new Encounter(153, 19, 20, 0.15));
 				encounters.add(new Encounter(114, 18, 19, 0.10));
 				encounters.add(new Encounter(123, 17, 18, 0.10));
-				encounters.add(new Encounter(197, 18, 19, 0.10));
-				encounters.add(new Encounter(199, 17, 19, 0.07));
-				encounters.add(new Encounter(202, 20, 20, 0.03));
-				encounters.add(new Encounter(205, 18, 19, 0.40));
+				encounters.add(new Encounter(197, 18, 19, 0.15));
+				encounters.add(new Encounter(199, 17, 19, 0.13));
+				encounters.add(new Encounter(202, 20, 20, 0.12));
+				encounters.add(new Encounter(205, 18, 19, 0.25));
 			} else if (area == 36 && type.equals("Standard")) { // Route 29
 				encounters.add(new Encounter(11, 20, 22, 0.12));
 				encounters.add(new Encounter(29, 18, 21, 0.12));
@@ -419,7 +419,7 @@ public class Encounter {
 				encounters.add(new Encounter(200, 39, 43, 0.12));
 				encounters.add(new Encounter(203, 39, 43, 0.20));
 				encounters.add(new Encounter(206, 39, 43, 0.15));
-			} else if (area == 97 && type.equals("Standard")) { // Electric -3
+			} else if (area == 98 && type.equals("Standard")) { // Electric -3
 				encounters.add(new Encounter(198, 42, 46, 0.40));
 				encounters.add(new Encounter(200, 42, 46, 0.20));
 				encounters.add(new Encounter(203, 42, 46, 0.20));
@@ -473,7 +473,7 @@ public class Encounter {
 				encounters.add(new Encounter(212, 45, 45, 0.01));
 				encounters.add(new Encounter(214, 45, 45, 0.01));
 			} else if (area == 103 && type.equals("Lava")) { // Shadow Ravine -3
-				encounters.add(new Encounter(225, 55, 55, 0.100));
+				encounters.add(new Encounter(225, 55, 55, 1.0));
 			} else if (area == 85 && type.equals("Standard")) { // Route 33
 				encounters.add(new Encounter(20, 34, 38, 0.15));
 				encounters.add(new Encounter(80, 34, 38, 0.11));
@@ -527,6 +527,13 @@ public class Encounter {
 				encounters.add(new Encounter(108, 40, 43, 0.21));
 				encounters.add(new Encounter(121, 40, 43, 0.09));
 				encounters.add(new Encounter(127, 40, 42, 0.09));
+			} else if (area == 117 && type.equals("Standard")) { // Mindagan Cavern 0
+				encounters.add(new Encounter(175, 26, 30, 0.12));
+				encounters.add(new Encounter(177, 26, 30, 0.13));
+				encounters.add(new Encounter(184, 24, 28, 0.25));
+				encounters.add(new Encounter(187, 25, 30, 0.25));
+				encounters.add(new Encounter(190, 24, 28, 0.10));
+				encounters.add(new Encounter(195, 26, 30, 0.15));
 			}
 			
 			
