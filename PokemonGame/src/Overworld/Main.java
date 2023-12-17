@@ -1014,7 +1014,7 @@ public class Main {
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
-			encounters = Encounter.getEncounters(11, 73, 56, "Standard", "", false); // route 25
+			encounters = Encounter.getEncounters(11, 73, 54, "Standard", "", false); // route 25
 			writer.write("Route 25");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);

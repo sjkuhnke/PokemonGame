@@ -4592,6 +4592,9 @@ public class Pokemon implements Serializable {
 			if (this.trainerOwned() && enemy.hasValidMembers()) {
 				console.writeln(this.nickname + " went back to " + enemy.getName() + "!");
 				this.vStatuses.add(Status.SWITCHING);
+			} else if (this.playerOwned && player.hasValidMembers()) {
+				console.writeln(this.nickname + " went back to you!");
+				this.vStatuses.add(Status.SWITCHING);
 			} else {
 				fail = fail();
 			}

@@ -31,7 +31,7 @@ Trainer 1 Gym Leader 1      Hummingspark Lv. 16, Zubat Lv. 16, Daray Lv. 16, Eka
 1 Gym Leader 1
 Hummingspark (Lv. 16) /   Keen Eye           /   Quick Attack, Whirlwind, Flash Ray, Gust
 Zubat (Lv. 16)        /   Strong Jaw         /   Mega Drain, Supersonic, Aerial Ace, Poison Fang
-Daray (Lv. 16)        /   Unaware            /   Aqua Ring, Supersonic, Double Slap, Water Gun
+Daray (Lv. 16)        /   Unaware            /   Aqua Ring, Supersonic, Wing Attack, Water Pulse
 Ekans-S (Lv. 16)      /   Lightning Rod      /   Gust, Glare, Night Shade, Shadow Sneak
 Minishoo (Lv. 16)     /   Natural Cure       /   Calm Mind, Wish, Magic Blast, Gust
 Pigonat (Lv. 17)      /   Insomnia           /   Sand Attack, Leer, Aerial Ace, Quick Attack
@@ -145,7 +145,7 @@ Trainer 3 Gym Leader 1      Millistone Lv. 31, Vikavolt Lv. 32, Leavanny Lv. 32,
 Millistone (Lv. 31)   /   Compound Eyes      /   Fell Stinger, Aqua Tail, Iron Tail, Stealth Rock
 Vikavolt (Lv. 32)     /   Levitate           /   Sticky Web, Thunderbolt, Bug Buzz, Thunder Wave
 Leavanny (Lv. 32)     /   Sharpness          /   Leaf Blade, X-Scissor, Fell Stinger, Swords Dance
-Swordik (Lv. 32)      /   Hyper Cutter       /   First Impression, Fell Stinger, Sacred Sword, Agility
+Swordik (Lv. 32)      /   Hyper Cutter       /   First Impression, U-Turn, Close Combat, Rock Slide
 Opwing (Lv. 32)       /   Technician         /   Bug Bite, Moonlight, Feint Attack, Fell Stinger
 Frosmoth (Lv. 33)     /   Icy Scales         /   Aurora Beam, Bug Buzz, Snowscape, Quiver Dance
 
@@ -381,3 +381,5 @@ Magestiflash (Lv. 62) /   Magic Guard        /   Morning Sun, Hurricane, Prismat
 Bushewe (Lv. 62)      /   Serene Grace       /   Energy Ball, Charge Beam, Thunder Wave, Ice Beam
 Crystallor-E (Lv. 63) /   Clear Body         /   Glittering Sword, Zing Zap, Shell Smash, Overheat
 
+Trainer Exp. Trainer        Magikarp Lv. 50, Magikarp Lv. 50, Magikarp Lv. 50, Magikarp Lv. 50, Magikarp Lv. 50, Magikarp Lv. 50
+Trainer BP1                 HammyBoy Lv. 48, Spacebear Lv. 47, Barkflare Lv. 48, Tigrette Lv. 48, Zurrclu Lv. 47, Draga Lv. 48

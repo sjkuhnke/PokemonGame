@@ -116,12 +116,12 @@ public class Encounter {
 				encounters.add(new Encounter(71, 16, 17, 0.20));
 				encounters.add(new Encounter(132, 15, 16, 0.10));
 			} else if (area == 11 && y < 55 && type.equals("Standard")) { // route 25
-				encounters.add(new Encounter(16, 12, 12, 0.25));
+				encounters.add(new Encounter(16, 12, 12, 0.20));
 				encounters.add(new Encounter(19, 13, 13, 0.20));
 				encounters.add(new Encounter(38, 11, 13, 0.15));
 				encounters.add(new Encounter(151, 11, 13, 0.20));
-				encounters.add(new Encounter(80, 11, 13, 0.05));
-				encounters.add(new Encounter(163, 11, 11, 0.05));
+				encounters.add(new Encounter(80, 11, 13, 0.10));
+				encounters.add(new Encounter(163, 11, 11, 0.10));
 				encounters.add(new Encounter(166, 10, 12, 0.05));
 			} else if (area == 13 && type.equals("Fishing")) { // sicab city
 				encounters.add(new Encounter(137, 15, 18, 0.35));
