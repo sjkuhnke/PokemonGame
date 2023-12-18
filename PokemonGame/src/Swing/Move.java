@@ -44,7 +44,7 @@ public enum Move {
 	BEEFY_BASH(100,85,50,0,0,-1,PType.FIGHTING,"% chance to paralyze foe, moves last",true,5),
 	BELCH(120,100,0,0,1,0,PType.POISON,"Only works on the first turn out",false,10),
 	//BIG_BULLET(70,90,30,0,0,0,PType.STEEL,"% chance to Paralyze foe",false,1),
-	BIND(15,85,100,0,0,0,PType.NORMAL,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/16 HP in damage, and cannot switch",true,20),
+	BIND(15,85,100,0,0,0,PType.NORMAL,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,20),
 	BITE(60,100,30,0,0,0,PType.DARK,"% chance of causing foe to flinch",true,20),
 	BITTER_MALICE(75,100,30,0,1,0,PType.GHOST,"% chance to Frostbite foe",false,10),
 	//BLACK_HOLE(90,90,100,0,1,0,PType.DARK,"% chance of lowering foe's Accuracy by 1",false,1),
@@ -174,7 +174,7 @@ public enum Move {
 	//FIRE_DASH(0,100,100,0,0,0,PType.FIRE,"% to Burn foe, user faints. Damage equals user's remaining HP",false,1),
 	FIRE_FANG(65,95,10,0,0,0,PType.FIRE,"% of flinching and/or Burning foe",true,15),
 	FIRE_PUNCH(75,100,10,0,0,0,PType.FIRE,"% to Burn foe",true,15),
-	FIRE_SPIN(35,85,100,0,1,0,PType.FIRE,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/16 HP in damage, and cannot switch",false,15),
+	FIRE_SPIN(35,85,100,0,1,0,PType.FIRE,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
 	//FIRE_TAIL(85,90,10,0,0,0,PType.FIRE,"% to Burn foe",false,1),
 	//FIREBALL(-1,100,10,0,1,0,PType.FIRE,"% chance to Burn foe, damage is doubled if foe is Burned",false,1),
 	FIRST_IMPRESSION(90,100,0,0,0,1,PType.BUG,"Always attacks first, fails after the first turn a user is out in battle",true,10),
@@ -269,7 +269,7 @@ public enum Move {
 	//IGNITE(0,75,0,0,2,0,PType.FIRE,"Burns foe",false,1),
 	INCINERATE(60,100,100,0,1,0,PType.FIRE,"% to lower foe's Sp. Def by 1",false,15),
 	INFERNO(100,50,100,0,1,0,PType.FIRE,"% chance to Burn foe",false,5),
-	INFESTATION(20,100,100,0,1,0,PType.BUG,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/16 HP in damage, and cannot switch",true,15),
+	INFESTATION(20,100,100,0,1,0,PType.BUG,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,15),
 	INGRAIN(0,1000,0,0,2,0,PType.GRASS,"Restores a small amount of HP at the end of every turn, user can't switch out",false,15),
 	//INJECT(55,100,100,0,0,0,PType.BUG,"% to Poison foe, heals 50% of damage dealt",false,1),
 	IRON_BLAST(85,95,30,0,1,0,PType.STEEL,"% chance to cause foe to Flinch",false,20),
@@ -307,7 +307,7 @@ public enum Move {
 	LUSTER_PURGE(70,100,50,0,1,0,PType.LIGHT,"% chance to lower foe's Sp.Def by 1",false,10),
 	MACH_PUNCH(40,100,0,0,0,1,PType.FIGHTING,"Always goes first",true,15),
 	MACHETE_JAB(75,80,100,0,0,0,PType.STEEL,"% to lower foe's Attack by 1",true,15),
-	MAGIC_BLAST(30,100,0,0,1,0,PType.MAGIC,"A random Rock, Ground or Grass move is also used",false,10),
+	MAGIC_BLAST(30,95,0,0,1,0,PType.MAGIC,"A random Rock, Ground or Grass move is also used",false,10),
 	MAGIC_CRASH(110,80,100,0,0,0,PType.MAGIC,"% to inflict foe with a random Status condition. User must rest after using",true,5),
 	MAGIC_FANG(70,95,75,0,0,0,PType.MAGIC,"% to flinch foe if this move is Super-Effective against it",true,10),
 	MAGIC_POWDER(0,100,0,0,2,0,PType.MAGIC,"Changes foe's type to MAGIC",false,15),
@@ -333,7 +333,7 @@ public enum Move {
 	MIRROR_MOVE(0,1000,0,0,2,0,PType.FLYING,"Uses the move last used by the foe, fails if foe hasn't used a move yet",false,15),
 	MIST_BALL(70,100,50,0,1,0,PType.PSYCHIC,"% chance to lower foe's Sp.Atk by 1",false,15),
 	MOLTEN_CONSUME(50,100,100,0,0,0,PType.FIRE,"% chance to Burn foe",true,5),
-	MOLTEN_LAIR(0,100,0,0,2,4,PType.FIRE,"User protects itself, can't be used in succession. Burns foe if they make contact",false,5),
+	LAVA_LAIR(0,100,0,0,2,4,PType.FIRE,"User protects itself, can't be used in succession. Burns foe if they make contact",false,5),
 	MOLTEN_STEELSPIKE(100,90,30,0,1,0,PType.STEEL,"% chance to Burn foe",false,10),
 	MOONBLAST(95,100,30,0,1,0,PType.LIGHT,"% chance to lower foe's Sp.Atk",false,5),
 	MOONLIGHT(0,1000,0,0,2,0,PType.LIGHT,"Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather",false,5),
@@ -590,7 +590,7 @@ public enum Move {
 	WATERFALL(80,100,10,0,0,0,PType.WATER,"% of causing foe to flinch",true,10),
 	WEATHER_BALL(-1,100,0,0,1,0,PType.NORMAL,"Type changes to match the current weather, double BP if type of the move changes",false,10),
 	WHIP_SMASH(120,100,0,0,0,0,PType.NORMAL,"A normal attack",true,5),
-	WHIRLPOOL(35,85,100,0,1,0,PType.WATER,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/16 HP in damage, and cannot switch",false,15),
+	WHIRLPOOL(35,85,100,0,1,0,PType.WATER,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
 	WHIRLWIND(0,1000,0,0,2,-6,PType.FLYING,"Forces foe to switch out to a random teammate",false,20),
 	WILL$O$WISP(0,85,0,0,2,0,PType.FIRE,"Burns foe",false,15),
 	WING_ATTACK(60,100,0,0,0,0,PType.FLYING,"A normal attack",true,35),
@@ -598,7 +598,7 @@ public enum Move {
 	WITHDRAW(0,1000,0,0,2,0,PType.WATER,"Raises user's Defense by 1",false,35),
 	WORRY_SEED(0,100,0,0,2,0,PType.GRASS,"Changes foe's ability to INSOMNIA",false,10),
 	//WOOD_FANG(50,100,50,0,0,0,PType.ROCK,"% to cause foe to flinch",false,1), // recoil
-	WRAP(15,90,100,0,0,0,PType.NORMAL,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/16 HP in damage, and cannot switch",true,20),
+	WRAP(15,90,100,0,0,0,PType.NORMAL,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,20),
 	//WRING_OUT(-1,100,0,0,0,0,PType.NORMAL,"Attack's power is greater the more HP the foe has",true,1),
 	X$SCISSOR(80,100,0,1,0,0,PType.BUG,"Boosted Crit rate",true,15),
 	ZAP_CANNON(120,50,100,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false,5),
@@ -936,7 +936,7 @@ public enum Move {
 		ArrayList<Move> result = new ArrayList<>();
 		result.add(DETECT);
 		result.add(PROTECT);
-		result.add(MOLTEN_LAIR);
+		result.add(LAVA_LAIR);
 		result.add(OBSTRUCT);
 		result.add(SPIKY_SHIELD);
 		result.add(ENDURE);
