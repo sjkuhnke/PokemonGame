@@ -2045,11 +2045,11 @@ public class Pokemon implements Serializable {
 		} else if (id == 8) { abilities = new Ability[] {Ability.TORRENT, Ability.PROTEAN};
 		} else if (id == 9) { abilities = new Ability[] {Ability.TORRENT, Ability.PROTEAN};
 		} else if (id == 10) { abilities = new Ability[] {Ability.KEEN_EYE, Ability.INSECT_FEEDER};
-		} else if (id == 11) { abilities = new Ability[] {Ability.KEEN_EYE, Ability.INSECT_FEEDER};
-		} else if (id == 12) { abilities = new Ability[] {Ability.MAGIC_GUARD, Ability.INSECT_FEEDER};
+		} else if (id == 11) { abilities = new Ability[] {Ability.MIRROR_ARMOR, Ability.INSECT_FEEDER};
+		} else if (id == 12) { abilities = new Ability[] {Ability.MIRROR_ARMOR, Ability.INSECT_FEEDER};
 		} else if (id == 13) { abilities = new Ability[] {Ability.INSOMNIA, Ability.INSECT_FEEDER};
 		} else if (id == 14) { abilities = new Ability[] {Ability.INSOMNIA, Ability.INSECT_FEEDER};
-		} else if (id == 15) { abilities = new Ability[] {Ability.MIRROR_ARMOR, Ability.TOUGH_CLAWS};
+		} else if (id == 15) { abilities = new Ability[] {Ability.BATTLE_ARMOR, Ability.TOUGH_CLAWS};
 		} else if (id == 16) { abilities = new Ability[] {Ability.MOUTHWATER, Ability.THICK_FAT};
 		} else if (id == 17) { abilities = new Ability[] {Ability.MOUTHWATER, Ability.THICK_FAT};
 		} else if (id == 18) { abilities = new Ability[] {Ability.ROUGH_SKIN, Ability.ROCK_HEAD};
@@ -3152,7 +3152,7 @@ public class Pokemon implements Serializable {
 			console.writeln(foe.nickname + " protected itself!");
 			if (move.contact) {
 				if (foe.lastMoveUsed == Move.OBSTRUCT) stat(this, 1, -2, foe);
-				if (foe.lastMoveUsed == Move.MOLTEN_LAIR) burn(false, foe);
+				if (foe.lastMoveUsed == Move.LAVA_LAIR) burn(false, foe);
 				if (foe.lastMoveUsed == Move.SPIKY_SHIELD && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 					this.currentHP -= Math.max(this.getStat(0) / 8.0, 1);
 					console.writeln(this.nickname + " was hurt!");
@@ -3582,7 +3582,7 @@ public class Pokemon implements Serializable {
 			critChance = move.critChance;
 			if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 			if (this.ability == Ability.SUPER_LUCK) critChance++;
-			if (critCheck(critChance)) {
+			if (foe.ability != Ability.BATTLE_ARMOR && critCheck(critChance)) {
 				console.writeln("A critical hit!");
 				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++; 
 				if (move.isPhysical() && attackStat < this.getStat(1)) {
@@ -4640,7 +4640,7 @@ public class Pokemon implements Serializable {
 				stat(this, 1, 1, foe);
 				stat(this, 4, -1, foe);
 			}
-		} else if (move == Move.DETECT || move == Move.PROTECT || move == Move.MOLTEN_LAIR || move == Move.OBSTRUCT || move == Move.SPIKY_SHIELD) {
+		} else if (move == Move.DETECT || move == Move.PROTECT || move == Move.LAVA_LAIR || move == Move.OBSTRUCT || move == Move.SPIKY_SHIELD) {
 			if (Move.getNoComboMoves().contains(lastMoveUsed) && success) {
 				fail = fail();
 			} else {
@@ -5914,7 +5914,7 @@ public class Pokemon implements Serializable {
 		    movebank[37] = new Node(Move.DRILL_PECK);
 			movebank[40] = new Node(Move.DEFOG);
 		    movebank[43] = new Node(Move.ROOST);
-		    movebank[46] = new Node(Move.TAKE_DOWN);
+		    movebank[46] = new Node(Move.IRON_DEFENSE);
 		    movebank[49] = new Node(Move.FLY);
 		    movebank[52] = new Node(Move.NIGHT_SLASH);
 		    movebank[56] = new Node(Move.GYRO_BALL);
@@ -7421,7 +7421,7 @@ public class Pokemon implements Serializable {
 			movebank[41] = new Node(Move.MOLTEN_CONSUME);
 			movebank[44] = new Node(Move.OVERHEAT);
 			movebank[48] = new Node(Move.EARTH_POWER);
-			movebank[51] = new Node(Move.MOLTEN_LAIR);
+			movebank[51] = new Node(Move.LAVA_LAIR);
 			movebank[56] = new Node(Move.POWER_GEM);
 			movebank[61] = new Node(Move.ERUPTION);
 			movebank[64] = new Node(Move.HYPER_BEAM);
@@ -9932,6 +9932,8 @@ public class Pokemon implements Serializable {
 		int critChance = move.critChance;
 		Ability foeAbility = foe.ability;
 		
+		int magicDamage = 0;
+		
 		ArrayList<FieldEffect> enemySide = this.playerOwned ? field.foeSide : field.playerSide;
 		
 		if (id == 237) {
@@ -9942,8 +9944,29 @@ public class Pokemon implements Serializable {
 			critChance = move.critChance;
 		}
 		
-		if (move == Move.MAGIC_BLAST || move == Move.ELEMENTAL_SPARKLE) {
-			bp = 100;
+		if (mode == 0 && (move == Move.MAGIC_BLAST || move == Move.ELEMENTAL_SPARKLE)) {
+			if (move == Move.MAGIC_BLAST) {
+				ArrayList<Move> moves = new ArrayList<>();
+				for (Move cand : Move.values()) {
+					if (cand.mtype == PType.ROCK || cand.mtype == PType.GRASS || cand.mtype == PType.GROUND) {
+						moves.add(cand);
+					}
+				}
+				Move[] validMoves = moves.toArray(new Move[moves.size()]);
+				Move pickMove = validMoves[new Random().nextInt(validMoves.length)];
+				magicDamage = calcWithTypes(foe, pickMove, first, mode, crit);
+			}
+			if (move == Move.ELEMENTAL_SPARKLE) {
+				ArrayList<Move> moves = new ArrayList<>();
+				for (Move cand : Move.values()) {
+					if (cand.mtype == PType.FIRE || cand.mtype == PType.WATER || cand.mtype == PType.GRASS) {
+						moves.add(cand);
+					}
+				}
+				Move[] validMoves = moves.toArray(new Move[moves.size()]);
+				Move pickMove = validMoves[new Random().nextInt(validMoves.length)];
+				magicDamage = calcWithTypes(foe, pickMove, first, mode, crit);
+			}
 		}
 		
 		if (move == Move.SLEEP_TALK || move == Move.SNORE) {
@@ -9960,7 +9983,7 @@ public class Pokemon implements Serializable {
 			} else {
 				bp *= 6;
 			}
-		} 
+		}
 		
 		if (this.ability == Ability.COMPOUND_EYES) acc *= 1.3;
 		if (field.contains(field.fieldEffects, Effect.GRAVITY)) acc = acc * 5 / 3;
@@ -10169,7 +10192,7 @@ public class Pokemon implements Serializable {
 		// Crit Check
 		if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 		if (this.ability == Ability.SUPER_LUCK) critChance++;
-		if ((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 3 || crit))) {
+		if (foe.ability != Ability.BATTLE_ARMOR && ((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 3 || crit)))) {
 			if (move.isPhysical() && attackStat < this.getStat(1)) {
 				attackStat = this.getStat(1);
 				if (this.status == Status.BURNED) attackStat /= 2;
@@ -10274,6 +10297,8 @@ public class Pokemon implements Serializable {
 		
 
 		if (mode == 0 && damage >= foe.currentHP) damage = foe.currentHP; // Check for kill
+		
+		if (mode == 0 && (move == Move.MAGIC_BLAST || move == Move.ELEMENTAL_SPARKLE)) damage += magicDamage;
 		
 		if (move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) {
 			Random rand = new Random();

@@ -6,6 +6,7 @@ public enum Ability {
 	ANGER_POINT("Maxes Attack after taking a critical hit."),
 	ANTICIPATION("Senses an opposing Pokemon's dangerous moves."),
 	INSOMNIA("Prevents the Pokemon from falling asleep."),
+	BATTLE_ARMOR("This Pokemon cannot be Critical hit"),
 	BLAZE("Powers up FIRE moves in a pinch."),
 	CHLOROPHYLL("Boosts the Pokemon's Speed stat in SUNSHINE."),
 	CLEAR_BODY("Prevents other Pokemon from lowering its stats."),

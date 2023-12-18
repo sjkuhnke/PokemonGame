@@ -261,7 +261,7 @@ Type:
 Light / Flying
 
 Ability:
-Keen Eye / Insect Feeder
+Mirror Armor / Insect Feeder
 
 Base Stats:
 50 HP / 40 Atk / 45 Def / 75 SpA / 70 SpD / 100 Spe / 380 BST
@@ -288,7 +288,7 @@ Type:
 Light / Flying
 
 Ability:
-Magic Guard / Insect Feeder
+Mirror Armor / Insect Feeder
 
 Base Stats:
 70 HP / 40 Atk / 60 Def / 100 SpA / 100 SpD / 130 Spe / 500 BST
@@ -368,7 +368,7 @@ Type:
 Steel / Flying
 
 Ability:
-Mirror Armor / Tough Claws
+Battle Armor / Tough Claws
 
 Base Stats:
 73 HP / 85 Atk / 110 Def / 56 SpA / 90 SpD / 81 Spe / 495 BST
@@ -389,7 +389,7 @@ Level Up:
 38 - Drill Peck
 41 - Defog
 44 - Roost
-47 - Take Down
+47 - Iron Defense
 50 - Fly
 53 - Night Slash
 57 - Gyro Ball
@@ -2863,7 +2863,7 @@ Level Up:
 42 - Molten Consume
 45 - Overheat
 49 - Earth Power
-52 - Molten Lair
+52 - Lava Lair
 57 - Power Gem
 62 - Eruption
 65 - Hyper Beam
@@ -4151,7 +4151,7 @@ Level Up:
 25 - Liquidation
 30 - Shadow Claw
 35 - Drill Run
-37 - Shadow Claw
+37 - Aqua Jet
 40 - Play Rough
 42 - Sucker Punch
 45 - Earthquake
@@ -6777,68 +6777,68 @@ Level Up:
 75 - Dragon Dance
 
 Unused moves:
-Blast Burn
-Sacred Fire
-Struggle
-Lunar Dance
-V-Create
-Boosted Pursuit
 Tornado Spin
+Struggle
+Boosted Pursuit
+Strength
+Perish Song
 Failed Sucker
+Sacred Fire
+Petal Blizzard
+V-Create
 Expanding Force
 Glaciate
-Strength
-Petal Blizzard
 Noble Roar
-Perish Song
+Blast Burn
+Lunar Dance
 
 TM Only:
-Scald
-Rock Smash
-Slow Fall
-Sleep Talk
-Terrain Pulse
-Surf
 Psyshock
-Rock Climb
+Scald
 Flip Turn
-Vine Cross
 Cut
+Rock Climb
+Surf
 Lava Surf
+Slow Fall
+Terrain Pulse
+Vine Cross
+Sleep Talk
+Rock Smash
 
 Signature Moves (3):
 Acrobatics : Raptorex
 Acrobatics : Fightorex
 Acrobatics : Suvinero
-Bind : Carinator
-Bind : Carinx
 Bind : Cairnasaur
-Branch Poke : Thunderzap
+Bind : Carinx
+Bind : Carinator
 Branch Poke : Shockbranch
 Branch Poke : Twigzap
+Branch Poke : Thunderzap
 Bubble : Sheltor
 Bubble : Bouncerog
 Bubble : Froshrog
-Circle Throw : Whiskeroar
 Circle Throw : Whiskers
 Circle Throw : Pyrator-S
-Cross Chop : Barbaracle
-Cross Chop : Ninjakik
+Circle Throw : Whiskeroar
 Cross Chop : Swordik
+Cross Chop : Ninjakik
+Cross Chop : Barbaracle
 Dragon Claw : Batorali
-Dragon Claw : Shadowsaur
 Dragon Claw : Dompster-S
-Electric Terrain : Shockbranch
+Dragon Claw : Shadowsaur
 Electric Terrain : Electroram
+Electric Terrain : Shockbranch
 Electric Terrain : Superchargo
-Electro Ball : Vinnie
-Electro Ball : Hast-E
 Electro Ball : Suvinero
-Eruption : Blastflames
+Electro Ball : Hast-E
+Electro Ball : Vinnie
 Eruption : Magron
+Eruption : Blastflames
 Eruption : Lafloo
-Facade : Scraftagon
 Facade : Scraggy
+Facade : Scraftagon
 Facade : Scrafty
 Flail : Magikarp
 Flail : Ludicolo
@@ -6846,54 +6846,54 @@ Flail : Millistone
 Focus Blast : Whiskeroar
 Focus Blast : Raptorex
 Focus Blast : Shelnado
-Force Palm : Stellarock
 Force Palm : Zurroaratr
+Force Palm : Stellarock
 Force Palm : Zurrclu
 Gastro Acid : Zurrclu-S
-Gastro Acid : Zurroaratr-S
 Gastro Acid : Arbok
-Glittering Sword : Crystallor-E
-Glittering Sword : Treewin
+Gastro Acid : Zurroaratr-S
 Glittering Sword : Crystallor
-Grass Whistle : Swadloon
+Glittering Sword : Treewin
+Glittering Sword : Crystallor-E
 Grass Whistle : Roselia
 Grass Whistle : Florlion
+Grass Whistle : Swadloon
 Heat Crash : Fireblion
 Heat Crash : Rhypolar
 Heat Crash : Magron
 Horn Attack : Rhypolar
 Horn Attack : Rhynee
 Horn Attack : Rhypo
-Light Of Ruin : Drageye
-Light Of Ruin : Crystallor
 Light Of Ruin : Crystallor-E
-Lock-On : Armoid
+Light Of Ruin : Crystallor
+Light Of Ruin : Drageye
 Lock-On : Soldrota
 Lock-On : Droid
-Low Sweep : Cairnasaur
+Lock-On : Armoid
 Low Sweep : Carinx
 Low Sweep : Carinator
-Memento : Iglite-S
+Low Sweep : Cairnasaur
 Memento : Blaxer-S
 Memento : Pyrator-S
-Morning Sun : Barkflare
+Memento : Iglite-S
 Morning Sun : Hatterene
+Morning Sun : Barkflare
 Morning Sun : Magestiflash
-Muddy Water : Durfish
-Muddy Water : Durfish-S
 Muddy Water : Dompster
-Odor Sleuth : Houndoom
+Muddy Water : Durfish-S
+Muddy Water : Durfish
 Odor Sleuth : Busheep
 Odor Sleuth : Houndour
-Petal Dance : Roselia
+Odor Sleuth : Houndoom
 Petal Dance : Florlion
+Petal Dance : Roselia
 Petal Dance : Winagrow
-Poison Jab : Zurrclu-S
 Poison Jab : Curlatoral
 Poison Jab : Zurroaratr-S
-Pop Pop : Soldrota
+Poison Jab : Zurrclu-S
 Pop Pop : Droid
 Pop Pop : Armoid
+Pop Pop : Soldrota
 Power Whip : Treewin
 Power Whip : Ramant
 Power-Up Punch : Whiskeroar
@@ -6902,103 +6902,103 @@ Power-Up Punch : Whiskers
 Reflect : Crystallor
 Reflect : Crystallor-E
 Reflect : Florlion
-Rest : Walrein
 Rest : Sealeo
 Rest : Spheal
-Reversal : Malamar
+Rest : Walrein
 Reversal : Conkeldurr
 Reversal : Gurdurr
+Reversal : Malamar
+Root Kick : Winagrow
 Root Kick : Treewin
 Root Kick : Sapwin
-Root Kick : Winagrow
-Round : Zoroark
 Round : Zorua
+Round : Zoroark
 Round : Busheep
 Sheer Cold : Consodust
-Sheer Cold : Walrein
 Sheer Cold : Bouncerog
+Sheer Cold : Walrein
 Smart Strike : Zurrclu
-Smart Strike : Zurroaratr
 Smart Strike : Megawatt
+Smart Strike : Zurroaratr
 Snore : Spheal
-Snore : Sealeo
 Snore : Walrein
+Snore : Sealeo
 Solar Beam : Psylotter
 Solar Beam : Magestiflash
 Solar Beam : Bushewe
-Steel Beam : Magron
 Steel Beam : Cinneroph
+Steel Beam : Magron
 Steel Beam : Magmaclang
 Stun Spore : Budew
-Stun Spore : Thunderzap
 Stun Spore : Frosmoth
+Stun Spore : Thunderzap
+Submission : Treewin
 Submission : Bipedice
 Submission : Rhypolar
-Submission : Treewin
-Sunny Day : Magestiflash
 Sunny Day : Bushewe
+Sunny Day : Magestiflash
 Sunny Day : Barkflare
 Synthesis : Roselia
-Synthesis : Ramant
 Synthesis : Bushewe
-Vise Grip : Vikavolt
+Synthesis : Ramant
 Vise Grip : Charjabug
 Vise Grip : Grubbin
-Wake-Up Slap : Pyrator
-Wake-Up Slap : Pyrator-S
+Vise Grip : Vikavolt
 Wake-Up Slap : Stellarock
-Water Sport : Budew
+Wake-Up Slap : Pyrator-S
+Wake-Up Slap : Pyrator
 Water Sport : Durfish
 Water Sport : Roselia
+Water Sport : Budew
+Zap Cannon : Blaster-E
 Zap Cannon : Vikavolt
 Zap Cannon : Blastflames-E
-Zap Cannon : Blaster-E
 
 Signature Moves (2):
-Acid : Cluuz
 Acid : Ekans
+Acid : Cluuz
 Acid Armor : Zurrclu-S
 Acid Armor : Zurroaratr-S
-Acid Spray : Ekans
 Acid Spray : Arbok
-Aerial Ace : Gallade
+Acid Spray : Ekans
 Aerial Ace : Ninjask
+Aerial Ace : Gallade
 Amnesia : Lilyray
 Amnesia : Hamthorno
 Beefy Bash : Whiskeroar
 Beefy Bash : Whiskers
-Belch : Zurroaratr-S
 Belch : Zurrclu-S
+Belch : Zurroaratr-S
 Bitter Malice : Arbok-S
 Bitter Malice : Zoroark
 Blaze Kick : Blaxer
 Blaze Kick : Pyrator
 Bug Buzz : Vikavolt
 Bug Buzz : Frosmoth
-Burn Up : Lafloo
 Burn Up : Magwoo
-Core Enforcer : Starmie
+Burn Up : Lafloo
 Core Enforcer : Clefairy
+Core Enforcer : Starmie
 Deep Sea Bubble : Kissyfishy-D
 Deep Sea Bubble : Kissyfishy
-Destiny Bond : Hast
 Destiny Bond : Grust
-Dragon Darts : Poshorump
+Destiny Bond : Hast
 Dragon Darts : Shomp
-Drill Peck : Pigoga
+Dragon Darts : Poshorump
 Drill Peck : Raptorex
+Drill Peck : Pigoga
 Dual Chop : Electrocobra
 Dual Chop : Shadowsaur
 Electroweb : Charjabug
 Electroweb : Vikavolt
-Fell Stinger : Curlatoral
 Fell Stinger : Leavanny
+Fell Stinger : Curlatoral
 Fiery Dance : Bluebunn
 Fiery Dance : Glittleshoo
-First Impression : Opwing
 First Impression : Ninjakik
-Flame Burst : Houndoom
+First Impression : Opwing
 Flame Burst : Sparkitten
+Flame Burst : Houndoom
 Flatter : Zurroaratr-S
 Flatter : Zurrclu-S
 Foresight : Tigrette
@@ -7007,60 +7007,60 @@ Forests Curse : Shockbranch
 Forests Curse : Thunderzap
 Freeze-Dry : Consodust
 Freeze-Dry : Zurroaratr-S
-Galaxy Blast : Spacebear
 Galaxy Blast : Shaboom
-Genesis Supernova : Galactasolder
+Galaxy Blast : Spacebear
 Genesis Supernova : Spacebear
+Genesis Supernova : Galactasolder
 Grass Knot : Thunderzap
 Grass Knot : Twigzap
-Growth : Budew
 Growth : Roselia
-Guillotine : Ninjakik
+Growth : Budew
 Guillotine : Vikavolt
+Guillotine : Ninjakik
 Horn Drill : Rhypolar
 Horn Drill : Rhynee
 Hyper Fang : Dompster
 Hyper Fang : Fireblion
 Hyper Voice : Zurroaratr-S
 Hyper Voice : Zoroark
-Ice Beam : Hootowl
 Ice Beam : Poshorump
+Ice Beam : Hootowl
 Ice Spinner : Cosmocrash
 Ice Spinner : Bipedice
 Icicle Crash : Grondor
 Icicle Crash : Cosmocrash
-Icy Wind : Frosmoth
 Icy Wind : Consodust
+Icy Wind : Frosmoth
 Inferno : Houndoom
 Inferno : Lafloo
-Lick : Poov
 Lick : Grust
+Lick : Poov
 Magnet Bomb : Psycorboratr
 Magnet Bomb : Psyballs
 Metronome : Clefable
 Metronome : Clefairy
-Mirror Move : Magestiflash
 Mirror Move : Flashclaw
-Pistol Pop : Ninjakik
+Mirror Move : Magestiflash
 Pistol Pop : Soldrota
+Pistol Pop : Ninjakik
 Pluck : Malamar
 Pluck : Inkay
-Psychic Terrain : Florlion
 Psychic Terrain : Cairnasaur
+Psychic Terrain : Florlion
 Reboot : Armoid
 Reboot : Soldrota
-Revenge : Raptorex
 Revenge : Fightorex
+Revenge : Raptorex
 Rock Wrecker : Millistone
 Rock Wrecker : Zurroaratr
-Sacred Sword : Swordik
 Sacred Sword : Ninjakik
-Sea Dragon : Kissyfishy-D
+Sacred Sword : Swordik
 Sea Dragon : Kissyfishy
-Shadow Punch : Hast-E
+Sea Dragon : Kissyfishy-D
 Shadow Punch : Grust
-Silver Wind : Zurroaratr-S
+Shadow Punch : Hast-E
 Silver Wind : Vikavolt
+Silver Wind : Zurroaratr-S
 Sky Uppercut : Whiskeroar
 Sky Uppercut : Whiskers
 Sparkling Aria : Bouncerog
@@ -7069,14 +7069,14 @@ Sparkling Water : Kissyfishy-D
 Sparkling Water : Kissyfishy
 Spectral Thief : Hast
 Spectral Thief : Dompster-S
-Spike Cannon : Binacle
 Spike Cannon : Barbaracle
-Star Storm : Zurroaratr-S
+Spike Cannon : Binacle
 Star Storm : Starmie
+Star Storm : Zurroaratr-S
 Steel Wing : Poshorump
 Steel Wing : Pigoga
-Stored Power : Clefable
 Stored Power : Clefairy
+Stored Power : Clefable
 Sunny Doom : Houndoom
 Sunny Doom : Magestiflash
 Super Fang : HammyBoy
@@ -7093,26 +7093,26 @@ Teeter Dance : Ludicolo
 Teeter Dance : Lombre
 U-Turn : Swordik
 U-Turn : Ninjakik
-Unseen Strangle : Dompster-S
 Unseen Strangle : Dompster
+Unseen Strangle : Dompster-S
 Venom Spit : Arbok
 Venom Spit : Arbok-S
 Vine Whip : Florline
 Vine Whip : Florlion
 Water Clap : Kissyfishy-D
 Water Clap : Kissyfishy
-Water Flick : Kissyfishy
 Water Flick : Kissyfishy-D
+Water Flick : Kissyfishy
 Water Kick : Kissyfishy
 Water Kick : Kissyfishy-D
 Water Smack : Kissyfishy-D
 Water Smack : Kissyfishy
 Waterfall : Gyarados
 Waterfall : Gyarados-E
-Whip Smash : Suvinero
 Whip Smash : Vinnie
-Whirlpool : Shelnado
+Whip Smash : Suvinero
 Whirlpool : Spinaquata
+Whirlpool : Shelnado
 
 Signature Moves (1):
 Abduct : Spacebear
@@ -7139,6 +7139,7 @@ Gunk Shot : Arbok
 Heat Wave : Houndoom
 Hydro Cannon : Dragave
 Icicle Spear : Bipedice
+Lava Lair : Lafloo
 Leaf Blade : Leavanny
 Leafage : Busheep
 Load Firearms : Soldrota
@@ -7146,7 +7147,6 @@ Machete Jab : Ninjakik
 Megahorn : Poshorump
 Mirror Shot : Glittleshoo
 Molten Consume : Lafloo
-Molten Lair : Lafloo
 Molten Steelspike : Magron
 Mystical Fire : Flamebless
 Needle Arm : Shockbranch
