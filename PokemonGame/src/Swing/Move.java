@@ -116,7 +116,7 @@ public enum Move {
 	DISCHARGE(80,100,30,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false,15),
 	DIVE(80,100,0,0,0,0,PType.WATER,"A two turn attack. Dives underwater on the first, attacks on the second",true,15),
 	//DOUBLE_BLAST(-1,60,30,0,1,0,PType.NORMAL,"% chance to Confuse foe",false,1),
-	//DOUBLE$EDGE(120,100,0,0,0,0,PType.NORMAL,"User takes 1/3 of damage inflicted",false,1),
+	DOUBLE$EDGE(120,100,0,0,0,0,PType.NORMAL,"User takes 1/3 of damage inflicted",false,15),
 	DOUBLE_HIT(35,90,0,0,0,0,PType.NORMAL,"Attacks twice",true,20),
 	//DOUBLE_JET(-1,85,0,0,0,0,PType.WATER,"Attacks 2-5 times",false,1),
 	DOUBLE_KICK(30,100,0,0,0,0,PType.FIGHTING,"Attacks twice",true,30),
