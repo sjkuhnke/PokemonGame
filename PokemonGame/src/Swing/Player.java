@@ -67,7 +67,7 @@ public class Player implements Serializable{
 		money = 100;
 		current = null;
 		bag = new Bag();
-		posX = 90;
+		posX = 89;
 		posY = 46;
 		
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];

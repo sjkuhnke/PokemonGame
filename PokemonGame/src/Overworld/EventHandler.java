@@ -26,10 +26,10 @@ public class EventHandler {
 		while(map < gp.maxMap && col < gp.maxWorldCol && row < gp.maxWorldRow) {
 			
 			eventRect[map][col][row] = new EventRect();
-			eventRect[map][col][row].x = 23;
-			eventRect[map][col][row].y = 23;
-			eventRect[map][col][row].width = 2;
-			eventRect[map][col][row].height = 2;
+			eventRect[map][col][row].x = 8;
+			eventRect[map][col][row].y = 8;
+			eventRect[map][col][row].width = 32;
+			eventRect[map][col][row].height = 32;
 			eventRect[map][col][row].eventRectDefaultX = eventRect[map][col][row].x;
 			eventRect[map][col][row].eventRectDefaultY = eventRect[map][col][row].y;
 			
@@ -248,17 +248,14 @@ public class EventHandler {
 			if (hit(50,31,46)) teleport(38, 23, 37,false);
 			
 			// New Minnow Town Houses
-			if (hit(0,90,45)) teleport(51, 31, 45,false);
-			if (hit(51,31,46)) teleport(0, 90, 46,false);
+			if (hit(0,89,45)) teleport(51, 31, 45,false);
+			if (hit(51,31,46)) teleport(0, 89, 46,false);
 			
-			if (hit(0,80,45)) teleport(52, 31, 45,false);
-			if (hit(52,31,46)) teleport(0, 80, 46,false);
+			if (hit(0,79,45)) teleport(52, 31, 45,false);
+			if (hit(52,31,46)) teleport(0, 79, 46,false);
 			
-			if (hit(0,90,54)) teleport(53, 31, 45,false);
-			if (hit(53,31,46)) teleport(0, 90, 55,false);
-			
-			if (hit(0,84,55)) teleport(54, 31, 45,false);
-			if (hit(54,31,46)) teleport(0, 84, 56,false);
+			if (hit(0,84,54)) teleport(54, 31, 45,false);
+			if (hit(54,31,46)) teleport(0, 84, 55,false);
 			
 			// Bananaville Town Houses
 			if (hit(0,27,44)) teleport(55, 31, 45,false);

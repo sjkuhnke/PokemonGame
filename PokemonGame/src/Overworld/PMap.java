@@ -48,7 +48,7 @@ public class PMap extends JFrame {
 	    if (locations[0]) {
 	    	NMT.setBackground(Color.red);
 	    	NMT.addActionListener(e -> {
-	    		fly("New Minnow Town", 0, 90, 46);
+	    		fly("New Minnow Town", 0, 89, 46);
 	    	});
 	    }
 	    if (loc == 0) NMT.setBackground(Color.yellow);

@@ -94,7 +94,7 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	public void setDefaultValues() {
-		worldX = gp.tileSize * 90;
+		worldX = gp.tileSize * 89;
 		worldY = gp.tileSize * 46;
 		speed = 4;
 		direction = "down";
@@ -1873,12 +1873,20 @@ public class PlayerCharacter extends Entity {
 			        	    	JButton party = setUpPartyButton(j);
 			        	        final int index = j;
 			        	        
-			        	        party.addActionListener(g -> {
-			        	        	if (p.team[index].expMax - p.team[index].exp != 1) {
-			        	        		p.team[index].exp = p.team[index].expMax - 1;
-			        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " successfully EDGED!");
-			        	        	} else {
-			        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+			        	        party.addMouseListener(new MouseAdapter() {
+			        	        	@Override
+        	        			    public void mouseClicked(MouseEvent e) {
+			        	        		if (p.team[index].expMax - p.team[index].exp != 1) {
+				        	        		p.team[index].exp = p.team[index].expMax - 1;
+				        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " successfully EDGED!");
+				        	        	} else {
+				        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+				        	        	}
+			        	        		if (SwingUtilities.isRightMouseButton(e)) {
+			        	        			SwingUtilities.getWindowAncestor(partyPanel).dispose();
+					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+			        	        		}
 			        	        	}
 			        	        });
 			        	        
