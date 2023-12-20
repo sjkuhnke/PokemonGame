@@ -75,7 +75,7 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 50);
 		loadMap("/maps/house01.txt", 51); // new minnow town
 		loadMap("/maps/house01.txt", 52);
-		loadMap("/maps/house01.txt", 53);
+		loadMap("/maps/house01.txt", 53); // TODO: doesn't exist
 		loadMap("/maps/house01.txt", 54);
 		loadMap("/maps/house01.txt", 55); // bananaville town
 		loadMap("/maps/house01.txt", 56);
@@ -141,6 +141,7 @@ public class TileManager {
 		loadMap("/maps/gate02.txt", 116);
 		loadMap("/maps/mindagan0.txt", 117);
 		loadMap("/maps/house01.txt", 118);
+		loadMap("/maps/map18.txt", 119);
 	}
 	
 	public void getTileImage() {
