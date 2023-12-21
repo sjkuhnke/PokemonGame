@@ -1687,7 +1687,7 @@ public class Battle extends JFrame {
 		p.p.money = p.p.money < 0 ? 0 : p.p.money;
 		JOptionPane.showMessageDialog(null, "You have no more Pokemon that can fight!\nYou lost $500!");
 		dispose();
-		p.worldX = gp.tileSize * 90;
+		p.worldX = gp.tileSize * 79;
 		p.worldY = gp.tileSize * 46;
 		gp.currentMap = 0;
 		for (Pokemon pokemon : p.p.team) {

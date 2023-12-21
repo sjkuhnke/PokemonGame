@@ -98,6 +98,7 @@ public enum Ability {
 	TINTED_LENS("Powers up \"not very effective\" moves."),
 	TORRENT("Powers up WATER moves in a pinch."),
 	TOUGH_CLAWS("Powers up moves that make direct contact."),
+	TRACE("The Pokemon copies a foe's Ability."),
 	TYPE_MASTER("Grants STAB on all moves."),
 	UNAWARE("Ignores the opposing Pokemon's stat changes."),
 	UNERODIBLE("Reduces damage from GRASS, WATER, and GROUND attacks."),

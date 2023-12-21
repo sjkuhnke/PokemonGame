@@ -76,10 +76,10 @@ public enum Item {
 	MAX_ELIXIR(41,250,new Color(246, 255, 120),Item.MEDICINE,null,"Restores PP of all moves\non a Pokemon"),
 	PP_UP(42,2500,new Color(150, 51, 156),Item.MEDICINE,null,"Increases max PP of a\nselected move by 20%"),
 	PP_MAX(43,0,new Color(142, 230, 21),Item.MEDICINE,null,"Increases max PP of a\nselected move by its\nmax PP, which is 160%"),
-	FLAME_ORB(44,0,new Color(232, 52, 54),Item.OTHER,null,"Burns a selected Pokemon"),
+	EDGE_KIT(44,0,new Color(232, 52, 54),Item.OTHER,null,"Edges ;) your Pokemon until\nthey're about to bust :{D"),
 	THUNDER_SCALES_FOSSIL(45,0,new Color(201, 169, 81),Item.OTHER,null,"A fossil of an ancient Pokemon\nthat lived in a desert.\nIt appears to have an\nelectric charge ridden\nin the scales."),
 	DUSK_SCALES_FOSSIL(46,0,new Color(45, 47, 51),Item.OTHER,null,"A fossil of an ancient Pokemon\nthat lived in a forest.\nIt appears to give off\na dark energy within\n the scales."),
-	EDGE_KIT(47,0,new Color(250, 200, 152),Item.MEDICINE,null,"Edges ;) your Pokemon until\nthey're about to bust :{D"),
+	FLAME_ORB(47,0,new Color(250, 200, 152),Item.OTHER,null,"Does nothing"),
 	NULL48(48,0,Color.BLACK,Item.OTHER,null,""),
 	NULL49(49,0,Color.BLACK,Item.OTHER,null,""),
 	NULL50(50,0,Color.BLACK,Item.OTHER,null,""),
@@ -246,6 +246,8 @@ public enum Item {
 	public static final int MEDICINE = 1;
     public static final int OTHER = 2;
     public static final int TMS = 3;
+    public static final int HELD_ITEM = 4;
+    public static final int BERRY = 5;
 	
 	Item(int id, int cost, Color color, int pocket, Move move, String desc) {
 		this.id = id;

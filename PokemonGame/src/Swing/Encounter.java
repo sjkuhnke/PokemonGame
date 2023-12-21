@@ -534,6 +534,14 @@ public class Encounter {
 				encounters.add(new Encounter(187, 25, 30, 0.25));
 				encounters.add(new Encounter(190, 24, 28, 0.10));
 				encounters.add(new Encounter(195, 26, 30, 0.15));
+			} else if (area == 119 && x < 22 && type.equals("Standard")) { // Route 43 (west)
+				encounters.add(new Encounter(32, 2, 3, 0.09));
+				encounters.add(new Encounter(44, 2, 3, 0.12));
+				encounters.add(new Encounter(59, 2, 3, 0.21));
+				encounters.add(new Encounter(71, 2, 4, 0.16));
+				encounters.add(new Encounter(85, 2, 3, 0.14));
+				encounters.add(new Encounter(106, 2, 3, 0.13));
+				encounters.add(new Encounter(117, 2, 3, 0.15));
 			}
 			
 			

@@ -620,6 +620,13 @@ public class EventHandler {
 			// Glurg Town Fossil Center
 			if (hit(109,12,34)) teleport(118, 31, 45,false);
 			if (hit(118,31,46)) teleport(109, 12, 35,false);
+			
+			// New Minnow Town -> Route 43 Gate
+			if (hit(0,92,49)) teleport(120, 23, 40,false);
+			if (hit(120,22,40)) teleport(0, 91, 49,false);
+			
+			if (hit(120,37,40)) teleport(119, 8, 49,false);
+			if (hit(119,7,49)) teleport(120, 36, 40,false);
 		}
 	}
 	
