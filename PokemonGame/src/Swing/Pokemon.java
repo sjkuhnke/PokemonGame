@@ -2069,9 +2069,9 @@ public class Pokemon implements Serializable {
 		} else if (id == 32) { abilities = new Ability[] {Ability.SWARM, Ability.CHLOROPHYLL};
 		} else if (id == 33) { abilities = new Ability[] {Ability.SWARM, Ability.CHLOROPHYLL};
 		} else if (id == 34) { abilities = new Ability[] {Ability.SHARPNESS, Ability.CHLOROPHYLL};
-		} else if (id == 35) { abilities = new Ability[] {Ability.SWARM, Ability.SWARM};
-		} else if (id == 36) { abilities = new Ability[] {Ability.STATIC, Ability.STATIC};
-		} else if (id == 37) { abilities = new Ability[] {Ability.LEVITATE, Ability.LEVITATE};
+		} else if (id == 35) { abilities = new Ability[] {Ability.SWARM, Ability.HYPER_CUTTER};
+		} else if (id == 36) { abilities = new Ability[] {Ability.STATIC, Ability.BATTLE_ARMOR};
+		} else if (id == 37) { abilities = new Ability[] {Ability.LEVITATE, Ability.TINTED_LENS};
 		} else if (id == 38) { abilities = new Ability[] {Ability.ANTICIPATION, Ability.FLUFFY};
 		} else if (id == 39) { abilities = new Ability[] {Ability.MOXIE, Ability.DEFIANT};
 		} else if (id == 40) { abilities = new Ability[] {Ability.SERENE_GRACE, Ability.COMPETITIVE};
@@ -2088,7 +2088,7 @@ public class Pokemon implements Serializable {
 		} else if (id == 51) { abilities = new Ability[] {Ability.STURDY, Ability.FILTER};
 		} else if (id == 52) { abilities = new Ability[] {Ability.SHED_SKIN, Ability.REGENERATOR};
 		} else if (id == 53) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.REGENERATOR};
-		} else if (id == 54) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.REGENERATOR};
+		} else if (id == 54) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.REGENERATOR};
 		} else if (id == 55) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.TECHNICIAN};
 		} else if (id == 56) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.TECHNICIAN};
 		} else if (id == 57) { abilities = new Ability[] {Ability.GUTS, Ability.NO_GUARD};
@@ -2119,9 +2119,9 @@ public class Pokemon implements Serializable {
 		} else if (id == 82) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.LEVITATE};
 		} else if (id == 83) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.LEVITATE};
 		} else if (id == 84) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.LEVITATE};
-		} else if (id == 85) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.NATURAL_CURE};
-		} else if (id == 86) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.NATURAL_CURE};
-		} else if (id == 87) { abilities = new Ability[] {Ability.EMPATHIC_LINK, Ability.NATURAL_CURE};
+		} else if (id == 85) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.TRACE};
+		} else if (id == 86) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.TRACE};
+		} else if (id == 87) { abilities = new Ability[] {Ability.EMPATHIC_LINK, Ability.TRACE};
 		} else if (id == 88) { abilities = new Ability[] {Ability.SHARPNESS, Ability.NO_GUARD};
 		} else if (id == 89) { abilities = new Ability[] {Ability.SIMPLE, Ability.NORMALIZE};
 		} else if (id == 90) { abilities = new Ability[] {Ability.CONTRARY, Ability.FALSE_ILLUMINATION};
@@ -2239,10 +2239,10 @@ public class Pokemon implements Serializable {
 		} else if (id == 202) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.STATIC};
 		} else if (id == 203) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.LEVITATE};
 		} else if (id == 204) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.LEVITATE};
-		} else if (id == 205) { abilities = new Ability[] {Ability.STURDY, Ability.MOTOR_DRIVE};
-		} else if (id == 206) { abilities = new Ability[] {Ability.STURDY, Ability.MOTOR_DRIVE};
+		} else if (id == 205) { abilities = new Ability[] {Ability.STURDY, Ability.LIGHTNING_ROD};
+		} else if (id == 206) { abilities = new Ability[] {Ability.STURDY, Ability.LIGHTNING_ROD};
 		} else if (id == 207) { abilities = new Ability[] {Ability.STURDY, Ability.LIGHTNING_ROD};
-		} else if (id == 208) { abilities = new Ability[] {Ability.CLEAR_BODY, Ability.MOTOR_DRIVE};
+		} else if (id == 208) { abilities = new Ability[] {Ability.CLEAR_BODY, Ability.FILTER};
 		} else if (id == 209) { abilities = new Ability[] {Ability.SWIFT_SWIM, Ability.RATTLED};
 		} else if (id == 210) { abilities = new Ability[] {Ability.VOLT_VORTEX, Ability.MOTOR_DRIVE};
 		} else if (id == 211) { abilities = new Ability[] {Ability.STRONG_JAW, Ability.SHED_SKIN};
@@ -2785,8 +2785,8 @@ public class Pokemon implements Serializable {
 		} else if (this.id == 68) { this.baseStats = new int[]{70,40,50,55,50,25};
 		} else if (this.id == 69) { this.baseStats = new int[]{90,60,70,75,70,45};
 		} else if (this.id == 70) { this.baseStats = new int[]{110,80,90,95,90,65};
-		} else if (this.id == 71) { this.baseStats = new int[]{49,51,60,76,62,102};
-		} else if (this.id == 72) { this.baseStats = new int[]{64,58,79,120,90,114};
+		} else if (this.id == 71) { this.baseStats = new int[]{44,46,50,76,62,92};
+		} else if (this.id == 72) { this.baseStats = new int[]{63,56,69,120,90,112};
 		} else if (this.id == 73) { this.baseStats = new int[]{52,59,51,33,46,58};
 		} else if (this.id == 74) { this.baseStats = new int[]{88,102,67,61,88,101};
 		} else if (this.id == 75) { this.baseStats = new int[]{42,30,45,56,53,39};
@@ -11701,6 +11701,10 @@ public class Pokemon implements Serializable {
 				console.writeAbility(this);
 				console.writeln(nickname + " shuddered!");
 			}
+		} else if (this.ability == Ability.TRACE) {
+			console.writeAbility(this);
+			this.ability = foe.ability;
+			console.writeln(this.nickname + "'s ability became " + this.ability + "!");
 		}
 		ArrayList<FieldEffect> side = playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.STEALTH_ROCKS)) {

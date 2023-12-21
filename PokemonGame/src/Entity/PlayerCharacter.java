@@ -94,7 +94,7 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	public void setDefaultValues() {
-		worldX = gp.tileSize * 89;
+		worldX = gp.tileSize * 79;
 		worldY = gp.tileSize * 46;
 		speed = 4;
 		direction = "down";
@@ -132,11 +132,11 @@ public class PlayerCharacter extends Entity {
 			collisionOn = false;
 			if (!p.ghost) gp.cChecker.checkTile(this);
 			
-			gp.cChecker.checkEntity(this, gp.npc);
+			if (!p.ghost) gp.cChecker.checkEntity(this, gp.npc);
 			
-			gp.cChecker.checkObject(this);
+			if (!p.ghost) gp.cChecker.checkObject(this);
 			
-			gp.cChecker.checkEntity(this, gp.iTile);
+			if (!p.ghost) gp.cChecker.checkEntity(this, gp.iTile);
 			
 			if (!collisionOn) {
 				switch(direction) {
@@ -202,7 +202,7 @@ public class PlayerCharacter extends Entity {
 				p.steps++;
 			}
 			
-			gp.eHandler.checkEvent();
+			//gp.eHandler.checkEvent(); TODO
 			
 			if (p.surf) {
 				double surfXD =  worldX / (1.0 * gp.tileSize);
@@ -264,7 +264,7 @@ public class PlayerCharacter extends Entity {
 					this.worldY = snapY;
 				}
 			}
-			PMap.getLoc(gp.currentMap, (int) Math.round(worldX * 1.0 / 48), (int) Math.round(worldY * 1.0 / 48));
+			PMap.getLoc(gp.currentMap, (int) Math.round(worldX * 1.0 / gp.tileSize), (int) Math.round(worldY * 1.0 / gp.tileSize));
 			Main.window.setTitle("Pokemon Game - " + currentMapName);
 		}
 		if (gp.currentMap == 107 && gp.checkSpin && gp.ticks == 4 && new Random().nextInt(3) == 0) {
@@ -876,27 +876,30 @@ public class PlayerCharacter extends Entity {
 				}
 				if (gp.currentMap == 18 && !p.flags[12]) {
 					Random gift = new Random();
-					int id = gift.nextInt(6); // Dualmoose, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie
-					switch (id) {
-					case 0:
-						id = 61;
-						break;
-					case 1:
-						id = 106;
-						break;
-					case 2:
-						id = 143;
-						break;
-					case 3:
-						id = 150;
-						break;
-					case 4:
-						id = 177;
-						break;
-					case 5:
-						id = 184;
-						break;
-					}
+					int id = 0;
+					do {
+						id = gift.nextInt(6); // Dualmoose, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie
+						switch (id) {
+						case 0:
+							id = 61;
+							break;
+						case 1:
+							id = 106;
+							break;
+						case 2:
+							id = 143;
+							break;
+						case 3:
+							id = 150;
+							break;
+						case 4:
+							id = 177;
+							break;
+						case 5:
+							id = 184;
+							break;
+						}
+					} while (p.pokedex[id] == 2);
 					Pokemon result = new Pokemon(id, 15, true, false);
 					p.flags[12] = true;
 					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
@@ -1142,12 +1145,16 @@ public class PlayerCharacter extends Entity {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		
 		JPanel medicinePanel = createPocketPanel(p, Item.MEDICINE);
+		JPanel heldPanel = createPocketPanel(p, Item.HELD_ITEM);
 		JPanel otherPanel = createPocketPanel(p, Item.OTHER);
 		JPanel tmsPanel = createPocketPanel(p, Item.TMS);
+		JPanel berryPanel = createPocketPanel(p, Item.BERRY);
 		
 		tabbedPane.addTab("Medicine", medicinePanel);
+		tabbedPane.addTab("Held Items", heldPanel);
 		tabbedPane.addTab("Other", otherPanel);
 		tabbedPane.addTab("TMs", tmsPanel);
+		tabbedPane.addTab("Berries", berryPanel);
 		
 		mainPanel.add(tabbedPane, BorderLayout.CENTER);
 
@@ -1837,33 +1844,33 @@ public class PlayerCharacter extends Entity {
 			        	    JOptionPane.showMessageDialog(null, partyPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
 			        	}
 			        	// Flame Orb
-			        	else if (i.getItem() == Item.FLAME_ORB) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
-			        	    
-			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
-			        	        final int index = j;
-			        	        
-			        	        party.addActionListener(g -> {
-			        	        	if (p.team[index].status == Status.HEALTHY && p.team[index].type1 != PType.FIRE && p.team[index].type2 != PType.FIRE) {
-			        	        		p.team[index].status = Status.BURNED;
-			        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " successfully burned!");
-			        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
-				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-				        	        	showBag();
-			        	        	} else {
-			        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
-			        	        	}
-			        	        });
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        partyPanel.add(memberPanel);
-			        	    }
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Burn?", JOptionPane.PLAIN_MESSAGE);
-			        	}
+//			        	else if (i.getItem() == Item.FLAME_ORB) {
+//			        		JPanel partyPanel = new JPanel();
+//			        	    partyPanel.setLayout(new GridLayout(6, 1));
+//			        	    
+//			        	    for (int j = 0; j < 6; j++) {
+//			        	    	JButton party = setUpPartyButton(j);
+//			        	        final int index = j;
+//			        	        
+//			        	        party.addActionListener(g -> {
+//			        	        	if (p.team[index].status == Status.HEALTHY && p.team[index].type1 != PType.FIRE && p.team[index].type2 != PType.FIRE) {
+//			        	        		p.team[index].status = Status.BURNED;
+//			        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " successfully burned!");
+//			        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
+//				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+//				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+//				        	        	showBag();
+//			        	        	} else {
+//			        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+//			        	        	}
+//			        	        });
+//			        	        
+//			        	        JPanel memberPanel = new JPanel(new BorderLayout());
+//			        	        memberPanel.add(party, BorderLayout.NORTH);
+//			        	        partyPanel.add(memberPanel);
+//			        	    }
+//			        	    JOptionPane.showMessageDialog(null, partyPanel, "Burn?", JOptionPane.PLAIN_MESSAGE);
+//			        	}
 			        	// Edge Kit
 			        	else if (i.getItem() == Item.EDGE_KIT) {
 			        		JPanel partyPanel = new JPanel();

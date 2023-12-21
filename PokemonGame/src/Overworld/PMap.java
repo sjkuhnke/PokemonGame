@@ -48,7 +48,7 @@ public class PMap extends JFrame {
 	    if (locations[0]) {
 	    	NMT.setBackground(Color.red);
 	    	NMT.addActionListener(e -> {
-	    		fly("New Minnow Town", 0, 89, 46);
+	    		fly("New Minnow Town", 0, 79, 46);
 	    	});
 	    }
 	    if (loc == 0) NMT.setBackground(Color.yellow);
@@ -933,13 +933,13 @@ public class PMap extends JFrame {
 		case 118:
 			PlayerCharacter.currentMapName = "Glurg Town";
 			return 32;
-		case 119: // TODO from here down
-			PlayerCharacter.currentMapName = "";
-			return 20;
+		case 119: 
+			PlayerCharacter.currentMapName = "Route 43";
+			return 45;
 		case 120:
-			PlayerCharacter.currentMapName = "";
-			return 28;
-		case 121:
+			PlayerCharacter.currentMapName = "New Minnow Town";
+			return 0;
+		case 121: // TODO from here down
 			PlayerCharacter.currentMapName = "";
 			return 15;
 		case 122:
