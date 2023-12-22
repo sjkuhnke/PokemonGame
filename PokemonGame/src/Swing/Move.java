@@ -666,7 +666,7 @@ public enum Move {
 	public double getbp(Pokemon user, Pokemon foe) {
 		if (basePower == -1) {
 			if (this == Move.STORED_POWER && foe == null) return 20;
-			boolean faster = user == null ? false : user.getFaster(foe, 0, 0) == user;
+			boolean faster = user == null ? true : user.getFaster(foe, 0, 0) == user;
 			if (user == null) {
 				if (this == Move.ELECTRO_BALL || this == Move.FLAIL || this == Move.REVERSAL || this == Move.GRASS_KNOT || this == Move.LOW_KICK
 						|| this == Move.GYRO_BALL || this == Move.HEAT_CRASH || this == Move.HEAVY_SLAM || this == Move.RETURN || this == Move.FRUSTRATION) return 0;

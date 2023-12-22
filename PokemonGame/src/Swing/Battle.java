@@ -136,8 +136,8 @@ public class Battle extends JFrame {
 		
 		Pokemon fasterInit = me.getCurrent().getFaster(foe, 0, 0);
 		Pokemon slowerInit = fasterInit == me.getCurrent() ? foe : me.getCurrent();
-		fasterInit.swapIn(slowerInit, me);
-		slowerInit.swapIn(fasterInit, me);
+		fasterInit.swapIn(slowerInit, me, true);
+		slowerInit.swapIn(fasterInit, me, true);
 		
 		updateField(field);
 		displayParty();
@@ -785,7 +785,7 @@ public class Battle extends JFrame {
 				}
 				
 				me.swap(me.team[index], index);
-				me.getCurrent().swapIn(foe, me);
+				me.getCurrent().swapIn(foe, me, true);
 				updateField(field);
 				foe.vStatuses.remove(Status.TRAPPED);
 				foe.vStatuses.remove(Status.SPUN);
@@ -828,7 +828,7 @@ public class Battle extends JFrame {
 						if (foeTrainer.hasNext()) {
 							foe = foeTrainer.next(me.getCurrent());
 							console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
-							foe.swapIn(me.getCurrent(), me);
+							foe.swapIn(me.getCurrent(), me, true);
 							updateField(field);
 							updateFoe();
 							updateCurrent(pl);
@@ -1310,6 +1310,23 @@ public class Battle extends JFrame {
 		if (p1.ability == Ability.STEALTHY_PREDATOR && p1.impressive) ++m1P;
 		if (p2.ability == Ability.STEALTHY_PREDATOR && p2.impressive) ++m2P;
 		
+		if (p1.item == Item.QUICK_CLAW) {
+			Random rand = new Random();
+			int num = rand.nextInt(10);
+			if (num < 2) {
+				m1P++;
+				console.writeln(p1.nickname + "'s Quick Claw let it act first!");
+			}
+		}
+		if (p2.item == Item.QUICK_CLAW) {
+			Random rand = new Random();
+			int num = rand.nextInt(10);
+			if (num < 2) {
+				m2P++;
+				console.writeln(p2.nickname + "'s Quick Claw let it act first!");
+			}
+		}
+		
 		Pokemon faster = p1.getFaster(p2, m1P, m2P);
 		
 		Pokemon slower = faster == p1 ? p2 : p1;
@@ -1362,7 +1379,7 @@ public class Battle extends JFrame {
 				if (foeTrainer.hasNext()) {
 					foe = foeTrainer.next(me.getCurrent());
 					console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
-					foe.swapIn(me.getCurrent(), me);
+					foe.swapIn(me.getCurrent(), me, true);
 					updateField(field);
 					updateFoe();
 					updateCurrent(pl);
@@ -1469,7 +1486,7 @@ public class Battle extends JFrame {
 		            party.addActionListener(g -> {
 		                if (baton) me.team[index].statStages = me.getCurrent().statStages;
 		                me.swap(me.team[index], index);
-		                me.getCurrent().swapIn(foe, me);
+		                me.getCurrent().swapIn(foe, me, true);
 		                updateField(field);
 		                foe.vStatuses.remove(Status.TRAPPED);
 		                foe.vStatuses.remove(Status.SPUN);

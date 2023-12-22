@@ -287,7 +287,7 @@ public class Player implements Serializable{
 		
 		Pokemon.console.write(current.nickname, true, 16);
 		Pokemon.console.writeln(" was dragged out!", false, 16);
-		current.swapIn(foe, this);
+		current.swapIn(foe, this, true);
 		return true;
 		
 	}
