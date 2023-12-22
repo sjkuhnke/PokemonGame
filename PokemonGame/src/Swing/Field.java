@@ -22,16 +22,16 @@ public class Field {
 	}
 	
 	public enum Effect {
-		SUN(8, true, false),
-		RAIN(8, true, false),
-		SANDSTORM(8, true, false),
-		SNOW(8, true, false),
-		GRASSY(8, false, true),
-		ELECTRIC(8, false, true),
-		PSYCHIC(8, false, true),
-		SPARKLY(8, false, true), 
-		REFLECT(6, false, false),
-		LIGHT_SCREEN(6, false, false),
+		SUN(5, true, false),
+		RAIN(5, true, false),
+		SANDSTORM(5, true, false),
+		SNOW(5, true, false),
+		GRASSY(5, false, true),
+		ELECTRIC(5, false, true),
+		PSYCHIC(5, false, true),
+		SPARKLY(5, false, true), 
+		REFLECT(5, false, false),
+		LIGHT_SCREEN(5, false, false),
 		AURORA_VEIL(5, false, false),
 		TRICK_ROOM(6, false, false),
 		GRAVITY(6, false, false), 
@@ -139,31 +139,37 @@ public class Field {
 		}
 	}
 	
-	public void setWeather(FieldEffect weather) {
+	public boolean setWeather(FieldEffect weather) {
 		if (weather != null && weather.effect.isWeather) {
 	        if (this.weather == null || this.weather.effect != weather.effect) {
 	            Pokemon.console.writeln("The weather became " + weather.toString() + "!");
 	            this.weather = weather;
 	            this.weatherTurns = weather.turns;
+	            return true;
 	        } else {
 	            Pokemon.console.writeln("The weather is already " + weather.toString() + "!");
+	            return false;
 	        }
 	    } else {
 	        Pokemon.console.writeln("Invalid weather effect or weather object is null.");
+	        return false;
 	    }
 	}
 	
-	public void setTerrain(FieldEffect terrain) {
+	public boolean setTerrain(FieldEffect terrain) {
 		if (terrain != null && terrain.effect.isTerrain) {
 	        if (this.terrain == null || this.terrain.effect != terrain.effect) {
 	            Pokemon.console.writeln("The terrain became " + terrain.toString() + "!");
 	            this.terrain = terrain;
 	            this.terrainTurns = terrain.turns;
+	            return true;
 	        } else {
 	            Pokemon.console.writeln("The terrain is already " + terrain.toString() + "!");
+	            return false;
 	        }
 	    } else {
 	        Pokemon.console.writeln("Invalid terrain effect or terrain object is null.");
+	        return false;
 	    }
 	}
 	

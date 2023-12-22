@@ -202,7 +202,7 @@ public class PlayerCharacter extends Entity {
 				p.steps++;
 			}
 			
-			//gp.eHandler.checkEvent(); TODO
+			gp.eHandler.checkEvent();
 			
 			if (p.surf) {
 				double surfXD =  worldX / (1.0 * gp.tileSize);
@@ -1910,6 +1910,48 @@ public class PlayerCharacter extends Entity {
 			        	
 			        });			     
 			        
+			        JButton giveButton = new JButton("Give");
+			        if (pocket == Item.HELD_ITEM || pocket == Item.BERRY) {
+			        	giveButton.addActionListener(f -> {
+			        		JPanel partyPanel = new JPanel();
+			        	    partyPanel.setLayout(new GridLayout(6, 1));
+			        	    
+			        	    for (int j = 0; j < 6; j++) {
+			        	    	JButton party = setUpPartyButton(j);
+			        	        final int index = j;
+			        	        
+			        	        party.addActionListener(g -> {
+			        	        	if (p.team[index].item != null) {
+			        	        		int option = JOptionPane.showOptionDialog(null,
+			        							p.team[index].nickname + " is already holding\n" + p.team[index].item.toString() + ", do you want to swap\nit for " + i.getItem().toString() + "?",
+			        				            "Item Switch",
+			        				            JOptionPane.YES_NO_OPTION,
+			        				            JOptionPane.QUESTION_MESSAGE,
+			        				            null, null, null);
+			        					if (option == JOptionPane.YES_OPTION) {
+			        						Item old = p.team[index].item;
+			        						p.bag.add(old);
+				        	        		p.team[index].item = i.getItem();
+				        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " swapped its " + old.toString() + " for " + p.team[index].item.toString() + "!");
+			        					}
+			        	        	} else {
+			        	        		p.team[index].item = i.getItem();
+			        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " was given " + p.team[index].item.toString() + " to hold!");
+			        	        	}
+			        	        	p.bag.remove(i.getItem());
+			        	        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+			        	        });
+			        	        JPanel memberPanel = new JPanel(new BorderLayout());
+			        	        memberPanel.add(party, BorderLayout.NORTH);
+			        	        partyPanel.add(memberPanel);
+			        	    }
+			        	    JOptionPane.showMessageDialog(null, partyPanel, "Give item?", JOptionPane.PLAIN_MESSAGE);
+			        	});
+			        	
+			        }
+			        
 			        itemDesc.add(description);
 			        if (i.getItem().getMove() != null) {
 			        	itemDesc.add(moveButton);
@@ -1917,7 +1959,14 @@ public class PlayerCharacter extends Entity {
 			        	itemDesc.add(count);
 			        	itemDesc.add(descLabel);
 			        }
-			        itemDesc.add(useButton);
+			        if (pocket == Item.HELD_ITEM) {
+			        	itemDesc.add(giveButton);
+			        } else if (pocket == Item.BERRY) {
+			        	itemDesc.add(giveButton);
+			        	itemDesc.add(useButton);
+			        } else {
+			        	itemDesc.add(useButton);
+			        }
 
 			        JOptionPane.showMessageDialog(null, itemDesc, "Item details", JOptionPane.PLAIN_MESSAGE);
 			    });

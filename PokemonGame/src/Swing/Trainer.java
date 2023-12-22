@@ -132,7 +132,7 @@ public class Trainer {
     	} else {
     		Pokemon.console.writeln(" was sent out!", false, 16);
     	}
-		current.swapIn(foe, me);
+		current.swapIn(foe, me, true);
 		return true;
 		
 	}

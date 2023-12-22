@@ -254,6 +254,11 @@ public class Main {
 			trainers[242] = new Trainer("Scott 4", new Pokemon[]{new Pokemon(77, 59, false, true), new Pokemon(130, 60, false, true), new Pokemon(189, 58, false, true), new Pokemon(6, 60, false, true), new Pokemon(37, 59, false, true), new Pokemon(168, 61, false, true)}, 400, 21);
 		}
 		
+		setItem("Rick 1", 1, Item.SITRUS_BERRY);
+		setItem("Rick 1", 2, Item.MAGNET);
+		setItem("Rick 1", 3, Item.EXPERT_BELT);
+		setItem("Rick 1", 4, Item.OCCA_BERRY);
+		
 		setMoveset("1 Gym Leader 1", 2, Move.MEGA_DRAIN, Move.SUPERSONIC, Move.AERIAL_ACE, Move.POISON_FANG);
 		setAbility("1 Gym Leader 1", 4, Ability.LIGHTNING_ROD);
 		setMoveset("1 Gym Leader 1", 5, Move.CALM_MIND, Move.WISH, Move.MAGIC_BLAST, Move.GUST);
@@ -697,7 +702,6 @@ public class Main {
 				if (!modifiedTrainers.contains(tr)) modifiedTrainers.add(tr);
 			}
 		}
-		
 	}
 	
 	private static void setAbility(String string, int i, Ability a) {
@@ -706,7 +710,14 @@ public class Main {
 				tr.getTeam()[i - 1].ability = a;
 			}
 		}
-		
+	}
+	
+	private static void setItem(String string, int i, Item a) {
+		for (Trainer tr : trainers) {
+			if (tr.getName().equals(string)) {
+				tr.getTeam()[i - 1].item = a;
+			}
+		}
 	}
 	
 	private static void writePokemon() {
@@ -1436,7 +1447,7 @@ public class Main {
 	            for (Move m : typeMoves) {
             		String result = m.toString() + " : ";
 					result += m.getCategory() + " / ";
-					result += m.getbp(null, null) + " / ";
+					result += (int) m.getbp(null, null) + " / ";
 					result += m.getAccuracy() + " : ";
 					result += m.getDescription() + "\n";
 					

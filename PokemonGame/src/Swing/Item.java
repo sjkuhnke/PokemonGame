@@ -79,50 +79,50 @@ public enum Item {
 	EDGE_KIT(44,0,new Color(232, 52, 54),Item.OTHER,null,"Edges ;) your Pokemon until\nthey're about to bust :{D"),
 	THUNDER_SCALES_FOSSIL(45,0,new Color(201, 169, 81),Item.OTHER,null,"A fossil of an ancient Pokemon\nthat lived in a desert.\nIt appears to have an\nelectric charge ridden\nin the scales."),
 	DUSK_SCALES_FOSSIL(46,0,new Color(45, 47, 51),Item.OTHER,null,"A fossil of an ancient Pokemon\nthat lived in a forest.\nIt appears to give off\na dark energy within\n the scales."),
-	FLAME_ORB(47,0,new Color(250, 200, 152),Item.OTHER,null,"Does nothing"),
-	NULL48(48,0,Color.BLACK,Item.OTHER,null,""),
-	NULL49(49,0,Color.BLACK,Item.OTHER,null,""),
-	NULL50(50,0,Color.BLACK,Item.OTHER,null,""),
-	NULL51(51,0,Color.BLACK,Item.OTHER,null,""),
-	NULL52(52,0,Color.BLACK,Item.OTHER,null,""),
-	NULL53(53,0,Color.BLACK,Item.OTHER,null,""),
-	NULL54(54,0,Color.BLACK,Item.OTHER,null,""),
-	NULL55(55,0,Color.BLACK,Item.OTHER,null,""),
-	NULL56(56,0,Color.BLACK,Item.OTHER,null,""),
-	NULL57(57,0,Color.BLACK,Item.OTHER,null,""),
-	NULL58(58,0,Color.BLACK,Item.OTHER,null,""),
-	NULL59(59,0,Color.BLACK,Item.OTHER,null,""),
-	NULL60(60,0,Color.BLACK,Item.OTHER,null,""),
-	NULL61(61,0,Color.BLACK,Item.OTHER,null,""),
-	NULL62(62,0,Color.BLACK,Item.OTHER,null,""),
-	NULL63(63,0,Color.BLACK,Item.OTHER,null,""),
-	NULL64(64,0,Color.BLACK,Item.OTHER,null,""),
-	NULL65(65,0,Color.BLACK,Item.OTHER,null,""),
-	NULL66(66,0,Color.BLACK,Item.OTHER,null,""),
-	NULL67(67,0,Color.BLACK,Item.OTHER,null,""),
-	NULL68(68,0,Color.BLACK,Item.OTHER,null,""),
-	NULL69(69,0,Color.BLACK,Item.OTHER,null,""),
-	NULL70(70,0,Color.BLACK,Item.OTHER,null,""),
-	NULL71(71,0,Color.BLACK,Item.OTHER,null,""),
-	NULL72(72,0,Color.BLACK,Item.OTHER,null,""),
-	NULL73(73,0,Color.BLACK,Item.OTHER,null,""),
-	NULL74(74,0,Color.BLACK,Item.OTHER,null,""),
-	NULL75(75,0,Color.BLACK,Item.OTHER,null,""),
-	NULL76(76,0,Color.BLACK,Item.OTHER,null,""),
-	NULL77(77,0,Color.BLACK,Item.OTHER,null,""),
-	NULL78(78,0,Color.BLACK,Item.OTHER,null,""),
-	NULL79(79,0,Color.BLACK,Item.OTHER,null,""),
-	NULL80(80,0,Color.BLACK,Item.OTHER,null,""),
-	NULL81(81,0,Color.BLACK,Item.OTHER,null,""),
-	NULL82(82,0,Color.BLACK,Item.OTHER,null,""),
-	NULL83(83,0,Color.BLACK,Item.OTHER,null,""),
-	NULL84(84,0,Color.BLACK,Item.OTHER,null,""),
-	NULL85(85,0,Color.BLACK,Item.OTHER,null,""),
-	NULL86(86,0,Color.BLACK,Item.OTHER,null,""),
-	NULL87(87,0,Color.BLACK,Item.OTHER,null,""),
-	NULL88(88,0,Color.BLACK,Item.OTHER,null,""),
-	NULL89(89,0,Color.BLACK,Item.OTHER,null,""),
-	NULL90(90,0,Color.BLACK,Item.OTHER,null,""),
+	CHOICE_BAND(47,0,new Color(224, 152, 159),Item.OTHER,null,"A curious headband that boosts the holder's Attack stat but only allows the use of a single move."), // TODO
+	CHOICE_SCARF(48,0,new Color(133, 172, 220),Item.HELD_ITEM,null,"A curious scarf that boosts the holder's Speed stat but only allows the use of a single move."), // TODO
+	CHOICE_SPECS(49,0,new Color(238, 236, 100),Item.HELD_ITEM,null,"A pair of curious glasses that boost the holder's Sp. Atk stat but only allow the use of a single move."), // TODO
+	LEFTOVERS(50,0,new Color(227, 96, 91),Item.HELD_ITEM,null,"An item that restores the user's HP gradually throughout a battle."),
+	BLACK_SLUDGE(51,0,new Color(144, 138, 169),Item.HELD_ITEM,null,"If the holder is a Poison type, this sludge will gradually restore its HP. It damages any other type."),
+	EVIOLITE(52,0,new Color(186, 141, 190),Item.HELD_ITEM,null,"A mysterious evolutionary lump that boosts the Defense and Sp. Def stats when held by a Pokemon that can still evolve."), // TODO
+	EVERSTONE(53,0,new Color(179, 200, 210),Item.HELD_ITEM,null,"A Pokemon holding this peculiar stone is prevented from evolving."),
+	DAMP_ROCK(54,0,new Color(37, 99, 179),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to rain, the rain will persist for longer than usual."),
+	HEAT_ROCK(55,0,new Color(209, 68, 61),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to harsh sunlight, the sunlight will persist for longer than usual."),
+	SMOOTH_ROCK(56,0,new Color(166, 124, 90),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to a sandstorm, the storm will persist for longer than usual."),
+	ICY_ROCK(57,0,new Color(130, 200, 232),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to snow, the snow will persist for longer than usual."),
+	ASSAULT_VEST(58,0,new Color(194, 80, 84),Item.HELD_ITEM,null,"An offensive vest boosts the holder's Sp. Def stat but prevents the use of status moves."), // TODO
+	BRIGHT_POWDER(59,0,new Color(214, 234, 206),Item.HELD_ITEM,null,"A glittery powder that casts a tricky glare which lowers the accuracy of opposing Pokemon's moves."), // TODO
+	EXPERT_BELT(60,0,new Color(94, 90, 97),Item.HELD_ITEM,null,"A well-worn belt that slightly boosts the power of the holder's supereffective moves."),
+	TERRAIN_EXTENDER(61,0,new Color(212, 228, 229),Item.HELD_ITEM,null,"A held item that extends the duration of terrain caused by the holder's move or Ability."),
+	LIFE_ORB(62,0,new Color(184, 72, 144),Item.HELD_ITEM,null,"An orb that boosts the power of the holder's moves, but at the cost of some HP."), // TODO
+	FLAME_ORB(63,0,new Color(225, 3, 3),Item.HELD_ITEM,null,"A bizarre orb that gives off heat when touched and will afflict the holder with a burn during battle."), // TODO
+	TOXIC_ORB(64,0,new Color(148, 112, 172),Item.HELD_ITEM,null,"A bizarre orb that exudes toxins when touched and will badly poison the holder during battle."), // TODO
+	ROCKY_HELMET(65,0,new Color(241, 188, 27),Item.HELD_ITEM,null,"If another Pokemon makes direct contact with the holder, that Pokémon will be damaged."),
+	LIGHT_CLAY(66,0,new Color(183, 216, 126),Item.HELD_ITEM,null,"An item that when the holder uses protective moves like Light Screen or Reflect, their effects will last longer than usual."), // TODO
+	SOOTHE_BELL(67,0,new Color(198, 199, 202),Item.HELD_ITEM,null,"The comforting chime of this bell calms the holder, making it friendly."),
+	SHELL_BELL(68,0,new Color(242, 242, 242),Item.HELD_ITEM,null,""), // TODO
+	SCOPE_LENS(69,0,new Color(192, 183, 54),Item.HELD_ITEM,null,""),
+	WIDE_LENS(70,0,new Color(74, 162, 195),Item.HELD_ITEM,null,""), 
+	QUICK_CLAW(71,0,new Color(213, 189, 105),Item.HELD_ITEM,null,""),
+	BIG_ROOT(72,0,new Color(208, 161, 91),Item.HELD_ITEM,null,""),
+	CLEAR_AMULET(73,0,new Color(204, 204, 243),Item.HELD_ITEM,null,""),
+	COVERT_CLOAK(74,0,new Color(101, 136, 160),Item.HELD_ITEM,null,""),
+	HEAVY$DUTY_BOOTS(75,0,new Color(97, 97, 97),Item.HELD_ITEM,null,""),
+	FOCUS_BAND(76,0,new Color(232, 80, 80),Item.HELD_ITEM,null,""), // TODO
+	KING1S_ROCK(77,0,new Color(224, 206, 58),Item.HELD_ITEM,null,""), // TODO
+	STICKY_BARB(78,0,new Color(109, 177, 196),Item.HELD_ITEM,null,""), // TODO
+	MUSCLE_BAND(79,0,new Color(225, 200, 50),Item.HELD_ITEM,null,""),
+	WISE_GLASSES(80,0,new Color(92, 105, 117),Item.HELD_ITEM,null,""),
+	FOCUS_SASH(81,0,new Color(232, 80, 80),Item.HELD_ITEM,null,""), // TODO
+	AIR_BALLOON(82,0,new Color(232, 72, 72),Item.HELD_ITEM,null,""), // TODO
+	POWER_HERB(83,0,new Color(253, 80, 77),Item.HELD_ITEM,null,""), // TODO
+	WHITE_HERB(84,0,new Color(242, 242, 242),Item.HELD_ITEM,null,""), // TODO
+	WEAKNESS_POLICY(85,0,new Color(215, 233, 195),Item.HELD_ITEM,null,""), // TODO
+	BLUNDER_POLICY(86,0,new Color(239, 239, 178),Item.HELD_ITEM,null,""), // TODO
+	RED_CARD(87,0,new Color(216, 35, 22),Item.HELD_ITEM,null,""), // TODO
+	THROAT_SPRAY(88,0,new Color(96, 120, 168),Item.HELD_ITEM,null,""), // TODO
+	NULL89(89,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	NULL90(90,0,Color.BLACK,Item.HELD_ITEM,null,""),
 	NULL91(91,0,Color.BLACK,Item.OTHER,null,""),
 	NULL92(92,0,Color.BLACK,Item.OTHER,null,""),
 	HM01(93,0,Color.BLACK,Item.TMS,Move.CUT,"Teaches a Pokemon this move."),
@@ -233,6 +233,66 @@ public enum Item {
 	TM98(198,0,Color.BLACK,Item.TMS,Move.FLIP_TURN,"Teaches a Pokemon this move."),
 	TM99(199,0,Color.BLACK,Item.TMS,Move.RETURN,"Teaches a Pokemon this move."),
 	CALCULATOR(200,0,Color.BLACK,Item.OTHER,null,"Calculates damage simulating\na battle"),
+	BLACK_BELT(201,0,new Color(81, 76, 84),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."), // TODO
+	BLACK_GLASSES(202,0,new Color(81, 65, 78),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."), // TODO
+	CHARCOAL(203,0,new Color(67, 60, 73),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."), // TODO
+	COSMIC_CORE(204,0,new Color(71, 40, 79),Item.HELD_ITEM,null,"A mysterious core from the heart of the cosmos that boosts the power of Galactic-type moves."), // TODO
+	DRAGON_FANG(205,0,new Color(149, 122, 124),Item.HELD_ITEM,null,""), // TODO
+	ENCHANTED_AMULET(206,0,new Color(211, 38, 255),Item.HELD_ITEM,null,"An ancient amulet with mystical properties that boosts the power of Magic-type moves."), // TODO
+	GLOWING_PRISM(207,0,new Color(255, 252, 153),Item.HELD_ITEM,null,"A radiant prism that boosts the power of Light-type moves."), // TODO
+	HARD_STONE(208,0,new Color(96, 88, 88),Item.HELD_ITEM,null,"A durable stone that boosts the power of the holder's Rock-type moves."), // TODO
+	MAGNET(209,0,new Color(163, 171, 147),Item.HELD_ITEM,null,""), // TODO
+	METAL_COAT(210,0,new Color(178, 200, 200),Item.HELD_ITEM,null,""), // TODO
+	MIRACLE_SEED(211,0,new Color(215, 209, 80),Item.HELD_ITEM,null,""), // TODO
+	MYSTIC_WATER(212,0,new Color(88, 88, 208),Item.HELD_ITEM,null,""), // TODO
+	NEVER$MELT_ICE(213,0,new Color(216, 235, 244),Item.HELD_ITEM,null,""), // TODO
+	POISON_BARB(214,0,new Color(173, 130, 158),Item.HELD_ITEM,null,""), // TODO
+	SHARP_BEAK(215,0,new Color(241, 225, 145),Item.HELD_ITEM,null,""), // TODO
+	SILK_SCARF(216,0,new Color(235, 250, 250),Item.HELD_ITEM,null,""), // TODO
+	SILVER_POWDER(217,0,new Color(119, 201, 132),Item.HELD_ITEM,null,""), // TODO
+	SOFT_SAND(218,0,new Color(240, 224, 152),Item.HELD_ITEM,null,""), // TODO
+	SPELL_TAG(219,0,new Color(127, 127, 126),Item.HELD_ITEM,null,""), // TODO
+	TWISTED_SPOON(220,0,new Color(220, 229, 229),Item.HELD_ITEM,null,""), // TODO
+	CHERI_BERRY(221,0,new Color(232, 96, 80),Item.BERRY,null,""), // TODO
+	CHESTO_BERRY(222,0,new Color(144, 112, 224),Item.BERRY,null,""), // TODO
+	PECHA_BERRY(223,0,new Color(248, 192, 152),Item.BERRY,null,""), // TODO
+	RAWST_BERRY(224,0,new Color(144, 208, 208),Item.BERRY,null,""), // TODO
+	ASPEAR_BERRY(225,0,new Color(240, 224, 80),Item.BERRY,null,""), // TODO
+	LUM_BERRY(226,0,new Color(144, 216, 72),Item.BERRY,null,""), // TODO
+	PERSIM_BERRY(227,0,new Color(224, 152, 112),Item.BERRY,null,""), // TODO
+	LEPPA_BERRY(228,0,new Color(200, 72, 48),Item.BERRY,null,""), // TODO
+	ORAN_BERRY(229,0,new Color(80, 160, 240),Item.BERRY,null,""), // TODO
+	SITRUS_BERRY(230,0,new Color(248, 232, 104),Item.BERRY,null,""), // TODO
+	WIKI_BERRY(231,0,new Color(144, 112, 224),Item.BERRY,null,""), // TODO
+	OCCA_BERRY(232,0,PType.FIRE.getColor(),Item.BERRY,null,""), // TODO
+	PASSHO_BERRY(233,0,PType.WATER.getColor(),Item.BERRY,null,""), // TODO
+	WACAN_BERRY(234,0,PType.ELECTRIC.getColor(),Item.BERRY,null,""), // TODO
+	RINDO_BERRY(235,0,PType.GRASS.getColor(),Item.BERRY,null,""), // TODO
+	YACHE_BERRY(236,0,PType.ICE.getColor(),Item.BERRY,null,""), // TODO
+	CHOPLE_BERRY(237,0,PType.FIGHTING.getColor(),Item.BERRY,null,""), // TODO
+	KEBIA_BERRY(238,0,PType.POISON.getColor(),Item.BERRY,null,""), // TODO
+	SHUCA_BERRY(239,0,PType.GROUND.getColor(),Item.BERRY,null,""), // TODO
+	COBA_BERRY(240,0,PType.FLYING.getColor(),Item.BERRY,null,""), // TODO
+	PAYAPA_BERRY(241,0,PType.PSYCHIC.getColor(),Item.BERRY,null,""), // TODO
+	TANGA_BERRY(242,0,PType.BUG.getColor(),Item.BERRY,null,""), // TODO
+	CHARTI_BERRY(243,0,PType.ROCK.getColor(),Item.BERRY,null,""), // TODO
+	KASIB_BERRY(244,0,PType.GHOST.getColor(),Item.BERRY,null,""), // TODO
+	HABAN_BERRY(245,0,PType.DRAGON.getColor(),Item.BERRY,null,""), // TODO
+	COLBUR_BERRY(246,0,PType.DARK.getColor(),Item.BERRY,null,""), // TODO
+	BABIRI_BERRY(247,0,PType.STEEL.getColor(),Item.BERRY,null,""), // TODO
+	CHILAN_BERRY(248,0,PType.NORMAL.getColor(),Item.BERRY,null,""), // TODO
+	ROSELI_BERRY(249,0,PType.LIGHT.getColor(),Item.BERRY,null,""), // TODO
+	MYSTICOLA_BERRY(250,0,PType.MAGIC.getColor(),Item.BERRY,null,""), // TODO
+	GALAXEED_BERRY(251,0,PType.GALACTIC.getColor(),Item.BERRY,null,""), // TODO
+	LIECHI_BERRY(252,0,new Color(248, 224, 160),Item.BERRY,null,""), // TODO
+	GANLON_BERRY(253,0,new Color(152, 144, 200),Item.BERRY,null,""), // TODO
+	SALAC_BERRY(254,0,new Color(120, 184, 112),Item.BERRY,null,""), // TODO
+	PETAYA_BERRY(255,0,new Color(240, 160, 120),Item.BERRY,null,""), // TODO
+	APRICOT_BERRY(256,0,new Color(104, 128, 184),Item.BERRY,null,""), // TODO
+	STARF_BERRY(257,0,new Color(184, 232, 152),Item.BERRY,null,""), // TODO
+	MICLE_BERRY(258,0,new Color(64, 200, 64),Item.BERRY,null,""), // TODO
+	NULL259(259,0,Color.BLACK,Item.BERRY,null,""),
+	NULL260(260,0,Color.BLACK,Item.BERRY,null,""),
 	;
 	
 	private int id;
@@ -274,6 +334,8 @@ public enum Item {
 				case 8:
 					healAmount = -1;
 					break;
+				case 229:
+					healAmount = 10;
 				default:
 					healAmount = 0;
 			}
@@ -600,13 +662,12 @@ public enum Item {
 	}
 
 	public Status getStatus() {
-		if (id == 9) return Status.POISONED;
-		else if (id == 10) return Status.ASLEEP;
-		else if (id == 11) return Status.BURNED;
-		else if (id == 12) return Status.PARALYZED;
-		else if (id == 13) return Status.FROSTBITE;
-		else if (id == 14) return null;
-		else if (id == 15) return null;
+		if (id == 9 || id == 223) return Status.POISONED;
+		else if (id == 10 || id == 222) return Status.ASLEEP;
+		else if (id == 11 || id == 224) return Status.BURNED;
+		else if (id == 12 || id == 221) return Status.PARALYZED;
+		else if (id == 13 || id == 225) return Status.FROSTBITE;
+		else if (id == 14 || id == 15 || id == 226) return null;
 		else return Status.CONFUSED; // lol
 		
 	}
@@ -915,8 +976,8 @@ public enum Item {
         		moves[k].setText(current.moveset[k].move.toString());
         		moves[k].setBackground(current.moveset[k].move.mtype.getColor());
         		if (current.moveset[k].move == Move.HIDDEN_POWER) moves[k].setBackground(current.determineHPType().getColor());
-        		int minDamage = current.calcWithTypes(foe, current.moveset[k].move, false, -1, crit);
-        		int maxDamage = current.calcWithTypes(foe, current.moveset[k].move, false, 1, crit);
+        		int minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, -1, crit);
+        		int maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, 1, crit);
         		double minDamageD = minDamage * 1.0 / foe.getStat(0);
         		minDamageD *= 100;
         		String formattedMinD = String.format("%.1f", minDamageD);
@@ -1111,9 +1172,7 @@ public enum Item {
 		    	for (int i = 0; i < 6; i++) {
 		    		ivInputs[i].setSelectedIndex(random.nextInt(32));
 		    	}
-		    	
 		    }
-			
 		});
 		result.add(randomize);
 		
@@ -1173,7 +1232,7 @@ public enum Item {
 	}
 
 	public boolean isStatusHealer() {
-		return getID() > 8 && getID() < 16;
+		return (getID() > 8 && getID() < 16) || (getID() > 220 && getID() < 227);
 	}
 
 	public boolean isPotion() {

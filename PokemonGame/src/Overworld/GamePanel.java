@@ -34,11 +34,11 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	
 	// SETTINGS
 	final int originalTileSize = 16;
-	final int scale = 1; // TODO: 3, 18, 12
+	final int scale = 3; // TODO: 3, 16, 12
 	
 	public final int tileSize = originalTileSize * scale;
-	public final int maxScreenCol = 48;
-	public final int maxScreenRow = 36;
+	public final int maxScreenCol = 16; // 48
+	public final int maxScreenRow = 12; // 36
 	public final int screenWidth = tileSize * maxScreenCol;
 	public final int screenHeight = tileSize * maxScreenRow;
 	
@@ -196,7 +196,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	    // Create the Battle instance and set the window listener to save on close
 	    keyH.pause();
 
-	    PBox box = new PBox(player);
+	    PBox box = new PBox(player, keyH);
 	    box.addWindowListener(new WindowAdapter() {
 	        @Override
 	        public void windowClosing(WindowEvent e) {

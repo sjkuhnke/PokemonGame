@@ -3,6 +3,7 @@ package Swing;
 import javax.swing.border.EmptyBorder;
 
 import Entity.PlayerCharacter;
+import Overworld.KeyHandler;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -23,13 +24,15 @@ public class PBox extends JFrame {
 	private JPanel playerPanel;
 	public static Player me;
 	public static PlayerCharacter playerCharacter;
+	public KeyHandler keyH;
 
 	private JGradientButton[] boxButtons;
 	private int currentBox = 1;
 
-	public PBox(PlayerCharacter playerCharacter) {
+	public PBox(PlayerCharacter playerCharacter, KeyHandler keyH) {
 	    me = playerCharacter.p;
 	    PBox.playerCharacter = playerCharacter;
+	    this.keyH = keyH;
 	    setTitle("Box 1");
 	    
 	    // Initializing panel
@@ -217,6 +220,14 @@ public class PBox extends JFrame {
 		    }
 		});
 		playerPanel.add(previousButton);
+		
+		JButton exitButton = new JButton("X");
+		exitButton.setBounds(555, 10, 60, 60);
+		exitButton.addActionListener(e -> {
+			keyH.resume();
+			dispose();
+		});
+		playerPanel.add(exitButton);
 		
 		displayBox();
 		

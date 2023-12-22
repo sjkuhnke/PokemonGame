@@ -85,6 +85,10 @@ public class Pokemon implements Serializable {
 	public int currentHP;
 	public boolean fainted;
 	
+	// item fields
+	public Item item;
+	boolean keepItem;
+	
 	// counter fields
 	private int confusionCounter;
 	private int sleepCounter;
@@ -206,6 +210,8 @@ public class Pokemon implements Serializable {
 		headbuttCrit = pokemon.headbuttCrit;
 		catchRate = setCatchRate();
 		happinessCap = pokemon.happinessCap;
+		item = pokemon.item;
+		keepItem = pokemon.keepItem;
 	}
 	
 	public BufferedImage getSprite() {
@@ -2362,6 +2368,7 @@ public class Pokemon implements Serializable {
 
 
 	private Pokemon checkEvo(Player player) {
+		if (this.item == Item.EVERSTONE) return null;
 		Pokemon result = null;
 		int area = player.currentMap;
 		if (area >= 95 && area <= 99) area = 35; // electric tunnel
@@ -3277,6 +3284,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (this.ability == Ability.COMPOUND_EYES) acc *= 1.3;
+		if (item == Item.WIDE_LENS) acc *= 1.1;
 		if (field.contains(field.fieldEffects, Effect.GRAVITY)) acc = acc * 5 / 3;
 		
 		if (field.equals(field.weather, Effect.SUN)) {
@@ -3501,42 +3509,47 @@ public class Pokemon implements Serializable {
 				bp *= 1.5;
 			}
 			
+			if (move.cat == 0 && item == Item.MUSCLE_BAND) bp *= 1.1;
+			if (move.cat == 1 && item == Item.WISE_GLASSES) bp *= 1.1;
+			
+			bp *= boostItemCheck(moveType);
+			
 			if (field.equals(field.weather, Effect.SUN)) {
-				if (move.mtype == PType.WATER) bp *= 0.5;
-				if (move.mtype == PType.FIRE) bp *= 1.5;
+				if (moveType == PType.WATER) bp *= 0.5;
+				if (moveType == PType.FIRE) bp *= 1.5;
 			}
 			
 			if (field.equals(field.weather, Effect.RAIN)) {
-				if (move.mtype == PType.WATER) bp *= 1.5;
-				if (move.mtype == PType.FIRE) bp *= 0.5;
+				if (moveType == PType.WATER) bp *= 1.5;
+				if (moveType == PType.FIRE) bp *= 0.5;
 				if (move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) bp *= 0.5;
 			}
 			
 			if (field.equals(field.terrain, Effect.ELECTRIC) && isGrounded()) {
-				if (move.mtype == PType.ELECTRIC) bp *= 1.5;
+				if (moveType == PType.ELECTRIC) bp *= 1.5;
 			}
 			
 			if (field.equals(field.terrain, Effect.GRASSY)) {
-				if (isGrounded() && move.mtype == PType.GRASS) bp *= 1.5;
+				if (isGrounded() && moveType == PType.GRASS) bp *= 1.5;
 				if (move == Move.EARTHQUAKE || move == Move.BULLDOZE || move == Move.MAGNITUDE) bp *= 0.5;
 			}
 			
 			if (field.equals(field.terrain, Effect.SPARKLY)) {
-				if (move.mtype == PType.DRAGON && foe.isGrounded()) bp *= 0.5;
+				if (moveType == PType.DRAGON && foe.isGrounded()) bp *= 0.5;
 				if (isGrounded()) secChance = 0;
 			}
 			
 			if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded()) {
-				if (move.mtype == PType.PSYCHIC) bp *= 1.5;
+				if (moveType == PType.PSYCHIC) bp *= 1.5;
 			}
 			
-			if ((field.contains(field.fieldEffects, Effect.MUD_SPORT) && move.mtype == PType.ELECTRIC) || (field.contains(field.fieldEffects, Effect.WATER_SPORT) && move.mtype == PType.FIRE)) bp *= 0.33;
+			if ((field.contains(field.fieldEffects, Effect.MUD_SPORT) && moveType == PType.ELECTRIC) || (field.contains(field.fieldEffects, Effect.WATER_SPORT) && moveType == PType.FIRE)) bp *= 0.33;
 			
-			if (field.equals(field.weather, Effect.SANDSTORM) && this.ability == Ability.SAND_FORCE && (move.mtype == PType.ROCK || move.mtype == PType.GROUND || move.mtype == PType.STEEL)) bp *= 1.3;
+			if (field.equals(field.weather, Effect.SANDSTORM) && this.ability == Ability.SAND_FORCE && (moveType == PType.ROCK || moveType == PType.GROUND || moveType == PType.STEEL)) bp *= 1.3;
 			
 			if ((field.equals(field.weather, Effect.RAIN) || field.equals(field.weather, Effect.SNOW) || field.equals(field.weather, Effect.SANDSTORM)) && (move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE)) bp *= 0.5;
 			
-			if (foeAbility == Ability.SHIELD_DUST) secChance = 0;
+			if (foeAbility == Ability.SHIELD_DUST || this.item == Item.COVERT_CLOAK) secChance = 0;
 			
 			// Use either physical or special attack/defense
 			if (move.isPhysical()) {
@@ -3576,12 +3589,13 @@ public class Pokemon implements Serializable {
 			if (moveType == PType.ELECTRIC && lastMoveUsed == Move.CHARGE) bp *= 2;
 			
 			// Load Firearms
-			if (move.mtype == PType.STEEL && lastMoveUsed == Move.LOAD_FIREARMS) bp *= 2;
+			if (moveType == PType.STEEL && lastMoveUsed == Move.LOAD_FIREARMS) bp *= 2;
 			
 			// Crit Check
 			critChance = move.critChance;
 			if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 			if (this.ability == Ability.SUPER_LUCK) critChance++;
+			if (item == Item.SCOPE_LENS) critChance++;
 			if (foe.ability != Ability.BATTLE_ARMOR && critCheck(critChance)) {
 				console.writeln("A critical hit!");
 				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++; 
@@ -3659,7 +3673,7 @@ public class Pokemon implements Serializable {
 				return; // Check for immunity
 			}
 			
-			if (foeAbility == Ability.FLUFFY && move.mtype == PType.FIRE) multiplier *= 2;
+			if (foeAbility == Ability.FLUFFY && moveType == PType.FIRE) multiplier *= 2;
 			
 			damage *= multiplier;
 			
@@ -3669,11 +3683,12 @@ public class Pokemon implements Serializable {
 			
 			if (foeAbility == Ability.PSYCHIC_AURA && move.cat == 1) damage *= 0.8;
 			if (foeAbility == Ability.GLACIER_AURA && move.cat == 0) damage *= 0.8;
-			if (foeAbility == Ability.GALACTIC_AURA && (move.mtype == PType.PSYCHIC || move.mtype == PType.ICE)) damage /= 2;
+			if (foeAbility == Ability.GALACTIC_AURA && (moveType == PType.PSYCHIC || moveType == PType.ICE)) damage /= 2;
 			
 			if (multiplier > 1) {
 				console.writeln("It's super effective!");
 				if (foeAbility == Ability.SOLID_ROCK || foeAbility == Ability.FILTER) damage /= 2;
+				if (item == Item.EXPERT_BELT) damage *= 1.2;
 			}
 			if (multiplier < 1) {
 				console.writeln("It's not very effective...");
@@ -3706,7 +3721,7 @@ public class Pokemon implements Serializable {
 				} else {
 					healAmount = move == Move.DRAINING_KISS ? Math.max((int) Math.ceil(damage / 1.333333333333), 1) : Math.max((int) Math.ceil(damage / 2.0), 1);
 				}
-				
+				if (item == Item.BIG_ROOT) healAmount *= 1.3;
 				this.currentHP += healAmount;
 				if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
 				console.writeln(this.nickname + " sucked HP from " + foe.nickname + "!");
@@ -3736,7 +3751,7 @@ public class Pokemon implements Serializable {
 			console.writeln("(" + foe.nickname + " lost " + formattedPercent + "% of its HP.)");
 			if (foe.currentHP <= 0 && (move == Move.FALSE_SWIPE || foe.vStatuses.contains(Status.ENDURE) || (fullHP && foeAbility == Ability.STURDY))) {
 				foe.currentHP = 1;
-				if (foeAbility == Ability.STURDY) console.writeAbility(foe);
+				if (fullHP && foeAbility == Ability.STURDY) console.writeAbility(foe);
 				if (move != Move.FALSE_SWIPE) console.writeln(foe.name + " endured the hit!");
 			}
 			if (foe.currentHP <= 0) { // Check for kill
@@ -3778,10 +3793,16 @@ public class Pokemon implements Serializable {
 				}
 			}
 			
-			if (move.contact && (foeAbility == Ability.ROUGH_SKIN || foeAbility == Ability.IRON_BARBS)) {
-				this.currentHP -= Math.max(this.getStat(0) * 1.0 / 8, 1);
-				console.writeln(this.nickname + " was hurt!");
-				if (this.currentHP <= 0) { // Check for kill
+			if (move.contact) {
+				if (foeAbility == Ability.ROUGH_SKIN || foeAbility == Ability.IRON_BARBS) {
+					this.currentHP -= Math.max(this.getStat(0) * 1.0 / 8, 1);
+					console.writeln(this.nickname + " was hurt!");
+				}
+				if (foe.item == Item.ROCKY_HELMET) {
+					this.currentHP -= Math.max(this.getStat(0) * 1.0 / 8, 1);
+					console.writeln(this.nickname + " was hurt by the Rocky Helmet!");
+				}
+				if ((foeAbility == Ability.ROUGH_SKIN || foeAbility == Ability.IRON_BARBS || foe.item == Item.ROCKY_HELMET) && this.currentHP <= 0) { // Check for kill
 					this.faint(true, player, foe);
 					if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
 					foe.awardxp((int) Math.ceil(this.level * this.trainer), player);
@@ -3869,6 +3890,30 @@ public class Pokemon implements Serializable {
 		success = false;
 		return true;
 	}
+	
+	private double boostItemCheck(PType type) {
+		if (item == Item.BLACK_BELT && type == PType.FIGHTING) return 1.2;
+		if (item == Item.BLACK_GLASSES && type == PType.DARK) return 1.2;
+		if (item == Item.CHARCOAL && type == PType.FIRE) return 1.2;
+		if (item == Item.COSMIC_CORE && type == PType.GALACTIC) return 1.2;
+		if (item == Item.DRAGON_FANG && type == PType.DRAGON) return 1.2;
+		if (item == Item.ENCHANTED_AMULET && type == PType.MAGIC) return 1.2;
+		if (item == Item.GLOWING_PRISM && type == PType.LIGHT) return 1.2;
+		if (item == Item.HARD_STONE && type == PType.ROCK) return 1.2;
+		if (item == Item.MAGNET && type == PType.ELECTRIC) return 1.2;
+		if (item == Item.METAL_COAT && type == PType.STEEL) return 1.2;
+		if (item == Item.MIRACLE_SEED && type == PType.GRASS) return 1.2;
+		if (item == Item.MYSTIC_WATER && type == PType.WATER) return 1.2;
+		if (item == Item.NEVER$MELT_ICE && type == PType.ICE) return 1.2;
+		if (item == Item.POISON_BARB && type == PType.POISON) return 1.2;
+		if (item == Item.SHARP_BEAK && type == PType.FLYING) return 1.2;
+		if (item == Item.SILK_SCARF && type == PType.NORMAL) return 1.2;
+		if (item == Item.SILVER_POWDER && type == PType.BUG) return 1.2;
+		if (item == Item.SOFT_SAND && type == PType.GROUND) return 1.2;
+		if (item == Item.SPELL_TAG && type == PType.GHOST) return 1.2;
+		if (item == Item.TWISTED_SPOON && type == PType.PSYCHIC) return 1.2;
+		return 1;
+	}
 
 	public void awardxp(int amt, Player player) {
 	    if (this.fainted) return;
@@ -3912,6 +3957,7 @@ public class Pokemon implements Serializable {
 
 	public void awardHappiness(int i, boolean override) {
 		int deduc = 0;
+		if (this.item == Item.SOOTHE_BELL && i > 0) i *= 2;
 		if (!override) {
 			this.happinessCap -= i;
 			deduc = happinessCap < 0 ? Math.abs(happinessCap) : 0;
@@ -4689,7 +4735,8 @@ public class Pokemon implements Serializable {
 			stat(this, 0, 1, foe);
 			stat(this, 4, 1, foe);
 		} else if (move == Move.ELECTRIC_TERRAIN) {
-			field.setTerrain(field.new FieldEffect(Effect.ELECTRIC));
+			boolean success = field.setTerrain(field.new FieldEffect(Effect.ELECTRIC));
+			if (success && item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
 		} else if (move == Move.ENCORE) {
 			if (!foe.vStatuses.contains(Status.ENCORED) && foe.lastMoveUsed != null) {
 				foe.vStatuses.add(Status.ENCORED);
@@ -4712,7 +4759,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.ENTRAINMENT) {
 			foe.ability = this.ability;
 			console.writeln(foe.nickname + "'s ability became " + foe.ability.toString() + "!");
-			foe.swapIn(this, player);
+			foe.swapIn(this, player, false);
 		} else if (move == Move.FAKE_TEARS) {
 			stat(foe, 3, -2, foe);
 		} else if (move == Move.FEATHER_DANCE) {
@@ -4751,7 +4798,8 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.GRASS_WHISTLE) {
 			foe.sleep(true);
 		} else if (move == Move.GRASSY_TERRAIN) {
-			field.setTerrain(field.new FieldEffect(Effect.GRASSY));
+			boolean success = field.setTerrain(field.new FieldEffect(Effect.GRASSY));
+			if (success && item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
 		} else if (move == Move.GRAVITY) {
 			field.setEffect(field.new FieldEffect(Effect.GRAVITY));
 		} else if (move == Move.GROWL) {
@@ -4765,7 +4813,8 @@ public class Pokemon implements Serializable {
 				stat(this, 2, 1, foe);
 			}
 		} else if (move == Move.SNOWSCAPE) {
-			field.setWeather(field.new FieldEffect(Effect.SNOW));
+			boolean success = field.setWeather(field.new FieldEffect(Effect.SNOW));
+			if (success && item == Item.ICY_ROCK) field.weatherTurns = 8;
 		} else if (move == Move.HARDEN) {
 			stat(this, 1, 1, foe);
 		} else if (move == Move.HAZE) {
@@ -4917,7 +4966,8 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.WATER_FLICK) {
 			stat(foe, 0, -1, foe);
 		} else if (move == Move.PSYCHIC_TERRAIN) {
-			field.setTerrain(field.new FieldEffect(Effect.PSYCHIC));
+			boolean success = field.setTerrain(field.new FieldEffect(Effect.PSYCHIC));
+			if (success && item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
 		} else if (move == Move.POISON_GAS) {
 			foe.poison(true, this);
 		} else if (move == Move.STUN_SPORE) {
@@ -4939,7 +4989,8 @@ public class Pokemon implements Serializable {
 			stat(this, 2, 2, foe);
 			stat(this, 4, 2, foe);
 		} else if (move == Move.RAIN_DANCE) {
-			field.setWeather(field.new FieldEffect(Effect.RAIN));
+			boolean success = field.setWeather(field.new FieldEffect(Effect.RAIN));
+			if (success && item == Item.DAMP_ROCK) field.weatherTurns = 8;
 		} else if (move == Move.REBOOT) {
 			if (this.status != Status.HEALTHY || !this.vStatuses.isEmpty()) console.writeln(this.nickname + " became healthy!");
 			this.status = Status.HEALTHY;
@@ -4991,7 +5042,8 @@ public class Pokemon implements Serializable {
 				fail = fail();
 			}
 		} else if (move == Move.SANDSTORM) {
-			field.setWeather(field.new FieldEffect(Effect.SANDSTORM));
+			boolean success = field.setWeather(field.new FieldEffect(Effect.SANDSTORM));
+			if (success && item == Item.SMOOTH_ROCK) field.weatherTurns = 8;
 		} else if (move == Move.SCARY_FACE) {
 			stat(foe, 4, -2, foe);
 		} else if (move == Move.SCREECH) {
@@ -5034,7 +5086,8 @@ public class Pokemon implements Serializable {
 //				foe.confuse();
 //			}
 		} else if (move == Move.SPARKLING_TERRAIN) {
-			field.setTerrain(field.new FieldEffect(Effect.SPARKLY));
+			boolean success = field.setTerrain(field.new FieldEffect(Effect.SPARKLY));
+			if (success && item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
 		} else if (move == Move.SPIKES) {
 			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.SPIKES));
 		} else if (move == Move.SPLASH) {
@@ -5055,7 +5108,8 @@ public class Pokemon implements Serializable {
 		}  else if (move == Move.STRING_SHOT) {
 			stat(foe, 4, -2, foe);
 		} else if (move == Move.SUNNY_DAY) {
-			field.setWeather(field.new FieldEffect(Effect.SUN));
+			boolean success = field.setWeather(field.new FieldEffect(Effect.SUN));
+			if (success && item == Item.HEAT_ROCK) field.weatherTurns = 8;
 		} else if (move == Move.SUPERSONIC) {
 			foe.confuse(true);
 		} else if (move == Move.SWAGGER) {
@@ -5134,6 +5188,7 @@ public class Pokemon implements Serializable {
 				fail();
 			} else {
 				this.vStatuses.add(Status.WISH);
+				console.writeln(this.nickname + " made a wish!");
 			}
 		} else if (move == Move.WITHDRAW) {
 			stat(this, 1, 1, foe);
@@ -5196,6 +5251,9 @@ public class Pokemon implements Serializable {
 			} else if (p.ability == Ability.CLEAR_BODY && a < 0) {
 				console.writeAbility(p);
 				console.writeln(p.nickname + "'s " + type + " was not lowered!");
+				return;
+			} else if (item == Item.CLEAR_AMULET && a < 0) {
+				console.writeln(p.nickname + "'s Clear Amulet blocked the stat drop!");
 				return;
 			} else if (p.ability == Ability.KEEN_EYE && a < 0 && i == 5) {
 				console.writeAbility(p);
@@ -9986,6 +10044,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (this.ability == Ability.COMPOUND_EYES) acc *= 1.3;
+		if (item == Item.WIDE_LENS) acc *= 1.1;
 		if (field.contains(field.fieldEffects, Effect.GRAVITY)) acc = acc * 5 / 3;
 		
 		if (field.equals(field.weather, Effect.SUN)) {
@@ -10112,37 +10171,42 @@ public class Pokemon implements Serializable {
 			bp *= 1.5;
 		}
 		
+		if (move.cat == 0 && item == Item.MUSCLE_BAND) bp *= 1.1;
+		if (move.cat == 1 && item == Item.WISE_GLASSES) bp *= 1.1;
+		
+		bp *= boostItemCheck(moveType);
+		
 		if (field.equals(field.weather, Effect.SUN)) {
-			if (move.mtype == PType.WATER) bp *= 0.5;
-			if (move.mtype == PType.FIRE) bp *= 1.5;
+			if (moveType == PType.WATER) bp *= 0.5;
+			if (moveType == PType.FIRE) bp *= 1.5;
 		}
 		
 		if (field.equals(field.weather, Effect.RAIN)) {
-			if (move.mtype == PType.WATER) bp *= 1.5;
-			if (move.mtype == PType.FIRE) bp *= 0.5;
+			if (moveType == PType.WATER) bp *= 1.5;
+			if (moveType == PType.FIRE) bp *= 0.5;
 			if (move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) bp *= 0.5;
 		}
 		
 		if (field.equals(field.terrain, Effect.ELECTRIC) && isGrounded()) {
-			if (move.mtype == PType.ELECTRIC) bp *= 1.5;
+			if (moveType == PType.ELECTRIC) bp *= 1.5;
 		}
 		
 		if (field.equals(field.terrain, Effect.GRASSY)) {
-			if (isGrounded() && move.mtype == PType.GRASS) bp *= 1.5;
+			if (isGrounded() && moveType == PType.GRASS) bp *= 1.5;
 			if (move == Move.EARTHQUAKE || move == Move.BULLDOZE || move == Move.MAGNITUDE) bp *= 0.5;
 		}
 		
 		if (field.equals(field.terrain, Effect.SPARKLY) && foe.isGrounded()) {
-			if (move.mtype == PType.DRAGON) bp *= 0.5;
+			if (moveType == PType.DRAGON) bp *= 0.5;
 		}
 		
 		if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded()) {
-			if (move.mtype == PType.PSYCHIC) bp *= 1.5;
+			if (moveType == PType.PSYCHIC) bp *= 1.5;
 		}
 		
-		if ((field.contains(field.fieldEffects, Effect.MUD_SPORT) && move.mtype == PType.ELECTRIC) || (field.contains(field.fieldEffects, Effect.WATER_SPORT) && move.mtype == PType.FIRE)) bp *= 0.33;
+		if ((field.contains(field.fieldEffects, Effect.MUD_SPORT) && moveType == PType.ELECTRIC) || (field.contains(field.fieldEffects, Effect.WATER_SPORT) && moveType == PType.FIRE)) bp *= 0.33;
 		
-		if (field.equals(field.weather, Effect.SANDSTORM) && this.ability == Ability.SAND_FORCE && (move.mtype == PType.ROCK || move.mtype == PType.GROUND || move.mtype == PType.STEEL)) bp *= 1.3;
+		if (field.equals(field.weather, Effect.SANDSTORM) && this.ability == Ability.SAND_FORCE && (moveType == PType.ROCK || moveType == PType.GROUND || moveType == PType.STEEL)) bp *= 1.3;
 		
 		if ((field.equals(field.weather, Effect.RAIN) || field.equals(field.weather, Effect.SNOW) || field.equals(field.weather, Effect.SANDSTORM)) && (move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE)) bp *= 0.5;
 		
@@ -10184,7 +10248,7 @@ public class Pokemon implements Serializable {
 		if (moveType == PType.ELECTRIC && lastMoveUsed == Move.CHARGE) bp *= 2;
 		
 		// Load Firearms
-		if (move.mtype == PType.STEEL && lastMoveUsed == Move.LOAD_FIREARMS) bp *= 2;
+		if (moveType == PType.STEEL && lastMoveUsed == Move.LOAD_FIREARMS) bp *= 2;
 		
 		// Multi hit moves calc to use
 		if (mode == 0) bp *= move.getNumHits(null);
@@ -10259,7 +10323,7 @@ public class Pokemon implements Serializable {
 			return 0;
 		}
 		
-		if (foeAbility == Ability.FLUFFY && move.mtype == PType.FIRE) multiplier *= 2;
+		if (foeAbility == Ability.FLUFFY && moveType == PType.FIRE) multiplier *= 2;
 		
 		damage *= multiplier;
 		
@@ -10269,7 +10333,7 @@ public class Pokemon implements Serializable {
 		
 		if (foeAbility == Ability.PSYCHIC_AURA && move.cat == 1) damage *= 0.8;
 		if (foeAbility == Ability.GLACIER_AURA && move.cat == 0) damage *= 0.8;
-		if (foeAbility == Ability.GALACTIC_AURA && (move.mtype == PType.PSYCHIC || move.mtype == PType.ICE)) damage /= 2;
+		if (foeAbility == Ability.GALACTIC_AURA && (moveType == PType.PSYCHIC || moveType == PType.ICE)) damage /= 2;
 		
 		if (multiplier > 1) {
 			if (foeAbility == Ability.SOLID_ROCK || foeAbility == Ability.FILTER) damage /= 2;
@@ -10365,6 +10429,7 @@ public class Pokemon implements Serializable {
 			if (f.currentHP > f.getStat(0)) f.currentHP = f.getStat(0);
 			this.currentHP -= hp;
 			console.writeln("\n" + f.nickname + " sucked health from " + this.nickname + "!");
+			if (f.item == Item.BIG_ROOT) hp *= 1.3;
 			f.currentHP += hp;
 			f.verifyHP();
 			if (this.currentHP <= 0) {
@@ -10388,7 +10453,9 @@ public class Pokemon implements Serializable {
 			}
 		} if (this.vStatuses.contains(Status.AQUA_RING)) {
 			if (this.currentHP < this.getStat(0)) {
-				this.currentHP += Math.max(this.getStat(0) * 1.0 / 16, 1);
+				int hp = (int) Math.max(this.getStat(0) * 1.0 / 16, 1);
+				if (item == Item.BIG_ROOT) hp *= 1.3;
+				this.currentHP += hp;
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
@@ -10416,20 +10483,48 @@ public class Pokemon implements Serializable {
 				this.currentHP += Math.max(this.getStat(0) * 1.0 / 8, 1);
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
+					console.writeln();
+					console.writeAbility(this);
+					console.writeln(this.nickname + " restored HP.");
 				}
-				console.writeln();
-				console.writeAbility(this);
-				console.writeln(this.nickname + " restored HP.");
 			}
 		} if (this.ability == Ability.ICE_BODY && field.equals(field.weather, Effect.SNOW)) {
 			if (this.currentHP < this.getStat(0)) {
 				this.currentHP += Math.max(this.getStat(0) * 1.0 / 16, 1);
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
+					console.writeln();
+					console.writeAbility(this);
+					console.writeln(this.nickname + " restored HP.");
 				}
-				console.writeln();
-				console.writeAbility(this);
-				console.writeln(this.nickname + " restored HP.");
+			}
+		} if (this.item == Item.LEFTOVERS) {
+			if (this.currentHP < this.getStat(0)) {
+				this.currentHP += Math.max(this.getStat(0) * 1.0 / 16, 1);
+				if (this.currentHP > this.getStat(0)) {
+					this.currentHP = this.getStat(0);
+				}
+				console.writeln("\n" + this.nickname + " restored HP.");
+			}
+		} if (this.item == Item.BLACK_SLUDGE) {
+			if (this.type1 == PType.POISON || this.type2 == PType.POISON) {
+				if (this.currentHP < this.getStat(0)) {
+					this.currentHP += Math.max(this.getStat(0) * 1.0 / 16, 1);
+					if (this.currentHP > this.getStat(0)) {
+						this.currentHP = this.getStat(0);
+					}
+					console.writeln("\n" + this.nickname + " restored HP.");
+				}
+			} else {
+				if (this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
+					this.currentHP -= Math.max(this.getStat(0) * 1.0 / 16, 1);
+					console.writeln("\n" + this.nickname + " was hurt!");
+				}
+				if (this.currentHP <= 0) { // Check for kill
+					this.faint(true, player, f);
+					f.awardxp((int) Math.ceil(this.level * this.trainer), player);
+					return;
+				}
 			}
 		} if (this.vStatuses.contains(Status.WISH) && this.lastMoveUsed != Move.WISH) {
 			if (this.currentHP < this.getStat(0)) {
@@ -11633,28 +11728,27 @@ public class Pokemon implements Serializable {
 
 
 
-	public void swapIn(Pokemon foe, Player me) {
+	public void swapIn(Pokemon foe, Player me, boolean hazards) {
 		if (this.ability == Ability.DROUGHT && !field.equals(field.weather, Effect.SUN)) {
 			console.writeAbility(this);
 			field.setWeather(field.new FieldEffect(Effect.SUN));
-			field.weatherTurns = 5;
+			if (this.item == Item.HEAT_ROCK) field.weatherTurns = 8;
 		} else if (this.ability == Ability.DRIZZLE && !field.equals(field.weather, Effect.RAIN)) {
 			console.writeAbility(this);
 			field.setWeather(field.new FieldEffect(Effect.RAIN));
-			field.weatherTurns = 5;
+			if (this.item == Item.DAMP_ROCK) field.weatherTurns = 8;
 		} else if (this.ability == Ability.SAND_STREAM && !field.equals(field.weather, Effect.SANDSTORM)) {
 			console.writeAbility(this);
 			field.setWeather(field.new FieldEffect(Effect.SANDSTORM));
-			field.weatherTurns = 5;
+			if (this.item == Item.SMOOTH_ROCK) field.weatherTurns = 8;
 		} else if (this.ability == Ability.SNOW_WARNING && !field.equals(field.weather, Effect.SNOW)) {
 			console.writeAbility(this);
 			field.setWeather(field.new FieldEffect(Effect.SNOW));
-			field.weatherTurns = 5;
-		
+			if (this.item == Item.ICY_ROCK) field.weatherTurns = 8;
 		} else if (this.ability == Ability.GRASSY_SURGE && !field.equals(field.terrain, Effect.GRASSY)) {
 			console.writeAbility(this);
 			field.setTerrain(field.new FieldEffect(Effect.GRASSY));
-			field.terrainTurns = 5;
+			if (this.item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
 		} else if (this.ability == Ability.ELECTRIC_SURGE && !field.equals(field.terrain, Effect.ELECTRIC)) {
 			console.writeAbility(this);
 			field.setTerrain(field.new FieldEffect(Effect.ELECTRIC));
@@ -11662,12 +11756,12 @@ public class Pokemon implements Serializable {
 		} else if (this.ability == Ability.PSYCHIC_SURGE && !field.equals(field.terrain, Effect.PSYCHIC)) {
 			console.writeAbility(this);
 			field.setTerrain(field.new FieldEffect(Effect.PSYCHIC));
-			field.terrainTurns = 5;
+			if (this.item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
 		} else if (this.ability == Ability.SPARKLY_SURGE && !field.equals(field.terrain, Effect.SPARKLY)) {
 			console.writeAbility(this);
 			field.setTerrain(field.new FieldEffect(Effect.SPARKLY));
-			field.terrainTurns = 5;
-		} else if (this.ability == Ability.GRAVITATIONAL_PULL) { 
+			if (this.item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
+		} else if (this.ability == Ability.GRAVITATIONAL_PULL) {
 			console.writeAbility(this);
 			field.setEffect(field.new FieldEffect(Effect.GRAVITY));
 		} else if (this.ability == Ability.INTIMIDATE || this.ability == Ability.SCALY_SKIN) {
@@ -11706,38 +11800,40 @@ public class Pokemon implements Serializable {
 			this.ability = foe.ability;
 			console.writeln(this.nickname + "'s ability became " + this.ability + "!");
 		}
-		ArrayList<FieldEffect> side = playerOwned ? field.playerSide : field.foeSide;
-		if (field.contains(side, Effect.STEALTH_ROCKS)) {
-			double multiplier = getEffectiveMultiplier(PType.ROCK);
-			double damage = (this.getStat(0) / 8.0) * multiplier;
-			this.currentHP -= (int) Math.floor(damage);
-			console.writeln("Pointed stones dug into " + this.nickname + "!");
-		}
-		if (field.contains(side, Effect.SPIKES) && this.isGrounded()) {
-			double layers = field.getLayers(side, Effect.SPIKES);
-			double damage = (this.getStat(0) / 8.0) * ((layers + 1) / 2);
-			this.currentHP -= (int) Math.floor(damage);
-			console.writeln(this.nickname + " was hurt by Spikes!");
-		}
-		
-		if (field.contains(side, Effect.TOXIC_SPIKES) && this.isGrounded()) {
-			int layers = field.getLayers(side, Effect.TOXIC_SPIKES);
-			if (layers == 1) this.poison(false, this);
-			if (layers == 2) this.toxic(false, this);
-			
-			if (this.type1 == PType.POISON || this.type2 == PType.POISON) {
-				field.remove(side, Effect.TOXIC_SPIKES);
-				console.writeln("The toxic spikes disappeared from " + this.nickname + "'s feet!");
+		if (hazards && this.item != Item.HEAVY$DUTY_BOOTS) {
+			ArrayList<FieldEffect> side = playerOwned ? field.playerSide : field.foeSide;
+			if (field.contains(side, Effect.STEALTH_ROCKS)) {
+				double multiplier = getEffectiveMultiplier(PType.ROCK);
+				double damage = (this.getStat(0) / 8.0) * multiplier;
+				this.currentHP -= (int) Math.floor(damage);
+				console.writeln("Pointed stones dug into " + this.nickname + "!");
 			}
-		}
-		
-		if (field.contains(side, Effect.STICKY_WEBS) && this.isGrounded()) {
-			stat(this, 4, -1, foe);
-		}
-		
-		if (this.currentHP <= 0) {
-			this.faint(true, me, foe);
-			foe.awardxp((int) Math.ceil(this.level * this.trainer), me);
+			if (field.contains(side, Effect.SPIKES) && this.isGrounded()) {
+				double layers = field.getLayers(side, Effect.SPIKES);
+				double damage = (this.getStat(0) / 8.0) * ((layers + 1) / 2);
+				this.currentHP -= (int) Math.floor(damage);
+				console.writeln(this.nickname + " was hurt by Spikes!");
+			}
+			
+			if (field.contains(side, Effect.TOXIC_SPIKES) && this.isGrounded()) {
+				int layers = field.getLayers(side, Effect.TOXIC_SPIKES);
+				if (layers == 1) this.poison(false, this);
+				if (layers == 2) this.toxic(false, this);
+				
+				if (this.type1 == PType.POISON || this.type2 == PType.POISON) {
+					field.remove(side, Effect.TOXIC_SPIKES);
+					console.writeln("The toxic spikes disappeared from " + this.nickname + "'s feet!");
+				}
+			}
+			
+			if (field.contains(side, Effect.STICKY_WEBS) && this.isGrounded()) {
+				stat(this, 4, -1, foe);
+			}
+			
+			if (this.currentHP <= 0) {
+				this.faint(true, me, foe);
+				foe.awardxp((int) Math.ceil(this.level * this.trainer), me);
+			}
 		}
 		
 		if (me.pokedex[this.id] < 1) me.pokedex[this.id] = 1;

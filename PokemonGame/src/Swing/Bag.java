@@ -12,8 +12,8 @@ public class Bag implements Serializable {
 	public int[] count;
 	
 	public Bag() {
-		bag = new Item[201];
-		count = new int[201];
+		bag = new Item[Item.values().length];
+		count = new int[Item.values().length];
 	}
 	
 	public void add(Item item) {
