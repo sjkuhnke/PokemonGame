@@ -97,7 +97,7 @@ public enum Item {
 	LIFE_ORB(62,0,new Color(184, 72, 144),Item.HELD_ITEM,null,"An orb that boosts the power of the holder's moves, but at the cost of some HP."), // TODO
 	FLAME_ORB(63,0,new Color(225, 3, 3),Item.HELD_ITEM,null,"A bizarre orb that gives off heat when touched and will afflict the holder with a burn during battle."), // TODO
 	TOXIC_ORB(64,0,new Color(148, 112, 172),Item.HELD_ITEM,null,"A bizarre orb that exudes toxins when touched and will badly poison the holder during battle."), // TODO
-	ROCKY_HELMET(65,0,new Color(241, 188, 27),Item.HELD_ITEM,null,"If another Pokemon makes direct contact with the holder, that Pokémon will be damaged."),
+	ROCKY_HELMET(65,0,new Color(241, 188, 27),Item.HELD_ITEM,null,"If another Pokemon makes direct contact with the holder, that Pokï¿½mon will be damaged."),
 	LIGHT_CLAY(66,0,new Color(183, 216, 126),Item.HELD_ITEM,null,"An item that when the holder uses protective moves like Light Screen or Reflect, their effects will last longer than usual."), // TODO
 	SOOTHE_BELL(67,0,new Color(198, 199, 202),Item.HELD_ITEM,null,"The comforting chime of this bell calms the holder, making it friendly."),
 	SHELL_BELL(68,0,new Color(242, 242, 242),Item.HELD_ITEM,null,""), // TODO
@@ -233,26 +233,26 @@ public enum Item {
 	TM98(198,0,Color.BLACK,Item.TMS,Move.FLIP_TURN,"Teaches a Pokemon this move."),
 	TM99(199,0,Color.BLACK,Item.TMS,Move.RETURN,"Teaches a Pokemon this move."),
 	CALCULATOR(200,0,Color.BLACK,Item.OTHER,null,"Calculates damage simulating\na battle"),
-	BLACK_BELT(201,0,new Color(81, 76, 84),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."), // TODO
-	BLACK_GLASSES(202,0,new Color(81, 65, 78),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."), // TODO
-	CHARCOAL(203,0,new Color(67, 60, 73),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."), // TODO
-	COSMIC_CORE(204,0,new Color(71, 40, 79),Item.HELD_ITEM,null,"A mysterious core from the heart of the cosmos that boosts the power of Galactic-type moves."), // TODO
-	DRAGON_FANG(205,0,new Color(149, 122, 124),Item.HELD_ITEM,null,""), // TODO
-	ENCHANTED_AMULET(206,0,new Color(211, 38, 255),Item.HELD_ITEM,null,"An ancient amulet with mystical properties that boosts the power of Magic-type moves."), // TODO
-	GLOWING_PRISM(207,0,new Color(255, 252, 153),Item.HELD_ITEM,null,"A radiant prism that boosts the power of Light-type moves."), // TODO
-	HARD_STONE(208,0,new Color(96, 88, 88),Item.HELD_ITEM,null,"A durable stone that boosts the power of the holder's Rock-type moves."), // TODO
-	MAGNET(209,0,new Color(163, 171, 147),Item.HELD_ITEM,null,""), // TODO
-	METAL_COAT(210,0,new Color(178, 200, 200),Item.HELD_ITEM,null,""), // TODO
-	MIRACLE_SEED(211,0,new Color(215, 209, 80),Item.HELD_ITEM,null,""), // TODO
-	MYSTIC_WATER(212,0,new Color(88, 88, 208),Item.HELD_ITEM,null,""), // TODO
-	NEVER$MELT_ICE(213,0,new Color(216, 235, 244),Item.HELD_ITEM,null,""), // TODO
-	POISON_BARB(214,0,new Color(173, 130, 158),Item.HELD_ITEM,null,""), // TODO
-	SHARP_BEAK(215,0,new Color(241, 225, 145),Item.HELD_ITEM,null,""), // TODO
-	SILK_SCARF(216,0,new Color(235, 250, 250),Item.HELD_ITEM,null,""), // TODO
-	SILVER_POWDER(217,0,new Color(119, 201, 132),Item.HELD_ITEM,null,""), // TODO
-	SOFT_SAND(218,0,new Color(240, 224, 152),Item.HELD_ITEM,null,""), // TODO
-	SPELL_TAG(219,0,new Color(127, 127, 126),Item.HELD_ITEM,null,""), // TODO
-	TWISTED_SPOON(220,0,new Color(220, 229, 229),Item.HELD_ITEM,null,""), // TODO
+	BLACK_BELT(201,0,new Color(81, 76, 84),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."),
+	BLACK_GLASSES(202,0,new Color(81, 65, 78),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."),
+	CHARCOAL(203,0,new Color(67, 60, 73),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."),
+	COSMIC_CORE(204,0,new Color(71, 40, 79),Item.HELD_ITEM,null,"A mysterious core from the heart of the cosmos that boosts the power of Galactic-type moves."),
+	DRAGON_FANG(205,0,new Color(149, 122, 124),Item.HELD_ITEM,null,""),
+	ENCHANTED_AMULET(206,0,new Color(211, 38, 255),Item.HELD_ITEM,null,"An ancient amulet with mystical properties that boosts the power of Magic-type moves."),
+	GLOWING_PRISM(207,0,new Color(255, 252, 153),Item.HELD_ITEM,null,"A radiant prism that boosts the power of Light-type moves."),
+	HARD_STONE(208,0,new Color(96, 88, 88),Item.HELD_ITEM,null,"A durable stone that boosts the power of the holder's Rock-type moves."),
+	MAGNET(209,0,new Color(163, 171, 147),Item.HELD_ITEM,null,""),
+	METAL_COAT(210,0,new Color(178, 200, 200),Item.HELD_ITEM,null,""),
+	MIRACLE_SEED(211,0,new Color(215, 209, 80),Item.HELD_ITEM,null,""),
+	MYSTIC_WATER(212,0,new Color(88, 88, 208),Item.HELD_ITEM,null,""),
+	NEVER$MELT_ICE(213,0,new Color(216, 235, 244),Item.HELD_ITEM,null,""),
+	POISON_BARB(214,0,new Color(173, 130, 158),Item.HELD_ITEM,null,""),
+	SHARP_BEAK(215,0,new Color(241, 225, 145),Item.HELD_ITEM,null,""),
+	SILK_SCARF(216,0,new Color(235, 250, 250),Item.HELD_ITEM,null,""),
+	SILVER_POWDER(217,0,new Color(119, 201, 132),Item.HELD_ITEM,null,""),
+	SOFT_SAND(218,0,new Color(240, 224, 152),Item.HELD_ITEM,null,""),
+	SPELL_TAG(219,0,new Color(127, 127, 126),Item.HELD_ITEM,null,""),
+	TWISTED_SPOON(220,0,new Color(220, 229, 229),Item.HELD_ITEM,null,""),
 	CHERI_BERRY(221,0,new Color(232, 96, 80),Item.BERRY,null,""), // TODO
 	CHESTO_BERRY(222,0,new Color(144, 112, 224),Item.BERRY,null,""), // TODO
 	PECHA_BERRY(223,0,new Color(248, 192, 152),Item.BERRY,null,""), // TODO

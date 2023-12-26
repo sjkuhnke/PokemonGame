@@ -11261,7 +11261,7 @@ public class Pokemon implements Serializable {
 	}
 
 
-	public JPanel showSummary() {
+	public JPanel showSummary(Player player) {
 	    JPanel teamMemberPanel = new JPanel();
 	    teamMemberPanel.setLayout(new BoxLayout(teamMemberPanel, BoxLayout.Y_AXIS));
 	    
@@ -11422,6 +11422,26 @@ public class Pokemon implements Serializable {
 		});
 	    
 	    teamMemberPanel.add(bottomPanel);
+	    
+	    JButton giveButton = new JButton("N/A");
+	    if (this.item != null) {
+	    	giveButton.setText("Take " + item.toString());
+	    	giveButton.addActionListener(e -> {
+	    		int option = JOptionPane.showOptionDialog(null,
+	    				"Would you like to take " + this.nickname + "'s " + this.item + "?",
+	    				"Take " + this.item + "?",
+	    	            JOptionPane.YES_NO_OPTION,
+	    	            JOptionPane.QUESTION_MESSAGE,
+	    	            null, null, null);
+	    	    if (option == JOptionPane.YES_OPTION) {
+	    	    	Item old = this.item;
+					player.bag.add(old);
+	        		this.item = null;
+	        		SwingUtilities.getWindowAncestor(teamMemberPanel).dispose();
+	    	    }
+	    	});
+	    	teamMemberPanel.add(giveButton);
+	    }
 	    
 	    teamMemberPanel.add(Box.createHorizontalGlue());
 
