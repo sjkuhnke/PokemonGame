@@ -1115,7 +1115,7 @@ public class PlayerCharacter extends Entity {
 	        final int index = j;
 	        
 	        party.addActionListener(e -> {
-	            JPanel teamMemberPanel = p.team[index].showSummary();
+	            JPanel teamMemberPanel = p.team[index].showSummary(p);
 	            JButton swapButton = new JButton("Swap");
 		        swapButton.addActionListener(f -> {
 		            if (p.team[index] != null && p.team[index] != p.current) {
