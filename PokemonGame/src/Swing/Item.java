@@ -12,9 +12,12 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -47,7 +50,7 @@ public enum Item {
 	PARALYZE_HEAL(12,25,new Color(176, 158, 0),Item.MEDICINE,null,"Cures a Pokemon of Paralysis"),
 	FREEZE_HEAL(13,25,new Color(0, 170, 189),Item.MEDICINE,null,"Cures a Pokemon of Frostbite"),
 	FULL_HEAL(14,150,new Color(255, 247, 0),Item.MEDICINE,null,"Cures a Pokemon of any status\ncondition"),
-	RAGE_CANDY_BAR(15,50,new Color(0, 55, 255),Item.MEDICINE,null,"Cures a Pokemon of any status\ncondition"),
+	KLEINE_BAR(15,50,new Color(0, 55, 255),Item.MEDICINE,null,"Cures a Pokemon of any status\ncondition"),
 	REVIVE(16,500,new Color(219, 194, 0),Item.MEDICINE,null,"Recovers a Pokemon from fainting\nwith 50% HP"),
 	MAX_REVIVE(17,1500,new Color(219, 194, 0),Item.MEDICINE,null,"Recovers a Pokemon from fainting\nwith full HP"),
 	RARE_CANDY(18,0,new Color(124, 54, 255),Item.MEDICINE,null,"Elevates a Pokemon by 1 level"),
@@ -79,7 +82,7 @@ public enum Item {
 	EDGE_KIT(44,0,new Color(232, 52, 54),Item.OTHER,null,"Edges ;) your Pokemon until\nthey're about to bust :{D"),
 	THUNDER_SCALES_FOSSIL(45,0,new Color(201, 169, 81),Item.OTHER,null,"A fossil of an ancient Pokemon\nthat lived in a desert.\nIt appears to have an\nelectric charge ridden\nin the scales."),
 	DUSK_SCALES_FOSSIL(46,0,new Color(45, 47, 51),Item.OTHER,null,"A fossil of an ancient Pokemon\nthat lived in a forest.\nIt appears to give off\na dark energy within\n the scales."),
-	CHOICE_BAND(47,0,new Color(224, 152, 159),Item.OTHER,null,"A curious headband that boosts the holder's Attack stat but only allows the use of a single move."), // TODO
+	CHOICE_BAND(47,0,new Color(224, 152, 159),Item.HELD_ITEM,null,"A curious headband that boosts the holder's Attack stat but only allows the use of a single move."), // TODO
 	CHOICE_SCARF(48,0,new Color(133, 172, 220),Item.HELD_ITEM,null,"A curious scarf that boosts the holder's Speed stat but only allows the use of a single move."), // TODO
 	CHOICE_SPECS(49,0,new Color(238, 236, 100),Item.HELD_ITEM,null,"A pair of curious glasses that boost the holder's Sp. Atk stat but only allow the use of a single move."), // TODO
 	LEFTOVERS(50,0,new Color(227, 96, 91),Item.HELD_ITEM,null,"An item that restores the user's HP gradually throughout a battle."),
@@ -95,10 +98,10 @@ public enum Item {
 	EXPERT_BELT(60,0,new Color(94, 90, 97),Item.HELD_ITEM,null,"A well-worn belt that slightly boosts the power of the holder's supereffective moves."),
 	TERRAIN_EXTENDER(61,0,new Color(212, 228, 229),Item.HELD_ITEM,null,"A held item that extends the duration of terrain caused by the holder's move or Ability."),
 	LIFE_ORB(62,0,new Color(184, 72, 144),Item.HELD_ITEM,null,"An orb that boosts the power of the holder's moves, but at the cost of some HP."), // TODO
-	FLAME_ORB(63,0,new Color(225, 3, 3),Item.HELD_ITEM,null,"A bizarre orb that gives off heat when touched and will afflict the holder with a burn during battle."), // TODO
-	TOXIC_ORB(64,0,new Color(148, 112, 172),Item.HELD_ITEM,null,"A bizarre orb that exudes toxins when touched and will badly poison the holder during battle."), // TODO
-	ROCKY_HELMET(65,0,new Color(241, 188, 27),Item.HELD_ITEM,null,"If another Pokemon makes direct contact with the holder, that Pok�mon will be damaged."),
-	LIGHT_CLAY(66,0,new Color(183, 216, 126),Item.HELD_ITEM,null,"An item that when the holder uses protective moves like Light Screen or Reflect, their effects will last longer than usual."), // TODO
+	FLAME_ORB(63,0,new Color(225, 3, 3),Item.HELD_ITEM,null,"A bizarre orb that gives off heat when touched and will afflict the holder with a burn during battle."),
+	TOXIC_ORB(64,0,new Color(148, 112, 172),Item.HELD_ITEM,null,"A bizarre orb that exudes toxins when touched and will badly poison the holder during battle."),
+	ROCKY_HELMET(65,0,new Color(241, 188, 27),Item.HELD_ITEM,null,"If another Pokemon makes direct contact with the holder, that Pokemon will be damaged."),
+	LIGHT_CLAY(66,0,new Color(183, 216, 126),Item.HELD_ITEM,null,"An item that when the holder uses protective moves like Light Screen or Reflect, their effects will last longer than usual."),
 	SOOTHE_BELL(67,0,new Color(198, 199, 202),Item.HELD_ITEM,null,"The comforting chime of this bell calms the holder, making it friendly."),
 	SHELL_BELL(68,0,new Color(242, 242, 242),Item.HELD_ITEM,null,""), // TODO
 	SCOPE_LENS(69,0,new Color(192, 183, 54),Item.HELD_ITEM,null,""),
@@ -108,16 +111,16 @@ public enum Item {
 	CLEAR_AMULET(73,0,new Color(204, 204, 243),Item.HELD_ITEM,null,""),
 	COVERT_CLOAK(74,0,new Color(101, 136, 160),Item.HELD_ITEM,null,""),
 	HEAVY$DUTY_BOOTS(75,0,new Color(97, 97, 97),Item.HELD_ITEM,null,""),
-	FOCUS_BAND(76,0,new Color(232, 80, 80),Item.HELD_ITEM,null,""), // TODO
+	FOCUS_BAND(76,0,new Color(232, 80, 80),Item.HELD_ITEM,null,""),
 	KING1S_ROCK(77,0,new Color(224, 206, 58),Item.HELD_ITEM,null,""), // TODO
 	STICKY_BARB(78,0,new Color(109, 177, 196),Item.HELD_ITEM,null,""), // TODO
 	MUSCLE_BAND(79,0,new Color(225, 200, 50),Item.HELD_ITEM,null,""),
 	WISE_GLASSES(80,0,new Color(92, 105, 117),Item.HELD_ITEM,null,""),
-	FOCUS_SASH(81,0,new Color(232, 80, 80),Item.HELD_ITEM,null,""), // TODO
+	FOCUS_SASH(81,0,new Color(232, 80, 80),Item.HELD_ITEM,null,""),
 	AIR_BALLOON(82,0,new Color(232, 72, 72),Item.HELD_ITEM,null,""), // TODO
 	POWER_HERB(83,0,new Color(253, 80, 77),Item.HELD_ITEM,null,""), // TODO
 	WHITE_HERB(84,0,new Color(242, 242, 242),Item.HELD_ITEM,null,""), // TODO
-	WEAKNESS_POLICY(85,0,new Color(215, 233, 195),Item.HELD_ITEM,null,""), // TODO
+	WEAKNESS_POLICY(85,0,new Color(215, 233, 195),Item.HELD_ITEM,null,""),
 	BLUNDER_POLICY(86,0,new Color(239, 239, 178),Item.HELD_ITEM,null,""), // TODO
 	RED_CARD(87,0,new Color(216, 35, 22),Item.HELD_ITEM,null,""), // TODO
 	THROAT_SPRAY(88,0,new Color(96, 120, 168),Item.HELD_ITEM,null,""), // TODO
@@ -253,44 +256,44 @@ public enum Item {
 	SOFT_SAND(218,0,new Color(240, 224, 152),Item.HELD_ITEM,null,""),
 	SPELL_TAG(219,0,new Color(127, 127, 126),Item.HELD_ITEM,null,""),
 	TWISTED_SPOON(220,0,new Color(220, 229, 229),Item.HELD_ITEM,null,""),
-	CHERI_BERRY(221,0,new Color(232, 96, 80),Item.BERRY,null,""), // TODO
-	CHESTO_BERRY(222,0,new Color(144, 112, 224),Item.BERRY,null,""), // TODO
-	PECHA_BERRY(223,0,new Color(248, 192, 152),Item.BERRY,null,""), // TODO
-	RAWST_BERRY(224,0,new Color(144, 208, 208),Item.BERRY,null,""), // TODO
-	ASPEAR_BERRY(225,0,new Color(240, 224, 80),Item.BERRY,null,""), // TODO
-	LUM_BERRY(226,0,new Color(144, 216, 72),Item.BERRY,null,""), // TODO
-	PERSIM_BERRY(227,0,new Color(224, 152, 112),Item.BERRY,null,""), // TODO
-	LEPPA_BERRY(228,0,new Color(200, 72, 48),Item.BERRY,null,""), // TODO
-	ORAN_BERRY(229,0,new Color(80, 160, 240),Item.BERRY,null,""), // TODO
-	SITRUS_BERRY(230,0,new Color(248, 232, 104),Item.BERRY,null,""), // TODO
-	WIKI_BERRY(231,0,new Color(144, 112, 224),Item.BERRY,null,""), // TODO
-	OCCA_BERRY(232,0,PType.FIRE.getColor(),Item.BERRY,null,""), // TODO
-	PASSHO_BERRY(233,0,PType.WATER.getColor(),Item.BERRY,null,""), // TODO
-	WACAN_BERRY(234,0,PType.ELECTRIC.getColor(),Item.BERRY,null,""), // TODO
-	RINDO_BERRY(235,0,PType.GRASS.getColor(),Item.BERRY,null,""), // TODO
-	YACHE_BERRY(236,0,PType.ICE.getColor(),Item.BERRY,null,""), // TODO
-	CHOPLE_BERRY(237,0,PType.FIGHTING.getColor(),Item.BERRY,null,""), // TODO
-	KEBIA_BERRY(238,0,PType.POISON.getColor(),Item.BERRY,null,""), // TODO
-	SHUCA_BERRY(239,0,PType.GROUND.getColor(),Item.BERRY,null,""), // TODO
-	COBA_BERRY(240,0,PType.FLYING.getColor(),Item.BERRY,null,""), // TODO
-	PAYAPA_BERRY(241,0,PType.PSYCHIC.getColor(),Item.BERRY,null,""), // TODO
-	TANGA_BERRY(242,0,PType.BUG.getColor(),Item.BERRY,null,""), // TODO
-	CHARTI_BERRY(243,0,PType.ROCK.getColor(),Item.BERRY,null,""), // TODO
-	KASIB_BERRY(244,0,PType.GHOST.getColor(),Item.BERRY,null,""), // TODO
-	HABAN_BERRY(245,0,PType.DRAGON.getColor(),Item.BERRY,null,""), // TODO
-	COLBUR_BERRY(246,0,PType.DARK.getColor(),Item.BERRY,null,""), // TODO
-	BABIRI_BERRY(247,0,PType.STEEL.getColor(),Item.BERRY,null,""), // TODO
-	CHILAN_BERRY(248,0,PType.NORMAL.getColor(),Item.BERRY,null,""), // TODO
-	ROSELI_BERRY(249,0,PType.LIGHT.getColor(),Item.BERRY,null,""), // TODO
-	MYSTICOLA_BERRY(250,0,PType.MAGIC.getColor(),Item.BERRY,null,""), // TODO
-	GALAXEED_BERRY(251,0,PType.GALACTIC.getColor(),Item.BERRY,null,""), // TODO
-	LIECHI_BERRY(252,0,new Color(248, 224, 160),Item.BERRY,null,""), // TODO
-	GANLON_BERRY(253,0,new Color(152, 144, 200),Item.BERRY,null,""), // TODO
-	SALAC_BERRY(254,0,new Color(120, 184, 112),Item.BERRY,null,""), // TODO
-	PETAYA_BERRY(255,0,new Color(240, 160, 120),Item.BERRY,null,""), // TODO
-	APRICOT_BERRY(256,0,new Color(104, 128, 184),Item.BERRY,null,""), // TODO
-	STARF_BERRY(257,0,new Color(184, 232, 152),Item.BERRY,null,""), // TODO
-	MICLE_BERRY(258,0,new Color(64, 200, 64),Item.BERRY,null,""), // TODO
+	CHERI_BERRY(221,0,new Color(232, 96, 80),Item.BERRY,null,""),
+	CHESTO_BERRY(222,0,new Color(144, 112, 224),Item.BERRY,null,""),
+	PECHA_BERRY(223,0,new Color(248, 192, 152),Item.BERRY,null,""),
+	RAWST_BERRY(224,0,new Color(144, 208, 208),Item.BERRY,null,""),
+	ASPEAR_BERRY(225,0,new Color(240, 224, 80),Item.BERRY,null,""),
+	LUM_BERRY(226,0,new Color(144, 216, 72),Item.BERRY,null,""),
+	PERSIM_BERRY(227,0,new Color(224, 152, 112),Item.BERRY,null,""),
+	LEPPA_BERRY(228,0,new Color(200, 72, 48),Item.BERRY,null,""),
+	ORAN_BERRY(229,0,new Color(80, 160, 240),Item.BERRY,null,""),
+	SITRUS_BERRY(230,0,new Color(248, 232, 104),Item.BERRY,null,""), // TODO heal in bag
+	WIKI_BERRY(231,0,new Color(144, 112, 224),Item.BERRY,null,""), // TODO heal in bag
+	OCCA_BERRY(232,0,PType.FIRE.getColor(),Item.BERRY,null,""),
+	PASSHO_BERRY(233,0,PType.WATER.getColor(),Item.BERRY,null,""),
+	WACAN_BERRY(234,0,PType.ELECTRIC.getColor(),Item.BERRY,null,""),
+	RINDO_BERRY(235,0,PType.GRASS.getColor(),Item.BERRY,null,""),
+	YACHE_BERRY(236,0,PType.ICE.getColor(),Item.BERRY,null,""),
+	CHOPLE_BERRY(237,0,PType.FIGHTING.getColor(),Item.BERRY,null,""),
+	KEBIA_BERRY(238,0,PType.POISON.getColor(),Item.BERRY,null,""),
+	SHUCA_BERRY(239,0,PType.GROUND.getColor(),Item.BERRY,null,""),
+	COBA_BERRY(240,0,PType.FLYING.getColor(),Item.BERRY,null,""),
+	PAYAPA_BERRY(241,0,PType.PSYCHIC.getColor(),Item.BERRY,null,""),
+	TANGA_BERRY(242,0,PType.BUG.getColor(),Item.BERRY,null,""),
+	CHARTI_BERRY(243,0,PType.ROCK.getColor(),Item.BERRY,null,""),
+	KASIB_BERRY(244,0,PType.GHOST.getColor(),Item.BERRY,null,""),
+	HABAN_BERRY(245,0,PType.DRAGON.getColor(),Item.BERRY,null,""),
+	COLBUR_BERRY(246,0,PType.DARK.getColor(),Item.BERRY,null,""),
+	BABIRI_BERRY(247,0,PType.STEEL.getColor(),Item.BERRY,null,""),
+	CHILAN_BERRY(248,0,PType.NORMAL.getColor(),Item.BERRY,null,""),
+	ROSELI_BERRY(249,0,PType.LIGHT.getColor(),Item.BERRY,null,""),
+	MYSTICOLA_BERRY(250,0,PType.MAGIC.getColor(),Item.BERRY,null,""),
+	GALAXEED_BERRY(251,0,PType.GALACTIC.getColor(),Item.BERRY,null,""),
+	LIECHI_BERRY(252,0,new Color(248, 224, 160),Item.BERRY,null,""),
+	GANLON_BERRY(253,0,new Color(152, 144, 200),Item.BERRY,null,""),
+	SALAC_BERRY(254,0,new Color(120, 184, 112),Item.BERRY,null,""),
+	PETAYA_BERRY(255,0,new Color(240, 160, 120),Item.BERRY,null,""),
+	APRICOT_BERRY(256,0,new Color(104, 128, 184),Item.BERRY,null,""),
+	STARF_BERRY(257,0,new Color(184, 232, 152),Item.BERRY,null,""),
+	MICLE_BERRY(258,0,new Color(64, 200, 64),Item.BERRY,null,""),
 	NULL259(259,0,Color.BLACK,Item.BERRY,null,""),
 	NULL260(260,0,Color.BLACK,Item.BERRY,null,""),
 	;
@@ -302,6 +305,7 @@ public enum Item {
 	private int cost;
 	private int healAmount;
 	private String desc;
+	private BufferedImage image;
 	
 	public static final int MEDICINE = 1;
     public static final int OTHER = 2;
@@ -316,6 +320,11 @@ public enum Item {
 		this.pocket = pocket;
 		this.move = move;
 		this.desc = desc;
+		
+		String path = "/items/";
+		path += isTM() ? "tm_" + getMove().mtype.toString().toLowerCase() : super.toString().toLowerCase();
+		if (isMint()) path = path.replace("_mint", "");
+		image = setupImage(path + ".png");
 		
 		if (id >= 4 && id <= 8) {
 			switch(id) {
@@ -342,6 +351,22 @@ public enum Item {
 		}
 	}
 	
+	private BufferedImage setupImage(String path) {
+		BufferedImage image = null;
+		
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream(path));
+		} catch (Exception e) {
+			try {
+				image = ImageIO.read(getClass().getResourceAsStream("/items/null.png"));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return image;
+		
+	}
+
 	public int getCost() { return cost; }
 
 	public int getID() { return id; }
@@ -356,6 +381,8 @@ public enum Item {
 	}
 	
 	public String getDesc() { return desc; }
+	
+	public BufferedImage getImage() { return image; }
 	
 	public static Item getItem(int id) {
 		Item[] items = Item.values();
@@ -377,25 +404,35 @@ public enum Item {
 	
 	@Override
 	public String toString() {
-		String result = "";
-		String name = super.toString();
-		if (name.contains("HM") || name.contains("TM")) {
-			result = name + " " + getMove().toString();
-		} else {
-			name = name.toLowerCase().replace('_', ' ');
-		    String[] words = name.split(" ");
-		    StringBuilder sb = new StringBuilder();
-		    for (String word : words) {
-		    	if (word.contains("pp")) {
-		    		sb.append(word.toUpperCase()).append(" ");
-		    	} else {
-		    		sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
-		    	}
-		    }
-		    result = sb.toString().trim();
-		}
-		
-		return result;
+	    String result = "";
+	    String name = super.toString();
+	    if (name.contains("HM") || name.contains("TM")) {
+	        result = name + " " + getMove().toString();
+	    } else {
+	    	name = name.replace('$', '-');
+	        name = name.replace('1', '\'');
+	        name = name.toLowerCase().replace('_', ' ');
+
+	        StringBuilder sb = new StringBuilder();
+	        boolean capitalizeNext = true; // Flag to capitalize the next word
+	        for (char c : name.toCharArray()) {
+	            if (c == ' ' || c == '-') {
+	                sb.append(c); // Keep the space or hyphen
+	                capitalizeNext = true;
+	            } else {
+	                if (capitalizeNext) {
+	                    sb.append(Character.toUpperCase(c));
+	                    capitalizeNext = false;
+	                } else {
+	                    sb.append(c);
+	                }
+	            }
+	        }
+	        result = sb.toString().trim();
+	        result = result.replace("Pp", "PP");
+	    }
+
+	    return result;
 	}
 
 	public int getHealAmount() {

@@ -3,6 +3,7 @@ package Entity;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -1168,11 +1169,12 @@ public class PlayerCharacter extends Entity {
 		ArrayList<Entry> bag = p.getBag().getItems();
 		for (Entry i : bag) {
 			if (i.getItem().getPocket() == pocket) {
+				JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 				JButton item = new JGradientButton("");
 			    String text = i.getItem().getMove() == null ? i.getItem().toString() + " x " + i.getCount() : i.getItem().toString();
 			    item.setText(text);
 			    
-			    item.setPreferredSize(new Dimension(200, item.getPreferredSize().height));
+			    item.setPreferredSize(new Dimension(175, item.getPreferredSize().height));
 
 			    item.addActionListener(e -> {
 			        JPanel itemDesc = new JPanel();
@@ -1972,7 +1974,9 @@ public class PlayerCharacter extends Entity {
 			    });
 			    item.setBackground(i.getItem().getColor());
 			    if (i.getItem().getMove() != null) item.setBackground(i.getItem().getMove().mtype.getColor());
-			    panel.add(item);
+			    itemPanel.add(new JLabel(new ImageIcon(i.getItem().getImage())));
+			    itemPanel.add(item);
+			    panel.add(itemPanel);
 			}
 		}
 
@@ -2030,7 +2034,7 @@ public class PlayerCharacter extends Entity {
 		JPanel shopPanel = new JPanel();
 	    shopPanel.setLayout(new GridLayout(6, 1));
 	    Item[] shopItems = new Item[1];
-	    if (gp.currentMap == 30) { shopItems = new Item[] {Item.REPEL, Item.POKEBALL, Item.RAGE_CANDY_BAR, Item.BOTTLE_CAP, Item.TM49, Item.TM51};
+	    if (gp.currentMap == 30) { shopItems = new Item[] {Item.REPEL, Item.POKEBALL, Item.KLEINE_BAR, Item.BOTTLE_CAP, Item.TM49, Item.TM51};
 	    } else if (gp.currentMap == 40) { shopItems = new Item[] {Item.TM12, Item.TM13, Item.TM15, Item.TM16, Item.TM23, Item.TM24};
 	    } else if (gp.currentMap == 89) { shopItems = new Item[] {Item.TM45, Item.TM50, Item.TM54, Item.TM74, Item.TM75,
 	    		Item.TM76, Item.TM77, Item.TM79, Item.TM80, Item.TM81, Item.TM82, Item.TM95};

@@ -3050,7 +3050,7 @@ public class Pokemon implements Serializable {
 					attackStat *= this.asModifier(0);
 					defenseStat *= this.asModifier(1);
 					damage = calc(attackStat, defenseStat, 40, this.level);
-					this.currentHP -= damage;
+					this.damage(damage, foe);
 					if (this.currentHP <= 0) {
 						this.faint(true, player, foe);
 						foe.awardxp((int) Math.ceil(this.level * trainer), player);
@@ -3161,7 +3161,7 @@ public class Pokemon implements Serializable {
 				if (foe.lastMoveUsed == Move.OBSTRUCT) stat(this, 1, -2, foe);
 				if (foe.lastMoveUsed == Move.LAVA_LAIR) burn(false, foe);
 				if (foe.lastMoveUsed == Move.SPIKY_SHIELD && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-					this.currentHP -= Math.max(this.getStat(0) / 8.0, 1);
+					this.damage(Math.max(this.getStat(0) / 8.0, 1), foe);
 					console.writeln(this.nickname + " was hurt!");
 					if (this.currentHP <= 0) { // Check for kill
 						this.faint(true, player, foe);
@@ -3204,7 +3204,14 @@ public class Pokemon implements Serializable {
 			move = get150Move(move);
 			if (move != oldMove) {
 				for (Moveslot m : this.moveset) {
-					if (m != null && m.move == oldMove) m.currentPP--;
+					if (m != null && m.move == oldMove) {
+						m.currentPP--;
+						if (this.item == Item.LEPPA_BERRY && m.currentPP == 0) {
+							m.currentPP = 10;
+							console.writeln(this.nickname + " ate its " + this.item.toString() + " to restore PP to " + m.move.toString());
+							this.consumeItem();
+						}
+					}
 				}
 			}
 			bp = move.basePower;
@@ -3317,7 +3324,7 @@ public class Pokemon implements Serializable {
 				useMove(move);
 				console.writeln(this.nickname + "'s attack missed!");
 				if (move == Move.HI_JUMP_KICK) {
-					this.currentHP -= this.getStat(0) / 2.0;
+					this.damage(this.getStat(0) / 2.0, foe);
 					console.writeln(this.nickname + " kept going and crashed!");
 					if (this.currentHP < 0) {
 						this.faint(true, player, foe);
@@ -3689,6 +3696,17 @@ public class Pokemon implements Serializable {
 				console.writeln("It's super effective!");
 				if (foeAbility == Ability.SOLID_ROCK || foeAbility == Ability.FILTER) damage /= 2;
 				if (item == Item.EXPERT_BELT) damage *= 1.2;
+				if (foe.item != null && foe.checkTypeResistBerry(moveType)) {
+					console.writeln(foe.nickname + " ate its " + foe.item.toString() + " to weaken the attack!");
+					foe.consumeItem();
+					damage /= 2;
+				}
+				if (foe.item == Item.WEAKNESS_POLICY) {
+					console.writeln(foe.nickname + " used its " + foe.item.toString() + "!");
+					stat(foe, 0, 2, this);
+					stat(foe, 2, 2, this);
+					foe.consumeItem();
+				}
 			}
 			if (multiplier < 1) {
 				console.writeln("It's not very effective...");
@@ -3745,14 +3763,19 @@ public class Pokemon implements Serializable {
 			
 			// Damage foe
 			int dividend = Math.min(damage, foe.currentHP);
-			foe.currentHP -= damage;
+			foe.damage(damage, this);
 			double percent = dividend * 100.0 / foe.getStat(0); // change dividend to damage
 			String formattedPercent = String.format("%.1f", percent);
 			console.writeln("(" + foe.nickname + " lost " + formattedPercent + "% of its HP.)");
-			if (foe.currentHP <= 0 && (move == Move.FALSE_SWIPE || foe.vStatuses.contains(Status.ENDURE) || (fullHP && foeAbility == Ability.STURDY))) {
+			if (foe.currentHP <= 0 && (move == Move.FALSE_SWIPE || foe.vStatuses.contains(Status.ENDURE) || (foe.item == Item.FOCUS_BAND && checkSecondary(10)) || (fullHP && (foeAbility == Ability.STURDY || foe.item == Item.FOCUS_SASH)))) {
 				foe.currentHP = 1;
 				if (fullHP && foeAbility == Ability.STURDY) console.writeAbility(foe);
-				if (move != Move.FALSE_SWIPE) console.writeln(foe.name + " endured the hit!");
+				if (foe.item == Item.FOCUS_SASH) {
+					console.writeln(foe.nickname + " hung on using its Focus Sash!");
+					foe.consumeItem();
+				} else if (move != Move.FALSE_SWIPE) {
+					console.writeln(foe.name + " endured the hit!");
+				}
 			}
 			if (foe.currentHP <= 0) { // Check for kill
 				foe.faint(true, player, this);
@@ -3771,7 +3794,7 @@ public class Pokemon implements Serializable {
 			
 			if (recoil != 0) {
 				console.writeln(this.nickname + " was damaged by recoil!");
-				this.currentHP -= recoil;
+				this.damage(recoil, foe);
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, player, foe);
 					foe.awardxp((int) Math.ceil(this.level * trainer), player);
@@ -3795,11 +3818,11 @@ public class Pokemon implements Serializable {
 			
 			if (move.contact) {
 				if (foeAbility == Ability.ROUGH_SKIN || foeAbility == Ability.IRON_BARBS) {
-					this.currentHP -= Math.max(this.getStat(0) * 1.0 / 8, 1);
+					this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), foe);
 					console.writeln(this.nickname + " was hurt!");
 				}
 				if (foe.item == Item.ROCKY_HELMET) {
-					this.currentHP -= Math.max(this.getStat(0) * 1.0 / 8, 1);
+					this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), foe);
 					console.writeln(this.nickname + " was hurt by the Rocky Helmet!");
 				}
 				if ((foeAbility == Ability.ROUGH_SKIN || foeAbility == Ability.IRON_BARBS || foe.item == Item.ROCKY_HELMET) && this.currentHP <= 0) { // Check for kill
@@ -3913,6 +3936,30 @@ public class Pokemon implements Serializable {
 		if (item == Item.SPELL_TAG && type == PType.GHOST) return 1.2;
 		if (item == Item.TWISTED_SPOON && type == PType.PSYCHIC) return 1.2;
 		return 1;
+	}
+	
+	private boolean checkTypeResistBerry(PType type) {
+		if (this.item == Item.OCCA_BERRY && type == PType.FIRE) return true;
+		if (this.item == Item.PASSHO_BERRY && type == PType.WATER) return true;
+		if (this.item == Item.WACAN_BERRY && type == PType.ELECTRIC) return true;
+		if (this.item == Item.RINDO_BERRY && type == PType.GRASS) return true;
+		if (this.item == Item.YACHE_BERRY && type == PType.ICE) return true;
+		if (this.item == Item.CHOPLE_BERRY && type == PType.FIGHTING) return true;
+		if (this.item == Item.KEBIA_BERRY && type == PType.POISON) return true;
+		if (this.item == Item.SHUCA_BERRY && type == PType.GROUND) return true;
+		if (this.item == Item.COBA_BERRY && type == PType.FLYING) return true;
+		if (this.item == Item.PAYAPA_BERRY && type == PType.PSYCHIC) return true;
+		if (this.item == Item.TANGA_BERRY && type == PType.BUG) return true;
+		if (this.item == Item.CHARTI_BERRY && type == PType.ROCK) return true;
+		if (this.item == Item.KASIB_BERRY && type == PType.GHOST) return true;
+		if (this.item == Item.HABAN_BERRY && type == PType.DRAGON) return true;
+		if (this.item == Item.COLBUR_BERRY && type == PType.DARK) return true;
+		if (this.item == Item.BABIRI_BERRY && type == PType.STEEL) return true;
+		if (this.item == Item.CHILAN_BERRY && type == PType.NORMAL) return true;
+		if (this.item == Item.ROSELI_BERRY && type == PType.LIGHT) return true;
+		if (this.item == Item.MYSTICOLA_BERRY && type == PType.MAGIC) return true;
+		if (this.item == Item.GALAXEED_BERRY && type == PType.GALACTIC) return true;
+		return false;
 	}
 
 	public void awardxp(int amt, Player player) {
@@ -4621,7 +4668,9 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.AURORA_VEIL) {
 			if (field.equals(field.weather, Effect.SNOW)) {
 				if (!(field.contains(userSide, Effect.AURORA_VEIL))) {
-					userSide.add(field.new FieldEffect(Effect.AURORA_VEIL));
+					FieldEffect a = field.new FieldEffect(Effect.AURORA_VEIL);
+					if (this.item == Item.LIGHT_CLAY) a.turns = 8;
+					userSide.add(a);
 				} else {
 					fail = fail();
 				}
@@ -4673,7 +4722,7 @@ public class Pokemon implements Serializable {
 				if (!foe.vStatuses.contains(Status.CURSED)) {
 					foe.vStatuses.add(Status.CURSED);
 					console.writeln(foe.nickname + " was afflicted with a curse!");
-					this.currentHP -= (this.getStat(0) * 1.0 / 2);
+					this.damage((this.getStat(0) * 1.0 / 2), foe);
 					if (this.currentHP <= 0) {
 						this.faint(true, player, foe);
 						foe.awardxp((int) Math.ceil(this.level * trainer), player);
@@ -4872,7 +4921,9 @@ public class Pokemon implements Serializable {
 			stat(foe, 1, -1, foe);
 		} else if (move == Move.LIGHT_SCREEN) {
 			if (!(field.contains(userSide, Effect.LIGHT_SCREEN))) {
-				userSide.add(field.new FieldEffect(Effect.LIGHT_SCREEN));
+				FieldEffect a = field.new FieldEffect(Effect.LIGHT_SCREEN);
+				if (this.item == Item.LIGHT_CLAY) a.turns = 8;
+				userSide.add(a);
 				console.writeln("Light Screen made " + this.nickname + "'s team stronger against Special moves!");
 			} else {
 				fail = fail();
@@ -5002,7 +5053,9 @@ public class Pokemon implements Serializable {
 			stat(this, 3, 1, foe);
 		} else if (move == Move.REFLECT) {
 			if (!(field.contains(userSide, Effect.REFLECT))) {
-				userSide.add(field.new FieldEffect(Effect.REFLECT));
+				FieldEffect a = field.new FieldEffect(Effect.REFLECT);
+				if (this.item == Item.LIGHT_CLAY) a.turns = 8;
+				userSide.add(a);
 				console.writeln("Reflect made " + this.nickname + "'s team stronger against Physical moves!");
 			} else {
 				fail = fail();
@@ -10337,6 +10390,8 @@ public class Pokemon implements Serializable {
 		
 		if (multiplier > 1) {
 			if (foeAbility == Ability.SOLID_ROCK || foeAbility == Ability.FILTER) damage /= 2;
+			if (item == Item.EXPERT_BELT) damage *= 1.2;
+			if (mode != 0 && foe.item != null && foe.checkTypeResistBerry(moveType)) damage /= 2;
 		}
 		
 		if (multiplier < 1) {
@@ -10377,7 +10432,7 @@ public class Pokemon implements Serializable {
 		if (this.isFainted()) return;
 		if (this.status == Status.TOXIC && toxic < 16) toxic++;
 		if (this.status == Status.FROSTBITE && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.currentHP -= Math.max(this.getStat(0) * 1.0 / 16, 1);
+			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f);
 			console.writeln("\n" + this.nickname + " was hurt by frostbite!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
@@ -10386,7 +10441,7 @@ public class Pokemon implements Serializable {
 			}
 			
 		} else if (this.status == Status.BURNED && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.currentHP -= Math.max(this.getStat(0) * 1.0 / 16, 1);
+			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f);
 			console.writeln("\n" + this.nickname + " was hurt by its burn!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
@@ -10395,7 +10450,7 @@ public class Pokemon implements Serializable {
 			}
 			
 		} else if (this.status == Status.POISONED && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.currentHP -= Math.max(this.getStat(0) * 1.0 / 8, 1);
+			this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f);
 			console.writeln("\n" + this.nickname + " was hurt by poison!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
@@ -10404,7 +10459,7 @@ public class Pokemon implements Serializable {
 			}
 			
 		} else if (this.status == Status.TOXIC && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.currentHP -= Math.max((this.getStat(0) * 1.0 / 16) * toxic, 1);
+			this.damage(Math.max((this.getStat(0) * 1.0 / 16) * toxic, 1), f);
 			console.writeln("\n" + this.nickname + " was hurt by poison!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
@@ -10414,7 +10469,7 @@ public class Pokemon implements Serializable {
 			
 		}
 		if (this.vStatuses.contains(Status.CURSED) && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.currentHP -= Math.max(this.getStat(0) * 1.0 / 4, 1);
+			this.damage(Math.max(this.getStat(0) * 1.0 / 4, 1), f);
 			console.writeln("\n" + this.nickname + " was hurt by the curse!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
@@ -10427,7 +10482,7 @@ public class Pokemon implements Serializable {
 			int hp = (int) Math.max(this.getStat(0) * 1.0 / 8, 1);
 			if (hp >= this.currentHP) hp = this.currentHP;
 			if (f.currentHP > f.getStat(0)) f.currentHP = f.getStat(0);
-			this.currentHP -= hp;
+			this.damage(hp, f);
 			console.writeln("\n" + f.nickname + " sucked health from " + this.nickname + "!");
 			if (f.item == Item.BIG_ROOT) hp *= 1.3;
 			f.currentHP += hp;
@@ -10441,7 +10496,7 @@ public class Pokemon implements Serializable {
 		}
 		if (this.vStatuses.contains(Status.NIGHTMARE) && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			if (this.status == Status.ASLEEP) {
-				this.currentHP -= Math.max(this.getStat(0) * 1.0 / 4, 1);
+				this.damage(Math.max(this.getStat(0) * 1.0 / 4, 1), f);
 				console.writeln("\n" + this.nickname + " had a nightmare!");
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, player, f);
@@ -10517,7 +10572,7 @@ public class Pokemon implements Serializable {
 				}
 			} else {
 				if (this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-					this.currentHP -= Math.max(this.getStat(0) * 1.0 / 16, 1);
+					this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f);
 					console.writeln("\n" + this.nickname + " was hurt!");
 				}
 				if (this.currentHP <= 0) { // Check for kill
@@ -10543,7 +10598,7 @@ public class Pokemon implements Serializable {
 				this.vStatuses.remove(Status.SPUN);
 			} else {
 				if (this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-					this.currentHP -= Math.max(this.getStat(0) * 1.0 / 8, 1);
+					this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f);
 					console.writeln("\n" + this.nickname + " was hurt by being wrapped!");
 				}
 				this.spunCount--;
@@ -10557,7 +10612,7 @@ public class Pokemon implements Serializable {
 		if (field.equals(field.weather, Effect.SANDSTORM) && this.type1 != PType.ROCK && this.type1 != PType.STEEL && this.type1 != PType.GROUND
 				&& this.ability != Ability.SAND_FORCE && this.ability != Ability.SAND_RUSH && this.ability != Ability.SAND_VEIL && this.type2 != PType.ROCK 
 				&& this.type2 != PType.STEEL && this.type2 != PType.GROUND && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.currentHP -= Math.max(this.getStat(0) * 1.0 / 16, 1);
+			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f);
 			console.writeln("\n" + this.nickname + " was buffeted by the sandstorm!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
@@ -10565,7 +10620,7 @@ public class Pokemon implements Serializable {
 				return;
 			}
 		} if (this.ability == Ability.DRY_SKIN && field.equals(field.weather, Effect.SUN)) {
-			this.currentHP -= Math.max(this.getStat(0) * 1.0 / 8, 1);
+			this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f);
 			console.writeAbility(this);
 			console.writeln("\n" + this.nickname + " was hurt!");
 			if (this.currentHP <= 0) { // Check for kill
@@ -10576,7 +10631,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN) && field.weatherTurns > 1) {
-			this.currentHP -= Math.max(this.getStat(0) * 1.0 / 8, 1);
+			this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f);
 			console.writeln("\n" + this.nickname + " was hurt!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, f);
@@ -10627,6 +10682,50 @@ public class Pokemon implements Serializable {
 				this.status = Status.HEALTHY;
 				console.writeAbility(this);
 				console.writeln(nickname + " became healthy!");
+			}
+		}
+		
+		if (this.item == Item.FLAME_ORB) {
+			console.writeln();
+			this.burn(false, this);
+		}
+		if (this.item == Item.TOXIC_ORB) {
+			console.writeln();
+			this.toxic(false, this);
+		}
+		
+		checkBerry(f);
+		
+		if (this.status != Status.HEALTHY || this.vStatuses.contains(Status.CONFUSED)) {
+			if ((this.status == Status.POISONED || this.status == Status.TOXIC) && (this.item == Item.PECHA_BERRY || this.item == Item.LUM_BERRY)) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its poison!");
+				this.status = Status.HEALTHY;
+				this.consumeItem();
+			}
+			if (this.status == Status.BURNED && (this.item == Item.RAWST_BERRY || this.item == Item.LUM_BERRY)) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its burn!");
+				this.status = Status.HEALTHY;
+				this.consumeItem();
+			}
+			if (this.status == Status.PARALYZED && (this.item == Item.CHERI_BERRY || this.item == Item.LUM_BERRY)) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its paralysis!");
+				this.status = Status.HEALTHY;
+				this.consumeItem();
+			}
+			if (this.status == Status.FROSTBITE && (this.item == Item.ASPEAR_BERRY || this.item == Item.LUM_BERRY)) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its frostbite!");
+				this.status = Status.HEALTHY;
+				this.consumeItem();
+			}
+			if (this.status == Status.ASLEEP && (this.item == Item.CHESTO_BERRY || this.item == Item.LUM_BERRY)) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its sleep!");
+				this.status = Status.HEALTHY;
+				this.consumeItem();
+			}
+			if (this.vStatuses.contains(Status.CONFUSED) && (this.item == Item.PERSIM_BERRY || this.item == Item.LUM_BERRY)) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its confusion!");
+				this.status = Status.HEALTHY;
+				this.consumeItem();
 			}
 		}
 		
@@ -10685,6 +10784,12 @@ public class Pokemon implements Serializable {
 			this.vStatuses.add(Status.CONFUSED);
 			this.confusionCounter = (int)(Math.random() * 4) + 1;
 			console.writeln(this.nickname + " became confused!");
+			if (this.item == Item.PERSIM_BERRY || this.item == Item.LUM_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its confusion!");
+				this.status = Status.HEALTHY;
+				this.confusionCounter = 0;
+				this.consumeItem();
+			}
 		} else {
 			if (announce) fail();
 		}
@@ -10713,6 +10818,12 @@ public class Pokemon implements Serializable {
 			this.status = Status.ASLEEP;
 			this.sleepCounter = (int)(Math.random() * 3) + 1;
 			console.writeln(this.nickname + " fell asleep!");
+			if (this.item == Item.CHESTO_BERRY || this.item == Item.LUM_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its sleep!");
+				this.status = Status.HEALTHY;
+				this.sleepCounter = 0;
+				this.consumeItem();
+			}
 		} else {
 			if (announce) fail();
 		}
@@ -10737,11 +10848,16 @@ public class Pokemon implements Serializable {
 				console.writeAbility(this);
 				foe.paralyze(false, this);
 			}
+			if (this.item == Item.CHERI_BERRY || this.item == Item.LUM_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its paralysis!");
+				this.status = Status.HEALTHY;
+				this.consumeItem();
+			}
 		} else {
 			if (announce) fail();
 		}
 	}
-	
+
 	public void burn(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
@@ -10767,6 +10883,11 @@ public class Pokemon implements Serializable {
 				console.writeAbility(this);
 				foe.burn(false, this);
 			}
+			if (this.item == Item.RAWST_BERRY || this.item == Item.LUM_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its burn!");
+				this.status = Status.HEALTHY;
+				this.consumeItem();
+			}
 		} else {
 			if (announce) fail();
 		}
@@ -10789,6 +10910,11 @@ public class Pokemon implements Serializable {
 			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
 				console.writeAbility(this);
 				foe.poison(false, this);
+			}
+			if (this.item == Item.PECHA_BERRY || this.item == Item.LUM_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its poison!");
+				this.status = Status.HEALTHY;
+				this.consumeItem();
 			}
 		} else {
 			if (announce) fail();
@@ -10813,6 +10939,11 @@ public class Pokemon implements Serializable {
 				console.writeAbility(this);
 				foe.toxic(false, this);
 			}
+			if (this.item == Item.PECHA_BERRY || this.item == Item.LUM_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its poison!");
+				this.status = Status.HEALTHY;
+				this.consumeItem();
+			}
 		} else {
 			if (announce) fail();
 		}
@@ -10835,9 +10966,18 @@ public class Pokemon implements Serializable {
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.FROSTBITE;
 			console.writeln(this.nickname + " was frostbitten!");
+			if (this.item == Item.ASPEAR_BERRY || this.item == Item.LUM_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its frostbite!");
+				this.status = Status.HEALTHY;
+				this.consumeItem();
+			}
 		} else {
 			if (announce) fail();
 		}
+	}
+	
+	private void consumeItem() {
+		this.item = null;
 	}
 	
 	public int determineBasePower(Pokemon foe, Move move, boolean first, Pokemon[] team, boolean announce) {
@@ -11408,22 +11548,8 @@ public class Pokemon implements Serializable {
 	    
 	    teamMemberPanel.add(movesPanel);
 	    
-	    JPanel happinessPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    happinessPanel.add(new JLabel(getHappinessDesc()));
-	    teamMemberPanel.add(happinessPanel);
-	    
-	    Pokemon p = this;
-	    happinessPanel.addMouseListener(new MouseAdapter() {
-			@Override
-            public void mouseClicked(MouseEvent e) {
-				String happinessCap = p.happiness >= 255 ? 0 + "" : p.happinessCap + "";
-		        JOptionPane.showMessageDialog(null, "Happiness: " + p.happiness + " (" + happinessCap + " remaining)");
-            }
-		});
-	    
-	    teamMemberPanel.add(bottomPanel);
-	    
 	    JButton giveButton = new JButton("N/A");
+	    JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	    if (this.item != null) {
 	    	giveButton.setText("Take " + item.toString());
 	    	giveButton.addActionListener(e -> {
@@ -11440,8 +11566,25 @@ public class Pokemon implements Serializable {
 	        		SwingUtilities.getWindowAncestor(teamMemberPanel).dispose();
 	    	    }
 	    	});
-	    	teamMemberPanel.add(giveButton);
+	    	itemPanel.add(new JLabel(new ImageIcon(this.item.getImage())));
+	    	itemPanel.add(giveButton);
+	    	teamMemberPanel.add(itemPanel);
 	    }
+	    
+	    JPanel happinessPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    happinessPanel.add(new JLabel(getHappinessDesc()));
+	    teamMemberPanel.add(happinessPanel);
+	    
+	    Pokemon p = this;
+	    happinessPanel.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseClicked(MouseEvent e) {
+				String happinessCap = p.happiness >= 255 ? 0 + "" : p.happinessCap + "";
+		        JOptionPane.showMessageDialog(null, "Happiness: " + p.happiness + " (" + happinessCap + " remaining)");
+            }
+		});
+	    
+	    teamMemberPanel.add(bottomPanel);
 	    
 	    teamMemberPanel.add(Box.createHorizontalGlue());
 
@@ -11825,13 +11968,13 @@ public class Pokemon implements Serializable {
 			if (field.contains(side, Effect.STEALTH_ROCKS)) {
 				double multiplier = getEffectiveMultiplier(PType.ROCK);
 				double damage = (this.getStat(0) / 8.0) * multiplier;
-				this.currentHP -= (int) Math.floor(damage);
+				this.damage((int) Math.floor(damage), foe);
 				console.writeln("Pointed stones dug into " + this.nickname + "!");
 			}
 			if (field.contains(side, Effect.SPIKES) && this.isGrounded()) {
 				double layers = field.getLayers(side, Effect.SPIKES);
 				double damage = (this.getStat(0) / 8.0) * ((layers + 1) / 2);
-				this.currentHP -= (int) Math.floor(damage);
+				this.damage((int) Math.floor(damage), foe);
 				console.writeln(this.nickname + " was hurt by Spikes!");
 			}
 			
@@ -11860,6 +12003,72 @@ public class Pokemon implements Serializable {
 		
 	}
 	
+	private void damage(double amt, Pokemon foe) {
+		this.damage((int) amt, foe);
+	}
+	
+	private void damage(int amt, Pokemon foe) {
+		this.currentHP -= amt;
+		if (currentHP > 0) this.checkBerry(foe);
+		
+	}
+
+	private void checkBerry(Pokemon foe) {
+		if (this.item == null) return;
+		if (this.item.getPocket() != Item.BERRY) return;
+		double hpRatio = this.currentHP * 1.0 / this.getStat(0);
+		if (hpRatio <= (1.0/4)) {
+			if (this.item == Item.WIKI_BERRY) {
+				this.currentHP += (this.getBaseStat(0) / 3);
+				this.verifyHP();
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to restore HP!");
+				this.consumeItem();
+			}
+			if (this.item == Item.LIECHI_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + "!");
+				stat(this, 0, 1, foe);
+				this.consumeItem();
+			} else if (this.item == Item.GANLON_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + "!");
+				stat(this, 1, 1, foe);
+				this.consumeItem();
+			} else if (this.item == Item.PETAYA_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + "!");
+				stat(this, 2, 1, foe);
+				this.consumeItem();
+			} else if (this.item == Item.APRICOT_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + "!");
+				stat(this, 3, 1, foe);
+				this.consumeItem();
+			} else if (this.item == Item.SALAC_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + "!");
+				stat(this, 4, 1, foe);
+				this.consumeItem();
+			} else if (this.item == Item.STARF_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + "!");
+				stat(this, new Random().nextInt(7), 2, foe);
+				this.consumeItem();
+			}
+			if (this.item == Item.MICLE_BERRY) {
+				console.writeln(this.nickname + " ate its " + this.item.toString() + "!");
+				stat(this, 5, 1, foe);
+				this.consumeItem();
+			}
+		}
+		if (hpRatio <= (1.0/2)) {
+			if (this.item == Item.ORAN_BERRY || this.item == Item.SITRUS_BERRY) {
+				int healAmt = this.item == Item.ORAN_BERRY ? 10 : (this.getBaseStat(0) / 4);
+				this.currentHP += healAmt;
+				this.verifyHP();
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to restore HP!");
+				this.consumeItem();
+			}
+		} else {
+			return;
+		}
+		
+	}
+
 	public double getEffectiveMultiplier(PType mtype) {
 		double multiplier = 1.0;
 		
@@ -12571,6 +12780,10 @@ public class Pokemon implements Serializable {
 	    clonedPokemon.currentHP = this.currentHP;
 	    clonedPokemon.fainted = this.fainted;
 	    
+	    // Clone item fields
+		clonedPokemon.item = this.item;
+		clonedPokemon.keepItem = this.keepItem;
+	    
 	    // Clone counter fields
 	    clonedPokemon.confusionCounter = this.confusionCounter;
 	    clonedPokemon.sleepCounter = this.sleepCounter;
@@ -12596,6 +12809,8 @@ public class Pokemon implements Serializable {
 	    clonedPokemon.lastMoveUsed = this.lastMoveUsed;
 	    clonedPokemon.trainer = this.trainer;
 	    clonedPokemon.slot = this.slot;
+	    
+	    clonedPokemon.happinessCap = this.happinessCap;
 	    
 	    return clonedPokemon;
 	}
