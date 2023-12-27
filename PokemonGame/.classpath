@@ -17,6 +17,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/PokemonGame/lib/miglayout-core-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/shaej/Downloads/swingx-all-1.6.4.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Downloads/swingx-all-1.6.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

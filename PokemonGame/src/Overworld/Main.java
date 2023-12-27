@@ -933,7 +933,8 @@ public class Main {
 					writer.write(tr.getName() + "\n");
 					for (Pokemon p : tr.getTeam()) {
 						String pName = p.name + " (Lv. " + p.level + ")";
-						while (pName.length() < 22) {
+						if (p.item != null) pName += " @ " + p.item.toString();
+						while (pName.length() < 40) {
 							pName += " ";
 						}
 						pName += "/";
