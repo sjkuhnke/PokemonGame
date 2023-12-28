@@ -88,7 +88,7 @@ public class PBox extends JFrame {
         	        	@Override
         	            public void mouseClicked(MouseEvent e) {
         	        		if (SwingUtilities.isLeftMouseButton(e)) {
-        	        			JPanel summary = me.team[index].showSummary(me);
+        	        			JPanel summary = me.team[index].showSummary(me, true);
                 	        	JButton depositButton = new JButton("Deposit");
                 	        	depositButton.addActionListener(f -> {
                 		            if (me.team[index] != null) {
@@ -275,7 +275,7 @@ public class PBox extends JFrame {
 		    		if (SwingUtilities.isLeftMouseButton(e)) {
 		    			JPanel boxMemberPanel;
 		    	    	if (box[index] != null) {
-		    	    		boxMemberPanel = box[index].showSummary(me);
+		    	    		boxMemberPanel = box[index].showSummary(me, true);
 		    	    	} else {
 		    	    		boxMemberPanel = new JPanel();
 		    	    	}

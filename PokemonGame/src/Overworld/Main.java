@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import Entity.Entity;
 import Entity.PlayerCharacter;
 import Swing.Player;
 import Swing.Pokemon;
@@ -195,7 +197,7 @@ public class Main {
 						}
 		            }
 		            
-		    		if (selectedOptions[0]) writeTrainers();
+		    		if (selectedOptions[0]) writeTrainers(gamePanel);
 		    		if (selectedOptions[1]) writePokemon();
 		    		if (selectedOptions[2]) writeEncounters();
 		    		if (selectedOptions[3]) writeMoves();
@@ -254,9 +256,9 @@ public class Main {
 			trainers[242] = new Trainer("Scott 4", new Pokemon[]{new Pokemon(77, 59, false, true), new Pokemon(130, 60, false, true), new Pokemon(189, 58, false, true), new Pokemon(6, 60, false, true), new Pokemon(37, 59, false, true), new Pokemon(168, 61, false, true)}, 400, 21);
 		}
 		
-		setItem("Rick 1", 1, Item.SITRUS_BERRY);
+		setItem("Rick 1", 1, Item.ORAN_BERRY);
 		setItem("Rick 1", 2, Item.MAGNET);
-		setItem("Rick 1", 3, Item.EXPERT_BELT);
+		setItem("Rick 1", 3, Item.BIG_ROOT);
 		setItem("Rick 1", 4, Item.OCCA_BERRY);
 		
 		setMoveset("1 Gym Leader 1", 2, Move.MEGA_DRAIN, Move.SUPERSONIC, Move.AERIAL_ACE, Move.POISON_FANG);
@@ -911,54 +913,106 @@ public class Main {
 
 
 
-	private static void writeTrainers() {
+	private static void writeTrainers(GamePanel gp) {
 		try {
 			FileWriter writer = new FileWriter("./docs/TrainerInfo.txt");
+			Entity[][] npc = gp.npc;
+			writer.write("Trainers:\n");
+			Map<String, ArrayList<Trainer>> trainerMap = new LinkedHashMap<>();
+			for (int loc = 0; loc < npc.length; loc++) {
+				for (int col = 0; col < npc[loc].length; col++) {
+					Entity e = npc[loc][col];
+					if (e == null || e.trainer < 0) continue;
+					if (loc != 0 && e.trainer == 0) continue;
+					PMap.getLoc(loc, e.worldX / gp.tileSize, e.worldY / gp.tileSize);
+					String location = PlayerCharacter.currentMapName;
+					Trainer tr = Main.trainers[e.trainer];
+					if (trainerMap.containsKey(location)) {
+						ArrayList<Trainer> list = trainerMap.get(location);
+						list.add(tr);
+					} else {
+						ArrayList<Trainer> list = new ArrayList<>();
+						list.add(tr);
+						trainerMap.put(location, list);
+					}
+				}
+			}
 			
-			for (Trainer tr : trainers) {
-				String name = "Trainer " + tr.getName();
-				while (name.length() < 28) {
-					name += " ";
+			for (Map.Entry<Entity, Integer> e : GamePanel.volatileTrainers.entrySet()) {
+				PMap.getLoc(e.getValue(), e.getKey().worldX / gp.tileSize, e.getKey().worldY / gp.tileSize);
+				String location = PlayerCharacter.currentMapName;
+				Trainer tr = Main.trainers[e.getKey().trainer];
+				if (trainerMap.containsKey(location)) {
+					ArrayList<Trainer> list = trainerMap.get(location);
+					list.add(tr);
+				} else {
+					ArrayList<Trainer> list = new ArrayList<>();
+					list.add(tr);
+					trainerMap.put(location, list);
 				}
-				writer.write(name);
-				for (int i = 0; i < tr.getTeam().length; i++) {
-					Pokemon p = tr.getTeam()[i];
-					writer.write(p.name + " Lv. " + p.level);
-					if (i != tr.getTeam().length - 1) writer.write(", ");
+			}
+			
+			for (Map.Entry<String, ArrayList<Trainer>> e : trainerMap.entrySet()) {
+				ArrayList<Trainer> trainers = e.getValue();
+				String loc = e.getKey();
+				while (loc.length() < 50) {
+					loc += "-";
 				}
+				writer.write(loc + "\n");
 				writer.write("\n");
-				
-				if (tr.getName().contains("Leader") || tr.getName().contains("Rick") || tr.getName().contains("Scott") || tr.getName().contains("Fred") || tr.getName().contains("Maxwell")) {
-					writer.write("\n");
-					writer.write(tr.getName() + "\n");
-					for (Pokemon p : tr.getTeam()) {
-						String pName = p.name + " (Lv. " + p.level + ")";
-						if (p.item != null) pName += " @ " + p.item.toString();
-						while (pName.length() < 40) {
-							pName += " ";
-						}
-						pName += "/";
-						writer.write(pName);
-						
-						String aName = "   " + p.ability.toString();
-						while (aName.length() < 22) {
-							aName += " ";
-						}
-						aName += "/";
-						writer.write(aName);
-						
-						String mName = "   ";
-						for (int i = 0; i < 4; i++) {
-							if (p.moveset[i] != null) {
-								mName += p.moveset[i].move.toString();
-								if (i != 3) mName += ", ";
-							}
-						}
-						writer.write(mName);
-						writer.write("\n");
+				for (Trainer tr : trainers) {
+					String name = "Trainer " + tr.getName();
+					while (name.length() < 28) {
+						name += " ";
+					}
+					writer.write(name);
+					for (int i = 0; i < tr.getTeam().length; i++) {
+						Pokemon p = tr.getTeam()[i];
+						writer.write(p.name + " Lv. " + p.level);
+						if (i != tr.getTeam().length - 1) writer.write(", ");
 					}
 					writer.write("\n");
+					
+					if (tr.getName().contains("Leader") || tr.getName().contains("Rick") || tr.getName().contains("Scott") || tr.getName().contains("Fred") || tr.getName().contains("Maxwell")) {
+						writer.write("\n");
+						writer.write(tr.getName() + "\n");
+						for (Pokemon p : tr.getTeam()) {
+							String pName = p.name + " (Lv. " + p.level + ")";
+							if (p.item != null) {
+								pName += " @ " + p.item.toString();
+								while (pName.length() < 40) {
+									pName += " ";
+								}
+							} else {
+								while (pName.length() < 22) {
+									pName += " ";
+								}
+							}
+							
+							pName += "/";
+							writer.write(pName);
+							
+							String aName = "   " + p.ability.toString();
+							while (aName.length() < 18) {
+								aName += " ";
+							}
+							aName += "/";
+							writer.write(aName);
+							
+							String mName = "   ";
+							for (int i = 0; i < 4; i++) {
+								if (p.moveset[i] != null) {
+									mName += p.moveset[i].move.toString();
+									if (i != 3) mName += ", ";
+								}
+							}
+							writer.write(mName);
+							writer.write("\n");
+						}
+						writer.write("\n");
+					}
 				}
+				writer.write("\n");
 			}
 			
 			writer.close();
