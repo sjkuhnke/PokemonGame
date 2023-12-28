@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -70,6 +72,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	public boolean mapOpen = false;
 	public int ticks;
 
+	public static Map<Entity, Integer> volatileTrainers = new HashMap<>();
 	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));

@@ -14,6 +14,7 @@ public class ItemObj {
 
 	public BufferedImage image;
 	public Item item;
+	public int count;
 	
 	GamePanel gp;
 	

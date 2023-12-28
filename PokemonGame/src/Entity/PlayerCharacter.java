@@ -410,9 +410,10 @@ public class PlayerCharacter extends Entity {
 
 	private void pickUpObject(int objIndex) {
 		keyH.pause();
-		
-		p.bag.add(gp.obj[gp.currentMap][objIndex].item);
-		JOptionPane.showMessageDialog(null, "You found 1 " + gp.obj[gp.currentMap][objIndex].item.toString() + "!");
+		Item item = gp.obj[gp.currentMap][objIndex].item;
+		int count = gp.obj[gp.currentMap][objIndex].count;
+		p.bag.add(item, count);
+		JOptionPane.showMessageDialog(null, "You found " + count + " " + item.toString() + "!");
 		gp.player.p.itemsCollected[gp.currentMap][objIndex] = true;
 		gp.obj[gp.currentMap][objIndex] = null;
 		keyH.resume();
@@ -1116,7 +1117,7 @@ public class PlayerCharacter extends Entity {
 	        final int index = j;
 	        
 	        party.addActionListener(e -> {
-	            JPanel teamMemberPanel = p.team[index].showSummary(p);
+	            JPanel teamMemberPanel = p.team[index].showSummary(p, true);
 	            JButton swapButton = new JButton("Swap");
 		        swapButton.addActionListener(f -> {
 		            if (p.team[index] != null && p.team[index] != p.current) {

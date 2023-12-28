@@ -4413,6 +4413,8 @@ public class Pokemon implements Serializable {
 			foe.poison(false, this);
 //		} else if (move == Move.POISONOUS_WATER) {
 //			foe.poison(false, this);
+		} else if (move == Move.POWDER_SNOW) {
+			foe.freeze(false);
 		} else if (move == Move.POWER$UP_PUNCH) {
 			stat(this, 0, 1, foe);
 		} else if (move == Move.PSYBEAM) {
@@ -5005,8 +5007,6 @@ public class Pokemon implements Serializable {
 			if (foe.type2 == PType.GHOST) foe.type2 = PType.NORMAL;
 			console.writeln(this.nickname + " identified " + foe.nickname + "!");
 			stat(foe, 6, -1, foe);
-		} else if (move == Move.POWDER_SNOW) {
-			foe.freeze(false);
 		} else if (move == Move.PERISH_SONG) {
 			this.perishCount = (this.perishCount == 0) ? 3 : this.perishCount;
 			foe.perishCount = (foe.perishCount == 0) ? 3 : foe.perishCount;
@@ -11401,7 +11401,7 @@ public class Pokemon implements Serializable {
 	}
 
 
-	public JPanel showSummary(Player player) {
+	public JPanel showSummary(Player player, boolean takeItem) {
 	    JPanel teamMemberPanel = new JPanel();
 	    teamMemberPanel.setLayout(new BoxLayout(teamMemberPanel, BoxLayout.Y_AXIS));
 	    
@@ -11548,10 +11548,12 @@ public class Pokemon implements Serializable {
 	    
 	    teamMemberPanel.add(movesPanel);
 	    
-	    JButton giveButton = new JButton("N/A");
+    	JButton giveButton = new JButton("N/A");
 	    JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    JLabel itemLabel = new JLabel("N/A");
 	    if (this.item != null) {
 	    	giveButton.setText("Take " + item.toString());
+	    	itemLabel.setText(item.toString());
 	    	giveButton.addActionListener(e -> {
 	    		int option = JOptionPane.showOptionDialog(null,
 	    				"Would you like to take " + this.nickname + "'s " + this.item + "?",
@@ -11567,7 +11569,11 @@ public class Pokemon implements Serializable {
 	    	    }
 	    	});
 	    	itemPanel.add(new JLabel(new ImageIcon(this.item.getImage())));
-	    	itemPanel.add(giveButton);
+	    	if (takeItem) {
+	    		itemPanel.add(giveButton);
+	    	} else {
+	    		itemPanel.add(itemLabel);
+	    	}
 	    	teamMemberPanel.add(itemPanel);
 	    }
 	    

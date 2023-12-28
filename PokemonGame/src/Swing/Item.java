@@ -105,7 +105,7 @@ public enum Item {
 	SOOTHE_BELL(67,0,new Color(198, 199, 202),Item.HELD_ITEM,null,"The comforting chime of this bell calms the holder, making it friendly."),
 	SHELL_BELL(68,0,new Color(242, 242, 242),Item.HELD_ITEM,null,""), // TODO
 	SCOPE_LENS(69,0,new Color(192, 183, 54),Item.HELD_ITEM,null,""),
-	WIDE_LENS(70,0,new Color(74, 162, 195),Item.HELD_ITEM,null,""), 
+	WIDE_LENS(70,0,new Color(74, 162, 195),Item.HELD_ITEM,null,""),
 	QUICK_CLAW(71,0,new Color(213, 189, 105),Item.HELD_ITEM,null,""),
 	BIG_ROOT(72,0,new Color(208, 161, 91),Item.HELD_ITEM,null,""),
 	CLEAR_AMULET(73,0,new Color(204, 204, 243),Item.HELD_ITEM,null,""),

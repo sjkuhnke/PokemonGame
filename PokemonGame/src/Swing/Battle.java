@@ -872,7 +872,7 @@ public class Battle extends JFrame {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 			        if (SwingUtilities.isRightMouseButton(e)) {
-			        	JPanel teamMemberPanel = me.team[index].showSummary(me);
+			        	JPanel teamMemberPanel = me.team[index].showSummary(me, false);
 			            JOptionPane.showMessageDialog(null, teamMemberPanel, "Party member details", JOptionPane.PLAIN_MESSAGE);
 			        }
 			    }
@@ -1021,7 +1021,7 @@ public class Battle extends JFrame {
 		userSprite.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				JPanel teamMemberPanel = me.getCurrent().showSummary(me);
+				JPanel teamMemberPanel = me.getCurrent().showSummary(me, false);
 	            JOptionPane.showMessageDialog(null, teamMemberPanel, "Party member details", JOptionPane.PLAIN_MESSAGE);
             }
 		});
