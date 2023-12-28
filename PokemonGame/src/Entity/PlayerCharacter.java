@@ -1962,11 +1962,8 @@ public class PlayerCharacter extends Entity {
 			        	itemDesc.add(count);
 			        	itemDesc.add(descLabel);
 			        }
-			        if (pocket == Item.HELD_ITEM) {
+			        if (pocket == Item.HELD_ITEM || pocket == Item.BERRY) {
 			        	itemDesc.add(giveButton);
-			        } else if (pocket == Item.BERRY) {
-			        	itemDesc.add(giveButton);
-			        	itemDesc.add(useButton);
 			        } else {
 			        	itemDesc.add(useButton);
 			        }

@@ -103,7 +103,7 @@ public enum Item {
 	ROCKY_HELMET(65,0,new Color(241, 188, 27),Item.HELD_ITEM,null,"If another Pokemon makes direct contact with the holder, that Pokemon will be damaged."),
 	LIGHT_CLAY(66,0,new Color(183, 216, 126),Item.HELD_ITEM,null,"An item that when the holder uses protective moves like Light Screen or Reflect, their effects will last longer than usual."),
 	SOOTHE_BELL(67,0,new Color(198, 199, 202),Item.HELD_ITEM,null,"The comforting chime of this bell calms the holder, making it friendly."),
-	SHELL_BELL(68,0,new Color(242, 242, 242),Item.HELD_ITEM,null,""), // TODO
+	LOADED_DICE(68,0,new Color(144, 232, 16),Item.HELD_ITEM,null,""), // TODO
 	SCOPE_LENS(69,0,new Color(192, 183, 54),Item.HELD_ITEM,null,""),
 	WIDE_LENS(70,0,new Color(74, 162, 195),Item.HELD_ITEM,null,""),
 	QUICK_CLAW(71,0,new Color(213, 189, 105),Item.HELD_ITEM,null,""),
@@ -343,8 +343,6 @@ public enum Item {
 				case 8:
 					healAmount = -1;
 					break;
-				case 229:
-					healAmount = 10;
 				default:
 					healAmount = 0;
 			}
@@ -699,12 +697,12 @@ public enum Item {
 	}
 
 	public Status getStatus() {
-		if (id == 9 || id == 223) return Status.POISONED;
-		else if (id == 10 || id == 222) return Status.ASLEEP;
-		else if (id == 11 || id == 224) return Status.BURNED;
-		else if (id == 12 || id == 221) return Status.PARALYZED;
-		else if (id == 13 || id == 225) return Status.FROSTBITE;
-		else if (id == 14 || id == 15 || id == 226) return null;
+		if (id == 9) return Status.POISONED;
+		else if (id == 10) return Status.ASLEEP;
+		else if (id == 11) return Status.BURNED;
+		else if (id == 12) return Status.PARALYZED;
+		else if (id == 13) return Status.FROSTBITE;
+		else if (id == 14 || id == 15) return null;
 		else return Status.CONFUSED; // lol
 		
 	}
