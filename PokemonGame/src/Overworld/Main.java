@@ -266,6 +266,13 @@ public class Main {
 		setMoveset("1 Gym Leader 1", 5, Move.CALM_MIND, Move.WISH, Move.MAGIC_BLAST, Move.GUST);
 		setMoveset("1 Gym Leader 1", 6, Move.SAND_ATTACK, Move.LEER, Move.AERIAL_ACE, Move.QUICK_ATTACK);
 		
+		setItem("1 Gym Leader 1", 1, Item.BRIGHT_POWDER);
+		setItem("1 Gym Leader 1", 2, Item.EXPERT_BELT);
+		setItem("1 Gym Leader 1", 3, Item.LEFTOVERS);
+		setItem("1 Gym Leader 1", 4, Item.ORAN_BERRY);
+		setItem("1 Gym Leader 1", 5, Item.ENCHANTED_AMULET);
+		setItem("1 Gym Leader 1", 6, Item.SCOPE_LENS);
+		
 		setMoveset("2 Gym Leader 1", 1, Move.SUPER_FANG, Move.BITE, Move.HEADBUTT, Move.BULK_UP);
 		setMoveset("2 Gym Leader 1", 2, Move.POWER$UP_PUNCH, Move.FURY_SWIPES, Move.DOUBLE_TEAM, Move.CHARM);
 		setMoveset("2 Gym Leader 1", 3, Move.WILL$O$WISP, Move.HEX, Move.ROUND, Move.TAUNT);
