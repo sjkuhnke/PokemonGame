@@ -261,6 +261,8 @@ public class Main {
 		setItem("Rick 1", 3, Item.BIG_ROOT);
 		setItem("Rick 1", 4, Item.OCCA_BERRY);
 		
+		setItem("TN 9", 1, Item.CHOICE_BAND);
+		
 		setMoveset("1 Gym Leader 1", 2, Move.MEGA_DRAIN, Move.SUPERSONIC, Move.AERIAL_ACE, Move.POISON_FANG);
 		setAbility("1 Gym Leader 1", 4, Ability.LIGHTNING_ROD);
 		setMoveset("1 Gym Leader 1", 5, Move.CALM_MIND, Move.WISH, Move.MAGIC_BLAST, Move.GUST);
@@ -620,6 +622,7 @@ public class Main {
 				new Trainer("6 Gym Leader 1", new Pokemon[]{new Pokemon(87, 62, false, true), new Pokemon(110, 62, false, true), new Pokemon(170, 62, false, true), new Pokemon(12, 62, false, true), new Pokemon(40, 62, false, true), new Pokemon(208, 63, false, true)}, 500, Item.TM97), // 255
 				new Trainer("Exp. Trainer", new Pokemon[]{new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true)}, 100),
 				new Trainer("BP1", new Pokemon[] {new Pokemon(17, 48, false, true), new Pokemon(21, 47, false, true), new Pokemon(93, 48, false, true), new Pokemon(89, 48, false, true), new Pokemon(161, 47, false, true), new Pokemon(188, 48, false, true)}, 100),
+				new Trainer("TN 9", new Pokemon[] {new Pokemon(153, 12, false, true), new Pokemon(160, 12, false, true)}, 100),
 //				new Trainer("Z", new Pokemon[]{new Pokemon(-75, 26, false, true)}, 100),
 //				new Trainer("AA", new Pokemon[]{new Pokemon(-97, 19, false, true), new Pokemon(-98, 26, false, true)}, 100),
 //				new Trainer("BB", new Pokemon[]{new Pokemon(-41, 26, false, true)}, 100),

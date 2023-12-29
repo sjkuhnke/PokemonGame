@@ -322,29 +322,14 @@ public class Pokemon implements Serializable {
 	}
 	
 	public Move bestMove(Pokemon foe, boolean first) {
-	    ArrayList<Move> validMoves = new ArrayList<>();
-
-	    // Add all non-null moves to the validMoves list
-	    for (Moveslot m : moveset) {
-	    	if (m != null && m.currentPP != 0) {
-	    		Move move = m.move;
-	    		if (move != null) {
-		            validMoves.add(move);
-		        }
-	    	}
-	        
-	    }
+	    ArrayList<Move> validMoves = this.getValidMoveset();
 	    
         // Calculate and store the damage values of each move
         Map<Move, Integer> moveToDamage = new HashMap<>();
 
         for (Move move : validMoves) {
             int damage = calcWithTypes(foe, move, first);
-            if ((vStatuses.contains(Status.TORMENTED) && move == this.lastMoveUsed) || (vStatuses.contains(Status.MUTE) && Move.getSound().contains(move))) {
-            	// nothing: don't add
-            } else {
-            	moveToDamage.put(move, damage);
-            }
+            moveToDamage.put(move, damage);
         }
         
         // Check if there are no valid moves with non-zero PP
@@ -353,7 +338,7 @@ public class Pokemon implements Serializable {
         }
         
         // Find the maximum damage value
-        int maxDamage = Collections.max(moveToDamage.values()); // NoSuchElementException when moveToDamage == 0 (i.e. all moves have 0 PP)
+        int maxDamage = Collections.max(moveToDamage.values());
         
         // Filter moves based on conditions and max damage
         ArrayList<Move> bestMoves = new ArrayList<>();
@@ -370,10 +355,6 @@ public class Pokemon implements Serializable {
         		bestMoves.add(move);
         	}
         	bestMoves = modifyStatus(bestMoves, foe);
-        }
-        
-        if (this.vStatuses.contains(Status.TAUNTED)) {
-        	bestMoves.removeIf(move -> move.cat == 2 && move != Move.METRONOME);
         }
 
         if (bestMoves.isEmpty()) {
@@ -2986,11 +2967,7 @@ public class Pokemon implements Serializable {
 		if (move != this.lastMoveUsed) this.moveMultiplier = 1;
 		
 		if (!this.vStatuses.contains(Status.CHARGING) && !this.vStatuses.contains(Status.SEMI_INV) && !this.vStatuses.contains(Status.LOCKED) &&
-				!this.vStatuses.contains(Status.ENCORED) && !Move.getNoComboMoves().contains(move)) this.lastMoveUsed = move;
-		
-		if (move == Move.STRUGGLE) {
-			this.lastMoveUsed = null;
-		}
+				!this.vStatuses.contains(Status.ENCORED) && !Move.getNoComboMoves().contains(move) && move != Move.STRUGGLE) this.lastMoveUsed = move;
 		
 		if (move == Move.FAILED_SUCKER) this.lastMoveUsed = Move.SUCKER_PUNCH;
 		
@@ -3111,6 +3088,15 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN)) || this.vStatuses.contains(Status.CHARGING) || move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY) {
+			if (this.item == Item.POWER_HERB) {
+				announceUseMove(move);
+				console.writeln(this.nickname + " started charging up!");
+				this.vStatuses.add(Status.CHARGING);
+				if (move == Move.SKULL_BASH) stat(this, 1, 1, foe);
+				if (move == Move.BLACK_HOLE_ECLIPSE) stat(this, 3, 1, foe);
+				console.writeln(this.nickname + " became fully charged due to its Power Herb!");
+				this.consumeItem();
+			}
 			if (!this.vStatuses.contains(Status.CHARGING)) {
 				announceUseMove(move);
 				console.writeln(this.nickname + " started charging up!");
@@ -3320,6 +3306,7 @@ public class Pokemon implements Serializable {
 			double accuracy = acc * asAccModifier(accEv);
 			if ((field.equals(field.weather, Effect.SANDSTORM) && foeAbility == Ability.SAND_VEIL) ||
 					(field.equals(field.weather, Effect.SNOW) && foeAbility == Ability.SNOW_CLOAK)) accuracy *= 0.8;
+			if (foe.item == Item.BRIGHT_POWDER) damage *= 0.9;
 			if (!hit(accuracy) || foe.vStatuses.contains(Status.SEMI_INV) && acc <= 100) {
 				useMove(move);
 				console.writeln(this.nickname + "'s attack missed!");
@@ -3330,6 +3317,10 @@ public class Pokemon implements Serializable {
 						this.faint(true, player, foe);
 						foe.awardxp((int) Math.ceil(this.level * trainer), player);
 					}
+				}
+				if (this.item == Item.BLUNDER_POLICY) {
+					stat(this, 4, 2, foe);
+					this.consumeItem();
 				}
 				endMove();
 				this.vStatuses.remove(Status.LOCKED);
@@ -3342,7 +3333,7 @@ public class Pokemon implements Serializable {
 		if (move == Move.WEATHER_BALL) moveType = determineWBType();
 		if (move == Move.TERRAIN_PULSE) moveType = determineTPType();
 		
-		int numHits = move.getNumHits(team);
+		int numHits = move.getNumHits(this, team);
 		useMove(move);
 		int hits = 0;
 		for (int hit = 1; hit <= numHits; hit++) {
@@ -3361,8 +3352,13 @@ public class Pokemon implements Serializable {
 				double accuracy = acc * asAccModifier(accEv);
 				if ((field.equals(field.weather, Effect.SANDSTORM) && foeAbility == Ability.SAND_VEIL) ||
 						(field.equals(field.weather, Effect.SNOW) && foeAbility == Ability.SNOW_CLOAK)) accuracy *= 0.8;
+				if (foe.item == Item.BRIGHT_POWDER) damage *= 0.9;
 				if (!hit(accuracy) || foe.vStatuses.contains(Status.SEMI_INV) && acc <= 100) {
 					console.writeln(this.nickname + "'s attack missed!");
+					if (this.item == Item.BLUNDER_POLICY) {
+						stat(this, 4, 2, foe);
+						this.consumeItem();
+					}
 					endMove();
 					this.vStatuses.remove(Status.LOCKED);
 					this.moveMultiplier = 1;
@@ -3566,6 +3562,7 @@ public class Pokemon implements Serializable {
 				if (move != Move.DARKEST_LARIAT && move != Move.SACRED_SWORD && this.ability != Ability.UNAWARE) defenseStat *= foe.asModifier(1);
 				if (move == Move.BODY_PRESS) attackStat = this.getStat(2) * this.asModifier(1);
 				if (move == Move.FOUL_PLAY) attackStat = foe.getStat(1) * foe.asModifier(0);
+				if (this.item == Item.CHOICE_BAND) attackStat *= 1.5;
 				if (this.status == Status.BURNED && this.ability != Ability.GUTS && move != Move.FACADE) attackStat /= 2;
 				if (this.ability == Ability.GUTS && this.status != Status.HEALTHY) attackStat *= 1.5;
 				if (this.ability == Ability.HUGE_POWER) attackStat *= 2;
@@ -3575,11 +3572,15 @@ public class Pokemon implements Serializable {
 				defenseStat = foe.getStat(4);
 				if (foeAbility != Ability.UNAWARE) attackStat *= this.asModifier(2);
 				if (this.ability != Ability.UNAWARE) defenseStat *= foe.asModifier(3);
+				if (foe.item == Item.ASSAULT_VEST) defenseStat *= 1.5;
 				if (move == Move.PSYSHOCK) defenseStat = foe.getStat(2) * foe.asModifier(1);
+				if (this.item == Item.CHOICE_SPECS) attackStat *= 1.5;
 				if (this.status == Status.FROSTBITE) attackStat /= 2;
 				if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN)) attackStat *= 1.5;
 				if (field.equals(field.weather, Effect.SANDSTORM) && (foe.type1 == PType.ROCK || foe.type2 == PType.ROCK)) defenseStat *= 1.5;
 			}
+			
+			if (foe.item == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
 			
 			// Stab
 			if (moveType == this.type1 || moveType == this.type2 || this.ability == Ability.TYPE_MASTER) {
@@ -3616,6 +3617,7 @@ public class Pokemon implements Serializable {
 				}
 				if (move.isPhysical() && defenseStat > foe.getStat(2)) defenseStat = foe.getStat(2);
 				if (!move.isPhysical() && defenseStat > foe.getStat(4)) defenseStat = foe.getStat(4);
+				if (foe.item == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
 				damage = calc(attackStat, defenseStat, bp, this.level);
 				damage *= 1.5;
 				if (this.ability == Ability.SNIPER) damage *= 1.5;
@@ -3767,6 +3769,27 @@ public class Pokemon implements Serializable {
 			double percent = dividend * 100.0 / foe.getStat(0); // change dividend to damage
 			String formattedPercent = String.format("%.1f", percent);
 			console.writeln("(" + foe.nickname + " lost " + formattedPercent + "% of its HP.)");
+			if (foe.item == Item.AIR_BALLOON) {
+				console.writeln(foe.nickname + "'s Air Balloon popped!");
+				foe.consumeItem();
+			}
+			if (foe.item == Item.RED_CARD) {
+				boolean result = false;
+				if (this.trainerOwned() && enemy != null) {
+					result = enemy.swapRandom(foe, player);
+				} else if (this.playerOwned) {
+					result = player.swapRandom(foe);
+				}
+				if (result) {
+					console.writeln(foe.nickname + " held up its Red Card!");
+					foe.consumeItem();
+				}
+			}
+			if (this.item == Item.THROAT_SPRAY && Move.getSound().contains(move)) {
+				console.writeln(this.nickname + " used its Throat Spray!");
+				stat(this, 2, 1, foe);
+				this.consumeItem();
+			}
 			if (foe.currentHP <= 0 && (move == Move.FALSE_SWIPE || foe.vStatuses.contains(Status.ENDURE) || (foe.item == Item.FOCUS_BAND && checkSecondary(10)) || (fullHP && (foeAbility == Ability.STURDY || foe.item == Item.FOCUS_SASH)))) {
 				foe.currentHP = 1;
 				if (fullHP && foeAbility == Ability.STURDY) console.writeAbility(foe);
@@ -3845,6 +3868,10 @@ public class Pokemon implements Serializable {
 				console.writeln("Hit " + hits + " times!");
 			} else if (hit == numHits && hit > 1) {
 				console.writeln("Hit " + hit + " times!");
+			}
+			
+			if (first && this.item == Item.KING1S_ROCK && checkSecondary(10)) {
+				foe.vStatuses.add(Status.FLINCHED);
 			}
 		}
 		
@@ -5323,6 +5350,9 @@ public class Pokemon implements Serializable {
 			foe.stat(foe, 2, 1, this);
 		}
 		p.statStages[i] += a;
+		if (p.item == Item.WHITE_HERB && a < 0) {
+			p.statStages[i] -= a;
+		}
 		if (p.statStages[i] > 6 && a > 0) {
 			p.statStages[i] = 6;
 			if (a != 12) {
@@ -5330,14 +5360,16 @@ public class Pokemon implements Serializable {
 			} else {
 				console.writeln(p.nickname + "'s " + type + " was raised to the max!");
 			}
-		} else if (p.statStages[i] < -6 && a < 0){
+		} else if (p.statStages[i] < -6 && a < 0) {
 			p.statStages[i] = -6;
 			if (a != 12) console.writeln(p.nickname + "'s " + type + " won't go any lower!");
 		} else {
 			console.writeln(p.nickname + "'s " + type + amount + "!");
+			if (p.item == Item.WHITE_HERB && a < 0) {
+				console.writeln(p.nickname + " returned its stats to normal using its White Herb!");
+				p.consumeItem();
+			}
 		}
-		
-		
 	}
 
 	public double asModifier(int index) {
@@ -10271,6 +10303,7 @@ public class Pokemon implements Serializable {
 			if (move != Move.DARKEST_LARIAT && move != Move.SACRED_SWORD && this.ability != Ability.UNAWARE) defenseStat *= foe.asModifier(1);
 			if (move == Move.BODY_PRESS) attackStat = this.getStat(2) * this.asModifier(1);
 			if (move == Move.FOUL_PLAY) attackStat = foe.getStat(1) * foe.asModifier(0);
+			if (this.item == Item.CHOICE_BAND) attackStat *= 1.5;
 			if (this.status == Status.BURNED && this.ability != Ability.GUTS && move != Move.FACADE) attackStat /= 2;
 			if (this.ability == Ability.GUTS && this.status != Status.HEALTHY) attackStat *= 1.5;
 			if (this.ability == Ability.HUGE_POWER) attackStat *= 2;
@@ -10280,11 +10313,15 @@ public class Pokemon implements Serializable {
 			defenseStat = foe.getStat(4);
 			if (foeAbility != Ability.UNAWARE) attackStat *= this.asModifier(2);
 			if (this.ability != Ability.UNAWARE) defenseStat *= foe.asModifier(3);
+			if (mode != 0 && foe.item == Item.ASSAULT_VEST) defenseStat *= 1.5;
 			if (move == Move.PSYSHOCK) defenseStat = foe.getStat(2) * foe.asModifier(1);
+			if (this.item == Item.CHOICE_SPECS) attackStat *= 1.5;
 			if (this.status == Status.FROSTBITE) attackStat /= 2;
 			if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN)) attackStat *= 1.5;
 			if (field.equals(field.weather, Effect.SANDSTORM) && (foe.type1 == PType.ROCK || foe.type2 == PType.ROCK)) defenseStat *= 1.5;
 		}
+		
+		if (mode != 0 && foe.item == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
 		
 		// Stab
 		if (moveType == this.type1 || moveType == this.type2 || this.ability == Ability.TYPE_MASTER) {
@@ -10304,7 +10341,7 @@ public class Pokemon implements Serializable {
 		if (moveType == PType.STEEL && lastMoveUsed == Move.LOAD_FIREARMS) bp *= 2;
 		
 		// Multi hit moves calc to use
-		if (mode == 0) bp *= move.getNumHits(null);
+		if (mode == 0) bp *= move.getNumHits(this, null);
 		
 		// Crit Check
 		if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
@@ -10320,6 +10357,7 @@ public class Pokemon implements Serializable {
 			}
 			if (move.isPhysical() && defenseStat > foe.getStat(2)) defenseStat = foe.getStat(2);
 			if (!move.isPhysical() && defenseStat > foe.getStat(4)) defenseStat = foe.getStat(4);
+			if (mode != 0 && foe.item == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
 			damage = calc(attackStat, defenseStat, bp, this.level, mode);
 			damage *= 1.5;
 			if (this.ability == Ability.SNIPER) damage *= 1.5;
@@ -10397,6 +10435,8 @@ public class Pokemon implements Serializable {
 		if (multiplier < 1) {
 			if (ability == Ability.TINTED_LENS) damage *= 2;
 		}
+		
+		if (mode == 0 && this.item == Item.THROAT_SPRAY && Move.getSound().contains(move)) damage *= 1.5;
 		
 		if (move == Move.NIGHT_SHADE || move == Move.SEISMIC_TOSS || move == Move.PSYWAVE) damage = this.level;
 		if (move == Move.ENDEAVOR) {
@@ -10739,6 +10779,7 @@ public class Pokemon implements Serializable {
 	public int getSpeed() {
 		double speed = this.getStat(5) * this.asModifier(4);
 		if (this.status == Status.PARALYZED) speed *= 0.5;
+		if (this.item == Item.CHOICE_SCARF) speed *= 1.5;
 		return (int) speed;
 	}
 	
@@ -11969,6 +12010,9 @@ public class Pokemon implements Serializable {
 			this.ability = foe.ability;
 			console.writeln(this.nickname + "'s ability became " + this.ability + "!");
 		}
+		if (this.item == Item.AIR_BALLOON) {
+			console.write(this.nickname + " floated on its Air Balloon!\n");
+		}
 		if (hazards && this.item != Item.HEAVY$DUTY_BOOTS) {
 			ArrayList<FieldEffect> side = playerOwned ? field.playerSide : field.foeSide;
 			if (field.contains(side, Effect.STEALTH_ROCKS)) {
@@ -12101,6 +12145,7 @@ public class Pokemon implements Serializable {
 	private boolean isGrounded() {
 		boolean result = true;
 		if (this.type1 == PType.FLYING || this.type2 == PType.FLYING) result = false;
+		if (this.item == Item.AIR_BALLOON) result = false;
 		if (this.ability == Ability.LEVITATE) result = false;
 		if (this.magCount > 0) result = false;
 		if (this.vStatuses.contains(Status.SMACK_DOWN)) result = true;
@@ -12729,7 +12774,8 @@ public class Pokemon implements Serializable {
 		for (Moveslot moveslot : moveset) {
 			if (moveslot != null) {
 				Move m = moveslot.move;
-				if ((vStatuses.contains(Status.TORMENTED) && m == this.lastMoveUsed) || (vStatuses.contains(Status.MUTE) && Move.getSound().contains(m)) || (moveslot.currentPP == 0)) {
+				if ((vStatuses.contains(Status.TORMENTED) && m == this.lastMoveUsed) || (vStatuses.contains(Status.MUTE) && Move.getSound().contains(m)) || (moveslot.currentPP == 0) 
+						|| (this.item != null && this.item.isChoiceItem() && this.lastMoveUsed != null && this.lastMoveUsed != m) || (this.item == Item.ASSAULT_VEST && m.cat == 2)) {
 	            	// nothing: don't add
 	            } else {
 	            	validMoves.add(m);
@@ -12863,6 +12909,148 @@ public class Pokemon implements Serializable {
 	    	nickname = JOptionPane.showInputDialog(null, "Would you like to nickname " + name + "?");
 	    	if (nickname == null || nickname.isBlank()) nickname = name;
 	    }
+		
+	}
+	
+	public boolean canEvolve() {
+		return canEvolve(this.id);
+	}
+	
+	public boolean canEvolve(int id) {
+		switch (id) {
+		case 1: return true;
+		case 2: return true;
+		case 4: return true;
+		case 5: return true;
+		case 7: return true;
+		case 8: return true;
+		case 10: return true;
+		case 11: return true;
+		case 13: return true;
+		case 14: return true;
+		case 16: return true;
+		case 17: return true;
+		case 19: return true;
+		case 20: return true;
+		case 22: return true;
+		case 23: return true;
+		case 26: return true;
+		case 27: return true;
+		case 29: return true;
+		case 30: return true;
+		case 32: return true;
+		case 33: return true;
+		case 35: return true;
+		case 36: return true;
+		case 38: return true;
+		case 41: return true;
+		case 42: return true;
+		case 44: return true;
+		case 45: return true;
+		case 48: return true;
+		case 49: return true;
+		case 52: return true;
+		case 53: return true;
+		case 55: return true;
+		case 57: return true;
+		case 59: return true;
+		case 62: return true;
+		case 64: return true;
+		case 66: return true;
+		case 68: return true;
+		case 69: return true;
+		case 71: return true;
+		case 73: return true;
+		case 75: return true;
+		case 78: return true;
+		case 80: return true;
+		case 82: return true;
+		case 83: return true;
+		case 85: return true;
+		case 86: return true;
+		case 90: return true;
+		case 92: return true;
+		case 94: return true;
+		case 95: return true;
+		case 98: return true;
+		case 99: return true;
+		case 101: return true;
+		case 102: return true;
+		case 104: return true;
+		case 106: return true;
+		case 108: return true;
+		case 111: return true;
+		case 112: return true;
+		case 114: return true;
+		case 115: return true;
+		case 117: return true;
+		case 118: return true;
+		case 120: return true;
+		case 121: return true;
+		case 123: return true;
+		case 124: return true;
+		case 126: return true;
+		case 127: return true;
+		case 129: return true;
+		case 132: return true;
+		case 134: return true;
+		case 135: return true;
+		case 137: return true;
+		case 139: return true;
+		case 141: return true;
+		case 143: return true;
+		case 144: return true;
+		case 146: return true;
+		case 148: return true;
+		case 151: return true;
+		case 153: return true;
+		case 154: return true;
+		case 156: return true;
+		case 158: return true;
+		case 160: return true;
+		case 161: return true;
+		case 163: return true;
+		case 164: return true;
+		case 166: return true;
+		case 167: return true;
+		case 169: return true;
+		case 171: return true;
+		case 172: return true;
+		case 174: return true;
+		case 175: return true;
+		case 177: return true;
+		case 179: return true;
+		case 181: return true;
+		case 182: return true;
+		case 184: return true;
+		case 185: return true;
+		case 187: return true;
+		case 188: return true;
+		case 190: return true;
+		case 191: return true;
+		case 193: return true;
+		case 195: return true;
+		case 197: return true;
+		case 199: return true;
+		case 200: return true;
+		case 202: return true;
+		case 203: return true;
+		case 205: return true;
+		case 206: return true;
+		case 209: return true;
+		case 211: return true;
+		case 213: return true;
+		case 215: return true;
+		case 217: return true;
+		case 218: return true;
+		case 220: return true;
+		case 221: return true;
+		case 223: return true;
+		case 224: return true;
+		case 226: return true;
+		default:
+			return false;
+		}
 		
 	}
 

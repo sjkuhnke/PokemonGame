@@ -82,19 +82,19 @@ public enum Item {
 	EDGE_KIT(44,0,new Color(232, 52, 54),Item.OTHER,null,"Edges ;) your Pokemon until\nthey're about to bust :{D"),
 	THUNDER_SCALES_FOSSIL(45,0,new Color(201, 169, 81),Item.OTHER,null,"A fossil of an ancient Pokemon\nthat lived in a desert.\nIt appears to have an\nelectric charge ridden\nin the scales."),
 	DUSK_SCALES_FOSSIL(46,0,new Color(45, 47, 51),Item.OTHER,null,"A fossil of an ancient Pokemon\nthat lived in a forest.\nIt appears to give off\na dark energy within\n the scales."),
-	CHOICE_BAND(47,0,new Color(224, 152, 159),Item.HELD_ITEM,null,"A curious headband that boosts the holder's Attack stat but only allows the use of a single move."), // TODO
-	CHOICE_SCARF(48,0,new Color(133, 172, 220),Item.HELD_ITEM,null,"A curious scarf that boosts the holder's Speed stat but only allows the use of a single move."), // TODO
-	CHOICE_SPECS(49,0,new Color(238, 236, 100),Item.HELD_ITEM,null,"A pair of curious glasses that boost the holder's Sp. Atk stat but only allow the use of a single move."), // TODO
+	CHOICE_BAND(47,0,new Color(224, 152, 159),Item.HELD_ITEM,null,"A curious headband that boosts the holder's Attack stat but only allows the use of a single move."),
+	CHOICE_SCARF(48,0,new Color(133, 172, 220),Item.HELD_ITEM,null,"A curious scarf that boosts the holder's Speed stat but only allows the use of a single move."),
+	CHOICE_SPECS(49,0,new Color(238, 236, 100),Item.HELD_ITEM,null,"A pair of curious glasses that boost the holder's Sp. Atk stat but only allow the use of a single move."),
 	LEFTOVERS(50,0,new Color(227, 96, 91),Item.HELD_ITEM,null,"An item that restores the user's HP gradually throughout a battle."),
 	BLACK_SLUDGE(51,0,new Color(144, 138, 169),Item.HELD_ITEM,null,"If the holder is a Poison type, this sludge will gradually restore its HP. It damages any other type."),
-	EVIOLITE(52,0,new Color(186, 141, 190),Item.HELD_ITEM,null,"A mysterious evolutionary lump that boosts the Defense and Sp. Def stats when held by a Pokemon that can still evolve."), // TODO
+	EVIOLITE(52,0,new Color(186, 141, 190),Item.HELD_ITEM,null,"A mysterious evolutionary lump that boosts the Defense and Sp. Def stats when held by a Pokemon that can still evolve."),
 	EVERSTONE(53,0,new Color(179, 200, 210),Item.HELD_ITEM,null,"A Pokemon holding this peculiar stone is prevented from evolving."),
 	DAMP_ROCK(54,0,new Color(37, 99, 179),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to rain, the rain will persist for longer than usual."),
 	HEAT_ROCK(55,0,new Color(209, 68, 61),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to harsh sunlight, the sunlight will persist for longer than usual."),
 	SMOOTH_ROCK(56,0,new Color(166, 124, 90),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to a sandstorm, the storm will persist for longer than usual."),
 	ICY_ROCK(57,0,new Color(130, 200, 232),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to snow, the snow will persist for longer than usual."),
-	ASSAULT_VEST(58,0,new Color(194, 80, 84),Item.HELD_ITEM,null,"An offensive vest boosts the holder's Sp. Def stat but prevents the use of status moves."), // TODO
-	BRIGHT_POWDER(59,0,new Color(214, 234, 206),Item.HELD_ITEM,null,"A glittery powder that casts a tricky glare which lowers the accuracy of opposing Pokemon's moves."), // TODO
+	ASSAULT_VEST(58,0,new Color(194, 80, 84),Item.HELD_ITEM,null,"An offensive vest boosts the holder's Sp. Def stat but prevents the use of status moves."),
+	BRIGHT_POWDER(59,0,new Color(214, 234, 206),Item.HELD_ITEM,null,"A glittery powder that casts a tricky glare which lowers the accuracy of opposing Pokemon's moves."),
 	EXPERT_BELT(60,0,new Color(94, 90, 97),Item.HELD_ITEM,null,"A well-worn belt that slightly boosts the power of the holder's supereffective moves."),
 	TERRAIN_EXTENDER(61,0,new Color(212, 228, 229),Item.HELD_ITEM,null,"A held item that extends the duration of terrain caused by the holder's move or Ability."),
 	LIFE_ORB(62,0,new Color(184, 72, 144),Item.HELD_ITEM,null,"An orb that boosts the power of the holder's moves, but at the cost of some HP."), // TODO
@@ -103,7 +103,7 @@ public enum Item {
 	ROCKY_HELMET(65,0,new Color(241, 188, 27),Item.HELD_ITEM,null,"If another Pokemon makes direct contact with the holder, that Pokemon will be damaged."),
 	LIGHT_CLAY(66,0,new Color(183, 216, 126),Item.HELD_ITEM,null,"An item that when the holder uses protective moves like Light Screen or Reflect, their effects will last longer than usual."),
 	SOOTHE_BELL(67,0,new Color(198, 199, 202),Item.HELD_ITEM,null,"The comforting chime of this bell calms the holder, making it friendly."),
-	LOADED_DICE(68,0,new Color(144, 232, 16),Item.HELD_ITEM,null,""), // TODO
+	LOADED_DICE(68,0,new Color(144, 232, 16),Item.HELD_ITEM,null,""),
 	SCOPE_LENS(69,0,new Color(192, 183, 54),Item.HELD_ITEM,null,""),
 	WIDE_LENS(70,0,new Color(74, 162, 195),Item.HELD_ITEM,null,""),
 	QUICK_CLAW(71,0,new Color(213, 189, 105),Item.HELD_ITEM,null,""),
@@ -112,18 +112,18 @@ public enum Item {
 	COVERT_CLOAK(74,0,new Color(101, 136, 160),Item.HELD_ITEM,null,""),
 	HEAVY$DUTY_BOOTS(75,0,new Color(97, 97, 97),Item.HELD_ITEM,null,""),
 	FOCUS_BAND(76,0,new Color(232, 80, 80),Item.HELD_ITEM,null,""),
-	KING1S_ROCK(77,0,new Color(224, 206, 58),Item.HELD_ITEM,null,""), // TODO
+	KING1S_ROCK(77,0,new Color(224, 206, 58),Item.HELD_ITEM,null,""),
 	STICKY_BARB(78,0,new Color(109, 177, 196),Item.HELD_ITEM,null,""), // TODO
 	MUSCLE_BAND(79,0,new Color(225, 200, 50),Item.HELD_ITEM,null,""),
 	WISE_GLASSES(80,0,new Color(92, 105, 117),Item.HELD_ITEM,null,""),
 	FOCUS_SASH(81,0,new Color(232, 80, 80),Item.HELD_ITEM,null,""),
-	AIR_BALLOON(82,0,new Color(232, 72, 72),Item.HELD_ITEM,null,""), // TODO
-	POWER_HERB(83,0,new Color(253, 80, 77),Item.HELD_ITEM,null,""), // TODO
-	WHITE_HERB(84,0,new Color(242, 242, 242),Item.HELD_ITEM,null,""), // TODO
+	AIR_BALLOON(82,0,new Color(232, 72, 72),Item.HELD_ITEM,null,""),
+	POWER_HERB(83,0,new Color(253, 80, 77),Item.HELD_ITEM,null,""),
+	WHITE_HERB(84,0,new Color(242, 242, 242),Item.HELD_ITEM,null,""),
 	WEAKNESS_POLICY(85,0,new Color(215, 233, 195),Item.HELD_ITEM,null,""),
-	BLUNDER_POLICY(86,0,new Color(239, 239, 178),Item.HELD_ITEM,null,""), // TODO
-	RED_CARD(87,0,new Color(216, 35, 22),Item.HELD_ITEM,null,""), // TODO
-	THROAT_SPRAY(88,0,new Color(96, 120, 168),Item.HELD_ITEM,null,""), // TODO
+	BLUNDER_POLICY(86,0,new Color(239, 239, 178),Item.HELD_ITEM,null,""),
+	RED_CARD(87,0,new Color(216, 35, 22),Item.HELD_ITEM,null,""),
+	THROAT_SPRAY(88,0,new Color(96, 120, 168),Item.HELD_ITEM,null,""),
 	NULL89(89,0,Color.BLACK,Item.HELD_ITEM,null,""),
 	NULL90(90,0,Color.BLACK,Item.HELD_ITEM,null,""),
 	NULL91(91,0,Color.BLACK,Item.OTHER,null,""),
@@ -265,8 +265,8 @@ public enum Item {
 	PERSIM_BERRY(227,0,new Color(224, 152, 112),Item.BERRY,null,""),
 	LEPPA_BERRY(228,0,new Color(200, 72, 48),Item.BERRY,null,""),
 	ORAN_BERRY(229,0,new Color(80, 160, 240),Item.BERRY,null,""),
-	SITRUS_BERRY(230,0,new Color(248, 232, 104),Item.BERRY,null,""), // TODO heal in bag
-	WIKI_BERRY(231,0,new Color(144, 112, 224),Item.BERRY,null,""), // TODO heal in bag
+	SITRUS_BERRY(230,0,new Color(248, 232, 104),Item.BERRY,null,""),
+	WIKI_BERRY(231,0,new Color(144, 112, 224),Item.BERRY,null,""),
 	OCCA_BERRY(232,0,PType.FIRE.getColor(),Item.BERRY,null,""),
 	PASSHO_BERRY(233,0,PType.WATER.getColor(),Item.BERRY,null,""),
 	WACAN_BERRY(234,0,PType.ELECTRIC.getColor(),Item.BERRY,null,""),
@@ -736,7 +736,7 @@ public enum Item {
 		return result;
 	}
 
-	public void useCalc(Player p) {
+	public void useCalc(Player p, Pokemon[] box) {
 		JPanel calc = new JPanel();
 	    calc.setLayout(new GridBagLayout());
 	    
@@ -776,6 +776,11 @@ public enum Item {
             	}
         	}
         }
+        if (box != null) {
+			for (Pokemon q : box) {
+				if (q != null) userMons.addItem(q.clone());
+			}
+		}
         AutoCompleteDecorator.decorate(userMons);
         
         JComboBox<Pokemon> foeMons = new JComboBox<>();
@@ -1272,5 +1277,9 @@ public enum Item {
 
 	public boolean isPotion() {
 		return getHealAmount() != 0;
+	}
+	
+	public boolean isChoiceItem() {
+		return (getID() >= 47 && getID() <= 49);
 	}
 }
