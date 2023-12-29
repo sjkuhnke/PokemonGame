@@ -813,19 +813,28 @@ public enum Move {
 	    return sb.toString().trim();
 	}
 	
-	public int getNumHits(Pokemon[] team) {
+	public int getNumHits(Pokemon user, Pokemon[] team) {
 		if (this == Move.DOUBLE_SLAP || this == Move.FURY_ATTACK ||this == Move.FURY_SWIPES || this == Move.ICICLE_SPEAR ||
 				this == Move.PIN_MISSILE || this == Move.ROCK_BLAST|| this == Move.SCALE_SHOT || this == Move.SPIKE_CANNON) {
 			int randomNum = (int) (Math.random() * 100) + 1; // Generate a random number between 1 and 100 (inclusive)
-	        if (randomNum <= 35) {
-	            return 2; // 2 hits with 35% probability
-	        } else if (randomNum <= 70) {
-	            return 3; // 3 hits with 35% probability
-	        } else if (randomNum <= 85) {
-	            return 4; // 4 hits with 15% probability
-	        } else {
-	            return 5; // 5 hits with 15% probability
-	        }
+			if (user.item == Item.LOADED_DICE) {
+				if (randomNum <= 50) {
+					return 4;
+				} else {
+					return 5;
+				}
+			} else {
+				if (randomNum <= 35) {
+		            return 2; // 2 hits with 35% probability
+		        } else if (randomNum <= 70) {
+		            return 3; // 3 hits with 35% probability
+		        } else if (randomNum <= 85) {
+		            return 4; // 4 hits with 15% probability
+		        } else {
+		            return 5; // 5 hits with 15% probability
+		        }
+			}
+	        
 		} else if (this == Move.DOUBLE_KICK || this == Move.DRAGON_DARTS || this == Move.DUAL_CHOP || this == Move.DOUBLE_HIT || this == Move.TWINEEDLE || this == Move.POP_POP) {
 			return 2;
 		} else if (this == Move.BEAT_UP) {

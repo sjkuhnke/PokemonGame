@@ -738,7 +738,7 @@ public class Battle extends JFrame {
 		});
 		
 		calcButton.addActionListener(e -> {
-			me.bag.bag[200].useCalc(me);
+			me.bag.bag[200].useCalc(me, null);
 		});
 		
 		/*

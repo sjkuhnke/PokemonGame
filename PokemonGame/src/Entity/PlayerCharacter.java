@@ -861,7 +861,9 @@ public class PlayerCharacter extends Entity {
 					id = 120 + (id * 3);
 					p.flags[11] = true;
 					JOptionPane.showMessageDialog(null, "You adopted a gift dog!");
-					p.catchPokemon(new Pokemon(id, 5, true, false));
+					Pokemon dogP = new Pokemon(id, 5, true, false);
+					dogP.item = Item.SILK_SCARF;
+					p.catchPokemon(dogP);
 				}
 				if (gp.currentMap == 47 && !p.flags[10]) {
 					Random starter = new Random();
@@ -871,7 +873,20 @@ public class PlayerCharacter extends Entity {
 					}
 					id *= 3;
 					id += 1;
+					Item item = null;
+					switch (id) {
+					case 1:
+						item = Item.MIRACLE_SEED;
+						break;
+					case 4:
+						item = Item.CHARCOAL;
+						break;
+					case 7:
+						item = Item.MYSTIC_WATER;
+						break;
+					}
 					Pokemon result = new Pokemon(id, 5, true, false);
+					result.item = item;
 					p.flags[10] = true;
 					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
 					p.catchPokemon(result);
@@ -1908,7 +1923,7 @@ public class PlayerCharacter extends Entity {
 			        	}
 			        	// Calc
 			        	else if (i.getItem() == Item.CALCULATOR) {
-			        		i.getItem().useCalc(p);
+			        		i.getItem().useCalc(p, null);
 			        	}
 			        	
 			        });			     

@@ -63,10 +63,23 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 60, Item.MAX_ELIXIR, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(42, 74, Item.TM26, mapNum); // hidden power
 		gp.obj[mapNum][objIndex] = ObjSetup(15, 57, Item.TM17, mapNum); // solar beam
+		gp.obj[mapNum][objIndex] = ObjSetup(24, 67, Item.BLACK_BELT, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 72, Item.REPEL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 75, Item.GREAT_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(71, 29, Item.TM99, mapNum); // return (need cut)
 		gp.obj[mapNum][objIndex] = ObjSetup(74, 19, Item.BOTTLE_CAP, mapNum);
+		
+		mapNum = 7;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(27, 42, Item.BLACK_GLASSES, mapNum);
+		
+		mapNum = 8;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(27, 45, Item.EXPERT_BELT, mapNum);
+		
+		mapNum = 9;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 33, Item.SHARP_BEAK, mapNum);
 		
 		mapNum = 11;
 		objIndex = 0;
@@ -239,6 +252,14 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(48, 17, Item.ULTRA_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 18, Item.SUPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 42, Item.PARALYZE_HEAL, mapNum);
+		
+		mapNum = 56;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 41, Item.EVERSTONE, mapNum);
+		
+		mapNum = 57;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 41, Item.FLAME_ORB, mapNum);
 		
 		mapNum = 60;
 		objIndex = 0;
@@ -567,6 +588,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(11, 32, 39, 11);
 		gp.npc[mapNum][index] = NPCSetup(12, 32, 45, 12);
 		gp.npc[mapNum][index] = NPCSetup(8, 35, 41, 13);
+		gp.npc[mapNum][index] = NPCSetup(13, 30, 44, 258);
 		
 		mapNum = 9;
 		index = 0;

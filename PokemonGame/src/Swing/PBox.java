@@ -229,6 +229,21 @@ public class PBox extends JFrame {
 		});
 		playerPanel.add(exitButton);
 		
+		JButton calcButton = new JButton("Calc");
+		calcButton.setBounds(555, 80, 60, 60);
+		calcButton.addActionListener(e -> {
+			Pokemon[] cBox = null;
+			if (currentBox == 1) {
+				cBox = me.box1;
+			} else if (currentBox == 2) {
+				cBox = me.box2;
+			} else if (currentBox == 3) {
+				cBox = me.box3;
+			}
+			me.bag.bag[200].useCalc(me, cBox);
+		});
+		playerPanel.add(calcButton);
+		
 		displayBox();
 		
 	}
