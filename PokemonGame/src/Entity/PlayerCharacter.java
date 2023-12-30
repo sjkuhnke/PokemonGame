@@ -203,7 +203,7 @@ public class PlayerCharacter extends Entity {
 				p.steps++;
 			}
 			
-			gp.eHandler.checkEvent();
+			//gp.eHandler.checkEvent(); TODO
 			
 			if (p.surf) {
 				double surfXD =  worldX / (1.0 * gp.tileSize);
@@ -866,27 +866,9 @@ public class PlayerCharacter extends Entity {
 					p.catchPokemon(dogP);
 				}
 				if (gp.currentMap == 47 && !p.flags[10]) {
-					Random starter = new Random();
-					int id = starter.nextInt(3);
-					while (id + 1 == p.starter) {
-						id = starter.nextInt(3);
-					}
-					id *= 3;
-					id += 1;
-					Item item = null;
-					switch (id) {
-					case 1:
-						item = Item.MIRACLE_SEED;
-						break;
-					case 4:
-						item = Item.CHARCOAL;
-						break;
-					case 7:
-						item = Item.MYSTIC_WATER;
-						break;
-					}
-					Pokemon result = new Pokemon(id, 5, true, false);
-					result.item = item;
+					Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
+					Pokemon result = new Pokemon((p.secondStarter * 3) - 2, 5, true, false);
+					result.item = items[p.secondStarter - 1];
 					p.flags[10] = true;
 					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
 					p.catchPokemon(result);

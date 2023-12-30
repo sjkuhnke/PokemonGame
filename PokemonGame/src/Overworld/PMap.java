@@ -481,7 +481,7 @@ public class PMap extends JFrame {
 				PlayerCharacter.currentMapName = "New Minnow Town";
 				return 0;
 			}
-			if (x <= 73 && x > 41 && y > 37) {
+			if (x <= 73 && x > 41 && y > 36) {
 				PlayerCharacter.currentMapName = "Route 22";
 				return 1;
 			}
@@ -493,7 +493,7 @@ public class PMap extends JFrame {
 				PlayerCharacter.currentMapName = "Route 23";
 				return 3;
 			}
-			if (x > 40 && y <= 37) {
+			if (x > 40 && y <= 36) {
 				PlayerCharacter.currentMapName = "Route 42";
 				return 26;
 			}

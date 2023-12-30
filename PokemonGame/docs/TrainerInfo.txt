@@ -1,4 +1,16 @@
 Trainers:
+Route 22------------------------------------------
+
+Trainer Scott 1             Lizish Lv. 7
+
+Scott 1
+Lizish (Lv. 7)        /   Torrent        /   Scratch, Growl, Water Gun, 
+
+Trainer B A                 Hammo Lv. 16
+Trainer B B                 Roselia Lv. 15
+Trainer B C                 Fightorex Lv. 15
+Trainer B D                 Elelamb Lv. 15
+
 Route 23------------------------------------------
 
 Trainer A                   Hammo Lv. 5
@@ -50,18 +62,19 @@ Shookwat (Lv. 12) @ Magnet              /   Static         /   Thundershock, Cha
 Lotad (Lv. 13) @ Big Root               /   Swift Swim     /   Haze, Mega Drain, Absorb, Water Gun
 Magie (Lv. 13) @ Occa Berry             /   Tough Claws    /   Iron Defense, Defense Curl, Quick Attack, Growl
 
+Trainer TN 9                Zubat Lv. 12, Cluuz Lv. 12
 Trainer 1 Gym A             Pigo Lv. 11, Pigo Lv. 12, Pigo Lv. 13
 Trainer 1 Gym B             Hummingspark Lv. 12, Hummingspark Lv. 13
 Trainer 1 Gym C             Pigo Lv. 13, Hummingspark Lv. 14
 Trainer 1 Gym Leader 1      Hummingspark Lv. 16, Zubat Lv. 16, Daray Lv. 16, Ekans-S Lv. 16, Minishoo Lv. 15, Pigonat Lv. 17
 
 1 Gym Leader 1
-Hummingspark (Lv. 16) /   Keen Eye       /   Quick Attack, Whirlwind, Flash Ray, Gust
-Zubat (Lv. 16)        /   Strong Jaw     /   Mega Drain, Supersonic, Aerial Ace, Poison Fang
-Daray (Lv. 16)        /   Unaware        /   Aqua Ring, Supersonic, Wing Attack, Water Pulse
-Ekans-S (Lv. 16)      /   Lightning Rod  /   Gust, Glare, Night Shade, Shadow Sneak
-Minishoo (Lv. 15)     /   Natural Cure   /   Calm Mind, Wish, Magic Blast, Gust
-Pigonat (Lv. 17)      /   Insomnia       /   Sand Attack, Leer, Aerial Ace, Quick Attack
+Hummingspark (Lv. 16) @ Bright Powder   /   Keen Eye       /   Quick Attack, Whirlwind, Flash Ray, Gust
+Zubat (Lv. 16) @ Expert Belt            /   Strong Jaw     /   Mega Drain, Supersonic, Aerial Ace, Poison Fang
+Daray (Lv. 16) @ Leftovers              /   Unaware        /   Aqua Ring, Supersonic, Wing Attack, Water Pulse
+Ekans-S (Lv. 16) @ Oran Berry           /   Lightning Rod  /   Gust, Glare, Night Shade, Shadow Sneak
+Minishoo (Lv. 15) @ Enchanted Amulet    /   Natural Cure   /   Calm Mind, Wish, Magic Blast, Gust
+Pigonat (Lv. 17) @ Scope Lens           /   Insomnia       /   Sand Attack, Leer, Aerial Ace, Quick Attack
 
 Trainer BVA                 Whiskie Lv. 12, Magie Lv. 12
 Trainer BVB                 Vupp Lv. 12, Whiskie Lv. 12
@@ -497,12 +510,4 @@ Route 35------------------------------------------
 Trainer CO                  Megawatt Lv. 57, Thunderzap Lv. 58, Superchargo Lv. 57, Soldrota-E Lv. 57, Suvinero Lv. 57
 Trainer CP                  Conkeldurr Lv. 58, Whiskeroar Lv. 58
 Trainer CQ                  Blastflames Lv. 58, Drageye Lv. 58
-
-Route 22------------------------------------------
-
-Trainer Scott 1             Lizish Lv. 7
-
-Scott 1
-Lizish (Lv. 7)        /   Torrent        /   Scratch, Growl, Water Gun, 
-
 

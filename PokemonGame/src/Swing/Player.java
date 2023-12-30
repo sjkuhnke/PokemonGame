@@ -58,6 +58,9 @@ public class Player implements Serializable{
 	public boolean surf;
 	public boolean lavasurf;
 	public int grustCount;
+	public int scottItem;
+	public boolean[] resistBerries = new boolean[20];
+	public int secondStarter;
 	
 	public Player(GamePanel gp) {
 		team = new Pokemon[6];
