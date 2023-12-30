@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -90,7 +91,7 @@ public class Main {
 	        }
 	        gamePanel.player.worldX = gamePanel.player.p.getPosX();
 	        gamePanel.player.worldY = gamePanel.player.p.getPosY();
-	        gamePanel.currentMap = gamePanel.player.p.currentMap;
+	        gamePanel.currentMap = 11; //gamePanel.player.p.currentMap; TODO
 	        if (gamePanel.player.p.surf) {
 	        	for (Integer i : gamePanel.tileM.getWaterTiles()) {
 	        		gamePanel.tileM.tile[i].collision = false;
@@ -154,6 +155,17 @@ public class Main {
 	        } else if (gamePanel.player.p.starter == 3) {
 	            gamePanel.player.p.catchPokemon(new Pokemon(7, 5, true, false));
 	        }
+	        Random random = new Random();
+	        int secondStarter = -1;
+	        do {
+	        	secondStarter = random.nextInt(3) + 1;
+	        } while (secondStarter == gamePanel.player.p.starter);
+	        gamePanel.player.p.secondStarter = secondStarter;
+	        int secondItem = -1;
+	        do {
+	        	secondItem = random.nextInt(3) + 1;
+	        } while (secondItem == gamePanel.player.p.secondStarter);
+	        gamePanel.player.p.scottItem = secondItem;
 	    }
 		
 		PMap.getLoc(gamePanel.currentMap, (int) Math.round(gamePanel.player.worldX * 1.0 / 48), (int) Math.round(gamePanel.player.worldY * 1.0 / 48));
@@ -228,9 +240,29 @@ public class Main {
 	}
 
 	private static void modifyTrainers(GamePanel gp) {
+		Item scottItem = null;
+		Item fredItem = null;
+		if (gp.player.p.secondStarter != 0) {
+			Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
+			items[gp.player.p.secondStarter - 1] = null;
+			Random random = new Random();
+			int scottIndex = -1;
+			do {
+				scottIndex = random.nextInt(3);
+			} while (items[scottIndex] == null);
+			scottItem = items[scottIndex];
+			items[scottIndex] = null;
+			fredItem = null;
+			for (int i = 0; i < items.length; i++) {
+				if (items[i] != null) {
+					fredItem = items[i];
+					break;
+				}
+			}
+		}
 		if (gp.player.p.starter == 1) {
-			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(7, 7, false, true)}, 400, 1);
-			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(5, 20, false, true)}, 400);
+			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(7, 7, false, true)}, 400, scottItem, 1);
+			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(5, 20, false, true)}, 400, fredItem);
 			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(8, 22, false, true), new Pokemon(166, 22, false, true)}, 400, Item.HM02, 4);
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(5, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
 			trainers[185] = new Trainer("Scott 3", new Pokemon[]{new Pokemon(77, 47, false, true), new Pokemon(130, 47, false, true), new Pokemon(9, 47, false, true), new Pokemon(37, 46, false, true), new Pokemon(167, 48, false, true)}, 400, 15);
@@ -238,8 +270,8 @@ public class Main {
 			trainers[242] = new Trainer("Scott 4", new Pokemon[]{new Pokemon(77, 59, false, true), new Pokemon(130, 60, false, true), new Pokemon(189, 58, false, true), new Pokemon(9, 60, false, true), new Pokemon(37, 59, false, true), new Pokemon(168, 61, false, true)}, 400, 21);
 		}
 		else if (gp.player.p.starter == 2) {
-			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(1, 7, false, true)}, 400, 1);
-			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(8, 20, false, true)}, 400);
+			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(1, 7, false, true)}, 400, scottItem, 1);
+			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(8, 20, false, true)}, 400, fredItem);
 			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(2, 22, false, true), new Pokemon(166, 22, false, true)}, 400, Item.HM02, 4);
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(8, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
 			trainers[185] = new Trainer("Scott 3", new Pokemon[]{new Pokemon(77, 47, false, true), new Pokemon(130, 47, false, true), new Pokemon(3, 47, false, true), new Pokemon(37, 46, false, true), new Pokemon(167, 48, false, true)}, 400, 15);
@@ -247,8 +279,8 @@ public class Main {
 			trainers[242] = new Trainer("Scott 4", new Pokemon[]{new Pokemon(77, 59, false, true), new Pokemon(130, 60, false, true), new Pokemon(189, 58, false, true), new Pokemon(3, 60, false, true), new Pokemon(37, 59, false, true), new Pokemon(168, 61, false, true)}, 400, 21);
 		}
 		else if (gp.player.p.starter == 3) {
-			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(4, 7, false, true)}, 400, 1);
-			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(2, 20, false, true)}, 400);
+			trainers[0] = new Trainer("Scott 1", new Pokemon[]{new Pokemon(4, 7, false, true)}, 400, scottItem, 1);
+			trainers[34] = new Trainer("Fred 1", new Pokemon[]{new Pokemon(78, 18, false, true), new Pokemon(2, 20, false, true)}, 400, fredItem);
 			trainers[55] = new Trainer("Scott 2", new Pokemon[]{new Pokemon(130, 21, false, true), new Pokemon(5, 22, false, true), new Pokemon(166, 22, false, true)}, 400, Item.HM02, 4);
 			trainers[89] = new Trainer("Fred 2", new Pokemon[]{new Pokemon(98, 29, false, true), new Pokemon(210, 30, false, true), new Pokemon(2, 30, false, true), new Pokemon(79, 31, false, true)}, 400, 5);
 			trainers[185] = new Trainer("Scott 3", new Pokemon[]{new Pokemon(77, 47, false, true), new Pokemon(130, 47, false, true), new Pokemon(6, 47, false, true), new Pokemon(37, 46, false, true), new Pokemon(167, 48, false, true)}, 400, 15);
@@ -623,8 +655,13 @@ public class Main {
 				new Trainer("Exp. Trainer", new Pokemon[]{new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true)}, 100),
 				new Trainer("BP1", new Pokemon[] {new Pokemon(17, 48, false, true), new Pokemon(21, 47, false, true), new Pokemon(93, 48, false, true), new Pokemon(89, 48, false, true), new Pokemon(161, 47, false, true), new Pokemon(188, 48, false, true)}, 100),
 				new Trainer("TN 9", new Pokemon[] {new Pokemon(153, 12, false, true), new Pokemon(160, 12, false, true)}, 100),
-//				new Trainer("Z", new Pokemon[]{new Pokemon(-75, 26, false, true)}, 100),
-//				new Trainer("AA", new Pokemon[]{new Pokemon(-97, 19, false, true), new Pokemon(-98, 26, false, true)}, 100),
+				new Trainer("B A", new Pokemon[] {new Pokemon(16, 16, false, true)}, 100),
+				new Trainer("B B", new Pokemon[] {new Pokemon(30, 15, false, true)}, 100), // 260
+				new Trainer("B C", new Pokemon[] {new Pokemon(57, 15, false, true)}, 100),
+				new Trainer("B D", new Pokemon[] {new Pokemon(114, 15, false, true)}, 100),
+				new Trainer("B E", new Pokemon[] {new Pokemon(174, 13, false, true), new Pokemon(71, 11, false, true)}, 100),
+				new Trainer("YA", new Pokemon[]{new Pokemon(101, 9, false, true)}, 100),
+				new Trainer("YB", new Pokemon[]{new Pokemon(184, 8, false, true), new Pokemon(190, 9, false, true)}, 100), // 265
 //				new Trainer("BB", new Pokemon[]{new Pokemon(-41, 26, false, true)}, 100),
 //				new Trainer("CC", new Pokemon[]{new Pokemon(-46, 25, false, true), new Pokemon(-47, 31, false, true)}, 100),
 //				new Trainer("CA", new Pokemon[]{new Pokemon(-18, 10, false, true), new Pokemon(-21, 10, false, true)}, 100),

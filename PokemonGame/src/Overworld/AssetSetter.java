@@ -1,5 +1,7 @@
 package Overworld;
 
+import java.util.Random;
+
 import Entity.Entity;
 import Entity.NPC_Block;
 import Entity.NPC_Clerk;
@@ -45,8 +47,8 @@ public class AssetSetter {
 	public void setObject() {
 		int mapNum = 0;
 		
-		gp.obj[mapNum][objIndex] = ObjSetup(60, 45, Item.POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(2, 54, Item.ANTIDOTE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 45, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(9, 54, Item.ANTIDOTE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(25, 31, Item.POKEBALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(89, 24, Item.ELIXIR, mapNum);
 		
@@ -55,6 +57,12 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(80, 18, Item.PP_UP, mapNum);
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(71, 32, Item.TM98, mapNum); // flip turn
+		
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 40, Item.PECHA_BERRY, mapNum, 15, 30);
+		gp.obj[mapNum][objIndex] = ObjSetup(59, 36, Item.CHESTO_BERRY, mapNum, 15, 30);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 40, Item.CHERI_BERRY, mapNum, 15, 30);
+		
+		gp.obj[mapNum][objIndex] = ObjSetup(13, 45, Item.ASPEAR_BERRY, mapNum, 15, 30);
 		
 		mapNum = 4;
 		objIndex = 0;
@@ -68,6 +76,10 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 75, Item.GREAT_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(71, 29, Item.TM99, mapNum); // return (need cut)
 		gp.obj[mapNum][objIndex] = ObjSetup(74, 19, Item.BOTTLE_CAP, mapNum);
+		
+		gp.obj[mapNum][objIndex] = ObjSetup(70, 48, Item.CHERI_BERRY, mapNum, 15, 30);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 80, Item.ORAN_BERRY, mapNum, 10, 20);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 67, Item.BRIGHT_POWDER, mapNum);
 		
 		mapNum = 7;
 		objIndex = 0;
@@ -155,6 +167,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(94, 15, Item.EUPHORIAN_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 18, Item.BURN_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(82, 14, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(66, 14, Item.RAWST_BERRY, mapNum, 15, 30);
 		
 		mapNum = 24;
 		objIndex = 0;
@@ -486,6 +499,12 @@ public class AssetSetter {
 		mapNum = 117;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(59, 76, Item.TM07, mapNum); // focus blast
+		
+		mapNum = 119;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(21, 65, Item.QUICK_CLAW, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(20, 79, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 76, Item.HARD_STONE, mapNum);
 	}
 	
 	public void setNPC() {
@@ -527,6 +546,11 @@ public class AssetSetter {
 			gp.npc[mapNum][index++] = null;
 		}
 		
+		gp.npc[mapNum][index] = NPCSetup(3, 60, 37, 259);
+		gp.npc[mapNum][index] = NPCSetup(4, 55, 40, 260);
+		gp.npc[mapNum][index] = NPCSetup(6, 55, 37, 261);
+		gp.npc[mapNum][index] = NPCSetup(4, 63, 40, 262);
+		
 		index = 0;
 		
 		// Nurses/PCs
@@ -561,7 +585,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(4, 23, 65, 19); // make way lower levels
 		gp.npc[mapNum][index] = NPCSetup(4, 32, 68, 20); // make way lower levels
 		gp.npc[mapNum][index] = NPCSetup(4, 34, 76, 21); // make way lower levels
-		gp.npc[mapNum][index] = NPCSetup(4, 45, 75, 22); // make way lower levels
+		gp.npc[mapNum][index] = NPCSetup(4, 45, 76, 22); // make way lower levels
 		gp.npc[mapNum][index] = NPCSetup(4, 15, 70, 103);
 		gp.npc[mapNum][index] = NPCSetup(4, 11, 70, 23);
 		
@@ -570,7 +594,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(5, 76, 30, 100);
 		gp.npc[mapNum][index] = NPCSetup(6, 72, 28, 101);
 		
-//		gp.npc[mapNum][index] = NPCSetup(4, 15, 70, 23);
+		gp.npc[mapNum][index] = NPCSetup(4, 44, 81, 263);
 //		gp.npc[mapNum][index] = NPCSetup(4, 15, 70, 23);
 //		gp.npc[mapNum][index] = NPCSetup(4, 15, 70, 23);
 		
@@ -1091,6 +1115,11 @@ public class AssetSetter {
 		mapNum = 118;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(31, 41, "Hi! I can revive fossils for you!", true);
+		
+		mapNum = 119;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(4, 32, 79, 264);
+		gp.npc[mapNum][index] = NPCSetup(5, 37, 76, 265);
 	}
 	
 	public void setInteractiveTile(int map) {
@@ -1451,6 +1480,9 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(38, 72, 3, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 72, 3, 2, mapNum, map);
 		
+		mapNum = 119;
+		iIndex = 0;
+		
 	}
 
 	public void updateNPC() {
@@ -1623,7 +1655,7 @@ public class AssetSetter {
 		return result;
 	}
 	
-	private ItemObj ObjSetup(int x, int y, Item item, int mapNum, int amt) {
+	private ItemObj ObjSetup(int x, int y, Item item, int mapNum, int lower, int upper) {
 		if (gp.player.p.itemsCollected.length != gp.obj.length || gp.player.p.itemsCollected[1].length != gp.obj[1].length) {
 			gp.player.p.updateItems(gp.obj.length, gp.obj[1].length);
 		}
@@ -1637,13 +1669,17 @@ public class AssetSetter {
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;
 		result.item = item;
+		int amt = lower;
+		if (lower != upper) amt = new Random().nextInt(upper - lower + 1) + lower;
 		result.count = amt;
 		
 		objIndex++;
 		
 		return result;
-		
-		
+	}
+	
+	private ItemObj ObjSetup(int x, int y, Item item, int mapNum, int amt) {
+		return ObjSetup(x, y, item, mapNum, amt, amt);
 	}
 	
 	private ItemObj ObjSetup(int x, int y, Item item, int mapNum) {

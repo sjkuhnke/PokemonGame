@@ -36,11 +36,11 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	
 	// SETTINGS
 	final int originalTileSize = 16;
-	final int scale = 3; // TODO: 3, 16, 12
+	final int scale = 1; // 3, 16, 12
 	
 	public final int tileSize = originalTileSize * scale;
-	public final int maxScreenCol = 16; // 48
-	public final int maxScreenRow = 12; // 36
+	public final int maxScreenCol = 48; // 48
+	public final int maxScreenRow = 36; // 36
 	public final int screenWidth = tileSize * maxScreenCol;
 	public final int screenHeight = tileSize * maxScreenRow;
 	

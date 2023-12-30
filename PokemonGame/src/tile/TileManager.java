@@ -522,12 +522,48 @@ public class TileManager {
 		setup(391, false);
 		setup(392, false);
 		setup(393, false);
-//		setup(394, true);
-//		setup(395, true);
-//		setup(396, true);
-//		setup(397, true);
-//		setup(398, true);
-//		setup(399, true);
+		
+		setup(394, true);
+		setup(395, true);
+		setup(396, true);
+		setup(397, true);
+		setup(398, true);
+		setup(399, true);
+		setup(400, true);
+		setup(401, true);
+		setup(402, true);
+		setup(403, true);
+		setup(404, true);
+		setup(405, true);
+		setup(406, false);
+		setup(407, true);
+		setup(408, true);
+		setup(409, true);
+		setup(410, false);
+		setup(411, false);
+		setup(412, false);
+		
+		setup(413, true);
+		setup(414, true);
+		
+		setup(415, false);
+		setup(416, false);
+		setup(417, false);
+		setup(418, true);
+		setup(419, true);
+		setup(420, true);
+		setup(421, true);
+		setup(422, true);
+		setup(423, true);
+		setup(424, true);
+		setup(425, true);
+		setup(426, false);
+		setup(427, true);
+		setup(428, true);
+		setup(429, true);
+		setup(430, false);
+		setup(431, false);
+		setup(432, false);
 
 		try {
 			tile[7] = new GrassTile();
