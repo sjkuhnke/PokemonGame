@@ -1,16 +1,4 @@
 Trainers:
-Route 22------------------------------------------
-
-Trainer Scott 1             Lizish Lv. 7
-
-Scott 1
-Lizish (Lv. 7)        /   Torrent        /   Scratch, Growl, Water Gun, 
-
-Trainer B A                 Hammo Lv. 16
-Trainer B B                 Roselia Lv. 15
-Trainer B C                 Fightorex Lv. 15
-Trainer B D                 Elelamb Lv. 15
-
 Route 23------------------------------------------
 
 Trainer A                   Hammo Lv. 5
@@ -27,6 +15,19 @@ Trainer BW1                 Pyrator Lv. 45, Ninjakik Lv. 44
 Trainer BW2                 Pyrator-S Lv. 45, Leavanny Lv. 45
 Trainer BX                  Electroram Lv. 46, Vinnie Lv. 44, Thunderzap Lv. 45
 
+Route 22------------------------------------------
+
+Trainer B A                 Hammo Lv. 16
+Trainer B B                 Roselia Lv. 15
+Trainer B C                 Fightorex Lv. 15
+Trainer B D                 Elelamb Lv. 15
+Trainer B F                 Bluebunn Lv. 21
+Trainer Scott 1             Lizish Lv. 7
+
+Scott 1
+Lizish (Lv. 7) @ Mystic Water           /   Protean        /   Scratch, Growl, Water Gun, 
+
+
 Route 24 (pt. 1)----------------------------------
 
 Trainer E                   Sheabear Lv. 16, Poov Lv. 16
@@ -36,6 +37,7 @@ Trainer H                   Sapwin Lv. 10
 Trainer I                   Bluebunn Lv. 10, Pebblepup Lv. 11
 Trainer K                   Twigle Lv. 15, Lagma Lv. 15, Lizish Lv. 15
 Trainer J1                  Ralts Lv. 15, Hummingspark Lv. 16
+Trainer B E                 Cleffa Lv. 13, Froshrog Lv. 11
 
 Route 36------------------------------------------
 
@@ -73,7 +75,7 @@ Hummingspark (Lv. 16) @ Bright Powder   /   Keen Eye       /   Quick Attack, Whi
 Zubat (Lv. 16) @ Expert Belt            /   Strong Jaw     /   Mega Drain, Supersonic, Aerial Ace, Poison Fang
 Daray (Lv. 16) @ Leftovers              /   Unaware        /   Aqua Ring, Supersonic, Wing Attack, Water Pulse
 Ekans-S (Lv. 16) @ Oran Berry           /   Lightning Rod  /   Gust, Glare, Night Shade, Shadow Sneak
-Minishoo (Lv. 15) @ Enchanted Amulet    /   Natural Cure   /   Calm Mind, Wish, Magic Blast, Gust
+Minishoo (Lv. 15) @ Enchanted Amulet    /   Serene Grace   /   Calm Mind, Wish, Magic Blast, Gust
 Pigonat (Lv. 17) @ Scope Lens           /   Insomnia       /   Sand Attack, Leer, Aerial Ace, Quick Attack
 
 Trainer BVA                 Whiskie Lv. 12, Magie Lv. 12
@@ -96,8 +98,8 @@ Gelb Forest---------------------------------------
 Trainer Fred 1              Otterpor Lv. 18, Maguide Lv. 20
 
 Fred 1
-Otterpor (Lv. 18)     /   Water Veil     /   Baby-Doll Eyes, Detect, Aqua Ring, Razor Shell
-Maguide (Lv. 20)      /   Blaze          /   Incinerate, Headbutt, Flame Wheel, Smokescreen
+Otterpor (Lv. 18) @ Leftovers           /   Water Veil     /   Baby-Doll Eyes, Detect, Aqua Ring, Razor Shell
+Maguide (Lv. 20) @ Charcoal             /   Dry Skin       /   Incinerate, Headbutt, Flame Wheel, Smokescreen
 
 Trainer Q                   Inkay Lv. 18, Psycorb Lv. 19
 Trainer R                   Grondor Lv. 19
@@ -149,9 +151,9 @@ Sicab Office (2A)---------------------------------
 Trainer Scott 2             Ninjask Lv. 21, Iguaton Lv. 22, Rhypo Lv. 22
 
 Scott 2
-Ninjask (Lv. 21)      /   Speed Boost    /   False Swipe, Mud-Slap, Fury Cutter, Harden
-Iguaton (Lv. 22)      /   Torrent        /   Mud Sport, Bite, Mean Look, Bubblebeam
-Rhypo (Lv. 22)        /   Rattled        /   Fury Attack, Rapid Spin, Growl, Tail Whip
+Ninjask (Lv. 21) @ Focus Sash           /   Speed Boost    /   False Swipe, Mud-Slap, Fury Cutter, Harden
+Iguaton (Lv. 22) @ Sitrus Berry         /   Protean        /   Mud Sport, Bite, Mean Look, Bubblebeam
+Rhypo (Lv. 22) @ Passho Berry           /   Rattled        /   Fury Attack, Rapid Spin, Growl, Tail Whip
 
 Trainer O1                  Glittleshoo Lv. 28, Dragee Lv. 29, Shomp Lv. 28
 
@@ -170,12 +172,12 @@ Trainer 2 Gym J             Pigonat Lv. 22
 Trainer 2 Gym Leader 1      Hammo Lv. 24, Whiskie Lv. 24, Zorua Lv. 24, Flameruff Lv. 24, Tigrette Lv. 24, Dualbear Lv. 25
 
 2 Gym Leader 1
-Hammo (Lv. 24)        /   Mouthwater     /   Super Fang, Bite, Headbutt, Bulk Up
-Whiskie (Lv. 24)      /   Guts           /   Power-Up Punch, Fury Swipes, Double Team, Charm
-Zorua (Lv. 24)        /   Adaptability   /   Will-O-Wisp, Hex, Round, Taunt
-Flameruff (Lv. 24)    /   Flash Fire     /   Super Fang, Metal Claw, Flame Wheel, Body Slam
-Tigrette (Lv. 24)     /   Simple         /   Light Beam, Flash Cannon, Thunderbolt, Tail Glow
-Dualbear (Lv. 25)     /   Adaptability   /   Headbutt, Hypnosis, Feint Attack, Swift
+Hammo (Lv. 24) @ Eviolite               /   Mouthwater     /   Super Fang, Bite, Headbutt, Bulk Up
+Whiskie (Lv. 24) @ Focus Band           /   Guts           /   Power-Up Punch, Fury Swipes, Double Team, Charm
+Zorua (Lv. 24) @ Colbur Berry           /   Adaptability   /   Will-O-Wisp, Hex, Round, Taunt
+Flameruff (Lv. 24) @ Muscle Band        /   Flash Fire     /   Super Fang, Metal Claw, Flame Wheel, Body Slam
+Tigrette (Lv. 24) @ Starf Berry         /   Simple         /   Light Beam, Flash Cannon, Thunderbolt, Tail Glow
+Dualbear (Lv. 25) @ Expert Belt         /   Adaptability   /   Headbutt, Hypnosis, Feint Attack, Swift
 
 
 Route 40------------------------------------------
@@ -188,6 +190,8 @@ Trainer SD                  Zubat Lv. 8
 Mt. Splinkty (1A)---------------------------------
 
 Trainer MS A                Dualmoose Lv. 29
+Trainer MS E                Consodust Lv. 31, Grondor Lv. 31
+Trainer MS F                Hootowl Lv. 30, Bouncerog Lv. 31
 
 Mt. Splinkty (2B)---------------------------------
 
@@ -216,10 +220,10 @@ Kleine Village------------------------------------
 Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Maguide Lv. 30, Psylotter Lv. 31
 
 Fred 2
-Flamehox (Lv. 29)     /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
-Gyarados-E (Lv. 30)   /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
-Maguide (Lv. 30)      /   Blaze          /   Take Down, Bulldoze, Lava Plume, Iron Defense
-Psylotter (Lv. 31)    /   Water Veil     /   Psybeam, Rollout, Confuse Ray, Hypnosis
+Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
+Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
+Maguide (Lv. 30) @ Expert Belt          /   Dry Skin       /   Take Down, Bulldoze, Lava Plume, Iron Defense
+Psylotter (Lv. 31) @ Wide Lens          /   Water Veil     /   Psybeam, Rollout, Confuse Ray, Hypnosis
 
 Trainer RR A                Froshrog Lv. 30, Spheal Lv. 31
 Trainer RR B                Treewin Lv. 30, Roselia Lv. 31
@@ -231,12 +235,12 @@ Trainer 3 Gym D             Centatle Lv. 31, Millistone Lv. 31
 Trainer 3 Gym Leader 1      Millistone Lv. 31, Vikavolt Lv. 32, Leavanny Lv. 32, Swordik Lv. 32, Opwing Lv. 32, Frosmoth Lv. 33
 
 3 Gym Leader 1
-Millistone (Lv. 31)   /   Compound Eyes  /   Fell Stinger, Aqua Tail, Iron Tail, Stealth Rock
-Vikavolt (Lv. 32)     /   Levitate       /   Sticky Web, Thunderbolt, Bug Buzz, Thunder Wave
-Leavanny (Lv. 32)     /   Sharpness      /   Leaf Blade, X-Scissor, Fell Stinger, Swords Dance
-Swordik (Lv. 32)      /   Hyper Cutter   /   First Impression, U-Turn, Close Combat, Rock Slide
-Opwing (Lv. 32)       /   Technician     /   Bug Bite, Moonlight, Feint Attack, Fell Stinger
-Frosmoth (Lv. 33)     /   Icy Scales     /   Aurora Beam, Bug Buzz, Snowscape, Quiver Dance
+Millistone (Lv. 31) @ Wiki Berry        /   Compound Eyes  /   Fell Stinger, Iron Tail, Stone Edge, Stealth Rock
+Vikavolt (Lv. 32) @ Wise Glasses        /   Levitate       /   Sticky Web, Thunderbolt, Bug Buzz, Thunder Wave
+Leavanny (Lv. 32) @ Coba Berry          /   Sharpness      /   Leaf Blade, X-Scissor, Fell Stinger, Swords Dance
+Swordik (Lv. 32) @ Life Orb             /   Hyper Cutter   /   First Impression, U-Turn, Close Combat, Rock Slide
+Opwing (Lv. 32) @ Lum Berry             /   Technician     /   Bug Bite, Moonlight, Feint Attack, Fell Stinger
+Frosmoth (Lv. 33) @ Occa Berry          /   Icy Scales     /   Aurora Beam, Bug Buzz, Snowscape, Quiver Dance
 
 
 Route 41------------------------------------------
@@ -253,6 +257,10 @@ Trainer DD                  Millistone Lv. 46
 Trainer DE                  Ninjakik Lv. 46
 Trainer DF                  Roselia Lv. 46, Roserade Lv. 45
 Trainer DG                  Ramant Lv. 45, Bushewe Lv. 45
+
+Route 28------------------------------------------
+
+Trainer B G                 Nebulimb Lv. 31, Rockmite Lv. 30
 
 Route 29------------------------------------------
 
@@ -342,7 +350,7 @@ Trainer Scott 3             Hatterene Lv. 47, Ninjask Lv. 47, Dragave Lv. 47, Vi
 Scott 3
 Hatterene (Lv. 47)    /   Magic Bounce   /   Magic Reflect, Psychic, Magic Tomb, Calm Mind
 Ninjask (Lv. 47)      /   Speed Boost    /   Swords Dance, Leech Life, Acrobatics, Poison Jab
-Dragave (Lv. 47)      /   Torrent        /   Hammer Arm, Dragon Rush, Channeling Blow, Liquidation
+Dragave (Lv. 47)      /   Protean        /   Hammer Arm, Dragon Rush, Channeling Blow, Liquidation
 Vikavolt (Lv. 46)     /   Levitate       /   Discharge, Guillotine, Bug Buzz, Silver Wind
 Rhynee (Lv. 48)       /   Sand Stream    /   Stone Edge, Body Press, Horn Drill, Magnitude
 
@@ -422,7 +430,7 @@ Fred 3
 Blastflames (Lv. 56)  /   Levitate       /   Iron Blast, Dragon Pulse, Flamethrower, Hurricane
 Gyarados-E (Lv. 56)   /   Volt Vortex    /   Bounce, Volt Tackle, Comet Crash, Waterfall
 Wormatron-S (Lv. 57)  /   Adaptability   /   Sucker Punch, Breaking Swipe, Earth Power, Earthquake
-Magron (Lv. 57)       /   Blaze          /   Heat Crash, Earth Power, Aura Sphere, Steel Beam
+Magron (Lv. 57)       /   Dry Skin       /   Heat Crash, Earth Power, Aura Sphere, Steel Beam
 Stellarock (Lv. 56)   /   Gravitational Pull/   Cosmic Power, Stone Edge, Meteor Mash, Comet Crash
 Psylotter (Lv. 58)    /   Water Veil     /   Blizzard, Light Screen, Hydro Pump, Psychic
 
@@ -474,7 +482,7 @@ Scott 4
 Hatterene (Lv. 59)    /   Magic Bounce   /   Magic Tomb, Nuzzle, Reflect, Light Screen
 Ninjask (Lv. 60)      /   Speed Boost    /   Swords Dance, Leech Life, Baton Pass, Protect
 Drageye (Lv. 58)      /   Multiscale     /   Prismatic Laser, Dragon Pulse, Thunderbolt, Rest
-Dragave (Lv. 60)      /   Torrent        /   Double-Edge, Dragon Rush, Bulk Up, Close Combat
+Dragave (Lv. 60)      /   Protean        /   Double-Edge, Dragon Rush, Bulk Up, Close Combat
 Vikavolt (Lv. 59)     /   Levitate       /   Photon Geyser, Bug Buzz, Volt Switch, Sticky Web
 Rhypolar (Lv. 61)     /   Sand Stream    /   Earthquake, Spikes, Smack Down, Body Press
 
@@ -510,4 +518,9 @@ Route 35------------------------------------------
 Trainer CO                  Megawatt Lv. 57, Thunderzap Lv. 58, Superchargo Lv. 57, Soldrota-E Lv. 57, Suvinero Lv. 57
 Trainer CP                  Conkeldurr Lv. 58, Whiskeroar Lv. 58
 Trainer CQ                  Blastflames Lv. 58, Drageye Lv. 58
+
+Route 43------------------------------------------
+
+Trainer YA                  Tiowoo Lv. 9
+Trainer YB                  Tinkie Lv. 8, Blobmo Lv. 9
 

@@ -59,7 +59,7 @@ public class Player implements Serializable{
 	public boolean lavasurf;
 	public int grustCount;
 	public int scottItem;
-	public boolean[] resistBerries = new boolean[20];
+	public Item[] resistBerries;
 	public int secondStarter;
 	
 	public Player(GamePanel gp) {

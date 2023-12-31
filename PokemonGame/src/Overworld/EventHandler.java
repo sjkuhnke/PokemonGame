@@ -26,10 +26,10 @@ public class EventHandler {
 		while(map < gp.maxMap && col < gp.maxWorldCol && row < gp.maxWorldRow) {
 			
 			eventRect[map][col][row] = new EventRect();
-			eventRect[map][col][row].x = 8;
-			eventRect[map][col][row].y = 8;
-			eventRect[map][col][row].width = 32;
-			eventRect[map][col][row].height = 32;
+			eventRect[map][col][row].x = gp.tileSize / 6;
+			eventRect[map][col][row].y = gp.tileSize / 6;
+			eventRect[map][col][row].width = gp.tileSize * 2 / 3;
+			eventRect[map][col][row].height = gp.tileSize * 2 / 3;
 			eventRect[map][col][row].eventRectDefaultX = eventRect[map][col][row].x;
 			eventRect[map][col][row].eventRectDefaultY = eventRect[map][col][row].y;
 			
@@ -101,12 +101,12 @@ public class EventHandler {
 			// Route 25 gate
 			if (hit(11,24,29)) teleport(12, 31, 45,false);
 			if (hit(12,31,46)) teleport(11, 24, 30,false);
-			if (hit(12,31,33)) teleport(13, 25, 89,false);
-			if (hit(13,25,90)) teleport(12, 31, 34,false);
+			if (hit(12,31,33)) teleport(13, 28, 89,false);
+			if (hit(13,28,90)) teleport(12, 31, 34,false);
 			
 			// Energy Plant A
-			if (hit(13,16,85)) teleport(14, 31, 49,false);
-			if (hit(14,31,50)) teleport(13, 16, 86,false);
+			if (hit(13,19,85)) teleport(14, 31, 49,false);
+			if (hit(14,31,50)) teleport(13, 19, 86,false);
 			if (hit(14,21,37)) teleport(15, 50, 40,false);
 			if (hit(15,51,40)) teleport(14, 22, 37,false);
 			
@@ -115,8 +115,8 @@ public class EventHandler {
 			if (hit(16,31,46)) teleport(15, 31, 9,false);
 			
 			// Office
-			if (hit(13,45,57)) teleport(17, 53, 56,false);
-			if (hit(17,53,57)) teleport(13, 45, 58,false);
+			if (hit(13,48,57)) teleport(17, 53, 56,false);
+			if (hit(17,53,57)) teleport(13, 48, 58,false);
 			
 			if (hit(17,52,46)) gp.aSetter.updateNPC();
 			if (hit(17,53,46)) gp.aSetter.updateNPC();
@@ -128,20 +128,20 @@ public class EventHandler {
 			if (hit(18,41,51)) teleport(17, 57, 53,false);
 			
 			// Sicab PC
-			if (hit(13,35,85)) teleport(19, 31, 45,false);
-			if (hit(19,31,46)) teleport(13, 35, 86,false);
+			if (hit(13,38,85)) teleport(19, 31, 45,false);
+			if (hit(19,31,46)) teleport(13, 38, 86,false);
 			
 			// Sicab Shop
-			if (hit(13,9,85)) teleport(20, 31, 45,false);
-			if (hit(20,31,46)) teleport(13, 9, 86,false);
+			if (hit(13,12,85)) teleport(20, 31, 45,false);
+			if (hit(20,31,46)) teleport(13, 12, 86,false);
 			
 			// Sicab Fishing House
-			if (hit(13,41,75)) teleport(32, 31, 45,false);
-			if (hit(32,31,46)) teleport(13, 41, 76,false);
+			if (hit(13,44,75)) teleport(32, 31, 45,false);
+			if (hit(32,31,46)) teleport(13, 44, 76,false);
 			
 			// Gym 2
-			if (hit(13,12,56)) teleport(21, 63, 62,false);
-			if (hit(21,63,63)) teleport(13, 12, 57,false);
+			if (hit(13,15,56)) teleport(21, 63, 62,false);
+			if (hit(21,63,63)) teleport(13, 15, 57,false);
 			
 			if (hit(21,54,61)) gp.iTile[21][0] = null;
 			if (hit(21,74,58)) gp.iTile[21][1] = null;
@@ -156,8 +156,8 @@ public class EventHandler {
 			if (hit(22,76,7)) teleport(23, 31, 45,false);
 			
 			// Route 26 to Mt. Splinkty
-			if (hit(13,24,5)) teleport(24, 56, 84,false);
-			if (hit(24,56,85)) teleport(13, 24, 6,false);
+			if (hit(13,27,5)) teleport(24, 56, 84,false);
+			if (hit(24,56,85)) teleport(13, 27, 6,false);
 			
 			// Mt. Splinkty
 			if (hit(24,73,63)) teleport(25, 73, 69,true);
@@ -272,11 +272,11 @@ public class EventHandler {
 			if (hit(58,31,46)) teleport(4, 63, 63,false);
 			
 			// Sicab City Houses
-			if (hit(13,46,85)) teleport(59, 31, 45,false);
-			if (hit(59,31,46)) teleport(13, 46, 86,false);
+			if (hit(13,49,85)) teleport(59, 31, 45,false);
+			if (hit(59,31,46)) teleport(13, 49, 86,false);
 			
-			if (hit(13,23,64)) teleport(60, 31, 45,false);
-			if (hit(60,31,46)) teleport(13, 23, 65,false);
+			if (hit(13,26,64)) teleport(60, 31, 45,false);
+			if (hit(60,31,46)) teleport(13, 26, 65,false);
 			
 			// Kleine Village House
 			if (hit(28,68,44)) teleport(61, 31, 45,false);

@@ -457,6 +457,7 @@ public class Battle extends JFrame {
 	        	} else {
 	        		Pokemon faster = me.getCurrent().getFaster(foe, 0, 0);
 					double chance = faster == me.getCurrent() ? 1 : 0.5;
+					chance = me.getCurrent().item == Item.SHED_SHELL ? 1 : chance;
 					
 					if (chance >= Math.random()) {
 						JOptionPane.showMessageDialog(null, "Got away safely!");
@@ -464,7 +465,6 @@ public class Battle extends JFrame {
 						dispose();
 						return;
 					}
-					
 					console.writeln("\nCouldn't escape!");
 	        		foe.move(me.getCurrent(),foe.randomMove(), me, null, null, false);
 	        	}
@@ -754,7 +754,7 @@ public class Battle extends JFrame {
 			final int index = i + 1;
 			
 			party[i].addActionListener(e -> {
-				if (me.getCurrent().vStatuses.contains(Status.SPUN) || me.getCurrent().vStatuses.contains(Status.CHARGING) || me.getCurrent().vStatuses.contains(Status.RECHARGE) || me.getCurrent().vStatuses.contains(Status.LOCKED) || me.getCurrent().vStatuses.contains(Status.TRAPPED) || me.getCurrent().vStatuses.contains(Status.SEMI_INV) || me.getCurrent().vStatuses.contains(Status.NO_SWITCH)) {
+				if (me.getCurrent().isTrapped()) {
 	        		JOptionPane.showMessageDialog(null, "You are trapped and cannot switch!");
 	                return;
 				}

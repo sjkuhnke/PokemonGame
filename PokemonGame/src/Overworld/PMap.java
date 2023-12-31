@@ -178,7 +178,7 @@ public class PMap extends JFrame {
 	    if (locations[3]) {
 	    	SC.setBackground(Color.red);
 	    	SC.addActionListener(e -> {
-	    		fly(SC.getToolTipText(), 13, 35, 86);
+	    		fly(SC.getToolTipText(), 13, 38, 86);
 	    	});
 	    }
 	    if (loc == 9) SC.setBackground(Color.yellow);

@@ -378,6 +378,10 @@ public class Pokemon implements Serializable {
 			if (bestMoves.size() > 1 && bestMoves.contains(m) && lastMoveUsed == m) bestMoves.remove(m);
 		}
 		
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_REFLECT) && this.impressive) bestMoves.remove(Move.MAGIC_REFLECT);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.ABDUCT) && this.impressive) bestMoves.remove(Move.ABDUCT);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAKE_OVER) && this.impressive) bestMoves.remove(Move.TAKE_OVER);
+		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.SUNNY_DAY) && field.equals(field.weather, Effect.SUN)) bestMoves.remove(Move.SUNNY_DAY);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.RAIN_DANCE) && field.equals(field.weather, Effect.RAIN)) bestMoves.remove(Move.RAIN_DANCE);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.SANDSTORM) && field.equals(field.weather, Effect.SANDSTORM)) bestMoves.remove(Move.SANDSTORM);
@@ -2198,8 +2202,8 @@ public class Pokemon implements Serializable {
 		} else if (id == 174) { abilities = new Ability[] {Ability.MAGIC_GUARD, Ability.UNAWARE};
 		} else if (id == 175) { abilities = new Ability[] {Ability.MAGIC_GUARD, Ability.UNAWARE};
 		} else if (id == 176) { abilities = new Ability[] {Ability.MAGIC_GUARD, Ability.UNAWARE};
-		} else if (id == 177) { abilities = new Ability[] {Ability.NATURAL_CURE, Ability.SERENE_GRACE};
-		} else if (id == 178) { abilities = new Ability[] {Ability.NATURAL_CURE, Ability.SERENE_GRACE};
+		} else if (id == 177) { abilities = new Ability[] {Ability.SERENE_GRACE, Ability.NATURAL_CURE};
+		} else if (id == 178) { abilities = new Ability[] {Ability.SERENE_GRACE, Ability.NATURAL_CURE};
 		} else if (id == 179) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.FALSE_ILLUMINATION};
 		} else if (id == 180) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.FALSE_ILLUMINATION};
 		} else if (id == 181) { abilities = new Ability[] {Ability.SNIPER, Ability.INNER_FOCUS};
@@ -3276,6 +3280,14 @@ public class Pokemon implements Serializable {
 			return;
 		}
 		
+		if ((move == Move.MAGIC_REFLECT || move == Move.ABDUCT || move == Move.TAKE_OVER) && this.impressive) {
+			useMove(move);
+			fail();
+			this.impressive	= false;
+			this.moveMultiplier = 1;
+			return;
+		}
+		
 		if (this.ability == Ability.COMPOUND_EYES) acc *= 1.3;
 		if (item == Item.WIDE_LENS) acc *= 1.1;
 		if (field.contains(field.fieldEffects, Effect.GRAVITY)) acc = acc * 5 / 3;
@@ -3765,10 +3777,10 @@ public class Pokemon implements Serializable {
 			
 			// Damage foe
 			int dividend = Math.min(damage, foe.currentHP);
-			foe.damage(damage, this);
 			double percent = dividend * 100.0 / foe.getStat(0); // change dividend to damage
 			String formattedPercent = String.format("%.1f", percent);
 			console.writeln("(" + foe.nickname + " lost " + formattedPercent + "% of its HP.)");
+			foe.damage(damage, this);
 			if (foe.item == Item.AIR_BALLOON) {
 				console.writeln(foe.nickname + "'s Air Balloon popped!");
 				foe.consumeItem();
@@ -4977,6 +4989,8 @@ public class Pokemon implements Serializable {
 			if (!foe.vStatuses.contains(Status.TRAPPED)) {
 				foe.vStatuses.add(Status.TRAPPED);
 				console.writeln(foe.nickname + " can no longer escape!");
+			} else {
+				fail = fail();
 			}
 		} else if (move == Move.MEMENTO) {
 			stat(foe, 0, -2, foe);
@@ -5680,7 +5694,6 @@ public class Pokemon implements Serializable {
 				break;
 			case LIGHT:
 				resistantTypes.add(PType.FIRE);
-				resistantTypes.add(PType.WATER); // ???
 				resistantTypes.add(PType.STEEL);
 				resistantTypes.add(PType.LIGHT);
 				resistantTypes.add(PType.BUG);
@@ -10324,7 +10337,7 @@ public class Pokemon implements Serializable {
 		if (mode != 0 && foe.item == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
 		
 		// Stab
-		if (moveType == this.type1 || moveType == this.type2 || this.ability == Ability.TYPE_MASTER) {
+		if (moveType == this.type1 || moveType == this.type2 || this.ability == Ability.TYPE_MASTER || this.ability == Ability.PROTEAN) {
 			if (ability == Ability.ADAPTABILITY) {
 				bp *= 2;
 			} else {
@@ -13052,6 +13065,14 @@ public class Pokemon implements Serializable {
 			return false;
 		}
 		
+	}
+
+	public boolean isTrapped() {
+		if (this.vStatuses.contains(Status.SPUN) || this.vStatuses.contains(Status.CHARGING) || this.vStatuses.contains(Status.RECHARGE) || this.vStatuses.contains(Status.LOCKED) || this.vStatuses.contains(Status.SEMI_INV)) {
+			return true;
+		}
+		if ((this.vStatuses.contains(Status.NO_SWITCH) || this.vStatuses.contains(Status.TRAPPED)) && this.item != Item.SHED_SHELL) return true;
+		return false;
 	}
 
 //	private String getStatName(int stat) {
