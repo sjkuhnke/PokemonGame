@@ -133,7 +133,7 @@ public class WelcomeMenu extends JPanel {
         	        location.setText("     " + PlayerCharacter.currentMapName);
         	        repaint();
         	        ois.close();
-        	    } catch (IOException | ClassNotFoundException f) {
+        	    } catch (IOException | ClassNotFoundException | ClassCastException f) {
         	    	f.printStackTrace();
         	    }
         	}

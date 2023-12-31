@@ -113,7 +113,7 @@ public enum Item {
 	HEAVY$DUTY_BOOTS(75,0,new Color(97, 97, 97),Item.HELD_ITEM,null,""),
 	FOCUS_BAND(76,0,new Color(232, 80, 80),Item.HELD_ITEM,null,""),
 	KING1S_ROCK(77,0,new Color(224, 206, 58),Item.HELD_ITEM,null,""),
-	STICKY_BARB(78,0,new Color(109, 177, 196),Item.HELD_ITEM,null,""), // TODO
+	SHED_SHELL(78,0,new Color(243, 241, 140),Item.HELD_ITEM,null,""), // TODO
 	MUSCLE_BAND(79,0,new Color(225, 200, 50),Item.HELD_ITEM,null,""),
 	WISE_GLASSES(80,0,new Color(92, 105, 117),Item.HELD_ITEM,null,""),
 	FOCUS_SASH(81,0,new Color(232, 80, 80),Item.HELD_ITEM,null,""),
@@ -294,7 +294,7 @@ public enum Item {
 	APRICOT_BERRY(256,0,new Color(104, 128, 184),Item.BERRY,null,""),
 	STARF_BERRY(257,0,new Color(184, 232, 152),Item.BERRY,null,""),
 	MICLE_BERRY(258,0,new Color(64, 200, 64),Item.BERRY,null,""),
-	NULL259(259,0,Color.BLACK,Item.BERRY,null,""),
+	CUSTAP_BERRY(259,0,Color.BLACK,Item.BERRY,null,""), // TODO
 	NULL260(260,0,Color.BLACK,Item.BERRY,null,""),
 	;
 	
@@ -1342,5 +1342,9 @@ public enum Item {
 	
 	public boolean isChoiceItem() {
 		return (getID() >= 47 && getID() <= 49);
+	}
+	
+	public boolean isResistBerry() {
+		return (getID() >= 232 && getID() <= 251);
 	}
 }

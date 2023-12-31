@@ -203,7 +203,7 @@ public class PlayerCharacter extends Entity {
 				p.steps++;
 			}
 			
-			//gp.eHandler.checkEvent(); TODO
+			gp.eHandler.checkEvent();
 			
 			if (p.surf) {
 				double surfXD =  worldX / (1.0 * gp.tileSize);
@@ -413,7 +413,9 @@ public class PlayerCharacter extends Entity {
 		Item item = gp.obj[gp.currentMap][objIndex].item;
 		int count = gp.obj[gp.currentMap][objIndex].count;
 		p.bag.add(item, count);
-		JOptionPane.showMessageDialog(null, "You found " + count + " " + item.toString() + "!");
+		String itemName = item.toString();
+		if (count > 1 && itemName.contains("Berry")) itemName = itemName.replace("Berry", "Berries");
+		JOptionPane.showMessageDialog(null, "You found " + count + " " + itemName + "!");
 		gp.player.p.itemsCollected[gp.currentMap][objIndex] = true;
 		gp.obj[gp.currentMap][objIndex] = null;
 		keyH.resume();
@@ -865,7 +867,7 @@ public class PlayerCharacter extends Entity {
 					dogP.item = Item.SILK_SCARF;
 					p.catchPokemon(dogP);
 				}
-				if (gp.currentMap == 47 && !p.flags[10]) {
+				if (gp.currentMap == 47 && !p.flags[10] && p.secondStarter != 0) {
 					Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
 					Pokemon result = new Pokemon((p.secondStarter * 3) - 2, 5, true, false);
 					result.item = items[p.secondStarter - 1];
@@ -1933,15 +1935,21 @@ public class PlayerCharacter extends Entity {
 			        						p.bag.add(old);
 				        	        		p.team[index].item = i.getItem();
 				        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " swapped its " + old.toString() + " for " + p.team[index].item.toString() + "!");
+				        	        		p.bag.remove(i.getItem());
+					        	        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+					        	        	showBag();
 			        					}
 			        	        	} else {
 			        	        		p.team[index].item = i.getItem();
 			        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " was given " + p.team[index].item.toString() + " to hold!");
+			        	        		p.bag.remove(i.getItem());
+				        	        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+				        	        	showBag();
 			        	        	}
-			        	        	p.bag.remove(i.getItem());
-			        	        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
-			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
 			        	        });
 			        	        JPanel memberPanel = new JPanel(new BorderLayout());
 			        	        memberPanel.add(party, BorderLayout.NORTH);
