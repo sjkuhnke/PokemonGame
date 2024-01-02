@@ -25,11 +25,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import org.jdesktop.swingx.VerticalLayout;
@@ -54,6 +52,7 @@ import Swing.Item;
 import Swing.Move;
 import Swing.Moveslot;
 import Swing.PType;
+import Swing.PartyPanel;
 import Swing.Player;
 import Swing.Pokemon;
 import Swing.Pokemon.Node;
@@ -542,15 +541,15 @@ public class PlayerCharacter extends Entity {
 	    			pPanel.setLayout(new GridLayout(6, 1));
 
 	        	    for (int j = 0; j < 6; j++) {
-	        	    	JButton partyB = setUpPartyButton(j);
-	        	        final int index = j;
+	        	    	//JButton partyB = setUpPartyButton(j);
+	        	        //final int index = j;
 	        	        
-	        	        partyB.addActionListener(g -> {
-	        	        	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has hit " + p.team[index].headbuttCrit + " headbutt crit(s).");
-	        	        });
+	        	        //partyB.addActionListener(g -> {
+	        	        	//JOptionPane.showMessageDialog(null, p.team[index].nickname + " has hit " + p.team[index].headbuttCrit + " headbutt crit(s).");
+	        	        //});
 	        	        
 	        	        JPanel mPanel = new JPanel(new BorderLayout());
-	        	        mPanel.add(partyB, BorderLayout.NORTH);
+	        	        //mPanel.add(partyB, BorderLayout.NORTH);
 	        	        pPanel.add(mPanel);
 	        	        
 	        	    }
@@ -794,51 +793,56 @@ public class PlayerCharacter extends Entity {
 			if (!p.fish || gp.currentMap != 32) JOptionPane.showMessageDialog(null, npc.message);
 			if (gp.currentMap == 32 && !p.fish) {
 				p.fish = true;
-				JOptionPane.showMessageDialog(null, "You got a Fishing Rod!\n(Press 'A' to fish)");			}
+				JOptionPane.showMessageDialog(null, "You got a Fishing Rod!\n(Press 'A' to fish)");
+			}
 			if (npc.more) {
 				if (!p.flags[6] && gp.currentMap == 43) {
-					JPanel partyPanel = new JPanel();
-					partyPanel.setLayout(new GridLayout(6, 1));
+					JPanel partyMasterPanel = new JPanel();
+					partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+					partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 					
 					for (int j = 0; j < 6; j++) {
-						JButton party = setUpPartyButton(j);
+						PartyPanel partyPanel = new PartyPanel(p.team[j]);
 						final int index = j;
-						party.addActionListener(e -> {
-							if (p.team[index].type1 == PType.GROUND || p.team[index].type2 == PType.GROUND) {
-								p.flags[6] = true;
-								JOptionPane.showMessageDialog(null, "Thank you! Here, take this as a reward!");
-								JOptionPane.showMessageDialog(null, "Obtained A Key!\nGot 1 Valiant Gem!");
-								p.bag.add(Item.VALIANT_GEM);
-							} else {
-								JOptionPane.showMessageDialog(null, "That's not a GROUND type!");
+						partyPanel.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent evt) {
+								if (p.team[index].type1 == PType.GROUND || p.team[index].type2 == PType.GROUND) {
+									p.flags[6] = true;
+									JOptionPane.showMessageDialog(null, "Thank you! Here, take this as a reward!");
+									JOptionPane.showMessageDialog(null, "Obtained A Key!\nGot 1 Valiant Gem!");
+									p.bag.add(Item.VALIANT_GEM);
+								} else {
+									JOptionPane.showMessageDialog(null, "That's not a GROUND type!");
+								}
+								SwingUtilities.getWindowAncestor(partyPanel).dispose();
 							}
-							SwingUtilities.getWindowAncestor(partyPanel).dispose();
 						});
-						partyPanel.add(party);
 					}
-					JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 				}
 				if (!p.flags[7] && gp.currentMap == 38) {
-					JPanel partyPanel = new JPanel();
-					partyPanel.setLayout(new GridLayout(6, 1));
+					JPanel partyMasterPanel = new JPanel();
+					partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+					partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 					
 					for (int j = 0; j < 6; j++) {
-						JButton party = setUpPartyButton(j);
+						PartyPanel partyPanel = new PartyPanel(p.team[j]);
 						final int index = j;
-						party.addActionListener(e -> {
-							if (p.team[index].type1 == PType.ICE || p.team[index].type2 == PType.ICE) {
-								p.flags[7] = true;
-								JOptionPane.showMessageDialog(null, "Thank you! Here, take this as a reward!");
-								JOptionPane.showMessageDialog(null, "Obtained B Key!\nGot 1 Petticoat Gem!");
-								p.bag.add(Item.PETTICOAT_GEM);
-							} else {
-								JOptionPane.showMessageDialog(null, "That's not an ICE type!");
+						partyPanel.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent evt) {
+								if (p.team[index].type1 == PType.ICE || p.team[index].type2 == PType.ICE) {
+									p.flags[7] = true;
+									JOptionPane.showMessageDialog(null, "Thank you! Here, take this as a reward!");
+									JOptionPane.showMessageDialog(null, "Obtained B Key!\nGot 1 Petticoat Gem!");
+									p.bag.add(Item.PETTICOAT_GEM);
+								} else {
+									JOptionPane.showMessageDialog(null, "That's not an ICE type!");
+								}
+								SwingUtilities.getWindowAncestor(partyPanel).dispose();
 							}
-							SwingUtilities.getWindowAncestor(partyPanel).dispose();
 						});
-						partyPanel.add(party);
 					}
-					JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 				}
 				if (p.flags[8] && p.flags[9] && gp.currentMap == 41 && !p.bag.contains(96)) {
 					JOptionPane.showMessageDialog(null, "Oh you have?! Thank you so much!\nHere, take this as a reward!\n\nObtained HM04 Surf!");
@@ -970,57 +974,59 @@ public class PlayerCharacter extends Entity {
 					JOptionPane.showMessageDialog(null, "Also, if you haven't yet, you should\nbe sure to check out the bottom right\nhouse in the quadrant above.\nI hear he has a gift!");
 					p.flags[16] = true;
 				} if (gp.currentMap == 93) {
-					JPanel partyPanel = new JPanel();
-					partyPanel.setLayout(new GridLayout(6, 1));
+					JPanel partyMasterPanel = new JPanel();
+					partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+					partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 					for (int j = 0; j < 6; j++) {
-						JButton party = setUpPartyButton(j);
+						PartyPanel partyPanel = new PartyPanel(p.team[j]);
 						final int index = j;
-						party.addActionListener(e -> {
-							ArrayList<Move> forgottenMoves = new ArrayList<>();
-		                    for (int i = 0; i < p.team[index].getLevel(); i++) {
-		                    	if (i < p.team[index].movebank.length) {
-		                    		Node move = p.team[index].movebank[i];
-		                    		while (move != null) {
-		                    			if (!p.team[index].knowsMove(move.data)) {
-		                    				forgottenMoves.add(move.data);
-		                    			}
-		                    			move = move.next;
-		                    		}
-		                    	}
-		                    }
-		                    if (forgottenMoves.isEmpty()) {
-		                        JOptionPane.showMessageDialog(null, "This Pokemon has not forgotten any moves.");
-		                    } else {
-		                    	JPanel moves = new JPanel();
-		                    	moves.setLayout(new GridLayout(0, 1));
-		                        for (Move move : forgottenMoves) {
-		                            JGradientButton moveButton = new JGradientButton(move.toString());
-		                            moveButton.setBackground(move.mtype.getColor());
-		                            moveButton.addMouseListener(new MouseAdapter() {
-		                			    @Override
-		                			    public void mouseClicked(MouseEvent e) {
-		                			    	if (SwingUtilities.isRightMouseButton(e)) {
-		                			            JOptionPane.showMessageDialog(null, move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
-		                			        } else {
-		                			        	int choice = p.team[index].displayMoveOptions(move);
-					        	                if (choice == JOptionPane.CLOSED_OPTION) {
-					        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not learn " + move + ".");
-					        	                } else {
-					        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has learned " + move + " and forgot " + p.team[index].moveset[choice].move + "!");
-					        	                	p.team[index].moveset[choice] = new Moveslot(move);
-					        	                }
-					        	                SwingUtilities.getWindowAncestor(moves).dispose();
-		                			        }
-		                			    }
-		                			});
-		                            moves.add(moveButton);
-		                        }
-		                        JOptionPane.showMessageDialog(null, moves, "Teach a Move?", JOptionPane.QUESTION_MESSAGE);
-		                    }
+						partyPanel.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent evt) {
+								ArrayList<Move> forgottenMoves = new ArrayList<>();
+			                    for (int i = 0; i < p.team[index].getLevel(); i++) {
+			                    	if (i < p.team[index].movebank.length) {
+			                    		Node move = p.team[index].movebank[i];
+			                    		while (move != null) {
+			                    			if (!p.team[index].knowsMove(move.data)) {
+			                    				forgottenMoves.add(move.data);
+			                    			}
+			                    			move = move.next;
+			                    		}
+			                    	}
+			                    }
+			                    if (forgottenMoves.isEmpty()) {
+			                        JOptionPane.showMessageDialog(null, "This Pokemon has not forgotten any moves.");
+			                    } else {
+			                    	JPanel moves = new JPanel();
+			                    	moves.setLayout(new GridLayout(0, 1));
+			                        for (Move move : forgottenMoves) {
+			                            JGradientButton moveButton = new JGradientButton(move.toString());
+			                            moveButton.setBackground(move.mtype.getColor());
+			                            moveButton.addMouseListener(new MouseAdapter() {
+			                			    @Override
+			                			    public void mouseClicked(MouseEvent e) {
+			                			    	if (SwingUtilities.isRightMouseButton(e)) {
+			                			            JOptionPane.showMessageDialog(null, move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			                			        } else {
+			                			        	int choice = p.team[index].displayMoveOptions(move);
+						        	                if (choice == JOptionPane.CLOSED_OPTION) {
+						        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not learn " + move + ".");
+						        	                } else {
+						        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has learned " + move + " and forgot " + p.team[index].moveset[choice].move + "!");
+						        	                	p.team[index].moveset[choice] = new Moveslot(move);
+						        	                }
+						        	                SwingUtilities.getWindowAncestor(moves).dispose();
+			                			        }
+			                			    }
+			                			});
+			                            moves.add(moveButton);
+			                        }
+			                        JOptionPane.showMessageDialog(null, moves, "Teach a Move?", JOptionPane.QUESTION_MESSAGE);
+			                    }
+							}
 						});
-						partyPanel.add(party);
 					}
-					JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 				} if (gp.currentMap == 94 && !p.flags[18]) {
 					JOptionPane.showMessageDialog(null, "Here's a gift of one\nof the Pokemon affected!");
 					int[] ids = new int[] {197, 199, 202, 205, 209, 215, 217, 220, 223, 226};
@@ -1107,35 +1113,33 @@ public class PlayerCharacter extends Entity {
 	}
 
 	private void showParty() {
-	    JPanel partyPanel = new JPanel();
-	    partyPanel.setLayout(new GridLayout(6, 1));
+	    JPanel partyMasterPanel = new JPanel();
+	    partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+	    partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 
 	    for (int j = 0; j < 6; j++) {
-	    	JButton party = setUpPartyButton(j);
-	    	JProgressBar partyHP = setupHPBar(j);
+	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
 	        final int index = j;
 	        
-	        party.addActionListener(e -> {
-	            JPanel teamMemberPanel = p.team[index].showSummary(p, true);
-	            JButton swapButton = new JButton("Swap");
-		        swapButton.addActionListener(f -> {
-		            if (p.team[index] != null && p.team[index] != p.current) {
-		                p.swap(p.team[index], index); // Call the swap method in the Player class
-		                JOptionPane.getRootFrame().dispose();
-		                showParty(); // Update the party display after swapping
-		            }
-		        });
-	            if (p.team[index] != p.current && !p.team[index].isFainted()) teamMemberPanel.add(swapButton);
-	            JOptionPane.showMessageDialog(null, teamMemberPanel, "Party member details", JOptionPane.PLAIN_MESSAGE);
+	        partyPanel.addMouseListener(new MouseAdapter() {
+	            public void mouseClicked(MouseEvent evt) {
+	            	JPanel teamMemberPanel = p.team[index].showSummary(p, true, partyMasterPanel, null);
+		            JButton swapButton = new JButton("Swap");
+			        swapButton.addActionListener(f -> {
+			            if (p.team[index] != null && p.team[index] != p.current) {
+			                p.swap(p.team[index], index); // Call the swap method in the Player class
+			                JOptionPane.getRootFrame().dispose();
+			                showParty(); // Update the party display after swapping
+			            }
+			        });
+		            if (p.team[index] != p.current && !p.team[index].isFainted()) teamMemberPanel.add(swapButton);
+		            JOptionPane.showMessageDialog(null, teamMemberPanel, "Party member details", JOptionPane.PLAIN_MESSAGE);
+	            }
 	        });
-
-	        JPanel memberPanel = new JPanel(new BorderLayout());
-	        memberPanel.add(party, BorderLayout.NORTH);
-	        memberPanel.add(partyHP, BorderLayout.SOUTH);
-	        partyPanel.add(memberPanel);
+	        partyMasterPanel.add(partyPanel);
 	    }
 
-	    JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 	    keyH.resume();
 	}
 	
@@ -1200,136 +1204,129 @@ public class PlayerCharacter extends Entity {
 			        	
 			        	// POTIONS
 			        	if (i.getItem().isPotion()) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
-			        	    	JProgressBar partyHP = setupHPBar(j);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
 			        	        final int index = j;
 
-			        	        party.addActionListener(g -> {
-			        	        	if (p.team[index].currentHP == p.team[index].getStat(0) || p.team[index].isFainted()) {
-			        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
-			        	        	} else {
-			        	        		int difference = 0;
-			        	        		if (i.getItem().getHealAmount() > 0) {
-			        	        			difference = Math.min(i.getItem().getHealAmount(), p.team[index].getStat(0) - p.team[index].currentHP);
-			        	        			p.team[index].currentHP += i.getItem().getHealAmount();
-			        	        		} else {
-			        	        			difference = p.team[index].getStat(0) - p.team[index].currentHP;
-			        	        			p.team[index].currentHP = p.team[index].getStat(0);
-			        	        			if (i.getItem().getID() == 8) p.team[index].status = Status.HEALTHY;
-			        	        		}
-				        	        	p.team[index].verifyHP();
-				        	        	p.bag.remove(i.getItem());
-				        	        	JOptionPane.showMessageDialog(null, p.team[index].nickname + " was healed by " + difference + " HP");
-				        	        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
-				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-				        	        	showBag();
+			        	        partyPanel.addMouseListener(new MouseAdapter() {
+			        	        	public void mouseClicked(MouseEvent evt) {
+			        	        		if (p.team[index].currentHP == p.team[index].getStat(0) || p.team[index].isFainted()) {
+				        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+				        	        	} else {
+				        	        		int difference = 0;
+				        	        		if (i.getItem().getHealAmount() > 0) {
+				        	        			difference = Math.min(i.getItem().getHealAmount(), p.team[index].getStat(0) - p.team[index].currentHP);
+				        	        			p.team[index].currentHP += i.getItem().getHealAmount();
+				        	        		} else {
+				        	        			difference = p.team[index].getStat(0) - p.team[index].currentHP;
+				        	        			p.team[index].currentHP = p.team[index].getStat(0);
+				        	        			if (i.getItem().getID() == 8) p.team[index].status = Status.HEALTHY;
+				        	        		}
+					        	        	p.team[index].verifyHP();
+					        	        	p.bag.remove(i.getItem());
+					        	        	JOptionPane.showMessageDialog(null, p.team[index].nickname + " was healed by " + difference + " HP");
+					        	        	SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+					        	        	showBag();
+				        	        	}
 			        	        	}
 			        	        });
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        memberPanel.add(partyHP, BorderLayout.SOUTH);
-			        	        partyPanel.add(memberPanel);
+			        	        partyMasterPanel.add(partyPanel);
 			        	    }
 
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 			        	}
 			        	
 			        	// STATUS HEALERS
 			        	else if (i.getItem().isStatusHealer()) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
-			        	    
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));       	    
 			        	    Status target = i.getItem().getStatus();
 
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
-			        	    	if (p.team[j] != null && p.team[j].status == Status.HEALTHY) party.setBackground(Color.green);
-			        	    	if (p.team[j] != null && p.team[j].status != Status.HEALTHY) party.setBackground(p.team[j].status.getColor());
-			        	    	if (p.team[j] != null && p.team[j].isFainted()) party.setBackground(Color.red);
-			        	    	JProgressBar partyHP = setupHPBar(j);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	if (p.team[j] != null && p.team[j].status == Status.HEALTHY) partyPanel.setBackground(Color.green);
+			        	    	if (p.team[j] != null && p.team[j].status != Status.HEALTHY) partyPanel.setBackground(p.team[j].status.getColor());
+			        	    	if (p.team[j] != null && p.team[j].isFainted()) partyPanel.setBackground(Color.red);
 			        	        final int index = j;
 			        	        Status finalTarget = target == null && p.team[index] != null && p.team[index].status != Status.HEALTHY ? p.team[index].status : target;
 			        	        final Status fFinalTarget = p.team[index] != null && p.team[index].status == Status.TOXIC && target == Status.POISONED ? Status.TOXIC : finalTarget;		        	        
 
-			        	        party.addActionListener(g -> {
-			        	        	if (p.team[index].status != fFinalTarget || p.team[index].isFainted()) {
-			        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
-			        	        	} else {
-			        	        		Status temp = p.team[index].status;
-			        	        		p.team[index].status = Status.HEALTHY;
-				        	        	p.bag.remove(i.getItem());
-				        	        	JOptionPane.showMessageDialog(null, p.team[index].nickname + " was cured of its " + temp.getName());
-				        	        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
-				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-				        	        	showBag();
+			        	        partyPanel.addMouseListener(new MouseAdapter() {
+			        	        	public void mouseClicked(MouseEvent evt) {
+			        	        		if (p.team[index].status != fFinalTarget || p.team[index].isFainted()) {
+				        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+				        	        	} else {
+				        	        		Status temp = p.team[index].status;
+				        	        		p.team[index].status = Status.HEALTHY;
+					        	        	p.bag.remove(i.getItem());
+					        	        	JOptionPane.showMessageDialog(null, p.team[index].nickname + " was cured of its " + temp.getName());
+					        	        	SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+					        	        	showBag();
+				        	        	}
 			        	        	}
 			        	        });
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        memberPanel.add(partyHP, BorderLayout.SOUTH);
-			        	        partyPanel.add(memberPanel);
+			        	        partyMasterPanel.add(partyPanel);
 			        	    }
 
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 			        	}
 			        	
 			        	// REVIVES
 			        	else if (i.getItem() == Item.REVIVE || i.getItem() == Item.MAX_REVIVE) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
-			        	    	JProgressBar partyHP = setupHPBar(j);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
 			        	        final int index = j;
 
-			        	        party.addActionListener(g -> {
-			        	        	if (!p.team[index].isFainted()) {
-			        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
-			        	        	} else {
-			        	        		p.team[index].fainted = false;
-			        	        		if (i.getItem().getID() == 16) {
-			        	        			p.team[index].currentHP = p.team[index].getStat(0) / 2;
-			        	        		} else {
-			        	        			p.team[index].currentHP = p.team[index].getStat(0);
-			        	        		}
-				        	        	p.bag.remove(i.getItem());
-				        	        	JOptionPane.showMessageDialog(null, p.team[index].nickname + " was revived!");
-				        	        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
-				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-				        	        	showBag();
+			        	        partyPanel.addMouseListener(new MouseAdapter() {
+			        	        	public void mouseClicked(MouseEvent evt) {
+			        	        		if (!p.team[index].isFainted()) {
+				        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+				        	        	} else {
+				        	        		p.team[index].fainted = false;
+				        	        		if (i.getItem().getID() == 16) {
+				        	        			p.team[index].currentHP = p.team[index].getStat(0) / 2;
+				        	        		} else {
+				        	        			p.team[index].currentHP = p.team[index].getStat(0);
+				        	        		}
+					        	        	p.bag.remove(i.getItem());
+					        	        	JOptionPane.showMessageDialog(null, p.team[index].nickname + " was revived!");
+					        	        	SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+					        	        	showBag();
+				        	        	}
 			        	        	}
 			        	        });
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        memberPanel.add(partyHP, BorderLayout.SOUTH);
-			        	        partyPanel.add(memberPanel);
+			        	        partyMasterPanel.add(partyPanel);
 			        	    }
 
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 			        	}
 			        	
 			        	// RARE CANDY
 			        	else if (i.getItem() == Item.RARE_CANDY) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
-			        	    	JProgressBar partyHP = setupHPBar(j);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
 			        	        final int index = j;
 			        	        
-			        	        party.addMouseListener(new MouseAdapter() {
+			        	        partyPanel.addMouseListener(new MouseAdapter() {
 			        			    @Override
 			        			    public void mouseClicked(MouseEvent e) {
 			        			    	if (SwingUtilities.isRightMouseButton(e)) { // Right-click
@@ -1346,7 +1343,7 @@ public class PlayerCharacter extends Entity {
 			        			                	}
 			        			                    
 			        			                    useRareCandies(p.team[index], numCandies, i.getItem());
-			        			                    SwingUtilities.getWindowAncestor(partyPanel).dispose();
+			        			                    SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
 							        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
 							        	        	SwingUtilities.getWindowAncestor(panel).dispose();
 							        	        	showBag();
@@ -1359,7 +1356,7 @@ public class PlayerCharacter extends Entity {
 			        		    	    	} else {
 			        		    	    		p.elevate(p.team[index]);
 					        	        		p.bag.remove(i.getItem());
-					        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
+					        	        		SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
 						        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
 						        	        	SwingUtilities.getWindowAncestor(panel).dispose();
 						        	        	showBag();
@@ -1367,102 +1364,93 @@ public class PlayerCharacter extends Entity {
 			        			    	}
 			        			    }
 			        	        });
-			        	    	
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        memberPanel.add(partyHP, BorderLayout.SOUTH);
-			        	        partyPanel.add(memberPanel);
+			        	        partyMasterPanel.add(partyPanel);
 			        	    }
 
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 			        	}
 			        	
 			        	// EUPHORIAN GEM
 			        	else if (i.getItem() == Item.EUPHORIAN_GEM) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
-			        	    	JProgressBar partyHP = setupHPBar(j);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
 			        	        final int index = j;
 			        	        
-			        	        party.addActionListener(g -> {
-			        	        	if (p.team[index].happiness >= 255) {
-			        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
-			        	        	} else {
-			        	        		p.team[index].awardHappiness(100, true);
-			        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " looked happier!");
-			        	        		p.bag.remove(i.getItem());
-			        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
-				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-				        	        	showBag();
-			        	        	}
-			        	        });
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        memberPanel.add(partyHP, BorderLayout.SOUTH);
-			        	        partyPanel.add(memberPanel);
-			        	    }
-
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
-			        	}
-			        	
-			        	// EVOLUTION ITEMS
-			        	else if (i.getItem().isEvoItem()) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
-			        	    
-			        	    for (int j = 0; j < 6; j++) {
-			        	    	if (p.team[j] != null) {
-			        	    		JButton party = setUpPartyButton(j);
-				        	    	JProgressBar partyHP = setupHPBar(j);
-				        	        final int index = j;
-				        	        final boolean eligible = i.getItem().getEligible(p.team[j].id);
-				        	        if (eligible) {
-				        	        	party.setBackground(Color.GREEN);
-				        	        } else {
-				        	        	party.setBackground(Color.RED);
-				        	        }
-
-				        	        party.addActionListener(g -> {
-				        	        	if (!eligible) {
+			        	        partyPanel.addMouseListener(new MouseAdapter() {
+			        	        	public void mouseClicked(MouseEvent evt) {
+			        	        		if (p.team[index].happiness >= 255) {
 				        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
 				        	        	} else {
-				        	        		boolean shouldEvolve = Battle.displayEvolution(p.team[index]);
-				        	    			if (shouldEvolve) {
-				        	    				Pokemon result = new Pokemon(p.team[index].getEvolved(i.getItem().getID()), p.team[index]);
-				        	    		        int hpDif = p.team[index].getStat(0) - p.team[index].currentHP;
-				        	    		        result.currentHP -= hpDif;
-				        	    		        result.moveMultiplier = p.team[index].moveMultiplier;
-				        	    		        JOptionPane.showMessageDialog(null, p.team[index].nickname + " evolved into " + result.name + "!");
-				        	    		        result.exp = p.team[index].exp;
-				        	    		        p.team[index] = result;
-				        	    		        if (index == 0) p.current = result;
-				        	                    result.checkMove();
-				        	                    p.pokedex[result.id] = 2;
-				        	    		        p.bag.remove(i.getItem());
-				        	    			} else {
-				        	    				JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not evolve.");
-				        	    			}
-					        	        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+				        	        		p.team[index].awardHappiness(100, true);
+				        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " looked happier!");
+				        	        		p.bag.remove(i.getItem());
+				        	        		SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
 					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
 					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
 					        	        	showBag();
 				        	        	}
+			        	        	}
+			        	        });
+			        	        partyMasterPanel.add(partyPanel);
+			        	    }
+
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+			        	}
+			        	
+			        	// EVOLUTION ITEMS
+			        	else if (i.getItem().isEvoItem()) {
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        	    
+			        	    for (int j = 0; j < 6; j++) {
+			        	    	if (p.team[j] != null) {
+			        	    		PartyPanel partyPanel = new PartyPanel(p.team[j]);
+				        	        final int index = j;
+				        	        final boolean eligible = i.getItem().getEligible(p.team[j].id);
+				        	        if (eligible) {
+				        	        	partyPanel.setBackground(Color.GREEN);
+				        	        } else {
+				        	        	partyPanel.setBackground(Color.RED);
+				        	        }
+
+				        	        partyPanel.addMouseListener(new MouseAdapter() {
+				        	        	public void mouseClicked(MouseEvent evt) {
+				        	        		if (!eligible) {
+					        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+					        	        	} else {
+					        	        		boolean shouldEvolve = Battle.displayEvolution(p.team[index]);
+					        	    			if (shouldEvolve) {
+					        	    				Pokemon result = new Pokemon(p.team[index].getEvolved(i.getItem().getID()), p.team[index]);
+					        	    		        int hpDif = p.team[index].getStat(0) - p.team[index].currentHP;
+					        	    		        result.currentHP -= hpDif;
+					        	    		        result.moveMultiplier = p.team[index].moveMultiplier;
+					        	    		        JOptionPane.showMessageDialog(null, p.team[index].nickname + " evolved into " + result.name + "!");
+					        	    		        result.exp = p.team[index].exp;
+					        	    		        p.team[index] = result;
+					        	    		        if (index == 0) p.current = result;
+					        	                    result.checkMove();
+					        	                    p.pokedex[result.id] = 2;
+					        	    		        p.bag.remove(i.getItem());
+					        	    			} else {
+					        	    				JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not evolve.");
+					        	    			}
+						        	        	SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+						        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+						        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+						        	        	showBag();
+					        	        	}
+				        	        	}
 				        	        });
-				        	        
-				        	        JPanel memberPanel = new JPanel(new BorderLayout());
-				        	        memberPanel.add(party, BorderLayout.NORTH);
-				        	        memberPanel.add(partyHP, BorderLayout.SOUTH);
-				        	        partyPanel.add(memberPanel);
+				        	        partyMasterPanel.add(partyPanel);
 			        	    	}
 			        	    }
 
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 			        	}
 			        	
 			        	// REPEL
@@ -1476,67 +1464,68 @@ public class PlayerCharacter extends Entity {
 			        	
 			        	// TMS/HMS
 			        	else if (i.getItem().isTM()) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
 			        	        final int index = j;
 			        	        
 			        	        boolean learnable = p.team[index] != null ? i.getItem().getLearned(p.team[index]) : false;
 			        	        boolean learned = p.team[index] != null ? p.team[index].knowsMove(i.getItem().getMove()) : false;
 			        	        if (!learnable) {
-			        	        	party.setBackground(Color.RED.darker());
+			        	        	partyPanel.setBackground(Color.RED.darker());
 			        	        } else if (learned) {
-			        	        	party.setBackground(Color.YELLOW);
+			        	        	partyPanel.setBackground(Color.YELLOW);
 			        	        } else {
-			        	        	party.setBackground(Color.GREEN);
+			        	        	partyPanel.setBackground(Color.GREEN);
 			        	        }
 			        	        
-			        	        party.addActionListener(g -> {
-			        	        	if (!learnable) {
-			        	        		JOptionPane.showMessageDialog(null, "" + p.team[index].nickname + " can't learn " + i.getItem().getMove() + "!");
-			        	        	} else if (learned) {
-			        	        		JOptionPane.showMessageDialog(null, "" + p.team[index].nickname + " already knows " + i.getItem().getMove() + "!");
-			        	        	} else {
-			        	        		boolean learnedMove = false;
-			        		            for (int k = 0; k < 4; k++) {
-			        		                if (p.team[index].moveset[k] == null) {
-			        		                	p.team[index].moveset[k] = new Moveslot(i.getItem().getMove());
-			        		                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " learned " + i.getItem().getMove() + "!");
-			        		                    learnedMove = true;
-			        		                    break;
-			        		                }
-			        		            }
-			        		            if (!learnedMove) {
-			        		            	int choice = p.team[index].displayMoveOptions(i.getItem().getMove());
-				        	                if (choice == JOptionPane.CLOSED_OPTION) {
-				        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not learn " + i.getItem().getMove() + ".");
-				        	                } else {
-				        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has learned " + i.getItem().getMove().toString() + " and forgot " + p.team[index].moveset[choice].move + "!");
-				        	                	p.team[index].moveset[choice] = new Moveslot(i.getItem().getMove());
-				        	                }
-			        		            }
-			        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
-				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-				        	        	showBag();
+			        	        partyPanel.addMouseListener(new MouseAdapter() {
+			        	        	public void mouseClicked(MouseEvent evt) {
+			        	        		if (!learnable) {
+				        	        		JOptionPane.showMessageDialog(null, "" + p.team[index].nickname + " can't learn " + i.getItem().getMove() + "!");
+				        	        	} else if (learned) {
+				        	        		JOptionPane.showMessageDialog(null, "" + p.team[index].nickname + " already knows " + i.getItem().getMove() + "!");
+				        	        	} else {
+				        	        		boolean learnedMove = false;
+				        		            for (int k = 0; k < 4; k++) {
+				        		                if (p.team[index].moveset[k] == null) {
+				        		                	p.team[index].moveset[k] = new Moveslot(i.getItem().getMove());
+				        		                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " learned " + i.getItem().getMove() + "!");
+				        		                    learnedMove = true;
+				        		                    break;
+				        		                }
+				        		            }
+				        		            if (!learnedMove) {
+				        		            	int choice = p.team[index].displayMoveOptions(i.getItem().getMove());
+					        	                if (choice == JOptionPane.CLOSED_OPTION) {
+					        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not learn " + i.getItem().getMove() + ".");
+					        	                } else {
+					        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has learned " + i.getItem().getMove().toString() + " and forgot " + p.team[index].moveset[choice].move + "!");
+					        	                	p.team[index].moveset[choice] = new Moveslot(i.getItem().getMove());
+					        	                }
+				        		            }
+				        	        		SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+					        	        	showBag();
+				        	        	}
 			        	        	}
 			        	        });
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        partyPanel.add(memberPanel);
+			        	        partyMasterPanel.add(partyPanel);
 			        	    }
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
 			        	}
 			        	// Ability Capsule
 			        	else if (i.getItem() == Item.ABILITY_CAPSULE) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
 			        	        final int index = j;
 			        	        
 			        	        if (p.team[index] != null) {
@@ -1544,204 +1533,255 @@ public class PlayerCharacter extends Entity {
 				        	        test.setAbility(1 - p.team[index].abilitySlot);
 				        	        boolean swappable = p.team[index].ability != test.ability;
 				        	        if (swappable) {
-				        	        	party.setBackground(Color.GREEN);
+				        	        	partyPanel.setBackground(Color.GREEN);
 				        	        } else {
-				        	        	party.setBackground(Color.YELLOW);
+				        	        	partyPanel.setBackground(Color.YELLOW);
 				        	        }
 				        	        
-				        	        party.addActionListener(g -> {
-				        	        	if (!swappable) {
-				        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
-				        	        	} else {
-				        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s ability was swapped from " + p.team[index].ability + " to " + test.ability + "!");
-				        	        		p.team[index].abilitySlot = 1 - p.team[index].abilitySlot;
-				        	        		p.team[index].setAbility(p.team[index].abilitySlot);
-				        	        		p.bag.remove(i.getItem());
-				        	        		
-				        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
-					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-					        	        	showBag();
+				        	        partyPanel.addMouseListener(new MouseAdapter() {
+				        	        	public void mouseClicked(MouseEvent evt) {
+				        	        		if (!swappable) {
+					        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+					        	        	} else {
+					        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s ability was swapped from " + p.team[index].ability + " to " + test.ability + "!");
+					        	        		p.team[index].abilitySlot = 1 - p.team[index].abilitySlot;
+					        	        		p.team[index].setAbility(p.team[index].abilitySlot);
+					        	        		p.bag.remove(i.getItem());
+					        	        		
+					        	        		SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+						        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+						        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+						        	        	showBag();
+					        	        	}
 				        	        	}
 				        	        });
 			        	        }
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        partyPanel.add(memberPanel);
+			        	        partyMasterPanel.add(partyPanel);
 			        	    }
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Swap Abilities?", JOptionPane.PLAIN_MESSAGE);
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Swap Abilities?", JOptionPane.PLAIN_MESSAGE);
 			        	}
 			        	
 			        	// Bottle Caps
 			        	else if (i.getItem() == Item.BOTTLE_CAP || i.getItem() == Item.GOLD_BOTTLE_CAP) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
 			        	        final int index = j;
 			        	        
 			        	        if (p.team[index] != null) {
 				        	        
-				        	        party.addActionListener(g -> {
-				        	        	if (i.getItem().getID() == 27) {
-				        	        		JPanel ivPanel = new JPanel();
-				        	        		ivPanel.setLayout(new GridLayout(6, 1));
-				        	        		int[] ivs = p.team[index].getIVs();
-				        	        		for (int k = 0; k < 6; k++) {
-				        	        			final int kndex = k;
-				        	        			JButton iv = new JButton();
-			        	        	        	String type = p.team[index].getStatType(k);
-				        	        			iv.setText(type + ": " + ivs[k]);
-				        	        			final String finalType = type;
-				        	        			
-				        	        			iv.addActionListener(h -> {
-				        	        				JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s " + finalType + "IV was maxed out!");
-				        	        				p.team[index].ivs[kndex] = 31;
-				        	        				p.team[index].stats = p.team[index].getStats();
-				        	        				p.bag.remove(i.getItem());
-						        	        		
-				        	        				SwingUtilities.getWindowAncestor(ivPanel).dispose();
-						        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
-							        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-							        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-							        	        	showBag();
-				        	        			});
-				        	        			
-				        	        			ivPanel.add(iv);
-				        	        		}
-				        	        		JOptionPane.showMessageDialog(null, ivPanel, "Which IV?", JOptionPane.PLAIN_MESSAGE);
-				        	        	} else {
-				        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s IVs were maxed out!");
-				        	        		p.team[index].ivs = new int[] {31, 31, 31, 31, 31, 31};
-				        	        		p.team[index].stats = p.team[index].getStats();
-		        	        				p.bag.remove(i.getItem());
-				        	        		
-				        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
-					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-					        	        	showBag();
-				        	        	}
-			        	        		
+				        	        partyPanel.addMouseListener(new MouseAdapter() {
+				        	        	public void mouseClicked(MouseEvent evt) {
+				        	        		if (i.getItem().getID() == 27) {
+					        	        		JPanel ivPanel = new JPanel();
+					        	        		ivPanel.setLayout(new GridLayout(6, 1));
+					        	        		int[] ivs = p.team[index].getIVs();
+					        	        		for (int k = 0; k < 6; k++) {
+					        	        			final int kndex = k;
+					        	        			JButton iv = new JButton();
+				        	        	        	String type = p.team[index].getStatType(k);
+					        	        			iv.setText(type + ": " + ivs[k]);
+					        	        			final String finalType = type;
+					        	        			
+					        	        			iv.addActionListener(h -> {
+					        	        				JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s " + finalType + "IV was maxed out!");
+					        	        				p.team[index].ivs[kndex] = 31;
+					        	        				p.team[index].stats = p.team[index].getStats();
+					        	        				p.bag.remove(i.getItem());
+							        	        		
+					        	        				SwingUtilities.getWindowAncestor(ivPanel).dispose();
+							        	        		SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+								        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+								        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+								        	        	showBag();
+					        	        			});
+					        	        			
+					        	        			ivPanel.add(iv);
+					        	        		}
+					        	        		JOptionPane.showMessageDialog(null, ivPanel, "Which IV?", JOptionPane.PLAIN_MESSAGE);
+					        	        	} else {
+					        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s IVs were maxed out!");
+					        	        		p.team[index].ivs = new int[] {31, 31, 31, 31, 31, 31};
+					        	        		p.team[index].stats = p.team[index].getStats();
+			        	        				p.bag.remove(i.getItem());
+					        	        		
+					        	        		SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+						        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+						        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+						        	        	showBag();
+					        	        	}
+				        	        	}			        	        		
 				        	        });
 			        	        }
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        partyPanel.add(memberPanel);
+			        	        partyMasterPanel.add(partyPanel);
 			        	    }
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Change IVs?", JOptionPane.PLAIN_MESSAGE);
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Change IVs?", JOptionPane.PLAIN_MESSAGE);
 			        	}
 			        	
 			        	// Nature Mints
 			        	else if (i.getItem().isMint()) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
 			        	        final int index = j;
 			        	        
 			        	        if (p.team[index] != null) {
 			        	        
-			        	        	party.addActionListener(h -> {
-			        	        		double nature[];
-				        	        	switch (i.getItem().getID()) {
-		    	        	        	case 29:
-		    	        	        		nature = new double[] {1.1,1.0,0.9,1.0,1.0,-1.0};
-		    	        	        		break;
-		    	        	        	case 30:
-		    	        	        		nature = new double[] {0.9,1.1,1.0,1.0,1.0,-1.0};
-		    	        	        		break;
-		    	        	        	case 31:
-		    	        	        		nature = new double[] {1.1,1.0,1.0,1.0,0.9,-1.0};
-		    	        	        		break;
-		    	        	        	case 32:
-		    	        	        		nature = new double[] {0.9,1.0,1.0,1.1,1.0,-1.0};
-		    	        	        		break;
-		    	        	        	case 33:
-		    	        	        		nature = new double[] {1.0,1.0,0.9,1.1,1.0,-1.0};
-		    	        	        		break;
-		    	        	        	case 34:
-		    	        	        		nature = new double[] {1.0,1.1,0.9,1.0,1.0,-1.0};
-		    	        	        		break;
-		    	        	        	case 35:
-		    	        	        		nature = new double[] {1.0,1.0,0.9,1.0,1.1,-1.0};
-		    	        	        		break;
-		    	        	        	case 36:
-		    	        	        		nature = new double[] {0.9,1.0,1.1,1.0,1.0,-1.0};
-		    	        	        		break;
-		    	        	        	case 37:
-		    	        	        		nature = new double[] {1.0,1.0,1.1,1.0,0.9,-1.0};
-		    	        	        		break;
-		    	        	        	case 38:
-		    	        	        		nature = new double[] {1.0,1.0,1.0,1.0,1.0,4.0};
-		    	        	        		break;
-		    	        	        	case 39:
-		    	        	        		nature = new double[] {0.9,1.0,1.0,1.0,1.1,-1.0};
-		    	        	        		break;
-		    	                		default:
-		    	                			nature = null;
-		    	                			break;
-		    	        	        	}
-			        	        		
-			        	        		String natureOld = p.team[index].getNature();
-				        	        	p.team[index].nature = nature;
-				        	        	p.team[index].stats = p.team[index].getStats();
-				        	        	JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s nature was changed from " + natureOld + " to " + p.team[index].getNature() + "!");
-				        	        	
-				        	        	
-		        	        			p.bag.remove(i.getItem());
+			        	        	partyPanel.addMouseListener(new MouseAdapter() {
+			        	        		public void mouseClicked(MouseEvent evt) {
+			        	        			double nature[];
+					        	        	switch (i.getItem().getID()) {
+			    	        	        	case 29:
+			    	        	        		nature = new double[] {1.1,1.0,0.9,1.0,1.0,-1.0};
+			    	        	        		break;
+			    	        	        	case 30:
+			    	        	        		nature = new double[] {0.9,1.1,1.0,1.0,1.0,-1.0};
+			    	        	        		break;
+			    	        	        	case 31:
+			    	        	        		nature = new double[] {1.1,1.0,1.0,1.0,0.9,-1.0};
+			    	        	        		break;
+			    	        	        	case 32:
+			    	        	        		nature = new double[] {0.9,1.0,1.0,1.1,1.0,-1.0};
+			    	        	        		break;
+			    	        	        	case 33:
+			    	        	        		nature = new double[] {1.0,1.0,0.9,1.1,1.0,-1.0};
+			    	        	        		break;
+			    	        	        	case 34:
+			    	        	        		nature = new double[] {1.0,1.1,0.9,1.0,1.0,-1.0};
+			    	        	        		break;
+			    	        	        	case 35:
+			    	        	        		nature = new double[] {1.0,1.0,0.9,1.0,1.1,-1.0};
+			    	        	        		break;
+			    	        	        	case 36:
+			    	        	        		nature = new double[] {0.9,1.0,1.1,1.0,1.0,-1.0};
+			    	        	        		break;
+			    	        	        	case 37:
+			    	        	        		nature = new double[] {1.0,1.0,1.1,1.0,0.9,-1.0};
+			    	        	        		break;
+			    	        	        	case 38:
+			    	        	        		nature = new double[] {1.0,1.0,1.0,1.0,1.0,4.0};
+			    	        	        		break;
+			    	        	        	case 39:
+			    	        	        		nature = new double[] {0.9,1.0,1.0,1.0,1.1,-1.0};
+			    	        	        		break;
+			    	                		default:
+			    	                			nature = null;
+			    	                			break;
+			    	        	        	}
 				        	        		
-				        	        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
-					        	        SwingUtilities.getWindowAncestor(itemDesc).dispose();
-					        	        SwingUtilities.getWindowAncestor(panel).dispose();
-					        	        showBag();
-			        	        		
+				        	        		String natureOld = p.team[index].getNature();
+					        	        	p.team[index].nature = nature;
+					        	        	p.team[index].stats = p.team[index].getStats();
+					        	        	JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s nature was changed from " + natureOld + " to " + p.team[index].getNature() + "!");
+					        	        	
+			        	        			p.bag.remove(i.getItem());
+					        	        		
+					        	        	SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+						        	        SwingUtilities.getWindowAncestor(itemDesc).dispose();
+						        	        SwingUtilities.getWindowAncestor(panel).dispose();
+						        	        showBag();
+			        	        		}
 			        	        	});
-			        	        	
 			        	        }
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        partyPanel.add(memberPanel);
+			        	        partyMasterPanel.add(partyPanel);
 			        	    }
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Change Nature?", JOptionPane.PLAIN_MESSAGE);
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Change Nature?", JOptionPane.PLAIN_MESSAGE);
 			        	}
 			        	
 			        	// Elixir/Max Elixir
 			        	else if (i.getItem() == Item.ELIXIR || i .getItem() == Item.MAX_ELIXIR) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
 			        	        final int index = j;
 			        	        
-			        	        party.addActionListener(g -> {
-			        	        	if (i.getItem().getID() == 41) {
-			        	        		boolean work = false;
-			        	        		for (Moveslot m : p.team[index].moveset) {
-			        	        			if (m != null && m.currentPP != m.maxPP) {
-			        	        				work = true;
-			        	        				break;
-			        	        			}
-			        	        		}
-			        	        		if (work) {
+			        	        partyPanel.addMouseListener(new MouseAdapter() {
+			        	        	public void mouseClicked(MouseEvent evt) {
+			        	        		if (i.getItem().getID() == 41) {
+				        	        		boolean work = false;
 				        	        		for (Moveslot m : p.team[index].moveset) {
-				        	        			if (m != null) m.currentPP = m.maxPP;
+				        	        			if (m != null && m.currentPP != m.maxPP) {
+				        	        				work = true;
+				        	        				break;
+				        	        			}
 				        	        		}
-				        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s PP was restored!");
-			        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
-					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-			        	        			p.bag.remove(i.getItem());
-			        	        			showBag();
-			        	        		} else {
-			        	        			JOptionPane.showMessageDialog(null, "It won't have any effect.");
-			        	        		}
-			        	        	} else {
+				        	        		if (work) {
+					        	        		for (Moveslot m : p.team[index].moveset) {
+					        	        			if (m != null) m.currentPP = m.maxPP;
+					        	        		}
+					        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + "'s PP was restored!");
+				        			        	SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+						        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+						        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+				        	        			p.bag.remove(i.getItem());
+				        	        			showBag();
+				        	        		} else {
+				        	        			JOptionPane.showMessageDialog(null, "It won't have any effect.");
+				        	        		}
+				        	        	} else {
+				        	        		JPanel movePanel = new JPanel();
+				        	        	    movePanel.setLayout(new BoxLayout(movePanel, BoxLayout.Y_AXIS));
+				        	        		for (Moveslot m : p.team[index].moveset) {
+				        	        			if (m != null) {
+						        	        		JGradientButton move = new JGradientButton("<html><center>" + m.move.toString() + "<br>" + " " + m.showPP() + "</center></html>");
+						        	        		move.setFont(new Font(move.getFont().getName(), Font.PLAIN, 13));
+						        	        		move.setBackground(m.move.mtype.getColor());
+						        	        		move.setForeground(m.getPPColor());
+						        	        		move.addMouseListener(new MouseAdapter() {
+					        	        	        	@Override
+					        	        			    public void mouseClicked(MouseEvent e) {
+					        	        			    	if (SwingUtilities.isRightMouseButton(e)) {
+					        	        			            JOptionPane.showMessageDialog(null, m.move.getMoveSummary(p.team[index], null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+					        	        			        } else {
+					        	        			        	if (m.currentPP != m.maxPP) {
+					        	        			        		m.currentPP = m.maxPP;
+						        	        			        	JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was restored!");
+						        	        			        	SwingUtilities.getWindowAncestor(movePanel).dispose();
+						        	        			        	SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+						        			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+						        			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+						        			        	        	p.bag.remove(i.getItem());
+						        			        	        	showBag();
+					        	        			        	} else {
+					        	        			        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
+					        	        			        	}
+					        	        			        }
+					        	        			    }
+					        	        	        });
+					        	        	        movePanel.add(move);
+				        	        			}
+					        	        		
+				        		            }
+				        	        		JOptionPane.showMessageDialog(null, movePanel, "Select a move to restore PP:", JOptionPane.PLAIN_MESSAGE);
+				        	        	}
+			        	        	}			        	        	
+			        	        });
+			        	        partyMasterPanel.add(partyPanel);
+			        	    }
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Restore PP?", JOptionPane.PLAIN_MESSAGE);
+			        	}
+			        	
+			        	// PP Up/PP Max
+			        	else if (i.getItem() == Item.PP_UP || i .getItem() == Item.PP_MAX) {
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        	    
+			        	    for (int j = 0; j < 6; j++) {
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	        final int index = j;
+			        	        
+			        	        partyPanel.addMouseListener(new MouseAdapter() {
+			        	        	public void mouseClicked(MouseEvent evt) {
 			        	        		JPanel movePanel = new JPanel();
 			        	        	    movePanel.setLayout(new BoxLayout(movePanel, BoxLayout.Y_AXIS));
 			        	        		for (Moveslot m : p.team[index].moveset) {
@@ -1756,18 +1796,23 @@ public class PlayerCharacter extends Entity {
 				        	        			    	if (SwingUtilities.isRightMouseButton(e)) {
 				        	        			            JOptionPane.showMessageDialog(null, m.move.getMoveSummary(p.team[index], null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 				        	        			        } else {
-				        	        			        	if (m.currentPP != m.maxPP) {
-				        	        			        		m.currentPP = m.maxPP;
-					        	        			        	JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was restored!");
-					        	        			        	SwingUtilities.getWindowAncestor(movePanel).dispose();
-					        	        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+			        	        			        		if (m.maxPP < (m.move.pp * 8 / 5)) {
+			        	        			        			if (i.getItem().getID() == 42) { // PP Up
+			        	        			        				m.maxPP += Math.max((m.move.pp / 5), 1);
+			        	        			        				JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was increased!");
+			        	        			        			} else { // PP Max
+			        	        			        				m.maxPP = (m.move.pp * 8 / 5);
+			        	        			        				JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was maxed!");
+			        	        			        			}
+			        	        			        			SwingUtilities.getWindowAncestor(movePanel).dispose();
+					        	        			        	SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
 					        			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
 					        			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
 					        			        	        	p.bag.remove(i.getItem());
 					        			        	        	showBag();
-				        	        			        	} else {
-				        	        			        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
-				        	        			        	}
+			        	        			        		} else {
+			        	        			        			JOptionPane.showMessageDialog(null, "It won't have any effect.");
+			        	        			        		}
 				        	        			        }
 				        	        			    }
 				        	        	        });
@@ -1775,114 +1820,24 @@ public class PlayerCharacter extends Entity {
 			        	        			}
 				        	        		
 			        		            }
-			        	        		JOptionPane.showMessageDialog(null, movePanel, "Select a move to restore PP:", JOptionPane.PLAIN_MESSAGE);
+			        	        		JOptionPane.showMessageDialog(null, movePanel, "Select a move to increase PP:", JOptionPane.PLAIN_MESSAGE);	
 			        	        	}
-			        	        	
 			        	        });
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        partyPanel.add(memberPanel);
+			        	        partyMasterPanel.add(partyPanel);
 			        	    }
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
 			        	}
-			        	
-			        	// PP Up/PP Max
-			        	else if (i.getItem() == Item.PP_UP || i .getItem() == Item.PP_MAX) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
-			        	    
-			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
-			        	        final int index = j;
-			        	        
-			        	        party.addActionListener(g -> {
-			        	        	JPanel movePanel = new JPanel();
-		        	        	    movePanel.setLayout(new BoxLayout(movePanel, BoxLayout.Y_AXIS));
-		        	        		for (Moveslot m : p.team[index].moveset) {
-		        	        			if (m != null) {
-				        	        		JGradientButton move = new JGradientButton("<html><center>" + m.move.toString() + "<br>" + " " + m.showPP() + "</center></html>");
-				        	        		move.setFont(new Font(move.getFont().getName(), Font.PLAIN, 13));
-				        	        		move.setBackground(m.move.mtype.getColor());
-				        	        		move.setForeground(m.getPPColor());
-				        	        		move.addMouseListener(new MouseAdapter() {
-			        	        	        	@Override
-			        	        			    public void mouseClicked(MouseEvent e) {
-			        	        			    	if (SwingUtilities.isRightMouseButton(e)) {
-			        	        			            JOptionPane.showMessageDialog(null, m.move.getMoveSummary(p.team[index], null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
-			        	        			        } else {
-		        	        			        		if (m.maxPP < (m.move.pp * 8 / 5)) {
-		        	        			        			if (i.getItem().getID() == 42) { // PP Up
-		        	        			        				m.maxPP += Math.max((m.move.pp / 5), 1);
-		        	        			        				JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was increased!");
-		        	        			        			} else { // PP Max
-		        	        			        				m.maxPP = (m.move.pp * 8 / 5);
-		        	        			        				JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was maxed!");
-		        	        			        			}
-		        	        			        			SwingUtilities.getWindowAncestor(movePanel).dispose();
-				        	        			        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
-				        			        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-				        			        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-				        			        	        	p.bag.remove(i.getItem());
-				        			        	        	showBag();
-		        	        			        		} else {
-		        	        			        			JOptionPane.showMessageDialog(null, "It won't have any effect.");
-		        	        			        		}
-			        	        			        }
-			        	        			    }
-			        	        	        });
-			        	        	        movePanel.add(move);
-		        	        			}
-			        	        		
-		        		            }
-		        	        		JOptionPane.showMessageDialog(null, movePanel, "Select a move to increase PP:", JOptionPane.PLAIN_MESSAGE);
-			        	        	
-			        	        });
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        partyPanel.add(memberPanel);
-			        	    }
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Teach " + i.getItem().getMove() + "?", JOptionPane.PLAIN_MESSAGE);
-			        	}
-			        	// Flame Orb
-//			        	else if (i.getItem() == Item.FLAME_ORB) {
-//			        		JPanel partyPanel = new JPanel();
-//			        	    partyPanel.setLayout(new GridLayout(6, 1));
-//			        	    
-//			        	    for (int j = 0; j < 6; j++) {
-//			        	    	JButton party = setUpPartyButton(j);
-//			        	        final int index = j;
-//			        	        
-//			        	        party.addActionListener(g -> {
-//			        	        	if (p.team[index].status == Status.HEALTHY && p.team[index].type1 != PType.FIRE && p.team[index].type2 != PType.FIRE) {
-//			        	        		p.team[index].status = Status.BURNED;
-//			        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " successfully burned!");
-//			        	        		SwingUtilities.getWindowAncestor(partyPanel).dispose();
-//				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-//				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-//				        	        	showBag();
-//			        	        	} else {
-//			        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
-//			        	        	}
-//			        	        });
-//			        	        
-//			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-//			        	        memberPanel.add(party, BorderLayout.NORTH);
-//			        	        partyPanel.add(memberPanel);
-//			        	    }
-//			        	    JOptionPane.showMessageDialog(null, partyPanel, "Burn?", JOptionPane.PLAIN_MESSAGE);
-//			        	}
 			        	// Edge Kit
 			        	else if (i.getItem() == Item.EDGE_KIT) {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
 			        	        final int index = j;
 			        	        
-			        	        party.addMouseListener(new MouseAdapter() {
+			        	        partyPanel.addMouseListener(new MouseAdapter() {
 			        	        	@Override
         	        			    public void mouseClicked(MouseEvent e) {
 			        	        		if (p.team[index].expMax - p.team[index].exp != 1) {
@@ -1892,18 +1847,15 @@ public class PlayerCharacter extends Entity {
 				        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
 				        	        	}
 			        	        		if (SwingUtilities.isRightMouseButton(e)) {
-			        	        			SwingUtilities.getWindowAncestor(partyPanel).dispose();
+			        	        			SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
 					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
 					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
 			        	        		}
 			        	        	}
 			        	        });
-			        	        
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        partyPanel.add(memberPanel);
+			        	        partyMasterPanel.add(partyPanel);
 			        	    }
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "EDGE?????", JOptionPane.PLAIN_MESSAGE);
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "EDGE?????", JOptionPane.PLAIN_MESSAGE);
 			        	}
 			        	// Calc
 			        	else if (i.getItem() == Item.CALCULATOR) {
@@ -1915,47 +1867,48 @@ public class PlayerCharacter extends Entity {
 			        JButton giveButton = new JButton("Give");
 			        if (pocket == Item.HELD_ITEM || pocket == Item.BERRY) {
 			        	giveButton.addActionListener(f -> {
-			        		JPanel partyPanel = new JPanel();
-			        	    partyPanel.setLayout(new GridLayout(6, 1));
+			        		JPanel partyMasterPanel = new JPanel();
+			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	JButton party = setUpPartyButton(j);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
 			        	        final int index = j;
 			        	        
-			        	        party.addActionListener(g -> {
-			        	        	if (p.team[index].item != null) {
-			        	        		int option = JOptionPane.showOptionDialog(null,
-			        							p.team[index].nickname + " is already holding\n" + p.team[index].item.toString() + ", do you want to swap\nit for " + i.getItem().toString() + "?",
-			        				            "Item Switch",
-			        				            JOptionPane.YES_NO_OPTION,
-			        				            JOptionPane.QUESTION_MESSAGE,
-			        				            null, null, null);
-			        					if (option == JOptionPane.YES_OPTION) {
-			        						Item old = p.team[index].item;
-			        						p.bag.add(old);
+			        	        partyPanel.addMouseListener(new MouseAdapter() {
+			        	        	public void mouseClicked(MouseEvent evt) {
+			        	        		if (p.team[index].item != null) {
+				        	        		int option = JOptionPane.showOptionDialog(null,
+				        							p.team[index].nickname + " is already holding\n" + p.team[index].item.toString() + ", do you want to swap\nit for " + i.getItem().toString() + "?",
+				        				            "Item Switch",
+				        				            JOptionPane.YES_NO_OPTION,
+				        				            JOptionPane.QUESTION_MESSAGE,
+				        				            null, null, null);
+				        					if (option == JOptionPane.YES_OPTION) {
+				        						Item old = p.team[index].item;
+				        						p.bag.add(old);
+					        	        		p.team[index].item = i.getItem();
+					        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " swapped its " + old.toString() + " for " + p.team[index].item.toString() + "!");
+					        	        		p.bag.remove(i.getItem());
+						        	        	SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+						        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
+						        	        	SwingUtilities.getWindowAncestor(panel).dispose();
+						        	        	showBag();
+				        					}
+				        	        	} else {
 				        	        		p.team[index].item = i.getItem();
-				        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " swapped its " + old.toString() + " for " + p.team[index].item.toString() + "!");
+				        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " was given " + p.team[index].item.toString() + " to hold!");
 				        	        		p.bag.remove(i.getItem());
-					        	        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
+					        	        	SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
 					        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
 					        	        	SwingUtilities.getWindowAncestor(panel).dispose();
 					        	        	showBag();
-			        					}
-			        	        	} else {
-			        	        		p.team[index].item = i.getItem();
-			        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " was given " + p.team[index].item.toString() + " to hold!");
-			        	        		p.bag.remove(i.getItem());
-				        	        	SwingUtilities.getWindowAncestor(partyPanel).dispose();
-				        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
-				        	        	SwingUtilities.getWindowAncestor(panel).dispose();
-				        	        	showBag();
+				        	        	}
 			        	        	}
 			        	        });
-			        	        JPanel memberPanel = new JPanel(new BorderLayout());
-			        	        memberPanel.add(party, BorderLayout.NORTH);
-			        	        partyPanel.add(memberPanel);
+			        	        partyMasterPanel.add(partyPanel);
 			        	    }
-			        	    JOptionPane.showMessageDialog(null, partyPanel, "Give item?", JOptionPane.PLAIN_MESSAGE);
+			        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Give item?", JOptionPane.PLAIN_MESSAGE);
 			        	});
 			        	
 			        }
@@ -2073,45 +2026,26 @@ public class PlayerCharacter extends Entity {
 	}
 
 
-	public JGradientButton setUpPartyButton(int j) {
-		JGradientButton party = new JGradientButton("");
-		party.setText("");
-        if (p.team[j] != null) {
-        	if (p.team[j].isFainted()) {
-        		party = new JGradientButton("");
-            	party.setBackground(new Color(200, 0, 0));
-            	party.setSolid(true);
-            } else {
-            	party.setBackground(p.team[j].type1.getColor(), p.team[j].type2 == null ? null : p.team[j].type2.getColor());
-            }
-            party.setText(p.team[j].nickname + "  lv " + p.team[j].getLevel());
-            party.setHorizontalAlignment(SwingConstants.CENTER);
-            party.setFont(new Font("Tahoma", Font.PLAIN, 11));
-            party.setVisible(true);
-        } else {
-            party.setVisible(false);
-        }
-        return party;
-	}
-	
-	private JProgressBar setupHPBar(int j) {
-		JProgressBar partyHP = new JProgressBar(0, 50);
-		if (p.team[j] != null) {
-            partyHP.setMaximum(p.team[j].getStat(0));
-            partyHP.setValue(p.team[j].currentHP);
-            if (partyHP.getPercentComplete() > 0.5) {
-                partyHP.setForeground(new Color(0, 255, 0));
-            } else if (partyHP.getPercentComplete() <= 0.5 && partyHP.getPercentComplete() > 0.25) {
-                partyHP.setForeground(new Color(255, 255, 0));
-            } else {
-                partyHP.setForeground(new Color(255, 0, 0));
-            }
-            partyHP.setVisible(true);
-        } else {
-            partyHP.setVisible(false);
-        }
-		return partyHP;
-	}
+//	public JGradientButton setUpPartyButton(int j) {
+//		JGradientButton party = new JGradientButton("");
+//		party.setText("");
+//        if (p.team[j] != null) {
+//        	if (p.team[j].isFainted()) {
+//        		party = new JGradientButton("");
+//            	party.setBackground(new Color(200, 0, 0));
+//            	party.setSolid(true);
+//            } else {
+//            	party.setBackground(p.team[j].type1.getColor(), p.team[j].type2 == null ? null : p.team[j].type2.getColor());
+//            }
+//            party.setText(p.team[j].nickname + "  lv " + p.team[j].getLevel());
+//            party.setHorizontalAlignment(SwingConstants.CENTER);
+//            party.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//            party.setVisible(true);
+//        } else {
+//            party.setVisible(false);
+//        }
+//        return party;
+//	}
 	
 	private void useRareCandies(Pokemon pokemon, int numCandies, Item item) {
 		boolean evolved = false;

@@ -102,7 +102,7 @@ public class AssetSetter {
 		
 		mapNum = 9;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(40, 33, Item.SHARP_BEAK, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 34, Item.SHARP_BEAK, mapNum);
 		
 		mapNum = 11;
 		objIndex = 0;
@@ -600,7 +600,7 @@ public class AssetSetter {
 		}
 		
 		gp.npc[mapNum][index] = NPCSetup(3, 60, 37, 259);
-		gp.npc[mapNum][index] = NPCSetup(4, 55, 40, 260);
+		gp.npc[mapNum][index] = NPCSetup(4, 56, 40, 260);
 		gp.npc[mapNum][index] = NPCSetup(6, 55, 37, 261);
 		gp.npc[mapNum][index] = NPCSetup(4, 63, 40, 262);
 		
@@ -1605,7 +1605,7 @@ public class AssetSetter {
 		}
 		if (flags[2]) {
 			gp.npc[4][1] = null;
-			gp.npc[0][16] = null;
+			gp.npc[0][17] = null;
 		}
 		if (flags[3]) {
 			gp.npc[17][6] = null;
