@@ -1782,6 +1782,7 @@ public class AssetSetter {
 	private ItemObj ResistBerrySetup(int x, int y, int mapNum, int lower, int upper) {
 		if (gp.player.p.itemsCollected[mapNum][objIndex] == true || gp.player.p.resistBerries == null) {
 			objIndex++;
+			berryIndex++;
 			return null;
 		}
 		
