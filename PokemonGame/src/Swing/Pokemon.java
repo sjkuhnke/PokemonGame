@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -214,7 +215,7 @@ public class Pokemon implements Serializable {
 		keepItem = pokemon.keepItem;
 	}
 	
-	public BufferedImage getSprite() {
+	public Image getSprite() {
 		BufferedImage image = null;
 		
 		String imageName = id + "";
@@ -232,7 +233,7 @@ public class Pokemon implements Serializable {
 		return image;
 	}
 	
-	public BufferedImage getSprite(int id) {
+	public Image getSprite(int id) {
 		BufferedImage image = null;
 		
 		String imageName = id + "";
@@ -250,8 +251,8 @@ public class Pokemon implements Serializable {
 		return image;
 	}
 	
-	public BufferedImage getMiniSprite() {
-		BufferedImage image = null;
+	public Image getMiniSprite() {
+		Image image = null;
 		
 		String imageName = id + "";
 		while (imageName.length() < 3) imageName = "0" + imageName;
@@ -259,13 +260,38 @@ public class Pokemon implements Serializable {
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/minisprites/" + imageName + ".png"));
 		} catch (Exception e) {
-			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/minisprites/000.png"));
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			image = getSprite();
+			
+			int scaledWidth = (int) (image.getWidth(null) * 0.5);
+			int scaledHeight = (int) (image.getHeight(null) * 0.5);
+			
+			Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
+			
+			return scaledImage;
 		}
 		return image;
+	}
+	
+	public Image getBoxSprite() {
+		Image image = null;
+		
+		String imageName = id + "";
+		while (imageName.length() < 3) imageName = "0" + imageName;
+		
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream("/minisprites/" + imageName + ".png"));
+			
+			return image;
+		} catch (Exception e) {
+			image = getSprite();
+			
+			int scaledWidth = (int) (image.getWidth(null) * 0.75);
+			int scaledHeight = (int) (image.getHeight(null) * 0.75);
+			
+			Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
+			
+			return scaledImage;
+		}
 	}
 
 
@@ -11455,7 +11481,7 @@ public class Pokemon implements Serializable {
 	}
 
 
-	public JPanel showSummary(Player player, boolean takeItem) {
+	public JPanel showSummary(Player player, boolean takeItem, JPanel panel, PBox pbox) {
 	    JPanel teamMemberPanel = new JPanel();
 	    teamMemberPanel.setLayout(new BoxLayout(teamMemberPanel, BoxLayout.Y_AXIS));
 	    
@@ -11602,13 +11628,13 @@ public class Pokemon implements Serializable {
 	    
 	    teamMemberPanel.add(movesPanel);
 	    
-    	JButton giveButton = new JButton("N/A");
+    	JButton takeButton = new JButton("N/A");
 	    JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	    JLabel itemLabel = new JLabel("N/A");
 	    if (this.item != null) {
-	    	giveButton.setText("Take " + item.toString());
+	    	takeButton.setText("Take " + item.toString());
 	    	itemLabel.setText(item.toString());
-	    	giveButton.addActionListener(e -> {
+	    	takeButton.addActionListener(e -> {
 	    		int option = JOptionPane.showOptionDialog(null,
 	    				"Would you like to take " + this.nickname + "'s " + this.item + "?",
 	    				"Take " + this.item + "?",
@@ -11620,11 +11646,13 @@ public class Pokemon implements Serializable {
 					player.bag.add(old);
 	        		this.item = null;
 	        		SwingUtilities.getWindowAncestor(teamMemberPanel).dispose();
+	        		if (panel != null) SwingUtilities.getWindowAncestor(panel).dispose();
+	        		if (pbox != null) pbox.displayBox();
 	    	    }
 	    	});
 	    	itemPanel.add(new JLabel(new ImageIcon(this.item.getImage())));
 	    	if (takeItem) {
-	    		itemPanel.add(giveButton);
+	    		itemPanel.add(takeButton);
 	    	} else {
 	    		itemPanel.add(itemLabel);
 	    	}

@@ -362,7 +362,6 @@ public enum Item {
 			}
 		}
 		return image;
-		
 	}
 
 	public int getCost() { return cost; }

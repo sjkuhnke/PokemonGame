@@ -1,5 +1,6 @@
 package Swing;
 
+import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import Entity.PlayerCharacter;
@@ -14,6 +15,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import Swing.Battle.JGradientButton;
+import Swing.CompoundIcon.Axis;
 
 public class PBox extends JFrame {
 
@@ -51,7 +53,7 @@ public class PBox extends JFrame {
 		boxButtons = new JGradientButton[90];
 		for (int i = 0; i < me.box1.length; i++) {
 			boxButtons[i] = new JGradientButton("");
-			boxButtons[i].setBounds(10 + (i % 6) * 90, 10 + (i / 6) * 80, 80, 50);
+			boxButtons[i].setBounds(10 + (i % 6) * 90, 10 + (i / 6) * 80, 80, 60);
 			boxButtons[i].setVisible(true);
 			playerPanel.add(boxButtons[i]);
 		}
@@ -77,18 +79,19 @@ public class PBox extends JFrame {
 		partyButton.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		    	JPanel partyPanel = new JPanel();
-        	    partyPanel.setLayout(new GridLayout(6, 1));
+		    	JPanel partyMasterPanel = new JPanel();
+		    	partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+			    partyMasterPanel.setPreferredSize(new Dimension(350, 275));
         	    
         	    for (int j = 0; j < 6; j++) {
-        	    	JButton party = playerCharacter.setUpPartyButton(j);
+        	    	PartyPanel partyPanel = new PartyPanel(me.team[j]);
         	        final int index = j;
         	        
-        	        party.addMouseListener(new MouseAdapter() {
+        	        partyPanel.addMouseListener(new MouseAdapter() {
         	        	@Override
         	            public void mouseClicked(MouseEvent e) {
         	        		if (SwingUtilities.isLeftMouseButton(e)) {
-        	        			JPanel summary = me.team[index].showSummary(me, true);
+        	        			JPanel summary = me.team[index].showSummary(me, true, partyMasterPanel, null);
                 	        	JButton depositButton = new JButton("Deposit");
                 	        	depositButton.addActionListener(f -> {
                 		            if (me.team[index] != null) {
@@ -136,7 +139,7 @@ public class PBox extends JFrame {
                                             	me.team[5] = null;
                                             }
                 		                }
-                                        SwingUtilities.getWindowAncestor(partyPanel).dispose();
+                                        SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
                 		                SwingUtilities.getWindowAncestor(summary).dispose();
                 		                displayBox();
                 		            }
@@ -189,18 +192,15 @@ public class PBox extends JFrame {
                                         	me.team[5] = null;
                                         }
             		                }
-                                    SwingUtilities.getWindowAncestor(partyPanel).dispose();
+                                    SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
             		                displayBox();
             		            }
         	        		}
         	        	}
         	        });
-        	        
-        	        JPanel memberPanel = new JPanel(new BorderLayout());
-        	        memberPanel.add(party, BorderLayout.NORTH);
-        	        partyPanel.add(memberPanel);
+        	        partyMasterPanel.add(partyPanel);
         	    }
-        	    JOptionPane.showMessageDialog(null, partyPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+        	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 		    }
 		});
 		playerPanel.add(partyButton);
@@ -248,7 +248,7 @@ public class PBox extends JFrame {
 		
 	}
 	
-	private void displayBox() {
+	public void displayBox() {
 	    Pokemon[] cBox;
 	    if (currentBox == 1) {
 	        cBox = me.box1;
@@ -262,7 +262,10 @@ public class PBox extends JFrame {
 	        boxButtons[i].setText("");
 	        boxButtons[i].setIcon(null);
 	        if (cBox[i] != null) {
-	        	ImageIcon icon = new ImageIcon(cBox[i].getSprite()); // change to getMiniSprite()
+	        	ImageIcon spriteIcon = new ImageIcon(cBox[i].getBoxSprite());
+	        	ImageIcon itemIcon = null;
+	        	if (cBox[i].item != null) itemIcon = new ImageIcon(cBox[i].item.getImage());
+	        	CompoundIcon icon = itemIcon == null ? new CompoundIcon(Axis.Z_AXIS, 0, CompoundIcon.LEFT, CompoundIcon.BOTTOM, spriteIcon) : new CompoundIcon(Axis.Z_AXIS, 0, CompoundIcon.LEFT, CompoundIcon.BOTTOM, spriteIcon, itemIcon);
 	            boxButtons[i].setIcon(icon);
 	            boxButtons[i].setHorizontalAlignment(SwingConstants.CENTER);
 	            boxButtons[i].setFont(new Font("Tahoma", Font.BOLD, 9));
@@ -282,6 +285,7 @@ public class PBox extends JFrame {
 	}
 
 	public void setActionListener(JButton b, Pokemon[] box, int index) {
+		PBox thisBox = this;
 		MouseListener[] mouseListeners = b.getMouseListeners();
 		if (mouseListeners.length == 1) {
 			b.addMouseListener(new MouseAdapter() {
@@ -290,7 +294,7 @@ public class PBox extends JFrame {
 		    		if (SwingUtilities.isLeftMouseButton(e)) {
 		    			JPanel boxMemberPanel;
 		    	    	if (box[index] != null) {
-		    	    		boxMemberPanel = box[index].showSummary(me, true);
+		    	    		boxMemberPanel = box[index].showSummary(me, true, null, thisBox);
 		    	    	} else {
 		    	    		boxMemberPanel = new JPanel();
 		    	    	}
@@ -310,78 +314,88 @@ public class PBox extends JFrame {
 		                    @Override
 		                    public void actionPerformed(ActionEvent e) {
 		                        // Open a new panel to display the party and allow the user to select a party member to swap with
-		                        JPanel partyPanel = new JPanel();
-		                        partyPanel.setLayout(new BoxLayout(partyPanel, BoxLayout.Y_AXIS));
-		                        JLabel titleLabel = new JLabel("Select a party member to swap with:");
-		                        partyPanel.add(titleLabel);
-		                        boolean oneVisible = false;
-		                        for (int j = 0; j < me.team.length; j++) {
-		                            final int jndex = j;
-		                            JGradientButton partyButton = new JGradientButton("EMPTY");
-		                            partyButton.setVisible(false);
-		                            if (me.team[j] != null) {
-		                                partyButton.setText(me.team[j].nickname + "  lv " + me.team[j].getLevel());
-		                                if (me.team[j].isFainted()) {
-		                                    partyButton.setBackground(Color.RED);
-		                                    partyButton.setSolid(true);
-		                                } else if (me.team[j].status != Status.HEALTHY) {
-		                                    partyButton.setBackground(Color.YELLOW);
-		                                } else {
-		                                    partyButton.setBackground(Color.GREEN);
-		                                }
-		                                partyButton.setVisible(true);
-		                            } else {
-		                                if (!oneVisible) {
-		                                    partyButton.setVisible(true);
+		                    	JPanel partyMasterPanel = new JPanel();
+		                	    partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+		                	    partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+		                	    boolean oneVisible = false;
+		                	    
+		                	    for (int j = 0; j < 6; j++) {
+		                	    	JPanel partyPanel = new PartyPanel(me.team[j]);
+		                	        final int jndex = j;
+		                	        
+		                            if (me.team[j] == null) {
+		                            	if (!oneVisible) {
+		                            		partyPanel = new JPanel();
+		                            		partyPanel.setLayout(new BoxLayout(partyPanel, BoxLayout.Y_AXIS));
+
+		                            		JLabel empty = new JLabel("EMPTY");
+		                            		empty.setHorizontalAlignment(SwingConstants.CENTER);
+		                            		empty.setAlignmentX(Component.CENTER_ALIGNMENT);
+		                            		empty.setAlignmentY(Component.CENTER_ALIGNMENT);
+		                            		empty.setFont(new Font(empty.getFont().getName(), Font.BOLD, 24));
+
+		                            		partyPanel.add(Box.createHorizontalGlue());
+		                            		partyPanel.add(Box.createVerticalGlue());
+		                            		partyPanel.add(empty);
+		                            		partyPanel.add(Box.createHorizontalGlue());
+		                            		partyPanel.add(Box.createVerticalGlue());
+		                            		JPanel pp = partyPanel;
+		                            		partyPanel.addMouseListener(new MouseAdapter() {
+		                            			public void mouseEntered(MouseEvent evt) {
+		                            				pp.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+		                            			}
+		                            			public void mouseExited(MouseEvent evt) {
+		                            				pp.setBorder(BorderFactory.createEmptyBorder());
+		                            			}
+		                            		});
 		                                    oneVisible = true;
 		                                }
 		                            }
-		                            partyButton.addActionListener(new ActionListener() {
-		                                @Override
-		                                public void actionPerformed(ActionEvent e) {
+		                            if (j > 0 && me.team[j - 1] != null) {
+		                            	partyPanel.addMouseListener(new MouseAdapter() {
+			                                @Override
+			                                public void mouseClicked(MouseEvent e) {
 
-		                                    // Swap the selected party member with the selected box member
-		                                    if (jndex == 0) {
-		                                    	if (box[index] == null && me.team[jndex + 1] == null) {
-		                                    		JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
-		            	                            return;
-		                                    	}
-		                                        me.current = box[index];
-		                                    }
-		                                    if (box[index] == null && checkFaintedTeam(jndex)) {
-		                                    	JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
-		        	                            return;
-		                                    }
-		                                    Pokemon temp = me.team[jndex];
-		                                    if (temp != null) {
-		                                        temp.heal();
-		                                    }
-		                                    me.team[jndex] = box[index];
-		                                    box[index] = temp;
-		                                    
-		                                    if (me.team[jndex] == null) {
-		                                    	Pokemon[] teamTemp = me.team.clone();
-		                                    	for (int i = jndex + 1; i < me.team.length; i++) {
-		                                        	teamTemp[i - 1] = me.team[i];
-		                                        }
-		                                    	me.team = teamTemp;
-		                                    	me.current = me.team[0];
-		                                    	me.team[5] = null;
-		                                    }
-		                                    
+			                                    // Swap the selected party member with the selected box member
+			                                    if (jndex == 0) {
+			                                    	if (box[index] == null && me.team[jndex + 1] == null) {
+			                                    		JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
+			            	                            return;
+			                                    	}
+			                                        me.current = box[index];
+			                                    }
+			                                    if (box[index] == null && checkFaintedTeam(jndex)) {
+			                                    	JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
+			        	                            return;
+			                                    }
+			                                    Pokemon temp = me.team[jndex];
+			                                    if (temp != null) {
+			                                        temp.heal();
+			                                    }
+			                                    me.team[jndex] = box[index];
+			                                    box[index] = temp;
+			                                    
+			                                    if (me.team[jndex] == null) {
+			                                    	Pokemon[] teamTemp = me.team.clone();
+			                                    	for (int i = jndex + 1; i < me.team.length; i++) {
+			                                        	teamTemp[i - 1] = me.team[i];
+			                                        }
+			                                    	me.team = teamTemp;
+			                                    	me.current = me.team[0];
+			                                    	me.team[5] = null;
+			                                    }
+			                                    
 
-		                                    // Update the display
-		                                    SwingUtilities.getWindowAncestor(partyPanel).dispose();
-		                                    SwingUtilities.getWindowAncestor(boxMemberPanel).dispose();
-		                                    displayBox();
-		                                }
-
-		                            });
-		                            partyPanel.add(partyButton);
-		                        }
-		                        JScrollPane scrollPane = new JScrollPane(partyPanel);
-		                        scrollPane.setPreferredSize(new Dimension(300, 200));
-		                        JOptionPane.showMessageDialog(null, scrollPane, "Swap with a party member", JOptionPane.PLAIN_MESSAGE);
+			                                    // Update the display
+			                                    SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+			                                    SwingUtilities.getWindowAncestor(boxMemberPanel).dispose();
+			                                    displayBox();
+			                                }
+			                            });
+		                            }
+		                            partyMasterPanel.add(partyPanel);
+		                	    }
+		                        JOptionPane.showMessageDialog(null, partyMasterPanel, "Select a party member to swap with:", JOptionPane.PLAIN_MESSAGE);
 		                    }
 		                });
 		                forgetButton.addActionListener(new ActionListener() {

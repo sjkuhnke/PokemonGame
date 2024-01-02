@@ -872,7 +872,7 @@ public class Battle extends JFrame {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 			        if (SwingUtilities.isRightMouseButton(e)) {
-			        	JPanel teamMemberPanel = me.team[index].showSummary(me, false);
+			        	JPanel teamMemberPanel = me.team[index].showSummary(me, false, null, null);
 			            JOptionPane.showMessageDialog(null, teamMemberPanel, "Party member details", JOptionPane.PLAIN_MESSAGE);
 			        }
 			    }
@@ -1021,7 +1021,7 @@ public class Battle extends JFrame {
 		userSprite.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				JPanel teamMemberPanel = me.getCurrent().showSummary(me, false);
+				JPanel teamMemberPanel = me.getCurrent().showSummary(me, false, null, null);
 	            JOptionPane.showMessageDialog(null, teamMemberPanel, "Party member details", JOptionPane.PLAIN_MESSAGE);
             }
 		});
@@ -1475,34 +1475,34 @@ public class Battle extends JFrame {
 
 	private Pokemon getSwap(PlayerCharacter pl, boolean baton) {
 		if (me.hasValidMembers()) {
-			JPanel partyPanel = new JPanel();
-		    partyPanel.setLayout(new GridLayout(6, 1));
+			JPanel partyMasterPanel = new JPanel();
+			partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+		    partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 
 		    for (int j = 0; j < 6; j++) {
 		        if (me.team[j] != null && !me.team[j].isFainted() && !(me.team[j] == me.current)) {
-		            JButton party = pl.setUpPartyButton(j);
+		        	PartyPanel partyPanel = new PartyPanel(me.team[j]);
 		            final int index = j;
 
-		            party.addActionListener(g -> {
-		                if (baton) me.team[index].statStages = me.getCurrent().statStages;
-		                me.swap(me.team[index], index);
-		                me.getCurrent().swapIn(foe, me, true);
-		                updateField(field);
-		                foe.vStatuses.remove(Status.TRAPPED);
-		                foe.vStatuses.remove(Status.SPUN);
-		                updateBars(true);
-		                SwingUtilities.getWindowAncestor(partyPanel).dispose();
+		            partyPanel.addMouseListener(new MouseAdapter() {
+		            	public void mouseClicked(MouseEvent evt) {
+		            		if (baton) me.team[index].statStages = me.getCurrent().statStages;
+			                me.swap(me.team[index], index);
+			                me.getCurrent().swapIn(foe, me, true);
+			                updateField(field);
+			                foe.vStatuses.remove(Status.TRAPPED);
+			                foe.vStatuses.remove(Status.SPUN);
+			                updateBars(true);
+			                SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+		            	}
 		            });
-
-		            JPanel memberPanel = new JPanel(new BorderLayout());
-		            memberPanel.add(party, BorderLayout.NORTH);
-		            partyPanel.add(memberPanel);
+		            partyMasterPanel.add(partyPanel);
 		        }
 		    }
 
 		    JPanel wrapperPanel = new JPanel(new BorderLayout());
 		    wrapperPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); // Add the desired blank border
-		    wrapperPanel.add(partyPanel, BorderLayout.NORTH);
+		    wrapperPanel.add(partyMasterPanel, BorderLayout.NORTH);
 
 		    JDialog dialog = new JDialog((Frame) null, "Choose a party member to switch out to:", true);
 		    dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
