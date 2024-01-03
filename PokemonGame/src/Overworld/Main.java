@@ -224,6 +224,8 @@ public class Main {
 		    		if (selectedOptions[1]) writePokemon();
 		    		if (selectedOptions[2]) writeEncounters();
 		    		if (selectedOptions[3]) writeMoves();
+		    		if (selectedOptions[4]) writeDefensiveTypes();
+		    		if (selectedOptions[5]) writeOffensiveTypes();
 		    		
 		    		window.add(gamePanel);
 		    		gamePanel.requestFocusInWindow();
@@ -1629,6 +1631,171 @@ public class Main {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
+	}
+	
+	private static void writeDefensiveTypes() {
+		try {
+            FileWriter writer = new FileWriter("./docs/DefensiveTypings.txt");
+
+            PType[] types = PType.values();
+            ArrayList<PType> arrayListTypes = new ArrayList<>(Arrays.asList(types));
+            arrayListTypes.remove(PType.UNKNOWN);
+            types = arrayListTypes.toArray(new PType[1]);
+            
+            Pokemon test = new Pokemon(1, 5, true, false);
+            Pokemon foe = new Pokemon(4, 5, true, false);
+
+            writer.write("TYPE COMBINATIONS (Defensively)\n");
+            for (PType type1 : types) {
+                for (PType type2 : types) {
+                	writer.write("\n===========================\n");
+                    String combination = (type1 == type2) ? type1 + " - None" : type1 + " - " + type2;
+                    writer.write(combination + "\n===========================\n");
+                    
+                    Map<PType, Double> typeEffectivenessMap = new HashMap<>();
+                    foe.type1 = type1;
+                    foe.type2 = type2;
+                    
+                    for (PType type3 : types) {
+                        double multiplier = 1;
+                        if (test.getImmune(foe, type3)) multiplier = 0;
+                        
+                        if (multiplier != 0) {
+                        	// Check type effectiveness
+                    		PType[] resist = test.getResistances(type3);
+                    		for (PType type : resist) {
+                    			if (type1 == type) multiplier /= 2;
+                    			if (type2 == type) multiplier /= 2;
+                    		}
+                    		
+                    		// Check type effectiveness
+                    		PType[] weak = test.getWeaknesses(type3);
+                    		for (PType type : weak) {
+                    			if (type1 == type) multiplier *= 2;
+                    			if (type2 == type) multiplier *= 2;
+                    		}
+                    		
+                        }
+                        typeEffectivenessMap.put(type3, multiplier);
+                		
+                    }
+                    
+                    writer.write("Immune to:\n\n");
+                    for (Map.Entry<PType, Double> entry : typeEffectivenessMap.entrySet()) {
+                        if (entry.getValue() == 0.0) {
+                            writer.write(entry.getKey().toString() + "\n");
+                        }
+                    }
+                    
+                    writer.write("\n----------\nWeak to:\n\n");
+                    for (Map.Entry<PType, Double> entry : typeEffectivenessMap.entrySet()) {
+                        if (entry.getValue() >= 2.0) {
+                            writer.write(entry.getKey().toString());
+                            if (entry.getValue() == 4.0 && type1 != type2) writer.write(" (!!)");
+                            writer.write("\n");
+                        }
+                    }
+                    
+                    writer.write("\n----------\nResists:\n\n");
+                    for (Map.Entry<PType, Double> entry : typeEffectivenessMap.entrySet()) {
+                        if (entry.getValue() < 1.0 && entry.getValue() != 0) {
+                            writer.write(entry.getKey().toString());
+                            if (entry.getValue() == 0.25 && type1 != type2) writer.write(" (!!)");
+                            writer.write("\n");
+                        }
+                    }
+                    
+                }
+            }
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+	}
+	
+	private static void writeOffensiveTypes() {
+		try {
+            FileWriter writer = new FileWriter("./docs/OffensiveTypings.txt");
+
+            PType[] types = PType.values();
+            ArrayList<PType> arrayListTypes = new ArrayList<>(Arrays.asList(types));
+            arrayListTypes.remove(PType.UNKNOWN);
+            types = arrayListTypes.toArray(new PType[1]);
+            
+            Pokemon test = new Pokemon(1, 5, true, false);
+            Pokemon foe = new Pokemon(4, 5, true, false);
+
+            writer.write("TYPE COMBINATIONS (Offensively)\n");
+            for (PType type1 : types) {
+                for (PType type2 : types) {
+                	writer.write("\n===========================\n");
+                    String combination = (type1 == type2) ? type1 + " - None" : type1 + " - " + type2;
+                    writer.write(combination + "\n===========================\n");
+                    
+                    Map<PType, Double> typeEffectivenessMap = new HashMap<>();
+                    
+                    for (PType type3 : types) {
+                    	foe.type1 = type3;
+                        foe.type2 = null;
+                        double multiplier = 1;
+                        if (test.getImmune(foe, type1) && test.getImmune(foe, type2)) multiplier = 0;
+                        
+                        if (multiplier != 0) {
+                        	// Check type effectiveness
+                    		ArrayList<PType> resist1 = new ArrayList<>(Arrays.asList(test.getResistances(type1)));
+                    		ArrayList<PType> resist2 = new ArrayList<>(Arrays.asList(test.getResistances(type2)));
+                    		if ((resist1.contains(type3) && resist2.contains(type3)) || (test.getImmune(foe, type1) && resist2.contains(type3) || (resist1.contains(type3) && test.getImmune(foe, type2)))) multiplier /= 2;
+                    		
+                    		// Check type effectiveness
+                    		ArrayList<PType> weak1 = new ArrayList<>(Arrays.asList(test.getWeaknesses(type1)));
+                    		ArrayList<PType> weak2 = new ArrayList<>(Arrays.asList(test.getWeaknesses(type2)));
+                    		if (weak1.contains(type3) && weak2.contains(type3)) {
+                    			multiplier *= 4;
+                    		} else if (weak1.contains(type3) || weak2.contains(type3)) {
+                    			multiplier *= 2;
+                    		}
+                    		
+                    		
+                        }
+                        typeEffectivenessMap.put(type3, multiplier);
+                		
+                    }
+                    
+                    writer.write("Deals 2x to:\n\n");
+                    for (Map.Entry<PType, Double> entry : typeEffectivenessMap.entrySet()) {
+                        if (entry.getValue() >= 2.0) {
+                            writer.write(entry.getKey().toString());
+                            if (entry.getValue() == 4.0 && type1 != type2) writer.write(" (!!)");
+                            writer.write("\n");
+                        }
+                    }
+                    
+                    writer.write("\n----------\nDeals 1/2x to:\n\n");
+                    for (Map.Entry<PType, Double> entry : typeEffectivenessMap.entrySet()) {
+                        if (entry.getValue() < 1.0 && entry.getValue() != 0) {
+                            writer.write(entry.getKey().toString());
+                            if (entry.getValue() == 0.25 && type1 != type2) writer.write(" (!!)");
+                            writer.write("\n");
+                        }
+                    }
+                    
+                    writer.write("\n----------\nDeals 0x to:\n\n");
+                    for (Map.Entry<PType, Double> entry : typeEffectivenessMap.entrySet()) {
+                        if (entry.getValue() == 0.0) {
+                            writer.write(entry.getKey().toString() + "\n");
+                        }
+                    }
+                    
+                }
+            }
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 		
 	}
 

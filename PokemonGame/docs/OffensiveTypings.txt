@@ -1,0 +1,8493 @@
+TYPE COMBINATIONS (Offensively)
+
+===========================
+Normal - None
+===========================
+Deals 2x to:
+
+Magic
+
+----------
+Deals 1/2x to:
+
+Rock
+Steel
+
+----------
+Deals 0x to:
+
+Ghost
+
+===========================
+Normal - Rock
+===========================
+Deals 2x to:
+
+Fire
+Flying
+Magic
+Galactic
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Fire
+===========================
+Deals 2x to:
+
+Magic
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Rock
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Magic
+Ground
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock
+Magic
+Ground
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Ice
+===========================
+Deals 2x to:
+
+Flying
+Magic
+Ground
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Electric
+===========================
+Deals 2x to:
+
+Water
+Flying
+Magic
+Steel
+
+----------
+Deals 1/2x to:
+
+Ghost
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Fighting
+===========================
+Deals 2x to:
+
+Rock
+Magic
+Normal
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+Ghost
+
+===========================
+Normal - Poison
+===========================
+Deals 2x to:
+
+Water
+Magic (!!)
+Grass
+
+----------
+Deals 1/2x to:
+
+Rock
+Ghost
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Magic
+Electric
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Flying
+===========================
+Deals 2x to:
+
+Fighting
+Magic
+Galactic
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+Rock
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Psychic
+===========================
+Deals 2x to:
+
+Poison
+Fighting
+Magic
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Bug
+===========================
+Deals 2x to:
+
+Psychic
+Magic
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Ghost
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Ghost
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Magic
+Electric
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Dragon
+===========================
+Deals 2x to:
+
+Magic
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Steel
+===========================
+Deals 2x to:
+
+Rock
+Magic
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Dark
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Magic (!!)
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Light
+===========================
+Deals 2x to:
+
+Ghost
+Magic
+Galactic
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Magic
+===========================
+Deals 2x to:
+
+Magic
+Normal
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Normal - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Magic
+Ground
+
+----------
+Deals 1/2x to:
+
+Rock
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Normal
+===========================
+Deals 2x to:
+
+Fire
+Flying
+Magic
+Galactic
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - None
+===========================
+Deals 2x to:
+
+Fire
+Flying
+Galactic
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+Fighting
+Ground
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Fire
+===========================
+Deals 2x to:
+
+Fire
+Flying
+Galactic
+Ice (!!)
+Bug (!!)
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Water
+===========================
+Deals 2x to:
+
+Fire (!!)
+Rock
+Flying
+Galactic
+Ground
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Grass
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock
+Flying
+Galactic
+Ground
+Ice
+Bug
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Ice
+===========================
+Deals 2x to:
+
+Fire
+Flying (!!)
+Galactic
+Ground
+Ice
+Bug
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Electric
+===========================
+Deals 2x to:
+
+Fire
+Water
+Flying (!!)
+Galactic
+Ice
+Bug
+Steel
+
+----------
+Deals 1/2x to:
+
+Ground
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Fighting
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Flying
+Normal
+Galactic
+Ice (!!)
+Bug
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Poison
+===========================
+Deals 2x to:
+
+Fire
+Water
+Flying
+Magic
+Galactic
+Ice
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+Ground
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Ground
+===========================
+Deals 2x to:
+
+Fire (!!)
+Rock
+Poison
+Flying
+Galactic
+Electric
+Ice
+Bug
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Flying
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Flying
+Galactic (!!)
+Ice
+Bug (!!)
+Grass
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Psychic
+===========================
+Deals 2x to:
+
+Fire
+Poison
+Fighting
+Flying
+Galactic
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Bug
+===========================
+Deals 2x to:
+
+Fire
+Psychic
+Flying
+Galactic
+Ice
+Bug
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Fighting
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Ghost
+===========================
+Deals 2x to:
+
+Fire
+Psychic
+Ghost
+Flying
+Galactic
+Electric
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Dragon
+===========================
+Deals 2x to:
+
+Fire
+Flying
+Galactic
+Ice
+Bug
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Steel
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Flying
+Galactic
+Ice (!!)
+Bug
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Dark
+===========================
+Deals 2x to:
+
+Fire
+Psychic
+Ghost
+Flying
+Magic
+Galactic
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+Fighting
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Light
+===========================
+Deals 2x to:
+
+Fire
+Ghost
+Flying
+Galactic (!!)
+Ice (!!)
+Bug
+Dark
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Magic
+===========================
+Deals 2x to:
+
+Fire
+Flying
+Normal
+Galactic
+Ice
+Bug
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Fighting
+
+----------
+Deals 0x to:
+
+
+===========================
+Rock - Galactic
+===========================
+Deals 2x to:
+
+Fire (!!)
+Fighting
+Flying
+Galactic
+Ground
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Normal
+===========================
+Deals 2x to:
+
+Magic
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Rock
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Rock
+===========================
+Deals 2x to:
+
+Fire
+Flying
+Galactic
+Ice (!!)
+Bug (!!)
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - None
+===========================
+Deals 2x to:
+
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Fire
+Water
+Rock
+Dragon
+
+----------
+Deals 0x to:
+
+Galactic
+
+===========================
+Fire - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Ground
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Water
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock
+Ground
+Ice
+Bug
+Grass
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Galactic
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Ice
+===========================
+Deals 2x to:
+
+Flying
+Ground
+Ice
+Bug
+Grass (!!)
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Fire
+Water
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Electric
+===========================
+Deals 2x to:
+
+Water
+Flying
+Ice
+Bug
+Grass
+Steel (!!)
+
+----------
+Deals 1/2x to:
+
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Fighting
+===========================
+Deals 2x to:
+
+Rock
+Normal
+Ice (!!)
+Bug
+Grass
+Dark
+Steel (!!)
+
+----------
+Deals 1/2x to:
+
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Poison
+===========================
+Deals 2x to:
+
+Water
+Magic
+Ice
+Bug
+Grass (!!)
+Steel
+
+----------
+Deals 1/2x to:
+
+Rock
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Electric
+Ice
+Bug
+Grass
+Steel (!!)
+
+----------
+Deals 1/2x to:
+
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Flying
+===========================
+Deals 2x to:
+
+Fighting
+Galactic
+Ice
+Bug (!!)
+Grass (!!)
+Steel
+
+----------
+Deals 1/2x to:
+
+Rock
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Psychic
+===========================
+Deals 2x to:
+
+Poison
+Fighting
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Bug
+===========================
+Deals 2x to:
+
+Psychic
+Ice
+Bug
+Grass (!!)
+Dark
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Ghost
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Electric
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Dragon
+===========================
+Deals 2x to:
+
+Ice
+Bug
+Grass
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Steel
+===========================
+Deals 2x to:
+
+Rock
+Ice (!!)
+Bug
+Grass
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Water
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Dark
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Magic
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Light
+===========================
+Deals 2x to:
+
+Ghost
+Galactic
+Ice (!!)
+Bug
+Grass
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Fire
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Magic
+===========================
+Deals 2x to:
+
+Normal
+Ice
+Bug
+Grass
+Steel (!!)
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Fire - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Ground
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Rock
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Normal
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Magic
+Ground
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Rock
+===========================
+Deals 2x to:
+
+Fire (!!)
+Rock
+Flying
+Galactic
+Ground
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Fire
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Ground
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Water
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - None
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Ground
+
+----------
+Deals 1/2x to:
+
+Water
+Grass
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Grass
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock (!!)
+Ground (!!)
+Light
+
+----------
+Deals 1/2x to:
+
+Grass
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Ice
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Flying
+Ground (!!)
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Water
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Electric
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock
+Flying
+Ground
+Steel
+
+----------
+Deals 1/2x to:
+
+Grass
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Fighting
+===========================
+Deals 2x to:
+
+Fire
+Rock (!!)
+Normal
+Ground
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Poison
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock
+Magic
+Ground
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Ground
+===========================
+Deals 2x to:
+
+Fire (!!)
+Rock (!!)
+Poison
+Electric
+Ground
+Steel
+
+----------
+Deals 1/2x to:
+
+Grass
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Flying
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Fighting
+Galactic
+Ground
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Psychic
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Fighting
+Ground
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Bug
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Psychic
+Ground
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Ghost
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Psychic
+Ghost
+Electric
+Ground
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Dragon
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Ground
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Steel
+===========================
+Deals 2x to:
+
+Fire
+Rock (!!)
+Ground
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+Water
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Dark
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Psychic
+Ghost
+Magic
+Ground
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Light
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Ghost
+Galactic
+Ground
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+Grass
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Magic
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Normal
+Ground
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Water - Galactic
+===========================
+Deals 2x to:
+
+Fire (!!)
+Rock
+Fighting
+Ground (!!)
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Normal
+===========================
+Deals 2x to:
+
+Water
+Rock
+Magic
+Ground
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Rock
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock
+Flying
+Galactic
+Ground
+Ice
+Bug
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Fire
+===========================
+Deals 2x to:
+
+Water
+Rock
+Ground
+Ice
+Bug
+Grass
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Galactic
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Water
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock (!!)
+Ground (!!)
+Light
+
+----------
+Deals 1/2x to:
+
+Grass
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - None
+===========================
+Deals 2x to:
+
+Water
+Rock
+Ground
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Poison
+Flying
+Galactic
+Bug
+Grass
+Steel
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Ice
+===========================
+Deals 2x to:
+
+Water
+Rock
+Flying
+Ground (!!)
+Grass
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Electric
+===========================
+Deals 2x to:
+
+Water (!!)
+Rock
+Flying
+Ground
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Grass
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Fighting
+===========================
+Deals 2x to:
+
+Water
+Rock (!!)
+Normal
+Ground
+Ice
+Dark
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Poison
+Flying
+Galactic
+Bug
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Poison
+===========================
+Deals 2x to:
+
+Water (!!)
+Rock
+Magic
+Ground
+Grass
+Light
+
+----------
+Deals 1/2x to:
+
+Poison
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Ground
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock (!!)
+Poison
+Electric
+Ground
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Flying
+Galactic
+Bug
+Grass
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Flying
+===========================
+Deals 2x to:
+
+Water
+Rock
+Fighting
+Galactic
+Ground
+Bug
+Grass
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Psychic
+===========================
+Deals 2x to:
+
+Water
+Rock
+Poison
+Fighting
+Ground
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Bug
+===========================
+Deals 2x to:
+
+Water
+Rock
+Psychic
+Ground
+Grass
+Dark
+Light (!!)
+
+----------
+Deals 1/2x to:
+
+Fire
+Poison
+Flying
+Galactic
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Ghost
+===========================
+Deals 2x to:
+
+Water
+Rock
+Psychic
+Ghost
+Electric
+Ground
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Dragon
+===========================
+Deals 2x to:
+
+Water
+Rock
+Ground
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Steel
+===========================
+Deals 2x to:
+
+Water
+Rock (!!)
+Ground
+Ice
+Light (!!)
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Dark
+===========================
+Deals 2x to:
+
+Water
+Rock
+Psychic
+Ghost
+Magic
+Ground
+Light
+
+----------
+Deals 1/2x to:
+
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Light
+===========================
+Deals 2x to:
+
+Water
+Rock
+Ghost
+Galactic
+Ground
+Ice
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Bug
+Grass
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Magic
+===========================
+Deals 2x to:
+
+Water
+Rock
+Normal
+Ground
+Steel
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Poison
+
+----------
+Deals 0x to:
+
+
+===========================
+Grass - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock
+Fighting
+Ground (!!)
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Normal
+===========================
+Deals 2x to:
+
+Flying
+Magic
+Ground
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Rock
+===========================
+Deals 2x to:
+
+Fire
+Flying (!!)
+Galactic
+Ground
+Ice
+Bug
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Fire
+===========================
+Deals 2x to:
+
+Flying
+Ground
+Ice
+Bug
+Grass (!!)
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Fire
+Water
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Flying
+Ground (!!)
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Water
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock
+Flying
+Ground (!!)
+Grass
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - None
+===========================
+Deals 2x to:
+
+Flying
+Ground
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Fire
+Water
+Ice
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Electric
+===========================
+Deals 2x to:
+
+Water
+Flying (!!)
+Ground
+Grass
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Fighting
+===========================
+Deals 2x to:
+
+Rock
+Flying
+Normal
+Ground
+Ice
+Grass
+Dark
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Poison
+===========================
+Deals 2x to:
+
+Water
+Flying
+Magic
+Ground
+Grass (!!)
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Flying
+Electric
+Ground
+Grass
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Flying
+===========================
+Deals 2x to:
+
+Fighting
+Flying
+Galactic
+Ground
+Bug
+Grass (!!)
+Dragon
+
+----------
+Deals 1/2x to:
+
+Ice
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Psychic
+===========================
+Deals 2x to:
+
+Poison
+Fighting
+Flying
+Ground
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Bug
+===========================
+Deals 2x to:
+
+Psychic
+Flying
+Ground
+Grass (!!)
+Dark
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Ghost
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Flying
+Electric
+Ground
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Dragon
+===========================
+Deals 2x to:
+
+Flying
+Ground
+Grass
+Dragon (!!)
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Steel
+===========================
+Deals 2x to:
+
+Rock
+Flying
+Ground
+Ice
+Grass
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Water
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Dark
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Flying
+Magic
+Ground
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Light
+===========================
+Deals 2x to:
+
+Ghost
+Flying
+Galactic
+Ground
+Ice
+Grass
+Dark
+Dragon
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Magic
+===========================
+Deals 2x to:
+
+Flying
+Normal
+Ground
+Grass
+Steel
+Dragon (!!)
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ice - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Flying
+Ground (!!)
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Ice
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Normal
+===========================
+Deals 2x to:
+
+Water
+Flying
+Magic
+Steel
+
+----------
+Deals 1/2x to:
+
+Ghost
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Rock
+===========================
+Deals 2x to:
+
+Fire
+Water
+Flying (!!)
+Galactic
+Ice
+Bug
+Steel
+
+----------
+Deals 1/2x to:
+
+Ground
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Fire
+===========================
+Deals 2x to:
+
+Water
+Flying
+Ice
+Bug
+Grass
+Steel (!!)
+
+----------
+Deals 1/2x to:
+
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Water
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock
+Flying
+Ground
+Steel
+
+----------
+Deals 1/2x to:
+
+Grass
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Grass
+===========================
+Deals 2x to:
+
+Water (!!)
+Rock
+Flying
+Ground
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Grass
+Dragon
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Ice
+===========================
+Deals 2x to:
+
+Water
+Flying (!!)
+Ground
+Grass
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - None
+===========================
+Deals 2x to:
+
+Water
+Flying
+Steel
+
+----------
+Deals 1/2x to:
+
+Ghost
+Electric
+Grass
+Dragon
+
+----------
+Deals 0x to:
+
+Ground
+
+===========================
+Electric - Fighting
+===========================
+Deals 2x to:
+
+Water
+Rock
+Flying
+Normal
+Ice
+Dark
+Steel (!!)
+
+----------
+Deals 1/2x to:
+
+Ghost
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Poison
+===========================
+Deals 2x to:
+
+Water (!!)
+Flying
+Magic
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Ghost
+Ground
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Ground
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock
+Poison
+Flying
+Electric
+Steel (!!)
+
+----------
+Deals 1/2x to:
+
+Grass
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Flying
+===========================
+Deals 2x to:
+
+Water
+Fighting
+Flying
+Galactic
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Electric
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Psychic
+===========================
+Deals 2x to:
+
+Water
+Poison
+Fighting
+Flying
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Bug
+===========================
+Deals 2x to:
+
+Water
+Psychic
+Flying
+Grass
+Dark
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Ghost
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Ghost
+===========================
+Deals 2x to:
+
+Water
+Psychic
+Ghost
+Flying
+Electric
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Dragon
+===========================
+Deals 2x to:
+
+Water
+Flying
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Steel
+===========================
+Deals 2x to:
+
+Water
+Rock
+Flying
+Ice
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Electric
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Dark
+===========================
+Deals 2x to:
+
+Water
+Psychic
+Ghost
+Flying
+Magic
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Light
+===========================
+Deals 2x to:
+
+Water
+Ghost
+Flying
+Galactic
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Grass
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Magic
+===========================
+Deals 2x to:
+
+Water
+Flying
+Normal
+Steel (!!)
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Electric - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Water
+Fighting
+Flying
+Ground
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Normal
+===========================
+Deals 2x to:
+
+Rock
+Magic
+Normal
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+Ghost
+
+===========================
+Fighting - Rock
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Flying
+Normal
+Galactic
+Ice (!!)
+Bug
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Fire
+===========================
+Deals 2x to:
+
+Rock
+Normal
+Ice (!!)
+Bug
+Grass
+Dark
+Steel (!!)
+
+----------
+Deals 1/2x to:
+
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock (!!)
+Normal
+Ground
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock (!!)
+Normal
+Ground
+Ice
+Dark
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Poison
+Flying
+Galactic
+Bug
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Ice
+===========================
+Deals 2x to:
+
+Rock
+Flying
+Normal
+Ground
+Ice
+Grass
+Dark
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Electric
+===========================
+Deals 2x to:
+
+Water
+Rock
+Flying
+Normal
+Ice
+Dark
+Steel (!!)
+
+----------
+Deals 1/2x to:
+
+Ghost
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - None
+===========================
+Deals 2x to:
+
+Rock
+Normal
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Psychic
+Poison
+Flying
+Magic
+Galactic
+Bug
+
+----------
+Deals 0x to:
+
+Ghost
+
+===========================
+Fighting - Poison
+===========================
+Deals 2x to:
+
+Water
+Rock
+Magic
+Normal
+Ice
+Grass
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Ghost
+Poison
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock (!!)
+Poison
+Normal
+Electric
+Ice
+Dark
+Steel (!!)
+
+----------
+Deals 1/2x to:
+
+Flying
+Galactic
+Bug
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Flying
+===========================
+Deals 2x to:
+
+Rock
+Fighting
+Normal
+Galactic
+Ice
+Bug
+Grass
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Psychic
+===========================
+Deals 2x to:
+
+Rock
+Poison
+Fighting
+Normal
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Psychic
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Bug
+===========================
+Deals 2x to:
+
+Rock
+Psychic
+Normal
+Ice
+Grass
+Dark (!!)
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Ghost
+Poison
+Flying
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Ghost
+===========================
+Deals 2x to:
+
+Rock
+Psychic
+Ghost
+Normal
+Electric
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Dragon
+===========================
+Deals 2x to:
+
+Rock
+Normal
+Ice
+Dark
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Steel
+===========================
+Deals 2x to:
+
+Rock (!!)
+Normal
+Ice (!!)
+Dark
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Dark
+===========================
+Deals 2x to:
+
+Rock
+Psychic
+Ghost
+Magic
+Normal
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Light
+===========================
+Deals 2x to:
+
+Rock
+Ghost
+Normal
+Galactic
+Ice (!!)
+Dark (!!)
+Steel
+
+----------
+Deals 1/2x to:
+
+Bug
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Magic
+===========================
+Deals 2x to:
+
+Rock
+Normal (!!)
+Ice
+Dark
+Steel (!!)
+Dragon
+
+----------
+Deals 1/2x to:
+
+Poison
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Fighting - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Fighting
+Normal
+Ground
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Normal
+===========================
+Deals 2x to:
+
+Water
+Magic (!!)
+Grass
+
+----------
+Deals 1/2x to:
+
+Rock
+Ghost
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Rock
+===========================
+Deals 2x to:
+
+Fire
+Water
+Flying
+Magic
+Galactic
+Ice
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+Ground
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Fire
+===========================
+Deals 2x to:
+
+Water
+Magic
+Ice
+Bug
+Grass (!!)
+Steel
+
+----------
+Deals 1/2x to:
+
+Rock
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Water
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock
+Magic
+Ground
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Grass
+===========================
+Deals 2x to:
+
+Water (!!)
+Rock
+Magic
+Ground
+Grass
+Light
+
+----------
+Deals 1/2x to:
+
+Poison
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Ice
+===========================
+Deals 2x to:
+
+Water
+Flying
+Magic
+Ground
+Grass (!!)
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Electric
+===========================
+Deals 2x to:
+
+Water (!!)
+Flying
+Magic
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Ghost
+Ground
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Fighting
+===========================
+Deals 2x to:
+
+Water
+Rock
+Magic
+Normal
+Ice
+Grass
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Ghost
+Poison
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - None
+===========================
+Deals 2x to:
+
+Water
+Magic
+Grass
+
+----------
+Deals 1/2x to:
+
+Rock
+Ghost
+Poison
+Ground
+
+----------
+Deals 0x to:
+
+Steel
+
+===========================
+Poison - Ground
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock
+Poison
+Magic
+Electric
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Flying
+===========================
+Deals 2x to:
+
+Water
+Fighting
+Magic
+Galactic
+Bug
+Grass (!!)
+
+----------
+Deals 1/2x to:
+
+Rock
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Psychic
+===========================
+Deals 2x to:
+
+Water
+Poison
+Fighting
+Magic
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Bug
+===========================
+Deals 2x to:
+
+Water
+Psychic
+Magic
+Grass (!!)
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Ghost
+Poison
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Ghost
+===========================
+Deals 2x to:
+
+Water
+Psychic
+Ghost
+Magic
+Electric
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Dragon
+===========================
+Deals 2x to:
+
+Water
+Magic
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Steel
+===========================
+Deals 2x to:
+
+Water
+Rock
+Magic
+Ice
+Grass
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Dark
+===========================
+Deals 2x to:
+
+Water
+Psychic
+Ghost
+Magic (!!)
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Light
+===========================
+Deals 2x to:
+
+Water
+Ghost
+Magic
+Galactic
+Ice
+Grass
+Dark
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Magic
+===========================
+Deals 2x to:
+
+Water
+Magic
+Normal
+Grass
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Poison
+
+----------
+Deals 0x to:
+
+
+===========================
+Poison - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Water
+Fighting
+Magic
+Ground
+Grass
+
+----------
+Deals 1/2x to:
+
+Rock
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Normal
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Magic
+Electric
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Rock
+===========================
+Deals 2x to:
+
+Fire (!!)
+Rock
+Poison
+Flying
+Galactic
+Electric
+Ice
+Bug
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Fire
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Electric
+Ice
+Bug
+Grass
+Steel (!!)
+
+----------
+Deals 1/2x to:
+
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Water
+===========================
+Deals 2x to:
+
+Fire (!!)
+Rock (!!)
+Poison
+Electric
+Ground
+Steel
+
+----------
+Deals 1/2x to:
+
+Grass
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Grass
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock (!!)
+Poison
+Electric
+Ground
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Flying
+Galactic
+Bug
+Grass
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Ice
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Flying
+Electric
+Ground
+Grass
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Electric
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock
+Poison
+Flying
+Electric
+Steel (!!)
+
+----------
+Deals 1/2x to:
+
+Grass
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Fighting
+===========================
+Deals 2x to:
+
+Fire
+Rock (!!)
+Poison
+Normal
+Electric
+Ice
+Dark
+Steel (!!)
+
+----------
+Deals 1/2x to:
+
+Flying
+Galactic
+Bug
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Poison
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock
+Poison
+Magic
+Electric
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - None
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Electric
+Steel
+
+----------
+Deals 1/2x to:
+
+Galactic
+Bug
+Grass
+
+----------
+Deals 0x to:
+
+Flying
+
+===========================
+Ground - Flying
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Fighting
+Galactic
+Electric
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Psychic
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison (!!)
+Fighting
+Electric
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Bug
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Psychic
+Poison
+Electric
+Grass
+Dark
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Flying
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Ghost
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Psychic
+Ghost
+Poison
+Electric (!!)
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Dragon
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Electric
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Steel
+===========================
+Deals 2x to:
+
+Fire
+Rock (!!)
+Poison
+Electric
+Ice
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Dark
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Psychic
+Ghost
+Poison
+Magic
+Electric
+Steel
+
+----------
+Deals 1/2x to:
+
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Light
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Ghost
+Poison
+Galactic
+Electric
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Bug
+Grass
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Magic
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Normal
+Electric
+Steel (!!)
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ground - Galactic
+===========================
+Deals 2x to:
+
+Fire (!!)
+Rock
+Poison
+Fighting
+Electric
+Ground
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Normal
+===========================
+Deals 2x to:
+
+Fighting
+Magic
+Galactic
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+Rock
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Rock
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Flying
+Galactic (!!)
+Ice
+Bug (!!)
+Grass
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Fire
+===========================
+Deals 2x to:
+
+Fighting
+Galactic
+Ice
+Bug (!!)
+Grass (!!)
+Steel
+
+----------
+Deals 1/2x to:
+
+Rock
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Fighting
+Galactic
+Ground
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock
+Fighting
+Galactic
+Ground
+Bug
+Grass
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Ice
+===========================
+Deals 2x to:
+
+Fighting
+Flying
+Galactic
+Ground
+Bug
+Grass (!!)
+Dragon
+
+----------
+Deals 1/2x to:
+
+Ice
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Electric
+===========================
+Deals 2x to:
+
+Water
+Fighting
+Flying
+Galactic
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Electric
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Fighting
+===========================
+Deals 2x to:
+
+Rock
+Fighting
+Normal
+Galactic
+Ice
+Bug
+Grass
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Poison
+===========================
+Deals 2x to:
+
+Water
+Fighting
+Magic
+Galactic
+Bug
+Grass (!!)
+
+----------
+Deals 1/2x to:
+
+Rock
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Fighting
+Galactic
+Electric
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - None
+===========================
+Deals 2x to:
+
+Fighting
+Galactic
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+Rock
+Electric
+Ice
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Psychic
+===========================
+Deals 2x to:
+
+Poison
+Fighting (!!)
+Galactic
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Bug
+===========================
+Deals 2x to:
+
+Psychic
+Fighting
+Galactic
+Bug
+Grass (!!)
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Ghost
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Fighting
+Galactic
+Electric
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Dragon
+===========================
+Deals 2x to:
+
+Fighting
+Galactic
+Bug
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Steel
+===========================
+Deals 2x to:
+
+Rock
+Fighting
+Galactic
+Ice
+Bug
+Grass
+Light
+
+----------
+Deals 1/2x to:
+
+Electric
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Dark
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Fighting
+Magic
+Galactic
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Light
+===========================
+Deals 2x to:
+
+Ghost
+Fighting
+Galactic (!!)
+Ice
+Bug
+Grass
+Dark
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Magic
+===========================
+Deals 2x to:
+
+Fighting
+Normal
+Galactic
+Bug
+Grass
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Flying - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Fighting (!!)
+Galactic
+Ground
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+Rock
+Ice
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Normal
+===========================
+Deals 2x to:
+
+Poison
+Fighting
+Magic
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Rock
+===========================
+Deals 2x to:
+
+Fire
+Poison
+Fighting
+Flying
+Galactic
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Fire
+===========================
+Deals 2x to:
+
+Poison
+Fighting
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Fighting
+Ground
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock
+Poison
+Fighting
+Ground
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Ice
+===========================
+Deals 2x to:
+
+Poison
+Fighting
+Flying
+Ground
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Electric
+===========================
+Deals 2x to:
+
+Water
+Poison
+Fighting
+Flying
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Fighting
+===========================
+Deals 2x to:
+
+Rock
+Poison
+Fighting
+Normal
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Psychic
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Poison
+===========================
+Deals 2x to:
+
+Water
+Poison
+Fighting
+Magic
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison (!!)
+Fighting
+Electric
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Flying
+===========================
+Deals 2x to:
+
+Poison
+Fighting (!!)
+Galactic
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - None
+===========================
+Deals 2x to:
+
+Poison
+Fighting
+
+----------
+Deals 1/2x to:
+
+Psychic
+Magic
+
+----------
+Deals 0x to:
+
+Dark
+
+===========================
+Psychic - Bug
+===========================
+Deals 2x to:
+
+Psychic
+Poison
+Fighting
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Ghost
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Poison
+Fighting
+Electric
+
+----------
+Deals 1/2x to:
+
+Dark
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Dragon
+===========================
+Deals 2x to:
+
+Poison
+Fighting
+Dragon
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Steel
+===========================
+Deals 2x to:
+
+Rock
+Poison
+Fighting
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Dark
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Poison
+Fighting
+Magic
+
+----------
+Deals 1/2x to:
+
+Dark
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Light
+===========================
+Deals 2x to:
+
+Ghost
+Poison
+Fighting
+Galactic
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Magic
+===========================
+Deals 2x to:
+
+Poison
+Fighting
+Normal
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Psychic - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Poison
+Fighting (!!)
+Ground
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Normal
+===========================
+Deals 2x to:
+
+Psychic
+Magic
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Ghost
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Rock
+===========================
+Deals 2x to:
+
+Fire
+Psychic
+Flying
+Galactic
+Ice
+Bug
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Fighting
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Fire
+===========================
+Deals 2x to:
+
+Psychic
+Ice
+Bug
+Grass (!!)
+Dark
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Psychic
+Ground
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock
+Psychic
+Ground
+Grass
+Dark
+Light (!!)
+
+----------
+Deals 1/2x to:
+
+Fire
+Poison
+Flying
+Galactic
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Ice
+===========================
+Deals 2x to:
+
+Psychic
+Flying
+Ground
+Grass (!!)
+Dark
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Electric
+===========================
+Deals 2x to:
+
+Water
+Psychic
+Flying
+Grass
+Dark
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Ghost
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Fighting
+===========================
+Deals 2x to:
+
+Rock
+Psychic
+Normal
+Ice
+Grass
+Dark (!!)
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Ghost
+Poison
+Flying
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Poison
+===========================
+Deals 2x to:
+
+Water
+Psychic
+Magic
+Grass (!!)
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Ghost
+Poison
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Psychic
+Poison
+Electric
+Grass
+Dark
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Flying
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Flying
+===========================
+Deals 2x to:
+
+Psychic
+Fighting
+Galactic
+Bug
+Grass (!!)
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Psychic
+===========================
+Deals 2x to:
+
+Psychic
+Poison
+Fighting
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - None
+===========================
+Deals 2x to:
+
+Psychic
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Ghost
+Poison
+Fighting
+Flying
+Galactic
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Ghost
+===========================
+Deals 2x to:
+
+Psychic (!!)
+Ghost
+Electric
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Dragon
+===========================
+Deals 2x to:
+
+Psychic
+Grass
+Dark
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Steel
+===========================
+Deals 2x to:
+
+Rock
+Psychic
+Ice
+Grass
+Dark
+Light (!!)
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Dark
+===========================
+Deals 2x to:
+
+Psychic (!!)
+Ghost
+Magic
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Fighting
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Light
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Galactic
+Ice
+Grass
+Dark (!!)
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Magic
+===========================
+Deals 2x to:
+
+Psychic
+Normal
+Grass
+Dark
+Steel
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Poison
+Fighting
+
+----------
+Deals 0x to:
+
+
+===========================
+Bug - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Psychic
+Fighting
+Ground
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Normal
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Magic
+Electric
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Rock
+===========================
+Deals 2x to:
+
+Fire
+Psychic
+Ghost
+Flying
+Galactic
+Electric
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Fire
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Electric
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Psychic
+Ghost
+Electric
+Ground
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock
+Psychic
+Ghost
+Electric
+Ground
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Ice
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Flying
+Electric
+Ground
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Electric
+===========================
+Deals 2x to:
+
+Water
+Psychic
+Ghost
+Flying
+Electric
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Fighting
+===========================
+Deals 2x to:
+
+Rock
+Psychic
+Ghost
+Normal
+Electric
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Poison
+===========================
+Deals 2x to:
+
+Water
+Psychic
+Ghost
+Magic
+Electric
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Psychic
+Ghost
+Poison
+Electric (!!)
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Flying
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Fighting
+Galactic
+Electric
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Psychic
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Poison
+Fighting
+Electric
+
+----------
+Deals 1/2x to:
+
+Dark
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Bug
+===========================
+Deals 2x to:
+
+Psychic (!!)
+Ghost
+Electric
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - None
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Electric
+
+----------
+Deals 1/2x to:
+
+Dark
+Light
+
+----------
+Deals 0x to:
+
+Normal
+
+===========================
+Ghost - Dragon
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Electric
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Steel
+===========================
+Deals 2x to:
+
+Rock
+Psychic
+Ghost
+Electric
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Dark
+===========================
+Deals 2x to:
+
+Psychic (!!)
+Ghost (!!)
+Magic
+Electric
+
+----------
+Deals 1/2x to:
+
+Dark
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Light
+===========================
+Deals 2x to:
+
+Psychic
+Ghost (!!)
+Galactic
+Electric
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Magic
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Normal
+Electric
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Ghost - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Psychic
+Ghost
+Fighting
+Electric
+Ground
+
+----------
+Deals 1/2x to:
+
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Normal
+===========================
+Deals 2x to:
+
+Magic
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Rock
+===========================
+Deals 2x to:
+
+Fire
+Flying
+Galactic
+Ice
+Bug
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Fire
+===========================
+Deals 2x to:
+
+Ice
+Bug
+Grass
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Ground
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock
+Ground
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Ice
+===========================
+Deals 2x to:
+
+Flying
+Ground
+Grass
+Dragon (!!)
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Electric
+===========================
+Deals 2x to:
+
+Water
+Flying
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Fighting
+===========================
+Deals 2x to:
+
+Rock
+Normal
+Ice
+Dark
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Poison
+===========================
+Deals 2x to:
+
+Water
+Magic
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Electric
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Flying
+===========================
+Deals 2x to:
+
+Fighting
+Galactic
+Bug
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Psychic
+===========================
+Deals 2x to:
+
+Poison
+Fighting
+Dragon
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Bug
+===========================
+Deals 2x to:
+
+Psychic
+Grass
+Dark
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Ghost
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Electric
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - None
+===========================
+Deals 2x to:
+
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+Magic
+
+===========================
+Dragon - Steel
+===========================
+Deals 2x to:
+
+Rock
+Ice
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Magic
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Dark
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Magic
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Light
+===========================
+Deals 2x to:
+
+Ghost
+Galactic
+Ice
+Dark
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Magic
+===========================
+Deals 2x to:
+
+Normal
+Steel
+Dragon (!!)
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Dragon - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Ground
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Normal
+===========================
+Deals 2x to:
+
+Rock
+Magic
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Rock
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Flying
+Galactic
+Ice (!!)
+Bug
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Fire
+===========================
+Deals 2x to:
+
+Rock
+Ice (!!)
+Bug
+Grass
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Water
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock (!!)
+Ground
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+Water
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock (!!)
+Ground
+Ice
+Light (!!)
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Ice
+===========================
+Deals 2x to:
+
+Rock
+Flying
+Ground
+Ice
+Grass
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Water
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Electric
+===========================
+Deals 2x to:
+
+Water
+Rock
+Flying
+Ice
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Electric
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Fighting
+===========================
+Deals 2x to:
+
+Rock (!!)
+Normal
+Ice (!!)
+Dark
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Poison
+===========================
+Deals 2x to:
+
+Water
+Rock
+Magic
+Ice
+Grass
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock (!!)
+Poison
+Electric
+Ice
+Steel
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Flying
+===========================
+Deals 2x to:
+
+Rock
+Fighting
+Galactic
+Ice
+Bug
+Grass
+Light
+
+----------
+Deals 1/2x to:
+
+Electric
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Psychic
+===========================
+Deals 2x to:
+
+Rock
+Poison
+Fighting
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Bug
+===========================
+Deals 2x to:
+
+Rock
+Psychic
+Ice
+Grass
+Dark
+Light (!!)
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Ghost
+===========================
+Deals 2x to:
+
+Rock
+Psychic
+Ghost
+Electric
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Dragon
+===========================
+Deals 2x to:
+
+Rock
+Ice
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Magic
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - None
+===========================
+Deals 2x to:
+
+Rock
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Water
+Magic
+Electric
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Dark
+===========================
+Deals 2x to:
+
+Rock
+Psychic
+Ghost
+Magic
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Light
+===========================
+Deals 2x to:
+
+Rock
+Ghost
+Galactic
+Ice (!!)
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Magic
+===========================
+Deals 2x to:
+
+Rock
+Normal
+Ice
+Steel
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Steel - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Fighting
+Ground
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Normal
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Magic (!!)
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Rock
+===========================
+Deals 2x to:
+
+Fire
+Psychic
+Ghost
+Flying
+Magic
+Galactic
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+Fighting
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Fire
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Magic
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Psychic
+Ghost
+Magic
+Ground
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock
+Psychic
+Ghost
+Magic
+Ground
+Light
+
+----------
+Deals 1/2x to:
+
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Ice
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Flying
+Magic
+Ground
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Electric
+===========================
+Deals 2x to:
+
+Water
+Psychic
+Ghost
+Flying
+Magic
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Fighting
+===========================
+Deals 2x to:
+
+Rock
+Psychic
+Ghost
+Magic
+Normal
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Poison
+===========================
+Deals 2x to:
+
+Water
+Psychic
+Ghost
+Magic (!!)
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Psychic
+Ghost
+Poison
+Magic
+Electric
+Steel
+
+----------
+Deals 1/2x to:
+
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Flying
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Fighting
+Magic
+Galactic
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Psychic
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Poison
+Fighting
+Magic
+
+----------
+Deals 1/2x to:
+
+Dark
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Bug
+===========================
+Deals 2x to:
+
+Psychic (!!)
+Ghost
+Magic
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Fighting
+Galactic
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Ghost
+===========================
+Deals 2x to:
+
+Psychic (!!)
+Ghost (!!)
+Magic
+Electric
+
+----------
+Deals 1/2x to:
+
+Dark
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Dragon
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Magic
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Steel
+===========================
+Deals 2x to:
+
+Rock
+Psychic
+Ghost
+Magic
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - None
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Magic
+
+----------
+Deals 1/2x to:
+
+Fighting
+Galactic
+Dark
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Light
+===========================
+Deals 2x to:
+
+Psychic
+Ghost (!!)
+Magic
+Galactic
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Magic
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Magic
+Normal
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Fighting
+
+----------
+Deals 0x to:
+
+
+===========================
+Dark - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Psychic
+Ghost
+Fighting
+Magic
+Ground
+
+----------
+Deals 1/2x to:
+
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Normal
+===========================
+Deals 2x to:
+
+Ghost
+Magic
+Galactic
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Rock
+===========================
+Deals 2x to:
+
+Fire
+Ghost
+Flying
+Galactic (!!)
+Ice (!!)
+Bug
+Dark
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Fire
+===========================
+Deals 2x to:
+
+Ghost
+Galactic
+Ice (!!)
+Bug
+Grass
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Fire
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Ghost
+Galactic
+Ground
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+Grass
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock
+Ghost
+Galactic
+Ground
+Ice
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Bug
+Grass
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Ice
+===========================
+Deals 2x to:
+
+Ghost
+Flying
+Galactic
+Ground
+Ice
+Grass
+Dark
+Dragon
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Electric
+===========================
+Deals 2x to:
+
+Water
+Ghost
+Flying
+Galactic
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Grass
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Fighting
+===========================
+Deals 2x to:
+
+Rock
+Ghost
+Normal
+Galactic
+Ice (!!)
+Dark (!!)
+Steel
+
+----------
+Deals 1/2x to:
+
+Bug
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Poison
+===========================
+Deals 2x to:
+
+Water
+Ghost
+Magic
+Galactic
+Ice
+Grass
+Dark
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Ghost
+Poison
+Galactic
+Electric
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+Bug
+Grass
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Flying
+===========================
+Deals 2x to:
+
+Ghost
+Fighting
+Galactic (!!)
+Ice
+Bug
+Grass
+Dark
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Psychic
+===========================
+Deals 2x to:
+
+Ghost
+Poison
+Fighting
+Galactic
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Bug
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Galactic
+Ice
+Grass
+Dark (!!)
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Ghost
+===========================
+Deals 2x to:
+
+Psychic
+Ghost (!!)
+Galactic
+Electric
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Dragon
+===========================
+Deals 2x to:
+
+Ghost
+Galactic
+Ice
+Dark
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Steel
+===========================
+Deals 2x to:
+
+Rock
+Ghost
+Galactic
+Ice (!!)
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Fire
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Dark
+===========================
+Deals 2x to:
+
+Psychic
+Ghost (!!)
+Magic
+Galactic
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - None
+===========================
+Deals 2x to:
+
+Ghost
+Galactic
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+Fire
+Bug
+Steel
+Light
+
+----------
+Deals 0x to:
+
+Grass
+
+===========================
+Light - Magic
+===========================
+Deals 2x to:
+
+Ghost
+Normal
+Galactic
+Ice
+Dark
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Light - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Ghost
+Fighting
+Galactic
+Ground
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+Steel
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Normal
+===========================
+Deals 2x to:
+
+Magic
+Normal
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Rock
+===========================
+Deals 2x to:
+
+Fire
+Flying
+Normal
+Galactic
+Ice
+Bug
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Fighting
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Fire
+===========================
+Deals 2x to:
+
+Normal
+Ice
+Bug
+Grass
+Steel (!!)
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Water
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Normal
+Ground
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Grass
+===========================
+Deals 2x to:
+
+Water
+Rock
+Normal
+Ground
+Steel
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Poison
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Ice
+===========================
+Deals 2x to:
+
+Flying
+Normal
+Ground
+Grass
+Steel
+Dragon (!!)
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Electric
+===========================
+Deals 2x to:
+
+Water
+Flying
+Normal
+Steel (!!)
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Fighting
+===========================
+Deals 2x to:
+
+Rock
+Normal (!!)
+Ice
+Dark
+Steel (!!)
+Dragon
+
+----------
+Deals 1/2x to:
+
+Poison
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Poison
+===========================
+Deals 2x to:
+
+Water
+Magic
+Normal
+Grass
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Poison
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Ground
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Poison
+Normal
+Electric
+Steel (!!)
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Flying
+===========================
+Deals 2x to:
+
+Fighting
+Normal
+Galactic
+Bug
+Grass
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Psychic
+===========================
+Deals 2x to:
+
+Poison
+Fighting
+Normal
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Bug
+===========================
+Deals 2x to:
+
+Psychic
+Normal
+Grass
+Dark
+Steel
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Poison
+Fighting
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Ghost
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Normal
+Electric
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Dragon
+===========================
+Deals 2x to:
+
+Normal
+Steel
+Dragon (!!)
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Steel
+===========================
+Deals 2x to:
+
+Rock
+Normal
+Ice
+Steel
+Dragon
+Light
+
+----------
+Deals 1/2x to:
+
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Dark
+===========================
+Deals 2x to:
+
+Psychic
+Ghost
+Magic
+Normal
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Fighting
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Light
+===========================
+Deals 2x to:
+
+Ghost
+Normal
+Galactic
+Ice
+Dark
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - None
+===========================
+Deals 2x to:
+
+Normal
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+Poison
+Fighting
+Magic
+
+----------
+Deals 0x to:
+
+
+===========================
+Magic - Galactic
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Normal
+Ground
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Normal
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Magic
+Ground
+
+----------
+Deals 1/2x to:
+
+Rock
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Rock
+===========================
+Deals 2x to:
+
+Fire (!!)
+Fighting
+Flying
+Galactic
+Ground
+Ice
+Bug
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Fire
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Ground
+Ice
+Bug
+Grass
+Steel
+
+----------
+Deals 1/2x to:
+
+Rock
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Water
+===========================
+Deals 2x to:
+
+Fire (!!)
+Rock
+Fighting
+Ground (!!)
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Grass
+===========================
+Deals 2x to:
+
+Fire
+Water
+Rock
+Fighting
+Ground (!!)
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Ice
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Flying
+Ground (!!)
+Grass
+Dragon
+
+----------
+Deals 1/2x to:
+
+Ice
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Electric
+===========================
+Deals 2x to:
+
+Fire
+Water
+Fighting
+Flying
+Ground
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Fighting
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Fighting
+Normal
+Ground
+Ice
+Dark
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Poison
+===========================
+Deals 2x to:
+
+Fire
+Water
+Fighting
+Magic
+Ground
+Grass
+
+----------
+Deals 1/2x to:
+
+Rock
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Ground
+===========================
+Deals 2x to:
+
+Fire (!!)
+Rock
+Poison
+Fighting
+Electric
+Ground
+Steel
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Flying
+===========================
+Deals 2x to:
+
+Fire
+Fighting (!!)
+Galactic
+Ground
+Bug
+Grass
+
+----------
+Deals 1/2x to:
+
+Rock
+Ice
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Psychic
+===========================
+Deals 2x to:
+
+Fire
+Poison
+Fighting (!!)
+Ground
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Bug
+===========================
+Deals 2x to:
+
+Fire
+Psychic
+Fighting
+Ground
+Grass
+Dark
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Ghost
+===========================
+Deals 2x to:
+
+Fire
+Psychic
+Ghost
+Fighting
+Electric
+Ground
+
+----------
+Deals 1/2x to:
+
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Dragon
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Ground
+Dragon
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Steel
+===========================
+Deals 2x to:
+
+Fire
+Rock
+Fighting
+Ground
+Ice
+Light
+
+----------
+Deals 1/2x to:
+
+Steel
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Dark
+===========================
+Deals 2x to:
+
+Fire
+Psychic
+Ghost
+Fighting
+Magic
+Ground
+
+----------
+Deals 1/2x to:
+
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Light
+===========================
+Deals 2x to:
+
+Fire
+Ghost
+Fighting
+Galactic
+Ground
+Ice
+Dark
+
+----------
+Deals 1/2x to:
+
+Steel
+Light
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - Magic
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Normal
+Ground
+Steel
+Dragon
+
+----------
+Deals 1/2x to:
+
+
+----------
+Deals 0x to:
+
+
+===========================
+Galactic - None
+===========================
+Deals 2x to:
+
+Fire
+Fighting
+Ground
+
+----------
+Deals 1/2x to:
+
+Rock
+Ice
+Steel
+Light
+
+----------
+Deals 0x to:
+
