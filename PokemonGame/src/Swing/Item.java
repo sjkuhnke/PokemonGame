@@ -35,53 +35,53 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import Overworld.Main;
 
 public enum Item {
-	REPEL(0,25,new Color(0, 92, 5),Item.OTHER,null,"Prevents wild Pokemon encounters\nfor 200 steps"),
-	POKEBALL(1,10,new Color(176, 0, 12),Item.OTHER,null,"A standard device for capturing\nwild Pokemon"),
-	GREAT_BALL(2,25,new Color(0, 0, 148),Item.OTHER,null,"An upgraded device for capturing\nwild Pokemon"),
-	ULTRA_BALL(3,50,new Color(148, 171, 0),Item.OTHER,null,"A very efficient device for\ncapturing wild Pokemon"),
+	REPEL(0,25,new Color(0, 92, 5),Item.OTHER,null,"Prevents wild Pokemon encounters for 200 steps"),
+	POKEBALL(1,10,new Color(176, 0, 12),Item.OTHER,null,"A standard device for capturing wild Pokemon"),
+	GREAT_BALL(2,25,new Color(0, 0, 148),Item.OTHER,null,"An upgraded device for capturing wild Pokemon"),
+	ULTRA_BALL(3,50,new Color(148, 171, 0),Item.OTHER,null,"A very efficient device for capturing wild Pokemon"),
 	POTION(4,50,new Color(124, 0, 219),Item.MEDICINE,null,"Restores 20 HP"),
 	SUPER_POTION(5,125,new Color(140, 24, 8),Item.MEDICINE,null,"Restores 60 HP"),
 	HYPER_POTION(6,275,new Color(255, 0, 191),Item.MEDICINE,null,"Restores 200 HP"),
 	MAX_POTION(7,400,new Color(0, 21, 255),Item.MEDICINE,null,"Restores a Pokemon's HP to full"),
-	FULL_RESTORE(8,500,new Color(255, 196, 0),Item.MEDICINE,null,"Restores a Pokemon's HP to full\nand cures any status conditions"),
+	FULL_RESTORE(8,500,new Color(255, 196, 0),Item.MEDICINE,null,"Restores a Pokemon's HP to full and cures any status conditions"),
 	ANTIDOTE(9,25,new Color(157, 0, 255),Item.MEDICINE,null,"Cures a Pokemon of Poison"),
 	AWAKENING(10,25,new Color(63, 83, 92),Item.MEDICINE,null,"Cures a Pokemon of Sleep"),
 	BURN_HEAL(11,25,new Color(133, 15, 19),Item.MEDICINE,null,"Cures a Pokemon of Burn"),
 	PARALYZE_HEAL(12,25,new Color(176, 158, 0),Item.MEDICINE,null,"Cures a Pokemon of Paralysis"),
 	FREEZE_HEAL(13,25,new Color(0, 170, 189),Item.MEDICINE,null,"Cures a Pokemon of Frostbite"),
-	FULL_HEAL(14,150,new Color(255, 247, 0),Item.MEDICINE,null,"Cures a Pokemon of any status\ncondition"),
-	KLEINE_BAR(15,50,new Color(0, 55, 255),Item.MEDICINE,null,"Cures a Pokemon of any status\ncondition"),
-	REVIVE(16,500,new Color(219, 194, 0),Item.MEDICINE,null,"Recovers a Pokemon from fainting\nwith 50% HP"),
-	MAX_REVIVE(17,1500,new Color(219, 194, 0),Item.MEDICINE,null,"Recovers a Pokemon from fainting\nwith full HP"),
+	FULL_HEAL(14,150,new Color(255, 247, 0),Item.MEDICINE,null,"Cures a Pokemon of any status condition"),
+	KLEINE_BAR(15,50,new Color(0, 55, 255),Item.MEDICINE,null,"Cures a Pokemon of any status condition"),
+	REVIVE(16,500,new Color(219, 194, 0),Item.MEDICINE,null,"Recovers a Pokemon from fainting with 50% HP"),
+	MAX_REVIVE(17,1500,new Color(219, 194, 0),Item.MEDICINE,null,"Recovers a Pokemon from fainting with full HP"),
 	RARE_CANDY(18,0,new Color(124, 54, 255),Item.MEDICINE,null,"Elevates a Pokemon by 1 level"),
-	EUPHORIAN_GEM(19,500,new Color(138, 237, 255),Item.OTHER,null,"Grants a Pokemon 100 friendship\npoints"),
-	LEAF_STONE(20,1000,new Color(0, 120, 20),Item.OTHER,null,"Evolves a certain species of\nPokemon"),
-	DUSK_STONE(21,1000,new Color(64, 64, 64),Item.OTHER,null,"Evolves a certain species of\nPokemon"),
-	DAWN_STONE(22,1000,new Color(0, 176, 179),Item.OTHER,null,"Evolves a certain species of\nPokemon"),
-	ICE_STONE(23,1000,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of\nPokemon"),
-	VALIANT_GEM(24,2000,new Color(72, 75, 219),Item.OTHER,null,"Grants Masculine energy to\na Pokemon, evolving them\ninto their male evolution"),
-	PETTICOAT_GEM(25,2000,new Color(204, 61, 140),Item.OTHER,null,"Grants Feminine energy to\na Pokemon, evolving them\ninto their female evolution"),
-	ABILITY_CAPSULE(26,0,new Color(102, 7, 143),Item.OTHER,null,"Swaps a Pokemon's ability\nwith its other possible\nability"),
+	EUPHORIAN_GEM(19,500,new Color(138, 237, 255),Item.OTHER,null,"Grants a Pokemon 100 friendship points"),
+	LEAF_STONE(20,1000,new Color(0, 120, 20),Item.OTHER,null,"Evolves a certain species of Pokemon"),
+	DUSK_STONE(21,1000,new Color(64, 64, 64),Item.OTHER,null,"Evolves a certain species of Pokemon"),
+	DAWN_STONE(22,1000,new Color(0, 176, 179),Item.OTHER,null,"Evolves a certain species of Pokemon"),
+	ICE_STONE(23,1000,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon"),
+	VALIANT_GEM(24,2000,new Color(72, 75, 219),Item.OTHER,null,"Grants Masculine energy to a Pokemon, evolving them into their male evolution"),
+	PETTICOAT_GEM(25,2000,new Color(204, 61, 140),Item.OTHER,null,"Grants Feminine energy to a Pokemon, evolving them into their female evolution"),
+	ABILITY_CAPSULE(26,0,new Color(102, 7, 143),Item.OTHER,null,"Swaps a Pokemon's ability with its other possible ability"),
 	BOTTLE_CAP(27,1000,new Color(192, 192, 192),Item.OTHER,null,"Maxes out an IV of choosing"),
-	GOLD_BOTTLE_CAP(28,0,new Color(255, 215, 0),Item.OTHER,null,"Maxes out all IVs of a\nPokemon"),
-	ADAMANT_MINT(29,2500,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature\n to +Atk, -SpA"),
-	BOLD_MINT(30,1750,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature\n to +Def, -Atk"),
-	BRAVE_MINT(31,1000,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature\n to +Atk, -Spe"),
-	CALM_MINT(32,1500,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature\n to +SpD, -Atk"),
-	CAREFUL_MINT(33,1250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature\n to +SpD, -SpA"),
-	IMPISH_MINT(34,1750,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature\n to +Def, -SpA"),
-	JOLLY_MINT(35,2500,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature\n to +Spe, -SpA"),
-	MODEST_MINT(36,2250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature\n to +SpA, -Atk"),
-	QUIET_MINT(37,1000,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature\n to +SpA, -Spe"),
-	SERIOUS_MINT(38,1250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature\n to Neutral"),
-	TIMID_MINT(39,2500,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature\n to +Spe, -Atk"),
-	ELIXIR(40,300,new Color(230, 146, 78),Item.MEDICINE,null,"Restores PP of a selected\nmove"),
-	MAX_ELIXIR(41,250,new Color(246, 255, 120),Item.MEDICINE,null,"Restores PP of all moves\non a Pokemon"),
-	PP_UP(42,2500,new Color(150, 51, 156),Item.MEDICINE,null,"Increases max PP of a\nselected move by 20%"),
-	PP_MAX(43,0,new Color(142, 230, 21),Item.MEDICINE,null,"Increases max PP of a\nselected move by its\nmax PP, which is 160%"),
-	EDGE_KIT(44,0,new Color(232, 52, 54),Item.OTHER,null,"Edges ;) your Pokemon until\nthey're about to bust :{D"),
-	THUNDER_SCALES_FOSSIL(45,0,new Color(201, 169, 81),Item.OTHER,null,"A fossil of an ancient Pokemon\nthat lived in a desert.\nIt appears to have an\nelectric charge ridden\nin the scales."),
-	DUSK_SCALES_FOSSIL(46,0,new Color(45, 47, 51),Item.OTHER,null,"A fossil of an ancient Pokemon\nthat lived in a forest.\nIt appears to give off\na dark energy within\n the scales."),
+	GOLD_BOTTLE_CAP(28,0,new Color(255, 215, 0),Item.OTHER,null,"Maxes out all IVs of a Pokemon"),
+	ADAMANT_MINT(29,2500,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature  to +Atk, -SpA"),
+	BOLD_MINT(30,1750,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature  to +Def, -Atk"),
+	BRAVE_MINT(31,1000,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature  to +Atk, -Spe"),
+	CALM_MINT(32,1500,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature  to +SpD, -Atk"),
+	CAREFUL_MINT(33,1250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature  to +SpD, -SpA"),
+	IMPISH_MINT(34,1750,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature  to +Def, -SpA"),
+	JOLLY_MINT(35,2500,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature  to +Spe, -SpA"),
+	MODEST_MINT(36,2250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature  to +SpA, -Atk"),
+	QUIET_MINT(37,1000,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature  to +SpA, -Spe"),
+	SERIOUS_MINT(38,1250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature  to Neutral"),
+	TIMID_MINT(39,2500,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature  to +Spe, -Atk"),
+	ELIXIR(40,300,new Color(230, 146, 78),Item.MEDICINE,null,"Restores PP of a selected move"),
+	MAX_ELIXIR(41,250,new Color(246, 255, 120),Item.MEDICINE,null,"Restores PP of all moves on a Pokemon"),
+	PP_UP(42,2500,new Color(150, 51, 156),Item.MEDICINE,null,"Increases max PP of a selected move by 20%"),
+	PP_MAX(43,0,new Color(142, 230, 21),Item.MEDICINE,null,"Increases max PP of a selected move by its max PP, which is 160%"),
+	EDGE_KIT(44,0,new Color(232, 52, 54),Item.OTHER,null,"Edges ;) your Pokemon until they're about to bust :{D"),
+	THUNDER_SCALES_FOSSIL(45,0,new Color(201, 169, 81),Item.OTHER,null,"A fossil of an ancient Pokemon that lived in a desert. It appears to have an electric charge ridden in the scales."),
+	DUSK_SCALES_FOSSIL(46,0,new Color(45, 47, 51),Item.OTHER,null,"A fossil of an ancient Pokemon that lived in a forest. It appears to give off a dark energy within  the scales."),
 	CHOICE_BAND(47,0,new Color(224, 152, 159),Item.HELD_ITEM,null,"A curious headband that boosts the holder's Attack stat but only allows the use of a single move."),
 	CHOICE_SCARF(48,0,new Color(133, 172, 220),Item.HELD_ITEM,null,"A curious scarf that boosts the holder's Speed stat but only allows the use of a single move."),
 	CHOICE_SPECS(49,0,new Color(238, 236, 100),Item.HELD_ITEM,null,"A pair of curious glasses that boost the holder's Sp. Atk stat but only allow the use of a single move."),
@@ -97,33 +97,33 @@ public enum Item {
 	BRIGHT_POWDER(59,0,new Color(214, 234, 206),Item.HELD_ITEM,null,"A glittery powder that casts a tricky glare which lowers the accuracy of opposing Pokemon's moves."),
 	EXPERT_BELT(60,0,new Color(94, 90, 97),Item.HELD_ITEM,null,"A well-worn belt that slightly boosts the power of the holder's supereffective moves."),
 	TERRAIN_EXTENDER(61,0,new Color(212, 228, 229),Item.HELD_ITEM,null,"A held item that extends the duration of terrain caused by the holder's move or Ability."),
-	LIFE_ORB(62,0,new Color(184, 72, 144),Item.HELD_ITEM,null,"An orb that boosts the power of the holder's moves, but at the cost of some HP."), // TODO
+	LIFE_ORB(62,0,new Color(184, 72, 144),Item.HELD_ITEM,null,"An orb that boosts the power of the holder's moves, but at the cost of some HP."),
 	FLAME_ORB(63,0,new Color(225, 3, 3),Item.HELD_ITEM,null,"A bizarre orb that gives off heat when touched and will afflict the holder with a burn during battle."),
 	TOXIC_ORB(64,0,new Color(148, 112, 172),Item.HELD_ITEM,null,"A bizarre orb that exudes toxins when touched and will badly poison the holder during battle."),
 	ROCKY_HELMET(65,0,new Color(241, 188, 27),Item.HELD_ITEM,null,"If another Pokemon makes direct contact with the holder, that Pokemon will be damaged."),
 	LIGHT_CLAY(66,0,new Color(183, 216, 126),Item.HELD_ITEM,null,"An item that when the holder uses protective moves like Light Screen or Reflect, their effects will last longer than usual."),
 	SOOTHE_BELL(67,0,new Color(198, 199, 202),Item.HELD_ITEM,null,"The comforting chime of this bell calms the holder, making it friendly."),
-	LOADED_DICE(68,0,new Color(144, 232, 16),Item.HELD_ITEM,null,""),
-	SCOPE_LENS(69,0,new Color(192, 183, 54),Item.HELD_ITEM,null,""),
-	WIDE_LENS(70,0,new Color(74, 162, 195),Item.HELD_ITEM,null,""),
-	QUICK_CLAW(71,0,new Color(213, 189, 105),Item.HELD_ITEM,null,""),
-	BIG_ROOT(72,0,new Color(208, 161, 91),Item.HELD_ITEM,null,""),
-	CLEAR_AMULET(73,0,new Color(204, 204, 243),Item.HELD_ITEM,null,""),
-	COVERT_CLOAK(74,0,new Color(101, 136, 160),Item.HELD_ITEM,null,""),
-	HEAVY$DUTY_BOOTS(75,0,new Color(97, 97, 97),Item.HELD_ITEM,null,""),
-	FOCUS_BAND(76,0,new Color(232, 80, 80),Item.HELD_ITEM,null,""),
-	KING1S_ROCK(77,0,new Color(224, 206, 58),Item.HELD_ITEM,null,""),
-	SHED_SHELL(78,0,new Color(243, 241, 140),Item.HELD_ITEM,null,""), // TODO
-	MUSCLE_BAND(79,0,new Color(225, 200, 50),Item.HELD_ITEM,null,""),
-	WISE_GLASSES(80,0,new Color(92, 105, 117),Item.HELD_ITEM,null,""),
-	FOCUS_SASH(81,0,new Color(232, 80, 80),Item.HELD_ITEM,null,""),
-	AIR_BALLOON(82,0,new Color(232, 72, 72),Item.HELD_ITEM,null,""),
-	POWER_HERB(83,0,new Color(253, 80, 77),Item.HELD_ITEM,null,""),
-	WHITE_HERB(84,0,new Color(242, 242, 242),Item.HELD_ITEM,null,""),
-	WEAKNESS_POLICY(85,0,new Color(215, 233, 195),Item.HELD_ITEM,null,""),
-	BLUNDER_POLICY(86,0,new Color(239, 239, 178),Item.HELD_ITEM,null,""),
-	RED_CARD(87,0,new Color(216, 35, 22),Item.HELD_ITEM,null,""),
-	THROAT_SPRAY(88,0,new Color(96, 120, 168),Item.HELD_ITEM,null,""),
+	LOADED_DICE(68,0,new Color(144, 232, 16),Item.HELD_ITEM,null,"This loaded dice always rolls a good number, and holding one can ensure that the holder's multistrike moves hit more times."),
+	SCOPE_LENS(69,0,new Color(192, 183, 54),Item.HELD_ITEM,null,"A lens for scoping out weak points. It boosts the holder's critical-hit ratio."),
+	WIDE_LENS(70,0,new Color(74, 162, 195),Item.HELD_ITEM,null,"A magnifying lens that slightly boosts the accuracy of the holder's moves."),
+	QUICK_CLAW(71,0,new Color(213, 189, 105),Item.HELD_ITEM,null,"This light, sharp claw lets the holder move first occasionally."),
+	BIG_ROOT(72,0,new Color(208, 161, 91),Item.HELD_ITEM,null,"This root boosts the amount of HP the holder restores to itself when it uses HP-stealing moves."),
+	CLEAR_AMULET(73,0,new Color(204, 204, 243),Item.HELD_ITEM,null,"This clear, sparkling amulet protects the holder from having its stats lowered by moves used against it or by other Pokemon's Abilities."),
+	COVERT_CLOAK(74,0,new Color(101, 136, 160),Item.HELD_ITEM,null,"This hooded cloak conceals the holder, tricking the eyes of its enemies and protecting it from the additional effects of moves."),
+	HEAVY$DUTY_BOOTS(75,0,new Color(97, 97, 97),Item.HELD_ITEM,null,"These boots protect the holder from the effects of entry hazards set on the battlefield."),
+	FOCUS_BAND(76,0,new Color(232, 80, 80),Item.HELD_ITEM,null,"When the holder is hit with a move that should knock it out, it may be able to endure with 1 HP."),
+	KING1S_ROCK(77,0,new Color(224, 206, 58),Item.HELD_ITEM,null,"It may cause the target to flinch whenever the holder successfully inflicts damage on them with an attack."),
+	SHED_SHELL(78,0,new Color(243, 241, 140),Item.HELD_ITEM,null,"Hard and sturdy, this discarded carapace enables the holder to switch out of battle without fail."),
+	MUSCLE_BAND(79,0,new Color(225, 200, 50),Item.HELD_ITEM,null,"This headband exudes strength, slightly boosting the power of the holder's physical moves."),
+	WISE_GLASSES(80,0,new Color(92, 105, 117),Item.HELD_ITEM,null,"This thick pair of glasses slightly boosts the power of the holder's special moves."),
+	FOCUS_SASH(81,0,new Color(232, 80, 80),Item.HELD_ITEM,null,"If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP—but only once."),
+	AIR_BALLOON(82,0,new Color(232, 72, 72),Item.HELD_ITEM,null,"This balloon makes the holder float in the air. If the holder is hit with an attack, the balloon will burst."),
+	POWER_HERB(83,0,new Color(253, 80, 77),Item.HELD_ITEM,null,"A herb that allows the holder to immediately use a move that normally requires a turn to charge—but only once."),
+	WHITE_HERB(84,0,new Color(242, 242, 242),Item.HELD_ITEM,null,"A herb that will restore any lowered stat in battle—but only once."),
+	WEAKNESS_POLICY(85,0,new Color(215, 233, 195),Item.HELD_ITEM,null,"If the holder is hit with a move it's weak to, this policy sharply boosts its Attack and Sp. Atk stats."),
+	BLUNDER_POLICY(86,0,new Color(239, 239, 178),Item.HELD_ITEM,null,"If the holder misses with a move due to low accuracy, this policy will sharply boost its Speed stat."),
+	RED_CARD(87,0,new Color(216, 35, 22),Item.HELD_ITEM,null,"If the holder is damaged by an attack, the mysterious power of this card can remove the attacker from the battle."),
+	THROAT_SPRAY(88,0,new Color(96, 120, 168),Item.HELD_ITEM,null,"If the holder uses a sound-based move, this throat spray will boost its Sp. Atk stat."),
 	NULL89(89,0,Color.BLACK,Item.HELD_ITEM,null,""),
 	NULL90(90,0,Color.BLACK,Item.HELD_ITEM,null,""),
 	NULL91(91,0,Color.BLACK,Item.OTHER,null,""),
@@ -235,66 +235,66 @@ public enum Item {
 	TM97(197,0,Color.BLACK,Item.TMS,Move.SPIRIT_BREAK,"Teaches a Pokemon this move."),
 	TM98(198,0,Color.BLACK,Item.TMS,Move.FLIP_TURN,"Teaches a Pokemon this move."),
 	TM99(199,0,Color.BLACK,Item.TMS,Move.RETURN,"Teaches a Pokemon this move."),
-	CALCULATOR(200,0,Color.BLACK,Item.OTHER,null,"Calculates damage simulating\na battle"),
+	CALCULATOR(200,0,Color.BLACK,Item.OTHER,null,"Calculates damage simulating a battle"),
 	BLACK_BELT(201,0,new Color(81, 76, 84),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."),
 	BLACK_GLASSES(202,0,new Color(81, 65, 78),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."),
 	CHARCOAL(203,0,new Color(67, 60, 73),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."),
 	COSMIC_CORE(204,0,new Color(71, 40, 79),Item.HELD_ITEM,null,"A mysterious core from the heart of the cosmos that boosts the power of Galactic-type moves."),
-	DRAGON_FANG(205,0,new Color(149, 122, 124),Item.HELD_ITEM,null,""),
+	DRAGON_FANG(205,0,new Color(149, 122, 124),Item.HELD_ITEM,null,"This hard, sharp fang boosts the power of the holder's Dragon-type moves."),
 	ENCHANTED_AMULET(206,0,new Color(211, 38, 255),Item.HELD_ITEM,null,"An ancient amulet with mystical properties that boosts the power of Magic-type moves."),
 	GLOWING_PRISM(207,0,new Color(255, 252, 153),Item.HELD_ITEM,null,"A radiant prism that boosts the power of Light-type moves."),
 	HARD_STONE(208,0,new Color(96, 88, 88),Item.HELD_ITEM,null,"A durable stone that boosts the power of the holder's Rock-type moves."),
-	MAGNET(209,0,new Color(163, 171, 147),Item.HELD_ITEM,null,""),
-	METAL_COAT(210,0,new Color(178, 200, 200),Item.HELD_ITEM,null,""),
-	MIRACLE_SEED(211,0,new Color(215, 209, 80),Item.HELD_ITEM,null,""),
-	MYSTIC_WATER(212,0,new Color(88, 88, 208),Item.HELD_ITEM,null,""),
-	NEVER$MELT_ICE(213,0,new Color(216, 235, 244),Item.HELD_ITEM,null,""),
-	POISON_BARB(214,0,new Color(173, 130, 158),Item.HELD_ITEM,null,""),
-	SHARP_BEAK(215,0,new Color(241, 225, 145),Item.HELD_ITEM,null,""),
-	SILK_SCARF(216,0,new Color(235, 250, 250),Item.HELD_ITEM,null,""),
-	SILVER_POWDER(217,0,new Color(119, 201, 132),Item.HELD_ITEM,null,""),
-	SOFT_SAND(218,0,new Color(240, 224, 152),Item.HELD_ITEM,null,""),
-	SPELL_TAG(219,0,new Color(127, 127, 126),Item.HELD_ITEM,null,""),
-	TWISTED_SPOON(220,0,new Color(220, 229, 229),Item.HELD_ITEM,null,""),
-	CHERI_BERRY(221,0,new Color(232, 96, 80),Item.BERRY,null,""),
-	CHESTO_BERRY(222,0,new Color(144, 112, 224),Item.BERRY,null,""),
-	PECHA_BERRY(223,0,new Color(248, 192, 152),Item.BERRY,null,""),
-	RAWST_BERRY(224,0,new Color(144, 208, 208),Item.BERRY,null,""),
-	ASPEAR_BERRY(225,0,new Color(240, 224, 80),Item.BERRY,null,""),
-	LUM_BERRY(226,0,new Color(144, 216, 72),Item.BERRY,null,""),
-	PERSIM_BERRY(227,0,new Color(224, 152, 112),Item.BERRY,null,""),
-	LEPPA_BERRY(228,0,new Color(200, 72, 48),Item.BERRY,null,""),
-	ORAN_BERRY(229,0,new Color(80, 160, 240),Item.BERRY,null,""),
-	SITRUS_BERRY(230,0,new Color(248, 232, 104),Item.BERRY,null,""),
-	WIKI_BERRY(231,0,new Color(144, 112, 224),Item.BERRY,null,""),
-	OCCA_BERRY(232,0,PType.FIRE.getColor(),Item.BERRY,null,""),
-	PASSHO_BERRY(233,0,PType.WATER.getColor(),Item.BERRY,null,""),
-	WACAN_BERRY(234,0,PType.ELECTRIC.getColor(),Item.BERRY,null,""),
-	RINDO_BERRY(235,0,PType.GRASS.getColor(),Item.BERRY,null,""),
-	YACHE_BERRY(236,0,PType.ICE.getColor(),Item.BERRY,null,""),
-	CHOPLE_BERRY(237,0,PType.FIGHTING.getColor(),Item.BERRY,null,""),
-	KEBIA_BERRY(238,0,PType.POISON.getColor(),Item.BERRY,null,""),
-	SHUCA_BERRY(239,0,PType.GROUND.getColor(),Item.BERRY,null,""),
-	COBA_BERRY(240,0,PType.FLYING.getColor(),Item.BERRY,null,""),
-	PAYAPA_BERRY(241,0,PType.PSYCHIC.getColor(),Item.BERRY,null,""),
-	TANGA_BERRY(242,0,PType.BUG.getColor(),Item.BERRY,null,""),
-	CHARTI_BERRY(243,0,PType.ROCK.getColor(),Item.BERRY,null,""),
-	KASIB_BERRY(244,0,PType.GHOST.getColor(),Item.BERRY,null,""),
-	HABAN_BERRY(245,0,PType.DRAGON.getColor(),Item.BERRY,null,""),
-	COLBUR_BERRY(246,0,PType.DARK.getColor(),Item.BERRY,null,""),
-	BABIRI_BERRY(247,0,PType.STEEL.getColor(),Item.BERRY,null,""),
-	CHILAN_BERRY(248,0,PType.NORMAL.getColor(),Item.BERRY,null,""),
-	ROSELI_BERRY(249,0,PType.LIGHT.getColor(),Item.BERRY,null,""),
-	MYSTICOLA_BERRY(250,0,PType.MAGIC.getColor(),Item.BERRY,null,""),
-	GALAXEED_BERRY(251,0,PType.GALACTIC.getColor(),Item.BERRY,null,""),
-	LIECHI_BERRY(252,0,new Color(248, 224, 160),Item.BERRY,null,""),
-	GANLON_BERRY(253,0,new Color(152, 144, 200),Item.BERRY,null,""),
-	SALAC_BERRY(254,0,new Color(120, 184, 112),Item.BERRY,null,""),
-	PETAYA_BERRY(255,0,new Color(240, 160, 120),Item.BERRY,null,""),
-	APRICOT_BERRY(256,0,new Color(104, 128, 184),Item.BERRY,null,""),
-	STARF_BERRY(257,0,new Color(184, 232, 152),Item.BERRY,null,""),
-	MICLE_BERRY(258,0,new Color(64, 200, 64),Item.BERRY,null,""),
-	CUSTAP_BERRY(259,0,Color.BLACK,Item.BERRY,null,""), // TODO
+	MAGNET(209,0,new Color(163, 171, 147),Item.HELD_ITEM,null,"A powerful magnet that boosts the power of the holder's Electric-type moves."),
+	METAL_COAT(210,0,new Color(178, 200, 200),Item.HELD_ITEM,null,"A special metallic coating that boosts the power of the holder's Steel-type moves."),
+	MIRACLE_SEED(211,0,new Color(215, 209, 80),Item.HELD_ITEM,null,"A seed imbued with life-force that boosts the power of the holder's Grass-type moves."),
+	MYSTIC_WATER(212,0,new Color(88, 88, 208),Item.HELD_ITEM,null,"A teardrop-shaped gem boosts the power of the holder's Water-type moves."),
+	NEVER$MELT_ICE(213,0,new Color(216, 235, 244),Item.HELD_ITEM,null,"A heat-repelling piece of ice that boosts the power of the holder's Ice- type moves."),
+	POISON_BARB(214,0,new Color(173, 130, 158),Item.HELD_ITEM,null,"A small poisonous barb boosts the power of the holder's Poison-type moves."),
+	SHARP_BEAK(215,0,new Color(241, 225, 145),Item.HELD_ITEM,null,"A long, sharp beak that boosts the power of the holder's Flying-type moves."),
+	SILK_SCARF(216,0,new Color(235, 250, 250),Item.HELD_ITEM,null,"A sumptuous scarf that boosts the power of the holder's Normal-type moves."),
+	SILVER_POWDER(217,0,new Color(119, 201, 132),Item.HELD_ITEM,null,"A pile of shiny silver powder that boosts the power of the holder's Bug-type moves."),
+	SOFT_SAND(218,0,new Color(240, 224, 152),Item.HELD_ITEM,null,"A loose, silky sand that boosts the power of the holder's Ground-type moves."),
+	SPELL_TAG(219,0,new Color(127, 127, 126),Item.HELD_ITEM,null,"A sinister, eerie tag that boosts the power of the holder's Ghost-type moves."),
+	TWISTED_SPOON(220,0,new Color(220, 229, 229),Item.HELD_ITEM,null,"This spoon is imbued with telekinetic energy and boosts the power of the holder's Psychic-type moves."),
+	CHERI_BERRY(221,0,new Color(232, 96, 80),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to free itself from paralysis."),
+	CHESTO_BERRY(222,0,new Color(144, 112, 224),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to wake itself from sleep."),
+	PECHA_BERRY(223,0,new Color(248, 192, 152),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to lift the effects of being poisoned from itself."),
+	RAWST_BERRY(224,0,new Color(144, 208, 208),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to cure itself of a burn."),
+	ASPEAR_BERRY(225,0,new Color(240, 224, 80),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to thaw itself from a frostbite."),
+	LUM_BERRY(226,0,new Color(144, 216, 72),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to cure itself of any status condition it may have."),
+	PERSIM_BERRY(227,0,new Color(224, 152, 112),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to cure itself of confusion."),
+	LEPPA_BERRY(228,0,new Color(200, 72, 48),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to restore 10 PP to a move."),
+	ORAN_BERRY(229,0,new Color(80, 160, 240),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to restore 10 HP to itself."),
+	SITRUS_BERRY(230,0,new Color(248, 232, 104),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to restore 25% of HP to itself."),
+	WIKI_BERRY(231,0,new Color(144, 112, 224),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to restore 33% HP should it find itself in a pinch."),
+	OCCA_BERRY(232,0,PType.FIRE.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Fire-type move, the power of that move will be weakened."),
+	PASSHO_BERRY(233,0,PType.WATER.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Water-type move, the power of that move will be weakened."),
+	WACAN_BERRY(234,0,PType.ELECTRIC.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Electric-type move, the power of that move will be weakened."),
+	RINDO_BERRY(235,0,PType.GRASS.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Rindo-type move, the power of that move will be weakened."),
+	YACHE_BERRY(236,0,PType.ICE.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Ice-type move, the power of that move will be weakened."),
+	CHOPLE_BERRY(237,0,PType.FIGHTING.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Fighting-type move, the power of that move will be weakened."),
+	KEBIA_BERRY(238,0,PType.POISON.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Poison-type move, the power of that move will be weakened."),
+	SHUCA_BERRY(239,0,PType.GROUND.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Ground-type move, the power of that move will be weakened."),
+	COBA_BERRY(240,0,PType.FLYING.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Flying-type move, the power of that move will be weakened."),
+	PAYAPA_BERRY(241,0,PType.PSYCHIC.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Psychic-type move, the power of that move will be weakened."),
+	TANGA_BERRY(242,0,PType.BUG.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Bug-type move, the power of that move will be weakened."),
+	CHARTI_BERRY(243,0,PType.ROCK.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Rock-type move, the power of that move will be weakened."),
+	KASIB_BERRY(244,0,PType.GHOST.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Ghost-type move, the power of that move will be weakened."),
+	HABAN_BERRY(245,0,PType.DRAGON.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Dragon-type move, the power of that move will be weakened."),
+	COLBUR_BERRY(246,0,PType.DARK.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Dark-type move, the power of that move will be weakened."),
+	BABIRI_BERRY(247,0,PType.STEEL.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Steel-type move, the power of that move will be weakened."),
+	CHILAN_BERRY(248,0,PType.NORMAL.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Normal-type move, the power of that move will be weakened."),
+	ROSELI_BERRY(249,0,PType.LIGHT.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Light-type move, the power of that move will be weakened."),
+	MYSTICOLA_BERRY(250,0,PType.MAGIC.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Magic-type move, the power of that move will be weakened."),
+	GALAXEED_BERRY(251,0,PType.GALACTIC.getColor(),Item.BERRY,null,"If a Pokémon holding this Berry is hit with a supereffective Galactic-type move, the power of that move will be weakened."),
+	LIECHI_BERRY(252,0,new Color(248, 224, 160),Item.BERRY,null,"If a Pokémon holds one of these Berries, its Attack stat will be boosted should it find itself in a pinch."),
+	GANLON_BERRY(253,0,new Color(152, 144, 200),Item.BERRY,null,"If a Pokémon holds one of these Berries, its Defense stat will be boosted should it find itself in a pinch."),
+	SALAC_BERRY(254,0,new Color(120, 184, 112),Item.BERRY,null,"If a Pokémon holds one of these Berries, its Speed stat will be boosted should it find itself in a pinch."),
+	PETAYA_BERRY(255,0,new Color(240, 160, 120),Item.BERRY,null,"If a Pokémon holds one of these Berries, its Sp. Atk stat will be boosted should it find itself in a pinch."),
+	APICOT_BERRY(256,0,new Color(104, 128, 184),Item.BERRY,null,"If a Pokémon holds one of these Berries, its Sp. Def stat will be boosted should it find itself in a pinch."),
+	STARF_BERRY(257,0,new Color(184, 232, 152),Item.BERRY,null,"If a Pokémon holds one of these Berries, one of its stats will be sharply boosted should it find itself in a pinch."),
+	MICLE_BERRY(258,0,new Color(64, 200, 64),Item.BERRY,null,"If a Pokémon holds one of these Berries, its accuracy will be boosted should it find itself in a pinch."),
+	CUSTAP_BERRY(259,0,new Color(220, 96, 70),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to act faster should it find itself in a pinch—but only for the next move it uses."),
 	NULL260(260,0,Color.BLACK,Item.BERRY,null,""),
 	;
 	
@@ -377,7 +377,9 @@ public enum Item {
 		return color;
 	}
 	
-	public String getDesc() { return desc; }
+	public String getDesc() {
+		return Item.breakString(desc, 65);
+	}
 	
 	public BufferedImage getImage() { return image; }
 	
@@ -1346,4 +1348,46 @@ public enum Item {
 	public boolean isResistBerry() {
 		return (getID() >= 232 && getID() <= 251);
 	}
+	
+	public boolean isBerry() {
+		return (getID() >= 221 && getID() <= 259);
+	}
+	
+	public boolean isPinchBerry() {
+		return (getID() == 269 || (getID() <= 290 && getID() >= 296));
+	}
+	
+	public static String breakString(String input, int maxChar) {
+        if (input == null || maxChar <= 0) {
+            return null; // Or handle this case according to your requirements
+        }
+
+        StringBuilder result = new StringBuilder();
+        StringBuilder currentLine = new StringBuilder();
+        int currentLength = 0;
+
+        for (char c : input.toCharArray()) {
+            if (Character.isWhitespace(c)) {
+                // If adding the current character exceeds the limit, start a new line
+                if (currentLength + currentLine.length() > maxChar) {
+                    result.append(currentLine.toString().trim()).append("\n");
+                    currentLine.setLength(0);
+                    currentLength = 0;
+                } else {
+                    currentLine.append(c);
+                    currentLength++;
+                }
+            } else {
+                currentLine.append(c);
+                currentLength++;
+            }
+        }
+
+        // Append the remaining part if any
+        if (currentLine.length() > 0) {
+            result.append(currentLine.toString().trim());
+        }
+
+        return result.toString();
+    }
 }

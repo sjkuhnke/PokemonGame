@@ -250,6 +250,16 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 				}
 				player.p.team[teamTemp[i].slot] = teamTemp[i];
 				teamTemp[i].setType();
+				
+				if (teamTemp[i].loseItem) {
+					teamTemp[i].item = null;
+					teamTemp[i].loseItem = false;
+				}
+				
+				if (teamTemp[i].lostItem != null) {
+					teamTemp[i].item = teamTemp[i].lostItem;
+					teamTemp[i].lostItem = null;
+				}
 			}
 		}
 		player.p.current = player.p.team[0];

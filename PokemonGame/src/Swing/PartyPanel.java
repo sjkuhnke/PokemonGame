@@ -35,8 +35,10 @@ public class PartyPanel extends JPanel {
 	private JLabel partySprite = new JLabel("");
 	private JProgressBar hpBar = new JProgressBar();
 	private Pokemon master;
+	@SuppressWarnings("unused")
+	private boolean changeColor;
 	
-	public PartyPanel(Pokemon p) {
+	public PartyPanel(Pokemon p, boolean changeColor) {
 		if (p == null) {
 			partyText.setVisible(false);
 			partySprite.setVisible(false);
@@ -44,6 +46,7 @@ public class PartyPanel extends JPanel {
 			return;
 		}
 		
+		this.changeColor = changeColor;
 		master = p;
 		partyText = setupPartyText();
 		partySprite = setupPartySprite();
@@ -69,9 +72,24 @@ public class PartyPanel extends JPanel {
 		this.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent evt) {
 				pp.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+				if (changeColor) {
+					if (p.isFainted()) {
+						pp.setBackground(new Color(200, 0, 0).brighter());
+					} else {
+						pp.setBackground(pp.backgroundColorA.brighter(), pp.backgroundColorB.brighter());
+					}
+				}
 			}
 			public void mouseExited(MouseEvent evt) {
 				pp.setBorder(BorderFactory.createEmptyBorder());
+				if (changeColor) {
+					if (p.isFainted()) {
+						pp.setBackground(new Color(200, 0, 0));
+					} else {
+						Color color2 = p.type2 == null ? p.type1.getColor() : p.type2.getColor();
+						pp.setBackground(p.type1.getColor(), color2);
+					}
+				}
 			}
 		});
 		this.setPreferredSize(new Dimension(250, 125));
