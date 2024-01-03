@@ -279,7 +279,7 @@ public enum Move {
 	IRON_TAIL(100,75,30,0,0,0,PType.STEEL,"% of lowering foe's Defense by 1",true,15),
 	JAW_LOCK(80,100,100,0,0,0,PType.DARK,"% to cause foe to not be able to switch",true,5),
 	KARATE_CHOP(50,100,0,1,0,0,PType.FIGHTING,"Boosted Crit rate",true,20),
-	KNOCK_OFF(-1,100,100,0,0,0,PType.DARK,"% chance to remove foe's item",true,15),
+	KNOCK_OFF(-1,100,100,0,0,0,PType.DARK,"% to remove foe's item",true,15),
 	LAVA_PLUME(80,100,30,0,1,0,PType.FIRE,"% to Burn foe",false,15),
 	//LEAF_BALL(75,95,0,0,1,0,PType.GRASS,"A normal attack",false,1),
 	LEAF_BLADE(90,100,0,1,0,0,PType.GRASS,"Boosted Crit rate",true,10),

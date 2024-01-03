@@ -1467,18 +1467,20 @@ public class Battle extends JFrame {
 		        	PartyPanel partyPanel = new PartyPanel(me.team[j], true);
 		            final int index = j;
 
-		            partyPanel.addMouseListener(new MouseAdapter() {
-		            	public void mouseClicked(MouseEvent evt) {
-		            		if (baton) me.team[index].statStages = me.getCurrent().statStages;
-			                me.swap(me.team[index], index);
-			                me.getCurrent().swapIn(foe, me, true);
-			                updateField(field);
-			                foe.vStatuses.remove(Status.TRAPPED);
-			                foe.vStatuses.remove(Status.SPUN);
-			                updateBars(true);
-			                SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
-		            	}
-		            });
+		            if (me.team[j] != null) {
+		            	partyPanel.addMouseListener(new MouseAdapter() {
+			            	public void mouseClicked(MouseEvent evt) {
+			            		if (baton) me.team[index].statStages = me.getCurrent().statStages;
+				                me.swap(me.team[index], index);
+				                me.getCurrent().swapIn(foe, me, true);
+				                updateField(field);
+				                foe.vStatuses.remove(Status.TRAPPED);
+				                foe.vStatuses.remove(Status.SPUN);
+				                updateBars(true);
+				                SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+			            	}
+			            });
+		            }
 		            partyMasterPanel.add(partyPanel);
 		        }
 		    }
