@@ -148,7 +148,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(10, 72, Item.POISON_BARB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 8, Item.WIDE_LENS, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 30, Item.GANLON_BERRY, mapNum, 3, 6);
-		gp.obj[mapNum][objIndex] = ObjSetup(16, 47, Item.APRICOT_BERRY, mapNum, 3, 6);
+		gp.obj[mapNum][objIndex] = ObjSetup(16, 47, Item.APICOT_BERRY, mapNum, 3, 6);
 		
 		mapNum = 14;
 		objIndex = 0;
@@ -1763,7 +1763,11 @@ public class AssetSetter {
 		result.worldY = gp.tileSize*y;
 		result.item = item;
 		int amt = lower;
-		if (lower != upper) amt = new Random().nextInt(upper - lower + 1) + lower;
+		if (lower != upper) {
+			Random random = new Random();
+			if (gp.player.p.id != 0) random.setSeed(gp.player.p.id);
+			amt = random.nextInt(upper - lower + 1) + lower;
+		}
 		result.count = amt;
 		
 		objIndex++;

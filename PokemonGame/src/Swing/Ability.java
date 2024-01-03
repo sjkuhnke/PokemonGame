@@ -8,6 +8,7 @@ public enum Ability {
 	INSOMNIA("Prevents the Pokemon from falling asleep."),
 	BATTLE_ARMOR("This Pokemon cannot be Critical hit"),
 	BLAZE("Powers up FIRE moves in a pinch."),
+	BRAINWASH("Forces the opponent's stat changes to have an opposite effect while the user is active."),
 	CHLOROPHYLL("Boosts the Pokemon's Speed stat in SUNSHINE."),
 	CLEAR_BODY("Prevents other Pokemon from lowering its stats."),
 	COMPETITIVE("Boosts the Pokemon's Special Attack stat when its stats are lowered."),

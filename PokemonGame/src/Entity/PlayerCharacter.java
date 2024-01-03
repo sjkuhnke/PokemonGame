@@ -802,7 +802,7 @@ public class PlayerCharacter extends Entity {
 					partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 					
 					for (int j = 0; j < 6; j++) {
-						PartyPanel partyPanel = new PartyPanel(p.team[j]);
+						PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 						final int index = j;
 						partyPanel.addMouseListener(new MouseAdapter() {
 							public void mouseClicked(MouseEvent evt) {
@@ -826,7 +826,7 @@ public class PlayerCharacter extends Entity {
 					partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 					
 					for (int j = 0; j < 6; j++) {
-						PartyPanel partyPanel = new PartyPanel(p.team[j]);
+						PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 						final int index = j;
 						partyPanel.addMouseListener(new MouseAdapter() {
 							public void mouseClicked(MouseEvent evt) {
@@ -978,7 +978,7 @@ public class PlayerCharacter extends Entity {
 					partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
 					partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 					for (int j = 0; j < 6; j++) {
-						PartyPanel partyPanel = new PartyPanel(p.team[j]);
+						PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 						final int index = j;
 						partyPanel.addMouseListener(new MouseAdapter() {
 							public void mouseClicked(MouseEvent evt) {
@@ -1118,24 +1118,26 @@ public class PlayerCharacter extends Entity {
 	    partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 
 	    for (int j = 0; j < 6; j++) {
-	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 	        final int index = j;
 	        
-	        partyPanel.addMouseListener(new MouseAdapter() {
-	            public void mouseClicked(MouseEvent evt) {
-	            	JPanel teamMemberPanel = p.team[index].showSummary(p, true, partyMasterPanel, null);
-		            JButton swapButton = new JButton("Swap");
-			        swapButton.addActionListener(f -> {
-			            if (p.team[index] != null && p.team[index] != p.current) {
-			                p.swap(p.team[index], index); // Call the swap method in the Player class
-			                JOptionPane.getRootFrame().dispose();
-			                showParty(); // Update the party display after swapping
-			            }
-			        });
-		            if (p.team[index] != p.current && !p.team[index].isFainted()) teamMemberPanel.add(swapButton);
-		            JOptionPane.showMessageDialog(null, teamMemberPanel, "Party member details", JOptionPane.PLAIN_MESSAGE);
-	            }
-	        });
+	        if (p.team[j] != null) {
+	        	partyPanel.addMouseListener(new MouseAdapter() {
+	        		public void mouseClicked(MouseEvent evt) {
+		            	JPanel teamMemberPanel = p.team[index].showSummary(p, true, partyMasterPanel, null);
+			            JButton swapButton = new JButton("Swap");
+				        swapButton.addActionListener(f -> {
+				            if (p.team[index] != null && p.team[index] != p.current) {
+				                p.swap(p.team[index], index); // Call the swap method in the Player class
+				                JOptionPane.getRootFrame().dispose();
+				                showParty(); // Update the party display after swapping
+				            }
+				        });
+			            if (p.team[index] != p.current && !p.team[index].isFainted()) teamMemberPanel.add(swapButton);
+			            JOptionPane.showMessageDialog(null, teamMemberPanel, "Party member details", JOptionPane.PLAIN_MESSAGE);
+		            }
+		        });
+	        }
 	        partyMasterPanel.add(partyPanel);
 	    }
 
@@ -1209,7 +1211,7 @@ public class PlayerCharacter extends Entity {
 			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 			        	        final int index = j;
 
 			        	        partyPanel.addMouseListener(new MouseAdapter() {
@@ -1250,7 +1252,7 @@ public class PlayerCharacter extends Entity {
 			        	    Status target = i.getItem().getStatus();
 
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], false);
 			        	    	if (p.team[j] != null && p.team[j].status == Status.HEALTHY) partyPanel.setBackground(Color.green);
 			        	    	if (p.team[j] != null && p.team[j].status != Status.HEALTHY) partyPanel.setBackground(p.team[j].status.getColor());
 			        	    	if (p.team[j] != null && p.team[j].isFainted()) partyPanel.setBackground(Color.red);
@@ -1287,7 +1289,7 @@ public class PlayerCharacter extends Entity {
 			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 			        	        final int index = j;
 
 			        	        partyPanel.addMouseListener(new MouseAdapter() {
@@ -1323,7 +1325,7 @@ public class PlayerCharacter extends Entity {
 			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 			        	        final int index = j;
 			        	        
 			        	        partyPanel.addMouseListener(new MouseAdapter() {
@@ -1377,7 +1379,7 @@ public class PlayerCharacter extends Entity {
 			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 			        	        final int index = j;
 			        	        
 			        	        partyPanel.addMouseListener(new MouseAdapter() {
@@ -1409,7 +1411,7 @@ public class PlayerCharacter extends Entity {
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	if (p.team[j] != null) {
-			        	    		PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    		PartyPanel partyPanel = new PartyPanel(p.team[j], false);
 				        	        final int index = j;
 				        	        final boolean eligible = i.getItem().getEligible(p.team[j].id);
 				        	        if (eligible) {
@@ -1469,7 +1471,7 @@ public class PlayerCharacter extends Entity {
 			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], false);
 			        	        final int index = j;
 			        	        
 			        	        boolean learnable = p.team[index] != null ? i.getItem().getLearned(p.team[index]) : false;
@@ -1525,7 +1527,7 @@ public class PlayerCharacter extends Entity {
 			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], false);
 			        	        final int index = j;
 			        	        
 			        	        if (p.team[index] != null) {
@@ -1568,7 +1570,7 @@ public class PlayerCharacter extends Entity {
 			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 			        	        final int index = j;
 			        	        
 			        	        if (p.team[index] != null) {
@@ -1628,7 +1630,7 @@ public class PlayerCharacter extends Entity {
 			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 			        	        final int index = j;
 			        	        
 			        	        if (p.team[index] != null) {
@@ -1701,7 +1703,7 @@ public class PlayerCharacter extends Entity {
 			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 			        	        final int index = j;
 			        	        
 			        	        partyPanel.addMouseListener(new MouseAdapter() {
@@ -1777,7 +1779,7 @@ public class PlayerCharacter extends Entity {
 			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 			        	        final int index = j;
 			        	        
 			        	        partyPanel.addMouseListener(new MouseAdapter() {
@@ -1834,7 +1836,7 @@ public class PlayerCharacter extends Entity {
 			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 			        	        final int index = j;
 			        	        
 			        	        partyPanel.addMouseListener(new MouseAdapter() {
@@ -1872,7 +1874,7 @@ public class PlayerCharacter extends Entity {
 			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
-			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j]);
+			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 			        	        final int index = j;
 			        	        
 			        	        partyPanel.addMouseListener(new MouseAdapter() {
@@ -1888,7 +1890,7 @@ public class PlayerCharacter extends Entity {
 				        						Item old = p.team[index].item;
 				        						p.bag.add(old);
 					        	        		p.team[index].item = i.getItem();
-					        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " swapped its " + old.toString() + " for " + p.team[index].item.toString() + "!");
+					        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " swapped its " + old.toString() + " for a\n" + p.team[index].item.toString() + "!");
 					        	        		p.bag.remove(i.getItem());
 						        	        	SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
 						        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();

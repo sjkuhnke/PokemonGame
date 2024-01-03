@@ -761,28 +761,6 @@ public class Battle extends JFrame {
 				boolean swapping = me.getCurrent().vStatuses.contains(Status.SWITCHING);
 				
 				Move move = foe.trainerOwned() ? foe.bestMove(me.current, false) : foe.randomMove();
-				if (move == Move.PURSUIT && !me.getCurrent().isFainted()) {
-					move = Move.BOOSTED_PURSUIT;
-					if (foeTrainer != null) {
-	        			foe.move(me.getCurrent(), move, me, foeTrainer.getTeam(), null, false);
-	        		} else {
-	        			foe.move(me.getCurrent(), move, me, null, null, false);
-		        	}
-				}
-				if (move == Move.BOOSTED_PURSUIT && me.getCurrent().isFainted()) {
-					foe.endOfTurn(me.getCurrent(), me);
-					field.endOfTurn();
-					updateCurrent(pl);
-					updateBars(true);
-					displayParty();
-					updateStatus();
-					console.writeln();
-				    console.writeln("------------------------------");
-				    if (me.wiped()) {
-						wipe(pl, gp);
-					}
-					return;
-				}
 				
 				me.swap(me.team[index], index);
 				me.getCurrent().swapIn(foe, me, true);
@@ -798,7 +776,7 @@ public class Battle extends JFrame {
 	            } else {
 	            	healthBar.setForeground(new Color(255, 0, 0));
 	            }
-				if (!me.team[index].isFainted() && !swapping && move != Move.BOOSTED_PURSUIT) {
+				if (!me.team[index].isFainted() && !swapping) {
 	        		if (foeTrainer != null) {
 	        			foe.move(me.getCurrent(), move, me, foeTrainer.getTeam(), foeTrainer, false);
 	        			if (foe.vStatuses.contains(Status.SWITCHING)) {
@@ -808,11 +786,6 @@ public class Battle extends JFrame {
 	        		} else {
 	        			foe.move(me.getCurrent(), move, me, null, null, false);
 		        	}
-					foe.endOfTurn(me.getCurrent(), me);
-					me.getCurrent().endOfTurn(foe, me);
-					field.endOfTurn();
-				}
-				if (move == Move.BOOSTED_PURSUIT) {
 					foe.endOfTurn(me.getCurrent(), me);
 					me.getCurrent().endOfTurn(foe, me);
 					field.endOfTurn();
@@ -1326,6 +1299,16 @@ public class Battle extends JFrame {
 				console.writeln(p2.nickname + "'s Quick Claw let it act first!");
 			}
 		}
+		if (p1.item == Item.CUSTAP_BERRY && p1.currentHP <= p1.getStat(0) * 1.0 / 4) {
+			m1P++;
+			console.writeln(p1.nickname + " ate its Custap Berry and could act first!");
+			p1.consumeItem();
+		}
+		if (p2.item == Item.CUSTAP_BERRY && p2.currentHP <= p2.getStat(0) * 1.0 / 4) {
+			m1P++;
+			console.writeln(p2.nickname + " ate its Custap Berry and could act first!");
+			p2.consumeItem();
+		}
 		
 		Pokemon faster = p1.getFaster(p2, m1P, m2P);
 		
@@ -1481,7 +1464,7 @@ public class Battle extends JFrame {
 
 		    for (int j = 0; j < 6; j++) {
 		        if (me.team[j] != null && !me.team[j].isFainted() && !(me.team[j] == me.current)) {
-		        	PartyPanel partyPanel = new PartyPanel(me.team[j]);
+		        	PartyPanel partyPanel = new PartyPanel(me.team[j], true);
 		            final int index = j;
 
 		            partyPanel.addMouseListener(new MouseAdapter() {
@@ -1643,6 +1626,7 @@ public class Battle extends JFrame {
 //		try {
 //			if (Integer.parseInt(idInput.getText()) >= -144 && Integer.parseInt(idInput.getText()) <= 237) {
 //				foe = new Pokemon(Integer.parseInt(idInput.getText()), Integer.parseInt(levelInput.getText()), false, false);
+//				foe.item = Item.ORAN_BERRY;
 //			} else {
 //				foe = new Pokemon(10, 5, false, false);
 //			}

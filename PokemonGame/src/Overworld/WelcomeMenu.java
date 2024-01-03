@@ -29,8 +29,10 @@ public class WelcomeMenu extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel titleLabel;
-	private JLabel subtitleLabel;
+	private static final int NUM_BACKGROUNDS = 3;
+	
+	private OutlineLabel titleLabel;
+	private OutlineLabel subtitleLabel;
 	private JPanel optionsPanel;
 
 	private Image img;
@@ -39,22 +41,27 @@ public class WelcomeMenu extends JPanel {
 		this.setPreferredSize(new Dimension(gp.screenWidth, gp.screenHeight));
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		Color textColor = null;
 		
 		try {
 			Random rand = new Random();
-			int random = rand.nextInt(3) + 1;
+			int random = rand.nextInt(NUM_BACKGROUNDS) + 1;
             img = ImageIO.read(getClass().getResourceAsStream("/gen/background" + random + ".png"));
+            Color[] textColors = new Color[] {new Color(221, 184, 188), new Color(247, 229, 123), new Color(196, 197, 83)};
+            textColor = textColors[random - 1];
         } catch (IOException e) {
             e.printStackTrace();
         }
 		
-		titleLabel = new JLabel("Shae’s Pokemon Game", SwingConstants.CENTER);
+		titleLabel = new OutlineLabel("Shae’s Pokemon Game", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        titleLabel.setForeground(Color.BLACK);
+        titleLabel.setForeground(textColor);
+        titleLabel.setOutlineColor(Color.BLACK);
         
-        subtitleLabel = new JLabel("Welcome to Shae’s Pokemon Game!", SwingConstants.CENTER);
+        subtitleLabel = new OutlineLabel("Welcome to Shae’s Pokemon Game!", SwingConstants.CENTER);
         subtitleLabel.setFont(new Font("Arial", Font.ITALIC, 18));
-        subtitleLabel.setForeground(Color.BLACK);
+        subtitleLabel.setForeground(textColor);
+        subtitleLabel.setOutlineColor(Color.BLACK);
         
         JPanel checkBoxPanel = new JPanel(new GridLayout(0, 1));
         checkBoxPanel.setOpaque(false);
@@ -67,30 +74,37 @@ public class WelcomeMenu extends JPanel {
         	iconPanel.add(icons[i]);
         }
         
-        JLabel location = new JLabel("N/A");
+        OutlineLabel location = new OutlineLabel("N/A");
         location.setFont(new Font(location.getFont().getName(), Font.BOLD, 16));
         JPanel locationPanel = new JPanel(new GridLayout(0, 1));
         locationPanel.setOpaque(false);
+        location.setForeground(textColor);
+        location.setOutlineColor(Color.BLACK);
         locationPanel.add(location);
-        
-        JLabel space = new JLabel("<html><br><br><br><br><br><br><br><br><br><br><br><br><br></html>");
 
-        JLabel generateDoc = new JLabel("Generate Documentation?");
+        OutlineLabel generateDoc = new OutlineLabel("Generate Documentation?");
         generateDoc.setFont(new Font("Arial", Font.BOLD, 16));
-        generateDoc.setForeground(Color.BLACK);
+        generateDoc.setForeground(textColor);
+        generateDoc.setOutlineColor(Color.BLACK);
 
         JCheckBox trainersCheckBox = new JCheckBox("Trainers");
         trainersCheckBox.setOpaque(false);
+        trainersCheckBox.setForeground(textColor);
         JCheckBox pokemonCheckBox = new JCheckBox("Pokemon");
         pokemonCheckBox.setOpaque(false);
+        pokemonCheckBox.setForeground(textColor);
         JCheckBox encountersCheckBox = new JCheckBox("Encounters");
         encountersCheckBox.setOpaque(false);
+        encountersCheckBox.setForeground(textColor);
         JCheckBox movesCheckBox = new JCheckBox("Moves");
         movesCheckBox.setOpaque(false);
+        movesCheckBox.setForeground(textColor);
         JCheckBox defensiveTypesBox = new JCheckBox("Defensive Types");
         defensiveTypesBox.setOpaque(false);
+        defensiveTypesBox.setForeground(textColor);
         JCheckBox offensiveTypesBox = new JCheckBox("Offensive Types");
         offensiveTypesBox.setOpaque(false);
+        offensiveTypesBox.setForeground(textColor);
         
         checkBoxPanel.add(generateDoc);
         checkBoxPanel.add(trainersCheckBox);
@@ -173,6 +187,8 @@ public class WelcomeMenu extends JPanel {
         newGameButton.addActionListener(e -> {
         	String save = null;
         	
+        	ArrayList<String> filesFinal = getDatFiles();
+        	
         	do {
         		save = JOptionPane.showInputDialog(this, "Enter a new save file name (A-Z, 0-9, _, and - are permitted, <= 20 characters):");
         		
@@ -183,7 +199,7 @@ public class WelcomeMenu extends JPanel {
         		if (!isValidFileName(save)) {
         			JOptionPane.showMessageDialog(this, "Invalid file name. Please use only alphanumeric characters, underscores, and hyphens, and ensure the length is no more than 20 characters.");
         		}
-        		if (files.contains(save + ".dat")) {
+        		if (filesFinal.contains(save + ".dat")) {
         			JOptionPane.showMessageDialog(this, "Save file already exists! Select the save file and press 'Continue'");
         			save = "$";
         		}
@@ -193,7 +209,9 @@ public class WelcomeMenu extends JPanel {
                     trainersCheckBox.isSelected(),
                     pokemonCheckBox.isSelected(),
                     encountersCheckBox.isSelected(),
-                    movesCheckBox.isSelected()
+                    movesCheckBox.isSelected(),
+                    defensiveTypesBox.isSelected(),
+                    offensiveTypesBox.isSelected(),
             };
         	
         	save += ".dat";
@@ -216,7 +234,6 @@ public class WelcomeMenu extends JPanel {
         add(subtitleLabel);
         add(locationPanel);
         add(iconPanel);
-        add(space);
         add(checkBoxPanel);
         add(optionsPanel);
         
@@ -333,5 +350,97 @@ public class WelcomeMenu extends JPanel {
 		
 		return imageIcon;
 	}
+    
+    public class OutlineLabel extends JLabel {
+
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private Color outlineColor = Color.WHITE;
+        private boolean isPaintingOutline = false;
+        private boolean forceTransparent = false;
+
+        public OutlineLabel() {
+            super();
+        }
+
+        public OutlineLabel(String text) {
+            super(text);
+        }
+
+        public OutlineLabel(String text, int horizontalAlignment) {
+            super(text, horizontalAlignment);
+        }
+
+        public Color getOutlineColor() {
+            return outlineColor;
+        }
+
+        public void setOutlineColor(Color outlineColor) {
+            this.outlineColor = outlineColor;
+            this.invalidate();
+        }
+
+        @Override
+        public Color getForeground() {
+            if (isPaintingOutline) {
+                return outlineColor;
+            } else {
+                return super.getForeground();
+            }
+        }
+
+        @Override
+        public boolean isOpaque() {
+            if (forceTransparent) {
+                return false;
+            } else {
+                return super.isOpaque();
+            }
+        }
+
+        @Override
+        public void paint(Graphics g) {
+
+            String text = getText();
+            if (text == null || text.length() == 0) {
+                super.paint(g);
+                return;
+            }
+
+            // 1 2 3
+            // 8 9 4
+            // 7 6 5
+
+            if (isOpaque())
+                super.paint(g);
+
+            forceTransparent = true;
+            isPaintingOutline = true;
+            g.translate(-1, -1);
+            super.paint(g); // 1
+            g.translate(1, 0);
+            super.paint(g); // 2
+            g.translate(1, 0);
+            super.paint(g); // 3
+            g.translate(0, 1);
+            super.paint(g); // 4
+            g.translate(0, 1);
+            super.paint(g); // 5
+            g.translate(-1, 0);
+            super.paint(g); // 6
+            g.translate(-1, 0);
+            super.paint(g); // 7
+            g.translate(0, -1);
+            super.paint(g); // 8
+            g.translate(1, 0); // 9
+            isPaintingOutline = false;
+
+            super.paint(g);
+            forceTransparent = false;
+
+        }
+    }
 
 }
