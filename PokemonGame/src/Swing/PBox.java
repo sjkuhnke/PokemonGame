@@ -87,14 +87,68 @@ public class PBox extends JFrame {
         	    	PartyPanel partyPanel = new PartyPanel(me.team[j], true);
         	        final int index = j;
         	        
-        	        partyPanel.addMouseListener(new MouseAdapter() {
-        	        	@Override
-        	            public void mouseClicked(MouseEvent e) {
-        	        		if (SwingUtilities.isLeftMouseButton(e)) {
-        	        			JPanel summary = me.team[index].showSummary(me, true, partyMasterPanel, null);
-                	        	JButton depositButton = new JButton("Deposit");
-                	        	depositButton.addActionListener(f -> {
-                		            if (me.team[index] != null) {
+        	        if (me.team[j] != null) {
+        	        	partyPanel.addMouseListener(new MouseAdapter() {
+            	        	@Override
+            	            public void mouseClicked(MouseEvent e) {
+            	        		if (SwingUtilities.isLeftMouseButton(e)) {
+            	        			JPanel summary = me.team[index].showSummary(me, true, partyMasterPanel, null);
+                    	        	JButton depositButton = new JButton("Deposit");
+                    	        	depositButton.addActionListener(f -> {
+                    		            if (me.team[index] != null) {
+                    		            	Pokemon[] cBox;
+                    		            	if (currentBox == 1) {
+                    		        	        cBox = me.box1;
+                    		        	    } else if (currentBox == 2) {
+                    		        	        cBox = me.box2;
+                    		        	    } else {
+                    		        	        cBox = me.box3;
+                    		        	    }
+                    		            	
+                    		            	Pokemon head = cBox[0];
+                    		            	int count = 0;
+                    		            	boolean emptyFound = false;
+                    		                for (Pokemon p : cBox) {
+                    		                	if (p == null) {
+                    		                		emptyFound = true;
+                    		                		break;
+                    		                	}
+                    		                	if (count != 0) {
+                    		                		if (p == head) break;
+                    		                	}
+                    		                	count++;
+                    		                }
+                    		                if (!emptyFound) {
+                    		                	JOptionPane.showMessageDialog(null, "Box is full!");
+                    		                } else if (index == 0 && index != me.team.length - 1 && me.team[index + 1] == null) {
+                                        		JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
+                                        	} else {
+                    		                	Pokemon temp = me.team[index];
+                                                if (temp != null) {
+                                                    temp.heal();
+                                                }
+                                                me.team[index] = cBox[count];
+                                                cBox[count] = temp;
+                                                
+                                                if (me.team[index] == null) {
+                                                	Pokemon[] teamTemp = me.team.clone();
+                                                	for (int i = index + 1; i < me.team.length; i++) {
+                                                    	teamTemp[i - 1] = me.team[i];
+                                                    }
+                                                	me.team = teamTemp;
+                                                	me.current = me.team[0];
+                                                	me.team[5] = null;
+                                                }
+                    		                }
+                                            SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+                    		                SwingUtilities.getWindowAncestor(summary).dispose();
+                    		                displayBox();
+                    		            }
+                    		        });
+                    	            summary.add(depositButton);
+                    	            JOptionPane.showMessageDialog(null, summary, "Party member details", JOptionPane.PLAIN_MESSAGE);
+            	        		} else {
+            	        			if (me.team[index] != null) {
                 		            	Pokemon[] cBox;
                 		            	if (currentBox == 1) {
                 		        	        cBox = me.box1;
@@ -140,64 +194,12 @@ public class PBox extends JFrame {
                                             }
                 		                }
                                         SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
-                		                SwingUtilities.getWindowAncestor(summary).dispose();
                 		                displayBox();
                 		            }
-                		        });
-                	            summary.add(depositButton);
-                	            JOptionPane.showMessageDialog(null, summary, "Party member details", JOptionPane.PLAIN_MESSAGE);
-        	        		} else {
-        	        			if (me.team[index] != null) {
-            		            	Pokemon[] cBox;
-            		            	if (currentBox == 1) {
-            		        	        cBox = me.box1;
-            		        	    } else if (currentBox == 2) {
-            		        	        cBox = me.box2;
-            		        	    } else {
-            		        	        cBox = me.box3;
-            		        	    }
-            		            	
-            		            	Pokemon head = cBox[0];
-            		            	int count = 0;
-            		            	boolean emptyFound = false;
-            		                for (Pokemon p : cBox) {
-            		                	if (p == null) {
-            		                		emptyFound = true;
-            		                		break;
-            		                	}
-            		                	if (count != 0) {
-            		                		if (p == head) break;
-            		                	}
-            		                	count++;
-            		                }
-            		                if (!emptyFound) {
-            		                	JOptionPane.showMessageDialog(null, "Box is full!");
-            		                } else if (index == 0 && index != me.team.length - 1 && me.team[index + 1] == null) {
-                                		JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
-                                	} else {
-            		                	Pokemon temp = me.team[index];
-                                        if (temp != null) {
-                                            temp.heal();
-                                        }
-                                        me.team[index] = cBox[count];
-                                        cBox[count] = temp;
-                                        
-                                        if (me.team[index] == null) {
-                                        	Pokemon[] teamTemp = me.team.clone();
-                                        	for (int i = index + 1; i < me.team.length; i++) {
-                                            	teamTemp[i - 1] = me.team[i];
-                                            }
-                                        	me.team = teamTemp;
-                                        	me.current = me.team[0];
-                                        	me.team[5] = null;
-                                        }
-            		                }
-                                    SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
-            		                displayBox();
-            		            }
-        	        		}
-        	        	}
-        	        });
+            	        		}
+            	        	}
+            	        });
+        	        }
         	        partyMasterPanel.add(partyPanel);
         	    }
         	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
@@ -352,46 +354,48 @@ public class PBox extends JFrame {
 		                                    oneVisible = true;
 		                                }
 		                            }
-	                            	partyPanel.addMouseListener(new MouseAdapter() {
-		                                @Override
-		                                public void mouseClicked(MouseEvent e) {
+		                            if (j == 0 || me.team[j - 1] != null) {
+		                            	partyPanel.addMouseListener(new MouseAdapter() {
+			                                @Override
+			                                public void mouseClicked(MouseEvent e) {
 
-		                                    // Swap the selected party member with the selected box member
-		                                    if (jndex == 0) {
-		                                    	if (box[index] == null && me.team[jndex + 1] == null) {
-		                                    		JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
-		            	                            return;
-		                                    	}
-		                                        me.current = box[index];
-		                                    }
-		                                    if (box[index] == null && checkFaintedTeam(jndex)) {
-		                                    	JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
-		        	                            return;
-		                                    }
-		                                    Pokemon temp = me.team[jndex];
-		                                    if (temp != null) {
-		                                        temp.heal();
-		                                    }
-		                                    me.team[jndex] = box[index];
-		                                    box[index] = temp;
-		                                    
-		                                    if (me.team[jndex] == null) {
-		                                    	Pokemon[] teamTemp = me.team.clone();
-		                                    	for (int i = jndex + 1; i < me.team.length; i++) {
-		                                        	teamTemp[i - 1] = me.team[i];
-		                                        }
-		                                    	me.team = teamTemp;
-		                                    	me.current = me.team[0];
-		                                    	me.team[5] = null;
-		                                    }
-		                                    
+			                                    // Swap the selected party member with the selected box member
+			                                    if (jndex == 0) {
+			                                    	if (box[index] == null && me.team[jndex + 1] == null) {
+			                                    		JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
+			            	                            return;
+			                                    	}
+			                                        me.current = box[index];
+			                                    }
+			                                    if (box[index] == null && checkFaintedTeam(jndex)) {
+			                                    	JOptionPane.showMessageDialog(null, "That's your last Pokemon!");
+			        	                            return;
+			                                    }
+			                                    Pokemon temp = me.team[jndex];
+			                                    if (temp != null) {
+			                                        temp.heal();
+			                                    }
+			                                    me.team[jndex] = box[index];
+			                                    box[index] = temp;
+			                                    
+			                                    if (me.team[jndex] == null) {
+			                                    	Pokemon[] teamTemp = me.team.clone();
+			                                    	for (int i = jndex + 1; i < me.team.length; i++) {
+			                                        	teamTemp[i - 1] = me.team[i];
+			                                        }
+			                                    	me.team = teamTemp;
+			                                    	me.current = me.team[0];
+			                                    	me.team[5] = null;
+			                                    }
+			                                    
 
-		                                    // Update the display
-		                                    SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
-		                                    SwingUtilities.getWindowAncestor(boxMemberPanel).dispose();
-		                                    displayBox();
-		                                }
-		                            });
+			                                    // Update the display
+			                                    SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+			                                    SwingUtilities.getWindowAncestor(boxMemberPanel).dispose();
+			                                    displayBox();
+			                                }
+			                            });
+		                            }
 	                            	partyMasterPanel.add(partyPanel);
 		                	    }
 		                        JOptionPane.showMessageDialog(null, partyMasterPanel, "Select a party member to swap with:", JOptionPane.PLAIN_MESSAGE);
