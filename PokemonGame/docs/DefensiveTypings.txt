@@ -1,0 +1,9913 @@
+TYPE COMBINATIONS
+
+===========================
+Normal - None
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Magic
+Fighting
+
+----------
+Resists:
+
+
+===========================
+Normal - Rock
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Water
+Grass
+Magic
+Fighting (!!)
+Ground
+Steel
+
+----------
+Resists:
+
+Galactic
+Fire
+Flying
+Poison
+Normal
+
+===========================
+Normal - Fire
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Water
+Galactic
+Magic
+Fighting
+Ground
+Rock
+
+----------
+Resists:
+
+Grass
+Light
+Ice
+Fire
+Steel
+Bug
+
+===========================
+Normal - Water
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Grass
+Magic
+Fighting
+Electric
+Poison
+
+----------
+Resists:
+
+Water
+Ice
+Fire
+Steel
+
+===========================
+Normal - Grass
+===========================
+Immune to:
+
+Light
+Ghost
+
+----------
+Weak to:
+
+Magic
+Ice
+Fighting
+Fire
+Flying
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Grass
+Ground
+Electric
+
+===========================
+Normal - Ice
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Magic
+Light
+Fighting (!!)
+Fire
+Steel
+Rock
+
+----------
+Resists:
+
+Galactic
+Ice
+Flying
+
+===========================
+Normal - Electric
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Magic
+Fighting
+Ground
+
+----------
+Resists:
+
+Steel
+Electric
+Flying
+
+===========================
+Normal - Fighting
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Galactic
+Fighting
+Psychic
+Flying
+
+----------
+Resists:
+
+Dark
+Rock
+Bug
+
+===========================
+Normal - Poison
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Ground
+Psychic
+
+----------
+Resists:
+
+Grass
+Poison
+Bug
+
+===========================
+Normal - Ground
+===========================
+Immune to:
+
+Ghost
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Magic
+Ice
+Fighting
+
+----------
+Resists:
+
+Rock
+Poison
+
+===========================
+Normal - Flying
+===========================
+Immune to:
+
+Ground
+Ghost
+
+----------
+Weak to:
+
+Magic
+Ice
+Rock
+Electric
+
+----------
+Resists:
+
+Grass
+Bug
+
+===========================
+Normal - Psychic
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Magic
+Dark
+Bug
+
+----------
+Resists:
+
+Psychic
+
+===========================
+Normal - Bug
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Magic
+Fire
+Rock
+Flying
+
+----------
+Resists:
+
+Grass
+Light
+Ground
+
+===========================
+Normal - Ghost
+===========================
+Immune to:
+
+Fighting
+Ghost
+Normal
+
+----------
+Weak to:
+
+Magic
+Dark
+Light
+
+----------
+Resists:
+
+Electric
+Poison
+Bug
+
+===========================
+Normal - Dragon
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Magic (!!)
+Ice
+Fighting
+Dragon
+
+----------
+Resists:
+
+Water
+Grass
+Fire
+Electric
+
+===========================
+Normal - Steel
+===========================
+Immune to:
+
+Ghost
+Poison
+
+----------
+Weak to:
+
+Magic (!!)
+Fighting (!!)
+Fire
+Ground
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic
+Light
+Ice
+Steel
+Rock
+Flying
+Dragon
+Bug
+Normal
+
+===========================
+Normal - Dark
+===========================
+Immune to:
+
+Ghost
+Psychic
+
+----------
+Weak to:
+
+Magic
+Light
+Fighting (!!)
+Bug
+
+----------
+Resists:
+
+Dark
+
+===========================
+Normal - Light
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Grass
+Magic
+Fighting
+Steel
+Bug
+
+----------
+Resists:
+
+Galactic
+Dark
+Light
+
+===========================
+Normal - Magic
+===========================
+Immune to:
+
+Ghost
+Dragon
+
+----------
+Weak to:
+
+Dark
+Poison
+Normal
+
+----------
+Resists:
+
+Steel
+Psychic
+
+===========================
+Normal - Galactic
+===========================
+Immune to:
+
+Fire
+Ghost
+
+----------
+Weak to:
+
+Magic
+Light
+Rock
+Flying
+
+----------
+Resists:
+
+Grass
+Dark
+Ground
+Bug
+
+===========================
+Rock - Normal
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Water
+Grass
+Magic
+Fighting (!!)
+Ground
+Steel
+
+----------
+Resists:
+
+Galactic
+Fire
+Flying
+Poison
+Normal
+
+===========================
+Rock - None
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Grass
+Fighting
+Ground
+Steel
+
+----------
+Resists:
+
+Galactic
+Fire
+Flying
+Poison
+Normal
+
+===========================
+Rock - Fire
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water (!!)
+Fighting
+Ground (!!)
+Rock
+
+----------
+Resists:
+
+Light
+Ice
+Fire (!!)
+Flying
+Poison
+Bug
+Normal
+
+===========================
+Rock - Water
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass (!!)
+Fighting
+Ground
+Electric
+
+----------
+Resists:
+
+Galactic
+Ice
+Fire (!!)
+Flying
+Normal
+
+===========================
+Rock - Grass
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Ice
+Fighting
+Steel
+Bug
+
+----------
+Resists:
+
+Galactic
+Electric
+Normal
+
+===========================
+Rock - Ice
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Grass
+Light
+Fighting (!!)
+Ground
+Steel (!!)
+Rock
+
+----------
+Resists:
+
+Galactic (!!)
+Ice
+Flying (!!)
+Poison
+Normal
+
+===========================
+Rock - Electric
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Grass
+Fighting
+Ground (!!)
+Ghost
+
+----------
+Resists:
+
+Galactic
+Fire
+Electric
+Flying (!!)
+Poison
+Normal
+
+===========================
+Rock - Fighting
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Grass
+Fighting
+Ground
+Steel
+Psychic
+
+----------
+Resists:
+
+Magic
+Dark
+Fire
+Rock
+Poison
+Bug
+Normal
+
+===========================
+Rock - Poison
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Ground (!!)
+Steel
+Psychic
+
+----------
+Resists:
+
+Galactic
+Magic
+Fire
+Flying
+Poison (!!)
+Bug
+Normal
+
+===========================
+Rock - Ground
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water (!!)
+Grass (!!)
+Ice
+Fighting
+Ground
+Steel
+
+----------
+Resists:
+
+Fire
+Rock
+Flying
+Poison (!!)
+Normal
+
+===========================
+Rock - Flying
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Water
+Ice
+Steel
+Rock
+Electric
+
+----------
+Resists:
+
+Galactic
+Fire
+Flying
+Poison
+Bug
+Normal
+
+===========================
+Rock - Psychic
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Grass
+Dark
+Ground
+Steel
+Ghost
+Bug
+
+----------
+Resists:
+
+Galactic
+Fire
+Psychic
+Flying
+Poison
+Normal
+
+===========================
+Rock - Bug
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Steel
+Rock
+
+----------
+Resists:
+
+Galactic
+Light
+Poison
+Normal
+
+===========================
+Rock - Ghost
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Water
+Grass
+Dark
+Light
+Ground
+Steel
+Ghost
+
+----------
+Resists:
+
+Galactic
+Fire
+Electric
+Flying
+Poison (!!)
+Bug
+
+===========================
+Rock - Dragon
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Ice
+Fighting
+Ground
+Steel
+Dragon
+
+----------
+Resists:
+
+Galactic
+Fire (!!)
+Electric
+Flying
+Poison
+Normal
+
+===========================
+Rock - Steel
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Water
+Magic
+Fighting (!!)
+Ground (!!)
+Electric
+
+----------
+Resists:
+
+Galactic (!!)
+Light
+Ice
+Rock
+Flying (!!)
+Dragon
+Bug
+Normal (!!)
+
+===========================
+Rock - Dark
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Water
+Grass
+Light
+Fighting (!!)
+Ground
+Steel
+Bug
+
+----------
+Resists:
+
+Galactic
+Dark
+Fire
+Ghost
+Flying
+Poison
+Normal
+
+===========================
+Rock - Light
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Grass (!!)
+Fighting
+Ground
+Steel (!!)
+Bug
+
+----------
+Resists:
+
+Galactic (!!)
+Dark
+Light
+Fire
+Ghost
+Flying
+Poison
+Normal
+
+===========================
+Rock - Magic
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Water
+Grass
+Dark
+Ground
+
+----------
+Resists:
+
+Galactic
+Magic
+Fire
+Psychic
+Flying
+
+===========================
+Rock - Galactic
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Water
+Light
+Steel
+Rock
+
+----------
+Resists:
+
+Galactic
+Dark
+Poison
+Bug
+Normal
+
+===========================
+Fire - Normal
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Water
+Galactic
+Magic
+Fighting
+Ground
+Rock
+
+----------
+Resists:
+
+Grass
+Light
+Ice
+Fire
+Steel
+Bug
+
+===========================
+Fire - Rock
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water (!!)
+Fighting
+Ground (!!)
+Rock
+
+----------
+Resists:
+
+Light
+Ice
+Fire (!!)
+Flying
+Poison
+Bug
+Normal
+
+===========================
+Fire - None
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Galactic
+Ground
+Rock
+
+----------
+Resists:
+
+Grass
+Light
+Ice
+Fire
+Steel
+Bug
+
+===========================
+Fire - Water
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Ground
+Rock
+Electric
+Poison
+
+----------
+Resists:
+
+Light
+Ice (!!)
+Fire (!!)
+Steel (!!)
+Bug
+
+===========================
+Fire - Grass
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Galactic
+Rock
+Flying
+Poison
+
+----------
+Resists:
+
+Grass (!!)
+Steel
+Electric
+
+===========================
+Fire - Ice
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Fighting
+Ground
+Rock (!!)
+
+----------
+Resists:
+
+Grass
+Ice (!!)
+Flying
+Bug
+
+===========================
+Fire - Electric
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Galactic
+Ground (!!)
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Light
+Ice
+Fire
+Steel (!!)
+Electric
+Flying
+Bug
+
+===========================
+Fire - Fighting
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Galactic (!!)
+Ground
+Psychic
+Flying
+
+----------
+Resists:
+
+Grass
+Magic
+Dark
+Light
+Ice
+Fire
+Steel
+Bug (!!)
+
+===========================
+Fire - Poison
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Galactic
+Ground (!!)
+Rock
+Psychic
+
+----------
+Resists:
+
+Grass (!!)
+Magic
+Light
+Ice
+Fighting
+Fire
+Steel
+Poison
+Bug (!!)
+
+===========================
+Fire - Ground
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water (!!)
+Galactic (!!)
+Ground
+
+----------
+Resists:
+
+Light
+Fire
+Steel
+Poison
+Bug
+
+===========================
+Fire - Flying
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Water
+Galactic
+Rock (!!)
+Electric
+
+----------
+Resists:
+
+Grass (!!)
+Light
+Fighting
+Fire
+Steel
+Bug (!!)
+
+===========================
+Fire - Psychic
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Galactic
+Dark
+Ground
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Light
+Ice
+Fighting
+Fire
+Steel
+Psychic
+
+===========================
+Fire - Bug
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Galactic
+Rock (!!)
+Flying
+
+----------
+Resists:
+
+Grass (!!)
+Light (!!)
+Ice
+Fighting
+Steel
+Bug
+
+===========================
+Fire - Ghost
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Water
+Galactic
+Dark
+Ground
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Ice
+Fire
+Steel
+Electric
+Poison
+Bug (!!)
+
+===========================
+Fire - Dragon
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Magic
+Ground
+Rock
+Dragon
+
+----------
+Resists:
+
+Grass (!!)
+Light
+Fire (!!)
+Steel
+Electric
+Bug
+
+===========================
+Fire - Steel
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Water
+Magic
+Fighting
+Ground (!!)
+Electric
+
+----------
+Resists:
+
+Grass (!!)
+Light (!!)
+Ice (!!)
+Steel (!!)
+Flying
+Dragon
+Bug (!!)
+Normal
+
+===========================
+Fire - Dark
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Water
+Galactic
+Fighting
+Ground
+Rock
+
+----------
+Resists:
+
+Grass
+Dark
+Ice
+Fire
+Steel
+Ghost
+
+===========================
+Fire - Light
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Ground
+Rock
+
+----------
+Resists:
+
+Dark
+Light (!!)
+Ice
+Fire
+Ghost
+
+===========================
+Fire - Magic
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Water
+Galactic
+Dark
+Ground
+Rock
+Poison
+Normal
+
+----------
+Resists:
+
+Grass
+Magic
+Light
+Ice
+Fighting
+Fire
+Steel (!!)
+Psychic
+Bug
+
+===========================
+Fire - Galactic
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Water
+Galactic
+Rock (!!)
+Flying
+
+----------
+Resists:
+
+Grass (!!)
+Dark
+Ice
+Fighting
+Steel
+Bug (!!)
+
+===========================
+Water - Normal
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Grass
+Magic
+Fighting
+Electric
+Poison
+
+----------
+Resists:
+
+Water
+Ice
+Fire
+Steel
+
+===========================
+Water - Rock
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass (!!)
+Fighting
+Ground
+Electric
+
+----------
+Resists:
+
+Galactic
+Ice
+Fire (!!)
+Flying
+Normal
+
+===========================
+Water - Fire
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Ground
+Rock
+Electric
+Poison
+
+----------
+Resists:
+
+Light
+Ice (!!)
+Fire (!!)
+Steel (!!)
+Bug
+
+===========================
+Water - None
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Electric
+Poison
+
+----------
+Resists:
+
+Water
+Ice
+Fire
+Steel
+
+===========================
+Water - Grass
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Flying
+Poison (!!)
+Bug
+
+----------
+Resists:
+
+Water (!!)
+Ground
+Steel
+
+===========================
+Water - Ice
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Light
+Fighting
+Rock
+Electric
+Poison
+
+----------
+Resists:
+
+Water
+Galactic
+Ice (!!)
+Flying
+
+===========================
+Water - Electric
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Ground
+Ghost
+Poison
+
+----------
+Resists:
+
+Water
+Ice
+Fire
+Steel (!!)
+Flying
+
+===========================
+Water - Fighting
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Galactic
+Psychic
+Electric
+Flying
+Poison
+
+----------
+Resists:
+
+Water
+Magic
+Dark
+Ice
+Fire
+Steel
+Rock
+Bug
+
+===========================
+Water - Poison
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Ground
+Psychic
+Electric
+
+----------
+Resists:
+
+Water
+Magic
+Ice
+Fighting
+Fire
+Steel
+Bug
+
+===========================
+Water - Ground
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Grass (!!)
+Galactic
+
+----------
+Resists:
+
+Fire
+Steel
+Rock
+
+===========================
+Water - Flying
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Rock
+Electric (!!)
+Poison
+
+----------
+Resists:
+
+Water
+Fighting
+Fire
+Steel
+Bug
+
+===========================
+Water - Psychic
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Dark
+Ghost
+Electric
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Ice
+Fighting
+Fire
+Steel
+Psychic
+
+===========================
+Water - Bug
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Rock
+Electric
+Flying
+Poison
+
+----------
+Resists:
+
+Water
+Light
+Ice
+Fighting
+Ground
+Steel
+
+===========================
+Water - Ghost
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Grass
+Dark
+Light
+Ghost
+
+----------
+Resists:
+
+Water
+Ice
+Fire
+Steel
+Bug
+
+===========================
+Water - Dragon
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Dragon
+Poison
+
+----------
+Resists:
+
+Water (!!)
+Fire (!!)
+Steel
+
+===========================
+Water - Steel
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting
+Ground
+Electric (!!)
+
+----------
+Resists:
+
+Water
+Galactic
+Light
+Ice (!!)
+Steel (!!)
+Rock
+Flying
+Dragon
+Bug
+Normal
+
+===========================
+Water - Dark
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Grass
+Light
+Fighting
+Electric
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Dark
+Ice
+Fire
+Steel
+Ghost
+
+===========================
+Water - Light
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass (!!)
+Electric
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Galactic
+Dark
+Light
+Ice
+Fire
+Ghost
+
+===========================
+Water - Magic
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Grass
+Dark
+Electric
+Poison (!!)
+Normal
+
+----------
+Resists:
+
+Water
+Magic
+Ice
+Fighting
+Fire
+Steel (!!)
+Psychic
+
+===========================
+Water - Galactic
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Light
+Rock
+Electric
+Flying
+Poison
+
+----------
+Resists:
+
+Water
+Dark
+Ice
+Fighting
+Ground
+Steel
+Bug
+
+===========================
+Grass - Normal
+===========================
+Immune to:
+
+Light
+Ghost
+
+----------
+Weak to:
+
+Magic
+Ice
+Fighting
+Fire
+Flying
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Grass
+Ground
+Electric
+
+===========================
+Grass - Rock
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Ice
+Fighting
+Steel
+Bug
+
+----------
+Resists:
+
+Galactic
+Electric
+Normal
+
+===========================
+Grass - Fire
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Galactic
+Rock
+Flying
+Poison
+
+----------
+Resists:
+
+Grass (!!)
+Steel
+Electric
+
+===========================
+Grass - Water
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Flying
+Poison (!!)
+Bug
+
+----------
+Resists:
+
+Water (!!)
+Ground
+Steel
+
+===========================
+Grass - None
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Ice
+Fire
+Flying
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Grass
+Ground
+Electric
+
+===========================
+Grass - Ice
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Fighting
+Fire (!!)
+Steel
+Rock
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Grass
+Galactic
+Ground
+Electric
+
+===========================
+Grass - Electric
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Ice
+Fire
+Ghost
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Grass
+Steel
+Electric (!!)
+
+===========================
+Grass - Fighting
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Galactic
+Ice
+Fire
+Psychic
+Flying (!!)
+Poison
+
+----------
+Resists:
+
+Water
+Grass
+Magic
+Dark
+Ground
+Rock
+Electric
+
+===========================
+Grass - Poison
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Ice
+Fire
+Psychic
+Flying
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Magic
+Fighting
+Electric
+
+===========================
+Grass - Ground
+===========================
+Immune to:
+
+Light
+Electric
+
+----------
+Weak to:
+
+Galactic
+Ice (!!)
+Fire
+Flying
+Bug
+
+----------
+Resists:
+
+Ground
+Rock
+
+===========================
+Grass - Flying
+===========================
+Immune to:
+
+Light
+Ground
+
+----------
+Weak to:
+
+Ice (!!)
+Fire
+Rock
+Flying
+Poison
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Fighting
+
+===========================
+Grass - Psychic
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Dark
+Ice
+Fire
+Ghost
+Flying
+Poison
+Bug (!!)
+
+----------
+Resists:
+
+Water
+Grass
+Fighting
+Ground
+Psychic
+Electric
+
+===========================
+Grass - Bug
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Ice
+Fire (!!)
+Rock
+Flying (!!)
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Fighting
+Ground (!!)
+Electric
+
+===========================
+Grass - Ghost
+===========================
+Immune to:
+
+Light
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark
+Ice
+Fire
+Ghost
+Flying
+
+----------
+Resists:
+
+Water
+Grass
+Ground
+Electric (!!)
+
+===========================
+Grass - Dragon
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Magic
+Ice (!!)
+Flying
+Dragon
+Poison
+Bug
+
+----------
+Resists:
+
+Water (!!)
+Grass (!!)
+Ground
+Electric (!!)
+
+===========================
+Grass - Steel
+===========================
+Immune to:
+
+Light
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting
+Fire (!!)
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Galactic
+Steel
+Rock
+Dragon
+Normal
+
+===========================
+Grass - Dark
+===========================
+Immune to:
+
+Light
+Psychic
+
+----------
+Weak to:
+
+Ice
+Fighting
+Fire
+Flying
+Poison
+Bug (!!)
+
+----------
+Resists:
+
+Water
+Grass
+Dark
+Ground
+Ghost
+Electric
+
+===========================
+Grass - Light
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Ice
+Fire
+Steel
+Flying
+Poison
+Bug (!!)
+
+----------
+Resists:
+
+Water
+Galactic
+Dark
+Ground
+Ghost
+Electric
+
+===========================
+Grass - Magic
+===========================
+Immune to:
+
+Light
+Dragon
+
+----------
+Weak to:
+
+Dark
+Ice
+Fire
+Flying
+Poison (!!)
+Bug
+Normal
+
+----------
+Resists:
+
+Water
+Grass
+Magic
+Fighting
+Ground
+Steel
+Psychic
+Electric
+
+===========================
+Grass - Galactic
+===========================
+Immune to:
+
+Light
+Fire
+
+----------
+Weak to:
+
+Ice
+Rock
+Flying (!!)
+Poison
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Dark
+Fighting
+Ground (!!)
+Electric
+
+===========================
+Ice - Normal
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Magic
+Light
+Fighting (!!)
+Fire
+Steel
+Rock
+
+----------
+Resists:
+
+Galactic
+Ice
+Flying
+
+===========================
+Ice - Rock
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Grass
+Light
+Fighting (!!)
+Ground
+Steel (!!)
+Rock
+
+----------
+Resists:
+
+Galactic (!!)
+Ice
+Flying (!!)
+Poison
+Normal
+
+===========================
+Ice - Fire
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Fighting
+Ground
+Rock (!!)
+
+----------
+Resists:
+
+Grass
+Ice (!!)
+Flying
+Bug
+
+===========================
+Ice - Water
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Light
+Fighting
+Rock
+Electric
+Poison
+
+----------
+Resists:
+
+Water
+Galactic
+Ice (!!)
+Flying
+
+===========================
+Ice - Grass
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Fighting
+Fire (!!)
+Steel
+Rock
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Grass
+Galactic
+Ground
+Electric
+
+===========================
+Ice - None
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Light
+Fighting
+Fire
+Steel
+Rock
+
+----------
+Resists:
+
+Galactic
+Ice
+Flying
+
+===========================
+Ice - Electric
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Light
+Fighting
+Fire
+Ground
+Rock
+Ghost
+
+----------
+Resists:
+
+Galactic
+Ice
+Electric
+Flying (!!)
+
+===========================
+Ice - Fighting
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Light
+Fighting
+Fire
+Steel
+Psychic
+
+----------
+Resists:
+
+Magic
+Dark
+Ice
+Bug
+
+===========================
+Ice - Poison
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Light
+Fire
+Ground
+Steel
+Rock
+Psychic
+
+----------
+Resists:
+
+Grass
+Galactic
+Magic
+Ice
+Flying
+Poison
+Bug
+
+===========================
+Ice - Ground
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Light
+Fighting
+Fire
+Steel
+
+----------
+Resists:
+
+Flying
+Poison
+
+===========================
+Ice - Flying
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Light
+Fire
+Steel
+Rock (!!)
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic
+Flying
+Bug
+
+===========================
+Ice - Psychic
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Dark
+Light
+Fire
+Steel
+Rock
+Ghost
+Bug
+
+----------
+Resists:
+
+Galactic
+Ice
+Psychic
+Flying
+
+===========================
+Ice - Bug
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Fire (!!)
+Steel
+Rock (!!)
+
+----------
+Resists:
+
+Grass
+Galactic
+Ice
+Ground
+
+===========================
+Ice - Ghost
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark
+Light (!!)
+Fire
+Steel
+Rock
+Ghost
+
+----------
+Resists:
+
+Galactic
+Ice
+Electric
+Flying
+Poison
+Bug
+
+===========================
+Ice - Dragon
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Light
+Fighting
+Steel
+Rock
+Dragon
+
+----------
+Resists:
+
+Water
+Grass
+Galactic
+Electric
+Flying
+
+===========================
+Ice - Steel
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting (!!)
+Fire (!!)
+Ground
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic (!!)
+Ice (!!)
+Flying (!!)
+Dragon
+Bug
+Normal
+
+===========================
+Ice - Dark
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Light (!!)
+Fighting (!!)
+Fire
+Steel
+Rock
+Bug
+
+----------
+Resists:
+
+Galactic
+Dark
+Ice
+Ghost
+Flying
+
+===========================
+Ice - Light
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Fighting
+Fire
+Steel (!!)
+Rock
+Bug
+
+----------
+Resists:
+
+Galactic (!!)
+Dark
+Ice
+Ghost
+Flying
+
+===========================
+Ice - Magic
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark
+Light
+Fire
+Rock
+Poison
+Normal
+
+----------
+Resists:
+
+Galactic
+Magic
+Ice
+Psychic
+Flying
+
+===========================
+Ice - Galactic
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Light (!!)
+Steel
+Rock (!!)
+
+----------
+Resists:
+
+Grass
+Galactic
+Dark
+Ice
+Ground
+Bug
+
+===========================
+Electric - Normal
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Magic
+Fighting
+Ground
+
+----------
+Resists:
+
+Steel
+Electric
+Flying
+
+===========================
+Electric - Rock
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Grass
+Fighting
+Ground (!!)
+Ghost
+
+----------
+Resists:
+
+Galactic
+Fire
+Electric
+Flying (!!)
+Poison
+Normal
+
+===========================
+Electric - Fire
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Galactic
+Ground (!!)
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Light
+Ice
+Fire
+Steel (!!)
+Electric
+Flying
+Bug
+
+===========================
+Electric - Water
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Ground
+Ghost
+Poison
+
+----------
+Resists:
+
+Water
+Ice
+Fire
+Steel (!!)
+Flying
+
+===========================
+Electric - Grass
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Ice
+Fire
+Ghost
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Grass
+Steel
+Electric (!!)
+
+===========================
+Electric - Ice
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Light
+Fighting
+Fire
+Ground
+Rock
+Ghost
+
+----------
+Resists:
+
+Galactic
+Ice
+Electric
+Flying (!!)
+
+===========================
+Electric - None
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Ground
+Ghost
+
+----------
+Resists:
+
+Steel
+Electric
+Flying
+
+===========================
+Electric - Fighting
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Ground
+Ghost
+Psychic
+
+----------
+Resists:
+
+Magic
+Dark
+Steel
+Rock
+Electric
+Bug
+
+===========================
+Electric - Poison
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Ground (!!)
+Ghost
+Psychic
+
+----------
+Resists:
+
+Grass
+Magic
+Fighting
+Steel
+Electric
+Flying
+Poison
+Bug
+
+===========================
+Electric - Ground
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Ice
+Ground
+Ghost
+
+----------
+Resists:
+
+Steel
+Rock
+Flying
+Poison
+
+===========================
+Electric - Flying
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Ice
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Fighting
+Steel
+Flying
+Bug
+
+===========================
+Electric - Psychic
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Dark
+Ground
+Ghost (!!)
+Bug
+
+----------
+Resists:
+
+Fighting
+Steel
+Psychic
+Electric
+Flying
+
+===========================
+Electric - Bug
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Fire
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Light
+Fighting
+Steel
+Electric
+
+===========================
+Electric - Ghost
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark
+Light
+Ground
+Ghost (!!)
+
+----------
+Resists:
+
+Steel
+Electric (!!)
+Flying
+Poison
+Bug
+
+===========================
+Electric - Dragon
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Ice
+Ground
+Ghost
+Dragon
+
+----------
+Resists:
+
+Water
+Grass
+Fire
+Steel
+Electric (!!)
+Flying
+
+===========================
+Electric - Steel
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting
+Fire
+Ground (!!)
+Ghost
+
+----------
+Resists:
+
+Grass
+Galactic
+Light
+Ice
+Steel (!!)
+Rock
+Flying (!!)
+Dragon
+Bug
+Normal
+
+===========================
+Electric - Dark
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Light
+Fighting
+Ground
+Bug
+
+----------
+Resists:
+
+Dark
+Steel
+Electric
+Flying
+
+===========================
+Electric - Light
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Ground
+Bug
+
+----------
+Resists:
+
+Galactic
+Dark
+Light
+Electric
+Flying
+
+===========================
+Electric - Magic
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark
+Ground
+Ghost
+Poison
+Normal
+
+----------
+Resists:
+
+Magic
+Fighting
+Steel (!!)
+Psychic
+Electric
+Flying
+
+===========================
+Electric - Galactic
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Light
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Dark
+Fighting
+Steel
+Electric
+Bug
+
+===========================
+Fighting - Normal
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Galactic
+Fighting
+Psychic
+Flying
+
+----------
+Resists:
+
+Dark
+Rock
+Bug
+
+===========================
+Fighting - Rock
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Grass
+Fighting
+Ground
+Steel
+Psychic
+
+----------
+Resists:
+
+Magic
+Dark
+Fire
+Rock
+Poison
+Bug
+Normal
+
+===========================
+Fighting - Fire
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Galactic (!!)
+Ground
+Psychic
+Flying
+
+----------
+Resists:
+
+Grass
+Magic
+Dark
+Light
+Ice
+Fire
+Steel
+Bug (!!)
+
+===========================
+Fighting - Water
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Galactic
+Psychic
+Electric
+Flying
+Poison
+
+----------
+Resists:
+
+Water
+Magic
+Dark
+Ice
+Fire
+Steel
+Rock
+Bug
+
+===========================
+Fighting - Grass
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Galactic
+Ice
+Fire
+Psychic
+Flying (!!)
+Poison
+
+----------
+Resists:
+
+Water
+Grass
+Magic
+Dark
+Ground
+Rock
+Electric
+
+===========================
+Fighting - Ice
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Light
+Fighting
+Fire
+Steel
+Psychic
+
+----------
+Resists:
+
+Magic
+Dark
+Ice
+Bug
+
+===========================
+Fighting - Electric
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Ground
+Ghost
+Psychic
+
+----------
+Resists:
+
+Magic
+Dark
+Steel
+Rock
+Electric
+Bug
+
+===========================
+Fighting - None
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Psychic
+Flying
+
+----------
+Resists:
+
+Magic
+Dark
+Rock
+Bug
+
+===========================
+Fighting - Poison
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Ground
+Psychic (!!)
+Flying
+
+----------
+Resists:
+
+Grass
+Magic (!!)
+Dark
+Fighting
+Rock
+Poison
+Bug (!!)
+
+===========================
+Fighting - Ground
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic (!!)
+Ice
+Psychic
+Flying
+
+----------
+Resists:
+
+Magic
+Dark
+Rock (!!)
+Poison
+Bug
+
+===========================
+Fighting - Flying
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Galactic
+Ice
+Psychic
+Electric
+Flying
+
+----------
+Resists:
+
+Grass
+Magic
+Dark
+Fighting
+Bug (!!)
+
+===========================
+Fighting - Psychic
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Ghost
+Flying
+
+----------
+Resists:
+
+Magic
+Fighting
+Rock
+
+===========================
+Fighting - Bug
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Fire
+Psychic
+Flying (!!)
+
+----------
+Resists:
+
+Grass
+Magic
+Dark
+Light
+Fighting
+Ground
+Bug
+
+===========================
+Fighting - Ghost
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Galactic
+Light
+Ghost
+Psychic
+Flying
+
+----------
+Resists:
+
+Magic
+Rock
+Electric
+Poison
+Bug (!!)
+
+===========================
+Fighting - Dragon
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Ice
+Psychic
+Flying
+Dragon
+
+----------
+Resists:
+
+Water
+Grass
+Dark
+Fire
+Rock
+Electric
+Bug
+
+===========================
+Fighting - Steel
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Fighting
+Fire
+Ground
+Psychic
+Electric
+
+----------
+Resists:
+
+Grass
+Dark
+Light
+Ice
+Steel
+Rock (!!)
+Dragon
+Bug (!!)
+Normal
+
+===========================
+Fighting - Dark
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Galactic
+Light
+Fighting
+Flying
+
+----------
+Resists:
+
+Magic
+Dark (!!)
+Rock
+Ghost
+
+===========================
+Fighting - Light
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Steel
+Psychic
+Flying
+
+----------
+Resists:
+
+Magic
+Dark (!!)
+Light
+Rock
+Ghost
+
+===========================
+Fighting - Magic
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Galactic
+Flying
+Poison
+Normal
+
+----------
+Resists:
+
+Magic (!!)
+Fighting
+Steel
+Rock
+Bug
+
+===========================
+Fighting - Galactic
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Galactic
+Light
+Psychic
+Flying (!!)
+
+----------
+Resists:
+
+Grass
+Magic
+Dark (!!)
+Fighting
+Ground
+Bug (!!)
+
+===========================
+Poison - Normal
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Ground
+Psychic
+
+----------
+Resists:
+
+Grass
+Poison
+Bug
+
+===========================
+Poison - Rock
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Ground (!!)
+Steel
+Psychic
+
+----------
+Resists:
+
+Galactic
+Magic
+Fire
+Flying
+Poison (!!)
+Bug
+Normal
+
+===========================
+Poison - Fire
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Galactic
+Ground (!!)
+Rock
+Psychic
+
+----------
+Resists:
+
+Grass (!!)
+Magic
+Light
+Ice
+Fighting
+Fire
+Steel
+Poison
+Bug (!!)
+
+===========================
+Poison - Water
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Ground
+Psychic
+Electric
+
+----------
+Resists:
+
+Water
+Magic
+Ice
+Fighting
+Fire
+Steel
+Bug
+
+===========================
+Poison - Grass
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Ice
+Fire
+Psychic
+Flying
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Magic
+Fighting
+Electric
+
+===========================
+Poison - Ice
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Light
+Fire
+Ground
+Steel
+Rock
+Psychic
+
+----------
+Resists:
+
+Grass
+Galactic
+Magic
+Ice
+Flying
+Poison
+Bug
+
+===========================
+Poison - Electric
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Ground (!!)
+Ghost
+Psychic
+
+----------
+Resists:
+
+Grass
+Magic
+Fighting
+Steel
+Electric
+Flying
+Poison
+Bug
+
+===========================
+Poison - Fighting
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Ground
+Psychic (!!)
+Flying
+
+----------
+Resists:
+
+Grass
+Magic (!!)
+Dark
+Fighting
+Rock
+Poison
+Bug (!!)
+
+===========================
+Poison - None
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Ground
+Psychic
+
+----------
+Resists:
+
+Grass
+Magic
+Fighting
+Poison
+Bug
+
+===========================
+Poison - Ground
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Galactic
+Ice
+Ground
+Psychic
+
+----------
+Resists:
+
+Magic
+Fighting
+Rock
+Poison (!!)
+Bug
+
+===========================
+Poison - Flying
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Ice
+Rock
+Psychic
+Electric
+
+----------
+Resists:
+
+Grass (!!)
+Magic
+Fighting (!!)
+Poison
+Bug (!!)
+
+===========================
+Poison - Psychic
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Dark
+Ground
+Ghost
+
+----------
+Resists:
+
+Grass
+Magic
+Fighting (!!)
+Poison
+
+===========================
+Poison - Bug
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Fire
+Rock
+Psychic
+Flying
+
+----------
+Resists:
+
+Grass (!!)
+Magic
+Light
+Fighting (!!)
+Poison
+Bug
+
+===========================
+Poison - Ghost
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark
+Light
+Ground
+Ghost
+Psychic
+
+----------
+Resists:
+
+Grass
+Magic
+Electric
+Poison (!!)
+Bug (!!)
+
+===========================
+Poison - Dragon
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Ice
+Ground
+Psychic
+Dragon
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Fighting
+Fire
+Electric
+Poison
+Bug
+
+===========================
+Poison - Steel
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Fire
+Ground (!!)
+Psychic
+Electric
+
+----------
+Resists:
+
+Grass (!!)
+Galactic
+Light
+Ice
+Steel
+Rock
+Flying
+Dragon
+Bug (!!)
+Normal
+
+===========================
+Poison - Dark
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Light
+Ground
+
+----------
+Resists:
+
+Grass
+Magic
+Dark
+Ghost
+Poison
+
+===========================
+Poison - Light
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Ground
+Steel
+Psychic
+
+----------
+Resists:
+
+Galactic
+Magic
+Dark
+Light
+Fighting
+Ghost
+Poison
+
+===========================
+Poison - Magic
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark
+Ground
+Normal
+
+----------
+Resists:
+
+Grass
+Magic (!!)
+Fighting (!!)
+Steel
+Bug
+
+===========================
+Poison - Galactic
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Light
+Rock
+Psychic
+Flying
+
+----------
+Resists:
+
+Grass (!!)
+Magic
+Dark
+Fighting (!!)
+Poison
+Bug (!!)
+
+===========================
+Ground - Normal
+===========================
+Immune to:
+
+Ghost
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Magic
+Ice
+Fighting
+
+----------
+Resists:
+
+Rock
+Poison
+
+===========================
+Ground - Rock
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water (!!)
+Grass (!!)
+Ice
+Fighting
+Ground
+Steel
+
+----------
+Resists:
+
+Fire
+Rock
+Flying
+Poison (!!)
+Normal
+
+===========================
+Ground - Fire
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water (!!)
+Galactic (!!)
+Ground
+
+----------
+Resists:
+
+Light
+Fire
+Steel
+Poison
+Bug
+
+===========================
+Ground - Water
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Grass (!!)
+Galactic
+
+----------
+Resists:
+
+Fire
+Steel
+Rock
+
+===========================
+Ground - Grass
+===========================
+Immune to:
+
+Light
+Electric
+
+----------
+Weak to:
+
+Galactic
+Ice (!!)
+Fire
+Flying
+Bug
+
+----------
+Resists:
+
+Ground
+Rock
+
+===========================
+Ground - Ice
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Light
+Fighting
+Fire
+Steel
+
+----------
+Resists:
+
+Flying
+Poison
+
+===========================
+Ground - Electric
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Ice
+Ground
+Ghost
+
+----------
+Resists:
+
+Steel
+Rock
+Flying
+Poison
+
+===========================
+Ground - Fighting
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic (!!)
+Ice
+Psychic
+Flying
+
+----------
+Resists:
+
+Magic
+Dark
+Rock (!!)
+Poison
+Bug
+
+===========================
+Ground - Poison
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Galactic
+Ice
+Ground
+Psychic
+
+----------
+Resists:
+
+Magic
+Fighting
+Rock
+Poison (!!)
+Bug
+
+===========================
+Ground - None
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Ice
+
+----------
+Resists:
+
+Rock
+Poison
+
+===========================
+Ground - Flying
+===========================
+Immune to:
+
+Ground
+Electric
+
+----------
+Weak to:
+
+Water
+Galactic
+Ice (!!)
+
+----------
+Resists:
+
+Fighting
+Poison
+Bug
+
+===========================
+Ground - Psychic
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Dark
+Ice
+Ghost
+Bug
+
+----------
+Resists:
+
+Fighting
+Rock
+Psychic
+Poison
+
+===========================
+Ground - Bug
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Galactic
+Ice
+Fire
+Flying
+
+----------
+Resists:
+
+Light
+Fighting
+Ground
+Poison
+
+===========================
+Ground - Ghost
+===========================
+Immune to:
+
+Fighting
+Electric
+Normal
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Dark
+Light
+Ice
+Ghost
+
+----------
+Resists:
+
+Rock
+Poison (!!)
+Bug
+
+===========================
+Ground - Dragon
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Galactic
+Magic
+Ice (!!)
+Dragon
+
+----------
+Resists:
+
+Fire
+Rock
+Poison
+
+===========================
+Ground - Steel
+===========================
+Immune to:
+
+Electric
+Poison
+
+----------
+Weak to:
+
+Water
+Magic
+Fighting
+Fire
+Ground
+
+----------
+Resists:
+
+Light
+Steel
+Rock (!!)
+Flying
+Dragon
+Bug
+Normal
+
+===========================
+Ground - Dark
+===========================
+Immune to:
+
+Psychic
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Light
+Ice
+Fighting
+Bug
+
+----------
+Resists:
+
+Dark
+Rock
+Ghost
+Poison
+
+===========================
+Ground - Light
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Grass (!!)
+Ice
+Steel
+Bug
+
+----------
+Resists:
+
+Dark
+Light
+Rock
+Ghost
+Poison
+
+===========================
+Ground - Magic
+===========================
+Immune to:
+
+Electric
+Dragon
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Dark
+Ice
+Normal
+
+----------
+Resists:
+
+Magic
+Fighting
+Steel
+Rock
+Psychic
+
+===========================
+Ground - Galactic
+===========================
+Immune to:
+
+Fire
+Electric
+
+----------
+Weak to:
+
+Water
+Galactic
+Light
+Ice
+Flying
+
+----------
+Resists:
+
+Dark
+Fighting
+Ground
+Poison
+Bug
+
+===========================
+Flying - Normal
+===========================
+Immune to:
+
+Ground
+Ghost
+
+----------
+Weak to:
+
+Magic
+Ice
+Rock
+Electric
+
+----------
+Resists:
+
+Grass
+Bug
+
+===========================
+Flying - Rock
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Water
+Ice
+Steel
+Rock
+Electric
+
+----------
+Resists:
+
+Galactic
+Fire
+Flying
+Poison
+Bug
+Normal
+
+===========================
+Flying - Fire
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Water
+Galactic
+Rock (!!)
+Electric
+
+----------
+Resists:
+
+Grass (!!)
+Light
+Fighting
+Fire
+Steel
+Bug (!!)
+
+===========================
+Flying - Water
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Rock
+Electric (!!)
+Poison
+
+----------
+Resists:
+
+Water
+Fighting
+Fire
+Steel
+Bug
+
+===========================
+Flying - Grass
+===========================
+Immune to:
+
+Light
+Ground
+
+----------
+Weak to:
+
+Ice (!!)
+Fire
+Rock
+Flying
+Poison
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Fighting
+
+===========================
+Flying - Ice
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Light
+Fire
+Steel
+Rock (!!)
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic
+Flying
+Bug
+
+===========================
+Flying - Electric
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Ice
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Fighting
+Steel
+Flying
+Bug
+
+===========================
+Flying - Fighting
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Galactic
+Ice
+Psychic
+Electric
+Flying
+
+----------
+Resists:
+
+Grass
+Magic
+Dark
+Fighting
+Bug (!!)
+
+===========================
+Flying - Poison
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Ice
+Rock
+Psychic
+Electric
+
+----------
+Resists:
+
+Grass (!!)
+Magic
+Fighting (!!)
+Poison
+Bug (!!)
+
+===========================
+Flying - Ground
+===========================
+Immune to:
+
+Ground
+Electric
+
+----------
+Weak to:
+
+Water
+Galactic
+Ice (!!)
+
+----------
+Resists:
+
+Fighting
+Poison
+Bug
+
+===========================
+Flying - None
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Ice
+Rock
+Electric
+
+----------
+Resists:
+
+Grass
+Fighting
+Bug
+
+===========================
+Flying - Psychic
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Dark
+Ice
+Rock
+Ghost
+Electric
+
+----------
+Resists:
+
+Grass
+Fighting (!!)
+Psychic
+
+===========================
+Flying - Bug
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Ice
+Fire
+Rock (!!)
+Electric
+Flying
+
+----------
+Resists:
+
+Grass (!!)
+Light
+Fighting (!!)
+Bug
+
+===========================
+Flying - Ghost
+===========================
+Immune to:
+
+Fighting
+Ground
+Normal
+
+----------
+Weak to:
+
+Dark
+Light
+Ice
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Poison
+Bug (!!)
+
+===========================
+Flying - Dragon
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Magic
+Ice (!!)
+Rock
+Dragon
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Fighting
+Fire
+Bug
+
+===========================
+Flying - Steel
+===========================
+Immune to:
+
+Ground
+Poison
+
+----------
+Weak to:
+
+Magic
+Fire
+Electric (!!)
+
+----------
+Resists:
+
+Grass (!!)
+Galactic
+Light
+Steel
+Flying
+Dragon
+Bug (!!)
+Normal
+
+===========================
+Flying - Dark
+===========================
+Immune to:
+
+Ground
+Psychic
+
+----------
+Weak to:
+
+Light
+Ice
+Rock
+Electric
+
+----------
+Resists:
+
+Grass
+Dark
+Ghost
+
+===========================
+Flying - Light
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Ice
+Steel
+Rock
+Electric
+
+----------
+Resists:
+
+Galactic
+Dark
+Light
+Fighting
+Ghost
+
+===========================
+Flying - Magic
+===========================
+Immune to:
+
+Ground
+Dragon
+
+----------
+Weak to:
+
+Dark
+Ice
+Rock
+Electric
+Poison
+Normal
+
+----------
+Resists:
+
+Grass
+Magic
+Fighting (!!)
+Steel
+Psychic
+Bug
+
+===========================
+Flying - Galactic
+===========================
+Immune to:
+
+Fire
+Ground
+
+----------
+Weak to:
+
+Light
+Ice
+Rock (!!)
+Electric
+Flying
+
+----------
+Resists:
+
+Grass (!!)
+Dark
+Fighting (!!)
+Bug (!!)
+
+===========================
+Psychic - Normal
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Magic
+Dark
+Bug
+
+----------
+Resists:
+
+Psychic
+
+===========================
+Psychic - Rock
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Grass
+Dark
+Ground
+Steel
+Ghost
+Bug
+
+----------
+Resists:
+
+Galactic
+Fire
+Psychic
+Flying
+Poison
+Normal
+
+===========================
+Psychic - Fire
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Galactic
+Dark
+Ground
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Light
+Ice
+Fighting
+Fire
+Steel
+Psychic
+
+===========================
+Psychic - Water
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Dark
+Ghost
+Electric
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Ice
+Fighting
+Fire
+Steel
+Psychic
+
+===========================
+Psychic - Grass
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Dark
+Ice
+Fire
+Ghost
+Flying
+Poison
+Bug (!!)
+
+----------
+Resists:
+
+Water
+Grass
+Fighting
+Ground
+Psychic
+Electric
+
+===========================
+Psychic - Ice
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Dark
+Light
+Fire
+Steel
+Rock
+Ghost
+Bug
+
+----------
+Resists:
+
+Galactic
+Ice
+Psychic
+Flying
+
+===========================
+Psychic - Electric
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Dark
+Ground
+Ghost (!!)
+Bug
+
+----------
+Resists:
+
+Fighting
+Steel
+Psychic
+Electric
+Flying
+
+===========================
+Psychic - Fighting
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Ghost
+Flying
+
+----------
+Resists:
+
+Magic
+Fighting
+Rock
+
+===========================
+Psychic - Poison
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Dark
+Ground
+Ghost
+
+----------
+Resists:
+
+Grass
+Magic
+Fighting (!!)
+Poison
+
+===========================
+Psychic - Ground
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Dark
+Ice
+Ghost
+Bug
+
+----------
+Resists:
+
+Fighting
+Rock
+Psychic
+Poison
+
+===========================
+Psychic - Flying
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Dark
+Ice
+Rock
+Ghost
+Electric
+
+----------
+Resists:
+
+Grass
+Fighting (!!)
+Psychic
+
+===========================
+Psychic - None
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Dark
+Ghost
+Bug
+
+----------
+Resists:
+
+Fighting
+Psychic
+
+===========================
+Psychic - Bug
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Dark
+Fire
+Rock
+Ghost
+Flying
+Bug
+
+----------
+Resists:
+
+Grass
+Light
+Fighting (!!)
+Ground
+Psychic
+
+===========================
+Psychic - Ghost
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark (!!)
+Light
+Ghost (!!)
+
+----------
+Resists:
+
+Psychic
+Electric
+Poison
+
+===========================
+Psychic - Dragon
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Dark
+Ice
+Ghost
+Dragon
+Bug
+
+----------
+Resists:
+
+Water
+Grass
+Fighting
+Fire
+Psychic
+Electric
+
+===========================
+Psychic - Steel
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Dark
+Fire
+Ground
+Ghost
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic
+Light
+Ice
+Steel
+Rock
+Psychic
+Flying
+Dragon
+Normal
+
+===========================
+Psychic - Dark
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Light
+Bug (!!)
+
+----------
+Resists:
+
+
+===========================
+Psychic - Light
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Steel
+Bug (!!)
+
+----------
+Resists:
+
+Galactic
+Light
+Fighting
+Psychic
+
+===========================
+Psychic - Magic
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark (!!)
+Ghost
+Poison
+Bug
+Normal
+
+----------
+Resists:
+
+Magic
+Fighting (!!)
+Steel
+Psychic (!!)
+
+===========================
+Psychic - Galactic
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Light
+Rock
+Ghost
+Flying
+
+----------
+Resists:
+
+Grass
+Fighting (!!)
+Ground
+Psychic
+
+===========================
+Bug - Normal
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Magic
+Fire
+Rock
+Flying
+
+----------
+Resists:
+
+Grass
+Light
+Ground
+
+===========================
+Bug - Rock
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Steel
+Rock
+
+----------
+Resists:
+
+Galactic
+Light
+Poison
+Normal
+
+===========================
+Bug - Fire
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Galactic
+Rock (!!)
+Flying
+
+----------
+Resists:
+
+Grass (!!)
+Light (!!)
+Ice
+Fighting
+Steel
+Bug
+
+===========================
+Bug - Water
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Rock
+Electric
+Flying
+Poison
+
+----------
+Resists:
+
+Water
+Light
+Ice
+Fighting
+Ground
+Steel
+
+===========================
+Bug - Grass
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Ice
+Fire (!!)
+Rock
+Flying (!!)
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Fighting
+Ground (!!)
+Electric
+
+===========================
+Bug - Ice
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Fire (!!)
+Steel
+Rock (!!)
+
+----------
+Resists:
+
+Grass
+Galactic
+Ice
+Ground
+
+===========================
+Bug - Electric
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Fire
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Light
+Fighting
+Steel
+Electric
+
+===========================
+Bug - Fighting
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Fire
+Psychic
+Flying (!!)
+
+----------
+Resists:
+
+Grass
+Magic
+Dark
+Light
+Fighting
+Ground
+Bug
+
+===========================
+Bug - Poison
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Fire
+Rock
+Psychic
+Flying
+
+----------
+Resists:
+
+Grass (!!)
+Magic
+Light
+Fighting (!!)
+Poison
+Bug
+
+===========================
+Bug - Ground
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Galactic
+Ice
+Fire
+Flying
+
+----------
+Resists:
+
+Light
+Fighting
+Ground
+Poison
+
+===========================
+Bug - Flying
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Ice
+Fire
+Rock (!!)
+Electric
+Flying
+
+----------
+Resists:
+
+Grass (!!)
+Light
+Fighting (!!)
+Bug
+
+===========================
+Bug - Psychic
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Dark
+Fire
+Rock
+Ghost
+Flying
+Bug
+
+----------
+Resists:
+
+Grass
+Light
+Fighting (!!)
+Ground
+Psychic
+
+===========================
+Bug - None
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Fire
+Rock
+Flying
+
+----------
+Resists:
+
+Grass
+Light
+Fighting
+Ground
+
+===========================
+Bug - Ghost
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark
+Fire
+Rock
+Ghost
+Flying
+
+----------
+Resists:
+
+Grass
+Ground
+Electric
+Poison
+Bug
+
+===========================
+Bug - Dragon
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Ice
+Rock
+Flying
+Dragon
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Light
+Fighting
+Ground
+Electric
+
+===========================
+Bug - Steel
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Fire (!!)
+Electric
+
+----------
+Resists:
+
+Grass (!!)
+Galactic
+Light (!!)
+Ice
+Steel
+Dragon
+Bug
+Normal
+
+===========================
+Bug - Dark
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Fire
+Rock
+Flying
+Bug
+
+----------
+Resists:
+
+Grass
+Dark
+Ground
+Ghost
+
+===========================
+Bug - Light
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Fire
+Steel
+Rock
+Flying
+Bug
+
+----------
+Resists:
+
+Galactic
+Dark
+Light (!!)
+Fighting
+Ground
+Ghost
+
+===========================
+Bug - Magic
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark
+Fire
+Rock
+Flying
+Poison
+Normal
+
+----------
+Resists:
+
+Grass
+Magic
+Light
+Fighting (!!)
+Ground
+Steel
+Psychic
+
+===========================
+Bug - Galactic
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Rock (!!)
+Flying (!!)
+
+----------
+Resists:
+
+Grass (!!)
+Dark
+Fighting (!!)
+Ground (!!)
+Bug
+
+===========================
+Ghost - Normal
+===========================
+Immune to:
+
+Fighting
+Ghost
+Normal
+
+----------
+Weak to:
+
+Magic
+Dark
+Light
+
+----------
+Resists:
+
+Electric
+Poison
+Bug
+
+===========================
+Ghost - Rock
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Water
+Grass
+Dark
+Light
+Ground
+Steel
+Ghost
+
+----------
+Resists:
+
+Galactic
+Fire
+Electric
+Flying
+Poison (!!)
+Bug
+
+===========================
+Ghost - Fire
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Water
+Galactic
+Dark
+Ground
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Ice
+Fire
+Steel
+Electric
+Poison
+Bug (!!)
+
+===========================
+Ghost - Water
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Grass
+Dark
+Light
+Ghost
+
+----------
+Resists:
+
+Water
+Ice
+Fire
+Steel
+Bug
+
+===========================
+Ghost - Grass
+===========================
+Immune to:
+
+Light
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark
+Ice
+Fire
+Ghost
+Flying
+
+----------
+Resists:
+
+Water
+Grass
+Ground
+Electric (!!)
+
+===========================
+Ghost - Ice
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark
+Light (!!)
+Fire
+Steel
+Rock
+Ghost
+
+----------
+Resists:
+
+Galactic
+Ice
+Electric
+Flying
+Poison
+Bug
+
+===========================
+Ghost - Electric
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark
+Light
+Ground
+Ghost (!!)
+
+----------
+Resists:
+
+Steel
+Electric (!!)
+Flying
+Poison
+Bug
+
+===========================
+Ghost - Fighting
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Galactic
+Light
+Ghost
+Psychic
+Flying
+
+----------
+Resists:
+
+Magic
+Rock
+Electric
+Poison
+Bug (!!)
+
+===========================
+Ghost - Poison
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark
+Light
+Ground
+Ghost
+Psychic
+
+----------
+Resists:
+
+Grass
+Magic
+Electric
+Poison (!!)
+Bug (!!)
+
+===========================
+Ghost - Ground
+===========================
+Immune to:
+
+Fighting
+Electric
+Normal
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Dark
+Light
+Ice
+Ghost
+
+----------
+Resists:
+
+Rock
+Poison (!!)
+Bug
+
+===========================
+Ghost - Flying
+===========================
+Immune to:
+
+Fighting
+Ground
+Normal
+
+----------
+Weak to:
+
+Dark
+Light
+Ice
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Poison
+Bug (!!)
+
+===========================
+Ghost - Psychic
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark (!!)
+Light
+Ghost (!!)
+
+----------
+Resists:
+
+Psychic
+Electric
+Poison
+
+===========================
+Ghost - Bug
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark
+Fire
+Rock
+Ghost
+Flying
+
+----------
+Resists:
+
+Grass
+Ground
+Electric
+Poison
+Bug
+
+===========================
+Ghost - None
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Dark
+Light
+Ghost
+
+----------
+Resists:
+
+Electric
+Poison
+Bug
+
+===========================
+Ghost - Dragon
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Magic
+Dark
+Light
+Ice
+Ghost
+Dragon
+
+----------
+Resists:
+
+Water
+Grass
+Fire
+Electric (!!)
+Poison
+Bug
+
+===========================
+Ghost - Steel
+===========================
+Immune to:
+
+Fighting
+Poison
+Normal
+
+----------
+Weak to:
+
+Magic
+Dark
+Fire
+Ground
+Ghost
+
+----------
+Resists:
+
+Grass
+Galactic
+Ice
+Steel
+Rock
+Flying
+Dragon
+Bug (!!)
+
+===========================
+Ghost - Dark
+===========================
+Immune to:
+
+Fighting
+Psychic
+Normal
+
+----------
+Weak to:
+
+Light (!!)
+
+----------
+Resists:
+
+Electric
+Poison
+
+===========================
+Ghost - Light
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Grass
+Steel
+
+----------
+Resists:
+
+Galactic
+Electric
+Poison
+
+===========================
+Ghost - Magic
+===========================
+Immune to:
+
+Fighting
+Dragon
+Normal
+
+----------
+Weak to:
+
+Dark (!!)
+Light
+Ghost
+
+----------
+Resists:
+
+Magic
+Steel
+Psychic
+Electric
+Bug
+
+===========================
+Ghost - Galactic
+===========================
+Immune to:
+
+Fighting
+Fire
+Normal
+
+----------
+Weak to:
+
+Light (!!)
+Rock
+Ghost
+Flying
+
+----------
+Resists:
+
+Grass
+Ground
+Electric
+Poison
+Bug (!!)
+
+===========================
+Dragon - Normal
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Magic (!!)
+Ice
+Fighting
+Dragon
+
+----------
+Resists:
+
+Water
+Grass
+Fire
+Electric
+
+===========================
+Dragon - Rock
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Ice
+Fighting
+Ground
+Steel
+Dragon
+
+----------
+Resists:
+
+Galactic
+Fire (!!)
+Electric
+Flying
+Poison
+Normal
+
+===========================
+Dragon - Fire
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Magic
+Ground
+Rock
+Dragon
+
+----------
+Resists:
+
+Grass (!!)
+Light
+Fire (!!)
+Steel
+Electric
+Bug
+
+===========================
+Dragon - Water
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Dragon
+Poison
+
+----------
+Resists:
+
+Water (!!)
+Fire (!!)
+Steel
+
+===========================
+Dragon - Grass
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Magic
+Ice (!!)
+Flying
+Dragon
+Poison
+Bug
+
+----------
+Resists:
+
+Water (!!)
+Grass (!!)
+Ground
+Electric (!!)
+
+===========================
+Dragon - Ice
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Light
+Fighting
+Steel
+Rock
+Dragon
+
+----------
+Resists:
+
+Water
+Grass
+Galactic
+Electric
+Flying
+
+===========================
+Dragon - Electric
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Ice
+Ground
+Ghost
+Dragon
+
+----------
+Resists:
+
+Water
+Grass
+Fire
+Steel
+Electric (!!)
+Flying
+
+===========================
+Dragon - Fighting
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Galactic
+Ice
+Psychic
+Flying
+Dragon
+
+----------
+Resists:
+
+Water
+Grass
+Dark
+Fire
+Rock
+Electric
+Bug
+
+===========================
+Dragon - Poison
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Ice
+Ground
+Psychic
+Dragon
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Fighting
+Fire
+Electric
+Poison
+Bug
+
+===========================
+Dragon - Ground
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Galactic
+Magic
+Ice (!!)
+Dragon
+
+----------
+Resists:
+
+Fire
+Rock
+Poison
+
+===========================
+Dragon - Flying
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Magic
+Ice (!!)
+Rock
+Dragon
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Fighting
+Fire
+Bug
+
+===========================
+Dragon - Psychic
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Dark
+Ice
+Ghost
+Dragon
+Bug
+
+----------
+Resists:
+
+Water
+Grass
+Fighting
+Fire
+Psychic
+Electric
+
+===========================
+Dragon - Bug
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Ice
+Rock
+Flying
+Dragon
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Light
+Fighting
+Ground
+Electric
+
+===========================
+Dragon - Ghost
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Magic
+Dark
+Light
+Ice
+Ghost
+Dragon
+
+----------
+Resists:
+
+Water
+Grass
+Fire
+Electric (!!)
+Poison
+Bug
+
+===========================
+Dragon - None
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Ice
+Dragon
+
+----------
+Resists:
+
+Water
+Grass
+Fire
+Electric
+
+===========================
+Dragon - Steel
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic (!!)
+Fighting
+Ground
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Galactic
+Light
+Steel
+Rock
+Flying
+Bug
+Normal
+
+===========================
+Dragon - Dark
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Magic
+Light
+Ice
+Fighting
+Dragon
+Bug
+
+----------
+Resists:
+
+Water
+Grass
+Dark
+Fire
+Ghost
+Electric
+
+===========================
+Dragon - Light
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Ice
+Steel
+Dragon
+Bug
+
+----------
+Resists:
+
+Water
+Galactic
+Dark
+Light
+Fire
+Ghost
+Electric
+
+===========================
+Dragon - Magic
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark
+Ice
+Poison
+Normal
+
+----------
+Resists:
+
+Water
+Grass
+Fighting
+Fire
+Steel
+Psychic
+Electric
+
+===========================
+Dragon - Galactic
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Magic
+Light
+Ice
+Rock
+Flying
+Dragon
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Dark
+Fighting
+Ground
+Electric
+Bug
+
+===========================
+Steel - Normal
+===========================
+Immune to:
+
+Ghost
+Poison
+
+----------
+Weak to:
+
+Magic (!!)
+Fighting (!!)
+Fire
+Ground
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic
+Light
+Ice
+Steel
+Rock
+Flying
+Dragon
+Bug
+Normal
+
+===========================
+Steel - Rock
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Water
+Magic
+Fighting (!!)
+Ground (!!)
+Electric
+
+----------
+Resists:
+
+Galactic (!!)
+Light
+Ice
+Rock
+Flying (!!)
+Dragon
+Bug
+Normal (!!)
+
+===========================
+Steel - Fire
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Water
+Magic
+Fighting
+Ground (!!)
+Electric
+
+----------
+Resists:
+
+Grass (!!)
+Light (!!)
+Ice (!!)
+Steel (!!)
+Flying
+Dragon
+Bug (!!)
+Normal
+
+===========================
+Steel - Water
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting
+Ground
+Electric (!!)
+
+----------
+Resists:
+
+Water
+Galactic
+Light
+Ice (!!)
+Steel (!!)
+Rock
+Flying
+Dragon
+Bug
+Normal
+
+===========================
+Steel - Grass
+===========================
+Immune to:
+
+Light
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting
+Fire (!!)
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Galactic
+Steel
+Rock
+Dragon
+Normal
+
+===========================
+Steel - Ice
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting (!!)
+Fire (!!)
+Ground
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic (!!)
+Ice (!!)
+Flying (!!)
+Dragon
+Bug
+Normal
+
+===========================
+Steel - Electric
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting
+Fire
+Ground (!!)
+Ghost
+
+----------
+Resists:
+
+Grass
+Galactic
+Light
+Ice
+Steel (!!)
+Rock
+Flying (!!)
+Dragon
+Bug
+Normal
+
+===========================
+Steel - Fighting
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Fighting
+Fire
+Ground
+Psychic
+Electric
+
+----------
+Resists:
+
+Grass
+Dark
+Light
+Ice
+Steel
+Rock (!!)
+Dragon
+Bug (!!)
+Normal
+
+===========================
+Steel - Poison
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Fire
+Ground (!!)
+Psychic
+Electric
+
+----------
+Resists:
+
+Grass (!!)
+Galactic
+Light
+Ice
+Steel
+Rock
+Flying
+Dragon
+Bug (!!)
+Normal
+
+===========================
+Steel - Ground
+===========================
+Immune to:
+
+Electric
+Poison
+
+----------
+Weak to:
+
+Water
+Magic
+Fighting
+Fire
+Ground
+
+----------
+Resists:
+
+Light
+Steel
+Rock (!!)
+Flying
+Dragon
+Bug
+Normal
+
+===========================
+Steel - Flying
+===========================
+Immune to:
+
+Ground
+Poison
+
+----------
+Weak to:
+
+Magic
+Fire
+Electric (!!)
+
+----------
+Resists:
+
+Grass (!!)
+Galactic
+Light
+Steel
+Flying
+Dragon
+Bug (!!)
+Normal
+
+===========================
+Steel - Psychic
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Dark
+Fire
+Ground
+Ghost
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic
+Light
+Ice
+Steel
+Rock
+Psychic
+Flying
+Dragon
+Normal
+
+===========================
+Steel - Bug
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Fire (!!)
+Electric
+
+----------
+Resists:
+
+Grass (!!)
+Galactic
+Light (!!)
+Ice
+Steel
+Dragon
+Bug
+Normal
+
+===========================
+Steel - Ghost
+===========================
+Immune to:
+
+Fighting
+Poison
+Normal
+
+----------
+Weak to:
+
+Magic
+Dark
+Fire
+Ground
+Ghost
+
+----------
+Resists:
+
+Grass
+Galactic
+Ice
+Steel
+Rock
+Flying
+Dragon
+Bug (!!)
+
+===========================
+Steel - Dragon
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic (!!)
+Fighting
+Ground
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Galactic
+Light
+Steel
+Rock
+Flying
+Bug
+Normal
+
+===========================
+Steel - None
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting
+Fire
+Ground
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic
+Light
+Ice
+Steel
+Rock
+Flying
+Dragon
+Bug
+Normal
+
+===========================
+Steel - Dark
+===========================
+Immune to:
+
+Psychic
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting (!!)
+Fire
+Ground
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic
+Dark
+Ice
+Steel
+Rock
+Ghost
+Flying
+Dragon
+Normal
+
+===========================
+Steel - Light
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting
+Fire
+Ground
+Electric
+
+----------
+Resists:
+
+Galactic (!!)
+Dark
+Light (!!)
+Ice
+Rock
+Ghost
+Flying
+Dragon
+Normal
+
+===========================
+Steel - Magic
+===========================
+Immune to:
+
+Dragon
+Poison
+
+----------
+Weak to:
+
+Dark
+Fire
+Ground
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic
+Light
+Ice
+Steel (!!)
+Rock
+Psychic
+Flying
+Bug
+
+===========================
+Steel - Galactic
+===========================
+Immune to:
+
+Fire
+Poison
+
+----------
+Weak to:
+
+Magic
+Electric
+
+----------
+Resists:
+
+Grass (!!)
+Galactic
+Dark
+Ice
+Steel
+Dragon
+Bug (!!)
+Normal
+
+===========================
+Dark - Normal
+===========================
+Immune to:
+
+Ghost
+Psychic
+
+----------
+Weak to:
+
+Magic
+Light
+Fighting (!!)
+Bug
+
+----------
+Resists:
+
+Dark
+
+===========================
+Dark - Rock
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Water
+Grass
+Light
+Fighting (!!)
+Ground
+Steel
+Bug
+
+----------
+Resists:
+
+Galactic
+Dark
+Fire
+Ghost
+Flying
+Poison
+Normal
+
+===========================
+Dark - Fire
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Water
+Galactic
+Fighting
+Ground
+Rock
+
+----------
+Resists:
+
+Grass
+Dark
+Ice
+Fire
+Steel
+Ghost
+
+===========================
+Dark - Water
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Grass
+Light
+Fighting
+Electric
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Dark
+Ice
+Fire
+Steel
+Ghost
+
+===========================
+Dark - Grass
+===========================
+Immune to:
+
+Light
+Psychic
+
+----------
+Weak to:
+
+Ice
+Fighting
+Fire
+Flying
+Poison
+Bug (!!)
+
+----------
+Resists:
+
+Water
+Grass
+Dark
+Ground
+Ghost
+Electric
+
+===========================
+Dark - Ice
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Light (!!)
+Fighting (!!)
+Fire
+Steel
+Rock
+Bug
+
+----------
+Resists:
+
+Galactic
+Dark
+Ice
+Ghost
+Flying
+
+===========================
+Dark - Electric
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Light
+Fighting
+Ground
+Bug
+
+----------
+Resists:
+
+Dark
+Steel
+Electric
+Flying
+
+===========================
+Dark - Fighting
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Galactic
+Light
+Fighting
+Flying
+
+----------
+Resists:
+
+Magic
+Dark (!!)
+Rock
+Ghost
+
+===========================
+Dark - Poison
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Light
+Ground
+
+----------
+Resists:
+
+Grass
+Magic
+Dark
+Ghost
+Poison
+
+===========================
+Dark - Ground
+===========================
+Immune to:
+
+Psychic
+Electric
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Light
+Ice
+Fighting
+Bug
+
+----------
+Resists:
+
+Dark
+Rock
+Ghost
+Poison
+
+===========================
+Dark - Flying
+===========================
+Immune to:
+
+Ground
+Psychic
+
+----------
+Weak to:
+
+Light
+Ice
+Rock
+Electric
+
+----------
+Resists:
+
+Grass
+Dark
+Ghost
+
+===========================
+Dark - Psychic
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Light
+Bug (!!)
+
+----------
+Resists:
+
+
+===========================
+Dark - Bug
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Fire
+Rock
+Flying
+Bug
+
+----------
+Resists:
+
+Grass
+Dark
+Ground
+Ghost
+
+===========================
+Dark - Ghost
+===========================
+Immune to:
+
+Fighting
+Psychic
+Normal
+
+----------
+Weak to:
+
+Light (!!)
+
+----------
+Resists:
+
+Electric
+Poison
+
+===========================
+Dark - Dragon
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Magic
+Light
+Ice
+Fighting
+Dragon
+Bug
+
+----------
+Resists:
+
+Water
+Grass
+Dark
+Fire
+Ghost
+Electric
+
+===========================
+Dark - Steel
+===========================
+Immune to:
+
+Psychic
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting (!!)
+Fire
+Ground
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic
+Dark
+Ice
+Steel
+Rock
+Ghost
+Flying
+Dragon
+Normal
+
+===========================
+Dark - None
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Light
+Fighting
+Bug
+
+----------
+Resists:
+
+Dark
+Ghost
+
+===========================
+Dark - Light
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Grass
+Fighting
+Steel
+Bug (!!)
+
+----------
+Resists:
+
+Galactic
+Dark (!!)
+Ghost (!!)
+
+===========================
+Dark - Magic
+===========================
+Immune to:
+
+Psychic
+Dragon
+
+----------
+Weak to:
+
+Light
+Poison
+Bug
+Normal
+
+----------
+Resists:
+
+Magic
+Steel
+Ghost
+
+===========================
+Dark - Galactic
+===========================
+Immune to:
+
+Fire
+Psychic
+
+----------
+Weak to:
+
+Light (!!)
+Rock
+Flying
+
+----------
+Resists:
+
+Grass
+Dark (!!)
+Ground
+Ghost
+
+===========================
+Light - Normal
+===========================
+Immune to:
+
+Ghost
+
+----------
+Weak to:
+
+Grass
+Magic
+Fighting
+Steel
+Bug
+
+----------
+Resists:
+
+Galactic
+Dark
+Light
+
+===========================
+Light - Rock
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Grass (!!)
+Fighting
+Ground
+Steel (!!)
+Bug
+
+----------
+Resists:
+
+Galactic (!!)
+Dark
+Light
+Fire
+Ghost
+Flying
+Poison
+Normal
+
+===========================
+Light - Fire
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Water
+Ground
+Rock
+
+----------
+Resists:
+
+Dark
+Light (!!)
+Ice
+Fire
+Ghost
+
+===========================
+Light - Water
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass (!!)
+Electric
+Poison
+Bug
+
+----------
+Resists:
+
+Water
+Galactic
+Dark
+Light
+Ice
+Fire
+Ghost
+
+===========================
+Light - Grass
+===========================
+Immune to:
+
+Light
+
+----------
+Weak to:
+
+Ice
+Fire
+Steel
+Flying
+Poison
+Bug (!!)
+
+----------
+Resists:
+
+Water
+Galactic
+Dark
+Ground
+Ghost
+Electric
+
+===========================
+Light - Ice
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Fighting
+Fire
+Steel (!!)
+Rock
+Bug
+
+----------
+Resists:
+
+Galactic (!!)
+Dark
+Ice
+Ghost
+Flying
+
+===========================
+Light - Electric
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Ground
+Bug
+
+----------
+Resists:
+
+Galactic
+Dark
+Light
+Electric
+Flying
+
+===========================
+Light - Fighting
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Steel
+Psychic
+Flying
+
+----------
+Resists:
+
+Magic
+Dark (!!)
+Light
+Rock
+Ghost
+
+===========================
+Light - Poison
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Ground
+Steel
+Psychic
+
+----------
+Resists:
+
+Galactic
+Magic
+Dark
+Light
+Fighting
+Ghost
+Poison
+
+===========================
+Light - Ground
+===========================
+Immune to:
+
+Electric
+
+----------
+Weak to:
+
+Water
+Grass (!!)
+Ice
+Steel
+Bug
+
+----------
+Resists:
+
+Dark
+Light
+Rock
+Ghost
+Poison
+
+===========================
+Light - Flying
+===========================
+Immune to:
+
+Ground
+
+----------
+Weak to:
+
+Ice
+Steel
+Rock
+Electric
+
+----------
+Resists:
+
+Galactic
+Dark
+Light
+Fighting
+Ghost
+
+===========================
+Light - Psychic
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Steel
+Bug (!!)
+
+----------
+Resists:
+
+Galactic
+Light
+Fighting
+Psychic
+
+===========================
+Light - Bug
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Fire
+Steel
+Rock
+Flying
+Bug
+
+----------
+Resists:
+
+Galactic
+Dark
+Light (!!)
+Fighting
+Ground
+Ghost
+
+===========================
+Light - Ghost
+===========================
+Immune to:
+
+Fighting
+Normal
+
+----------
+Weak to:
+
+Grass
+Steel
+
+----------
+Resists:
+
+Galactic
+Electric
+Poison
+
+===========================
+Light - Dragon
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Magic
+Ice
+Steel
+Dragon
+Bug
+
+----------
+Resists:
+
+Water
+Galactic
+Dark
+Light
+Fire
+Ghost
+Electric
+
+===========================
+Light - Steel
+===========================
+Immune to:
+
+Poison
+
+----------
+Weak to:
+
+Magic
+Fighting
+Fire
+Ground
+Electric
+
+----------
+Resists:
+
+Galactic (!!)
+Dark
+Light (!!)
+Ice
+Rock
+Ghost
+Flying
+Dragon
+Normal
+
+===========================
+Light - Dark
+===========================
+Immune to:
+
+Psychic
+
+----------
+Weak to:
+
+Grass
+Fighting
+Steel
+Bug (!!)
+
+----------
+Resists:
+
+Galactic
+Dark (!!)
+Ghost (!!)
+
+===========================
+Light - None
+===========================
+Immune to:
+
+
+----------
+Weak to:
+
+Grass
+Steel
+Bug
+
+----------
+Resists:
+
+Galactic
+Dark
+Light
+Ghost
+
+===========================
+Light - Magic
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Grass
+Poison
+Bug
+Normal
+
+----------
+Resists:
+
+Galactic
+Magic
+Light
+Fighting
+Ghost
+Psychic
+
+===========================
+Light - Galactic
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Steel
+Rock
+Flying
+
+----------
+Resists:
+
+Galactic
+Dark (!!)
+Fighting
+Ground
+Ghost
+
+===========================
+Magic - Normal
+===========================
+Immune to:
+
+Ghost
+Dragon
+
+----------
+Weak to:
+
+Dark
+Poison
+Normal
+
+----------
+Resists:
+
+Steel
+Psychic
+
+===========================
+Magic - Rock
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Water
+Grass
+Dark
+Ground
+
+----------
+Resists:
+
+Galactic
+Magic
+Fire
+Psychic
+Flying
+
+===========================
+Magic - Fire
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Water
+Galactic
+Dark
+Ground
+Rock
+Poison
+Normal
+
+----------
+Resists:
+
+Grass
+Magic
+Light
+Ice
+Fighting
+Fire
+Steel (!!)
+Psychic
+Bug
+
+===========================
+Magic - Water
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Grass
+Dark
+Electric
+Poison (!!)
+Normal
+
+----------
+Resists:
+
+Water
+Magic
+Ice
+Fighting
+Fire
+Steel (!!)
+Psychic
+
+===========================
+Magic - Grass
+===========================
+Immune to:
+
+Light
+Dragon
+
+----------
+Weak to:
+
+Dark
+Ice
+Fire
+Flying
+Poison (!!)
+Bug
+Normal
+
+----------
+Resists:
+
+Water
+Grass
+Magic
+Fighting
+Ground
+Steel
+Psychic
+Electric
+
+===========================
+Magic - Ice
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark
+Light
+Fire
+Rock
+Poison
+Normal
+
+----------
+Resists:
+
+Galactic
+Magic
+Ice
+Psychic
+Flying
+
+===========================
+Magic - Electric
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark
+Ground
+Ghost
+Poison
+Normal
+
+----------
+Resists:
+
+Magic
+Fighting
+Steel (!!)
+Psychic
+Electric
+Flying
+
+===========================
+Magic - Fighting
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Galactic
+Flying
+Poison
+Normal
+
+----------
+Resists:
+
+Magic (!!)
+Fighting
+Steel
+Rock
+Bug
+
+===========================
+Magic - Poison
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark
+Ground
+Normal
+
+----------
+Resists:
+
+Grass
+Magic (!!)
+Fighting (!!)
+Steel
+Bug
+
+===========================
+Magic - Ground
+===========================
+Immune to:
+
+Electric
+Dragon
+
+----------
+Weak to:
+
+Water
+Grass
+Galactic
+Dark
+Ice
+Normal
+
+----------
+Resists:
+
+Magic
+Fighting
+Steel
+Rock
+Psychic
+
+===========================
+Magic - Flying
+===========================
+Immune to:
+
+Ground
+Dragon
+
+----------
+Weak to:
+
+Dark
+Ice
+Rock
+Electric
+Poison
+Normal
+
+----------
+Resists:
+
+Grass
+Magic
+Fighting (!!)
+Steel
+Psychic
+Bug
+
+===========================
+Magic - Psychic
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark (!!)
+Ghost
+Poison
+Bug
+Normal
+
+----------
+Resists:
+
+Magic
+Fighting (!!)
+Steel
+Psychic (!!)
+
+===========================
+Magic - Bug
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark
+Fire
+Rock
+Flying
+Poison
+Normal
+
+----------
+Resists:
+
+Grass
+Magic
+Light
+Fighting (!!)
+Ground
+Steel
+Psychic
+
+===========================
+Magic - Ghost
+===========================
+Immune to:
+
+Fighting
+Dragon
+Normal
+
+----------
+Weak to:
+
+Dark (!!)
+Light
+Ghost
+
+----------
+Resists:
+
+Magic
+Steel
+Psychic
+Electric
+Bug
+
+===========================
+Magic - Dragon
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark
+Ice
+Poison
+Normal
+
+----------
+Resists:
+
+Water
+Grass
+Fighting
+Fire
+Steel
+Psychic
+Electric
+
+===========================
+Magic - Steel
+===========================
+Immune to:
+
+Dragon
+Poison
+
+----------
+Weak to:
+
+Dark
+Fire
+Ground
+Electric
+
+----------
+Resists:
+
+Grass
+Galactic
+Light
+Ice
+Steel (!!)
+Rock
+Psychic
+Flying
+Bug
+
+===========================
+Magic - Dark
+===========================
+Immune to:
+
+Psychic
+Dragon
+
+----------
+Weak to:
+
+Light
+Poison
+Bug
+Normal
+
+----------
+Resists:
+
+Magic
+Steel
+Ghost
+
+===========================
+Magic - Light
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Grass
+Poison
+Bug
+Normal
+
+----------
+Resists:
+
+Galactic
+Magic
+Light
+Fighting
+Ghost
+Psychic
+
+===========================
+Magic - None
+===========================
+Immune to:
+
+Dragon
+
+----------
+Weak to:
+
+Dark
+Poison
+Normal
+
+----------
+Resists:
+
+Magic
+Fighting
+Steel
+Psychic
+
+===========================
+Magic - Galactic
+===========================
+Immune to:
+
+Fire
+Dragon
+
+----------
+Weak to:
+
+Light
+Rock
+Flying
+Poison
+Normal
+
+----------
+Resists:
+
+Grass
+Magic
+Fighting (!!)
+Ground
+Steel
+Psychic
+Bug
+
+===========================
+Galactic - Normal
+===========================
+Immune to:
+
+Fire
+Ghost
+
+----------
+Weak to:
+
+Magic
+Light
+Rock
+Flying
+
+----------
+Resists:
+
+Grass
+Dark
+Ground
+Bug
+
+===========================
+Galactic - Rock
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Water
+Light
+Steel
+Rock
+
+----------
+Resists:
+
+Galactic
+Dark
+Poison
+Bug
+Normal
+
+===========================
+Galactic - Fire
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Water
+Galactic
+Rock (!!)
+Flying
+
+----------
+Resists:
+
+Grass (!!)
+Dark
+Ice
+Fighting
+Steel
+Bug (!!)
+
+===========================
+Galactic - Water
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Light
+Rock
+Electric
+Flying
+Poison
+
+----------
+Resists:
+
+Water
+Dark
+Ice
+Fighting
+Ground
+Steel
+Bug
+
+===========================
+Galactic - Grass
+===========================
+Immune to:
+
+Light
+Fire
+
+----------
+Weak to:
+
+Ice
+Rock
+Flying (!!)
+Poison
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Dark
+Fighting
+Ground (!!)
+Electric
+
+===========================
+Galactic - Ice
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Light (!!)
+Steel
+Rock (!!)
+
+----------
+Resists:
+
+Grass
+Galactic
+Dark
+Ice
+Ground
+Bug
+
+===========================
+Galactic - Electric
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Light
+Rock
+Ghost
+
+----------
+Resists:
+
+Grass
+Dark
+Fighting
+Steel
+Electric
+Bug
+
+===========================
+Galactic - Fighting
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Galactic
+Light
+Psychic
+Flying (!!)
+
+----------
+Resists:
+
+Grass
+Magic
+Dark (!!)
+Fighting
+Ground
+Bug (!!)
+
+===========================
+Galactic - Poison
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Light
+Rock
+Psychic
+Flying
+
+----------
+Resists:
+
+Grass (!!)
+Magic
+Dark
+Fighting (!!)
+Poison
+Bug (!!)
+
+===========================
+Galactic - Ground
+===========================
+Immune to:
+
+Fire
+Electric
+
+----------
+Weak to:
+
+Water
+Galactic
+Light
+Ice
+Flying
+
+----------
+Resists:
+
+Dark
+Fighting
+Ground
+Poison
+Bug
+
+===========================
+Galactic - Flying
+===========================
+Immune to:
+
+Fire
+Ground
+
+----------
+Weak to:
+
+Light
+Ice
+Rock (!!)
+Electric
+Flying
+
+----------
+Resists:
+
+Grass (!!)
+Dark
+Fighting (!!)
+Bug (!!)
+
+===========================
+Galactic - Psychic
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Light
+Rock
+Ghost
+Flying
+
+----------
+Resists:
+
+Grass
+Fighting (!!)
+Ground
+Psychic
+
+===========================
+Galactic - Bug
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Rock (!!)
+Flying (!!)
+
+----------
+Resists:
+
+Grass (!!)
+Dark
+Fighting (!!)
+Ground (!!)
+Bug
+
+===========================
+Galactic - Ghost
+===========================
+Immune to:
+
+Fighting
+Fire
+Normal
+
+----------
+Weak to:
+
+Light (!!)
+Rock
+Ghost
+Flying
+
+----------
+Resists:
+
+Grass
+Ground
+Electric
+Poison
+Bug (!!)
+
+===========================
+Galactic - Dragon
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Magic
+Light
+Ice
+Rock
+Flying
+Dragon
+
+----------
+Resists:
+
+Water
+Grass (!!)
+Dark
+Fighting
+Ground
+Electric
+Bug
+
+===========================
+Galactic - Steel
+===========================
+Immune to:
+
+Fire
+Poison
+
+----------
+Weak to:
+
+Magic
+Electric
+
+----------
+Resists:
+
+Grass (!!)
+Galactic
+Dark
+Ice
+Steel
+Dragon
+Bug (!!)
+Normal
+
+===========================
+Galactic - Dark
+===========================
+Immune to:
+
+Fire
+Psychic
+
+----------
+Weak to:
+
+Light (!!)
+Rock
+Flying
+
+----------
+Resists:
+
+Grass
+Dark (!!)
+Ground
+Ghost
+
+===========================
+Galactic - Light
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Steel
+Rock
+Flying
+
+----------
+Resists:
+
+Galactic
+Dark (!!)
+Fighting
+Ground
+Ghost
+
+===========================
+Galactic - Magic
+===========================
+Immune to:
+
+Fire
+Dragon
+
+----------
+Weak to:
+
+Light
+Rock
+Flying
+Poison
+Normal
+
+----------
+Resists:
+
+Grass
+Magic
+Fighting (!!)
+Ground
+Steel
+Psychic
+Bug
+
+===========================
+Galactic - None
+===========================
+Immune to:
+
+Fire
+
+----------
+Weak to:
+
+Light
+Rock
+Flying
+
+----------
+Resists:
+
+Grass
+Dark
+Fighting
+Ground
+Bug

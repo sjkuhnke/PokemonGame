@@ -5512,9 +5512,9 @@ public class Pokemon implements Serializable {
 		return modifier;
 	}
 
-	private boolean getImmune(Pokemon p, PType type) {
+	public boolean getImmune(Pokemon p, PType type) {
 		switch(type) {
-        case NORMAL: 
+        case NORMAL:
         	if (p.type1 == PType.GHOST) return true;
         	if (p.type2 == PType.GHOST) return true;
         	return false;

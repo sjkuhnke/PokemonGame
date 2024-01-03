@@ -87,12 +87,18 @@ public class WelcomeMenu extends JPanel {
         encountersCheckBox.setOpaque(false);
         JCheckBox movesCheckBox = new JCheckBox("Moves");
         movesCheckBox.setOpaque(false);
+        JCheckBox defensiveTypesBox = new JCheckBox("Defensive Types");
+        defensiveTypesBox.setOpaque(false);
+        JCheckBox offensiveTypesBox = new JCheckBox("Offensive Types");
+        offensiveTypesBox.setOpaque(false);
         
         checkBoxPanel.add(generateDoc);
         checkBoxPanel.add(trainersCheckBox);
         checkBoxPanel.add(pokemonCheckBox);
         checkBoxPanel.add(encountersCheckBox);
         checkBoxPanel.add(movesCheckBox);
+        checkBoxPanel.add(defensiveTypesBox);
+        checkBoxPanel.add(offensiveTypesBox);
         
         optionsPanel = new JPanel(new GridLayout(2, 2));
         
@@ -155,7 +161,9 @@ public class WelcomeMenu extends JPanel {
                     trainersCheckBox.isSelected(),
                     pokemonCheckBox.isSelected(),
                     encountersCheckBox.isSelected(),
-                    movesCheckBox.isSelected()
+                    movesCheckBox.isSelected(),
+                    defensiveTypesBox.isSelected(),
+                    offensiveTypesBox.isSelected(),
             };
         	
         	gp.player.currentSave = save;
