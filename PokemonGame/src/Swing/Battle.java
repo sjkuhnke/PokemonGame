@@ -352,7 +352,7 @@ public class Battle extends JFrame {
 		 */
 		catchButton.addActionListener(e -> {
 		    if (!foe.isFainted() && !me.getCurrent().isFainted()) {
-		    	if (foe.trainerOwned()) {
+		    	if (foe.trainerOwned() && this.staticPokemonID == -1) {
 		    		JOptionPane.showMessageDialog(null, "Cannot catch trainer's Pokemon!");
                     return;
 		    	}
@@ -401,6 +401,7 @@ public class Battle extends JFrame {
 		        if (randomValue <= modifiedCatchRate) {
 		            //me.catchPokemon(new Pokemon(foe.id, foe.getLevel(), true, false));
 		        	foe.playerOwned = true;
+		        	foe.trainer = 1;
 		        	me.catchPokemon(foe);
 		        	updateCurrent(pl);
 					updateStatus();

@@ -691,16 +691,16 @@ public class Main {
 				new Trainer("CE", new Pokemon[]{new Pokemon(125, 52, false, true), new Pokemon(128, 52, false, true), new Pokemon(122, 52, false, true)}, 100),
 				new Trainer("CF", new Pokemon[]{new Pokemon(133, 53, false, true), new Pokemon(131, 57, false, true)}, 100),
 				new Trainer("CG", new Pokemon[]{new Pokemon(150, 53, false, true), new Pokemon(136, 53, false, true), new Pokemon(147, 53, false, true)}, 100),
-				new Trainer("Grust 1", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
-				new Trainer("Grust 2", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0), // 225
-				new Trainer("Grust 3", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
-				new Trainer("Grust 4", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
-				new Trainer("Grust 5", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
-				new Trainer("Grust 6", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
-				new Trainer("Grust 7", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0), // 230
-				new Trainer("Grust 8", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
-				new Trainer("Grust 9", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
-				new Trainer("Grust 10", new Pokemon[]{new Pokemon(159, 65, false, true)}, 0),
+				new Trainer("Grust 1", new Pokemon[]{new Pokemon(159, 65, true)}, 0),
+				new Trainer("Grust 2", new Pokemon[]{new Pokemon(159, 65, true)}, 0), // 225
+				new Trainer("Grust 3", new Pokemon[]{new Pokemon(159, 65, true)}, 0),
+				new Trainer("Grust 4", new Pokemon[]{new Pokemon(159, 65, true)}, 0),
+				new Trainer("Grust 5", new Pokemon[]{new Pokemon(159, 65, true)}, 0),
+				new Trainer("Grust 6", new Pokemon[]{new Pokemon(159, 65, true)}, 0),
+				new Trainer("Grust 7", new Pokemon[]{new Pokemon(159, 65, true)}, 0), // 230
+				new Trainer("Grust 8", new Pokemon[]{new Pokemon(159, 65, true)}, 0),
+				new Trainer("Grust 9", new Pokemon[]{new Pokemon(159, 65, true)}, 0),
+				new Trainer("Grust 10", new Pokemon[]{new Pokemon(159, 65, true)}, 0),
 				new Trainer("Rick 2", new Pokemon[]{new Pokemon(67, 55, false, true), new Pokemon(162, 54, false, true), new Pokemon(113, 54, false, true), new Pokemon(46, 55, false, true), new Pokemon(74, 55, false, true), new Pokemon(122, 56, false, true)}, 400, 19),
 				new Trainer("CH", new Pokemon[]{new Pokemon(51, 54, false, true), new Pokemon(97, 55, false, true), new Pokemon(18, 54, false, true), new Pokemon(54, 54, false, true)}, 100), // 235
 				new Trainer("CI", new Pokemon[]{new Pokemon(93, 55, false, true), new Pokemon(88, 54, false, true), new Pokemon(107, 55, false, true)}, 100),
@@ -829,6 +829,7 @@ public class Main {
 		for (Trainer tr : trainers) {
 			if (tr.getName().equals(string)) {
 				tr.getTeam()[i - 1].ability = a;
+				if (!modifiedTrainers.contains(tr)) modifiedTrainers.add(tr);
 			}
 		}
 	}

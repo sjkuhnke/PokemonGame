@@ -115,7 +115,7 @@ public class Pokemon implements Serializable {
 	
 	// battle fields
 	public Move lastMoveUsed;
-	private double trainer;
+	public double trainer;
 	public int slot;
 	
 	public Pokemon(int i, int l, boolean o, boolean t) {
@@ -217,6 +217,30 @@ public class Pokemon implements Serializable {
 		lostItem = pokemon.lostItem;
 	}
 	
+	public Pokemon(int i, int l, boolean o, boolean t, Item item) {
+		this(i, l, o, t);
+		this.item = item;
+	}
+	
+	public Pokemon(int i, int l, boolean isStatic) {
+		this(i, l, false, true);
+		Random rand = new Random();
+		for (int j = 0; j < 6; j++) { this.ivs[j] = rand.nextInt(32); }
+		for (int k = 0; k < 3; k++) {
+			int index = -1;
+			do {
+				index = rand.nextInt(6);
+			} while (this.ivs[index] == 31);
+			this.ivs[rand.nextInt(6)] = 31;
+		}
+		setNature();
+		getStats();
+		currentHP = this.getStat(0);
+		
+		abilitySlot = (int)Math.round(Math.random());
+		setAbility(abilitySlot);
+	}
+	
 	public Image getSprite() {
 		BufferedImage image = null;
 		
@@ -283,7 +307,12 @@ public class Pokemon implements Serializable {
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/minisprites/" + imageName + ".png"));
 			
-			return image;
+			int scaledWidth = (int) (image.getWidth(null) * 2);
+			int scaledHeight = (int) (image.getHeight(null) * 2);
+			
+			Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
+			
+			return scaledImage;
 		} catch (Exception e) {
 			image = getSprite();
 			
@@ -374,7 +403,7 @@ public class Pokemon implements Serializable {
         	Move move = entry.getKey();
         	int damage = entry.getValue();
         	
-        	if (damage >= maxDamage && move.cat != 2) {
+        	if (damage >= maxDamage && (damage > 0 || validMoves.size() == 1) && move.cat != 2) {
         		bestMoves.add(move);
         		bestMoves.add(move);
         		bestMoves.add(move);
@@ -2555,7 +2584,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 163 && level >= 25) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 164 && happiness >= 160) {
+		} else if (id == 164 && level >= 36) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 166 && level >= 30) {
 			result = new Pokemon(id + 1, this);
@@ -3022,7 +3051,7 @@ public class Pokemon implements Serializable {
 					for (Moveslot moveslot : this.moveset) {
 						if (moveslot != null) {
 							Move m = moveslot.move;
-							if (m != null && m != Move.SLEEP_TALK) moves.add(m);
+							if (m != null && m != Move.SLEEP_TALK && m != Move.REST) moves.add(m);
 						}
 					}
 					move = moves.get(new Random().nextInt(moves.size()));
@@ -4769,6 +4798,7 @@ public class Pokemon implements Serializable {
 					FieldEffect a = field.new FieldEffect(Effect.AURORA_VEIL);
 					if (this.item == Item.LIGHT_CLAY) a.turns = 8;
 					userSide.add(a);
+					console.writeln("Aurora Veil made " + this.nickname + "'s team stronger against Physical and Special moves!");
 				} else {
 					fail = fail();
 				}
@@ -10288,7 +10318,7 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (move == Move.SLEEP_TALK || move == Move.SNORE) {
+		if (mode == 0 && (move == Move.SLEEP_TALK || move == Move.SNORE)) {
 			if (status != Status.ASLEEP) {
 				return 0;
 			} else {
@@ -10370,7 +10400,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		
-		if (move == Move.DREAM_EATER && foe.status != Status.ASLEEP) {
+		if (mode == 0 && move == Move.DREAM_EATER && foe.status != Status.ASLEEP) {
 			return -1;
 		}
 		
@@ -10381,6 +10411,8 @@ public class Pokemon implements Serializable {
 		if (move.basePower < 0) {
 			bp = determineBasePower(foe, move, first, null, false);
 		}
+		
+		if (mode == 0 && (move == Move.KNOCK_OFF || ((move == Move.COVET || move == Move.THIEF) && this.item == null)) && foe.item != null && checkSecondary(new Random().nextInt(25))) bp *= 2;
 		
 		if (moveType == PType.FIRE && this.vStatuses.contains(Status.FLASH_FIRE)) bp *= 1.5;
 		
@@ -10755,20 +10787,20 @@ public class Pokemon implements Serializable {
 				this.currentHP += Math.max(this.getStat(0) * 1.0 / 8, 1);
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
-					console.writeln();
-					console.writeAbility(this);
-					console.writeln(this.nickname + " restored HP.");
 				}
+				console.writeln();
+				console.writeAbility(this);
+				console.writeln(this.nickname + " restored HP.");
 			}
 		} if (this.ability == Ability.ICE_BODY && field.equals(field.weather, Effect.SNOW)) {
 			if (this.currentHP < this.getStat(0)) {
 				this.currentHP += Math.max(this.getStat(0) * 1.0 / 16, 1);
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
-					console.writeln();
-					console.writeAbility(this);
-					console.writeln(this.nickname + " restored HP.");
 				}
+				console.writeln();
+				console.writeAbility(this);
+				console.writeln(this.nickname + " restored HP.");
 			}
 		} if (this.item == Item.LEFTOVERS) {
 			if (this.currentHP < this.getStat(0)) {
@@ -10889,7 +10921,7 @@ public class Pokemon implements Serializable {
 			this.vStatuses.remove(Status.BONDED);
 		}
 		
-		if (this.ability == Ability.SPEED_BOOST) {
+		if (this.ability == Ability.SPEED_BOOST && !this.impressive) {
 			if (this.statStages[4] != 6) stat(this, 4, 1, f);
 		}
 		
@@ -10951,6 +10983,7 @@ public class Pokemon implements Serializable {
 		this.vStatuses.remove(Status.ENDURE);
 		this.vStatuses.remove(Status.SWITCHING);
 		
+		this.impressive = false;
 	}
 
 	public int getSpeed() {
@@ -11412,7 +11445,6 @@ public class Pokemon implements Serializable {
 					return true;
 				}
 			}
-			
 		}
 		return false;
 	}
