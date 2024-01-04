@@ -62,7 +62,7 @@ Rick 1
 Tricerpup (Lv. 11) @ Oran Berry         /   Rock Head      /   Headbutt, Beat Up, Feint Attack, Iron Defense
 Shookwat (Lv. 12) @ Magnet              /   Static         /   Thundershock, Charge, Wrap, 
 Lotad (Lv. 13) @ Big Root               /   Swift Swim     /   Haze, Mega Drain, Absorb, Water Gun
-Magie (Lv. 13) @ Occa Berry             /   Tough Claws    /   Iron Defense, Defense Curl, Quick Attack, Growl
+Magie (Lv. 13) @ Occa Berry             /   Tough Claws    /   Iron Defense, Growl, Quick Attack, Covet
 
 Trainer TN 9                Zubat Lv. 12, Cluuz Lv. 12
 Trainer 1 Gym A             Pigo Lv. 11, Pigo Lv. 12, Pigo Lv. 13
@@ -217,14 +217,6 @@ Trainer AF                  Flamebless Lv. 38
 
 Kleine Village------------------------------------
 
-Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Maguide Lv. 30, Psylotter Lv. 31
-
-Fred 2
-Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
-Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
-Maguide (Lv. 30) @ Expert Belt          /   Dry Skin       /   Take Down, Bulldoze, Lava Plume, Iron Defense
-Psylotter (Lv. 31) @ Wide Lens          /   Water Veil     /   Psybeam, Rollout, Confuse Ray, Hypnosis
-
 Trainer RR A                Froshrog Lv. 30, Spheal Lv. 31
 Trainer RR B                Treewin Lv. 30, Roselia Lv. 31
 Trainer RR C                Sparkitten Lv. 30, Splame Lv. 31
@@ -241,6 +233,14 @@ Leavanny (Lv. 32) @ Coba Berry          /   Sharpness      /   Leaf Blade, X-Sci
 Swordik (Lv. 32) @ Life Orb             /   Hyper Cutter   /   First Impression, U-Turn, Close Combat, Rock Slide
 Opwing (Lv. 32) @ Lum Berry             /   Technician     /   Bug Bite, Moonlight, Feint Attack, Fell Stinger
 Frosmoth (Lv. 33) @ Occa Berry          /   Icy Scales     /   Aurora Beam, Bug Buzz, Snowscape, Quiver Dance
+
+Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Maguide Lv. 30, Psylotter Lv. 31
+
+Fred 2
+Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
+Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
+Maguide (Lv. 30) @ Expert Belt          /   Dry Skin       /   Take Down, Bulldoze, Lava Plume, Iron Defense
+Psylotter (Lv. 31) @ Wide Lens          /   Water Veil     /   Hypnosis, Rollout, Confuse Ray, Trick
 
 
 Route 41------------------------------------------
@@ -429,7 +429,7 @@ Trainer Fred 3              Blastflames Lv. 56, Gyarados-E Lv. 56, Wormatron-S L
 Fred 3
 Blastflames (Lv. 56)  /   Levitate       /   Iron Blast, Dragon Pulse, Flamethrower, Hurricane
 Gyarados-E (Lv. 56)   /   Volt Vortex    /   Bounce, Volt Tackle, Comet Crash, Waterfall
-Wormatron-S (Lv. 57)  /   Adaptability   /   Sucker Punch, Breaking Swipe, Earth Power, Earthquake
+Wormatron-S (Lv. 57)  /   Adaptability   /   Earthquake, Sucker Punch, Breaking Swipe, Earth Power
 Magron (Lv. 57)       /   Dry Skin       /   Heat Crash, Earth Power, Aura Sphere, Steel Beam
 Stellarock (Lv. 56)   /   Gravitational Pull/   Cosmic Power, Stone Edge, Meteor Mash, Comet Crash
 Psylotter (Lv. 58)    /   Water Veil     /   Blizzard, Light Screen, Hydro Pump, Psychic
@@ -440,7 +440,7 @@ Maxwell 1
 Soldrota (Lv. 58)     /   Sniper         /   Load Firearms, Pistol Pop, Flamethrower, Ice Beam
 Zurroaratr-S (Lv. 58) /   Levitate       /   Toxic, Curse, Sludge Wave, False Surrender
 Dompster-S (Lv. 58)   /   False Illumination/   Phantom Force, Sucker Punch, Breaking Swipe, Unseen Strangle
-Shadowsaur (Lv. 59)   /   Moxie          /   Fatal Bind, Obstruct, Dragon Claw, Night Slash
+Shadowsaur (Lv. 59)   /   Moxie          /   Night Slash, Fatal Bind, Obstruct, Dragon Claw
 Galactasolder (Lv. 60)/   Sniper         /   Star-Struck Archer, Close Combat, Meteor Mash, Drain Punch
 Shaboom (Lv. 60)      /   Sparkly Surge  /   Magic Tomb, Comet Crash, Moonlight, Earthquake
 
@@ -462,9 +462,9 @@ Trainer Rick 2              Tricercil Lv. 55, Zurroaratr Lv. 54, Megawatt Lv. 54
 Rick 2
 Tricercil (Lv. 55)    /   Rock Head      /   Plasma Fists, Mach Punch, Stone Edge, Superpower
 Zurroaratr (Lv. 54)   /   Levitate       /   Stone Edge, Smart Strike, Shadow Ball, Phantom Force
-Megawatt (Lv. 54)     /   Huge Power     /   Heavy Slam, Smart Strike, Bullet Punch, Automotize
-Ludicolo (Lv. 55)     /   Swift Swim     /   Zen Headbutt, Energy Ball, Hydro Pump, Rain Dance
-Opwing (Lv. 55)       /   Technician     /   Night Daze, X-Scissor, Extreme Speed, Darkest Lariat
+Megawatt (Lv. 54)     /   Huge Power     /   Automotize, Heavy Slam, Smart Strike, Bullet Punch
+Ludicolo (Lv. 55)     /   Swift Swim     /   Hydro Pump, Rain Dance, Zen Headbutt, Energy Ball
+Opwing (Lv. 55)       /   Technician     /   Knock Off, X-Scissor, Darkest Lariat, Extreme Speed
 Cinneroph (Lv. 56)    /   Tough Claws    /   Hone Claws, Heavy Slam, Magic Crash, Sparkle Strike
 
 

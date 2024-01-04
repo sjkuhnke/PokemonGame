@@ -1,5 +1,6 @@
 package Swing;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -13,7 +14,7 @@ import javax.swing.*;
 import Swing.Battle.JGradientButton;
 
 public enum Move {
-	ABDUCT(0,100,0,0,2,0,PType.GALACTIC,"Abducts the foe and forces their next move to be used on themselves. Can be used once every other turn",false,5),
+	ABDUCT(0,100,0,0,2,0,PType.GALACTIC,"Abducts the foe and forces their next move to be used on themselves. Can be used once every other turn, and not on the first turn out.",false,5),
 	ABSORB(20,100,0,0,1,0,PType.GRASS,"Heals 50% of damage dealt to foe",false,25),
 	ACCELEROCK(40,100,0,0,0,1,PType.ROCK,"Always goes first",true,15),
 	ACID(40,100,10,0,1,0,PType.POISON,"% chance to lower foe's Sp.Def by 1",false,30),
@@ -232,7 +233,7 @@ public enum Move {
 	//GUNSHOT(70,60,0,2,0,0,PType.STEEL,"25% chance to Crit. If it Crits, foe is Bleeding",false,1),
 	GUST(40,100,0,0,1,0,PType.FLYING,"A normal attack",false,30),
 	GYRO_BALL(-1,100,0,0,0,0,PType.STEEL,"The lower the user's speed compared to the foe, the more power",true,10),
-	SNOWSCAPE(0,1000,0,0,2,0,PType.ICE,"Sets the weather to SNOW for 8 turns",false,10),
+	SNOWSCAPE(0,1000,0,0,2,0,PType.ICE,"Sets the weather to SNOW for 5 turns",false,10),
 	HAMMER_ARM(100,90,100,0,0,0,PType.FIGHTING,"% chance to lower user's speed by 1",true,10),
 	HARDEN(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Defense by 1",false,25),
 	HAZE(0,1000,0,0,2,0,PType.ICE,"Clears all stat changes on the field",false,25),
@@ -298,7 +299,7 @@ public enum Move {
 	LIFE_DEW(0,1000,0,0,2,0,PType.WATER,"Restores 25% HP",false,15),
 	LIGHT_BEAM(60,100,20,0,1,0,PType.LIGHT,"% chance to raise user's Sp.Atk by 1",false,15),
 	LIGHT_OF_RUIN(140,90,0,0,1,0,PType.LIGHT,"User takes 1/3 of damage dealt as recoil",false,5),
-	LIGHT_SCREEN(0,1000,0,0,2,0,PType.PSYCHIC,"Creates a screen that halves special damage on user's team for 6 turns",false,15),
+	LIGHT_SCREEN(0,1000,0,0,2,0,PType.PSYCHIC,"Creates a screen that halves special damage on user's team for 5 turns",false,15),
 	LIQUIDATION(85,100,20,0,0,0,PType.WATER,"% chance to lower foe's Defense by 1",true,10),
 	LOAD_FIREARMS(0,100,0,0,2,0,PType.STEEL,"Raises user's Speed and Accuracy by 1, and doubles the power of a STEEL move if used next",false,10),
 	LOCK$ON(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Accuracy by 6",false,5),
@@ -404,14 +405,14 @@ public enum Move {
 	QUICK_ATTACK(40,100,0,0,0,1,PType.NORMAL,"Always attacks first",true,15),
 	QUIVER_DANCE(0,1000,0,0,2,0,PType.BUG,"Raises user's Sp.Atk, Sp.Def and Speed by 1 stage",false,10),
 	RAGE(-1,100,0,0,0,0,PType.NORMAL,"Power increases the more times this move is used in succession",true,20),
-	RAIN_DANCE(0,1000,0,0,2,0,PType.WATER,"Changes the weather to RAIN for 8 turns",false,5),
+	RAIN_DANCE(0,1000,0,0,2,0,PType.WATER,"Changes the weather to RAIN for 5 turns",false,5),
 	RAPID_SPIN(50,100,100,0,0,0,PType.NORMAL,"% to raise user's Speed by 1, and frees user of being Spun",true,35),
 	RAZOR_LEAF(55,95,0,1,0,0,PType.GRASS,"Boosted Crit rate",false,25),
 	RAZOR_SHELL(75,95,50,0,0,0,PType.WATER,"% chance to lower foe's Defense by 1",true,10),
 	REBOOT(0,1000,0,0,2,0,PType.STEEL,"Clears user of any Status condition, and raises user's Speed by 1",false,10),
 	RECOVER(0,1000,0,0,2,0,PType.NORMAL,"Restores 1/2 of user's max HP",false,5),
 	RED$NOSE_BOOST(0,1000,0,0,2,0,PType.MAGIC,"Raises user's Defense and Sp.Def by 1, and user's Sp.Atk by 2",false,10),
-	REFLECT(0,1000,0,0,2,0,PType.PSYCHIC,"Creates a screen that halves physical damage on user's team for 6 turns",false,20),
+	REFLECT(0,1000,0,0,2,0,PType.PSYCHIC,"Creates a screen that halves physical damage on user's team for 5 turns",false,20),
 	REST(0,1000,0,0,2,0,PType.PSYCHIC,"Restores user's HP to full and clears any status conditions, and user falls asleep for 2 turns",false,5),
 	RETURN(-1,100,0,0,0,0,PType.NORMAL,"Damage is based on user's friendship: the higher, the stronger",true,15),
 	REVENGE(-1,100,0,0,0,0,PType.FIGHTING,"Power is doubled if user is slower than foe",true,10),
@@ -435,7 +436,7 @@ public enum Move {
 	SACRED_SWORD(90,100,0,0,0,0,PType.FIGHTING,"Ignores Defense and Evasion changes of foe",true,10),
 	SAFEGUARD(0,1000,0,0,2,0,PType.NORMAL,"Protects user's team from Status effects for 8 turns",false,20),
 	SAND_ATTACK(0,100,0,0,2,0,PType.GROUND,"Lowers foe's Accuracy by 1",false,20),
-	SANDSTORM(0,1000,0,0,2,0,PType.ROCK,"Changes the weather to SANDSTORM for 8 turns",false,10),
+	SANDSTORM(0,1000,0,0,2,0,PType.ROCK,"Changes the weather to SANDSTORM for 5 turns",false,10),
 	SCALD(80,100,30,0,1,0,PType.WATER,"% chance to Burn foe",false,15),
 	SCALE_SHOT(25,90,100,0,0,0,PType.DRAGON,"% chance to lower user's Defense by 1 and raise user's Speed by 1. Hits 2-5 times",false,20),
 	SCARY_FACE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Speed by 2",false,10),
@@ -515,7 +516,7 @@ public enum Move {
 	STUN_SPORE(0,75,0,0,2,0,PType.GRASS,"Paralyzes foe",false,25),
 	SUBMISSION(80,90,0,0,0,0,PType.FIGHTING,"User takes 1/3 of damage inflicted as recoil",true,20),
 	SUCKER_PUNCH(70,100,0,0,0,2,PType.DARK,"Always attacks first. Fails if foe didn't use an attacking move",true,5),
-	SUNNY_DAY(0,1000,0,0,2,0,PType.FIRE,"Changes the weather to SUNNY for 8 turns",false,5),
+	SUNNY_DAY(0,1000,0,0,2,0,PType.FIRE,"Changes the weather to SUNNY for 5 turns",false,5),
 	SUNNY_DOOM(80,100,0,0,1,0,PType.LIGHT,"If this attack faints foe, causes weather to turn SUNNY",false,5),
 	SUNSTEEL_STRIKE(100,100,0,0,0,0,PType.STEEL,"A normal attack",true,5),
 	//SUPER_CHARGE(90,50,100,0,0,0,PType.ELECTRIC,"% of causing foe to flinch, user takes 1/3 of damage dealt as recoil",false,1),
@@ -620,7 +621,7 @@ public enum Move {
 	VINE_CROSS(70,95,100,0,0,0,PType.GRASS,"% chance to lower foe's Speed by 1",false,15),
 	SURF(90,100,0,0,1,0,PType.WATER,"A normal attack",false,10),
 	SLOW_FALL(75,90,100,0,1,0,PType.PSYCHIC,"% chance to change user's ability to LEVITATE",false,15),
-	ROCK_CLIMB(80,95,20,0,1,0,PType.ROCK,"% chance to confuse foe",false,10),
+	ROCK_CLIMB(80,95,20,0,0,0,PType.ROCK,"% chance to confuse foe",true,10),
 	LAVA_SURF(90,100,0,0,1,0,PType.FIRE,"A normal attack",false,10),
 	
 	ABYSSAL_CHOP(-1,90,50,0,0,0,PType.DRAGON,"% chance to paralyse foe. Damage is doulbed if foe is paralyzed",true,10),
@@ -730,11 +731,13 @@ public enum Move {
 	    JLabel ppValueLabel = new JLabel(String.valueOf(pp));
 
 	    // Description
-	    JTextArea descriptionArea = new JTextArea(getDescription());
-	    descriptionArea.setLineWrap(true);
-	    descriptionArea.setWrapStyleWord(true);
-	    descriptionArea.setOpaque(false);
-	    descriptionArea.setEditable(false);
+	    JLabel descriptionLabel = new JLabel();
+	    String text = Item.breakString(getDescription(), 65);
+	    text = text.replace("\n", "<br>");
+	    descriptionLabel.setText("<html>" + text + "</html>");
+	    descriptionLabel.setOpaque(false);
+	    descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
+	    descriptionLabel.setHorizontalTextPosition(SwingConstants.LEFT);
 
 	    // Create a panel for the move summary
 	    JPanel moveSummaryPanel = new JPanel();
@@ -754,6 +757,9 @@ public enum Move {
 	    result.add(moveSummaryPanel);
 
 	    // Add the description area to the result panel
+	    JPanel descriptionArea = new JPanel();
+	    descriptionArea.add(descriptionLabel);
+	    descriptionArea.setBackground(new Color(225, 225, 225));
 	    result.add(descriptionArea);
 
 	    return result;

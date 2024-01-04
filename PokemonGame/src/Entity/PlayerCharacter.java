@@ -1431,9 +1431,9 @@ public class PlayerCharacter extends Entity {
 				        	        final int index = j;
 				        	        final boolean eligible = i.getItem().getEligible(p.team[j].id);
 				        	        if (eligible) {
-				        	        	partyPanel.setBackground(Color.GREEN);
+				        	        	if (p.team[index] != null) partyPanel.setBackground(Color.GREEN);
 				        	        } else {
-				        	        	partyPanel.setBackground(Color.RED);
+				        	        	if (p.team[index] != null) partyPanel.setBackground(Color.RED);
 				        	        }
 
 				        	        partyPanel.addMouseListener(new MouseAdapter() {
@@ -1493,11 +1493,11 @@ public class PlayerCharacter extends Entity {
 			        	        boolean learnable = p.team[index] != null ? i.getItem().getLearned(p.team[index]) : false;
 			        	        boolean learned = p.team[index] != null ? p.team[index].knowsMove(i.getItem().getMove()) : false;
 			        	        if (!learnable) {
-			        	        	partyPanel.setBackground(Color.RED.darker());
+			        	        	if (p.team[index] != null) partyPanel.setBackground(Color.RED.darker());
 			        	        } else if (learned) {
-			        	        	partyPanel.setBackground(Color.YELLOW);
+			        	        	if (p.team[index] != null) partyPanel.setBackground(Color.YELLOW);
 			        	        } else {
-			        	        	partyPanel.setBackground(Color.GREEN);
+			        	        	if (p.team[index] != null) partyPanel.setBackground(Color.GREEN);
 			        	        }
 			        	        
 			        	        if (p.team[index] != null) {
@@ -1553,9 +1553,9 @@ public class PlayerCharacter extends Entity {
 				        	        test.setAbility(1 - p.team[index].abilitySlot);
 				        	        boolean swappable = p.team[index].ability != test.ability;
 				        	        if (swappable) {
-				        	        	partyPanel.setBackground(Color.GREEN);
+				        	        	if (p.team[index] != null) partyPanel.setBackground(Color.GREEN);
 				        	        } else {
-				        	        	partyPanel.setBackground(Color.YELLOW);
+				        	        	if (p.team[index] != null) partyPanel.setBackground(Color.YELLOW);
 				        	        }
 				        	        
 				        	        partyPanel.addMouseListener(new MouseAdapter() {

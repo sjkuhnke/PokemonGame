@@ -807,6 +807,8 @@ public enum Item {
         
         JLabel abilityLabel = new JLabel(((Pokemon) userMons.getSelectedItem()).ability.toString());
         JLabel fAbilityLabel = new JLabel(((Pokemon) foeMons.getSelectedItem()).ability.toString());
+        JButton infoButton = new JButton("   Info   ");
+        JButton fInfoButton = new JButton("   Info   ");
         
         ArrayList<Item> items = new ArrayList<>();
         Item[] allItems = Item.values();
@@ -831,6 +833,14 @@ public enum Item {
 				JOptionPane.showMessageDialog(null, ((Pokemon) foeMons.getSelectedItem()).ability.desc);
             }
 		});
+        
+        infoButton.addActionListener(e -> {
+        	JOptionPane.showMessageDialog(null, ((Pokemon) userMons.getSelectedItem()).showSummary(p, false, null, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+        });
+        
+        fInfoButton.addActionListener(e -> {
+        	JOptionPane.showMessageDialog(null, ((Pokemon) foeMons.getSelectedItem()).showSummary(p, false, null, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+        });
         
         JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
         JComboBox<Item> foeItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
@@ -884,6 +894,7 @@ public enum Item {
     			foeCurrent.level = 50;
     		}
         	foeCurrent.stats = foeCurrent.getStats();
+        	foeCurrent.verifyHP();
         	foeCurrent.setMoves();
         	
         	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
@@ -998,9 +1009,16 @@ public enum Item {
         gbc.gridx = 0;
         gbc.gridy++;
         
-        calc.add(abilityLabel, gbc);
+        JPanel abilityLabelPanel = new JPanel();
+        abilityLabelPanel.add(infoButton);
+        abilityLabelPanel.add(abilityLabel);
+        
+        JPanel fAbilityLabelPanel = new JPanel();
+        fAbilityLabelPanel.add(fAbilityLabel);
+        fAbilityLabelPanel.add(fInfoButton);
+        calc.add(abilityLabelPanel, gbc);
         gbc.gridx++;
-        calc.add(fAbilityLabel, gbc);
+        calc.add(fAbilityLabelPanel, gbc);
         gbc.gridx = 0;
         gbc.gridy++;
         

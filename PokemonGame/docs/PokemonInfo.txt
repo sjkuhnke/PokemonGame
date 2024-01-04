@@ -357,7 +357,8 @@ Level Up:
 15 - Air Cutter
 17 - Fury Attack
 20 - Wing Attack
-24 - Agility
+23 - Agility
+25 - Pluck
 27 - Spikes
 30 - Metal Claw
 
@@ -381,7 +382,8 @@ Level Up:
 15 - Air Cutter
 17 - Fury Attack
 20 - Wing Attack
-24 - Agility
+23 - Agility
+25 - Pluck
 27 - Spikes
 30 - Metal Claw
 32 - Metal Sound
@@ -413,9 +415,10 @@ Level Up:
 3 - Growl
 5 - Leer
 9 - Double Slap
-14 - Headbutt
-19 - Mach Punch
-23 - Bite
+13 - Headbutt
+17 - Mach Punch
+20 - Bite
+23 - Covet
 27 - Stockpile
 30 - Ice Ball
 32 - Rollout
@@ -437,9 +440,10 @@ Level Up:
 3 - Growl
 5 - Leer
 9 - Double Slap
-14 - Headbutt
-19 - Mach Punch
-23 - Bite
+13 - Headbutt
+17 - Mach Punch
+20 - Bite
+23 - Covet
 27 - Stockpile
 30 - Ice Ball
 32 - Rollout
@@ -447,7 +451,7 @@ Level Up:
 37 - Take Down
 43 - Zen Headbutt
 50 - Super Fang
-53 - Psybeam
+53 - Bulldoze
 57 - Metal Claw
 60 - Double-Edge
 65 - Endeavor
@@ -470,12 +474,14 @@ Level Up:
 3 - Growl
 5 - Leer
 9 - Double Slap
-14 - Headbutt
-19 - Mach Punch
-23 - Bite
+13 - Headbutt
+17 - Mach Punch
+20 - Bite
+23 - Covet
 27 - Stockpile
 30 - Ice Ball
 32 - Rollout
+34 - Crunch
 36 - Rock Blast
 40 - Stealth Rock
 43 - Zen Headbutt
@@ -489,7 +495,7 @@ Level Up:
 67 - Superpower
 71 - Amnesia
 75 - Volt Tackle
-80 - Plasma Fists
+80 - Endeavor
 
 ===================
 019 - Sheabear
@@ -536,10 +542,10 @@ Level Up:
 15 - Detect
 19 - Low Kick
 20 - Baby-Doll Eyes
-20 - Double Hit
+20 - Covet
 23 - Feint Attack
 25 - Hypnosis
-28 - Psybeam
+28 - Knock Off
 30 - Swift
 32 - Fire Punch
 32 - Thunder Punch
@@ -548,6 +554,7 @@ Level Up:
 36 - Take Down
 38 - Hi Jump Kick
 40 - Psychic
+40 - Trick
 
 ===================
 021 - Spacebear
@@ -571,10 +578,10 @@ Level Up:
 15 - Detect
 19 - Low Kick
 20 - Baby-Doll Eyes
-20 - Double Hit
+20 - Covet
 23 - Feint Attack
 25 - Hypnosis
-28 - Psybeam
+28 - Knock Off
 30 - Swift
 32 - Fire Punch
 32 - Thunder Punch
@@ -583,6 +590,7 @@ Level Up:
 36 - Take Down
 38 - Hi Jump Kick
 40 - Psychic
+40 - Trick
 40 - Desolate Void
 44 - Galaxy Blast
 47 - Cosmic Power
@@ -628,6 +636,7 @@ Level Up:
 18 - Focus Energy
 18 - Poison Fang
 20 - Slam
+22 - Thief
 25 - Pin Missile
 30 - Aqua Tail
 32 - Iron Tail
@@ -651,6 +660,7 @@ Level Up:
 18 - Focus Energy
 18 - Poison Fang
 20 - Slam
+22 - Thief
 25 - Pin Missile
 30 - Aqua Tail
 32 - Iron Tail
@@ -678,8 +688,9 @@ Level Up:
 10 - Protect
 15 - Hidden Power
 18 - Focus Energy
-18 - Poison Sting
+18 - Poison Fang
 20 - Slam
+22 - Thief
 25 - Pin Missile
 30 - Aqua Tail
 32 - Iron Tail
@@ -741,11 +752,11 @@ Level Up:
 18 - Rock Throw
 21 - Ingrain
 24 - Rock Tomb
-28 - Double Hit
-31 - Mach Punch
+28 - Mach Punch
+31 - Submission
 35 - Stealth Rock
 39 - Hammer Arm
-43 - Submission
+42 - Knock Off
 45 - Earthquake
 47 - Power Whip
 50 - Ice Punch
@@ -927,8 +938,9 @@ Level Up:
 32 - Cross Poison
 36 - Leaf Blade
 39 - X-Scissor
-43 - Entrainment
-46 - Swords Dance
+42 - Entrainment
+45 - Knock Off
+47 - Swords Dance
 50 - Leaf Storm
 
 ===================
@@ -1035,16 +1047,16 @@ Level Up:
 9 - Endure
 12 - Odor Sleuth
 15 - Protect
-19 - Round
-23 - Slack Off
+19 - Covet
+22 - Leaf Tornado
+24 - Slack Off
 26 - Charm
-29 - Endeavor
+29 - Rollout
 32 - Cotton Guard
-36 - Leaf Tornado
+36 - Endeavor
 40 - Leech Seed
 43 - Giga Drain
-45 - Rollout
-55 - Leaf Storm
+47 - Leaf Storm
 
 ===================
 039 - Ramant
@@ -1062,6 +1074,7 @@ Level Up:
 1 - Power Whip
 1 - Horn Leech
 1 - Flame Charge
+1 - Covet
 15 - Stomp
 16 - Headbutt
 18 - Frustration
@@ -1092,6 +1105,7 @@ Level Up:
 1 - Draining Kiss
 1 - Light Screen
 1 - Sunny Day
+1 - Covet
 15 - Swift
 18 - Synthesis
 20 - Grassy Terrain
@@ -1233,6 +1247,7 @@ Level Up:
 20 - Bubblebeam
 25 - Giga Drain
 30 - Rain Dance
+35 - Knock Off
 40 - Zen Headbutt
 45 - Energy Ball
 50 - Hydro Pump
@@ -1251,12 +1266,14 @@ Base Stats:
 
 Level Up:
 1 - Teeter Dance
+1 - Thief
 1 - Fake Out
 1 - Fury Swipes
 1 - Flail
 1 - Haze
 1 - Bubblebeam
 1 - Giga Drain
+1 - Knock Off
 1 - Rain Dance
 1 - Zen Headbutt
 1 - Energy Ball
@@ -1288,7 +1305,7 @@ Level Up:
 29 - Magic Powder
 30 - Sparkling Terrain
 33 - Luster Purge
-35 - Sweet Kiss
+35 - Trick
 38 - Sparkly Swirl
 40 - Glitzy Glow
 42 - Tri-Attack
@@ -1394,6 +1411,7 @@ Base Stats:
 90 HP / 75 Atk / 50 Def / 110 SpA / 150 SpD / 50 Spe / 525 BST
 
 Level Up:
+1 - Knock Off
 1 - Tackle
 3 - Defense Curl
 6 - Mud Sport
@@ -1520,14 +1538,15 @@ Level Up:
 1 - Tackle
 3 - Defense Curl
 5 - Rock Throw
-9 - Slam
-12 - Bite
+9 - Bite
+12 - Thief
 15 - Rock Polish
 19 - Howl
 21 - Rock Blast
 24 - Flame Wheel
 27 - Play Rough
 31 - Thunder Fang
+33 - Knock Off
 
 ===================
 056 - Boulderoar
@@ -1545,16 +1564,17 @@ Level Up:
 1 - Tackle
 3 - Defense Curl
 5 - Rock Throw
-9 - Slam
-12 - Bite
+9 - Bite
+12 - Thief
 15 - Rock Polish
 19 - Howl
 21 - Rock Blast
 24 - Flame Wheel
 27 - Play Rough
 31 - Thunder Fang
-34 - Dark Pulse
-37 - Take Down
+33 - Knock Off
+34 - Take Down
+37 - Dark Pulse
 41 - Power Gem
 45 - Magic Fang
 49 - Accelerock
@@ -1619,7 +1639,7 @@ Level Up:
 44 - Drill Peck
 47 - Focus Blast
 50 - Aeroblast
-53 - Shadow Ball
+53 - Knock Off
 57 - Dragon Pulse
 60 - Calm Mind
 63 - Brave Bird
@@ -1644,6 +1664,7 @@ Level Up:
 1 - Confusion
 1 - Glare
 10 - Gust
+20 - Covet
 25 - Defog
 30 - Night Shade
 
@@ -1669,7 +1690,8 @@ Level Up:
 33 - Mist Ball
 37 - Ice Beam
 40 - Psychic
-45 - Blizzard
+43 - Trick
+46 - Blizzard
 50 - Freezing Glare
 60 - Luster Purge
 
@@ -1697,7 +1719,8 @@ Level Up:
 30 - Light Beam
 33 - Snowscape
 35 - Take Down
-40 - Aurora Veil
+39 - Aurora Veil
+42 - Trick
 45 - Blizzard
 50 - Twinkle Tackle
 55 - Sparkling Terrain
@@ -1880,7 +1903,8 @@ Level Up:
 13 - Ice Ball
 17 - Brine
 21 - Aurora Beam
-26 - Body Slam
+25 - Covet
+28 - Body Slam
 31 - Rest
 31 - Snore
 
@@ -1906,7 +1930,8 @@ Level Up:
 13 - Ice Ball
 17 - Brine
 21 - Aurora Beam
-26 - Body Slam
+25 - Covet
+28 - Body Slam
 31 - Rest
 31 - Snore
 32 - Aurora Veil
@@ -1935,7 +1960,8 @@ Level Up:
 13 - Ice Ball
 17 - Brine
 21 - Aurora Beam
-26 - Body Slam
+25 - Covet
+28 - Body Slam
 31 - Rest
 31 - Snore
 32 - Aurora Veil
@@ -1963,7 +1989,7 @@ Level Up:
 3 - Pound
 5 - Leer
 7 - Powder Snow
-9 - Slam
+9 - Covet
 11 - Magic Reflect
 15 - Water Pulse
 18 - Light Beam
@@ -1989,7 +2015,7 @@ Level Up:
 3 - Pound
 5 - Leer
 7 - Powder Snow
-9 - Slam
+9 - Covet
 11 - Magic Reflect
 15 - Water Pulse
 18 - Light Beam
@@ -2023,10 +2049,10 @@ Level Up:
 1 - Flash
 4 - Payback
 7 - Slash
-10 - Pursuit
+10 - Thief
 17 - Bug Bite
 21 - Feint Attack
-30 - Moonlight
+30 - Slash
 35 - Leech Life
 
 ===================
@@ -2046,18 +2072,19 @@ Level Up:
 1 - Flash
 4 - Payback
 7 - Slash
-10 - Pursuit
+10 - Thief
 17 - Bug Bite
 20 - Night Slash
 23 - Bounce
 25 - Fury Cutter
-30 - Slash
+30 - Moonlight
 33 - Quiver Dance
-36 - Twineedle
+36 - U-Turn
 40 - Night Daze
 44 - X-Scissor
-49 - Extreme Speed
-55 - Darkest Lariat
+47 - Darkest Lariat
+50 - Extreme Speed
+55 - Knock Off
 60 - First Impression
 
 ===================
@@ -2080,7 +2107,8 @@ Level Up:
 15 - Aromatherapy
 17 - Swift
 20 - Psybeam
-25 - Heal Pulse
+24 - Heal Pulse
+27 - Trick
 30 - Sparkly Swirl
 
 ===================
@@ -2103,7 +2131,8 @@ Level Up:
 15 - Aromatherapy
 17 - Swift
 20 - Psybeam
-25 - Heal Pulse
+24 - Heal Pulse
+27 - Trick
 30 - Sparkly Swirl
 32 - Brutal Swing
 35 - Magic Blast
@@ -2129,7 +2158,8 @@ Level Up:
 15 - Aromatherapy
 17 - Swift
 20 - Psybeam
-25 - Heal Pulse
+24 - Heal Pulse
+27 - Trick
 30 - Sparkly Swirl
 32 - Brutal Swing
 35 - Magic Blast
@@ -2168,6 +2198,7 @@ Level Up:
 20 - Psybeam
 23 - Rollout
 26 - Confuse Ray
+29 - Trick
 
 ===================
 079 - Psylotter
@@ -2193,6 +2224,7 @@ Level Up:
 20 - Psybeam
 23 - Rollout
 26 - Confuse Ray
+29 - Trick
 31 - Hypnosis
 36 - Psychic
 40 - Magic Tomb
@@ -2396,6 +2428,8 @@ Base Stats:
 
 Level Up:
 1 - Aura Sphere
+1 - Thief
+1 - Trick
 1 - Healing Wish
 1 - Teleport
 1 - Growl
@@ -2437,6 +2471,7 @@ Level Up:
 1 - Psychic
 1 - Calm Mind
 1 - Fury Cutter
+1 - Thief
 3 - Double Team
 6 - Confusion
 9 - Hypnosis
@@ -2446,12 +2481,12 @@ Level Up:
 20 - Aerial Ace
 23 - False Swipe
 26 - Slash
-28 - Protect
+28 - Trick
 30 - Psycho Cut
 33 - Swords Dance
 37 - Zen Headbutt
 45 - Close Combat
-49 - Heal Pulse
+49 - Knock Off
 54 - Feint
 60 - Solar Blade
 
@@ -2492,7 +2527,7 @@ Type:
 Psychic / Dark
 
 Ability:
-Contrary / False Illumination
+Contrary / Brainwash
 
 Base Stats:
 53 HP / 54 Atk / 53 Def / 37 SpA / 46 SpD / 45 Spe / 288 BST
@@ -2505,10 +2540,12 @@ Level Up:
 9 - Payback
 12 - Pluck
 15 - Psybeam
-18 - Swagger
-21 - Slash
+17 - Swagger
+19 - Slash
+22 - Thief
 24 - Night Slash
 27 - Psycho Cut
+30 - Switcheroo
 
 ===================
 091 - Malamar
@@ -2517,7 +2554,7 @@ Type:
 Psychic / Dark
 
 Ability:
-Contrary / False Illumination
+Contrary / Brainwash
 
 Base Stats:
 86 HP / 92 Atk / 88 Def / 68 SpA / 75 SpD / 73 Spe / 482 BST
@@ -2531,14 +2568,18 @@ Level Up:
 9 - Payback
 12 - Pluck
 15 - Psybeam
-18 - Swagger
-21 - Slash
+17 - Swagger
+19 - Slash
+22 - Thief
 24 - Night Slash
 27 - Psycho Cut
+30 - Switcheroo
 33 - Throat Chop
 37 - Foul Play
 42 - Topsy-Turvy
 47 - Superpower
+50 - Gravity
+55 - Knock Off
 
 ===================
 092 - Flameruff
@@ -2564,6 +2605,7 @@ Level Up:
 20 - Body Slam
 23 - Metal Claw
 25 - Fire Fang
+28 - Covet
 31 - Flamethrower
 
 ===================
@@ -2590,6 +2632,7 @@ Level Up:
 20 - Body Slam
 23 - Metal Claw
 25 - Fire Fang
+28 - Covet
 31 - Flamethrower
 36 - Flash Cannon
 40 - Volt Tackle
@@ -2656,7 +2699,7 @@ Level Up:
 26 - Mach Punch
 29 - Brick Break
 32 - Blaze Kick
-36 - Fire Fang
+36 - Knock Off
 40 - Wake-Up Slap
 45 - Cross Poison
 49 - Close Combat
@@ -2682,9 +2725,10 @@ Level Up:
 15 - Flamethrower
 20 - Iron Blast
 25 - Will-O-Wisp
-30 - Earth Power
-35 - Hex
-40 - Automotize
+29 - Earth Power
+32 - Hex
+36 - Automotize
+40 - Switcheroo
 45 - Gyro Ball
 50 - Explosion
 55 - Shadow Ball
@@ -2891,6 +2935,7 @@ Level Up:
 14 - Fire Fang
 16 - Odor Sleuth
 20 - Beat Up
+22 - Thief
 
 ===================
 105 - Houndoom
@@ -2915,8 +2960,9 @@ Level Up:
 14 - Fire Fang
 16 - Odor Sleuth
 20 - Beat Up
-22 - Feint Attack
-25 - Incinerate
+22 - Thief
+22 - Incinerate
+25 - Feint Attack
 28 - Crunch
 32 - Flame Burst
 36 - Dark Pulse
@@ -2948,8 +2994,9 @@ Level Up:
 8 - Confusion
 10 - Glittering Tornado
 14 - Hypnosis
-19 - Swift
-24 - Flame Wheel
+17 - Swift
+20 - Flame Wheel
+23 - Trick
 
 ===================
 107 - Splame
@@ -2972,8 +3019,9 @@ Level Up:
 8 - Confusion
 10 - Glittering Tornado
 14 - Hypnosis
-19 - Swift
-24 - Flame Wheel
+17 - Swift
+20 - Flame Wheel
+23 - Trick
 25 - Psybeam
 29 - Flamethrower
 35 - Magic Blast
@@ -3008,7 +3056,8 @@ Level Up:
 18 - Flame Wheel
 18 - Flame Burst
 20 - Draining Kiss
-23 - Light Beam
+22 - Covet
+24 - Light Beam
 26 - Incinerate
 29 - Fire Spin
 32 - Spirit Break
@@ -3144,6 +3193,7 @@ Level Up:
 1 - Slam
 1 - Spark
 1 - Double Hit
+1 - Knock Off
 31 - Dynamic Punch
 34 - Iron Defense
 37 - Magnet Rise
@@ -3176,7 +3226,7 @@ Level Up:
 13 - Mud Bomb
 16 - Shock Wave
 22 - Draining Kiss
-23 - Headbutt
+23 - Covet
 26 - Thunder Wave
 
 ===================
@@ -3200,13 +3250,14 @@ Level Up:
 13 - Mud Bomb
 16 - Shock Wave
 22 - Draining Kiss
-23 - Headbutt
+23 - Covet
 26 - Thunder Wave
+28 - Headbutt
 28 - Magnitude
 32 - Spark
 37 - Twinkle Tackle
 41 - Electric Terrain
-47 - Cotton Guard
+45 - Cotton Guard
 
 ===================
 116 - Superchargo
@@ -3229,13 +3280,14 @@ Level Up:
 13 - Mud Bomb
 16 - Shock Wave
 22 - Draining Kiss
-23 - Headbutt
+23 - Covet
 26 - Thunder Wave
+28 - Headbutt
 28 - Magnitude
 32 - Spark
 37 - Twinkle Tackle
 41 - Electric Terrain
-47 - Cotton Guard
+45 - Cotton Guard
 48 - Volt Tackle
 51 - Extreme Speed
 55 - Skull Bash
@@ -3327,9 +3379,9 @@ Base Stats:
 
 Level Up:
 1 - Scratch
-1 - Defense Curl
+1 - Growl
 5 - Quick Attack
-10 - Growl
+10 - Covet
 12 - Iron Defense
 15 - Gyro Ball
 20 - Metal Sound
@@ -3409,10 +3461,11 @@ Base Stats:
 
 Level Up:
 1 - Nuzzle
-5 - Quick Attack
-6 - Tail Whip
-8 - Charge
-10 - Spark
+1 - Quick Attack
+4 - Tail Whip
+6 - Charge
+9 - Spark
+12 - Covet
 15 - Double Team
 20 - Roar
 25 - Discharge
@@ -3495,8 +3548,9 @@ Level Up:
 6 - Tail Whip
 8 - Charm
 10 - Fury Swipes
-15 - Double Team
-20 - Power-Up Punch
+13 - Double Team
+16 - Power-Up Punch
+20 - Covet
 25 - Roar
 
 ===================
@@ -3636,7 +3690,7 @@ Level Up:
 5 - Harden
 10 - False Swipe
 15 - Mud-Slap
-23 - Absorb
+23 - Thief
 29 - Shadow Sneak
 36 - Fury Swipes
 43 - Leech Life
@@ -3716,6 +3770,7 @@ Level Up:
 1 - Amnesia
 1 - Water Pulse
 15 - Dive
+20 - Covet
 
 ===================
 135 - Daray
@@ -3899,7 +3954,7 @@ Level Up:
 7 - Scary Face
 10 - Slam
 14 - Jaw Lock
-17 - Feint Attack
+17 - Thief
 21 - Beat Up
 25 - Crunch
 28 - Liquidation
@@ -3907,6 +3962,7 @@ Level Up:
 32 - Fire Fang
 32 - Thunder Fang
 40 - Psychic Fangs
+45 - Knock Off
 
 ===================
 142 - Batorali
@@ -3933,7 +3989,7 @@ Level Up:
 30 - Throat Chop
 35 - Sky Attack
 40 - Darkest Lariat
-45 - Dragon Claw
+45 - Knock Off
 50 - Hurricane
 55 - Dragon Rush
 60 - Brave Bird
@@ -3959,6 +4015,7 @@ Level Up:
 5 - Swift
 10 - Magic Blast
 12 - Topsy-Turvy
+16 - Switcheroo
 20 - Elemental Sparkle
 23 - Sparkle Strike
 25 - Magic Crash
@@ -4012,6 +4069,7 @@ Level Up:
 1 - Outrage
 1 - Hyper Beam
 1 - Glittering Tornado
+1 - Switcheroo
 5 - Dragon Pulse
 6 - Bite
 9 - Dragon Breath
@@ -4049,11 +4107,12 @@ Level Up:
 3 - Water Gun
 5 - Withdraw
 8 - Fury Cutter
-11 - Fury Swipes
+11 - Spike Cannon
 14 - Ancient Power
-17 - Spike Cannon
+17 - Thief
 20 - Fake Out
-24 - Razor Shell
+22 - Fury Swipes
+25 - Razor Shell
 27 - Rock Polish
 29 - Slash
 32 - Hone Claws
@@ -4073,16 +4132,19 @@ Base Stats:
 72 HP / 105 Atk / 115 Def / 54 SpA / 86 SpD / 68 Spe / 500 BST
 
 Level Up:
+1 - Switcheroo
+1 - Knock Off
 1 - Scratch
 1 - Mud-Slap
 3 - Water Gun
 5 - Withdraw
 8 - Fury Cutter
-11 - Fury Swipes
+11 - Spike Cannon
 14 - Ancient Power
-17 - Spike Cannon
+17 - Thief
 20 - Fake Out
-24 - Razor Shell
+22 - Fury Swipes
+25 - Razor Shell
 27 - Rock Polish
 29 - Slash
 32 - Hone Claws
@@ -4116,11 +4178,13 @@ Level Up:
 12 - Mud Shot
 15 - Flash Ray
 19 - Mud Bomb
-24 - Life Dew
+22 - Thief
+25 - Life Dew
 28 - Mud Sport
 28 - Water Sport
 31 - Charm
-34 - Luster Purge
+34 - Switcheroo
+36 - Luster Purge
 39 - Muddy Water
 42 - Dark Pulse
 45 - Earth Power
@@ -4149,7 +4213,7 @@ Level Up:
 15 - Take Down
 20 - Brutal Swing
 25 - Liquidation
-30 - Shadow Claw
+30 - Knock Off
 35 - Drill Run
 37 - Aqua Jet
 40 - Play Rough
@@ -4217,7 +4281,6 @@ Level Up:
 17 - Screech
 20 - Poison Fang
 22 - Stockpile
-25 - Acid Spray
 
 ===================
 152 - Arbok
@@ -4235,6 +4298,7 @@ Level Up:
 1 - Ice Fang
 1 - Thunder Fang
 1 - Fire Fang
+1 - Knock Off
 1 - Wrap
 1 - Leer
 1 - Poison Sting
@@ -4245,8 +4309,9 @@ Level Up:
 22 - Stockpile
 25 - Acid Spray
 27 - Gastro Acid
-30 - Poison Tail
-33 - Dragon Tail
+29 - Thief
+31 - Poison Tail
+34 - Dragon Tail
 36 - Haze
 40 - Coil
 45 - Sucker Punch
@@ -4294,7 +4359,7 @@ Level Up:
 15 - Poison Fang
 20 - Bite
 25 - Wing Attack
-27 - Air Slash
+27 - Thief
 30 - Fire Fang
 30 - Thunder Fang
 30 - Ice Fang
@@ -4326,7 +4391,7 @@ Level Up:
 1 - Screech
 15 - Poison Fang
 20 - Wing Attack
-27 - Bite
+27 - Thief
 30 - Fire Fang
 30 - Thunder Fang
 30 - Ice Fang
@@ -4412,7 +4477,7 @@ Base Stats:
 
 Level Up:
 1 - Night Shade
-3 - Pursuit
+3 - Thief
 7 - Lick
 9 - Mean Look
 11 - Hypnosis
@@ -4436,7 +4501,7 @@ Base Stats:
 
 Level Up:
 1 - Night Shade
-3 - Pursuit
+3 - Thief
 7 - Lick
 9 - Mean Look
 11 - Hypnosis
@@ -4580,7 +4645,8 @@ Level Up:
 24 - Slam
 27 - Mach Punch
 30 - Scary Face
-36 - Dynamic Punch
+34 - Dynamic Punch
+38 - Knock Off
 42 - Hammer Arm
 48 - Stone Edge
 54 - Superpower
@@ -4609,7 +4675,8 @@ Level Up:
 24 - Slam
 27 - Mach Punch
 30 - Scary Face
-36 - Dynamic Punch
+34 - Dynamic Punch
+38 - Knock Off
 42 - Hammer Arm
 48 - Stone Edge
 54 - Superpower
@@ -4721,7 +4788,7 @@ Base Stats:
 Level Up:
 1 - Dig
 1 - Leer
-5 - Pursuit
+5 - Thief
 8 - Sand Attack
 12 - Magnitude
 15 - Metal Claw
@@ -4745,7 +4812,7 @@ Base Stats:
 Level Up:
 1 - Dig
 1 - Leer
-5 - Pursuit
+5 - Thief
 8 - Sand Attack
 12 - Magnitude
 15 - Metal Claw
@@ -4875,6 +4942,9 @@ Base Stats:
 Level Up:
 1 - Lovely Kiss
 1 - Sweet Kiss
+1 - Thief
+1 - Knock Off
+1 - Trick
 1 - Flash Ray
 1 - Encore
 1 - Charm
@@ -4916,6 +4986,9 @@ Level Up:
 1 - Lovely Kiss
 1 - Sweet Kiss
 1 - Flash Ray
+1 - Thief
+1 - Knock Off
+1 - Trick
 1 - Encore
 1 - Charm
 1 - Wish
@@ -5038,6 +5111,8 @@ Base Stats:
 55 HP / 100 Atk / 60 Def / 125 SpA / 60 SpD / 110 Spe / 510 BST
 
 Level Up:
+1 - Thief
+1 - Trick
 1 - Scratch
 1 - Leer
 4 - Torment
@@ -5052,7 +5127,7 @@ Level Up:
 32 - Agility
 34 - Spirit Break
 38 - Shadow Ball
-42 - Magic Reflect
+42 - Knock Off
 46 - Bitter Malice
 52 - Hyper Voice
 58 - Foul Play
@@ -5092,6 +5167,7 @@ Base Stats:
 65 HP / 75 Atk / 105 Def / 50 SpA / 75 SpD / 60 Spe / 430 BST
 
 Level Up:
+1 - Knock Off
 1 - Scratch
 5 - Protect
 10 - Pop Pop
@@ -5118,6 +5194,7 @@ Base Stats:
 70 HP / 115 Atk / 115 Def / 90 SpA / 75 SpD / 65 Spe / 530 BST
 
 Level Up:
+1 - Knock Off
 1 - Scratch
 5 - Protect
 10 - Pop Pop
@@ -5602,6 +5679,7 @@ Base Stats:
 50 HP / 100 Atk / 75 Def / 45 SpA / 55 SpD / 105 Spe / 430 BST
 
 Level Up:
+1 - Knock Off
 1 - Magnet Rise
 3 - Screech
 6 - Protect
@@ -5633,6 +5711,7 @@ Base Stats:
 75 HP / 145 Atk / 85 Def / 50 SpA / 65 SpD / 110 Spe / 530 BST
 
 Level Up:
+1 - Knock Off
 1 - Magnet Rise
 3 - Screech
 6 - Protect
@@ -5809,6 +5888,7 @@ Base Stats:
 120 HP / 66 Atk / 92 Def / 122 SpA / 80 SpD / 45 Spe / 525 BST
 
 Level Up:
+1 - Knock Off
 1 - Tackle
 1 - Charge
 3 - Spark
@@ -5845,6 +5925,7 @@ Base Stats:
 120 HP / 95 Atk / 70 Def / 65 SpA / 130 SpD / 45 Spe / 525 BST
 
 Level Up:
+1 - Knock Off
 1 - Tackle
 1 - Charge
 3 - Spark
@@ -5995,13 +6076,14 @@ Level Up:
 9 - Take Down
 12 - Dragon Rage
 15 - Sucker Punch
-19 - Crunch
-22 - Scary Face
+18 - Scary Face
+21 - Thief
+24 - Crunch
 26 - Dragon Tail
 30 - False Surrender
 33 - Jaw Lock
 36 - Ice Fang
-39 - Iron Head
+39 - Knock Off
 
 ===================
 214 - Shadowsaur
@@ -6025,13 +6107,14 @@ Level Up:
 9 - Take Down
 12 - Dragon Rage
 15 - Sucker Punch
-19 - Crunch
-22 - Scary Face
+18 - Scary Face
+21 - Thief
+24 - Crunch
 26 - Dragon Tail
 30 - False Surrender
 33 - Jaw Lock
 36 - Ice Fang
-39 - Iron Head
+39 - Knock Off
 40 - Fatal Bind
 45 - Obstruct
 50 - Dragon Claw
@@ -6059,14 +6142,15 @@ Level Up:
 15 - Flash Ray
 18 - Feint Attack
 21 - Mud Bomb
-24 - Zing Zap
+24 - Thief
 27 - Shadow Sneak
 30 - Tail Glow
 33 - Shadow Ball
 36 - Earth Power
 39 - Muddy Water
-42 - Dragon Dance
+42 - Switcheroo
 45 - Phantom Force
+48 - Dragon Dance
 
 ===================
 216 - Dompster-S
@@ -6085,8 +6169,10 @@ Level Up:
 1 - Bite
 1 - Crunch
 1 - Feint Attack
+1 - Dragon Dance
+1 - Knock Off
 5 - Fake Out
-8 - Pursuit
+8 - Thief
 12 - Shadow Sneak
 15 - Dragon Claw
 19 - Shadow Claw
@@ -6120,9 +6206,10 @@ Level Up:
 1 - Pound
 1 - Tail Whip
 3 - Sand Attack
-9 - Pursuit
+9 - Thief
 13 - Wrap
-19 - Mud Bomb
+16 - Mud Bomb
+19 - Knock Off
 
 ===================
 218 - Wormbot-S
@@ -6140,9 +6227,10 @@ Level Up:
 1 - Pound
 1 - Tail Whip
 3 - Sand Attack
-9 - Pursuit
+9 - Thief
 13 - Wrap
-19 - Mud Bomb
+16 - Mud Bomb
+19 - Knock Off
 20 - Dig
 23 - Brutal Swing
 25 - Snarl
@@ -6168,9 +6256,10 @@ Level Up:
 1 - Pound
 1 - Tail Whip
 3 - Sand Attack
-9 - Pursuit
+9 - Thief
 13 - Wrap
-19 - Mud Bomb
+16 - Mud Bomb
+19 - Knock Off
 20 - Dig
 23 - Brutal Swing
 25 - Snarl
@@ -6209,6 +6298,7 @@ Level Up:
 20 - Sludge
 24 - Nasty Plot
 29 - Toxic Spikes
+32 - Switcheroo
 35 - Sludge Bomb
 40 - Dark Pulse
 
@@ -6227,6 +6317,7 @@ Base Stats:
 Level Up:
 1 - Explosion
 1 - Smokescreen
+1 - Switcheroo
 3 - Smog
 5 - Poison Gas
 6 - Flatter
@@ -6240,7 +6331,7 @@ Level Up:
 26 - Toxic
 29 - Venoshock
 31 - Belch
-33 - Shadow Claw
+33 - Thief
 35 - Poison Jab
 36 - Acid Armor
 38 - Shadow Ball
@@ -6248,6 +6339,7 @@ Level Up:
 44 - Sludge Bomb
 47 - Dark Pulse
 50 - Phantom Force
+55 - Knock Off
 
 ===================
 222 - Zurroaratr-S
@@ -6284,6 +6376,8 @@ Level Up:
 1 - Poison Jab
 1 - Acid Armor
 1 - Shadow Ball
+1 - Switcheroo
+1 - Thief
 10 - Sludge Wave
 15 - Hyper Voice
 20 - Overheat
@@ -6295,6 +6389,7 @@ Level Up:
 50 - Moonblast
 55 - Phantom Force
 60 - Star Storm
+65 - Knock Off
 
 ===================
 223 - Iglite-S
@@ -6314,6 +6409,7 @@ Level Up:
 5 - Ember
 10 - Fire Spin
 15 - Memento
+18 - Knock Off
 
 ===================
 224 - Blaxer-S
@@ -6335,10 +6431,10 @@ Level Up:
 15 - Memento
 16 - Mach Punch
 19 - Beat Up
-22 - Fury Swipes
-26 - Feint Attack
-29 - Brick Break
-33 - Throat Chop
+22 - Feint Attack
+26 - Brick Break
+29 - Throat Chop
+33 - Knock Off
 
 ===================
 225 - Pyrator-S
@@ -6363,7 +6459,7 @@ Level Up:
 22 - Fury Swipes
 26 - Feint Attack
 29 - Brick Break
-33 - Throat Chop
+33 - Knock Off
 36 - Drain Punch
 38 - Taunt
 42 - Circle Throw
@@ -6776,409 +6872,3 @@ Level Up:
 65 - Abyssal Chop
 75 - Dragon Dance
 
-Unused moves:
-Strength
-Tornado Spin
-Expanding Force
-Struggle
-Failed Sucker
-Petal Blizzard
-Noble Roar
-Perish Song
-Sacred Fire
-Glaciate
-V-Create
-Lunar Dance
-Blast Burn
-Boosted Pursuit
-
-TM Only:
-Giga Impact
-Rock Smash
-Slow Fall
-Surf
-Psyshock
-Sleep Talk
-Terrain Pulse
-Cut
-Vine Cross
-Flip Turn
-Lava Surf
-Scald
-Rock Climb
-
-Signature Moves (3):
-Acrobatics : Suvinero
-Acrobatics : Fightorex
-Acrobatics : Raptorex
-Bind : Cairnasaur
-Bind : Carinx
-Bind : Carinator
-Branch Poke : Thunderzap
-Branch Poke : Twigzap
-Branch Poke : Shockbranch
-Bubble : Sheltor
-Bubble : Froshrog
-Bubble : Bouncerog
-Circle Throw : Whiskeroar
-Circle Throw : Whiskers
-Circle Throw : Pyrator-S
-Cross Chop : Barbaracle
-Cross Chop : Swordik
-Cross Chop : Ninjakik
-Dragon Claw : Shadowsaur
-Dragon Claw : Dompster-S
-Dragon Claw : Batorali
-Electric Terrain : Electroram
-Electric Terrain : Shockbranch
-Electric Terrain : Superchargo
-Electro Ball : Suvinero
-Electro Ball : Hast-E
-Electro Ball : Vinnie
-Eruption : Magron
-Eruption : Lafloo
-Eruption : Blastflames
-Facade : Scraggy
-Facade : Scrafty
-Facade : Scraftagon
-Flail : Magikarp
-Flail : Ludicolo
-Flail : Millistone
-Focus Blast : Raptorex
-Focus Blast : Whiskeroar
-Focus Blast : Shelnado
-Force Palm : Zurrclu
-Force Palm : Stellarock
-Force Palm : Zurroaratr
-Gastro Acid : Zurrclu-S
-Gastro Acid : Zurroaratr-S
-Gastro Acid : Arbok
-Glittering Sword : Crystallor-E
-Glittering Sword : Treewin
-Glittering Sword : Crystallor
-Grass Whistle : Swadloon
-Grass Whistle : Florlion
-Grass Whistle : Roselia
-Heat Crash : Fireblion
-Heat Crash : Rhypolar
-Heat Crash : Magron
-Horn Attack : Rhynee
-Horn Attack : Rhypo
-Horn Attack : Rhypolar
-Light Of Ruin : Drageye
-Light Of Ruin : Crystallor
-Light Of Ruin : Crystallor-E
-Lock-On : Droid
-Lock-On : Soldrota
-Lock-On : Armoid
-Low Sweep : Carinator
-Low Sweep : Carinx
-Low Sweep : Cairnasaur
-Memento : Pyrator-S
-Memento : Iglite-S
-Memento : Blaxer-S
-Morning Sun : Magestiflash
-Morning Sun : Barkflare
-Morning Sun : Hatterene
-Muddy Water : Dompster
-Muddy Water : Durfish-S
-Muddy Water : Durfish
-Odor Sleuth : Busheep
-Odor Sleuth : Houndoom
-Odor Sleuth : Houndour
-Petal Dance : Winagrow
-Petal Dance : Florlion
-Petal Dance : Roselia
-Poison Jab : Zurrclu-S
-Poison Jab : Zurroaratr-S
-Poison Jab : Curlatoral
-Pop Pop : Droid
-Pop Pop : Armoid
-Pop Pop : Soldrota
-Power Whip : Ramant
-Power Whip : Treewin
-Power-Up Punch : Whiskers
-Power-Up Punch : Whiskie
-Power-Up Punch : Whiskeroar
-Reflect : Crystallor
-Reflect : Crystallor-E
-Reflect : Florlion
-Rest : Sealeo
-Rest : Spheal
-Rest : Walrein
-Reversal : Conkeldurr
-Reversal : Malamar
-Reversal : Gurdurr
-Root Kick : Winagrow
-Root Kick : Sapwin
-Root Kick : Treewin
-Round : Zorua
-Round : Zoroark
-Round : Busheep
-Sheer Cold : Bouncerog
-Sheer Cold : Walrein
-Sheer Cold : Consodust
-Smart Strike : Zurroaratr
-Smart Strike : Megawatt
-Smart Strike : Zurrclu
-Snore : Walrein
-Snore : Spheal
-Snore : Sealeo
-Solar Beam : Magestiflash
-Solar Beam : Psylotter
-Solar Beam : Bushewe
-Steel Beam : Cinneroph
-Steel Beam : Magmaclang
-Steel Beam : Magron
-Stun Spore : Thunderzap
-Stun Spore : Budew
-Stun Spore : Frosmoth
-Submission : Bipedice
-Submission : Rhypolar
-Submission : Treewin
-Sunny Day : Barkflare
-Sunny Day : Bushewe
-Sunny Day : Magestiflash
-Synthesis : Bushewe
-Synthesis : Roselia
-Synthesis : Ramant
-Vise Grip : Vikavolt
-Vise Grip : Charjabug
-Vise Grip : Grubbin
-Wake-Up Slap : Pyrator-S
-Wake-Up Slap : Stellarock
-Wake-Up Slap : Pyrator
-Water Sport : Durfish
-Water Sport : Budew
-Water Sport : Roselia
-Zap Cannon : Vikavolt
-Zap Cannon : Blastflames-E
-Zap Cannon : Blaster-E
-
-Signature Moves (2):
-Acid : Ekans
-Acid : Cluuz
-Acid Armor : Zurroaratr-S
-Acid Armor : Zurrclu-S
-Acid Spray : Ekans
-Acid Spray : Arbok
-Aerial Ace : Gallade
-Aerial Ace : Ninjask
-Amnesia : Lilyray
-Amnesia : Hamthorno
-Beefy Bash : Whiskers
-Beefy Bash : Whiskeroar
-Belch : Zurrclu-S
-Belch : Zurroaratr-S
-Bitter Malice : Arbok-S
-Bitter Malice : Zoroark
-Blaze Kick : Blaxer
-Blaze Kick : Pyrator
-Bug Buzz : Vikavolt
-Bug Buzz : Frosmoth
-Burn Up : Lafloo
-Burn Up : Magwoo
-Core Enforcer : Clefairy
-Core Enforcer : Starmie
-Deep Sea Bubble : Kissyfishy-D
-Deep Sea Bubble : Kissyfishy
-Destiny Bond : Hast
-Destiny Bond : Grust
-Dragon Darts : Poshorump
-Dragon Darts : Shomp
-Drill Peck : Pigoga
-Drill Peck : Raptorex
-Dual Chop : Electrocobra
-Dual Chop : Shadowsaur
-Electroweb : Vikavolt
-Electroweb : Charjabug
-Fell Stinger : Curlatoral
-Fell Stinger : Leavanny
-Fiery Dance : Bluebunn
-Fiery Dance : Glittleshoo
-First Impression : Ninjakik
-First Impression : Opwing
-Flame Burst : Sparkitten
-Flame Burst : Houndoom
-Flatter : Zurroaratr-S
-Flatter : Zurrclu-S
-Foresight : Tigrette
-Foresight : Starmie
-Forests Curse : Shockbranch
-Forests Curse : Thunderzap
-Freeze-Dry : Zurroaratr-S
-Freeze-Dry : Consodust
-Galaxy Blast : Spacebear
-Galaxy Blast : Shaboom
-Genesis Supernova : Galactasolder
-Genesis Supernova : Spacebear
-Grass Knot : Twigzap
-Grass Knot : Thunderzap
-Growth : Roselia
-Growth : Budew
-Guillotine : Ninjakik
-Guillotine : Vikavolt
-Horn Drill : Rhynee
-Horn Drill : Rhypolar
-Hyper Fang : Fireblion
-Hyper Fang : Dompster
-Hyper Voice : Zoroark
-Hyper Voice : Zurroaratr-S
-Ice Beam : Poshorump
-Ice Beam : Hootowl
-Ice Spinner : Bipedice
-Ice Spinner : Cosmocrash
-Icicle Crash : Cosmocrash
-Icicle Crash : Grondor
-Icy Wind : Frosmoth
-Icy Wind : Consodust
-Inferno : Lafloo
-Inferno : Houndoom
-Lick : Grust
-Lick : Poov
-Magnet Bomb : Psycorboratr
-Magnet Bomb : Psyballs
-Metronome : Clefairy
-Metronome : Clefable
-Mirror Move : Magestiflash
-Mirror Move : Flashclaw
-Pistol Pop : Ninjakik
-Pistol Pop : Soldrota
-Pluck : Inkay
-Pluck : Malamar
-Psychic Terrain : Florlion
-Psychic Terrain : Cairnasaur
-Reboot : Armoid
-Reboot : Soldrota
-Revenge : Raptorex
-Revenge : Fightorex
-Rock Wrecker : Zurroaratr
-Rock Wrecker : Millistone
-Sacred Sword : Ninjakik
-Sacred Sword : Swordik
-Sea Dragon : Kissyfishy
-Sea Dragon : Kissyfishy-D
-Shadow Punch : Grust
-Shadow Punch : Hast-E
-Silver Wind : Vikavolt
-Silver Wind : Zurroaratr-S
-Sky Uppercut : Whiskers
-Sky Uppercut : Whiskeroar
-Sparkling Aria : Shelnado
-Sparkling Aria : Bouncerog
-Sparkling Water : Kissyfishy-D
-Sparkling Water : Kissyfishy
-Spectral Thief : Dompster-S
-Spectral Thief : Hast
-Spike Cannon : Barbaracle
-Spike Cannon : Binacle
-Star Storm : Starmie
-Star Storm : Zurroaratr-S
-Steel Wing : Pigoga
-Steel Wing : Poshorump
-Stored Power : Clefable
-Stored Power : Clefairy
-Sunny Doom : Houndoom
-Sunny Doom : Magestiflash
-Super Fang : HammyBoy
-Super Fang : Hamthorno
-Supercharged Splash : Kissyfishy-D
-Supercharged Splash : Kissyfishy
-Sweet Scent : Roselia
-Sweet Scent : Roserade
-Sword Spin : Ninjakik
-Sword Spin : Swordik
-Tail Glow : Durfish-S
-Tail Glow : Tigrette
-Teeter Dance : Ludicolo
-Teeter Dance : Lombre
-U-Turn : Swordik
-U-Turn : Ninjakik
-Unseen Strangle : Dompster-S
-Unseen Strangle : Dompster
-Venom Spit : Arbok
-Venom Spit : Arbok-S
-Vine Whip : Florline
-Vine Whip : Florlion
-Water Clap : Kissyfishy-D
-Water Clap : Kissyfishy
-Water Flick : Kissyfishy
-Water Flick : Kissyfishy-D
-Water Kick : Kissyfishy-D
-Water Kick : Kissyfishy
-Water Smack : Kissyfishy
-Water Smack : Kissyfishy-D
-Waterfall : Gyarados
-Waterfall : Gyarados-E
-Whip Smash : Vinnie
-Whip Smash : Suvinero
-Whirlpool : Spinaquata
-Whirlpool : Shelnado
-
-Signature Moves (1):
-Abduct : Spacebear
-Abyssal Chop : Scraftagon
-Accelerock : Boulderoar
-Baton Pass : Ninjask
-Black Hole Eclipse : Gardevoir
-Blue Flare : Splame
-Bolt Strike : Magikarp-E
-Captivate : Frosmoth
-Channeling Blow : Dragave
-Diamond Storm : Crystallor
-Dive : Lilyray
-Endure : Busheep
-Entrainment : Leavanny
-Feather Dance : Glittleshoo
-Freezing Glare : Hootowl
-Frenzy Plant : Tortugis
-Frustration : Ramant
-Fusion Bolt : Blastflames-E
-Fusion Flare : Blastflames-E
-Geomancy : Bluebunn
-Gunk Shot : Arbok
-Heat Wave : Houndoom
-Hydro Cannon : Dragave
-Icicle Spear : Bipedice
-Lava Lair : Lafloo
-Leaf Blade : Leavanny
-Leafage : Busheep
-Load Firearms : Soldrota
-Machete Jab : Ninjakik
-Megahorn : Poshorump
-Mirror Shot : Glittleshoo
-Molten Consume : Lafloo
-Molten Steelspike : Magron
-Mystical Fire : Flamebless
-Needle Arm : Shockbranch
-Night Daze : Opwing
-Nightmare : Grust
-Obstruct : Shadowsaur
-Poison Tail : Arbok
-Psywave : Staryu
-Rage : Shomp
-Red-Nose Boost : Dualmoose
-Return : Ramant
-Rockfall Frenzy : Tortugis
-Safeguard : Minishoo
-Scorching Sands : Rhypolar
-Seismic Toss : Whiskers
-Slack Off : Busheep
-Sludge Wave : Zurroaratr-S
-Solar Blade : Gallade
-Speedy Shuriken : Ninjakik
-Star-Struck Archer : Galactasolder
-Strength Sap : Twigzap
-Summit Strike : Scraftagon
-Sunsteel Strike : Fireblion
-Supernova Explosion : Shaboom
-Take Over : Grust
-Thrash : Gyarados
-Trick Room : Dualmoose
-Twineedle : Opwing
-Venom Drench : Roserade
-Vital Throw : Bipedice
-Volt Switch : Hast-E
-Water Spout : Shelnado
-Weather Ball : Roserade
-Worry Seed : Budew

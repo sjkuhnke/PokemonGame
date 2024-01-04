@@ -158,6 +158,12 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		keyH.pause();
 		setSlots();
 		
+		if (Main.trainers[trainer].getMoney() == 500) {
+			for (Pokemon member : player.p.team) {
+				if (member != null) member.heal();
+			}
+		}
+		
 		Battle frame = new Battle(player, Main.trainers[trainer], trainer, this, -1, -1, -1, null);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setBattleCloseListener(this);
