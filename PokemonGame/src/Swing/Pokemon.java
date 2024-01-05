@@ -307,12 +307,7 @@ public class Pokemon implements Serializable {
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/minisprites/" + imageName + ".png"));
 			
-			int scaledWidth = (int) (image.getWidth(null) * 2);
-			int scaledHeight = (int) (image.getHeight(null) * 2);
-			
-			Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
-			
-			return scaledImage;
+			return image;
 		} catch (Exception e) {
 			image = getSprite();
 			
@@ -4208,6 +4203,7 @@ public class Pokemon implements Serializable {
 			if (this.item == null && foe.item != null) {
 				console.writeln(this.nickname + " stole the foe's " + foe.item.toString() + "!");
 				this.item = foe.item;
+				foe.lostItem = foe.item;
 				foe.item = null;
 				this.loseItem = true;
 			}
@@ -8227,7 +8223,8 @@ public class Pokemon implements Serializable {
 			movebank[19] = new Node(Move.VACUUM_WAVE);
 			movebank[24] = new Node(Move.SHADOW_BALL);
 			movebank[28] = new Node(Move.GLITTERING_TORNADO);
-			movebank[33] = new Node(Move.SPARKLING_ARIA);
+			movebank[32] = new Node(Move.SPARKLING_ARIA);
+			movebank[35] = new Node(Move.SHELL_SMASH);
 			movebank[39] = new Node(Move.LIQUIDATION);
 			movebank[44] = new Node(Move.AEROBLAST);
 			movebank[49] = new Node(Move.FOCUS_BLAST);
@@ -13132,7 +13129,6 @@ public class Pokemon implements Serializable {
 	    	nickname = JOptionPane.showInputDialog(null, "Would you like to nickname " + name + "?");
 	    	if (nickname == null || nickname.isBlank()) nickname = name;
 	    }
-		
 	}
 	
 	public boolean canEvolve() {
@@ -13274,7 +13270,6 @@ public class Pokemon implements Serializable {
 		default:
 			return false;
 		}
-		
 	}
 
 	public boolean isTrapped() {

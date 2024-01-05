@@ -61,7 +61,6 @@ public class Player implements Serializable{
 	public int scottItem;
 	public Item[] resistBerries;
 	public int secondStarter;
-	public long id;
 	
 	public Player(GamePanel gp) {
 		team = new Pokemon[6];

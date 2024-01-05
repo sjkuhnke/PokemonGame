@@ -177,8 +177,6 @@ public class Main {
 	        List<Item> berryList = Arrays.asList(gamePanel.player.p.resistBerries);
 	        Collections.shuffle(berryList);
 	        gamePanel.player.p.resistBerries = berryList.toArray(new Item[1]);
-	        
-	        gamePanel.player.p.id = random.nextLong();
 	    }
 		
 		PMap.getLoc(gamePanel.currentMap, (int) Math.round(gamePanel.player.worldX * 1.0 / 48), (int) Math.round(gamePanel.player.worldY * 1.0 / 48));
