@@ -62,7 +62,7 @@ public enum Move {
 	BOLT_STRIKE(130,85,20,0,0,0,PType.ELECTRIC,"% chance to Paralyze foe",true,5),
 	//BOULDER_CRUSH(85,80,50,0,0,0,PType.ROCK,"% chance of causing foe to flinch",false,1),
 	//BOULDER_SLAM(70,100,0,0,0,0,PType.ROCK,"A normal attack",false,1),
-	BOUNCE(85,85,30,0,0,0,PType.FLYING,"% chance to Paralyze foe",true,5),
+	BOUNCE(85,85,30,0,0,0,PType.FLYING,"% chance to Paralyze foe. Goes into the air on the first turn, and attacks on the second",true,5),
 	//BRANCH_WHACK(50,95,0,0,0,0,PType.ROCK,"A normal attack",false,1),
 	BRANCH_POKE(40,100,0,0,0,0,PType.GRASS,"A normal attack",true,35),
 	BRAVE_BIRD(120,100,0,0,0,0,PType.FLYING,"User takes 1/3 of damage inflicted",true,10), // recoil
@@ -88,7 +88,7 @@ public enum Move {
 	//CHOMP(70,100,30,0,0,0,PType.DARK,"% chance to lower foe's Speed by 1",false,1),
 	CLOSE_COMBAT(120,100,100,0,0,0,PType.FIGHTING,"% to lower user's Defense and Sp.Def by 1",true,5),
 	COIL(0,1000,0,0,2,0,PType.POISON,"Raises user's Atk, Def, and Acc by 1",false,15),
-	COVET(60,100,100,0,0,0,PType.NORMAL,"% chance to steal opponents item",true,25), // TODO
+	COVET(60,100,100,0,0,0,PType.NORMAL,"% chance to steal opponents item",true,25),
 	COMET_CRASH(-1,90,0,0,0,0,PType.GALACTIC,"Damage is doubled if user's HP is full",true,5),
 	COMET_PUNCH(55,100,0,0,0,0,PType.GALACTIC,"A normal attack",true,15),
 	CONFUSE_RAY(0,100,0,0,2,0,PType.GHOST,"Confuses foe",false,10),
@@ -191,7 +191,7 @@ public enum Move {
 	FLASH_CANNON(80,100,10,0,1,0,PType.STEEL,"% chance to lower foe's Sp.Def by 1",false,10),
 	FLASH_RAY(40,100,50,0,1,0,PType.LIGHT,"% chance to lower foe's Accuracy by 1",false,25),
 	FLATTER(0,100,0,0,2,0,PType.DARK,"Confuses foe, and raises their Sp.Atk by 2",false,15),
-	FLY(100,100,0,0,0,0,PType.FLYING,"A normal attack",true,5),
+	FLY(100,100,0,0,0,0,PType.FLYING,"Goes into the air on the first turn, and attacks on the second",true,5),
 	FOCUS_BLAST(120,70,0,0,1,0,PType.FIGHTING,"A normal attack",false,5),
 	FOCUS_ENERGY(0,1000,0,0,2,0,PType.NORMAL,"Boosts the user's crit rate by 2",false,20),
 	FORCE_PALM(60,100,30,0,0,0,PType.FIGHTING,"% chance to Paralyze foe",true,10),
@@ -546,7 +546,7 @@ public enum Move {
 	TAUNT(0,100,0,0,2,0,PType.DARK,"Causes foe to only be able to use attacking moves for 4 turns",false,20),
 	TEETER_DANCE(0,100,0,0,2,0,PType.NORMAL,"Confuses foe",false,20),
 	TELEPORT(0,1000,0,0,2,-6,PType.PSYCHIC,"User switches out, bringing in a teammate for free. This always moves last",false,10),
-	THIEF(60,100,100,0,0,0,PType.DARK,"% chance to steal opponents item",true,25), // TODO
+	THIEF(60,100,100,0,0,0,PType.DARK,"% chance to steal opponents item",true,25),
 	THRASH(120,100,0,0,0,0,PType.NORMAL,"User is locked into this move for 2-3 turns, Confuses user when the effect is done",true,10),
 	THROAT_CHOP(80,100,100,0,0,0,PType.DARK,"% to cause foe to not be able to use any sound-based moves",true,10),
 	THUNDER(120,70,30,0,1,0,PType.ELECTRIC,"% of Paralyzing foe, doesn't check accuracy in RAIN",false,5),

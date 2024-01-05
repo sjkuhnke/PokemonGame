@@ -240,7 +240,6 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(73, 21, Item.RED_CARD, mapNum);
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(71, 24, mapNum, 5, 15);
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(75, 22, mapNum, 5, 15);
-		gp.obj[mapNum][objIndex] = ObjSetup(18, 46, Item.LUM_BERRY, mapNum, 5, 10);
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(25, 80, Item.HYPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(48, 82, Item.REPEL, mapNum);
@@ -1765,7 +1764,6 @@ public class AssetSetter {
 		int amt = lower;
 		if (lower != upper) {
 			Random random = new Random();
-			if (gp.player.p.id != 0) random.setSeed(gp.player.p.id);
 			amt = random.nextInt(upper - lower + 1) + lower;
 		}
 		result.count = amt;
