@@ -95,12 +95,12 @@ public class EventHandler {
 			// Route 24 pt. 1 gate
 			if (hit(4,7,68)) teleport(10, 36, 40,false);
 			if (hit(10,37,40)) teleport(4, 8, 68,false);
-			if (hit(10,22,40)) teleport(11, 91, 61,false);
-			if (hit(11,92,61)) teleport(10, 23, 40,false);
+			if (hit(10,22,40)) teleport(11, 91, 49,false);
+			if (hit(11,92,49)) teleport(10, 23, 40,false);
 			
 			// Route 25 gate
-			if (hit(11,24,29)) teleport(12, 31, 45,false);
-			if (hit(12,31,46)) teleport(11, 24, 30,false);
+			if (hit(11,24,17)) teleport(12, 31, 45,false);
+			if (hit(12,31,46)) teleport(11, 24, 18,false);
 			if (hit(12,31,33)) teleport(13, 28, 89,false);
 			if (hit(13,28,90)) teleport(12, 31, 34,false);
 			
@@ -430,8 +430,8 @@ public class EventHandler {
 			if (hit(89,31,46)) teleport(85, 33, 76,false);
 			
 			// Grandpa House
-			if (hit(85,23,80)) teleport(91, 31, 45,false);
-			if (hit(91,31,46)) teleport(85, 23, 81,false);
+			if (hit(85,24,80)) teleport(91, 31, 45,false);
+			if (hit(91,31,46)) teleport(85, 24, 81,false);
 			
 			// Peaceful park house
 			if (hit(33,32,89)) teleport(92, 31, 45,false);
@@ -627,6 +627,17 @@ public class EventHandler {
 			
 			if (hit(120,37,40)) teleport(119, 8, 49,false);
 			if (hit(119,7,49)) teleport(120, 36, 40,false);
+			
+			// Berry Shoppe House
+			if (hit(85,32,63)) teleport(53, 31, 45,false);
+			if (hit(53,31,46)) teleport(85, 32, 64,false);
+			
+			// Sicab City Tower
+			if (hit(13,53,75)) teleport(121, 31, 45,false);
+			if (hit(121,31,46)) teleport(13, 53, 76,false);
+			
+			if (hit(121,31,33)) teleport(122, 31, 45,false);
+			if (hit(122,31,46)) teleport(121, 31, 34,false);
 		}
 	}
 	

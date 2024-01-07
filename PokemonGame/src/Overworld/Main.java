@@ -399,26 +399,69 @@ public class Main {
 		setMoveset("4 Gym Leader 1", 4, Move.PSYCHIC, Move.ICE_BEAM, Move.FREEZE$DRY, Move.CALM_MIND);
 		setMoveset("4 Gym Leader 1", 5, Move.ICE_PUNCH, Move.CLOSE_COMBAT, Move.ICE_SHARD, Move.SWORDS_DANCE);
 		setMoveset("4 Gym Leader 1", 6, Move.ICE_SPINNER, Move.COMET_CRASH, Move.BRAVE_BIRD, Move.HEAD_SMASH);
+		setAbility("4 Gym Leader 1", 6, Ability.SLUSH_RUSH);
+		
+		setItem("4 Gym Leader 1", 1, Item.ICY_ROCK);
+		setItem("4 Gym Leader 1", 2, Item.LIGHT_CLAY);
+		setItem("4 Gym Leader 1", 3, Item.BRIGHT_POWDER);
+		setItem("4 Gym Leader 1", 4, Item.HEAVY$DUTY_BOOTS);
+		setItem("4 Gym Leader 1", 5, Item.FLAME_ORB);
+		setItem("4 Gym Leader 1", 6, Item.CHOICE_BAND);
 		
 		setMoveset("Scott 3", 1, Move.MAGIC_REFLECT, Move.PSYCHIC, Move.MAGIC_TOMB, Move.CALM_MIND);
 		setMoveset("Scott 3", 2, Move.SWORDS_DANCE, Move.LEECH_LIFE, Move.ACROBATICS, Move.POISON_JAB);
 		
-		setMoveset("5 Gym Leader 1", 1, Move.LIGHT_SCREEN, Move.REFLECT, Move.PSYCHO_CUT, Move.SUPERPOWER);
+		setItem("Scott 3", 1, Item.FOCUS_SASH);
+		setItem("Scott 3", 2, Item.FOCUS_SASH);
+		setItem("Scott 3", 3, Item.LIFE_ORB);
+		setItem("Scott 3", 4, Item.SILVER_POWDER);
+		setItem("Scott 3", 5, Item.LEFTOVERS);
+		
+		setMoveset("5 Gym Leader 1", 1, Move.LIGHT_SCREEN, Move.REFLECT, Move.PSYCHO_CUT, Move.KNOCK_OFF);
 		setMoveset("5 Gym Leader 1", 2, Move.PSYCHO_CUT, Move.SWORDS_DANCE, Move.PLAY_ROUGH, Move.CLOSE_COMBAT);
 		setMoveset("5 Gym Leader 1", 3, Move.LEECH_SEED, Move.PSYSHOCK, Move.ENERGY_BALL, Move.DETECT);
 		setMoveset("5 Gym Leader 1", 4, Move.HYDRO_PUMP, Move.CONFUSE_RAY, Move.PSYSHOCK, Move.FOCUS_BLAST);
 		setMoveset("5 Gym Leader 1", 5, Move.ELEMENTAL_SPARKLE, Move.MAGIC_REFLECT, Move.TRICK_ROOM, Move.PSYSHOCK);
 		setMoveset("5 Gym Leader 1", 6, Move.BULLET_PUNCH, Move.IRON_DEFENSE, Move.ZEN_HEADBUTT, Move.COMET_CRASH);
+		setAbility("5 Gym Leader 1", 1, Ability.BRAINWASH);
 		setAbility("5 Gym Leader 1", 6, Ability.LEVITATE);
+		
+		setItem("5 Gym Leader 1", 1, Item.LIGHT_CLAY);
+		setItem("5 Gym Leader 1", 2, Item.LIFE_ORB);
+		setItem("5 Gym Leader 1", 3, Item.LEFTOVERS);
+		setItem("5 Gym Leader 1", 4, Item.BLUNDER_POLICY);
+		setItem("5 Gym Leader 1", 5, Item.COLBUR_BERRY);
+		setItem("5 Gym Leader 1", 6, Item.WIKI_BERRY);
 		
 		setMoveset("Fred 3", 1, Move.IRON_BLAST, Move.DRAGON_PULSE, Move.FLAMETHROWER, Move.HURRICANE);
 		setMoveset("Fred 3", 5, Move.COSMIC_POWER, Move.STONE_EDGE, Move.METEOR_MASH, Move.COMET_CRASH);
 		setMoveset("Fred 3", 6, Move.BLIZZARD, Move.LIGHT_SCREEN, Move.HYDRO_PUMP, Move.PSYCHIC);
 		
+		setItem("Fred 3", 1, Item.MYSTICOLA_BERRY);
+		setItem("Fred 3", 2, Item.RINDO_BERRY);
+		setItem("Fred 3", 3, Item.BLACK_GLASSES);
+		setItem("Fred 3", 4, Item.EXPERT_BELT);
+		setItem("Fred 3", 5, Item.SITRUS_BERRY);
+		setItem("Fred 3", 6, Item.WEAKNESS_POLICY);
+		
 		setMoveset("Maxwell 1", 1, Move.LOAD_FIREARMS, Move.PISTOL_POP, Move.FLAMETHROWER, Move.ICE_BEAM);
 		setMoveset("Maxwell 1", 2, Move.TOXIC, Move.CURSE, Move.SLUDGE_WAVE, Move.FALSE_SURRENDER);
 		setMoveset("Maxwell 1", 3, Move.PHANTOM_FORCE, Move.SUCKER_PUNCH, Move.BREAKING_SWIPE, Move.UNSEEN_STRANGLE);
 		setMoveset("Maxwell 1", 6, Move.MAGIC_TOMB, Move.COMET_CRASH, Move.MOONLIGHT, Move.EARTHQUAKE);
+		
+		setItem("Maxwell 1", 1, Item.SCOPE_LENS);
+		setItem("Maxwell 1", 2, Item.BLACK_SLUDGE);
+		setItem("Maxwell 1", 3, Item.KASIB_BERRY);
+		setItem("Maxwell 1", 4, Item.LEFTOVERS);
+		setItem("Maxwell 1", 5, Item.COSMIC_CORE);
+		setItem("Maxwell 1", 6, Item.ENCHANTED_AMULET);
+		
+		setItem("Rick 2", 1, Item.SITRUS_BERRY);
+		setItem("Rick 2", 2, Item.LUM_BERRY);
+		setItem("Rick 2", 3, Item.SHUCA_BERRY);
+		setItem("Rick 2", 4, Item.KEBIA_BERRY);
+		setItem("Rick 2", 5, Item.CLEAR_AMULET);
+		setItem("Rick 2", 6, Item.ENCHANTED_AMULET);
 		
 		setMoveset("Scott 4", 1, Move.MAGIC_TOMB, Move.NUZZLE, Move.REFLECT, Move.LIGHT_SCREEN);
 		setMoveset("Scott 4", 2, Move.SWORDS_DANCE, Move.LEECH_LIFE, Move.BATON_PASS, Move.PROTECT);
@@ -426,13 +469,27 @@ public class Main {
 		setMoveset("Scott 4", 5, Move.PHOTON_GEYSER, Move.BUG_BUZZ, Move.VOLT_SWITCH, Move.STICKY_WEB);
 		setMoveset("Scott 4", 6, Move.EARTHQUAKE, Move.SPIKES, Move.SMACK_DOWN, Move.BODY_PRESS);
 		
+		setItem("Scott 4", 1, Item.CHILAN_BERRY);
+		setItem("Scott 4", 2, Item.FOCUS_SASH);
+		setItem("Scott 4", 3, Item.TANGA_BERRY);
+		setItem("Scott 4", 4, Item.LIFE_ORB);
+		setItem("Scott 4", 5, Item.MAGNET);
+		setItem("Scott 4", 6, Item.LEFTOVERS);
+		
 		setMoveset("6 Gym Leader 1", 1, Move.PSYCHIC, Move.MOONBLAST, Move.GLITTER_DANCE, Move.WILL$O$WISP);
 		setMoveset("6 Gym Leader 1", 2, Move.EARTH_POWER, Move.GLITTER_DANCE, Move.MOONBLAST, Move.OVERHEAT);
 		setMoveset("6 Gym Leader 1", 3, Move.SPIRIT_BREAK, Move.DRILL_RUN, Move.SWORDS_DANCE, Move.ICE_SPINNER);
 		setAbility("6 Gym Leader 1", 3, Ability.TOUGH_CLAWS);
-		setMoveset("6 Gym Leader 1", 4, Move.MORNING_SUN, Move.HURRICANE, Move.PRISMATIC_LASER, Move.DEFOG);
+		setMoveset("6 Gym Leader 1", 4, Move.MORNING_SUN, Move.AEROBLAST, Move.PRISMATIC_LASER, Move.DEFOG);
 		setMoveset("6 Gym Leader 1", 5, Move.ENERGY_BALL, Move.CHARGE_BEAM, Move.THUNDER_WAVE, Move.ICE_BEAM);
 		setMoveset("6 Gym Leader 1", 6, Move.GLITTERING_SWORD, Move.ZING_ZAP, Move.SHELL_SMASH, Move.OVERHEAT);
+		
+		setItem("6 Gym Leader 1", 1, Item.FOCUS_SASH);
+		setItem("6 Gym Leader 1", 2, Item.WHITE_HERB);
+		setItem("6 Gym Leader 1", 3, Item.EXPERT_BELT);
+		setItem("6 Gym Leader 1", 4, Item.HEAVY$DUTY_BOOTS);
+		setItem("6 Gym Leader 1", 5, Item.TANGA_BERRY);
+		setItem("6 Gym Leader 1", 6, Item.WHITE_HERB);
 		
 		
 		setMoveset("CCA", 1, Move.METRONOME, null, null, null);
@@ -735,6 +792,9 @@ public class Main {
 				new Trainer("MS E", new Pokemon[]{new Pokemon(193, 31, false, true), new Pokemon(64, 31, false, true)}, 100),
 				new Trainer("MS F", new Pokemon[]{new Pokemon(60, 30, false, true), new Pokemon(72, 31, false, true)}, 100),
 				new Trainer("B G", new Pokemon[]{new Pokemon(191, 31, false, true), new Pokemon(195, 30, false, true)}, 100),
+				new Trainer("SCT A", new Pokemon[]{new Pokemon(155, 47, false, true), new Pokemon(142, 48, false, true), new Pokemon(191, 49, false, true), new Pokemon(157, 48, false, true), new Pokemon(150, 49, false, true), new Pokemon(131, 49, false, true)}, 100), // 270
+				new Trainer("SCT B", new Pokemon[]{new Pokemon(109, 48, false, true), new Pokemon(105, 49, false, true), new Pokemon(152, 50, false, true), new Pokemon(203, 48, false, true), new Pokemon(176, 50, false, true), new Pokemon(103, 50, false, true)}, 100),
+				new Trainer("SCT C", new Pokemon[]{new Pokemon(173, 49, false, true), new Pokemon(178, 49, false, true), new Pokemon(168, 50, false, true), new Pokemon(170, 49, false, true), new Pokemon(216, 49, false, true), new Pokemon(207, 51, false, true)}, 100),
 //				new Trainer("CB", new Pokemon[]{new Pokemon(-18, 21, false, true), new Pokemon(-19, 26, false, true), new Pokemon(-19, 28, false, true)}, 100),
 //				new Trainer("CD", new Pokemon[]{new Pokemon(-38, 21, false, true), new Pokemon(-40, 21, false, true)}, 100),
 //				new Trainer("CE", new Pokemon[]{new Pokemon(-33, 20, false, true), new Pokemon(-33, 20, false, true), new Pokemon(-34, 25, false, true)}, 100),
