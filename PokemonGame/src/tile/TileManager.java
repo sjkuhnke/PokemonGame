@@ -75,7 +75,7 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 50);
 		loadMap("/maps/house01.txt", 51); // new minnow town
 		loadMap("/maps/house01.txt", 52);
-		loadMap("/maps/house01.txt", 53); // TODO: doesn't exist
+		loadMap("/maps/house01.txt", 53); // frenco berry shoppe
 		loadMap("/maps/house01.txt", 54);
 		loadMap("/maps/house01.txt", 55); // bananaville town
 		loadMap("/maps/house01.txt", 56);
@@ -143,6 +143,8 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 118);
 		loadMap("/maps/map18.txt", 119);
 		loadMap("/maps/gate02.txt", 120);
+		loadMap("/maps/radio_tower03.txt", 121); // sicab city tower thing
+		loadMap("/maps/radio_tower02.txt", 122);
 	}
 	
 	public void getTileImage() {
@@ -564,6 +566,19 @@ public class TileManager {
 		setup(430, false);
 		setup(431, false);
 		setup(432, false);
+		setup(433, false);
+		setup(434, true);
+		setup(435, true);
+		setup(436, true);
+		setup(437, true);
+		setup(438, true);
+		setup(439, true);
+		setup(440, true);
+		setup(441, true);
+		setup(442, true);
+		setup(443, true);
+		setup(444, false);
+		setup(445, true);
 
 		try {
 			tile[7] = new GrassTile();

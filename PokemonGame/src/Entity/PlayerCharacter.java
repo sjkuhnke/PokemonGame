@@ -74,6 +74,8 @@ public class PlayerCharacter extends Entity {
 	
 	public static String currentMapName;
 	
+	private int lastPocket = 0;
+	
 	public PlayerCharacter(GamePanel gp, KeyHandler keyH) {
 		super(gp);
 		this.keyH = keyH;
@@ -415,8 +417,21 @@ public class PlayerCharacter extends Entity {
 		String itemName = item.toString();
 		if (count > 1 && itemName.contains("Berry")) itemName = itemName.replace("Berry", "Berries");
 		JOptionPane.showMessageDialog(null, "You found " + count + " " + itemName + "!");
+		if (gp.currentMap == 121) {
+			if (gp.obj[gp.currentMap][objIndex].item == Item.CHOICE_BAND) {
+				gp.player.p.itemsCollected[gp.currentMap][objIndex + 1] = true;
+				gp.obj[gp.currentMap][objIndex + 1] = null;
+				p.choiceChoice = Item.CHOICE_BAND;
+			}
+			if (gp.obj[gp.currentMap][objIndex].item == Item.CHOICE_SPECS) {
+				gp.player.p.itemsCollected[gp.currentMap][objIndex - 1] = true;
+				gp.obj[gp.currentMap][objIndex - 1] = null;
+				p.choiceChoice = Item.CHOICE_SPECS;
+			}
+		}
 		gp.player.p.itemsCollected[gp.currentMap][objIndex] = true;
 		gp.obj[gp.currentMap][objIndex] = null;
+		
 		keyH.resume();
 		
 	}
@@ -790,7 +805,7 @@ public class PlayerCharacter extends Entity {
 	private void interactBlock(NPC_Block npc) {
 		if (keyH.wPressed) {
 			keyH.pause();
-			if (!p.fish || gp.currentMap != 32) JOptionPane.showMessageDialog(null, npc.message);
+			if (!p.fish || gp.currentMap != 32) JOptionPane.showMessageDialog(null, Item.breakString(npc.message, 65));
 			if (gp.currentMap == 32 && !p.fish) {
 				p.fish = true;
 				JOptionPane.showMessageDialog(null, "You got a Fishing Rod!\n(Press 'A' to fish)");
@@ -1168,6 +1183,13 @@ public class PlayerCharacter extends Entity {
 		tabbedPane.addTab("Other", otherPanel);
 		tabbedPane.addTab("TMs", tmsPanel);
 		tabbedPane.addTab("Berries", berryPanel);
+		
+		tabbedPane.addChangeListener(e -> {
+	        int selectedIndex = tabbedPane.getSelectedIndex();
+	        lastPocket = selectedIndex;
+	    });
+		
+		tabbedPane.setSelectedIndex(lastPocket);
 		
 		mainPanel.add(tabbedPane, BorderLayout.CENTER);
 
@@ -2016,7 +2038,6 @@ public class PlayerCharacter extends Entity {
 		keyH.pause();
 		
 		JPanel shopPanel = new JPanel();
-	    shopPanel.setLayout(new GridLayout(6, 1));
 	    Item[] shopItems = new Item[1];
 	    if (gp.currentMap == 30) { shopItems = new Item[] {Item.REPEL, Item.POKEBALL, Item.KLEINE_BAR, Item.BOTTLE_CAP, Item.TM49, Item.TM51};
 	    } else if (gp.currentMap == 40) { shopItems = new Item[] {Item.TM12, Item.TM13, Item.TM15, Item.TM16, Item.TM23, Item.TM24};
@@ -2025,8 +2046,15 @@ public class PlayerCharacter extends Entity {
 	    } else if (gp.currentMap == 92) { shopItems = new Item[] {Item.ADAMANT_MINT, Item.BOLD_MINT, Item.BRAVE_MINT, Item.CALM_MINT, Item.CAREFUL_MINT, Item.IMPISH_MINT,
 	    		Item.JOLLY_MINT, Item.MODEST_MINT, Item.QUIET_MINT, Item.SERIOUS_MINT, Item.TIMID_MINT};
 	    } else if (gp.currentMap == 112) { shopItems = new Item[] {Item.MAX_ELIXIR, Item.PP_UP, Item.TM41, Item.TM42, Item.TM43, Item.TM44, Item.TM91};
+	    } else if (gp.currentMap == 53) { shopItems = new Item[] {Item.ORAN_BERRY, Item.CHERI_BERRY, Item.CHESTO_BERRY, Item.PECHA_BERRY, Item.RAWST_BERRY, Item.ASPEAR_BERRY,
+	    		Item.PERSIM_BERRY, Item.LUM_BERRY, Item.LEPPA_BERRY, Item.SITRUS_BERRY, Item.WIKI_BERRY, Item.OCCA_BERRY, Item.PASSHO_BERRY, Item.WACAN_BERRY, Item.RINDO_BERRY,
+	    		Item.YACHE_BERRY, Item.CHOPLE_BERRY, Item.KEBIA_BERRY, Item.SHUCA_BERRY, Item.COBA_BERRY, Item.PAYAPA_BERRY, Item.TANGA_BERRY, Item.CHARTI_BERRY,
+	    		Item.KASIB_BERRY, Item.HABAN_BERRY, Item.COLBUR_BERRY, Item.BABIRI_BERRY, Item.CHILAN_BERRY, Item.ROSELI_BERRY, Item.MYSTICOLA_BERRY, Item.GALAXEED_BERRY,
+	    		Item.LIECHI_BERRY, Item.GANLON_BERRY, Item.SALAC_BERRY, Item.PETAYA_BERRY, Item.APICOT_BERRY, Item.STARF_BERRY, Item.MICLE_BERRY, Item.CUSTAP_BERRY};
 	    }
+	    shopPanel.setLayout(new GridLayout(Math.max((shopItems.length / 4) + 1, 6), 0));
 	    for (int i = 0; i < shopItems.length; i++) {
+	    	JPanel itemPanel = new JPanel();
 	    	JGradientButton item = new JGradientButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
 	    	Item curItem = shopItems[i];
 	    	item.setBackground(curItem.getColor());
@@ -2034,7 +2062,7 @@ public class PlayerCharacter extends Entity {
 	        	@Override
 			    public void mouseClicked(MouseEvent e) {
 	        		if (SwingUtilities.isRightMouseButton(e)) {
-			            if (curItem.getID() > 100) JOptionPane.showMessageDialog(null, curItem.getMove().getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			            if (curItem.isTM()) JOptionPane.showMessageDialog(null, curItem.getMove().getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 		    		} else {
 		    	    	if (p.buy(curItem)) {
 		    	            JOptionPane.showMessageDialog(null, "Purchased 1 " + curItem.toString() + " for $" + curItem.getCost());
@@ -2046,8 +2074,12 @@ public class PlayerCharacter extends Entity {
 		    		}
 	        	}
 	    	});
-	    	shopPanel.add(item);
-	    	if (curItem.getID() > 100 && p.bag.contains(curItem.getID())) shopPanel.remove(item);
+	    	JLabel icon = new JLabel();
+	    	icon.setIcon(new ImageIcon(shopItems[i].getImage()));
+	    	itemPanel.add(icon);
+	    	itemPanel.add(item);
+	    	shopPanel.add(itemPanel);
+	    	if (curItem.isTM() && p.bag.contains(curItem.getID())) shopPanel.remove(itemPanel);
 	    }
 		JOptionPane.showMessageDialog(null, shopPanel, "Money: $" + p.money, JOptionPane.PLAIN_MESSAGE);
 		keyH.resume();

@@ -406,6 +406,9 @@ public class Pokemon implements Serializable {
         	if (move.cat == 2 || move == Move.NUZZLE || move == Move.SWORD_SPIN || move == Move.POWER$UP_PUNCH || move == Move.VENOM_SPIT) {
         		bestMoves.add(move);
         	}
+        	if (move == Move.SEA_DRAGON) {
+        		bestMoves.add(move);
+        	}
         	bestMoves = modifyStatus(bestMoves, foe);
         }
 
@@ -462,8 +465,8 @@ public class Pokemon implements Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TRICK_ROOM) && field.contains(field.fieldEffects, Effect.TRICK_ROOM)) bestMoves.remove(Move.TRICK_ROOM);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAILWIND) && field.contains(field.foeSide, Effect.TAILWIND)) bestMoves.remove(Move.TAILWIND);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MUD_SPORT) && field.contains(field.fieldEffects, Effect.MUD_SPORT)) bestMoves.remove(Move.MUD_SPORT);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.WATER_SPORT) && field.contains(field.foeSide, Effect.WATER_SPORT)) bestMoves.remove(Move.WATER_SPORT);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.GRAVITY) && field.contains(field.foeSide, Effect.GRAVITY)) bestMoves.remove(Move.GRAVITY);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.WATER_SPORT) && field.contains(field.fieldEffects, Effect.WATER_SPORT)) bestMoves.remove(Move.WATER_SPORT);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.GRAVITY) && field.contains(field.fieldEffects, Effect.GRAVITY)) bestMoves.remove(Move.GRAVITY);
 		
 		if (bestMoves.size() > 1 && (bestMoves.contains(Move.AQUA_RING) || bestMoves.contains(Move.INGRAIN)) && this.vStatuses.contains(Status.AQUA_RING)) {
 			bestMoves.remove(Move.INGRAIN);
@@ -3889,16 +3892,16 @@ public class Pokemon implements Serializable {
 				}
 			}
 			
-			if (move.contact && checkSecondary(30) && this.status == null) {
+			if (move.contact && checkSecondary(30) && this.status == Status.HEALTHY) {
 				if (foeAbility == Ability.FLAME_BODY) {
 					console.writeAbility(foe);
 					burn(false, this);
 				}
-				if (foeAbility == Ability.STATIC && this.status == null) {
+				if (foeAbility == Ability.STATIC && this.status == Status.HEALTHY) {
 					console.writeAbility(foe);
 					paralyze(false, this);
 				}
-				if (foeAbility == Ability.POISON_POINT && this.status == null) {
+				if (foeAbility == Ability.POISON_POINT && this.status == Status.HEALTHY) {
 					console.writeAbility(foe);
 					poison(false, this);
 				}

@@ -82,7 +82,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(69, 15, Item.LEPPA_BERRY, mapNum, 3, 6);
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(70, 48, Item.PERSIM_BERRY, mapNum, 15, 30);
-		gp.obj[mapNum][objIndex] = ObjSetup(43, 80, Item.ORAN_BERRY, mapNum, 10, 20);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 80, Item.ORAN_BERRY, mapNum, 15, 30);
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 67, Item.BRIGHT_POWDER, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(77, 32, Item.SHED_SHELL, mapNum);
 		
@@ -91,6 +91,7 @@ public class AssetSetter {
 		
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(35, 58, mapNum, 5, 15);
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(13, 78, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 8, Item.LUM_BERRY, mapNum, 5, 10);
 		
 		mapNum = 7;
 		objIndex = 0;
@@ -106,36 +107,37 @@ public class AssetSetter {
 		
 		mapNum = 11;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(91, 55, Item.ABILITY_CAPSULE, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(60, 66, Item.REPEL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(61, 62, Item.REVIVE, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(15, 76, Item.GREAT_BALL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(57, 75, Item.SUPER_POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(53, 67, Item.PARALYZE_HEAL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(55, 57, Item.POKEBALL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(40, 68, Item.EUPHORIAN_GEM, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(50, 78, Item.POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(40, 82, Item.SUPER_POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(37, 81, Item.ANTIDOTE, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(30, 87, Item.POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(25, 90, Item.LEAF_STONE, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(16, 81, Item.FULL_HEAL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(26, 69, Item.REPEL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(80, 65, Item.TM40, mapNum); // facade
+		gp.obj[mapNum][objIndex] = ObjSetup(91, 43, Item.ABILITY_CAPSULE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 54, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(61, 50, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 64, Item.GREAT_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 63, Item.SUPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 55, Item.PARALYZE_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 45, Item.POKEBALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 56, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 66, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 70, Item.SUPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 69, Item.ANTIDOTE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(30, 75, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 78, Item.LEAF_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(16, 69, Item.FULL_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 57, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(80, 53, Item.TM40, mapNum); // facade
 		
-		gp.obj[mapNum][objIndex] = ObjSetup(4, 43, Item.TM09, mapNum); // leaf blade
-		gp.obj[mapNum][objIndex] = ObjSetup(32, 60, Item.POKEBALL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(35, 52, Item.AWAKENING, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(34, 50, Item.SUPER_POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(33, 47, Item.BURN_HEAL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(15, 46, Item.REPEL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(32, 34, Item.REVIVE, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(35, 38, Item.EUPHORIAN_GEM, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(35, 44, Item.FULL_HEAL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(46, 53, Item.SILVER_POWDER, mapNum);
-		gp.obj[mapNum][objIndex] = ResistBerrySetup(42, 49, mapNum, 5, 15);
-		gp.obj[mapNum][objIndex] = ResistBerrySetup(13, 78, mapNum, 5, 15);
-		gp.obj[mapNum][objIndex] = ResistBerrySetup(38, 42, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = ObjSetup(11, 49, Item.TM09, mapNum); // leaf blade
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 48, Item.POKEBALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 40, Item.AWAKENING, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(34, 38, Item.SUPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(33, 35, Item.BURN_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 34, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 22, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 26, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 32, Item.FULL_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(46, 41, Item.SILVER_POWDER, mapNum);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(42, 37, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(13, 66, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(38, 30, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = ObjSetup(14, 49, Item.ORAN_BERRY, mapNum, 15, 30);
 		
 		mapNum = 13;
 		objIndex = 0;
@@ -247,7 +249,10 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(16, 76, Item.LEAF_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(14, 39, Item.MAX_ELIXIR, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(35, 43, Item.CAREFUL_MINT, mapNum); // careful
-		gp.obj[mapNum][objIndex] = ObjSetup(42, 39, Item.TM05, mapNum); // body slam (change to in house??)
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 39, Item.TM05, mapNum); // body slam
+		gp.obj[mapNum][objIndex] = ObjSetup(51, 52, Item.LIFE_ORB, mapNum);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(57, 56, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(57, 78, mapNum, 5, 15);
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(64, 70, Item.TM30, mapNum); // u-turn
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 69, Item.TM53, mapNum); // volt switch
@@ -261,7 +266,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(59, 76, Item.BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(62, 73, Item.ULTRA_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(64, 78, Item.MAX_POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(91, 57, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(91, 57, Item.EVIOLITE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(61, 41, Item.MAX_ELIXIR, mapNum);
 		
 		mapNum = 36;
@@ -276,18 +281,22 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(68, 54, Item.PARALYZE_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(89, 52, Item.REVIVE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(64, 20, Item.TM86, mapNum); // x-scissor
+		gp.obj[mapNum][objIndex] = ObjSetup(34, 47, Item.AIR_BALLOON, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(49, 32, Item.WHITE_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(83, 51, mapNum, 5, 15);
 		
 		mapNum = 38;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(16, 34, Item.SERIOUS_MINT, mapNum); // serious
 		gp.obj[mapNum][objIndex] = ObjSetup(41, 34, Item.HYPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 7, Item.ICE_STONE, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(67, 30, Item.FREEZE_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 30, Item.NEVER$MELT_ICE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(40, 30, Item.FREEZE_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 75, Item.ABILITY_CAPSULE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(35, 77, Item.TM48, mapNum); // scald
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 78, Item.ADAMANT_MINT, mapNum); // adamant
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 79, Item.MAX_ELIXIR, mapNum);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(48, 67, mapNum, 5, 15);
 		
 		mapNum = 41;
 		objIndex = 0;
@@ -296,9 +305,9 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(22, 45, Item.TM62, mapNum); // bug buzz
 		gp.obj[mapNum][objIndex] = ObjSetup(16, 41, Item.ULTRA_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 18, Item.SUPER_POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(15, 17, Item.FULL_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 17, Item.LOADED_DICE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(30, 29, Item.BOTTLE_CAP, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(48, 17, Item.ULTRA_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(48, 17, Item.TERRAIN_EXTENDER, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 18, Item.SUPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 42, Item.PARALYZE_HEAL, mapNum);
 		
@@ -329,6 +338,14 @@ public class AssetSetter {
 		mapNum = 61;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(31, 41, Item.SCOPE_LENS, mapNum);
+		
+		mapNum = 64;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 41, Item.BLUNDER_POLICY, mapNum);
+		
+		mapNum = 69;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 41, Item.WEAKNESS_POLICY, mapNum);
 		
 		mapNum = 77;
 		objIndex = 0;
@@ -367,6 +384,9 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(27, 72, Item.PP_UP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(87, 46, Item.TM65, mapNum); // shadow claw
 		gp.obj[mapNum][objIndex] = ObjSetup(15, 69, Item.ABILITY_CAPSULE, mapNum);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(50, 81, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(43, 79, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(17, 30, mapNum, 5, 15);
 		
 		mapNum = 83;
 		objIndex = 0;
@@ -377,9 +397,11 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(50, 80, Item.AWAKENING, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(57, 74, Item.MAX_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(62, 73, Item.MAX_ELIXIR, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(75, 50, Item.TM85, mapNum); // rock slide
+		gp.obj[mapNum][objIndex] = ObjSetup(58, 63, Item.TM85, mapNum); // rock slide
+		gp.obj[mapNum][objIndex] = ObjSetup(75, 50, Item.ASSAULT_VEST, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 55, Item.FULL_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(65, 49, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(75, 63, Item.STARF_BERRY, mapNum, 2, 5);
 		
 		mapNum = 85;
 		objIndex = 0;
@@ -546,6 +568,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(77, 88, Item.MAX_ELIXIR, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 65, Item.TM19, mapNum); // photon geyser
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 70, Item.FULL_RESTORE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 84, Item.MICLE_BERRY, mapNum, 2, 5);
 		
 		mapNum = 117;
 		objIndex = 0;
@@ -557,6 +580,23 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 79, Item.POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(42, 76, Item.HARD_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 89, Item.TWISTED_SPOON, mapNum);
+		
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 67, Item.COSMIC_CORE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(36, 44, Item.SITRUS_BERRY, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 68, Item.RAWST_BERRY, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 70, Item.CHERI_BERRY, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 69, Item.PECHA_BERRY, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = ObjSetup(30, 68, Item.CHESTO_BERRY, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = ObjSetup(30, 66, Item.PERSIM_BERRY, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = ObjSetup(12, 87, Item.LUM_BERRY, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(21, 87, mapNum, 5, 15);
+		
+		mapNum = 121;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 39, Item.BLACK_SLUDGE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 36, Item.TM36, mapNum); // sludge bomb
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 35, Item.CHOICE_BAND, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 35, Item.CHOICE_SPECS, mapNum);
 	}
 
 	public void setNPC() {
@@ -593,7 +633,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(5, 88, 16, 179);
 		
 		if (!flags[15]) {
-			gp.npc[mapNum][index] = NPCSetup(85, 5, "The road is closed from\nthis direction, there's a MASSIVE\nsinkhole on the other side\nof this gate. If you come\n from Schrice City straight\nNorth of here it should\nbe clear.");
+			gp.npc[mapNum][index] = NPCSetup(85, 5, "The road is closed from this direction, there's a MASSIVE sinkhole on the other side of this gate. If you come  from Schrice City straight North of here it should be clear.");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -604,7 +644,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(4, 63, 40, 262);
 		
 		if (!flags[2]) {
-			gp.npc[mapNum][index] = NPCSetup(60, 44, "The Pokemon here are going\nFERAL over these berry trees.\nCome back later!");
+			gp.npc[mapNum][index] = NPCSetup(60, 44, "The Pokemon here are going FERAL over these berry trees. Come back later!");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -628,14 +668,14 @@ public class AssetSetter {
 		mapNum = 3;
 		index = 0;
 		if (!flags[1]) {
-			gp.npc[mapNum][index] = NPCSetup(31, 40, "I saw a boy named Scott near New\nMinnow town saying he was looking\nfor a young man that looked like you.\nMaybe you should check it out?");
+			gp.npc[mapNum][index] = NPCSetup(31, 40, "I saw a boy named Scott near New Minnow town saying he was looking for a young man that looked like you. Maybe you should check it out?");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
 		
 		mapNum = 4;
 		if (!flags[2]) {
-			gp.npc[mapNum][index] = NPCSetup(81, 61, "The gym is currently closed because the\nLeader is trying to help the Warehouse\nowner get rid of Team Nuke.\nCome back later.");
+			gp.npc[mapNum][index] = NPCSetup(81, 61, "The gym is currently closed because the Leader is trying to help the Warehouse owner get rid of Team Nuke. Come back later.");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -682,32 +722,32 @@ public class AssetSetter {
 		
 		mapNum = 11;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(4, 69, 65, 24);
-		gp.npc[mapNum][index] = NPCSetup(4, 50, 72, 25);
-		gp.npc[mapNum][index] = NPCSetup(4, 59, 74, 26);
-		gp.npc[mapNum][index] = NPCSetup(4, 76, 68, 27);
-		gp.npc[mapNum][index] = NPCSetup(3, 53, 59, 28);
-		gp.npc[mapNum][index] = NPCSetup(4, 53, 65, 29);
-		gp.npc[mapNum][index] = NPCSetup(4, 76, 59, 30);
+		gp.npc[mapNum][index] = NPCSetup(4, 69, 53, 24);
+		gp.npc[mapNum][index] = NPCSetup(4, 50, 60, 25);
+		gp.npc[mapNum][index] = NPCSetup(4, 59, 62, 26);
+		gp.npc[mapNum][index] = NPCSetup(4, 76, 56, 27);
+		gp.npc[mapNum][index] = NPCSetup(3, 53, 47, 28);
+		gp.npc[mapNum][index] = NPCSetup(4, 53, 53, 29);
+		gp.npc[mapNum][index] = NPCSetup(4, 76, 47, 30);
 		
-		gp.npc[mapNum][index] = NPCSetup(16, 43, 73, 34);
+		gp.npc[mapNum][index] = NPCSetup(16, 43, 61, 34);
 		
-		gp.npc[mapNum][index] = NPCSetup(5, 40, 78, 31);
-		gp.npc[mapNum][index] = NPCSetup(5, 36, 79, 32);
-		gp.npc[mapNum][index] = NPCSetup(4, 34, 89, 33);
+		gp.npc[mapNum][index] = NPCSetup(5, 40, 66, 31);
+		gp.npc[mapNum][index] = NPCSetup(5, 36, 67, 32);
+		gp.npc[mapNum][index] = NPCSetup(4, 34, 77, 33);
 		
-		gp.npc[mapNum][index] = NPCSetup(7, 19, 61, -1);
+		gp.npc[mapNum][index] = NPCSetup(7, 19, 49, -1);
 		
-		gp.npc[mapNum][index] = NPCSetup(6, 28, 55, 35);
-		gp.npc[mapNum][index] = NPCSetup(6, 15, 49, 36);
-		gp.npc[mapNum][index] = NPCSetup(5, 19, 49, 37);
-		gp.npc[mapNum][index] = NPCSetup(6, 21, 45, 38);
-		gp.npc[mapNum][index] = NPCSetup(6, 22, 33, 39);
+		gp.npc[mapNum][index] = NPCSetup(6, 28, 43, 35);
+		gp.npc[mapNum][index] = NPCSetup(6, 15, 37, 36);
+		gp.npc[mapNum][index] = NPCSetup(5, 19, 37, 37);
+		gp.npc[mapNum][index] = NPCSetup(6, 21, 33, 38);
+		gp.npc[mapNum][index] = NPCSetup(6, 22, 21, 39);
 		
 		mapNum = 13;
 		index = 0;
 		if (!flags[4]) {
-			gp.npc[mapNum][index] = NPCSetup(15, 56, "The gym leader is stuck in the\noffice upstairs trying to help\nScott with Team Nuke.\nGo find Scott and help!");
+			gp.npc[mapNum][index] = NPCSetup(15, 56, "The gym leader is stuck in the office upstairs trying to help Scott with Team Nuke. Go find Scott and help!");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -743,8 +783,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(13, 56, 43, 54);
 		
 		if (!flags[3]) {
-			gp.npc[mapNum][index] = NPCSetup(49, 53, "Quick! Team Nuke is taking over\nour office! Please help!");
-			gp.npc[mapNum][index] = NPCSetup(57, 53, "Quick! Team Nuke is taking over\nour office! Please help!");
+			gp.npc[mapNum][index] = NPCSetup(49, 53, "Quick! Team Nuke is taking over our office! Please help!");
+			gp.npc[mapNum][index] = NPCSetup(57, 53, "Quick! Team Nuke is taking over our office! Please help!");
 		} else {
 			gp.npc[mapNum][index++] = null;
 			gp.npc[mapNum][index++] = null;
@@ -754,7 +794,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(10, 48, 45, 55);
 		gp.npc[mapNum][index] = NPCSetup(6, 45, 38, 146);
-		gp.npc[mapNum][index] = NPCSetup(46, 33, "That was an impressive battle!\nI found a rare MAGIC Pokemon,\nbut after watching that, you'd\nbe a better trainer. Here!", true);
+		gp.npc[mapNum][index] = NPCSetup(46, 33, "That was an impressive battle! I found a rare MAGIC Pokemon, but after watching that, you'd be a better trainer. Here!", true);
 		
 		mapNum = 21;
 		gp.npc[mapNum][index] = NPCSetup(3, 55, 60, 56);
@@ -847,12 +887,12 @@ public class AssetSetter {
 		
 		mapNum = 32;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 40, "Take my spare fishing rod!\nLook at water and press\n'A' to fish!");
+		gp.npc[mapNum][index] = NPCSetup(31, 40, "Take my spare fishing rod! Look at water and press 'A' to fish!");
 		
 		mapNum = 33;
 		index = 0;
 		if (gp.player.p.badges >= 5 && !flags[19]) {
-			gp.npc[mapNum][index] = NPCSetup(62, 17, "There's some SCARY people wearing\nblack in there somewhere.\nI heard one of their leaders\nwent to Ghostly Woods and\nis planning something evil.");
+			gp.npc[mapNum][index] = NPCSetup(62, 17, "There's some SCARY people wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -882,17 +922,17 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(4, 91, 43, 116);
 		
 		if (gp.player.p.badges >= 5 && !flags[19]) {
-			gp.npc[mapNum][index] = NPCSetup(15, 46, "There's some SCARY people wearing\nblack in there somewhere.\nI heard one of their leaders\ngo to Ghostly Woods and\nis planning something evil.");
+			gp.npc[mapNum][index] = NPCSetup(15, 46, "There's some SCARY people wearing black in there somewhere. I heard one of their leaders go to Ghostly Woods and is planning something evil.");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
 		
 		mapNum = 38;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(53, 7, "Do you have an ICE type to show me?\nAlso, say hi to my brother in the\nRADIO TOWER if you haven't yet!", true);
+		gp.npc[mapNum][index] = NPCSetup(53, 7, "Do you have an ICE type to show me? Also, say hi to my brother in the RADIO TOWER if you haven't yet!", true);
 		
 		if (!flags[8] || !flags[9]) {
-			gp.npc[mapNum][index] = NPCSetup(62, 41, "What is going on at the school?!\nWhere is everybody?!?!");
+			gp.npc[mapNum][index] = NPCSetup(62, 41, "What is going on at the school?! Where is everybody?!?!");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -904,19 +944,19 @@ public class AssetSetter {
 		
 		mapNum = 43;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 42, "Do you have an GROUND type to show me?\nAlso, say hi to my brother in the\nICY FIELDS if you haven't yet!", true);
+		gp.npc[mapNum][index] = NPCSetup(31, 42, "Do you have an GROUND type to show me? Also, say hi to my brother in the ICY FIELDS if you haven't yet!", true);
 		
 		mapNum = 41;
 		index = 0;
 		
 		if (!flags[7]) {
-			gp.npc[mapNum][index] = NPCSetup(13, 24, "This room is locked!\nWhere could the key be?");
+			gp.npc[mapNum][index] = NPCSetup(13, 24, "This room is locked! Where could the key be?");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
 		
 		if (!flags[6]) {
-			gp.npc[mapNum][index] = NPCSetup(50, 24, "This room is locked!\nWhere could the key be?");
+			gp.npc[mapNum][index] = NPCSetup(50, 24, "This room is locked! Where could the key be?");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -938,7 +978,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(14, 36, 17, 131);
 		gp.npc[mapNum][index] = NPCSetup(12, 32, 18, 132);
 		
-		gp.npc[mapNum][index] = NPCSetup(29, 18, "Who are these people??\nHave you cleared both rooms yet?", true);
+		gp.npc[mapNum][index] = NPCSetup(29, 18, "Who are these people?? Have you cleared both rooms yet?", true);
 		
 		mapNum = 44;
 		index = 0;
@@ -966,11 +1006,15 @@ public class AssetSetter {
 		
 		mapNum = 49;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Deep below ELECTRIC TUNNEL there's\na secret trail called SHADOW PATH.", true);
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Deep below ELECTRIC TUNNEL there's a secret trail called SHADOW PATH.", true);
 		
 		mapNum = 50;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "WOAOAOHAOAHOAHOH!!!\nHehehehehe I just\npopped a naughty yerkocet!!\nPick one of these NUTTY\n\"starters\" teheheheheheee", true);
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "WOAOAOHAOAHOAHOH!!! Hehehehehe I just popped a naughty yerkocet!! Pick one of these NUTTY \"starters\" teheheheheheee", true);
+		
+		mapNum = 53;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(17, 31, 41, -1);
 		
 		mapNum = 60;
 		index = 0;
@@ -1023,7 +1067,7 @@ public class AssetSetter {
 		mapNum = 85;
 		index = 0;
 		if (!flags[16]) {
-			gp.npc[mapNum][index] = NPCSetup(58, 64, "Talk to Grandpa (bottom\nhouse all the way southwest)");
+			gp.npc[mapNum][index] = NPCSetup(58, 64, "Talk to Grandpa (bottom house all the way southwest)");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1035,7 +1079,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(6, 88, 40, 223);
 		
 		if (!flags[17]) {
-			gp.npc[mapNum][index] = NPCSetup(63, 67, "EEEK! DON'T GO THIS WAY!\nI saw some really scary\nmen dressed up in black\ngo towards the woods this\nway. BE CAREFUL!");
+			gp.npc[mapNum][index] = NPCSetup(63, 67, "EEEK! DON'T GO THIS WAY! I saw some really scary men dressed up in black go towards the woods this way. BE CAREFUL!");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1060,7 +1104,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(14, 29, 45, 183);
 		gp.npc[mapNum][index] = NPCSetup(13, 33, 45, 184);
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Thank you so much for saving me!\nHere, take this as a gift!", true);
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Thank you so much for saving me! Here, take this as a gift!", true);
 		
 		mapNum = 92;
 		index = 0;
@@ -1070,11 +1114,11 @@ public class AssetSetter {
 		
 		mapNum = 93;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Would you like to remember a move?\nWhich Pokemon should remember?", true);
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Would you like to remember a move? Which Pokemon should remember?", true);
 		
 		mapNum = 94;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "There have been 2 meteorites\nthat have crashed into our\nregion. One makes Pokemon surge\nwith electricity, and another\ncasts them in a strange\nshadow.", true);
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "There have been 2 meteorites that have crashed into our region. One makes Pokemon surge with electricity, and another casts them in a strange shadow.", true);
 		
 		mapNum = 104;
 		index = 0;
@@ -1147,7 +1191,7 @@ public class AssetSetter {
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
-		gp.npc[mapNum][index] = NPCSetup(44, 39, "I found this infant Pokemon\nabandoned here.", true);
+		gp.npc[mapNum][index] = NPCSetup(44, 39, "I found this infant Pokemon abandoned here.", true);
 		
 		mapNum = 110;
 		index = 0;
@@ -1185,10 +1229,21 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(5, 37, 76, 265);
 		
 		if (!flags[1]) {
-			gp.npc[mapNum][index] = NPCSetup(23, 76, "You're not ready to\nfight those guys over\nthere yet, sorry bud.");
+			gp.npc[mapNum][index] = NPCSetup(23, 76, "You're not ready to fight those guys over there yet, sorry bud.");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
+		
+		mapNum = 121;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(5, 34, 42, 270);
+		gp.npc[mapNum][index] = NPCSetup(6, 28, 37, 271);
+		gp.npc[mapNum][index] = NPCSetup(5, 34, 35, 272);
+		gp.npc[mapNum][index] = NPCSetup(31, 34, "You're definitely not strong enough to go up here. Also, the items on the floor are really powerful, so you can only choose one for now.");
+		
+		mapNum = 122;
+		index = 0;
+		
 	}
 	
 	public void setInteractiveTile(int map) {
@@ -1209,11 +1264,11 @@ public class AssetSetter {
 		
 		mapNum = 11;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(39, 77, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(13, 52, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(34, 47, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 65, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(13, 40, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 35, 0, mapNum, map);
 		
-		SetupWhirlpool(mapNum, 12, 92, map);
+		SetupWhirlpool(mapNum, 15, 76, map);
 		
 		mapNum = 13;
 		iIndex = 0;
@@ -1616,7 +1671,7 @@ public class AssetSetter {
 		if (flags[7]) gp.npc[41][0] = null;
 		if (flags[6]) gp.npc[41][1] = null;
 		if (flags[8] && flags[9]) gp.npc[38][1] = null;
-		if (flags[15]) gp.npc[0][11] = null;
+		if (flags[15]) gp.npc[0][12] = null;
 		if (flags[16]) gp.npc[85][0] = null;
 		if (flags[17]) gp.npc[85][7] = null;
 		if (!flags[19] && gp.player.p.grustCount >= 10) {
