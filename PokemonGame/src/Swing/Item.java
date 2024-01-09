@@ -236,26 +236,26 @@ public enum Item {
 	TM98(198,0,Color.BLACK,Item.TMS,Move.FLIP_TURN,"Teaches a Pokemon this move."),
 	TM99(199,0,Color.BLACK,Item.TMS,Move.RETURN,"Teaches a Pokemon this move."),
 	CALCULATOR(200,0,Color.BLACK,Item.OTHER,null,"Calculates damage simulating a battle"),
-	BLACK_BELT(201,0,new Color(81, 76, 84),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."),
-	BLACK_GLASSES(202,0,new Color(81, 65, 78),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."),
-	CHARCOAL(203,0,new Color(67, 60, 73),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."),
-	COSMIC_CORE(204,0,new Color(71, 40, 79),Item.HELD_ITEM,null,"A mysterious core from the heart of the cosmos that boosts the power of Galactic-type moves."),
-	DRAGON_FANG(205,0,new Color(149, 122, 124),Item.HELD_ITEM,null,"This hard, sharp fang boosts the power of the holder's Dragon-type moves."),
-	ENCHANTED_AMULET(206,0,new Color(211, 38, 255),Item.HELD_ITEM,null,"An ancient amulet with mystical properties that boosts the power of Magic-type moves."),
-	GLOWING_PRISM(207,0,new Color(255, 252, 153),Item.HELD_ITEM,null,"A radiant prism that boosts the power of Light-type moves."),
-	HARD_STONE(208,0,new Color(96, 88, 88),Item.HELD_ITEM,null,"A durable stone that boosts the power of the holder's Rock-type moves."),
-	MAGNET(209,0,new Color(163, 171, 147),Item.HELD_ITEM,null,"A powerful magnet that boosts the power of the holder's Electric-type moves."),
-	METAL_COAT(210,0,new Color(178, 200, 200),Item.HELD_ITEM,null,"A special metallic coating that boosts the power of the holder's Steel-type moves."),
-	MIRACLE_SEED(211,0,new Color(215, 209, 80),Item.HELD_ITEM,null,"A seed imbued with life-force that boosts the power of the holder's Grass-type moves."),
-	MYSTIC_WATER(212,0,new Color(88, 88, 208),Item.HELD_ITEM,null,"A teardrop-shaped gem boosts the power of the holder's Water-type moves."),
-	NEVER$MELT_ICE(213,0,new Color(216, 235, 244),Item.HELD_ITEM,null,"A heat-repelling piece of ice that boosts the power of the holder's Ice- type moves."),
-	POISON_BARB(214,0,new Color(173, 130, 158),Item.HELD_ITEM,null,"A small poisonous barb boosts the power of the holder's Poison-type moves."),
-	SHARP_BEAK(215,0,new Color(241, 225, 145),Item.HELD_ITEM,null,"A long, sharp beak that boosts the power of the holder's Flying-type moves."),
-	SILK_SCARF(216,0,new Color(235, 250, 250),Item.HELD_ITEM,null,"A sumptuous scarf that boosts the power of the holder's Normal-type moves."),
-	SILVER_POWDER(217,0,new Color(119, 201, 132),Item.HELD_ITEM,null,"A pile of shiny silver powder that boosts the power of the holder's Bug-type moves."),
-	SOFT_SAND(218,0,new Color(240, 224, 152),Item.HELD_ITEM,null,"A loose, silky sand that boosts the power of the holder's Ground-type moves."),
-	SPELL_TAG(219,0,new Color(127, 127, 126),Item.HELD_ITEM,null,"A sinister, eerie tag that boosts the power of the holder's Ghost-type moves."),
-	TWISTED_SPOON(220,0,new Color(220, 229, 229),Item.HELD_ITEM,null,"This spoon is imbued with telekinetic energy and boosts the power of the holder's Psychic-type moves."),
+	BLACK_BELT(201,0,PType.FIGHTING.getColor(),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."),
+	BLACK_GLASSES(202,0,PType.DARK.getColor(),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."),
+	CHARCOAL(203,0,PType.FIRE.getColor(),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."),
+	COSMIC_CORE(204,0,PType.GALACTIC.getColor(),Item.HELD_ITEM,null,"A mysterious core from the heart of the cosmos that boosts the power of Galactic-type moves."),
+	DRAGON_FANG(205,0,PType.DRAGON.getColor(),Item.HELD_ITEM,null,"This hard, sharp fang boosts the power of the holder's Dragon-type moves."),
+	ENCHANTED_AMULET(206,0,PType.MAGIC.getColor(),Item.HELD_ITEM,null,"An ancient amulet with mystical properties that boosts the power of Magic-type moves."),
+	GLOWING_PRISM(207,0,PType.LIGHT.getColor(),Item.HELD_ITEM,null,"A radiant prism that boosts the power of Light-type moves."),
+	HARD_STONE(208,0,PType.ROCK.getColor(),Item.HELD_ITEM,null,"A durable stone that boosts the power of the holder's Rock-type moves."),
+	MAGNET(209,0,PType.ELECTRIC.getColor(),Item.HELD_ITEM,null,"A powerful magnet that boosts the power of the holder's Electric-type moves."),
+	METAL_COAT(210,0,PType.STEEL.getColor(),Item.HELD_ITEM,null,"A special metallic coating that boosts the power of the holder's Steel-type moves."),
+	MIRACLE_SEED(211,0,PType.GRASS.getColor(),Item.HELD_ITEM,null,"A seed imbued with life-force that boosts the power of the holder's Grass-type moves."),
+	MYSTIC_WATER(212,0,PType.WATER.getColor(),Item.HELD_ITEM,null,"A teardrop-shaped gem boosts the power of the holder's Water-type moves."),
+	NEVER$MELT_ICE(213,0,PType.ICE.getColor(),Item.HELD_ITEM,null,"A heat-repelling piece of ice that boosts the power of the holder's Ice- type moves."),
+	POISON_BARB(214,0,PType.POISON.getColor(),Item.HELD_ITEM,null,"A small poisonous barb boosts the power of the holder's Poison-type moves."),
+	SHARP_BEAK(215,0,PType.FLYING.getColor(),Item.HELD_ITEM,null,"A long, sharp beak that boosts the power of the holder's Flying-type moves."),
+	SILK_SCARF(216,0,PType.NORMAL.getColor(),Item.HELD_ITEM,null,"A sumptuous scarf that boosts the power of the holder's Normal-type moves."),
+	SILVER_POWDER(217,0,PType.BUG.getColor(),Item.HELD_ITEM,null,"A pile of shiny silver powder that boosts the power of the holder's Bug-type moves."),
+	SOFT_SAND(218,0,PType.GROUND.getColor(),Item.HELD_ITEM,null,"A loose, silky sand that boosts the power of the holder's Ground-type moves."),
+	SPELL_TAG(219,0,PType.GHOST.getColor(),Item.HELD_ITEM,null,"A sinister, eerie tag that boosts the power of the holder's Ghost-type moves."),
+	TWISTED_SPOON(220,0,PType.PSYCHIC.getColor(),Item.HELD_ITEM,null,"This spoon is imbued with telekinetic energy and boosts the power of the holder's Psychic-type moves."),
 	CHERI_BERRY(221,10,new Color(232, 96, 80),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to free itself from paralysis."),
 	CHESTO_BERRY(222,10,new Color(144, 112, 224),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to wake itself from sleep."),
 	PECHA_BERRY(223,10,new Color(248, 192, 152),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to lift the effects of being poisoned from itself."),
@@ -981,8 +981,8 @@ public enum Item {
         			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         			int amt = (int) foeStages[index].getSelectedItem();
         			current.statStages[index - 1] = amt;
-        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), abilityLabel, userItem);
-        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), fAbilityLabel, foeItem);
+        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), abilityLabel, foeItem);
+        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), fAbilityLabel, userItem);
         			if (index == 5) foeSpeed.setText((current.getSpeed()) + "");
         		});
         		fStatsPanel.add(foeStages[i]);

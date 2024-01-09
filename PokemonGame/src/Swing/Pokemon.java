@@ -10925,11 +10925,11 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (this.item == Item.FLAME_ORB) {
+		if (this.item == Item.FLAME_ORB && this.status == Status.HEALTHY) {
 			console.writeln();
 			this.burn(false, this);
 		}
-		if (this.item == Item.TOXIC_ORB) {
+		if (this.item == Item.TOXIC_ORB && this.status == Status.HEALTHY) {
 			console.writeln();
 			this.toxic(false, this);
 		}
