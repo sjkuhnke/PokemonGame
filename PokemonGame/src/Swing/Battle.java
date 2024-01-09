@@ -166,7 +166,7 @@ public class Battle extends JFrame {
 		 * Set current movebuttons
 		 */
 		moveButtons = new JGradientButton[4];
-		int[] xPositions = {176, 275, 176, 275};
+		int[] xPositions = {196, 295, 196, 295};
 		int[] yPositions = {247, 247, 280, 280};
 		for (int i = 0; i < moveButtons.length; i++) {
 			final int index = i;
@@ -219,7 +219,7 @@ public class Battle extends JFrame {
 		userStatus.setText(me.getCurrent().status.getName());
 		userStatus.setForeground(me.getCurrent().status.getTextColor());
 		userStatus.setBackground(me.getCurrent().status.getColor());
-		userStatus.setBounds(203, 179, 21, 20);
+		userStatus.setBounds(223, 179, 21, 20);
 		userStatus.setVisible(true);
 		userStatus.setOpaque(true);
 		playerPanel.add(userStatus);
@@ -230,7 +230,7 @@ public class Battle extends JFrame {
 		foeStatus.setText(foe.status.getName());
 		foeStatus.setForeground(foe.status.getTextColor());
 		foeStatus.setBackground(foe.status.getColor());
-		foeStatus.setBounds(543, 37, 21, 20);
+		foeStatus.setBounds(563, 37, 21, 20);
 		foeStatus.setVisible(true);
 		foeStatus.setOpaque(true);
 		playerPanel.add(foeStatus);
@@ -239,7 +239,7 @@ public class Battle extends JFrame {
 		 * Initialize caught indicator
 		 */
 		caughtIndicator = new JLabel(new ImageIcon(getIcon("/icons/ball.png")));
-		caughtIndicator.setBounds(519, 39, 16, 16);
+		caughtIndicator.setBounds(539, 39, 16, 16);
 
 	    if (foeTrainer == null && pl.p.pokedex[foe.id] == 2) {
 	    	caughtIndicator.setVisible(true);
@@ -258,10 +258,10 @@ public class Battle extends JFrame {
 		 * Set current and foe
 		 */
 		userSprite = new JLabel("");
-		userSprite.setBounds(203, 0, 200, 200);
+		userSprite.setBounds(223, 0, 200, 200);
 		
 		foeSprite = new JLabel("");
-		foeSprite.setBounds(543, 60, 200, 200);
+		foeSprite.setBounds(563, 60, 200, 200);
 		
 		userSprite.setVisible(true);
 		foeSprite.setVisible(true);
@@ -275,11 +275,11 @@ public class Battle extends JFrame {
 		 * Set weather and terrain area
 		 */
 		weather = new JLabel("");
-		weather.setBounds(393, 10, 100, 200);
+		weather.setBounds(413, 10, 100, 200);
 		weather.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		terrain = new JLabel("");
-		terrain.setBounds(393, 230, 100, 75);
+		terrain.setBounds(413, 230, 100, 75);
 		terrain.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		playerPanel.add(weather);
@@ -291,7 +291,7 @@ public class Battle extends JFrame {
         slashLabel = new JLabel("/");
 		slashLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		slashLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		slashLabel.setBounds(266, 222, 21, 14);
+		slashLabel.setBounds(286, 222, 21, 14);
 		playerPanel.add(slashLabel);
 		
 		/*
@@ -307,13 +307,13 @@ public class Battle extends JFrame {
 		currentHPLabel = new JLabel(me.getCurrent().getCurrentHP() + "");
 		currentHPLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		currentHPLabel.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		currentHPLabel.setBounds(223, 222, 46, 14);
+		currentHPLabel.setBounds(243, 222, 46, 14);
 		playerPanel.add(currentHPLabel);
 		
 		maxHPLabel = new JLabel(me.getCurrent().getStat(0) + "");
 		maxHPLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		maxHPLabel.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		maxHPLabel.setBounds(283, 222, 46, 14);
+		maxHPLabel.setBounds(303, 222, 46, 14);
 		playerPanel.add(maxHPLabel);
 		
 		updateBars(false);
@@ -982,7 +982,7 @@ public class Battle extends JFrame {
 		currentText = new JLabel("ERROR");
 		currentText.setText(me.getCurrent().nickname + "  lv " + me.getCurrent().getLevel()); 
 		currentText.setHorizontalAlignment(SwingConstants.LEFT);
-		currentText.setBounds(229, 179, 140, 20);
+		currentText.setBounds(249, 179, 140, 20);
 		currentText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		currentText.setFont(getScaledFontSize(currentText));
 		
@@ -1095,7 +1095,7 @@ public class Battle extends JFrame {
 		if (foeHealthBar != null) playerPanel.remove(foeHealthBar);
 		foeText = new JLabel("ERROR");
 		foeText.setText(foe.nickname + "  lv " + foe.getLevel());
-		foeText.setBounds(569, 37, 184, 20);
+		foeText.setBounds(589, 37, 184, 20);
 		foeText.setHorizontalAlignment(SwingConstants.LEFT);
 		foeText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		foeText.setFont(getScaledFontSize(foeText));
@@ -1143,14 +1143,14 @@ public class Battle extends JFrame {
 		} else {
 			foeHealthBar.setForeground(new Color(255, 0, 0));
 		}
-		foeHealthBar.setBounds(543, 59, 146, 14);
+		foeHealthBar.setBounds(563, 59, 146, 14);
 		
 		playerPanel.add(foeText);
 		playerPanel.add(foeHealthBar);
 		
 		if (foePartyPanel != null) playerPanel.remove(foePartyPanel);
 		foePartyPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-		foePartyPanel.setBounds(525, 0, 200, 32);
+		foePartyPanel.setBounds(545, 0, 200, 32);
 
 		int yellowIndex = 6;
 		if (foeTrainer != null) yellowIndex = foeTrainer.getNumFainted();
@@ -1225,7 +1225,7 @@ public class Battle extends JFrame {
 				String top = p.nickname;
 				String bottom = "lv. " + p.getLevel();
 				party[i].setHorizontalAlignment(SwingConstants.CENTER);
-				party[i].setBounds(60, 21 + (i % 5) * 54, 94, 30);
+				party[i].setBounds(60, 21 + (i % 5) * 54, 114, 40);
 				party[i].setFont(new Font("Tahoma", Font.PLAIN, 11));
 				party[i].setText("<html><center>" + top + "<br>" + bottom + "</center></html>");
 				party[i].setBackground(p.type1.getColor(), p.type2 == null ? null : p.type2.getColor());
@@ -1242,12 +1242,12 @@ public class Battle extends JFrame {
 				} else {
 					partyHP[i].setForeground(new Color(255, 0, 0));
 				}
-				partyHP[i].setBounds(60, 54 + (i % 5) * 54, 94, 7);
+				partyHP[i].setBounds(60, 64 + (i % 5) * 54, 114, 7);
 				playerPanel.add(partyHP[i]);
 				partyHP[i].setVisible(true);
 				
 				// Party sprites
-				partySprites[i].setBounds(10, 21 + (i % 5) * 54, 40, 40);
+				partySprites[i].setBounds(0, 11 + (i % 5) * 54, 60, 60);
 				
 				partySprites[i].setIcon(getMiniSprite(p));
 				playerPanel.add(partySprites[i]);
@@ -1540,12 +1540,12 @@ public class Battle extends JFrame {
 		} else {
 			healthBar.setForeground(new Color(255, 0, 0));
 		}
-		healthBar.setBounds(203, 201, 146, 14);
+		healthBar.setBounds(223, 201, 146, 14);
 		playerPanel.add(healthBar);
 			
 		expBar.setMaximum(me.getCurrent().expMax);
 		expBar.setValue(me.getCurrent().exp);
-		expBar.setBounds(203, 216, 146, 7);
+		expBar.setBounds(223, 216, 146, 7);
 		playerPanel.add(expBar);
 		
 		foeHealthBar.setMaximum(foe.getStat(0));

@@ -92,7 +92,7 @@ public class PartyPanel extends JPanel {
 				}
 			}
 		});
-		this.setPreferredSize(new Dimension(250, 125));
+		this.setPreferredSize(new Dimension(250, 175));
 	}
 	
 	public JLabel getPartyText() {

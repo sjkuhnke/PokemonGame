@@ -545,11 +545,11 @@ public class PMap extends JFrame {
 				return 6;
 			}
 			if (x <= 43) {
-				if (y <= 64) {
+				if (y <= 52) {
 					PlayerCharacter.currentMapName = "Route 25";
 					return 8;
 				}
-				if (y > 64) {
+				if (y > 52) {
 					PlayerCharacter.currentMapName = "Gelb Forest";
 					return 7;
 				}

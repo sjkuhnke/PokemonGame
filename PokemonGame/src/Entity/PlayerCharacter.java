@@ -814,7 +814,7 @@ public class PlayerCharacter extends Entity {
 				if (!p.flags[6] && gp.currentMap == 43) {
 					JPanel partyMasterPanel = new JPanel();
 					partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-					partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+					partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 					
 					for (int j = 0; j < 6; j++) {
 						PartyPanel partyPanel = new PartyPanel(p.team[j], true);
@@ -840,7 +840,7 @@ public class PlayerCharacter extends Entity {
 				if (!p.flags[7] && gp.currentMap == 38) {
 					JPanel partyMasterPanel = new JPanel();
 					partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-					partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+					partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 					
 					for (int j = 0; j < 6; j++) {
 						PartyPanel partyPanel = new PartyPanel(p.team[j], true);
@@ -995,7 +995,7 @@ public class PlayerCharacter extends Entity {
 				} if (gp.currentMap == 93) {
 					JPanel partyMasterPanel = new JPanel();
 					partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-					partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+					partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 					for (int j = 0; j < 6; j++) {
 						PartyPanel partyPanel = new PartyPanel(p.team[j], true);
 						final int index = j;
@@ -1136,7 +1136,7 @@ public class PlayerCharacter extends Entity {
 	private void showParty() {
 	    JPanel partyMasterPanel = new JPanel();
 	    partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-	    partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+	    partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 
 	    for (int j = 0; j < 6; j++) {
 	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
@@ -1236,7 +1236,7 @@ public class PlayerCharacter extends Entity {
 			        	if (i.getItem().isPotion()) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
@@ -1278,7 +1278,7 @@ public class PlayerCharacter extends Entity {
 			        	else if (i.getItem().isStatusHealer()) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));       	    
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));       	    
 			        	    Status target = i.getItem().getStatus();
 
 			        	    for (int j = 0; j < 6; j++) {
@@ -1318,7 +1318,7 @@ public class PlayerCharacter extends Entity {
 			        	else if (i.getItem() == Item.REVIVE || i.getItem() == Item.MAX_REVIVE) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
@@ -1356,7 +1356,7 @@ public class PlayerCharacter extends Entity {
 			        	else if (i.getItem() == Item.RARE_CANDY) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
@@ -1412,7 +1412,7 @@ public class PlayerCharacter extends Entity {
 			        	else if (i.getItem() == Item.EUPHORIAN_GEM) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
@@ -1445,7 +1445,7 @@ public class PlayerCharacter extends Entity {
 			        	else if (i.getItem().isEvoItem()) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	if (p.team[j] != null) {
@@ -1506,7 +1506,7 @@ public class PlayerCharacter extends Entity {
 			        	else if (i.getItem().isTM()) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], false);
@@ -1564,7 +1564,7 @@ public class PlayerCharacter extends Entity {
 			        	else if (i.getItem() == Item.ABILITY_CAPSULE) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], false);
@@ -1607,7 +1607,7 @@ public class PlayerCharacter extends Entity {
 			        	else if (i.getItem() == Item.BOTTLE_CAP || i.getItem() == Item.GOLD_BOTTLE_CAP) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
@@ -1667,7 +1667,7 @@ public class PlayerCharacter extends Entity {
 			        	else if (i.getItem().isMint()) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
@@ -1740,7 +1740,7 @@ public class PlayerCharacter extends Entity {
 			        	else if (i.getItem() == Item.ELIXIR || i .getItem() == Item.MAX_ELIXIR) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
@@ -1818,7 +1818,7 @@ public class PlayerCharacter extends Entity {
 			        	else if (i.getItem() == Item.PP_UP || i .getItem() == Item.PP_MAX) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
@@ -1877,7 +1877,7 @@ public class PlayerCharacter extends Entity {
 			        	else if (i.getItem() == Item.EDGE_KIT) {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
@@ -1917,7 +1917,7 @@ public class PlayerCharacter extends Entity {
 			        	giveButton.addActionListener(f -> {
 			        		JPanel partyMasterPanel = new JPanel();
 			        		partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			        		partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			        		partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 			        	    
 			        	    for (int j = 0; j < 6; j++) {
 			        	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
