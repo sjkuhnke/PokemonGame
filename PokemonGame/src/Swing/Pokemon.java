@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -288,38 +289,25 @@ public class Pokemon implements Serializable {
 		} catch (Exception e) {
 			image = getSprite();
 			
-			int scaledWidth = (int) (image.getWidth(null) * 0.75);
-			int scaledHeight = (int) (image.getHeight(null) * 0.75);
-			
-			Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
-			
-			return scaledImage;
+			int scaledWidth = 40;  // New width
+	        int scaledHeight = 40; // New height
+
+	        // Create a BufferedImage with transparent pixels
+	        BufferedImage miniImage = new BufferedImage(60, 60, BufferedImage.TYPE_INT_ARGB);
+
+	        // Calculate the position to draw the scaled image in the center
+	        int x = (60 - scaledWidth) / 2;
+	        int y = (60 - scaledHeight) / 2;
+
+	        // Draw the scaled-down sprite onto the BufferedImage
+	        Graphics2D g2d = miniImage.createGraphics();
+	        g2d.drawImage(image, x, y, scaledWidth, scaledHeight, null);
+	        g2d.dispose();
+
+	        return miniImage;
 		}
 		return image;
 	}
-	
-	public Image getBoxSprite() {
-		Image image = null;
-		
-		String imageName = id + "";
-		while (imageName.length() < 3) imageName = "0" + imageName;
-		
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/minisprites/" + imageName + ".png"));
-			
-			return image;
-		} catch (Exception e) {
-			image = getSprite();
-			
-			int scaledWidth = (int) (image.getWidth(null) * 0.75);
-			int scaledHeight = (int) (image.getHeight(null) * 0.75);
-			
-			Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
-			
-			return scaledImage;
-		}
-	}
-
 
 	public void setMoves() {
 		int index = 0;
@@ -12300,7 +12288,7 @@ public class Pokemon implements Serializable {
 		if (hpRatio <= (1.0/4) && this.item.isPinchBerry()) {
 			eatBerry(this.item, true, foe);
 		}
-		if (hpRatio <= (1.0/2) && this.item == Item.ORAN_BERRY || this.item == Item.SITRUS_BERRY) {
+		if (hpRatio <= 1 / 2 && (this.item == Item.ORAN_BERRY || this.item == Item.SITRUS_BERRY)) {
 			eatBerry(this.item, true, foe);
 		} else {
 			return;

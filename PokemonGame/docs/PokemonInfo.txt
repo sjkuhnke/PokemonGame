@@ -3746,7 +3746,8 @@ Level Up:
 20 - Vacuum Wave
 25 - Shadow Ball
 29 - Glittering Tornado
-34 - Sparkling Aria
+33 - Sparkling Aria
+36 - Shell Smash
 40 - Liquidation
 45 - Aeroblast
 50 - Focus Blast

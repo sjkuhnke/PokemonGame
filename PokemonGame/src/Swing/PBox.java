@@ -81,7 +81,7 @@ public class PBox extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		    	JPanel partyMasterPanel = new JPanel();
 		    	partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			    partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+			    partyMasterPanel.setPreferredSize(new Dimension(350, 350));
         	    
         	    for (int j = 0; j < 6; j++) {
         	    	PartyPanel partyPanel = new PartyPanel(me.team[j], true);
@@ -264,7 +264,7 @@ public class PBox extends JFrame {
 	        boxButtons[i].setText("");
 	        boxButtons[i].setIcon(null);
 	        if (cBox[i] != null) {
-	        	ImageIcon spriteIcon = new ImageIcon(cBox[i].getBoxSprite());
+	        	ImageIcon spriteIcon = new ImageIcon(cBox[i].getMiniSprite());
 	        	ImageIcon itemIcon = null;
 	        	if (cBox[i].item != null) itemIcon = new ImageIcon(cBox[i].item.getImage());
 	        	CompoundIcon icon = itemIcon == null ? new CompoundIcon(Axis.Z_AXIS, 0, CompoundIcon.LEFT, CompoundIcon.BOTTOM, spriteIcon) : new CompoundIcon(Axis.Z_AXIS, 0, CompoundIcon.LEFT, CompoundIcon.BOTTOM, spriteIcon, itemIcon);
@@ -319,7 +319,7 @@ public class PBox extends JFrame {
 		                        // Open a new panel to display the party and allow the user to select a party member to swap with
 		                    	JPanel partyMasterPanel = new JPanel();
 		                	    partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-		                	    partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+		                	    partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 		                	    boolean oneVisible = false;
 		                	    
 		                	    for (int j = 0; j < 6; j++) {
