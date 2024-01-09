@@ -393,9 +393,38 @@ public class Pokemon implements Serializable {
         		bestMoves.add(move);
         	}
         	if (move.cat == 2 || move == Move.NUZZLE || move == Move.SWORD_SPIN || move == Move.POWER$UP_PUNCH || move == Move.VENOM_SPIT) {
-        		bestMoves.add(move);
-        		if (maxDamage < foe.currentHP / 4) {
+        		if (move.accuracy > 100) {
+        			Pokemon freshYou = this.clone();
+        			freshYou.statStages = new int[freshYou.statStages.length];
+        			Pokemon freshFoe = new Pokemon(1, 1, false, false);
+        			int[] prevStatsF = freshYou.statStages.clone();
+        			freshYou.statusEffect(freshFoe, move, null, null, null, field.foeSide, field.playerSide, false);
+        			int[] currentStatsF = freshYou.statStages.clone();
+        			if (!arrayEquals(prevStatsF, currentStatsF)) {
+        				Pokemon you = this.clone();
+            			Pokemon foeClone = foe.clone(); // shouldn't matter
+            			int[] prevStats = you.statStages.clone();
+            			you.statusEffect(foeClone, move, null, null, null, field.foeSide, field.playerSide, false);
+            			int[] currentStats = you.statStages.clone();
+            			if (arrayGreaterOrEqual(prevStats, currentStats)) {
+            				// nothing: don't add
+            			} else {
+            				bestMoves.add(move);
+            				if (maxDamage < foe.currentHP / 4) {
+                    			bestMoves.add(move);
+                    		}
+            			}
+        			} else {
+        				bestMoves.add(move);
+            			if (maxDamage < foe.currentHP / 4) {
+                			bestMoves.add(move);
+                		}
+        			}
+        		} else {
         			bestMoves.add(move);
+        			if (maxDamage < foe.currentHP / 4) {
+            			bestMoves.add(move);
+            		}
         		}
         	}
         	if (move == Move.SEA_DRAGON) {
@@ -414,34 +443,34 @@ public class Pokemon implements Serializable {
     }
 	
 	private ArrayList<Move> modifyStatus(ArrayList<Move> bestMoves, Pokemon foe) {
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.STICKY_WEB) && field.contains(field.playerSide, Effect.STICKY_WEBS)) bestMoves.remove(Move.STICKY_WEB);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.STEALTH_ROCK) && field.contains(field.playerSide, Effect.STEALTH_ROCKS)) bestMoves.remove(Move.STEALTH_ROCK);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPIKES) && field.getLayers(field.playerSide, Effect.SPIKES) == 3) bestMoves.remove(Move.SPIKES);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TOXIC_SPIKES) && field.getLayers(field.playerSide, Effect.TOXIC_SPIKES) == 2) bestMoves.remove(Move.TOXIC_SPIKES);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.DEFOG) && field.getHazards(field.foeSide).isEmpty() && field.getScreens(field.playerSide).isEmpty() && field.terrain == null) bestMoves.remove(Move.DEFOG);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.STICKY_WEB) && field.contains(field.playerSide, Effect.STICKY_WEBS)) bestMoves.removeIf(Move.STICKY_WEB::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.STEALTH_ROCK) && field.contains(field.playerSide, Effect.STEALTH_ROCKS)) bestMoves.removeIf(Move.STEALTH_ROCK::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPIKES) && field.getLayers(field.playerSide, Effect.SPIKES) == 3) bestMoves.removeIf(Move.SPIKES::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TOXIC_SPIKES) && field.getLayers(field.playerSide, Effect.TOXIC_SPIKES) == 2) bestMoves.removeIf(Move.TOXIC_SPIKES::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.DEFOG) && field.getHazards(field.foeSide).isEmpty() && field.getScreens(field.playerSide).isEmpty() && field.terrain == null) bestMoves.removeIf(Move.DEFOG::equals);
 		
 		ArrayList<Move> noRepeat = Move.getNoComboMoves();
 		for (Move m : noRepeat) {
-			if (bestMoves.size() > 1 && bestMoves.contains(m) && lastMoveUsed == m) bestMoves.remove(m);
+			if (bestMoves.size() > 1 && bestMoves.contains(m) && lastMoveUsed == m) bestMoves.removeIf(m::equals);
 		}
 		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_REFLECT) && this.impressive) bestMoves.remove(Move.MAGIC_REFLECT);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.ABDUCT) && this.impressive) bestMoves.remove(Move.ABDUCT);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAKE_OVER) && this.impressive) bestMoves.remove(Move.TAKE_OVER);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_REFLECT) && this.impressive) bestMoves.removeIf(Move.MAGIC_REFLECT::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.ABDUCT) && this.impressive) bestMoves.removeIf(Move.ABDUCT::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAKE_OVER) && this.impressive) bestMoves.removeIf(Move.TAKE_OVER::equals);
 		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SUNNY_DAY) && field.equals(field.weather, Effect.SUN)) bestMoves.remove(Move.SUNNY_DAY);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.RAIN_DANCE) && field.equals(field.weather, Effect.RAIN)) bestMoves.remove(Move.RAIN_DANCE);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SANDSTORM) && field.equals(field.weather, Effect.SANDSTORM)) bestMoves.remove(Move.SANDSTORM);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SNOWSCAPE) && field.equals(field.weather, Effect.SNOW)) bestMoves.remove(Move.SNOWSCAPE);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.ELECTRIC_TERRAIN) && field.equals(field.terrain, Effect.ELECTRIC)) bestMoves.remove(Move.ELECTRIC_TERRAIN);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.GRASSY_TERRAIN) && field.equals(field.terrain, Effect.GRASSY)) bestMoves.remove(Move.GRASSY_TERRAIN);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.PSYCHIC_TERRAIN) && field.equals(field.terrain, Effect.PSYCHIC)) bestMoves.remove(Move.PSYCHIC_TERRAIN);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPARKLING_TERRAIN) && field.equals(field.terrain, Effect.SPARKLY)) bestMoves.remove(Move.SPARKLING_TERRAIN);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SUNNY_DAY) && field.equals(field.weather, Effect.SUN)) bestMoves.removeIf(Move.SUNNY_DAY::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.RAIN_DANCE) && field.equals(field.weather, Effect.RAIN)) bestMoves.removeIf(Move.RAIN_DANCE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SANDSTORM) && field.equals(field.weather, Effect.SANDSTORM)) bestMoves.removeIf(Move.SANDSTORM::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SNOWSCAPE) && field.equals(field.weather, Effect.SNOW)) bestMoves.removeIf(Move.SNOWSCAPE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.ELECTRIC_TERRAIN) && field.equals(field.terrain, Effect.ELECTRIC)) bestMoves.removeIf(Move.ELECTRIC_TERRAIN::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.GRASSY_TERRAIN) && field.equals(field.terrain, Effect.GRASSY)) bestMoves.removeIf(Move.GRASSY_TERRAIN::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.PSYCHIC_TERRAIN) && field.equals(field.terrain, Effect.PSYCHIC)) bestMoves.removeIf(Move.PSYCHIC_TERRAIN::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPARKLING_TERRAIN) && field.equals(field.terrain, Effect.SPARKLY)) bestMoves.removeIf(Move.SPARKLING_TERRAIN::equals);
 		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.REFLECT) && field.contains(field.foeSide, Effect.REFLECT)) bestMoves.remove(Move.REFLECT);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.LIGHT_SCREEN) && field.contains(field.foeSide, Effect.LIGHT_SCREEN)) bestMoves.remove(Move.LIGHT_SCREEN);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_VEIL) && (field.contains(field.foeSide, Effect.AURORA_VEIL) || !field.equals(field.weather, Effect.SNOW))) bestMoves.remove(Move.AURORA_VEIL);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SAFEGUARD) && field.contains(field.foeSide, Effect.SAFEGUARD)) bestMoves.remove(Move.SAFEGUARD);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.REFLECT) && field.contains(field.foeSide, Effect.REFLECT)) bestMoves.removeIf(Move.REFLECT::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.LIGHT_SCREEN) && field.contains(field.foeSide, Effect.LIGHT_SCREEN)) bestMoves.removeIf(Move.LIGHT_SCREEN::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_VEIL) && (field.contains(field.foeSide, Effect.AURORA_VEIL) || !field.equals(field.weather, Effect.SNOW))) bestMoves.removeIf(Move.AURORA_VEIL::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SAFEGUARD) && field.contains(field.foeSide, Effect.SAFEGUARD)) bestMoves.removeIf(Move.SAFEGUARD::equals);
 		
 		if (bestMoves.size() > 1 && (bestMoves.contains(Move.ROOST) || bestMoves.contains(Move.SYNTHESIS) || bestMoves.contains(Move.MOONLIGHT) || bestMoves.contains(Move.MORNING_SUN) ||
 				bestMoves.contains(Move.RECOVER) || bestMoves.contains(Move.SLACK_OFF) || bestMoves.contains(Move.WISH) || bestMoves.contains(Move.REST) ||
@@ -451,37 +480,37 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (bestMoves.size() > 1) bestMoves.remove(Move.HEALING_WISH);
-		if (bestMoves.size() > 1) bestMoves.remove(Move.LUNAR_DANCE);
+		if (bestMoves.size() > 1) bestMoves.removeIf(Move.HEALING_WISH::equals);
+		if (bestMoves.size() > 1) bestMoves.removeIf(Move.LUNAR_DANCE::equals);
 		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TRICK_ROOM) && field.contains(field.fieldEffects, Effect.TRICK_ROOM)) bestMoves.remove(Move.TRICK_ROOM);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAILWIND) && field.contains(field.foeSide, Effect.TAILWIND)) bestMoves.remove(Move.TAILWIND);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MUD_SPORT) && field.contains(field.fieldEffects, Effect.MUD_SPORT)) bestMoves.remove(Move.MUD_SPORT);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.WATER_SPORT) && field.contains(field.fieldEffects, Effect.WATER_SPORT)) bestMoves.remove(Move.WATER_SPORT);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.GRAVITY) && field.contains(field.fieldEffects, Effect.GRAVITY)) bestMoves.remove(Move.GRAVITY);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TRICK_ROOM) && field.contains(field.fieldEffects, Effect.TRICK_ROOM)) bestMoves.removeIf(Move.TRICK_ROOM::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAILWIND) && field.contains(field.foeSide, Effect.TAILWIND)) bestMoves.removeIf(Move.TAILWIND::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MUD_SPORT) && field.contains(field.fieldEffects, Effect.MUD_SPORT)) bestMoves.removeIf(Move.MUD_SPORT::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.WATER_SPORT) && field.contains(field.fieldEffects, Effect.WATER_SPORT)) bestMoves.removeIf(Move.WATER_SPORT::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.GRAVITY) && field.contains(field.fieldEffects, Effect.GRAVITY)) bestMoves.removeIf(Move.GRAVITY::equals);
 		
 		if (bestMoves.size() > 1 && (bestMoves.contains(Move.AQUA_RING) || bestMoves.contains(Move.INGRAIN)) && this.vStatuses.contains(Status.AQUA_RING)) {
-			bestMoves.remove(Move.INGRAIN);
-			bestMoves.remove(Move.AQUA_RING);
+			bestMoves.removeIf(Move.INGRAIN::equals);
+			bestMoves.removeIf(Move.AQUA_RING::equals);
 		}
 		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.WORRY_SEED) && foe.ability == Ability.INSOMNIA) bestMoves.remove(Move.WORRY_SEED);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.GASTRO_ACID) && foe.ability == Ability.NULL) bestMoves.remove(Move.GASTRO_ACID);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.FORESTS_CURSE) && (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS)) bestMoves.remove(Move.FORESTS_CURSE);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_POWDER) && (foe.type1 == PType.MAGIC || foe.type2 == PType.MAGIC)) bestMoves.remove(Move.MAGIC_POWDER);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.WORRY_SEED) && foe.ability == Ability.INSOMNIA) bestMoves.removeIf(Move.WORRY_SEED::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.GASTRO_ACID) && foe.ability == Ability.NULL) bestMoves.removeIf(Move.GASTRO_ACID::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.FORESTS_CURSE) && (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS)) bestMoves.removeIf(Move.FORESTS_CURSE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_POWDER) && (foe.type1 == PType.MAGIC || foe.type2 == PType.MAGIC)) bestMoves.removeIf(Move.MAGIC_POWDER::equals);
 		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SEA_DRAGON) && this.id != 150) bestMoves.remove(Move.SEA_DRAGON);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.VENOM_DRENCH) && (foe.status != Status.POISONED || foe.status != Status.TOXIC)) bestMoves.remove(Move.VENOM_DRENCH);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SEA_DRAGON) && this.id != 150) bestMoves.removeIf(Move.SEA_DRAGON::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.VENOM_DRENCH) && (foe.status != Status.POISONED || foe.status != Status.TOXIC)) bestMoves.removeIf(Move.VENOM_DRENCH::equals);
 		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEAN_LOOK) && foe.vStatuses.contains(Status.TRAPPED)) bestMoves.remove(Move.MEAN_LOOK);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.FOCUS_ENERGY) && this.vStatuses.contains(Status.FOCUS_ENERGY)) bestMoves.remove(Move.FOCUS_ENERGY);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENCORE) && foe.vStatuses.contains(Status.ENCORED)) bestMoves.remove(Move.ENCORE);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.NO_RETREAT) && this.vStatuses.contains(Status.NO_SWITCH)) bestMoves.remove(Move.NO_RETREAT);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEMENTO) && ((this.currentHP * 1.0 / this.getStat(0))) > 0.25) bestMoves.remove(Move.MEMENTO);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.CURSE) && ((this.currentHP * 1.0 / this.getStat(0))) <= 0.55) bestMoves.remove(Move.CURSE);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.PERISH_SONG) && (this.perishCount > 0 || foe.perishCount > 0)) bestMoves.remove(Move.PERISH_SONG);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.NIGHTMARE) && (foe.status != Status.ASLEEP || foe.vStatuses.contains(Status.NIGHTMARE))) bestMoves.remove(Move.NIGHTMARE);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGNET_RISE) && this.magCount > 0) bestMoves.remove(Move.MAGNET_RISE);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEAN_LOOK) && foe.vStatuses.contains(Status.TRAPPED)) bestMoves.removeIf(Move.MEAN_LOOK::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.FOCUS_ENERGY) && this.vStatuses.contains(Status.FOCUS_ENERGY)) bestMoves.removeIf(Move.FOCUS_ENERGY::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENCORE) && foe.vStatuses.contains(Status.ENCORED)) bestMoves.removeIf(Move.ENCORE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.NO_RETREAT) && this.vStatuses.contains(Status.NO_SWITCH)) bestMoves.removeIf(Move.NO_RETREAT::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEMENTO) && ((this.currentHP * 1.0 / this.getStat(0))) > 0.25) bestMoves.removeIf(Move.MEMENTO::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.CURSE) && ((this.currentHP * 1.0 / this.getStat(0))) <= 0.55) bestMoves.removeIf(Move.CURSE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.PERISH_SONG) && (this.perishCount > 0 || foe.perishCount > 0)) bestMoves.removeIf(Move.PERISH_SONG::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.NIGHTMARE) && (foe.status != Status.ASLEEP || foe.vStatuses.contains(Status.NIGHTMARE))) bestMoves.removeIf(Move.NIGHTMARE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGNET_RISE) && this.magCount > 0) bestMoves.removeIf(Move.MAGNET_RISE::equals);
 		
 		return bestMoves;
 	}
@@ -670,7 +699,7 @@ public class Pokemon implements Serializable {
 			this.type2 = PType.PSYCHIC;
 		} else if (id == 54) {
 			this.type1 = PType.ROCK;
-			this.type2 = PType.DRAGON;
+			this.type2 = PType.PSYCHIC;
 		} else if (id == 55) {
 			this.type1 = PType.ROCK;
 			this.type2 = null;
@@ -2126,7 +2155,7 @@ public class Pokemon implements Serializable {
 		} else if (id == 51) { abilities = new Ability[] {Ability.STURDY, Ability.FILTER};
 		} else if (id == 52) { abilities = new Ability[] {Ability.SHED_SKIN, Ability.REGENERATOR};
 		} else if (id == 53) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.REGENERATOR};
-		} else if (id == 54) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.REGENERATOR};
+		} else if (id == 54) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.REGENERATOR};
 		} else if (id == 55) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.TECHNICIAN};
 		} else if (id == 56) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.TECHNICIAN};
 		} else if (id == 57) { abilities = new Ability[] {Ability.GUTS, Ability.NO_GUARD};
@@ -4003,9 +4032,13 @@ public class Pokemon implements Serializable {
 		impressive = false;
 		success = true;
 	}
-
+	
 	private boolean fail() {
-		console.writeln("But it failed!");
+		return fail(true);
+	}
+
+	private boolean fail(boolean announce) {
+		if (announce) console.writeln("But it failed!");
 		success = false;
 		return true;
 	}
@@ -4746,63 +4779,68 @@ public class Pokemon implements Serializable {
 			return false;
 		}
 	}
-
+	
 	private void statusEffect(Pokemon foe, Move move, Player player, Pokemon[] team, Trainer enemy, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide) {
+		statusEffect(foe, move, player, team, enemy, userSide, enemySide, true);
+	}
+
+	private void statusEffect(Pokemon foe, Move move, Player player, Pokemon[] team, Trainer enemy, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide,
+			boolean announce) {
 		boolean fail = false;
-		if (move == Move.ABDUCT || move == Move.TAKE_OVER || move == Move.MAGIC_REFLECT) {
+		if (announce && move == Move.ABDUCT || move == Move.TAKE_OVER || move == Move.MAGIC_REFLECT) {
 			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success)) {
 				foe.vStatuses.add(Status.POSESSED);
 				console.writeln(this.nickname + " posessed " + foe.nickname + "!");
-			} else { fail = fail(); }
+			} else { fail = fail(announce); }
 			this.impressive = false;
 			this.lastMoveUsed = move;
 		} else if (move == Move.ACID_ARMOR) {
-			stat(this, 1, 2, foe);
+			stat(this, 1, 2, foe, announce);
 		} else if (move == Move.AGILITY) {
-			stat(this, 4, 2, foe);
+			stat(this, 4, 2, foe, announce);
 		} else if (move == Move.AMNESIA) {
-			stat(this, 3, 2, foe);
-		} else if (move == Move.AROMATHERAPY) {
+			stat(this, 3, 2, foe, announce);
+		} else if (announce && move == Move.AROMATHERAPY) {
 			console.writeln("A soothing aroma wafted through the air!");
 			if (team == null) {
 				if (this.status != Status.HEALTHY) {
-					console.writeln(this.nickname + " was cured of its " + this.status.getName() + "!");
+					if (announce) console.writeln(this.nickname + " was cured of its " + this.status.getName() + "!");
 					this.status = Status.HEALTHY;
 				}
 			} else {
 				for (Pokemon p : team) {
 					if (p != null && p.status != Status.HEALTHY) {
-						console.writeln(p.nickname + " was cured of its " + p.status.getName() + "!");
+						if (announce) console.writeln(p.nickname + " was cured of its " + p.status.getName() + "!");
 						p.status = Status.HEALTHY;
 					}
 				}
 			}
-		} else if (move == Move.AQUA_RING) {
+		} else if (announce && move == Move.AQUA_RING) {
 			if (!(this.vStatuses.contains(Status.AQUA_RING))) {
 			    this.vStatuses.add(Status.AQUA_RING);
 			} else {
-			    fail = fail();
+			    fail = fail(announce);
 			}
-		} else if (move == Move.AURORA_VEIL) {
+		} else if (announce && move == Move.AURORA_VEIL) {
 			if (field.equals(field.weather, Effect.SNOW)) {
 				if (!(field.contains(userSide, Effect.AURORA_VEIL))) {
 					FieldEffect a = field.new FieldEffect(Effect.AURORA_VEIL);
 					if (this.item == Item.LIGHT_CLAY) a.turns = 8;
 					userSide.add(a);
-					console.writeln("Aurora Veil made " + this.nickname + "'s team stronger against Physical and Special moves!");
+					if (announce) console.writeln("Aurora Veil made " + this.nickname + "'s team stronger against Physical and Special moves!");
 				} else {
-					fail = fail();
+					fail = fail(announce);
 				}
-			} else { fail = fail(); }
+			} else { fail = fail(announce); }
 		} else if (move == Move.AUTOMOTIZE) {
-			stat(this, 4, 2, foe);
+			stat(this, 4, 2, foe, announce);
 		} else if (move == Move.LOAD_FIREARMS) {
-			console.writeln(this.nickname + " upgraded its weapon!");
-			stat(this, 4, 1, foe);
-			stat(this, 5, 1, foe);
+			if (announce) console.writeln(this.nickname + " upgraded its weapon!");
+			stat(this, 4, 1, foe, announce);
+			stat(this, 5, 1, foe, announce);
 		} else if (move == Move.BABY$DOLL_EYES) {
-			stat(foe, 0, -1, this);
-		} else if (move == Move.BATON_PASS || move == Move.TELEPORT) {
+			stat(foe, 0, -1, this, announce);
+		} else if (announce && (move == Move.BATON_PASS || move == Move.TELEPORT)) {
 			if (this.trainerOwned() && enemy.hasValidMembers()) {
 				console.writeln(this.nickname + " went back to " + enemy.getName() + "!");
 				this.vStatuses.add(Status.SWITCHING);
@@ -4810,34 +4848,34 @@ public class Pokemon implements Serializable {
 				console.writeln(this.nickname + " went back to you!");
 				this.vStatuses.add(Status.SWITCHING);
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
 		} else if (move == Move.BULK_UP) {
-			stat(this, 0, 1, foe);
-			stat(this, 1, 1, foe);
+			stat(this, 0, 1, foe, announce);
+			stat(this, 1, 1, foe, announce);
 		} else if (move == Move.CALM_MIND) {
-			stat(this, 2, 1, foe);
-			stat(this, 3, 1, foe);
+			stat(this, 2, 1, foe, announce);
+			stat(this, 3, 1, foe, announce);
 		} else if (move == Move.CAPTIVATE) {
-			stat(foe, 2, -2, this);
+			stat(foe, 2, -2, this, announce);
 		} else if (move == Move.CHARGE) {
-			console.writeln(this.nickname + " became charged with power!");
-			stat(this, 3, 1, foe);
+			if (announce) console.writeln(this.nickname + " became charged with power!");
+			stat(this, 3, 1, foe, announce);
 		} else if (move == Move.CHARM) {
-			stat(foe, 0, -2, this);
+			stat(foe, 0, -2, this, announce);
 		} else if (move == Move.COIL) {
-			stat(this, 0, 1, foe);
-			stat(this, 1, 1, foe);
-			stat(this, 5, 1, foe);
-		} else if (move == Move.CONFUSE_RAY) {
+			stat(this, 0, 1, foe, announce);
+			stat(this, 1, 1, foe, announce);
+			stat(this, 5, 1, foe, announce);
+		} else if (announce && move == Move.CONFUSE_RAY) {
 			foe.confuse(true);
 		} else if (move == Move.COSMIC_POWER) {
-			stat(this, 1, 1, foe);
-			stat(this, 3, 1, foe);
+			stat(this, 1, 1, foe, announce);
+			stat(this, 3, 1, foe, announce);
 		} else if (move == Move.COTTON_GUARD) {
-			stat(this, 1, 3, foe);
+			stat(this, 1, 3, foe, announce);
 		} else if (move == Move.CURSE) {
-			if (this.type1 == PType.GHOST || this.type2 == PType.GHOST) {
+			if (announce && (this.type1 == PType.GHOST || this.type2 == PType.GHOST)) {
 				if (!foe.vStatuses.contains(Status.CURSED)) {
 					foe.vStatuses.add(Status.CURSED);
 					console.writeln(foe.nickname + " was afflicted with a curse!");
@@ -4847,242 +4885,242 @@ public class Pokemon implements Serializable {
 						foe.awardxp((int) Math.ceil(this.level * trainer), player);
 					}
 				} else {
-					fail = fail();
+					fail = fail(announce);
 				}
 			} else {
-				stat(this, 0, 1, foe);
-				stat(this, 1, 1, foe);
-				stat(this, 4, -1, foe);
+				stat(this, 0, 1, foe, announce);
+				stat(this, 1, 1, foe, announce);
+				stat(this, 4, -1, foe, announce);
 			}
-		} else if (move == Move.DETECT || move == Move.PROTECT || move == Move.LAVA_LAIR || move == Move.OBSTRUCT || move == Move.SPIKY_SHIELD) {
+		} else if (announce && (move == Move.DETECT || move == Move.PROTECT || move == Move.LAVA_LAIR || move == Move.OBSTRUCT || move == Move.SPIKY_SHIELD)) {
 			if (Move.getNoComboMoves().contains(lastMoveUsed) && success) {
-				fail = fail();
+				fail = fail(announce);
 			} else {
-				console.writeln(this.nickname + " protected itself!");
+				if (announce) console.writeln(this.nickname + " protected itself!");
 				this.vStatuses.add(Status.PROTECT);
 				this.lastMoveUsed = move;
 			}
 		} else if (move == Move.DEFENSE_CURL) {
-			stat(this, 1, 1, foe);
-		} else if (move == Move.DEFOG) {
-			stat(foe, 6, -1, this);
+			stat(this, 1, 1, foe, announce);
+		} else if (announce && move == Move.DEFOG) {
+			stat(foe, 6, -1, this, announce);
 			for (FieldEffect fe : field.getHazards(userSide)) {
-				console.writeln(fe.toString() + " disappeared from " + this.nickname + "'s side!");
+				if (announce) console.writeln(fe.toString() + " disappeared from " + this.nickname + "'s side!");
 				userSide.remove(fe);
 			}
 			for (FieldEffect fe : field.getHazards(enemySide)) {
-				console.writeln(fe.toString() + " disappeared from " + this.nickname + "'s side!");
+				if (announce) console.writeln(fe.toString() + " disappeared from " + this.nickname + "'s side!");
 				enemySide.remove(fe);
 			}
 			for (FieldEffect fe : field.getScreens(userSide)) {
-				console.writeln(fe.toString() + " disappeared from " + this.nickname + "'s side!");
+				if (announce) console.writeln(fe.toString() + " disappeared from " + this.nickname + "'s side!");
 				userSide.remove(fe);
 			}
 			for (FieldEffect fe : field.getScreens(enemySide)) {
-				console.writeln(fe.toString() + " disappeared from " + this.nickname + "'s side!");
+				if (announce) console.writeln(fe.toString() + " disappeared from " + this.nickname + "'s side!");
 				enemySide.remove(fe);
 			}
 			if (field.terrain != null) {
-				console.writeln("The " + field.terrain.toString() + " terrain disappeared!");
+				if (announce) console.writeln("The " + field.terrain.toString() + " terrain disappeared!");
 				field.terrain = null;
 			}
-		} else if (move == Move.DESTINY_BOND) {
+		} else if (announce && move == Move.DESTINY_BOND) {
 			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success)) {
 				foe.vStatuses.add(Status.BONDED);
-				console.writeln(this.nickname + " is ready to take its attacker down with it!");
+				if (announce) console.writeln(this.nickname + " is ready to take its attacker down with it!");
 				lastMoveUsed = move;
-			} else { fail = fail(); }
+			} else { fail = fail(announce); }
 			this.impressive = false;
 			this.lastMoveUsed = move;
 			
 //		} else if (move == Move.DISAPPEAR) {
 //			stat(this, 6, 2);
 		} else if (move == Move.DOUBLE_TEAM) {
-			stat(this, 6, 1, foe);
+			stat(this, 6, 1, foe, announce);
 		} else if (move == Move.DRAGON_DANCE) {
-			stat(this, 0, 1, foe);
-			stat(this, 4, 1, foe);
-		} else if (move == Move.ELECTRIC_TERRAIN) {
+			stat(this, 0, 1, foe, announce);
+			stat(this, 4, 1, foe, announce);
+		} else if (announce && move == Move.ELECTRIC_TERRAIN) {
 			boolean success = field.setTerrain(field.new FieldEffect(Effect.ELECTRIC));
 			if (success && item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
-		} else if (move == Move.ENCORE) {
+		} else if (announce && move == Move.ENCORE) {
 			if (!foe.vStatuses.contains(Status.ENCORED) && foe.lastMoveUsed != null) {
 				foe.vStatuses.add(Status.ENCORED);
 				foe.encoreCount = 4;
-				console.writeln(foe.nickname + " must do an encore!");
+				if (announce) console.writeln(foe.nickname + " must do an encore!");
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
-		} else if (move == Move.ENDURE) {
+		} else if (announce && move == Move.ENDURE) {
 			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success)) {
-				console.writeln(this.nickname + " braced itself!");
+				if (announce) console.writeln(this.nickname + " braced itself!");
 				this.vStatuses.add(Status.ENDURE);
 				lastMoveUsed = move;
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
 		} else if (move == Move.FLASH) {
-			stat(foe, 5, -1, this);
-			stat(this, 2, 1, foe);
-		} else if (move == Move.ENTRAINMENT) {
+			stat(foe, 5, -1, this, announce);
+			stat(this, 2, 1, foe, announce);
+		} else if (announce && move == Move.ENTRAINMENT) {
 			foe.ability = this.ability;
-			console.writeln(foe.nickname + "'s ability became " + foe.ability.toString() + "!");
+			if (announce) console.writeln(foe.nickname + "'s ability became " + foe.ability.toString() + "!");
 			foe.swapIn(this, player, false);
 		} else if (move == Move.FAKE_TEARS) {
-			stat(foe, 3, -2, this);
+			stat(foe, 3, -2, this, announce);
 		} else if (move == Move.FEATHER_DANCE) {
-			stat(foe, 0, -2, this);
+			stat(foe, 0, -2, this, announce);
 		} else if (move == Move.FLATTER) {
-			stat(foe, 2, 2, this);
+			stat(foe, 2, 2, this, announce);
 			foe.confuse(false);
-		} else if (move == Move.FOCUS_ENERGY) {
+		} else if (announce && move == Move.FOCUS_ENERGY) {
 			if (!this.vStatuses.contains(Status.FOCUS_ENERGY)) {
 				this.vStatuses.add(Status.FOCUS_ENERGY);
-				console.writeln(this.nickname + " is tightening its focus!");
+				if (announce) console.writeln(this.nickname + " is tightening its focus!");
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
-		} else if (move == Move.FORESIGHT) {
+		} else if (announce && move == Move.FORESIGHT) {
 			if (foe.type1 == PType.GHOST) foe.type1 = PType.NORMAL;
 			if (foe.type2 == PType.GHOST) foe.type2 = PType.NORMAL;
-			console.writeln(this.nickname + " identified " + foe.nickname + "!");
-			stat(this, 5, 1, foe);
-		} else if (move == Move.FORESTS_CURSE) {
+			if (announce) console.writeln(this.nickname + " identified " + foe.nickname + "!");
+			stat(this, 5, 1, foe, announce);
+		} else if (announce && move == Move.FORESTS_CURSE) {
 			foe.type1 = PType.GRASS;
 			foe.type2 = null;
-			console.writeln(foe.nickname + "'s type was changed to Grass!");
-		} else if (move == Move.GASTRO_ACID) {
+			if (announce) console.writeln(foe.nickname + "'s type was changed to Grass!");
+		} else if (announce && move == Move.GASTRO_ACID) {
 			foe.ability = Ability.NULL;
-			console.writeln(foe.nickname + "'s ability was supressed!");
+			if (announce) console.writeln(foe.nickname + "'s ability was supressed!");
 		} else if (move == Move.GEOMANCY) {
-			stat(this, 2, 2, foe);
-			stat(this, 3, 2, foe);
-			stat(this, 4, 2, foe);
-		} else if (move == Move.GLARE) {
+			stat(this, 2, 2, foe, announce);
+			stat(this, 3, 2, foe, announce);
+			stat(this, 4, 2, foe, announce);
+		} else if (announce && move == Move.GLARE) {
 			foe.paralyze(true, this);
 		} else if (move == Move.GLITTER_DANCE) {
-			stat(this, 2, 1, foe);
-			stat(this, 4, 1, foe);
-		} else if (move == Move.GRASS_WHISTLE) {
+			stat(this, 2, 1, foe, announce);
+			stat(this, 4, 1, foe, announce);
+		} else if (announce && move == Move.GRASS_WHISTLE) {
 			foe.sleep(true);
-		} else if (move == Move.GRASSY_TERRAIN) {
+		} else if (announce && move == Move.GRASSY_TERRAIN) {
 			boolean success = field.setTerrain(field.new FieldEffect(Effect.GRASSY));
 			if (success && item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
-		} else if (move == Move.GRAVITY) {
+		} else if (announce && move == Move.GRAVITY) {
 			field.setEffect(field.new FieldEffect(Effect.GRAVITY));
 		} else if (move == Move.GROWL) {
-			stat(foe, 0, -1, this);
+			stat(foe, 0, -1, this, announce);
 		} else if (move == Move.GROWTH) {
 			if (field.equals(field.weather, Effect.SUN)) {
-				stat(this, 0, 2, foe);
-				stat(this, 2, 2, foe);
+				stat(this, 0, 2, foe, announce);
+				stat(this, 2, 2, foe, announce);
 			} else {
-				stat(this, 0, 1, foe);
-				stat(this, 2, 1, foe);
+				stat(this, 0, 1, foe, announce);
+				stat(this, 2, 1, foe, announce);
 			}
-		} else if (move == Move.SNOWSCAPE) {
+		} else if (announce && move == Move.SNOWSCAPE) {
 			boolean success = field.setWeather(field.new FieldEffect(Effect.SNOW));
 			if (success && item == Item.ICY_ROCK) field.weatherTurns = 8;
 		} else if (move == Move.HARDEN) {
-			stat(this, 1, 1, foe);
-		} else if (move == Move.HAZE) {
+			stat(this, 1, 1, foe, announce);
+		} else if (announce && move == Move.HAZE) {
 			this.statStages = new int[7];
 			foe.statStages = new int[7];
-			console.writeln("All stat changes were eliminated!");
-		} else if (move == Move.HEAL_PULSE) {
+			if (announce) console.writeln("All stat changes were eliminated!");
+		} else if (announce && move == Move.HEAL_PULSE) {
 			if (foe.currentHP == foe.getStat(0)) {
-				console.writeln(foe.nickname + "'s HP is full!");
+				if (announce) console.writeln(foe.nickname + "'s HP is full!");
 			} else {
 				foe.currentHP += (foe.getStat(0) * 1.0 / 2);
 				if (foe.currentHP > foe.getStat(0)) foe.currentHP = foe.getStat(0);
-				console.writeln(foe.nickname + " restored HP.");
+				if (announce) console.writeln(foe.nickname + " restored HP.");
 			}
 		} else if (move == Move.HONE_CLAWS) {
-			stat(this, 0, 1, foe);
-			stat(this, 5, 1, foe);
+			stat(this, 0, 1, foe, announce);
+			stat(this, 5, 1, foe, announce);
 		} else if (move == Move.HOWL) {
-			stat(this, 0, 1, foe);
-		} else if (move == Move.HYPNOSIS) {
+			stat(this, 0, 1, foe, announce);
+		} else if (announce && move == Move.HYPNOSIS) {
 			foe.sleep(true);
-		} else if (move == Move.HEALING_WISH || move == Move.LUNAR_DANCE) {
+		} else if (announce && (move == Move.HEALING_WISH || move == Move.LUNAR_DANCE)) {
 			this.faint(true, player, foe);
 			foe.awardxp((int) Math.ceil(this.level * trainer), player);
 			this.vStatuses.add(Status.HEALING);
-		} else if (move == Move.INGRAIN) {
+		} else if (announce && move == Move.INGRAIN) {
 			if (!(this.vStatuses.contains(Status.AQUA_RING))) {
 			    this.vStatuses.add(Status.AQUA_RING);
 			} else {
-			    fail = fail();
+			    fail = fail(announce);
 			}
 			this.vStatuses.add(Status.NO_SWITCH);
 		} else if (move == Move.IRON_DEFENSE) {
-			stat(this, 1, 2, foe);
-		} else if (move == Move.LIFE_DEW) {
+			stat(this, 1, 2, foe, announce);
+		} else if (announce && move == Move.LIFE_DEW) {
 			if (this.currentHP == this.getStat(0)) {
-				console.writeln(this.nickname + "'s HP is full!");
+				if (announce) console.writeln(this.nickname + "'s HP is full!");
 			} else {
 				this.currentHP += (this.getStat(0) * 1.0 / 4);
 				if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-				console.writeln(this.nickname + " restored HP.");
+				if (announce) console.writeln(this.nickname + " restored HP.");
 			}
-		} else if (move == Move.LEECH_SEED) {
+		} else if (announce && move == Move.LEECH_SEED) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
-				console.writeln("It doesn't effect " + foe.nickname + "...");
+				if (announce) console.writeln("It doesn't effect " + foe.nickname + "...");
 				return;
 			}
 			if (!foe.vStatuses.contains(Status.LEECHED)) {
 				foe.vStatuses.add(Status.LEECHED);
-				console.writeln(foe.nickname + " was seeded!");
+				if (announce) console.writeln(foe.nickname + " was seeded!");
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
 		} else if (move == Move.LEER) {
-			stat(foe, 1, -1, this);
-		} else if (move == Move.LIGHT_SCREEN) {
+			stat(foe, 1, -1, this, announce);
+		} else if (announce && move == Move.LIGHT_SCREEN) {
 			if (!(field.contains(userSide, Effect.LIGHT_SCREEN))) {
 				FieldEffect a = field.new FieldEffect(Effect.LIGHT_SCREEN);
 				if (this.item == Item.LIGHT_CLAY) a.turns = 8;
 				userSide.add(a);
-				console.writeln("Light Screen made " + this.nickname + "'s team stronger against Special moves!");
+				if (announce) console.writeln("Light Screen made " + this.nickname + "'s team stronger against Special moves!");
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
 		} else if (move == Move.LOCK$ON) {
-			console.writeln(this.nickname + " took aim at " + foe.nickname + "!\n");
-			stat(this, 5, 6, foe);
-		} else if (move == Move.LOVELY_KISS) {
+			if (announce) console.writeln(this.nickname + " took aim at " + foe.nickname + "!\n");
+			stat(this, 5, 6, foe, announce);
+		} else if (announce && move == Move.LOVELY_KISS) {
 			foe.sleep(true);
-		} else if (move == Move.MAGIC_POWDER) {
+		} else if (announce && move == Move.MAGIC_POWDER) {
 			foe.type1 = PType.MAGIC;
 			foe.type2 = null;
-			console.writeln(foe.nickname + "'s type changed to MAGIC!");
-		} else if (move == Move.MAGNET_RISE) {
+			if (announce) console.writeln(foe.nickname + "'s type changed to MAGIC!");
+		} else if (announce && move == Move.MAGNET_RISE) {
 			if (this.magCount == 0) {
 				this.magCount = 5;
-				console.writeln(this.nickname + " floated with electromagnetism!");
+				if (announce) console.writeln(this.nickname + " floated with electromagnetism!");
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
-		} else if (move == Move.MEAN_LOOK) {
+		} else if (announce && move == Move.MEAN_LOOK) {
 			if (!foe.vStatuses.contains(Status.TRAPPED)) {
 				foe.vStatuses.add(Status.TRAPPED);
-				console.writeln(foe.nickname + " can no longer escape!");
+				if (announce) console.writeln(foe.nickname + " can no longer escape!");
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
-		} else if (move == Move.MEMENTO) {
-			stat(foe, 0, -2, this);
-			stat(foe, 2, -2, this);
+		} else if (announce && move == Move.MEMENTO) {
+			stat(foe, 0, -2, this, announce);
+			stat(foe, 2, -2, this, announce);
 			this.currentHP = 0;
 			this.faint(true, player, foe);
 			foe.awardxp((int) Math.ceil(this.level * trainer), player);
 		} else if (move == Move.METAL_SOUND) {
-			stat(foe, 3, -2, this);
+			stat(foe, 3, -2, this, announce);
 		} else if (move == Move.MINIMIZE) {
-			stat(this, 6, 2, foe);
-		} else if (move == Move.MORNING_SUN || move == Move.MOONLIGHT || move == Move.SYNTHESIS) {
+			stat(this, 6, 2, foe, announce);
+		} else if (announce && (move == Move.MORNING_SUN || move == Move.MOONLIGHT || move == Move.SYNTHESIS)) {
 			if (this.currentHP == this.getStat(0)) {
-				console.writeln(this.nickname + "'s HP is full!");
+				if (announce) console.writeln(this.nickname + "'s HP is full!");
 			} else {
 				if (field.equals(field.weather, Effect.SUN)) {
 					this.currentHP += (this.getStat(0) / 1.5);
@@ -5092,137 +5130,137 @@ public class Pokemon implements Serializable {
 					this.currentHP += (this.getStat(0) * 1.0 / 2);
 				}
 				if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-				console.writeln(this.nickname + " restored HP.");
+				if (announce) console.writeln(this.nickname + " restored HP.");
 			}
-		} else if (move == Move.MUD_SPORT) {
+		} else if (announce && move == Move.MUD_SPORT) {
 			field.setEffect(field.new FieldEffect(Effect.MUD_SPORT));
-			console.writeln("Electric's power was weakened!");
+			if (announce) console.writeln("Electric's power was weakened!");
 		} else if (move == Move.NASTY_PLOT) {
-			stat(this, 2, 2, foe);
+			stat(this, 2, 2, foe, announce);
 		} else if (move == Move.NOBLE_ROAR) {
-			stat(foe, 0, -1, this);
-			stat(foe, 2, -1, this);
+			stat(foe, 0, -1, this, announce);
+			stat(foe, 2, -1, this, announce);
 		} else if (move == Move.NO_RETREAT) {
 			if (!(this.vStatuses.contains(Status.NO_SWITCH))) {
 			    this.vStatuses.add(Status.NO_SWITCH);
-			    stat(this, 0, 1, foe);
-			    stat(this, 1, 1, foe);
-			    stat(this, 2, 1, foe);
-			    stat(this, 3, 1, foe);
-			    stat(this, 4, 1, foe);
-			    console.writeln(this.nickname + " can no longer switch out!");
+			    stat(this, 0, 1, foe, announce);
+			    stat(this, 1, 1, foe, announce);
+			    stat(this, 2, 1, foe, announce);
+			    stat(this, 3, 1, foe, announce);
+			    stat(this, 4, 1, foe, announce);
+			    if (announce) console.writeln(this.nickname + " can no longer switch out!");
 			} else {
-			    fail = fail();
+			    fail = fail(announce);
 			}
-		} else if (move == Move.NIGHTMARE) {
+		} else if (announce && move == Move.NIGHTMARE) {
 			if (foe.status == Status.ASLEEP && !foe.vStatuses.contains(Status.NIGHTMARE)) {
 				foe.vStatuses.add(Status.NIGHTMARE);
-				console.writeln(foe.nickname + " had a nightmare!");
+				if (announce) console.writeln(foe.nickname + " had a nightmare!");
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
 		} else if (move == Move.ODOR_SLEUTH) {
 			if (foe.type1 == PType.GHOST) foe.type1 = PType.NORMAL;
 			if (foe.type2 == PType.GHOST) foe.type2 = PType.NORMAL;
-			console.writeln(this.nickname + " identified " + foe.nickname + "!");
-			stat(foe, 6, -1, this);
-		} else if (move == Move.PERISH_SONG) {
+			if (announce) console.writeln(this.nickname + " identified " + foe.nickname + "!");
+			stat(foe, 6, -1, this, announce);
+		} else if (announce && move == Move.PERISH_SONG) {
 			this.perishCount = (this.perishCount == 0) ? 3 : this.perishCount;
 			foe.perishCount = (foe.perishCount == 0) ? 3 : foe.perishCount;
 		} else if (move == Move.PLAY_NICE) {
-			stat(foe, 0, -1, this);
+			stat(foe, 0, -1, this, announce);
 		} else if (move == Move.SPARKLING_WATER) {
-			stat(this, 3, 1, foe);
+			stat(this, 3, 1, foe, announce);
 		} else if (move == Move.WATER_FLICK) {
-			stat(foe, 0, -1, this);
-		} else if (move == Move.PSYCHIC_TERRAIN) {
+			stat(foe, 0, -1, this, announce);
+		} else if (announce && move == Move.PSYCHIC_TERRAIN) {
 			boolean success = field.setTerrain(field.new FieldEffect(Effect.PSYCHIC));
 			if (success && item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
-		} else if (move == Move.POISON_GAS) {
+		} else if (announce && move == Move.POISON_GAS) {
 			foe.poison(true, this);
-		} else if (move == Move.STUN_SPORE) {
+		} else if (announce && move == Move.STUN_SPORE) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
-				console.writeln("It doesn't effect " + foe.nickname + "...");
+				if (announce) console.writeln("It doesn't effect " + foe.nickname + "...");
 				success = false;
 				fail = true;
 				return;
 			}
 			foe.paralyze(true, this);
 		} else if (move == Move.QUIVER_DANCE) {
-			stat(this, 2, 1, foe);
-			stat(this, 3, 1, foe);
-			stat(this, 4, 1, foe);
+			stat(this, 2, 1, foe, announce);
+			stat(this, 3, 1, foe, announce);
+			stat(this, 4, 1, foe, announce);
 		} else if (move == Move.SHELL_SMASH) {
-			stat(this, 1, -1, foe);
-			stat(this, 3, -1, foe);
-			stat(this, 0, 2, foe);
-			stat(this, 2, 2, foe);
-			stat(this, 4, 2, foe);
-		} else if (move == Move.RAIN_DANCE) {
+			stat(this, 1, -1, foe, announce);
+			stat(this, 3, -1, foe, announce);
+			stat(this, 0, 2, foe, announce);
+			stat(this, 2, 2, foe, announce);
+			stat(this, 4, 2, foe, announce);
+		} else if (announce && move == Move.RAIN_DANCE) {
 			boolean success = field.setWeather(field.new FieldEffect(Effect.RAIN));
 			if (success && item == Item.DAMP_ROCK) field.weatherTurns = 8;
 		} else if (move == Move.REBOOT) {
-			if (this.status != Status.HEALTHY || !this.vStatuses.isEmpty()) console.writeln(this.nickname + " became healthy!");
+			if (this.status != Status.HEALTHY || !this.vStatuses.isEmpty()) if (announce) console.writeln(this.nickname + " became healthy!");
 			this.status = Status.HEALTHY;
 			removeBad(this.vStatuses);
-			stat(this, 4, 1, foe);
+			stat(this, 4, 1, foe, announce);
 		} else if (move == Move.RED$NOSE_BOOST) {
-			stat(this, 1, 1, foe);
-			stat(this, 2, 2, foe);
-			stat(this, 3, 1, foe);
-		} else if (move == Move.REFLECT) {
+			stat(this, 1, 1, foe, announce);
+			stat(this, 2, 2, foe, announce);
+			stat(this, 3, 1, foe, announce);
+		} else if (announce && move == Move.REFLECT) {
 			if (!(field.contains(userSide, Effect.REFLECT))) {
 				FieldEffect a = field.new FieldEffect(Effect.REFLECT);
 				if (this.item == Item.LIGHT_CLAY) a.turns = 8;
 				userSide.add(a);
-				console.writeln("Reflect made " + this.nickname + "'s team stronger against Physical moves!");
+				if (announce) console.writeln("Reflect made " + this.nickname + "'s team stronger against Physical moves!");
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
-		} else if (move == Move.REST) {
+		} else if (announce && move == Move.REST) {
 			if (this.currentHP == this.getStat(0)) {
-				console.writeln(this.nickname + "'s HP is full!");
+				if (announce) console.writeln(this.nickname + "'s HP is full!");
 			} else if (this.status == Status.ASLEEP) {
-				fail = fail();
+				fail = fail(announce);
 				return;
 			} else {
 				this.currentHP = this.getStat(0);
 				this.status = Status.HEALTHY;
 				if (this.ability == Ability.INSOMNIA) {
-					fail = fail();
+					fail = fail(announce);
 					return;
 				}
 				this.sleep(false);
 				this.sleepCounter = 2;
 				this.vStatuses.remove(Status.CONFUSED);
-				console.writeln(this.nickname + " slept and became healthy!");
+				if (announce) console.writeln(this.nickname + " slept and became healthy!");
 			}
-		} else if (move == Move.ROOST || move == Move.RECOVER || move == Move.SLACK_OFF) {
+		} else if (announce && (move == Move.ROOST || move == Move.RECOVER || move == Move.SLACK_OFF)) {
 			if (this.currentHP == this.getStat(0)) {
-				console.writeln(this.nickname + "'s HP is full!");
+				if (announce) console.writeln(this.nickname + "'s HP is full!");
 			} else {
 				this.currentHP += (this.getStat(0) * 1.0 / 2);
 				if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-				console.writeln(this.nickname + " restored HP.");
+				if (announce) console.writeln(this.nickname + " restored HP.");
 			}
 		} else if (move == Move.SAND_ATTACK) {
-			stat(foe, 5, -1, this);
-		} else if (move == Move.SAFEGUARD) {
+			stat(foe, 5, -1, this, announce);
+		} else if (announce && move == Move.SAFEGUARD) {
 			if (!(field.contains(userSide, Effect.SAFEGUARD))) {
 				userSide.add(field.new FieldEffect(Effect.SAFEGUARD));
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
-		} else if (move == Move.SANDSTORM) {
+		} else if (announce && move == Move.SANDSTORM) {
 			boolean success = field.setWeather(field.new FieldEffect(Effect.SANDSTORM));
 			if (success && item == Item.SMOOTH_ROCK) field.weatherTurns = 8;
 		} else if (move == Move.SCARY_FACE) {
-			stat(foe, 4, -2, this);
+			stat(foe, 4, -2, this, announce);
 		} else if (move == Move.SCREECH) {
-			stat(foe, 1, -2, this);
+			stat(foe, 1, -2, this, announce);
 		} else if (move == Move.SEA_DRAGON) {
 			if (id == 150) {
-				console.writeln(nickname + " transformed into Kissyfishy-D!");
+				if (announce) console.writeln(nickname + " transformed into Kissyfishy-D!");
 				int oHP = this.getStat(0);
 				id = 237;
 				if (nickname == name) nickname = getName();
@@ -5235,149 +5273,149 @@ public class Pokemon implements Serializable {
 				setType();
 				setAbility(abilitySlot);
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
 			
 
-		} else if (move == Move.SLEEP_POWDER) {
+		} else if (announce && move == Move.SLEEP_POWDER) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
-				console.writeln("It doesn't effect " + foe.nickname + "...");
+				if (announce) console.writeln("It doesn't effect " + foe.nickname + "...");
 				success = false;
 				fail = true;
 				return;
 			}
 			foe.sleep(true);
 		} else if (move == Move.SHIFT_GEAR) {
-			stat(this, 0, 1, foe);
-			stat(this, 4, 2, foe);
+			stat(this, 0, 1, foe, announce);
+			stat(this, 4, 2, foe, announce);
 		} else if (move == Move.SMOKESCREEN) {
-			stat(foe, 5, -1, this);
+			stat(foe, 5, -1, this, announce);
 //		} else if (move == Move.STARE) {
 //			stat(foe, 0, 1);
 //			if (!foe.vStatuses.contains(Status.CONFUSED)) {
 //				foe.confuse();
 //			}
-		} else if (move == Move.SPARKLING_TERRAIN) {
+		} else if (announce && move == Move.SPARKLING_TERRAIN) {
 			boolean success = field.setTerrain(field.new FieldEffect(Effect.SPARKLY));
 			if (success && item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
-		} else if (move == Move.SPIKES) {
+		} else if (announce && move == Move.SPIKES) {
 			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.SPIKES));
 		} else if (move == Move.SPLASH) {
-			console.writeln("But nothing happened!");
-		} else if (move == Move.STEALTH_ROCK) {
+			if (announce) console.writeln("But nothing happened!");
+		} else if (announce && move == Move.STEALTH_ROCK) {
 			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.STEALTH_ROCKS));
-		} else if (move == Move.STICKY_WEB) {
+		} else if (announce && move == Move.STICKY_WEB) {
 			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.STICKY_WEBS));
 		} else if (move == Move.STOCKPILE) {
-			stat(this, 1, 1, foe);
-			stat(this, 3, 1, foe);
-		} else if (move == Move.STRENGTH_SAP) {
+			stat(this, 1, 1, foe, announce);
+			stat(this, 3, 1, foe, announce);
+		} else if (announce && move == Move.STRENGTH_SAP) {
 			int amount = (int) (foe.getStat(1) * foe.asModifier(0));
-			stat(foe, 0, -1, this);
+			stat(foe, 0, -1, this, announce);
 			this.currentHP += amount;
 			if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-			console.writeln(this.nickname + " restored HP.");
+			if (announce) console.writeln(this.nickname + " restored HP.");
 		}  else if (move == Move.STRING_SHOT) {
-			stat(foe, 4, -2, this);
-		} else if (move == Move.SUNNY_DAY) {
+			stat(foe, 4, -2, this, announce);
+		} else if (announce && move == Move.SUNNY_DAY) {
 			boolean success = field.setWeather(field.new FieldEffect(Effect.SUN));
 			if (success && item == Item.HEAT_ROCK) field.weatherTurns = 8;
-		} else if (move == Move.SUPERSONIC) {
+		} else if (announce && move == Move.SUPERSONIC) {
 			foe.confuse(true);
 		} else if (move == Move.SWAGGER) {
-			stat(foe, 0, 2, this);
-			foe.confuse(false);
-		} else if (move == Move.SWEET_KISS) {
+			stat(foe, 0, 2, this, announce);
+			if (announce) foe.confuse(false);
+		} else if (announce && move == Move.SWEET_KISS) {
 			foe.confuse(true);
 		} else if (move == Move.SWEET_SCENT) {
-			stat(foe, 6, -2, this);
+			stat(foe, 6, -2, this, announce);
 		} else if (move == Move.SWORDS_DANCE) {
-			stat(this, 0, 2, foe);
-		} else if (move == Move.TAUNT) {
+			stat(this, 0, 2, foe, announce);
+		} else if (announce && move == Move.TAUNT) {
 			if (!(foe.vStatuses.contains(Status.TAUNTED))) {
 			    foe.vStatuses.add(Status.TAUNTED);
 			    foe.tauntCount = 4;
-			    console.writeln(foe.nickname + " was taunted!");
+			    if (announce) console.writeln(foe.nickname + " was taunted!");
 			} else {
-			    fail = fail();
+			    fail = fail(announce);
 			}
-		} else if (move == Move.TORMENT) {
+		} else if (announce && move == Move.TORMENT) {
 			if (!(foe.vStatuses.contains(Status.TORMENTED))) {
 			    foe.vStatuses.add(Status.TORMENTED);
 			    foe.tormentCount = 4;
-			    console.writeln(foe.nickname + " was tormented!");
+			    if (announce) console.writeln(foe.nickname + " was tormented!");
 			} else {
-			    fail = fail();
+			    fail = fail(announce);
 			}
 		} else if (move == Move.TAIL_GLOW) {
-			stat(this, 2, 3, foe);
-		} else if (move == Move.TAILWIND) {
+			stat(this, 2, 3, foe, announce);
+		} else if (announce && move == Move.TAILWIND) {
 			if (!(field.contains(userSide, Effect.TAILWIND))) {
 				userSide.add(field.new FieldEffect(Effect.TAILWIND));
-				console.writeln("A strong wind blew behind your team!");
+				if (announce) console.writeln("A strong wind blew behind your team!");
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
 		} else if (move == Move.TAIL_WHIP) {
-			stat(foe, 1, -1, this);
-		} else if (move == Move.TEETER_DANCE) {
+			stat(foe, 1, -1, this, announce);
+		} else if (announce && move == Move.TEETER_DANCE) {
 			foe.confuse(true);
-		} else if (move == Move.THUNDER_WAVE) {
+		} else if (announce && move == Move.THUNDER_WAVE) {
 			foe.paralyze(true, this);
 		} else if (move == Move.TOPSY$TURVY) {
 			for (int i = 0; i < 7; i++) {
 				foe.statStages[i] *= -1;
 			}
-			console.writeln(foe.nickname + "'s stat changes were flipped!");
-		} else if (move == Move.TOXIC) {
+			if (announce) console.writeln(foe.nickname + "'s stat changes were flipped!");
+		} else if (announce && move == Move.TOXIC) {
 			foe.toxic(true, this);
-		} else if (move == Move.TOXIC_SPIKES) {
+		} else if (announce && move == Move.TOXIC_SPIKES) {
 			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.TOXIC_SPIKES));
 		} else if (move == Move.TRICK || move == Move.SWITCHEROO) {
-			console.writeln(this.nickname + " switched items with its target!");
+			if (announce) console.writeln(this.nickname + " switched items with its target!");
 			Item userItem = this.item;
 			Item foeItem = foe.item;
-			if (userItem != null) console.writeln(foe.nickname + " obtained a " + userItem.toString() + "!");
-			if (foeItem != null) console.writeln(this.nickname + " obtained a " + foeItem.toString() + "!");
+			if (userItem != null) if (announce) console.writeln(foe.nickname + " obtained a " + userItem.toString() + "!");
+			if (foeItem != null) if (announce) console.writeln(this.nickname + " obtained a " + foeItem.toString() + "!");
 			this.item = foeItem;
 			foe.item = userItem;
 			if (this.lostItem == null) this.lostItem = userItem;
-		} else if (move == Move.TRICK_ROOM) {
+		} else if (announce && move == Move.TRICK_ROOM) {
 			field.setEffect(field.new FieldEffect(Effect.TRICK_ROOM));
 		} else if (move == Move.VENOM_DRENCH) {
 			if (foe.status == Status.POISONED || foe.status == Status.TOXIC) {
-				stat(foe, 0, -2, this);
-				stat(foe, 2, -2, this);
+				stat(foe, 0, -2, this, announce);
+				stat(foe, 2, -2, this, announce);
 			} else {
-				fail = fail();
+				fail = fail(announce);
 			}
-		} else if (move == Move.WATER_SPORT) {
+		} else if (announce && move == Move.WATER_SPORT) {
 			field.setEffect(field.new FieldEffect(Effect.WATER_SPORT));
-			console.writeln("Fire's power was weakened!");
-		} else if (move == Move.WHIRLWIND || move == Move.ROAR) {
+			if (announce) console.writeln("Fire's power was weakened!");
+		} else if (announce && (move == Move.WHIRLWIND || move == Move.ROAR)) {
 			boolean result = false;
 			if (foe.trainerOwned() && enemy != null) {
 				result = enemy.swapRandom(foe, player);
 			} else if (foe.playerOwned) {
 				result = player.swapRandom(foe);
 			}
-			if (!result) fail = fail();
-		} else if (move == Move.WILL$O$WISP) {
+			if (!result) fail = fail(announce);
+		} else if (announce && move == Move.WILL$O$WISP) {
 			foe.burn(true, this);
-		} else if (move == Move.WISH) {
+		} else if (announce && move == Move.WISH) {
 			if (this.vStatuses.contains(Status.WISH)) {
-				fail();
+				fail(announce);
 			} else {
 				this.vStatuses.add(Status.WISH);
-				console.writeln(this.nickname + " made a wish!");
+				if (announce) console.writeln(this.nickname + " made a wish!");
 			}
 		} else if (move == Move.WITHDRAW) {
-			stat(this, 1, 1, foe);
-		} else if (move == Move.WORRY_SEED) {
+			stat(this, 1, 1, foe, announce);
+		} else if (announce && move == Move.WORRY_SEED) {
 			foe.ability = Ability.INSOMNIA;
-			console.writeln(foe.nickname + "'s ability became Insomnia!");
-		} if (move == Move.ROCK_POLISH) {
-			stat(this, 4, 2, foe);
+			if (announce) console.writeln(foe.nickname + "'s ability became Insomnia!");
+		} else if (move == Move.ROCK_POLISH) {
+			stat(this, 4, 2, foe, announce);
 		}
 		success = !fail;
 		return;
@@ -5386,7 +5424,7 @@ public class Pokemon implements Serializable {
 	public void verifyHP() {
 		if (currentHP > this.getStat(0)) currentHP = this.getStat(0);
 	}
-
+	
 	/**
 	 * 
 	 * @param p - Pokemon to activate the stat change on
@@ -5397,6 +5435,20 @@ public class Pokemon implements Serializable {
 	 * @throws IllegalArgumentException if amt is 0 (invalid stat change)
 	 */
 	private void stat(Pokemon p, int i, int amt, Pokemon foe) throws IllegalArgumentException {
+		stat(p, i, amt, foe, true);
+	}
+
+	/**
+	 * 
+	 * @param p - Pokemon to activate the stat change on
+	 * @param i - type of Stat to change (0 = Atk, 1 = Def, 2 = Sp.A, 3 = Sp.D, 4 = Spe, 5 = Acc, 6 = Eva)
+	 * @param amt - amount to modify the Stat by
+	 * @param foe - Pokemon causing the stat change (only matters for boosts)
+	 * @param announce - Whether to write in console
+	 * 
+	 * @throws IllegalArgumentException if amt is 0 (invalid stat change)
+	 */
+	private void stat(Pokemon p, int i, int amt, Pokemon foe, boolean announce) throws IllegalArgumentException {
 		if (amt == 0) throw new IllegalArgumentException("Stat change amount cannot be 0");
 		if (p.isFainted()) return;
 		int a = amt;
@@ -5421,34 +5473,34 @@ public class Pokemon implements Serializable {
 		
 		if (this != p) {
 			if (p.ability == Ability.MIRROR_ARMOR && a < 0) {
-				console.writeAbility(p);
+				if (announce) console.writeAbility(p);
 				stat(this, i, amt, foe);
 				return;
 			} else if (p.ability == Ability.DEFIANT && foe.ability != Ability.BRAINWASH && a < 0) {
-				console.writeAbility(p);
+				if (announce) console.writeAbility(p);
 				stat(p, 0, 2, foe);
 			} else if (p.ability == Ability.COMPETITIVE && foe.ability != Ability.BRAINWASH && a < 0) {
-				console.writeAbility(p);
+				if (announce) console.writeAbility(p);
 				stat(p, 2, 2, foe);
 			} else if (p.ability == Ability.CLEAR_BODY && a < 0) {
-				console.writeAbility(p);
-				console.writeln(p.nickname + "'s " + type + " was not lowered!");
+				if (announce) console.writeAbility(p);
+				if (announce) console.writeln(p.nickname + "'s " + type + " was not lowered!");
 				return;
 			} else if (item == Item.CLEAR_AMULET && a < 0) {
-				console.writeln(p.nickname + "'s Clear Amulet blocked the stat drop!");
+				if (announce) console.writeln(p.nickname + "'s Clear Amulet blocked the stat drop!");
 				return;
 			} else if (p.ability == Ability.KEEN_EYE && a < 0 && i == 5) {
-				console.writeAbility(p);
-				console.writeln(p.nickname + "'s " + type + " was not lowered!");
+				if (announce) console.writeAbility(p);
+				if (announce) console.writeln(p.nickname + "'s " + type + " was not lowered!");
 				return;
 			} else if (p.ability == Ability.HYPER_CUTTER && a < 0 && i == 0) {
-				console.writeAbility(p);
-				console.writeln(nickname + "'s " + type + " was not lowered!");
+				if (announce) console.writeAbility(p);
+				if (announce) console.writeln(nickname + "'s " + type + " was not lowered!");
 				return;
 			}
 		}
 		if (foe.ability == Ability.EMPATHIC_LINK && a > 0) {
-			console.writeAbility(foe);
+			if (announce) console.writeAbility(foe);
 			foe.stat(foe, 2, 1, this);
 		}
 		p.statStages[i] += a;
@@ -5458,17 +5510,17 @@ public class Pokemon implements Serializable {
 		if (p.statStages[i] > 6 && a > 0) {
 			p.statStages[i] = 6;
 			if (a != 12) {
-				console.writeln(p.nickname + "'s " + type + " won't go any higher!");
+				if (announce) console.writeln(p.nickname + "'s " + type + " won't go any higher!");
 			} else {
-				console.writeln(p.nickname + "'s " + type + " was raised to the max!");
+				if (announce) console.writeln(p.nickname + "'s " + type + " was raised to the max!");
 			}
 		} else if (p.statStages[i] < -6 && a < 0) {
 			p.statStages[i] = -6;
-			if (a != 12) console.writeln(p.nickname + "'s " + type + " won't go any lower!");
+			if (a != 12 && announce) console.writeln(p.nickname + "'s " + type + " won't go any lower!");
 		} else {
-			console.writeln(p.nickname + "'s " + type + amount + "!");
+			if (announce) console.writeln(p.nickname + "'s " + type + amount + "!");
 			if (p.item == Item.WHITE_HERB && a < 0) {
-				console.writeln(p.nickname + " returned its stats to normal using its White Herb!");
+				if (announce) console.writeln(p.nickname + " returned its stats to normal using its White Herb!");
 				p.consumeItem();
 			}
 		}
@@ -6112,8 +6164,8 @@ public class Pokemon implements Serializable {
 		    movebank[35] = new Node(Move.DAZZLING_GLEAM);
 		    movebank[40] = new Node(Move.ROOST);
 			movebank[42] = new Node(Move.PRISMATIC_LASER);
-		    movebank[45] = new Node(Move.SUNNY_DAY);
-		    movebank[48] = new Node(Move.HURRICANE);
+		    movebank[45] = new Node(Move.HURRICANE);
+		    movebank[48] = new Node(Move.SUNNY_DAY);
 		    movebank[51] = new Node(Move.MORNING_SUN);
 		    movebank[54] = new Node(Move.SUNNY_DOOM);
 		    movebank[59] = new Node(Move.AEROBLAST);
@@ -12977,6 +13029,20 @@ public class Pokemon implements Serializable {
 
         for (int i = 0; i < arr1.length; i++) {
             if (arr1[i] != arr2[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+	
+	public boolean arrayGreaterOrEqual(int[] arr1, int[] arr2) {
+//        if (arr1 == arr2) return true;
+//        if (arr1 == null || arr2 == null) return false;
+//        if (arr1.length != arr2.length) return false;
+
+        for (int i = 0; i < arr1.length; i++) {
+            if (arr1[i] < arr2[i]) {
                 return false;
             }
         }
