@@ -78,13 +78,14 @@ Gelb Forest=====================================================================
 10% Sheltor (Lv. 15 - 16)
 
 Route 25===============================================================================================
-20% Hammo (Lv. 12)
-20% Sheabear (Lv. 13)
-15% Busheep (Lv. 11 - 13)
-20% Ekans (Lv. 11 - 13)
-10% Florline (Lv. 11 - 13)
-10% Timburr (Lv. 11)
-5% Rhypo (Lv. 10 - 12)
+30% Hummingspark (Lv. 8 - 9)
+3% Pebblepup (Lv. 10)
+12% Hatenna (Lv. 8 - 10)
+10% Inkay (Lv. 9 - 10)
+5% Cleffa (Lv. 8 - 9)
+5% Snom (Lv. 8)
+20% Ekans (Lv. 9 - 10)
+15% Bealtle (Lv. 9 - 10)
 
 Sicab City===============================================================================================
 35% Magikarp (Lv. 15 - 18)
@@ -593,15 +594,15 @@ Mindagan Cavern 0===============================================================
 10% Blobmo (Lv. 24 - 28)
 15% Rockmite (Lv. 26 - 30)
 
-Hummingspark : 4 : 23.25%
+Hummingspark : 5 : 24.60%
 Flashclaw : 3 : 14.00%
 Magestiflash : 1 : 13.00%
 Pigo : 2 : 25.00%
 Pigonat : 3 : 12.00%
-Hammo : 3 : 20.67%
-Sheabear : 3 : 13.33%
+Hammo : 2 : 21.00%
+Sheabear : 2 : 10.00%
 Dualbear : 1 : 15.00%
-Bealtle : 4 : 18.00%
+Bealtle : 5 : 17.40%
 Centatle : 1 : 9.00%
 Curlatoral : 1 : 5.00%
 Sapwin : 4 : 11.25%
@@ -612,7 +613,7 @@ Sewaddle : 2 : 15.00%
 Swadloon : 2 : 10.00%
 Grubbin : 2 : 15.00%
 Charjabug : 1 : 15.00%
-Busheep : 4 : 10.00%
+Busheep : 3 : 8.33%
 Bugik : 2 : 14.00%
 Swordik : 1 : 15.00%
 Lotad : 2 : 42.50%
@@ -621,12 +622,12 @@ Bluebunn : 3 : 19.67%
 Rocky : 4 : 30.00%
 Carinx : 3 : 14.00%
 Carinator : 3 : 22.33%
-Pebblepup : 3 : 10.33%
+Pebblepup : 4 : 8.50%
 Boulderoar : 1 : 12.00%
 Fightorex : 2 : 15.00%
 Kleinowl : 2 : 14.50%
 Dualmoose : 2 : 12.50%
-Snom : 5 : 9.80%
+Snom : 6 : 9.00%
 Grondor : 3 : 16.00%
 Bipedice : 1 : 2.00%
 Tricerpup : 2 : 10.00%
@@ -635,17 +636,17 @@ Spheal : 4 : 22.00%
 Froshrog : 7 : 15.29%
 Bugop : 5 : 25.20%
 Opwing : 5 : 17.00%
-Hatenna : 4 : 12.25%
+Hatenna : 5 : 12.20%
 Hattrem : 1 : 2.00%
 Otterpor : 6 : 18.00%
 Psylotter : 1 : 30.00%
-Florline : 4 : 12.50%
+Florline : 3 : 13.33%
 Psycorb : 3 : 15.00%
 Ralts : 2 : 15.00%
 Kirlia : 2 : 11.50%
 Gardevoir : 1 : 5.00%
 Tigrette : 3 : 18.00%
-Inkay : 11 : 16.18%
+Inkay : 12 : 15.67%
 Flameruff : 2 : 13.50%
 Barkflare : 1 : 16.00%
 Iglite : 2 : 17.50%
@@ -692,15 +693,15 @@ Poov : 3 : 11.33%
 Grust : 1 : 10.00%
 Cluuz : 2 : 16.00%
 Zurrclu : 1 : 2.00%
-Timburr : 2 : 27.50%
+Timburr : 1 : 45.00%
 Gurdurr : 1 : 25.00%
-Rhypo : 3 : 9.00%
+Rhypo : 2 : 11.00%
 Rhynee : 1 : 15.00%
 Diggie : 1 : 25.00%
 Drillatron : 6 : 20.83%
 Wormite : 2 : 12.50%
 Wormbot : 2 : 17.50%
-Cleffa : 4 : 12.50%
+Cleffa : 5 : 11.00%
 Clefairy : 2 : 12.00%
 Minishoo : 3 : 10.33%
 Zorua : 2 : 8.00%

@@ -1450,7 +1450,7 @@ public class Battle extends JFrame {
 		});
 		
 		foeText.setText(foe.nickname + "  lv " + foe.getLevel());
-		foeText.setBounds(569, 37, 184, 20);
+		foeText.setBounds(589, 37, 184, 20);
 		foeText.setHorizontalAlignment(SwingConstants.LEFT);
 		foeText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		foeText.setFont(getScaledFontSize(foeText));
@@ -1461,7 +1461,7 @@ public class Battle extends JFrame {
 		if (me.hasValidMembers()) {
 			JPanel partyMasterPanel = new JPanel();
 			partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-		    partyMasterPanel.setPreferredSize(new Dimension(350, 275));
+		    partyMasterPanel.setPreferredSize(new Dimension(350, 350));
 
 		    for (int j = 0; j < 6; j++) {
 		        if (me.team[j] != null && !me.team[j].isFainted() && !(me.team[j] == me.current)) {
