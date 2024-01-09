@@ -201,6 +201,7 @@ public enum Move {
 	FREEZE$DRY(70,100,10,0,1,0,PType.ICE,"% chance to Frostbite foe, super effective against WATER types too",false,15),
 	FREEZING_GLARE(90,100,20,0,1,0,PType.PSYCHIC,"% chance to Frostbite foe",false,1),
 	FRENZY_PLANT(150,90,0,0,1,0,PType.GRASS,"User must rest after using this move",false,10),
+	FROSTBIND(0,90,0,0,2,0,PType.ICE,"Inflicts foe with Frostbite",false,10),
 	FRUSTRATION(-1,100,0,0,0,0,PType.NORMAL,"Base Power is based on user's friendship: the lower, the stronger",true,20),
 	FURY_ATTACK(15,85,0,0,0,0,PType.NORMAL,"Attacks 2-5 times",true,20),
 	FURY_CUTTER(-1,95,0,0,0,0,PType.BUG,"Power increases the more times this move is used in succession",true,10),
