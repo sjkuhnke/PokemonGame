@@ -1643,7 +1643,7 @@ public class AssetSetter {
 		// flags[12] is true after getting gift magic pokemon
 		// flags[13] is true after getting gift fossil/ancient pokemon
 		// flags[14] is true after getting gift "starter" pokemon
-		// flags[15] is true after beating Fred 3
+		// flags[15] is true after beating Scott 3
 		// flags[16] is true after talking to Grandpa
 		// flags[17] is true after beating Gym 5
 		// flags[18] is true after getting gift E/S pokemon

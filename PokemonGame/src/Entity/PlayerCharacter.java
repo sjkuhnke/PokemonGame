@@ -325,7 +325,12 @@ public class PlayerCharacter extends Entity {
 				int result = gp.cChecker.checkTileType(this);
 				if (gp.tileM.getWaterTiles().contains(result)) {
 					keyH.pause();
-					int answer = JOptionPane.showConfirmDialog(null, "The water is a deep blue!\nDo you want to Surf?");
+					int answer = JOptionPane.showOptionDialog(null,
+							"The water is a deep blue!\nDo you want to Surf?",
+				            "Surf?",
+				            JOptionPane.YES_NO_OPTION,
+				            JOptionPane.QUESTION_MESSAGE,
+				            null, null, null);
 					if (answer == JOptionPane.YES_OPTION) {
 						switch (direction) {
 						case "down":
@@ -354,7 +359,12 @@ public class PlayerCharacter extends Entity {
 				int result = gp.cChecker.checkTileType(this);
 				if (gp.tileM.getLavaTiles().contains(result)) {
 					keyH.pause();
-					int answer = JOptionPane.showConfirmDialog(null, "The lava is a hot, bubbly red!\nDo you want to Lava Surf?");
+					int answer = JOptionPane.showOptionDialog(null,
+							"The lava is a hot, bubbly red!\nDo you want to Lava Surf?",
+				            "Lava Surf?",
+				            JOptionPane.YES_NO_OPTION,
+				            JOptionPane.QUESTION_MESSAGE,
+				            null, null, null);
 					if (answer == JOptionPane.YES_OPTION) {
 						switch (direction) {
 						case "down":

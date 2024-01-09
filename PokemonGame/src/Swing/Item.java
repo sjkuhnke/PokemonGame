@@ -1372,7 +1372,7 @@ public enum Item {
 	}
 	
 	public boolean isPinchBerry() {
-		return (getID() == 269 || (getID() <= 290 && getID() >= 296));
+		return (getID() == 231 || (getID() >= 252 && getID() <= 259));
 	}
 	
 	public static String breakString(String input, int maxChar) {

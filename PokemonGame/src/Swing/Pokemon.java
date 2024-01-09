@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -4422,8 +4423,8 @@ public class Pokemon implements Serializable {
 			stat(foe, 4, -1, this);
 		} else if (move == Move.LUSTER_PURGE) {
 			stat(foe, 3, -1, this);
-    	} else if (move == Move.MACHETE_JAB) {
-    		stat(foe, 0, -1, this);
+    	} else if (move == Move.STAFF_JAB) {
+    		stat(foe, 0, -2, this);
 		} else if (move == Move.MAGIC_CRASH) {
 			int randomNum = ((int) Math.random() * 5);
 			switch (randomNum) {
@@ -6654,9 +6655,7 @@ public class Pokemon implements Serializable {
 			movebank[30] = new Node(Move.AGILITY);
 			movebank[33] = new Node(Move.X$SCISSOR);
 			movebank[36] = new Node(Move.SACRED_SWORD);
-			movebank[38] = new Node(Move.SPEEDY_SHURIKEN);
-			movebank[38].addToEnd(new Node(Move.MACHETE_JAB));
-			movebank[38].addToEnd(new Node(Move.PISTOL_POP));
+			movebank[38] = new Node(Move.STAFF_JAB);
 			movebank[41] = new Node(Move.FIRST_IMPRESSION);
 			movebank[44] = new Node(Move.DETECT);
 			movebank[49] = new Node(Move.NO_RETREAT);
@@ -10645,7 +10644,7 @@ public class Pokemon implements Serializable {
 			} else { return 0; } }
 		if (move == Move.SUPER_FANG) damage = foe.currentHP / 2;
 		if (move == Move.DRAGON_RAGE) damage = 40;
-		if (move == Move.HORN_DRILL || move == Move.SHEER_COLD || move == Move.GUILLOTINE || move == Move.FISSURE) {
+		if (mode == 0 && (move == Move.HORN_DRILL || move == Move.SHEER_COLD || move == Move.GUILLOTINE || move == Move.FISSURE)) {
 			if ((move == Move.SHEER_COLD && (foe.type1 == PType.ICE || foe.type2 == PType.ICE)) || foeAbility == Ability.STURDY || foe.level > this.level) {
 				return 0;
 			}
@@ -11739,7 +11738,7 @@ public class Pokemon implements Serializable {
 	                moveButton.setForeground(moveset[i].getPPColor());
 	                int index = i;
 	                moveButton.addActionListener(e -> {
-			            JOptionPane.showMessageDialog(null, moveset[index].move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			            JOptionPane.showMessageDialog(null, moveset[index].move.getMoveSummary(this, null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 	                });
 	            }
 	            movesPanel.add(moveButton);
@@ -12285,10 +12284,10 @@ public class Pokemon implements Serializable {
 		if (this.item == null) return;
 		if (this.item.getPocket() != Item.BERRY) return;
 		double hpRatio = this.currentHP * 1.0 / this.getStat(0);
-		if (hpRatio <= (1.0/4) && this.item.isPinchBerry()) {
+		if (hpRatio <= 0.25 && this.item.isPinchBerry()) {
 			eatBerry(this.item, true, foe);
 		}
-		if (hpRatio <= 1 / 2 && (this.item == Item.ORAN_BERRY || this.item == Item.SITRUS_BERRY)) {
+		if (hpRatio <= 0.5 && (this.item == Item.ORAN_BERRY || this.item == Item.SITRUS_BERRY)) {
 			eatBerry(this.item, true, foe);
 		} else {
 			return;
@@ -12381,6 +12380,7 @@ public class Pokemon implements Serializable {
 	    panel.add(label);
 	    panel.add(learnButton);
 	    panel.add(label2);
+	    List<Move> movebankList = this.movebankAsList();
 	    for (int i = 0; i < 4; i++) {
 	        if (pokemon.moveset[i] != null) {
 	            moves[i] = pokemon.moveset[i].move.toString();
@@ -12389,6 +12389,9 @@ public class Pokemon implements Serializable {
 	        }
 	        buttons[i] = new JGradientButton(moves[i]);
 	        if (pokemon.moveset[i] != null) buttons[i].setBackground(pokemon.moveset[i].move.mtype.getColor());
+	        if (!pokemon.moveset[i].move.isTM() && !movebankList.contains(pokemon.moveset[i].move)) {
+	        	buttons[i].setSolid(true);
+	        }
 	        
 	        if (moves[i].equals("")) {
 	            buttons[i].setEnabled(false);
@@ -12398,7 +12401,7 @@ public class Pokemon implements Serializable {
 	        	@Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
-			            JOptionPane.showMessageDialog(null, moveset[index].move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			            JOptionPane.showMessageDialog(null, moveset[index].move.getMoveSummary(pokemon, null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 			        } else {
 		        		choice[0] = index;
 		                JDialog dialog = (JDialog) SwingUtilities.getWindowAncestor((JButton) e.getSource());
@@ -12412,7 +12415,7 @@ public class Pokemon implements Serializable {
         	@Override
 		    public void mouseClicked(MouseEvent e) {
 		    	if (SwingUtilities.isRightMouseButton(e)) {
-		            JOptionPane.showMessageDialog(null, move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+		            JOptionPane.showMessageDialog(null, move.getMoveSummary(pokemon, null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 		        } else {
 		        	choice[0] = JOptionPane.CLOSED_OPTION;
 	                JDialog dialog = (JDialog) SwingUtilities.getWindowAncestor((JButton) e.getSource());
@@ -12428,6 +12431,20 @@ public class Pokemon implements Serializable {
 	    return result == JOptionPane.CLOSED_OPTION ? JOptionPane.CLOSED_OPTION : choice[0];
 	}
 	
+	private List<Move> movebankAsList() {
+		ArrayList<Move> movebankList = new ArrayList<>();
+        Node n = this.movebank[0];
+        for (int i = 0; i < this.movebank.length; i++) {
+        	n = movebank[i];
+        	while (n != null) {
+        		movebankList.add(n.data);
+        		n = n.next;
+        	}
+        }
+        System.out.println(Arrays.toString(movebankList.toArray(new Move[1])));
+        return movebankList;
+	}
+
 	private Move get150Move(Move move) {
 		if (move == Move.SPARKLING_WATER) return Move.SPARKLING_ARIA;
 		if (move == Move.WATER_FLICK) return Move.FLAMETHROWER;
