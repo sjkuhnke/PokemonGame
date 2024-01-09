@@ -543,8 +543,6 @@ public class Encounter {
 				encounters.add(new Encounter(106, 2, 3, 0.13));
 				encounters.add(new Encounter(117, 2, 3, 0.15));
 			}
-			
-			
 		}
 		
 		double total = 0;

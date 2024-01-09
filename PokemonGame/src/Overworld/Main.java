@@ -410,11 +410,12 @@ public class Main {
 		
 		setMoveset("Scott 3", 1, Move.MAGIC_REFLECT, Move.PSYCHIC, Move.MAGIC_TOMB, Move.CALM_MIND);
 		setMoveset("Scott 3", 2, Move.SWORDS_DANCE, Move.LEECH_LIFE, Move.ACROBATICS, Move.POISON_JAB);
+		setMoveset("Scott 3", 4, Move.VOLT_SWITCH, Move.GUILLOTINE, Move.BUG_BUZZ, Move.STICKY_WEB);
 		
 		setItem("Scott 3", 1, Item.FOCUS_SASH);
 		setItem("Scott 3", 2, Item.FOCUS_SASH);
 		setItem("Scott 3", 3, Item.LIFE_ORB);
-		setItem("Scott 3", 4, Item.SILVER_POWDER);
+		setItem("Scott 3", 4, Item.MAGNET);
 		setItem("Scott 3", 5, Item.LEFTOVERS);
 		
 		setMoveset("5 Gym Leader 1", 1, Move.LIGHT_SCREEN, Move.REFLECT, Move.PSYCHO_CUT, Move.KNOCK_OFF);
@@ -1601,6 +1602,11 @@ public class Main {
 			
 			encounters = Encounter.getEncounters(117, 58, 41, "Standard", "", false); // Mindagan Cavern 0
 			writer.write("Mindagan Cavern 0");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(119, 21, 41, "Standard", "", false); // Route 43
+			writer.write("Route 43 (W)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
