@@ -288,8 +288,8 @@ public class Pokemon implements Serializable {
 		} catch (Exception e) {
 			image = getSprite();
 			
-			int scaledWidth = (int) (image.getWidth(null) * 0.5);
-			int scaledHeight = (int) (image.getHeight(null) * 0.5);
+			int scaledWidth = (int) (image.getWidth(null) * 0.75);
+			int scaledHeight = (int) (image.getHeight(null) * 0.75);
 			
 			Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
 			
@@ -405,6 +405,9 @@ public class Pokemon implements Serializable {
         	}
         	if (move.cat == 2 || move == Move.NUZZLE || move == Move.SWORD_SPIN || move == Move.POWER$UP_PUNCH || move == Move.VENOM_SPIT) {
         		bestMoves.add(move);
+        		if (maxDamage < foe.currentHP / 4) {
+        			bestMoves.add(move);
+        		}
         	}
         	if (move == Move.SEA_DRAGON) {
         		bestMoves.add(move);
@@ -5447,7 +5450,7 @@ public class Pokemon implements Serializable {
 				return;
 			} else if (p.ability == Ability.KEEN_EYE && a < 0 && i == 5) {
 				console.writeAbility(p);
-				console.writeln(nickname + "'s " + type + " was not lowered!");
+				console.writeln(p.nickname + "'s " + type + " was not lowered!");
 				return;
 			} else if (p.ability == Ability.HYPER_CUTTER && a < 0 && i == 0) {
 				console.writeAbility(p);
