@@ -1056,6 +1056,7 @@ public class PlayerCharacter extends Entity {
 								}
 							});
 						}
+						partyMasterPanel.add(partyPanel);
 					}
 					JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 				} if (gp.currentMap == 94 && !p.flags[18]) {
