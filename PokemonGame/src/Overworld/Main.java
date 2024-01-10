@@ -357,7 +357,7 @@ public class Main {
 		setItem("Scott 2", 2, Item.SITRUS_BERRY);
 		setItem("Scott 2", 3, Item.PASSHO_BERRY);
 		
-		setMoveset("2 Gym Leader 1", 1, Move.TRICK_ROOM, Move.BITE, Move.HEADBUTT, Move.BULK_UP);
+		setMoveset("2 Gym Leader 1", 1, Move.SUPER_FANG, Move.BITE, Move.HEADBUTT, Move.BULK_UP);
 		setMoveset("2 Gym Leader 1", 2, Move.POWER$UP_PUNCH, Move.FURY_SWIPES, Move.DOUBLE_TEAM, Move.CHARM);
 		setMoveset("2 Gym Leader 1", 3, Move.WILL$O$WISP, Move.HEX, Move.ROUND, Move.TAUNT);
 		setMoveset("2 Gym Leader 1", 4, Move.SUPER_FANG, Move.METAL_CLAW, Move.FLAME_WHEEL, Move.BODY_SLAM);
@@ -1450,8 +1450,8 @@ public class Main {
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
-			encounters = Encounter.getEncounters(83, 57, 41, "Standard", "", false); // shadow ravine 1A
-			writer.write("Shadow Ravine 1A");
+			encounters = Encounter.getEncounters(83, 57, 41, "Standard", "", false); // shadow ravine 1B
+			writer.write("Shadow Ravine 1B");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			

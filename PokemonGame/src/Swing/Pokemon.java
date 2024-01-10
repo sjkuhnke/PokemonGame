@@ -5380,6 +5380,7 @@ public class Pokemon implements Serializable {
 			this.item = foeItem;
 			foe.item = userItem;
 			if (this.lostItem == null) this.lostItem = userItem;
+			if (foe.lostItem == null) foe.lostItem = foeItem;
 		} else if (announce && move == Move.TRICK_ROOM) {
 			field.setEffect(field.new FieldEffect(Effect.TRICK_ROOM));
 		} else if (move == Move.VENOM_DRENCH) {
@@ -12502,7 +12503,6 @@ public class Pokemon implements Serializable {
         		n = n.next;
         	}
         }
-        System.out.println(Arrays.toString(movebankList.toArray(new Move[1])));
         return movebankList;
 	}
 
