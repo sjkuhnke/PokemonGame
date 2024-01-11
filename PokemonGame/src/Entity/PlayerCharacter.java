@@ -306,7 +306,7 @@ public class PlayerCharacter extends Entity {
 					interactMarket();
 				} else if (target instanceof NPC_Block) {
 					interactBlock((NPC_Block) gp.npc[gp.currentMap][npcIndex]);
-				} else if (target instanceof NPC_Trainer || target instanceof NPC_TN || target instanceof NPC_Rival || target instanceof NPC_Rival2) {
+				} else if (target instanceof NPC_Trainer) {
 					gp.startBattle(target.trainer);
 				} else if (target instanceof NPC_GymLeader) {
 					gp.startBattle(target.trainer);

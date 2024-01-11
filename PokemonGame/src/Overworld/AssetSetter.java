@@ -13,6 +13,7 @@ import Entity.NPC_Pokemon;
 import Entity.NPC_Rival;
 import Entity.NPC_Rival2;
 import Entity.NPC_TN;
+import Entity.NPC_TN_Admin;
 import Entity.NPC_Trainer;
 import Obj.Cut_Tree;
 import Obj.GymBarrier;
@@ -37,6 +38,35 @@ public class AssetSetter {
 	int objIndex;
 	private int iIndex;
 	private int berryIndex;
+	
+	private static final int NPC_POKEMON = -5;
+	private static final int NPC_MARKET = -4;
+	private static final int NPC_NURSE_FULL = -3;
+	private static final int NPC_CLERK = -2;
+	private static final int NPC_PC = -1;
+	private static final int NPC_NURSE = 0;
+	private static final int GYM_1 = 1;
+	private static final int GYM_2 = 2;
+	private static final int GYM_3 = 3;
+	private static final int GYM_4 = 4;
+	private static final int GYM_5 = 5;
+	private static final int GYM_6 = 6;
+	private static final int GYM_7 = 7;
+	private static final int GYM_8 = 8;
+	private static final int SCOTT_UP = 9;
+	private static final int SCOTT_DOWN = 10;
+	private static final int FRED_UP = 11;
+	private static final int FRED_DOWN = 12;
+	private static final int TRAINER_UP = 13;
+	private static final int TRAINER_DOWN = 14;
+	private static final int TRAINER_LEFT = 15;
+	private static final int TRAINER_RIGHT = 16;
+	private static final int RICK = 17;
+	private static final int MAXWELL = 18;
+	private static final int TN_DOWN = 19;
+	private static final int TN_UP = 20;
+	private static final int TN_LEFT = 21;
+	private static final int TN_RIGHT = 22;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -151,6 +181,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 8, Item.WIDE_LENS, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 30, Item.GANLON_BERRY, mapNum, 3, 6);
 		gp.obj[mapNum][objIndex] = ObjSetup(16, 47, Item.APICOT_BERRY, mapNum, 3, 6);
+		gp.obj[mapNum][objIndex] = ObjSetup(34, 73, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(28, 73, Item.RED_CARD, mapNum);
 		
 		mapNum = 14;
 		objIndex = 0;
@@ -192,6 +224,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 18, Item.BURN_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(82, 14, Item.POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 14, Item.RAWST_BERRY, mapNum, 15, 30);
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 12, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 14, Item.POWER_HERB, mapNum);
 		
 		mapNum = 24;
 		objIndex = 0;
@@ -268,6 +302,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(64, 78, Item.MAX_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(91, 57, Item.EVIOLITE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(61, 41, Item.MAX_ELIXIR, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(66, 41, Item.CLEAR_AMULET, mapNum);
 		
 		mapNum = 36;
 		objIndex = 0;
@@ -415,7 +450,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 42, Item.PETTICOAT_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(93, 35, Item.VALIANT_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(82, 26, Item.HYPER_POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(90, 28, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(90, 28, Item.THROAT_SPRAY, mapNum);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(80, 31, mapNum, 5, 15);
 		
 		mapNum = 90;
 		objIndex = 0;
@@ -425,6 +461,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 8, Item.GOLD_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 37, Item.PP_MAX, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(69, 13, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 11, Item.COVERT_CLOAK, mapNum);
 		
 		mapNum = 95;
 		objIndex = 0;
@@ -528,7 +565,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(18, 35, Item.PP_UP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(21, 72, Item.REPEL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(13, 54, Item.ULTRA_BALL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(17, 37, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(17, 37, Item.WHITE_HERB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(59, 63, Item.IMPISH_MINT, mapNum); // impish
 		gp.obj[mapNum][objIndex] = ObjSetup(42, 70, Item.BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(47, 48, Item.PP_MAX, mapNum);
@@ -540,9 +577,10 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(79, 79, Item.TM71, mapNum); // stone edge
 		gp.obj[mapNum][objIndex] = ObjSetup(87, 91, Item.BOLD_MINT, mapNum); // bold
 		gp.obj[mapNum][objIndex] = ObjSetup(82, 92, Item.PP_UP, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(76, 66, Item.FULL_RESTORE, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(61, 50, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(76, 66, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(61, 50, Item.GOLD_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 32, Item.GOLD_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(68, 87, mapNum, 5, 15);
 		
 		mapNum = 110;
 		objIndex = 0;
@@ -550,7 +588,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(19, 74, Item.ULTRA_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(16, 77, Item.CAREFUL_MINT, mapNum); // careful
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 68, Item.PP_UP, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(28, 74, Item.GOLD_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(28, 74, Item.ROCKY_HELMET, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(47, 51, Item.ABILITY_CAPSULE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 77, Item.FULL_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(32, 51, Item.BURN_HEAL, mapNum);
@@ -561,14 +599,15 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(82, 71, Item.FREEZE_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(62, 65, Item.HYPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(78, 76, Item.ULTRA_BALL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(56, 65, Item.ELIXIR, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(48, 66, Item.MAX_REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(56, 65, Item.AIR_BALLOON, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(48, 66, Item.CHOICE_SCARF, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(36, 77, Item.ANTIDOTE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(57, 82, Item.BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(77, 88, Item.MAX_ELIXIR, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 65, Item.TM19, mapNum); // photon geyser
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 70, Item.FULL_RESTORE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 84, Item.MICLE_BERRY, mapNum, 2, 5);
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(42, 67, mapNum, 5, 15);
 		
 		mapNum = 117;
 		objIndex = 0;
@@ -610,27 +649,27 @@ public class AssetSetter {
 		int mapNum = 0;
 		
 		if (flags[0] && !flags[1]) {
-			gp.npc[mapNum][index] = NPCSetup(10, 72, 48, 0);
+			gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		} else {
 			gp.npc[mapNum][index++] = null;
-			GamePanel.volatileTrainers.put(NPCSetup(10, 72, 48, 0), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(SCOTT_UP, 72, 48, 0), mapNum);
 		}
 		
-		gp.npc[mapNum][index] = NPCSetup(5, 18, 18, 1);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 18, 18, 1);
 		
-		gp.npc[mapNum][index] = NPCSetup(6, 23, 19, 2);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 23, 19, 2);
 		
-		gp.npc[mapNum][index] = NPCSetup(6, 23, 27, 3);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 23, 27, 3);
 		
-		gp.npc[mapNum][index] = NPCSetup(5, 21, 31, 4);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 21, 31, 4);
 		
-		gp.npc[mapNum][index] = NPCSetup(6, 21, 14, 102);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 21, 14, 102);
 		
-		gp.npc[mapNum][index] = NPCSetup(5, 88, 7, 175);
-		gp.npc[mapNum][index] = NPCSetup(6, 83, 8, 176);
-		gp.npc[mapNum][index] = NPCSetup(6, 82, 11, 177);
-		gp.npc[mapNum][index] = NPCSetup(5, 88, 11, 178);
-		gp.npc[mapNum][index] = NPCSetup(5, 88, 16, 179);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 7, 175);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 83, 8, 176);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 82, 11, 177);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 11, 178);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 16, 179);
 		
 		if (!flags[15]) {
 			gp.npc[mapNum][index] = NPCSetup(85, 5, "The road is closed from this direction, there's a MASSIVE sinkhole on the other side of this gate. If you come  from Schrice City straight North of here it should be clear.");
@@ -638,32 +677,32 @@ public class AssetSetter {
 			gp.npc[mapNum][index++] = null;
 		}
 		
-		gp.npc[mapNum][index] = NPCSetup(3, 60, 37, 259);
-		gp.npc[mapNum][index] = NPCSetup(4, 56, 40, 260);
-		gp.npc[mapNum][index] = NPCSetup(6, 55, 37, 261);
-		gp.npc[mapNum][index] = NPCSetup(4, 63, 40, 262);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 60, 37, 259);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 56, 40, 260);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 55, 37, 261);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 63, 40, 262);
 		
 		if (!flags[2]) {
 			gp.npc[mapNum][index] = NPCSetup(60, 44, "The Pokemon here are going FERAL over these berry trees. Come back later!");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
-		gp.npc[mapNum][index] = NPCSetup(4, 68, 63, 266);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 68, 63, 266);
 		
 		index = 0;
 		
 		// Nurses/PCs
-		gp.npc[1][index] = NPCSetup(1, 31, 37, -1);
-		gp.npc[1][index] = NPCSetup(0, 35, 36, -1);
-		gp.npc[5][index] = NPCSetup(1, 31, 37, -1);
-		gp.npc[5][index] = NPCSetup(0, 35, 36, -1);
-		gp.npc[19][index] = NPCSetup(1, 31, 37, -1);
-		gp.npc[19][index] = NPCSetup(0, 35, 36, -1);
+		gp.npc[1][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
+		gp.npc[1][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[5][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
+		gp.npc[5][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[19][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
+		gp.npc[19][index] = NPCSetup(NPC_PC, 35, 36, -1);
 		
 		// Clerks
-		gp.npc[2][index] = NPCSetup(2, 27, 39, -1);
-		gp.npc[6][index] = NPCSetup(2, 27, 39, -1);
-		gp.npc[20][index] = NPCSetup(2, 27, 39, -1);
+		gp.npc[2][index] = NPCSetup(NPC_CLERK, 27, 39, -1);
+		gp.npc[6][index] = NPCSetup(NPC_CLERK, 27, 39, -1);
+		gp.npc[20][index] = NPCSetup(NPC_CLERK, 27, 39, -1);
 		
 		mapNum = 3;
 		index = 0;
@@ -680,69 +719,69 @@ public class AssetSetter {
 			gp.npc[mapNum][index++] = null;
 		}
 		
-		gp.npc[mapNum][index] = NPCSetup(4, 32, 62, 18);
-		gp.npc[mapNum][index] = NPCSetup(4, 23, 65, 19); // make way lower levels
-		gp.npc[mapNum][index] = NPCSetup(4, 32, 68, 20); // make way lower levels
-		gp.npc[mapNum][index] = NPCSetup(4, 34, 76, 21); // make way lower levels
-		gp.npc[mapNum][index] = NPCSetup(4, 45, 76, 22); // make way lower levels
-		gp.npc[mapNum][index] = NPCSetup(4, 15, 70, 103);
-		gp.npc[mapNum][index] = NPCSetup(4, 11, 70, 23);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 32, 62, 18);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 23, 65, 19); // make way lower levels
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 32, 68, 20); // make way lower levels
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 34, 76, 21); // make way lower levels
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 45, 76, 22); // make way lower levels
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 15, 70, 103);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 11, 70, 23);
 		
-		gp.npc[mapNum][index] = NPCSetup(6, 72, 37, 98);
-		gp.npc[mapNum][index] = NPCSetup(5, 77, 34, 99);
-		gp.npc[mapNum][index] = NPCSetup(5, 76, 30, 100);
-		gp.npc[mapNum][index] = NPCSetup(6, 72, 28, 101);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 72, 37, 98);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 77, 34, 99);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 76, 30, 100);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 72, 28, 101);
 		
-		gp.npc[mapNum][index] = NPCSetup(4, 44, 81, 263);
-//		gp.npc[mapNum][index] = NPCSetup(4, 15, 70, 23);
-//		gp.npc[mapNum][index] = NPCSetup(4, 15, 70, 23);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 44, 81, 263);
+//		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 15, 70, 23);
+//		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 15, 70, 23);
 		
 		mapNum = 7;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(14, 30, 42, 5);
-		gp.npc[mapNum][index] = NPCSetup(13, 33, 42, 6);
-		gp.npc[mapNum][index] = NPCSetup(11, 36, 39, 7);
-		gp.npc[mapNum][index] = NPCSetup(12, 36, 42, 8);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 30, 42, 5);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 33, 42, 6);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 36, 39, 7);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 36, 42, 8);
 		
 		mapNum = 8;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(13, 30, 39, 9);
-		gp.npc[mapNum][index] = NPCSetup(12, 28, 41, 10);
-		gp.npc[mapNum][index] = NPCSetup(11, 32, 39, 11);
-		gp.npc[mapNum][index] = NPCSetup(12, 32, 45, 12);
-		gp.npc[mapNum][index] = NPCSetup(8, 35, 41, 13);
-		gp.npc[mapNum][index] = NPCSetup(13, 30, 44, 258);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 30, 39, 9);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 28, 41, 10);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 32, 39, 11);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 32, 45, 12);
+		gp.npc[mapNum][index] = NPCSetup(RICK, 35, 41, 13);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 30, 44, 258);
 		
 		mapNum = 9;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(5, 34, 42, 14);
-		gp.npc[mapNum][index] = NPCSetup(6, 27, 39, 15);
-		gp.npc[mapNum][index] = NPCSetup(5, 42, 34, 16);
-		gp.npc[mapNum][index] = NPCSetup(8, 38, 28, 17);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 34, 42, 14);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 27, 39, 15);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 42, 34, 16);
+		gp.npc[mapNum][index] = NPCSetup(GYM_1, 38, 28, 17);
 		
 		mapNum = 11;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(4, 69, 53, 24);
-		gp.npc[mapNum][index] = NPCSetup(4, 50, 60, 25);
-		gp.npc[mapNum][index] = NPCSetup(4, 59, 62, 26);
-		gp.npc[mapNum][index] = NPCSetup(4, 76, 56, 27);
-		gp.npc[mapNum][index] = NPCSetup(3, 53, 47, 28);
-		gp.npc[mapNum][index] = NPCSetup(4, 53, 53, 29);
-		gp.npc[mapNum][index] = NPCSetup(4, 76, 47, 30);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 69, 53, 24);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 50, 60, 25);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 59, 62, 26);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 76, 56, 27);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 53, 47, 28);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 53, 53, 29);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 76, 47, 30);
 		
-		gp.npc[mapNum][index] = NPCSetup(16, 43, 61, 34);
+		gp.npc[mapNum][index] = NPCSetup(FRED_UP, 43, 61, 34);
 		
-		gp.npc[mapNum][index] = NPCSetup(5, 40, 66, 31);
-		gp.npc[mapNum][index] = NPCSetup(5, 36, 67, 32);
-		gp.npc[mapNum][index] = NPCSetup(4, 34, 77, 33);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 40, 66, 31);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 36, 67, 32);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 34, 77, 33);
 		
-		gp.npc[mapNum][index] = NPCSetup(7, 19, 49, -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE_FULL, 19, 49, -1);
 		
-		gp.npc[mapNum][index] = NPCSetup(6, 28, 43, 35);
-		gp.npc[mapNum][index] = NPCSetup(6, 15, 37, 36);
-		gp.npc[mapNum][index] = NPCSetup(5, 19, 37, 37);
-		gp.npc[mapNum][index] = NPCSetup(6, 21, 33, 38);
-		gp.npc[mapNum][index] = NPCSetup(6, 22, 21, 39);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 28, 43, 35);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 15, 37, 36);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 19, 37, 37);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 21, 33, 38);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 22, 21, 39);
 		
 		mapNum = 13;
 		index = 0;
@@ -751,36 +790,36 @@ public class AssetSetter {
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
-		gp.npc[mapNum][index] = NPCSetup(5, 29, 49, 104);
-		gp.npc[mapNum][index] = NPCSetup(6, 23, 49, 105);
-		gp.npc[mapNum][index] = NPCSetup(5, 29, 34, 71);
-		gp.npc[mapNum][index] = NPCSetup(5, 19, 37, 72);
-		gp.npc[mapNum][index] = NPCSetup(6, 35, 24, 73);
-		gp.npc[mapNum][index] = NPCSetup(6, 28, 18, 74);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 29, 49, 104);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 23, 49, 105);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 29, 34, 71);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 19, 37, 72);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 35, 24, 73);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 28, 18, 74);
 		
 		mapNum = 14;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(5, 33, 41, 44);
-		gp.npc[mapNum][index] = NPCSetup(3, 26, 29, 40);
-		gp.npc[mapNum][index] = NPCSetup(5, 39, 39, 41);
-		gp.npc[mapNum][index] = NPCSetup(6, 22, 43, 42);
-		gp.npc[mapNum][index] = NPCSetup(4, 26, 48, 43);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 33, 41, 44);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 26, 29, 40);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 39, 39, 41);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 22, 43, 42);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 26, 48, 43);
 		
 		mapNum = 16;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(6, 22, 29, 45);
-		gp.npc[mapNum][index] = NPCSetup(6, 26, 29, 46);
-		gp.npc[mapNum][index] = NPCSetup(5, 46, 29, 47);
-		gp.npc[mapNum][index] = NPCSetup(6, 21, 39, 48);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 22, 29, 45);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 26, 29, 46);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 46, 29, 47);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 21, 39, 48);
 		
 		mapNum = 17;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(14, 50, 45, 49);
-		gp.npc[mapNum][index] = NPCSetup(13, 56, 45, 50);
-		gp.npc[mapNum][index] = NPCSetup(14, 50, 44, 51);
-		gp.npc[mapNum][index] = NPCSetup(13, 56, 44, 52);
-		gp.npc[mapNum][index] = NPCSetup(14, 50, 43, 53);
-		gp.npc[mapNum][index] = NPCSetup(13, 56, 43, 54);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 50, 45, 49);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 56, 45, 50);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 50, 44, 51);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 56, 44, 52);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 50, 43, 53);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 56, 43, 54);
 		
 		if (!flags[3]) {
 			gp.npc[mapNum][index] = NPCSetup(49, 53, "Quick! Team Nuke is taking over our office! Please help!");
@@ -792,98 +831,98 @@ public class AssetSetter {
 		
 		mapNum = 18;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(10, 48, 45, 55);
-		gp.npc[mapNum][index] = NPCSetup(6, 45, 38, 146);
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 48, 45, 55);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 45, 38, 146);
 		gp.npc[mapNum][index] = NPCSetup(46, 33, "That was an impressive battle! I found a rare MAGIC Pokemon, but after watching that, you'd be a better trainer. Here!", true);
 		
 		mapNum = 21;
-		gp.npc[mapNum][index] = NPCSetup(3, 55, 60, 56);
-		gp.npc[mapNum][index] = NPCSetup(4, 55, 62, 57);
-		gp.npc[mapNum][index] = NPCSetup(3, 72, 52, 58);
-		gp.npc[mapNum][index] = NPCSetup(4, 72, 54, 59);
-		gp.npc[mapNum][index] = NPCSetup(6, 73, 57, 60);
-		gp.npc[mapNum][index] = NPCSetup(5, 75, 57, 61);
-		gp.npc[mapNum][index] = NPCSetup(3, 72, 46, 62);
-		gp.npc[mapNum][index] = NPCSetup(4, 72, 48, 63);
-		gp.npc[mapNum][index] = NPCSetup(3, 54, 46, 64);
-		gp.npc[mapNum][index] = NPCSetup(4, 54, 48, 65);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 55, 60, 56);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 55, 62, 57);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 72, 52, 58);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 72, 54, 59);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 73, 57, 60);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 75, 57, 61);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 72, 46, 62);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 72, 48, 63);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 54, 46, 64);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 54, 48, 65);
 		
-		gp.npc[mapNum][index] = NPCSetup(8, 63, 39, 66);
+		gp.npc[mapNum][index] = NPCSetup(GYM_2, 63, 39, 66);
 		
 		mapNum = 22;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(3, 80, 8, 67);
-		gp.npc[mapNum][index] = NPCSetup(4, 78, 12, 68);
-		gp.npc[mapNum][index] = NPCSetup(3, 72, 10, 69);
-		gp.npc[mapNum][index] = NPCSetup(4, 69, 14, 70);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 80, 8, 67);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 78, 12, 68);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 72, 10, 69);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 69, 14, 70);
 		
 		mapNum = 24;
-		gp.npc[mapNum][index] = NPCSetup(6, 65, 63, 75);
-		gp.npc[mapNum][index] = NPCSetup(4, 79, 59, 267);
-		gp.npc[mapNum][index] = NPCSetup(3, 83, 55, 268);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 65, 63, 75);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 79, 59, 267);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 83, 55, 268);
 		
 		mapNum = 25;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(6, 70, 65, 76);
-		gp.npc[mapNum][index] = NPCSetup(6, 70, 80, 77);
-		gp.npc[mapNum][index] = NPCSetup(4, 66, 87, 78);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 70, 65, 76);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 70, 80, 77);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 66, 87, 78);
 		
 		mapNum = 26;
-		gp.npc[mapNum][index] = NPCSetup(11, 58, 70, 79);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 58, 70, 79);
 		
 		index = 0;
 		// Nurses/PCs
-		gp.npc[29][index] = NPCSetup(1, 31, 37, -1);
-		gp.npc[29][index] = NPCSetup(0, 35, 36, -1);
-		gp.npc[39][index] = NPCSetup(1, 31, 37, -1);
-		gp.npc[39][index] = NPCSetup(0, 35, 36, -1);
-		gp.npc[86][index] = NPCSetup(1, 31, 37, -1);
-		gp.npc[86][index] = NPCSetup(0, 35, 36, -1);
-		gp.npc[111][index] = NPCSetup(1, 31, 37, -1);
-		gp.npc[111][index] = NPCSetup(0, 35, 36, -1);
+		gp.npc[29][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
+		gp.npc[29][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[39][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
+		gp.npc[39][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[86][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
+		gp.npc[86][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[111][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
+		gp.npc[111][index] = NPCSetup(NPC_PC, 35, 36, -1);
 		
 		// Clerks
-		gp.npc[30][index] = NPCSetup(17, 31, 41, -1);
-		gp.npc[40][index] = NPCSetup(17, 34, 38, -1);
-		gp.npc[45][index] = NPCSetup(2, 30, 39, -1);
-		gp.npc[87][index] = NPCSetup(2, 27, 39, -1);
-		gp.npc[89][index] = NPCSetup(17, 24, 36, -1);
-		gp.npc[112][index] = NPCSetup(17, 31, 41, -1);
+		gp.npc[30][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
+		gp.npc[40][index] = NPCSetup(NPC_MARKET, 34, 38, -1);
+		gp.npc[45][index] = NPCSetup(NPC_CLERK, 30, 39, -1);
+		gp.npc[87][index] = NPCSetup(NPC_CLERK, 27, 39, -1);
+		gp.npc[89][index] = NPCSetup(NPC_MARKET, 24, 36, -1);
+		gp.npc[112][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
 		
 		mapNum = 28;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(3, 12, 52, 85);
-		gp.npc[mapNum][index] = NPCSetup(4, 13, 55, 86);
-		gp.npc[mapNum][index] = NPCSetup(3, 30, 50, 80);
-		gp.npc[mapNum][index] = NPCSetup(6, 50, 52, 87);
-		gp.npc[mapNum][index] = NPCSetup(4, 52, 55, 81);
-		gp.npc[mapNum][index] = NPCSetup(3, 56, 46, 82);
-		gp.npc[mapNum][index] = NPCSetup(5, 60, 49, 88);
-		gp.npc[mapNum][index] = NPCSetup(4, 38, 36, 83);
-		gp.npc[mapNum][index] = NPCSetup(5, 55, 35, 84);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 12, 52, 85);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 13, 55, 86);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 30, 50, 80);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 50, 52, 87);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 52, 55, 81);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 56, 46, 82);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 60, 49, 88);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 38, 36, 83);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 55, 35, 84);
 		
 		if (!flags[5]) {
-			gp.npc[mapNum][index] = NPCSetup(15, 87, 45, 89);
+			gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 87, 45, 89);
 		} else {
 			gp.npc[mapNum][index++] = null;
-			GamePanel.volatileTrainers.put(NPCSetup(15, 87, 45, 89), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(FRED_DOWN, 87, 45, 89), mapNum);
 		}
 		
 		
-		gp.npc[mapNum][index] = NPCSetup(6, 77, 26, 95);
-		gp.npc[mapNum][index] = NPCSetup(3, 82, 20, 96);
-		gp.npc[mapNum][index] = NPCSetup(5, 87, 26, 97);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 77, 26, 95);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 20, 96);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 87, 26, 97);
 		
-		gp.npc[mapNum][index] = NPCSetup(6, 75, 69, 202);
-		gp.npc[mapNum][index] = NPCSetup(6, 78, 83, 203);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 75, 69, 202);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 78, 83, 203);
 		
 		mapNum = 31;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(3, 48, 50, 90);
-		gp.npc[mapNum][index] = NPCSetup(5, 65, 61, 91);
-		gp.npc[mapNum][index] = NPCSetup(3, 45, 63, 92);
-		gp.npc[mapNum][index] = NPCSetup(6, 38, 70, 93);
-		gp.npc[mapNum][index] = NPCSetup(8, 51, 61, 94);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 48, 50, 90);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 65, 61, 91);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 45, 63, 92);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 38, 70, 93);
+		gp.npc[mapNum][index] = NPCSetup(GYM_3, 51, 61, 94);
 		
 		mapNum = 32;
 		index = 0;
@@ -897,29 +936,29 @@ public class AssetSetter {
 			gp.npc[mapNum][index++] = null;
 		}
 		
-		gp.npc[mapNum][index] = NPCSetup(3, 49, 78, 195);
-		gp.npc[mapNum][index] = NPCSetup(3, 40, 84, 196);
-		gp.npc[mapNum][index] = NPCSetup(5, 35, 73, 197);
-		gp.npc[mapNum][index] = NPCSetup(6, 22, 81, 198);
-		gp.npc[mapNum][index] = NPCSetup(6, 25, 45, 199);
-		gp.npc[mapNum][index] = NPCSetup(6, 32, 41, 200);
-		gp.npc[mapNum][index] = NPCSetup(5, 41, 44, 201);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 49, 78, 195);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 40, 84, 196);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 35, 73, 197);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 22, 81, 198);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 25, 45, 199);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 32, 41, 200);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 41, 44, 201);
 		
-		gp.npc[mapNum][index] = NPCSetup(5, 71, 18, 269);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 71, 18, 269);
 		
 		mapNum = 36;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(3, 20, 45, 106);
-		gp.npc[mapNum][index] = NPCSetup(5, 39, 47, 107);
-		gp.npc[mapNum][index] = NPCSetup(3, 42, 27, 108);
-		gp.npc[mapNum][index] = NPCSetup(6, 44, 32, 109);
-		gp.npc[mapNum][index] = NPCSetup(3, 60, 31, 110);
-		gp.npc[mapNum][index] = NPCSetup(6, 53, 44, 111);
-		gp.npc[mapNum][index] = NPCSetup(4, 65, 48, 112);
-		gp.npc[mapNum][index] = NPCSetup(5, 82, 39, 113);
-		gp.npc[mapNum][index] = NPCSetup(6, 67, 30, 114);
-		gp.npc[mapNum][index] = NPCSetup(3, 76, 25, 115);
-		gp.npc[mapNum][index] = NPCSetup(4, 91, 43, 116);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 20, 45, 106);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 39, 47, 107);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 42, 27, 108);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 44, 32, 109);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 60, 31, 110);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 53, 44, 111);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 65, 48, 112);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 82, 39, 113);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 67, 30, 114);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 76, 25, 115);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 91, 43, 116);
 		
 		if (gp.player.p.badges >= 5 && !flags[19]) {
 			gp.npc[mapNum][index] = NPCSetup(15, 46, "There's some SCARY people wearing black in there somewhere. I heard one of their leaders go to Ghostly Woods and is planning something evil.");
@@ -937,10 +976,10 @@ public class AssetSetter {
 			gp.npc[mapNum][index++] = null;
 		}
 		
-		gp.npc[mapNum][index] = NPCSetup(5, 35, 74, 138);
-		gp.npc[mapNum][index] = NPCSetup(5, 51, 74, 139);
-		gp.npc[mapNum][index] = NPCSetup(6, 46, 85, 140);
-		gp.npc[mapNum][index] = NPCSetup(6, 36, 84, 141);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 35, 74, 138);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 51, 74, 139);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 46, 85, 140);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 36, 84, 141);
 		
 		mapNum = 43;
 		index = 0;
@@ -961,32 +1000,32 @@ public class AssetSetter {
 			gp.npc[mapNum][index++] = null;
 		}
 		
-		gp.npc[mapNum][index] = NPCSetup(11, 51, 21, 117);
-		gp.npc[mapNum][index] = NPCSetup(12, 51, 27, 118);
-		gp.npc[mapNum][index] = NPCSetup(11, 12, 21, 119);
-		gp.npc[mapNum][index] = NPCSetup(12, 12, 27, 120);
-		gp.npc[mapNum][index] = NPCSetup(11, 14, 22, 121);
-		gp.npc[mapNum][index] = NPCSetup(12, 14, 26, 122);
-		gp.npc[mapNum][index] = NPCSetup(13, 19, 24, 123);
-		gp.npc[mapNum][index] = NPCSetup(14, 21, 22, 124);
-		gp.npc[mapNum][index] = NPCSetup(13, 25, 22, 125);
-		gp.npc[mapNum][index] = NPCSetup(11, 23, 16, 126);
-		gp.npc[mapNum][index] = NPCSetup(14, 32, 24, 127);
-		gp.npc[mapNum][index] = NPCSetup(13, 37, 24, 128);
-		gp.npc[mapNum][index] = NPCSetup(11, 40, 18, 129);
-		gp.npc[mapNum][index] = NPCSetup(12, 40, 21, 130);
-		gp.npc[mapNum][index] = NPCSetup(14, 36, 17, 131);
-		gp.npc[mapNum][index] = NPCSetup(12, 32, 18, 132);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 51, 21, 117);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 51, 27, 118);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 12, 21, 119);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 12, 27, 120);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 14, 22, 121);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 14, 26, 122);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 19, 24, 123);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 21, 22, 124);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 25, 22, 125);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 23, 16, 126);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 32, 24, 127);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 37, 24, 128);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 40, 18, 129);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 40, 21, 130);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 36, 17, 131);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 32, 18, 132);
 		
 		gp.npc[mapNum][index] = NPCSetup(29, 18, "Who are these people?? Have you cleared both rooms yet?", true);
 		
 		mapNum = 44;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(6, 60, 61, 133);
-		gp.npc[mapNum][index] = NPCSetup(5, 66, 57, 134);
-		gp.npc[mapNum][index] = NPCSetup(6, 60, 52, 135);
-		gp.npc[mapNum][index] = NPCSetup(5, 66, 46, 136);
-		gp.npc[mapNum][index] = NPCSetup(8, 63, 39, 137);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 60, 61, 133);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 66, 57, 134);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 60, 52, 135);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 66, 46, 136);
+		gp.npc[mapNum][index] = NPCSetup(GYM_4, 63, 39, 137);
 		
 		mapNum = 46;
 		index = 0;
@@ -998,10 +1037,10 @@ public class AssetSetter {
 		
 		mapNum = 48;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(6, 29, 42, 142);
-		gp.npc[mapNum][index] = NPCSetup(5, 33, 42, 143);
-		gp.npc[mapNum][index] = NPCSetup(3, 31, 36, 144);
-		gp.npc[mapNum][index] = NPCSetup(6, 28, 39, 145);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 29, 42, 142);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 33, 42, 143);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 31, 36, 144);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 28, 39, 145);
 		gp.npc[mapNum][index] = NPCSetup(24, 37, "Here, take this as a gift!", true);
 		
 		mapNum = 49;
@@ -1014,55 +1053,55 @@ public class AssetSetter {
 		
 		mapNum = 53;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(17, 31, 41, -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
 		
 		mapNum = 60;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(6, 29, 42, 147);
-		gp.npc[mapNum][index] = NPCSetup(5, 33, 42, 148);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 29, 42, 147);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 33, 42, 148);
 		
 		mapNum = 77;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(6, 46, 18, 149);
-		gp.npc[mapNum][index] = NPCSetup(5, 51, 24, 150);
-		gp.npc[mapNum][index] = NPCSetup(6, 45, 30, 151);
-		gp.npc[mapNum][index] = NPCSetup(6, 52, 64, 152);
-		gp.npc[mapNum][index] = NPCSetup(5, 54, 37, 153);
-		gp.npc[mapNum][index] = NPCSetup(5, 54, 52, 154);
-		gp.npc[mapNum][index] = NPCSetup(5, 86, 33, 155);
-		gp.npc[mapNum][index] = NPCSetup(4, 67, 34, 156);
-		gp.npc[mapNum][index] = NPCSetup(6, 74, 61, 157);
-		gp.npc[mapNum][index] = NPCSetup(5, 32, 45, 158);
-		gp.npc[mapNum][index] = NPCSetup(3, 18, 20, 159);
-		gp.npc[mapNum][index] = NPCSetup(4, 18, 24, 160);
-		gp.npc[mapNum][index] = NPCSetup(5, 87, 15, 161);
-		gp.npc[mapNum][index] = NPCSetup(6, 67, 41, 162);
-		gp.npc[mapNum][index] = NPCSetup(6, 83, 47, 163);
-		gp.npc[mapNum][index] = NPCSetup(6, 23, 60, 164);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 46, 18, 149);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 51, 24, 150);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 45, 30, 151);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 52, 64, 152);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 54, 37, 153);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 54, 52, 154);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 86, 33, 155);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 67, 34, 156);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 74, 61, 157);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 32, 45, 158);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 18, 20, 159);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 18, 24, 160);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 87, 15, 161);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 67, 41, 162);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 83, 47, 163);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 23, 60, 164);
 		
 		mapNum = 80;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(5, 33, 19, 165);
-		gp.npc[mapNum][index] = NPCSetup(6, 27, 22, 166);
-		gp.npc[mapNum][index] = NPCSetup(6, 28, 28, 167);
-		gp.npc[mapNum][index] = NPCSetup(10, 35, 41, 185);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 33, 19, 165);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 27, 22, 166);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 28, 28, 167);
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 35, 41, 185);
 		
-		gp.npc[mapNum][index] = NPCSetup(3, 41, 51, 168);
-		gp.npc[mapNum][index] = NPCSetup(6, 31, 64, 169);
-		gp.npc[mapNum][index] = NPCSetup(4, 75, 57, 170);
-		gp.npc[mapNum][index] = NPCSetup(5, 49, 74, 171);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 41, 51, 168);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 31, 64, 169);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 75, 57, 170);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 49, 74, 171);
 		
-		gp.npc[mapNum][index] = NPCSetup(7, 25, 11, -1);
-		gp.npc[mapNum][index] = NPCSetup(3, 17, 68, 257);
+		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE_FULL, 25, 11, -1);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 17, 68, 257);
 		
 		mapNum = 83;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(3, 48, 64, 172);
-		gp.npc[mapNum][index] = NPCSetup(4, 48, 67, 173);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 48, 64, 172);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 48, 67, 173);
 		
-		gp.npc[mapNum][index] = NPCSetup(4, 60, 70, 180);
-		gp.npc[mapNum][index] = NPCSetup(6, 61, 66, 181);
-		gp.npc[mapNum][index] = NPCSetup(5, 65, 65, 182);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 60, 70, 180);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 61, 66, 181);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 65, 65, 182);
 		
 		mapNum = 85;
 		index = 0;
@@ -1071,12 +1110,12 @@ public class AssetSetter {
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
-		gp.npc[mapNum][index] = NPCSetup(6, 67, 69, 218);
-		gp.npc[mapNum][index] = NPCSetup(5, 85, 64, 219);
-		gp.npc[mapNum][index] = NPCSetup(5, 93, 54, 220);
-		gp.npc[mapNum][index] = NPCSetup(6, 83, 51, 221);
-		gp.npc[mapNum][index] = NPCSetup(5, 85, 37, 222);
-		gp.npc[mapNum][index] = NPCSetup(6, 88, 40, 223);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 67, 69, 218);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 85, 64, 219);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 93, 54, 220);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 83, 51, 221);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 85, 37, 222);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 88, 40, 223);
 		
 		if (!flags[17]) {
 			gp.npc[mapNum][index] = NPCSetup(63, 67, "EEEK! DON'T GO THIS WAY! I saw some really scary men dressed up in black go towards the woods this way. BE CAREFUL!");
@@ -1086,31 +1125,31 @@ public class AssetSetter {
 		
 		mapNum = 88;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(5, 75, 57, 186);
-		gp.npc[mapNum][index] = NPCSetup(4, 81, 57, 187);
-		gp.npc[mapNum][index] = NPCSetup(3, 85, 63, 188);
-		gp.npc[mapNum][index] = NPCSetup(5, 45, 67, 189);
-		gp.npc[mapNum][index] = NPCSetup(6, 41, 53, 190);
-		gp.npc[mapNum][index] = NPCSetup(3, 51, 53, 191);
-		gp.npc[mapNum][index] = NPCSetup(4, 41, 47, 192);
-		gp.npc[mapNum][index] = NPCSetup(5, 55, 47, 193);
-		gp.npc[mapNum][index] = NPCSetup(8, 63, 35, 194);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 75, 57, 186);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 81, 57, 187);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 85, 63, 188);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 45, 67, 189);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 41, 53, 190);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 51, 53, 191);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 41, 47, 192);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 55, 47, 193);
+		gp.npc[mapNum][index] = NPCSetup(GYM_5, 63, 35, 194);
 		
 		mapNum = 90;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(6, 48, 10, 174);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 48, 10, 174);
 		
 		mapNum = 91;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(14, 29, 45, 183);
-		gp.npc[mapNum][index] = NPCSetup(13, 33, 45, 184);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 29, 45, 183);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 33, 45, 184);
 		gp.npc[mapNum][index] = NPCSetup(31, 41, "Thank you so much for saving me! Here, take this as a gift!", true);
 		
 		mapNum = 92;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(1, 31, 37, -1);
-		gp.npc[mapNum][index] = NPCSetup(0, 35, 36, -1);
-		gp.npc[mapNum][index] = NPCSetup(17, 22, 37, -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 22, 37, -1);
 		
 		mapNum = 93;
 		index = 0;
@@ -1123,47 +1162,47 @@ public class AssetSetter {
 		mapNum = 104;
 		index = 0;
 		if (!flags[20]) {
-			gp.npc[mapNum][index] = NPCSetup(14, 44, 47, 204);
-			gp.npc[mapNum][index] = NPCSetup(13, 49, 47, 205);
-			gp.npc[mapNum][index] = NPCSetup(14, 44, 49, 206);
-			gp.npc[mapNum][index] = NPCSetup(13, 49, 49, 207);
-			gp.npc[mapNum][index] = NPCSetup(14, 44, 51, 208);
-			gp.npc[mapNum][index] = NPCSetup(13, 49, 51, 209);
-			gp.npc[mapNum][index] = NPCSetup(14, 44, 53, 210);
-			gp.npc[mapNum][index] = NPCSetup(13, 49, 53, 211);
-			gp.npc[mapNum][index] = NPCSetup(14, 44, 55, 212);
-			gp.npc[mapNum][index] = NPCSetup(13, 49, 55, 213);
-			gp.npc[mapNum][index] = NPCSetup(14, 44, 57, 214);
-			gp.npc[mapNum][index] = NPCSetup(13, 49, 57, 215);
+			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 47, 204);
+			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 47, 205);
+			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 49, 206);
+			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 49, 207);
+			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 51, 208);
+			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 51, 209);
+			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 53, 210);
+			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 53, 211);
+			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 55, 212);
+			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 55, 213);
+			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 57, 214);
+			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 57, 215);
 			
-			gp.npc[mapNum][index] = NPCSetup(16, 44, 62, 216);
-			gp.npc[mapNum][index] = NPCSetup(8, 41, 59, 217);
+			gp.npc[mapNum][index] = NPCSetup(FRED_UP, 44, 62, 216);
+			gp.npc[mapNum][index] = NPCSetup(MAXWELL, 41, 59, 217);
 		} else {
-			GamePanel.volatileTrainers.put(NPCSetup(14, 44, 47, 204), mapNum);
-			GamePanel.volatileTrainers.put(NPCSetup(13, 49, 47, 205), mapNum);
-			GamePanel.volatileTrainers.put(NPCSetup(14, 44, 49, 206), mapNum);
-			GamePanel.volatileTrainers.put(NPCSetup(13, 49, 49, 207), mapNum);
-			GamePanel.volatileTrainers.put(NPCSetup(14, 44, 51, 208), mapNum);
-			GamePanel.volatileTrainers.put(NPCSetup(13, 49, 51, 209), mapNum);
-			GamePanel.volatileTrainers.put(NPCSetup(14, 44, 53, 210), mapNum);
-			GamePanel.volatileTrainers.put(NPCSetup(13, 49, 53, 211), mapNum);
-			GamePanel.volatileTrainers.put(NPCSetup(14, 44, 55, 212), mapNum);
-			GamePanel.volatileTrainers.put(NPCSetup(13, 49, 55, 213), mapNum);
-			GamePanel.volatileTrainers.put(NPCSetup(14, 44, 57, 214), mapNum);
-			GamePanel.volatileTrainers.put(NPCSetup(13, 49, 57, 215), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 44, 47, 204), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 49, 47, 205), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 44, 49, 206), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 49, 49, 207), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 44, 51, 208), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 49, 51, 209), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 44, 53, 210), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 49, 53, 211), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 44, 55, 212), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 49, 55, 213), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 44, 57, 214), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 49, 57, 215), mapNum);
 			
-			GamePanel.volatileTrainers.put(NPCSetup(16, 44, 62, 216), mapNum);
-			GamePanel.volatileTrainers.put(NPCSetup(8, 41, 59, 217), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(FRED_UP, 44, 62, 216), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(MAXWELL, 41, 59, 217), mapNum);
 		}
 		
 		
 		mapNum = 107;
 		index = 0;
 		if (!flags[19] && gp.player.p.grustCount >= 10) {
-			gp.npc[mapNum][index] = NPCSetup(8, 46, 60, 234);
+			gp.npc[mapNum][index] = NPCSetup(RICK, 46, 60, 234);
 		} else {
 			gp.npc[mapNum][index++] = null;
-			GamePanel.volatileTrainers.put(NPCSetup(8, 46, 60, 234, false), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(RICK, 46, 60, 234, false), mapNum);
 		}
 		
 		if (gp.player.p.grustCount < 10) {
@@ -1172,22 +1211,22 @@ public class AssetSetter {
 			
 			for (int i = 224; i <= 233; i++) {
 				if (!gp.player.p.trainersBeat[i]) {
-					gp.npc[mapNum][index] = NPCSetup(18, xCoords[i-224], yCoords[i-224], i);
+					gp.npc[mapNum][index] = NPCSetup(NPC_POKEMON, xCoords[i-224], yCoords[i-224], i);
 				} else {
 					gp.npc[mapNum][index++] = null;
-					GamePanel.volatileTrainers.put(NPCSetup(18, xCoords[i-224], yCoords[i-224], i), mapNum);
+					GamePanel.volatileTrainers.put(NPCSetup(NPC_POKEMON, xCoords[i-224], yCoords[i-224], i), mapNum);
 				}
 			}
 		}
 		
 		mapNum = 109;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(5, 76, 89, 235);
-		gp.npc[mapNum][index] = NPCSetup(6, 67, 72, 236);
-		gp.npc[mapNum][index] = NPCSetup(6, 49, 44, 237);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 76, 89, 235);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 67, 72, 236);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 49, 44, 237);
 		
 		if (!flags[21]) {
-			gp.npc[mapNum][index] = NPCSetup(9, 21, 40, 242);
+			gp.npc[mapNum][index] = NPCSetup(SCOTT_DOWN, 21, 40, 242);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1195,29 +1234,29 @@ public class AssetSetter {
 		
 		mapNum = 110;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(5, 35, 84, 238);
-		gp.npc[mapNum][index] = NPCSetup(5, 25, 78, 239);
-		gp.npc[mapNum][index] = NPCSetup(6, 20, 56, 240);
-		gp.npc[mapNum][index] = NPCSetup(5, 26, 54, 241);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 35, 84, 238);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 25, 78, 239);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 20, 56, 240);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 26, 54, 241);
 		
 		mapNum = 113;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(5, 55, 58, 246);
-		gp.npc[mapNum][index] = NPCSetup(3, 51, 56, 247);
-		gp.npc[mapNum][index] = NPCSetup(4, 44, 58, 248);
-		gp.npc[mapNum][index] = NPCSetup(6, 42, 56, 249);
-		gp.npc[mapNum][index] = NPCSetup(5, 44, 49, 250);
-		gp.npc[mapNum][index] = NPCSetup(4, 53, 49, 251);
-		gp.npc[mapNum][index] = NPCSetup(6, 62, 47, 252);
-		gp.npc[mapNum][index] = NPCSetup(3, 63, 41, 253);
-		gp.npc[mapNum][index] = NPCSetup(4, 54, 43, 254);
-		gp.npc[mapNum][index] = NPCSetup(8, 53, 30, 255);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 55, 58, 246);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 51, 56, 247);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 44, 58, 248);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 42, 56, 249);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 44, 49, 250);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 53, 49, 251);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 62, 47, 252);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 63, 41, 253);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 54, 43, 254);
+		gp.npc[mapNum][index] = NPCSetup(GYM_6, 53, 30, 255);
 		
 		mapNum = 115;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(5, 88, 69, 243);
-		gp.npc[mapNum][index] = NPCSetup(3, 62, 74, 244);
-		gp.npc[mapNum][index] = NPCSetup(6, 41, 72, 245);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 69, 243);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 62, 74, 244);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 41, 72, 245);
 		
 		mapNum = 118;
 		index = 0;
@@ -1225,8 +1264,8 @@ public class AssetSetter {
 		
 		mapNum = 119;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(4, 32, 79, 264);
-		gp.npc[mapNum][index] = NPCSetup(5, 37, 76, 265);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 32, 79, 264);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 37, 76, 265);
 		
 		if (!flags[1]) {
 			gp.npc[mapNum][index] = NPCSetup(23, 76, "You're not ready to fight those guys over there yet, sorry bud.");
@@ -1236,9 +1275,9 @@ public class AssetSetter {
 		
 		mapNum = 121;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(5, 34, 42, 270);
-		gp.npc[mapNum][index] = NPCSetup(6, 28, 37, 271);
-		gp.npc[mapNum][index] = NPCSetup(5, 34, 35, 272);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 34, 42, 270);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 28, 37, 271);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 34, 35, 272);
 		gp.npc[mapNum][index] = NPCSetup(31, 34, "You're definitely not strong enough to go up here. Also, the items on the floor are really powerful, so you can only choose one for now.");
 		
 		mapNum = 122;
@@ -1292,6 +1331,10 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(63, 50, 3, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(63, 45, 3, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(63, 43, 3, mapNum, map);
+		
+		mapNum = 22;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 13, 1, mapNum, map);
 		
 		mapNum = 24;
 		iIndex = 0;
@@ -1652,7 +1695,7 @@ public class AssetSetter {
 		// flags[21] is true after beating Scott 4
 		// flags[22] is true after getting Glurg Town gift
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
-		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(10, 72, 48, 0);
+		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		if (flags[1]) {
 			gp.npc[3][0] = null;
 			gp.npc[119][2] = null;
@@ -1675,7 +1718,7 @@ public class AssetSetter {
 		if (flags[16]) gp.npc[85][0] = null;
 		if (flags[17]) gp.npc[85][7] = null;
 		if (!flags[19] && gp.player.p.grustCount >= 10) {
-			gp.npc[107][0] = NPCSetup(8, 46, 60, 234);
+			gp.npc[107][0] = NPCSetup(RICK, 46, 60, 234);
 			index--;
 		} else {
 			gp.npc[107][0] = null;
@@ -1709,63 +1752,90 @@ public class AssetSetter {
 	private Entity NPCSetup(int type, int x, int y, int team, boolean increase) {
 		Entity result = null;
 		switch (type) {
-		case 0:
+		case NPC_PC:
 			result = new NPC_PC(gp);
 			break;
-		case 1:
+		case NPC_NURSE:
 			result = new NPC_Nurse(gp, "down");
 			break;
-		case 2:
+		case NPC_CLERK:
 			result = new NPC_Clerk(gp);
 			break;
-		case 3:
+		case TRAINER_DOWN:
 			result = new NPC_Trainer(gp, "down", team);
 			break;
-		case 4:
+		case TRAINER_UP:
 			result = new NPC_Trainer(gp, "up", team);
 			break;
-		case 5:
+		case TRAINER_LEFT:
 			result = new NPC_Trainer(gp, "left", team);
 			break;
-		case 6:
+		case TRAINER_RIGHT:
 			result = new NPC_Trainer(gp, "right", team);
 			break;
-		case 7:
+		case NPC_NURSE_FULL:
 			result = new NPC_Nurse(gp, "up");
 			break;
-		case 8:
+		case GYM_1:
 			result = new NPC_GymLeader(gp, "down", team);
 			break;
-		case 9:
+		case GYM_2:
+			result = new NPC_GymLeader(gp, "down2", team);
+			break;
+		case GYM_3:
+			result = new NPC_GymLeader(gp, "up", team);
+			break;
+		case GYM_4:
+			result = new NPC_GymLeader(gp, "up2", team);
+			break;
+		case GYM_5:
+			result = new NPC_GymLeader(gp, "left", team);
+			break;
+		case GYM_6:
+			result = new NPC_GymLeader(gp, "left2", team);
+			break;
+		case GYM_7:
+			result = new NPC_GymLeader(gp, "right", team);
+			break;
+		case GYM_8:
+			result = new NPC_GymLeader(gp, "right2", team);
+			break;
+		case SCOTT_DOWN:
 			result = new NPC_Rival(gp, "down", team); // scott down
 			break;
-		case 10:
+		case SCOTT_UP:
 			result = new NPC_Rival(gp, "up", team); // scott up
 			break;
-		case 11:
+		case TN_DOWN:
 			result = new NPC_TN(gp, "down", team);
 			break;
-		case 12:
+		case TN_UP:
 			result = new NPC_TN(gp, "up", team);
 			break;
-		case 13:
+		case TN_LEFT:
 			result = new NPC_TN(gp, "left", team);
 			break;
-		case 14:
+		case TN_RIGHT:
 			result = new NPC_TN(gp, "right", team);
 			break;
-		case 15:
+		case FRED_DOWN:
 			result = new NPC_Rival2(gp, "down", team); // fred down
 			break;
-		case 16:
+		case FRED_UP:
 			result = new NPC_Rival2(gp, "up", team); // fred up
 			break;
-		case 17:
+		case NPC_MARKET:
 			result = new NPC_Market(gp);
 			break;
-		case 18:
+		case NPC_POKEMON:
 			result = new NPC_Pokemon(gp, 159, team, true); // Grust
 			gp.grusts[index - 1] = ((NPC_Pokemon) result);
+			break;
+		case RICK:
+			result = new NPC_TN_Admin(gp, "down", team);
+			break;
+		case MAXWELL:
+			result = new NPC_TN_Admin(gp, "up", team);
 			break;
 			
 		}

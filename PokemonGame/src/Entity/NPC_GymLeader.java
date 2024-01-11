@@ -15,7 +15,14 @@ public class NPC_GymLeader extends Entity {
 	}
 	
 	public void getImage() {
-		down1 = setup("/npc/gymleader");
+		down1 = setup("/npc/robin");
+		down2 = setup("/npc/stanford");
+		up1 = setup("/npc/millie");
+		up2 = setup("/npc/glacius");
+		left1 = setup("/npc/mindy");
+		left2 = setup("/npc/rayna");
+		right1 = setup("/npc/merlin");
+		right2 = setup("/npc/nova");
 	}
 
 }

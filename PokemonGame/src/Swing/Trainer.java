@@ -11,26 +11,35 @@ public class Trainer {
 	Pokemon current;
 	
 	public Trainer(String name, Pokemon[] team, int money) {
-		this.name = name;
-		this.team = team;
-		this.money = money;
-		current = team[0];
+		this(name, team, money, null, 0);
+	}
+	
+	public Trainer(String name, Pokemon[] team, Item[] items, int money) {
+		this(name, team, items, money, null, 0);
+	}
+	
+	public Trainer(String name, Pokemon[] team, Item[] items, int money, Item item) {
+		this(name, team, items, money, item, 0);
+	}
+	
+	public Trainer(String name, Pokemon[] team, Item[] items, int money, int index) {
+		this(name, team, items, money, null, index);
+	}
+	
+	public Trainer(String name, Pokemon[] team, Item[] items, int money, Item item, int index) {
+		this(name, team, money, item, index);
+		if (team.length != items.length) throw new IllegalArgumentException("Items array must be same length as team array");
+		for (int i = 0; i < team.length; i++) {
+			team[i].item = items[i];
+		}
 	}
 
 	public Trainer(String name, Pokemon[] team, int money, Item item) {
-		this.name = name;
-		this.team = team;
-		this.money = money;
-		this.item = item;
-		current = team[0];
+		this(name, team, money, item, 0);
 	}
 	
 	public Trainer(String name, Pokemon[] team, int money, int index) {
-		this.name = name;
-		this.team = team;
-		this.money = money;
-		this.flagIndex = index;
-		current = team[0];
+		this(name, team, money, null, index);
 	}
 	
 	public Trainer(String name, Pokemon[] team, int money, Item item, int index) {

@@ -66,6 +66,18 @@ public class Entity {
 			case "right":
 				image = right1;
 				break;
+			case "up2":
+				image = up2;
+				break;
+			case "down2":
+				image = down2;
+				break;
+			case "left2":
+				image = left2;
+				break;
+			case "right2":
+				image = right2;
+				break;
 			}
 			
 			g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
