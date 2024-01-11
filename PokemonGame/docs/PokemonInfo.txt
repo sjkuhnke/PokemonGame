@@ -156,6 +156,8 @@ Level Up:
 55 - Steel Beam
 60 - Flare Blitz
 70 - Eruption
+75 - Stealth Rock
+80 - Spikes
 
 ===================
 007 - Lizish
@@ -196,7 +198,7 @@ Level Up:
 15 - Mud Sport
 17 - Bite
 19 - Mean Look
-23 - Slam
+23 - Fire Fang
 26 - Aqua Jet
 32 - Dragon Tail
 
@@ -220,7 +222,7 @@ Level Up:
 15 - Mud Sport
 16 - Bite
 19 - Mean Look
-23 - Slam
+23 - Fire Fang
 26 - Aqua Jet
 32 - Dragon Tail
 36 - Channeling Blow
@@ -233,6 +235,7 @@ Level Up:
 66 - Wave Crash
 72 - Outrage
 80 - Hydro Cannon
+85 - Spikes
 
 ===================
 010 - Hummingspark
@@ -310,8 +313,8 @@ Level Up:
 36 - Dazzling Gleam
 41 - Roost
 43 - Prismatic Laser
-46 - Sunny Day
-49 - Hurricane
+46 - Hurricane
+49 - Sunny Day
 52 - Morning Sun
 55 - Sunny Doom
 60 - Aeroblast
@@ -635,7 +638,7 @@ Level Up:
 15 - Hidden Power
 18 - Focus Energy
 18 - Poison Fang
-20 - Slam
+20 - Coil
 22 - Thief
 25 - Pin Missile
 30 - Aqua Tail
@@ -659,7 +662,7 @@ Level Up:
 15 - Hidden Power
 18 - Focus Energy
 18 - Poison Fang
-20 - Slam
+20 - Coil
 22 - Thief
 25 - Pin Missile
 30 - Aqua Tail
@@ -689,7 +692,7 @@ Level Up:
 15 - Hidden Power
 18 - Focus Energy
 18 - Poison Fang
-20 - Slam
+20 - Coil
 22 - Thief
 25 - Pin Missile
 30 - Aqua Tail
@@ -1194,9 +1197,7 @@ Level Up:
 31 - Agility
 34 - X-Scissor
 37 - Sacred Sword
-39 - Speedy Shuriken
-39 - Machete Jab
-39 - Pistol Pop
+39 - Staff Jab
 42 - First Impression
 45 - Detect
 50 - No Retreat
@@ -1361,7 +1362,7 @@ Level Up:
 21 - Magnitude
 23 - Smack Down
 26 - Rollout
-29 - Slam
+29 - Stealth Rock
 32 - Self-Destruct
 36 - Rock Blast
 
@@ -1387,7 +1388,7 @@ Level Up:
 21 - Magnitude
 23 - Smack Down
 26 - Rollout
-29 - Slam
+29 - Stealth Rock
 32 - Self-Destruct
 36 - Rock Blast
 40 - Fire Blast
@@ -1421,7 +1422,7 @@ Level Up:
 21 - Magnitude
 23 - Smack Down
 26 - Rollout
-29 - Slam
+29 - Stealth Rock
 32 - Self-Destruct
 36 - Rock Blast
 36 - Dazzling Gleam
@@ -1456,7 +1457,7 @@ Level Up:
 19 - Low Sweep
 22 - Psycho Cut
 24 - Rock Tomb
-28 - Slam
+28 - Stealth Rock
 
 ===================
 053 - Carinator
@@ -1480,7 +1481,7 @@ Level Up:
 19 - Low Sweep
 22 - Psycho Cut
 24 - Rock Tomb
-28 - Slam
+28 - Stealth Rock
 30 - Rock Polish
 35 - Psychic Fangs
 38 - Curse
@@ -1492,10 +1493,10 @@ Level Up:
 054 - Cairnasaur
 ===================
 Type:
-Rock / Dragon
+Rock / Psychic
 
 Ability:
-Synchronize / Regenerator
+Psychic Surge / Regenerator
 
 Base Stats:
 99 HP / 120 Atk / 75 Def / 62 SpA / 96 SpD / 70 Spe / 522 BST
@@ -1510,7 +1511,7 @@ Level Up:
 19 - Low Sweep
 22 - Psycho Cut
 24 - Rock Tomb
-28 - Slam
+28 - Stealth Rock
 30 - Shadow Claw
 33 - Dragon Rage
 37 - Psychic Fangs
@@ -1681,7 +1682,7 @@ Base Stats:
 85 HP / 30 Atk / 65 Def / 120 SpA / 120 SpD / 75 Spe / 495 BST
 
 Level Up:
-1 - Peck
+1 - Frostbind
 15 - Ice Shard
 20 - Psybeam
 22 - Scary Face
@@ -1692,7 +1693,8 @@ Level Up:
 40 - Psychic
 43 - Trick
 46 - Blizzard
-50 - Freezing Glare
+50 - Aurora Veil
+53 - Freezing Glare
 60 - Luster Purge
 
 ===================
@@ -1708,7 +1710,7 @@ Base Stats:
 90 HP / 64 Atk / 67 Def / 85 SpA / 71 SpD / 58 Spe / 435 BST
 
 Level Up:
-1 - Double Hit
+1 - Take Down
 1 - Leer
 5 - Headbutt
 10 - Powder Snow
@@ -1718,7 +1720,7 @@ Level Up:
 25 - Magic Blast
 30 - Light Beam
 33 - Snowscape
-35 - Take Down
+35 - Frostbind
 39 - Aurora Veil
 42 - Trick
 45 - Blizzard
@@ -1770,6 +1772,7 @@ Level Up:
 40 - Blizzard
 45 - Tailwind
 50 - Quiver Dance
+55 - Frostbind
 
 ===================
 064 - Grondor
@@ -1934,8 +1937,9 @@ Level Up:
 28 - Body Slam
 31 - Rest
 31 - Snore
-32 - Aurora Veil
-38 - Snowscape
+32 - Frostbind
+36 - Snowscape
+40 - Aurora Veil
 43 - Blizzard
 
 ===================
@@ -1964,8 +1968,9 @@ Level Up:
 28 - Body Slam
 31 - Rest
 31 - Snore
-32 - Aurora Veil
-38 - Snowscape
+32 - Frostbind
+36 - Snowscape
+40 - Aurora Veil
 43 - Blizzard
 44 - Ice Fang
 50 - Sheer Cold
@@ -2249,7 +2254,7 @@ Base Stats:
 Level Up:
 1 - Vine Whip
 3 - Scratch
-5 - Leer
+5 - Fake Tears
 9 - Confusion
 12 - Detect
 16 - Leech Seed
@@ -2274,7 +2279,7 @@ Base Stats:
 Level Up:
 1 - Vine Whip
 3 - Scratch
-5 - Leer
+5 - Fake Tears
 9 - Confusion
 12 - Detect
 16 - Leech Seed
@@ -2751,7 +2756,7 @@ Level Up:
 1 - Tackle
 1 - Tail Whip
 5 - Ember
-9 - Slam
+9 - Body Slam
 11 - Mud-Slap
 14 - Double Team
 19 - Flame Wheel
@@ -2775,7 +2780,7 @@ Level Up:
 1 - Tackle
 1 - Tail Whip
 5 - Ember
-9 - Slam
+9 - Body Slam
 11 - Mud-Slap
 14 - Double Team
 19 - Flame Wheel
@@ -2805,7 +2810,7 @@ Level Up:
 1 - Tackle
 1 - Tail Whip
 5 - Ember
-9 - Slam
+9 - Body Slam
 11 - Mud-Slap
 14 - Double Team
 19 - Flame Wheel
@@ -3107,7 +3112,7 @@ Base Stats:
 
 Level Up:
 1 - Charm
-1 - Slam
+1 - Fiery Dance
 1 - Roar
 1 - Play Nice
 5 - Confuse Ray
@@ -3140,7 +3145,7 @@ Level Up:
 4 - Charge
 8 - Wrap
 13 - Thunder Wave
-17 - Slam
+17 - Coil
 21 - Spark
 25 - Scary Face
 27 - Thunder Fang
@@ -3162,7 +3167,7 @@ Level Up:
 4 - Charge
 8 - Wrap
 13 - Thunder Wave
-17 - Slam
+17 - Coil
 21 - Spark
 25 - Scary Face
 27 - Thunder Fang
@@ -3190,7 +3195,7 @@ Level Up:
 1 - Gyro Ball
 1 - Iron Defense
 1 - Night Slash
-1 - Slam
+1 - Coil
 1 - Spark
 1 - Double Hit
 1 - Knock Off
@@ -3407,7 +3412,7 @@ Level Up:
 1 - Spiky Shield
 10 - Metal Claw
 15 - Snarl
-20 - Slam
+20 - Take Down
 25 - Rollout
 30 - Flash
 30 - Flash Cannon
@@ -3953,7 +3958,7 @@ Level Up:
 1 - Aqua Jet
 3 - Tail Whip
 7 - Scary Face
-10 - Slam
+10 - Skull Bash
 14 - Jaw Lock
 17 - Thief
 21 - Beat Up
@@ -3995,6 +4000,7 @@ Level Up:
 55 - Dragon Rush
 60 - Brave Bird
 65 - Outrage
+70 - Unseen Strangle
 
 ===================
 143 - Posho
@@ -4035,7 +4041,7 @@ Base Stats:
 
 Level Up:
 1 - Bite
-3 - Slam
+3 - Dragon Dance
 5 - Rage
 10 - Dragon Breath
 12 - Bubblebeam
@@ -4089,6 +4095,7 @@ Level Up:
 60 - Spacial Rend
 70 - Draco Meteor
 75 - Wave Crash
+80 - Dragon Dance
 
 ===================
 146 - Binacle
@@ -4157,6 +4164,7 @@ Level Up:
 50 - Swords Dance
 54 - Stone Edge
 60 - Wave Crash
+65 - Focus Energy
 
 ===================
 148 - Durfish
@@ -4870,11 +4878,11 @@ Level Up:
 13 - Wrap
 17 - Mud Shot
 20 - Dig
-26 - Aurora Beam
+26 - Iron Defense
 30 - Iron Tail
-33 - Light Beam
+33 - Spikes
 39 - Earthquake
-43 - Flash Cannon
+43 - Iron Head
 
 ===================
 173 - Wormatron
@@ -4895,15 +4903,15 @@ Level Up:
 13 - Wrap
 17 - Mud Shot
 20 - Dig
-26 - Aurora Beam
+26 - Iron Defense
 30 - Iron Tail
-33 - Light Beam
+33 - Spikes
 39 - Earthquake
-43 - Flash Cannon
+43 - Iron Head
 48 - Fissure
-53 - Gyro Ball
-57 - Dragon Pulse
-60 - Fire Blast
+53 - Dragon Pulse
+57 - Earth Power
+60 - Dragon Dance
 65 - Fatal Bind
 70 - Draco Meteor
 
@@ -5196,6 +5204,7 @@ Base Stats:
 
 Level Up:
 1 - Knock Off
+1 - Focus Energy
 1 - Scratch
 5 - Protect
 10 - Pop Pop
@@ -5328,7 +5337,7 @@ Level Up:
 16 - Glittering Tornado
 19 - Light Beam
 22 - Water Pulse
-24 - Slam
+24 - Glitter Dance
 26 - Twister
 30 - Dragon Breath
 33 - Luster Purge
@@ -5354,7 +5363,7 @@ Level Up:
 16 - Glittering Tornado
 19 - Light Beam
 22 - Water Pulse
-24 - Slam
+24 - Glitter Dance
 26 - Twister
 30 - Dragon Breath
 33 - Luster Purge
@@ -5386,7 +5395,7 @@ Level Up:
 16 - Glittering Tornado
 19 - Light Beam
 22 - Water Pulse
-24 - Slam
+24 - Glitter Dance
 26 - Twister
 30 - Dragon Breath
 33 - Glitzy Glow
@@ -5713,6 +5722,7 @@ Base Stats:
 
 Level Up:
 1 - Knock Off
+1 - Focus Energy
 1 - Magnet Rise
 3 - Screech
 6 - Protect
@@ -5751,7 +5761,7 @@ Level Up:
 1 - Tackle
 1 - Tail Whip
 5 - Thundershock
-9 - Slam
+9 - Body Slam
 11 - Ember
 14 - Flame Charge
 19 - Spark
@@ -5775,7 +5785,7 @@ Level Up:
 1 - Tackle
 1 - Tail Whip
 5 - Thundershock
-9 - Slam
+9 - Body Slam
 11 - Ember
 14 - Flame Charge
 19 - Spark
@@ -5805,7 +5815,7 @@ Level Up:
 1 - Tackle
 1 - Tail Whip
 5 - Thundershock
-9 - Slam
+9 - Body Slam
 11 - Ember
 14 - Flame Charge
 19 - Spark
@@ -6532,11 +6542,12 @@ Level Up:
 32 - Air Slash
 34 - Whirlwind
 36 - Curse
-39 - Shadow Ball
-43 - Bitter Malice
+39 - Bitter Malice
+43 - Shadow Ball
 46 - Hurricane
 50 - Venom Spit
-55 - Aeroblast
+55 - Frostbind
+60 - Aeroblast
 
 ===================
 228 - Soarwhell

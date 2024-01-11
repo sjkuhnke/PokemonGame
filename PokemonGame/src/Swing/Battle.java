@@ -1566,6 +1566,7 @@ public class Battle extends JFrame {
 	    private Color backgroundColorA;
 	    private Color backgroundColorB;
 	    private boolean solid = false;
+	    private boolean solidGradient = false;
 
 	    public JGradientButton(String text) {
 	        super(text);
@@ -1575,6 +1576,10 @@ public class Battle extends JFrame {
 	    
 	    public void setSolid(boolean a) {
 	    	solid = a;
+	    }
+	    
+	    public void setSolidGradient(boolean a) {
+	    	solidGradient = a;
 	    }
 
 	    // Set the background gradient colors
@@ -1604,24 +1609,36 @@ public class Battle extends JFrame {
 
 	    @Override
 	    protected void paintComponent(Graphics g) {
-	    	Color middle = solid ? backgroundColorA : Color.white;
-	    	
-    		Graphics2D g2 = (Graphics2D) g.create();
-	        g2.setPaint(new GradientPaint(
-	                new Point(0, 0),
-	                backgroundColorA,
-	                new Point(0, getHeight() / 3),
-	                middle));
-	        g2.fillRect(0, 0, getWidth(), getHeight() / 3);
-	        g2.setPaint(new GradientPaint(
-	                new Point(0, getHeight() / 3),
-	                middle,
-	                new Point(0, getHeight()),
-	                backgroundColorB));
-	        g2.fillRect(0, getHeight() / 3, getWidth(), getHeight());
-	        g2.dispose();
-	    	
-	    	super.paintComponent(g);
+	    	if (!solidGradient) {
+	    		Color middle = solid ? backgroundColorA : Color.white;
+		    	
+	    		Graphics2D g2 = (Graphics2D) g.create();
+		        g2.setPaint(new GradientPaint(
+		                new Point(0, 0),
+		                backgroundColorA,
+		                new Point(0, getHeight() / 3),
+		                middle));
+		        g2.fillRect(0, 0, getWidth(), getHeight() / 3);
+		        g2.setPaint(new GradientPaint(
+		                new Point(0, getHeight() / 3),
+		                middle,
+		                new Point(0, getHeight()),
+		                backgroundColorB));
+		        g2.fillRect(0, getHeight() / 3, getWidth(), getHeight());
+		        g2.dispose();
+		    	
+		    	super.paintComponent(g);
+	    	} else {
+	    		Graphics2D g2 = (Graphics2D) g;
+	    		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT);
+	    		int w = getWidth();
+	    		int h = getHeight();
+	    		GradientPaint gp = new GradientPaint(0, 0, backgroundColorA, w, h, new Color(245, 225, 210));
+	            g2.setPaint(gp);
+	            g2.fillRect(0, 0, w, h);
+	            
+	            super.paintComponent(g);
+	    	}
 	    }
 	}
 	

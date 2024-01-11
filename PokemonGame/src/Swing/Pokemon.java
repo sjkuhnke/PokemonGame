@@ -4787,7 +4787,7 @@ public class Pokemon implements Serializable {
 	private void statusEffect(Pokemon foe, Move move, Player player, Pokemon[] team, Trainer enemy, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide,
 			boolean announce) {
 		boolean fail = false;
-		if (announce && move == Move.ABDUCT || move == Move.TAKE_OVER || move == Move.MAGIC_REFLECT) {
+		if (announce && (move == Move.ABDUCT || move == Move.TAKE_OVER || move == Move.MAGIC_REFLECT)) {
 			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success)) {
 				foe.vStatuses.add(Status.POSESSED);
 				console.writeln(this.nickname + " posessed " + foe.nickname + "!");
@@ -8173,8 +8173,7 @@ public class Pokemon implements Serializable {
 			movebank[34].next = new Node(Move.PLAY_ROUGH);
 			movebank[39] = new Node(Move.BULK_UP);
 			movebank[39].next = new Node(Move.CIRCLE_THROW);
-			movebank[44] = new Node(Move.SEISMIC_TOSS);
-			movebank[44].next = new Node(Move.HAMMER_ARM);
+			movebank[44] = new Node(Move.HAMMER_ARM);
 			movebank[49] = new Node(Move.ICE_PUNCH);
 			movebank[49].next = new Node(Move.TWINKLE_TACKLE);
 			movebank[54] = new Node(Move.SKY_UPPERCUT);
@@ -12452,7 +12451,7 @@ public class Pokemon implements Serializable {
 	        buttons[i] = new JGradientButton(moves[i]);
 	        if (pokemon.moveset[i] != null) buttons[i].setBackground(pokemon.moveset[i].move.mtype.getColor());
 	        if (!pokemon.moveset[i].move.isTM() && !movebankList.contains(pokemon.moveset[i].move)) {
-	        	buttons[i].setSolid(true);
+	        	buttons[i].setSolidGradient(true);
 	        }
 	        
 	        if (moves[i].equals("")) {

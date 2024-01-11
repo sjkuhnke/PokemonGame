@@ -365,7 +365,7 @@ Route 31========================================================================
 20% Ali (Lv. 24 - 26)
 25% Durfish-S (Lv. 22 - 24)
 
-Shadow Ravine 1A===============================================================================================
+Shadow Ravine 1B===============================================================================================
 15% Wormbot (Lv. 25 - 29)
 25% Wormbot-S (Lv. 25 - 29)
 8% Cluuz-S (Lv. 26 - 28)
@@ -594,6 +594,15 @@ Mindagan Cavern 0===============================================================
 10% Blobmo (Lv. 24 - 28)
 15% Rockmite (Lv. 26 - 30)
 
+Route 43 (W)===============================================================================================
+9% Sewaddle (Lv. 2 - 3)
+12% Lotad (Lv. 2 - 3)
+21% Kleinowl (Lv. 2 - 3)
+16% Froshrog (Lv. 2 - 4)
+14% Ralts (Lv. 2 - 3)
+13% Sparkdust (Lv. 2 - 3)
+15% Twigzap (Lv. 2 - 3)
+
 Hummingspark : 5 : 24.60%
 Flashclaw : 3 : 14.00%
 Magestiflash : 1 : 13.00%
@@ -609,14 +618,14 @@ Sapwin : 4 : 11.25%
 Treewin : 1 : 7.00%
 Budew : 3 : 15.33%
 Roselia : 1 : 5.00%
-Sewaddle : 2 : 15.00%
+Sewaddle : 3 : 13.00%
 Swadloon : 2 : 10.00%
 Grubbin : 2 : 15.00%
 Charjabug : 1 : 15.00%
 Busheep : 3 : 8.33%
 Bugik : 2 : 14.00%
 Swordik : 1 : 15.00%
-Lotad : 2 : 42.50%
+Lotad : 3 : 32.33%
 Lombre : 1 : 10.00%
 Bluebunn : 3 : 19.67%
 Rocky : 4 : 30.00%
@@ -625,7 +634,7 @@ Carinator : 3 : 22.33%
 Pebblepup : 4 : 8.50%
 Boulderoar : 1 : 12.00%
 Fightorex : 2 : 15.00%
-Kleinowl : 2 : 14.50%
+Kleinowl : 3 : 16.67%
 Dualmoose : 2 : 12.50%
 Snom : 6 : 9.00%
 Grondor : 3 : 16.00%
@@ -633,7 +642,7 @@ Bipedice : 1 : 2.00%
 Tricerpup : 2 : 10.00%
 Tricercil : 1 : 10.00%
 Spheal : 4 : 22.00%
-Froshrog : 7 : 15.29%
+Froshrog : 8 : 15.37%
 Bugop : 5 : 25.20%
 Opwing : 5 : 17.00%
 Hatenna : 5 : 12.20%
@@ -642,7 +651,7 @@ Otterpor : 6 : 18.00%
 Psylotter : 1 : 30.00%
 Florline : 3 : 13.33%
 Psycorb : 3 : 15.00%
-Ralts : 2 : 15.00%
+Ralts : 3 : 14.67%
 Kirlia : 2 : 11.50%
 Gardevoir : 1 : 5.00%
 Tigrette : 3 : 18.00%
@@ -655,12 +664,12 @@ Flamehox : 1 : 100.00%
 Tiowoo : 2 : 13.50%
 Houndour : 1 : 20.00%
 Houndoom : 2 : 16.50%
-Sparkdust : 1 : 5.00%
+Sparkdust : 2 : 9.00%
 Splame : 1 : 20.00%
 Sparkitten : 3 : 15.33%
 Shookwat : 2 : 45.00%
 Elelamb : 4 : 8.50%
-Twigzap : 2 : 32.50%
+Twigzap : 3 : 26.67%
 Shockbranch : 1 : 3.00%
 Magie : 1 : 10.00%
 Cumin : 1 : 9.00%
