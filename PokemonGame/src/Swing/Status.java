@@ -38,6 +38,7 @@ public enum Status {
 	WISH("AUT",Color.BLACK,Color.BLACK),
 	HEALING("AUT",Color.BLACK,Color.BLACK),
 	MUTE("AUT",Color.BLACK,Color.BLACK),
+	SWAP("AUT",Color.BLACK,Color.BLACK),
 	;
 	
 	Status(String name, Color color, Color textColor) {

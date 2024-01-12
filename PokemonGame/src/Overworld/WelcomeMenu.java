@@ -13,7 +13,9 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -259,6 +261,17 @@ public class WelcomeMenu extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        // Sort the file names based on the last modified time
+        fileNames.sort(Comparator.comparing(path -> {
+            try {
+            	FileTime time = Files.getLastModifiedTime(Paths.get("./saves/" + path));
+                return time.toMillis();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 0L;
+            }
+        }).reversed());
 
         return fileNames;
 	}

@@ -766,7 +766,7 @@ public class Main {
 				new Trainer("CM", new Pokemon[]{new Pokemon(105, 55, false, true), new Pokemon(107, 56, false, true), new Pokemon(6, 56, false, true)}, new Item[]{Item.FOCUS_SASH, Item.KEBIA_BERRY, Item.SHUCA_BERRY}, 100), // 240
 				new Trainer("CN", new Pokemon[]{new Pokemon(157, 56, false, true), new Pokemon(180, 57, false, true), new Pokemon(214, 57, false, true)}, new Item[]{Item.ROCKY_HELMET, Item.FOCUS_SASH, Item.LEFTOVERS}, 100),
 				new Trainer("Scott 4", new Pokemon[]{new Pokemon(10, 5, false, true)}, 500),
-				new Trainer("CO", new Pokemon[]{new Pokemon(113, 57, false, true), new Pokemon(119, 58, false, true), new Pokemon(116, 57, false, true), new Pokemon(201, 57, false, true), new Pokemon(125, 57, false, true)}, new Item[]{Item.FOCUS_BAND, Item.QUICK_CLAW, Item.LIECHI_BERRY, Item.MUSCLE_BAND}, 100),
+				new Trainer("CO", new Pokemon[]{new Pokemon(113, 57, false, true), new Pokemon(119, 58, false, true), new Pokemon(116, 57, false, true), new Pokemon(201, 57, false, true), new Pokemon(125, 57, false, true)}, new Item[]{Item.FOCUS_BAND, Item.QUICK_CLAW, Item.LIECHI_BERRY, Item.MUSCLE_BAND, Item.ENCHANTED_AMULET}, 100),
 				new Trainer("CP", new Pokemon[]{new Pokemon(165, 58, false, true), new Pokemon(128, 58, false, true)}, new Item[]{Item.FLAME_ORB, Item.CLEAR_AMULET}, 100),
 				new Trainer("CQ", new Pokemon[]{new Pokemon(100, 58, false, true), new Pokemon(189, 58, false, true)}, new Item[]{Item.CUSTAP_BERRY, Item.HEAVY$DUTY_BOOTS}, 100), // 245
 				new Trainer("6 Gym A", new Pokemon[]{new Pokemon(51, 59, false, true), new Pokemon(51, 60, false, true), new Pokemon(51, 60, false, true)}, new Item[]{Item.BRIGHT_POWDER, Item.WHITE_HERB, Item.RINDO_BERRY}, 200),
