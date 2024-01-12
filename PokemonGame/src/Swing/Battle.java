@@ -192,7 +192,7 @@ public class Battle extends JFrame {
 		        		if (me.getCurrent().movesetEmpty()) move = Move.STRUGGLE;
 		        		
 			        	if (foe.trainerOwned()) {
-			        		turn(me.getCurrent(), foe, move, foe.bestMove(me.getCurrent(), false), pl, gp);
+			        		turn(me.getCurrent(), foe, move, foe.bestMove(me.getCurrent(), false, foeTrainer), pl, gp);
 			        	} else {
 			        		turn(me.getCurrent(), foe, move, foe.randomMove(), pl, gp);
 			        	}
@@ -761,10 +761,38 @@ public class Battle extends JFrame {
 				}
 				boolean swapping = me.getCurrent().vStatuses.contains(Status.SWITCHING);
 				
-				Move move = foe.trainerOwned() ? foe.bestMove(me.current, false) : foe.randomMove();
+				Move move = foe.trainerOwned() ? foe.bestMove(me.current, false, foeTrainer) : foe.randomMove();
+				Pokemon oldCurrent = me.getCurrent().clone();
 				
-				me.swap(me.team[index], index);
-				me.getCurrent().swapIn(foe, me, true);
+				boolean foeCanMove = true;
+    			if (foeTrainer.getCurrent().vStatuses.contains(Status.SWAP)) { // AI wants to swap out
+    				Pokemon faster = me.getCurrent().getFaster(foe, 0, 0);
+    				if (me.getCurrent() == faster) {
+    					me.swap(me.team[index], index);
+    					me.getCurrent().swapIn(foe, me, true);
+    					
+    					foe = foeTrainer.getSwap(oldCurrent);
+        				if (foe != foeTrainer.getCurrent()) {
+        					foeTrainer.swap(foeTrainer.getCurrent(), foe);
+        					foe.swapIn(me.getCurrent(), me, true);
+        					foeCanMove = false;
+        				}
+    				} else {
+    					foe = foeTrainer.getSwap(oldCurrent);
+        				if (foe != foeTrainer.getCurrent()) {
+        					foeTrainer.swap(foeTrainer.getCurrent(), foe);
+        					foe.swapIn(me.getCurrent(), me, true);
+        					foeCanMove = false;
+        				}
+        				
+        				me.swap(me.team[index], index);
+        				me.getCurrent().swapIn(foe, me, true);
+    				}
+    				
+    			} else {
+    				me.swap(me.team[index], index);
+    				me.getCurrent().swapIn(foe, me, true);
+    			}
 				updateField(field);
 				foe.vStatuses.remove(Status.TRAPPED);
 				foe.vStatuses.remove(Status.SPUN);
@@ -779,11 +807,13 @@ public class Battle extends JFrame {
 	            }
 				if (!me.team[index].isFainted() && !swapping) {
 	        		if (foeTrainer != null) {
-	        			foe.move(me.getCurrent(), move, me, foeTrainer.getTeam(), foeTrainer, false);
-	        			if (foe.vStatuses.contains(Status.SWITCHING)) {
-	        	        	foeTrainer.swapRandom(me.getCurrent(), me, false, foe.lastMoveUsed == Move.BATON_PASS);
-	        	        	foe = foeTrainer.current;
-	        	        }
+	        			if (foeCanMove) {
+	        				foe.move(me.getCurrent(), move, me, foeTrainer.getTeam(), foeTrainer, false);
+	        				if (foe.vStatuses.contains(Status.SWITCHING)) {
+		        	        	foeTrainer.swapRandom(me.getCurrent(), me, false, foe.lastMoveUsed == Move.BATON_PASS);
+		        	        	foe = foeTrainer.current;
+		        	        }
+	        			}
 	        		} else {
 	        			foe.move(me.getCurrent(), move, me, null, null, false);
 		        	}
@@ -1315,7 +1345,20 @@ public class Battle extends JFrame {
 		
 		Pokemon slower = faster == p1 ? p2 : p1;
 		
+		boolean foeCanMove = true;
+		
 		if (faster == p1) { // player Pokemon is faster
+			if (slower.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
+				slower = foeTrainer.getSwap(me.getCurrent());
+				if (slower != foeTrainer.getCurrent()) {
+					foeTrainer.swap(foeTrainer.getCurrent(), slower);
+					slower.swapIn(me.getCurrent(), me, true);
+					me.getCurrent().vStatuses.remove(Status.TRAPPED);
+					me.getCurrent().vStatuses.remove(Status.SPUN);
+					foeCanMove = false;
+				}
+			}
+			
 			Pokemon[] team = me.getTeam();
 			Pokemon[] enemyTeam = foeTrainer == null ? null : foeTrainer.getTeam();
 			if (m1 == Move.SUCKER_PUNCH && m2.cat == 2) m1 = Move.FAILED_SUCKER;
@@ -1324,10 +1367,10 @@ public class Battle extends JFrame {
 			if (faster.vStatuses.contains(Status.SWITCHING)) faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS);
 			
 			if (m2 == Move.SUCKER_PUNCH && m1.cat == 2) m2 = Move.FAILED_SUCKER;
-	        if (!(foeTrainer != null && slower != foeTrainer.getCurrent())) slower.move(faster, m2, me, enemyTeam, foeTrainer, false);
+	        if (!(foeTrainer != null && slower != foeTrainer.getCurrent()) && foeCanMove) slower.move(faster, m2, me, enemyTeam, foeTrainer, false);
 	        
 	        // Check for swap (AI)
-	        if (slower.vStatuses.contains(Status.SWITCHING)) {
+	        if (foeCanMove && slower.vStatuses.contains(Status.SWITCHING)) {
 	        	foeTrainer.swapRandom(faster, me, false, slower.lastMoveUsed == Move.BATON_PASS);
 	        	slower = foeTrainer.current;
 	        }

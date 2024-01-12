@@ -362,7 +362,7 @@ public class Pokemon implements Serializable {
 	    }	    
 	}
 	
-	public Move bestMove(Pokemon foe, boolean first) {
+	public Move bestMove(Pokemon foe, boolean first, Trainer tr) {
 	    ArrayList<Move> validMoves = this.getValidMoveset();
 	    
         // Calculate and store the damage values of each move
@@ -375,11 +375,25 @@ public class Pokemon implements Serializable {
         
         // Check if there are no valid moves with non-zero PP
         if (moveToDamage.isEmpty()) {
-            return Move.STRUGGLE;
+        	if (tr.hasValidMembers()) {
+        		this.vStatuses.add(Status.SWAP);
+        		return Move.FAILED_SUCKER;
+        	} else {
+        		return Move.STRUGGLE;
+        	}
         }
         
         // Find the maximum damage value
         int maxDamage = Collections.max(moveToDamage.values());
+        
+        // 25% chance to swap in a partner if they resist and you don't
+        // 100% chance to swap in a partner if you can only struggle
+        // 75% chance to swap if all of your moves do 0 damage
+        // 20% chance to swap if the most damage you do is 1/5 or less to target
+        if (foe.lastMoveUsed != null && foe.lastMoveUsed.cat != 2 && !tr.resists(this, foe.lastMoveUsed.mtype) && tr.hasResist(foe.lastMoveUsed.mtype)) {
+        	this.vStatuses.add(Status.SWAP);
+        	return Move.FAILED_SUCKER;
+        }
         
         // Filter moves based on conditions and max damage
         ArrayList<Move> bestMoves = new ArrayList<>();
@@ -391,6 +405,9 @@ public class Pokemon implements Serializable {
         		bestMoves.add(move);
         		bestMoves.add(move);
         		bestMoves.add(move);
+        		if (move.priority > 0) {
+        			bestMoves.add(move);
+        		}
         	}
         	if (move.cat == 2 || move == Move.NUZZLE || move == Move.SWORD_SPIN || move == Move.POWER$UP_PUNCH || move == Move.VENOM_SPIT) {
         		if (move.accuracy > 100) {
@@ -4183,7 +4200,7 @@ public class Pokemon implements Serializable {
 //		} else if (move == Move.BLAZING_SWORD) {
 //			foe.burn(false, this);
 		} else if (move == Move.BLIZZARD) {
-			foe.freeze(false);
+			foe.freeze(false, this);
 		} else if (move == Move.BLUE_FLARE) {
 			foe.burn(false, this);
 		} else if (move == Move.BODY_SLAM) {
@@ -4344,9 +4361,9 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.FORCE_PALM) {
 			foe.paralyze(false, this);
 		} else if (move == Move.FREEZE$DRY) {
-			foe.freeze(false);
+			foe.freeze(false, this);
 		} else if (move == Move.FREEZING_GLARE) {
-			foe.freeze(false);
+			foe.freeze(false, this);
 		} else if (move == Move.GLACIATE) {
 			stat(foe, 4, -1, this);
 		} else if (move == Move.GLITTERING_SWORD) {
@@ -4373,20 +4390,20 @@ public class Pokemon implements Serializable {
 				foe.item = null;
 			}
 		} else if (move == Move.ICE_BEAM) {
-			foe.freeze(false);
+			foe.freeze(false, this);
 		} else if (move == Move.ICE_FANG) {
 			int randomNum = ((int) Math.random() * 3);
 			if (randomNum == 0) {
-				foe.freeze(false);
+				foe.freeze(false, this);
 			} else if (randomNum == 1 && first) {
 				foe.vStatuses.add(Status.FLINCHED);
 			}
 			 else if (randomNum == 2) {
 				if (first) foe.vStatuses.add(Status.FLINCHED);
-				foe.freeze(false);
+				foe.freeze(false, this);
 			}
 		} else if (move == Move.ICE_PUNCH) {
-			foe.freeze(false);
+			foe.freeze(false, this);
 		} else if (move == Move.ICICLE_CRASH && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.ICE_SPINNER) {
@@ -4480,7 +4497,7 @@ public class Pokemon implements Serializable {
 				}
 				break;
 			case 4:
-				foe.freeze(false);
+				foe.freeze(false, this);
 				break;
 			default:
 				return;
@@ -4564,7 +4581,7 @@ public class Pokemon implements Serializable {
 //		} else if (move == Move.POISONOUS_WATER) {
 //			foe.poison(false, this);
 		} else if (move == Move.POWDER_SNOW) {
-			foe.freeze(false);
+			foe.freeze(false, this);
 		} else if (move == Move.POWER$UP_PUNCH) {
 			stat(this, 0, 1, foe);
 		} else if (move == Move.PSYBEAM) {
@@ -4719,7 +4736,7 @@ public class Pokemon implements Serializable {
 				foe.paralyze(false, this);
 			}
 			 else if (randomNum == 2) {
-				foe.freeze(false);
+				foe.freeze(false, this);
 			}
 		} else if (move == Move.TORNADO_SPIN) {
 			stat(this, 4, 1, foe);
@@ -4990,6 +5007,8 @@ public class Pokemon implements Serializable {
 			foe.type1 = PType.GRASS;
 			foe.type2 = null;
 			if (announce) console.writeln(foe.nickname + "'s type was changed to Grass!");
+		} else if (announce && move == Move.FROSTBIND) {
+			foe.freeze(true, this);
 		} else if (announce && move == Move.GASTRO_ACID) {
 			foe.ability = Ability.NULL;
 			if (announce) console.writeln(foe.nickname + "'s ability was supressed!");
@@ -11034,6 +11053,8 @@ public class Pokemon implements Serializable {
 		this.vStatuses.remove(Status.PROTECT);
 		this.vStatuses.remove(Status.ENDURE);
 		this.vStatuses.remove(Status.SWITCHING);
+		boolean result = this.vStatuses.remove(Status.SWAP);
+		if (result) System.out.println(this.nickname + " had swap at the end of the turn (bad)");
 		
 		this.impressive = false;
 	}
@@ -11252,7 +11273,7 @@ public class Pokemon implements Serializable {
 		}
 	}
 	
-	public void freeze(boolean announce) {
+	public void freeze(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
 		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
@@ -11269,6 +11290,10 @@ public class Pokemon implements Serializable {
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.FROSTBITE;
 			console.writeln(this.nickname + " was frostbitten!");
+			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
+				console.writeAbility(this);
+				foe.freeze(false, this);
+			}
 			if (this.item == Item.ASPEAR_BERRY || this.item == Item.LUM_BERRY) {
 				console.writeln(this.nickname + " ate its " + this.item.toString() + " to cure its frostbite!");
 				this.status = Status.HEALTHY;
@@ -12209,9 +12234,6 @@ public class Pokemon implements Serializable {
 		
 		return result;
 	}
-
-
-
 
 	public void swapIn(Pokemon foe, Player me, boolean hazards) {
 		if (this.ability == Ability.DROUGHT && !field.equals(field.weather, Effect.SUN)) {

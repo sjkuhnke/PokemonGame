@@ -98,12 +98,10 @@ public class Trainer {
 							highestBP = effectiveBP;
 							result = p;
 						}
-						//System.out.println(move + ": " + effectiveBP);
 					}
 				}
 			}
 		}
-		//System.out.println("----------------\n" + result.name + ": " + highestBPMove + "\n----------------");
 		return result;
 	}
 
@@ -175,5 +173,60 @@ public class Trainer {
 			}
 		}
 		return result;
+	}
+
+	public Pokemon getSwap(Pokemon foe) {
+		if (hasResist(foe.lastMoveUsed.mtype)) {
+			for (Pokemon p : team) {
+				if (resists(p, foe.lastMoveUsed.mtype)) return p;
+			}
+		} else {
+			return getNext(foe);
+		}
+		return this.current;
+	}
+	
+	public boolean hasResist(PType type) {
+		for (Pokemon p : team) {
+			if (resists(p, type)) return true;
+		}
+		return false;
+	}
+	
+	public boolean resists(Pokemon p, PType type) {
+		if (p.isFainted()) return false;
+		double multiplier = p.getEffectiveMultiplier(type);
+		if (p.ability == Ability.DRY_SKIN && type == PType.WATER) multiplier = 0;
+		if (p.ability == Ability.FALSE_ILLUMINATION && (type == PType.GHOST || type == PType.DARK || type == PType.LIGHT || type == PType.GALACTIC)) multiplier *= 0.5;
+		if (p.ability == Ability.FLASH_FIRE && type == PType.FIRE) multiplier = 0;
+		if (p.ability == Ability.FRIENDLY_GHOST && type == PType.GHOST) multiplier = 0;
+		if (p.ability == Ability.GALACTIC_AURA && (type == PType.ICE || type == PType.PSYCHIC)) multiplier *= 0.5;
+		if (p.ability == Ability.INSECT_FEEDER && type == PType.BUG) multiplier = 0;
+		if (p.ability == Ability.LEVITATE && type == PType.GROUND) multiplier = 0;
+		if (p.ability == Ability.LIGHTNING_ROD && type == PType.ELECTRIC) multiplier = 0;
+		if (p.ability == Ability.MOTOR_DRIVE && type == PType.ELECTRIC) multiplier = 0;
+		if (p.ability == Ability.SAP_SIPPER && type == PType.GRASS) multiplier = 0;
+		if (p.ability == Ability.THICK_FAT && (type == PType.FIRE || type == PType.ICE)) multiplier *= 0.5;
+		if (p.ability == Ability.VOLT_ABSORB && type == PType.ELECTRIC) multiplier = 0;
+		if (p.ability == Ability.WATER_ABSORB && type == PType.WATER) multiplier = 0;
+		if (p.ability == Ability.WONDER_GUARD && multiplier < 2.0) multiplier = 0;
+		
+		return multiplier < 1;
+	}
+	
+	public void swap(Pokemon oldP, Pokemon newP) {
+		Pokemon.console.writeln("\n" + name + " withdrew " + oldP.nickname + "!", false, 16);
+		if (oldP.ability == Ability.REGENERATOR) {
+			oldP.currentHP += current.getStat(0) / 3;
+			oldP.verifyHP();
+		}
+		if (oldP.vStatuses.contains(Status.HEALING)) newP.vStatuses.add(Status.HEALING);
+		if (oldP.vStatuses.contains(Status.WISH)) newP.vStatuses.add(Status.WISH);
+		oldP.clearVolatile();
+		this.current = newP;
+		Pokemon.console.write(name + " sent out ", false, 16);
+		Pokemon.console.write(current.nickname, true, 16);
+		Pokemon.console.writeln("!", false, 16);
+		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
 	}
 }

@@ -563,7 +563,7 @@ public enum Move {
 	TOXIC(0,90,0,0,2,0,PType.POISON,"Badly poisons foe",false,5),
 	TOXIC_SPIKES(0,1000,0,0,2,0,PType.POISON,"Lays poisonous spikes on opponents side. 1 layer will cause any non-grounded foe switching in to be Poisoned, 2 = Toxic. POISON-types swtiching in removes them",false,10),
 	TRI$ATTACK(80,100,20,0,1,0,PType.NORMAL,"% chance to either Burn, Paralyze or Frostbite foe",false,10),
-	TRICK(0,100,0,0,2,0,PType.PSYCHIC,"Swaps the user's and foe's held items",false,10),
+	TRICK(0,100,0,0,2,0,PType.MAGIC,"Swaps the user's and foe's held items",false,10),
 	TRICK_ROOM(0,1000,0,0,2,-7,PType.PSYCHIC,"Speed order is reversed for 6 turns",false,5),
 	TWINKLE_TACKLE(85,90,20,0,0,0,PType.MAGIC,"% chance to lower foe's Attack and Sp.Atk by 1",true,10),
 	TWINEEDLE(25,100,50,0,0,0,PType.BUG,"% chance to Poison foe",false,20),
