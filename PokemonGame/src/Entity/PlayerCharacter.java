@@ -1059,7 +1059,11 @@ public class PlayerCharacter extends Entity {
 				                			});
 				                            moves.add(moveButton);
 				                        }
-				                        JOptionPane.showMessageDialog(null, moves, "Teach a Move?", JOptionPane.QUESTION_MESSAGE);
+				                        JScrollPane scrollPane = new JScrollPane(moves);
+				                		scrollPane.setPreferredSize(new Dimension(200, 300));
+				                		scrollPane.getVerticalScrollBar().setUnitIncrement(6);
+
+				                        JOptionPane.showMessageDialog(null, scrollPane, "Teach a Move?", JOptionPane.QUESTION_MESSAGE);
 				                    }
 								}
 							});
