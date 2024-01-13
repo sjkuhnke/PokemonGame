@@ -164,7 +164,7 @@ public enum Move {
 	FAKE_TEARS(0,100,0,0,2,0,PType.DARK,"Lowers foe's Sp.Def by 2",false,20),
 	FAILED_SUCKER(0,100,0,0,0,0,PType.DARK,"If you're seeing this, something went horribly wrong",false,1),
 	FALSE_SURRENDER(80,1000,0,0,0,0,PType.DARK,"This attack never misses",true,10),
-	FATAL_BIND(70,85,100,0,0,0,PType.BUG,"% to cause foe to faint in 3 turns",true,3),
+	FATAL_BIND(70,85,100,0,0,0,PType.BUG,"% to cause the user and foe to faint in 3 turns",true,3),
 	FEATHER_DANCE(0,100,0,0,2,0,PType.FLYING,"Lowers foe's Attack by 2",false,15),
 	FEINT(30,100,0,0,0,2,PType.NORMAL,"Always goes first, and hits through protect",false,10),
 	FEINT_ATTACK(60,1000,0,0,0,0,PType.DARK,"This attack always hits",true,20),
