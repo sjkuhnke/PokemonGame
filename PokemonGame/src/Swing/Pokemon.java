@@ -4362,6 +4362,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.FIRE_BLAST) {
 			foe.burn(false, this);
 		} else if (move == Move.FATAL_BIND) {
+			this.perishCount = (this.perishCount == 0) ? 4 : this.perishCount;
 			foe.perishCount = (foe.perishCount == 0) ? 4 : foe.perishCount;
 //		} else if (move == Move.FIRE_DASH) {
 //			foe.burn(false, this);
