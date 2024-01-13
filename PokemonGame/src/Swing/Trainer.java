@@ -87,7 +87,7 @@ public class Trainer {
 		//Move highestBPMove = null;
 		int highestBP = Integer.MIN_VALUE;
 		for (Pokemon p : team) {
-			if (!p.isFainted()) {
+			if (!p.isFainted() && p != current) {
 				//System.out.println("\n" + p.name);
 				for (Moveslot m : p.moveset) {
 					if (m != null) {
@@ -175,10 +175,20 @@ public class Trainer {
 		return result;
 	}
 
-	public Pokemon getSwap(Pokemon foe) {
-		if (hasResist(foe.lastMoveUsed.mtype)) {
+	public Pokemon getSwap(Pokemon foe, Move m) {
+		PType type = null;
+		if (m != Move.SPLASH) {
+			type = m.mtype;
+		} else if (foe.lastMoveUsed != null) {
+			type = foe.lastMoveUsed.mtype;
+		}
+		if (m == Move.GROWL) {
+			return getNext(foe);
+		} else if (foe.lastMoveUsed != null || m == Move.SPLASH || hasResist(type)) {
 			for (Pokemon p : team) {
-				if (resists(p, foe.lastMoveUsed.mtype)) return p;
+				if (p != current && resists(p, type)) {
+					return p;
+				}
 			}
 		} else {
 			return getNext(foe);
@@ -188,7 +198,7 @@ public class Trainer {
 	
 	public boolean hasResist(PType type) {
 		for (Pokemon p : team) {
-			if (resists(p, type)) return true;
+			if (p != current && resists(p, type)) return true;
 		}
 		return false;
 	}

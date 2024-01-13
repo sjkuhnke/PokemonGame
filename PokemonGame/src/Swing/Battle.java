@@ -8,6 +8,8 @@ import Swing.Field.Effect;
 import Swing.Field.FieldEffect;
 
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionListener;
 //import java.awt.event.FocusAdapter;
 //import java.awt.event.FocusEvent;
@@ -408,6 +410,7 @@ public class Battle extends JFrame {
 		        	updateBars(true);
 					displayParty();
 					updateFoe();
+					if (me.copyBattle) copyToClipboard();
 					JOptionPane.showMessageDialog(null, "You caught " + foe.name + "!");
 					dispose();
 		        } else {
@@ -461,6 +464,7 @@ public class Battle extends JFrame {
 					chance = me.getCurrent().item == Item.SHED_SHELL ? 1 : chance;
 					
 					if (chance >= Math.random()) {
+						if (me.copyBattle) copyToClipboard();
 						JOptionPane.showMessageDialog(null, "Got away safely!");
 						gp.keyH.resume();
 						dispose();
@@ -478,6 +482,7 @@ public class Battle extends JFrame {
 			displayParty();
 			updateStatus();
 			if (foe.isFainted()) {
+				if (me.copyBattle) copyToClipboard();
 				JOptionPane.showMessageDialog(null, foe.name + " was defeated!");
 				dispose();
 			}
@@ -765,20 +770,20 @@ public class Battle extends JFrame {
 				Pokemon oldCurrent = me.getCurrent().clone();
 				
 				boolean foeCanMove = true;
-    			if (foeTrainer.getCurrent().vStatuses.contains(Status.SWAP)) { // AI wants to swap out
+    			if (!me.getCurrent().isFainted() && foeTrainer.getCurrent().vStatuses.contains(Status.SWAP)) { // AI wants to swap out
     				Pokemon faster = me.getCurrent().getFaster(foe, 0, 0);
     				if (me.getCurrent() == faster) {
     					me.swap(me.team[index], index);
     					me.getCurrent().swapIn(foe, me, true);
     					
-    					foe = foeTrainer.getSwap(oldCurrent);
+    					foe = foeTrainer.getSwap(oldCurrent, move);
         				if (foe != foeTrainer.getCurrent()) {
         					foeTrainer.swap(foeTrainer.getCurrent(), foe);
         					foe.swapIn(me.getCurrent(), me, true);
         					foeCanMove = false;
         				}
     				} else {
-    					foe = foeTrainer.getSwap(oldCurrent);
+    					foe = foeTrainer.getSwap(oldCurrent, move);
         				if (foe != foeTrainer.getCurrent()) {
         					foeTrainer.swap(foeTrainer.getCurrent(), foe);
         					foe.swapIn(me.getCurrent(), me, true);
@@ -841,6 +846,7 @@ public class Battle extends JFrame {
 							me.getCurrent().battled = true;
 							
 						} else {
+							if (me.copyBattle) copyToClipboard();
 							// Show the prompt with the specified text
 							me.money += foeTrainer.getMoney();
 				            JOptionPane.showMessageDialog(null, foeTrainer.toString() + " was defeated!\nWon $" + foeTrainer.getMoney() + "!");
@@ -862,6 +868,7 @@ public class Battle extends JFrame {
 				            dispose();
 						}
 					} else {
+						if (me.copyBattle) copyToClipboard();
 						JOptionPane.showMessageDialog(null, foe.name + " was defeated!");
 						dispose();
 					}
@@ -1349,7 +1356,7 @@ public class Battle extends JFrame {
 		
 		if (faster == p1) { // player Pokemon is faster
 			if (slower.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
-				slower = foeTrainer.getSwap(me.getCurrent());
+				slower = foeTrainer.getSwap(me.getCurrent(), m2);
 				if (slower != foeTrainer.getCurrent()) {
 					foeTrainer.swap(foeTrainer.getCurrent(), slower);
 					slower.swapIn(me.getCurrent(), me, true);
@@ -1375,12 +1382,22 @@ public class Battle extends JFrame {
 	        	slower = foeTrainer.current;
 	        }
 		} else { // enemy Pokemon is faster
+			if (faster.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
+				faster = foeTrainer.getSwap(me.getCurrent(), m1);
+				if (faster != foeTrainer.getCurrent()) {
+					foeTrainer.swap(foeTrainer.getCurrent(), faster);
+					faster.swapIn(me.getCurrent(), me, true);
+					me.getCurrent().vStatuses.remove(Status.TRAPPED);
+					me.getCurrent().vStatuses.remove(Status.SPUN);
+					foeCanMove = false;
+				}
+			}
 			Pokemon[] enemyTeam = me.getTeam();
 			Pokemon[] team = foeTrainer == null ? null : foeTrainer.getTeam();
 			if (m2 == Move.SUCKER_PUNCH && m1.cat == 2) m2 = Move.FAILED_SUCKER;
-			faster.move(slower, m2, me, team, foeTrainer, true);
+			if (foeCanMove) faster.move(slower, m2, me, team, foeTrainer, true);
 			// Check for swap (AI)
-	        if (faster.vStatuses.contains(Status.SWITCHING)) {
+	        if (foeCanMove && faster.vStatuses.contains(Status.SWITCHING)) {
 	        	foeTrainer.swapRandom(slower, me, false, faster.lastMoveUsed == Move.BATON_PASS);
 	        	faster = foeTrainer.current;
 	        }
@@ -1432,12 +1449,16 @@ public class Battle extends JFrame {
 		            if (foeTrainer.flagIndex != 0) {
 		            	me.flags[foeTrainer.flagIndex] = true;
 		            }
+		            
+		            if (me.copyBattle) copyToClipboard();
+		            
 		            JOptionPane.showMessageDialog(null, message);
 
 		            // Close the current Battle JFrame
 		            dispose();
 				}
 			} else {
+				if (me.copyBattle) copyToClipboard();
 				JOptionPane.showMessageDialog(null, foe.name + " was defeated!");
 				dispose();
 			}
@@ -1448,6 +1469,20 @@ public class Battle extends JFrame {
 	    if (me.wiped()) {
 			wipe(pl, gp);
 		}
+	}
+
+	private void copyToClipboard() {
+		String text = console.getText();
+
+	    // Create a StringSelection object to hold the text
+	    StringSelection stringSelection = new StringSelection(text);
+
+	    // Get the system clipboard
+	    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+	    // Set the contents of the clipboard to the StringSelection
+	    clipboard.setContents(stringSelection, null);
+		
 	}
 
 	private boolean hasAlive() {

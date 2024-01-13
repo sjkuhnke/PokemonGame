@@ -375,9 +375,10 @@ public class Pokemon implements Serializable {
         
         // Check if there are no valid moves with non-zero PP
         if (moveToDamage.isEmpty()) {
-        	if (tr.hasValidMembers()) {
+        	// 100% chance to swap in a partner if you can only struggle
+        	if (tr.hasValidMembers() && !isTrapped()) {
         		this.vStatuses.add(Status.SWAP);
-        		return Move.FAILED_SUCKER;
+        		return Move.SPLASH;
         	} else {
         		return Move.STRUGGLE;
         	}
@@ -386,14 +387,71 @@ public class Pokemon implements Serializable {
         // Find the maximum damage value
         int maxDamage = Collections.max(moveToDamage.values());
         
-        // 25% chance to swap in a partner if they resist and you don't
-        // 100% chance to swap in a partner if you can only struggle
-        // 75% chance to swap if all of your moves do 0 damage
-        // 20% chance to swap if the most damage you do is 1/5 or less to target
-        if (foe.lastMoveUsed != null && foe.lastMoveUsed.cat != 2 && !tr.resists(this, foe.lastMoveUsed.mtype) && tr.hasResist(foe.lastMoveUsed.mtype)) {
-        	this.vStatuses.add(Status.SWAP);
-        	return Move.FAILED_SUCKER;
+        if (tr.hasValidMembers() && !isTrapped()) {
+        	// 20% chance to swap in a partner if they resist and you don't
+        	if (foe.lastMoveUsed != null && foe.lastMoveUsed.cat != 2 && !tr.resists(this, foe.lastMoveUsed.mtype)
+        			&& tr.hasResist(foe.lastMoveUsed.mtype)) {
+        		int chance = 20;
+        		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
+        		if (this.impressive) chance /= 2;
+        		if (checkSecondary(chance)) {
+        			System.out.println("partner resists");
+                	this.vStatuses.add(Status.SWAP);
+                	return Move.SPLASH;
+        		}
+            }
+        	// 60% chance to swap if all of your moves do 0 damage
+        	if (maxDamage == 0) {
+        		int chance = 60;
+        		if (this.impressive) chance *= 0.75;
+        		if (checkSecondary(chance)) {
+        			System.out.println("all moves do 0 damage");
+        			this.vStatuses.add(Status.SWAP);
+            		return Move.GROWL;
+        		}
+        	}
+        	// 10% chance to swap if the most damage you do is 1/5 or less to target
+        	if (maxDamage <= foe.currentHP * 1.0 / 5) {
+        		int chance = 10;
+        		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
+        		if (this.impressive) chance /= 2;
+        		if (checkSecondary(chance)) {
+        			System.out.println("damage i do is 1/5 or less");
+        			this.vStatuses.add(Status.SWAP);
+            		return Move.GROWL;
+        		}
+        	}
+        	// 100% chance to swap if perishCount is 1
+        	if (this.perishCount == 1) {
+        		this.vStatuses.add(Status.SWAP);
+        		return Move.SPLASH;
+        	}
+    		boolean moveKills = false;
+    		PType type = null;
+        	for (Moveslot m : foe.moveset) {
+        		if (m != null) {
+        			Move move = m.move;
+            		int damage = foe.calcWithTypes(this, move, true, 1, false);
+            		if (damage >= this.currentHP && tr.hasResist(move.mtype)) {
+            			moveKills = true;
+            			type = move.mtype;
+            			break;
+            		}
+        		}
+        	}
+        	if (moveKills) {
+        		double chance = (this.currentHP * 1.0 / this.getStat(0)) * 100;
+        		chance *= 0.5;
+        		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
+        		if (maxDamage >= foe.currentHP) chance /= 2;
+        		if (checkSecondary((int) chance)) {
+        			System.out.println("enemy kills me");
+        			this.vStatuses.add(Status.SWAP);
+            		return Move.moveOfType(type);
+        		}
+        	}
         }
+        
         
         // Filter moves based on conditions and max damage
         ArrayList<Move> bestMoves = new ArrayList<>();
@@ -409,7 +467,8 @@ public class Pokemon implements Serializable {
         			bestMoves.add(move);
         		}
         	}
-        	if (move.cat == 2 || move == Move.NUZZLE || move == Move.SWORD_SPIN || move == Move.POWER$UP_PUNCH || move == Move.VENOM_SPIT) {
+        	if (move.cat == 2 || move == Move.NUZZLE || move == Move.SWORD_SPIN || move == Move.POWER$UP_PUNCH || move == Move.VENOM_SPIT
+        			|| move == Move.WHIRLPOOL || move == Move.WRAP || move == Move.BIND || move == Move.FIRE_SPIN) {
         		if (move.accuracy > 100) {
         			Pokemon freshYou = this.clone();
         			freshYou.statStages = new int[freshYou.statStages.length];
@@ -3604,7 +3663,7 @@ public class Pokemon implements Serializable {
 			
 			if (this.ability == Ability.STRONG_JAW && (move == Move.BITE || move == Move.CRUNCH || move == Move.FIRE_FANG || move == Move.HYPER_FANG
 					|| move == Move.ICE_FANG || move == Move.JAW_LOCK || move == Move.POISON_FANG || move == Move.PSYCHIC_FANGS || move == Move.THUNDER_FANG
-					|| move == Move.LEECH_LIFE)) {
+					|| move == Move.LEECH_LIFE || move == Move.MAGIC_FANG)) {
 				bp *= 1.5;
 			}
 			
@@ -4303,7 +4362,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.FIRE_BLAST) {
 			foe.burn(false, this);
 		} else if (move == Move.FATAL_BIND) {
-			foe.perishCount = (foe.perishCount == 0) ? 3 : foe.perishCount;
+			foe.perishCount = (foe.perishCount == 0) ? 4 : foe.perishCount;
 //		} else if (move == Move.FIRE_DASH) {
 //			foe.burn(false, this);
 		} else if (move == Move.FIRE_FANG) {
@@ -5184,9 +5243,19 @@ public class Pokemon implements Serializable {
 			if (foe.type2 == PType.GHOST) foe.type2 = PType.NORMAL;
 			if (announce) console.writeln(this.nickname + " identified " + foe.nickname + "!");
 			stat(foe, 6, -1, this, announce);
+		} else if (announce && move == Move.PARTING_SHOT) {
+			stat(foe, 0, -1, this, announce);
+			stat(foe, 2, -1, this, announce);
+			if (this.trainerOwned() && enemy.hasValidMembers()) {
+				console.writeln(this.nickname + " went back to " + enemy.getName() + "!");
+				this.vStatuses.add(Status.SWITCHING);
+			} else if (this.playerOwned && player.hasValidMembers()) {
+				console.writeln(this.nickname + " went back to you!");
+				this.vStatuses.add(Status.SWITCHING);
+			}
 		} else if (announce && move == Move.PERISH_SONG) {
-			this.perishCount = (this.perishCount == 0) ? 3 : this.perishCount;
-			foe.perishCount = (foe.perishCount == 0) ? 3 : foe.perishCount;
+			this.perishCount = (this.perishCount == 0) ? 4 : this.perishCount;
+			foe.perishCount = (foe.perishCount == 0) ? 4 : foe.perishCount;
 		} else if (move == Move.PLAY_NICE) {
 			stat(foe, 0, -1, this, announce);
 		} else if (move == Move.SPARKLING_WATER) {
@@ -8574,7 +8643,7 @@ public class Pokemon implements Serializable {
 			movebank[44] = new Node(Move.EARTH_POWER);
 			break;
 		case 149:
-			movebank = new Node[65];
+			movebank = new Node[80];
 			movebank[0] = new Node(Move.MUD_SPORT);
 			movebank[0].addToEnd(new Node(Move.BRINE));
 			movebank[0].addToEnd(new Node(Move.MUD_SHOT));
@@ -8598,6 +8667,7 @@ public class Pokemon implements Serializable {
 			movebank[54] = new Node(Move.PHANTOM_FORCE);
 			movebank[59] = new Node(Move.TWINKLE_TACKLE);
 			movebank[64] = new Node(Move.UNSEEN_STRANGLE);
+			movebank[79] = new Node(Move.PARTING_SHOT);
 			break;
 		case 150:
 			movebank = new Node[60];
@@ -9789,7 +9859,7 @@ public class Pokemon implements Serializable {
 			movebank[59] = new Node(Move.OUTRAGE);
 			break;
 		case 215:
-			movebank = new Node[48];
+			movebank = new Node[53];
 			movebank[0] = new Node(Move.FLASH);
 			movebank[2] = new Node(Move.FAKE_TEARS);
 			movebank[5] = new Node(Move.HEX);
@@ -9806,15 +9876,14 @@ public class Pokemon implements Serializable {
 			movebank[38] = new Node(Move.MUDDY_WATER);
 			movebank[41] = new Node(Move.SWITCHEROO);
 			movebank[44] = new Node(Move.PHANTOM_FORCE);
-			movebank[47] = new Node(Move.DRAGON_DANCE);
+			movebank[52] = new Node(Move.DRAGON_DANCE);
 			break;
 		case 216:
-			movebank = new Node[60];
+			movebank = new Node[80];
 			movebank[0] = new Node(Move.MAGIC_FANG);
 			movebank[0].addToEnd(new Node(Move.BITE));
 			movebank[0].addToEnd(new Node(Move.CRUNCH));
 			movebank[0].addToEnd(new Node(Move.FEINT_ATTACK));
-			movebank[0].addToEnd(new Node(Move.DRAGON_DANCE));
 			movebank[0].addToEnd(new Node(Move.KNOCK_OFF));
 			movebank[4] = new Node(Move.FAKE_OUT);
 			movebank[7] = new Node(Move.THIEF);
@@ -9834,6 +9903,8 @@ public class Pokemon implements Serializable {
 			movebank[52] = new Node(Move.MAGIC_CRASH);
 			movebank[56] = new Node(Move.EARTHQUAKE);
 			movebank[59] = new Node(Move.SPECTRAL_THIEF);
+			movebank[69] = new Node(Move.DRAGON_DANCE);
+			movebank[79] = new Node(Move.PARTING_SHOT);
 			break;
 		case 217:
 			movebank = new Node[19];
@@ -10851,7 +10922,7 @@ public class Pokemon implements Serializable {
 					this.currentHP = this.getStat(0);
 				}
 				console.writeAbility(this);
-				console.writeln("\n" + this.nickname + " restored HP.");
+				console.writeln(this.nickname + " restored HP.");
 			}
 		} if (this.ability == Ability.DRY_SKIN && field.equals(field.weather, Effect.RAIN)) {
 			if (this.currentHP < this.getStat(0)) {

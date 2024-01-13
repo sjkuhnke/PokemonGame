@@ -363,6 +363,7 @@ public enum Move {
 	OUTRAGE(120,100,0,0,0,0,PType.DRAGON,"User is locked into this move for 2-3 turns, Confuses user when the effect is done",true,10),
 	OVERHEAT(130,90,100,0,1,0,PType.FIRE,"% to lower user's Sp.Atk by 2",false,5),
 	PARABOLIC_CHARGE(65,100,0,0,1,0,PType.ELECTRIC,"Heals 50% of damage dealt to foe",false,20),
+	PARTING_SHOT(0,100,0,0,2,0,PType.DARK,"Lower foe's Atk and Sp.Atk by 1, user switches out",false,5),
 	PAYBACK(-1,100,0,0,0,0,PType.DARK,"Power is doubled if the user moves after foe",true,10),
 	PECK(35,100,0,0,0,0,PType.FLYING,"A normal attack",true,30),
 	PERISH_SONG(0,1000,0,0,2,0,PType.GHOST,"All Pokemon hearing this song will faint in 3 turns",false,5),
@@ -887,7 +888,7 @@ public enum Move {
 		result.add(Move.SPARKLING_WATER);
 		result.add(Move.SUPERSONIC);
 		result.add(Move.HYPER_VOICE);
-		
+		result.add(Move.PARTING_SHOT);
 		return result;
 	}
 	
@@ -963,6 +964,12 @@ public enum Move {
 		result.add(DESTINY_BOND);
 		
 		return result;
+	}
+	public static Move moveOfType(PType type) {
+		for (Move m : values()) {
+			if (m.mtype == type) return m;
+		}
+		return Move.STRUGGLE;
 	}
 
 }
