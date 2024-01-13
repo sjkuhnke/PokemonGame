@@ -21,11 +21,11 @@ Trainer B A                 Hammo Lv. 16
 Trainer B B                 Roselia Lv. 15
 Trainer B C                 Fightorex Lv. 15
 Trainer B D                 Elelamb Lv. 15
-Trainer B F                 Bluebunn Lv. 21
-Trainer Scott 1             Twigle Lv. 7
+Trainer B F                 Bluebunn Lv. 21 @ (Chilan Berry)
+Trainer Scott 1             Lizish Lv. 7
 
 Scott 1
-Twigle (Lv. 7) @ Miracle Seed           /   Rough Skin     /   Pound, Withdraw, Razor Leaf, 
+Lizish (Lv. 7) @ Mystic Water           /   Protean        /   Scratch, Growl, Water Gun, 
 
 
 Route 24 (pt. 1)----------------------------------
@@ -37,7 +37,7 @@ Trainer H                   Sapwin Lv. 10 @ (Salac Berry)
 Trainer I                   Bluebunn Lv. 10, Pebblepup Lv. 11 @ (Focus Sash, Rindo Berry)
 Trainer K1                  Twigle Lv. 15, Lagma Lv. 15, Lizish Lv. 15 @ (Miracle Seed, Charcoal, Mystic Water)
 Trainer J1                  Ralts Lv. 15, Hummingspark Lv. 16 @ (Tanga Berry, Petaya Berry)
-Trainer B E                 Cleffa Lv. 13, Froshrog Lv. 11
+Trainer B E                 Cleffa Lv. 13, Froshrog Lv. 11 @ (Oran Berry, Chesto Berry)
 
 Route 36------------------------------------------
 
@@ -64,7 +64,7 @@ Shookwat (Lv. 12) @ Magnet              /   Static         /   Thundershock, Cha
 Lotad (Lv. 13) @ Big Root               /   Swift Swim     /   Haze, Mega Drain, Absorb, Water Gun
 Magie (Lv. 13) @ Occa Berry             /   Tough Claws    /   Iron Defense, Growl, Quick Attack, Covet
 
-Trainer TN 9                Zubat Lv. 12, Cluuz Lv. 12
+Trainer TN 9                Zubat Lv. 12, Cluuz Lv. 12 @ (Big Root, Cheri Berry)
 Trainer 1 Gym A             Pigo Lv. 11, Pigo Lv. 12, Pigo Lv. 13 @ (Bright Powder, Oran Berry, Glowing Prism)
 Trainer 1 Gym B             Hummingspark Lv. 12, Hummingspark Lv. 13 @ (Oran Berry, Charti Berry)
 Trainer 1 Gym C             Pigo Lv. 13, Hummingspark Lv. 14 @ (Sharp Beak, Ganlon Berry)
@@ -95,11 +95,11 @@ Trainer P                   Sapwin Lv. 18 @ (Hard Stone)
 
 Gelb Forest---------------------------------------
 
-Trainer Fred 1              Otterpor Lv. 18, Iguaton Lv. 20
+Trainer Fred 1              Otterpor Lv. 18, Maguide Lv. 20
 
 Fred 1
 Otterpor (Lv. 18) @ Leftovers           /   Water Veil     /   Baby-Doll Eyes, Detect, Aqua Ring, Razor Shell
-Iguaton (Lv. 20) @ Mystic Water         /   Protean        /   Mud Sport, Bite, Mean Look, Bubblebeam
+Maguide (Lv. 20) @ Charcoal             /   Dry Skin       /   Incinerate, Headbutt, Flame Wheel, Smokescreen
 
 Trainer Q                   Inkay Lv. 18, Psycorb Lv. 19 @ (Black Glasses, Terrain Extender)
 Trainer R                   Grondor Lv. 19 @ (Expert Belt)
@@ -148,11 +148,11 @@ Trainer TN O6               Inkay Lv. 20, Shomp Lv. 20 @ (Life Orb, None)
 
 Sicab Office (2A)---------------------------------
 
-Trainer Scott 2             Ninjask Lv. 21, Torgged Lv. 22, Rhypo Lv. 22
+Trainer Scott 2             Ninjask Lv. 21, Iguaton Lv. 22, Rhypo Lv. 22
 
 Scott 2
 Ninjask (Lv. 21) @ Focus Sash           /   Speed Boost    /   False Swipe, Mud-Slap, Fury Cutter, Harden
-Torgged (Lv. 22) @ Sitrus Berry         /   Rough Skin     /   Smack Down, Headbutt, Sleep Powder, Sand Attack
+Iguaton (Lv. 22) @ Sitrus Berry         /   Protean        /   Mud Sport, Bite, Mean Look, Bubblebeam
 Rhypo (Lv. 22) @ Passho Berry           /   Rattled        /   Fury Attack, Rapid Spin, Growl, Tail Whip
 
 Trainer O3                  Glittleshoo Lv. 28, Dragee Lv. 29, Shomp Lv. 28 @ (Chilan Berry, Babiri Berry, Haban Berry)
@@ -190,8 +190,8 @@ Trainer SD                  Zubat Lv. 8 @ (Expert Belt)
 Mt. Splinkty (1A)---------------------------------
 
 Trainer MS A                Dualmoose Lv. 29 @ (Expert Belt)
-Trainer MS E                Consodust Lv. 31, Grondor Lv. 31
-Trainer MS F                Hootowl Lv. 30, Bouncerog Lv. 31
+Trainer MS E                Consodust Lv. 31, Grondor Lv. 31 @ (Roseli Berry, Sitrus Berry)
+Trainer MS F                Hootowl Lv. 30, Bouncerog Lv. 31 @ (Icy Rock, Power Herb)
 
 Mt. Splinkty (2B)---------------------------------
 
@@ -217,14 +217,6 @@ Trainer AF                  Flamebless Lv. 38 @ (Passho Berry)
 
 Kleine Village------------------------------------
 
-Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Iguaton Lv. 30, Psylotter Lv. 31
-
-Fred 2
-Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
-Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
-Iguaton (Lv. 30) @ Expert Belt          /   Protean        /   Aqua Jet, Bite, Mean Look, Fire Fang
-Psylotter (Lv. 31) @ Wide Lens          /   Water Veil     /   Hypnosis, Rollout, Confuse Ray, Trick
-
 Trainer RR A                Froshrog Lv. 30, Spheal Lv. 31 @ (Life Orb, Silk Scarf)
 Trainer RR B                Treewin Lv. 30, Roselia Lv. 31 @ (Sitrus Berry, Black Sludge)
 Trainer RR C                Sparkitten Lv. 30, Splame Lv. 31 @ (Charcoal, Chilan Berry)
@@ -241,6 +233,14 @@ Leavanny (Lv. 32) @ Coba Berry          /   Sharpness      /   Leaf Blade, X-Sci
 Swordik (Lv. 32) @ Life Orb             /   Hyper Cutter   /   First Impression, U-Turn, Close Combat, Rock Slide
 Opwing (Lv. 32) @ Lum Berry             /   Technician     /   Bug Bite, Moonlight, Feint Attack, Fell Stinger
 Frosmoth (Lv. 33) @ Occa Berry          /   Icy Scales     /   Aurora Beam, Bug Buzz, Snowscape, Quiver Dance
+
+Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Maguide Lv. 30, Psylotter Lv. 31
+
+Fred 2
+Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
+Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
+Maguide (Lv. 30) @ Expert Belt          /   Dry Skin       /   Take Down, Bulldoze, Lava Plume, Iron Defense
+Psylotter (Lv. 31) @ Wide Lens          /   Water Veil     /   Hypnosis, Rollout, Confuse Ray, Trick
 
 
 Route 41------------------------------------------
@@ -260,7 +260,7 @@ Trainer DG                  Ramant Lv. 45, Bushewe Lv. 45 @ (Big Root, Leftovers
 
 Route 28------------------------------------------
 
-Trainer B G                 Nebulimb Lv. 31, Rockmite Lv. 30
+Trainer B G                 Nebulimb Lv. 31, Rockmite Lv. 30 @ (Charti Berry, Covert Cloak)
 
 Route 29------------------------------------------
 
@@ -345,12 +345,12 @@ Route 31------------------------------------------
 Trainer BL                  Wormatron-S Lv. 45 @ (Black Glasses)
 Trainer BM                  Cluuz-S Lv. 47, Zurrclu-S Lv. 45, Cluuz-S Lv. 47, Zurrclu-S Lv. 46 @ (Focus Sash, Sitrus Berry, Roseli Berry, Salac Berry)
 Trainer BN                  Durfish Lv. 47, Dompster Lv. 45, Durfish-S Lv. 47, Dompster-S Lv. 45 @ (Choice Specs, Choice Band, Eviolite, Power Herb)
-Trainer Scott 3             Hatterene Lv. 47, Ninjask Lv. 47, Tortugis Lv. 47, Vikavolt Lv. 46, Rhynee Lv. 48
+Trainer Scott 3             Hatterene Lv. 47, Ninjask Lv. 47, Dragave Lv. 47, Vikavolt Lv. 46, Rhynee Lv. 48
 
 Scott 3
 Hatterene (Lv. 47) @ Focus Sash         /   Magic Bounce   /   Magic Reflect, Psychic, Magic Tomb, Calm Mind
 Ninjask (Lv. 47) @ Focus Sash           /   Speed Boost    /   Swords Dance, Leech Life, Acrobatics, Poison Jab
-Tortugis (Lv. 47) @ Life Orb            /   Rough Skin     /   Power Gem, Dragon Tail, Rockfall Frenzy, Earthquake
+Dragave (Lv. 47) @ Life Orb             /   Protean        /   Hammer Arm, Dragon Rush, Channeling Blow, Liquidation
 Vikavolt (Lv. 46) @ Magnet              /   Levitate       /   Volt Switch, Guillotine, Bug Buzz, Sticky Web
 Rhynee (Lv. 48) @ Leftovers             /   Sand Stream    /   Stone Edge, Body Press, Horn Drill, Magnitude
 
@@ -361,7 +361,7 @@ Trainer BO                  Magestiflash Lv. 48 @ (Bright Powder)
 Trainer BP                  Opwing Lv. 46, Leavanny Lv. 46 @ (Clear Amulet, Coba Berry)
 Trainer BQ                  Raptorex Lv. 46, Hatterene Lv. 46, Gallade Lv. 47, Starmie Lv. 45, Poshorump Lv. 46 @ (Flame Orb, Chilan Berry, Muscle Band, Petaya Berry, Assault Vest)
 Trainer BR                  Conkeldurr Lv. 46, Pyrator-S Lv. 47, Tricercil Lv. 48 @ (Black Glasses, Rocky Helmet, Leftovers)
-Trainer BP1                 HammyBoy Lv. 48, Spacebear Lv. 47, Barkflare Lv. 48, Tigrette Lv. 48, Zurrclu Lv. 47, Draga Lv. 48
+Trainer BP1                 HammyBoy Lv. 48, Spacebear Lv. 47, Barkflare Lv. 48, Tigrette Lv. 48, Zurrclu Lv. 47, Draga Lv. 48 @ (Chople Berry, Life Orb, Expert Belt, Starf Berry, Spell Tag, Wiki Berry)
 
 Shadow Ravine (1B)--------------------------------
 
@@ -376,12 +376,12 @@ Trainer CA                  Zoroark Lv. 46, Zoroark Lv. 47, Zoroark Lv. 48 @ (Li
 
 Route 33------------------------------------------
 
-Trainer CB                  Treewin Lv. 52, Winagrow Lv. 51
-Trainer CC                  Tiowoo Lv. 80, Magwoo Lv. 60, Lafloo Lv. 52, Posho Lv. 45, Posho Lv. 45, Poshorump Lv. 44
-Trainer CD                  Magikarp-E Lv. 100, Thunderzap Lv. 53
-Trainer CE                  Suvinero Lv. 52, Whiskeroar Lv. 52, Cinneroph Lv. 52
-Trainer CF                  Shelnado Lv. 53, Shedinja Lv. 57
-Trainer CG                  Kissyfishy Lv. 53, Spinaquata Lv. 53, Barbaracle Lv. 53
+Trainer CB                  Treewin Lv. 52, Winagrow Lv. 51 @ (Assault Vest, Dragon Fang)
+Trainer CC                  Tiowoo Lv. 80, Magwoo Lv. 60, Lafloo Lv. 52, Posho Lv. 45, Posho Lv. 45, Poshorump Lv. 44 @ (Weakness Policy, Loaded Dice, Passho Berry, Focus Band, Quick Claw, Power Herb)
+Trainer CD                  Magikarp-E Lv. 100, Thunderzap Lv. 53 @ (Choice Band, Wiki Berry)
+Trainer CE                  Suvinero Lv. 52, Whiskeroar Lv. 52, Cinneroph Lv. 52 @ (Assault Vest, Clear Amulet, Lum Berry)
+Trainer CF                  Shelnado Lv. 53, Shedinja Lv. 57 @ (White Herb, Focus Sash)
+Trainer CG                  Kissyfishy Lv. 53, Spinaquata Lv. 53, Barbaracle Lv. 53 @ (Bright Powder, Covert Cloak, Muscle Band)
 
 Frenco City---------------------------------------
 
@@ -416,21 +416,21 @@ Trainer TN B1               Wormatron Lv. 50, Pyrator-S Lv. 50 @ (Sitrus Berry, 
 Trainer TN B2               Wormatron-S Lv. 50, Pyrator Lv. 50 @ (Focus Band, Black Glasses)
 Trainer TN B3               Opwing Lv. 51, Zoroark Lv. 51 @ (Choice Band, Spell Tag)
 Trainer TN B4               Malamar Lv. 51, Houndoom Lv. 51 @ (Leftovers, Salac Berry)
-Trainer TN B5               Batorali Lv. 52, Barbaracle Lv. 52
-Trainer TN B6               Gyarados Lv. 52, Dompster Lv. 52
-Trainer TN B7               Arbok Lv. 53, Conkeldurr Lv. 53
-Trainer TN B8               Crobat Lv. 53, Arbok-S Lv. 53
-Trainer TN B9               Rhypolar Lv. 54, Tricercil Lv. 54
-Trainer TN B10              Bipedice Lv. 54, Soldrota-E Lv. 54
-Trainer TN B11              Blaster-E Lv. 55, Gyarados-E Lv. 55
-Trainer TN B12              Crystallor-E Lv. 55, Hast-E Lv. 55
-Trainer Fred 3              Blastflames Lv. 56, Gyarados-E Lv. 56, Wormatron-S Lv. 57, Dragave Lv. 57, Stellarock Lv. 56, Psylotter Lv. 58
+Trainer TN B5               Batorali Lv. 52, Barbaracle Lv. 52 @ (Power Herb, Blunder Policy)
+Trainer TN B6               Gyarados Lv. 52, Dompster Lv. 52 @ (Rocky Helmet, Life Orb)
+Trainer TN B7               Arbok Lv. 53, Conkeldurr Lv. 53 @ (Black Sludge, Flame Orb)
+Trainer TN B8               Crobat Lv. 53, Arbok-S Lv. 53 @ (Black Sludge, Assault Vest)
+Trainer TN B9               Rhypolar Lv. 54, Tricercil Lv. 54 @ (Assault Vest, Rocky Helmet)
+Trainer TN B10              Bipedice Lv. 54, Soldrota-E Lv. 54 @ (Choice Band, Life Orb)
+Trainer TN B11              Blaster-E Lv. 55, Gyarados-E Lv. 55 @ (Air Balloon, Choice Scarf)
+Trainer TN B12              Crystallor-E Lv. 55, Hast-E Lv. 55 @ (White Herb, Choice Scarf)
+Trainer Fred 3              Blastflames Lv. 56, Gyarados-E Lv. 56, Wormatron-S Lv. 57, Magron Lv. 57, Stellarock Lv. 56, Psylotter Lv. 58
 
 Fred 3
 Blastflames (Lv. 56) @ Mysticola Berry  /   Levitate       /   Iron Blast, Dragon Pulse, Flamethrower, Hurricane
 Gyarados-E (Lv. 56) @ Rindo Berry       /   Volt Vortex    /   Bounce, Volt Tackle, Comet Crash, Waterfall
 Wormatron-S (Lv. 57) @ Black Glasses    /   Adaptability   /   Earthquake, Sucker Punch, Breaking Swipe, Earth Power
-Dragave (Lv. 57) @ Expert Belt          /   Protean        /   Hammer Arm, Dragon Rush, Bulk Up, Close Combat
+Magron (Lv. 57) @ Expert Belt           /   Dry Skin       /   Heat Crash, Earth Power, Aura Sphere, Steel Beam
 Stellarock (Lv. 56) @ Sitrus Berry      /   Gravitational Pull/   Cosmic Power, Stone Edge, Meteor Mash, Comet Crash
 Psylotter (Lv. 58) @ Weakness Policy    /   Water Veil     /   Blizzard, Light Screen, Hydro Pump, Psychic
 
@@ -460,41 +460,41 @@ Trainer Grust 10            Grust Lv. 65
 Trainer Rick 2              Tricercil Lv. 55, Zurroaratr Lv. 54, Megawatt Lv. 54, Ludicolo Lv. 55, Opwing Lv. 55, Cinneroph Lv. 56
 
 Rick 2
-Tricercil (Lv. 55) @ Sitrus Berry       /   Rock Head      /   Plasma Fists, Mach Punch, Stone Edge, Superpower
-Zurroaratr (Lv. 54) @ Lum Berry         /   Levitate       /   Stone Edge, Smart Strike, Shadow Ball, Phantom Force
-Megawatt (Lv. 54) @ Shuca Berry         /   Huge Power     /   Automotize, Heavy Slam, Smart Strike, Bullet Punch
-Ludicolo (Lv. 55) @ Kebia Berry         /   Swift Swim     /   Hydro Pump, Rain Dance, Zen Headbutt, Energy Ball
-Opwing (Lv. 55) @ Clear Amulet          /   Technician     /   Knock Off, X-Scissor, Darkest Lariat, Extreme Speed
-Cinneroph (Lv. 56) @ Enchanted Amulet   /   Tough Claws    /   Hone Claws, Heavy Slam, Magic Crash, Sparkle Strike
+Tricercil (Lv. 55) @ Lum Berry          /   Rock Head      /   Head Smash, Plasma Fists, Superpower, Spiky Shield
+Zurroaratr (Lv. 54) @ Sitrus Berry      /   Levitate       /   Stone Edge, Toxic, Phantom Force, Protect
+Megawatt (Lv. 54) @ Shuca Berry         /   Huge Power     /   Bullet Punch, U-Turn, Volt Tackle, Earthquake
+Ludicolo (Lv. 55) @ Kebia Berry         /   Rain Dish      /   Scald, Giga Drain, Rain Dance, Ice Beam
+Opwing (Lv. 55) @ Clear Amulet          /   Technician     /   Feint Attack, Bug Bite, Extreme Speed, Aerial Ace
+Cinneroph (Lv. 56) @ Enchanted Amulet   /   Tough Claws    /   Spiky Shield, Iron Head, Magic Crash, Sparkle Strike
 
 
 Route 34 (1A)-------------------------------------
 
-Trainer CH                  Crystallor Lv. 54, Magmaclang Lv. 55, Hamthorno Lv. 54, Cairnasaur Lv. 54
-Trainer CI                  Barkflare Lv. 55, Gallade Lv. 54, Splame Lv. 55
+Trainer CH                  Crystallor Lv. 54, Magmaclang Lv. 55, Hamthorno Lv. 54, Cairnasaur Lv. 54 @ (Rindo Berry, Air Balloon, Assault Vest, Choice Scarf)
+Trainer CI                  Barkflare Lv. 55, Gallade Lv. 54, Splame Lv. 55 @ (Life Orb, Life Orb, Life Orb)
 
 Glurg Town----------------------------------------
 
-Trainer CJ                  Roserade Lv. 55, Crobat Lv. 55, Cluuz Lv. 57
-Trainer Scott 4             Hatterene Lv. 59, Ninjask Lv. 60, Drageye Lv. 58, Tortugis Lv. 60, Vikavolt Lv. 59, Rhypolar Lv. 61
+Trainer CJ                  Roserade Lv. 55, Crobat Lv. 55, Cluuz Lv. 57 @ (Sitrus Berry, Power Herb, Bright Powder)
+Trainer Scott 4             Hatterene Lv. 59, Ninjask Lv. 60, Drageye Lv. 58, Dragave Lv. 60, Vikavolt Lv. 59, Rhypolar Lv. 61
 
 Scott 4
 Hatterene (Lv. 59) @ Chilan Berry       /   Magic Bounce   /   Magic Tomb, Nuzzle, Reflect, Light Screen
 Ninjask (Lv. 60) @ Focus Sash           /   Speed Boost    /   Swords Dance, Leech Life, Baton Pass, Protect
 Drageye (Lv. 58) @ Tanga Berry          /   Multiscale     /   Prismatic Laser, Dragon Pulse, Thunderbolt, Rest
-Tortugis (Lv. 60) @ Life Orb            /   Rough Skin     /   Spiky Shield, Dragon Tail, Leaf Storm, Earth Power
+Dragave (Lv. 60) @ Life Orb             /   Protean        /   Double-Edge, Dragon Rush, Bulk Up, Close Combat
 Vikavolt (Lv. 59) @ Magnet              /   Levitate       /   Photon Geyser, Bug Buzz, Volt Switch, Sticky Web
 Rhypolar (Lv. 61) @ Leftovers           /   Sand Stream    /   Earthquake, Spikes, Smack Down, Body Press
 
-Trainer 6 Gym A             Crystallor Lv. 59, Crystallor Lv. 60, Crystallor Lv. 60
-Trainer 6 Gym B             Crystallor-E Lv. 61
-Trainer 6 Gym C             Vinnie Lv. 60, Whiskers Lv. 60, Cumin Lv. 60
-Trainer 6 Gym D             Gardevoir Lv. 61
-Trainer 6 Gym E             Magestiflash Lv. 59, Magestiflash Lv. 60
-Trainer 6 Gym F             Bluebunn Lv. 61, Bouncerog Lv. 60
-Trainer 6 Gym G             Tigrette Lv. 61, Drillatron Lv. 60
-Trainer 6 Gym H             Bushewe Lv. 60, Flamebless Lv. 60
-Trainer 6 Gym I             Clefable Lv. 61, Drageye Lv. 60
+Trainer 6 Gym A             Crystallor Lv. 59, Crystallor Lv. 60, Crystallor Lv. 60 @ (Bright Powder, White Herb, Rindo Berry)
+Trainer 6 Gym B             Crystallor-E Lv. 61 @ (Air Balloon)
+Trainer 6 Gym C             Vinnie Lv. 60, Whiskers Lv. 60, Cumin Lv. 60 @ (Focus Sash, Flame Orb, Muscle Band)
+Trainer 6 Gym D             Gardevoir Lv. 61 @ (Focus Sash)
+Trainer 6 Gym E             Magestiflash Lv. 59, Magestiflash Lv. 60 @ (Sharp Beak, Glowing Prism)
+Trainer 6 Gym F             Bluebunn Lv. 61, Bouncerog Lv. 60 @ (Focus Sash, Rindo Berry)
+Trainer 6 Gym G             Tigrette Lv. 61, Drillatron Lv. 60 @ (Salac Berry, Life Orb)
+Trainer 6 Gym H             Bushewe Lv. 60, Flamebless Lv. 60 @ (White Herb, White Herb)
+Trainer 6 Gym I             Clefable Lv. 61, Drageye Lv. 60 @ (Leftovers, Assault Vest)
 Trainer 6 Gym Leader 1      Gardevoir Lv. 62, Flamebless Lv. 62, Drillatron Lv. 62, Magestiflash Lv. 62, Bushewe Lv. 62, Crystallor-E Lv. 63
 
 6 Gym Leader 1
@@ -508,25 +508,25 @@ Crystallor-E (Lv. 63) @ White Herb      /   Clear Body     /   Glittering Sword,
 
 Route 34 (0A)-------------------------------------
 
-Trainer CK                  Drillatron Lv. 54, Wormatron Lv. 55
-Trainer CL                  Crystallor-E Lv. 56
-Trainer CM                  Houndoom Lv. 55, Splame Lv. 56, Magron Lv. 56
-Trainer CN                  Hast Lv. 56, Zoroark Lv. 57, Shadowsaur Lv. 57
+Trainer CK                  Drillatron Lv. 54, Wormatron Lv. 55 @ (Life Orb, Clear Amulet)
+Trainer CL                  Crystallor-E Lv. 56 @ (Air Balloon)
+Trainer CM                  Houndoom Lv. 55, Splame Lv. 56, Magron Lv. 56 @ (Focus Sash, Kebia Berry, Shuca Berry)
+Trainer CN                  Hast Lv. 56, Zoroark Lv. 57, Shadowsaur Lv. 57 @ (Rocky Helmet, Focus Sash, Leftovers)
 
 Route 35------------------------------------------
 
-Trainer CO                  Megawatt Lv. 57, Thunderzap Lv. 58, Superchargo Lv. 57, Soldrota-E Lv. 57, Suvinero Lv. 57
-Trainer CP                  Conkeldurr Lv. 58, Whiskeroar Lv. 58
-Trainer CQ                  Blastflames Lv. 58, Drageye Lv. 58
+Trainer CO                  Megawatt Lv. 57, Thunderzap Lv. 58, Superchargo Lv. 57, Soldrota-E Lv. 57, Suvinero Lv. 57 @ (Focus Band, Quick Claw, Liechi Berry, Muscle Band, Enchanted Amulet)
+Trainer CP                  Conkeldurr Lv. 58, Whiskeroar Lv. 58 @ (Flame Orb, Clear Amulet)
+Trainer CQ                  Blastflames Lv. 58, Drageye Lv. 58 @ (Custap Berry, Heavy-Duty Boots)
 
 Route 43------------------------------------------
 
-Trainer YA                  Tiowoo Lv. 9
-Trainer YB                  Tinkie Lv. 8, Blobmo Lv. 9
+Trainer YA                  Tiowoo Lv. 9 @ (Passho Berry)
+Trainer YB                  Tinkie Lv. 8, Blobmo Lv. 9 @ (Chilan Berry, Coba Berry)
 
 --------------------------------------------------
 
-Trainer SCT A               Crobat Lv. 47, Batorali Lv. 48, Nebulimb Lv. 49, Hast Lv. 48, Kissyfishy Lv. 49, Shedinja Lv. 49
-Trainer SCT B               Fireblion Lv. 48, Houndoom Lv. 49, Arbok Lv. 50, Fireshard-E Lv. 48, Clefable Lv. 50, Lafloo Lv. 50
-Trainer SCT C               Wormatron Lv. 49, Glittleshoo Lv. 49, Rhypolar Lv. 50, Drillatron Lv. 49, Dompster-S Lv. 49, Blaster-E Lv. 51
+Trainer SCT A               Crobat Lv. 47, Batorali Lv. 48, Nebulimb Lv. 49, Hast Lv. 48, Kissyfishy Lv. 49, Shedinja Lv. 49 @ (Black Sludge, Power Herb, Eviolite, Occa Berry, Sitrus Berry, Focus Band)
+Trainer SCT B               Fireblion Lv. 48, Houndoom Lv. 49, Arbok Lv. 50, Fireshard-E Lv. 48, Clefable Lv. 50, Lafloo Lv. 50 @ (Heat Rock, Wise Glasses, Black Sludge, Air Balloon, Leftovers, White Herb)
+Trainer SCT C               Wormatron Lv. 49, Glittleshoo Lv. 49, Rhypolar Lv. 50, Drillatron Lv. 49, Dompster-S Lv. 49, Blaster-E Lv. 51 @ (Wiki Berry, Leftovers, Sitrus Berry, Assault Vest, Black Glasses, Weakness Policy)
 

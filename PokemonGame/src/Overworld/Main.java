@@ -457,12 +457,21 @@ public class Main {
 		setItem("Maxwell 1", 5, Item.COSMIC_CORE);
 		setItem("Maxwell 1", 6, Item.ENCHANTED_AMULET);
 		
-		setItem("Rick 2", 1, Item.SITRUS_BERRY);
-		setItem("Rick 2", 2, Item.LUM_BERRY);
+		setItem("Rick 2", 1, Item.LUM_BERRY);
+		setItem("Rick 2", 2, Item.SITRUS_BERRY);
 		setItem("Rick 2", 3, Item.SHUCA_BERRY);
 		setItem("Rick 2", 4, Item.KEBIA_BERRY);
 		setItem("Rick 2", 5, Item.CLEAR_AMULET);
 		setItem("Rick 2", 6, Item.ENCHANTED_AMULET);
+		
+		setMoveset("Rick 2", 1, Move.HEAD_SMASH, Move.PLASMA_FISTS, Move.SUPERPOWER, Move.STEALTH_ROCK);
+		setMoveset("Rick 2", 2, Move.STONE_EDGE, Move.TOXIC, Move.PHANTOM_FORCE, Move.PROTECT);
+		setMoveset("Rick 2", 3, Move.BULLET_PUNCH, Move.U$TURN, Move.VOLT_TACKLE, Move.EARTHQUAKE);
+		setMoveset("Rick 2", 4, Move.SCALD, Move.GIGA_DRAIN, Move.RAIN_DANCE, Move.ICE_BEAM);
+		setMoveset("Rick 2", 5, Move.FEINT_ATTACK, Move.BUG_BITE, Move.EXTREME_SPEED, Move.AERIAL_ACE);
+		setMoveset("Rick 2", 6, Move.SPIKY_SHIELD, Move.IRON_HEAD, Move.MAGIC_CRASH, Move.SPARKLE_STRIKE);
+		
+		setAbility("Rick 2", 4, Ability.RAIN_DISH);
 		
 		setMoveset("Scott 4", 1, Move.MAGIC_TOMB, Move.NUZZLE, Move.REFLECT, Move.LIGHT_SCREEN);
 		setMoveset("Scott 4", 2, Move.SWORDS_DANCE, Move.LEECH_LIFE, Move.BATON_PASS, Move.PROTECT);

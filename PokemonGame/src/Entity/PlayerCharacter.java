@@ -22,6 +22,7 @@ import java.util.Random;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -678,9 +679,16 @@ public class PlayerCharacter extends Entity {
 	    		}
 	    	});
 	    	
+	    	JCheckBox copyBattle = new JCheckBox("Copy Battle Chat");
+	    	copyBattle.setSelected(p.copyBattle);
+	    	copyBattle.addActionListener(f -> {
+	    		p.copyBattle = copyBattle.isSelected();
+	    	});
+	    	
 	    	playerInfo.add(moneyLabel);
 	    	playerInfo.add(badgesLabel);
 	    	playerInfo.add(cheats);
+	    	playerInfo.add(copyBattle);
 	    	
 	    	JOptionPane.showMessageDialog(null, playerInfo, "Player Info", JOptionPane.PLAIN_MESSAGE);
 	    });
