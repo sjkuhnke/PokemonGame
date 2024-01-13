@@ -4,7 +4,7 @@ Bug
 ===============
 Bug Bite : Physical / 60 / 100 : 100% chance to eat foe's berry
 Bug Buzz : Special / 90 / 100 : 10% chance to lower foe's Sp.Def by 1
-Fatal Bind : Physical / 70 / 85 : 100% to cause foe to faint in 3 turns
+Fatal Bind : Physical / 70 / 85 : 100% to cause the user and foe to faint in 3 turns
 Fell Stinger : Physical / 50 / 100 : Raises user's attack by 3 if it faints the foe
 First Impression : Physical / 90 / 100 : Always attacks first, fails after the first turn a user is out in battle
 Fury Cutter : Physical / 40 / 95 : Power increases the more times this move is used in succession
@@ -46,6 +46,7 @@ Nasty Plot : Status / 0 / -- : Raises user's Sp.Atk by 2
 Night Daze : Physical / 85 / 95 : 40% chance to lower foe's Accuracy by 1
 Night Slash : Physical / 70 / 100 : Boosted Crit rate
 Obstruct : Status / 0 / -- : User protects itself, can't be used in succession. Lowers foe's Defense by 2 if they make contact
+Parting Shot : Status / 0 / 100 : Lower foe's Atk and Sp.Atk by 1, user switches out
 Payback : Physical / 50 / 100 : Power is doubled if the user moves after foe
 Snarl : Special / 55 / 95 : 100% chance to lower foe's Sp.Atk
 Sucker Punch : Physical / 70 / 100 : Always attacks first. Fails if foe didn't use an attacking move
@@ -129,7 +130,7 @@ Low Sweep : Physical / 65 / 100 : 100% chance to lower foe's Speed by 1
 Mach Punch : Physical / 40 / 100 : Always goes first
 No Retreat : Status / 0 / -- : Raises all of user's stats by 1, user can't switch out. Can only be used once
 Power-Up Punch : Physical / 40 / 100 : 100% chance to raise user's Attack by 1
-Revenge : Physical / 120 / 100 : Power is doubled if user is slower than foe
+Revenge : Physical / 60 / 100 : Power is doubled if user is slower than foe
 Reversal : Physical / 0 / 100 : Deals more damage the lower the user's HP is
 Rock Smash : Physical / 40 / 100 : 100% to lower foe's Defense by 1
 Sacred Sword : Physical / 90 / 100 : Ignores Defense and Evasion changes of foe
@@ -295,7 +296,7 @@ Drill Run : Physical / 80 / 95 : Boosted Crit rate
 Earth Power : Special / 90 / 100 : 10% chance to lower foe's Sp.Def by 1
 Earthquake : Physical / 100 / 100 : A normal attack
 Fissure : Physical / 0 / 30 : If this move hits, it always K.Os foe
-Magnitude : Physical / 90 / 100 : A random Magnitude between 4-10 will be used, corresponding to its power
+Magnitude : Physical / 70 / 100 : A random Magnitude between 4-10 will be used, corresponding to its power
 Mud Bomb : Special / 65 / 85 : 30% to lower foe's Accuracy by 1
 Mud Shot : Special / 55 / 95 : 100% chance to lower foe's Speed by 1
 Mud Sport : Status / 0 / -- : Makes ELECTRIC moves deal 1/3 damage for 8 turns
@@ -372,6 +373,7 @@ Sparkle Strike : Physical / 80 / -- : This attack never misses
 Sparkling Terrain : Status / 0 / -- : Sets the terrain to SPARKLY for 8 turns
 Sparkly Swirl : Special / 70 / 100 : 10% chance to lower all of foe's stats by 1
 Swift : Special / 60 / -- : This attack never misses
+Trick : Status / 0 / 100 : Swaps the user's and foe's held items
 Twinkle Tackle : Physical / 85 / 90 : 20% chance to lower foe's Attack and Sp.Atk by 1
 
 ===============
@@ -522,7 +524,6 @@ Rest : Status / 0 / -- : Restores user's HP to full and clears any status condit
 Slow Fall : Special / 75 / 90 : 100% chance to change user's ability to LEVITATE
 Stored Power : Special / 20 / 100 : +20 BP for each stat boost
 Teleport : Status / 0 / -- : User switches out, bringing in a teammate for free. This always moves last
-Trick : Status / 0 / 100 : Swaps the user's and foe's held items
 Trick Room : Status / 0 / -- : Speed order is reversed for 6 turns
 Zen Headbutt : Physical / 80 / 90 : 30% of causing foe to flinch
 

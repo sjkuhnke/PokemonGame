@@ -783,24 +783,27 @@ Base Stats:
 120 HP / 75 Atk / 80 Def / 115 SpA / 80 SpD / 90 Spe / 560 BST
 
 Level Up:
+1 - Stealth Rock
+1 - Spiky Shield
+1 - Dragon Tail
+1 - Grassy Terrain
+1 - Forests Curse
+1 - Giga Drain
+1 - Growth
+1 - Breaking Swipe
+1 - Leaf Tornado
+1 - Magical Leaf
+1 - Ingrain
+1 - Rock Tomb
+1 - Dragon Pulse
 1 - Dragon Rush
 1 - Leaf Storm
-1 - Draco Meteor
 1 - Flamethrower
-1 - Pound
-3 - Leer
-5 - Absorb
-8 - Headbutt
-10 - Root Kick
-13 - Leaf Tornado
-16 - Magical Leaf
-18 - Rock Throw
-21 - Ingrain
-24 - Rock Tomb
-50 - Dragon Pulse
-60 - Petal Dance
+1 - Synthesis
+1 - Draco Meteor
+50 - Petal Dance
+60 - Nasty Plot
 70 - Thunder
-70 - Hyper Beam
 80 - Draco Meteor
 
 ===================
@@ -3586,7 +3589,6 @@ Level Up:
 35 - Play Rough
 40 - Bulk Up
 40 - Circle Throw
-45 - Seismic Toss
 45 - Hammer Arm
 50 - Ice Punch
 50 - Twinkle Tackle
@@ -4234,6 +4236,7 @@ Level Up:
 55 - Phantom Force
 60 - Twinkle Tackle
 65 - Unseen Strangle
+80 - Parting Shot
 
 ===================
 150 - Kissyfishy
@@ -6161,7 +6164,7 @@ Level Up:
 39 - Muddy Water
 42 - Switcheroo
 45 - Phantom Force
-48 - Dragon Dance
+53 - Dragon Dance
 
 ===================
 216 - Dompster-S
@@ -6180,7 +6183,6 @@ Level Up:
 1 - Bite
 1 - Crunch
 1 - Feint Attack
-1 - Dragon Dance
 1 - Knock Off
 5 - Fake Out
 8 - Thief
@@ -6200,6 +6202,8 @@ Level Up:
 53 - Magic Crash
 57 - Earthquake
 60 - Spectral Thief
+70 - Dragon Dance
+80 - Parting Shot
 
 ===================
 217 - Wormite-S

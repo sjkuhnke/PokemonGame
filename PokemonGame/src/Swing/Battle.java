@@ -770,7 +770,7 @@ public class Battle extends JFrame {
 				Pokemon oldCurrent = me.getCurrent().clone();
 				
 				boolean foeCanMove = true;
-    			if (!me.getCurrent().isFainted() && foeTrainer.getCurrent().vStatuses.contains(Status.SWAP)) { // AI wants to swap out
+    			if (!me.getCurrent().isFainted() && foeTrainer != null && foeTrainer.getCurrent().vStatuses.contains(Status.SWAP)) { // AI wants to swap out
     				Pokemon faster = me.getCurrent().getFaster(foe, 0, 0);
     				if (me.getCurrent() == faster) {
     					me.swap(me.team[index], index);
@@ -905,16 +905,6 @@ public class Battle extends JFrame {
 		}
 		if (p.perishCount > 0) {
 			JLabel statusLabel = new JLabel("Perish in " + p.perishCount);
-			statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.BOLD, 13));
-			result.add(statusLabel);
-		}
-		if (p.lastMoveUsed == Move.CHARGE) {
-			JLabel statusLabel = new JLabel("Charged");
-			statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.BOLD, 13));
-			result.add(statusLabel);
-		}
-		if (p.lastMoveUsed == Move.LOAD_FIREARMS) {
-			JLabel statusLabel = new JLabel("Loaded Firearms");
 			statusLabel.setFont(new Font(statusLabel.getFont().getName(), Font.BOLD, 13));
 			result.add(statusLabel);
 		}
@@ -1549,14 +1539,18 @@ public class Battle extends JFrame {
 		            if (me.team[j] != null) {
 		            	partyPanel.addMouseListener(new MouseAdapter() {
 			            	public void mouseClicked(MouseEvent evt) {
-			            		if (baton) me.team[index].statStages = me.getCurrent().statStages;
-				                me.swap(me.team[index], index);
-				                me.getCurrent().swapIn(foe, me, true);
-				                updateField(field);
-				                foe.vStatuses.remove(Status.TRAPPED);
-				                foe.vStatuses.remove(Status.SPUN);
-				                updateBars(true);
-				                SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+			            		if (SwingUtilities.isRightMouseButton(evt)) {
+			            			JOptionPane.showMessageDialog(null, me.team[index].showSummary(me, false, null, null), "Party member details", JOptionPane.PLAIN_MESSAGE);
+			            		} else {
+			            			if (baton) me.team[index].statStages = me.getCurrent().statStages;
+					                me.swap(me.team[index], index);
+					                me.getCurrent().swapIn(foe, me, true);
+					                updateField(field);
+					                foe.vStatuses.remove(Status.TRAPPED);
+					                foe.vStatuses.remove(Status.SPUN);
+					                updateBars(true);
+					                SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
+			            		}
 			            	}
 			            });
 		            }

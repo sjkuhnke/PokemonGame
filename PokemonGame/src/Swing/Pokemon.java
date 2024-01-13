@@ -3759,10 +3759,16 @@ public class Pokemon implements Serializable {
 			if (moveType == PType.STEEL && this.ability == Ability.STEELWORKER) bp *= 1.5;
 			
 			// Charged
-			if (moveType == PType.ELECTRIC && lastMoveUsed == Move.CHARGE) bp *= 2;
+			if (moveType == PType.ELECTRIC && this.vStatuses.contains(Status.CHARGED)) {
+				bp *= 2;
+				this.vStatuses.remove(Status.CHARGED);
+			}
 			
 			// Load Firearms
-			if (moveType == PType.STEEL && lastMoveUsed == Move.LOAD_FIREARMS) bp *= 2;
+			if (moveType == PType.STEEL && this.vStatuses.contains(Status.LOADED)) {
+				bp *= 2;
+				this.vStatuses.remove(Status.LOADED);
+			}
 			
 			// Crit Check
 			critChance = move.critChance;
@@ -4916,6 +4922,7 @@ public class Pokemon implements Serializable {
 			if (announce) console.writeln(this.nickname + " upgraded its weapon!");
 			stat(this, 4, 1, foe, announce);
 			stat(this, 5, 1, foe, announce);
+			if (!this.vStatuses.contains(Status.LOADED)) this.vStatuses.add(Status.LOADED);
 		} else if (move == Move.BABY$DOLL_EYES) {
 			stat(foe, 0, -1, this, announce);
 		} else if (announce && (move == Move.BATON_PASS || move == Move.TELEPORT)) {
@@ -4939,6 +4946,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.CHARGE) {
 			if (announce) console.writeln(this.nickname + " became charged with power!");
 			stat(this, 3, 1, foe, announce);
+			if (!this.vStatuses.contains(Status.CHARGED)) this.vStatuses.add(Status.CHARGED);
 		} else if (move == Move.CHARM) {
 			stat(foe, 0, -2, this, announce);
 		} else if (move == Move.COIL) {
@@ -6549,24 +6557,27 @@ public class Pokemon implements Serializable {
 			break;
 		case 28:
 			movebank = new Node[80];
-			movebank[0] = new Node(Move.DRAGON_RUSH);
+			movebank[0] = new Node(Move.STEALTH_ROCK);
+			movebank[0].addToEnd(new Node(Move.SPIKY_SHIELD));
+			movebank[0].addToEnd(new Node(Move.DRAGON_TAIL));
+			movebank[0].addToEnd(new Node(Move.GRASSY_TERRAIN));
+			movebank[0].addToEnd(new Node(Move.FORESTS_CURSE));
+			movebank[0].addToEnd(new Node(Move.GIGA_DRAIN));
+			movebank[0].addToEnd(new Node(Move.GROWTH));
+			movebank[0].addToEnd(new Node(Move.BREAKING_SWIPE));
+			movebank[0].addToEnd(new Node(Move.LEAF_TORNADO));
+			movebank[0].addToEnd(new Node(Move.MAGICAL_LEAF));
+			movebank[0].addToEnd(new Node(Move.INGRAIN));
+			movebank[0].addToEnd(new Node(Move.ROCK_TOMB));
+			movebank[0].addToEnd(new Node(Move.DRAGON_PULSE));
+			movebank[0].addToEnd(new Node(Move.DRAGON_RUSH));
 			movebank[0].addToEnd(new Node(Move.LEAF_STORM));
-			movebank[0].addToEnd(new Node(Move.DRACO_METEOR));
 			movebank[0].addToEnd(new Node(Move.FLAMETHROWER));
-			movebank[0].addToEnd(new Node(Move.POUND));
-			movebank[2] = new Node(Move.LEER);
-			movebank[4] = new Node(Move.ABSORB);
-			movebank[7] = new Node(Move.HEADBUTT);
-			movebank[9] = new Node(Move.ROOT_KICK);
-			movebank[12] = new Node(Move.LEAF_TORNADO);
-			movebank[15] = new Node(Move.MAGICAL_LEAF);
-			movebank[17] = new Node(Move.ROCK_THROW);
-			movebank[20] = new Node(Move.INGRAIN);
-			movebank[23] = new Node(Move.ROCK_TOMB);
-			movebank[49] = new Node(Move.DRAGON_PULSE);
-			movebank[59] = new Node(Move.PETAL_DANCE);
+			movebank[0].addToEnd(new Node(Move.SYNTHESIS));
+			movebank[0].addToEnd(new Node(Move.DRACO_METEOR));
+			movebank[49] = new Node(Move.PETAL_DANCE);
+			movebank[59] = new Node(Move.NASTY_PLOT);
 			movebank[69] = new Node(Move.THUNDER);
-			movebank[69].addToEnd(new Node(Move.HYPER_BEAM));
 			movebank[79] = new Node(Move.DRACO_METEOR);
 			break;
 		case 29:
@@ -10686,10 +10697,10 @@ public class Pokemon implements Serializable {
 		if (moveType == PType.STEEL && this.ability == Ability.STEELWORKER) bp *= 1.5;
 		
 		// Charged
-		if (moveType == PType.ELECTRIC && lastMoveUsed == Move.CHARGE) bp *= 2;
+		if (moveType == PType.ELECTRIC && this.vStatuses.contains(Status.CHARGED)) bp *= 2;
 		
 		// Load Firearms
-		if (moveType == PType.STEEL && lastMoveUsed == Move.LOAD_FIREARMS) bp *= 2;
+		if (moveType == PType.STEEL && this.vStatuses.contains(Status.LOADED)) bp *= 2;
 		
 		// Multi hit moves calc to use
 		if (mode == 0) bp *= move.getNumHits(this, null);
