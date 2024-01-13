@@ -4284,11 +4284,12 @@ public class Pokemon implements Serializable {
 			if (foe.item != null && foe.item.isBerry()) {
 				console.writeln(this.nickname + " stole and ate " + foe.nickname + "'s berry!");
 				eatBerry(foe.item, false, foe);
+				foe.item = null;
 			}
 		} else if (move == Move.BUG_BUZZ) {
 			stat(foe, 3, -1, this);
 		} else if (move == Move.BURN_UP) {
-			if (this.type1 == PType.FIRE) type1 = PType.UNKNOWN; 
+			if (this.type1 == PType.FIRE) type1 = PType.UNKNOWN;
 			if (this.type2 == PType.FIRE) type2 = null;
 		} else if (move == Move.BULLDOZE) {
 			stat(foe, 4, -1, this);
@@ -4314,7 +4315,7 @@ public class Pokemon implements Serializable {
 			if (this.item == null && foe.item != null) {
 				console.writeln(this.nickname + " stole the foe's " + foe.item.toString() + "!");
 				this.item = foe.item;
-				foe.lostItem = foe.item;
+				if (!foe.loseItem) foe.lostItem = foe.item;
 				foe.item = null;
 				this.loseItem = true;
 			}
