@@ -199,7 +199,7 @@ public enum Move {
 	FORESTS_CURSE(0,100,0,0,2,0,PType.GRASS,"Changes foe's type to GRASS",false,20),
 	FOUL_PLAY(95,100,0,0,0,0,PType.DARK,"Uses the foe's attack stat instead of the user's",true,15),
 	FREEZE$DRY(70,100,10,0,1,0,PType.ICE,"% chance to Frostbite foe, super effective against WATER types too",false,15),
-	FREEZING_GLARE(90,100,20,0,1,0,PType.PSYCHIC,"% chance to Frostbite foe",false,1),
+	FREEZING_GLARE(90,100,20,0,1,0,PType.PSYCHIC,"% chance to Frostbite foe",false,10),
 	FRENZY_PLANT(150,90,0,0,1,0,PType.GRASS,"User must rest after using this move",false,10),
 	FROSTBIND(0,90,0,0,2,0,PType.ICE,"Inflicts foe with Frostbite",false,10),
 	FRUSTRATION(-1,100,0,0,0,0,PType.NORMAL,"Base Power is based on user's friendship: the lower, the stronger",true,20),
