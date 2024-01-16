@@ -498,7 +498,7 @@ public enum Move {
 	SPLASH(0,1000,0,0,2,0,PType.NORMAL,"This attack does nothing",false,40),
 	STAFF_JAB(75,90,100,0,0,0,PType.BUG,"% to lower foe's Attack by 2",true,15),
 	STAR_STORM(110,85,0,0,1,0,PType.GALACTIC,"A normal attack",false,5),
-	STAR$STRUCK_ARCHER(75,85,0,3,0,0,PType.GALACTIC,"This move always crits",false,10),
+	STAR$STRUCK_ARROW(75,85,0,3,0,0,PType.GALACTIC,"This move always crits",false,10),
 	STEALTH_ROCK(0,1000,0,0,2,0,PType.ROCK,"Lays floating rocks on opponents side. Will damage any foe switching in (depending on their type weakness/resistance to ROCK) for a corresponding amount (1/2-1/32)",false,20),
 	STEEL_BEAM(140,95,100,0,1,0,PType.STEEL,"% chance to deal 1/2 of user's HP in recoil",false,5),
 	STEEL_WING(70,90,10,0,0,0,PType.STEEL,"% chance to raise user's Defense by 1",true,25),

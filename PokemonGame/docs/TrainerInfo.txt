@@ -132,7 +132,7 @@ Trainer EP-AD               Droid Lv. 22 @ (Metal Coat)
 
 Energy Plant (pt. 2)------------------------------
 
-Trainer EP-BA               Gyarados Lv. 21, Gyarados Lv. 21
+Trainer EP-BA               Gyarados Lv. 21, Gyarados Lv. 21 @ (Cheri Berry, Rawst Berry)
 Trainer EP-BB               Durfish Lv. 22 @ (Rindo Berry)
 Trainer EP-BC               Staryu Lv. 22, Starmie Lv. 22 @ (Coba Berry, None)
 Trainer EP-BD               Shomp Lv. 21 @ (Mysticola Berry)
@@ -143,7 +143,7 @@ Trainer TN O1               Centatle Lv. 19 @ (Poison Barb)
 Trainer TN O2               Bugop Lv. 19 @ (Lum Berry)
 Trainer TN O3               Blaxer Lv. 19 @ (Galaxeed Berry)
 Trainer TN O4               Houndour Lv. 19 @ (Salac Berry)
-Trainer TN O5               Carinx Lv. 20, Ali Lv. 20 @ (Chople Berry, Blunder Policy)
+Trainer TN O5               Carinx Lv. 20, Ali Lv. 20 @ (Chople Berry, Rawst Berry)
 Trainer TN O6               Inkay Lv. 20, Shomp Lv. 20 @ (Life Orb, None)
 
 Sicab Office (2A)---------------------------------

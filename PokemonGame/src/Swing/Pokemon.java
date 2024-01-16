@@ -468,7 +468,7 @@ public class Pokemon implements Serializable {
         		}
         	}
         	if (move.cat == 2 || move == Move.NUZZLE || move == Move.SWORD_SPIN || move == Move.POWER$UP_PUNCH || move == Move.VENOM_SPIT
-        			|| move == Move.WHIRLPOOL || move == Move.WRAP || move == Move.BIND || move == Move.FIRE_SPIN) {
+        			|| ((move == Move.WHIRLPOOL || move == Move.WRAP || move == Move.BIND || move == Move.FIRE_SPIN) && !foe.vStatuses.contains(Status.SPUN))) {
         		if (move.accuracy > 100) {
         			Pokemon freshYou = this.clone();
         			freshYou.statStages = new int[freshYou.statStages.length];
@@ -8428,10 +8428,12 @@ public class Pokemon implements Serializable {
 			movebank[59] = new Node(Move.OUTRAGE);
 			break;
 		case 137:
-			movebank = new Node[25];
+			movebank = new Node[40];
 			movebank[0] = new Node(Move.SPLASH);
 			movebank[14] = new Node(Move.TACKLE);
 			movebank[24] = new Node(Move.FLAIL);
+			movebank[29] = new Node(Move.FLAIL);
+			movebank[39] = new Node(Move.HYDRO_PUMP);
 			break;
 		case 138:
 			movebank = new Node[52];
@@ -9278,7 +9280,7 @@ public class Pokemon implements Serializable {
 			movebank[49] = new Node(Move.METEOR_MASH);
 			break;
 		case 183:
-			movebank = new Node[65];
+			movebank = new Node[70];
 			movebank[0] = new Node(Move.KNOCK_OFF);
 			movebank[0].next = new Node(Move.FOCUS_ENERGY);
 			movebank[0].next.next = new Node(Move.SCRATCH);
@@ -9301,6 +9303,7 @@ public class Pokemon implements Serializable {
 			movebank[57] = new Node(Move.MAGIC_BLAST);
 			movebank[59] = new Node(Move.SHIFT_GEAR);
 			movebank[64] = new Node(Move.PRISMATIC_LASER);
+			movebank[69] = new Node(Move.STEEL_BEAM);
 			break;
 		case 184:
 			movebank = new Node[23];
@@ -9397,8 +9400,9 @@ public class Pokemon implements Serializable {
 			break;
 		case 189:
 			movebank = new Node[75];
-			movebank[0] = new Node(Move.WRAP);
-			movebank[0].next = new Node(Move.LEER);
+			movebank[0] = new Node(Move.FIERY_DANCE);
+			movebank[0].next = new Node(Move.WRAP);
+			movebank[0].next.next = new Node(Move.LEER);
 			movebank[4] = new Node(Move.THUNDER_WAVE);
 			movebank[7] = new Node(Move.THUNDERSHOCK);
 			movebank[12] = new Node(Move.DRAGON_RAGE);
@@ -9408,7 +9412,7 @@ public class Pokemon implements Serializable {
 			movebank[23] = new Node(Move.GLITTER_DANCE);
 			movebank[25] = new Node(Move.TWISTER);
 			movebank[29] = new Node(Move.DRAGON_BREATH);
-			movebank[32] = new Node(Move.GLITZY_GLOW);
+			movebank[32] = new Node(Move.LUSTER_PURGE);
 			movebank[35] = new Node(Move.DRAGON_TAIL);
 			movebank[38] = new Node(Move.GLITZY_GLOW);
 			movebank[41] = new Node(Move.SCALE_SHOT);
@@ -9462,7 +9466,7 @@ public class Pokemon implements Serializable {
 			movebank[51] = new Node(Move.AURA_SPHERE);
 			movebank[55] = new Node(Move.METEOR_MASH);
 			movebank[59] = new Node(Move.DRAIN_PUNCH);
-			movebank[59].next = new Node(Move.STAR$STRUCK_ARCHER);
+			movebank[59].next = new Node(Move.STAR$STRUCK_ARROW);
 			movebank[59].next.next = new Node(Move.CLOSE_COMBAT);
 			movebank[64] = new Node(Move.NO_RETREAT);
 			movebank[69] = new Node(Move.METEOR_ASSAULT);
