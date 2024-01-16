@@ -454,7 +454,7 @@ public class Main {
 		setItem("Maxwell 1", 2, Item.BLACK_SLUDGE);
 		setItem("Maxwell 1", 3, Item.KASIB_BERRY);
 		setItem("Maxwell 1", 4, Item.LEFTOVERS);
-		setItem("Maxwell 1", 5, Item.COSMIC_CORE);
+		setItem("Maxwell 1", 5, Item.COBA_BERRY);
 		setItem("Maxwell 1", 6, Item.ENCHANTED_AMULET);
 		
 		setItem("Rick 2", 1, Item.LUM_BERRY);
@@ -512,22 +512,7 @@ public class Main {
 		setMoveset("Exp. Trainer", 4, Move.SPLASH, null, null, null);
 		setMoveset("Exp. Trainer", 5, Move.SPLASH, null, null, null);
 		setMoveset("Exp. Trainer", 6, Move.SPLASH, null, null, null);
-		
-//		Move[] yes = Move.values();
-//		int max = 0;
-//		Move result = Move.ABSORB;
-//		for (int i = 0; i < yes.length; i++) {
-//			int size = yes[i].toString().length();
-//			if (size > max) {
-//				max = size;
-//				result = yes[i];
-//			}
-//			
-//		}
-//		System.out.println(max + ", " + result.toString());
 	}
-
-
 
 	private static void setTrainers() {
 		modifiedTrainers = new ArrayList<>();
@@ -577,7 +562,7 @@ public class Main {
 				new Trainer("EP-AC", new Pokemon[]{new Pokemon(114, 20, false, true)}, new Item[]{Item.RINDO_BERRY}, 100),
 				new Trainer("EP-AD", new Pokemon[]{new Pokemon(181, 22, false, true)}, new Item[]{Item.METAL_COAT}, 100),
 				new Trainer("EP-AE", new Pokemon[]{new Pokemon(126, 21, false, true), new Pokemon(123, 22, false, true), new Pokemon(120, 21, false, true)}, new Item[]{Item.FOCUS_BAND, Item.FOCUS_BAND, Item.FOCUS_BAND}, 100),
-				new Trainer("EP-BA", new Pokemon[]{new Pokemon(138, 21, false, true), new Pokemon(138, 21, false, true)}, 100), // 45
+				new Trainer("EP-BA", new Pokemon[]{new Pokemon(138, 21, false, true), new Pokemon(138, 21, false, true)}, new Item[] {Item.CHERI_BERRY, Item.RAWST_BERRY}, 100), // 45
 				new Trainer("EP-BB", new Pokemon[]{new Pokemon(148, 22, false, true)}, new Item[]{Item.RINDO_BERRY}, 100),
 				new Trainer("EP-BC", new Pokemon[]{new Pokemon(139, 22, false, true), new Pokemon(140, 22, false, true)}, new Item[]{Item.COBA_BERRY, null}, 100),
 				new Trainer("EP-BD", new Pokemon[]{new Pokemon(144, 21, false, true)}, new Item[]{Item.MYSTICOLA_BERRY}, 100),
@@ -585,7 +570,7 @@ public class Main {
 				new Trainer("TN O2", new Pokemon[]{new Pokemon(73, 19, false, true)}, new Item[]{Item.LUM_BERRY}, 100), // 50
 				new Trainer("TN O3", new Pokemon[]{new Pokemon(95, 19, false, true)}, new Item[]{Item.GALAXEED_BERRY}, 100),
 				new Trainer("TN O4", new Pokemon[]{new Pokemon(104, 19, false, true)}, new Item[]{Item.SALAC_BERRY}, 100),
-				new Trainer("TN O5", new Pokemon[]{new Pokemon(52, 20, false, true), new Pokemon(141, 20, false, true)}, new Item[]{Item.CHOPLE_BERRY, Item.BLUNDER_POLICY}, 100),
+				new Trainer("TN O5", new Pokemon[]{new Pokemon(52, 20, false, true), new Pokemon(141, 20, false, true)}, new Item[]{Item.CHOPLE_BERRY, Item.RAWST_BERRY}, 100),
 				new Trainer("TN O6", new Pokemon[]{new Pokemon(90, 20, false, true), new Pokemon(144, 20, false, true)}, new Item[]{Item.LIFE_ORB, null}, 100, 3),
 				new Trainer("Scott 2", new Pokemon[]{new Pokemon(10, 5, false, true)}, 100), // 55
 				new Trainer("2 Gym A", new Pokemon[]{new Pokemon(16, 22, false, true)}, new Item[]{Item.MUSCLE_BAND}, 200),
