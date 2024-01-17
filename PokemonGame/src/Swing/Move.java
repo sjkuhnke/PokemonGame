@@ -302,7 +302,7 @@ public enum Move {
 	LIGHT_OF_RUIN(140,90,0,0,1,0,PType.LIGHT,"User takes 1/3 of damage dealt as recoil",false,5),
 	LIGHT_SCREEN(0,1000,0,0,2,0,PType.PSYCHIC,"Creates a screen that halves special damage on user's team for 5 turns",false,15),
 	LIQUIDATION(85,100,20,0,0,0,PType.WATER,"% chance to lower foe's Defense by 1",true,10),
-	LOAD_FIREARMS(0,100,0,0,2,0,PType.STEEL,"Raises user's Speed and Accuracy by 1, and doubles the power of a STEEL move if used next",false,10),
+	LOAD_FIREARMS(0,1000,0,0,2,0,PType.STEEL,"Raises user's Speed and Accuracy by 1, and doubles the power of a STEEL move if used next",false,10),
 	LOCK$ON(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Accuracy by 6",false,5),
 	LOVELY_KISS(0,75,0,0,2,0,PType.NORMAL,"Sleeps foe",false,5),
 	LOW_KICK(-1,100,0,0,0,0,PType.FIGHTING,"Damage is based on how heavy foe is",true,20),
