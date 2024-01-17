@@ -468,7 +468,8 @@ public class Pokemon implements Serializable {
         		}
         	}
         	if (move.cat == 2 || move == Move.NUZZLE || move == Move.SWORD_SPIN || move == Move.POWER$UP_PUNCH || move == Move.VENOM_SPIT
-        			|| ((move == Move.WHIRLPOOL || move == Move.WRAP || move == Move.BIND || move == Move.FIRE_SPIN) && !foe.vStatuses.contains(Status.SPUN))) {
+        			|| move == Move.FATAL_BIND || ((move == Move.WHIRLPOOL || move == Move.WRAP || move == Move.BIND || move == Move.FIRE_SPIN)
+        					&& !foe.vStatuses.contains(Status.SPUN))) {
         		if (move.accuracy > 100) {
         			Pokemon freshYou = this.clone();
         			freshYou.statStages = new int[freshYou.statStages.length];
@@ -2270,8 +2271,8 @@ public class Pokemon implements Serializable {
 		} else if (id == 89) { abilities = new Ability[] {Ability.SIMPLE, Ability.NORMALIZE};
 		} else if (id == 90) { abilities = new Ability[] {Ability.CONTRARY, Ability.BRAINWASH};
 		} else if (id == 91) { abilities = new Ability[] {Ability.CONTRARY, Ability.BRAINWASH};
-		} else if (id == 92) { abilities = new Ability[] {Ability.FLASH_FIRE, Ability.INTIMIDATE};
-		} else if (id == 93) { abilities = new Ability[] {Ability.FLASH_FIRE, Ability.INTIMIDATE};
+		} else if (id == 92) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.FLASH_FIRE};
+		} else if (id == 93) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.FLASH_FIRE};
 		} else if (id == 94) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.FLASH_FIRE};
 		} else if (id == 95) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.IRON_FIST};
 		} else if (id == 96) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.IRON_FIST};
@@ -7753,11 +7754,11 @@ public class Pokemon implements Serializable {
 			movebank[31] = new Node(Move.HEX);
 			movebank[35] = new Node(Move.AUTOMOTIZE);
 			movebank[39] = new Node(Move.SWITCHEROO);
-			movebank[44] = new Node(Move.GYRO_BALL);
+			movebank[44] = new Node(Move.FIRE_BLAST);
 			movebank[49] = new Node(Move.EXPLOSION);
 			movebank[54] = new Node(Move.SHADOW_BALL);
 			movebank[59] = new Node(Move.STEEL_BEAM);
-			movebank[64] = new Node(Move.FIRE_BLAST);
+			movebank[64] = new Node(Move.ERUPTION);
 			break;
 		case 98:
 			movebank = new Node[33];
@@ -8228,7 +8229,7 @@ public class Pokemon implements Serializable {
 			movebank[54] = new Node(Move.PLASMA_FISTS);
 			break;
 		case 125:
-			movebank = new Node[60];
+			movebank = new Node[75];
 			movebank[0] = new Node(Move.VOLT_TACKLE);
 			movebank[0].addToEnd(new Node(Move.BOUNCE));
 			movebank[0].addToEnd(new Node(Move.HOWL));
@@ -8244,7 +8245,7 @@ public class Pokemon implements Serializable {
 			movebank[44] = new Node(Move.SPARKLE_STRIKE);
 			movebank[49] = new Node(Move.ELECTRO_BALL);
 			movebank[54] = new Node(Move.MAGIC_CRASH);
-			movebank[59] = new Node(Move.PLASMA_FISTS);
+			movebank[74] = new Node(Move.PLASMA_FISTS);
 			break;
 		case 126:
 			movebank = new Node[25];
@@ -10829,7 +10830,7 @@ public class Pokemon implements Serializable {
 		
 		if (mode == 0 && (move == Move.MAGIC_BLAST || move == Move.ELEMENTAL_SPARKLE)) damage += magicDamage;
 		
-		if (move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) {
+		if ((move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) && mode == 0) {
 			Random rand = new Random();
 			if (rand.nextInt(4) != 1) {
 				return 0;

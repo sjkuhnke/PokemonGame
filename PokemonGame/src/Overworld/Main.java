@@ -435,6 +435,7 @@ public class Main {
 		setItem("5 Gym Leader 1", 6, Item.WIKI_BERRY);
 		
 		setMoveset("Fred 3", 1, Move.IRON_BLAST, Move.DRAGON_PULSE, Move.FLAMETHROWER, Move.HURRICANE);
+		setMoveset("Fred 3", 3, Move.SUCKER_PUNCH, Move.BREAKING_SWIPE, Move.EARTHQUAKE, Move.SWORDS_DANCE);
 		setMoveset("Fred 3", 5, Move.COSMIC_POWER, Move.STONE_EDGE, Move.METEOR_MASH, Move.COMET_CRASH);
 		setMoveset("Fred 3", 6, Move.BLIZZARD, Move.LIGHT_SCREEN, Move.HYDRO_PUMP, Move.PSYCHIC);
 		
