@@ -7396,8 +7396,9 @@ public class Pokemon implements Serializable {
 			break;
 		case 77:
 			movebank = new Node[70];
-			movebank[0] = new Node(Move.CONFUSION);
-			movebank[0].next = new Node(Move.PLAY_NICE);
+			movebank[0] = new Node(Move.NUZZLE);
+			movebank[0].addToEnd(new Node(Move.CONFUSION));
+			movebank[0].addToEnd(new Node(Move.PLAY_NICE));
 			movebank[4] = new Node(Move.LIFE_DEW);
 			movebank[9] = new Node(Move.MAGIC_POWDER);
 			movebank[14] = new Node(Move.AROMATHERAPY);
@@ -7945,8 +7946,8 @@ public class Pokemon implements Serializable {
 			movebank[44] = new Node(Move.SPARKLING_TERRAIN);
 			movebank[49] = new Node(Move.FIRE_BLAST);
 			movebank[53] = new Node(Move.MAGIC_REFLECT);
-			movebank[59] = new Node(Move.SPACIAL_REND);
-			movebank[64] = new Node(Move.HYPER_BEAM);
+			movebank[59] = new Node(Move.MAGIC_TOMB);
+			movebank[64] = new Node(Move.SPACIAL_REND);
 			movebank[69] = new Node(Move.BLUE_FLARE);
 			break;
 		case 108:

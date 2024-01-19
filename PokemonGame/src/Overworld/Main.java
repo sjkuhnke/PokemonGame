@@ -482,7 +482,7 @@ public class Main {
 		
 		setItem("Scott 4", 1, Item.CHILAN_BERRY);
 		setItem("Scott 4", 2, Item.FOCUS_SASH);
-		setItem("Scott 4", 3, Item.TANGA_BERRY);
+		setItem("Scott 4", 3, Item.CHESTO_BERRY);
 		setItem("Scott 4", 4, Item.LIFE_ORB);
 		setItem("Scott 4", 5, Item.MAGNET);
 		setItem("Scott 4", 6, Item.LEFTOVERS);
