@@ -444,7 +444,7 @@ public enum Move {
 	SCORCHING_SANDS(70,100,30,0,1,0,PType.GROUND,"% chance to burn foe",false,15),
 	SCRATCH(40,100,0,0,0,0,PType.NORMAL,"A normal attack",true,35),
 	SCREECH(0,85,0,0,2,0,PType.NORMAL,"Lowers foe's Defense by 2",false,35),
-	SEA_DRAGON(0,1000,0,0,2,0,PType.MAGIC,"Transforms Kissyfishy into Kissyfishy-D",false,5),
+	SEA_DRAGON(0,1000,0,0,2,0,PType.MAGIC,"Transforms Kissyfishy into Kissyfishy-D: raised Atk, SpAtk, Acc by 1 if Kissyfishy-D",false,5),
 	SEISMIC_TOSS(0,100,0,0,0,0,PType.FIGHTING,"Damage dealt is equal to the user's level",true,20),
 	SELF$DESTRUCT(200,100,0,0,0,0,PType.NORMAL,"User faints",false,5),
 	SHADOW_BALL(80,100,30,0,1,0,PType.GHOST,"% to lower foe's Sp.Def by 1",false,15),
@@ -485,7 +485,7 @@ public enum Move {
 	SPARKLE_STRIKE(80,1000,0,0,0,0,PType.MAGIC,"This attack never misses",true,15),
 	SPARKLING_ARIA(90,100,100,0,1,0,PType.WATER,"% to cure user of its Burn if it has one",false,10),
 	SPARKLING_TERRAIN(0,1000,0,0,2,0,PType.MAGIC,"Sets the terrain to SPARKLY for 8 turns",false,10),
-	SPARKLING_WATER(0,1000,0,0,2,0,PType.WATER,"Raises Sp.Def by 1. Turns into Sparkling Aria when used by Kissyfishy-D",false,15),
+	SPARKLING_WATER(0,1000,0,0,2,0,PType.WATER,"Raises Sp.Def by 2. Turns into Sparkling Aria when used by Kissyfishy-D",false,15),
 	SPARKLY_SWIRL(70,100,10,0,1,0,PType.MAGIC,"% chance to lower all of foe's stats by 1",false,15),
 	SPECTRAL_THIEF(90,100,100,0,0,0,PType.GHOST,"% to steal any stat boosts foe has",true,10),
 	SPIKE_CANNON(20,100,0,0,0,0,PType.NORMAL,"Hits 2-5 times",false,15),
@@ -522,7 +522,7 @@ public enum Move {
 	SUNSTEEL_STRIKE(100,100,0,0,0,0,PType.STEEL,"A normal attack",true,5),
 	//SUPER_CHARGE(90,50,100,0,0,0,PType.ELECTRIC,"% of causing foe to flinch, user takes 1/3 of damage dealt as recoil",false,1),
 	SUPER_FANG(0,90,0,0,0,0,PType.NORMAL,"Halves foe's remaining HP",true,10),
-	SUPERCHARGED_SPLASH(10,100,50,0,1,0,PType.WATER,"% chance to raise user's Sp.Atk by 1. Turns into Thunder when used by Kissyfishy-D",false,15),
+	SUPERCHARGED_SPLASH(10,100,50,0,1,0,PType.WATER,"% chance to raise user's Sp.Atk by 2. Turns into Thunder when used by Kissyfishy-D",false,15),
 	SUPERNOVA_EXPLOSION(200,100,0,0,1,0,PType.GALACTIC,"User faints",false,5),
 	SUPERPOWER(120,100,100,0,0,0,PType.FIGHTING,"% of lowering user's Attack and Defense by 1",true,5),
 	SUPERSONIC(0,55,0,0,2,0,PType.NORMAL,"Confuses foe",false,20),
@@ -582,13 +582,13 @@ public enum Move {
 	VITAL_THROW(60,1000,0,0,0,-1,PType.FIGHTING,"This attack never misses, but goes last",false,10),
 	VOLT_TACKLE(120,100,10,0,0,0,PType.ELECTRIC,"% to Paralyze foe. User takes 1/3 of damage dealt as recoil",true,5),
 	WAKE$UP_SLAP(-1,100,0,0,0,0,PType.FIGHTING,"If foe is asleep, power is doubled, but the foe wakes up",true,10),
-	WATER_CLAP(20,100,20,0,0,0,PType.WATER,"% to Paralyze foe. Turns into Dragon Darts when used by Kissyfishy-D",true,15),
-	WATER_FLICK(0,100,0,0,2,0,PType.WATER,"Lowers foe's Attack by 1. Turns into Flamethrower when used by Kissyfishy-D",false,20),
-	WATER_KICK(75,100,0,0,0,0,PType.WATER,"A normal attack. Turns into Hi Jump Kick when used by Kissyfishy-D",true,15),
-	WATER_SMACK(40,95,30,0,0,0,PType.WATER,"% chance of causing foe to flinch. Turns into Darkest Lariat when used by Kissyfishy-D",true,10),
+	WATER_CLAP(20,100,100,0,0,0,PType.WATER,"% to Paralyze foe. Turns into Dragon Darts when used by Kissyfishy-D",true,15),
+	WATER_FLICK(0,100,0,0,2,0,PType.WATER,"Lowers foe's Attack by 2. Turns into Flamethrower when used by Kissyfishy-D",false,20),
+	WATER_KICK(130,90,0,0,0,0,PType.WATER,"A normal attack. Turns into Hi Jump Kick when used by Kissyfishy-D",true,15),
+	WATER_SMACK(40,95,50,0,0,0,PType.WATER,"% chance of causing foe to flinch. Turns into Darkest Lariat when used by Kissyfishy-D",true,10),
 	WATER_SPOUT(-1,100,0,0,1,0,PType.WATER,"Power is higher the more HP the user has",false,5),
 	WATER_SPORT(0,1000,0,0,2,0,PType.WATER,"Makes FIRE moves deal 1/3 damage for 8 turns",false,15),
-	WAVE_CRASH(120,100,0,0,0,0,PType.WATER,"User takes 1/3 of damage dealt as recoil",false,10),
+	WAVE_CRASH(120,100,0,0,0,0,PType.WATER,"User takes 1/3 of damage dealt as recoil",true,10),
 	WATER_GUN(40,100,0,0,1,0,PType.WATER,"A normal attack",false,25),
 	//WATER_JET(50,100,0,0,0,1,PType.WATER,"Always attacks first",false,1),
 	WATER_PULSE(60,100,30,0,1,0,PType.WATER,"% to Confuse foe",false,20),
@@ -670,7 +670,7 @@ public enum Move {
 	public double getbp(Pokemon user, Pokemon foe) {
 		if (basePower == -1) {
 			if (this == Move.STORED_POWER && foe == null) return 20;
-			boolean faster = user == null ? true : user.getFaster(foe, 0, 0) == user;
+			boolean faster = user == null || foe == null ? true : user.getFaster(foe, 0, 0) == user;
 			if (user == null) {
 				if (this == Move.ELECTRO_BALL || this == Move.FLAIL || this == Move.REVERSAL || this == Move.GRASS_KNOT || this == Move.LOW_KICK
 						|| this == Move.GYRO_BALL || this == Move.HEAT_CRASH || this == Move.HEAVY_SLAM || this == Move.RETURN || this == Move.FRUSTRATION) return 0;

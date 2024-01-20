@@ -238,7 +238,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		if (trainer > -1 && !player.p.wiped() && trainer != 256) player.p.trainersBeat[trainer] = true;
 		if (id == 159) {
 			player.p.grustCount++;
-			aSetter.updateNPC();
+			aSetter.updateNPC(107);
 		}
 		Pokemon[] teamTemp = Arrays.copyOf(player.p.team, 6);
 		for (int i = 0; i < 6; i++) {

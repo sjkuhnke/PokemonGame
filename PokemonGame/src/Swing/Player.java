@@ -210,7 +210,7 @@ public class Player implements Serializable{
             	int index = Arrays.asList(this.getTeam()).indexOf(pokemon);
                 this.team[index] = evolved;
                 if (index == 0) this.current = evolved;
-                evolved.checkMove();
+                evolved.checkMove(this);
                 pokemon = evolved;
                 result = true;
             }
@@ -573,6 +573,14 @@ public class Player implements Serializable{
 		result.add(confirmButton);
 		JOptionPane.showMessageDialog(null, result);
 		
+	}
+
+	public boolean hasTM(Move move) {
+		if (!move.isTM()) return false;
+		for (int i = 93; i < 200; i++) {
+			if (bag.contains(i) && Item.getItem(i).getMove() == move) return true;
+		}
+		return false;
 	}
 
 }

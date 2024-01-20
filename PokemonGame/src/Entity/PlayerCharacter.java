@@ -432,12 +432,12 @@ public class PlayerCharacter extends Entity {
 			if (gp.obj[gp.currentMap][objIndex].item == Item.CHOICE_BAND) {
 				gp.player.p.itemsCollected[gp.currentMap][objIndex + 1] = true;
 				gp.obj[gp.currentMap][objIndex + 1] = null;
-				p.choiceChoice = Item.CHOICE_BAND;
+				p.choiceChoice = Item.CHOICE_SPECS;
 			}
 			if (gp.obj[gp.currentMap][objIndex].item == Item.CHOICE_SPECS) {
 				gp.player.p.itemsCollected[gp.currentMap][objIndex - 1] = true;
 				gp.obj[gp.currentMap][objIndex - 1] = null;
-				p.choiceChoice = Item.CHOICE_SPECS;
+				p.choiceChoice = Item.CHOICE_BAND;
 			}
 		}
 		gp.player.p.itemsCollected[gp.currentMap][objIndex] = true;
@@ -1046,7 +1046,7 @@ public class PlayerCharacter extends Entity {
 				                			    	if (SwingUtilities.isRightMouseButton(e)) {
 				                			            JOptionPane.showMessageDialog(null, move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 				                			        } else {
-				                			        	int choice = p.team[index].displayMoveOptions(move);
+				                			        	int choice = p.team[index].displayMoveOptions(move, p);
 							        	                if (choice == JOptionPane.CLOSED_OPTION) {
 							        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not learn " + move + ".");
 							        	                } else {
@@ -1496,7 +1496,7 @@ public class PlayerCharacter extends Entity {
 					        	    		        result.exp = p.team[index].exp;
 					        	    		        p.team[index] = result;
 					        	    		        if (index == 0) p.current = result;
-					        	                    result.checkMove();
+					        	                    result.checkMove(p);
 					        	                    p.pokedex[result.id] = 2;
 					        	    		        p.bag.remove(i.getItem());
 					        	    			} else {
@@ -1563,7 +1563,7 @@ public class PlayerCharacter extends Entity {
 					        		                }
 					        		            }
 					        		            if (!learnedMove) {
-					        		            	int choice = p.team[index].displayMoveOptions(i.getItem().getMove());
+					        		            	int choice = p.team[index].displayMoveOptions(i.getItem().getMove(), p);
 						        	                if (choice == JOptionPane.CLOSED_OPTION) {
 						        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not learn " + i.getItem().getMove() + ".");
 						        	                } else {

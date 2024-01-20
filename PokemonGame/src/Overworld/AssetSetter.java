@@ -206,6 +206,11 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 27, Item.TM14, mapNum); // drain punch
 		gp.obj[mapNum][objIndex] = ObjSetup(46, 28, Item.BOTTLE_CAP, mapNum);
 		
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 41, Item.WEAKNESS_POLICY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 32, Item.BLUNDER_POLICY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(72, 32, Item.FULL_RESTORE, mapNum);
+		if (gp.player.p.choiceChoice != null) gp.obj[mapNum][objIndex] = ObjSetup(77, 41, gp.player.p.choiceChoice, mapNum);
+		
 		mapNum = 17;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 38, Item.TM61, mapNum); // smack down
@@ -811,6 +816,9 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 26, 29, 46);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 46, 29, 47);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 21, 39, 48);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 62, 39, 273);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 67, 42, 274);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 72, 40, 275);
 		
 		mapNum = 17;
 		index = 0;
@@ -1320,6 +1328,10 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(30, 9, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(30, 8, 4, mapNum, map);
 		
+		mapNum = 16;
+		iIndex = 0;
+		SetupWhirlpool(mapNum, 65, 35, map);
+		
 		mapNum = 18;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(46, 40, 1, mapNum, map);
@@ -1669,7 +1681,7 @@ public class AssetSetter {
 		
 	}
 
-	public void updateNPC() {
+	public void updateNPC(int map) {
 		boolean[] flags = gp.player.p.flags;
 		// flags[0] is true after walking into first gate
 		// flags[1] is true after beating Scott 1
@@ -1743,6 +1755,8 @@ public class AssetSetter {
 			}
 		}
 		if (flags[21]) gp.npc[109][3] = null;
+		
+		if (map == 16 && gp.player.p.choiceChoice != null) gp.obj[map][objIndex] = ObjSetup(46, 28, gp.player.p.choiceChoice, map);
 	}
 	
 	private Entity NPCSetup(int type, int x, int y, int team) {

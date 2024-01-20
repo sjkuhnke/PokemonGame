@@ -2247,9 +2247,9 @@ public class Pokemon implements Serializable {
 		} else if (id == 65) { abilities = new Ability[] {Ability.GUTS, Ability.SLUSH_RUSH};
 		} else if (id == 66) { abilities = new Ability[] {Ability.ROCK_HEAD, Ability.SAND_FORCE};
 		} else if (id == 67) { abilities = new Ability[] {Ability.ROCK_HEAD, Ability.SAND_FORCE};
-		} else if (id == 68) { abilities = new Ability[] {Ability.THICK_FAT, Ability.ICE_BODY};
-		} else if (id == 69) { abilities = new Ability[] {Ability.THICK_FAT, Ability.ICE_BODY};
-		} else if (id == 70) { abilities = new Ability[] {Ability.THICK_FAT, Ability.ICE_BODY};
+		} else if (id == 68) { abilities = new Ability[] {Ability.UNAWARE, Ability.THICK_FAT};
+		} else if (id == 69) { abilities = new Ability[] {Ability.UNAWARE, Ability.THICK_FAT};
+		} else if (id == 70) { abilities = new Ability[] {Ability.UNAWARE, Ability.THICK_FAT};
 		} else if (id == 71) { abilities = new Ability[] {Ability.TORRENT, Ability.SLUSH_RUSH};
 		} else if (id == 72) { abilities = new Ability[] {Ability.TORRENT, Ability.SLUSH_RUSH};
 		} else if (id == 73) { abilities = new Ability[] {Ability.TECHNICIAN, Ability.INSOMNIA};
@@ -2442,7 +2442,7 @@ public class Pokemon implements Serializable {
 		++level;
 		awardHappiness(5, false);
 		console.writeln(this.nickname + " leveled Up!");
-		checkMove();
+		checkMove(player);
 		Pokemon result = this.checkEvo(player);
 		expMax = setExpMax();
 		stats = this.getStats();
@@ -2476,7 +2476,7 @@ public class Pokemon implements Serializable {
 		return 0;
 	}
 
-	public void checkMove() {
+	public void checkMove(Player p) {
 	    if (this.level - 1 >= this.movebank.length) return;
 	    Node node = this.movebank[this.level - 1];
 	    while (node != null) {
@@ -2492,7 +2492,7 @@ public class Pokemon implements Serializable {
 	                }
 	            }
 	            if (!learnedMove) {
-	                int choice = this.displayMoveOptions(move);
+	                int choice = this.displayMoveOptions(move, p);
 	                if (choice == JOptionPane.CLOSED_OPTION) {
 	                    console.writeln(this.nickname + " did not learn " + move.toString() + ".");
 	                } else {
@@ -4054,7 +4054,7 @@ public class Pokemon implements Serializable {
 		
 		if (this.item == Item.LIFE_ORB) {
 			this.damage(this.getStat(0) / 10, foe);
-			console.writeln(this.nickname + " was hurt!");
+			console.writeln(this.nickname + " lost some of its HP!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, player, foe);
 				foe.awardxp((int) Math.ceil(this.level * trainer), player);
@@ -4205,7 +4205,7 @@ public class Pokemon implements Serializable {
 	                    int index = Arrays.asList(player.getTeam()).indexOf(p);
 	                    player.team[index] = evolved;
 	                    if (index == 0) player.current = evolved;
-	                    evolved.checkMove();
+	                    evolved.checkMove(player);
 	                    p = evolved;
 	                }
 	            }
@@ -4841,7 +4841,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.WATER_SMACK && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.SUPERCHARGED_SPLASH) {
-			stat(this, 2, 1, foe);
+			stat(this, 2, 2, foe);
 		} else if (move == Move.WATERFALL && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 //		} else if (move == Move.WOOD_FANG && first) {
@@ -5270,9 +5270,9 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.PLAY_NICE) {
 			stat(foe, 0, -1, this, announce);
 		} else if (move == Move.SPARKLING_WATER) {
-			stat(this, 3, 1, foe, announce);
+			stat(this, 3, 2, foe, announce);
 		} else if (move == Move.WATER_FLICK) {
-			stat(foe, 0, -1, this, announce);
+			stat(foe, 0, -2, this, announce);
 		} else if (announce && move == Move.PSYCHIC_TERRAIN) {
 			boolean success = field.setTerrain(field.new FieldEffect(Effect.PSYCHIC));
 			if (success && item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
@@ -5372,6 +5372,10 @@ public class Pokemon implements Serializable {
 				this.currentHP += nHP - oHP;
 				setType();
 				setAbility(abilitySlot);
+			} else if (id == 237) {
+				stat(foe, 0, 1, this, announce);
+				stat(foe, 2, 1, this, announce);
+				stat(foe, 5, 1, this, announce);
 			} else {
 				fail = fail(announce);
 			}
@@ -6317,7 +6321,7 @@ public class Pokemon implements Serializable {
 		    movebank[49] = new Node(Move.FLY);
 		    movebank[52] = new Node(Move.NIGHT_SLASH);
 		    movebank[56] = new Node(Move.GYRO_BALL);
-		    movebank[62] = new Node(Move.EXTREME_SPEED);
+		    movebank[62] = new Node(Move.IRON_HEAD);
 		    movebank[69] = new Node(Move.BRAVE_BIRD);
 		    break;
 		case 16:
@@ -10938,7 +10942,7 @@ public class Pokemon implements Serializable {
 			}
 		} if (this.ability == Ability.RAIN_DISH && field.equals(field.weather, Effect.RAIN)) {
 			if (this.currentHP < this.getStat(0)) {
-				this.currentHP += Math.max(this.getStat(0) * 1.0 / 16, 1);
+				this.currentHP += Math.max(this.getStat(0) * 1.0 / 8, 1);
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
@@ -10957,7 +10961,7 @@ public class Pokemon implements Serializable {
 			}
 		} if (this.ability == Ability.ICE_BODY && field.equals(field.weather, Effect.SNOW)) {
 			if (this.currentHP < this.getStat(0)) {
-				this.currentHP += Math.max(this.getStat(0) * 1.0 / 16, 1);
+				this.currentHP += Math.max(this.getStat(0) * 1.0 / 8, 1);
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
@@ -12541,7 +12545,7 @@ public class Pokemon implements Serializable {
 		return result;
 	}
 	
-	public int displayMoveOptions(Move move) {
+	public int displayMoveOptions(Move move, Player p) {
 		Pokemon pokemon = this;
 	    String[] moves = new String[4];
 	    JGradientButton[] buttons = new JGradientButton[4];
@@ -12565,7 +12569,7 @@ public class Pokemon implements Serializable {
 	        }
 	        buttons[i] = new JGradientButton(moves[i]);
 	        if (pokemon.moveset[i] != null) buttons[i].setBackground(pokemon.moveset[i].move.mtype.getColor());
-	        if (!pokemon.moveset[i].move.isTM() && !movebankList.contains(pokemon.moveset[i].move)) {
+	        if (!p.hasTM(pokemon.moveset[i].move) && !movebankList.contains(pokemon.moveset[i].move)) {
 	        	buttons[i].setSolidGradient(true);
 	        }
 	        

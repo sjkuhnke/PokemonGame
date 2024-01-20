@@ -118,9 +118,9 @@ public class EventHandler {
 			if (hit(13,48,57)) teleport(17, 53, 56,false);
 			if (hit(17,53,57)) teleport(13, 48, 58,false);
 			
-			if (hit(17,52,46)) gp.aSetter.updateNPC();
-			if (hit(17,53,46)) gp.aSetter.updateNPC();
-			if (hit(17,54,46)) gp.aSetter.updateNPC();
+			if (hit(17,52,46)) gp.aSetter.updateNPC(17);
+			if (hit(17,53,46)) gp.aSetter.updateNPC(17);
+			if (hit(17,54,46)) gp.aSetter.updateNPC(17);
 			
 			if (hit(17,48,53)) teleport(18, 54, 51,false);
 			if (hit(18,55,51)) teleport(17, 49, 53,false);
@@ -680,7 +680,7 @@ public class EventHandler {
 		previousEventX = gp.player.worldX;
 		previousEventY = gp.player.worldY;
 		
-		gp.aSetter.updateNPC();
+		gp.aSetter.updateNPC(map);
 		gp.aSetter.setInteractiveTile(map);
 		gp.player.cross = false;
 		
