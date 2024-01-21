@@ -63,6 +63,7 @@ public class Player implements Serializable{
 	public int secondStarter;
 	public Item choiceChoice;
 	public boolean copyBattle;
+	public int coins;
 	
 	public Player(GamePanel gp) {
 		team = new Pokemon[6];
