@@ -10090,7 +10090,7 @@ public class Pokemon implements Serializable {
 			movebank[32] = new Node(Move.KNOCK_OFF);
 			break;
 		case 225:
-			movebank = new Node[65];
+			movebank = new Node[70];
 			movebank[0] = new Node(Move.FAKE_TEARS);
 			movebank[0].next = new Node(Move.WILL$O$WISP);
 			movebank[4] = new Node(Move.EMBER);
@@ -10112,6 +10112,7 @@ public class Pokemon implements Serializable {
 			movebank[54] = new Node(Move.CLOSE_COMBAT);
 			movebank[59] = new Node(Move.NO_RETREAT);
 			movebank[64] = new Node(Move.DARKEST_LARIAT);
+			movebank[69] = new Node(Move.FOCUS_ENERGY);
 			break;
 		case 226:
 			movebank = new Node[30];
