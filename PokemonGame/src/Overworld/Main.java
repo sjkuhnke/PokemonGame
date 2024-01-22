@@ -886,6 +886,7 @@ public class Main {
 		for (Trainer tr : trainers) {
 			if (tr.getName().equals(string)) {
 				tr.getTeam()[i - 1].ability = a;
+				tr.getTeam()[i - 1].abilitySlot = 1;
 				if (!modifiedTrainers.contains(tr)) modifiedTrainers.add(tr);
 			}
 		}

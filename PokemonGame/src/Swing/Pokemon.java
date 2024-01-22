@@ -377,6 +377,7 @@ public class Pokemon implements Serializable {
         if (moveToDamage.isEmpty()) {
         	// 100% chance to swap in a partner if you can only struggle
         	if (tr.hasValidMembers() && !isTrapped()) {
+        		System.out.println("all valid moves have 0 PP : 100%");
         		this.vStatuses.add(Status.SWAP);
         		return Move.SPLASH;
         	} else {
@@ -395,7 +396,8 @@ public class Pokemon implements Serializable {
         		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
         		if (this.impressive) chance /= 2;
         		if (checkSecondary(chance)) {
-        			System.out.println("partner resists");
+        			System.out.print("partner resists : ");
+        			System.out.println(String.format("%.1f", chance) + "%");
                 	this.vStatuses.add(Status.SWAP);
                 	return Move.SPLASH;
         		}
@@ -405,7 +407,8 @@ public class Pokemon implements Serializable {
         		int chance = 60;
         		if (this.impressive) chance *= 0.75;
         		if (checkSecondary(chance)) {
-        			System.out.println("all moves do 0 damage");
+        			System.out.print("all moves do 0 damage : ");
+        			System.out.println(String.format("%.1f", chance) + "%");
         			this.vStatuses.add(Status.SWAP);
             		return Move.GROWL;
         		}
@@ -416,13 +419,15 @@ public class Pokemon implements Serializable {
         		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
         		if (this.impressive) chance /= 2;
         		if (checkSecondary(chance)) {
-        			System.out.println("damage i do is 1/5 or less");
+        			System.out.print("damage i do is 1/5 or less : ");
+        			System.out.println(String.format("%.1f", chance) + "%");
         			this.vStatuses.add(Status.SWAP);
             		return Move.GROWL;
         		}
         	}
         	// 100% chance to swap if perishCount is 1
         	if (this.perishCount == 1) {
+        		System.out.println("perish in 1 : 100%");
         		this.vStatuses.add(Status.SWAP);
         		return Move.SPLASH;
         	}
@@ -445,7 +450,8 @@ public class Pokemon implements Serializable {
         		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
         		if (maxDamage >= foe.currentHP) chance /= 2;
         		if (checkSecondary((int) chance)) {
-        			System.out.println("enemy kills me");
+        			System.out.print("enemy kills me : ");
+        			System.out.println(String.format("%.1f", chance) + "%");
         			this.vStatuses.add(Status.SWAP);
             		return Move.moveOfType(type);
         		}
