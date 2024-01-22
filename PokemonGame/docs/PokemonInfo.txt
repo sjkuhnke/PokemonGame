@@ -398,7 +398,7 @@ Level Up:
 50 - Fly
 53 - Night Slash
 57 - Gyro Ball
-63 - Extreme Speed
+63 - Iron Head
 70 - Brave Bird
 
 ===================
@@ -1894,7 +1894,7 @@ Type:
 Ice / Water
 
 Ability:
-Thick Fat / Ice Body
+Unaware / Thick Fat
 
 Base Stats:
 70 HP / 40 Atk / 50 Def / 55 SpA / 50 SpD / 25 Spe / 290 BST
@@ -1921,7 +1921,7 @@ Type:
 Ice / Water
 
 Ability:
-Thick Fat / Ice Body
+Unaware / Thick Fat
 
 Base Stats:
 90 HP / 60 Atk / 70 Def / 75 SpA / 70 SpD / 45 Spe / 410 BST
@@ -1952,7 +1952,7 @@ Type:
 Ice / Water
 
 Ability:
-Thick Fat / Ice Body
+Unaware / Thick Fat
 
 Base Stats:
 110 HP / 80 Atk / 90 Def / 95 SpA / 90 SpD / 65 Spe / 530 BST
@@ -2159,6 +2159,7 @@ Base Stats:
 82 HP / 65 Atk / 95 Def / 136 SpA / 103 SpD / 29 Spe / 510 BST
 
 Level Up:
+1 - Nuzzle
 1 - Confusion
 1 - Play Nice
 5 - Life Dew
@@ -2596,7 +2597,7 @@ Type:
 Fire / Normal
 
 Ability:
-Flash Fire / Intimidate
+Intimidate / Flash Fire
 
 Base Stats:
 46 HP / 74 Atk / 68 Def / 48 SpA / 58 SpD / 81 Spe / 375 BST
@@ -2623,7 +2624,7 @@ Type:
 Fire / Normal
 
 Ability:
-Flash Fire / Intimidate
+Intimidate / Flash Fire
 
 Base Stats:
 65 HP / 103 Atk / 82 Def / 66 SpA / 79 SpD / 100 Spe / 495 BST
@@ -2737,11 +2738,11 @@ Level Up:
 32 - Hex
 36 - Automotize
 40 - Switcheroo
-45 - Gyro Ball
+45 - Fire Blast
 50 - Explosion
 55 - Shadow Ball
 60 - Steel Beam
-65 - Fire Blast
+65 - Eruption
 
 ===================
 098 - Flamehox
@@ -3038,8 +3039,8 @@ Level Up:
 45 - Sparkling Terrain
 50 - Fire Blast
 54 - Magic Reflect
-60 - Spacial Rend
-65 - Hyper Beam
+60 - Magic Tomb
+65 - Spacial Rend
 70 - Blue Flare
 
 ===================
@@ -3536,7 +3537,7 @@ Level Up:
 45 - Sparkle Strike
 50 - Electro Ball
 55 - Magic Crash
-60 - Plasma Fists
+75 - Plasma Fists
 
 ===================
 126 - Whiskie
@@ -3856,6 +3857,8 @@ Level Up:
 1 - Splash
 15 - Tackle
 25 - Flail
+30 - Flail
+40 - Hydro Pump
 
 ===================
 138 - Gyarados
@@ -3987,6 +3990,7 @@ Base Stats:
 Level Up:
 1 - Extreme Speed
 1 - Dragon Pulse
+1 - Bite
 5 - Magic Fang
 10 - Foul Play
 15 - Ice Fang
@@ -3999,10 +4003,11 @@ Level Up:
 40 - Darkest Lariat
 45 - Knock Off
 50 - Hurricane
-55 - Dragon Rush
-60 - Brave Bird
-65 - Outrage
+55 - Crunch
+60 - Dragon Rush
+65 - Brave Bird
 70 - Unseen Strangle
+75 - Outrage
 
 ===================
 143 - Posho
@@ -5228,6 +5233,7 @@ Level Up:
 58 - Magic Blast
 60 - Shift Gear
 65 - Prismatic Laser
+70 - Steel Beam
 
 ===================
 184 - Tinkie
@@ -5390,6 +5396,7 @@ Base Stats:
 95 HP / 85 Atk / 90 Def / 115 SpA / 125 SpD / 90 Spe / 600 BST
 
 Level Up:
+1 - Fiery Dance
 1 - Wrap
 1 - Leer
 5 - Thunder Wave
@@ -5401,7 +5408,7 @@ Level Up:
 24 - Glitter Dance
 26 - Twister
 30 - Dragon Breath
-33 - Glitzy Glow
+33 - Luster Purge
 36 - Dragon Tail
 39 - Glitzy Glow
 42 - Scale Shot
@@ -5488,7 +5495,7 @@ Level Up:
 52 - Aura Sphere
 56 - Meteor Mash
 60 - Drain Punch
-60 - Star-Struck Archer
+60 - Star-Struck Arrow
 60 - Close Combat
 65 - No Retreat
 70 - Meteor Assault
@@ -6485,6 +6492,7 @@ Level Up:
 55 - Close Combat
 60 - No Retreat
 65 - Darkest Lariat
+70 - Focus Energy
 
 ===================
 226 - Ekans-S

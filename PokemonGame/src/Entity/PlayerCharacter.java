@@ -1447,7 +1447,11 @@ public class PlayerCharacter extends Entity {
 				        	        		if (p.team[index].happiness >= 255) {
 					        	        		JOptionPane.showMessageDialog(null, "It won't have any effect.");
 					        	        	} else {
-					        	        		p.team[index].awardHappiness(100, true);
+					        	        		if (p.team[index].item == Item.SOOTHE_BELL) {
+					        	        			p.team[index].awardHappiness(50, true);
+					        	        		} else {
+					        	        			p.team[index].awardHappiness(100, true);
+					        	        		}
 					        	        		JOptionPane.showMessageDialog(null, p.team[index].nickname + " looked happier!");
 					        	        		p.bag.remove(i.getItem());
 					        	        		SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
