@@ -638,6 +638,20 @@ public class EventHandler {
 			
 			if (hit(121,31,33)) teleport(122, 31, 45,false);
 			if (hit(122,31,46)) teleport(121, 31, 34,false);
+			
+			// Route 37 Gate
+			if (hit(11,20,93)) teleport(123, 31, 34,false);
+			if (hit(123,31,33)) teleport(11, 20, 92,false);
+			if (hit(123,31,46)) teleport(124, 22, 9,false);
+			if (hit(124,22,8)) teleport(123, 31, 45,false);
+			
+			// Rawwar City PC
+			if (hit(124,21,56)) teleport(125, 31, 45,false);
+			if (hit(125,31,46)) teleport(124, 21, 57,false);
+			
+			// Rawwar City Shop
+			if (hit(124,29,56)) teleport(125, 31, 45,false);
+			if (hit(125,31,46)) teleport(124, 29, 57,false);
 		}
 	}
 	

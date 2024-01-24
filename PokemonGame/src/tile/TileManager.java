@@ -145,6 +145,11 @@ public class TileManager {
 		loadMap("/maps/gate02.txt", 120);
 		loadMap("/maps/radio_tower03.txt", 121); // sicab city tower thing
 		loadMap("/maps/radio_tower02.txt", 122);
+		loadMap("/maps/gate01.txt", 123);
+		loadMap("/maps/map19.txt", 124);
+		loadMap("/maps/pc.txt", 125);
+		loadMap("/maps/mart.txt", 126);
+		//loadMap("/maps/casino.txt", 127);
 	}
 	
 	public void getTileImage() {
@@ -579,6 +584,26 @@ public class TileManager {
 		setup(443, true);
 		setup(444, false);
 		setup(445, true);
+		setup(446, true);
+		setup(447, true);
+		setup(448, true);
+		setup(449, true);
+		setup(450, true);
+		setup(451, true);
+		setup(452, true);
+		setup(453, true);
+		setup(454, true);
+		setup(455, true);
+		setup(456, true);
+		setup(457, true);
+		setup(458, true);
+		setup(459, true);
+		setup(460, true);
+//		setup(461, true);
+//		setup(462, true);
+//		setup(463, true);
+//		setup(464, true);
+//		setup(465, true);
 
 		try {
 			tile[7] = new GrassTile();
