@@ -6,6 +6,7 @@ import Entity.Entity;
 import Entity.NPC_Block;
 import Entity.NPC_Clerk;
 import Entity.NPC_GymLeader;
+import Entity.NPC_Invisible;
 import Entity.NPC_Market;
 import Entity.NPC_Nurse;
 import Entity.NPC_PC;
@@ -67,6 +68,10 @@ public class AssetSetter {
 	private static final int TN_UP = 20;
 	private static final int TN_LEFT = 21;
 	private static final int TN_RIGHT = 22;
+	private static final int INVIS_DOWN = 23;
+	private static final int INVIS_UP = 24;
+	private static final int INVIS_LEFT = 25;
+	private static final int INVIS_RIGHT = 26;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -888,6 +893,8 @@ public class AssetSetter {
 		gp.npc[86][index] = NPCSetup(NPC_PC, 35, 36, -1);
 		gp.npc[111][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
 		gp.npc[111][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[125][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
+		gp.npc[125][index] = NPCSetup(NPC_PC, 35, 36, -1);
 		
 		// Clerks
 		gp.npc[30][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
@@ -896,6 +903,7 @@ public class AssetSetter {
 		gp.npc[87][index] = NPCSetup(NPC_CLERK, 27, 39, -1);
 		gp.npc[89][index] = NPCSetup(NPC_MARKET, 24, 36, -1);
 		gp.npc[112][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
+		gp.npc[126][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
 		
 		mapNum = 28;
 		index = 0;
@@ -1290,6 +1298,29 @@ public class AssetSetter {
 		
 		mapNum = 122;
 		index = 0;
+		
+		mapNum = 127;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(27, 39, "Welcome to the Blackjack table!", true);
+		gp.npc[mapNum][index] = NPCSetup(35, 39, "This game isn't ready yet!", true);
+		
+		mapNum = 128;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 51, 66, 270);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 55, 66, 271);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 50, 65, 270);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 56, 65, 271);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 47, 64, 270);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 59, 64, 271);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 50, 62, 270);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 56, 62, 271);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 50, 61, 270);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 56, 61, 271);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 51, 59, 270);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 55, 58, 271);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 51, 56, 270);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 55, 56, 271);
+		gp.npc[mapNum][index] = NPCSetup(GYM_7, 51, 59, 270);
 		
 	}
 	
@@ -1851,7 +1882,18 @@ public class AssetSetter {
 		case MAXWELL:
 			result = new NPC_TN_Admin(gp, "up", team);
 			break;
-			
+		case INVIS_DOWN:
+			result = new NPC_Invisible(gp, "down", team);
+			break;
+		case INVIS_UP:
+			result = new NPC_Invisible(gp, "up", team);
+			break;
+		case INVIS_LEFT:
+			result = new NPC_Invisible(gp, "left", team);
+			break;
+		case INVIS_RIGHT:
+			result = new NPC_Invisible(gp, "right", team);
+			break;
 		}
 		
 		result.worldX = gp.tileSize*x;
