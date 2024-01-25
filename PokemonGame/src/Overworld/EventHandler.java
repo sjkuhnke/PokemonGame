@@ -652,6 +652,11 @@ public class EventHandler {
 			// Rawwar City Shop
 			if (hit(124,29,56)) teleport(125, 31, 45,false);
 			if (hit(125,31,46)) teleport(124, 29, 57,false);
+			
+			// Rawwar City Casino
+			gp.player.p.coins = 100;
+			if (hit(124,27,69)) teleport(127, 31, 45,false);
+			if (hit(127,31,46)) teleport(124, 27, 70,false);
 		}
 	}
 	

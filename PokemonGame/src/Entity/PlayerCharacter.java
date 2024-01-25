@@ -23,6 +23,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -42,6 +43,7 @@ import Obj.Tree_Stump;
 import Obj.Vine;
 import Obj.Vine_Crossable;
 import Obj.Whirlpool;
+import Overworld.BlackjackPanel;
 import Overworld.GamePanel;
 import Overworld.KeyHandler;
 import Overworld.Main;
@@ -852,6 +854,7 @@ public class PlayerCharacter extends Entity {
 								}
 							});
 						}
+						partyMasterPanel.add(partyPanel);
 					}
 					JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 				}
@@ -878,6 +881,7 @@ public class PlayerCharacter extends Entity {
 								}
 							});
 						}
+						partyMasterPanel.add(partyPanel);
 					}
 					JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 				}
@@ -1149,6 +1153,32 @@ public class PlayerCharacter extends Entity {
 						JOptionPane.showMessageDialog(null, options, "Revive a fossil?", JOptionPane.QUESTION_MESSAGE);
 					} else {
 						JOptionPane.showMessageDialog(null, "You don't have any fossils to revive!");
+					}
+				} if (gp.currentMap == 127) {
+					if (p.coins > 0) {
+						int answer = JOptionPane.showOptionDialog(null,
+								"Would you like to play Blackjack?",
+					            "Blackjack?",
+					            JOptionPane.YES_NO_OPTION,
+					            JOptionPane.QUESTION_MESSAGE,
+					            null, null, null);
+						if (answer == JOptionPane.YES_OPTION) {
+							// Remove all existing components from the JFrame
+						    Main.window.getContentPane().removeAll();
+
+						    // Create and add the BlackjackPanel
+						    BlackjackPanel bjPanel = new BlackjackPanel(gp);
+						    Main.window.getContentPane().add(bjPanel);
+
+						    // Set focus on the BlackjackPanel
+						    bjPanel.requestFocusInWindow();
+
+						    // Repaint the JFrame to reflect the changes
+						    Main.window.revalidate();
+						    Main.window.repaint();
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Sorry, you don't have enough coins to play.");
 					}
 				}
 			}
