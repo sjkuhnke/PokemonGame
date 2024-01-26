@@ -48,7 +48,7 @@ public class Player implements Serializable{
 	public int currentMap;
 	public boolean[] trainersBeat = new boolean[Main.trainers.length];
 	public boolean[][] itemsCollected;
-	public boolean[] flags = new boolean[GamePanel.maxFlags];
+	public boolean[] flags = new boolean[GamePanel.MAX_FLAGS];
 	public boolean[] locations = new boolean[12]; // NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
 	public boolean random = false;
 	public boolean ghost = false;
@@ -64,6 +64,8 @@ public class Player implements Serializable{
 	public Item choiceChoice;
 	public boolean copyBattle;
 	public int coins;
+	public int gamesWon;
+	public int winStreak;
 	
 	public Player(GamePanel gp) {
 		team = new Pokemon[6];
@@ -300,7 +302,7 @@ public class Player implements Serializable{
 	
 	public void updateFlags() {
 		boolean[] tempFlag = flags.clone();
-		flags = new boolean[GamePanel.maxFlags];
+		flags = new boolean[GamePanel.MAX_FLAGS];
 		for (int i = 0; i < tempFlag.length; i++) {
 			flags[i] = tempFlag[i];
 		}
@@ -349,7 +351,7 @@ public class Player implements Serializable{
 		JComboBox<Pokemon> starter = new JComboBox<>();
 		JButton pokedexButton = new JButton("Pokedex");
 		JButton bagButton = new JButton("Bag");
-		JCheckBox[] flags = new JCheckBox[GamePanel.maxFlags];
+		JCheckBox[] flags = new JCheckBox[GamePanel.MAX_FLAGS];
 		JCheckBox[] locations = new JCheckBox[12];
 		JButton importTrainers = new JButton("Import Trainers");
 		JButton importItems = new JButton("Import ObjectItems");
@@ -385,7 +387,8 @@ public class Player implements Serializable{
 		String[] flagDesc = new String[] {
 				"First Gate", "Scott 1", "Rick 1", "TN in Office", "Scott 2", "Fred 2", "Key A SC", "Key B SC",
 				"Clear Room A", "Clear Room B", "Gift Starter", "Gift Dog", "Gift Magic", "Gift Ancient", "Gift \"Starter\"",
-				"Fred 3", "Talk to Grandpa", "Gym 5", "Gift E/S", "Rick 2", "Maxwell 1", "Scott 4", "Gift Glurg"
+				"Fred 3", "Talk to Grandpa", "Gym 5", "Gift E/S", "Rick 2", "Maxwell 1", "Scott 4", "Gift Glurg", "Coins Gotten",
+				"Autosave Warn"
 		};
 		JPanel flagsPanel = new JPanel();
 		flagsPanel.setLayout(new BoxLayout(flagsPanel, BoxLayout.Y_AXIS));

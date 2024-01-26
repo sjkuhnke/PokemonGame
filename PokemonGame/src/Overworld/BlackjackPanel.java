@@ -1,8 +1,16 @@
 package Overworld;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -27,34 +35,42 @@ public class BlackjackPanel extends JPanel {
 	private JButton leaveButton;
 	private JLabel coinText;
 	private JLabel currentBetText;
+	private JLabel winStreakText;
+	private JLabel gamesWonText;
 	
 	private int currentIndex;
 	private Card[] userCards;
 	private Card[] foeCards;
+	private int bet;
+	
+	private Image backgroundImage;
 	
 	private static final int MAX_BET = 100;
+	private static final int MAX_HAND_SIZE = 5;
+	private static final int DECK_SIZE = 52;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
 	public BlackjackPanel(GamePanel gp) {
 		this.gp = gp;
 		p = gp.player.p;
-		deck = new Card[52];
+		deck = new Card[DECK_SIZE];
 		initializeDeck();
 		shuffleDeck();
 		
-		userCards = new Card[5];
-		foeCards = new Card[5];
+		userCards = new Card[MAX_HAND_SIZE];
+		foeCards = new Card[MAX_HAND_SIZE];
 		
 		initializeFrame();
 	}
 
 	private void shuffleDeck() {
 		Random random = new Random();
-		for (int i = 0; i < 52; i++) {
-			int swapIndex = random.nextInt(52);
+		for (int i = 0; i < DECK_SIZE; i++) {
+			int swapIndex = random.nextInt(DECK_SIZE);
 			Card old = deck[i];
 			deck[i] = deck[swapIndex];
 			deck[swapIndex] = old;
@@ -62,12 +78,16 @@ public class BlackjackPanel extends JPanel {
 	}
 
 	private void initializeDeck() {
-		for (int i = 0; i < 52; i++) {
+		for (int i = 0; i < DECK_SIZE; i++) {
 			deck[i] = new Card(i, this);
 		}
 	}
 	
 	private void startGame(int bet) {
+		if (getDeckSize() <= 20) {
+			resetDeck();
+			JOptionPane.showMessageDialog(null, "Deck reshuffled!");
+		}
 		hitButton.setVisible(true);
 		standButton.setVisible(true);
 		startButton.setVisible(false);
@@ -95,15 +115,20 @@ public class BlackjackPanel extends JPanel {
 		standButton.setVisible(false);
 		startButton.setVisible(true);
 		leaveButton.setVisible(true);
+		bet = 0;
 		currentBetText.setText("Bet: -- coins");
 		coinText.setText(p.coins + " coins");
+		gamesWonText.setText(p.gamesWon + " games won");
+		winStreakText.setText("Current Win Streak: " + p.winStreak);
 		
-		userCards = new Card[5];
-		foeCards = new Card[5];
+		userCards = new Card[MAX_HAND_SIZE];
+		foeCards = new Card[MAX_HAND_SIZE];
 		userCardIcons.setVisible(false);
 		foeCardIcons.setVisible(false);
+		
+		saveGame();
 	}
-	
+
 	private void resetDeck() {
 		shuffleDeck();
 		currentIndex = 0;
@@ -114,6 +139,7 @@ public class BlackjackPanel extends JPanel {
         setBounds(0, 0, gp.screenWidth, gp.screenHeight);
         setOpaque(false);
         setLayout(null);
+        backgroundImage = getImage("/cards/blackjack");
         
 		hitButton = new JButton("Hit");
 		this.add(hitButton);
@@ -140,12 +166,28 @@ public class BlackjackPanel extends JPanel {
 		currentBetText.setHorizontalAlignment(SwingConstants.RIGHT);
 		this.add(currentBetText);
 		currentBetText.setVisible(true);
+		currentBetText.setForeground(Color.WHITE);
 		
 		coinText = new JLabel("<html><strong>" + p.coins + "</strong> coins</html>");
 		coinText.setBounds(600, 5, 150, 20);
 		coinText.setHorizontalAlignment(SwingConstants.RIGHT);
 		this.add(coinText);
 		coinText.setVisible(true);
+		coinText.setForeground(Color.WHITE);
+		
+		gamesWonText = new JLabel(p.gamesWon + " games won");
+		gamesWonText.setBounds(5, 50, 150, 20);
+		gamesWonText.setHorizontalAlignment(SwingConstants.LEFT);
+		this.add(gamesWonText);
+		gamesWonText.setVisible(true);
+		gamesWonText.setForeground(Color.WHITE);
+		
+		winStreakText = new JLabel("Current Win Streak: " + p.winStreak);
+		winStreakText.setBounds(5, 75, 150, 20);
+		winStreakText.setHorizontalAlignment(SwingConstants.LEFT);
+		this.add(winStreakText);
+		winStreakText.setVisible(true);
+		winStreakText.setForeground(Color.WHITE);
 		
 		userCardIcons = new JLabel();
 		foeCardIcons = new JLabel();
@@ -161,18 +203,27 @@ public class BlackjackPanel extends JPanel {
 		this.add(deckIcon);
 		deckIcon.setVisible(true);
 		deckIcon.setBounds(50, 150, 160, 190);
+		deckIcon.setForeground(Color.WHITE);
 		
 		leaveButton.addActionListener(e -> {
-			Main.window.remove(this);
-			Main.window.add(gp);
-			
-			gp.requestFocusInWindow();
-
-		    // Repaint the JFrame to reflect the changes
-		    Main.window.revalidate();
-		    Main.window.repaint();
-			
-			gp.keyH.resume();
+			exitBlackjack();
+		});
+		
+		hitButton.addActionListener(e -> {
+			int handSize = getHandSize(userCards);
+			if (handSize < MAX_HAND_SIZE) {
+				userCards[handSize] = dealCard();
+				userCardIcons.setIcon(createHandIcon(userCards));
+				int handTotal = getHandTotal(userCards);
+				if (handTotal > 21) {
+					JOptionPane.showMessageDialog(null, "Player busts with a hand total of " + handTotal + "!");
+					JOptionPane.showMessageDialog(null, "Dealer won " + bet * 2 + " coins!");
+					loseGame();
+					endGame();
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Can't hold any more cards!");
+			}
 		});
 		
 		standButton.addActionListener(e -> {
@@ -180,13 +231,30 @@ public class BlackjackPanel extends JPanel {
 			int handSize = getHandSize(foeCards);
 			foeCards[1].setVisible(true);
 			foeCardIcons.setIcon(createHandIcon(foeCards));
-			while (dealerTotal < 16 && handSize < 5) {
+			while (dealerTotal < 16 && handSize < MAX_HAND_SIZE) {
 				Card card = dealCard();
 				foeCards[handSize] = card;
 				foeCardIcons.setIcon(createHandIcon(foeCards));
 				JOptionPane.showMessageDialog(null, "Dealer hit and was dealt a \n" + card.getRankString() + " of " + card.getSuitString() + "!");
 				dealerTotal = getHandTotal(foeCards);
 				handSize = getHandSize(foeCards);
+			}
+			if (dealerTotal <= 21) {
+				int playerTotal = getHandTotal(userCards);
+				JOptionPane.showMessageDialog(null, "Dealer stood and had a hand total of " + dealerTotal + "!\nPlayer stood and had a hand total of " + playerTotal + "!");
+				if (playerTotal > dealerTotal) {
+					winGame(bet * 2);
+				} else if (playerTotal == dealerTotal) {
+					JOptionPane.showMessageDialog(null, "It's a push. Bet was returned.");
+					p.coins += bet;
+					p.winStreak = 0;
+				} else {
+					JOptionPane.showMessageDialog(null, "Dealer won " + bet * 2 + " coins!");
+					loseGame();
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Dealer busts with a hand total of " + dealerTotal + "!");
+				winGame(bet * 2);
 			}
 			endGame();
 		});
@@ -200,11 +268,25 @@ public class BlackjackPanel extends JPanel {
 		        // Check if the user clicked cancel or entered an empty string
 		        if (betInput != null && !betInput.trim().isEmpty()) {
 		            try {
-		                int bet = Integer.parseInt(betInput);
+		                bet = Integer.parseInt(betInput);
 
 		                // Check if the bet is within the allowed range
 		                if (bet >= 1 && bet <= Math.min(p.coins, MAX_BET)) {
+		                	if (!gp.player.p.flags[24]) {
+		    					int answer = JOptionPane.showOptionDialog(null,
+		    							"Would you like to save the game?\n(Won't show this message again:\nWill save every time)",
+		    				            "Save?",
+		    				            JOptionPane.YES_NO_OPTION,
+		    				            JOptionPane.QUESTION_MESSAGE,
+		    				            null, null, null);
+		    					if (answer == JOptionPane.YES_OPTION) {
+		    						gp.player.p.flags[24] = true;
+		    					} else {
+		    						return;
+		    					}
+		    				}
 		                    startGame(bet);
+		                    saveGame();
 		                } else {
 		                    JOptionPane.showMessageDialog(this, "Invalid bet. Please enter a value between 1 and " + Math.min(p.coins, MAX_BET) + ".");
 		                }
@@ -217,19 +299,34 @@ public class BlackjackPanel extends JPanel {
 		    }
 		});
 	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		g.drawImage(backgroundImage, 0, 0, null);
+	}
 	
 	private int getDeckSize() {
 		return deck.length - currentIndex;
 	}
 	
 	private int getHandSize(Card[] hand) {
-		int indexOfNull = Arrays.asList(hand).indexOf(null);
-	    return (indexOfNull != -1) ? indexOfNull : hand.length;
+		for (int i = 0; i < hand.length; i++) {
+	        if (hand[i] == null) {
+	            return i;
+	        }
+	    }
+	    return hand.length;
 	}
 
 	private void winGame(int amt) {
 		JOptionPane.showMessageDialog(this, "You won " + amt + " coins!");
 		p.coins += amt;
+		p.winStreak++;
+		p.gamesWon++;
+	}
+	
+	private void loseGame() {
+		p.winStreak = 0;
 	}
 	
 	private int getHandTotal(Card[] hand) {
@@ -266,6 +363,7 @@ public class BlackjackPanel extends JPanel {
 	private Card dealCard() {
 		Card result = deck[currentIndex++];
 		deckIcon.setText(getDeckSize() + "");
+		result.setVisible(true);
 		return result;
 	}
 
@@ -291,6 +389,7 @@ public class BlackjackPanel extends JPanel {
 			return rank;
 		}
 
+		@SuppressWarnings("unused")
 		public int getSuit() {
 			return suit;
 		}
@@ -378,5 +477,39 @@ public class BlackjackPanel extends JPanel {
 			currentIcon = icon;
 		}
     	return currentIcon;
+	}
+	
+	private void exitBlackjack() {
+		Main.window.remove(this);
+		Main.window.add(gp);
+		
+		gp.requestFocusInWindow();
+
+	    // Repaint the JFrame to reflect the changes
+	    Main.window.revalidate();
+	    Main.window.repaint();
+		
+		gp.keyH.resume();
+	}
+	
+	private void saveGame() {
+		Path savesDirectory = Paths.get("./saves/");
+        if (!Files.exists(savesDirectory)) {
+            try {
+				Files.createDirectories(savesDirectory);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        }
+        
+    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves/" + gp.player.currentSave))) {
+        	gp.player.p.setPosX(gp.player.worldX);
+        	gp.player.p.setPosY(gp.player.worldY);
+        	gp.player.p.currentMap = gp.currentMap;
+            oos.writeObject(gp.player.p);
+            oos.close();
+        } catch (IOException ex) {
+        	JOptionPane.showMessageDialog(null, "Error writing object to file: " + ex.getMessage());
+        }
 	}
 }

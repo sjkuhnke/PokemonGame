@@ -649,7 +649,7 @@ public class AssetSetter {
 	}
 
 	public void setNPC() {
-		if (gp.player.p.flags.length < GamePanel.maxFlags) {
+		if (gp.player.p.flags.length < GamePanel.MAX_FLAGS) {
 			gp.player.p.updateFlags();
 		}
 		if (gp.player.p.trainersBeat.length < Main.trainers.length) {
@@ -1320,7 +1320,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 55, 58, 271);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 51, 56, 270);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 55, 56, 271);
-		gp.npc[mapNum][index] = NPCSetup(GYM_7, 51, 59, 270);
+		gp.npc[mapNum][index] = NPCSetup(GYM_7, 53, 56, 270);
 		
 	}
 	
@@ -1737,6 +1737,8 @@ public class AssetSetter {
 		// flags[20] is true after beating Maxwell 1
 		// flags[21] is true after beating Scott 4
 		// flags[22] is true after getting Glurg Town gift
+		// flags[23] is true after getting coins
+		// flags[24] is true after being prompted that casino will auto-save
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		if (flags[1]) {

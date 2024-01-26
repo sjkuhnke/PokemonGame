@@ -654,9 +654,24 @@ public class EventHandler {
 			if (hit(125,31,46)) teleport(124, 29, 57,false);
 			
 			// Rawwar City Casino
-			gp.player.p.coins = 100;
 			if (hit(124,27,69)) teleport(127, 31, 45,false);
 			if (hit(127,31,46)) teleport(124, 27, 70,false);
+			
+			// Rawwar City Prize Shop
+			if (hit(124,37,62)) teleport(129, 31, 45,false);
+			if (hit(129,31,46)) teleport(124, 37, 63,false);
+			
+			// Rawwar City Gym
+			if (hit(124,25,82)) teleport(128, 53, 68,false);
+			if (hit(128,53,69)) teleport(124, 25, 84,false);
+			
+			// Magmaclang House
+			if (hit(124,36,78)) teleport(130, 31, 45,false);
+			if (hit(130,31,46)) teleport(124, 36, 79,false);
+			
+			// Geology Shop
+			if (hit(124,10,59)) teleport(131, 31, 45,false);
+			if (hit(131,31,46)) teleport(124, 10, 60,false);
 		}
 	}
 	
