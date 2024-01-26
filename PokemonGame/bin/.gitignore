@@ -1,7 +1,12 @@
-/tile/
-/Overworld/
-/Entity/
 /maps/
+/minisprites/
 /npc/
+/overworlds/
+/player/
 /sprites/
-/cards/
+/tiles/
+/Entity/
+/Obj/
+/Overworld/
+/Swing/
+/tile/
