@@ -392,21 +392,21 @@ public class Pokemon implements Serializable {
         	// 20% chance to swap in a partner if they resist and you don't
         	if (foe.lastMoveUsed != null && foe.lastMoveUsed.cat != 2 && !tr.resists(this, foe.lastMoveUsed.mtype)
         			&& tr.hasResist(foe.lastMoveUsed.mtype)) {
-        		int chance = 20;
+        		double chance = 20;
         		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
         		if (this.impressive) chance /= 2;
-        		if (checkSecondary(chance)) {
+        		if (checkSecondary((int) Math.round(chance))) {
         			System.out.print("partner resists : ");
-        			System.out.println(String.format("%.1f", chance) + "%");
+        			System.out.printf("%.1f%%\n", chance);
                 	this.vStatuses.add(Status.SWAP);
                 	return Move.SPLASH;
         		}
             }
         	// 60% chance to swap if all of your moves do 0 damage
         	if (maxDamage == 0) {
-        		int chance = 60;
+        		double chance = 60;
         		if (this.impressive) chance *= 0.75;
-        		if (checkSecondary(chance)) {
+        		if (checkSecondary((int) chance)) {
         			System.out.print("all moves do 0 damage : ");
         			System.out.println(String.format("%.1f", chance) + "%");
         			this.vStatuses.add(Status.SWAP);
@@ -415,10 +415,10 @@ public class Pokemon implements Serializable {
         	}
         	// 10% chance to swap if the most damage you do is 1/5 or less to target
         	if (maxDamage <= foe.currentHP * 1.0 / 5) {
-        		int chance = 10;
+        		double chance = 10;
         		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
         		if (this.impressive) chance /= 2;
-        		if (checkSecondary(chance)) {
+        		if (checkSecondary((int) chance)) {
         			System.out.print("damage i do is 1/5 or less : ");
         			System.out.println(String.format("%.1f", chance) + "%");
         			this.vStatuses.add(Status.SWAP);
@@ -3106,7 +3106,7 @@ public class Pokemon implements Serializable {
 		} else if (this.id == 237) { this.baseStats = new int[]{110,100,75,100,75,90};
 		} else if (this.id == 238) { this.baseStats = new int[]{50,75,70,35,70,48};
 		} else if (this.id == 239) { this.baseStats = new int[]{65,90,115,45,115,58};
-		} else if (this.id == 240) { this.baseStats = new int[]{80,110,120,25,120,115};
+		} else if (this.id == 240) { this.baseStats = new int[]{70,110,120,40,120,110};
 		}
 		return this.baseStats;
 	}
@@ -11158,8 +11158,6 @@ public class Pokemon implements Serializable {
 		this.vStatuses.remove(Status.SWITCHING);
 		boolean result = this.vStatuses.remove(Status.SWAP);
 		if (result) System.out.println(this.nickname + " had swap at the end of the turn (bad)");
-		
-		this.impressive = false;
 	}
 
 	public int getSpeed() {
@@ -12409,6 +12407,7 @@ public class Pokemon implements Serializable {
 			console.writeAbility(this);
 			this.ability = foe.ability;
 			console.writeln(this.nickname + "'s ability became " + this.ability + "!");
+			this.swapIn(foe, me, false);
 		}
 		if (this.item == Item.AIR_BALLOON) {
 			console.write(this.nickname + " floated on its Air Balloon!\n");

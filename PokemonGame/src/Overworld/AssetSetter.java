@@ -1322,6 +1322,11 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 55, 56, 271);
 		gp.npc[mapNum][index] = NPCSetup(GYM_7, 53, 56, 270);
 		
+		mapNum = 129;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(37, 44, "Hi there! Here, you can exchange coins for money!", true);
+		gp.npc[mapNum][index] = NPCSetup(31, 39, "Hi there! Here, you can exchange coins for prizes!", true);
+		
 	}
 	
 	public void setInteractiveTile(int map) {

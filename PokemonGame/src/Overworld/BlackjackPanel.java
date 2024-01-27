@@ -83,7 +83,7 @@ public class BlackjackPanel extends JPanel {
 		}
 	}
 	
-	private void startGame(int bet) {
+	private void startGame() {
 		if (getDeckSize() <= 20) {
 			resetDeck();
 			JOptionPane.showMessageDialog(null, "Deck reshuffled!");
@@ -247,7 +247,6 @@ public class BlackjackPanel extends JPanel {
 				} else if (playerTotal == dealerTotal) {
 					JOptionPane.showMessageDialog(null, "It's a push. Bet was returned.");
 					p.coins += bet;
-					p.winStreak = 0;
 				} else {
 					JOptionPane.showMessageDialog(null, "Dealer won " + bet * 2 + " coins!");
 					loseGame();
@@ -285,7 +284,7 @@ public class BlackjackPanel extends JPanel {
 		    						return;
 		    					}
 		    				}
-		                    startGame(bet);
+		                    startGame();
 		                    saveGame();
 		                } else {
 		                    JOptionPane.showMessageDialog(this, "Invalid bet. Please enter a value between 1 and " + Math.min(p.coins, MAX_BET) + ".");

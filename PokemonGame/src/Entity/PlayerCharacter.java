@@ -17,7 +17,11 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -766,6 +770,7 @@ public class PlayerCharacter extends Entity {
 		    	if (gp.currentMap == 86) p.locations[8] = true;
 		    	if (gp.currentMap == 92) p.locations[5] = true;
 		    	if (gp.currentMap == 111) p.locations[7] = true;
+		    	if (gp.currentMap == 125) p.locations[9] = true;
 		    }
 		    keyH.resume();
 		}
@@ -1176,9 +1181,192 @@ public class PlayerCharacter extends Entity {
 					    Main.window.repaint();
 					}
 				}
+			} if (gp.currentMap == 129 && worldY / gp.tileSize > 41) {
+				if (!p.flags[23]) {
+					JOptionPane.showMessageDialog(null, "Oh, you haven't gotten any coins yet?\nHere, just this once, have some!");
+					JOptionPane.showMessageDialog(null, "You recieved 100 Coins!");
+					p.coins += 100;
+					p.flags[23] = true;
+				} else {
+					JPanel panel = new JPanel();
+					JButton coinButton = new JButton("1 Coin to $25");
+					coinButton.setPreferredSize(new Dimension(120, 75));
+					panel.setPreferredSize(new Dimension(200, 100));
+					panel.add(coinButton);
+					coinButton.addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent evt) {
+			            	if (SwingUtilities.isLeftMouseButton(evt)) {
+			            		if (p.coins > 0) {
+			            			p.coins--;
+			            			p.money += 25;
+			            		} else {
+			            			JOptionPane.showMessageDialog(null, "Not enough coins!");
+			            		}
+			            	} else {
+			            		String input = JOptionPane.showInputDialog(null, "Enter the amount of coins to exchange:");
+			                    try {
+			                        int coins = Integer.parseInt(input);
+			                        if (p.coins > coins && coins > 0) {
+			                        	p.coins -= coins;
+			                        	p.money += coins * 25;
+			                        } else {
+			                        	JOptionPane.showMessageDialog(null, "Not enough coins!");
+			                        }
+			                        
+			                    } catch (NumberFormatException e) {
+			                        JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
+			                    }
+			            	}
+			            	SwingUtilities.getWindowAncestor(panel).dispose();
+			            	showPrizeMenu(panel, p.coins + " coins   $" + p.money);
+			            }
+					});
+					showPrizeMenu(panel, p.coins + " coins   $" + p.money);
+				}
+			} if (gp.currentMap == 129 && worldY / gp.tileSize <= 41) {
+				JPanel shopPanel = new JPanel();
+				shopPanel.setLayout(new GridLayout(0, 3));
+				Map<Pokemon, Integer> pokemonMap = new HashMap<>();
+				pokemonMap.put(new Pokemon(150, 25, true, false), 3); // Kissyfishy
+				pokemonMap.put(new Pokemon(143, 25, true, false), 4); // Posho
+				pokemonMap.put(new Pokemon(238, 25, true, false), 5); // Scraggy
+				pokemonMap.put(new Pokemon(193, 25, true, false), 5); // Consodust
+				pokemonMap.put(new Pokemon(195, 25, true, false), 6); // Rockmite
+				pokemonMap.put(new Pokemon(184, 25, true, false), 8); // Tinkie
+				pokemonMap.put(new Pokemon(187, 25, true, false), 8); // Dragee
+				pokemonMap.put(new Pokemon(190, 25, true, false), 10); // Blobmo
+				pokemonMap.put(new Pokemon(232, 25, true, false), 15); // Triwandoliz
+				pokemonMap.put(new Pokemon(231, 25, true, false), 20); // Kleinyeti
+				JPanel pokemonPanel = new JPanel(new VerticalLayout());
+				
+				List<Map.Entry<Pokemon, Integer>> sortedPokemonList = pokemonMap.entrySet()
+				        .stream()
+				        .sorted(Map.Entry.comparingByValue())
+				        .collect(Collectors.toList());
+				
+				Map<Item, Integer> itemMap = new HashMap<>();
+				itemMap.put(Item.FOCUS_SASH, 10);
+				itemMap.put(Item.AIR_BALLOON, 25);
+				itemMap.put(Item.POWER_HERB, 5);
+				itemMap.put(Item.WHITE_HERB, 5);
+				itemMap.put(Item.WEAKNESS_POLICY, 20);
+				itemMap.put(Item.BLUNDER_POLICY, 20);
+				itemMap.put(Item.RED_CARD, 25);
+				itemMap.put(Item.THROAT_SPRAY, 15);
+				JPanel itemPanel = new JPanel(new VerticalLayout());
+				
+				List<Map.Entry<Item, Integer>> sortedItemList = itemMap.entrySet()
+				        .stream()
+				        .sorted(Map.Entry.comparingByValue())
+				        .collect(Collectors.toList());
+				
+				Map<Item, Integer> tmMap = new HashMap<>();
+				tmMap.put(Item.TM59, 10);
+				tmMap.put(Item.TM39, 25);
+				tmMap.put(Item.TM96, 40);
+				tmMap.put(Item.TM21, 60);
+				tmMap.put(Item.TM70, 75);
+				tmMap.put(Item.TM64, 100);
+				tmMap.put(Item.TM94, 150);
+				JPanel tmPanel = new JPanel(new VerticalLayout());
+				
+				List<Map.Entry<Item, Integer>> sortedTMList = tmMap.entrySet()
+				        .stream()
+				        .sorted(Map.Entry.comparingByValue())
+				        .collect(Collectors.toList());
+				
+				for (Map.Entry<Item, Integer> e : sortedItemList) {
+					JPanel iPanel = new JPanel();
+			    	JGradientButton item = new JGradientButton(e.getKey().toString() + ": " + e.getValue() + " coins");
+			    	item.setBackground(e.getKey().getColor());
+			    	item.addMouseListener(new MouseAdapter() {
+			        	@Override
+					    public void mouseClicked(MouseEvent evt) {
+			    	    	if (p.coins >= e.getValue()) {
+			    	    		JOptionPane.showMessageDialog(null, "Purchased 1 " + e.getKey().toString() + " for " + e.getValue() + " coins");
+			    	    		p.bag.add(e.getKey());
+			    	    		p.coins -= e.getValue();
+			    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
+			    	            showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
+			    	        } else {
+			    	            JOptionPane.showMessageDialog(null, "Not enough coins!");
+			    	        }
+			        	}
+			    	});
+			    	JLabel icon = new JLabel();
+			    	icon.setIcon(new ImageIcon(e.getKey().getImage()));
+			    	iPanel.add(icon);
+			    	iPanel.add(item);
+			    	itemPanel.add(iPanel);
+				}
+				
+				for (Map.Entry<Item, Integer> e : sortedTMList) {
+					JPanel iPanel = new JPanel();
+			    	JGradientButton item = new JGradientButton(e.getKey().toString() + ": " + e.getValue() + " games won");
+			    	item.setBackground(e.getKey().getColor());
+			    	item.addMouseListener(new MouseAdapter() {
+			        	@Override
+					    public void mouseClicked(MouseEvent evt) {
+			    	    	if (p.gamesWon >= e.getValue()) {
+			    	    		JOptionPane.showMessageDialog(null, "Purchased 1 " + e.getKey().toString() + " for " + e.getValue() + " games won");
+			    	    		p.bag.add(e.getKey());
+			    	    		p.gamesWon -= e.getValue();
+			    	    		tmPanel.remove(iPanel);
+			    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
+			    	            showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
+			    	        } else {
+			    	            JOptionPane.showMessageDialog(null, "Not enough total wins!");
+			    	        }
+			        	}
+			    	});
+			    	JLabel icon = new JLabel();
+			    	icon.setIcon(new ImageIcon(e.getKey().getImage()));
+			    	iPanel.add(icon);
+			    	iPanel.add(item);
+			    	tmPanel.add(iPanel);
+			    	if (e.getKey().isTM() && p.bag.contains(e.getKey().getID())) tmPanel.remove(iPanel);
+				}
+				
+				for (Map.Entry<Pokemon, Integer> e : sortedPokemonList) {
+					JPanel iPanel = new JPanel();
+					iPanel.setLayout(new VerticalLayout());
+			    	JGradientButton item = new JGradientButton(e.getKey().nickname + ": " + e.getValue() + " win streak");
+			    	Color color2 = e.getKey().type2 == null ? e.getKey().type1.getColor() : e.getKey().type2.getColor();
+			    	item.setBackground(e.getKey().type1.getColor(), color2);
+			    	item.addMouseListener(new MouseAdapter() {
+			        	@Override
+					    public void mouseClicked(MouseEvent evt) {
+			        		if (SwingUtilities.isRightMouseButton(evt)) {
+					            JOptionPane.showMessageDialog(null, e.getKey().showSummary(p, false, null, null), "Pokemon Summary", JOptionPane.INFORMATION_MESSAGE);
+				    		} else {
+				    	    	if (p.winStreak >= e.getValue()) {
+				    	            JOptionPane.showMessageDialog(null, "Got 1 " + e.getKey().nickname + "!");
+				    	            p.catchPokemon(e.getKey());
+				    	            pokemonPanel.remove(iPanel);
+				    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
+				    	            showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
+				    	        } else {
+				    	            JOptionPane.showMessageDialog(null, "Not enough wins in a row!");
+				    	        }
+				    		}
+			        	}
+			    	});
+			    	iPanel.add(item);
+			    	pokemonPanel.add(iPanel);
+			    	if (p.pokedex[e.getKey().id] == 2) pokemonPanel.remove(iPanel);
+				}
+				
+				shopPanel.add(itemPanel);
+				shopPanel.add(tmPanel);
+				shopPanel.add(pokemonPanel);
+				showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
 			}
 		    keyH.resume();
 		}
+	}
+	
+	private void showPrizeMenu(JPanel panel, String title) {
+		JOptionPane.showMessageDialog(null, panel, title, JOptionPane.QUESTION_MESSAGE);
 	}
 
 	private void showParty() {
@@ -2052,7 +2240,7 @@ public class PlayerCharacter extends Entity {
 	    JPanel dexPanel = new JPanel();
 	    dexPanel.setLayout(new GridLayout(60, 6));
 
-	    for (int j = 1; j < 237; j++) {
+	    for (int j = 1; j < p.getDexShowing(); j++) {
 	    	final int id = j;
 	    	JButton mon = new JGradientButton("");
 	        
