@@ -940,13 +940,13 @@ public class PMap extends JFrame {
 			PlayerCharacter.currentMapName = "New Minnow Town";
 			return 0;
 		case 121: // TODO from here down
-			PlayerCharacter.currentMapName = "";
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 15;
 		case 122:
-			PlayerCharacter.currentMapName = "";
+			PlayerCharacter.currentMapName = "Sicab City";
 			return 20;
 		case 123:
-			PlayerCharacter.currentMapName = "";
+			PlayerCharacter.currentMapName = "Gelb Forest";
 			return 20;
 		case 124:
 			PlayerCharacter.currentMapName = "";
