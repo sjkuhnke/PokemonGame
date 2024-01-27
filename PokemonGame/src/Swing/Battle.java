@@ -418,6 +418,7 @@ public class Battle extends JFrame {
 		            foe.move(me.getCurrent(),foe.randomMove(), me, null, null, false);
 					foe.endOfTurn(me.getCurrent(), me);
 					me.getCurrent().endOfTurn(foe, me);
+					me.getCurrent().impressive = false;
 					field.endOfTurn();
 					updateCurrent(pl);
 					updateStatus();

@@ -626,7 +626,7 @@ public enum Move {
 	LAVA_SURF(90,100,0,0,1,0,PType.FIRE,"A normal attack",false,10),
 	
 	ABYSSAL_CHOP(-1,90,50,0,0,0,PType.DRAGON,"% chance to paralyse foe. Damage is doulbed if foe is paralyzed",true,10),
-	SUMMIT_STRIKE(70,95,100,0,0,0,PType.FIGHTING,"% to lower foe's Defense Stats by one stage. 30% to flinch foe",true,15),
+	SUMMIT_STRIKE(70,95,100,0,0,0,PType.FIGHTING,"% to lower foe's Defense by one stage. 30% to flinch foe",true,15),
 	
 	STRUGGLE(40,1000,0,0,0,0,PType.UNKNOWN,"Deals 25% of user's max HP as recoil",true,1),
 	

@@ -587,4 +587,16 @@ public class Player implements Serializable{
 		return false;
 	}
 
+	public int getDexShowing() {
+		int result = pokedex.length;
+		for (int i = pokedex.length - 1; i >= 0; i--) {
+			if (pokedex[i] != 0) {
+				result = i;
+				break;
+			}
+		}
+		result = result >= pokedex.length - 1 ? pokedex.length : result + 3;
+		return result;
+	}
+
 }
