@@ -542,6 +542,22 @@ public class Encounter {
 				encounters.add(new Encounter(85, 2, 3, 0.14));
 				encounters.add(new Encounter(106, 2, 3, 0.13));
 				encounters.add(new Encounter(117, 2, 3, 0.15));
+			} else if (area == 124 && y < 50 && type.equals("Standard")) { // Route 37
+				encounters.add(new Encounter(43, 45, 48, 0.12));
+				encounters.add(new Encounter(170, 45, 48, 0.09));
+				encounters.add(new Encounter(112, 43, 45, 0.17));
+				encounters.add(new Encounter(182, 44, 47, 0.16));
+				encounters.add(new Encounter(83, 44, 47, 0.17));
+				encounters.add(new Encounter(89, 43, 46, 0.12));
+				encounters.add(new Encounter(58, 45, 48, 0.17));
+			} else if (area == 124 && y < 50 && type.equals("Surfing")) { // Route 37
+				encounters.add(new Encounter(32, 2, 3, 0.09));
+				encounters.add(new Encounter(44, 2, 3, 0.12));
+				encounters.add(new Encounter(59, 2, 3, 0.21));
+				encounters.add(new Encounter(71, 2, 4, 0.16));
+				encounters.add(new Encounter(85, 2, 3, 0.14));
+				encounters.add(new Encounter(106, 2, 3, 0.13));
+				encounters.add(new Encounter(117, 2, 3, 0.15));
 			}
 		}
 		

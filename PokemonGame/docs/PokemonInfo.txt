@@ -72,8 +72,9 @@ Level Up:
 50 - Leaf Storm
 53 - Earth Power
 57 - Spiky Shield
-65 - Head Smash
-75 - Frenzy Plant
+65 - Giga Drain
+70 - Head Smash
+80 - Spikes
 
 ===================
 004 - Lagma
@@ -234,7 +235,7 @@ Level Up:
 59 - Double-Edge
 66 - Wave Crash
 72 - Outrage
-80 - Hydro Cannon
+80 - Summit Strike
 85 - Spikes
 
 ===================
@@ -4270,10 +4271,12 @@ Level Up:
 36 - Sparkling Water
 40 - Water Flick
 44 - Water Smack
+46 - Sea Dragon
 48 - Water Clap
 52 - Water Kick
 56 - Supercharged Splash
 60 - Deep Sea Bubble
+65 - Sea Dragon
 
 ===================
 151 - Ekans
@@ -6598,16 +6601,44 @@ Base Stats:
 45 HP / 125 Atk / 40 Def / 125 SpA / 100 SpD / 165 Spe / 600 BST
 
 Level Up:
-1 - Charge
-3 - Thundershock
-5 - Growl
-7 - Baby-Doll Eyes
-10 - Flash
-13 - Mud Bomb
-16 - Shock Wave
-22 - Draining Kiss
-23 - Headbutt
-26 - Thunder Wave
+1 - Beat Up
+1 - Shadow Sneak
+1 - Trick
+1 - Switcheroo
+1 - Thief
+2 - Ember
+4 - Water Pulse
+6 - Discharge
+8 - Giga Drain
+10 - Fake Tears
+12 - Brick Break
+14 - Sucker Punch
+16 - Dive
+18 - Snarl
+20 - Magic Reflect
+22 - Nasty Plot
+24 - Rock Blast
+26 - Glitzy Glow
+28 - Shadow Ball
+30 - Night Daze
+32 - Sparkle Strike
+34 - Reflect
+36 - Flatter
+39 - False Surrender
+42 - Volt Tackle
+45 - Comet Crash
+48 - Knock Off
+51 - Obstruct
+54 - Flare Blitz
+57 - Hone Claws
+60 - Twinkle Tackle
+63 - Tri-Attack
+66 - Galaxy Blast
+69 - Unseen Strangle
+72 - Magic Crash
+75 - Parting Shot
+80 - Spectral Thief
+90 - Glitter Dance
 
 ===================
 230 - Vorsuitex
@@ -6646,13 +6677,13 @@ Base Stats:
 25 HP / 400 Atk / 35 Def / 5 SpA / 50 SpD / 95 Spe / 610 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Icicle Spear
+1 - Bullet Punch
+1 - Wish
+1 - Twinkle Tackle
+50 - Swords Dance
+60 - Ice Shard
+70 - Icicle Crash
 
 ===================
 232 - Triwandoliz
@@ -6667,13 +6698,40 @@ Base Stats:
 75 HP / 85 Atk / 90 Def / 134 SpA / 105 SpD / 126 Spe / 615 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Poison Sting
+1 - Poison Gas
+1 - Magic Powder
+1 - Trick
+3 - Aqua Tail
+6 - Dragon Rush
+9 - Poison Tail
+12 - Dragon Tail
+15 - Sludge
+18 - Acid Spray
+21 - Swift
+24 - Venoshock
+27 - Toxic
+30 - Toxic Spikes
+33 - Venom Drench
+36 - Dazzling Gleam
+39 - Elemental Sparkle
+42 - Sludge Bomb
+45 - Magic Reflect
+48 - Zen Headbutt
+51 - Thunderbolt
+54 - Tri-Attack
+57 - Aura Sphere
+60 - Stored Power
+63 - Magic Tomb
+66 - Prismatic Laser
+69 - Spikes
+72 - Recover
+75 - Nasty Plot
+78 - Venom Spit
+81 - Hyper Voice
+85 - Galaxy Blast
+90 - Coil
+95 - Core Enforcer
 
 ===================
 233 - Relomidel
@@ -6757,16 +6815,34 @@ Base Stats:
 190 HP / 75 Atk / 120 Def / 90 SpA / 120 SpD / 75 Spe / 670 BST
 
 Level Up:
-1 - Charge
-3 - Thundershock
-5 - Growl
-7 - Baby-Doll Eyes
-10 - Flash
-13 - Mud Bomb
-16 - Shock Wave
-22 - Draining Kiss
-23 - Headbutt
-26 - Thunder Wave
+1 - Gravity
+1 - Trick Room
+5 - Flame Charge
+8 - Space Beam
+11 - Light Beam
+14 - Incinerate
+17 - Cosmic Power
+20 - Will-O-Wisp
+23 - Comet Crash
+26 - Sunny Day
+29 - Desolate Void
+32 - Dazzling Gleam
+35 - Flame Burst
+38 - Flash Cannon
+41 - Star Storm
+45 - Lava Plume
+49 - Prismatic Laser
+53 - Aeroblast
+57 - Glitter Dance
+61 - Solar Beam
+65 - Genesis Supernova
+70 - Heat Wave
+75 - Photon Geyser
+80 - Sacred Fire
+85 - Black Hole Eclipse
+90 - Supernova Explosion
+95 - V-Create
+100 - Eruption
 
 ===================
 237 - Kissyfishy-D
@@ -6795,10 +6871,12 @@ Level Up:
 36 - Sparkling Water
 40 - Water Flick
 44 - Water Smack
+46 - Sea Dragon
 48 - Water Clap
 52 - Water Kick
 56 - Supercharged Splash
 60 - Deep Sea Bubble
+65 - Sea Dragon
 
 ===================
 238 - Scraggy
@@ -6871,7 +6949,7 @@ Ability:
 Scaly Skin / Moxie
 
 Base Stats:
-80 HP / 110 Atk / 120 Def / 25 SpA / 120 SpD / 115 Spe / 570 BST
+70 HP / 110 Atk / 120 Def / 40 SpA / 120 SpD / 110 Spe / 570 BST
 
 Level Up:
 1 - Leer

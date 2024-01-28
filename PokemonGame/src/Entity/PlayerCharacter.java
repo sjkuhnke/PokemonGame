@@ -567,25 +567,6 @@ public class PlayerCharacter extends Entity {
 	    		        	JOptionPane.showMessageDialog(null, "Invalid Pokemon ID/Level.");
 	    		        }
 	    		    }
-	    		} else if (code.startsWith("ben")) {
-	    			JPanel pPanel = new JPanel();
-	    			pPanel.setLayout(new GridLayout(6, 1));
-
-	        	    for (int j = 0; j < 6; j++) {
-	        	    	//JButton partyB = setUpPartyButton(j);
-	        	        //final int index = j;
-	        	        
-	        	        //partyB.addActionListener(g -> {
-	        	        	//JOptionPane.showMessageDialog(null, p.team[index].nickname + " has hit " + p.team[index].headbuttCrit + " headbutt crit(s).");
-	        	        //});
-	        	        
-	        	        JPanel mPanel = new JPanel(new BorderLayout());
-	        	        //mPanel.add(partyB, BorderLayout.NORTH);
-	        	        pPanel.add(mPanel);
-	        	        
-	        	    }
-	        	    
-	        	    JOptionPane.showMessageDialog(null, pPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 	    		} else if (code.equals("UPDATE")) {
 	    			p.updateTrainers();
 	    			p.updateItems(gp.obj.length, gp.obj[1].length);
@@ -603,7 +584,6 @@ public class PlayerCharacter extends Entity {
 	    					p.setAbility(p.abilitySlot);
 	    					p.setMoveBank();
 	    				}
-	    				
 	    			}
 	    			for (Pokemon p : p.box2) {
 	    				if (p != null) {
@@ -1360,6 +1340,12 @@ public class PlayerCharacter extends Entity {
 				shopPanel.add(tmPanel);
 				shopPanel.add(pokemonPanel);
 				showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
+			} if (gp.currentMap == 130 && !p.flags[25]) {
+				JOptionPane.showMessageDialog(null, "Here, take this rare Pokemon!");
+				Pokemon result = new Pokemon(97, 50, true, false);
+				p.flags[25] = true;
+				JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+				p.catchPokemon(result);
 			}
 		    keyH.resume();
 		}
@@ -2291,6 +2277,10 @@ public class PlayerCharacter extends Entity {
 	    		Item.YACHE_BERRY, Item.CHOPLE_BERRY, Item.KEBIA_BERRY, Item.SHUCA_BERRY, Item.COBA_BERRY, Item.PAYAPA_BERRY, Item.TANGA_BERRY, Item.CHARTI_BERRY,
 	    		Item.KASIB_BERRY, Item.HABAN_BERRY, Item.COLBUR_BERRY, Item.BABIRI_BERRY, Item.CHILAN_BERRY, Item.ROSELI_BERRY, Item.MYSTICOLA_BERRY, Item.GALAXEED_BERRY,
 	    		Item.LIECHI_BERRY, Item.GANLON_BERRY, Item.SALAC_BERRY, Item.PETAYA_BERRY, Item.APICOT_BERRY, Item.STARF_BERRY, Item.MICLE_BERRY, Item.CUSTAP_BERRY};
+	    } else if (gp.currentMap == 131) { shopItems = new Item[] {Item.EUPHORIAN_GEM, Item.LEAF_STONE, Item.DUSK_STONE, Item.DAWN_STONE, Item.ICE_STONE,
+	    		Item.VALIANT_GEM, Item.PETTICOAT_GEM, Item.EVERSTONE, Item.HEAT_ROCK, Item.DAMP_ROCK, Item.SMOOTH_ROCK, Item.ICY_ROCK, Item.THUNDER_SCALES_FOSSIL,
+	    		Item.DUSK_SCALES_FOSSIL};
+	    } else if (gp.currentMap == 133) { shopItems = new Item[] {Item.TM46, Item.TM63, Item.TM38};
 	    }
 	    shopPanel.setLayout(new GridLayout(Math.max((shopItems.length / 4) + 1, 6), 0));
 	    for (int i = 0; i < shopItems.length; i++) {

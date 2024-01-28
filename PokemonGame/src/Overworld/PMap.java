@@ -939,55 +939,65 @@ public class PMap extends JFrame {
 		case 120:
 			PlayerCharacter.currentMapName = "New Minnow Town";
 			return 0;
-		case 121: // TODO from here down
+		case 121:
 			PlayerCharacter.currentMapName = "Sicab City";
-			return 15;
+			return 9;
 		case 122:
 			PlayerCharacter.currentMapName = "Sicab City";
-			return 20;
+			return 9;
 		case 123:
 			PlayerCharacter.currentMapName = "Gelb Forest";
-			return 20;
+			return 7;
 		case 124:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			if (y <= 49) {
+				PlayerCharacter.currentMapName = "Route 37";
+				return 34;
+			}
+			if (x <= 47) {
+				PlayerCharacter.currentMapName = "Rawwar City";
+				return 35;
+			}
+			if (x > 47) {
+				PlayerCharacter.currentMapName = "Route 38";
+				return 36;
+			}
 		case 125:
-			PlayerCharacter.currentMapName = "";
-			return 4;
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
 		case 126:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
 		case 127:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
 		case 128:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
 		case 129:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
 		case 130:
-			PlayerCharacter.currentMapName = "";
-			return 28;
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
 		case 131:
-			PlayerCharacter.currentMapName = "";
-			return 15;
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
 		case 132:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
 		case 133:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
 		case 134:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
 		case 135:
-			PlayerCharacter.currentMapName = "";
-			return 4;
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
 		case 136:
-			PlayerCharacter.currentMapName = "";
-			return 20;
-		case 137:
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
+		case 137: // TODO from here down
 			PlayerCharacter.currentMapName = "";
 			return 20;
 		case 138:

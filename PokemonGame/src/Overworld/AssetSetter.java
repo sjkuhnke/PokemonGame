@@ -903,7 +903,9 @@ public class AssetSetter {
 		gp.npc[87][index] = NPCSetup(NPC_CLERK, 27, 39, -1);
 		gp.npc[89][index] = NPCSetup(NPC_MARKET, 24, 36, -1);
 		gp.npc[112][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
-		gp.npc[126][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
+		gp.npc[126][index] = NPCSetup(NPC_CLERK, 27, 39, -1);
+		gp.npc[132][index] = NPCSetup(NPC_CLERK, 30, 39, -1);
+		gp.npc[133][index] = NPCSetup(NPC_MARKET, 34, 38, -1);
 		
 		mapNum = 28;
 		index = 0;
@@ -1299,6 +1301,25 @@ public class AssetSetter {
 		mapNum = 122;
 		index = 0;
 		
+		mapNum = 124;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 25, 21, 276); // DH
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 24, 24, 281);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 17, 22, 280);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 22, 32, 283);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 15, 32, 277); // DI
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 12, 43, 278); // DJ
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 24, 43, 279); // DK
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 16, 39, 284);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 15, 28, 282);
+		
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 65, 72, 285);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 69, 85, 286);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 84, 84, 288);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 91, 80, 289);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 79, 287);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 86, 72, 290);
+		
 		mapNum = 127;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(27, 39, "Welcome to the Blackjack table!", true);
@@ -1306,26 +1327,34 @@ public class AssetSetter {
 		
 		mapNum = 128;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 51, 66, 270);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 55, 66, 271);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 50, 65, 270);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 56, 65, 271);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 47, 64, 270);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 59, 64, 271);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 50, 62, 270);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 56, 62, 271);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 50, 61, 270);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 56, 61, 271);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 51, 59, 270);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 55, 58, 271);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 51, 56, 270);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 55, 56, 271);
-		gp.npc[mapNum][index] = NPCSetup(GYM_7, 53, 56, 270);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 51, 66, 291);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 55, 66, 292);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 50, 65, 293);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 56, 65, 294);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 47, 64, 295);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 59, 64, 296);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 50, 62, 297);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 56, 62, 298);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 50, 61, 299);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 56, 61, 300);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 51, 59, 301);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 55, 58, 302);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 51, 56, 303);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 55, 56, 304);
+		gp.npc[mapNum][index] = NPCSetup(GYM_7, 53, 56, 305);
 		
 		mapNum = 129;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(37, 44, "Hi there! Here, you can exchange coins for money!", true);
 		gp.npc[mapNum][index] = NPCSetup(31, 39, "Hi there! Here, you can exchange coins for prizes!", true);
+		
+		mapNum = 130;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(24, 36, "Aren't you lookin like you want some SPICE!", true);
+		
+		mapNum = 131;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
 		
 	}
 	
@@ -1715,6 +1744,31 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(26, 46, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(27, 46, 4, mapNum, map);
 		
+		mapNum = 124;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 74, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 74, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 74, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 80, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 80, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 76, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 76, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 82, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 83, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 89, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 89, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 89, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 87, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 87, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(68, 88, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(68, 89, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 79, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 80, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(72, 84, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(73, 84, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(74, 84, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(83, 89, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(83, 90, 4, mapNum, map);
 	}
 
 	public void updateNPC(int map) {
@@ -1744,6 +1798,8 @@ public class AssetSetter {
 		// flags[22] is true after getting Glurg Town gift
 		// flags[23] is true after getting coins
 		// flags[24] is true after being prompted that casino will auto-save
+		// flags[25] is true after getting gift magmaclang
+		// flags[26] 
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		if (flags[1]) {

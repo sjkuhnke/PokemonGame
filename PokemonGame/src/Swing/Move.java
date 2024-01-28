@@ -574,7 +574,7 @@ public enum Move {
 	VACUUM_WAVE(40,100,0,0,1,1,PType.FIGHTING,"Always goes first",false,30),
 	V$CREATE(180,95,100,0,0,0,PType.FIRE,"% chance to lower user's Defense, Sp.Def, and Speed by 1",true,5),
 	VENOM_DRENCH(0,100,0,0,2,0,PType.POISON,"Lowers a Poisoned/Badly Poisoned foe's Attack and Sp.Atk by 2",false,20),
-	VENOM_SPIT(40,100,100,0,0,0,PType.POISON,"% to Paralyze foe; always goes first",false,5),
+	VENOM_SPIT(40,100,100,0,0,1,PType.POISON,"% to Paralyze foe; always goes first",false,5),
 	VENOSHOCK(-1,100,0,0,1,0,PType.POISON,"Damage is doubled if foe is Poisoned or Badly Poisoned",false,10),
 	VISE_GRIP(55,100,0,0,0,0,PType.NORMAL,"A normal attack",true,30),
 	VINE_WHIP(45,100,0,0,0,0,PType.GRASS,"A normal attack",true,25),

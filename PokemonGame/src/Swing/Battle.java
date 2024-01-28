@@ -767,7 +767,7 @@ public class Battle extends JFrame {
 				}
 				boolean swapping = me.getCurrent().vStatuses.contains(Status.SWITCHING);
 				
-				Move move = foe.trainerOwned() ? foe.bestMove(me.current, false, foeTrainer) : foe.randomMove();
+				Move move = foe.trainerOwned() && !me.getCurrent().isFainted() ? foe.bestMove(me.current, false, foeTrainer) : foe.randomMove();
 				Pokemon oldCurrent = me.getCurrent().clone();
 				
 				boolean foeCanMove = true;
