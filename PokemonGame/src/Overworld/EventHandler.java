@@ -650,8 +650,8 @@ public class EventHandler {
 			if (hit(125,31,46)) teleport(124, 21, 57,false);
 			
 			// Rawwar City Shop
-			if (hit(124,29,56)) teleport(125, 31, 45,false);
-			if (hit(125,31,46)) teleport(124, 29, 57,false);
+			if (hit(124,29,56)) teleport(126, 31, 45,false);
+			if (hit(126,31,46)) teleport(124, 29, 57,false);
 			
 			// Rawwar City Casino
 			if (hit(124,27,69)) teleport(127, 31, 45,false);
@@ -672,6 +672,21 @@ public class EventHandler {
 			// Geology Shop
 			if (hit(124,10,59)) teleport(131, 31, 45,false);
 			if (hit(131,31,46)) teleport(124, 10, 60,false);
+			
+			// Supermarket
+			if (hit(124,16,73)) teleport(132, 31, 45,false);
+			if (hit(132,31,46)) teleport(124, 16, 74,false);
+			if (hit(132,36,38)) teleport(133, 27, 38,false);
+			if (hit(133,26,38)) teleport(132, 35, 38,false);
+			
+			// Geology Shop
+			if (hit(131,37,38)) teleport(134, 12, 30,false);
+			if (hit(134,11,30)) teleport(131, 36, 38,false);
+			if (hit(134,85,40)) teleport(135, 26, 44,false);
+			if (hit(135,25,44)) teleport(134, 84, 40,false);
+			
+			if (hit(135,31,33)) teleport(136, 31, 45,false);
+			if (hit(136,31,46)) teleport(135, 31, 34,false);
 		}
 	}
 	
