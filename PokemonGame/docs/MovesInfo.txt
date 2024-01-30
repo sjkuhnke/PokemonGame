@@ -137,7 +137,7 @@ Sacred Sword : Physical / 90 / 100 : Ignores Defense and Evasion changes of foe
 Seismic Toss : Physical / 0 / 100 : Damage dealt is equal to the user's level
 Sky Uppercut : Physical / 85 / 90 : A normal attack
 Submission : Physical / 80 / 90 : User takes 1/3 of damage inflicted as recoil
-Summit Strike : Physical / 70 / 95 : 100% to lower foe's Defense Stats by one stage. 30% to flinch foe
+Summit Strike : Physical / 70 / 95 : 100% to lower foe's Defense by one stage. 30% to flinch foe
 Superpower : Physical / 120 / 100 : 100% of lowering user's Attack and Defense by 1
 Tornado Spin : Physical / 60 / 95 : 100% to raise user's Speed and Accuracy by 1, and frees user of being Spun
 Vacuum Wave : Special / 40 / 100 : Always goes first
@@ -296,7 +296,7 @@ Drill Run : Physical / 80 / 95 : Boosted Crit rate
 Earth Power : Special / 90 / 100 : 10% chance to lower foe's Sp.Def by 1
 Earthquake : Physical / 100 / 100 : A normal attack
 Fissure : Physical / 0 / 30 : If this move hits, it always K.Os foe
-Magnitude : Physical / 90 / 100 : A random Magnitude between 4-10 will be used, corresponding to its power
+Magnitude : Physical / 30 / 100 : A random Magnitude between 4-10 will be used, corresponding to its power
 Mud Bomb : Special / 65 / 85 : 30% to lower foe's Accuracy by 1
 Mud Shot : Special / 55 / 95 : 100% chance to lower foe's Speed by 1
 Mud Sport : Status / 0 / -- : Makes ELECTRIC moves deal 1/3 damage for 8 turns

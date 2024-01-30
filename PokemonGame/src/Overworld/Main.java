@@ -258,13 +258,8 @@ public class Main {
 		if (gp.player.p.secondStarter != 0) {
 			Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
 			items[gp.player.p.secondStarter - 1] = null;
-			Random random = new Random();
-			int scottIndex = -1;
-			do {
-				scottIndex = random.nextInt(3);
-			} while (items[scottIndex] == null);
-			scottItem = items[scottIndex];
-			items[scottIndex] = null;
+			scottItem = items[gp.player.p.scottItem - 1];
+			items[gp.player.p.scottItem - 1] = null;
 			fredItem = null;
 			for (int i = 0; i < items.length; i++) {
 				if (items[i] != null) {
