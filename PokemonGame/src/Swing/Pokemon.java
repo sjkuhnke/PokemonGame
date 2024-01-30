@@ -6667,7 +6667,8 @@ public class Pokemon implements Serializable {
 			movebank[41] = new Node(Move.ENTRAINMENT);
 			movebank[44] = new Node(Move.KNOCK_OFF);
 			movebank[46] = new Node(Move.SWORDS_DANCE);
-			movebank[49] = new Node(Move.LEAF_STORM);
+			movebank[49] = new Node(Move.PSYCHO_CUT);
+			movebank[60] = new Node(Move.SOLAR_BLADE);
 			break;
 		case 35:
 			movebank = new Node[25];
