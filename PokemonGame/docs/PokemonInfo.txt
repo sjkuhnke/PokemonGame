@@ -18,6 +18,9 @@ Level Up:
 15 - Smack Down
 18 - Headbutt
 
+Evolutions:
+Twigle -> Torrged (lv. 18)
+
 ===================
 002 - Torgged
 ===================
@@ -41,6 +44,9 @@ Level Up:
 25 - Mega Drain
 28 - Magnitude
 31 - Rock Tomb
+
+Evolutions:
+Torrged -> Tortugis (lv. 36)
 
 ===================
 003 - Tortugis
@@ -95,6 +101,9 @@ Level Up:
 11 - Smokescreen
 14 - Incinerate
 
+Evolutions:
+Lagma -> Maguide (lv. 16)
+
 ===================
 005 - Maguide
 ===================
@@ -121,6 +130,9 @@ Level Up:
 30 - Lava Plume
 33 - Play Rough
 36 - Iron Head
+
+Evolutions:
+Maguide -> Magron (lv. 36)
 
 ===================
 006 - Magron
@@ -179,6 +191,9 @@ Level Up:
 11 - Bubblebeam
 15 - Mud Sport
 
+Evolutions:
+Lizish -> Iguaton (lv. 17)
+
 ===================
 008 - Iguaton
 ===================
@@ -202,6 +217,9 @@ Level Up:
 23 - Fire Fang
 26 - Aqua Jet
 32 - Dragon Tail
+
+Evolutions:
+Iguaton -> Dragave (lv. 36)
 
 ===================
 009 - Dragave
@@ -258,6 +276,9 @@ Level Up:
 13 - Quick Attack
 16 - Whirlwind
 
+Evolutions:
+Hummingspark -> Flashclaw (lv. 17)
+
 ===================
 011 - Flashclaw
 ===================
@@ -284,6 +305,9 @@ Level Up:
 27 - Mirror Move
 30 - Glitter Dance
 33 - Air Slash
+
+Evolutions:
+Flashclaw -> Majestiflash (lv. 36)
 
 ===================
 012 - Magestiflash
@@ -341,6 +365,9 @@ Level Up:
 13 - Leer
 15 - Air Cutter
 
+Evolutions:
+Pigo -> Pigonat (lv. 17)
+
 ===================
 014 - Pigonat
 ===================
@@ -365,6 +392,9 @@ Level Up:
 25 - Pluck
 27 - Spikes
 30 - Metal Claw
+
+Evolutions:
+Pigonat -> Pigoga (lv. 32)
 
 ===================
 015 - Pigoga
@@ -427,6 +457,9 @@ Level Up:
 30 - Ice Ball
 32 - Rollout
 
+Evolutions:
+Hammo -> HammyBoy (lv. 32 & Knows Rollout)
+
 ===================
 017 - HammyBoy
 ===================
@@ -460,6 +493,9 @@ Level Up:
 60 - Double-Edge
 65 - Endeavor
 70 - Earthquake
+
+Evolutions:
+HammyBoy -> Hamthorno (lv. up in Shadow Ravine Heart)
 
 ===================
 018 - Hamthorno
@@ -524,6 +560,9 @@ Level Up:
 19 - Low Kick
 20 - Baby-Doll Eyes
 
+Evolutions:
+Sheabear -> Dualbear (lv. 20)
+
 ===================
 020 - Dualbear
 ===================
@@ -559,6 +598,9 @@ Level Up:
 38 - Hi Jump Kick
 40 - Psychic
 40 - Trick
+
+Evolutions:
+Dualbear -> Spacebear (lv. 40)
 
 ===================
 021 - Spacebear
@@ -621,6 +663,9 @@ Level Up:
 10 - Protect
 15 - Hidden Power
 
+Evolutions:
+Bealtle -> Centatle (lv. 18)
+
 ===================
 023 - Centatle
 ===================
@@ -644,6 +689,10 @@ Level Up:
 25 - Pin Missile
 30 - Aqua Tail
 32 - Iron Tail
+
+Evolutions:
+Centatle -> Curlatoral (lv. 32)
+Centatle -> Millistone (lv. up in Shadow Ravine)
 
 ===================
 024 - Curlatoral
@@ -733,6 +782,9 @@ Level Up:
 21 - Ingrain
 24 - Rock Tomb
 
+Evolutions:
+Sapwin -> Treewin (lv. 28)
+
 ===================
 027 - Treewin
 ===================
@@ -770,6 +822,9 @@ Level Up:
 59 - Glittering Sword
 63 - Grassy Terrain
 70 - Outrage
+
+Evolutions:
+Treewin -> Winagrow (Leaf Stone)
 
 ===================
 028 - Winagrow
@@ -827,6 +882,9 @@ Level Up:
 13 - Mega Drain
 16 - Worry Seed
 
+Evolutions:
+Budew -> Roselia (>= 160 happiness)
+
 ===================
 030 - Roselia
 ===================
@@ -860,6 +918,9 @@ Level Up:
 43 - Aromatherapy
 46 - Synthesis
 50 - Petal Dance
+
+Evolutions:
+Roselia -> Roserade (Dawn Stone)
 
 ===================
 031 - Roserade
@@ -902,6 +963,9 @@ Level Up:
 8 - Bug Bite
 15 - Razor Leaf
 
+Evolutions:
+Sewaddle -> Swadloon (lv. 20)
+
 ===================
 033 - Swadloon
 ===================
@@ -922,6 +986,9 @@ Level Up:
 20 - Protect
 25 - Grass Whistle
 33 - Struggle Bug
+
+Evolutions:
+Swadloon -> Leavanny (>= 160 happiness)
 
 ===================
 034 - Leavanny
@@ -948,7 +1015,8 @@ Level Up:
 42 - Entrainment
 45 - Knock Off
 47 - Swords Dance
-50 - Leaf Storm
+50 - Psycho Cut
+60 - Solar Blade
 
 ===================
 035 - Grubbin
@@ -971,6 +1039,9 @@ Level Up:
 16 - Thundershock
 20 - Spark
 25 - Sticky Web
+
+Evolutions:
+Grubbin -> Charjabug (lv. 20)
 
 ===================
 036 - Charjabug
@@ -1001,6 +1072,9 @@ Level Up:
 50 - Dig
 57 - Iron Defense
 64 - Discharge
+
+Evolutions:
+Charjabug -> Vikavolt (lv. up in Electric Tunnel)
 
 ===================
 037 - Vikavolt
@@ -1064,6 +1138,10 @@ Level Up:
 40 - Leech Seed
 43 - Giga Drain
 47 - Leaf Storm
+
+Evolutions:
+Busheep -> Ramant (Valiant Gem)
+Busheep -> Bushewe (Petticoat Gem)
 
 ===================
 039 - Ramant
@@ -1148,6 +1226,9 @@ Level Up:
 20 - Quiver Dance
 25 - Sticky Web
 
+Evolutions:
+Bugik -> Swordik (lv. 15)
+
 ===================
 042 - Swordik
 ===================
@@ -1174,6 +1255,9 @@ Level Up:
 31 - Agility
 34 - X-Scissor
 37 - Sacred Sword
+
+Evolutions:
+Swordik -> Ninjakik (lv. 39)
 
 ===================
 043 - Ninjakik
@@ -1227,6 +1311,9 @@ Level Up:
 9 - Haze
 12 - Mega Drain
 
+Evolutions:
+Lotad -> Lombre (lv. 16)
+
 ===================
 045 - Lombre
 ===================
@@ -1256,6 +1343,9 @@ Level Up:
 40 - Zen Headbutt
 45 - Energy Ball
 50 - Hydro Pump
+
+Evolutions:
+Lombre -> Ludicolo (Leaf Stone)
 
 ===================
 046 - Ludicolo
@@ -1344,6 +1434,9 @@ Level Up:
 16 - Rock Tomb
 21 - Magnitude
 
+Evolutions:
+Rocky -> Boulder (lv. 22)
+
 ===================
 049 - Boulder
 ===================
@@ -1369,6 +1462,10 @@ Level Up:
 29 - Stealth Rock
 32 - Self-Destruct
 36 - Rock Blast
+
+Evolutions:
+Boulder -> Blaster (lv. 36 & Knows Rock Blast)
+Boulder -> Crystallor (lv. up in Electric Tunnel)
 
 ===================
 050 - Blaster
@@ -1463,6 +1560,9 @@ Level Up:
 24 - Rock Tomb
 28 - Stealth Rock
 
+Evolutions:
+Carinx -> Carinator (lv. 30)
+
 ===================
 053 - Carinator
 ===================
@@ -1492,6 +1592,9 @@ Level Up:
 42 - Skull Bash
 46 - Iron Tail
 50 - Earthquake
+
+Evolutions:
+Carinator -> Cairnasaur (lv. up in Shadow Ravine)
 
 ===================
 054 - Cairnasaur
@@ -1553,6 +1656,9 @@ Level Up:
 31 - Thunder Fang
 33 - Knock Off
 
+Evolutions:
+Pebblepup -> Boulderoar (lv. 34)
+
 ===================
 056 - Boulderoar
 ===================
@@ -1578,8 +1684,8 @@ Level Up:
 27 - Play Rough
 31 - Thunder Fang
 33 - Knock Off
-34 - Take Down
-37 - Dark Pulse
+35 - Stealth Rock
+38 - Dark Pulse
 41 - Power Gem
 45 - Magic Fang
 49 - Accelerock
@@ -1614,6 +1720,9 @@ Level Up:
 30 - Detect
 34 - Acrobatics
 36 - Earth Power
+
+Evolutions:
+Fightorex -> Raptorex (lv. 36)
 
 ===================
 058 - Raptorex
@@ -1672,6 +1781,9 @@ Level Up:
 20 - Covet
 25 - Defog
 30 - Night Shade
+
+Evolutions:
+Kleinowl -> Hootowl (>= 160 happiness)
 
 ===================
 060 - Hootowl
@@ -1748,6 +1860,9 @@ Level Up:
 1 - Powder Snow
 1 - Struggle Bug
 
+Evolutions:
+Snom -> Frosmoth (Ice Stone)
+
 ===================
 063 - Frosmoth
 ===================
@@ -1804,6 +1919,9 @@ Level Up:
 30 - Earthquake
 40 - Icicle Crash
 
+Evolutions:
+Grondor -> Bipedice (Ice Stone)
+
 ===================
 065 - Bipedice
 ===================
@@ -1858,6 +1976,9 @@ Level Up:
 25 - Spiky Shield
 30 - Stealth Rock
 40 - Body Press
+
+Evolutions:
+Tricerpup -> Tricercil (lv. 48)
 
 ===================
 067 - Tricercil
@@ -1915,6 +2036,9 @@ Level Up:
 31 - Rest
 31 - Snore
 
+Evolutions:
+Spheal -> Sealeo (lv. 32)
+
 ===================
 069 - Sealeo
 ===================
@@ -1945,6 +2069,9 @@ Level Up:
 36 - Snowscape
 40 - Aurora Veil
 43 - Blizzard
+
+Evolutions:
+Sealeo -> Walrein (lv. 44)
 
 ===================
 070 - Walrein
@@ -2007,6 +2134,9 @@ Level Up:
 27 - Bounce
 30 - Dazzling Gleam
 
+Evolutions:
+Froshrog -> Bouncerog (lv. 32)
+
 ===================
 072 - Bouncerog
 ===================
@@ -2064,6 +2194,9 @@ Level Up:
 30 - Slash
 35 - Leech Life
 
+Evolutions:
+Bugop -> Opwing (lv. 30)
+
 ===================
 074 - Opwing
 ===================
@@ -2120,6 +2253,9 @@ Level Up:
 27 - Trick
 30 - Sparkly Swirl
 
+Evolutions:
+Hatenna -> Hattrem (lv. 32)
+
 ===================
 076 - Hattrem
 ===================
@@ -2146,6 +2282,9 @@ Level Up:
 32 - Brutal Swing
 35 - Magic Blast
 37 - Calm Mind
+
+Evolutions:
+Hattrem -> Hatterene (lv. 42)
 
 ===================
 077 - Hatterene
@@ -2210,6 +2349,9 @@ Level Up:
 26 - Confuse Ray
 29 - Trick
 
+Evolutions:
+Otterpor -> Psylotter (lv. 30)
+
 ===================
 079 - Psylotter
 ===================
@@ -2269,6 +2411,9 @@ Level Up:
 34 - Light Screen
 39 - Leaf Storm
 
+Evolutions:
+Florline -> Florlion (lv. 40)
+
 ===================
 081 - Florlion
 ===================
@@ -2321,6 +2466,9 @@ Level Up:
 15 - Hypnosis
 25 - Dream Eater
 
+Evolutions:
+Psycorb -> Psyballs (lv. 32)
+
 ===================
 083 - Psyballs
 ===================
@@ -2345,6 +2493,9 @@ Level Up:
 42 - Zen Headbutt
 47 - Extrasensory
 50 - Bullet Punch
+
+Evolutions:
+Psyballs -> Psycorboratr (lv. 52)
 
 ===================
 084 - Psycorboratr
@@ -2399,6 +2550,9 @@ Level Up:
 15 - Draining Kiss
 18 - Psybeam
 
+Evolutions:
+Ralts -> Kirlia (lv. 18)
+
 ===================
 086 - Kirlia
 ===================
@@ -2423,6 +2577,10 @@ Level Up:
 18 - Psybeam
 23 - Life Dew
 28 - Charm
+
+Evolutions:
+Kirlia -> Gardevoir (lv. 30)
+Kirlia -> Gallade (Valiant Gem)
 
 ===================
 087 - Gardevoir
@@ -2557,6 +2715,9 @@ Level Up:
 27 - Psycho Cut
 30 - Switcheroo
 
+Evolutions:
+Inkay -> Malamar (lv. 30)
+
 ===================
 091 - Malamar
 ===================
@@ -2618,6 +2779,9 @@ Level Up:
 28 - Covet
 31 - Flamethrower
 
+Evolutions:
+Flameruff -> Barkflare (lv. 35)
+
 ===================
 093 - Barkflare
 ===================
@@ -2651,6 +2815,7 @@ Level Up:
 55 - Agility
 60 - Morning Sun
 65 - Sunny Day
+75 - Extreme Speed
 
 ===================
 094 - Iglite
@@ -2667,6 +2832,9 @@ Base Stats:
 Level Up:
 1 - Will-O-Wisp
 15 - Ember
+
+Evolutions:
+Iglite -> Blaxer (lv. 16)
 
 ===================
 095 - Blaxer
@@ -2688,6 +2856,9 @@ Level Up:
 26 - Mach Punch
 29 - Brick Break
 32 - Blaze Kick
+
+Evolutions:
+Blaxer -> Pyrator (lv. 36)
 
 ===================
 096 - Pyrator
@@ -2769,6 +2940,9 @@ Level Up:
 29 - Will-O-Wisp
 33 - Detect
 
+Evolutions:
+Flamehox -> Fireshard (lv. 35)
+
 ===================
 099 - Fireshard
 ===================
@@ -2798,6 +2972,9 @@ Level Up:
 45 - Dragon Breath
 50 - Flamethrower
 53 - Dragon Pulse
+
+Evolutions:
+Fireshard -> Blastflames (lv. 55)
 
 ===================
 100 - Blastflames
@@ -2857,6 +3034,9 @@ Level Up:
 18 - Rock Polish
 20 - Screech
 
+Evolutions:
+Tiowoo -> Magwoo (lv. 20)
+
 ===================
 102 - Magwoo
 ===================
@@ -2884,6 +3064,9 @@ Level Up:
 28 - Burn Up
 30 - Rock Blast
 33 - Lava Plume
+
+Evolutions:
+Magwoo -> Lafloo (lv. 40)
 
 ===================
 103 - Lafloo
@@ -2947,6 +3130,9 @@ Level Up:
 20 - Beat Up
 22 - Thief
 
+Evolutions:
+Houndour -> Houndoom (lv. 24)
+
 ===================
 105 - Houndoom
 ===================
@@ -3007,6 +3193,9 @@ Level Up:
 17 - Swift
 20 - Flame Wheel
 23 - Trick
+
+Evolutions:
+Sparkdust -> Splame (lv. 25)
 
 ===================
 107 - Splame
@@ -3072,6 +3261,10 @@ Level Up:
 29 - Fire Spin
 32 - Spirit Break
 32 - Glitzy Glow
+
+Evolutions:
+Sparkitten -> Fireblion (Valiant Gem)
+Sparkitten -> Flamebless (Petticoat Gem)
 
 ===================
 109 - Fireblion
@@ -3155,6 +3348,9 @@ Level Up:
 25 - Scary Face
 27 - Thunder Fang
 
+Evolutions:
+Shookwat -> Wattwo (lv. 30)
+
 ===================
 112 - Wattwo
 ===================
@@ -3183,6 +3379,9 @@ Level Up:
 42 - Thunder Punch
 45 - Curse
 50 - Thunderbolt
+
+Evolutions:
+Wattwo -> Megawatt (lv. up in Electric Tunnel)
 
 ===================
 113 - Megawatt
@@ -3239,6 +3438,9 @@ Level Up:
 23 - Covet
 26 - Thunder Wave
 
+Evolutions:
+Elelamb -> Electroram (lv. 28)
+
 ===================
 115 - Electroram
 ===================
@@ -3268,6 +3470,9 @@ Level Up:
 37 - Twinkle Tackle
 41 - Electric Terrain
 45 - Cotton Guard
+
+Evolutions:
+Electroram -> Superchargo (lv. 48)
 
 ===================
 116 - Superchargo
@@ -3322,6 +3527,9 @@ Level Up:
 20 - Strength Sap
 30 - Grass Knot
 
+Evolutions:
+Twigzap -> Shockbrach (lv. 19)
+
 ===================
 118 - Shockbranch
 ===================
@@ -3344,6 +3552,9 @@ Level Up:
 25 - Needle Arm
 27 - Thunder Wave
 30 - Thunder Punch
+
+Evolutions:
+Shockbranch -> Thunderzap (Leaf Stone)
 
 ===================
 119 - Thunderzap
@@ -3398,6 +3609,9 @@ Level Up:
 25 - Rollout
 30 - Metal Claw
 
+Evolutions:
+Magie -> Cumin (lv. 30)
+
 ===================
 121 - Cumin
 ===================
@@ -3426,6 +3640,9 @@ Level Up:
 45 - Iron Head
 50 - Hone Claws
 55 - Twinkle Tackle
+
+Evolutions:
+Cumin -> Cinneroph (>= 250 happiness)
 
 ===================
 122 - Cinneroph
@@ -3480,6 +3697,9 @@ Level Up:
 20 - Roar
 25 - Discharge
 
+Evolutions:
+Vupp -> Vinnie (lv. 30)
+
 ===================
 124 - Vinnie
 ===================
@@ -3509,6 +3729,9 @@ Level Up:
 45 - Electro Ball
 50 - Volt Tackle
 55 - Plasma Fists
+
+Evolutions:
+Vinnie -> Suvinero (>= 250 happiness)
 
 ===================
 125 - Suvinero
@@ -3563,6 +3786,9 @@ Level Up:
 20 - Covet
 25 - Roar
 
+Evolutions:
+Whiskie -> Whiskers (lv. 30)
+
 ===================
 127 - Whiskers
 ===================
@@ -3595,6 +3821,9 @@ Level Up:
 50 - Ice Punch
 50 - Twinkle Tackle
 55 - Sky Uppercut
+
+Evolutions:
+Whiskers -> Whiskeroar (>= 250 happiness)
 
 ===================
 128 - Whiskeroar
@@ -3647,6 +3876,9 @@ Level Up:
 21 - Absorb
 25 - Metal Claw
 30 - Dig
+
+Evolutions:
+Nincada -> Ninjask (lv. 20)
 
 ===================
 130 - Ninjask
@@ -3730,6 +3962,9 @@ Level Up:
 25 - Water Pulse
 35 - Shell Smash
 
+Evolutions:
+Sheltor -> Shelnado (lv. up in Mindagan Lake)
+
 ===================
 133 - Shelnado
 ===================
@@ -3782,6 +4017,9 @@ Level Up:
 15 - Dive
 20 - Covet
 
+Evolutions:
+Lilyray -> Daray (>= 160 happiness)
+
 ===================
 135 - Daray
 ===================
@@ -3805,6 +4043,9 @@ Level Up:
 23 - Air Slash
 26 - Haze
 30 - Defog
+
+Evolutions:
+Daray -> Spinaquata (lv. 30)
 
 ===================
 136 - Spinaquata
@@ -3861,6 +4102,9 @@ Level Up:
 30 - Flail
 40 - Hydro Pump
 
+Evolutions:
+Magikarp -> Gyarados (lv. 20)
+
 ===================
 138 - Gyarados
 ===================
@@ -3914,6 +4158,9 @@ Level Up:
 36 - Psychic
 40 - Recover
 45 - Hydro Pump
+
+Evolutions:
+Staryu -> Starmie (lv. up in Mindagan Lake)
 
 ===================
 140 - Starmie
@@ -3976,6 +4223,9 @@ Level Up:
 40 - Psychic Fangs
 45 - Knock Off
 
+Evolutions:
+Ali -> Batorali (Dusk Stone)
+
 ===================
 142 - Batorali
 ===================
@@ -4035,6 +4285,9 @@ Level Up:
 23 - Sparkle Strike
 25 - Magic Crash
 
+Evolutions:
+Posho -> Shomp (>= 250 happiness)
+
 ===================
 144 - Shomp
 ===================
@@ -4067,6 +4320,9 @@ Level Up:
 48 - Dragon Darts
 50 - Hyper Beam
 58 - Outrage
+
+Evolutions:
+Shomp -> Poshorump (lv. up in Mindagan Lake)
 
 ===================
 145 - Poshorump
@@ -4134,6 +4390,9 @@ Level Up:
 32 - Hone Claws
 35 - Shell Smash
 38 - Night Slash
+
+Evolutions:
+Binacle -> Barbaracle (lv. 39)
 
 ===================
 147 - Barbaracle
@@ -4205,6 +4464,9 @@ Level Up:
 39 - Muddy Water
 42 - Dark Pulse
 45 - Earth Power
+
+Evolutions:
+Durfish -> Dompster (lv. up in Mindagan Lake)
 
 ===================
 149 - Dompster
@@ -4302,6 +4564,9 @@ Level Up:
 20 - Poison Fang
 22 - Stockpile
 
+Evolutions:
+Ekans -> Arbok (lv. 22)
+
 ===================
 152 - Arbok
 ===================
@@ -4359,6 +4624,9 @@ Level Up:
 20 - Bite
 25 - Wing Attack
 
+Evolutions:
+Zubat -> Golbat (lv. 22)
+
 ===================
 154 - Golbat
 ===================
@@ -4391,6 +4659,9 @@ Level Up:
 48 - Venoshock
 55 - Leech Life
 62 - Brave Bird
+
+Evolutions:
+Golbat -> Crobat (>= 160 happiness)
 
 ===================
 155 - Crobat
@@ -4450,6 +4721,9 @@ Level Up:
 28 - Luster Purge
 30 - Shadow Ball
 
+Evolutions:
+Poof -> Hast (lv. 32)
+
 ===================
 157 - Hast
 ===================
@@ -4506,6 +4780,9 @@ Level Up:
 23 - Hex
 25 - Sucker Punch
 27 - Feint Attack
+
+Evolutions:
+Poov -> Grust (lv. 30)
 
 ===================
 159 - Grust
@@ -4564,6 +4841,9 @@ Level Up:
 35 - Sludge Bomb
 40 - Shadow Ball
 
+Evolutions:
+Cluuz -> Zurrclu (Dusk Stone)
+
 ===================
 161 - Zurrclu
 ===================
@@ -4591,6 +4871,9 @@ Level Up:
 37 - Smart Strike
 44 - Shadow Ball
 50 - Phantom Force
+
+Evolutions:
+Zurrclu -> Zurroaratr (>= 250 happiness)
 
 ===================
 162 - Zurroaratr
@@ -4642,6 +4925,9 @@ Level Up:
 20 - Rock Slide
 24 - Slam
 
+Evolutions:
+Timburr -> Gurdurr (lv. 25)
+
 ===================
 164 - Gurdurr
 ===================
@@ -4671,6 +4957,9 @@ Level Up:
 48 - Stone Edge
 54 - Superpower
 60 - Reversal
+
+Evolutions:
+Gurdurr -> Conkeldurr (lv. 36)
 
 ===================
 165 - Conkeldurr
@@ -4724,6 +5013,9 @@ Level Up:
 23 - Stomp
 28 - Stealth Rock
 
+Evolutions:
+Rhypo -> Rhynee (lv. 30)
+
 ===================
 167 - Rhynee
 ===================
@@ -4753,6 +5045,9 @@ Level Up:
 46 - Body Press
 50 - Endeavor
 55 - Double-Edge
+
+Evolutions:
+Rhynee -> Rhypolar (lv. 50)
 
 ===================
 168 - Rhypolar
@@ -4817,6 +5112,9 @@ Level Up:
 25 - Headbutt
 30 - Low Kick
 
+Evolutions:
+Diggie -> Drillatron (lv. 33)
+
 ===================
 170 - Drillatron
 ===================
@@ -4870,6 +5168,9 @@ Level Up:
 13 - Wrap
 17 - Mud Shot
 
+Evolutions:
+Wormite -> Wormbot (lv. 20)
+
 ===================
 172 - Wormbot
 ===================
@@ -4894,6 +5195,9 @@ Level Up:
 33 - Spikes
 39 - Earthquake
 43 - Iron Head
+
+Evolutions:
+Wormbot -> Wormatron (lv. 48)
 
 ===================
 173 - Wormatron
@@ -4947,6 +5251,9 @@ Level Up:
 12 - Encore
 16 - Charm
 
+Evolutions:
+Cleffa -> Clefairy (>= 160 happiness)
+
 ===================
 175 - Clefairy
 ===================
@@ -4989,6 +5296,9 @@ Level Up:
 45 - Core Enforcer
 48 - Spacial Rend
 51 - Healing Wish
+
+Evolutions:
+Clefairy -> Clefable (Dawn Stone)
 
 ===================
 176 - Clefable
@@ -5063,6 +5373,9 @@ Level Up:
 50 - Tri-Attack
 55 - Glitter Dance
 
+Evolutions:
+Minishoo -> Glittleshoo (Dawn Stone)
+
 ===================
 178 - Glittleshoo
 ===================
@@ -5117,6 +5430,9 @@ Level Up:
 23 - Round
 25 - Hex
 28 - Confuse Ray
+
+Evolutions:
+Zorua -> Zoroark (lv. 30)
 
 ===================
 180 - Zoroark
@@ -5174,6 +5490,9 @@ Level Up:
 20 - Automotize
 25 - Lock-On
 
+Evolutions:
+Droid -> Armoid (lv. 25)
+
 ===================
 182 - Armoid
 ===================
@@ -5200,6 +5519,9 @@ Level Up:
 40 - Iron Head
 45 - Metal Sound
 50 - Meteor Mash
+
+Evolutions:
+Armoid -> Soldrota (lv. 50)
 
 ===================
 183 - Soldrota
@@ -5260,6 +5582,9 @@ Level Up:
 18 - Sparkly Swirl
 23 - Space Beam
 
+Evolutions:
+Tinkie -> Shawar (lv. 26)
+
 ===================
 185 - Shawar
 ===================
@@ -5290,6 +5615,9 @@ Level Up:
 42 - Take Down
 45 - Desolate Void
 48 - Magic Tomb
+
+Evolutions:
+Shawar -> Shaboom (lv. 50)
 
 ===================
 186 - Shaboom
@@ -5354,6 +5682,9 @@ Level Up:
 30 - Dragon Breath
 33 - Luster Purge
 
+Evolutions:
+Dragee -> Draga (lv. 36)
+
 ===================
 188 - Draga
 ===================
@@ -5385,6 +5716,9 @@ Level Up:
 46 - Dragon Pulse
 50 - Dragon Rush
 53 - Hydro Pump
+
+Evolutions:
+Draga -> Drageye (lv. 55)
 
 ===================
 189 - Drageye
@@ -5447,6 +5781,9 @@ Level Up:
 25 - Mist Ball
 25 - Topsy-Turvy
 
+Evolutions:
+Blobmo -> Nebulimb (lv. 40)
+
 ===================
 191 - Nebulimb
 ===================
@@ -5472,6 +5809,9 @@ Level Up:
 52 - Aura Sphere
 56 - Meteor Mash
 60 - Drain Punch
+
+Evolutions:
+Nebulimb -> Galactasolder (lv. 60)
 
 ===================
 192 - Galactasolder
@@ -5527,6 +5867,9 @@ Level Up:
 25 - Space Beam
 30 - Freeze-Dry
 45 - Sheer Cold
+
+Evolutions:
+Consodust -> Cosmocrash (Ice Stone)
 
 ===================
 194 - Cosmocrash
@@ -5584,6 +5927,9 @@ Level Up:
 40 - Meteor Mash
 50 - Power Gem
 
+Evolutions:
+Rockmite -> Stellarock (lv. up in Shadow Ravine Heart)
+
 ===================
 196 - Stellarock
 ===================
@@ -5634,6 +5980,9 @@ Level Up:
 15 - Hypnosis
 19 - Will-O-Wisp
 24 - Hex
+
+Evolutions:
+Poof-E -> Hast-E (lv. 32)
 
 ===================
 198 - Hast-E
@@ -5689,6 +6038,9 @@ Level Up:
 19 - Spark
 22 - Shift Gear
 
+Evolutions:
+Droid-E -> Armoid-E (lv. 25)
+
 ===================
 200 - Armoid-E
 ===================
@@ -5720,6 +6072,9 @@ Level Up:
 40 - Drain Punch
 44 - Sucker Punch
 47 - Volt Tackle
+
+Evolutions:
+Armoid-E -> Soldrota-E (lv. 50)
 
 ===================
 201 - Soldrota-E
@@ -5782,6 +6137,9 @@ Level Up:
 29 - Thunder Wave
 33 - Charge Beam
 
+Evolutions:
+Flamehox-E -> Fireshard-E (lv. 35)
+
 ===================
 203 - Fireshard-E
 ===================
@@ -5811,6 +6169,9 @@ Level Up:
 45 - Dragon Pulse
 50 - Thunderbolt
 53 - Overheat
+
+Evolutions:
+Fireshard-E -> Blastflames-E (lv. 55)
 
 ===================
 204 - Blastflames-E
@@ -5871,6 +6232,9 @@ Level Up:
 20 - Thunder Punch
 26 - Nuzzle
 
+Evolutions:
+Rocky-E -> Boulder-E (lv. 22)
+
 ===================
 206 - Boulder-E
 ===================
@@ -5898,6 +6262,10 @@ Level Up:
 31 - Discharge
 33 - Magnitude
 36 - Rock Blast
+
+Evolutions:
+Boulder-E -> Blaster-E (lv. 36 & Knows Rock Blast)
+Boulder-E -> Crystallor-E (lv. up in Electric Tunnel)
 
 ===================
 207 - Blaster-E
@@ -5992,6 +6360,9 @@ Level Up:
 15 - Tackle
 32 - Bolt Strike
 
+Evolutions:
+Magikarp-E -> Gyarados-E (lv. 20)
+
 ===================
 210 - Gyarados-E
 ===================
@@ -6045,6 +6416,9 @@ Level Up:
 33 - Zing Zap
 36 - Ice Fang
 39 - Poison Fang
+
+Evolutions:
+Shockfang -> Electrocobra (lv. 40)
 
 ===================
 212 - Electrocobra
@@ -6108,6 +6482,9 @@ Level Up:
 33 - Jaw Lock
 36 - Ice Fang
 39 - Knock Off
+
+Evolutions:
+Nightrex -> Shadowsaur (lv. 40)
 
 ===================
 214 - Shadowsaur
@@ -6176,6 +6553,9 @@ Level Up:
 45 - Phantom Force
 53 - Dragon Dance
 
+Evolutions:
+Durfish-S -> Dompster-S (Dusk Stone)
+
 ===================
 216 - Dompster-S
 ===================
@@ -6236,6 +6616,9 @@ Level Up:
 16 - Mud Bomb
 19 - Knock Off
 
+Evolutions:
+Wormite-S -> Wormbot-S (lv. 20)
+
 ===================
 218 - Wormbot-S
 ===================
@@ -6264,6 +6647,9 @@ Level Up:
 36 - Glare
 39 - Fissure
 42 - Sandstorm
+
+Evolutions:
+Wormbot-S -> Wormatron-S (lv. 45)
 
 ===================
 219 - Wormatron-S
@@ -6327,6 +6713,9 @@ Level Up:
 35 - Sludge Bomb
 40 - Dark Pulse
 
+Evolutions:
+Cluuz-S -> Zurrclu-S (Dusk Stone)
+
 ===================
 221 - Zurrclu-S
 ===================
@@ -6365,6 +6754,9 @@ Level Up:
 47 - Dark Pulse
 50 - Phantom Force
 55 - Knock Off
+
+Evolutions:
+Zurrclu-S -> Zurroaratr (>= 250 happiness)
 
 ===================
 222 - Zurroaratr-S
@@ -6436,6 +6828,9 @@ Level Up:
 15 - Memento
 18 - Knock Off
 
+Evolutions:
+Iglite-S -> Blaxer-S (lv. 16)
+
 ===================
 224 - Blaxer-S
 ===================
@@ -6460,6 +6855,9 @@ Level Up:
 26 - Brick Break
 29 - Throat Chop
 33 - Knock Off
+
+Evolutions:
+Blaxer-S -> Pyrator-S (lv. 36)
 
 ===================
 225 - Pyrator-S
@@ -6525,6 +6923,9 @@ Level Up:
 30 - Toxic
 30 - Thunder Wave
 30 - Will-O-Wisp
+
+Evolutions:
+Ekans-S -> Arbok-S (lv. 32)
 
 ===================
 227 - Arbok-S
@@ -6908,6 +7309,9 @@ Level Up:
 52 - Head Smash
 55 - Close Combat
 
+Evolutions:
+Scraggy -> Scrafty (lv. 39)
+
 ===================
 239 - Scrafty
 ===================
@@ -6938,6 +7342,9 @@ Level Up:
 48 - Swords Dance
 55 - Close Combat
 61 - Head Smash
+
+Evolutions:
+Scrafty -> Scraftagon (>= 5 Headbutt Crits in Trainer Battles)
 
 ===================
 240 - Scraftagon
