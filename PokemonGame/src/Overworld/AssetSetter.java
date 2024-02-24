@@ -1232,7 +1232,6 @@ public class AssetSetter {
 					gp.npc[mapNum][index] = NPCSetup(NPC_POKEMON, xCoords[i-224], yCoords[i-224], i);
 				} else {
 					gp.npc[mapNum][index++] = null;
-					GamePanel.volatileTrainers.put(NPCSetup(NPC_POKEMON, xCoords[i-224], yCoords[i-224], i), mapNum);
 				}
 			}
 		}

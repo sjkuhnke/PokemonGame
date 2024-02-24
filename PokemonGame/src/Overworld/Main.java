@@ -967,6 +967,11 @@ public class Main {
 					}
 				}
 				writer.write("\n");
+				if (p.canEvolve()) {
+					writer.write("Evolutions:\n");
+					writer.write(p.getEvolveString() + "\n\n");
+				}
+				
 			}
 			writer.close();
 			//writeUnusedMoves();
