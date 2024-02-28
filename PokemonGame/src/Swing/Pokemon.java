@@ -7628,7 +7628,7 @@ public class Pokemon implements Serializable {
 			movebank[59] = new Node(Move.SOLAR_BLADE);
 			break;
 		case 89:
-			movebank = new Node[65];
+			movebank = new Node[75];
 			movebank[0] = new Node(Move.CHARGE_BEAM);
 			movebank[0].addToEnd(new Node(Move.FORESIGHT));
 			movebank[0].addToEnd(new Node(Move.FLASH));
@@ -7645,6 +7645,7 @@ public class Pokemon implements Serializable {
 			movebank[54] = new Node(Move.THUNDER);
 			movebank[59] = new Node(Move.TRI$ATTACK);
 			movebank[64] = new Node(Move.MOONBLAST);
+			movebank[74] = new Node(Move.EXTREME_SPEED);
 			break;
 		case 90:
 			movebank = new Node[30];

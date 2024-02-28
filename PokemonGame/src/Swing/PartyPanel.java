@@ -120,7 +120,7 @@ public class PartyPanel extends JPanel {
         	ImageFilter filter = new GrayFilter(true, 25);
         	ImageProducer producer = new FilteredImageSource(master.getMiniSprite().getSource(), filter);
         	spriteIcon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(producer));
-        }		
+        }
     	ImageIcon itemIcon = null;
     	if (master.item != null) itemIcon = new ImageIcon(setupImage("/items/item.png"));
     	CompoundIcon icon = itemIcon == null ? new CompoundIcon(Axis.Z_AXIS, 0, CompoundIcon.LEFT, CompoundIcon.BOTTOM, spriteIcon) : new CompoundIcon(Axis.Z_AXIS, 0, CompoundIcon.LEFT, CompoundIcon.BOTTOM, spriteIcon, itemIcon);

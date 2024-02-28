@@ -2687,6 +2687,7 @@ Level Up:
 55 - Thunder
 60 - Tri-Attack
 65 - Moonblast
+75 - Extreme Speed
 
 ===================
 090 - Inkay

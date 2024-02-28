@@ -22,10 +22,10 @@ Trainer B B                 Roselia Lv. 15
 Trainer B C                 Fightorex Lv. 15
 Trainer B D                 Elelamb Lv. 15
 Trainer B F                 Bluebunn Lv. 21 @ (Chilan Berry)
-Trainer Scott 1             Twigle Lv. 7
+Trainer Scott 1             Lagma Lv. 7
 
 Scott 1
-Twigle (Lv. 7) @ Miracle Seed           /   Rough Skin     /   Pound, Withdraw, Razor Leaf, 
+Lagma (Lv. 7) @ Charcoal                /   Dry Skin       /   Tackle, Harden, Ember, 
 
 
 Route 24 (pt. 1)----------------------------------
@@ -95,11 +95,11 @@ Trainer P                   Sapwin Lv. 18 @ (Hard Stone)
 
 Gelb Forest---------------------------------------
 
-Trainer Fred 1              Otterpor Lv. 18, Iguaton Lv. 20
+Trainer Fred 1              Otterpor Lv. 18, Torgged Lv. 20
 
 Fred 1
 Otterpor (Lv. 18) @ Leftovers           /   Water Veil     /   Baby-Doll Eyes, Detect, Aqua Ring, Razor Shell
-Iguaton (Lv. 20) @ Mystic Water         /   Protean        /   Mud Sport, Bite, Mean Look, Bubblebeam
+Torgged (Lv. 20) @ Miracle Seed         /   Rough Skin     /   Smack Down, Headbutt, Razor Leaf, Sand Attack
 
 Trainer Q                   Inkay Lv. 18, Psycorb Lv. 19 @ (Black Glasses, Terrain Extender)
 Trainer R                   Grondor Lv. 19 @ (Expert Belt)
@@ -151,11 +151,11 @@ Trainer TN O6               Inkay Lv. 20, Shomp Lv. 20 @ (Life Orb, None)
 
 Sicab Office (2A)---------------------------------
 
-Trainer Scott 2             Ninjask Lv. 21, Torgged Lv. 22, Rhypo Lv. 22
+Trainer Scott 2             Ninjask Lv. 21, Maguide Lv. 22, Rhypo Lv. 22
 
 Scott 2
 Ninjask (Lv. 21) @ Focus Sash           /   Speed Boost    /   False Swipe, Mud-Slap, Fury Cutter, Harden
-Torgged (Lv. 22) @ Sitrus Berry         /   Rough Skin     /   Smack Down, Headbutt, Sleep Powder, Sand Attack
+Maguide (Lv. 22) @ Sitrus Berry         /   Dry Skin       /   Incinerate, Headbutt, Flame Wheel, Iron Defense
 Rhypo (Lv. 22) @ Passho Berry           /   Rattled        /   Fury Attack, Rapid Spin, Growl, Tail Whip
 
 Trainer O3                  Glittleshoo Lv. 28, Dragee Lv. 29, Shomp Lv. 28 @ (Chilan Berry, Babiri Berry, Haban Berry)
@@ -223,12 +223,12 @@ Trainer AF                  Flamebless Lv. 38 @ (Passho Berry)
 
 Kleine Village------------------------------------
 
-Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Iguaton Lv. 30, Psylotter Lv. 31
+Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Torgged Lv. 30, Psylotter Lv. 31
 
 Fred 2
 Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
 Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
-Iguaton (Lv. 30) @ Expert Belt          /   Protean        /   Aqua Jet, Bite, Mean Look, Fire Fang
+Torgged (Lv. 30) @ Expert Belt          /   Rough Skin     /   Magnitude, Headbutt, Sleep Powder, Mega Drain
 Psylotter (Lv. 31) @ Wide Lens          /   Water Veil     /   Hypnosis, Rollout, Confuse Ray, Trick
 
 Trainer RR A                Froshrog Lv. 30, Spheal Lv. 31 @ (Life Orb, Silk Scarf)
@@ -351,12 +351,12 @@ Route 31------------------------------------------
 Trainer BL                  Wormatron-S Lv. 45 @ (Black Glasses)
 Trainer BM                  Cluuz-S Lv. 47, Zurrclu-S Lv. 45, Cluuz-S Lv. 47, Zurrclu-S Lv. 46 @ (Focus Sash, Sitrus Berry, Roseli Berry, Salac Berry)
 Trainer BN                  Durfish Lv. 47, Dompster Lv. 45, Durfish-S Lv. 47, Dompster-S Lv. 45 @ (Choice Specs, Choice Band, Eviolite, Power Herb)
-Trainer Scott 3             Hatterene Lv. 47, Ninjask Lv. 47, Tortugis Lv. 47, Vikavolt Lv. 46, Rhynee Lv. 48
+Trainer Scott 3             Hatterene Lv. 47, Ninjask Lv. 47, Magron Lv. 47, Vikavolt Lv. 46, Rhynee Lv. 48
 
 Scott 3
 Hatterene (Lv. 47) @ Focus Sash         /   Magic Bounce   /   Magic Reflect, Psychic, Magic Tomb, Calm Mind
 Ninjask (Lv. 47) @ Focus Sash           /   Speed Boost    /   Swords Dance, Leech Life, Acrobatics, Poison Jab
-Tortugis (Lv. 47) @ Life Orb            /   Rough Skin     /   Power Gem, Dragon Tail, Rockfall Frenzy, Earthquake
+Magron (Lv. 47) @ Life Orb              /   Dry Skin       /   Heat Crash, Earth Power, Fire Blast, Heavy Slam
 Vikavolt (Lv. 46) @ Magnet              /   Levitate       /   Volt Switch, Guillotine, Bug Buzz, Sticky Web
 Rhynee (Lv. 48) @ Leftovers             /   Sand Stream    /   Stone Edge, Body Press, Horn Drill, Magnitude
 
@@ -430,13 +430,13 @@ Trainer TN B9               Rhypolar Lv. 54, Tricercil Lv. 54 @ (Assault Vest, R
 Trainer TN B10              Bipedice Lv. 54, Soldrota-E Lv. 54 @ (Choice Band, Life Orb)
 Trainer TN B11              Blaster-E Lv. 55, Gyarados-E Lv. 55 @ (Air Balloon, Choice Scarf)
 Trainer TN B12              Crystallor-E Lv. 55, Hast-E Lv. 55 @ (White Herb, Choice Scarf)
-Trainer Fred 3              Blastflames Lv. 56, Gyarados-E Lv. 56, Wormatron-S Lv. 57, Dragave Lv. 57, Stellarock Lv. 56, Psylotter Lv. 58
+Trainer Fred 3              Blastflames Lv. 56, Gyarados-E Lv. 56, Wormatron-S Lv. 57, Tortugis Lv. 57, Stellarock Lv. 56, Psylotter Lv. 58
 
 Fred 3
 Blastflames (Lv. 56) @ Mysticola Berry  /   Levitate       /   Iron Blast, Dragon Pulse, Flamethrower, Hurricane
 Gyarados-E (Lv. 56) @ Rindo Berry       /   Volt Vortex    /   Bounce, Volt Tackle, Comet Crash, Waterfall
 Wormatron-S (Lv. 57) @ Black Glasses    /   Adaptability   /   Sucker Punch, Breaking Swipe, Earthquake, Swords Dance
-Dragave (Lv. 57) @ Expert Belt          /   Protean        /   Hammer Arm, Dragon Rush, Bulk Up, Close Combat
+Tortugis (Lv. 57) @ Expert Belt         /   Rough Skin     /   Spiky Shield, Dragon Tail, Leaf Storm, Earth Power
 Stellarock (Lv. 56) @ Sitrus Berry      /   Gravitational Pull/   Cosmic Power, Stone Edge, Meteor Mash, Comet Crash
 Psylotter (Lv. 58) @ Weakness Policy    /   Water Veil     /   Blizzard, Light Screen, Hydro Pump, Psychic
 
@@ -482,13 +482,13 @@ Trainer CI                  Barkflare Lv. 55, Gallade Lv. 54, Splame Lv. 55 @ (L
 Glurg Town----------------------------------------
 
 Trainer CJ                  Roserade Lv. 55, Crobat Lv. 55, Cluuz Lv. 57 @ (Sitrus Berry, Power Herb, Bright Powder)
-Trainer Scott 4             Hatterene Lv. 59, Ninjask Lv. 60, Drageye Lv. 58, Tortugis Lv. 60, Vikavolt Lv. 59, Rhypolar Lv. 61
+Trainer Scott 4             Hatterene Lv. 59, Ninjask Lv. 60, Drageye Lv. 58, Magron Lv. 60, Vikavolt Lv. 59, Rhypolar Lv. 61
 
 Scott 4
 Hatterene (Lv. 59) @ Chilan Berry       /   Magic Bounce   /   Magic Tomb, Nuzzle, Reflect, Light Screen
 Ninjask (Lv. 60) @ Focus Sash           /   Speed Boost    /   Swords Dance, Leech Life, Baton Pass, Protect
 Drageye (Lv. 58) @ Chesto Berry         /   Multiscale     /   Prismatic Laser, Dragon Pulse, Thunderbolt, Rest
-Tortugis (Lv. 60) @ Life Orb            /   Rough Skin     /   Spiky Shield, Dragon Tail, Leaf Storm, Earth Power
+Magron (Lv. 60) @ Life Orb              /   Dry Skin       /   Flare Blitz, Earth Power, Aura Sphere, Steel Beam
 Vikavolt (Lv. 59) @ Magnet              /   Levitate       /   Photon Geyser, Bug Buzz, Volt Switch, Sticky Web
 Rhypolar (Lv. 61) @ Leftovers           /   Sand Stream    /   Earthquake, Spikes, Smack Down, Body Press
 

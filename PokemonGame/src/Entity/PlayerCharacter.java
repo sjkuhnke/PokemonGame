@@ -2224,7 +2224,7 @@ public class PlayerCharacter extends Entity {
 
 	private void showDex() {
 	    JPanel dexPanel = new JPanel();
-	    dexPanel.setLayout(new GridLayout(60, 6));
+	    dexPanel.setLayout(new GridLayout(0, 4));
 
 	    for (int j = 1; j < p.getDexShowing(); j++) {
 	    	final int id = j;
