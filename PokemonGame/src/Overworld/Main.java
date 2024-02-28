@@ -1281,22 +1281,22 @@ public class Main {
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
-			encounters = Encounter.getEncounters(11, 43, 55, "Standard", "", false); // gelb forest
+			encounters = Encounter.getEncounters(11, 32, 68, "Standard", "", false); // gelb forest
 			writer.write("Gelb Forest");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
-			encounters = Encounter.getEncounters(11, 43, 55, "Fishing", "", false); // gelb forest
+			encounters = Encounter.getEncounters(11, 32, 68, "Fishing", "", false); // gelb forest
 			writer.write("Gelb Forest");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
-			encounters = Encounter.getEncounters(11, 43, 55, "Surfing", "", false); // gelb forest
+			encounters = Encounter.getEncounters(11, 32, 68, "Surfing", "", false); // gelb forest
 			writer.write("Gelb Forest");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
-			encounters = Encounter.getEncounters(11, 73, 54, "Standard", "", false); // route 25
+			encounters = Encounter.getEncounters(11, 42, 52, "Standard", "", false); // route 25
 			writer.write("Route 25");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);

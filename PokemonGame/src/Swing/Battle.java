@@ -1362,30 +1362,30 @@ public class Battle extends JFrame {
 			Pokemon[] enemyTeam = foeTrainer == null ? null : foeTrainer.getTeam();
 			if (m1 == Move.SUCKER_PUNCH && m2.cat == 2) m1 = Move.FAILED_SUCKER;
 			faster.move(slower, m1, me, team, foeTrainer, true);
-			updateBars(true);
-			JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
+//			updateBars(true);
+//			JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
 			
 			// Check for swap (player)
 			if (faster.vStatuses.contains(Status.SWITCHING)) {
 				faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS);
-				updateBars(true);
-				JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
+//				updateBars(true);
+//				JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
 			}
 			
 			if (m2 == Move.SUCKER_PUNCH && m1.cat == 2) m2 = Move.FAILED_SUCKER;
 	        if (!(foeTrainer != null && slower != foeTrainer.getCurrent()) && foeCanMove) {
 	        	slower.move(faster, m2, me, enemyTeam, foeTrainer, false);
 	        	if (foeTrainer != null) slower = foeTrainer.getCurrent();
-	        	updateBars(true);
-				JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
+//	        	updateBars(true);
+//				JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
 	        }
 	        
 	        // Check for swap (AI)
 	        if (foeCanMove && slower.vStatuses.contains(Status.SWITCHING)) {
 	        	foeTrainer.swapRandom(faster, me, false, slower.lastMoveUsed == Move.BATON_PASS);
 	        	slower = foeTrainer.current;
-	        	updateBars(true);
-				JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
+//	        	updateBars(true);
+//				JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
 	        }
 		} else { // enemy Pokemon is faster
 			if (faster.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
