@@ -4254,7 +4254,7 @@ public class Pokemon implements Serializable {
 			foe.paralyze(false, this);
 //		} else if (move == Move.BIG_BULLET) {
 //			foe.paralyze(false, this);
-		} else if (move == Move.BIND) {
+		} else if (move == Move.BIND && !foe.isFainted()) {
 			if (!foe.vStatuses.contains(Status.SPUN)) {
 				foe.vStatuses.add(Status.SPUN);
 				foe.spunCount = (((int) (Math.random() * 4)) + 2);
@@ -4393,7 +4393,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.FIRE_PUNCH) {
 			foe.burn(false, this);
 		} else if (move == Move.FIRE_SPIN) {
-			if (!foe.vStatuses.contains(Status.SPUN)) {
+			if (!foe.vStatuses.contains(Status.SPUN) && !foe.isFainted()) {
 				if (foe.type1 != PType.FIRE && foe.type2 != PType.FIRE) {
 					foe.vStatuses.add(Status.SPUN);
 					foe.spunCount = (((int) (Math.random() * 4)) + 2);
@@ -4401,7 +4401,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 		} else if (move == Move.WHIRLPOOL) {
-			if (!foe.vStatuses.contains(Status.SPUN)) {
+			if (!foe.vStatuses.contains(Status.SPUN) && !foe.isFainted()) {
 				if (foe.type1 != PType.WATER && foe.type2 != PType.WATER) {
 					foe.vStatuses.add(Status.SPUN);
 					foe.spunCount = (((int) (Math.random() * 4)) + 2);
@@ -4409,7 +4409,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 		} else if (move == Move.WRAP) {
-			if (!foe.vStatuses.contains(Status.SPUN)) {
+			if (!foe.vStatuses.contains(Status.SPUN) && !foe.isFainted()) {
 				foe.vStatuses.add(Status.SPUN);
 				foe.spunCount = (((int) (Math.random() * 4)) + 2);
 				console.writeln(foe.nickname + " was wrapped by " + this.nickname + "!");

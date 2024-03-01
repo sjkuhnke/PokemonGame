@@ -747,7 +747,7 @@ public enum Item {
         gbc.insets = new Insets(5, 5, 5, 5); // Add space between components
         
         JComboBox<Pokemon> userMons = new JComboBox<>();
-        JLabel userLevel = new JLabel();
+        JTextField userLevel = new JTextField();
         JLabel[] userStatLabels = new JLabel[6];
         @SuppressWarnings("unchecked")
 		JComboBox<Integer>[] userStages = new JComboBox[6];
@@ -880,6 +880,29 @@ public enum Item {
         	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
         });
         
+        userLevel.addActionListener(l ->{
+        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+        	try {
+        		int level = Integer.parseInt(userLevel.getText());
+    			if (level >= 1 && level <= 100) {
+    				userCurrent.level = level;
+    			} else {
+    				userCurrent.level = 50;
+    			}
+    		} catch (NumberFormatException e1) {
+    			userCurrent.level = 50;
+    		}
+        	int oHP = userCurrent.getStat(0);
+        	userCurrent.stats = userCurrent.getStats();
+        	int nHP = userCurrent.getStat(0);
+        	userCurrent.currentHP += nHP - oHP;
+        	userCurrent.verifyHP();
+        	
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
+        });
+        
         foeLevel.addActionListener(l ->{
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
@@ -900,6 +923,13 @@ public enum Item {
         	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
         	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
         });
+        
+        userLevel.addFocusListener(new FocusAdapter() {
+			@Override // implementation
+	    	public void focusGained(FocusEvent e) {
+	        	userLevel.selectAll();
+	    	}
+		});
         
 		foeLevel.addFocusListener(new FocusAdapter() {
 			@Override // implementation
