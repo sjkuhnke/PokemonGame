@@ -787,7 +787,7 @@ public class Main {
 				new Trainer("Exp. Trainer", new Pokemon[]{new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true)}, new Item[]{Item.TOXIC_ORB, Item.TOXIC_ORB, Item.TOXIC_ORB, Item.TOXIC_ORB, Item.TOXIC_ORB, Item.TOXIC_ORB}, 100),
 				new Trainer("BP1", new Pokemon[] {new Pokemon(17, 48, false, true), new Pokemon(21, 47, false, true), new Pokemon(93, 48, false, true), new Pokemon(89, 48, false, true), new Pokemon(161, 47, false, true), new Pokemon(188, 48, false, true)}, new Item[]{Item.CHOPLE_BERRY, Item.LIFE_ORB, Item.EXPERT_BELT, Item.STARF_BERRY, Item.SPELL_TAG, Item.WIKI_BERRY}, 100),
 				new Trainer("TN 9", new Pokemon[] {new Pokemon(153, 12, false, true), new Pokemon(160, 12, false, true)}, new Item[]{Item.BIG_ROOT, Item.CHERI_BERRY}, 100),
-				new Trainer("B A", new Pokemon[] {new Pokemon(16, 16, false, true)}, 100),
+				new Trainer("B A", new Pokemon[] {new Pokemon(16, 15, false, true)}, 100),
 				new Trainer("B B", new Pokemon[] {new Pokemon(30, 15, false, true)}, 100), // 260
 				new Trainer("B C", new Pokemon[] {new Pokemon(57, 15, false, true)}, 100),
 				new Trainer("B D", new Pokemon[] {new Pokemon(114, 15, false, true)}, 100),

@@ -569,7 +569,8 @@ public class Player implements Serializable{
 		confirmButton.addActionListener(e -> {
 			for (int i = 0; i < counts.length; i++) {
 				int count = Integer.parseInt(counts[i].getText().trim());
-				if (count != 0) bag.add(Item.getItem(i));
+				if (count > 0) bag.add(Item.getItem(i));
+				if (count < 1) bag.bag[i] = null;
 				bag.count[i] = count;
 			}
 			SwingUtilities.getWindowAncestor(result).dispose();
