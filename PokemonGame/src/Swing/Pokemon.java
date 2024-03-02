@@ -379,7 +379,7 @@ public class Pokemon implements Serializable {
         	if (tr.hasValidMembers() && !isTrapped()) {
         		System.out.println("all valid moves have 0 PP : 100%");
         		this.vStatuses.add(Status.SWAP);
-        		return Move.SPLASH;
+        		return Move.GROWL;
         	} else {
         		return Move.STRUGGLE;
         	}
@@ -429,7 +429,7 @@ public class Pokemon implements Serializable {
         	if (this.perishCount == 1) {
         		System.out.println("perish in 1 : 100%");
         		this.vStatuses.add(Status.SWAP);
-        		return Move.SPLASH;
+        		return Move.GROWL;
         	}
     		boolean moveKills = false;
     		PType type = null;
@@ -3447,9 +3447,11 @@ public class Pokemon implements Serializable {
 			return;
 		}
 		
-		if (this.ability == Ability.COMPOUND_EYES) acc *= 1.3;
-		if (item == Item.WIDE_LENS) acc *= 1.1;
-		if (field.contains(field.fieldEffects, Effect.GRAVITY)) acc = acc * 5 / 3;
+		if (!foe.vStatuses.contains(Status.SEMI_INV)) {
+			if (this.ability == Ability.COMPOUND_EYES) acc *= 1.3;
+			if (item == Item.WIDE_LENS) acc *= 1.1;
+			if (field.contains(field.fieldEffects, Effect.GRAVITY)) acc = acc * 5 / 3;
+		}
 		
 		if (field.equals(field.weather, Effect.SUN)) {
 			if (move == Move.THUNDER || move == Move.HURRICANE) acc = 50;
@@ -5181,7 +5183,7 @@ public class Pokemon implements Serializable {
 				fail = fail(announce);
 			}
 		} else if (move == Move.LOCK$ON) {
-			if (announce) console.writeln(this.nickname + " took aim at " + foe.nickname + "!\n");
+			if (announce) console.writeln(this.nickname + " took aim at " + foe.nickname + "!");
 			stat(this, 5, 6, foe, announce);
 		} else if (announce && move == Move.LOVELY_KISS) {
 			foe.sleep(true);
@@ -5377,7 +5379,7 @@ public class Pokemon implements Serializable {
 				this.currentHP += nHP - oHP;
 				setType();
 				setAbility(abilitySlot);
-				player.pokedex[237] = 2;
+				if (player != null) player.pokedex[237] = 2;
 			} else if (id == 237) {
 				stat(foe, 0, 1, this, announce);
 				stat(foe, 2, 1, this, announce);
@@ -11063,7 +11065,7 @@ public class Pokemon implements Serializable {
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
-				console.writeln("\n" + this.nickname + " restored HP.");
+				console.writeln("\n" + this.nickname + " restored a little HP using its Leftovers!");
 			}
 		} if (this.item == Item.BLACK_SLUDGE) {
 			if (this.type1 == PType.POISON || this.type2 == PType.POISON) {
