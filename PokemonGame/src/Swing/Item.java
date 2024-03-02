@@ -25,7 +25,10 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 
 import Swing.Battle.JGradientButton;
@@ -741,13 +744,31 @@ public enum Item {
 		JPanel calc = new JPanel();
 	    calc.setLayout(new GridBagLayout());
 	    
+	    SpinnerModel levelModel = new SpinnerNumberModel(50, 1, 100, 1);
+	    SpinnerModel foeLevelModel = new SpinnerNumberModel(50, 1, 100, 1);
+	    
 	    GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(5, 5, 5, 5); // Add space between components
         
         JComboBox<Pokemon> userMons = new JComboBox<>();
-        JTextField userLevel = new JTextField();
+        JSpinner userLevel = new JSpinner(levelModel);
+        
+        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor)userLevel.getEditor();
+        JTextField textField = editor.getTextField();
+        textField.addFocusListener( new FocusAdapter() {
+            public void focusGained(final FocusEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        JTextField tf = (JTextField)e.getSource();
+                        tf.selectAll();
+                    }
+                });
+            }
+        });
+        
         JLabel[] userStatLabels = new JLabel[6];
         @SuppressWarnings("unchecked")
 		JComboBox<Integer>[] userStages = new JComboBox[6];
@@ -785,7 +806,22 @@ public enum Item {
         AutoCompleteDecorator.decorate(userMons);
         
         JComboBox<Pokemon> foeMons = new JComboBox<>();
-        JTextField foeLevel = new JTextField();
+        JSpinner foeLevel = new JSpinner(foeLevelModel);
+        
+        JSpinner.DefaultEditor fEditor = (JSpinner.DefaultEditor)foeLevel.getEditor();
+        JTextField fTextField = fEditor.getTextField();
+        fTextField.addFocusListener( new FocusAdapter() {
+            public void focusGained(final FocusEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        JTextField tf = (JTextField)e.getSource();
+                        tf.selectAll();
+                    }
+                });
+            }
+        });
+        
         JLabel[] foeStatLabels = new JLabel[6];
         @SuppressWarnings("unchecked")
 		JComboBox<Integer>[] foeStages = new JComboBox[6];
@@ -867,7 +903,7 @@ public enum Item {
         userMons.addActionListener(l -> {
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-            userLevel.setText(userCurrent.getLevel() + "");
+            userLevel.setValue(userCurrent.getLevel());
             updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
             updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
         });
@@ -875,16 +911,16 @@ public enum Item {
         foeMons.addActionListener(l -> {
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	foeLevel.setText(foeCurrent.getLevel() + "");
+        	foeLevel.setValue(foeCurrent.getLevel());
         	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
         	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
         });
         
-        userLevel.addActionListener(l ->{
+        userLevel.addChangeListener(l ->{
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
         	try {
-        		int level = Integer.parseInt(userLevel.getText());
+        		int level = (int) userLevel.getValue();
     			if (level >= 1 && level <= 100) {
     				userCurrent.level = level;
     			} else {
@@ -903,11 +939,11 @@ public enum Item {
         	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
         });
         
-        foeLevel.addActionListener(l ->{
+        foeLevel.addChangeListener(l ->{
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
         	try {
-        		int level = Integer.parseInt(foeLevel.getText());
+        		int level = (int) foeLevel.getValue();
     			if (level >= 1 && level <= 100) {
     				foeCurrent.level = level;
     			} else {
@@ -918,7 +954,7 @@ public enum Item {
     		}
         	foeCurrent.stats = foeCurrent.getStats();
         	foeCurrent.verifyHP();
-        	foeCurrent.setMoves();
+        	if (!foeCurrent.toString().contains("(")) foeCurrent.setMoves();
         	
         	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
         	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
@@ -927,14 +963,16 @@ public enum Item {
         userLevel.addFocusListener(new FocusAdapter() {
 			@Override // implementation
 	    	public void focusGained(FocusEvent e) {
-	        	userLevel.selectAll();
+				JTextField textField = ((JSpinner.DefaultEditor) userLevel.getEditor()).getTextField();
+				textField.selectAll();
 	    	}
 		});
         
 		foeLevel.addFocusListener(new FocusAdapter() {
 			@Override // implementation
 	    	public void focusGained(FocusEvent e) {
-	        	foeLevel.selectAll();
+				JTextField textField = ((JSpinner.DefaultEditor) foeLevel.getEditor()).getTextField();
+				textField.selectAll();
 	    	}
 		});
         
@@ -1027,10 +1065,10 @@ public enum Item {
         	
         }
         
-        userLevel.setText(userC.getLevel() + "");
+        userLevel.setValue(userC.getLevel());
         updateMoves(userC, userMoves, userDamage, foeC, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
         
-        foeLevel.setText(foeC.getLevel() + "");
+        foeLevel.setValue(foeC.getLevel());
         updateMoves(foeC, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
         
         calc.add(statsPanel, gbc);
@@ -1150,7 +1188,7 @@ public enum Item {
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
 			    		if (current.moveset[kndex] != null) {
-	    	                JOptionPane.showMessageDialog(null, current.moveset[kndex].move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+	    	                JOptionPane.showMessageDialog(null, current.moveset[kndex].move.getMoveSummary(current, foe), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 	        			}
 			    	} else {
 			    		Move[] allMoves = Move.values();

@@ -383,13 +383,13 @@ public class Main {
 		setItem("3 Gym Leader 1", 3, Item.COBA_BERRY);
 		setItem("3 Gym Leader 1", 4, Item.LIFE_ORB);
 		setItem("3 Gym Leader 1", 5, Item.LUM_BERRY);
-		setItem("3 Gym Leader 1", 6, Item.OCCA_BERRY);
+		setItem("3 Gym Leader 1", 6, Item.HEAVY$DUTY_BOOTS);
 		
 		setMoveset("AB1", 1, Move.HYPNOSIS, Move.PLAY_NICE, Move.MOONLIGHT, Move.HIDDEN_POWER);
 		setMoveset("AC1", 1, Move.HYPNOSIS, Move.FAKE_TEARS, Move.NASTY_PLOT, Move.SNARL);
 		
+		setMoveset("4 Gym Leader 1", 1, Move.FREEZE$DRY, Move.SPACE_BEAM, Move.COSMIC_POWER, Move.WHIRLPOOL);
 		setMoveset("4 Gym Leader 1", 2, Move.SNOWSCAPE, Move.AURORA_VEIL, Move.BLIZZARD, Move.SCALD);
-		setAbility("4 Gym Leader 1", 2, Ability.ICE_BODY);
 		setMoveset("4 Gym Leader 1", 3, Move.RED$NOSE_BOOST, Move.MAGIC_BLAST, Move.ICE_SHARD, Move.BLIZZARD);
 		setMoveset("4 Gym Leader 1", 4, Move.PSYCHIC, Move.ICE_BEAM, Move.FREEZE$DRY, Move.CALM_MIND);
 		setMoveset("4 Gym Leader 1", 5, Move.ICE_PUNCH, Move.CLOSE_COMBAT, Move.ICE_SHARD, Move.SWORDS_DANCE);

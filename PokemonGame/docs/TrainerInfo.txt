@@ -223,14 +223,6 @@ Trainer AF                  Flamebless Lv. 38 @ (Passho Berry)
 
 Kleine Village------------------------------------
 
-Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Maguide Lv. 30, Psylotter Lv. 31
-
-Fred 2
-Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
-Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
-Maguide (Lv. 30) @ Expert Belt          /   Dry Skin       /   Take Down, Bulldoze, Lava Plume, Iron Defense
-Psylotter (Lv. 31) @ Wide Lens          /   Water Veil     /   Hypnosis, Rollout, Confuse Ray, Trick
-
 Trainer RR A                Froshrog Lv. 30, Spheal Lv. 31 @ (Life Orb, Silk Scarf)
 Trainer RR B                Treewin Lv. 30, Roselia Lv. 31 @ (Sitrus Berry, Black Sludge)
 Trainer RR C                Sparkitten Lv. 30, Splame Lv. 31 @ (Charcoal, Chilan Berry)
@@ -246,7 +238,15 @@ Vikavolt (Lv. 32) @ Wise Glasses        /   Levitate       /   Sticky Web, Thund
 Leavanny (Lv. 32) @ Coba Berry          /   Sharpness      /   Leaf Blade, X-Scissor, Fell Stinger, Swords Dance
 Swordik (Lv. 32) @ Life Orb             /   Hyper Cutter   /   First Impression, U-Turn, Close Combat, Rock Slide
 Opwing (Lv. 32) @ Lum Berry             /   Technician     /   Bug Bite, Moonlight, Feint Attack, Fell Stinger
-Frosmoth (Lv. 33) @ Occa Berry          /   Icy Scales     /   Aurora Beam, Bug Buzz, Snowscape, Quiver Dance
+Frosmoth (Lv. 33) @ Heavy-Duty Boots    /   Icy Scales     /   Aurora Beam, Bug Buzz, Snowscape, Quiver Dance
+
+Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Maguide Lv. 30, Psylotter Lv. 31
+
+Fred 2
+Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
+Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
+Maguide (Lv. 30) @ Expert Belt          /   Dry Skin       /   Take Down, Bulldoze, Lava Plume, Iron Defense
+Psylotter (Lv. 31) @ Wide Lens          /   Water Veil     /   Hypnosis, Rollout, Confuse Ray, Trick
 
 
 Route 41------------------------------------------
@@ -314,8 +314,8 @@ Trainer 4 Gym D             Frosmoth Lv. 41 @ (Focus Sash)
 Trainer 4 Gym Leader 1      Consodust Lv. 41, Sealeo Lv. 41, Dualmoose Lv. 41, Hootowl Lv. 41, Bipedice Lv. 40, Cosmocrash Lv. 42
 
 4 Gym Leader 1
-Consodust (Lv. 41) @ Icy Rock           /   Snow Warning   /   Freeze-Dry, Ice Ball, Cosmic Power, Space Beam
-Sealeo (Lv. 41) @ Light Clay            /   Ice Body       /   Snowscape, Aurora Veil, Blizzard, Scald
+Consodust (Lv. 41) @ Icy Rock           /   Snow Warning   /   Freeze-Dry, Space Beam, Cosmic Power, Whirlpool
+Sealeo (Lv. 41) @ Light Clay            /   Unaware        /   Snowscape, Aurora Veil, Blizzard, Scald
 Dualmoose (Lv. 41) @ Bright Powder      /   Snow Cloak     /   Red-Nose Boost, Magic Blast, Ice Shard, Blizzard
 Hootowl (Lv. 41) @ Heavy-Duty Boots     /   Snow Cloak     /   Psychic, Ice Beam, Freeze-Dry, Calm Mind
 Bipedice (Lv. 40) @ Flame Orb           /   Guts           /   Ice Punch, Close Combat, Ice Shard, Swords Dance

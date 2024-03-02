@@ -1389,7 +1389,7 @@ public class Battle extends JFrame {
 	        }
 		} else { // enemy Pokemon is faster
 			if (faster.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
-				faster = foeTrainer.getSwap(me.getCurrent(), m1);
+				faster = foeTrainer.getSwap(me.getCurrent(), m2);
 				if (faster != foeTrainer.getCurrent()) {
 					foeTrainer.swap(foeTrainer.getCurrent(), faster);
 					faster.swapIn(me.getCurrent(), me, true);
@@ -1427,7 +1427,7 @@ public class Battle extends JFrame {
 		updateCurrent(pl);
 		updateStatus();
 		displayParty();
-		if (foe.isFainted()) {
+		while (foe.isFainted()) {
 			if (foeTrainer != null && foeTrainer.getTeam() != null) {
 				if (foeTrainer.hasNext()) {
 					foe = foeTrainer.next(me.getCurrent());
@@ -1465,11 +1465,13 @@ public class Battle extends JFrame {
 
 		            // Close the current Battle JFrame
 		            dispose();
+		            break;
 				}
 			} else {
 				if (me.copyBattle) copyToClipboard();
 				JOptionPane.showMessageDialog(null, foe.name + " was defeated!");
 				dispose();
+				break;
 			}
 		}
 		console.writeln();
