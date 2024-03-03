@@ -249,7 +249,7 @@ public enum Move {
 	HI_JUMP_KICK(130,90,0,0,0,0,PType.FIGHTING,"If this attack misses, user takes 50% of its max HP",true,10),
 	HIDDEN_POWER(60,100,0,0,1,0,PType.NORMAL,"The type of this move depends on the user's IVs",false,15),
 	HONE_CLAWS(0,1000,0,0,2,0,PType.DARK,"Raises user's Attack and Accuracy by 1",false,15),
-	HORN_ATTACK(65,100,0,0,0,0,PType.NORMAL,"A normal attack",false,25), // recharge
+	HORN_ATTACK(65,100,0,0,0,0,PType.NORMAL,"A normal attack",true,25), // recharge
 	HORN_DRILL(0,30,0,0,0,0,PType.NORMAL,"If this move hits, it always K.Os foe",true,5),
 	HORN_LEECH(75,100,0,0,0,0,PType.GRASS,"Heals 50% of damage dealt to foe",true,10),
 	HOWL(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Attack by 1",false,20),
