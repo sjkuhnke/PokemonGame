@@ -3281,6 +3281,17 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.DIG || move == Move.DIVE || move == Move.FLY || move == Move.BOUNCE || move == Move.PHANTOM_FORCE || this.vStatuses.contains(Status.SEMI_INV)) {
+			if (this.item == Item.POWER_HERB) {
+				announceUseMove(move);
+				if (move == Move.DIG) console.writeln(this.nickname + " burrowed underground!");
+				if (move == Move.DIVE) console.writeln(this.nickname + " dove underwater!");
+				if (move == Move.FLY) console.writeln(this.nickname + " flew up high!");
+				if (move == Move.BOUNCE) console.writeln(this.nickname + " sprang up!");
+				if (move == Move.PHANTOM_FORCE) console.writeln(this.nickname + " vanished instantly!");
+				this.vStatuses.add(Status.SEMI_INV);
+				console.writeln(this.nickname + " became fully charged due to its Power Herb!");
+				this.consumeItem();
+			}
 			if (!this.vStatuses.contains(Status.SEMI_INV)) {
 				announceUseMove(move);
 				if (move == Move.DIG) console.writeln(this.nickname + " burrowed underground!");
@@ -12503,7 +12514,7 @@ public class Pokemon implements Serializable {
 				this.damage((int) Math.floor(damage), foe);
 				console.writeln("Pointed stones dug into " + this.nickname + "!");
 			}
-			if (field.contains(side, Effect.SPIKES) && this.isGrounded()) {
+			if (field.contains(side, Effect.SPIKES) && this.isGrounded() && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 				double layers = field.getLayers(side, Effect.SPIKES);
 				double damage = (this.getStat(0) / 8.0) * ((layers + 1) / 2);
 				this.damage((int) Math.floor(damage), foe);
