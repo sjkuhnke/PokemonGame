@@ -416,11 +416,17 @@ public class Pokemon implements Serializable {
         	// 10% chance to swap if the most damage you do is 1/5 or less to target
         	if (maxDamage <= foe.currentHP * 1.0 / 5) {
         		double chance = 10;
-        		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
+        		if (this == this.getFaster(foe, 0, 0) && !validMoves.contains(Move.U$TURN) && !validMoves.contains(Move.VOLT_SWITCH) &&
+        				!validMoves.contains(Move.FLIP_TURN) && !validMoves.contains(Move.PARTING_SHOT) && !validMoves.contains(Move.BATON_PASS)) chance /= 2;
         		if (this.impressive) chance /= 2;
         		if (checkSecondary((int) chance)) {
         			System.out.print("damage i do is 1/5 or less : ");
         			System.out.println(String.format("%.1f", chance) + "%");
+        			if (validMoves.contains(Move.U$TURN)) return Move.U$TURN;
+        			if (validMoves.contains(Move.VOLT_SWITCH)) return Move.VOLT_SWITCH;
+        			if (validMoves.contains(Move.FLIP_TURN)) return Move.FLIP_TURN;
+        			if (validMoves.contains(Move.PARTING_SHOT)) return Move.PARTING_SHOT;
+        			if (validMoves.contains(Move.BATON_PASS)) return Move.BATON_PASS;
         			this.vStatuses.add(Status.SWAP);
             		return Move.GROWL;
         		}
@@ -12577,7 +12583,7 @@ public class Pokemon implements Serializable {
 	private void eatBerry(Item berry, boolean consume, Pokemon foe) {
 		if (berry.isBerry()) {
 			if (berry == Item.WIKI_BERRY) {
-				this.currentHP += (this.getBaseStat(0) / 3);
+				this.currentHP += (this.getStat(0) / 3);
 				this.verifyHP();
 				console.writeln(this.nickname + " ate its " + berry.toString() + " to restore HP!");
 			} else if (berry == Item.LIECHI_BERRY) {
