@@ -175,14 +175,14 @@ public class Trainer {
 		return result;
 	}
 
-	public Pokemon getSwap(Pokemon foe, Move m) {
+	public Pokemon getSwap(Pokemon foe, Move m, boolean baton) {
 		PType type = null;
-		if (m != Move.SPLASH) {
+		if (m != Move.SPLASH && m != null) {
 			type = m.mtype;
 		} else if (foe.lastMoveUsed != null) {
 			type = foe.lastMoveUsed.mtype;
 		}
-		if (m == Move.GROWL) {
+		if (m == Move.GROWL || type == null) {
 			return getNext(foe);
 		} else if (foe.lastMoveUsed != null || m == Move.SPLASH || hasResist(type)) {
 			for (Pokemon p : team) {
@@ -193,7 +193,20 @@ public class Trainer {
 		} else {
 			return getNext(foe);
 		}
-		return this.current;
+		return getNext(foe);
+	}
+	
+	public Pokemon swapOut(Pokemon foe, Player me, Move m, boolean baton) {
+		Pokemon result = getSwap(foe, m, baton);
+		if (result != current) {
+			int[] oldStats = current.statStages;
+			swap(current, result);
+			if (baton) result.statStages = oldStats;
+			result.swapIn(me.getCurrent(), me, true);
+			me.getCurrent().vStatuses.remove(Status.TRAPPED);
+			me.getCurrent().vStatuses.remove(Status.SPUN);
+		}
+		return result;
 	}
 	
 	public boolean hasResist(PType type) {

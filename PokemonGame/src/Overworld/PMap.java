@@ -468,6 +468,8 @@ public class PMap extends JFrame {
 	            null, null, null);
 		if (answer == JOptionPane.YES_OPTION) {
 			gp.eHandler.teleport(map, x, y, false);
+			gp.player.p.surf = false;
+			gp.player.p.lavasurf = false;
 			gp.keyH.resume();
 			this.dispose();
 			gp.mapOpen = false;
