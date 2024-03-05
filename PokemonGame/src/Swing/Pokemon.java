@@ -526,7 +526,6 @@ public class Pokemon implements Serializable {
             // Fallback: Struggle
             return Move.STRUGGLE;
         }
-        
         int randomIndex = (int) (Math.random() * bestMoves.size());
         return bestMoves.get(randomIndex);
     }
@@ -10637,7 +10636,7 @@ public class Pokemon implements Serializable {
 			if ((field.equals(field.weather, Effect.SANDSTORM) && foeAbility == Ability.SAND_VEIL) ||
 					(field.equals(field.weather, Effect.SNOW) && foeAbility == Ability.SNOW_CLOAK)) accuracy *= 0.8;
 			if (!hit(accuracy)) {
-				return 0;
+				return 1;
 			}
 		}
 		
