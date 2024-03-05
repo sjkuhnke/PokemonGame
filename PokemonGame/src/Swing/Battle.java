@@ -778,10 +778,10 @@ public class Battle extends JFrame {
     					me.getCurrent().swapIn(foe, me, true);
     					
     					foe = foeTrainer.swapOut(oldCurrent, me, move, false);
-        				if (foe != foeTrainer.getCurrent()) foeCanMove = false;
+        				foeCanMove = false;
     				} else {
     					foe = foeTrainer.swapOut(oldCurrent, me, move, false);
-        				if (foe != foeTrainer.getCurrent()) foeCanMove = false;
+        				foeCanMove = false;
         				
         				me.swap(me.team[index], index);
         				me.getCurrent().swapIn(foe, me, true);
