@@ -3373,7 +3373,7 @@ public class Pokemon implements Serializable {
 						m.currentPP--;
 						if (this.item == Item.LEPPA_BERRY && m.currentPP == 0) {
 							m.currentPP = 10;
-							console.writeln(this.nickname + " ate its " + this.item.toString() + " to restore PP to " + m.move.toString());
+							console.writeln(this.nickname + " ate its " + this.item.toString() + " to restore PP to " + m.move.toString() + "!");
 							this.consumeItem();
 						}
 					}
@@ -4125,6 +4125,11 @@ public class Pokemon implements Serializable {
 		announceUseMove(move);
 		for (Moveslot m : this.moveset) {
 			if (m != null && m.move == move) m.currentPP--;
+			if (this.item == Item.LEPPA_BERRY && m.currentPP == 0) {
+				m.currentPP = 10;
+				console.writeln(this.nickname + " ate its " + this.item.toString() + " to restore PP to " + m.move.toString() + "!");
+				this.consumeItem();
+			}
 		}
 	}
 	
