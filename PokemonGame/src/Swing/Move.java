@@ -101,7 +101,7 @@ public enum Move {
 	CROSS_CHOP(100,80,0,1,0,0,PType.FIGHTING,"Boosted Crit rate",true,5),
 	CROSS_POISON(90,100,10,1,0,0,PType.POISON,"% chance to Poison foe, boosted Crit rate",true,10),
 	CRUNCH(80,100,30,0,0,0,PType.DARK,"% chance to lower foe's Defense by 1",true,15),
-	CURSE(0,100,0,0,2,0,PType.GHOST,"User loses half of its total HP. In exchance, foe takes 1/4 of its max HP at the end of every turn",false,10),
+	CURSE(0,1000,0,0,2,0,PType.GHOST,"User loses half of its total HP. In exchance, foe takes 1/4 of its max HP at the end of every turn",false,10),
 	DARK_PULSE(80,100,30,0,1,0,PType.DARK,"% chance of causing foe to flinch",false,15),
 	DARKEST_LARIAT(85,100,0,0,0,0,PType.DARK,"Ignores Defense and Evasion changes of foe",true,10),
 	DAZZLING_GLEAM(80,100,0,0,1,0,PType.LIGHT,"A normal attack",false,10),

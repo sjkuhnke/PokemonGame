@@ -519,13 +519,13 @@ public class Pokemon implements Serializable {
         	if (move == Move.SEA_DRAGON && id == 150) {
         		bestMoves.add(move);
         	}
-        	bestMoves = modifyStatus(bestMoves, foe);
         }
-
-        if (bestMoves.isEmpty()) {
-            // Fallback: Struggle
-            return Move.STRUGGLE;
-        }
+        
+        bestMoves = modifyStatus(bestMoves, foe);
+    	if (bestMoves.isEmpty()) { // fallback: return a random valid move
+    		int randomIndex = (int) (Math.random() * validMoves.size());
+            return validMoves.get(randomIndex);
+    	}
         int randomIndex = (int) (Math.random() * bestMoves.size());
         return bestMoves.get(randomIndex);
     }
@@ -596,7 +596,7 @@ public class Pokemon implements Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENCORE) && foe.vStatuses.contains(Status.ENCORED)) bestMoves.removeIf(Move.ENCORE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.NO_RETREAT) && this.vStatuses.contains(Status.NO_SWITCH)) bestMoves.removeIf(Move.NO_RETREAT::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEMENTO) && ((this.currentHP * 1.0 / this.getStat(0))) > 0.25) bestMoves.removeIf(Move.MEMENTO::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.CURSE) && ((this.currentHP * 1.0 / this.getStat(0))) <= 0.55) bestMoves.removeIf(Move.CURSE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.CURSE) && (this.currentHP * 1.0 / this.getStat(0)) <= 0.55 && (this.type1 == PType.GHOST || this.type2 == PType.GHOST)) bestMoves.removeIf(Move.CURSE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.PERISH_SONG) && (this.perishCount > 0 || foe.perishCount > 0)) bestMoves.removeIf(Move.PERISH_SONG::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.NIGHTMARE) && (foe.status != Status.ASLEEP || foe.vStatuses.contains(Status.NIGHTMARE))) bestMoves.removeIf(Move.NIGHTMARE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGNET_RISE) && this.magCount > 0) bestMoves.removeIf(Move.MAGNET_RISE::equals);
@@ -11219,6 +11219,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (this.ability == Ability.SPEED_BOOST && !this.impressive) {
+			console.writeAbility(this);
 			if (this.statStages[4] != 6) stat(this, 4, 1, f);
 		}
 		
@@ -13299,10 +13300,11 @@ public class Pokemon implements Serializable {
 
         for (int i = 0; i < arr1.length; i++) {
             if (arr1[i] < arr2[i]) {
+            	//System.out.println(getStatType(i + 1) + "arr1 is less than arr2: " + arr1[i] + " < " + arr2[i]);
                 return false;
             }
         }
-
+        //System.out.println(Arrays.toString(arr1) + " >= " + Arrays.toString(arr2));
         return true;
     }
 	
