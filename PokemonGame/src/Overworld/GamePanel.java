@@ -23,6 +23,7 @@ import tile.TileManager;
 import Swing.Battle;
 import Swing.Battle.BattleCloseListener;
 import Swing.Field;
+import Swing.Item;
 import Swing.PBox;
 import Swing.Pokemon;
 import Swing.TextPane;
@@ -264,6 +265,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 				if (teamTemp[i].lostItem != null) {
 					teamTemp[i].item = teamTemp[i].lostItem;
 					teamTemp[i].lostItem = null;
+					if (teamTemp[i].item == Item.POTION) teamTemp[i].item = null;
 				}
 			}
 		}

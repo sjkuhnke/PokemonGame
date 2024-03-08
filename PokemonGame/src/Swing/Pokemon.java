@@ -471,7 +471,7 @@ public class Pokemon implements Serializable {
         	Move move = entry.getKey();
         	int damage = entry.getValue();
         	
-        	if (damage >= maxDamage && (damage > 0 || validMoves.size() == 1) && move.cat != 2) {
+        	if (damage >= maxDamage && (damage > 0 || validMoves.size() == 1 || (allMovesAreDamaging(moveToDamage) && maxDamage == 0)) && move.cat != 2) {
         		bestMoves.add(move);
         		bestMoves.add(move);
         		bestMoves.add(move);
@@ -530,6 +530,8 @@ public class Pokemon implements Serializable {
         return bestMoves.get(randomIndex);
     }
 	
+	
+
 	private ArrayList<Move> modifyStatus(ArrayList<Move> bestMoves, Pokemon foe) {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.STICKY_WEB) && field.contains(field.playerSide, Effect.STICKY_WEBS)) bestMoves.removeIf(Move.STICKY_WEB::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.STEALTH_ROCK) && field.contains(field.playerSide, Effect.STEALTH_ROCKS)) bestMoves.removeIf(Move.STEALTH_ROCK::equals);
@@ -601,6 +603,13 @@ public class Pokemon implements Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MIRROR_MOVE) && foe.lastMoveUsed == null) bestMoves.removeIf(Move.MIRROR_MOVE::equals);
 		
 		return bestMoves;
+	}
+	
+	private boolean allMovesAreDamaging(Map<Move, Integer> moves) {
+		for (Map.Entry<Move, Integer> e : moves.entrySet()) {
+			if (e.getKey().cat == 2) return false;
+		}
+		return true;
 	}
 	
 	public int getID() {
@@ -4036,11 +4045,11 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (move.contact) {
-				if (foeAbility == Ability.ROUGH_SKIN || foeAbility == Ability.IRON_BARBS) {
+				if ((foeAbility == Ability.ROUGH_SKIN || foeAbility == Ability.IRON_BARBS) && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 					this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), foe);
 					console.writeln(this.nickname + " was hurt!");
 				}
-				if (foe.item == Item.ROCKY_HELMET) {
+				if (foe.item == Item.ROCKY_HELMET && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 					this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), foe);
 					console.writeln(this.nickname + " was hurt by the Rocky Helmet!");
 				}
@@ -5512,8 +5521,18 @@ public class Pokemon implements Serializable {
 			if (foeItem != null) if (announce) console.writeln(this.nickname + " obtained a " + foeItem.toString() + "!");
 			this.item = foeItem;
 			foe.item = userItem;
-			if (this.lostItem == null) this.lostItem = userItem;
-			if (foe.lostItem == null) foe.lostItem = foeItem;
+			if (this.lostItem == null) {
+				this.lostItem = userItem;
+				if (this.lostItem == null) {
+					this.lostItem = Item.POTION;
+				}
+			}
+			if (foe.lostItem == null) {
+				foe.lostItem = foeItem;
+				if (foe.lostItem == null) {
+					foe.lostItem = Item.POTION;
+				}
+			}
 		} else if (announce && move == Move.TRICK_ROOM) {
 			field.setEffect(field.new FieldEffect(Effect.TRICK_ROOM));
 		} else if (move == Move.VENOM_DRENCH) {
@@ -5646,7 +5665,6 @@ public class Pokemon implements Serializable {
 			if (announce) console.writeln(p.nickname + "'s " + type + amount + "!");
 			if (p.item == Item.WHITE_HERB && p.statStages[i] > -6 && a < 0) {
 				if (announce) console.writeln(p.nickname + " returned its stats to normal using its White Herb!");
-				p.consumeItem();
 			}
 		}
 		p.statStages[i] += a;
@@ -5654,6 +5672,7 @@ public class Pokemon implements Serializable {
 		p.statStages[i] = p.statStages[i] > 6 ? 6 : p.statStages[i];
 		if (p.item == Item.WHITE_HERB && p.statStages[i] > -6 && a < 0) {
 			p.statStages[i] -= a;
+			p.consumeItem();
 		}
 	}
 
@@ -11095,12 +11114,12 @@ public class Pokemon implements Serializable {
 					if (this.currentHP > this.getStat(0)) {
 						this.currentHP = this.getStat(0);
 					}
-					console.writeln("\n" + this.nickname + " restored HP.");
+					console.writeln("\n" + this.nickname + " restored a little HP using its Black Sludge!");
 				}
 			} else {
 				if (this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 					this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f);
-					console.writeln("\n" + this.nickname + " was hurt!");
+					console.writeln("\n" + this.nickname + " was hurt by its Black Sludge!");
 				}
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, player, f);
@@ -12612,7 +12631,7 @@ public class Pokemon implements Serializable {
 				console.writeln(this.nickname + " ate its " + berry.toString() + "!");
 				stat(this, 5, 1, foe);
 			} else if (berry == Item.ORAN_BERRY || berry == Item.SITRUS_BERRY) {
-				int healAmt = berry == Item.ORAN_BERRY ? 10 : (this.getBaseStat(0) / 4);
+				int healAmt = berry == Item.ORAN_BERRY ? 10 : (this.getStat(0) / 4);
 				this.currentHP += healAmt;
 				this.verifyHP();
 				console.writeln(this.nickname + " ate its " + berry.toString() + " to restore HP!");
