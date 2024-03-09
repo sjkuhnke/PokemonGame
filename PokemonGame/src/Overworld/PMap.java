@@ -470,6 +470,12 @@ public class PMap extends JFrame {
 			gp.eHandler.teleport(map, x, y, false);
 			gp.player.p.surf = false;
 			gp.player.p.lavasurf = false;
+			for (Integer i : gp.tileM.getWaterTiles()) {
+				gp.tileM.tile[i].collision = true;
+			}
+			for (Integer i : gp.tileM.getLavaTiles()) {
+				gp.tileM.tile[i].collision = true;
+			}
 			gp.keyH.resume();
 			this.dispose();
 			gp.mapOpen = false;
@@ -714,7 +720,7 @@ public class PMap extends JFrame {
 			PlayerCharacter.currentMapName = "New Minnow Town";
 			return 0;
 		case 53:
-			PlayerCharacter.currentMapName = "New Minnow Town";
+			PlayerCharacter.currentMapName = "Frenco City";
 			return 0;
 		case 54:
 			PlayerCharacter.currentMapName = "New Minnow Town";

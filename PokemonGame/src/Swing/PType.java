@@ -23,7 +23,7 @@ public enum PType {
 	LIGHT(new Color(248, 248, 120)),
 	MAGIC(new Color(254, 1, 77)),
 	GALACTIC(new Color(138, 30, 106)),
-	UNKNOWN(Color.BLUE.brighter());
+	UNKNOWN(Color.GRAY.darker());
 	
 	private Color color;
 

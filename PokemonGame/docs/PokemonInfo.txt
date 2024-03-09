@@ -720,8 +720,9 @@ Level Up:
 34 - Toxic Spikes
 37 - Poison Jab
 40 - Endeavor
-46 - Fell Stinger
+45 - Fell Stinger
 50 - Quiver Dance
+55 - Sticky Web
 60 - Fatal Bind
 
 ===================
@@ -1224,7 +1225,6 @@ Level Up:
 8 - Karate Chop
 12 - Brutal Swing
 20 - Quiver Dance
-25 - Sticky Web
 
 Evolutions:
 Bugik -> Swordik (lv. 15)
@@ -1691,8 +1691,8 @@ Level Up:
 49 - Accelerock
 53 - Throat Chop
 55 - Fire Blast
-59 - Shadow Ball
-63 - Psychic Fangs
+59 - Psychic Fangs
+63 - Parting Shot
 67 - Plasma Fists
 70 - Jaw Lock
 
@@ -1859,6 +1859,7 @@ Base Stats:
 Level Up:
 1 - Powder Snow
 1 - Struggle Bug
+40 - Sticky Web
 
 Evolutions:
 Snom -> Frosmoth (Ice Stone)
@@ -1886,8 +1887,9 @@ Level Up:
 16 - Defog
 21 - Aurora Beam
 24 - Snowscape
+28 - Aurora Veil
 32 - Bug Buzz
-36 - Aurora Veil
+36 - Ice Beam
 40 - Blizzard
 45 - Tailwind
 50 - Quiver Dance
@@ -2752,6 +2754,7 @@ Level Up:
 47 - Superpower
 50 - Gravity
 55 - Knock Off
+60 - Parting Shot
 
 ===================
 092 - Flameruff
@@ -3169,6 +3172,7 @@ Level Up:
 50 - Nasty Plot
 55 - Heat Wave
 60 - Inferno
+65 - Parting Shot
 
 ===================
 106 - Sparkdust
@@ -3875,8 +3879,8 @@ Level Up:
 10 - False Swipe
 15 - Mud-Slap
 21 - Absorb
-25 - Metal Claw
-30 - Dig
+25 - Dig
+30 - Sticky Web
 
 Evolutions:
 Nincada -> Ninjask (lv. 20)
@@ -4155,10 +4159,11 @@ Level Up:
 20 - Confuse Ray
 23 - Light Beam
 27 - Bubblebeam
-31 - Light Screen
+31 - Shooting Stars
 36 - Psychic
 40 - Recover
 45 - Hydro Pump
+50 - Light Screen
 
 Evolutions:
 Staryu -> Starmie (lv. up in Mindagan Lake)
@@ -4180,6 +4185,7 @@ Level Up:
 1 - Foresight
 1 - Luster Purge
 1 - Moonlight
+1 - Shooting Stars
 1 - Swift
 1 - Tri-Attack
 1 - Magic Crash
@@ -4189,11 +4195,11 @@ Level Up:
 1 - Sparkly Swirl
 1 - Light Screen
 1 - Psychic
-1 - Recover
-1 - Hydro Pump
 1 - Moonblast
+1 - Hydro Pump
+1 - Recover
 45 - Core Enforcer
-50 - Desolate Void
+50 - Ice Beam
 
 ===================
 141 - Ali
@@ -4465,6 +4471,7 @@ Level Up:
 39 - Muddy Water
 42 - Dark Pulse
 45 - Earth Power
+50 - Topsy-Turvy
 
 Evolutions:
 Durfish -> Dompster (lv. up in Mindagan Lake)
@@ -4505,7 +4512,7 @@ Level Up:
 55 - Phantom Force
 60 - Twinkle Tackle
 65 - Unseen Strangle
-80 - Parting Shot
+70 - Parting Shot
 
 ===================
 150 - Kissyfishy
@@ -5575,7 +5582,7 @@ Base Stats:
 
 Level Up:
 1 - Magic Powder
-1 - Gust
+1 - Shooting Stars
 5 - Swift
 10 - Glittering Tornado
 13 - Tailwind
@@ -5600,8 +5607,8 @@ Base Stats:
 
 Level Up:
 1 - Magic Powder
-1 - Gust
-5 - Spark
+1 - Shooting Stars
+5 - Swift
 10 - Glittering Tornado
 13 - Tailwind
 15 - Flash
@@ -5634,8 +5641,8 @@ Base Stats:
 
 Level Up:
 1 - Magic Powder
-1 - Gust
-5 - Spark
+1 - Shooting Stars
+5 - Swift
 10 - Glittering Tornado
 13 - Tailwind
 15 - Flash
@@ -5889,6 +5896,8 @@ Level Up:
 1 - Brave Bird
 1 - Head Smash
 1 - Take Down
+1 - Icicle Spear
+1 - Shooting Stars
 10 - Comet Punch
 12 - Mach Punch
 15 - Ice Punch
@@ -5915,18 +5924,25 @@ Base Stats:
 70 HP / 65 Atk / 130 Def / 55 SpA / 75 SpD / 55 Spe / 450 BST
 
 Level Up:
+1 - Wake-Up Slap
 1 - Defense Curl
 3 - Ancient Power
 6 - Rollout
-8 - Tackle
+8 - Force Palm
+10 - Smack Down
 12 - Comet Punch
 15 - Gravity
 19 - Rock Blast
+22 - Sandstorm
 24 - Desolate Void
 27 - Smack Down
+30 - Gravity
 34 - Rock Slide
 40 - Meteor Mash
+43 - Cosmic Power
+46 - Shooting Stars
 50 - Power Gem
+55 - Stone Edge
 
 Evolutions:
 Rockmite -> Stellarock (lv. up in Shadow Ravine Heart)
@@ -5944,21 +5960,28 @@ Base Stats:
 80 HP / 75 Atk / 180 Def / 65 SpA / 80 SpD / 60 Spe / 540 BST
 
 Level Up:
-1 - Force Palm
-1 - Smack Down
 1 - Wake-Up Slap
-5 - Rollout
-9 - Sandstorm
-13 - Comet Punch
-17 - Gravity
-24 - Mach Punch
-27 - Rock Blast
-31 - Desolate Void
-36 - Rock Slide
+1 - Defense Curl
+3 - Ancient Power
+6 - Rollout
+8 - Force Palm
+10 - Smack Down
+12 - Comet Punch
+15 - Gravity
+19 - Rock Blast
+22 - Sandstorm
+24 - Desolate Void
+27 - Smack Down
+30 - Gravity
+34 - Rock Slide
 40 - Meteor Mash
-44 - Cosmic Power
-50 - Stone Edge
-60 - Power Gem
+43 - Shooting Stars
+46 - Cosmic Power
+50 - Power Gem
+55 - Stone Edge
+60 - Comet Crash
+65 - Meteor Assault
+75 - Rock Wrecker
 
 ===================
 197 - Poof-E
@@ -6552,6 +6575,7 @@ Level Up:
 39 - Muddy Water
 42 - Switcheroo
 45 - Phantom Force
+48 - Topsy-Turvy
 53 - Dragon Dance
 
 Evolutions:
@@ -6593,8 +6617,8 @@ Level Up:
 53 - Magic Crash
 57 - Earthquake
 60 - Spectral Thief
+65 - Parting Shot
 70 - Dragon Dance
-80 - Parting Shot
 
 ===================
 217 - Wormite-S
@@ -7382,3 +7406,25 @@ Level Up:
 65 - Abyssal Chop
 75 - Dragon Dance
 
+Stats:
+Type,HP,Atk,Def,SpA,SpD,Spe,Amt
+Normal,68.3,72.4,65.8,59.4,64.4,64.1,16
+Rock,81.7,86.2,100.4,59.9,77.6,49.8,27
+Fire,74.9,67.1,71.5,87.0,74.2,71.3,26
+Water,66.7,64.4,70.7,64.9,75.2,66.2,33
+Grass,67.2,70.2,72.7,72.4,76.5,62.9,23
+Ice,76.3,82.7,73.7,78.5,83.9,63.4,15
+Electric,69.3,80.1,70.4,72.0,68.5,71.9,30
+Fighting,74.7,104.5,84.6,51.5,73.5,68.9,28
+Poison,63.1,65.3,57.3,85.2,84.1,81.8,13
+Ground,61.3,79.0,86.0,54.6,58.0,55.5,24
+Flying,68.9,62.2,72.7,72.6,81.4,83.3,20
+Psychic,64.9,65.4,68.0,81.2,87.5,56.2,21
+Bug,54.7,74.3,70.3,51.0,61.9,69.5,20
+Ghost,65.3,68.5,70.6,80.3,72.3,69.2,19
+Dragon,87.0,93.4,85.2,91.8,82.9,82.3,20
+Steel,67.4,83.5,96.2,66.5,81.2,66.2,13
+Dark,72.4,86.3,63.9,69.4,70.5,79.3,25
+Light,69.3,62.0,65.4,86.4,88.1,73.8,26
+Magic,65.9,83.9,68.1,90.0,83.2,79.6,22
+Galactic,88.3,71.1,78.6,76.8,87.9,67.8,18

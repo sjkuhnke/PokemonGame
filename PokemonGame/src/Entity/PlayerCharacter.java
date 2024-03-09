@@ -537,6 +537,7 @@ public class PlayerCharacter extends Entity {
 	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		} else if (code.equals("KANY3")) {
 	    			p.money = 1000000;
+	    			p.itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 	    			SwingUtilities.getWindowAncestor(cheats).dispose();
 	    		} else if (code.equals("Ben")) {
 	    			p.catchPokemon(new Pokemon(238, 5, true, false));
@@ -1850,7 +1851,7 @@ public class PlayerCharacter extends Entity {
 					        	        		for (int k = 0; k < 6; k++) {
 					        	        			final int kndex = k;
 					        	        			JButton iv = new JButton();
-				        	        	        	String type = p.team[index].getStatType(k);
+				        	        	        	String type = Pokemon.getStatType(k);
 					        	        			iv.setText(type + ": " + ivs[k]);
 					        	        			final String finalType = type;
 					        	        			

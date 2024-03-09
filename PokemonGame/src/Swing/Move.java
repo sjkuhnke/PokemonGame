@@ -457,6 +457,7 @@ public enum Move {
 	SHIFT_GEAR(0,1000,0,0,2,0,PType.STEEL,"Raises user's Attack by 1 and Speed by 2",false,10),
 	//SHOCK(15,100,100,0,1,0,PType.ELECTRIC,"% to Paralyze foe",false,1),
 	SHOCK_WAVE(60,1000,0,0,1,0,PType.ELECTRIC,"This attack never misses",false,20),
+	SHOOTING_STARS(25,100,0,0,0,0,PType.GALACTIC,"Hits 2-5 times",false,25),
 	SILVER_WIND(60,100,10,0,1,0,PType.BUG,"% chance to raise all of user's stats",false,5),
 	//SHURIKEN(75,85,50,0,0,0,PType.STEEL,"% to cause foe to Bleed",false,1),
 	SKULL_BASH(100,100,100,0,0,0,PType.NORMAL,"% to raise the user's Defense by 1, user must charge on the first turn",true,10),
@@ -824,7 +825,8 @@ public enum Move {
 	
 	public int getNumHits(Pokemon user, Pokemon[] team) {
 		if (this == Move.DOUBLE_SLAP || this == Move.FURY_ATTACK ||this == Move.FURY_SWIPES || this == Move.ICICLE_SPEAR ||
-				this == Move.PIN_MISSILE || this == Move.ROCK_BLAST|| this == Move.SCALE_SHOT || this == Move.SPIKE_CANNON) {
+				this == Move.PIN_MISSILE || this == Move.ROCK_BLAST|| this == Move.SCALE_SHOT || this == Move.SPIKE_CANNON ||
+				this == Move.SHOOTING_STARS) {
 			int randomNum = (int) (Math.random() * 100) + 1; // Generate a random number between 1 and 100 (inclusive)
 			if (user.item == Item.LOADED_DICE) {
 				if (randomNum <= 50) {
