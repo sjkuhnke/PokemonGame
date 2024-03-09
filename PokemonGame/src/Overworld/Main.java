@@ -448,7 +448,7 @@ public class Main {
 		
 		setItem("Maxwell 1", 1, Item.SCOPE_LENS);
 		setItem("Maxwell 1", 2, Item.BLACK_SLUDGE);
-		setItem("Maxwell 1", 3, Item.KASIB_BERRY);
+		setItem("Maxwell 1", 3, Item.FOCUS_SASH);
 		setItem("Maxwell 1", 4, Item.LEFTOVERS);
 		setItem("Maxwell 1", 5, Item.COBA_BERRY);
 		setItem("Maxwell 1", 6, Item.ENCHANTED_AMULET);
@@ -693,7 +693,7 @@ public class Main {
 				new Trainer("BI", new Pokemon[]{new Pokemon(165, 44, false, true), new Pokemon(127, 45, false, true), new Pokemon(128, 43, false, true)}, new Item[]{Item.FLAME_ORB, Item.FLAME_ORB, Item.WIKI_BERRY}, 100),
 				new Trainer("BJ", new Pokemon[]{new Pokemon(167, 46, false, true), new Pokemon(170, 43, false, true), new Pokemon(172, 45, false, true)}, new Item[]{Item.SMOOTH_ROCK, Item.EXPERT_BELT, Item.EVIOLITE}, 100),
 				new Trainer("BK", new Pokemon[]{new Pokemon(109, 45, false, true), new Pokemon(97, 45, false, true)}, new Item[]{Item.HEAT_ROCK, Item.LEFTOVERS}, 100),
-				new Trainer("BL", new Pokemon[]{new Pokemon(219, 45, false, true)}, new Item[]{Item.BLACK_GLASSES}, 100), // 165
+				new Trainer("BL", new Pokemon[]{new Pokemon(195, 46, false, true), new Pokemon(219, 45, false, true)}, new Item[]{Item.ASSAULT_VEST, Item.SMOOTH_ROCK}, 100), // 165
 				new Trainer("BM", new Pokemon[]{new Pokemon(220, 47, false, true), new Pokemon(221, 45, false, true), new Pokemon(220, 47, false, true), new Pokemon(221, 46, false, true)}, new Item[]{Item.FOCUS_SASH, Item.SITRUS_BERRY, Item.ROSELI_BERRY, Item.SALAC_BERRY}, 100),
 				new Trainer("BN", new Pokemon[]{new Pokemon(148, 47, false, true), new Pokemon(149, 45, false, true), new Pokemon(215, 47, false, true), new Pokemon(216, 45, false, true)}, new Item[]{Item.CHOICE_SPECS, Item.CHOICE_BAND, Item.EVIOLITE, Item.POWER_HERB}, 100),
 				new Trainer("BO", new Pokemon[]{new Pokemon(12, 48, false, true)}, new Item[]{Item.BRIGHT_POWDER}, 100),
@@ -772,8 +772,8 @@ public class Main {
 				new Trainer("CN", new Pokemon[]{new Pokemon(157, 56, false, true), new Pokemon(180, 57, false, true), new Pokemon(214, 57, false, true)}, new Item[]{Item.ROCKY_HELMET, Item.FOCUS_SASH, Item.LEFTOVERS}, 100),
 				new Trainer("Scott 4", new Pokemon[]{new Pokemon(10, 5, false, true)}, 500),
 				new Trainer("CO", new Pokemon[]{new Pokemon(113, 57, false, true), new Pokemon(119, 58, false, true), new Pokemon(116, 57, false, true), new Pokemon(201, 57, false, true), new Pokemon(125, 57, false, true)}, new Item[]{Item.FOCUS_BAND, Item.QUICK_CLAW, Item.LIECHI_BERRY, Item.MUSCLE_BAND, Item.ENCHANTED_AMULET}, 100),
-				new Trainer("CP", new Pokemon[]{new Pokemon(165, 58, false, true), new Pokemon(128, 58, false, true)}, new Item[]{Item.FLAME_ORB, Item.CLEAR_AMULET}, 100),
-				new Trainer("CQ", new Pokemon[]{new Pokemon(100, 58, false, true), new Pokemon(189, 58, false, true)}, new Item[]{Item.CUSTAP_BERRY, Item.HEAVY$DUTY_BOOTS}, 100), // 245
+				new Trainer("CP", new Pokemon[]{new Pokemon(165, 58, false, true), new Pokemon(128, 58, false, true), new Pokemon(191, 58, false, true)}, new Item[]{Item.FLAME_ORB, Item.CLEAR_AMULET, Item.EVIOLITE}, 100),
+				new Trainer("CQ", new Pokemon[]{new Pokemon(100, 58, false, true), new Pokemon(189, 58, false, true), new Pokemon(28, 58, false, true)}, new Item[]{Item.CUSTAP_BERRY, Item.HEAVY$DUTY_BOOTS, Item.WHITE_HERB}, 100), // 245
 				new Trainer("6 Gym A", new Pokemon[]{new Pokemon(51, 59, false, true), new Pokemon(51, 60, false, true), new Pokemon(51, 60, false, true)}, new Item[]{Item.BRIGHT_POWDER, Item.WHITE_HERB, Item.RINDO_BERRY}, 200),
 				new Trainer("6 Gym B", new Pokemon[]{new Pokemon(208, 61, false, true)}, new Item[]{Item.AIR_BALLOON}, 200),
 				new Trainer("6 Gym C", new Pokemon[]{new Pokemon(124, 60, false, true), new Pokemon(127, 60, false, true), new Pokemon(121, 60, false, true)}, new Item[]{Item.FOCUS_SASH, Item.FLAME_ORB, Item.MUSCLE_BAND}, 200),
@@ -797,7 +797,7 @@ public class Main {
 				new Trainer("B F", new Pokemon[]{new Pokemon(47, 21, false, true)}, new Item[]{Item.CHILAN_BERRY}, 100),
 				new Trainer("MS E", new Pokemon[]{new Pokemon(193, 31, false, true), new Pokemon(64, 31, false, true)}, new Item[]{Item.ROSELI_BERRY, Item.SITRUS_BERRY}, 100),
 				new Trainer("MS F", new Pokemon[]{new Pokemon(60, 30, false, true), new Pokemon(72, 31, false, true)}, new Item[]{Item.ICY_ROCK, Item.POWER_HERB}, 100),
-				new Trainer("B G", new Pokemon[]{new Pokemon(191, 31, false, true), new Pokemon(195, 30, false, true)}, new Item[]{Item.CHARTI_BERRY, Item.COVERT_CLOAK}, 100),
+				new Trainer("B G", new Pokemon[]{new Pokemon(190, 31, false, true), new Pokemon(195, 30, false, true)}, new Item[]{Item.CHARTI_BERRY, Item.COVERT_CLOAK}, 100),
 				new Trainer("SCT A", new Pokemon[]{new Pokemon(155, 47, false, true), new Pokemon(142, 48, false, true), new Pokemon(191, 49, false, true), new Pokemon(157, 48, false, true), new Pokemon(150, 49, false, true), new Pokemon(131, 49, false, true)}, new Item[]{Item.BLACK_SLUDGE, Item.POWER_HERB, Item.EVIOLITE, Item.OCCA_BERRY, Item.SITRUS_BERRY, Item.FOCUS_BAND}, 100), // 270
 				new Trainer("SCT B", new Pokemon[]{new Pokemon(109, 48, false, true), new Pokemon(105, 49, false, true), new Pokemon(152, 50, false, true), new Pokemon(203, 48, false, true), new Pokemon(176, 50, false, true), new Pokemon(103, 50, false, true)}, new Item[]{Item.HEAT_ROCK, Item.WISE_GLASSES, Item.BLACK_SLUDGE, Item.AIR_BALLOON, Item.LEFTOVERS, Item.WHITE_HERB}, 100),
 				new Trainer("SCT C", new Pokemon[]{new Pokemon(173, 49, false, true), new Pokemon(178, 49, false, true), new Pokemon(168, 50, false, true), new Pokemon(170, 49, false, true), new Pokemon(216, 49, false, true), new Pokemon(207, 51, false, true)}, new Item[]{Item.WIKI_BERRY, Item.LEFTOVERS, Item.SITRUS_BERRY, Item.ASSAULT_VEST, Item.BLACK_GLASSES, Item.WEAKNESS_POLICY}, 100),
@@ -952,7 +952,7 @@ public class Main {
 				writer.write("Base Stats:\n");
 				String stats = "";
 				for (int j = 0; j < p.baseStats.length; j++) {
-					stats += p.getBaseStat(j) + " " + p.getStatType(j) + "/ ";
+					stats += p.getBaseStat(j) + " " + Pokemon.getStatType(j) + "/ ";
 				}
 				stats += p.getBST() + " BST";
 				writer.write(stats + "\n\n");
@@ -975,12 +975,70 @@ public class Main {
 			}
 			writer.close();
 			//writeUnusedMoves();
+			//writeTypeStats();
 			
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
 	}
+
+	@SuppressWarnings("unused")
+	private static void writeTypeStats() {
+		try {
+			FileWriter writer = new FileWriter("./docs/PokemonInfo.txt", true);
+			writer.write("Stats:\n");
+			ArrayList<PType> types = new ArrayList<>(Arrays.asList(PType.values()));
+			types.remove(PType.UNKNOWN);
+			int[][] sums = new int[types.size()][6];
+			int[] amounts = new int[types.size()];
+			
+			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
+				Pokemon p = new Pokemon(i, 5, false, false);
+				for (int j = 0; j < p.baseStats.length; j++) {
+					sums[types.indexOf(p.type1)][j] += p.baseStats[j];
+					if (p.type2 != null) sums[types.indexOf(p.type2)][j] += p.baseStats[j];
+				}
+				amounts[types.indexOf(p.type1)]++;
+				if (p.type2 != null) amounts[types.indexOf(p.type2)]++;
+			}
+			StringBuilder header = new StringBuilder();
+			header.append("Type");
+			for (int i = 0; i < sums[1].length; i++) {
+				header.append("," + Pokemon.getStatType(i).strip());
+			}
+			header.append(",Amt\n");
+			writer.write(header.toString());
+			for (int i = 0; i < types.size(); i++) {
+				StringBuilder stats = new StringBuilder();
+				stats.append(types.get(i).toString());
+				for (int j = 0; j < sums[1].length; j++) {
+					double average = sums[i][j] * 1.0;
+					average /= amounts[i];
+					stats.append("," + String.format("%.1f", average));
+				}
+				stats.append("," + amounts[i]);
+				stats.append("\n");
+				writer.write(stats.toString());
+			}
+			writer.close();
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+	}
+
+	public static void printIntArray2D(int[][] array) {
+        // Iterate over each row of the 2D array
+        for (int i = 0; i < array.length; i++) {
+            // Iterate over each element in the current row
+            for (int j = 0; j < array[i].length; j++) {
+                // Print the current element followed by a space
+                System.out.print(array[i][j] + " ");
+            }
+            // Move to the next line after printing all elements in the current row
+            System.out.println();
+        }
+    }
 
 	@SuppressWarnings("unused")
 	private static void writeUnusedMoves() {

@@ -320,13 +320,13 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(21, 32, Item.HYPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(49, 56, Item.MODEST_MINT, mapNum); // modest
 		gp.obj[mapNum][objIndex] = ObjSetup(61, 28, Item.FULL_HEAL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(54, 45, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 55, Item.EUPHORIAN_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(58, 51, Item.REPEL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 52, Item.SUPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(68, 54, Item.PARALYZE_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(89, 52, Item.REVIVE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(64, 20, Item.TM86, mapNum); // x-scissor
-		gp.obj[mapNum][objIndex] = ObjSetup(34, 47, Item.AIR_BALLOON, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(38, 47, Item.AIR_BALLOON, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(49, 32, Item.WHITE_HERB, mapNum);
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(83, 51, mapNum, 5, 15);
 		
@@ -1089,7 +1089,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 86, 33, 155);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 67, 34, 156);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 74, 61, 157);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 32, 45, 158);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 32, 45, 158);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 18, 20, 159);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 18, 24, 160);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 87, 15, 161);
@@ -1561,6 +1561,7 @@ public class AssetSetter {
 
 		mapNum = 85;
 		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(17, 76, 0, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(64, 67, 0, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(75, 64, 0, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(83, 66, 0, mapNum, map);
