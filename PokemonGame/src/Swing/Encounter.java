@@ -551,13 +551,35 @@ public class Encounter {
 				encounters.add(new Encounter(89, 43, 46, 0.12));
 				encounters.add(new Encounter(58, 45, 48, 0.17));
 			} else if (area == 124 && y < 50 && type.equals("Surfing")) { // Route 37
-				encounters.add(new Encounter(32, 2, 3, 0.09));
-				encounters.add(new Encounter(44, 2, 3, 0.12));
-				encounters.add(new Encounter(59, 2, 3, 0.21));
-				encounters.add(new Encounter(71, 2, 4, 0.16));
-				encounters.add(new Encounter(85, 2, 3, 0.14));
-				encounters.add(new Encounter(106, 2, 3, 0.13));
-				encounters.add(new Encounter(117, 2, 3, 0.15));
+				encounters.add(new Encounter(45, 42, 45, 0.13));
+				encounters.add(new Encounter(46, 45, 48, 0.10));
+				encounters.add(new Encounter(72, 46, 48, 0.15));
+				encounters.add(new Encounter(132, 42, 44, 0.07));
+				encounters.add(new Encounter(133, 45, 48, 0.05));
+				encounters.add(new Encounter(134, 40, 44, 0.08));
+				encounters.add(new Encounter(135, 42, 46, 0.07));
+				encounters.add(new Encounter(136, 44, 48, 0.09));
+				encounters.add(new Encounter(141, 44, 47, 0.08));
+				encounters.add(new Encounter(69, 40, 43, 0.11));
+				encounters.add(new Encounter(70, 44, 47, 0.07));
+			} else if (area == 124 && y < 50 && type.equals("Fishing")) { // Route 37
+				encounters.add(new Encounter(91, 40, 44, 0.20));
+				encounters.add(new Encounter(132, 40, 42, 0.10));
+				encounters.add(new Encounter(133, 43, 46, 0.08));
+				encounters.add(new Encounter(138, 44, 47, 0.40));
+				encounters.add(new Encounter(147, 44, 47, 0.22));
+			} else if (area == 124 && y >= 50 && type.equals("Standard")) { // Route 38
+				encounters.add(new Encounter(17, 45, 49, 0.09));
+				encounters.add(new Encounter(97, 50, 50, 0.01));
+				encounters.add(new Encounter(99, 44, 48, 0.14));
+				encounters.add(new Encounter(103, 45, 49, 0.17));
+				encounters.add(new Encounter(108, 40, 44, 0.15));
+				encounters.add(new Encounter(165, 45, 49, 0.04));
+				encounters.add(new Encounter(105, 45, 48, 0.07));
+				encounters.add(new Encounter(93, 44, 48, 0.18));
+				encounters.add(new Encounter(107, 45, 48, 0.03));
+				encounters.add(new Encounter(112, 43, 47, 0.08));
+				encounters.add(new Encounter(116, 48, 49, 0.04));
 			}
 		}
 		
