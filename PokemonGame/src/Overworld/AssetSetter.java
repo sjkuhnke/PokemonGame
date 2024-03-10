@@ -1326,21 +1326,21 @@ public class AssetSetter {
 		
 		mapNum = 128;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 51, 66, 291);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 55, 66, 292);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 50, 65, 293);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 56, 65, 294);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 47, 64, 295);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 59, 64, 296);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 50, 62, 297);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 56, 62, 298);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 50, 61, 299);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 56, 61, 300);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 51, 59, 301);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 55, 58, 302);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 51, 56, 303);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 55, 56, 304);
-		gp.npc[mapNum][index] = NPCSetup(GYM_7, 53, 56, 305);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 55, 66, 291);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 49, 65, 292);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 56, 68, 293);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 47, 68, 294);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 52, 62, 295);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 58, 63, 296);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_UP, 55, 63, 297);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 58, 60, 298);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 52, 60, 299);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 59, 57, 300);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 55, 57, 301);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 49, 59, 302);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 54, 54, 303);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 53, 56, 304);
+		gp.npc[mapNum][index] = NPCSetup(GYM_7, 53, 54, 305);
 		
 		mapNum = 129;
 		index = 0;

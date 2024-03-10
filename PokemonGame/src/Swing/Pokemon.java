@@ -3735,9 +3735,9 @@ public class Pokemon implements Serializable {
 				if (move == Move.EARTHQUAKE || move == Move.BULLDOZE || move == Move.MAGNITUDE) bp *= 0.5;
 			}
 			
-			if (field.equals(field.terrain, Effect.SPARKLY)) {
-				if (moveType == PType.DRAGON && foe.isGrounded()) bp *= 0.5;
-				if (isGrounded()) secChance = 0;
+			if (field.equals(field.terrain, Effect.SPARKLY) && isGrounded()) {
+				if (moveType == PType.MAGIC) bp *= 1.5;
+				secChance = 0;
 			}
 			
 			if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded()) {
@@ -10810,8 +10810,8 @@ public class Pokemon implements Serializable {
 			if (move == Move.EARTHQUAKE || move == Move.BULLDOZE || move == Move.MAGNITUDE) bp *= 0.5;
 		}
 		
-		if (field.equals(field.terrain, Effect.SPARKLY) && foe.isGrounded()) {
-			if (moveType == PType.DRAGON) bp *= 0.5;
+		if (field.equals(field.terrain, Effect.SPARKLY) && isGrounded()) {
+			if (moveType == PType.MAGIC) bp *= 1.5;
 		}
 		
 		if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded()) {
@@ -13482,7 +13482,7 @@ public class Pokemon implements Serializable {
 
 	public void setNickname() {
 		nickname = JOptionPane.showInputDialog(null, "Would you like to nickname " + name + "?");
-	    if (nickname == null || nickname.isBlank()) nickname = name;
+	    if (nickname == null || nickname.trim().isEmpty()) nickname = name;
 	    while (nickname.length() > 12) {
 	    	JOptionPane.showMessageDialog(null, "Nickname must be no greater than 12 characters.");
 	    	nickname = JOptionPane.showInputDialog(null, "Would you like to nickname " + name + "?");

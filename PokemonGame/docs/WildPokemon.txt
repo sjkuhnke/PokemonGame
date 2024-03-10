@@ -609,148 +609,285 @@ Route 43 (W)====================================================================
 13% Sparkdust (Lv. 2 - 3)
 15% Twigzap (Lv. 2 - 3)
 
-Hummingspark : 3 : 21.00%
-Flashclaw : 3 : 14.00%
-Magestiflash : 1 : 13.00%
-Pigo : 2 : 25.00%
-Pigonat : 3 : 12.00%
-Hammo : 3 : 20.67%
-Sheabear : 3 : 13.33%
-Dualbear : 1 : 15.00%
-Bealtle : 4 : 18.00%
-Centatle : 1 : 9.00%
-Curlatoral : 1 : 5.00%
-Sapwin : 5 : 11.40%
-Treewin : 1 : 7.00%
-Budew : 4 : 13.50%
-Roselia : 2 : 3.50%
-Sewaddle : 4 : 12.25%
-Swadloon : 2 : 10.00%
-Grubbin : 3 : 11.67%
-Charjabug : 1 : 15.00%
-Busheep : 5 : 9.60%
-Bugik : 3 : 10.67%
-Swordik : 2 : 8.00%
-Lotad : 4 : 27.25%
-Lombre : 1 : 10.00%
-Bluebunn : 4 : 15.50%
-Rocky : 4 : 30.00%
-Carinx : 3 : 14.00%
-Carinator : 3 : 22.33%
-Pebblepup : 2 : 14.00%
-Boulderoar : 1 : 12.00%
-Fightorex : 2 : 15.00%
-Kleinowl : 3 : 16.67%
-Dualmoose : 2 : 12.50%
-Snom : 4 : 11.00%
-Grondor : 3 : 16.00%
-Bipedice : 1 : 2.00%
-Tricerpup : 2 : 10.00%
-Tricercil : 1 : 10.00%
-Spheal : 4 : 22.00%
-Froshrog : 8 : 15.37%
-Bugop : 5 : 25.20%
-Opwing : 5 : 17.00%
-Hatenna : 3 : 12.33%
-Hattrem : 1 : 2.00%
-Otterpor : 6 : 18.00%
-Psylotter : 1 : 30.00%
-Florline : 4 : 12.50%
-Psycorb : 4 : 11.50%
-Ralts : 3 : 14.67%
-Kirlia : 2 : 11.50%
-Gardevoir : 1 : 5.00%
-Tigrette : 3 : 18.00%
-Inkay : 10 : 16.80%
-Flameruff : 2 : 13.50%
-Barkflare : 1 : 16.00%
-Iglite : 2 : 17.50%
-Blaxer : 1 : 10.00%
-Flamehox : 1 : 100.00%
-Tiowoo : 2 : 13.50%
-Houndour : 1 : 20.00%
-Houndoom : 2 : 16.50%
-Sparkdust : 2 : 9.00%
-Splame : 1 : 20.00%
-Sparkitten : 3 : 15.33%
-Shookwat : 2 : 45.00%
-Elelamb : 4 : 8.50%
-Twigzap : 3 : 26.67%
-Shockbranch : 1 : 3.00%
-Magie : 1 : 10.00%
-Cumin : 1 : 9.00%
-Vupp : 5 : 13.00%
-Vinnie : 1 : 15.00%
-Whiskie : 2 : 15.00%
-Whiskers : 1 : 9.00%
-Nincada : 3 : 8.33%
-Ninjask : 1 : 2.00%
-Sheltor : 11 : 15.73%
-Shelnado : 1 : 40.00%
-Lilyray : 10 : 22.80%
-Daray : 3 : 15.00%
-Spinaquata : 1 : 15.00%
-Magikarp : 12 : 28.75%
-Gyarados : 2 : 15.00%
-Staryu : 10 : 33.10%
-Ali : 13 : 13.85%
-Posho : 7 : 16.86%
-Binacle : 8 : 17.75%
-Durfish : 6 : 19.50%
-Kissyfishy : 2 : 32.50%
-Ekans : 2 : 20.00%
-Arbok : 2 : 13.50%
-Zubat : 5 : 24.80%
-Golbat : 1 : 10.00%
-Poof : 3 : 20.00%
-Hast : 1 : 6.00%
-Poov : 3 : 11.33%
-Grust : 1 : 10.00%
-Cluuz : 3 : 12.33%
-Zurrclu : 1 : 2.00%
-Timburr : 2 : 27.50%
-Gurdurr : 1 : 25.00%
-Rhypo : 3 : 9.00%
-Rhynee : 1 : 15.00%
-Diggie : 1 : 25.00%
-Drillatron : 6 : 20.83%
-Wormite : 2 : 12.50%
-Wormbot : 2 : 17.50%
-Cleffa : 3 : 15.00%
-Clefairy : 2 : 12.00%
-Minishoo : 3 : 10.33%
-Zorua : 2 : 8.00%
-Zoroark : 1 : 7.00%
-Droid : 1 : 15.00%
-Armoid : 1 : 14.00%
-Tinkie : 2 : 25.00%
-Dragee : 2 : 25.00%
-Blobmo : 2 : 10.00%
-Rockmite : 3 : 15.67%
-Poof-E : 1 : 15.00%
-Hast-E : 6 : 21.00%
-Droid-E : 2 : 9.00%
-Armoid-E : 6 : 16.67%
-Flamehox-E : 2 : 16.00%
-Fireshard-E : 6 : 12.50%
-Rocky-E : 2 : 15.00%
-Boulder-E : 6 : 18.17%
-Blaster-E : 1 : 5.00%
-Crystallor-E : 1 : 5.00%
-Magikarp-E : 6 : 60.83%
-Gyarados-E : 5 : 22.00%
-Electrocobra : 1 : 1.00%
-Shadowsaur : 1 : 1.00%
-Durfish-S : 6 : 28.33%
-Dompster-S : 1 : 5.00%
-Wormite-S : 1 : 16.00%
-Wormbot-S : 8 : 23.38%
-Wormatron-S : 2 : 13.50%
-Cluuz-S : 10 : 12.50%
-Zurrclu-S : 3 : 7.67%
-Zurroaratr-S : 2 : 3.50%
-Iglite-S : 2 : 16.50%
-Blaxer-S : 7 : 20.57%
-Pyrator-S : 5 : 30.20%
-Ekans-S : 2 : 25.00%
-Arbok-S : 8 : 12.63%
+Route 37===============================================================================================
+12% Ninjakik (Lv. 45 - 48)
+9% Drillatron (Lv. 45 - 48)
+17% Wattwo (Lv. 43 - 45)
+16% Armoid (Lv. 44 - 47)
+17% Psyballs (Lv. 44 - 47)
+12% Tigrette (Lv. 43 - 46)
+17% Raptorex (Lv. 45 - 48)
+
+Route 37===============================================================================================
+13% Lombre (Lv. 42 - 45)
+10% Ludicolo (Lv. 45 - 48)
+15% Bouncerog (Lv. 46 - 48)
+7% Sheltor (Lv. 42 - 44)
+5% Shelnado (Lv. 45 - 48)
+8% Lilyray (Lv. 40 - 44)
+7% Daray (Lv. 42 - 46)
+9% Spinaquata (Lv. 44 - 48)
+8% Ali (Lv. 44 - 47)
+11% Sealeo (Lv. 40 - 43)
+7% Walrein (Lv. 44 - 47)
+
+Route 37===============================================================================================
+20% Malamar (Lv. 40 - 44)
+10% Sheltor (Lv. 40 - 42)
+8% Shelnado (Lv. 43 - 46)
+40% Gyarados (Lv. 44 - 47)
+22% Barbaracle (Lv. 44 - 47)
+
+Route 38===============================================================================================
+9% HammyBoy (Lv. 45 - 49)
+1% Magmaclang (Lv. 50)
+14% Fireshard (Lv. 44 - 48)
+17% Lafloo (Lv. 45 - 49)
+15% Sparkitten (Lv. 40 - 44)
+4% Conkeldurr (Lv. 45 - 49)
+7% Houndoom (Lv. 45 - 48)
+18% Barkflare (Lv. 44 - 48)
+3% Splame (Lv. 45 - 48)
+8% Wattwo (Lv. 43 - 47)
+4% Superchargo (Lv. 48 - 49)
+
+1,Twigle,0,0.00%
+2,Torgged,0,0.00%
+3,Tortugis,0,0.00%
+4,Lagma,0,0.00%
+5,Maguide,0,0.00%
+6,Magron,0,0.00%
+7,Lizish,0,0.00%
+8,Iguaton,0,0.00%
+9,Dragave,0,0.00%
+10,Hummingspark,3,21.00%
+11,Flashclaw,3,14.00%
+12,Magestiflash,1,13.00%
+13,Pigo,2,25.00%
+14,Pigonat,3,12.00%
+15,Pigoga,0,0.00%
+16,Hammo,3,20.67%
+17,HammyBoy,1,9.00%
+18,Hamthorno,0,0.00%
+19,Sheabear,3,13.33%
+20,Dualbear,1,15.00%
+21,Spacebear,0,0.00%
+22,Bealtle,4,18.00%
+23,Centatle,1,9.00%
+24,Curlatoral,1,5.00%
+25,Millistone,0,0.00%
+26,Sapwin,5,11.40%
+27,Treewin,1,7.00%
+28,Winagrow,0,0.00%
+29,Budew,4,13.50%
+30,Roselia,2,3.50%
+31,Roserade,0,0.00%
+32,Sewaddle,4,12.25%
+33,Swadloon,2,10.00%
+34,Leavanny,0,0.00%
+35,Grubbin,3,11.67%
+36,Charjabug,1,15.00%
+37,Vikavolt,0,0.00%
+38,Busheep,5,9.60%
+39,Ramant,0,0.00%
+40,Bushewe,0,0.00%
+41,Bugik,3,10.67%
+42,Swordik,2,8.00%
+43,Ninjakik,1,12.00%
+44,Lotad,4,27.25%
+45,Lombre,2,11.50%
+46,Ludicolo,1,10.00%
+47,Bluebunn,4,15.50%
+48,Rocky,4,30.00%
+49,Boulder,0,0.00%
+50,Blaster,0,0.00%
+51,Crystallor,0,0.00%
+52,Carinx,3,14.00%
+53,Carinator,3,22.33%
+54,Cairnasaur,0,0.00%
+55,Pebblepup,2,14.00%
+56,Boulderoar,1,12.00%
+57,Fightorex,2,15.00%
+58,Raptorex,1,17.00%
+59,Kleinowl,3,16.67%
+60,Hootowl,0,0.00%
+61,Dualmoose,2,12.50%
+62,Snom,4,11.00%
+63,Frosmoth,0,0.00%
+64,Grondor,3,16.00%
+65,Bipedice,1,2.00%
+66,Tricerpup,2,10.00%
+67,Tricercil,1,10.00%
+68,Spheal,4,22.00%
+69,Sealeo,1,11.00%
+70,Walrein,1,7.00%
+71,Froshrog,8,15.37%
+72,Bouncerog,1,15.00%
+73,Bugop,5,25.20%
+74,Opwing,5,17.00%
+75,Hatenna,3,12.33%
+76,Hattrem,1,2.00%
+77,Hatterene,0,0.00%
+78,Otterpor,6,18.00%
+79,Psylotter,1,30.00%
+80,Florline,4,12.50%
+81,Florlion,0,0.00%
+82,Psycorb,4,11.50%
+83,Psyballs,1,17.00%
+84,Psycorboratr,0,0.00%
+85,Ralts,3,14.67%
+86,Kirlia,2,11.50%
+87,Gardevoir,1,5.00%
+88,Gallade,0,0.00%
+89,Tigrette,4,16.50%
+90,Inkay,10,16.80%
+91,Malamar,1,20.00%
+92,Flameruff,2,13.50%
+93,Barkflare,2,17.00%
+94,Iglite,2,17.50%
+95,Blaxer,1,10.00%
+96,Pyrator,0,0.00%
+97,Magmaclang,1,1.00%
+98,Flamehox,1,100.00%
+99,Fireshard,1,14.00%
+100,Blastflames,0,0.00%
+101,Tiowoo,2,13.50%
+102,Magwoo,0,0.00%
+103,Lafloo,1,17.00%
+104,Houndour,1,20.00%
+105,Houndoom,3,13.33%
+106,Sparkdust,2,9.00%
+107,Splame,2,11.50%
+108,Sparkitten,4,15.25%
+109,Fireblion,0,0.00%
+110,Flamebless,0,0.00%
+111,Shookwat,2,45.00%
+112,Wattwo,2,12.50%
+113,Megawatt,0,0.00%
+114,Elelamb,4,8.50%
+115,Electroram,0,0.00%
+116,Superchargo,1,4.00%
+117,Twigzap,3,26.67%
+118,Shockbranch,1,3.00%
+119,Thunderzap,0,0.00%
+120,Magie,1,10.00%
+121,Cumin,1,9.00%
+122,Cinneroph,0,0.00%
+123,Vupp,5,13.00%
+124,Vinnie,1,15.00%
+125,Suvinero,0,0.00%
+126,Whiskie,2,15.00%
+127,Whiskers,1,9.00%
+128,Whiskeroar,0,0.00%
+129,Nincada,3,8.33%
+130,Ninjask,1,2.00%
+131,Shedinja,0,0.00%
+132,Sheltor,13,14.62%
+133,Shelnado,3,17.67%
+134,Lilyray,11,21.45%
+135,Daray,4,13.00%
+136,Spinaquata,2,12.00%
+137,Magikarp,12,28.75%
+138,Gyarados,3,23.33%
+139,Staryu,10,33.10%
+140,Starmie,0,0.00%
+141,Ali,14,13.43%
+142,Batorali,0,0.00%
+143,Posho,7,16.86%
+144,Shomp,0,0.00%
+145,Poshorump,0,0.00%
+146,Binacle,8,17.75%
+147,Barbaracle,1,22.00%
+148,Durfish,6,19.50%
+149,Dompster,0,0.00%
+150,Kissyfishy,2,32.50%
+151,Ekans,2,20.00%
+152,Arbok,2,13.50%
+153,Zubat,5,24.80%
+154,Golbat,1,10.00%
+155,Crobat,0,0.00%
+156,Poof,3,20.00%
+157,Hast,1,6.00%
+158,Poov,3,11.33%
+159,Grust,1,10.00%
+160,Cluuz,3,12.33%
+161,Zurrclu,1,2.00%
+162,Zurroaratr,0,0.00%
+163,Timburr,2,27.50%
+164,Gurdurr,1,25.00%
+165,Conkeldurr,1,4.00%
+166,Rhypo,3,9.00%
+167,Rhynee,1,15.00%
+168,Rhypolar,0,0.00%
+169,Diggie,1,25.00%
+170,Drillatron,7,19.14%
+171,Wormite,2,12.50%
+172,Wormbot,2,17.50%
+173,Wormatron,0,0.00%
+174,Cleffa,3,15.00%
+175,Clefairy,2,12.00%
+176,Clefable,0,0.00%
+177,Minishoo,3,10.33%
+178,Glittleshoo,0,0.00%
+179,Zorua,2,8.00%
+180,Zoroark,1,7.00%
+181,Droid,1,15.00%
+182,Armoid,2,15.00%
+183,Soldrota,0,0.00%
+184,Tinkie,2,25.00%
+185,Shawar,0,0.00%
+186,Shaboom,0,0.00%
+187,Dragee,2,25.00%
+188,Draga,0,0.00%
+189,Drageye,0,0.00%
+190,Blobmo,2,10.00%
+191,Nebulimb,0,0.00%
+192,Galactasolder,0,0.00%
+193,Consodust,0,0.00%
+194,Cosmocrash,0,0.00%
+195,Rockmite,3,15.67%
+196,Stellarock,0,0.00%
+197,Poof-E,1,15.00%
+198,Hast-E,6,21.00%
+199,Droid-E,2,9.00%
+200,Armoid-E,6,16.67%
+201,Soldrota-E,0,0.00%
+202,Flamehox-E,2,16.00%
+203,Fireshard-E,6,12.50%
+204,Blastflames-E,0,0.00%
+205,Rocky-E,2,15.00%
+206,Boulder-E,6,18.17%
+207,Blaster-E,1,5.00%
+208,Crystallor-E,1,5.00%
+209,Magikarp-E,6,60.83%
+210,Gyarados-E,5,22.00%
+211,Shockfang,0,0.00%
+212,Electrocobra,1,1.00%
+213,Nightrex,0,0.00%
+214,Shadowsaur,1,1.00%
+215,Durfish-S,6,28.33%
+216,Dompster-S,1,5.00%
+217,Wormite-S,1,16.00%
+218,Wormbot-S,8,23.38%
+219,Wormatron-S,2,13.50%
+220,Cluuz-S,10,12.50%
+221,Zurrclu-S,3,7.67%
+222,Zurroaratr-S,2,3.50%
+223,Iglite-S,2,16.50%
+224,Blaxer-S,7,20.57%
+225,Pyrator-S,5,30.20%
+226,Ekans-S,2,25.00%
+227,Arbok-S,8,12.63%
+228,Soarwhell,0,0.00%
+229,Diftery,0,0.00%
+230,Vorsuitex,0,0.00%
+231,Kleinyeti,0,0.00%
+232,Triwandoliz,0,0.00%
+233,Relomidel,0,0.00%
+234,Relopamil,0,0.00%
+235,Dragowrath,0,0.00%
+236,Solaroxyous,0,0.00%
+237,Kissyfishy-D,0,0.00%
+238,Scraggy,0,0.00%
+239,Scrafty,0,0.00%
+240,Scraftagon,0,0.00%
