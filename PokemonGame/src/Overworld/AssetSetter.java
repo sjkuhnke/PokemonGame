@@ -1769,6 +1769,39 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(74, 84, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(83, 89, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(83, 90, 4, mapNum, map);
+		
+		mapNum = 137;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(74, 80, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(79, 76, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(89, 76, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(74, 59, 1, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(69, 52, 2, 1, mapNum, map);
+		
+		mapNum = 138;
+		iIndex = 0;
+		SetupPit(mapNum, 32, 59, 137, 37, 48, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 52, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 56, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 71, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 74, 3, 1, mapNum, map);
+		
+		mapNum = 139;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 72, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 69, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 65, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 61, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 50, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(43, 57, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 64, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 67, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 72, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 72, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 72, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 73, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 73, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 73, 4, mapNum, map);
 	}
 
 	public void updateNPC(int map) {

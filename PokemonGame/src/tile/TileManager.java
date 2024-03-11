@@ -159,6 +159,9 @@ public class TileManager {
 		loadMap("/maps/geologyB.txt", 134);
 		loadMap("/maps/radio_tower04.txt", 135);
 		loadMap("/maps/radio_tower02.txt", 136);
+		loadMap("/maps/st_joseph01A.txt", 137);
+		loadMap("/maps/st_joseph02A.txt", 138);
+		loadMap("/maps/st_joseph02B.txt", 139);
 	}
 	
 	public void getTileImage() {

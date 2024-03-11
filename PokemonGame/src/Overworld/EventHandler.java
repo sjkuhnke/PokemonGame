@@ -687,6 +687,37 @@ public class EventHandler {
 			
 			if (hit(135,31,33)) teleport(136, 31, 45,false);
 			if (hit(136,31,46)) teleport(135, 31, 34,false);
+			
+			// Joseph 1A
+			if (hit(124,91,76)) teleport(137, 60, 76,false);
+			if (hit(137,60,77)) teleport(124, 91, 77,false);
+			
+			if (hit(137,75,70)) teleport(139, 46, 60,true);
+			if (hit(139,46,60)) teleport(137, 75, 70,true);
+			if (hit(137,80,80)) teleport(139, 57, 70,true);
+			if (hit(139,57,70)) teleport(137, 80, 80,true);
+			if (hit(137,90,64)) teleport(139, 60, 52,true);
+			if (hit(139,60,52)) teleport(137, 90, 64,true);
+			
+			if (hit(137,46,62)) teleport(138, 51, 65,true);
+			if (hit(138,51,65)) teleport(137, 46, 62,true);
+			if (hit(137,69,49)) teleport(138, 59, 52,true);
+			if (hit(138,59,52)) teleport(137, 69, 49,true);
+			if (hit(137,41,48)) teleport(138, 40, 56,true);
+			if (hit(138,40,56)) teleport(137, 41, 48,true);
+			
+			// Joseph 2A
+			if (hit(124,81,57)) teleport(138, 31, 77,false);
+			if (hit(138,31,78)) teleport(124, 81, 58,false);
+			if (hit(138,53,77)) teleport(139, 42, 50,false);
+			if (hit(139,42,49)) teleport(138, 53, 76,false);
+			
+			
+			// Joseph 2B
+			if (hit(124,87,71)) teleport(139, 38, 74,false);
+			if (hit(139,38,75)) teleport(124, 87, 72,false);
+			
+			
 		}
 	}
 	
