@@ -2278,8 +2278,8 @@ public class Pokemon implements Serializable {
 		} else if (id == 77) { abilities = new Ability[] {Ability.MAGIC_BOUNCE, Ability.NATURAL_CURE};
 		} else if (id == 78) { abilities = new Ability[] {Ability.WATER_VEIL, Ability.ANTICIPATION};
 		} else if (id == 79) { abilities = new Ability[] {Ability.WATER_VEIL, Ability.SWIFT_SWIM};
-		} else if (id == 80) { abilities = new Ability[] {Ability.GRASSY_SURGE, Ability.GRASSY_SURGE};
-		} else if (id == 81) { abilities = new Ability[] {Ability.GRASSY_SURGE, Ability.GRASSY_SURGE};
+		} else if (id == 80) { abilities = new Ability[] {Ability.GRASSY_SURGE, Ability.PSYCHIC_SURGE};
+		} else if (id == 81) { abilities = new Ability[] {Ability.GRASSY_SURGE, Ability.PSYCHIC_SURGE};
 		} else if (id == 82) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.LEVITATE};
 		} else if (id == 83) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.LEVITATE};
 		} else if (id == 84) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.LEVITATE};
@@ -2321,9 +2321,9 @@ public class Pokemon implements Serializable {
 		} else if (id == 120) { abilities = new Ability[] {Ability.TOUGH_CLAWS, Ability.IRON_BARBS};
 		} else if (id == 121) { abilities = new Ability[] {Ability.TOUGH_CLAWS, Ability.IRON_BARBS};
 		} else if (id == 122) { abilities = new Ability[] {Ability.TOUGH_CLAWS, Ability.IRON_BARBS};
-		} else if (id == 123) { abilities = new Ability[] {Ability.MOTOR_DRIVE, Ability.ELECTRIC_SURGE};
-		} else if (id == 124) { abilities = new Ability[] {Ability.MOTOR_DRIVE, Ability.ELECTRIC_SURGE};
-		} else if (id == 125) { abilities = new Ability[] {Ability.MOTOR_DRIVE, Ability.ELECTRIC_SURGE};
+		} else if (id == 123) { abilities = new Ability[] {Ability.ELECTRIC_SURGE, Ability.MOTOR_DRIVE};
+		} else if (id == 124) { abilities = new Ability[] {Ability.ELECTRIC_SURGE, Ability.MOTOR_DRIVE};
+		} else if (id == 125) { abilities = new Ability[] {Ability.ELECTRIC_SURGE, Ability.MOTOR_DRIVE};
 		} else if (id == 126) { abilities = new Ability[] {Ability.GUTS, Ability.MOXIE};
 		} else if (id == 127) { abilities = new Ability[] {Ability.GUTS, Ability.MOXIE};
 		} else if (id == 128) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.MOXIE};
@@ -2400,9 +2400,9 @@ public class Pokemon implements Serializable {
 		} else if (id == 199) { abilities = new Ability[] {Ability.SNIPER, Ability.IRON_FIST};
 		} else if (id == 200) { abilities = new Ability[] {Ability.SNIPER, Ability.IRON_FIST};
 		} else if (id == 201) { abilities = new Ability[] {Ability.SNIPER, Ability.IRON_FIST};
-		} else if (id == 202) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.STATIC};
-		} else if (id == 203) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.LEVITATE};
-		} else if (id == 204) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.LEVITATE};
+		} else if (id == 202) { abilities = new Ability[] {Ability.STATIC, Ability.FLAME_BODY};
+		} else if (id == 203) { abilities = new Ability[] {Ability.LEVITATE, Ability.FLAME_BODY};
+		} else if (id == 204) { abilities = new Ability[] {Ability.LEVITATE, Ability.FLAME_BODY};
 		} else if (id == 205) { abilities = new Ability[] {Ability.STURDY, Ability.LIGHTNING_ROD};
 		} else if (id == 206) { abilities = new Ability[] {Ability.STURDY, Ability.LIGHTNING_ROD};
 		} else if (id == 207) { abilities = new Ability[] {Ability.STURDY, Ability.LIGHTNING_ROD};
@@ -7048,7 +7048,7 @@ public class Pokemon implements Serializable {
 			movebank[49] = new Node(Move.EARTHQUAKE);
 			break;
 		case 54:
-			movebank = new Node[65];
+			movebank = new Node[70];
 			movebank[0] = new Node(Move.HARDEN);
 			movebank[0].next = new Node(Move.TACKLE);
 			movebank[5] = new Node(Move.SCREECH);
@@ -7069,6 +7069,7 @@ public class Pokemon implements Serializable {
 			movebank[58] = new Node(Move.HEAD_SMASH);
 			movebank[62] = new Node(Move.OUTRAGE);
 			movebank[64] = new Node(Move.EARTHQUAKE);
+			movebank[69] = new Node(Move.EXPANDING_FORCE);
 			break;
 		case 55:
 			movebank = new Node[33];
@@ -7176,7 +7177,7 @@ public class Pokemon implements Serializable {
 			movebank[45] = new Node(Move.BLIZZARD);
 			movebank[49] = new Node(Move.AURORA_VEIL);
 			movebank[52] = new Node(Move.FREEZING_GLARE);
-			movebank[59] = new Node(Move.LUSTER_PURGE);
+			movebank[59] = new Node(Move.EXPANDING_FORCE);
 			break;
 		case 61:
 			movebank = new Node[60];
@@ -7474,7 +7475,7 @@ public class Pokemon implements Serializable {
 			movebank[57] = new Node(Move.MAGIC_TOMB);
 			movebank[60] = new Node(Move.SPARKLING_TERRAIN);
 			movebank[64] = new Node(Move.MORNING_SUN);
-			movebank[69] = new Node(Move.MAGIC_CRASH);
+			movebank[69] = new Node(Move.EXPANDING_FORCE);
 			break;
 		case 78:
 			movebank = new Node[29];
@@ -7492,7 +7493,7 @@ public class Pokemon implements Serializable {
 			movebank[28] = new Node(Move.TRICK);
 			break;
 		case 79:
-			movebank = new Node[60];
+			movebank = new Node[70];
 			movebank[0] = new Node(Move.POUND);
 			movebank[2] = new Node(Move.TAIL_WHIP);
 			movebank[4] = new Node(Move.WATER_GUN);
@@ -7510,9 +7511,10 @@ public class Pokemon implements Serializable {
 			movebank[39] = new Node(Move.MAGIC_TOMB);
 			movebank[42] = new Node(Move.LIGHT_SCREEN);
 			movebank[45] = new Node(Move.HYDRO_PUMP);
-			movebank[49] = new Node(Move.SOLAR_BEAM);
+			movebank[49] = new Node(Move.EXPANDING_FORCE);
 			movebank[54] = new Node(Move.BLIZZARD);
-			movebank[59] = new Node(Move.SHADOW_BALL);
+			movebank[59] = new Node(Move.CALM_MIND);
+			movebank[69] = new Node(Move.WATER_SPOUT);
 			break;
 		case 80:
 			movebank = new Node[39];
@@ -7546,8 +7548,8 @@ public class Pokemon implements Serializable {
 			movebank[44] = new Node(Move.GRASS_WHISTLE);
 			movebank[49] = new Node(Move.PSYCHIC_TERRAIN);
 			movebank[53] = new Node(Move.ENERGY_BALL);
-			movebank[58] = new Node(Move.TWINKLE_TACKLE);
-			movebank[62] = new Node(Move.SPIRIT_BREAK);
+			movebank[58] = new Node(Move.EXPANDING_FORCE);
+			movebank[62] = new Node(Move.MOONBLAST);
 			movebank[69] = new Node(Move.PETAL_DANCE);
 			break;
 		case 82:
@@ -7620,6 +7622,7 @@ public class Pokemon implements Serializable {
 		case 87:
 			movebank = new Node[65];
 			movebank[0] = new Node(Move.AURA_SPHERE);
+			movebank[0].addToEnd(new Node(Move.DREAM_EATER));
 			movebank[0].addToEnd(new Node(Move.THIEF));
 			movebank[0].addToEnd(new Node(Move.TRICK));
 			movebank[0].addToEnd(new Node(Move.HEALING_WISH));
@@ -7640,8 +7643,8 @@ public class Pokemon implements Serializable {
 			movebank[44] = new Node(Move.PSYCHIC);
 			movebank[48] = new Node(Move.MOONBLAST);
 			movebank[54] = new Node(Move.GLITTER_DANCE);
-			movebank[59] = new Node(Move.DREAM_EATER);
-			movebank[64] = new Node(Move.BLACK_HOLE_ECLIPSE);
+			movebank[59] = new Node(Move.BLACK_HOLE_ECLIPSE);
+			movebank[64] = new Node(Move.EXPANDING_FORCE);
 			break;
 		case 88:
 			movebank = new Node[60];

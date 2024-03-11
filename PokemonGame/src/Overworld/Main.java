@@ -818,7 +818,7 @@ public class Main {
 				new Trainer("DS", new Pokemon[]{new Pokemon(100, 65, false, true), new Pokemon(54, 65, false, true), new Pokemon(145, 64, false, true), new Pokemon(173, 65, false, true)}, 100),
 				new Trainer("DT", new Pokemon[]{new Pokemon(103, 65, false, true), new Pokemon(58, 66, false, true), new Pokemon(18, 65, false, true)}, 100),
 				new Trainer("DU", new Pokemon[]{new Pokemon(93, 65, false, true), new Pokemon(97, 66, false, true), new Pokemon(6, 66, false, true), new Pokemon(225, 65, false, true)}, 100),
-				new Trainer("DV", new Pokemon[]{new Pokemon(204, 66, false, true), new Pokemon(125, 66, false, true), new Pokemon(63, 67, false, true)}, 100), // 290
+				new Trainer("DV", new Pokemon[]{new Pokemon(204, 67, false, true), new Pokemon(125, 67, false, true), new Pokemon(63, 68, false, true)}, 100), // 290
 				new Trainer("7 Gym A", new Pokemon[]{new Pokemon(61, 67, false, true), new Pokemon(61, 67, false, true), new Pokemon(145, 65, false, true)}, 200),
 				new Trainer("7 Gym B", new Pokemon[]{new Pokemon(47, 65, false, true), new Pokemon(122, 66, false, true), new Pokemon(47, 67, false, true)}, 200),
 				new Trainer("7 Gym C", new Pokemon[]{new Pokemon(128, 65, false, true), new Pokemon(150, 67, false, true)}, 200),
@@ -834,6 +834,12 @@ public class Main {
 				new Trainer("7 Gym M", new Pokemon[]{new Pokemon(125, 67, false, true), new Pokemon(122, 67, false, true), new Pokemon(128, 67, false, true)}, 200),
 				new Trainer("7 Gym N", new Pokemon[]{new Pokemon(77, 68, false, true), new Pokemon(178, 68, false, true)}, 200),
 				new Trainer("7 Gym Leader 1", new Pokemon[]{new Pokemon(122, 68, false, true), new Pokemon(150, 68, false, true), new Pokemon(47, 68, false, true), new Pokemon(107, 68, false, true), new Pokemon(232, 68, false, true), new Pokemon(229, 69, false, true)}, 500, Item.TM03), // 305
+				new Trainer("DX", new Pokemon[]{new Pokemon(125, 65, false, true), new Pokemon(212, 66, false, true), new Pokemon(120, 66, false, true), new Pokemon(204, 65, false, true)}, 100),
+				new Trainer("DY", new Pokemon[]{new Pokemon(196, 67, false, true), new Pokemon(168, 67, false, true)}, 100),
+				new Trainer("DZ", new Pokemon[]{new Pokemon(136, 67, false, true), new Pokemon(162, 67, false, true), new Pokemon(180, 66, false, true), new Pokemon(149, 67, false, true)}, 100),
+				new Trainer("EA", new Pokemon[]{new Pokemon(222, 67, false, true), new Pokemon(227, 67, false, true), new Pokemon(157, 68, false, true), new Pokemon(159, 67, false, true), new Pokemon(131, 67, false, true)}, 100),
+				new Trainer("EB", new Pokemon[]{new Pokemon(141, 69, false, true), new Pokemon(116, 67, false, true), new Pokemon(3, 68, false, true), new Pokemon(28, 67, false, true), new Pokemon(31, 68, false, true)}, 100), // 310
+				new Trainer("TN MSJ 1", new Pokemon[]{new Pokemon(53, 68, false, true), new Pokemon(56, 68, false, true), new Pokemon(84, 68, false, true), new Pokemon(87, 68, false, true), new Pokemon(24, 68, false, true), new Pokemon(60, 69, false, true)}, 100),
 //				new Trainer("Rival 5", new Pokemon[]{new Pokemon(-132, 36, false, true), new Pokemon(-25, 27, false, true), new Pokemon(-22, 32, false, true), new Pokemon(-41, 29, false, true), new Pokemon(-78, 35, false, true)}, 500),
 //				new Trainer("KK", new Pokemon[]{new Pokemon(-96, 25, false, true), new Pokemon(-97, 20, false, true), new Pokemon(-98, 30, false, true)}, 100),
 //				new Trainer("LL", new Pokemon[]{new Pokemon(-39, 25, false, true), new Pokemon(-41, 25, false, true), new Pokemon(-39, 30, false, true), new Pokemon(-41, 30, false, true)}, 100),
@@ -1290,12 +1296,70 @@ public class Main {
 			}
 			
 			writer.close();
+			//writeTrainerUsageStats();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
 	}
 	
+	@SuppressWarnings("unused")
+	private static void writeTrainerUsageStats() {
+		try {
+			FileWriter writer = new FileWriter("./docs/TrainerInfo.txt", true);
+			writer.write("Stats:\n");
+			int[] occurences = new int[Pokemon.MAX_POKEMON + 1];
+			int totalPokemon = 0;
+			
+			for (Trainer tr : trainers) {
+				for (Pokemon p : tr.getTeam()) {
+					if (p.id <= 9 && (tr.getName().contains("Scott") || tr.getName().contains("Fred"))) {
+						if (p.id == 1 || p.id == 4 || p.id == 7) {
+							occurences[1]++;
+							occurences[4]++;
+							occurences[7]++;
+							totalPokemon += 3;
+						} else if (p.id == 2 || p.id == 5 || p.id == 8) {
+							occurences[2]++;
+							occurences[5]++;
+							occurences[8]++;
+							totalPokemon += 3;
+						} else if (p.id == 3 || p.id == 6 || p.id == 9) {
+							occurences[3]++;
+							occurences[6]++;
+							occurences[9]++;
+							totalPokemon += 3;
+						}
+					} else {
+						occurences[p.id]++;
+						totalPokemon++;
+					}
+				}
+			}
+			StringBuilder header = new StringBuilder();
+			header.append("Num,Pokemon,Amt,%\n");
+			writer.write(header.toString());
+			Pokemon dummy = new Pokemon(1, 5, false, false);
+			for (int i = 1; i < occurences.length; i++) {
+				double ratio = occurences[i] * 100.0;
+				ratio /= totalPokemon;
+				StringBuilder stats = new StringBuilder();
+				stats.append(i);
+				stats.append("," + dummy.getName(i));
+				stats.append("," + occurences[i]);
+				stats.append("," + String.format("%.2f", ratio) + "%");
+				stats.append("\n");
+				writer.write(stats.toString());
+			}
+			writer.write("\nTotal: " + totalPokemon);
+			writer.close();
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+	}
+
+
+
 	private static void writeEncounters() {
 		try {
 			FileWriter writer = new FileWriter("./docs/WildPokemon.txt");
