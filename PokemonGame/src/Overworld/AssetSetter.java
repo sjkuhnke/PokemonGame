@@ -1243,9 +1243,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 49, 44, 237);
 		
 		if (!flags[21]) {
-			gp.npc[mapNum][index] = NPCSetup(SCOTT_DOWN, 21, 40, 242);
+			gp.npc[mapNum][index] = NPCSetup(SCOTT_DOWN, 21, 40, 242);;
 		} else {
 			gp.npc[mapNum][index++] = null;
+			GamePanel.volatileTrainers.put(NPCSetup(SCOTT_DOWN, 21, 40, 242), mapNum);
 		}
 		gp.npc[mapNum][index] = NPCSetup(44, 39, "I found this infant Pokemon abandoned here.", true);
 		
@@ -1319,6 +1320,14 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 79, 287);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 86, 72, 290);
 		
+		if (!flags[26]) {
+			gp.npc[mapNum][index] = NPCSetup(25, 82, "The gym is closed right now. Why, you ask? Because a goddamn Team Nuke member came here and KIDNAPPED one of our employees.\n\nYeah, what the hell is right! Last I saw him, he was bringing Marcus towards the volcano. I just hope that Marcus doesn't sue us...");
+		} else {
+			System.out.println(index);
+			gp.npc[mapNum][index++] = null;
+		}
+		
+		
 		mapNum = 127;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(27, 39, "Welcome to the Blackjack table!", true);
@@ -1354,6 +1363,32 @@ public class AssetSetter {
 		mapNum = 131;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
+		
+		mapNum = 137;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 70, 73, 306);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 72, 74, 307);
+		
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 37, 46, 312);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 39, 48, 313);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 37, 50, 314);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 35, 48, 315);
+		
+		mapNum = 138;
+		index = 0;
+		if (!flags[26]) {
+			gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 53, 73, 311);;
+		} else {
+			gp.npc[mapNum][index++] = null;
+			GamePanel.volatileTrainers.put(NPCSetup(TN_DOWN, 53, 73, 311), mapNum);
+		}
+		gp.npc[mapNum][index] = NPCSetup(55, 72, "Thank you so much for saving me!", true);
+		
+		mapNum = 139;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 29, 73, 308);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 46, 50, 309);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 30, 55, 310);
 		
 	}
 	
@@ -1832,7 +1867,7 @@ public class AssetSetter {
 		// flags[23] is true after getting coins
 		// flags[24] is true after being prompted that casino will auto-save
 		// flags[25] is true after getting gift magmaclang
-		// flags[26] 
+		// flags[26] is true after beating TN guy in MSJ
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		if (flags[1]) {
@@ -1884,6 +1919,10 @@ public class AssetSetter {
 		if (flags[21]) gp.npc[109][3] = null;
 		
 		if (map == 16 && gp.player.p.choiceChoice != null) gp.obj[map][objIndex] = ObjSetup(46, 28, gp.player.p.choiceChoice, map);
+		if (flags[26]) {
+			gp.npc[138][0] = null;
+			gp.npc[124][15] = null;
+		}
 	}
 	
 	private Entity NPCSetup(int type, int x, int y, int team) {

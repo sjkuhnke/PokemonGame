@@ -388,7 +388,7 @@ public class Player implements Serializable{
 				"First Gate", "Scott 1", "Rick 1", "TN in Office", "Scott 2", "Fred 2", "Key A SC", "Key B SC",
 				"Clear Room A", "Clear Room B", "Gift Starter", "Gift Dog", "Gift Magic", "Gift Ancient", "Gift \"Starter\"",
 				"Fred 3", "Talk to Grandpa", "Gym 5", "Gift E/S", "Rick 2", "Maxwell 1", "Scott 4", "Gift Glurg", "Coins Gotten",
-				"Autosave Warn"
+				"Autosave Warn", "Magmaclang", "MSJ TN"
 		};
 		JPanel flagsPanel = new JPanel();
 		flagsPanel.setLayout(new BoxLayout(flagsPanel, BoxLayout.Y_AXIS));
