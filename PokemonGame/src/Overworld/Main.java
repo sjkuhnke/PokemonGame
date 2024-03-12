@@ -818,28 +818,32 @@ public class Main {
 				new Trainer("DS", new Pokemon[]{new Pokemon(100, 65, false, true), new Pokemon(54, 65, false, true), new Pokemon(145, 64, false, true), new Pokemon(173, 65, false, true)}, 100),
 				new Trainer("DT", new Pokemon[]{new Pokemon(103, 65, false, true), new Pokemon(58, 66, false, true), new Pokemon(18, 65, false, true)}, 100),
 				new Trainer("DU", new Pokemon[]{new Pokemon(93, 65, false, true), new Pokemon(97, 66, false, true), new Pokemon(6, 66, false, true), new Pokemon(225, 65, false, true)}, 100),
-				new Trainer("DV", new Pokemon[]{new Pokemon(204, 67, false, true), new Pokemon(125, 67, false, true), new Pokemon(63, 68, false, true)}, 100), // 290
-				new Trainer("7 Gym A", new Pokemon[]{new Pokemon(61, 67, false, true), new Pokemon(61, 67, false, true), new Pokemon(145, 65, false, true)}, 200),
-				new Trainer("7 Gym B", new Pokemon[]{new Pokemon(47, 65, false, true), new Pokemon(122, 66, false, true), new Pokemon(47, 67, false, true)}, 200),
-				new Trainer("7 Gym C", new Pokemon[]{new Pokemon(128, 65, false, true), new Pokemon(150, 67, false, true)}, 200),
-				new Trainer("7 Gym D", new Pokemon[]{new Pokemon(150, 67, false, true), new Pokemon(107, 66, false, true)}, 200),
-				new Trainer("7 Gym E", new Pokemon[]{new Pokemon(178, 66, false, true), new Pokemon(145, 65, false, true), new Pokemon(122, 66, false, true)}, 200), // 295
-				new Trainer("7 Gym F", new Pokemon[]{new Pokemon(125, 65, false, true), new Pokemon(47, 66, false, true)}, 200),
-				new Trainer("7 Gym G", new Pokemon[]{new Pokemon(185, 67, false, true), new Pokemon(178, 66, false, true), new Pokemon(128, 65, false, true)}, 200),
-				new Trainer("7 Gym H", new Pokemon[]{new Pokemon(145, 65, false, true), new Pokemon(150, 66, false, true)}, 200),
-				new Trainer("7 Gym I", new Pokemon[]{new Pokemon(150, 68, false, true)}, 200),
-				new Trainer("7 Gym J", new Pokemon[]{new Pokemon(143, 90, false, true), new Pokemon(125, 65, false, true), new Pokemon(61, 67, false, true)}, 200), // 300
-				new Trainer("7 Gym K", new Pokemon[]{new Pokemon(186, 65, false, true), new Pokemon(77, 66, false, true)}, 200),
-				new Trainer("7 Gym L", new Pokemon[]{new Pokemon(107, 66, false, true), new Pokemon(122, 66, false, true)}, 200),
-				new Trainer("7 Gym M", new Pokemon[]{new Pokemon(125, 67, false, true), new Pokemon(122, 67, false, true), new Pokemon(128, 67, false, true)}, 200),
-				new Trainer("7 Gym N", new Pokemon[]{new Pokemon(77, 68, false, true), new Pokemon(178, 68, false, true)}, 200),
-				new Trainer("7 Gym Leader 1", new Pokemon[]{new Pokemon(122, 68, false, true), new Pokemon(150, 68, false, true), new Pokemon(47, 68, false, true), new Pokemon(107, 68, false, true), new Pokemon(232, 68, false, true), new Pokemon(229, 69, false, true)}, 500, Item.TM03), // 305
-				new Trainer("DX", new Pokemon[]{new Pokemon(125, 65, false, true), new Pokemon(212, 66, false, true), new Pokemon(120, 66, false, true), new Pokemon(204, 65, false, true)}, 100),
+				new Trainer("DV", new Pokemon[]{new Pokemon(204, 68, false, true), new Pokemon(125, 68, false, true), new Pokemon(63, 68, false, true)}, 100), // 290
+				new Trainer("7 Gym A", new Pokemon[]{new Pokemon(61, 69, false, true), new Pokemon(61, 69, false, true), new Pokemon(145, 67, false, true)}, 200),
+				new Trainer("7 Gym B", new Pokemon[]{new Pokemon(47, 68, false, true), new Pokemon(122, 67, false, true), new Pokemon(47, 69, false, true)}, 200),
+				new Trainer("7 Gym C", new Pokemon[]{new Pokemon(128, 68, false, true), new Pokemon(150, 68, false, true)}, 200),
+				new Trainer("7 Gym D", new Pokemon[]{new Pokemon(150, 69, false, true), new Pokemon(107, 68, false, true)}, 200),
+				new Trainer("7 Gym E", new Pokemon[]{new Pokemon(178, 68, false, true), new Pokemon(145, 67, false, true), new Pokemon(122, 68, false, true)}, 200), // 295
+				new Trainer("7 Gym F", new Pokemon[]{new Pokemon(125, 68, false, true), new Pokemon(47, 69, false, true)}, 200),
+				new Trainer("7 Gym G", new Pokemon[]{new Pokemon(185, 69, false, true), new Pokemon(178, 68, false, true), new Pokemon(128, 67, false, true)}, 200),
+				new Trainer("7 Gym H", new Pokemon[]{new Pokemon(145, 68, false, true), new Pokemon(150, 69, false, true)}, 200),
+				new Trainer("7 Gym I", new Pokemon[]{new Pokemon(150, 70, false, true)}, 200),
+				new Trainer("7 Gym J", new Pokemon[]{new Pokemon(143, 90, false, true), new Pokemon(125, 67, false, true), new Pokemon(61, 69, false, true)}, 200), // 300
+				new Trainer("7 Gym K", new Pokemon[]{new Pokemon(186, 67, false, true), new Pokemon(77, 69, false, true)}, 200),
+				new Trainer("7 Gym L", new Pokemon[]{new Pokemon(107, 67, false, true), new Pokemon(122, 68, false, true)}, 200),
+				new Trainer("7 Gym M", new Pokemon[]{new Pokemon(125, 69, false, true), new Pokemon(122, 69, false, true), new Pokemon(128, 69, false, true)}, 200),
+				new Trainer("7 Gym N", new Pokemon[]{new Pokemon(77, 69, false, true), new Pokemon(178, 69, false, true)}, 200),
+				new Trainer("7 Gym Leader 1", new Pokemon[]{new Pokemon(122, 70, false, true), new Pokemon(150, 70, false, true), new Pokemon(47, 70, false, true), new Pokemon(107, 70, false, true), new Pokemon(232, 70, false, true), new Pokemon(229, 71, false, true)}, 500, Item.TM03), // 305
+				new Trainer("DX", new Pokemon[]{new Pokemon(125, 65, false, true), new Pokemon(212, 66, false, true), new Pokemon(119, 66, false, true), new Pokemon(204, 65, false, true)}, 100),
 				new Trainer("DY", new Pokemon[]{new Pokemon(196, 67, false, true), new Pokemon(168, 67, false, true)}, 100),
 				new Trainer("DZ", new Pokemon[]{new Pokemon(136, 67, false, true), new Pokemon(162, 67, false, true), new Pokemon(180, 66, false, true), new Pokemon(149, 67, false, true)}, 100),
 				new Trainer("EA", new Pokemon[]{new Pokemon(222, 67, false, true), new Pokemon(227, 67, false, true), new Pokemon(157, 68, false, true), new Pokemon(159, 67, false, true), new Pokemon(131, 67, false, true)}, 100),
 				new Trainer("EB", new Pokemon[]{new Pokemon(141, 69, false, true), new Pokemon(116, 67, false, true), new Pokemon(3, 68, false, true), new Pokemon(28, 67, false, true), new Pokemon(31, 68, false, true)}, 100), // 310
 				new Trainer("TN MSJ 1", new Pokemon[]{new Pokemon(53, 68, false, true), new Pokemon(56, 68, false, true), new Pokemon(84, 68, false, true), new Pokemon(87, 68, false, true), new Pokemon(24, 68, false, true), new Pokemon(60, 69, false, true)}, 100),
+				new Trainer("EC", new Pokemon[]{new Pokemon(96, 66, false, true), new Pokemon(107, 66, false, true), new Pokemon(110, 66, false, true)}, 100),
+				new Trainer("ED", new Pokemon[]{new Pokemon(116, 66, false, true), new Pokemon(170, 66, false, true), new Pokemon(219, 66, false, true)}, 100),
+				new Trainer("EE", new Pokemon[]{new Pokemon(178, 66, false, true), new Pokemon(15, 66, false, true), new Pokemon(10, 66, false, true)}, 100),
+				new Trainer("EF", new Pokemon[]{new Pokemon(9, 66, false, true), new Pokemon(140, 66, false, true), new Pokemon(72, 66, false, true)}, 100), // 315
 //				new Trainer("Rival 5", new Pokemon[]{new Pokemon(-132, 36, false, true), new Pokemon(-25, 27, false, true), new Pokemon(-22, 32, false, true), new Pokemon(-41, 29, false, true), new Pokemon(-78, 35, false, true)}, 500),
 //				new Trainer("KK", new Pokemon[]{new Pokemon(-96, 25, false, true), new Pokemon(-97, 20, false, true), new Pokemon(-98, 30, false, true)}, 100),
 //				new Trainer("LL", new Pokemon[]{new Pokemon(-39, 25, false, true), new Pokemon(-41, 25, false, true), new Pokemon(-39, 30, false, true), new Pokemon(-41, 30, false, true)}, 100),

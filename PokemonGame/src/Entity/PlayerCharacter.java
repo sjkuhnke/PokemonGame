@@ -1347,6 +1347,11 @@ public class PlayerCharacter extends Entity {
 				p.flags[25] = true;
 				JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
 				p.catchPokemon(result);
+			} if (gp.currentMap == 138 && !p.flags[26]) {
+				JOptionPane.showMessageDialog(null, "Here, I have a gift for\nyou for being so kind.");
+				JOptionPane.showMessageDialog(null, "Obtained HM07 Rock Climb!");
+				p.bag.add(Item.HM07);
+				p.flags[26] = true;
 			}
 		    keyH.resume();
 		}
