@@ -220,7 +220,7 @@ public class Trainer {
 		if (p.isFainted()) return false;
 		double multiplier = p.getEffectiveMultiplier(type);
 		if (p.ability == Ability.DRY_SKIN && type == PType.WATER) multiplier = 0;
-		if (p.ability == Ability.FALSE_ILLUMINATION && (type == PType.GHOST || type == PType.DARK || type == PType.LIGHT || type == PType.GALACTIC)) multiplier *= 0.5;
+		if (p.ability == Ability.ILLUMINATION && (type == PType.GHOST || type == PType.DARK || type == PType.LIGHT || type == PType.GALACTIC)) multiplier *= 0.5;
 		if (p.ability == Ability.FLASH_FIRE && type == PType.FIRE) multiplier = 0;
 		if (p.ability == Ability.FRIENDLY_GHOST && type == PType.GHOST) multiplier = 0;
 		if (p.ability == Ability.GALACTIC_AURA && (type == PType.ICE || type == PType.PSYCHIC)) multiplier *= 0.5;

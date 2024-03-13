@@ -580,6 +580,48 @@ public class Encounter {
 				encounters.add(new Encounter(107, 45, 48, 0.03));
 				encounters.add(new Encounter(112, 43, 47, 0.08));
 				encounters.add(new Encounter(116, 48, 49, 0.04));
+			} else if (area == 137 && type.equals("Standard")) { // Joseph 1A
+				encounters.add(new Encounter(51, 46, 50, 0.10));
+				encounters.add(new Encounter(54, 46, 50, 0.09));
+				encounters.add(new Encounter(56, 44, 48, 0.08));
+				encounters.add(new Encounter(66, 42, 47, 0.07));
+				encounters.add(new Encounter(99, 44, 48, 0.14));
+				encounters.add(new Encounter(103, 45, 49, 0.17));
+				encounters.add(new Encounter(109, 50, 50, 0.13));
+				encounters.add(new Encounter(105, 45, 49, 0.10));
+				encounters.add(new Encounter(96, 46, 50, 0.12));
+			} else if ((area == 137 || area == 138 || area == 140 || area == 141 || area == 142) && type.equals("Lava")) { // Joseph Lava
+				encounters.add(new Encounter(100, 70, 75, 0.50));
+				encounters.add(new Encounter(103, 68, 73, 0.50));
+			} else if ((area == 138 || area == 139) && type.equals("Standard")) { // Joseph 2A/2B
+				encounters.add(new Encounter(50, 48, 52, 0.11));
+				encounters.add(new Encounter(54, 48, 52, 0.08));
+				encounters.add(new Encounter(56, 46, 50, 0.09));
+				encounters.add(new Encounter(66, 44, 47, 0.05));
+				encounters.add(new Encounter(99, 46, 50, 0.15));
+				encounters.add(new Encounter(103, 47, 51, 0.18));
+				encounters.add(new Encounter(110, 50, 52, 0.14));
+				encounters.add(new Encounter(105, 47, 51, 0.07));
+				encounters.add(new Encounter(96, 48, 52, 0.13));
+			} else if ((area == 140 || area == 141) && type.equals("Standard")) { // Joseph 3A/3B
+				encounters.add(new Encounter(50, 50, 54, 0.08));
+				encounters.add(new Encounter(51, 50, 54, 0.08));
+				encounters.add(new Encounter(54, 50, 54, 0.09));
+				encounters.add(new Encounter(56, 48, 52, 0.08));
+				encounters.add(new Encounter(99, 48, 52, 0.20));
+				encounters.add(new Encounter(103, 50, 54, 0.14));
+				encounters.add(new Encounter(109, 52, 54, 0.06));
+				encounters.add(new Encounter(110, 52, 54, 0.06));
+				encounters.add(new Encounter(105, 49, 53, 0.05));
+				encounters.add(new Encounter(96, 50, 54, 0.16));
+			} else if (area == 142 && type.equals("Standard")) { // Joseph 4A
+				encounters.add(new Encounter(100, 60, 65, 0.30));
+				encounters.add(new Encounter(109, 65, 65, 0.25));
+				encounters.add(new Encounter(110, 65, 65, 0.25));
+				encounters.add(new Encounter(105, 58, 63, 0.05));
+				encounters.add(new Encounter(96, 60, 65, 0.15));
+			} else if (area == 143 && type.equals("Lava")) { // Joseph 4B
+				encounters.add(new Encounter(94, 100, 100, 1.0));
 			}
 		}
 		
