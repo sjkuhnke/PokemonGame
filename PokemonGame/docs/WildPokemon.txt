@@ -651,6 +651,82 @@ Route 38========================================================================
 8% Wattwo (Lv. 43 - 47)
 4% Superchargo (Lv. 48 - 49)
 
+Mt. St. Joseph 1A===============================================================================================
+10% Crystallor (Lv. 46 - 50)
+9% Cairnasaur (Lv. 46 - 50)
+8% Boulderoar (Lv. 44 - 48)
+7% Tricerpup (Lv. 42 - 47)
+14% Fireshard (Lv. 44 - 48)
+17% Lafloo (Lv. 45 - 49)
+13% Fireblion (Lv. 50)
+10% Houndoom (Lv. 45 - 49)
+12% Pyrator (Lv. 46 - 50)
+
+Mt. St. Joseph 2A===============================================================================================
+11% Blaster (Lv. 48 - 52)
+8% Cairnasaur (Lv. 48 - 52)
+9% Boulderoar (Lv. 46 - 50)
+5% Tricerpup (Lv. 44 - 47)
+15% Fireshard (Lv. 46 - 50)
+18% Lafloo (Lv. 47 - 51)
+14% Flamebless (Lv. 50 - 52)
+7% Houndoom (Lv. 47 - 51)
+13% Pyrator (Lv. 48 - 52)
+
+Mt. St. Joseph 2B===============================================================================================
+11% Blaster (Lv. 48 - 52)
+8% Cairnasaur (Lv. 48 - 52)
+9% Boulderoar (Lv. 46 - 50)
+5% Tricerpup (Lv. 44 - 47)
+15% Fireshard (Lv. 46 - 50)
+18% Lafloo (Lv. 47 - 51)
+14% Flamebless (Lv. 50 - 52)
+7% Houndoom (Lv. 47 - 51)
+13% Pyrator (Lv. 48 - 52)
+
+Mt. St. Joseph 3A===============================================================================================
+8% Blaster (Lv. 50 - 54)
+8% Crystallor (Lv. 50 - 54)
+9% Cairnasaur (Lv. 50 - 54)
+8% Boulderoar (Lv. 48 - 52)
+20% Fireshard (Lv. 48 - 52)
+14% Lafloo (Lv. 50 - 54)
+6% Fireblion (Lv. 52 - 54)
+6% Flamebless (Lv. 52 - 54)
+5% Houndoom (Lv. 49 - 53)
+16% Pyrator (Lv. 50 - 54)
+
+Mt. St. Joseph 3B===============================================================================================
+8% Blaster (Lv. 50 - 54)
+8% Crystallor (Lv. 50 - 54)
+9% Cairnasaur (Lv. 50 - 54)
+8% Boulderoar (Lv. 48 - 52)
+20% Fireshard (Lv. 48 - 52)
+14% Lafloo (Lv. 50 - 54)
+6% Fireblion (Lv. 52 - 54)
+6% Flamebless (Lv. 52 - 54)
+5% Houndoom (Lv. 49 - 53)
+16% Pyrator (Lv. 50 - 54)
+
+Mt. St. Joseph 4A===============================================================================================
+30% Blastflames (Lv. 60 - 65)
+25% Fireblion (Lv. 65)
+25% Flamebless (Lv. 65)
+5% Houndoom (Lv. 58 - 63)
+15% Pyrator (Lv. 60 - 65)
+
+Mt. St. Joseph 1A/2A/2B/3A/3B/4A===============================================================================================
+50% Blastflames (Lv. 70 - 75)
+50% Lafloo (Lv. 68 - 73)
+
+Mt. St. Joseph 4A===============================================================================================
+50% Blastflames (Lv. 70 - 75)
+50% Lafloo (Lv. 68 - 73)
+
+Mt. St. Joseph 4B===============================================================================================
+50% Blastflames (Lv. 70 - 75)
+50% Lafloo (Lv. 68 - 73)
+
 1,Twigle,0,0.00%
 2,Torgged,0,0.00%
 3,Tortugis,0,0.00%
@@ -700,13 +776,13 @@ Route 38========================================================================
 47,Bluebunn,4,15.50%
 48,Rocky,4,30.00%
 49,Boulder,0,0.00%
-50,Blaster,0,0.00%
-51,Crystallor,0,0.00%
+50,Blaster,4,9.50%
+51,Crystallor,3,8.67%
 52,Carinx,3,14.00%
 53,Carinator,3,22.33%
-54,Cairnasaur,0,0.00%
+54,Cairnasaur,5,8.60%
 55,Pebblepup,2,14.00%
-56,Boulderoar,1,12.00%
+56,Boulderoar,6,9.00%
 57,Fightorex,2,15.00%
 58,Raptorex,1,17.00%
 59,Kleinowl,3,16.67%
@@ -716,7 +792,7 @@ Route 38========================================================================
 63,Frosmoth,0,0.00%
 64,Grondor,3,16.00%
 65,Bipedice,1,2.00%
-66,Tricerpup,2,10.00%
+66,Tricerpup,5,7.40%
 67,Tricercil,1,10.00%
 68,Spheal,4,22.00%
 69,Sealeo,1,11.00%
@@ -746,21 +822,21 @@ Route 38========================================================================
 93,Barkflare,2,17.00%
 94,Iglite,2,17.50%
 95,Blaxer,1,10.00%
-96,Pyrator,0,0.00%
+96,Pyrator,6,14.17%
 97,Magmaclang,1,1.00%
 98,Flamehox,1,100.00%
-99,Fireshard,1,14.00%
-100,Blastflames,0,0.00%
+99,Fireshard,6,16.33%
+100,Blastflames,4,45.00%
 101,Tiowoo,2,13.50%
 102,Magwoo,0,0.00%
-103,Lafloo,1,17.00%
+103,Lafloo,9,27.56%
 104,Houndour,1,20.00%
-105,Houndoom,3,13.33%
+105,Houndoom,9,8.78%
 106,Sparkdust,2,9.00%
 107,Splame,2,11.50%
 108,Sparkitten,4,15.25%
-109,Fireblion,0,0.00%
-110,Flamebless,0,0.00%
+109,Fireblion,4,12.50%
+110,Flamebless,5,13.00%
 111,Shookwat,2,45.00%
 112,Wattwo,2,12.50%
 113,Megawatt,0,0.00%

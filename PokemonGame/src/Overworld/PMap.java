@@ -1005,28 +1005,28 @@ public class PMap extends JFrame {
 		case 136:
 			PlayerCharacter.currentMapName = "Rawwar City";
 			return 35;
-		case 137: // TODO from here down
-			PlayerCharacter.currentMapName = "";
+		case 137:
+			PlayerCharacter.currentMapName = "Mt. St. Joseph (1A)";
 			return 20;
 		case 138:
-			PlayerCharacter.currentMapName = "";
+			PlayerCharacter.currentMapName = "Mt. St. Joseph (2A)";
 			return 20;
 		case 139:
-			PlayerCharacter.currentMapName = "";
+			PlayerCharacter.currentMapName = "Mt. St. Joseph (2B)";
 			return 20;
 		case 140:
-			PlayerCharacter.currentMapName = "";
+			PlayerCharacter.currentMapName = "Mt. St. Joseph (3A)";
 			return 28;
 		case 141:
-			PlayerCharacter.currentMapName = "";
+			PlayerCharacter.currentMapName = "Mt. St. Joseph (3B)";
 			return 15;
 		case 142:
-			PlayerCharacter.currentMapName = "";
+			PlayerCharacter.currentMapName = "Mt. St. Joseph (4A)";
 			return 20;
 		case 143:
-			PlayerCharacter.currentMapName = "";
+			PlayerCharacter.currentMapName = "Mt. St. Joseph (4B)";
 			return 20;
-		case 144:
+		case 144: // TODO from here down
 			PlayerCharacter.currentMapName = "";
 			return 20;
 		case 145:

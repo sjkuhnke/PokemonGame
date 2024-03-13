@@ -712,12 +712,28 @@ public class EventHandler {
 			if (hit(138,53,77)) teleport(139, 42, 50,false);
 			if (hit(139,42,49)) teleport(138, 53, 76,false);
 			
+			if (hit(138,61,60)) teleport(140, 49, 43,true);
+			if (hit(140,49,43)) teleport(138, 61, 60,true);
 			
 			// Joseph 2B
 			if (hit(124,87,71)) teleport(139, 38, 74,false);
 			if (hit(139,38,75)) teleport(124, 87, 72,false);
 			
+			if (hit(139,54,56)) teleport(141, 57, 72,true);
+			if (hit(141,57,72)) teleport(139, 54, 56,true);
+			if (hit(139,31,51)) teleport(140, 38, 58,true);
+			if (hit(140,38,58)) teleport(139, 31, 51,true);
 			
+			// Joseph 3A
+			if (hit(140,71,64)) teleport(141, 33, 58,false);
+			if (hit(141,33,59)) teleport(140, 71, 65,false);
+			
+			if (hit(140,26,69)) teleport(142, 42, 72,true);
+			if (hit(142,42,72)) teleport(140, 26, 69,true);
+			
+			// Joseph 4A
+			if (hit(142,73,40)) teleport(143, 53, 49,false);
+			if (hit(143,53,48)) teleport(142, 73, 39,false);
 		}
 	}
 	

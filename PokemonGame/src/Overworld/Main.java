@@ -666,7 +666,7 @@ public class Main {
 				new Trainer("4 Gym C", new Pokemon[]{new Pokemon(59, 40, false, true), new Pokemon(60, 39, false, true), new Pokemon(61, 40, false, true), new Pokemon(60, 39, false, true)}, new Item[]{Item.BRIGHT_POWDER, Item.LIGHT_CLAY, Item.CUSTAP_BERRY, Item.FOCUS_BAND}, 200), // 135
 				new Trainer("4 Gym D", new Pokemon[]{new Pokemon(63, 41, false, true)}, new Item[]{Item.FOCUS_SASH}, 200),
 				new Trainer("4 Gym Leader 1", new Pokemon[]{new Pokemon(193, 41, false, true), new Pokemon(69, 41, false, true), new Pokemon(61, 41, false, true), new Pokemon(60, 41, false, true), new Pokemon(65, 40, false, true), new Pokemon(194, 42, false, true)}, 500, Item.TM60),
-				new Trainer("AR", new Pokemon[]{new Pokemon(15, 40, false, true), new Pokemon(60, 40, false, true), new Pokemon(15, 40, false, true), new Pokemon(12, 40, false, true), new Pokemon(178, 40, false, true), new Pokemon(203, 40, false, true)}, new Item[]{Item.WACAN_BERRY, Item.NEVER$MELT_ICE, Item.ROCKY_HELMET, Item.HEAVY$DUTY_BOOTS, Item.CHILAN_BERRY, Item.AIR_BALLOON}, 100),
+				new Trainer("AR", new Pokemon[]{new Pokemon(15, 40, false, true), new Pokemon(60, 40, false, true), new Pokemon(15, 40, false, true), new Pokemon(12, 40, false, true), new Pokemon(178, 40, false, true), new Pokemon(203, 40, false, true)}, new Item[]{Item.WACAN_BERRY, Item.NEVER$MELT_ICE, Item.ROCKY_HELMET, Item.HEAVY$DUTY_BOOTS, Item.CHILAN_BERRY, Item.WIKI_BERRY}, 100),
 				new Trainer("AS", new Pokemon[]{new Pokemon(91, 42, false, true), new Pokemon(79, 43, false, true), new Pokemon(140, 41, false, true), new Pokemon(136, 42, false, true)}, new Item[]{Item.BLACK_GLASSES, Item.WIKI_BERRY, Item.EXPERT_BELT, Item.LEFTOVERS}, 100),
 				new Trainer("AT", new Pokemon[]{new Pokemon(138, 41, false, true), new Pokemon(138, 42, false, true), new Pokemon(136, 43, false, true), new Pokemon(149, 42, false, true)}, new Item[]{Item.WACAN_BERRY, Item.CHARTI_BERRY, Item.DAMP_ROCK, Item.RINDO_BERRY}, 100), // 140
 				new Trainer("AU", new Pokemon[]{new Pokemon(155, 43, false, true), new Pokemon(125, 43, false, true), new Pokemon(119, 42, false, true)}, new Item[]{Item.EXPERT_BELT, Item.AIR_BALLOON, Item.ASSAULT_VEST}, 100),
@@ -683,7 +683,7 @@ public class Main {
 				new Trainer("AY", new Pokemon[]{new Pokemon(91, 43, false, true), new Pokemon(147, 44, false, true)}, new Item[]{Item.FOCUS_SASH, Item.WHITE_HERB}, 100),
 				new Trainer("AZ", new Pokemon[]{new Pokemon(136, 44, false, true), new Pokemon(133, 44, false, true), new Pokemon(139, 45, false, true)}, new Item[]{Item.MYSTICOLA_BERRY, Item.MYSTIC_WATER, Item.ROCKY_HELMET}, 100),
 				new Trainer("BA", new Pokemon[]{new Pokemon(141, 44, false, true), new Pokemon(144, 44, false, true)}, new Item[]{Item.ASSAULT_VEST, Item.CHOICE_SCARF}, 100),
-				new Trainer("BB", new Pokemon[]{new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(145, 44, false, true)}, new Item[]{Item.FOCUS_SASH, Item.FOCUS_BAND, Item.BRIGHT_POWDER, Item.QUICK_CLAW, Item.FOCUS_SASH, Item.POWER_HERB}, 100), // 155
+				new Trainer("BB", new Pokemon[]{new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(145, 44, false, true)}, new Item[]{Item.FOCUS_SASH, Item.FOCUS_BAND, Item.BRIGHT_POWDER, Item.QUICK_CLAW, Item.POWER_HERB, Item.POWER_HERB}, 100), // 155
 				new Trainer("BC", new Pokemon[]{new Pokemon(138, 44, false, true), new Pokemon(210, 44, false, true)}, new Item[]{Item.WACAN_BERRY, Item.AIR_BALLOON}, 100),
 				new Trainer("BD", new Pokemon[]{new Pokemon(210, 44, false, true), new Pokemon(138, 44, false, true)}, new Item[]{Item.POWER_HERB, Item.LIFE_ORB}, 100),
 				new Trainer("BE", new Pokemon[]{new Pokemon(210, 43, false, true), new Pokemon(119, 44, false, true), new Pokemon(113, 44, false, true)}, new Item[]{Item.MAGNET, Item.LEFTOVERS, Item.AIR_BALLOON}, 100),
@@ -747,7 +747,7 @@ public class Main {
 				new Trainer("Fred 3", new Pokemon[]{new Pokemon(10, 5, false, true)}, 500),
 				new Trainer("Maxwell 1", new Pokemon[]{new Pokemon(183, 58, false, true), new Pokemon(222, 58, false, true), new Pokemon(216, 58, false, true), new Pokemon(214, 59, false, true), new Pokemon(192, 60, false, true), new Pokemon(186, 60, false, true)}, 400, 20),
 				new Trainer("CB", new Pokemon[]{new Pokemon(27, 52, false, true), new Pokemon(28, 51, false, true)}, new Item[]{Item.ASSAULT_VEST, Item.DRAGON_FANG}, 100),
-				new Trainer("CC", new Pokemon[]{new Pokemon(101, 80, false, true), new Pokemon(102, 60, false, true), new Pokemon(103, 52, false, true), new Pokemon(143, 60, false, true), new Pokemon(143, 60, false, true), new Pokemon(145, 52, false, true)}, new Item[]{Item.WEAKNESS_POLICY, Item.LOADED_DICE, Item.PASSHO_BERRY, Item.FOCUS_BAND, Item.QUICK_CLAW, Item.POWER_HERB}, 100),
+				new Trainer("CC", new Pokemon[]{new Pokemon(101, 80, false, true), new Pokemon(102, 60, false, true), new Pokemon(103, 52, false, true), new Pokemon(143, 60, false, true), new Pokemon(143, 60, false, true), new Pokemon(145, 52, false, true)}, new Item[]{Item.WEAKNESS_POLICY, Item.LOADED_DICE, Item.PASSHO_BERRY, Item.POWER_HERB, Item.QUICK_CLAW, Item.POWER_HERB}, 100),
 				new Trainer("CD", new Pokemon[]{new Pokemon(209, 100, false, true), new Pokemon(119, 53, false, true)}, new Item[]{Item.CHOICE_BAND, Item.WIKI_BERRY}, 100), // 220
 				new Trainer("CE", new Pokemon[]{new Pokemon(125, 52, false, true), new Pokemon(128, 52, false, true), new Pokemon(122, 52, false, true)}, new Item[]{Item.ASSAULT_VEST, Item.CLEAR_AMULET, Item.LUM_BERRY}, 100),
 				new Trainer("CF", new Pokemon[]{new Pokemon(133, 53, false, true), new Pokemon(131, 57, false, true)}, new Item[]{Item.WHITE_HERB, Item.FOCUS_SASH}, 100),
@@ -791,7 +791,7 @@ public class Main {
 				new Trainer("B B", new Pokemon[] {new Pokemon(30, 15, false, true)}, 100), // 260
 				new Trainer("B C", new Pokemon[] {new Pokemon(57, 15, false, true)}, 100),
 				new Trainer("B D", new Pokemon[] {new Pokemon(114, 15, false, true)}, 100),
-				new Trainer("B E", new Pokemon[] {new Pokemon(174, 13, false, true), new Pokemon(71, 11, false, true)}, new Item[]{Item.ORAN_BERRY, Item.CHESTO_BERRY}, 100),
+				new Trainer("B E", new Pokemon[] {new Pokemon(174, 14, false, true), new Pokemon(71, 11, false, true)}, new Item[]{Item.ORAN_BERRY, Item.CHESTO_BERRY}, 100),
 				new Trainer("YA", new Pokemon[]{new Pokemon(101, 9, false, true)}, new Item[]{Item.PASSHO_BERRY}, 100),
 				new Trainer("YB", new Pokemon[]{new Pokemon(184, 8, false, true), new Pokemon(190, 9, false, true)}, new Item[]{Item.CHILAN_BERRY, Item.COBA_BERRY}, 100), // 265
 				new Trainer("B F", new Pokemon[]{new Pokemon(47, 21, false, true)}, new Item[]{Item.CHILAN_BERRY}, 100),
@@ -799,51 +799,51 @@ public class Main {
 				new Trainer("MS F", new Pokemon[]{new Pokemon(60, 30, false, true), new Pokemon(72, 31, false, true)}, new Item[]{Item.ICY_ROCK, Item.POWER_HERB}, 100),
 				new Trainer("B G", new Pokemon[]{new Pokemon(190, 31, false, true), new Pokemon(195, 30, false, true)}, new Item[]{Item.CHARTI_BERRY, Item.COVERT_CLOAK}, 100),
 				new Trainer("SCT A", new Pokemon[]{new Pokemon(155, 47, false, true), new Pokemon(142, 48, false, true), new Pokemon(191, 49, false, true), new Pokemon(157, 48, false, true), new Pokemon(150, 49, false, true), new Pokemon(131, 49, false, true)}, new Item[]{Item.BLACK_SLUDGE, Item.POWER_HERB, Item.EVIOLITE, Item.OCCA_BERRY, Item.SITRUS_BERRY, Item.FOCUS_BAND}, 100), // 270
-				new Trainer("SCT B", new Pokemon[]{new Pokemon(109, 48, false, true), new Pokemon(105, 49, false, true), new Pokemon(152, 50, false, true), new Pokemon(203, 48, false, true), new Pokemon(176, 50, false, true), new Pokemon(103, 50, false, true)}, new Item[]{Item.HEAT_ROCK, Item.WISE_GLASSES, Item.BLACK_SLUDGE, Item.AIR_BALLOON, Item.LEFTOVERS, Item.WHITE_HERB}, 100),
+				new Trainer("SCT B", new Pokemon[]{new Pokemon(109, 48, false, true), new Pokemon(105, 49, false, true), new Pokemon(152, 50, false, true), new Pokemon(203, 48, false, true), new Pokemon(176, 50, false, true), new Pokemon(103, 50, false, true)}, new Item[]{Item.HEAT_ROCK, Item.WISE_GLASSES, Item.BLACK_SLUDGE, Item.CHOICE_SCARF, Item.LEFTOVERS, Item.WHITE_HERB}, 100),
 				new Trainer("SCT C", new Pokemon[]{new Pokemon(173, 49, false, true), new Pokemon(178, 49, false, true), new Pokemon(168, 50, false, true), new Pokemon(170, 49, false, true), new Pokemon(216, 49, false, true), new Pokemon(207, 51, false, true)}, new Item[]{Item.WIKI_BERRY, Item.LEFTOVERS, Item.SITRUS_BERRY, Item.ASSAULT_VEST, Item.BLACK_GLASSES, Item.WEAKNESS_POLICY}, 100),
 				new Trainer("EP-BE", new Pokemon[]{new Pokemon(70, 45, false, true), new Pokemon(60, 44, false, true), new Pokemon(63, 45, false, true)}, new Item[]{Item.ICY_ROCK, Item.BRIGHT_POWDER, Item.LIGHT_CLAY}, 100),
 				new Trainer("EP-BF", new Pokemon[]{new Pokemon(112, 66, false, true), new Pokemon(119, 65, false, true), new Pokemon(178, 65, false, true)}, new Item[]{Item.EVIOLITE, Item.WIDE_LENS, Item.CHILAN_BERRY}, 100),
-				new Trainer("EP-BG", new Pokemon[]{new Pokemon(109, 66, false, true), new Pokemon(105, 67, false, true), new Pokemon(204, 65, false, true), new Pokemon(100, 65, false, true), new Pokemon(6, 66, false, true)}, new Item[]{Item.HEAT_ROCK, Item.BLUNDER_POLICY, Item.AIR_BALLOON, Item.ROCKY_HELMET, Item.RED_CARD}, 100), // 275
+				new Trainer("EP-BG", new Pokemon[]{new Pokemon(109, 66, false, true), new Pokemon(105, 67, false, true), new Pokemon(204, 65, false, true), new Pokemon(100, 65, false, true), new Pokemon(6, 66, false, true)}, new Item[]{Item.HEAT_ROCK, Item.BLUNDER_POLICY, Item.PASSHO_BERRY, Item.ROCKY_HELMET, Item.RED_CARD}, 100), // 275
 				new Trainer("DH", new Pokemon[]{new Pokemon(168, 62, false, true), new Pokemon(50, 63, false, true), new Pokemon(56, 64, false, true)}, new Item[]{Item.SMOOTH_ROCK, Item.LEFTOVERS, Item.FOCUS_SASH}, 100),
 				new Trainer("DI", new Pokemon[]{new Pokemon(40, 64, false, true), new Pokemon(12, 64, false, true)}, new Item[]{Item.WHITE_HERB, Item.GLOWING_PRISM}, 100),
 				new Trainer("DJ", new Pokemon[]{new Pokemon(109, 65, false, true), new Pokemon(107, 65, false, true), new Pokemon(100, 65, false, true)}, new Item[]{Item.SHUCA_BERRY, Item.QUICK_CLAW, Item.FOCUS_BAND}, 100),
 				new Trainer("DK", new Pokemon[]{new Pokemon(110, 65, false, true), new Pokemon(96, 65, false, true), new Pokemon(103, 65, false, true)}, new Item[]{Item.WHITE_HERB, Item.ASSAULT_VEST, Item.LEFTOVERS}, 100),
 				new Trainer("DL", new Pokemon[]{new Pokemon(46, 64, false, true), new Pokemon(9, 63, false, true), new Pokemon(70, 64, false, true), new Pokemon(61, 66, false, true)}, new Item[]{Item.KEBIA_BERRY, Item.WIKI_BERRY, Item.WIDE_LENS, Item.FOCUS_BAND}, 100), // 280
-				new Trainer("DM", new Pokemon[]{new Pokemon(132, 90, false, true), new Pokemon(143, 90, false, true), new Pokemon(148, 90, false, true)}, new Item[]{Item.EVIOLITE, Item.FOCUS_BAND, Item.RINDO_BERRY}, 100),
+				new Trainer("DM", new Pokemon[]{new Pokemon(132, 90, false, true), new Pokemon(143, 90, false, true), new Pokemon(148, 90, false, true)}, new Item[]{Item.EVIOLITE, Item.POWER_HERB, Item.RINDO_BERRY}, 100),
 				new Trainer("DN", new Pokemon[]{new Pokemon(139, 75, false, true), new Pokemon(140, 65, false, true)}, new Item[]{Item.EVIOLITE, Item.COSMIC_CORE}, 100),
 				new Trainer("DO", new Pokemon[]{new Pokemon(138, 63, false, true), new Pokemon(142, 63, false, true), new Pokemon(216, 64, false, true)}, new Item[]{Item.WACAN_BERRY, Item.WEAKNESS_POLICY, Item.RED_CARD}, 100),
 				new Trainer("DP", new Pokemon[]{new Pokemon(150, 64, false, true), new Pokemon(150, 65, false, true), new Pokemon(150, 66, false, true)}, new Item[]{Item.LIFE_ORB, Item.MYSTICOLA_BERRY, Item.WHITE_HERB}, 100),
-				new Trainer("DQ", new Pokemon[]{new Pokemon(152, 65, false, true), new Pokemon(155, 64, false, true), new Pokemon(227, 65, false, true), new Pokemon(105, 64, false, true)}, 100), // 285
-				new Trainer("DR", new Pokemon[]{new Pokemon(107, 64, false, true), new Pokemon(77, 65, false, true), new Pokemon(21, 65, false, true), new Pokemon(47, 66, false, true)}, 100),
-				new Trainer("DS", new Pokemon[]{new Pokemon(100, 65, false, true), new Pokemon(54, 65, false, true), new Pokemon(145, 64, false, true), new Pokemon(173, 65, false, true)}, 100),
-				new Trainer("DT", new Pokemon[]{new Pokemon(103, 65, false, true), new Pokemon(58, 66, false, true), new Pokemon(18, 65, false, true)}, 100),
-				new Trainer("DU", new Pokemon[]{new Pokemon(93, 65, false, true), new Pokemon(97, 66, false, true), new Pokemon(6, 66, false, true), new Pokemon(225, 65, false, true)}, 100),
-				new Trainer("DV", new Pokemon[]{new Pokemon(204, 68, false, true), new Pokemon(125, 68, false, true), new Pokemon(63, 68, false, true)}, 100), // 290
-				new Trainer("7 Gym A", new Pokemon[]{new Pokemon(61, 69, false, true), new Pokemon(61, 69, false, true), new Pokemon(145, 67, false, true)}, 200),
-				new Trainer("7 Gym B", new Pokemon[]{new Pokemon(47, 68, false, true), new Pokemon(122, 67, false, true), new Pokemon(47, 69, false, true)}, 200),
-				new Trainer("7 Gym C", new Pokemon[]{new Pokemon(128, 68, false, true), new Pokemon(150, 68, false, true)}, 200),
-				new Trainer("7 Gym D", new Pokemon[]{new Pokemon(150, 69, false, true), new Pokemon(107, 68, false, true)}, 200),
-				new Trainer("7 Gym E", new Pokemon[]{new Pokemon(178, 68, false, true), new Pokemon(145, 67, false, true), new Pokemon(122, 68, false, true)}, 200), // 295
-				new Trainer("7 Gym F", new Pokemon[]{new Pokemon(125, 68, false, true), new Pokemon(47, 69, false, true)}, 200),
-				new Trainer("7 Gym G", new Pokemon[]{new Pokemon(185, 69, false, true), new Pokemon(178, 68, false, true), new Pokemon(128, 67, false, true)}, 200),
-				new Trainer("7 Gym H", new Pokemon[]{new Pokemon(145, 68, false, true), new Pokemon(150, 69, false, true)}, 200),
-				new Trainer("7 Gym I", new Pokemon[]{new Pokemon(150, 70, false, true)}, 200),
-				new Trainer("7 Gym J", new Pokemon[]{new Pokemon(143, 90, false, true), new Pokemon(125, 67, false, true), new Pokemon(61, 69, false, true)}, 200), // 300
-				new Trainer("7 Gym K", new Pokemon[]{new Pokemon(186, 67, false, true), new Pokemon(77, 69, false, true)}, 200),
-				new Trainer("7 Gym L", new Pokemon[]{new Pokemon(107, 67, false, true), new Pokemon(122, 68, false, true)}, 200),
-				new Trainer("7 Gym M", new Pokemon[]{new Pokemon(125, 69, false, true), new Pokemon(122, 69, false, true), new Pokemon(128, 69, false, true)}, 200),
-				new Trainer("7 Gym N", new Pokemon[]{new Pokemon(77, 69, false, true), new Pokemon(178, 69, false, true)}, 200),
+				new Trainer("DQ", new Pokemon[]{new Pokemon(152, 65, false, true), new Pokemon(155, 64, false, true), new Pokemon(227, 65, false, true), new Pokemon(105, 64, false, true)}, new Item[]{Item.BLACK_SLUDGE, Item.ASSAULT_VEST, Item.SPELL_TAG, Item.BLUNDER_POLICY}, 100), // 285
+				new Trainer("DR", new Pokemon[]{new Pokemon(107, 64, false, true), new Pokemon(77, 65, false, true), new Pokemon(21, 65, false, true), new Pokemon(47, 66, false, true)}, new Item[]{Item.AIR_BALLOON, Item.RED_CARD, Item.COSMIC_CORE, Item.WHITE_HERB}, 100),
+				new Trainer("DS", new Pokemon[]{new Pokemon(100, 65, false, true), new Pokemon(54, 65, false, true), new Pokemon(145, 64, false, true), new Pokemon(173, 65, false, true)}, new Item[]{Item.ROCKY_HELMET, Item.STARF_BERRY, Item.ASSAULT_VEST, Item.SITRUS_BERRY}, 100),
+				new Trainer("DT", new Pokemon[]{new Pokemon(103, 65, false, true), new Pokemon(58, 66, false, true), new Pokemon(18, 65, false, true)}, new Item[]{Item.STARF_BERRY, Item.STARF_BERRY, Item.CUSTAP_BERRY}, 100),
+				new Trainer("DU", new Pokemon[]{new Pokemon(93, 65, false, true), new Pokemon(97, 66, false, true), new Pokemon(6, 66, false, true), new Pokemon(225, 65, false, true)}, new Item[]{Item.SILK_SCARF, Item.LIFE_ORB, Item.EXPERT_BELT, Item.BLACK_GLASSES}, 100),
+				new Trainer("DV", new Pokemon[]{new Pokemon(204, 68, false, true), new Pokemon(125, 68, false, true), new Pokemon(63, 68, false, true)}, new Item[]{Item.BLUNDER_POLICY, Item.POWER_HERB, Item.WIDE_LENS}, 100), // 290
+				new Trainer("7 Gym A", new Pokemon[]{new Pokemon(61, 69, false, true), new Pokemon(61, 69, false, true), new Pokemon(145, 67, false, true)}, new Item[]{Item.FOCUS_BAND, Item.WIDE_LENS, Item.POWER_HERB}, 200),
+				new Trainer("7 Gym B", new Pokemon[]{new Pokemon(47, 68, false, true), new Pokemon(122, 67, false, true), new Pokemon(47, 69, false, true)}, new Item[]{Item.FOCUS_SASH, Item.POWER_HERB, Item.WHITE_HERB}, 200),
+				new Trainer("7 Gym C", new Pokemon[]{new Pokemon(128, 68, false, true), new Pokemon(150, 68, false, true)}, new Item[]{Item.LIFE_ORB, Item.LIFE_ORB}, 200),
+				new Trainer("7 Gym D", new Pokemon[]{new Pokemon(150, 69, false, true), new Pokemon(107, 68, false, true)}, new Item[]{Item.FOCUS_SASH, Item.CUSTAP_BERRY}, 200),
+				new Trainer("7 Gym E", new Pokemon[]{new Pokemon(178, 68, false, true), new Pokemon(145, 67, false, true), new Pokemon(122, 68, false, true)}, new Item[]{Item.COLBUR_BERRY, Item.KEBIA_BERRY, Item.SITRUS_BERRY}, 200), // 295
+				new Trainer("7 Gym F", new Pokemon[]{new Pokemon(125, 68, false, true), new Pokemon(47, 69, false, true)}, new Item[]{Item.AIR_BALLOON, Item.WHITE_HERB}, 200),
+				new Trainer("7 Gym G", new Pokemon[]{new Pokemon(185, 69, false, true), new Pokemon(178, 68, false, true), new Pokemon(128, 67, false, true)}, new Item[]{Item.EVIOLITE, Item.CHILAN_BERRY, Item.STARF_BERRY}, 200),
+				new Trainer("7 Gym H", new Pokemon[]{new Pokemon(145, 68, false, true), new Pokemon(150, 69, false, true)}, new Item[]{Item.LEFTOVERS, Item.ROCKY_HELMET}, 200),
+				new Trainer("7 Gym I", new Pokemon[]{new Pokemon(150, 70, false, true)}, new Item[]{Item.FOCUS_BAND}, 200),
+				new Trainer("7 Gym J", new Pokemon[]{new Pokemon(143, 90, false, true), new Pokemon(125, 67, false, true), new Pokemon(61, 69, false, true)}, new Item[]{Item.POWER_HERB, Item.KING1S_ROCK, Item.RED_CARD}, 200), // 300
+				new Trainer("7 Gym K", new Pokemon[]{new Pokemon(186, 67, false, true), new Pokemon(77, 69, false, true)}, new Item[]{Item.ASSAULT_VEST, Item.COLBUR_BERRY}, 200),
+				new Trainer("7 Gym L", new Pokemon[]{new Pokemon(107, 67, false, true), new Pokemon(122, 68, false, true)}, new Item[]{Item.QUICK_CLAW, Item.ROCKY_HELMET}, 200),
+				new Trainer("7 Gym M", new Pokemon[]{new Pokemon(125, 69, false, true), new Pokemon(122, 69, false, true), new Pokemon(128, 69, false, true)}, new Item[]{Item.FOCUS_BAND, Item.BRIGHT_POWDER, Item.QUICK_CLAW}, 200),
+				new Trainer("7 Gym N", new Pokemon[]{new Pokemon(77, 69, false, true), new Pokemon(178, 69, false, true)}, new Item[]{Item.RED_CARD, Item.RED_CARD}, 200),
 				new Trainer("7 Gym Leader 1", new Pokemon[]{new Pokemon(122, 70, false, true), new Pokemon(150, 70, false, true), new Pokemon(47, 70, false, true), new Pokemon(107, 70, false, true), new Pokemon(232, 70, false, true), new Pokemon(229, 71, false, true)}, 500, Item.TM03), // 305
-				new Trainer("DX", new Pokemon[]{new Pokemon(125, 65, false, true), new Pokemon(212, 66, false, true), new Pokemon(119, 66, false, true), new Pokemon(204, 65, false, true)}, 100),
-				new Trainer("DY", new Pokemon[]{new Pokemon(196, 67, false, true), new Pokemon(168, 67, false, true)}, 100),
-				new Trainer("DZ", new Pokemon[]{new Pokemon(136, 67, false, true), new Pokemon(162, 67, false, true), new Pokemon(180, 66, false, true), new Pokemon(149, 67, false, true)}, 100),
-				new Trainer("EA", new Pokemon[]{new Pokemon(222, 67, false, true), new Pokemon(227, 67, false, true), new Pokemon(157, 68, false, true), new Pokemon(159, 67, false, true), new Pokemon(131, 67, false, true)}, 100),
-				new Trainer("EB", new Pokemon[]{new Pokemon(141, 69, false, true), new Pokemon(116, 67, false, true), new Pokemon(3, 68, false, true), new Pokemon(28, 67, false, true), new Pokemon(31, 68, false, true)}, 100), // 310
-				new Trainer("TN MSJ 1", new Pokemon[]{new Pokemon(53, 68, false, true), new Pokemon(56, 68, false, true), new Pokemon(84, 68, false, true), new Pokemon(87, 68, false, true), new Pokemon(24, 68, false, true), new Pokemon(60, 69, false, true)}, 100),
-				new Trainer("EC", new Pokemon[]{new Pokemon(96, 66, false, true), new Pokemon(107, 66, false, true), new Pokemon(110, 66, false, true)}, 100),
-				new Trainer("ED", new Pokemon[]{new Pokemon(116, 66, false, true), new Pokemon(170, 66, false, true), new Pokemon(219, 66, false, true)}, 100),
-				new Trainer("EE", new Pokemon[]{new Pokemon(178, 66, false, true), new Pokemon(15, 66, false, true), new Pokemon(10, 66, false, true)}, 100),
-				new Trainer("EF", new Pokemon[]{new Pokemon(9, 66, false, true), new Pokemon(140, 66, false, true), new Pokemon(72, 66, false, true)}, 100), // 315
+				new Trainer("DX", new Pokemon[]{new Pokemon(125, 65, false, true), new Pokemon(212, 66, false, true), new Pokemon(119, 66, false, true), new Pokemon(204, 65, false, true)}, new Item[]{Item.TERRAIN_EXTENDER, Item.CHOICE_BAND, Item.COVERT_CLOAK, Item.WHITE_HERB}, 100),
+				new Trainer("DY", new Pokemon[]{new Pokemon(196, 67, false, true), new Pokemon(168, 67, false, true)}, new Item[]{Item.ASSAULT_VEST, Item.LEFTOVERS}, 100),
+				new Trainer("DZ", new Pokemon[]{new Pokemon(136, 67, false, true), new Pokemon(162, 67, false, true), new Pokemon(180, 66, false, true), new Pokemon(149, 67, false, true)}, new Item[]{Item.RED_CARD, Item.WHITE_HERB, Item.LIFE_ORB, Item.RINDO_BERRY}, 100),
+				new Trainer("EA", new Pokemon[]{new Pokemon(222, 67, false, true), new Pokemon(227, 67, false, true), new Pokemon(157, 68, false, true), new Pokemon(159, 67, false, true), new Pokemon(131, 67, false, true)}, new Item[]{Item.EXPERT_BELT, Item.LEFTOVERS, Item.LEFTOVERS, Item.ROSELI_BERRY, Item.FOCUS_SASH}, 100),
+				new Trainer("EB", new Pokemon[]{new Pokemon(141, 69, false, true), new Pokemon(116, 67, false, true), new Pokemon(3, 68, false, true), new Pokemon(28, 67, false, true), new Pokemon(31, 68, false, true)}, new Item[]{Item.EVIOLITE, Item.SOFT_SAND, Item.BABIRI_BERRY, Item.WHITE_HERB, Item.BLACK_SLUDGE}, 100), // 310
+				new Trainer("TN MSJ 1", new Pokemon[]{new Pokemon(53, 68, false, true), new Pokemon(56, 68, false, true), new Pokemon(84, 68, false, true), new Pokemon(87, 68, false, true), new Pokemon(24, 68, false, true), new Pokemon(60, 69, false, true)}, new Item[]{Item.ROCKY_HELMET, Item.FOCUS_SASH, Item.TERRAIN_EXTENDER, Item.BRIGHT_POWDER, Item.LEFTOVERS, Item.TWISTED_SPOON}, 100),
+				new Trainer("EC", new Pokemon[]{new Pokemon(96, 66, false, true), new Pokemon(107, 66, false, true), new Pokemon(110, 66, false, true)}, new Item[]{Item.CHOICE_BAND, Item.QUICK_CLAW, Item.WHITE_HERB}, 100),
+				new Trainer("ED", new Pokemon[]{new Pokemon(116, 66, false, true), new Pokemon(170, 66, false, true), new Pokemon(219, 66, false, true)}, new Item[]{Item.AIR_BALLOON, Item.WIDE_LENS, Item.ASSAULT_VEST}, 100),
+				new Trainer("EE", new Pokemon[]{new Pokemon(178, 66, false, true), new Pokemon(15, 66, false, true), new Pokemon(12, 66, false, true)}, new Item[]{Item.EXPERT_BELT, Item.WACAN_BERRY, Item.WISE_GLASSES}, 100),
+				new Trainer("EF", new Pokemon[]{new Pokemon(9, 66, false, true), new Pokemon(140, 66, false, true), new Pokemon(72, 66, false, true)}, new Item[]{Item.MUSCLE_BAND, Item.STARF_BERRY, Item.FOCUS_SASH}, 100), // 315
 //				new Trainer("Rival 5", new Pokemon[]{new Pokemon(-132, 36, false, true), new Pokemon(-25, 27, false, true), new Pokemon(-22, 32, false, true), new Pokemon(-41, 29, false, true), new Pokemon(-78, 35, false, true)}, 500),
 //				new Trainer("KK", new Pokemon[]{new Pokemon(-96, 25, false, true), new Pokemon(-97, 20, false, true), new Pokemon(-98, 30, false, true)}, 100),
 //				new Trainer("LL", new Pokemon[]{new Pokemon(-39, 25, false, true), new Pokemon(-41, 25, false, true), new Pokemon(-39, 30, false, true), new Pokemon(-41, 30, false, true)}, 100),
@@ -1789,6 +1789,46 @@ public class Main {
 			
 			encounters = Encounter.getEncounters(124, 21, 50, "Standard", "", false); // Route 38
 			writer.write("Route 38");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(137, 21, 50, "Standard", "", false); // MSJ 1A
+			writer.write("Mt. St. Joseph 1A");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(138, 21, 50, "Standard", "", false); // MSJ 2A
+			writer.write("Mt. St. Joseph 2A");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(139, 21, 50, "Standard", "", false); // MSJ 2B
+			writer.write("Mt. St. Joseph 2B");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(140, 21, 50, "Standard", "", false); // MSJ 3A
+			writer.write("Mt. St. Joseph 3A");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(141, 21, 50, "Standard", "", false); // MSJ 3B
+			writer.write("Mt. St. Joseph 3B");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(142, 21, 50, "Standard", "", false); // MSJ 4A
+			writer.write("Mt. St. Joseph 4A");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(137, 21, 50, "Lava", "", false); // MSJ 1A
+			writer.write("Mt. St. Joseph 1A/2A/2B/3A/3B/4A");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
+			encounters = Encounter.getEncounters(143, 21, 50, "Lava", "", false); // MSJ 4B
+			writer.write("Mt. St. Joseph 4B");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			

@@ -646,6 +646,70 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(31, 36, Item.TM36, mapNum); // sludge bomb
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 35, Item.CHOICE_BAND, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(37, 35, Item.CHOICE_SPECS, mapNum);
+		
+		mapNum = 124;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(12, 15, Item.FULL_RESTORE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(18, 26, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(17, 32, Item.PP_UP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(8, 40, Item.FULL_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(23, 46, Item.REVIVE, mapNum);
+		
+		gp.obj[mapNum][objIndex] = ResistBerrySetup(48, 88, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = ObjSetup(45, 76, Item.HYPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 84, Item.SERIOUS_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(66, 69, Item.AIR_BALLOON, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(61, 72, Item.THROAT_SPRAY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(84, 93, Item.ELIXIR, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(91, 89, Item.BURN_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(91, 83, Item.RAWST_BERRY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(84, 79, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(79, 58, Item.ADAMANT_MINT, mapNum);
+		
+		mapNum = 137;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(70, 67, Item.POWER_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(64, 81, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(73, 81, Item.QUIET_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(78, 71, Item.MAX_ELIXIR, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(87, 79, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(86, 62, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 75, Item.HEAT_ROCK, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 75, Item.SMOOTH_ROCK, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 73, Item.DAMP_ROCK, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 74, Item.ICY_ROCK, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 48, Item.TM93, mapNum); // earth power
+		
+		mapNum = 138;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 56, Item.WHITE_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(36, 76, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 68, Item.MODEST_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(51, 50, Item.BRAVE_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(48, 76, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 58, Item.HYPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 69, Item.BOTTLE_CAP, mapNum);
+		
+		mapNum = 139;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(45, 70, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 50, Item.GOLD_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 70, Item.MAX_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 60, Item.MAX_REVIVE, mapNum);
+		
+		mapNum = 140;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 66, Item.TM34, mapNum); // magic tomb
+		gp.obj[mapNum][objIndex] = ObjSetup(46, 60, Item.TIMID_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 54, Item.MAX_ELIXIR, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(51, 51, Item.TM35, mapNum); // flamethrower
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 43, Item.GOLD_BOTTLE_CAP, mapNum);
+		
+		mapNum = 141;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(23, 73, Item.TM78, mapNum); // swords dance
+		gp.obj[mapNum][objIndex] = ObjSetup(23, 67, Item.GOLD_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 59, Item.RED_CARD, mapNum);
 	}
 
 	public void setNPC() {
@@ -1323,10 +1387,8 @@ public class AssetSetter {
 		if (!flags[26]) {
 			gp.npc[mapNum][index] = NPCSetup(25, 82, "The gym is closed right now. Why, you ask? Because a goddamn Team Nuke member came here and KIDNAPPED one of our employees.\n\nYeah, what the hell is right! Last I saw him, he was bringing Marcus towards the volcano. I just hope that Marcus doesn't sue us...");
 		} else {
-			System.out.println(index);
 			gp.npc[mapNum][index++] = null;
 		}
-		
 		
 		mapNum = 127;
 		index = 0;
@@ -1837,6 +1899,60 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(53, 73, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(52, 73, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(51, 73, 4, mapNum, map);
+		
+		mapNum = 140;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 50, 2, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 49, 2, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 48, 2, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 47, 2, 4, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(78, 60, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(78, 67, 0, 1, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 69, 1, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(31, 69, 1, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 69, 1, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(29, 69, 1, 4, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(71, 55, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(65, 55, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 57, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 63, 3, 1, mapNum, map);
+		
+		mapNum = 141;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(53, 63, 1, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 63, 3, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 63, 3, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 63, 3, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(64, 63, 3, 4, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(65, 77, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 80, 1, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(42, 80, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 77, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 75, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(26, 79, 3, 1, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 64, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 64, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 66, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 67, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 71, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 72, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(44, 64, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 64, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 62, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 63, 4, mapNum, map);
+		
+		mapNum = 142;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 53, 2, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 54, 2, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 44, 3, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 44, 3, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(59, 40, 2, 1, mapNum, map);
 	}
 
 	public void updateNPC(int map) {
