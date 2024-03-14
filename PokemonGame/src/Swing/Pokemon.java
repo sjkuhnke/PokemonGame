@@ -5916,7 +5916,6 @@ public class Pokemon implements Serializable {
 				resistantTypes.add(PType.FIGHTING);
 	            resistantTypes.add(PType.DARK);
 	            resistantTypes.add(PType.LIGHT);
-	            resistantTypes.add(PType.GALACTIC);
 	            break;
 			case DRAGON:
 				resistantTypes.add(PType.STEEL);
@@ -6038,7 +6037,6 @@ public class Pokemon implements Serializable {
 	            weakTypes.add(PType.LIGHT);
 	            break;
 			case DARK:
-				weakTypes.add(PType.MAGIC);
 				weakTypes.add(PType.PSYCHIC);
 	            weakTypes.add(PType.GHOST);
 	            break;

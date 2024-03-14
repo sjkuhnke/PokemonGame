@@ -844,6 +844,8 @@ public class Main {
 				new Trainer("ED", new Pokemon[]{new Pokemon(116, 66, false, true), new Pokemon(170, 66, false, true), new Pokemon(219, 66, false, true)}, new Item[]{Item.AIR_BALLOON, Item.WIDE_LENS, Item.ASSAULT_VEST}, 100),
 				new Trainer("EE", new Pokemon[]{new Pokemon(178, 66, false, true), new Pokemon(15, 66, false, true), new Pokemon(12, 66, false, true)}, new Item[]{Item.EXPERT_BELT, Item.WACAN_BERRY, Item.WISE_GLASSES}, 100),
 				new Trainer("EF", new Pokemon[]{new Pokemon(9, 66, false, true), new Pokemon(140, 66, false, true), new Pokemon(72, 66, false, true)}, new Item[]{Item.MUSCLE_BAND, Item.STARF_BERRY, Item.FOCUS_SASH}, 100), // 315
+				new Trainer("ZT", new Pokemon[]{new Pokemon(48, 20, false, true), new Pokemon(118, 20, false, true)}, 100),
+				new Trainer("ZU", new Pokemon[]{new Pokemon(211, 19, false, true), new Pokemon(213, 19, false, true)}, 100),
 //				new Trainer("Rival 5", new Pokemon[]{new Pokemon(-132, 36, false, true), new Pokemon(-25, 27, false, true), new Pokemon(-22, 32, false, true), new Pokemon(-41, 29, false, true), new Pokemon(-78, 35, false, true)}, 500),
 //				new Trainer("KK", new Pokemon[]{new Pokemon(-96, 25, false, true), new Pokemon(-97, 20, false, true), new Pokemon(-98, 30, false, true)}, 100),
 //				new Trainer("LL", new Pokemon[]{new Pokemon(-39, 25, false, true), new Pokemon(-41, 25, false, true), new Pokemon(-39, 30, false, true), new Pokemon(-41, 30, false, true)}, 100),

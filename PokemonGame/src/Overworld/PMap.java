@@ -558,7 +558,7 @@ public class PMap extends JFrame {
 					return 8;
 				}
 				if (y > 52) {
-					PlayerCharacter.currentMapName = "Gelb Forest";
+					PlayerCharacter.currentMapName = "Gelb Forest (1A)";
 					return 7;
 				}
 			}
@@ -954,7 +954,7 @@ public class PMap extends JFrame {
 			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 123:
-			PlayerCharacter.currentMapName = "Gelb Forest";
+			PlayerCharacter.currentMapName = "Gelb Forest (1A)";
 			return 7;
 		case 124:
 			if (y <= 49) {
@@ -1007,28 +1007,34 @@ public class PMap extends JFrame {
 			return 35;
 		case 137:
 			PlayerCharacter.currentMapName = "Mt. St. Joseph (1A)";
-			return 20;
+			return 37;
 		case 138:
 			PlayerCharacter.currentMapName = "Mt. St. Joseph (2A)";
-			return 20;
+			return 37;
 		case 139:
 			PlayerCharacter.currentMapName = "Mt. St. Joseph (2B)";
-			return 20;
+			return 37;
 		case 140:
 			PlayerCharacter.currentMapName = "Mt. St. Joseph (3A)";
-			return 28;
+			return 37;
 		case 141:
 			PlayerCharacter.currentMapName = "Mt. St. Joseph (3B)";
-			return 15;
+			return 37;
 		case 142:
 			PlayerCharacter.currentMapName = "Mt. St. Joseph (4A)";
-			return 20;
+			return 37;
 		case 143:
 			PlayerCharacter.currentMapName = "Mt. St. Joseph (4B)";
-			return 20;
+			return 37;
 		case 144: // TODO from here down
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			if (x <= 32) {
+				PlayerCharacter.currentMapName = "Gelb Forest (2A)";
+				return 7;
+			}
+			if (x > 32) {
+				PlayerCharacter.currentMapName = "Route 44";
+				return 41;
+			}
 		case 145:
 			PlayerCharacter.currentMapName = "";
 			return 4;

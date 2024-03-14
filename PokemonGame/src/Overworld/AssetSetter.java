@@ -710,6 +710,11 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(23, 73, Item.TM78, mapNum); // swords dance
 		gp.obj[mapNum][objIndex] = ObjSetup(23, 67, Item.GOLD_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 59, Item.RED_CARD, mapNum);
+		
+		mapNum = 144;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(20, 23, Item.LIECHI_BERRY, mapNum, 2, 5);
+		gp.obj[mapNum][objIndex] = ObjSetup(24, 29, Item.PETAYA_BERRY, mapNum, 2, 5);
 	}
 
 	public void setNPC() {
@@ -847,7 +852,7 @@ public class AssetSetter {
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 40, 66, 31);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 36, 67, 32);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 34, 77, 33);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 38, 78, 33);
 		
 		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE_FULL, 19, 49, -1);
 		
@@ -1452,6 +1457,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 46, 50, 309);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 30, 55, 310);
 		
+		mapNum = 144;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 14, 17, 316);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 24, 16, 317);
 	}
 	
 	public void setInteractiveTile(int map) {
