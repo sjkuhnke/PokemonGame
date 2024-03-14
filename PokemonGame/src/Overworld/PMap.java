@@ -1026,7 +1026,7 @@ public class PMap extends JFrame {
 		case 143:
 			PlayerCharacter.currentMapName = "Mt. St. Joseph (4B)";
 			return 37;
-		case 144: // TODO from here down
+		case 144:
 			if (x <= 32) {
 				PlayerCharacter.currentMapName = "Gelb Forest (2A)";
 				return 7;
@@ -1035,7 +1035,7 @@ public class PMap extends JFrame {
 				PlayerCharacter.currentMapName = "Route 44";
 				return 41;
 			}
-		case 145:
+		case 145: // TODO from here down
 			PlayerCharacter.currentMapName = "";
 			return 4;
 		case 146:
