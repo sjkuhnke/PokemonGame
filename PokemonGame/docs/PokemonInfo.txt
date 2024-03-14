@@ -586,7 +586,7 @@ Level Up:
 19 - Low Kick
 20 - Baby-Doll Eyes
 20 - Covet
-23 - Feint Attack
+23 - Encore
 25 - Hypnosis
 28 - Knock Off
 30 - Swift
@@ -625,7 +625,7 @@ Level Up:
 19 - Low Kick
 20 - Baby-Doll Eyes
 20 - Covet
-23 - Feint Attack
+23 - Encore
 25 - Hypnosis
 28 - Knock Off
 30 - Swift
@@ -640,8 +640,8 @@ Level Up:
 40 - Desolate Void
 44 - Galaxy Blast
 47 - Cosmic Power
-50 - Abduct
-55 - Magic Crash
+50 - Memento
+55 - Abduct
 59 - Blizzard
 64 - Genesis Supernova
 70 - Hyper Beam
@@ -1629,6 +1629,7 @@ Level Up:
 59 - Head Smash
 63 - Outrage
 65 - Earthquake
+70 - Expanding Force
 
 ===================
 055 - Pebblepup
@@ -1811,7 +1812,7 @@ Level Up:
 46 - Blizzard
 50 - Aurora Veil
 53 - Freezing Glare
-60 - Luster Purge
+60 - Expanding Force
 
 ===================
 061 - Dualmoose
@@ -2323,7 +2324,7 @@ Level Up:
 58 - Magic Tomb
 61 - Sparkling Terrain
 65 - Morning Sun
-70 - Magic Crash
+70 - Expanding Force
 
 ===================
 078 - Otterpor
@@ -2384,9 +2385,10 @@ Level Up:
 40 - Magic Tomb
 43 - Light Screen
 46 - Hydro Pump
-50 - Solar Beam
+50 - Expanding Force
 55 - Blizzard
-60 - Shadow Ball
+60 - Calm Mind
+70 - Water Spout
 
 ===================
 080 - Florline
@@ -2395,7 +2397,7 @@ Type:
 Grass / Psychic
 
 Ability:
-Grassy Surge / None
+Grassy Surge / Psychic Surge
 
 Base Stats:
 43 HP / 43 Atk / 43 Def / 88 SpA / 80 SpD / 43 Spe / 340 BST
@@ -2423,7 +2425,7 @@ Type:
 Grass / Psychic
 
 Ability:
-Grassy Surge / None
+Grassy Surge / Psychic Surge
 
 Base Stats:
 67 HP / 72 Atk / 87 Def / 96 SpA / 93 SpD / 104 Spe / 519 BST
@@ -2445,8 +2447,8 @@ Level Up:
 45 - Grass Whistle
 50 - Psychic Terrain
 54 - Energy Ball
-59 - Twinkle Tackle
-63 - Spirit Break
+59 - Expanding Force
+63 - Moonblast
 70 - Petal Dance
 
 ===================
@@ -2598,6 +2600,7 @@ Base Stats:
 
 Level Up:
 1 - Aura Sphere
+1 - Dream Eater
 1 - Thief
 1 - Trick
 1 - Healing Wish
@@ -2618,8 +2621,8 @@ Level Up:
 45 - Psychic
 49 - Moonblast
 55 - Glitter Dance
-60 - Dream Eater
-65 - Black Hole Eclipse
+60 - Black Hole Eclipse
+65 - Expanding Force
 
 ===================
 088 - Gallade
@@ -3508,9 +3511,9 @@ Level Up:
 37 - Twinkle Tackle
 41 - Electric Terrain
 45 - Cotton Guard
-48 - Volt Tackle
+48 - Skull Bash
 51 - Extreme Speed
-55 - Skull Bash
+55 - Volt Tackle
 60 - Earthquake
 65 - Magnet Rise
 
@@ -3686,7 +3689,7 @@ Type:
 Electric / Normal
 
 Ability:
-Motor Drive / Electric Surge
+Electric Surge / Motor Drive
 
 Base Stats:
 30 HP / 45 Atk / 25 Def / 35 SpA / 40 SpD / 60 Spe / 235 BST
@@ -3712,7 +3715,7 @@ Type:
 Electric / Light
 
 Ability:
-Motor Drive / Electric Surge
+Electric Surge / Motor Drive
 
 Base Stats:
 75 HP / 105 Atk / 60 Def / 85 SpA / 60 SpD / 105 Spe / 490 BST
@@ -3745,7 +3748,7 @@ Type:
 Electric / Magic
 
 Ability:
-Motor Drive / Electric Surge
+Electric Surge / Motor Drive
 
 Base Stats:
 75 HP / 120 Atk / 70 Def / 80 SpA / 75 SpD / 125 Spe / 545 BST
@@ -4143,7 +4146,7 @@ Type:
 Water / Galactic
 
 Ability:
-False Illumination / Natural Cure
+Illumination / Natural Cure
 
 Base Stats:
 30 HP / 45 Atk / 55 Def / 70 SpA / 55 SpD / 85 Spe / 340 BST
@@ -4175,7 +4178,7 @@ Type:
 Water / Galactic
 
 Ability:
-False Illumination / Natural Cure
+Illumination / Natural Cure
 
 Base Stats:
 60 HP / 75 Atk / 85 Def / 100 SpA / 85 SpD / 115 Spe / 520 BST
@@ -4447,7 +4450,7 @@ Type:
 Water / Ground
 
 Ability:
-False Illumination / Prankster
+Illumination / Prankster
 
 Base Stats:
 55 HP / 60 Atk / 64 Def / 62 SpA / 55 SpD / 49 Spe / 345 BST
@@ -4483,7 +4486,7 @@ Type:
 Water / Ground
 
 Ability:
-False Illumination / Prankster
+Illumination / Prankster
 
 Base Stats:
 70 HP / 115 Atk / 100 Def / 60 SpA / 80 SpD / 60 Spe / 485 BST
@@ -5422,7 +5425,7 @@ Type:
 Normal / Ghost
 
 Ability:
-Adaptability / False Illumination
+Adaptability / Illumination
 
 Base Stats:
 35 HP / 60 Atk / 40 Def / 85 SpA / 40 SpD / 70 Spe / 330 BST
@@ -5449,7 +5452,7 @@ Type:
 Normal / Ghost
 
 Ability:
-Adaptability / False Illumination
+Adaptability / Illumination
 
 Base Stats:
 55 HP / 100 Atk / 60 Def / 125 SpA / 60 SpD / 110 Spe / 510 BST
@@ -6144,7 +6147,7 @@ Type:
 Fire / Electric
 
 Ability:
-Flame Body / Static
+Static / Flame Body
 
 Base Stats:
 60 HP / 65 Atk / 50 Def / 75 SpA / 50 SpD / 60 Spe / 360 BST
@@ -6171,7 +6174,7 @@ Type:
 Fire / Electric
 
 Ability:
-Flame Body / Levitate
+Levitate / Flame Body
 
 Base Stats:
 90 HP / 70 Atk / 80 Def / 85 SpA / 65 SpD / 70 Spe / 460 BST
@@ -6204,7 +6207,7 @@ Type:
 Fire / Electric
 
 Ability:
-Flame Body / Levitate
+Levitate / Flame Body
 
 Base Stats:
 95 HP / 90 Atk / 90 Def / 120 SpA / 90 SpD / 75 Spe / 560 BST
@@ -6553,7 +6556,7 @@ Type:
 Ground / Ghost
 
 Ability:
-False Illumination / Prankster
+Illumination / Prankster
 
 Base Stats:
 60 HP / 45 Atk / 52 Def / 64 SpA / 65 SpD / 59 Spe / 345 BST
@@ -6588,7 +6591,7 @@ Type:
 Dragon / Ghost
 
 Ability:
-False Illumination / Prankster
+Illumination / Prankster
 
 Base Stats:
 65 HP / 135 Atk / 65 Def / 50 SpA / 70 SpD / 100 Spe / 485 BST
@@ -6781,7 +6784,7 @@ Level Up:
 55 - Knock Off
 
 Evolutions:
-Zurrclu-S -> Zurroaratr (>= 250 happiness)
+Zurrclu-S -> Zurroaratr-S (>= 250 happiness)
 
 ===================
 222 - Zurroaratr-S
@@ -6984,8 +6987,8 @@ Level Up:
 34 - Whirlwind
 36 - Curse
 39 - Bitter Malice
-43 - Shadow Ball
-46 - Hurricane
+43 - Hurricane
+46 - Shadow Ball
 50 - Venom Spit
 55 - Frostbind
 60 - Aeroblast
@@ -7406,25 +7409,3 @@ Level Up:
 65 - Abyssal Chop
 75 - Dragon Dance
 
-Stats:
-Type,HP,Atk,Def,SpA,SpD,Spe,Amt
-Normal,68.3,72.4,65.8,59.4,64.4,64.1,16
-Rock,81.7,86.2,100.4,59.9,77.6,49.8,27
-Fire,74.9,67.1,71.5,87.0,74.2,71.3,26
-Water,66.7,64.4,70.7,64.9,75.2,66.2,33
-Grass,67.2,70.2,72.7,72.4,76.5,62.9,23
-Ice,76.3,82.7,73.7,78.5,83.9,63.4,15
-Electric,69.3,80.1,70.4,72.0,68.5,71.9,30
-Fighting,74.7,104.5,84.6,51.5,73.5,68.9,28
-Poison,63.1,65.3,57.3,85.2,84.1,81.8,13
-Ground,61.3,79.0,86.0,54.6,58.0,55.5,24
-Flying,68.9,62.2,72.7,72.6,81.4,83.3,20
-Psychic,64.9,65.4,68.0,81.2,87.5,56.2,21
-Bug,54.7,74.3,70.3,51.0,61.9,69.5,20
-Ghost,65.3,68.5,70.6,80.3,72.3,69.2,19
-Dragon,87.0,93.4,85.2,91.8,82.9,82.3,20
-Steel,67.4,83.5,96.2,66.5,81.2,66.2,13
-Dark,72.4,86.3,63.9,69.4,70.5,79.3,25
-Light,69.3,62.0,65.4,86.4,88.1,73.8,26
-Magic,65.9,83.9,68.1,90.0,83.2,79.6,22
-Galactic,88.3,71.1,78.6,76.8,87.9,67.8,18

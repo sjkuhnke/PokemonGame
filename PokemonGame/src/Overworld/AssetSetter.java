@@ -1461,6 +1461,13 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 14, 17, 316);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 24, 16, 317);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 40, 40, 318);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 50, 42, 319);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 55, 44, 320);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 46, 49, 321);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 54, 49, 322);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 57, 49, 323);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 57, 80, 324);
 	}
 	
 	public void setInteractiveTile(int map) {
@@ -1962,6 +1969,28 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 44, 3, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 44, 3, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(59, 40, 2, 1, mapNum, map);
+		
+		mapNum = 144;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(25, 24, 3, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(26, 24, 3, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 27, 2, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 28, 2, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 23, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(36, 18, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 55, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 53, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(59, 50, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 59, 2, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 63, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 64, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 65, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 80, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(61, 80, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 80, 4, mapNum, map);
+		SetupPit(mapNum, 64, 80, 144, 11, 28, map); // lower TODO dest
+		SetupPit(mapNum, 63, 67, 144, 11, 28, map); // middle TODO dest
+		SetupPit(mapNum, 72, 74, 144, 11, 28, map); // upper TODO dest
 	}
 
 	public void updateNPC(int map) {
