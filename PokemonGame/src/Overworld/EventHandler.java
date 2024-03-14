@@ -734,6 +734,10 @@ public class EventHandler {
 			// Joseph 4A
 			if (hit(142,73,40)) teleport(143, 53, 49,false);
 			if (hit(143,53,48)) teleport(142, 73, 39,false);
+			
+			// Gelb Forest 1 -> 2
+			if (hit(11,42,77)) teleport(144, 11, 28,false);
+			if (hit(144,10,28)) teleport(11, 41, 77,false);
 		}
 	}
 	
