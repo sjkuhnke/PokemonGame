@@ -832,7 +832,7 @@ public class Pokemon implements Serializable {
 			this.type2 = PType.ICE;
 		} else if (id == 66) {
 			this.type1 = PType.ROCK;
-			this.type2 = PType.LIGHT;
+			this.type2 = PType.FIGHTING;
 		} else if (id == 67) {
 			this.type1 = PType.ROCK;
 			this.type2 = PType.FIGHTING;
@@ -3056,8 +3056,8 @@ public class Pokemon implements Serializable {
 		} else if (this.id == 174) { this.baseStats = new int[]{50,25,28,45,55,15};
 		} else if (this.id == 175) { this.baseStats = new int[]{70,45,48,60,65,35};
 		} else if (this.id == 176) { this.baseStats = new int[]{95,70,73,95,90,60};
-		} else if (this.id == 177) { this.baseStats = new int[]{55,25,70,105,100,65};
-		} else if (this.id == 178) { this.baseStats = new int[]{75,35,75,135,120,80};
+		} else if (this.id == 177) { this.baseStats = new int[]{40,45,65,100,105,65};
+		} else if (this.id == 178) { this.baseStats = new int[]{70,45,75,135,115,80};
 		} else if (this.id == 179) { this.baseStats = new int[]{35,60,40,85,40,70};
 		} else if (this.id == 180) { this.baseStats = new int[]{55,100,60,125,60,110};
 		} else if (this.id == 181) { this.baseStats = new int[]{50,70,55,50,50,55};
@@ -3504,7 +3504,7 @@ public class Pokemon implements Serializable {
 			double accuracy = acc * asAccModifier(accEv);
 			if ((field.equals(field.weather, Effect.SANDSTORM) && foeAbility == Ability.SAND_VEIL) ||
 					(field.equals(field.weather, Effect.SNOW) && foeAbility == Ability.SNOW_CLOAK)) accuracy *= 0.8;
-			if (foe.item == Item.BRIGHT_POWDER) damage *= 0.9;
+			if (foe.item == Item.BRIGHT_POWDER) accuracy *= 0.9;
 			if (!hit(accuracy) || foe.vStatuses.contains(Status.SEMI_INV) && acc <= 100) {
 				useMove(move);
 				console.writeln(this.nickname + "'s attack missed!");
@@ -3517,6 +3517,7 @@ public class Pokemon implements Serializable {
 					}
 				}
 				if (this.item == Item.BLUNDER_POLICY) {
+					console.writeln(this.nickname + " used its " + item.toString() + "!");
 					stat(this, 4, 2, foe);
 					this.consumeItem();
 				}
@@ -3550,7 +3551,7 @@ public class Pokemon implements Serializable {
 				double accuracy = acc * asAccModifier(accEv);
 				if ((field.equals(field.weather, Effect.SANDSTORM) && foeAbility == Ability.SAND_VEIL) ||
 						(field.equals(field.weather, Effect.SNOW) && foeAbility == Ability.SNOW_CLOAK)) accuracy *= 0.8;
-				if (foe.item == Item.BRIGHT_POWDER) damage *= 0.9;
+				if (foe.item == Item.BRIGHT_POWDER) accuracy *= 0.9;
 				if (!hit(accuracy) || foe.vStatuses.contains(Status.SEMI_INV) && acc <= 100) {
 					console.writeln(this.nickname + "'s attack missed!");
 					if (this.item == Item.BLUNDER_POLICY) {
@@ -4328,8 +4329,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.BUG_BITE || move == Move.PLUCK) {
 			if (foe.item != null && foe.item.isBerry()) {
 				console.writeln(this.nickname + " stole and ate " + foe.nickname + "'s berry!");
-				eatBerry(foe.item, false, foe);
-				foe.item = null;
+				eatBerry(foe.item, true, foe);
 			}
 		} else if (move == Move.BUG_BUZZ) {
 			stat(foe, 3, -1, this);
@@ -4939,7 +4939,7 @@ public class Pokemon implements Serializable {
 				}
 			} else {
 				for (Pokemon p : team) {
-					if (p != null && p.status != Status.HEALTHY) {
+					if (p != null && !p.isFainted() && p.status != Status.HEALTHY) {
 						if (announce) console.writeln(p.nickname + " was cured of its " + p.status.getName() + "!");
 						p.status = Status.HEALTHY;
 					}
