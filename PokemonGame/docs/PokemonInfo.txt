@@ -1961,7 +1961,7 @@ Level Up:
 066 - Tricerpup
 ===================
 Type:
-Rock / Light
+Rock / Fighting
 
 Ability:
 Rock Head / Sand Force
@@ -5364,7 +5364,7 @@ Ability:
 Serene Grace / Natural Cure
 
 Base Stats:
-55 HP / 25 Atk / 70 Def / 105 SpA / 100 SpD / 65 Spe / 420 BST
+40 HP / 45 Atk / 65 Def / 100 SpA / 105 SpD / 65 Spe / 420 BST
 
 Level Up:
 1 - Baby-Doll Eyes
@@ -5397,7 +5397,7 @@ Ability:
 Serene Grace / Natural Cure
 
 Base Stats:
-75 HP / 35 Atk / 75 Def / 135 SpA / 120 SpD / 80 Spe / 520 BST
+70 HP / 45 Atk / 75 Def / 135 SpA / 115 SpD / 80 Spe / 520 BST
 
 Level Up:
 1 - Glittering Tornado

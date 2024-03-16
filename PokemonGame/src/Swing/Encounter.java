@@ -622,6 +622,26 @@ public class Encounter {
 				encounters.add(new Encounter(96, 60, 65, 0.15));
 			} else if (area == 143 && type.equals("Lava")) { // Joseph 4B
 				encounters.add(new Encounter(94, 100, 100, 1.0));
+			} else if (area == 144 && x <= 32 && type.equals("Standard")) { // Gelb Forest (2A)
+				encounters.add(new Encounter(26, 14, 18, 0.20));
+				encounters.add(new Encounter(32, 13, 16, 0.10));
+				encounters.add(new Encounter(35, 14, 17, 0.07));
+				encounters.add(new Encounter(38, 15, 18, 0.10));
+				encounters.add(new Encounter(41, 13, 14, 0.10));
+				encounters.add(new Encounter(42, 15, 17, 0.05));
+				encounters.add(new Encounter(82, 15, 17, 0.09));
+				encounters.add(new Encounter(160, 15, 18, 0.19));
+				encounters.add(new Encounter(153, 16, 18, 0.10));
+			} else if (area == 144 && x > 32 && type.equals("Standard")) { // Route 44 TODO
+				encounters.add(new Encounter(26, 14, 18, 0.20));
+				encounters.add(new Encounter(32, 13, 16, 0.10));
+				encounters.add(new Encounter(35, 14, 17, 0.07));
+				encounters.add(new Encounter(38, 15, 18, 0.10));
+				encounters.add(new Encounter(41, 13, 14, 0.10));
+				encounters.add(new Encounter(42, 15, 17, 0.05));
+				encounters.add(new Encounter(82, 15, 17, 0.09));
+				encounters.add(new Encounter(160, 15, 18, 0.19));
+				encounters.add(new Encounter(153, 16, 18, 0.10));
 			}
 		}
 		

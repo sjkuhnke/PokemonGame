@@ -130,7 +130,7 @@ Low Sweep : Physical / 65 / 100 : 100% chance to lower foe's Speed by 1
 Mach Punch : Physical / 40 / 100 : Always goes first
 No Retreat : Status / 0 / -- : Raises all of user's stats by 1, user can't switch out. Can only be used once
 Power-Up Punch : Physical / 40 / 100 : 100% chance to raise user's Attack by 1
-Revenge : Physical / 120 / 100 : Power is doubled if user is slower than foe
+Revenge : Physical / 60 / 100 : Power is doubled if user is slower than foe
 Reversal : Physical / 0 / 100 : Deals more damage the lower the user's HP is
 Rock Smash : Physical / 40 / 100 : 100% to lower foe's Defense by 1
 Sacred Sword : Physical / 90 / 100 : Ignores Defense and Evasion changes of foe
@@ -297,7 +297,7 @@ Drill Run : Physical / 80 / 95 : Boosted Crit rate
 Earth Power : Special / 90 / 100 : 10% chance to lower foe's Sp.Def by 1
 Earthquake : Physical / 100 / 100 : A normal attack
 Fissure : Physical / 0 / 30 : If this move hits, it always K.Os foe
-Magnitude : Physical / 30 / 100 : A random Magnitude between 4-10 will be used, corresponding to its power
+Magnitude : Physical / 110 / 100 : A random Magnitude between 4-10 will be used, corresponding to its power
 Mud Bomb : Special / 65 / 85 : 30% to lower foe's Accuracy by 1
 Mud Shot : Special / 55 / 95 : 100% chance to lower foe's Speed by 1
 Mud Sport : Status / 0 / -- : Makes ELECTRIC moves deal 1/3 damage for 8 turns
