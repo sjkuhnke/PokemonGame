@@ -403,7 +403,7 @@ public class Pokemon implements Serializable {
         		}
             }
         	// 60% chance to swap if all of your moves do 0 damage
-        	if (maxDamage == 0) {
+        	if (maxDamage == 0 && !validMoves.equals(new ArrayList<>(Arrays.asList(new Move[] {Move.METRONOME})))) {
         		double chance = 60;
         		if (this.impressive) chance *= 0.75;
         		if (checkSecondary((int) chance)) {
@@ -4547,9 +4547,10 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.KNOCK_OFF) {
 			if (foe.item != null) {
+				Item oldItem = foe.item;
 				if (foe.lostItem == null) foe.lostItem = foe.item;
 				foe.item = null;
-				console.writeln(this.nickname + " knocked off " + foe.nickname + "'s " + foe.lostItem.toString() + "!");
+				console.writeln(this.nickname + " knocked off " + foe.nickname + "'s " + oldItem.toString() + "!");
 			}
 		} else if (move == Move.LAVA_PLUME) {
 			foe.burn(false, this);
@@ -9675,7 +9676,7 @@ public class Pokemon implements Serializable {
 			movebank[11] = new Node(Move.KARATE_CHOP);
 			movebank[15] = new Node(Move.NUZZLE);
 			movebank[18] = new Node(Move.SPARK);
-			movebank[21] = new Node(Move.SHIFT_GEAR);
+			movebank[21] = new Node(Move.AUTOMOTIZE);
 			break;
 		case 200:
 			movebank = new Node[47];
@@ -9687,7 +9688,7 @@ public class Pokemon implements Serializable {
 			movebank[11] = new Node(Move.KARATE_CHOP);
 			movebank[15] = new Node(Move.NUZZLE);
 			movebank[18] = new Node(Move.SPARK);
-			movebank[21] = new Node(Move.SHIFT_GEAR);
+			movebank[21] = new Node(Move.AUTOMOTIZE);
 			movebank[24] = new Node(Move.BRICK_BREAK);
 			movebank[28] = new Node(Move.COMET_PUNCH);
 			movebank[31] = new Node(Move.BULLET_PUNCH);
@@ -9703,13 +9704,14 @@ public class Pokemon implements Serializable {
 			movebank[0] = new Node(Move.KNOCK_OFF);
 			movebank[0].next = new Node(Move.FOCUS_ENERGY);
 			movebank[0].next.next = new Node(Move.MAGNET_RISE);
+			movebank[0].addToEnd(new Node(Move.DYNAMIC_PUNCH));
 			movebank[2] = new Node(Move.SCREECH);
 			movebank[5] = new Node(Move.PROTECT);
 			movebank[9] = new Node(Move.MACH_PUNCH);
 			movebank[11] = new Node(Move.KARATE_CHOP);
 			movebank[15] = new Node(Move.NUZZLE);
 			movebank[18] = new Node(Move.SPARK);
-			movebank[21] = new Node(Move.SHIFT_GEAR);
+			movebank[21] = new Node(Move.AUTOMOTIZE);
 			movebank[24] = new Node(Move.BRICK_BREAK);
 			movebank[28] = new Node(Move.COMET_PUNCH);
 			movebank[31] = new Node(Move.BULLET_PUNCH);
@@ -9719,10 +9721,10 @@ public class Pokemon implements Serializable {
 			movebank[39] = new Node(Move.DRAIN_PUNCH);
 			movebank[43] = new Node(Move.SUCKER_PUNCH);
 			movebank[46] = new Node(Move.VOLT_TACKLE);
-			movebank[49] = new Node(Move.PLASMA_FISTS);
-			movebank[53] = new Node(Move.DYNAMIC_PUNCH);
-			movebank[56] = new Node(Move.CLOSE_COMBAT);
-			movebank[59] = new Node(Move.METEOR_ASSAULT);
+			movebank[49] = new Node(Move.SHIFT_GEAR);
+			movebank[53] = new Node(Move.CLOSE_COMBAT);
+			movebank[56] = new Node(Move.METEOR_ASSAULT);
+			movebank[59] = new Node(Move.PLASMA_FISTS);
 			break;
 		case 202:
 			movebank = new Node[33];

@@ -6063,7 +6063,7 @@ Level Up:
 12 - Karate Chop
 16 - Nuzzle
 19 - Spark
-22 - Shift Gear
+22 - Automotize
 
 Evolutions:
 Droid-E -> Armoid-E (lv. 25)
@@ -6089,7 +6089,7 @@ Level Up:
 12 - Karate Chop
 16 - Nuzzle
 19 - Spark
-22 - Shift Gear
+22 - Automotize
 25 - Brick Break
 29 - Comet Punch
 32 - Bullet Punch
@@ -6119,13 +6119,14 @@ Level Up:
 1 - Knock Off
 1 - Focus Energy
 1 - Magnet Rise
+1 - Dynamic Punch
 3 - Screech
 6 - Protect
 10 - Mach Punch
 12 - Karate Chop
 16 - Nuzzle
 19 - Spark
-22 - Shift Gear
+22 - Automotize
 25 - Brick Break
 29 - Comet Punch
 32 - Bullet Punch
@@ -6135,10 +6136,10 @@ Level Up:
 40 - Drain Punch
 44 - Sucker Punch
 47 - Volt Tackle
-50 - Plasma Fists
-54 - Dynamic Punch
-57 - Close Combat
-60 - Meteor Assault
+50 - Shift Gear
+54 - Close Combat
+57 - Meteor Assault
+60 - Plasma Fists
 
 ===================
 202 - Flamehox-E
