@@ -168,7 +168,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		happiness = 70;
-		if (id == 29 || id == 134 || id == 174) happiness = 100;
+		if (id == 29 || id == 134 || id == 174) happiness = 110;
 		catchRate = setCatchRate();
 		happinessCap = 50;
 	}

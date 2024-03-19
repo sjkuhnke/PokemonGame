@@ -93,6 +93,7 @@ public class Player implements Serializable{
 	    p.setNickname();
 	    pokedex[p.id] = 2;
 	    p.clearVolatile();
+	    p.consumeItem();
 	    for (int i = 0; i < team.length; i++) {
 	        if (team[i] == null) {
 	            hasNull = true;
