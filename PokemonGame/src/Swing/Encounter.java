@@ -81,7 +81,7 @@ public class Encounter {
 				encounters.add(new Encounter(73, 4, 5, 0.05));
 				encounters.add(new Encounter(85, 3, 5, 0.10));
 				encounters.add(new Encounter(114, 4, 6, 0.05));
-			} else if (area == 11 && x > 42 && y >= 43 && type.equals("Standard")) { // route 24 pt. 2
+			} else if (area == 11 && x > 42 && y >= 42 && type.equals("Standard")) { // route 24 pt. 2
 				encounters.add(new Encounter(10, 8, 9, 0.30));
 				encounters.add(new Encounter(55, 10, 10, 0.03));
 				encounters.add(new Encounter(75, 8, 10, 0.12));

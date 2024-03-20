@@ -8133,6 +8133,7 @@ public class Pokemon implements Serializable {
 			movebank[9] = new Node(Move.MUD$SLAP);
 			movebank[12] = new Node(Move.MUD_BOMB);
 			movebank[15] = new Node(Move.SHOCK_WAVE);
+			movebank[18] = new Node(Move.ENDURE);
 			movebank[21] = new Node(Move.DRAINING_KISS);
 			movebank[22] = new Node(Move.COVET);
 			movebank[25] = new Node(Move.THUNDER_WAVE);
@@ -8146,6 +8147,7 @@ public class Pokemon implements Serializable {
 			movebank[9] = new Node(Move.MUD$SLAP);
 			movebank[12] = new Node(Move.MUD_BOMB);
 			movebank[15] = new Node(Move.SHOCK_WAVE);
+			movebank[18] = new Node(Move.ENDURE);
 			movebank[21] = new Node(Move.DRAINING_KISS);
 			movebank[22] = new Node(Move.COVET);
 			movebank[25] = new Node(Move.THUNDER_WAVE);
@@ -8165,6 +8167,7 @@ public class Pokemon implements Serializable {
 			movebank[9] = new Node(Move.MUD$SLAP);
 			movebank[12] = new Node(Move.MUD_BOMB);
 			movebank[15] = new Node(Move.SHOCK_WAVE);
+			movebank[18] = new Node(Move.ENDURE);
 			movebank[21] = new Node(Move.DRAINING_KISS);
 			movebank[22] = new Node(Move.COVET);
 			movebank[25] = new Node(Move.THUNDER_WAVE);

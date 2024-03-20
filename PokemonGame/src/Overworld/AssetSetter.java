@@ -1531,6 +1531,7 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 78, 3, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 43, 1, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(44, 55, 2, 1, mapNum, map);
+		SetupPit(mapNum, 49, 74, 147, 43, 49, map);
 		
 		mapNum = 25;
 		iIndex = 0;
@@ -2026,6 +2027,7 @@ public class AssetSetter {
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(62, 75, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 74, 1, 1, mapNum, map);
+		SetupPit(mapNum, 44, 62, 24, 46, 74, map);
 		
 		mapNum = 146;
 		iIndex = 0;
@@ -2047,6 +2049,11 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(75, 34, 3, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(80, 31, 2, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(80, 32, 2, 2, mapNum, map);
+		
+		mapNum = 147;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 59, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 48, 1, 1, mapNum, map);
 	}
 
 	public void updateNPC(int map) {
