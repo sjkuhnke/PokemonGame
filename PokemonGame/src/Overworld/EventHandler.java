@@ -192,6 +192,17 @@ public class EventHandler {
 			if (hit(27,39,74)) teleport(146, 70, 33,false);
 			if (hit(146,70,32)) teleport(27, 39, 73,false);
 			
+			if (hit(24,52,74)) teleport(145, 59, 70,true);
+			if (hit(145,59,70)) teleport(24, 52, 74,true);
+			if (hit(24,51,75)) teleport(147, 60, 58,true);
+			if (hit(147,60,58)) teleport(24, 51, 75,true);
+			
+			// Mt. Splinkty Outside
+			if (hit(146,77,38)) teleport(148, 50, 75,false);
+			if (hit(148,50,76)) teleport(146, 77, 39,false);
+			if (hit(146,82,26)) teleport(149, 49, 76,false);
+			if (hit(149,49,77)) teleport(146, 82, 27,false);
+			
 			// Kleine Village PC
 			if (hit(28,76,51)) teleport(29, 31, 45,false);
 			if (hit(29,31,46)) teleport(28, 76, 52,false);
