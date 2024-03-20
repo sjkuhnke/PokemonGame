@@ -30,12 +30,15 @@ public class PBox extends JFrame {
 
 	private JGradientButton[] boxButtons;
 	private int currentBox = 1;
+	private boolean isGauntlet;
 
-	public PBox(PlayerCharacter playerCharacter, KeyHandler keyH) {
+	public PBox(PlayerCharacter playerCharacter, KeyHandler keyH, boolean isGauntlet) {
 	    me = playerCharacter.p;
 	    PBox.playerCharacter = playerCharacter;
 	    this.keyH = keyH;
 	    setTitle("Box 1");
+	    
+	    this.isGauntlet = isGauntlet;
 	    
 	    // Initializing panel
 	    setResizable(false);
@@ -84,10 +87,11 @@ public class PBox extends JFrame {
 			    partyMasterPanel.setPreferredSize(new Dimension(350, 350));
         	    
         	    for (int j = 0; j < 6; j++) {
-        	    	PartyPanel partyPanel = new PartyPanel(me.team[j], true);
+        	    	Pokemon p = isGauntlet && me.team[j] != null && !me.team[j].isSelected() ? null : me.team[j];
+        	    	PartyPanel partyPanel = new PartyPanel(p, true);
         	        final int index = j;
         	        
-        	        if (me.team[j] != null) {
+        	        if (p != null) {
         	        	partyPanel.addMouseListener(new MouseAdapter() {
             	        	@Override
             	            public void mouseClicked(MouseEvent e) {
@@ -242,7 +246,7 @@ public class PBox extends JFrame {
 			} else if (currentBox == 3) {
 				cBox = me.box3;
 			}
-			me.bag.bag[200].useCalc(me, cBox);
+			me.bag.bag[200].useCalc(me, cBox, isGauntlet);
 		});
 		playerPanel.add(calcButton);
 		
@@ -264,15 +268,22 @@ public class PBox extends JFrame {
 	        boxButtons[i].setText("");
 	        boxButtons[i].setIcon(null);
 	        if (cBox[i] != null) {
-	        	ImageIcon spriteIcon = new ImageIcon(cBox[i].getMiniSprite());
+	        	ImageIcon spriteIcon = isGauntlet && !cBox[i].isSelected() ? cBox[i].getFaintedIcon() : new ImageIcon(cBox[i].getMiniSprite());
 	        	ImageIcon itemIcon = null;
-	        	if (cBox[i].item != null) itemIcon = new ImageIcon(cBox[i].item.getImage());
-	        	CompoundIcon icon = itemIcon == null ? new CompoundIcon(Axis.Z_AXIS, 0, CompoundIcon.LEFT, CompoundIcon.BOTTOM, spriteIcon) : new CompoundIcon(Axis.Z_AXIS, 0, CompoundIcon.LEFT, CompoundIcon.BOTTOM, spriteIcon, itemIcon);
+	        	CompoundIcon icon = new CompoundIcon(Axis.Z_AXIS, 0, CompoundIcon.LEFT, CompoundIcon.BOTTOM, spriteIcon);
+	        	if ((isGauntlet && cBox[i].isSelected()) || !isGauntlet) {
+	        		if (cBox[i].item != null) {
+	        			itemIcon = new ImageIcon(cBox[i].item.getImage());
+	        			icon = new CompoundIcon(Axis.Z_AXIS, 0, CompoundIcon.LEFT, CompoundIcon.BOTTOM, spriteIcon, itemIcon);
+	        		}
+	        		boxButtons[i].setBackground(cBox[i].type1.getColor(), cBox[i].type2 == null ? null : cBox[i].type2.getColor());
+	        	} else {
+	        		boxButtons[i].setBackground(null);
+	        	}
 	            boxButtons[i].setIcon(icon);
 	            boxButtons[i].setHorizontalAlignment(SwingConstants.CENTER);
 	            boxButtons[i].setFont(new Font("Tahoma", Font.BOLD, 9));
 	            
-	            boxButtons[i].setBackground(cBox[i].type1.getColor(), cBox[i].type2 == null ? null : cBox[i].type2.getColor());
 	        } else {
 	            boxButtons[i].setText("");
 	            boxButtons[i].setIcon(null);
@@ -293,6 +304,10 @@ public class PBox extends JFrame {
 			b.addMouseListener(new MouseAdapter() {
 		    	@Override
 		        public void mouseClicked(MouseEvent e) {
+		    		if (box[index] != null && isGauntlet && !box[index].isSelected()) {
+    	    			JOptionPane.showMessageDialog(null, box[index].nickname + " isn't selected!");
+    	    			return;
+    	    		}
 		    		if (SwingUtilities.isLeftMouseButton(e)) {
 		    			JPanel boxMemberPanel;
 		    	    	if (box[index] != null) {

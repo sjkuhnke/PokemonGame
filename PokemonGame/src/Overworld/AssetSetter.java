@@ -40,7 +40,10 @@ public class AssetSetter {
 	private int iIndex;
 	private int berryIndex;
 	
-	private static final int NPC_POKEMON = -5;
+	private static final int NPC_PC_GAUNTLET = -8;
+	private static final int TRIWANDOLIZ = -7;
+	private static final int DIFTERY = -6;
+	private static final int GRUST = -5;
 	private static final int NPC_MARKET = -4;
 	private static final int NPC_NURSE_FULL = -3;
 	private static final int NPC_CLERK = -2;
@@ -1298,7 +1301,7 @@ public class AssetSetter {
 			
 			for (int i = 224; i <= 233; i++) {
 				if (!gp.player.p.trainersBeat[i]) {
-					gp.npc[mapNum][index] = NPCSetup(NPC_POKEMON, xCoords[i-224], yCoords[i-224], i);
+					gp.npc[mapNum][index] = NPCSetup(GRUST, xCoords[i-224], yCoords[i-224], i);
 				} else {
 					gp.npc[mapNum][index++] = null;
 				}
@@ -1468,6 +1471,19 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 54, 49, 322);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 57, 49, 323);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 57, 80, 324);
+		
+		mapNum = 146;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 79, 27, -1);
+		gp.npc[mapNum][index] = NPCSetup(82, 27, "Inside there is quite the function in there. You are only allowed to bring 10 of your strongest Pokemon, and that's it. Good luck.", true);
+		
+		mapNum = 148;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(TRIWANDOLIZ, 50, 68, 325);
+		
+		mapNum = 149;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 53, 74, -1);
 	}
 	
 	public void setInteractiveTile(int map) {
@@ -2085,6 +2101,9 @@ public class AssetSetter {
 		// flags[24] is true after being prompted that casino will auto-save
 		// flags[25] is true after getting gift magmaclang
 		// flags[26] is true after beating TN guy in MSJ
+		// flags[27] is true after beating Rick 3
+		// flags[28] is true after beating Maxwell 2 (and disbanding TN)
+		// flags[29] is true after beating Zurroaratr
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		if (flags[1]) {
@@ -2224,9 +2243,15 @@ public class AssetSetter {
 		case NPC_MARKET:
 			result = new NPC_Market(gp);
 			break;
-		case NPC_POKEMON:
-			result = new NPC_Pokemon(gp, 159, team, true); // Grust
+		case GRUST:
+			result = new NPC_Pokemon(gp, 159, team, true);
 			gp.grusts[index - 1] = ((NPC_Pokemon) result);
+			break;
+		case DIFTERY:
+			result = new NPC_Pokemon(gp, 229, team, false);
+			break;
+		case TRIWANDOLIZ:
+			result = new NPC_Pokemon(gp, 232, team, false);
 			break;
 		case RICK:
 			result = new NPC_TN_Admin(gp, "down", team);
@@ -2245,6 +2270,9 @@ public class AssetSetter {
 			break;
 		case INVIS_RIGHT:
 			result = new NPC_Invisible(gp, "right", team);
+			break;
+		case NPC_PC_GAUNTLET:
+			result = new NPC_PC(gp, true);
 			break;
 		}
 		

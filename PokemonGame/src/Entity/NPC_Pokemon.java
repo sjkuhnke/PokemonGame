@@ -6,6 +6,7 @@ import Overworld.GamePanel;
 
 public class NPC_Pokemon extends Entity {
 	int id;
+	boolean spin;
 
 	public NPC_Pokemon(GamePanel gp, int id, int t, boolean spin) {
 		super(gp);
@@ -16,6 +17,7 @@ public class NPC_Pokemon extends Entity {
 		
 		getImage(id);
 		
+		this.spin = spin;
 		if (spin) turnRandom();
 		
 	}
@@ -23,9 +25,11 @@ public class NPC_Pokemon extends Entity {
 	public void getImage(int id) {
 		String path = "/overworlds/" + id;
 		down1 = setup(path + "_0");
-		left1 = setup(path + "_1");
-		up1 = setup(path + "_2");
-		right1 = setup(path + "_3");
+		if (spin) {
+			left1 = setup(path + "_1");
+			up1 = setup(path + "_2");
+			right1 = setup(path + "_3");
+		}
 	}
 	
 	public void turnRandom() {

@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import Entity.Entity;
+import Entity.NPC_PC;
 import Entity.NPC_Pokemon;
 import Entity.PlayerCharacter;
 import Obj.InteractiveTile;
@@ -175,7 +176,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	
 	public void startBattle(int trainer, int id) {
 		Battle frame = startBattle(trainer);
-		frame.staticPokemonID = id;
+		if (frame != null) frame.staticPokemonID = id;
 	}
 	
 	public void startWild(int area, int x, int y, String type) {
@@ -202,11 +203,11 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
         frame.setVisible(true);
 	}
 	
-	public void openBox() {
+	public void openBox(NPC_PC target) {
 	    // Create the Battle instance and set the window listener to save on close
 	    keyH.pause();
 
-	    PBox box = new PBox(player, keyH);
+	    PBox box = new PBox(player, keyH, target.isGauntlet());
 	    box.addWindowListener(new WindowAdapter() {
 	        @Override
 	        public void windowClosing(WindowEvent e) {

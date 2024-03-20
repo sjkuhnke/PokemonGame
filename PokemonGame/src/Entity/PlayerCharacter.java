@@ -317,7 +317,7 @@ public class PlayerCharacter extends Entity {
 				} else if (target instanceof NPC_GymLeader) {
 					gp.startBattle(target.trainer);
 				} else if (target instanceof NPC_PC) {
-					gp.openBox();
+					gp.openBox((NPC_PC) target);
 				} else if (target instanceof NPC_Pokemon) {
 					gp.startBattle(target.trainer, ((NPC_Pokemon) target).id);
 				}
@@ -1352,11 +1352,125 @@ public class PlayerCharacter extends Entity {
 				JOptionPane.showMessageDialog(null, "Obtained HM07 Rock Climb!");
 				p.bag.add(Item.HM07);
 				p.flags[26] = true;
+			} if (gp.currentMap == 146 && !p.flags[28]) {
+				showPokemonList(10);
+				p.bag.add(Item.HM07);
+				p.flags[26] = true;
 			}
 		    keyH.resume();
 		}
 	}
 	
+	private void showPokemonList(int max) {
+		showPokemonList(p.getAmountSelected(), max, 0);
+	}
+	
+	private void showPokemonList(int amount, int max, int value) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		JPanel textPanel = new JPanel();
+		JLabel selectedAmount = new JLabel(amount + " selected");
+		JGradientButton confirmButton = new JGradientButton("CONFIRM");
+		if (amount == max) {
+			selectedAmount.setFont(new Font(selectedAmount.getFont().getName(), Font.BOLD, 24));
+			selectedAmount.setForeground(Color.GREEN);
+		}
+		if (!p.teamIsSelected()) {
+			confirmButton.setBackground(Color.RED);
+		} else {
+			if (amount == max) {
+				confirmButton.setBackground(Color.GREEN);
+			} else {
+				confirmButton.setBackground(Color.YELLOW);
+			}
+		}
+		textPanel.add(selectedAmount);
+		JPanel pokemonPanel = new JPanel();
+		pokemonPanel.setLayout(new VerticalLayout());
+		
+		JScrollPane scrollPane = new JScrollPane(pokemonPanel);
+		scrollPane.setPreferredSize(new Dimension(300, 300));
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+		
+		ArrayList<Pokemon> allPokemon = p.getAllPokemon();
+		for (Pokemon pokemon : allPokemon) {
+			final Pokemon pokemonP = pokemon;
+			if (pokemon != null) {
+				JPanel current = new JPanel();
+				current.add(new JLabel(new ImageIcon(pokemon.getMiniSprite())));
+				JGradientButton currentButton = new JGradientButton(pokemon.nickname + " Lv. " + pokemon.getLevel());
+				if (pokemon.isSelected()) {
+					currentButton.setBackground(Color.GREEN);
+				} else {
+					currentButton.setBackground(Color.RED);
+				}
+				currentButton.addMouseListener(new MouseAdapter() {
+					@Override
+	        		public void mouseClicked(MouseEvent evt) {
+						if (SwingUtilities.isRightMouseButton(evt)) {
+							JOptionPane.showMessageDialog(null, pokemonP.showSummary(p, false, null, null), "Pokemon Summary", JOptionPane.PLAIN_MESSAGE);
+						} else {
+							int newAmount = amount;
+							if (pokemonP.isSelected()) {
+								pokemonP.selected = false;
+								newAmount--;
+							} else {
+								if (amount < max) {
+									pokemonP.selected = true;
+									newAmount++;
+								} else {
+									JOptionPane.showMessageDialog(null, "Max amount of Pokemon already selected!");
+									return;
+								}
+							}
+							SwingUtilities.getWindowAncestor(panel).dispose();
+							showPokemonList(newAmount, max, scrollPane.getVerticalScrollBar().getValue());
+							return;
+		        		}
+					}
+				});
+				current.add(currentButton);
+				pokemonPanel.add(current);
+			}
+		}
+		confirmButton.addActionListener(e -> {
+			if (!p.teamIsSelected()) {
+				JOptionPane.showMessageDialog(null, "Your team contains some members that aren't\nselected. Please remove them and try again!");
+				return;
+			}
+			String message = "Are you sure you want to enter?\nBe ready to fight!";
+			if (amount != max) {
+				message = "You don't have 10 Pokemon selected!\n" + message;
+			}
+			int option = JOptionPane.showOptionDialog(null,
+					message,
+					"Enter Room?",
+		            JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE,
+		            null, null, null);
+			if (option == JOptionPane.YES_OPTION) {
+				SwingUtilities.getWindowAncestor(panel).dispose();
+				gp.eHandler.teleport(149, 49, 76, false);
+			}
+		});
+		
+		panel.add(textPanel);
+		
+		scrollPane.getVerticalScrollBar().setValue(value);
+		scrollPane.repaint();
+		JPanel containerPanel = new JPanel(new BorderLayout());
+		containerPanel.add(scrollPane, BorderLayout.CENTER);
+		panel.add(containerPanel);
+		scrollPane.getVerticalScrollBar().setValue(value);
+		scrollPane.repaint();
+		
+		JPanel containerPanel2 = new JPanel();
+		containerPanel2.add(confirmButton);
+		panel.add(containerPanel2);
+		
+		JOptionPane.showMessageDialog(null, panel, "Select your Pokemon", JOptionPane.PLAIN_MESSAGE);
+	}
+
 	private void showPrizeMenu(JPanel panel, String title) {
 		JOptionPane.showMessageDialog(null, panel, title, JOptionPane.QUESTION_MESSAGE);
 	}

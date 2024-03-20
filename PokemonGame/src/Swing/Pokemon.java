@@ -7,9 +7,14 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
+import java.awt.image.ImageProducer;
+import java.awt.image.RGBImageFilter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,6 +28,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.GrayFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -114,6 +120,7 @@ public class Pokemon implements Serializable {
 	public boolean impressive;
 	public boolean battled;
 	public boolean success;
+	public boolean selected;
 	
 	// battle fields
 	public Move lastMoveUsed;
@@ -5349,7 +5356,7 @@ public class Pokemon implements Serializable {
 			this.status = Status.HEALTHY;
 			removeBad(this.vStatuses);
 			stat(this, 4, 1, foe, announce);
-		} else if (move == Move.RED$NOSE_BOOST) {
+		} else if (move == Move.AURORA_BOOST) {
 			stat(this, 1, 1, foe, announce);
 			stat(this, 2, 2, foe, announce);
 			stat(this, 3, 1, foe, announce);
@@ -7192,7 +7199,7 @@ public class Pokemon implements Serializable {
 			movebank[4] = new Node(Move.HEADBUTT);
 			movebank[9] = new Node(Move.POWDER_SNOW);
 			movebank[14] = new Node(Move.HORN_LEECH);
-			movebank[19] = new Node(Move.RED$NOSE_BOOST);
+			movebank[19] = new Node(Move.AURORA_BOOST);
 			movebank[22] = new Node(Move.ICE_SHARD);
 			movebank[24] = new Node(Move.MAGIC_BLAST);
 			movebank[29] = new Node(Move.LIGHT_BEAM);
@@ -13662,6 +13669,34 @@ public class Pokemon implements Serializable {
 		if ((this.vStatuses.contains(Status.NO_SWITCH) || this.vStatuses.contains(Status.TRAPPED)) && this.item != Item.SHED_SHELL) return true;
 		return false;
 	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+	
+	public ImageIcon getFaintedIcon() {
+        ImageFilter grayFilter = new GrayFilter(true, 25);
+        ImageFilter opacityFilter = new RGBImageFilter() {
+            // Modify the alpha value to achieve opacity
+            public int filterRGB(int x, int y, int rgb) {
+                int alpha = (rgb >> 24) & 0xFF; // Extract alpha value
+                if (alpha == 0) {
+                    return rgb; // Leave transparent pixels unchanged
+                } else {
+                    return (rgb & 0x00FFFFFF) | (128 << 24); // Apply opacity to visible pixels
+                }
+            }
+        };
+
+        ImageProducer producer = new FilteredImageSource(getMiniSprite().getSource(), grayFilter);
+        Image grayImage = Toolkit.getDefaultToolkit().createImage(producer);
+
+        // Apply the opacity filter
+        ImageProducer opacityProducer = new FilteredImageSource(grayImage.getSource(), opacityFilter);
+        Image finalImage = Toolkit.getDefaultToolkit().createImage(opacityProducer);
+
+        return new ImageIcon(finalImage);
+    }
 
 //	private String getStatName(int stat) {
 //		switch(stat) {
