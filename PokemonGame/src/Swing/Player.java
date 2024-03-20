@@ -7,6 +7,7 @@ import java.awt.event.FocusEvent;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -599,6 +600,39 @@ public class Player implements Serializable{
 		}
 		result = result >= pokedex.length - 1 ? pokedex.length : result + 3;
 		return result;
+	}
+
+	public int getAmountSelected() {
+		int result = 0;
+		ArrayList<Pokemon> allPokemon = getAllPokemon();
+		for (Pokemon p : allPokemon) {
+			if (p.isSelected()) result++;
+		}
+		return result;
+	}
+
+	public ArrayList<Pokemon> getAllPokemon() {
+		ArrayList<Pokemon> result = new ArrayList<>();
+		for (Pokemon p : team) {
+			if (p != null) result.add(p);
+		}
+		for (Pokemon p : box1) {
+			if (p != null) result.add(p);
+		}
+		for (Pokemon p : box2) {
+			if (p != null) result.add(p);
+		}
+		for (Pokemon p : box3) {
+			if (p != null) result.add(p);
+		}
+		return result;
+	}
+	
+	public boolean teamIsSelected() {
+		for (Pokemon p : team) {
+			if (p != null && !p.isSelected()) return false;
+		}
+		return true;
 	}
 
 }

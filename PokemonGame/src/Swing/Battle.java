@@ -415,7 +415,11 @@ public class Battle extends JFrame {
 					dispose();
 		        } else {
 		            console.writeln("Oh no! " + foe.name + " broke free!");
-		            foe.move(me.getCurrent(),foe.randomMove(), me, null, null, false);
+		            if (foe.trainerOwned()) {
+		            	foe.move(me.getCurrent(),foe.bestMove(me.getCurrent(), false, foeTrainer), me, me.getTeam(), foeTrainer, false);
+		            } else {
+		            	foe.move(me.getCurrent(),foe.randomMove(), me, null, null, false);
+		            }
 					foe.endOfTurn(me.getCurrent(), me);
 					me.getCurrent().endOfTurn(foe, me);
 					me.getCurrent().impressive = false;

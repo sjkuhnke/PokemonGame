@@ -390,7 +390,7 @@ public class Main {
 		
 		setMoveset("4 Gym Leader 1", 1, Move.FREEZE$DRY, Move.SPACE_BEAM, Move.COSMIC_POWER, Move.WHIRLPOOL);
 		setMoveset("4 Gym Leader 1", 2, Move.SNOWSCAPE, Move.AURORA_VEIL, Move.BLIZZARD, Move.SCALD);
-		setMoveset("4 Gym Leader 1", 3, Move.RED$NOSE_BOOST, Move.MAGIC_BLAST, Move.ICE_SHARD, Move.BLIZZARD);
+		setMoveset("4 Gym Leader 1", 3, Move.AURORA_BOOST, Move.MAGIC_BLAST, Move.ICE_SHARD, Move.BLIZZARD);
 		setMoveset("4 Gym Leader 1", 4, Move.PSYCHIC, Move.ICE_BEAM, Move.FREEZE$DRY, Move.CALM_MIND);
 		setMoveset("4 Gym Leader 1", 5, Move.ICE_PUNCH, Move.CLOSE_COMBAT, Move.ICE_SHARD, Move.SWORDS_DANCE);
 		setMoveset("4 Gym Leader 1", 6, Move.ICE_SPINNER, Move.COMET_CRASH, Move.BRAVE_BIRD, Move.HEAD_SMASH);
@@ -606,7 +606,7 @@ public class Main {
 				new Trainer("MS A", new Pokemon[]{new Pokemon(61, 29, false, true)}, new Item[]{Item.EXPERT_BELT}, 100), // 75
 				new Trainer("MS B", new Pokemon[]{new Pokemon(92, 29, false, true), new Pokemon(160, 30, false, true)}, new Item[]{Item.PASSHO_BERRY, Item.PAYAPA_BERRY}, 100),
 				new Trainer("MS C", new Pokemon[]{new Pokemon(115, 30, false, true)}, new Item[]{Item.SOFT_SAND}, 100),
-				new Trainer("MS D", new Pokemon[]{new Pokemon(155, 51, false, true), new Pokemon(161, 53, false, true)}, 100),
+				new Trainer("MS D", new Pokemon[]{new Pokemon(155, 51, false, true), new Pokemon(161, 53, false, true)}, new Item[] {Item.POWER_HERB, Item.BLACK_SLUDGE}, 100),
 				new Trainer("TN MS 1", new Pokemon[]{new Pokemon(53, 30, false, true)}, new Item[]{Item.RAWST_BERRY}, 100, Item.HM03),
 				new Trainer("AB", new Pokemon[]{new Pokemon(86, 28, false, true), new Pokemon(82, 30, false, true), new Pokemon(86, 29, false, true), new Pokemon(75, 30, false, true), new Pokemon(79, 30, false, true)}, new Item[]{Item.RINDO_BERRY, Item.TERRAIN_EXTENDER, Item.TANGA_BERRY, Item.COLBUR_BERRY, Item.FOCUS_BAND}, 100), // 80
 				new Trainer("AC", new Pokemon[]{new Pokemon(49, 30, false, true), new Pokemon(53, 31, false, true)}, new Item[]{Item.CHOICE_BAND, Item.FOCUS_BAND}, 100),
@@ -853,7 +853,9 @@ public class Main {
 				new Trainer("EK", new Pokemon[]{new Pokemon(54, 72, false, true), new Pokemon(216, 71, false, true), new Pokemon(225, 72, false, true)}, new Item[]{Item.TWISTED_SPOON, Item.STARF_BERRY, Item.FLAME_ORB}, 100),
 				new Trainer("EL", new Pokemon[]{new Pokemon(201, 71, false, true), new Pokemon(210, 71, false, true), new Pokemon(133, 72, false, true)}, new Item[]{Item.LIFE_ORB, Item.RED_CARD, Item.CHOICE_SCARF}, 100),
 				new Trainer("EM", new Pokemon[]{new Pokemon(79, 72, false, true), new Pokemon(56, 72, false, true), new Pokemon(47, 72, false, true), new Pokemon(25, 72, false, true)}, new Item[]{Item.LEFTOVERS, Item.RED_CARD, Item.WHITE_HERB, Item.SITRUS_BERRY}, 100),
-				new Trainer("EN", new Pokemon[]{new Pokemon(9, 66, false, true), new Pokemon(140, 66, false, true), new Pokemon(72, 66, false, true)}, new Item[]{Item.MUSCLE_BAND, Item.STARF_BERRY, Item.FOCUS_SASH}, 100), // 325 TODO
+				new Trainer("Diftery", new Pokemon[]{new Pokemon(229, 75, true)}, 0), // 325
+				new Trainer("Triwandoliz", new Pokemon[]{new Pokemon(232, 75, true)}, 0),
+				new Trainer("EN", new Pokemon[]{new Pokemon(9, 66, false, true), new Pokemon(140, 66, false, true), new Pokemon(72, 66, false, true)}, new Item[]{Item.MUSCLE_BAND, Item.STARF_BERRY, Item.FOCUS_SASH}, 100), // TODO
 				new Trainer("EO", new Pokemon[]{new Pokemon(9, 66, false, true), new Pokemon(140, 66, false, true), new Pokemon(72, 66, false, true)}, new Item[]{Item.MUSCLE_BAND, Item.STARF_BERRY, Item.FOCUS_SASH}, 100), // TODO
 //				new Trainer("Rival 5", new Pokemon[]{new Pokemon(-132, 36, false, true), new Pokemon(-25, 27, false, true), new Pokemon(-22, 32, false, true), new Pokemon(-41, 29, false, true), new Pokemon(-78, 35, false, true)}, 500),
 //				new Trainer("KK", new Pokemon[]{new Pokemon(-96, 25, false, true), new Pokemon(-97, 20, false, true), new Pokemon(-98, 30, false, true)}, 100),

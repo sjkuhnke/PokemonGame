@@ -412,7 +412,7 @@ public enum Move {
 	RAZOR_SHELL(75,95,50,0,0,0,PType.WATER,"% chance to lower foe's Defense by 1",true,10),
 	REBOOT(0,1000,0,0,2,0,PType.STEEL,"Clears user of any Status condition, and raises user's Speed by 1",false,10),
 	RECOVER(0,1000,0,0,2,0,PType.NORMAL,"Restores 1/2 of user's max HP",false,5),
-	RED$NOSE_BOOST(0,1000,0,0,2,0,PType.MAGIC,"Raises user's Defense and Sp.Def by 1, and user's Sp.Atk by 2",false,10),
+	AURORA_BOOST(0,1000,0,0,2,0,PType.MAGIC,"Raises user's Defense and Sp.Def by 1, and user's Sp.Atk by 2",false,10),
 	REFLECT(0,1000,0,0,2,0,PType.PSYCHIC,"Creates a screen that halves physical damage on user's team for 5 turns",false,20),
 	REST(0,1000,0,0,2,0,PType.PSYCHIC,"Restores user's HP to full and clears any status conditions, and user falls asleep for 2 turns",false,5),
 	RETURN(-1,100,0,0,0,0,PType.NORMAL,"Damage is based on user's friendship: the higher, the stronger",true,15),

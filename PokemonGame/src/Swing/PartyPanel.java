@@ -9,13 +9,9 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.awt.image.FilteredImageSource;
-import java.awt.image.ImageFilter;
-import java.awt.image.ImageProducer;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -117,9 +113,7 @@ public class PartyPanel extends JPanel {
 		
 		ImageIcon spriteIcon = new ImageIcon(master.getMiniSprite());
 		if (master.isFainted()) {
-        	ImageFilter filter = new GrayFilter(true, 25);
-        	ImageProducer producer = new FilteredImageSource(master.getMiniSprite().getSource(), filter);
-        	spriteIcon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(producer));
+			spriteIcon = master.getFaintedIcon();
         }
     	ImageIcon itemIcon = null;
     	if (master.item != null) itemIcon = new ImageIcon(setupImage("/items/item.png"));
