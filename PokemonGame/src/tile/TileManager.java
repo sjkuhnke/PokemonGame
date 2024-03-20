@@ -167,6 +167,8 @@ public class TileManager {
 		loadMap("/maps/st_joseph04A.txt", 142);
 		loadMap("/maps/st_joseph04B.txt", 143);
 		loadMap("/maps/map20.txt", 144);
+		loadMap("/maps/splinkty02A.txt", 145);
+		loadMap("/maps/splinkty01B.txt", 146);
 	}
 	
 	public void getTileImage() {
