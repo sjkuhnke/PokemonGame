@@ -460,6 +460,10 @@ public class PMap extends JFrame {
 	}
 
 	private void fly(String loc, int map, int x, int y) {
+		if (!gp.tileM.canFly[gp.currentMap]) {
+			JOptionPane.showMessageDialog(null, "Can't fly right now; you're indoors!");
+			return;
+		}
 		int answer = JOptionPane.showOptionDialog(null,
 				"Would you like to fly to " + loc + "?",
 	            "Fly?",
@@ -1050,10 +1054,10 @@ public class PMap extends JFrame {
 		case 149:
 			PlayerCharacter.currentMapName = "Mt. Splinkty (5A)";
 			return 11;
-		case 150: // TODO from here down
-			PlayerCharacter.currentMapName = "";
-			return 28;
-		case 151:
+		case 150:
+			PlayerCharacter.currentMapName = "Shadow Cavern";
+			return -1;
+		case 151: // TODO from here down
 			PlayerCharacter.currentMapName = "";
 			return 15;
 		case 152:
