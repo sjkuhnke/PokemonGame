@@ -15,163 +15,166 @@ public class TileManager {
 	GamePanel gp;
 	public Tile[] tile;
 	public int mapTileNum[][][];
+	public boolean canFly[];
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
 		tile = new Tile[500];
 		mapTileNum = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
+		canFly = new boolean[gp.maxMap];
 		
 		getTileImage();
-		loadMap("/maps/map01.txt", 0);
-		loadMap("/maps/pc.txt", 1);
-		loadMap("/maps/mart.txt", 2);
-		loadMap("/maps/gate01.txt", 3);
-		loadMap("/maps/map02.txt", 4);
-		loadMap("/maps/pc.txt", 5);
-		loadMap("/maps/mart.txt", 6);
-		loadMap("/maps/warehouse01.txt", 7);
-		loadMap("/maps/warehouse01B.txt", 8);
-		loadMap("/maps/gym01.txt", 9);
-		loadMap("/maps/gate02.txt", 10);
-		loadMap("/maps/map03.txt", 11);
-		loadMap("/maps/gate01.txt", 12);
-		loadMap("/maps/map04.txt", 13);
-		loadMap("/maps/energy01.txt", 14);
-		loadMap("/maps/energy01B.txt", 15);
-		loadMap("/maps/energy02.txt", 16);
-		loadMap("/maps/office01.txt", 17);
-		loadMap("/maps/office02.txt", 18);
-		loadMap("/maps/pc.txt", 19);
-		loadMap("/maps/mart.txt", 20);
-		loadMap("/maps/gym02.txt", 21);
-		loadMap("/maps/map05.txt", 22);
-		loadMap("/maps/gate01.txt", 23);
-		loadMap("/maps/splinkty01A.txt", 24);
-		loadMap("/maps/splinkty02B.txt", 25);
-		loadMap("/maps/splinkty03B.txt", 26);
-		loadMap("/maps/splinkty03A.txt", 27);
-		loadMap("/maps/map06.txt", 28);
-		loadMap("/maps/pc.txt", 29);
-		loadMap("/maps/market01.txt", 30);
-		loadMap("/maps/gym03.txt", 31);
-		loadMap("/maps/house01.txt", 32);
-		loadMap("/maps/map07.txt", 33);
-		loadMap("/maps/gate02.txt", 34);
-		loadMap("/maps/electric01.txt", 35);
-		loadMap("/maps/map08.txt", 36);
-		loadMap("/maps/gate02.txt", 37);
-		loadMap("/maps/map09.txt", 38);
-		loadMap("/maps/pc.txt", 39);
-		loadMap("/maps/supermarket02.txt", 40);
-		loadMap("/maps/school01.txt", 41);
-		loadMap("/maps/radio_tower01.txt", 42);
-		loadMap("/maps/radio_tower02.txt", 43);
-		loadMap("/maps/gym04.txt", 44);
-		loadMap("/maps/supermarket01.txt", 45);
-		loadMap("/maps/house01.txt", 46);
-		loadMap("/maps/house01.txt", 47);
-		loadMap("/maps/house02.txt", 48);
-		loadMap("/maps/house01.txt", 49);
-		loadMap("/maps/house01.txt", 50);
-		loadMap("/maps/house01.txt", 51); // new minnow town
-		loadMap("/maps/house01.txt", 52);
-		loadMap("/maps/house01.txt", 53); // frenco berry shoppe
-		loadMap("/maps/house01.txt", 54);
-		loadMap("/maps/house01.txt", 55); // bananaville town
-		loadMap("/maps/house01.txt", 56);
-		loadMap("/maps/house01.txt", 57); // poppy grove
-		loadMap("/maps/house01.txt", 58);
-		loadMap("/maps/house01.txt", 59); // sicab city
-		loadMap("/maps/house02.txt", 60);
-		loadMap("/maps/house01.txt", 61); // kleine village
-		loadMap("/maps/house01.txt", 62); // schrice city
-		loadMap("/maps/house01.txt", 63);
-		loadMap("/maps/house01.txt", 64);
-		loadMap("/maps/house01.txt", 65);
-		loadMap("/maps/house01.txt", 66);
-		loadMap("/maps/house01.txt", 67);
-		loadMap("/maps/house01.txt", 68);
-		loadMap("/maps/house01.txt", 69);
-		loadMap("/maps/house01.txt", 70);
-		loadMap("/maps/house01.txt", 71);
-		loadMap("/maps/house01.txt", 72);
-		loadMap("/maps/house01.txt", 73);
-		loadMap("/maps/gate01.txt", 74);
-		loadMap("/maps/gate02.txt", 75);
-		loadMap("/maps/gate01.txt", 76);
-		loadMap("/maps/map10.txt", 77);
-		loadMap("/maps/mindagan01.txt", 78);
-		loadMap("/maps/gate01.txt", 79);
-		loadMap("/maps/map11.txt", 80); // shadow ravine 1
-		loadMap("/maps/gate01.txt", 81);
-		loadMap("/maps/gate02.txt", 82);
-		loadMap("/maps/map12.txt", 83); // shadow ravine 1A
-		loadMap("/maps/gate02.txt", 84);
-		loadMap("/maps/map13.txt", 85);
-		loadMap("/maps/pc.txt", 86);
-		loadMap("/maps/mart.txt", 87);
-		loadMap("/maps/gym05.txt", 88);
-		loadMap("/maps/house02.txt", 89); // pawn shop
-		loadMap("/maps/shadow0.txt", 90);
-		loadMap("/maps/house01.txt", 91);
-		loadMap("/maps/pphouse.txt", 92);
-		loadMap("/maps/house01.txt", 93); // move deletor
-		loadMap("/maps/house01.txt", 94); // gift e/s pokemon
-		loadMap("/maps/electric0.txt", 95);
-		loadMap("/maps/electric-1.txt", 96);
-		loadMap("/maps/electric-2.txt", 97);
-		loadMap("/maps/electric-3.txt", 98);
-		loadMap("/maps/electricH.txt", 99);
-		loadMap("/maps/shadowH.txt", 100);
-		loadMap("/maps/shadow-1.txt", 101);
-		loadMap("/maps/shadow-2.txt", 102);
-		loadMap("/maps/shadow-3.txt", 103);
-		loadMap("/maps/tn_base.txt", 104);
-		loadMap("/maps/shadow_path.txt", 105);
-		loadMap("/maps/gate01.txt", 106);
-		loadMap("/maps/map14.txt", 107);
-		loadMap("/maps/gate01.txt", 108);
-		loadMap("/maps/map15.txt", 109);
-		loadMap("/maps/map16.txt", 110);
-		loadMap("/maps/pc.txt", 111);
-		loadMap("/maps/market01.txt", 112);
-		loadMap("/maps/gym06.txt", 113);
-		loadMap("/maps/gate02.txt", 114);
-		loadMap("/maps/map17.txt", 115);
-		loadMap("/maps/gate02.txt", 116);
-		loadMap("/maps/mindagan0.txt", 117);
-		loadMap("/maps/house01.txt", 118);
-		loadMap("/maps/map18.txt", 119);
-		loadMap("/maps/gate02.txt", 120);
-		loadMap("/maps/radio_tower03.txt", 121); // sicab city tower thing
-		loadMap("/maps/radio_tower02.txt", 122);
-		loadMap("/maps/gate01.txt", 123);
-		loadMap("/maps/map19.txt", 124);
-		loadMap("/maps/pc.txt", 125);
-		loadMap("/maps/mart.txt", 126);
-		loadMap("/maps/casino.txt", 127);
-		loadMap("/maps/gym07.txt", 128);
-		loadMap("/maps/prize.txt", 129);
-		loadMap("/maps/house02.txt", 130);
-		loadMap("/maps/house03.txt", 131);
-		loadMap("/maps/supermarket01.txt", 132);
-		loadMap("/maps/supermarket02.txt", 133);
-		loadMap("/maps/geologyB.txt", 134);
-		loadMap("/maps/radio_tower04.txt", 135);
-		loadMap("/maps/radio_tower02.txt", 136);
-		loadMap("/maps/st_joseph01A.txt", 137);
-		loadMap("/maps/st_joseph02A.txt", 138);
-		loadMap("/maps/st_joseph02B.txt", 139);
-		loadMap("/maps/st_joseph03A.txt", 140);
-		loadMap("/maps/st_joseph03B.txt", 141);
-		loadMap("/maps/st_joseph04A.txt", 142);
-		loadMap("/maps/st_joseph04B.txt", 143);
-		loadMap("/maps/map20.txt", 144);
-		loadMap("/maps/splinkty02A.txt", 145);
-		loadMap("/maps/splinkty01B.txt", 146);
-		loadMap("/maps/splinktyH.txt", 147);
-		loadMap("/maps/splinkty04A.txt", 148);
-		loadMap("/maps/splinkty05A.txt", 149);
+		loadMap("/maps/map01.txt", 0, true);
+		loadMap("/maps/pc.txt", 1, true);
+		loadMap("/maps/mart.txt", 2, true);
+		loadMap("/maps/gate01.txt", 3, true);
+		loadMap("/maps/map02.txt", 4, true);
+		loadMap("/maps/pc.txt", 5, true);
+		loadMap("/maps/mart.txt", 6, true);
+		loadMap("/maps/warehouse01.txt", 7, true);
+		loadMap("/maps/warehouse01B.txt", 8, true);
+		loadMap("/maps/gym01.txt", 9, true);
+		loadMap("/maps/gate02.txt", 10, true);
+		loadMap("/maps/map03.txt", 11, true);
+		loadMap("/maps/gate01.txt", 12, true);
+		loadMap("/maps/map04.txt", 13, true);
+		loadMap("/maps/energy01.txt", 14, true);
+		loadMap("/maps/energy01B.txt", 15, true);
+		loadMap("/maps/energy02.txt", 16, true);
+		loadMap("/maps/office01.txt", 17, true);
+		loadMap("/maps/office02.txt", 18, true);
+		loadMap("/maps/pc.txt", 19, true);
+		loadMap("/maps/mart.txt", 20, true);
+		loadMap("/maps/gym02.txt", 21, true);
+		loadMap("/maps/map05.txt", 22, true);
+		loadMap("/maps/gate01.txt", 23, true);
+		loadMap("/maps/splinkty01A.txt", 24, true);
+		loadMap("/maps/splinkty02B.txt", 25, true);
+		loadMap("/maps/splinkty03B.txt", 26, true);
+		loadMap("/maps/splinkty03A.txt", 27, true);
+		loadMap("/maps/map06.txt", 28, true);
+		loadMap("/maps/pc.txt", 29, true);
+		loadMap("/maps/market01.txt", 30, true);
+		loadMap("/maps/gym03.txt", 31, true);
+		loadMap("/maps/house01.txt", 32, true);
+		loadMap("/maps/map07.txt", 33, true);
+		loadMap("/maps/gate02.txt", 34, true);
+		loadMap("/maps/electric01.txt", 35, true);
+		loadMap("/maps/map08.txt", 36, true);
+		loadMap("/maps/gate02.txt", 37, true);
+		loadMap("/maps/map09.txt", 38, true);
+		loadMap("/maps/pc.txt", 39, true);
+		loadMap("/maps/supermarket02.txt", 40, true);
+		loadMap("/maps/school01.txt", 41, true);
+		loadMap("/maps/radio_tower01.txt", 42, true);
+		loadMap("/maps/radio_tower02.txt", 43, true);
+		loadMap("/maps/gym04.txt", 44, true);
+		loadMap("/maps/supermarket01.txt", 45, true);
+		loadMap("/maps/house01.txt", 46, true);
+		loadMap("/maps/house01.txt", 47, true);
+		loadMap("/maps/house02.txt", 48, true);
+		loadMap("/maps/house01.txt", 49, true);
+		loadMap("/maps/house01.txt", 50, true);
+		loadMap("/maps/house01.txt", 51, true); // new minnow town
+		loadMap("/maps/house01.txt", 52, true);
+		loadMap("/maps/house01.txt", 53, true); // frenco berry shoppe
+		loadMap("/maps/house01.txt", 54, true);
+		loadMap("/maps/house01.txt", 55, true); // bananaville town
+		loadMap("/maps/house01.txt", 56, true);
+		loadMap("/maps/house01.txt", 57, true); // poppy grove
+		loadMap("/maps/house01.txt", 58, true);
+		loadMap("/maps/house01.txt", 59, true); // sicab city
+		loadMap("/maps/house02.txt", 60, true);
+		loadMap("/maps/house01.txt", 61, true); // kleine village
+		loadMap("/maps/house01.txt", 62, true); // schrice city
+		loadMap("/maps/house01.txt", 63, true);
+		loadMap("/maps/house01.txt", 64, true);
+		loadMap("/maps/house01.txt", 65, true);
+		loadMap("/maps/house01.txt", 66, true);
+		loadMap("/maps/house01.txt", 67, true);
+		loadMap("/maps/house01.txt", 68, true);
+		loadMap("/maps/house01.txt", 69, true);
+		loadMap("/maps/house01.txt", 70, true);
+		loadMap("/maps/house01.txt", 71, true);
+		loadMap("/maps/house01.txt", 72, true);
+		loadMap("/maps/house01.txt", 73, true);
+		loadMap("/maps/gate01.txt", 74, true);
+		loadMap("/maps/gate02.txt", 75, true);
+		loadMap("/maps/gate01.txt", 76, true);
+		loadMap("/maps/map10.txt", 77, true);
+		loadMap("/maps/mindagan01.txt", 78, true);
+		loadMap("/maps/gate01.txt", 79, true);
+		loadMap("/maps/map11.txt", 80, true); // shadow ravine 1
+		loadMap("/maps/gate01.txt", 81, true);
+		loadMap("/maps/gate02.txt", 82, true);
+		loadMap("/maps/map12.txt", 83, true); // shadow ravine 1A
+		loadMap("/maps/gate02.txt", 84, true);
+		loadMap("/maps/map13.txt", 85, true);
+		loadMap("/maps/pc.txt", 86, true);
+		loadMap("/maps/mart.txt", 87, true);
+		loadMap("/maps/gym05.txt", 88, true);
+		loadMap("/maps/house02.txt", 89, true); // pawn shop
+		loadMap("/maps/shadow0.txt", 90, true);
+		loadMap("/maps/house01.txt", 91, true);
+		loadMap("/maps/pphouse.txt", 92, true);
+		loadMap("/maps/house01.txt", 93, true); // move deletor
+		loadMap("/maps/house01.txt", 94, true); // gift e/s pokemon
+		loadMap("/maps/electric0.txt", 95, true);
+		loadMap("/maps/electric-1.txt", 96, true);
+		loadMap("/maps/electric-2.txt", 97, true);
+		loadMap("/maps/electric-3.txt", 98, true);
+		loadMap("/maps/electricH.txt", 99, true);
+		loadMap("/maps/shadowH.txt", 100, true);
+		loadMap("/maps/shadow-1.txt", 101, true);
+		loadMap("/maps/shadow-2.txt", 102, true);
+		loadMap("/maps/shadow-3.txt", 103, true);
+		loadMap("/maps/tn_base.txt", 104, true);
+		loadMap("/maps/shadow_path.txt", 105, true);
+		loadMap("/maps/gate01.txt", 106, true);
+		loadMap("/maps/map14.txt", 107, true);
+		loadMap("/maps/gate01.txt", 108, true);
+		loadMap("/maps/map15.txt", 109, true);
+		loadMap("/maps/map16.txt", 110, true);
+		loadMap("/maps/pc.txt", 111, true);
+		loadMap("/maps/market01.txt", 112, true);
+		loadMap("/maps/gym06.txt", 113, true);
+		loadMap("/maps/gate02.txt", 114, true);
+		loadMap("/maps/map17.txt", 115, true);
+		loadMap("/maps/gate02.txt", 116, true);
+		loadMap("/maps/mindagan0.txt", 117, true);
+		loadMap("/maps/house01.txt", 118, true);
+		loadMap("/maps/map18.txt", 119, true);
+		loadMap("/maps/gate02.txt", 120, true);
+		loadMap("/maps/radio_tower03.txt", 121, true); // sicab city tower thing
+		loadMap("/maps/radio_tower02.txt", 122, true);
+		loadMap("/maps/gate01.txt", 123, true);
+		loadMap("/maps/map19.txt", 124, true);
+		loadMap("/maps/pc.txt", 125, true);
+		loadMap("/maps/mart.txt", 126, true);
+		loadMap("/maps/casino.txt", 127, true);
+		loadMap("/maps/gym07.txt", 128, true);
+		loadMap("/maps/prize.txt", 129, true);
+		loadMap("/maps/house02.txt", 130, true);
+		loadMap("/maps/house03.txt", 131, true);
+		loadMap("/maps/supermarket01.txt", 132, true);
+		loadMap("/maps/supermarket02.txt", 133, true);
+		loadMap("/maps/geologyB.txt", 134, true);
+		loadMap("/maps/radio_tower04.txt", 135, true);
+		loadMap("/maps/radio_tower02.txt", 136, true);
+		loadMap("/maps/st_joseph01A.txt", 137, true);
+		loadMap("/maps/st_joseph02A.txt", 138, true);
+		loadMap("/maps/st_joseph02B.txt", 139, true);
+		loadMap("/maps/st_joseph03A.txt", 140, true);
+		loadMap("/maps/st_joseph03B.txt", 141, true);
+		loadMap("/maps/st_joseph04A.txt", 142, true);
+		loadMap("/maps/st_joseph04B.txt", 143, true);
+		loadMap("/maps/map20.txt", 144, true);
+		loadMap("/maps/splinkty02A.txt", 145, true);
+		loadMap("/maps/splinkty01B.txt", 146, true);
+		loadMap("/maps/splinktyH.txt", 147, true);
+		loadMap("/maps/splinkty04A.txt", 148, false);
+		loadMap("/maps/splinkty05A.txt", 149, false);
+		loadMap("/maps/shadow_cavern.txt", 150, false);
 	}
 	
 	public void getTileImage() {
@@ -787,7 +790,7 @@ public class TileManager {
 		
 	}
 	
-	public void loadMap(String filePath, int map) {
+	public void loadMap(String filePath, int map, boolean canFly) {
 		try {
 			InputStream is = getClass().getResourceAsStream(filePath);
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -817,6 +820,7 @@ public class TileManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		this.canFly[map] = canFly;
 	}
 	
 	public void draw(Graphics2D g2) {

@@ -770,6 +770,10 @@ public class EventHandler {
 			// Gelb Forest 1 -> 2
 			if (hit(11,42,77)) teleport(144, 11, 28,false);
 			if (hit(144,10,28)) teleport(11, 41, 77,false);
+			
+			// Shadow Path -> Shadow Cavern
+			if (hit(105,12,46)) teleport(150, 54, 77,false);
+			if (hit(144,54,78)) teleport(105, 12, 47,false);
 		}
 	}
 	

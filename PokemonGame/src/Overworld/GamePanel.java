@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	
 	public final int maxWorldCol = 100;
 	public final int maxWorldRow = 100;
-	public final int maxMap = 150;
+	public final int maxMap = 200;
 	public int currentMap = 0;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
@@ -242,6 +242,8 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 			player.p.grustCount++;
 			aSetter.updateNPC(107);
 		}
+		if (id == 232) npc[148][0] = null;
+		if (id == 229) npc[150][0] = null;
 		Pokemon[] teamTemp = Arrays.copyOf(player.p.team, 6);
 		for (int i = 0; i < 6; i++) {
 			if (teamTemp[i] != null) {
