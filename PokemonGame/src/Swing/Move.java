@@ -510,6 +510,7 @@ public enum Move {
 	STOMP(65,100,30,0,0,0,PType.NORMAL,"% of causing foe to flinch",true,20),
 	STONE_EDGE(100,80,0,1,0,0,PType.ROCK,"Boosted Crit rate",false,5),
 	STORED_POWER(-1,100,0,0,1,0,PType.PSYCHIC,"+20 BP for each stat boost",false,10),
+	STORM_THROW(60,100,0,3,0,0,PType.FIGHTING,"This move always Crits",true,10),
 	STRENGTH_SAP(0,100,0,0,2,0,PType.GRASS,"Heals user an HP amount equal to foe's Attack stat; lowers foe's Attack by 1",false,10),
 	STRENGTH(80,100,0,0,0,0,PType.NORMAL,"A normal attack",true,10),
 	STRING_SHOT(0,100,0,0,2,0,PType.BUG,"Lowers foe's Speed by 2",false,25),

@@ -804,7 +804,7 @@ public enum Item {
         }
         if (box != null) {
 			for (Pokemon q : box) {
-				if ((q != null && isGauntlet && q.isSelected()) || !isGauntlet) {
+				if (q != null && ((isGauntlet && q.isSelected()) || !isGauntlet)) {
 					userMons.addItem(q.clone());
 				}
 			}

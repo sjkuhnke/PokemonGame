@@ -235,10 +235,10 @@ public class Encounter {
 				encounters.add(new Encounter(101, 15, 17, 0.15));
 				encounters.add(new Encounter(108, 18, 19, 0.05));
 			} else if (area == 4 && y < 43 && type.equals("Fishing")) { // Route 36
-				encounters.add(new Encounter(90, 16, 18, 0.20));
+				encounters.add(new Encounter(90, 16, 18, 0.15));
 				encounters.add(new Encounter(134, 15, 17, 0.25));
-				encounters.add(new Encounter(137, 16, 18, 0.45));
-				encounters.add(new Encounter(139, 16, 16, 0.10));
+				encounters.add(new Encounter(137, 16, 18, 0.35));
+				encounters.add(new Encounter(139, 16, 16, 0.25));
 			} else if (area == 4 && y < 43 && type.equals("Surfing")) { // Route 36
 				encounters.add(new Encounter(139, 20, 20, 0.50));
 				encounters.add(new Encounter(134, 20, 20, 0.25));
