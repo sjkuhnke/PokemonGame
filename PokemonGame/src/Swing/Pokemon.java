@@ -7277,25 +7277,27 @@ public class Pokemon implements Serializable {
 		case 66:
 			movebank = new Node[40];
 			movebank[0] = new Node(Move.HEADBUTT);
-			movebank[0].next = new Node(Move.BEAT_UP);
+			movebank[0].next = new Node(Move.CIRCLE_THROW);
 			movebank[4] = new Node(Move.FEINT_ATTACK);
 			movebank[7] = new Node(Move.IRON_DEFENSE);
 			movebank[14] = new Node(Move.DRILL_RUN);
 			movebank[19] = new Node(Move.HEAD_SMASH);
 			movebank[24] = new Node(Move.SPIKY_SHIELD);
 			movebank[29] = new Node(Move.STEALTH_ROCK);
+			movebank[34] = new Node(Move.STORM_THROW);
 			movebank[39] = new Node(Move.BODY_PRESS);
 			break;
 		case 67:
 			movebank = new Node[70];
 			movebank[0] = new Node(Move.HEADBUTT);
-			movebank[0].next = new Node(Move.BEAT_UP);
+			movebank[0].next = new Node(Move.CIRCLE_THROW);
 			movebank[4] = new Node(Move.FEINT_ATTACK);
 			movebank[7] = new Node(Move.IRON_DEFENSE);
 			movebank[14] = new Node(Move.DRILL_RUN);
 			movebank[19] = new Node(Move.HEAD_SMASH);
 			movebank[24] = new Node(Move.SPIKY_SHIELD);
 			movebank[29] = new Node(Move.STEALTH_ROCK);
+			movebank[34] = new Node(Move.STORM_THROW);
 			movebank[39] = new Node(Move.BODY_PRESS);
 			movebank[47] = new Node(Move.MACH_PUNCH);
 			movebank[47].next = new Node(Move.STONE_EDGE);
