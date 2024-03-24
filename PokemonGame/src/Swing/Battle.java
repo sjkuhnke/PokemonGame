@@ -812,7 +812,7 @@ public class Battle extends JFrame {
 	        			if (foeCanMove) {
 	        				foe.move(me.getCurrent(), move, me, foeTrainer.getTeam(), foeTrainer, false);
 	        				foe = foeTrainer.getCurrent();
-	        				if (foe.vStatuses.contains(Status.SWITCHING)) {
+	        				if (foeTrainer.hasValidMembers() && foe.vStatuses.contains(Status.SWITCHING)) {
 		        	        	foeTrainer.swapRandom(me.getCurrent(), me, false, foe.lastMoveUsed == Move.BATON_PASS);
 		        	        	foe = foeTrainer.current;
 		        	        }
@@ -1356,7 +1356,7 @@ public class Battle extends JFrame {
 //			JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
 			
 			// Check for swap (player)
-			if (faster.vStatuses.contains(Status.SWITCHING)) {
+			if (me.hasValidMembers() && faster.vStatuses.contains(Status.SWITCHING)) {
 				faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS);
 //				updateBars(true);
 //				JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
@@ -1371,7 +1371,7 @@ public class Battle extends JFrame {
 	        }
 	        
 	        // Check for swap (AI)
-	        if (foeCanMove && slower.vStatuses.contains(Status.SWITCHING)) {
+	        if (foeTrainer.hasValidMembers() && foeCanMove && slower.vStatuses.contains(Status.SWITCHING)) {
 	        	foeTrainer.current = foeTrainer.swapOut(faster, me, null, slower.lastMoveUsed == Move.BATON_PASS);
 //	        	updateBars(true);
 //				JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
@@ -1389,14 +1389,14 @@ public class Battle extends JFrame {
 				if (foeTrainer != null) faster = foeTrainer.getCurrent();
 			}
 			// Check for swap (AI)
-	        if (foeCanMove && faster.vStatuses.contains(Status.SWITCHING)) {
+	        if (foeTrainer.hasValidMembers() && foeCanMove && faster.vStatuses.contains(Status.SWITCHING)) {
 	        	faster = foeTrainer.swapOut(slower, me, null, faster.lastMoveUsed == Move.BATON_PASS);
 	        }
 			
 			if (m1 == Move.SUCKER_PUNCH && m2.cat == 2) m1 = Move.FAILED_SUCKER;
 	        if (slower == me.getCurrent()) slower.move(faster, m1, me, enemyTeam, foeTrainer, false);
 	        // Check for swap
-	        if (slower.vStatuses.contains(Status.SWITCHING)) slower = getSwap(pl, slower.lastMoveUsed == Move.BATON_PASS);
+	        if (me.hasValidMembers() && slower.vStatuses.contains(Status.SWITCHING)) slower = getSwap(pl, slower.lastMoveUsed == Move.BATON_PASS);
 		}
 		if (foeTrainer != null) {
 			foe = foeTrainer.getCurrent();
