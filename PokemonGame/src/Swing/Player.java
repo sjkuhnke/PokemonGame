@@ -30,7 +30,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import Overworld.GamePanel;
 import Overworld.Main;
 
-public class Player implements Serializable{
+public class Player implements Serializable {
 	/**
 	 * 
 	 */
