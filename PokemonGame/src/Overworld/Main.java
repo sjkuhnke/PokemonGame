@@ -56,7 +56,7 @@ public class Main {
 		
 		setTrainers();
 		
-		GamePanel gamePanel = new GamePanel();
+		GamePanel gamePanel = new GamePanel(window);
 		
 		showStartupMenu(window, gamePanel);
 	}
@@ -203,12 +203,12 @@ public class Main {
 		    // Create a Timer to gradually change the opacity of the fadePanel
 		    Timer timer = new Timer(20, null);
 		    timer.addActionListener(e -> {
-		        float alpha = fadePanel.getAlpha();
-		        alpha += 0.02f; // Adjust the fading speed
+		        int alpha = fadePanel.getAlpha();
+		        alpha += 2; // Adjust the fading speed
 		        fadePanel.setAlpha(alpha);
 		        fadePanel.repaint();
 	
-		        if (alpha >= 0.95f) {
+		        if (alpha >= 95) {
 		            timer.stop();
 		    		
 		            Path docsDirectory = Paths.get("./docs/");

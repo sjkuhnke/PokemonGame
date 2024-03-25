@@ -13,6 +13,8 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import Entity.Entity;
 import Entity.NPC_PC;
@@ -35,6 +37,8 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1898610723315381969L;
+	
+	public JFrame window;
 	
 	// SETTINGS
 	final int originalTileSize = 16;
@@ -76,12 +80,14 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 
 	public static Map<Entity, Integer> volatileTrainers = new HashMap<>();
 	
-	public GamePanel() {
+	public GamePanel(JFrame window) {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
+		
+		this.window = window;
 	}
 	
 	public void startGameThread() {
@@ -166,12 +172,15 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 			}
 		}
 		
-		Battle frame = new Battle(player, Main.trainers[trainer], trainer, this, -1, -1, -1, null);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.setBattleCloseListener(this);
-        frame.setVisible(true);
+		Battle panel = new Battle(player, Main.trainers[trainer], trainer, this, -1, -1, -1, null);
+		//panel.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); JFrame exclusive
+        //panel.setBattleCloseListener(this);
+		removePanel();
+		addBattle(panel);
+		
+        panel.setVisible(true);
         
-        return frame;
+        return panel;
 	}
 	
 	public void startBattle(int trainer, int id) {
@@ -185,10 +194,12 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		keyH.pause();
 		setSlots();
 		
-		Battle frame = new Battle(player, null, -1, this, area, x, y, type);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.setBattleCloseListener(this);
-        frame.setVisible(true);
+		Battle panel = new Battle(player, null, -1, this, area, x, y, type);
+		//panel.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); JFrame exclusive
+		removePanel();
+		addBattle(panel);
+		
+		panel.setVisible(true);
 	}
 	
 	public void startFish(int area, int x, int y) {
@@ -197,10 +208,12 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		keyH.pause();
 		setSlots();
 		
-		Battle frame = new Battle(player, null, -1, this, area, x, y, null);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.setBattleCloseListener(this);
-        frame.setVisible(true);
+		Battle panel = new Battle(player, null, -1, this, area, x, y, null);
+		//panel.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); JFrame exclusive
+		removePanel();
+		addBattle(panel);
+		
+		panel.setVisible(true);
 	}
 	
 	public void openBox(NPC_PC target) {
@@ -235,6 +248,112 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	}
 
 
+	public void endBattle(int trainer, int id) {
+		removePanel();
+		
+		if (trainer > -1 && !player.p.wiped() && trainer != 256) player.p.trainersBeat[trainer] = true;
+		if (id == 159) {
+			player.p.grustCount++;
+			aSetter.updateNPC(107);
+		}
+		if (id == 232) npc[148][0] = null;
+		if (id == 229) npc[150][0] = null;
+		Pokemon[] teamTemp = Arrays.copyOf(player.p.team, 6);
+		for (int i = 0; i < 6; i++) {
+			if (teamTemp[i] != null) {
+				if (teamTemp[i].id == 237) {
+					teamTemp[i].id = 150;
+					teamTemp[i].nickname = teamTemp[i].nickname.equals("Kissyfishy-D") ? teamTemp[i].nickname = teamTemp[i].getName() : teamTemp[i].nickname;
+					
+					teamTemp[i].setBaseStats();
+					teamTemp[i].getStats();
+					teamTemp[i].weight = teamTemp[i].setWeight();
+					teamTemp[i].setType();
+					teamTemp[i].setAbility(teamTemp[i].abilitySlot);
+					teamTemp[i].currentHP = teamTemp[i].currentHP > teamTemp[i].getStat(0) ? teamTemp[i].getStat(0) : teamTemp[i].currentHP;
+				}
+				player.p.team[teamTemp[i].slot] = teamTemp[i];
+				teamTemp[i].setType();
+				
+				if (teamTemp[i].loseItem) {
+					teamTemp[i].item = null;
+					teamTemp[i].loseItem = false;
+				}
+				if (teamTemp[i].lostItem != null) {
+					teamTemp[i].item = teamTemp[i].lostItem;
+					teamTemp[i].lostItem = null;
+					if (teamTemp[i].item == Item.POTION) teamTemp[i].item = null;
+				}
+			}
+		}
+		player.p.current = player.p.team[0];
+		
+		Pokemon.field = new Field();
+		
+		addGamePanel();
+	}
+	
+	private void addBattle(Battle battle) {
+		SwingUtilities.invokeLater(() -> {
+			// Create a JPanel for the fade effect
+		    FadingPanel fadePanel = new FadingPanel();
+		    fadePanel.setBackground(Color.BLACK);
+		    fadePanel.setBounds(0, 0, window.getWidth(), window.getHeight());
+		    window.add(fadePanel, 0);
+		    
+		    // Create a Timer to gradually change the opacity of the fadePanel
+		    Timer timer = new Timer(20, null);
+
+		    timer.addActionListener(e -> {
+		    	fadePanel.setBackground(new Color(fadePanel.getBackground().getRed() + 5, fadePanel.getBackground().getGreen() + 5, fadePanel.getBackground().getBlue() + 5));
+		        int alpha = fadePanel.getAlpha();
+//		        if (alpha % 4 == 0) {
+//		    		fadePanel.setBackground(Color.RED);
+//		    	} else {
+//		    		fadePanel.setBackground(Color.GREEN);
+//		    	}
+		        alpha += 2; // Adjust the fading speed
+		        fadePanel.setAlpha(alpha);
+		        fadePanel.repaint();
+	
+		        if (alpha >= 90) {
+		        	removePanel();
+		            timer.stop();
+		    		
+		            // Add the Battle
+		    	    Main.window.getContentPane().add(battle);
+
+		    	    // Set focus on the Battle
+		    	    battle.requestFocusInWindow();
+
+		    	    // Repaint the JFrame to reflect the changes
+		    	    Main.window.revalidate();
+		    	    Main.window.repaint();
+		        }
+		    });
+			
+			timer.start();
+		});
+	}
+	
+	private void removePanel() {
+		// Remove all existing components from the JFrame
+	    Main.window.getContentPane().removeAll();
+	}
+	
+	private void addGamePanel() {
+		Main.window.add(this);
+		
+		this.requestFocusInWindow();
+
+	    // Repaint the JFrame to reflect the changes
+	    Main.window.revalidate();
+	    Main.window.repaint();
+		
+		inBattle = false;
+		keyH.resume();
+	}
+	
 	@Override
 	public void onBattleClosed(int trainer, int id) {
 		if (trainer > -1 && !player.p.wiped() && trainer != 256) player.p.trainersBeat[trainer] = true;

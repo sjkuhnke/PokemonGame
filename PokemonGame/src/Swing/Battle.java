@@ -27,80 +27,85 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Battle extends JFrame {
+public class Battle extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8943929896582623587L;
-	private JPanel playerPanel;
+	
+	// Player GUI fields
+	private JLabel currentText;
 	private JGradientButton[] moveButtons;
-	private Pokemon foe;
-	private Trainer foeTrainer;
 	private JProgressBar healthBar;
 	private JProgressBar expBar;
 	private JLabel currentHPLabel;
 	private JLabel slashLabel;
 	private JLabel maxHPLabel;
+	private JLabel userStatus;
+	
+	public JLabel userSprite;
+	private JGradientButton[] party;
+	private JLabel partySprites[];
+	private JProgressBar[] partyHP;
+	
+	// Foe GUI fields
 	private JLabel foeText;
 	private JProgressBar foeHealthBar;
-	public static Player me;
-//	private JTextField idInput; // debug
-//	private JTextField levelInput; // debug
-	private JLabel currentText;
-	private JGradientButton[] party;
-	private JLabel partySprites[]; 
-	public Field field;
-	public JLabel userSprite;
+	private JLabel foeStatus;
+	private JLabel caughtIndicator;
+	
 	public JLabel foeSprite;
-	public JLabel weather;
-	public JLabel terrain;
 	private JPanel foePartyPanel;
 	
-	private JButton catchButton;
-//	private JButton addButton; // debug
-	//private JButton healButton;
-	private JButton runButton;
-	private JLabel userStatus;
-	private JLabel foeStatus;
+	// Other GUI fields
+	public JLabel weather;
+	public JLabel terrain;
+	private TextPane console;
 	
-	private JRadioButton pokeballButton;
-	private JRadioButton greatballButton;
-	private JRadioButton ultraballButton;
+	// Player option GUI fields
+	private JButton catchButton;
 	private JLabel pokeballLabel;
 	private JLabel greatballLabel;
 	private JLabel ultraballLabel;
-	private JProgressBar[] partyHP;
-//	private ButtonGroup time;
-//	private JRadioButton morning;
-//	private JRadioButton day;
-//	private JRadioButton night;
-//	private JRadioButton standard;
-//	private JRadioButton rdbtnFishing;
-//	private JRadioButton rdbtnSurfing;
-//	private JRadioButton rdbtnHeadbutt;
-	//private JComboBox<Trainer> trainerSelect;
-	//private Trainer[] trainers;
+	private JRadioButton pokeballButton;
+	private JRadioButton greatballButton;
+	private JRadioButton ultraballButton;
+	private JButton runButton;
 	private JButton infoButton;
 	private JButton calcButton;
-//	private JButton exitButton; // debug
+	
+	// Trainers fields
+	public static Player me; // make not static
+	private Pokemon foe; // remove eventually
+	private Trainer foeTrainer;
+	
+	// Functional field pointers
+	public Field field;
+	private GamePanel gp;
+	
 	private int trainerIndex;
-	private JLabel caughtIndicator;
 	public int staticPokemonID = -1;
-	
-	private BattleCloseListener battleCloseListener;
-	private TextPane console;
-	
+
+	// Debug fields
+//	private JButton addButton;
+//  private JButton healButton;
+//	private JButton exitButton;
+//	private JTextField idInput;
+//	private JTextField levelInput;
 
 	public Battle(PlayerCharacter playerCharacter, Trainer foeT, int trainerIndex, GamePanel gp, int area, int x, int y, String type) {
+		super(); // new JPanel()
+		
 		me = playerCharacter.p;
+		this.gp = gp;
 		this.trainerIndex = trainerIndex;
 		int faintIndex = 0;
 		while (me.getCurrent().isFainted()) {
 			me.swap(me.team[++faintIndex], faintIndex);
 		}
 		
-		setTitle("Battle");
+		//setTitle("Battle"); JFrame exclusive
 		
 		foe = new Pokemon(10, 5, false, false);
 	    
@@ -108,21 +113,19 @@ public class Battle extends JFrame {
 	    Pokemon.field = field;
 		
 	    // Initializing panel
-	    setResizable(false);
+	    // setResizable(false); JFrame exclusive
         setPreferredSize(new Dimension(gp.screenWidth, gp.screenHeight));
         setBounds(0, 0, gp.screenWidth, gp.screenHeight);
 
-
-        playerPanel = new JPanel();
-        playerPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        playerPanel.setOpaque(false); // Make the panel transparent
-        playerPanel.setLayout(null);
+        setBorder(new EmptyBorder(5, 5, 5, 5));
+        setOpaque(false); // Make the panel transparent
+        setLayout(null);
 
         // Set the content pane to the playerPanel
-        setContentPane(playerPanel);
+        //setContentPane(playerPanel); JFrame exclusive
 
         // Set the location of the Box in the center of the screen
-        setLocationRelativeTo(null);
+        //setLocationRelativeTo(null); JFrame exclusive
         
         // Decide between trainer or wild encounter
  		if (foeT != null) {
@@ -157,24 +160,24 @@ public class Battle extends JFrame {
 		console = new TextPane();
 		
 		JScrollPane scrollPane = new JScrollPane(console);
-		scrollPane.setBounds(10, 340, 610, 190);
+		scrollPane.setBounds(10, 325, 610, 245);
 		
 		console.setScrollPane(scrollPane);
 		
-		playerPanel.add(scrollPane);
+		this.add(scrollPane);
 		Pokemon.console = console;
 		
 		/*
 		 * Set current movebuttons
 		 */
 		moveButtons = new JGradientButton[4];
-		int[] xPositions = {196, 295, 196, 295};
+		int[] xPositions = {196, 300, 196, 300};
 		int[] yPositions = {247, 247, 280, 280};
 		for (int i = 0; i < moveButtons.length; i++) {
 			final int index = i;
 			moveButtons[i] = new JGradientButton("");
-			moveButtons[i].setBounds(xPositions[i], yPositions[i], 99, 33);
-			playerPanel.add(moveButtons[i]);
+			moveButtons[i].setBounds(xPositions[i], yPositions[i], 104, 33);
+			this.add(moveButtons[i]);
 			
 			moveButtons[i].addMouseListener(new MouseAdapter() {
 			    @Override
@@ -221,10 +224,10 @@ public class Battle extends JFrame {
 		userStatus.setText(me.getCurrent().status.getName());
 		userStatus.setForeground(me.getCurrent().status.getTextColor());
 		userStatus.setBackground(me.getCurrent().status.getColor());
-		userStatus.setBounds(223, 179, 21, 20);
+		userStatus.setBounds(230, 179, 21, 20);
 		userStatus.setVisible(true);
 		userStatus.setOpaque(true);
-		playerPanel.add(userStatus);
+		this.add(userStatus);
 		
 		foeStatus = new JLabel("");
 		foeStatus.setHorizontalAlignment(SwingConstants.CENTER);
@@ -232,16 +235,16 @@ public class Battle extends JFrame {
 		foeStatus.setText(foe.status.getName());
 		foeStatus.setForeground(foe.status.getTextColor());
 		foeStatus.setBackground(foe.status.getColor());
-		foeStatus.setBounds(563, 37, 21, 20);
+		foeStatus.setBounds(573, 37, 21, 20);
 		foeStatus.setVisible(true);
 		foeStatus.setOpaque(true);
-		playerPanel.add(foeStatus);
+		this.add(foeStatus);
 		
 		/*
 		 * Initialize caught indicator
 		 */
 		caughtIndicator = new JLabel(new ImageIcon(getIcon("/icons/ball.png")));
-		caughtIndicator.setBounds(539, 39, 16, 16);
+		caughtIndicator.setBounds(549, 39, 16, 16);
 
 	    if (foeTrainer == null && pl.p.pokedex[foe.id] == 2) {
 	    	caughtIndicator.setVisible(true);
@@ -249,7 +252,7 @@ public class Battle extends JFrame {
 	    	caughtIndicator.setVisible(false);
 	    }
 	    
-	    playerPanel.add(caughtIndicator);
+	    this.add(caughtIndicator);
 		
 		/*
 		 * Set Pokeball buttons and labels
@@ -260,15 +263,15 @@ public class Battle extends JFrame {
 		 * Set current and foe
 		 */
 		userSprite = new JLabel("");
-		userSprite.setBounds(223, 0, 200, 200);
+		userSprite.setBounds(233, 0, 200, 200);
 		
 		foeSprite = new JLabel("");
-		foeSprite.setBounds(563, 60, 200, 200);
+		foeSprite.setBounds(573, 60, 200, 200);
 		
 		userSprite.setVisible(true);
 		foeSprite.setVisible(true);
-		playerPanel.add(userSprite);
-		playerPanel.add(foeSprite);
+		this.add(userSprite);
+		this.add(foeSprite);
 		
 		updateCurrent(pl);
 		updateFoe();
@@ -277,15 +280,13 @@ public class Battle extends JFrame {
 		 * Set weather and terrain area
 		 */
 		weather = new JLabel("");
-		weather.setBounds(413, 10, 100, 200);
-		weather.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		weather.setBounds(423, 10, 110, 200);
 		
 		terrain = new JLabel("");
-		terrain.setBounds(413, 230, 100, 75);
-		terrain.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		terrain.setBounds(423, 230, 110, 75);
 		
-		playerPanel.add(weather);
-		playerPanel.add(terrain);
+		this.add(weather);
+		this.add(terrain);
 		
 		/*
 		 * Set slash label
@@ -293,8 +294,8 @@ public class Battle extends JFrame {
         slashLabel = new JLabel("/");
 		slashLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		slashLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		slashLabel.setBounds(286, 222, 21, 14);
-		playerPanel.add(slashLabel);
+		slashLabel.setBounds(293, 222, 21, 14);
+		this.add(slashLabel);
 		
 		/*
 		 * Set bars
@@ -309,14 +310,14 @@ public class Battle extends JFrame {
 		currentHPLabel = new JLabel(me.getCurrent().getCurrentHP() + "");
 		currentHPLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		currentHPLabel.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		currentHPLabel.setBounds(243, 222, 46, 14);
-		playerPanel.add(currentHPLabel);
+		currentHPLabel.setBounds(250, 222, 46, 14);
+		this.add(currentHPLabel);
 		
 		maxHPLabel = new JLabel(me.getCurrent().getStat(0) + "");
 		maxHPLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		maxHPLabel.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		maxHPLabel.setBounds(303, 222, 46, 14);
-		playerPanel.add(maxHPLabel);
+		maxHPLabel.setBounds(310, 222, 46, 14);
+		this.add(maxHPLabel);
 		
 		updateBars(false);
 		
@@ -324,11 +325,11 @@ public class Battle extends JFrame {
 		 * Set buttons
 		 */
 //		addButton = createJButton("ADD", new Font("Tahoma", Font.BOLD, 9), 645, 430, 75, 23);
-		catchButton = createJButton("CATCH", new Font("Tahoma", Font.BOLD, 11), 638, 340, 89, 23);
+		catchButton = createJButton("CATCH", new Font("Tahoma", Font.BOLD, 14), 638, 330, 109, 33);
 //		healButton = createJButton("HEAL", new Font("Tahoma", Font.BOLD, 9), 645, 460, 75, 23);
-		runButton = createJButton("RUN", new Font("Tahoma", Font.BOLD, 9), 645, 430, 75, 23);
-		infoButton = createJButton("INFO", new Font("Tahoma", Font.BOLD, 9), 645, 460, 75, 23);
-		calcButton = createJButton("CALC", new Font("Tahoma", Font.BOLD, 9), 645, 490, 75, 23);
+		runButton = createJButton("RUN", new Font("Tahoma", Font.BOLD, 11), 645, 430, 94, 30);
+		infoButton = createJButton("INFO", new Font("Tahoma", Font.BOLD, 11), 645, 467, 94, 30);
+		calcButton = createJButton("CALC", new Font("Tahoma", Font.BOLD, 11), 645, 504, 94, 30);
 //		exitButton = createJButton("EXIT", new Font("Tahoma", Font.BOLD, 9), 645, 400, 75, 23);
 		
 		/*
@@ -412,7 +413,7 @@ public class Battle extends JFrame {
 					updateFoe();
 					if (me.copyBattle) copyToClipboard();
 					JOptionPane.showMessageDialog(null, "You caught " + foe.name + "!");
-					dispose();
+					endBattle();
 		        } else {
 		            console.writeln("Oh no! " + foe.name + " broke free!");
 		            if (foe.trainerOwned()) {
@@ -472,7 +473,7 @@ public class Battle extends JFrame {
 						if (me.copyBattle) copyToClipboard();
 						JOptionPane.showMessageDialog(null, "Got away safely!");
 						gp.keyH.resume();
-						dispose();
+						endBattle();
 						return;
 					}
 					console.writeln("\nCouldn't escape!");
@@ -489,7 +490,7 @@ public class Battle extends JFrame {
 			if (foe.isFainted()) {
 				if (me.copyBattle) copyToClipboard();
 				JOptionPane.showMessageDialog(null, foe.name + " was defeated!");
-				dispose();
+				endBattle();
 			}
 			if (me.getCurrent().isFainted()) {
 				if (me.wiped()) {
@@ -812,7 +813,7 @@ public class Battle extends JFrame {
 	        			if (foeCanMove) {
 	        				foe.move(me.getCurrent(), move, me, foeTrainer.getTeam(), foeTrainer, false);
 	        				foe = foeTrainer.getCurrent();
-	        				if (foeTrainer.hasValidMembers() && foe.vStatuses.contains(Status.SWITCHING)) {
+	        				if (foeTrainer != null && foeTrainer.hasValidMembers() && foe.vStatuses.contains(Status.SWITCHING)) {
 		        	        	foeTrainer.swapRandom(me.getCurrent(), me, false, foe.lastMoveUsed == Move.BATON_PASS);
 		        	        	foe = foeTrainer.current;
 		        	        }
@@ -863,12 +864,12 @@ public class Battle extends JFrame {
 				            }
 
 				            // Close the current Battle JFrame
-				            dispose();
+				            endBattle();
 						}
 					} else {
 						if (me.copyBattle) copyToClipboard();
 						JOptionPane.showMessageDialog(null, foe.name + " was defeated!");
-						dispose();
+						endBattle();
 					}
 				}
 				console.writeln();
@@ -964,7 +965,7 @@ public class Battle extends JFrame {
 		JButton newB = new JButton(string);
 		newB.setFont(font);
 		newB.setBounds(i, j, k, l);
-		playerPanel.add(newB);
+		this.add(newB);
 		return newB;
 	}
 	
@@ -1001,13 +1002,13 @@ public class Battle extends JFrame {
 	}
 
 	private void updateCurrent(PlayerCharacter pl) {
-		if (currentText != null) playerPanel.remove(currentText);
-		if (userSprite != null) playerPanel.remove(userSprite);
+		if (currentText != null) this.remove(currentText);
+		if (userSprite != null) this.remove(userSprite);
 		
 		currentText = new JLabel("ERROR");
 		currentText.setText(me.getCurrent().nickname + "  lv " + me.getCurrent().getLevel()); 
 		currentText.setHorizontalAlignment(SwingConstants.LEFT);
-		currentText.setBounds(249, 179, 140, 20);
+		currentText.setBounds(256, 179, 140, 20);
 		currentText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		currentText.setFont(getScaledFontSize(currentText));
 		
@@ -1029,9 +1030,9 @@ public class Battle extends JFrame {
 		
 		setBallCounts(pl);
 		
-		playerPanel.add(currentText);
-		playerPanel.add(userSprite);
-		playerPanel.repaint();
+		this.add(currentText);
+		this.add(userSprite);
+		this.repaint();
 		
 	}
 
@@ -1082,19 +1083,23 @@ public class Battle extends JFrame {
 	        	moveButtons[i].setVisible(false);
 	        }
 	    }
-	    playerPanel.repaint();
+	    this.repaint();
 	}
 	
 	private void updateField(Field field) {
 		if (field.weather != null) {
 			weather.setIcon(new ImageIcon(getIcon(field.weather)));
+			weather.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		} else {
 			weather.setIcon(null);
+			weather.setBorder(null);
 		}
 		if (field.terrain != null) {
 			terrain.setIcon(new ImageIcon(getIcon(field.terrain)));
+			terrain.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		} else {
 			terrain.setIcon(null);
+			terrain.setBorder(null);
 		}
 		repaint();
 		
@@ -1116,11 +1121,11 @@ public class Battle extends JFrame {
 
 	private void updateFoe() {
 		// Foe text
-		if (foeText != null) playerPanel.remove(foeText);
-		if (foeHealthBar != null) playerPanel.remove(foeHealthBar);
+		if (foeText != null) this.remove(foeText);
+		if (foeHealthBar != null) this.remove(foeHealthBar);
 		foeText = new JLabel("ERROR");
 		foeText.setText(foe.nickname + "  lv " + foe.getLevel());
-		foeText.setBounds(589, 37, 184, 20);
+		foeText.setBounds(599, 37, 184, 20);
 		foeText.setHorizontalAlignment(SwingConstants.LEFT);
 		foeText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		foeText.setFont(getScaledFontSize(foeText));
@@ -1168,14 +1173,14 @@ public class Battle extends JFrame {
 		} else {
 			foeHealthBar.setForeground(new Color(255, 0, 0));
 		}
-		foeHealthBar.setBounds(563, 59, 146, 14);
+		foeHealthBar.setBounds(573, 59, 146, 14);
 		
-		playerPanel.add(foeText);
-		playerPanel.add(foeHealthBar);
+		this.add(foeText);
+		this.add(foeHealthBar);
 		
-		if (foePartyPanel != null) playerPanel.remove(foePartyPanel);
+		if (foePartyPanel != null) this.remove(foePartyPanel);
 		foePartyPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-		foePartyPanel.setBounds(545, 0, 200, 32);
+		foePartyPanel.setBounds(555, 0, 200, 32);
 
 		int yellowIndex = 6;
 		if (foeTrainer != null) yellowIndex = foeTrainer.getNumFainted();
@@ -1197,11 +1202,11 @@ public class Battle extends JFrame {
 		}
 
 		foePartyPanel.setVisible(true);
-		playerPanel.add(foePartyPanel);
+		this.add(foePartyPanel);
 
 		
 		updateStatus();
-		playerPanel.repaint();
+		this.repaint();
 		
 	}
 
@@ -1254,7 +1259,7 @@ public class Battle extends JFrame {
 				party[i].setFont(new Font("Tahoma", Font.PLAIN, 11));
 				party[i].setText("<html><center>" + top + "<br>" + bottom + "</center></html>");
 				party[i].setBackground(p.type1.getColor(), p.type2 == null ? null : p.type2.getColor());
-				playerPanel.add(party[i]);
+				this.add(party[i]);
 				party[i].setVisible(true);
 				
 				// Party HP bars
@@ -1268,14 +1273,14 @@ public class Battle extends JFrame {
 					partyHP[i].setForeground(new Color(255, 0, 0));
 				}
 				partyHP[i].setBounds(60, 64 + (i % 5) * 54, 114, 7);
-				playerPanel.add(partyHP[i]);
+				this.add(partyHP[i]);
 				partyHP[i].setVisible(true);
 				
 				// Party sprites
 				partySprites[i].setBounds(0, 11 + (i % 5) * 54, 60, 60);
 				
 				partySprites[i].setIcon(getMiniSprite(p));
-				playerPanel.add(partySprites[i]);
+				this.add(partySprites[i]);
 				partySprites[i].setVisible(true);
 			} else {
 				party[i].setVisible(false);
@@ -1371,7 +1376,7 @@ public class Battle extends JFrame {
 	        }
 	        
 	        // Check for swap (AI)
-	        if (foeTrainer.hasValidMembers() && foeCanMove && slower.vStatuses.contains(Status.SWITCHING)) {
+	        if (foeTrainer != null && foeTrainer.hasValidMembers() && foeCanMove && slower.vStatuses.contains(Status.SWITCHING)) {
 	        	foeTrainer.current = foeTrainer.swapOut(faster, me, null, slower.lastMoveUsed == Move.BATON_PASS);
 //	        	updateBars(true);
 //				JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
@@ -1389,7 +1394,7 @@ public class Battle extends JFrame {
 				if (foeTrainer != null) faster = foeTrainer.getCurrent();
 			}
 			// Check for swap (AI)
-	        if (foeTrainer.hasValidMembers() && foeCanMove && faster.vStatuses.contains(Status.SWITCHING)) {
+	        if (foeTrainer != null && foeTrainer.hasValidMembers() && foeCanMove && faster.vStatuses.contains(Status.SWITCHING)) {
 	        	faster = foeTrainer.swapOut(slower, me, null, faster.lastMoveUsed == Move.BATON_PASS);
 	        }
 			
@@ -1446,13 +1451,13 @@ public class Battle extends JFrame {
 		            JOptionPane.showMessageDialog(null, message);
 
 		            // Close the current Battle JFrame
-		            dispose();
+		            endBattle();
 		            break;
 				}
 			} else {
 				if (me.copyBattle) copyToClipboard();
 				JOptionPane.showMessageDialog(null, foe.name + " was defeated!");
-				dispose();
+				endBattle();
 				break;
 			}
 		}
@@ -1521,7 +1526,7 @@ public class Battle extends JFrame {
 		});
 		
 		foeText.setText(foe.nickname + "  lv " + foe.getLevel());
-		foeText.setBounds(589, 37, 184, 20);
+		foeText.setBounds(599, 37, 184, 20);
 		foeText.setHorizontalAlignment(SwingConstants.LEFT);
 		foeText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		foeText.setFont(getScaledFontSize(foeText));
@@ -1596,7 +1601,7 @@ public class Battle extends JFrame {
 		userStatus.setForeground(me.getCurrent().status.getTextColor());
 		foeStatus.setForeground(foe.status.getTextColor());
 		
-		playerPanel.repaint();
+		this.repaint();
 	}
 
 	private void updateBars(boolean animate) {
@@ -1615,13 +1620,13 @@ public class Battle extends JFrame {
 		} else {
 			healthBar.setForeground(new Color(255, 0, 0));
 		}
-		healthBar.setBounds(223, 201, 146, 14);
-		playerPanel.add(healthBar);
+		healthBar.setBounds(230, 201, 149, 14);
+		this.add(healthBar);
 			
 		expBar.setMaximum(me.getCurrent().expMax);
 		expBar.setValue(me.getCurrent().exp);
-		expBar.setBounds(223, 216, 146, 7);
-		playerPanel.add(expBar);
+		expBar.setBounds(230, 216, 149, 7);
+		this.add(expBar);
 		
 		foeHealthBar.setMaximum(foe.getStat(0));
 		if (animate) animateBar(foeHealthBar, foeHealthBar.getValue(), foe.getCurrentHP());
@@ -1632,7 +1637,7 @@ public class Battle extends JFrame {
 		} else {
 			foeHealthBar.setForeground(new Color(255, 0, 0));
 		}
-		playerPanel.repaint();
+		this.repaint();
 		
 	}
 	
@@ -1783,7 +1788,7 @@ public class Battle extends JFrame {
 		p.p.money = p.p.money < 0 ? 0 : p.p.money;
 		JOptionPane.showMessageDialog(null, "You have no more Pokemon that can fight!\nYou lost $500!");
 		gp.eHandler.teleport(0, 79, 46, false);
-		dispose();
+		endBattle();
 		for (Pokemon pokemon : p.p.team) {
 			if (pokemon != null) {
 				pokemon.heal();
@@ -1801,36 +1806,36 @@ public class Battle extends JFrame {
 	private void setBallComps(PlayerCharacter pl) {
 		ButtonGroup ballType = new ButtonGroup();
 		pokeballButton = new JRadioButton("");
-		pokeballButton.setBounds(640, 370, 21, 23);
+		pokeballButton.setBounds(648, 370, 21, 23);
 		pokeballButton.setSelected(true);
-		playerPanel.add(pokeballButton);
+		this.add(pokeballButton);
 		pokeballButton.setVisible(true);
 		greatballButton = new JRadioButton("");
-		greatballButton.setBounds(675, 370, 21, 23);
-		playerPanel.add(greatballButton);
+		greatballButton.setBounds(683, 370, 21, 23);
+		this.add(greatballButton);
 		greatballButton.setVisible(true);
 		ultraballButton = new JRadioButton("");
-		ultraballButton.setBounds(710, 370, 21, 23);
-		playerPanel.add(ultraballButton);
+		ultraballButton.setBounds(718, 370, 21, 23);
+		this.add(ultraballButton);
 		ultraballButton.setVisible(true);
 		ballType.add(pokeballButton);
 		ballType.add(greatballButton);
 		ballType.add(ultraballButton);
 		
 		pokeballLabel = new JLabel("");
-		pokeballLabel.setBounds(640, 385, 30, 30);
+		pokeballLabel.setBounds(650, 385, 30, 30);
 		pokeballLabel.setForeground(Color.red.brighter());
-		playerPanel.add(pokeballLabel);
+		this.add(pokeballLabel);
 		
 		greatballLabel = new JLabel("");
-		greatballLabel.setBounds(675, 385, 30, 30);
+		greatballLabel.setBounds(688, 385, 30, 30);
 		greatballLabel.setForeground(Color.blue.darker());
-		playerPanel.add(greatballLabel);
+		this.add(greatballLabel);
 		
 		ultraballLabel = new JLabel("");
-		ultraballLabel.setBounds(710, 385, 30, 30);
+		ultraballLabel.setBounds(723, 385, 30, 30);
 		ultraballLabel.setForeground(Color.yellow.darker());
-		playerPanel.add(ultraballLabel);
+		this.add(ultraballLabel);
 		
 		setBallCounts(pl);
 	}
@@ -1839,16 +1844,6 @@ public class Battle extends JFrame {
 		pokeballLabel.setText(pl.p.bag.count[1] + "");
 		greatballLabel.setText(pl.p.bag.count[2] + "");
 		ultraballLabel.setText(pl.p.bag.count[3] + "");
-	}
-
-	public void setBattleCloseListener(BattleCloseListener listener) {
-        this.battleCloseListener = listener;
-    }
-	
-	@Override
-	public void dispose() {
-		super.dispose();
-		if (battleCloseListener != null) battleCloseListener.onBattleClosed(trainerIndex, staticPokemonID);
 	}
 	
 	public interface BattleCloseListener {
@@ -1885,6 +1880,10 @@ public class Battle extends JFrame {
 			t.setRepeats(false);
 			t.start();
 		}
+	}
+	
+	private void endBattle() {
+		gp.endBattle(trainerIndex, staticPokemonID);
 	}
 	
 }
