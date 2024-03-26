@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,9 +54,9 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	public int currentMap = 0;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
-	public static final int MAX_FLAGS = 30;
+	public static final int MAX_FLAGS = 40;
 	
-	public KeyHandler keyH = new KeyHandler();
+	public KeyHandler keyH = new KeyHandler(this);
 	public AssetSetter aSetter = new AssetSetter(this);
 	public EventHandler eHandler = new EventHandler(this);
 	Thread gameThread;
@@ -77,6 +75,12 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	private volatile boolean inBattle;
 	public boolean mapOpen = false;
 	public int ticks;
+	
+	public UI ui = new UI(this);
+	
+	public int gameState;
+	public static final int PLAY_STATE = 1;
+	public static final int DIALOG_STATE = 2;
 
 	public static Map<Entity, Integer> volatileTrainers = new HashMap<>();
 	
@@ -125,13 +129,15 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	}
 	
 	public void update() {
-		player.update();
+		if (gameState == PLAY_STATE) {
+			player.update();
+		}
 		
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
 		Graphics2D g2 = (Graphics2D)g;
+		
 		tileM.draw(g2);
 		
 		for (int i = 0; i < npc[1].length; i++) {
@@ -153,6 +159,8 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		}
 		
 		player.draw(g2);
+		
+		ui.draw(g2);
 		
 		g2.dispose();
 	}
@@ -176,7 +184,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		//panel.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); JFrame exclusive
         //panel.setBattleCloseListener(this);
 		removePanel();
-		addBattle(panel);
+		addPanel(panel, true);
 		
         panel.setVisible(true);
         
@@ -197,7 +205,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		Battle panel = new Battle(player, null, -1, this, area, x, y, type);
 		//panel.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); JFrame exclusive
 		removePanel();
-		addBattle(panel);
+		addPanel(panel, true);
 		
 		panel.setVisible(true);
 	}
@@ -211,7 +219,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		Battle panel = new Battle(player, null, -1, this, area, x, y, null);
 		//panel.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); JFrame exclusive
 		removePanel();
-		addBattle(panel);
+		addPanel(panel, true);
 		
 		panel.setVisible(true);
 	}
@@ -220,15 +228,9 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	    // Create the Battle instance and set the window listener to save on close
 	    keyH.pause();
 
-	    PBox box = new PBox(player, keyH, target.isGauntlet());
-	    box.addWindowListener(new WindowAdapter() {
-	        @Override
-	        public void windowClosing(WindowEvent e) {
-	            keyH.resume();
-	        }
-	    });
-
-	    box.setVisible(true);
+	    PBox box = new PBox(this, keyH, target.isGauntlet());
+	    removePanel();
+	    addPanel(box, true);
 	}
 	
 	public void openMap() {
@@ -236,15 +238,8 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		mapOpen = true;
 		
 		PMap map = new PMap(this);
-		map.addWindowListener(new WindowAdapter() {
-	        @Override
-	        public void windowClosing(WindowEvent e) {
-	        	keyH.resume();
-	        	mapOpen = false;
-	        }
-	    });
-		
-		map.setVisible(true);
+		removePanel();
+		addPanel(map, true);
 	}
 
 
@@ -293,55 +288,58 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		addGamePanel();
 	}
 	
-	private void addBattle(Battle battle) {
-		SwingUtilities.invokeLater(() -> {
-			// Create a JPanel for the fade effect
-		    FadingPanel fadePanel = new FadingPanel();
-		    fadePanel.setBackground(Color.BLACK);
-		    fadePanel.setBounds(0, 0, window.getWidth(), window.getHeight());
-		    window.add(fadePanel, 0);
-		    
-		    // Create a Timer to gradually change the opacity of the fadePanel
-		    Timer timer = new Timer(20, null);
+	private void addPanel(JPanel panel, boolean animate) {
+		if (animate) {
+			SwingUtilities.invokeLater(() -> {
+				// Create a JPanel for the fade effect
+			    FadingPanel fadePanel = new FadingPanel();
+			    fadePanel.setBackground(Color.BLACK);
+			    fadePanel.setBounds(0, 0, window.getWidth(), window.getHeight());
+			    window.add(fadePanel, 0);
+			    
+			    // Create a Timer to gradually change the opacity of the fadePanel
+			    Timer timer = new Timer(20, null);
 
-		    timer.addActionListener(e -> {
-		    	fadePanel.setBackground(new Color(fadePanel.getBackground().getRed() + 5, fadePanel.getBackground().getGreen() + 5, fadePanel.getBackground().getBlue() + 5));
-		        int alpha = fadePanel.getAlpha();
-//		        if (alpha % 4 == 0) {
-//		    		fadePanel.setBackground(Color.RED);
-//		    	} else {
-//		    		fadePanel.setBackground(Color.GREEN);
-//		    	}
-		        alpha += 2; // Adjust the fading speed
-		        fadePanel.setAlpha(alpha);
-		        fadePanel.repaint();
-	
-		        if (alpha >= 90) {
-		        	removePanel();
-		            timer.stop();
-		    		
-		            // Add the Battle
-		    	    Main.window.getContentPane().add(battle);
-
-		    	    // Set focus on the Battle
-		    	    battle.requestFocusInWindow();
-
-		    	    // Repaint the JFrame to reflect the changes
-		    	    Main.window.revalidate();
-		    	    Main.window.repaint();
-		        }
-		    });
-			
-			timer.start();
-		});
+			    timer.addActionListener(e -> {
+			    	fadePanel.setBackground(new Color(fadePanel.getBackground().getRed() + 5, fadePanel.getBackground().getGreen() + 5, fadePanel.getBackground().getBlue() + 5));
+			        int alpha = fadePanel.getAlpha();
+			        alpha += 2; // Adjust the fading speed
+			        fadePanel.setAlpha(alpha);
+			        fadePanel.repaint();
+		
+			        if (alpha >= 90) {
+			        	removePanel();
+			            timer.stop();
+			    		
+			            addPanel(panel);
+			        }
+			    });
+				
+				timer.start();
+			});
+		} else {
+			addPanel(panel);
+		}
 	}
 	
-	private void removePanel() {
+	private void addPanel(JPanel panel) {
+		// Add the Battle
+	    Main.window.getContentPane().add(panel);
+
+	    // Set focus on the Battle
+	    panel.requestFocusInWindow();
+
+	    // Repaint the JFrame to reflect the changes
+	    Main.window.revalidate();
+	    Main.window.repaint();
+	}
+	
+	public void removePanel() {
 		// Remove all existing components from the JFrame
 	    Main.window.getContentPane().removeAll();
 	}
 	
-	private void addGamePanel() {
+	public void addGamePanel() {
 		Main.window.add(this);
 		
 		this.requestFocusInWindow();
@@ -403,6 +401,9 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		aSetter.setNPC();
 		aSetter.setObject();
 		aSetter.setInteractiveTile(currentMap);
+		
+		gameState = PLAY_STATE;
+		
 		Pokemon.console = new TextPane();
 		Pokemon.console.setScrollPane(new JScrollPane());
 		Pokemon.field = new Field();

@@ -308,7 +308,7 @@ public class PlayerCharacter extends Entity {
 				} else if (target instanceof NPC_Market) {
 					interactMarket();
 				} else if (target instanceof NPC_Block) {
-					interactBlock((NPC_Block) gp.npc[gp.currentMap][npcIndex]);
+					interactNPC((NPC_Block) gp.npc[gp.currentMap][npcIndex]);
 				} else if (target instanceof NPC_Trainer) {
 					gp.startBattle(target.trainer);
 				} else if (target instanceof NPC_GymLeader) {
@@ -804,362 +804,382 @@ public class PlayerCharacter extends Entity {
 		keyH.resume();
 	}
 	
-	private void interactBlock(NPC_Block npc) {
-		if (keyH.wPressed) {
-			keyH.pause();
-			if (!p.fish || gp.currentMap != 32) JOptionPane.showMessageDialog(null, Item.breakString(npc.message, 65));
-			if (gp.currentMap == 32 && !p.fish) {
-				p.fish = true;
-				JOptionPane.showMessageDialog(null, "You got a Fishing Rod!\n(Press 'A' to fish)");
-			}
+	private void interactNPC(NPC_Block npc) {
+		if (npc.flag != -1 && !p.flags[npc.flag]) {
+			gp.gameState = GamePanel.DIALOG_STATE;
+			npc.speak(0);
 			if (npc.more) {
-				if (!p.flags[6] && gp.currentMap == 43) {
-					JPanel partyMasterPanel = new JPanel();
-					partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-					partyMasterPanel.setPreferredSize(new Dimension(350, 350));
-					
-					for (int j = 0; j < 6; j++) {
-						PartyPanel partyPanel = new PartyPanel(p.team[j], true);
-						final int index = j;
-						if (p.team[index] != null) {
-							partyPanel.addMouseListener(new MouseAdapter() {
-								public void mouseClicked(MouseEvent evt) {
-									if (p.team[index].type1 == PType.GROUND || p.team[index].type2 == PType.GROUND) {
-										p.flags[6] = true;
-										JOptionPane.showMessageDialog(null, "Thank you! Here, take this as a reward!");
-										JOptionPane.showMessageDialog(null, "Obtained A Key!\nGot 1 Valiant Gem!");
-										p.bag.add(Item.VALIANT_GEM);
-									} else {
-										JOptionPane.showMessageDialog(null, "That's not a GROUND type!");
-									}
-									SwingUtilities.getWindowAncestor(partyPanel).dispose();
+				SwingUtilities.invokeLater(() -> {
+					interactBlock(npc);
+				});
+			}
+		} else if (npc.altDialogue != null) {
+			gp.gameState = GamePanel.DIALOG_STATE;
+			npc.speak(1);
+		}
+		
+	}
+	
+	private void interactBlock(NPC_Block npc) {
+		keyH.pause();
+		if (gp.currentMap == 32 && !p.flags[30]) {
+			p.flags[30] = true;
+			p.fish = true;
+			JOptionPane.showMessageDialog(null, "You got a Fishing Rod!\n(Press 'A' to fish)");
+		}
+			if (!p.flags[6] && gp.currentMap == 43) {
+				JPanel partyMasterPanel = new JPanel();
+				partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+				partyMasterPanel.setPreferredSize(new Dimension(350, 350));
+				
+				for (int j = 0; j < 6; j++) {
+					PartyPanel partyPanel = new PartyPanel(p.team[j], true);
+					final int index = j;
+					if (p.team[index] != null) {
+						partyPanel.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent evt) {
+								if (p.team[index].type1 == PType.GROUND || p.team[index].type2 == PType.GROUND) {
+									p.flags[6] = true;
+									JOptionPane.showMessageDialog(null, "Thank you! Here, take this as a reward!");
+									JOptionPane.showMessageDialog(null, "Obtained A Key!\nGot 1 Valiant Gem!");
+									p.bag.add(Item.VALIANT_GEM);
+								} else {
+									JOptionPane.showMessageDialog(null, "That's not a GROUND type!");
 								}
-							});
-						}
-						partyMasterPanel.add(partyPanel);
+								SwingUtilities.getWindowAncestor(partyPanel).dispose();
+							}
+						});
 					}
-					JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+					partyMasterPanel.add(partyPanel);
 				}
-				if (!p.flags[7] && gp.currentMap == 38) {
-					JPanel partyMasterPanel = new JPanel();
-					partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-					partyMasterPanel.setPreferredSize(new Dimension(350, 350));
-					
-					for (int j = 0; j < 6; j++) {
-						PartyPanel partyPanel = new PartyPanel(p.team[j], true);
-						final int index = j;
-						if (p.team[index] != null) {
-							partyPanel.addMouseListener(new MouseAdapter() {
-								public void mouseClicked(MouseEvent evt) {
-									if (p.team[index].type1 == PType.ICE || p.team[index].type2 == PType.ICE) {
-										p.flags[7] = true;
-										JOptionPane.showMessageDialog(null, "Thank you! Here, take this as a reward!");
-										JOptionPane.showMessageDialog(null, "Obtained B Key!\nGot 1 Petticoat Gem!");
-										p.bag.add(Item.PETTICOAT_GEM);
-									} else {
-										JOptionPane.showMessageDialog(null, "That's not an ICE type!");
-									}
-									SwingUtilities.getWindowAncestor(partyPanel).dispose();
+				JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+			}
+			if (!p.flags[7] && gp.currentMap == 38) {
+				JPanel partyMasterPanel = new JPanel();
+				partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+				partyMasterPanel.setPreferredSize(new Dimension(350, 350));
+				
+				for (int j = 0; j < 6; j++) {
+					PartyPanel partyPanel = new PartyPanel(p.team[j], true);
+					final int index = j;
+					if (p.team[index] != null) {
+						partyPanel.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent evt) {
+								if (p.team[index].type1 == PType.ICE || p.team[index].type2 == PType.ICE) {
+									p.flags[7] = true;
+									JOptionPane.showMessageDialog(null, "Thank you! Here, take this as a reward!");
+									JOptionPane.showMessageDialog(null, "Obtained B Key!\nGot 1 Petticoat Gem!");
+									p.bag.add(Item.PETTICOAT_GEM);
+								} else {
+									JOptionPane.showMessageDialog(null, "That's not an ICE type!");
 								}
-							});
-						}
-						partyMasterPanel.add(partyPanel);
+								SwingUtilities.getWindowAncestor(partyPanel).dispose();
+							}
+						});
 					}
-					JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+					partyMasterPanel.add(partyPanel);
 				}
-				if (p.flags[8] && p.flags[9] && gp.currentMap == 41 && !p.bag.contains(96)) {
-					JOptionPane.showMessageDialog(null, "Oh you have?! Thank you so much!\nHere, take this as a reward!\n\nObtained HM04 Surf!");
-					p.bag.add(Item.HM04);
-				}
-				if (gp.currentMap == 46) {
-					String message = "";
-	    			for (Pokemon p : p.team) {
-	    				if (p != null) {
-	    	    			message += p.nickname;
-	    	    			if (p.nickname != p.name) message += (" (" + p.name + ")");
-	    	    			message += " : ";
-	    	    			message += p.determineHPType();
-	    	    			message += "\n";
-	    				}
-	    			}
-					JOptionPane.showMessageDialog(null, message, "Party Hidden Power Types", JOptionPane.PLAIN_MESSAGE);
-				}
-				if (gp.currentMap == 48 && !p.flags[11]) {
-					Random dog = new Random();
-					int id = dog.nextInt(3);
-					id = 120 + (id * 3);
-					p.flags[11] = true;
-					JOptionPane.showMessageDialog(null, "You adopted a gift dog!");
-					Pokemon dogP = new Pokemon(id, 5, true, false);
-					dogP.item = Item.SILK_SCARF;
-					p.catchPokemon(dogP);
-				}
-				if (gp.currentMap == 47 && !p.flags[10] && p.secondStarter != 0) {
-					Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
-					Pokemon result = new Pokemon((p.secondStarter * 3) - 2, 5, true, false);
-					result.item = items[p.secondStarter - 1];
-					p.flags[10] = true;
-					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
-					p.catchPokemon(result);
-				}
-				if (gp.currentMap == 18 && !p.flags[12]) {
-					Random gift = new Random();
-					int id = 0;
-					do {
-						id = gift.nextInt(6); // Dualmoose, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie
-						switch (id) {
-						case 0:
-							id = 61;
-							break;
-						case 1:
-							id = 106;
-							break;
-						case 2:
-							id = 143;
-							break;
-						case 3:
-							id = 150;
-							break;
-						case 4:
-							id = 177;
-							break;
-						case 5:
-							id = 184;
-							break;
-						}
-					} while (p.pokedex[id] == 2);
-					Pokemon result = new Pokemon(id, 15, true, false);
-					p.flags[12] = true;
-					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
-					p.catchPokemon(result);
-				}
-				if (gp.currentMap == 49 && !p.flags[13]) {
-					JOptionPane.showMessageDialog(null, "I encountered this very\nstrong Pokemon, and I\ndon't think I'm strong\nenough to train it. Here!");
-					Random gift = new Random();
-					int id;
-					do {
-						id = gift.nextInt(5); // Pebblepup, Fightorex, Tricerpup, Shockfang, Nightrex
-						switch (id) {
-						case 0:
-							id = 55;
-							break;
-						case 1:
-							id = 57;
-							break;
-						case 2:
-							id = 66;
-							break;
-						case 3:
-							id = 211;
-							break;
-						case 4:
-							id = 213;
-							break;
-						}
-					} while (p.pokedex[id] == 2);
-					Pokemon result = new Pokemon(id, 15, true, false);
-					p.flags[13] = true;
-					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
-					p.catchPokemon(result);
-				}
-				if (gp.currentMap == 50 && !p.flags[14]) {
-					JOptionPane.showMessageDialog(null, "Great choice young cracka!!!!");
-					Random gift = new Random();
-					int id = gift.nextInt(3); // Otterpor, Florline, Flameruff
+				JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+			}
+			if (p.flags[8] && p.flags[9] && gp.currentMap == 41 && !p.bag.contains(96)) {
+				JOptionPane.showMessageDialog(null, "Oh you have?! Thank you so much!\nHere, take this as a reward!\n\nObtained HM04 Surf!");
+				p.bag.add(Item.HM04);
+			}
+			if (gp.currentMap == 46) {
+				String message = "";
+    			for (Pokemon p : p.team) {
+    				if (p != null) {
+    	    			message += p.nickname;
+    	    			if (p.nickname != p.name) message += (" (" + p.name + ")");
+    	    			message += " : ";
+    	    			message += p.determineHPType();
+    	    			message += "\n";
+    				}
+    			}
+				JOptionPane.showMessageDialog(null, message, "Party Hidden Power Types", JOptionPane.PLAIN_MESSAGE);
+			}
+			if (gp.currentMap == 48 && !p.flags[11]) {
+				Random dog = new Random();
+				int id = dog.nextInt(3);
+				id = 120 + (id * 3);
+				p.flags[11] = true;
+				JOptionPane.showMessageDialog(null, "You adopted a gift dog!");
+				Pokemon dogP = new Pokemon(id, 5, true, false);
+				dogP.item = Item.SILK_SCARF;
+				p.catchPokemon(dogP);
+			}
+			if (gp.currentMap == 47 && !p.flags[10] && p.secondStarter != 0) {
+				Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
+				Pokemon result = new Pokemon((p.secondStarter * 3) - 2, 5, true, false);
+				result.item = items[p.secondStarter - 1];
+				p.flags[10] = true;
+				JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+				p.catchPokemon(result);
+			}
+			if (gp.currentMap == 18 && !p.flags[12]) {
+				Random gift = new Random();
+				int id = 0;
+				int counter = 0;
+				do {
+					counter++;
+					id = gift.nextInt(6); // Dualmoose, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie
 					switch (id) {
 					case 0:
-						id = 78;
+						id = 61;
 						break;
 					case 1:
-						id = 80;
+						id = 106;
 						break;
 					case 2:
-						id = 92;
+						id = 143;
+						break;
+					case 3:
+						id = 150;
+						break;
+					case 4:
+						id = 177;
+						break;
+					case 5:
+						id = 184;
 						break;
 					}
-					if (p.pokedex[id] == 2) {
-						JOptionPane.showMessageDialog(null, "Wait..... you have that\none?!?!? Shit. Well, take\nthis one instead bozo");
-						Random gift2 = new Random();
-						boolean sparkitten = gift2.nextBoolean();
-						if (sparkitten) {
-							id = 108;
-						} else {
-							id = 190;
-						}
+				} while (p.pokedex[id] == 2 && counter < 100);
+				Pokemon result = new Pokemon(id, 15, true, false);
+				p.flags[12] = true;
+				JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+				p.catchPokemon(result);
+			}
+			if (gp.currentMap == 49 && !p.flags[13]) {
+				JOptionPane.showMessageDialog(null, "I encountered this very\nstrong Pokemon, and I\ndon't think I'm strong\nenough to train it. Here!");
+				Random gift = new Random();
+				int id;
+				int counter = 0;
+				do {
+					counter++;
+					id = gift.nextInt(5); // Pebblepup, Fightorex, Tricerpup, Shockfang, Nightrex
+					switch (id) {
+					case 0:
+						id = 55;
+						break;
+					case 1:
+						id = 57;
+						break;
+					case 2:
+						id = 66;
+						break;
+					case 3:
+						id = 211;
+						break;
+					case 4:
+						id = 213;
+						break;
 					}
-					Pokemon result = new Pokemon(id, 25, true, false);
-					p.flags[14] = true;
-					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
-					p.catchPokemon(result);
-				} if (gp.currentMap == 91 && !p.flags[16]) {
-					JOptionPane.showMessageDialog(null, "Obtained HM05 Slow Fall!");
-					p.bag.add(Item.HM05);
-					JOptionPane.showMessageDialog(null, "Also, if you haven't yet, you should\nbe sure to check out the bottom right\nhouse in the quadrant above.\nI hear he has a gift!");
-					p.flags[16] = true;
-				} if (gp.currentMap == 93) {
-					JPanel partyMasterPanel = new JPanel();
-					partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-					partyMasterPanel.setPreferredSize(new Dimension(350, 350));
-					for (int j = 0; j < 6; j++) {
-						PartyPanel partyPanel = new PartyPanel(p.team[j], true);
-						final int index = j;
-						if (p.team[index] != null) {
-							partyPanel.addMouseListener(new MouseAdapter() {
-								public void mouseClicked(MouseEvent evt) {
-									ArrayList<Move> forgottenMoves = new ArrayList<>();
-				                    for (int i = 0; i < p.team[index].getLevel(); i++) {
-				                    	if (i < p.team[index].movebank.length) {
-				                    		Node move = p.team[index].movebank[i];
-				                    		while (move != null) {
-				                    			if (!p.team[index].knowsMove(move.data)) {
-				                    				forgottenMoves.add(move.data);
-				                    			}
-				                    			move = move.next;
-				                    		}
-				                    	}
-				                    }
-				                    if (forgottenMoves.isEmpty()) {
-				                        JOptionPane.showMessageDialog(null, "This Pokemon has not forgotten any moves.");
-				                    } else {
-				                    	JPanel moves = new JPanel();
-				                    	moves.setLayout(new GridLayout(0, 1));
-				                        for (Move move : forgottenMoves) {
-				                            JGradientButton moveButton = new JGradientButton(move.toString());
-				                            moveButton.setBackground(move.mtype.getColor());
-				                            moveButton.addMouseListener(new MouseAdapter() {
-				                			    @Override
-				                			    public void mouseClicked(MouseEvent e) {
-				                			    	if (SwingUtilities.isRightMouseButton(e)) {
-				                			            JOptionPane.showMessageDialog(null, move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
-				                			        } else {
-				                			        	int choice = p.team[index].displayMoveOptions(move, p);
-							        	                if (choice == JOptionPane.CLOSED_OPTION) {
-							        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not learn " + move + ".");
-							        	                } else {
-							        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has learned " + move + " and forgot " + p.team[index].moveset[choice].move + "!");
-							        	                	p.team[index].moveset[choice] = new Moveslot(move);
-							        	                }
-							        	                SwingUtilities.getWindowAncestor(moves).dispose();
-				                			        }
-				                			    }
-				                			});
-				                            moves.add(moveButton);
-				                        }
-				                        JScrollPane scrollPane = new JScrollPane(moves);
-				                		scrollPane.setPreferredSize(new Dimension(200, 300));
-				                		scrollPane.getVerticalScrollBar().setUnitIncrement(6);
-
-				                        JOptionPane.showMessageDialog(null, scrollPane, "Teach a Move?", JOptionPane.QUESTION_MESSAGE);
-				                    }
-								}
-							});
-						}
-						partyMasterPanel.add(partyPanel);
-					}
-					JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
-				} if (gp.currentMap == 94 && !p.flags[18]) {
-					JOptionPane.showMessageDialog(null, "Here's a gift of one\nof the Pokemon affected!");
-					int[] ids = new int[] {197, 199, 202, 205, 209, 215, 217, 220, 223, 226};
-					Random gift = new Random();
-					int index = -1;
-					do {
-						index = gift.nextInt(ids.length);
-					} while (p.pokedex[ids[index]] == 2);
-					
-					Pokemon result = new Pokemon(ids[index], 30, true, false);
-					p.flags[18] = true;
-					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
-					p.catchPokemon(result);
-					
-				} if (gp.currentMap == 109 && !p.flags[22]) {
-					JOptionPane.showMessageDialog(null, "Here, could you raise it for me?");
-					int[] ids = new int[] {177, 179, 98};
-					Random gift = new Random();
-					int index = gift.nextInt(ids.length - 1);
-					if (p.pokedex[ids[0]] == 2 || p.pokedex[ids[1]] == 2) {
-						Pokemon temp = new Pokemon(5, 5, false, false);
-						JOptionPane.showMessageDialog(null, "Oh, you already have a\n" + temp.getName(ids[index]) + "? Well, take this really\nrare Pokemon instead!");
-						index = 2;
-					}
-					
-					Pokemon result = new Pokemon(ids[index], 1, true, false);
-					p.flags[22] = true;
-					JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
-					p.catchPokemon(result);
-					
-				} if (gp.currentMap == 118) {
-					JOptionPane.showMessageDialog(null, "Do you have any fossils for me to resurrect?");
-					JPanel options = new JPanel();
-					boolean valid = false;
-					if (p.bag.contains(45)) {
-						JGradientButton button = new JGradientButton(p.bag.bag[45].toString());
-						button.setBackground(p.bag.bag[45].getColor());
-						button.addActionListener(e -> {
-							int answer = JOptionPane.showOptionDialog(null,
-									"Would you like to revive a Shockfang?",
-						            "Revive Fossil?",
-						            JOptionPane.YES_NO_OPTION,
-						            JOptionPane.QUESTION_MESSAGE,
-						            null, null, null);
-							if (answer == JOptionPane.YES_OPTION) {
-								p.catchPokemon(new Pokemon(211, 20, true, false));
-								p.bag.remove(Item.THUNDER_SCALES_FOSSIL);
-								SwingUtilities.getWindowAncestor(options).dispose();
-							}
-						});
-						valid = true;
-						options.add(button);
-					}
-					
-					if (p.bag.contains(46)) {
-						JGradientButton button = new JGradientButton(p.bag.bag[46].toString());
-						button.setBackground(p.bag.bag[46].getColor());
-						button.addActionListener(e -> {
-							int answer = JOptionPane.showOptionDialog(null,
-									"Would you like to revive a Nightrex?",
-						            "Revive Fossil?",
-						            JOptionPane.YES_NO_OPTION,
-						            JOptionPane.QUESTION_MESSAGE,
-						            null, null, null);
-							if (answer == JOptionPane.YES_OPTION) {
-								p.catchPokemon(new Pokemon(213, 20, true, false));
-								p.bag.remove(Item.DUSK_SCALES_FOSSIL);
-								SwingUtilities.getWindowAncestor(options).dispose();
-							}
-						});
-						valid = true;
-						options.add(button);
-					}
-					
-					if (valid) {
-						JOptionPane.showMessageDialog(null, options, "Revive a fossil?", JOptionPane.QUESTION_MESSAGE);
+				} while (p.pokedex[id] == 2 && counter < 50);
+				Pokemon result = new Pokemon(id, 15, true, false);
+				p.flags[13] = true;
+				JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+				p.catchPokemon(result);
+			}
+			if (gp.currentMap == 50 && !p.flags[14]) {
+				JOptionPane.showMessageDialog(null, "Great choice young cracka!!!!");
+				Random gift = new Random();
+				int id = gift.nextInt(3); // Otterpor, Florline, Flameruff
+				switch (id) {
+				case 0:
+					id = 78;
+					break;
+				case 1:
+					id = 80;
+					break;
+				case 2:
+					id = 92;
+					break;
+				}
+				if (p.pokedex[id] == 2) {
+					JOptionPane.showMessageDialog(null, "Wait..... you have that\none?!?!? Shit. Well, take\nthis one instead bozo");
+					Random gift2 = new Random();
+					boolean sparkitten = gift2.nextBoolean();
+					if (sparkitten) {
+						id = 108;
 					} else {
-						JOptionPane.showMessageDialog(null, "You don't have any fossils to revive!");
-					}
-				} if (gp.currentMap == 127) {
-					int answer = JOptionPane.showOptionDialog(null,
-							"Would you like to play Blackjack?\n(Warning: Will Auto-Save)",
-				            "Blackjack?",
-				            JOptionPane.YES_NO_OPTION,
-				            JOptionPane.QUESTION_MESSAGE,
-				            null, null, null);
-					if (answer == JOptionPane.YES_OPTION) {
-						// Remove all existing components from the JFrame
-					    Main.window.getContentPane().removeAll();
-
-					    // Create and add the BlackjackPanel
-					    BlackjackPanel bjPanel = new BlackjackPanel(gp);
-					    Main.window.getContentPane().add(bjPanel);
-
-					    // Set focus on the BlackjackPanel
-					    bjPanel.requestFocusInWindow();
-
-					    // Repaint the JFrame to reflect the changes
-					    Main.window.revalidate();
-					    Main.window.repaint();
+						id = 190;
 					}
 				}
-			} if (gp.currentMap == 129 && worldY / gp.tileSize > 41) {
+				Pokemon result = new Pokemon(id, 25, true, false);
+				p.flags[14] = true;
+				JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+				p.catchPokemon(result);
+			} if (gp.currentMap == 91 && !p.flags[16]) {
+				JOptionPane.showMessageDialog(null, "Obtained HM05 Slow Fall!");
+				p.bag.add(Item.HM05);
+				JOptionPane.showMessageDialog(null, "Also, if you haven't yet, you should\nbe sure to check out the bottom right\nhouse in the quadrant above.\nI hear he has a gift!");
+				p.flags[16] = true;
+			} if (gp.currentMap == 93) {
+				JPanel partyMasterPanel = new JPanel();
+				partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
+				partyMasterPanel.setPreferredSize(new Dimension(350, 350));
+				for (int j = 0; j < 6; j++) {
+					PartyPanel partyPanel = new PartyPanel(p.team[j], true);
+					final int index = j;
+					if (p.team[index] != null) {
+						partyPanel.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent evt) {
+								ArrayList<Move> forgottenMoves = new ArrayList<>();
+			                    for (int i = 0; i < p.team[index].getLevel(); i++) {
+			                    	if (i < p.team[index].movebank.length) {
+			                    		Node move = p.team[index].movebank[i];
+			                    		while (move != null) {
+			                    			if (!p.team[index].knowsMove(move.data)) {
+			                    				forgottenMoves.add(move.data);
+			                    			}
+			                    			move = move.next;
+			                    		}
+			                    	}
+			                    }
+			                    if (forgottenMoves.isEmpty()) {
+			                        JOptionPane.showMessageDialog(null, "This Pokemon has not forgotten any moves.");
+			                    } else {
+			                    	JPanel moves = new JPanel();
+			                    	moves.setLayout(new GridLayout(0, 1));
+			                        for (Move move : forgottenMoves) {
+			                            JGradientButton moveButton = new JGradientButton(move.toString());
+			                            moveButton.setBackground(move.mtype.getColor());
+			                            moveButton.addMouseListener(new MouseAdapter() {
+			                			    @Override
+			                			    public void mouseClicked(MouseEvent e) {
+			                			    	if (SwingUtilities.isRightMouseButton(e)) {
+			                			            JOptionPane.showMessageDialog(null, move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			                			        } else {
+			                			        	int choice = p.team[index].displayMoveOptions(move, p);
+						        	                if (choice == JOptionPane.CLOSED_OPTION) {
+						        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not learn " + move + ".");
+						        	                } else {
+						        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has learned " + move + " and forgot " + p.team[index].moveset[choice].move + "!");
+						        	                	p.team[index].moveset[choice] = new Moveslot(move);
+						        	                }
+						        	                SwingUtilities.getWindowAncestor(moves).dispose();
+			                			        }
+			                			    }
+			                			});
+			                            moves.add(moveButton);
+			                        }
+			                        JScrollPane scrollPane = new JScrollPane(moves);
+			                		scrollPane.setPreferredSize(new Dimension(200, 300));
+			                		scrollPane.getVerticalScrollBar().setUnitIncrement(6);
+
+			                        JOptionPane.showMessageDialog(null, scrollPane, "Teach a Move?", JOptionPane.QUESTION_MESSAGE);
+			                    }
+							}
+						});
+					}
+					partyMasterPanel.add(partyPanel);
+				}
+				JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+			} if (gp.currentMap == 94 && !p.flags[18]) {
+				JOptionPane.showMessageDialog(null, "Here's a gift of one\nof the Pokemon affected!");
+				int[] ids = new int[] {197, 199, 202, 205, 209, 215, 217, 220, 223, 226};
+				Random gift = new Random();
+				int index = -1;
+				int counter = 0;
+				do {
+					counter++;
+					index = gift.nextInt(ids.length);
+				} while (p.pokedex[ids[index]] == 2 && counter < 100);
+				
+				Pokemon result = new Pokemon(ids[index], 30, true, false);
+				p.flags[18] = true;
+				JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+				p.catchPokemon(result);
+				
+			} if (gp.currentMap == 109 && !p.flags[22]) {
+				JOptionPane.showMessageDialog(null, "Here, could you raise it for me?");
+				int[] ids = new int[] {177, 179, 98};
+				Random gift = new Random();
+				int index = gift.nextInt(ids.length - 1);
+				if (p.pokedex[ids[0]] == 2 || p.pokedex[ids[1]] == 2) {
+					Pokemon temp = new Pokemon(5, 5, false, false);
+					JOptionPane.showMessageDialog(null, "Oh, you already have a\n" + temp.getName(ids[index]) + "? Well, take this really\nrare Pokemon instead!");
+					index = 2;
+				}
+				
+				Pokemon result = new Pokemon(ids[index], 1, true, false);
+				p.flags[22] = true;
+				JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+				p.catchPokemon(result);
+				
+			} if (gp.currentMap == 118) {
+				JOptionPane.showMessageDialog(null, "Do you have any fossils for me to resurrect?");
+				JPanel options = new JPanel();
+				boolean valid = false;
+				if (p.bag.contains(45)) {
+					JGradientButton button = new JGradientButton(p.bag.bag[45].toString());
+					button.setBackground(p.bag.bag[45].getColor());
+					button.addActionListener(e -> {
+						int answer = JOptionPane.showOptionDialog(null,
+								"Would you like to revive a Shockfang?",
+					            "Revive Fossil?",
+					            JOptionPane.YES_NO_OPTION,
+					            JOptionPane.QUESTION_MESSAGE,
+					            null, null, null);
+						if (answer == JOptionPane.YES_OPTION) {
+							p.catchPokemon(new Pokemon(211, 20, true, false));
+							p.bag.remove(Item.THUNDER_SCALES_FOSSIL);
+							SwingUtilities.getWindowAncestor(options).dispose();
+						}
+					});
+					valid = true;
+					options.add(button);
+				}
+				
+				if (p.bag.contains(46)) {
+					JGradientButton button = new JGradientButton(p.bag.bag[46].toString());
+					button.setBackground(p.bag.bag[46].getColor());
+					button.addActionListener(e -> {
+						int answer = JOptionPane.showOptionDialog(null,
+								"Would you like to revive a Nightrex?",
+					            "Revive Fossil?",
+					            JOptionPane.YES_NO_OPTION,
+					            JOptionPane.QUESTION_MESSAGE,
+					            null, null, null);
+						if (answer == JOptionPane.YES_OPTION) {
+							p.catchPokemon(new Pokemon(213, 20, true, false));
+							p.bag.remove(Item.DUSK_SCALES_FOSSIL);
+							SwingUtilities.getWindowAncestor(options).dispose();
+						}
+					});
+					valid = true;
+					options.add(button);
+				}
+				
+				if (valid) {
+					JOptionPane.showMessageDialog(null, options, "Revive a fossil?", JOptionPane.QUESTION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "You don't have any fossils to revive!");
+				}
+			} if (gp.currentMap == 127) {
+				int answer = JOptionPane.showOptionDialog(null,
+						"Would you like to play Blackjack?\n(Warning: Will Auto-Save)",
+			            "Blackjack?",
+			            JOptionPane.YES_NO_OPTION,
+			            JOptionPane.QUESTION_MESSAGE,
+			            null, null, null);
+				if (answer == JOptionPane.YES_OPTION) {
+					// Remove all existing components from the JFrame
+				    Main.window.getContentPane().removeAll();
+
+				    // Create and add the BlackjackPanel
+				    BlackjackPanel bjPanel = new BlackjackPanel(gp);
+				    Main.window.getContentPane().add(bjPanel);
+
+				    // Set focus on the BlackjackPanel
+				    bjPanel.requestFocusInWindow();
+
+				    // Repaint the JFrame to reflect the changes
+				    Main.window.revalidate();
+				    Main.window.repaint();
+				}
+			}
+			if (gp.currentMap == 129 && worldY / gp.tileSize > 41) {
 				if (!p.flags[23]) {
 					JOptionPane.showMessageDialog(null, "Oh, you haven't gotten any coins yet?\nHere, just this once, have some!");
 					JOptionPane.showMessageDialog(null, "You recieved 100 Coins!");
@@ -1201,161 +1221,160 @@ public class PlayerCharacter extends Entity {
 					});
 					showPrizeMenu(panel, p.coins + " coins   $" + p.money);
 				}
-			} if (gp.currentMap == 129 && worldY / gp.tileSize <= 41) {
-				JPanel shopPanel = new JPanel();
-				shopPanel.setLayout(new GridLayout(0, 3));
-				Map<Pokemon, Integer> pokemonMap = new HashMap<>();
-				pokemonMap.put(new Pokemon(150, 25, true, false), 3); // Kissyfishy
-				pokemonMap.put(new Pokemon(143, 25, true, false), 4); // Posho
-				pokemonMap.put(new Pokemon(238, 25, true, false), 5); // Scraggy
-				pokemonMap.put(new Pokemon(193, 25, true, false), 5); // Consodust
-				pokemonMap.put(new Pokemon(195, 25, true, false), 6); // Rockmite
-				pokemonMap.put(new Pokemon(184, 25, true, false), 8); // Tinkie
-				pokemonMap.put(new Pokemon(187, 25, true, false), 8); // Dragee
-				pokemonMap.put(new Pokemon(190, 25, true, false), 10); // Blobmo
-				pokemonMap.put(new Pokemon(232, 25, true, false), 15); // Triwandoliz
-				pokemonMap.put(new Pokemon(231, 25, true, false), 20); // Kleinyeti
-				JPanel pokemonPanel = new JPanel(new VerticalLayout());
-				
-				List<Map.Entry<Pokemon, Integer>> sortedPokemonList = pokemonMap.entrySet()
-				        .stream()
-				        .sorted(Map.Entry.comparingByValue())
-				        .collect(Collectors.toList());
-				
-				Map<Item, Integer> itemMap = new HashMap<>();
-				itemMap.put(Item.FOCUS_SASH, 10);
-				itemMap.put(Item.AIR_BALLOON, 25);
-				itemMap.put(Item.POWER_HERB, 5);
-				itemMap.put(Item.WHITE_HERB, 5);
-				itemMap.put(Item.WEAKNESS_POLICY, 20);
-				itemMap.put(Item.BLUNDER_POLICY, 20);
-				itemMap.put(Item.RED_CARD, 25);
-				itemMap.put(Item.THROAT_SPRAY, 15);
-				JPanel itemPanel = new JPanel(new VerticalLayout());
-				
-				List<Map.Entry<Item, Integer>> sortedItemList = itemMap.entrySet()
-				        .stream()
-				        .sorted(Map.Entry.comparingByValue())
-				        .collect(Collectors.toList());
-				
-				Map<Item, Integer> tmMap = new HashMap<>();
-				tmMap.put(Item.TM59, 10);
-				tmMap.put(Item.TM39, 25);
-				tmMap.put(Item.TM96, 40);
-				tmMap.put(Item.TM21, 60);
-				tmMap.put(Item.TM70, 75);
-				tmMap.put(Item.TM64, 100);
-				tmMap.put(Item.TM94, 150);
-				JPanel tmPanel = new JPanel(new VerticalLayout());
-				
-				List<Map.Entry<Item, Integer>> sortedTMList = tmMap.entrySet()
-				        .stream()
-				        .sorted(Map.Entry.comparingByValue())
-				        .collect(Collectors.toList());
-				
-				for (Map.Entry<Item, Integer> e : sortedItemList) {
-					JPanel iPanel = new JPanel();
-			    	JGradientButton item = new JGradientButton(e.getKey().toString() + ": " + e.getValue() + " coins");
-			    	item.setBackground(e.getKey().getColor());
-			    	item.addMouseListener(new MouseAdapter() {
-			        	@Override
-					    public void mouseClicked(MouseEvent evt) {
-			    	    	if (p.coins >= e.getValue()) {
-			    	    		JOptionPane.showMessageDialog(null, "Purchased 1 " + e.getKey().toString() + " for " + e.getValue() + " coins");
-			    	    		p.bag.add(e.getKey());
-			    	    		p.coins -= e.getValue();
-			    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
-			    	            showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
-			    	        } else {
-			    	            JOptionPane.showMessageDialog(null, "Not enough coins!");
-			    	        }
-			        	}
-			    	});
-			    	JLabel icon = new JLabel();
-			    	icon.setIcon(new ImageIcon(e.getKey().getImage()));
-			    	iPanel.add(icon);
-			    	iPanel.add(item);
-			    	itemPanel.add(iPanel);
-				}
-				
-				for (Map.Entry<Item, Integer> e : sortedTMList) {
-					JPanel iPanel = new JPanel();
-			    	JGradientButton item = new JGradientButton(e.getKey().toString() + ": " + e.getValue() + " games won");
-			    	item.setBackground(e.getKey().getColor());
-			    	item.addMouseListener(new MouseAdapter() {
-			        	@Override
-					    public void mouseClicked(MouseEvent evt) {
-			    	    	if (p.gamesWon >= e.getValue()) {
-			    	    		JOptionPane.showMessageDialog(null, "Purchased 1 " + e.getKey().toString() + " for " + e.getValue() + " games won");
-			    	    		p.bag.add(e.getKey());
-			    	    		p.gamesWon -= e.getValue();
-			    	    		tmPanel.remove(iPanel);
-			    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
-			    	            showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
-			    	        } else {
-			    	            JOptionPane.showMessageDialog(null, "Not enough total wins!");
-			    	        }
-			        	}
-			    	});
-			    	JLabel icon = new JLabel();
-			    	icon.setIcon(new ImageIcon(e.getKey().getImage()));
-			    	iPanel.add(icon);
-			    	iPanel.add(item);
-			    	tmPanel.add(iPanel);
-			    	if (e.getKey().isTM() && p.bag.contains(e.getKey().getID())) tmPanel.remove(iPanel);
-				}
-				
-				for (Map.Entry<Pokemon, Integer> e : sortedPokemonList) {
-					JPanel iPanel = new JPanel();
-					iPanel.setLayout(new VerticalLayout());
-			    	JGradientButton item = new JGradientButton(e.getKey().nickname + ": " + e.getValue() + " win streak");
-			    	Color color2 = e.getKey().type2 == null ? e.getKey().type1.getColor() : e.getKey().type2.getColor();
-			    	item.setBackground(e.getKey().type1.getColor(), color2);
-			    	item.addMouseListener(new MouseAdapter() {
-			        	@Override
-					    public void mouseClicked(MouseEvent evt) {
-			        		if (SwingUtilities.isRightMouseButton(evt)) {
-					            JOptionPane.showMessageDialog(null, e.getKey().showSummary(p, false, null, null), "Pokemon Summary", JOptionPane.INFORMATION_MESSAGE);
-				    		} else {
-				    	    	if (p.winStreak >= e.getValue()) {
-				    	            JOptionPane.showMessageDialog(null, "Got 1 " + e.getKey().nickname + "!");
-				    	            p.catchPokemon(e.getKey());
-				    	            pokemonPanel.remove(iPanel);
-				    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
-				    	            showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
-				    	        } else {
-				    	            JOptionPane.showMessageDialog(null, "Not enough wins in a row!");
-				    	        }
-				    		}
-			        	}
-			    	});
-			    	iPanel.add(item);
-			    	pokemonPanel.add(iPanel);
-			    	if (p.pokedex[e.getKey().id] == 2) pokemonPanel.remove(iPanel);
-				}
-				
-				shopPanel.add(itemPanel);
-				shopPanel.add(tmPanel);
-				shopPanel.add(pokemonPanel);
-				showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
-			} if (gp.currentMap == 130 && !p.flags[25]) {
-				JOptionPane.showMessageDialog(null, "Here, take this rare Pokemon!");
-				Pokemon result = new Pokemon(97, 50, true, false);
-				p.flags[25] = true;
-				JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
-				p.catchPokemon(result);
-			} if (gp.currentMap == 138 && !p.flags[26]) {
-				JOptionPane.showMessageDialog(null, "Here, I have a gift for\nyou for being so kind.");
-				JOptionPane.showMessageDialog(null, "Obtained HM07 Rock Climb!");
-				p.bag.add(Item.HM07);
-				p.flags[26] = true;
-			} if (gp.currentMap == 146 && !p.flags[28]) {
-				showPokemonList(10);
-				p.bag.add(Item.HM07);
-				p.flags[26] = true;
+		} if (gp.currentMap == 129 && worldY / gp.tileSize <= 41) {
+			JPanel shopPanel = new JPanel();
+			shopPanel.setLayout(new GridLayout(0, 3));
+			Map<Pokemon, Integer> pokemonMap = new HashMap<>();
+			pokemonMap.put(new Pokemon(150, 25, true, false), 3); // Kissyfishy
+			pokemonMap.put(new Pokemon(143, 25, true, false), 4); // Posho
+			pokemonMap.put(new Pokemon(238, 25, true, false), 5); // Scraggy
+			pokemonMap.put(new Pokemon(193, 25, true, false), 5); // Consodust
+			pokemonMap.put(new Pokemon(195, 25, true, false), 6); // Rockmite
+			pokemonMap.put(new Pokemon(184, 25, true, false), 8); // Tinkie
+			pokemonMap.put(new Pokemon(187, 25, true, false), 8); // Dragee
+			pokemonMap.put(new Pokemon(190, 25, true, false), 10); // Blobmo
+			pokemonMap.put(new Pokemon(232, 25, true, false), 15); // Triwandoliz
+			pokemonMap.put(new Pokemon(231, 25, true, false), 20); // Kleinyeti
+			JPanel pokemonPanel = new JPanel(new VerticalLayout());
+			
+			List<Map.Entry<Pokemon, Integer>> sortedPokemonList = pokemonMap.entrySet()
+			        .stream()
+			        .sorted(Map.Entry.comparingByValue())
+			        .collect(Collectors.toList());
+			
+			Map<Item, Integer> itemMap = new HashMap<>();
+			itemMap.put(Item.FOCUS_SASH, 10);
+			itemMap.put(Item.AIR_BALLOON, 25);
+			itemMap.put(Item.POWER_HERB, 5);
+			itemMap.put(Item.WHITE_HERB, 5);
+			itemMap.put(Item.WEAKNESS_POLICY, 20);
+			itemMap.put(Item.BLUNDER_POLICY, 20);
+			itemMap.put(Item.RED_CARD, 25);
+			itemMap.put(Item.THROAT_SPRAY, 15);
+			JPanel itemPanel = new JPanel(new VerticalLayout());
+			
+			List<Map.Entry<Item, Integer>> sortedItemList = itemMap.entrySet()
+			        .stream()
+			        .sorted(Map.Entry.comparingByValue())
+			        .collect(Collectors.toList());
+			
+			Map<Item, Integer> tmMap = new HashMap<>();
+			tmMap.put(Item.TM59, 10);
+			tmMap.put(Item.TM39, 25);
+			tmMap.put(Item.TM96, 40);
+			tmMap.put(Item.TM21, 60);
+			tmMap.put(Item.TM70, 75);
+			tmMap.put(Item.TM64, 100);
+			tmMap.put(Item.TM94, 150);
+			JPanel tmPanel = new JPanel(new VerticalLayout());
+			
+			List<Map.Entry<Item, Integer>> sortedTMList = tmMap.entrySet()
+			        .stream()
+			        .sorted(Map.Entry.comparingByValue())
+			        .collect(Collectors.toList());
+			
+			for (Map.Entry<Item, Integer> e : sortedItemList) {
+				JPanel iPanel = new JPanel();
+		    	JGradientButton item = new JGradientButton(e.getKey().toString() + ": " + e.getValue() + " coins");
+		    	item.setBackground(e.getKey().getColor());
+		    	item.addMouseListener(new MouseAdapter() {
+		        	@Override
+				    public void mouseClicked(MouseEvent evt) {
+		    	    	if (p.coins >= e.getValue()) {
+		    	    		JOptionPane.showMessageDialog(null, "Purchased 1 " + e.getKey().toString() + " for " + e.getValue() + " coins");
+		    	    		p.bag.add(e.getKey());
+		    	    		p.coins -= e.getValue();
+		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
+		    	            showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
+		    	        } else {
+		    	            JOptionPane.showMessageDialog(null, "Not enough coins!");
+		    	        }
+		        	}
+		    	});
+		    	JLabel icon = new JLabel();
+		    	icon.setIcon(new ImageIcon(e.getKey().getImage()));
+		    	iPanel.add(icon);
+		    	iPanel.add(item);
+		    	itemPanel.add(iPanel);
 			}
-		    keyH.resume();
+			
+			for (Map.Entry<Item, Integer> e : sortedTMList) {
+				JPanel iPanel = new JPanel();
+		    	JGradientButton item = new JGradientButton(e.getKey().toString() + ": " + e.getValue() + " games won");
+		    	item.setBackground(e.getKey().getColor());
+		    	item.addMouseListener(new MouseAdapter() {
+		        	@Override
+				    public void mouseClicked(MouseEvent evt) {
+		    	    	if (p.gamesWon >= e.getValue()) {
+		    	    		JOptionPane.showMessageDialog(null, "Purchased 1 " + e.getKey().toString() + " for " + e.getValue() + " games won");
+		    	    		p.bag.add(e.getKey());
+		    	    		p.gamesWon -= e.getValue();
+		    	    		tmPanel.remove(iPanel);
+		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
+		    	            showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
+		    	        } else {
+		    	            JOptionPane.showMessageDialog(null, "Not enough total wins!");
+		    	        }
+		        	}
+		    	});
+		    	JLabel icon = new JLabel();
+		    	icon.setIcon(new ImageIcon(e.getKey().getImage()));
+		    	iPanel.add(icon);
+		    	iPanel.add(item);
+		    	tmPanel.add(iPanel);
+		    	if (e.getKey().isTM() && p.bag.contains(e.getKey().getID())) tmPanel.remove(iPanel);
+			}
+			
+			for (Map.Entry<Pokemon, Integer> e : sortedPokemonList) {
+				JPanel iPanel = new JPanel();
+				iPanel.setLayout(new VerticalLayout());
+		    	JGradientButton item = new JGradientButton(e.getKey().nickname + ": " + e.getValue() + " win streak");
+		    	Color color2 = e.getKey().type2 == null ? e.getKey().type1.getColor() : e.getKey().type2.getColor();
+		    	item.setBackground(e.getKey().type1.getColor(), color2);
+		    	item.addMouseListener(new MouseAdapter() {
+		        	@Override
+				    public void mouseClicked(MouseEvent evt) {
+		        		if (SwingUtilities.isRightMouseButton(evt)) {
+				            JOptionPane.showMessageDialog(null, e.getKey().showSummary(p, false, null, null), "Pokemon Summary", JOptionPane.INFORMATION_MESSAGE);
+			    		} else {
+			    	    	if (p.winStreak >= e.getValue()) {
+			    	            JOptionPane.showMessageDialog(null, "Got 1 " + e.getKey().nickname + "!");
+			    	            p.catchPokemon(e.getKey());
+			    	            pokemonPanel.remove(iPanel);
+			    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
+			    	            showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
+			    	        } else {
+			    	            JOptionPane.showMessageDialog(null, "Not enough wins in a row!");
+			    	        }
+			    		}
+		        	}
+		    	});
+		    	iPanel.add(item);
+		    	pokemonPanel.add(iPanel);
+		    	if (p.pokedex[e.getKey().id] == 2) pokemonPanel.remove(iPanel);
+			}
+			
+			shopPanel.add(itemPanel);
+			shopPanel.add(tmPanel);
+			shopPanel.add(pokemonPanel);
+			showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
+		} if (gp.currentMap == 130 && !p.flags[25]) {
+			JOptionPane.showMessageDialog(null, "Here, take this rare Pokemon!");
+			Pokemon result = new Pokemon(97, 50, true, false);
+			p.flags[25] = true;
+			JOptionPane.showMessageDialog(null, "You recieved " + result.name + "!");
+			p.catchPokemon(result);
+		} if (gp.currentMap == 138 && !p.flags[26]) {
+			JOptionPane.showMessageDialog(null, "Here, I have a gift for\nyou for being so kind.");
+			JOptionPane.showMessageDialog(null, "Obtained HM07 Rock Climb!");
+			p.bag.add(Item.HM07);
+			p.flags[26] = true;
+		} if (gp.currentMap == 146 && !p.flags[28]) {
+			showPokemonList(10);
+			p.bag.add(Item.HM07);
+			p.flags[26] = true;
 		}
+	    keyH.resume();
 	}
 	
 	private void showPokemonList(int max) {

@@ -1,9 +1,9 @@
 package Swing;
 
 import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
 
 import Entity.PlayerCharacter;
+import Overworld.GamePanel;
 import Overworld.KeyHandler;
 
 import java.awt.*;
@@ -17,40 +17,38 @@ import javax.swing.*;
 import Swing.Battle.JGradientButton;
 import Swing.CompoundIcon.Axis;
 
-public class PBox extends JFrame {
+public class PBox extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8943929896582623587L;
-	private JPanel playerPanel;
 	public static Player me;
 	public static PlayerCharacter playerCharacter;
+	public GamePanel gp;
 	public KeyHandler keyH;
 
 	private JGradientButton[] boxButtons;
 	private int currentBox = 1;
 	private boolean isGauntlet;
 
-	public PBox(PlayerCharacter playerCharacter, KeyHandler keyH, boolean isGauntlet) {
-	    me = playerCharacter.p;
-	    PBox.playerCharacter = playerCharacter;
+	public PBox(GamePanel gp, KeyHandler keyH, boolean isGauntlet) {
+	    me = gp.player.p;
+	    this.gp = gp;
 	    this.keyH = keyH;
-	    setTitle("Box 1");
+	    //setTitle("Box 1"); JFrame method
 	    
 	    this.isGauntlet = isGauntlet;
 	    
 	    // Initializing panel
-	    setResizable(false);
+	    //setResizable(false); JFrame method
 	    setPreferredSize(new Dimension(768, 576));
 	    setBounds(100, 100, 648, 530);
-	    playerPanel = new JPanel();
-	    playerPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-	    setContentPane(playerPanel);
-	    playerPanel.setLayout(null);
+	    //setContentPane(playerPanel); JFrame method
+	    setLayout(null);
 
 	    // Set the location of the Box in the center of the screen
-	    setLocationRelativeTo(null);
+	    //setLocationRelativeTo(null); JFrame method
 
 		
 		boxButtons = new JGradientButton[90];
@@ -58,7 +56,7 @@ public class PBox extends JFrame {
 			boxButtons[i] = new JGradientButton("");
 			boxButtons[i].setBounds(10 + (i % 6) * 90, 10 + (i / 6) * 80, 80, 60);
 			boxButtons[i].setVisible(true);
-			playerPanel.add(boxButtons[i]);
+			this.add(boxButtons[i]);
 		}
 		
 		JButton nextButton = new JButton("Next");
@@ -72,10 +70,10 @@ public class PBox extends JFrame {
 		            currentBox = 1;
 		        }
 		        displayBox();
-		        setTitle("Box " + currentBox);
+		        //setTitle("Box " + currentBox); JFrame method TODO
 		    }
 		});
-		playerPanel.add(nextButton);
+		this.add(nextButton);
 		
 		JButton partyButton = new JButton("Party");
 		partyButton.setBounds(235, 440, 120, 50);
@@ -209,7 +207,7 @@ public class PBox extends JFrame {
         	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
 		    }
 		});
-		playerPanel.add(partyButton);
+		this.add(partyButton);
 
 		JButton previousButton = new JButton("Prev");
 		previousButton.setBounds(10, 460, 80, 30);
@@ -222,18 +220,19 @@ public class PBox extends JFrame {
 		            currentBox = 3;
 		        }
 		        displayBox();
-		        setTitle("Box " + currentBox);
+		        //setTitle("Box " + currentBox); JFrame method TODO
 		    }
 		});
-		playerPanel.add(previousButton);
+		this.add(previousButton);
 		
 		JButton exitButton = new JButton("X");
 		exitButton.setBounds(555, 10, 60, 60);
 		exitButton.addActionListener(e -> {
-			keyH.resume();
-			dispose();
+			gp.removePanel();
+			gp.addGamePanel();
+			//dispose();
 		});
-		playerPanel.add(exitButton);
+		this.add(exitButton);
 		
 		JButton calcButton = new JButton("Calc");
 		calcButton.setBounds(555, 80, 60, 60);
@@ -248,7 +247,7 @@ public class PBox extends JFrame {
 			}
 			me.bag.bag[200].useCalc(me, cBox, isGauntlet);
 		});
-		playerPanel.add(calcButton);
+		this.add(calcButton);
 		
 		displayBox();
 		
@@ -293,7 +292,7 @@ public class PBox extends JFrame {
 	        if (mouseListeners.length > 1) boxButtons[i].removeMouseListener(mouseListeners[1]);
 	        setActionListener(boxButtons[i], cBox, i);
 	        boxButtons[i].setVisible(true);
-	        playerPanel.add(boxButtons[i]);
+	        this.add(boxButtons[i]);
 	    }
 	}
 
