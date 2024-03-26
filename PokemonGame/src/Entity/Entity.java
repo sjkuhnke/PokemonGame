@@ -27,6 +27,9 @@ public class Entity {
 	
 	public int trainer;
 	public boolean collision = true;
+	String dialogues[] = new String[20];
+	int dialogueIndex = 0;
+	public String altDialogue;
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;
@@ -83,5 +86,17 @@ public class Entity {
 			g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 		}
 		
+	}
+	
+	public void speak(int mode) {
+		if (mode == 0) {
+			if (dialogues[dialogueIndex] == null) {
+				dialogueIndex = 0;
+			}
+			gp.ui.currentDialogue = dialogues[dialogueIndex];
+			dialogueIndex++;
+		} else if (mode == 1) {
+			gp.ui.currentDialogue = altDialogue;
+		}
 	}
 }

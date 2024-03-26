@@ -8,6 +8,12 @@ public class KeyHandler implements KeyListener {
 	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed;
 	public boolean pause;
 	
+	GamePanel gp;
+	
+	public KeyHandler(GamePanel gp) {
+		this.gp = gp;
+	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
@@ -17,31 +23,38 @@ public class KeyHandler implements KeyListener {
 		if (pause) return;
 		int code = e.getKeyCode();
 		
-		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
-			upPressed = true;
-		}
-		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
-			downPressed = true;
-		}
-		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
-			leftPressed = true;
-		}
-		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
-			rightPressed = true;
-		}
-		if (code == KeyEvent.VK_D) {
-			dPressed = true;
-		}
-		if (code == KeyEvent.VK_S) {
-			sPressed = true;
-		}
-		if (code == KeyEvent.VK_W) {
-			wPressed = true;
-		}
-		if (code == KeyEvent.VK_A) {
-			aPressed = true;
+		if (gp.gameState == GamePanel.PLAY_STATE) {
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+				upPressed = true;
+			}
+			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				downPressed = true;
+			}
+			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+				leftPressed = true;
+			}
+			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+				rightPressed = true;
+			}
+			if (code == KeyEvent.VK_D) {
+				dPressed = true;
+			}
+			if (code == KeyEvent.VK_S) {
+				sPressed = true;
+			}
+			if (code == KeyEvent.VK_W) {
+				wPressed = true;
+			}
+			if (code == KeyEvent.VK_A) {
+				aPressed = true;
+			}
 		}
 		
+		else if (gp.gameState == GamePanel.DIALOG_STATE) {
+			if (code == KeyEvent.VK_W) {
+				gp.gameState = GamePanel.PLAY_STATE;
+			}
+		}
 	}
 
 	@Override
