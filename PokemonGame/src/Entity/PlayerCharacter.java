@@ -278,8 +278,9 @@ public class PlayerCharacter extends Entity {
 		}
 		
 		if (keyH.dPressed) {
-			keyH.pause();
-			showMenu();
+			gp.gameState = GamePanel.MENU_STATE;
+			//keyH.pause();
+			//showMenu();
 		}
 		if (keyH.sPressed) {
 			speed = 8;
@@ -303,12 +304,12 @@ public class PlayerCharacter extends Entity {
 				Entity target = gp.npc[gp.currentMap][npcIndex];
 				if (target instanceof NPC_Nurse) {
 					interactNurse();
-				} else if (target instanceof NPC_Clerk) {
-					interactClerk();
+				} else if (target instanceof NPC_Clerk || target instanceof NPC_Market) {
+					interactClerk(target);
 				} else if (target instanceof NPC_Market) {
 					interactMarket();
 				} else if (target instanceof NPC_Block) {
-					interactNPC((NPC_Block) gp.npc[gp.currentMap][npcIndex]);
+					interactNPC((NPC_Block) target);
 				} else if (target instanceof NPC_Trainer) {
 					gp.startBattle(target.trainer);
 				} else if (target instanceof NPC_GymLeader) {
@@ -429,7 +430,7 @@ public class PlayerCharacter extends Entity {
 		p.bag.add(item, count);
 		String itemName = item.toString();
 		if (count > 1 && itemName.contains("Berry")) itemName = itemName.replace("Berry", "Berries");
-		JOptionPane.showMessageDialog(null, "You found " + count + " " + itemName + "!");
+		gp.ui.showMessage("You found " + count + " " + itemName + "!");
 		if (gp.currentMap == 121) {
 			if (gp.obj[gp.currentMap][objIndex].item == Item.CHOICE_BAND) {
 				gp.player.p.itemsCollected[gp.currentMap][objIndex + 1] = true;
@@ -754,59 +755,62 @@ public class PlayerCharacter extends Entity {
 		}
 	}
 	
-	private void interactClerk() {
-		keyH.pause();
+	private void interactClerk(Entity npc) {
+//		keyH.pause();
+//		
+//		JPanel shopPanel = new JPanel();
+//	    int available = 8;
+//	    if (p.badges > 7) available += 2;
+//	    if (p.badges > 6) available ++;
+//	    if (p.badges > 3) available += 2;
+//	    if (p.badges > 2) available += 2;
+//	    if (p.badges > 1) available ++;
+//	    if (p.badges > 0) available += 2;
+//	    Item[] shopItems = new Item[] {Item.REPEL, Item.POKEBALL, Item.POTION, Item.ANTIDOTE, Item.AWAKENING, Item.BURN_HEAL, Item.PARALYZE_HEAL, Item.FREEZE_HEAL, // 0 badges
+//	    		Item.GREAT_BALL, Item.SUPER_POTION, // 1 badge
+//	    		Item.ELIXIR, // 2 badges
+//	    		Item.FULL_HEAL, Item.REVIVE, // 3 badges
+//	    		Item.ULTRA_BALL, Item.HYPER_POTION, // 4 badges
+//	    		Item.MAX_POTION, // 7 badges
+//	    		Item.FULL_RESTORE, Item.MAX_REVIVE}; // 8 badges
+//	    shopPanel.setLayout(new GridLayout((available + 1) / 2, 2));
+//	    for (int i = 0; i < available; i++) {
+//	    	JButton item = new JButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
+//	    	int index = i;
+//	    	item.addMouseListener(new MouseAdapter() {
+//			    @Override
+//			    public void mouseClicked(MouseEvent e) {
+//			    	if (SwingUtilities.isRightMouseButton(e)) { // Right-click
+//			    		if (p.buy(shopItems[index], 5)) {
+//		    	            JOptionPane.showMessageDialog(null, "Purchased 5 " + shopItems[index].toString() + " for $" + shopItems[index].getCost() * 5);
+//		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
+//		    	            interactClerk();
+//		    	        } else {
+//		    	            JOptionPane.showMessageDialog(null, "Not enough money!");
+//		    	        }
+//		    	    } else { // Left-click
+//		    	    	if (p.buy(shopItems[index])) {
+//		    	            JOptionPane.showMessageDialog(null, "Purchased 1 " + shopItems[index].toString() + " for $" + shopItems[index].getCost());
+//		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
+//		    	            interactClerk();
+//		    	        } else {
+//		    	            JOptionPane.showMessageDialog(null, "Not enough money!");
+//		    	        }
+//		    	    }
+//			    }
+//	    	});
+//	    	shopPanel.add(item);
+//	    }
+//		JOptionPane.showMessageDialog(null, shopPanel, "Money: $" + p.money, JOptionPane.PLAIN_MESSAGE);
+//		keyH.resume();
 		
-		JPanel shopPanel = new JPanel();
-	    int available = 8;
-	    if (p.badges > 7) available += 2;
-	    if (p.badges > 6) available ++;
-	    if (p.badges > 3) available += 2;
-	    if (p.badges > 2) available += 2;
-	    if (p.badges > 1) available ++;
-	    if (p.badges > 0) available += 2;
-	    Item[] shopItems = new Item[] {Item.REPEL, Item.POKEBALL, Item.POTION, Item.ANTIDOTE, Item.AWAKENING, Item.BURN_HEAL, Item.PARALYZE_HEAL, Item.FREEZE_HEAL, // 0 badges
-	    		Item.GREAT_BALL, Item.SUPER_POTION, // 1 badge
-	    		Item.ELIXIR, // 2 badges
-	    		Item.FULL_HEAL, Item.REVIVE, // 3 badges
-	    		Item.ULTRA_BALL, Item.HYPER_POTION, // 4 badges
-	    		Item.MAX_POTION, // 7 badges
-	    		Item.FULL_RESTORE, Item.MAX_REVIVE}; // 8 badges
-	    shopPanel.setLayout(new GridLayout((available + 1) / 2, 2));
-	    for (int i = 0; i < available; i++) {
-	    	JButton item = new JButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
-	    	int index = i;
-	    	item.addMouseListener(new MouseAdapter() {
-			    @Override
-			    public void mouseClicked(MouseEvent e) {
-			    	if (SwingUtilities.isRightMouseButton(e)) { // Right-click
-			    		if (p.buy(shopItems[index], 5)) {
-		    	            JOptionPane.showMessageDialog(null, "Purchased 5 " + shopItems[index].toString() + " for $" + shopItems[index].getCost() * 5);
-		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
-		    	            interactClerk();
-		    	        } else {
-		    	            JOptionPane.showMessageDialog(null, "Not enough money!");
-		    	        }
-		    	    } else { // Left-click
-		    	    	if (p.buy(shopItems[index])) {
-		    	            JOptionPane.showMessageDialog(null, "Purchased 1 " + shopItems[index].toString() + " for $" + shopItems[index].getCost());
-		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
-		    	            interactClerk();
-		    	        } else {
-		    	            JOptionPane.showMessageDialog(null, "Not enough money!");
-		    	        }
-		    	    }
-			    }
-	    	});
-	    	shopPanel.add(item);
-	    }
-		JOptionPane.showMessageDialog(null, shopPanel, "Money: $" + p.money, JOptionPane.PLAIN_MESSAGE);
-		keyH.resume();
+		gp.gameState = GamePanel.SHOP_STATE;
+		npc.speak(0);
 	}
 	
 	private void interactNPC(NPC_Block npc) {
 		if (npc.flag != -1 && !p.flags[npc.flag]) {
-			gp.gameState = GamePanel.DIALOG_STATE;
+			gp.gameState = GamePanel.DIALOGUE_STATE;
 			npc.speak(0);
 			if (npc.more) {
 				SwingUtilities.invokeLater(() -> {
@@ -814,7 +818,7 @@ public class PlayerCharacter extends Entity {
 				});
 			}
 		} else if (npc.altDialogue != null) {
-			gp.gameState = GamePanel.DIALOG_STATE;
+			gp.gameState = GamePanel.DIALOGUE_STATE;
 			npc.speak(1);
 		}
 		
@@ -2358,9 +2362,9 @@ public class PlayerCharacter extends Entity {
 		return containerPanel;
 	}
 
-	private void showDex() {
+	public void showDex() {
 	    JPanel dexPanel = new JPanel();
-	    dexPanel.setLayout(new GridLayout(0, 4));
+	    dexPanel.setLayout(new GridLayout(0, 5));
 
 	    for (int j = 1; j < p.getDexShowing(); j++) {
 	    	final int id = j;
@@ -2385,15 +2389,32 @@ public class PlayerCharacter extends Entity {
 
 	        dexPanel.add(mon);
 	    }
+	    
+	    JButton closeButton = new JButton("Close");
+	    closeButton.setBounds(640, 30, 100, 65);
+	    closeButton.addActionListener(e -> {
+	    	gp.removePanel();
+	    	gp.ui.subState = 0;
+	    	gp.addGamePanel();
+	    });
 
 	    JScrollPane dexScrollPane = new JScrollPane(dexPanel);
-	    dexScrollPane.setPreferredSize(new Dimension(600, 600)); // Set the preferred size of the scroll pane
+	    dexScrollPane.setPreferredSize(new Dimension(598, gp.screenHeight - 20)); // Set the preferred size of the scroll pane
 	    
 	    // Set the vertical and horizontal unit increments to control the scrolling speed
 	    dexScrollPane.getVerticalScrollBar().setUnitIncrement(16); // Adjust the value as needed
-
-	    JOptionPane.showMessageDialog(null, dexScrollPane, "Pokedex", JOptionPane.PLAIN_MESSAGE);
-	    keyH.resume();
+	    
+	    JPanel container = new JPanel();
+	    container.add(dexScrollPane);
+	    container.setBounds(10, 10, 598, gp.screenHeight - 20);
+	    
+	    JPanel panel = new JPanel();
+	    panel.setLayout(null);
+	    panel.add(container);
+	    panel.add(closeButton);
+	    
+	    gp.removePanel();
+	    gp.addPanel(panel, true);
 	}
 	
 	private void interactMarket() {
@@ -2675,5 +2696,28 @@ public class PlayerCharacter extends Entity {
 			break;
 		}
 		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+	}
+	
+	public Item[] getItems() {
+		int available = 8;
+	    if (p.badges > 7) available += 2;
+	    if (p.badges > 6) available ++;
+	    if (p.badges > 3) available += 2;
+	    if (p.badges > 2) available += 2;
+	    if (p.badges > 1) available ++;
+	    if (p.badges > 0) available += 2;
+	    Item[] shopItems = new Item[] {Item.REPEL, Item.POKEBALL, Item.POTION, Item.ANTIDOTE, Item.AWAKENING, Item.BURN_HEAL, Item.PARALYZE_HEAL, Item.FREEZE_HEAL, // 0 badges
+	    		Item.GREAT_BALL, Item.SUPER_POTION, // 1 badge
+	    		Item.ELIXIR, // 2 badges
+	    		Item.FULL_HEAL, Item.REVIVE, // 3 badges
+	    		Item.ULTRA_BALL, Item.HYPER_POTION, // 4 badges
+	    		Item.MAX_POTION, // 7 badges
+	    		Item.FULL_RESTORE, Item.MAX_REVIVE}; // 8 badges
+	    
+	    Item[] result = new Item[available];
+	    for (int i = 0; i < available; i++) {
+	    	result[i] = shopItems[i];
+	    }
+	    return result;
 	}
 }

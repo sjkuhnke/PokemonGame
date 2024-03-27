@@ -24,36 +24,13 @@ public class KeyHandler implements KeyListener {
 		int code = e.getKeyCode();
 		
 		if (gp.gameState == GamePanel.PLAY_STATE) {
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
-				upPressed = true;
-			}
-			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
-				downPressed = true;
-			}
-			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
-				leftPressed = true;
-			}
-			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
-				rightPressed = true;
-			}
-			if (code == KeyEvent.VK_D) {
-				dPressed = true;
-			}
-			if (code == KeyEvent.VK_S) {
-				sPressed = true;
-			}
-			if (code == KeyEvent.VK_W) {
-				wPressed = true;
-			}
-			if (code == KeyEvent.VK_A) {
-				aPressed = true;
-			}
-		}
-		
-		else if (gp.gameState == GamePanel.DIALOG_STATE) {
-			if (code == KeyEvent.VK_W) {
-				gp.gameState = GamePanel.PLAY_STATE;
-			}
+			playState(code);
+		} else if (gp.gameState == GamePanel.DIALOGUE_STATE) {
+			dialogueState(code);
+		} else if (gp.gameState == GamePanel.MENU_STATE) {
+			menuState(code);
+		} else if (gp.gameState == GamePanel.SHOP_STATE) {
+			shopState(code);
 		}
 	}
 
@@ -93,6 +70,96 @@ public class KeyHandler implements KeyListener {
 	}
 	public void resume() {
 		pause = false;
+	}
+	
+	private void playState(int code) {
+		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			upPressed = true;
+		}
+		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			downPressed = true;
+		}
+		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+			leftPressed = true;
+		}
+		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+			rightPressed = true;
+		}
+		if (code == KeyEvent.VK_D) {
+			dPressed = true;
+		}
+		if (code == KeyEvent.VK_S) {
+			sPressed = true;
+		}
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		if (code == KeyEvent.VK_A) {
+			aPressed = true;
+		}
+	}
+	
+	private void dialogueState(int code) {
+		if (code == KeyEvent.VK_W) {
+			gp.gameState = GamePanel.PLAY_STATE;
+		}
+	}
+	
+	private void menuState(int code) {
+		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+			if (gp.ui.subState == 0) {
+				gp.gameState = GamePanel.PLAY_STATE;
+			}
+			gp.ui.subState = 0;
+		}
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		
+		int maxCommandNum = 0;
+		switch(gp.ui.subState) {
+		case 0:
+			maxCommandNum = 6;
+		}
+		
+		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			gp.ui.menuNum--;
+			if (gp.ui.menuNum < 0) {
+				gp.ui.menuNum = maxCommandNum;
+			}
+		}
+		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			gp.ui.menuNum++;
+			if (gp.ui.menuNum > maxCommandNum) {
+				gp.ui.menuNum = 0;
+			}
+		}
+	}
+	
+	private void shopState(int code) {
+		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+			gp.gameState = GamePanel.PLAY_STATE;
+			gp.ui.subState = 0;
+			gp.ui.commandNum = 0;
+		}
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		
+		if (gp.ui.subState == 0) {
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+				gp.ui.commandNum--;
+				if (gp.ui.commandNum < 0) {
+					gp.ui.commandNum = 2;
+				}
+			}
+			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				gp.ui.commandNum++;
+				if (gp.ui.commandNum > 2) {
+					gp.ui.commandNum = 0;
+				}
+			}
+		}
 	}
 
 }

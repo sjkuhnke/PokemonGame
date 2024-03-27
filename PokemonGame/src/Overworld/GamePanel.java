@@ -80,7 +80,11 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	
 	public int gameState;
 	public static final int PLAY_STATE = 1;
-	public static final int DIALOG_STATE = 2;
+	public static final int DIALOGUE_STATE = 2;
+	public static final int BATTLE_STATE = 3;
+	public static final int MENU_STATE = 4;
+	public static final int TRANSITION_STATE = 5;
+	public static final int SHOP_STATE = 6;
 
 	public static Map<Entity, Integer> volatileTrainers = new HashMap<>();
 	
@@ -288,7 +292,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		addGamePanel();
 	}
 	
-	private void addPanel(JPanel panel, boolean animate) {
+	public void addPanel(JPanel panel, boolean animate) {
 		if (animate) {
 			SwingUtilities.invokeLater(() -> {
 				// Create a JPanel for the fade effect
@@ -322,7 +326,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		}
 	}
 	
-	private void addPanel(JPanel panel) {
+	public void addPanel(JPanel panel) {
 		// Add the Battle
 	    Main.window.getContentPane().add(panel);
 

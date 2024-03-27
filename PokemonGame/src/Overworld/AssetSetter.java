@@ -969,15 +969,16 @@ public class AssetSetter {
 		gp.npc[125][index] = NPCSetup(NPC_PC, 35, 36, -1);
 		
 		// Clerks
-		gp.npc[30][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
-		gp.npc[40][index] = NPCSetup(NPC_MARKET, 34, 38, -1);
+		gp.npc[30][index] = NPCSetup(NPC_MARKET, 31, 41, -1, true, Item.REPEL, Item.POKEBALL, Item.KLEINE_BAR, Item.BOTTLE_CAP, Item.TM49, Item.TM51);
+		gp.npc[40][index] = NPCSetup(NPC_MARKET, 34, 38, -1, true, Item.TM12, Item.TM13, Item.TM15, Item.TM16, Item.TM23, Item.TM24);
 		gp.npc[45][index] = NPCSetup(NPC_CLERK, 30, 39, -1);
 		gp.npc[87][index] = NPCSetup(NPC_CLERK, 27, 39, -1);
-		gp.npc[89][index] = NPCSetup(NPC_MARKET, 24, 36, -1);
-		gp.npc[112][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
+		gp.npc[89][index] = NPCSetup(NPC_MARKET, 24, 36, -1, true, Item.TM45, Item.TM50, Item.TM54, Item.TM74, Item.TM75,
+                Item.TM76, Item.TM77, Item.TM79, Item.TM80, Item.TM81, Item.TM82, Item.TM95);
+		gp.npc[112][index] = NPCSetup(NPC_MARKET, 31, 41, -1, true, Item.MAX_ELIXIR, Item.PP_UP, Item.TM41, Item.TM42, Item.TM43, Item.TM44, Item.TM91);
 		gp.npc[126][index] = NPCSetup(NPC_CLERK, 27, 39, -1);
 		gp.npc[132][index] = NPCSetup(NPC_CLERK, 30, 39, -1);
-		gp.npc[133][index] = NPCSetup(NPC_MARKET, 34, 38, -1);
+		gp.npc[133][index] = NPCSetup(NPC_MARKET, 34, 38, -1, true, Item.TM46, Item.TM63, Item.TM38);
 		
 		mapNum = 28;
 		index = 0;
@@ -1143,7 +1144,11 @@ public class AssetSetter {
 		
 		mapNum = 53;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 31, 41, -1, true, Item.ORAN_BERRY, Item.CHERI_BERRY, Item.CHESTO_BERRY, Item.PECHA_BERRY, Item.RAWST_BERRY, Item.ASPEAR_BERRY,
+                Item.PERSIM_BERRY, Item.LUM_BERRY, Item.LEPPA_BERRY, Item.SITRUS_BERRY, Item.WIKI_BERRY, Item.OCCA_BERRY, Item.PASSHO_BERRY, Item.WACAN_BERRY, Item.RINDO_BERRY,
+                Item.YACHE_BERRY, Item.CHOPLE_BERRY, Item.KEBIA_BERRY, Item.SHUCA_BERRY, Item.COBA_BERRY, Item.PAYAPA_BERRY, Item.TANGA_BERRY, Item.CHARTI_BERRY,
+                Item.KASIB_BERRY, Item.HABAN_BERRY, Item.COLBUR_BERRY, Item.BABIRI_BERRY, Item.CHILAN_BERRY, Item.ROSELI_BERRY, Item.MYSTICOLA_BERRY, Item.GALAXEED_BERRY,
+                Item.LIECHI_BERRY, Item.GANLON_BERRY, Item.SALAC_BERRY, Item.PETAYA_BERRY, Item.APICOT_BERRY, Item.STARF_BERRY, Item.MICLE_BERRY, Item.CUSTAP_BERRY);
 		
 		mapNum = 60;
 		index = 0;
@@ -1239,7 +1244,8 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 35, 36, -1);
-		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 22, 37, -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 22, 37, -1, true, Item.ADAMANT_MINT, Item.BOLD_MINT, Item.BRAVE_MINT, Item.CALM_MINT, Item.CAREFUL_MINT, Item.IMPISH_MINT,
+                Item.JOLLY_MINT, Item.MODEST_MINT, Item.QUIET_MINT, Item.SERIOUS_MINT, Item.TIMID_MINT);
 		
 		mapNum = 93;
 		index = 0;
@@ -1432,7 +1438,9 @@ public class AssetSetter {
 		
 		mapNum = 131;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 31, 41, -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 31, 41, -1, true, Item.EUPHORIAN_GEM, Item.LEAF_STONE, Item.DUSK_STONE, Item.DAWN_STONE, Item.ICE_STONE,
+                Item.VALIANT_GEM, Item.PETTICOAT_GEM, Item.EVERSTONE, Item.HEAT_ROCK, Item.DAMP_ROCK, Item.SMOOTH_ROCK, Item.ICY_ROCK, Item.THUNDER_SCALES_FOSSIL,
+                Item.DUSK_SCALES_FOSSIL);
 		
 		mapNum = 137;
 		index = 0;
@@ -2196,8 +2204,12 @@ public class AssetSetter {
 	private Entity NPCSetup(int type, int x, int y, int team) {
 		return NPCSetup(type, x, y, team, true);
 	}
-
+	
 	private Entity NPCSetup(int type, int x, int y, int team, boolean increase) {
+		return NPCSetup(type, x, y, team, increase, new Item[] {});
+	}
+
+	private Entity NPCSetup(int type, int x, int y, int team, boolean increase, Item... items) {
 		Entity result = null;
 		switch (type) {
 		case NPC_PC:
@@ -2208,6 +2220,7 @@ public class AssetSetter {
 			break;
 		case NPC_CLERK:
 			result = new NPC_Clerk(gp);
+			result.setItems(gp.player.getItems());
 			break;
 		case TRAINER_DOWN:
 			result = new NPC_Trainer(gp, "down", team);
@@ -2274,6 +2287,7 @@ public class AssetSetter {
 			break;
 		case NPC_MARKET:
 			result = new NPC_Market(gp);
+			result.setItems(items);
 			break;
 		case GRUST:
 			result = new NPC_Pokemon(gp, 159, team, true);

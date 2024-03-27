@@ -4,10 +4,12 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 import Overworld.GamePanel;
+import Swing.Item;
 
 public class Entity {
 	
@@ -30,6 +32,7 @@ public class Entity {
 	String dialogues[] = new String[20];
 	int dialogueIndex = 0;
 	public String altDialogue;
+	public ArrayList<Item> inventory = new ArrayList<>();
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;
@@ -97,6 +100,12 @@ public class Entity {
 			dialogueIndex++;
 		} else if (mode == 1) {
 			gp.ui.currentDialogue = altDialogue;
+		}
+	}
+	
+	public void setItems(Item... items) {
+		for (Item item : items) {
+			inventory.add(item);
 		}
 	}
 }
