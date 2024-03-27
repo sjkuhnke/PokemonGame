@@ -2,7 +2,6 @@ package Overworld;
 
 import javax.swing.JOptionPane;
 
-import Entity.PlayerCharacter;
 import Swing.Player;
 
 public class EventHandler {
@@ -14,6 +13,9 @@ public class EventHandler {
 	
 	int previousEventX, previousEventY;
 	boolean canTouchEvent = true;
+	
+	int tempMap, tempCol, tempRow;
+	boolean tempCooldown;
 	
 	public EventHandler(GamePanel gp) {
 		this.gp = gp;
@@ -805,22 +807,24 @@ public class EventHandler {
 	}
 	
 	public void teleport(int map, int col, int row, boolean cooldown) {
-		gp.currentMap = map;
-		gp.player.worldX = gp.tileSize * col;
-		gp.player.worldY = gp.tileSize * row;
-		gp.player.worldY -= gp.tileSize / 4;
-		p.currentMap = map;
+		gp.gameState = GamePanel.TRANSITION_STATE;
+		tempMap = map;
+		tempCol = col;
+		tempRow = row;
 		
-		canTouchEvent = !cooldown;
-		
-		previousEventX = gp.player.worldX;
-		previousEventY = gp.player.worldY;
+//		gp.currentMap = map;
+//		gp.player.worldX = gp.tileSize * col;
+//		gp.player.worldY = gp.tileSize * row;
+//		gp.player.worldY -= gp.tileSize / 4;
+//		p.currentMap = map;
+//		
+//		canTouchEvent = !cooldown;
+//		
+//		previousEventX = gp.player.worldX;
+//		previousEventY = gp.player.worldY;
 		
 		gp.aSetter.updateNPC(map);
 		gp.aSetter.setInteractiveTile(map);
 		gp.player.cross = false;
-		
-		PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
-		Main.window.setTitle("Pokemon Game - " + PlayerCharacter.currentMapName);
 	}
 }
