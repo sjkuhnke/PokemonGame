@@ -1,5 +1,6 @@
 package Overworld;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import Swing.AbstractUI;
+import Swing.Moveslot;
 import Swing.Pokemon;
 
 public class BattleUI extends AbstractUI {
@@ -20,6 +22,7 @@ public class BattleUI extends AbstractUI {
 	
 	public int subState = 0;
 	public int dialogueState = DIALOGUE_FREE_STATE;
+	public int moveNum = 0;
 	private int dialogueCounter = 0;
 
 	public static final int STARTING_STATE = -1;
@@ -30,6 +33,7 @@ public class BattleUI extends AbstractUI {
 	public static final int USER_SENDING_IN_START = 4;
 	public static final int FOE_SENDING_IN = 5;
 	public static final int USER_SENDING_IN = 6;
+	public static final int MOVE_SELECTION_STATE = 7;
 	
 	public static final int DIALOGUE_WAITING_STATE = 0;
 	public static final int DIALOGUE_STATE = 1;
@@ -71,10 +75,7 @@ public class BattleUI extends AbstractUI {
 		
 		// Sub states of the battle
 		if (subState == STARTING_STATE) {
-			showMessage("You are challenged by " + foe.trainer.getName());
-		}
-		if (subState == IDLE_STATE) {
-			drawIdleScreen();
+			showMessage("You are challenged by " + foe.trainer.getName() + "!");
 		}
 		if (subState == FOE_SENDING_IN_START) {
 			drawFoeStart();
@@ -90,7 +91,18 @@ public class BattleUI extends AbstractUI {
 			drawDialogueState();
 		}
 		
-		drawDialogueScreen(false);
+		if (subState != IDLE_STATE && subState != MOVE_SELECTION_STATE) {
+			drawDialogueScreen(false);
+		}
+		
+		if (subState == IDLE_STATE) {
+			drawIdleScreen();
+		}
+		
+		if (subState == MOVE_SELECTION_STATE) {
+			drawMoveSelectionScreen();
+		}
+		
 //		String print = dialogueState == DIALOGUE_WAITING_STATE ? "Dialogue Waiting" : "Dialogue";
 //		System.out.println(print);
 	}
@@ -100,29 +112,41 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void drawIdleScreen() {
+		drawFoe();
+		drawUser();
+		currentDialogue = "What will\n" + user.nickname + " do?";
+		drawDialogueScreen(false);
+		drawActionScreen(user);
+	}
+
+	private void drawUser() {
 		drawHPImage(user);
-		drawHPImage(foe);
 		drawHPBar(user);
-		drawHPBar(foe);
 		drawNameLabel(user);
-		drawNameLabel(foe);
 		drawUserSprite();
+		drawUserHP();	
+	}
+
+	private void drawFoe() {
+		drawHPImage(foe);
+		drawHPBar(foe);
+		drawNameLabel(foe);
 		drawFoeSprite();
-		drawUserHP();
 	}
 
 	private void drawHPImage(Pokemon p) {
 		if (p.playerOwned()) {
-			g2.drawImage(setup("/battle/user_hp", 1), 310, 288, null);
+			g2.drawImage(setup("/battle/user_hp", 1), 302, 280, null);
 		} else {
-			g2.drawImage(setup("/battle/foe_hp", 1), 222, 40, null);
+			g2.drawImage(setup("/battle/foe_hp", 1), 222, 39, null);
 		}		
 	}
 
 	private void drawUserHP() {
 		g2.setColor(Color.BLACK);
+		g2.setFont(g2.getFont().deriveFont(24F));
 		String hpLabel = user.getCurrentHP() + " / " + user.getStat(0);
-		g2.drawString(hpLabel, this.getCenterAlignedTextX(hpLabel, 490), 363);
+		g2.drawString(hpLabel, this.getCenterAlignedTextX(hpLabel, 490), 362);
 		
 	}
 
@@ -160,9 +184,7 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void drawUserStart() {
-		drawFoeSprite();
-		drawHPBar(foe);
-		drawNameLabel(foe);
+		drawFoe();
 		drawUserPokeball();
 		if (counter >= 100) {
 			counter = 0;
@@ -175,9 +197,7 @@ public class BattleUI extends AbstractUI {
 		if (counter < 50) {
 			g2.drawImage(setup("/items/pokeball", 2), 570, 188, null);
 		} else {
-			drawFoeSprite();
-			drawHPBar(foe);
-			drawNameLabel(foe);
+			drawFoe();
 		}
 	}
 	
@@ -186,10 +206,7 @@ public class BattleUI extends AbstractUI {
 		if (counter < 50) {
 			g2.drawImage(setup("/items/pokeball", 2), 133, 348, null);
 		} else {
-			drawUserSprite();
-			drawHPBar(user);
-			drawNameLabel(user);
-			drawUserHP();
+			drawUser();
 		}
 	}
 	
@@ -216,6 +233,8 @@ public class BattleUI extends AbstractUI {
 			y = 82;
 		}
 		g2.fillRect(x, y, width, height);
+		g2.setColor(getHPBarColor(hpRatio).darker());
+		g2.fillRect(x, y, width, 3);
 	}
 	
 	private void drawNameLabel(Pokemon p) {
@@ -231,12 +250,12 @@ public class BattleUI extends AbstractUI {
 		if (p.playerOwned()) {
 			x = getRightAlignedTextX(name, 490);
 			y = 318;
-			levelX = 524;
+			levelX = 523;
 			levelY = 318;
 		} else {
 			x = getRightAlignedTextX(name, 383);
 			y = 70;
-			levelX = 415;
+			levelX = 416;
 			levelY = 70;
 		}
 		g2.drawString(p.nickname, x, y);
@@ -253,6 +272,7 @@ public class BattleUI extends AbstractUI {
 		}
 	}
 
+	@SuppressWarnings("unused") // DEBUG
 	private String getStateName() {
 		switch (subState) {
 		case STARTING_STATE: return "Starting State";
@@ -304,6 +324,160 @@ public class BattleUI extends AbstractUI {
 	    int length = metrics.stringWidth(text); // Calculate the width of the text
 	    int x = centerX - length / 2; // Calculate the x-coordinate for center alignment
 	    return x;
+	}
+	
+	private void drawActionScreen(Pokemon p) {
+		int x = gp.tileSize * 6;
+		int y = gp.screenHeight - (gp.tileSize * 4);
+		int width = gp.screenWidth - x;
+		int height = gp.tileSize * 4;
+		
+		drawActionBackground(p, x, y, width, height);
+		
+		x += gp.tileSize;
+		y += gp.tileSize / 4;
+		width = (int) (gp.tileSize * 3.5);
+		height = (int) (gp.tileSize * 1.5);
+		g2.setFont(g2.getFont().deriveFont(48F));
+		
+		g2.setColor(Color.RED.darker());
+		g2.fillRoundRect(x, y, width, height, 10, 10);
+		g2.setColor(Color.WHITE);
+		g2.drawString("FIGHT", x + 30, y + 50);
+		if (commandNum == 0) {
+			g2.drawRoundRect(x, y, width, height, 10, 10);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				subState = MOVE_SELECTION_STATE;
+			}
+		}
+		
+		x += width + gp.tileSize;
+		g2.setColor(Color.GREEN.darker());
+		g2.fillRoundRect(x, y, width, height, 10, 10);
+		g2.setColor(Color.WHITE);
+		g2.drawString("PARTY", x + 30, y + 50);
+		if (commandNum == 1) {
+			g2.drawRoundRect(x, y, width, height, 10, 10);
+		}
+		
+		x = gp.tileSize * 7;
+		y += height + 16;
+		g2.setColor(Color.YELLOW.darker());
+		g2.fillRoundRect(x, y, width, height, 10, 10);
+		g2.setColor(Color.WHITE);
+		g2.drawString("BAG", x + 30, y + 50);
+		if (commandNum == 2) {
+			g2.drawRoundRect(x, y, width, height, 10, 10);
+		}
+		
+		x += width + gp.tileSize;
+		g2.setColor(Color.BLUE.darker());
+		g2.fillRoundRect(x, y, width, height, 10, 10);
+		g2.setColor(Color.WHITE);
+		g2.drawString("RUN", x + 30, y + 50);
+		if (commandNum == 3) {
+			g2.drawRoundRect(x, y, width, height, 10, 10);
+		}
+	}
+	
+	private void drawMoveSelectionScreen() {
+		drawFoe();
+		drawUser();
+		currentDialogue = "What will\n" + user.nickname + " do?";
+		drawDialogueScreen(false);
+		drawMoves();
+	}
+
+	private void drawActionBackground(Pokemon p, int x, int y, int width, int height) {
+		Color background = new Color(175, 175, 175);
+		g2.setColor(background);
+		g2.fillRoundRect(x, y, width, height, 35, 35);
+		
+		Color border = p.type1.getColor();
+		g2.setColor(border);
+		g2.setStroke(new BasicStroke(5));
+		g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+	}
+	
+	private void drawMoves() {
+		int x = gp.tileSize * 6;
+		int y = gp.screenHeight - (gp.tileSize * 4);
+		int width = gp.screenWidth - x;
+		int height = gp.tileSize * 4;
+		
+		drawActionBackground(user, x, y, width, height);
+		
+		x += gp.tileSize;
+		y += gp.tileSize / 4;
+		width = (int) (gp.tileSize * 3.5);
+		height = (int) (gp.tileSize * 1.5);
+		g2.setFont(g2.getFont().deriveFont(24F));
+		Moveslot[] moves = user.moveset;
+		
+		if (moves[0] != null) {
+			g2.setColor(moves[0].move.mtype.getColor());
+			g2.fillRoundRect(x, y, width, height, 10, 10);
+			g2.setColor(Color.BLACK);
+			String text = moves[0].move.toString();
+			g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
+			g2.setColor(moves[0].getPPColor());
+			String pp = moves[0].currentPP + " / " + moves[0].maxPP;
+			g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
+			if (moveNum == 0) {
+				g2.setColor(Color.WHITE);
+				g2.drawRoundRect(x, y, width, height, 10, 10);
+			}
+		}
+		
+		if (moves[1] != null) {
+			x += width + gp.tileSize;
+			g2.setColor(moves[1].move.mtype.getColor());
+			g2.fillRoundRect(x, y, width, height, 10, 10);
+			g2.setColor(Color.BLACK);
+			String text = moves[1].move.toString();
+			g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
+			g2.setColor(moves[1].getPPColor());
+			String pp = moves[1].currentPP + " / " + moves[1].maxPP;
+			g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
+			if (moveNum == 1) {
+				g2.setColor(Color.WHITE);
+				g2.drawRoundRect(x, y, width, height, 10, 10);
+			}
+		}
+		
+		if (moves[2] != null) {
+			x = gp.tileSize * 7;
+			y += height + 16;
+			g2.setColor(moves[2].move.mtype.getColor());
+			g2.fillRoundRect(x, y, width, height, 10, 10);
+			g2.setColor(Color.BLACK);
+			String text = moves[2].move.toString();
+			g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
+			g2.setColor(moves[2].getPPColor());
+			String pp = moves[2].currentPP + " / " + moves[2].maxPP;
+			g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
+			if (moveNum == 2) {
+				g2.setColor(Color.WHITE);
+				g2.drawRoundRect(x, y, width, height, 10, 10);
+			}
+		}
+		
+		if (moves[3] != null) {
+			x += width + gp.tileSize;
+			g2.setColor(moves[3].move.mtype.getColor());
+			g2.fillRoundRect(x, y, width, height, 10, 10);
+			g2.setColor(Color.BLACK);
+			String text = moves[3].move.toString();
+			g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
+			g2.setColor(moves[3].getPPColor());
+			String pp = moves[3].currentPP + " / " + moves[3].maxPP;
+			g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
+			if (moveNum == 3) {
+				g2.setColor(Color.WHITE);
+				g2.drawRoundRect(x, y, width, height, 10, 10);
+			}
+		}
 	}
 
 }
