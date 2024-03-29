@@ -118,7 +118,6 @@ public class Pokemon implements Serializable {
 	public int happinessCap;
 	
 	// boolean fields
-	public boolean playerOwned;
 	public boolean impressive;
 	public boolean battled;
 	public boolean success;
@@ -167,7 +166,6 @@ public class Pokemon implements Serializable {
 		status = Status.HEALTHY;
 		vStatuses = new ArrayList<Status>();
 		
-		playerOwned = o;
 		impressive = true;
 		if (t) {
 			ivs = new int[] {31, 31, 31, 31, 31, 31};
@@ -214,7 +212,6 @@ public class Pokemon implements Serializable {
 		status = pokemon.status;
 		vStatuses = new ArrayList<Status>(pokemon.vStatuses);
 		
-		playerOwned = true;
 		impressive = true;
 		trainer = pokemon.trainer;
 		lastMoveUsed = pokemon.lastMoveUsed;
@@ -371,8 +368,9 @@ public class Pokemon implements Serializable {
 	    }	    
 	}
 	
-	public Move bestMove(Pokemon foe, boolean first, Trainer tr) {
+	public Move bestMove(Pokemon foe, boolean first) {
 	    ArrayList<Move> validMoves = this.getValidMoveset();
+	    Trainer tr = this.trainer;
 	    
         // Calculate and store the damage values of each move
         Map<Move, Integer> moveToDamage = new HashMap<>();
@@ -3134,7 +3132,7 @@ public class Pokemon implements Serializable {
 	}
 
 	
-	public void move(Pokemon foe, Move move, Player player, Pokemon[] team, Trainer enemy, boolean first) {
+	public void move(Pokemon foe, Move move, boolean first) {
 		if (this.fainted || foe.fainted) return;
 
 		double attackStat;
@@ -3147,8 +3145,25 @@ public class Pokemon implements Serializable {
 		int critChance = move.critChance;
 		Ability foeAbility = foe.ability;
 		
-		ArrayList<FieldEffect> userSide = this.playerOwned ? field.playerSide : field.foeSide;
-		ArrayList<FieldEffect> enemySide = this.playerOwned ? field.foeSide : field.playerSide;
+		ArrayList<FieldEffect> userSide = this.playerOwned() ? field.playerSide : field.foeSide;
+		ArrayList<FieldEffect> enemySide = this.playerOwned() ? field.foeSide : field.playerSide;
+		Player player;
+		Trainer enemy = null;
+		Pokemon[] team = null;
+		
+		if (this.playerOwned()) {
+			userSide = field.playerSide;
+			enemySide = field.foeSide;
+			player = (Player) this.trainer;
+			trainer = foe.trainer;
+			team = player.team;
+		} else {
+			userSide = field.foeSide;
+			enemySide = field.playerSide;
+			player = (Player) foe.trainer;
+			enemy = this.trainer;
+			if (trainer != null) team = enemy.team;
+		}
 		
 		if (move != this.lastMoveUsed) this.moveMultiplier = 1;
 		
@@ -3215,8 +3230,8 @@ public class Pokemon implements Serializable {
 					damage = calc(attackStat, defenseStat, 40, this.level);
 					this.damage(damage, foe);
 					if (this.currentHP <= 0) {
-						this.faint(true, player, foe);
-						foe.awardxp(getxpReward(), player);
+						this.faint(true, foe);
+						foe.awardxp(getxpReward());
 					}
 					confusionCounter--;
 					endMove();
@@ -3347,8 +3362,8 @@ public class Pokemon implements Serializable {
 					this.damage(Math.max(this.getStat(0) / 8.0, 1), foe);
 					console.writeln(this.nickname + " was hurt!");
 					if (this.currentHP <= 0) { // Check for kill
-						this.faint(true, player, foe);
-						foe.awardxp(getxpReward(), player);
+						this.faint(true, foe);
+						foe.awardxp(getxpReward());
 					}
 				}
 			}
@@ -3424,20 +3439,20 @@ public class Pokemon implements Serializable {
 				|| move == Move.SPIKES || move == Move.TOXIC_SPIKES || move == Move.TOXIC || move == Move.STICKY_WEB)) {
 			useMove(move);
 			console.writeAbility(foe, false);
-			foe.move(this, move, player, arrayEquals(player.getTeam(), team) ? enemy.getTeam() : player.getTeam(), enemy, true);
+			foe.move(this, move, true);
 			console.writeln(foe.nickname + " bounced the " + move + " back!");
 			return;
 		}
 		
 		if (foe.vStatuses.contains(Status.REFLECT) && (move != Move.BRICK_BREAK && move != Move.MAGIC_FANG && move != Move.PSYCHIC_FANGS)) {
-			this.move(this, move, player, team, enemy, false);
+			this.move(this, move, false);
 			console.writeln(move + " was reflected on itself!");
 			foe.vStatuses.remove(Status.REFLECT);
 			return;
 		}
 		if (this.vStatuses.contains(Status.POSESSED)) {
 			this.vStatuses.remove(Status.POSESSED);
-			this.move(this, move, player, team, enemy, false);
+			this.move(this, move, false);
 			console.writeln(move + " was used on itself!");
 			return;
 		}
@@ -3521,8 +3536,8 @@ public class Pokemon implements Serializable {
 					this.damage(this.getStat(0) / 2.0, foe);
 					console.writeln(this.nickname + " kept going and crashed!");
 					if (this.currentHP < 0) {
-						this.faint(true, player, foe);
-						foe.awardxp(getxpReward(), player);
+						this.faint(true, foe);
+						foe.awardxp(getxpReward());
 					}
 				}
 				if (this.item == Item.BLUNDER_POLICY) {
@@ -3992,7 +4007,7 @@ public class Pokemon implements Serializable {
 				boolean result = false;
 				if (this.trainerOwned() && enemy != null) {
 					result = enemy.swapRandom(foe, player);
-				} else if (this.playerOwned) {
+				} else if (this.playerOwned()) {
 					result = player.swapRandom(foe);
 				}
 				if (result) {
@@ -4016,13 +4031,13 @@ public class Pokemon implements Serializable {
 				}
 			}
 			if (foe.currentHP <= 0) { // Check for kill
-				foe.faint(true, player, this);
+				foe.faint(true, this);
 				if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
 				if (move == Move.SUNNY_DOOM) field.setWeather(field.new FieldEffect(Effect.SUN));
-				this.awardxp(getxpReward(), player);
+				this.awardxp(getxpReward());
 				if (this.vStatuses.contains(Status.BONDED)) {
 					console.writeln(foe.nickname + " took its attacker down with it!");
-					this.faint(true, player, foe);
+					this.faint(true, foe);
 				}
 				if (this.ability == Ability.MOXIE) {
 					console.writeAbility(this);
@@ -4034,8 +4049,8 @@ public class Pokemon implements Serializable {
 				console.writeln(this.nickname + " was damaged by recoil!");
 				this.damage(recoil, foe);
 				if (this.currentHP <= 0) { // Check for kill
-					this.faint(true, player, foe);
-					foe.awardxp(getxpReward(), player);
+					this.faint(true, foe);
+					foe.awardxp(getxpReward());
 				}
 			}
 			
@@ -4064,9 +4079,9 @@ public class Pokemon implements Serializable {
 					console.writeln(this.nickname + " was hurt by the Rocky Helmet!");
 				}
 				if ((foeAbility == Ability.ROUGH_SKIN || foeAbility == Ability.IRON_BARBS || foe.item == Item.ROCKY_HELMET) && this.currentHP <= 0) { // Check for kill
-					this.faint(true, player, foe);
+					this.faint(true, foe);
 					if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
-					foe.awardxp(getxpReward(), player);
+					foe.awardxp(getxpReward());
 				}
 			}
 			
@@ -4098,8 +4113,8 @@ public class Pokemon implements Serializable {
 			this.damage(this.getStat(0) / 10, foe);
 			console.writeln(this.nickname + " lost some of its HP!");
 			if (this.currentHP <= 0) { // Check for kill
-				this.faint(true, player, foe);
-				foe.awardxp(getxpReward(), player);
+				this.faint(true, foe);
+				foe.awardxp(getxpReward());
 			}
 		}
 		
@@ -4112,8 +4127,8 @@ public class Pokemon implements Serializable {
 		
 		
 		if (move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) {
-			this.faint(true, player, foe);
-			foe.awardxp(getxpReward(), player);
+			this.faint(true, foe);
+			foe.awardxp(getxpReward());
 		}
 		if (move == Move.HYPER_BEAM || move == Move.BLAST_BURN || move == Move.FRENZY_PLANT || move == Move.GIGA_IMPACT || move == Move.HYDRO_CANNON || move == Move.MAGIC_CRASH) {
 			if (this.item == Item.POWER_HERB) {
@@ -4131,7 +4146,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			Move[] validMoves = moves.toArray(new Move[moves.size()]);
-			move(foe, validMoves[new Random().nextInt(validMoves.length)], player, team, enemy, first);
+			this.move(foe, validMoves[new Random().nextInt(validMoves.length)], first);
 		}
 		if (move == Move.ELEMENTAL_SPARKLE) {
 			ArrayList<Move> moves = new ArrayList<>();
@@ -4141,7 +4156,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			Move[] validMoves = moves.toArray(new Move[moves.size()]);
-			move(foe, validMoves[new Random().nextInt(validMoves.length)], player, team, enemy, first);
+			this.move(foe, validMoves[new Random().nextInt(validMoves.length)], first);
 		}
 		endMove();
 		return;
@@ -4234,9 +4249,10 @@ public class Pokemon implements Serializable {
 		return false;
 	}
 
-	public void awardxp(int amt, Player player) {
+	public void awardxp(int amt) {
 	    if (this.fainted) return;
-	    if (!this.playerOwned) return;
+	    if (!this.playerOwned()) return;
+	    Player player = (Player) this.trainer;
 
 	    ArrayList<Pokemon> teamCopy = new ArrayList<>(Arrays.asList(player.getTeam()));
 	    int numBattled = player.getBattled();
@@ -4357,7 +4373,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.CIRCLE_THROW || move == Move.DRAGON_TAIL) {
 			if (foe.trainerOwned() && enemy != null) {
 				enemy.swapRandom(foe, player);
-			} else if (foe.playerOwned) {
+			} else if (foe.playerOwned()) {
 				player.swapRandom(foe);
 			}
 		} else if (move == Move.CLOSE_COMBAT) {
@@ -4990,7 +5006,7 @@ public class Pokemon implements Serializable {
 			if (this.trainerOwned() && enemy.hasValidMembers()) {
 				console.writeln(this.nickname + " went back to " + enemy.getName() + "!");
 				this.vStatuses.add(Status.SWITCHING);
-			} else if (this.playerOwned && player.hasValidMembers()) {
+			} else if (this.playerOwned() && player.hasValidMembers()) {
 				console.writeln(this.nickname + " went back to you!");
 				this.vStatuses.add(Status.SWITCHING);
 			} else {
@@ -5028,8 +5044,8 @@ public class Pokemon implements Serializable {
 					console.writeln(foe.nickname + " was afflicted with a curse!");
 					this.damage((this.getStat(0) * 1.0 / 2), foe);
 					if (this.currentHP <= 0) {
-						this.faint(true, player, foe);
-						foe.awardxp(getxpReward(), player);
+						this.faint(true, foe);
+						foe.awardxp(getxpReward());
 					}
 				} else {
 					fail = fail(announce);
@@ -5112,7 +5128,7 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.ENTRAINMENT) {
 			foe.ability = this.ability;
 			if (announce) console.writeln(foe.nickname + "'s ability became " + foe.ability.toString() + "!");
-			foe.swapIn(this, player, false);
+			foe.swapIn(this, false);
 		} else if (move == Move.FAKE_TEARS) {
 			stat(foe, 3, -2, this, announce);
 		} else if (move == Move.FEATHER_DANCE) {
@@ -5192,8 +5208,8 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.HYPNOSIS) {
 			foe.sleep(true);
 		} else if (announce && (move == Move.HEALING_WISH || move == Move.LUNAR_DANCE)) {
-			this.faint(true, player, foe);
-			foe.awardxp(getxpReward(), player);
+			this.faint(true, foe);
+			foe.awardxp(getxpReward());
 			this.vStatuses.add(Status.HEALING);
 		} else if (announce && move == Move.INGRAIN) {
 			if (!(this.vStatuses.contains(Status.AQUA_RING))) {
@@ -5261,8 +5277,8 @@ public class Pokemon implements Serializable {
 			stat(foe, 0, -2, this, announce);
 			stat(foe, 2, -2, this, announce);
 			this.currentHP = 0;
-			this.faint(true, player, foe);
-			foe.awardxp(getxpReward(), player);
+			this.faint(true, foe);
+			foe.awardxp(getxpReward());
 		} else if (move == Move.METAL_SOUND) {
 			stat(foe, 3, -2, this, announce);
 		} else if (move == Move.MINIMIZE) {
@@ -5319,7 +5335,7 @@ public class Pokemon implements Serializable {
 			if (this.trainerOwned() && enemy.hasValidMembers()) {
 				console.writeln(this.nickname + " went back to " + enemy.getName() + "!");
 				this.vStatuses.add(Status.SWITCHING);
-			} else if (this.playerOwned && player.hasValidMembers()) {
+			} else if (this.playerOwned() && player.hasValidMembers()) {
 				console.writeln(this.nickname + " went back to you!");
 				this.vStatuses.add(Status.SWITCHING);
 			}
@@ -5571,7 +5587,7 @@ public class Pokemon implements Serializable {
 			boolean result = false;
 			if (foe.trainerOwned() && enemy != null) {
 				result = enemy.swapRandom(foe, player);
-			} else if (foe.playerOwned) {
+			} else if (foe.playerOwned()) {
 				result = player.swapRandom(foe);
 			}
 			if (!result) fail = fail(announce);
@@ -10557,7 +10573,7 @@ public class Pokemon implements Serializable {
 		}
 	}
 
-	public void faint(boolean announce, Player player, Pokemon foe) {
+	public void faint(boolean announce, Pokemon foe) {
 		this.currentHP = 0;
 		this.fainted = true;
 		this.battled = false;
@@ -10571,7 +10587,8 @@ public class Pokemon implements Serializable {
 		this.vStatuses.remove(Status.SEMI_INV);
 		foe.vStatuses.remove(Status.SPUN);
 		foe.vStatuses.remove(Status.TRAPPED);
-		if (player != null && this.playerOwned) {
+		if (this.trainer != null && this.playerOwned()) {
+			Player player = (Player) this.trainer;
 			player.setBattled(player.getBattled() - 1);
 		}
 		if (announce) console.writeln("\n" + this.nickname + " fainted!", false, 14);
@@ -10634,7 +10651,7 @@ public class Pokemon implements Serializable {
 		
 		int magicDamage = 0;
 		
-		ArrayList<FieldEffect> enemySide = this.playerOwned ? field.foeSide : field.playerSide;
+		ArrayList<FieldEffect> enemySide = this.playerOwned() ? field.foeSide : field.playerSide;
 		
 		if (id == 237) {
 			move = get150Move(move);
@@ -11028,15 +11045,15 @@ public class Pokemon implements Serializable {
 		return damage;
 	}
 
-	public void endOfTurn(Pokemon f, Player player) {
+	public void endOfTurn(Pokemon f) {
 		if (this.isFainted()) return;
 		if (this.status == Status.TOXIC && toxic < 16) toxic++;
 		if (this.status == Status.FROSTBITE && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f);
 			console.writeln("\n" + this.nickname + " was hurt by frostbite!");
 			if (this.currentHP <= 0) { // Check for kill
-				this.faint(true, player, f);
-				f.awardxp(getxpReward(), player);
+				this.faint(true, f);
+				f.awardxp(getxpReward());
 				return;
 			}
 			
@@ -11044,8 +11061,8 @@ public class Pokemon implements Serializable {
 			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f);
 			console.writeln("\n" + this.nickname + " was hurt by its burn!");
 			if (this.currentHP <= 0) { // Check for kill
-				this.faint(true, player, f);
-				f.awardxp(getxpReward(), player);
+				this.faint(true, f);
+				f.awardxp(getxpReward());
 				return;
 			}
 			
@@ -11053,8 +11070,8 @@ public class Pokemon implements Serializable {
 			this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f);
 			console.writeln("\n" + this.nickname + " was hurt by poison!");
 			if (this.currentHP <= 0) { // Check for kill
-				this.faint(true, player, f);
-				f.awardxp(getxpReward(), player);
+				this.faint(true, f);
+				f.awardxp(getxpReward());
 				return;
 			}
 			
@@ -11062,8 +11079,8 @@ public class Pokemon implements Serializable {
 			this.damage(Math.max((this.getStat(0) * 1.0 / 16) * toxic, 1), f);
 			console.writeln("\n" + this.nickname + " was hurt by poison!");
 			if (this.currentHP <= 0) { // Check for kill
-				this.faint(true, player, f);
-				f.awardxp(getxpReward(), player);
+				this.faint(true, f);
+				f.awardxp(getxpReward());
 				return;
 			}
 			
@@ -11072,8 +11089,8 @@ public class Pokemon implements Serializable {
 			this.damage(Math.max(this.getStat(0) * 1.0 / 4, 1), f);
 			console.writeln("\n" + this.nickname + " was hurt by the curse!");
 			if (this.currentHP <= 0) { // Check for kill
-				this.faint(true, player, f);
-				f.awardxp(getxpReward(), player);
+				this.faint(true, f);
+				f.awardxp(getxpReward());
 				return;
 			}
 			
@@ -11088,8 +11105,8 @@ public class Pokemon implements Serializable {
 			f.currentHP += hp;
 			f.verifyHP();
 			if (this.currentHP <= 0) {
-				this.faint(true, player, f);
-				f.awardxp(getxpReward(), player);
+				this.faint(true, f);
+				f.awardxp(getxpReward());
 				return;
 			}
 			
@@ -11099,8 +11116,8 @@ public class Pokemon implements Serializable {
 				this.damage(Math.max(this.getStat(0) * 1.0 / 4, 1), f);
 				console.writeln("\n" + this.nickname + " had a nightmare!");
 				if (this.currentHP <= 0) { // Check for kill
-					this.faint(true, player, f);
-					f.awardxp(getxpReward(), player);
+					this.faint(true, f);
+					f.awardxp(getxpReward());
 					return;
 				}
 			} else {
@@ -11176,8 +11193,8 @@ public class Pokemon implements Serializable {
 					console.writeln("\n" + this.nickname + " was hurt by its Black Sludge!");
 				}
 				if (this.currentHP <= 0) { // Check for kill
-					this.faint(true, player, f);
-					f.awardxp(getxpReward(), player);
+					this.faint(true, f);
+					f.awardxp(getxpReward());
 					return;
 				}
 			}
@@ -11203,8 +11220,8 @@ public class Pokemon implements Serializable {
 				}
 				this.spunCount--;
 				if (this.currentHP <= 0) { // Check for kill
-					this.faint(true, player, f);
-					f.awardxp(getxpReward(), player);
+					this.faint(true, f);
+					f.awardxp(getxpReward());
 					return;
 				}
 			}
@@ -11215,8 +11232,8 @@ public class Pokemon implements Serializable {
 			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f);
 			console.writeln("\n" + this.nickname + " was buffeted by the sandstorm!");
 			if (this.currentHP <= 0) { // Check for kill
-				this.faint(true, player, f);
-				f.awardxp(getxpReward(), player);
+				this.faint(true, f);
+				f.awardxp(getxpReward());
 				return;
 			}
 		} if (this.ability == Ability.DRY_SKIN && field.equals(field.weather, Effect.SUN)) {
@@ -11224,8 +11241,8 @@ public class Pokemon implements Serializable {
 			console.writeAbility(this);
 			console.writeln("\n" + this.nickname + " was hurt!");
 			if (this.currentHP <= 0) { // Check for kill
-				this.faint(true, player, f);
-				f.awardxp(getxpReward(), player);
+				this.faint(true, f);
+				f.awardxp(getxpReward());
 				return;
 			}
 		}
@@ -11234,8 +11251,8 @@ public class Pokemon implements Serializable {
 			this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f);
 			console.writeln("\n" + this.nickname + " was hurt!");
 			if (this.currentHP <= 0) { // Check for kill
-				this.faint(true, player, f);
-				f.awardxp(getxpReward(), player);
+				this.faint(true, f);
+				f.awardxp(getxpReward());
 				return;
 			}
 		}
@@ -11244,8 +11261,8 @@ public class Pokemon implements Serializable {
 			this.perishCount--;
 			console.writeln("\n" + this.nickname + "'s perish count fell to " + this.perishCount + "!");
 			if (this.perishCount == 0) {
-				this.faint(true, player, f);
-				f.awardxp(getxpReward(), player);
+				this.faint(true, f);
+				f.awardxp(getxpReward());
 				return;
 			}
 		}
@@ -11378,7 +11395,7 @@ public class Pokemon implements Serializable {
 
 	public void confuse(boolean announce) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
@@ -11401,7 +11418,7 @@ public class Pokemon implements Serializable {
 	
 	public void sleep(boolean announce) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
@@ -11435,7 +11452,7 @@ public class Pokemon implements Serializable {
 	
 	public void paralyze(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
@@ -11463,7 +11480,7 @@ public class Pokemon implements Serializable {
 
 	public void burn(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
@@ -11498,7 +11515,7 @@ public class Pokemon implements Serializable {
 	
 	public void poison(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
@@ -11526,7 +11543,7 @@ public class Pokemon implements Serializable {
 	
 	public void toxic(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
@@ -11554,7 +11571,7 @@ public class Pokemon implements Serializable {
 	
 	public void freeze(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned ? field.playerSide : field.foeSide;
+		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) console.writeln(this.nickname + " is protected by the Safeguard!");
 			return;
@@ -12518,7 +12535,7 @@ public class Pokemon implements Serializable {
 		return result;
 	}
 
-	public void swapIn(Pokemon foe, Player me, boolean hazards) {
+	public void swapIn(Pokemon foe, boolean hazards) {
 		if (this.ability == Ability.DROUGHT && !field.equals(field.weather, Effect.SUN)) {
 			console.writeAbility(this);
 			field.setWeather(field.new FieldEffect(Effect.SUN));
@@ -12589,13 +12606,13 @@ public class Pokemon implements Serializable {
 			console.writeAbility(this);
 			this.ability = foe.ability;
 			console.writeln(this.nickname + "'s ability became " + this.ability + "!");
-			this.swapIn(foe, me, false);
+			this.swapIn(foe, false);
 		}
 		if (this.item == Item.AIR_BALLOON) {
 			console.write(this.nickname + " floated on its Air Balloon!\n");
 		}
 		if (hazards && this.item != Item.HEAVY$DUTY_BOOTS) {
-			ArrayList<FieldEffect> side = playerOwned ? field.playerSide : field.foeSide;
+			ArrayList<FieldEffect> side = playerOwned() ? field.playerSide : field.foeSide;
 			if (field.contains(side, Effect.STEALTH_ROCKS)) {
 				double multiplier = getEffectiveMultiplier(PType.ROCK);
 				double damage = (this.getStat(0) / 8.0) * multiplier;
@@ -12625,12 +12642,11 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (this.currentHP <= 0) {
-				this.faint(true, me, foe);
-				foe.awardxp(getxpReward(), me);
+				this.faint(true, foe);
+				foe.awardxp(getxpReward());
 			}
 		}
-		
-		if (me.pokedex[this.id] < 1) me.pokedex[this.id] = 1;
+		if (gamePanel.player.p.pokedex[this.id] < 1) gamePanel.player.p.pokedex[this.id] = 1;
 		
 	}
 	
@@ -13366,12 +13382,12 @@ public class Pokemon implements Serializable {
         return true;
     }
 	
-	private boolean arrayEquals(Pokemon[] team, Pokemon[] team2) {
-		if (team == team2) return true;
-		if (team == null || team2 == null) return false;
-		System.out.println("fix arrayequals");
-		return false;
-	}
+//	private boolean arrayEquals(Pokemon[] team, Pokemon[] team2) {
+//		if (team == team2) return true;
+//		if (team == null || team2 == null) return false;
+//		System.out.println("fix arrayequals");
+//		return false;
+//	}
 
 	public boolean moveUsable(Move move) {
 		return getValidMoveset().contains(move);
@@ -13463,19 +13479,19 @@ public class Pokemon implements Serializable {
 	    clonedPokemon.tormentCount = this.tormentCount;
 	    clonedPokemon.toxic = this.toxic;
 	    clonedPokemon.headbuttCrit = this.headbuttCrit;
+	    clonedPokemon.happinessCap = this.happinessCap;
 	    
 	    // Clone boolean fields
-	    clonedPokemon.playerOwned = this.playerOwned;
 	    clonedPokemon.impressive = this.impressive;
 	    clonedPokemon.battled = this.battled;
 	    clonedPokemon.success = this.success;
+	    clonedPokemon.selected = this.selected;
 	    
 	    // Clone battle fields
 	    clonedPokemon.lastMoveUsed = this.lastMoveUsed;
-	    clonedPokemon.trainer = this.trainer;
 	    clonedPokemon.slot = this.slot;
-	    
-	    clonedPokemon.happinessCap = this.happinessCap;
+
+	    clonedPokemon.trainer = this.trainer;
 	    
 	    return clonedPokemon;
 	}
@@ -13715,6 +13731,29 @@ public class Pokemon implements Serializable {
 	public void setTrainer(Trainer trainer) {
 		this.trainer = trainer;
 		
+	}
+
+	public int checkQuickClaw(int priority) {
+		int result = priority;
+		if (item == Item.QUICK_CLAW) {
+			Random rand = new Random();
+			int num = rand.nextInt(10);
+			if (num < 2) {
+				result++;
+				console.writeln(this.nickname + "'s Quick Claw let it act first!");
+			}
+		}
+		return result;
+	}
+
+	public int checkCustap(int priority) {
+		int result = priority;
+		if (item == Item.CUSTAP_BERRY && currentHP <= getStat(0) * 1.0 / 4) {
+			result++;
+			console.writeln(this.nickname + " ate its Custap Berry and could act first!");
+			consumeItem();
+		}
+		return result;
 	}
 
 //	private String getStatName(int stat) {

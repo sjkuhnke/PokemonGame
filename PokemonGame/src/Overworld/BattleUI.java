@@ -10,10 +10,18 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
+import javax.swing.JOptionPane;
+
+import Entity.PlayerCharacter;
+import Swing.Ability;
 import Swing.AbstractUI;
+import Swing.Item;
+import Swing.Move;
 import Swing.Moveslot;
 import Swing.Pokemon;
+import Swing.Status;
 
 public class BattleUI extends AbstractUI {
 	
@@ -103,8 +111,17 @@ public class BattleUI extends AbstractUI {
 			drawMoveSelectionScreen();
 		}
 		
+		if (subState == USER_TURN) {
+			drawUserTurn();
+		}
+		
 //		String print = dialogueState == DIALOGUE_WAITING_STATE ? "Dialogue Waiting" : "Dialogue";
 //		System.out.println(print);
+	}
+	
+	private void drawUserTurn() {
+		drawFoe();
+		drawUser();
 	}
 	
 	private void showSendOutText(Pokemon p) {
@@ -414,70 +431,168 @@ public class BattleUI extends AbstractUI {
 		height = (int) (gp.tileSize * 1.5);
 		g2.setFont(g2.getFont().deriveFont(24F));
 		Moveslot[] moves = user.moveset;
-		
-		if (moves[0] != null) {
-			g2.setColor(moves[0].move.mtype.getColor());
-			g2.fillRoundRect(x, y, width, height, 10, 10);
-			g2.setColor(Color.BLACK);
-			String text = moves[0].move.toString();
-			g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
-			g2.setColor(moves[0].getPPColor());
-			String pp = moves[0].currentPP + " / " + moves[0].maxPP;
-			g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
-			if (moveNum == 0) {
-				g2.setColor(Color.WHITE);
-				g2.drawRoundRect(x, y, width, height, 10, 10);
-			}
-		}
-		
-		if (moves[1] != null) {
-			x += width + gp.tileSize;
-			g2.setColor(moves[1].move.mtype.getColor());
-			g2.fillRoundRect(x, y, width, height, 10, 10);
-			g2.setColor(Color.BLACK);
-			String text = moves[1].move.toString();
-			g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
-			g2.setColor(moves[1].getPPColor());
-			String pp = moves[1].currentPP + " / " + moves[1].maxPP;
-			g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
-			if (moveNum == 1) {
-				g2.setColor(Color.WHITE);
-				g2.drawRoundRect(x, y, width, height, 10, 10);
-			}
-		}
-		
-		if (moves[2] != null) {
-			x = gp.tileSize * 7;
-			y += height + 16;
-			g2.setColor(moves[2].move.mtype.getColor());
-			g2.fillRoundRect(x, y, width, height, 10, 10);
-			g2.setColor(Color.BLACK);
-			String text = moves[2].move.toString();
-			g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
-			g2.setColor(moves[2].getPPColor());
-			String pp = moves[2].currentPP + " / " + moves[2].maxPP;
-			g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
-			if (moveNum == 2) {
-				g2.setColor(Color.WHITE);
-				g2.drawRoundRect(x, y, width, height, 10, 10);
-			}
-		}
-		
-		if (moves[3] != null) {
-			x += width + gp.tileSize;
-			g2.setColor(moves[3].move.mtype.getColor());
-			g2.fillRoundRect(x, y, width, height, 10, 10);
-			g2.setColor(Color.BLACK);
-			String text = moves[3].move.toString();
-			g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
-			g2.setColor(moves[3].getPPColor());
-			String pp = moves[3].currentPP + " / " + moves[3].maxPP;
-			g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
-			if (moveNum == 3) {
-				g2.setColor(Color.WHITE);
-				g2.drawRoundRect(x, y, width, height, 10, 10);
-			}
+		for (int i = 0; i < moves.length; i++) {
+			if (moves[i] != null) {
+		        if (i == 2) {
+		            x = gp.tileSize * 7;
+		            y += height + 16;
+		        } else if (i != 0) {
+		            x += width + gp.tileSize;
+		        }
+
+		        g2.setColor(moves[i].move.mtype.getColor());
+		        g2.fillRoundRect(x, y, width, height, 10, 10);
+		        g2.setColor(Color.BLACK);
+		        String text = moves[i].move.toString();
+		        g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
+		        g2.setColor(moves[i].getPPColor());
+		        String pp = moves[i].currentPP + " / " + moves[i].maxPP;
+		        g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
+		        if (moveNum == i) {
+		            g2.setColor(Color.WHITE);
+		            g2.drawRoundRect(x, y, width, height, 10, 10);
+		            if (gp.keyH.wPressed) {
+		            	startTurn(moves[i].move, foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove());
+		            }
+		        }
+		    }
 		}
 	}
+	
+	public void startTurn(Move uMove, Move fMove) {
+		if (user.isFainted() || foe.isFainted()) return; // TODO: maybe let the move method handle this?
 
+		// Priority stuff
+		int uP, fP;
+		uP = uMove.priority;
+		fP = fMove.priority;
+		if (user.ability == Ability.PRANKSTER && uMove.cat == 2) ++uP;
+		if (foe.ability == Ability.PRANKSTER && fMove.cat == 2) ++fP;
+		
+		if (user.ability == Ability.STEALTHY_PREDATOR && user.impressive) ++uP;
+		if (foe.ability == Ability.STEALTHY_PREDATOR && foe.impressive) ++fP;
+		
+		uP = user.checkQuickClaw(uP);
+		fP = foe.checkQuickClaw(fP);
+		uP = user.checkCustap(uP);
+		fP = foe.checkCustap(fP);
+		
+		Pokemon faster = user.getFaster(foe, uP, fP);
+		
+		Pokemon slower = faster == user ? foe : user;
+		
+		boolean foeCanMove = true;
+		
+		if (faster == user) { // player Pokemon is faster
+			if (slower.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
+				slower = foe.trainer.swapOut(user, fMove, false);
+				foeCanMove = false;
+			}
+			
+			if (uMove == Move.SUCKER_PUNCH && fMove.cat == 2) uMove = Move.FAILED_SUCKER;
+			subState = USER_TURN;
+			faster.move(slower, uMove, true);
+			
+			// Check for swap (player)
+			if (user.trainer.hasValidMembers() && faster.vStatuses.contains(Status.SWITCHING)) {
+				//faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS); TODO: write switching out selection method
+			}
+			
+			if (fMove == Move.SUCKER_PUNCH) fMove = Move.FAILED_SUCKER; // TODO: make move method check if you're faster and if not make Sucker Punch fail (move() has an argument for this)
+	        if (!(foe.trainer != null && slower != foe.trainer.getCurrent()) && foeCanMove) {
+	        	slower.move(faster, fMove, false);
+	        	slower = foe.trainer.getCurrent();
+	        }
+	        
+	        // Check for swap (AI)
+	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && slower.vStatuses.contains(Status.SWITCHING)) {
+	        	foe.trainer.setCurrent(foe.trainer.swapOut(faster, null, slower.lastMoveUsed == Move.BATON_PASS)); 
+	        }
+//		} else { // enemy Pokemon is faster
+//			if (faster.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
+//				faster = foeTrainer.swapOut(slower, m2, false);
+//				foeCanMove = false;
+//			}
+//			if (m2 == Move.SUCKER_PUNCH && m1.cat == 2) m2 = Move.FAILED_SUCKER;
+//			if (foeCanMove) {
+//				faster.move(slower, m2, true);
+//				if (foeTrainer != null) faster = foeTrainer.getCurrent();
+//			}
+//			// Check for swap (AI)
+//	        if (foeTrainer != null && foeTrainer.hasValidMembers() && foeCanMove && faster.vStatuses.contains(Status.SWITCHING)) {
+//	        	faster = foeTrainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS);
+//	        }
+//			
+//			if (m1 == Move.SUCKER_PUNCH && m2.cat == 2) m1 = Move.FAILED_SUCKER;
+//	        if (slower == me.getCurrent()) slower.move(faster, m1, false);
+//	        // Check for swap
+//	        if (me.hasValidMembers() && slower.vStatuses.contains(Status.SWITCHING)) slower = getSwap(pl, slower.lastMoveUsed == Move.BATON_PASS);
+//		}
+//		if (foeTrainer != null) {
+//			foe = foeTrainer.getCurrent();
+//			showFoe();
+//		}
+//        if (hasAlive()) faster.endOfTurn(slower);
+//        if (hasAlive()) slower.endOfTurn(faster);
+//        if (hasAlive()) field.endOfTurn();
+//		updateBars(true);
+//		updateCurrent(pl);
+//		updateStatus();
+//		displayParty();
+//		while (foe.isFainted()) {
+//			if (foeTrainer != null && foeTrainer.getTeam() != null) {
+//				if (foeTrainer.hasNext()) {
+//					foe = foeTrainer.next(me.getCurrent());
+//					console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
+//					foe.swapIn(me.getCurrent(), true);
+//					updateField(field);
+//					updateFoe();
+//					updateCurrent(pl);
+//					updateBars(false);
+//					me.clearBattled();
+//					me.getCurrent().battled = true;
+//					
+//				} else {
+//					// Show the prompt with the specified text
+//					me.money += foeTrainer.getMoney();
+//					String message = foeTrainer.toString() + " was defeated!\nWon $" + foeTrainer.getMoney() + "!";
+//		            if (foeTrainer.getMoney() == 500 && me.badges < 8) {
+//		            	me.badges++;
+//		            	for (Pokemon p : me.team) {
+//		            		if (p != null) p.awardHappiness(15, true);
+//		            	}
+//		            	me.updateHappinessCaps();
+//		            }
+//		            if (foeTrainer.item != null) {
+//		            	me.bag.add(foeTrainer.item);
+//		            	message += "\nYou were given " + foeTrainer.item.toString() + "!";
+//		            }
+//		            if (foeTrainer.flagIndex != 0) {
+//		            	me.flags[foeTrainer.flagIndex] = true;
+//		            }
+//		            
+//		            if (me.copyBattle) copyToClipboard();
+//		            
+//		            JOptionPane.showMessageDialog(null, message);
+//
+//		            // Close the current Battle JFrame
+//		            endBattle();
+//		            break;
+//				}
+//			} else {
+//				if (me.copyBattle) copyToClipboard();
+//				JOptionPane.showMessageDialog(null, foe.name + " was defeated!");
+//				endBattle();
+//				break;
+//			}
+//		}
+//		console.writeln();
+//	    console.writeln("------------------------------");
+//	    updateField(field);
+//	    if (me.wiped()) {
+//			wipe(pl, gp);
+//		}
+	}
+
+}
 }

@@ -152,7 +152,7 @@ public class Trainer implements Serializable {
     	} else {
     		Pokemon.console.writeln(" was sent out!", false, 16);
     	}
-		current.swapIn(foe, me, true);
+		current.swapIn(foe, true);
 		return true;
 		
 	}
@@ -209,15 +209,15 @@ public class Trainer implements Serializable {
 		return getNext(foe);
 	}
 	
-	public Pokemon swapOut(Pokemon foe, Player me, Move m, boolean baton) {
+	public Pokemon swapOut(Pokemon foe, Move m, boolean baton) {
 		Pokemon result = getSwap(foe, m, baton);
 		if (result != current) {
 			int[] oldStats = current.statStages;
 			swap(current, result);
 			if (baton) result.statStages = oldStats;
-			result.swapIn(me.getCurrent(), me, true);
-			me.getCurrent().vStatuses.remove(Status.TRAPPED);
-			me.getCurrent().vStatuses.remove(Status.SPUN);
+			result.swapIn(foe, true);
+			foe.vStatuses.remove(Status.TRAPPED);
+			foe.vStatuses.remove(Status.SPUN);
 		}
 		return result;
 	}
@@ -264,5 +264,9 @@ public class Trainer implements Serializable {
 		Pokemon.console.write(current.nickname, true, 16);
 		Pokemon.console.writeln("!", false, 16);
 		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
+	}
+
+	public void setCurrent(Pokemon newCurrent) {
+		this.current = newCurrent;
 	}
 }
