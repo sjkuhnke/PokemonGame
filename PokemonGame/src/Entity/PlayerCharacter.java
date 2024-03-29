@@ -183,7 +183,6 @@ public class PlayerCharacter extends Entity {
 				}
 			}
 			if (p.steps == 202 && p.repel) {
-				keyH.pause();
 				p.repel = false;
 				if (p.bag.contains(0)) {
 					int option = JOptionPane.showOptionDialog(null,
@@ -198,7 +197,6 @@ public class PlayerCharacter extends Entity {
 				} else {
 					JOptionPane.showMessageDialog(null, "Repel's effects wore off.");
 				}
-				keyH.resume();
 			}
 			if (p.steps % 129 == 0) {
 				for (Pokemon p : p.team) {
@@ -303,7 +301,7 @@ public class PlayerCharacter extends Entity {
 			if (npcIndex != 999) {
 				Entity target = gp.npc[gp.currentMap][npcIndex];
 				if (target instanceof NPC_Nurse) {
-					interactNurse();
+					interactNurse(target);
 				} else if (target instanceof NPC_Clerk || target instanceof NPC_Market) {
 					interactClerk(target);
 				} else if (target instanceof NPC_Market) {
@@ -328,7 +326,6 @@ public class PlayerCharacter extends Entity {
 			if (p.hasMove(Move.SURF) && !p.surf) {
 				int result = gp.cChecker.checkTileType(this);
 				if (gp.tileM.getWaterTiles().contains(result)) {
-					keyH.pause();
 					int answer = JOptionPane.showOptionDialog(null,
 							"The water is a deep blue!\nDo you want to Surf?",
 				            "Surf?",
@@ -356,13 +353,11 @@ public class PlayerCharacter extends Entity {
 						}
 						
 					}
-					keyH.resume();
 				}
 			}
 			if (p.hasMove(Move.LAVA_SURF) && !p.lavasurf) {
 				int result = gp.cChecker.checkTileType(this);
 				if (gp.tileM.getLavaTiles().contains(result)) {
-					keyH.pause();
 					int answer = JOptionPane.showOptionDialog(null,
 							"The lava is a hot, bubbly red!\nDo you want to Lava Surf?",
 				            "Lava Surf?",
@@ -390,7 +385,6 @@ public class PlayerCharacter extends Entity {
 						}
 						
 					}
-					keyH.resume();
 				}
 			}
 			
@@ -424,7 +418,6 @@ public class PlayerCharacter extends Entity {
 	}
 
 	private void pickUpObject(int objIndex) {
-		keyH.pause();
 		Item item = gp.obj[gp.currentMap][objIndex].item;
 		int count = gp.obj[gp.currentMap][objIndex].count;
 		p.bag.add(item, count);
@@ -446,255 +439,10 @@ public class PlayerCharacter extends Entity {
 		gp.player.p.itemsCollected[gp.currentMap][objIndex] = true;
 		gp.obj[gp.currentMap][objIndex] = null;
 		
-		keyH.resume();
 		
 	}
 
-	private void showMenu() {
-		JPanel menu = new JPanel();
-	    menu.setLayout(new GridLayout(6, 1));
-	    
-	    JButton dex = new JGradientButton("Pokedex");
-	    dex.setBackground(new Color(128, 0, 128).darker());
-	    JButton party = new JGradientButton("Party");
-	    party.setBackground(Color.red.darker());
-	    JButton bag = new JGradientButton("Bag");
-	    bag.setBackground(Color.blue.darker());
-	    JButton save = new JGradientButton("Save");
-	    save.setBackground(Color.green.darker());
-	    JButton player = new JGradientButton("Player");
-	    player.setBackground(Color.yellow.darker());
-	    JButton map = new JGradientButton("Map");
-	    map.setBackground(new Color(255, 165, 0).darker());
-	    
-	    
-	    dex.addActionListener(e -> {
-	    	showDex();
-	    });
-	    party.addActionListener(e -> {
-	    	showParty();
-	    });
-	    bag.addActionListener(e -> {
-	    	showBag();
-	    });
-	    save.addActionListener(e -> {
-	    	saveGame();
-	    });
-	    player.addActionListener(e -> {
-	    	JPanel playerInfo = new JPanel();
-	    	playerInfo.setLayout(new GridLayout(6, 1));
-	    	
-	    	JLabel moneyLabel = new JLabel();
-	    	moneyLabel.setText("$" + p.money);
-	    	JLabel badgesLabel = new JLabel();
-	    	badgesLabel.setText(p.badges + " Badges");
-	    	
-	    	JTextField cheats = new JTextField();
-	    	cheats.addActionListener(f -> {
-	    		String code = cheats.getText();
-	    		
-	    		if (code.equals("RAR3")) {
-	    			p.bag.add(Item.RARE_CANDY);
-	    			p.bag.count[18] = 999;
-	    			SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("M1X3R")) {
-	    			p.random = !p.random;
-	    			String onoff = p.random ? "on!" : "off.";
-	    			JOptionPane.showMessageDialog(null, "Randomizer mode was turned " + onoff);
-	    			SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("GASTLY")) {
-	    			p.ghost = !p.ghost;
-	    			String onoff = p.ghost ? "on!" : "off.";
-	    			JOptionPane.showMessageDialog(null, "Walk-through-walls mode was turned " + onoff);
-	    			SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("R")) {
-	    			for (Pokemon p : p.team) {
-	    				if (p != null) {
-	    					for (int i = 0; i < p.movebank.length; i++) {
-	    						Node current = p.movebank[i];
-	    						while (current != null) {
-	    							Move[] options = Move.values();
-	    							Random random = new Random();
-	    							int index = random.nextInt(options.length);
-	    							current.data = options[index];
-	    							current = current.next;
-	    							
-	    						}
-	    					}
-	    				}
-	    			}
-	    			SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("LIGMA")) {
-	    			for (Pokemon pokemon : p.team) {
-	    				if (pokemon != null) pokemon.heal();
-	    			}
-	    			SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("BALLZ")) {
-	    			JPanel panel = p.displayTweaker();
-	    			JOptionPane.showMessageDialog(null, panel);
-	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("KANY3")) {
-	    			p.money = 1000000;
-	    			p.itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
-	    			SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("Ben")) {
-	    			p.catchPokemon(new Pokemon(238, 5, true, false));
-	    			SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.startsWith("anyi")) {
-	    			String[] parts = code.split(" ");
-	    		    if (parts.length >= 3) {
-	    		        try {
-	    		            int id = Integer.parseInt(parts[1]);
-	    		            int amt = Integer.parseInt(parts[2]);
-	    		            p.bag.add(Item.getItem(id), amt);
-	    		            SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		        } catch (NumberFormatException g) {
-	    		            // Handle invalid input (e.g., if the entered value is not a valid integer)
-	    		            JOptionPane.showMessageDialog(null, "Invalid item ID.");
-	    		        }
-	    		    }
-	    		} else if (code.startsWith("Shae")) {
-	    			String[] parts = code.split(" ");
-	    		    if (parts.length >= 3) {
-	    		        try {
-	    		            int id = Integer.parseInt(parts[1]);
-	    		            int level = Integer.parseInt(parts[2]);
-	    		            p.catchPokemon(new Pokemon(id, level, true, false));
-	    		            SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		        } catch (NumberFormatException g) {
-	    		            // Handle invalid input (e.g., if the entered value is not a valid integer)
-	    		        	JOptionPane.showMessageDialog(null, "Invalid Pokemon ID/Level.");
-	    		        }
-	    		    }
-	    		} else if (code.equals("UPDATE")) {
-	    			p.updateTrainers();
-	    			p.updateItems(gp.obj.length, gp.obj[1].length);
-	    			p.updateFlags();
-	    			for (Pokemon p : p.team) {
-	    				if (p != null) {
-	    					p.setBaseStats();
-	    					p.setAbility(p.abilitySlot);
-	    					p.setMoveBank();
-	    				}
-	    			}
-	    			for (Pokemon p : p.box1) {
-	    				if (p != null) {
-	    					p.setBaseStats();
-	    					p.setAbility(p.abilitySlot);
-	    					p.setMoveBank();
-	    				}
-	    			}
-	    			for (Pokemon p : p.box2) {
-	    				if (p != null) {
-	    					p.setBaseStats();
-	    					p.setAbility(p.abilitySlot);
-	    					p.setMoveBank();
-	    				}
-	    			}
-	    			for (Pokemon p : p.box3) {
-	    				if (p != null) {
-	    					p.setBaseStats();
-	    					p.setAbility(p.abilitySlot);
-	    					p.setMoveBank();
-	    				}
-	    			}
-	        	    
-	        	    JOptionPane.showMessageDialog(null, "Player successfully updated!");
-	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("HP")) {
-	    			String message = "";
-	    			for (Pokemon p : p.team) {
-	    				if (p != null) {
-	    	    			message += p.nickname + " : ";
-	    	    			message += p.determineHPType();
-	    	    			message += "\n";
-	    				}
-	    			}
-	    			
-	        	    
-	        	    JOptionPane.showMessageDialog(null, message);
-	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("nei")) {
-	    			for (int i = 0; i < p.pokedex.length; i++) {
-	    				p.pokedex[i] = 2;
-	    			}
-	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("GENN")) {
-	    			JPanel panel = Item.displayGenerator(p);
-	    			JOptionPane.showMessageDialog(null, panel);
-	        	    SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("ASH KETCHUP")) {
-	    			p.trainersBeat = new boolean[Main.trainers.length];
-	    			SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("exptrainer")) {
-	    			StringBuilder result = new StringBuilder();
-	    			for (boolean value : p.trainersBeat) {
-	    				result.append(value).append(",");
-	    			}
-	    			try {
-						FileWriter writer = new FileWriter("./docs/trainers.txt");
-						writer.write(result.toString());
-						writer.close();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-	    			SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("expitem")) {
-	    			StringBuilder result = new StringBuilder();
-
-	    		    for (boolean[] row : p.itemsCollected) {
-	    		        for (boolean value : row) {
-	    		            result.append(value).append(",");
-	    		        }
-	    		        result.append("\n");
-	    		    }
-
-	    			try {
-						FileWriter writer = new FileWriter("./docs/items.txt");
-						writer.write(result.toString());
-						writer.close();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-	    			SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		} else if (code.equals("EDGEMEDADDY")) {
-	    			p.bag.add(Item.EDGE_KIT);
-	    			SwingUtilities.getWindowAncestor(cheats).dispose();
-	    		}
-	    	});
-	    	
-	    	JCheckBox copyBattle = new JCheckBox("Copy Battle Chat");
-	    	copyBattle.setSelected(p.copyBattle);
-	    	copyBattle.addActionListener(f -> {
-	    		p.copyBattle = copyBattle.isSelected();
-	    	});
-	    	
-	    	playerInfo.add(moneyLabel);
-	    	playerInfo.add(badgesLabel);
-	    	playerInfo.add(cheats);
-	    	playerInfo.add(copyBattle);
-	    	
-	    	JOptionPane.showMessageDialog(null, playerInfo, "Player Info", JOptionPane.PLAIN_MESSAGE);
-	    });
-	    map.addActionListener(e -> {
-	    	SwingUtilities.getWindowAncestor(menu).dispose();
-	    	gp.openMap();
-	    	
-	    });
-	    
-	    menu.add(dex);
-	    menu.add(party);
-	    menu.add(bag);
-	    menu.add(save);
-	    menu.add(player);
-	    menu.add(map);
-	    
-	    JOptionPane.showMessageDialog(null, menu, "Menu", JOptionPane.PLAIN_MESSAGE);
-	    if (!gp.mapOpen) keyH.resume();
-	}
-
-	private void saveGame() {
-		keyH.pause();
+	public void saveGame() {
 		int option = JOptionPane.showOptionDialog(null,
 				"Would you like to save the game?",
 				"Confirm Save",
@@ -723,87 +471,56 @@ public class PlayerCharacter extends Entity {
             	JOptionPane.showMessageDialog(null, "Error writing object to file: " + ex.getMessage());
             }
 	    }
-	    keyH.resume();
+	}
+	
+	public void showPlayer() {
+		JPanel playerInfo = new JPanel();
+    	playerInfo.setLayout(new GridLayout(6, 1));
+    	
+    	JLabel moneyLabel = new JLabel();
+    	moneyLabel.setText("$" + p.getMoney());
+    	JLabel badgesLabel = new JLabel();
+    	badgesLabel.setText(p.badges + " Badges");
+    	
+    	JTextField cheats = new JTextField();
+    	cheats.addActionListener(e -> {
+    		String code = cheats.getText();
+    		runCode(code, cheats);
+    	});
+    	
+    	JCheckBox copyBattle = new JCheckBox("Copy Battle Chat");
+    	copyBattle.setSelected(p.copyBattle);
+    	copyBattle.addActionListener(f -> {
+    		p.copyBattle = copyBattle.isSelected();
+    	});
+    	
+    	playerInfo.add(moneyLabel);
+    	playerInfo.add(badgesLabel);
+    	playerInfo.add(cheats);
+    	playerInfo.add(copyBattle);
+    	
+    	JOptionPane.showMessageDialog(null, playerInfo, "Player Info", JOptionPane.PLAIN_MESSAGE);
 	}
 
-	private void interactNurse() {
-		if (keyH.wPressed) {
-			keyH.pause();
-			int option = JOptionPane.showOptionDialog(null,
-					"Welcome to the Pokemon Center!\nDo you want to rest your Pokemon?",
-					"Heal",
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.QUESTION_MESSAGE,
-		            null, null, null);
-		    if (option == JOptionPane.YES_OPTION) {
-		    	for (Pokemon member : p.team) {
-					if (member != null) member.heal();
-				}
-		    	JOptionPane.showMessageDialog(null, "Your Pokemon were healed to full health!");
-		    	// NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
-		    	if (gp.currentMap == 1) p.locations[1] = true;
-		    	if (gp.currentMap == 5) p.locations[2] = true;
-		    	if (gp.currentMap == 19) p.locations[3] = true;
-		    	if (gp.currentMap == 29) p.locations[4] = true;
-		    	if (gp.currentMap == 39) p.locations[6] = true;
-		    	if (gp.currentMap == 86) p.locations[8] = true;
-		    	if (gp.currentMap == 92) p.locations[5] = true;
-		    	if (gp.currentMap == 111) p.locations[7] = true;
-		    	if (gp.currentMap == 125) p.locations[9] = true;
-		    }
-		    keyH.resume();
-		}
+	private void interactNurse(Entity npc) {
+		// NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
+    	if (gp.currentMap == 1) p.locations[1] = true;
+    	if (gp.currentMap == 5) p.locations[2] = true;
+    	if (gp.currentMap == 19) p.locations[3] = true;
+    	if (gp.currentMap == 29) p.locations[4] = true;
+    	if (gp.currentMap == 39) p.locations[6] = true;
+    	if (gp.currentMap == 86) p.locations[8] = true;
+    	if (gp.currentMap == 92) p.locations[5] = true;
+    	if (gp.currentMap == 111) p.locations[7] = true;
+    	if (gp.currentMap == 125) p.locations[9] = true;
+    	
+		gp.keyH.wPressed = false;
+		gp.gameState = GamePanel.NURSE_STATE;
+		npc.speak(0);
 	}
 	
 	private void interactClerk(Entity npc) {
-//		keyH.pause();
-//		
-//		JPanel shopPanel = new JPanel();
-//	    int available = 8;
-//	    if (p.badges > 7) available += 2;
-//	    if (p.badges > 6) available ++;
-//	    if (p.badges > 3) available += 2;
-//	    if (p.badges > 2) available += 2;
-//	    if (p.badges > 1) available ++;
-//	    if (p.badges > 0) available += 2;
-//	    Item[] shopItems = new Item[] {Item.REPEL, Item.POKEBALL, Item.POTION, Item.ANTIDOTE, Item.AWAKENING, Item.BURN_HEAL, Item.PARALYZE_HEAL, Item.FREEZE_HEAL, // 0 badges
-//	    		Item.GREAT_BALL, Item.SUPER_POTION, // 1 badge
-//	    		Item.ELIXIR, // 2 badges
-//	    		Item.FULL_HEAL, Item.REVIVE, // 3 badges
-//	    		Item.ULTRA_BALL, Item.HYPER_POTION, // 4 badges
-//	    		Item.MAX_POTION, // 7 badges
-//	    		Item.FULL_RESTORE, Item.MAX_REVIVE}; // 8 badges
-//	    shopPanel.setLayout(new GridLayout((available + 1) / 2, 2));
-//	    for (int i = 0; i < available; i++) {
-//	    	JButton item = new JButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
-//	    	int index = i;
-//	    	item.addMouseListener(new MouseAdapter() {
-//			    @Override
-//			    public void mouseClicked(MouseEvent e) {
-//			    	if (SwingUtilities.isRightMouseButton(e)) { // Right-click
-//			    		if (p.buy(shopItems[index], 5)) {
-//		    	            JOptionPane.showMessageDialog(null, "Purchased 5 " + shopItems[index].toString() + " for $" + shopItems[index].getCost() * 5);
-//		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
-//		    	            interactClerk();
-//		    	        } else {
-//		    	            JOptionPane.showMessageDialog(null, "Not enough money!");
-//		    	        }
-//		    	    } else { // Left-click
-//		    	    	if (p.buy(shopItems[index])) {
-//		    	            JOptionPane.showMessageDialog(null, "Purchased 1 " + shopItems[index].toString() + " for $" + shopItems[index].getCost());
-//		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
-//		    	            interactClerk();
-//		    	        } else {
-//		    	            JOptionPane.showMessageDialog(null, "Not enough money!");
-//		    	        }
-//		    	    }
-//			    }
-//	    	});
-//	    	shopPanel.add(item);
-//	    }
-//		JOptionPane.showMessageDialog(null, shopPanel, "Money: $" + p.money, JOptionPane.PLAIN_MESSAGE);
-//		keyH.resume();
-		
+		gp.keyH.wPressed = false;
 		gp.gameState = GamePanel.SHOP_STATE;
 		npc.speak(0);
 	}
@@ -825,7 +542,6 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	private void interactBlock(NPC_Block npc) {
-		keyH.pause();
 		if (gp.currentMap == 32 && !p.flags[30]) {
 			p.flags[30] = true;
 			p.fish = true;
@@ -1200,7 +916,7 @@ public class PlayerCharacter extends Entity {
 			            	if (SwingUtilities.isLeftMouseButton(evt)) {
 			            		if (p.coins > 0) {
 			            			p.coins--;
-			            			p.money += 25;
+			            			p.setMoney(p.getMoney() + 25);
 			            		} else {
 			            			JOptionPane.showMessageDialog(null, "Not enough coins!");
 			            		}
@@ -1210,7 +926,7 @@ public class PlayerCharacter extends Entity {
 			                        int coins = Integer.parseInt(input);
 			                        if (p.coins > coins && coins > 0) {
 			                        	p.coins -= coins;
-			                        	p.money += coins * 25;
+			                        	p.setMoney(coins * 25);
 			                        } else {
 			                        	JOptionPane.showMessageDialog(null, "Not enough coins!");
 			                        }
@@ -1220,10 +936,10 @@ public class PlayerCharacter extends Entity {
 			                    }
 			            	}
 			            	SwingUtilities.getWindowAncestor(panel).dispose();
-			            	showPrizeMenu(panel, p.coins + " coins   $" + p.money);
+			            	showPrizeMenu(panel, p.coins + " coins   $" + p.getMoney());
 			            }
 					});
-					showPrizeMenu(panel, p.coins + " coins   $" + p.money);
+					showPrizeMenu(panel, p.coins + " coins   $" + p.getMoney());
 				}
 		} if (gp.currentMap == 129 && worldY / gp.tileSize <= 41) {
 			JPanel shopPanel = new JPanel();
@@ -1378,7 +1094,6 @@ public class PlayerCharacter extends Entity {
 			p.bag.add(Item.HM07);
 			p.flags[26] = true;
 		}
-	    keyH.resume();
 	}
 	
 	private void showPokemonList(int max) {
@@ -1510,13 +1225,13 @@ public class PlayerCharacter extends Entity {
 		            	JPanel teamMemberPanel = p.team[index].showSummary(p, true, partyMasterPanel, null);
 			            JButton swapButton = new JButton("Swap");
 				        swapButton.addActionListener(f -> {
-				            if (p.team[index] != null && p.team[index] != p.current) {
+				            if (p.team[index] != null && p.team[index] != p.getCurrent()) {
 				                p.swap(p.team[index], index); // Call the swap method in the Player class
 				                JOptionPane.getRootFrame().dispose();
 				                showParty(); // Update the party display after swapping
 				            }
 				        });
-			            if (p.team[index] != p.current && !p.team[index].isFainted()) teamMemberPanel.add(swapButton);
+			            if (p.team[index] != p.getCurrent() && !p.team[index].isFainted()) teamMemberPanel.add(swapButton);
 			            JOptionPane.showMessageDialog(null, teamMemberPanel, "Party member details", JOptionPane.PLAIN_MESSAGE);
 		            }
 		        });
@@ -1525,10 +1240,9 @@ public class PlayerCharacter extends Entity {
 	    }
 
 	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
-	    keyH.resume();
 	}
 	
-	private void showBag() {
+	public void showBag() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		
@@ -1556,7 +1270,6 @@ public class PlayerCharacter extends Entity {
 		mainPanel.add(tabbedPane, BorderLayout.CENTER);
 
 		JOptionPane.showMessageDialog(null, mainPanel, "Bag", JOptionPane.PLAIN_MESSAGE);
-		keyH.resume();
 	}
 	
 	private JPanel createPocketPanel(Player p, int pocket) {
@@ -1838,8 +1551,8 @@ public class PlayerCharacter extends Entity {
 					        	    		        JOptionPane.showMessageDialog(null, p.team[index].nickname + " evolved into " + result.name + "!");
 					        	    		        result.exp = p.team[index].exp;
 					        	    		        p.team[index] = result;
-					        	    		        if (index == 0) p.current = result;
-					        	                    result.checkMove(p);
+					        	    		        if (index == 0) p.setCurrent(result);
+					        	    		        result.checkMove(p);
 					        	                    p.pokedex[result.id] = 2;
 					        	    		        p.bag.remove(i.getItem());
 					        	    			} else {
@@ -2363,6 +2076,7 @@ public class PlayerCharacter extends Entity {
 	}
 
 	public void showDex() {
+		gp.removePanel();
 	    JPanel dexPanel = new JPanel();
 	    dexPanel.setLayout(new GridLayout(0, 5));
 
@@ -2413,12 +2127,10 @@ public class PlayerCharacter extends Entity {
 	    panel.add(container);
 	    panel.add(closeButton);
 	    
-	    gp.removePanel();
 	    gp.addPanel(panel, true);
 	}
 	
 	private void interactMarket() {
-		keyH.pause();
 		
 		JPanel shopPanel = new JPanel();
 	    Item[] shopItems = new Item[1];
@@ -2468,31 +2180,8 @@ public class PlayerCharacter extends Entity {
 	    	shopPanel.add(itemPanel);
 	    	if (curItem.isTM() && p.bag.contains(curItem.getID())) shopPanel.remove(itemPanel);
 	    }
-		JOptionPane.showMessageDialog(null, shopPanel, "Money: $" + p.money, JOptionPane.PLAIN_MESSAGE);
-		keyH.resume();
+		JOptionPane.showMessageDialog(null, shopPanel, "Money: $" + p.getMoney(), JOptionPane.PLAIN_MESSAGE);
 	}
-
-
-//	public JGradientButton setUpPartyButton(int j) {
-//		JGradientButton party = new JGradientButton("");
-//		party.setText("");
-//        if (p.team[j] != null) {
-//        	if (p.team[j].isFainted()) {
-//        		party = new JGradientButton("");
-//            	party.setBackground(new Color(200, 0, 0));
-//            	party.setSolid(true);
-//            } else {
-//            	party.setBackground(p.team[j].type1.getColor(), p.team[j].type2 == null ? null : p.team[j].type2.getColor());
-//            }
-//            party.setText(p.team[j].nickname + "  lv " + p.team[j].getLevel());
-//            party.setHorizontalAlignment(SwingConstants.CENTER);
-//            party.setFont(new Font("Tahoma", Font.PLAIN, 11));
-//            party.setVisible(true);
-//        } else {
-//            party.setVisible(false);
-//        }
-//        return party;
-//	}
 	
 	private void useRareCandies(Pokemon pokemon, int numCandies, Item item) {
 		boolean evolved = false;
@@ -2506,7 +2195,6 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	private void interactCutTree(int i) {
-		keyH.pause();
 		if (p.hasMove(Move.CUT)) {
 			int option = JOptionPane.showOptionDialog(null,
 					"This tree looks like it can be cut down!\nDo you want to cut it?",
@@ -2523,12 +2211,10 @@ public class PlayerCharacter extends Entity {
 		} else {
 			JOptionPane.showMessageDialog(null, "This tree looks like it can be cut down!");
 		}
-		keyH.resume();
 		
 	}
 	
 	private void interactRockSmash(int i) {
-		keyH.pause();
 		if (p.hasMove(Move.ROCK_SMASH)) {
 			int option = JOptionPane.showOptionDialog(null,
 					"This rock looks like it can be broken!\nDo you want to use Rock Smash?",
@@ -2542,7 +2228,6 @@ public class PlayerCharacter extends Entity {
 		} else {
 			JOptionPane.showMessageDialog(null, "This rock looks like it can be broken!");
 		}
-		keyH.resume();
 		
 	}
 	
@@ -2554,13 +2239,10 @@ public class PlayerCharacter extends Entity {
 				gp.iTile[gp.currentMap][i].worldX = temp.worldX;
 				gp.iTile[gp.currentMap][i].worldY = temp.worldY;
 			} else {
-				keyH.pause();
 				JOptionPane.showMessageDialog(null, "This gap looks like it can be crossed!");
 				cross = false;
-				keyH.resume();
 			}
 		} else {
-			keyH.pause();
 			if (p.hasMove(Move.VINE_CROSS)) {
 				int option = JOptionPane.showOptionDialog(null,
 						"This gap can be crossed!\nDo you want to use Vine Cross?",
@@ -2579,13 +2261,11 @@ public class PlayerCharacter extends Entity {
 				JOptionPane.showMessageDialog(null, "This gap looks like it can be crossed!");
 				cross = false;
 			}
-			keyH.resume();
 		}
 		
 	}
 	
 	private void interactPit(int i) {
-		keyH.pause();
 		if (p.hasMove(Move.SLOW_FALL)) {
 			int option = JOptionPane.showOptionDialog(null,
 					"This pit can be traversed!\nWould you like to use Slow Fall?",
@@ -2600,12 +2280,10 @@ public class PlayerCharacter extends Entity {
 		} else {
 			JOptionPane.showMessageDialog(null, "This pit looks deep!\nI can't even see the bottom!");
 		}
-		keyH.resume();
 		
 	}
 	
 	private void interactWhirlpool(int i) {
-		keyH.pause();
 		if (p.hasMove(Move.WHIRLPOOL)) {
 			int option = JOptionPane.showOptionDialog(null,
 					"This water vortex can be crossed!\nWould you like to use Whirlpool?",
@@ -2632,12 +2310,10 @@ public class PlayerCharacter extends Entity {
 		} else {
 			JOptionPane.showMessageDialog(null, "This water vortex can be crossed!");
 		}
-		keyH.resume();
 		
 	}
 	
 	private void interactRockClimb(int i) {
-		keyH.pause();
 		if (p.hasMove(Move.ROCK_CLIMB)) {
 			int option = JOptionPane.showOptionDialog(null,
 					"This wall can be scaled!\nWould you like to use Rock Climb?",
@@ -2654,7 +2330,6 @@ public class PlayerCharacter extends Entity {
 		} else {
 			JOptionPane.showMessageDialog(null, "This wall looks like it can be scaled!");
 		}
-		keyH.resume();
 		
 	}
 	
@@ -2719,5 +2394,176 @@ public class PlayerCharacter extends Entity {
 	    	result[i] = shopItems[i];
 	    }
 	    return result;
+	}
+	
+	private void runCode(String code, JTextField cheats) {
+		if (code.equals("RAR3")) {
+			p.bag.add(Item.RARE_CANDY);
+			p.bag.count[18] = 999;
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("M1X3R")) {
+			p.random = !p.random;
+			String onoff = p.random ? "on!" : "off.";
+			JOptionPane.showMessageDialog(null, "Randomizer mode was turned " + onoff);
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("GASTLY")) {
+			p.ghost = !p.ghost;
+			String onoff = p.ghost ? "on!" : "off.";
+			JOptionPane.showMessageDialog(null, "Walk-through-walls mode was turned " + onoff);
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("R")) {
+			for (Pokemon p : p.team) {
+				if (p != null) {
+					for (int i = 0; i < p.movebank.length; i++) {
+						Node current = p.movebank[i];
+						while (current != null) {
+							Move[] options = Move.values();
+							Random random = new Random();
+							int index = random.nextInt(options.length);
+							current.data = options[index];
+							current = current.next;
+							
+						}
+					}
+				}
+			}
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("LIGMA")) {
+			for (Pokemon pokemon : p.team) {
+				if (pokemon != null) pokemon.heal();
+			}
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("BALLZ")) {
+			JPanel panel = p.displayTweaker();
+			JOptionPane.showMessageDialog(null, panel);
+    	    SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("KANY3")) {
+			p.setMoney(1000000);
+			p.itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("Ben")) {
+			p.catchPokemon(new Pokemon(238, 5, true, false));
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.startsWith("anyi")) {
+			String[] parts = code.split(" ");
+		    if (parts.length >= 3) {
+		        try {
+		            int id = Integer.parseInt(parts[1]);
+		            int amt = Integer.parseInt(parts[2]);
+		            p.bag.add(Item.getItem(id), amt);
+		            SwingUtilities.getWindowAncestor(cheats).dispose();
+		        } catch (NumberFormatException g) {
+		            // Handle invalid input (e.g., if the entered value is not a valid integer)
+		            JOptionPane.showMessageDialog(null, "Invalid item ID.");
+		        }
+		    }
+		} else if (code.startsWith("Shae")) {
+			String[] parts = code.split(" ");
+		    if (parts.length >= 3) {
+		        try {
+		            int id = Integer.parseInt(parts[1]);
+		            int level = Integer.parseInt(parts[2]);
+		            p.catchPokemon(new Pokemon(id, level, true, false));
+		            SwingUtilities.getWindowAncestor(cheats).dispose();
+		        } catch (NumberFormatException g) {
+		            // Handle invalid input (e.g., if the entered value is not a valid integer)
+		        	JOptionPane.showMessageDialog(null, "Invalid Pokemon ID/Level.");
+		        }
+		    }
+		} else if (code.equals("UPDATE")) {
+			p.updateTrainers();
+			p.updateItems(gp.obj.length, gp.obj[1].length);
+			p.updateFlags();
+			for (Pokemon p : p.team) {
+				if (p != null) {
+					p.setBaseStats();
+					p.setAbility(p.abilitySlot);
+					p.setMoveBank();
+				}
+			}
+			for (Pokemon p : p.box1) {
+				if (p != null) {
+					p.setBaseStats();
+					p.setAbility(p.abilitySlot);
+					p.setMoveBank();
+				}
+			}
+			for (Pokemon p : p.box2) {
+				if (p != null) {
+					p.setBaseStats();
+					p.setAbility(p.abilitySlot);
+					p.setMoveBank();
+				}
+			}
+			for (Pokemon p : p.box3) {
+				if (p != null) {
+					p.setBaseStats();
+					p.setAbility(p.abilitySlot);
+					p.setMoveBank();
+				}
+			}
+    	    
+    	    JOptionPane.showMessageDialog(null, "Player successfully updated!");
+    	    SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("HP")) {
+			String message = "";
+			for (Pokemon p : p.team) {
+				if (p != null) {
+	    			message += p.nickname + " : ";
+	    			message += p.determineHPType();
+	    			message += "\n";
+				}
+			}
+			
+    	    
+    	    JOptionPane.showMessageDialog(null, message);
+    	    SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("nei")) {
+			for (int i = 0; i < p.pokedex.length; i++) {
+				p.pokedex[i] = 2;
+			}
+    	    SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("GENN")) {
+			JPanel panel = Item.displayGenerator(p);
+			JOptionPane.showMessageDialog(null, panel);
+    	    SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("ASH KETCHUP")) {
+			p.trainersBeat = new boolean[Main.trainers.length];
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("exptrainer")) {
+			StringBuilder result = new StringBuilder();
+			for (boolean value : p.trainersBeat) {
+				result.append(value).append(",");
+			}
+			try {
+				FileWriter writer = new FileWriter("./docs/trainers.txt");
+				writer.write(result.toString());
+				writer.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("expitem")) {
+			StringBuilder result = new StringBuilder();
+
+		    for (boolean[] row : p.itemsCollected) {
+		        for (boolean value : row) {
+		            result.append(value).append(",");
+		        }
+		        result.append("\n");
+		    }
+
+			try {
+				FileWriter writer = new FileWriter("./docs/items.txt");
+				writer.write(result.toString());
+				writer.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("EDGEMEDADDY")) {
+			p.bag.add(Item.EDGE_KIT);
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		}
 	}
 }

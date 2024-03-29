@@ -30,15 +30,13 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import Overworld.GamePanel;
 import Overworld.Main;
 
-public class Player implements Serializable {
+public class Player extends Trainer implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2851052666892205583L;
-	public Pokemon[] team;
+	
 	public Pokemon[] box1, box2, box3;
-	public int money;
-	public Pokemon current;
 	private int numBattled;
 	private int posX;
 	private int posY;
@@ -69,12 +67,11 @@ public class Player implements Serializable {
 	public int winStreak;
 	
 	public Player(GamePanel gp) {
-		team = new Pokemon[6];
+		super(true);
 		box1 = new Pokemon[30];
 		box2 = new Pokemon[30];
 		box3 = new Pokemon[30];
-		money = 100;
-		current = null;
+
 		bag = new Bag();
 		posX = 79;
 		posY = 46;
@@ -84,10 +81,6 @@ public class Player implements Serializable {
 		bag.add(Item.CALCULATOR);
 	}
 	
-	public Pokemon getCurrent() {
-		return this.current;
-	}
-	
 	public void catchPokemon(Pokemon p) {
 	    if (p.isFainted()) return;
 	    boolean hasNull = false;
@@ -95,6 +88,7 @@ public class Player implements Serializable {
 	    pokedex[p.id] = 2;
 	    p.clearVolatile();
 	    p.consumeItem();
+	    p.trainer = this;
 	    for (int i = 0; i < team.length; i++) {
 	        if (team[i] == null) {
 	            hasNull = true;
@@ -150,6 +144,7 @@ public class Player implements Serializable {
 		if (lead.vStatuses.contains(Status.WISH)) team[index].vStatuses.add(Status.WISH);
 		lead.clearVolatile();
 		this.current = pokemon;
+		
 		this.team[0] = pokemon;
 		this.team[index] = lead;
 		if (!this.current.battled) {
@@ -160,7 +155,6 @@ public class Player implements Serializable {
 		Pokemon.console.write(current.nickname, true, 16);
 		Pokemon.console.writeln("!", false, 16);
 		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
-		
 	}
 	
 	public int getBattled() {
@@ -176,10 +170,6 @@ public class Player implements Serializable {
 			if (p != null) p.battled = false;
 		}
 		numBattled = 1;
-	}
-
-	public Pokemon[] getTeam() {
-		return team;
 	}
 
 	public int getPosX() {
@@ -239,23 +229,10 @@ public class Player implements Serializable {
 		bag.add(item, amt);
 		return true;
 	}
-
-	public boolean hasValidMembers() {
-		boolean result = false;
-		for (int i = 0; i < 6; i++) {
-			if (this.team[i] != null) {
-				if (this.team[i] != current && !this.team[i].isFainted()) {
-					result = true;
-					break;
-				}
-			}
-		}
-		return result;
-	}
 	
 	public boolean wiped() {
 		boolean result = true;
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < team.length; i++) {
 			if (this.team[i] != null && !this.team[i].isFainted()) {
 				result = false;
 				break;
@@ -633,6 +610,16 @@ public class Player implements Serializable {
 			if (p != null && !p.isSelected()) return false;
 		}
 		return true;
+	}
+	
+	public void heal() {
+		for (Pokemon member : team) {
+			if (member != null) member.heal();
+		}
+	}
+
+	public void setCurrent(Pokemon newCurrent) {
+		this.current = newCurrent;
 	}
 
 }

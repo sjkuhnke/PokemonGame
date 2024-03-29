@@ -72,11 +72,10 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	public TileManager tileM = new TileManager(this);
 	
 	int FPS = 60;
-	private volatile boolean inBattle;
-	public boolean mapOpen = false;
 	public int ticks;
 	
 	public UI ui = new UI(this);
+	public BattleUI battleUI = new BattleUI(this);
 	
 	public int gameState;
 	public static final int PLAY_STATE = 1;
@@ -85,6 +84,12 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	public static final int MENU_STATE = 4;
 	public static final int TRANSITION_STATE = 5;
 	public static final int SHOP_STATE = 6;
+	public static final int NURSE_STATE = 7;
+	public static final int PARTY_STATE = 8;
+	public static final int BAG_STATE = 9;
+	public static final int SAVE_STATE = 10;
+	public static final int PLAYER_STATE = 11;
+	public static final int START_BATTLE_STATE = 12;
 
 	public static Map<Entity, Integer> volatileTrainers = new HashMap<>();
 	
@@ -109,25 +114,22 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		double nextDrawTime = System.nanoTime() + drawInterval;
 		
 		while (gameThread != null) {
-			if (!inBattle) {
-				update();
+			update();
+			
+			repaint();
+			
+			try {
+				double remainingTime = nextDrawTime - System.nanoTime();
+				remainingTime /= 1000000;
 				
-				repaint();
+				if (remainingTime < 0) remainingTime = 0;
 				
-				try {
-					double remainingTime = nextDrawTime - System.nanoTime();
-					remainingTime /= 1000000;
-					
-					if (remainingTime < 0) remainingTime = 0;
-					
-					Thread.sleep((long)remainingTime);
-					
-					nextDrawTime += drawInterval;
-					
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				Thread.sleep((long)remainingTime);
 				
+				nextDrawTime += drawInterval;
+				
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -136,8 +138,8 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		if (gameState == PLAY_STATE) {
 			player.update();
 		}
-		
 	}
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
@@ -166,44 +168,44 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		
 		ui.draw(g2);
 		
+		if (gameState == BATTLE_STATE) {
+			battleUI.draw(g2);
+		}
+		
 		g2.dispose();
 	}
 	
-	public Battle startBattle(int trainer) {
+	public void startBattle(int trainer) {
 	    // Create the Battle instance and set the window listener to save on close
-		if (trainer == -1) return null;
-		if (player.p.trainersBeat[trainer]) return null;
-		if (player.p.wiped()) return null;
-		inBattle = true;
-		keyH.pause();
+		if (trainer == -1) return;
+		if (player.p.trainersBeat[trainer]) return;
+		if (player.p.wiped()) return;
 		setSlots();
 		
 		if (Main.trainers[trainer].getMoney() == 500) {
-			for (Pokemon member : player.p.team) {
-				if (member != null) member.heal();
-			}
+			player.p.heal();
 		}
 		
-		Battle panel = new Battle(player, Main.trainers[trainer], trainer, this, -1, -1, -1, null);
+		gameState = START_BATTLE_STATE;
+		battleUI.user = player.p.getCurrent();
+		battleUI.foe = Main.trainers[trainer].getCurrent();
+		
+		//Battle panel = new Battle(player, Main.trainers[trainer], trainer, this, -1, -1, -1, null);
 		//panel.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); JFrame exclusive
         //panel.setBattleCloseListener(this);
-		removePanel();
-		addPanel(panel, true);
-		
-        panel.setVisible(true);
+//		removePanel();
+//		addPanel(battle, true);
         
-        return panel;
+        //return panel;
 	}
 	
 	public void startBattle(int trainer, int id) {
-		Battle frame = startBattle(trainer);
-		if (frame != null) frame.staticPokemonID = id;
+		//Battle frame = startBattle(trainer);
+		//if (frame != null) frame.staticPokemonID = id;
 	}
 	
 	public void startWild(int area, int x, int y, String type) {
 	    // Create the Battle instance and set the window listener to save on close
-		inBattle = true;
-		keyH.pause();
 		setSlots();
 		
 		Battle panel = new Battle(player, null, -1, this, area, x, y, type);
@@ -216,8 +218,6 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	
 	public void startFish(int area, int x, int y) {
 	    // Create the Battle instance and set the window listener to save on close
-		inBattle = true;
-		keyH.pause();
 		setSlots();
 		
 		Battle panel = new Battle(player, null, -1, this, area, x, y, null);
@@ -230,16 +230,14 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	
 	public void openBox(NPC_PC target) {
 	    // Create the Battle instance and set the window listener to save on close
-	    keyH.pause();
 
+		keyH.resetKeys();
 	    PBox box = new PBox(this, keyH, target.isGauntlet());
 	    removePanel();
 	    addPanel(box, true);
 	}
 	
 	public void openMap() {
-		keyH.pause();
-		mapOpen = true;
 		
 		PMap map = new PMap(this);
 		removePanel();
@@ -285,7 +283,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 				}
 			}
 		}
-		player.p.current = player.p.team[0];
+		player.p.setCurrent(player.p.team[0]);;
 		
 		Pokemon.field = new Field();
 		
@@ -352,8 +350,6 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	    Main.window.revalidate();
 	    Main.window.repaint();
 		
-		inBattle = false;
-		keyH.resume();
 	}
 	
 	@Override
@@ -393,12 +389,10 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 				}
 			}
 		}
-		player.p.current = player.p.team[0];
+		player.p.setCurrent(player.p.team[0]);
 		
 		Pokemon.field = new Field();
 		
-		inBattle = false;
-		keyH.resume();
 	}
 
 	public void setupGame() {
@@ -411,6 +405,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		Pokemon.console = new TextPane();
 		Pokemon.console.setScrollPane(new JScrollPane());
 		Pokemon.field = new Field();
+		Pokemon.gamePanel = this;
 		checkSpin = true;
 	}
 	

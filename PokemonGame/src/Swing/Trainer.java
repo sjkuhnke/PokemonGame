@@ -1,11 +1,16 @@
 package Swing;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Trainer {
-	private String name;
-	private Pokemon[] team;
-	private int money;
+public class Trainer implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	String name;
+	public Pokemon[] team;
+	int money;
 	Item item;
 	int flagIndex;
 	Pokemon current;
@@ -49,18 +54,26 @@ public class Trainer {
 		this.item = item;
 		this.flagIndex = index;
 		current = team[0];
+		
+		for (Pokemon p : team) {
+			p.setTrainer(this);
+		}
 	}
 	
-	public Trainer(boolean placeholder) {
-		if (placeholder) {
+	public Trainer(boolean player) {
+		if (player) {
 			name = "[SELECT]";
-			this.team = null;
-			this.money = 0;
+			team = new Pokemon[6];
+			this.money = 100;
 		}
 	}
 
 	public Pokemon[] getTeam() {
 		return team;
+	}
+	
+	public void setMoney(int amt) {
+		this.money = amt;
 	}
 	
 	@Override // implementation

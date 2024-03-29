@@ -15,9 +15,8 @@ public class NPC_Pokemon extends Entity {
 		trainer = t;
 		this.id = id;
 		
-		getImage(id);
-		
 		this.spin = spin;
+		getImage(id);
 		if (spin) turnRandom();
 		
 	}
@@ -34,20 +33,26 @@ public class NPC_Pokemon extends Entity {
 	
 	public void turnRandom() {
 		int direction = new Random().nextInt(4);
-		switch (direction) {
-		case 0:
-			this.direction = "down";
-			break;
-		case 1:
-			this.direction = "left";
-			break;
-		case 2:
-			this.direction = "up";
-			break;
-		case 3:
-			this.direction = "right";
-			break;
+		boolean visible = new Random().nextBoolean();
+		if (visible) {
+			switch (direction) {
+			case 0:
+				this.direction = "down";
+				break;
+			case 1:
+				this.direction = "left";
+				break;
+			case 2:
+				this.direction = "up";
+				break;
+			case 3:
+				this.direction = "right";
+				break;
+			}
+		} else {
+			this.direction = "down2";
 		}
+		
 	}
 
 }

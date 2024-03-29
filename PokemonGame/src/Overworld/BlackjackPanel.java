@@ -488,7 +488,6 @@ public class BlackjackPanel extends JPanel {
 	    Main.window.revalidate();
 	    Main.window.repaint();
 		
-		gp.keyH.resume();
 	}
 	
 	private void saveGame() {
