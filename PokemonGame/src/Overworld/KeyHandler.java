@@ -97,6 +97,53 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_W) {
 			wPressed = true;
 		}
+		if (gp.battleUI.subState == BattleUI.IDLE_STATE) {
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+				if (gp.battleUI.commandNum > 1) {
+					gp.battleUI.commandNum -= 2;
+				}
+			}
+			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				if (gp.battleUI.commandNum < 2) {
+					gp.battleUI.commandNum += 2;
+				}
+			}
+			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+				if (gp.battleUI.commandNum % 2 == 1) {
+					gp.battleUI.commandNum--;
+				}
+			}
+			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+				if (gp.battleUI.commandNum % 2 == 0) {
+					gp.battleUI.commandNum++;
+				}
+			}
+		}
+		if (gp.battleUI.subState == BattleUI.MOVE_SELECTION_STATE) {
+			if (code == KeyEvent.VK_S) {
+				gp.battleUI.subState = BattleUI.IDLE_STATE;
+			}
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+				if (gp.battleUI.moveNum > 1) {
+					gp.battleUI.moveNum -= 2;
+				}
+			}
+			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				if (gp.battleUI.moveNum < 2) {
+					gp.battleUI.moveNum += 2;
+				}
+			}
+			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+				if (gp.battleUI.moveNum % 2 == 1) {
+					gp.battleUI.moveNum--;
+				}
+			}
+			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+				if (gp.battleUI.moveNum % 2 == 0) {
+					gp.battleUI.moveNum++;
+				}
+			}
+		}
 	}
 	
 	private void dialogueState(int code) {
