@@ -141,8 +141,8 @@ public class Battle extends JPanel {
 		
 		Pokemon fasterInit = me.getCurrent().getFaster(foe, 0, 0);
 		Pokemon slowerInit = fasterInit == me.getCurrent() ? foe : me.getCurrent();
-		fasterInit.swapIn(slowerInit, me, true);
-		slowerInit.swapIn(fasterInit, me, true);
+		fasterInit.swapIn(slowerInit, true);
+		slowerInit.swapIn(fasterInit, true);
 		
 		updateField(field);
 		displayParty();
@@ -197,7 +197,7 @@ public class Battle extends JPanel {
 		        		if (me.getCurrent().movesetEmpty()) move = Move.STRUGGLE;
 		        		
 			        	if (foe.trainerOwned()) {
-			        		turn(me.getCurrent(), foe, move, foe.bestMove(me.getCurrent(), false, foeTrainer), pl, gp);
+			        		turn(me.getCurrent(), foe, move, foe.bestMove(me.getCurrent(), false), pl, gp);
 			        	} else {
 			        		turn(me.getCurrent(), foe, move, foe.randomMove(), pl, gp);
 			        	}
@@ -403,7 +403,6 @@ public class Battle extends JPanel {
 		        
 		        if (randomValue <= modifiedCatchRate) {
 		            //me.catchPokemon(new Pokemon(foe.id, foe.getLevel(), true, false));
-		        	foe.playerOwned = true;
 		        	me.catchPokemon(foe);
 		        	updateCurrent(pl);
 					updateStatus();
@@ -416,12 +415,12 @@ public class Battle extends JPanel {
 		        } else {
 		            console.writeln("Oh no! " + foe.name + " broke free!");
 		            if (foe.trainerOwned()) {
-		            	foe.move(me.getCurrent(),foe.bestMove(me.getCurrent(), false, foeTrainer), me, me.getTeam(), foeTrainer, false);
+		            	foe.move(me.getCurrent(),foe.bestMove(me.getCurrent(), false), false);
 		            } else {
-		            	foe.move(me.getCurrent(),foe.randomMove(), me, null, null, false);
+		            	foe.move(me.getCurrent(),foe.randomMove(), false);
 		            }
-					foe.endOfTurn(me.getCurrent(), me);
-					me.getCurrent().endOfTurn(foe, me);
+					foe.endOfTurn(me.getCurrent());
+					me.getCurrent().endOfTurn(foe);
 					me.getCurrent().impressive = false;
 					field.endOfTurn();
 					updateCurrent(pl);
@@ -475,10 +474,10 @@ public class Battle extends JPanel {
 						return;
 					}
 					console.writeln("\nCouldn't escape!");
-	        		foe.move(me.getCurrent(),foe.randomMove(), me, null, null, false);
+	        		foe.move(me.getCurrent(),foe.randomMove(), false);
 	        	}
-				foe.endOfTurn(me.getCurrent(), me);
-				me.getCurrent().endOfTurn(foe, me);
+				foe.endOfTurn(me.getCurrent());
+				me.getCurrent().endOfTurn(foe);
 				field.endOfTurn();
 			}
 			updateCurrent(pl);
@@ -770,7 +769,7 @@ public class Battle extends JPanel {
 				}
 				boolean swapping = me.getCurrent().vStatuses.contains(Status.SWITCHING);
 				
-				Move move = foe.trainerOwned() && !me.getCurrent().isFainted() ? foe.bestMove(me.current, false, foeTrainer) : foe.randomMove();
+				Move move = foe.trainerOwned() && !me.getCurrent().isFainted() ? foe.bestMove(me.current, false) : foe.randomMove();
 				Pokemon oldCurrent = me.getCurrent().clone();
 				
 				boolean foeCanMove = true;
@@ -778,21 +777,21 @@ public class Battle extends JPanel {
     				Pokemon faster = me.getCurrent().getFaster(foe, 0, 0);
     				if (me.getCurrent() == faster) {
     					me.swap(me.team[index], index);
-    					me.getCurrent().swapIn(foe, me, true);
+    					me.getCurrent().swapIn(foe, true);
     					
-    					foe = foeTrainer.swapOut(oldCurrent, me, move, false);
+    					foe = foeTrainer.swapOut(oldCurrent, move, false);
         				foeCanMove = false;
     				} else {
-    					foe = foeTrainer.swapOut(oldCurrent, me, move, false);
+    					foe = foeTrainer.swapOut(oldCurrent, move, false);
         				foeCanMove = false;
         				
         				me.swap(me.team[index], index);
-        				me.getCurrent().swapIn(foe, me, true);
+        				me.getCurrent().swapIn(foe, true);
     				}
     				
     			} else {
     				me.swap(me.team[index], index);
-    				me.getCurrent().swapIn(foe, me, true);
+    				me.getCurrent().swapIn(foe, true);
     			}
 				updateField(field);
 				foe.vStatuses.remove(Status.TRAPPED);
@@ -809,7 +808,7 @@ public class Battle extends JPanel {
 				if (!me.team[index].isFainted() && !swapping) {
 	        		if (foeTrainer != null) {
 	        			if (foeCanMove) {
-	        				foe.move(me.getCurrent(), move, me, foeTrainer.getTeam(), foeTrainer, false);
+	        				foe.move(me.getCurrent(), move, false);
 	        				foe = foeTrainer.getCurrent();
 	        				if (foeTrainer != null && foeTrainer.hasValidMembers() && foe.vStatuses.contains(Status.SWITCHING)) {
 		        	        	foeTrainer.swapRandom(me.getCurrent(), me, false, foe.lastMoveUsed == Move.BATON_PASS);
@@ -817,10 +816,10 @@ public class Battle extends JPanel {
 		        	        }
 	        			}
 	        		} else {
-	        			foe.move(me.getCurrent(), move, me, null, null, false);
+	        			foe.move(me.getCurrent(), move, false);
 		        	}
-					foe.endOfTurn(me.getCurrent(), me);
-					me.getCurrent().endOfTurn(foe, me);
+					foe.endOfTurn(me.getCurrent());
+					me.getCurrent().endOfTurn(foe);
 					field.endOfTurn();
 				}
 				updateCurrent(pl);
@@ -834,7 +833,7 @@ public class Battle extends JPanel {
 						if (foeTrainer.hasNext()) {
 							foe = foeTrainer.next(me.getCurrent());
 							console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
-							foe.swapIn(me.getCurrent(), me, true);
+							foe.swapIn(me.getCurrent(), true);
 							updateField(field);
 							updateFoe();
 							updateCurrent(pl);
@@ -1043,7 +1042,7 @@ public class Battle extends JPanel {
 		
 		Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
 		
-		if (p.playerOwned) scaledImage = flipHorizontal(scaledImage);
+		if (p.playerOwned()) scaledImage = flipHorizontal(scaledImage);
 		
 		ImageIcon scaledIcon = new ImageIcon(scaledImage);
 		
@@ -1347,14 +1346,12 @@ public class Battle extends JPanel {
 		
 		if (faster == p1) { // player Pokemon is faster
 			if (slower.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
-				slower = foeTrainer.swapOut(me.getCurrent(), me, m2, false);
+				slower = foeTrainer.swapOut(me.getCurrent(), m2, false);
 				foeCanMove = false;
 			}
 			
-			Pokemon[] team = me.getTeam();
-			Pokemon[] enemyTeam = foeTrainer == null ? null : foeTrainer.getTeam();
 			if (m1 == Move.SUCKER_PUNCH && m2.cat == 2) m1 = Move.FAILED_SUCKER;
-			faster.move(slower, m1, me, team, foeTrainer, true);
+			faster.move(slower, m1, true);
 //			updateBars(true);
 //			JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
 			
@@ -1367,7 +1364,7 @@ public class Battle extends JPanel {
 			
 			if (m2 == Move.SUCKER_PUNCH && m1.cat == 2) m2 = Move.FAILED_SUCKER;
 	        if (!(foeTrainer != null && slower != foeTrainer.getCurrent()) && foeCanMove) {
-	        	slower.move(faster, m2, me, enemyTeam, foeTrainer, false);
+	        	slower.move(faster, m2, false);
 	        	if (foeTrainer != null) slower = foeTrainer.getCurrent();
 //	        	updateBars(true);
 //				JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
@@ -1375,29 +1372,27 @@ public class Battle extends JPanel {
 	        
 	        // Check for swap (AI)
 	        if (foeTrainer != null && foeTrainer.hasValidMembers() && foeCanMove && slower.vStatuses.contains(Status.SWITCHING)) {
-	        	foeTrainer.current = foeTrainer.swapOut(faster, me, null, slower.lastMoveUsed == Move.BATON_PASS);
+	        	foeTrainer.current = foeTrainer.swapOut(faster, null, slower.lastMoveUsed == Move.BATON_PASS);
 //	        	updateBars(true);
 //				JOptionPane.showMessageDialog(null, "here to wait until user clicks 'ok'");
 	        }
 		} else { // enemy Pokemon is faster
 			if (faster.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
-				faster = foeTrainer.swapOut(slower, me, m2, false);
+				faster = foeTrainer.swapOut(slower, m2, false);
 				foeCanMove = false;
 			}
-			Pokemon[] enemyTeam = me.getTeam();
-			Pokemon[] team = foeTrainer == null ? null : foeTrainer.getTeam();
 			if (m2 == Move.SUCKER_PUNCH && m1.cat == 2) m2 = Move.FAILED_SUCKER;
 			if (foeCanMove) {
-				faster.move(slower, m2, me, team, foeTrainer, true);
+				faster.move(slower, m2, true);
 				if (foeTrainer != null) faster = foeTrainer.getCurrent();
 			}
 			// Check for swap (AI)
 	        if (foeTrainer != null && foeTrainer.hasValidMembers() && foeCanMove && faster.vStatuses.contains(Status.SWITCHING)) {
-	        	faster = foeTrainer.swapOut(slower, me, null, faster.lastMoveUsed == Move.BATON_PASS);
+	        	faster = foeTrainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS);
 	        }
 			
 			if (m1 == Move.SUCKER_PUNCH && m2.cat == 2) m1 = Move.FAILED_SUCKER;
-	        if (slower == me.getCurrent()) slower.move(faster, m1, me, enemyTeam, foeTrainer, false);
+	        if (slower == me.getCurrent()) slower.move(faster, m1, false);
 	        // Check for swap
 	        if (me.hasValidMembers() && slower.vStatuses.contains(Status.SWITCHING)) slower = getSwap(pl, slower.lastMoveUsed == Move.BATON_PASS);
 		}
@@ -1405,8 +1400,8 @@ public class Battle extends JPanel {
 			foe = foeTrainer.getCurrent();
 			showFoe();
 		}
-        if (hasAlive()) faster.endOfTurn(slower, me);
-        if (hasAlive()) slower.endOfTurn(faster, me);
+        if (hasAlive()) faster.endOfTurn(slower);
+        if (hasAlive()) slower.endOfTurn(faster);
         if (hasAlive()) field.endOfTurn();
 		updateBars(true);
 		updateCurrent(pl);
@@ -1417,7 +1412,7 @@ public class Battle extends JPanel {
 				if (foeTrainer.hasNext()) {
 					foe = foeTrainer.next(me.getCurrent());
 					console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
-					foe.swapIn(me.getCurrent(), me, true);
+					foe.swapIn(me.getCurrent(), true);
 					updateField(field);
 					updateFoe();
 					updateCurrent(pl);
@@ -1550,7 +1545,7 @@ public class Battle extends JPanel {
 			            		} else {
 			            			if (baton) me.team[index].statStages = me.getCurrent().statStages;
 					                me.swap(me.team[index], index);
-					                me.getCurrent().swapIn(foe, me, true);
+					                me.getCurrent().swapIn(foe, true);
 					                updateField(field);
 					                foe.vStatuses.remove(Status.TRAPPED);
 					                foe.vStatuses.remove(Status.SPUN);

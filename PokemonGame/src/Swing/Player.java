@@ -274,7 +274,7 @@ public class Player extends Trainer implements Serializable {
 		
 		Pokemon.console.write(current.nickname, true, 16);
 		Pokemon.console.writeln(" was dragged out!", false, 16);
-		current.swapIn(foe, this, true);
+		current.swapIn(foe, true);
 		return true;
 		
 	}
@@ -616,10 +616,6 @@ public class Player extends Trainer implements Serializable {
 		for (Pokemon member : team) {
 			if (member != null) member.heal();
 		}
-	}
-
-	public void setCurrent(Pokemon newCurrent) {
-		this.current = newCurrent;
 	}
 
 }
