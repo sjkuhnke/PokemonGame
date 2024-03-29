@@ -87,9 +87,13 @@ public class Main {
             
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./saves/" + fileName));
 	        gamePanel.player.p = (Player) ois.readObject();
-	        for (Pokemon p : gamePanel.player.p.team) {
-	            if (p != null) p.clearVolatile();
-	        }
+	        if (gamePanel.player.p.team == null) {
+	        	gamePanel.player.p.team = new Pokemon[6];
+	        } else {
+	        	for (Pokemon p : gamePanel.player.p.getTeam()) {
+		            if (p != null) p.clearVolatile();
+		        }
+	        }       
 	        gamePanel.player.worldX = gamePanel.player.p.getPosX();
 	        gamePanel.player.worldY = gamePanel.player.p.getPosY();
 	        gamePanel.currentMap = gamePanel.player.p.currentMap;

@@ -552,7 +552,6 @@ public class EventHandler {
 			if (hit(107,53,63)) teleport(107, 66, 50,true); // F
 			if (hit(107,47,63)) {
 				if (!gp.player.p.flags[19] || !gp.player.p.flags[20]) {
-					gp.keyH.pause();
 					teleport(107, 42, 57,true);
 					if (gp.player.p.grustCount < 10) {
 						JOptionPane.showMessageDialog(null, "This portal seems to be jammed\nby the Ghosts everywhere...\nThere are " + (10 - gp.player.p.grustCount) + " remaining!");
@@ -561,7 +560,6 @@ public class EventHandler {
 					} else {
 						JOptionPane.showMessageDialog(null, "This portal seems to be jammed\nby Team Nuke... Rick said\nthat they're at the bottom\nof Electric Tunnel!");
 					}
-					gp.keyH.resume();
 				} else {
 					teleport(107, 24, 48,true); // G
 				}

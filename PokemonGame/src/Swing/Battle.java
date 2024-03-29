@@ -404,7 +404,6 @@ public class Battle extends JPanel {
 		        if (randomValue <= modifiedCatchRate) {
 		            //me.catchPokemon(new Pokemon(foe.id, foe.getLevel(), true, false));
 		        	foe.playerOwned = true;
-		        	foe.trainer = 1;
 		        	me.catchPokemon(foe);
 		        	updateCurrent(pl);
 					updateStatus();
@@ -472,7 +471,6 @@ public class Battle extends JPanel {
 					if (chance >= Math.random()) {
 						if (me.copyBattle) copyToClipboard();
 						JOptionPane.showMessageDialog(null, "Got away safely!");
-						gp.keyH.resume();
 						endBattle();
 						return;
 					}

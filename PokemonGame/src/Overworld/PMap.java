@@ -455,8 +455,8 @@ public class PMap extends JPanel {
 	    closeButton.setBounds(665, 11, 70, 27);
 	    closeButton.addActionListener(e -> {
 	    	gp.removePanel();
-			gp.mapOpen = false;
-			gp.addGamePanel();
+	    	gp.ui.subState = 0;
+	    	gp.addGamePanel();
     	});
 	    add(closeButton);
 	    
@@ -512,7 +512,7 @@ public class PMap extends JPanel {
 				gp.tileM.tile[i].collision = true;
 			}
 			gp.removePanel();
-			gp.mapOpen = false;
+			gp.ui.subState = 0;
 			gp.addGamePanel();
 		}
 	}
