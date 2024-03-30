@@ -10,14 +10,10 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Random;
 
-import javax.swing.JOptionPane;
 
-import Entity.PlayerCharacter;
 import Swing.Ability;
 import Swing.AbstractUI;
-import Swing.Item;
 import Swing.Move;
 import Swing.Moveslot;
 import Swing.Pokemon;
@@ -94,6 +90,10 @@ public class BattleUI extends AbstractUI {
 			showSendOutText(user);
 		}
 		
+		if (subState == USER_TURN) {
+			drawUserTurn();
+		}
+		
 		// Dialogue States
 		if (dialogueState == DIALOGUE_STATE) {
 			drawDialogueState();
@@ -109,10 +109,6 @@ public class BattleUI extends AbstractUI {
 		
 		if (subState == MOVE_SELECTION_STATE) {
 			drawMoveSelectionScreen();
-		}
-		
-		if (subState == USER_TURN) {
-			drawUserTurn();
 		}
 		
 //		String print = dialogueState == DIALOGUE_WAITING_STATE ? "Dialogue Waiting" : "Dialogue";
@@ -228,11 +224,11 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void drawFoeSprite() {
-		g2.drawImage(getSprite(foe), 505, 70, null);
+		g2.drawImage(getSprite(foe), 515, 70, null);
 	}
 	
 	private void drawUserSprite() {
-		g2.drawImage(getSprite(user), 70, 235, null);
+		g2.drawImage(getSprite(user), 80, 235, null);
 	}
 
 	private void drawHPBar(Pokemon p) {

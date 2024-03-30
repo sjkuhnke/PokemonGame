@@ -617,5 +617,9 @@ public class Player extends Trainer implements Serializable {
 			if (member != null) member.heal();
 		}
 	}
+	
+	public String toString() {
+		return getClass().getName() + "@" + Integer.toHexString(hashCode());
+	}
 
 }
