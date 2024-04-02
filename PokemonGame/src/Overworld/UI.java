@@ -244,13 +244,6 @@ public class UI extends AbstractUI{
 		
 	}
 	
-	public int getTextX(String text) {
-	    FontMetrics metrics = g2.getFontMetrics(); // Assuming g2 is your Graphics2D object
-	    int length = metrics.stringWidth(text); // Calculate the width of the text
-	    int x = (gp.screenWidth - length) / 2; // Calculate the x-coordinate for centering
-	    return x;
-	}
-	
 	public BufferedImage setup(String imageName, int scale) {
 	    BufferedImage image = null;
 	    

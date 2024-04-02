@@ -11,6 +11,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import Swing.Pokemon.Task;
+
 
 public class TextPane extends JTextPane {
     /**
@@ -86,7 +88,8 @@ public class TextPane extends JTextPane {
 	}
 
 	public void writeAbility(Pokemon p) {
-		writeln("[" + p.nickname + "'s " + p.ability + "]:", false, 14);
+		Task t = Pokemon.addTask(Task.ABILITY, "[" + p.nickname + "'s " + p.ability + "]:");
+		t.setAbility(p);
 	}
 	
 	public void writeAbility(Pokemon p, boolean newLine) {
