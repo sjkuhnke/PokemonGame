@@ -4,40 +4,49 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.util.ArrayList;
 
 import Swing.Ability;
 import Swing.AbstractUI;
+import Swing.Field;
 import Swing.Move;
 import Swing.Moveslot;
 import Swing.Pokemon;
+import Swing.Pokemon.Task;
 import Swing.Status;
 
 public class BattleUI extends AbstractUI {
 	
 	public Pokemon user;
 	public Pokemon foe;
+	public int userHP;
+	public int foeHP;
 	
 	public int subState = 0;
 	public int dialogueState = DIALOGUE_FREE_STATE;
 	public int moveNum = 0;
 	private int dialogueCounter = 0;
+	private int abilityCounter = 0;
+	private Pokemon currentAbility;
+	public Task currentTask;
+	public ArrayList<Task> tasks;
+	private Field field;
 
 	public static final int STARTING_STATE = -1;
 	public static final int IDLE_STATE = 0;
-	public static final int USER_TURN = 1;
-	public static final int FOE_TURN = 2;
+	public static final int TURN_STATE = 1;
+	public static final int PRE_TURN_STATE_START = 2;
 	public static final int FOE_SENDING_IN_START = 3;
 	public static final int USER_SENDING_IN_START = 4;
 	public static final int FOE_SENDING_IN = 5;
 	public static final int USER_SENDING_IN = 6;
 	public static final int MOVE_SELECTION_STATE = 7;
+	public static final int PRE_TURN_STATE = 8;
 	
 	public static final int DIALOGUE_WAITING_STATE = 0;
 	public static final int DIALOGUE_STATE = 1;
@@ -48,6 +57,7 @@ public class BattleUI extends AbstractUI {
 		
 		currentDialogue = "";
 		commandNum = 0;
+		tasks = new ArrayList<>();
 		
 		try {
 			InputStream is = getClass().getResourceAsStream("/font/marumonica.ttf");
@@ -59,12 +69,17 @@ public class BattleUI extends AbstractUI {
 	
 	@Override
 	public void showMessage(String message) {
-		if (dialogueState == DIALOGUE_FREE_STATE) dialogueState = DIALOGUE_WAITING_STATE;
-		currentDialogue = message;
-		dialogueCounter++;
-		if (dialogueCounter >= 25) {
-			dialogueCounter = 0;
-			dialogueState = DIALOGUE_STATE;
+		if (dialogueState != DIALOGUE_STATE) {
+			if (dialogueState == DIALOGUE_FREE_STATE) {
+				dialogueState = DIALOGUE_WAITING_STATE;
+				currentDialogue = message;
+			} else {
+				dialogueCounter++;
+				if (dialogueCounter >= 25) {
+					dialogueCounter = 0;
+					dialogueState = DIALOGUE_STATE;
+				}
+			}
 		}
 	}
 
@@ -90,13 +105,24 @@ public class BattleUI extends AbstractUI {
 			showSendOutText(user);
 		}
 		
-		if (subState == USER_TURN) {
-			drawUserTurn();
+		if (subState == PRE_TURN_STATE_START) {
+			preTurnStateStart();
 		}
 		
-		// Dialogue States
-		if (dialogueState == DIALOGUE_STATE) {
-			drawDialogueState();
+		if (subState == TURN_STATE) {
+			drawTurn();
+		}
+		
+		if (!tasks.isEmpty() && currentTask == null) {
+			currentTask = tasks.remove(0);
+		}
+		
+		if (currentTask != null) {
+			drawTask();
+		}
+		
+		if (currentAbility != null) {
+			drawAbility();
 		}
 		
 		if (subState != IDLE_STATE && subState != MOVE_SELECTION_STATE) {
@@ -111,38 +137,94 @@ public class BattleUI extends AbstractUI {
 			drawMoveSelectionScreen();
 		}
 		
+		// Dialogue States
+		if (dialogueState == DIALOGUE_STATE) {
+			drawDialogueState();
+		}
+		
 //		String print = dialogueState == DIALOGUE_WAITING_STATE ? "Dialogue Waiting" : "Dialogue";
 //		System.out.println(print);
+		
+		//System.out.println(tasks.toString());
 	}
 	
-	private void drawUserTurn() {
-		drawFoe();
-		drawUser();
+	private void drawAbility() {
+		if (currentTask.type == Task.ABILITY) abilityCounter++;
+		
+		int x = gp.screenWidth - (4 * gp.tileSize);
+		int y = gp.screenHeight - (6 * gp.tileSize);
+		int width = gp.tileSize * 4;
+		int height = gp.tileSize * 2;
+		
+		drawSubWindow(x, y, width, height);
+		x += gp.tileSize * 2;
+		y += gp.tileSize * 3 / 4;
+		String topText = currentAbility.nickname + "'s";
+		g2.drawString(topText, this.getCenterAlignedTextX(topText, x), y);
+		y += gp.tileSize * 3 / 4;
+		String bottomText = currentAbility.ability.toString() + ":";
+		g2.drawString(bottomText, this.getCenterAlignedTextX(bottomText, x), y);
+		
+		if (abilityCounter == 25) {
+			abilityCounter = 0;
+			currentTask = null;
+		}
+	}
+
+	private void preTurnStateStart() {
+		drawFoe(foe.currentHP);
+		drawUser(user.currentHP);
+		if (currentTask == null && tasks.isEmpty()) subState = IDLE_STATE;
+	}
+
+	private void drawTask() {
+		if (currentTask.type == Task.TEXT) {
+			showMessage(currentTask.message);
+		} else if (currentTask.type == Task.DAMAGE) {
+			currentDialogue = currentTask.message;
+			if (currentTask.damaged == user) {
+				if (userHP > currentTask.finish) userHP--;
+				if (userHP < currentTask.finish) userHP++;
+				if (userHP == currentTask.finish) currentTask = null;
+			} else if (currentTask.damaged == foe) {
+				if (foeHP > currentTask.finish) foeHP--;
+				if (foeHP < currentTask.finish) foeHP++;
+				if (foeHP == currentTask.finish) currentTask = null;
+			}
+		} else if (currentTask.type == Task.ABILITY) {
+			currentAbility = currentTask.ability;
+		}
+	}
+
+	private void drawTurn() {
+		drawFoe(foeHP);
+		drawUser(userHP);
+		if (currentTask == null && tasks.isEmpty()) subState = IDLE_STATE;
 	}
 	
 	private void showSendOutText(Pokemon p) {
-		showMessage(p.trainer.getName() + " sends out " + p.nickname + "!");
+		currentDialogue = p.trainer.getName() + " sends out " + p.nickname + "!";
 	}
 	
 	private void drawIdleScreen() {
-		drawFoe();
-		drawUser();
+		drawFoe(foe.currentHP);
+		drawUser(user.currentHP);
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);
 		drawActionScreen(user);
 	}
 
-	private void drawUser() {
+	private void drawUser(int hp) {
 		drawHPImage(user);
-		drawHPBar(user);
+		drawHPBar(user, hp);
 		drawNameLabel(user);
 		drawUserSprite();
-		drawUserHP();	
+		drawUserHP(hp);	
 	}
 
-	private void drawFoe() {
+	private void drawFoe(int hp) {
 		drawHPImage(foe);
-		drawHPBar(foe);
+		drawHPBar(foe, hp);
 		drawNameLabel(foe);
 		drawFoeSprite();
 	}
@@ -155,10 +237,10 @@ public class BattleUI extends AbstractUI {
 		}		
 	}
 
-	private void drawUserHP() {
+	private void drawUserHP(int hp) {
 		g2.setColor(Color.BLACK);
 		g2.setFont(g2.getFont().deriveFont(24F));
-		String hpLabel = user.getCurrentHP() + " / " + user.getStat(0);
+		String hpLabel = hp + " / " + user.getStat(0);
 		g2.drawString(hpLabel, this.getCenterAlignedTextX(hpLabel, 490), 362);
 		
 	}
@@ -169,21 +251,20 @@ public class BattleUI extends AbstractUI {
 		int width = gp.tileSize / 2;
 		int height = gp.tileSize / 2;
 		g2.setColor(Color.WHITE);
-		g2.drawPolygon(new int[] {x, (x + width), (x + width / 2)}, new int[] {y, y, y + height}, 3);
+		g2.fillPolygon(new int[] {x, (x + width), (x + width / 2)}, new int[] {y, y, y + height}, 3);
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			switch(subState) {
 			case STARTING_STATE:
+				field = new Field();
+			    Pokemon.field = field;
 				subState = FOE_SENDING_IN_START;
-				break;
-			case FOE_SENDING_IN_START:
-				subState = USER_SENDING_IN_START;
-				break;
-			case USER_SENDING_IN_START:
-				subState = IDLE_STATE;
 				break;
 			}
 			dialogueState = DIALOGUE_FREE_STATE;
+			currentDialogue = "";
+			currentTask = null;
+			currentAbility = null;
 		}
 		
 	}
@@ -197,11 +278,15 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void drawUserStart() {
-		drawFoe();
+		drawFoe(foe.currentHP);
 		drawUserPokeball();
 		if (counter >= 100) {
 			counter = 0;
-			subState = IDLE_STATE;
+			Pokemon fasterInit = user.getFaster(foe, 0, 0);
+			Pokemon slowerInit = fasterInit == user ? foe : user;
+			fasterInit.swapIn(slowerInit, true);
+			slowerInit.swapIn(fasterInit, true);
+			subState = PRE_TURN_STATE_START;
 		}
 	}
 
@@ -210,7 +295,7 @@ public class BattleUI extends AbstractUI {
 		if (counter < 50) {
 			g2.drawImage(setup("/items/pokeball", 2), 570, 188, null);
 		} else {
-			drawFoe();
+			drawFoe(foe.currentHP);
 		}
 	}
 	
@@ -219,7 +304,7 @@ public class BattleUI extends AbstractUI {
 		if (counter < 50) {
 			g2.drawImage(setup("/items/pokeball", 2), 133, 348, null);
 		} else {
-			drawUser();
+			drawUser(user.currentHP);
 		}
 	}
 	
@@ -231,8 +316,8 @@ public class BattleUI extends AbstractUI {
 		g2.drawImage(getSprite(user), 80, 235, null);
 	}
 
-	private void drawHPBar(Pokemon p) {
-		double hpRatio = p.currentHP / p.getStat(0);
+	private void drawHPBar(Pokemon p, double amt) {
+		double hpRatio = amt / p.getStat(0);
 		g2.setColor(getHPBarColor(hpRatio));
 		int x;
 		int y;
@@ -290,13 +375,23 @@ public class BattleUI extends AbstractUI {
 		switch (subState) {
 		case STARTING_STATE: return "Starting State";
 		case IDLE_STATE: return "Idle State";
-		case USER_TURN: return "User Turn State";
-		case FOE_TURN: return "Foe Turn State";
+		case TURN_STATE: return "Turn State";
 		case FOE_SENDING_IN_START: return "Foe Sending In Start State";
 		case USER_SENDING_IN_START: return "User Sending In Start State";
 		case FOE_SENDING_IN: return "Foe Sending In State";
 		case USER_SENDING_IN: return "User Sending In State";
 		default: return "Not added to getStateName() yet";
+		}
+		
+	}
+	
+	@SuppressWarnings("unused") // DEBUG
+	private String getDialogueStateName() {
+		switch (dialogueState) {
+		case DIALOGUE_FREE_STATE: return "Dialogue Free State";
+		case DIALOGUE_WAITING_STATE: return "Dialogue Waiting State";
+		case DIALOGUE_STATE: return "Dialogue State";
+		default: return "Not added to getDialogueStateName() yet";
 		}
 		
 	}
@@ -323,20 +418,6 @@ public class BattleUI extends AbstractUI {
 	    graphics.dispose();
 
 	    return bufferedImage;
-	}
-	
-	private int getRightAlignedTextX(String text, int rightX) {
-		FontMetrics metrics = g2.getFontMetrics(); // Assuming g2 is your Graphics2D object
-	    int length = metrics.stringWidth(text); // Calculate the width of the text
-	    int x = rightX - length; // Calculate the x-coordinate for positioning
-	    return x;
-	}
-	
-	private int getCenterAlignedTextX(String text, int centerX) {
-		FontMetrics metrics = g2.getFontMetrics(); // Assuming g2 is your Graphics2D object
-	    int length = metrics.stringWidth(text); // Calculate the width of the text
-	    int x = centerX - length / 2; // Calculate the x-coordinate for center alignment
-	    return x;
 	}
 	
 	private void drawActionScreen(Pokemon p) {
@@ -395,8 +476,8 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void drawMoveSelectionScreen() {
-		drawFoe();
-		drawUser();
+		drawFoe(foe.currentHP);
+		drawUser(user.currentHP);
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);
 		drawMoves();
@@ -448,6 +529,8 @@ public class BattleUI extends AbstractUI {
 		            g2.setColor(Color.WHITE);
 		            g2.drawRoundRect(x, y, width, height, 10, 10);
 		            if (gp.keyH.wPressed) {
+		            	userHP = user.currentHP;
+		            	foeHP = foe.currentHP;
 		            	startTurn(moves[i].move, foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove());
 		            }
 		        }
@@ -458,6 +541,8 @@ public class BattleUI extends AbstractUI {
 	public void startTurn(Move uMove, Move fMove) {
 		if (user.isFainted() || foe.isFainted()) return; // TODO: maybe let the move method handle this?
 
+//		Pokemon.addTask(Task.TEXT, "Message 1");
+//		Pokemon.addTask(Task.TEXT, "Message 2");
 		// Priority stuff
 		int uP, fP;
 		uP = uMove.priority;
@@ -486,7 +571,6 @@ public class BattleUI extends AbstractUI {
 			}
 			
 			if (uMove == Move.SUCKER_PUNCH && fMove.cat == 2) uMove = Move.FAILED_SUCKER;
-			subState = USER_TURN;
 			faster.move(slower, uMove, true);
 			
 			// Check for swap (player)
@@ -504,37 +588,34 @@ public class BattleUI extends AbstractUI {
 	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && slower.vStatuses.contains(Status.SWITCHING)) {
 	        	foe.trainer.setCurrent(foe.trainer.swapOut(faster, null, slower.lastMoveUsed == Move.BATON_PASS)); 
 	        }
-//		} else { // enemy Pokemon is faster
-//			if (faster.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
-//				faster = foeTrainer.swapOut(slower, m2, false);
-//				foeCanMove = false;
-//			}
-//			if (m2 == Move.SUCKER_PUNCH && m1.cat == 2) m2 = Move.FAILED_SUCKER;
-//			if (foeCanMove) {
-//				faster.move(slower, m2, true);
-//				if (foeTrainer != null) faster = foeTrainer.getCurrent();
-//			}
-//			// Check for swap (AI)
-//	        if (foeTrainer != null && foeTrainer.hasValidMembers() && foeCanMove && faster.vStatuses.contains(Status.SWITCHING)) {
-//	        	faster = foeTrainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS);
-//	        }
-//			
-//			if (m1 == Move.SUCKER_PUNCH && m2.cat == 2) m1 = Move.FAILED_SUCKER;
-//	        if (slower == me.getCurrent()) slower.move(faster, m1, false);
-//	        // Check for swap
-//	        if (me.hasValidMembers() && slower.vStatuses.contains(Status.SWITCHING)) slower = getSwap(pl, slower.lastMoveUsed == Move.BATON_PASS);
-//		}
-//		if (foeTrainer != null) {
-//			foe = foeTrainer.getCurrent();
-//			showFoe();
-//		}
-//        if (hasAlive()) faster.endOfTurn(slower);
-//        if (hasAlive()) slower.endOfTurn(faster);
-//        if (hasAlive()) field.endOfTurn();
-//		updateBars(true);
-//		updateCurrent(pl);
-//		updateStatus();
-//		displayParty();
+		} else { // enemy Pokemon is faster
+			if (faster.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
+				faster = foe.trainer.swapOut(slower, fMove, false);
+				foeCanMove = false;
+			}
+			if (fMove == Move.SUCKER_PUNCH && fMove.cat == 2) fMove = Move.FAILED_SUCKER; // TODO: make move method check if you're faster and if not make Sucker Punch fail (move() has an argument for this)
+			if (foeCanMove) {
+				faster.move(slower, fMove, true);
+				if (foe.trainer != null) faster = foe.trainer.getCurrent();
+			}
+			// Check for swap (AI)
+	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && faster.vStatuses.contains(Status.SWITCHING)) {
+	        	faster = foe.trainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS);
+	        }
+			
+	        if (slower == user.trainer.getCurrent()) slower.move(faster, uMove, false);
+	        // Check for swap
+	        if (user.trainer.hasValidMembers() && faster.vStatuses.contains(Status.SWITCHING)) {
+				//faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS); TODO: write switching out selection method
+			}
+		}
+	    subState = TURN_STATE;
+		if (foe.trainer != null) {
+			foe = foe.trainer.getCurrent();
+		}
+//		if (hasAlive()) faster.endOfTurn(slower);
+//		if (hasAlive()) slower.endOfTurn(faster);
+//		if (hasAlive()) field.endOfTurn();
 //		while (foe.isFainted()) {
 //			if (foeTrainer != null && foeTrainer.getTeam() != null) {
 //				if (foeTrainer.hasNext()) {
@@ -589,6 +670,7 @@ public class BattleUI extends AbstractUI {
 //			wipe(pl, gp);
 //		}
 	}
+	
+	
 
-}
 }

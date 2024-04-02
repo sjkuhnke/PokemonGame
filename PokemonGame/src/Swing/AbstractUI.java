@@ -98,4 +98,18 @@ public abstract class AbstractUI {
 	    
 	    return image;
 	}
+	
+	public int getRightAlignedTextX(String text, int rightX) {
+		FontMetrics metrics = g2.getFontMetrics(); // Assuming g2 is your Graphics2D object
+	    int length = metrics.stringWidth(text); // Calculate the width of the text
+	    int x = rightX - length; // Calculate the x-coordinate for positioning
+	    return x;
+	}
+	
+	public int getCenterAlignedTextX(String text, int centerX) {
+		FontMetrics metrics = g2.getFontMetrics(); // Assuming g2 is your Graphics2D object
+	    int length = metrics.stringWidth(text); // Calculate the width of the text
+	    int x = centerX - length / 2; // Calculate the x-coordinate for center alignment
+	    return x;
+	}
 }
