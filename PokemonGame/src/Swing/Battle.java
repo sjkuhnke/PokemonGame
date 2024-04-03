@@ -856,8 +856,8 @@ public class Battle extends JPanel {
 				            if (foeTrainer.item != null) {
 				            	me.bag.add(foeTrainer.item);
 				            }
-				            if (foeTrainer.flagIndex != 0) {
-				            	me.flags[foeTrainer.flagIndex] = true;
+				            if (foeTrainer.getFlagIndex() != 0) {
+				            	me.flags[foeTrainer.getFlagIndex()] = true;
 				            }
 
 				            // Close the current Battle JFrame
@@ -1435,8 +1435,8 @@ public class Battle extends JPanel {
 		            	me.bag.add(foeTrainer.item);
 		            	message += "\nYou were given " + foeTrainer.item.toString() + "!";
 		            }
-		            if (foeTrainer.flagIndex != 0) {
-		            	me.flags[foeTrainer.flagIndex] = true;
+		            if (foeTrainer.getFlagIndex() != 0) {
+		            	me.flags[foeTrainer.getFlagIndex()] = true;
 		            }
 		            
 		            if (me.copyBattle) copyToClipboard();

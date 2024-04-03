@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -47,8 +46,6 @@ public class UI extends AbstractUI{
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
-		
-		transitionBuffer = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
 	}
 	
 	@Override
@@ -306,6 +303,7 @@ public class UI extends AbstractUI{
 			btX = 0;
 			btY += height;
 			if (btY >= gp.screenHeight) {
+				btY = 0;
 				counter = 0;
 				gp.battleUI.subState = BattleUI.STARTING_STATE;
 				gp.gameState = GamePanel.BATTLE_STATE;

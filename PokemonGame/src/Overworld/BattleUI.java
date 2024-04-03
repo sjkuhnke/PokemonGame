@@ -22,6 +22,8 @@ import Swing.Status;
 
 public class BattleUI extends AbstractUI {
 	
+	public int index;
+	
 	public Pokemon user;
 	public Pokemon foe;
 	public int userHP;
@@ -39,14 +41,9 @@ public class BattleUI extends AbstractUI {
 
 	public static final int STARTING_STATE = -1;
 	public static final int IDLE_STATE = 0;
-	public static final int TURN_STATE = 1;
-	public static final int PRE_TURN_STATE_START = 2;
-	public static final int FOE_SENDING_IN_START = 3;
-	public static final int USER_SENDING_IN_START = 4;
-	public static final int FOE_SENDING_IN = 5;
-	public static final int USER_SENDING_IN = 6;
-	public static final int MOVE_SELECTION_STATE = 7;
-	public static final int PRE_TURN_STATE = 8;
+	public static final int TASK_STATE = 1;
+	public static final int MOVE_SELECTION_STATE = 2;
+	public static final int END_STATE = 10;
 	
 	public static final int DIALOGUE_WAITING_STATE = 0;
 	public static final int DIALOGUE_STATE = 1;
@@ -96,29 +93,16 @@ public class BattleUI extends AbstractUI {
 		if (subState == STARTING_STATE) {
 			showMessage("You are challenged by " + foe.trainer.getName() + "!");
 		}
-		if (subState == FOE_SENDING_IN_START) {
-			drawFoeStart();
-			showSendOutText(foe);
-		}
-		if (subState == USER_SENDING_IN_START) {
-			drawUserStart();
-			showSendOutText(user);
+		
+		if (subState == END_STATE) {
+			showMessage(currentTask.message);
 		}
 		
-		if (subState == PRE_TURN_STATE_START) {
-			preTurnStateStart();
-		}
+		drawUser();
+		drawFoe();
 		
-		if (subState == TURN_STATE) {
-			drawTurn();
-		}
-		
-		if (!tasks.isEmpty() && currentTask == null) {
-			currentTask = tasks.remove(0);
-		}
-		
-		if (currentTask != null) {
-			drawTask();
+		if (subState == TASK_STATE) {
+			taskState();
 		}
 		
 		if (currentAbility != null) {
@@ -142,12 +126,23 @@ public class BattleUI extends AbstractUI {
 			drawDialogueState();
 		}
 		
-//		String print = dialogueState == DIALOGUE_WAITING_STATE ? "Dialogue Waiting" : "Dialogue";
-//		System.out.println(print);
-		
 		//System.out.println(tasks.toString());
 	}
 	
+	private void taskState() {
+		if (!tasks.isEmpty() && currentTask == null) {
+			currentTask = tasks.remove(0);
+		}
+		
+		if (currentTask != null) {
+			drawTask();
+		}
+		
+		if (tasks.isEmpty() && currentTask == null) {
+			subState = IDLE_STATE;
+		}
+	}
+
 	private void drawAbility() {
 		if (currentTask.type == Task.ABILITY) abilityCounter++;
 		
@@ -171,60 +166,90 @@ public class BattleUI extends AbstractUI {
 		}
 	}
 
-	private void preTurnStateStart() {
-		drawFoe(foe.currentHP);
-		drawUser(user.currentHP);
-		if (currentTask == null && tasks.isEmpty()) subState = IDLE_STATE;
-	}
+//	private void preTurnStateStart() {
+//		drawFoe(foe.currentHP);
+//		drawUser(user.currentHP);
+//		if (currentTask == null && tasks.isEmpty()) subState = IDLE_STATE;
+//	}
 
 	private void drawTask() {
 		if (currentTask.type == Task.TEXT) {
 			showMessage(currentTask.message);
 		} else if (currentTask.type == Task.DAMAGE) {
 			currentDialogue = currentTask.message;
-			if (currentTask.damaged == user) {
+			if (currentTask.p.playerOwned()) {
 				if (userHP > currentTask.finish) userHP--;
 				if (userHP < currentTask.finish) userHP++;
 				if (userHP == currentTask.finish) currentTask = null;
-			} else if (currentTask.damaged == foe) {
+			} else {
 				if (foeHP > currentTask.finish) foeHP--;
 				if (foeHP < currentTask.finish) foeHP++;
 				if (foeHP == currentTask.finish) currentTask = null;
 			}
 		} else if (currentTask.type == Task.ABILITY) {
-			currentAbility = currentTask.ability;
+			currentAbility = currentTask.p;
+		} else if (currentTask.type == Task.SWAP_IN) {
+			currentDialogue = currentTask.message;
+			if (currentTask.p.playerOwned()) {
+				user = currentTask.p;
+				userHP = user.currentHP;
+				drawUserPokeball(true);
+			} else {
+				foe = currentTask.p;
+				foeHP = foe.currentHP;
+				drawFoePokeball(true);
+			}
+			if (counter >= 100) {
+				counter = 0;
+				currentTask = null;
+			}
+		} else if (currentTask.type == Task.SWAP_OUT) {
+			currentDialogue = currentTask.message;
+			if (currentTask.p.playerOwned()) {
+				drawUserPokeball(false);
+			} else {
+				drawFoePokeball(false);
+			}
+			if (counter >= 100) {
+				counter = 0;
+				currentTask = null;
+			}
+		} else if (currentTask.type == Task.FAINT) {
+			currentDialogue = currentTask.message;
+			counter++;
+			if (counter >= 75) {
+				currentTask.p.setVisible(false);
+			}
+			if (counter >= 100) {
+				counter = 0;
+				currentTask = null;
+			}
+		} else if (currentTask.type == Task.END) {
+			subState = END_STATE;
 		}
-	}
-
-	private void drawTurn() {
-		drawFoe(foeHP);
-		drawUser(userHP);
-		if (currentTask == null && tasks.isEmpty()) subState = IDLE_STATE;
-	}
-	
-	private void showSendOutText(Pokemon p) {
-		currentDialogue = p.trainer.getName() + " sends out " + p.nickname + "!";
 	}
 	
 	private void drawIdleScreen() {
-		drawFoe(foe.currentHP);
-		drawUser(user.currentHP);
+		drawFoe();
+		drawUser();
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);
 		drawActionScreen(user);
 	}
 
-	private void drawUser(int hp) {
+	private void drawUser() {
+		if (!user.isVisible()) return;
 		drawHPImage(user);
-		drawHPBar(user, hp);
+		drawHPBar(user, userHP);
 		drawNameLabel(user);
 		drawUserSprite();
-		drawUserHP(hp);	
+		drawUserHP(userHP);	
 	}
 
-	private void drawFoe(int hp) {
+	private void drawFoe() {
+		if (!foe.isVisible()) return;
 		drawHPImage(foe);
-		drawHPBar(foe, hp);
+		drawHPBar(foe, foeHP);
 		drawNameLabel(foe);
 		drawFoeSprite();
 	}
@@ -256,55 +281,62 @@ public class BattleUI extends AbstractUI {
 			gp.keyH.wPressed = false;
 			switch(subState) {
 			case STARTING_STATE:
-				field = new Field();
-			    Pokemon.field = field;
-				subState = FOE_SENDING_IN_START;
+			    setStartingTasks();
+				subState = TASK_STATE;
 				break;
+			case END_STATE:
+				if (tasks.isEmpty()) {
+					user.setVisible(false);
+					gp.endBattle(index, -1);
+					gp.gameState = GamePanel.PLAY_STATE;
+				}
 			}
 			dialogueState = DIALOGUE_FREE_STATE;
 			currentDialogue = "";
 			currentTask = null;
 			currentAbility = null;
 		}
+	}
+	
+	private void setStartingTasks() {
+		field = new Field();
+	    Pokemon.field = field;
+	    userHP = user.currentHP;
+	    foeHP = foe.currentHP;
 		
-	}
-	
-	private void drawFoeStart() {
-		drawFoePokeball();
-		if (counter >= 100) {
-			counter = 0;
-			subState = USER_SENDING_IN_START;
-		}
-	}
-	
-	private void drawUserStart() {
-		drawFoe(foe.currentHP);
-		drawUserPokeball();
-		if (counter >= 100) {
-			counter = 0;
-			Pokemon fasterInit = user.getFaster(foe, 0, 0);
-			Pokemon slowerInit = fasterInit == user ? foe : user;
-			fasterInit.swapIn(slowerInit, true);
-			slowerInit.swapIn(fasterInit, true);
-			subState = PRE_TURN_STATE_START;
-		}
+		Pokemon.addSwapInTask(foe);
+	    Pokemon.addSwapInTask(user);
+	    Pokemon fasterInit = user.getFaster(foe, 0, 0);
+		Pokemon slowerInit = fasterInit == user ? foe : user;
+		fasterInit.swapIn(slowerInit, true);
+		slowerInit.swapIn(fasterInit, true);
 	}
 
-	private void drawFoePokeball() {
+	private void drawFoePokeball(boolean arriving) {
 		counter++;
 		if (counter < 50) {
-			g2.drawImage(setup("/items/pokeball", 2), 570, 188, null);
+			if (arriving) g2.drawImage(setup("/items/pokeball", 2), 570, 188, null);
 		} else {
-			drawFoe(foe.currentHP);
+			if (arriving) {
+				foe.setVisible(true);
+			} else {
+				foe.setVisible(false);
+				g2.drawImage(setup("/items/pokeball", 2), 570, 188, null);
+			}
 		}
 	}
 	
-	private void drawUserPokeball() {
+	private void drawUserPokeball(boolean arriving) {
 		counter++;
 		if (counter < 50) {
-			g2.drawImage(setup("/items/pokeball", 2), 133, 348, null);
+			if (arriving) g2.drawImage(setup("/items/pokeball", 2), 133, 348, null);
 		} else {
-			drawUser(user.currentHP);
+			if (arriving) {
+				user.setVisible(true);
+			} else {
+				user.setVisible(false);
+				g2.drawImage(setup("/items/pokeball", 2), 133, 348, null);
+			}
 		}
 	}
 	
@@ -375,11 +407,6 @@ public class BattleUI extends AbstractUI {
 		switch (subState) {
 		case STARTING_STATE: return "Starting State";
 		case IDLE_STATE: return "Idle State";
-		case TURN_STATE: return "Turn State";
-		case FOE_SENDING_IN_START: return "Foe Sending In Start State";
-		case USER_SENDING_IN_START: return "User Sending In Start State";
-		case FOE_SENDING_IN: return "Foe Sending In State";
-		case USER_SENDING_IN: return "User Sending In State";
 		default: return "Not added to getStateName() yet";
 		}
 		
@@ -476,8 +503,8 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void drawMoveSelectionScreen() {
-		drawFoe(foe.currentHP);
-		drawUser(user.currentHP);
+		drawFoe();
+		drawUser();
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);
 		drawMoves();
@@ -529,20 +556,16 @@ public class BattleUI extends AbstractUI {
 		            g2.setColor(Color.WHITE);
 		            g2.drawRoundRect(x, y, width, height, 10, 10);
 		            if (gp.keyH.wPressed) {
-		            	userHP = user.currentHP;
-		            	foeHP = foe.currentHP;
-		            	startTurn(moves[i].move, foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove());
+		            	turn(moves[i].move, foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove());
 		            }
 		        }
 		    }
 		}
 	}
 	
-	public void startTurn(Move uMove, Move fMove) {
+	public void turn(Move uMove, Move fMove) {
 		if (user.isFainted() || foe.isFainted()) return; // TODO: maybe let the move method handle this?
 
-//		Pokemon.addTask(Task.TEXT, "Message 1");
-//		Pokemon.addTask(Task.TEXT, "Message 2");
 		// Priority stuff
 		int uP, fP;
 		uP = uMove.priority;
@@ -609,68 +632,72 @@ public class BattleUI extends AbstractUI {
 				//faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS); TODO: write switching out selection method
 			}
 		}
-	    subState = TURN_STATE;
+	    subState = TASK_STATE;
 		if (foe.trainer != null) {
 			foe = foe.trainer.getCurrent();
 		}
-//		if (hasAlive()) faster.endOfTurn(slower);
-//		if (hasAlive()) slower.endOfTurn(faster);
-//		if (hasAlive()) field.endOfTurn();
-//		while (foe.isFainted()) {
-//			if (foeTrainer != null && foeTrainer.getTeam() != null) {
-//				if (foeTrainer.hasNext()) {
-//					foe = foeTrainer.next(me.getCurrent());
-//					console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
-//					foe.swapIn(me.getCurrent(), true);
-//					updateField(field);
-//					updateFoe();
-//					updateCurrent(pl);
-//					updateBars(false);
-//					me.clearBattled();
-//					me.getCurrent().battled = true;
-//					
-//				} else {
-//					// Show the prompt with the specified text
-//					me.money += foeTrainer.getMoney();
-//					String message = foeTrainer.toString() + " was defeated!\nWon $" + foeTrainer.getMoney() + "!";
-//		            if (foeTrainer.getMoney() == 500 && me.badges < 8) {
-//		            	me.badges++;
-//		            	for (Pokemon p : me.team) {
-//		            		if (p != null) p.awardHappiness(15, true);
-//		            	}
-//		            	me.updateHappinessCaps();
-//		            }
-//		            if (foeTrainer.item != null) {
-//		            	me.bag.add(foeTrainer.item);
-//		            	message += "\nYou were given " + foeTrainer.item.toString() + "!";
-//		            }
-//		            if (foeTrainer.flagIndex != 0) {
-//		            	me.flags[foeTrainer.flagIndex] = true;
-//		            }
-//		            
-//		            if (me.copyBattle) copyToClipboard();
-//		            
-//		            JOptionPane.showMessageDialog(null, message);
-//
-//		            // Close the current Battle JFrame
-//		            endBattle();
-//		            break;
-//				}
-//			} else {
-//				if (me.copyBattle) copyToClipboard();
-//				JOptionPane.showMessageDialog(null, foe.name + " was defeated!");
-//				endBattle();
-//				break;
-//			}
-//		}
-//		console.writeln();
-//	    console.writeln("------------------------------");
-//	    updateField(field);
-//	    if (me.wiped()) {
-//			wipe(pl, gp);
-//		}
+		if (hasAlive()) faster.endOfTurn(slower);
+		if (hasAlive()) slower.endOfTurn(faster);
+		if (hasAlive()) field.endOfTurn();
+		Pokemon next = foe;
+		while (next.isFainted()) {
+			if (foe.trainer != null) {
+				if (foe.trainer.hasNext()) {
+					next = foe.trainer.next(user);
+					Pokemon.addSwapInTask(next);
+					next.swapIn(user, true);
+					user.getPlayerTrainer().clearBattled();
+					user.battled = true;
+					
+				} else {
+					user.getPlayerTrainer().setMoney(user.getPlayerTrainer().getMoney() + foe.trainer.getMoney());
+					Pokemon.addTask(Task.END, foe.trainer.getName() + " was defeated!\nWon $" + foe.trainer.getMoney() + "!");
+		            if (foe.trainer.getMoney() == 500 && user.getPlayerTrainer().badges < 8) {
+		            	user.getPlayerTrainer().badges++;
+		            	for (Pokemon p : user.trainer.team) {
+		            		if (p != null) p.awardHappiness(15, true);
+		            	}
+		            	user.getPlayerTrainer().updateHappinessCaps();
+		            }
+		            if (foe.trainer.getItem() != null) {
+		            	user.getPlayerTrainer().bag.add(foe.trainer.getItem());
+		            	Pokemon.addTask(Task.END, "\nYou were given " + foe.trainer.getItem().toString() + "!");
+		            }
+		            if (foe.trainer.getFlagIndex() != 0) {
+		            	user.getPlayerTrainer().flags[foe.trainer.getFlagIndex()] = true;
+		            }
+		            break;
+				}
+			} else {
+				showMessage(foe.name + " was defeated!");
+				break;
+			}
+		}
+	    if (user.getPlayerTrainer().wiped()) {
+			wipe();
+		}
 	}
 	
+	private boolean hasAlive() {
+		if (!foe.isFainted()) return true;
+		
+		if (foe.trainer != null && foe.trainer.getTeam() != null) {
+			if (foe.trainer.hasNext()) return true;
+		}
+
+		return false;
+	}
 	
+	private void wipe() {
+		user.getPlayerTrainer().setMoney(user.getPlayerTrainer().getMoney() - 500);
+		Pokemon.addTask(Task.END, "You have no more Pokemon that can fight!");
+		Pokemon.addTask(Task.END, "You lost $500!");
+		gp.eHandler.teleport(0, 79, 46, false);
+		user.trainer.heal();
+		if (foe.trainer != null) {
+			foe.trainer.heal();
+			foe.trainer.setCurrent(foe.trainer.getTeam()[0]);
+		}
+	}
 
 }

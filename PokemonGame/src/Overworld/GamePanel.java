@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -166,9 +167,10 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		
 		player.draw(g2);
 		
-		ui.draw(g2);
 		
-		if (gameState == BATTLE_STATE) {
+		if (gameState != BATTLE_STATE) {
+			ui.draw(g2);
+		} else {
 			battleUI.draw(g2);
 		}
 		
@@ -186,9 +188,11 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 			player.p.heal();
 		}
 		
+		ui.transitionBuffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 		gameState = START_BATTLE_STATE;
 		battleUI.user = player.p.getCurrent();
 		battleUI.foe = Main.trainers[trainer].getCurrent();
+		battleUI.index = trainer;
 		
 		//Battle panel = new Battle(player, Main.trainers[trainer], trainer, this, -1, -1, -1, null);
 		//panel.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); JFrame exclusive
@@ -246,7 +250,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 
 
 	public void endBattle(int trainer, int id) {
-		removePanel();
+		//removePanel();
 		
 		if (trainer > -1 && !player.p.wiped() && trainer != 256) player.p.trainersBeat[trainer] = true;
 		if (id == 159) {
@@ -287,7 +291,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		
 		Pokemon.field = new Field();
 		
-		addGamePanel();
+		//addGamePanel();
 	}
 	
 	public void addPanel(JPanel panel, boolean animate) {
