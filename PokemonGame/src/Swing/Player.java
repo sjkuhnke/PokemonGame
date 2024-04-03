@@ -612,12 +612,6 @@ public class Player extends Trainer implements Serializable {
 		return true;
 	}
 	
-	public void heal() {
-		for (Pokemon member : team) {
-			if (member != null) member.heal();
-		}
-	}
-	
 	public String toString() {
 		return getClass().getName() + "@" + Integer.toHexString(hashCode());
 	}

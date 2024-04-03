@@ -72,8 +72,17 @@ public class Trainer implements Serializable {
 		return team;
 	}
 	
+	public Item getItem() {
+		return item;
+	}
+	
+	public int getFlagIndex() {
+		return flagIndex;
+	}
+	
 	public void setMoney(int amt) {
 		this.money = amt;
+		if (money < 0) money = 0;
 	}
 	
 	@Override // implementation
@@ -251,7 +260,7 @@ public class Trainer implements Serializable {
 	}
 	
 	public void swap(Pokemon oldP, Pokemon newP) {
-		Pokemon.console.writeln("\n" + name + " withdrew " + oldP.nickname + "!", false, 16);
+		Pokemon.addSwapOutTask(oldP);
 		if (oldP.ability == Ability.REGENERATOR) {
 			oldP.currentHP += current.getStat(0) / 3;
 			oldP.verifyHP();
@@ -260,13 +269,17 @@ public class Trainer implements Serializable {
 		if (oldP.vStatuses.contains(Status.WISH)) newP.vStatuses.add(Status.WISH);
 		oldP.clearVolatile();
 		this.current = newP;
-		Pokemon.console.write(name + " sent out ", false, 16);
-		Pokemon.console.write(current.nickname, true, 16);
-		Pokemon.console.writeln("!", false, 16);
+		Pokemon.addSwapInTask(newP);
 		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
 	}
 
 	public void setCurrent(Pokemon newCurrent) {
 		this.current = newCurrent;
+	}
+
+	public void heal() {
+		for (Pokemon member : team) {
+			if (member != null) member.heal();
+		}
 	}
 }

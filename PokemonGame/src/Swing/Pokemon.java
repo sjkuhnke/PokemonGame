@@ -122,6 +122,7 @@ public class Pokemon implements Serializable {
 	public boolean battled;
 	public boolean success;
 	public boolean selected;
+	private boolean visible;
 	
 	// battle fields
 	public Move lastMoveUsed;
@@ -3222,13 +3223,12 @@ public class Pokemon implements Serializable {
 				addTask(Task.TEXT, this.nickname + " is confused!");
 				if (Math.random() < 1.0/3.0) {
 			        // user hits themselves
-					addTask(Task.TEXT, this.nickname + " hit itself in confusion!");
 					attackStat = this.getStat(1);
 					defenseStat = this.getStat(2);
 					attackStat *= this.asModifier(0);
 					defenseStat *= this.asModifier(1);
 					damage = calc(attackStat, defenseStat, 40, this.level);
-					this.damage(damage, foe);
+					this.damage(damage, foe, null, " hit itself in confusion!", -1);
 					if (this.currentHP <= 0) {
 						this.faint(true, foe);
 						foe.awardxp(getxpReward());
@@ -3942,7 +3942,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			if (multiplier < 1) {
-				message += "It's not very effective...";
+				message += "\nIt's not very effective...";
 				if (ability == Ability.TINTED_LENS) damage *= 2;
 			}
 			
@@ -10577,27 +10577,31 @@ public class Pokemon implements Serializable {
 		public static final int DAMAGE = 1;
 		public static final int ABILITY = 2;
 		public static final int STAT = 3;
+		public static final int SWAP_IN = 4;
+		public static final int SWAP_OUT = 5;
+		public static final int FAINT = 6;
+		public static final int END = 7;
 		
 		public int type;
 		public String message;
 		public int counter;
 		
 		public int finish;
-		public Pokemon damaged;
-		public Pokemon ability;
+		public Pokemon p; // the pokemon taking damage, or announcing an ability, or being sent out
 		
 		public Task(int type, String message) {
+			this(type, message, null);
+		}
+		
+		public Task(int type, String message, Pokemon p) {
 			this.message = message;
 			this.type = type;
 			this.counter = 50;
+			setPokemon(p);
 		}
 		
-		public void setDamaged(Pokemon p) {
-			this.damaged = p;
-		}
-		
-		public void setAbility(Pokemon p) {
-			this.ability = p;
+		public void setPokemon(Pokemon p) {
+			this.p = p;
 		}
 		
 		public void setFinish(int f) {
@@ -10638,7 +10642,7 @@ public class Pokemon implements Serializable {
 			Player player = (Player) this.trainer;
 			player.setBattled(player.getBattled() - 1);
 		}
-		if (announce) addTask(Task.TEXT, this.nickname + " fainted!");
+		if (announce) addTask(Task.FAINT, this.nickname + " fainted!", this);
 	}
 
 	public void clearVolatile() {
@@ -12711,13 +12715,12 @@ public class Pokemon implements Serializable {
 				move != Move.THIEF && move != Move.COVET) this.checkBerry(foe);
 		Task t = null;
 		if (damageIndex >= 0) {
-			t = createTask(Task.DAMAGE, message);
+			t = createTask(Task.DAMAGE, message, this);
 			setTask(damageIndex, t);
 		} else {
-			t = addTask(Task.DAMAGE, message);
+			t = addTask(Task.DAMAGE, message, this);
 		}
 		
-		t.setDamaged(this);
 		t.setFinish(this.currentHP < 0 ? 0 : this.currentHP);
 	}
 
@@ -13814,13 +13817,31 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static Task createTask(int text, String string) {
-		return gamePanel.battleUI.user.new Task(text, string);
+		return createTask(text, string, null);
+	}
+	
+	public static Task createTask(int text, String string, Pokemon p) {
+		return gamePanel.battleUI.user.new Task(text, string, p);
 	}
 	
 	public static Task addTask(int text, String string) {
-		Task t = createTask(text, string);
+		return addTask(text, string, null);
+	}
+	
+	public static Task addTask(int text, String string, Pokemon p) {
+		Task t = createTask(text, string, p);
 		gamePanel.battleUI.tasks.add(t);
 		return t;
+	}
+	
+	public static void addSwapInTask(Pokemon p) {
+		String message = p.playerOwned() ? "Go! " + p.nickname + "!" : p.trainer.getName() + " sends out " + p.nickname + "!";
+		addTask(Task.SWAP_IN, message, p);
+	}
+	
+	public static void addSwapOutTask(Pokemon p) {
+		String message = p.playerOwned() ? p.nickname + ", come back!" : p.trainer.getName() + " withdrew " + p.nickname + "!";
+		addTask(Task.SWAP_OUT, message, p);
 	}
 	
 	public static void setTask(int index, Task task) {
@@ -13829,6 +13850,22 @@ public class Pokemon implements Serializable {
 	
 	public static Task getTask(int index) {
 		return gamePanel.battleUI.tasks.get(index);
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+	
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public Player getPlayerTrainer() {
+		if (this.playerOwned()) {
+			return (Player) this.trainer;
+		} else {
+			throw new IllegalStateException("calling object is not player owned");
+		}
 	}
 
 //	private String getStatName(int stat) {
