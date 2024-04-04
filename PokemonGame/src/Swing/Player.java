@@ -36,7 +36,7 @@ public class Player extends Trainer implements Serializable {
 	 */
 	private static final long serialVersionUID = -2851052666892205583L;
 	
-	public Pokemon[] box1, box2, box3;
+	public Pokemon[][] boxes;
 	private int numBattled;
 	private int posX;
 	private int posY;
@@ -61,16 +61,16 @@ public class Player extends Trainer implements Serializable {
 	public Item[] resistBerries;
 	public int secondStarter;
 	public Item choiceChoice;
-	public boolean copyBattle;
 	public int coins;
 	public int gamesWon;
 	public int winStreak;
+	public int currentBox;
+	
+	public static final int MAX_BOXES = 10;
 	
 	public Player(GamePanel gp) {
 		super(true);
-		box1 = new Pokemon[30];
-		box2 = new Pokemon[30];
-		box3 = new Pokemon[30];
+		boxes = new Pokemon[MAX_BOXES][30];
 
 		bag = new Bag();
 		posX = 79;
@@ -110,7 +110,6 @@ public class Player extends Trainer implements Serializable {
 	    } else {
 	    	p.heal();
 	        int index = -1;
-	        Pokemon[][] boxes = {box1, box2, box3};  // Array of box references
 	        for (int i = 0; i < boxes.length; i++) {
 	            for (int j = 0; j < boxes[i].length; j++) {
 	                if (boxes[i][j] == null) {
@@ -309,16 +308,13 @@ public class Player extends Trainer implements Serializable {
 		for (Pokemon p : team) {
 			if (p != null) p.happinessCap += 50;
 		}
-		for (Pokemon p : box1) {
-			if (p != null) p.happinessCap += 50;
-		}
-		for (Pokemon p : box2) {
-			if (p != null) p.happinessCap += 50;
-		}
-		for (Pokemon p : box3) {
-			if (p != null) p.happinessCap += 50;
-		}
-		
+		for (int i = 0; i < boxes.length; i++) {
+            for (int j = 0; j < boxes[i].length; j++) {
+                if (boxes[i][j] != null) {
+                    boxes[i][j].happinessCap += 50;
+                }
+            }
+        }
 	}
 
 	public JPanel displayTweaker() {
@@ -593,15 +589,13 @@ public class Player extends Trainer implements Serializable {
 		for (Pokemon p : team) {
 			if (p != null) result.add(p);
 		}
-		for (Pokemon p : box1) {
-			if (p != null) result.add(p);
-		}
-		for (Pokemon p : box2) {
-			if (p != null) result.add(p);
-		}
-		for (Pokemon p : box3) {
-			if (p != null) result.add(p);
-		}
+		for (int i = 0; i < boxes.length; i++) {
+            for (int j = 0; j < boxes[i].length; j++) {
+                if (boxes[i][j] != null) {
+                    result.add(boxes[i][j]);
+                }
+            }
+        }
 		return result;
 	}
 	

@@ -3228,7 +3228,7 @@ public class Pokemon implements Serializable {
 					attackStat *= this.asModifier(0);
 					defenseStat *= this.asModifier(1);
 					damage = calc(attackStat, defenseStat, 40, this.level);
-					this.damage(damage, foe, null, " hit itself in confusion!", -1);
+					this.damage(damage, foe, null, this.nickname + " hit itself in confusion!", -1);
 					if (this.currentHP <= 0) {
 						this.faint(true, foe);
 						foe.awardxp(getxpReward());
@@ -5918,7 +5918,6 @@ public class Pokemon implements Serializable {
 		for (Moveslot m : moveset) {
 			if (m != null) m.currentPP = m.maxPP;
 		}
-		addTask(Task.TEXT, this.nickname + " healed!");
 	}
 	
 	public PType[] getResistances(PType type) {
@@ -10609,7 +10608,14 @@ public class Pokemon implements Serializable {
 		}
 		
 		public String toString() {
-			return message.substring(0, 6) + "... [" + getTypeString() + "]";
+			try {
+				return message.substring(0, 6) + "... [" + getTypeString() + "]";
+			} catch (StringIndexOutOfBoundsException e) {
+				e.printStackTrace();
+				return message + getTypeString();
+			}
+			
+			
 		}
 		
 		private String getTypeString() {
@@ -10618,6 +10624,10 @@ public class Pokemon implements Serializable {
 			case DAMAGE: return "DAMAGE";
 			case ABILITY: return "ABILITY";
 			case STAT: return "STAT";
+			case SWAP_IN: return "SWAP_IN";
+			case SWAP_OUT: return "SWAP_OUT";
+			case FAINT: return "FAINT";
+			case END: return "END";
 			default:
 				return "getTypeString() doesn't have a case for this type";
 			}
@@ -13829,9 +13839,14 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static Task addTask(int text, String string, Pokemon p) {
-		Task t = createTask(text, string, p);
-		gamePanel.battleUI.tasks.add(t);
-		return t;
+		if (gamePanel.gameState == GamePanel.BATTLE_STATE) {
+			Task t = createTask(text, string, p);
+			gamePanel.battleUI.tasks.add(t);
+			return t;
+		} else {
+			gamePanel.ui.showMessage(string);
+			return null;
+		}
 	}
 	
 	public static void addSwapInTask(Pokemon p) {

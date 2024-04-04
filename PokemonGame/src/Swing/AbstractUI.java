@@ -112,4 +112,42 @@ public abstract class AbstractUI {
 	    int x = centerX - length / 2; // Calculate the x-coordinate for center alignment
 	    return x;
 	}
+
+	public void drawParty() {
+		int x = gp.tileSize*3;
+		int y = gp.tileSize;
+		int width = gp.tileSize*10;
+		int height = gp.tileSize*10;
+		
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize / 2;
+		int startX = x;
+		int partyWidth = (int) (gp.tileSize * 4.5);
+		int partyHeight = gp.tileSize * 3;
+		
+		for (int i = 0; i < gp.player.p.team.length; i++) {
+			Pokemon p = gp.player.p.team[i];
+			if (p != null) {
+				Color background;
+				if (p.isFainted()) {
+					background = new Color(200, 0, 0, 200);
+				} else if (p.status == Status.HEALTHY) {
+					background = new Color(0, 220, 0, 200);
+				} else {
+					background = new Color(200, 200, 0, 200);
+				}
+				g2.setColor(background);
+				g2.fillRoundRect(x + 12, y + 12, partyWidth - 12, partyHeight - 12, 15, 15);
+				g2.drawImage(p.getMiniSprite(), x, y, null);
+			}
+			if (i % 2 == 0) {
+				x += partyWidth;
+			} else {
+				x = startX;
+				y += partyHeight;
+			}
+		}
+	}
 }

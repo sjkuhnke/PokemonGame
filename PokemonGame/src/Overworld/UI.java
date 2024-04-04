@@ -232,13 +232,7 @@ public class UI extends AbstractUI{
 	}
 	
 	private void showParty() {
-		int x = gp.tileSize*4;
-		int y = gp.tileSize;
-		int width = gp.tileSize*8;
-		int height = gp.tileSize*10;
-		
-		drawSubWindow(x, y, width, height);
-		
+		drawParty();
 	}
 	
 	public BufferedImage setup(String imageName, int scale) {

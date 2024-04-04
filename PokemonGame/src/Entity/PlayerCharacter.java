@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -488,16 +487,9 @@ public class PlayerCharacter extends Entity {
     		runCode(code, cheats);
     	});
     	
-    	JCheckBox copyBattle = new JCheckBox("Copy Battle Chat");
-    	copyBattle.setSelected(p.copyBattle);
-    	copyBattle.addActionListener(f -> {
-    		p.copyBattle = copyBattle.isSelected();
-    	});
-    	
     	playerInfo.add(moneyLabel);
     	playerInfo.add(badgesLabel);
     	playerInfo.add(cheats);
-    	playerInfo.add(copyBattle);
     	
     	JOptionPane.showMessageDialog(null, playerInfo, "Player Info", JOptionPane.PLAIN_MESSAGE);
 	}
@@ -2474,28 +2466,7 @@ public class PlayerCharacter extends Entity {
 			p.updateTrainers();
 			p.updateItems(gp.obj.length, gp.obj[1].length);
 			p.updateFlags();
-			for (Pokemon p : p.team) {
-				if (p != null) {
-					p.setBaseStats();
-					p.setAbility(p.abilitySlot);
-					p.setMoveBank();
-				}
-			}
-			for (Pokemon p : p.box1) {
-				if (p != null) {
-					p.setBaseStats();
-					p.setAbility(p.abilitySlot);
-					p.setMoveBank();
-				}
-			}
-			for (Pokemon p : p.box2) {
-				if (p != null) {
-					p.setBaseStats();
-					p.setAbility(p.abilitySlot);
-					p.setMoveBank();
-				}
-			}
-			for (Pokemon p : p.box3) {
+			for (Pokemon p : p.getAllPokemon()) {
 				if (p != null) {
 					p.setBaseStats();
 					p.setAbility(p.abilitySlot);
