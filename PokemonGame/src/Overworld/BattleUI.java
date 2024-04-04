@@ -28,12 +28,15 @@ public class BattleUI extends AbstractUI {
 	public Pokemon foe;
 	public int userHP;
 	public int foeHP;
+	public int tempUserHP;
+	public int tempFoeHP;
 	
 	public int subState = 0;
 	public int dialogueState = DIALOGUE_FREE_STATE;
 	public int moveNum = 0;
 	private int dialogueCounter = 0;
 	private int abilityCounter = 0;
+	private int hpCounter = 0;
 	private Pokemon currentAbility;
 	public Task currentTask;
 	public ArrayList<Task> tasks;
@@ -43,6 +46,7 @@ public class BattleUI extends AbstractUI {
 	public static final int IDLE_STATE = 0;
 	public static final int TASK_STATE = 1;
 	public static final int MOVE_SELECTION_STATE = 2;
+	public static final int PARTY_SELECTION_STATE = 3;
 	public static final int END_STATE = 10;
 	
 	public static final int DIALOGUE_WAITING_STATE = 0;
@@ -121,14 +125,16 @@ public class BattleUI extends AbstractUI {
 			drawMoveSelectionScreen();
 		}
 		
+		if (subState == PARTY_SELECTION_STATE) {
+			drawPartySelectionScreen();
+		}
+		
 		// Dialogue States
 		if (dialogueState == DIALOGUE_STATE) {
 			drawDialogueState();
 		}
-		
-		//System.out.println(tasks.toString());
 	}
-	
+
 	private void taskState() {
 		if (!tasks.isEmpty() && currentTask == null) {
 			currentTask = tasks.remove(0);
@@ -177,14 +183,26 @@ public class BattleUI extends AbstractUI {
 			showMessage(currentTask.message);
 		} else if (currentTask.type == Task.DAMAGE) {
 			currentDialogue = currentTask.message;
+			hpCounter++;
 			if (currentTask.p.playerOwned()) {
 				if (userHP > currentTask.finish) userHP--;
 				if (userHP < currentTask.finish) userHP++;
-				if (userHP == currentTask.finish) currentTask = null;
+				if (userHP == currentTask.finish) {
+					if (hpCounter >= 50) {
+						hpCounter = 0;
+						currentTask = null;
+					}
+					
+				}
 			} else {
 				if (foeHP > currentTask.finish) foeHP--;
 				if (foeHP < currentTask.finish) foeHP++;
-				if (foeHP == currentTask.finish) currentTask = null;
+				if (foeHP == currentTask.finish) {
+					if (hpCounter >= 50) {
+						hpCounter = 0;
+						currentTask = null;
+					}
+				}
 			}
 		} else if (currentTask.type == Task.ABILITY) {
 			currentAbility = currentTask.p;
@@ -192,15 +210,17 @@ public class BattleUI extends AbstractUI {
 			currentDialogue = currentTask.message;
 			if (currentTask.p.playerOwned()) {
 				user = currentTask.p;
-				userHP = user.currentHP;
+				userHP = tempUserHP == 0 ? user.currentHP : tempUserHP;
 				drawUserPokeball(true);
 			} else {
 				foe = currentTask.p;
-				foeHP = foe.currentHP;
+				foeHP = tempFoeHP == 0 ? foe.currentHP : tempFoeHP;
 				drawFoePokeball(true);
 			}
 			if (counter >= 100) {
 				counter = 0;
+				tempUserHP = 0;
+				tempFoeHP = 0;
 				currentTask = null;
 			}
 		} else if (currentTask.type == Task.SWAP_OUT) {
@@ -320,7 +340,7 @@ public class BattleUI extends AbstractUI {
 			if (arriving) {
 				foe.setVisible(true);
 			} else {
-				foe.setVisible(false);
+				currentTask.p.setVisible(false);
 				g2.drawImage(setup("/items/pokeball", 2), 570, 188, null);
 			}
 		}
@@ -334,7 +354,7 @@ public class BattleUI extends AbstractUI {
 			if (arriving) {
 				user.setVisible(true);
 			} else {
-				user.setVisible(false);
+				currentTask.p.setVisible(false);
 				g2.drawImage(setup("/items/pokeball", 2), 133, 348, null);
 			}
 		}
@@ -509,6 +529,11 @@ public class BattleUI extends AbstractUI {
 		drawDialogueScreen(false);
 		drawMoves();
 	}
+	
+	private void drawPartySelectionScreen() {
+		drawParty();
+		
+	}
 
 	private void drawActionBackground(Pokemon p, int x, int y, int width, int height) {
 		Color background = new Color(175, 175, 175);
@@ -590,6 +615,7 @@ public class BattleUI extends AbstractUI {
 		if (faster == user) { // player Pokemon is faster
 			if (slower.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
 				slower = foe.trainer.swapOut(user, fMove, false);
+				tempFoeHP = slower.currentHP;
 				foeCanMove = false;
 			}
 			
@@ -599,6 +625,7 @@ public class BattleUI extends AbstractUI {
 			// Check for swap (player)
 			if (user.trainer.hasValidMembers() && faster.vStatuses.contains(Status.SWITCHING)) {
 				//faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS); TODO: write switching out selection method
+				tempUserHP = faster.currentHP;
 			}
 			
 			if (fMove == Move.SUCKER_PUNCH) fMove = Move.FAILED_SUCKER; // TODO: make move method check if you're faster and if not make Sucker Punch fail (move() has an argument for this)
@@ -609,11 +636,13 @@ public class BattleUI extends AbstractUI {
 	        
 	        // Check for swap (AI)
 	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && slower.vStatuses.contains(Status.SWITCHING)) {
-	        	foe.trainer.setCurrent(foe.trainer.swapOut(faster, null, slower.lastMoveUsed == Move.BATON_PASS)); 
+	        	slower = foe.trainer.swapOut(faster, null, slower.lastMoveUsed == Move.BATON_PASS);
+	        	tempFoeHP = slower.currentHP;
 	        }
 		} else { // enemy Pokemon is faster
 			if (faster.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
 				faster = foe.trainer.swapOut(slower, fMove, false);
+				tempFoeHP = faster.currentHP;
 				foeCanMove = false;
 			}
 			if (fMove == Move.SUCKER_PUNCH && fMove.cat == 2) fMove = Move.FAILED_SUCKER; // TODO: make move method check if you're faster and if not make Sucker Punch fail (move() has an argument for this)
@@ -624,12 +653,14 @@ public class BattleUI extends AbstractUI {
 			// Check for swap (AI)
 	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && faster.vStatuses.contains(Status.SWITCHING)) {
 	        	faster = foe.trainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS);
+	        	tempFoeHP = faster.currentHP;
 	        }
 			
 	        if (slower == user.trainer.getCurrent()) slower.move(faster, uMove, false);
 	        // Check for swap
 	        if (user.trainer.hasValidMembers() && faster.vStatuses.contains(Status.SWITCHING)) {
-				//faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS); TODO: write switching out selection method
+				//slower = getSwap(pl, slower.lastMoveUsed == Move.BATON_PASS); TODO: write switching out selection method
+	        	tempUserHP = slower.currentHP;
 			}
 		}
 	    subState = TASK_STATE;

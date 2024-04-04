@@ -8,8 +8,6 @@ import Swing.Field.Effect;
 import Swing.Field.FieldEffect;
 
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionListener;
 //import java.awt.event.FocusAdapter;
 //import java.awt.event.FocusEvent;
@@ -409,7 +407,6 @@ public class Battle extends JPanel {
 		        	updateBars(true);
 					displayParty();
 					updateFoe();
-					if (me.copyBattle) copyToClipboard();
 					JOptionPane.showMessageDialog(null, "You caught " + foe.name + "!");
 					endBattle();
 		        } else {
@@ -468,7 +465,6 @@ public class Battle extends JPanel {
 					chance = me.getCurrent().item == Item.SHED_SHELL ? 1 : chance;
 					
 					if (chance >= Math.random()) {
-						if (me.copyBattle) copyToClipboard();
 						JOptionPane.showMessageDialog(null, "Got away safely!");
 						endBattle();
 						return;
@@ -485,7 +481,6 @@ public class Battle extends JPanel {
 			displayParty();
 			updateStatus();
 			if (foe.isFainted()) {
-				if (me.copyBattle) copyToClipboard();
 				JOptionPane.showMessageDialog(null, foe.name + " was defeated!");
 				endBattle();
 			}
@@ -842,7 +837,6 @@ public class Battle extends JPanel {
 							me.getCurrent().battled = true;
 							
 						} else {
-							if (me.copyBattle) copyToClipboard();
 							// Show the prompt with the specified text
 							me.money += foeTrainer.getMoney();
 				            JOptionPane.showMessageDialog(null, foeTrainer.toString() + " was defeated!\nWon $" + foeTrainer.getMoney() + "!");
@@ -864,7 +858,6 @@ public class Battle extends JPanel {
 				            endBattle();
 						}
 					} else {
-						if (me.copyBattle) copyToClipboard();
 						JOptionPane.showMessageDialog(null, foe.name + " was defeated!");
 						endBattle();
 					}
@@ -1439,7 +1432,6 @@ public class Battle extends JPanel {
 		            	me.flags[foeTrainer.getFlagIndex()] = true;
 		            }
 		            
-		            if (me.copyBattle) copyToClipboard();
 		            
 		            JOptionPane.showMessageDialog(null, message);
 
@@ -1448,7 +1440,6 @@ public class Battle extends JPanel {
 		            break;
 				}
 			} else {
-				if (me.copyBattle) copyToClipboard();
 				JOptionPane.showMessageDialog(null, foe.name + " was defeated!");
 				endBattle();
 				break;
@@ -1460,20 +1451,6 @@ public class Battle extends JPanel {
 	    if (me.wiped()) {
 			wipe(pl, gp);
 		}
-	}
-
-	private void copyToClipboard() {
-		String text = console.getText();
-
-	    // Create a StringSelection object to hold the text
-	    StringSelection stringSelection = new StringSelection(text);
-
-	    // Get the system clipboard
-	    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-
-	    // Set the contents of the clipboard to the StringSelection
-	    clipboard.setContents(stringSelection, null);
-		
 	}
 
 	private boolean hasAlive() {

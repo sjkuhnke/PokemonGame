@@ -27,32 +27,26 @@ public class PBox extends JPanel {
 	public static PlayerCharacter playerCharacter;
 	public GamePanel gp;
 	public KeyHandler keyH;
+	
+	private JLabel boxLabel = new JLabel();
 
 	private JGradientButton[] boxButtons;
-	private int currentBox = 1;
 	private boolean isGauntlet;
 
 	public PBox(GamePanel gp, KeyHandler keyH, boolean isGauntlet) {
 	    me = gp.player.p;
 	    this.gp = gp;
 	    this.keyH = keyH;
-	    //setTitle("Box 1"); JFrame method
 	    
 	    this.isGauntlet = isGauntlet;
-	    
-	    // Initializing panel
-	    //setResizable(false); JFrame method
-	    setPreferredSize(new Dimension(768, 576));
-	    setBounds(100, 100, 648, 530);
-	    //setContentPane(playerPanel); JFrame method
 	    setLayout(null);
-
-	    // Set the location of the Box in the center of the screen
-	    //setLocationRelativeTo(null); JFrame method
+	    
+	    boxLabel.setBounds(200, 500, 200, 50);
+	    this.add(boxLabel);
 
 		
-		boxButtons = new JGradientButton[90];
-		for (int i = 0; i < me.box1.length; i++) {
+		boxButtons = new JGradientButton[30];
+		for (int i = 0; i < me.boxes[1].length; i++) {
 			boxButtons[i] = new JGradientButton("");
 			boxButtons[i].setBounds(10 + (i % 6) * 90, 10 + (i / 6) * 80, 80, 60);
 			boxButtons[i].setVisible(true);
@@ -65,12 +59,11 @@ public class PBox extends JPanel {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		        // Display the next box
-		        currentBox++;
-		        if (currentBox > 3) {
-		            currentBox = 1;
+		        me.currentBox++;
+		        if (me.currentBox >= Player.MAX_BOXES) {
+		            me.currentBox = 0;
 		        }
 		        displayBox();
-		        //setTitle("Box " + currentBox); JFrame method TODO
 		    }
 		});
 		this.add(nextButton);
@@ -98,14 +91,7 @@ public class PBox extends JPanel {
                     	        	JButton depositButton = new JButton("Deposit");
                     	        	depositButton.addActionListener(f -> {
                     		            if (me.team[index] != null) {
-                    		            	Pokemon[] cBox;
-                    		            	if (currentBox == 1) {
-                    		        	        cBox = me.box1;
-                    		        	    } else if (currentBox == 2) {
-                    		        	        cBox = me.box2;
-                    		        	    } else {
-                    		        	        cBox = me.box3;
-                    		        	    }
+                    		            	Pokemon[] cBox = me.boxes[me.currentBox];
                     		            	
                     		            	Pokemon head = cBox[0];
                     		            	int count = 0;
@@ -151,14 +137,7 @@ public class PBox extends JPanel {
                     	            JOptionPane.showMessageDialog(null, summary, "Party member details", JOptionPane.PLAIN_MESSAGE);
             	        		} else {
             	        			if (me.team[index] != null) {
-                		            	Pokemon[] cBox;
-                		            	if (currentBox == 1) {
-                		        	        cBox = me.box1;
-                		        	    } else if (currentBox == 2) {
-                		        	        cBox = me.box2;
-                		        	    } else {
-                		        	        cBox = me.box3;
-                		        	    }
+                		            	Pokemon[] cBox = me.boxes[me.currentBox];
                 		            	
                 		            	Pokemon head = cBox[0];
                 		            	int count = 0;
@@ -215,12 +194,11 @@ public class PBox extends JPanel {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		        // Display the previous box
-		        currentBox--;
-		        if (currentBox < 1) {
-		            currentBox = 3;
+		        me.currentBox--;
+		        if (me.currentBox < 0) {
+		            me.currentBox = Player.MAX_BOXES - 1;
 		        }
 		        displayBox();
-		        //setTitle("Box " + currentBox); JFrame method TODO
 		    }
 		});
 		this.add(previousButton);
@@ -237,14 +215,7 @@ public class PBox extends JPanel {
 		JButton calcButton = new JButton("Calc");
 		calcButton.setBounds(555, 80, 60, 60);
 		calcButton.addActionListener(e -> {
-			Pokemon[] cBox = null;
-			if (currentBox == 1) {
-				cBox = me.box1;
-			} else if (currentBox == 2) {
-				cBox = me.box2;
-			} else if (currentBox == 3) {
-				cBox = me.box3;
-			}
+			Pokemon[] cBox = me.boxes[me.currentBox];
 			me.bag.bag[200].useCalc(me, cBox, isGauntlet);
 		});
 		this.add(calcButton);
@@ -254,14 +225,8 @@ public class PBox extends JPanel {
 	}
 	
 	public void displayBox() {
-	    Pokemon[] cBox;
-	    if (currentBox == 1) {
-	        cBox = me.box1;
-	    } else if (currentBox == 2) {
-	        cBox = me.box2;
-	    } else {
-	        cBox = me.box3;
-	    }
+		boxLabel.setText("Box " + (me.currentBox + 1));
+	    Pokemon[] cBox = me.boxes[me.currentBox];
 
 	    for (int i = 0; i < cBox.length; i++) {
 	        boxButtons[i].setText("");

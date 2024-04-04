@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import Swing.Pokemon.Task;
+
 public class Field {
 	
 	FieldEffect weather;
@@ -142,16 +144,16 @@ public class Field {
 	public boolean setWeather(FieldEffect weather) {
 		if (weather != null && weather.effect.isWeather) {
 	        if (this.weather == null || this.weather.effect != weather.effect) {
-	            Pokemon.console.writeln("The weather became " + weather.toString() + "!");
+	            Pokemon.addTask(Task.TEXT, "The weather became " + weather.toString() + "!");
 	            this.weather = weather;
 	            this.weatherTurns = weather.turns;
 	            return true;
 	        } else {
-	            Pokemon.console.writeln("The weather is already " + weather.toString() + "!");
+	            Pokemon.addTask(Task.TEXT, "The weather is already " + weather.toString() + "!");
 	            return false;
 	        }
 	    } else {
-	        Pokemon.console.writeln("Invalid weather effect or weather object is null.");
+	        Pokemon.addTask(Task.TEXT, "Invalid weather effect or weather object is null.");
 	        return false;
 	    }
 	}
@@ -159,16 +161,16 @@ public class Field {
 	public boolean setTerrain(FieldEffect terrain) {
 		if (terrain != null && terrain.effect.isTerrain) {
 	        if (this.terrain == null || this.terrain.effect != terrain.effect) {
-	            Pokemon.console.writeln("The terrain became " + terrain.toString() + "!");
+	            Pokemon.addTask(Task.TEXT, "The terrain became " + terrain.toString() + "!");
 	            this.terrain = terrain;
 	            this.terrainTurns = terrain.turns;
 	            return true;
 	        } else {
-	            Pokemon.console.writeln("The terrain is already " + terrain.toString() + "!");
+	            Pokemon.addTask(Task.TEXT, "The terrain is already " + terrain.toString() + "!");
 	            return false;
 	        }
 	    } else {
-	        Pokemon.console.writeln("Invalid terrain effect or terrain object is null.");
+	        Pokemon.addTask(Task.TEXT, "Invalid terrain effect or terrain object is null.");
 	        return false;
 	    }
 	}
@@ -177,68 +179,68 @@ public class Field {
 		if (effect.effect == Effect.TRICK_ROOM) {
 			if (contains(fieldEffects, effect.effect)) {
 				removeEffect(fieldEffects, effect.effect);
-				Pokemon.console.writeln("The twisted dimensions returned to normal!");
+				Pokemon.addTask(Task.TEXT, "The twisted dimensions returned to normal!");
 				return;
 			}
 		}
 		if (!contains(fieldEffects, effect.effect)) {
 			fieldEffects.add(effect);
-			Pokemon.console.writeln(effect.toString() + " took effect!");
+			Pokemon.addTask(Task.TEXT, effect.toString() + " took effect!");
 		} else {
-			Pokemon.console.writeln("But it failed!");
+			Pokemon.addTask(Task.TEXT, "But it failed!");
 		}
 	}
 	
 	public boolean setHazard(ArrayList<FieldEffect> side, FieldEffect hazard) {
 		if (hazard.effect == Effect.STEALTH_ROCKS) {
 			if (!contains(side, Effect.STEALTH_ROCKS)) {
-				Pokemon.console.writeln("Pointed rocks were scattered everywhere!");
+				Pokemon.addTask(Task.TEXT, "Pointed rocks were scattered everywhere!");
 				side.add(hazard);
 				hazard.layers = 1;
 				return true;
 			} else {
-				Pokemon.console.writeln("But it failed!");
+				Pokemon.addTask(Task.TEXT, "But it failed!");
 				return false;
 			}
 		} else if (hazard.effect == Effect.STICKY_WEBS) {
 			if (!contains(side, Effect.STICKY_WEBS)) {
-				Pokemon.console.writeln("Sticky webs were scattered at the Pokemon's feet!");
+				Pokemon.addTask(Task.TEXT, "Sticky webs were scattered at the Pokemon's feet!");
 				side.add(hazard);
 				hazard.layers = 1;
 			} else {
-				Pokemon.console.writeln("But it failed!");
+				Pokemon.addTask(Task.TEXT, "But it failed!");
 				return false;
 			}
 			return true;
 		} else if (hazard.effect == Effect.TOXIC_SPIKES) {
 			int layers = getLayers(side, Effect.TOXIC_SPIKES);
 			if (layers == 0) {
-				Pokemon.console.writeln("Poisonous Spikes were put at the Pokemon's feet!");
+				Pokemon.addTask(Task.TEXT, "Poisonous Spikes were put at the Pokemon's feet!");
 				side.add(hazard);
 				addLayer(side, Effect.TOXIC_SPIKES);
 				return true;
 			} else if (layers == 1) {
-				Pokemon.console.writeln("Poisonous Spikes were put at the Pokemon's feet!");
+				Pokemon.addTask(Task.TEXT, "Poisonous Spikes were put at the Pokemon's feet!");
 				addLayer(side, Effect.TOXIC_SPIKES);
 				return true;
 			} else if (layers == 2) {
-				Pokemon.console.writeln("But it failed!");
+				Pokemon.addTask(Task.TEXT, "But it failed!");
 				return false;
 			}
 			
 		} else if (hazard.effect == Effect.SPIKES) {
 			int layers = getLayers(side, Effect.SPIKES);
 			if (layers == 0) {
-				Pokemon.console.writeln("Spikes were scattered at the Pokemon's feet!");
+				Pokemon.addTask(Task.TEXT, "Spikes were scattered at the Pokemon's feet!");
 				side.add(hazard);
 				addLayer(side, Effect.SPIKES);
 				return true;
 			} else if (layers == 1 || layers == 2) {
-				Pokemon.console.writeln("Spikes were scattered at the Pokemon's feet!");
+				Pokemon.addTask(Task.TEXT, "Spikes were scattered at the Pokemon's feet!");
 				addLayer(side, Effect.SPIKES);
 				return true;
 			} else if (layers == 3) {
-				Pokemon.console.writeln("But it failed!");
+				Pokemon.addTask(Task.TEXT, "But it failed!");
 				return false;
 			}
 			
@@ -273,14 +275,14 @@ public class Field {
 	    if (weather != null) {
 	        weatherTurns--;
 	        if (weatherTurns == 0) {
-	            Pokemon.console.writeln("The weather returned to normal!");
+	            Pokemon.addTask(Task.TEXT, "The weather returned to normal!");
 	            weather = null;
 	        }
 	    }
 	    if (terrain != null) {
 	        terrainTurns--;
 	        if (terrainTurns == 0) {
-	            Pokemon.console.writeln("The terrain returned to normal!");
+	            Pokemon.addTask(Task.TEXT, "The terrain returned to normal!");
 	            terrain = null;
 	        }
 	    }
@@ -290,7 +292,7 @@ public class Field {
 	        FieldEffect effect = iterator.next();
 	        if (effect.turns > 0) effect.turns--;
 	        if (effect.turns == 0) {
-	            Pokemon.console.writeln(effect.effect.toString() + " wore off!");
+	            Pokemon.addTask(Task.TEXT, effect.effect.toString() + " wore off!");
 	            iterator.remove();
 	        }
 	    }
@@ -300,7 +302,7 @@ public class Field {
 	        FieldEffect effect = iterator.next();
 	        if (effect.turns > 0) effect.turns--;
 	        if (effect.turns == 0) {
-	            Pokemon.console.writeln("Your " + effect.effect.toString() + " wore off!");
+	            Pokemon.addTask(Task.TEXT, "Your " + effect.effect.toString() + " wore off!");
 	            iterator.remove();
 	        }
 	    }
@@ -310,7 +312,7 @@ public class Field {
 	        FieldEffect effect = iterator.next();
 	        if (effect.turns > 0) effect.turns--;
 	        if (effect.turns == 0) {
-	            Pokemon.console.writeln("Foe's " + effect.effect.toString() + " wore off!");
+	            Pokemon.addTask(Task.TEXT, "Foe's " + effect.effect.toString() + " wore off!");
 	            iterator.remove();
 	        }
 	    }
