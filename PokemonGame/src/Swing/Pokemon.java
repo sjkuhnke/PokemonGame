@@ -3423,7 +3423,7 @@ public class Pokemon implements Serializable {
 			useMove(move);
 			move = foe.lastMoveUsed;
 			if (move == null) {
-				addTask(Task.TEXT, "\nBut it failed!");
+				addTask(Task.TEXT, "But it failed!");
 				this.impressive = false;
 				this.moveMultiplier = 1;
 				return;
@@ -3994,35 +3994,28 @@ public class Pokemon implements Serializable {
 			}
 			
 			boolean fullHP = foe.currentHP == foe.getStat(0);
+			boolean sturdy = false;
+			if (damage >= foe.currentHP && (move == Move.FALSE_SWIPE || foe.vStatuses.contains(Status.ENDURE) || (foe.item == Item.FOCUS_BAND && checkSecondary(10)) || (fullHP && (foeAbility == Ability.STURDY || foe.item == Item.FOCUS_SASH)))) {
+				sturdy = true;
+			}
 			
 			// Damage foe
 			int dividend = Math.min(damage, foe.currentHP);
+			if (sturdy) dividend--;
 			double percent = dividend * 100.0 / foe.getStat(0); // change dividend to damage
 			String formattedPercent = String.format("%.1f", percent);
-			message += "\n(" + foe.nickname + " lost " + formattedPercent + "% of its HP.)";
-			foe.damage(damage, this, move, message, damageIndex);
+			addTask(Task.TEXT, "(" + foe.nickname + " lost " + formattedPercent + "% of its HP.)");
+			foe.damage(damage, this, move, message, damageIndex, sturdy);
 			if (foe.item == Item.AIR_BALLOON) {
 				addTask(Task.TEXT, foe.nickname + "'s Air Balloon popped!");
 				foe.consumeItem();
-			}
-			if (foe.item == Item.RED_CARD) {
-				boolean result = false;
-				if (this.trainerOwned() && enemy != null) {
-					result = enemy.swapRandom(foe, player);
-				} else if (this.playerOwned()) {
-					result = player.swapRandom(foe);
-				}
-				if (result) {
-					addTask(Task.TEXT, foe.nickname + " held up its Red Card!");
-					foe.consumeItem();
-				}
 			}
 			if (this.item == Item.THROAT_SPRAY && Move.getSound().contains(move)) {
 				addTask(Task.TEXT, this.nickname + " used its Throat Spray!");
 				stat(this, 2, 1, foe);
 				this.consumeItem();
 			}
-			if (foe.currentHP <= 0 && (move == Move.FALSE_SWIPE || foe.vStatuses.contains(Status.ENDURE) || (foe.item == Item.FOCUS_BAND && checkSecondary(10)) || (fullHP && (foeAbility == Ability.STURDY || foe.item == Item.FOCUS_SASH)))) {
+			if (sturdy) {
 				foe.currentHP = 1;
 				if (fullHP && foeAbility == Ability.STURDY) console.writeAbility(foe);
 				if (foe.item == Item.FOCUS_SASH) {
@@ -4048,8 +4041,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (recoil != 0) {
-				addTask(Task.TEXT, this.nickname + " was damaged by recoil!");
-				this.damage(recoil, foe);
+				this.damage(recoil, foe, this.nickname + " was damaged by recoil!");
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, foe);
 					foe.awardxp(getxpReward());
@@ -4140,6 +4132,22 @@ public class Pokemon implements Serializable {
 				this.vStatuses.add(Status.RECHARGE);
 			}
 		}
+		
+		if (foe.item == Item.RED_CARD) {
+			boolean result = false;
+			if (this.trainerOwned() && enemy != null) {
+				result = enemy.swapRandom(foe, player);
+			} else if (this.playerOwned()) {
+				result = player.swapRandom(foe);
+			}
+			if (result) {
+				addTask(Task.TEXT, foe.nickname + " held up its Red Card!");
+				foe.consumeItem();
+				endMove();
+				return;
+			}
+		}
+		
 		if (move == Move.MAGIC_BLAST) {
 			ArrayList<Move> moves = new ArrayList<>();
 			for (Move cand : Move.values()) {
@@ -10580,6 +10588,7 @@ public class Pokemon implements Serializable {
 		public static final int SWAP_OUT = 5;
 		public static final int FAINT = 6;
 		public static final int END = 7;
+		public static final int PARTY = 8;
 		
 		public int type;
 		public String message;
@@ -10587,6 +10596,7 @@ public class Pokemon implements Serializable {
 		
 		public int finish;
 		public Pokemon p; // the pokemon taking damage, or announcing an ability, or being sent out
+		public Ability ability;
 		
 		public Task(int type, String message) {
 			this(type, message, null);
@@ -10605,6 +10615,10 @@ public class Pokemon implements Serializable {
 		
 		public void setFinish(int f) {
 			this.finish = f;
+		}
+		
+		public void setAbility(Ability ability) {
+			this.ability = ability;
 		}
 		
 		public String toString() {
@@ -11110,8 +11124,7 @@ public class Pokemon implements Serializable {
 		if (this.isFainted()) return;
 		if (this.status == Status.TOXIC && toxic < 16) toxic++;
 		if (this.status == Status.FROSTBITE && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f);
-			addTask(Task.TEXT, "\n" + this.nickname + " was hurt by frostbite!");
+			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f, this.nickname + " was hurt by frostbite!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, f);
 				f.awardxp(getxpReward());
@@ -11119,8 +11132,7 @@ public class Pokemon implements Serializable {
 			}
 			
 		} else if (this.status == Status.BURNED && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f);
-			addTask(Task.TEXT, "\n" + this.nickname + " was hurt by its burn!");
+			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f, this.nickname + " was hurt by its burn!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, f);
 				f.awardxp(getxpReward());
@@ -11128,8 +11140,7 @@ public class Pokemon implements Serializable {
 			}
 			
 		} else if (this.status == Status.POISONED && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f);
-			addTask(Task.TEXT, "\n" + this.nickname + " was hurt by poison!");
+			this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f, this.nickname + " was hurt by poison!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, f);
 				f.awardxp(getxpReward());
@@ -11137,8 +11148,7 @@ public class Pokemon implements Serializable {
 			}
 			
 		} else if (this.status == Status.TOXIC && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.damage(Math.max((this.getStat(0) * 1.0 / 16) * toxic, 1), f);
-			addTask(Task.TEXT, "\n" + this.nickname + " was hurt by poison!");
+			this.damage(Math.max((this.getStat(0) * 1.0 / 16) * toxic, 1), f, this.nickname + " was hurt by poison!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, f);
 				f.awardxp(getxpReward());
@@ -11147,8 +11157,7 @@ public class Pokemon implements Serializable {
 			
 		}
 		if (this.vStatuses.contains(Status.CURSED) && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.damage(Math.max(this.getStat(0) * 1.0 / 4, 1), f);
-			addTask(Task.TEXT, "\n" + this.nickname + " was hurt by the curse!");
+			this.damage(Math.max(this.getStat(0) * 1.0 / 4, 1), f, this.nickname + " was hurt by the curse!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, f);
 				f.awardxp(getxpReward());
@@ -11160,8 +11169,7 @@ public class Pokemon implements Serializable {
 			int hp = (int) Math.max(this.getStat(0) * 1.0 / 8, 1);
 			if (hp >= this.currentHP) hp = this.currentHP;
 			if (f.currentHP > f.getStat(0)) f.currentHP = f.getStat(0);
-			this.damage(hp, f);
-			addTask(Task.TEXT, "\n" + f.nickname + " sucked health from " + this.nickname + "!");
+			this.damage(hp, f, f.nickname + " sucked health from " + this.nickname + "!");
 			if (f.item == Item.BIG_ROOT) hp *= 1.3;
 			f.currentHP += hp;
 			f.verifyHP();
@@ -11174,8 +11182,7 @@ public class Pokemon implements Serializable {
 		}
 		if (this.vStatuses.contains(Status.NIGHTMARE) && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			if (this.status == Status.ASLEEP) {
-				this.damage(Math.max(this.getStat(0) * 1.0 / 4, 1), f);
-				addTask(Task.TEXT, "\n" + this.nickname + " had a nightmare!");
+				this.damage(Math.max(this.getStat(0) * 1.0 / 4, 1), f, this.nickname + " had a nightmare!");
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, f);
 					f.awardxp(getxpReward());
@@ -11192,7 +11199,7 @@ public class Pokemon implements Serializable {
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
-				addTask(Task.TEXT, "\n" + this.nickname + " restored HP.");
+				addTask(Task.TEXT, this.nickname + " restored HP.");
 			}
 		} if (field.equals(field.terrain, Effect.GRASSY) && isGrounded()) {
 			if (this.currentHP < this.getStat(0)) {
@@ -11200,7 +11207,7 @@ public class Pokemon implements Serializable {
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
-				addTask(Task.TEXT, "\n" + this.nickname + " restored HP.");
+				addTask(Task.TEXT, this.nickname + " restored HP.");
 			}
 		} if (this.ability == Ability.RAIN_DISH && field.equals(field.weather, Effect.RAIN)) {
 			if (this.currentHP < this.getStat(0)) {
@@ -11217,7 +11224,6 @@ public class Pokemon implements Serializable {
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
-				addTask(Task.TEXT, "");
 				console.writeAbility(this);
 				addTask(Task.TEXT, this.nickname + " restored HP.");
 			}
@@ -11227,7 +11233,6 @@ public class Pokemon implements Serializable {
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
-				addTask(Task.TEXT, "");
 				console.writeAbility(this);
 				addTask(Task.TEXT, this.nickname + " restored HP.");
 			}
@@ -11237,7 +11242,7 @@ public class Pokemon implements Serializable {
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
-				addTask(Task.TEXT, "\n" + this.nickname + " restored a little HP using its Leftovers!");
+				addTask(Task.TEXT, this.nickname + " restored a little HP using its Leftovers!");
 			}
 		} if (this.item == Item.BLACK_SLUDGE) {
 			if (this.type1 == PType.POISON || this.type2 == PType.POISON) {
@@ -11246,12 +11251,11 @@ public class Pokemon implements Serializable {
 					if (this.currentHP > this.getStat(0)) {
 						this.currentHP = this.getStat(0);
 					}
-					addTask(Task.TEXT, "\n" + this.nickname + " restored a little HP using its Black Sludge!");
+					addTask(Task.TEXT, this.nickname + " restored a little HP using its Black Sludge!");
 				}
 			} else {
 				if (this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-					this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f);
-					addTask(Task.TEXT, "\n" + this.nickname + " was hurt by its Black Sludge!");
+					this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f, this.nickname + " was hurt by its Black Sludge!");
 				}
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, f);
@@ -11265,19 +11269,18 @@ public class Pokemon implements Serializable {
 				if (this.currentHP > this.getStat(0)) {
 					this.currentHP = this.getStat(0);
 				}
-				addTask(Task.TEXT, "\n" + this.nickname + "'s wish came true!");
+				addTask(Task.TEXT, this.nickname + "'s wish came true!");
 			} else {
-				addTask(Task.TEXT, "\n" + this.nickname + "'s HP is full!");
+				addTask(Task.TEXT, this.nickname + "'s HP is full!");
 			}
 			this.vStatuses.remove(Status.WISH);
 		} if (this.vStatuses.contains(Status.SPUN)) {
 			if (this.spunCount == 0) {
-				addTask(Task.TEXT, "\n" + this.nickname + " was freed from wrap!");
+				addTask(Task.TEXT, this.nickname + " was freed from wrap!");
 				this.vStatuses.remove(Status.SPUN);
 			} else {
 				if (this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-					this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f);
-					addTask(Task.TEXT, "\n" + this.nickname + " was hurt by being wrapped!");
+					this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f, this.nickname + " was hurt by being wrapped!");
 				}
 				this.spunCount--;
 				if (this.currentHP <= 0) { // Check for kill
@@ -11290,17 +11293,15 @@ public class Pokemon implements Serializable {
 		if (field.equals(field.weather, Effect.SANDSTORM) && this.type1 != PType.ROCK && this.type1 != PType.STEEL && this.type1 != PType.GROUND
 				&& this.ability != Ability.SAND_FORCE && this.ability != Ability.SAND_RUSH && this.ability != Ability.SAND_VEIL && this.type2 != PType.ROCK 
 				&& this.type2 != PType.STEEL && this.type2 != PType.GROUND && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f);
-			addTask(Task.TEXT, "\n" + this.nickname + " was buffeted by the sandstorm!");
+			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f, this.nickname + " was buffeted by the sandstorm!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, f);
 				f.awardxp(getxpReward());
 				return;
 			}
 		} if (this.ability == Ability.DRY_SKIN && field.equals(field.weather, Effect.SUN)) {
-			this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f);
 			console.writeAbility(this);
-			addTask(Task.TEXT, "\n" + this.nickname + " was hurt!");
+			this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f, this.nickname + " was hurt!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, f);
 				f.awardxp(getxpReward());
@@ -11309,8 +11310,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN) && field.weatherTurns > 1) {
-			this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f);
-			addTask(Task.TEXT, "\n" + this.nickname + " was hurt!");
+			this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f, this.nickname + " was hurt!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, f);
 				f.awardxp(getxpReward());
@@ -11320,7 +11320,7 @@ public class Pokemon implements Serializable {
 		
 		if (this.perishCount > 0) {
 			this.perishCount--;
-			addTask(Task.TEXT, "\n" + this.nickname + "'s perish count fell to " + this.perishCount + "!");
+			addTask(Task.TEXT, this.nickname + "'s perish count fell to " + this.perishCount + "!");
 			if (this.perishCount == 0) {
 				this.faint(true, f);
 				f.awardxp(getxpReward());
@@ -11365,11 +11365,9 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (this.item == Item.FLAME_ORB && this.status == Status.HEALTHY) {
-			addTask(Task.TEXT, "");
 			this.burn(false, this);
 		}
 		if (this.item == Item.TOXIC_ORB && this.status == Status.HEALTHY) {
-			addTask(Task.TEXT, "");
 			this.toxic(false, this);
 		}
 		
@@ -12670,7 +12668,7 @@ public class Pokemon implements Serializable {
 			this.swapIn(foe, false);
 		}
 		if (this.item == Item.AIR_BALLOON) {
-			addTask(Task.TEXT, this.nickname + " floated on its Air Balloon!\n");
+			addTask(Task.TEXT, this.nickname + " floated on its Air Balloon!");
 		}
 		if (hazards && this.item != Item.HEAVY$DUTY_BOOTS) {
 			ArrayList<FieldEffect> side = playerOwned() ? field.playerSide : field.foeSide;
@@ -12719,8 +12717,17 @@ public class Pokemon implements Serializable {
 		this.damage(amt, foe, null, "", -1);
 	}
 	
+	private void damage(double amt, Pokemon foe, String message) {
+		this.damage((int) amt, foe, null, message, -1);
+	}
+	
 	private void damage(int amt, Pokemon foe, Move move, String message, int damageIndex) {
+		this.damage(amt, foe, move, message, damageIndex, false);
+	}
+	
+	private void damage(int amt, Pokemon foe, Move move, String message, int damageIndex, boolean sturdy) {
 		this.currentHP -= amt;
+		if (sturdy) this.currentHP = 1;
 		if (move != null && currentHP > 0 && move != Move.INCINERATE && move != Move.KNOCK_OFF && move != Move.BUG_BITE && move != Move.PLUCK &&
 				move != Move.THIEF && move != Move.COVET) this.checkBerry(foe);
 		Task t = null;

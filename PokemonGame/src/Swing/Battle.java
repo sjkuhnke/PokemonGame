@@ -100,7 +100,7 @@ public class Battle extends JPanel {
 		this.trainerIndex = trainerIndex;
 		int faintIndex = 0;
 		while (me.getCurrent().isFainted()) {
-			me.swap(me.team[++faintIndex], faintIndex);
+			me.swapToFront(me.team[++faintIndex], faintIndex);
 		}
 		
 		//setTitle("Battle"); JFrame exclusive
@@ -771,7 +771,7 @@ public class Battle extends JPanel {
     			if (!me.getCurrent().isFainted() && foeTrainer != null && foeTrainer.getCurrent().vStatuses.contains(Status.SWAP)) { // AI wants to swap out
     				Pokemon faster = me.getCurrent().getFaster(foe, 0, 0);
     				if (me.getCurrent() == faster) {
-    					me.swap(me.team[index], index);
+    					me.swapToFront(me.team[index], index);
     					me.getCurrent().swapIn(foe, true);
     					
     					foe = foeTrainer.swapOut(oldCurrent, move, false);
@@ -780,12 +780,12 @@ public class Battle extends JPanel {
     					foe = foeTrainer.swapOut(oldCurrent, move, false);
         				foeCanMove = false;
         				
-        				me.swap(me.team[index], index);
+        				me.swapToFront(me.team[index], index);
         				me.getCurrent().swapIn(foe, true);
     				}
     				
     			} else {
-    				me.swap(me.team[index], index);
+    				me.swapToFront(me.team[index], index);
     				me.getCurrent().swapIn(foe, true);
     			}
 				updateField(field);
@@ -1521,7 +1521,7 @@ public class Battle extends JPanel {
 			            			JOptionPane.showMessageDialog(null, me.team[index].showSummary(me, false, null, null), "Party member details", JOptionPane.PLAIN_MESSAGE);
 			            		} else {
 			            			if (baton) me.team[index].statStages = me.getCurrent().statStages;
-					                me.swap(me.team[index], index);
+					                me.swapToFront(me.team[index], index);
 					                me.getCurrent().swapIn(foe, true);
 					                updateField(field);
 					                foe.vStatuses.remove(Status.TRAPPED);

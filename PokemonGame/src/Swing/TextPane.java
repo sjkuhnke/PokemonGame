@@ -88,7 +88,8 @@ public class TextPane extends JTextPane {
 	}
 
 	public void writeAbility(Pokemon p) {
-		Pokemon.addTask(Task.ABILITY, "[" + p.nickname + "'s " + p.ability + "]:", p);
+		Task t = Pokemon.addTask(Task.ABILITY, "[" + p.nickname + "'s " + p.ability + "]:", p);
+		t.setAbility(p.ability);
 	}
 	
 	public void writeAbility(Pokemon p, boolean newLine) {

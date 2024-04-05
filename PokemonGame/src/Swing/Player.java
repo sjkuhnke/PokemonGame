@@ -132,8 +132,11 @@ public class Player extends Trainer implements Serializable {
 	}
 
 
-	public void swap(Pokemon pokemon, int index) {
-		Pokemon.console.writeln("\n" + current.nickname + ", come back!", false, 16);
+	public void swapToFront(Pokemon pokemon, int index) {
+		if (!current.isFainted()) {
+			Pokemon.addSwapOutTask(current);
+		}
+		
 		if (current.ability == Ability.REGENERATOR) {
 			current.currentHP += current.getStat(0) / 3;
 			current.verifyHP();
@@ -150,10 +153,20 @@ public class Player extends Trainer implements Serializable {
 			numBattled++;
 			this.current.battled = true;
 		}
-		Pokemon.console.write("Go ", false, 16);
-		Pokemon.console.write(current.nickname, true, 16);
-		Pokemon.console.writeln("!", false, 16);
+		Pokemon.addSwapInTask(current);
 		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
+	}
+	
+	public void swap(int a, int b) {
+		Pokemon temp = team[a];
+		team[a] = team[b];
+		team[b] = temp;
+		
+		if (current == team[a]) {
+			current = team[b];
+		} else if (current == team[b]) {
+			current = team[a];
+		}
 	}
 	
 	public int getBattled() {
@@ -269,7 +282,7 @@ public class Player extends Trainer implements Serializable {
 			index = rand.nextInt(team.length);
 		}
 		
-		swap(team[index], index);
+		swapToFront(team[index], index);
 		
 		Pokemon.console.write(current.nickname, true, 16);
 		Pokemon.console.writeln(" was dragged out!", false, 16);

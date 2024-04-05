@@ -1218,7 +1218,7 @@ public class PlayerCharacter extends Entity {
 			            JButton swapButton = new JButton("Swap");
 				        swapButton.addActionListener(f -> {
 				            if (p.team[index] != null && p.team[index] != p.getCurrent()) {
-				                p.swap(p.team[index], index); // Call the swap method in the Player class
+				                p.swapToFront(p.team[index], index); // Call the swap method in the Player class
 				                JOptionPane.getRootFrame().dispose();
 				                showParty(); // Update the party display after swapping
 				            }

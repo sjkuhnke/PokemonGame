@@ -36,17 +36,22 @@ public class BattleUI extends AbstractUI {
 	public int moveNum = 0;
 	private int dialogueCounter = 0;
 	private int abilityCounter = 0;
+	private int cooldownCounter = 0;
 	private int hpCounter = 0;
-	private Pokemon currentAbility;
+	private Pokemon currentAbilityHost;
+	private Ability currentAbility;
 	public Task currentTask;
 	public ArrayList<Task> tasks;
 	private Field field;
+	
+	public boolean cancellableParty;
 
 	public static final int STARTING_STATE = -1;
 	public static final int IDLE_STATE = 0;
 	public static final int TASK_STATE = 1;
 	public static final int MOVE_SELECTION_STATE = 2;
 	public static final int PARTY_SELECTION_STATE = 3;
+	public static final int COOLDOWN_STATE = 9;
 	public static final int END_STATE = 10;
 	
 	public static final int DIALOGUE_WAITING_STATE = 0;
@@ -109,6 +114,10 @@ public class BattleUI extends AbstractUI {
 			taskState();
 		}
 		
+		if (subState == COOLDOWN_STATE) {
+			cooldownState();
+		}
+		
 		if (currentAbility != null) {
 			drawAbility();
 		}
@@ -132,6 +141,19 @@ public class BattleUI extends AbstractUI {
 		// Dialogue States
 		if (dialogueState == DIALOGUE_STATE) {
 			drawDialogueState();
+		}
+	}
+	
+	private void endTask() {
+		subState = COOLDOWN_STATE;
+	}
+
+	private void cooldownState() {
+		currentTask = null;
+		cooldownCounter++;
+		if (cooldownCounter >= 25) {
+			cooldownCounter = 0;
+			subState = TASK_STATE;
 		}
 	}
 
@@ -160,10 +182,10 @@ public class BattleUI extends AbstractUI {
 		drawSubWindow(x, y, width, height);
 		x += gp.tileSize * 2;
 		y += gp.tileSize * 3 / 4;
-		String topText = currentAbility.nickname + "'s";
+		String topText = currentAbilityHost.nickname + "'s";
 		g2.drawString(topText, this.getCenterAlignedTextX(topText, x), y);
 		y += gp.tileSize * 3 / 4;
-		String bottomText = currentAbility.ability.toString() + ":";
+		String bottomText = currentAbility.toString() + ":";
 		g2.drawString(bottomText, this.getCenterAlignedTextX(bottomText, x), y);
 		
 		if (abilityCounter == 25) {
@@ -171,12 +193,6 @@ public class BattleUI extends AbstractUI {
 			currentTask = null;
 		}
 	}
-
-//	private void preTurnStateStart() {
-//		drawFoe(foe.currentHP);
-//		drawUser(user.currentHP);
-//		if (currentTask == null && tasks.isEmpty()) subState = IDLE_STATE;
-//	}
 
 	private void drawTask() {
 		if (currentTask.type == Task.TEXT) {
@@ -190,7 +206,7 @@ public class BattleUI extends AbstractUI {
 				if (userHP == currentTask.finish) {
 					if (hpCounter >= 50) {
 						hpCounter = 0;
-						currentTask = null;
+						endTask();
 					}
 					
 				}
@@ -200,12 +216,13 @@ public class BattleUI extends AbstractUI {
 				if (foeHP == currentTask.finish) {
 					if (hpCounter >= 50) {
 						hpCounter = 0;
-						currentTask = null;
+						endTask();
 					}
 				}
 			}
 		} else if (currentTask.type == Task.ABILITY) {
-			currentAbility = currentTask.p;
+			currentAbilityHost = currentTask.p;
+			currentAbility = currentTask.ability;
 		} else if (currentTask.type == Task.SWAP_IN) {
 			currentDialogue = currentTask.message;
 			if (currentTask.p.playerOwned()) {
@@ -232,7 +249,7 @@ public class BattleUI extends AbstractUI {
 			}
 			if (counter >= 100) {
 				counter = 0;
-				currentTask = null;
+				endTask();
 			}
 		} else if (currentTask.type == Task.FAINT) {
 			currentDialogue = currentTask.message;
@@ -242,10 +259,17 @@ public class BattleUI extends AbstractUI {
 			}
 			if (counter >= 100) {
 				counter = 0;
-				currentTask = null;
+				if (currentTask.p == user) {
+					Pokemon.addTask(Task.PARTY, "");
+				}
+				endTask();
 			}
 		} else if (currentTask.type == Task.END) {
 			subState = END_STATE;
+		} else if (currentTask.type == Task.PARTY) {
+			currentDialogue = "";
+			cancellableParty = false;
+			subState = PARTY_SELECTION_STATE;
 		}
 	}
 	
@@ -411,22 +435,17 @@ public class BattleUI extends AbstractUI {
 		g2.drawString(p.nickname, x, y);
 		g2.drawString(p.level + "", levelX, levelY);
 	}
-	
-	private Color getHPBarColor(double hpRatio) {
-		if (hpRatio < 0.25) {
-			return Color.red;
-		} else if (hpRatio <= 0.5) {
-			return Color.yellow;
-		} else {
-			return Color.green;
-		}
-	}
 
 	@SuppressWarnings("unused") // DEBUG
 	private String getStateName() {
 		switch (subState) {
 		case STARTING_STATE: return "Starting State";
 		case IDLE_STATE: return "Idle State";
+		case TASK_STATE: return "Task State";
+		case MOVE_SELECTION_STATE: return "Move Select State";
+		case PARTY_SELECTION_STATE: return "Party Select State";
+		case COOLDOWN_STATE: return "Cooldown State";
+		case END_STATE: return "End State";
 		default: return "Not added to getStateName() yet";
 		}
 		
@@ -500,6 +519,12 @@ public class BattleUI extends AbstractUI {
 		g2.drawString("PARTY", x + 30, y + 50);
 		if (commandNum == 1) {
 			g2.drawRoundRect(x, y, width, height, 10, 10);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				currentDialogue = "";
+				cancellableParty = true;
+				subState = PARTY_SELECTION_STATE;
+			}
 		}
 		
 		x = gp.tileSize * 7;
@@ -532,7 +557,6 @@ public class BattleUI extends AbstractUI {
 	
 	private void drawPartySelectionScreen() {
 		drawParty();
-		
 	}
 
 	private void drawActionBackground(Pokemon p, int x, int y, int width, int height) {
@@ -624,8 +648,8 @@ public class BattleUI extends AbstractUI {
 			
 			// Check for swap (player)
 			if (user.trainer.hasValidMembers() && faster.vStatuses.contains(Status.SWITCHING)) {
-				//faster = getSwap(pl, faster.lastMoveUsed == Move.BATON_PASS); TODO: write switching out selection method
-				tempUserHP = faster.currentHP;
+				Pokemon.addTask(Task.PARTY, ""); // TODO: update faster with new Pokemon sent in
+				//tempUserHP = faster.currentHP;
 			}
 			
 			if (fMove == Move.SUCKER_PUNCH) fMove = Move.FAILED_SUCKER; // TODO: make move method check if you're faster and if not make Sucker Punch fail (move() has an argument for this)
@@ -659,8 +683,8 @@ public class BattleUI extends AbstractUI {
 	        if (slower == user.trainer.getCurrent()) slower.move(faster, uMove, false);
 	        // Check for swap
 	        if (user.trainer.hasValidMembers() && faster.vStatuses.contains(Status.SWITCHING)) {
-				//slower = getSwap(pl, slower.lastMoveUsed == Move.BATON_PASS); TODO: write switching out selection method
-	        	tempUserHP = slower.currentHP;
+	        	Pokemon.addTask(Task.PARTY, ""); // TODO: fix, update slower with new Pokemon sent in
+	        	//tempUserHP = slower.currentHP;
 			}
 		}
 	    subState = TASK_STATE;
@@ -728,6 +752,35 @@ public class BattleUI extends AbstractUI {
 		if (foe.trainer != null) {
 			foe.trainer.heal();
 			foe.trainer.setCurrent(foe.trainer.getTeam()[0]);
+		}
+	}
+	
+	@Override
+	public void drawParty() {
+		super.drawParty();
+		currentTask = null;
+		if (gp.keyH.aPressed) {
+			gp.keyH.aPressed = false;
+			Pokemon select = gp.player.p.team[partyNum];
+			if (select.isFainted()) {
+				currentDialogue = select.nickname + " has no energy to battle!";
+			} else if (select == select.trainer.getCurrent()) {
+				currentDialogue = select.nickname + " is already out!";
+			} else {
+				subState = TASK_STATE;
+				gp.player.p.swapToFront(gp.player.p.team[partyNum], partyNum);
+				gp.player.p.getCurrent().swapIn(foe, true);
+				partyNum = 0;
+				dialogueCounter = 0;
+			}
+		}
+		if (!currentDialogue.equals("")) {
+			drawDialogueScreen(false);
+			dialogueCounter++;
+			if (dialogueCounter >= 50) {
+				dialogueCounter = 0;
+				currentDialogue = "";
+			}
 		}
 	}
 
