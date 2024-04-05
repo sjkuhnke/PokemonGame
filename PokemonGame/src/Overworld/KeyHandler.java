@@ -34,6 +34,19 @@ public class KeyHandler implements KeyListener {
 		} else if (gp.gameState == GamePanel.BATTLE_STATE) {
 			battleState(code);
 		}
+		
+		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			upPressed = true;
+		}
+		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			downPressed = true;
+		}
+		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+			leftPressed = true;
+		}
+		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+			rightPressed = true;
+		}
 	}
 
 	@Override
@@ -97,6 +110,10 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_W) {
 			wPressed = true;
 		}
+		
+		if (code == KeyEvent.VK_A) {
+			aPressed = true;
+		}
 		if (gp.battleUI.subState == BattleUI.IDLE_STATE) {
 			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
 				if (gp.battleUI.commandNum > 1) {
@@ -144,6 +161,11 @@ public class KeyHandler implements KeyListener {
 				}
 			}
 		}
+		if (gp.battleUI.subState == BattleUI.PARTY_SELECTION_STATE) {
+			if (code == KeyEvent.VK_S && gp.battleUI.cancellableParty) {
+				gp.battleUI.subState = BattleUI.IDLE_STATE;
+			}
+		}
 	}
 	
 	private void dialogueState(int code) {
@@ -158,9 +180,14 @@ public class KeyHandler implements KeyListener {
 				gp.gameState = GamePanel.PLAY_STATE;
 			}
 			gp.ui.subState = 0;
+			gp.ui.partySelectedNum = -1;
+			gp.ui.partyNum = 0;
 		}
 		if (code == KeyEvent.VK_W) {
 			wPressed = true;
+		}
+		if (code == KeyEvent.VK_A) {
+			aPressed = true;
 		}
 		
 		int maxCommandNum = 0;
@@ -170,16 +197,21 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
-			gp.ui.menuNum--;
-			if (gp.ui.menuNum < 0) {
-				gp.ui.menuNum = maxCommandNum;
+			if (gp.ui.subState == 0) {
+				gp.ui.menuNum--;
+				if (gp.ui.menuNum < 0) {
+					gp.ui.menuNum = maxCommandNum;
+				}
 			}
 		}
 		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
-			gp.ui.menuNum++;
-			if (gp.ui.menuNum > maxCommandNum) {
-				gp.ui.menuNum = 0;
+			if (gp.ui.subState == 0) {
+				gp.ui.menuNum++;
+				if (gp.ui.menuNum > maxCommandNum) {
+					gp.ui.menuNum = 0;
+				}
 			}
+			
 		}
 	}
 	

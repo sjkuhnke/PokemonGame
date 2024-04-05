@@ -103,33 +103,27 @@ public class UI extends AbstractUI{
 			optionsTop(x, y);
 			break;
 		case 1:
-			gp.keyH.wPressed = false;
 			gp.player.showDex();
 			break;
 		case 2:
-			gp.keyH.wPressed = false;
 			showParty();
 			break;
 		case 3:
-			gp.keyH.wPressed = false;
 			gp.gameState = GamePanel.PLAY_STATE;
 			subState = 0;
 			gp.player.showBag();
 			break;
 		case 4:
-			gp.keyH.wPressed = false;
 			gp.gameState = GamePanel.PLAY_STATE;
 			subState = 0;
 			gp.player.saveGame();
 			break;
 		case 5:
-			gp.keyH.wPressed = false;
 			gp.gameState = GamePanel.PLAY_STATE;
 			subState = 0;
 			gp.player.showPlayer();
 			break;
 		case 6:
-			gp.keyH.wPressed = false;
 			gp.openMap();
 			break;
 		}
@@ -153,6 +147,7 @@ public class UI extends AbstractUI{
 		if (menuNum == 0) {
 			g2.drawString(">", textX- (25 + gp.tileSize), textY);
 			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
 				subState = 1;
 			}
 		}
@@ -165,6 +160,7 @@ public class UI extends AbstractUI{
 		if (menuNum == 1) {
 			g2.drawString(">", textX- (25 + gp.tileSize), textY);
 			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
 				subState = 2;
 			}
 		}
@@ -177,6 +173,7 @@ public class UI extends AbstractUI{
 		if (menuNum == 2) {
 			g2.drawString(">", textX- (25 + gp.tileSize), textY);
 			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
 				subState = 3;
 			}
 		}
@@ -189,6 +186,7 @@ public class UI extends AbstractUI{
 		if (menuNum == 3) {
 			g2.drawString(">", textX- (25 + gp.tileSize), textY);
 			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
 				subState = 4;
 			}
 		}
@@ -201,6 +199,7 @@ public class UI extends AbstractUI{
 		if (menuNum == 4) {
 			g2.drawString(">", textX- (25 + gp.tileSize), textY);
 			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
 				subState = 5;
 			}
 		}
@@ -213,6 +212,7 @@ public class UI extends AbstractUI{
 		if (menuNum == 5) {
 			g2.drawString(">", textX- (25 + gp.tileSize), textY);
 			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
 				subState = 6;
 			}
 		}
@@ -225,6 +225,7 @@ public class UI extends AbstractUI{
 		if (menuNum == 6) {
 			g2.drawString(">", textX- (25 + gp.tileSize), textY);
 			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
 				gp.gameState = GamePanel.PLAY_STATE;
 				gp.ui.subState = 0;
 			}
@@ -233,6 +234,17 @@ public class UI extends AbstractUI{
 	
 	private void showParty() {
 		drawParty();
+		if (gp.keyH.aPressed) {
+			gp.keyH.aPressed = false;
+			if (partySelectedNum == -1) {
+				partySelectedNum = partyNum;
+			} else {
+				if (partySelectedNum != partyNum) {
+					gp.player.p.swap(partySelectedNum, partyNum);
+				}
+				partySelectedNum = -1;
+			}
+		}
 	}
 	
 	public BufferedImage setup(String imageName, int scale) {

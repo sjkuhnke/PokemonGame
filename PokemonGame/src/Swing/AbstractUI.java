@@ -18,6 +18,8 @@ public abstract class AbstractUI {
 	public Graphics2D g2;
 	public String currentDialogue;
 	public int commandNum;
+	public int partyNum;
+	public int partySelectedNum = -1;
 	public Font marumonica;
 	public int counter = 0;
 
@@ -120,6 +122,34 @@ public abstract class AbstractUI {
 		int height = gp.tileSize*10;
 		
 		drawSubWindow(x, y, width, height);
+
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			if (partyNum > 1) {
+				partyNum -= 2;
+			}
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			if (partyNum < 4) {
+				partyNum += 2;
+			}
+		}
+		
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			if (partyNum % 2 != 0) {
+				partyNum--;
+			}
+		}
+		
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			if (partyNum % 2 == 0) {
+				partyNum++;
+			}
+		}
 		
 		x += gp.tileSize / 2;
 		y += gp.tileSize / 2;
@@ -138,9 +168,34 @@ public abstract class AbstractUI {
 				} else {
 					background = new Color(200, 200, 0, 200);
 				}
+				if (partySelectedNum == i) background = new Color(100, 100, 220, 200);
+				if (partyNum == i) background = background.brighter();
 				g2.setColor(background);
 				g2.fillRoundRect(x + 12, y + 12, partyWidth - 12, partyHeight - 12, 15, 15);
-				g2.drawImage(p.getMiniSprite(), x, y, null);
+				g2.setColor(background.brighter());
+				g2.drawRoundRect(x + 12, y + 12, partyWidth - 12, partyHeight - 12, 15, 15);
+				if (partyNum == i) {
+					g2.setColor(Color.RED);
+					g2.drawRoundRect(x + 8, y + 8, partyWidth - 4, partyHeight - 4, 18, 18);
+				}
+				g2.drawImage(p.getSprite(), x + (gp.tileSize / 4), y + (gp.tileSize / 2), null);
+				if (p.item != null) {
+					g2.drawImage(p.item.getImage(), x + (gp.tileSize / 4) + 8, y + 84, null);
+				}
+				g2.setColor(Color.BLACK);
+				g2.setFont(g2.getFont().deriveFont(24F));
+				g2.drawString(p.nickname, getCenterAlignedTextX(p.nickname, (int) (x + (partyWidth * 0.75) - 12)), y + gp.tileSize);
+				int barX = (x + gp.tileSize * 2) - 4;
+				int barY = (int) (y + (gp.tileSize * 1.25));
+				int barWidth = (int) (gp.tileSize * 2.5);
+				int barHeight = gp.tileSize / 3;
+				g2.fillRoundRect(barX, barY, barWidth, barHeight, 10, 10);
+				double hpRatio = p.currentHP * 1.0 / p.getStat(0);
+				g2.setColor(new Color(195, 190, 195));
+				g2.fillRoundRect(barX + 3, barY + 3, barWidth - 6, barHeight - 6, 8, 8);
+				g2.setColor(getHPBarColor(hpRatio));
+				g2.fillRoundRect(barX + 3, barY + 3, (int) (hpRatio * (barWidth - 6)), barHeight - 6, 8, 8);
+				
 			}
 			if (i % 2 == 0) {
 				x += partyWidth;
@@ -148,6 +203,16 @@ public abstract class AbstractUI {
 				x = startX;
 				y += partyHeight;
 			}
+		}
+	}
+	
+	public Color getHPBarColor(double hpRatio) {
+		if (hpRatio < 0.25) {
+			return Color.red;
+		} else if (hpRatio <= 0.5) {
+			return Color.yellow;
+		} else {
+			return Color.green;
 		}
 	}
 }

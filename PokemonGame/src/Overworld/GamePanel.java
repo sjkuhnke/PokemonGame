@@ -190,7 +190,12 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		
 		ui.transitionBuffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 		gameState = START_BATTLE_STATE;
-		battleUI.user = player.p.getCurrent();
+		int index = 0;
+		Pokemon user = player.p.team[index++];
+		while (user.isFainted()) {
+			user = player.p.team[index++];
+		}
+		battleUI.user = user;
 		battleUI.foe = Main.trainers[trainer].getCurrent();
 		battleUI.index = trainer;
 		
