@@ -30,6 +30,9 @@ public class BattleUI extends AbstractUI {
 	public int foeHP;
 	public int tempUserHP;
 	public int tempFoeHP;
+	public Status userStatus;
+	public Status foeStatus;
+	public Move foeMove;
 	
 	public int subState = 0;
 	public int dialogueState = DIALOGUE_FREE_STATE;
@@ -51,6 +54,7 @@ public class BattleUI extends AbstractUI {
 	public static final int TASK_STATE = 1;
 	public static final int MOVE_SELECTION_STATE = 2;
 	public static final int PARTY_SELECTION_STATE = 3;
+	public static final int SUMMARY_STATE = 4;
 	public static final int COOLDOWN_STATE = 9;
 	public static final int END_STATE = 10;
 	
@@ -136,6 +140,10 @@ public class BattleUI extends AbstractUI {
 		
 		if (subState == PARTY_SELECTION_STATE) {
 			drawPartySelectionScreen();
+		}
+		
+		if (subState == SUMMARY_STATE) {
+			drawSummary();
 		}
 		
 		// Dialogue States
@@ -228,10 +236,12 @@ public class BattleUI extends AbstractUI {
 			if (currentTask.p.playerOwned()) {
 				user = currentTask.p;
 				userHP = tempUserHP == 0 ? user.currentHP : tempUserHP;
+				userStatus = user.status;
 				drawUserPokeball(true);
 			} else {
 				foe = currentTask.p;
 				foeHP = tempFoeHP == 0 ? foe.currentHP : tempFoeHP;
+				foeStatus = foe.status;
 				drawFoePokeball(true);
 			}
 			if (counter >= 100) {
@@ -247,7 +257,7 @@ public class BattleUI extends AbstractUI {
 			} else {
 				drawFoePokeball(false);
 			}
-			if (counter >= 100) {
+			if (counter >= 50) {
 				counter = 0;
 				endTask();
 			}
@@ -265,17 +275,23 @@ public class BattleUI extends AbstractUI {
 				endTask();
 			}
 		} else if (currentTask.type == Task.END) {
+			if (currentTask.wipe) wipe();
 			subState = END_STATE;
 		} else if (currentTask.type == Task.PARTY) {
 			currentDialogue = "";
 			cancellableParty = false;
 			subState = PARTY_SELECTION_STATE;
+		} else if (currentTask.type == Task.STATUS) {
+			showMessage(currentTask.message);
+			if (currentTask.p.playerOwned()) {
+				userStatus = currentTask.status;
+			} else {
+				foeStatus = currentTask.status;
+			}
 		}
 	}
 	
 	private void drawIdleScreen() {
-		drawFoe();
-		drawUser();
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);
 		drawActionScreen(user);
@@ -287,15 +303,38 @@ public class BattleUI extends AbstractUI {
 		drawHPBar(user, userHP);
 		drawNameLabel(user);
 		drawUserSprite();
-		drawUserHP(userHP);	
+		drawUserHP(userHP);
+		drawStatus(user);
+		drawTypes(user);
 	}
-
+	
 	private void drawFoe() {
 		if (!foe.isVisible()) return;
 		drawHPImage(foe);
 		drawHPBar(foe, foeHP);
 		drawNameLabel(foe);
 		drawFoeSprite();
+		drawStatus(foe);
+		drawTypes(foe);
+	}
+
+	private void drawStatus(Pokemon p) {
+		if (p.playerOwned()) {
+			if (userStatus != Status.HEALTHY) g2.drawImage(setup("/battle/" + userStatus.toString().toLowerCase(), 2), 339, 326, null);
+		} else {
+			if (foeStatus != Status.HEALTHY) g2.drawImage(setup("/battle/" + foeStatus.toString().toLowerCase(), 2), 232, 78, null);
+		}
+	}
+
+	private void drawTypes(Pokemon p) {
+		if (p.playerOwned()) {
+			g2.drawImage(setup("/battle/" + p.type1.toString().toLowerCase(), 1), 340, 298, null);
+			if (p.type2 != null) g2.drawImage(setup("/battle/" + p.type2.toString().toLowerCase(), 1), 364, 298, null);
+		} else {
+			g2.drawImage(setup("/battle/" + p.type1.toString().toLowerCase(), 1), 232, 50, null);
+			if (p.type2 != null) g2.drawImage(setup("/battle/" + p.type2.toString().toLowerCase(), 1), 256, 50, null);
+		}
+		
 	}
 
 	private void drawHPImage(Pokemon p) {
@@ -303,7 +342,7 @@ public class BattleUI extends AbstractUI {
 			g2.drawImage(setup("/battle/user_hp", 1), 302, 280, null);
 		} else {
 			g2.drawImage(setup("/battle/foe_hp", 1), 222, 39, null);
-		}		
+		}
 	}
 
 	private void drawUserHP(int hp) {
@@ -334,6 +373,7 @@ public class BattleUI extends AbstractUI {
 					gp.endBattle(index, -1);
 					gp.gameState = GamePanel.PLAY_STATE;
 				}
+				break;
 			}
 			dialogueState = DIALOGUE_FREE_STATE;
 			currentDialogue = "";
@@ -372,15 +412,15 @@ public class BattleUI extends AbstractUI {
 	
 	private void drawUserPokeball(boolean arriving) {
 		counter++;
-		if (counter < 50) {
-			if (arriving) g2.drawImage(setup("/items/pokeball", 2), 133, 348, null);
-		} else {
-			if (arriving) {
-				user.setVisible(true);
-			} else {
-				currentTask.p.setVisible(false);
+		if (arriving) {
+			if (counter < 50) {
 				g2.drawImage(setup("/items/pokeball", 2), 133, 348, null);
+			} else {
+				user.setVisible(true);
 			}
+		} else {
+			currentTask.p.setVisible(false);
+			g2.drawImage(setup("/items/pokeball", 2), 133, 348, null);
 		}
 	}
 	
@@ -397,7 +437,7 @@ public class BattleUI extends AbstractUI {
 		g2.setColor(getHPBarColor(hpRatio));
 		int x;
 		int y;
-		int width = (int) (hpRatio * 120);
+		int width = amt == 0 ? 0 : Math.max((int) (hpRatio * 120), 1);
 		int height = 8;
 		if (p.playerOwned()) {
 			x = 426;
@@ -548,8 +588,6 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void drawMoveSelectionScreen() {
-		drawFoe();
-		drawUser();
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);
 		drawMoves();
@@ -605,7 +643,8 @@ public class BattleUI extends AbstractUI {
 		            g2.setColor(Color.WHITE);
 		            g2.drawRoundRect(x, y, width, height, 10, 10);
 		            if (gp.keyH.wPressed) {
-		            	turn(moves[i].move, foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove());
+		            	foeMove = foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
+		            	turn(moves[i].move, foeMove);
 		            }
 		        }
 		    }
@@ -617,13 +656,13 @@ public class BattleUI extends AbstractUI {
 
 		// Priority stuff
 		int uP, fP;
-		uP = uMove.priority;
-		fP = fMove.priority;
-		if (user.ability == Ability.PRANKSTER && uMove.cat == 2) ++uP;
-		if (foe.ability == Ability.PRANKSTER && fMove.cat == 2) ++fP;
+		uP = uMove == null ? 0 : uMove.priority;
+		fP = fMove == null ? 0 : fMove.priority;
+		if (uMove != null && user.ability == Ability.PRANKSTER && uMove.cat == 2) ++uP;
+		if (fMove != null && foe.ability == Ability.PRANKSTER && fMove.cat == 2) ++fP;
 		
-		if (user.ability == Ability.STEALTHY_PREDATOR && user.impressive) ++uP;
-		if (foe.ability == Ability.STEALTHY_PREDATOR && foe.impressive) ++fP;
+		if (uMove != null && user.ability == Ability.STEALTHY_PREDATOR && user.impressive) ++uP;
+		if (fMove != null && foe.ability == Ability.STEALTHY_PREDATOR && foe.impressive) ++fP;
 		
 		uP = user.checkQuickClaw(uP);
 		fP = foe.checkQuickClaw(fP);
@@ -640,16 +679,18 @@ public class BattleUI extends AbstractUI {
 			if (slower.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
 				slower = foe.trainer.swapOut(user, fMove, false);
 				tempFoeHP = slower.currentHP;
+				foeMove = null;
 				foeCanMove = false;
 			}
 			
-			if (uMove == Move.SUCKER_PUNCH && fMove.cat == 2) uMove = Move.FAILED_SUCKER;
+			if (fMove != null && uMove == Move.SUCKER_PUNCH && fMove.cat == 2) uMove = Move.FAILED_SUCKER;
 			faster.move(slower, uMove, true);
 			
 			// Check for swap (player)
 			if (user.trainer.hasValidMembers() && faster.vStatuses.contains(Status.SWITCHING)) {
-				Pokemon.addTask(Task.PARTY, ""); // TODO: update faster with new Pokemon sent in
-				//tempUserHP = faster.currentHP;
+				Pokemon.addTask(Task.PARTY, "");
+				subState = TASK_STATE;
+	        	return;
 			}
 			
 			if (fMove == Move.SUCKER_PUNCH) fMove = Move.FAILED_SUCKER; // TODO: make move method check if you're faster and if not make Sucker Punch fail (move() has an argument for this)
@@ -667,12 +708,14 @@ public class BattleUI extends AbstractUI {
 			if (faster.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
 				faster = foe.trainer.swapOut(slower, fMove, false);
 				tempFoeHP = faster.currentHP;
+				foeMove = null;
 				foeCanMove = false;
 			}
-			if (fMove == Move.SUCKER_PUNCH && fMove.cat == 2) fMove = Move.FAILED_SUCKER; // TODO: make move method check if you're faster and if not make Sucker Punch fail (move() has an argument for this)
+			if (uMove != null && fMove == Move.SUCKER_PUNCH && uMove.cat == 2) fMove = Move.FAILED_SUCKER; // TODO: make move method check if you're faster and if not make Sucker Punch fail (move() has an argument for this)
 			if (foeCanMove) {
 				faster.move(slower, fMove, true);
 				if (foe.trainer != null) faster = foe.trainer.getCurrent();
+				foeMove = null;
 			}
 			// Check for swap (AI)
 	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && faster.vStatuses.contains(Status.SWITCHING)) {
@@ -682,9 +725,10 @@ public class BattleUI extends AbstractUI {
 			
 	        if (slower == user.trainer.getCurrent()) slower.move(faster, uMove, false);
 	        // Check for swap
-	        if (user.trainer.hasValidMembers() && faster.vStatuses.contains(Status.SWITCHING)) {
-	        	Pokemon.addTask(Task.PARTY, ""); // TODO: fix, update slower with new Pokemon sent in
-	        	//tempUserHP = slower.currentHP;
+	        if (user.trainer.hasValidMembers() && slower.vStatuses.contains(Status.SWITCHING)) {
+	        	Pokemon.addTask(Task.PARTY, "");
+	        	subState = TASK_STATE;
+	        	return;
 			}
 		}
 	    subState = TASK_STATE;
@@ -729,7 +773,10 @@ public class BattleUI extends AbstractUI {
 			}
 		}
 	    if (user.getPlayerTrainer().wiped()) {
-			wipe();
+	    	Pokemon.addTask(Task.TEXT, "You have no more Pokemon that can fight!");
+			Pokemon.addTask(Task.TEXT, "You lost $500!");
+			Task t = Pokemon.addTask(Task.END, "Wipe");
+			t.setWipe(true);
 		}
 	}
 	
@@ -745,8 +792,6 @@ public class BattleUI extends AbstractUI {
 	
 	private void wipe() {
 		user.getPlayerTrainer().setMoney(user.getPlayerTrainer().getMoney() - 500);
-		Pokemon.addTask(Task.END, "You have no more Pokemon that can fight!");
-		Pokemon.addTask(Task.END, "You lost $500!");
 		gp.eHandler.teleport(0, 79, 46, false);
 		user.trainer.heal();
 		if (foe.trainer != null) {
@@ -768,11 +813,23 @@ public class BattleUI extends AbstractUI {
 				currentDialogue = select.nickname + " is already out!";
 			} else {
 				subState = TASK_STATE;
+				if (user.isFainted()) foeMove = null;
+				if (cancellableParty && !user.isFainted()) {
+					foeMove = foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
+				}
 				gp.player.p.swapToFront(gp.player.p.team[partyNum], partyNum);
 				gp.player.p.getCurrent().swapIn(foe, true);
+				user = gp.player.p.getCurrent();
+				tempUserHP = user.currentHP;
 				partyNum = 0;
 				dialogueCounter = 0;
+				if (foeMove != null) turn(null, foeMove);
+				foeMove = null;
 			}
+		}
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			subState = SUMMARY_STATE;
 		}
 		if (!currentDialogue.equals("")) {
 			drawDialogueScreen(false);

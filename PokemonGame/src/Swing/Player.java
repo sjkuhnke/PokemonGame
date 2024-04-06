@@ -29,6 +29,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import Overworld.GamePanel;
 import Overworld.Main;
+import Swing.Bag.Entry;
 
 public class Player extends Trainer implements Serializable {
 	/**
@@ -621,6 +622,16 @@ public class Player extends Trainer implements Serializable {
 	
 	public String toString() {
 		return getClass().getName() + "@" + Integer.toHexString(hashCode());
+	}
+
+	public ArrayList<Entry> getItems(int pocket) {
+		ArrayList<Entry> result = new ArrayList<>();
+		for (Entry i : bag.getItems()) {
+			if (i.getItem().getPocket() == pocket) {
+				result.add(i);
+			}
+		}
+		return result;
 	}
 
 }

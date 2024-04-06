@@ -3135,6 +3135,7 @@ public class Pokemon implements Serializable {
 	
 	public void move(Pokemon foe, Move move, boolean first) {
 		if (this.fainted || foe.fainted) return;
+		if (move == null) return;
 
 		double attackStat;
 		double defenseStat;
@@ -10589,14 +10590,18 @@ public class Pokemon implements Serializable {
 		public static final int FAINT = 6;
 		public static final int END = 7;
 		public static final int PARTY = 8;
+		public static final int STATUS = 9;
 		
 		public int type;
 		public String message;
 		public int counter;
 		
+		public boolean wipe;
+		
 		public int finish;
 		public Pokemon p; // the pokemon taking damage, or announcing an ability, or being sent out
 		public Ability ability;
+		public Status status;
 		
 		public Task(int type, String message) {
 			this(type, message, null);
@@ -10621,6 +10626,10 @@ public class Pokemon implements Serializable {
 			this.ability = ability;
 		}
 		
+		public void setWipe(boolean wipe) {
+			this.wipe = wipe;
+		}
+		
 		public String toString() {
 			try {
 				return message.substring(0, 6) + "... [" + getTypeString() + "]";
@@ -10628,8 +10637,6 @@ public class Pokemon implements Serializable {
 				e.printStackTrace();
 				return message + getTypeString();
 			}
-			
-			
 		}
 		
 		private String getTypeString() {
@@ -10653,6 +10660,7 @@ public class Pokemon implements Serializable {
 		this.fainted = true;
 		this.battled = false;
 		awardHappiness(-3, false);
+		this.status = Status.HEALTHY;
 		this.vStatuses.remove(Status.LOCKED);
 		this.vStatuses.remove(Status.SPUN);
 		this.vStatuses.remove(Status.RECHARGE);
@@ -11496,7 +11504,7 @@ public class Pokemon implements Serializable {
 			}
 			this.status = Status.ASLEEP;
 			this.sleepCounter = (int)(Math.random() * 3) + 1;
-			addTask(Task.TEXT, this.nickname + " fell asleep!");
+			addTask(Task.STATUS, Status.ASLEEP, this.nickname + " fell asleep!", this);
 			if (this.item == Item.CHESTO_BERRY || this.item == Item.LUM_BERRY) {
 				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its sleep!");
 				this.status = Status.HEALTHY;
@@ -11522,7 +11530,7 @@ public class Pokemon implements Serializable {
 		}
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.PARALYZED;
-			addTask(Task.TEXT, this.nickname + " was paralyzed!");
+			addTask(Task.STATUS, Status.PARALYZED, this.nickname + " was paralyzed!", this);
 			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
 				console.writeAbility(this);
 				foe.paralyze(false, this);
@@ -11557,7 +11565,7 @@ public class Pokemon implements Serializable {
 				return;
 			}
 			this.status = Status.BURNED;
-			addTask(Task.TEXT, this.nickname + " was burned!");
+			addTask(Task.STATUS, Status.BURNED, this.nickname + " was burned!", this);
 			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
 				console.writeAbility(this);
 				foe.burn(false, this);
@@ -11585,7 +11593,7 @@ public class Pokemon implements Serializable {
 		}
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.POISONED;
-			addTask(Task.TEXT, this.nickname + " was poisoned!");
+			addTask(Task.STATUS, Status.POISONED, this.nickname + " was poisoned!", this);
 			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
 				console.writeAbility(this);
 				foe.poison(false, this);
@@ -11613,7 +11621,7 @@ public class Pokemon implements Serializable {
 		}
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.TOXIC;
-			addTask(Task.TEXT, this.nickname + " was badly poisoned!");
+			addTask(Task.STATUS, Status.TOXIC, this.nickname + " was badly poisoned!", this);
 			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
 				console.writeAbility(this);
 				foe.toxic(false, this);
@@ -11644,7 +11652,7 @@ public class Pokemon implements Serializable {
 		}
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.FROSTBITE;
-			addTask(Task.TEXT, this.nickname + " was frostbitten!");
+			addTask(Task.STATUS, Status.FROSTBITE, this.nickname + " was frostbitten!", this);
 			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
 				console.writeAbility(this);
 				foe.freeze(false, this);
@@ -12297,21 +12305,21 @@ public class Pokemon implements Serializable {
 	    return teamMemberPanel;
 	}
 	
-	private String getHappinessDesc() {
+	public String getHappinessDesc() {
 		if (happiness < 70) {
 			return "It's quite wary of you.";
 		} else if (happiness >= 70 && happiness < 100) {
 			return "It's not used to you yet.";
 		} else if (happiness >= 100 && happiness < 130) {
-			return "It's warming up to you. Trust must be growing between you.";
+			return "It's warming up to you.";
 		} else if (happiness >= 130 && happiness < 160) {
-			return "It's quite friendly with you. Keep being good to it!";
+			return "It's quite friendly with you!";
 		} else if (happiness >= 160 && happiness < 200) {
-			return "It looks very happy. It's very comfortable around you.";
+			return "It looks very happy!";
 		} else if (happiness >= 200 && happiness < 250) {
 			return "It really trusts you.";
 		} else {
-			return "It looks really happy! It must love you a lot.";
+			return "It looks really happy! It loves you a lot.";
 		}
 	}
 
@@ -13804,6 +13812,30 @@ public class Pokemon implements Serializable {
 
         return new ImageIcon(finalImage);
     }
+	
+	public Image getFaintedSprite() {
+		ImageFilter grayFilter = new GrayFilter(true, 25);
+        ImageFilter opacityFilter = new RGBImageFilter() {
+            // Modify the alpha value to achieve opacity
+            public int filterRGB(int x, int y, int rgb) {
+                int alpha = (rgb >> 24) & 0xFF; // Extract alpha value
+                if (alpha == 0) {
+                    return rgb; // Leave transparent pixels unchanged
+                } else {
+                    return (rgb & 0x00FFFFFF) | (128 << 24); // Apply opacity to visible pixels
+                }
+            }
+        };
+
+        ImageProducer producer = new FilteredImageSource(getSprite().getSource(), grayFilter);
+        Image grayImage = Toolkit.getDefaultToolkit().createImage(producer);
+
+        // Apply the opacity filter
+        ImageProducer opacityProducer = new FilteredImageSource(grayImage.getSource(), opacityFilter);
+        Image finalImage = Toolkit.getDefaultToolkit().createImage(opacityProducer);
+        
+        return finalImage;
+	}
 
 	public void setTrainer(Trainer trainer) {
 		this.trainer = trainer;
@@ -13843,6 +13875,12 @@ public class Pokemon implements Serializable {
 	
 	public static Task addTask(int text, String string) {
 		return addTask(text, string, null);
+	}
+	
+	public static Task addTask(int text, Status status, String string, Pokemon p) {
+		Task t = addTask(text, string, p);
+		t.status = status;
+		return t;
 	}
 	
 	public static Task addTask(int text, String string, Pokemon p) {

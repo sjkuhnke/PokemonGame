@@ -1483,4 +1483,21 @@ public enum Item {
 
         return result.toString();
     }
+	
+	public static String getPocketName(int pocket) {
+		switch(pocket) {
+		case MEDICINE:
+			return "Medicine";
+		case OTHER:
+			return "Other";
+		case TMS:
+			return "TMs";
+		case HELD_ITEM:
+			return "Held Items";
+		case BERRY:
+			return "Berries";
+		default:
+			return "getPocketName() doesn't have a case for " + pocket;
+		}
+	}
 }

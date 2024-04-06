@@ -3,6 +3,8 @@ package Overworld;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import Swing.Item;
+
 public class KeyHandler implements KeyListener {
 
 	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed;
@@ -135,8 +137,7 @@ public class KeyHandler implements KeyListener {
 					gp.battleUI.commandNum++;
 				}
 			}
-		}
-		if (gp.battleUI.subState == BattleUI.MOVE_SELECTION_STATE) {
+		} else if (gp.battleUI.subState == BattleUI.MOVE_SELECTION_STATE) {
 			if (code == KeyEvent.VK_S) {
 				gp.battleUI.subState = BattleUI.IDLE_STATE;
 			}
@@ -160,10 +161,13 @@ public class KeyHandler implements KeyListener {
 					gp.battleUI.moveNum++;
 				}
 			}
-		}
-		if (gp.battleUI.subState == BattleUI.PARTY_SELECTION_STATE) {
+		} else if (gp.battleUI.subState == BattleUI.PARTY_SELECTION_STATE) {
 			if (code == KeyEvent.VK_S && gp.battleUI.cancellableParty) {
 				gp.battleUI.subState = BattleUI.IDLE_STATE;
+			}
+		} else if (gp.battleUI.subState == BattleUI.SUMMARY_STATE) {
+			if (code == KeyEvent.VK_S) {
+				gp.battleUI.subState = BattleUI.PARTY_SELECTION_STATE;
 			}
 		}
 	}
@@ -179,9 +183,14 @@ public class KeyHandler implements KeyListener {
 			if (gp.ui.subState == 0) {
 				gp.gameState = GamePanel.PLAY_STATE;
 			}
-			gp.ui.subState = 0;
-			gp.ui.partySelectedNum = -1;
-			gp.ui.partyNum = 0;
+			if (gp.ui.subState < 7) {
+				gp.ui.subState = 0;
+				gp.ui.partySelectedNum = -1;
+				gp.ui.partyNum = 0;
+			} else if (gp.ui.subState == 7) {
+				gp.ui.subState = 2;
+			}
+			
 		}
 		if (code == KeyEvent.VK_W) {
 			wPressed = true;
@@ -197,21 +206,48 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
-			if (gp.ui.subState == 0) {
+			if (gp.ui.subState == 0) { // options top
 				gp.ui.menuNum--;
 				if (gp.ui.menuNum < 0) {
 					gp.ui.menuNum = maxCommandNum;
 				}
+			} else if (gp.ui.subState == 3) { // bag
+				if (gp.ui.bagNum > 0) {
+					gp.ui.bagNum--;
+				}
 			}
 		}
 		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
-			if (gp.ui.subState == 0) {
+			if (gp.ui.subState == 0) { // options top
 				gp.ui.menuNum++;
 				if (gp.ui.menuNum > maxCommandNum) {
 					gp.ui.menuNum = 0;
 				}
+			} else if (gp.ui.subState == 3) { // bag
+				if (gp.ui.bagNum < gp.ui.currentItems.size() - 1) {
+					gp.ui.bagNum++;
+				}
 			}
-			
+		}
+		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+			if (gp.ui.subState == 3) {
+				gp.ui.currentPocket--;
+				if (gp.ui.currentPocket < Item.MEDICINE) {
+					gp.ui.currentPocket = Item.BERRY;
+				}
+				gp.ui.bagNum = 0;
+				gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
+			}
+		}
+		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+			if (gp.ui.subState == 3) {
+				gp.ui.currentPocket++;
+				if (gp.ui.currentPocket > Item.BERRY) {
+					gp.ui.currentPocket = Item.MEDICINE;
+				}
+				gp.ui.bagNum = 0;
+				gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
+			}
 		}
 	}
 	

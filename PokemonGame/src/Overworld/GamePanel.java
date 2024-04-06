@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -145,32 +146,40 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
 		
-		tileM.draw(g2);
-		
-		for (int i = 0; i < npc[1].length; i++) {
-			if (npc[currentMap][i] != null) {
-				npc[currentMap][i].draw(g2);
-			}
-		}
-		
-		for (int i = 0; i < obj[1].length; i++) {
-			if (obj[currentMap][i] != null) {
-				obj[currentMap][i].draw(g2);
-			}
-		}
-		
-		for (int i = 0; i < iTile[1].length; i++) {
-			if (iTile[currentMap][i] != null) {
-				iTile[currentMap][i].draw(g2);
-			}
-		}
-		
-		player.draw(g2);
-		
-		
 		if (gameState != BATTLE_STATE) {
+			
+			// Draw Tiles
+			tileM.draw(g2);
+			
+			// Draw NPCs
+			for (int i = 0; i < npc[1].length; i++) {
+				if (npc[currentMap][i] != null) {
+					npc[currentMap][i].draw(g2);
+				}
+			}
+			
+			// Draw Items
+			for (int i = 0; i < obj[1].length; i++) {
+				if (obj[currentMap][i] != null) {
+					obj[currentMap][i].draw(g2);
+				}
+			}
+			
+			// Draw Interactive Tiles
+			for (int i = 0; i < iTile[1].length; i++) {
+				if (iTile[currentMap][i] != null) {
+					iTile[currentMap][i].draw(g2);
+				}
+			}
+			
+			// Draw Player
+			player.draw(g2);
+			
+			// Draw UI
 			ui.draw(g2);
+		
 		} else {
+			// Draw Battle Screen
 			battleUI.draw(g2);
 		}
 		
@@ -195,6 +204,8 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		while (user.isFainted()) {
 			user = player.p.team[index++];
 		}
+		player.p.clearBattled();
+		user.battled = true;
 		battleUI.user = user;
 		battleUI.foe = Main.trainers[trainer].getCurrent();
 		battleUI.index = trainer;
@@ -295,6 +306,8 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		player.p.setCurrent(player.p.team[0]);;
 		
 		Pokemon.field = new Field();
+		battleUI.tasks = new ArrayList<>();
+		battleUI.currentTask = null;
 		
 		//addGamePanel();
 	}
