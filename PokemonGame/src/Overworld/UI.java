@@ -9,12 +9,14 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 import Entity.Entity;
 import Entity.PlayerCharacter;
 import Swing.AbstractUI;
+import Swing.Bag;
 import Swing.Item;
 
 public class UI extends AbstractUI{
@@ -24,6 +26,9 @@ public class UI extends AbstractUI{
 	public Entity npc;
 	public int slotCol = 0;
 	public int slotRow = 0;
+	public int bagNum = 0;
+	public int currentPocket = Item.MEDICINE;
+	ArrayList<Bag.Entry> currentItems;
 	
 	public int btX = 0;
 	public int btY = 0;
@@ -109,9 +114,10 @@ public class UI extends AbstractUI{
 			showParty();
 			break;
 		case 3:
-			gp.gameState = GamePanel.PLAY_STATE;
-			subState = 0;
-			gp.player.showBag();
+			showBag();
+//			gp.gameState = GamePanel.PLAY_STATE;
+//			subState = 0;
+//			gp.player.showBag();
 			break;
 		case 4:
 			gp.gameState = GamePanel.PLAY_STATE;
@@ -126,6 +132,8 @@ public class UI extends AbstractUI{
 		case 6:
 			gp.openMap();
 			break;
+		case 7:
+			drawSummary();
 		}
 	}
 
@@ -174,6 +182,7 @@ public class UI extends AbstractUI{
 			g2.drawString(">", textX- (25 + gp.tileSize), textY);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
+				currentItems = gp.player.p.getItems(currentPocket);
 				subState = 3;
 			}
 		}
@@ -227,7 +236,7 @@ public class UI extends AbstractUI{
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				gp.gameState = GamePanel.PLAY_STATE;
-				gp.ui.subState = 0;
+				subState = 0;
 			}
 		}
 	}
@@ -244,6 +253,56 @@ public class UI extends AbstractUI{
 				}
 				partySelectedNum = -1;
 			}
+		}
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			subState = 7;
+		}
+	}
+	
+	private void showBag() {
+		int x = gp.tileSize * 4;
+		int y = 0;
+		int width = gp.tileSize * 8;
+		int height = gp.tileSize;
+		drawSubWindow(x, y, width, height);
+		String pocketName = Item.getPocketName(currentPocket);
+		g2.drawString(pocketName, this.getCenterAlignedTextX(pocketName, gp.screenWidth / 2), (int) (y + gp.tileSize * 0.75));
+		
+		y += gp.tileSize;
+		height = gp.tileSize * 10;
+		
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize;
+		y += gp.tileSize / 2;
+		for (int i = bagNum; i < bagNum + 9; i++) {
+			if (i == bagNum) {
+				g2.drawString(">", (x - gp.tileSize / 2) - 2, y + gp.tileSize / 2);
+			}
+			if (i < currentItems.size()) {
+				Bag.Entry current = currentItems.get(i);
+				g2.drawImage(current.getItem().getImage(), x, y, null);
+				y += gp.tileSize / 2;
+				String itemString = current.getItem().toString();
+				if (currentPocket != Item.TMS) itemString += " x " + current.getCount();
+				g2.drawString(itemString, x + gp.tileSize / 2, y);
+				y += gp.tileSize / 2;
+			}
+		}
+		if (bagNum + 9 < currentItems.size()) {
+			int x2 = gp.tileSize * 3 + width;
+			int y2 = height;
+			int width2 = gp.tileSize / 2;
+			int height2 = gp.tileSize / 2;
+			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
+		}
+		if (bagNum != 0) {
+			int x2 = gp.tileSize * 3 + width;
+			int y2 = (int) (gp.tileSize * 1.5);
+			int width2 = gp.tileSize / 2;
+			int height2 = gp.tileSize / 2;
+			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
 		}
 	}
 	
