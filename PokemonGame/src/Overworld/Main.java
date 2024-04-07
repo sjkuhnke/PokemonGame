@@ -23,7 +23,6 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -32,7 +31,6 @@ import Entity.PlayerCharacter;
 import Swing.Player;
 import Swing.Pokemon;
 import Swing.Pokemon.Node;
-import Swing.TextPane;
 import Swing.Trainer;
 import Swing.Ability;
 import Swing.Battle.JGradientButton;
@@ -147,9 +145,6 @@ public class Main {
 	            null, 
 	            null
 	        );
-	        
-	        Pokemon.console = new TextPane();
-	        Pokemon.console.setScrollPane(new JScrollPane());
 	        
 	        // Add the chosen starter to the player's team
 	        if (gamePanel.player.p.starter <= 0) gamePanel.player.p.starter = (int)(Math.random() * options.length) + 1;

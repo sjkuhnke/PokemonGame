@@ -59,7 +59,6 @@ public class Battle extends JPanel {
 	// Other GUI fields
 	public JLabel weather;
 	public JLabel terrain;
-	private TextPane console;
 	
 	// Player option GUI fields
 	private JButton catchButton;
@@ -155,15 +154,8 @@ public class Battle extends JPanel {
 		/*
 		 * Set text area
 		 */
-		console = new TextPane();
 		
-		JScrollPane scrollPane = new JScrollPane(console);
-		scrollPane.setBounds(10, 325, 610, 245);
-		
-		console.setScrollPane(scrollPane);
-		
-		this.add(scrollPane);
-		Pokemon.console = console;
+		//console.setScrollPane(scrollPane);
 		
 		/*
 		 * Set current movebuttons
@@ -365,7 +357,7 @@ public class Battle extends JPanel {
 		        		JOptionPane.showMessageDialog(null, "No balls remaining!");
                         return;
 		        	}
-		            console.writeln("\nUsed a Pokeball!");
+		            //console.writeln("\nUsed a Pokeball!");
 		            me.bag.remove(Item.POKEBALL);
 		            ballBonus = 1;
 		        } else if (greatballButton.isSelected()) {
@@ -373,7 +365,7 @@ public class Battle extends JPanel {
 		        		JOptionPane.showMessageDialog(null, "No balls remaining!");
                         return;
 		        	}
-		            console.writeln("\nUsed a Great Ball!");
+		            //console.writeln("\nUsed a Great Ball!");
 		            me.bag.remove(Item.GREAT_BALL);
 		            ballBonus = 1.5;
 		        } else if (ultraballButton.isSelected()) {
@@ -381,7 +373,7 @@ public class Battle extends JPanel {
 		        		JOptionPane.showMessageDialog(null, "No balls remaining!");
                         return;
 		        	}
-		            console.writeln("\nUsed an Ultra Ball!");
+		            //console.writeln("\nUsed an Ultra Ball!");
 		            me.bag.remove(Item.ULTRA_BALL);
 		            ballBonus = 2;
 		        }
@@ -410,7 +402,7 @@ public class Battle extends JPanel {
 					JOptionPane.showMessageDialog(null, "You caught " + foe.name + "!");
 					endBattle();
 		        } else {
-		            console.writeln("Oh no! " + foe.name + " broke free!");
+		            //console.writeln("Oh no! " + foe.name + " broke free!");
 		            if (foe.trainerOwned()) {
 		            	foe.move(me.getCurrent(),foe.bestMove(me.getCurrent(), false), false);
 		            } else {
@@ -429,8 +421,8 @@ public class Battle extends JPanel {
 						wipe(pl, gp);
 					}
 		        }
-		        console.writeln();
-			    console.writeln("------------------------------");
+		        //console.writeln();
+			    //console.writeln("------------------------------");
 		    }
 		});
 		
@@ -469,7 +461,7 @@ public class Battle extends JPanel {
 						endBattle();
 						return;
 					}
-					console.writeln("\nCouldn't escape!");
+					//console.writeln("\nCouldn't escape!");
 	        		foe.move(me.getCurrent(),foe.randomMove(), false);
 	        	}
 				foe.endOfTurn(me.getCurrent());
@@ -490,8 +482,8 @@ public class Battle extends JPanel {
 				}
 				return;
 			}
-			console.writeln();
-		    console.writeln("------------------------------");
+			//console.writeln();
+		    //console.writeln("------------------------------");
         });
 		
 		infoButton.addActionListener(e -> {
@@ -742,7 +734,7 @@ public class Battle extends JPanel {
 		});
 		
 		calcButton.addActionListener(e -> {
-			me.bag.bag[200].useCalc(me, null);
+			Item.useCalc(me, null);
 		});
 		
 		/*
@@ -827,7 +819,7 @@ public class Battle extends JPanel {
 					if (foeTrainer != null && foeTrainer.getTeam() != null) {
 						if (foeTrainer.hasNext()) {
 							foe = foeTrainer.next(me.getCurrent());
-							console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
+							//console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
 							foe.swapIn(me.getCurrent(), true);
 							updateField(field);
 							updateFoe();
@@ -862,8 +854,8 @@ public class Battle extends JPanel {
 						endBattle();
 					}
 				}
-				console.writeln();
-			    console.writeln("------------------------------");
+				//console.writeln();
+			    //console.writeln("------------------------------");
 			    if (me.wiped()) {
 					wipe(pl, gp);
 				}
@@ -1309,7 +1301,7 @@ public class Battle extends JPanel {
 			int num = rand.nextInt(10);
 			if (num < 2) {
 				m1P++;
-				console.writeln(p1.nickname + "'s Quick Claw let it act first!");
+				//console.writeln(p1.nickname + "'s Quick Claw let it act first!");
 			}
 		}
 		if (p2.item == Item.QUICK_CLAW) {
@@ -1317,17 +1309,17 @@ public class Battle extends JPanel {
 			int num = rand.nextInt(10);
 			if (num < 2) {
 				m2P++;
-				console.writeln(p2.nickname + "'s Quick Claw let it act first!");
+				//console.writeln(p2.nickname + "'s Quick Claw let it act first!");
 			}
 		}
 		if (p1.item == Item.CUSTAP_BERRY && p1.currentHP <= p1.getStat(0) * 1.0 / 4) {
 			m1P++;
-			console.writeln(p1.nickname + " ate its Custap Berry and could act first!");
+			//console.writeln(p1.nickname + " ate its Custap Berry and could act first!");
 			p1.consumeItem();
 		}
 		if (p2.item == Item.CUSTAP_BERRY && p2.currentHP <= p2.getStat(0) * 1.0 / 4) {
 			m1P++;
-			console.writeln(p2.nickname + " ate its Custap Berry and could act first!");
+			//console.writeln(p2.nickname + " ate its Custap Berry and could act first!");
 			p2.consumeItem();
 		}
 		
@@ -1404,7 +1396,7 @@ public class Battle extends JPanel {
 			if (foeTrainer != null && foeTrainer.getTeam() != null) {
 				if (foeTrainer.hasNext()) {
 					foe = foeTrainer.next(me.getCurrent());
-					console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
+					//console.writeln("\n" + foeTrainer.toString() + " sends out " + foeTrainer.getCurrent().name + "!");
 					foe.swapIn(me.getCurrent(), true);
 					updateField(field);
 					updateFoe();
@@ -1445,8 +1437,8 @@ public class Battle extends JPanel {
 				break;
 			}
 		}
-		console.writeln();
-	    console.writeln("------------------------------");
+		//console.writeln();
+	    //console.writeln("------------------------------");
 	    updateField(field);
 	    if (me.wiped()) {
 			wipe(pl, gp);

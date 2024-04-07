@@ -3,6 +3,8 @@ package Swing;
 import java.io.Serializable;
 import java.util.Random;
 
+import Swing.Pokemon.Task;
+
 public class Trainer implements Serializable {
 	/**
 	 * 
@@ -155,12 +157,13 @@ public class Trainer implements Serializable {
 			newCurrent.verifyHP();
 		}
 		
-    	Pokemon.console.write(current.nickname, true, 16);
+    	String message = current.nickname;
     	if (announce) {
-    		Pokemon.console.writeln(" was dragged out!", false, 16);
+    		message += " was dragged out!";
     	} else {
-    		Pokemon.console.writeln(" was sent out!", false, 16);
+    		message += " was sent out!";
     	}
+    	Pokemon.addTask(Task.TEXT, message);
 		current.swapIn(foe, true);
 		return true;
 		

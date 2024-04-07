@@ -133,7 +133,7 @@ public class UI extends AbstractUI{
 			gp.openMap();
 			break;
 		case 7:
-			drawSummary();
+			drawSummary(null);
 		}
 	}
 
@@ -370,6 +370,11 @@ public class UI extends AbstractUI{
 			if (btY >= gp.screenHeight) {
 				btY = 0;
 				counter = 0;
+				gp.battleUI.commandNum = 0;
+				if (!gp.battleUI.foe.trainerOwned()) {
+					gp.battleUI.ball = gp.player.p.getBall(gp.battleUI.ball);
+					gp.battleUI.balls = gp.player.p.getBalls();
+				}
 				gp.battleUI.subState = BattleUI.STARTING_STATE;
 				gp.gameState = GamePanel.BATTLE_STATE;
 			}

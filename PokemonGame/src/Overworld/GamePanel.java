@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -23,15 +23,13 @@ import Entity.PlayerCharacter;
 import Obj.InteractiveTile;
 import Obj.ItemObj;
 import tile.TileManager;
-import Swing.Battle;
-import Swing.Battle.BattleCloseListener;
+import Swing.Encounter;
 import Swing.Field;
 import Swing.Item;
 import Swing.PBox;
 import Swing.Pokemon;
-import Swing.TextPane;
 
-public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
+public class GamePanel extends JPanel implements Runnable {
 
 	/**
 	 * 
@@ -187,36 +185,32 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	}
 	
 	public void startBattle(int trainer) {
-	    // Create the Battle instance and set the window listener to save on close
 		if (trainer == -1) return;
 		if (player.p.trainersBeat[trainer]) return;
 		if (player.p.wiped()) return;
+		
 		setSlots();
 		
+		// Heal if Gym Leader
 		if (Main.trainers[trainer].getMoney() == 500) {
 			player.p.heal();
 		}
 		
 		ui.transitionBuffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 		gameState = START_BATTLE_STATE;
+		
+		// Make sure the front Pokemon isn't fainted
 		int index = 0;
 		Pokemon user = player.p.team[index++];
 		while (user.isFainted()) {
 			user = player.p.team[index++];
 		}
+		
 		player.p.clearBattled();
 		user.battled = true;
 		battleUI.user = user;
 		battleUI.foe = Main.trainers[trainer].getCurrent();
 		battleUI.index = trainer;
-		
-		//Battle panel = new Battle(player, Main.trainers[trainer], trainer, this, -1, -1, -1, null);
-		//panel.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); JFrame exclusive
-        //panel.setBattleCloseListener(this);
-//		removePanel();
-//		addPanel(battle, true);
-        
-        //return panel;
 	}
 	
 	public void startBattle(int trainer, int id) {
@@ -225,27 +219,27 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	}
 	
 	public void startWild(int area, int x, int y, String type) {
-	    // Create the Battle instance and set the window listener to save on close
 		setSlots();
 		
-		Battle panel = new Battle(player, null, -1, this, area, x, y, type);
-		//panel.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); JFrame exclusive
-		removePanel();
-		addPanel(panel, true);
+		ui.transitionBuffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+		gameState = START_BATTLE_STATE;
 		
-		panel.setVisible(true);
+		// Make sure the front Pokemon isn't fainted
+		int index = 0;
+		Pokemon user = player.p.team[index++];
+		while (user.isFainted()) {
+			user = player.p.team[index++];
+		}
+		
+		player.p.clearBattled();
+		user.battled = true;
+		battleUI.user = user;
+		battleUI.foe = encounterPokemon(area, x, y, player.p.random, type);
+		battleUI.index = -1;
 	}
 	
 	public void startFish(int area, int x, int y) {
-	    // Create the Battle instance and set the window listener to save on close
-		setSlots();
-		
-		Battle panel = new Battle(player, null, -1, this, area, x, y, null);
-		//panel.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); JFrame exclusive
-		removePanel();
-		addPanel(panel, true);
-		
-		panel.setVisible(true);
+		startWild(area, x, y, "Fishing");
 	}
 	
 	public void openBox(NPC_PC target) {
@@ -266,7 +260,6 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 
 
 	public void endBattle(int trainer, int id) {
-		//removePanel();
 		
 		if (trainer > -1 && !player.p.wiped() && trainer != 256) player.p.trainersBeat[trainer] = true;
 		if (id == 159) {
@@ -290,7 +283,7 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 					teamTemp[i].currentHP = teamTemp[i].currentHP > teamTemp[i].getStat(0) ? teamTemp[i].getStat(0) : teamTemp[i].currentHP;
 				}
 				player.p.team[teamTemp[i].slot] = teamTemp[i];
-				teamTemp[i].setType();
+				teamTemp[i].clearVolatile();
 				
 				if (teamTemp[i].loseItem) {
 					teamTemp[i].item = null;
@@ -308,8 +301,6 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		Pokemon.field = new Field();
 		battleUI.tasks = new ArrayList<>();
 		battleUI.currentTask = null;
-		
-		//addGamePanel();
 	}
 	
 	public void addPanel(JPanel panel, boolean animate) {
@@ -373,49 +364,6 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 	    Main.window.repaint();
 		
 	}
-	
-	@Override
-	public void onBattleClosed(int trainer, int id) {
-		if (trainer > -1 && !player.p.wiped() && trainer != 256) player.p.trainersBeat[trainer] = true;
-		if (id == 159) {
-			player.p.grustCount++;
-			aSetter.updateNPC(107);
-		}
-		if (id == 232) npc[148][0] = null;
-		if (id == 229) npc[150][0] = null;
-		Pokemon[] teamTemp = Arrays.copyOf(player.p.team, 6);
-		for (int i = 0; i < 6; i++) {
-			if (teamTemp[i] != null) {
-				if (teamTemp[i].id == 237) {
-					teamTemp[i].id = 150;
-					teamTemp[i].nickname = teamTemp[i].nickname.equals("Kissyfishy-D") ? teamTemp[i].nickname = teamTemp[i].getName() : teamTemp[i].nickname;
-					
-					teamTemp[i].setBaseStats();
-					teamTemp[i].getStats();
-					teamTemp[i].weight = teamTemp[i].setWeight();
-					teamTemp[i].setType();
-					teamTemp[i].setAbility(teamTemp[i].abilitySlot);
-					teamTemp[i].currentHP = teamTemp[i].currentHP > teamTemp[i].getStat(0) ? teamTemp[i].getStat(0) : teamTemp[i].currentHP;
-				}
-				player.p.team[teamTemp[i].slot] = teamTemp[i];
-				teamTemp[i].setType();
-				
-				if (teamTemp[i].loseItem) {
-					teamTemp[i].item = null;
-					teamTemp[i].loseItem = false;
-				}
-				if (teamTemp[i].lostItem != null) {
-					teamTemp[i].item = teamTemp[i].lostItem;
-					teamTemp[i].lostItem = null;
-					if (teamTemp[i].item == Item.POTION) teamTemp[i].item = null;
-				}
-			}
-		}
-		player.p.setCurrent(player.p.team[0]);
-		
-		Pokemon.field = new Field();
-		
-	}
 
 	public void setupGame() {
 		aSetter.setNPC();
@@ -424,10 +372,8 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		
 		gameState = PLAY_STATE;
 		
-		Pokemon.console = new TextPane();
-		Pokemon.console.setScrollPane(new JScrollPane());
 		Pokemon.field = new Field();
-		Pokemon.gamePanel = this;
+		Pokemon.gp = this;
 		checkSpin = true;
 	}
 	
@@ -437,5 +383,29 @@ public class GamePanel extends JPanel implements Runnable, BattleCloseListener {
 		}
 	}
 
+	public Pokemon encounterPokemon(int area, int x, int y, boolean random, String type) {
+	    ArrayList<Encounter> encounters = Encounter.getEncounters(area, x, y, type, "D", random);
+
+	    // Calculate the total encounter chance for the route
+	    double totalChance = 0.0;
+	    for (Encounter encounter : encounters) {
+	        totalChance += encounter.getEncounterChance();
+	    }
+
+	    // Randomly select an encounter based on the Pokemon's encounter chance
+	    double rand = Math.random() * totalChance;
+	    for (Encounter encounter : encounters) {
+	        rand -= encounter.getEncounterChance();
+	        if (rand < 0) {
+	            // Randomly generate a level within the level range
+	            int level = (int) (Math.random() * (encounter.getMaxLevel() - encounter.getMinLevel() + 1) + encounter.getMinLevel());
+	            return new Pokemon(encounter.getId(), level, false, false);
+	        }
+	    }
+
+	    // If no encounter was selected, return null
+	    JOptionPane.showMessageDialog(null, "No encounters available for this combination.");
+	    return new Pokemon(10, 5, false, false);
+	}
 
 }
