@@ -740,11 +740,11 @@ public enum Item {
 		return result;
 	}
 	
-	public void useCalc(Player p, Pokemon[] box) {
+	public static void useCalc(Player p, Pokemon[] box) {
 		useCalc(p, box, false);
 	}
 
-	public void useCalc(Player p, Pokemon[] box, boolean isGauntlet) {
+	public static void useCalc(Player p, Pokemon[] box, boolean isGauntlet) {
 		JPanel calc = new JPanel();
 	    calc.setLayout(new GridBagLayout());
 	    
@@ -1164,7 +1164,7 @@ public enum Item {
 		
 	}
 	
-	private void updateMoves(Pokemon current, JGradientButton[] moves, JLabel[] damages, Pokemon foe, JLabel[] statLabels, JComboBox<Integer>[] stages,
+	private static void updateMoves(Pokemon current, JGradientButton[] moves, JLabel[] damages, Pokemon foe, JLabel[] statLabels, JComboBox<Integer>[] stages,
 			JLabel speed, JButton currentHP, JLabel HPP, boolean crit, JLabel currentAbility, JComboBox<Item> currentItem) {
         for (int k = 0; k < moves.length; k++) {
         	if (current.moveset[k] != null) {

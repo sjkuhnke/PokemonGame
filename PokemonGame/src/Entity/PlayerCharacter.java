@@ -1201,38 +1201,6 @@ public class PlayerCharacter extends Entity {
 	private void showPrizeMenu(JPanel panel, String title) {
 		JOptionPane.showMessageDialog(null, panel, title, JOptionPane.QUESTION_MESSAGE);
 	}
-
-	private void showParty() {
-	    JPanel partyMasterPanel = new JPanel();
-	    partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-	    partyMasterPanel.setPreferredSize(new Dimension(350, 350));
-
-	    for (int j = 0; j < 6; j++) {
-	    	PartyPanel partyPanel = new PartyPanel(p.team[j], true);
-	        final int index = j;
-	        
-	        if (p.team[j] != null) {
-	        	partyPanel.addMouseListener(new MouseAdapter() {
-	        		public void mouseClicked(MouseEvent evt) {
-		            	JPanel teamMemberPanel = p.team[index].showSummary(p, true, partyMasterPanel, null);
-			            JButton swapButton = new JButton("Swap");
-				        swapButton.addActionListener(f -> {
-				            if (p.team[index] != null && p.team[index] != p.getCurrent()) {
-				                p.swapToFront(p.team[index], index); // Call the swap method in the Player class
-				                JOptionPane.getRootFrame().dispose();
-				                showParty(); // Update the party display after swapping
-				            }
-				        });
-			            if (p.team[index] != p.getCurrent() && !p.team[index].isFainted()) teamMemberPanel.add(swapButton);
-			            JOptionPane.showMessageDialog(null, teamMemberPanel, "Party member details", JOptionPane.PLAIN_MESSAGE);
-		            }
-		        });
-	        }
-	        partyMasterPanel.add(partyPanel);
-	    }
-
-	    JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
-	}
 	
 	public void showBag() {
 		JPanel mainPanel = new JPanel();
@@ -1978,7 +1946,7 @@ public class PlayerCharacter extends Entity {
 			        	}
 			        	// Calc
 			        	else if (i.getItem() == Item.CALCULATOR) {
-			        		i.getItem().useCalc(p, null);
+			        		Item.useCalc(p, null);
 			        	}
 			        	
 			        });			     

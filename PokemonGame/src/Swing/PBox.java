@@ -216,7 +216,7 @@ public class PBox extends JPanel {
 		calcButton.setBounds(555, 80, 60, 60);
 		calcButton.addActionListener(e -> {
 			Pokemon[] cBox = me.boxes[me.currentBox];
-			me.bag.bag[200].useCalc(me, cBox, isGauntlet);
+			Item.useCalc(me, cBox, isGauntlet);
 		});
 		this.add(calcButton);
 		

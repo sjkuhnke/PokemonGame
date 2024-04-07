@@ -30,6 +30,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import Overworld.GamePanel;
 import Overworld.Main;
 import Swing.Bag.Entry;
+import Swing.Pokemon.Task;
 
 public class Player extends Trainer implements Serializable {
 	/**
@@ -85,7 +86,7 @@ public class Player extends Trainer implements Serializable {
 	public void catchPokemon(Pokemon p) {
 	    if (p.isFainted()) return;
 	    boolean hasNull = false;
-	    p.setNickname();
+	    Pokemon.addTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?");
 	    pokedex[p.id] = 2;
 	    p.clearVolatile();
 	    p.consumeItem();
@@ -101,9 +102,7 @@ public class Player extends Trainer implements Serializable {
 	            if (team[i] == null) {
 	                team[i] = p;
 	                p.slot = i;
-                	Pokemon.console.write("Caught ", false, 16);
-                	Pokemon.console.write(p.nickname, true, 16);
-                	Pokemon.console.writeln(", added to party!", false, 16);
+	                Pokemon.addTask(Task.END, "Caught " + p.nickname + ", added to party!");
 	                current = team[0];
 	                break;
 	            }
@@ -120,15 +119,11 @@ public class Player extends Trainer implements Serializable {
 	            }
 	            if (index >= 0) {
 	                boxes[i][index] = p;
-                	Pokemon.console.write("Caught ", false, 16);
-                	Pokemon.console.write(p.nickname, true, 16);
-                	Pokemon.console.writeln(", sent to box " + (i+1) + "!", false, 16);
+	                Pokemon.addTask(Task.END, "Caught " + p.nickname + ", sent to box " + (i + 1) + "!");
 	                return;  // Exit the method after catching the Pokemon
 	            }
 	        }
-        	Pokemon.console.write("Cannot catch ", false, 16);
-        	Pokemon.console.write(p.nickname, true, 16);
-        	Pokemon.console.writeln(", all boxes are full.", false, 16);
+	        Pokemon.addTask(Task.END, "Cannot catch " + p.nickname + ", all boxes are full.");
 	    }
 	}
 
@@ -285,8 +280,7 @@ public class Player extends Trainer implements Serializable {
 		
 		swapToFront(team[index], index);
 		
-		Pokemon.console.write(current.nickname, true, 16);
-		Pokemon.console.writeln(" was dragged out!", false, 16);
+		Pokemon.addTask(Task.TEXT, current.nickname + " was dragged out!");
 		current.swapIn(foe, true);
 		return true;
 		
@@ -630,6 +624,25 @@ public class Player extends Trainer implements Serializable {
 			if (i.getItem().getPocket() == pocket) {
 				result.add(i);
 			}
+		}
+		return result;
+	}
+
+	public Entry getBall(Entry ball) {
+		if (ball != null) {
+			ball.count = bag.count[ball.getItem().getID()];
+			return ball;
+		}
+		for (int i = 1; i < 4; i++) {
+			if (bag.count[i] > 0) return bag.new Entry(bag.bag[i], bag.count[i]);
+		}
+		return ball;
+	}
+	
+	public ArrayList<Entry> getBalls() {
+		ArrayList<Entry> result = new ArrayList<>();
+		for (int i = 1; i < 4; i++) {
+			if (bag.count[i] > 0) result.add(bag.new Entry(bag.bag[i], bag.count[i]));
 		}
 		return result;
 	}

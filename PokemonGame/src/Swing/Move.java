@@ -727,7 +727,7 @@ public enum Move {
 
 	    // Accuracy
 	    JLabel accuracyLabel = new JLabel("Acc");
-	    JLabel accuracyValueLabel = new JLabel(String.valueOf(getAccuracy()));
+	    JLabel accuracyValueLabel = new JLabel(getAccuracy());
 
 	    // PP
 	    JLabel ppLabel = new JLabel("PP");

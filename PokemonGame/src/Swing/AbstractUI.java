@@ -18,12 +18,16 @@ public abstract class AbstractUI {
 	public String currentDialogue;
 	public int commandNum;
 	public int partyNum;
+	public int moveSummaryNum = -1;
 	public int partySelectedNum = -1;
 	public Font marumonica;
 	public int counter = 0;
+	
+	public StringBuilder nickname = new StringBuilder();
+	public int nicknaming = -1;
 
 	public abstract void showMessage(String message);
-	
+
 	public abstract void draw(Graphics2D g2);
 	
 	public void drawDialogueScreen(boolean above) {
@@ -55,9 +59,9 @@ public abstract class AbstractUI {
 			y += 40;
 		}
 	}
-
-	public void drawSubWindow(int x, int y, int width, int height) {
-		Color background = new Color(0, 0, 0, 200);
+	
+	public void drawSubWindow(int x, int y, int width, int height, int opacity) {
+		Color background = new Color(0, 0, 0, opacity);
 		g2.setColor(background);
 		g2.fillRoundRect(x, y, width, height, 35, 35);
 		
@@ -65,7 +69,10 @@ public abstract class AbstractUI {
 		g2.setColor(border);
 		g2.setStroke(new BasicStroke(5));
 		g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
-		
+	}
+
+	public void drawSubWindow(int x, int y, int width, int height) {
+		drawSubWindow(x, y, width, height, 200);		
 	}
 	
 	public int getTextX(String text) {
@@ -232,7 +239,7 @@ public abstract class AbstractUI {
 		}
 	}
 
-	public void drawSummary() {
+	public void drawSummary(Pokemon foe) {
 		int x = gp.tileSize*3;
 		int y = gp.tileSize / 2;
 		int width = gp.tileSize*10;
@@ -272,9 +279,9 @@ public abstract class AbstractUI {
 		// Sprite
 		g2.drawImage(p.isFainted() ? p.getFaintedSprite() : p.getSprite(), x - 12, y, null);
 		x += gp.tileSize * 2;
-		g2.drawImage(setup("/battle/" + p.type1.toString().toLowerCase(), 2), x - 12, y, null);
+		g2.drawImage(setup("/battle/" + p.type1.toString().toLowerCase() + "_2", 1), x - 12, y, null);
 		if (p.type2 != null) {
-			g2.drawImage(setup("/battle/" + p.type2.toString().toLowerCase(), 2), x + 36, y + 36, null);
+			g2.drawImage(setup("/battle/" + p.type2.toString().toLowerCase() + "_2", 1), x + 36, y + 36, null);
 		}
 		
 		// Ability
@@ -401,5 +408,178 @@ public abstract class AbstractUI {
 		g2.setColor(Color.WHITE);
 		String nature = p.getNature() + " Nature";
 		g2.drawString(nature, getCenterAlignedTextX(nature, x), y);
+		
+		// Moves
+		x += gp.tileSize * 3;
+		y -= gp.tileSize * 3.5;
+		int moveWidth = gp.tileSize * 3;
+		int moveHeight = (int) (gp.tileSize * 0.75);
+		g2.setFont(g2.getFont().deriveFont(18F));
+		for (int i = 0; i < 4; i++) {
+			Moveslot m = p.moveset[i];
+			if (m != null) {
+				g2.setColor(m.move.mtype.getColor());
+				g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
+				g2.setColor(Color.BLACK);
+		        String text = m.move.toString();
+		        g2.drawString(text, getCenterAlignedTextX(text, (x + moveWidth / 2)), y + gp.tileSize / 3);
+		        g2.setColor(m.getPPColor());
+		        String pp = m.currentPP + " / " + m.maxPP;
+		        g2.drawString(pp, getCenterAlignedTextX(pp, (x + moveWidth / 2)), (int) (y + gp.tileSize * 0.75) - 3);
+		        if (moveSummaryNum == i) {
+		            g2.setColor(Color.RED);
+		            g2.drawRoundRect(x - 2, y - 2, moveWidth + 4, moveHeight + 4, 10, 10);
+		        }
+				y += gp.tileSize;
+			}
+		}
+		
+		if (moveSummaryNum > -1) {
+			int moveX = gp.tileSize * 3;
+			int moveY = gp.tileSize / 2;
+			drawSubWindow(moveX, moveY, width, height / 2, 255);
+			drawMoveSummary(moveX, moveY, p, foe);
+		}
+		
+		if (gp.keyH.wPressed && moveSummaryNum == -1) {
+			gp.keyH.wPressed = false;
+			moveSummaryNum = 0;
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			moveSummaryNum--;
+			if (moveSummaryNum < 0) {
+				moveSummaryNum = 3;
+			}
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			if (moveSummaryNum < 3 && p.moveset[moveSummaryNum + 1] != null) {
+				moveSummaryNum++;
+			} else {
+				moveSummaryNum = 0;
+			}
+		}
+	}
+
+	public void drawMoveSummary(int x, int y, Pokemon p, Pokemon foe) {
+		Moveslot m = p.moveset[moveSummaryNum];
+		x += gp.tileSize * 0.75;
+		int startX = x;
+		y += gp.tileSize * 1.25;
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.drawString(m.move.toString(), x, y);
+		
+		x += gp.tileSize * 3.5;
+		y -= gp.tileSize * 0.75;
+		g2.drawImage(setup("/battle/" + m.move.mtype.toString().toLowerCase() + "_2", 1), x, y, null);
+		
+		x += gp.tileSize * 1.5;
+		y += gp.tileSize * 0.75;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.drawString("Power: " + m.move.formatbp(p, foe), x, y);
+		
+		x += gp.tileSize * 2.5;
+		g2.drawString("Acc: " + m.move.getAccuracy(), x, y);
+		
+		x = startX;
+		y += gp.tileSize * 1.25;
+		g2.drawString("Category", x, y);
+		
+		x += gp.tileSize * 2;
+		y -= gp.tileSize / 2;
+		g2.drawImage(scaleImage(m.move.getCategoryIcon(), 2), x, y, null);
+		
+		x += gp.tileSize * 4;
+		y += gp.tileSize / 2;
+		Color ppColor = m.getPPColor();
+		if (ppColor == Color.BLACK) {
+			ppColor = Color.white;
+		} else {
+			ppColor = ppColor.brighter();
+		}
+		g2.setColor(ppColor);
+		g2.drawString(m.currentPP + " / " + m.maxPP + " PP", x, y);
+		
+		g2.setColor(Color.WHITE);
+		x = (int) (startX - (gp.tileSize * 0.75));
+		x += gp.tileSize * 5;
+		y += gp.tileSize * 1.25;
+		String[] desc = Item.breakString(m.move.getDescription(), 80).split("\n");
+		for (String s : desc) {
+			g2.drawString(s, getCenterAlignedTextX(s, x), y);
+			y += gp.tileSize * 0.75;
+		}
+		
+	}
+
+	public void setNickname(Pokemon p) {
+		int x = gp.tileSize * 3;
+		int y = gp.tileSize * 5;
+		int width = gp.tileSize*10;
+		int height = gp.tileSize*3;
+		
+		drawSubWindow(x, y, width, height);
+		
+		g2.setFont(g2.getFont().deriveFont(36F));
+		
+		x += gp.tileSize / 2 + 4;
+		y += gp.tileSize;
+		int charWidth = 36;
+		for (int i = 0; i < 12; i++) {
+			String currentChar = i < nickname.length() ? nickname.charAt(i) + "" : null;
+	        if (currentChar != null) g2.drawString(currentChar, x, y);
+	        g2.setStroke(new BasicStroke(1));
+	        g2.drawLine(x - 6, y + 5, x + 20, y + 5);
+	        if (i == nickname.length() && nicknaming == 1) {
+	        	int x2 = x;
+	        	int y2 = y + gp.tileSize / 3;
+	        	int width2 = gp.tileSize / 4;
+	        	int height2 = gp.tileSize / 4;
+	        	g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
+	        }
+	        x += charWidth;
+	    }
+		g2.setStroke(new BasicStroke(3));
+		y += gp.tileSize * 1.5;
+		x = getCenterAlignedTextX("Confirm", gp.tileSize * 3 + width / 2);
+		g2.drawString("Confirm", x, y);
+		if (nicknaming == 0) {
+			g2.drawRoundRect(x - 8, (int) (y - gp.tileSize * 0.65), (int) (gp.tileSize * 2.3), (int) (gp.tileSize * 0.8), 12, 12);
+		}
+		
+		if (gp.keyH.upPressed && nicknaming == 0) {
+			gp.keyH.upPressed = false;
+			nicknaming = 1;
+		}
+		
+		if (gp.keyH.downPressed && nicknaming == 1) {
+			gp.keyH.downPressed = false;
+			nicknaming = 0;
+		}
+	}
+	
+	public void handleKeyInput(char keyChar) {
+		if (nickname.length() < 12) {
+			nickname.append(keyChar);
+		}
+	}
+
+	public void handleBackspace() {
+	    if (nickname.length() > 0) {
+	        nickname.deleteCharAt(nickname.length() - 1);
+	    }
+	}
+
+	public void setNicknaming(boolean n) {
+		if (n) {
+			nicknaming = 1;
+		} else {
+			nicknaming = 0;
+		}
+		
 	}
 }
