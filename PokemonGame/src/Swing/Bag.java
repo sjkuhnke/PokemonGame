@@ -2,54 +2,38 @@ package Swing;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Bag implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public Item[] bag;
+	public ArrayList<Item> bag;
 	public int[] count;
 	
 	public Bag() {
-		bag = new Item[Item.values().length];
+		bag = new ArrayList<>(Arrays.asList(Item.values()));
 		count = new int[Item.values().length];
 	}
 	
 	public void add(Item item) {
-		int index = item.getID();
-		if (bag[index] == null) {
-			bag[index] = item;
-			count[index] = 1;
-		} else {
-			count[index]++;
-		}
+		count[item.getID()]++;
 	}
 	
 	public void add(Item item, int amt) {
-		int index = item.getID();
-		if (bag[index] == null) {
-			bag[index] = item;
-			count[index] = amt;
-		} else {
-			count[index] += amt;
-		}
+		count[item.getID()] += amt;
 	}
 	
 	public void remove(Item item) {
-		int index = item.getID();
-		if (--count[index] == 0) bag[index] = null;
+		count[item.getID()]--;
 	}
 	
 	public ArrayList<Entry> getItems() {
 		ArrayList<Entry> items = new ArrayList<>();
-		for (int i = 0; i < bag.length; i++) {
-			if (bag[i] == null) continue;
-			if (i == 18) {
-				items.add(0, new Entry(bag[i], count[i]));
-			} else {
-				items.add(new Entry(bag[i], count[i]));
-			}
+		for (Item i : bag) {
+			if (count[i.getID()] <= 0) continue;
+			items.add(new Entry(i, count[i.getID()]));
 		}
 		return items;
 	}
@@ -70,10 +54,18 @@ public class Bag implements Serializable {
 		public int getCount() {
 			return count;
 		}
+		
+		public String toString() {
+			return item.toString() + " x " + count;
+		}
 	}
 
 	public boolean contains(int id) {
-		return bag[id] != null;
+		return count[id] > 0;
+	}
+
+	public boolean contains(Item item) {
+		return count[item.getID()] > 0;
 	}
 
 }

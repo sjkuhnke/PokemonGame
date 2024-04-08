@@ -1451,38 +1451,31 @@ public enum Item {
 	}
 	
 	public static String breakString(String input, int maxChar) {
-        if (input == null || maxChar <= 0) {
-            return null; // Or handle this case according to your requirements
-        }
+	    if (input == null || maxChar <= 0) {
+	        return null; // Or handle this case according to your requirements
+	    }
 
-        StringBuilder result = new StringBuilder();
-        StringBuilder currentLine = new StringBuilder();
-        int currentLength = 0;
+	    StringBuilder result = new StringBuilder();
+	    StringBuilder currentLine = new StringBuilder();
+	    int currentLength = 0;
 
-        for (char c : input.toCharArray()) {
-            if (Character.isWhitespace(c)) {
-                // If adding the current character exceeds the limit, start a new line
-                if (currentLength + currentLine.length() > maxChar) {
-                    result.append(currentLine.toString().trim()).append("\n");
-                    currentLine.setLength(0);
-                    currentLength = 0;
-                } else {
-                    currentLine.append(c);
-                    currentLength++;
-                }
-            } else {
-                currentLine.append(c);
-                currentLength++;
-            }
-        }
+	    for (String word : input.split("\\s+")) {
+	        if (currentLength + word.length() > maxChar) {
+	            result.append(currentLine.toString().trim()).append("\n");
+	            currentLine.setLength(0);
+	            currentLength = 0;
+	        }
+	        currentLine.append(word).append(" ");
+	        currentLength += word.length() + 1; // Account for the added whitespace character
+	    }
 
-        // Append the remaining part if any
-        if (currentLine.length() > 0) {
-            result.append(currentLine.toString().trim());
-        }
+	    // Append the remaining part if any
+	    if (currentLine.length() > 0) {
+	        result.append(currentLine.toString().trim());
+	    }
 
-        return result.toString();
-    }
+	    return result.toString();
+	}
 	
 	public static String getPocketName(int pocket) {
 		switch(pocket) {

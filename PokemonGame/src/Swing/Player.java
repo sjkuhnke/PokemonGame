@@ -86,7 +86,7 @@ public class Player extends Trainer implements Serializable {
 	public void catchPokemon(Pokemon p) {
 	    if (p.isFainted()) return;
 	    boolean hasNull = false;
-	    Pokemon.addTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?");
+	    Pokemon.addTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?", p);
 	    pokedex[p.id] = 2;
 	    p.clearVolatile();
 	    p.consumeItem();
@@ -552,8 +552,6 @@ public class Player extends Trainer implements Serializable {
 		confirmButton.addActionListener(e -> {
 			for (int i = 0; i < counts.length; i++) {
 				int count = Integer.parseInt(counts[i].getText().trim());
-				if (count > 0) bag.add(Item.getItem(i));
-				if (count < 1) bag.bag[i] = null;
 				bag.count[i] = count;
 			}
 			SwingUtilities.getWindowAncestor(result).dispose();
@@ -634,7 +632,7 @@ public class Player extends Trainer implements Serializable {
 			return ball;
 		}
 		for (int i = 1; i < 4; i++) {
-			if (bag.count[i] > 0) return bag.new Entry(bag.bag[i], bag.count[i]);
+			if (bag.count[i] > 0) return bag.new Entry(Item.getItem(i), bag.count[i]);
 		}
 		return ball;
 	}
@@ -642,9 +640,14 @@ public class Player extends Trainer implements Serializable {
 	public ArrayList<Entry> getBalls() {
 		ArrayList<Entry> result = new ArrayList<>();
 		for (int i = 1; i < 4; i++) {
-			if (bag.count[i] > 0) result.add(bag.new Entry(bag.bag[i], bag.count[i]));
+			if (bag.count[i] > 0) result.add(bag.new Entry(Item.getItem(i), bag.count[i]));
 		}
 		return result;
 	}
 
+	public void moveItem(Item item, Item addAbove) {
+		bag.bag.remove(item);
+		int index = bag.bag.indexOf(addAbove);
+		bag.bag.add(index, item);
+	}
 }

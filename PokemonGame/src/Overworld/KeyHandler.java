@@ -228,16 +228,19 @@ public class KeyHandler implements KeyListener {
 			if (gp.ui.subState == 0) {
 				gp.gameState = GamePanel.PLAY_STATE;
 			}
-			if (gp.ui.subState < 7) {
+			if (gp.ui.subState < 7 && gp.ui.bagState == 0) { // Menus for handling the 7 top menu options
 				gp.ui.subState = 0;
 				gp.ui.partySelectedNum = -1;
 				gp.ui.partyNum = 0;
-			} else if (gp.ui.subState == 7) {
+			} else if (gp.ui.subState == 7) { // Pokemon summary move info screen
 				if (gp.ui.moveSummaryNum == -1) {
 					gp.ui.subState = 2;
 				} else {
 					gp.ui.moveSummaryNum = -1;
 				}
+			} else if (gp.ui.bagState > 0) { // Bag option menu screen
+				gp.ui.bagState = 0;
+				gp.ui.commandNum = 0;
 			}
 			
 		}
@@ -261,8 +264,14 @@ public class KeyHandler implements KeyListener {
 					gp.ui.menuNum = maxCommandNum;
 				}
 			} else if (gp.ui.subState == 3) { // bag
-				if (gp.ui.bagNum > 0) {
-					gp.ui.bagNum--;
+				if (gp.ui.bagState == 1) {
+					if (gp.ui.commandNum > 0) {
+						gp.ui.commandNum--;
+					}
+				} else {
+					if (gp.ui.bagNum > 0) {
+						gp.ui.bagNum--;
+					}
 				}
 			}
 		}
@@ -273,28 +282,36 @@ public class KeyHandler implements KeyListener {
 					gp.ui.menuNum = 0;
 				}
 			} else if (gp.ui.subState == 3) { // bag
-				if (gp.ui.bagNum < gp.ui.currentItems.size() - 1) {
-					gp.ui.bagNum++;
+				if (gp.ui.bagState == 1) {
+					if (gp.ui.commandNum < 2) {
+						gp.ui.commandNum++;
+					}
+				} else {
+					if (gp.ui.bagNum < gp.ui.currentItems.size() - 1) {
+						gp.ui.bagNum++;
+					}
 				}
 			}
 		}
 		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
-			if (gp.ui.subState == 3) {
+			if (gp.ui.subState == 3 && gp.ui.bagState == 0) { // bag
 				gp.ui.currentPocket--;
 				if (gp.ui.currentPocket < Item.MEDICINE) {
 					gp.ui.currentPocket = Item.BERRY;
 				}
 				gp.ui.bagNum = 0;
+				gp.ui.selectedBagNum = -1;
 				gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
 			}
 		}
 		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
-			if (gp.ui.subState == 3) {
+			if (gp.ui.subState == 3 && gp.ui.bagState == 0) { // bag
 				gp.ui.currentPocket++;
 				if (gp.ui.currentPocket > Item.BERRY) {
 					gp.ui.currentPocket = Item.MEDICINE;
 				}
 				gp.ui.bagNum = 0;
+				gp.ui.selectedBagNum = -1;
 				gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
 			}
 		}
