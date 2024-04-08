@@ -13891,12 +13891,16 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static Task addTask(int text, String string, Pokemon p) {
-		if (gp.gameState == GamePanel.BATTLE_STATE) {
+		if (gp != null && gp.gameState == GamePanel.BATTLE_STATE) {
 			Task t = createTask(text, string, p);
 			gp.battleUI.tasks.add(t);
 			return t;
 		} else {
-			gp.ui.showMessage(string);
+			if (text == Task.TEXT) {
+				gp.ui.showMessage(string);
+			} else if (text == Task.NICKNAME) {
+				p.setNickname();
+			}
 			return null;
 		}
 	}

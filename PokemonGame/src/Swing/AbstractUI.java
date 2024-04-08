@@ -437,8 +437,7 @@ public abstract class AbstractUI {
 		if (moveSummaryNum > -1) {
 			int moveX = gp.tileSize * 3;
 			int moveY = gp.tileSize / 2;
-			drawSubWindow(moveX, moveY, width, height / 2, 255);
-			drawMoveSummary(moveX, moveY, p, foe);
+			drawMoveSummary(moveX, moveY, p, foe, p.moveset[moveSummaryNum], null);
 		}
 		
 		if (gp.keyH.wPressed && moveSummaryNum == -1) {
@@ -450,7 +449,11 @@ public abstract class AbstractUI {
 			gp.keyH.upPressed = false;
 			moveSummaryNum--;
 			if (moveSummaryNum < 0) {
-				moveSummaryNum = 3;
+				int index = 3;
+				while (p.moveset[index] == null) {
+					index--;
+				}
+				moveSummaryNum = index;
 			}
 		}
 		
@@ -464,26 +467,30 @@ public abstract class AbstractUI {
 		}
 	}
 
-	public void drawMoveSummary(int x, int y, Pokemon p, Pokemon foe) {
-		Moveslot m = p.moveset[moveSummaryNum];
+	public void drawMoveSummary(int x, int y, Pokemon p, Pokemon foe, Moveslot moveslot, Move move) {
+		int width = gp.tileSize*10;
+		int height = (int) (gp.tileSize*5.5);
+		drawSubWindow(x, y, width, height, 255);
+		
+		if (moveslot != null) move = moveslot.move;
 		x += gp.tileSize * 0.75;
 		int startX = x;
 		y += gp.tileSize * 1.25;
 		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(32F));
-		g2.drawString(m.move.toString(), x, y);
+		g2.drawString(move.toString(), x, y);
 		
 		x += gp.tileSize * 3.5;
 		y -= gp.tileSize * 0.75;
-		g2.drawImage(setup("/battle/" + m.move.mtype.toString().toLowerCase() + "_2", 1), x, y, null);
+		g2.drawImage(setup("/battle/" + move.mtype.toString().toLowerCase() + "_2", 1), x, y, null);
 		
 		x += gp.tileSize * 1.5;
 		y += gp.tileSize * 0.75;
 		g2.setFont(g2.getFont().deriveFont(24F));
-		g2.drawString("Power: " + m.move.formatbp(p, foe), x, y);
+		g2.drawString("Power: " + move.formatbp(p, foe), x, y);
 		
 		x += gp.tileSize * 2.5;
-		g2.drawString("Acc: " + m.move.getAccuracy(), x, y);
+		g2.drawString("Acc: " + move.getAccuracy(), x, y);
 		
 		x = startX;
 		y += gp.tileSize * 1.25;
@@ -491,24 +498,25 @@ public abstract class AbstractUI {
 		
 		x += gp.tileSize * 2;
 		y -= gp.tileSize / 2;
-		g2.drawImage(scaleImage(m.move.getCategoryIcon(), 2), x, y, null);
+		g2.drawImage(scaleImage(move.getCategoryIcon(), 2), x, y, null);
 		
 		x += gp.tileSize * 4;
 		y += gp.tileSize / 2;
-		Color ppColor = m.getPPColor();
+		Color ppColor = moveslot != null ? moveslot.getPPColor() : Color.BLACK;
 		if (ppColor == Color.BLACK) {
 			ppColor = Color.white;
 		} else {
 			ppColor = ppColor.brighter();
 		}
 		g2.setColor(ppColor);
-		g2.drawString(m.currentPP + " / " + m.maxPP + " PP", x, y);
+		String ppString = moveslot != null ? moveslot.currentPP + " / " + moveslot.maxPP + " PP" : move.pp + " PP (Max " + move.pp * 8 / 5 + ")";
+		g2.drawString(ppString, x, y);
 		
 		g2.setColor(Color.WHITE);
 		x = (int) (startX - (gp.tileSize * 0.75));
 		x += gp.tileSize * 5;
 		y += gp.tileSize * 1.25;
-		String[] desc = Item.breakString(m.move.getDescription(), 80).split("\n");
+		String[] desc = Item.breakString(move.getDescription(), 50).split("\n");
 		for (String s : desc) {
 			g2.drawString(s, getCenterAlignedTextX(s, x), y);
 			y += gp.tileSize * 0.75;

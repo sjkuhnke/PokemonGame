@@ -823,9 +823,9 @@ public class PlayerCharacter extends Entity {
 				JOptionPane.showMessageDialog(null, "Do you have any fossils for me to resurrect?");
 				JPanel options = new JPanel();
 				boolean valid = false;
-				if (p.bag.contains(45)) {
-					JGradientButton button = new JGradientButton(p.bag.bag[45].toString());
-					button.setBackground(p.bag.bag[45].getColor());
+				if (p.bag.contains(Item.THUNDER_SCALES_FOSSIL)) {
+					JGradientButton button = new JGradientButton(Item.THUNDER_SCALES_FOSSIL.toString());
+					button.setBackground(Item.THUNDER_SCALES_FOSSIL.getColor());
 					button.addActionListener(e -> {
 						int answer = JOptionPane.showOptionDialog(null,
 								"Would you like to revive a Shockfang?",
@@ -843,9 +843,9 @@ public class PlayerCharacter extends Entity {
 					options.add(button);
 				}
 				
-				if (p.bag.contains(46)) {
-					JGradientButton button = new JGradientButton(p.bag.bag[46].toString());
-					button.setBackground(p.bag.bag[46].getColor());
+				if (p.bag.contains(Item.DUSK_SCALES_FOSSIL)) {
+					JGradientButton button = new JGradientButton(Item.DUSK_SCALES_FOSSIL.toString());
+					button.setBackground(Item.DUSK_SCALES_FOSSIL.getColor());
 					button.addActionListener(e -> {
 						int answer = JOptionPane.showOptionDialog(null,
 								"Would you like to revive a Nightrex?",
@@ -1881,7 +1881,7 @@ public class PlayerCharacter extends Entity {
 					        	        			            JOptionPane.showMessageDialog(null, m.move.getMoveSummary(p.team[index], null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 					        	        			        } else {
 				        	        			        		if (m.maxPP < (m.move.pp * 8 / 5)) {
-				        	        			        			if (i.getItem().getID() == 42) { // PP Up
+				        	        			        			if (i.getItem() == Item.PP_UP) { // PP Up
 				        	        			        				m.maxPP += Math.max((m.move.pp / 5), 1);
 				        	        			        				JOptionPane.showMessageDialog(null, m.move.toString() + "'s PP was increased!");
 				        	        			        			} else { // PP Max

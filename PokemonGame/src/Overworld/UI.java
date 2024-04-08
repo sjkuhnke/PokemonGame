@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-
 import Entity.Entity;
 import Entity.PlayerCharacter;
 import Swing.AbstractUI;
@@ -27,7 +25,9 @@ public class UI extends AbstractUI{
 	public int slotCol = 0;
 	public int slotRow = 0;
 	public int bagNum = 0;
+	public int selectedBagNum = -1;
 	public int currentPocket = Item.MEDICINE;
+	public int bagState;
 	ArrayList<Bag.Entry> currentItems;
 	
 	public int btX = 0;
@@ -115,9 +115,6 @@ public class UI extends AbstractUI{
 			break;
 		case 3:
 			showBag();
-//			gp.gameState = GamePanel.PLAY_STATE;
-//			subState = 0;
-//			gp.player.showBag();
 			break;
 		case 4:
 			gp.gameState = GamePanel.PLAY_STATE;
@@ -261,24 +258,43 @@ public class UI extends AbstractUI{
 	}
 	
 	private void showBag() {
-		int x = gp.tileSize * 4;
-		int y = 0;
+		int x = gp.tileSize * 6;
+		int y = gp.tileSize / 2;
 		int width = gp.tileSize * 8;
 		int height = gp.tileSize;
 		drawSubWindow(x, y, width, height);
 		String pocketName = Item.getPocketName(currentPocket);
-		g2.drawString(pocketName, this.getCenterAlignedTextX(pocketName, gp.screenWidth / 2), (int) (y + gp.tileSize * 0.75));
+		g2.drawString(pocketName, this.getCenterAlignedTextX(pocketName, x + (width / 2)), (int) (y + gp.tileSize * 0.75));
 		
 		y += gp.tileSize;
 		height = gp.tileSize * 10;
 		
 		drawSubWindow(x, y, width, height);
 		
+		int descX = gp.tileSize / 2;
+		int descY = gp.tileSize * 2;
+		int descWidth = (int) (gp.tileSize * 5.5);
+		int descHeight = gp.tileSize * 8;
+		drawSubWindow(descX, descY, descWidth, descHeight);
+		int textX = descX + 20;
+		int textY = descY + gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		String desc = currentItems.get(bagNum).getItem().getDesc();
+		for (String line : Item.breakString(desc, 25).split("\n")) {
+			g2.drawString(line, textX, textY);
+			textY += 32;
+		}
+		g2.setFont(g2.getFont().deriveFont(32F));
+		
 		x += gp.tileSize;
 		y += gp.tileSize / 2;
 		for (int i = bagNum; i < bagNum + 9; i++) {
+			g2.setColor(Color.WHITE);
 			if (i == bagNum) {
 				g2.drawString(">", (x - gp.tileSize / 2) - 2, y + gp.tileSize / 2);
+			}
+			if (i == selectedBagNum) {
+				g2.setColor(Color.BLUE.brighter());
 			}
 			if (i < currentItems.size()) {
 				Bag.Entry current = currentItems.get(i);
@@ -304,31 +320,75 @@ public class UI extends AbstractUI{
 			int height2 = gp.tileSize / 2;
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
 		}
+		if (gp.keyH.aPressed) {
+			gp.keyH.aPressed = false;
+			if (selectedBagNum == -1) {
+				selectedBagNum = bagNum;
+			} else if (selectedBagNum == bagNum) {
+				selectedBagNum = -1;
+			} else {
+				gp.player.p.moveItem(currentItems.get(selectedBagNum).getItem(), currentItems.get(bagNum).getItem());
+				currentItems = gp.player.p.getItems(currentPocket);
+				selectedBagNum = -1;
+			}
+		}
+		if (bagState == 0 && gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			bagState = 1;
+		}
+		
+		if (bagState == 1) {
+			drawItemOptions();
+		} else if (bagState == 2) {
+			drawTrashOptions();
+		} else if (bagState == 3) {
+			drawMoveSummary(gp.tileSize / 2, gp.tileSize * 6, null, null, null, currentItems.get(bagNum).getItem().getMove());
+		}
+	}
+
+	private void drawItemOptions() {
+		int x = gp.tileSize * 12;
+		int y = (int) (gp.tileSize * 1.5);
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 3.5);
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize;
+		y += gp.tileSize;
+		String option1 = currentPocket == Item.BERRY || currentPocket == Item.HELD_ITEM ? "Give" : "Use";
+		g2.drawString(option1, x, y);
+		if (commandNum == 0) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				gp.gameState = GamePanel.USE_ITEM_STATE;
+			}
+		}
+		y += gp.tileSize;
+		String option2 = currentPocket == Item.TMS ? "Info" : "Trash";
+		g2.drawString(option2, x, y);
+		if (commandNum == 1) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				bagState = currentPocket == Item.TMS ? 3 : 2;
+			}
+		}
+		y += gp.tileSize;
+		g2.drawString("Back", x, y);
+		if (commandNum == 2) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				bagState = 0;
+				commandNum = 0;
+			}
+		}
 	}
 	
-	public BufferedImage setup(String imageName, int scale) {
-	    BufferedImage image = null;
-	    
-	    try {
-	        // Load the original image
-	        BufferedImage originalImage = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
-	        
-	        // Calculate the new dimensions based on the scale
-	        int newWidth = originalImage.getWidth() * scale;
-	        int newHeight = originalImage.getHeight() * scale;
-	        
-	        // Create a new BufferedImage with the scaled dimensions
-	        image = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-	        
-	        // Draw the original image onto the scaled image
-	        Graphics2D g2d = image.createGraphics();
-	        g2d.drawImage(originalImage, 0, 0, newWidth, newHeight, null);
-	        g2d.dispose();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	    
-	    return image;
+	private void drawTrashOptions() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void drawTransition() {
@@ -417,14 +477,14 @@ public class UI extends AbstractUI{
 	
 	public void drawShopScreen() {
 		switch(subState) {
-		case 0: tradeSelect(); break;
-		case 1: tradeBuy(); break;
-		case 2: tradeSell(); break;
+		case 0: shopSelect(); break;
+		case 1: shopBuy(); break;
+		case 2: shopSell(); break;
 		}
 		gp.keyH.wPressed = false;
 	}
 	
-	public void tradeSelect() {
+	public void shopSelect() {
 		drawDialogueScreen(true);
 		
 		int x = gp.tileSize * 11;
@@ -448,6 +508,7 @@ public class UI extends AbstractUI{
 		if (commandNum == 1) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
 				subState = 2;
 			}
 		}
@@ -456,6 +517,7 @@ public class UI extends AbstractUI{
 		if (commandNum == 2) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
 				showMessage("Come again soon!");
 				subState = 0;
 				commandNum = 0;
@@ -463,11 +525,11 @@ public class UI extends AbstractUI{
 		}
 	}
 	
-	public void tradeBuy() {
+	public void shopBuy() {
 		drawInventory(npc);
 	}
 	
-	public void tradeSell() {
+	public void shopSell() {
 		
 		
 	}
@@ -519,7 +581,7 @@ public class UI extends AbstractUI{
 		
 		if (itemIndex < entity.inventory.size()) {
 			drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
-			String desc = entity.inventory.get(itemIndex).getDesc().replace('\n', ' ');
+			String desc = entity.inventory.get(itemIndex).getDesc();
 			
 			for (String line : Item.breakString(desc, 35).split("\n")) {
 				g2.drawString(line, textX, textY);
