@@ -58,6 +58,10 @@ public class Bag implements Serializable {
 		public String toString() {
 			return item.toString() + " x " + count;
 		}
+
+		public int getMaxSell() {
+			return Math.min(99, count);
+		}
 	}
 
 	public boolean contains(int id) {

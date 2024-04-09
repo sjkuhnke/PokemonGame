@@ -50,22 +50,13 @@ public class KeyHandler implements KeyListener {
 			rightPressed = true;
 		}
 		
-		if (gp.battleUI.nicknaming == 1) {
+		if (gp.battleUI.nicknaming == 1 || gp.ui.nicknaming == 1) {
 			if (code == KeyEvent.VK_BACK_SPACE) {
 				gp.battleUI.handleBackspace();
 			} else {
 				char c = e.getKeyChar();
 				if (c != KeyEvent.CHAR_UNDEFINED) {
 					gp.battleUI.handleKeyInput(c);
-				}
-			}
-		} else if (gp.ui.nicknaming == 1) {
-			if (code == KeyEvent.VK_BACK_SPACE) {
-				gp.ui.handleBackspace();
-			} else {
-				char c = e.getKeyChar();
-				if (c != KeyEvent.CHAR_UNDEFINED) {
-					gp.ui.handleKeyInput(c);
 				}
 			}
 		}
@@ -136,6 +127,10 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_A) {
 			aPressed = true;
 		}
+		
+		if (code == KeyEvent.VK_D) {
+			dPressed = true;
+		}
 		if (gp.battleUI.subState == BattleUI.IDLE_STATE) {
 			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
 				if ((gp.battleUI.foe.trainerOwned() && gp.battleUI.commandNum > 1) || (!gp.battleUI.foe.trainerOwned() && gp.battleUI.commandNum >= 0)) {
@@ -180,6 +175,7 @@ public class KeyHandler implements KeyListener {
 		} else if (gp.battleUI.subState == BattleUI.MOVE_SELECTION_STATE) {
 			if (code == KeyEvent.VK_S) {
 				gp.battleUI.subState = BattleUI.IDLE_STATE;
+				gp.battleUI.showMoveSummary = false;
 			}
 			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
 				if (gp.battleUI.moveNum > 1) {
@@ -241,6 +237,7 @@ public class KeyHandler implements KeyListener {
 			} else if (gp.ui.bagState > 0) { // Bag option menu screen
 				gp.ui.bagState = 0;
 				gp.ui.commandNum = 0;
+				gp.ui.sellAmt = 1;
 			}
 			
 		}
@@ -264,10 +261,13 @@ public class KeyHandler implements KeyListener {
 					gp.ui.menuNum = maxCommandNum;
 				}
 			} else if (gp.ui.subState == 3) { // bag
-				if (gp.ui.bagState == 1) {
+				if (gp.ui.bagState == 1) { // item options
 					if (gp.ui.commandNum > 0) {
 						gp.ui.commandNum--;
 					}
+				} else if (gp.ui.bagState == 2) { // sell
+					gp.ui.sellAmt++;
+					if (gp.ui.sellAmt > gp.ui.currentItems.get(gp.ui.bagNum).getMaxSell()) gp.ui.sellAmt = 1;
 				} else {
 					if (gp.ui.bagNum > 0) {
 						gp.ui.bagNum--;
@@ -282,10 +282,13 @@ public class KeyHandler implements KeyListener {
 					gp.ui.menuNum = 0;
 				}
 			} else if (gp.ui.subState == 3) { // bag
-				if (gp.ui.bagState == 1) {
+				if (gp.ui.bagState == 1) { // item options
 					if (gp.ui.commandNum < 2) {
 						gp.ui.commandNum++;
 					}
+				} else if (gp.ui.bagState == 2) { // sell
+					gp.ui.sellAmt--;
+					if (gp.ui.sellAmt < 1) gp.ui.sellAmt = gp.ui.currentItems.get(gp.ui.bagNum).getMaxSell();
 				} else {
 					if (gp.ui.bagNum < gp.ui.currentItems.size() - 1) {
 						gp.ui.bagNum++;
@@ -294,25 +297,37 @@ public class KeyHandler implements KeyListener {
 			}
 		}
 		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
-			if (gp.ui.subState == 3 && gp.ui.bagState == 0) { // bag
-				gp.ui.currentPocket--;
-				if (gp.ui.currentPocket < Item.MEDICINE) {
-					gp.ui.currentPocket = Item.BERRY;
+			if (gp.ui.subState == 3) { // bag
+				if (gp.ui.bagState == 2) { // sell
+					int max = gp.ui.currentItems.get(gp.ui.bagNum).getMaxSell();
+					gp.ui.sellAmt -= max > 10 ? 10 : 1;
+					if (gp.ui.sellAmt < 1) gp.ui.sellAmt += max;
+				} else if (gp.ui.bagState == 0) {
+					gp.ui.currentPocket--;
+					if (gp.ui.currentPocket < Item.MEDICINE) {
+						gp.ui.currentPocket = Item.BERRY;
+					}
+					gp.ui.bagNum = 0;
+					gp.ui.selectedBagNum = -1;
+					gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
 				}
-				gp.ui.bagNum = 0;
-				gp.ui.selectedBagNum = -1;
-				gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
 			}
 		}
 		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
-			if (gp.ui.subState == 3 && gp.ui.bagState == 0) { // bag
-				gp.ui.currentPocket++;
-				if (gp.ui.currentPocket > Item.BERRY) {
-					gp.ui.currentPocket = Item.MEDICINE;
+			if (gp.ui.subState == 3) { // bag
+				if (gp.ui.bagState == 2) { // sell
+					int max = gp.ui.currentItems.get(gp.ui.bagNum).getMaxSell();
+					gp.ui.sellAmt += max > 10 ? 10 : 1;
+					if (gp.ui.sellAmt > max) gp.ui.sellAmt -= max;
+				} else if (gp.ui.bagState == 0) {
+					gp.ui.currentPocket++;
+					if (gp.ui.currentPocket > Item.BERRY) {
+						gp.ui.currentPocket = Item.MEDICINE;
+					}
+					gp.ui.bagNum = 0;
+					gp.ui.selectedBagNum = -1;
+					gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
 				}
-				gp.ui.bagNum = 0;
-				gp.ui.selectedBagNum = -1;
-				gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
 			}
 		}
 	}

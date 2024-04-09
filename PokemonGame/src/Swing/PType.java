@@ -41,7 +41,7 @@ public enum PType {
         return name.substring(0, 1).toUpperCase() + name.substring(1);
 	}
 
-	String effectiveness(Pokemon foe) {
+	public String effectiveness(Pokemon foe) {
 		double multiplier = foe.getEffectiveMultiplier(this);
 		
 		if (multiplier == 0) return "No Effect";

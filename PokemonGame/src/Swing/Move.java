@@ -615,9 +615,9 @@ public enum Move {
 	
 	TERRAIN_PULSE(-1,100,0,0,1,0,PType.NORMAL,"Type changes to match the current terrain, double BP if type of the move changes",false,10),
 	FACADE(-1,100,0,0,0,0,PType.NORMAL,"Damage is doubled if the user has a status condition",true,20),
-	SLEEP_TALK(-1,100,0,0,2,0,PType.NORMAL,"Picks a random move of the user's to use if the user is sleeping",false,10),
-	CAPTIVATE(-1,100,0,0,2,0,PType.NORMAL,"Lowers foe's Sp.Atk by 2",false,10),
-	BATON_PASS(-1,1000,0,0,2,0,PType.NORMAL,"Causes user to switch and passes all stat changes with it",false,3),
+	SLEEP_TALK(0,100,0,0,2,0,PType.NORMAL,"Picks a random move of the user's to use if the user is sleeping",false,10),
+	CAPTIVATE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Sp.Atk by 2",false,10),
+	BATON_PASS(0,1000,0,0,2,0,PType.NORMAL,"Causes user to switch and passes all stat changes with it",false,3),
 	FLIP_TURN(60,100,0,0,0,0,PType.WATER,"Causes user to switch out after use",true,10),
 	CUT(55,95,0,3,0,0,PType.NORMAL,"This move always Crits",true,20),
 	ROCK_SMASH(40,100,100,0,0,0,PType.FIGHTING,"% to lower foe's Defense by 1",true,30),

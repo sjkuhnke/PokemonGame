@@ -477,7 +477,7 @@ public abstract class AbstractUI {
 		int startX = x;
 		y += gp.tileSize * 1.25;
 		g2.setColor(Color.WHITE);
-		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.setFont(g2.getFont().deriveFont(getMoveFontSize(move.toString())));
 		g2.drawString(move.toString(), x, y);
 		
 		x += gp.tileSize * 3.5;
@@ -522,6 +522,23 @@ public abstract class AbstractUI {
 			y += gp.tileSize * 0.75;
 		}
 		
+	}
+
+	private float getMoveFontSize(String moveName) {
+	    float targetWidth = gp.tileSize * 4; // Target width in pixels
+	    float fontSize = 32F; // Default font size
+
+	    FontMetrics metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
+	    int textWidth = metrics.stringWidth(moveName);
+
+	    // Reduce font size until the text fits within the target width
+	    while (textWidth > targetWidth && fontSize > 1) {
+	        fontSize -= 1; // Decrease font size
+	        metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
+	        textWidth = metrics.stringWidth(moveName);
+	    }
+
+	    return fontSize;
 	}
 
 	public void setNickname(Pokemon p) {
