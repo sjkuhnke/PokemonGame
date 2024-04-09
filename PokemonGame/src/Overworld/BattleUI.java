@@ -55,6 +55,7 @@ public class BattleUI extends AbstractUI {
 	private Field field;
 	
 	public boolean cancellableParty;
+	public boolean showMoveSummary;
 
 	public static final int STARTING_STATE = -1;
 	public static final int IDLE_STATE = 0;
@@ -667,6 +668,10 @@ public class BattleUI extends AbstractUI {
 			gp.keyH.aPressed = false;
 			Item.useCalc(user.getPlayer(), null);
 		}
+		if (gp.keyH.dPressed) {
+			gp.keyH.dPressed = false;
+			showMoveSummary = !showMoveSummary;
+		}
 		drawCalcWindow();
 	}
 	
@@ -762,27 +767,29 @@ public class BattleUI extends AbstractUI {
 
 		        g2.setColor(moves[i].move.mtype.getColor());
 		        g2.fillRoundRect(x, y, width, height, 10, 10);
-		        g2.setColor(Color.BLACK);
+		        g2.setColor(moves[i].getPPColor());
 		        String text = moves[i].move.toString();
 		        g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
-		        g2.setColor(moves[i].getPPColor());
-		        String pp = moves[i].currentPP + " / " + moves[i].maxPP;
+		        String pp = showMoveSummary ? moves[i].move.cat == 2 ? "Status" : moves[i].move.mtype.effectiveness(foe) : moves[i].currentPP + " / " + moves[i].maxPP;
 		        g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
 		        if (moveNum == i) {
 		            g2.setColor(Color.WHITE);
 		            g2.drawRoundRect(x, y, width, height, 10, 10);
-		            if (gp.keyH.wPressed) {
-		            	foeMove = foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
-		            	turn(moves[i].move, foeMove);
-		            }
 		        }
 		    }
 		}
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			showMoveSummary = false;
+        	foeMove = foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
+        	turn(moves[moveNum].move, foeMove);
+        }
+		if (showMoveSummary) {
+        	drawMoveSummary(gp.tileSize * 3, gp.tileSize, user, foe, moves[moveNum], null);
+        }
 	}
 	
 	public void turn(Move uMove, Move fMove) {
-		//if (user.isFainted() || foe.isFainted()) return; // TODO: maybe let the move method handle this?
-
 		// Priority stuff
 		int uP, fP;
 		uP = uMove == null ? 0 : uMove.priority;

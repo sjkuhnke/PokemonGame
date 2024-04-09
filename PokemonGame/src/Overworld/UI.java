@@ -28,6 +28,7 @@ public class UI extends AbstractUI{
 	public int selectedBagNum = -1;
 	public int currentPocket = Item.MEDICINE;
 	public int bagState;
+	public int sellAmt = 1;
 	ArrayList<Bag.Entry> currentItems;
 	
 	public int btX = 0;
@@ -307,15 +308,15 @@ public class UI extends AbstractUI{
 			}
 		}
 		if (bagNum + 9 < currentItems.size()) {
-			int x2 = gp.tileSize * 3 + width;
-			int y2 = height;
+			int x2 = gp.tileSize * 5 + width;
+			int y2 = height + (gp.tileSize / 2);
 			int width2 = gp.tileSize / 2;
 			int height2 = gp.tileSize / 2;
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
 		}
-		if (bagNum != 0) {
-			int x2 = gp.tileSize * 3 + width;
-			int y2 = (int) (gp.tileSize * 1.5);
+		if (bagNum != 0 && bagState != 2) {
+			int x2 = gp.tileSize * 5 + width;
+			int y2 = gp.tileSize * 2;
 			int width2 = gp.tileSize / 2;
 			int height2 = gp.tileSize / 2;
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
@@ -340,7 +341,7 @@ public class UI extends AbstractUI{
 		if (bagState == 1) {
 			drawItemOptions();
 		} else if (bagState == 2) {
-			drawTrashOptions();
+			drawSellOptions();
 		} else if (bagState == 3) {
 			drawMoveSummary(gp.tileSize / 2, gp.tileSize * 6, null, null, null, currentItems.get(bagNum).getItem().getMove());
 		}
@@ -365,7 +366,7 @@ public class UI extends AbstractUI{
 			}
 		}
 		y += gp.tileSize;
-		String option2 = currentPocket == Item.TMS ? "Info" : "Trash";
+		String option2 = currentPocket == Item.TMS ? "Info" : "Sell";
 		g2.drawString(option2, x, y);
 		if (commandNum == 1) {
 			g2.drawString(">", x-24, y);
@@ -386,8 +387,29 @@ public class UI extends AbstractUI{
 		}
 	}
 	
-	private void drawTrashOptions() {
-		// TODO Auto-generated method stub
+	private void drawSellOptions() {
+		int x = gp.tileSize * 12;
+		int y = (int) (gp.tileSize * 1.5);
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 3.5);
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize * 1.25;
+		y += gp.tileSize * 2;
+		g2.drawString(sellAmt + "", x, y);
+		
+		int y2 = y += gp.tileSize / 4;
+		int width2 = gp.tileSize / 2;
+		int height2 = gp.tileSize / 2;
+		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
+		
+		y2 = y -= gp.tileSize * 1.5;
+		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
+		
+		x -= gp.tileSize;
+		y += gp.tileSize * 2.5;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.drawString("+$" + currentItems.get(bagNum).getItem().getSell() * sellAmt, x, y);
 		
 	}
 	
