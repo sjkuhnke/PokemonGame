@@ -422,15 +422,19 @@ public class UI extends AbstractUI{
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				currentItem = currentItems.get(bagNum).getItem();
-				if (currentItem == Item.REPEL) {
+				if (currentPocket == Item.BERRY || currentPocket == Item.HELD_ITEM) {
 					
-					gp.player.p.bag.remove(currentItem);
-					gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
-				} else if (currentItem == Item.CALCULATOR) {
-					Item.useCalc(gp.player.p, null);
 				} else {
-					gp.gameState = GamePanel.USE_ITEM_STATE;
-				}	
+					if (currentItem == Item.REPEL) {
+						
+						gp.player.p.bag.remove(currentItem);
+						gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
+					} else if (currentItem == Item.CALCULATOR) {
+						Item.useCalc(gp.player.p, null);
+					} else {
+						gp.gameState = GamePanel.USE_ITEM_STATE;
+					}	
+				}
 			}
 		}
 		y += gp.tileSize;
