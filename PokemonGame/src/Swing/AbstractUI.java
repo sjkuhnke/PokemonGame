@@ -131,7 +131,7 @@ public abstract class AbstractUI {
 	    return x;
 	}
 
-	public void drawParty() {
+	public void drawParty(Item item) {
 		int x = gp.tileSize*3;
 		int y = gp.tileSize;
 		int width = gp.tileSize*10;
@@ -214,7 +214,8 @@ public abstract class AbstractUI {
 				String lvText = "Lv. " + p.level;
 				g2.setColor(Color.BLACK);
 				g2.drawString(lvText, getCenterAlignedTextX(lvText, x + 60), (int) (y + gp.tileSize * 2.75));
-				String hpText = p.currentHP + " / " + p.getStat(0);
+				int canUseItem = p.canUseItem(item);
+				String hpText = canUseItem == -1 ? p.currentHP + " / " + p.getStat(0) : canUseItem == 0 ? "NOT ABLE" : canUseItem == 2 ? "LEARNED" : "ABLE";
 				g2.drawString(hpText, getCenterAlignedTextX(hpText, (int) (x + (partyWidth * 0.75) - 12)), (int) (y + gp.tileSize * 2.25));
 				if (p.status != Status.HEALTHY) {
 					g2.drawImage(setup("/battle/" + p.status.toString().toLowerCase(), 2), (int) (x + gp.tileSize * 2.5) + 4, (int) (y + gp.tileSize * 2.25) + 8, null);
@@ -517,9 +518,15 @@ public abstract class AbstractUI {
 		x += gp.tileSize * 5;
 		y += gp.tileSize * 1.25;
 		String[] desc = Item.breakString(move.getDescription(), 50).split("\n");
+		int offset = (int) (gp.tileSize * 0.75);
+		if (desc.length > 2) {
+			g2.setFont(g2.getFont().deriveFont(20F));
+			desc = Item.breakString(move.getDescription(), 60).split("\n");
+			offset = (int) (gp.tileSize * 0.5);
+		}
 		for (String s : desc) {
 			g2.drawString(s, getCenterAlignedTextX(s, x), y);
-			y += gp.tileSize * 0.75;
+			y += offset;
 		}
 		
 	}

@@ -32,9 +32,9 @@ public class Moveslot implements Serializable {
 	public Color getPPColor() {
 		double ratio = getPPRatio();
 		if (ratio <= 0.25) {
-			return new Color(184, 58, 0);
+			return new Color(134, 38, 0);
 		} else if (ratio <= 0.5) {
-			return new Color(130, 115, 1);
+			return new Color(100, 96, 1);
 		} else {
 			return Color.black;
 		}

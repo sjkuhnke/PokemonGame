@@ -29,10 +29,14 @@ public class UI extends AbstractUI{
 	public int currentPocket = Item.MEDICINE;
 	public int bagState;
 	public int sellAmt = 1;
-	ArrayList<Bag.Entry> currentItems;
+	public int rareCandyAmt = 1;
+	public Item currentItem;
+	public ArrayList<Bag.Entry> currentItems;
 	
 	public int btX = 0;
 	public int btY = 0;
+	
+	public boolean showMessage;
 	
 	BufferedImage transitionBuffer;
 	
@@ -56,7 +60,11 @@ public class UI extends AbstractUI{
 	
 	@Override
 	public void showMessage(String text) {
-		gp.gameState = GamePanel.DIALOGUE_STATE;
+		if (gp.gameState == GamePanel.PLAY_STATE) {
+			gp.gameState = GamePanel.DIALOGUE_STATE;
+		} else {
+			showMessage = true;
+		}
 		gp.ui.currentDialogue = text;
 	}
 	
@@ -90,6 +98,56 @@ public class UI extends AbstractUI{
 		
 		if (gp.gameState == GamePanel.START_BATTLE_STATE) {
 			drawBattleStartTransition();
+		}
+		
+		if (gp.gameState == GamePanel.USE_ITEM_STATE) {
+			useItem();
+		}
+		
+		if (gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
+			useRareCandy();
+		}
+		
+		if (showMessage) {
+			drawDialogueScreen(true);
+		}
+	}
+
+	private void useRareCandy() {
+		int x = gp.tileSize * 12;
+		int y = (int) (gp.tileSize * 1.5);
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 3.5);
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize * 1.25;
+		y += gp.tileSize * 2;
+		g2.drawString(rareCandyAmt + "", x, y);
+		
+		int y2 = y += gp.tileSize / 4;
+		int width2 = gp.tileSize / 2;
+		int height2 = gp.tileSize / 2;
+		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
+		
+		y2 = y -= gp.tileSize * 1.5;
+		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			showMessage("Sold " + sellAmt + " " + currentItems.get(bagNum).getItem().toString() + " for $" + sellAmt * currentItems.get(bagNum).getItem().getSell());
+			gp.player.p.sellItem(currentItems.get(bagNum).getItem(), sellAmt);
+			currentItems = gp.player.p.getItems(currentPocket);
+			gp.ui.bagState = 0;
+			gp.ui.commandNum = 0;
+			gp.ui.sellAmt = 1;
+		}
+	}
+
+	private void useItem() {
+		drawParty(currentItem);
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			gp.player.p.useItem(gp.player.p.team[partyNum], currentItem, gp);
 		}
 	}
 
@@ -240,7 +298,7 @@ public class UI extends AbstractUI{
 	}
 	
 	private void showParty() {
-		drawParty();
+		drawParty(null);
 		if (gp.keyH.aPressed) {
 			gp.keyH.aPressed = false;
 			if (partySelectedNum == -1) {
@@ -331,6 +389,7 @@ public class UI extends AbstractUI{
 				gp.player.p.moveItem(currentItems.get(selectedBagNum).getItem(), currentItems.get(bagNum).getItem());
 				currentItems = gp.player.p.getItems(currentPocket);
 				selectedBagNum = -1;
+				if (bagNum > 0) bagNum--;
 			}
 		}
 		if (bagState == 0 && gp.keyH.wPressed) {
@@ -362,7 +421,16 @@ public class UI extends AbstractUI{
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				gp.gameState = GamePanel.USE_ITEM_STATE;
+				currentItem = currentItems.get(bagNum).getItem();
+				if (currentItem == Item.REPEL) {
+					
+					gp.player.p.bag.remove(currentItem);
+					gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
+				} else if (currentItem == Item.CALCULATOR) {
+					Item.useCalc(gp.player.p, null);
+				} else {
+					gp.gameState = GamePanel.USE_ITEM_STATE;
+				}	
 			}
 		}
 		y += gp.tileSize;
@@ -410,6 +478,16 @@ public class UI extends AbstractUI{
 		y += gp.tileSize * 2.5;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		g2.drawString("+$" + currentItems.get(bagNum).getItem().getSell() * sellAmt, x, y);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			showMessage("Sold " + sellAmt + " " + currentItems.get(bagNum).getItem().toString() + " for $" + sellAmt * currentItems.get(bagNum).getItem().getSell());
+			gp.player.p.sellItem(currentItems.get(bagNum).getItem(), sellAmt);
+			currentItems = gp.player.p.getItems(currentPocket);
+			gp.ui.bagState = 0;
+			gp.ui.commandNum = 0;
+			gp.ui.sellAmt = 1;
+		}
 		
 	}
 	
@@ -477,6 +555,8 @@ public class UI extends AbstractUI{
 		if (commandNum == 0) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
 				showMessage("Your Pokemon were restored\nto full health!");
 				gp.player.p.heal();
 				gp.ui.subState = 0;
@@ -488,6 +568,8 @@ public class UI extends AbstractUI{
 		if (commandNum == 1) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
 				showMessage("Come again soon!");
 				gp.ui.subState = 0;
 				commandNum = 0;
@@ -501,7 +583,6 @@ public class UI extends AbstractUI{
 		switch(subState) {
 		case 0: shopSelect(); break;
 		case 1: shopBuy(); break;
-		case 2: shopSell(); break;
 		}
 		gp.keyH.wPressed = false;
 	}
@@ -512,7 +593,7 @@ public class UI extends AbstractUI{
 		int x = gp.tileSize * 11;
 		int y = gp.tileSize * 4;
 		int width = gp.tileSize * 3;
-		int height = (int) (gp.tileSize * 3.5);
+		int height = (int) (gp.tileSize * 2.5);
 		drawSubWindow(x, y, width, height);
 		
 		x += gp.tileSize;
@@ -526,20 +607,12 @@ public class UI extends AbstractUI{
 			}
 		}
 		y += gp.tileSize;
-		g2.drawString("Sell", x, y);
+		g2.drawString("Exit", x, y);
 		if (commandNum == 1) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				subState = 2;
-			}
-		}
-		y += gp.tileSize;
-		g2.drawString("Exit", x, y);
-		if (commandNum == 2) {
-			g2.drawString(">", x-24, y);
-			if (gp.keyH.wPressed) {
-				gp.keyH.wPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
 				showMessage("Come again soon!");
 				subState = 0;
 				commandNum = 0;
@@ -549,11 +622,6 @@ public class UI extends AbstractUI{
 	
 	public void shopBuy() {
 		drawInventory(npc);
-	}
-	
-	public void shopSell() {
-		
-		
 	}
 	
 	private void drawInventory(Entity entity) {

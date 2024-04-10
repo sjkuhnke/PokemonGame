@@ -705,12 +705,12 @@ public enum Item {
 	}
 
 	public Status getStatus() {
-		if (id == 9) return Status.POISONED;
-		else if (id == 10) return Status.ASLEEP;
-		else if (id == 11) return Status.BURNED;
-		else if (id == 12) return Status.PARALYZED;
-		else if (id == 13) return Status.FROSTBITE;
-		else if (id == 14 || id == 15) return null;
+		if (this == ANTIDOTE) return Status.POISONED;
+		else if (this == AWAKENING) return Status.ASLEEP;
+		else if (this == BURN_HEAL) return Status.BURNED;
+		else if (this == PARALYZE_HEAL) return Status.PARALYZED;
+		else if (this == FREEZE_HEAL) return Status.FROSTBITE;
+		else if (this == FULL_HEAL || this == KLEINE_BAR) return null;
 		else return Status.CONFUSED; // lol
 		
 	}
