@@ -3,13 +3,13 @@ package Swing;
 import java.awt.Color;
 
 public enum Status {
-	BURNED("BRN", new Color(230, 9, 15), Color.BLACK),
-	PARALYZED("PRZ", new Color(219, 216, 15), Color.BLACK),
-	ASLEEP("SLP", new Color(105, 105, 102), Color.WHITE),
-	POISONED("PSN", new Color(68, 2, 161), Color.WHITE),
+	BURNED("Burn", new Color(230, 9, 15), Color.BLACK),
+	PARALYZED("Paralysis", new Color(219, 216, 15), Color.BLACK),
+	ASLEEP("Sleep", new Color(105, 105, 102), Color.WHITE),
+	POISONED("Poison", new Color(68, 2, 161), Color.WHITE),
 	HEALTHY("", new Color(255, 255, 255), Color.BLACK),
-	FROSTBITE("FRS", new Color(150, 217, 214), Color.BLACK),
-	TOXIC("TOX", new Color(68, 2, 161), Color.WHITE),
+	FROSTBITE("Frostbite", new Color(150, 217, 214), Color.BLACK),
+	TOXIC("Toxic Poison", new Color(68, 2, 161), Color.WHITE),
 	CONFUSED("CNF", new Color(32, 37, 61), Color.WHITE),
 	CURSED("CRS", new Color(30, 32, 41), Color.WHITE),
 	LEECHED("LCH", new Color(21, 143, 40), Color.BLACK),

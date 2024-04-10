@@ -23,7 +23,9 @@ public class KeyHandler implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 		
-		if (gp.gameState == GamePanel.PLAY_STATE) {
+		if (gp.ui.showMessage) {
+			messageState(code);
+		} else if (gp.gameState == GamePanel.PLAY_STATE) {
 			playState(code);
 		} else if (gp.gameState == GamePanel.DIALOGUE_STATE) {
 			dialogueState(code);
@@ -35,28 +37,33 @@ public class KeyHandler implements KeyListener {
 			nurseState(code);
 		} else if (gp.gameState == GamePanel.BATTLE_STATE) {
 			battleState(code);
+		} else if (gp.gameState == GamePanel.USE_ITEM_STATE) {
+			useItemState(code);
 		}
 		
-		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
-			upPressed = true;
-		}
-		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
-			downPressed = true;
-		}
-		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
-			leftPressed = true;
-		}
-		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
-			rightPressed = true;
-		}
 		
-		if (gp.battleUI.nicknaming == 1 || gp.ui.nicknaming == 1) {
-			if (code == KeyEvent.VK_BACK_SPACE) {
-				gp.battleUI.handleBackspace();
-			} else {
-				char c = e.getKeyChar();
-				if (c != KeyEvent.CHAR_UNDEFINED) {
-					gp.battleUI.handleKeyInput(c);
+		if (!gp.ui.showMessage) {
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+				upPressed = true;
+			}
+			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				downPressed = true;
+			}
+			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+				leftPressed = true;
+			}
+			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+				rightPressed = true;
+			}
+			
+			if (gp.battleUI.nicknaming == 1 || gp.ui.nicknaming == 1) {
+				if (code == KeyEvent.VK_BACK_SPACE) {
+					gp.battleUI.handleBackspace();
+				} else {
+					char c = e.getKeyChar();
+					if (c != KeyEvent.CHAR_UNDEFINED) {
+						gp.battleUI.handleKeyInput(c);
+					}
 				}
 			}
 		}
@@ -183,7 +190,7 @@ public class KeyHandler implements KeyListener {
 				}
 			}
 			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
-				if (gp.battleUI.moveNum < 2) {
+				if (gp.battleUI.moveNum < 2 && gp.battleUI.user.moveset[gp.battleUI.moveNum + 2] != null) {
 					gp.battleUI.moveNum += 2;
 				}
 			}
@@ -193,7 +200,7 @@ public class KeyHandler implements KeyListener {
 				}
 			}
 			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
-				if (gp.battleUI.moveNum % 2 == 0) {
+				if (gp.battleUI.moveNum % 2 == 0 && gp.battleUI.user.moveset[gp.battleUI.moveNum + 1] != null) {
 					gp.battleUI.moveNum++;
 				}
 			}
@@ -216,6 +223,18 @@ public class KeyHandler implements KeyListener {
 	private void dialogueState(int code) {
 		if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
 			gp.gameState = GamePanel.PLAY_STATE;
+		}
+	}
+	
+	private void messageState(int code) {
+		if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
+			gp.ui.showMessage = false;
+			if (gp.gameState == GamePanel.USE_ITEM_STATE) {
+				gp.gameState = GamePanel.MENU_STATE;
+				gp.ui.subState = 3;
+				gp.ui.bagState = 0;
+				gp.ui.commandNum = 0;
+			}
 		}
 	}
 	
@@ -343,17 +362,8 @@ public class KeyHandler implements KeyListener {
 				gp.ui.subState = 0;
 				gp.ui.commandNum = 0;
 			}
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
-				gp.ui.commandNum--;
-				if (gp.ui.commandNum < 0) {
-					gp.ui.commandNum = 2;
-				}
-			}
-			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
-				gp.ui.commandNum++;
-				if (gp.ui.commandNum > 2) {
-					gp.ui.commandNum = 0;
-				}
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I || code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				gp.ui.commandNum = 1 - gp.ui.commandNum;
 			}
 		}
 		if (gp.ui.subState > 0) {
@@ -394,19 +404,24 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (gp.ui.subState == 0) {
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
-				gp.ui.commandNum--;
-				if (gp.ui.commandNum < 0) {
-					gp.ui.commandNum = 1;
-				}
-			}
-			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
-				gp.ui.commandNum++;
-				if (gp.ui.commandNum > 1) {
-					gp.ui.commandNum = 0;
-				}
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I || code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				gp.ui.commandNum = 1 - gp.ui.commandNum;
 			}
 		}
+	}
+	
+	private void useItemState(int code) {
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		
+		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+			gp.gameState = GamePanel.MENU_STATE;
+			gp.ui.subState = 3;
+			gp.ui.bagState = 0;
+			gp.ui.commandNum = 0;
+		}
+		
 	}
 	
 	public void resetKeys() {

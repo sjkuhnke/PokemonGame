@@ -728,7 +728,7 @@ public class BattleUI extends AbstractUI {
 	}
 
 	private void drawPartySelectionScreen() {
-		drawParty();
+		drawParty(null);
 	}
 
 	private void drawActionBackground(Pokemon p, int x, int y, int width, int height) {
@@ -939,8 +939,8 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	@Override
-	public void drawParty() {
-		super.drawParty();
+	public void drawParty(Item item) {
+		super.drawParty(item);
 		currentTask = null;
 		if (gp.keyH.aPressed) {
 			gp.keyH.aPressed = false;
