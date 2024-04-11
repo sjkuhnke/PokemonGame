@@ -2470,7 +2470,7 @@ public class Pokemon implements Serializable {
 		this.exp -= this.expMax;
 		++level;
 		awardHappiness(5, false);
-		addTask(Task.TEXT, this.nickname + " leveled up to " + this.level + "!");
+		addTask(Task.LEVEL_UP, this.nickname + " leveled up to " + this.level + "!");
 		checkMove(player);
 		Pokemon result = this.checkEvo(player);
 		expMax = setExpMax();
@@ -4272,8 +4272,9 @@ public class Pokemon implements Serializable {
 	            }
 	            if (p.level < 100) {
 	                p.exp += expAwarded;
-	                if (this.isVisible()) {
-	                	addTask(Task.TEXT, p.nickname + " gained " + expAwarded + " experience points!"); // TODO xp bar task
+	                if (p.isVisible()) {
+	                	Task t = addTask(Task.EXP, p.nickname + " gained " + expAwarded + " experience points!");
+	                	t.setFinish(Math.min(p.exp, expMax));
 	                } else {
 	                	addTask(Task.TEXT, p.nickname + " gained " + expAwarded + " experience points!");
 	                }
@@ -10589,6 +10590,8 @@ public class Pokemon implements Serializable {
 		public static final int STATUS = 9;
 		public static final int CATCH = 10;
 		public static final int NICKNAME = 11;
+		public static final int EXP = 12;
+		public static final int LEVEL_UP = 13;
 		
 		public int type;
 		public String message;
@@ -11478,6 +11481,10 @@ public class Pokemon implements Serializable {
 		}
 		if (isGrounded() && field.equals(field.terrain, Effect.ELECTRIC)) {
 			if (announce) addTask(Task.TEXT, this.nickname + " is protected by the Electric Terrain!");
+			return;
+		}
+		if (this.type1 == PType.PSYCHIC || this.type2 == PType.PSYCHIC) {
+			if (announce) addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...");
 			return;
 		}
 		if (this.status == Status.HEALTHY) {
@@ -13487,7 +13494,7 @@ public class Pokemon implements Serializable {
 	}
 
 	@Override
-	protected Pokemon clone() {
+	public Pokemon clone() {
 	    Pokemon clonedPokemon = new Pokemon(1, 0, true, false);
 	    
 	    // Clone id fields

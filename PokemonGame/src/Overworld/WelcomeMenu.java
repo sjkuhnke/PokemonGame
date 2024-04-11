@@ -19,7 +19,6 @@ import java.util.Comparator;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-
 import Swing.Player;
 import Swing.Pokemon;
 import Swing.Battle.JGradientButton;
@@ -147,13 +146,9 @@ public class WelcomeMenu extends JPanel {
                     
         			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./saves/" + name));
         	        Player current = (Player) ois.readObject();
-        	        if (current.team != null) {
-        	        	for (int i = 0; i < 6; i++) {
-            	        	Pokemon p = current.team[i];
-            	        	icons[i].setIcon(getMiniSprite(p));
-            	        }
-        	        } else {
-        	        	current.team = new Pokemon[6];
+    	        	for (int i = 0; i < 6; i++) {
+        	        	Pokemon p = current.team[i];
+        	        	icons[i].setIcon(getMiniSprite(p));
         	        }
         	        
         	        PMap.getLoc(current.currentMap, (int) Math.round(current.getPosX() * 1.0 / 48), (int) Math.round(current.getPosY() * 1.0 / 48));
