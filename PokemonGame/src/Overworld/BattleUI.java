@@ -30,12 +30,14 @@ public class BattleUI extends AbstractUI {
 	
 	public Pokemon user;
 	public Pokemon foe;
+	public Pokemon tempUser;
 	public int userHP;
 	public int foeHP;
-	public int tempUserHP;
 	public int tempFoeHP;
 	public Status userStatus;
 	public Status foeStatus;
+	public int userExp;
+	public int userLevel;
 	public Move foeMove;
 	public FieldEffect weather;
 	public FieldEffect terrain;
@@ -247,8 +249,10 @@ public class BattleUI extends AbstractUI {
 			currentDialogue = currentTask.message;
 			if (currentTask.p.playerOwned()) {
 				user = currentTask.p;
-				userHP = tempUserHP == 0 ? user.currentHP : tempUserHP;
-				userStatus = user.status;
+				userHP = tempUser == null ? user.currentHP : tempUser.currentHP;
+				userStatus = tempUser == null ? user.status : tempUser.status;
+				userExp = tempUser == null ? user.exp : tempUser.exp;
+				userLevel = tempUser == null ? user.level : tempUser.level;
 				drawUserPokeball(true);
 			} else {
 				foe = currentTask.p;
@@ -258,7 +262,7 @@ public class BattleUI extends AbstractUI {
 			}
 			if (counter >= 100) {
 				counter = 0;
-				tempUserHP = 0;
+				//tempUserHP = 0;
 				tempFoeHP = 0;
 				currentTask = null;
 			}
@@ -328,6 +332,16 @@ public class BattleUI extends AbstractUI {
 					currentTask = null;
 				}
 			}
+		} else if (currentTask.type == Task.EXP) {
+			currentDialogue = currentTask.message;
+			if (userExp < currentTask.finish) userExp++;
+			if (userExp == currentTask.finish) {
+				endTask();
+			}
+		} else if (currentTask.type == Task.LEVEL_UP) {
+			currentDialogue = currentTask.message;
+			userLevel++;
+			endTask();
 		}
 	}
 	
@@ -352,8 +366,9 @@ public class BattleUI extends AbstractUI {
 		drawUserHP(userHP);
 		drawStatus(user);
 		drawTypes(user);
+		drawExpBar();
 	}
-	
+
 	private void drawFoe() {
 		if (!foe.isVisible()) return;
 		drawHPImage(foe);
@@ -501,6 +516,17 @@ public class BattleUI extends AbstractUI {
 		g2.fillRect(x, y, width, 3);
 	}
 	
+	private void drawExpBar() {
+		double xpRatio = userExp * 1.0 / user.expMax;
+		int x = 386;
+		int y = 370;
+		int width = (int) (xpRatio * 160);
+		int height = 5;
+		g2.setColor(new Color(30, 60, 200, 200));
+		g2.fillRect(x, y, width, height);
+		
+	}
+	
 	private void drawNameLabel(Pokemon p) {
 		g2.setColor(Color.BLACK);
 		g2.setFont(g2.getFont().deriveFont(24F));
@@ -523,7 +549,8 @@ public class BattleUI extends AbstractUI {
 			levelY = 70;
 		}
 		g2.drawString(p.nickname, x, y);
-		g2.drawString(p.level + "", levelX, levelY);
+		int level = p.playerOwned() ? userLevel : p.level;
+		g2.drawString(level + "", levelX, levelY);
 	}
 
 	@SuppressWarnings("unused") // DEBUG
@@ -955,10 +982,10 @@ public class BattleUI extends AbstractUI {
 				if (cancellableParty && !user.isFainted()) {
 					foeMove = foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
 				}
+				tempUser = gp.player.p.team[partyNum].clone();
 				gp.player.p.swapToFront(gp.player.p.team[partyNum], partyNum);
 				gp.player.p.getCurrent().swapIn(foe, true);
 				user = gp.player.p.getCurrent();
-				tempUserHP = user.currentHP;
 				partyNum = 0;
 				dialogueCounter = 0;
 				turn(null, foeMove);

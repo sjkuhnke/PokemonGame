@@ -15,6 +15,9 @@ public class Bag implements Serializable {
 	public Bag() {
 		bag = new ArrayList<>(Arrays.asList(Item.values()));
 		count = new int[Item.values().length];
+		bag.remove(Item.NULL91);
+		bag.remove(Item.NULL92);
+		bag.remove(Item.NULL260);
 	}
 	
 	public void add(Item item) {
@@ -32,7 +35,7 @@ public class Bag implements Serializable {
 	public ArrayList<Entry> getItems() {
 		ArrayList<Entry> items = new ArrayList<>();
 		for (Item i : bag) {
-			if (count[i.getID()] <= 0) continue;
+			if (i.getID() >= count.length || count[i.getID()] <= 0) continue;
 			items.add(new Entry(i, count[i.getID()]));
 		}
 		return items;

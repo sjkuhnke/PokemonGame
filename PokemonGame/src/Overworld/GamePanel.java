@@ -303,6 +303,7 @@ public class GamePanel extends JPanel implements Runnable {
 		Pokemon.field = new Field();
 		battleUI.tasks = new ArrayList<>();
 		battleUI.currentTask = null;
+		battleUI.tempUser = null;
 	}
 	
 	public void addPanel(JPanel panel, boolean animate) {
