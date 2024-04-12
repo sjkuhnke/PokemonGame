@@ -298,12 +298,14 @@ public class GamePanel extends JPanel implements Runnable {
 				}
 			}
 		}
-		player.p.setCurrent(player.p.team[0]);;
+		player.p.setCurrent(player.p.team[0]);
 		
 		Pokemon.field = new Field();
 		battleUI.tasks = new ArrayList<>();
 		battleUI.currentTask = null;
 		battleUI.tempUser = null;
+		battleUI.weather = null;
+		battleUI.terrain = null;
 	}
 	
 	public void addPanel(JPanel panel, boolean animate) {

@@ -208,6 +208,10 @@ public class KeyHandler implements KeyListener {
 			if (code == KeyEvent.VK_S && gp.battleUI.cancellableParty) {
 				gp.battleUI.subState = BattleUI.IDLE_STATE;
 			}
+		} else if (gp.battleUI.subState == BattleUI.INFO_STATE) {
+			if (code == KeyEvent.VK_S) {
+				gp.battleUI.subState = BattleUI.IDLE_STATE;
+			}
 		} else if (gp.battleUI.subState == BattleUI.SUMMARY_STATE) {
 			if (code == KeyEvent.VK_S) {
 				if (gp.battleUI.moveSummaryNum == -1) {
@@ -415,7 +419,7 @@ public class KeyHandler implements KeyListener {
 			wPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+		if (!gp.ui.showMoveOptions && (code == KeyEvent.VK_D || code == KeyEvent.VK_S)) {
 			gp.gameState = GamePanel.MENU_STATE;
 			gp.ui.subState = 3;
 			gp.ui.bagState = 0;

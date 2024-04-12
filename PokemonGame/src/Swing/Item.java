@@ -2,6 +2,7 @@ package Swing;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -310,6 +311,7 @@ public enum Item {
 	private int healAmount;
 	private String desc;
 	private BufferedImage image;
+	private BufferedImage image2;
 	
 	public static final int MEDICINE = 1;
     public static final int OTHER = 2;
@@ -330,6 +332,10 @@ public enum Item {
 		path += isTM() ? "tm_" + getMove().mtype.toString().toLowerCase() : super.toString().toLowerCase();
 		if (isMint()) path = path.replace("_mint", "");
 		image = setupImage(path + ".png");
+		
+		if (isBall()) {
+			image2 = scaleImage(image, 2);
+		}
 		
 		if (id >= 4 && id <= 8) {
 			switch(id) {
@@ -353,7 +359,7 @@ public enum Item {
 			}
 		}
 	}
-	
+
 	private BufferedImage setupImage(String path) {
 		BufferedImage image = null;
 		
@@ -367,6 +373,22 @@ public enum Item {
 			}
 		}
 		return image;
+	}
+	
+	public BufferedImage scaleImage(BufferedImage image, int scale) {
+		// Calculate the new dimensions based on the scale
+        int newWidth = image.getWidth() * scale;
+        int newHeight = image.getHeight() * scale;
+        
+        // Create a new BufferedImage with the scaled dimensions
+        BufferedImage result = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+        
+        // Draw the original image onto the scaled image
+        Graphics2D g2d = result.createGraphics();
+        g2d.drawImage(image, 0, 0, newWidth, newHeight, null);
+        g2d.dispose();
+        
+        return result;
 	}
 
 	public int getCost() { return cost; }
@@ -389,6 +411,7 @@ public enum Item {
 	}
 	
 	public BufferedImage getImage() { return image; }
+	public BufferedImage getImage2() { return image2; }
 	
 	public static Item getItem(int id) {
 		Item[] items = Item.values();
@@ -1416,6 +1439,10 @@ public enum Item {
 		result.add(generate);
 		
 		return result;
+	}
+	
+	public boolean isBall() {
+		return getID() >= 1 && getID() <= 3;
 	}
 
 	public boolean isMint() {

@@ -1,17 +1,25 @@
 package Swing;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import Swing.Pokemon.Task;
 
 public class Field {
 	
-	FieldEffect weather;
-	int weatherTurns;
-	FieldEffect terrain;
-	int terrainTurns;
+	public FieldEffect weather;
+	public int weatherTurns;
+	public FieldEffect terrain;
+	public int terrainTurns;
 	public ArrayList<FieldEffect> playerSide;
 	public ArrayList<FieldEffect> foeSide;
 	public ArrayList<FieldEffect> fieldEffects;
@@ -51,11 +59,17 @@ public class Field {
 			this.turns = turns;
 			this.isWeather = isWeather;
 			this.isTerrain = isTerrain;
+			
+			String path = "/battle/" + super.toString().toLowerCase();
+			path = isWeather ? path + ".gif" : path + "_terrain.png";
+			image = setupImage(path);
 		}
 		
 		public int turns;
 		public boolean isWeather;
 		public boolean isTerrain;
+		
+		private Image image;
 		
 		@Override
 		public String toString() {
@@ -68,12 +82,41 @@ public class Field {
 		    }
 		    return sb.toString().trim();
 		}
+		
+		private Image setupImage(String path) {
+			Image originalImage = null;
+
+	        try {
+	            originalImage = new ImageIcon(getClass().getResource(path)).getImage();
+	        } catch (Exception e) {
+	            try {
+	                originalImage = ImageIO.read(getClass().getResourceAsStream("/items/null.png"));
+	            } catch (IOException e1) {
+	                e1.printStackTrace();
+	            }
+	        }
+	        
+	        if (isWeather) return originalImage;
+	        
+	        BufferedImage bufferedImage = new BufferedImage(originalImage.getWidth(null), originalImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+	        Graphics2D g2d = bufferedImage.createGraphics();
+	        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+	        g2d.drawImage(originalImage, 0, 0, null);
+	        g2d.dispose();
+
+	        return bufferedImage;
+		}
+		
+		public Image getImage() {
+			return image;
+		}
 	}
 	
 	public class FieldEffect {
-		int turns;
-		Effect effect;
-		int layers;
+		public int turns;
+		public Effect effect;
+		public int layers;
 		
 		public FieldEffect(Effect effect) {
 			this.effect = effect;
@@ -144,7 +187,8 @@ public class Field {
 	public boolean setWeather(FieldEffect weather) {
 		if (weather != null && weather.effect.isWeather) {
 	        if (this.weather == null || this.weather.effect != weather.effect) {
-	            Pokemon.addTask(Task.TEXT, "The weather became " + weather.toString() + "!");
+	            Task t = Pokemon.addTask(Task.WEATHER, "The weather became " + weather.toString() + "!");
+	            t.setEffect(weather);
 	            this.weather = weather;
 	            this.weatherTurns = weather.turns;
 	            return true;
@@ -161,7 +205,8 @@ public class Field {
 	public boolean setTerrain(FieldEffect terrain) {
 		if (terrain != null && terrain.effect.isTerrain) {
 	        if (this.terrain == null || this.terrain.effect != terrain.effect) {
-	            Pokemon.addTask(Task.TEXT, "The terrain became " + terrain.toString() + "!");
+	            Task t = Pokemon.addTask(Task.TERRAIN, "The terrain became " + terrain.toString() + "!");
+	            t.setEffect(terrain);
 	            this.terrain = terrain;
 	            this.terrainTurns = terrain.turns;
 	            return true;

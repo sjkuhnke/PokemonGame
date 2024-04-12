@@ -282,7 +282,10 @@ public class Trainer implements Serializable {
 
 	public void heal() {
 		for (Pokemon member : team) {
-			if (member != null) member.heal();
+			if (member != null) {
+				member.heal();
+				member.setVisible(false);
+			}
 		}
 	}
 }

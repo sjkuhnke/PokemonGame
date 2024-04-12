@@ -131,6 +131,12 @@ public class Pokemon implements Serializable {
 	// trainer field
 	public Trainer trainer;
 	
+	// Sprite fields
+	private transient BufferedImage sprite;
+	private transient Image frontSprite;
+	private transient Image backSprite;
+	private transient BufferedImage miniSprite;
+	
 	public Pokemon(int i, int l, boolean o, boolean t) {
 		id = i;
 		name = getName();
@@ -179,6 +185,8 @@ public class Pokemon implements Serializable {
 		if (id == 29 || id == 134 || id == 174) happiness = 110;
 		catchRate = setCatchRate();
 		happinessCap = 50;
+		
+		setSprites();
 	}
 	
 	public Pokemon(int i, Pokemon pokemon) {
@@ -226,6 +234,8 @@ public class Pokemon implements Serializable {
 		lostItem = pokemon.lostItem;
 		
 		moveMultiplier = pokemon.moveMultiplier;
+		
+		setSprites();
 	}
 	
 	public Pokemon(int i, int l, boolean o, boolean t, Item item) {
@@ -252,7 +262,32 @@ public class Pokemon implements Serializable {
 		setAbility(abilitySlot);
 	}
 	
-	public Image getSprite() {
+	public BufferedImage getSprite() {
+		return sprite;
+	}
+	
+	public BufferedImage getSprite(int id) {
+		return new Pokemon(id, 5, false, false).sprite;
+	}
+	
+	public Image getFrontSprite() {
+		return frontSprite;
+	}
+	
+	public Image getBackSprite() {
+		return backSprite;
+	}
+	
+	public BufferedImage getMiniSprite() {
+		return miniSprite;
+	}
+	
+	public BufferedImage getMiniSprite(int id) {
+		sprite = setSprite();
+		return setMiniSprite();
+	}
+	
+	private BufferedImage setSprite() {
 		BufferedImage image = null;
 		
 		String imageName = id + "";
@@ -270,26 +305,32 @@ public class Pokemon implements Serializable {
 		return image;
 	}
 	
-	public Image getSprite(int id) {
-		BufferedImage image = null;
+	private Image setFrontSprite() {
+		BufferedImage originalSprite = sprite;
 		
-		String imageName = id + "";
-		while (imageName.length() < 3) imageName = "0" + imageName;
+		int scaledWidth = originalSprite.getWidth(null) * 2;
+		int scaledHeight = originalSprite.getHeight(null) * 2;
 		
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/sprites/" + imageName + ".png"));
-		} catch (Exception e) {
-			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/sprites/000.png"));
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-		return image;
+		Image scaledImage = originalSprite.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
+		
+		return scaledImage;
 	}
 	
-	public Image getMiniSprite() {
-		Image image = null;
+	private Image setBackSprite() {
+		Image image = frontSprite;
+		
+		BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D graphics = bufferedImage.createGraphics();
+
+	    // Flip the image horizontally by drawing it with negative width
+	    graphics.drawImage(image, image.getWidth(null), 0, -image.getWidth(null), image.getHeight(null), null);
+	    graphics.dispose();
+
+	    return bufferedImage;
+	}
+	
+	public BufferedImage setMiniSprite() {
+		BufferedImage image = null;
 		
 		String imageName = id + "";
 		while (imageName.length() < 3) imageName = "0" + imageName;
@@ -297,7 +338,7 @@ public class Pokemon implements Serializable {
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/minisprites/" + imageName + ".png"));
 		} catch (Exception e) {
-			image = getSprite();
+			image = sprite;
 			
 			int scaledWidth = 40;  // New width
 	        int scaledHeight = 40; // New height
@@ -2471,7 +2512,7 @@ public class Pokemon implements Serializable {
 		++level;
 		awardHappiness(5, false);
 		addTask(Task.LEVEL_UP, this.nickname + " leveled up to " + this.level + "!");
-		checkMove(player);
+		checkMove();
 		Pokemon result = this.checkEvo(player);
 		expMax = setExpMax();
 		stats = this.getStats();
@@ -2505,7 +2546,7 @@ public class Pokemon implements Serializable {
 		return 0;
 	}
 
-	public void checkMove(Player p) {
+	public void checkMove() {
 	    if (this.level - 1 >= this.movebank.length) return;
 	    Node node = this.movebank[this.level - 1];
 	    while (node != null) {
@@ -2521,13 +2562,16 @@ public class Pokemon implements Serializable {
 	                }
 	            }
 	            if (!learnedMove) {
-	                int choice = this.displayMoveOptions(move, p);
-	                if (choice == JOptionPane.CLOSED_OPTION) {
-	                    addTask(Task.TEXT, this.nickname + " did not learn " + move.toString() + ".");
-	                } else {
-		                addTask(Task.TEXT, this.nickname + " has learned " + move.toString() + " and forgot " + this.moveset[choice].move + "!");
-		                this.moveset[choice] = new Moveslot(move);
-	                }
+	            	if (gp.gameState == GamePanel.BATTLE_STATE) {
+	            		Task t = Pokemon.addTask(Task.MOVE, "", this);
+	            		t.setMove(move);
+	            		gp.battleUI.moveOption = -1;
+	            	} else {
+	            		gp.ui.currentPokemon = this;
+		            	gp.ui.currentMove = move;
+		            	gp.ui.moveOption = -1;
+		            	gp.ui.showMoveOptions = true;
+	            	}
 	            }
 	        }
 	        node = node.next;
@@ -2783,7 +2827,7 @@ public class Pokemon implements Serializable {
 		} else if (id == 239 && headbuttCrit >= 5) {
 		    result = new Pokemon(id + 1, this);
 		}
-					
+		
 		if (result != null) {
 			boolean shouldEvolve = Battle.displayEvolution(this);
 			if (shouldEvolve) {
@@ -4288,7 +4332,7 @@ public class Pokemon implements Serializable {
 	                    int index = Arrays.asList(player.getTeam()).indexOf(p);
 	                    player.team[index] = evolved;
 	                    if (index == 0) player.current = evolved;
-	                    evolved.checkMove(player);
+	                    evolved.checkMove();
 	                    p = evolved;
 	                }
 	            }
@@ -5428,6 +5472,7 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.SAFEGUARD) {
 			if (!(field.contains(userSide, Effect.SAFEGUARD))) {
 				userSide.add(field.new FieldEffect(Effect.SAFEGUARD));
+				if (announce) addTask(Task.TEXT, "A veil was added to protect the team from Status!");
 			} else {
 				fail = fail(announce);
 			}
@@ -5537,7 +5582,7 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.TAILWIND) {
 			if (!(field.contains(userSide, Effect.TAILWIND))) {
 				userSide.add(field.new FieldEffect(Effect.TAILWIND));
-				if (announce) addTask(Task.TEXT, "A strong wind blew behind your team!");
+				if (announce) addTask(Task.TEXT, "A strong wind blew behind the team!");
 			} else {
 				fail = fail(announce);
 			}
@@ -10592,6 +10637,10 @@ public class Pokemon implements Serializable {
 		public static final int NICKNAME = 11;
 		public static final int EXP = 12;
 		public static final int LEVEL_UP = 13;
+		public static final int MOVE = 14;
+		public static final int EVO = 15;
+		public static final int WEATHER = 16;
+		public static final int TERRAIN = 17;
 		
 		public int type;
 		public String message;
@@ -10603,11 +10652,13 @@ public class Pokemon implements Serializable {
 		public Pokemon p; // the pokemon taking damage, or announcing an ability, or being sent out
 		public Ability ability;
 		public Status status;
+		public Move move;
+		public FieldEffect fe;
 		
 		public Task(int type, String message) {
 			this(type, message, null);
 		}
-		
+
 		public Task(int type, String message, Pokemon p) {
 			this.message = message;
 			this.type = type;
@@ -10629,6 +10680,14 @@ public class Pokemon implements Serializable {
 		
 		public void setWipe(boolean wipe) {
 			this.wipe = wipe;
+		}
+		
+		public void setMove(Move m) {
+			this.move = m;
+		}
+		
+		public void setEffect(FieldEffect fe) {
+			this.fe = fe;
 		}
 		
 		public String toString() {
@@ -13912,6 +13971,10 @@ public class Pokemon implements Serializable {
 	public static Task getTask(int index) {
 		return gp.battleUI.tasks.get(index);
 	}
+	
+	public static void insertTask(Task t, int index) {
+		gp.battleUI.tasks.add(index, t);
+	}
 
 	public boolean isVisible() {
 		return visible;
@@ -13991,6 +14054,35 @@ public class Pokemon implements Serializable {
 		default:
 			return -1;
 		}
+	}
+
+	public ArrayList<String> getStatusLabels() {
+		ArrayList<String> result = new ArrayList<>();
+		for (Status s : vStatuses) {
+	    	result.add(s.toString());
+	    }
+		if (magCount > 0) {
+			result.add("Magnet Rise");
+		}
+		if (perishCount > 0) {
+			result.add("Perish in " + perishCount);
+		}
+		return result;
+	}
+	
+	public void update() {
+		setBaseStats();
+		setAbility(abilitySlot);
+		setMoveBank();
+		
+		setSprites();
+	}
+	
+	public void setSprites() {
+		sprite = setSprite();
+		frontSprite = setFrontSprite();
+		backSprite = setBackSprite();
+		miniSprite = setMiniSprite();
 	}
 
 //	private String getStatName(int stat) {

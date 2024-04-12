@@ -354,7 +354,7 @@ public class WelcomeMenu extends JPanel {
 				e.printStackTrace();
 			}
     	} else {
-    		originalSprite = new ImageIcon(p.getMiniSprite());
+    		originalSprite = new ImageIcon(p.getMiniSprite(p.id));
     	}
     	
 		Image image = originalSprite.getImage();
