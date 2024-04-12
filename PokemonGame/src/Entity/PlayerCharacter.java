@@ -1512,7 +1512,7 @@ public class PlayerCharacter extends Entity {
 					        	    		        result.exp = p.team[index].exp;
 					        	    		        p.team[index] = result;
 					        	    		        if (index == 0) p.setCurrent(result);
-					        	    		        result.checkMove(p);
+					        	    		        result.checkMove();
 					        	                    p.pokedex[result.id] = 2;
 					        	    		        p.bag.remove(i.getItem());
 					        	    			} else {
@@ -2431,16 +2431,7 @@ public class PlayerCharacter extends Entity {
 		        }
 		    }
 		} else if (code.equals("UPDATE")) {
-			p.updateTrainers();
-			p.updateItems(gp.obj.length, gp.obj[1].length);
-			p.updateFlags();
-			for (Pokemon p : p.getAllPokemon()) {
-				if (p != null) {
-					p.setBaseStats();
-					p.setAbility(p.abilitySlot);
-					p.setMoveBank();
-				}
-			}
+			p.update(gp);
     	    
     	    JOptionPane.showMessageDialog(null, "Player successfully updated!");
     	    SwingUtilities.getWindowAncestor(cheats).dispose();

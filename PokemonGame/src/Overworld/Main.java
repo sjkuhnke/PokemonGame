@@ -85,6 +85,11 @@ public class Main {
             
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./saves/" + fileName));
 	        gamePanel.player.p = (Player) ois.readObject();
+	        if (gamePanel.player.p.version != Player.VERSION) {
+	        	gamePanel.player.p.update(gamePanel);
+	        } else {
+	        	gamePanel.player.p.setSprites();
+	        }
         	for (Pokemon p : gamePanel.player.p.getTeam()) {
 	            if (p != null) p.clearVolatile();
 	        }

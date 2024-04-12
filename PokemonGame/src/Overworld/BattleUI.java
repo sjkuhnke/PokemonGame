@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +15,7 @@ import Swing.Ability;
 import Swing.AbstractUI;
 import Swing.Bag.Entry;
 import Swing.Field;
+import Swing.Field.Effect;
 import Swing.Field.FieldEffect;
 import Swing.Item;
 import Swing.Move;
@@ -58,6 +58,12 @@ public class BattleUI extends AbstractUI {
 	
 	public boolean cancellableParty;
 	public boolean showMoveSummary;
+	
+	private BufferedImage battle;
+	private BufferedImage userHPBar;
+	private BufferedImage foeHPBar;
+	private BufferedImage userStatusImage;
+	private BufferedImage foeStatusImage;
 
 	public static final int STARTING_STATE = -1;
 	public static final int IDLE_STATE = 0;
@@ -86,6 +92,10 @@ public class BattleUI extends AbstractUI {
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
+		
+		battle = setup("/battle/background", 1);
+		userHPBar = setup("/battle/user_hp", 1);
+		foeHPBar = setup("/battle/foe_hp", 1);
 	}
 	
 	@Override
@@ -111,7 +121,14 @@ public class BattleUI extends AbstractUI {
 		g2.setFont(marumonica);
 		g2.setColor(Color.WHITE);
 		
-		g2.drawImage(setup("/battle/background", 1), 0, 0, gp.screenWidth, gp.screenHeight, null);
+		g2.drawImage(battle, 0, 0, gp.screenWidth, gp.screenHeight, null);
+		
+		if (weather != null) {
+			g2.drawImage(weather.effect.getImage(), 0, 0, gp.screenWidth, gp.screenHeight, null);
+		}
+		if (terrain != null) {
+			g2.drawImage(terrain.effect.getImage(), 0, 0, gp.screenWidth, gp.screenHeight, null);
+		}
 		
 		// Sub states of the battle
 		if (subState == STARTING_STATE) {
@@ -137,7 +154,7 @@ public class BattleUI extends AbstractUI {
 			drawAbility();
 		}
 		
-		if (subState != IDLE_STATE && subState != MOVE_SELECTION_STATE) {
+		if (subState != IDLE_STATE && subState != MOVE_SELECTION_STATE && subState != INFO_STATE && (currentTask == null || currentTask.type != Task.MOVE)) {
 			drawDialogueScreen(false);
 		}
 		
@@ -157,21 +174,16 @@ public class BattleUI extends AbstractUI {
 			drawSummary(foe);
 		}
 		
+		if (subState == INFO_STATE) {
+			drawInfo();
+		}
+		
 		// Dialogue States
 		if (dialogueState == DIALOGUE_STATE) {
 			drawDialogueState();
 		}
-	}
-	
-	private void startingState() {
-		if (foe.trainerOwned()) {
-			showMessage("You are challenged by " + foe.trainer.getName() + "!");
-		} else {
-			foe.setVisible(true);
-			foeStatus = foe.status;
-			foeHP = tempFoeHP == 0 ? foe.currentHP : tempFoeHP;
-			showMessage("A wild " + foe.nickname + " appeared!");
-		}
+		
+		System.out.println(tasks.toString());
 	}
 
 	private void endTask() {
@@ -225,9 +237,11 @@ public class BattleUI extends AbstractUI {
 	}
 
 	private void drawTask() {
-		if (currentTask.type == Task.TEXT) {
+		switch (currentTask.type) {
+		case Task.TEXT:
 			showMessage(currentTask.message);
-		} else if (currentTask.type == Task.DAMAGE) {
+			break;
+		case Task.DAMAGE:
 			currentDialogue = currentTask.message;
 			if (currentTask.p.playerOwned()) {
 				if (userHP > currentTask.finish) userHP--;
@@ -242,10 +256,12 @@ public class BattleUI extends AbstractUI {
 					endTask();
 				}
 			}
-		} else if (currentTask.type == Task.ABILITY) {
+			break;
+		case Task.ABILITY:
 			currentAbilityHost = currentTask.p;
 			currentAbility = currentTask.ability;
-		} else if (currentTask.type == Task.SWAP_IN) {
+			break;
+		case Task.SWAP_IN:
 			currentDialogue = currentTask.message;
 			if (currentTask.p.playerOwned()) {
 				user = currentTask.p;
@@ -262,11 +278,11 @@ public class BattleUI extends AbstractUI {
 			}
 			if (counter >= 100) {
 				counter = 0;
-				//tempUserHP = 0;
 				tempFoeHP = 0;
 				currentTask = null;
 			}
-		} else if (currentTask.type == Task.SWAP_OUT) {
+			break;
+		case Task.SWAP_OUT:
 			currentDialogue = currentTask.message;
 			if (currentTask.p.playerOwned()) {
 				drawUserPokeball(false);
@@ -279,7 +295,8 @@ public class BattleUI extends AbstractUI {
 				counter = 0;
 				endTask();
 			}
-		} else if (currentTask.type == Task.FAINT) {
+			break;
+		case Task.FAINT:
 			currentDialogue = currentTask.message;
 			counter++;
 			if (counter >= 75) {
@@ -287,27 +304,33 @@ public class BattleUI extends AbstractUI {
 			}
 			if (counter >= 100) {
 				counter = 0;
-				if (currentTask.p == user) {
+				if (currentTask.p == user && hasAlive()) {
 					Pokemon.addTask(Task.PARTY, "");
 				}
 				endTask();
 			}
-		} else if (currentTask.type == Task.END) {
+			break;
+		case Task.END:
 			if (currentTask.wipe) wipe();
 			subState = END_STATE;
-		} else if (currentTask.type == Task.PARTY) {
+			break;
+		case Task.PARTY:
 			currentDialogue = "";
 			cancellableParty = false;
 			subState = PARTY_SELECTION_STATE;
-		} else if (currentTask.type == Task.STATUS) {
+			break;
+		case Task.STATUS:
 			showMessage(currentTask.message);
 			if (currentTask.p.playerOwned()) {
 				userStatus = currentTask.status;
+				userStatusImage = setup("/battle/" + userStatus.toString().toLowerCase(), 2);
 			} else {
 				foeStatus = currentTask.status;
+				foeStatusImage = setup("/battle/" + foeStatus.toString().toLowerCase(), 2);
 			}
-		} else if (currentTask.type == Task.CATCH) {
-			drawFoePokeball(false, ball.getItem().toString().replace(" ", "_").toLowerCase());
+			break;
+		case Task.CATCH:
+			drawFoePokeball(false, ball.getItem());
 			if (counter >= 75) {
 				counter = 0;
 				if (currentTask.wipe) {
@@ -320,7 +343,8 @@ public class BattleUI extends AbstractUI {
 				}
 				currentTask = null;
 			}
-		} else if (currentTask.type == Task.NICKNAME) {
+			break;
+		case Task.NICKNAME:
 			currentDialogue = currentTask.message;
 			setNickname(foe);
 			if (nicknaming == 0) {
@@ -332,16 +356,32 @@ public class BattleUI extends AbstractUI {
 					currentTask = null;
 				}
 			}
-		} else if (currentTask.type == Task.EXP) {
+			break;
+		case Task.EXP:
 			currentDialogue = currentTask.message;
 			if (userExp < currentTask.finish) userExp++;
 			if (userExp == currentTask.finish) {
 				endTask();
 			}
-		} else if (currentTask.type == Task.LEVEL_UP) {
+			break;
+		case Task.LEVEL_UP:
 			currentDialogue = currentTask.message;
 			userLevel++;
 			endTask();
+			break;
+		case Task.MOVE:
+			drawMoveOptions(currentTask.move, currentTask.p);
+			break;
+		case Task.EVO:
+			break;
+		case Task.WEATHER:
+			showMessage(currentTask.message);
+			weather = currentTask.fe;
+			break;
+		case Task.TERRAIN:
+			showMessage(currentTask.message);
+			terrain = currentTask.fe;
+			break;
 		}
 	}
 	
@@ -381,9 +421,9 @@ public class BattleUI extends AbstractUI {
 
 	private void drawStatus(Pokemon p) {
 		if (p.playerOwned()) {
-			if (userStatus != Status.HEALTHY) g2.drawImage(setup("/battle/" + userStatus.toString().toLowerCase(), 2), 339, 326, null);
+			if (userStatus != Status.HEALTHY) g2.drawImage(userStatusImage, 339, 326, null);
 		} else {
-			if (foeStatus != Status.HEALTHY) g2.drawImage(setup("/battle/" + foeStatus.toString().toLowerCase(), 2), 232, 78, null);
+			if (foeStatus != Status.HEALTHY) g2.drawImage(foeStatusImage, 232, 78, null);
 		}
 	}
 
@@ -400,9 +440,9 @@ public class BattleUI extends AbstractUI {
 
 	private void drawHPImage(Pokemon p) {
 		if (p.playerOwned()) {
-			g2.drawImage(setup("/battle/user_hp", 1), 302, 280, null);
+			g2.drawImage(userHPBar, 302, 280, null);
 		} else {
-			g2.drawImage(setup("/battle/foe_hp", 1), 222, 39, null);
+			g2.drawImage(foeHPBar, 222, 39, null);
 		}
 	}
 
@@ -457,44 +497,44 @@ public class BattleUI extends AbstractUI {
 		slowerInit.swapIn(fasterInit, true);
 	}
 
-	private void drawFoePokeball(boolean arriving, String ballType) {
+	private void drawFoePokeball(boolean arriving, Item ballType) {
 		counter++;
 		if (arriving) {
 			if (counter < 50) {
-				if (arriving) g2.drawImage(setup("/items/" + ballType, 2), 570, 188, null);
+				if (arriving) g2.drawImage(ballType.getImage2(), 570, 188, null);
 			} else {
 				foe.setVisible(true);
 			}
 		} else {
 			currentTask.p.setVisible(false);
-			g2.drawImage(setup("/items/" + ballType, 2), 570, 188, null);
+			g2.drawImage(ballType.getImage2(), 570, 188, null);
 		}
 	}
 	
 	private void drawFoePokeball(boolean arriving) {
-		drawFoePokeball(arriving, "pokeball");
+		drawFoePokeball(arriving, Item.POKEBALL);
 	}
 	
 	private void drawUserPokeball(boolean arriving) {
 		counter++;
 		if (arriving) {
 			if (counter < 50) {
-				g2.drawImage(setup("/items/pokeball", 2), 133, 348, null);
+				g2.drawImage(Item.POKEBALL.getImage2(), 133, 348, null);
 			} else {
 				user.setVisible(true);
 			}
 		} else {
 			currentTask.p.setVisible(false);
-			g2.drawImage(setup("/items/pokeball", 2), 133, 348, null);
+			g2.drawImage(Item.POKEBALL.getImage2(), 133, 348, null);
 		}
 	}
 	
 	private void drawFoeSprite() {
-		g2.drawImage(getSprite(foe), 515, 70, null);
+		g2.drawImage(foe.getFrontSprite(), 515, 70, null);
 	}
 	
 	private void drawUserSprite() {
-		g2.drawImage(getSprite(user), 80, 235, null);
+		g2.drawImage(user.getBackSprite(), 80, 235, null);
 	}
 
 	private void drawHPBar(Pokemon p, double amt) {
@@ -577,30 +617,6 @@ public class BattleUI extends AbstractUI {
 		default: return "Not added to getDialogueStateName() yet";
 		}
 		
-	}
-	
-	private Image getSprite(Pokemon p) {
-		Image originalSprite = p.getSprite();
-		
-		int scaledWidth = originalSprite.getWidth(null) * 2;
-		int scaledHeight = originalSprite.getHeight(null) * 2;
-		
-		Image scaledImage = originalSprite.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
-		
-		if (p.playerOwned()) scaledImage = flipHorizontal(scaledImage);
-		
-		return scaledImage;
-	}
-
-	private Image flipHorizontal(Image image) {
-		BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-	    Graphics2D graphics = bufferedImage.createGraphics();
-
-	    // Flip the image horizontally by drawing it with negative width
-	    graphics.drawImage(image, image.getWidth(null), 0, -image.getWidth(null), image.getHeight(null), null);
-	    graphics.dispose();
-
-	    return bufferedImage;
 	}
 	
 	private void drawActionScreen(Pokemon p) {
@@ -736,14 +752,15 @@ public class BattleUI extends AbstractUI {
 			g2.drawString(ball.getCount() + "", getRightAlignedTextX(ball.getCount() + "", x + 44), y + 42);
 		}
 		if (commandNum < 0) {
-			//g2.setColor(Color.RED);
 			g2.drawRoundRect(x, y, gp.tileSize, gp.tileSize, 12, 12);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				Pokemon.addTask(Task.TEXT, "You threw a " + ball.getItem().toString() + "!");
-				Task t = Pokemon.addTask(Task.CATCH, "", foe);
-				t.setWipe(user.getCapture(foe, ball));
-				subState = TASK_STATE;
+				if (ball != null) {
+					Pokemon.addTask(Task.TEXT, "You threw a " + ball.getItem().toString() + "!");
+					Task t = Pokemon.addTask(Task.CATCH, "", foe);
+					t.setWipe(user.getCapture(foe, ball));
+					subState = TASK_STATE;
+				}
 			}
 		}
 		g2.setColor(Color.WHITE);
@@ -812,7 +829,7 @@ public class BattleUI extends AbstractUI {
         	turn(moves[moveNum].move, foeMove);
         }
 		if (showMoveSummary) {
-        	drawMoveSummary(gp.tileSize * 3, gp.tileSize, user, foe, moves[moveNum], null);
+        	drawMoveSummary(gp.tileSize * 3, (int) (gp.tileSize * 2.5), user, foe, moves[moveNum], null);
         }
 	}
 	
@@ -912,7 +929,6 @@ public class BattleUI extends AbstractUI {
 					next.swapIn(user, true);
 					user.getPlayer().clearBattled();
 					user.battled = true;
-					
 				} else {
 					user.getPlayer().setMoney(user.getPlayer().getMoney() + foe.trainer.getMoney());
 					Pokemon.addTask(Task.END, foe.trainer.getName() + " was defeated!\nWon $" + foe.trainer.getMoney() + "!");
@@ -932,15 +948,16 @@ public class BattleUI extends AbstractUI {
 		            }
 		            break;
 				}
-			} else {
+			} else if (!user.getPlayer().wiped()) {
 				subState = TASK_STATE;
 				Pokemon.addTask(Task.END, foe.name + " was defeated!");
 				break;
 			}
+			break;
 		}
 	    if (user.getPlayer().wiped()) {
-	    	Pokemon.addTask(Task.TEXT, "You have no more Pokemon that can fight!");
-			Task t = Pokemon.addTask(Task.END, "You lost $500!");
+	    	Pokemon.addTask(Task.TEXT, "You have no more Pokemon that can fight!\nYou lost $500!");
+			Task t = Pokemon.addTask(Task.END, "");
 			t.setWipe(true);
 		}
 	}
@@ -956,6 +973,7 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void wipe() {
+		gp.endBattle(-1, -1);
 		user.getPlayer().setMoney(user.getPlayer().getMoney() - 500);
 		gp.eHandler.teleport(0, 79, 46, false);
 		user.trainer.heal();
@@ -987,6 +1005,7 @@ public class BattleUI extends AbstractUI {
 				gp.player.p.getCurrent().swapIn(foe, true);
 				user = gp.player.p.getCurrent();
 				partyNum = 0;
+				moveNum = 0;
 				dialogueCounter = 0;
 				turn(null, foeMove);
 				foeMove = null;
@@ -1003,6 +1022,170 @@ public class BattleUI extends AbstractUI {
 				dialogueCounter = 0;
 				currentDialogue = "";
 			}
+		}
+	}
+	
+	private void drawInfo() {
+		int x = gp.tileSize * 3;
+		int y = gp.tileSize / 2;
+		int width = gp.tileSize * 10;
+		int height = (int) (gp.tileSize * 10.5);
+		drawSubWindow(x, y, width, height, 255);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize;
+		int userX = x;
+		int startY = y;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.drawString(user.nickname, x, y);
+		x = gp.tileSize * 8 - 68;
+		x -= gp.tileSize / 2;
+		y -= gp.tileSize / 2;
+		g2.drawImage(user.getSprite(), x, y, null);
+		
+		g2.setColor(Color.WHITE);
+		x += 80 + gp.tileSize / 2;
+		y += gp.tileSize / 2;
+		int foeX = x;
+		g2.drawString(foe.nickname, x, y);
+		x = (gp.tileSize * 3 + width) - 80;
+		x -= gp.tileSize / 2;
+		y -= gp.tileSize / 2;
+		g2.drawImage(foe.getSprite(), x, y, null);
+		
+		x = userX;
+		y = (int) (startY + gp.tileSize * 1.5);
+		startY = y;
+		g2.setFont(g2.getFont().deriveFont(20F));
+        
+        for (int i = 2; i < 16; i++) {
+        	g2.setColor(Color.WHITE);
+        	String type = Pokemon.getStatType(i / 2);
+        	int stage;
+        	if (i % 2 == 0) {
+        		stage = user.statStages[i / 2 - 1];
+        	} else {
+        		stage = foe.statStages[i / 2 - 1];
+        	}
+        	String amt = stage > 0 ? "+" + stage : stage + "";
+        	
+        	if (stage > 0) g2.setColor(Color.red.darker());
+        	if (stage < 0) g2.setColor(Color.blue);
+        	
+        	g2.drawString(type + ": " + amt, x, y);
+        	if (i % 2 == 0) {
+        		x = foeX;
+        	} else {
+        		x = userX;
+        		y += gp.tileSize / 2;
+        	}
+        }
+        
+        x = userX + gp.tileSize * 3;
+        int endY = y;
+        y = startY;
+	    ArrayList<String> addVStatus = user.getStatusLabels();
+	    for (String s : addVStatus) {
+        	g2.drawString(s, x, y);
+        	y += gp.tileSize / 3;
+        }
+        
+        x = foeX + gp.tileSize * 3;
+        y = startY;
+        addVStatus = foe.getStatusLabels();
+        for (String s : addVStatus) {
+        	g2.drawString(s, x, y);
+        	y += gp.tileSize / 3;
+        }
+        
+        y = endY;
+        g2.setFont(g2.getFont().deriveFont(24F));
+        String fieldLabel = "Field Effects:";
+        int middleX = gp.tileSize * 3 + width / 2;
+        g2.drawString(fieldLabel, getCenterAlignedTextX(fieldLabel, middleX), y);
+        
+        y += gp.tileSize * 0.75;
+	    
+	    if (field.weather != null) {
+	    	String weather = field.weather.toString();
+	    	String turns = field.weatherTurns + "/" + field.weather.effect.turns;
+	    	g2.setColor(field.weather.getColor());
+	    	g2.drawString(weather, getCenterAlignedTextX(weather, middleX - gp.tileSize), y);
+	    	g2.setColor(Color.WHITE);
+	    	g2.drawString(turns, getCenterAlignedTextX(turns, middleX + gp.tileSize), y);
+	    	y += gp.tileSize / 2;
+	    }
+	    
+	    if (field.terrain != null) {
+	    	String terrain = field.terrain.toString();
+	    	String turns = field.terrainTurns + "/" + field.terrain.effect.turns;
+	    	g2.setColor(field.terrain.getColor());
+	    	g2.drawString(terrain, getCenterAlignedTextX(terrain, middleX - gp.tileSize), y);
+	    	g2.setColor(Color.WHITE);
+	    	g2.drawString(turns, getCenterAlignedTextX(turns, middleX + gp.tileSize), y);
+	    	y += gp.tileSize / 2;
+	    }
+	    
+	    for (FieldEffect fe : field.fieldEffects) {
+	    	String effect = fe.toString();
+	    	String turns = fe.turns + "/" + fe.effect.turns;
+	    	g2.setColor(fe.getColor());
+	    	g2.drawString(effect, getCenterAlignedTextX(effect, middleX - gp.tileSize), y);
+	    	g2.setColor(Color.WHITE);
+	    	g2.drawString(turns, getCenterAlignedTextX(turns, middleX + gp.tileSize), y);
+	    	y += gp.tileSize / 2;
+	    }
+	    
+	    x = userX;
+	    y += gp.tileSize / 2;
+	    startY = y;
+	    
+	    for (FieldEffect fe : field.playerSide) {
+	    	String effect = fe.toString();
+	    	String turns = fe.turns + "/" + fe.effect.turns;
+	    	if (field.getHazards(field.playerSide).contains(fe)) {
+	    		int layers = field.getLayers(field.playerSide, fe.effect);
+	    		int maxLayers = 1;
+	    		if (fe.effect == Effect.SPIKES) maxLayers = 3;
+	    		if (fe.effect == Effect.TOXIC_SPIKES) maxLayers = 2;
+	    		turns = "( " + layers + " / " + maxLayers + " )";
+	    	}
+	    	g2.setColor(fe.getColor());
+	    	g2.drawString(effect, x, y);
+	    	g2.setColor(Color.WHITE);
+	    	g2.drawString(turns, x + gp.tileSize * 3, y);
+	    	y += gp.tileSize / 2;
+	    }
+	    
+	    x = foeX;
+	    y = startY;
+
+	    for (FieldEffect fe : field.foeSide) {
+	    	String effect = fe.toString();
+	    	String turns = fe.turns + "/" + fe.effect.turns;
+	    	if (field.getHazards(field.foeSide).contains(fe)) {
+	    		int layers = field.getLayers(field.foeSide, fe.effect);
+	    		int maxLayers = 1;
+	    		if (fe.effect == Effect.SPIKES) maxLayers = 3;
+	    		if (fe.effect == Effect.TOXIC_SPIKES) maxLayers = 2;
+	    		turns = "( " + layers + " / " + maxLayers + " )";
+	    	}
+	    	g2.setColor(fe.getColor());
+	    	g2.drawString(effect, x, y);
+	    	g2.setColor(Color.WHITE);
+	    	g2.drawString(turns, x + gp.tileSize * 3, y);
+	    	y += gp.tileSize / 2;
+	    }
+	}
+
+	private void startingState() {
+		if (foe.trainerOwned()) {
+			showMessage("You are challenged by " + foe.trainer.getName() + "!");
+		} else {
+			foe.setVisible(true);
+			foeStatus = foe.status;
+			foeHP = tempFoeHP == 0 ? foe.currentHP : tempFoeHP;
+			showMessage("A wild " + foe.nickname + " appeared!");
 		}
 	}
 

@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import Overworld.GamePanel;
+import Swing.Pokemon.Task;
 
 public abstract class AbstractUI {
 	
@@ -20,8 +21,10 @@ public abstract class AbstractUI {
 	public int partyNum;
 	public int moveSummaryNum = -1;
 	public int partySelectedNum = -1;
+	public int moveOption = -1;
 	public Font marumonica;
 	public int counter = 0;
+	public boolean showMoveOptions;
 	
 	public StringBuilder nickname = new StringBuilder();
 	public int nicknaming = -1;
@@ -138,32 +141,34 @@ public abstract class AbstractUI {
 		int height = gp.tileSize*10;
 		
 		drawSubWindow(x, y, width, height);
-
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-			if (partyNum > 1) {
-				partyNum -= 2;
-			}
-		}
 		
-		if (gp.keyH.downPressed) {
-			gp.keyH.downPressed = false;
-			if (partyNum < 4 && gp.player.p.team[partyNum + 2] != null) {
-				partyNum += 2;
+		if (!showMoveOptions) {
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				if (partyNum > 1) {
+					partyNum -= 2;
+				}
 			}
-		}
-		
-		if (gp.keyH.leftPressed) {
-			gp.keyH.leftPressed = false;
-			if (partyNum % 2 != 0) {
-				partyNum--;
+			
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				if (partyNum < 4 && gp.player.p.team[partyNum + 2] != null) {
+					partyNum += 2;
+				}
 			}
-		}
-		
-		if (gp.keyH.rightPressed) {
-			gp.keyH.rightPressed = false;
-			if (partyNum % 2 == 0 && gp.player.p.team[partyNum + 1] != null) {
-				partyNum++;
+			
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (partyNum % 2 != 0) {
+					partyNum--;
+				}
+			}
+			
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				if (partyNum % 2 == 0 && gp.player.p.team[partyNum + 1] != null) {
+					partyNum++;
+				}
 			}
 		}
 		
@@ -295,7 +300,7 @@ public abstract class AbstractUI {
 		g2.drawString(ability, getCenterAlignedTextX(ability, x), y);
 		
 		g2.setFont(g2.getFont().deriveFont(16F));
-		String[] abilityDesc = Item.breakString(p.ability.desc, 36).split("\n");
+		String[] abilityDesc = Item.breakString(p.ability.desc, 32).split("\n");
 		y += gp.tileSize / 4;
 		for (String s : abilityDesc) {
 			y += gp.tileSize / 2 - 4;
@@ -517,11 +522,11 @@ public abstract class AbstractUI {
 		x = (int) (startX - (gp.tileSize * 0.75));
 		x += gp.tileSize * 5;
 		y += gp.tileSize * 1.25;
-		String[] desc = Item.breakString(move.getDescription(), 50).split("\n");
+		String[] desc = Item.breakString(move.getDescription(), 46).split("\n");
 		int offset = (int) (gp.tileSize * 0.75);
 		if (desc.length > 2) {
 			g2.setFont(g2.getFont().deriveFont(20F));
-			desc = Item.breakString(move.getDescription(), 60).split("\n");
+			desc = Item.breakString(move.getDescription(), 58).split("\n");
 			offset = (int) (gp.tileSize * 0.5);
 		}
 		for (String s : desc) {
@@ -591,6 +596,165 @@ public abstract class AbstractUI {
 		if (gp.keyH.downPressed && nicknaming == 1) {
 			gp.keyH.downPressed = false;
 			nicknaming = 0;
+		}
+	}
+	
+	public void drawMoveOptions(Move m, Pokemon p) {
+		drawMoveOptions(m, p, p.nickname + " wants to learn " + m.toString() + ":");
+	}
+	
+	public void drawMoveOptions(Move m, Pokemon p, String header) {
+		int x = gp.tileSize * 4;
+		int y = 0;
+		int width = gp.tileSize * 8;
+		int height = gp.tileSize * 5;
+		if (m != null) height += gp.tileSize * 2;
+		drawSubWindow(x, y, width, height);
+		if (moveOption == 0) {
+			drawMoveSummary(x - gp.tileSize * 1, height - gp.tileSize / 2, p, null, null, m);
+		}
+		int moveWidth = gp.tileSize * 10 / 3;
+		int moveHeight = (int) (gp.tileSize * 1.25);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		for (String s : Item.breakString(header, 40).split("\n")) {
+			g2.drawString(s, getCenterAlignedTextX(s, (x - gp.tileSize / 2) + width / 2), y);
+			y += gp.tileSize / 2;
+		}
+		if (m != null) {
+			x += gp.tileSize * 11 / 6;
+			g2.setColor(m.mtype.getColor());
+			g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
+			g2.setColor(Color.BLACK);
+	        String text = m.toString();
+	        g2.drawString(text, getCenterAlignedTextX(text, x + moveWidth / 2), y + gp.tileSize / 2);
+	        String pp = m.pp + " / " + m.pp;
+	        g2.drawString(pp, getCenterAlignedTextX(pp, (x + moveWidth / 2)), y + gp.tileSize);
+	        if (moveOption == 0) {
+	            g2.setColor(Color.RED);
+	            g2.drawRoundRect(x - 2, y - 2, moveWidth + 4, moveHeight + 4, 10, 10);
+	        }
+			y += gp.tileSize * 1.5;
+			x -= gp.tileSize * 11 / 6;
+		}
+		int startX = x;
+		int max = 0;
+		
+		for (int i = 1; i <= p.moveset.length; i++) {
+			Moveslot ms = p.moveset[i - 1];
+			if (ms != null) {
+				g2.setFont(g2.getFont().deriveFont(24F));
+				g2.setColor(ms.move.mtype.getColor());
+				g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
+				g2.setColor(Color.BLACK);
+		        String text = ms.move.toString();
+		        g2.drawString(text, getCenterAlignedTextX(text, x + moveWidth / 2), y + gp.tileSize / 2);
+		        g2.setColor(ms.getPPColor());
+		        String pp = ms.currentPP + " / " + ms.maxPP;
+		        g2.drawString(pp, getCenterAlignedTextX(pp, (x + moveWidth / 2)), y + gp.tileSize);
+		        if (moveOption == i) {
+		            g2.setColor(Color.RED);
+		            g2.drawRoundRect(x - 2, y - 2, moveWidth + 4, moveHeight + 4, 10, 10);
+		            drawMoveSummary((int) (startX - gp.tileSize * 1.5), height - gp.tileSize / 2, p, null, ms, null);
+		        }
+		        if (i % 2 == 1) {
+		        	x += moveWidth + gp.tileSize / 3;
+		        } else {
+		        	x = startX;
+		        	y += gp.tileSize * 1.5;
+		        }
+		        max++;
+			}
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			moveOption -= 2;
+			if (m == null) {
+				moveOption = moveOption < 1 ? 1 : moveOption;
+			} else {
+				moveOption = moveOption < 0 ? 0 : moveOption;
+			}
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			moveOption = moveOption > 0 || m == null ? moveOption + 2 : moveOption + 1;
+			if (moveOption > max) moveOption = max;
+		}
+		
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			if ((moveOption % 2 == 0 && moveOption != 0) || (moveOption == 1 && m != null)) {
+				moveOption--;
+			}
+		}
+		
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			if (moveOption % 2 == 1 && moveOption < max || (moveOption == 0 && m != null)) {
+				moveOption++;
+			}
+		}
+		
+		if (gp.keyH.wPressed && m != null) {
+			gp.keyH.wPressed = false;
+			if (moveOption >= 0) {
+				if (gp.gameState == GamePanel.BATTLE_STATE) {
+					if (moveOption == 0) {
+						Task t = Pokemon.createTask(Task.TEXT, p.nickname + " did not learn " + m.toString() + ".");
+						Pokemon.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
+					} else {
+						Task t = Pokemon.createTask(Task.TEXT, p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!");
+						Pokemon.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
+					}
+				} else {
+					if (moveOption == 0) {
+						gp.ui.showMessage(p.nickname + " did not learn " + m.toString() + ".");
+					} else {
+						gp.ui.showMessage(p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!");
+					}
+				}
+				if (moveOption > 0) p.moveset[moveOption - 1] = new Moveslot(m);
+				showMoveOptions = false;
+				gp.battleUI.currentTask = null;
+			}
+		}
+	}
+	
+	public void drawEvolution(boolean above) {
+		int x = gp.tileSize * 11;
+		int y;
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 2.5);
+		if (above) {
+			y = gp.tileSize * 4;
+		} else {
+			y = gp.screenHeight - gp.tileSize * 4;
+		}
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize;
+		y += gp.tileSize;
+		g2.drawString("Yes", x, y);
+		if (commandNum == 0) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+			}
+		}
+		y += gp.tileSize;
+		g2.drawString("No", x, y);
+		if (commandNum == 1) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
+				showMessage("Come again soon!");
+				commandNum = 0;
+			}
 		}
 	}
 	

@@ -16,6 +16,8 @@ import Entity.PlayerCharacter;
 import Swing.AbstractUI;
 import Swing.Bag;
 import Swing.Item;
+import Swing.Move;
+import Swing.Pokemon;
 
 public class UI extends AbstractUI{
 
@@ -37,6 +39,9 @@ public class UI extends AbstractUI{
 	public int btY = 0;
 	
 	public boolean showMessage;
+	public Pokemon currentPokemon;
+	public Move currentMove;
+	public String currentHeader;
 	
 	BufferedImage transitionBuffer;
 	
@@ -108,8 +113,20 @@ public class UI extends AbstractUI{
 			useRareCandy();
 		}
 		
+		if (showMoveOptions) {
+			showMoveOptions();
+		}
+		
 		if (showMessage) {
 			drawDialogueScreen(true);
+		}
+	}
+
+	private void showMoveOptions() {
+		if (currentMove == null) {
+			drawMoveOptions(null, currentPokemon, currentHeader);
+		} else {
+			drawMoveOptions(currentMove, currentPokemon);
 		}
 	}
 
@@ -145,7 +162,7 @@ public class UI extends AbstractUI{
 
 	private void useItem() {
 		drawParty(currentItem);
-		if (gp.keyH.wPressed) {
+		if (gp.keyH.wPressed && !showMoveOptions) {
 			gp.keyH.wPressed = false;
 			gp.player.p.useItem(gp.player.p.team[partyNum], currentItem, gp);
 		}
@@ -338,10 +355,12 @@ public class UI extends AbstractUI{
 		int textX = descX + 20;
 		int textY = descY + gp.tileSize;
 		g2.setFont(g2.getFont().deriveFont(24F));
-		String desc = currentItems.get(bagNum).getItem().getDesc();
-		for (String line : Item.breakString(desc, 25).split("\n")) {
-			g2.drawString(line, textX, textY);
-			textY += 32;
+		if (currentItems.size() > 0) {
+			String desc = currentItems.get(bagNum).getItem().getDesc();
+			for (String line : Item.breakString(desc, 25).split("\n")) {
+				g2.drawString(line, textX, textY);
+				textY += 32;
+			}
 		}
 		g2.setFont(g2.getFont().deriveFont(32F));
 		
@@ -379,22 +398,24 @@ public class UI extends AbstractUI{
 			int height2 = gp.tileSize / 2;
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
 		}
-		if (gp.keyH.aPressed) {
-			gp.keyH.aPressed = false;
-			if (selectedBagNum == -1) {
-				selectedBagNum = bagNum;
-			} else if (selectedBagNum == bagNum) {
-				selectedBagNum = -1;
-			} else {
-				gp.player.p.moveItem(currentItems.get(selectedBagNum).getItem(), currentItems.get(bagNum).getItem());
-				currentItems = gp.player.p.getItems(currentPocket);
-				selectedBagNum = -1;
-				if (bagNum > 0) bagNum--;
+		if (!showMoveOptions) {
+			if (gp.keyH.aPressed) {
+				gp.keyH.aPressed = false;
+				if (selectedBagNum == -1) {
+					selectedBagNum = bagNum;
+				} else if (selectedBagNum == bagNum) {
+					selectedBagNum = -1;
+				} else {
+					gp.player.p.moveItem(currentItems.get(selectedBagNum).getItem(), currentItems.get(bagNum).getItem());
+					currentItems = gp.player.p.getItems(currentPocket);
+					selectedBagNum = -1;
+					if (bagNum > 0) bagNum--;
+				}
 			}
-		}
-		if (bagState == 0 && gp.keyH.wPressed) {
-			gp.keyH.wPressed = false;
-			bagState = 1;
+			if (bagState == 0 && gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				bagState = 1;
+			}
 		}
 		
 		if (bagState == 1) {

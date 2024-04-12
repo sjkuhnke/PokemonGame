@@ -72,8 +72,10 @@ public class Player extends Trainer implements Serializable {
 	public int gamesWon;
 	public int winStreak;
 	public int currentBox;
+	public int version;
 	
 	public static final int MAX_BOXES = 10;
+	public static final int VERSION = 1;
 	
 	public Player(GamePanel gp) {
 		super(true);
@@ -86,6 +88,8 @@ public class Player extends Trainer implements Serializable {
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 		locations[0] = true;
 		bag.add(Item.CALCULATOR);
+		
+		version = VERSION;
 	}
 	
 	public void catchPokemon(Pokemon p) {
@@ -218,7 +222,7 @@ public class Player extends Trainer implements Serializable {
             	int index = Arrays.asList(this.getTeam()).indexOf(pokemon);
                 this.team[index] = evolved;
                 if (index == 0) this.current = evolved;
-                evolved.checkMove(this);
+                evolved.checkMove();
                 pokemon = evolved;
                 result = true;
             }
@@ -291,7 +295,7 @@ public class Player extends Trainer implements Serializable {
 		
 	}
 	
-	public void updateFlags() {
+	private void updateFlags() {
 		boolean[] tempFlag = flags.clone();
 		flags = new boolean[GamePanel.MAX_FLAGS];
 		for (int i = 0; i < tempFlag.length; i++) {
@@ -299,7 +303,7 @@ public class Player extends Trainer implements Serializable {
 		}
 	}
 	
-	public void updateTrainers() {
+	private void updateTrainers() {
 		boolean[] temp = trainersBeat.clone();
 		trainersBeat = new boolean[Main.trainers.length];
 		for (int i = 0; i < temp.length; i++) {
@@ -307,7 +311,7 @@ public class Player extends Trainer implements Serializable {
 		}
 	}
 
-	public void updateItems(int x, int y) {
+	private void updateItems(int x, int y) {
 		boolean[][] tempObj = itemsCollected.clone();
 		itemsCollected = new boolean[x][y];
 		for (int i = 0; i < tempObj.length; i++) {
@@ -822,7 +826,7 @@ public class Player extends Trainer implements Serializable {
     		        int index = Arrays.asList(getTeam()).indexOf(p);
     		        team[index] = result;
     		        if (index == 0) setCurrent(result);
-    		        result.checkMove(this);
+    		        result.checkMove();
                     pokedex[result.id] = 2;
     			} else {
     				gp.ui.showMessage(p.nickname + " did not evolve.");
@@ -1070,13 +1074,10 @@ public class Player extends Trainer implements Serializable {
 	                }
 	            }
 	            if (!learnedMove) {
-	            	int choice = p.displayMoveOptions(item.getMove(), this);
-	                if (choice == JOptionPane.CLOSED_OPTION) {
-	                	gp.ui.showMessage(p.nickname + " did not learn " + item.getMove() + ".");
-	                } else {
-	                	gp.ui.showMessage(Item.breakString(p.nickname + " has learned " + item.getMove() + " and forgot " + p.moveset[choice].move + "!", 45));
-	                	p.moveset[choice] = new Moveslot(item.getMove());
-	                }
+	            	gp.ui.currentPokemon = p;
+	            	gp.ui.currentMove = item.getMove();
+	            	gp.ui.moveOption = -1;
+	            	gp.ui.showMoveOptions = true;
 	            }
         	}
 			return;
@@ -1085,5 +1086,25 @@ public class Player extends Trainer implements Serializable {
 		}
 		bag.remove(item);
 		gp.ui.currentItems = getItems(gp.ui.currentPocket);
+	}
+
+	public void update(GamePanel gp) {
+		updateTrainers();
+		updateItems(gp.obj.length, gp.obj[1].length);
+		updateFlags();
+		for (Pokemon p : getAllPokemon()) {
+			if (p != null) {
+				p.update();
+			}
+		}
+		version = VERSION;
+	}
+	
+	public void setSprites() {
+		for (Pokemon p : getAllPokemon()) {
+			if (p != null) {
+				p.setSprites();
+			}
+		}
 	}
 }

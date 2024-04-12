@@ -721,12 +721,6 @@ public class AssetSetter {
 	}
 
 	public void setNPC() {
-		if (gp.player.p.flags.length < GamePanel.MAX_FLAGS) {
-			gp.player.p.updateFlags();
-		}
-		if (gp.player.p.trainersBeat.length < Main.trainers.length) {
-			gp.player.p.updateTrainers();
-		}
 		boolean[] flags = gp.player.p.flags;
 		int mapNum = 0;
 		
@@ -2358,9 +2352,6 @@ public class AssetSetter {
 	}
 	
 	private ItemObj ObjSetup(int x, int y, Item item, int mapNum, int lower, int upper) {
-		if (gp.player.p.itemsCollected.length != gp.obj.length || gp.player.p.itemsCollected[1].length != gp.obj[1].length) {
-			gp.player.p.updateItems(gp.obj.length, gp.obj[1].length);
-		}
 		if (gp.player.p.itemsCollected[mapNum][objIndex] == true) {
 			objIndex++;
 			return null;
