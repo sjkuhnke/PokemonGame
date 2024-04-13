@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import Overworld.GamePanel;
+import overworld.GamePanel;
 
 public class TileManager {
 	GamePanel gp;
