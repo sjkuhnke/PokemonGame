@@ -47,7 +47,6 @@ public enum PType {
 	        // Load the original image
 	        image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
 	        
-	        
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
