@@ -2,12 +2,9 @@ package pokemon;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.*;
@@ -34,7 +31,6 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import overworld.GamePanel;
 import overworld.Main;
 import pokemon.Bag.Entry;
-import pokemon.Battle.JGradientButton;
 import pokemon.Pokemon.Task;
 
 public class Player extends Trainer implements Serializable {
@@ -907,45 +903,26 @@ public class Player extends Trainer implements Serializable {
 	        		gp.ui.showMessage(p.nickname + "'s PP was restored!");
         		} else {
         			gp.ui.showMessage("It won't have any effect.");
-        			return;
         		}
+        		break;
         	} else {
-        		JPanel movePanel = new JPanel();
-        	    movePanel.setLayout(new BoxLayout(movePanel, BoxLayout.Y_AXIS));
-        		for (Moveslot m : p.moveset) {
-        			if (m != null) {
-    	        		JGradientButton move = new JGradientButton("<html><center>" + m.move.toString() + "<br>" + " " + m.showPP() + "</center></html>");
-    	        		move.setFont(new Font(move.getFont().getName(), Font.PLAIN, 13));
-    	        		move.setBackground(m.move.mtype.getColor());
-    	        		move.setForeground(m.getPPColor());
-    	        		move.addMouseListener(new MouseAdapter() {
-	        	        	@Override
-	        			    public void mouseClicked(MouseEvent e) {
-	        			    	if (SwingUtilities.isRightMouseButton(e)) {
-	        			            JOptionPane.showMessageDialog(null, m.move.getMoveSummary(p, null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
-	        			        } else {
-	        			        	if (m.currentPP != m.maxPP) {
-	        			        		m.currentPP = m.maxPP;
-    	        			        	gp.ui.showMessage(m.move.toString() + "'s PP was restored!");
-	        			        	} else {
-	        			        		gp.ui.showMessage("It won't have any effect.");
-	        			        		return;
-	        			        	}
-	        			        }
-	        			    }
-	        	        });
-	        	        movePanel.add(move);
-        			}
-	        		
-	            }
-        		JOptionPane.showMessageDialog(null, movePanel, "Select a move to restore PP:", JOptionPane.PLAIN_MESSAGE);
+        		gp.ui.currentPokemon = p;
+            	gp.ui.currentMove = null;
+            	gp.ui.currentHeader = "Select a move to restore PP:";
+            	gp.ui.moveOption = -1;
+            	gp.ui.showMoveOptions = true;
         	}
-			break;
+			return;
 			
 		// PPs
 		case PP_UP:
 		case PP_MAX:
-			break;
+			gp.ui.currentPokemon = p;
+        	gp.ui.currentMove = null;
+        	gp.ui.currentHeader = "Select a move to increase PP:";
+        	gp.ui.moveOption = -1;
+        	gp.ui.showMoveOptions = true;
+			return;
 		
 		case RARE_CANDY:
 			break;

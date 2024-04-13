@@ -37,7 +37,7 @@ public enum PType {
 		color = c;
 		
 		image = setup("/battle/" + toString().toLowerCase());
-		image = setup("/battle/" + toString().toLowerCase() + "_2");
+		image2 = setup("/battle/" + toString().toLowerCase() + "_2");
 	}
 	
 	private BufferedImage setup(String imageName) {
