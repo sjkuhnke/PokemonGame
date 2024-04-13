@@ -419,13 +419,17 @@ public class KeyHandler implements KeyListener {
 			wPressed = true;
 		}
 		
-		if (!gp.ui.showMoveOptions && (code == KeyEvent.VK_D || code == KeyEvent.VK_S)) {
-			gp.gameState = GamePanel.MENU_STATE;
-			gp.ui.subState = 3;
-			gp.ui.bagState = 0;
-			gp.ui.commandNum = 0;
+		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+			if (gp.ui.showMoveOptions) {
+				gp.ui.moveOption = -1;
+				gp.ui.showMoveOptions = false;
+			} else {
+				gp.gameState = GamePanel.MENU_STATE;
+				gp.ui.subState = 3;
+				gp.ui.bagState = 0;
+				gp.ui.commandNum = 0;
+			}
 		}
-		
 	}
 	
 	public void resetKeys() {

@@ -17,6 +17,7 @@ import pokemon.AbstractUI;
 import pokemon.Bag;
 import pokemon.Item;
 import pokemon.Move;
+import pokemon.Moveslot;
 import pokemon.Pokemon;
 
 public class UI extends AbstractUI{
@@ -125,6 +126,38 @@ public class UI extends AbstractUI{
 	private void showMoveOptions() {
 		if (currentMove == null) {
 			drawMoveOptions(null, currentPokemon, currentHeader);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				if (moveOption > 0) {
+					if (currentItem == Item.ELIXIR) {
+						Moveslot m = currentPokemon.moveset[moveOption - 1];
+						if (m.currentPP != m.maxPP) {
+			        		m.currentPP = m.maxPP;
+				        	showMessage(m.move.toString() + "'s PP was restored!");
+				        	gp.player.p.bag.remove(currentItem);
+			        		currentItems = gp.player.p.getItems(currentPocket);
+			        	} else {
+			        		showMessage("It won't have any effect.");
+			        	}
+					} else if (currentItem == Item.PP_UP || currentItem == Item.PP_MAX) {
+						Moveslot m = currentPokemon.moveset[moveOption - 1];
+						if (m.maxPP < (m.move.pp * 8 / 5)) {
+			    			if (currentItem == Item.PP_UP) { // PP Up
+			    				m.maxPP += Math.max((m.move.pp / 5), 1);
+			    				showMessage(m.move.toString() + "'s PP was increased!");
+			    			} else { // PP Max
+			    				m.maxPP = (m.move.pp * 8 / 5);
+			    				showMessage(m.move.toString() + "'s PP was maxed!");
+			    			}
+				        	gp.player.p.bag.remove(currentItem);
+			        		currentItems = gp.player.p.getItems(currentPocket);
+			    		} else {
+			    			showMessage("It won't have any effect.");
+			    		}
+					}
+					showMoveOptions = false;
+				}
+			}
 		} else {
 			drawMoveOptions(currentMove, currentPokemon);
 		}
