@@ -2348,7 +2348,6 @@ public class PlayerCharacter extends Entity {
 	    		Item.ULTRA_BALL, Item.HYPER_POTION, // 4 badges
 	    		Item.MAX_POTION, // 7 badges
 	    		Item.FULL_RESTORE, Item.MAX_REVIVE}; // 8 badges
-	    
 	    Item[] result = new Item[available];
 	    for (int i = 0; i < available; i++) {
 	    	result[i] = shopItems[i];

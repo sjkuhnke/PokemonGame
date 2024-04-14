@@ -582,7 +582,7 @@ public class Player extends Trainer implements Serializable {
 				break;
 			}
 		}
-		result = result >= pokedex.length - 1 ? pokedex.length : result + 3;
+		result = result >= pokedex.length - 1 ? pokedex.length - 1 : result + 3;
 		return result;
 	}
 
@@ -1083,5 +1083,15 @@ public class Player extends Trainer implements Serializable {
 				p.setSprites();
 			}
 		}
+	}
+
+	public void handleExpShare() {
+		for (Pokemon p : team) {
+			if (p != null && !p.battled && p.item == Item.EXP_SHARE) {
+				numBattled++;
+				p.battled = true;
+			}
+		}
+		
 	}
 }

@@ -46,8 +46,8 @@ public class UI extends AbstractUI{
 	
 	BufferedImage transitionBuffer;
 	
-	public static final int MAX_SHOP_COL = 9;
-	public static final int MAX_SHOP_ROW = 5;
+	public static final int MAX_SHOP_COL = 10;
+	public static final int MAX_SHOP_ROW = 4;
 	
 	
 	public UI(GamePanel gp) {
@@ -683,10 +683,10 @@ public class UI extends AbstractUI{
 	}
 	
 	private void drawInventory(Entity entity) {
-		int x = gp.tileSize * 5;
+		int x = gp.tileSize * 2;
 		int y = gp.tileSize;
-		int width = gp.tileSize * 6;
-		int height = gp.tileSize * 5;
+		int width = gp.tileSize * 12;
+		int height = gp.tileSize * 6;
 		
 		drawSubWindow(x, y, width, height);
 		
@@ -694,10 +694,10 @@ public class UI extends AbstractUI{
 		final int slotYstart = y + 20;
 		int slotX = slotXstart;
 		int slotY = slotYstart;
-		int slotSize = (gp.tileSize / 2) + 3;
+		int slotSize = gp.tileSize + 5;
 		
 		for (int i = 0; i < entity.inventory.size(); i++) {
-			g2.drawImage(npc.inventory.get(i).getImage(), slotX, slotY, null);
+			g2.drawImage(npc.inventory.get(i).getImage2(), slotX, slotY, null);
 			
 			slotX += slotSize;
 			
@@ -709,8 +709,8 @@ public class UI extends AbstractUI{
 		
 		int cursorX = slotXstart + (slotSize * slotCol);
 		int cursorY = slotYstart + (slotSize * slotRow);
-		int cursorWidth = gp.tileSize / 2;
-		int cursorHeight = gp.tileSize / 2;
+		int cursorWidth = gp.tileSize;
+		int cursorHeight = gp.tileSize;
 		
 		g2.setColor(Color.WHITE);
 		g2.setStroke(new BasicStroke(3));
@@ -719,11 +719,11 @@ public class UI extends AbstractUI{
 		int dFrameX = x;
 		int dFrameY = y + height;
 		int dFrameWidth = width;
-		int dFrameHeight = gp.tileSize * 5;
+		int dFrameHeight = gp.tileSize * 3;
 		
 		int textX = dFrameX + 20;
 		int textY = dFrameY + gp.tileSize;
-		g2.setFont(g2.getFont().deriveFont(20F));
+		g2.setFont(g2.getFont().deriveFont(24F));
 		
 		int itemIndex = getItemIndexOnSlot();
 		
@@ -731,7 +731,7 @@ public class UI extends AbstractUI{
 			drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
 			String desc = entity.inventory.get(itemIndex).getDesc();
 			
-			for (String line : Item.breakString(desc, 35).split("\n")) {
+			for (String line : Item.breakString(desc, 66).split("\n")) {
 				g2.drawString(line, textX, textY);
 				textY += 32;
 			}

@@ -191,37 +191,17 @@ public class GamePanel extends JPanel implements Runnable {
 		if (player.p.trainersBeat[trainer]) return;
 		if (player.p.wiped()) return;
 		
-		setSlots();
+		Pokemon foe = Main.trainers[trainer].getCurrent();
 		
 		// Heal if Gym Leader
 		if (Main.trainers[trainer].getMoney() == 500) {
 			player.p.heal();
 		}
 		
-		ui.transitionBuffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
-		gameState = START_BATTLE_STATE;
-		
-		// Make sure the front Pokemon isn't fainted
-		int index = 0;
-		Pokemon user = player.p.getCurrent();
-		while (user.isFainted()) {
-			player.p.swapToFront(player.p.team[++index], index);
-			user = player.p.getCurrent();
-		}
-		
-		player.p.clearBattled();
-		user.battled = true;
-		battleUI.user = user;
-		battleUI.foe = Main.trainers[trainer].getCurrent();
-		battleUI.index = trainer;
+		startBattle(trainer, -1, foe);
 	}
 	
-	public void startBattle(int trainer, int id) {
-		//Battle frame = startBattle(trainer);
-		//if (frame != null) frame.staticPokemonID = id;
-	}
-	
-	public void startWild(int area, int x, int y, String type) {
+	public void startBattle(int trainer, int id, Pokemon foe) {	
 		setSlots();
 		
 		ui.transitionBuffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
@@ -238,8 +218,19 @@ public class GamePanel extends JPanel implements Runnable {
 		player.p.clearBattled();
 		user.battled = true;
 		battleUI.user = user;
-		battleUI.foe = encounterPokemon(area, x, y, player.p.random, type);
-		battleUI.index = -1;
+		battleUI.foe = foe;
+		battleUI.index = trainer;
+		battleUI.staticID = id;
+	}
+	
+	public void startBattle(int trainer, int id) {
+		Pokemon foe = Main.trainers[trainer].getCurrent();
+		startBattle(trainer, id, foe);
+	}
+	
+	public void startWild(int area, int x, int y, String type) {
+		Pokemon foe = encounterPokemon(area, x, y, player.p.random, type);
+		startBattle(-2, -1, foe);
 	}
 	
 	public void startFish(int area, int x, int y) {

@@ -127,8 +127,8 @@ public enum Item {
 	BLUNDER_POLICY(86,0,0,new Color(239, 239, 178),Item.HELD_ITEM,null,"If the holder misses with a move due to low accuracy, this policy will sharply boost its Speed stat."),
 	RED_CARD(87,0,0,new Color(216, 35, 22),Item.HELD_ITEM,null,"If the holder is damaged by an attack, the mysterious power of this card can remove the attacker from the battle."),
 	THROAT_SPRAY(88,0,0,new Color(96, 120, 168),Item.HELD_ITEM,null,"If the holder uses a sound-based move, this throat spray will boost its Sp. Atk stat."),
-	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
+	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
 	NULL91(91,0,0,Color.BLACK,Item.OTHER,null,""),
 	NULL92(92,0,0,Color.BLACK,Item.OTHER,null,""),
 	HM01(93,0,0,Color.BLACK,Item.TMS,Move.CUT,"Teaches a Pokemon this move."),
@@ -331,10 +331,7 @@ public enum Item {
 		path += isTM() ? "tm_" + getMove().mtype.toString().toLowerCase() : super.toString().toLowerCase();
 		if (isMint()) path = path.replace("_mint", "");
 		image = setupImage(path + ".png");
-		
-		if (isBall()) {
-			image2 = scaleImage(image, 2);
-		}
+		image2 = scaleImage(image, 2);
 		
 		if (id >= 4 && id <= 8) {
 			switch(id) {
@@ -1490,6 +1487,12 @@ public enum Item {
 	    int currentLength = 0;
 
 	    for (String word : input.split("\\s+")) {
+	        // Check if the word contains a newline character
+	        if (word.contains("\n")) {
+	            // If it does, reset the current length
+	            currentLength = 0;
+	        }
+
 	        if (currentLength + word.length() > maxChar) {
 	            result.append(currentLine.toString().trim()).append("\n");
 	            currentLine.setLength(0);

@@ -104,6 +104,7 @@ public class Entity {
 	}
 	
 	public void setItems(Item... items) {
+		inventory.clear();
 		for (Item item : items) {
 			inventory.add(item);
 		}
