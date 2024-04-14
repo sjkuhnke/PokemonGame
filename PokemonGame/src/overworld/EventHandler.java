@@ -823,6 +823,5 @@ public class EventHandler {
 		
 		gp.aSetter.updateNPC(map);
 		gp.aSetter.setInteractiveTile(map);
-		gp.player.cross = false;
 	}
 }

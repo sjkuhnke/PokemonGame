@@ -50,7 +50,7 @@ public class BattleUI extends AbstractUI {
 	public FieldEffect terrain;
 	private Pokemon currentAbilityHost;
 	private Ability currentAbility;
-	private int foeFainted;
+	public int foeFainted;
 	
 	public Entry ball;
 	public ArrayList<Entry> balls;
