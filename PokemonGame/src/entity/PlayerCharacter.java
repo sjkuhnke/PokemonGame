@@ -68,8 +68,6 @@ public class PlayerCharacter extends Entity {
 	public final int screenY;
 	public Player p;
 
-	public boolean cross = false;
-
 	public String currentSave;
 
 	private int cooldown;
@@ -325,64 +323,46 @@ public class PlayerCharacter extends Entity {
 			if (p.hasMove(Move.SURF) && !p.surf) {
 				int result = gp.cChecker.checkTileType(this);
 				if (gp.tileM.getWaterTiles().contains(result)) {
-					int answer = JOptionPane.showOptionDialog(null,
-							"The water is a deep blue!\nDo you want to Surf?",
-				            "Surf?",
-				            JOptionPane.YES_NO_OPTION,
-				            JOptionPane.QUESTION_MESSAGE,
-				            null, null, null);
-					if (answer == JOptionPane.YES_OPTION) {
-						switch (direction) {
-						case "down":
-							worldY += gp.tileSize;
-							break;
-						case "up":
-							worldY -= gp.tileSize;
-							break;
-						case "left":
-							worldX -= gp.tileSize;
-							break;
-						case "right":
-							worldX += gp.tileSize;
-							break;
-						}
-						p.surf = true;
-						for (Integer i : gp.tileM.getWaterTiles()) {
-							gp.tileM.tile[i].collision = false;
-						}
-						
+					switch (direction) {
+					case "down":
+						worldY += gp.tileSize;
+						break;
+					case "up":
+						worldY -= gp.tileSize;
+						break;
+					case "left":
+						worldX -= gp.tileSize;
+						break;
+					case "right":
+						worldX += gp.tileSize;
+						break;
+					}
+					p.surf = true;
+					for (Integer i : gp.tileM.getWaterTiles()) {
+						gp.tileM.tile[i].collision = false;
 					}
 				}
 			}
 			if (p.hasMove(Move.LAVA_SURF) && !p.lavasurf) {
 				int result = gp.cChecker.checkTileType(this);
 				if (gp.tileM.getLavaTiles().contains(result)) {
-					int answer = JOptionPane.showOptionDialog(null,
-							"The lava is a hot, bubbly red!\nDo you want to Lava Surf?",
-				            "Lava Surf?",
-				            JOptionPane.YES_NO_OPTION,
-				            JOptionPane.QUESTION_MESSAGE,
-				            null, null, null);
-					if (answer == JOptionPane.YES_OPTION) {
-						switch (direction) {
-						case "down":
-							worldY += gp.tileSize;
-							break;
-						case "up":
-							worldY -= gp.tileSize;
-							break;
-						case "left":
-							worldX -= gp.tileSize;
-							break;
-						case "right":
-							worldX += gp.tileSize;
-							break;
-						}
-						p.lavasurf = true;
-						for (Integer i : gp.tileM.getLavaTiles()) {
-							gp.tileM.tile[i].collision = false;
-						}
-						
+					switch (direction) {
+					case "down":
+						worldY += gp.tileSize;
+						break;
+					case "up":
+						worldY -= gp.tileSize;
+						break;
+					case "left":
+						worldX -= gp.tileSize;
+						break;
+					case "right":
+						worldX += gp.tileSize;
+						break;
+					}
+					p.lavasurf = true;
+					for (Integer i : gp.tileM.getLavaTiles()) {
+						gp.tileM.tile[i].collision = false;
 					}
 				}
 			}
@@ -2156,139 +2136,76 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactCutTree(int i) {
 		if (p.hasMove(Move.CUT)) {
-			int option = JOptionPane.showOptionDialog(null,
-					"This tree looks like it can be cut down!\nDo you want to cut it?",
-		            "Cut Tree",
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.QUESTION_MESSAGE,
-		            null, null, null);
-			if (option == JOptionPane.YES_OPTION) {
-				Cut_Tree temp = (Cut_Tree) gp.iTile[gp.currentMap][i];
-				gp.iTile[gp.currentMap][i] = new Tree_Stump(gp);
-				gp.iTile[gp.currentMap][i].worldX = temp.worldX;
-				gp.iTile[gp.currentMap][i].worldY = temp.worldY;
-			}
+			Cut_Tree temp = (Cut_Tree) gp.iTile[gp.currentMap][i];
+			gp.iTile[gp.currentMap][i] = new Tree_Stump(gp);
+			gp.iTile[gp.currentMap][i].worldX = temp.worldX;
+			gp.iTile[gp.currentMap][i].worldY = temp.worldY;
 		} else {
-			JOptionPane.showMessageDialog(null, "This tree looks like it can be cut down!");
+			gp.ui.showMessage("This tree looks like it can be cut down!");
 		}
 		
 	}
 	
 	private void interactRockSmash(int i) {
 		if (p.hasMove(Move.ROCK_SMASH)) {
-			int option = JOptionPane.showOptionDialog(null,
-					"This rock looks like it can be broken!\nDo you want to use Rock Smash?",
-		            "Rock Smash",
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.QUESTION_MESSAGE,
-		            null, null, null);
-			if (option == JOptionPane.YES_OPTION) {
-				gp.iTile[gp.currentMap][i] = null;
-			}
+			gp.iTile[gp.currentMap][i] = null;
 		} else {
-			JOptionPane.showMessageDialog(null, "This rock looks like it can be broken!");
+			gp.ui.showMessage("This rock looks like it can be broken!");
 		}
 		
 	}
 	
 	private void interactVines(int i) {
-		if (cross) {
-			if (p.hasMove(Move.VINE_CROSS)) {
-				Vine_Crossable temp = (Vine_Crossable) gp.iTile[gp.currentMap][i];
-				gp.iTile[gp.currentMap][i] = new Vine(gp);
-				gp.iTile[gp.currentMap][i].worldX = temp.worldX;
-				gp.iTile[gp.currentMap][i].worldY = temp.worldY;
-			} else {
-				JOptionPane.showMessageDialog(null, "This gap looks like it can be crossed!");
-				cross = false;
-			}
+		if (p.hasMove(Move.VINE_CROSS)) {
+			Vine_Crossable temp = (Vine_Crossable) gp.iTile[gp.currentMap][i];
+			gp.iTile[gp.currentMap][i] = new Vine(gp);
+			gp.iTile[gp.currentMap][i].worldX = temp.worldX;
+			gp.iTile[gp.currentMap][i].worldY = temp.worldY;
 		} else {
-			if (p.hasMove(Move.VINE_CROSS)) {
-				int option = JOptionPane.showOptionDialog(null,
-						"This gap can be crossed!\nDo you want to use Vine Cross?",
-			            "Vine Cross",
-			            JOptionPane.YES_NO_OPTION,
-			            JOptionPane.QUESTION_MESSAGE,
-			            null, null, null);
-				if (option == JOptionPane.YES_OPTION) {
-					Vine_Crossable temp = (Vine_Crossable) gp.iTile[gp.currentMap][i];
-					gp.iTile[gp.currentMap][i] = new Vine(gp);
-					gp.iTile[gp.currentMap][i].worldX = temp.worldX;
-					gp.iTile[gp.currentMap][i].worldY = temp.worldY;
-					cross = true;
-				}
-			} else {
-				JOptionPane.showMessageDialog(null, "This gap looks like it can be crossed!");
-				cross = false;
-			}
+			gp.ui.showMessage("This gap looks like it can be crossed!");
 		}
-		
 	}
 	
 	private void interactPit(int i) {
 		if (p.hasMove(Move.SLOW_FALL)) {
-			int option = JOptionPane.showOptionDialog(null,
-					"This pit can be traversed!\nWould you like to use Slow Fall?",
-					"Slow Fall",
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.QUESTION_MESSAGE,
-		            null, null, null);
-			if (option == JOptionPane.YES_OPTION) {
-				Pit pit = (Pit) gp.iTile[gp.currentMap][i];
-				gp.eHandler.teleport(pit.mapDest, pit.xDest, pit.yDest, false);
-			}
+			Pit pit = (Pit) gp.iTile[gp.currentMap][i];
+			gp.eHandler.teleport(pit.mapDest, pit.xDest, pit.yDest, false);
 		} else {
-			JOptionPane.showMessageDialog(null, "This pit looks deep!\nI can't even see the bottom!");
+			gp.ui.showMessage("This pit looks deep!\nI can't even see the bottom!");
 		}
 		
 	}
 	
 	private void interactWhirlpool(int i) {
 		if (p.hasMove(Move.WHIRLPOOL)) {
-			int option = JOptionPane.showOptionDialog(null,
-					"This water vortex can be crossed!\nWould you like to use Whirlpool?",
-					"Whirlpool",
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.QUESTION_MESSAGE,
-		            null, null, null);
-			if (option == JOptionPane.YES_OPTION) {
-				switch (direction) {
-				case "down":
-					worldY += gp.tileSize * 3.75;
-					break;
-				case "up":
-					worldY -= gp.tileSize * 3.75;
-					break;
-				case "left":
-					worldX -= gp.tileSize * 3.75;
-					break;
-				case "right":
-					worldX += gp.tileSize * 3.75;
-					break;
-				}
+			switch (direction) {
+			case "down":
+				worldY += gp.tileSize * 3.75;
+				break;
+			case "up":
+				worldY -= gp.tileSize * 3.75;
+				break;
+			case "left":
+				worldX -= gp.tileSize * 3.75;
+				break;
+			case "right":
+				worldX += gp.tileSize * 3.75;
+				break;
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "This water vortex can be crossed!");
+			gp.ui.showMessage("This water vortex can be crossed!");
 		}
 		
 	}
 	
 	private void interactRockClimb(int i) {
 		if (p.hasMove(Move.ROCK_CLIMB)) {
-			int option = JOptionPane.showOptionDialog(null,
-					"This wall can be scaled!\nWould you like to use Rock Climb?",
-					"Rock Climb",
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.QUESTION_MESSAGE,
-		            null, null, null);
-			if (option == JOptionPane.YES_OPTION) {
-				Rock_Climb rc = (Rock_Climb) gp.iTile[gp.currentMap][i];
-				int inverse = this.direction == rc.direction ? 1 : -1;
-				this.worldX += ((rc.deltaX * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaX * inverse));
-				this.worldY += ((rc.deltaY * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaY * inverse));
-			}
+			Rock_Climb rc = (Rock_Climb) gp.iTile[gp.currentMap][i];
+			int inverse = this.direction == rc.direction ? 1 : -1;
+			this.worldX += ((rc.deltaX * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaX * inverse));
+			this.worldY += ((rc.deltaY * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaY * inverse));
 		} else {
-			JOptionPane.showMessageDialog(null, "This wall looks like it can be scaled!");
+			gp.ui.showMessage("This wall looks like it can be scaled!");
 		}
 		
 	}
@@ -2300,7 +2217,7 @@ public class PlayerCharacter extends Entity {
 			p.bag.remove(Item.REPEL);
 			return true;
 	    } else {
-	    	JOptionPane.showMessageDialog(null, "It won't have any effect.");
+	    	gp.ui.showMessage("It won't have any effect.");
 	    	return false;
 	    }
 	}

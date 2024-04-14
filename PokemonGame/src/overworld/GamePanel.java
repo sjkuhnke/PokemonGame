@@ -300,6 +300,7 @@ public class GamePanel extends JPanel implements Runnable {
 		battleUI.weather = null;
 		battleUI.terrain = null;
 		battleUI.moveNum = 0;
+		battleUI.foeFainted = 0;
 	}
 	
 	public void addPanel(JPanel panel, boolean animate) {
