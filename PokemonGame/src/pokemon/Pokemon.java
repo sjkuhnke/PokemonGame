@@ -4180,7 +4180,8 @@ public class Pokemon implements Serializable {
 				result = player.swapRandom(foe);
 			}
 			if (result) {
-				addTask(Task.TEXT, foe.nickname + " held up its Red Card!");
+				Task t = createTask(Task.TEXT, foe.nickname + " held up its Red Card!");
+				insertTask(t, gp.battleUI.tasks.size() - 1);
 				foe.consumeItem();
 				endMove();
 				return;
@@ -4301,6 +4302,7 @@ public class Pokemon implements Serializable {
 	    Player player = (Player) this.trainer;
 
 	    ArrayList<Pokemon> teamCopy = new ArrayList<>(Arrays.asList(player.getTeam()));
+	    player.handleExpShare();
 	    int numBattled = player.getBattled();
 	    if (numBattled == 0) return;
 	    int expPerPokemon = amt / numBattled;
@@ -4315,12 +4317,15 @@ public class Pokemon implements Serializable {
 	                remainingExp--;
 	            }
 	            if (p.level < 100) {
+	            	if (p.item == Item.LUCKY_EGG) expAwarded *= 1.5;
 	                p.exp += expAwarded;
+	                String flavor = p.item == Item.LUCKY_EGG ? " a boosted " : "";
 	                if (p.isVisible()) {
 	                	Task t = addTask(Task.EXP, p.nickname + " gained " + expAwarded + " experience points!");
 	                	t.setFinish(Math.min(p.exp, expMax));
 	                } else {
-	                	addTask(Task.TEXT, p.nickname + " gained " + expAwarded + " experience points!");
+	                	flavor = p.item == Item.EXP_SHARE ? " a shared " : flavor;
+	                	addTask(Task.TEXT, p.nickname + " gained " + flavor + expAwarded + " experience points!");
 	                }
 	                
 	            }

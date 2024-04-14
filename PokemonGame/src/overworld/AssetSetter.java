@@ -1,5 +1,6 @@
 package overworld;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import entity.Entity;
@@ -39,6 +40,8 @@ public class AssetSetter {
 	int objIndex;
 	private int iIndex;
 	private int berryIndex;
+	
+	public ArrayList<Entity> clerks = new ArrayList<>();
 	
 	private static final int NPC_PC_GAUNTLET = -8;
 	private static final int TRIWANDOLIZ = -7;
@@ -681,7 +684,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(37, 75, Item.SMOOTH_ROCK, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(41, 73, Item.DAMP_ROCK, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 74, Item.ICY_ROCK, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(37, 48, Item.TM93, mapNum); // earth power
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 52, Item.TM93, mapNum); // earth power
 		
 		mapNum = 138;
 		objIndex = 0;
@@ -2215,6 +2218,7 @@ public class AssetSetter {
 		case NPC_CLERK:
 			result = new NPC_Clerk(gp);
 			result.setItems(gp.player.getItems());
+			clerks.add(result);
 			break;
 		case TRAINER_DOWN:
 			result = new NPC_Trainer(gp, "down", team);

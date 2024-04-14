@@ -320,7 +320,7 @@ public class Field {
 	    if (weather != null) {
 	        weatherTurns--;
 	        if (weatherTurns == 0) {
-	            Task t = Pokemon.addTask(Task.TERRAIN, "The weather returned to normal!");
+	            Task t = Pokemon.addTask(Task.WEATHER, "The weather returned to normal!");
 	            t.setEffect(null);
 	            weather = null;
 	        }

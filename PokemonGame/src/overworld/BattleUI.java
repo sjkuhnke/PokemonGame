@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
+import entity.Entity;
 import pokemon.Ability;
 import pokemon.AbstractUI;
 import pokemon.Field;
@@ -26,10 +27,15 @@ import pokemon.Pokemon.Task;
 
 public class BattleUI extends AbstractUI {
 	
+	// Index of trainer and static Pokemon
 	public int index;
+	public int staticID;
 	
+	// User and foe
 	public Pokemon user;
 	public Pokemon foe;
+	
+	// Pointers for tasks
 	public Pokemon tempUser;
 	public int userHP;
 	public int foeHP;
@@ -37,10 +43,15 @@ public class BattleUI extends AbstractUI {
 	public Status userStatus;
 	public Status foeStatus;
 	public int userExp;
+	public int userExpMax;
 	public int userLevel;
 	public Move foeMove;
 	public FieldEffect weather;
 	public FieldEffect terrain;
+	private Pokemon currentAbilityHost;
+	private Ability currentAbility;
+	private int foeFainted;
+	
 	public Entry ball;
 	public ArrayList<Entry> balls;
 	
@@ -50,8 +61,6 @@ public class BattleUI extends AbstractUI {
 	private int dialogueCounter = 0;
 	private int abilityCounter = 0;
 	private int cooldownCounter = 0;
-	private Pokemon currentAbilityHost;
-	private Ability currentAbility;
 	public Task currentTask;
 	public ArrayList<Task> tasks;
 	private Field field;
@@ -250,7 +259,7 @@ public class BattleUI extends AbstractUI {
 	private void drawTask() {
 		switch (currentTask.type) {
 		case Task.TEXT:
-			showMessage(currentTask.message);
+			showMessage(Item.breakString(currentTask.message, 55));
 			break;
 		case Task.DAMAGE:
 			currentDialogue = currentTask.message;
@@ -279,6 +288,7 @@ public class BattleUI extends AbstractUI {
 				userHP = tempUser == null ? user.currentHP : tempUser.currentHP;
 				userStatus = tempUser == null ? user.status : tempUser.status;
 				userExp = tempUser == null ? user.exp : tempUser.exp;
+				userExpMax = tempUser == null ? user.expMax : tempUser.expMax;
 				userLevel = tempUser == null ? user.level : tempUser.level;
 				drawUserPokeball(true);
 			} else {
@@ -312,6 +322,7 @@ public class BattleUI extends AbstractUI {
 			counter++;
 			if (counter >= 75) {
 				currentTask.p.setVisible(false);
+				if (foe.trainerOwned()) foeFainted = foe.trainer.getNumFainted();
 			}
 			if (counter >= 100) {
 				counter = 0;
@@ -375,7 +386,11 @@ public class BattleUI extends AbstractUI {
 			break;
 		case Task.LEVEL_UP:
 			currentDialogue = currentTask.message;
-			if (currentTask.p.isVisible()) userLevel++;
+			if (currentTask.p.isVisible()) {
+				userLevel++;
+				userExp = user.exp;
+				userExpMax = user.expMax;
+			}
 			endTask();
 			break;
 		case Task.MOVE:
@@ -460,7 +475,7 @@ public class BattleUI extends AbstractUI {
 		int y = 10;
 		int width = 20;
 		
-		int yellowIndex = foe.trainer.getNumFainted();
+		int yellowIndex = foeFainted;
 		for (int i = 0; i < 6; i++) {
 		   BufferedImage image = ballIcon;
 
@@ -551,7 +566,10 @@ public class BattleUI extends AbstractUI {
 	    userHP = user.currentHP;
 	    foeHP = foe.currentHP;
 		
-		if (foe.trainerOwned()) Pokemon.addSwapInTask(foe);
+		if (foe.trainerOwned()) {
+			Pokemon.addSwapInTask(foe);
+			foeFainted = foe.trainer.getNumFainted();
+		}
 	    Pokemon.addSwapInTask(user);
 	    Pokemon fasterInit = user.getFaster(foe, 0, 0);
 		Pokemon slowerInit = fasterInit == user ? foe : user;
@@ -619,7 +637,7 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void drawExpBar() {
-		double xpRatio = userExp * 1.0 / user.expMax;
+		double xpRatio = userExp * 1.0 / userExpMax;
 		int x = 386;
 		int y = 370;
 		int width = (int) (xpRatio * 160);
@@ -1010,17 +1028,21 @@ public class BattleUI extends AbstractUI {
 					user.battled = true;
 				} else {
 					user.getPlayer().setMoney(user.getPlayer().getMoney() + foe.trainer.getMoney());
-					Pokemon.addTask(Task.END, foe.trainer.getName() + " was defeated!\nWon $" + foe.trainer.getMoney() + "!");
+					String message = foe.trainer.getName() + " was defeated!\nWon $" + foe.trainer.getMoney() + "!";
+					if (foe.trainer.getItem() != null) {
+		            	user.getPlayer().bag.add(foe.trainer.getItem());
+		            	message += "\nYou were given " + foe.trainer.getItem().toString() + "!";
+		            }
+					Pokemon.addTask(Task.END, message);
 		            if (foe.trainer.getMoney() == 500 && user.getPlayer().badges < 8) {
 		            	user.getPlayer().badges++;
 		            	for (Pokemon p : user.trainer.team) {
 		            		if (p != null) p.awardHappiness(15, true);
 		            	}
 		            	user.getPlayer().updateHappinessCaps();
-		            }
-		            if (foe.trainer.getItem() != null) {
-		            	user.getPlayer().bag.add(foe.trainer.getItem());
-		            	Pokemon.addTask(Task.END, "\nYou were given " + foe.trainer.getItem().toString() + "!");
+		            	for (Entity clerk : gp.aSetter.clerks) {
+		            		clerk.setItems(gp.player.getItems());
+		            	}
 		            }
 		            if (foe.trainer.getFlagIndex() != 0) {
 		            	user.getPlayer().flags[foe.trainer.getFlagIndex()] = true;
