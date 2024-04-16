@@ -505,8 +505,6 @@ public class PMap extends JPanel {
 	            null, null, null);
 		if (answer == JOptionPane.YES_OPTION) {
 			gp.eHandler.teleport(map, x, y, false);
-			gp.player.p.surf = false;
-			gp.player.p.lavasurf = false;
 			for (Integer i : gp.tileM.getWaterTiles()) {
 				gp.tileM.tile[i].collision = true;
 			}

@@ -286,6 +286,7 @@ public class Player extends Trainer implements Serializable {
 		swapToFront(team[index], index);
 		
 		Pokemon.addTask(Task.TEXT, current.nickname + " was dragged out!");
+		Pokemon.gp.battleUI.tempUser = current.clone();
 		current.swapIn(foe, true);
 		return true;
 		
@@ -662,404 +663,416 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public void useItem(Pokemon p, Item item, GamePanel gp) {
-		switch (item) {
-		// Potions
-		case POTION:
-		case SUPER_POTION:
-		case HYPER_POTION:
-		case MAX_POTION:
-		case FULL_RESTORE:
-			if (p.currentHP == p.getStat(0) || p.isFainted()) {
-        		gp.ui.showMessage("It won't have any effect.");
-        		return;
+		if (item.getPocket() == Item.HELD_ITEM || item.getPocket() == Item.BERRY) {
+			if (p.item != null) {
+				Item old = p.item;
+				bag.add(old);
+        		p.item = item;
+	        	gp.ui.showMessage(p.nickname + " swapped its " + old.toString() + " for\na " + p.item.toString() + "!");
         	} else {
-        		int difference = 0;
-        		int healAmt = item.getHealAmount();
-        		if (healAmt > 0) {
-        			difference = Math.min(healAmt, p.getStat(0) - p.currentHP);
-        			p.currentHP += healAmt;
-        		} else {
-        			difference = p.getStat(0) - p.currentHP;
-        			p.currentHP = p.getStat(0);
-        			if (item == Item.FULL_RESTORE) p.status = Status.HEALTHY;
-        		}
-        		gp.ui.showMessage(p.nickname + " was healed by " + difference + " HP");
-	        	p.verifyHP();
+        		p.item = item;
+        		gp.ui.showMessage(p.nickname + " was given " + item.toString() + " to hold!");
         	}
-			break;
-			
-		// Status Healers
-		case AWAKENING:
-		case BURN_HEAL:
-		case FREEZE_HEAL:
-		case PARALYZE_HEAL:
-		case FULL_HEAL:
-		case KLEINE_BAR:
-		case ANTIDOTE:
-			Status target = item.getStatus();
-			target = target == null && p.status != Status.HEALTHY ? p.status : target;
-	        target = p.status == Status.TOXIC && target == Status.POISONED ? Status.TOXIC : target;
-
-    		if (p.status != target || p.isFainted()) {
-        		gp.ui.showMessage("It won't have any effect.");
-        		return;
-        	} else {
-        		Status temp = p.status;
-        		p.status = Status.HEALTHY;
-	        	gp.ui.showMessage(Item.breakString(p.nickname + " was cured of its " + temp.getName(), 45));
-        	}
-			break;
-			
-		// Revives
-		case REVIVE:
-		case MAX_REVIVE:
-			if (!p.isFainted()) {
-        		gp.ui.showMessage("It won't have any effect.");
-        		return;
-        	} else {
-        		p.fainted = false;
-        		if (item == Item.REVIVE) {
-        			p.currentHP = p.getStat(0) / 2;
-        		} else {
-        			p.currentHP = p.getStat(0);
-        		}
-	        	gp.ui.showMessage(p.nickname + " was revived!");
-        	}
-			break;
-			
-		// Mints
-		case ADAMANT_MINT:
-		case BOLD_MINT:
-		case BRAVE_MINT:
-		case CALM_MINT:
-		case CAREFUL_MINT:
-		case IMPISH_MINT:
-		case JOLLY_MINT:
-		case MODEST_MINT:
-		case QUIET_MINT:
-		case SERIOUS_MINT:
-		case TIMID_MINT:
-			double nature[];
-        	switch (item.getID()) {
-        	case 29:
-        		nature = new double[] {1.1,1.0,0.9,1.0,1.0,-1.0};
-        		break;
-        	case 30:
-        		nature = new double[] {0.9,1.1,1.0,1.0,1.0,-1.0};
-        		break;
-        	case 31:
-        		nature = new double[] {1.1,1.0,1.0,1.0,0.9,-1.0};
-        		break;
-        	case 32:
-        		nature = new double[] {0.9,1.0,1.0,1.1,1.0,-1.0};
-        		break;
-        	case 33:
-        		nature = new double[] {1.0,1.0,0.9,1.1,1.0,-1.0};
-        		break;
-        	case 34:
-        		nature = new double[] {1.0,1.1,0.9,1.0,1.0,-1.0};
-        		break;
-        	case 35:
-        		nature = new double[] {1.0,1.0,0.9,1.0,1.1,-1.0};
-        		break;
-        	case 36:
-        		nature = new double[] {0.9,1.0,1.1,1.0,1.0,-1.0};
-        		break;
-        	case 37:
-        		nature = new double[] {1.0,1.0,1.1,1.0,0.9,-1.0};
-        		break;
-        	case 38:
-        		nature = new double[] {1.0,1.0,1.0,1.0,1.0,4.0};
-        		break;
-        	case 39:
-        		nature = new double[] {0.9,1.0,1.0,1.0,1.1,-1.0};
-        		break;
-    		default:
-    			nature = null;
-    			break;
-        	}
-    		
-    		String natureOld = p.getNature();
-        	p.nature = nature;
-        	p.stats = p.getStats();
-        	gp.ui.showMessage(p.nickname + "'s nature was changed from " + natureOld + " to " + p.getNature() + "!");
-			break;
-			
-		// Euphorian Gem
-		case EUPHORIAN_GEM:
-			if (p.happiness >= 255) {
-        		gp.ui.showMessage("It won't have any effect.");
-        		return;
-        	} else {
-        		if (p.item == Item.SOOTHE_BELL) {
-        			p.awardHappiness(50, true);
-        		} else {
-        			p.awardHappiness(100, true);
-        		}
-        		gp.ui.showMessage(p.nickname + " looked happier!");
-        	}
-			break;
-			
-		// Evo Items
-		case DAWN_STONE:
-		case DUSK_STONE:
-		case ICE_STONE:
-		case LEAF_STONE:
-		case PETTICOAT_GEM:
-		case VALIANT_GEM:
-			boolean eligible = item.getEligible(p.id);
-			if (!eligible) {
-        		gp.ui.showMessage("It won't have any effect.");
-        		return;
-        	} else {
-        		boolean shouldEvolve = Battle.displayEvolution(p);
-    			if (shouldEvolve) {
-    				Pokemon result = new Pokemon(p.getEvolved(item.getID()), p);
-    		        int hpDif = p.getStat(0) - p.currentHP;
-    		        result.currentHP -= hpDif;
-    		        gp.ui.showMessage(p.nickname + " evolved into " + result.name + "!");
-    		        result.exp = p.exp;
-    		        int index = Arrays.asList(getTeam()).indexOf(p);
-    		        team[index] = result;
-    		        if (index == 0) setCurrent(result);
-    		        result.checkMove();
-                    pokedex[result.id] = 2;
-    			} else {
-    				gp.ui.showMessage(p.nickname + " did not evolve.");
-    			}
-        	}
-			break;
-			
-			
-		// Ability Capsule
-		case ABILITY_CAPSULE:
-			boolean swappable = p.canUseItem(item) == 1;
-    		if (!swappable) {
-        		gp.ui.showMessage("It won't have any effect.");
-        		return;
-        	} else {
-        		Ability oldAbility = p.ability;
-        		p.abilitySlot = 1 - p.abilitySlot;
-        		p.setAbility(p.abilitySlot);
-        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was swapped from " + oldAbility + " to " + p.ability + "!", 45));
-        	}
-			break;
-			
-		// Bottle Caps
-		case BOTTLE_CAP:
-		case GOLD_BOTTLE_CAP:
-			if (item == Item.BOTTLE_CAP) {
-        		JPanel ivPanel = new JPanel();
-        		ivPanel.setLayout(new GridLayout(6, 1));
-        		int[] ivs = p.getIVs();
-        		for (int k = 0; k < 6; k++) {
-        			final int kndex = k;
-        			JButton iv = new JButton();
-    	        	String type = Pokemon.getStatType(k);
-        			iv.setText(type + ": " + ivs[k]);
-        			final String finalType = type;
-        			
-        			iv.addActionListener(h -> {
-        				gp.ui.showMessage(p.nickname + "'s " + finalType + "IV was maxed out!");
-        				p.ivs[kndex] = 31;
-        				p.stats = p.getStats();
-        			});
-        			
-        			ivPanel.add(iv);
-        		}
-        		JOptionPane.showMessageDialog(null, ivPanel, "Which IV?", JOptionPane.PLAIN_MESSAGE);
-        	} else {
-        		gp.ui.showMessage(p.nickname + "'s IVs were maxed out!");
-        		p.ivs = new int[] {31, 31, 31, 31, 31, 31};
-        		p.stats = p.getStats();
-        	}
-			break;
-				
-		// Edge Kit
-		case EDGE_KIT:
-			if (p.expMax - p.exp != 1) {
-        		p.exp = p.expMax - 1;
-        		gp.ui.showMessage(p.nickname + " successfully EDGED!");
-        	} else {
-        		gp.ui.showMessage("It won't have any effect.");
-        	}
-			return;
-		
-		// Elixirs
-		case ELIXIR:
-		case MAX_ELIXIR:
-			if (item == Item.MAX_ELIXIR) {
-        		boolean work = false;
-        		for (Moveslot m : p.moveset) {
-        			if (m != null && m.currentPP != m.maxPP) {
-        				work = true;
-        				break;
-        			}
-        		}
-        		if (work) {
-	        		for (Moveslot m : p.moveset) {
-	        			if (m != null) m.currentPP = m.maxPP;
+		} else {
+			switch (item) {
+			// Potions
+			case POTION:
+			case SUPER_POTION:
+			case HYPER_POTION:
+			case MAX_POTION:
+			case FULL_RESTORE:
+				if (p.currentHP == p.getStat(0) || p.isFainted()) {
+	        		gp.ui.showMessage("It won't have any effect.");
+	        		return;
+	        	} else {
+	        		int difference = 0;
+	        		int healAmt = item.getHealAmount();
+	        		if (healAmt > 0) {
+	        			difference = Math.min(healAmt, p.getStat(0) - p.currentHP);
+	        			p.currentHP += healAmt;
+	        		} else {
+	        			difference = p.getStat(0) - p.currentHP;
+	        			p.currentHP = p.getStat(0);
+	        			if (item == Item.FULL_RESTORE) p.status = Status.HEALTHY;
 	        		}
-	        		gp.ui.showMessage(p.nickname + "'s PP was restored!");
-        		} else {
-        			gp.ui.showMessage("It won't have any effect.");
-        		}
-        		break;
-        	} else {
-        		gp.ui.currentPokemon = p;
-            	gp.ui.currentMove = null;
-            	gp.ui.currentHeader = "Select a move to restore PP:";
-            	gp.ui.moveOption = -1;
-            	gp.ui.showMoveOptions = true;
-        	}
-			return;
+	        		gp.ui.showMessage(p.nickname + " was healed by " + difference + " HP");
+		        	p.verifyHP();
+	        	}
+				break;
+				
+			// Status Healers
+			case AWAKENING:
+			case BURN_HEAL:
+			case FREEZE_HEAL:
+			case PARALYZE_HEAL:
+			case FULL_HEAL:
+			case KLEINE_BAR:
+			case ANTIDOTE:
+				Status target = item.getStatus();
+				target = target == null && p.status != Status.HEALTHY ? p.status : target;
+		        target = p.status == Status.TOXIC && target == Status.POISONED ? Status.TOXIC : target;
+
+	    		if (p.status != target || p.isFainted()) {
+	        		gp.ui.showMessage("It won't have any effect.");
+	        		return;
+	        	} else {
+	        		Status temp = p.status;
+	        		p.status = Status.HEALTHY;
+		        	gp.ui.showMessage(Item.breakString(p.nickname + " was cured of its " + temp.getName(), 45));
+	        	}
+				break;
+				
+			// Revives
+			case REVIVE:
+			case MAX_REVIVE:
+				if (!p.isFainted()) {
+	        		gp.ui.showMessage("It won't have any effect.");
+	        		return;
+	        	} else {
+	        		p.fainted = false;
+	        		if (item == Item.REVIVE) {
+	        			p.currentHP = p.getStat(0) / 2;
+	        		} else {
+	        			p.currentHP = p.getStat(0);
+	        		}
+		        	gp.ui.showMessage(p.nickname + " was revived!");
+	        	}
+				break;
+				
+			// Mints
+			case ADAMANT_MINT:
+			case BOLD_MINT:
+			case BRAVE_MINT:
+			case CALM_MINT:
+			case CAREFUL_MINT:
+			case IMPISH_MINT:
+			case JOLLY_MINT:
+			case MODEST_MINT:
+			case QUIET_MINT:
+			case SERIOUS_MINT:
+			case TIMID_MINT:
+				double nature[];
+	        	switch (item.getID()) {
+	        	case 29:
+	        		nature = new double[] {1.1,1.0,0.9,1.0,1.0,-1.0};
+	        		break;
+	        	case 30:
+	        		nature = new double[] {0.9,1.1,1.0,1.0,1.0,-1.0};
+	        		break;
+	        	case 31:
+	        		nature = new double[] {1.1,1.0,1.0,1.0,0.9,-1.0};
+	        		break;
+	        	case 32:
+	        		nature = new double[] {0.9,1.0,1.0,1.1,1.0,-1.0};
+	        		break;
+	        	case 33:
+	        		nature = new double[] {1.0,1.0,0.9,1.1,1.0,-1.0};
+	        		break;
+	        	case 34:
+	        		nature = new double[] {1.0,1.1,0.9,1.0,1.0,-1.0};
+	        		break;
+	        	case 35:
+	        		nature = new double[] {1.0,1.0,0.9,1.0,1.1,-1.0};
+	        		break;
+	        	case 36:
+	        		nature = new double[] {0.9,1.0,1.1,1.0,1.0,-1.0};
+	        		break;
+	        	case 37:
+	        		nature = new double[] {1.0,1.0,1.1,1.0,0.9,-1.0};
+	        		break;
+	        	case 38:
+	        		nature = new double[] {1.0,1.0,1.0,1.0,1.0,4.0};
+	        		break;
+	        	case 39:
+	        		nature = new double[] {0.9,1.0,1.0,1.0,1.1,-1.0};
+	        		break;
+	    		default:
+	    			nature = null;
+	    			break;
+	        	}
+	    		
+	    		String natureOld = p.getNature();
+	        	p.nature = nature;
+	        	p.stats = p.getStats();
+	        	gp.ui.showMessage(p.nickname + "'s nature was changed from " + natureOld + " to " + p.getNature() + "!");
+				break;
+				
+			// Euphorian Gem
+			case EUPHORIAN_GEM:
+				if (p.happiness >= 255) {
+	        		gp.ui.showMessage("It won't have any effect.");
+	        		return;
+	        	} else {
+	        		if (p.item == Item.SOOTHE_BELL) {
+	        			p.awardHappiness(50, true);
+	        		} else {
+	        			p.awardHappiness(100, true);
+	        		}
+	        		gp.ui.showMessage(p.nickname + " looked happier!");
+	        	}
+				break;
+				
+			// Evo Items
+			case DAWN_STONE:
+			case DUSK_STONE:
+			case ICE_STONE:
+			case LEAF_STONE:
+			case PETTICOAT_GEM:
+			case VALIANT_GEM:
+				boolean eligible = item.getEligible(p.id);
+				if (!eligible) {
+	        		gp.ui.showMessage("It won't have any effect.");
+	        		return;
+	        	} else {
+	        		boolean shouldEvolve = Battle.displayEvolution(p);
+	    			if (shouldEvolve) {
+	    				Pokemon result = new Pokemon(p.getEvolved(item.getID()), p);
+	    		        int hpDif = p.getStat(0) - p.currentHP;
+	    		        result.currentHP -= hpDif;
+	    		        gp.ui.showMessage(p.nickname + " evolved into " + result.name + "!");
+	    		        result.exp = p.exp;
+	    		        int index = Arrays.asList(getTeam()).indexOf(p);
+	    		        team[index] = result;
+	    		        if (index == 0) setCurrent(result);
+	    		        result.checkMove();
+	                    pokedex[result.id] = 2;
+	    			} else {
+	    				gp.ui.showMessage(p.nickname + " did not evolve.");
+	    			}
+	        	}
+				break;
+				
+				
+			// Ability Capsule
+			case ABILITY_CAPSULE:
+				boolean swappable = p.canUseItem(item) == 1;
+	    		if (!swappable) {
+	        		gp.ui.showMessage("It won't have any effect.");
+	        		return;
+	        	} else {
+	        		Ability oldAbility = p.ability;
+	        		p.abilitySlot = 1 - p.abilitySlot;
+	        		p.setAbility(p.abilitySlot);
+	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was swapped from " + oldAbility + " to " + p.ability + "!", 45));
+	        	}
+				break;
+				
+			// Bottle Caps
+			case BOTTLE_CAP:
+			case GOLD_BOTTLE_CAP:
+				if (item == Item.BOTTLE_CAP) {
+	        		JPanel ivPanel = new JPanel();
+	        		ivPanel.setLayout(new GridLayout(6, 1));
+	        		int[] ivs = p.getIVs();
+	        		for (int k = 0; k < 6; k++) {
+	        			final int kndex = k;
+	        			JButton iv = new JButton();
+	    	        	String type = Pokemon.getStatType(k);
+	        			iv.setText(type + ": " + ivs[k]);
+	        			final String finalType = type;
+	        			
+	        			iv.addActionListener(h -> {
+	        				gp.ui.showMessage(p.nickname + "'s " + finalType + "IV was maxed out!");
+	        				p.ivs[kndex] = 31;
+	        				p.stats = p.getStats();
+	        			});
+	        			
+	        			ivPanel.add(iv);
+	        		}
+	        		JOptionPane.showMessageDialog(null, ivPanel, "Which IV?", JOptionPane.PLAIN_MESSAGE);
+	        	} else {
+	        		gp.ui.showMessage(p.nickname + "'s IVs were maxed out!");
+	        		p.ivs = new int[] {31, 31, 31, 31, 31, 31};
+	        		p.stats = p.getStats();
+	        	}
+				break;
+					
+			// Edge Kit
+			case EDGE_KIT:
+				if (p.expMax - p.exp != 1) {
+	        		p.exp = p.expMax - 1;
+	        		gp.ui.showMessage(p.nickname + " successfully EDGED!");
+	        	} else {
+	        		gp.ui.showMessage("It won't have any effect.");
+	        	}
+				return;
 			
-		// PPs
-		case PP_UP:
-		case PP_MAX:
-			gp.ui.currentPokemon = p;
-        	gp.ui.currentMove = null;
-        	gp.ui.currentHeader = "Select a move to increase PP:";
-        	gp.ui.moveOption = -1;
-        	gp.ui.showMoveOptions = true;
-			return;
-		
-		case RARE_CANDY:
-			break;
-		
-		// TMS/HMS
-		case HM01:
-		case HM02:
-		case HM03:
-		case HM04:
-		case HM05:
-		case HM06:
-		case HM07:
-		case HM08:
-		case TM01:
-		case TM02:
-		case TM03:
-		case TM04:
-		case TM05:
-		case TM06:
-		case TM07:
-		case TM08:
-		case TM09:
-		case TM10:
-		case TM11:
-		case TM12:
-		case TM13:
-		case TM14:
-		case TM15:
-		case TM16:
-		case TM17:
-		case TM18:
-		case TM19:
-		case TM20:
-		case TM21:
-		case TM22:
-		case TM23:
-		case TM24:
-		case TM25:
-		case TM26:
-		case TM27:
-		case TM28:
-		case TM29:
-		case TM30:
-		case TM31:
-		case TM32:
-		case TM33:
-		case TM34:
-		case TM35:
-		case TM36:
-		case TM37:
-		case TM38:
-		case TM39:
-		case TM40:
-		case TM41:
-		case TM42:
-		case TM43:
-		case TM44:
-		case TM45:
-		case TM46:
-		case TM47:
-		case TM48:
-		case TM49:
-		case TM50:
-		case TM51:
-		case TM52:
-		case TM53:
-		case TM54:
-		case TM55:
-		case TM56:
-		case TM57:
-		case TM58:
-		case TM59:
-		case TM60:
-		case TM61:
-		case TM62:
-		case TM63:
-		case TM64:
-		case TM65:
-		case TM66:
-		case TM67:
-		case TM68:
-		case TM69:
-		case TM70:
-		case TM71:
-		case TM72:
-		case TM73:
-		case TM74:
-		case TM75:
-		case TM76:
-		case TM77:
-		case TM78:
-		case TM79:
-		case TM80:
-		case TM81:
-		case TM82:
-		case TM83:
-		case TM84:
-		case TM85:
-		case TM86:
-		case TM87:
-		case TM88:
-		case TM89:
-		case TM90:
-		case TM91:
-		case TM92:
-		case TM93:
-		case TM94:
-		case TM95:
-		case TM96:
-		case TM97:
-		case TM98:
-		case TM99:
-			int learnable = p.canUseItem(item);
-			if (learnable == 0) {
-        		gp.ui.showMessage("" + p.nickname + " can't learn " + item.getMove() + "!");
-        	} else if (learnable == 2) {
-        		gp.ui.showMessage("" + p.nickname + " already knows " + item.getMove() + "!");
-        	} else {
-        		boolean learnedMove = false;
-	            for (int k = 0; k < 4; k++) {
-	                if (p.moveset[k] == null) {
-	                	p.moveset[k] = new Moveslot(item.getMove());
-	                	gp.ui.showMessage(p.nickname + " learned " + item.getMove() + "!");
-	                    learnedMove = true;
-	                    break;
-	                }
-	            }
-	            if (!learnedMove) {
-	            	gp.ui.currentPokemon = p;
-	            	gp.ui.currentMove = item.getMove();
+			// Elixirs
+			case ELIXIR:
+			case MAX_ELIXIR:
+				if (item == Item.MAX_ELIXIR) {
+	        		boolean work = false;
+	        		for (Moveslot m : p.moveset) {
+	        			if (m != null && m.currentPP != m.maxPP) {
+	        				work = true;
+	        				break;
+	        			}
+	        		}
+	        		if (work) {
+		        		for (Moveslot m : p.moveset) {
+		        			if (m != null) m.currentPP = m.maxPP;
+		        		}
+		        		gp.ui.showMessage(p.nickname + "'s PP was restored!");
+	        		} else {
+	        			gp.ui.showMessage("It won't have any effect.");
+	        		}
+	        		break;
+	        	} else {
+	        		gp.ui.currentPokemon = p;
+	            	gp.ui.currentMove = null;
+	            	gp.ui.currentHeader = "Select a move to restore PP:";
 	            	gp.ui.moveOption = -1;
 	            	gp.ui.showMoveOptions = true;
-	            }
-        	}
-			return;
-		default:
-			break;
+	        	}
+				return;
+				
+			// PPs
+			case PP_UP:
+			case PP_MAX:
+				gp.ui.currentPokemon = p;
+	        	gp.ui.currentMove = null;
+	        	gp.ui.currentHeader = "Select a move to increase PP:";
+	        	gp.ui.moveOption = -1;
+	        	gp.ui.showMoveOptions = true;
+				return;
+			
+			case RARE_CANDY:
+				break;
+			
+			// TMS/HMS
+			case HM01:
+			case HM02:
+			case HM03:
+			case HM04:
+			case HM05:
+			case HM06:
+			case HM07:
+			case HM08:
+			case TM01:
+			case TM02:
+			case TM03:
+			case TM04:
+			case TM05:
+			case TM06:
+			case TM07:
+			case TM08:
+			case TM09:
+			case TM10:
+			case TM11:
+			case TM12:
+			case TM13:
+			case TM14:
+			case TM15:
+			case TM16:
+			case TM17:
+			case TM18:
+			case TM19:
+			case TM20:
+			case TM21:
+			case TM22:
+			case TM23:
+			case TM24:
+			case TM25:
+			case TM26:
+			case TM27:
+			case TM28:
+			case TM29:
+			case TM30:
+			case TM31:
+			case TM32:
+			case TM33:
+			case TM34:
+			case TM35:
+			case TM36:
+			case TM37:
+			case TM38:
+			case TM39:
+			case TM40:
+			case TM41:
+			case TM42:
+			case TM43:
+			case TM44:
+			case TM45:
+			case TM46:
+			case TM47:
+			case TM48:
+			case TM49:
+			case TM50:
+			case TM51:
+			case TM52:
+			case TM53:
+			case TM54:
+			case TM55:
+			case TM56:
+			case TM57:
+			case TM58:
+			case TM59:
+			case TM60:
+			case TM61:
+			case TM62:
+			case TM63:
+			case TM64:
+			case TM65:
+			case TM66:
+			case TM67:
+			case TM68:
+			case TM69:
+			case TM70:
+			case TM71:
+			case TM72:
+			case TM73:
+			case TM74:
+			case TM75:
+			case TM76:
+			case TM77:
+			case TM78:
+			case TM79:
+			case TM80:
+			case TM81:
+			case TM82:
+			case TM83:
+			case TM84:
+			case TM85:
+			case TM86:
+			case TM87:
+			case TM88:
+			case TM89:
+			case TM90:
+			case TM91:
+			case TM92:
+			case TM93:
+			case TM94:
+			case TM95:
+			case TM96:
+			case TM97:
+			case TM98:
+			case TM99:
+				int learnable = p.canUseItem(item);
+				if (learnable == 0) {
+	        		gp.ui.showMessage("" + p.nickname + " can't learn " + item.getMove() + "!");
+	        	} else if (learnable == 2) {
+	        		gp.ui.showMessage("" + p.nickname + " already knows " + item.getMove() + "!");
+	        	} else {
+	        		boolean learnedMove = false;
+		            for (int k = 0; k < 4; k++) {
+		                if (p.moveset[k] == null) {
+		                	p.moveset[k] = new Moveslot(item.getMove());
+		                	gp.ui.showMessage(p.nickname + " learned " + item.getMove() + "!");
+		                    learnedMove = true;
+		                    break;
+		                }
+		            }
+		            if (!learnedMove) {
+		            	gp.ui.currentPokemon = p;
+		            	gp.ui.currentMove = item.getMove();
+		            	gp.ui.moveOption = -1;
+		            	gp.ui.showMoveOptions = true;
+		            }
+	        	}
+				return;
+			default:
+				break;
+			}
 		}
 		bag.remove(item);
 		gp.ui.currentItems = getItems(gp.ui.currentPocket);

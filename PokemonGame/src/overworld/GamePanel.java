@@ -19,6 +19,7 @@ import javax.swing.Timer;
 import entity.Entity;
 import entity.NPC_PC;
 import entity.NPC_Pokemon;
+import entity.Particle;
 import entity.PlayerCharacter;
 import object.InteractiveTile;
 import object.ItemObj;
@@ -65,13 +66,14 @@ public class GamePanel extends JPanel implements Runnable {
 	public Entity npc[][] = new Entity[maxMap][20];
 	public ItemObj obj[][] = new ItemObj[maxMap][35];
 	public InteractiveTile iTile[][] = new InteractiveTile[maxMap][55];
+	public ArrayList<Entity> particleList = new ArrayList<>();
 	
 	public NPC_Pokemon[] grusts = new NPC_Pokemon[10];
 	public boolean checkSpin = false;
 	
 	public TileManager tileM = new TileManager(this);
 	
-	int FPS = 60;
+	public int FPS = 60;
 	public int ticks;
 	
 	public UI ui = new UI(this);
@@ -85,13 +87,10 @@ public class GamePanel extends JPanel implements Runnable {
 	public static final int TRANSITION_STATE = 5;
 	public static final int SHOP_STATE = 6;
 	public static final int NURSE_STATE = 7;
-	public static final int PARTY_STATE = 8;
-	public static final int BAG_STATE = 9;
-	public static final int SAVE_STATE = 10;
-	public static final int PLAYER_STATE = 11;
 	public static final int START_BATTLE_STATE = 12;
 	public static final int USE_ITEM_STATE = 13;
 	public static final int USE_RARE_CANDY_STATE = 14;
+	public static final int USE_REPEL_STATE = 15;
 
 	public static Map<Entity, Integer> volatileTrainers = new HashMap<>();
 	
@@ -101,6 +100,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
+		this.setFocusTraversalKeysEnabled(false);
 		
 		this.window = window;
 	}
@@ -116,6 +116,7 @@ public class GamePanel extends JPanel implements Runnable {
 		double nextDrawTime = System.nanoTime() + drawInterval;
 		
 		while (gameThread != null) {
+			drawInterval = 1000000000/FPS;
 			update();
 			
 			repaint();
@@ -139,6 +140,11 @@ public class GamePanel extends JPanel implements Runnable {
 	public void update() {
 		if (gameState == PLAY_STATE) {
 			player.update();
+		}
+		if (keyH.tabPressed) {
+			FPS = 120;
+		} else {
+			FPS = 60;
 		}
 	}
 	
@@ -174,6 +180,18 @@ public class GamePanel extends JPanel implements Runnable {
 			
 			// Draw Player
 			player.draw(g2);
+			
+			// Draw Particles
+			for (int i = 0; i < particleList.size(); i++) {
+				Particle p = (Particle) particleList.get(i);
+				if (p != null) {
+					if (p.alive) {
+						p.draw(g2);
+					} else {
+						particleList.remove(i);
+					}
+				}
+			}
 			
 			// Draw UI
 			ui.draw(g2);
@@ -355,6 +373,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void addGamePanel() {
+		keyH.resetKeys();
 		Main.window.add(this);
 		
 		this.requestFocusInWindow();

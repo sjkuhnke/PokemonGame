@@ -3,8 +3,6 @@ package pokemon;
 import java.io.Serializable;
 import java.util.Random;
 
-import pokemon.Pokemon.Task;
-
 public class Trainer implements Serializable {
 	/**
 	 * 
@@ -137,7 +135,7 @@ public class Trainer implements Serializable {
 		return money;
 	}
 	
-	public boolean swapRandom(Pokemon foe, Player me, boolean announce, boolean baton) {
+	public boolean swapRandom(Pokemon foe, Player me, boolean baton) {
 		if (!hasValidMembers()) return false;
 		Random rand = new Random();
 		int index = rand.nextInt(team.length);
@@ -146,31 +144,15 @@ public class Trainer implements Serializable {
 		}
 		
 		if (baton) team[index].statStages = current.statStages;
-		Pokemon newCurrent = current;
 		
-		newCurrent.clearVolatile();
-		current = team[index];
-		//this.team[currentIndex] = team[index];
-		
-		if (newCurrent.ability == Ability.REGENERATOR) {
-			newCurrent.currentHP += newCurrent.getStat(0) / 3;
-			newCurrent.verifyHP();
-		}
-		
-    	String message = current.nickname;
-    	if (announce) {
-    		message += " was dragged out!";
-    	} else {
-    		message += " was sent out!";
-    	}
-    	Pokemon.addTask(Task.TEXT, message);
+		swap(current, team[index]);
 		current.swapIn(foe, true);
 		return true;
 		
 	}
 	
 	public boolean swapRandom(Pokemon foe, Player me) {
-		return swapRandom(foe, me, true, false);
+		return swapRandom(foe, me, false);
 	}
 	
 	public boolean hasValidMembers() {

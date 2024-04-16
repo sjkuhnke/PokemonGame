@@ -798,7 +798,7 @@ public class Battle extends JPanel {
 	        				foe.move(me.getCurrent(), move, false);
 	        				foe = foeTrainer.getCurrent();
 	        				if (foeTrainer != null && foeTrainer.hasValidMembers() && foe.vStatuses.contains(Status.SWITCHING)) {
-		        	        	foeTrainer.swapRandom(me.getCurrent(), me, false, foe.lastMoveUsed == Move.BATON_PASS);
+		        	        	foeTrainer.swapRandom(me.getCurrent(), me, foe.lastMoveUsed == Move.BATON_PASS);
 		        	        	foe = foeTrainer.current;
 		        	        }
 	        			}
