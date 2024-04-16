@@ -510,7 +510,6 @@ public class BattleUI extends AbstractUI {
 			g2.drawImage(p.type1.getImage(), 232, 50, null);
 			if (p.type2 != null) g2.drawImage(p.type2.getImage(), 256, 50, null);
 		}
-		
 	}
 
 	private void drawHPImage(Pokemon p) {
@@ -962,6 +961,8 @@ public class BattleUI extends AbstractUI {
 			
 			if (fMove != null && uMove == Move.SUCKER_PUNCH && fMove.cat == 2) uMove = Move.FAILED_SUCKER;
 			faster.move(slower, uMove, true);
+			faster = faster.trainer.getCurrent();
+			if (slower.trainer != null) slower = slower.trainer.getCurrent();
 			
 			// Check for swap (player)
 			if (user.trainer.hasValidMembers() && faster.vStatuses.contains(Status.SWITCHING)) {
@@ -973,6 +974,7 @@ public class BattleUI extends AbstractUI {
 			if (fMove == Move.SUCKER_PUNCH) fMove = Move.FAILED_SUCKER; // TODO: make move method check if you're faster and if not make Sucker Punch fail (move() has an argument for this)
 	        if (!(foe.trainer != null && slower != foe.trainer.getCurrent()) && foeCanMove) {
 	        	slower.move(faster, fMove, false);
+	        	faster = faster.trainer.getCurrent();
 	        	if (foe.trainer != null) slower = foe.trainer.getCurrent();
 	        }
 	        
@@ -991,7 +993,8 @@ public class BattleUI extends AbstractUI {
 			if (uMove != null && fMove == Move.SUCKER_PUNCH && uMove.cat == 2) fMove = Move.FAILED_SUCKER; // TODO: make move method check if you're faster and if not make Sucker Punch fail (move() has an argument for this)
 			if (foeCanMove) {
 				faster.move(slower, fMove, true);
-				if (foe.trainer != null) faster = foe.trainer.getCurrent();
+				if (faster.trainer != null) faster = faster.trainer.getCurrent();
+				slower = slower.trainer.getCurrent();
 				foeMove = null;
 			}
 			// Check for swap (AI)
@@ -1000,7 +1003,11 @@ public class BattleUI extends AbstractUI {
 	        	tempFoeHP = faster.currentHP;
 	        }
 			
-	        if (slower == user.trainer.getCurrent()) slower.move(faster, uMove, false);
+	        if (slower == user.trainer.getCurrent()) {
+	        	slower.move(faster, uMove, false);
+	        	if (faster.trainer != null) faster = faster.trainer.getCurrent();
+				slower = slower.trainer.getCurrent();
+	        }
 	        // Check for swap
 	        if (user.trainer.hasValidMembers() && slower.vStatuses.contains(Status.SWITCHING)) {
 	        	Pokemon.addTask(Task.PARTY, "");
@@ -1009,15 +1016,12 @@ public class BattleUI extends AbstractUI {
 			}
 		}
 	    subState = TASK_STATE;
-		if (foe.trainer != null) {
-			foe = foe.trainer.getCurrent();
-		}
 		if (uMove != null || fMove != null) {
 			if (hasAlive()) faster.endOfTurn(slower);
 			if (hasAlive()) slower.endOfTurn(faster);
 			if (hasAlive()) field.endOfTurn();
 		}
-		Pokemon next = foe;
+		Pokemon next = foe.trainer == null ? foe : foe.trainer.getCurrent();
 		while (next.isFainted()) {
 			if (foe.trainer != null) {
 				if (foe.trainer.hasNext()) {
@@ -1109,6 +1113,7 @@ public class BattleUI extends AbstractUI {
 				user = gp.player.p.getCurrent();
 				partyNum = 0;
 				moveNum = 0;
+				commandNum = 0;
 				dialogueCounter = 0;
 				turn(null, foeMove);
 				foeMove = null;

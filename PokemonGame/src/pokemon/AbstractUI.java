@@ -271,6 +271,13 @@ public abstract class AbstractUI {
 			g2.drawString("@", x, y + gp.tileSize / 2);
 			x += gp.tileSize * 0.5;
 			g2.drawImage(scaleImage(p.item.getImage(), 2), x, y - gp.tileSize / 4, null);
+			if (foe == null) {
+				y += gp.tileSize * 1.1;
+				g2.setFont(g2.getFont().deriveFont(12F));
+				String itemTake = "[A] Take " + p.item.toString();
+				g2.drawString(itemTake, getCenterAlignedTextX(itemTake, x + 8), y);
+				y -= gp.tileSize * 1.1;
+			}
 		}
 		
 		// Status
@@ -471,6 +478,13 @@ public abstract class AbstractUI {
 			} else {
 				moveSummaryNum = 0;
 			}
+		}
+		
+		if (gp.keyH.aPressed && p.item != null && foe == null) {
+			gp.keyH.aPressed = false;
+			showMessage("Took " + p.nickname + "'s " + p.item);
+			gp.player.p.bag.add(p.item);
+			p.item = null;
 		}
 	}
 
@@ -715,7 +729,7 @@ public abstract class AbstractUI {
 					if (moveOption == 0) {
 						gp.ui.showMessage(p.nickname + " did not learn " + m.toString() + ".");
 					} else {
-						gp.ui.showMessage(p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!");
+						gp.ui.showMessage(Item.breakString(p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!", 46));
 					}
 				}
 				if (moveOption > 0) p.moveset[moveOption - 1] = new Moveslot(m);

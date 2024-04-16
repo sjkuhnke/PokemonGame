@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -33,6 +34,12 @@ public class Entity {
 	int dialogueIndex = 0;
 	public String altDialogue;
 	public ArrayList<Item> inventory = new ArrayList<>();
+	
+	// Particle fields
+	Color color;
+	int size;
+	int pSpeed;
+	int maxLife;
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;
@@ -107,6 +114,36 @@ public class Entity {
 		inventory.clear();
 		for (Item item : items) {
 			inventory.add(item);
+		}
+	}
+	
+	public Color getParticleColor() {
+		return null;
+	}
+	public int getParticleSize() {
+		return 0;
+	}
+	public int getParticleSpeed() {
+		return 0;
+	}
+	public int getParticleMaxLife() {
+		return 0;
+	}
+	public void generateParticle(Entity generator) {
+		Color color = generator.getParticleColor();
+		int size = generator.getParticleSize();
+		int speed = generator.getParticleSpeed();
+		int maxLife = generator.getParticleMaxLife();
+		
+		for (int i = 0; i < 5; i++) {
+			Particle p = new Particle(gp, generator, color, size, speed, maxLife);
+			gp.particleList.add(p);
+		}
+	}
+	public void generateParticle(int x, int y, Color color, int size, int speed, int maxLife) {
+		for (int i = 0; i < 5; i++) {
+			Particle p = new Particle(gp, x, y, color, size, speed, maxLife);
+			gp.particleList.add(p);
 		}
 	}
 }

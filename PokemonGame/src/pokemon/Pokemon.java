@@ -491,7 +491,7 @@ public class Pokemon implements Serializable {
     		boolean moveKills = false;
     		PType type = null;
         	for (Moveslot m : foe.moveset) {
-        		if (m != null) {
+        		if (m != null && m.currentPP > 0) {
         			Move move = m.move;
             		int damage = foe.calcWithTypes(this, move, true, 1, false);
             		if (damage >= this.currentHP && tr.hasResist(move.mtype)) {
@@ -3257,7 +3257,7 @@ public class Pokemon implements Serializable {
 					return;
 				}
 			} else {
-				addTask(Task.TEXT, this.nickname + " woke up!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " woke up!", this);
 				this.status = Status.HEALTHY;
 			}
 		}
@@ -4173,6 +4173,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (foe.item == Item.RED_CARD) {
+			int index = gp.battleUI.tasks.size();
 			boolean result = false;
 			if (this.trainerOwned() && enemy != null) {
 				result = enemy.swapRandom(foe, player);
@@ -4181,7 +4182,7 @@ public class Pokemon implements Serializable {
 			}
 			if (result) {
 				Task t = createTask(Task.TEXT, foe.nickname + " held up its Red Card!");
-				insertTask(t, gp.battleUI.tasks.size() - 1);
+				insertTask(t, index);
 				foe.consumeItem();
 				endMove();
 				return;
@@ -4860,7 +4861,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SPARKLING_ARIA) {
 			if (status == Status.BURNED) {
 				status = Status.HEALTHY;
-				addTask(Task.TEXT, nickname + " was cured of its burn!");
+				addTask(Task.STATUS, Status.HEALTHY, nickname + " was cured of its burn!", this);
 			}
 		} else if (move == Move.SPARKLY_SWIRL) {
 			for (int i = 0; i < 5; ++i) {

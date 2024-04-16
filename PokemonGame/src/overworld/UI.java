@@ -7,8 +7,13 @@ import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import entity.Entity;
@@ -71,7 +76,7 @@ public class UI extends AbstractUI{
 		} else {
 			showMessage = true;
 		}
-		gp.ui.currentDialogue = text;
+		currentDialogue = text;
 	}
 	
 	@Override
@@ -112,6 +117,10 @@ public class UI extends AbstractUI{
 		
 		if (gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
 			useRareCandy();
+		}
+		
+		if (gp.gameState == GamePanel.USE_REPEL_STATE) {
+			drawRepelScreen();
 		}
 		
 		if (showMoveOptions) {
@@ -187,9 +196,9 @@ public class UI extends AbstractUI{
 			showMessage("Sold " + sellAmt + " " + currentItems.get(bagNum).getItem().toString() + " for $" + sellAmt * currentItems.get(bagNum).getItem().getSell());
 			gp.player.p.sellItem(currentItems.get(bagNum).getItem(), sellAmt);
 			currentItems = gp.player.p.getItems(currentPocket);
-			gp.ui.bagState = 0;
-			gp.ui.commandNum = 0;
-			gp.ui.sellAmt = 1;
+			bagState = 0;
+			commandNum = 0;
+			sellAmt = 1;
 		}
 	}
 
@@ -226,9 +235,7 @@ public class UI extends AbstractUI{
 			showBag();
 			break;
 		case 4:
-			gp.gameState = GamePanel.PLAY_STATE;
-			subState = 0;
-			gp.player.saveGame();
+			saveGame();
 			break;
 		case 5:
 			gp.gameState = GamePanel.PLAY_STATE;
@@ -241,6 +248,62 @@ public class UI extends AbstractUI{
 		case 7:
 			drawSummary(null);
 		}
+	}
+
+	private void saveGame() {
+		currentDialogue = "Would you like to save the game?";
+		drawDialogueScreen(true);
+		
+		int x = gp.tileSize * 11;
+		int y = gp.tileSize * 4;
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 2.5);
+		drawSubWindow(x, y, width, height);
+		x += gp.tileSize;
+		y += gp.tileSize;
+		g2.drawString("Yes", x, y);
+		if (commandNum == 0) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
+				subState = 0;
+				commandNum = 0;
+				
+				Path savesDirectory = Paths.get("./saves/");
+	            if (!Files.exists(savesDirectory)) {
+	                try {
+						Files.createDirectories(savesDirectory);
+					} catch (IOException e) {
+						showMessage("The /saves/ folder could not be created.\nIf you are playing this game in your downloads,\ntry moving it to another folder.");
+					}
+	            }
+	            
+		    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves/" + gp.player.currentSave))) {
+	            	gp.player.p.setPosX(gp.player.worldX);
+	            	gp.player.p.setPosY(gp.player.worldY);
+	            	gp.player.p.currentMap = gp.currentMap;
+	                oos.writeObject(gp.player.p);
+	                oos.close();
+	                showMessage("Game saved sucessfully!");
+	            } catch (IOException ex) {
+	            	showMessage("Error writing player to file:\n" + ex.getMessage());
+	            }
+			}
+		}
+		y += gp.tileSize;
+		g2.drawString("No", x, y);
+		if (commandNum == 1) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				subState = 0;
+				commandNum = 0;
+			}
+		}
+		
+		gp.keyH.wPressed = false;
+		
 	}
 
 	public void optionsTop(int x, int y) {
@@ -417,6 +480,7 @@ public class UI extends AbstractUI{
 				y += gp.tileSize / 2;
 			}
 		}
+		// Down Arrow
 		if (bagNum + 9 < currentItems.size()) {
 			int x2 = gp.tileSize * 5 + width;
 			int y2 = height + (gp.tileSize / 2);
@@ -424,6 +488,7 @@ public class UI extends AbstractUI{
 			int height2 = gp.tileSize / 2;
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
 		}
+		// Up Arrow
 		if (bagNum != 0 && bagState != 2) {
 			int x2 = gp.tileSize * 5 + width;
 			int y2 = gp.tileSize * 2;
@@ -431,6 +496,7 @@ public class UI extends AbstractUI{
 			int height2 = gp.tileSize / 2;
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
 		}
+		// Subwindow for item options
 		if (!showMoveOptions) {
 			if (gp.keyH.aPressed) {
 				gp.keyH.aPressed = false;
@@ -476,18 +542,17 @@ public class UI extends AbstractUI{
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				currentItem = currentItems.get(bagNum).getItem();
-				if (currentPocket == Item.BERRY || currentPocket == Item.HELD_ITEM) {
-					
+				if (currentItem == Item.REPEL) {
+					if (!gp.player.p.repel) {
+						useRepel();
+				    } else {
+				    	gp.ui.showMessage("It won't have any effect.");
+				    }
+					bagState = 0;
+				} else if (currentItem == Item.CALCULATOR) {
+					Item.useCalc(gp.player.p, null);
 				} else {
-					if (currentItem == Item.REPEL) {
-						
-						gp.player.p.bag.remove(currentItem);
-						gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
-					} else if (currentItem == Item.CALCULATOR) {
-						Item.useCalc(gp.player.p, null);
-					} else {
-						gp.gameState = GamePanel.USE_ITEM_STATE;
-					}	
+					gp.gameState = GamePanel.USE_ITEM_STATE;
 				}
 			}
 		}
@@ -542,9 +607,9 @@ public class UI extends AbstractUI{
 			showMessage("Sold " + sellAmt + " " + currentItems.get(bagNum).getItem().toString() + " for $" + sellAmt * currentItems.get(bagNum).getItem().getSell());
 			gp.player.p.sellItem(currentItems.get(bagNum).getItem(), sellAmt);
 			currentItems = gp.player.p.getItems(currentPocket);
-			gp.ui.bagState = 0;
-			gp.ui.commandNum = 0;
-			gp.ui.sellAmt = 1;
+			bagState = 0;
+			commandNum = 0;
+			sellAmt = 1;
 		}
 		
 	}
@@ -564,6 +629,9 @@ public class UI extends AbstractUI{
 			gp.eHandler.previousEventX = gp.player.worldX;
 			gp.eHandler.previousEventY = gp.player.worldY;
 			gp.player.p.currentMap = gp.eHandler.tempMap;
+			gp.eHandler.canTouchEvent = !gp.eHandler.tempCooldown;
+			gp.player.p.surf = false;
+			gp.player.p.lavasurf = false;
 			
 			PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
 			Main.window.setTitle("Pokemon Game - " + PlayerCharacter.currentMapName);
@@ -617,7 +685,7 @@ public class UI extends AbstractUI{
 				gp.gameState = GamePanel.PLAY_STATE;
 				showMessage("Your Pokemon were restored\nto full health!");
 				gp.player.p.heal();
-				gp.ui.subState = 0;
+				subState = 0;
 				commandNum = 0;
 			}
 		}
@@ -629,7 +697,7 @@ public class UI extends AbstractUI{
 				gp.keyH.wPressed = false;
 				gp.gameState = GamePanel.PLAY_STATE;
 				showMessage("Come again soon!");
-				gp.ui.subState = 0;
+				subState = 0;
 				commandNum = 0;
 			}
 		}
@@ -742,5 +810,44 @@ public class UI extends AbstractUI{
 	private int getItemIndexOnSlot() {
 		int itemIndex = slotCol + (slotRow*MAX_SHOP_COL);
 		return itemIndex;
+	}
+	
+	public void drawRepelScreen() {
+		currentDialogue = "Repel's effect wore off!\nWould you like to use another?";
+		drawDialogueScreen(true);
+		
+		int x = gp.tileSize * 11;
+		int y = gp.tileSize * 4;
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 2.5);
+		drawSubWindow(x, y, width, height);
+		x += gp.tileSize;
+		y += gp.tileSize;
+		g2.drawString("Yes", x, y);
+		if (commandNum == 0) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
+				useRepel();
+			}
+		}
+		y += gp.tileSize;
+		g2.drawString("No", x, y);
+		if (commandNum == 1) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
+				commandNum = 0;
+			}
+		}
+	}
+	
+	private void useRepel() {
+		gp.player.p.repel = true;
+		gp.player.p.steps = 1;
+		gp.player.p.bag.remove(Item.REPEL);
+		currentItems = gp.player.p.getItems(currentPocket);
 	}
 }

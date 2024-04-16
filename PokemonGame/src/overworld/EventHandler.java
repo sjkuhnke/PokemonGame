@@ -809,6 +809,7 @@ public class EventHandler {
 		tempMap = map;
 		tempCol = col;
 		tempRow = row;
+		tempCooldown = cooldown;
 		
 //		gp.currentMap = map;
 //		gp.player.worldX = gp.tileSize * col;

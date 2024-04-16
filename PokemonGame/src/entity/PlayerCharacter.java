@@ -12,7 +12,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -182,17 +181,9 @@ public class PlayerCharacter extends Entity {
 			if (p.steps == 202 && p.repel) {
 				p.repel = false;
 				if (p.bag.contains(0)) {
-					int option = JOptionPane.showOptionDialog(null,
-							"Repel's effects wore off.\nWould you like to use another?",
-				            "Repel",
-				            JOptionPane.YES_NO_OPTION,
-				            JOptionPane.QUESTION_MESSAGE,
-				            null, null, null);
-					if (option == JOptionPane.YES_OPTION) {
-						useRepel();
-					}
+					gp.gameState = GamePanel.USE_REPEL_STATE;
 				} else {
-					JOptionPane.showMessageDialog(null, "Repel's effects wore off.");
+					gp.ui.showMessage("Repel's effects wore off.");
 				}
 			}
 			if (p.steps % 129 == 0) {
@@ -274,8 +265,6 @@ public class PlayerCharacter extends Entity {
 		
 		if (keyH.dPressed) {
 			gp.gameState = GamePanel.MENU_STATE;
-			//keyH.pause();
-			//showMenu();
 		}
 		if (keyH.sPressed) {
 			speed = 8;
@@ -301,8 +290,6 @@ public class PlayerCharacter extends Entity {
 					interactNurse(target);
 				} else if (target instanceof NPC_Clerk || target instanceof NPC_Market) {
 					interactClerk(target);
-				} else if (target instanceof NPC_Market) {
-					interactMarket();
 				} else if (target instanceof NPC_Block) {
 					interactNPC((NPC_Block) target);
 				} else if (target instanceof NPC_Trainer) {
@@ -323,21 +310,32 @@ public class PlayerCharacter extends Entity {
 			if (p.hasMove(Move.SURF) && !p.surf) {
 				int result = gp.cChecker.checkTileType(this);
 				if (gp.tileM.getWaterTiles().contains(result)) {
+					int x = 0;
+					int y = 0;
 					switch (direction) {
 					case "down":
 						worldY += gp.tileSize;
+						x = worldX + gp.tileSize / 2;
+						y = worldY;
 						break;
 					case "up":
 						worldY -= gp.tileSize;
+						x = worldX + gp.tileSize / 2;
+						y = worldY;
 						break;
 					case "left":
 						worldX -= gp.tileSize;
+						x = worldX;
+						y = worldY;
 						break;
 					case "right":
 						worldX += gp.tileSize;
+						x = worldX + gp.tileSize;
+						y = worldY;
 						break;
 					}
 					p.surf = true;
+					generateParticle(x, y, new Color(50,184,255), 6, 1, 20);
 					for (Integer i : gp.tileM.getWaterTiles()) {
 						gp.tileM.tile[i].collision = false;
 					}
@@ -346,21 +344,32 @@ public class PlayerCharacter extends Entity {
 			if (p.hasMove(Move.LAVA_SURF) && !p.lavasurf) {
 				int result = gp.cChecker.checkTileType(this);
 				if (gp.tileM.getLavaTiles().contains(result)) {
+					int x = 0;
+					int y = 0;
 					switch (direction) {
 					case "down":
 						worldY += gp.tileSize;
+						x = worldX + gp.tileSize / 2;
+						y = worldY;
 						break;
 					case "up":
 						worldY -= gp.tileSize;
+						x = worldX + gp.tileSize / 2;
+						y = worldY;
 						break;
 					case "left":
 						worldX -= gp.tileSize;
+						x = worldX;
+						y = worldY;
 						break;
 					case "right":
 						worldX += gp.tileSize;
+						x = worldX + gp.tileSize;
+						y = worldY;
 						break;
 					}
 					p.lavasurf = true;
+					generateParticle(x, y, new Color(255,48,48), 6, 1, 20);
 					for (Integer i : gp.tileM.getLavaTiles()) {
 						gp.tileM.tile[i].collision = false;
 					}
@@ -419,37 +428,6 @@ public class PlayerCharacter extends Entity {
 		gp.obj[gp.currentMap][objIndex] = null;
 		
 		
-	}
-
-	public void saveGame() {
-		int option = JOptionPane.showOptionDialog(null,
-				"Would you like to save the game?",
-				"Confirm Save",
-	            JOptionPane.YES_NO_OPTION,
-	            JOptionPane.QUESTION_MESSAGE,
-	            null, null, null);
-	    if (option == JOptionPane.YES_OPTION) {
-	    	// Check if the directory exists, create it if not
-            Path savesDirectory = Paths.get("./saves/");
-            if (!Files.exists(savesDirectory)) {
-                try {
-					Files.createDirectories(savesDirectory);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-            }
-            
-	    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves/" + currentSave))) {
-            	gp.player.p.setPosX(gp.player.worldX);
-            	gp.player.p.setPosY(gp.player.worldY);
-            	gp.player.p.currentMap = gp.currentMap;
-                oos.writeObject(gp.player.p);
-                oos.close();
-                JOptionPane.showMessageDialog(null, "Game saved sucessfully!");
-            } catch (IOException ex) {
-            	JOptionPane.showMessageDialog(null, "Error writing object to file: " + ex.getMessage());
-            }
-	    }
 	}
 	
 	public void showPlayer() {
@@ -1514,11 +1492,6 @@ public class PlayerCharacter extends Entity {
 			        	
 			        	// REPEL
 			        	else if (i.getItem() == Item.REPEL) {
-			        		if (useRepel()) {
-			        			SwingUtilities.getWindowAncestor(itemDesc).dispose();
-			        			SwingUtilities.getWindowAncestor(panel).dispose();
-				            	showBag();
-			        		}
 			        	}
 			        	
 			        	// TMS/HMS
@@ -2070,59 +2043,6 @@ public class PlayerCharacter extends Entity {
 	    gp.addPanel(panel, true);
 	}
 	
-	private void interactMarket() {
-		
-		JPanel shopPanel = new JPanel();
-	    Item[] shopItems = new Item[1];
-	    if (gp.currentMap == 30) { shopItems = new Item[] {Item.REPEL, Item.POKEBALL, Item.KLEINE_BAR, Item.BOTTLE_CAP, Item.TM49, Item.TM51};
-	    } else if (gp.currentMap == 40) { shopItems = new Item[] {Item.TM12, Item.TM13, Item.TM15, Item.TM16, Item.TM23, Item.TM24};
-	    } else if (gp.currentMap == 89) { shopItems = new Item[] {Item.TM45, Item.TM50, Item.TM54, Item.TM74, Item.TM75,
-	    		Item.TM76, Item.TM77, Item.TM79, Item.TM80, Item.TM81, Item.TM82, Item.TM95};
-	    } else if (gp.currentMap == 92) { shopItems = new Item[] {Item.ADAMANT_MINT, Item.BOLD_MINT, Item.BRAVE_MINT, Item.CALM_MINT, Item.CAREFUL_MINT, Item.IMPISH_MINT,
-	    		Item.JOLLY_MINT, Item.MODEST_MINT, Item.QUIET_MINT, Item.SERIOUS_MINT, Item.TIMID_MINT};
-	    } else if (gp.currentMap == 112) { shopItems = new Item[] {Item.MAX_ELIXIR, Item.PP_UP, Item.TM41, Item.TM42, Item.TM43, Item.TM44, Item.TM91};
-	    } else if (gp.currentMap == 53) { shopItems = new Item[] {Item.ORAN_BERRY, Item.CHERI_BERRY, Item.CHESTO_BERRY, Item.PECHA_BERRY, Item.RAWST_BERRY, Item.ASPEAR_BERRY,
-	    		Item.PERSIM_BERRY, Item.LUM_BERRY, Item.LEPPA_BERRY, Item.SITRUS_BERRY, Item.WIKI_BERRY, Item.OCCA_BERRY, Item.PASSHO_BERRY, Item.WACAN_BERRY, Item.RINDO_BERRY,
-	    		Item.YACHE_BERRY, Item.CHOPLE_BERRY, Item.KEBIA_BERRY, Item.SHUCA_BERRY, Item.COBA_BERRY, Item.PAYAPA_BERRY, Item.TANGA_BERRY, Item.CHARTI_BERRY,
-	    		Item.KASIB_BERRY, Item.HABAN_BERRY, Item.COLBUR_BERRY, Item.BABIRI_BERRY, Item.CHILAN_BERRY, Item.ROSELI_BERRY, Item.MYSTICOLA_BERRY, Item.GALAXEED_BERRY,
-	    		Item.LIECHI_BERRY, Item.GANLON_BERRY, Item.SALAC_BERRY, Item.PETAYA_BERRY, Item.APICOT_BERRY, Item.STARF_BERRY, Item.MICLE_BERRY, Item.CUSTAP_BERRY};
-	    } else if (gp.currentMap == 131) { shopItems = new Item[] {Item.EUPHORIAN_GEM, Item.LEAF_STONE, Item.DUSK_STONE, Item.DAWN_STONE, Item.ICE_STONE,
-	    		Item.VALIANT_GEM, Item.PETTICOAT_GEM, Item.EVERSTONE, Item.HEAT_ROCK, Item.DAMP_ROCK, Item.SMOOTH_ROCK, Item.ICY_ROCK, Item.THUNDER_SCALES_FOSSIL,
-	    		Item.DUSK_SCALES_FOSSIL};
-	    } else if (gp.currentMap == 133) { shopItems = new Item[] {Item.TM46, Item.TM63, Item.TM38};
-	    }
-	    shopPanel.setLayout(new GridLayout(Math.max((shopItems.length / 4) + 1, 6), 0));
-	    for (int i = 0; i < shopItems.length; i++) {
-	    	JPanel itemPanel = new JPanel();
-	    	JGradientButton item = new JGradientButton(shopItems[i].toString() + ": $" + shopItems[i].getCost());
-	    	Item curItem = shopItems[i];
-	    	item.setBackground(curItem.getColor());
-	    	item.addMouseListener(new MouseAdapter() {
-	        	@Override
-			    public void mouseClicked(MouseEvent e) {
-	        		if (SwingUtilities.isRightMouseButton(e)) {
-			            if (curItem.isTM()) JOptionPane.showMessageDialog(null, curItem.getMove().getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
-		    		} else {
-		    	    	if (p.buy(curItem)) {
-		    	            JOptionPane.showMessageDialog(null, "Purchased 1 " + curItem.toString() + " for $" + curItem.getCost());
-		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
-		    	            interactMarket();
-		    	        } else {
-		    	            JOptionPane.showMessageDialog(null, "Not enough money!");
-		    	        }
-		    		}
-	        	}
-	    	});
-	    	JLabel icon = new JLabel();
-	    	icon.setIcon(new ImageIcon(shopItems[i].getImage()));
-	    	itemPanel.add(icon);
-	    	itemPanel.add(item);
-	    	shopPanel.add(itemPanel);
-	    	if (curItem.isTM() && p.bag.contains(curItem.getID())) shopPanel.remove(itemPanel);
-	    }
-		JOptionPane.showMessageDialog(null, shopPanel, "Money: $" + p.getMoney(), JOptionPane.PLAIN_MESSAGE);
-	}
-	
 	private void useRareCandies(Pokemon pokemon, int numCandies, Item item) {
 		boolean evolved = false;
 	    for (int i = 0; i < numCandies; i++) {
@@ -2140,6 +2060,8 @@ public class PlayerCharacter extends Entity {
 			gp.iTile[gp.currentMap][i] = new Tree_Stump(gp);
 			gp.iTile[gp.currentMap][i].worldX = temp.worldX;
 			gp.iTile[gp.currentMap][i].worldY = temp.worldY;
+			
+			generateParticle(temp);
 		} else {
 			gp.ui.showMessage("This tree looks like it can be cut down!");
 		}
@@ -2148,6 +2070,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactRockSmash(int i) {
 		if (p.hasMove(Move.ROCK_SMASH)) {
+			generateParticle(gp.iTile[gp.currentMap][i]);
 			gp.iTile[gp.currentMap][i] = null;
 		} else {
 			gp.ui.showMessage("This rock looks like it can be broken!");
@@ -2161,6 +2084,7 @@ public class PlayerCharacter extends Entity {
 			gp.iTile[gp.currentMap][i] = new Vine(gp);
 			gp.iTile[gp.currentMap][i].worldX = temp.worldX;
 			gp.iTile[gp.currentMap][i].worldY = temp.worldY;
+			generateParticle(temp);
 		} else {
 			gp.ui.showMessage("This gap looks like it can be crossed!");
 		}
@@ -2170,6 +2094,7 @@ public class PlayerCharacter extends Entity {
 		if (p.hasMove(Move.SLOW_FALL)) {
 			Pit pit = (Pit) gp.iTile[gp.currentMap][i];
 			gp.eHandler.teleport(pit.mapDest, pit.xDest, pit.yDest, false);
+			generateParticle(pit);
 		} else {
 			gp.ui.showMessage("This pit looks deep!\nI can't even see the bottom!");
 		}
@@ -2178,6 +2103,14 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactWhirlpool(int i) {
 		if (p.hasMove(Move.WHIRLPOOL)) {
+			int offset = gp.tileSize / 2;
+			int x = gp.iTile[gp.currentMap][i].worldX + offset;
+			int y = gp.iTile[gp.currentMap][i].worldY + offset;
+			for (int j = 0; j < 3; j++) {
+				generateParticle(x, y, new Color(50,184,255), 6, 1, 20);
+				x += getTileForwardX();
+				y += getTileForwardY();
+			}
 			switch (direction) {
 			case "down":
 				worldY += gp.tileSize * 3.75;
@@ -2201,25 +2134,46 @@ public class PlayerCharacter extends Entity {
 	private void interactRockClimb(int i) {
 		if (p.hasMove(Move.ROCK_CLIMB)) {
 			Rock_Climb rc = (Rock_Climb) gp.iTile[gp.currentMap][i];
+			int offset = gp.tileSize / 2;
+			int x = rc.worldX + offset;
+			int y = rc.worldY + offset;
+			for (int j = 0; j < rc.amt; j++) {
+				generateParticle(x, y, new Color(112, 69, 35), 6, 1, 20);
+				x += getTileForwardX();
+				y += getTileForwardY();
+			}
 			int inverse = this.direction == rc.direction ? 1 : -1;
 			this.worldX += ((rc.deltaX * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaX * inverse));
 			this.worldY += ((rc.deltaY * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaY * inverse));
 		} else {
 			gp.ui.showMessage("This wall looks like it can be scaled!");
-		}
-		
+		}	
 	}
 	
-	private boolean useRepel() {
-		if (!p.repel) {
-			p.repel = true;
-			p.steps = 1;
-			p.bag.remove(Item.REPEL);
-			return true;
-	    } else {
-	    	gp.ui.showMessage("It won't have any effect.");
-	    	return false;
-	    }
+	private int getTileForwardX() {
+		switch (direction) {
+		case "down":
+		case "up":
+			break;
+		case "left":
+			return -gp.tileSize;
+		case "right":
+			return gp.tileSize;
+		}
+		return 0;
+	}
+	
+	private int getTileForwardY() {
+		switch (direction) {
+		case "down":
+			return gp.tileSize;
+		case "up":
+			return -gp.tileSize;
+		case "left":
+		case "right":
+			break;
+		}
+		return 0;
 	}
 
 	public void draw(Graphics2D g2) {

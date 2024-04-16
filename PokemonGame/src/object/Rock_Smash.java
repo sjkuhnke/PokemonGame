@@ -1,5 +1,7 @@
 package object;
 
+import java.awt.Color;
+
 import overworld.GamePanel;
 
 public class Rock_Smash extends InteractiveTile {
@@ -15,6 +17,23 @@ public class Rock_Smash extends InteractiveTile {
 		down1 = setup("/npc/rock_smash");
 		destructible = true;
 		collision = true;
+	}
+	
+	@Override
+	public Color getParticleColor() {
+		return new Color(65, 50, 30);
+	}
+	@Override
+	public int getParticleSize() {
+		return 6;
+	}
+	@Override
+	public int getParticleSpeed() {
+		return 1;
+	}
+	@Override
+	public int getParticleMaxLife() {
+		return 20;
 	}
 
 }

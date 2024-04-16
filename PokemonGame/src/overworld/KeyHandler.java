@@ -7,7 +7,7 @@ import pokemon.Item;
 
 public class KeyHandler implements KeyListener {
 
-	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed;
 	
 	GamePanel gp;
 	
@@ -39,6 +39,8 @@ public class KeyHandler implements KeyListener {
 			battleState(code);
 		} else if (gp.gameState == GamePanel.USE_ITEM_STATE) {
 			useItemState(code);
+		} else if (gp.gameState == GamePanel.USE_REPEL_STATE) {
+			useRepelState(code);
 		}
 		
 		
@@ -66,6 +68,10 @@ public class KeyHandler implements KeyListener {
 					}
 				}
 			}
+		}
+		
+		if (code == KeyEvent.VK_TAB) {
+			tabPressed = true;
 		}
 	}
 
@@ -96,6 +102,9 @@ public class KeyHandler implements KeyListener {
 		}
 		if (code == KeyEvent.VK_A) {
 			aPressed = false;
+		}
+		if (code == KeyEvent.VK_TAB) {
+			tabPressed = false;
 		}
 	}
 	
@@ -251,6 +260,7 @@ public class KeyHandler implements KeyListener {
 				gp.ui.subState = 0;
 				gp.ui.partySelectedNum = -1;
 				gp.ui.partyNum = 0;
+				gp.ui.commandNum = 0;
 			} else if (gp.ui.subState == 7) { // Pokemon summary move info screen
 				if (gp.ui.moveSummaryNum == -1) {
 					gp.ui.subState = 2;
@@ -296,6 +306,8 @@ public class KeyHandler implements KeyListener {
 						gp.ui.bagNum--;
 					}
 				}
+			} else if (gp.ui.subState == 4) { // save
+				gp.ui.commandNum = 1 - gp.ui.commandNum;
 			}
 		}
 		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
@@ -317,6 +329,8 @@ public class KeyHandler implements KeyListener {
 						gp.ui.bagNum++;
 					}
 				}
+			} else if (gp.ui.subState == 4) { // save
+				gp.ui.commandNum = 1 - gp.ui.commandNum;
 			}
 		}
 		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
@@ -432,6 +446,20 @@ public class KeyHandler implements KeyListener {
 		}
 	}
 	
+	private void useRepelState(int code) {
+		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+			gp.gameState = GamePanel.PLAY_STATE;
+			gp.ui.commandNum = 0;
+		}
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		
+		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I || code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			gp.ui.commandNum = 1 - gp.ui.commandNum;
+		}
+	}
+	
 	public void resetKeys() {
 		upPressed = false;
 		downPressed = false;
@@ -441,6 +469,7 @@ public class KeyHandler implements KeyListener {
 		wPressed = false;
 		dPressed = false;
 		aPressed = false;
+		tabPressed = false;
 	}
 
 }
