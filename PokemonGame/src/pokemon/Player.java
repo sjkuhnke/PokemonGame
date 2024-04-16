@@ -568,7 +568,7 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public boolean hasTM(Move move) {
-		if (!move.isTM()) return false;
+		if (move == null || !move.isTM()) return false;
 		for (int i = 93; i < 200; i++) {
 			if (bag.contains(i) && Item.getItem(i).getMove() == move) return true;
 		}

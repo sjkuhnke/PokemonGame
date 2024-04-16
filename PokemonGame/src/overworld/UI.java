@@ -790,21 +790,58 @@ public class UI extends AbstractUI{
 		int dFrameHeight = gp.tileSize * 3;
 		
 		int textX = dFrameX + 20;
-		int textY = dFrameY + gp.tileSize;
-		g2.setFont(g2.getFont().deriveFont(24F));
+		int textY = (int) (dFrameY + gp.tileSize * 0.8);
+		g2.setFont(g2.getFont().deriveFont(32F));
 		
 		int itemIndex = getItemIndexOnSlot();
 		
 		if (itemIndex < entity.inventory.size()) {
+			Item current = entity.inventory.get(itemIndex);
 			drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
-			String desc = entity.inventory.get(itemIndex).getDesc();
+			g2.drawString(current.toString(), textX, textY);
+			String price = "$" + current.getCost();
+			g2.drawString(price, getRightAlignedTextX(price, dFrameX + dFrameWidth - gp.tileSize / 2), textY);
 			
-			for (String line : Item.breakString(desc, 66).split("\n")) {
+			int amtX = dFrameX + dFrameWidth - gp.tileSize * 4;
+			int amtY = dFrameY + dFrameHeight;
+			int amtWidth = gp.tileSize * 4;
+			int amtHeight = gp.tileSize;
+			
+			drawSubWindow(amtX, amtY, amtWidth, amtHeight);
+			int amtTextX = amtX + 20;
+			int amtTextY = (int) (amtY + gp.tileSize * 0.75);
+			g2.drawString("You have: " + gp.player.p.bag.count[current.getID()], amtTextX, amtTextY);
+			
+			textY += 38;
+			g2.setFont(g2.getFont().deriveFont(24F));
+			String desc = current.isTM() ? current.getMove().getDescription() : current.getDesc();
+			
+			for (String line : Item.breakString(desc, 63).split("\n")) {
 				g2.drawString(line, textX, textY);
 				textY += 32;
 			}
+			
+			if (gp.keyH.wPressed) {
+				if (gp.player.p.buy(current)) {
+					if (current.isTM()) {
+						entity.inventory.remove(current);
+					}
+				} else {
+					showMessage("Not enough money!");
+				}
+			}
 		}
 		
+		int moneyX = x + width - gp.tileSize * 3;
+		int moneyY = y - gp.tileSize;
+		int moneyWidth = gp.tileSize * 3;
+		int moneyHeight = gp.tileSize;
+		
+		drawSubWindow(moneyX, moneyY, moneyWidth, moneyHeight);
+		textX = moneyX + 20;
+		textY = (int) (moneyY + gp.tileSize * 0.75);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.drawString("$" + gp.player.p.getMoney(), textX, textY);
 	}
 
 	private int getItemIndexOnSlot() {

@@ -30,7 +30,7 @@ public class Entity {
 	
 	public int trainer;
 	public boolean collision = true;
-	String dialogues[] = new String[20];
+	public String dialogues[] = new String[20];
 	int dialogueIndex = 0;
 	public String altDialogue;
 	public ArrayList<Item> inventory = new ArrayList<>();
@@ -38,7 +38,6 @@ public class Entity {
 	// Particle fields
 	Color color;
 	int size;
-	int pSpeed;
 	int maxLife;
 	
 	public Entity(GamePanel gp) {
@@ -113,7 +112,7 @@ public class Entity {
 	public void setItems(Item... items) {
 		inventory.clear();
 		for (Item item : items) {
-			inventory.add(item);
+			if (!item.isTM() || !gp.player.p.hasTM(item.getMove())) inventory.add(item);
 		}
 	}
 	
