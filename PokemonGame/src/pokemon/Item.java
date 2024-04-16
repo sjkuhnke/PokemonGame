@@ -297,7 +297,7 @@ public enum Item {
 	APICOT_BERRY(256,75,0,new Color(104, 128, 184),Item.BERRY,null,"If a Pokémon holds one of these Berries, its Sp. Def stat will be boosted should it find itself in a pinch."),
 	STARF_BERRY(257,500,0,new Color(184, 232, 152),Item.BERRY,null,"If a Pokémon holds one of these Berries, one of its stats will be sharply boosted should it find itself in a pinch."),
 	MICLE_BERRY(258,200,0,new Color(64, 200, 64),Item.BERRY,null,"If a Pokémon holds one of these Berries, its accuracy will be boosted should it find itself in a pinch."),
-	CUSTAP_BERRY(259,200,0,new Color(220, 96, 70),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to act faster should it find itself in a pinch—but only for the next move it uses."),
+	CUSTAP_BERRY(259,200,0,new Color(220, 96, 70),Item.BERRY,null,"If a Pokémon holds one of these Berries, it will be able to act faster in a pinch—but only for the next move."),
 	NULL260(260,0,0,Color.BLACK,Item.BERRY,null,""),
 	;
 	

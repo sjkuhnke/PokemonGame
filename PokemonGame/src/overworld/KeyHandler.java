@@ -387,6 +387,7 @@ public class KeyHandler implements KeyListener {
 		if (gp.ui.subState > 0) {
 			if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
 				gp.ui.subState = 0;
+				gp.ui.currentDialogue = gp.ui.npc.dialogues[0];
 			}
 			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
 				if (gp.ui.slotRow > 0) {
