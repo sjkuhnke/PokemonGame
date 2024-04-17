@@ -24,6 +24,7 @@ import pokemon.Item;
 import pokemon.Move;
 import pokemon.Moveslot;
 import pokemon.Pokemon;
+import pokemon.Pokemon.Task;
 
 public class UI extends AbstractUI{
 
@@ -37,7 +38,6 @@ public class UI extends AbstractUI{
 	public int currentPocket = Item.MEDICINE;
 	public int bagState;
 	public int sellAmt = 1;
-	public int rareCandyAmt = 1;
 	public Item currentItem;
 	public ArrayList<Bag.Entry> currentItems;
 	
@@ -60,6 +60,7 @@ public class UI extends AbstractUI{
 		
 		currentDialogue = "";
 		commandNum = 0;
+		tasks = new ArrayList<>();
 		
 		try {
 			InputStream is = getClass().getResourceAsStream("/font/marumonica.ttf");
@@ -116,7 +117,7 @@ public class UI extends AbstractUI{
 		}
 		
 		if (gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
-			useRareCandy();
+			rareCandyState();
 		}
 		
 		if (gp.gameState == GamePanel.USE_REPEL_STATE) {
@@ -129,6 +130,46 @@ public class UI extends AbstractUI{
 		
 		if (showMessage) {
 			drawDialogueScreen(true);
+		}
+		
+	}
+
+	private void rareCandyState() {
+		drawParty(null);
+		
+		if (currentTask == null) {
+			if (gp.player.p.bag.count[Item.RARE_CANDY.getID()] <= 0) {
+				gp.gameState = GamePanel.MENU_STATE;
+				gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
+				gp.ui.bagState = 0;
+				return;
+			} else if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				useRareCandy(gp.player.p.team[partyNum]);
+			}
+		} else {
+			drawTask();
+		}
+		
+		if (currentTask == null && tasks.size() > 0) {
+			currentTask = tasks.remove(0);
+		}
+	}
+	
+	private void drawTask() {
+		switch(currentTask.type) {
+		case Task.LEVEL_UP:
+		case Task.TEXT:
+			showMessage(currentTask.message);
+			break;
+		case Task.MOVE:
+			currentMove = currentTask.move;
+			currentPokemon = currentTask.p;
+			showMoveOptions = true;
+			break;
+		case Task.EVO:
+			drawEvolution(currentTask);
+			break;
 		}
 	}
 
@@ -171,42 +212,25 @@ public class UI extends AbstractUI{
 			drawMoveOptions(currentMove, currentPokemon);
 		}
 	}
-
-	private void useRareCandy() {
-		int x = gp.tileSize * 12;
-		int y = (int) (gp.tileSize * 1.5);
-		int width = gp.tileSize * 3;
-		int height = (int) (gp.tileSize * 3.5);
-		drawSubWindow(x, y, width, height);
-		
-		x += gp.tileSize * 1.25;
-		y += gp.tileSize * 2;
-		g2.drawString(rareCandyAmt + "", x, y);
-		
-		int y2 = y += gp.tileSize / 4;
-		int width2 = gp.tileSize / 2;
-		int height2 = gp.tileSize / 2;
-		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
-		
-		y2 = y -= gp.tileSize * 1.5;
-		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
-		
-		if (gp.keyH.wPressed) {
-			gp.keyH.wPressed = false;
-			showMessage("Sold " + sellAmt + " " + currentItems.get(bagNum).getItem().toString() + " for $" + sellAmt * currentItems.get(bagNum).getItem().getSell());
-			gp.player.p.sellItem(currentItems.get(bagNum).getItem(), sellAmt);
-			currentItems = gp.player.p.getItems(currentPocket);
-			bagState = 0;
-			commandNum = 0;
-			sellAmt = 1;
-		}
+	
+	private void useRareCandy(Pokemon pokemon) {
+        if (pokemon.getLevel() == 100) {
+            showMessage("It won't have any effect.");
+            return;
+        }
+        gp.player.p.elevate(pokemon);
+        gp.player.p.bag.remove(Item.RARE_CANDY);
 	}
 
 	private void useItem() {
 		drawParty(currentItem);
 		if (gp.keyH.wPressed && !showMoveOptions) {
-			gp.keyH.wPressed = false;
-			gp.player.p.useItem(gp.player.p.team[partyNum], currentItem, gp);
+			if (currentItem == Item.RARE_CANDY) {
+				gp.gameState = GamePanel.USE_RARE_CANDY_STATE;
+			} else {
+				gp.keyH.wPressed = false;
+				gp.player.p.useItem(gp.player.p.team[partyNum], currentItem, gp);	
+			}
 		}
 	}
 

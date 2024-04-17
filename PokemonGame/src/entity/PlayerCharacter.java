@@ -2043,17 +2043,6 @@ public class PlayerCharacter extends Entity {
 	    gp.addPanel(panel, true);
 	}
 	
-	private void useRareCandies(Pokemon pokemon, int numCandies, Item item) {
-		boolean evolved = false;
-	    for (int i = 0; i < numCandies; i++) {
-	        if (pokemon.getLevel() == 100 || p.bag.count[item.getID()] <= 0 || evolved) {
-	            break; // Stop using Rare Candies if level 100 or out of candies
-	        }
-	        evolved = p.elevate(pokemon);
-	        p.bag.remove(item);
-	    }
-	}
-	
 	private void interactCutTree(int i) {
 		if (p.hasMove(Move.CUT)) {
 			Cut_Tree temp = (Cut_Tree) gp.iTile[gp.currentMap][i];
