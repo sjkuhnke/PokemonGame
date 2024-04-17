@@ -7,6 +7,8 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -26,6 +28,9 @@ public abstract class AbstractUI {
 	public Font marumonica;
 	public int counter = 0;
 	public boolean showMoveOptions;
+	
+	public Task currentTask;
+	public ArrayList<Task> tasks;
 	
 	public StringBuilder nickname = new StringBuilder();
 	public int nicknaming = -1;
@@ -615,6 +620,11 @@ public abstract class AbstractUI {
 	}
 	
 	public void drawMoveOptions(Move m, Pokemon p) {
+		if (p.knowsMove(m)) {
+			showMoveOptions = false;
+			gp.battleUI.currentTask = null;
+			return;
+		}
 		drawMoveOptions(m, p, p.nickname + " wants to learn " + m.toString() + ":");
 	}
 	
@@ -717,7 +727,7 @@ public abstract class AbstractUI {
 		if (gp.keyH.wPressed && m != null) {
 			gp.keyH.wPressed = false;
 			if (moveOption >= 0) {
-				if (gp.gameState == GamePanel.BATTLE_STATE) {
+				if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
 					if (moveOption == 0) {
 						Task t = Pokemon.createTask(Task.TEXT, p.nickname + " did not learn " + m.toString() + ".");
 						Pokemon.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
@@ -733,22 +743,21 @@ public abstract class AbstractUI {
 					}
 				}
 				if (moveOption > 0) p.moveset[moveOption - 1] = new Moveslot(m);
+				moveOption = -1;
 				showMoveOptions = false;
-				gp.battleUI.currentTask = null;
+				currentTask = null;
 			}
 		}
 	}
 	
-	public void drawEvolution(boolean above) {
+	public void drawEvolution(Task t) {
+		currentDialogue = t.message;
+		drawDialogueScreen(true);
+		
 		int x = gp.tileSize * 11;
-		int y;
+		int y = gp.tileSize * 4;
 		int width = gp.tileSize * 3;
 		int height = (int) (gp.tileSize * 2.5);
-		if (above) {
-			y = gp.tileSize * 4;
-		} else {
-			y = gp.screenHeight - gp.tileSize * 4;
-		}
 		drawSubWindow(x, y, width, height);
 		
 		x += gp.tileSize;
@@ -758,6 +767,29 @@ public abstract class AbstractUI {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
+				Pokemon oldP = t.p;
+				Pokemon newP = t.evo;
+				int hpDif = oldP.getStat(0) - oldP.currentHP;
+		        newP.currentHP -= hpDif;
+		        newP.moveMultiplier = newP.moveMultiplier;
+		        Task text = Pokemon.createTask(Task.TEXT, oldP.nickname + " evolved into " + newP.name + "!");
+		        Pokemon.insertTask(text, 0);
+		        newP.exp = oldP.exp;
+		        gp.player.p.pokedex[newP.id] = 2;
+		        
+		        // Update player team
+		        int index = Arrays.asList(gp.player.p.getTeam()).indexOf(oldP);
+                gp.player.p.team[index] = newP;
+                if (index == 0) {
+                	oldP.setVisible(false);
+                	newP.setVisible(true);
+                	gp.player.p.current = newP;
+                	gp.battleUI.user = newP;
+                	gp.battleUI.userHP = newP.currentHP;
+                }
+                newP.checkMove(1);
+		        
+		        currentTask = null;
 			}
 		}
 		y += gp.tileSize;
@@ -766,10 +798,21 @@ public abstract class AbstractUI {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				gp.gameState = GamePanel.PLAY_STATE;
-				showMessage("Come again soon!");
+				Task text = Pokemon.createTask(Task.TEXT, t.p.nickname + " did not evolve.");
+				Pokemon.insertTask(text, 0);
+				currentTask = null;
 				commandNum = 0;
 			}
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			commandNum = 1 - commandNum;
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			commandNum = 1 - commandNum;
 		}
 	}
 	

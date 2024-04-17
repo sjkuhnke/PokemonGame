@@ -61,8 +61,6 @@ public class BattleUI extends AbstractUI {
 	private int dialogueCounter = 0;
 	private int abilityCounter = 0;
 	private int cooldownCounter = 0;
-	public Task currentTask;
-	public ArrayList<Task> tasks;
 	private Field field;
 	
 	public boolean cancellableParty;
@@ -262,6 +260,10 @@ public class BattleUI extends AbstractUI {
 			showMessage(Item.breakString(currentTask.message, 55));
 			break;
 		case Task.DAMAGE:
+			if (!currentTask.p.isVisible()) {
+				currentTask = null;
+				return;
+			}
 			currentDialogue = currentTask.message;
 			if (currentTask.p.playerOwned()) {
 				if (userHP > currentTask.finish) userHP--;
@@ -333,6 +335,11 @@ public class BattleUI extends AbstractUI {
 			}
 			break;
 		case Task.END:
+			if (tasks.size() != 0) {
+				tasks.add(currentTask);
+				currentTask = null;
+				return;
+			}
 			if (currentTask.wipe) wipe();
 			subState = END_STATE;
 			break;
@@ -397,6 +404,7 @@ public class BattleUI extends AbstractUI {
 			drawMoveOptions(currentTask.move, currentTask.p);
 			break;
 		case Task.EVO:
+			drawEvolution(currentTask);
 			break;
 		case Task.WEATHER:
 			showMessage(currentTask.message);
@@ -971,7 +979,6 @@ public class BattleUI extends AbstractUI {
 	        	return;
 			}
 			
-			if (fMove == Move.SUCKER_PUNCH) fMove = Move.FAILED_SUCKER; // TODO: make move method check if you're faster and if not make Sucker Punch fail (move() has an argument for this)
 	        if (!(foe.trainer != null && slower != foe.trainer.getCurrent()) && foeCanMove) {
 	        	slower.move(faster, fMove, false);
 	        	faster = faster.trainer.getCurrent();
@@ -990,7 +997,8 @@ public class BattleUI extends AbstractUI {
 				foeMove = null;
 				foeCanMove = false;
 			}
-			if (uMove != null && fMove == Move.SUCKER_PUNCH && uMove.cat == 2) fMove = Move.FAILED_SUCKER; // TODO: make move method check if you're faster and if not make Sucker Punch fail (move() has an argument for this)
+			
+			if (uMove != null && fMove == Move.SUCKER_PUNCH && uMove.cat == 2) fMove = Move.FAILED_SUCKER;
 			if (foeCanMove) {
 				faster.move(slower, fMove, true);
 				if (faster.trainer != null) faster = faster.trainer.getCurrent();

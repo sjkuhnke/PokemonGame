@@ -2506,21 +2506,20 @@ public class Pokemon implements Serializable {
 		return this.currentHP;
 	}
 
-	public Pokemon levelUp(Player player) {
+	public void levelUp(Player player) {
 		int oHP = this.getStat(0);
 		this.exp -= this.expMax;
 		++level;
 		awardHappiness(5, false);
 		addTask(Task.LEVEL_UP, this.nickname + " leveled up to " + this.level + "!", this);
-		checkMove();
-		Pokemon result = this.checkEvo(player);
+		ArrayList<Task> check = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.ui.tasks;
+		checkMove(check.size());
+		this.checkEvo(player);
 		expMax = setExpMax();
 		stats = this.getStats();
 		int nHP = this.getStat(0);
 		this.currentHP += nHP - oHP;
 		if (this.level == 100) this.exp = 0;
-		return result;
-		
 	}
 	
 	private int setExpMax() {
@@ -2546,7 +2545,7 @@ public class Pokemon implements Serializable {
 		return 0;
 	}
 
-	public void checkMove() {
+	public void checkMove(int index) {
 	    if (this.level - 1 >= this.movebank.length) return;
 	    Node node = this.movebank[this.level - 1];
 	    while (node != null) {
@@ -2556,22 +2555,28 @@ public class Pokemon implements Serializable {
 	            for (int i = 0; i < 4; i++) {
 	                if (this.moveset[i] == null) {
 	                    this.moveset[i] = new Moveslot(move);
-	                    addTask(Task.TEXT, this.nickname + " learned " + move.toString() + "!");
+	                    if (gp.gameState == GamePanel.BATTLE_STATE) {
+	                    	Task t = createTask(Task.TEXT, this.nickname + " learned " + move.toString() + "!");
+		                    insertTask(t, index++);
+	                    } else {
+	                    	addTask(Task.TEXT, this.nickname + " learned " + move.toString() + "!");
+	                    }
+	                    
 	                    learnedMove = true;
 	                    break;
 	                }
 	            }
 	            if (!learnedMove) {
-	            	if (gp.gameState == GamePanel.BATTLE_STATE) {
-	            		Task t = Pokemon.addTask(Task.MOVE, "", this);
-	            		t.setMove(move);
-	            		gp.battleUI.moveOption = -1;
+	            	Task t = createTask(Task.MOVE, "", this);
+            		t.setMove(move);
+	            	if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
+	            		insertTask(t, index++);
 	            	} else {
 	            		gp.ui.currentPokemon = this;
 		            	gp.ui.currentMove = move;
-		            	gp.ui.moveOption = -1;
 		            	gp.ui.showMoveOptions = true;
 	            	}
+	            	gp.battleUI.moveOption = -1;
 	            }
 	        }
 	        node = node.next;
@@ -2579,8 +2584,8 @@ public class Pokemon implements Serializable {
 	}
 
 
-	private Pokemon checkEvo(Player player) {
-		if (this.item == Item.EVERSTONE) return null;
+	private void checkEvo(Player player) {
+		if (this.item == Item.EVERSTONE) return;
 		Pokemon result = null;
 		int area = player.currentMap;
 		if (area >= 95 && area <= 99) area = 35; // electric tunnel
@@ -2829,20 +2834,8 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (result != null) {
-			boolean shouldEvolve = Battle.displayEvolution(this);
-			if (shouldEvolve) {
-		        int hpDif = this.getStat(0) - this.currentHP;
-		        result.currentHP -= hpDif;
-		        result.moveMultiplier = this.moveMultiplier;
-		        addTask(Task.TEXT, this.nickname + " evolved into " + result.name + "!");
-		        result.exp = this.exp;
-		        player.pokedex[result.id] = 2;
-			} else {
-				return this;
-			}
+			Pokemon.addEvoTask(this, result);
 	    }
-		return result;
-		
 	}
 
 	public int[] getStats() {
@@ -3217,6 +3210,8 @@ public class Pokemon implements Serializable {
 		
 		if (!this.vStatuses.contains(Status.CHARGING) && !this.vStatuses.contains(Status.SEMI_INV) && !this.vStatuses.contains(Status.LOCKED) &&
 				!this.vStatuses.contains(Status.ENCORED) && !Move.getNoComboMoves().contains(move) && move != Move.STRUGGLE) this.lastMoveUsed = move;
+		
+		if (move == Move.SUCKER_PUNCH && !first) move = Move.FAILED_SUCKER;
 		
 		if (move == Move.FAILED_SUCKER) this.lastMoveUsed = Move.SUCKER_PUNCH;
 		
@@ -3688,6 +3683,7 @@ public class Pokemon implements Serializable {
 					if (foeAbility == Ability.FRIENDLY_GHOST && moveType == PType.GHOST) addAbilityTask(foe);
 					addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 					endMove();
+					this.outCount = 0;
 					this.moveMultiplier = 1;
 					return; // Check for immunity 
 				}
@@ -3952,7 +3948,7 @@ public class Pokemon implements Serializable {
 				addAbilityTask(foe);
 				addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 				endMove();
-				this.impressive = false;
+				this.outCount = 0;
 				this.moveMultiplier = 1;
 				return; // Check for immunity
 			}
@@ -4332,15 +4328,9 @@ public class Pokemon implements Serializable {
 	            }
 	            while (p.exp >= p.expMax) {
 	                // Pokemon has leveled up, check for evolution
-	                Pokemon evolved = p.levelUp(player);
-	                if (evolved != null) {
-	                    // Update the player's team with the evolved Pokemon
-	                    int index = Arrays.asList(player.getTeam()).indexOf(p);
-	                    player.team[index] = evolved;
-	                    if (index == 0) player.current = evolved;
-	                    evolved.checkMove();
-	                    p = evolved;
-	                }
+	                p.levelUp(player);
+	                int index = Arrays.asList(player.getTeam()).indexOf(p);
+	                p = player.team[index];
 	            }
 	        }
 	    }
@@ -10660,6 +10650,7 @@ public class Pokemon implements Serializable {
 		
 		public int finish;
 		public Pokemon p; // the pokemon taking damage, or announcing an ability, or being sent out
+		public Pokemon evo;
 		public Ability ability;
 		public Status status;
 		public Move move;
@@ -10704,8 +10695,8 @@ public class Pokemon implements Serializable {
 			try {
 				return message.substring(0, 6) + "... [" + getTypeString() + "]";
 			} catch (StringIndexOutOfBoundsException e) {
-				e.printStackTrace();
-				return message + getTypeString();
+				//e.printStackTrace();
+				return "\"\" [" + getTypeString() + "]";
 			}
 		}
 		
@@ -10719,6 +10710,16 @@ public class Pokemon implements Serializable {
 			case SWAP_OUT: return "SWAP_OUT";
 			case FAINT: return "FAINT";
 			case END: return "END";
+			case PARTY: return "PARTY";
+			case STATUS: return "STATUS";
+			case CATCH: return "CATCH";
+			case NICKNAME: return "NICKNAME";
+			case EXP: return "EXP";
+			case LEVEL_UP: return "LEVEL_UP";
+			case MOVE: return "MOVE";
+			case EVO: return "EVO";
+			case WEATHER: return "WEATHER";
+			case TERRAIN: return "TERRAIN";
 			default:
 				return "getTypeString() doesn't have a case for this type";
 			}
@@ -13931,7 +13932,8 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static Task createTask(int text, String string, Pokemon p) {
-		return gp.battleUI.user.new Task(text, string, p);
+		Pokemon dummy = new Pokemon(1, 1, false, false);
+		return dummy.new Task(text, string, p);
 	}
 	
 	public static Task addTask(int text, String string) {
@@ -13949,6 +13951,10 @@ public class Pokemon implements Serializable {
 			Task t = createTask(text, string, p);
 			gp.battleUI.tasks.add(t);
 			return t;
+		} else if (gp != null && gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
+			Task t = createTask(text, string, p);
+			gp.ui.tasks.add(t);
+			return t;
 		} else {
 			if (text == Task.TEXT) {
 				gp.ui.showMessage(string);
@@ -13957,6 +13963,11 @@ public class Pokemon implements Serializable {
 			}
 			return null;
 		}
+	}
+	
+	private static void addEvoTask(Pokemon p, Pokemon result) {
+		Task t = Pokemon.addTask(Task.EVO, p.nickname + " is evolving!\nDo you want to evolve your " + p.nickname + "?", p);
+		t.evo = result;
 	}
 	
 	public void addAbilityTask(Pokemon p) {
@@ -13983,7 +13994,11 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void insertTask(Task t, int index) {
-		gp.battleUI.tasks.add(index, t);
+		if (gp.gameState == GamePanel.BATTLE_STATE) {
+			gp.battleUI.tasks.add(index, t);
+		} else {
+			gp.ui.tasks.add(index, t);
+		}
 	}
 
 	public boolean isVisible() {

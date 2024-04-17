@@ -41,6 +41,8 @@ public class KeyHandler implements KeyListener {
 			useItemState(code);
 		} else if (gp.gameState == GamePanel.USE_REPEL_STATE) {
 			useRepelState(code);
+		} else if (gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
+			useRareCandyState(code);
 		}
 		
 		
@@ -247,6 +249,8 @@ public class KeyHandler implements KeyListener {
 				gp.ui.subState = 3;
 				gp.ui.bagState = 0;
 				gp.ui.commandNum = 0;
+			} else if (gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
+				gp.ui.currentTask = null;
 			}
 		}
 	}
@@ -459,6 +463,21 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I || code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
 			gp.ui.commandNum = 1 - gp.ui.commandNum;
 		}
+	}
+	
+	private void useRareCandyState(int code) {
+		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+			if (gp.ui.currentTask == null) {
+				gp.gameState = GamePanel.MENU_STATE;
+				gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
+				gp.ui.bagState = 0;
+			}
+		}
+		
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		
 	}
 	
 	public void resetKeys() {

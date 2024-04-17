@@ -205,28 +205,15 @@ public class Player extends Trainer implements Serializable {
 		return bag;
 	}
 	
-	public boolean elevate(Pokemon pokemon) {
-		boolean result = false;
+	public void elevate(Pokemon pokemon) {
 		int expAmt = pokemon.expMax - pokemon.exp;
     	pokemon.exp += expAmt;
     	while (pokemon.exp >= pokemon.expMax) {
     		if (pokemon.happiness < 255 && pokemon.happinessCap > 2) pokemon.awardHappiness(-3, false);
             // Pokemon has leveled up, check for evolution
-            Pokemon evolved = pokemon.levelUp(this);
-            if (evolved != null && evolved != pokemon) {
-                // Update the player's team with the evolved Pokemon
-            	int index = Arrays.asList(this.getTeam()).indexOf(pokemon);
-                this.team[index] = evolved;
-                if (index == 0) this.current = evolved;
-                evolved.checkMove();
-                pokemon = evolved;
-                result = true;
-            }
+            pokemon.levelUp(this);
         }
     	pokemon.fainted = false;
-    	JOptionPane.showMessageDialog(null, pokemon.nickname + " was elevated to " + pokemon.getLevel());
-    	return result;
-		
 	}
 	
 	public boolean buy(Item item) {
@@ -682,7 +669,7 @@ public class Player extends Trainer implements Serializable {
 			case MAX_POTION:
 			case FULL_RESTORE:
 				if (p.currentHP == p.getStat(0) || p.isFainted()) {
-	        		gp.ui.showMessage("It won't have any effect.");
+	        		gp.ui.showMessage(p.nickname + " is already full HP!");
 	        		return;
 	        	} else {
 	        		int difference = 0;
@@ -713,7 +700,7 @@ public class Player extends Trainer implements Serializable {
 		        target = p.status == Status.TOXIC && target == Status.POISONED ? Status.TOXIC : target;
 
 	    		if (p.status != target || p.isFainted()) {
-	        		gp.ui.showMessage("It won't have any effect.");
+	        		gp.ui.showMessage(p.nickname + " is already healthy!");
 	        		return;
 	        	} else {
 	        		Status temp = p.status;
@@ -726,7 +713,7 @@ public class Player extends Trainer implements Serializable {
 			case REVIVE:
 			case MAX_REVIVE:
 				if (!p.isFainted()) {
-	        		gp.ui.showMessage("It won't have any effect.");
+	        		gp.ui.showMessage(p.nickname + " isn't fainted!");
 	        		return;
 	        	} else {
 	        		p.fainted = false;
@@ -800,7 +787,7 @@ public class Player extends Trainer implements Serializable {
 			// Euphorian Gem
 			case EUPHORIAN_GEM:
 				if (p.happiness >= 255) {
-	        		gp.ui.showMessage("It won't have any effect.");
+	        		gp.ui.showMessage(p.nickname + " is already as happy as can be!");
 	        		return;
 	        	} else {
 	        		if (p.item == Item.SOOTHE_BELL) {
@@ -821,7 +808,7 @@ public class Player extends Trainer implements Serializable {
 			case VALIANT_GEM:
 				boolean eligible = item.getEligible(p.id);
 				if (!eligible) {
-	        		gp.ui.showMessage("It won't have any effect.");
+	        		gp.ui.showMessage(p.nickname + " isn't compatible with " + item.toString() + ".");
 	        		return;
 	        	} else {
 	        		boolean shouldEvolve = Battle.displayEvolution(p);
@@ -834,7 +821,7 @@ public class Player extends Trainer implements Serializable {
 	    		        int index = Arrays.asList(getTeam()).indexOf(p);
 	    		        team[index] = result;
 	    		        if (index == 0) setCurrent(result);
-	    		        result.checkMove();
+	    		        result.checkMove(0);
 	                    pokedex[result.id] = 2;
 	    			} else {
 	    				gp.ui.showMessage(p.nickname + " did not evolve.");
@@ -847,7 +834,7 @@ public class Player extends Trainer implements Serializable {
 			case ABILITY_CAPSULE:
 				boolean swappable = p.canUseItem(item) == 1;
 	    		if (!swappable) {
-	        		gp.ui.showMessage("It won't have any effect.");
+	        		gp.ui.showMessage(p.nickname + " only has one ability, it won't have any effect.");
 	        		return;
 	        	} else {
 	        		Ability oldAbility = p.ability;
@@ -860,7 +847,7 @@ public class Player extends Trainer implements Serializable {
 			// Bottle Caps
 			case BOTTLE_CAP:
 			case GOLD_BOTTLE_CAP:
-				if (item == Item.BOTTLE_CAP) {
+				if (item == Item.BOTTLE_CAP) { // TODO
 	        		JPanel ivPanel = new JPanel();
 	        		ivPanel.setLayout(new GridLayout(6, 1));
 	        		int[] ivs = p.getIVs();
@@ -893,7 +880,7 @@ public class Player extends Trainer implements Serializable {
 	        		p.exp = p.expMax - 1;
 	        		gp.ui.showMessage(p.nickname + " successfully EDGED!");
 	        	} else {
-	        		gp.ui.showMessage("It won't have any effect.");
+	        		gp.ui.showMessage(p.nickname + " is already edged :>");
 	        	}
 				return;
 			
@@ -914,7 +901,7 @@ public class Player extends Trainer implements Serializable {
 		        		}
 		        		gp.ui.showMessage(p.nickname + "'s PP was restored!");
 	        		} else {
-	        			gp.ui.showMessage("It won't have any effect.");
+	        			gp.ui.showMessage(p.nickname + "'s PP is already full!");
 	        		}
 	        		break;
 	        	} else {
