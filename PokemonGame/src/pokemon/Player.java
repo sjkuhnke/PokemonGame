@@ -811,21 +811,9 @@ public class Player extends Trainer implements Serializable {
 	        		gp.ui.showMessage(p.nickname + " isn't compatible with " + item.toString() + ".");
 	        		return;
 	        	} else {
-	        		boolean shouldEvolve = Battle.displayEvolution(p);
-	    			if (shouldEvolve) {
-	    				Pokemon result = new Pokemon(p.getEvolved(item.getID()), p);
-	    		        int hpDif = p.getStat(0) - p.currentHP;
-	    		        result.currentHP -= hpDif;
-	    		        gp.ui.showMessage(p.nickname + " evolved into " + result.name + "!");
-	    		        result.exp = p.exp;
-	    		        int index = Arrays.asList(getTeam()).indexOf(p);
-	    		        team[index] = result;
-	    		        if (index == 0) setCurrent(result);
-	    		        result.checkMove(0);
-	                    pokedex[result.id] = 2;
-	    			} else {
-	    				gp.ui.showMessage(p.nickname + " did not evolve.");
-	    			}
+	        		gp.gameState = GamePanel.USE_RARE_CANDY_STATE;
+	        		Pokemon.addEvoTask(p, new Pokemon(p.getEvolved(item.getID()), p));
+	        		Pokemon.addTask(Task.CLOSE, "");
 	        	}
 				break;
 				

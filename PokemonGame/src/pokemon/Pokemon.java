@@ -235,6 +235,8 @@ public class Pokemon implements Serializable {
 		
 		moveMultiplier = pokemon.moveMultiplier;
 		
+		visible = pokemon.visible;
+		
 		setSprites();
 	}
 	
@@ -2511,15 +2513,20 @@ public class Pokemon implements Serializable {
 		this.exp -= this.expMax;
 		++level;
 		awardHappiness(5, false);
-		addTask(Task.LEVEL_UP, this.nickname + " leveled up to " + this.level + "!", this);
-		ArrayList<Task> check = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.ui.tasks;
-		checkMove(check.size());
-		this.checkEvo(player);
+		
 		expMax = setExpMax();
 		stats = this.getStats();
 		int nHP = this.getStat(0);
-		this.currentHP += nHP - oHP;
+		int amt = nHP - oHP;
+		currentHP += amt;
 		if (this.level == 100) this.exp = 0;
+		
+		Task t = addTask(Task.LEVEL_UP, this.nickname + " leveled up to " + this.level + "!", this);
+		t.setFinish(amt);
+		
+		ArrayList<Task> check = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.ui.tasks;
+		checkMove(check.size());
+		this.checkEvo(player);
 	}
 	
 	private int setExpMax() {
@@ -3650,9 +3657,7 @@ public class Pokemon implements Serializable {
 					return; // Check for immunity
 				} else {
 					addAbilityTask(foe);
-					addTask(Task.TEXT, foe.nickname + " restored HP!");
-					foe.currentHP += foe.getStat(0) * 1.0 / 4;
-					foe.verifyHP();
+					foe.heal(foe.getHPAmount(1.0/4), foe.nickname + " restored HP!");
 					endMove();
 					this.moveMultiplier = 1;
 					return;
@@ -4014,9 +4019,7 @@ public class Pokemon implements Serializable {
 					healAmount = move == Move.DRAINING_KISS ? Math.max((int) Math.ceil(damage / 1.333333333333), 1) : Math.max((int) Math.ceil(damage / 2.0), 1);
 				}
 				if (item == Item.BIG_ROOT) healAmount *= 1.3;
-				this.currentHP += healAmount;
-				if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-				addTask(Task.TEXT, this.nickname + " sucked HP from " + foe.nickname + "!");
+				heal(healAmount, this.nickname + " sucked HP from " + foe.nickname + "!");
 			}
 			
 			damage = Math.max(damage, 1);
@@ -4209,6 +4212,10 @@ public class Pokemon implements Serializable {
 		return;
 	}
 
+	private double getHPAmount(double fraction) {
+		return Math.max(this.getStat(0) * fraction, 1);
+	}
+
 	private int getxpReward() {
 		int result = (int) Math.ceil(this.level * (trainerOwned() ? 1.5 : 1.0));
 		return result;
@@ -4316,15 +4323,9 @@ public class Pokemon implements Serializable {
 	            if (p.level < 100) {
 	            	if (p.item == Item.LUCKY_EGG) expAwarded *= 1.5;
 	                p.exp += expAwarded;
-	                String flavor = p.item == Item.LUCKY_EGG ? " a boosted " : "";
-	                if (p.isVisible()) {
-	                	Task t = addTask(Task.EXP, p.nickname + " gained " + expAwarded + " experience points!");
-	                	t.setFinish(Math.min(p.exp, expMax));
-	                } else {
-	                	flavor = p.item == Item.EXP_SHARE ? " a shared " : flavor;
-	                	addTask(Task.TEXT, p.nickname + " gained " + flavor + expAwarded + " experience points!");
-	                }
-	                
+	                String flavor = p.item == Item.LUCKY_EGG ? " a boosted " : p.item == Item.EXP_SHARE ? " a shared " : "";
+                	Task t = addTask(Task.EXP, p.nickname + " gained " + flavor + expAwarded + " experience points!", p);
+                	t.setFinish(Math.min(p.exp, expMax));
 	            }
 	            while (p.exp >= p.expMax) {
 	                // Pokemon has leveled up, check for evolution
@@ -4407,7 +4408,8 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.BUG_BITE || move == Move.PLUCK) {
 			if (foe.item != null && foe.item.isBerry()) {
 				addTask(Task.TEXT, this.nickname + " stole and ate " + foe.nickname + "'s berry!");
-				eatBerry(foe.item, true, foe);
+				eatBerry(foe.item, false, foe);
+				foe.consumeItem();
 			}
 		} else if (move == Move.BUG_BUZZ) {
 			stat(foe, 3, -1, this);
@@ -5028,6 +5030,7 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.AQUA_RING) {
 			if (!(this.vStatuses.contains(Status.AQUA_RING))) {
 			    this.vStatuses.add(Status.AQUA_RING);
+			    if (announce) addTask(Task.TEXT, "A veil of water surrounded " + this.nickname + "!");
 			} else {
 			    fail = fail(announce);
 			}
@@ -5247,9 +5250,7 @@ public class Pokemon implements Serializable {
 			if (foe.currentHP == foe.getStat(0)) {
 				if (announce) addTask(Task.TEXT, foe.nickname + "'s HP is full!");
 			} else {
-				foe.currentHP += (foe.getStat(0) * 1.0 / 2);
-				if (foe.currentHP > foe.getStat(0)) foe.currentHP = foe.getStat(0);
-				if (announce) addTask(Task.TEXT, foe.nickname + " restored HP.");
+				foe.heal(foe.getHPAmount(1.0/2), foe.nickname + " restored HP.");
 			}
 		} else if (move == Move.HONE_CLAWS) {
 			stat(this, 0, 1, foe, announce);
@@ -5274,9 +5275,7 @@ public class Pokemon implements Serializable {
 			if (this.currentHP == this.getStat(0)) {
 				if (announce) addTask(Task.TEXT, this.nickname + "'s HP is full!");
 			} else {
-				this.currentHP += (this.getStat(0) * 1.0 / 4);
-				if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-				if (announce) addTask(Task.TEXT, this.nickname + " restored HP.");
+				heal(getHPAmount(1.0/4), this.nickname + " restored HP.");
 			}
 		} else if (announce && move == Move.LEECH_SEED) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
@@ -5337,14 +5336,12 @@ public class Pokemon implements Serializable {
 				if (announce) addTask(Task.TEXT, this.nickname + "'s HP is full!");
 			} else {
 				if (field.equals(field.weather, Effect.SUN)) {
-					this.currentHP += (this.getStat(0) / 1.5);
+					heal(getHPAmount(1.0/1.5), this.nickname + " restored HP.");
 				} else if (field.equals(field.weather, Effect.RAIN) || field.equals(field.weather, Effect.SANDSTORM) || field.equals(field.weather, Effect.SNOW)) {
-					this.currentHP += (this.getStat(0) * 1.0 / 4);
+					heal(getHPAmount(1.0/4), this.nickname + " restored HP.");
 				} else {
-					this.currentHP += (this.getStat(0) * 1.0 / 2);
+					heal(getHPAmount(1.0/2), this.nickname + " restored HP.");
 				}
-				if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-				if (announce) addTask(Task.TEXT, this.nickname + " restored HP.");
 			}
 		} else if (announce && move == Move.MUD_SPORT) {
 			field.setEffect(field.new FieldEffect(Effect.MUD_SPORT));
@@ -5463,9 +5460,7 @@ public class Pokemon implements Serializable {
 			if (this.currentHP == this.getStat(0)) {
 				if (announce) addTask(Task.TEXT, this.nickname + "'s HP is full!");
 			} else {
-				this.currentHP += (this.getStat(0) * 1.0 / 2);
-				if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-				if (announce) addTask(Task.TEXT, this.nickname + " restored HP.");
+				heal(getHPAmount(1.0/2), this.nickname + " restored HP.");
 			}
 		} else if (move == Move.SAND_ATTACK) {
 			stat(foe, 5, -1, this, announce);
@@ -5484,8 +5479,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SCREECH) {
 			stat(foe, 1, -2, this, announce);
 		} else if (move == Move.SEA_DRAGON) {
-			if (id == 150) {
-				if (announce) addTask(Task.TEXT, nickname + " transformed into Kissyfishy-D!");
+			if (id == 150 && announce) {
 				int oHP = this.getStat(0);
 				id = 237;
 				if (nickname == name) nickname = getName();
@@ -5494,7 +5488,7 @@ public class Pokemon implements Serializable {
 				getStats();
 				weight = setWeight();
 				int nHP = this.getStat(0);
-				this.currentHP += nHP - oHP;
+				heal(nHP - oHP, nickname + " transformed into Kissyfishy-D!");
 				setType();
 				setAbility(abilitySlot);
 				if (player != null) player.pokedex[237] = 2;
@@ -5541,10 +5535,8 @@ public class Pokemon implements Serializable {
 			stat(this, 3, 1, foe, announce);
 		} else if (announce && move == Move.STRENGTH_SAP) {
 			int amount = (int) (foe.getStat(1) * foe.asModifier(0));
+			heal(amount, this.nickname + " restored HP.");
 			stat(foe, 0, -1, this, announce);
-			this.currentHP += amount;
-			if (this.currentHP > this.getStat(0)) this.currentHP = this.getStat(0);
-			if (announce) addTask(Task.TEXT, this.nickname + " restored HP.");
 		}  else if (move == Move.STRING_SHOT) {
 			stat(foe, 4, -2, this, announce);
 		} else if (announce && move == Move.SUNNY_DAY) {
@@ -10641,6 +10633,7 @@ public class Pokemon implements Serializable {
 		public static final int EVO = 15;
 		public static final int WEATHER = 16;
 		public static final int TERRAIN = 17;
+		public static final int CLOSE = 18;
 		
 		public int type;
 		public String message;
@@ -10720,6 +10713,7 @@ public class Pokemon implements Serializable {
 			case EVO: return "EVO";
 			case WEATHER: return "WEATHER";
 			case TERRAIN: return "TERRAIN";
+			case CLOSE: return "CLOSE";
 			default:
 				return "getTypeString() doesn't have a case for this type";
 			}
@@ -11246,8 +11240,7 @@ public class Pokemon implements Serializable {
 			if (f.currentHP > f.getStat(0)) f.currentHP = f.getStat(0);
 			this.damage(hp, f, f.nickname + " sucked health from " + this.nickname + "!");
 			if (f.item == Item.BIG_ROOT) hp *= 1.3;
-			f.currentHP += hp;
-			f.verifyHP();
+			f.heal(hp, "");
 			if (this.currentHP <= 0) {
 				this.faint(true, f);
 				return;
@@ -11268,63 +11261,35 @@ public class Pokemon implements Serializable {
 			if (this.currentHP < this.getStat(0)) {
 				int hp = (int) Math.max(this.getStat(0) * 1.0 / 16, 1);
 				if (item == Item.BIG_ROOT) hp *= 1.3;
-				this.currentHP += hp;
-				if (this.currentHP > this.getStat(0)) {
-					this.currentHP = this.getStat(0);
-				}
-				addTask(Task.TEXT, this.nickname + " restored HP.");
+				heal(hp, this.nickname + " restored HP.");
 			}
 		} if (field.equals(field.terrain, Effect.GRASSY) && isGrounded()) {
 			if (this.currentHP < this.getStat(0)) {
-				this.currentHP += Math.max(this.getStat(0) * 1.0 / 16, 1);
-				if (this.currentHP > this.getStat(0)) {
-					this.currentHP = this.getStat(0);
-				}
-				addTask(Task.TEXT, this.nickname + " restored HP.");
+				heal(getHPAmount(1.0/16), this.nickname + " restored HP.");
 			}
 		} if (this.ability == Ability.RAIN_DISH && field.equals(field.weather, Effect.RAIN)) {
 			if (this.currentHP < this.getStat(0)) {
-				this.currentHP += Math.max(this.getStat(0) * 1.0 / 8, 1);
-				if (this.currentHP > this.getStat(0)) {
-					this.currentHP = this.getStat(0);
-				}
 				addAbilityTask(this);
-				addTask(Task.TEXT, this.nickname + " restored HP.");
+				heal(getHPAmount(1.0/8), this.nickname + " restored HP.");
 			}
 		} if (this.ability == Ability.DRY_SKIN && field.equals(field.weather, Effect.RAIN)) {
 			if (this.currentHP < this.getStat(0)) {
-				this.currentHP += Math.max(this.getStat(0) * 1.0 / 8, 1);
-				if (this.currentHP > this.getStat(0)) {
-					this.currentHP = this.getStat(0);
-				}
 				addAbilityTask(this);
-				addTask(Task.TEXT, this.nickname + " restored HP.");
+				heal(getHPAmount(1.0/8), this.nickname + " restored HP.");
 			}
 		} if (this.ability == Ability.ICE_BODY && field.equals(field.weather, Effect.SNOW)) {
 			if (this.currentHP < this.getStat(0)) {
-				this.currentHP += Math.max(this.getStat(0) * 1.0 / 8, 1);
-				if (this.currentHP > this.getStat(0)) {
-					this.currentHP = this.getStat(0);
-				}
 				addAbilityTask(this);
-				addTask(Task.TEXT, this.nickname + " restored HP.");
+				heal(getHPAmount(1.0/8), this.nickname + " restored HP.");
 			}
 		} if (this.item == Item.LEFTOVERS) {
 			if (this.currentHP < this.getStat(0)) {
-				this.currentHP += Math.max(this.getStat(0) * 1.0 / 16, 1);
-				if (this.currentHP > this.getStat(0)) {
-					this.currentHP = this.getStat(0);
-				}
-				addTask(Task.TEXT, this.nickname + " restored a little HP using its Leftovers!");
+				heal(getHPAmount(1.0/16), this.nickname + " restored a little HP using its Leftovers!");
 			}
 		} if (this.item == Item.BLACK_SLUDGE) {
 			if (this.type1 == PType.POISON || this.type2 == PType.POISON) {
 				if (this.currentHP < this.getStat(0)) {
-					this.currentHP += Math.max(this.getStat(0) * 1.0 / 16, 1);
-					if (this.currentHP > this.getStat(0)) {
-						this.currentHP = this.getStat(0);
-					}
-					addTask(Task.TEXT, this.nickname + " restored a little HP using its Black Sludge!");
+					heal(getHPAmount(1.0/16), this.nickname + " restored a little HP using its Black Sludge!");
 				}
 			} else {
 				if (this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
@@ -11337,11 +11302,7 @@ public class Pokemon implements Serializable {
 			}
 		} if (this.vStatuses.contains(Status.WISH) && this.lastMoveUsed != Move.WISH) {
 			if (this.currentHP < this.getStat(0)) {
-				this.currentHP += Math.max(this.getStat(0) * 1.0 / 2, 1);
-				if (this.currentHP > this.getStat(0)) {
-					this.currentHP = this.getStat(0);
-				}
-				addTask(Task.TEXT, this.nickname + "'s wish came true!");
+				heal(getHPAmount(1.0/2), this.nickname + "'s wish came true!");
 			} else {
 				addTask(Task.TEXT, this.nickname + "'s HP is full!");
 			}
@@ -11442,32 +11403,32 @@ public class Pokemon implements Serializable {
 		
 		if (this.status != Status.HEALTHY || this.vStatuses.contains(Status.CONFUSED)) {
 			if ((this.status == Status.POISONED || this.status == Status.TOXIC) && (this.item == Item.PECHA_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its poison!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its poison!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem();
 			}
 			if (this.status == Status.BURNED && (this.item == Item.RAWST_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its burn!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its burn!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem();
 			}
 			if (this.status == Status.PARALYZED && (this.item == Item.CHERI_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its paralysis!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its paralysis!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem();
 			}
 			if (this.status == Status.FROSTBITE && (this.item == Item.ASPEAR_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its frostbite!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its frostbite!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem();
 			}
 			if (this.status == Status.ASLEEP && (this.item == Item.CHESTO_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its sleep!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its sleep!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem();
 			}
 			if (this.vStatuses.contains(Status.CONFUSED) && (this.item == Item.PERSIM_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its confusion!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its confusion!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem();
 			}
@@ -11569,7 +11530,7 @@ public class Pokemon implements Serializable {
 			this.sleepCounter = (int)(Math.random() * 3) + 1;
 			addTask(Task.STATUS, Status.ASLEEP, this.nickname + " fell asleep!", this);
 			if (this.item == Item.CHESTO_BERRY || this.item == Item.LUM_BERRY) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its sleep!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its sleep!", this);
 				this.status = Status.HEALTHY;
 				this.sleepCounter = 0;
 				this.consumeItem();
@@ -11599,7 +11560,7 @@ public class Pokemon implements Serializable {
 				foe.paralyze(false, this);
 			}
 			if (this.item == Item.CHERI_BERRY || this.item == Item.LUM_BERRY) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its paralysis!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its paralysis!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem();
 			}
@@ -11634,7 +11595,7 @@ public class Pokemon implements Serializable {
 				foe.burn(false, this);
 			}
 			if (this.item == Item.RAWST_BERRY || this.item == Item.LUM_BERRY) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its burn!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its burn!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem();
 			}
@@ -11662,7 +11623,7 @@ public class Pokemon implements Serializable {
 				foe.poison(false, this);
 			}
 			if (this.item == Item.PECHA_BERRY || this.item == Item.LUM_BERRY) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its poison!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its poison!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem();
 			}
@@ -11690,7 +11651,7 @@ public class Pokemon implements Serializable {
 				foe.toxic(false, this);
 			}
 			if (this.item == Item.PECHA_BERRY || this.item == Item.LUM_BERRY) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its poison!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its poison!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem();
 			}
@@ -11721,7 +11682,7 @@ public class Pokemon implements Serializable {
 				foe.freeze(false, this);
 			}
 			if (this.item == Item.ASPEAR_BERRY || this.item == Item.LUM_BERRY) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its frostbite!");
+				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its frostbite!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem();
 			}
@@ -12798,8 +12759,6 @@ public class Pokemon implements Serializable {
 	private void damage(int amt, Pokemon foe, Move move, String message, int damageIndex, boolean sturdy) {
 		this.currentHP -= amt;
 		if (sturdy) this.currentHP = 1;
-		if (move != null && currentHP > 0 && move != Move.INCINERATE && move != Move.KNOCK_OFF && move != Move.BUG_BITE && move != Move.PLUCK &&
-				move != Move.THIEF && move != Move.COVET) this.checkBerry(foe);
 		Task t = null;
 		if (damageIndex >= 0) {
 			t = createTask(Task.DAMAGE, message, this);
@@ -12809,6 +12768,9 @@ public class Pokemon implements Serializable {
 		}
 		
 		t.setFinish(this.currentHP < 0 ? 0 : this.currentHP);
+		
+		if (move != null && currentHP > 0 && move != Move.INCINERATE && move != Move.KNOCK_OFF && move != Move.BUG_BITE && move != Move.PLUCK &&
+				move != Move.THIEF && move != Move.COVET) this.checkBerry(foe);
 	}
 
 	private void checkBerry(Pokemon foe) {
@@ -12828,9 +12790,7 @@ public class Pokemon implements Serializable {
 	private void eatBerry(Item berry, boolean consume, Pokemon foe) {
 		if (berry.isBerry()) {
 			if (berry == Item.WIKI_BERRY) {
-				this.currentHP += (this.getStat(0) / 3);
-				this.verifyHP();
-				addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + " to restore HP!");
+				heal(getHPAmount(1.0/3), this.nickname + " ate its " + berry.toString() + " to restore HP!");
 			} else if (berry == Item.LIECHI_BERRY) {
 				addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
 				stat(this, 0, 1, foe);
@@ -12854,12 +12814,21 @@ public class Pokemon implements Serializable {
 				stat(this, 5, 1, foe);
 			} else if (berry == Item.ORAN_BERRY || berry == Item.SITRUS_BERRY) {
 				int healAmt = berry == Item.ORAN_BERRY ? 10 : (this.getStat(0) / 4);
-				this.currentHP += healAmt;
-				this.verifyHP();
-				addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + " to restore HP!");
+				heal(healAmt, this.nickname + " ate its " + berry.toString() + " to restore HP!");
 			}
 			if (consume) this.consumeItem();
 		}
+	}
+	
+	private void heal(double amt, String message) {
+		Task t = createTask(Task.DAMAGE, message, this);
+		currentHP += amt;
+		verifyHP();
+		if (gp.gameState == GamePanel.BATTLE_STATE) {
+			t.setFinish(currentHP);
+			gp.battleUI.tasks.add(t);
+		}
+		
 	}
 
 	public double getEffectiveMultiplier(PType mtype) {
@@ -13965,7 +13934,7 @@ public class Pokemon implements Serializable {
 		}
 	}
 	
-	private static void addEvoTask(Pokemon p, Pokemon result) {
+	public static void addEvoTask(Pokemon p, Pokemon result) {
 		Task t = Pokemon.addTask(Task.EVO, p.nickname + " is evolving!\nDo you want to evolve your " + p.nickname + "?", p);
 		t.evo = result;
 	}
