@@ -378,6 +378,7 @@ public class BattleUI extends AbstractUI {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
 					foe.nickname = nickname.toString().strip();
+					nickname = new StringBuilder();
 					if (foe.nickname == null || foe.nickname.trim().isEmpty()) foe.nickname = foe.name;
 					nicknaming = -1;
 					currentTask = null;
