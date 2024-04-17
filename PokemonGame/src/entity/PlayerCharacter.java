@@ -1372,7 +1372,7 @@ public class PlayerCharacter extends Entity {
 				        			                		numCandies = 1;
 				        			                	}
 				        			                    
-				        			                    useRareCandies(p.team[index], numCandies, i.getItem());
+				        			                    //useRareCandies(p.team[index], numCandies, i.getItem());
 				        			                    SwingUtilities.getWindowAncestor(partyMasterPanel).dispose();
 								        	        	SwingUtilities.getWindowAncestor(itemDesc).dispose();
 								        	        	SwingUtilities.getWindowAncestor(panel).dispose();
@@ -1470,7 +1470,7 @@ public class PlayerCharacter extends Entity {
 					        	    		        result.exp = p.team[index].exp;
 					        	    		        p.team[index] = result;
 					        	    		        if (index == 0) p.setCurrent(result);
-					        	    		        result.checkMove();
+					        	    		        //result.checkMove();
 					        	                    p.pokedex[result.id] = 2;
 					        	    		        p.bag.remove(i.getItem());
 					        	    			} else {
