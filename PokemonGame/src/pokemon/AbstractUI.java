@@ -485,7 +485,7 @@ public abstract class AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.aPressed && p.item != null && foe == null) {
+		if (gp.keyH.aPressed && p.item != null && foe == null && moveSummaryNum < 0) {
 			gp.keyH.aPressed = false;
 			showMessage("Took " + p.nickname + "'s " + p.item);
 			gp.player.p.bag.add(p.item);
@@ -782,7 +782,6 @@ public abstract class AbstractUI {
                 gp.player.p.team[index] = newP;
                 if (index == 0) {
                 	oldP.setVisible(false);
-                	newP.setVisible(true);
                 	gp.player.p.current = newP;
                 	gp.battleUI.user = newP;
                 	gp.battleUI.userHP = newP.currentHP;

@@ -2337,15 +2337,15 @@ public class AssetSetter {
 	}
 	
 	private Entity NPCSetup(int x, int y, String message, boolean a) {
-		return NPCSetup(x, y, message, -1, false, null);
+		return NPCSetup(x, y, message, -1, a, null);
 	}
 	
 	private Entity NPCSetup(int x, int y, String message, int flag, boolean a, String altDialogue) {
 		String messages[] = message.split("\n");
 		for (int i = 0; i < messages.length; i++) {
-			messages[i] = Item.breakString(messages[i], 46);
+			messages[i] = Item.breakString(messages[i], 44);
 		}
-		Entity result = new NPC_Block(gp, messages, flag, a, Item.breakString(altDialogue, 60));
+		Entity result = new NPC_Block(gp, messages, flag, a, Item.breakString(altDialogue, 44));
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;

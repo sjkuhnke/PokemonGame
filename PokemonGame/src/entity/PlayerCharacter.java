@@ -469,11 +469,13 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	private void interactNPC(NPC_Block npc) {
-		if (npc.flag != -1 && !p.flags[npc.flag]) {
+		gp.keyH.wPressed = false;
+		if (npc.flag == -1 || !p.flags[npc.flag]) {
 			gp.gameState = GamePanel.DIALOGUE_STATE;
 			npc.speak(0);
 			if (npc.more) {
 				SwingUtilities.invokeLater(() -> {
+					gp.keyH.resetKeys();
 					interactBlock(npc);
 				});
 			}

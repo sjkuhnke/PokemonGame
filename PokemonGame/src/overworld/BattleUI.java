@@ -210,6 +210,7 @@ public class BattleUI extends AbstractUI {
 
 	private void cooldownState() {
 		currentTask = null;
+		currentAbility = null;
 		cooldownCounter++;
 		if (cooldownCounter >= 25) {
 			cooldownCounter = 0;
@@ -387,8 +388,12 @@ public class BattleUI extends AbstractUI {
 			break;
 		case Task.EXP:
 			currentDialogue = currentTask.message;
-			if (userExp < currentTask.finish) userExp++;
-			if (userExp == currentTask.finish) {
+			if (currentTask.p.isVisible()) {
+				if (userExp < currentTask.finish) userExp++;
+				if (userExp == currentTask.finish) {
+					endTask();
+				}
+			} else {
 				endTask();
 			}
 			break;
@@ -398,6 +403,7 @@ public class BattleUI extends AbstractUI {
 				userLevel++;
 				userExp = user.exp;
 				userExpMax = user.expMax;
+				userHP += currentTask.finish;
 			}
 			endTask();
 			break;
@@ -455,7 +461,7 @@ public class BattleUI extends AbstractUI {
 
 	private void drawCaughtIndicator() {
 		if (foe.trainerOwned() || user.getPlayer().pokedex[foe.id] != 2) return;
-		g2.drawImage(ballIcon, 204, 50, null);
+		g2.drawImage(ballIcon, 454, 50, null);
 	}
 	
 	private void drawUserParty() {
@@ -949,14 +955,21 @@ public class BattleUI extends AbstractUI {
 		if (uMove != null && user.ability == Ability.STEALTHY_PREDATOR && user.impressive) ++uP;
 		if (fMove != null && foe.ability == Ability.STEALTHY_PREDATOR && foe.impressive) ++fP;
 		
-		uP = user.checkQuickClaw(uP);
-		fP = foe.checkQuickClaw(fP);
-		uP = user.checkCustap(uP);
-		fP = foe.checkCustap(fP);
+		if (uMove != null) uP = user.checkQuickClaw(uP);
+		if (fMove != null) fP = foe.checkQuickClaw(fP);
+		if (uMove != null) uP = user.checkCustap(uP);
+		if (fMove != null) fP = foe.checkCustap(fP);
 		
-		Pokemon faster = user.getFaster(foe, uP, fP);
+		Pokemon faster;
+		Pokemon slower;
 		
-		Pokemon slower = faster == user ? foe : user;
+		if (uMove == null || fMove == null) {
+			faster = uMove == null ? user : foe;
+		} else {
+			faster = user.getFaster(foe, uP, fP);
+		}
+		
+		slower = faster == user ? foe : user;
 		
 		boolean foeCanMove = true;
 		

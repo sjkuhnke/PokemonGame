@@ -606,7 +606,7 @@ public class Main {
 				new Trainer("MS A", new Pokemon[]{new Pokemon(61, 29, false, true)}, new Item[]{Item.EXPERT_BELT}, 100), // 75
 				new Trainer("MS B", new Pokemon[]{new Pokemon(92, 29, false, true), new Pokemon(160, 30, false, true)}, new Item[]{Item.PASSHO_BERRY, Item.PAYAPA_BERRY}, 100),
 				new Trainer("MS C", new Pokemon[]{new Pokemon(115, 30, false, true)}, new Item[]{Item.SOFT_SAND}, 100),
-				new Trainer("MS D", new Pokemon[]{new Pokemon(155, 51, false, true), new Pokemon(161, 53, false, true)}, new Item[] {Item.POWER_HERB, Item.BLACK_SLUDGE}, 100),
+				new Trainer("MS D", new Pokemon[]{new Pokemon(155, 51, false, true), new Pokemon(161, 53, false, true)}, new Item[] {Item.POWER_HERB, Item.EVIOLITE}, 100),
 				new Trainer("TN MS 1", new Pokemon[]{new Pokemon(53, 30, false, true)}, new Item[]{Item.RAWST_BERRY}, 100, Item.HM03),
 				new Trainer("AB", new Pokemon[]{new Pokemon(86, 28, false, true), new Pokemon(82, 30, false, true), new Pokemon(86, 29, false, true), new Pokemon(75, 30, false, true), new Pokemon(79, 30, false, true)}, new Item[]{Item.RINDO_BERRY, Item.TERRAIN_EXTENDER, Item.TANGA_BERRY, Item.COLBUR_BERRY, Item.FOCUS_BAND}, 100), // 80
 				new Trainer("AC", new Pokemon[]{new Pokemon(49, 30, false, true), new Pokemon(53, 31, false, true)}, new Item[]{Item.CHOICE_BAND, Item.FOCUS_BAND}, 100),

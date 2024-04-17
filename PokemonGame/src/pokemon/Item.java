@@ -1318,6 +1318,12 @@ public enum Item {
 		happiness.setSelectedIndex(70);
 		result.add(happiness);
 		
+		JTextField happinessCapInput = new JTextField("50");
+		result.add(happinessCapInput);
+		
+		JTextField expInput = new JTextField();
+		result.add(expInput);
+		
 		AutoCompleteDecorator.decorate(nameInput);
 		AutoCompleteDecorator.decorate(levelInput);
 		AutoCompleteDecorator.decorate(abilityInput);
@@ -1399,6 +1405,8 @@ public enum Item {
 			int id = ((Pokemon) nameInput.getSelectedItem()).id;
 			int level = (Integer) levelInput.getSelectedItem();
 			int ability = abilityInput.getSelectedIndex();
+			int expRemaining = Integer.parseInt(expInput.getText());
+			int happinessCap = Integer.parseInt(expInput.getText());
 			String selectedNature = (String) natures.getSelectedItem();
 			for (int i = 0; i < 25; i++) {
 				temp.nature = temp.getNature(i);
@@ -1420,6 +1428,14 @@ public enum Item {
 			resultPokemon.nature = nature;
 			resultPokemon.ivs = ivs;
 			resultPokemon.getStats();
+			int exp = resultPokemon.expMax - expRemaining;
+			if (exp < 0 || exp >= resultPokemon.expMax) {
+				JOptionPane.showMessageDialog(null, "Exp is not in the range [0, " + resultPokemon.expMax + "]");
+				return;
+			} else {
+				resultPokemon.exp = exp;
+			}
+			resultPokemon.happinessCap = happinessCap;
 			
 			for (int i = 0; i < 4; i++) {
 				resultPokemon.moveset[i] = moveset[i] == null ? null : new Moveslot(moveset[i]);

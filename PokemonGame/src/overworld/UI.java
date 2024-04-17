@@ -170,6 +170,17 @@ public class UI extends AbstractUI{
 		case Task.EVO:
 			drawEvolution(currentTask);
 			break;
+		case Task.CLOSE:
+			if (tasks.size() != 0) {
+				tasks.add(currentTask);
+				currentTask = null;
+				return;
+			}
+			gp.gameState = GamePanel.MENU_STATE;
+			gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
+			gp.ui.bagState = 0;
+			currentTask = null;
+			break;
 		}
 	}
 
@@ -476,6 +487,7 @@ public class UI extends AbstractUI{
 		int textY = descY + gp.tileSize;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		if (currentItems.size() > 0) {
+			if (bagNum >= currentItems.size()) bagNum--;
 			String desc = currentItems.get(bagNum).getItem().getDesc();
 			for (String line : Item.breakString(desc, 25).split("\n")) {
 				g2.drawString(line, textX, textY);
