@@ -229,6 +229,7 @@ public class KeyHandler implements KeyListener {
 					gp.battleUI.subState = BattleUI.PARTY_SELECTION_STATE;
 				} else {
 					gp.battleUI.moveSummaryNum = -1;
+					gp.battleUI.moveSwapNum = -1;
 				}
 				
 			}
@@ -269,6 +270,7 @@ public class KeyHandler implements KeyListener {
 				if (gp.ui.moveSummaryNum == -1) {
 					gp.ui.subState = 2;
 				} else {
+					gp.ui.moveSwapNum = -1;
 					gp.ui.moveSummaryNum = -1;
 				}
 			} else if (gp.ui.bagState > 0) { // Bag option menu screen
