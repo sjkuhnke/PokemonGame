@@ -12931,7 +12931,7 @@ public class Pokemon implements Serializable {
 	    return result == JOptionPane.CLOSED_OPTION ? JOptionPane.CLOSED_OPTION : choice[0];
 	}
 	
-	private List<Move> movebankAsList() {
+	public ArrayList<Move> movebankAsList() {
 		ArrayList<Move> movebankList = new ArrayList<>();
         Node n = this.movebank[0];
         for (int i = 0; i < this.movebank.length; i++) {

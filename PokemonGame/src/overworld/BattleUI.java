@@ -40,6 +40,7 @@ public class BattleUI extends AbstractUI {
 	public int userHP;
 	public int foeHP;
 	public int tempFoeHP;
+	public int maxUserHP;
 	public Status userStatus;
 	public Status foeStatus;
 	public int userExp;
@@ -289,6 +290,7 @@ public class BattleUI extends AbstractUI {
 			if (currentTask.p.playerOwned()) {
 				user = currentTask.p;
 				userHP = tempUser == null ? user.currentHP : tempUser.currentHP;
+				maxUserHP = tempUser == null ? user.getStat(0) : tempUser.getStat(0);
 				userStatus = tempUser == null ? user.status : tempUser.status;
 				userExp = tempUser == null ? user.exp : tempUser.exp;
 				userExpMax = tempUser == null ? user.expMax : tempUser.expMax;
@@ -404,6 +406,7 @@ public class BattleUI extends AbstractUI {
 				userExp = user.exp;
 				userExpMax = user.expMax;
 				userHP += currentTask.finish;
+				maxUserHP += currentTask.finish;
 			}
 			endTask();
 			break;
@@ -439,10 +442,10 @@ public class BattleUI extends AbstractUI {
 	private void drawUser() {
 		if (!user.isVisible()) return;
 		drawHPImage(user);
-		drawHPBar(user, userHP);
+		drawHPBar(user, userHP, maxUserHP);
 		drawNameLabel(user);
 		drawUserSprite();
-		drawUserHP(userHP);
+		drawUserHP();
 		drawStatus(user);
 		drawTypes(user);
 		drawExpBar();
@@ -451,7 +454,7 @@ public class BattleUI extends AbstractUI {
 	private void drawFoe() {
 		if (!foe.isVisible()) return;
 		drawHPImage(foe);
-		drawHPBar(foe, foeHP);
+		drawHPBar(foe, foeHP, foe.getStat(0));
 		drawNameLabel(foe);
 		drawFoeSprite();
 		drawStatus(foe);
@@ -535,10 +538,10 @@ public class BattleUI extends AbstractUI {
 		}
 	}
 
-	private void drawUserHP(int hp) {
+	private void drawUserHP() {
 		g2.setColor(Color.BLACK);
 		g2.setFont(g2.getFont().deriveFont(24F));
-		String hpLabel = hp + " / " + user.getStat(0);
+		String hpLabel = userHP + " / " + maxUserHP;
 		g2.drawString(hpLabel, this.getCenterAlignedTextX(hpLabel, 490), 362);
 		
 	}
@@ -578,6 +581,7 @@ public class BattleUI extends AbstractUI {
 		field = new Field();
 	    Pokemon.field = field;
 	    userHP = user.currentHP;
+	    maxUserHP = user.getStat(0);
 	    foeHP = foe.currentHP;
 		
 		if (foe.trainerOwned()) {
@@ -631,8 +635,8 @@ public class BattleUI extends AbstractUI {
 		g2.drawImage(user.getBackSprite(), 80, 235, null);
 	}
 
-	private void drawHPBar(Pokemon p, double amt) {
-		double hpRatio = amt / p.getStat(0);
+	private void drawHPBar(Pokemon p, double amt, double maxHP) {
+		double hpRatio = amt / maxHP;
 		g2.setColor(getHPBarColor(hpRatio));
 		int x;
 		int y;

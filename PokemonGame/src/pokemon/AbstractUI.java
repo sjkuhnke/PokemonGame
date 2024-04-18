@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -23,6 +24,7 @@ public abstract class AbstractUI {
 	public int commandNum;
 	public int partyNum;
 	public int moveSummaryNum = -1;
+	public int moveSwapNum = -1;
 	public int partySelectedNum = -1;
 	public int moveOption = -1;
 	public Font marumonica;
@@ -437,8 +439,15 @@ public abstract class AbstractUI {
 		for (int i = 0; i < 4; i++) {
 			Moveslot m = p.moveset[i];
 			if (m != null) {
-				g2.setColor(m.move.mtype.getColor());
-				g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
+				if (i == moveSwapNum) {
+					g2.setColor(new Color(245, 225, 210));
+					g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
+					g2.setColor(g2.getColor().darker());
+					g2.drawRoundRect(x, y, moveWidth, moveHeight, 10, 10);
+				} else {
+					g2.setColor(m.move.mtype.getColor());
+					g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
+				}
 				g2.setColor(Color.BLACK);
 		        String text = m.move.toString();
 		        g2.drawString(text, getCenterAlignedTextX(text, (x + moveWidth / 2)), y + gp.tileSize / 3);
@@ -485,11 +494,26 @@ public abstract class AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.aPressed && p.item != null && foe == null && moveSummaryNum < 0) {
+		if (gp.keyH.aPressed) {
 			gp.keyH.aPressed = false;
-			showMessage("Took " + p.nickname + "'s " + p.item);
-			gp.player.p.bag.add(p.item);
-			p.item = null;
+			if (moveSummaryNum < 0) {
+				if (p.item != null && foe == null) {
+					showMessage("Took " + p.nickname + "'s " + p.item + ".");
+					gp.player.p.bag.add(p.item);
+					p.item = null;
+				}
+			} else {
+				if (moveSwapNum > -1) {
+					if (moveSummaryNum != moveSwapNum) {
+						Moveslot temp = p.moveset[moveSummaryNum];
+						p.moveset[moveSummaryNum] = p.moveset[moveSwapNum];
+						p.moveset[moveSwapNum] = temp;
+					}
+					moveSwapNum = -1;
+				} else {
+					moveSwapNum = moveSummaryNum;
+				}
+			}
 		}
 	}
 
@@ -629,6 +653,8 @@ public abstract class AbstractUI {
 	}
 	
 	public void drawMoveOptions(Move m, Pokemon p, String header) {
+		ArrayList<Move> movebankList = p.movebankAsList();
+		
 		int x = gp.tileSize * 4;
 		int y = 0;
 		int width = gp.tileSize * 8;
@@ -671,7 +697,11 @@ public abstract class AbstractUI {
 			Moveslot ms = p.moveset[i - 1];
 			if (ms != null) {
 				g2.setFont(g2.getFont().deriveFont(24F));
-				g2.setColor(ms.move.mtype.getColor());
+				if (!gp.player.p.hasTM(ms.move) && !movebankList.contains(ms.move)) {
+		        	g2.setPaint(new GradientPaint(x, y, ms.move.mtype.getColor(), x + moveWidth, y + moveHeight, new Color(245, 225, 210)));
+		        } else {
+		        	g2.setColor(ms.move.mtype.getColor());	
+		        }
 				g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 				g2.setColor(Color.BLACK);
 		        String text = ms.move.toString();
