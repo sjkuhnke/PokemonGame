@@ -2275,7 +2275,7 @@ public class Pokemon implements Serializable {
 		} else if (id == 21) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.LEVITATE};
 		} else if (id == 22) { abilities = new Ability[] {Ability.SWARM, Ability.COMPOUND_EYES};
 		} else if (id == 23) { abilities = new Ability[] {Ability.SWARM, Ability.COMPOUND_EYES};
-		} else if (id == 24) { abilities = new Ability[] {Ability.SWARM, Ability.COMPOUND_EYES};
+		} else if (id == 24) { abilities = new Ability[] {Ability.POISON_HEAL, Ability.COMPOUND_EYES};
 		} else if (id == 25) { abilities = new Ability[] {Ability.ROUGH_SKIN, Ability.COMPOUND_EYES};
 		} else if (id == 26) { abilities = new Ability[] {Ability.ANGER_POINT, Ability.CHLOROPHYLL};
 		} else if (id == 27) { abilities = new Ability[] {Ability.ANGER_POINT, Ability.CHLOROPHYLL};
@@ -3208,7 +3208,7 @@ public class Pokemon implements Serializable {
 		} else {
 			userSide = field.foeSide;
 			enemySide = field.playerSide;
-			player = (Player) foe.trainer;
+			player = foe.trainer instanceof Player ? (Player) foe.trainer : gp.player.p;
 			enemy = this.trainer;
 			if (trainer != null) team = enemy.team;
 		}
@@ -4999,10 +4999,17 @@ public class Pokemon implements Serializable {
 	private void statusEffect(Pokemon foe, Move move, Player player, Pokemon[] team, Trainer enemy, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide,
 			boolean announce) {
 		boolean fail = false;
-		if (announce && (move == Move.ABDUCT || move == Move.TAKE_OVER || move == Move.MAGIC_REFLECT)) {
+		if (announce && (move == Move.ABDUCT || move == Move.TAKE_OVER)) {
 			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success)) {
 				foe.vStatuses.add(Status.POSESSED);
 				addTask(Task.TEXT, this.nickname + " posessed " + foe.nickname + "!");
+			} else { fail = fail(announce); }
+			this.impressive = false;
+			this.lastMoveUsed = move;
+		} else if (announce && move == Move.MAGIC_REFLECT) {
+			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success)) {
+				this.vStatuses.add(Status.REFLECT);
+				addTask(Task.TEXT, "A magical reflection surrounds " + this.nickname + "!");
 			} else { fail = fail(announce); }
 			this.impressive = false;
 			this.lastMoveUsed = move;
@@ -9713,7 +9720,7 @@ public class Pokemon implements Serializable {
 	private void setMoveBank2() {
 		switch(this.id) {
 		case 197:
-			movebank = new Node[24];
+			movebank = new Node[31];
 			movebank[0] = new Node(Move.NIGHT_SHADE);
 			movebank[2] = new Node(Move.THUNDER_WAVE);
 			movebank[4] = new Node(Move.CONFUSE_RAY);
@@ -9722,6 +9729,10 @@ public class Pokemon implements Serializable {
 			movebank[14] = new Node(Move.HYPNOSIS);
 			movebank[18] = new Node(Move.WILL$O$WISP);
 			movebank[23] = new Node(Move.HEX);
+			movebank[24] = new Node(Move.SHADOW_PUNCH);
+			movebank[24].next = new Node(Move.THUNDER_PUNCH);
+			movebank[27] = new Node(Move.MAGNET_RISE);
+			movebank[30] = new Node(Move.SHADOW_BALL);
 			break;
 		case 198:
 			movebank = new Node[55];
@@ -11212,19 +11223,32 @@ public class Pokemon implements Serializable {
 			}
 			
 		} else if (this.status == Status.POISONED && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f, this.nickname + " was hurt by poison!");
-			if (this.currentHP <= 0) { // Check for kill
-				this.faint(true, f);
-				return;
+			if (this.ability == Ability.POISON_HEAL) {
+				if (this.currentHP < this.getStat(0)) {
+					addAbilityTask(this);
+					heal(getHPAmount(1.0/8), this.nickname + " restored HP!");
+				}
+			} else {
+				this.damage(Math.max(this.getStat(0) * 1.0 / 8, 1), f, this.nickname + " was hurt by poison!");
+				if (this.currentHP <= 0) { // Check for kill
+					this.faint(true, f);
+					return;
+				}	
 			}
 			
 		} else if (this.status == Status.TOXIC && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.damage(Math.max((this.getStat(0) * 1.0 / 16) * toxic, 1), f, this.nickname + " was hurt by poison!");
-			if (this.currentHP <= 0) { // Check for kill
-				this.faint(true, f);
-				return;
+			if (this.ability == Ability.POISON_HEAL) {
+				if (this.currentHP < this.getStat(0)) {
+					addAbilityTask(this);
+					heal(getHPAmount(1.0/8), this.nickname + " restored HP!");
+				}
+			} else {
+				this.damage(Math.max((this.getStat(0) * 1.0 / 16) * toxic, 1), f, this.nickname + " was hurt by poison!");
+				if (this.currentHP <= 0) { // Check for kill
+					this.faint(true, f);
+					return;
+				}
 			}
-			
 		}
 		if (this.vStatuses.contains(Status.CURSED) && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			this.damage(Math.max(this.getStat(0) * 1.0 / 4, 1), f, this.nickname + " was hurt by the curse!");

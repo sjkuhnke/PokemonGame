@@ -380,7 +380,7 @@ public class BattleUI extends AbstractUI {
 			if (nicknaming == 0) {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
-					foe.nickname = nickname.toString().strip();
+					foe.nickname = nickname.toString().trim();
 					nickname = new StringBuilder();
 					if (foe.nickname == null || foe.nickname.trim().isEmpty()) foe.nickname = foe.name;
 					nicknaming = -1;
