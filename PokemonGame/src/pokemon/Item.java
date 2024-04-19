@@ -814,12 +814,12 @@ public enum Item {
     				kD.id = 237;
     				if (kD.nickname == kD.name) kD.nickname = kD.getName();
     				
-    				kD.setBaseStats();
-    				kD.getStats();
-    				kD.weight = kD.setWeight();
+    				kD.baseStats = kD.getBaseStats();
+    				kD.setStats();
+    				kD.weight = kD.getWeight();
     				int nHP = kD.getStat(0);
     				kD.currentHP += nHP - oHP;
-    				kD.setType();
+    				kD.setTypes();
     				kD.setAbility(kD.abilitySlot);
     				userMons.addItem(kD);
             	}
@@ -959,7 +959,7 @@ public enum Item {
     			userCurrent.level = 50;
     		}
         	int oHP = userCurrent.getStat(0);
-        	userCurrent.stats = userCurrent.getStats();
+        	userCurrent.setStats();
         	int nHP = userCurrent.getStat(0);
         	userCurrent.currentHP += nHP - oHP;
         	userCurrent.verifyHP();
@@ -981,7 +981,7 @@ public enum Item {
     		} catch (NumberFormatException e1) {
     			foeCurrent.level = 50;
     		}
-        	foeCurrent.stats = foeCurrent.getStats();
+        	foeCurrent.setStats();
         	foeCurrent.currentHP = foeCurrent.getStat(0);
         	foeCurrent.verifyHP();
         	if (!foeCurrent.toString().contains("(")) foeCurrent.setMoves();
@@ -1427,7 +1427,7 @@ public enum Item {
 			resultPokemon.setAbility(resultPokemon.abilitySlot);
 			resultPokemon.nature = nature;
 			resultPokemon.ivs = ivs;
-			resultPokemon.getStats();
+			resultPokemon.setStats();
 			int exp = resultPokemon.expMax - expRemaining;
 			if (exp < 0 || exp >= resultPokemon.expMax) {
 				JOptionPane.showMessageDialog(null, "Exp is not in the range [0, " + resultPokemon.expMax + "]");

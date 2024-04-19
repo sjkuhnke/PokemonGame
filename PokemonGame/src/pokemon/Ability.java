@@ -129,4 +129,8 @@ public enum Ability {
 	}
 	
 	public String desc;
+
+	String superToString() {
+		return super.toString();
+	}
 }
