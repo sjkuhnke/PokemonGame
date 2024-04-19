@@ -55,6 +55,7 @@ public enum Ability {
 	NO_GUARD("Ensures the Pokemon and its foe's attacks land."),
 	NORMALIZE("All the Pokemon's moves become Normal type. The power of those moves is boosted."),
 	OVERGROW("Powers up GRASS moves in a pinch."),
+	POISON_HEAL("Restores HP if the Pokemon is poisoned instead of losing HP."),
 	POISON_POINT("Contact with the Pokemon may poison the attacker."),
 	PRANKSTER("Gives priority to a status move."),
 	PROTEAN("Makes the Pokemon's type to the move type it's about to use."),
