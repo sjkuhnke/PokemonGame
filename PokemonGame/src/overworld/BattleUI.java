@@ -18,6 +18,7 @@ import pokemon.Field;
 import pokemon.Item;
 import pokemon.Move;
 import pokemon.Moveslot;
+import pokemon.PType;
 import pokemon.Pokemon;
 import pokemon.Status;
 import pokemon.Bag.Entry;
@@ -521,12 +522,13 @@ public class BattleUI extends AbstractUI {
 	}
 
 	private void drawTypes(Pokemon p) {
+		PType[] types = p.getTypes(p.id);
 		if (p.playerOwned()) {
-			g2.drawImage(p.type1.getImage(), 340, 298, null);
-			if (p.type2 != null) g2.drawImage(p.type2.getImage(), 364, 298, null);
+			g2.drawImage(types[0].getImage(), 340, 298, null);
+			if (types[1] != null) g2.drawImage(types[1].getImage(), 364, 298, null);
 		} else {
-			g2.drawImage(p.type1.getImage(), 232, 50, null);
-			if (p.type2 != null) g2.drawImage(p.type2.getImage(), 256, 50, null);
+			g2.drawImage(types[0].getImage(), 232, 50, null);
+			if (types[1] != null) g2.drawImage(types[1].getImage(), 256, 50, null);
 		}
 	}
 

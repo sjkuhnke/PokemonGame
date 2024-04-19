@@ -80,4 +80,8 @@ public enum PType {
 		if (multiplier < 1) return "Not Very Effective";
 		return "Effective";
 	}
+	
+	String superToString() {
+		return super.toString();
+	}
 }

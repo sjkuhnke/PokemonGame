@@ -103,6 +103,8 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setFocusTraversalKeysEnabled(false);
 		
 		this.window = window;
+		
+		Pokemon.readInfoFromCSV();
 	}
 	
 	public void startGameThread() {
@@ -288,10 +290,10 @@ public class GamePanel extends JPanel implements Runnable {
 					teamTemp[i].id = 150;
 					teamTemp[i].nickname = teamTemp[i].nickname.equals("Kissyfishy-D") ? teamTemp[i].nickname = teamTemp[i].getName() : teamTemp[i].nickname;
 					
-					teamTemp[i].setBaseStats();
-					teamTemp[i].getStats();
-					teamTemp[i].weight = teamTemp[i].setWeight();
-					teamTemp[i].setType();
+					teamTemp[i].baseStats = teamTemp[i].getBaseStats();
+					teamTemp[i].setStats();
+					teamTemp[i].weight = teamTemp[i].getWeight();
+					teamTemp[i].setTypes();
 					teamTemp[i].setAbility(teamTemp[i].abilitySlot);
 					teamTemp[i].currentHP = teamTemp[i].currentHP > teamTemp[i].getStat(0) ? teamTemp[i].getStat(0) : teamTemp[i].currentHP;
 				}

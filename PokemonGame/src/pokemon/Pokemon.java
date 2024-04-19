@@ -15,7 +15,9 @@ import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
 import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -55,6 +58,14 @@ public class Pokemon implements Serializable {
 	public static Field field;
 	public static GamePanel gp;
 	public static final int MAX_POKEMON = 240;
+	
+	// Database
+	public static String[] names = new String[MAX_POKEMON];
+	public static PType[][] types = new PType[MAX_POKEMON][2];
+	public static Ability[][] abilities = new Ability[MAX_POKEMON][2];
+	public static int[][] base_stats = new int[MAX_POKEMON][6];
+	public static double[] weights = new double[MAX_POKEMON];
+	public static int[] catch_rates = new int[MAX_POKEMON];
 	
 	// id fields
 	public int id;
@@ -148,18 +159,18 @@ public class Pokemon implements Serializable {
 		level = l;
 		statStages = new int[7];
 		
-		setBaseStats();
+		baseStats = getBaseStats();
 		for (int j = 0; j < 6; j++) { ivs[j] = (int) (Math.random() * 32); }
 		setNature();
-		getStats();
-		setType();
+		setStats();
+		setTypes();
 		if (t) {
 			setAbility(0);
 		} else {
 			abilitySlot = (int)Math.round(Math.random());
 			setAbility(abilitySlot);
 		}
-		this.weight = setWeight();
+		this.weight = getWeight();
 		
 		expMax = setExpMax();
 		exp = 0;
@@ -177,13 +188,13 @@ public class Pokemon implements Serializable {
 		if (t) {
 			ivs = new int[] {31, 31, 31, 31, 31, 31};
 			nature = new double[] {1.0,1.0,1.0,1.0,1.0,0.0};
-			getStats();
+			setStats();
 			currentHP = this.getStat(0);
 		}
 		
 		happiness = 70;
 		if (id == 29 || id == 134 || id == 174) happiness = 110;
-		catchRate = setCatchRate();
+		catchRate = getCatchRate();
 		happinessCap = 50;
 		
 		setSprites();
@@ -202,12 +213,12 @@ public class Pokemon implements Serializable {
 		ivs = pokemon.ivs;
 		nature = pokemon.nature;
 		
-		setBaseStats();
-		getStats();
-		setType();
+		baseStats = getBaseStats();
+		setStats();
+		setTypes();
 		this.abilitySlot = pokemon.abilitySlot;
 		setAbility(abilitySlot);
-		this.weight = setWeight();
+		this.weight = getWeight();
 		
 		this.slot = pokemon.slot;
 		
@@ -227,7 +238,7 @@ public class Pokemon implements Serializable {
 		
 		happiness = pokemon.happiness;
 		headbuttCrit = pokemon.headbuttCrit;
-		catchRate = setCatchRate();
+		catchRate = getCatchRate();
 		happinessCap = pokemon.happinessCap;
 		item = pokemon.item;
 		loseItem = pokemon.loseItem;
@@ -257,7 +268,7 @@ public class Pokemon implements Serializable {
 			this.ivs[rand.nextInt(6)] = 31;
 		}
 		setNature();
-		getStats();
+		setStats();
 		currentHP = this.getStat(0);
 		
 		abilitySlot = (int)Math.round(Math.random());
@@ -673,1831 +684,38 @@ public class Pokemon implements Serializable {
 		return this.fainted;
 	}
 	
-	public void setType() {
-		setType(this.id);
+	public void setTypes() {
+		setTypes(this.id);
 	}
 	
-	public PType[] getType(int id) {
-		PType[] result = new PType[2];
-		Pokemon temp = new Pokemon(id, 1, false, false);
-		
-		result[0] = temp.type1;
-		result[1] = temp.type2;
-		
-		return result;
+	private void setTypes(int id) {
+		PType[] type = getTypes(id);
+		type1 = type[0];
+		type2 = type[1];
 	}
 
-	public void setType(int id) {
-		if (id == 1) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == 2) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.ROCK;
-		} else if (id == 3) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.ROCK;
-		} else if (id == 4) {
-			this.type1 = PType.FIRE;
-			this.type2 = null;
-		} else if (id == 5) {
-			this.type1 = PType.FIRE;
-			this.type2 = null;
-		} else if (id == 6) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.STEEL;
-		} else if (id == 7) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == 8) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == 9) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 10) {
-			this.type1 = PType.LIGHT;
-			this.type2 = PType.FLYING;
-		} else if (id == 11) {
-			this.type1 = PType.LIGHT;
-			this.type2 = PType.FLYING;
-		} else if (id == 12) {
-			this.type1 = PType.LIGHT;
-			this.type2 = PType.FLYING;
-		} else if (id == 13) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.FLYING;
-		} else if (id == 14) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.FLYING;
-		} else if (id == 15) {
-			this.type1 = PType.STEEL;
-			this.type2 = PType.FLYING;
-		} else if (id == 16) {
-			this.type1 = PType.NORMAL;
-			this.type2 = null;
-		} else if (id == 17) {
-			this.type1 = PType.NORMAL;
-			this.type2 = null;
-		} else if (id == 18) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.ROCK;
-		} else if (id == 19) {
-			this.type1 = PType.NORMAL;
-			this.type2 = null;
-		} else if (id == 20) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.MAGIC;
-		} else if (id == 21) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.GALACTIC;
-		} else if (id == 22) {
-			this.type1 = PType.BUG;
-			this.type2 = null;
-		} else if (id == 23) {
-			this.type1 = PType.BUG;
-			this.type2 = null;
-		} else if (id == 24) {
-			this.type1 = PType.BUG;
-			this.type2 = null;
-		} else if (id == 25) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.ROCK;
-		} else if (id == 26) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == 27) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 28) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.DRAGON;
-		} else if (id == 29) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.POISON;
-		} else if (id == 30) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.POISON;
-		} else if (id == 31) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.POISON;
-		} else if (id == 32) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.GRASS;
-		} else if (id == 33) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.GRASS;
-		} else if (id == 34) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.GRASS;
-		} else if (id == 35) {
-			this.type1 = PType.BUG;
-			this.type2 = null;
-		} else if (id == 36) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 37) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 38) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == 39) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == 40) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.LIGHT;
-		} else if (id == 41) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 42) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 43) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 44) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.GRASS;
-		} else if (id == 45) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.GRASS;
-		} else if (id == 46) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.GRASS;
-		} else if (id == 47) {
-			this.type1 = PType.MAGIC;
-			this.type2 = PType.LIGHT;
-		} else if (id == 48) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.GROUND;
-		} else if (id == 49) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.GROUND;
-		} else if (id == 50) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.GROUND;
-		} else if (id == 51) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.LIGHT;
-		} else if (id == 52) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.PSYCHIC;
-		} else if (id == 53) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.PSYCHIC;
-		} else if (id == 54) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.PSYCHIC;
-		} else if (id == 55) {
-			this.type1 = PType.ROCK;
-			this.type2 = null;
-		} else if (id == 56) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.DARK;
-		} else if (id == 57) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = PType.GROUND;
-		} else if (id == 58) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = PType.FLYING;
-		} else if (id == 59) {
-			this.type1 = PType.ICE;
-			this.type2 = PType.PSYCHIC;
-		} else if (id == 60) {
-			this.type1 = PType.ICE;
-			this.type2 = PType.PSYCHIC;
-		} else if (id == 61) {
-			this.type1 = PType.ICE;
-			this.type2 = PType.MAGIC;
-		} else if (id == 62) {
-			this.type1 = PType.ICE;
-			this.type2 = PType.BUG;
-		} else if (id == 63) {
-			this.type1 = PType.ICE;
-			this.type2 = PType.BUG;
-		} else if (id == 64) {
-			this.type1 = PType.GROUND;
-			this.type2 = PType.ICE;
-		} else if (id == 65) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = PType.ICE;
-		} else if (id == 66) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 67) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 68) {
-			this.type1 = PType.ICE;
-			this.type2 = PType.WATER;
-		} else if (id == 69) {
-			this.type1 = PType.ICE;
-			this.type2 = PType.WATER;
-		} else if (id == 70) {
-			this.type1 = PType.ICE;
-			this.type2 = PType.WATER;
-		} else if (id == 71) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == 72) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.LIGHT;
-		} else if (id == 73) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.DARK;
-		} else if (id == 74) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.DARK;
-		} else if (id == 75) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = PType.MAGIC;
-		} else if (id == 76) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = PType.MAGIC;
-		} else if (id == 77) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = PType.MAGIC;
-		} else if (id == 78) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.PSYCHIC;
-		} else if (id == 79) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.PSYCHIC;
-		} else if (id == 80) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.PSYCHIC;
-		} else if (id == 81) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.PSYCHIC;
-		} else if (id == 82) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = null;
-		} else if (id == 83) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = PType.STEEL;
-		} else if (id == 84) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = PType.STEEL;
-		} else if (id == 85) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = PType.LIGHT;
-		} else if (id == 86) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = PType.LIGHT;
-		} else if (id == 87) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = PType.LIGHT;
-		} else if (id == 88) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 89) {
-			this.type1 = PType.LIGHT;
-			this.type2 = PType.NORMAL;
-		} else if (id == 90) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = PType.DARK;
-		} else if (id == 91) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = PType.DARK;
-		} else if (id == 92) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.NORMAL;
-		} else if (id == 93) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.NORMAL;
-		} else if (id == 94) {
-			this.type1 = PType.FIRE;
-			this.type2 = null;
-		} else if (id == 95) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 96) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 97) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.GHOST;
-		} else if (id == 98) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.GROUND;
-		} else if (id == 99) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.FLYING;
-		} else if (id == 100) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.DRAGON;
-		} else if (id == 101) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.ROCK;
-		} else if (id == 102) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.ROCK;
-		} else if (id == 103) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.ROCK;
-		} else if (id == 104) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.DARK;
-		} else if (id == 105) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.DARK;
-		} else if (id == 106) {
-			this.type1 = PType.MAGIC;
-			this.type2 = null;
-		} else if (id == 107) {
-			this.type1 = PType.MAGIC;
-			this.type2 = PType.FIRE;
-		} else if (id == 108) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.LIGHT;
-		} else if (id == 109) {
-			this.type1 = PType.FIRE;
-			this.type2 = null;
-		} else if (id == 110) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.LIGHT;
-		} else if (id == 111) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = null;
-		} else if (id == 112) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = null;
-		} else if (id == 113) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = PType.STEEL;
-		} else if (id == 114) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = PType.GROUND;
-		} else if (id == 115) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = PType.GROUND;
-		} else if (id == 116) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = PType.GROUND;
-		} else if (id == 117) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 118) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 119) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 120) {
-			this.type1 = PType.STEEL;
-			this.type2 = PType.NORMAL;
-		} else if (id == 121) {
-			this.type1 = PType.STEEL;
-			this.type2 = PType.LIGHT;
-		} else if (id == 122) {
-			this.type1 = PType.STEEL;
-			this.type2 = PType.MAGIC;
-		} else if (id == 123) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = PType.NORMAL;
-		} else if (id == 124) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = PType.LIGHT;
-		} else if (id == 125) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = PType.MAGIC;
-		} else if (id == 126) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = PType.NORMAL;
-		} else if (id == 127) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = PType.LIGHT;
-		} else if (id == 128) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = PType.MAGIC;
-		} else if (id == 129) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.GROUND;
-		} else if (id == 130) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.FLYING;
-		} else if (id == 131) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.GHOST;
-		} else if (id == 132) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.GHOST;
-		} else if (id == 133) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.GHOST;
-		} else if (id == 134) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == 135) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.FLYING;
-		} else if (id == 136) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.DRAGON;
-		} else if (id == 137) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == 138) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.FLYING;
-		} else if (id == 139) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.GALACTIC;
-		} else if (id == 140) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.GALACTIC;
-		} else if (id == 141) {
-			this.type1 = PType.DARK;
-			this.type2 = PType.WATER;
-		} else if (id == 142) {
-			this.type1 = PType.DARK;
-			this.type2 = PType.FLYING;
-		} else if (id == 143) {
-			this.type1 = PType.MAGIC;
-			this.type2 = PType.DRAGON;
-		} else if (id == 144) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.DRAGON;
-		} else if (id == 145) {
-			this.type1 = PType.MAGIC;
-			this.type2 = PType.DRAGON;
-		} else if (id == 146) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.ROCK;
-		} else if (id == 147) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.ROCK;
-		} else if (id == 148) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.GROUND;
-		} else if (id == 149) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.GROUND;
-		} else if (id == 150) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.MAGIC;
-		} else if (id == 151) {
-			this.type1 = PType.POISON;
-			this.type2 = null;
-		} else if (id == 152) {
-			this.type1 = PType.POISON;
-			this.type2 = null;
-		} else if (id == 153) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.FLYING;
-		} else if (id == 154) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.FLYING;
-		} else if (id == 155) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.FLYING;
-		} else if (id == 156) {
-			this.type1 = PType.GHOST;
-			this.type2 = null;
-		} else if (id == 157) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.STEEL;
-		} else if (id == 158) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.DARK;
-		} else if (id == 159) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.DARK;
-		} else if (id == 160) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.POISON;
-		} else if (id == 161) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.ROCK;
-		} else if (id == 162) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.ROCK;
-		} else if (id == 163) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = null;
-		} else if (id == 164) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = null;
-		} else if (id == 165) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = null;
-		} else if (id == 166) {
-			this.type1 = PType.GROUND;
-			this.type2 = null;
-		} else if (id == 167) {
-			this.type1 = PType.GROUND;
-			this.type2 = null;
-		} else if (id == 168) {
-			this.type1 = PType.GROUND;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 169) {
-			this.type1 = PType.GROUND;
-			this.type2 = null;
-		} else if (id == 170) {
-			this.type1 = PType.GROUND;
-			this.type2 = PType.LIGHT;
-		} else if (id == 171) {
-			this.type1 = PType.GROUND;
-			this.type2 = null;
-		} else if (id == 172) {
-			this.type1 = PType.GROUND;
-			this.type2 = PType.STEEL;
-		} else if (id == 173) {
-			this.type1 = PType.GROUND;
-			this.type2 = PType.DRAGON;
-		} else if (id == 174) {
-			this.type1 = PType.GALACTIC;
-			this.type2 = PType.LIGHT;
-		} else if (id == 175) {
-			this.type1 = PType.GALACTIC;
-			this.type2 = PType.LIGHT;
-		} else if (id == 176) {
-			this.type1 = PType.GALACTIC;
-			this.type2 = PType.LIGHT;
-		} else if (id == 177) {
-			this.type1 = PType.MAGIC;
-			this.type2 = PType.FLYING;
-		} else if (id == 178) {
-			this.type1 = PType.MAGIC;
-			this.type2 = PType.FLYING;
-		} else if (id == 179) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.GHOST;
-		} else if (id == 180) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.GHOST;
-		} else if (id == 181) {
-			this.type1 = PType.STEEL;
-			this.type2 = null;
-		} else if (id == 182) {
-			this.type1 = PType.STEEL;
-			this.type2 = null;
-		} else if (id == 183) {
-			this.type1 = PType.STEEL;
-			this.type2 = null;
-		} else if (id == 184) {
-			this.type1 = PType.MAGIC;
-			this.type2 = PType.GALACTIC;
-		} else if (id == 185) {
-			this.type1 = PType.MAGIC;
-			this.type2 = PType.GALACTIC;
-		} else if (id == 186) {
-			this.type1 = PType.MAGIC;
-			this.type2 = PType.GALACTIC;
-		} else if (id == 187) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.LIGHT;
-		} else if (id == 188) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.LIGHT;
-		} else if (id == 189) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.LIGHT;
-		} else if (id == 190) {
-			this.type1 = PType.GALACTIC;
-			this.type2 = null;
-		} else if (id == 191) {
-			this.type1 = PType.GALACTIC;
-			this.type2 = null;
-		} else if (id == 192) {
-			this.type1 = PType.GALACTIC;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 193) {
-			this.type1 = PType.GALACTIC;
-			this.type2 = PType.ICE;
-		} else if (id == 194) {
-			this.type1 = PType.GALACTIC;
-			this.type2 = PType.ICE;
-		} else if (id == 195) {
-			this.type1 = PType.GALACTIC;
-			this.type2 = PType.ROCK;
-		} else if (id == 196) {
-			this.type1 = PType.GALACTIC;
-			this.type2 = PType.ROCK;
-		} else if (id == 197) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 198) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 199) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 200) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 201) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 202) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 203) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 204) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 205) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 206) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 207) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 208) {
-			this.type1 = PType.LIGHT;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 209) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 210) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 211) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 212) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == 213) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.DARK;
-		} else if (id == 214) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.DARK;
-		} else if (id == 215) {
-			this.type1 = PType.GROUND;
-			this.type2 = PType.GHOST;
-		} else if (id == 216) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.GHOST;
-		} else if (id == 217) {
-			this.type1 = PType.GROUND;
-			this.type2 = PType.DARK;
-		} else if (id == 218) {
-			this.type1 = PType.GROUND;
-			this.type2 = PType.DARK;
-		} else if (id == 219) {
-			this.type1 = PType.GROUND;
-			this.type2 = PType.DARK;
-		} else if (id == 220) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.DARK;
-		} else if (id == 221) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.DARK;
-		} else if (id == 222) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.DARK;
-		} else if (id == 223) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.DARK;
-		} else if (id == 224) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = PType.DARK;
-		} else if (id == 225) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = PType.DARK;
-		} else if (id == 226) {
-			this.type1 = PType.FLYING;
-			this.type2 = PType.GHOST;
-		} else if (id == 227) {
-			this.type1 = PType.FLYING;
-			this.type2 = PType.GHOST;
-		} else if (id == 228) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.FLYING;
-		} else if (id == 229) {
-			this.type1 = PType.DARK;
-			this.type2 = PType.MAGIC;
-		} else if (id == 230) {
-			this.type1 = PType.ICE;
-			this.type2 = PType.LIGHT;
-		} else if (id == 231) {
-			this.type1 = PType.ICE;
-			this.type2 = PType.MAGIC;
-		} else if (id == 232) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.MAGIC;
-		} else if (id == 233) {
-			this.type1 = PType.ICE;
-			this.type2 = PType.DRAGON;
-		} else if (id == 234) {
-			this.type1 = PType.PSYCHIC;
-			this.type2 = PType.DRAGON;
-		} else if (id == 235) {
-			this.type1 = PType.GALACTIC;
-			this.type2 = PType.DRAGON;
-		} else if (id == 236) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.GALACTIC;
-		} else if (id == 237) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.DRAGON;
-		} else if (id == 238) {
-			this.type1 = PType.DARK;
-			this.type2 = PType.FIGHTING;
-		} else if (id == 239) {
-            this.type1 = PType.DARK;
-            this.type2 = PType.FIGHTING;
-		} else if (id == 240) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.FIGHTING;
-		}else if (id == -1) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == -2) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == -3) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.ROCK;
-		} else if (id == -4) {
-			this.type1 = PType.FIRE;
-			this.type2 = null;
-		} else if (id == -5) {
-			this.type1 = PType.FIRE;
-			this.type2 = null;
-		} else if (id == -6) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.ROCK;
-		} else if (id == -7) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == -8) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == -9) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == -10) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == -11) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == -12) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == -13) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.FIGHTING;
-		} else if (id == -14) {
-			this.type1 = PType.NORMAL;
-			this.type2 = null;
-		} else if (id == -15) {
-			this.type1 = PType.NORMAL;
-			this.type2 = null;
-		} else if (id == -16) {
-			this.type1 = PType.NORMAL;
-			this.type2 = null;
-		} else if (id == -17) {
-			this.type1 = PType.NORMAL;
-			this.type2 = null;
-		} else if (id == -18) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.GROUND;
-		} else if (id == -19) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.GROUND;
-		} else if (id == -20) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.GROUND;
-		} else if (id == -21) {
-			this.type1 = PType.ROCK;
-			this.type2 = null;
-		} else if (id == -22) {
-			this.type1 = PType.ROCK;
-			this.type2 = null;
-		} else if (id == -23) {
-			this.type1 = PType.ROCK;
-			this.type2 = PType.FLYING;
-		} else if (id == -24) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.DARK;
-		} else if (id == -25) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == -26) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.FLYING;
-		} else if (id == -27) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.FLYING;
-		} else if (id == -28) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.FLYING;
-		} else if (id == -29) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.FLYING;
-		} else if (id == -30) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.FLYING;
-		} else if (id == -31) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.FLYING;
-		} else if (id == -32) {
-			this.type1 = PType.GRASS;
-			this.type2 = PType.FLYING;
-		} else if (id == -33) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.POISON;
-		} else if (id == -34) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.POISON;
-		} else if (id == -35) {
-			this.type1 = PType.BUG;
-			this.type2 = null;
-		} else if (id == -36) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.POISON;
-		} else if (id == -37) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.POISON;
-		} else if (id == -38) {
-			this.type1 = PType.GHOST;
-			this.type2 = null;
-		} else if (id == -39) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.STEEL;
-		} else if (id == -40) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.DARK;
-		} else if (id == -41) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.DARK;
-		} else if (id == -42) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = null;
-		} else if (id == -43) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.ELECTRIC;
-		} else if (id == -44) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = null;
-		} else if (id == -45) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = PType.STEEL;;
-		} else if (id == -46) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = null;
-		} else if (id == -47) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = null;
-		} else if (id == -48) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.FIGHTING;
-		} else if (id == -49) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.FIGHTING;
-		} else if (id == -50) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.FIGHTING;
-		} else if (id == -51) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = null;
-		} else if (id == -52) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = null;
-		} else if (id == -53) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = null;
-		} else if (id == -54) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = null;
-		} else if (id == -55) {
-			this.type1 = PType.POISON;
-			this.type2 = null;
-		} else if (id == -56) {
-			this.type1 = PType.POISON;
-			this.type2 = null;
-		} else if (id == -57) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.FLYING;
-		} else if (id == -58) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.FLYING;
-		} else if (id == -59) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.GRASS;
-		} else if (id == -60) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.GRASS;
-		} else if (id == -61) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.POISON;
-		} else if (id == -62) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.POISON;
-		} else if (id == -63) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == -64) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.FIGHTING;
-		} else if (id == -65) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.FLYING;
-		} else if (id == -66) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.FLYING;
-		} else if (id == -67) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == -68) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == -69) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.DARK;
-		} else if (id == -70) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.DRAGON;
-		} else if (id == -71) {
-			this.type1 = PType.GROUND;
-			this.type2 = null;
-		} else if (id == -72) {
-			this.type1 = PType.GROUND;
-			this.type2 = null;
-		} else if (id == -73) {
-			this.type1 = PType.GROUND;
-			this.type2 = PType.FIGHTING;
-		} else if (id == -74) {
-			this.type1 = PType.FIRE;
-			this.type2 = null;
-		} else if (id == -75) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.FIGHTING;
-		} else if (id == -76) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.FIGHTING;
-		} else if (id == -77) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.GROUND;
-		} else if (id == -78) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.FLYING;
-		} else if (id == -79) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.DRAGON;
-		} else if (id == -80) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.STEEL;
-		} else if (id == -81) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.STEEL;
-		} else if (id == -82) {
-			this.type1 = PType.WATER;
-			this.type2 = PType.FLYING;
-		} else if (id == -83) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = PType.FLYING;
-		} else if (id == -84) {
-			this.type1 = PType.FIRE;
-			this.type2 = null;
-		} else if (id == -85) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.FLYING;
-		} else if (id == -86) {
-			this.type1 = PType.DARK;
-			this.type2 = PType.BUG;
-		} else if (id == -87) {
-			this.type1 = PType.DARK;
-			this.type2 = PType.BUG;
-		} else if (id == -88) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.STEEL;
-		} else if (id == -89) {
-			this.type1 = PType.DARK;
-			this.type2 = null;
-		} else if (id == -90) {
-			this.type1 = PType.DARK;
-			this.type2 = null;
-		} else if (id == -91) {
-			this.type1 = PType.DARK;
-			this.type2 = PType.MAGIC;
-		} else if (id == -92) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = null;
-		} else if (id == -93) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.FIRE;
-		} else if (id == -94) {
-			this.type1 = PType.GHOST;
-			this.type2 = PType.FIRE;
-		} else if (id == -95) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.STEEL;
-		} else if (id == -96) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.STEEL;
-		} else if (id == -97) {
-			this.type1 = PType.STEEL;
-			this.type2 = null;
-		} else if (id == -98) {
-			this.type1 = PType.STEEL;
-			this.type2 = null;
-		} else if (id == -99) {
-			this.type1 = PType.STEEL;
-			this.type2 = null;
-		} else if (id == -100) {
-			this.type1 = PType.DRAGON;
-			this.type2 = null;
-		} else if (id == -101) {
-			this.type1 = PType.DRAGON;
-			this.type2 = null;
-		} else if (id == -102) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.FLYING;
-		} else if (id == -103) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.FIGHTING;
-		} else if (id == -104) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.FLYING;
-		} else if (id == -105) {
-			this.type1 = PType.DRAGON;
-			this.type2 = PType.FIRE;
-		} else if (id == -106) {
-			this.type1 = PType.MAGIC;
-			this.type2 = null;
-		} else if (id == -107) {
-			this.type1 = PType.MAGIC;
-			this.type2 = null;
-		} else if (id == -108) {
-			this.type1 = PType.MAGIC;
-			this.type2 = PType.FIRE;
-		} else if (id == -109) {
-			this.type1 = PType.MAGIC;
-			this.type2 = null;
-		} else if (id == -110) {
-			this.type1 = PType.MAGIC;
-			this.type2 = null;
-		} else if (id == -111) {
-			this.type1 = PType.MAGIC;
-			this.type2 = null;
-		} else if (id == -112) {
-			this.type1 = PType.NORMAL;
-			this.type2 = null;
-		} else if (id == -113) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == -114) {
-			this.type1 = PType.FIRE;
-			this.type2 = null;
-		} else if (id == -115) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == -116) {
-			this.type1 = PType.POISON;
-			this.type2 = null;
-		} else if (id == -117) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = null;
-		} else if (id == -118) {
-			this.type1 = PType.ROCK;
-			this.type2 = null;
-		} else if (id == -119) {
-			this.type1 = PType.DARK;
-			this.type2 = null;
-		} else if (id == -120) {
-			this.type1 = PType.STEEL;
-			this.type2 = null;
-		} else if (id == -121) {
-			this.type1 = PType.FIGHTING;
-			this.type2 = null;
-		} else if (id == -122) {
-			this.type1 = PType.DRAGON;
-			this.type2 = null;
-		} else if (id == -123) {
-			this.type1 = PType.MAGIC;
-			this.type2 = null;
-		} else if (id == -124) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == -125) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == -126) {
-			this.type1 = PType.GRASS;
-			this.type2 = null;
-		} else if (id == -127) {
-			this.type1 = PType.FIRE;
-			this.type2 = null;
-		} else if (id == -128) {
-			this.type1 = PType.FIRE;
-			this.type2 = null;
-		} else if (id == -129) {
-			this.type1 = PType.FIRE;
-			this.type2 = null;
-		} else if (id == -130) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == -131) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == -132) {
-			this.type1 = PType.WATER;
-			this.type2 = null;
-		} else if (id == -133) {
-			this.type1 = PType.ELECTRIC;
-			this.type2 = PType.DRAGON;
-		} else if (id == -134) {
-			this.type1 = PType.FIRE;
-			this.type2 = PType.DRAGON;
-		} else if (id == -135) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.MAGIC;
-		} else if (id == -136) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.MAGIC;
-		} else if (id == -137) {
-			this.type1 = PType.FLYING;
-			this.type2 = PType.MAGIC;
-		} else if (id == -138) {
-			this.type1 = PType.NORMAL;
-			this.type2 = PType.MAGIC;
-		} else if (id == -139) {
-			this.type1 = PType.BUG;
-			this.type2 = PType.MAGIC;
-		} else if (id == -140) {
-			this.type1 = PType.FLYING;
-			this.type2 = PType.MAGIC;
-		} else if (id == -141) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.FIRE;
-		} else if (id == -142) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.WATER;
-		} else if (id == -143) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.FIRE;
-		} else if (id == -144) {
-			this.type1 = PType.POISON;
-			this.type2 = PType.WATER;
-		}
-		
+	public PType[] getTypes(int id) {
+		return types[id - 1];
 	}
 	
 	public PType getType1(int id) {
-		Pokemon test = new Pokemon(1, 1, false, false);
-		test.setType(id);
-		return test.type1;
+		return getTypes(id)[0];
 	}
 	
 	public PType getType2(int id) {
-		Pokemon test = new Pokemon(1, 1, false, false);
-		test.setType(id);
-		return test.type2;
+		return getTypes(id)[0];
 	}
 	
 	public String getName() {
-		return getName(this.id);
+		return getName(id);
 	}
 	
 	public String getName(int id) {
-		if (id == 1) { return "Twigle";
-		} else if (id == 2) { return "Torgged";
-		} else if (id == 3) { return "Tortugis";
-		} else if (id == 4) { return "Lagma";
-		} else if (id == 5) { return "Maguide";
-		} else if (id == 6) { return "Magron";
-		} else if (id == 7) { return "Lizish";
-		} else if (id == 8) { return "Iguaton";
-		} else if (id == 9) { return "Dragave";
-		} else if (id == 10) { return "Hummingspark";
-		} else if (id == 11) { return "Flashclaw";
-		} else if (id == 12) { return "Magestiflash";
-		} else if (id == 13) { return "Pigo";
-		} else if (id == 14) { return "Pigonat";
-		} else if (id == 15) { return "Pigoga";
-		} else if (id == 16) { return "Hammo";
-		} else if (id == 17) { return "HammyBoy";
-		} else if (id == 18) { return "Hamthorno";
-		} else if (id == 19) { return "Sheabear";
-		} else if (id == 20) { return "Dualbear";
-		} else if (id == 21) { return "Spacebear";
-		} else if (id == 22) { return "Bealtle";
-		} else if (id == 23) { return "Centatle";
-		} else if (id == 24) { return "Curlatoral";
-		} else if (id == 25) { return "Millistone";
-		} else if (id == 26) { return "Sapwin";
-		} else if (id == 27) { return "Treewin";
-		} else if (id == 28) { return "Winagrow";
-		} else if (id == 29) { return "Budew";
-		} else if (id == 30) { return "Roselia";
-		} else if (id == 31) { return "Roserade";
-		} else if (id == 32) { return "Sewaddle";
-		} else if (id == 33) { return "Swadloon";
-		} else if (id == 34) { return "Leavanny";
-		} else if (id == 35) { return "Grubbin";
-		} else if (id == 36) { return "Charjabug";
-		} else if (id == 37) { return "Vikavolt";
-		} else if (id == 38) { return "Busheep";
-		} else if (id == 39) { return "Ramant";
-		} else if (id == 40) { return "Bushewe";
-		} else if (id == 41) { return "Bugik";
-		} else if (id == 42) { return "Swordik";
-		} else if (id == 43) { return "Ninjakik";
-		} else if (id == 44) { return "Lotad";
-		} else if (id == 45) { return "Lombre";
-		} else if (id == 46) { return "Ludicolo";
-		} else if (id == 47) { return "Bluebunn";
-		} else if (id == 48) { return "Rocky";
-		} else if (id == 49) { return "Boulder";
-		} else if (id == 50) { return "Blaster";
-		} else if (id == 51) { return "Crystallor";
-		} else if (id == 52) { return "Carinx";
-		} else if (id == 53) { return "Carinator";
-		} else if (id == 54) { return "Cairnasaur";
-		} else if (id == 55) { return "Pebblepup";
-		} else if (id == 56) { return "Boulderoar";
-		} else if (id == 57) { return "Fightorex";
-		} else if (id == 58) { return "Raptorex";
-		} else if (id == 59) { return "Kleinowl";
-		} else if (id == 60) { return "Hootowl";
-		} else if (id == 61) { return "Dualmoose";
-		} else if (id == 62) { return "Snom";
-		} else if (id == 63) { return "Frosmoth";
-		} else if (id == 64) { return "Grondor";
-		} else if (id == 65) { return "Bipedice";
-		} else if (id == 66) { return "Tricerpup";
-		} else if (id == 67) { return "Tricercil";
-		} else if (id == 68) { return "Spheal";
-		} else if (id == 69) { return "Sealeo";
-		} else if (id == 70) { return "Walrein";
-		} else if (id == 71) { return "Froshrog";
-		} else if (id == 72) { return "Bouncerog";
-		} else if (id == 73) { return "Bugop";
-		} else if (id == 74) { return "Opwing";
-		} else if (id == 75) { return "Hatenna";
-		} else if (id == 76) { return "Hattrem";
-		} else if (id == 77) { return "Hatterene";
-		} else if (id == 78) { return "Otterpor";
-		} else if (id == 79) { return "Psylotter";
-		} else if (id == 80) { return "Florline";
-		} else if (id == 81) { return "Florlion";
-		} else if (id == 82) { return "Psycorb";
-		} else if (id == 83) { return "Psyballs";
-		} else if (id == 84) { return "Psycorboratr";
-		} else if (id == 85) { return "Ralts";
-		} else if (id == 86) { return "Kirlia";
-		} else if (id == 87) { return "Gardevoir";
-		} else if (id == 88) { return "Gallade";
-		} else if (id == 89) { return "Tigrette";
-		} else if (id == 90) { return "Inkay";
-		} else if (id == 91) { return "Malamar";
-		} else if (id == 92) { return "Flameruff";
-		} else if (id == 93) { return "Barkflare";
-		} else if (id == 94) { return "Iglite";
-		} else if (id == 95) { return "Blaxer";
-		} else if (id == 96) { return "Pyrator";
-		} else if (id == 97) { return "Magmaclang";
-		} else if (id == 98) { return "Flamehox";
-		} else if (id == 99) { return "Fireshard";
-		} else if (id == 100) { return "Blastflames";
-		} else if (id == 101) { return "Tiowoo";
-		} else if (id == 102) { return "Magwoo";
-		} else if (id == 103) { return "Lafloo";
-		} else if (id == 104) { return "Houndour";
-		} else if (id == 105) { return "Houndoom";
-		} else if (id == 106) { return "Sparkdust";
-		} else if (id == 107) { return "Splame";
-		} else if (id == 108) { return "Sparkitten";
-		} else if (id == 109) { return "Fireblion";
-		} else if (id == 110) { return "Flamebless";
-		} else if (id == 111) { return "Shookwat";
-		} else if (id == 112) { return "Wattwo";
-		} else if (id == 113) { return "Megawatt";
-		} else if (id == 114) { return "Elelamb";
-		} else if (id == 115) { return "Electroram";
-		} else if (id == 116) { return "Superchargo";
-		} else if (id == 117) { return "Twigzap";
-		} else if (id == 118) { return "Shockbranch";
-		} else if (id == 119) { return "Thunderzap";
-		} else if (id == 120) { return "Magie";
-		} else if (id == 121) { return "Cumin";
-		} else if (id == 122) { return "Cinneroph";
-		} else if (id == 123) { return "Vupp";
-		} else if (id == 124) { return "Vinnie";
-		} else if (id == 125) { return "Suvinero";
-		} else if (id == 126) { return "Whiskie";
-		} else if (id == 127) { return "Whiskers";
-		} else if (id == 128) { return "Whiskeroar";
-		} else if (id == 129) { return "Nincada";
-		} else if (id == 130) { return "Ninjask";
-		} else if (id == 131) { return "Shedinja";
-		} else if (id == 132) { return "Sheltor";
-		} else if (id == 133) { return "Shelnado";
-		} else if (id == 134) { return "Lilyray";
-		} else if (id == 135) { return "Daray";
-		} else if (id == 136) { return "Spinaquata";
-		} else if (id == 137) { return "Magikarp";
-		} else if (id == 138) { return "Gyarados";
-		} else if (id == 139) { return "Staryu";
-		} else if (id == 140) { return "Starmie";
-		} else if (id == 141) { return "Ali";
-		} else if (id == 142) { return "Batorali";
-		} else if (id == 143) { return "Posho";
-		} else if (id == 144) { return "Shomp";
-		} else if (id == 145) { return "Poshorump";
-		} else if (id == 146) { return "Binacle";
-		} else if (id == 147) { return "Barbaracle";
-		} else if (id == 148) { return "Durfish";
-		} else if (id == 149) { return "Dompster";
-		} else if (id == 150) { return "Kissyfishy";
-		} else if (id == 151) { return "Ekans";
-		} else if (id == 152) { return "Arbok";
-		} else if (id == 153) { return "Zubat";
-		} else if (id == 154) { return "Golbat";
-		} else if (id == 155) { return "Crobat";
-		} else if (id == 156) { return "Poof";
-		} else if (id == 157) { return "Hast";
-		} else if (id == 158) { return "Poov";
-		} else if (id == 159) { return "Grust";
-		} else if (id == 160) { return "Cluuz";
-		} else if (id == 161) { return "Zurrclu";
-		} else if (id == 162) { return "Zurroaratr";
-		} else if (id == 163) { return "Timburr";
-		} else if (id == 164) { return "Gurdurr";
-		} else if (id == 165) { return "Conkeldurr";
-		} else if (id == 166) { return "Rhypo";
-		} else if (id == 167) { return "Rhynee";
-		} else if (id == 168) { return "Rhypolar";
-		} else if (id == 169) { return "Diggie";
-		} else if (id == 170) { return "Drillatron";
-		} else if (id == 171) { return "Wormite";
-		} else if (id == 172) { return "Wormbot";
-		} else if (id == 173) { return "Wormatron";
-		} else if (id == 174) { return "Cleffa";
-		} else if (id == 175) { return "Clefairy";
-		} else if (id == 176) { return "Clefable";
-		} else if (id == 177) { return "Minishoo";
-		} else if (id == 178) { return "Glittleshoo";
-		} else if (id == 179) { return "Zorua";
-		} else if (id == 180) { return "Zoroark";
-		} else if (id == 181) { return "Droid";
-		} else if (id == 182) { return "Armoid";
-		} else if (id == 183) { return "Soldrota";
-		} else if (id == 184) { return "Tinkie";
-		} else if (id == 185) { return "Shawar";
-		} else if (id == 186) { return "Shaboom";
-		} else if (id == 187) { return "Dragee";
-		} else if (id == 188) { return "Draga";
-		} else if (id == 189) { return "Drageye";
-		} else if (id == 190) { return "Blobmo";
-		} else if (id == 191) { return "Nebulimb";
-		} else if (id == 192) { return "Galactasolder";
-		} else if (id == 193) { return "Consodust";
-		} else if (id == 194) { return "Cosmocrash";
-		} else if (id == 195) { return "Rockmite";
-		} else if (id == 196) { return "Stellarock";
-		} else if (id == 197) { return "Poof-E";
-		} else if (id == 198) { return "Hast-E";
-		} else if (id == 199) { return "Droid-E";
-		} else if (id == 200) { return "Armoid-E";
-		} else if (id == 201) { return "Soldrota-E";
-		} else if (id == 202) { return "Flamehox-E";
-		} else if (id == 203) { return "Fireshard-E";
-		} else if (id == 204) { return "Blastflames-E";
-		} else if (id == 205) { return "Rocky-E";
-		} else if (id == 206) { return "Boulder-E";
-		} else if (id == 207) { return "Blaster-E";
-		} else if (id == 208) { return "Crystallor-E";
-		} else if (id == 209) { return "Magikarp-E";
-		} else if (id == 210) { return "Gyarados-E";
-		} else if (id == 211) { return "Shockfang";
-		} else if (id == 212) { return "Electrocobra";
-		} else if (id == 213) { return "Nightrex";
-		} else if (id == 214) { return "Shadowsaur";
-		} else if (id == 215) { return "Durfish-S";
-		} else if (id == 216) { return "Dompster-S";
-		} else if (id == 217) { return "Wormite-S";
-		} else if (id == 218) { return "Wormbot-S";
-		} else if (id == 219) { return "Wormatron-S";
-		} else if (id == 220) { return "Cluuz-S";
-		} else if (id == 221) { return "Zurrclu-S";
-		} else if (id == 222) { return "Zurroaratr-S";
-		} else if (id == 223) { return "Iglite-S";
-		} else if (id == 224) { return "Blaxer-S";
-		} else if (id == 225) { return "Pyrator-S";
-		} else if (id == 226) { return "Ekans-S";
-		} else if (id == 227) { return "Arbok-S";
-		} else if (id == 228) { return "Soarwhell";
-		} else if (id == 229) { return "Diftery";
-		} else if (id == 230) { return "Vorsuitex";
-		} else if (id == 231) { return "Kleinyeti";
-		} else if (id == 232) { return "Triwandoliz";
-		} else if (id == 233) { return "Relomidel";
-		} else if (id == 234) { return "Relopamil";
-		} else if (id == 235) { return "Dragowrath";
-		} else if (id == 236) { return "Solaroxyous";
-		} else if (id == 237) { return "Kissyfishy-D";
-		} else if (id == 238) { return "Scraggy";
-		} else if (id == 239) { return "Scrafty";
-		} else if (id == 240) { return "Scraftagon";
-		
-		} else if (id == -1) { return "Leafer";
-		} else if (id == -2) { return "Sticker";
-		} else if (id == -3) { return "Tree-a-tar";
-		} else if (id == -4) { return "Fwoochar";
-		} else if (id == -5) { return "Charchar";
-		} else if (id == -6) { return "Charwoo";
-		} else if (id == -7) { return "Poletad";
-		} else if (id == -8) { return "Tadwhirl";
-		} else if (id == -9) { return "Tadtoad";
-		} else if (id == -10) { return "Twigzig";
-		} else if (id == -11) { return "Twanzig";
-		} else if (id == -12) { return "Sapwin";
-		} else if (id == -13) { return "Treewin";
-		} else if (id == -14) { return "Hops";
-		} else if (id == -15) { return "Bouncey";
-		} else if (id == -16) { return "Hammo";
-		} else if (id == -17) { return "HammyBoy";
-		} else if (id == -18) { return "Rocky";
-		} else if (id == -19) { return "Boulder";
-		} else if (id == -20) { return "Blaster";
-		} else if (id == -21) { return "Spike";
-		} else if (id == -22) { return "Spiko";
-		} else if (id == -23) { return "Spikoga";
-		} else if (id == -24) { return "Chompee";
-		} else if (id == -25) { return "Chompo";
-		} else if (id == -26) { return "Duckwee";
-		} else if (id == -27) { return "Duckwack";
-		} else if (id == -28) { return "Duckstrike";
-		} else if (id == -29) { return "Chirpus";
-		} else if (id == -30) { return "Quackus";
-		} else if (id == -31) { return "Crane";
-		} else if (id == -32) { return "Plankik";
-		} else if (id == -33) { return "Nug";
-		} else if (id == -34) { return "Contrug";
-		} else if (id == -35) { return "Wasp";
-		} else if (id == -36) { return "Mosquitto";
-		} else if (id == -37) { return "Cluuz";
-		} else if (id == -38) { return "Poof";
-		} else if (id == -39) { return "Hast";
-		} else if (id == -40) { return "Poov";
-		} else if (id == -41) { return "Grust";
-		} else if (id == -42) { return "Smartwiz";
-		} else if (id == -43) { return "Vinnie";
-		} else if (id == -44) { return "Shookwat";
-		} else if (id == -45) { return "Wattwo";
-		} else if (id == -46) { return "Corry";
-		} else if (id == -47) { return "Ssordy";
-		} else if (id == -48) { return "Bugik";
-		} else if (id == -49) { return "Swordik";
-		} else if (id == -50) { return "Ninjakik";
-		} else if (id == -51) { return "Karachop";
-		} else if (id == -52) { return "Karapunch";
-		} else if (id == -53) { return "Karakik";
-		} else if (id == -54) { return "Karasword";
-		} else if (id == -55) { return "Sludger";
-		} else if (id == -56) { return "Gludge";
-		} else if (id == -57) { return "Wing";
-		} else if (id == -58) { return "Toxing";
-		} else if (id == -59) { return "Gelco-G";
-		} else if (id == -60) { return "Lizardo-G";
-		} else if (id == -61) { return "Jorid";
-		} else if (id == -62) { return "Tentarid";
-		} else if (id == -63) { return "Hedgehog";
-		} else if (id == -64) { return "Bulldozer";
-		} else if (id == -65) { return "Daray";
-		} else if (id == -66) { return "Spinaquata";
-		} else if (id == -67) { return "Toree";
-		} else if (id == -68) { return "Turdee";
-		} else if (id == -69) { return "Ali";
-		} else if (id == -70) { return "Shomp";
-		} else if (id == -71) { return "Rhypo";
-		} else if (id == -72) { return "Rhynee";
-		} else if (id == -73) { return "Rhypolar";
-		} else if (id == -74) { return "Ignite";
-		} else if (id == -75) { return "Blaze";
-		} else if (id == -76) { return "Inferno";
-		} else if (id == -77) { return "Flamehead";
-		} else if (id == -78) { return "Fireshard";
-		} else if (id == -79) { return "Blastflames";
-		} else if (id == -80) { return "Heater";
-		} else if (id == -81) { return "Froller";
-		} else if (id == -82) { return "Cloudorus";
-		} else if (id == -83) { return "Stormatus";
-		} else if (id == -84) { return "Creeflare";
-		} else if (id == -85) { return "Flyflare";
-		} else if (id == -86) { return "Tara-Z";
-		} else if (id == -87) { return "Tara-X";
-		} else if (id == -88) { return "Savahger";
-		} else if (id == -89) { return "Show";
-		} else if (id == -90) { return "Dark Zombie";
-		} else if (id == -91) { return "Diftery";
-		} else if (id == -92) { return "Electroball";
-		} else if (id == -93) { return "Ghast";
-		} else if (id == -94) { return "Flast";
-		} else if (id == -95) { return "Magie";
-		} else if (id == -96) { return "Cumin";
-		} else if (id == -97) { return "Droid";
-		} else if (id == -98) { return "Armoid";
-		} else if (id == -99) { return "Soldrota";
-		} else if (id == -100) { return "Dragee";
-		} else if (id == -101) { return "Draga";
-		} else if (id == -102) { return "Drageye";
-		} else if (id == -103) { return "Soardine-A";
-		} else if (id == -104) { return "Soardine-D";
-		} else if (id == -105) { return "Soardine-F";
-		} else if (id == -106) { return "Wando";
-		} else if (id == -107) { return "Sparkdust";
-		} else if (id == -108) { return "Splame";
-		} else if (id == -109) { return "Tinkie";
-		} else if (id == -110) { return "Shawar";
-		} else if (id == -111) { return "Shaboom";
-		} else if (id == -112) { return "Dogo";
-		} else if (id == -113) { return "Doleaf";
-		} else if (id == -114) { return "Drame";
-		} else if (id == -115) { return "Daqua";
-		} else if (id == -116) { return "Doxic";
-		} else if (id == -117) { return "Dratt";
-		} else if (id == -118) { return "Drock";
-		} else if (id == -119) { return "Dokurk";
-		} else if (id == -120) { return "Drotal";
-		} else if (id == -121) { return "Drunch";
-		} else if (id == -122) { return "Draco";
-		} else if (id == -123) { return "Drakik";
-		} else if (id == -124) { return "Plantro";
-		} else if (id == -125) { return "Leafron";
-		} else if (id == -126) { return "Planterra";
-		} else if (id == -127) { return "Sparky";
-		} else if (id == -128) { return "Fireball";
-		} else if (id == -129) { return "Meteator";
-		} else if (id == -130) { return "Taddy";
-		} else if (id == -131) { return "Tarow";
-		} else if (id == -132) { return "Tadagater";
-		} else if (id == -133) { return "Zaparch";
-		} else if (id == -134) { return "Zaflame";
-		} else if (id == -135) { return "Holgor";
-		} else if (id == -136) { return "Larvangor";
-		} else if (id == -137) { return "Fleigor";
-		} else if (id == -138) { return "Halgatoria";
-		} else if (id == -139) { return "Lavatoria";
-		} else if (id == -140) { return "Wingatoria";
-		} else if (id == -141) { return "Gelco-F";
-		} else if (id == -142) { return "Gelco-W";
-		} else if (id == -143) { return "Lizardo-F";
-		} else if (id == -144) { return "Lizardo-W";
-		} return "";
+		return names[id - 1];
 	}
 	
-	public void setAbility(int i) {
-		Ability[] abilities;
-		
-		if (id == 1) { abilities = new Ability[] {Ability.OVERGROW, Ability.ROUGH_SKIN};
-		} else if (id == 2) { abilities = new Ability[] {Ability.OVERGROW, Ability.ROUGH_SKIN};
-		} else if (id == 3) { abilities = new Ability[] {Ability.OVERGROW, Ability.ROUGH_SKIN};
-		} else if (id == 4) { abilities = new Ability[] {Ability.BLAZE, Ability.DRY_SKIN};
-		} else if (id == 5) { abilities = new Ability[] {Ability.BLAZE, Ability.DRY_SKIN};
-		} else if (id == 6) { abilities = new Ability[] {Ability.BLAZE, Ability.DRY_SKIN};
-		} else if (id == 7) { abilities = new Ability[] {Ability.TORRENT, Ability.PROTEAN};
-		} else if (id == 8) { abilities = new Ability[] {Ability.TORRENT, Ability.PROTEAN};
-		} else if (id == 9) { abilities = new Ability[] {Ability.TORRENT, Ability.PROTEAN};
-		} else if (id == 10) { abilities = new Ability[] {Ability.KEEN_EYE, Ability.INSECT_FEEDER};
-		} else if (id == 11) { abilities = new Ability[] {Ability.MIRROR_ARMOR, Ability.INSECT_FEEDER};
-		} else if (id == 12) { abilities = new Ability[] {Ability.MIRROR_ARMOR, Ability.INSECT_FEEDER};
-		} else if (id == 13) { abilities = new Ability[] {Ability.INSOMNIA, Ability.INSECT_FEEDER};
-		} else if (id == 14) { abilities = new Ability[] {Ability.INSOMNIA, Ability.INSECT_FEEDER};
-		} else if (id == 15) { abilities = new Ability[] {Ability.BATTLE_ARMOR, Ability.TOUGH_CLAWS};
-		} else if (id == 16) { abilities = new Ability[] {Ability.MOUTHWATER, Ability.THICK_FAT};
-		} else if (id == 17) { abilities = new Ability[] {Ability.MOUTHWATER, Ability.THICK_FAT};
-		} else if (id == 18) { abilities = new Ability[] {Ability.ROUGH_SKIN, Ability.ROCK_HEAD};
-		} else if (id == 19) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.ANGER_POINT};
-		} else if (id == 20) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.SHIELD_DUST};
-		} else if (id == 21) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.LEVITATE};
-		} else if (id == 22) { abilities = new Ability[] {Ability.SWARM, Ability.COMPOUND_EYES};
-		} else if (id == 23) { abilities = new Ability[] {Ability.SWARM, Ability.COMPOUND_EYES};
-		} else if (id == 24) { abilities = new Ability[] {Ability.POISON_HEAL, Ability.COMPOUND_EYES};
-		} else if (id == 25) { abilities = new Ability[] {Ability.ROUGH_SKIN, Ability.COMPOUND_EYES};
-		} else if (id == 26) { abilities = new Ability[] {Ability.ANGER_POINT, Ability.CHLOROPHYLL};
-		} else if (id == 27) { abilities = new Ability[] {Ability.ANGER_POINT, Ability.CHLOROPHYLL};
-		} else if (id == 28) { abilities = new Ability[] {Ability.COMPETITIVE, Ability.CHLOROPHYLL};
-		} else if (id == 29) { abilities = new Ability[] {Ability.POISON_POINT, Ability.NATURAL_CURE};
-		} else if (id == 30) { abilities = new Ability[] {Ability.POISON_POINT, Ability.NATURAL_CURE};
-		} else if (id == 31) { abilities = new Ability[] {Ability.TECHNICIAN, Ability.NATURAL_CURE};
-		} else if (id == 32) { abilities = new Ability[] {Ability.SWARM, Ability.CHLOROPHYLL};
-		} else if (id == 33) { abilities = new Ability[] {Ability.SWARM, Ability.CHLOROPHYLL};
-		} else if (id == 34) { abilities = new Ability[] {Ability.SHARPNESS, Ability.CHLOROPHYLL};
-		} else if (id == 35) { abilities = new Ability[] {Ability.SWARM, Ability.HYPER_CUTTER};
-		} else if (id == 36) { abilities = new Ability[] {Ability.STATIC, Ability.BATTLE_ARMOR};
-		} else if (id == 37) { abilities = new Ability[] {Ability.LEVITATE, Ability.TINTED_LENS};
-		} else if (id == 38) { abilities = new Ability[] {Ability.ANTICIPATION, Ability.FLUFFY};
-		} else if (id == 39) { abilities = new Ability[] {Ability.MOXIE, Ability.DEFIANT};
-		} else if (id == 40) { abilities = new Ability[] {Ability.SERENE_GRACE, Ability.COMPETITIVE};
-		} else if (id == 41) { abilities = new Ability[] {Ability.HYPER_CUTTER, Ability.SWARM};
-		} else if (id == 42) { abilities = new Ability[] {Ability.HYPER_CUTTER, Ability.JUSTIFIED};
-		} else if (id == 43) { abilities = new Ability[] {Ability.SPEED_BOOST, Ability.JUSTIFIED};
-		} else if (id == 44) { abilities = new Ability[] {Ability.SWIFT_SWIM, Ability.RAIN_DISH};
-		} else if (id == 45) { abilities = new Ability[] {Ability.SWIFT_SWIM, Ability.RAIN_DISH};
-		} else if (id == 46) { abilities = new Ability[] {Ability.SWIFT_SWIM, Ability.RAIN_DISH};
-		} else if (id == 47) { abilities = new Ability[] {Ability.MAGIC_GUARD, Ability.FLASH_FIRE};
-		} else if (id == 48) { abilities = new Ability[] {Ability.STURDY, Ability.UNERODIBLE};
-		} else if (id == 49) { abilities = new Ability[] {Ability.STURDY, Ability.UNERODIBLE};
-		} else if (id == 50) { abilities = new Ability[] {Ability.STURDY, Ability.UNERODIBLE};
-		} else if (id == 51) { abilities = new Ability[] {Ability.STURDY, Ability.FILTER};
-		} else if (id == 52) { abilities = new Ability[] {Ability.SHED_SKIN, Ability.REGENERATOR};
-		} else if (id == 53) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.REGENERATOR};
-		} else if (id == 54) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.REGENERATOR};
-		} else if (id == 55) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.TECHNICIAN};
-		} else if (id == 56) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.TECHNICIAN};
-		} else if (id == 57) { abilities = new Ability[] {Ability.GUTS, Ability.NO_GUARD};
-		} else if (id == 58) { abilities = new Ability[] {Ability.GUTS, Ability.NO_GUARD};
-		} else if (id == 59) { abilities = new Ability[] {Ability.SNOW_CLOAK, Ability.MOUTHWATER};
-		} else if (id == 60) { abilities = new Ability[] {Ability.SNOW_CLOAK, Ability.ICE_BODY};
-		} else if (id == 61) { abilities = new Ability[] {Ability.SNOW_CLOAK, Ability.SPARKLY_SURGE};
-		} else if (id == 62) { abilities = new Ability[] {Ability.ICY_SCALES, Ability.SWARM};
-		} else if (id == 63) { abilities = new Ability[] {Ability.ICY_SCALES, Ability.SHIELD_DUST};
-		} else if (id == 64) { abilities = new Ability[] {Ability.STURDY, Ability.TECHNICIAN};
-		} else if (id == 65) { abilities = new Ability[] {Ability.GUTS, Ability.SLUSH_RUSH};
-		} else if (id == 66) { abilities = new Ability[] {Ability.ROCK_HEAD, Ability.SAND_FORCE};
-		} else if (id == 67) { abilities = new Ability[] {Ability.ROCK_HEAD, Ability.SAND_FORCE};
-		} else if (id == 68) { abilities = new Ability[] {Ability.UNAWARE, Ability.THICK_FAT};
-		} else if (id == 69) { abilities = new Ability[] {Ability.UNAWARE, Ability.THICK_FAT};
-		} else if (id == 70) { abilities = new Ability[] {Ability.UNAWARE, Ability.THICK_FAT};
-		} else if (id == 71) { abilities = new Ability[] {Ability.TORRENT, Ability.SLUSH_RUSH};
-		} else if (id == 72) { abilities = new Ability[] {Ability.TORRENT, Ability.SLUSH_RUSH};
-		} else if (id == 73) { abilities = new Ability[] {Ability.TECHNICIAN, Ability.INSOMNIA};
-		} else if (id == 74) { abilities = new Ability[] {Ability.TECHNICIAN, Ability.INSOMNIA};
-		} else if (id == 75) { abilities = new Ability[] {Ability.ANTICIPATION, Ability.NATURAL_CURE};
-		} else if (id == 76) { abilities = new Ability[] {Ability.MAGIC_BOUNCE, Ability.NATURAL_CURE};
-		} else if (id == 77) { abilities = new Ability[] {Ability.MAGIC_BOUNCE, Ability.NATURAL_CURE};
-		} else if (id == 78) { abilities = new Ability[] {Ability.WATER_VEIL, Ability.ANTICIPATION};
-		} else if (id == 79) { abilities = new Ability[] {Ability.WATER_VEIL, Ability.SWIFT_SWIM};
-		} else if (id == 80) { abilities = new Ability[] {Ability.GRASSY_SURGE, Ability.PSYCHIC_SURGE};
-		} else if (id == 81) { abilities = new Ability[] {Ability.GRASSY_SURGE, Ability.PSYCHIC_SURGE};
-		} else if (id == 82) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.LEVITATE};
-		} else if (id == 83) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.LEVITATE};
-		} else if (id == 84) { abilities = new Ability[] {Ability.PSYCHIC_SURGE, Ability.LEVITATE};
-		} else if (id == 85) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.TRACE};
-		} else if (id == 86) { abilities = new Ability[] {Ability.SYNCHRONIZE, Ability.TRACE};
-		} else if (id == 87) { abilities = new Ability[] {Ability.EMPATHIC_LINK, Ability.TRACE};
-		} else if (id == 88) { abilities = new Ability[] {Ability.SHARPNESS, Ability.NO_GUARD};
-		} else if (id == 89) { abilities = new Ability[] {Ability.SIMPLE, Ability.NORMALIZE};
-		} else if (id == 90) { abilities = new Ability[] {Ability.CONTRARY, Ability.BRAINWASH};
-		} else if (id == 91) { abilities = new Ability[] {Ability.CONTRARY, Ability.BRAINWASH};
-		} else if (id == 92) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.FLASH_FIRE};
-		} else if (id == 93) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.FLASH_FIRE};
-		} else if (id == 94) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.FLASH_FIRE};
-		} else if (id == 95) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.IRON_FIST};
-		} else if (id == 96) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.IRON_FIST};
-		} else if (id == 97) { abilities = new Ability[] {Ability.STEELWORKER, Ability.STEELWORKER};
-		} else if (id == 98) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.FLAME_BODY};
-		} else if (id == 99) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.INTIMIDATE};
-		} else if (id == 100) { abilities = new Ability[] {Ability.LEVITATE, Ability.LEVITATE};
-		} else if (id == 101) { abilities = new Ability[] {Ability.SOLID_ROCK, Ability.SOLID_ROCK};
-		} else if (id == 102) { abilities = new Ability[] {Ability.SOLID_ROCK, Ability.SOLID_ROCK};
-		} else if (id == 103) { abilities = new Ability[] {Ability.SOLID_ROCK, Ability.SOLID_ROCK};
-		} else if (id == 104) { abilities = new Ability[] {Ability.SOLAR_POWER, Ability.FLASH_FIRE};
-		} else if (id == 105) { abilities = new Ability[] {Ability.SOLAR_POWER, Ability.FLASH_FIRE};
-		} else if (id == 106) { abilities = new Ability[] {Ability.SHIELD_DUST, Ability.MAGIC_GUARD};
-		} else if (id == 107) { abilities = new Ability[] {Ability.SHIELD_DUST, Ability.MAGIC_GUARD};
-		} else if (id == 108) { abilities = new Ability[] {Ability.ANTICIPATION, Ability.ANTICIPATION};
-		} else if (id == 109) { abilities = new Ability[] {Ability.DROUGHT, Ability.DROUGHT};
-		} else if (id == 110) { abilities = new Ability[] {Ability.COMPETITIVE, Ability.COMPETITIVE};
-		} else if (id == 111) { abilities = new Ability[] {Ability.STATIC, Ability.VOLT_ABSORB};
-		} else if (id == 112) { abilities = new Ability[] {Ability.STATIC, Ability.ELECTRIC_SURGE};
-		} else if (id == 113) { abilities = new Ability[] {Ability.HUGE_POWER, Ability.ELECTRIC_SURGE};
-		} else if (id == 114) { abilities = new Ability[] {Ability.STATIC, Ability.FLUFFY};
-		} else if (id == 115) { abilities = new Ability[] {Ability.STATIC, Ability.FLUFFY};
-		} else if (id == 116) { abilities = new Ability[] {Ability.SPEED_BOOST, Ability.FLUFFY};
-		} else if (id == 117) { abilities = new Ability[] {Ability.SAP_SIPPER, Ability.VOLT_ABSORB};
-		} else if (id == 118) { abilities = new Ability[] {Ability.SAP_SIPPER, Ability.VOLT_ABSORB};
-		} else if (id == 119) { abilities = new Ability[] {Ability.SAP_SIPPER, Ability.VOLT_ABSORB};
-		} else if (id == 120) { abilities = new Ability[] {Ability.TOUGH_CLAWS, Ability.IRON_BARBS};
-		} else if (id == 121) { abilities = new Ability[] {Ability.TOUGH_CLAWS, Ability.IRON_BARBS};
-		} else if (id == 122) { abilities = new Ability[] {Ability.TOUGH_CLAWS, Ability.IRON_BARBS};
-		} else if (id == 123) { abilities = new Ability[] {Ability.ELECTRIC_SURGE, Ability.MOTOR_DRIVE};
-		} else if (id == 124) { abilities = new Ability[] {Ability.ELECTRIC_SURGE, Ability.MOTOR_DRIVE};
-		} else if (id == 125) { abilities = new Ability[] {Ability.ELECTRIC_SURGE, Ability.MOTOR_DRIVE};
-		} else if (id == 126) { abilities = new Ability[] {Ability.GUTS, Ability.MOXIE};
-		} else if (id == 127) { abilities = new Ability[] {Ability.GUTS, Ability.MOXIE};
-		} else if (id == 128) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.MOXIE};
-		} else if (id == 129) { abilities = new Ability[] {Ability.COMPOUND_EYES, Ability.TINTED_LENS};
-		} else if (id == 130) { abilities = new Ability[] {Ability.SPEED_BOOST, Ability.TINTED_LENS};
-		} else if (id == 131) { abilities = new Ability[] {Ability.WONDER_GUARD, Ability.WONDER_GUARD};
-		} else if (id == 132) { abilities = new Ability[] {Ability.SWIFT_SWIM, Ability.REGENERATOR};
-		} else if (id == 133) { abilities = new Ability[] {Ability.SWIFT_SWIM, Ability.REGENERATOR};
-		} else if (id == 134) { abilities = new Ability[] {Ability.UNAWARE, Ability.WATER_ABSORB};
-		} else if (id == 135) { abilities = new Ability[] {Ability.UNAWARE, Ability.WATER_ABSORB};
-		} else if (id == 136) { abilities = new Ability[] {Ability.DRIZZLE, Ability.WATER_ABSORB};
-		} else if (id == 137) { abilities = new Ability[] {Ability.SWIFT_SWIM, Ability.RATTLED};
-		} else if (id == 138) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.MOXIE};
-		} else if (id == 139) { abilities = new Ability[] {Ability.ILLUMINATION, Ability.NATURAL_CURE};
-		} else if (id == 140) { abilities = new Ability[] {Ability.ILLUMINATION, Ability.NATURAL_CURE};
-		} else if (id == 141) { abilities = new Ability[] {Ability.STEALTHY_PREDATOR, Ability.STRONG_JAW};
-		} else if (id == 142) { abilities = new Ability[] {Ability.STEALTHY_PREDATOR, Ability.STRONG_JAW};
-		} else if (id == 143) { abilities = new Ability[] {Ability.REGENERATOR, Ability.MAGIC_GUARD};
-		} else if (id == 144) { abilities = new Ability[] {Ability.SWIFT_SWIM, Ability.SNIPER};
-		} else if (id == 145) { abilities = new Ability[] {Ability.SWIFT_SWIM, Ability.MAGIC_GUARD};
-		} else if (id == 146) { abilities = new Ability[] {Ability.TOUGH_CLAWS, Ability.SNIPER};
-		} else if (id == 147) { abilities = new Ability[] {Ability.TOUGH_CLAWS, Ability.SNIPER};
-		} else if (id == 148) { abilities = new Ability[] {Ability.ILLUMINATION, Ability.PRANKSTER};
-		} else if (id == 149) { abilities = new Ability[] {Ability.ILLUMINATION, Ability.PRANKSTER};
-		} else if (id == 150) { abilities = new Ability[] {Ability.WATER_VEIL, Ability.REGENERATOR};
-		} else if (id == 151) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.SHED_SKIN};
-		} else if (id == 152) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.SHED_SKIN};
-		} else if (id == 153) { abilities = new Ability[] {Ability.STRONG_JAW, Ability.INNER_FOCUS};
-		} else if (id == 154) { abilities = new Ability[] {Ability.STRONG_JAW, Ability.INNER_FOCUS};
-		} else if (id == 155) { abilities = new Ability[] {Ability.STRONG_JAW, Ability.INNER_FOCUS};
-		} else if (id == 156) { abilities = new Ability[] {Ability.FRIENDLY_GHOST, Ability.LEVITATE};
-		} else if (id == 157) { abilities = new Ability[] {Ability.FRIENDLY_GHOST, Ability.LEVITATE};
-		} else if (id == 158) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.ANGER_POINT};
-		} else if (id == 159) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.ANGER_POINT};
-		} else if (id == 160) { abilities = new Ability[] {Ability.LEVITATE, Ability.LEVITATE};
-		} else if (id == 161) { abilities = new Ability[] {Ability.LEVITATE, Ability.LEVITATE};
-		} else if (id == 162) { abilities = new Ability[] {Ability.LEVITATE, Ability.LEVITATE};
-		} else if (id == 163) { abilities = new Ability[] {Ability.GUTS, Ability.IRON_FIST};
-		} else if (id == 164) { abilities = new Ability[] {Ability.GUTS, Ability.IRON_FIST};
-		} else if (id == 165) { abilities = new Ability[] {Ability.GUTS, Ability.IRON_FIST};
-		} else if (id == 166) { abilities = new Ability[] {Ability.RATTLED, Ability.SAND_FORCE};
-		} else if (id == 167) { abilities = new Ability[] {Ability.SAND_STREAM, Ability.SAND_FORCE};
-		} else if (id == 168) { abilities = new Ability[] {Ability.SAND_STREAM, Ability.SAND_FORCE};
-		} else if (id == 169) { abilities = new Ability[] {Ability.SAND_RUSH, Ability.TOUGH_CLAWS};
-		} else if (id == 170) { abilities = new Ability[] {Ability.SAND_FORCE, Ability.TOUGH_CLAWS};
-		} else if (id == 171) { abilities = new Ability[] {Ability.SAND_VEIL, Ability.RATTLED};
-		} else if (id == 172) { abilities = new Ability[] {Ability.SAND_VEIL, Ability.RATTLED};
-		} else if (id == 173) { abilities = new Ability[] {Ability.SAND_VEIL, Ability.ROUGH_SKIN};
-		} else if (id == 174) { abilities = new Ability[] {Ability.MAGIC_GUARD, Ability.UNAWARE};
-		} else if (id == 175) { abilities = new Ability[] {Ability.MAGIC_GUARD, Ability.UNAWARE};
-		} else if (id == 176) { abilities = new Ability[] {Ability.MAGIC_GUARD, Ability.UNAWARE};
-		} else if (id == 177) { abilities = new Ability[] {Ability.SERENE_GRACE, Ability.NATURAL_CURE};
-		} else if (id == 178) { abilities = new Ability[] {Ability.SERENE_GRACE, Ability.NATURAL_CURE};
-		} else if (id == 179) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.ILLUMINATION};
-		} else if (id == 180) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.ILLUMINATION};
-		} else if (id == 181) { abilities = new Ability[] {Ability.SNIPER, Ability.INNER_FOCUS};
-		} else if (id == 182) { abilities = new Ability[] {Ability.SNIPER, Ability.INNER_FOCUS};
-		} else if (id == 183) { abilities = new Ability[] {Ability.SNIPER, Ability.INNER_FOCUS};
-		} else if (id == 184) { abilities = new Ability[] {Ability.SPARKLY_SURGE, Ability.SPARKLY_SURGE};
-		} else if (id == 185) { abilities = new Ability[] {Ability.SPARKLY_SURGE, Ability.SPARKLY_SURGE};
-		} else if (id == 186) { abilities = new Ability[] {Ability.SPARKLY_SURGE, Ability.SPARKLY_SURGE};
-		} else if (id == 187) { abilities = new Ability[] {Ability.MULTISCALE, Ability.MULTISCALE};
-		} else if (id == 188) { abilities = new Ability[] {Ability.MULTISCALE, Ability.MULTISCALE};
-		} else if (id == 189) { abilities = new Ability[] {Ability.MULTISCALE, Ability.MULTISCALE};
-		} else if (id == 190) { abilities = new Ability[] {Ability.SHIELD_DUST, Ability.LEVITATE};
-		} else if (id == 191) { abilities = new Ability[] {Ability.SHIELD_DUST, Ability.GRAVITATIONAL_PULL};
-		} else if (id == 192) { abilities = new Ability[] {Ability.SNIPER, Ability.GRAVITATIONAL_PULL};
-		} else if (id == 193) { abilities = new Ability[] {Ability.SNOW_WARNING, Ability.SLUSH_RUSH};
-		} else if (id == 194) { abilities = new Ability[] {Ability.SNOW_WARNING, Ability.SLUSH_RUSH};
-		} else if (id == 195) { abilities = new Ability[] {Ability.GRAVITATIONAL_PULL, Ability.HUGE_POWER};
-		} else if (id == 196) { abilities = new Ability[] {Ability.GRAVITATIONAL_PULL, Ability.HUGE_POWER};
-		} else if (id == 197) { abilities = new Ability[] {Ability.FRIENDLY_GHOST, Ability.LEVITATE};
-		} else if (id == 198) { abilities = new Ability[] {Ability.FRIENDLY_GHOST, Ability.COMPETITIVE};
-		} else if (id == 199) { abilities = new Ability[] {Ability.SNIPER, Ability.IRON_FIST};
-		} else if (id == 200) { abilities = new Ability[] {Ability.SNIPER, Ability.IRON_FIST};
-		} else if (id == 201) { abilities = new Ability[] {Ability.SNIPER, Ability.IRON_FIST};
-		} else if (id == 202) { abilities = new Ability[] {Ability.STATIC, Ability.FLAME_BODY};
-		} else if (id == 203) { abilities = new Ability[] {Ability.LEVITATE, Ability.FLAME_BODY};
-		} else if (id == 204) { abilities = new Ability[] {Ability.LEVITATE, Ability.FLAME_BODY};
-		} else if (id == 205) { abilities = new Ability[] {Ability.STURDY, Ability.LIGHTNING_ROD};
-		} else if (id == 206) { abilities = new Ability[] {Ability.STURDY, Ability.LIGHTNING_ROD};
-		} else if (id == 207) { abilities = new Ability[] {Ability.STURDY, Ability.LIGHTNING_ROD};
-		} else if (id == 208) { abilities = new Ability[] {Ability.CLEAR_BODY, Ability.FILTER};
-		} else if (id == 209) { abilities = new Ability[] {Ability.SWIFT_SWIM, Ability.RATTLED};
-		} else if (id == 210) { abilities = new Ability[] {Ability.VOLT_VORTEX, Ability.MOTOR_DRIVE};
-		} else if (id == 211) { abilities = new Ability[] {Ability.STRONG_JAW, Ability.SHED_SKIN};
-		} else if (id == 212) { abilities = new Ability[] {Ability.STRONG_JAW, Ability.SHED_SKIN};
-		} else if (id == 213) { abilities = new Ability[] {Ability.MOXIE, Ability.DEFIANT};
-		} else if (id == 214) { abilities = new Ability[] {Ability.MOXIE, Ability.DEFIANT};
-		} else if (id == 215) { abilities = new Ability[] {Ability.ILLUMINATION, Ability.PRANKSTER};
-		} else if (id == 216) { abilities = new Ability[] {Ability.ILLUMINATION, Ability.PRANKSTER};
-		} else if (id == 217) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.ADAPTABILITY};
-		} else if (id == 218) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.ADAPTABILITY};
-		} else if (id == 219) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.ADAPTABILITY};
-		} else if (id == 220) { abilities = new Ability[] {Ability.LEVITATE, Ability.LEVITATE};
-		} else if (id == 221) { abilities = new Ability[] {Ability.LEVITATE, Ability.LEVITATE};
-		} else if (id == 222) { abilities = new Ability[] {Ability.LEVITATE, Ability.LEVITATE};
-		} else if (id == 223) { abilities = new Ability[] {Ability.FLAME_BODY, Ability.SUPER_LUCK};
-		} else if (id == 224) { abilities = new Ability[] {Ability.GUTS, Ability.SUPER_LUCK};
-		} else if (id == 225) { abilities = new Ability[] {Ability.GUTS, Ability.SUPER_LUCK};
-		} else if (id == 226) { abilities = new Ability[] {Ability.SHED_SKIN, Ability.LIGHTNING_ROD};
-		} else if (id == 227) { abilities = new Ability[] {Ability.SHED_SKIN, Ability.LIGHTNING_ROD};
-		} else if (id == 228) { abilities = new Ability[] {Ability.DRIZZLE, Ability.DRIZZLE};
-		} else if (id == 229) { abilities = new Ability[] {Ability.TYPE_MASTER, Ability.TYPE_MASTER};
-		} else if (id == 230) { abilities = new Ability[] {Ability.SNOW_WARNING, Ability.SNOW_WARNING};
-		} else if (id == 231) { abilities = new Ability[] {Ability.SLUSH_RUSH, Ability.SLUSH_RUSH};
-		} else if (id == 232) { abilities = new Ability[] {Ability.PROTEAN, Ability.PROTEAN};
-		} else if (id == 233) { abilities = new Ability[] {Ability.GLACIER_AURA, Ability.GLACIER_AURA};
-		} else if (id == 234) { abilities = new Ability[] {Ability.PSYCHIC_AURA, Ability.PSYCHIC_AURA};
-		} else if (id == 235) { abilities = new Ability[] {Ability.GALACTIC_AURA, Ability.GALACTIC_AURA};
-		} else if (id == 236) { abilities = new Ability[] {Ability.DROUGHT, Ability.DROUGHT};
-		} else if (id == 237) { abilities = new Ability[] {Ability.ADAPTABILITY, Ability.ADAPTABILITY};
-		} else if (id == 238) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.MOXIE};
-		} else if (id == 239) { abilities = new Ability[] {Ability.INTIMIDATE, Ability.MOXIE};
-		} else if (id == 240) { abilities = new Ability[] {Ability.SCALY_SKIN, Ability.MOXIE};
-		} else {
-			abilities = new Ability[] {Ability.SAND_VEIL, Ability.SNOW_CLOAK};
-		}
-		
-		ability = abilities[i];
-		
+	public void setAbility(int slot) {
+		ability = abilities[id - 1][slot];	
 	}
 	
 	public int getLevel() {
@@ -2515,7 +733,7 @@ public class Pokemon implements Serializable {
 		awardHappiness(5, false);
 		
 		expMax = setExpMax();
-		stats = this.getStats();
+		setStats();
 		int nHP = this.getStat(0);
 		int amt = nHP - oHP;
 		currentHP += amt;
@@ -2845,7 +1063,7 @@ public class Pokemon implements Serializable {
 	    }
 	}
 
-	public int[] getStats() {
+	public void setStats() {
 		double HPnum = (2 * baseStats[0] + ivs[0]) * level;
 		stats[0] = (int) (Math.floor(HPnum/100) + level + 10);
 		if (id == 131) stats[0] = 1;
@@ -2859,7 +1077,6 @@ public class Pokemon implements Serializable {
 		stats[4] = (int) Math.floor((Math.floor(SpDnum/100) + 5) * nature[3]);
 		double Spenum = (2 * baseStats[5] + ivs[5]) * level;
 		stats[5] = (int) Math.floor((Math.floor(Spenum/100) + 5) * nature[4]);
-		return stats;
 	}
 	
 	public int getStat(int type) {
@@ -2933,249 +1150,8 @@ public class Pokemon implements Serializable {
 	    return sb.toString();
 	}
 	
-	public int[] setBaseStats() {
-		if (this.id == 1) { this.baseStats = new int[]{58,58,69,46,69,35};
-		} else if (this.id == 2) { this.baseStats = new int[]{73,75,80,48,89,37};
-		} else if (this.id == 3) { this.baseStats = new int[]{95,87,91,95,110,39};
-		} else if (this.id == 4) { this.baseStats = new int[]{60,49,54,74,58,34};
-		} else if (this.id == 5) { this.baseStats = new int[]{80,75,65,75,60,50};
-		} else if (this.id == 6) { this.baseStats = new int[]{109,81,71,101,67,92};
-		} else if (this.id == 7) { this.baseStats = new int[]{45,70,56,46,45,63};
-		} else if (this.id == 8) { this.baseStats = new int[]{60,90,76,49,55,70};
-		} else if (this.id == 9) { this.baseStats = new int[]{85,110,105,65,85,80};
-		} else if (this.id == 10) { this.baseStats = new int[]{35,35,35,55,55,80};
-		} else if (this.id == 11) { this.baseStats = new int[]{50,40,45,75,70,100};
-		} else if (this.id == 12) { this.baseStats = new int[]{70,40,60,100,100,130};
-		} else if (this.id == 13) { this.baseStats = new int[]{56,61,65,20,29,45};
-		} else if (this.id == 14) { this.baseStats = new int[]{66,76,86,35,60,78};
-		} else if (this.id == 15) { this.baseStats = new int[]{73,85,110,56,90,81};
-		} else if (this.id == 16) { this.baseStats = new int[]{99,61,51,40,79,20};
-		} else if (this.id == 17) { this.baseStats = new int[]{150,79,75,43,108,35};
-		} else if (this.id == 18) { this.baseStats = new int[]{150,105,110,40,85,45};
-		} else if (this.id == 19) { this.baseStats = new int[]{55,55,55,55,55,55};
-		} else if (this.id == 20) { this.baseStats = new int[]{75,75,75,75,75,75};
-		} else if (this.id == 21) { this.baseStats = new int[]{80,60,75,135,85,80};
-		} else if (this.id == 22) { this.baseStats = new int[]{33,44,33,23,29,38};
-		} else if (this.id == 23) { this.baseStats = new int[]{55,68,70,41,61,80};
-		} else if (this.id == 24) { this.baseStats = new int[]{80,70,80,55,120,100};
-		} else if (this.id == 25) { this.baseStats = new int[]{80,120,120,35,80,70};
-		} else if (this.id == 26) { this.baseStats = new int[]{65,105,100,50,30,55};
-		} else if (this.id == 27) { this.baseStats = new int[]{110,125,110,55,35,55};
-		} else if (this.id == 28) { this.baseStats = new int[]{120,75,80,115,80,90};
-		} else if (this.id == 29) { this.baseStats = new int[]{40,30,35,50,70,55};
-		} else if (this.id == 30) { this.baseStats = new int[]{50,60,45,100,80,65};
-		} else if (this.id == 31) { this.baseStats = new int[]{70,60,65,125,105,90};
-		} else if (this.id == 32) { this.baseStats = new int[]{45,53,70,40,60,42};
-		} else if (this.id == 33) { this.baseStats = new int[]{55,63,90,50,80,42};
-		} else if (this.id == 34) { this.baseStats = new int[]{75,108,80,60,80,97};
-		} else if (this.id == 35) { this.baseStats = new int[]{47,62,45,55,45,46};
-		} else if (this.id == 36) { this.baseStats = new int[]{57,82,95,55,75,36};
-		} else if (this.id == 37) { this.baseStats = new int[]{77,65,90,110,75,95};
-		} else if (this.id == 38) { this.baseStats = new int[]{60,50,100,75,105,60};
-		} else if (this.id == 39) { this.baseStats = new int[]{70,130,95,45,80,100};
-		} else if (this.id == 40) { this.baseStats = new int[]{70,45,80,130,95,100};
-		} else if (this.id == 41) { this.baseStats = new int[]{40,60,65,30,50,70};
-		} else if (this.id == 42) { this.baseStats = new int[]{53,95,85,30,53,85};
-		} else if (this.id == 43) { this.baseStats = new int[]{63,120,90,62,65,105};
-		} else if (this.id == 44) { this.baseStats = new int[]{40,30,30,40,50,30};
-		} else if (this.id == 45) { this.baseStats = new int[]{60,50,50,60,70,50};
-		} else if (this.id == 46) { this.baseStats = new int[]{80,70,70,90,100,70};
-		} else if (this.id == 47) { this.baseStats = new int[]{60,40,39,120,95,101};
-		} else if (this.id == 48) { this.baseStats = new int[]{68,72,122,20,25,18};
-		} else if (this.id == 49) { this.baseStats = new int[]{87,95,143,25,30,45};
-		} else if (this.id == 50) { this.baseStats = new int[]{95,110,150,70,45,55};
-		} else if (this.id == 51) { this.baseStats = new int[]{90,75,50,110,150,50};
-		} else if (this.id == 52) { this.baseStats = new int[]{72,83,75,62,58,60};
-		} else if (this.id == 53) { this.baseStats = new int[]{85,95,77,55,88,65};
-		} else if (this.id == 54) { this.baseStats = new int[]{99,120,75,62,96,70};
-		} else if (this.id == 55) { this.baseStats = new int[]{55,90,60,45,50,80};
-		} else if (this.id == 56) { this.baseStats = new int[]{75,111,75,90,64,85};
-		} else if (this.id == 57) { this.baseStats = new int[]{52,72,69,77,56,67};
-		} else if (this.id == 58) { this.baseStats = new int[]{66,74,85,106,95,97};
-		} else if (this.id == 59) { this.baseStats = new int[]{60,15,40,80,73,55};
-		} else if (this.id == 60) { this.baseStats = new int[]{85,30,65,120,120,75};
-		} else if (this.id == 61) { this.baseStats = new int[]{90,64,67,85,71,58};
-		} else if (this.id == 62) { this.baseStats = new int[]{30,25,35,45,30,20};
-		} else if (this.id == 63) { this.baseStats = new int[]{70,65,60,125,90,65};
-		} else if (this.id == 64) { this.baseStats = new int[]{80,74,87,25,96,33};
-		} else if (this.id == 65) { this.baseStats = new int[]{95,130,90,45,85,40};
-		} else if (this.id == 66) { this.baseStats = new int[]{65,90,120,20,65,20};
-		} else if (this.id == 67) { this.baseStats = new int[]{114,124,130,20,130,20};
-		} else if (this.id == 68) { this.baseStats = new int[]{70,40,50,55,50,25};
-		} else if (this.id == 69) { this.baseStats = new int[]{90,60,70,75,70,45};
-		} else if (this.id == 70) { this.baseStats = new int[]{110,80,90,95,90,65};
-		} else if (this.id == 71) { this.baseStats = new int[]{44,46,50,76,62,92};
-		} else if (this.id == 72) { this.baseStats = new int[]{63,56,69,120,90,112};
-		} else if (this.id == 73) { this.baseStats = new int[]{52,59,51,33,46,58};
-		} else if (this.id == 74) { this.baseStats = new int[]{88,102,67,61,88,101};
-		} else if (this.id == 75) { this.baseStats = new int[]{42,30,45,56,53,39};
-		} else if (this.id == 76) { this.baseStats = new int[]{57,40,65,86,73,49};
-		} else if (this.id == 77) { this.baseStats = new int[]{82,65,95,136,103,29};
-		} else if (this.id == 78) { this.baseStats = new int[]{55,39,66,74,79,20};
-		} else if (this.id == 79) { this.baseStats = new int[]{71,48,87,102,106,86};
-		} else if (this.id == 80) { this.baseStats = new int[]{43,43,43,88,80,43};
-		} else if (this.id == 81) { this.baseStats = new int[]{67,72,87,96,93,104};
-		} else if (this.id == 82) { this.baseStats = new int[]{25,20,63,55,62,25};
-		} else if (this.id == 83) { this.baseStats = new int[]{50,70,90,70,90,30};
-		} else if (this.id == 84) { this.baseStats = new int[]{100,140,100,70,100,40};
-		} else if (this.id == 85) { this.baseStats = new int[]{28,25,25,65,55,40};
-		} else if (this.id == 86) { this.baseStats = new int[]{38,35,35,95,85,50};
-		} else if (this.id == 87) { this.baseStats = new int[]{68,65,65,125,115,80};
-		} else if (this.id == 88) { this.baseStats = new int[]{68,125,65,65,115,63};
-		} else if (this.id == 89) { this.baseStats = new int[]{65,79,67,103,72,69};
-		} else if (this.id == 90) { this.baseStats = new int[]{53,54,53,37,46,45};
-		} else if (this.id == 91) { this.baseStats = new int[]{86,92,88,68,75,73};
-		} else if (this.id == 92) { this.baseStats = new int[]{46,74,68,48,58,81};
-		} else if (this.id == 93) { this.baseStats = new int[]{65,103,82,66,79,100};
-		} else if (this.id == 94) { this.baseStats = new int[]{30,20,40,103,30,83};
-		} else if (this.id == 95) { this.baseStats = new int[]{43,88,50,74,52,93};
-		} else if (this.id == 96) { this.baseStats = new int[]{65,115,55,106,75,100};
-		} else if (this.id == 97) { this.baseStats = new int[]{105,35,120,90,90,65};
-		} else if (this.id == 98) { this.baseStats = new int[]{70,53,70,55,60,52};
-		} else if (this.id == 99) { this.baseStats = new int[]{75,75,75,90,75,70};
-		} else if (this.id == 100) { this.baseStats = new int[]{95,75,87,140,80,83};
-		} else if (this.id == 101) { this.baseStats = new int[]{60,35,78,50,77,30};
-		} else if (this.id == 102) { this.baseStats = new int[]{70,57,105,51,87,30};
-		} else if (this.id == 103) { this.baseStats = new int[]{90,80,95,120,95,45};
-		} else if (this.id == 104) { this.baseStats = new int[]{45,60,30,80,50,65};
-		} else if (this.id == 105) { this.baseStats = new int[]{75,90,50,110,80,95};
-		} else if (this.id == 106) { this.baseStats = new int[]{40,45,40,75,65,70};
-		} else if (this.id == 107) { this.baseStats = new int[]{85,45,65,145,110,55};
-		} else if (this.id == 108) { this.baseStats = new int[]{60,70,65,70,65,70};
-		} else if (this.id == 109) { this.baseStats = new int[]{85,105,99,40,92,89};
-		} else if (this.id == 110) { this.baseStats = new int[]{70,40,55,120,115,110};
-		} else if (this.id == 111) { this.baseStats = new int[]{55,62,46,73,75,49};
-		} else if (this.id == 112) { this.baseStats = new int[]{83,65,92,105,80,50};
-		} else if (this.id == 113) { this.baseStats = new int[]{85,65,120,92,98,55};
-		} else if (this.id == 114) { this.baseStats = new int[]{54,32,53,65,58,33};
-		} else if (this.id == 115) { this.baseStats = new int[]{65,80,55,45,60,50};
-		} else if (this.id == 116) { this.baseStats = new int[]{85,128,72,60,77,98};
-		} else if (this.id == 117) { this.baseStats = new int[]{34,62,43,58,44,59};
-		} else if (this.id == 118) { this.baseStats = new int[]{65,94,49,60,54,73};
-		} else if (this.id == 119) { this.baseStats = new int[]{90,70,100,85,100,55};
-		} else if (this.id == 120) { this.baseStats = new int[]{30,60,73,30,65,58};
-		} else if (this.id == 121) { this.baseStats = new int[]{60,80,95,65,95,95};
-		} else if (this.id == 122) { this.baseStats = new int[]{69,95,97,70,95,104};
-		} else if (this.id == 123) { this.baseStats = new int[]{30,45,25,35,40,60};
-		} else if (this.id == 124) { this.baseStats = new int[]{75,105,60,85,60,105};
-		} else if (this.id == 125) { this.baseStats = new int[]{75,120,70,80,75,125};
-		} else if (this.id == 126) { this.baseStats = new int[]{35,65,45,15,40,45};
-		} else if (this.id == 127) { this.baseStats = new int[]{95,125,105,25,75,50};
-		} else if (this.id == 128) { this.baseStats = new int[]{95,130,100,85,75,55};
-		} else if (this.id == 129) { this.baseStats = new int[]{31,45,90,30,30,40};
-		} else if (this.id == 130) { this.baseStats = new int[]{61,90,45,50,50,160};
-		} else if (this.id == 131) { this.baseStats = new int[]{1,90,45,30,30,40};
-		} else if (this.id == 132) { this.baseStats = new int[]{58,29,71,31,58,33};
-		} else if (this.id == 133) { this.baseStats = new int[]{67,61,75,97,91,83};
-		} else if (this.id == 134) { this.baseStats = new int[]{34,14,20,27,90,15};
-		} else if (this.id == 135) { this.baseStats = new int[]{100,28,45,72,110,45};
-		} else if (this.id == 136) { this.baseStats = new int[]{100,90,66,74,84,81};
-		} else if (this.id == 137) { this.baseStats = new int[]{20,10,55,15,20,80};
-		} else if (this.id == 138) { this.baseStats = new int[]{95,125,79,60,100,81};
-		} else if (this.id == 139) { this.baseStats = new int[]{30,45,55,70,55,85};
-		} else if (this.id == 140) { this.baseStats = new int[]{60,75,85,100,85,115};
-		} else if (this.id == 141) { this.baseStats = new int[]{90,120,80,45,55,60};
-		} else if (this.id == 142) { this.baseStats = new int[]{105,130,80,75,55,95};
-		} else if (this.id == 143) { this.baseStats = new int[]{35,35,35,100,45,45};
-		} else if (this.id == 144) { this.baseStats = new int[]{81,93,63,93,70,60};
-		} else if (this.id == 145) { this.baseStats = new int[]{100,95,90,95,90,90};
-		} else if (this.id == 146) { this.baseStats = new int[]{42,52,67,39,56,50};
-		} else if (this.id == 147) { this.baseStats = new int[]{72,105,115,54,86,68};
-		} else if (this.id == 148) { this.baseStats = new int[]{55,60,64,62,55,49};
-		} else if (this.id == 149) { this.baseStats = new int[]{70,115,100,60,80,60};
-		} else if (this.id == 150) { this.baseStats = new int[]{40,40,75,55,50,90};
-		} else if (this.id == 151) { this.baseStats = new int[]{35,60,44,40,54,55};
-		} else if (this.id == 152) { this.baseStats = new int[]{60,110,70,55,80,80};
-		} else if (this.id == 153) { this.baseStats = new int[]{40,45,35,30,40,55};
-		} else if (this.id == 154) { this.baseStats = new int[]{75,80,70,65,75,90};
-		} else if (this.id == 155) { this.baseStats = new int[]{85,90,80,70,80,130};
-		} else if (this.id == 156) { this.baseStats = new int[]{55,60,80,75,65,65};
-		} else if (this.id == 157) { this.baseStats = new int[]{65,70,120,60,120,65};
-		} else if (this.id == 158) { this.baseStats = new int[]{75,85,45,60,55,79};
-		} else if (this.id == 159) { this.baseStats = new int[]{115,105,55,105,60,59};
-		} else if (this.id == 160) { this.baseStats = new int[]{60,42,58,105,97,73};
-		} else if (this.id == 161) { this.baseStats = new int[]{80,90,96,71,85,58};
-		} else if (this.id == 162) { this.baseStats = new int[]{100,109,110,67,99,55};
-		} else if (this.id == 163) { this.baseStats = new int[]{75,80,55,25,35,35};
-		} else if (this.id == 164) { this.baseStats = new int[]{85,105,85,40,50,40};
-		} else if (this.id == 165) { this.baseStats = new int[]{105,140,95,55,65,45};
-		} else if (this.id == 166) { this.baseStats = new int[]{51,65,89,30,66,15};
-		} else if (this.id == 167) { this.baseStats = new int[]{57,73,112,55,95,20};
-		} else if (this.id == 168) { this.baseStats = new int[]{75,100,145,70,95,25};
-		} else if (this.id == 169) { this.baseStats = new int[]{37,85,47,23,63,78};
-		} else if (this.id == 170) { this.baseStats = new int[]{65,128,55,80,55,120};
-		} else if (this.id == 171) { this.baseStats = new int[]{45,60,55,35,25,55};
-		} else if (this.id == 172) { this.baseStats = new int[]{50,80,100,60,35,60};
-		} else if (this.id == 173) { this.baseStats = new int[]{60,100,120,105,70,65};
-		} else if (this.id == 174) { this.baseStats = new int[]{50,25,28,45,55,15};
-		} else if (this.id == 175) { this.baseStats = new int[]{70,45,48,60,65,35};
-		} else if (this.id == 176) { this.baseStats = new int[]{95,70,73,95,90,60};
-		} else if (this.id == 177) { this.baseStats = new int[]{40,45,65,100,105,65};
-		} else if (this.id == 178) { this.baseStats = new int[]{70,45,75,135,115,80};
-		} else if (this.id == 179) { this.baseStats = new int[]{35,60,40,85,40,70};
-		} else if (this.id == 180) { this.baseStats = new int[]{55,100,60,125,60,110};
-		} else if (this.id == 181) { this.baseStats = new int[]{50,70,55,50,50,55};
-		} else if (this.id == 182) { this.baseStats = new int[]{65,75,105,50,75,60};
-		} else if (this.id == 183) { this.baseStats = new int[]{70,115,115,90,75,65};
-		} else if (this.id == 184) { this.baseStats = new int[]{55,76,55,54,90,60};
-		} else if (this.id == 185) { this.baseStats = new int[]{75,80,75,60,90,75};
-		} else if (this.id == 186) { this.baseStats = new int[]{100,100,100,100,100,100};
-		} else if (this.id == 187) { this.baseStats = new int[]{80,40,57,63,59,51};
-		} else if (this.id == 188) { this.baseStats = new int[]{85,75,80,90,75,60};
-		} else if (this.id == 189) { this.baseStats = new int[]{95,85,90,115,125,90};
-		} else if (this.id == 190) { this.baseStats = new int[]{90,30,30,30,100,30};
-		} else if (this.id == 191) { this.baseStats = new int[]{125,45,50,45,115,40};
-		} else if (this.id == 192) { this.baseStats = new int[]{170,135,70,55,115,50};
-		} else if (this.id == 193) { this.baseStats = new int[]{70,33,76,58,93,85};
-		} else if (this.id == 194) { this.baseStats = new int[]{90,150,60,65,60,100};
-		} else if (this.id == 195) { this.baseStats = new int[]{70,65,130,55,75,55};
-		} else if (this.id == 196) { this.baseStats = new int[]{80,75,180,65,80,60};
-		} else if (this.id == 197) { this.baseStats = new int[]{60,30,70,80,80,80};
-		} else if (this.id == 198) { this.baseStats = new int[]{70,75,35,150,55,115};
-		} else if (this.id == 199) { this.baseStats = new int[]{40,75,70,30,30,85};
-		} else if (this.id == 200) { this.baseStats = new int[]{50,100,75,45,55,105};
-		} else if (this.id == 201) { this.baseStats = new int[]{75,145,85,50,65,110};
-		} else if (this.id == 202) { this.baseStats = new int[]{60,65,50,75,50,60};
-		} else if (this.id == 203) { this.baseStats = new int[]{90,70,80,85,65,70};
-		} else if (this.id == 204) { this.baseStats = new int[]{95,90,90,120,90,75};
-		} else if (this.id == 205) { this.baseStats = new int[]{40,65,74,49,53,44};
-		} else if (this.id == 206) { this.baseStats = new int[]{80,77,90,77,56,45};
-		} else if (this.id == 207) { this.baseStats = new int[]{120,66,92,122,80,45};
-		} else if (this.id == 208) { this.baseStats = new int[]{120,95,70,65,130,45};
-		} else if (this.id == 209) { this.baseStats = new int[]{20,10,25,45,30,70};
-		} else if (this.id == 210) { this.baseStats = new int[]{105,135,80,25,110,85};
-		} else if (this.id == 211) { this.baseStats = new int[]{50,105,65,65,65,80};
-		} else if (this.id == 212) { this.baseStats = new int[]{75,124,90,70,70,101};
-		} else if (this.id == 213) { this.baseStats = new int[]{95,105,65,35,55,75};
-		} else if (this.id == 214) { this.baseStats = new int[]{134,110,101,35,85,65};
-		} else if (this.id == 215) { this.baseStats = new int[]{60,45,52,64,65,59};
-		} else if (this.id == 216) { this.baseStats = new int[]{65,135,65,50,70,100};
-		} else if (this.id == 217) { this.baseStats = new int[]{20,50,50,35,50,70};
-		} else if (this.id == 218) { this.baseStats = new int[]{40,75,75,60,50,85};
-		} else if (this.id == 219) { this.baseStats = new int[]{100,100,90,100,50,80};
-		} else if (this.id == 220) { this.baseStats = new int[]{55,42,38,110,110,80};
-		} else if (this.id == 221) { this.baseStats = new int[]{80,70,50,100,100,80};
-		} else if (this.id == 222) { this.baseStats = new int[]{95,75,65,123,97,85};
-		} else if (this.id == 223) { this.baseStats = new int[]{30,20,40,83,50,83};
-		} else if (this.id == 224) { this.baseStats = new int[]{47,98,60,40,62,93};
-		} else if (this.id == 225) { this.baseStats = new int[]{95,115,65,46,95,100};
-		} else if (this.id == 226) { this.baseStats = new int[]{35,40,54,65,64,30};
-		} else if (this.id == 227) { this.baseStats = new int[]{80,40,90,115,90,75};
-		} else if (this.id == 228) { this.baseStats = new int[]{80,30,170,72,170,78};
-		} else if (this.id == 229) { this.baseStats = new int[]{45,125,40,125,100,165};
-		} else if (this.id == 230) { this.baseStats = new int[]{80,5,130,150,180,80};
-		} else if (this.id == 231) { this.baseStats = new int[]{25,400,35,5,50,95};
-		} else if (this.id == 232) { this.baseStats = new int[]{75,85,90,134,105,126};
-		} else if (this.id == 233) { this.baseStats = new int[]{100,70,150,150,100,110};
-		} else if (this.id == 234) { this.baseStats = new int[]{100,150,100,100,130,100};
-		} else if (this.id == 235) { this.baseStats = new int[]{90,95,105,200,110,100};
-		} else if (this.id == 236) { this.baseStats = new int[]{190,75,120,90,120,75};
-		} else if (this.id == 237) { this.baseStats = new int[]{110,100,75,100,75,90};
-		} else if (this.id == 238) { this.baseStats = new int[]{50,75,70,35,70,48};
-		} else if (this.id == 239) { this.baseStats = new int[]{65,90,115,45,115,58};
-		} else if (this.id == 240) { this.baseStats = new int[]{70,110,120,40,120,110};
-		}
-		return this.baseStats;
+	public int[] getBaseStats() {
+		return base_stats[id - 1];
 	}
 
 	
@@ -5491,12 +3467,12 @@ public class Pokemon implements Serializable {
 				id = 237;
 				if (nickname == name) nickname = getName();
 				
-				setBaseStats();
-				getStats();
-				weight = setWeight();
+				baseStats = getBaseStats();
+				setStats();
+				weight = getWeight();
 				int nHP = this.getStat(0);
 				heal(nHP - oHP, nickname + " transformed into Kissyfishy-D!");
-				setType();
+				setTypes();
 				setAbility(abilitySlot);
 				if (player != null) player.pokedex[237] = 2;
 			} else if (id == 237) {
@@ -10764,7 +8740,7 @@ public class Pokemon implements Serializable {
 		this.vStatuses.clear();
 		statStages = new int[7];
 		this.impressive = true;
-		setType();
+		setTypes();
 		setAbility(this.abilitySlot);
 		if (this.ability == Ability.NATURAL_CURE) this.status = Status.HEALTHY;
 		
@@ -11452,8 +9428,9 @@ public class Pokemon implements Serializable {
 				this.consumeItem();
 			}
 			if (this.vStatuses.contains(Status.CONFUSED) && (this.item == Item.PERSIM_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its confusion!", this);
-				this.status = Status.HEALTHY;
+				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its confusion!", this);
+				this.vStatuses.remove(Status.CONFUSED);
+				this.confusionCounter = 0;
 				this.consumeItem();
 			}
 		}
@@ -11517,7 +9494,7 @@ public class Pokemon implements Serializable {
 			addTask(Task.TEXT, this.nickname + " became confused!");
 			if (this.item == Item.PERSIM_BERRY || this.item == Item.LUM_BERRY) {
 				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its confusion!");
-				this.status = Status.HEALTHY;
+				this.vStatuses.remove(Status.CONFUSED);
 				this.confusionCounter = 0;
 				this.consumeItem();
 			}
@@ -12406,7 +10383,7 @@ public class Pokemon implements Serializable {
 	        
 	        Pokemon test = new Pokemon(1, 1, false, false);
 	        test.id = id;
-	        test.setBaseStats();
+	        test.baseStats = getBaseStats();
 	        
 	        for (int i = 0; i < 6; i++) {
 	        	String type = getStatType(i);
@@ -12979,496 +10956,12 @@ public class Pokemon implements Serializable {
 		return move;
 	}
 	
-	public double setWeight() {
-		if (id == 1) { return 52.5;
-		} else if (id == 2) { return 310.5;
-		} else if (id == 3) { return 476.0;
-		} else if (id == 4) { return 13.4;
-		} else if (id == 5) { return 75.6;
-		} else if (id == 6) { return 125.2;
-		} else if (id == 7) { return 9.5;
-		} else if (id == 8) { return 45.0;
-		} else if (id == 9) { return 195.6;
-		} else if (id == 10) { return 2.0;
-		} else if (id == 11) { return 5.0;
-		} else if (id == 12) { return 30.5;
-		} else if (id == 13) { return 5.5;
-		} else if (id == 14) { return 40.9;
-		} else if (id == 15) { return 129.2;
-		} else if (id == 16) { return 95.6;
-		} else if (id == 17) { return 445.9;
-		} else if (id == 18) { return 205.0;
-		} else if (id == 19) { return 65.7;
-		} else if (id == 20) { return 65.8;
-		} else if (id == 21) { return 90.9;
-		} else if (id == 22) { return 0.9;
-		} else if (id == 23) { return 2.0;
-		} else if (id == 24) { return 50.7;
-		} else if (id == 25) { return 90.5;
-		} else if (id == 26) { return 100.5;
-		} else if (id == 27) { return 399.9;
-		} else if (id == 28) { return 412.5;
-		} else if (id == 29) { return 2.6;
-		} else if (id == 30) { return 4.4;
-		} else if (id == 31) { return 32.0;
-		} else if (id == 32) { return 5.5;
-		} else if (id == 33) { return 16.1;
-		} else if (id == 34) { return 45.2;
-		} else if (id == 35) { return 9.7;
-		} else if (id == 36) { return 23.1;
-		} else if (id == 37) { return 99.2;
-		} else if (id == 38) { return 15.8;
-		} else if (id == 39) { return 87.7;
-		} else if (id == 40) { return 55.6;
-		} else if (id == 41) { return 6.0;
-		} else if (id == 42) { return 45.5;
-		} else if (id == 43) { return 90.1;
-		} else if (id == 44) { return 5.7;
-		} else if (id == 45) { return 71.7;
-		} else if (id == 46) { return 121.3;
-		} else if (id == 47) { return 7.3;
-		} else if (id == 48) { return 104.4;
-		} else if (id == 49) { return 256.2;
-		} else if (id == 50) { return 337.2;
-		} else if (id == 51) { return 370.5;
-		} else if (id == 52) { return 140.3;
-		} else if (id == 53) { return 173.2;
-		} else if (id == 54) { return 252.9;
-		} else if (id == 55) { return 40.6;
-		} else if (id == 56) { return 190.0;
-		} else if (id == 57) { return 62.5;
-		} else if (id == 58) { return 190.3;
-		} else if (id == 59) { return 4.5;
-		} else if (id == 60) { return 89.5;
-		} else if (id == 61) { return 100.0;
-		} else if (id == 62) { return 8.4;
-		} else if (id == 63) { return 92.6;
-		} else if (id == 64) { return 135.6;
-		} else if (id == 65) { return 208.1;
-		} else if (id == 66) { return 95.4;
-		} else if (id == 67) { return 900.9;
-		} else if (id == 68) { return 87.1;
-		} else if (id == 69) { return 193.1;
-		} else if (id == 70) { return 332.0;
-		} else if (id == 71) { return 9.9;
-		} else if (id == 72) { return 25.9;
-		} else if (id == 73) { return 7.5;
-		} else if (id == 74) { return 18.5;
-		} else if (id == 75) { return 7.5;
-		} else if (id == 76) { return 10.6;
-		} else if (id == 77) { return 11.2;
-		} else if (id == 78) { return 16.6;
-		} else if (id == 79) { return 41.0;
-		} else if (id == 80) { return 13.1;
-		} else if (id == 81) { return 115.5;
-		} else if (id == 82) { return 75.0;
-		} else if (id == 83) { return 175.0;
-		} else if (id == 84) { return 275.0;
-		} else if (id == 85) { return 14.6;
-		} else if (id == 86) { return 44.5;
-		} else if (id == 87) { return 106.7;
-		} else if (id == 88) { return 114.6;
-		} else if (id == 89) { return 250.4;
-		} else if (id == 90) { return 7.7;
-		} else if (id == 91) { return 103.6;
-		} else if (id == 92) { return 21.0;
-		} else if (id == 93) { return 93.6;
-		} else if (id == 94) { return 10.0;
-		} else if (id == 95) { return 145.6;
-		} else if (id == 96) { return 195.0;
-		} else if (id == 97) { return 165.3;
-		} else if (id == 98) { return 290.2;
-		} else if (id == 99) { return 301.3;
-		} else if (id == 100) { return 345.6;
-		} else if (id == 101) { return 28.9;
-		} else if (id == 102) { return 199.3;
-		} else if (id == 103) { return 450.9;
-		} else if (id == 104) { return 23.8;
-		} else if (id == 105) { return 77.2;
-		} else if (id == 106) { return 3.5;
-		} else if (id == 107) { return 5.5;
-		} else if (id == 108) { return 16.0;
-		} else if (id == 109) { return 295.5;
-		} else if (id == 110) { return 125.0;
-		} else if (id == 111) { return 11.0;
-		} else if (id == 112) { return 56.1;
-		} else if (id == 113) { return 65.9;
-		} else if (id == 114) { return 40.1;
-		} else if (id == 115) { return 76.0;
-		} else if (id == 116) { return 91.3;
-		} else if (id == 117) { return 3.6;
-		} else if (id == 118) { return 13.4;
-		} else if (id == 119) { return 245.9;
-		} else if (id == 120) { return 50.5;
-		} else if (id == 121) { return 125.7;
-		} else if (id == 122) { return 130.6;
-		} else if (id == 123) { return 8.1;
-		} else if (id == 124) { return 25.1;
-		} else if (id == 125) { return 26.0;
-		} else if (id == 126) { return 35.6;
-		} else if (id == 127) { return 100.9;
-		} else if (id == 128) { return 145.1;
-		} else if (id == 129) { return 12.1;
-		} else if (id == 130) { return 26.5;
-		} else if (id == 131) { return 2.6;
-		} else if (id == 132) { return 9.5;
-		} else if (id == 133) { return 65.7;
-		} else if (id == 134) { return 9.9;
-		} else if (id == 135) { return 41.8;
-		} else if (id == 136) { return 129.5;
-		} else if (id == 137) { return 22.0;
-		} else if (id == 138) { return 518.1;
-		} else if (id == 139) { return 76.1;
-		} else if (id == 140) { return 176.4;
-		} else if (id == 141) { return 410.9;
-		} else if (id == 142) { return 476.0;
-		} else if (id == 143) { return 21.0;
-		} else if (id == 144) { return 835.9;
-		} else if (id == 145) { return 954.5;
-		} else if (id == 146) { return 68.3;
-		} else if (id == 147) { return 211.6;
-		} else if (id == 148) { return 6.8;
-		} else if (id == 149) { return 67.9;
-		} else if (id == 150) { return 10.6;
-		} else if (id == 151) { return 15.2;
-		} else if (id == 152) { return 143.3;
-		} else if (id == 153) { return 16.5;
-		} else if (id == 154) { return 121.3;
-		} else if (id == 155) { return 165.3;
-		} else if (id == 156) { return 0.2;
-		} else if (id == 157) { return 200.5;
-		} else if (id == 158) { return 3.4;
-		} else if (id == 159) { return 20.7;
-		} else if (id == 160) { return 0.5;
-		} else if (id == 161) { return 199.1;
-		} else if (id == 162) { return 600.3;
-		} else if (id == 163) { return 27.6;
-		} else if (id == 164) { return 88.2;
-		} else if (id == 165) { return 191.8;
-		} else if (id == 166) { return 49.5;
-		} else if (id == 167) { return 295.1;
-		} else if (id == 168) { return 489.1;
-		} else if (id == 169) { return 29.0;
-		} else if (id == 170) { return 55.1;
-		} else if (id == 171) { return 40.3;
-		} else if (id == 172) { return 100.6;
-		} else if (id == 173) { return 185.3;
-		} else if (id == 174) { return 6.6;
-		} else if (id == 175) { return 16.5;
-		} else if (id == 176) { return 88.2;
-		} else if (id == 177) { return 12.9;
-		} else if (id == 178) { return 75.1;
-		} else if (id == 179) { return 27.6;
-		} else if (id == 180) { return 178.8;
-		} else if (id == 181) { return 99.9;
-		} else if (id == 182) { return 149.9;
-		} else if (id == 183) { return 199.9;
-		} else if (id == 184) { return 10.0;
-		} else if (id == 185) { return 100.0;
-		} else if (id == 186) { return 292.3;
-		} else if (id == 187) { return 50.2;
-		} else if (id == 188) { return 103.4;
-		} else if (id == 189) { return 247.2;
-		} else if (id == 190) { return 100.2;
-		} else if (id == 191) { return 759.2;
-		} else if (id == 192) { return 1000.5;
-		} else if (id == 193) { return 90.3;
-		} else if (id == 194) { return 378.2;
-		} else if (id == 195) { return 632.5;
-		} else if (id == 196) { return 1000.5;
-		} else if (id == 197) { return 1.0;
-		} else if (id == 198) { return 45.2;
-		} else if (id == 199) { return 94.9;
-		} else if (id == 200) { return 144.9;
-		} else if (id == 201) { return 194.9;
-		} else if (id == 202) { return 97.4;
-		} else if (id == 203) { return 301.3;
-		} else if (id == 204) { return 345.0;
-		} else if (id == 205) { return 94.4;
-		} else if (id == 206) { return 246.3;
-		} else if (id == 207) { return 357.4;
-		} else if (id == 208) { return 770.5;
-		} else if (id == 209) { return 16.5;
-		} else if (id == 210) { return 510.9;
-		} else if (id == 211) { return 102.6;
-		} else if (id == 212) { return 237.6;
-		} else if (id == 213) { return 145.8;
-		} else if (id == 214) { return 394.5;
-		} else if (id == 215) { return 2.5;
-		} else if (id == 216) { return 94.2;
-		} else if (id == 217) { return 5.6;
-		} else if (id == 218) { return 46.6;
-		} else if (id == 219) { return 165.2;
-		} else if (id == 220) { return 0.4;
-		} else if (id == 221) { return 36.5;
-		} else if (id == 222) { return 80.5;
-		} else if (id == 223) { return 19.4;
-		} else if (id == 224) { return 78.5;
-		} else if (id == 225) { return 205.3;
-		} else if (id == 226) { return 3.9;
-		} else if (id == 227) { return 17.5;
-		} else if (id == 228) { return 800.4;
-		} else if (id == 229) { return 20.6;
-		} else if (id == 230) { return 100.9;
-		} else if (id == 231) { return 2.3;
-		} else if (id == 232) { return 86.5;
-		} else if (id == 233) { return 750.5;
-		} else if (id == 234) { return 705.2;
-		} else if (id == 235) { return 956.4;
-		} else if (id == 236) { return 999.9;
-		} else if (id == 237) { return 895.4;
-		} else if (id == 238) { return 26.0;
-		} else if (id == 239) { return 66.1;
-		} else if (id == 240) { return 92.6;
-		} else {
-			return 0;
-		}
+	public double getWeight() {
+		return weights[id - 1];
 	}
 	
-	public int setCatchRate() {
-		if (id == 1) { return 45;
-		} else if (id == 2) { return 40;
-		} else if (id == 3) { return 35;
-		} else if (id == 4) { return 50;
-		} else if (id == 5) { return 40;
-		} else if (id == 6) { return 35;
-		} else if (id == 7) { return 40;
-		} else if (id == 8) { return 35;
-		} else if (id == 9) { return 30;
-		} else if (id == 10) { return 180;
-		} else if (id == 11) { return 150;
-		} else if (id == 12) { return 90;
-		} else if (id == 13) { return 245;
-		} else if (id == 14) { return 150;
-		} else if (id == 15) { return 85;
-		} else if (id == 16) { return 255;
-		} else if (id == 17) { return 190;
-		} else if (id == 18) { return 100;
-		} else if (id == 19) { return 125;
-		} else if (id == 20) { return 100;
-		} else if (id == 21) { return 50;
-		} else if (id == 22) { return 255;
-		} else if (id == 23) { return 200;
-		} else if (id == 24) { return 125;
-		} else if (id == 25) { return 125;
-		} else if (id == 26) { return 75;
-		} else if (id == 27) { return 50;
-		} else if (id == 28) { return 30;
-		} else if (id == 29) { return 255;
-		} else if (id == 30) { return 150;
-		} else if (id == 31) { return 75;
-		} else if (id == 32) { return 255;
-		} else if (id == 33) { return 120;
-		} else if (id == 34) { return 45;
-		} else if (id == 35) { return 255;
-		} else if (id == 36) { return 120;
-		} else if (id == 37) { return 45;
-		} else if (id == 38) { return 230;
-		} else if (id == 39) { return 85;
-		} else if (id == 40) { return 100;
-		} else if (id == 41) { return 200;
-		} else if (id == 42) { return 85;
-		} else if (id == 43) { return 50;
-		} else if (id == 44) { return 255;
-		} else if (id == 45) { return 120;
-		} else if (id == 46) { return 45;
-		} else if (id == 47) { return 80;
-		} else if (id == 48) { return 200;
-		} else if (id == 49) { return 130;
-		} else if (id == 50) { return 40;
-		} else if (id == 51) { return 35;
-		} else if (id == 52) { return 120;
-		} else if (id == 53) { return 65;
-		} else if (id == 54) { return 30;
-		} else if (id == 55) { return 100;
-		} else if (id == 56) { return 35;
-		} else if (id == 57) { return 65;
-		} else if (id == 58) { return 45;
-		} else if (id == 59) { return 50;
-		} else if (id == 60) { return 45;
-		} else if (id == 61) { return 35;
-		} else if (id == 62) { return 190;
-		} else if (id == 63) { return 75;
-		} else if (id == 64) { return 135;
-		} else if (id == 65) { return 30;
-		} else if (id == 66) { return 100;
-		} else if (id == 67) { return 30;
-		} else if (id == 68) { return 255;
-		} else if (id == 69) { return 120;
-		} else if (id == 70) { return 45;
-		} else if (id == 71) { return 85;
-		} else if (id == 72) { return 45;
-		} else if (id == 73) { return 135;
-		} else if (id == 74) { return 50;
-		} else if (id == 75) { return 235;
-		} else if (id == 76) { return 120;
-		} else if (id == 77) { return 45;
-		} else if (id == 78) { return 75;
-		} else if (id == 79) { return 45;
-		} else if (id == 80) { return 75;
-		} else if (id == 81) { return 40;
-		} else if (id == 82) { return 125;
-		} else if (id == 83) { return 75;
-		} else if (id == 84) { return 25;
-		} else if (id == 85) { return 235;
-		} else if (id == 86) { return 120;
-		} else if (id == 87) { return 45;
-		} else if (id == 88) { return 45;
-		} else if (id == 89) { return 65;
-		} else if (id == 90) { return 190;
-		} else if (id == 91) { return 80;
-		} else if (id == 92) { return 75;
-		} else if (id == 93) { return 50;
-		} else if (id == 94) { return 195;
-		} else if (id == 95) { return 100;
-		} else if (id == 96) { return 50;
-		} else if (id == 97) { return 80;
-		} else if (id == 98) { return 55;
-		} else if (id == 99) { return 35;
-		} else if (id == 100) { return 15;
-		} else if (id == 101) { return 230;
-		} else if (id == 102) { return 110;
-		} else if (id == 103) { return 50;
-		} else if (id == 104) { return 120;
-		} else if (id == 105) { return 45;
-		} else if (id == 106) { return 50;
-		} else if (id == 107) { return 25;
-		} else if (id == 108) { return 110;
-		} else if (id == 109) { return 35;
-		} else if (id == 110) { return 35;
-		} else if (id == 111) { return 255;
-		} else if (id == 112) { return 100;
-		} else if (id == 113) { return 35;
-		} else if (id == 114) { return 255;
-		} else if (id == 115) { return 120;
-		} else if (id == 116) { return 45;
-		} else if (id == 117) { return 255;
-		} else if (id == 118) { return 120;
-		} else if (id == 119) { return 45;
-		} else if (id == 120) { return 100;
-		} else if (id == 121) { return 65;
-		} else if (id == 122) { return 35;
-		} else if (id == 123) { return 100;
-		} else if (id == 124) { return 65;
-		} else if (id == 125) { return 35;
-		} else if (id == 126) { return 100;
-		} else if (id == 127) { return 65;
-		} else if (id == 128) { return 35;
-		} else if (id == 129) { return 255;
-		} else if (id == 130) { return 120;
-		} else if (id == 131) { return 5;
-		} else if (id == 132) { return 200;
-		} else if (id == 133) { return 45;
-		} else if (id == 134) { return 140;
-		} else if (id == 135) { return 140;
-		} else if (id == 136) { return 75;
-		} else if (id == 137) { return 255;
-		} else if (id == 138) { return 45;
-		} else if (id == 139) { return 225;
-		} else if (id == 140) { return 60;
-		} else if (id == 141) { return 45;
-		} else if (id == 142) { return 10;
-		} else if (id == 143) { return 30;
-		} else if (id == 144) { return 30;
-		} else if (id == 145) { return 10;
-		} else if (id == 146) { return 120;
-		} else if (id == 147) { return 45;
-		} else if (id == 148) { return 95;
-		} else if (id == 149) { return 35;
-		} else if (id == 150) { return 25;
-		} else if (id == 151) { return 255;
-		} else if (id == 152) { return 90;
-		} else if (id == 153) { return 255;
-		} else if (id == 154) { return 90;
-		} else if (id == 155) { return 90;
-		} else if (id == 156) { return 135;
-		} else if (id == 157) { return 45;
-		} else if (id == 158) { return 95;
-		} else if (id == 159) { return 35;
-		} else if (id == 160) { return 175;
-		} else if (id == 161) { return 55;
-		} else if (id == 162) { return 35;
-		} else if (id == 163) { return 180;
-		} else if (id == 164) { return 90;
-		} else if (id == 165) { return 45;
-		} else if (id == 166) { return 235;
-		} else if (id == 167) { return 175;
-		} else if (id == 168) { return 45;
-		} else if (id == 169) { return 200;
-		} else if (id == 170) { return 45;
-		} else if (id == 171) { return 255;
-		} else if (id == 172) { return 195;
-		} else if (id == 173) { return 45;
-		} else if (id == 174) { return 150;
-		} else if (id == 175) { return 150;
-		} else if (id == 176) { return 25;
-		} else if (id == 177) { return 100;
-		} else if (id == 178) { return 55;
-		} else if (id == 179) { return 75;
-		} else if (id == 180) { return 45;
-		} else if (id == 181) { return 135;
-		} else if (id == 182) { return 95;
-		} else if (id == 183) { return 45;
-		} else if (id == 184) { return 45;
-		} else if (id == 185) { return 35;
-		} else if (id == 186) { return 25;
-		} else if (id == 187) { return 45;
-		} else if (id == 188) { return 35;
-		} else if (id == 189) { return 25;
-		} else if (id == 190) { return 85;
-		} else if (id == 191) { return 65;
-		} else if (id == 192) { return 35;
-		} else if (id == 193) { return 100;
-		} else if (id == 194) { return 45;
-		} else if (id == 195) { return 75;
-		} else if (id == 196) { return 35;
-		} else if (id == 197) { return 135;
-		} else if (id == 198) { return 45;
-		} else if (id == 199) { return 135;
-		} else if (id == 200) { return 95;
-		} else if (id == 201) { return 45;
-		} else if (id == 202) { return 55;
-		} else if (id == 203) { return 35;
-		} else if (id == 204) { return 15;
-		} else if (id == 205) { return 200;
-		} else if (id == 206) { return 130;
-		} else if (id == 207) { return 40;
-		} else if (id == 208) { return 35;
-		} else if (id == 209) { return 155;
-		} else if (id == 210) { return 35;
-		} else if (id == 211) { return 45;
-		} else if (id == 212) { return 45;
-		} else if (id == 213) { return 45;
-		} else if (id == 214) { return 45;
-		} else if (id == 215) { return 90;
-		} else if (id == 216) { return 30;
-		} else if (id == 217) { return 255;
-		} else if (id == 218) { return 195;
-		} else if (id == 219) { return 45;
-		} else if (id == 220) { return 175;
-		} else if (id == 221) { return 55;
-		} else if (id == 222) { return 35;
-		} else if (id == 223) { return 195;
-		} else if (id == 224) { return 100;
-		} else if (id == 225) { return 50;
-		} else if (id == 226) { return 255;
-		} else if (id == 227) { return 90;
-		} else if (id == 228) { return 5;
-		} else if (id == 229) { return 3;
-		} else if (id == 230) { return 3;
-		} else if (id == 231) { return 3;
-		} else if (id == 232) { return 3;
-		} else if (id == 233) { return 3;
-		} else if (id == 234) { return 3;
-		} else if (id == 235) { return 3;
-		} else if (id == 236) { return 3;
-		} else if (id == 237) { return 3;
-		} else if (id == 238) { return 180;
-		} else if (id == 239) { return 90;
-		} else if (id == 240) { return 45;
-		} else {
-			return 0;
-		}
+	public int getCatchRate() {
+		return catch_rates[id - 1];
 	}
 
 	public int getEvolved(int itemid) {
@@ -13632,6 +11125,12 @@ public class Pokemon implements Serializable {
 	    clonedPokemon.slot = this.slot;
 
 	    clonedPokemon.trainer = this.trainer;
+	    
+	    // Clone Image fields
+	    clonedPokemon.sprite = this.sprite;
+	    clonedPokemon.frontSprite = this.frontSprite;
+	    clonedPokemon.backSprite = this.backSprite;
+	    clonedPokemon.miniSprite = this.miniSprite;
 	    
 	    return clonedPokemon;
 	}
@@ -14089,10 +11588,10 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void update() {
-		setBaseStats();
+		baseStats = getBaseStats();
 		setAbility(abilitySlot);
 		setMoveBank();
-		
+		setTypes();
 		setSprites();
 	}
 	
@@ -14102,21 +11601,55 @@ public class Pokemon implements Serializable {
 		backSprite = setBackSprite();
 		miniSprite = setMiniSprite();
 	}
+	public static void writeInfoToCSV(String filePath) {
+	    try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+	        for (int i = 1; i <= MAX_POKEMON; i++) {
+	            StringBuilder sb = new StringBuilder();
+	            Pokemon p = new Pokemon(i, 1, false, true);
+	            sb.append("|").append(padString(p.name, 13));
+	            sb.append("|").append(padString(p.type1.superToString(), 8));
+	            sb.append("|").append(padString(p.type2 == null ? "null" : p.type2.superToString(), 8));
+	            sb.append("|").append(padString(p.ability.superToString(), 18));
+	            p.setAbility(1);
+	            sb.append("|").append(padString(p.ability.superToString(), 18));
+	            sb.append("|").append(padString(Arrays.toString(p.baseStats), 30));
+	            sb.append("|").append(padString(String.valueOf(p.weight), 6));
+	            sb.append("|").append(padString(String.valueOf(p.catchRate), 3)).append("|");
+	            writer.println(sb.toString());
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
 
-//	private String getStatName(int stat) {
-//		switch(stat) {
-//		case 0:
-//			return "Atk";
-//		case 1:
-//			return "Def";
-//		case 2:
-//			return "SpA";
-//		case 3:
-//			return "SpD";
-//		case 4:
-//			return "Spe";
-//		default:
-//			return "null";
-//		}
-//	}
+	private static String padString(String str, int length) {
+	    if (str.length() >= length) {
+	        return str;
+	    } else {
+	        StringBuilder padded = new StringBuilder(str);
+	        for (int i = str.length(); i < length; i++) {
+	            padded.append(" ");
+	        }
+	        return padded.toString();
+	    }
+	}    
+	
+	public static void readInfoFromCSV() {
+        Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/info.csv"));
+        for (int i = 0; i < MAX_POKEMON; i++) {
+        	String line = scanner.nextLine();
+        	String[] tokens = line.split("\\|");
+        	names[i] = tokens[1].trim();
+        	types[i][0] = PType.valueOf(tokens[2].trim());
+        	types[i][1] = tokens[3].trim().equals("null") ? null : PType.valueOf(tokens[3].trim());
+        	abilities[i][0] = Ability.valueOf(tokens[4].trim());
+        	abilities[i][1] = Ability.valueOf(tokens[5].trim());
+        	String[] baseStatsStr = tokens[6].trim().replaceAll("\\[|\\]", "").split(", ");
+        	for (int j = 0; j < 6; j++) {
+                base_stats[i][j] = Integer.parseInt(baseStatsStr[j]);
+            }
+        	weights[i] = Double.parseDouble(tokens[7].trim());
+        	catch_rates[i] = Integer.parseInt(tokens[8].trim());
+        }
+    }
 }

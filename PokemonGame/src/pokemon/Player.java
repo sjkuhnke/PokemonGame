@@ -71,7 +71,7 @@ public class Player extends Trainer implements Serializable {
 	public int version;
 	
 	public static final int MAX_BOXES = 10;
-	public static final int VERSION = 2;
+	public static final int VERSION = 3;
 	
 	public Player(GamePanel gp) {
 		super(true);
@@ -780,7 +780,7 @@ public class Player extends Trainer implements Serializable {
 	    		
 	    		String natureOld = p.getNature();
 	        	p.nature = nature;
-	        	p.stats = p.getStats();
+	        	p.setStats();
 	        	gp.ui.showMessage(p.nickname + "'s nature was changed from " + natureOld + " to " + p.getNature() + "!");
 				break;
 				
@@ -849,7 +849,7 @@ public class Player extends Trainer implements Serializable {
 	        			iv.addActionListener(h -> {
 	        				gp.ui.showMessage(p.nickname + "'s " + finalType + "IV was maxed out!");
 	        				p.ivs[kndex] = 31;
-	        				p.stats = p.getStats();
+	        				p.setStats();
 	        			});
 	        			
 	        			ivPanel.add(iv);
@@ -858,7 +858,7 @@ public class Player extends Trainer implements Serializable {
 	        	} else {
 	        		gp.ui.showMessage(p.nickname + "'s IVs were maxed out!");
 	        		p.ivs = new int[] {31, 31, 31, 31, 31, 31};
-	        		p.stats = p.getStats();
+	        		p.setStats();
 	        	}
 				break;
 					
