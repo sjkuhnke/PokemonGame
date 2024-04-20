@@ -40,7 +40,6 @@ public class BattleUI extends AbstractUI {
 	public Pokemon tempUser;
 	public int userHP;
 	public int foeHP;
-	public int tempFoeHP;
 	public int maxUserHP;
 	public Status userStatus;
 	public Status foeStatus;
@@ -299,13 +298,12 @@ public class BattleUI extends AbstractUI {
 				drawUserPokeball(true);
 			} else {
 				foe = currentTask.p;
-				foeHP = tempFoeHP == 0 ? foe.currentHP : tempFoeHP;
-				foeStatus = foe.status;
+				foeHP = currentTask.start == -1 ? foe.currentHP : currentTask.start;
+				foeStatus = currentTask.status;
 				drawFoePokeball(true);
 			}
 			if (counter >= 100) {
 				counter = 0;
-				tempFoeHP = 0;
 				currentTask = null;
 			}
 			break;
@@ -982,7 +980,6 @@ public class BattleUI extends AbstractUI {
 		if (faster == user) { // player Pokemon is faster
 			if (slower.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
 				slower = foe.trainer.swapOut(user, fMove, false);
-				tempFoeHP = slower.currentHP;
 				foeMove = null;
 				foeCanMove = false;
 			}
@@ -1008,12 +1005,10 @@ public class BattleUI extends AbstractUI {
 	        // Check for swap (AI)
 	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && slower.vStatuses.contains(Status.SWITCHING)) {
 	        	slower = foe.trainer.swapOut(faster, null, slower.lastMoveUsed == Move.BATON_PASS);
-	        	tempFoeHP = slower.currentHP;
 	        }
 		} else { // enemy Pokemon is faster
 			if (faster.vStatuses.contains(Status.SWAP)) { // AI wants to swap out
 				faster = foe.trainer.swapOut(slower, fMove, false);
-				tempFoeHP = faster.currentHP;
 				foeMove = null;
 				foeCanMove = false;
 			}
@@ -1028,7 +1023,6 @@ public class BattleUI extends AbstractUI {
 			// Check for swap (AI)
 	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && faster.vStatuses.contains(Status.SWITCHING)) {
 	        	faster = foe.trainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS);
-	        	tempFoeHP = faster.currentHP;
 	        }
 			
 	        if (slower == user.trainer.getCurrent()) {
@@ -1054,7 +1048,7 @@ public class BattleUI extends AbstractUI {
 			if (foe.trainer != null) {
 				if (foe.trainer.hasNext()) {
 					next = foe.trainer.next(user);
-					Pokemon.addSwapInTask(next);
+					Pokemon.addSwapInTask(next, next.currentHP);
 					next.swapIn(user, true);
 					user.getPlayer().clearBattled();
 					user.battled = true;
@@ -1086,7 +1080,6 @@ public class BattleUI extends AbstractUI {
 				Pokemon.addTask(Task.END, foe.name + " was defeated!");
 				break;
 			}
-			break;
 		}
 	    if (user.getPlayer().wiped()) {
 	    	Pokemon.addTask(Task.TEXT, "You have no more Pokemon that can fight!\nYou lost $500!");
@@ -1317,10 +1310,11 @@ public class BattleUI extends AbstractUI {
 	private void startingState() {
 		if (foe.trainerOwned()) {
 			showMessage("You are challenged by " + foe.trainer.getName() + "!");
+			foeStatus = foe.status;
 		} else {
 			foe.setVisible(true);
 			foeStatus = foe.status;
-			foeHP = tempFoeHP == 0 ? foe.currentHP : tempFoeHP;
+			foeHP = foe.currentHP;
 			showMessage("A wild " + foe.nickname + " appeared!");
 		}
 	}

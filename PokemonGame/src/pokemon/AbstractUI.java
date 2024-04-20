@@ -150,7 +150,7 @@ public abstract class AbstractUI {
 		
 		drawSubWindow(x, y, width, height);
 		
-		if (!showMoveOptions) {
+		if (!showMoveOptions && currentTask == null) {
 			if (gp.keyH.upPressed) {
 				gp.keyH.upPressed = false;
 				if (partyNum > 1) {
@@ -263,12 +263,17 @@ public abstract class AbstractUI {
 		
 		Pokemon p = gp.player.p.team[partyNum];
 		
-		x += gp.tileSize;
-		y += gp.tileSize;
-		int startX = x;
+		// ID
+		x += gp.tileSize / 2;
+		y += gp.tileSize * 0.75;
 		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(20F));
+		g2.drawString(p.getFormattedID(), x, y);
 		
 		// Name
+		x += gp.tileSize / 2;
+		y += gp.tileSize / 4;
+		int startX = x;
 		g2.setFont(g2.getFont().deriveFont(36F));
 		g2.drawString(p.name, x, y + gp.tileSize / 2);
 		
@@ -491,6 +496,30 @@ public abstract class AbstractUI {
 				moveSummaryNum++;
 			} else {
 				moveSummaryNum = 0;
+			}
+		}
+		
+		if (moveSummaryNum < 0) {
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (partyNum > 0) {
+					partyNum--;
+				} else {
+					int index = 5;
+					while (gp.player.p.team[index] == null) {
+						index--;
+					}
+					partyNum = index;
+				}
+			}
+			
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				if (partyNum < 5 && gp.player.p.team[partyNum + 1] != null) {
+					partyNum++;
+				} else {
+					partyNum = 0;
+				}
 			}
 		}
 		
@@ -815,6 +844,7 @@ public abstract class AbstractUI {
                 	gp.player.p.current = newP;
                 	gp.battleUI.user = newP;
                 	gp.battleUI.userHP = newP.currentHP;
+                	gp.battleUI.maxUserHP = newP.getStat(0);
                 }
                 newP.checkMove(1);
 		        

@@ -68,7 +68,7 @@
 |Spheal       |ICE     |WATER   |UNAWARE           |THICK_FAT         |[70, 40, 50, 55, 50, 25]      |87.1  |255|
 |Sealeo       |ICE     |WATER   |UNAWARE           |THICK_FAT         |[90, 60, 70, 75, 70, 45]      |193.1 |120|
 |Walrein      |ICE     |WATER   |UNAWARE           |THICK_FAT         |[110, 80, 90, 95, 90, 65]     |332.0 |45 |
-|Froshrog     |WATER   |null    |TORRENT           |SLUSH_RUSH        |[44, 46, 50, 76, 62, 92]      |9.9   |85 |
+|Froshrog     |WATER   |LIGHT   |TORRENT           |SLUSH_RUSH        |[44, 46, 50, 76, 62, 92]      |9.9   |85 |
 |Bouncerog    |WATER   |LIGHT   |TORRENT           |SLUSH_RUSH        |[63, 56, 69, 120, 90, 112]    |25.9  |45 |
 |Bugop        |BUG     |DARK    |TECHNICIAN        |INSOMNIA          |[52, 59, 51, 33, 46, 58]      |7.5   |135|
 |Opwing       |BUG     |DARK    |TECHNICIAN        |INSOMNIA          |[88, 102, 67, 61, 88, 101]    |18.5  |50 |

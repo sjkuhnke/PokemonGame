@@ -209,6 +209,7 @@ public class Trainer implements Serializable {
 			int[] oldStats = current.statStages;
 			swap(current, result);
 			if (baton) result.statStages = oldStats;
+			Pokemon.gp.battleUI.foeStatus = result.status;
 			result.swapIn(foe, true);
 			foe.vStatuses.remove(Status.TRAPPED);
 			foe.vStatuses.remove(Status.SPUN);
@@ -254,7 +255,7 @@ public class Trainer implements Serializable {
 		if (oldP.vStatuses.contains(Status.WISH)) newP.vStatuses.add(Status.WISH);
 		oldP.clearVolatile();
 		this.current = newP;
-		Pokemon.addSwapInTask(newP);
+		Pokemon.addSwapInTask(newP, newP.currentHP);
 		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
 	}
 
