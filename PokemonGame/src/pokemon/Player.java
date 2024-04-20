@@ -2,7 +2,6 @@ package pokemon;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.IOException;
@@ -88,7 +87,7 @@ public class Player extends Trainer implements Serializable {
 		version = VERSION;
 	}
 	
-	public void catchPokemon(Pokemon p) {
+	public void catchPokemon(Pokemon p, Item ball) {
 	    if (p.isFainted()) return;
 	    boolean hasNull = false;
 	    Pokemon.addTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?", p);
@@ -130,6 +129,10 @@ public class Player extends Trainer implements Serializable {
 	        }
 	        Pokemon.addTask(Task.END, "Cannot catch " + p.nickname + ", all boxes are full.");
 	    }
+	}
+	
+	public void catchPokemon(Pokemon p) {
+		catchPokemon(p, Item.POKEBALL);
 	}
 
 
@@ -361,10 +364,10 @@ public class Player extends Trainer implements Serializable {
 		result.add(bagButton);
 		
 		String[] flagDesc = new String[] {
-				"First Gate", "Scott 1", "Rick 1", "TN in Office", "Scott 2", "Fred 2", "Key A SC", "Key B SC",
-				"Clear Room A", "Clear Room B", "Gift Starter", "Gift Dog", "Gift Magic", "Gift Ancient", "Gift \"Starter\"",
-				"Fred 3", "Talk to Grandpa", "Gym 5", "Gift E/S", "Rick 2", "Maxwell 1", "Scott 4", "Gift Glurg", "Coins Gotten",
-				"Autosave Warn", "Magmaclang", "MSJ TN"
+				"First Gate", "Scott 1", "Rick 1", "TN in Office", "Scott 2", "Fred 2", "Key A SC", "Key B SC", "Clear Room A", "Clear Room B", // 9
+				"Gift Starter", "Gift Dog", "Gift Magic", "Gift Ancient", "Gift \"Starter\"", "Fred 3", "Talk to Grandpa", "Gym 5", "Gift E/S", // 18
+				"Rick 2", "Maxwell 1", "Scott 4", "Gift Glurg", "Coins Gotten", "Autosave Warn", "Magmaclang", "MSJ TN", "Rick 3", // 27
+				"Maxwell 2", "Zurroaratr", "Fishing Rod", "Got Surf"
 		};
 		JPanel flagsPanel = new JPanel();
 		flagsPanel.setLayout(new BoxLayout(flagsPanel, BoxLayout.Y_AXIS));
@@ -622,6 +625,7 @@ public class Player extends Trainer implements Serializable {
 	public Entry getBall(Entry ball) {
 		if (ball != null) {
 			ball.count = bag.count[ball.getItem().getID()];
+			if (ball.count <= 0) ball = null;
 			return ball;
 		}
 		for (int i = 1; i < 4; i++) {
@@ -811,7 +815,7 @@ public class Player extends Trainer implements Serializable {
 	        		gp.ui.showMessage(p.nickname + " isn't compatible with " + item.toString() + ".");
 	        		return;
 	        	} else {
-	        		gp.gameState = GamePanel.USE_RARE_CANDY_STATE;
+	        		gp.gameState = GamePanel.RARE_CANDY_STATE;
 	        		Pokemon.addEvoTask(p, new Pokemon(p.getEvolved(item.getID()), p));
 	        		Pokemon.addTask(Task.CLOSE, "");
 	        	}
@@ -835,26 +839,12 @@ public class Player extends Trainer implements Serializable {
 			// Bottle Caps
 			case BOTTLE_CAP:
 			case GOLD_BOTTLE_CAP:
-				if (item == Item.BOTTLE_CAP) { // TODO
-	        		JPanel ivPanel = new JPanel();
-	        		ivPanel.setLayout(new GridLayout(6, 1));
-	        		int[] ivs = p.getIVs();
-	        		for (int k = 0; k < 6; k++) {
-	        			final int kndex = k;
-	        			JButton iv = new JButton();
-	    	        	String type = Pokemon.getStatType(k);
-	        			iv.setText(type + ": " + ivs[k]);
-	        			final String finalType = type;
-	        			
-	        			iv.addActionListener(h -> {
-	        				gp.ui.showMessage(p.nickname + "'s " + finalType + "IV was maxed out!");
-	        				p.ivs[kndex] = 31;
-	        				p.setStats();
-	        			});
-	        			
-	        			ivPanel.add(iv);
-	        		}
-	        		JOptionPane.showMessageDialog(null, ivPanel, "Which IV?", JOptionPane.PLAIN_MESSAGE);
+				if (item == Item.BOTTLE_CAP) {
+	        		gp.ui.currentPokemon = p;
+	        		gp.ui.currentHeader = "Which IV to max out?";
+	        		gp.ui.moveOption = -1;
+	        		gp.ui.showIVOptions = true;
+	        		return;
 	        	} else {
 	        		gp.ui.showMessage(p.nickname + "'s IVs were maxed out!");
 	        		p.ivs = new int[] {31, 31, 31, 31, 31, 31};

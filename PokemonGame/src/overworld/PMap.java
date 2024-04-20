@@ -5,7 +5,7 @@ import java.awt.Color;
 
 import javax.swing.*;
 
-import pokemon.Battle.JGradientButton;
+import pokemon.JGradientButton;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -536,7 +536,7 @@ public class PMap extends JPanel {
 				PlayerCharacter.currentMapName = "Route 23";
 				return 3;
 			}
-			if (x > 40 && y <= 36) {
+			if (x > 40 && y <= 37) {
 				PlayerCharacter.currentMapName = "Route 42";
 				return 26;
 			}

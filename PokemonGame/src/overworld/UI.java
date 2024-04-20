@@ -116,7 +116,7 @@ public class UI extends AbstractUI{
 			useItem();
 		}
 		
-		if (gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
+		if (gp.gameState == GamePanel.RARE_CANDY_STATE) {
 			rareCandyState();
 		}
 		
@@ -124,14 +124,35 @@ public class UI extends AbstractUI{
 			drawRepelScreen();
 		}
 		
+		if (gp.gameState == GamePanel.TASK_STATE) {
+			taskState();
+		}
+		
 		if (showMoveOptions) {
 			showMoveOptions();
+		}
+		
+		if (showIVOptions) {
+			showIVOptions();
 		}
 		
 		if (showMessage) {
 			drawDialogueScreen(true);
 		}
 		
+	}
+	
+	private void taskState() {
+		if (currentTask == null) {
+			if (tasks.size() > 0) {
+				currentTask = tasks.remove(0);
+			} else {
+				gp.gameState = GamePanel.PLAY_STATE;
+				return;
+			}
+		}
+		
+		drawTask();
 	}
 
 	private void rareCandyState() {
@@ -160,7 +181,7 @@ public class UI extends AbstractUI{
 		switch(currentTask.type) {
 		case Task.LEVEL_UP:
 		case Task.TEXT:
-			showMessage(currentTask.message);
+			showMessage(Item.breakString(currentTask.message, 46));
 			break;
 		case Task.MOVE:
 			currentMove = currentTask.move;
@@ -180,6 +201,30 @@ public class UI extends AbstractUI{
 			gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
 			gp.ui.bagState = 0;
 			currentTask = null;
+			break;
+		case Task.GIFT:
+			gp.player.p.catchPokemon(currentTask.p);
+			currentTask.p.item = currentTask.item;
+			setNicknaming(true);
+			currentTask = null;
+			break;
+		case Task.NICKNAME:
+			currentDialogue = currentTask.message;
+			drawDialogueScreen(true);
+			setNickname(currentTask.p);
+			if (nicknaming == 0) {
+				if (gp.keyH.wPressed) {
+					gp.keyH.wPressed = false;
+					currentTask.p.nickname = nickname.toString().trim();
+					nickname = new StringBuilder();
+					if (currentTask.p.nickname == null || currentTask.p.nickname.trim().isEmpty()) currentTask.p.nickname = currentTask.p.name;
+					nicknaming = -1;
+					currentTask = null;
+				}
+			}
+			break;
+		case Task.END:
+			showMessage(currentTask.message);
 			break;
 		}
 	}
@@ -224,6 +269,75 @@ public class UI extends AbstractUI{
 		}
 	}
 	
+	private void showIVOptions() {
+		drawIVOptions(currentPokemon, currentHeader);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (currentItem == Item.BOTTLE_CAP) {
+				if (moveOption >= 0) {
+					if (currentPokemon.ivs[moveOption] < 31) {
+						currentPokemon.ivs[moveOption] = 31;
+			        	showMessage(currentPokemon + "'s " + Pokemon.getStatType(moveOption) + "IV was maxed out!");
+			        	gp.player.p.bag.remove(currentItem);
+		        		currentItems = gp.player.p.getItems(currentPocket);
+		        	} else {
+		        		showMessage("It won't have any effect.");
+		        	}
+					showIVOptions = false;
+				}
+			}
+		}
+	}
+	
+	public void drawIVOptions(Pokemon p, String header) {
+		int x = (int) (gp.tileSize * 5.5);
+		int y = gp.tileSize * 2;
+		int width = gp.tileSize * 5;
+		int height = gp.tileSize * 8;
+		drawSubWindow(x, y, width, height);
+		
+		int ivWidth = gp.tileSize * 4;
+		int ivHeight = (int) (gp.tileSize * 7 / 8);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.drawString(header, x, y);
+		y += gp.tileSize / 2;
+		
+		for (int i = 0; i < p.ivs.length; i++) {
+			int iv = p.ivs[i];
+			g2.setFont(g2.getFont().deriveFont(24F));
+			g2.setColor(Color.LIGHT_GRAY);
+			g2.fillRoundRect(x, y, ivWidth, ivHeight, 10, 10);
+			g2.setColor(Color.BLACK);
+	        String text = Pokemon.getStatType(i) + ": " + iv;
+	        g2.drawString(text, getCenterAlignedTextX(text, x + ivWidth / 2), y + gp.tileSize / 2);
+	        if (moveOption == i) {
+	            g2.setColor(Color.RED);
+	            g2.drawRoundRect(x - 2, y - 2, ivWidth + 4, ivHeight + 4, 10, 10);
+	        }
+	        y += gp.tileSize;
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			moveOption--;
+			if (moveOption < 0) {
+				moveOption = 5;
+			}
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			moveOption++;
+			if (moveOption > 5) {
+				moveOption = 0;
+			}
+		}
+	}
+	
 	private void useRareCandy(Pokemon pokemon) {
         if (pokemon.getLevel() == 100) {
             showMessage("It won't have any effect.");
@@ -234,15 +348,35 @@ public class UI extends AbstractUI{
 	}
 
 	private void useItem() {
+		drawItemUsingScreen();
 		drawParty(currentItem);
-		if (gp.keyH.wPressed && !showMoveOptions) {
+		if (gp.keyH.wPressed && !showMoveOptions && !showIVOptions) {
 			if (currentItem == Item.RARE_CANDY) {
-				gp.gameState = GamePanel.USE_RARE_CANDY_STATE;
+				gp.gameState = GamePanel.RARE_CANDY_STATE;
 			} else {
 				gp.keyH.wPressed = false;
 				gp.player.p.useItem(gp.player.p.team[partyNum], currentItem, gp);	
 			}
 		}
+	}
+
+	private void drawItemUsingScreen() {
+		int x = gp.tileSize*3;
+		int y = 0;
+		int width = gp.tileSize*10;
+		int height = gp.tileSize;
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize * 0.75;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.setColor(Color.WHITE);
+		String option1 = currentPocket == Item.BERRY || currentPocket == Item.HELD_ITEM ? "Give " : "Use ";
+		g2.drawString(option1 + currentItem.toString(), x, y);
+		
+		x = gp.tileSize * 12;
+		y = gp.tileSize / 4;
+		g2.drawImage(currentItem.getImage(), x, y, null);
 	}
 
 	public void drawMenuScreen() {

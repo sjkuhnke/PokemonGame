@@ -701,7 +701,7 @@ Type:
 Bug / None
 
 Ability:
-Swarm / Compound Eyes
+Poison Heal / Compound Eyes
 
 Base Stats:
 80 HP / 70 Atk / 80 Def / 55 SpA / 120 SpD / 100 Spe / 505 BST
@@ -796,7 +796,7 @@ Ability:
 Anger Point / Chlorophyll
 
 Base Stats:
-120 HP / 125 Atk / 120 Def / 60 SpA / 35 SpD / 55 Spe / 515 BST
+110 HP / 125 Atk / 110 Def / 55 SpA / 35 SpD / 55 Spe / 490 BST
 
 Level Up:
 1 - Pound
@@ -1017,6 +1017,7 @@ Level Up:
 45 - Knock Off
 47 - Swords Dance
 50 - Psycho Cut
+55 - Sticky Web
 60 - Solar Blade
 
 ===================
@@ -1540,7 +1541,7 @@ Level Up:
 052 - Carinx
 ===================
 Type:
-Rock / None
+Rock / Psychic
 
 Ability:
 Shed Skin / Regenerator
@@ -1832,7 +1833,7 @@ Level Up:
 5 - Headbutt
 10 - Powder Snow
 15 - Horn Leech
-20 - Red-Nose Boost
+20 - Aurora Boost
 23 - Ice Shard
 25 - Magic Blast
 30 - Light Beam
@@ -1971,13 +1972,14 @@ Base Stats:
 
 Level Up:
 1 - Headbutt
-1 - Beat Up
+1 - Circle Throw
 5 - Feint Attack
 8 - Iron Defense
 15 - Drill Run
 20 - Head Smash
 25 - Spiky Shield
 30 - Stealth Rock
+35 - Storm Throw
 40 - Body Press
 
 Evolutions:
@@ -1997,13 +1999,14 @@ Base Stats:
 
 Level Up:
 1 - Headbutt
-1 - Beat Up
+1 - Circle Throw
 5 - Feint Attack
 8 - Iron Defense
 15 - Drill Run
 20 - Head Smash
 25 - Spiky Shield
 30 - Stealth Rock
+35 - Storm Throw
 40 - Body Press
 48 - Mach Punch
 48 - Stone Edge
@@ -2115,7 +2118,7 @@ Level Up:
 071 - Froshrog
 ===================
 Type:
-Water / None
+Water / Light
 
 Ability:
 Torrent / Slush Rush
@@ -2126,7 +2129,7 @@ Base Stats:
 Level Up:
 1 - Bubble
 3 - Pound
-5 - Leer
+5 - Flash
 7 - Powder Snow
 9 - Covet
 11 - Magic Reflect
@@ -2135,7 +2138,7 @@ Level Up:
 20 - Ice Shard
 24 - Aqua Jet
 27 - Bounce
-30 - Dazzling Gleam
+30 - Aurora Beam
 
 Evolutions:
 Froshrog -> Bouncerog (lv. 32)
@@ -2155,7 +2158,7 @@ Base Stats:
 Level Up:
 1 - Bubble
 3 - Pound
-5 - Leer
+5 - Flash
 7 - Powder Snow
 9 - Covet
 11 - Magic Reflect
@@ -2164,8 +2167,7 @@ Level Up:
 20 - Ice Shard
 24 - Aqua Jet
 27 - Bounce
-30 - Dazzling Gleam
-31 - Aurora Beam
+32 - Dazzling Gleam
 36 - Hydro Pump
 40 - Elemental Sparkle
 44 - Sparkling Aria
@@ -3442,6 +3444,7 @@ Level Up:
 10 - Mud-Slap
 13 - Mud Bomb
 16 - Shock Wave
+19 - Endure
 22 - Draining Kiss
 23 - Covet
 26 - Thunder Wave
@@ -3469,6 +3472,7 @@ Level Up:
 10 - Mud-Slap
 13 - Mud Bomb
 16 - Shock Wave
+19 - Endure
 22 - Draining Kiss
 23 - Covet
 26 - Thunder Wave
@@ -3502,6 +3506,7 @@ Level Up:
 10 - Mud-Slap
 13 - Mud Bomb
 16 - Shock Wave
+19 - Endure
 22 - Draining Kiss
 23 - Covet
 26 - Thunder Wave
@@ -6007,6 +6012,10 @@ Level Up:
 15 - Hypnosis
 19 - Will-O-Wisp
 24 - Hex
+25 - Shadow Punch
+25 - Thunder Punch
+28 - Magnet Rise
+31 - Shadow Ball
 
 Evolutions:
 Poof-E -> Hast-E (lv. 32)

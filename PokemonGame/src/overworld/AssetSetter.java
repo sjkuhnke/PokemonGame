@@ -1056,7 +1056,7 @@ public class AssetSetter {
 		
 		mapNum = 38;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(53, 7, "Do you have an ICE type to show me? Also, say hi to my brother in the RADIO TOWER if you haven't yet!", true);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 53, 7, 327);
 		
 		if (!flags[8] || !flags[9]) {
 			gp.npc[mapNum][index] = NPCSetup(62, 41, "What is going on at the school?! Where is everybody?!?!");
@@ -1071,19 +1071,19 @@ public class AssetSetter {
 		
 		mapNum = 43;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 42, "Do you have an GROUND type to show me? Also, say hi to my brother in the ICY FIELDS if you haven't yet!", true);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 31, 42, 328);
 		
 		mapNum = 41;
 		index = 0;
 		
 		if (!flags[7]) {
-			gp.npc[mapNum][index] = NPCSetup(13, 24, "This room is locked! Where could the key be?", 7);
+			gp.npc[mapNum][index] = NPCSetup(13, 24, "Room B is locked! Where could Key B be?", 7);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
 		
 		if (!flags[6]) {
-			gp.npc[mapNum][index] = NPCSetup(50, 24, "This room is locked! Where could the key be?", 6);
+			gp.npc[mapNum][index] = NPCSetup(50, 24, "Room A is locked! Where could Key A be?", 6);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1105,7 +1105,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 36, 17, 131);
 		gp.npc[mapNum][index] = NPCSetup(TN_UP, 32, 18, 132);
 		
-		gp.npc[mapNum][index] = NPCSetup(29, 18, "Who are these people?? Have you cleared both rooms yet?", 9, true, "Thank you for restoring peace to our wonderful school!");
+		gp.npc[mapNum][index] = NPCSetup(29, 18, "Who are these people?? Have you cleared both rooms yet?", 31, true, "Thank you for restoring peace to our wonderful school!");
 		
 		mapNum = 44;
 		index = 0;
@@ -1250,7 +1250,7 @@ public class AssetSetter {
 		
 		mapNum = 94;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "There have been 2 meteorites that have crashed into our region.\nOne makes Pokemon surge with electricity, and another casts them in a strange shadow.", 18, true, "You should explore the Hearts of the ELECTRIC TUNNEL and SHADOW\nRAVINE. They're really pretty.");
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "There have been 2 meteorites that have crashed into our region.", 18, true, "You should explore the Hearts of the ELECTRIC TUNNEL and SHADOW\nRAVINE. They're really pretty.");
 		
 		mapNum = 104;
 		index = 0;
@@ -2141,6 +2141,7 @@ public class AssetSetter {
 		// flags[28] is true after beating Maxwell 2 (and disbanding TN)
 		// flags[29] is true after beating Zurroaratr
 		// flags[30] is true after getting fishing rod
+		// flags[31] is true after getting Surf
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		if (flags[1]) {

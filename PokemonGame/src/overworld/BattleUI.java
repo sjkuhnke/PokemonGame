@@ -359,16 +359,18 @@ public class BattleUI extends AbstractUI {
 			}
 			break;
 		case Task.CATCH:
-			drawFoePokeball(false, ball.getItem());
+			drawFoePokeball(false, currentTask.item);
 			if (counter >= 75) {
 				counter = 0;
 				if (currentTask.wipe) {
-					user.getPlayer().catchPokemon(foe);
+					user.getPlayer().catchPokemon(foe, currentTask.item);
 					setNicknaming(true);
 				} else {
 					currentTask.p.setVisible(true);
 					Pokemon.addTask(Task.TEXT, "Oh no, " + foe.name + " broke free!");
 					turn(null, foe.randomMove());
+					ball = gp.player.p.getBall(ball);
+					balls = gp.player.p.getBalls();
 				}
 				currentTask = null;
 			}
@@ -858,6 +860,7 @@ public class BattleUI extends AbstractUI {
 				if (ball != null) {
 					Pokemon.addTask(Task.TEXT, "You threw a " + ball.getItem().toString() + "!");
 					Task t = Pokemon.addTask(Task.CATCH, "", foe);
+					t.item = ball.getItem();
 					t.setWipe(user.getCapture(foe, ball));
 					subState = TASK_STATE;
 				}
@@ -1059,6 +1062,15 @@ public class BattleUI extends AbstractUI {
 		            	user.getPlayer().bag.add(foe.trainer.getItem());
 		            	message += "\nYou were given " + foe.trainer.getItem().toString() + "!";
 		            }
+					if (foe.trainer.getFlagIndex() != 0) {
+						int flag = foe.trainer.getFlagIndex();
+		            	user.getPlayer().flags[flag] = true;
+		            	if (flag == 6) {
+		            		message += "\nObtained A Key!";
+		            	} else if (flag == 7) {
+		            		message += "\nObtained B Key!";
+		            	}
+		            }
 					Pokemon.addTask(Task.END, message);
 		            if (foe.trainer.getMoney() == 500 && user.getPlayer().badges < 8) {
 		            	user.getPlayer().badges++;
@@ -1069,9 +1081,6 @@ public class BattleUI extends AbstractUI {
 		            	for (Entity clerk : gp.aSetter.clerks) {
 		            		clerk.setItems(gp.player.getItems());
 		            	}
-		            }
-		            if (foe.trainer.getFlagIndex() != 0) {
-		            	user.getPlayer().flags[foe.trainer.getFlagIndex()] = true;
 		            }
 		            break;
 				}

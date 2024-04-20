@@ -5,7 +5,7 @@ import javax.swing.*;
 import entity.PlayerCharacter;
 import pokemon.Player;
 import pokemon.Pokemon;
-import pokemon.Battle.JGradientButton;
+import pokemon.JGradientButton;
 
 import java.awt.*;
 import java.io.FileInputStream;

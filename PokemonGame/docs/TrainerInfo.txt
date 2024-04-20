@@ -228,14 +228,6 @@ Trainer AF                  Flamebless Lv. 38 @ (Passho Berry)
 
 Kleine Village------------------------------------
 
-Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Torgged Lv. 30, Psylotter Lv. 31
-
-Fred 2
-Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
-Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
-Torgged (Lv. 30) @ Expert Belt          /   Rough Skin     /   Magnitude, Headbutt, Sleep Powder, Mega Drain
-Psylotter (Lv. 31) @ Wide Lens          /   Water Veil     /   Hypnosis, Rollout, Confuse Ray, Trick
-
 Trainer RR A                Froshrog Lv. 30, Spheal Lv. 31 @ (Life Orb, Silk Scarf)
 Trainer RR B                Treewin Lv. 30, Roselia Lv. 31 @ (Sitrus Berry, Black Sludge)
 Trainer RR C                Sparkitten Lv. 30, Splame Lv. 31 @ (Charcoal, Chilan Berry)
@@ -252,6 +244,14 @@ Leavanny (Lv. 32) @ Coba Berry          /   Sharpness      /   Leaf Blade, X-Sci
 Swordik (Lv. 32) @ Life Orb             /   Hyper Cutter   /   First Impression, U-Turn, Close Combat, Rock Slide
 Opwing (Lv. 32) @ Lum Berry             /   Technician     /   Bug Bite, Moonlight, Feint Attack, Fell Stinger
 Frosmoth (Lv. 33) @ Heavy-Duty Boots    /   Icy Scales     /   Aurora Beam, Bug Buzz, Snowscape, Quiver Dance
+
+Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Torgged Lv. 30, Psylotter Lv. 31
+
+Fred 2
+Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
+Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
+Torgged (Lv. 30) @ Expert Belt          /   Rough Skin     /   Magnitude, Headbutt, Sleep Powder, Mega Drain
+Psylotter (Lv. 31) @ Wide Lens          /   Water Veil     /   Hypnosis, Rollout, Confuse Ray, Trick
 
 
 Route 41------------------------------------------
@@ -287,6 +287,10 @@ Trainer AO                  Sheltor Lv. 37, Posho Lv. 40, Daray Lv. 37, Shelnado
 Trainer AP                  Whiskers Lv. 36, Gurdurr Lv. 37, Armoid Lv. 36, Zoroark Lv. 37 @ (Black Belt, Covert Cloak, Occa Berry, Roseli Berry)
 Trainer AQ                  Minishoo Lv. 38, Consodust Lv. 39, Shawar Lv. 37, Magestiflash Lv. 37 @ (Clear Amulet, Charti Berry, Enchanted Amulet, Red Card)
 
+Icy Fields----------------------------------------
+
+Trainer Ice Master          Kleinowl Lv. 37, Hootowl Lv. 36, Grondor Lv. 35, Sealeo Lv. 36 @ (Focus Sash, Icy Rock, Eviolite, Leftovers)
+
 Route 30------------------------------------------
 
 Trainer AR                  Pigoga Lv. 40, Hootowl Lv. 40, Pigoga Lv. 40, Magestiflash Lv. 40, Glittleshoo Lv. 40, Fireshard-E Lv. 40 @ (Wacan Berry, Never-Melt Ice, Rocky Helmet, Heavy-Duty Boots, Chilan Berry, Wiki Berry)
@@ -312,6 +316,7 @@ Trainer TN S13              Curlatoral Lv. 38, Opwing Lv. 37 @ (Toxic Orb, Lum B
 Trainer TN S14              Boulderoar Lv. 37, Millistone Lv. 38 @ (King's Rock, Rocky Helmet)
 Trainer TN S15              Houndoom Lv. 39, Fireshard Lv. 38 @ (Assault Vest, Charti Berry)
 Trainer TN S16              Ali Lv. 38, Batorali Lv. 37 @ (Choice Band, Power Herb)
+Trainer Ground Master       Blaster Lv. 36, Fightorex Lv. 35, Diggie Lv. 36, Durfish-S Lv. 37 @ (Focus Band, None, Eviolite, Life Orb)
 Trainer 4 Gym A             Frosmoth Lv. 37, Frosmoth Lv. 38, Sealeo Lv. 39, Sealeo Lv. 40 @ (Occa Berry, Charti Berry, Sitrus Berry, Chesto Berry)
 Trainer 4 Gym B             Bipedice Lv. 40 @ (Clear Amulet)
 Trainer 4 Gym C             Kleinowl Lv. 40, Hootowl Lv. 39, Dualmoose Lv. 40, Hootowl Lv. 39 @ (Bright Powder, Light Clay, Custap Berry, Focus Band)

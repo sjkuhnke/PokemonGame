@@ -30,6 +30,7 @@ public abstract class AbstractUI {
 	public Font marumonica;
 	public int counter = 0;
 	public boolean showMoveOptions;
+	public boolean showIVOptions;
 	
 	public Task currentTask;
 	public ArrayList<Task> tasks;
@@ -150,7 +151,7 @@ public abstract class AbstractUI {
 		
 		drawSubWindow(x, y, width, height);
 		
-		if (!showMoveOptions && currentTask == null) {
+		if (!showMoveOptions && !showIVOptions && currentTask == null) {
 			if (gp.keyH.upPressed) {
 				gp.keyH.upPressed = false;
 				if (partyNum > 1) {
@@ -786,7 +787,7 @@ public abstract class AbstractUI {
 		if (gp.keyH.wPressed && m != null) {
 			gp.keyH.wPressed = false;
 			if (moveOption >= 0) {
-				if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
+				if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.RARE_CANDY_STATE) {
 					if (moveOption == 0) {
 						Task t = Pokemon.createTask(Task.TEXT, p.nickname + " did not learn " + m.toString() + ".");
 						Pokemon.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);

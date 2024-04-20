@@ -1,6 +1,8 @@
 package entity;
 
 import overworld.GamePanel;
+import pokemon.Pokemon;
+import pokemon.Pokemon.Task;
 
 public class NPC_Block extends Entity {
 	
@@ -30,6 +32,11 @@ public class NPC_Block extends Entity {
 	}
 	
 	public void speak(int mode) {
-		super.speak(mode);
+		if (!more || mode != 0) {
+			super.speak(mode);
+		} else {
+			gp.gameState = GamePanel.TASK_STATE;
+			Pokemon.addTask(Task.TEXT, dialogues[dialogueIndex]);
+		}
 	}
 }

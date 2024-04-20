@@ -130,12 +130,13 @@ Low Sweep : Physical / 65 / 100 : 100% chance to lower foe's Speed by 1
 Mach Punch : Physical / 40 / 100 : Always goes first
 No Retreat : Status / 0 / -- : Raises all of user's stats by 1, user can't switch out. Can only be used once
 Power-Up Punch : Physical / 40 / 100 : 100% chance to raise user's Attack by 1
-Revenge : Physical / 60 / 100 : Power is doubled if user is slower than foe
+Revenge : Physical / 120 / 100 : Power is doubled if user is slower than foe
 Reversal : Physical / 0 / 100 : Deals more damage the lower the user's HP is
 Rock Smash : Physical / 40 / 100 : 100% to lower foe's Defense by 1
 Sacred Sword : Physical / 90 / 100 : Ignores Defense and Evasion changes of foe
 Seismic Toss : Physical / 0 / 100 : Damage dealt is equal to the user's level
 Sky Uppercut : Physical / 85 / 90 : A normal attack
+Storm Throw : Physical / 60 / 100 : This move always Crits
 Submission : Physical / 80 / 90 : User takes 1/3 of damage inflicted as recoil
 Summit Strike : Physical / 70 / 95 : 100% to lower foe's Defense by one stage. 30% to flinch foe
 Superpower : Physical / 120 / 100 : 100% of lowering user's Attack and Defense by 1
@@ -168,7 +169,7 @@ Heat Crash : Physical / 0 / 100 : Damage is based on how heavy the user is compa
 Heat Wave : Special / 95 / 90 : 10% to Burn foe
 Incinerate : Special / 60 / 100 : 100% to burn up foe's berry
 Inferno : Special / 100 / 50 : 100% chance to Burn foe
-Lava Lair : Status / 0 / 100 : User protects itself, can't be used in succession. Burns foe if they make contact
+Lava Lair : Status / 0 / -- : User protects itself, can't be used in succession. Burns foe if they make contact
 Lava Plume : Special / 80 / 100 : 30% to Burn foe
 Lava Surf : Special / 90 / 100 : A normal attack
 Molten Consume : Physical / 50 / 100 : 100% chance to Burn foe
@@ -297,7 +298,7 @@ Drill Run : Physical / 80 / 95 : Boosted Crit rate
 Earth Power : Special / 90 / 100 : 10% chance to lower foe's Sp.Def by 1
 Earthquake : Physical / 100 / 100 : A normal attack
 Fissure : Physical / 0 / 30 : If this move hits, it always K.Os foe
-Magnitude : Physical / 110 / 100 : A random Magnitude between 4-10 will be used, corresponding to its power
+Magnitude : Physical / 50 / 100 : A random Magnitude between 4-10 will be used, corresponding to its power
 Mud Bomb : Special / 65 / 85 : 30% to lower foe's Accuracy by 1
 Mud Shot : Special / 55 / 95 : 100% chance to lower foe's Speed by 1
 Mud Sport : Status / 0 / -- : Makes ELECTRIC moves deal 1/3 damage for 8 turns
@@ -359,6 +360,7 @@ Sweet Kiss : Status / 0 / 75 : Confuses foe
 ===============
 Magic
 ===============
+Aurora Boost : Status / 0 / -- : Raises user's Defense and Sp.Def by 1, and user's Sp.Atk by 2
 Elemental Sparkle : Special / 45 / 90 : A random Grass, Fire, or Water move is also used
 Foresight : Status / 0 / -- : Indentifies foe, replacing their Ghost typing with Normal if they have it. It also raises user's Accuracy by 1 stage
 Magic Blast : Special / 30 / 95 : A random Rock, Ground or Grass move is also used
@@ -368,7 +370,6 @@ Magic Powder : Status / 0 / 100 : Changes foe's type to MAGIC
 Magic Reflect : Status / 0 / -- : Foe's next attack will be reflected against them. Can be used every other turn, and not on the first turn out.
 Magic Tomb : Special / 90 / 100 : A normal attack
 Metronome : Status / 0 / -- : Uses a random move, can't be blocked by taunt
-Red-Nose Boost : Status / 0 / -- : Raises user's Defense and Sp.Def by 1, and user's Sp.Atk by 2
 Sea Dragon : Status / 0 / -- : Transforms Kissyfishy into Kissyfishy-D: raised Atk, SpAtk, Acc by 1 if Kissyfishy-D
 Sparkle Strike : Physical / 80 / -- : This attack never misses
 Sparkling Terrain : Status / 0 / -- : Sets the terrain to SPARKLY for 5 turns
