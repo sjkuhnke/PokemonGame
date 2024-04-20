@@ -60,12 +60,12 @@ public class Pokemon implements Serializable {
 	public static final int MAX_POKEMON = 240;
 	
 	// Database
-	public static String[] names = new String[MAX_POKEMON];
-	public static PType[][] types = new PType[MAX_POKEMON][2];
-	public static Ability[][] abilities = new Ability[MAX_POKEMON][2];
-	public static int[][] base_stats = new int[MAX_POKEMON][6];
-	public static double[] weights = new double[MAX_POKEMON];
-	public static int[] catch_rates = new int[MAX_POKEMON];
+	private static String[] names = new String[MAX_POKEMON];
+	private static PType[][] types = new PType[MAX_POKEMON][2];
+	private static Ability[][] abilities = new Ability[MAX_POKEMON][2];
+	private static int[][] base_stats = new int[MAX_POKEMON][6];
+	private static double[] weights = new double[MAX_POKEMON];
+	private static int[] catch_rates = new int[MAX_POKEMON];
 	
 	// id fields
 	public int id;
@@ -3428,7 +3428,7 @@ public class Pokemon implements Serializable {
 				fail = fail(announce);
 				return;
 			} else {
-				this.currentHP = this.getStat(0);
+				int healAmt = this.getStat(0) - this.currentHP;
 				this.status = Status.HEALTHY;
 				if (this.ability == Ability.INSOMNIA) {
 					fail = fail(announce);
@@ -3437,7 +3437,7 @@ public class Pokemon implements Serializable {
 				this.sleep(false);
 				this.sleepCounter = 2;
 				this.vStatuses.remove(Status.CONFUSED);
-				if (announce) addTask(Task.TEXT, this.nickname + " slept and became healthy!");
+				heal(healAmt, this.nickname + " slept and became healthy!");
 			}
 		} else if (announce && (move == Move.ROOST || move == Move.RECOVER || move == Move.SLACK_OFF)) {
 			if (this.currentHP == this.getStat(0)) {
@@ -5418,7 +5418,7 @@ public class Pokemon implements Serializable {
 			movebank = new Node[30];
 			movebank[0] = new Node(Move.BUBBLE);
 			movebank[2] = new Node(Move.POUND);
-			movebank[4] = new Node(Move.LEER);
+			movebank[4] = new Node(Move.FLASH);
 			movebank[6] = new Node(Move.POWDER_SNOW);
 			movebank[8] = new Node(Move.COVET);
 			movebank[10] = new Node(Move.MAGIC_REFLECT);
@@ -5427,13 +5427,13 @@ public class Pokemon implements Serializable {
 			movebank[19] = new Node(Move.ICE_SHARD);
 			movebank[23] = new Node(Move.AQUA_JET);
 			movebank[26] = new Node(Move.BOUNCE);
-			movebank[29] = new Node(Move.DAZZLING_GLEAM);
+			movebank[29] = new Node(Move.AURORA_BEAM);
 			break;
 		case 72:
 			movebank = new Node[60];
 			movebank[0] = new Node(Move.BUBBLE);
 			movebank[2] = new Node(Move.POUND);
-			movebank[4] = new Node(Move.LEER);
+			movebank[4] = new Node(Move.FLASH);
 			movebank[6] = new Node(Move.POWDER_SNOW);
 			movebank[8] = new Node(Move.COVET);
 			movebank[10] = new Node(Move.MAGIC_REFLECT);
@@ -5442,8 +5442,7 @@ public class Pokemon implements Serializable {
 			movebank[19] = new Node(Move.ICE_SHARD);
 			movebank[23] = new Node(Move.AQUA_JET);
 			movebank[26] = new Node(Move.BOUNCE);
-			movebank[29] = new Node(Move.DAZZLING_GLEAM);
-			movebank[30] = new Node(Move.AURORA_BEAM);
+			movebank[31] = new Node(Move.DAZZLING_GLEAM);
 			movebank[35] = new Node(Move.HYDRO_PUMP);
 			movebank[39] = new Node(Move.ELEMENTAL_SPARKLE);
 			movebank[43] = new Node(Move.SPARKLING_ARIA);
@@ -8628,6 +8627,7 @@ public class Pokemon implements Serializable {
 		
 		public boolean wipe;
 		
+		public int start;
 		public int finish;
 		public Pokemon p; // the pokemon taking damage, or announcing an ability, or being sent out
 		public Pokemon evo;
@@ -8645,6 +8645,7 @@ public class Pokemon implements Serializable {
 			this.type = type;
 			this.counter = 50;
 			setPokemon(p);
+			start = -1;
 		}
 		
 		public void setPokemon(Pokemon p) {
@@ -11467,9 +11468,15 @@ public class Pokemon implements Serializable {
 		t.setAbility(p.ability);
 	}
 	
-	public static void addSwapInTask(Pokemon p) {
+	public static void addSwapInTask(Pokemon p, int start) {
 		String message = p.playerOwned() ? "Go! " + p.nickname + "!" : p.trainer.getName() + " sends out " + p.nickname + "!";
-		addTask(Task.SWAP_IN, message, p);
+		Task t = addTask(Task.SWAP_IN, message, p);
+		t.start = start;
+		t.status = p.status;
+	}
+	
+	public static void addSwapInTask(Pokemon p) {
+		addSwapInTask(p, -1);
 	}
 	
 	public static void addSwapOutTask(Pokemon p) {
@@ -11652,4 +11659,11 @@ public class Pokemon implements Serializable {
         	catch_rates[i] = Integer.parseInt(tokens[8].trim());
         }
     }
+
+	public String getFormattedID() {
+		String id = this.id + "";
+		while (id.length() < 3) id = "0" + id;
+		id = "#" + id;
+		return id;
+	}
 }

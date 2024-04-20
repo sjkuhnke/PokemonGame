@@ -52,9 +52,9 @@ public class Main {
 		window.setResizable(false);
 		window.setTitle("Pokemon Game");
 		
-		setTrainers();
-		
 		GamePanel gamePanel = new GamePanel(window);
+		
+		setTrainers();
 		
 		showStartupMenu(window, gamePanel);
 	}
