@@ -41,8 +41,10 @@ public class KeyHandler implements KeyListener {
 			useItemState(code);
 		} else if (gp.gameState == GamePanel.USE_REPEL_STATE) {
 			useRepelState(code);
-		} else if (gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
+		} else if (gp.gameState == GamePanel.RARE_CANDY_STATE) {
 			useRareCandyState(code);
+		} else if (gp.gameState == GamePanel.TASK_STATE) {
+			taskState(code);
 		}
 		
 		
@@ -60,13 +62,22 @@ public class KeyHandler implements KeyListener {
 				rightPressed = true;
 			}
 			
-			if (gp.battleUI.nicknaming == 1 || gp.ui.nicknaming == 1) {
+			if (gp.battleUI.nicknaming == 1) {
 				if (code == KeyEvent.VK_BACK_SPACE) {
 					gp.battleUI.handleBackspace();
 				} else {
 					char c = e.getKeyChar();
 					if (c != KeyEvent.CHAR_UNDEFINED) {
 						gp.battleUI.handleKeyInput(c);
+					}
+				}
+			} else if (gp.ui.nicknaming == 1) {
+				if (code == KeyEvent.VK_BACK_SPACE) {
+					gp.ui.handleBackspace();
+				} else {
+					char c = e.getKeyChar();
+					if (c != KeyEvent.CHAR_UNDEFINED) {
+						gp.ui.handleKeyInput(c);
 					}
 				}
 			}
@@ -250,7 +261,7 @@ public class KeyHandler implements KeyListener {
 				gp.ui.subState = 3;
 				gp.ui.bagState = 0;
 				gp.ui.commandNum = 0;
-			} else if (gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
+			} else if (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
 				gp.ui.currentTask = null;
 			}
 		}
@@ -441,8 +452,9 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
-			if (gp.ui.showMoveOptions) {
+			if (gp.ui.showMoveOptions || gp.ui.showIVOptions) {
 				gp.ui.moveOption = -1;
+				gp.ui.showIVOptions = false;
 				gp.ui.showMoveOptions = false;
 			} else {
 				gp.gameState = GamePanel.MENU_STATE;
@@ -473,6 +485,19 @@ public class KeyHandler implements KeyListener {
 				gp.gameState = GamePanel.MENU_STATE;
 				gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
 				gp.ui.bagState = 0;
+			}
+		}
+		
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		
+	}
+	
+	private void taskState(int code) {
+		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+			if (gp.ui.currentTask == null) {
+				gp.gameState = GamePanel.PLAY_STATE;
 			}
 		}
 		

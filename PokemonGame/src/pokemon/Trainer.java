@@ -135,7 +135,7 @@ public class Trainer implements Serializable {
 		return money;
 	}
 	
-	public boolean swapRandom(Pokemon foe, Player me, boolean baton) {
+	public boolean swapRandom(Pokemon foe, Player me) {
 		if (!hasValidMembers()) return false;
 		Random rand = new Random();
 		int index = rand.nextInt(team.length);
@@ -143,16 +143,10 @@ public class Trainer implements Serializable {
 			index = rand.nextInt(team.length);
 		}
 		
-		if (baton) team[index].statStages = current.statStages;
-		
 		swap(current, team[index]);
 		current.swapIn(foe, true);
 		return true;
 		
-	}
-	
-	public boolean swapRandom(Pokemon foe, Player me) {
-		return swapRandom(foe, me, false);
 	}
 	
 	public boolean hasValidMembers() {

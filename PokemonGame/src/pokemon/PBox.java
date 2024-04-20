@@ -5,7 +5,6 @@ import javax.swing.border.BevelBorder;
 import entity.PlayerCharacter;
 import overworld.GamePanel;
 import overworld.KeyHandler;
-import pokemon.Battle.JGradientButton;
 import pokemon.CompoundIcon.Axis;
 
 import java.awt.*;

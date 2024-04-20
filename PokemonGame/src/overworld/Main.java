@@ -37,7 +37,7 @@ import pokemon.PType;
 import pokemon.Player;
 import pokemon.Pokemon;
 import pokemon.Trainer;
-import pokemon.Battle.JGradientButton;
+import pokemon.JGradientButton;
 import pokemon.Pokemon.Node;
 
 public class Main {
@@ -855,8 +855,8 @@ public class Main {
 				new Trainer("EM", new Pokemon[]{new Pokemon(79, 72, false, true), new Pokemon(56, 72, false, true), new Pokemon(47, 72, false, true), new Pokemon(25, 72, false, true)}, new Item[]{Item.LEFTOVERS, Item.RED_CARD, Item.WHITE_HERB, Item.SITRUS_BERRY}, 100),
 				new Trainer("Diftery", new Pokemon[]{new Pokemon(229, 75, true)}, 0), // 325
 				new Trainer("Triwandoliz", new Pokemon[]{new Pokemon(232, 75, true)}, 0),
-				new Trainer("EN", new Pokemon[]{new Pokemon(9, 66, false, true), new Pokemon(140, 66, false, true), new Pokemon(72, 66, false, true)}, new Item[]{Item.MUSCLE_BAND, Item.STARF_BERRY, Item.FOCUS_SASH}, 100), // TODO
-				new Trainer("EO", new Pokemon[]{new Pokemon(9, 66, false, true), new Pokemon(140, 66, false, true), new Pokemon(72, 66, false, true)}, new Item[]{Item.MUSCLE_BAND, Item.STARF_BERRY, Item.FOCUS_SASH}, 100), // TODO
+				new Trainer("Ice Master", new Pokemon[]{new Pokemon(59, 37, false, true), new Pokemon(60, 36, false, true), new Pokemon(64, 35, false, true), new Pokemon(69, 36, false, true)}, new Item[]{Item.FOCUS_SASH, Item.ICY_ROCK, Item.EVIOLITE, Item.LEFTOVERS}, 100, Item.PETTICOAT_GEM, 7), // TODO
+				new Trainer("Ground Master", new Pokemon[]{new Pokemon(50, 36, false, true), new Pokemon(57, 35, false, true), new Pokemon(169, 36, false, true), new Pokemon(215, 37, false, true)}, new Item[]{Item.FOCUS_BAND, null, Item.EVIOLITE, Item.LIFE_ORB}, 100, Item.VALIANT_GEM, 6), // TODO
 //				new Trainer("Rival 5", new Pokemon[]{new Pokemon(-132, 36, false, true), new Pokemon(-25, 27, false, true), new Pokemon(-22, 32, false, true), new Pokemon(-41, 29, false, true), new Pokemon(-78, 35, false, true)}, 500),
 //				new Trainer("KK", new Pokemon[]{new Pokemon(-96, 25, false, true), new Pokemon(-97, 20, false, true), new Pokemon(-98, 30, false, true)}, 100),
 //				new Trainer("LL", new Pokemon[]{new Pokemon(-39, 25, false, true), new Pokemon(-41, 25, false, true), new Pokemon(-39, 30, false, true), new Pokemon(-41, 30, false, true)}, 100),

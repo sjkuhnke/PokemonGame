@@ -45,7 +45,6 @@ import javax.swing.SwingUtilities;
 
 import overworld.GamePanel;
 import pokemon.Bag.Entry;
-import pokemon.Battle.JGradientButton;
 import pokemon.Field.Effect;
 import pokemon.Field.FieldEffect;
 
@@ -794,7 +793,7 @@ public class Pokemon implements Serializable {
 	            if (!learnedMove) {
 	            	Task t = createTask(Task.MOVE, "", this);
             		t.setMove(move);
-	            	if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
+	            	if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
 	            		insertTask(t, index++);
 	            	} else {
 	            		gp.ui.currentPokemon = this;
@@ -2127,13 +2126,12 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (move == Move.VOLT_SWITCH || move == Move.FLIP_TURN || move == Move.U$TURN) {
+		if ((move == Move.VOLT_SWITCH || move == Move.FLIP_TURN || move == Move.U$TURN) && !this.isFainted()) {
 			if (this.trainerOwned() && enemy.hasValidMembers()) {
 				addTask(Task.TEXT, this.nickname + " went back to " + enemy.getName() + "!");
 			}
 			this.vStatuses.add(Status.SWITCHING);
 		}
-		
 		
 		if (move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) {
 			this.faint(true, foe);
@@ -8620,6 +8618,7 @@ public class Pokemon implements Serializable {
 		public static final int WEATHER = 16;
 		public static final int TERRAIN = 17;
 		public static final int CLOSE = 18;
+		public static final int GIFT = 19;
 		
 		public int type;
 		public String message;
@@ -8635,6 +8634,7 @@ public class Pokemon implements Serializable {
 		public Status status;
 		public Move move;
 		public FieldEffect fe;
+		public Item item;
 		
 		public Task(int type, String message) {
 			this(type, message, null);
@@ -8702,6 +8702,7 @@ public class Pokemon implements Serializable {
 			case WEATHER: return "WEATHER";
 			case TERRAIN: return "TERRAIN";
 			case CLOSE: return "CLOSE";
+			case GIFT: return "GIFT";
 			default:
 				return "getTypeString() doesn't have a case for this type";
 			}
@@ -8715,6 +8716,7 @@ public class Pokemon implements Serializable {
 		awardHappiness(-3, false);
 		this.status = Status.HEALTHY;
 		this.vStatuses.remove(Status.LOCKED);
+		this.vStatuses.remove(Status.SWITCHING);
 		this.vStatuses.remove(Status.SPUN);
 		this.vStatuses.remove(Status.RECHARGE);
 		this.vStatuses.remove(Status.CHARGING);
@@ -11444,7 +11446,7 @@ public class Pokemon implements Serializable {
 			Task t = createTask(text, string, p);
 			gp.battleUI.tasks.add(t);
 			return t;
-		} else if (gp != null && gp.gameState == GamePanel.USE_RARE_CANDY_STATE) {
+		} else if (gp != null && (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE)) {
 			Task t = createTask(text, string, p);
 			gp.ui.tasks.add(t);
 			return t;
@@ -11476,6 +11478,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void addSwapInTask(Pokemon p) {
+		if (gp.gameState != GamePanel.BATTLE_STATE) return;
 		addSwapInTask(p, -1);
 	}
 	

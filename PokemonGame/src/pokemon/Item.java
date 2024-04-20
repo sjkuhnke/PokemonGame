@@ -35,7 +35,6 @@ import javax.swing.SwingUtilities;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import overworld.Main;
-import pokemon.Battle.JGradientButton;
 
 public enum Item {
 	REPEL(0,10,5,new Color(0, 92, 5),Item.OTHER,null,"Prevents wild Pokemon encounters for 200 steps"),
