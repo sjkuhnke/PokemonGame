@@ -1855,6 +1855,11 @@ public class Main {
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
+			encounters = Encounter.getEncounters(146, 33, 68, "Standard", "", false); // Mt. Splinkty Outside
+			writer.write("Mt. Splinkty (Outside)");
+			writer.write(writeEncounter(encounters));
+			allEncounters.addAll(encounters);
+			
 			for (Encounter e : allEncounters) {
 				int index = e.getId();
 				amounts[index]++;

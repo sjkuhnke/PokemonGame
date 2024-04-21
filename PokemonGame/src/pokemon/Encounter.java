@@ -642,6 +642,19 @@ public class Encounter {
 				encounters.add(new Encounter(82, 15, 17, 0.09));
 				encounters.add(new Encounter(160, 15, 18, 0.19));
 				encounters.add(new Encounter(153, 16, 18, 0.10));
+			} else if (area == 146 && type.equals("Standard")) { // Mt. Splinkty Outside
+				encounters.add(new Encounter(27, 33, 35, 0.06));
+				encounters.add(new Encounter(20, 30, 32, 0.11));
+				encounters.add(new Encounter(47, 29, 32, 0.08));
+				encounters.add(new Encounter(42, 31, 34, 0.05));
+				encounters.add(new Encounter(76, 32, 33, 0.07));
+				encounters.add(new Encounter(108, 28, 31, 0.05));
+				encounters.add(new Encounter(152, 30, 32, 0.04));
+				encounters.add(new Encounter(177, 29, 32, 0.15));
+				encounters.add(new Encounter(61, 30, 30, 0.07));
+				encounters.add(new Encounter(193, 29, 34, 0.10));
+				encounters.add(new Encounter(107, 31, 34, 0.14));
+				encounters.add(new Encounter(184, 24, 25, 0.08));
 			}
 		}
 		
