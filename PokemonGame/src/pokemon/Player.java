@@ -785,7 +785,7 @@ public class Player extends Trainer implements Serializable {
 	    		String natureOld = p.getNature();
 	        	p.nature = nature;
 	        	p.setStats();
-	        	gp.ui.showMessage(p.nickname + "'s nature was changed from " + natureOld + " to " + p.getNature() + "!");
+	        	gp.ui.showMessage(p.nickname + "'s nature was changed from " + natureOld + " to\n" + p.getNature() + "!");
 				break;
 				
 			// Euphorian Gem

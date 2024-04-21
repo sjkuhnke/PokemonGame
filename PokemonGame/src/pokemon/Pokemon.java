@@ -1825,8 +1825,6 @@ public class Pokemon implements Serializable {
 				if (field.equals(field.weather, Effect.SANDSTORM) && (foe.type1 == PType.ROCK || foe.type2 == PType.ROCK)) defenseStat *= 1.5;
 			}
 			
-			if (foe.item == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
-			
 			// Stab
 			if (moveType == this.type1 || moveType == this.type2 || this.ability == Ability.TYPE_MASTER) {
 				if (ability == Ability.ADAPTABILITY) {
@@ -1857,7 +1855,7 @@ public class Pokemon implements Serializable {
 			if (item == Item.SCOPE_LENS) critChance++;
 			if (foe.ability != Ability.BATTLE_ARMOR && critCheck(critChance)) {
 				addTask(Task.TEXT, "A critical hit!");
-				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++; 
+				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++;
 				if (move.isPhysical() && attackStat < this.getStat(1)) {
 					attackStat = this.getStat(1);
 					if (this.status == Status.BURNED) attackStat /= 2;
@@ -1876,6 +1874,7 @@ public class Pokemon implements Serializable {
 					addAbilityTask(foe);
 					stat(foe, 0, 12, this); }
 			} else {
+				if (foe.item == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
 				damage = calc(attackStat, defenseStat, bp, this.level);
 			}
 			
@@ -8833,7 +8832,15 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (mode == 0 && (move == Move.FIRST_IMPRESSION || move == Move.BELCH || move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT)) {
+		if (mode == 0 && (move == Move.FIRST_IMPRESSION || move == Move.BELCH)) {
+			if (!this.impressive) {
+				return -1;
+			} else {
+				bp *= 2;
+			}
+		}
+		
+		if (mode == 0 && (move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT)) {
 			if (!this.impressive) {
 				return -1;
 			} else {
@@ -9036,8 +9043,6 @@ public class Pokemon implements Serializable {
 			if (field.equals(field.weather, Effect.SANDSTORM) && (foe.type1 == PType.ROCK || foe.type2 == PType.ROCK)) defenseStat *= 1.5;
 		}
 		
-		if (mode != 0 && foe.item == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
-		
 		// Stab
 		if (moveType == this.type1 || moveType == this.type2 || this.ability == Ability.TYPE_MASTER || this.ability == Ability.PROTEAN) {
 			if (ability == Ability.ADAPTABILITY) {
@@ -9077,6 +9082,7 @@ public class Pokemon implements Serializable {
 			damage *= 1.5;
 			if (this.ability == Ability.SNIPER) damage *= 1.5;
 		} else {
+			if (mode != 0 && foe.item == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
 			damage = calc(attackStat, defenseStat, bp, this.level, mode);
 		}
 		
