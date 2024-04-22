@@ -254,7 +254,12 @@ public class Trainer implements Serializable {
 	}
 
 	public void setCurrent(Pokemon newCurrent) {
+		if (newCurrent == null) throw new NullPointerException("New Current cannot be null");
 		this.current = newCurrent;
+	}
+	
+	public void setCurrent() {
+		setCurrent(team[0]);
 	}
 
 	public void heal() {

@@ -39,6 +39,7 @@ public class Player extends Trainer implements Serializable {
 	private static final long serialVersionUID = -2851052666892205583L;
 	
 	public Pokemon[][] boxes;
+	public Pokemon[] gauntletBox;
 	private int numBattled;
 	private int posX;
 	private int posY;
@@ -70,11 +71,13 @@ public class Player extends Trainer implements Serializable {
 	public int version;
 	
 	public static final int MAX_BOXES = 10;
-	public static final int VERSION = 4;
+	public static final int GAUNTLET_BOX_SIZE = 4;
+	public static final int VERSION = 6;
 	
 	public Player(GamePanel gp) {
 		super(true);
 		boxes = new Pokemon[MAX_BOXES][30];
+		gauntletBox = new Pokemon[GAUNTLET_BOX_SIZE];
 
 		bag = new Bag();
 		posX = 79;
@@ -1052,6 +1055,7 @@ public class Player extends Trainer implements Serializable {
 				p.update();
 			}
 		}
+		if (gauntletBox == null) gauntletBox = new Pokemon[GAUNTLET_BOX_SIZE];
 		version = VERSION;
 	}
 	
@@ -1070,6 +1074,24 @@ public class Player extends Trainer implements Serializable {
 				p.battled = true;
 			}
 		}
-		
+	}
+	
+	public boolean teamWouldBeFainted(int index) {
+		for (Pokemon p : team) {
+			if (p != null && p != team[index] && !p.isFainted()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public void shiftTeamForward(int index) {
+		Pokemon[] teamTemp = team.clone();
+    	for (int i = index + 1; i < team.length; i++) {
+        	teamTemp[i - 1] = team[i];
+        }
+    	team = teamTemp;
+    	current = team[0];
+    	team[5] = null;
 	}
 }

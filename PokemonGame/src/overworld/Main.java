@@ -581,7 +581,7 @@ public class Main {
 				new Trainer("TN O2", new Pokemon[]{new Pokemon(73, 19, false, true)}, new Item[]{Item.LUM_BERRY}, 100), // 50
 				new Trainer("TN O3", new Pokemon[]{new Pokemon(95, 19, false, true)}, new Item[]{Item.GALAXEED_BERRY}, 100),
 				new Trainer("TN O4", new Pokemon[]{new Pokemon(104, 19, false, true)}, new Item[]{Item.SALAC_BERRY}, 100),
-				new Trainer("TN O5", new Pokemon[]{new Pokemon(52, 20, false, true), new Pokemon(141, 20, false, true)}, new Item[]{Item.CHOPLE_BERRY, Item.RAWST_BERRY}, 100),
+				new Trainer("TN O5", new Pokemon[]{new Pokemon(52, 20, false, true), new Pokemon(141, 20, false, true)}, new Item[]{Item.WHITE_HERB, Item.RAWST_BERRY}, 100),
 				new Trainer("TN O6", new Pokemon[]{new Pokemon(90, 20, false, true), new Pokemon(144, 20, false, true)}, new Item[]{Item.LIFE_ORB, null}, 100, 3),
 				new Trainer("Scott 2", new Pokemon[]{new Pokemon(10, 5, false, true)}, 100), // 55
 				new Trainer("2 Gym A", new Pokemon[]{new Pokemon(16, 22, false, true)}, new Item[]{Item.MUSCLE_BAND}, 200),
@@ -787,10 +787,10 @@ public class Main {
 				new Trainer("Exp. Trainer", new Pokemon[]{new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true), new Pokemon(137, 50, false, true)}, new Item[]{Item.TOXIC_ORB, Item.TOXIC_ORB, Item.TOXIC_ORB, Item.TOXIC_ORB, Item.TOXIC_ORB, Item.TOXIC_ORB}, 100),
 				new Trainer("BP1", new Pokemon[] {new Pokemon(17, 48, false, true), new Pokemon(21, 47, false, true), new Pokemon(93, 48, false, true), new Pokemon(89, 48, false, true), new Pokemon(161, 47, false, true), new Pokemon(188, 48, false, true)}, new Item[]{Item.CHOPLE_BERRY, Item.LIFE_ORB, Item.EXPERT_BELT, Item.STARF_BERRY, Item.SPELL_TAG, Item.WIKI_BERRY}, 100),
 				new Trainer("TN 9", new Pokemon[] {new Pokemon(153, 11, false, true), new Pokemon(160, 11, false, true)}, new Item[]{Item.BIG_ROOT, Item.CHERI_BERRY}, 100),
-				new Trainer("B A", new Pokemon[] {new Pokemon(16, 15, false, true)}, 100),
-				new Trainer("B B", new Pokemon[] {new Pokemon(30, 15, false, true)}, 100), // 260
-				new Trainer("B C", new Pokemon[] {new Pokemon(57, 15, false, true)}, 100),
-				new Trainer("B D", new Pokemon[] {new Pokemon(114, 15, false, true)}, 100),
+				new Trainer("B A", new Pokemon[] {new Pokemon(16, 14, false, true)}, 100),
+				new Trainer("B B", new Pokemon[] {new Pokemon(30, 14, false, true)}, 100), // 260
+				new Trainer("B C", new Pokemon[] {new Pokemon(57, 14, false, true)}, 100),
+				new Trainer("B D", new Pokemon[] {new Pokemon(114, 14, false, true)}, 100),
 				new Trainer("B E", new Pokemon[] {new Pokemon(174, 14, false, true), new Pokemon(71, 11, false, true)}, new Item[]{Item.ORAN_BERRY, Item.CHESTO_BERRY}, 100),
 				new Trainer("YA", new Pokemon[]{new Pokemon(101, 9, false, true)}, new Item[]{Item.PASSHO_BERRY}, 100),
 				new Trainer("YB", new Pokemon[]{new Pokemon(184, 8, false, true), new Pokemon(190, 9, false, true)}, new Item[]{Item.CHILAN_BERRY, Item.COBA_BERRY}, 100), // 265
@@ -855,8 +855,9 @@ public class Main {
 				new Trainer("EM", new Pokemon[]{new Pokemon(79, 72, false, true), new Pokemon(56, 72, false, true), new Pokemon(47, 72, false, true), new Pokemon(25, 72, false, true)}, new Item[]{Item.LEFTOVERS, Item.RED_CARD, Item.WHITE_HERB, Item.SITRUS_BERRY}, 100),
 				new Trainer("Diftery", new Pokemon[]{new Pokemon(229, 75, true)}, 0), // 325
 				new Trainer("Triwandoliz", new Pokemon[]{new Pokemon(232, 75, true)}, 0),
-				new Trainer("Ice Master", new Pokemon[]{new Pokemon(59, 37, false, true), new Pokemon(60, 36, false, true), new Pokemon(64, 35, false, true), new Pokemon(69, 36, false, true)}, new Item[]{Item.FOCUS_SASH, Item.ICY_ROCK, Item.EVIOLITE, Item.LEFTOVERS}, 100, Item.PETTICOAT_GEM, 7), // TODO
-				new Trainer("Ground Master", new Pokemon[]{new Pokemon(50, 36, false, true), new Pokemon(57, 35, false, true), new Pokemon(169, 36, false, true), new Pokemon(215, 37, false, true)}, new Item[]{Item.FOCUS_BAND, null, Item.EVIOLITE, Item.LIFE_ORB}, 100, Item.VALIANT_GEM, 6), // TODO
+				new Trainer("Ice Master", new Pokemon[]{new Pokemon(59, 37, false, true), new Pokemon(60, 36, false, true), new Pokemon(64, 35, false, true), new Pokemon(69, 36, false, true)}, new Item[]{Item.FOCUS_SASH, Item.ICY_ROCK, Item.EVIOLITE, Item.LEFTOVERS}, 100, Item.PETTICOAT_GEM, 7),
+				new Trainer("Ground Master", new Pokemon[]{new Pokemon(50, 36, false, true), new Pokemon(57, 35, false, true), new Pokemon(169, 36, false, true), new Pokemon(215, 37, false, true)}, new Item[]{Item.FOCUS_BAND, null, Item.EVIOLITE, Item.LIFE_ORB}, 100, Item.VALIANT_GEM, 6),
+				new Trainer("Crook", new Pokemon[]{new Pokemon(104, 13, false, true), new Pokemon(85, 14, false, true), new Pokemon(171, 14, false, true)}, new Item[]{Item.ORAN_BERRY, Item.RINDO_BERRY, Item.ROCKY_HELMET}, 100, Item.EXP_SHARE, 32),
 //				new Trainer("Rival 5", new Pokemon[]{new Pokemon(-132, 36, false, true), new Pokemon(-25, 27, false, true), new Pokemon(-22, 32, false, true), new Pokemon(-41, 29, false, true), new Pokemon(-78, 35, false, true)}, 500),
 //				new Trainer("KK", new Pokemon[]{new Pokemon(-96, 25, false, true), new Pokemon(-97, 20, false, true), new Pokemon(-98, 30, false, true)}, 100),
 //				new Trainer("LL", new Pokemon[]{new Pokemon(-39, 25, false, true), new Pokemon(-41, 25, false, true), new Pokemon(-39, 30, false, true), new Pokemon(-41, 30, false, true)}, 100),

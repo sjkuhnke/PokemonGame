@@ -753,6 +753,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 82, 11, 177);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 11, 178);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 16, 179);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 63, 14, 329);
 		
 		if (!flags[15]) {
 			gp.npc[mapNum][index] = NPCSetup(85, 5, "The road is closed from this direction, there's a MASSIVE sinkhole on the other side of this gate.\nIf you come from Schrice City straight North of here it should be clear.", 15);
@@ -1150,6 +1151,10 @@ public class AssetSetter {
                 Item.YACHE_BERRY, Item.CHOPLE_BERRY, Item.KEBIA_BERRY, Item.SHUCA_BERRY, Item.COBA_BERRY, Item.PAYAPA_BERRY, Item.TANGA_BERRY, Item.CHARTI_BERRY,
                 Item.KASIB_BERRY, Item.HABAN_BERRY, Item.COLBUR_BERRY, Item.BABIRI_BERRY, Item.CHILAN_BERRY, Item.ROSELI_BERRY, Item.MYSTICOLA_BERRY, Item.GALAXEED_BERRY,
                 Item.LIECHI_BERRY, Item.GANLON_BERRY, Item.SALAC_BERRY, Item.PETAYA_BERRY, Item.APICOT_BERRY, Item.STARF_BERRY, Item.MICLE_BERRY, Item.CUSTAP_BERRY);
+		
+		mapNum = 58;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(33, 42, "Who are you?!?!?! Oh, hello there. Sorry for being alarmed, I'm a little unsettled right now.", 33, true, "Thank you so much for your kindness! I hope you have a great day :)");
 		
 		mapNum = 60;
 		index = 0;
@@ -2146,6 +2151,8 @@ public class AssetSetter {
 		// flags[29] is true after beating Zurroaratr
 		// flags[30] is true after getting fishing rod
 		// flags[31] is true after getting Surf
+		// flags[32] is true after getting Exp. Share
+		// flags[33] is true after getting Lucky Egg
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		if (flags[1]) {

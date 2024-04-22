@@ -10390,9 +10390,8 @@ public class Pokemon implements Serializable {
 	        }
 	        
 	        
-	        Pokemon test = new Pokemon(1, 1, false, false);
-	        test.id = id;
-	        test.baseStats = getBaseStats();
+	        Pokemon test = new Pokemon(id, 1, false, false);
+	        test.baseStats = test.getBaseStats();
 	        
 	        for (int i = 0; i < 6; i++) {
 	        	String type = getStatType(i);

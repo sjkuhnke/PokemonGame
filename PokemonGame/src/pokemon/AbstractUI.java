@@ -32,6 +32,10 @@ public abstract class AbstractUI {
 	public boolean showMoveOptions;
 	public boolean showIVOptions;
 	
+	public int boxSwapNum;
+	public boolean showBoxParty;
+	public boolean showBoxSummary;
+	
 	public Task currentTask;
 	public ArrayList<Task> tasks;
 	
@@ -142,16 +146,27 @@ public abstract class AbstractUI {
 	    int x = centerX - length / 2; // Calculate the x-coordinate for center alignment
 	    return x;
 	}
-
+	
 	public void drawParty(Item item) {
-		int x = gp.tileSize*3;
-		int y = gp.tileSize;
+		drawParty(gp.tileSize*3, gp.tileSize, item);
+	}
+
+	public void drawParty(int x, int y, Item item) {
 		int width = gp.tileSize*10;
 		int height = gp.tileSize*10;
 		
 		drawSubWindow(x, y, width, height);
 		
-		if (!showMoveOptions && !showIVOptions && currentTask == null) {
+		if (!showMoveOptions && !showIVOptions && !showBoxSummary && currentTask == null) {
+			int maxPartyIndex = 0;
+			for (int i = 1; i < gp.player.p.team.length; i++) {
+				if (gp.player.p.team[i] == null) {
+					break;
+				}
+				maxPartyIndex++;
+			}
+			if (boxSwapNum >= 0 && maxPartyIndex < 5) maxPartyIndex++;
+			
 			if (gp.keyH.upPressed) {
 				gp.keyH.upPressed = false;
 				if (partyNum > 1) {
@@ -161,7 +176,7 @@ public abstract class AbstractUI {
 			
 			if (gp.keyH.downPressed) {
 				gp.keyH.downPressed = false;
-				if (partyNum < 4 && gp.player.p.team[partyNum + 2] != null) {
+				if (partyNum < 4 && partyNum + 2 <= maxPartyIndex) {
 					partyNum += 2;
 				}
 			}
@@ -175,7 +190,7 @@ public abstract class AbstractUI {
 			
 			if (gp.keyH.rightPressed) {
 				gp.keyH.rightPressed = false;
-				if (partyNum % 2 == 0 && gp.player.p.team[partyNum + 1] != null) {
+				if (partyNum % 2 == 0 && partyNum + 1 <= maxPartyIndex) {
 					partyNum++;
 				}
 			}
@@ -234,6 +249,11 @@ public abstract class AbstractUI {
 				if (p.status != Status.HEALTHY) {
 					g2.drawImage(p.status.getImage(), (int) (x + gp.tileSize * 2.5) + 4, (int) (y + gp.tileSize * 2.25) + 8, null);
 				}
+			} else {
+				if (partyNum == i) {
+					g2.setColor(Color.RED);
+					g2.drawRoundRect(x + 8, y + 8, partyWidth - 4, partyHeight - 4, 18, 18);
+				}
 			}
 			if (i % 2 == 0) {
 				x += partyWidth;
@@ -253,16 +273,18 @@ public abstract class AbstractUI {
 			return Color.green;
 		}
 	}
-
+	
 	public void drawSummary(Pokemon foe) {
+		drawSummary(gp.player.p.team[partyNum], foe);
+	}
+
+	public void drawSummary(Pokemon p, Pokemon foe) {
 		int x = gp.tileSize*3;
 		int y = gp.tileSize / 2;
 		int width = gp.tileSize*10;
 		int height = gp.tileSize*11;
 		
 		drawSubWindow(x, y, width, height);
-		
-		Pokemon p = gp.player.p.team[partyNum];
 		
 		// ID
 		x += gp.tileSize / 2;
