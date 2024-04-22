@@ -248,7 +248,9 @@ public class PlayerCharacter extends Entity {
 					this.worldY = snapY;
 				}
 			}
+			String currentMap = currentMapName;
 			PMap.getLoc(gp.currentMap, (int) Math.round(worldX * 1.0 / gp.tileSize), (int) Math.round(worldY * 1.0 / gp.tileSize));
+			if (!currentMap.equals(currentMapName)) gp.ui.showAreaName();
 			Main.window.setTitle("Pokemon Game - " + currentMapName);
 		}
 		if (gp.currentMap == 107 && gp.checkSpin && gp.ticks == 4 && new Random().nextInt(3) == 0) {
@@ -492,6 +494,20 @@ public class PlayerCharacter extends Entity {
 			p.flags[30] = true;
 			p.fish = true;
 			Pokemon.addTask(Task.TEXT, "You got a Fishing Rod!\n(Press 'A' to fish)");
+		}
+		if (gp.currentMap == 58 && !p.flags[33]) {
+			if (!p.flags[32]) {
+				Pokemon.addTask(Task.TEXT, "Some rampant Pokemon sniffing out berries all burst into my house, but I was just making juice.");
+				Pokemon.addTask(Task.TEXT, "In the midst of all the chaos, some crook snuck in and stole my precious item right off my poor Pokemon!");
+				Pokemon.addTask(Task.TEXT, "Whatever will I do to find it?");
+			} else {
+				p.flags[33] = true;
+				Pokemon.addTask(Task.TEXT, "Oh my god, my item! You found it! Wow, you really are impressive!");
+				Pokemon.addTask(Task.TEXT, "You know what, since you're so kind, why don't you just keep it? It'll be better off with a stronger trainer like you.");
+				Pokemon.addTask(Task.TEXT, "Here, take this for your troubles too. Really, it's the least I can do.");
+				Pokemon.addTask(Task.TEXT, "Obtained a Lucky Egg!");
+				p.bag.add(Item.LUCKY_EGG);
+			}
 		}
 		if (gp.currentMap == 41 && p.flags[8] && p.flags[9] && !p.flags[31]) {
 			p.flags[31] = true;

@@ -23,6 +23,7 @@ import pokemon.Bag;
 import pokemon.Item;
 import pokemon.Move;
 import pokemon.Moveslot;
+import pokemon.Player;
 import pokemon.Pokemon;
 import pokemon.Pokemon.Task;
 
@@ -45,9 +46,15 @@ public class UI extends AbstractUI{
 	public int btY = 0;
 	
 	public boolean showMessage;
+	public boolean showArea;
+	public int areaCounter;
 	public Pokemon currentPokemon;
 	public Move currentMove;
 	public String currentHeader;
+	
+	public int boxNum;
+	public boolean isGauntlet;
+	public Pokemon currentBoxP;
 	
 	BufferedImage transitionBuffer;
 	
@@ -88,6 +95,10 @@ public class UI extends AbstractUI{
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2.setColor(Color.WHITE);
 		
+		if (showArea) {
+			drawAreaName();
+		}
+		
 		if (gp.gameState == GamePanel.DIALOGUE_STATE) {
 			drawDialogueScreen(true);
 		}
@@ -124,6 +135,10 @@ public class UI extends AbstractUI{
 			drawRepelScreen();
 		}
 		
+		if (gp.gameState == GamePanel.BOX_STATE) {
+			drawBoxScreen();
+		}
+		
 		if (gp.gameState == GamePanel.TASK_STATE) {
 			taskState();
 		}
@@ -136,12 +151,280 @@ public class UI extends AbstractUI{
 			showIVOptions();
 		}
 		
+		if (showBoxParty) {
+			drawParty(null);
+		}
+		
+		if (showBoxSummary) {
+			drawSummary(currentBoxP, null);
+		}
+		
 		if (showMessage) {
 			drawDialogueScreen(true);
 		}
 		
 	}
-	
+
+	private void drawBoxScreen() {
+		int cBoxIndex = gp.player.p.currentBox;
+		Pokemon[] cBox = gp.player.p.boxes[cBoxIndex];
+		
+		int x = (int) (gp.tileSize * 1.75);
+		int y = gp.tileSize;
+		int width = (int) (gp.tileSize * 12.75);
+		int height = gp.tileSize * 11;
+		drawSubWindow(x, y, width, height);
+		
+		int headX = x;
+		int headY = 0;
+		int headWidth = width;
+		int headHeight = gp.tileSize;
+		drawSubWindow(headX, headY, headWidth, headHeight);
+		
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(28F));
+		int headTextY = (int) (headY + gp.tileSize * 0.75);
+		g2.drawString("<", headX + gp.tileSize / 2, headTextY);
+		g2.drawString(">", headWidth + headX - gp.tileSize / 2 - 8, headTextY);
+		String boxText = "Box " + (cBoxIndex + 1);
+		int centerX = headX + (headWidth / 2);
+		g2.drawString(boxText, getCenterAlignedTextX(boxText, centerX), headTextY);
+		if (boxNum < 0) {
+			g2.drawRoundRect(centerX - gp.tileSize, (int) (headTextY - gp.tileSize / 2), gp.tileSize * 2, (int) (gp.tileSize * 0.6), 10, 10);
+		}
+		
+		int startX = x + gp.tileSize / 2;
+		int startY = y + gp.tileSize / 2;
+		int spriteWidth = gp.tileSize * 2;
+		int spriteHeight = spriteWidth;
+		int cX = startX;
+		int cY = startY;
+		for (int i = 0; i < cBox.length; i++) {
+			if (i == boxSwapNum) {
+				g2.setColor(new Color(100, 100, 220, 200));
+				g2.fillRoundRect(cX - 8, cY - 8, spriteWidth, spriteHeight, 10, 10);
+				g2.setColor(g2.getColor().darker());
+				g2.drawRoundRect(cX - 8, cY - 8, spriteWidth, spriteHeight, 10, 10);
+			}
+			
+			if (cBox[i] != null) {
+				g2.drawImage(cBox[i].getSprite(), cX, cY, null);
+				if (cBox[i].item != null) {
+					g2.drawImage(cBox[i].item.getImage(), cX - 6, cY + 62, null);
+				}
+			}
+			
+			g2.setColor(Color.WHITE);
+			if (i == boxNum) {
+				g2.drawRoundRect(cX - 8, cY - 8, spriteWidth, spriteHeight, 10, 10);
+			}
+			
+			if ((i + 1) % 6 == 0) {
+				cX = startX;
+				cY += spriteHeight;
+			} else {
+				cX += spriteWidth;
+			}
+		}
+		
+		if (!showBoxSummary && !showBoxParty) {
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				if (boxNum >= 0) {
+					currentBoxP = cBox[boxNum];
+				}
+				if (currentBoxP != null) {
+					showBoxSummary = true;
+				}
+			}
+			
+			if (gp.keyH.aPressed) {
+				gp.keyH.aPressed = false;
+				if (boxSwapNum == boxNum) {
+					// withdraw
+					if (cBox[boxNum] != null) {
+	    				int nullIndex = -1;
+	    				for (int i = 0; i < gp.player.p.team.length; i++) {
+	    					if (gp.player.p.team[i] == null) {
+	    						nullIndex = i;
+	    						break;
+	    					}
+	    				}
+	    				if (nullIndex == -1) {
+	    					showMessage("Party is full!");
+	    					return;
+	    				} else {
+	    					gp.player.p.team[nullIndex] = cBox[boxNum];
+	    					cBox[boxNum] = null;
+	    					boxSwapNum = -1;
+	    				}
+	    			}
+				} else if (partySelectedNum >= 0) {
+					if (cBox[boxNum] == null) {
+						if (partySelectedNum == 0 || gp.player.p.team[partySelectedNum - 1] != null) { // depositing lead or it's not the last pokemon in your party
+							if (partySelectedNum == 0) {
+                            	if (gp.player.p.team[partySelectedNum + 1] == null) {
+                            		showMessage("That's your last Pokemon!");
+    	                            return;
+                            	}
+                            }
+                            if (gp.player.p.teamWouldBeFainted(partySelectedNum)) {
+                            	showMessage("That's your last Pokemon!");
+	                            return;
+                            }
+						}
+					}
+					Pokemon temp = gp.player.p.team[partySelectedNum];
+					if (temp != null) {
+                        temp.heal();
+                    }
+					gp.player.p.team[partySelectedNum] = cBox[boxNum];
+					cBox[boxNum] = temp;
+					
+					if (gp.player.p.team[partySelectedNum] == null) {
+                    	gp.player.p.shiftTeamForward(partySelectedNum);
+                    }
+					
+					if (partySelectedNum == 0) gp.player.p.setCurrent();
+					
+					partySelectedNum = -1;
+				} else if (boxSwapNum >= 0) {
+					Pokemon temp = cBox[boxSwapNum];
+					cBox[boxSwapNum] = cBox[boxNum];
+					cBox[boxNum] = temp;
+					boxSwapNum = -1;
+				} else {
+					boxSwapNum = boxNum;
+				}
+			}
+			
+			if (gp.keyH.dPressed) {
+				gp.keyH.dPressed = false;
+				showBoxParty = true;
+			}
+			
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				if (boxNum >= 0) {
+					boxNum -= 6;
+				}
+			}
+			
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				if (boxNum < 24) {
+					boxNum += 6;
+				}
+			}
+			
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (boxNum < 0) {
+					boxSwapNum = -1;
+					gp.player.p.currentBox--;
+			        if (gp.player.p.currentBox < 0) {
+			        	gp.player.p.currentBox = Player.MAX_BOXES - 1;
+			        }
+				} else {
+					if (boxNum % 6 != 0) {
+						boxNum--;
+					}
+				}
+			}
+			
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				if (boxNum < 0) {
+					boxSwapNum = -1;
+					gp.player.p.currentBox++;
+			        if (gp.player.p.currentBox >= Player.MAX_BOXES) {
+			        	gp.player.p.currentBox = 0;
+			        }
+				} else {
+					if ((boxNum + 1) % 6 != 0) {
+						boxNum++;
+					}
+				}
+			}
+		}
+		
+		if (showBoxParty) {
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				currentBoxP = gp.player.p.team[partyNum];
+				if (currentBoxP != null) {
+					showBoxSummary = true;
+				}
+			}
+			
+			if (gp.keyH.aPressed) {
+				gp.keyH.aPressed = false;
+				if (partySelectedNum == partyNum) {
+					// deposit
+	            	int index = -1;
+	                for (int i = 0; i < cBox.length; i++) {
+	                	if (cBox[i] == null) {
+	                		index = i;
+	                		break;
+	                	}
+	                }
+	                if (index == -1) {
+	                	showMessage("Box is full!");
+	                	return;
+	                } else if ((partyNum == 0 && gp.player.p.team[1] == null) || gp.player.p.teamWouldBeFainted(partyNum)) {
+                		showMessage("That's your last Pokemon!");
+                		return;
+                	} else {
+	                	Pokemon temp = gp.player.p.team[partyNum];
+                        if (temp != null) {
+                            temp.heal();
+                        }
+                        gp.player.p.team[partyNum] = null;
+                        cBox[index] = temp;
+                        
+                        gp.player.p.shiftTeamForward(partyNum);
+	                }
+	                partySelectedNum = -1;
+				} else if (boxSwapNum >= 0) {
+					if (cBox[boxSwapNum] == null) {
+						if (partyNum == 0 || gp.player.p.team[partyNum - 1] != null) { // depositing lead or it's not the last pokemon in your party
+							if (partyNum == 0) {
+                            	if (gp.player.p.team[partyNum + 1] == null) {
+                            		showMessage("That's your last Pokemon!");
+    	                            return;
+                            	}
+                            }
+                            if (gp.player.p.teamWouldBeFainted(partyNum)) {
+                            	showMessage("That's your last Pokemon!");
+	                            return;
+                            }
+						}
+					}
+					
+					Pokemon temp = gp.player.p.team[partyNum];
+					if (temp != null) {
+                        temp.heal();
+                    }
+					gp.player.p.team[partyNum] = cBox[boxSwapNum];
+					cBox[boxSwapNum] = temp;
+					
+					if (gp.player.p.team[partyNum] == null) {
+                    	gp.player.p.shiftTeamForward(partyNum);
+                    }
+					
+					if (partyNum == 0) gp.player.p.setCurrent();
+					
+					boxSwapNum = -1;
+				} else if (partySelectedNum >= 0) {
+					gp.player.p.swap(partySelectedNum, partyNum);
+					partySelectedNum = -1;
+				} else {
+					partySelectedNum = partyNum;
+				}
+			}
+		}
+	}
+
 	private void taskState() {
 		if (currentTask == null) {
 			if (tasks.size() > 0) {
@@ -803,8 +1086,10 @@ public class UI extends AbstractUI{
 			gp.player.p.surf = false;
 			gp.player.p.lavasurf = false;
 			
+			String currentMap = PlayerCharacter.currentMapName;
 			PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
 			Main.window.setTitle("Pokemon Game - " + PlayerCharacter.currentMapName);
+			if (!currentMap.equals(PlayerCharacter.currentMapName)) showAreaName();
 		}
 	}
 	
@@ -826,6 +1111,7 @@ public class UI extends AbstractUI{
 			if (btY >= gp.screenHeight) {
 				btY = 0;
 				counter = 0;
+				showArea = false;
 				gp.battleUI.commandNum = 0;
 				if (!gp.battleUI.foe.trainerOwned()) {
 					gp.battleUI.ball = gp.player.p.getBall(gp.battleUI.ball);
@@ -1056,5 +1342,36 @@ public class UI extends AbstractUI{
 		gp.player.p.steps = 1;
 		gp.player.p.bag.remove(Item.REPEL);
 		currentItems = gp.player.p.getItems(currentPocket);
+	}
+
+	public void showAreaName() {
+		showArea = true;
+		areaCounter = 0;
+	}
+	
+	private void drawAreaName() {
+		areaCounter++;
+		int x = 0;
+		int y = 0;
+		int width = gp.tileSize * 5;
+		int height = (int) (gp.tileSize * 1.5);
+		drawSubWindow(x, y, width, height);
+		x += gp.tileSize / 2;
+		y += gp.tileSize;
+		String message = PlayerCharacter.currentMapName;
+		if (message.length() < 15) {
+			g2.setFont(g2.getFont().deriveFont(32F));
+		} else if (message.length() < 21) {
+			g2.setFont(g2.getFont().deriveFont(28F));
+		} else {
+			g2.setFont(g2.getFont().deriveFont(24F));
+		}
+		
+		g2.drawString(PlayerCharacter.currentMapName, x, y);
+		
+		if (areaCounter >= 100) {
+			showArea = false;
+			areaCounter = 0;
+		}
 	}
 }

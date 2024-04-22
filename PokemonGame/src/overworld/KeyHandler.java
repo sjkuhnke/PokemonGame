@@ -7,7 +7,7 @@ import pokemon.Item;
 
 public class KeyHandler implements KeyListener {
 
-	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed;
 	
 	GamePanel gp;
 	
@@ -45,6 +45,8 @@ public class KeyHandler implements KeyListener {
 			useRareCandyState(code);
 		} else if (gp.gameState == GamePanel.TASK_STATE) {
 			taskState(code);
+		} else if (gp.gameState == GamePanel.BOX_STATE) {
+			boxState(code);
 		}
 		
 		
@@ -86,6 +88,10 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_TAB) {
 			tabPressed = true;
 		}
+		
+		if (code == KeyEvent.VK_SHIFT) {
+			shiftPressed = true;
+		}
 	}
 
 	@Override
@@ -118,6 +124,9 @@ public class KeyHandler implements KeyListener {
 		}
 		if (code == KeyEvent.VK_TAB) {
 			tabPressed = false;
+		}
+		if (code == KeyEvent.VK_SHIFT) {
+			shiftPressed = false;
 		}
 	}
 	
@@ -425,6 +434,47 @@ public class KeyHandler implements KeyListener {
 				if (gp.ui.slotCol < UI.MAX_SHOP_COL - 1) {
 					gp.ui.slotCol++;
 				}
+			}
+		}
+	}
+	
+	private void boxState(int code) {
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		
+		if (code == KeyEvent.VK_S) {
+			if (gp.ui.showBoxSummary) {
+				if (gp.ui.moveSummaryNum >= 0) {
+					gp.ui.moveSummaryNum = -1;
+				} else {
+					gp.ui.showBoxSummary = false;
+				}
+			} else if (gp.ui.showBoxParty) {
+				gp.ui.partySelectedNum = -1;
+			} else if (gp.ui.boxSwapNum >= 0) {
+				gp.ui.boxSwapNum = -1;
+			} else {
+				gp.gameState = GamePanel.PLAY_STATE;
+				gp.ui.boxNum = 0;
+				gp.ui.partySelectedNum = -1;
+				gp.ui.boxSwapNum = -1;
+			}
+		}
+		
+		if (code == KeyEvent.VK_A) {
+			if (shiftPressed) {
+				shiftPressed = false;
+				Item.useCalc(gp.player.p, gp.player.p.boxes[gp.player.p.currentBox], gp.ui.isGauntlet);
+			} else {
+				aPressed = true;
+			}
+		}
+		
+		if (code == KeyEvent.VK_D) {
+			if (!gp.ui.showBoxSummary) {
+				gp.ui.partyNum = 0;
+				gp.ui.showBoxParty = !gp.ui.showBoxParty;
 			}
 		}
 	}

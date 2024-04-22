@@ -26,7 +26,6 @@ import object.ItemObj;
 import pokemon.Encounter;
 import pokemon.Field;
 import pokemon.Item;
-import pokemon.PBox;
 import pokemon.Pokemon;
 import tile.TileManager;
 
@@ -87,6 +86,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public static final int TRANSITION_STATE = 5;
 	public static final int SHOP_STATE = 6;
 	public static final int NURSE_STATE = 7;
+	public static final int BOX_STATE = 8;
 	public static final int TASK_STATE = 10;
 	public static final int START_BATTLE_STATE = 11;
 	public static final int USE_ITEM_STATE = 12;
@@ -259,12 +259,10 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void openBox(NPC_PC target) {
-	    // Create the Battle instance and set the window listener to save on close
-
 		keyH.resetKeys();
-	    PBox box = new PBox(this, keyH, target.isGauntlet());
-	    removePanel();
-	    addPanel(box, true);
+		ui.isGauntlet = target.isGauntlet();
+		ui.boxSwapNum = -1;
+		gameState = GamePanel.BOX_STATE;
 	}
 	
 	public void openMap() {
