@@ -198,6 +198,9 @@ public class GamePanel extends JPanel implements Runnable {
 			
 			// Draw UI
 			ui.draw(g2);
+			
+			// Draw Tooltips
+			drawOverworldToolTips(g2);
 		
 		} else {
 			// Draw Battle Screen
@@ -426,6 +429,25 @@ public class GamePanel extends JPanel implements Runnable {
 	    // If no encounter was selected, return null
 	    JOptionPane.showMessageDialog(null, "No encounters available for this combination.");
 	    return new Pokemon(10, 5, false, false);
+	}
+	
+	private void drawOverworldToolTips(Graphics2D g2) {
+		if (!keyH.shiftPressed || gameState != PLAY_STATE) return;
+		int x = 0;
+		int y = tileSize * 9;
+		int width = tileSize * 7;
+		int height = (int) (tileSize * 1.5);
+		
+		ui.drawSubWindow(x, y, width, height);
+		
+		g2.setFont(g2.getFont().deriveFont(24F));
+		x += tileSize / 2;
+		y += tileSize;
+		
+		g2.drawString("[\u2190][\u2191][\u2192][\u2193] Move", x, y);
+		
+		String aText = player.p.fish ? "Fish" : null;
+		ui.drawToolTips("Talk", aText, "Run", "Menu");
 	}
 
 }

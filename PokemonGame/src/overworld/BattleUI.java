@@ -438,6 +438,7 @@ public class BattleUI extends AbstractUI {
 			Item.useCalc(user.getPlayer(), null);
 		}
 		drawCatchWindow();
+		drawToolTips("OK", null, null, null);
 	}
 
 	private void drawUser() {
@@ -818,6 +819,7 @@ public class BattleUI extends AbstractUI {
 			showMoveSummary = !showMoveSummary;
 		}
 		drawCalcWindow();
+		drawToolTips("OK", null, "Back", "Info");
 	}
 	
 	private void drawCalcWindow() {
@@ -876,6 +878,7 @@ public class BattleUI extends AbstractUI {
 
 	private void drawPartySelectionScreen() {
 		drawParty(null);
+		drawToolTips("Info", "Swap", "Back", null);
 	}
 
 	private void drawActionBackground(Pokemon p, int x, int y, int width, int height) {
@@ -1314,6 +1317,8 @@ public class BattleUI extends AbstractUI {
 	    	g2.drawString(turns, x + gp.tileSize * 3, y);
 	    	y += gp.tileSize / 2;
 	    }
+	    
+	    drawToolTips(null, null, "Back", null);
 	}
 
 	private void startingState() {

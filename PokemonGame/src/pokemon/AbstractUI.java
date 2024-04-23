@@ -567,6 +567,10 @@ public abstract class AbstractUI {
 				}
 			}
 		}
+		String wText = moveSummaryNum < 0 ? "Moves" : null;
+		String aText = moveSummaryNum < 0 ? p.item == null || foe != null ? null : "Take" : "Swap";
+		String dText = gp.gameState == GamePanel.BATTLE_STATE ? null : "Back";
+		drawToolTips(wText, aText, "Back", dText);
 	}
 
 	public void drawMoveSummary(int x, int y, Pokemon p, Pokemon foe, Moveslot moveslot, Move move) {
@@ -915,7 +919,74 @@ public abstract class AbstractUI {
 			nicknaming = 1;
 		} else {
 			nicknaming = 0;
+		}	
+	}
+	
+	public void drawToolTips(String w, String a, String s, String d) {
+		drawToolTips(0, (int) (gp.tileSize * 10.5), w, a, s, d);
+	}	
+	
+	public void drawToolTips(int x, int y, String w, String a, String s, String d) {
+		if (!gp.keyH.shiftPressed) return;
+		int num = 0;
+		boolean sdSame = false;
+		if (s != null && s.equals(d)) {
+			sdSame = true;
+			d = null;
 		}
 		
+		if (w != null) num++;
+		if (a != null) num++;
+		if (s != null) num++;
+		if (d != null) num++;
+		
+		int width = (int) (gp.tileSize * 1.5 * num + gp.tileSize * 2);
+		if (sdSame) width += gp.tileSize;
+		int height = (int) (gp.tileSize * 1.5);
+		drawSubWindow(x, y, width, height);
+		
+		int textWidth = (int) (gp.tileSize * 1.10);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize;
+		if (w != null) {
+			g2.setFont(g2.getFont().deriveFont(24F));
+			g2.drawString("[W]", x, y);
+			x += gp.tileSize * 0.75;
+			g2.setFont(g2.getFont().deriveFont(getFontSize(w, textWidth)));
+			g2.drawString(w, x, y);
+			x += gp.tileSize * 1.15;
+		}
+		
+		if (s != null) {
+			g2.setFont(g2.getFont().deriveFont(24F));
+			g2.drawString("[S]", x, y);
+			x += gp.tileSize * 0.65;
+			if (sdSame) {
+				x -= gp.tileSize * 0.2;
+				g2.drawString("/[D]", x, y);
+				x += gp.tileSize * 0.85;
+			}
+			g2.setFont(g2.getFont().deriveFont(getFontSize(s, textWidth)));
+			g2.drawString(s, x, y);
+			x += gp.tileSize * 1.25;
+		}
+		
+		if (a != null) {
+			g2.setFont(g2.getFont().deriveFont(24F));
+			g2.drawString("[A]", x, y);
+			x += gp.tileSize * 0.65;
+			g2.setFont(g2.getFont().deriveFont(getFontSize(a, textWidth)));
+			g2.drawString(a, x, y);
+			x += gp.tileSize * 1.25;
+		}
+		
+		if (d != null) {
+			g2.setFont(g2.getFont().deriveFont(24F));
+			g2.drawString("[D]", x, y);
+			x += gp.tileSize * 0.65;
+			g2.setFont(g2.getFont().deriveFont(getFontSize(d, textWidth)));
+			g2.drawString(d, x, y);
+		}
 	}
 }
