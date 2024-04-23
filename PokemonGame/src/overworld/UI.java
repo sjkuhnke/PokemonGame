@@ -101,6 +101,7 @@ public class UI extends AbstractUI{
 		
 		if (gp.gameState == GamePanel.DIALOGUE_STATE) {
 			drawDialogueScreen(true);
+			drawToolTips("OK", null, null, null);
 		}
 		
 		if (gp.gameState == GamePanel.MENU_STATE) {
@@ -161,6 +162,7 @@ public class UI extends AbstractUI{
 		
 		if (showMessage) {
 			drawDialogueScreen(true);
+			drawToolTips("OK", null, null, null);
 		}
 		
 	}
@@ -238,7 +240,7 @@ public class UI extends AbstractUI{
 				}
 			}
 			
-			if (gp.keyH.aPressed) {
+			if (gp.keyH.aPressed && boxNum >= 0) {
 				gp.keyH.aPressed = false;
 				if (boxSwapNum == boxNum) {
 					// withdraw
@@ -451,6 +453,11 @@ public class UI extends AbstractUI{
 				gp.keyH.wPressed = false;
 				useRareCandy(gp.player.p.team[partyNum]);
 			}
+			if (tasks.size() == 0) {
+				drawToolTips("Use", null, "Back", "Back");
+			} else {
+				drawToolTips("OK", null, null, null);
+			}
 		} else {
 			drawTask();
 		}
@@ -473,6 +480,7 @@ public class UI extends AbstractUI{
 			break;
 		case Task.EVO:
 			drawEvolution(currentTask);
+			drawToolTips("OK", null, null, null);
 			break;
 		case Task.CLOSE:
 			if (tasks.size() != 0) {
@@ -504,6 +512,7 @@ public class UI extends AbstractUI{
 					nicknaming = -1;
 					currentTask = null;
 				}
+				drawToolTips("OK", null, null, null);
 			}
 			break;
 		case Task.END:
@@ -550,6 +559,7 @@ public class UI extends AbstractUI{
 		} else {
 			drawMoveOptions(currentMove, currentPokemon);
 		}
+		drawToolTips("OK", null, null, null);
 	}
 	
 	private void showIVOptions() {
@@ -619,6 +629,8 @@ public class UI extends AbstractUI{
 				moveOption = 0;
 			}
 		}
+		
+		drawToolTips("OK", null, "Back", "Back");
 	}
 	
 	private void useRareCandy(Pokemon pokemon) {
@@ -641,6 +653,8 @@ public class UI extends AbstractUI{
 				gp.player.p.useItem(gp.player.p.team[partyNum], currentItem, gp);	
 			}
 		}
+		
+		drawToolTips("Use", null, "Back", "Back");
 	}
 
 	private void drawItemUsingScreen() {
@@ -756,6 +770,7 @@ public class UI extends AbstractUI{
 		
 		gp.keyH.wPressed = false;
 		
+		drawToolTips("OK", null, "Back", "Back");
 	}
 
 	public void optionsTop(int x, int y) {
@@ -860,6 +875,8 @@ public class UI extends AbstractUI{
 				subState = 0;
 			}
 		}
+		
+		drawToolTips("OK", null, "Back", "Back");
 	}
 	
 	private void showParty() {
@@ -879,6 +896,8 @@ public class UI extends AbstractUI{
 			gp.keyH.wPressed = false;
 			subState = 7;
 		}
+		
+		drawToolTips("Info", "Swap", "Back", "Back");
 	}
 	
 	private void showBag() {
@@ -977,6 +996,8 @@ public class UI extends AbstractUI{
 		} else if (bagState == 3) {
 			drawMoveSummary(gp.tileSize / 2, gp.tileSize * 6, null, null, null, currentItems.get(bagNum).getItem().getMove());
 		}
+		
+		drawToolTips("OK", "Swap", "Back", "Back");
 	}
 
 	private void drawItemOptions() {
@@ -1158,6 +1179,8 @@ public class UI extends AbstractUI{
 			}
 		}
 		
+		drawToolTips("OK", null, "Back", "Back");
+		
 		gp.keyH.wPressed = false;
 	}
 	
@@ -1200,6 +1223,8 @@ public class UI extends AbstractUI{
 				commandNum = 0;
 			}
 		}
+		
+		drawToolTips("OK", null, "Back", "Back");
 	}
 	
 	public void shopBuy() {
@@ -1298,6 +1323,8 @@ public class UI extends AbstractUI{
 		textY = (int) (moneyY + gp.tileSize * 0.75);
 		g2.setFont(g2.getFont().deriveFont(32F));
 		g2.drawString("$" + gp.player.p.getMoney(), textX, textY);
+		
+		drawToolTips("Buy", null, "Back", "Back");
 	}
 
 	private int getItemIndexOnSlot() {
@@ -1335,6 +1362,8 @@ public class UI extends AbstractUI{
 				commandNum = 0;
 			}
 		}
+		
+		drawToolTips("OK", null, "Back", "Back");
 	}
 	
 	private void useRepel() {

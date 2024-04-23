@@ -71,6 +71,7 @@ public class KeyHandler implements KeyListener {
 					char c = e.getKeyChar();
 					if (c != KeyEvent.CHAR_UNDEFINED) {
 						gp.battleUI.handleKeyInput(c);
+						downPressed = false;
 					}
 				}
 			} else if (gp.ui.nicknaming == 1) {
@@ -80,6 +81,7 @@ public class KeyHandler implements KeyListener {
 					char c = e.getKeyChar();
 					if (c != KeyEvent.CHAR_UNDEFINED) {
 						gp.ui.handleKeyInput(c);
+						downPressed = false;
 					}
 				}
 			}
