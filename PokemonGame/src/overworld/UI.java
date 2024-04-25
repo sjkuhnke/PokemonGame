@@ -25,6 +25,7 @@ import pokemon.Move;
 import pokemon.Moveslot;
 import pokemon.Player;
 import pokemon.Pokemon;
+import pokemon.Pokemon.Node;
 import pokemon.Pokemon.Task;
 
 public class UI extends AbstractUI{
@@ -55,6 +56,8 @@ public class UI extends AbstractUI{
 	public int boxNum;
 	public boolean isGauntlet;
 	public Pokemon currentBoxP;
+	
+	public int remindNum;
 	
 	BufferedImage transitionBuffer;
 	
@@ -154,6 +157,7 @@ public class UI extends AbstractUI{
 		
 		if (showBoxParty) {
 			drawParty(null);
+			drawToolTips("Info", "Swap", "Deselect", "Close");
 		}
 		
 		if (showBoxSummary) {
@@ -164,7 +168,190 @@ public class UI extends AbstractUI{
 			drawDialogueScreen(true);
 			drawToolTips("OK", null, null, null);
 		}
+	}
+	
+	private void drawTask() {
+		switch(currentTask.type) {
+		case Task.LEVEL_UP:
+		case Task.TEXT:
+			showMessage(Item.breakString(currentTask.message, 46));
+			break;
+		case Task.MOVE:
+			currentMove = currentTask.move;
+			currentPokemon = currentTask.p;
+			showMoveOptions = true;
+			break;
+		case Task.EVO:
+			drawEvolution(currentTask);
+			drawToolTips("OK", null, null, null);
+			break;
+		case Task.CLOSE:
+			if (tasks.size() != 0) {
+				tasks.add(currentTask);
+				currentTask = null;
+				return;
+			}
+			gp.gameState = GamePanel.MENU_STATE;
+			gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
+			gp.ui.bagState = 0;
+			currentTask = null;
+			break;
+		case Task.GIFT:
+			gp.player.p.catchPokemon(currentTask.p);
+			currentTask.p.item = currentTask.item;
+			setNicknaming(true);
+			currentTask = null;
+			break;
+		case Task.NICKNAME:
+			currentDialogue = currentTask.message;
+			drawDialogueScreen(true);
+			setNickname(currentTask.p);
+			if (nicknaming == 0) {
+				if (gp.keyH.wPressed) {
+					gp.keyH.wPressed = false;
+					currentTask.p.nickname = nickname.toString().trim();
+					nickname = new StringBuilder();
+					if (currentTask.p.nickname == null || currentTask.p.nickname.trim().isEmpty()) currentTask.p.nickname = currentTask.p.name;
+					nicknaming = -1;
+					currentTask = null;
+				}
+				drawToolTips("OK", null, null, null);
+			}
+			break;
+		case Task.END:
+			showMessage(currentTask.message);
+			break;
+		case Task.PARTY: // move reminder party
+			drawMoveReminderParty();
+			break;
+		case Task.REMIND:
+			drawDialogueScreen(true);
+			drawMoveReminder(currentTask.p);
+			if (currentTask != null) currentDialogue = currentTask.message;
+			break;
+		}
+	}
+
+	private void drawMoveReminder(Pokemon p) {
+		int x = gp.tileSize / 2;
+		int y = gp.tileSize * 2;
+		int width = (int) (gp.tileSize * 6.5);
+		int height = gp.tileSize * 8;
 		
+		int sumX = x + width - gp.tileSize;
+		int sumY = (int) (gp.tileSize * 3.25);
+
+		ArrayList<Move> forgottenMoves = new ArrayList<>();
+        for (int i = 0; i < p.getLevel(); i++) {
+        	if (i < p.movebank.length) {
+        		Node move = p.movebank[i];
+        		while (move != null) {
+        			if (!p.knowsMove(move.data)) {
+        				forgottenMoves.add(move.data);
+        			}
+        			move = move.next;
+        		}
+        	}
+        }
+        if (forgottenMoves.isEmpty()) {
+            Pokemon.addTask(Task.TEXT, "This Pokemon has not forgotten any moves.");
+            currentTask = null;
+            return;
+        }
+        
+        drawSubWindow(x, y, width, height);
+        
+        x += gp.tileSize;
+        y += gp.tileSize / 2;
+        int moveWidth = gp.tileSize * 4;
+        int moveHeight = (int) (gp.tileSize * 0.75);
+        
+        for (int i = remindNum; i < remindNum + 8; i++) {
+        	g2.setColor(Color.WHITE);
+			if (i == remindNum) {
+				g2.drawString(">", (x - gp.tileSize / 2) - 2, y + gp.tileSize / 2);
+			}
+			
+			if (i < forgottenMoves.size()) {
+				Move move = forgottenMoves.get(i);
+				g2.setColor(move.mtype.getColor());
+				g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
+				y += gp.tileSize * 0.6;
+				String moveString = move.toString();
+				g2.setColor(Color.BLACK);
+				g2.drawString(moveString, getCenterAlignedTextX(moveString, x + (moveWidth / 2)), y);
+				y += gp.tileSize / 3;
+			}
+        }
+        
+        Move m = forgottenMoves.get(remindNum);
+		
+		drawMoveSummary(sumX, sumY, p, null, null, m);
+		
+		// Down Arrow
+		if (remindNum + 8 < forgottenMoves.size()) {
+			int x2 = sumX - 4;
+			int y2 = height + gp.tileSize;
+			int width2 = gp.tileSize / 2;
+			int height2 = gp.tileSize / 2;
+			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
+		}
+		// Up Arrow
+		if (remindNum != 0) {
+			int x2 = sumX - 4;
+			int y2 = (int) (gp.tileSize * 2.5);
+			int width2 = gp.tileSize / 2;
+			int height2 = gp.tileSize / 2;
+			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
+		}
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			Task t = Pokemon.addTask(Task.MOVE, "", p);
+			t.move = m;
+			currentTask = null;
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			Pokemon.addTask(Task.PARTY, "");
+			currentTask = null;
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			if (remindNum > 0) {
+				remindNum--;
+			}
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			if (remindNum < forgottenMoves.size() - 1) {
+				remindNum++;
+			}
+		}
+		
+		drawToolTips("OK", null, "Back", null);
+	}
+
+	private void drawMoveReminderParty() {
+		drawParty(null);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			Pokemon p = gp.player.p.team[partyNum];
+			Pokemon.addTask(Task.REMIND, "What move would you like to teach " + p.nickname + "?", p);
+			remindNum = 0;
+			currentTask = null;
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			currentTask = null;
+		}
+		
+		drawToolTips("OK", null, "Back", null);
 	}
 
 	private void drawBoxScreen() {
@@ -226,6 +413,33 @@ public class UI extends AbstractUI{
 				cY += spriteHeight;
 			} else {
 				cX += spriteWidth;
+			}
+		}
+		
+		if (boxSwapNum >= 0 || partySelectedNum >= 0) {
+			Pokemon selected = boxSwapNum >= 0 ? cBox[boxSwapNum] : gp.player.p.team[partySelectedNum];
+			int selectX = 0;
+			int selectY = 0;
+			int selectWidth = gp.tileSize * 2;
+			int selectHeight = gp.tileSize * 2;
+			
+			drawSubWindow(selectX, selectY, selectWidth, selectHeight);
+			
+			selectX += 8;
+			selectY += 8;
+			selectWidth -= 16;
+			selectHeight -= 16;
+			
+			g2.setColor(new Color(100, 100, 220, 200));
+			g2.fillRoundRect(selectX, selectY, selectWidth, selectHeight, 10, 10);
+			g2.setColor(g2.getColor().darker());
+			g2.drawRoundRect(selectX, selectY, selectWidth, selectHeight, 10, 10);
+			
+			if (selected != null) {
+				g2.drawImage(selected.getSprite(), selectX, selectY, null);
+				if (selected.item != null) {
+					g2.drawImage(selected.item.getImage(), selectX - 6, selectY + 62, null);
+				}
 			}
 		}
 		
@@ -425,6 +639,8 @@ public class UI extends AbstractUI{
 				}
 			}
 		}
+		
+		drawBoxToolTips();
 	}
 
 	private void taskState() {
@@ -464,60 +680,6 @@ public class UI extends AbstractUI{
 		
 		if (currentTask == null && tasks.size() > 0) {
 			currentTask = tasks.remove(0);
-		}
-	}
-	
-	private void drawTask() {
-		switch(currentTask.type) {
-		case Task.LEVEL_UP:
-		case Task.TEXT:
-			showMessage(Item.breakString(currentTask.message, 46));
-			break;
-		case Task.MOVE:
-			currentMove = currentTask.move;
-			currentPokemon = currentTask.p;
-			showMoveOptions = true;
-			break;
-		case Task.EVO:
-			drawEvolution(currentTask);
-			drawToolTips("OK", null, null, null);
-			break;
-		case Task.CLOSE:
-			if (tasks.size() != 0) {
-				tasks.add(currentTask);
-				currentTask = null;
-				return;
-			}
-			gp.gameState = GamePanel.MENU_STATE;
-			gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
-			gp.ui.bagState = 0;
-			currentTask = null;
-			break;
-		case Task.GIFT:
-			gp.player.p.catchPokemon(currentTask.p);
-			currentTask.p.item = currentTask.item;
-			setNicknaming(true);
-			currentTask = null;
-			break;
-		case Task.NICKNAME:
-			currentDialogue = currentTask.message;
-			drawDialogueScreen(true);
-			setNickname(currentTask.p);
-			if (nicknaming == 0) {
-				if (gp.keyH.wPressed) {
-					gp.keyH.wPressed = false;
-					currentTask.p.nickname = nickname.toString().trim();
-					nickname = new StringBuilder();
-					if (currentTask.p.nickname == null || currentTask.p.nickname.trim().isEmpty()) currentTask.p.nickname = currentTask.p.name;
-					nicknaming = -1;
-					currentTask = null;
-				}
-				drawToolTips("OK", null, null, null);
-			}
-			break;
-		case Task.END:
-			showMessage(currentTask.message);
-			break;
 		}
 	}
 
@@ -934,7 +1096,7 @@ public class UI extends AbstractUI{
 		
 		x += gp.tileSize;
 		y += gp.tileSize / 2;
-		for (int i = bagNum; i < bagNum + 9; i++) {
+		for (int i = bagNum; i < bagNum + 9; i++) { // TODO
 			g2.setColor(Color.WHITE);
 			if (i == bagNum) {
 				g2.drawString(">", (x - gp.tileSize / 2) - 2, y + gp.tileSize / 2);
@@ -1402,5 +1564,23 @@ public class UI extends AbstractUI{
 			showArea = false;
 			areaCounter = 0;
 		}
+	}
+	
+	private void drawBoxToolTips() {
+		if (!gp.keyH.shiftPressed || showBoxSummary || showBoxParty) return;
+		int x = 0;
+		int y = gp.tileSize * 9;
+		int width = gp.tileSize * 7;
+		int height = (int) (gp.tileSize * 1.5);
+		
+		drawSubWindow(x, y, width, height);
+		
+		g2.setFont(g2.getFont().deriveFont(24F));
+		x += gp.tileSize / 2;
+		y += gp.tileSize;
+		
+		g2.drawString("[Shift]+[W] Release  [Shift]+[A] Calc", x, y);
+		
+		drawToolTips("Info", "Swap", "Back", "Party");
 	}
 }

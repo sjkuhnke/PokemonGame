@@ -157,7 +157,7 @@ public abstract class AbstractUI {
 		
 		drawSubWindow(x, y, width, height);
 		
-		if (!showMoveOptions && !showIVOptions && !showBoxSummary && currentTask == null) {
+		if (!showMoveOptions && !showIVOptions && !showBoxSummary && (currentTask == null || currentTask.type == Task.PARTY)) {
 			int maxPartyIndex = 0;
 			for (int i = 1; i < gp.player.p.team.length; i++) {
 				if (gp.player.p.team[i] == null) {
@@ -165,7 +165,7 @@ public abstract class AbstractUI {
 				}
 				maxPartyIndex++;
 			}
-			if (boxSwapNum >= 0 && maxPartyIndex < 5) maxPartyIndex++;
+			if (gp.gameState == GamePanel.BOX_STATE && boxSwapNum >= 0 && maxPartyIndex < 5) maxPartyIndex++;
 			
 			if (gp.keyH.upPressed) {
 				gp.keyH.upPressed = false;
@@ -496,81 +496,106 @@ public abstract class AbstractUI {
 			drawMoveSummary(moveX, moveY, p, foe, p.moveset[moveSummaryNum], null);
 		}
 		
-		if (gp.keyH.wPressed && moveSummaryNum == -1) {
-			gp.keyH.wPressed = false;
-			moveSummaryNum = 0;
-		}
-		
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-			moveSummaryNum--;
-			if (moveSummaryNum < 0) {
-				int index = 3;
-				while (p.moveset[index] == null) {
-					index--;
-				}
-				moveSummaryNum = index;
-			}
-		}
-		
-		if (gp.keyH.downPressed) {
-			gp.keyH.downPressed = false;
-			if (moveSummaryNum < 3 && p.moveset[moveSummaryNum + 1] != null) {
-				moveSummaryNum++;
-			} else {
+		if (nicknaming < 0) {
+			if (gp.keyH.wPressed && moveSummaryNum == -1) {
+				gp.keyH.wPressed = false;
 				moveSummaryNum = 0;
 			}
-		}
-		
-		if (moveSummaryNum < 0) {
-			if (gp.keyH.leftPressed) {
-				gp.keyH.leftPressed = false;
-				if (partyNum > 0) {
-					partyNum--;
-				} else {
-					int index = 5;
-					while (gp.player.p.team[index] == null) {
+			
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				moveSummaryNum--;
+				if (moveSummaryNum < 0) {
+					int index = 3;
+					while (p.moveset[index] == null) {
 						index--;
 					}
-					partyNum = index;
+					moveSummaryNum = index;
 				}
 			}
 			
-			if (gp.keyH.rightPressed) {
-				gp.keyH.rightPressed = false;
-				if (partyNum < 5 && gp.player.p.team[partyNum + 1] != null) {
-					partyNum++;
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				if (moveSummaryNum < 3 && p.moveset[moveSummaryNum + 1] != null) {
+					moveSummaryNum++;
 				} else {
-					partyNum = 0;
+					moveSummaryNum = 0;
 				}
 			}
-		}
-		
-		if (gp.keyH.aPressed) {
-			gp.keyH.aPressed = false;
+			
 			if (moveSummaryNum < 0) {
-				if (p.item != null && foe == null) {
-					showMessage("Took " + p.nickname + "'s " + p.item + ".");
-					gp.player.p.bag.add(p.item);
-					p.item = null;
-				}
-			} else {
-				if (moveSwapNum > -1) {
-					if (moveSummaryNum != moveSwapNum) {
-						Moveslot temp = p.moveset[moveSummaryNum];
-						p.moveset[moveSummaryNum] = p.moveset[moveSwapNum];
-						p.moveset[moveSwapNum] = temp;
+				if (gp.keyH.leftPressed) {
+					gp.keyH.leftPressed = false;
+					if (partyNum > 0) {
+						partyNum--;
+					} else {
+						int index = 5;
+						while (gp.player.p.team[index] == null) {
+							index--;
+						}
+						partyNum = index;
 					}
-					moveSwapNum = -1;
-				} else {
-					moveSwapNum = moveSummaryNum;
+				}
+				
+				if (gp.keyH.rightPressed) {
+					gp.keyH.rightPressed = false;
+					if (partyNum < 5 && gp.player.p.team[partyNum + 1] != null) {
+						partyNum++;
+					} else {
+						partyNum = 0;
+					}
 				}
 			}
+			
+			if (gp.keyH.aPressed) {
+				gp.keyH.aPressed = false;
+				if (moveSummaryNum < 0) {
+					if (p.item != null && foe == null) {
+						showMessage("Took " + p.nickname + "'s " + p.item + ".");
+						gp.player.p.bag.add(p.item);
+						p.item = null;
+					}
+				} else {
+					if (moveSwapNum > -1) {
+						if (moveSummaryNum != moveSwapNum) {
+							Moveslot temp = p.moveset[moveSummaryNum];
+							p.moveset[moveSummaryNum] = p.moveset[moveSwapNum];
+							p.moveset[moveSwapNum] = temp;
+						}
+						moveSwapNum = -1;
+					} else {
+						moveSwapNum = moveSummaryNum;
+					}
+				}
+			}
+			
+			if (gp.keyH.dPressed) {
+				gp.keyH.dPressed = false;
+				if (foe == null) {
+					nickname = new StringBuilder(p.nickname);
+					setNicknaming(true);
+				}
+			}
+			
+			String wText = moveSummaryNum < 0 ? "Moves" : null;
+			String aText = moveSummaryNum < 0 ? p.item == null || foe != null ? null : "Take" : "Swap";
+			String dText = gp.gameState == GamePanel.BATTLE_STATE || moveSummaryNum > -1 ? null : "Name";
+			drawToolTips(wText, aText, "Back", dText);
+		} else {
+			currentDialogue = "Change " + p.name + "'s nickname?";
+			drawDialogueScreen(true);
+			setNickname(p);
+			if (nicknaming == 0) {
+				if (gp.keyH.wPressed) {
+					gp.keyH.wPressed = false;
+					p.nickname = nickname.toString().trim();
+					nickname = new StringBuilder();
+					if (p.nickname == null || p.nickname.trim().isEmpty()) p.nickname = p.name;
+					nicknaming = -1;
+				}
+				drawToolTips("OK", null, null, null);
+			}
 		}
-		String wText = moveSummaryNum < 0 ? "Moves" : null;
-		String aText = moveSummaryNum < 0 ? p.item == null || foe != null ? null : "Take" : "Swap";
-		String dText = gp.gameState == GamePanel.BATTLE_STATE ? null : "Back";
-		drawToolTips(wText, aText, "Back", dText);
 	}
 
 	public void drawMoveSummary(int x, int y, Pokemon p, Pokemon foe, Moveslot moveslot, Move move) {

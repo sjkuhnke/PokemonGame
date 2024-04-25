@@ -435,7 +435,7 @@ public class GamePanel extends JPanel implements Runnable {
 		if (!keyH.shiftPressed || gameState != PLAY_STATE) return;
 		int x = 0;
 		int y = tileSize * 9;
-		int width = tileSize * 7;
+		int width = tileSize * 8;
 		int height = (int) (tileSize * 1.5);
 		
 		ui.drawSubWindow(x, y, width, height);
@@ -444,7 +444,7 @@ public class GamePanel extends JPanel implements Runnable {
 		x += tileSize / 2;
 		y += tileSize;
 		
-		g2.drawString("[\u2190][\u2191][\u2192][\u2193] Move", x, y);
+		g2.drawString("[\u2190][\u2191][\u2192][\u2193] Move    [TAB] Speedup", x, y);
 		
 		String aText = player.p.fish ? "Fish" : null;
 		ui.drawToolTips("Talk", aText, "Run", "Menu");

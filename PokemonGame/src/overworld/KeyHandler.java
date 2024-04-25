@@ -289,11 +289,15 @@ public class KeyHandler implements KeyListener {
 				gp.ui.partyNum = 0;
 				gp.ui.commandNum = 0;
 			} else if (gp.ui.subState == 7) { // Pokemon summary move info screen
-				if (gp.ui.moveSummaryNum == -1) {
-					gp.ui.subState = 2;
-				} else {
-					gp.ui.moveSwapNum = -1;
-					gp.ui.moveSummaryNum = -1;
+				if (code == KeyEvent.VK_S && gp.ui.nicknaming < 0) {
+					if (gp.ui.moveSummaryNum == -1) {
+						gp.ui.subState = 2;
+					} else {
+						gp.ui.moveSwapNum = -1;
+						gp.ui.moveSummaryNum = -1;
+					}
+				} else if (code == KeyEvent.VK_D) {
+					dPressed = true;
 				}
 			} else if (gp.ui.bagState > 0) { // Bag option menu screen
 				gp.ui.bagState = 0;
@@ -446,21 +450,23 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (code == KeyEvent.VK_S) {
-			if (gp.ui.showBoxSummary) {
-				if (gp.ui.moveSummaryNum >= 0) {
-					gp.ui.moveSummaryNum = -1;
+			if (gp.ui.nicknaming < 0) {
+				if (gp.ui.showBoxSummary) {
+					if (gp.ui.moveSummaryNum >= 0) {
+						gp.ui.moveSummaryNum = -1;
+					} else {
+						gp.ui.showBoxSummary = false;
+					}
+				} else if (gp.ui.showBoxParty) {
+					gp.ui.partySelectedNum = -1;
+				} else if (gp.ui.boxSwapNum >= 0) {
+					gp.ui.boxSwapNum = -1;
 				} else {
-					gp.ui.showBoxSummary = false;
+					gp.gameState = GamePanel.PLAY_STATE;
+					gp.ui.boxNum = 0;
+					gp.ui.partySelectedNum = -1;
+					gp.ui.boxSwapNum = -1;
 				}
-			} else if (gp.ui.showBoxParty) {
-				gp.ui.partySelectedNum = -1;
-			} else if (gp.ui.boxSwapNum >= 0) {
-				gp.ui.boxSwapNum = -1;
-			} else {
-				gp.gameState = GamePanel.PLAY_STATE;
-				gp.ui.boxNum = 0;
-				gp.ui.partySelectedNum = -1;
-				gp.ui.boxSwapNum = -1;
 			}
 		}
 		
@@ -477,6 +483,8 @@ public class KeyHandler implements KeyListener {
 			if (!gp.ui.showBoxSummary) {
 				gp.ui.partyNum = 0;
 				gp.ui.showBoxParty = !gp.ui.showBoxParty;
+			} else {
+				dPressed = true;
 			}
 		}
 	}
@@ -547,9 +555,19 @@ public class KeyHandler implements KeyListener {
 	}
 	
 	private void taskState(int code) {
-		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+		if (code == KeyEvent.VK_D) {
 			if (gp.ui.currentTask == null) {
 				gp.gameState = GamePanel.PLAY_STATE;
+			} else {
+				dPressed = true;
+			}
+		}
+		
+		if (code == KeyEvent.VK_S) {
+			if (gp.ui.currentTask == null) {
+				gp.gameState = GamePanel.PLAY_STATE;
+			} else {
+				sPressed = true;
 			}
 		}
 		
