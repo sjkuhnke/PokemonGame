@@ -824,7 +824,6 @@ public class Player extends Trainer implements Serializable {
 	        	}
 				break;
 				
-				
 			// Ability Capsule
 			case ABILITY_CAPSULE:
 				boolean swappable = p.canUseItem(item) == 1;

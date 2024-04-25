@@ -7,7 +7,7 @@ import pokemon.Item;
 
 public class KeyHandler implements KeyListener {
 
-	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed, ctrlPressed;
 	
 	GamePanel gp;
 	
@@ -94,6 +94,10 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_SHIFT) {
 			shiftPressed = true;
 		}
+		
+		if (code == KeyEvent.VK_CONTROL) {
+			ctrlPressed = true;
+		}
 	}
 
 	@Override
@@ -129,6 +133,9 @@ public class KeyHandler implements KeyListener {
 		}
 		if (code == KeyEvent.VK_SHIFT) {
 			shiftPressed = false;
+		}
+		if (code == KeyEvent.VK_CONTROL) {
+			ctrlPressed = false;
 		}
 	}
 	
@@ -471,8 +478,9 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (code == KeyEvent.VK_A) {
-			if (shiftPressed) {
-				shiftPressed = false;
+			aPressed = false;
+			if (ctrlPressed) {
+				ctrlPressed = false;
 				Item.useCalc(gp.player.p, gp.player.p.boxes[gp.player.p.currentBox], gp.ui.isGauntlet);
 			} else {
 				aPressed = true;
@@ -574,7 +582,6 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_W) {
 			wPressed = true;
 		}
-		
 	}
 	
 	public void resetKeys() {

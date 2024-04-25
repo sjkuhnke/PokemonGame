@@ -515,7 +515,7 @@ public class Pokemon implements Serializable {
         	}
         	if (moveKills) {
         		double chance = (this.currentHP * 1.0 / this.getStat(0)) * 100;
-        		chance *= 0.5;
+        		chance *= 0.6;
         		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
         		if (maxDamage >= foe.currentHP) chance /= 2;
         		if (checkSecondary((int) chance)) {
@@ -2425,11 +2425,13 @@ public class Pokemon implements Serializable {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.DESOLATE_VOID) {
 			Random random = new Random();
-			boolean isHeads = random.nextBoolean();
-			if (isHeads) {
+			int type = random.nextInt(3);
+			if (type == 0) {
 				foe.paralyze(false, this);
-			} else {
+			} else if (type == 1) {
 				foe.sleep(false);
+			} else {
+				foe.freeze(false, this);
 			}
 		} else if (move == Move.DISCHARGE) {
 			foe.paralyze(false, this);
@@ -5537,7 +5539,7 @@ public class Pokemon implements Serializable {
 			movebank[64] = new Node(Move.MORNING_SUN);
 			movebank[69] = new Node(Move.EXPANDING_FORCE);
 			break;
-		case 78:
+		case 78: // TODO: water pulse
 			movebank = new Node[29];
 			movebank[0] = new Node(Move.POUND);
 			movebank[2] = new Node(Move.TAIL_WHIP);
@@ -5545,14 +5547,14 @@ public class Pokemon implements Serializable {
 			movebank[6] = new Node(Move.CONFUSION);
 			movebank[8] = new Node(Move.BABY$DOLL_EYES);
 			movebank[10] = new Node(Move.DETECT);
-			movebank[14] = new Node(Move.AQUA_RING);
+			movebank[13] = new Node(Move.AQUA_RING);
 			movebank[16] = new Node(Move.RAZOR_SHELL);
 			movebank[19] = new Node(Move.PSYBEAM);
 			movebank[22] = new Node(Move.ROLLOUT);
 			movebank[25] = new Node(Move.CONFUSE_RAY);
 			movebank[28] = new Node(Move.TRICK);
 			break;
-		case 79:
+		case 79: // TODO: water pulse
 			movebank = new Node[70];
 			movebank[0] = new Node(Move.POUND);
 			movebank[2] = new Node(Move.TAIL_WHIP);
@@ -5560,7 +5562,7 @@ public class Pokemon implements Serializable {
 			movebank[6] = new Node(Move.CONFUSION);
 			movebank[8] = new Node(Move.BABY$DOLL_EYES);
 			movebank[10] = new Node(Move.DETECT);
-			movebank[14] = new Node(Move.AQUA_RING);
+			movebank[13] = new Node(Move.AQUA_RING);
 			movebank[16] = new Node(Move.RAZOR_SHELL);
 			movebank[19] = new Node(Move.PSYBEAM);
 			movebank[22] = new Node(Move.ROLLOUT);

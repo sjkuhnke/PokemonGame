@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import entity.Entity;
 import entity.PlayerCharacter;
@@ -182,8 +183,7 @@ public class UI extends AbstractUI{
 			showMoveOptions = true;
 			break;
 		case Task.EVO:
-			drawEvolution(currentTask);
-			drawToolTips("OK", null, null, null);
+			evolveMon();
 			break;
 		case Task.CLOSE:
 			if (tasks.size() != 0) {
@@ -311,7 +311,6 @@ public class UI extends AbstractUI{
 			t.move = m;
 			currentTask = null;
 		}
-		
 		
 		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
@@ -566,7 +565,7 @@ public class UI extends AbstractUI{
 		}
 		
 		if (showBoxParty) {
-			if (gp.keyH.wPressed) {
+			if (gp.keyH.wPressed && !showBoxSummary) {
 				gp.keyH.wPressed = false;
 				currentBoxP = gp.player.p.team[partyNum];
 				if (currentBoxP != null) {
@@ -574,7 +573,7 @@ public class UI extends AbstractUI{
 				}
 			}
 			
-			if (gp.keyH.aPressed) {
+			if (gp.keyH.aPressed && !showBoxSummary) {
 				gp.keyH.aPressed = false;
 				if (partySelectedNum == partyNum) {
 					// deposit
@@ -1571,7 +1570,7 @@ public class UI extends AbstractUI{
 		if (!gp.keyH.shiftPressed || showBoxSummary || showBoxParty) return;
 		int x = 0;
 		int y = gp.tileSize * 9;
-		int width = gp.tileSize * 7;
+		int width = gp.tileSize * 8;
 		int height = (int) (gp.tileSize * 1.5);
 		
 		drawSubWindow(x, y, width, height);
@@ -1580,8 +1579,35 @@ public class UI extends AbstractUI{
 		x += gp.tileSize / 2;
 		y += gp.tileSize;
 		
-		g2.drawString("[Shift]+[W] Release  [Shift]+[A] Calc", x, y);
+		g2.drawString("[Ctrl]+[W] Release   [Ctrl]+[A] Calc", x, y);
 		
 		drawToolTips("Info", "Swap", "Back", "Party");
+	}
+	
+	private void evolveMon() {
+		Task t = currentTask;
+		Pokemon oldP = t.p;
+		Pokemon newP = t.evo;
+		int hpDif = oldP.getStat(0) - oldP.currentHP;
+        newP.currentHP -= hpDif;
+        newP.moveMultiplier = newP.moveMultiplier;
+        Task text = Pokemon.createTask(Task.TEXT, oldP.nickname + " evolved into " + newP.name + "!");
+        Pokemon.insertTask(text, 0);
+        newP.exp = oldP.exp;
+        gp.player.p.pokedex[newP.id] = 2;
+        
+        // Update player team
+        int index = Arrays.asList(gp.player.p.getTeam()).indexOf(oldP);
+        gp.player.p.team[index] = newP;
+        if (index == 0) {
+        	oldP.setVisible(false);
+        	gp.player.p.setCurrent(newP);
+        	gp.battleUI.user = newP;
+        	gp.battleUI.userHP = newP.currentHP;
+        	gp.battleUI.maxUserHP = newP.getStat(0);
+        }
+        newP.checkMove(1);
+        
+        currentTask = null;
 	}
 }
