@@ -46,8 +46,6 @@ import overworld.Main;
 import overworld.PMap;
 import pokemon.Item;
 import pokemon.Move;
-import pokemon.Moveslot;
-import pokemon.PartyPanel;
 import pokemon.Player;
 import pokemon.Pokemon;
 import pokemon.JGradientButton;
@@ -643,67 +641,8 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "Obtained HM05 Slow Fall!");
 			p.bag.add(Item.HM05);
 			Pokemon.addTask(Task.TEXT, "Also, if you haven't yet, you should be sure to check out the bottom right house in the quadrant above. I hear he has a gift!");
-		} if (gp.currentMap == 93) {
-			JPanel partyMasterPanel = new JPanel();
-			partyMasterPanel.setLayout(new GridLayout(3, 2, 5, 5));
-			partyMasterPanel.setPreferredSize(new Dimension(350, 350));
-			for (int j = 0; j < 6; j++) {
-				PartyPanel partyPanel = new PartyPanel(p.team[j], true);
-				final int index = j;
-				if (p.team[index] != null) {
-					partyPanel.addMouseListener(new MouseAdapter() {
-						public void mouseClicked(MouseEvent evt) {
-							ArrayList<Move> forgottenMoves = new ArrayList<>();
-		                    for (int i = 0; i < p.team[index].getLevel(); i++) {
-		                    	if (i < p.team[index].movebank.length) {
-		                    		Node move = p.team[index].movebank[i];
-		                    		while (move != null) {
-		                    			if (!p.team[index].knowsMove(move.data)) {
-		                    				forgottenMoves.add(move.data);
-		                    			}
-		                    			move = move.next;
-		                    		}
-		                    	}
-		                    }
-		                    if (forgottenMoves.isEmpty()) {
-		                        JOptionPane.showMessageDialog(null, "This Pokemon has not forgotten any moves.");
-		                    } else {
-		                    	JPanel moves = new JPanel();
-		                    	moves.setLayout(new GridLayout(0, 1));
-		                        for (Move move : forgottenMoves) {
-		                            JGradientButton moveButton = new JGradientButton(move.toString());
-		                            moveButton.setBackground(move.mtype.getColor());
-		                            moveButton.addMouseListener(new MouseAdapter() {
-		                			    @Override
-		                			    public void mouseClicked(MouseEvent e) {
-		                			    	if (SwingUtilities.isRightMouseButton(e)) {
-		                			            JOptionPane.showMessageDialog(null, move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
-		                			        } else {
-		                			        	int choice = p.team[index].displayMoveOptions(move, p);
-					        	                if (choice == JOptionPane.CLOSED_OPTION) {
-					        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " did not learn " + move + ".");
-					        	                } else {
-					        	                	JOptionPane.showMessageDialog(null, p.team[index].nickname + " has learned " + move + " and forgot " + p.team[index].moveset[choice].move + "!");
-					        	                	p.team[index].moveset[choice] = new Moveslot(move);
-					        	                }
-					        	                SwingUtilities.getWindowAncestor(moves).dispose();
-		                			        }
-		                			    }
-		                			});
-		                            moves.add(moveButton);
-		                        }
-		                        JScrollPane scrollPane = new JScrollPane(moves);
-		                		scrollPane.setPreferredSize(new Dimension(200, 300));
-		                		scrollPane.getVerticalScrollBar().setUnitIncrement(6);
-
-		                        JOptionPane.showMessageDialog(null, scrollPane, "Teach a Move?", JOptionPane.QUESTION_MESSAGE);
-		                    }
-						}
-					});
-				}
-				partyMasterPanel.add(partyPanel);
-			}
-			JOptionPane.showMessageDialog(null, partyMasterPanel, "Party", JOptionPane.PLAIN_MESSAGE);
+		} if (gp.currentMap == 93) { // Move reminder
+			Pokemon.addTask(Task.PARTY, "");
 		} if (gp.currentMap == 94 && !p.flags[18]) {
 			p.flags[18] = true;
 			Pokemon.addTask(Task.TEXT, "One makes Pokemon surge with electricity, and another casts them in a strange shadow.");
@@ -737,8 +676,8 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 			Pokemon.addTask(Task.GIFT, "", result);
 			
-		} if (gp.currentMap == 118) {
-			JOptionPane.showMessageDialog(null, "Do you have any fossils for me to resurrect?");
+		} if (gp.currentMap == 118) { // TODO
+			Pokemon.addTask(Task.TEXT, "Do you have any fossils for me to resurrect?");
 			JPanel options = new JPanel();
 			boolean valid = false;
 			if (p.bag.contains(Item.THUNDER_SCALES_FOSSIL)) {
@@ -965,7 +904,7 @@ public class PlayerCharacter extends Entity {
 		        	@Override
 				    public void mouseClicked(MouseEvent evt) {
 		        		if (SwingUtilities.isRightMouseButton(evt)) {
-				            JOptionPane.showMessageDialog(null, e.getKey().showSummary(p, false, null, null), "Pokemon Summary", JOptionPane.INFORMATION_MESSAGE);
+				            JOptionPane.showMessageDialog(null, e.getKey().showSummary(p, false, null), "Pokemon Summary", JOptionPane.INFORMATION_MESSAGE);
 			    		} else {
 			    	    	if (p.winStreak >= e.getValue()) {
 			    	            JOptionPane.showMessageDialog(null, "Got 1 " + e.getKey().nickname + "!");
@@ -1053,7 +992,7 @@ public class PlayerCharacter extends Entity {
 					@Override
 	        		public void mouseClicked(MouseEvent evt) {
 						if (SwingUtilities.isRightMouseButton(evt)) {
-							JOptionPane.showMessageDialog(null, pokemonP.showSummary(p, false, null, null), "Pokemon Summary", JOptionPane.PLAIN_MESSAGE);
+							JOptionPane.showMessageDialog(null, pokemonP.showSummary(p, false, null), "Pokemon Summary", JOptionPane.PLAIN_MESSAGE);
 						} else {
 							int newAmount = amount;
 							if (pokemonP.isSelected()) {

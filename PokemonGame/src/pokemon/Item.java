@@ -899,11 +899,11 @@ public enum Item {
 		});
         
         infoButton.addActionListener(e -> {
-        	JOptionPane.showMessageDialog(null, ((Pokemon) userMons.getSelectedItem()).showSummary(p, false, null, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+        	JOptionPane.showMessageDialog(null, ((Pokemon) userMons.getSelectedItem()).showSummary(p, false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
         });
         
         fInfoButton.addActionListener(e -> {
-        	JOptionPane.showMessageDialog(null, ((Pokemon) foeMons.getSelectedItem()).showSummary(p, false, null, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+        	JOptionPane.showMessageDialog(null, ((Pokemon) foeMons.getSelectedItem()).showSummary(p, false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
         });
         
         JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));

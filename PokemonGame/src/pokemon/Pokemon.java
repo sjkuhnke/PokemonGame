@@ -1784,7 +1784,7 @@ public class Pokemon implements Serializable {
 			
 			if (field.equals(field.terrain, Effect.SPARKLY) && isGrounded()) {
 				if (moveType == PType.MAGIC) bp *= 1.5;
-				secChance = 0;
+				secChance *= 2;
 			}
 			
 			if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded()) {
@@ -5247,6 +5247,7 @@ public class Pokemon implements Serializable {
 			movebank[19] = new Node(Move.AURORA_BOOST);
 			movebank[22] = new Node(Move.ICE_SHARD);
 			movebank[24] = new Node(Move.MAGIC_BLAST);
+			movebank[27] = new Node(Move.ENCORE);
 			movebank[29] = new Node(Move.LIGHT_BEAM);
 			movebank[32] = new Node(Move.SNOWSCAPE);
 			movebank[34] = new Node(Move.FROSTBIND);
@@ -8618,6 +8619,7 @@ public class Pokemon implements Serializable {
 		public static final int TERRAIN = 17;
 		public static final int CLOSE = 18;
 		public static final int GIFT = 19;
+		public static final int REMIND = 20;
 		
 		public int type;
 		public String message;
@@ -8702,6 +8704,7 @@ public class Pokemon implements Serializable {
 			case TERRAIN: return "TERRAIN";
 			case CLOSE: return "CLOSE";
 			case GIFT: return "GIFT";
+			case REMIND: return "REMIND";
 			default:
 				return "getTypeString() doesn't have a case for this type";
 			}
@@ -10141,7 +10144,7 @@ public class Pokemon implements Serializable {
 	}
 
 
-	public JPanel showSummary(Player player, boolean takeItem, JPanel panel, PBox pbox) {
+	public JPanel showSummary(Player player, boolean takeItem, JPanel panel) {
 	    JPanel teamMemberPanel = new JPanel();
 	    teamMemberPanel.setLayout(new BoxLayout(teamMemberPanel, BoxLayout.Y_AXIS));
 	    
@@ -10307,7 +10310,6 @@ public class Pokemon implements Serializable {
 	        		this.item = null;
 	        		SwingUtilities.getWindowAncestor(teamMemberPanel).dispose();
 	        		if (panel != null) SwingUtilities.getWindowAncestor(panel).dispose();
-	        		if (pbox != null) pbox.displayBox();
 	    	    }
 	    	});
 	    	itemPanel.add(new JLabel(new ImageIcon(this.item.getImage())));

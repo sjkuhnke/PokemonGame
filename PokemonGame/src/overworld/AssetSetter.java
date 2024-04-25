@@ -1445,8 +1445,7 @@ public class AssetSetter {
 		mapNum = 131;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 31, 41, -1, true, Item.EUPHORIAN_GEM, Item.LEAF_STONE, Item.DUSK_STONE, Item.DAWN_STONE, Item.ICE_STONE,
-                Item.VALIANT_GEM, Item.PETTICOAT_GEM, Item.EVERSTONE, Item.HEAT_ROCK, Item.DAMP_ROCK, Item.SMOOTH_ROCK, Item.ICY_ROCK, Item.THUNDER_SCALES_FOSSIL,
-                Item.DUSK_SCALES_FOSSIL);
+                Item.VALIANT_GEM, Item.PETTICOAT_GEM, Item.EVERSTONE, Item.HEAT_ROCK, Item.DAMP_ROCK, Item.SMOOTH_ROCK, Item.ICY_ROCK);
 		
 		mapNum = 137;
 		index = 0;

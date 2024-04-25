@@ -773,7 +773,7 @@ public class EventHandler {
 			
 			// Shadow Path -> Shadow Cavern
 			if (hit(105,12,46)) teleport(150, 54, 77,false);
-			if (hit(144,54,78)) teleport(105, 12, 47,false);
+			if (hit(150,54,78)) teleport(105, 12, 47,false);
 		}
 	}
 	
