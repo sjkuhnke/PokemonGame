@@ -312,6 +312,7 @@ public class UI extends AbstractUI{
 			currentTask = null;
 		}
 		
+		
 		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
 			Pokemon.addTask(Task.PARTY, "");
