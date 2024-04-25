@@ -2108,7 +2108,7 @@ public class Pokemon implements Serializable {
 				addTask(Task.TEXT, "Hit " + hit + " times!");
 			}
 			
-			if (first && this.item == Item.KING1S_ROCK && checkSecondary(10)) {
+			if (first && this.item == Item.KING1S_ROCK && !foe.vStatuses.contains(Status.FLINCHED) && checkSecondary(10)) {
 				foe.vStatuses.add(Status.FLINCHED);
 			}
 		}
