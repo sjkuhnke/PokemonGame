@@ -678,6 +678,7 @@ public class PlayerCharacter extends Entity {
 			
 		} if (gp.currentMap == 118) { // TODO
 			Pokemon.addTask(Task.TEXT, "Do you have any fossils for me to resurrect?");
+			Pokemon.addTask(Task.FOSSIL, "Do you have any fossils for me to resurrect?");
 			JPanel options = new JPanel();
 			boolean valid = false;
 			if (p.bag.contains(Item.THUNDER_SCALES_FOSSIL)) {

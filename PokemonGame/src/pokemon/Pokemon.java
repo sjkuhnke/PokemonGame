@@ -8620,6 +8620,7 @@ public class Pokemon implements Serializable {
 		public static final int CLOSE = 18;
 		public static final int GIFT = 19;
 		public static final int REMIND = 20;
+		public static final int FOSSIL = 21;
 		
 		public int type;
 		public String message;
@@ -8705,6 +8706,7 @@ public class Pokemon implements Serializable {
 			case CLOSE: return "CLOSE";
 			case GIFT: return "GIFT";
 			case REMIND: return "REMIND";
+			case FOSSIL: return "FOSSIL";
 			default:
 				return "getTypeString() doesn't have a case for this type";
 			}
