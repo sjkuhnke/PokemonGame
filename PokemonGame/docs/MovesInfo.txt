@@ -93,7 +93,7 @@ Parabolic Charge : Special / 65 / 100 : Heals 50% of damage dealt to foe
 Plasma Fists : Physical / 100 / 100 : A normal attack
 Shock Wave : Special / 60 / -- : This attack never misses
 Spark : Physical / 65 / 100 : 30% to Paralyze foe
-Thunder : Special / 120 / 70 : 30% of Paralyzing foe, doesn't check accuracy in RAIN
+Thunder : Special / 110 / 70 : 30% of Paralyzing foe, doesn't check accuracy in RAIN
 Thunder Fang : Physical / 65 / 95 : 10% of Paralyzing and/or flinching foe
 Thunder Punch : Physical / 75 / 100 : 10% of Paralyzing foe
 Thunder Wave : Status / 0 / 90 : Paralyzes foe
@@ -191,7 +191,7 @@ Air Cutter : Special / 55 / 95 : Boosted Crit Rate
 Air Slash : Special / 75 / 95 : 30% chance of causing foe to flinch
 Bounce : Physical / 85 / 85 : 30% chance to Paralyze foe. Goes into the air on the first turn, and attacks on the second
 Brave Bird : Physical / 120 / 100 : User takes 1/3 of damage inflicted
-Defog : Status / 0 / -- : Lowers foe's Evasion by 1, clears all hazards and screens from both sides
+Defog : Status / 0 / -- : Lowers foe's Evasion by 1, clears all hazards, terrain and screens from both sides
 Drill Peck : Physical / 80 / 100 : Boosted Crit rate
 Feather Dance : Status / 0 / 100 : Lowers foe's Attack by 2
 Fly : Physical / 100 / 100 : Goes into the air on the first turn, and attacks on the second
@@ -215,7 +215,7 @@ Comet Crash : Physical / 80 / 90 : Damage is doubled if user's HP is full
 Comet Punch : Physical / 55 / 100 : A normal attack
 Core Enforcer : Special / 100 / 100 : 10% chance to lower foe's Attack and Sp.Atk by 1
 Cosmic Power : Status / 0 / -- : Raises user's Def and Sp.Def by 1
-Desolate Void : Special / 65 / 85 : 50% chance to Paralyze or Sleep foe
+Desolate Void : Special / 65 / 85 : 50% chance to Paralyze, Sleep or Frostbite foe
 Galaxy Blast : Special / 90 / 100 : A normal attack
 Genesis Supernova : Special / 120 / 95 : User takes 1/3 of damage dealt as recoil
 Gravity : Status / 0 / -- : Sets GRAVITY for 6 turns, in which the accuracy of all Pokemon is increased
@@ -298,7 +298,7 @@ Drill Run : Physical / 80 / 95 : Boosted Crit rate
 Earth Power : Special / 90 / 100 : 10% chance to lower foe's Sp.Def by 1
 Earthquake : Physical / 100 / 100 : A normal attack
 Fissure : Physical / 0 / 30 : If this move hits, it always K.Os foe
-Magnitude : Physical / 70 / 100 : A random Magnitude between 4-10 will be used, corresponding to its power
+Magnitude : Physical / 50 / 100 : A random Magnitude between 4-10 will be used, corresponding to its power
 Mud Bomb : Special / 65 / 85 : 30% to lower foe's Accuracy by 1
 Mud Shot : Special / 55 / 95 : 100% chance to lower foe's Speed by 1
 Mud Sport : Status / 0 / -- : Makes ELECTRIC moves deal 1/3 damage for 8 turns

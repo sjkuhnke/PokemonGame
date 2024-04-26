@@ -293,6 +293,7 @@ public class KeyHandler implements KeyListener {
 			if (gp.ui.subState < 7 && gp.ui.bagState == 0) { // Menus for handling the 7 top menu options
 				gp.ui.subState = 0;
 				gp.ui.partySelectedNum = -1;
+				gp.ui.selectedBagNum = -1;
 				gp.ui.partyNum = 0;
 				gp.ui.commandNum = 0;
 			} else if (gp.ui.subState == 7) { // Pokemon summary move info screen
@@ -458,14 +459,21 @@ public class KeyHandler implements KeyListener {
 		
 		if (code == KeyEvent.VK_S) {
 			if (gp.ui.nicknaming < 0) {
-				if (gp.ui.showBoxSummary) {
+				if (gp.ui.release) {
+					gp.ui.release = false;
+				} else if (gp.ui.showBoxSummary) {
 					if (gp.ui.moveSummaryNum >= 0) {
 						gp.ui.moveSummaryNum = -1;
 					} else {
 						gp.ui.showBoxSummary = false;
 					}
 				} else if (gp.ui.showBoxParty) {
-					gp.ui.partySelectedNum = -1;
+					if (gp.ui.partySelectedNum >= 0) {
+						gp.ui.partySelectedNum = -1;
+					} else {
+						gp.ui.partyNum = 0;
+						gp.ui.showBoxParty = false;
+					}
 				} else if (gp.ui.boxSwapNum >= 0) {
 					gp.ui.boxSwapNum = -1;
 				} else {
@@ -478,7 +486,6 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (code == KeyEvent.VK_A) {
-			aPressed = false;
 			if (ctrlPressed) {
 				ctrlPressed = false;
 				Item.useCalc(gp.player.p, gp.player.p.boxes[gp.player.p.currentBox], gp.ui.isGauntlet);
@@ -488,7 +495,7 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (code == KeyEvent.VK_D) {
-			if (!gp.ui.showBoxSummary) {
+			if (!gp.ui.showBoxSummary && !gp.ui.release) {
 				gp.ui.partyNum = 0;
 				gp.ui.showBoxParty = !gp.ui.showBoxParty;
 			} else {
@@ -593,7 +600,6 @@ public class KeyHandler implements KeyListener {
 		wPressed = false;
 		dPressed = false;
 		aPressed = false;
-		tabPressed = false;
 	}
 
 }

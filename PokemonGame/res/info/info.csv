@@ -49,9 +49,9 @@
 |Boulder      |ROCK    |GROUND  |STURDY            |UNERODIBLE        |[87, 95, 143, 25, 30, 45]     |256.2 |130|
 |Blaster      |ROCK    |GROUND  |STURDY            |UNERODIBLE        |[95, 110, 150, 70, 45, 55]    |337.2 |40 |
 |Crystallor   |ROCK    |LIGHT   |STURDY            |FILTER            |[90, 75, 50, 110, 150, 50]    |370.5 |35 |
-|Carinx       |ROCK    |PSYCHIC |SHED_SKIN         |REGENERATOR       |[72, 83, 75, 62, 58, 60]      |140.3 |120|
-|Carinator    |ROCK    |PSYCHIC |SYNCHRONIZE       |REGENERATOR       |[85, 95, 77, 55, 88, 65]      |173.2 |65 |
-|Cairnasaur   |ROCK    |PSYCHIC |PSYCHIC_SURGE     |REGENERATOR       |[99, 120, 75, 62, 96, 70]     |252.9 |30 |
+|Carinx       |ROCK    |PSYCHIC |SHED_SKIN         |REGENERATOR       |[62, 68, 45, 62, 65, 60]      |140.3 |120|
+|Carinator    |ROCK    |PSYCHIC |SYNCHRONIZE       |REGENERATOR       |[72, 75, 73, 75, 70, 75]      |173.2 |65 |
+|Cairnasaur   |ROCK    |PSYCHIC |PSYCHIC_SURGE     |REGENERATOR       |[99, 120, 80, 80, 76, 80]     |252.9 |30 |
 |Pebblepup    |ROCK    |null    |INTIMIDATE        |TECHNICIAN        |[55, 90, 60, 45, 50, 80]      |40.6  |100|
 |Boulderoar   |ROCK    |DARK    |INTIMIDATE        |TECHNICIAN        |[75, 111, 75, 90, 64, 85]     |190.0 |35 |
 |Fightorex    |FIGHTING|GROUND  |GUTS              |NO_GUARD          |[52, 72, 69, 77, 56, 67]      |62.5  |65 |

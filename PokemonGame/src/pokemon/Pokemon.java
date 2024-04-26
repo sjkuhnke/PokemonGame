@@ -452,10 +452,10 @@ public class Pokemon implements Serializable {
         int maxDamage = Collections.max(moveToDamage.values());
         
         if (tr.hasValidMembers() && !isTrapped()) {
-        	// 20% chance to swap in a partner if they resist and you don't
+        	// 25% chance to swap in a partner if they resist and you don't
         	if (foe.lastMoveUsed != null && foe.lastMoveUsed.cat != 2 && !tr.resists(this, foe.lastMoveUsed.mtype)
         			&& tr.hasResist(foe.lastMoveUsed.mtype)) {
-        		double chance = 20;
+        		double chance = 25;
         		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
         		if (this.impressive) chance /= 2;
         		if (checkSecondary((int) Math.round(chance))) {
@@ -465,9 +465,9 @@ public class Pokemon implements Serializable {
                 	return Move.SPLASH;
         		}
             }
-        	// 60% chance to swap if all of your moves do 0 damage
+        	// 70% chance to swap if all of your moves do 0 damage
         	if (maxDamage == 0 && !validMoves.equals(new ArrayList<>(Arrays.asList(new Move[] {Move.METRONOME})))) {
-        		double chance = 60;
+        		double chance = 70;
         		if (this.impressive) chance *= 0.75;
         		if (checkSecondary((int) chance)) {
         			System.out.print("all moves do 0 damage : ");
@@ -476,9 +476,9 @@ public class Pokemon implements Serializable {
             		return Move.GROWL;
         		}
         	}
-        	// 10% chance to swap if the most damage you do is 1/5 or less to target
+        	// 12% chance to swap if the most damage you do is 1/5 or less to target
         	if (maxDamage <= foe.currentHP * 1.0 / 5) {
-        		double chance = 10;
+        		double chance = 20;
         		if (this == this.getFaster(foe, 0, 0) && !validMoves.contains(Move.U$TURN) && !validMoves.contains(Move.VOLT_SWITCH) &&
         				!validMoves.contains(Move.FLIP_TURN) && !validMoves.contains(Move.PARTING_SHOT) && !validMoves.contains(Move.BATON_PASS)) chance /= 2;
         		if (this.impressive) chance /= 2;
@@ -702,7 +702,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public PType getType2(int id) {
-		return getTypes(id)[0];
+		return getTypes(id)[1];
 	}
 	
 	public String getName() {
@@ -8623,6 +8623,8 @@ public class Pokemon implements Serializable {
 		public static final int GIFT = 19;
 		public static final int REMIND = 20;
 		public static final int FOSSIL = 21;
+		public static final int HP = 22;
+		public static final int EVO_ITEM = 23;
 		
 		public int type;
 		public String message;
@@ -8709,6 +8711,8 @@ public class Pokemon implements Serializable {
 			case GIFT: return "GIFT";
 			case REMIND: return "REMIND";
 			case FOSSIL: return "FOSSIL";
+			case HP: return "HP";
+			case EVO_ITEM: return "EVO_ITEM";
 			default:
 				return "getTypeString() doesn't have a case for this type";
 			}
@@ -8832,7 +8836,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (mode == 0 && (move == Move.SLEEP_TALK || move == Move.SNORE)) {
-			if (status != Status.ASLEEP) {
+			if (status != Status.ASLEEP || sleepCounter == 0) {
 				return 0;
 			} else {
 				return 999999;

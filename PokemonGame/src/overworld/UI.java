@@ -57,6 +57,7 @@ public class UI extends AbstractUI{
 	public int boxNum;
 	public boolean isGauntlet;
 	public Pokemon currentBoxP;
+	public boolean release;
 	
 	public int remindNum;
 	
@@ -158,7 +159,8 @@ public class UI extends AbstractUI{
 		
 		if (showBoxParty) {
 			drawParty(null);
-			drawToolTips("Info", "Swap", "Deselect", "Close");
+			String sText = partySelectedNum >= 0 ? "Deselect" : "Close";
+			drawToolTips("Info", "Swap", sText, "Close");
 		}
 		
 		if (showBoxSummary) {
@@ -182,8 +184,12 @@ public class UI extends AbstractUI{
 			currentPokemon = currentTask.p;
 			showMoveOptions = true;
 			break;
-		case Task.EVO:
+		case Task.EVO_ITEM:
 			evolveMon();
+			break;
+		case Task.EVO:
+			drawEvolution(currentTask);
+			drawToolTips("OK", null, null, null);
 			break;
 		case Task.CLOSE:
 			if (tasks.size() != 0) {
@@ -443,14 +449,18 @@ public class UI extends AbstractUI{
 			}
 		}
 		
-		if (!showBoxSummary && !showBoxParty) {
+		if (!showBoxSummary && !showBoxParty && !release) {
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				if (boxNum >= 0) {
 					currentBoxP = cBox[boxNum];
 				}
 				if (currentBoxP != null) {
-					showBoxSummary = true;
+					if (!gp.keyH.ctrlPressed) {
+						showBoxSummary = true;
+					} else {
+						release = true;
+					}
 				}
 			}
 			
@@ -467,7 +477,8 @@ public class UI extends AbstractUI{
 	    					}
 	    				}
 	    				if (nullIndex == -1) {
-	    					showMessage("Party is full!");
+	    					partyNum = 0;
+	    					showBoxParty = true;
 	    					return;
 	    				} else {
 	    					gp.player.p.team[nullIndex] = cBox[boxNum];
@@ -512,11 +523,6 @@ public class UI extends AbstractUI{
 				} else {
 					boxSwapNum = boxNum;
 				}
-			}
-			
-			if (gp.keyH.dPressed) {
-				gp.keyH.dPressed = false;
-				showBoxParty = true;
 			}
 			
 			if (gp.keyH.upPressed) {
@@ -638,6 +644,48 @@ public class UI extends AbstractUI{
 					partySelectedNum = partyNum;
 				}
 			}
+		}
+		
+		if (release) {
+			if (gp.keyH.upPressed || gp.keyH.downPressed) {
+				gp.keyH.upPressed = false;
+				gp.keyH.downPressed = false;
+				commandNum = 1 - commandNum;
+			}
+			
+			currentDialogue = "Are you sure you want to release " + currentBoxP.nickname + "?";
+			drawDialogueScreen(true);
+			
+			int rX = gp.tileSize * 11;
+			int rY = gp.tileSize * 4;
+			int rWidth = gp.tileSize * 3;
+			int rHeight = (int) (gp.tileSize * 2.5);
+			drawSubWindow(rX, rY, rWidth, rHeight);
+			rX += gp.tileSize;
+			rY += gp.tileSize;
+			g2.drawString("Yes", rX, rY);
+			if (commandNum == 0) {
+				g2.drawString(">", rX-24, rY);
+				if (gp.keyH.wPressed) {
+					gp.keyH.wPressed = false;
+					release = false;
+					cBox[boxNum] = null;
+					showMessage(currentBoxP.nickname + " was released!\nBye bye, " + currentBoxP.nickname + "!");
+					commandNum = 0;
+				}
+			}
+			rY += gp.tileSize;
+			g2.drawString("No", rX, rY);
+			if (commandNum == 1) {
+				g2.drawString(">", rX-24, rY);
+				if (gp.keyH.wPressed) {
+					gp.keyH.wPressed = false;
+					release = false;
+					commandNum = 0;
+				}
+			}
+			
+			drawToolTips("OK", null, "Back", "Back");
 		}
 		
 		drawBoxToolTips();
@@ -1567,7 +1615,7 @@ public class UI extends AbstractUI{
 	}
 	
 	private void drawBoxToolTips() {
-		if (!gp.keyH.shiftPressed || showBoxSummary || showBoxParty) return;
+		if (!gp.keyH.shiftPressed || showBoxSummary || showBoxParty || release) return;
 		int x = 0;
 		int y = gp.tileSize * 9;
 		int width = gp.tileSize * 8;

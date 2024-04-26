@@ -1547,7 +1547,7 @@ Ability:
 Shed Skin / Regenerator
 
 Base Stats:
-72 HP / 83 Atk / 75 Def / 62 SpA / 58 SpD / 60 Spe / 410 BST
+62 HP / 68 Atk / 45 Def / 62 SpA / 65 SpD / 60 Spe / 362 BST
 
 Level Up:
 1 - Harden
@@ -1574,7 +1574,7 @@ Ability:
 Synchronize / Regenerator
 
 Base Stats:
-85 HP / 95 Atk / 77 Def / 55 SpA / 88 SpD / 65 Spe / 465 BST
+72 HP / 75 Atk / 73 Def / 75 SpA / 70 SpD / 75 Spe / 440 BST
 
 Level Up:
 1 - Harden
@@ -1607,7 +1607,7 @@ Ability:
 Psychic Surge / Regenerator
 
 Base Stats:
-99 HP / 120 Atk / 75 Def / 62 SpA / 96 SpD / 70 Spe / 522 BST
+99 HP / 120 Atk / 80 Def / 80 SpA / 76 SpD / 80 Spe / 535 BST
 
 Level Up:
 1 - Harden
@@ -1836,6 +1836,7 @@ Level Up:
 20 - Aurora Boost
 23 - Ice Shard
 25 - Magic Blast
+28 - Encore
 30 - Light Beam
 33 - Snowscape
 35 - Frostbind
@@ -2347,7 +2348,7 @@ Level Up:
 7 - Confusion
 9 - Baby-Doll Eyes
 11 - Detect
-15 - Aqua Ring
+14 - Aqua Ring
 17 - Razor Shell
 20 - Psybeam
 23 - Rollout
@@ -2376,7 +2377,7 @@ Level Up:
 7 - Confusion
 9 - Baby-Doll Eyes
 11 - Detect
-15 - Aqua Ring
+14 - Aqua Ring
 17 - Razor Shell
 20 - Psybeam
 23 - Rollout
