@@ -541,7 +541,7 @@ public enum Move {
 	WAVE_CRASH(120,100,0,0,0,0,PType.WATER,"User takes 1/3 of damage dealt as recoil",true,10),
 	WEATHER_BALL(-1,100,0,0,1,0,PType.NORMAL,"Type changes to match the current weather, double BP if type of the move changes",false,10),
 	WHIP_SMASH(120,100,0,0,0,0,PType.NORMAL,"A normal attack",true,5),
-	WHIRLPOOL(35,85,100,0,1,0,PType.WATER,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
+	WHIRLPOOL(35,95,100,0,1,0,PType.WATER,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
 	WHIRLWIND(0,1000,0,0,2,-6,PType.FLYING,"Forces foe to switch out to a random teammate",false,20),
 	WILL$O$WISP(0,85,0,0,2,0,PType.FIRE,"Burns foe",false,15),
 	WING_ATTACK(60,100,0,0,0,0,PType.FLYING,"A normal attack",true,35),
