@@ -819,7 +819,7 @@ public class Player extends Trainer implements Serializable {
 	        		return;
 	        	} else {
 	        		gp.gameState = GamePanel.RARE_CANDY_STATE;
-	        		Task t = Pokemon.addTask(Task.EVO_ITEM, "");
+	        		Task t = Pokemon.addTask(Task.EVO_ITEM, "", p);
 	        		t.evo = new Pokemon(p.getEvolved(item.getID()), p);
 	        		Pokemon.addTask(Task.CLOSE, "");
 	        	}
