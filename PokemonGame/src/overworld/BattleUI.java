@@ -63,6 +63,7 @@ public class BattleUI extends AbstractUI {
 	private int abilityCounter = 0;
 	private int cooldownCounter = 0;
 	private Field field;
+	private boolean baton;
 	
 	public boolean cancellableParty;
 	public boolean showMoveSummary;
@@ -348,6 +349,7 @@ public class BattleUI extends AbstractUI {
 		case Task.PARTY:
 			currentDialogue = "";
 			cancellableParty = false;
+			baton = currentTask.wipe;
 			subState = PARTY_SELECTION_STATE;
 			break;
 		case Task.STATUS:
@@ -572,6 +574,7 @@ public class BattleUI extends AbstractUI {
 				break;
 			case MOVE_MESSAGE_STATE:
 				subState = MOVE_SELECTION_STATE;
+				break;
 			}
 			dialogueState = DIALOGUE_FREE_STATE;
 			currentDialogue = "";
@@ -756,7 +759,7 @@ public class BattleUI extends AbstractUI {
 		if (commandNum == 1) {
 			g2.drawRoundRect(x, y, width, height, 10, 10);
 			if (gp.keyH.wPressed) {
-				gp.keyH.wPressed = false;
+				gp.keyH.resetKeys();
 				currentDialogue = "";
 				cancellableParty = true;
 				subState = PARTY_SELECTION_STATE;
@@ -878,7 +881,8 @@ public class BattleUI extends AbstractUI {
 
 	private void drawPartySelectionScreen() {
 		drawParty(null);
-		drawToolTips("Info", "Swap", "Back", null);
+		String sText = cancellableParty ? "Back" : null;
+		drawToolTips("Info", "Swap", sText, null);
 	}
 
 	private void drawActionBackground(Pokemon p, int x, int y, int width, int height) {
@@ -997,7 +1001,8 @@ public class BattleUI extends AbstractUI {
 			
 			// Check for swap (player)
 			if (user.trainer.hasValidMembers() && faster.vStatuses.contains(Status.SWITCHING)) {
-				Pokemon.addTask(Task.PARTY, "");
+				Task t = Pokemon.addTask(Task.PARTY, "");
+				t.wipe = faster.lastMoveUsed == Move.BATON_PASS;
 				subState = TASK_STATE;
 	        	return;
 			}
@@ -1038,7 +1043,8 @@ public class BattleUI extends AbstractUI {
 	        }
 	        // Check for swap
 	        if (user.trainer.hasValidMembers() && slower.vStatuses.contains(Status.SWITCHING)) {
-	        	Pokemon.addTask(Task.PARTY, "");
+	        	Task t = Pokemon.addTask(Task.PARTY, "");
+	        	t.wipe = slower.lastMoveUsed == Move.BATON_PASS;
 	        	subState = TASK_STATE;
 	        	return;
 			}
@@ -1132,7 +1138,7 @@ public class BattleUI extends AbstractUI {
 				currentDialogue = select.nickname + " has no energy to battle!";
 			} else if (select == select.trainer.getCurrent()) {
 				currentDialogue = select.nickname + " is already out!";
-			} else if (user.isTrapped()) {
+			} else if (cancellableParty && user.isTrapped()) {
         		currentDialogue = "You are trapped and cannot switch!";
 			} else {
 				subState = TASK_STATE;
@@ -1141,6 +1147,12 @@ public class BattleUI extends AbstractUI {
 					foeMove = foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
 				}
 				tempUser = gp.player.p.team[partyNum].clone();
+				if (baton) {
+					gp.player.p.team[partyNum].statStages = user.statStages.clone();
+					gp.player.p.team[partyNum].vStatuses = new ArrayList<>(user.vStatuses);
+					gp.player.p.team[partyNum].vStatuses.remove(Status.SWITCHING);
+					gp.player.p.team[partyNum].vStatuses.remove(Status.SWAP);
+				}
 				gp.player.p.swapToFront(gp.player.p.team[partyNum], partyNum);
 				gp.player.p.getCurrent().swapIn(foe, true);
 				user = gp.player.p.getCurrent();
@@ -1148,6 +1160,7 @@ public class BattleUI extends AbstractUI {
 				moveNum = 0;
 				commandNum = 0;
 				dialogueCounter = 0;
+				baton = false;
 				turn(null, foeMove);
 				foeMove = null;
 			}

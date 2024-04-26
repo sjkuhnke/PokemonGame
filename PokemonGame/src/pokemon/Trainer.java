@@ -1,6 +1,7 @@
 package pokemon;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Trainer implements Serializable {
@@ -176,7 +177,7 @@ public class Trainer implements Serializable {
 		return result;
 	}
 
-	public Pokemon getSwap(Pokemon foe, Move m, boolean baton) {
+	public Pokemon getSwap(Pokemon foe, Move m) {
 		PType type = null;
 		if (m != Move.SPLASH && m != null) {
 			type = m.mtype;
@@ -198,11 +199,17 @@ public class Trainer implements Serializable {
 	}
 	
 	public Pokemon swapOut(Pokemon foe, Move m, boolean baton) {
-		Pokemon result = getSwap(foe, m, baton);
+		Pokemon result = getSwap(foe, m);
 		if (result != current) {
-			int[] oldStats = current.statStages;
+			int[] oldStats = current.statStages.clone();
+			ArrayList<Status> oldVStatuses = new ArrayList<>(current.vStatuses);
 			swap(current, result);
-			if (baton) result.statStages = oldStats;
+			if (baton) {
+				result.statStages = oldStats;
+				result.vStatuses = oldVStatuses;
+				result.vStatuses.remove(Status.SWITCHING);
+				result.vStatuses.remove(Status.SWAP);
+			}
 			Pokemon.gp.battleUI.foeStatus = result.status;
 			result.swapIn(foe, true);
 			foe.vStatuses.remove(Status.TRAPPED);

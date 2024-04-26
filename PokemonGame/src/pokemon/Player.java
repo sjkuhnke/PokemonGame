@@ -712,7 +712,7 @@ public class Player extends Trainer implements Serializable {
 	        	} else {
 	        		Status temp = p.status;
 	        		p.status = Status.HEALTHY;
-		        	gp.ui.showMessage(Item.breakString(p.nickname + " was cured of its " + temp.getName(), 45));
+		        	gp.ui.showMessage(Item.breakString(p.nickname + " was cured of its " + temp.getName() + "!", 45));
 	        	}
 				break;
 				
@@ -819,7 +819,8 @@ public class Player extends Trainer implements Serializable {
 	        		return;
 	        	} else {
 	        		gp.gameState = GamePanel.RARE_CANDY_STATE;
-	        		Pokemon.addEvoTask(p, new Pokemon(p.getEvolved(item.getID()), p));
+	        		Task t = Pokemon.addTask(Task.EVO_ITEM, "");
+	        		t.evo = new Pokemon(p.getEvolved(item.getID()), p);
 	        		Pokemon.addTask(Task.CLOSE, "");
 	        	}
 				break;

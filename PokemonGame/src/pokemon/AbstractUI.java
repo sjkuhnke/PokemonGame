@@ -893,6 +893,7 @@ public abstract class AbstractUI {
                 gp.player.p.team[index] = newP;
                 if (index == 0) {
                 	oldP.setVisible(false);
+                	newP.battled = true;
                 	gp.player.p.current = newP;
                 	gp.battleUI.user = newP;
                 	gp.battleUI.userHP = newP.currentHP;

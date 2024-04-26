@@ -2160,7 +2160,7 @@ public class AssetSetter {
 		}
 		if (flags[2]) {
 			gp.npc[4][1] = null;
-			gp.npc[0][17] = null;
+			gp.npc[0][18] = null;
 		}
 		if (flags[3]) {
 			gp.npc[17][6] = null;
@@ -2172,7 +2172,7 @@ public class AssetSetter {
 		if (flags[7]) gp.npc[41][0] = null;
 		if (flags[6]) gp.npc[41][1] = null;
 		if (flags[8] && flags[9]) gp.npc[38][1] = null;
-		if (flags[15]) gp.npc[0][12] = null;
+		if (flags[15]) gp.npc[0][13] = null;
 		if (flags[16]) gp.npc[85][0] = null;
 		if (flags[17]) gp.npc[85][7] = null;
 		if (!flags[19] && gp.player.p.grustCount >= 10) {

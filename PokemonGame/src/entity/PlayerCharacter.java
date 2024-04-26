@@ -509,10 +509,11 @@ public class PlayerCharacter extends Entity {
 		}
 		if (gp.currentMap == 41 && p.flags[8] && p.flags[9] && !p.flags[31]) {
 			p.flags[31] = true;
-			Pokemon.addTask(Task.TEXT, "Oh you have?! Thank you so much!\nHere, take this as a reward!\nObtained HM04 Surf!");
+			Pokemon.addTask(Task.TEXT, "Oh you have?! Thank you so much!\nHere, take this as a reward!");
+			Pokemon.addTask(Task.TEXT, "Obtained HM04 Surf!");
 			p.bag.add(Item.HM04);
 		}
-		if (gp.currentMap == 46) {
+		if (gp.currentMap == 46) { // TODO
 			String message = "";
 			for (Pokemon p : p.team) {
 				if (p != null) {
@@ -1117,6 +1118,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactCutTree(int i) {
 		if (p.hasMove(Move.CUT)) {
+			gp.keyH.wPressed = false;
 			Cut_Tree temp = (Cut_Tree) gp.iTile[gp.currentMap][i];
 			gp.iTile[gp.currentMap][i] = new Tree_Stump(gp);
 			gp.iTile[gp.currentMap][i].worldX = temp.worldX;
@@ -1131,6 +1133,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactRockSmash(int i) {
 		if (p.hasMove(Move.ROCK_SMASH)) {
+			gp.keyH.wPressed = false;
 			generateParticle(gp.iTile[gp.currentMap][i]);
 			gp.iTile[gp.currentMap][i] = null;
 		} else {
@@ -1141,6 +1144,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactVines(int i) {
 		if (p.hasMove(Move.VINE_CROSS)) {
+			gp.keyH.wPressed = false;
 			Vine_Crossable temp = (Vine_Crossable) gp.iTile[gp.currentMap][i];
 			gp.iTile[gp.currentMap][i] = new Vine(gp);
 			gp.iTile[gp.currentMap][i].worldX = temp.worldX;
@@ -1153,6 +1157,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactPit(int i) {
 		if (p.hasMove(Move.SLOW_FALL)) {
+			gp.keyH.wPressed = false;
 			Pit pit = (Pit) gp.iTile[gp.currentMap][i];
 			gp.eHandler.teleport(pit.mapDest, pit.xDest, pit.yDest, false);
 			generateParticle(pit);
@@ -1164,6 +1169,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactWhirlpool(int i) {
 		if (p.hasMove(Move.WHIRLPOOL)) {
+			gp.keyH.wPressed = false;
 			int offset = gp.tileSize / 2;
 			int x = gp.iTile[gp.currentMap][i].worldX + offset;
 			int y = gp.iTile[gp.currentMap][i].worldY + offset;
@@ -1194,6 +1200,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactRockClimb(int i) {
 		if (p.hasMove(Move.ROCK_CLIMB)) {
+			gp.keyH.wPressed = false;
 			Rock_Climb rc = (Rock_Climb) gp.iTile[gp.currentMap][i];
 			int offset = gp.tileSize / 2;
 			int x = rc.worldX + offset;
