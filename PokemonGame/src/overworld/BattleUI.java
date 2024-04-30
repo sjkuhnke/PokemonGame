@@ -71,7 +71,6 @@ public class BattleUI extends AbstractUI {
 	private BufferedImage battle;
 	private BufferedImage userHPBar;
 	private BufferedImage foeHPBar;
-	private BufferedImage ballIcon;
 	private BufferedImage currentIcon;
 	private BufferedImage faintedIcon;
 	private BufferedImage emptyIcon;
@@ -525,7 +524,7 @@ public class BattleUI extends AbstractUI {
 	}
 
 	private void drawTypes(Pokemon p) {
-		PType[] types = p.getTypes(p.id);
+		PType[] types = Pokemon.getTypes(p.id);
 		if (p.playerOwned()) {
 			g2.drawImage(types[0].getImage(), 340, 298, null);
 			if (types[1] != null) g2.drawImage(types[1].getImage(), 364, 298, null);

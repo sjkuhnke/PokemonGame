@@ -693,15 +693,15 @@ public class Pokemon implements Serializable {
 		type2 = type[1];
 	}
 
-	public PType[] getTypes(int id) {
+	public static PType[] getTypes(int id) {
 		return types[id - 1];
 	}
 	
-	public PType getType1(int id) {
+	public static PType getType1(int id) {
 		return getTypes(id)[0];
 	}
 	
-	public PType getType2(int id) {
+	public static PType getType2(int id) {
 		return getTypes(id)[1];
 	}
 	
@@ -709,7 +709,7 @@ public class Pokemon implements Serializable {
 		return getName(id);
 	}
 	
-	public String getName(int id) {
+	public static String getName(int id) {
 		return names[id - 1];
 	}
 	
@@ -4649,10 +4649,10 @@ public class Pokemon implements Serializable {
 			movebank[2] = new Node(Move.LEER);
 			movebank[4] = new Node(Move.ABSORB);
 			movebank[7] = new Node(Move.HEADBUTT);
-			movebank[9] = new Node(Move.ROOT_KICK);
+			movebank[9] = new Node(Move.ROCK_THROW);
 			movebank[12] = new Node(Move.LEAF_TORNADO);
 			movebank[15] = new Node(Move.MAGICAL_LEAF);
-			movebank[17] = new Node(Move.ROCK_THROW);
+			movebank[17] = new Node(Move.ROOT_KICK);
 			movebank[20] = new Node(Move.INGRAIN);
 			movebank[23] = new Node(Move.ROCK_TOMB);
 			movebank[27] = new Node(Move.MACH_PUNCH);
@@ -11678,10 +11678,10 @@ public class Pokemon implements Serializable {
         }
     }
 
-	public String getFormattedID() {
-		String id = this.id + "";
-		while (id.length() < 3) id = "0" + id;
-		id = "#" + id;
-		return id;
+	public static String getFormattedID(int id) {
+		String result = id + "";
+		while (result.length() < 3) result = "0" + result;
+		result = "#" + result;
+		return result;
 	}
 }

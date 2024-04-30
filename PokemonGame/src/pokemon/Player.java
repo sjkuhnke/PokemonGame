@@ -46,7 +46,7 @@ public class Player extends Trainer implements Serializable {
 	public Bag bag;
 	public int badges;
 	public int starter;
-	public int[] pokedex = new int[241];
+	public int[] pokedex = new int[Pokemon.MAX_POKEMON + 1];
 	public int currentMap;
 	public boolean[] trainersBeat = new boolean[Main.trainers.length];
 	public boolean[][] itemsCollected;
@@ -569,15 +569,15 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public int getDexShowing() {
-		int result = pokedex.length;
+		int result = -1;
 		for (int i = pokedex.length - 1; i >= 0; i--) {
 			if (pokedex[i] != 0) {
 				result = i;
 				break;
 			}
 		}
-		result = result >= pokedex.length - 1 ? pokedex.length - 1 : result + 3;
-		return result;
+		result += 3;
+		return Math.min(result, pokedex.length - 1);
 	}
 
 	public int getAmountSelected() {
@@ -1093,5 +1093,15 @@ public class Player extends Trainer implements Serializable {
     	team = teamTemp;
     	current = team[0];
     	team[5] = null;
+	}
+
+	public int[] getDexAmounts() {
+		int[] result = new int[2];
+		for (int i = 1; i <= getDexShowing(); i++) {
+			if (pokedex[i] > 0) {
+				result[pokedex[i] - 1]++;
+			}
+		}
+		return result;
 	}
 }

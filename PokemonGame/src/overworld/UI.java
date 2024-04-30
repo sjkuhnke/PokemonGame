@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -16,6 +17,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import entity.Entity;
 import entity.PlayerCharacter;
@@ -59,6 +62,11 @@ public class UI extends AbstractUI{
 	public Pokemon currentBoxP;
 	public boolean release;
 	
+	public int dexNum = 1;
+	public int dexMode;
+	public int levelDexNum;
+	public int tmDexNum;
+	
 	public int remindNum;
 	
 	BufferedImage transitionBuffer;
@@ -73,6 +81,8 @@ public class UI extends AbstractUI{
 		currentDialogue = "";
 		commandNum = 0;
 		tasks = new ArrayList<>();
+		
+		ballIcon = setup("/icons/ball", 1);
 		
 		try {
 			InputStream is = getClass().getResourceAsStream("/font/marumonica.ttf");
@@ -172,7 +182,7 @@ public class UI extends AbstractUI{
 			drawToolTips("OK", null, null, null);
 		}
 	}
-	
+
 	private void drawTask() {
 		switch(currentTask.type) {
 		case Task.LEVEL_UP:
@@ -198,8 +208,8 @@ public class UI extends AbstractUI{
 				return;
 			}
 			gp.gameState = GamePanel.MENU_STATE;
-			gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
-			gp.ui.bagState = 0;
+			currentItems = gp.player.p.getItems(currentPocket);
+			bagState = 0;
 			currentTask = null;
 			break;
 		case Task.GIFT:
@@ -358,6 +368,321 @@ public class UI extends AbstractUI{
 		}
 		
 		drawToolTips("OK", null, "Back", null);
+	}
+	
+	private void drawPokedex() {
+		int x = 0;
+		int y = 0;
+		int width = gp.tileSize * 7;
+		int height = gp.tileSize * 12;
+		
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize / 2;
+		int startX = x;
+		int textWidth = (int) (gp.tileSize * 0.75);
+		
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(24F));
+		
+		int maxShow = gp.player.p.getDexShowing();
+		for (int i = dexNum; i < dexNum + 12; i++) {
+			int textY = y + gp.tileSize / 2;
+			if (i == dexNum) {
+				g2.drawString(">", x, textY);
+			}
+			x += gp.tileSize / 3;
+			if (i <= maxShow) {
+				int mode = gp.player.p.pokedex[i];
+				if (mode == 2) {
+					g2.drawImage(ballIcon, x, y + 8, null);
+					x += gp.tileSize / 2;
+					g2.drawString(Pokemon.getFormattedID(i) + " " + Pokemon.getName(i), x, textY);
+					x += gp.tileSize * 4;
+					g2.drawImage(Pokemon.getType1(i).getImage(), x, y + 4, null);
+					x += gp.tileSize / 2;
+					if (Pokemon.getType2(i) != null) g2.drawImage(Pokemon.getType2(i).getImage(), x, y + 4, null);
+				} else if (mode == 1) {
+					g2.setColor(Color.DARK_GRAY);
+					int circleDiameter = 16;
+					g2.fillOval(x, y + 8, circleDiameter, circleDiameter);
+					g2.setColor(Color.WHITE);
+					x += gp.tileSize / 2;
+					g2.drawString(Pokemon.getFormattedID(i) + " " + Pokemon.getName(i), x, textY);
+				} else {
+					x += gp.tileSize / 2;
+					g2.drawString(Pokemon.getFormattedID(i) + " " + "---", x, textY);
+				}
+				x = startX;
+				y += textWidth;
+			}
+		}
+		
+		int mode = gp.player.p.pokedex[dexNum];
+		LinkedHashMap<Move, Integer> levelMap = new LinkedHashMap<>();
+		ArrayList<Item> tmList = new ArrayList<>();
+		Pokemon test = new Pokemon(dexNum, 5, false, true);
+		if (mode == 2) {
+			if (test.movebank != null) {
+			    for (int i = 0; i < test.movebank.length; i++) {
+			        Node move = test.movebank[i];
+			        while (move != null) {
+			        	levelMap.put(move.data, i + 1);
+			            move = move.next;
+			        }
+			    }
+			}
+			
+			for (int i = 93; i < 200; i++) {
+				Item testItem = Item.getItem(i);
+		    	if (testItem.getLearned(test)) {
+		    		tmList.add(testItem);
+		    	}
+			}
+		}
+		
+		drawDexSummary(test, mode, levelMap, tmList);
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			if (dexMode == 0) {
+				if (dexNum > 1) {
+					dexNum--;
+					levelDexNum = 0;
+					tmDexNum = 0;
+				}
+			} else if (dexMode == 1) {
+				if (levelDexNum > 0) {
+					levelDexNum--;
+				}
+			} else if (dexMode == 2) {
+				if (tmDexNum > 0) {
+					tmDexNum--;
+				}
+			}
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			if (dexMode == 0) {
+				if (dexNum < maxShow) {
+					dexNum++;
+					levelDexNum = 0;
+					tmDexNum = 0;
+				}
+			} else if (dexMode == 1) {
+				if (levelDexNum < levelMap.size() - 1) {
+					levelDexNum++;
+				}
+			} else if (dexMode == 2) {
+				if (tmDexNum < tmList.size() - 1) {
+					tmDexNum++;
+				}
+			}
+		}
+		if (gp.keyH.rightPressed || gp.keyH.wPressed) {
+			gp.keyH.rightPressed = false;
+			gp.keyH.wPressed = false;
+			if (mode == 2 && dexMode < 2 && !(dexMode == 1 && tmList.size() == 0)) dexMode++;
+		}
+		if (gp.keyH.leftPressed || gp.keyH.sPressed) {
+			gp.keyH.leftPressed = false;
+			gp.keyH.sPressed = false;
+			if (dexMode > 0) {
+				dexMode--;
+			} else {
+				subState = 0;
+			}
+		}
+		
+		int infoX = 0;
+		int infoY = (int) (gp.screenHeight - gp.tileSize * 2.5);
+		int infoWidth = width;
+		int infoHeight = (int) (gp.tileSize * 2.5);
+		
+		drawSubWindow(infoX, infoY, infoWidth, infoHeight, 255);
+		
+		int infoTextX = infoX + gp.tileSize / 2;
+		int infoTextY = infoY + gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(32F));
+		int[] amounts = gp.player.p.getDexAmounts();
+		int caughtAmt = amounts[1];
+		int seenAmt = amounts[0] + caughtAmt;
+		String caughtString = "Caught: " + caughtAmt;
+		String seenString = "Seen: " + seenAmt;
+		if (caughtAmt >= Pokemon.MAX_POKEMON) {
+			g2.setPaint(new GradientPaint(infoTextX, infoTextY, new Color(255, 215, 0), infoTextX + gp.tileSize, infoTextY - gp.tileSize, new Color(245, 225, 210)));
+		}
+		g2.drawString(caughtString, infoTextX, infoTextY);
+		
+		g2.setColor(Color.WHITE);
+		infoTextY += gp.tileSize;
+		if (seenAmt >= Pokemon.MAX_POKEMON) {
+			g2.setPaint(new GradientPaint(infoTextX, infoTextY, new Color(192, 192, 192), infoTextX + gp.tileSize, infoTextY - gp.tileSize, new Color(245, 225, 210)));
+		}
+		g2.drawString(seenString, infoTextX, infoTextY);
+		
+		String wText = dexMode == 0 ? "Moves": null;
+		drawToolTips(wText, null, "Back", null);
+	}
+
+	private void drawDexSummary(Pokemon p, int mode, LinkedHashMap<Move, Integer> levelMap, ArrayList<Item> tmList) {
+		if (mode == 0) return;
+		int x = gp.tileSize * 7;
+		int y = gp.tileSize / 4;
+		int width = gp.tileSize * 9;
+		int height = (int) (mode == 2 ? gp.tileSize * 11.5 : gp.tileSize * 4.5);
+		
+		drawSubWindow(x, y, width, height);
+		
+		// ID
+		x += gp.tileSize / 2;
+		y += gp.tileSize * 0.75;
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(20F));
+		g2.drawString(Pokemon.getFormattedID(p.id), x, y);
+		
+		// Name
+		x += gp.tileSize / 2;
+		y += gp.tileSize / 4;
+		int startX = x;
+		g2.setFont(g2.getFont().deriveFont(36F));
+		g2.drawString(p.name, x, y + gp.tileSize / 2);
+		
+		x = startX;
+		y += gp.tileSize;
+		int startY = y;
+		
+		// Sprite
+		g2.drawImage(p.isFainted() ? p.getFaintedSprite() : p.getSprite(), x - 12, y, null);
+		x += gp.tileSize * 2;
+		g2.drawImage(p.type1.getImage2(), x - 12, y, null);
+		if (p.type2 != null) {
+			g2.drawImage(p.type2.getImage2(), x + 36, y + 36, null);
+		}
+		
+		// Abilities
+		g2.setFont(g2.getFont().deriveFont(28F));
+		x += gp.tileSize * 3.75;
+		String abilityLabel = "Abilities:";
+		g2.drawString(abilityLabel, getCenterAlignedTextX(abilityLabel, x), y);
+		g2.setFont(g2.getFont().deriveFont(24F));
+		y += gp.tileSize / 2;
+		String ability = mode == 2 ? p.ability.toString() : "???";
+		g2.drawString(ability, getCenterAlignedTextX(ability, x), y);
+		
+		if (mode == 1) return;
+		
+		g2.setFont(g2.getFont().deriveFont(16F));
+		String[] abilityDesc = Item.breakString(p.ability.desc, 26).split("\n");
+		y += gp.tileSize / 4;
+		for (String s : abilityDesc) {
+			y += gp.tileSize / 2 - 4;
+			g2.drawString(s, getCenterAlignedTextX(s, x), y);
+		}
+		
+		g2.setFont(g2.getFont().deriveFont(24F));
+		y += gp.tileSize * 0.75;
+		p.setAbility(1);
+		String ability2 = p.ability.toString();
+		g2.drawString(ability2, getCenterAlignedTextX(ability2, x), y);
+		
+		g2.setFont(g2.getFont().deriveFont(16F));
+		String[] abilityDesc2 = Item.breakString(p.ability.desc, 26).split("\n");
+		y += gp.tileSize / 4;
+		for (String s : abilityDesc2) {
+			y += gp.tileSize / 2 - 4;
+			g2.drawString(s, getCenterAlignedTextX(s, x), y);
+		}
+		
+		// Stats
+		startX -= gp.tileSize / 2;
+		y = (int) (startY + gp.tileSize * 2.5);
+		for (int i = 0; i < 6; i++) {
+			int sY = y;
+			g2.setFont(g2.getFont().deriveFont(24F));
+			g2.setColor(Color.WHITE);
+			x = startX;
+			String type = Pokemon.getStatType(i);
+        	g2.drawString(type, x, y);
+        	
+        	g2.setFont(g2.getFont().deriveFont(16F));
+        	x += gp.tileSize * 0.75;
+        	int statWidth = 3 * gp.tileSize;
+        	int statHeight = gp.tileSize / 2;
+        	y -= gp.tileSize / 2 - 4;
+        	g2.setColor(Color.BLACK);
+        	g2.fillRect(x, y, statWidth, statHeight);
+        	g2.setColor(Color.WHITE);
+        	g2.fillRect(x + 2, y + 2, statWidth - 4, statHeight - 4);
+        	double bar = Math.min(p.getBaseStat(i) * 1.0 / 200, 1.0);
+        	g2.setColor(Pokemon.getColor(p.getBaseStat(i)));
+        	g2.fillRect(x + 2, y + 2, (int) ((statWidth - 4) * bar), statHeight - 4);
+        	x += 4;
+        	y += (gp.tileSize / 2) - 4;
+        	g2.setColor(Color.BLACK);
+        	g2.drawString(p.getBaseStat(i) + "", x, y);
+        	
+        	y = sY + gp.tileSize / 2;
+		}
+		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.setColor(Color.WHITE);
+		x = startX - 6;
+		y += gp.tileSize / 4;
+		g2.drawString("Total: " + p.getBST(), x, y);
+		
+		// Level up moves
+		g2.setFont(g2.getFont().deriveFont(20F));
+		y += gp.tileSize / 2;
+		int moveStartY = y;
+		g2.drawString("Level Up Moves: ", x, y);
+		y += 8;
+		int moveWidth = gp.tileSize * 4;
+		int moveHeight = gp.tileSize / 2;
+		int index = 0;
+		Move m = null;
+		for (Map.Entry<Move, Integer> entry : levelMap.entrySet()) {
+		    if (index >= levelDexNum && index < levelDexNum + 5) {
+		        if (index == levelDexNum && dexMode == 1) {
+		            g2.setColor(Color.RED);
+		            g2.drawRoundRect(x, y, moveWidth, moveHeight, 8, 8);
+		            m = entry.getKey();
+		        }
+		        g2.setColor(entry.getKey().mtype.getColor());
+		        g2.fillRoundRect(x, y, moveWidth, moveHeight, 8, 8);
+		        g2.setColor(Color.BLACK);
+		        g2.drawString(entry.getValue() + " " + entry.getKey().toString(), x + 8, y + 19);
+		        y += gp.tileSize * 0.6;
+		    }
+		    index++;
+		}
+		
+		// TM moves
+		x += gp.tileSize * 4.25;
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(20F));
+		y = moveStartY;
+		g2.drawString("TM/HM Moves: ", x, y);
+		y += 8;
+		
+		for (int i = tmDexNum; i < tmDexNum + 5; i++) {
+			if (i == tmDexNum && dexMode == 2) {
+	            g2.setColor(Color.RED);
+	            g2.drawRoundRect(x, y, moveWidth, moveHeight, 8, 8);
+	            m = tmList.get(i).getMove();
+	        }
+			if (i < tmList.size()) {
+				g2.setColor(tmList.get(i).getMove().mtype.getColor());
+		        g2.fillRoundRect(x, y, moveWidth, moveHeight, 8, 8);
+		        g2.setColor(Color.BLACK);
+		        g2.drawString(tmList.get(i).toString(), x + 8, y + 19);
+			}
+	        y += gp.tileSize * 0.6;
+		}
+		
+		int moveSumX = gp.tileSize * 6;
+		int moveSumY = gp.tileSize * 2;
+		if (dexMode > 0) drawMoveSummary(moveSumX, moveSumY, p, null, null, m);
 	}
 
 	private void drawBoxScreen() {
@@ -710,8 +1035,8 @@ public class UI extends AbstractUI{
 		if (currentTask == null) {
 			if (gp.player.p.bag.count[Item.RARE_CANDY.getID()] <= 0) {
 				gp.gameState = GamePanel.MENU_STATE;
-				gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
-				gp.ui.bagState = 0;
+				currentItems = gp.player.p.getItems(currentPocket);
+				bagState = 0;
 				return;
 			} else if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
@@ -902,7 +1227,7 @@ public class UI extends AbstractUI{
 			optionsTop(x, y);
 			break;
 		case 1:
-			gp.player.showDex();
+			drawPokedex();
 			break;
 		case 2:
 			showParty();
@@ -1230,7 +1555,7 @@ public class UI extends AbstractUI{
 					if (!gp.player.p.repel) {
 						useRepel();
 				    } else {
-				    	gp.ui.showMessage("It won't have any effect.");
+				    	showMessage("It won't have any effect.");
 				    }
 					bagState = 0;
 				} else if (currentItem == Item.CALCULATOR) {

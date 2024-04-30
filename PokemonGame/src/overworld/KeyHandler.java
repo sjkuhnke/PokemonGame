@@ -290,7 +290,7 @@ public class KeyHandler implements KeyListener {
 			if (gp.ui.subState == 0) {
 				gp.gameState = GamePanel.PLAY_STATE;
 			}
-			if (gp.ui.subState < 7 && gp.ui.bagState == 0) { // Menus for handling the 7 top menu options
+			if (gp.ui.subState > 1 && gp.ui.subState < 7 && gp.ui.bagState == 0) { // Menus for handling the 7 top menu options
 				gp.ui.subState = 0;
 				gp.ui.partySelectedNum = -1;
 				gp.ui.selectedBagNum = -1;
@@ -307,6 +307,8 @@ public class KeyHandler implements KeyListener {
 				} else if (code == KeyEvent.VK_D) {
 					dPressed = true;
 				}
+			} else if (gp.ui.subState == 1) { // Pokedex
+				sPressed = true;
 			} else if (gp.ui.bagState > 0) { // Bag option menu screen
 				gp.ui.bagState = 0;
 				gp.ui.commandNum = 0;
