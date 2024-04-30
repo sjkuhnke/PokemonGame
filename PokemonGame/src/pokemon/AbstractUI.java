@@ -41,6 +41,8 @@ public abstract class AbstractUI {
 	
 	public StringBuilder nickname = new StringBuilder();
 	public int nicknaming = -1;
+	
+	public BufferedImage ballIcon;
 
 	public abstract void showMessage(String message);
 
@@ -291,7 +293,7 @@ public abstract class AbstractUI {
 		y += gp.tileSize * 0.75;
 		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(20F));
-		g2.drawString(p.getFormattedID(), x, y);
+		g2.drawString(Pokemon.getFormattedID(p.id), x, y);
 		
 		// Name
 		x += gp.tileSize / 2;

@@ -1357,13 +1357,12 @@ public class Main {
 			StringBuilder header = new StringBuilder();
 			header.append("Num,Pokemon,Amt,%\n");
 			writer.write(header.toString());
-			Pokemon dummy = new Pokemon(1, 5, false, false);
 			for (int i = 1; i < occurences.length; i++) {
 				double ratio = occurences[i] * 100.0;
 				ratio /= totalPokemon;
 				StringBuilder stats = new StringBuilder();
 				stats.append(i);
-				stats.append("," + dummy.getName(i));
+				stats.append("," + Pokemon.getName(i));
 				stats.append("," + occurences[i]);
 				stats.append("," + String.format("%.2f", ratio) + "%");
 				stats.append("\n");
@@ -1867,10 +1866,9 @@ public class Main {
 				chances[index] += e.getEncounterChance();
 			}
 			
-			Pokemon test = new Pokemon(1, 5, false, false);
 			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
 				double average = amounts[i] == 0 ? 0.0 : chances[i] / amounts[i] * 100;
-				writer.write(i + "," + test.getName(i) + "," + amounts[i] + "," + String.format("%.2f", average) + "%\n");
+				writer.write(i + "," + Pokemon.getName(i) + "," + amounts[i] + "," + String.format("%.2f", average) + "%\n");
 			}
 			
 			writer.close();
