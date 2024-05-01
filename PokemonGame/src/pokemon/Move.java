@@ -306,6 +306,7 @@ public enum Move {
 	MOONBLAST(95,100,30,0,1,0,PType.LIGHT,"% chance to lower foe's Sp.Atk",false,5),
 	MOONLIGHT(0,1000,0,0,2,0,PType.LIGHT,"Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather",false,5),
 	MORNING_SUN(0,1000,0,0,2,0,PType.LIGHT,"Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather",false,5),
+	MORTAL_SPIN(30,100,100,0,0,0,PType.POISON,"% to poison foe, and frees user of being Spun, Leech Seed, and Hazards",true,15), // TODO
 	MUD_BOMB(65,85,30,0,1,0,PType.GROUND,"% to lower foe's Accuracy by 1",false,10),
 	MUD_SHOT(55,95,100,0,1,0,PType.GROUND,"% chance to lower foe's Speed by 1",false,15),
 	MUD_SPORT(0,1000,0,0,2,0,PType.GROUND,"Makes ELECTRIC moves deal 1/3 damage for 8 turns",false,15),
@@ -364,7 +365,7 @@ public enum Move {
 	QUIVER_DANCE(0,1000,0,0,2,0,PType.BUG,"Raises user's Sp.Atk, Sp.Def and Speed by 1 stage",false,10),
 	RAGE(-1,100,0,0,0,0,PType.NORMAL,"Power increases the more times this move is used in succession",true,20),
 	RAIN_DANCE(0,1000,0,0,2,0,PType.WATER,"Changes the weather to RAIN for 5 turns",false,5),
-	RAPID_SPIN(50,100,100,0,0,0,PType.NORMAL,"% to raise user's Speed by 1, and frees user of being Spun",true,35),
+	RAPID_SPIN(50,100,100,0,0,0,PType.NORMAL,"% to raise user's Speed by 1, and frees user of being Spun, Leech Seed, and Hazards",true,35),
 	RAZOR_LEAF(55,95,0,1,0,0,PType.GRASS,"Boosted Crit rate",false,25),
 	RAZOR_SHELL(75,95,50,0,0,0,PType.WATER,"% chance to lower foe's Defense by 1",true,10),
 	REBOOT(0,1000,0,0,2,0,PType.STEEL,"Clears user of any Status condition, and raises user's Speed by 1",false,10),

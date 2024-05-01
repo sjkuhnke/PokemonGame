@@ -14,6 +14,7 @@ public enum Ability {
 	COMPETITIVE("Boosts the Pokemon's Special Attack stat when its stats are lowered."),
 	COMPOUND_EYES("The Pokemon's accuracy is boosted."),
 	CONTRARY("Makes stat changes have an opposite effect."),
+	CORROSION("The Pokemon can poison the target even if it's a Steel or Poison type."), // TODO
 	DEFIANT("Boosts the Pokemon's Attack stat when its stats are lowered."),
 	DRIZZLE("The Pokemon makes it RAIN when it enters a battle."),
 	DRY_SKIN("Restores HP in RAIN or when hit by WATER moves, but reduces HP in SUN and is weaker to FIRE."),
@@ -101,6 +102,7 @@ public enum Ability {
 	TINTED_LENS("Powers up \"not very effective\" moves."),
 	TORRENT("Powers up WATER moves in a pinch."),
 	TOUGH_CLAWS("Powers up moves that make direct contact."),
+	TOXIC_DEBRIS("Puts toxic spikes on the opposing side when the hit by physical moves."), // TODO
 	TRACE("The Pokemon copies a foe's Ability."),
 	TYPE_MASTER("Grants STAB on all moves."),
 	UNAWARE("Ignores the opposing Pokemon's stat changes."),

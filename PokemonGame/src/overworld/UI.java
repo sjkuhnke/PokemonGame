@@ -17,8 +17,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import entity.Entity;
 import entity.PlayerCharacter;
@@ -577,7 +575,8 @@ public class UI extends AbstractUI{
 		}
 		
 		int mode = gp.player.p.pokedex[dexNum];
-		LinkedHashMap<Move, Integer> levelMap = new LinkedHashMap<>();
+		ArrayList<Move> levelMoveList = new ArrayList<>();
+		ArrayList<Integer> levelLevelList = new ArrayList<>();
 		ArrayList<Item> tmList = new ArrayList<>();
 		Pokemon test = new Pokemon(dexNum, 5, false, true);
 		if (mode == 2) {
@@ -585,7 +584,8 @@ public class UI extends AbstractUI{
 			    for (int i = 0; i < test.movebank.length; i++) {
 			        Node move = test.movebank[i];
 			        while (move != null) {
-			        	levelMap.put(move.data, i + 1);
+			        	levelMoveList.add(move.data);
+			        	levelLevelList.add(i + 1);
 			            move = move.next;
 			        }
 			    }
@@ -598,8 +598,7 @@ public class UI extends AbstractUI{
 		    	}
 			}
 		}
-		
-		drawDexSummary(test, mode, levelMap, tmList);
+		drawDexSummary(test, mode, levelMoveList, levelLevelList, tmList);
 		
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
@@ -628,7 +627,7 @@ public class UI extends AbstractUI{
 					tmDexNum = 0;
 				}
 			} else if (dexMode == 1) {
-				if (levelDexNum < levelMap.size() - 1) {
+				if (levelDexNum < levelMoveList.size() - 1) {
 					levelDexNum++;
 				}
 			} else if (dexMode == 2) {
@@ -683,7 +682,7 @@ public class UI extends AbstractUI{
 		drawToolTips(wText, null, "Back", null);
 	}
 
-	private void drawDexSummary(Pokemon p, int mode, LinkedHashMap<Move, Integer> levelMap, ArrayList<Item> tmList) {
+	private void drawDexSummary(Pokemon p, int mode, ArrayList<Move> levelMoveList, ArrayList<Integer> levelLevelList, ArrayList<Item> tmList) {
 		if (mode == 0) return;
 		int x = gp.tileSize * 7;
 		int y = gp.tileSize / 4;
@@ -796,22 +795,20 @@ public class UI extends AbstractUI{
 		y += 8;
 		int moveWidth = gp.tileSize * 4;
 		int moveHeight = gp.tileSize / 2;
-		int index = 0;
 		Move m = null;
-		for (Map.Entry<Move, Integer> entry : levelMap.entrySet()) {
-		    if (index >= levelDexNum && index < levelDexNum + 5) {
-		        if (index == levelDexNum && dexMode == 1) {
-		            g2.setColor(Color.RED);
-		            g2.drawRoundRect(x, y, moveWidth, moveHeight, 8, 8);
-		            m = entry.getKey();
-		        }
-		        g2.setColor(entry.getKey().mtype.getColor());
+		for (int i = levelDexNum; i < levelDexNum + 5; i++) {
+	        if (i == levelDexNum && dexMode == 1) {
+	            g2.setColor(Color.RED);
+	            g2.drawRoundRect(x, y, moveWidth, moveHeight, 8, 8);
+	            m = levelMoveList.get(i);
+	        }
+	        if (i < levelMoveList.size()) {
+	        	g2.setColor(levelMoveList.get(i).mtype.getColor());
 		        g2.fillRoundRect(x, y, moveWidth, moveHeight, 8, 8);
 		        g2.setColor(Color.BLACK);
-		        g2.drawString(entry.getValue() + " " + entry.getKey().toString(), x + 8, y + 19);
+		        g2.drawString(levelLevelList.get(i) + " " + levelMoveList.get(i).toString(), x + 8, y + 19);
 		        y += gp.tileSize * 0.6;
-		    }
-		    index++;
+	        }
 		}
 		
 		// TM moves

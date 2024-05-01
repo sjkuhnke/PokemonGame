@@ -1,7 +1,6 @@
 package pokemon;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -39,8 +38,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import overworld.GamePanel;
@@ -56,7 +53,7 @@ public class Pokemon implements Serializable {
 	
 	public static Field field;
 	public static GamePanel gp;
-	public static final int MAX_POKEMON = 240;
+	public static final int MAX_POKEMON = 242;
 	
 	// Database
 	private static String[] names = new String[MAX_POKEMON];
@@ -203,7 +200,7 @@ public class Pokemon implements Serializable {
 		id = i;
 		name = getName();
 		nickname = pokemon.nickname;
-		if (pokemon.nickname == pokemon.name) nickname = name;
+		if (pokemon.nickname.equals(pokemon.name)) nickname = name;
 		
 		baseStats = new int[6];
 		stats = new int[6];
@@ -746,7 +743,7 @@ public class Pokemon implements Serializable {
 		this.checkEvo(player);
 	}
 	
-	private int setExpMax() {
+	public int setExpMax() {
 		if (level >= 1 && level < 20) {
 			return level * 2;
 		} else if (level >= 20 && level < 30) {
@@ -1055,6 +1052,8 @@ public class Pokemon implements Serializable {
             result = new Pokemon(id + 1, this);
 		} else if (id == 239 && headbuttCrit >= 5) {
 		    result = new Pokemon(id + 1, this);
+		} else if (id == 241 && level >= 35) {
+            result = new Pokemon(id + 1, this);
 		}
 		
 		if (result != null) {
@@ -8577,6 +8576,45 @@ public class Pokemon implements Serializable {
             movebank[64].next = new Node(Move.ABYSSAL_CHOP);
             movebank[74] = new Node(Move.DRAGON_DANCE);
             break;
+     case 241:
+         movebank = new Node[45];
+         movebank[0] = new Node(Move.ROCK_THROW);
+         movebank[0].addToEnd(new Node(Move.HARDEN));
+         movebank[0].addToEnd(new Node(Move.SMACK_DOWN));
+         movebank[4] = new Node(Move.ACID_SPRAY);
+         movebank[9] = new Node(Move.ANCIENT_POWER);
+         movebank[14] = new Node(Move.ROCK_POLISH);
+         movebank[17] = new Node(Move.STEALTH_ROCK);
+         movebank[21] = new Node(Move.VENOSHOCK);
+         movebank[24] = new Node(Move.SANDSTORM);
+         movebank[27] = new Node(Move.SELF$DESTRUCT);
+         movebank[30] = new Node(Move.SPIKES);
+         movebank[34] = new Node(Move.SLUDGE);
+         movebank[38] = new Node(Move.POWER_GEM);
+         movebank[41] = new Node(Move.ACID_ARMOR);
+         movebank[44] = new Node(Move.SLUDGE_WAVE);
+         break;
+     case 242:
+    	 movebank = new Node[50];
+         movebank[0] = new Node(Move.SPIKY_SHIELD);
+         movebank[0].addToEnd(new Node(Move.TOXIC_SPIKES));
+         movebank[0].addToEnd(new Node(Move.ROCK_THROW));
+         movebank[0].addToEnd(new Node(Move.HARDEN));
+         movebank[0].addToEnd(new Node(Move.SMACK_DOWN));
+         movebank[4] = new Node(Move.ACID_SPRAY);
+         movebank[9] = new Node(Move.ANCIENT_POWER);
+         movebank[14] = new Node(Move.ROCK_POLISH);
+         movebank[17] = new Node(Move.STEALTH_ROCK);
+         movebank[21] = new Node(Move.VENOSHOCK);
+         movebank[24] = new Node(Move.SANDSTORM);
+         movebank[27] = new Node(Move.SELF$DESTRUCT);
+         movebank[30] = new Node(Move.SPIKES);
+         movebank[34] = new Node(Move.SLUDGE);
+         movebank[34].next = new Node(Move.MORTAL_SPIN);
+         movebank[38] = new Node(Move.POWER_GEM);
+         movebank[41] = new Node(Move.ACID_ARMOR);
+         movebank[44] = new Node(Move.TOXIC);
+         movebank[49] = new Node(Move.SLUDGE_WAVE);
 		}
 	}
 	
@@ -10048,20 +10086,6 @@ public class Pokemon implements Serializable {
 			natureString = ns;
 			break;
 		}
-			
-//		natureString += " (";
-//		int increasedStat, decreasedStat;
-//		increasedStat = decreasedStat = -1;
-//		for (int i = 0; i < nature.length; i++) {
-//			if (nature[i] == 1.1) increasedStat = i;
-//			if (nature[i] == 0.9) decreasedStat = i;
-//		}
-//		if (increasedStat != -1 || decreasedStat != -1) {
-//			natureString += "+" + getStatName(increasedStat) + ",-" + getStatName(decreasedStat);
-//		} else {
-//			natureString += "Neutral";
-//		}
-//		natureString += ")";
 		
 		return natureString;
 	}
@@ -10365,233 +10389,6 @@ public class Pokemon implements Serializable {
 		} else {
 			return "It looks really happy! It loves you a lot.";
 		}
-	}
-
-	public JPanel getDexSummary(int id, int pokedex) {
-	    JPanel dexPanel = new JPanel();
-	    dexPanel.setLayout(new BoxLayout(dexPanel, BoxLayout.Y_AXIS));
-	    dexPanel.setPreferredSize(new Dimension(500, 750));
-	    
-	    JLabel spriteLabel = new JLabel();
-	    ImageIcon spriteIcon = new ImageIcon(getSprite(id));
-	    spriteLabel.setIcon(spriteIcon);
-
-	    JLabel dexNo, nameLabel, abilityLabel, bst, levelUp, tmLearn;
-	    nameLabel = abilityLabel = bst = dexNo = levelUp = tmLearn = new JLabel("???");
-	    JProgressBar[] bars = new JProgressBar[6];
-	    JPanel barPanel = new JPanel(new GridLayout(6, 1));
-	    JLabel[] abilitiesDesc = new JLabel[4];
-	    JGradientButton type1B, type2B;
-	    JPanel movesPanel = new JPanel();
-	    JPanel learnPanel = new JPanel();
-	    type1B = new JGradientButton("");
-	    type2B = new JGradientButton("");
-	    if (this != null) {
-	        nameLabel = new JLabel(getName(id));
-	        nameLabel.setFont(new Font(nameLabel.getFont().getName(), Font.BOLD, 16));
-	        
-	        PType type1 = getType1(id);
-	        PType type2 = getType2(id);
-	        type1B.setText(type1.toString());
-	        type1B.setBackground(type1.getColor());
-	        if (type2 != null) {
-	            type2B.setText(type2.toString());
-	            type2B.setBackground(type2.getColor());
-	        }
-	        
-	        
-	        Pokemon test = new Pokemon(id, 1, false, false);
-	        test.baseStats = test.getBaseStats();
-	        
-	        for (int i = 0; i < 6; i++) {
-	        	String type = getStatType(i);
-	        	
-	        	bars[i] = new JProgressBar();
-	        	bars[i].setMaximum(200);
-	        	bars[i].setValue(test.getBaseStat(i));
-	        	bars[i].setString(type + ": " + test.getBaseStat(i) + "");
-	        	bars[i].setUI(new CustomProgressBarUI(Color.BLACK));
-	        	bars[i].setStringPainted(true);
-	        	bars[i].setForeground(getColor(test.getBaseStat(i)));
-	        	
-	        	barPanel.add(bars[i]);
-	        	
-	        }
-	        
-	        bst = new JLabel("TOTAL : " + test.getBST());
-        	bst.setFont(new Font(bst.getFont().getName(), Font.BOLD, 14));
-	        
-	        dexNo = new JLabel("No. " + id);
-	        dexNo.setFont(new Font(dexNo.getFont().getName(), Font.BOLD, 18));
-	        
-	        abilityLabel = new JLabel("Abilities:");
-	        abilityLabel.setFont(new Font(abilityLabel.getFont().getName(), Font.ITALIC, 18));
-
-			for (int i = 0; i < 4; i++) {
-				if (i % 2 == 1) {
-					JLabel abDesc = new JLabel(test.ability.desc);
-					abilitiesDesc[i] = abDesc;
-				} else {
-					test.setAbility(i / 2);
-					JLabel abLab = new JLabel(test.ability.toString());
-					abLab.setFont(new Font(abLab.getFont().getName(), Font.BOLD, 14));
-					abilitiesDesc[i] = abLab;
-				}
-			}
-			
-			levelUp = new JLabel("Level Up Moves :");
-			levelUp.setFont(new Font(levelUp.getFont().getName(), Font.PLAIN, 13));
-			
-			test.setMoveBank();
-			ArrayList<Move> moves = new ArrayList<>();
-			ArrayList<Integer> moveLevels = new ArrayList<>();
-			if (test.movebank != null) {
-	            for (int i = 0; i < test.movebank.length; i++) {
-            		Node move = test.movebank[i];
-            		while (move != null) {
-            			moves.add(move.data);
-            			moveLevels.add(i + 1);
-            			move = move.next;
-            		}
-	            }
-	    	}
-			
-			
-		    movesPanel.setLayout(new GridLayout(moves.size(), 1));
-
-		    for (int i = 0; i < moves.size(); i++) {
-		        Move move = moves.get(i);
-		        int level = moveLevels.get(i); // Get the level for the corresponding move
-
-		        JButton moveButton = new JGradientButton("");
-		        if (move != null) {
-		            String levelText = String.format("%3d ", level); // Format the level text with padding
-		            moveButton.setText(levelText + move.toString());
-		            moveButton.setHorizontalAlignment(SwingConstants.LEFT);
-		            moveButton.setBackground(move.mtype.getColor());
-		            moveButton.addActionListener(f -> {
-		                JOptionPane.showMessageDialog(null, move.getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
-		            });
-		        }
-		        movesPanel.add(moveButton);
-		    }
-		    
-		    tmLearn = new JLabel("TM/HM Moves :");
-		    tmLearn.setFont(new Font(tmLearn.getFont().getName(), Font.PLAIN, 13));
-		    
-		    int length = 0;
-		    for (int i = 93; i < 200; i++) {
-		    	Item testItem = Item.getItem(i);
-		    	if (testItem.getLearned(test)) {
-		    		length++;
-		    	}
-		    }
-		    learnPanel.setLayout(new GridLayout(length, 1));
-		    
-			for (int i = 93; i < 200; i++) {
-				Item testItem = Item.getItem(i);
-				JButton moveButton = new JGradientButton("");
-				if (testItem.getLearned(test)) {
-					moveButton.setText(testItem.toString());
-					moveButton.setHorizontalAlignment(SwingConstants.LEFT);
-					moveButton.setBackground(testItem.getColor());
-					moveButton.addActionListener(f -> {
-		                JOptionPane.showMessageDialog(null, testItem.getMove().getMoveSummary(), "Move Description", JOptionPane.INFORMATION_MESSAGE);
-		            });
-					learnPanel.add(moveButton);
-				}
-			}
-	    }
-	    
-	    if (pokedex == 0) {
-	    	nameLabel.setText("???");
-	    	spriteLabel.setIcon(null);
-	    	type1B.setText("???");
-	    	type1B.setBackground(Color.WHITE);
-	    	type2B.setText("???");
-	    	type2B.setBackground(Color.WHITE);
-	    }
-	    
-	    JPanel dexNoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    dexNoPanel.add(dexNo);
-	    dexPanel.add(dexNoPanel);
-
-	    JPanel nameLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    nameLabelPanel.add(nameLabel);
-	    dexPanel.add(nameLabelPanel);
-	    
-	    JPanel spriteLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    nameLabelPanel.add(spriteLabel);
-	    dexPanel.add(spriteLabelPanel);
-
-	    JPanel typesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    typesPanel.add(type1B);
-	    typesPanel.add(type2B);
-	    dexPanel.add(typesPanel);
-
-	    JPanel abilityLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    abilityLabelPanel.add(abilityLabel);
-	    dexPanel.add(abilityLabelPanel);
-	    for (JLabel j : abilitiesDesc) {
-	    	JPanel abilitiesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    	if (pokedex < 2) {
-	    		j.setText("???");
-	    		if (j.getFont().getSize() != 14) abilitiesPanel.add(j);
-	    	} else {
-	    		abilitiesPanel.add(j);
-	    	}
-	    	dexPanel.add(abilitiesPanel);
-	    }
-	    
-	    if (pokedex == 2) {
-	    	dexPanel.add(barPanel);
-	    	JPanel bstPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		    bstPanel.add(bst);
-		    dexPanel.add(bstPanel);
-		    
-		    JPanel movesPanelMaster = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		    JPanel moves1Panel = new JPanel();
-		    moves1Panel.setLayout(new BoxLayout(moves1Panel, BoxLayout.Y_AXIS));
-		    moves1Panel.setPreferredSize(new Dimension(240, 225));
-		    JPanel moves2Panel = new JPanel();
-		    moves2Panel.setLayout(new BoxLayout(moves2Panel, BoxLayout.Y_AXIS));
-		    moves2Panel.setPreferredSize(new Dimension(240, 225));
-		    
-	    	JPanel levelUpPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    	levelUpPanel.add(levelUp);
-		    moves1Panel.add(levelUpPanel);
-		    
-		    // Wrap the movesPanel in a JScrollPane
-		    JScrollPane movesScrollPane = new JScrollPane(movesPanel);
-
-		    // Set preferred size of the JScrollPane to make it scrollable
-		    movesScrollPane.setPreferredSize(new Dimension(100, 200));
-		    movesScrollPane.getVerticalScrollBar().setUnitIncrement(12); // Adjust the value as needed
-
-		    moves1Panel.add(movesScrollPane);
-		    
-		    JPanel tmLearnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    	tmLearnPanel.add(tmLearn);
-		    moves2Panel.add(tmLearnPanel);
-		    
-		    JScrollPane learnScrollPane = new JScrollPane(learnPanel);
-		    
-		    learnScrollPane.setPreferredSize(new Dimension(100, 200));
-		    learnScrollPane.getVerticalScrollBar().setUnitIncrement(12);
-		    
-		    moves2Panel.add(learnScrollPane);
-		    
-		    movesPanelMaster.add(moves1Panel);
-		    movesPanelMaster.add(moves2Panel);
-		    
-		    dexPanel.add(movesPanelMaster);
-	    } else {
-	    	dexPanel.setPreferredSize(null);
-	    }
-
-	    dexPanel.add(Box.createHorizontalGlue());
-
-	    return dexPanel;
 	}
 	
 	public static Color getColor(int value) {
