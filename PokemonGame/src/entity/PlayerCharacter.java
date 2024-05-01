@@ -513,18 +513,8 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "Obtained HM04 Surf!");
 			p.bag.add(Item.HM04);
 		}
-		if (gp.currentMap == 46) { // TODO
-			String message = "";
-			for (Pokemon p : p.team) {
-				if (p != null) {
-	    			message += p.nickname;
-	    			if (p.nickname != p.name) message += (" (" + p.name + ")");
-	    			message += " : ";
-	    			message += p.determineHPType();
-	    			message += "\n";
-				}
-			}
-			JOptionPane.showMessageDialog(null, message, "Party Hidden Power Types", JOptionPane.PLAIN_MESSAGE);
+		if (gp.currentMap == 46) {
+			Pokemon.addTask(Task.HP, "Check your team's Hidden Power types here!");
 		}
 		if (gp.currentMap == 48 && !p.flags[11]) {
 			Random dog = new Random();
@@ -676,56 +666,9 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 			Pokemon.addTask(Task.GIFT, "", result);
 			
-		} if (gp.currentMap == 118) { // TODO
+		} if (gp.currentMap == 118) {
 			Pokemon.addTask(Task.TEXT, "Do you have any fossils for me to resurrect?");
 			Pokemon.addTask(Task.FOSSIL, "Do you have any fossils for me to resurrect?");
-			JPanel options = new JPanel();
-			boolean valid = false;
-			if (p.bag.contains(Item.THUNDER_SCALES_FOSSIL)) {
-				JGradientButton button = new JGradientButton(Item.THUNDER_SCALES_FOSSIL.toString());
-				button.setBackground(Item.THUNDER_SCALES_FOSSIL.getColor());
-				button.addActionListener(e -> {
-					int answer = JOptionPane.showOptionDialog(null,
-							"Would you like to revive a Shockfang?",
-				            "Revive Fossil?",
-				            JOptionPane.YES_NO_OPTION,
-				            JOptionPane.QUESTION_MESSAGE,
-				            null, null, null);
-					if (answer == JOptionPane.YES_OPTION) {
-						p.catchPokemon(new Pokemon(211, 20, true, false));
-						p.bag.remove(Item.THUNDER_SCALES_FOSSIL);
-						SwingUtilities.getWindowAncestor(options).dispose();
-					}
-				});
-				valid = true;
-				options.add(button);
-			}
-			
-			if (p.bag.contains(Item.DUSK_SCALES_FOSSIL)) {
-				JGradientButton button = new JGradientButton(Item.DUSK_SCALES_FOSSIL.toString());
-				button.setBackground(Item.DUSK_SCALES_FOSSIL.getColor());
-				button.addActionListener(e -> {
-					int answer = JOptionPane.showOptionDialog(null,
-							"Would you like to revive a Nightrex?",
-				            "Revive Fossil?",
-				            JOptionPane.YES_NO_OPTION,
-				            JOptionPane.QUESTION_MESSAGE,
-				            null, null, null);
-					if (answer == JOptionPane.YES_OPTION) {
-						p.catchPokemon(new Pokemon(213, 20, true, false));
-						p.bag.remove(Item.DUSK_SCALES_FOSSIL);
-						SwingUtilities.getWindowAncestor(options).dispose();
-					}
-				});
-				valid = true;
-				options.add(button);
-			}
-			
-			if (valid) {
-				JOptionPane.showMessageDialog(null, options, "Revive a fossil?", JOptionPane.QUESTION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(null, "You don't have any fossils to revive!");
-			}
 		} if (gp.currentMap == 127) {
 			int answer = JOptionPane.showOptionDialog(null,
 					"Would you like to play Blackjack?\n(Warning: Will Auto-Save)",
@@ -1058,61 +1001,6 @@ public class PlayerCharacter extends Entity {
 
 	private void showPrizeMenu(JPanel panel, String title) {
 		JOptionPane.showMessageDialog(null, panel, title, JOptionPane.QUESTION_MESSAGE);
-	}
-
-	public void showDex() {
-		gp.removePanel();
-	    JPanel dexPanel = new JPanel();
-	    dexPanel.setLayout(new GridLayout(0, 5));
-
-	    for (int j = 1; j < p.getDexShowing(); j++) {
-	    	final int id = j;
-	    	JButton mon = new JGradientButton("");
-	        
-	        if (p.pokedex[j] == 0) {
-	        	mon.setText("???");
-	        } else if (p.pokedex[j] == 1) {
-		        ImageIcon sprite = new ImageIcon(p.getCurrent().getSprite(j));
-		        mon.setIcon(sprite);
-		        mon.setBackground(Color.yellow);
-	        } else {
-		        ImageIcon sprite = new ImageIcon(p.getCurrent().getSprite(j));
-		        mon.setIcon(sprite);
-		        mon.setBackground(Color.green);
-	        }
-	        
-	        mon.addActionListener(e -> {
-	            JPanel teamMemberPanel = p.getCurrent().getDexSummary(id, p.pokedex[id]);
-	            JOptionPane.showMessageDialog(null, teamMemberPanel, "Pokemon details", JOptionPane.PLAIN_MESSAGE);
-	        });
-
-	        dexPanel.add(mon);
-	    }
-	    
-	    JButton closeButton = new JButton("Close");
-	    closeButton.setBounds(640, 30, 100, 65);
-	    closeButton.addActionListener(e -> {
-	    	gp.removePanel();
-	    	gp.ui.subState = 0;
-	    	gp.addGamePanel();
-	    });
-
-	    JScrollPane dexScrollPane = new JScrollPane(dexPanel);
-	    dexScrollPane.setPreferredSize(new Dimension(598, gp.screenHeight - 20)); // Set the preferred size of the scroll pane
-	    
-	    // Set the vertical and horizontal unit increments to control the scrolling speed
-	    dexScrollPane.getVerticalScrollBar().setUnitIncrement(16); // Adjust the value as needed
-	    
-	    JPanel container = new JPanel();
-	    container.add(dexScrollPane);
-	    container.setBounds(10, 10, 598, gp.screenHeight - 20);
-	    
-	    JPanel panel = new JPanel();
-	    panel.setLayout(null);
-	    panel.add(container);
-	    panel.add(closeButton);
-	    
-	    gp.addPanel(panel, true);
 	}
 	
 	private void interactCutTree(int i) {

@@ -602,6 +602,7 @@ public class KeyHandler implements KeyListener {
 		wPressed = false;
 		dPressed = false;
 		aPressed = false;
+		ctrlPressed = false;
 	}
 
 }

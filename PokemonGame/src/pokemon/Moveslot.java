@@ -34,7 +34,7 @@ public class Moveslot implements Serializable {
 		if (ratio <= 0.25) {
 			return new Color(134, 38, 0);
 		} else if (ratio <= 0.5) {
-			return new Color(100, 96, 1);
+			return new Color(71, 69, 4);
 		} else {
 			return Color.black;
 		}

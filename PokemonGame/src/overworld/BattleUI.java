@@ -234,6 +234,12 @@ public class BattleUI extends AbstractUI {
 	}
 
 	private void drawAbility() {
+		if (currentTask == null) {
+			abilityCounter = 0;
+			currentAbility = null;
+			return;
+		}
+		
 		if (currentTask.type == Task.ABILITY) abilityCounter++;
 		
 		int x = gp.screenWidth - (4 * gp.tileSize);
