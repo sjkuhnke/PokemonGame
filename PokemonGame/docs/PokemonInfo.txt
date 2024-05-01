@@ -803,10 +803,10 @@ Level Up:
 3 - Leer
 5 - Absorb
 8 - Headbutt
-10 - Root Kick
+10 - Rock Throw
 13 - Leaf Tornado
 16 - Magical Leaf
-18 - Rock Throw
+18 - Root Kick
 21 - Ingrain
 24 - Rock Tomb
 28 - Mach Punch

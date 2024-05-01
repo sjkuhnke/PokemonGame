@@ -72,7 +72,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 10;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 6;
+	public static final int VERSION = 7;
 	
 	public Player(GamePanel gp) {
 		super(true);
@@ -298,6 +298,14 @@ public class Player extends Trainer implements Serializable {
 		trainersBeat = new boolean[Main.trainers.length];
 		for (int i = 0; i < temp.length; i++) {
 			trainersBeat[i] = temp[i];
+		}
+	}
+	
+	private void updatePokedex() {
+		int[] temp = pokedex.clone();
+		pokedex = new int[Pokemon.MAX_POKEMON + 1];
+		for (int i = 0; i < temp.length; i++) {
+			pokedex[i] = temp[i];
 		}
 	}
 
@@ -689,7 +697,7 @@ public class Player extends Trainer implements Serializable {
 	        			p.currentHP = p.getStat(0);
 	        			if (item == Item.FULL_RESTORE) p.status = Status.HEALTHY;
 	        		}
-	        		gp.ui.showMessage(p.nickname + " was healed by " + difference + " HP");
+	        		gp.ui.showMessage(p.nickname + " was healed by " + difference + " HP!");
 		        	p.verifyHP();
 	        	}
 				break;
@@ -1050,12 +1058,12 @@ public class Player extends Trainer implements Serializable {
 		updateTrainers();
 		updateItems(gp.obj.length, gp.obj[1].length);
 		updateFlags();
+		updatePokedex();
 		for (Pokemon p : getAllPokemon()) {
 			if (p != null) {
 				p.update();
 			}
 		}
-		if (gauntletBox == null) gauntletBox = new Pokemon[GAUNTLET_BOX_SIZE];
 		version = VERSION;
 	}
 	

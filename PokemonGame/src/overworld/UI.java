@@ -27,6 +27,7 @@ import pokemon.Bag;
 import pokemon.Item;
 import pokemon.Move;
 import pokemon.Moveslot;
+import pokemon.PType;
 import pokemon.Player;
 import pokemon.Pokemon;
 import pokemon.Pokemon.Node;
@@ -245,7 +246,163 @@ public class UI extends AbstractUI{
 			drawMoveReminder(currentTask.p);
 			if (currentTask != null) currentDialogue = currentTask.message;
 			break;
+		case Task.HP:
+			currentDialogue = currentTask.message;
+			drawDialogueScreen(true);
+			drawHiddenPowerScreen(gp.player.p.team);
+			break;
+		case Task.FOSSIL:
+			currentDialogue = currentTask.message;
+			drawDialogueScreen(true);
+			drawFossilScreen(gp.player.p.bag);
+			break;
 		}
+	}
+
+	private void drawFossilScreen(Bag bag) {
+		int x = gp.tileSize * 2;
+		int y = (int) (gp.tileSize * 4.5);
+		int width = gp.tileSize * 12;
+		int height = gp.tileSize * 5;
+		
+		drawSubWindow(x, y, width, height);
+		
+		boolean hasTSF = bag.contains(Item.THUNDER_SCALES_FOSSIL);
+		boolean hasDSF = bag.contains(Item.DUSK_SCALES_FOSSIL);
+		
+		x += gp.tileSize;
+		y += gp.tileSize * 1.5;
+		
+		int buttonWidth = gp.tileSize * 5;
+		int buttonHeight = gp.tileSize * 2;
+		
+		Item item = Item.THUNDER_SCALES_FOSSIL;
+		
+		Color color = hasTSF ? item.getColor() : Color.gray;
+		g2.setColor(color);
+		g2.fillRoundRect(x, y, buttonWidth, buttonHeight, 10, 10);
+		
+		if (commandNum == 0) {
+			g2.setColor(Color.RED);
+			g2.drawRoundRect(x, y, buttonWidth, buttonHeight, 10, 10);
+		}
+		
+		int startY = y;
+		
+		y += gp.tileSize * 0.75;
+		
+		g2.setColor(Color.WHITE);
+		String text = item.toString();
+		g2.drawString(text, getCenterAlignedTextX(text, x + buttonWidth / 2), y);
+		
+		y += gp.tileSize * 0.75;
+		String amt = "x" + bag.count[item.getID()];
+		g2.drawString(amt, getCenterAlignedTextX(amt, x + buttonWidth / 2), y);
+		
+		x += buttonWidth;
+		x += gp.tileSize / 2;
+		
+		item = Item.DUSK_SCALES_FOSSIL;
+		y = startY;
+		
+		color = hasDSF ? item.getColor() : Color.gray;
+		g2.setColor(color);
+		g2.fillRoundRect(x, y, buttonWidth, buttonHeight, 10, 10);
+		
+		if (commandNum == 1) {
+			g2.setColor(Color.RED);
+			g2.drawRoundRect(x, y, buttonWidth, buttonHeight, 10, 10);
+		}
+		
+		y += gp.tileSize * 0.75;
+		
+		g2.setColor(Color.WHITE);
+		text = item.toString();
+		g2.drawString(text, getCenterAlignedTextX(text, x + buttonWidth / 2), y);
+		
+		y += gp.tileSize * 0.75;
+		amt = "x" + bag.count[item.getID()];
+		g2.drawString(amt, getCenterAlignedTextX(amt, x + buttonWidth / 2), y);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (commandNum == 0) {
+				if (hasTSF) {
+					currentTask = null;
+					Pokemon.addTask(Task.TEXT, "Okay! I'll go revive this ancient Pokemon!");
+					Pokemon.addTask(Task.GIFT, "", new Pokemon(211, 20, true, false));
+					bag.remove(Item.THUNDER_SCALES_FOSSIL);
+					commandNum = 0;
+				} else {
+					Pokemon.addTask(Task.TEXT, "You don't have any Thunder Scales Fossils for me to revive!");
+					Pokemon.addTask(Task.FOSSIL, currentTask.message);
+					currentTask = null;
+				}
+			} else if (commandNum == 1) {
+				if (hasDSF) {
+					currentTask = null;
+					Pokemon.addTask(Task.TEXT, "Okay! I'll go revive this ancient Pokemon!");
+					Pokemon.addTask(Task.GIFT, "", new Pokemon(213, 20, true, false));
+					bag.remove(Item.DUSK_SCALES_FOSSIL);
+					commandNum = 0;
+				} else {
+					Pokemon.addTask(Task.TEXT, "You don't have any Dusk Scales Fossils for me to revive!");
+					Pokemon.addTask(Task.FOSSIL, currentTask.message);
+					currentTask = null;
+				}
+			}
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			commandNum = 0;
+			currentTask = null;
+		}
+		
+		if (gp.keyH.leftPressed || gp.keyH.rightPressed) {
+			gp.keyH.leftPressed = false;
+			gp.keyH.rightPressed = false;
+			commandNum = 1 - commandNum;
+		}
+	}
+
+	private void drawHiddenPowerScreen(Pokemon[] team) {
+		int x = gp.tileSize * 4;
+		int y = (int) (gp.tileSize * 4.5);
+		int width = gp.tileSize * 8;
+		int height = gp.tileSize * 5;
+		
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize * 0.75 + 4;
+		
+		int textHeight = (int) (gp.tileSize * 0.75);
+		
+		for (Pokemon p : team) {
+			if (p != null) {
+				String message = "";
+    			message += p.nickname;
+    			if (!p.nickname.equals(p.name)) message += (" (" + p.name + ")");
+    			message += " : ";
+    			PType type = p.determineHPType();
+    			message += type;
+    			
+    			g2.drawString(message, x, y);
+    			g2.drawImage(type.getImage(), (int) (x + gp.tileSize * 6.5), y - gp.tileSize / 2 + 4, null);
+    			
+    			y += textHeight;
+			}
+		}		
+		
+		if (gp.keyH.wPressed || gp.keyH.sPressed) {
+			gp.keyH.wPressed = false;
+			gp.keyH.sPressed = false;
+			currentTask = null;
+		}
+		
+		drawToolTips("OK", null, "OK", null);
+		
 	}
 
 	private void drawMoveReminder(Pokemon p) {
@@ -487,12 +644,12 @@ public class UI extends AbstractUI{
 		}
 		if (gp.keyH.leftPressed || gp.keyH.sPressed) {
 			gp.keyH.leftPressed = false;
-			gp.keyH.sPressed = false;
 			if (dexMode > 0) {
 				dexMode--;
-			} else {
+			} else if (gp.keyH.sPressed) {
 				subState = 0;
 			}
+			gp.keyH.sPressed = false;
 		}
 		
 		int infoX = 0;
@@ -784,6 +941,7 @@ public class UI extends AbstractUI{
 					if (!gp.keyH.ctrlPressed) {
 						showBoxSummary = true;
 					} else {
+						gp.keyH.ctrlPressed = false;
 						release = true;
 					}
 				}
@@ -1469,7 +1627,7 @@ public class UI extends AbstractUI{
 		
 		x += gp.tileSize;
 		y += gp.tileSize / 2;
-		for (int i = bagNum; i < bagNum + 9; i++) { // TODO
+		for (int i = bagNum; i < bagNum + 9; i++) {
 			g2.setColor(Color.WHITE);
 			if (i == bagNum) {
 				g2.drawString(">", (x - gp.tileSize / 2) - 2, y + gp.tileSize / 2);
