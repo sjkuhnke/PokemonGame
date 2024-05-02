@@ -698,7 +698,7 @@ public class Main {
 				new Trainer("BN", new Pokemon[]{new Pokemon(148, 47, false, true), new Pokemon(149, 45, false, true), new Pokemon(215, 47, false, true), new Pokemon(216, 45, false, true)}, new Item[]{Item.CHOICE_SPECS, Item.CHOICE_BAND, Item.EVIOLITE, Item.POWER_HERB}, 100),
 				new Trainer("BO", new Pokemon[]{new Pokemon(12, 48, false, true)}, new Item[]{Item.BRIGHT_POWDER}, 100),
 				new Trainer("BP", new Pokemon[]{new Pokemon(74, 46, false, true), new Pokemon(34, 46, false, true)}, new Item[]{Item.CLEAR_AMULET, Item.COBA_BERRY}, 100),
-				new Trainer("BQ", new Pokemon[]{new Pokemon(58, 46, false, true), new Pokemon(77, 46, false, true), new Pokemon(88, 47, false, true), new Pokemon(140, 45, false, true), new Pokemon(145, 46, false, true)}, new Item[]{Item.FLAME_ORB, Item.CHILAN_BERRY, Item.MUSCLE_BAND, Item.PETAYA_BERRY, Item.ASSAULT_VEST}, 100), // 170
+				new Trainer("BQ", new Pokemon[]{new Pokemon(58, 46, false, true), new Pokemon(77, 46, false, true), new Pokemon(88, 47, false, true), new Pokemon(140, 45, false, true), new Pokemon(145, 46, false, true)}, new Item[]{Item.CHOICE_SCARF, Item.CHILAN_BERRY, Item.MUSCLE_BAND, Item.PETAYA_BERRY, Item.ASSAULT_VEST}, 100), // 170
 				new Trainer("BR", new Pokemon[]{new Pokemon(165, 46, false, true), new Pokemon(225, 47, false, true), new Pokemon(67, 48, false, true)}, new Item[]{Item.BLACK_GLASSES, Item.ROCKY_HELMET, Item.LEFTOVERS}, 100),
 				new Trainer("BS1", new Pokemon[]{new Pokemon(56, 47, false, true), new Pokemon(50, 46, false, true)}, new Item[]{Item.FOCUS_SASH, Item.COVERT_CLOAK}, 100),
 				new Trainer("BS2", new Pokemon[]{new Pokemon(93, 47, false, true), new Pokemon(51, 46, false, true)}, new Item[]{Item.ASSAULT_VEST, Item.CUSTAP_BERRY}, 100),
