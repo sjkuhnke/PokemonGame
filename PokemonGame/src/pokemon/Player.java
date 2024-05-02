@@ -72,7 +72,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 10;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 7;
+	public static final int VERSION = 8;
 	
 	public Player(GamePanel gp) {
 		super(true);

@@ -54,8 +54,8 @@
 |Cairnasaur   |ROCK    |PSYCHIC |PSYCHIC_SURGE     |REGENERATOR       |[99, 120, 80, 80, 76, 80]     |252.9 |30 |
 |Pebblepup    |ROCK    |null    |INTIMIDATE        |TECHNICIAN        |[55, 90, 60, 45, 50, 80]      |40.6  |100|
 |Boulderoar   |ROCK    |DARK    |INTIMIDATE        |TECHNICIAN        |[75, 111, 75, 90, 64, 85]     |190.0 |35 |
-|Fightorex    |FIGHTING|GROUND  |GUTS              |NO_GUARD          |[52, 72, 69, 77, 56, 67]      |62.5  |65 |
-|Raptorex     |FIGHTING|FLYING  |GUTS              |NO_GUARD          |[66, 74, 85, 106, 95, 97]     |190.3 |45 |
+|Fightorex    |FIGHTING|GROUND  |NO_GUARD          |GUTS              |[52, 72, 69, 77, 56, 67]      |62.5  |65 |
+|Raptorex     |FIGHTING|FLYING  |NO_GUARD          |GUTS              |[66, 74, 85, 106, 95, 97]     |190.3 |45 |
 |Kleinowl     |ICE     |PSYCHIC |SNOW_CLOAK        |MOUTHWATER        |[60, 15, 40, 80, 73, 55]      |4.5   |50 |
 |Hootowl      |ICE     |PSYCHIC |SNOW_CLOAK        |ICE_BODY          |[85, 30, 65, 120, 120, 75]    |89.5  |45 |
 |Dualmoose    |ICE     |MAGIC   |SNOW_CLOAK        |SPARKLY_SURGE     |[90, 64, 67, 85, 71, 58]      |100.0 |35 |

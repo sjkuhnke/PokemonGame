@@ -1249,7 +1249,7 @@ public class BattleUI extends AbstractUI {
         	y += gp.tileSize / 3;
         }
         
-        x = foeX + gp.tileSize * 3;
+        x = foeX + gp.tileSize * 2;
         y = startY;
         addVStatus = foe.getStatusLabels();
         for (String s : addVStatus) {
