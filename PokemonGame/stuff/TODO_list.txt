@@ -1,0 +1,27 @@
+TODO
+Movesets:
+Legendaries (TMs)
+
+Polishing stuff
+Make whirlpool spin (jk fuck that)
+Add water trainer texture
+Make wild pokemon sometimes hold items (for balancing, can't covet bc it'll clear)
+Lava Surf sprite tinted red, surf one tinted blue
+Back side cave tiles, for Mindagan Cavern outside and Gelb Forest
+Add PP to move info doc
+
+Quality of Life
+Add exp trainer in Schrice City
+Add a nuzlocke check box when creating a new game
+Ctrl + A = Calc in overworld?
+
+Implementation/Bug Fixes
+Finish TMs (legendaries only)
+Add more sashes to Gym 5/6 split
+Test if Assault Vest in showdown actually blocks the move mid turn (i.e. getting Tricked/Encored)
+Encounters on R43 E over vine cross should be same as R43 W
+Swap in text say "forced out"/"forced in" on random switch ins (Whirlwind etc)
+
+Ideas
+Make Dark resist Magic and Fighting no longer resist magic? (Would also make Galactic resist Dark again)
+Make Bipedice Ice/Ground (not Ground/Ice) and redo moveset
