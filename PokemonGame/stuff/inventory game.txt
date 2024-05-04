@@ -1,0 +1,183 @@
+Flamehox
+Consodust
+
+Diggie*
+Tiowoo*
+Flameruff*
+Sparkitten*
+Kleinowl*
+Dualmoose*
+Grondor*
+Sparkdust*
+Dragee*
+Blobmo*
+Tinkie*
+Rockmite*
+
+HammyBoy
+Magmaclang (1%)
+Fireshard
+Magwoo/Lafloo
+Sparkitten
+Conkeldurr
+Houndoom
+Barkflare
+Splame
+Wattwo
+Superchargo
+
+Mt.St. Joseph
+Fireshard
+Magwoo/Lafloo
+Fireblion
+Flamebless
+Houndoom
+Pyrator
+Pyrator-S
+
+
+Route 39
+Spacebear
+Shawar?
+Clefairy
+Draga
+Nebulimb
+Consodust
+Rockmite
+
+Game2.72: Encounters and TN base stuff done 3/27
+Game2.721: Items for Mt Splinkty done 3/29
+Game2.725: Ghostly woods stuff done 4/2
+Game2.73: Iron Town made 4/7
+Game2.74: Outer space done and functional 4/11
+Game2.75: Trainers for 8th gym split all done up to gym leader 4/14
+Game2.76/2.77: Encounters and items done for 8th gym split 4/17
+Game2.8: Balancing done up through 8th gym 4/28
+Game2.815: Mindagan cavern done and can catch Soarwhell 5/3
+Game2.82: Lava items and encounters are all done everywhere where you can reach them 5/10
+Game2.83: Camden and Turner are placed and flags are added 5/14
+Game2.84: Deep chasm maps and warps are done 5/20
+Game2.85: Abandoned path and abandoned tower maps and warps are done 5/31
+Game2.86: Encounters and items are added to 2 legendary spots 6/5
+Game2.87: Checkpoint charlie and remaining trainers up to the league are done 6/9
+Game2.88: Elite four maps are added and warps are working 6/14
+Game2.89: Trainers and teams are added 6/21
+Game2.9: League is beatable 7/1
+
+
+Ice Beam (Deep Chasm)
+Iron Head (Iron Town Area)
+Magic Tomb 7
+Flamethrower (Mt. St. Joseph Peak)
+Star Storm 6
+Galaxy Blast 8
+
+HammyBoy (0)
+Bouncerog (2)
+Fireblion (1)
+Shockbranch (0)
+Zurrclu (2)
+Draga (0)
+Blobmo
+Nebulimb
+Rockmite
+Poof-E
+Droid-E
+Flamehox-E
+Blastflames-E
+Boulder-E
+Shockfang
+Electrocobra
+Nightrex
+Durfish-S
+
+Codes:
+RAR3: sets Rare Candy count to 999
+M1X3R: toggles randomizer mode
+BALLZ: sets 25 count of Pokeball, Great Ball and Ultra Ball
+GASTLY: toggles collision
+R: randomizes movebanks for party
+LIGMA: heals team
+KANY3: sets money to 1,000,000
+Ben: catches lv 5 Scraggy
+anyi <id> <amt>: gives <id> item, <amt> amount
+Shae <id> <level>: catches <id> pokemon, <level> level
+ben: shows party and each button when clicked shows how many headbutt crits they've hit
+UPDATE: increases trainersBeat, itemsCollected and flags size to account for new trainers items and flags,
+and sets updated base stats, abilities, and movebanks of all Pokemon (team, boxes)
+HP: displays hidden power types for whole team
+nei: fills out entire pokedex with complete
+GENN: opens generate panel
+ASH KETCHUP: makes all trainers battlable again
+
+Hummingspark -> Sparklet/Chivick/Shimmick/Hummisong/Shimmick/Throchirp
+Flashclaw -> Humbrill/Billumina/Photochili
+Majestiflash -> Vivolant/Prismalon/Huminescence
+Pigo -> Scigeon
+Pigonat -> Thieven/Shruv
+Pigoga -> Armraven/Armoraven
+Hammo -> Piggly/Hammo
+HammyBoy -> Grunswine
+Hamthorno -> Hoghoncho
+Sheabear -> Grisly
+Dualbear -> Teddigician
+Spacebear -> Teddinaut
+Bealtle -> Minipede
+Centatle -> Morphopede
+Curlatoral -> Megapede
+Millistone -> Purpypede
+Sapwin -> Rootle/Ferndish
+Treewin -> Kappalm/Shrubbully
+Winagrow -> Serpenge/Verdrake
+Busheep ->
+Ramant ->
+Bushewe ->
+Bugik -> Bealiddle/Beatiny/Centidden
+Swordik -> Scarabit/Scimitarb/Spartipede/Scarabrute
+Ninjakik -> Bedental/Bidentalis/Beadental/Gladipede/Vermarshal
+Bluebunn -> Willolagos
+Rocky -> Sedinister
+Boulder -> Metaslate
+Blaster -> Sedisoftra
+Crystallor -> Obsidicite/Prismodon
+Carinx -> Asmethyst
+Carinator -> Aspomancer
+Cairnasaur -> Kobraturgy
+Pebblepup -> Sabretite/Sabore/Bitiger/Kiteeth/Sabare/Machairoc/Sabrunt
+Boulderoar -> Staglodon/Graniteeth/Saberock/Stalagbite/Statatrox/Terratooth
+Fightorex -> Rexisilt
+Raptorex -> Pterator
+Kleinowl -> Frostus/Owlcicle/Hoover/Snowl/Snowlet
+Hootowl -> Nixnerva/Clairfrost/Zeroost/Devasnowl
+Dualmoose -> Cervora
+Grondor ->
+Bipedice ->
+Tricerpup ->
+Tricercil ->
+Froshrog -> Flashrog/Amphibulb/Ribblink
+Bouncerog -> Blitzoad
+Bugop -> Lunymph
+Opwing -> Feromoth
+Otterpor ->
+Psylotter ->
+
+Trainer Classes:
+Ace Trainer
+Actor
+Actress
+Team Nuke Grunt
+Team Nuke Admin
+Team Nuke Boss
+Rival Scott
+Rival Fred
+Athlete
+
+Gym Leader Names:
+Robin
+Stanford
+Millie
+Glacius
+Mindy
+Rayna
+Merlin
+Nova
