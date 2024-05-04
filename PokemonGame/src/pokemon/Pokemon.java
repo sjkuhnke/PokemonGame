@@ -3470,13 +3470,14 @@ public class Pokemon implements Serializable {
 				weight = getWeight();
 				int nHP = this.getStat(0);
 				heal(nHP - oHP, nickname + " transformed into Kissyfishy-D!");
+				Pokemon.addTask(Task.SPRITE, "", this);
 				setTypes();
 				setAbility(abilitySlot);
 				if (player != null) player.pokedex[237] = 2;
 			} else if (id == 237) {
-				stat(foe, 0, 1, this, announce);
-				stat(foe, 2, 1, this, announce);
-				stat(foe, 5, 1, this, announce);
+				stat(this, 0, 1, foe, announce);
+				stat(this, 2, 1, foe, announce);
+				stat(this, 5, 1, foe, announce);
 			} else {
 				fail = fail(announce);
 			}
@@ -3516,6 +3517,7 @@ public class Pokemon implements Serializable {
 			stat(this, 3, 1, foe, announce);
 		} else if (announce && move == Move.STRENGTH_SAP) {
 			int amount = (int) (foe.getStat(1) * foe.asModifier(0));
+			if (this.item == Item.BIG_ROOT) amount *= 1.3;
 			heal(amount, this.nickname + " restored HP.");
 			stat(foe, 0, -1, this, announce);
 		}  else if (move == Move.STRING_SHOT) {
@@ -8663,6 +8665,7 @@ public class Pokemon implements Serializable {
 		public static final int FOSSIL = 21;
 		public static final int HP = 22;
 		public static final int EVO_ITEM = 23;
+		public static final int SPRITE = 24;
 		
 		public int type;
 		public String message;

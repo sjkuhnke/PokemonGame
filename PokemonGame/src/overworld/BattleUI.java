@@ -432,6 +432,10 @@ public class BattleUI extends AbstractUI {
 			showMessage(currentTask.message);
 			terrain = currentTask.fe;
 			break;
+		case Task.SPRITE:
+			foe.setSprites();
+			currentTask = null;
+			break;
 		}
 	}
 	
