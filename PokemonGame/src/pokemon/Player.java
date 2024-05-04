@@ -843,7 +843,7 @@ public class Player extends Trainer implements Serializable {
 	        		Ability oldAbility = p.ability;
 	        		p.abilitySlot = 1 - p.abilitySlot;
 	        		p.setAbility(p.abilitySlot);
-	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was swapped from " + oldAbility + " to " + p.ability + "!", 45));
+	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was swapped from " + oldAbility + " to " + p.ability + "!", 40));
 	        	}
 				break;
 				

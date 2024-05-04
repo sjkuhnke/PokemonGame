@@ -722,7 +722,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 23, Item.LIECHI_BERRY, mapNum, 2, 5);
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 29, Item.PETAYA_BERRY, mapNum, 2, 5);
 		
-		mapNum = 148;
+		mapNum = 146;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 48, Item.EVIOLITE, mapNum);
 	}
