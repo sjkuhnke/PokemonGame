@@ -845,14 +845,14 @@ public abstract class AbstractUI {
 						Task t = Pokemon.createTask(Task.TEXT, p.nickname + " did not learn " + m.toString() + ".");
 						Pokemon.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
 					} else {
-						Task t = Pokemon.createTask(Task.TEXT, Item.breakString(p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!", 46));
+						Task t = Pokemon.createTask(Task.TEXT, Item.breakString(p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!", 44));
 						Pokemon.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
 					}
 				} else {
 					if (moveOption == 0) {
 						gp.ui.showMessage(p.nickname + " did not learn " + m.toString() + ".");
 					} else {
-						gp.ui.showMessage(Item.breakString(p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!", 46));
+						gp.ui.showMessage(Item.breakString(p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!", 44));
 					}
 				}
 				if (moveOption > 0) p.moveset[moveOption - 1] = new Moveslot(m);

@@ -343,7 +343,7 @@ public class BattleUI extends AbstractUI {
 			}
 			break;
 		case Task.END:
-			if (tasks.size() != 0) {
+			if (tasks.size() != 0 && !currentTask.wipe) {
 				tasks.add(currentTask);
 				currentTask = null;
 				return;
