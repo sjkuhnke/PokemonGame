@@ -30,6 +30,7 @@ public enum Move {
 	AQUA_JET(40,100,0,0,0,1,PType.WATER,"Always goes first",true,15),
 	AQUA_RING(0,1000,0,0,2,0,PType.WATER,"Restores a small amount of HP at the end of every turn",false,15),
 	AQUA_TAIL(90,90,0,0,0,0,PType.WATER,"A normal attack",true,10),
+	AQUA_VEIL(0,1000,0,0,2,4,PType.WATER,"User protects itself, can't be used in succession. Lowers foe's Sp.Atk by 1 if they make contact",false,5),
 	AROMATHERAPY(0,1000,0,0,2,0,PType.GRASS,"Cures team of any status conditions",false,5),
 	ASTONISH(30,100,30,0,0,0,PType.GHOST,"% chance of causing foe to flinch",true,15),
 	AURA_SPHERE(90,1000,0,0,1,0,PType.FIGHTING,"This attack always hits",false,15),

@@ -21,6 +21,7 @@ Add more sashes to Gym 5/6 split
 Test if Assault Vest in showdown actually blocks the move mid turn (i.e. getting Tricked/Encored)
 Encounters on R43 E over vine cross should be same as R43 W
 Swap in text say "forced out"/"forced in" on random switch ins (Whirlwind etc)
+Make Baton Pass pass perish counter and electromag counter since they're not vStati
 
 Ideas
 Make Dark resist Magic and Fighting no longer resist magic? (Would also make Galactic resist Dark again)
