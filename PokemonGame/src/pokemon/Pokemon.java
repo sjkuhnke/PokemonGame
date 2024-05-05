@@ -1379,6 +1379,7 @@ public class Pokemon implements Serializable {
 			addTask(Task.TEXT, foe.nickname + " protected itself!");
 			if (move.contact) {
 				if (foe.lastMoveUsed == Move.OBSTRUCT) stat(this, 1, -2, foe);
+				if (foe.lastMoveUsed == Move.AQUA_VEIL) stat(this, 2, -1, foe);
 				if (foe.lastMoveUsed == Move.LAVA_LAIR) burn(false, foe);
 				if (foe.lastMoveUsed == Move.SPIKY_SHIELD && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 					this.damage(Math.max(this.getStat(0) / 8.0, 1), foe);
@@ -1796,7 +1797,7 @@ public class Pokemon implements Serializable {
 			
 			if ((field.equals(field.weather, Effect.RAIN) || field.equals(field.weather, Effect.SNOW) || field.equals(field.weather, Effect.SANDSTORM)) && (move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE)) bp *= 0.5;
 			
-			if (foeAbility == Ability.SHIELD_DUST || this.item == Item.COVERT_CLOAK) secChance = 0;
+			if (foeAbility == Ability.SHIELD_DUST || foe.item == Item.COVERT_CLOAK) secChance = 0;
 			
 			// Use either physical or special attack/defense
 			if (move.isPhysical()) {
@@ -2111,7 +2112,6 @@ public class Pokemon implements Serializable {
 				foe.vStatuses.add(Status.FLINCHED);
 			}
 		}
-		
 		if (checkSecondary(secChance)) {
 			secondaryEffect(foe, move, first, userSide, enemySide, player, enemy);
 		}
@@ -5540,37 +5540,36 @@ public class Pokemon implements Serializable {
 			movebank[64] = new Node(Move.MORNING_SUN);
 			movebank[69] = new Node(Move.EXPANDING_FORCE);
 			break;
-		case 78: // TODO: water pulse
+		case 78:
 			movebank = new Node[29];
-			movebank[0] = new Node(Move.POUND);
-			movebank[2] = new Node(Move.TAIL_WHIP);
+			movebank[0] = new Node(Move.PSYWAVE);
+			movebank[0].next = new Node(Move.TAIL_WHIP);
 			movebank[4] = new Node(Move.WATER_GUN);
-			movebank[6] = new Node(Move.CONFUSION);
-			movebank[8] = new Node(Move.BABY$DOLL_EYES);
-			movebank[10] = new Node(Move.DETECT);
-			movebank[13] = new Node(Move.AQUA_RING);
-			movebank[16] = new Node(Move.RAZOR_SHELL);
-			movebank[19] = new Node(Move.PSYBEAM);
-			movebank[22] = new Node(Move.ROLLOUT);
+			movebank[7] = new Node(Move.BABY$DOLL_EYES);
+			movebank[10] = new Node(Move.CONFUSION);
+			movebank[12] = new Node(Move.AQUA_RING);
+			movebank[15] = new Node(Move.WATER_PULSE);
+			movebank[17] = new Node(Move.AQUA_VEIL);
+			movebank[20] = new Node(Move.PSYBEAM);
 			movebank[25] = new Node(Move.CONFUSE_RAY);
 			movebank[28] = new Node(Move.TRICK);
 			break;
-		case 79: // TODO: water pulse
+		case 79:
 			movebank = new Node[70];
-			movebank[0] = new Node(Move.POUND);
-			movebank[2] = new Node(Move.TAIL_WHIP);
+			movebank[0] = new Node(Move.PSYWAVE);
+			movebank[0].next = new Node(Move.TAIL_WHIP);
 			movebank[4] = new Node(Move.WATER_GUN);
-			movebank[6] = new Node(Move.CONFUSION);
-			movebank[8] = new Node(Move.BABY$DOLL_EYES);
-			movebank[10] = new Node(Move.DETECT);
-			movebank[13] = new Node(Move.AQUA_RING);
-			movebank[16] = new Node(Move.RAZOR_SHELL);
-			movebank[19] = new Node(Move.PSYBEAM);
-			movebank[22] = new Node(Move.ROLLOUT);
+			movebank[7] = new Node(Move.BABY$DOLL_EYES);
+			movebank[10] = new Node(Move.CONFUSION);
+			movebank[12] = new Node(Move.AQUA_RING);
+			movebank[15] = new Node(Move.WATER_PULSE);
+			movebank[17] = new Node(Move.AQUA_VEIL);
+			movebank[20] = new Node(Move.PSYBEAM);
 			movebank[25] = new Node(Move.CONFUSE_RAY);
 			movebank[28] = new Node(Move.TRICK);
 			movebank[30] = new Node(Move.HYPNOSIS);
-			movebank[35] = new Node(Move.PSYCHIC);
+			movebank[33] = new Node(Move.BUBBLEBEAM);
+			movebank[36] = new Node(Move.PSYCHIC);
 			movebank[39] = new Node(Move.MAGIC_TOMB);
 			movebank[42] = new Node(Move.LIGHT_SCREEN);
 			movebank[45] = new Node(Move.HYDRO_PUMP);
@@ -9447,9 +9446,8 @@ public class Pokemon implements Serializable {
 		if (this.ability == Ability.SHED_SKIN && this.status != Status.HEALTHY) {
 			int r = (int)(Math.random() * 3);
 			if (r == 0) {
-				this.status = Status.HEALTHY;
 				addAbilityTask(this);
-				addTask(Task.TEXT, nickname + " became healthy!");
+				addTask(Task.STATUS, Status.HEALTHY, nickname + " became healthy!", this);
 			}
 		}
 		

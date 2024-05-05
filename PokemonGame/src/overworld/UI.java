@@ -1987,7 +1987,7 @@ public class UI extends AbstractUI{
 			g2.setFont(g2.getFont().deriveFont(24F));
 			String desc = current.isTM() ? current.getMove().getDescription() : current.getDesc();
 			
-			for (String line : Item.breakString(desc, 63).split("\n")) {
+			for (String line : Item.breakString(desc, 58).split("\n")) {
 				g2.drawString(line, textX, textY);
 				textY += 32;
 			}

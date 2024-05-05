@@ -110,7 +110,7 @@ nei: fills out entire pokedex with complete
 GENN: opens generate panel
 ASH KETCHUP: makes all trainers battlable again
 
-Hummingspark -> Sparklet/Chivick/Shimmick/Hummisong/Shimmick/Throchirp
+Hummingspark -> Sparklet/Chivick/Shimmick/Hummisong/Throchirp
 Flashclaw -> Humbrill/Billumina/Photochili
 Majestiflash -> Vivolant/Prismalon/Huminescence
 Pigo -> Scigeon
