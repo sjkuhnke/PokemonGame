@@ -424,6 +424,7 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	public void showPlayer() {
+		gp.keyH.resetKeys();
 		JPanel playerInfo = new JPanel();
     	playerInfo.setLayout(new GridLayout(6, 1));
     	

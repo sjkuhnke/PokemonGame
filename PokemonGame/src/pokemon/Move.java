@@ -207,7 +207,7 @@ public enum Move {
 	GROWL(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack by 1",false,35),
 	GROWTH(0,1000,0,0,2,0,PType.GRASS,"Raises user's Attack and Sp.Atk by 1",false,15),
 	GUILLOTINE(0,30,0,0,0,0,PType.NORMAL,"If this move hits, it always K.Os foe",true,5),
-	GUNK_SHOT(120,70,30,0,1,0,PType.POISON,"% chance to Poison foe",false,5),
+	GUNK_SHOT(120,80,30,0,0,0,PType.POISON,"% chance to Poison foe",false,5),
 	GUST(40,100,0,0,1,0,PType.FLYING,"A normal attack",false,30),
 	GYRO_BALL(-1,100,0,0,0,0,PType.STEEL,"The lower the user's speed compared to the foe, the more power",true,10),
 	HAMMER_ARM(100,90,100,0,0,0,PType.FIGHTING,"% chance to lower user's speed by 1",true,10),
