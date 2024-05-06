@@ -6860,6 +6860,7 @@ public class Pokemon implements Serializable {
 			movebank[0] = new Node(Move.ICE_FANG);
 			movebank[0].addToEnd(new Node(Move.THUNDER_FANG));
 			movebank[0].addToEnd(new Node(Move.FIRE_FANG));
+			movebank[0].addToEnd(new Node(Move.MAGIC_FANG));
 			movebank[0].addToEnd(new Node(Move.KNOCK_OFF));
 			movebank[0].addToEnd(new Node(Move.WRAP));
 			movebank[0].addToEnd(new Node(Move.LEER));
