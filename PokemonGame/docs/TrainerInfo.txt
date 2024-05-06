@@ -104,7 +104,7 @@ Gelb Forest (1A)----------------------------------
 Trainer Fred 1              Otterpor Lv. 18, Torgged Lv. 20
 
 Fred 1
-Otterpor (Lv. 18) @ Leftovers           /   Water Veil     /   Baby-Doll Eyes, Detect, Aqua Ring, Razor Shell
+Otterpor (Lv. 18) @ Leftovers           /   Water Veil     /   Confusion, Aqua Ring, Water Pulse, Aqua Veil
 Torgged (Lv. 20) @ Miracle Seed         /   Rough Skin     /   Smack Down, Headbutt, Razor Leaf, Sand Attack
 
 Trainer Q                   Inkay Lv. 18, Psycorb Lv. 19 @ (Black Glasses, Terrain Extender)
@@ -229,14 +229,6 @@ Trainer AF                  Flamebless Lv. 38 @ (Passho Berry)
 
 Kleine Village------------------------------------
 
-Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Torgged Lv. 30, Psylotter Lv. 31
-
-Fred 2
-Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
-Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
-Torgged (Lv. 30) @ Expert Belt          /   Rough Skin     /   Magnitude, Headbutt, Sleep Powder, Mega Drain
-Psylotter (Lv. 31) @ Wide Lens          /   Water Veil     /   Hypnosis, Rollout, Confuse Ray, Trick
-
 Trainer RR A                Froshrog Lv. 30, Spheal Lv. 31 @ (Life Orb, Silk Scarf)
 Trainer RR B                Treewin Lv. 30, Roselia Lv. 31 @ (Sitrus Berry, Black Sludge)
 Trainer RR C                Sparkitten Lv. 30, Splame Lv. 31 @ (Charcoal, Chilan Berry)
@@ -253,6 +245,14 @@ Leavanny (Lv. 32) @ Coba Berry          /   Sharpness      /   Leaf Blade, X-Sci
 Swordik (Lv. 32) @ Life Orb             /   Hyper Cutter   /   First Impression, U-Turn, Close Combat, Rock Slide
 Opwing (Lv. 32) @ Lum Berry             /   Technician     /   Bug Bite, Moonlight, Feint Attack, Fell Stinger
 Frosmoth (Lv. 33) @ Heavy-Duty Boots    /   Icy Scales     /   Aurora Beam, Bug Buzz, Snowscape, Quiver Dance
+
+Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Torgged Lv. 30, Psylotter Lv. 31
+
+Fred 2
+Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
+Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
+Torgged (Lv. 30) @ Expert Belt          /   Rough Skin     /   Magnitude, Headbutt, Sleep Powder, Mega Drain
+Psylotter (Lv. 31) @ Wide Lens          /   Water Veil     /   Psybeam, Confuse Ray, Trick, Hypnosis
 
 
 Route 41------------------------------------------
@@ -376,7 +376,7 @@ Shadow Ravine (1A)--------------------------------
 
 Trainer BO                  Magestiflash Lv. 48 @ (Bright Powder)
 Trainer BP                  Opwing Lv. 46, Leavanny Lv. 46 @ (Clear Amulet, Coba Berry)
-Trainer BQ                  Raptorex Lv. 46, Hatterene Lv. 46, Gallade Lv. 47, Starmie Lv. 45, Poshorump Lv. 46 @ (Flame Orb, Chilan Berry, Muscle Band, Petaya Berry, Assault Vest)
+Trainer BQ                  Raptorex Lv. 46, Hatterene Lv. 46, Gallade Lv. 47, Starmie Lv. 45, Poshorump Lv. 46 @ (Choice Scarf, Chilan Berry, Muscle Band, Petaya Berry, Assault Vest)
 Trainer BR                  Conkeldurr Lv. 46, Pyrator-S Lv. 47, Tricercil Lv. 48 @ (Black Glasses, Rocky Helmet, Leftovers)
 Trainer BP1                 HammyBoy Lv. 48, Spacebear Lv. 47, Barkflare Lv. 48, Tigrette Lv. 48, Zurrclu Lv. 47, Draga Lv. 48 @ (Chople Berry, Life Orb, Expert Belt, Starf Berry, Spell Tag, Wiki Berry)
 
