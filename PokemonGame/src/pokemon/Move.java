@@ -837,6 +837,7 @@ public enum Move {
 		result.add(TAKE_OVER);
 		result.add(MAGIC_REFLECT);
 		result.add(DESTINY_BOND);
+		result.add(AQUA_VEIL);
 		
 		return result;
 	}
