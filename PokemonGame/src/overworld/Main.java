@@ -368,7 +368,8 @@ public class Main {
 		setItem("Fred 2", 1, Item.PASSHO_BERRY);
 		setItem("Fred 2", 2, Item.AIR_BALLOON);
 		setItem("Fred 2", 3, Item.EXPERT_BELT);
-		setItem("Fred 2", 4, Item.WIDE_LENS);
+		setItem("Fred 2", 4, Item.ROCKY_HELMET);
+		setMoveset("Fred 2", 4, Move.PSYBEAM, Move.WATER_PULSE, Move.AQUA_VEIL, Move.CONFUSE_RAY);
 		
 		setMoveset("3 Gym Leader 1", 1, Move.FELL_STINGER, Move.IRON_TAIL, Move.STONE_EDGE, Move.STEALTH_ROCK);
 		setAbility("3 Gym Leader 1", 1, Ability.COMPOUND_EYES);

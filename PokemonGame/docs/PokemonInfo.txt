@@ -1705,7 +1705,7 @@ Type:
 Fighting / Ground
 
 Ability:
-Guts / No Guard
+No Guard / Guts
 
 Base Stats:
 52 HP / 72 Atk / 69 Def / 77 SpA / 56 SpD / 67 Spe / 393 BST
@@ -1733,7 +1733,7 @@ Type:
 Fighting / Flying
 
 Ability:
-Guts / No Guard
+No Guard / Guts
 
 Base Stats:
 66 HP / 74 Atk / 85 Def / 106 SpA / 95 SpD / 97 Spe / 523 BST
@@ -2339,19 +2339,18 @@ Ability:
 Water Veil / Anticipation
 
 Base Stats:
-55 HP / 39 Atk / 66 Def / 74 SpA / 79 SpD / 20 Spe / 333 BST
+55 HP / 19 Atk / 66 Def / 74 SpA / 99 SpD / 20 Spe / 333 BST
 
 Level Up:
-1 - Pound
-3 - Tail Whip
+1 - Psywave
+1 - Tail Whip
 5 - Water Gun
-7 - Confusion
-9 - Baby-Doll Eyes
-11 - Detect
-14 - Aqua Ring
-17 - Razor Shell
-20 - Psybeam
-23 - Rollout
+8 - Baby-Doll Eyes
+11 - Confusion
+13 - Aqua Ring
+16 - Water Pulse
+18 - Aqua Veil
+21 - Psybeam
 26 - Confuse Ray
 29 - Trick
 
@@ -2371,20 +2370,20 @@ Base Stats:
 71 HP / 48 Atk / 87 Def / 102 SpA / 106 SpD / 86 Spe / 500 BST
 
 Level Up:
-1 - Pound
-3 - Tail Whip
+1 - Psywave
+1 - Tail Whip
 5 - Water Gun
-7 - Confusion
-9 - Baby-Doll Eyes
-11 - Detect
-14 - Aqua Ring
-17 - Razor Shell
-20 - Psybeam
-23 - Rollout
+8 - Baby-Doll Eyes
+11 - Confusion
+13 - Aqua Ring
+16 - Water Pulse
+18 - Aqua Veil
+21 - Psybeam
 26 - Confuse Ray
 29 - Trick
 31 - Hypnosis
-36 - Psychic
+34 - Bubblebeam
+37 - Psychic
 40 - Magic Tomb
 43 - Light Screen
 46 - Hydro Pump
@@ -4600,6 +4599,7 @@ Level Up:
 1 - Ice Fang
 1 - Thunder Fang
 1 - Fire Fang
+1 - Magic Fang
 1 - Knock Off
 1 - Wrap
 1 - Leer
@@ -7419,4 +7419,66 @@ Level Up:
 65 - Summit Strike
 65 - Abyssal Chop
 75 - Dragon Dance
+
+===================
+241 - Glimmet
+===================
+Type:
+Rock / Poison
+
+Ability:
+Toxic Debris / Corrosion
+
+Base Stats:
+48 HP / 35 Atk / 42 Def / 105 SpA / 60 SpD / 60 Spe / 350 BST
+
+Level Up:
+1 - Rock Throw
+1 - Harden
+1 - Smack Down
+5 - Acid Spray
+10 - Ancient Power
+15 - Rock Polish
+18 - Stealth Rock
+22 - Venoshock
+25 - Sandstorm
+28 - Self-Destruct
+31 - Spikes
+35 - Sludge
+39 - Power Gem
+42 - Acid Armor
+45 - Sludge Wave
+
+===================
+242 - Glimmora
+===================
+Type:
+Rock / Poison
+
+Ability:
+Toxic Debris / Corrosion
+
+Base Stats:
+83 HP / 55 Atk / 90 Def / 130 SpA / 81 SpD / 86 Spe / 525 BST
+
+Level Up:
+1 - Spiky Shield
+1 - Toxic Spikes
+1 - Rock Throw
+1 - Harden
+1 - Smack Down
+5 - Acid Spray
+10 - Ancient Power
+15 - Rock Polish
+18 - Stealth Rock
+22 - Venoshock
+25 - Sandstorm
+28 - Self-Destruct
+31 - Spikes
+35 - Sludge
+35 - Mortal Spin
+39 - Power Gem
+42 - Acid Armor
+45 - Toxic
+50 - Sludge Wave
 
