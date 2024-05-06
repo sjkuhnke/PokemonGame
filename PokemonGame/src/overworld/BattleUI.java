@@ -980,8 +980,8 @@ public class BattleUI extends AbstractUI {
 		
 		if (uMove != null) uP = user.checkQuickClaw(uP);
 		if (fMove != null) fP = foe.checkQuickClaw(fP);
-		if (uMove != null) uP = user.checkCustap(uP);
-		if (fMove != null) fP = foe.checkCustap(fP);
+		if (uMove != null) uP = user.checkCustap(uP, foe);
+		if (fMove != null) fP = foe.checkCustap(fP, user);
 		
 		Pokemon faster;
 		Pokemon slower;

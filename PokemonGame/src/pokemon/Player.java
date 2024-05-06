@@ -96,7 +96,7 @@ public class Player extends Trainer implements Serializable {
 	    Pokemon.addTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?", p);
 	    pokedex[p.id] = 2;
 	    p.clearVolatile();
-	    p.consumeItem();
+	    p.consumeItem(null);
 	    p.trainer = this;
 	    for (int i = 0; i < team.length; i++) {
 	        if (team[i] == null) {
