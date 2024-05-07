@@ -138,8 +138,8 @@
 |Gyarados     |WATER   |FLYING  |INTIMIDATE        |MOXIE             |[95, 125, 79, 60, 100, 81]    |518.1 |45 |
 |Staryu       |WATER   |GALACTIC|ILLUMINATION      |NATURAL_CURE      |[30, 45, 55, 70, 55, 85]      |76.1  |225|
 |Starmie      |WATER   |GALACTIC|ILLUMINATION      |NATURAL_CURE      |[60, 75, 85, 100, 85, 115]    |176.4 |60 |
-|Ali          |DARK    |WATER   |STEALTHY_PREDATOR |STRONG_JAW        |[90, 120, 80, 45, 55, 60]     |410.9 |45 |
-|Batorali     |DARK    |FLYING  |STEALTHY_PREDATOR |STRONG_JAW        |[105, 130, 80, 75, 55, 95]    |476.0 |10 |
+|Ali          |DARK    |WATER   |AMBUSH            |STRONG_JAW        |[90, 120, 80, 45, 55, 60]     |410.9 |45 |
+|Batorali     |DARK    |FLYING  |AMBUSH            |STRONG_JAW        |[105, 130, 80, 75, 55, 95]    |476.0 |10 |
 |Posho        |MAGIC   |DRAGON  |REGENERATOR       |MAGIC_GUARD       |[35, 35, 35, 100, 45, 45]     |21.0  |30 |
 |Shomp        |WATER   |DRAGON  |SWIFT_SWIM        |SNIPER            |[81, 93, 63, 93, 70, 60]      |835.9 |30 |
 |Poshorump    |MAGIC   |DRAGON  |SWIFT_SWIM        |MAGIC_GUARD       |[100, 95, 90, 95, 90, 90]     |954.5 |10 |
@@ -178,9 +178,9 @@
 |Glittleshoo  |MAGIC   |FLYING  |SERENE_GRACE      |NATURAL_CURE      |[70, 45, 75, 135, 115, 80]    |75.1  |55 |
 |Zorua        |NORMAL  |GHOST   |ADAPTABILITY      |ILLUMINATION      |[35, 60, 40, 85, 40, 70]      |27.6  |75 |
 |Zoroark      |NORMAL  |GHOST   |ADAPTABILITY      |ILLUMINATION      |[55, 100, 60, 125, 60, 110]   |178.8 |45 |
-|Droid        |STEEL   |null    |SNIPER            |INNER_FOCUS       |[50, 70, 55, 50, 50, 55]      |99.9  |135|
-|Armoid       |STEEL   |null    |SNIPER            |INNER_FOCUS       |[65, 75, 105, 50, 75, 60]     |149.9 |95 |
-|Soldrota     |STEEL   |null    |SNIPER            |INNER_FOCUS       |[70, 115, 115, 90, 75, 65]    |199.9 |45 |
+|Droid        |STEEL   |null    |SNIPER            |VOLT_ABSORB       |[50, 70, 55, 50, 50, 55]      |99.9  |135|
+|Armoid       |STEEL   |null    |SNIPER            |VOLT_ABSORB       |[65, 75, 105, 50, 75, 60]     |149.9 |95 |
+|Soldrota     |STEEL   |null    |SNIPER            |VOLT_ABSORB       |[70, 115, 115, 90, 75, 65]    |199.9 |45 |
 |Tinkie       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SPARKLY_SURGE     |[55, 76, 55, 54, 90, 60]      |10.0  |45 |
 |Shawar       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SPARKLY_SURGE     |[75, 80, 75, 60, 90, 75]      |100.0 |35 |
 |Shaboom      |MAGIC   |GALACTIC|SPARKLY_SURGE     |SPARKLY_SURGE     |[100, 100, 100, 100, 100, 100]|292.3 |25 |
@@ -188,12 +188,12 @@
 |Draga        |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |[85, 75, 80, 90, 75, 60]      |103.4 |35 |
 |Drageye      |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |[95, 85, 90, 115, 125, 90]    |247.2 |25 |
 |Blobmo       |GALACTIC|null    |SHIELD_DUST       |LEVITATE          |[90, 30, 30, 30, 100, 30]     |100.2 |85 |
-|Nebulimb     |GALACTIC|null    |SHIELD_DUST       |GRAVITATIONAL_PULL|[125, 45, 50, 45, 115, 40]    |759.2 |65 |
-|Galactasolder|GALACTIC|FIGHTING|SNIPER            |GRAVITATIONAL_PULL|[170, 135, 70, 55, 115, 50]   |1000.5|35 |
+|Nebulimb     |GALACTIC|null    |SHIELD_DUST       |GRAVITATION       |[125, 45, 50, 45, 115, 40]    |759.2 |65 |
+|Galactasolder|GALACTIC|FIGHTING|SNIPER            |GRAVITATION       |[170, 135, 70, 55, 115, 50]   |1000.5|35 |
 |Consodust    |GALACTIC|ICE     |SNOW_WARNING      |SLUSH_RUSH        |[70, 33, 76, 58, 93, 85]      |90.3  |100|
 |Cosmocrash   |GALACTIC|ICE     |SNOW_WARNING      |SLUSH_RUSH        |[90, 150, 60, 65, 60, 100]    |378.2 |45 |
-|Rockmite     |GALACTIC|ROCK    |GRAVITATIONAL_PULL|HUGE_POWER        |[70, 65, 130, 55, 75, 55]     |632.5 |75 |
-|Stellarock   |GALACTIC|ROCK    |GRAVITATIONAL_PULL|HUGE_POWER        |[80, 75, 180, 65, 80, 60]     |1000.5|35 |
+|Rockmite     |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |[70, 65, 130, 55, 75, 55]     |632.5 |75 |
+|Stellarock   |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |[80, 75, 180, 65, 80, 60]     |1000.5|35 |
 |Poof-E       |GHOST   |ELECTRIC|FRIENDLY_GHOST    |LEVITATE          |[60, 30, 70, 80, 80, 80]      |1.0   |135|
 |Hast-E       |GHOST   |ELECTRIC|FRIENDLY_GHOST    |COMPETITIVE       |[70, 75, 35, 150, 55, 115]    |45.2  |45 |
 |Droid-E      |FIGHTING|ELECTRIC|SNIPER            |IRON_FIST         |[40, 75, 70, 30, 30, 85]      |94.9  |135|

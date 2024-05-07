@@ -119,9 +119,9 @@ Pigoga -> Armraven/Armoraven
 Hammo -> Piggly/Hammo
 HammyBoy -> Grunswine
 Hamthorno -> Hoghoncho
-Sheabear -> Grisly
-Dualbear -> Teddigician
-Spacebear -> Teddinaut
+Sheabear -> Grisly/Teddull
+Dualbear -> Teddigician/Sorcerbear
+Spacebear -> Teddinaut/Ursanaut
 Bealtle -> Minipede
 Centatle -> Morphopede
 Curlatoral -> Megapede
@@ -140,8 +140,8 @@ Rocky -> Sedinister
 Boulder -> Metaslate
 Blaster -> Sedisoftra
 Crystallor -> Obsidicite/Prismodon
-Carinx -> Asmethyst
-Carinator -> Aspomancer
+Carinx -> Asmethyst/Asmethiss
+Carinator -> Aspomancer/Geobra
 Cairnasaur -> Kobraturgy
 Pebblepup -> Sabretite/Sabore/Bitiger/Kiteeth/Sabare/Machairoc/Sabrunt
 Boulderoar -> Staglodon/Graniteeth/Saberock/Stalagbite/Statatrox/Terratooth
@@ -160,6 +160,10 @@ Bugop -> Lunymph
 Opwing -> Feromoth
 Otterpor ->
 Psylotter ->
+Psycorb -> Psycorb/Orbronze
+Psyballs -> Silvidol
+Psycorboratr -> Auracle
+
 
 Trainer Classes:
 Ace Trainer

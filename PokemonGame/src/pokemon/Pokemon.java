@@ -128,7 +128,6 @@ public class Pokemon implements Serializable {
 	public boolean impressive;
 	public boolean battled;
 	public boolean success;
-	public boolean selected;
 	private boolean visible;
 	public boolean consumedItem;
 	
@@ -240,6 +239,7 @@ public class Pokemon implements Serializable {
 		item = pokemon.item;
 		loseItem = pokemon.loseItem;
 		lostItem = pokemon.lostItem;
+		consumedItem = pokemon.consumedItem;
 		
 		moveMultiplier = pokemon.moveMultiplier;
 		
@@ -4910,7 +4910,7 @@ public class Pokemon implements Serializable {
 			movebank[36] = new Node(Move.SACRED_SWORD);
 			break;
 		case 43:
-			movebank = new Node[55];
+			movebank = new Node[50];
 			movebank[0] = new Node(Move.LOW_KICK);
 			movebank[2] = new Node(Move.LEER);
 			movebank[4] = new Node(Move.FURY_CUTTER);
@@ -4928,7 +4928,6 @@ public class Pokemon implements Serializable {
 			movebank[41] = new Node(Move.FIRST_IMPRESSION);
 			movebank[44] = new Node(Move.DETECT);
 			movebank[49] = new Node(Move.NO_RETREAT);
-			movebank[54] = new Node(Move.GUILLOTINE);
 			break;
 		case 44:
 			movebank = new Node[12];
@@ -5613,12 +5612,13 @@ public class Pokemon implements Serializable {
 			movebank[69] = new Node(Move.PETAL_DANCE);
 			break;
 		case 82:
-			movebank = new Node[25];
+			movebank = new Node[30];
 			movebank[0] = new Node(Move.TELEPORT);
 			movebank[4] = new Node(Move.GLARE);
 			movebank[8] = new Node(Move.CONFUSION);
 			movebank[14] = new Node(Move.HYPNOSIS);
 			movebank[24] = new Node(Move.DREAM_EATER);
+			movebank[29] = new Node(Move.GRAVITY);
 			break;
 		case 83:
 			movebank = new Node[50];
@@ -5627,6 +5627,7 @@ public class Pokemon implements Serializable {
 			movebank[8] = new Node(Move.CONFUSION);
 			movebank[14] = new Node(Move.HYPNOSIS);
 			movebank[24] = new Node(Move.DREAM_EATER);
+			movebank[29] = new Node(Move.GRAVITY);
 			movebank[31] = new Node(Move.DOUBLE_HIT);
 			movebank[34] = new Node(Move.MAGNET_BOMB);
 			movebank[38] = new Node(Move.IRON_DEFENSE);
@@ -5641,6 +5642,7 @@ public class Pokemon implements Serializable {
 			movebank[8] = new Node(Move.CONFUSION);
 			movebank[14] = new Node(Move.HYPNOSIS);
 			movebank[24] = new Node(Move.DREAM_EATER);
+			movebank[29] = new Node(Move.GRAVITY);
 			movebank[31] = new Node(Move.DOUBLE_HIT);
 			movebank[34] = new Node(Move.MAGNET_BOMB);
 			movebank[38] = new Node(Move.IRON_DEFENSE);
@@ -8206,7 +8208,7 @@ public class Pokemon implements Serializable {
 			movebank[9] = new Node(Move.SLUDGE_WAVE);
 			movebank[14] = new Node(Move.HYPER_VOICE);
 			movebank[19] = new Node(Move.OVERHEAT);
-			movebank[24] = new Node(Move.SILVER_WIND);
+			movebank[24] = new Node(Move.DARK_PULSE);
 			movebank[29] = new Node(Move.GIGA_DRAIN);
 			movebank[34] = new Node(Move.POWER_GEM);
 			movebank[39] = new Node(Move.FREEZE$DRY);
@@ -8664,6 +8666,7 @@ public class Pokemon implements Serializable {
 		public static final int HP = 22;
 		public static final int EVO_ITEM = 23;
 		public static final int SPRITE = 24;
+		public static final int CONFIRM = 25; // counter: 0 = gauntlet at mt. splinkty
 		
 		public int type;
 		public String message;
@@ -10478,7 +10481,7 @@ public class Pokemon implements Serializable {
 			addAbilityTask(this);
 			field.setTerrain(field.new FieldEffect(Effect.SPARKLY));
 			if (this.item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
-		} else if (this.ability == Ability.GRAVITATIONAL_PULL) {
+		} else if (this.ability == Ability.GRAVITATION) {
 			addAbilityTask(this);
 			field.setEffect(field.new FieldEffect(Effect.GRAVITY));
 		} else if (this.ability == Ability.INTIMIDATE || this.ability == Ability.SCALY_SKIN) {
@@ -10488,6 +10491,14 @@ public class Pokemon implements Serializable {
 				addTask(Task.TEXT, foe.nickname + "'s Attack was not lowered!");
 			} else {
 				stat(foe, 0, -1, this);
+			}
+		} else if (this.ability == Ability.TERRIFY) {
+			addAbilityTask(this);
+			if (foe.ability == Ability.INNER_FOCUS) {
+				addAbilityTask(foe);
+				addTask(Task.TEXT, foe.nickname + "'s Sp. Atk was not lowered!");
+			} else {
+				stat(foe, 2, -1, this);
 			}
 		} else if (this.ability == Ability.MOUTHWATER) {
 			if (!foe.vStatuses.contains(Status.TAUNTED)) {
@@ -10936,7 +10947,7 @@ public class Pokemon implements Serializable {
 	    clonedPokemon.impressive = this.impressive;
 	    clonedPokemon.battled = this.battled;
 	    clonedPokemon.success = this.success;
-	    clonedPokemon.selected = this.selected;
+	    clonedPokemon.consumedItem = this.consumedItem;
 	    
 	    // Clone battle fields
 	    clonedPokemon.lastMoveUsed = this.lastMoveUsed;
@@ -11155,10 +11166,6 @@ public class Pokemon implements Serializable {
 		}
 		if ((this.vStatuses.contains(Status.NO_SWITCH) || this.vStatuses.contains(Status.TRAPPED)) && this.item != Item.SHED_SHELL) return true;
 		return false;
-	}
-
-	public boolean isSelected() {
-		return selected;
 	}
 	
 	public ImageIcon getFaintedIcon() {

@@ -1497,6 +1497,41 @@ public class AssetSetter {
 		mapNum = 149;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 53, 74, -1);
+		if (!flags[28]) {
+			gp.npc[mapNum][index] = NPCSetup(TN_UP, 49, 77, 330);
+			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 46, 76, 331);
+			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 52, 76, 332);
+			gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 49, 73, 333);
+			gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 56, 67, 334);
+			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 61, 71, 335);
+			gp.npc[mapNum][index] = NPCSetup(TN_UP, 56, 75, 336);
+			gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 42, 68, 337);
+			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 36, 71, 338);
+			gp.npc[mapNum][index] = NPCSetup(TN_UP, 42, 74, 339);
+			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 36, 65, 340);
+			gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 39, 59, 341);
+			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 42, 65, 342);
+			gp.npc[mapNum][index] = NPCSetup(RICK, 49, 62, 343);
+			gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 53, 61, 344);
+			gp.npc[mapNum][index] = NPCSetup(MAXWELL, 49, 56, 345);
+		} else {
+			GamePanel.volatileTrainers.put(NPCSetup(TN_UP, 49, 77, 330), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 46, 76, 331), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 52, 76, 332), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_DOWN, 49, 73, 333), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_DOWN, 56, 67, 334), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 60, 71, 335), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_UP, 56, 75, 336), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_DOWN, 42, 68, 337), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 38, 71, 338), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_UP, 42, 74, 339), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 36, 65, 340), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_DOWN, 39, 61, 341), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 42, 65, 342), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(RICK, 49, 62, 343), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(FRED_DOWN, 53, 61, 344), mapNum);
+			GamePanel.volatileTrainers.put(NPCSetup(MAXWELL, 49, 56, 345), mapNum);
+		}
 		
 		mapNum = 150;
 		index = 0;
@@ -2145,13 +2180,14 @@ public class AssetSetter {
 		// flags[24] is true after being prompted that casino will auto-save
 		// flags[25] is true after getting gift magmaclang
 		// flags[26] is true after beating TN guy in MSJ
-		// flags[27] is true after beating Rick 3
+		// flags[27] is true after beating Fred 4
 		// flags[28] is true after beating Maxwell 2 (and disbanding TN)
 		// flags[29] is true after beating Zurroaratr
 		// flags[30] is true after getting fishing rod
 		// flags[31] is true after getting Surf
 		// flags[32] is true after getting Exp. Share
 		// flags[33] is true after getting Lucky Egg
+		// flags[34] is true after beating Rick 3
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		if (flags[1]) {
@@ -2206,6 +2242,9 @@ public class AssetSetter {
 		if (flags[26]) {
 			gp.npc[138][0] = null;
 			gp.npc[124][15] = null;
+		}
+		if (flags[28]) {
+			gp.npc[146][1] = null;
 		}
 	}
 	

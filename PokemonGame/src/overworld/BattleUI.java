@@ -975,8 +975,8 @@ public class BattleUI extends AbstractUI {
 		if (uMove != null && user.ability == Ability.PRANKSTER && uMove.cat == 2) ++uP;
 		if (fMove != null && foe.ability == Ability.PRANKSTER && fMove.cat == 2) ++fP;
 		
-		if (uMove != null && user.ability == Ability.STEALTHY_PREDATOR && user.impressive) ++uP;
-		if (fMove != null && foe.ability == Ability.STEALTHY_PREDATOR && foe.impressive) ++fP;
+		if (uMove != null && user.ability == Ability.AMBUSH && user.impressive) ++uP;
+		if (fMove != null && foe.ability == Ability.AMBUSH && foe.impressive) ++fP;
 		
 		if (uMove != null) uP = user.checkQuickClaw(uP);
 		if (fMove != null) fP = foe.checkQuickClaw(fP);
