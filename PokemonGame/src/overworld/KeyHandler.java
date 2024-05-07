@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import pokemon.Item;
+import pokemon.Pokemon;
 
 public class KeyHandler implements KeyListener {
 
@@ -490,7 +491,8 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_A) {
 			if (ctrlPressed) {
 				ctrlPressed = false;
-				Item.useCalc(gp.player.p, gp.player.p.boxes[gp.player.p.currentBox], gp.ui.isGauntlet);
+				Pokemon[] cBox = gp.ui.gauntlet ? gp.player.p.gauntletBox : gp.player.p.boxes[gp.player.p.currentBox];
+				Item.useCalc(gp.player.p, cBox);
 			} else {
 				aPressed = true;
 			}

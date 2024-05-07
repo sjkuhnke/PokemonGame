@@ -227,6 +227,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void startBattle(int trainer, int id, Pokemon foe) {	
 		setSlots();
+		keyH.resetKeys();
 		
 		ui.transitionBuffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 		gameState = START_BATTLE_STATE;
@@ -264,6 +265,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void openBox(NPC_PC target) {
 		keyH.resetKeys();
 		ui.isGauntlet = target.isGauntlet();
+		if (ui.isGauntlet) ui.gauntlet = true;
 		ui.boxSwapNum = -1;
 		gameState = GamePanel.BOX_STATE;
 	}

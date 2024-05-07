@@ -60,6 +60,7 @@ public class UI extends AbstractUI{
 	public boolean isGauntlet;
 	public Pokemon currentBoxP;
 	public boolean release;
+	public boolean gauntlet;
 	
 	public int dexNum = 1;
 	public int dexMode;
@@ -186,7 +187,7 @@ public class UI extends AbstractUI{
 		switch(currentTask.type) {
 		case Task.LEVEL_UP:
 		case Task.TEXT:
-			showMessage(Item.breakString(currentTask.message, 46));
+			showMessage(Item.breakString(currentTask.message, 42));
 			break;
 		case Task.MOVE:
 			currentMove = currentTask.move;
@@ -254,7 +255,59 @@ public class UI extends AbstractUI{
 			drawDialogueScreen(true);
 			drawFossilScreen(gp.player.p.bag);
 			break;
+		case Task.CONFIRM:
+			currentDialogue = Item.breakString(currentTask.message, 42);
+			drawDialogueScreen(true);
+			drawConfirmWindow(currentTask.counter);
+			break;
 		}
+	}
+
+	private void drawConfirmWindow(int type) {
+		int x = gp.tileSize * 11;
+		int y = gp.tileSize * 4;
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 2.5);
+		drawSubWindow(x, y, width, height);
+		x += gp.tileSize;
+		y += gp.tileSize;
+		g2.drawString("Yes", x, y);
+		if (commandNum == 0) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				switch (type) {
+				case 0: // gauntlet at top of splinkty
+					currentTask = null;
+					gp.eHandler.teleport(149, 49, 76, false);
+					break;
+				}
+			}
+		}
+		y += gp.tileSize;
+		g2.drawString("No", x, y);
+		if (commandNum == 1) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				currentTask = null;
+				gp.gameState = GamePanel.PLAY_STATE;
+				showMessage("Come back when you're ready!");
+				commandNum = 0;
+			}
+		}
+		
+		if (gp.keyH.sPressed) {
+			currentTask = null;
+		}
+		
+		if (gp.keyH.upPressed || gp.keyH.downPressed) {
+			gp.keyH.upPressed = false;
+			gp.keyH.downPressed = false;
+			commandNum = 1 - commandNum;
+		}
+		
+		drawToolTips("OK", null, "Back", null);
 	}
 
 	private void drawFossilScreen(Bag bag) {
@@ -841,7 +894,7 @@ public class UI extends AbstractUI{
 
 	private void drawBoxScreen() {
 		int cBoxIndex = gp.player.p.currentBox;
-		Pokemon[] cBox = gp.player.p.boxes[cBoxIndex];
+		Pokemon[] cBox = gauntlet ? gp.player.p.gauntletBox : gp.player.p.boxes[cBoxIndex];
 		
 		int x = (int) (gp.tileSize * 1.75);
 		int y = gp.tileSize;
@@ -858,13 +911,16 @@ public class UI extends AbstractUI{
 		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(28F));
 		int headTextY = (int) (headY + gp.tileSize * 0.75);
-		g2.drawString("<", headX + gp.tileSize / 2, headTextY);
-		g2.drawString(">", headWidth + headX - gp.tileSize / 2 - 8, headTextY);
-		String boxText = "Box " + (cBoxIndex + 1);
+		if (!gauntlet) {
+			g2.drawString("<", headX + gp.tileSize / 2, headTextY);
+			g2.drawString(">", headWidth + headX - gp.tileSize / 2 - 8, headTextY);
+		}
+		String boxText = gauntlet ? "Gauntlet Box" : "Box " + (cBoxIndex + 1);
 		int centerX = headX + (headWidth / 2);
 		g2.drawString(boxText, getCenterAlignedTextX(boxText, centerX), headTextY);
+		int highlightWidth = gauntlet ? gp.tileSize * 2 : gp.tileSize;
 		if (boxNum < 0) {
-			g2.drawRoundRect(centerX - gp.tileSize, (int) (headTextY - gp.tileSize / 2), gp.tileSize * 2, (int) (gp.tileSize * 0.6), 10, 10);
+			g2.drawRoundRect(centerX - highlightWidth, (int) (headTextY - gp.tileSize / 2), highlightWidth * 2, (int) (gp.tileSize * 0.6), 10, 10);
 		}
 		
 		int startX = x + gp.tileSize / 2;
@@ -873,7 +929,7 @@ public class UI extends AbstractUI{
 		int spriteHeight = spriteWidth;
 		int cX = startX;
 		int cY = startY;
-		for (int i = 0; i < cBox.length; i++) {
+		for (int i = 0; i < 30; i++) {
 			if (i == boxSwapNum) {
 				g2.setColor(new Color(100, 100, 220, 200));
 				g2.fillRoundRect(cX - 8, cY - 8, spriteWidth, spriteHeight, 10, 10);
@@ -881,7 +937,7 @@ public class UI extends AbstractUI{
 				g2.drawRoundRect(cX - 8, cY - 8, spriteWidth, spriteHeight, 10, 10);
 			}
 			
-			if (cBox[i] != null) {
+			if (i < cBox.length && cBox[i] != null) {
 				g2.drawImage(cBox[i].getSprite(), cX, cY, null);
 				if (cBox[i].item != null) {
 					g2.drawImage(cBox[i].item.getImage(), cX - 6, cY + 62, null);
@@ -891,6 +947,11 @@ public class UI extends AbstractUI{
 			g2.setColor(Color.WHITE);
 			if (i == boxNum) {
 				g2.drawRoundRect(cX - 8, cY - 8, spriteWidth, spriteHeight, 10, 10);
+			}
+			
+			if (i >= Player.GAUNTLET_BOX_SIZE && gauntlet) {
+				g2.setColor(Color.DARK_GRAY);
+				g2.fillRect(cX, cY, spriteWidth, spriteHeight);
 			}
 			
 			if ((i + 1) % 6 == 0) {
@@ -1009,24 +1070,33 @@ public class UI extends AbstractUI{
 				gp.keyH.upPressed = false;
 				if (boxNum >= 0) {
 					boxNum -= 6;
+				} else if (!gp.ui.isGauntlet) {
+					gauntlet = !gauntlet;
+					boxSwapNum = -1;
 				}
 			}
 			
 			if (gp.keyH.downPressed) {
 				gp.keyH.downPressed = false;
-				if (boxNum < 24) {
-					boxNum += 6;
+				if (gauntlet) {
+					if (boxNum < 0) boxNum = 0;
+				} else {
+					if (boxNum < 24) {
+						boxNum += 6;
+					}
 				}
 			}
 			
 			if (gp.keyH.leftPressed) {
 				gp.keyH.leftPressed = false;
 				if (boxNum < 0) {
-					boxSwapNum = -1;
-					gp.player.p.currentBox--;
-			        if (gp.player.p.currentBox < 0) {
-			        	gp.player.p.currentBox = Player.MAX_BOXES - 1;
-			        }
+					if (!gauntlet) {
+						boxSwapNum = -1;
+						gp.player.p.currentBox--;
+				        if (gp.player.p.currentBox < 0) {
+				        	gp.player.p.currentBox = Player.MAX_BOXES - 1;
+				        }
+					}
 				} else {
 					if (boxNum % 6 != 0) {
 						boxNum--;
@@ -1037,14 +1107,22 @@ public class UI extends AbstractUI{
 			if (gp.keyH.rightPressed) {
 				gp.keyH.rightPressed = false;
 				if (boxNum < 0) {
-					boxSwapNum = -1;
-					gp.player.p.currentBox++;
-			        if (gp.player.p.currentBox >= Player.MAX_BOXES) {
-			        	gp.player.p.currentBox = 0;
-			        }
+					if (!gauntlet) {
+						boxSwapNum = -1;
+						gp.player.p.currentBox++;
+				        if (gp.player.p.currentBox >= Player.MAX_BOXES) {
+				        	gp.player.p.currentBox = 0;
+				        }
+					}
 				} else {
-					if ((boxNum + 1) % 6 != 0) {
-						boxNum++;
+					if (gauntlet) {
+						if (boxNum < Player.GAUNTLET_BOX_SIZE - 1) {
+							boxNum++;
+						}
+					} else {
+						if ((boxNum + 1) % 6 != 0) {
+							boxNum++;
+						}
 					}
 				}
 			}

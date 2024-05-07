@@ -1,9 +1,7 @@
 package entity;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
@@ -11,20 +9,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -695,8 +690,8 @@ public class PlayerCharacter extends Entity {
 		}
 		if (gp.currentMap == 129 && worldY / gp.tileSize > 41) {
 			if (!p.flags[23]) {
-				JOptionPane.showMessageDialog(null, "Oh, you haven't gotten any coins yet?\nHere, just this once, have some!");
-				JOptionPane.showMessageDialog(null, "You recieved 100 Coins!");
+				Pokemon.addTask(Task.TEXT, "Oh, you haven't gotten any coins yet?\nHere, just this once, have some!");
+				Pokemon.addTask(Task.TEXT, "You recieved 100 Coins!");
 				p.coins += 100;
 				p.flags[23] = true;
 			} else {
@@ -884,120 +879,17 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "Obtained HM07 Rock Climb!");
 			p.bag.add(Item.HM07);
 		} if (gp.currentMap == 146 && !p.flags[28]) {
-			showPokemonList(10);
-			//p.bag.add(Item.HM07);
-			//p.flags[26] = true;
+			int selected = p.getAmountSelected();
+			String message = "Are you ready to fight as soon as you step into this room?";
+			if (selected < Player.GAUNTLET_BOX_SIZE) { // Not enough selected
+				message = "You don't have 10 Pokemon selected to bring! You'll be at a huge disadvantage!\nYou can choose what Pokemon to bring using the Gauntlet Box in this PC (press [\u2191] when selecting a box).\n" + message;
+			}
+			for (String s : message.split("\n")) {
+				Pokemon.addTask(Task.TEXT, s);
+			}
+			Task t = Pokemon.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?");
+			t.counter = 0;
 		}
-	}
-	
-	private void showPokemonList(int max) {
-		showPokemonList(p.getAmountSelected(), max, 0);
-	}
-	
-	private void showPokemonList(int amount, int max, int value) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		JPanel textPanel = new JPanel();
-		JLabel selectedAmount = new JLabel(amount + " selected");
-		JGradientButton confirmButton = new JGradientButton("CONFIRM");
-		if (amount == max) {
-			selectedAmount.setFont(new Font(selectedAmount.getFont().getName(), Font.BOLD, 24));
-			selectedAmount.setForeground(Color.GREEN);
-		}
-		if (!p.teamIsSelected()) {
-			confirmButton.setBackground(Color.RED);
-		} else {
-			if (amount == max) {
-				confirmButton.setBackground(Color.GREEN);
-			} else {
-				confirmButton.setBackground(Color.YELLOW);
-			}
-		}
-		textPanel.add(selectedAmount);
-		JPanel pokemonPanel = new JPanel();
-		pokemonPanel.setLayout(new VerticalLayout());
-		
-		JScrollPane scrollPane = new JScrollPane(pokemonPanel);
-		scrollPane.setPreferredSize(new Dimension(300, 300));
-		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-		
-		ArrayList<Pokemon> allPokemon = p.getAllPokemon();
-		for (Pokemon pokemon : allPokemon) {
-			final Pokemon pokemonP = pokemon;
-			if (pokemon != null) {
-				JPanel current = new JPanel();
-				current.add(new JLabel(new ImageIcon(pokemon.getMiniSprite())));
-				JGradientButton currentButton = new JGradientButton(pokemon.nickname + " Lv. " + pokemon.getLevel());
-				if (pokemon.isSelected()) {
-					currentButton.setBackground(Color.GREEN);
-				} else {
-					currentButton.setBackground(Color.RED);
-				}
-				currentButton.addMouseListener(new MouseAdapter() {
-					@Override
-	        		public void mouseClicked(MouseEvent evt) {
-						if (SwingUtilities.isRightMouseButton(evt)) {
-							JOptionPane.showMessageDialog(null, pokemonP.showSummary(p, false, null), "Pokemon Summary", JOptionPane.PLAIN_MESSAGE);
-						} else {
-							int newAmount = amount;
-							if (pokemonP.isSelected()) {
-								pokemonP.selected = false;
-								newAmount--;
-							} else {
-								if (amount < max) {
-									pokemonP.selected = true;
-									newAmount++;
-								} else {
-									JOptionPane.showMessageDialog(null, "Max amount of Pokemon already selected!");
-									return;
-								}
-							}
-							SwingUtilities.getWindowAncestor(panel).dispose();
-							showPokemonList(newAmount, max, scrollPane.getVerticalScrollBar().getValue());
-							return;
-		        		}
-					}
-				});
-				current.add(currentButton);
-				pokemonPanel.add(current);
-			}
-		}
-		confirmButton.addActionListener(e -> {
-			if (!p.teamIsSelected()) {
-				JOptionPane.showMessageDialog(null, "Your team contains some members that aren't\nselected. Please remove them and try again!");
-				return;
-			}
-			String message = "Are you sure you want to enter?\nBe ready to fight!";
-			if (amount != max) {
-				message = "You don't have 10 Pokemon selected!\n" + message;
-			}
-			int option = JOptionPane.showOptionDialog(null,
-					message,
-					"Enter Room?",
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.QUESTION_MESSAGE,
-		            null, null, null);
-			if (option == JOptionPane.YES_OPTION) {
-				SwingUtilities.getWindowAncestor(panel).dispose();
-				gp.eHandler.teleport(149, 49, 76, false);
-			}
-		});
-		
-		panel.add(textPanel);
-		
-		scrollPane.getVerticalScrollBar().setValue(value);
-		scrollPane.repaint();
-		JPanel containerPanel = new JPanel(new BorderLayout());
-		containerPanel.add(scrollPane, BorderLayout.CENTER);
-		panel.add(containerPanel);
-		scrollPane.getVerticalScrollBar().setValue(value);
-		scrollPane.repaint();
-		
-		JPanel containerPanel2 = new JPanel();
-		containerPanel2.add(confirmButton);
-		panel.add(containerPanel2);
-		
-		JOptionPane.showMessageDialog(null, panel, "Select your Pokemon", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	private void showPrizeMenu(JPanel panel, String title) {

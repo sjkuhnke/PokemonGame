@@ -494,7 +494,7 @@ public class PMap extends JPanel {
 
 	private void fly(String loc, int map, int x, int y) {
 		if (!gp.tileM.canFly[gp.currentMap]) {
-			JOptionPane.showMessageDialog(null, "Can't fly right now; you're indoors!");
+			JOptionPane.showMessageDialog(null, "Can't fly right now: you're indoors!");
 			return;
 		}
 		int answer = JOptionPane.showOptionDialog(null,

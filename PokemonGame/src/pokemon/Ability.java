@@ -3,6 +3,7 @@ package pokemon;
 public enum Ability {
 
 	ADAPTABILITY("Powers up moves of the same type."),
+	AMBUSH("Gives priority to the first move when this Pokemon enters battle."),
 	ANGER_POINT("Maxes Attack after taking a critical hit."),
 	ANTICIPATION("Senses an opposing Pokemon's dangerous moves."),
 	INSOMNIA("Prevents the Pokemon from falling asleep."),
@@ -30,7 +31,7 @@ public enum Ability {
 	GALACTIC_AURA("Halves the damage of ICE and PSYCHIC moves."),
 	GLACIER_AURA("Weakens the power of Physical moves."),
 	GRASSY_SURGE("Turns the ground into GRASSY TERRAIN when the Pokemon enters a battle."),
-	GRAVITATIONAL_PULL("Creates GRAVITY when the Pokemon enters a battle."),
+	GRAVITATION("Creates GRAVITY when the Pokemon enters a battle."),
 	GUTS("Boosts the Attack stat if the Pokemon has a status condition."),
 	HUGE_POWER("Doubles the Pokemon's Attack stat."),
 	HYPER_CUTTER("Prevents other Pokemon from lowering Attack stat."),
@@ -89,7 +90,6 @@ public enum Ability {
 	SPARKLY_SURGE("Turns the ground into SPARKLY TERRAIN when the Pokemon enters a battle."),
 	SPEED_BOOST("Its Speed stat is gradually boosted."),
 	STATIC("Contact with the Pokemon may paralyze the attacker."),
-	STEALTHY_PREDATOR("Gives priority to the first move when this Pokemon enters battle."),
 	STEELWORKER("Powers up STEEL moves."),
 	STRONG_JAW("The Pokemon's strong jaw boosts the power of its biting moves."),
 	STURDY("It cannot be knocked out with one hit. One-hit KO moves cannot knock it out, either."),
@@ -103,6 +103,7 @@ public enum Ability {
 	TORRENT("Powers up WATER moves in a pinch."),
 	TOUGH_CLAWS("Powers up moves that make direct contact."),
 	TOXIC_DEBRIS("Puts toxic spikes on the opposing side when the hit by physical moves."), // TODO
+	TERRIFY("Lowers the opposing Pokemon's Sp. Atk stat."),
 	TRACE("The Pokemon copies a foe's Ability."),
 	TYPE_MASTER("Grants STAB on all moves."),
 	UNAWARE("Ignores the opposing Pokemon's stat changes."),

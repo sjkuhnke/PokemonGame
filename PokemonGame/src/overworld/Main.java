@@ -276,6 +276,7 @@ public class Main {
 			trainers[185] = new Trainer("Scott 3", new Pokemon[]{new Pokemon(77, 47, false, true), new Pokemon(130, 47, false, true), new Pokemon(9, 47, false, true), new Pokemon(37, 46, false, true), new Pokemon(167, 48, false, true)}, 400, 15);
 			trainers[216] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(100, 56, false, true), new Pokemon(210, 56, false, true), new Pokemon(219, 57, false, true), new Pokemon(6, 57, false, true), new Pokemon(196, 56, false, true), new Pokemon(79, 58, false, true)}, 400);
 			trainers[242] = new Trainer("Scott 4", new Pokemon[]{new Pokemon(77, 59, false, true), new Pokemon(130, 60, false, true), new Pokemon(189, 58, false, true), new Pokemon(9, 60, false, true), new Pokemon(37, 59, false, true), new Pokemon(168, 61, false, true)}, 400, 21);
+			trainers[344] = new Trainer("Fred 4", new Pokemon[]{new Pokemon(196, 77, false, true), new Pokemon(210, 76, false, true), new Pokemon(219, 77, false, true), new Pokemon(6, 77, false, true), new Pokemon(100, 76, false, true), new Pokemon(79, 78, false, true)}, 400, 27);
 			
 			setAbility("Scott 1", 1, Ability.PROTEAN);
 			setAbility("Fred 1", 2, Ability.DRY_SKIN);
@@ -284,6 +285,7 @@ public class Main {
 			setAbility("Scott 3", 3, Ability.PROTEAN);
 			setAbility("Fred 3", 4, Ability.DRY_SKIN);
 			setAbility("Scott 4", 4, Ability.PROTEAN);
+			setAbility("Fred 4", 4, Ability.DRY_SKIN);
 			
 			setItem("Scott 1", 1, Item.MYSTIC_WATER);
 			setItem("Fred 1", 2, Item.CHARCOAL);
@@ -296,6 +298,7 @@ public class Main {
 			trainers[185] = new Trainer("Scott 3", new Pokemon[]{new Pokemon(77, 47, false, true), new Pokemon(130, 47, false, true), new Pokemon(3, 47, false, true), new Pokemon(37, 46, false, true), new Pokemon(167, 48, false, true)}, 400, 15);
 			trainers[216] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(100, 56, false, true), new Pokemon(210, 56, false, true), new Pokemon(219, 57, false, true), new Pokemon(9, 57, false, true), new Pokemon(196, 56, false, true), new Pokemon(79, 58, false, true)}, 400);
 			trainers[242] = new Trainer("Scott 4", new Pokemon[]{new Pokemon(77, 59, false, true), new Pokemon(130, 60, false, true), new Pokemon(189, 58, false, true), new Pokemon(3, 60, false, true), new Pokemon(37, 59, false, true), new Pokemon(168, 61, false, true)}, 400, 21);
+			trainers[344] = new Trainer("Fred 4", new Pokemon[]{new Pokemon(196, 77, false, true), new Pokemon(210, 76, false, true), new Pokemon(219, 77, false, true), new Pokemon(9, 77, false, true), new Pokemon(100, 76, false, true), new Pokemon(79, 78, false, true)}, 400, 27);
 			
 			setAbility("Scott 1", 1, Ability.ROUGH_SKIN);
 			setAbility("Fred 1", 2, Ability.PROTEAN);
@@ -304,6 +307,7 @@ public class Main {
 			setAbility("Scott 3", 3, Ability.ROUGH_SKIN);
 			setAbility("Fred 3", 4, Ability.PROTEAN);
 			setAbility("Scott 4", 4, Ability.ROUGH_SKIN);
+			setAbility("Fred 4", 4, Ability.PROTEAN);
 			
 			setItem("Scott 1", 1, Item.MIRACLE_SEED);
 			setItem("Fred 1", 2, Item.MYSTIC_WATER);
@@ -316,6 +320,7 @@ public class Main {
 			trainers[185] = new Trainer("Scott 3", new Pokemon[]{new Pokemon(77, 47, false, true), new Pokemon(130, 47, false, true), new Pokemon(6, 47, false, true), new Pokemon(37, 46, false, true), new Pokemon(167, 48, false, true)}, 400, 15);
 			trainers[216] = new Trainer("Fred 3", new Pokemon[]{new Pokemon(100, 56, false, true), new Pokemon(210, 56, false, true), new Pokemon(219, 57, false, true), new Pokemon(3, 57, false, true), new Pokemon(196, 56, false, true), new Pokemon(79, 58, false, true)}, 400);
 			trainers[242] = new Trainer("Scott 4", new Pokemon[]{new Pokemon(77, 59, false, true), new Pokemon(130, 60, false, true), new Pokemon(189, 58, false, true), new Pokemon(6, 60, false, true), new Pokemon(37, 59, false, true), new Pokemon(168, 61, false, true)}, 400, 21);
+			trainers[344] = new Trainer("Fred 4", new Pokemon[]{new Pokemon(196, 77, false, true), new Pokemon(210, 76, false, true), new Pokemon(219, 77, false, true), new Pokemon(3, 77, false, true), new Pokemon(100, 76, false, true), new Pokemon(79, 78, false, true)}, 400, 27);
 			
 			setAbility("Scott 1", 1, Ability.DRY_SKIN);
 			setAbility("Fred 1", 2, Ability.ROUGH_SKIN);
@@ -324,6 +329,7 @@ public class Main {
 			setAbility("Scott 3", 3, Ability.DRY_SKIN);
 			setAbility("Fred 3", 4, Ability.ROUGH_SKIN);
 			setAbility("Scott 4", 4, Ability.DRY_SKIN);
+			setAbility("Fred 4", 4, Ability.ROUGH_SKIN);
 			
 			setItem("Scott 1", 1, Item.CHARCOAL);
 			setItem("Fred 1", 2, Item.MIRACLE_SEED);
@@ -524,6 +530,51 @@ public class Main {
 		setItem("7 Gym Leader 1", 4, Item.LEFTOVERS);
 		setItem("7 Gym Leader 1", 5, Item.WIKI_BERRY);
 		setItem("7 Gym Leader 1", 6, Item.CHOICE_BAND);
+		
+		setItem("Rick 3", 1, Item.SILVER_POWDER);
+		setAbility("Rick 3", 1, Ability.TERRIFY, true);
+		setItem("Rick 3", 2, Item.WIDE_LENS);
+		setItem("Rick 3", 3, Item.AIR_BALLOON);
+		setItem("Rick 3", 4, Item.CHOICE_SPECS);
+		setItem("Rick 3", 5, Item.BIG_ROOT);
+		setItem("Rick 3", 6, Item.POWER_HERB);
+		
+		setMoveset("Rick 3", 1, Move.U$TURN, Move.KNOCK_OFF, Move.MOONLIGHT, Move.FIRST_IMPRESSION);
+		setMoveset("Rick 3", 2, Move.STONE_EDGE, Move.WILL$O$WISP, Move.COMET_CRASH, Move.ROCK_POLISH);
+		setMoveset("Rick 3", 3, Move.BULLET_PUNCH, Move.COIL, Move.THUNDER_PUNCH, Move.EARTHQUAKE);
+		setMoveset("Rick 3", 4, Move.SCALD, Move.GIGA_DRAIN, Move.U$TURN, Move.ICE_BEAM);
+		setMoveset("Rick 3", 5, Move.HEAD_SMASH, Move.DRAIN_PUNCH, Move.NO_RETREAT, Move.STEALTH_ROCK);
+		setMoveset("Rick 3", 6, Move.SPIKY_SHIELD, Move.IRON_HEAD, Move.MAGIC_CRASH, Move.HONE_CLAWS);
+		
+		setItem("Fred 4", 1, Item.LOADED_DICE);
+		setAbility("Fred 4", 1, Ability.HUGE_POWER);
+		setItem("Fred 4", 2, Item.WEAKNESS_POLICY);
+		setItem("Fred 4", 3, Item.ROCKY_HELMET);
+		setItem("Fred 4", 4, Item.SITRUS_BERRY);
+		setItem("Fred 4", 5, Item.CHOICE_SCARF);
+		setItem("Fred 4", 6, Item.LEFTOVERS);
+		
+		setMoveset("Fred 4", 1, Move.SHOOTING_STARS, Move.ROCK_BLAST, Move.DRAIN_PUNCH, Move.BULK_UP);
+		setMoveset("Fred 4", 2, Move.DRAGON_DANCE, Move.WATERFALL, Move.VOLT_TACKLE, Move.BREAKING_SWIPE);
+		setMoveset("Fred 4", 3, Move.GLARE, Move.BREAKING_SWIPE, Move.EARTH_POWER, Move.DARK_PULSE);
+		setMoveset("Fred 4", 5, Move.ERUPTION, Move.DRACO_METEOR, Move.VOLT_SWITCH, Move.DARK_PULSE);
+		setMoveset("Fred 4", 6, Move.AQUA_VEIL, Move.SCALD, Move.PSYCHIC, Move.CALM_MIND);
+		
+		setItem("Maxwell 2", 1, Item.BLUNDER_POLICY);
+		setItem("Maxwell 2", 2, Item.CHOICE_SPECS);
+		setItem("Maxwell 2", 3, Item.HEAVY$DUTY_BOOTS);
+		setAbility("Maxwell 3", 3, Ability.PRANKSTER);
+		setItem("Maxwell 2", 4, Item.LOADED_DICE);
+		setAbility("Maxwell 3", 4, Ability.DEFIANT);
+		setItem("Maxwell 2", 5, Item.COBA_BERRY);
+		setItem("Maxwell 2", 6, Item.WEAKNESS_POLICY);
+		
+		setMoveset("Maxwell 2", 1, Move.SHIFT_GEAR, Move.POP_POP, Move.ACROBATICS, Move.EARTHQUAKE);
+		setMoveset("Maxwell 2", 2, Move.DARK_PULSE, Move.STAR_STORM, Move.SLUDGE_WAVE, Move.SWITCHEROO);
+		setMoveset("Maxwell 2", 3, Move.SPECTRAL_THIEF, Move.THUNDER_WAVE, Move.PARTING_SHOT, Move.UNSEEN_STRANGLE);
+		setMoveset("Maxwell 2", 4, Move.SCALE_SHOT, Move.JAW_LOCK, Move.OBSTRUCT, Move.FATAL_BIND);
+		setMoveset("Maxwell 2", 5, Move.STAR$STRUCK_ARROW, Move.DRAIN_PUNCH, Move.NO_RETREAT, Move.METEOR_MASH);
+		setMoveset("Maxwell 2", 6, Move.TERRAIN_PULSE, Move.SPACIAL_REND, Move.SUPERNOVA_EXPLOSION, Move.MAGIC_REFLECT);
 	}
 
 	private static void setTrainers() {
@@ -859,7 +910,22 @@ public class Main {
 				new Trainer("Ice Master", new Pokemon[]{new Pokemon(59, 37, false, true), new Pokemon(60, 36, false, true), new Pokemon(64, 35, false, true), new Pokemon(69, 36, false, true)}, new Item[]{Item.FOCUS_SASH, Item.ICY_ROCK, Item.EVIOLITE, Item.LEFTOVERS}, 100, Item.PETTICOAT_GEM, 7),
 				new Trainer("Ground Master", new Pokemon[]{new Pokemon(50, 36, false, true), new Pokemon(57, 35, false, true), new Pokemon(169, 36, false, true), new Pokemon(215, 37, false, true)}, new Item[]{Item.FOCUS_BAND, null, Item.EVIOLITE, Item.LIFE_ORB}, 100, Item.VALIANT_GEM, 6),
 				new Trainer("Crook", new Pokemon[]{new Pokemon(104, 13, false, true), new Pokemon(85, 14, false, true), new Pokemon(171, 14, false, true)}, new Item[]{Item.ORAN_BERRY, Item.RINDO_BERRY, Item.ROCKY_HELMET}, 100, Item.EXP_SHARE, 32),
-//				new Trainer("Rival 5", new Pokemon[]{new Pokemon(-132, 36, false, true), new Pokemon(-25, 27, false, true), new Pokemon(-22, 32, false, true), new Pokemon(-41, 29, false, true), new Pokemon(-78, 35, false, true)}, 500),
+				new Trainer("TN MS 2", new Pokemon[] {new Pokemon(227, 68, false, true), new Pokemon(152, 68, false, true), new Pokemon(222, 68, false, true), new Pokemon(162, 68, false, true)}, new Item[] {Item.ROSELI_BERRY, Item.BLACK_SLUDGE, Item.CHOICE_SCARF, Item.POWER_HERB}, 100), // 330
+				new Trainer("TN MS 3", new Pokemon[] {new Pokemon(225, 68, false, true), new Pokemon(96, 68, false, true), new Pokemon(105, 68, false, true), new Pokemon(17, 68, false, true)}, new Item[] {Item.FLAME_ORB, Item.ASSAULT_VEST, Item.WIDE_LENS, Item.EVIOLITE}, 100),
+				new Trainer("TN MS 4", new Pokemon[] {new Pokemon(216, 68, false, true), new Pokemon(149, 68, false, true), new Pokemon(46, 68, false, true), new Pokemon(147, 68, false, true)}, new Item[] {Item.POWER_HERB, Item.POWER_HERB, Item.COBA_BERRY, Item.ROCKY_HELMET}, 100),
+				new Trainer("TN MS 5", new Pokemon[] {new Pokemon(219, 68, false, true), new Pokemon(173, 68, false, true), new Pokemon(180, 68, false, true), new Pokemon(159, 68, false, true)}, new Item[] {Item.SITRUS_BERRY, Item.PASSHO_BERRY, Item.FOCUS_SASH, Item.ROSELI_BERRY}, 100),
+				new Trainer("TN MS 6", new Pokemon[] {new Pokemon(207, 69, false, true), new Pokemon(51, 69, false, true), new Pokemon(212, 69, false, true), new Pokemon(54, 69, false, true)}, new Item[] {Item.CHOICE_SPECS, Item.RINDO_BERRY, Item.CHOICE_SCARF, Item.ASSAULT_VEST}, 100),
+				new Trainer("TN MS 7", new Pokemon[] {new Pokemon(208, 69, false, true), new Pokemon(50, 69, false, true), new Pokemon(201, 69, false, true), new Pokemon(183, 69, false, true)}, new Item[] {Item.CHOICE_SCARF, Item.MUSCLE_BAND, Item.WHITE_HERB, Item.EXPERT_BELT}, 100), // 335
+				new Trainer("TN MS 8", new Pokemon[] {new Pokemon(210, 69, false, true), new Pokemon(198, 69, false, true), new Pokemon(204, 69, false, true), new Pokemon(100, 69, false, true)}, new Item[] {Item.AIR_BALLOON, Item.LIFE_ORB, Item.WHITE_HERB, Item.WIDE_LENS}, 100),
+				new Trainer("TN MS 9", new Pokemon[] {new Pokemon(113, 69, false, true), new Pokemon(214, 69, false, true), new Pokemon(119, 69, false, true), new Pokemon(28, 69, false, true)}, new Item[] {Item.METAL_COAT, Item.CHOPLE_BERRY, Item.ROCKY_HELMET, Item.YACHE_BERRY}, 100),
+				new Trainer("TN MS 10", new Pokemon[] {new Pokemon(27, 69, false, true), new Pokemon(31, 69, false, true), new Pokemon(155, 69, false, true), new Pokemon(34, 69, false, true)}, new Item[] {Item.FLAME_ORB, Item.POISON_BARB, Item.SHARP_BEAK, Item.POWER_HERB}, 100),
+				new Trainer("TN MS 11", new Pokemon[] {new Pokemon(165, 69, false, true), new Pokemon(170, 69, false, true), new Pokemon(173, 69, false, true), new Pokemon(176, 69, false, true)}, new Item[] {Item.EVERSTONE, Item.EXPERT_BELT, Item.YACHE_BERRY, Item.SITRUS_BERRY}, 100),
+				new Trainer("TN MS 12", new Pokemon[] {new Pokemon(24, 70, false, true), new Pokemon(43, 70, false, true), new Pokemon(25, 70, false, true), new Pokemon(74, 70, false, true)}, new Item[] {Item.TOXIC_ORB, Item.SILVER_POWDER, Item.ROCKY_HELMET, Item.BLACK_GLASSES}, 100), // 340
+				new Trainer("TN MS 13", new Pokemon[] {new Pokemon(84, 70, false, true), new Pokemon(145, 70, false, true), new Pokemon(142, 70, false, true), new Pokemon(141, 70, false, true)}, new Item[] {Item.ROCKY_HELMET, Item.RED_CARD, Item.LIFE_ORB, Item.EVIOLITE}, 100),
+				new Trainer("TN MS 14", new Pokemon[] {new Pokemon(97, 70, false, true), new Pokemon(109, 70, false, true), new Pokemon(6, 70, false, true), new Pokemon(196, 70, false, true)}, new Item[] {Item.CHOICE_SCARF, Item.HEAT_ROCK, Item.CHOICE_SCARF, Item.CHOICE_SCARF}, 100),
+				new Trainer("Rick 3", new Pokemon[]{new Pokemon(74, 74, false, true), new Pokemon(162, 74, false, true), new Pokemon(113, 74, false, true), new Pokemon(46, 74, false, true), new Pokemon(67, 73, false, true), new Pokemon(122, 75, false, true)}, 400, 32),
+				new Trainer("Fred 4", new Pokemon[]{new Pokemon(1, 1, false, true)}, 500),
+				new Trainer("Maxwell 2", new Pokemon[]{new Pokemon(183, 79, false, true), new Pokemon(222, 79, false, true), new Pokemon(216, 79, false, true), new Pokemon(214, 79, false, true), new Pokemon(192, 79, false, true), new Pokemon(186, 80, false, true)}, 400, 28), // 345
 //				new Trainer("KK", new Pokemon[]{new Pokemon(-96, 25, false, true), new Pokemon(-97, 20, false, true), new Pokemon(-98, 30, false, true)}, 100),
 //				new Trainer("LL", new Pokemon[]{new Pokemon(-39, 25, false, true), new Pokemon(-41, 25, false, true), new Pokemon(-39, 30, false, true), new Pokemon(-41, 30, false, true)}, 100),
 //				new Trainer("OO", new Pokemon[]{new Pokemon(-39, 30, false, true), new Pokemon(-41, 30, false, true)}, 100),
@@ -929,10 +995,14 @@ public class Main {
 	}
 	
 	private static void setAbility(String string, int i, Ability a) {
+		setAbility(string, i, a, false);
+	}
+	
+	private static void setAbility(String string, int i, Ability a, boolean hidden) {
 		for (Trainer tr : trainers) {
 			if (tr.getName().equals(string)) {
 				tr.getTeam()[i - 1].ability = a;
-				tr.getTeam()[i - 1].abilitySlot = 1;
+				tr.getTeam()[i - 1].abilitySlot = hidden ? 2 : 1;
 				if (!modifiedTrainers.contains(tr)) modifiedTrainers.add(tr);
 			}
 		}
