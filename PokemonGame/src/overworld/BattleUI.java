@@ -577,7 +577,7 @@ public class BattleUI extends AbstractUI {
 			case END_STATE:
 				if (tasks.isEmpty()) {
 					user.setVisible(false);
-					gp.endBattle(index, -1);
+					gp.endBattle(index, staticID);
 					gp.gameState = GamePanel.PLAY_STATE;
 				}
 				break;

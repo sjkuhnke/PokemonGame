@@ -245,6 +245,10 @@ public class Main {
 		            });
 		    		
 		    		gamePanel.eHandler.p = gamePanel.player.p;
+		    		
+		    		if (gamePanel.currentMap == 107 && gamePanel.player.p.flags[28]) {
+		    			gamePanel.tileM.openGhostlyBluePortals();
+		    		}
 		        }
 		    });
 			
@@ -923,7 +927,7 @@ public class Main {
 				new Trainer("TN MS 12", new Pokemon[] {new Pokemon(24, 70, false, true), new Pokemon(43, 70, false, true), new Pokemon(25, 70, false, true), new Pokemon(74, 70, false, true)}, new Item[] {Item.TOXIC_ORB, Item.SILVER_POWDER, Item.ROCKY_HELMET, Item.BLACK_GLASSES}, 100), // 340
 				new Trainer("TN MS 13", new Pokemon[] {new Pokemon(84, 70, false, true), new Pokemon(145, 70, false, true), new Pokemon(142, 70, false, true), new Pokemon(141, 70, false, true)}, new Item[] {Item.ROCKY_HELMET, Item.RED_CARD, Item.LIFE_ORB, Item.EVIOLITE}, 100),
 				new Trainer("TN MS 14", new Pokemon[] {new Pokemon(97, 70, false, true), new Pokemon(109, 70, false, true), new Pokemon(6, 70, false, true), new Pokemon(196, 70, false, true)}, new Item[] {Item.CHOICE_SCARF, Item.HEAT_ROCK, Item.CHOICE_SCARF, Item.CHOICE_SCARF}, 100),
-				new Trainer("Rick 3", new Pokemon[]{new Pokemon(74, 74, false, true), new Pokemon(162, 74, false, true), new Pokemon(113, 74, false, true), new Pokemon(46, 74, false, true), new Pokemon(67, 73, false, true), new Pokemon(122, 75, false, true)}, 400, 32),
+				new Trainer("Rick 3", new Pokemon[]{new Pokemon(74, 74, false, true), new Pokemon(162, 74, false, true), new Pokemon(113, 74, false, true), new Pokemon(46, 74, false, true), new Pokemon(67, 73, false, true), new Pokemon(122, 75, false, true)}, 400, 34),
 				new Trainer("Fred 4", new Pokemon[]{new Pokemon(1, 1, false, true)}, 500),
 				new Trainer("Maxwell 2", new Pokemon[]{new Pokemon(183, 79, false, true), new Pokemon(222, 79, false, true), new Pokemon(216, 79, false, true), new Pokemon(214, 79, false, true), new Pokemon(192, 79, false, true), new Pokemon(186, 80, false, true)}, 400, 28), // 345
 //				new Trainer("KK", new Pokemon[]{new Pokemon(-96, 25, false, true), new Pokemon(-97, 20, false, true), new Pokemon(-98, 30, false, true)}, 100),

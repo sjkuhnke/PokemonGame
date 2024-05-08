@@ -58,7 +58,7 @@ public class Pokemon implements Serializable {
 	// Database
 	private static String[] names = new String[MAX_POKEMON];
 	private static PType[][] types = new PType[MAX_POKEMON][2];
-	private static Ability[][] abilities = new Ability[MAX_POKEMON][2];
+	private static Ability[][] abilities = new Ability[MAX_POKEMON][3];
 	private static int[][] base_stats = new int[MAX_POKEMON][6];
 	private static double[] weights = new double[MAX_POKEMON];
 	private static int[] catch_rates = new int[MAX_POKEMON];
@@ -712,7 +712,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void setAbility(int slot) {
-		ability = abilities[id - 1][slot];	
+		ability = abilities[id - 1][slot];
 	}
 	
 	public int getLevel() {
@@ -1380,7 +1380,10 @@ public class Pokemon implements Serializable {
 			addTask(Task.TEXT, foe.nickname + " protected itself!");
 			if (move.contact) {
 				if (foe.lastMoveUsed == Move.OBSTRUCT) stat(this, 1, -2, foe);
-				if (foe.lastMoveUsed == Move.AQUA_VEIL) stat(this, 2, -1, foe);
+				if (foe.lastMoveUsed == Move.AQUA_VEIL) {
+					stat(this, 0, -1, foe);
+					stat(this, 2, -1, foe);
+				}
 				if (foe.lastMoveUsed == Move.LAVA_LAIR) burn(false, foe);
 				if (foe.lastMoveUsed == Move.SPIKY_SHIELD && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 					this.damage(Math.max(this.getStat(0) / 8.0, 1), foe);
@@ -8667,15 +8670,16 @@ public class Pokemon implements Serializable {
 		public static final int EVO_ITEM = 23;
 		public static final int SPRITE = 24;
 		public static final int CONFIRM = 25; // counter: 0 = gauntlet at mt. splinkty
+		public static final int TELEPORT = 26;
 		
 		public int type;
 		public String message;
-		public int counter;
+		public int counter; // map for teleport
 		
-		public boolean wipe;
+		public boolean wipe; // cooldown for teleport
 		
-		public int start;
-		public int finish;
+		public int start; // x for teleport
+		public int finish; // y for teleport
 		public Pokemon p; // the pokemon taking damage, or announcing an ability, or being sent out
 		public Pokemon evo;
 		public Ability ability;
@@ -11476,12 +11480,13 @@ public class Pokemon implements Serializable {
         	types[i][1] = tokens[3].trim().equals("null") ? null : PType.valueOf(tokens[3].trim());
         	abilities[i][0] = Ability.valueOf(tokens[4].trim());
         	abilities[i][1] = Ability.valueOf(tokens[5].trim());
-        	String[] baseStatsStr = tokens[6].trim().replaceAll("\\[|\\]", "").split(", ");
+        	abilities[i][2] = Ability.valueOf(tokens[6].trim());
+        	String[] baseStatsStr = tokens[7].trim().replaceAll("\\[|\\]", "").split(", ");
         	for (int j = 0; j < 6; j++) {
                 base_stats[i][j] = Integer.parseInt(baseStatsStr[j]);
             }
-        	weights[i] = Double.parseDouble(tokens[7].trim());
-        	catch_rates[i] = Integer.parseInt(tokens[8].trim());
+        	weights[i] = Double.parseDouble(tokens[8].trim());
+        	catch_rates[i] = Integer.parseInt(tokens[9].trim());
         }
     }
 

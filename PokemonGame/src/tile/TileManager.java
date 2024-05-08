@@ -876,4 +876,12 @@ public class TileManager {
 		
 		return result;
 	}
+	
+	public void openGhostlyBluePortals() {
+		int[] xCoords = new int[] {56, 56, 38, 69, 79, 43, 18, 20, 36, 50, 66, 52, 69, 32, 50, 54, 60, 64, 74, 76, 46, 47, 47, 47, 45, 50, 54, 55, 49, 45, 45, 49, 41};
+		int[] yCoords = new int[] {81, 83, 90, 83, 63, 73, 39, 34, 48, 64, 54, 59, 31, 28, 20, 20, 17, 19, 22, 26, 53, 50, 47, 44, 41, 51, 48, 40, 37, 37, 30, 30, 48};
+		for (int i = 0; i < xCoords.length; i++) {
+			mapTileNum[107][xCoords[i]][yCoords[i]] = 483;
+		}
+	}
 }
