@@ -160,6 +160,8 @@ Bugop -> Lunymph
 Opwing -> Feromoth
 Otterpor ->
 Psylotter ->
+Florline ->
+Florlion -> Oncaroma/Osceloma/Osceroma
 Psycorb -> Psycorb/Orbronze
 Psyballs -> Silvidol
 Psycorboratr -> Auracle

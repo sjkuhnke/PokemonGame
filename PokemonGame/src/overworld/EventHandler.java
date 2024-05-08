@@ -1,8 +1,8 @@
 package overworld;
 
-import javax.swing.JOptionPane;
-
 import pokemon.Player;
+import pokemon.Pokemon;
+import pokemon.Pokemon.Task;
 
 public class EventHandler {
 
@@ -552,13 +552,20 @@ public class EventHandler {
 			if (hit(107,53,63)) teleport(107, 66, 50,true); // F
 			if (hit(107,47,63)) {
 				if (!gp.player.p.flags[19] || !gp.player.p.flags[20]) {
-					teleport(107, 42, 57,true);
+					gp.gameState = GamePanel.TASK_STATE;
+					Task t = Pokemon.addTask(Task.TELEPORT, "");
+					t.counter = 107;
+					t.start = 42;
+					t.finish = 57;
+					t.wipe = false;
 					if (gp.player.p.grustCount < 10) {
-						JOptionPane.showMessageDialog(null, "This portal seems to be jammed\nby the Ghosts everywhere...\nThere are " + (10 - gp.player.p.grustCount) + " remaining!");
+						Pokemon.addTask(Task.TEXT, "This portal seems to be jammed by the Ghosts everywhere...");
+						Pokemon.addTask(Task.TEXT, "There are " + (10 - gp.player.p.grustCount) + " Ghosts remaining!");
 					} else if (!gp.player.p.flags[19]) {
-						JOptionPane.showMessageDialog(null, "This portal seems to be jammed\nby Rick...");
+						Pokemon.addTask(Task.TEXT, "This portal seems to be jammed by Rick...");
 					} else {
-						JOptionPane.showMessageDialog(null, "This portal seems to be jammed\nby Team Nuke... Rick said\nthat they're at the bottom\nof Electric Tunnel!");
+						Pokemon.addTask(Task.TEXT, "This portal seems to be jammed by Team Nuke...");
+						Pokemon.addTask(Task.TEXT, "Rick said that they're at the bottom of Electric Tunnel!");
 					}
 				} else {
 					teleport(107, 24, 48,true); // G
@@ -774,6 +781,14 @@ public class EventHandler {
 			// Shadow Path -> Shadow Cavern
 			if (hit(105,12,46)) teleport(150, 54, 77,false);
 			if (hit(150,54,78)) teleport(105, 12, 47,false);
+			
+			// Splinkty 5A
+			if (hit(149,56,71)) gp.iTile[149][0] = null;
+			if (hit(149,42,71)) gp.iTile[149][1] = null;
+			if (hit(149,39,65)) gp.iTile[149][2] = null;
+			if (hit(149,51,63) && gp.player.p.flags[34]) gp.iTile[149][3] = null; // beat rick, unlock fred gate
+			if (hit(149,54,62) && gp.player.p.flags[27]) gp.iTile[149][4] = null; // beat fred, unlock maxwell gate
+			if (hit(149,49,59)) gp.aSetter.updateNPC(149); // clear all tn members
 		}
 	}
 	

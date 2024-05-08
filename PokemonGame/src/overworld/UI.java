@@ -260,6 +260,9 @@ public class UI extends AbstractUI{
 			drawDialogueScreen(true);
 			drawConfirmWindow(currentTask.counter);
 			break;
+		case Task.TELEPORT:
+			gp.gameState = GamePanel.TRANSITION_STATE;
+			break;
 		}
 	}
 
@@ -1863,15 +1866,28 @@ public class UI extends AbstractUI{
 		
 		if (counter == 50) {
 			counter = 0;
-			gp.gameState = GamePanel.PLAY_STATE;
-			gp.currentMap = gp.eHandler.tempMap;
-			gp.player.worldX = gp.tileSize * gp.eHandler.tempCol;
-			gp.player.worldY = gp.tileSize * gp.eHandler.tempRow;
-			gp.player.worldY -= gp.tileSize / 4;
-			gp.eHandler.previousEventX = gp.player.worldX;
-			gp.eHandler.previousEventY = gp.player.worldY;
-			gp.player.p.currentMap = gp.eHandler.tempMap;
-			gp.eHandler.canTouchEvent = !gp.eHandler.tempCooldown;
+			if (currentTask != null && currentTask.type == Task.TELEPORT) {
+				gp.gameState = GamePanel.TASK_STATE;
+				gp.currentMap = currentTask.counter;
+				gp.player.worldX = gp.tileSize * currentTask.start;
+				gp.player.worldY = gp.tileSize * currentTask.finish;
+				gp.player.worldY -= gp.tileSize / 4;
+				gp.eHandler.previousEventX = gp.player.worldX;
+				gp.eHandler.previousEventY = gp.player.worldY;
+				gp.player.p.currentMap = currentTask.counter;
+				gp.eHandler.canTouchEvent = !currentTask.wipe;
+				currentTask = null;
+			} else {
+				gp.gameState = GamePanel.PLAY_STATE;
+				gp.currentMap = gp.eHandler.tempMap;
+				gp.player.worldX = gp.tileSize * gp.eHandler.tempCol;
+				gp.player.worldY = gp.tileSize * gp.eHandler.tempRow;
+				gp.player.worldY -= gp.tileSize / 4;
+				gp.eHandler.previousEventX = gp.player.worldX;
+				gp.eHandler.previousEventY = gp.player.worldY;
+				gp.player.p.currentMap = gp.eHandler.tempMap;
+				gp.eHandler.canTouchEvent = !gp.eHandler.tempCooldown;
+			}
 			gp.player.p.surf = false;
 			gp.player.p.lavasurf = false;
 			
@@ -2158,7 +2174,7 @@ public class UI extends AbstractUI{
 		String message = PlayerCharacter.currentMapName;
 		if (message.length() < 15) {
 			g2.setFont(g2.getFont().deriveFont(32F));
-		} else if (message.length() < 21) {
+		} else if (message.length() < 19) {
 			g2.setFont(g2.getFont().deriveFont(28F));
 		} else {
 			g2.setFont(g2.getFont().deriveFont(24F));

@@ -1488,7 +1488,11 @@ public class AssetSetter {
 		mapNum = 146;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 79, 27, -1);
-		gp.npc[mapNum][index] = NPCSetup(82, 27, "Inside there is quite the function in there. You are only allowed to bring 10 of your strongest Pokemon, and that's it. Good luck.", true);
+		if (!flags[28]) {
+			gp.npc[mapNum][index] = NPCSetup(82, 27, "Inside there is quite the function in there. You are only allowed to bring 10 of your strongest Pokemon, and that's it. Good luck.", true);
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
 		
 		mapNum = 148;
 		index = 0;
@@ -2123,6 +2127,14 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(45, 59, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 48, 1, 1, mapNum, map);
 		
+		mapNum = 149;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 68, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 67, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 66, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 62, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 60, 3, mapNum, map);
+		
 		mapNum = 150;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(48, 77, 1, mapNum, map);
@@ -2245,9 +2257,16 @@ public class AssetSetter {
 		}
 		if (flags[28]) {
 			gp.npc[146][1] = null;
+			for (int i = 1; i < gp.npc[1].length; i++) {
+				gp.npc[149][i] = null;
+			}
+		}
+		
+		if (map == 107 && flags[28]) {
+			gp.tileM.openGhostlyBluePortals();
 		}
 	}
-	
+
 	private Entity NPCSetup(int type, int x, int y, int team) {
 		return NPCSetup(type, x, y, team, true);
 	}
