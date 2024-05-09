@@ -20,6 +20,7 @@ import java.util.Arrays;
 
 import entity.Entity;
 import entity.PlayerCharacter;
+import pokemon.Ability;
 import pokemon.AbstractUI;
 import pokemon.Bag;
 import pokemon.Item;
@@ -634,7 +635,9 @@ public class UI extends AbstractUI{
 		ArrayList<Move> levelMoveList = new ArrayList<>();
 		ArrayList<Integer> levelLevelList = new ArrayList<>();
 		ArrayList<Item> tmList = new ArrayList<>();
-		Pokemon test = new Pokemon(dexNum, 5, false, true);
+		Pokemon test = new Pokemon(dexNum, 5, false, false);
+		test.abilitySlot = 0;
+		test.setAbility(test.abilitySlot);
 		if (mode == 2) {
 			if (test.movebank != null) {
 			    for (int i = 0; i < test.movebank.length; i++) {
@@ -741,9 +744,9 @@ public class UI extends AbstractUI{
 	private void drawDexSummary(Pokemon p, int mode, ArrayList<Move> levelMoveList, ArrayList<Integer> levelLevelList, ArrayList<Item> tmList) {
 		if (mode == 0) return;
 		int x = gp.tileSize * 7;
-		int y = gp.tileSize / 4;
+		int y = 0;
 		int width = gp.tileSize * 9;
-		int height = (int) (mode == 2 ? gp.tileSize * 11.5 : gp.tileSize * 4.5);
+		int height = (int) (mode == 2 ? gp.tileSize * 12 : gp.tileSize * 4.5);
 		
 		drawSubWindow(x, y, width, height);
 		
@@ -766,7 +769,7 @@ public class UI extends AbstractUI{
 		int startY = y;
 		
 		// Sprite
-		g2.drawImage(p.isFainted() ? p.getFaintedSprite() : p.getSprite(), x - 12, y, null);
+		g2.drawImage(p.getSprite(), x - 12, y, null);
 		x += gp.tileSize * 2;
 		g2.drawImage(p.type1.getImage2(), x - 12, y, null);
 		if (p.type2 != null) {
@@ -776,10 +779,11 @@ public class UI extends AbstractUI{
 		// Abilities
 		g2.setFont(g2.getFont().deriveFont(28F));
 		x += gp.tileSize * 3.75;
+		y -= gp.tileSize;
 		String abilityLabel = "Abilities:";
 		g2.drawString(abilityLabel, getCenterAlignedTextX(abilityLabel, x), y);
 		g2.setFont(g2.getFont().deriveFont(24F));
-		y += gp.tileSize / 2;
+		y += gp.tileSize * 0.75;
 		String ability = mode == 2 ? p.ability.toString() : "???";
 		g2.drawString(ability, getCenterAlignedTextX(ability, x), y);
 		
@@ -787,7 +791,6 @@ public class UI extends AbstractUI{
 		
 		g2.setFont(g2.getFont().deriveFont(16F));
 		String[] abilityDesc = Item.breakString(p.ability.desc, 26).split("\n");
-		y += gp.tileSize / 4;
 		for (String s : abilityDesc) {
 			y += gp.tileSize / 2 - 4;
 			g2.drawString(s, getCenterAlignedTextX(s, x), y);
@@ -801,10 +804,32 @@ public class UI extends AbstractUI{
 		
 		g2.setFont(g2.getFont().deriveFont(16F));
 		String[] abilityDesc2 = Item.breakString(p.ability.desc, 26).split("\n");
-		y += gp.tileSize / 4;
 		for (String s : abilityDesc2) {
 			y += gp.tileSize / 2 - 4;
 			g2.drawString(s, getCenterAlignedTextX(s, x), y);
+		}
+		
+		g2.setFont(g2.getFont().deriveFont(28F));
+		y += gp.tileSize * 0.5;
+		String hAbilityLabel = "-----------------";
+		g2.drawString(hAbilityLabel, getCenterAlignedTextX(hAbilityLabel, x), y);
+		g2.setFont(g2.getFont().deriveFont(24F));
+		y += gp.tileSize * 0.5;
+		p.setAbility(2);
+		String ability3;
+		if (p.ability == Ability.NULL) {
+			ability3 = "N/A";
+			g2.drawString(ability3, getCenterAlignedTextX(ability3, x), y);
+		} else {
+			ability3 = p.ability.toString();
+			g2.drawString(ability3, getCenterAlignedTextX(ability3, x), y);
+			
+			g2.setFont(g2.getFont().deriveFont(16F));
+			String[] abilityDesc3 = Item.breakString(p.ability.desc, 26).split("\n");
+			for (String s : abilityDesc3) {
+				y += gp.tileSize / 2 - 4;
+				g2.drawString(s, getCenterAlignedTextX(s, x), y);
+			}
 		}
 		
 		// Stats
@@ -837,16 +862,27 @@ public class UI extends AbstractUI{
         	
         	y = sY + gp.tileSize / 2;
 		}
-		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.setFont(g2.getFont().deriveFont(20F));
 		g2.setColor(Color.WHITE);
-		x = startX - 6;
+		x = startX;
 		y += gp.tileSize / 4;
-		g2.drawString("Total: " + p.getBST(), x, y);
+		String totalText = "Total: " + p.getBST();
+		g2.drawString(totalText, getRightAlignedTextX(totalText, x + 180), y - 12);
+		
+		// Evolutions
+		int moveStartY = y + gp.tileSize;
+		y += gp.tileSize / 6;
+		String evolve = p.getEvolveString();
+		if (evolve != null) {
+			String[] evolves = p.getEvolveString().split("\n");
+			for (String s : evolves) {
+				g2.drawString(s, x, y);
+				y += gp.tileSize / 3 + 2;
+			}
+		}
 		
 		// Level up moves
-		g2.setFont(g2.getFont().deriveFont(20F));
-		y += gp.tileSize / 2;
-		int moveStartY = y;
+		y = moveStartY;
 		g2.drawString("Level Up Moves: ", x, y);
 		y += 8;
 		int moveWidth = gp.tileSize * 4;

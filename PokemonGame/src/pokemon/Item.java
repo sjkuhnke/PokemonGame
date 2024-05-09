@@ -128,7 +128,7 @@ public enum Item {
 	THROAT_SPRAY(88,0,150,new Color(96, 120, 168),Item.HELD_ITEM,null,"If the holder uses a sound-based move, this throat spray will boost its Sp. Atk stat."),
 	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
 	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
-	NULL91(91,0,0,Color.BLACK,Item.OTHER,null,""),
+	ABILITY_PATCH(91,0,0,Color.BLACK,Item.OTHER,null,"A patch that can be used to change the regular Ability of a Pokémon to a rarer Ability."),
 	NULL92(92,0,0,Color.BLACK,Item.OTHER,null,""),
 	HM01(93,0,0,Color.BLACK,Item.TMS,Move.CUT,"Teaches a Pokemon this move."),
 	HM02(94,0,0,Color.BLACK,Item.TMS,Move.ROCK_SMASH,"Teaches a Pokemon this move."),
@@ -1280,8 +1280,8 @@ public enum Item {
 		JComboBox<Integer> levelInput = new JComboBox<>(levels);
 		result.add(levelInput);
 		
-		Ability[] abilityOptions = new Ability[2];
-		for (int i = 0; i < 2; i++) {
+		Ability[] abilityOptions = new Ability[3];
+		for (int i = 0; i < 3; i++) {
 			Pokemon test = (Pokemon) nameInput.getSelectedItem();
 			test.setAbility(i);
 			abilityOptions[i] = test.ability;
@@ -1354,7 +1354,7 @@ public enum Item {
 			Pokemon test = (Pokemon) nameInput.getSelectedItem();
 			test.level = (Integer) levelInput.getSelectedItem();
 			test.setMoves();
-			for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < 3; i++) {
 				test.setAbility(i);
 				abilityInput.addItem(test.ability);
 			}

@@ -5,7 +5,7 @@ Type:
 Grass / None
 
 Ability:
-Overgrow / Rough Skin
+Overgrow / Rough Skin / (Regenerator)
 
 Base Stats:
 58 HP / 58 Atk / 69 Def / 46 SpA / 69 SpD / 35 Spe / 335 BST
@@ -28,7 +28,7 @@ Type:
 Grass / Rock
 
 Ability:
-Overgrow / Rough Skin
+Overgrow / Rough Skin / (Regenerator)
 
 Base Stats:
 73 HP / 75 Atk / 80 Def / 48 SpA / 89 SpD / 37 Spe / 402 BST
@@ -55,7 +55,7 @@ Type:
 Grass / Rock
 
 Ability:
-Overgrow / Rough Skin
+Overgrow / Rough Skin / (Regenerator)
 
 Base Stats:
 95 HP / 87 Atk / 91 Def / 95 SpA / 110 SpD / 39 Spe / 517 BST
@@ -89,7 +89,7 @@ Type:
 Fire / None
 
 Ability:
-Blaze / Dry Skin
+Blaze / Dry Skin / (Drought)
 
 Base Stats:
 60 HP / 49 Atk / 54 Def / 74 SpA / 58 SpD / 34 Spe / 329 BST
@@ -111,7 +111,7 @@ Type:
 Fire / None
 
 Ability:
-Blaze / Dry Skin
+Blaze / Dry Skin / (Drought)
 
 Base Stats:
 80 HP / 75 Atk / 65 Def / 75 SpA / 60 SpD / 50 Spe / 405 BST
@@ -141,7 +141,7 @@ Type:
 Fire / Steel
 
 Ability:
-Blaze / Dry Skin
+Blaze / Dry Skin / (Drought)
 
 Base Stats:
 109 HP / 81 Atk / 71 Def / 101 SpA / 67 SpD / 92 Spe / 521 BST
@@ -179,7 +179,7 @@ Type:
 Water / None
 
 Ability:
-Torrent / Protean
+Torrent / Protean / (Swift Swim)
 
 Base Stats:
 45 HP / 70 Atk / 56 Def / 46 SpA / 45 SpD / 63 Spe / 325 BST
@@ -201,7 +201,7 @@ Type:
 Water / None
 
 Ability:
-Torrent / Protean
+Torrent / Protean / (Swift Swim)
 
 Base Stats:
 60 HP / 90 Atk / 76 Def / 49 SpA / 55 SpD / 70 Spe / 400 BST
@@ -228,7 +228,7 @@ Type:
 Water / Fighting
 
 Ability:
-Torrent / Protean
+Torrent / Protean / (Swift Swim)
 
 Base Stats:
 85 HP / 110 Atk / 105 Def / 65 SpA / 85 SpD / 80 Spe / 530 BST
@@ -263,7 +263,7 @@ Type:
 Light / Flying
 
 Ability:
-Keen Eye / Insect Feeder
+Keen Eye / Insect Feeder / (Radiant)
 
 Base Stats:
 35 HP / 35 Atk / 35 Def / 55 SpA / 55 SpD / 80 Spe / 295 BST
@@ -286,7 +286,7 @@ Type:
 Light / Flying
 
 Ability:
-Mirror Armor / Insect Feeder
+Mirror Armor / Insect Feeder / (Radiant)
 
 Base Stats:
 50 HP / 40 Atk / 45 Def / 75 SpA / 70 SpD / 100 Spe / 380 BST
@@ -316,7 +316,7 @@ Type:
 Light / Flying
 
 Ability:
-Mirror Armor / Insect Feeder
+Mirror Armor / Insect Feeder / (Radiant)
 
 Base Stats:
 70 HP / 40 Atk / 60 Def / 100 SpA / 100 SpD / 130 Spe / 500 BST
@@ -353,7 +353,7 @@ Type:
 Normal / Flying
 
 Ability:
-Insomnia / Insect Feeder
+Insomnia / Insect Feeder / (Ambush)
 
 Base Stats:
 56 HP / 61 Atk / 65 Def / 20 SpA / 29 SpD / 45 Spe / 276 BST
@@ -375,7 +375,7 @@ Type:
 Normal / Flying
 
 Ability:
-Insomnia / Insect Feeder
+Insomnia / Insect Feeder / (Ambush)
 
 Base Stats:
 66 HP / 76 Atk / 86 Def / 35 SpA / 60 SpD / 78 Spe / 401 BST
@@ -403,7 +403,7 @@ Type:
 Steel / Flying
 
 Ability:
-Battle Armor / Tough Claws
+Battle Armor / Tough Claws / (Iron Barbs)
 
 Base Stats:
 73 HP / 85 Atk / 110 Def / 56 SpA / 90 SpD / 81 Spe / 495 BST
@@ -439,7 +439,7 @@ Type:
 Normal / None
 
 Ability:
-Mouthwater / Thick Fat
+Mouthwater / Thick Fat / (Unaware)
 
 Base Stats:
 99 HP / 61 Atk / 51 Def / 40 SpA / 79 SpD / 20 Spe / 350 BST
@@ -467,7 +467,7 @@ Type:
 Normal / None
 
 Ability:
-Mouthwater / Thick Fat
+Mouthwater / Thick Fat / (Unaware)
 
 Base Stats:
 150 HP / 79 Atk / 75 Def / 43 SpA / 108 SpD / 35 Spe / 490 BST
@@ -504,7 +504,7 @@ Type:
 Normal / Rock
 
 Ability:
-Rough Skin / Rock Head
+Rough Skin / Rock Head / (Solid Rock)
 
 Base Stats:
 150 HP / 105 Atk / 110 Def / 40 SpA / 85 SpD / 45 Spe / 535 BST
@@ -544,7 +544,7 @@ Type:
 Normal / None
 
 Ability:
-Adaptability / Anger Point
+Adaptability / Anger Point / (Scrappy)
 
 Base Stats:
 55 HP / 55 Atk / 55 Def / 55 SpA / 55 SpD / 55 Spe / 330 BST
@@ -570,7 +570,7 @@ Type:
 Normal / Magic
 
 Ability:
-Adaptability / Shield Dust
+Adaptability / Shield Dust / (Scrappy)
 
 Base Stats:
 75 HP / 75 Atk / 75 Def / 75 SpA / 75 SpD / 75 Spe / 450 BST
@@ -609,7 +609,7 @@ Type:
 Normal / Galactic
 
 Ability:
-Adaptability / Levitate
+Adaptability / Levitate / (Scrappy)
 
 Base Stats:
 80 HP / 60 Atk / 75 Def / 135 SpA / 85 SpD / 80 Spe / 515 BST
@@ -653,7 +653,7 @@ Type:
 Bug / None
 
 Ability:
-Swarm / Compound Eyes
+Swarm / Compound Eyes / (None)
 
 Base Stats:
 33 HP / 44 Atk / 33 Def / 23 SpA / 29 SpD / 38 Spe / 200 BST
@@ -673,7 +673,7 @@ Type:
 Bug / None
 
 Ability:
-Swarm / Compound Eyes
+Swarm / Compound Eyes / (None)
 
 Base Stats:
 55 HP / 68 Atk / 70 Def / 41 SpA / 61 SpD / 80 Spe / 375 BST
@@ -701,7 +701,7 @@ Type:
 Bug / None
 
 Ability:
-Poison Heal / Compound Eyes
+Poison Heal / Compound Eyes / (None)
 
 Base Stats:
 80 HP / 70 Atk / 80 Def / 55 SpA / 120 SpD / 100 Spe / 505 BST
@@ -732,7 +732,7 @@ Type:
 Bug / Rock
 
 Ability:
-Rough Skin / Compound Eyes
+Rough Skin / Compound Eyes / (None)
 
 Base Stats:
 80 HP / 120 Atk / 120 Def / 35 SpA / 80 SpD / 70 Spe / 505 BST
@@ -766,7 +766,7 @@ Type:
 Grass / None
 
 Ability:
-Anger Point / Chlorophyll
+Anger Point / Chlorophyll / (None)
 
 Base Stats:
 65 HP / 105 Atk / 100 Def / 50 SpA / 30 SpD / 55 Spe / 405 BST
@@ -793,7 +793,7 @@ Type:
 Grass / Fighting
 
 Ability:
-Anger Point / Chlorophyll
+Anger Point / Chlorophyll / (None)
 
 Base Stats:
 110 HP / 125 Atk / 110 Def / 55 SpA / 35 SpD / 55 Spe / 490 BST
@@ -834,7 +834,7 @@ Type:
 Grass / Dragon
 
 Ability:
-Competitive / Chlorophyll
+Competitive / Chlorophyll / (None)
 
 Base Stats:
 120 HP / 75 Atk / 80 Def / 115 SpA / 80 SpD / 90 Spe / 560 BST
@@ -870,7 +870,7 @@ Type:
 Grass / Poison
 
 Ability:
-Poison Point / Natural Cure
+Poison Point / Natural Cure / (Corrosion)
 
 Base Stats:
 40 HP / 30 Atk / 35 Def / 50 SpA / 70 SpD / 55 Spe / 280 BST
@@ -893,7 +893,7 @@ Type:
 Grass / Poison
 
 Ability:
-Poison Point / Natural Cure
+Poison Point / Natural Cure / (Corrosion)
 
 Base Stats:
 50 HP / 60 Atk / 45 Def / 100 SpA / 80 SpD / 65 Spe / 400 BST
@@ -930,7 +930,7 @@ Type:
 Grass / Poison
 
 Ability:
-Technician / Natural Cure
+Technician / Natural Cure / (Corrosion)
 
 Base Stats:
 70 HP / 60 Atk / 65 Def / 125 SpA / 105 SpD / 90 Spe / 515 BST
@@ -953,7 +953,7 @@ Type:
 Bug / Grass
 
 Ability:
-Swarm / Chlorophyll
+Swarm / Chlorophyll / (None)
 
 Base Stats:
 45 HP / 53 Atk / 70 Def / 40 SpA / 60 SpD / 42 Spe / 310 BST
@@ -974,7 +974,7 @@ Type:
 Bug / Grass
 
 Ability:
-Swarm / Chlorophyll
+Swarm / Chlorophyll / (None)
 
 Base Stats:
 55 HP / 63 Atk / 90 Def / 50 SpA / 80 SpD / 42 Spe / 380 BST
@@ -998,7 +998,7 @@ Type:
 Bug / Grass
 
 Ability:
-Sharpness / Chlorophyll
+Sharpness / Chlorophyll / (None)
 
 Base Stats:
 75 HP / 108 Atk / 80 Def / 60 SpA / 80 SpD / 97 Spe / 500 BST
@@ -1027,7 +1027,7 @@ Type:
 Bug / None
 
 Ability:
-Swarm / Hyper Cutter
+Swarm / Hyper Cutter / (None)
 
 Base Stats:
 47 HP / 62 Atk / 45 Def / 55 SpA / 45 SpD / 46 Spe / 300 BST
@@ -1052,7 +1052,7 @@ Type:
 Bug / Electric
 
 Ability:
-Static / Battle Armor
+Static / Battle Armor / (None)
 
 Base Stats:
 57 HP / 82 Atk / 95 Def / 55 SpA / 75 SpD / 36 Spe / 400 BST
@@ -1085,7 +1085,7 @@ Type:
 Bug / Electric
 
 Ability:
-Levitate / Tinted Lens
+Levitate / Tinted Lens / (None)
 
 Base Stats:
 77 HP / 65 Atk / 90 Def / 110 SpA / 75 SpD / 95 Spe / 512 BST
@@ -1118,7 +1118,7 @@ Type:
 Grass / None
 
 Ability:
-Anticipation / Fluffy
+Anticipation / Fluffy / (None)
 
 Base Stats:
 60 HP / 50 Atk / 100 Def / 75 SpA / 105 SpD / 60 Spe / 450 BST
@@ -1152,7 +1152,7 @@ Type:
 Grass / None
 
 Ability:
-Moxie / Defiant
+Moxie / Defiant / (None)
 
 Base Stats:
 70 HP / 130 Atk / 95 Def / 45 SpA / 80 SpD / 100 Spe / 520 BST
@@ -1182,7 +1182,7 @@ Type:
 Grass / Light
 
 Ability:
-Serene Grace / Competitive
+Serene Grace / Competitive / (None)
 
 Base Stats:
 70 HP / 45 Atk / 80 Def / 130 SpA / 95 SpD / 100 Spe / 520 BST
@@ -1214,7 +1214,7 @@ Type:
 Bug / Fighting
 
 Ability:
-Hyper Cutter / Swarm
+Hyper Cutter / Swarm / (None)
 
 Base Stats:
 40 HP / 60 Atk / 65 Def / 30 SpA / 50 SpD / 70 Spe / 315 BST
@@ -1237,7 +1237,7 @@ Type:
 Bug / Fighting
 
 Ability:
-Hyper Cutter / Justified
+Hyper Cutter / Justified / (None)
 
 Base Stats:
 53 HP / 95 Atk / 85 Def / 30 SpA / 53 SpD / 85 Spe / 401 BST
@@ -1267,7 +1267,7 @@ Type:
 Bug / Fighting
 
 Ability:
-Speed Boost / Justified
+Speed Boost / Justified / (None)
 
 Base Stats:
 63 HP / 120 Atk / 90 Def / 62 SpA / 65 SpD / 105 Spe / 505 BST
@@ -1290,7 +1290,6 @@ Level Up:
 42 - First Impression
 45 - Detect
 50 - No Retreat
-55 - Guillotine
 
 ===================
 044 - Lotad
@@ -1299,7 +1298,7 @@ Type:
 Water / Grass
 
 Ability:
-Swift Swim / Rain Dish
+Swift Swim / Rain Dish / (None)
 
 Base Stats:
 40 HP / 30 Atk / 30 Def / 40 SpA / 50 SpD / 30 Spe / 220 BST
@@ -1322,7 +1321,7 @@ Type:
 Water / Grass
 
 Ability:
-Swift Swim / Rain Dish
+Swift Swim / Rain Dish / (None)
 
 Base Stats:
 60 HP / 50 Atk / 50 Def / 60 SpA / 70 SpD / 50 Spe / 340 BST
@@ -1355,7 +1354,7 @@ Type:
 Water / Grass
 
 Ability:
-Swift Swim / Rain Dish
+Swift Swim / Rain Dish / (None)
 
 Base Stats:
 80 HP / 70 Atk / 70 Def / 90 SpA / 100 SpD / 70 Spe / 480 BST
@@ -1382,7 +1381,7 @@ Type:
 Magic / Light
 
 Ability:
-Magic Guard / Flash Fire
+Magic Guard / Flash Fire / (None)
 
 Base Stats:
 60 HP / 40 Atk / 39 Def / 120 SpA / 95 SpD / 101 Spe / 455 BST
@@ -1421,7 +1420,7 @@ Type:
 Rock / Ground
 
 Ability:
-Sturdy / Unerodible
+Sturdy / Unerodible / (Solid Rock)
 
 Base Stats:
 68 HP / 72 Atk / 122 Def / 20 SpA / 25 SpD / 18 Spe / 325 BST
@@ -1445,7 +1444,7 @@ Type:
 Rock / Ground
 
 Ability:
-Sturdy / Unerodible
+Sturdy / Unerodible / (Solid Rock)
 
 Base Stats:
 87 HP / 95 Atk / 143 Def / 25 SpA / 30 SpD / 45 Spe / 425 BST
@@ -1475,7 +1474,7 @@ Type:
 Rock / Ground
 
 Ability:
-Sturdy / Unerodible
+Sturdy / Unerodible / (Solid Rock)
 
 Base Stats:
 95 HP / 110 Atk / 150 Def / 70 SpA / 45 SpD / 55 Spe / 525 BST
@@ -1508,7 +1507,7 @@ Type:
 Rock / Light
 
 Ability:
-Sturdy / Filter
+Sturdy / Filter / (Mirror Armor)
 
 Base Stats:
 90 HP / 75 Atk / 50 Def / 110 SpA / 150 SpD / 50 Spe / 525 BST
@@ -1544,7 +1543,7 @@ Type:
 Rock / Psychic
 
 Ability:
-Shed Skin / Regenerator
+Shed Skin / Regenerator / (Filter)
 
 Base Stats:
 62 HP / 68 Atk / 45 Def / 62 SpA / 65 SpD / 60 Spe / 362 BST
@@ -1571,7 +1570,7 @@ Type:
 Rock / Psychic
 
 Ability:
-Synchronize / Regenerator
+Synchronize / Regenerator / (Intimidate)
 
 Base Stats:
 72 HP / 75 Atk / 73 Def / 75 SpA / 70 SpD / 75 Spe / 440 BST
@@ -1604,7 +1603,7 @@ Type:
 Rock / Psychic
 
 Ability:
-Psychic Surge / Regenerator
+Psychic Surge / Regenerator / (Intimidate)
 
 Base Stats:
 99 HP / 120 Atk / 80 Def / 80 SpA / 76 SpD / 80 Spe / 535 BST
@@ -1639,7 +1638,7 @@ Type:
 Rock / None
 
 Ability:
-Intimidate / Technician
+Intimidate / Technician / (Sturdy)
 
 Base Stats:
 55 HP / 90 Atk / 60 Def / 45 SpA / 50 SpD / 80 Spe / 380 BST
@@ -1668,7 +1667,7 @@ Type:
 Rock / Dark
 
 Ability:
-Intimidate / Technician
+Intimidate / Technician / (Sturdy)
 
 Base Stats:
 75 HP / 111 Atk / 75 Def / 90 SpA / 64 SpD / 85 Spe / 500 BST
@@ -1705,7 +1704,7 @@ Type:
 Fighting / Ground
 
 Ability:
-No Guard / Guts
+No Guard / Guts / (Adaptability)
 
 Base Stats:
 52 HP / 72 Atk / 69 Def / 77 SpA / 56 SpD / 67 Spe / 393 BST
@@ -1733,7 +1732,7 @@ Type:
 Fighting / Flying
 
 Ability:
-No Guard / Guts
+No Guard / Guts / (Adaptability)
 
 Base Stats:
 66 HP / 74 Atk / 85 Def / 106 SpA / 95 SpD / 97 Spe / 523 BST
@@ -1769,7 +1768,7 @@ Type:
 Ice / Psychic
 
 Ability:
-Snow Cloak / Mouthwater
+Snow Cloak / Mouthwater / (Snow Warning)
 
 Base Stats:
 60 HP / 15 Atk / 40 Def / 80 SpA / 73 SpD / 55 Spe / 323 BST
@@ -1794,7 +1793,7 @@ Type:
 Ice / Psychic
 
 Ability:
-Snow Cloak / Ice Body
+Snow Cloak / Ice Body / (Snow Warning)
 
 Base Stats:
 85 HP / 30 Atk / 65 Def / 120 SpA / 120 SpD / 75 Spe / 495 BST
@@ -1822,7 +1821,7 @@ Type:
 Ice / Magic
 
 Ability:
-Snow Cloak / Sparkly Surge
+Snow Cloak / Sparkly Surge / (Magic Guard)
 
 Base Stats:
 90 HP / 64 Atk / 67 Def / 85 SpA / 71 SpD / 58 Spe / 435 BST
@@ -1854,7 +1853,7 @@ Type:
 Ice / Bug
 
 Ability:
-Icy Scales / Swarm
+Icy Scales / Swarm / (Tinted Lens)
 
 Base Stats:
 30 HP / 25 Atk / 35 Def / 45 SpA / 30 SpD / 20 Spe / 185 BST
@@ -1874,7 +1873,7 @@ Type:
 Ice / Bug
 
 Ability:
-Icy Scales / Shield Dust
+Icy Scales / Shield Dust / (Tinted Lens)
 
 Base Stats:
 70 HP / 65 Atk / 60 Def / 125 SpA / 90 SpD / 65 Spe / 475 BST
@@ -1905,7 +1904,7 @@ Type:
 Ground / Ice
 
 Ability:
-Sturdy / Technician
+Sturdy / Technician / (None)
 
 Base Stats:
 80 HP / 74 Atk / 87 Def / 25 SpA / 96 SpD / 33 Spe / 395 BST
@@ -1934,7 +1933,7 @@ Type:
 Fighting / Ice
 
 Ability:
-Guts / Slush Rush
+Guts / Slush Rush / (None)
 
 Base Stats:
 95 HP / 130 Atk / 90 Def / 45 SpA / 85 SpD / 40 Spe / 485 BST
@@ -1966,7 +1965,7 @@ Type:
 Rock / Fighting
 
 Ability:
-Rock Head / Sand Force
+Rock Head / Sand Force / (Rough Skin)
 
 Base Stats:
 65 HP / 90 Atk / 120 Def / 20 SpA / 65 SpD / 20 Spe / 380 BST
@@ -1993,7 +1992,7 @@ Type:
 Rock / Fighting
 
 Ability:
-Rock Head / Sand Force
+Rock Head / Sand Force / (Rough Skin)
 
 Base Stats:
 114 HP / 124 Atk / 130 Def / 20 SpA / 130 SpD / 20 Spe / 538 BST
@@ -2023,7 +2022,7 @@ Type:
 Ice / Water
 
 Ability:
-Unaware / Thick Fat
+Unaware / Thick Fat / (Ice Body)
 
 Base Stats:
 70 HP / 40 Atk / 50 Def / 55 SpA / 50 SpD / 25 Spe / 290 BST
@@ -2053,7 +2052,7 @@ Type:
 Ice / Water
 
 Ability:
-Unaware / Thick Fat
+Unaware / Thick Fat / (Ice Body)
 
 Base Stats:
 90 HP / 60 Atk / 70 Def / 75 SpA / 70 SpD / 45 Spe / 410 BST
@@ -2087,7 +2086,7 @@ Type:
 Ice / Water
 
 Ability:
-Unaware / Thick Fat
+Unaware / Thick Fat / (Ice Body)
 
 Base Stats:
 110 HP / 80 Atk / 90 Def / 95 SpA / 90 SpD / 65 Spe / 530 BST
@@ -2122,7 +2121,7 @@ Type:
 Water / Light
 
 Ability:
-Torrent / Slush Rush
+Torrent / Slush Rush / (Swift Swim)
 
 Base Stats:
 44 HP / 46 Atk / 50 Def / 76 SpA / 62 SpD / 92 Spe / 370 BST
@@ -2151,7 +2150,7 @@ Type:
 Water / Light
 
 Ability:
-Torrent / Slush Rush
+Torrent / Slush Rush / (Swift Swim)
 
 Base Stats:
 63 HP / 56 Atk / 69 Def / 120 SpA / 90 SpD / 112 Spe / 510 BST
@@ -2184,7 +2183,7 @@ Type:
 Bug / Dark
 
 Ability:
-Technician / Insomnia
+Technician / Insomnia / (Terrify)
 
 Base Stats:
 52 HP / 59 Atk / 51 Def / 33 SpA / 46 SpD / 58 Spe / 299 BST
@@ -2210,7 +2209,7 @@ Type:
 Bug / Dark
 
 Ability:
-Technician / Insomnia
+Technician / Insomnia / (Terrify)
 
 Base Stats:
 88 HP / 102 Atk / 67 Def / 61 SpA / 88 SpD / 101 Spe / 507 BST
@@ -2242,7 +2241,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Anticipation / Natural Cure
+Anticipation / Natural Cure / (None)
 
 Base Stats:
 42 HP / 30 Atk / 45 Def / 56 SpA / 53 SpD / 39 Spe / 265 BST
@@ -2269,7 +2268,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Magic Bounce / Natural Cure
+Magic Bounce / Natural Cure / (None)
 
 Base Stats:
 57 HP / 40 Atk / 65 Def / 86 SpA / 73 SpD / 49 Spe / 370 BST
@@ -2299,7 +2298,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Magic Bounce / Natural Cure
+Magic Bounce / Natural Cure / (None)
 
 Base Stats:
 82 HP / 65 Atk / 95 Def / 136 SpA / 103 SpD / 29 Spe / 510 BST
@@ -2336,7 +2335,7 @@ Type:
 Water / Psychic
 
 Ability:
-Water Veil / Anticipation
+Water Veil / Anticipation / (Hydration)
 
 Base Stats:
 55 HP / 19 Atk / 66 Def / 74 SpA / 99 SpD / 20 Spe / 333 BST
@@ -2364,7 +2363,7 @@ Type:
 Water / Psychic
 
 Ability:
-Water Veil / Swift Swim
+Water Veil / Swift Swim / (Hydration)
 
 Base Stats:
 71 HP / 48 Atk / 87 Def / 102 SpA / 106 SpD / 86 Spe / 500 BST
@@ -2399,7 +2398,7 @@ Type:
 Grass / Psychic
 
 Ability:
-Grassy Surge / Psychic Surge
+Grassy Surge / Psychic Surge / (Unburden)
 
 Base Stats:
 43 HP / 43 Atk / 43 Def / 88 SpA / 80 SpD / 43 Spe / 340 BST
@@ -2427,7 +2426,7 @@ Type:
 Grass / Psychic
 
 Ability:
-Grassy Surge / Psychic Surge
+Grassy Surge / Psychic Surge / (Unburden)
 
 Base Stats:
 67 HP / 72 Atk / 87 Def / 96 SpA / 93 SpD / 104 Spe / 519 BST
@@ -2460,7 +2459,7 @@ Type:
 Psychic / None
 
 Ability:
-Psychic Surge / Levitate
+Psychic Surge / Levitate / (Trace)
 
 Base Stats:
 25 HP / 20 Atk / 63 Def / 55 SpA / 62 SpD / 25 Spe / 250 BST
@@ -2471,6 +2470,7 @@ Level Up:
 9 - Confusion
 15 - Hypnosis
 25 - Dream Eater
+30 - Gravity
 
 Evolutions:
 Psycorb -> Psyballs (lv. 32)
@@ -2482,7 +2482,7 @@ Type:
 Psychic / Steel
 
 Ability:
-Psychic Surge / Levitate
+Psychic Surge / Levitate / (Trace)
 
 Base Stats:
 50 HP / 70 Atk / 90 Def / 70 SpA / 90 SpD / 30 Spe / 400 BST
@@ -2493,6 +2493,7 @@ Level Up:
 9 - Confusion
 15 - Hypnosis
 25 - Dream Eater
+30 - Gravity
 32 - Double Hit
 35 - Magnet Bomb
 39 - Iron Defense
@@ -2510,7 +2511,7 @@ Type:
 Psychic / Steel
 
 Ability:
-Psychic Surge / Levitate
+Psychic Surge / Levitate / (Trace)
 
 Base Stats:
 100 HP / 140 Atk / 100 Def / 70 SpA / 100 SpD / 40 Spe / 550 BST
@@ -2521,6 +2522,7 @@ Level Up:
 9 - Confusion
 15 - Hypnosis
 25 - Dream Eater
+30 - Gravity
 32 - Double Hit
 35 - Magnet Bomb
 39 - Iron Defense
@@ -2540,7 +2542,7 @@ Type:
 Psychic / Light
 
 Ability:
-Synchronize / Trace
+Synchronize / Trace / (None)
 
 Base Stats:
 28 HP / 25 Atk / 25 Def / 65 SpA / 55 SpD / 40 Spe / 238 BST
@@ -2566,7 +2568,7 @@ Type:
 Psychic / Light
 
 Ability:
-Synchronize / Trace
+Synchronize / Trace / (None)
 
 Base Stats:
 38 HP / 35 Atk / 35 Def / 95 SpA / 85 SpD / 50 Spe / 338 BST
@@ -2595,7 +2597,7 @@ Type:
 Psychic / Light
 
 Ability:
-Empathic Link / Trace
+Empathic Link / Trace / (Pixilate)
 
 Base Stats:
 68 HP / 65 Atk / 65 Def / 125 SpA / 115 SpD / 80 Spe / 518 BST
@@ -2633,7 +2635,7 @@ Type:
 Psychic / Fighting
 
 Ability:
-Sharpness / No Guard
+Sharpness / No Guard / (Inner Focus)
 
 Base Stats:
 68 HP / 125 Atk / 65 Def / 65 SpA / 115 SpD / 63 Spe / 501 BST
@@ -2672,7 +2674,7 @@ Type:
 Light / Normal
 
 Ability:
-Simple / Normalize
+Simple / Normalize / (Pixilate)
 
 Base Stats:
 65 HP / 79 Atk / 67 Def / 103 SpA / 72 SpD / 69 Spe / 455 BST
@@ -2703,7 +2705,7 @@ Type:
 Psychic / Dark
 
 Ability:
-Contrary / Brainwash
+Contrary / Brainwash / (Illumination)
 
 Base Stats:
 53 HP / 54 Atk / 53 Def / 37 SpA / 46 SpD / 45 Spe / 288 BST
@@ -2733,7 +2735,7 @@ Type:
 Psychic / Dark
 
 Ability:
-Contrary / Brainwash
+Contrary / Brainwash / (Illumination)
 
 Base Stats:
 86 HP / 92 Atk / 88 Def / 68 SpA / 75 SpD / 73 Spe / 482 BST
@@ -2768,7 +2770,7 @@ Type:
 Fire / Normal
 
 Ability:
-Intimidate / Flash Fire
+Intimidate / Flash Fire / (Guts)
 
 Base Stats:
 46 HP / 74 Atk / 68 Def / 48 SpA / 58 SpD / 81 Spe / 375 BST
@@ -2798,7 +2800,7 @@ Type:
 Fire / Normal
 
 Ability:
-Intimidate / Flash Fire
+Intimidate / Flash Fire / (Guts)
 
 Base Stats:
 65 HP / 103 Atk / 82 Def / 66 SpA / 79 SpD / 100 Spe / 495 BST
@@ -2833,7 +2835,7 @@ Type:
 Fire / None
 
 Ability:
-Flame Body / Flash Fire
+Flame Body / Flash Fire / (Unburden)
 
 Base Stats:
 30 HP / 20 Atk / 40 Def / 103 SpA / 30 SpD / 83 Spe / 306 BST
@@ -2852,7 +2854,7 @@ Type:
 Fire / Fighting
 
 Ability:
-Flame Body / Iron Fist
+Flame Body / Iron Fist / (Unburden)
 
 Base Stats:
 43 HP / 88 Atk / 50 Def / 74 SpA / 52 SpD / 93 Spe / 400 BST
@@ -2876,7 +2878,7 @@ Type:
 Fire / Fighting
 
 Ability:
-Flame Body / Iron Fist
+Flame Body / Iron Fist / (Unburden)
 
 Base Stats:
 65 HP / 115 Atk / 55 Def / 106 SpA / 75 SpD / 100 Spe / 516 BST
@@ -2903,7 +2905,7 @@ Type:
 Fire / Ghost
 
 Ability:
-Steelworker / None
+Steelworker / None / (None)
 
 Base Stats:
 105 HP / 35 Atk / 120 Def / 90 SpA / 90 SpD / 65 Spe / 505 BST
@@ -2932,7 +2934,7 @@ Type:
 Fire / Ground
 
 Ability:
-Flame Body / None
+Flame Body / None / (None)
 
 Base Stats:
 70 HP / 53 Atk / 70 Def / 55 SpA / 60 SpD / 52 Spe / 360 BST
@@ -2959,7 +2961,7 @@ Type:
 Fire / Flying
 
 Ability:
-Intimidate / None
+Intimidate / None / (None)
 
 Base Stats:
 75 HP / 75 Atk / 75 Def / 90 SpA / 75 SpD / 70 Spe / 460 BST
@@ -2992,7 +2994,7 @@ Type:
 Fire / Dragon
 
 Ability:
-Levitate / None
+Levitate / None / (None)
 
 Base Stats:
 95 HP / 75 Atk / 87 Def / 140 SpA / 80 SpD / 83 Spe / 560 BST
@@ -3028,7 +3030,7 @@ Type:
 Fire / Rock
 
 Ability:
-Solid Rock / None
+Solid Rock / None / (Flame Body)
 
 Base Stats:
 60 HP / 35 Atk / 78 Def / 50 SpA / 77 SpD / 30 Spe / 330 BST
@@ -3053,7 +3055,7 @@ Type:
 Fire / Rock
 
 Ability:
-Solid Rock / None
+Solid Rock / None / (Flame Body)
 
 Base Stats:
 70 HP / 57 Atk / 105 Def / 51 SpA / 87 SpD / 30 Spe / 400 BST
@@ -3084,7 +3086,7 @@ Type:
 Fire / Rock
 
 Ability:
-Solid Rock / None
+Solid Rock / None / (Flame Body)
 
 Base Stats:
 90 HP / 80 Atk / 95 Def / 120 SpA / 95 SpD / 45 Spe / 525 BST
@@ -3121,7 +3123,7 @@ Type:
 Fire / Dark
 
 Ability:
-Solar Power / Flash Fire
+Solar Power / Flash Fire / (Intimidate)
 
 Base Stats:
 45 HP / 60 Atk / 30 Def / 80 SpA / 50 SpD / 65 Spe / 330 BST
@@ -3149,7 +3151,7 @@ Type:
 Fire / Dark
 
 Ability:
-Solar Power / Flash Fire
+Solar Power / Flash Fire / (Intimidate)
 
 Base Stats:
 75 HP / 90 Atk / 50 Def / 110 SpA / 80 SpD / 95 Spe / 500 BST
@@ -3186,7 +3188,7 @@ Type:
 Magic / None
 
 Ability:
-Shield Dust / Magic Guard
+Shield Dust / Magic Guard / (Serene Grace)
 
 Base Stats:
 40 HP / 45 Atk / 40 Def / 75 SpA / 65 SpD / 70 Spe / 335 BST
@@ -3214,7 +3216,7 @@ Type:
 Magic / Fire
 
 Ability:
-Shield Dust / Magic Guard
+Shield Dust / Magic Guard / (Serene Grace)
 
 Base Stats:
 85 HP / 45 Atk / 65 Def / 145 SpA / 110 SpD / 55 Spe / 505 BST
@@ -3250,7 +3252,7 @@ Type:
 Fire / Light
 
 Ability:
-Anticipation / None
+Anticipation / None / (None)
 
 Base Stats:
 60 HP / 70 Atk / 65 Def / 70 SpA / 65 SpD / 70 Spe / 400 BST
@@ -3283,7 +3285,7 @@ Type:
 Fire / None
 
 Ability:
-Drought / None
+Drought / None / (None)
 
 Base Stats:
 85 HP / 105 Atk / 99 Def / 40 SpA / 92 SpD / 89 Spe / 510 BST
@@ -3313,7 +3315,7 @@ Type:
 Fire / Light
 
 Ability:
-Competitive / None
+Competitive / None / (None)
 
 Base Stats:
 70 HP / 40 Atk / 55 Def / 120 SpA / 115 SpD / 110 Spe / 510 BST
@@ -3343,7 +3345,7 @@ Type:
 Electric / None
 
 Ability:
-Static / Volt Absorb
+Static / Volt Absorb / (Motor Drive)
 
 Base Stats:
 55 HP / 62 Atk / 46 Def / 73 SpA / 75 SpD / 49 Spe / 360 BST
@@ -3368,7 +3370,7 @@ Type:
 Electric / None
 
 Ability:
-Static / Electric Surge
+Static / Electric Surge / (Motor Drive)
 
 Base Stats:
 83 HP / 65 Atk / 92 Def / 105 SpA / 80 SpD / 50 Spe / 475 BST
@@ -3400,7 +3402,7 @@ Type:
 Electric / Steel
 
 Ability:
-Huge Power / Electric Surge
+Huge Power / Electric Surge / (Motor Drive)
 
 Base Stats:
 85 HP / 65 Atk / 120 Def / 92 SpA / 98 SpD / 55 Spe / 515 BST
@@ -3431,7 +3433,7 @@ Type:
 Electric / Ground
 
 Ability:
-Static / Fluffy
+Static / Fluffy / (None)
 
 Base Stats:
 54 HP / 32 Atk / 53 Def / 65 SpA / 58 SpD / 33 Spe / 295 BST
@@ -3459,7 +3461,7 @@ Type:
 Electric / Ground
 
 Ability:
-Static / Fluffy
+Static / Fluffy / (None)
 
 Base Stats:
 65 HP / 80 Atk / 55 Def / 45 SpA / 60 SpD / 50 Spe / 355 BST
@@ -3493,7 +3495,7 @@ Type:
 Electric / Ground
 
 Ability:
-Speed Boost / Fluffy
+Speed Boost / Fluffy / (None)
 
 Base Stats:
 85 HP / 128 Atk / 72 Def / 60 SpA / 77 SpD / 98 Spe / 520 BST
@@ -3529,7 +3531,7 @@ Type:
 Grass / Electric
 
 Ability:
-Sap Sipper / Volt Absorb
+Sap Sipper / Volt Absorb / (None)
 
 Base Stats:
 34 HP / 62 Atk / 43 Def / 58 SpA / 44 SpD / 59 Spe / 300 BST
@@ -3550,7 +3552,7 @@ Type:
 Grass / Electric
 
 Ability:
-Sap Sipper / Volt Absorb
+Sap Sipper / Volt Absorb / (None)
 
 Base Stats:
 65 HP / 94 Atk / 49 Def / 60 SpA / 54 SpD / 73 Spe / 395 BST
@@ -3576,7 +3578,7 @@ Type:
 Grass / Electric
 
 Ability:
-Sap Sipper / Volt Absorb
+Sap Sipper / Volt Absorb / (None)
 
 Base Stats:
 90 HP / 70 Atk / 100 Def / 85 SpA / 100 SpD / 55 Spe / 500 BST
@@ -3606,7 +3608,7 @@ Type:
 Steel / Normal
 
 Ability:
-Tough Claws / Iron Barbs
+Tough Claws / Iron Barbs / (None)
 
 Base Stats:
 30 HP / 60 Atk / 73 Def / 30 SpA / 65 SpD / 58 Spe / 316 BST
@@ -3632,7 +3634,7 @@ Type:
 Steel / Light
 
 Ability:
-Tough Claws / Iron Barbs
+Tough Claws / Iron Barbs / (None)
 
 Base Stats:
 60 HP / 80 Atk / 95 Def / 65 SpA / 95 SpD / 95 Spe / 490 BST
@@ -3664,7 +3666,7 @@ Type:
 Steel / Magic
 
 Ability:
-Tough Claws / Iron Barbs
+Tough Claws / Iron Barbs / (None)
 
 Base Stats:
 69 HP / 95 Atk / 97 Def / 70 SpA / 95 SpD / 104 Spe / 530 BST
@@ -3694,7 +3696,7 @@ Type:
 Electric / Normal
 
 Ability:
-Electric Surge / Motor Drive
+Electric Surge / Motor Drive / (None)
 
 Base Stats:
 30 HP / 45 Atk / 25 Def / 35 SpA / 40 SpD / 60 Spe / 235 BST
@@ -3720,7 +3722,7 @@ Type:
 Electric / Light
 
 Ability:
-Electric Surge / Motor Drive
+Electric Surge / Motor Drive / (None)
 
 Base Stats:
 75 HP / 105 Atk / 60 Def / 85 SpA / 60 SpD / 105 Spe / 490 BST
@@ -3753,7 +3755,7 @@ Type:
 Electric / Magic
 
 Ability:
-Electric Surge / Motor Drive
+Electric Surge / Motor Drive / (None)
 
 Base Stats:
 75 HP / 120 Atk / 70 Def / 80 SpA / 75 SpD / 125 Spe / 545 BST
@@ -3783,7 +3785,7 @@ Type:
 Fighting / Normal
 
 Ability:
-Guts / Moxie
+Guts / Moxie / (None)
 
 Base Stats:
 35 HP / 65 Atk / 45 Def / 15 SpA / 40 SpD / 45 Spe / 245 BST
@@ -3809,7 +3811,7 @@ Type:
 Fighting / Light
 
 Ability:
-Guts / Moxie
+Guts / Moxie / (None)
 
 Base Stats:
 95 HP / 125 Atk / 105 Def / 25 SpA / 75 SpD / 50 Spe / 475 BST
@@ -3845,7 +3847,7 @@ Type:
 Fighting / Magic
 
 Ability:
-Adaptability / Moxie
+Adaptability / Moxie / (None)
 
 Base Stats:
 95 HP / 130 Atk / 100 Def / 85 SpA / 75 SpD / 55 Spe / 540 BST
@@ -3875,7 +3877,7 @@ Type:
 Bug / Ground
 
 Ability:
-Compound Eyes / Tinted Lens
+Compound Eyes / Tinted Lens / (None)
 
 Base Stats:
 31 HP / 45 Atk / 90 Def / 30 SpA / 30 SpD / 40 Spe / 266 BST
@@ -3900,7 +3902,7 @@ Type:
 Bug / Flying
 
 Ability:
-Speed Boost / Tinted Lens
+Speed Boost / Tinted Lens / (None)
 
 Base Stats:
 61 HP / 90 Atk / 45 Def / 50 SpA / 50 SpD / 160 Spe / 456 BST
@@ -3931,7 +3933,7 @@ Type:
 Bug / Ghost
 
 Ability:
-Wonder Guard / None
+Wonder Guard / None / (None)
 
 Base Stats:
 1 HP / 90 Atk / 45 Def / 30 SpA / 30 SpD / 40 Spe / 236 BST
@@ -3958,7 +3960,7 @@ Type:
 Water / Ghost
 
 Ability:
-Swift Swim / Regenerator
+Swift Swim / Regenerator / (None)
 
 Base Stats:
 58 HP / 29 Atk / 71 Def / 31 SpA / 58 SpD / 33 Spe / 280 BST
@@ -3985,7 +3987,7 @@ Type:
 Water / Ghost
 
 Ability:
-Swift Swim / Regenerator
+Swift Swim / Regenerator / (None)
 
 Base Stats:
 67 HP / 61 Atk / 75 Def / 97 SpA / 91 SpD / 83 Spe / 474 BST
@@ -4018,7 +4020,7 @@ Type:
 Water / None
 
 Ability:
-Unaware / Water Absorb
+Unaware / Water Absorb / (None)
 
 Base Stats:
 34 HP / 14 Atk / 20 Def / 27 SpA / 90 SpD / 15 Spe / 200 BST
@@ -4040,7 +4042,7 @@ Type:
 Water / Flying
 
 Ability:
-Unaware / Water Absorb
+Unaware / Water Absorb / (None)
 
 Base Stats:
 100 HP / 28 Atk / 45 Def / 72 SpA / 110 SpD / 45 Spe / 400 BST
@@ -4067,7 +4069,7 @@ Type:
 Water / Dragon
 
 Ability:
-Drizzle / Water Absorb
+Drizzle / Water Absorb / (None)
 
 Base Stats:
 100 HP / 90 Atk / 66 Def / 74 SpA / 84 SpD / 81 Spe / 495 BST
@@ -4103,7 +4105,7 @@ Type:
 Water / None
 
 Ability:
-Swift Swim / Rattled
+Swift Swim / Rattled / (None)
 
 Base Stats:
 20 HP / 10 Atk / 55 Def / 15 SpA / 20 SpD / 80 Spe / 200 BST
@@ -4125,7 +4127,7 @@ Type:
 Water / Flying
 
 Ability:
-Intimidate / Moxie
+Intimidate / Moxie / (None)
 
 Base Stats:
 95 HP / 125 Atk / 79 Def / 60 SpA / 100 SpD / 81 Spe / 540 BST
@@ -4151,7 +4153,7 @@ Type:
 Water / Galactic
 
 Ability:
-Illumination / Natural Cure
+Illumination / Natural Cure / (Regenerator)
 
 Base Stats:
 30 HP / 45 Atk / 55 Def / 70 SpA / 55 SpD / 85 Spe / 340 BST
@@ -4183,7 +4185,7 @@ Type:
 Water / Galactic
 
 Ability:
-Illumination / Natural Cure
+Illumination / Natural Cure / (Regenerator)
 
 Base Stats:
 60 HP / 75 Atk / 85 Def / 100 SpA / 85 SpD / 115 Spe / 520 BST
@@ -4216,7 +4218,7 @@ Type:
 Dark / Water
 
 Ability:
-Stealthy Predator / Strong Jaw
+Ambush / Strong Jaw / (None)
 
 Base Stats:
 90 HP / 120 Atk / 80 Def / 45 SpA / 55 SpD / 60 Spe / 450 BST
@@ -4248,7 +4250,7 @@ Type:
 Dark / Flying
 
 Ability:
-Stealthy Predator / Strong Jaw
+Ambush / Strong Jaw / (None)
 
 Base Stats:
 105 HP / 130 Atk / 80 Def / 75 SpA / 55 SpD / 95 Spe / 540 BST
@@ -4282,7 +4284,7 @@ Type:
 Magic / Dragon
 
 Ability:
-Regenerator / Magic Guard
+Regenerator / Magic Guard / (None)
 
 Base Stats:
 35 HP / 35 Atk / 35 Def / 100 SpA / 45 SpD / 45 Spe / 295 BST
@@ -4310,7 +4312,7 @@ Type:
 Water / Dragon
 
 Ability:
-Swift Swim / Sniper
+Swift Swim / Sniper / (None)
 
 Base Stats:
 81 HP / 93 Atk / 63 Def / 93 SpA / 70 SpD / 60 Spe / 460 BST
@@ -4346,7 +4348,7 @@ Type:
 Magic / Dragon
 
 Ability:
-Swift Swim / Magic Guard
+Swift Swim / Magic Guard / (None)
 
 Base Stats:
 100 HP / 95 Atk / 90 Def / 95 SpA / 90 SpD / 90 Spe / 560 BST
@@ -4383,7 +4385,7 @@ Type:
 Water / Rock
 
 Ability:
-Tough Claws / Sniper
+Tough Claws / Sniper / (None)
 
 Base Stats:
 42 HP / 52 Atk / 67 Def / 39 SpA / 56 SpD / 50 Spe / 306 BST
@@ -4416,7 +4418,7 @@ Type:
 Water / Rock
 
 Ability:
-Tough Claws / Sniper
+Tough Claws / Sniper / (None)
 
 Base Stats:
 72 HP / 105 Atk / 115 Def / 54 SpA / 86 SpD / 68 Spe / 500 BST
@@ -4455,7 +4457,7 @@ Type:
 Water / Ground
 
 Ability:
-Illumination / Prankster
+Illumination / Prankster / (None)
 
 Base Stats:
 55 HP / 60 Atk / 64 Def / 62 SpA / 55 SpD / 49 Spe / 345 BST
@@ -4491,7 +4493,7 @@ Type:
 Water / Ground
 
 Ability:
-Illumination / Prankster
+Illumination / Prankster / (None)
 
 Base Stats:
 70 HP / 115 Atk / 100 Def / 60 SpA / 80 SpD / 60 Spe / 485 BST
@@ -4529,7 +4531,7 @@ Type:
 Water / Magic
 
 Ability:
-Water Veil / Regenerator
+Water Veil / Regenerator / (None)
 
 Base Stats:
 40 HP / 40 Atk / 75 Def / 55 SpA / 50 SpD / 90 Spe / 350 BST
@@ -4563,7 +4565,7 @@ Type:
 Poison / None
 
 Ability:
-Intimidate / Shed Skin
+Intimidate / Shed Skin / (Corrosion)
 
 Base Stats:
 35 HP / 60 Atk / 44 Def / 40 SpA / 54 SpD / 55 Spe / 288 BST
@@ -4590,7 +4592,7 @@ Type:
 Poison / None
 
 Ability:
-Intimidate / Shed Skin
+Intimidate / Shed Skin / (Corrosion)
 
 Base Stats:
 60 HP / 110 Atk / 70 Def / 55 SpA / 80 SpD / 80 Spe / 455 BST
@@ -4627,7 +4629,7 @@ Type:
 Poison / Flying
 
 Ability:
-Strong Jaw / Inner Focus
+Strong Jaw / Inner Focus / (Poison Touch)
 
 Base Stats:
 40 HP / 45 Atk / 35 Def / 30 SpA / 40 SpD / 55 Spe / 245 BST
@@ -4651,7 +4653,7 @@ Type:
 Poison / Flying
 
 Ability:
-Strong Jaw / Inner Focus
+Strong Jaw / Inner Focus / (Poison Touch)
 
 Base Stats:
 75 HP / 80 Atk / 70 Def / 65 SpA / 75 SpD / 90 Spe / 455 BST
@@ -4687,7 +4689,7 @@ Type:
 Poison / Flying
 
 Ability:
-Strong Jaw / Inner Focus
+Strong Jaw / Inner Focus / (Poison Touch)
 
 Base Stats:
 85 HP / 90 Atk / 80 Def / 70 SpA / 80 SpD / 130 Spe / 535 BST
@@ -4720,7 +4722,7 @@ Type:
 Ghost / None
 
 Ability:
-Friendly Ghost / Levitate
+Friendly Ghost / Levitate / (Illumination)
 
 Base Stats:
 55 HP / 60 Atk / 80 Def / 75 SpA / 65 SpD / 65 Spe / 400 BST
@@ -4748,7 +4750,7 @@ Type:
 Ghost / Steel
 
 Ability:
-Friendly Ghost / Levitate
+Friendly Ghost / Levitate / (Iron Barbs)
 
 Base Stats:
 65 HP / 70 Atk / 120 Def / 60 SpA / 120 SpD / 65 Spe / 500 BST
@@ -4781,7 +4783,7 @@ Type:
 Ghost / Dark
 
 Ability:
-Adaptability / Anger Point
+Adaptability / Anger Point / (Pressure)
 
 Base Stats:
 75 HP / 85 Atk / 45 Def / 60 SpA / 55 SpD / 79 Spe / 399 BST
@@ -4808,7 +4810,7 @@ Type:
 Ghost / Dark
 
 Ability:
-Adaptability / Anger Point
+Adaptability / Anger Point / (Pressure)
 
 Base Stats:
 115 HP / 105 Atk / 55 Def / 105 SpA / 60 SpD / 59 Spe / 499 BST
@@ -4840,7 +4842,7 @@ Type:
 Ghost / Poison
 
 Ability:
-Levitate / None
+Levitate / None / (None)
 
 Base Stats:
 60 HP / 42 Atk / 58 Def / 105 SpA / 97 SpD / 73 Spe / 435 BST
@@ -4868,7 +4870,7 @@ Type:
 Ghost / Rock
 
 Ability:
-Levitate / None
+Levitate / None / (None)
 
 Base Stats:
 80 HP / 90 Atk / 96 Def / 71 SpA / 85 SpD / 58 Spe / 480 BST
@@ -4899,7 +4901,7 @@ Type:
 Ghost / Rock
 
 Ability:
-Levitate / None
+Levitate / None / (None)
 
 Base Stats:
 100 HP / 109 Atk / 110 Def / 67 SpA / 99 SpD / 55 Spe / 540 BST
@@ -4927,7 +4929,7 @@ Type:
 Fighting / None
 
 Ability:
-Guts / Iron Fist
+Guts / Iron Fist / (None)
 
 Base Stats:
 75 HP / 80 Atk / 55 Def / 25 SpA / 35 SpD / 35 Spe / 305 BST
@@ -4952,7 +4954,7 @@ Type:
 Fighting / None
 
 Ability:
-Guts / Iron Fist
+Guts / Iron Fist / (None)
 
 Base Stats:
 85 HP / 105 Atk / 85 Def / 40 SpA / 50 SpD / 40 Spe / 405 BST
@@ -4985,7 +4987,7 @@ Type:
 Fighting / None
 
 Ability:
-Guts / Iron Fist
+Guts / Iron Fist / (None)
 
 Base Stats:
 105 HP / 140 Atk / 95 Def / 55 SpA / 65 SpD / 45 Spe / 505 BST
@@ -5015,7 +5017,7 @@ Type:
 Ground / None
 
 Ability:
-Rattled / Sand Force
+Rattled / Sand Force / (Rough Skin)
 
 Base Stats:
 51 HP / 65 Atk / 89 Def / 30 SpA / 66 SpD / 15 Spe / 316 BST
@@ -5040,7 +5042,7 @@ Type:
 Ground / None
 
 Ability:
-Sand Stream / Sand Force
+Sand Stream / Sand Force / (Rough Skin)
 
 Base Stats:
 57 HP / 73 Atk / 112 Def / 55 SpA / 95 SpD / 20 Spe / 412 BST
@@ -5073,7 +5075,7 @@ Type:
 Ground / Fighting
 
 Ability:
-Sand Stream / Sand Force
+Sand Stream / Sand Force / (Rough Skin)
 
 Base Stats:
 75 HP / 100 Atk / 145 Def / 70 SpA / 95 SpD / 25 Spe / 510 BST
@@ -5112,7 +5114,7 @@ Type:
 Ground / None
 
 Ability:
-Sand Rush / Tough Claws
+Sand Rush / Tough Claws / (Mold Breaker)
 
 Base Stats:
 37 HP / 85 Atk / 47 Def / 23 SpA / 63 SpD / 78 Spe / 333 BST
@@ -5139,7 +5141,7 @@ Type:
 Ground / Light
 
 Ability:
-Sand Force / Tough Claws
+Sand Force / Tough Claws / (Mold Breaker)
 
 Base Stats:
 65 HP / 128 Atk / 55 Def / 80 SpA / 55 SpD / 120 Spe / 503 BST
@@ -5173,7 +5175,7 @@ Type:
 Ground / None
 
 Ability:
-Sand Veil / Rattled
+Sand Veil / Rattled / (Regenerator)
 
 Base Stats:
 45 HP / 60 Atk / 55 Def / 35 SpA / 25 SpD / 55 Spe / 275 BST
@@ -5195,7 +5197,7 @@ Type:
 Ground / Steel
 
 Ability:
-Sand Veil / Rattled
+Sand Veil / Rattled / (Regenerator)
 
 Base Stats:
 50 HP / 80 Atk / 100 Def / 60 SpA / 35 SpD / 60 Spe / 385 BST
@@ -5223,7 +5225,7 @@ Type:
 Ground / Dragon
 
 Ability:
-Sand Veil / Rough Skin
+Sand Veil / Rough Skin / (Regenerator)
 
 Base Stats:
 60 HP / 100 Atk / 120 Def / 105 SpA / 70 SpD / 65 Spe / 520 BST
@@ -5254,7 +5256,7 @@ Type:
 Galactic / Light
 
 Ability:
-Magic Guard / Unaware
+Magic Guard / Unaware / (None)
 
 Base Stats:
 50 HP / 25 Atk / 28 Def / 45 SpA / 55 SpD / 15 Spe / 218 BST
@@ -5278,7 +5280,7 @@ Type:
 Galactic / Light
 
 Ability:
-Magic Guard / Unaware
+Magic Guard / Unaware / (None)
 
 Base Stats:
 70 HP / 45 Atk / 48 Def / 60 SpA / 65 SpD / 35 Spe / 323 BST
@@ -5324,7 +5326,7 @@ Type:
 Galactic / Light
 
 Ability:
-Magic Guard / Unaware
+Magic Guard / Unaware / (None)
 
 Base Stats:
 95 HP / 70 Atk / 73 Def / 95 SpA / 90 SpD / 60 Spe / 483 BST
@@ -5367,7 +5369,7 @@ Type:
 Magic / Flying
 
 Ability:
-Serene Grace / Natural Cure
+Serene Grace / Natural Cure / (Mirror Armor)
 
 Base Stats:
 40 HP / 45 Atk / 65 Def / 100 SpA / 105 SpD / 65 Spe / 420 BST
@@ -5400,7 +5402,7 @@ Type:
 Magic / Flying
 
 Ability:
-Serene Grace / Natural Cure
+Serene Grace / Natural Cure / (Mirror Armor)
 
 Base Stats:
 70 HP / 45 Atk / 75 Def / 135 SpA / 115 SpD / 80 Spe / 520 BST
@@ -5431,7 +5433,7 @@ Type:
 Normal / Ghost
 
 Ability:
-Adaptability / Illumination
+Adaptability / Illumination / (None)
 
 Base Stats:
 35 HP / 60 Atk / 40 Def / 85 SpA / 40 SpD / 70 Spe / 330 BST
@@ -5458,7 +5460,7 @@ Type:
 Normal / Ghost
 
 Ability:
-Adaptability / Illumination
+Adaptability / Illumination / (None)
 
 Base Stats:
 55 HP / 100 Atk / 60 Def / 125 SpA / 60 SpD / 110 Spe / 510 BST
@@ -5494,7 +5496,7 @@ Type:
 Steel / None
 
 Ability:
-Sniper / Inner Focus
+Sniper / Volt Absorb / (Full Force)
 
 Base Stats:
 50 HP / 70 Atk / 55 Def / 50 SpA / 50 SpD / 55 Spe / 330 BST
@@ -5517,7 +5519,7 @@ Type:
 Steel / None
 
 Ability:
-Sniper / Inner Focus
+Sniper / Volt Absorb / (Full Force)
 
 Base Stats:
 65 HP / 75 Atk / 105 Def / 50 SpA / 75 SpD / 60 Spe / 430 BST
@@ -5547,7 +5549,7 @@ Type:
 Steel / None
 
 Ability:
-Sniper / Inner Focus
+Sniper / Volt Absorb / (Full Force)
 
 Base Stats:
 70 HP / 115 Atk / 115 Def / 90 SpA / 75 SpD / 65 Spe / 530 BST
@@ -5584,7 +5586,7 @@ Type:
 Magic / Galactic
 
 Ability:
-Sparkly Surge / None
+Sparkly Surge / None / (None)
 
 Base Stats:
 55 HP / 76 Atk / 55 Def / 54 SpA / 90 SpD / 60 Spe / 390 BST
@@ -5609,7 +5611,7 @@ Type:
 Magic / Galactic
 
 Ability:
-Sparkly Surge / None
+Sparkly Surge / None / (None)
 
 Base Stats:
 75 HP / 80 Atk / 75 Def / 60 SpA / 90 SpD / 75 Spe / 455 BST
@@ -5643,7 +5645,7 @@ Type:
 Magic / Galactic
 
 Ability:
-Sparkly Surge / None
+Sparkly Surge / None / (None)
 
 Base Stats:
 100 HP / 100 Atk / 100 Def / 100 SpA / 100 SpD / 100 Spe / 600 BST
@@ -5680,7 +5682,7 @@ Type:
 Dragon / Light
 
 Ability:
-Multiscale / None
+Multiscale / None / (None)
 
 Base Stats:
 80 HP / 40 Atk / 57 Def / 63 SpA / 59 SpD / 51 Spe / 350 BST
@@ -5709,7 +5711,7 @@ Type:
 Dragon / Light
 
 Ability:
-Multiscale / None
+Multiscale / None / (None)
 
 Base Stats:
 85 HP / 75 Atk / 80 Def / 90 SpA / 75 SpD / 60 Spe / 465 BST
@@ -5744,7 +5746,7 @@ Type:
 Dragon / Light
 
 Ability:
-Multiscale / None
+Multiscale / None / (None)
 
 Base Stats:
 95 HP / 85 Atk / 90 Def / 115 SpA / 125 SpD / 90 Spe / 600 BST
@@ -5785,7 +5787,7 @@ Type:
 Galactic / None
 
 Ability:
-Shield Dust / Levitate
+Shield Dust / Levitate / (Regenerator)
 
 Base Stats:
 90 HP / 30 Atk / 30 Def / 30 SpA / 100 SpD / 30 Spe / 310 BST
@@ -5808,7 +5810,7 @@ Type:
 Galactic / None
 
 Ability:
-Shield Dust / Gravitational Pull
+Shield Dust / Gravitation / (Mold Breaker)
 
 Base Stats:
 125 HP / 45 Atk / 50 Def / 45 SpA / 115 SpD / 40 Spe / 420 BST
@@ -5837,7 +5839,7 @@ Type:
 Galactic / Fighting
 
 Ability:
-Sniper / Gravitational Pull
+Sniper / Gravitation / (Mold Breaker)
 
 Base Stats:
 170 HP / 135 Atk / 70 Def / 55 SpA / 115 SpD / 50 Spe / 595 BST
@@ -5868,7 +5870,7 @@ Type:
 Galactic / Ice
 
 Ability:
-Snow Warning / Slush Rush
+Snow Warning / Slush Rush / (Reckless)
 
 Base Stats:
 70 HP / 33 Atk / 76 Def / 58 SpA / 93 SpD / 85 Spe / 415 BST
@@ -5895,7 +5897,7 @@ Type:
 Galactic / Ice
 
 Ability:
-Snow Warning / Slush Rush
+Snow Warning / Slush Rush / (Reckless)
 
 Base Stats:
 90 HP / 150 Atk / 60 Def / 65 SpA / 60 SpD / 100 Spe / 525 BST
@@ -5927,7 +5929,7 @@ Type:
 Galactic / Rock
 
 Ability:
-Gravitational Pull / Huge Power
+Gravitation / Huge Power / (Mold Breaker)
 
 Base Stats:
 70 HP / 65 Atk / 130 Def / 55 SpA / 75 SpD / 55 Spe / 450 BST
@@ -5963,7 +5965,7 @@ Type:
 Galactic / Rock
 
 Ability:
-Gravitational Pull / Huge Power
+Gravitation / Huge Power / (Mold Breaker)
 
 Base Stats:
 80 HP / 75 Atk / 180 Def / 65 SpA / 80 SpD / 60 Spe / 540 BST
@@ -5999,7 +6001,7 @@ Type:
 Ghost / Electric
 
 Ability:
-Friendly Ghost / Levitate
+Friendly Ghost / Competitive / (Levitate)
 
 Base Stats:
 60 HP / 30 Atk / 70 Def / 80 SpA / 80 SpD / 80 Spe / 400 BST
@@ -6028,7 +6030,7 @@ Type:
 Ghost / Electric
 
 Ability:
-Friendly Ghost / Competitive
+Friendly Ghost / Competitive / (Levitate)
 
 Base Stats:
 70 HP / 75 Atk / 35 Def / 150 SpA / 55 SpD / 115 Spe / 500 BST
@@ -6060,7 +6062,7 @@ Type:
 Fighting / Electric
 
 Ability:
-Sniper / Iron Fist
+Sniper / Iron Fist / (Full Force)
 
 Base Stats:
 40 HP / 75 Atk / 70 Def / 30 SpA / 30 SpD / 85 Spe / 330 BST
@@ -6085,7 +6087,7 @@ Type:
 Fighting / Electric
 
 Ability:
-Sniper / Iron Fist
+Sniper / Iron Fist / (Full Force)
 
 Base Stats:
 50 HP / 100 Atk / 75 Def / 45 SpA / 55 SpD / 105 Spe / 430 BST
@@ -6120,7 +6122,7 @@ Type:
 Fighting / Electric
 
 Ability:
-Sniper / Iron Fist
+Sniper / Iron Fist / (Full Force)
 
 Base Stats:
 75 HP / 145 Atk / 85 Def / 50 SpA / 65 SpD / 110 Spe / 530 BST
@@ -6158,7 +6160,7 @@ Type:
 Fire / Electric
 
 Ability:
-Static / Flame Body
+Static / Flame Body / (None)
 
 Base Stats:
 60 HP / 65 Atk / 50 Def / 75 SpA / 50 SpD / 60 Spe / 360 BST
@@ -6185,7 +6187,7 @@ Type:
 Fire / Electric
 
 Ability:
-Levitate / Flame Body
+Levitate / Flame Body / (None)
 
 Base Stats:
 90 HP / 70 Atk / 80 Def / 85 SpA / 65 SpD / 70 Spe / 460 BST
@@ -6218,7 +6220,7 @@ Type:
 Fire / Electric
 
 Ability:
-Levitate / Flame Body
+Levitate / Flame Body / (None)
 
 Base Stats:
 95 HP / 90 Atk / 90 Def / 120 SpA / 90 SpD / 75 Spe / 560 BST
@@ -6254,7 +6256,7 @@ Type:
 Rock / Electric
 
 Ability:
-Sturdy / Lightning Rod
+Sturdy / Lightning Rod / (None)
 
 Base Stats:
 40 HP / 65 Atk / 74 Def / 49 SpA / 53 SpD / 44 Spe / 325 BST
@@ -6280,7 +6282,7 @@ Type:
 Rock / Electric
 
 Ability:
-Sturdy / Lightning Rod
+Sturdy / Lightning Rod / (None)
 
 Base Stats:
 80 HP / 77 Atk / 90 Def / 77 SpA / 56 SpD / 45 Spe / 425 BST
@@ -6312,7 +6314,7 @@ Type:
 Rock / Electric
 
 Ability:
-Sturdy / Lightning Rod
+Sturdy / Lightning Rod / (None)
 
 Base Stats:
 120 HP / 66 Atk / 92 Def / 122 SpA / 80 SpD / 45 Spe / 525 BST
@@ -6349,7 +6351,7 @@ Type:
 Light / Electric
 
 Ability:
-Clear Body / Filter
+Clear Body / Filter / (None)
 
 Base Stats:
 120 HP / 95 Atk / 70 Def / 65 SpA / 130 SpD / 45 Spe / 525 BST
@@ -6388,7 +6390,7 @@ Type:
 Water / Electric
 
 Ability:
-Swift Swim / Rattled
+Swift Swim / Rattled / (None)
 
 Base Stats:
 20 HP / 10 Atk / 25 Def / 45 SpA / 30 SpD / 70 Spe / 200 BST
@@ -6408,7 +6410,7 @@ Type:
 Water / Electric
 
 Ability:
-Volt Vortex / Motor Drive
+Volt Vortex / Motor Drive / (None)
 
 Base Stats:
 105 HP / 135 Atk / 80 Def / 25 SpA / 110 SpD / 85 Spe / 540 BST
@@ -6435,7 +6437,7 @@ Type:
 Dragon / Electric
 
 Ability:
-Strong Jaw / Shed Skin
+Strong Jaw / Shed Skin / (None)
 
 Base Stats:
 50 HP / 105 Atk / 65 Def / 65 SpA / 65 SpD / 80 Spe / 430 BST
@@ -6465,7 +6467,7 @@ Type:
 Dragon / Electric
 
 Ability:
-Strong Jaw / Shed Skin
+Strong Jaw / Shed Skin / (None)
 
 Base Stats:
 75 HP / 124 Atk / 90 Def / 70 SpA / 70 SpD / 101 Spe / 530 BST
@@ -6500,7 +6502,7 @@ Type:
 Dragon / Dark
 
 Ability:
-Moxie / Defiant
+Moxie / Defiant / (None)
 
 Base Stats:
 95 HP / 105 Atk / 65 Def / 35 SpA / 55 SpD / 75 Spe / 430 BST
@@ -6531,7 +6533,7 @@ Type:
 Dragon / Dark
 
 Ability:
-Moxie / Defiant
+Moxie / Defiant / (None)
 
 Base Stats:
 134 HP / 110 Atk / 101 Def / 35 SpA / 85 SpD / 65 Spe / 530 BST
@@ -6567,7 +6569,7 @@ Type:
 Ground / Ghost
 
 Ability:
-Illumination / Prankster
+Illumination / Prankster / (None)
 
 Base Stats:
 60 HP / 45 Atk / 52 Def / 64 SpA / 65 SpD / 59 Spe / 345 BST
@@ -6602,7 +6604,7 @@ Type:
 Dragon / Ghost
 
 Ability:
-Illumination / Prankster
+Illumination / Prankster / (None)
 
 Base Stats:
 65 HP / 135 Atk / 65 Def / 50 SpA / 70 SpD / 100 Spe / 485 BST
@@ -6641,7 +6643,7 @@ Type:
 Ground / Dark
 
 Ability:
-Adaptability / None
+Adaptability / Sand Rush / (Regenerator)
 
 Base Stats:
 20 HP / 50 Atk / 50 Def / 35 SpA / 50 SpD / 70 Spe / 275 BST
@@ -6665,7 +6667,7 @@ Type:
 Ground / Dark
 
 Ability:
-Adaptability / None
+Adaptability / Sand Rush / (Regenerator)
 
 Base Stats:
 40 HP / 75 Atk / 75 Def / 60 SpA / 50 SpD / 85 Spe / 385 BST
@@ -6697,7 +6699,7 @@ Type:
 Ground / Dark
 
 Ability:
-Adaptability / None
+Adaptability / Sand Rush / (Regenerator)
 
 Base Stats:
 100 HP / 100 Atk / 90 Def / 100 SpA / 50 SpD / 80 Spe / 520 BST
@@ -6733,7 +6735,7 @@ Type:
 Poison / Dark
 
 Ability:
-Levitate / None
+Levitate / None / (Pressure)
 
 Base Stats:
 55 HP / 42 Atk / 38 Def / 110 SpA / 110 SpD / 80 Spe / 435 BST
@@ -6762,7 +6764,7 @@ Type:
 Poison / Dark
 
 Ability:
-Levitate / None
+Levitate / None / (Pressure)
 
 Base Stats:
 80 HP / 70 Atk / 50 Def / 100 SpA / 100 SpD / 80 Spe / 480 BST
@@ -6804,7 +6806,7 @@ Type:
 Poison / Dark
 
 Ability:
-Levitate / None
+Levitate / None / (Pressure)
 
 Base Stats:
 95 HP / 75 Atk / 65 Def / 123 SpA / 97 SpD / 85 Spe / 540 BST
@@ -6837,7 +6839,7 @@ Level Up:
 10 - Sludge Wave
 15 - Hyper Voice
 20 - Overheat
-25 - Silver Wind
+25 - Dark Pulse
 30 - Giga Drain
 35 - Power Gem
 40 - Freeze-Dry
@@ -6854,7 +6856,7 @@ Type:
 Fire / Dark
 
 Ability:
-Flame Body / Super Luck
+Flash Fire / Super Luck / (Flame Body)
 
 Base Stats:
 30 HP / 20 Atk / 40 Def / 83 SpA / 50 SpD / 83 Spe / 306 BST
@@ -6877,7 +6879,7 @@ Type:
 Fighting / Dark
 
 Ability:
-Guts / Super Luck
+Guts / Super Luck / (Flame Body)
 
 Base Stats:
 47 HP / 98 Atk / 60 Def / 40 SpA / 62 SpD / 93 Spe / 400 BST
@@ -6905,7 +6907,7 @@ Type:
 Fighting / Dark
 
 Ability:
-Guts / Super Luck
+Guts / Super Luck / (Flame Body)
 
 Base Stats:
 95 HP / 115 Atk / 65 Def / 46 SpA / 95 SpD / 100 Spe / 516 BST
@@ -6941,7 +6943,7 @@ Type:
 Flying / Ghost
 
 Ability:
-Shed Skin / Lightning Rod
+Shed Skin / Lightning Rod / (Pressure)
 
 Base Stats:
 35 HP / 40 Atk / 54 Def / 65 SpA / 64 SpD / 30 Spe / 288 BST
@@ -6973,7 +6975,7 @@ Type:
 Flying / Ghost
 
 Ability:
-Shed Skin / Lightning Rod
+Shed Skin / Lightning Rod / (Pressure)
 
 Base Stats:
 80 HP / 40 Atk / 90 Def / 115 SpA / 90 SpD / 75 Spe / 490 BST
@@ -7011,7 +7013,7 @@ Type:
 Water / Flying
 
 Ability:
-Drizzle / None
+Drizzle / None / (None)
 
 Base Stats:
 80 HP / 30 Atk / 170 Def / 72 SpA / 170 SpD / 78 Spe / 600 BST
@@ -7035,7 +7037,7 @@ Type:
 Dark / Magic
 
 Ability:
-Type Master / None
+Type Master / None / (None)
 
 Base Stats:
 45 HP / 125 Atk / 40 Def / 125 SpA / 100 SpD / 165 Spe / 600 BST
@@ -7087,7 +7089,7 @@ Type:
 Ice / Light
 
 Ability:
-Snow Warning / None
+Snow Warning / None / (None)
 
 Base Stats:
 80 HP / 5 Atk / 130 Def / 150 SpA / 180 SpD / 80 Spe / 625 BST
@@ -7111,7 +7113,7 @@ Type:
 Ice / Magic
 
 Ability:
-Slush Rush / None
+Slush Rush / None / (None)
 
 Base Stats:
 25 HP / 400 Atk / 35 Def / 5 SpA / 50 SpD / 95 Spe / 610 BST
@@ -7132,7 +7134,7 @@ Type:
 Poison / Magic
 
 Ability:
-Protean / None
+Protean / None / (None)
 
 Base Stats:
 75 HP / 85 Atk / 90 Def / 134 SpA / 105 SpD / 126 Spe / 615 BST
@@ -7180,7 +7182,7 @@ Type:
 Ice / Dragon
 
 Ability:
-Glacier Aura / None
+Glacier Aura / None / (Pressure)
 
 Base Stats:
 100 HP / 70 Atk / 150 Def / 150 SpA / 100 SpD / 110 Spe / 680 BST
@@ -7201,7 +7203,7 @@ Type:
 Psychic / Dragon
 
 Ability:
-Psychic Aura / None
+Psychic Aura / None / (Pressure)
 
 Base Stats:
 100 HP / 150 Atk / 100 Def / 100 SpA / 130 SpD / 100 Spe / 680 BST
@@ -7225,7 +7227,7 @@ Type:
 Galactic / Dragon
 
 Ability:
-Galactic Aura / None
+Galactic Aura / None / (Pressure)
 
 Base Stats:
 90 HP / 95 Atk / 105 Def / 200 SpA / 110 SpD / 100 Spe / 700 BST
@@ -7249,7 +7251,7 @@ Type:
 Fire / Galactic
 
 Ability:
-Drought / None
+Drought / None / (None)
 
 Base Stats:
 190 HP / 75 Atk / 120 Def / 90 SpA / 120 SpD / 75 Spe / 670 BST
@@ -7291,7 +7293,7 @@ Type:
 Water / Dragon
 
 Ability:
-Adaptability / None
+Adaptability / None / (None)
 
 Base Stats:
 110 HP / 100 Atk / 75 Def / 100 SpA / 75 SpD / 90 Spe / 550 BST
@@ -7325,7 +7327,7 @@ Type:
 Dark / Fighting
 
 Ability:
-Intimidate / Moxie
+Intimidate / Moxie / (Shed Skin)
 
 Base Stats:
 50 HP / 75 Atk / 70 Def / 35 SpA / 70 SpD / 48 Spe / 348 BST
@@ -7358,7 +7360,7 @@ Type:
 Dark / Fighting
 
 Ability:
-Intimidate / Moxie
+Intimidate / Moxie / (Shed Skin)
 
 Base Stats:
 65 HP / 90 Atk / 115 Def / 45 SpA / 115 SpD / 58 Spe / 488 BST
@@ -7392,7 +7394,7 @@ Type:
 Dragon / Fighting
 
 Ability:
-Scaly Skin / Moxie
+Scaly Skin / Moxie / (Shed Skin)
 
 Base Stats:
 70 HP / 110 Atk / 120 Def / 40 SpA / 120 SpD / 110 Spe / 570 BST
@@ -7427,7 +7429,7 @@ Type:
 Rock / Poison
 
 Ability:
-Toxic Debris / Corrosion
+Toxic Debris / None / (Corrosion)
 
 Base Stats:
 48 HP / 35 Atk / 42 Def / 105 SpA / 60 SpD / 60 Spe / 350 BST
@@ -7456,7 +7458,7 @@ Type:
 Rock / Poison
 
 Ability:
-Toxic Debris / Corrosion
+Toxic Debris / None / (Corrosion)
 
 Base Stats:
 83 HP / 55 Atk / 90 Def / 130 SpA / 81 SpD / 86 Spe / 525 BST
