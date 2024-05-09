@@ -2299,7 +2299,7 @@ public class Pokemon implements Serializable {
 	            if (p.level < 100) {
 	            	if (p.item == Item.LUCKY_EGG) expAwarded *= 1.5;
 	                p.exp += expAwarded;
-	                String flavor = p.item == Item.LUCKY_EGG ? " a boosted " : p.item == Item.EXP_SHARE ? " a shared " : "";
+	                String flavor = p.item == Item.LUCKY_EGG ? "a boosted " : p.item == Item.EXP_SHARE && !p.visible ? "a shared " : "";
                 	Task t = addTask(Task.EXP, p.nickname + " gained " + flavor + expAwarded + " experience points!", p);
                 	t.setFinish(Math.min(p.exp, expMax));
 	            }

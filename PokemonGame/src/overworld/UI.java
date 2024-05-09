@@ -1342,6 +1342,7 @@ public class UI extends AbstractUI{
 				if (moveOption >= 0) {
 					if (currentPokemon.ivs[moveOption] < 31) {
 						currentPokemon.ivs[moveOption] = 31;
+						currentPokemon.setStats();
 			        	showMessage(currentPokemon + "'s " + Pokemon.getStatType(moveOption) + "IV was maxed out!");
 			        	gp.player.p.bag.remove(currentItem);
 		        		currentItems = gp.player.p.getItems(currentPocket);
