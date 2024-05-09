@@ -193,7 +193,7 @@ public class Pokemon implements Serializable {
 		catchRate = getCatchRate();
 		happinessCap = 50;
 		
-		setSprites();
+		if (!t) setSprites();
 	}
 	
 	public Pokemon(int i, Pokemon pokemon) {

@@ -902,6 +902,8 @@ public enum Item {
         });
         
         fInfoButton.addActionListener(e -> {
+        	Pokemon foe = (Pokemon) foeMons.getSelectedItem();
+        	if (foe.getSprite() == null) foe.setSprites();
         	JOptionPane.showMessageDialog(null, ((Pokemon) foeMons.getSelectedItem()).showSummary(p, false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
         });
         

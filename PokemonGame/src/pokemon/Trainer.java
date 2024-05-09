@@ -277,4 +277,11 @@ public class Trainer implements Serializable {
 			}
 		}
 	}
+
+	public void setSprites() {
+		for (Pokemon p : team) {
+			if (p != null) p.setSprites();
+		}
+		
+	}
 }
