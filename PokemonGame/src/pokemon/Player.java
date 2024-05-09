@@ -72,7 +72,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 10;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 10;
+	public static final int VERSION = 11;
 	
 	public Player(GamePanel gp) {
 		super(true);
@@ -832,13 +832,31 @@ public class Player extends Trainer implements Serializable {
 			case ABILITY_CAPSULE:
 				boolean swappable = p.canUseItem(item) == 1;
 	    		if (!swappable) {
-	        		gp.ui.showMessage(p.nickname + " only has one ability, it won't have any effect.");
+	        		gp.ui.showMessage(Item.breakString(p.nickname + " only has one ability, it won't have any effect.", 40));
 	        		return;
 	        	} else {
 	        		Ability oldAbility = p.ability;
 	        		p.abilitySlot = 1 - p.abilitySlot;
 	        		p.setAbility(p.abilitySlot);
 	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was swapped from " + oldAbility + " to " + p.ability + "!", 40));
+	        	}
+				break;
+				
+			// Ability Patch
+			case ABILITY_PATCH:
+				boolean swappable2 = p.canUseItem(item) == 1;
+	    		if (!swappable2) {
+	        		gp.ui.showMessage(Item.breakString(p.nickname + " doesn't have a hidden ability, it won't have any effect.", 40));
+	        		return;
+	        	} else {
+	        		Ability oldAbility = p.ability;
+	        		if (p.abilitySlot == 2) {
+	        			p.abilitySlot = 0;
+	        		} else {
+	        			p.abilitySlot = 2;
+	        		}
+	        		p.setAbility(p.abilitySlot);
+	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was changed from " + oldAbility + " to " + p.ability + "!", 40));
 	        	}
 				break;
 				
@@ -1054,6 +1072,7 @@ public class Player extends Trainer implements Serializable {
 		updateItems(gp.obj.length, gp.obj[1].length);
 		updateFlags();
 		updatePokedex();
+		updateBag();
 		for (Pokemon p : getAllPokemon()) {
 			if (p != null) {
 				p.update();
@@ -1062,6 +1081,14 @@ public class Player extends Trainer implements Serializable {
 		version = VERSION;
 	}
 	
+	private void updateBag() {
+		Bag temp = new Bag();
+		if (bag.bag.size() == temp.bag.size()) return;
+		int[] counts = bag.count;
+		bag = new Bag();
+		bag.count = counts;
+	}
+
 	public void setSprites() {
 		for (Pokemon p : getAllPokemon()) {
 			if (p != null) {

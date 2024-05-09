@@ -15,7 +15,7 @@ public enum Ability {
 	COMPETITIVE("Boosts the Pokemon's Special Attack stat when its stats are lowered."),
 	COMPOUND_EYES("The Pokemon's accuracy is boosted."),
 	CONTRARY("Makes stat changes have an opposite effect."),
-	CORROSION("The Pokemon can poison the target even if it's a Steel or Poison type."), // TODO
+	CORROSION("The Pokemon can poison the target even if it's a Steel or Poison type."),
 	DEFIANT("Boosts the Pokemon's Attack stat when its stats are lowered."),
 	DRIZZLE("The Pokemon makes it RAIN when it enters a battle."),
 	DRY_SKIN("Restores HP in RAIN or when hit by WATER moves, but reduces HP in SUN and is weaker to FIRE."),
@@ -28,18 +28,18 @@ public enum Ability {
 	FLASH_FIRE("It powers up FIRE moves if it's hit by one."),
 	FLUFFY("Halves the damage from moves that make direct contact, but doubles that of FIRE moves."),
 	FRIENDLY_GHOST("Gives full immunity to all GHOST moves."),
-	FULL_FORCE(""), // TODO
+	FULL_FORCE("Boosts the Attack stat by 2 stages if the Pokemon's held item is used or lost."),
 	GALACTIC_AURA("Halves the damage of ICE and PSYCHIC moves."),
 	GLACIER_AURA("Weakens the power of Physical moves."),
 	GRASSY_SURGE("Turns the ground into GRASSY TERRAIN when the Pokemon enters a battle."),
 	GRAVITATION("Creates GRAVITY when the Pokemon enters a battle."),
 	GUTS("Boosts the Attack stat if the Pokemon has a status condition."),
 	HUGE_POWER("Doubles the Pokemon's Attack stat."),
-	HYDRATION(""), // TODO
+	HYDRATION("Cures the Pokemon's status conditions in RAIN."),
 	HYPER_CUTTER("Prevents other Pokemon from lowering Attack stat."),
 	ICE_BODY("The Pokemon gradually regains HP in SNOW."),
 	ICY_SCALES("The Pokemon is protected by ice scales, which halve the damage from special moves."),
-	INNER_FOCUS("The Pokemon is protected from flinching."),
+	INNER_FOCUS("The Pokemon is protected from flinching; ignores Intimidate and Terrify."),
 	INSECT_FEEDER("Restores HP if hit by a BUG move."),
 	INTIMIDATE("Lowers the opposing Pokemon's Attack stat."),
 	IRON_BARBS("Inflicts damage to the Pokemon on contact."),
@@ -51,7 +51,7 @@ public enum Ability {
 	MAGIC_BOUNCE("Reflects status moves instead of getting hit by them."),
 	MAGIC_GUARD("The Pokemon only takes damage from attacks."),
 	MIRROR_ARMOR("Bounces back only the stat-lowering effects that the Pokemon receives."),
-	MOLD_BREAKER(""), // TODO
+	MOLD_BREAKER("Moves can be used on the target regardless of its Abilities."),
 	MOTOR_DRIVE("Raises Speed if hit by an ELECTRIC move."),
 	MOUTHWATER("Prevents the foe from using any non-damaging moves."),
 	MOXIE("Boosts the Attack stat after knocking out any Pokemon."),
@@ -60,19 +60,19 @@ public enum Ability {
 	NO_GUARD("Ensures the Pokemon and its foe's attacks land."),
 	NORMALIZE("All the Pokemon's moves become Normal type. The power of those moves is boosted."),
 	OVERGROW("Powers up GRASS moves in a pinch."),
-	PIXILATE(""), // TODO
+	PIXILATE("NORMAL moves become LIGHT moves. The power of those moves is boosted a little."),
 	POISON_HEAL("Restores HP if the Pokemon is poisoned instead of losing HP."),
 	POISON_POINT("Contact with the Pokemon may poison the attacker."),
-	POISON_TOUCH(""), // TODO
+	POISON_TOUCH("May poison a target when the Pokemon makes contact."),
 	PRANKSTER("Gives priority to a status move."),
-	PRESSURE(""), // TODO
+	PRESSURE("The Pokemon raises opposing Pokemon's PP usage."),
 	PROTEAN("Makes the Pokemon's type to the move type it's about to use."),
 	PSYCHIC_AURA("Weakens the power of Special moves."),
 	PSYCHIC_SURGE("Turns the ground into PSYCHIC TERRAIN when the Pokemon enters a battle."),
 	RADIANT("Lowers foe's Accuracy when hit by a LIGHT move"),
 	RAIN_DISH("The Pokemon gradually regains HP in RAIN."),
 	RATTLED("DARK, GHOST, and BUG moves scare the Pokemon and boost its Speed stat."),
-	RECKLESS(""), // TODO
+	RECKLESS("Powers up moves that have recoil damage."),
 	REGENERATOR("Restores a little HP when withdrawn from battle."),
 	ROCK_HEAD("Prevents recoil damage."),
 	ROUGH_SKIN("Inflicts damage to the Pokemon on contact."),
@@ -83,7 +83,7 @@ public enum Ability {
 	SAP_SIPPER("Raises Attack if hit by an GRASS move."),
 	SERENE_GRACE("Boosts the likelihood of additional effects occurring when attacking."),
 	SCALY_SKIN("Lowers the foe's Attack, and this Pokemon only takes damage from attacks."),
-	SCRAPPY(""), // TODO
+	SCRAPPY("The Pokemon can hit GHOST Pokemon with NORMAL and FIGHTING moves; ignores Intimidate and Terrify."),
 	SHARPNESS("Boosts the power of Slicing moves."),
 	SHED_SKIN("The Pokemon may heal its own status conditions."),
 	SHEER_FORCE("Removes additional effects to increase the power of moves when attacking."),
@@ -110,12 +110,12 @@ public enum Ability {
 	TINTED_LENS("Powers up \"not very effective\" moves."),
 	TORRENT("Powers up WATER moves in a pinch."),
 	TOUGH_CLAWS("Powers up moves that make direct contact."),
-	TOXIC_DEBRIS("Puts toxic spikes on the opposing side when the hit by physical moves."), // TODO
+	TOXIC_DEBRIS("Puts toxic spikes on the opposing side when the hit by physical moves."),
 	TERRIFY("Lowers the opposing Pokemon's Sp. Atk stat."),
 	TRACE("The Pokemon copies a foe's Ability."),
 	TYPE_MASTER("Grants STAB on all moves."),
 	UNAWARE("Ignores the opposing Pokemon's stat changes."),
-	UNBURDEN(""), // TODO
+	UNBURDEN("Doubles the Speed stat if the Pokemon's held item is used or lost."),
 	UNERODIBLE("Reduces damage from GRASS, WATER, and GROUND attacks."),
 	VOLT_ABSORB("Restores HP if hit by a ELECTRIC move."),
 	VOLT_VORTEX("Boosts the Pokemon's speed in ELECTRIC TERRAIN."),

@@ -265,7 +265,8 @@ public class BattleUI extends AbstractUI {
 	private void drawTask() {
 		switch (currentTask.type) {
 		case Task.TEXT:
-			showMessage(Item.breakString(currentTask.message, 55));
+			String message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 55);
+			showMessage(message);
 			break;
 		case Task.DAMAGE:
 			if (!currentTask.p.isVisible()) {

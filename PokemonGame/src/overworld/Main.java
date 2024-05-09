@@ -1041,12 +1041,25 @@ public class Main {
 				writer.write(type + "\n\n");
 				
 				writer.write("Ability:\n");
+				StringBuilder abilityBuilder = new StringBuilder();
 				p.setAbility(0);
 				Ability ability1 = p.ability;
-				String ability = ability1.toString() + " / ";
+				abilityBuilder.append(ability1.toString()).append(" / ");
 				p.setAbility(1);
-				ability = p.ability == ability1 ? ability + "None" : ability + p.ability.toString();			
-				writer.write(ability + "\n\n");
+				if (p.ability == ability1) {
+				    abilityBuilder.append("None");
+				} else {
+				    abilityBuilder.append(p.ability.toString());
+				}
+				p.setAbility(2);
+				abilityBuilder.append(" / (");
+				if (p.ability == Ability.NULL || p.ability == ability1) {
+				    abilityBuilder.append("None");
+				} else {
+				    abilityBuilder.append(p.ability.toString());
+				}
+				abilityBuilder.append(")\n\n");
+				writer.write(abilityBuilder.toString());
 				
 				writer.write("Base Stats:\n");
 				String stats = "";

@@ -900,4 +900,22 @@ public enum Move {
 	    return sb.toString().trim();
 	}
 
+	public static ArrayList<Move> getRecoil() {
+		ArrayList<Move> result = new ArrayList<>();
+		result.add(Move.BRAVE_BIRD);
+		result.add(Move.FLARE_BLITZ);
+		result.add(Move.HEAD_SMASH);
+		result.add(Move.TAKE_DOWN);
+		result.add(Move.VOLT_TACKLE);
+		result.add(Move.ROCK_WRECKER);
+		result.add(Move.GENESIS_SUPERNOVA);
+		result.add(Move.LIGHT_OF_RUIN);
+		result.add(Move.SUBMISSION);
+		result.add(Move.WAVE_CRASH);
+		result.add(Move.STEEL_BEAM);
+		result.add(Move.DOUBLE$EDGE);
+		result.add(Move.STRUGGLE);
+		return result;
+	}
+
 }
