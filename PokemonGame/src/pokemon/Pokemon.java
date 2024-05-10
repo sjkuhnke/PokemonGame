@@ -10597,13 +10597,13 @@ public class Pokemon implements Serializable {
 			if (field.contains(side, Effect.STEALTH_ROCKS)) {
 				double multiplier = getEffectiveMultiplier(PType.ROCK);
 				double damage = (this.getStat(0) / 8.0) * multiplier;
-				this.damage((int) Math.floor(damage), foe);
+				this.damage((int) Math.max(Math.floor(damage), 1), foe);
 				addTask(Task.TEXT, "Pointed stones dug into " + this.nickname + "!");
 			}
 			if (field.contains(side, Effect.SPIKES) && this.isGrounded() && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 				double layers = field.getLayers(side, Effect.SPIKES);
 				double damage = (this.getStat(0) / 8.0) * ((layers + 1) / 2);
-				this.damage((int) Math.floor(damage), foe);
+				this.damage((int) Math.max(Math.floor(damage), 1), foe);
 				addTask(Task.TEXT, this.nickname + " was hurt by Spikes!");
 			}
 			
