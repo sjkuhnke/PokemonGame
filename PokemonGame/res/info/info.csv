@@ -35,9 +35,9 @@
 |Grubbin      |BUG     |null    |SWARM             |HYPER_CUTTER      |NULL              |[47, 62, 45, 55, 45, 46]      |9.7   |255|
 |Charjabug    |BUG     |ELECTRIC|STATIC            |BATTLE_ARMOR      |NULL              |[57, 82, 95, 55, 75, 36]      |23.1  |120|
 |Vikavolt     |BUG     |ELECTRIC|LEVITATE          |TINTED_LENS       |NULL              |[77, 65, 90, 110, 75, 95]     |99.2  |45 |
-|Busheep      |GRASS   |null    |ANTICIPATION      |FLUFFY            |NULL              |[60, 50, 100, 75, 105, 60]    |15.8  |230|
-|Ramant       |GRASS   |null    |MOXIE             |DEFIANT           |NULL              |[70, 130, 95, 45, 80, 100]    |87.7  |85 |
-|Bushewe      |GRASS   |LIGHT   |SERENE_GRACE      |COMPETITIVE       |NULL              |[70, 45, 80, 130, 95, 100]    |55.6  |100|
+|Busheep      |GRASS   |null    |ANTICIPATION      |FLUFFY            |CHLOROPHYLL       |[60, 50, 100, 75, 105, 60]    |15.8  |230|
+|Ramant       |GRASS   |null    |MOXIE             |DEFIANT           |RECKLESS          |[70, 130, 95, 45, 80, 100]    |87.7  |85 |
+|Bushewe      |GRASS   |LIGHT   |SERENE_GRACE      |COMPETITIVE       |GRASSY_SURGE      |[70, 45, 80, 130, 95, 100]    |55.6  |100|
 |Bugik        |BUG     |FIGHTING|HYPER_CUTTER      |SWARM             |NULL              |[40, 60, 65, 30, 50, 70]      |6.0   |200|
 |Swordik      |BUG     |FIGHTING|HYPER_CUTTER      |JUSTIFIED         |NULL              |[53, 95, 85, 30, 53, 85]      |45.5  |85 |
 |Ninjakik     |BUG     |FIGHTING|SPEED_BOOST       |JUSTIFIED         |NULL              |[63, 120, 90, 62, 65, 105]    |90.1  |50 |
@@ -111,9 +111,9 @@
 |Shookwat     |ELECTRIC|null    |STATIC            |VOLT_ABSORB       |MOTOR_DRIVE       |[55, 62, 46, 73, 75, 49]      |11.0  |255|
 |Wattwo       |ELECTRIC|null    |STATIC            |ELECTRIC_SURGE    |MOTOR_DRIVE       |[83, 65, 92, 105, 80, 50]     |56.1  |100|
 |Megawatt     |ELECTRIC|STEEL   |HUGE_POWER        |ELECTRIC_SURGE    |MOTOR_DRIVE       |[85, 65, 120, 92, 98, 55]     |65.9  |35 |
-|Elelamb      |ELECTRIC|GROUND  |STATIC            |FLUFFY            |NULL              |[54, 32, 53, 65, 58, 33]      |40.1  |255|
-|Electroram   |ELECTRIC|GROUND  |STATIC            |FLUFFY            |NULL              |[65, 80, 55, 45, 60, 50]      |76.0  |120|
-|Superchargo  |ELECTRIC|GROUND  |SPEED_BOOST       |FLUFFY            |NULL              |[85, 128, 72, 60, 77, 98]     |91.3  |45 |
+|Elelamb      |ELECTRIC|GROUND  |STATIC            |FLUFFY            |UNERODIBLE        |[54, 32, 53, 65, 58, 33]      |40.1  |255|
+|Electroram   |ELECTRIC|GROUND  |STATIC            |FLUFFY            |UNERODIBLE        |[65, 80, 55, 45, 60, 50]      |76.0  |120|
+|Superchargo  |ELECTRIC|GROUND  |SPEED_BOOST       |FLUFFY            |UNERODIBLE        |[85, 128, 72, 60, 77, 98]     |91.3  |45 |
 |Twigzap      |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |NULL              |[34, 62, 43, 58, 44, 59]      |3.6   |255|
 |Shockbranch  |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |NULL              |[65, 94, 49, 60, 54, 73]      |13.4  |120|
 |Thunderzap   |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |NULL              |[90, 70, 100, 85, 100, 55]    |245.9 |45 |
@@ -159,7 +159,7 @@
 |Grust        |GHOST   |DARK    |ADAPTABILITY      |ANGER_POINT       |PRESSURE          |[115, 105, 55, 105, 60, 59]   |20.7  |35 |
 |Cluuz        |GHOST   |POISON  |LEVITATE          |LEVITATE          |LEVITATE          |[60, 42, 58, 105, 97, 73]     |0.5   |175|
 |Zurrclu      |GHOST   |ROCK    |LEVITATE          |LEVITATE          |LEVITATE          |[80, 90, 96, 71, 85, 58]      |199.1 |55 |
-|Zurroaratr   |GHOST   |ROCK    |LEVITATE          |LEVITATE          |LEVITATE          |[100, 109, 110, 67, 99, 55]   |600.3 |35 |
+|Zurroaratr   |GHOST   |ROCK    |LEVITATE          |LEVITATE          |LEVITATE          |[100, 109, 110, 67, 99, 55]   |600.3 |15 |
 |Timburr      |FIGHTING|null    |GUTS              |IRON_FIST         |NULL              |[75, 80, 55, 25, 35, 35]      |27.6  |180|
 |Gurdurr      |FIGHTING|null    |GUTS              |IRON_FIST         |NULL              |[85, 105, 85, 40, 50, 40]     |88.2  |90 |
 |Conkeldurr   |FIGHTING|null    |GUTS              |IRON_FIST         |NULL              |[105, 140, 95, 55, 65, 45]    |191.8 |45 |
@@ -219,7 +219,7 @@
 |Wormatron-S  |GROUND  |DARK    |ADAPTABILITY      |SAND_RUSH         |REGENERATOR       |[100, 100, 90, 100, 50, 80]   |165.2 |45 |
 |Cluuz-S      |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[55, 42, 38, 110, 110, 80]    |0.4   |175|
 |Zurrclu-S    |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[80, 70, 50, 100, 100, 80]    |36.5  |55 |
-|Zurroaratr-S |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[95, 75, 65, 123, 97, 85]     |80.5  |35 |
+|Zurroaratr-S |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[95, 75, 65, 123, 97, 85]     |80.5  |15 |
 |Iglite-S     |FIRE    |DARK    |FLASH_FIRE        |SUPER_LUCK        |FLAME_BODY        |[30, 20, 40, 83, 50, 83]      |19.4  |195|
 |Blaxer-S     |FIGHTING|DARK    |GUTS              |SUPER_LUCK        |FLAME_BODY        |[47, 98, 60, 40, 62, 93]      |78.5  |100|
 |Pyrator-S    |FIGHTING|DARK    |GUTS              |SUPER_LUCK        |FLAME_BODY        |[95, 115, 65, 46, 95, 100]    |205.3 |50 |

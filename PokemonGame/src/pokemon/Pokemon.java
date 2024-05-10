@@ -3685,7 +3685,7 @@ public class Pokemon implements Serializable {
 	 * 
 	 * @throws IllegalArgumentException if amt is 0 (invalid stat change)
 	 */
-	private void stat(Pokemon p, int i, int amt, Pokemon foe) throws IllegalArgumentException {
+	public void stat(Pokemon p, int i, int amt, Pokemon foe) throws IllegalArgumentException {
 		stat(p, i, amt, foe, true);
 	}
 
@@ -4698,12 +4698,11 @@ public class Pokemon implements Serializable {
 			movebank[41] = new Node(Move.KNOCK_OFF);
 			movebank[44] = new Node(Move.EARTHQUAKE);
 			movebank[46] = new Node(Move.POWER_WHIP);
-			movebank[49] = new Node(Move.ICE_PUNCH);
-			movebank[49].next = new Node(Move.THUNDER_PUNCH);
+			movebank[49] = new Node(Move.THUNDER_PUNCH);
+			movebank[49].next = new Node(Move.ICE_PUNCH);
 			movebank[52] = new Node(Move.SUPERPOWER);
-			movebank[54] = new Node(Move.SPIKY_SHIELD);
-			movebank[58] = new Node(Move.GLITTERING_SWORD);
-			movebank[62] = new Node(Move.GRASSY_TERRAIN);
+			movebank[58] = new Node(Move.GRASSY_TERRAIN);
+			movebank[62] = new Node(Move.WOOD_HAMMER);
 			movebank[69] = new Node(Move.OUTRAGE);
 			break;
 		case 28:
@@ -4898,6 +4897,7 @@ public class Pokemon implements Serializable {
 			movebank[42] = new Node(Move.DOUBLE$EDGE);
 			movebank[45] = new Node(Move.DRILL_RUN);
 			movebank[49] = new Node(Move.HEAD_SMASH);
+			movebank[54] = new Node(Move.WOOD_HAMMER);
 			movebank[59] = new Node(Move.SYNTHESIS);
 			break;
 		case 40:

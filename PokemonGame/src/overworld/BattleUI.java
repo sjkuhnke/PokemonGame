@@ -600,10 +600,16 @@ public class BattleUI extends AbstractUI {
 	    maxUserHP = user.getStat(0);
 	    foeHP = foe.currentHP;
 		
-		if (foe.trainerOwned()) {
+		if (foe.trainerOwned() && staticID == -1) {
 			Pokemon.addSwapInTask(foe);
 			foeFainted = foe.trainer.getNumFainted();
 		}
+		if (staticID == 162) {
+			Pokemon.addTask(Task.TEXT, foe.nickname + "'s aura is radiating!");
+	    	for (int i = 0; i < 5; i++) {
+	    		foe.stat(foe, i, 1, new Pokemon(1, 1, false, false));
+	    	}
+	    }
 	    Pokemon.addSwapInTask(user);
 	    Pokemon fasterInit = user.getFaster(foe, 0, 0);
 		Pokemon slowerInit = fasterInit == user ? foe : user;
@@ -854,7 +860,7 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void drawCatchWindow() {
-		if (foe.trainerOwned()) return;
+		if (foe.trainerOwned() && staticID < 0) return;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		int x = gp.screenWidth - (gp.tileSize * 4);
 		int y = (int) (gp.screenHeight - (gp.tileSize * 5.5));
@@ -1345,7 +1351,7 @@ public class BattleUI extends AbstractUI {
 	}
 
 	private void startingState() {
-		if (foe.trainerOwned()) {
+		if (foe.trainerOwned() && staticID == -1) {
 			showMessage("You are challenged by " + foe.trainer.getName() + "!");
 			foeStatus = foe.status;
 		} else {

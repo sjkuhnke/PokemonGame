@@ -72,7 +72,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 10;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 11;
+	public static final int VERSION = 14;
 	
 	public Player(GamePanel gp) {
 		super(true);
@@ -378,7 +378,8 @@ public class Player extends Trainer implements Serializable {
 				"First Gate", "Scott 1", "Rick 1", "TN in Office", "Scott 2", "Fred 2", "Key A SC", "Key B SC", "Clear Room A", "Clear Room B", // 9
 				"Gift Starter", "Gift Dog", "Gift Magic", "Gift Ancient", "Gift \"Starter\"", "Fred 3", "Talk to Grandpa", "Gym 5", "Gift E/S", // 18
 				"Rick 2", "Maxwell 1", "Scott 4", "Gift Glurg", "Coins Gotten", "Autosave Warn", "Magmaclang", "MSJ TN", "Fred 4", // 27
-				"Maxwell 2", "Zurroaratr", "Fishing Rod", "Got Surf", "Exp. Share", "Lucky Egg", "Rick 3"
+				"Maxwell 2", "Zurroaratr", "Fishing Rod", "Got Surf", "Exp. Share", "Lucky Egg", "Rick 3", "Triwandoliz", "Diftery" // 36
+				
 		};
 		JPanel flagsPanel = new JPanel();
 		flagsPanel.setLayout(new BoxLayout(flagsPanel, BoxLayout.Y_AXIS));

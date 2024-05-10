@@ -54,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public int currentMap = 0;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
-	public static final int MAX_FLAGS = 40;
+	public static final int MAX_FLAGS = 50;
 	
 	public KeyHandler keyH = new KeyHandler(this);
 	public AssetSetter aSetter = new AssetSetter(this);
@@ -291,6 +291,7 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		if (id == 232) npc[148][0] = null;
 		if (id == 229) npc[150][0] = null;
+		if (id == 162) npc[107][11] = null;
 		Pokemon[] teamTemp = Arrays.copyOf(player.p.team, 6);
 		for (int i = 0; i < 6; i++) {
 			if (teamTemp[i] != null) {

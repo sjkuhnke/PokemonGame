@@ -873,12 +873,11 @@ public class UI extends AbstractUI{
 		int moveStartY = y + gp.tileSize;
 		y += gp.tileSize / 6;
 		String evolve = p.getEvolveString();
-		if (evolve != null) {
-			String[] evolves = p.getEvolveString().split("\n");
-			for (String s : evolves) {
-				g2.drawString(s, x, y);
-				y += gp.tileSize / 3 + 2;
-			}
+		if (evolve == null) evolve = "Does not evolve";
+		String[] evolves = evolve.split("\n");
+		for (String s : evolves) {
+			g2.drawString(s, x, y);
+			y += gp.tileSize / 3 + 2;
 		}
 		
 		// Level up moves
@@ -1955,7 +1954,7 @@ public class UI extends AbstractUI{
 				counter = 0;
 				showArea = false;
 				gp.battleUI.commandNum = 0;
-				if (!gp.battleUI.foe.trainerOwned()) {
+				if (!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) {
 					gp.battleUI.ball = gp.player.p.getBall(gp.battleUI.ball);
 					gp.battleUI.balls = gp.player.p.getBalls();
 				}

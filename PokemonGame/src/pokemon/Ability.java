@@ -69,7 +69,7 @@ public enum Ability {
 	PROTEAN("Makes the Pokemon's type to the move type it's about to use."),
 	PSYCHIC_AURA("Weakens the power of Special moves."),
 	PSYCHIC_SURGE("Turns the ground into PSYCHIC TERRAIN when the Pokemon enters a battle."),
-	RADIANT("Lowers foe's Accuracy when hit by a LIGHT move"),
+	RADIANT("Lowers foe's Accuracy when this Pokemon hits with a LIGHT move"),
 	RAIN_DISH("The Pokemon gradually regains HP in RAIN."),
 	RATTLED("DARK, GHOST, and BUG moves scare the Pokemon and boost its Speed stat."),
 	RECKLESS("Powers up moves that have recoil damage."),
