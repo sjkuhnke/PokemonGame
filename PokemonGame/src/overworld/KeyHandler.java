@@ -181,7 +181,7 @@ public class KeyHandler implements KeyListener {
 		}
 		if (gp.battleUI.subState == BattleUI.IDLE_STATE) {
 			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
-				if ((gp.battleUI.foe.trainerOwned() && gp.battleUI.commandNum > 1) || (!gp.battleUI.foe.trainerOwned() && gp.battleUI.commandNum >= 0)) {
+				if ((gp.battleUI.foe.trainerOwned() && gp.battleUI.commandNum > 1) || ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.commandNum >= 0)) {
 					gp.battleUI.commandNum -= 2;
 				}
 			}
@@ -196,7 +196,7 @@ public class KeyHandler implements KeyListener {
 						gp.battleUI.commandNum--;
 					}
 				} else {
-					if (!gp.battleUI.foe.trainerOwned() && gp.battleUI.balls.size() > 1) {
+					if ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.balls.size() > 1) {
 						int index = gp.battleUI.balls.indexOf(gp.battleUI.ball);
 						if (--index < 0) {
 							index = gp.battleUI.balls.size() - 1;
@@ -211,7 +211,7 @@ public class KeyHandler implements KeyListener {
 						gp.battleUI.commandNum++;
 					}
 				} else {
-					if (!gp.battleUI.foe.trainerOwned() && gp.battleUI.balls.size() > 1) {
+					if ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.balls.size() > 1) {
 						int index = gp.battleUI.balls.indexOf(gp.battleUI.ball);
 						if (++index >= gp.battleUI.balls.size()) {
 							index = 0;

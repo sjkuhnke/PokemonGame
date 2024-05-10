@@ -549,6 +549,7 @@ public enum Move {
 	WING_ATTACK(60,100,0,0,0,0,PType.FLYING,"A normal attack",true,35),
 	WISH(0,1000,0,0,2,0,PType.NORMAL,"Heals a Pokemon by 50% of the user's max HP the next turn",false,10),
 	WITHDRAW(0,1000,0,0,2,0,PType.WATER,"Raises user's Defense by 1",false,35),
+	WOOD_HAMMER(120,100,0,0,0,0,PType.GRASS,"User takes 1/3 of damage inflicted",true,15),
 	WORRY_SEED(0,100,0,0,2,0,PType.GRASS,"Changes foe's ability to INSOMNIA",false,10),
 	WRAP(15,90,100,0,0,0,PType.NORMAL,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,20),
 	X$SCISSOR(80,100,0,1,0,0,PType.BUG,"Boosted Crit rate",true,15),
@@ -915,6 +916,7 @@ public enum Move {
 		result.add(Move.STEEL_BEAM);
 		result.add(Move.DOUBLE$EDGE);
 		result.add(Move.STRUGGLE);
+		result.add(Move.WOOD_HAMMER);
 		return result;
 	}
 

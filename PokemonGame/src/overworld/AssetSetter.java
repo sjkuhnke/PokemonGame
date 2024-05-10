@@ -43,7 +43,8 @@ public class AssetSetter {
 	
 	public ArrayList<Entity> clerks = new ArrayList<>();
 	
-	private static final int NPC_PC_GAUNTLET = -8;
+	private static final int NPC_PC_GAUNTLET = -9;
+	private static final int ZURROARATR = -8;
 	private static final int TRIWANDOLIZ = -7;
 	private static final int DIFTERY = -6;
 	private static final int GRUST = -5;
@@ -1318,7 +1319,15 @@ public class AssetSetter {
 					gp.npc[mapNum][index++] = null;
 				}
 			}
+		} else {
+			index += 10;
 		}
+		if (!flags[29]) {
+			gp.npc[mapNum][index] = NPCSetup(ZURROARATR, 50, 58, 346);
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
+		
 		
 		mapNum = 109;
 		index = 0;
@@ -1496,7 +1505,12 @@ public class AssetSetter {
 		
 		mapNum = 148;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRIWANDOLIZ, 50, 68, 326);
+		if (!flags[35] && flags[29]) {
+			gp.npc[mapNum][index] = NPCSetup(TRIWANDOLIZ, 50, 68, 326);
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
+		
 		
 		mapNum = 149;
 		index = 0;
@@ -1539,7 +1553,12 @@ public class AssetSetter {
 		
 		mapNum = 150;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(DIFTERY, 46, 66, 325);
+		if (!flags[36]) {
+			gp.npc[mapNum][index] = NPCSetup(DIFTERY, 46, 66, 325);
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
+		
 	}
 	
 	public void setInteractiveTile(int map) {
@@ -2200,6 +2219,8 @@ public class AssetSetter {
 		// flags[32] is true after getting Exp. Share
 		// flags[33] is true after getting Lucky Egg
 		// flags[34] is true after beating Rick 3
+		// flags[35] is true after fighting Triwandoliz
+		// flags[36] is true after fighting Diftery
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		if (flags[1]) {
@@ -2365,6 +2386,9 @@ public class AssetSetter {
 			break;
 		case TRIWANDOLIZ:
 			result = new NPC_Pokemon(gp, 232, team, false);
+			break;
+		case ZURROARATR:
+			result = new NPC_Pokemon(gp, 162, team, false);
 			break;
 		case RICK:
 			result = new NPC_TN_Admin(gp, "down", team);
