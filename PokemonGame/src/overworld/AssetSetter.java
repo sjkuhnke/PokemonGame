@@ -1559,6 +1559,14 @@ public class AssetSetter {
 			gp.npc[mapNum][index++] = null;
 		}
 		
+		// Nurses
+		gp.npc[153][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
+		gp.npc[153][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		
+		// Clerks
+		gp.npc[154][index] = NPCSetup(NPC_CLERK, 30, 39, -1);
+		gp.npc[155][index] = NPCSetup(NPC_MARKET, 34, 38, -1, true, Item.TM46, Item.TM63);
+		
 	}
 	
 	public void setInteractiveTile(int map) {

@@ -175,6 +175,13 @@ public class TileManager {
 		loadMap("/maps/splinkty04A.txt", 148, false);
 		loadMap("/maps/splinkty05A.txt", 149, false);
 		loadMap("/maps/shadow_cavern.txt", 150, false);
+		loadMap("/maps/gate01.txt", 151, true);
+		loadMap("/maps/map21.txt", 152, true);
+		loadMap("/maps/pc.txt", 153, true);
+		loadMap("/maps/mart.txt", 154, true);
+		loadMap("/maps/house01.txt", 155, true);
+		loadMap("/maps/house01.txt", 156, true);
+		loadMap("/maps/house01.txt", 157, true);
 	}
 	
 	public void getTileImage() {
@@ -624,31 +631,34 @@ public class TileManager {
 		setup(458, true);
 		setup(459, true);
 		setup(460, true);
-//		setup(461, true);
-//		setup(462, true);
-//		setup(463, true);
-//		setup(464, true);
-//		setup(465, true);
-//		setup(461, true);
-//		setup(462, true);
-//		setup(463, true);
-//		setup(464, true);
-//		setup(465, true);
-//		setup(461, true);
-//		setup(462, true);
-//		setup(463, true);
-//		setup(464, true);
-//		setup(465, true);
-//		setup(461, true);
-//		setup(462, true);
-//		setup(463, true);
-//		setup(464, true);
-//		setup(465, true);
-//		setup(461, true);
-//		setup(462, true);
-//		setup(463, true);
-//		setup(464, true);
+		setup(461, true);
+		setup(462, true);
+		setup(463, true);
+		setup(464, true);
+		setup(465, true);
+		setup(466, true);
+		setup(467, true);
+		setup(468, true);
+		setup(469, true);
+		setup(470, true);
+		setup(471, true);
+		setup(472, true);
+		setup(473, true);
+		setup(474, true);
+		setup(475, true);
+		setup(476, true);
+		setup(477, true);
+		setup(478, true);
+		setup(479, true);
+		setup(480, true);
+		setup(481, false);
+		setup(482, false);
+		
 		setup(483, false);
+		setup(484, true);
+		setup(485, false);
+		setup(486, false);
+		setup(487, false);
 
 		try {
 			tile[7] = new GrassTile();

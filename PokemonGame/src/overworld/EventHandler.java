@@ -789,6 +789,20 @@ public class EventHandler {
 			if (hit(149,51,63) && gp.player.p.flags[34]) gp.iTile[149][3] = null; // beat rick, unlock fred gate
 			if (hit(149,54,62) && gp.player.p.flags[27]) gp.iTile[149][4] = null; // beat fred, unlock maxwell gate
 			if (hit(149,49,59)) gp.aSetter.updateNPC(149); // clear all tn members
+			
+			// Rawwar City -> Route 39 gate
+			if (hit(124,32,92)) teleport(151, 31, 34,false);
+			if (hit(151,31,33)) teleport(124, 32, 92,false);
+			if (hit(151,31,46)) teleport(152, 30, 8,false);
+			if (hit(152,30,7)) teleport(151, 31, 45,false);
+			
+			// Iron Town PC
+			if (hit(152,37,72)) teleport(153, 31, 45,false);
+			if (hit(153,31,46)) teleport(152, 37, 73,false);
+			
+			// Iron Town Shop
+			if (hit(152,44,81)) teleport(154, 31, 45,false);
+			if (hit(154,31,46)) teleport(152, 44, 82,false);
 		}
 	}
 	

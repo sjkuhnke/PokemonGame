@@ -1955,6 +1955,7 @@ public class Pokemon implements Serializable {
 			
 			if (foeAbility == Ability.UNERODIBLE && (moveType == PType.GRASS || moveType == PType.WATER || moveType == PType.GROUND)) damage /= 4;
 			if (foeAbility == Ability.THICK_FAT && (moveType == PType.FIRE || moveType == PType.ICE)) damage /= 2;
+			if (foeAbility == Ability.UNWAVERING && (moveType == PType.DARK || moveType == PType.GHOST)) damage /= 2;
 			if (foeAbility == Ability.FLUFFY && move.contact) damage /= 2;
 			
 			if (foeAbility == Ability.PSYCHIC_AURA && move.cat == 1) damage *= 0.8;
@@ -2417,7 +2418,7 @@ public class Pokemon implements Serializable {
 			stat(foe, 4, -1, this);
 		} else if (move == Move.BUG_BITE || move == Move.PLUCK) {
 			if (foe.item != null && foe.item.isBerry()) {
-				addTask(Task.TEXT, this.nickname + " stole and ate " + foe.nickname + "'s berry!");
+				addTask(Task.TEXT, this.nickname + " stole and ate " + foe.nickname + "'s " + foe.item.toString() + "!");
 				eatBerry(foe.item, false, foe);
 				foe.consumeItem(this);
 			}
@@ -2430,7 +2431,7 @@ public class Pokemon implements Serializable {
 			stat(foe, 4, -1, this);
 		} else if (move == Move.CHARGE_BEAM) {
 			stat(this, 2, 1, this);
-		} else if (move == Move.CIRCLE_THROW || move == Move.DRAGON_TAIL) {
+		} else if ((move == Move.CIRCLE_THROW || move == Move.DRAGON_TAIL) && !foe.isFainted()) {
 			if (foe.trainerOwned() && enemy != null) {
 				enemy.swapRandom(foe, player);
 			} else if (foe.playerOwned()) {
@@ -6691,7 +6692,7 @@ public class Pokemon implements Serializable {
 			movebank[34] = new Node(Move.SKY_ATTACK);
 			movebank[39] = new Node(Move.DARKEST_LARIAT);
 			movebank[44] = new Node(Move.KNOCK_OFF);
-			movebank[49] = new Node(Move.HURRICANE);
+			movebank[49] = new Node(Move.ACROBATICS);
 			movebank[54] = new Node(Move.CRUNCH);
 			movebank[59] = new Node(Move.DRAGON_RUSH);
 			movebank[64] = new Node(Move.BRAVE_BIRD);
@@ -9246,6 +9247,7 @@ public class Pokemon implements Serializable {
 		
 		if (foeAbility == Ability.UNERODIBLE && (moveType == PType.GRASS || moveType == PType.WATER || moveType == PType.GROUND)) damage /= 4;
 		if (foeAbility == Ability.THICK_FAT && (moveType == PType.FIRE || moveType == PType.ICE)) damage /= 2;
+		if (foeAbility == Ability.UNWAVERING && (moveType == PType.DARK || moveType == PType.GHOST)) damage /= 2;
 		if (foeAbility == Ability.FLUFFY && move.contact) damage /= 2;
 		
 		if (foeAbility == Ability.PSYCHIC_AURA && move.cat == 1) damage *= 0.8;
@@ -9519,38 +9521,8 @@ public class Pokemon implements Serializable {
 		
 		checkBerry(f);
 		
-		if (this.status != Status.HEALTHY || this.vStatuses.contains(Status.CONFUSED)) {
-			if ((this.status == Status.POISONED || this.status == Status.TOXIC) && (this.item == Item.PECHA_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its poison!", this);
-				this.status = Status.HEALTHY;
-				this.consumeItem(f);
-			}
-			if (this.status == Status.BURNED && (this.item == Item.RAWST_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its burn!", this);
-				this.status = Status.HEALTHY;
-				this.consumeItem(f);
-			}
-			if (this.status == Status.PARALYZED && (this.item == Item.CHERI_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its paralysis!", this);
-				this.status = Status.HEALTHY;
-				this.consumeItem(f);
-			}
-			if (this.status == Status.FROSTBITE && (this.item == Item.ASPEAR_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its frostbite!", this);
-				this.status = Status.HEALTHY;
-				this.consumeItem(f);
-			}
-			if (this.status == Status.ASLEEP && (this.item == Item.CHESTO_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its sleep!", this);
-				this.status = Status.HEALTHY;
-				this.consumeItem(f);
-			}
-			if (this.vStatuses.contains(Status.CONFUSED) && (this.item == Item.PERSIM_BERRY || this.item == Item.LUM_BERRY)) {
-				addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its confusion!", this);
-				this.vStatuses.remove(Status.CONFUSED);
-				this.confusionCounter = 0;
-				this.consumeItem(f);
-			}
+		if ((this.status != Status.HEALTHY || this.vStatuses.contains(Status.CONFUSED)) && this.item != null && this.item.isBerry()) {
+			eatBerry(this.item, true, f);
 		}
 		
 		this.vStatuses.remove(Status.FLINCHED);
@@ -9795,6 +9767,13 @@ public class Pokemon implements Serializable {
 			return;
 		}
 		if (this.status == Status.HEALTHY) {
+			if (this.ability == Ability.MAGMA_ARMOR) {
+				if (announce) {
+					addAbilityTask(this);
+					addTask(Task.TEXT, "It doesn't effect " + nickname + "...");
+				}
+				return;
+			}
 			this.status = Status.FROSTBITE;
 			addTask(Task.STATUS, Status.FROSTBITE, this.nickname + " was frostbitten!", this);
 			if (this.ability == Ability.SYNCHRONIZE && this != foe) {
@@ -10546,7 +10525,7 @@ public class Pokemon implements Serializable {
 			field.setEffect(field.new FieldEffect(Effect.GRAVITY));
 		} else if (this.ability == Ability.INTIMIDATE || this.ability == Ability.SCALY_SKIN) {
 			addAbilityTask(this);
-			if (foe.ability == Ability.INNER_FOCUS || foe.ability == Ability.SCRAPPY) {
+			if (foe.ability == Ability.INNER_FOCUS || foe.ability == Ability.SCRAPPY || foe.ability == Ability.UNWAVERING) {
 				addAbilityTask(foe);
 				addTask(Task.TEXT, foe.nickname + "'s Attack was not lowered!");
 			} else {
@@ -10554,11 +10533,19 @@ public class Pokemon implements Serializable {
 			}
 		} else if (this.ability == Ability.TERRIFY) {
 			addAbilityTask(this);
-			if (foe.ability == Ability.INNER_FOCUS || foe.ability == Ability.SCRAPPY) {
+			if (foe.ability == Ability.INNER_FOCUS || foe.ability == Ability.SCRAPPY || foe.ability == Ability.UNWAVERING) {
 				addAbilityTask(foe);
 				addTask(Task.TEXT, foe.nickname + "'s Sp. Atk was not lowered!");
 			} else {
 				stat(foe, 2, -1, this);
+			}
+		} else if (this.ability == Ability.THREATENING) {
+			addAbilityTask(this);
+			if (foe.ability == Ability.INNER_FOCUS || foe.ability == Ability.SCRAPPY || foe.ability == Ability.UNWAVERING) {
+				addAbilityTask(foe);
+				addTask(Task.TEXT, foe.nickname + "'s Defense was not lowered!");
+			} else {
+				stat(foe, 1, -1, this);
 			}
 		} else if (this.ability == Ability.MOUTHWATER) {
 			if (!foe.vStatuses.contains(Status.TAUNTED)) {
@@ -10681,32 +10668,73 @@ public class Pokemon implements Serializable {
 		if (berry.isBerry()) {
 			if (berry == Item.WIKI_BERRY) {
 				heal(getHPAmount(1.0/3), this.nickname + " ate its " + berry.toString() + " to restore HP!");
+				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.LIECHI_BERRY) {
 				addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
 				stat(this, 0, 1, foe);
+				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.GANLON_BERRY) {
 				addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
 				stat(this, 1, 1, foe);
+				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.PETAYA_BERRY) {
 				addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
 				stat(this, 2, 1, foe);
+				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.APICOT_BERRY) {
 				addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
 				stat(this, 3, 1, foe);
+				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.SALAC_BERRY) {
 				addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
 				stat(this, 4, 1, foe);
+				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.STARF_BERRY) {
 				addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
 				stat(this, new Random().nextInt(7), 2, foe);
+				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.MICLE_BERRY) {
 				addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
 				stat(this, 5, 1, foe);
+				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.ORAN_BERRY || berry == Item.SITRUS_BERRY) {
 				int healAmt = berry == Item.ORAN_BERRY ? 10 : (this.getStat(0) / 4);
 				heal(healAmt, this.nickname + " ate its " + berry.toString() + " to restore HP!");
+				if (consume) this.consumeItem(foe);
 			}
-			if (consume) this.consumeItem(foe);
+			
+			if (this.status != Status.HEALTHY || this.vStatuses.contains(Status.CONFUSED)) {
+				if ((this.status == Status.POISONED || this.status == Status.TOXIC) && (berry == Item.PECHA_BERRY || berry == Item.LUM_BERRY)) {
+					addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + berry.toString() + " to cure its poison!", this);
+					this.status = Status.HEALTHY;
+					this.consumeItem(foe);
+				}
+				if (this.status == Status.BURNED && (berry == Item.RAWST_BERRY || berry == Item.LUM_BERRY)) {
+					addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + berry.toString() + " to cure its burn!", this);
+					this.status = Status.HEALTHY;
+					if (consume) this.consumeItem(foe);
+				}
+				if (this.status == Status.PARALYZED && (berry == Item.CHERI_BERRY || berry == Item.LUM_BERRY)) {
+					addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + berry.toString() + " to cure its paralysis!", this);
+					this.status = Status.HEALTHY;
+					if (consume) this.consumeItem(foe);
+				}
+				if (this.status == Status.FROSTBITE && (berry == Item.ASPEAR_BERRY || berry == Item.LUM_BERRY)) {
+					addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + berry.toString() + " to cure its frostbite!", this);
+					this.status = Status.HEALTHY;
+					if (consume) this.consumeItem(foe);
+				}
+				if (this.status == Status.ASLEEP && (berry == Item.CHESTO_BERRY || berry == Item.LUM_BERRY)) {
+					addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + berry.toString() + " to cure its sleep!", this);
+					this.status = Status.HEALTHY;
+					if (consume) this.consumeItem(foe);
+				}
+				if (this.vStatuses.contains(Status.CONFUSED) && (berry == Item.PERSIM_BERRY || berry == Item.LUM_BERRY)) {
+					addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + " to cure its confusion!", this);
+					this.vStatuses.remove(Status.CONFUSED);
+					if (consume) this.consumeItem(foe);
+				}
+			}
 		}
 	}
 	

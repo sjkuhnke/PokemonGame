@@ -19,10 +19,10 @@
 |Sheabear     |NORMAL  |null    |ADAPTABILITY      |ANGER_POINT       |SCRAPPY           |[55, 55, 55, 55, 55, 55]      |65.7  |125|
 |Dualbear     |NORMAL  |MAGIC   |ADAPTABILITY      |SHIELD_DUST       |SCRAPPY           |[75, 75, 75, 75, 75, 75]      |65.8  |100|
 |Spacebear    |NORMAL  |GALACTIC|ADAPTABILITY      |LEVITATE          |SCRAPPY           |[80, 60, 75, 135, 85, 80]     |90.9  |50 |
-|Bealtle      |BUG     |null    |SWARM             |COMPOUND_EYES     |NULL              |[33, 44, 33, 23, 29, 38]      |0.9   |255|
-|Centatle     |BUG     |null    |SWARM             |COMPOUND_EYES     |NULL              |[55, 68, 70, 41, 61, 80]      |2.0   |200|
-|Curlatoral   |BUG     |null    |POISON_HEAL       |COMPOUND_EYES     |NULL              |[80, 70, 80, 55, 120, 100]    |50.7  |125|
-|Millistone   |BUG     |ROCK    |ROUGH_SKIN        |COMPOUND_EYES     |NULL              |[80, 120, 120, 35, 80, 70]    |90.5  |125|
+|Bealtle      |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[33, 44, 33, 23, 29, 38]      |0.9   |255|
+|Centatle     |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[55, 68, 70, 41, 61, 80]      |2.0   |200|
+|Curlatoral   |BUG     |null    |POISON_HEAL       |COMPOUND_EYES     |THREATENING       |[80, 70, 80, 55, 120, 100]    |50.7  |125|
+|Millistone   |BUG     |ROCK    |ROUGH_SKIN        |COMPOUND_EYES     |THREATENING       |[80, 120, 120, 35, 80, 70]    |90.5  |125|
 |Sapwin       |GRASS   |null    |ANGER_POINT       |CHLOROPHYLL       |NULL              |[65, 105, 100, 50, 30, 55]    |100.5 |75 |
 |Treewin      |GRASS   |FIGHTING|ANGER_POINT       |CHLOROPHYLL       |NULL              |[110, 125, 110, 55, 35, 55]   |399.9 |50 |
 |Winagrow     |GRASS   |DRAGON  |COMPETITIVE       |CHLOROPHYLL       |NULL              |[120, 75, 80, 115, 80, 90]    |412.5 |30 |
@@ -38,13 +38,13 @@
 |Busheep      |GRASS   |null    |ANTICIPATION      |FLUFFY            |CHLOROPHYLL       |[60, 50, 100, 75, 105, 60]    |15.8  |230|
 |Ramant       |GRASS   |null    |MOXIE             |DEFIANT           |RECKLESS          |[70, 130, 95, 45, 80, 100]    |87.7  |85 |
 |Bushewe      |GRASS   |LIGHT   |SERENE_GRACE      |COMPETITIVE       |GRASSY_SURGE      |[70, 45, 80, 130, 95, 100]    |55.6  |100|
-|Bugik        |BUG     |FIGHTING|HYPER_CUTTER      |SWARM             |NULL              |[40, 60, 65, 30, 50, 70]      |6.0   |200|
-|Swordik      |BUG     |FIGHTING|HYPER_CUTTER      |JUSTIFIED         |NULL              |[53, 95, 85, 30, 53, 85]      |45.5  |85 |
-|Ninjakik     |BUG     |FIGHTING|SPEED_BOOST       |JUSTIFIED         |NULL              |[63, 120, 90, 62, 65, 105]    |90.1  |50 |
+|Bugik        |BUG     |FIGHTING|HYPER_CUTTER      |SWARM             |THREATENING       |[40, 60, 65, 30, 50, 70]      |6.0   |200|
+|Swordik      |BUG     |FIGHTING|HYPER_CUTTER      |JUSTIFIED         |THREATENING       |[53, 95, 85, 30, 53, 85]      |45.5  |85 |
+|Ninjakik     |BUG     |FIGHTING|SPEED_BOOST       |JUSTIFIED         |THREATENING       |[63, 120, 90, 62, 65, 105]    |90.1  |50 |
 |Lotad        |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |NULL              |[40, 30, 30, 40, 50, 30]      |5.7   |255|
 |Lombre       |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |NULL              |[60, 50, 50, 60, 70, 50]      |71.7  |120|
 |Ludicolo     |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |NULL              |[80, 70, 70, 90, 100, 70]     |121.3 |45 |
-|Bluebunn     |MAGIC   |LIGHT   |MAGIC_GUARD       |FLASH_FIRE        |NULL              |[60, 40, 39, 120, 95, 101]    |7.3   |80 |
+|Bluebunn     |MAGIC   |LIGHT   |MAGIC_GUARD       |FLASH_FIRE        |MAGIC_BOUNCE      |[60, 40, 39, 120, 95, 101]    |7.3   |80 |
 |Rocky        |ROCK    |GROUND  |STURDY            |UNERODIBLE        |SOLID_ROCK        |[68, 72, 122, 20, 25, 18]     |104.4 |200|
 |Boulder      |ROCK    |GROUND  |STURDY            |UNERODIBLE        |SOLID_ROCK        |[87, 95, 143, 25, 30, 45]     |256.2 |130|
 |Blaster      |ROCK    |GROUND  |STURDY            |UNERODIBLE        |SOLID_ROCK        |[95, 110, 150, 70, 45, 55]    |337.2 |40 |
@@ -58,7 +58,7 @@
 |Raptorex     |FIGHTING|FLYING  |NO_GUARD          |GUTS              |ADAPTABILITY      |[66, 74, 85, 106, 95, 97]     |190.3 |45 |
 |Kleinowl     |ICE     |PSYCHIC |SNOW_CLOAK        |MOUTHWATER        |SNOW_WARNING      |[60, 15, 40, 80, 73, 55]      |4.5   |50 |
 |Hootowl      |ICE     |PSYCHIC |SNOW_CLOAK        |ICE_BODY          |SNOW_WARNING      |[85, 30, 65, 120, 120, 75]    |89.5  |45 |
-|Dualmoose    |ICE     |MAGIC   |SNOW_CLOAK        |SPARKLY_SURGE     |MAGIC_GUARD       |[90, 64, 67, 85, 71, 58]      |100.0 |35 |
+|Dualmoose    |ICE     |MAGIC   |SNOW_CLOAK        |SPARKLY_SURGE     |MAGIC_BOUNCE      |[90, 64, 67, 85, 71, 58]      |100.0 |35 |
 |Snom         |ICE     |BUG     |ICY_SCALES        |SWARM             |TINTED_LENS       |[30, 25, 35, 45, 30, 20]      |8.4   |190|
 |Frosmoth     |ICE     |BUG     |ICY_SCALES        |SHIELD_DUST       |TINTED_LENS       |[70, 65, 60, 125, 90, 65]     |92.6  |75 |
 |Grondor      |GROUND  |ICE     |STURDY            |TECHNICIAN        |NULL              |[80, 74, 87, 25, 96, 33]      |135.6 |135|
@@ -72,9 +72,9 @@
 |Bouncerog    |WATER   |LIGHT   |TORRENT           |SLUSH_RUSH        |SWIFT_SWIM        |[63, 56, 69, 120, 90, 112]    |25.9  |45 |
 |Bugop        |BUG     |DARK    |TECHNICIAN        |INSOMNIA          |TERRIFY           |[52, 59, 51, 33, 46, 58]      |7.5   |135|
 |Opwing       |BUG     |DARK    |TECHNICIAN        |INSOMNIA          |TERRIFY           |[88, 102, 67, 61, 88, 101]    |18.5  |50 |
-|Hatenna      |PSYCHIC |MAGIC   |ANTICIPATION      |NATURAL_CURE      |NULL              |[42, 30, 45, 56, 53, 39]      |7.5   |235|
-|Hattrem      |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |NATURAL_CURE      |NULL              |[57, 40, 65, 86, 73, 49]      |10.6  |120|
-|Hatterene    |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |NATURAL_CURE      |NULL              |[82, 65, 95, 136, 103, 29]    |11.2  |45 |
+|Hatenna      |PSYCHIC |MAGIC   |ANTICIPATION      |NATURAL_CURE      |UNWAVERING        |[42, 30, 45, 56, 53, 39]      |7.5   |235|
+|Hattrem      |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |NATURAL_CURE      |UNWAVERING        |[57, 40, 65, 86, 73, 49]      |10.6  |120|
+|Hatterene    |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |NATURAL_CURE      |UNWAVERING        |[82, 65, 95, 136, 103, 29]    |11.2  |45 |
 |Otterpor     |WATER   |PSYCHIC |WATER_VEIL        |ANTICIPATION      |HYDRATION         |[55, 19, 66, 74, 99, 20]      |16.6  |75 |
 |Psylotter    |WATER   |PSYCHIC |WATER_VEIL        |SWIFT_SWIM        |HYDRATION         |[71, 48, 87, 102, 106, 86]    |41.0  |45 |
 |Florline     |GRASS   |PSYCHIC |GRASSY_SURGE      |PSYCHIC_SURGE     |UNBURDEN          |[43, 43, 43, 88, 80, 43]      |13.1  |75 |
@@ -82,8 +82,8 @@
 |Psycorb      |PSYCHIC |null    |PSYCHIC_SURGE     |LEVITATE          |TRACE             |[25, 20, 63, 55, 62, 25]      |75.0  |125|
 |Psyballs     |PSYCHIC |STEEL   |PSYCHIC_SURGE     |LEVITATE          |TRACE             |[50, 70, 90, 70, 90, 30]      |175.0 |75 |
 |Psycorboratr |PSYCHIC |STEEL   |PSYCHIC_SURGE     |LEVITATE          |TRACE             |[100, 140, 100, 70, 100, 40]  |275.0 |25 |
-|Ralts        |PSYCHIC |LIGHT   |SYNCHRONIZE       |TRACE             |NULL              |[28, 25, 25, 65, 55, 40]      |14.6  |235|
-|Kirlia       |PSYCHIC |LIGHT   |SYNCHRONIZE       |TRACE             |NULL              |[38, 35, 35, 95, 85, 50]      |44.5  |120|
+|Ralts        |PSYCHIC |LIGHT   |SYNCHRONIZE       |TRACE             |PIXILATE          |[28, 25, 25, 65, 55, 40]      |14.6  |235|
+|Kirlia       |PSYCHIC |LIGHT   |SYNCHRONIZE       |TRACE             |PIXILATE          |[38, 35, 35, 95, 85, 50]      |44.5  |120|
 |Gardevoir    |PSYCHIC |LIGHT   |EMPATHIC_LINK     |TRACE             |PIXILATE          |[68, 65, 65, 125, 115, 80]    |106.7 |45 |
 |Gallade      |PSYCHIC |FIGHTING|SHARPNESS         |NO_GUARD          |INNER_FOCUS       |[68, 125, 65, 65, 115, 63]    |114.6 |45 |
 |Tigrette     |LIGHT   |NORMAL  |SIMPLE            |NORMALIZE         |PIXILATE          |[65, 79, 67, 103, 72, 69]     |250.4 |65 |
@@ -103,8 +103,8 @@
 |Lafloo       |FIRE    |ROCK    |SOLID_ROCK        |SOLID_ROCK        |FLAME_BODY        |[90, 80, 95, 120, 95, 45]     |450.9 |50 |
 |Houndour     |FIRE    |DARK    |SOLAR_POWER       |FLASH_FIRE        |INTIMIDATE        |[45, 60, 30, 80, 50, 65]      |23.8  |120|
 |Houndoom     |FIRE    |DARK    |SOLAR_POWER       |FLASH_FIRE        |INTIMIDATE        |[75, 90, 50, 110, 80, 95]     |77.2  |45 |
-|Sparkdust    |MAGIC   |null    |SHIELD_DUST       |MAGIC_GUARD       |SERENE_GRACE      |[40, 45, 40, 75, 65, 70]      |3.5   |50 |
-|Splame       |MAGIC   |FIRE    |SHIELD_DUST       |MAGIC_GUARD       |SERENE_GRACE      |[85, 45, 65, 145, 110, 55]    |5.5   |25 |
+|Sparkdust    |MAGIC   |null    |SHIELD_DUST       |MAGIC_GUARD       |MAGIC_BOUNCE      |[40, 45, 40, 75, 65, 70]      |3.5   |50 |
+|Splame       |MAGIC   |FIRE    |SHIELD_DUST       |MAGIC_GUARD       |MAGIC_BOUNCE      |[85, 45, 65, 145, 110, 55]    |5.5   |25 |
 |Sparkitten   |FIRE    |LIGHT   |ANTICIPATION      |ANTICIPATION      |ANTICIPATION      |[60, 70, 65, 70, 65, 70]      |16.0  |110|
 |Fireblion    |FIRE    |null    |DROUGHT           |DROUGHT           |DROUGHT           |[85, 105, 99, 40, 92, 89]     |295.5 |35 |
 |Flamebless   |FIRE    |LIGHT   |COMPETITIVE       |COMPETITIVE       |COMPETITIVE       |[70, 40, 55, 120, 115, 110]   |125.0 |35 |
@@ -114,9 +114,9 @@
 |Elelamb      |ELECTRIC|GROUND  |STATIC            |FLUFFY            |UNERODIBLE        |[54, 32, 53, 65, 58, 33]      |40.1  |255|
 |Electroram   |ELECTRIC|GROUND  |STATIC            |FLUFFY            |UNERODIBLE        |[65, 80, 55, 45, 60, 50]      |76.0  |120|
 |Superchargo  |ELECTRIC|GROUND  |SPEED_BOOST       |FLUFFY            |UNERODIBLE        |[85, 128, 72, 60, 77, 98]     |91.3  |45 |
-|Twigzap      |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |NULL              |[34, 62, 43, 58, 44, 59]      |3.6   |255|
-|Shockbranch  |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |NULL              |[65, 94, 49, 60, 54, 73]      |13.4  |120|
-|Thunderzap   |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |NULL              |[90, 70, 100, 85, 100, 55]    |245.9 |45 |
+|Twigzap      |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |CHLOROPHYLL       |[34, 62, 43, 58, 44, 59]      |3.6   |255|
+|Shockbranch  |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |CHLOROPHYLL       |[65, 94, 49, 60, 54, 73]      |13.4  |120|
+|Thunderzap   |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |CHLOROPHYLL       |[90, 70, 100, 85, 100, 55]    |245.9 |45 |
 |Magie        |STEEL   |NORMAL  |TOUGH_CLAWS       |IRON_BARBS        |NULL              |[30, 60, 73, 30, 65, 58]      |50.5  |100|
 |Cumin        |STEEL   |LIGHT   |TOUGH_CLAWS       |IRON_BARBS        |NULL              |[60, 80, 95, 65, 95, 95]      |125.7 |65 |
 |Cinneroph    |STEEL   |MAGIC   |TOUGH_CLAWS       |IRON_BARBS        |NULL              |[69, 95, 97, 70, 95, 104]     |130.6 |35 |

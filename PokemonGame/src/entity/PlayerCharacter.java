@@ -452,6 +452,7 @@ public class PlayerCharacter extends Entity {
     	if (gp.currentMap == 92) p.locations[5] = true;
     	if (gp.currentMap == 111) p.locations[7] = true;
     	if (gp.currentMap == 125) p.locations[9] = true;
+    	if (gp.currentMap == 153) p.locations[10] = true;
     	
 		gp.keyH.wPressed = false;
 		gp.gameState = GamePanel.NURSE_STATE;

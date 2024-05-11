@@ -586,8 +586,6 @@ public enum Move {
 	public int priority;
 	public int secondary;
 	
-	public boolean userStat;
-	
 	Move(int bp, int acc, int sec, int crit, int cat, int p, PType type, String desc, boolean contact, int pp){
 		this.basePower = bp;
 		this.accuracy = acc;
