@@ -474,7 +474,7 @@ public class Pokemon implements Serializable {
             		return Move.GROWL;
         		}
         	}
-        	// 12% chance to swap if the most damage you do is 1/5 or less to target
+        	// 20% chance to swap if the most damage you do is 1/5 or less to target
         	if (maxDamage <= foe.currentHP * 1.0 / 5) {
         		double chance = 20;
         		if (this == this.getFaster(foe, 0, 0) && !validMoves.contains(Move.U$TURN) && !validMoves.contains(Move.VOLT_SWITCH) &&
@@ -541,7 +541,7 @@ public class Pokemon implements Serializable {
         		}
         	}
         	if (move.cat == 2 || move == Move.NUZZLE || move == Move.SWORD_SPIN || move == Move.POWER$UP_PUNCH || move == Move.VENOM_SPIT
-        			|| move == Move.FATAL_BIND || ((move == Move.WHIRLPOOL || move == Move.WRAP || move == Move.BIND || move == Move.FIRE_SPIN)
+        			|| move == Move.FATAL_BIND || move == Move.MOLTEN_CONSUME || ((move == Move.WHIRLPOOL || move == Move.WRAP || move == Move.BIND || move == Move.FIRE_SPIN)
         					&& !foe.vStatuses.contains(Status.SPUN))) {
         		if (move.accuracy > 100) {
         			Pokemon freshYou = this.clone();
@@ -1279,13 +1279,19 @@ public class Pokemon implements Serializable {
 		if (foe.status != Status.TOXIC) foe.toxic = 0;
 		
 		if (this.vStatuses.contains(Status.FLINCHED) && this.ability != Ability.INNER_FOCUS) {
-			addTask(Task.TEXT, this.nickname + " flinched!");
-			this.vStatuses.remove(Status.FLINCHED);
-			this.moveMultiplier = 1;
-			this.impressive = false;
-			this.vStatuses.remove(Status.LOCKED);
-			this.vStatuses.remove(Status.CHARGING);
-			return;
+			if (foe.item == Item.MENTAL_HERB) {
+				addTask(Task.TEXT, foe.nickname + " didn't flinch due to its Mental Herb!");
+				foe.vStatuses.remove(Status.FLINCHED);
+				foe.consumeItem(this);
+			} else {
+				addTask(Task.TEXT, this.nickname + " flinched!");
+				this.vStatuses.remove(Status.FLINCHED);
+				this.moveMultiplier = 1;
+				this.impressive = false;
+				this.vStatuses.remove(Status.LOCKED);
+				this.vStatuses.remove(Status.CHARGING);
+				return;
+			}
 		}
 		if (this.vStatuses.contains(Status.RECHARGE)) {
 			addTask(Task.TEXT, this.nickname + " must recharge!");
@@ -1728,6 +1734,11 @@ public class Pokemon implements Serializable {
 				bp *= 1.2;
 			}
 			
+			if (this.ability == Ability.GALVANIZE && moveType == PType.NORMAL) {
+				moveType = PType.ELECTRIC;
+				bp *= 1.2;
+			}
+			
 			if (this.ability == Ability.SHEER_FORCE && move.cat != 2 && secChance > 0) {
 				secChance = 0;
 				bp *= 1.3;
@@ -1870,7 +1881,7 @@ public class Pokemon implements Serializable {
 			if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 			if (this.ability == Ability.SUPER_LUCK) critChance++;
 			if (item == Item.SCOPE_LENS) critChance++;
-			if (foe.ability != Ability.BATTLE_ARMOR && critCheck(critChance)) {
+			if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && critCheck(critChance)) {
 				addTask(Task.TEXT, "A critical hit!");
 				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++;
 				if (move.isPhysical() && attackStat < this.getStat(1)) {
@@ -2560,6 +2571,8 @@ public class Pokemon implements Serializable {
 			stat(foe, 3, -1, this);
 		} else if (move == Move.FLASH_RAY) {
 			stat(foe, 5, -1, this);
+		} else if (move == Move.FOCUS_BLAST) {
+			stat(foe, 3, -1, this);
 		} else if (move == Move.FORCE_PALM) {
 			foe.paralyze(false, this);
 		} else if (move == Move.FREEZE$DRY) {
@@ -3182,6 +3195,12 @@ public class Pokemon implements Serializable {
 				foe.vStatuses.add(Status.ENCORED);
 				foe.encoreCount = 4;
 				if (announce) addTask(Task.TEXT, foe.nickname + " must do an encore!");
+				if (foe.item == Item.MENTAL_HERB) {
+					addTask(Task.TEXT, foe.nickname + " cleared its encore using its Mental Herb!");
+					foe.vStatuses.remove(Status.ENCORED);
+					foe.encoreCount = 0;
+					foe.consumeItem(this);
+				}
 			} else {
 				fail = fail(announce);
 			}
@@ -3509,7 +3528,7 @@ public class Pokemon implements Serializable {
 				Pokemon.addTask(Task.SPRITE, "", this);
 				setTypes();
 				setAbility(abilitySlot);
-				if (player != null) player.pokedex[237] = 2;
+				if (this.playerOwned()) player.pokedex[237] = 2;
 			} else if (id == 237) {
 				stat(this, 0, 1, foe, announce);
 				stat(this, 2, 1, foe, announce);
@@ -3577,6 +3596,12 @@ public class Pokemon implements Serializable {
 			    foe.vStatuses.add(Status.TAUNTED);
 			    foe.tauntCount = 4;
 			    if (announce) addTask(Task.TEXT, foe.nickname + " was taunted!");
+			    if (foe.item == Item.MENTAL_HERB) {
+					addTask(Task.TEXT, foe.nickname + " cured its taunt using its Mental Herb!");
+					foe.vStatuses.remove(Status.TAUNTED);
+					foe.tauntCount = 4;
+					foe.consumeItem(this);
+				}
 			} else {
 			    fail = fail(announce);
 			}
@@ -3585,6 +3610,12 @@ public class Pokemon implements Serializable {
 			    foe.vStatuses.add(Status.TORMENTED);
 			    foe.tormentCount = 4;
 			    if (announce) addTask(Task.TEXT, foe.nickname + " was tormented!");
+			    if (foe.item == Item.MENTAL_HERB) {
+					addTask(Task.TEXT, foe.nickname + " cured its torment using its Mental Herb!");
+					foe.vStatuses.remove(Status.TORMENTED);
+					foe.tormentCount = 0;
+					foe.consumeItem(this);
+				}
 			} else {
 			    fail = fail(announce);
 			}
@@ -6600,11 +6631,11 @@ public class Pokemon implements Serializable {
 			movebank[0] = new Node(Move.SPLASH);
 			movebank[14] = new Node(Move.TACKLE);
 			movebank[24] = new Node(Move.FLAIL);
-			movebank[29] = new Node(Move.FLAIL);
+			movebank[29] = new Node(Move.BOUNCE);
 			movebank[39] = new Node(Move.HYDRO_PUMP);
 			break;
 		case 138:
-			movebank = new Node[52];
+			movebank = new Node[56];
 			movebank[0] = new Node(Move.SPLASH);
 			movebank[14] = new Node(Move.TACKLE);
 			movebank[19] = new Node(Move.BITE);
@@ -6612,11 +6643,12 @@ public class Pokemon implements Serializable {
 			movebank[25] = new Node(Move.CRUNCH);
 			movebank[27] = new Node(Move.RAIN_DANCE);
 			movebank[31] = new Node(Move.AQUA_TAIL);
-			movebank[35] = new Node(Move.DRAGON_DANCE);
-			movebank[39] = new Node(Move.WATERFALL);
-			movebank[43] = new Node(Move.HURRICANE);
-			movebank[47] = new Node(Move.THRASH);
-			movebank[51] = new Node(Move.HYDRO_PUMP);
+			movebank[35] = new Node(Move.AERIAL_ACE);
+			movebank[39] = new Node(Move.DRAGON_TAIL);
+			movebank[43] = new Node(Move.THRASH);
+			movebank[47] = new Node(Move.WATERFALL);
+			movebank[51] = new Node(Move.BOUNCE);
+			movebank[55] = new Node(Move.DRAGON_DANCE);
 			break;
 		case 139:
 			movebank = new Node[50];
@@ -9037,6 +9069,11 @@ public class Pokemon implements Serializable {
 			bp *= 1.2;
 		}
 		
+		if (this.ability == Ability.GALVANIZE && moveType == PType.NORMAL) {
+			moveType = PType.ELECTRIC;
+			bp *= 1.2;
+		}
+		
 		if (this.ability == Ability.SHEER_FORCE && move.cat != 2 && secChance > 0) {
 			bp *= 1.3;
 		}
@@ -9172,7 +9209,7 @@ public class Pokemon implements Serializable {
 		// Crit Check
 		if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 		if (this.ability == Ability.SUPER_LUCK) critChance++;
-		if (foe.ability != Ability.BATTLE_ARMOR && ((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 3 || crit)))) {
+		if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && ((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 3 || crit)))) {
 			if (move.isPhysical() && attackStat < this.getStat(1)) {
 				attackStat = this.getStat(1);
 				if (this.status == Status.BURNED) attackStat /= 2;
@@ -10552,6 +10589,11 @@ public class Pokemon implements Serializable {
 				foe.vStatuses.add(Status.TAUNTED);
 				addAbilityTask(this);
 				addTask(Task.TEXT, foe.nickname + " was taunted!");
+				if (foe.item == Item.MENTAL_HERB) {
+					addTask(Task.TEXT, foe.nickname + " cured its taunt using its Mental Herb!");
+					foe.vStatuses.remove(Status.TAUNTED);
+					foe.consumeItem(this);
+				}
 			}
 		} else if (this.ability == Ability.ANTICIPATION) {
 			boolean shuddered = false;

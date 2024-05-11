@@ -23,27 +23,27 @@
 |Centatle     |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[55, 68, 70, 41, 61, 80]      |2.0   |200|
 |Curlatoral   |BUG     |null    |POISON_HEAL       |COMPOUND_EYES     |THREATENING       |[80, 70, 80, 55, 120, 100]    |50.7  |125|
 |Millistone   |BUG     |ROCK    |ROUGH_SKIN        |COMPOUND_EYES     |THREATENING       |[80, 120, 120, 35, 80, 70]    |90.5  |125|
-|Sapwin       |GRASS   |null    |ANGER_POINT       |CHLOROPHYLL       |NULL              |[65, 105, 100, 50, 30, 55]    |100.5 |75 |
-|Treewin      |GRASS   |FIGHTING|ANGER_POINT       |CHLOROPHYLL       |NULL              |[110, 125, 110, 55, 35, 55]   |399.9 |50 |
-|Winagrow     |GRASS   |DRAGON  |COMPETITIVE       |CHLOROPHYLL       |NULL              |[120, 75, 80, 115, 80, 90]    |412.5 |30 |
+|Sapwin       |GRASS   |null    |ANGER_POINT       |CHLOROPHYLL       |SAP_SIPPER        |[65, 105, 100, 50, 30, 55]    |100.5 |75 |
+|Treewin      |GRASS   |FIGHTING|ANGER_POINT       |CHLOROPHYLL       |SAP_SIPPER        |[110, 125, 110, 55, 35, 55]   |399.9 |50 |
+|Winagrow     |GRASS   |DRAGON  |COMPETITIVE       |CHLOROPHYLL       |TERRIFY           |[120, 75, 80, 115, 80, 90]    |412.5 |30 |
 |Budew        |GRASS   |POISON  |POISON_POINT      |NATURAL_CURE      |CORROSION         |[40, 30, 35, 50, 70, 55]      |2.6   |255|
 |Roselia      |GRASS   |POISON  |POISON_POINT      |NATURAL_CURE      |CORROSION         |[50, 60, 45, 100, 80, 65]     |4.4   |150|
 |Roserade     |GRASS   |POISON  |TECHNICIAN        |NATURAL_CURE      |CORROSION         |[70, 60, 65, 125, 105, 90]    |32.0  |75 |
-|Sewaddle     |BUG     |GRASS   |SWARM             |CHLOROPHYLL       |NULL              |[45, 53, 70, 40, 60, 42]      |5.5   |255|
-|Swadloon     |BUG     |GRASS   |SWARM             |CHLOROPHYLL       |NULL              |[55, 63, 90, 50, 80, 42]      |16.1  |120|
-|Leavanny     |BUG     |GRASS   |SHARPNESS         |CHLOROPHYLL       |NULL              |[75, 108, 80, 60, 80, 97]     |45.2  |45 |
-|Grubbin      |BUG     |null    |SWARM             |HYPER_CUTTER      |NULL              |[47, 62, 45, 55, 45, 46]      |9.7   |255|
-|Charjabug    |BUG     |ELECTRIC|STATIC            |BATTLE_ARMOR      |NULL              |[57, 82, 95, 55, 75, 36]      |23.1  |120|
-|Vikavolt     |BUG     |ELECTRIC|LEVITATE          |TINTED_LENS       |NULL              |[77, 65, 90, 110, 75, 95]     |99.2  |45 |
+|Sewaddle     |BUG     |GRASS   |SWARM             |CHLOROPHYLL       |TECHNICIAN        |[45, 53, 70, 40, 60, 42]      |5.5   |255|
+|Swadloon     |BUG     |GRASS   |SWARM             |CHLOROPHYLL       |TECHNICIAN        |[55, 63, 90, 50, 80, 42]      |16.1  |120|
+|Leavanny     |BUG     |GRASS   |SHARPNESS         |CHLOROPHYLL       |UNBURDEN          |[75, 108, 80, 60, 80, 97]     |45.2  |45 |
+|Grubbin      |BUG     |null    |SWARM             |HYPER_CUTTER      |SNIPER            |[47, 62, 45, 55, 45, 46]      |9.7   |255|
+|Charjabug    |BUG     |ELECTRIC|STATIC            |BATTLE_ARMOR      |VOLT_ABSORB       |[57, 82, 95, 55, 75, 36]      |23.1  |120|
+|Vikavolt     |BUG     |ELECTRIC|LEVITATE          |TINTED_LENS       |SPEED_BOOST       |[77, 65, 90, 110, 75, 95]     |99.2  |45 |
 |Busheep      |GRASS   |null    |ANTICIPATION      |FLUFFY            |CHLOROPHYLL       |[60, 50, 100, 75, 105, 60]    |15.8  |230|
 |Ramant       |GRASS   |null    |MOXIE             |DEFIANT           |RECKLESS          |[70, 130, 95, 45, 80, 100]    |87.7  |85 |
 |Bushewe      |GRASS   |LIGHT   |SERENE_GRACE      |COMPETITIVE       |GRASSY_SURGE      |[70, 45, 80, 130, 95, 100]    |55.6  |100|
 |Bugik        |BUG     |FIGHTING|HYPER_CUTTER      |SWARM             |THREATENING       |[40, 60, 65, 30, 50, 70]      |6.0   |200|
 |Swordik      |BUG     |FIGHTING|HYPER_CUTTER      |JUSTIFIED         |THREATENING       |[53, 95, 85, 30, 53, 85]      |45.5  |85 |
 |Ninjakik     |BUG     |FIGHTING|SPEED_BOOST       |JUSTIFIED         |THREATENING       |[63, 120, 90, 62, 65, 105]    |90.1  |50 |
-|Lotad        |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |NULL              |[40, 30, 30, 40, 50, 30]      |5.7   |255|
-|Lombre       |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |NULL              |[60, 50, 50, 60, 70, 50]      |71.7  |120|
-|Ludicolo     |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |NULL              |[80, 70, 70, 90, 100, 70]     |121.3 |45 |
+|Lotad        |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |HYDRATION         |[40, 30, 30, 40, 50, 30]      |5.7   |255|
+|Lombre       |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |HYDRATION         |[60, 50, 50, 60, 70, 50]      |71.7  |120|
+|Ludicolo     |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |HYDRATION         |[80, 70, 70, 90, 100, 70]     |121.3 |45 |
 |Bluebunn     |MAGIC   |LIGHT   |MAGIC_GUARD       |FLASH_FIRE        |MAGIC_BOUNCE      |[60, 40, 39, 120, 95, 101]    |7.3   |80 |
 |Rocky        |ROCK    |GROUND  |STURDY            |UNERODIBLE        |SOLID_ROCK        |[68, 72, 122, 20, 25, 18]     |104.4 |200|
 |Boulder      |ROCK    |GROUND  |STURDY            |UNERODIBLE        |SOLID_ROCK        |[87, 95, 143, 25, 30, 45]     |256.2 |130|
@@ -95,19 +95,19 @@
 |Blaxer       |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[43, 88, 50, 74, 52, 93]      |145.6 |100|
 |Pyrator      |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[65, 115, 55, 106, 75, 100]   |195.0 |50 |
 |Magmaclang   |FIRE    |GHOST   |STEELWORKER       |STEELWORKER       |STEELWORKER       |[105, 35, 120, 90, 90, 65]    |165.3 |80 |
-|Flamehox     |FIRE    |GROUND  |FLAME_BODY        |FLAME_BODY        |FLAME_BODY        |[70, 53, 70, 55, 60, 52]      |290.2 |55 |
-|Fireshard    |FIRE    |FLYING  |INTIMIDATE        |INTIMIDATE        |INTIMIDATE        |[75, 75, 75, 90, 75, 70]      |301.3 |35 |
-|Blastflames  |FIRE    |DRAGON  |LEVITATE          |LEVITATE          |LEVITATE          |[95, 75, 87, 140, 80, 83]     |345.6 |15 |
-|Tiowoo       |FIRE    |ROCK    |SOLID_ROCK        |SOLID_ROCK        |FLAME_BODY        |[60, 35, 78, 50, 77, 30]      |28.9  |230|
-|Magwoo       |FIRE    |ROCK    |SOLID_ROCK        |SOLID_ROCK        |FLAME_BODY        |[70, 57, 105, 51, 87, 30]     |199.3 |110|
-|Lafloo       |FIRE    |ROCK    |SOLID_ROCK        |SOLID_ROCK        |FLAME_BODY        |[90, 80, 95, 120, 95, 45]     |450.9 |50 |
+|Flamehox     |FIRE    |GROUND  |FLAME_BODY        |FLAME_BODY        |NULL              |[70, 53, 70, 55, 60, 52]      |290.2 |55 |
+|Fireshard    |FIRE    |FLYING  |INTIMIDATE        |INTIMIDATE        |NULL              |[75, 75, 75, 90, 75, 70]      |301.3 |35 |
+|Blastflames  |FIRE    |DRAGON  |LEVITATE          |LEVITATE          |NULL              |[95, 75, 87, 140, 80, 83]     |345.6 |15 |
+|Tiowoo       |FIRE    |ROCK    |SOLID_ROCK        |SOLID_ROCK        |MAGMA_ARMOR       |[60, 35, 78, 50, 77, 30]      |28.9  |230|
+|Magwoo       |FIRE    |ROCK    |SOLID_ROCK        |SOLID_ROCK        |MAGMA_ARMOR       |[70, 57, 105, 51, 87, 30]     |199.3 |110|
+|Lafloo       |FIRE    |ROCK    |SOLID_ROCK        |SOLID_ROCK        |MAGMA_ARMOR       |[90, 80, 95, 120, 95, 45]     |450.9 |50 |
 |Houndour     |FIRE    |DARK    |SOLAR_POWER       |FLASH_FIRE        |INTIMIDATE        |[45, 60, 30, 80, 50, 65]      |23.8  |120|
 |Houndoom     |FIRE    |DARK    |SOLAR_POWER       |FLASH_FIRE        |INTIMIDATE        |[75, 90, 50, 110, 80, 95]     |77.2  |45 |
 |Sparkdust    |MAGIC   |null    |SHIELD_DUST       |MAGIC_GUARD       |MAGIC_BOUNCE      |[40, 45, 40, 75, 65, 70]      |3.5   |50 |
 |Splame       |MAGIC   |FIRE    |SHIELD_DUST       |MAGIC_GUARD       |MAGIC_BOUNCE      |[85, 45, 65, 145, 110, 55]    |5.5   |25 |
-|Sparkitten   |FIRE    |LIGHT   |ANTICIPATION      |ANTICIPATION      |ANTICIPATION      |[60, 70, 65, 70, 65, 70]      |16.0  |110|
-|Fireblion    |FIRE    |null    |DROUGHT           |DROUGHT           |DROUGHT           |[85, 105, 99, 40, 92, 89]     |295.5 |35 |
-|Flamebless   |FIRE    |LIGHT   |COMPETITIVE       |COMPETITIVE       |COMPETITIVE       |[70, 40, 55, 120, 115, 110]   |125.0 |35 |
+|Sparkitten   |FIRE    |LIGHT   |ANTICIPATION      |ANTICIPATION      |NULL              |[60, 70, 65, 70, 65, 70]      |16.0  |110|
+|Fireblion    |FIRE    |null    |DROUGHT           |DROUGHT           |NULL              |[85, 105, 99, 40, 92, 89]     |295.5 |35 |
+|Flamebless   |FIRE    |LIGHT   |COMPETITIVE       |COMPETITIVE       |NULL              |[70, 40, 55, 120, 115, 110]   |125.0 |35 |
 |Shookwat     |ELECTRIC|null    |STATIC            |VOLT_ABSORB       |MOTOR_DRIVE       |[55, 62, 46, 73, 75, 49]      |11.0  |255|
 |Wattwo       |ELECTRIC|null    |STATIC            |ELECTRIC_SURGE    |MOTOR_DRIVE       |[83, 65, 92, 105, 80, 50]     |56.1  |100|
 |Megawatt     |ELECTRIC|STEEL   |HUGE_POWER        |ELECTRIC_SURGE    |MOTOR_DRIVE       |[85, 65, 120, 92, 98, 55]     |65.9  |35 |
@@ -117,52 +117,52 @@
 |Twigzap      |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |CHLOROPHYLL       |[34, 62, 43, 58, 44, 59]      |3.6   |255|
 |Shockbranch  |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |CHLOROPHYLL       |[65, 94, 49, 60, 54, 73]      |13.4  |120|
 |Thunderzap   |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |CHLOROPHYLL       |[90, 70, 100, 85, 100, 55]    |245.9 |45 |
-|Magie        |STEEL   |NORMAL  |TOUGH_CLAWS       |IRON_BARBS        |NULL              |[30, 60, 73, 30, 65, 58]      |50.5  |100|
-|Cumin        |STEEL   |LIGHT   |TOUGH_CLAWS       |IRON_BARBS        |NULL              |[60, 80, 95, 65, 95, 95]      |125.7 |65 |
-|Cinneroph    |STEEL   |MAGIC   |TOUGH_CLAWS       |IRON_BARBS        |NULL              |[69, 95, 97, 70, 95, 104]     |130.6 |35 |
-|Vupp         |ELECTRIC|NORMAL  |ELECTRIC_SURGE    |MOTOR_DRIVE       |NULL              |[30, 45, 25, 35, 40, 60]      |8.1   |100|
-|Vinnie       |ELECTRIC|LIGHT   |ELECTRIC_SURGE    |MOTOR_DRIVE       |NULL              |[75, 105, 60, 85, 60, 105]    |25.1  |65 |
-|Suvinero     |ELECTRIC|MAGIC   |ELECTRIC_SURGE    |MOTOR_DRIVE       |NULL              |[75, 120, 70, 80, 75, 125]    |26.0  |35 |
-|Whiskie      |FIGHTING|NORMAL  |GUTS              |MOXIE             |NULL              |[35, 65, 45, 15, 40, 45]      |35.6  |100|
-|Whiskers     |FIGHTING|LIGHT   |GUTS              |MOXIE             |NULL              |[95, 125, 105, 25, 75, 50]    |100.9 |65 |
-|Whiskeroar   |FIGHTING|MAGIC   |ADAPTABILITY      |MOXIE             |NULL              |[95, 130, 100, 85, 75, 55]    |145.1 |35 |
-|Nincada      |BUG     |GROUND  |COMPOUND_EYES     |TINTED_LENS       |NULL              |[31, 45, 90, 30, 30, 40]      |12.1  |255|
-|Ninjask      |BUG     |FLYING  |SPEED_BOOST       |TINTED_LENS       |NULL              |[61, 90, 45, 50, 50, 160]     |26.5  |120|
-|Shedinja     |BUG     |GHOST   |WONDER_GUARD      |WONDER_GUARD      |NULL              |[1, 90, 45, 30, 30, 40]       |2.6   |5  |
-|Sheltor      |WATER   |GHOST   |SWIFT_SWIM        |REGENERATOR       |NULL              |[58, 29, 71, 31, 58, 33]      |9.5   |200|
-|Shelnado     |WATER   |GHOST   |SWIFT_SWIM        |REGENERATOR       |NULL              |[67, 61, 75, 97, 91, 83]      |65.7  |45 |
-|Lilyray      |WATER   |null    |UNAWARE           |WATER_ABSORB      |NULL              |[34, 14, 20, 27, 90, 15]      |9.9   |140|
-|Daray        |WATER   |FLYING  |UNAWARE           |WATER_ABSORB      |NULL              |[100, 28, 45, 72, 110, 45]    |41.8  |140|
-|Spinaquata   |WATER   |DRAGON  |DRIZZLE           |WATER_ABSORB      |NULL              |[100, 90, 66, 74, 84, 81]     |129.5 |75 |
-|Magikarp     |WATER   |null    |SWIFT_SWIM        |RATTLED           |NULL              |[20, 10, 55, 15, 20, 80]      |22.0  |255|
-|Gyarados     |WATER   |FLYING  |INTIMIDATE        |MOXIE             |NULL              |[95, 125, 79, 60, 100, 81]    |518.1 |45 |
+|Magie        |STEEL   |NORMAL  |TOUGH_CLAWS       |IRON_BARBS        |WEAK_ARMOR        |[30, 60, 73, 30, 65, 58]      |50.5  |100|
+|Cumin        |STEEL   |LIGHT   |TOUGH_CLAWS       |IRON_BARBS        |WEAK_ARMOR        |[60, 80, 95, 65, 95, 95]      |125.7 |65 |
+|Cinneroph    |STEEL   |MAGIC   |TOUGH_CLAWS       |IRON_BARBS        |WEAK_ARMOR        |[69, 95, 97, 70, 95, 104]     |130.6 |35 |
+|Vupp         |ELECTRIC|NORMAL  |ELECTRIC_SURGE    |MOTOR_DRIVE       |GALVANIZE         |[30, 45, 25, 35, 40, 60]      |8.1   |100|
+|Vinnie       |ELECTRIC|LIGHT   |ELECTRIC_SURGE    |MOTOR_DRIVE       |GALVANIZE         |[75, 105, 60, 85, 60, 105]    |25.1  |65 |
+|Suvinero     |ELECTRIC|MAGIC   |ELECTRIC_SURGE    |MOTOR_DRIVE       |GALVANIZE         |[75, 120, 70, 80, 75, 125]    |26.0  |35 |
+|Whiskie      |FIGHTING|NORMAL  |GUTS              |MOXIE             |NO_GUARD          |[35, 65, 45, 15, 40, 45]      |35.6  |100|
+|Whiskers     |FIGHTING|LIGHT   |GUTS              |MOXIE             |NO_GUARD          |[95, 125, 105, 25, 75, 50]    |100.9 |65 |
+|Whiskeroar   |FIGHTING|MAGIC   |ADAPTABILITY      |JUSTIFIED         |NO_GUARD          |[95, 130, 100, 85, 75, 55]    |145.1 |35 |
+|Nincada      |BUG     |GROUND  |COMPOUND_EYES     |TINTED_LENS       |SWARM             |[31, 45, 90, 30, 30, 40]      |12.1  |255|
+|Ninjask      |BUG     |FLYING  |SPEED_BOOST       |TINTED_LENS       |SWARM             |[61, 90, 45, 50, 50, 160]     |26.5  |120|
+|Shedinja     |BUG     |GHOST   |WONDER_GUARD      |WONDER_GUARD      |WONDER_GUARD      |[1, 90, 45, 30, 30, 40]       |2.6   |5  |
+|Sheltor      |WATER   |GHOST   |SWIFT_SWIM        |REGENERATOR       |SHELL_ARMOR       |[58, 29, 71, 31, 58, 33]      |9.5   |200|
+|Shelnado     |WATER   |GHOST   |SWIFT_SWIM        |REGENERATOR       |SHELL_ARMOR       |[67, 61, 75, 97, 91, 83]      |65.7  |45 |
+|Lilyray      |WATER   |null    |UNAWARE           |WATER_ABSORB      |LIGHTNING_ROD     |[34, 14, 20, 27, 90, 15]      |9.9   |140|
+|Daray        |WATER   |FLYING  |UNAWARE           |WATER_ABSORB      |LIGHTNING_ROD     |[100, 28, 45, 72, 110, 45]    |41.8  |140|
+|Spinaquata   |WATER   |DRAGON  |DRIZZLE           |WATER_ABSORB      |LIGHTNING_ROD     |[100, 90, 66, 74, 84, 81]     |129.5 |75 |
+|Magikarp     |WATER   |null    |SWIFT_SWIM        |RATTLED           |MULTISCALE        |[20, 10, 55, 15, 20, 80]      |22.0  |255|
+|Gyarados     |WATER   |FLYING  |INTIMIDATE        |MOXIE             |MULTISCALE        |[95, 125, 79, 60, 100, 81]    |518.1 |45 |
 |Staryu       |WATER   |GALACTIC|ILLUMINATION      |NATURAL_CURE      |REGENERATOR       |[30, 45, 55, 70, 55, 85]      |76.1  |225|
 |Starmie      |WATER   |GALACTIC|ILLUMINATION      |NATURAL_CURE      |REGENERATOR       |[60, 75, 85, 100, 85, 115]    |176.4 |60 |
-|Ali          |DARK    |WATER   |AMBUSH            |STRONG_JAW        |NULL              |[90, 120, 80, 45, 55, 60]     |410.9 |45 |
-|Batorali     |DARK    |FLYING  |AMBUSH            |STRONG_JAW        |NULL              |[105, 130, 80, 75, 55, 95]    |476.0 |10 |
-|Posho        |MAGIC   |DRAGON  |REGENERATOR       |MAGIC_GUARD       |NULL              |[35, 35, 35, 100, 45, 45]     |21.0  |30 |
-|Shomp        |WATER   |DRAGON  |SWIFT_SWIM        |SNIPER            |NULL              |[81, 93, 63, 93, 70, 60]      |835.9 |30 |
-|Poshorump    |MAGIC   |DRAGON  |SWIFT_SWIM        |MAGIC_GUARD       |NULL              |[100, 95, 90, 95, 90, 90]     |954.5 |10 |
-|Binacle      |WATER   |ROCK    |TOUGH_CLAWS       |SNIPER            |NULL              |[42, 52, 67, 39, 56, 50]      |68.3  |120|
-|Barbaracle   |WATER   |ROCK    |TOUGH_CLAWS       |SNIPER            |NULL              |[72, 105, 115, 54, 86, 68]    |211.6 |45 |
+|Ali          |DARK    |WATER   |AMBUSH            |STRONG_JAW        |THREATENING       |[90, 120, 80, 45, 55, 60]     |410.9 |45 |
+|Batorali     |DARK    |FLYING  |AMBUSH            |STRONG_JAW        |THREATENING       |[105, 130, 80, 75, 55, 95]    |476.0 |10 |
+|Posho        |MAGIC   |DRAGON  |REGENERATOR       |MAGIC_GUARD       |WONDER_SKIN       |[35, 35, 35, 100, 45, 45]     |21.0  |30 |
+|Shomp        |WATER   |DRAGON  |SWIFT_SWIM        |SNIPER            |STRONG_JAW        |[81, 93, 63, 93, 70, 60]      |835.9 |30 |
+|Poshorump    |MAGIC   |DRAGON  |SWIFT_SWIM        |MAGIC_GUARD       |WONDER_SKIN       |[100, 95, 90, 95, 90, 90]     |954.5 |10 |
+|Binacle      |WATER   |ROCK    |TOUGH_CLAWS       |SNIPER            |SHELL_ARMOR       |[42, 52, 67, 39, 56, 50]      |68.3  |120|
+|Barbaracle   |WATER   |ROCK    |TOUGH_CLAWS       |SNIPER            |SHELL_ARMOR       |[72, 105, 115, 54, 86, 68]    |211.6 |45 |
 |Durfish      |WATER   |GROUND  |ILLUMINATION      |PRANKSTER         |NULL              |[55, 60, 64, 62, 55, 49]      |6.8   |95 |
 |Dompster     |WATER   |GROUND  |ILLUMINATION      |PRANKSTER         |NULL              |[70, 115, 100, 60, 80, 60]    |67.9  |35 |
-|Kissyfishy   |WATER   |MAGIC   |WATER_VEIL        |REGENERATOR       |NULL              |[40, 40, 75, 55, 50, 90]      |10.6  |25 |
+|Kissyfishy   |WATER   |MAGIC   |WATER_VEIL        |REGENERATOR       |WONDER_SKIN       |[40, 40, 75, 55, 50, 90]      |10.6  |25 |
 |Ekans        |POISON  |null    |INTIMIDATE        |SHED_SKIN         |CORROSION         |[35, 60, 44, 40, 54, 55]      |15.2  |255|
 |Arbok        |POISON  |null    |INTIMIDATE        |SHED_SKIN         |CORROSION         |[60, 110, 70, 55, 80, 80]     |143.3 |90 |
 |Zubat        |POISON  |FLYING  |STRONG_JAW        |INNER_FOCUS       |POISON_TOUCH      |[40, 45, 35, 30, 40, 55]      |16.5  |255|
 |Golbat       |POISON  |FLYING  |STRONG_JAW        |INNER_FOCUS       |POISON_TOUCH      |[75, 80, 70, 65, 75, 90]      |121.3 |90 |
 |Crobat       |POISON  |FLYING  |STRONG_JAW        |INNER_FOCUS       |POISON_TOUCH      |[85, 90, 80, 70, 80, 130]     |165.3 |90 |
-|Poof         |GHOST   |null    |FRIENDLY_GHOST    |LEVITATE          |ILLUMINATION      |[55, 60, 80, 75, 65, 65]      |0.2   |135|
+|Poof         |GHOST   |null    |FRIENDLY_GHOST    |LEVITATE          |UNWAVERING        |[55, 60, 80, 75, 65, 65]      |0.2   |135|
 |Hast         |GHOST   |STEEL   |FRIENDLY_GHOST    |LEVITATE          |IRON_BARBS        |[65, 70, 120, 60, 120, 65]    |200.5 |45 |
 |Poov         |GHOST   |DARK    |ADAPTABILITY      |ANGER_POINT       |PRESSURE          |[75, 85, 45, 60, 55, 79]      |3.4   |95 |
 |Grust        |GHOST   |DARK    |ADAPTABILITY      |ANGER_POINT       |PRESSURE          |[115, 105, 55, 105, 60, 59]   |20.7  |35 |
 |Cluuz        |GHOST   |POISON  |LEVITATE          |LEVITATE          |LEVITATE          |[60, 42, 58, 105, 97, 73]     |0.5   |175|
 |Zurrclu      |GHOST   |ROCK    |LEVITATE          |LEVITATE          |LEVITATE          |[80, 90, 96, 71, 85, 58]      |199.1 |55 |
 |Zurroaratr   |GHOST   |ROCK    |LEVITATE          |LEVITATE          |LEVITATE          |[100, 109, 110, 67, 99, 55]   |600.3 |15 |
-|Timburr      |FIGHTING|null    |GUTS              |IRON_FIST         |NULL              |[75, 80, 55, 25, 35, 35]      |27.6  |180|
-|Gurdurr      |FIGHTING|null    |GUTS              |IRON_FIST         |NULL              |[85, 105, 85, 40, 50, 40]     |88.2  |90 |
-|Conkeldurr   |FIGHTING|null    |GUTS              |IRON_FIST         |NULL              |[105, 140, 95, 55, 65, 45]    |191.8 |45 |
+|Timburr      |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[75, 80, 55, 25, 35, 35]      |27.6  |180|
+|Gurdurr      |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[85, 105, 85, 40, 50, 40]     |88.2  |90 |
+|Conkeldurr   |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[105, 140, 95, 55, 65, 45]    |191.8 |45 |
 |Rhypo        |GROUND  |null    |RATTLED           |SAND_FORCE        |ROUGH_SKIN        |[51, 65, 89, 30, 66, 15]      |49.5  |235|
 |Rhynee       |GROUND  |null    |SAND_STREAM       |SAND_FORCE        |ROUGH_SKIN        |[57, 73, 112, 55, 95, 20]     |295.1 |175|
 |Rhypolar     |GROUND  |FIGHTING|SAND_STREAM       |SAND_FORCE        |ROUGH_SKIN        |[75, 100, 145, 70, 95, 25]    |489.1 |45 |
@@ -171,22 +171,22 @@
 |Wormite      |GROUND  |null    |SAND_VEIL         |RATTLED           |REGENERATOR       |[45, 60, 55, 35, 25, 55]      |40.3  |255|
 |Wormbot      |GROUND  |STEEL   |SAND_VEIL         |RATTLED           |REGENERATOR       |[50, 80, 100, 60, 35, 60]     |100.6 |195|
 |Wormatron    |GROUND  |DRAGON  |SAND_VEIL         |ROUGH_SKIN        |REGENERATOR       |[60, 100, 120, 105, 70, 65]   |185.3 |45 |
-|Cleffa       |GALACTIC|LIGHT   |MAGIC_GUARD       |UNAWARE           |NULL              |[50, 25, 28, 45, 55, 15]      |6.6   |150|
-|Clefairy     |GALACTIC|LIGHT   |MAGIC_GUARD       |UNAWARE           |NULL              |[70, 45, 48, 60, 65, 35]      |16.5  |150|
-|Clefable     |GALACTIC|LIGHT   |MAGIC_GUARD       |UNAWARE           |NULL              |[95, 70, 73, 95, 90, 60]      |88.2  |25 |
+|Cleffa       |GALACTIC|LIGHT   |MAGIC_GUARD       |UNAWARE           |CLOUD_NINE        |[50, 25, 28, 45, 55, 15]      |6.6   |150|
+|Clefairy     |GALACTIC|LIGHT   |MAGIC_GUARD       |UNAWARE           |CLOUD_NINE        |[70, 45, 48, 60, 65, 35]      |16.5  |150|
+|Clefable     |GALACTIC|LIGHT   |MAGIC_GUARD       |UNAWARE           |CLOUD_NINE        |[95, 70, 73, 95, 90, 60]      |88.2  |25 |
 |Minishoo     |MAGIC   |FLYING  |SERENE_GRACE      |NATURAL_CURE      |MIRROR_ARMOR      |[40, 45, 65, 100, 105, 65]    |12.9  |100|
 |Glittleshoo  |MAGIC   |FLYING  |SERENE_GRACE      |NATURAL_CURE      |MIRROR_ARMOR      |[70, 45, 75, 135, 115, 80]    |75.1  |55 |
-|Zorua        |NORMAL  |GHOST   |ADAPTABILITY      |ILLUMINATION      |NULL              |[35, 60, 40, 85, 40, 70]      |27.6  |75 |
-|Zoroark      |NORMAL  |GHOST   |ADAPTABILITY      |ILLUMINATION      |NULL              |[55, 100, 60, 125, 60, 110]   |178.8 |45 |
+|Zorua        |NORMAL  |GHOST   |ADAPTABILITY      |ILLUMINATION      |UNWAVERING        |[35, 60, 40, 85, 40, 70]      |27.6  |75 |
+|Zoroark      |NORMAL  |GHOST   |ADAPTABILITY      |ILLUMINATION      |UNWAVERING        |[55, 100, 60, 125, 60, 110]   |178.8 |45 |
 |Droid        |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[50, 70, 55, 50, 50, 55]      |99.9  |135|
 |Armoid       |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[65, 75, 105, 50, 75, 60]     |149.9 |95 |
 |Soldrota     |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[70, 115, 115, 90, 75, 65]    |199.9 |45 |
-|Tinkie       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SPARKLY_SURGE     |SPARKLY_SURGE     |[55, 76, 55, 54, 90, 60]      |10.0  |45 |
-|Shawar       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SPARKLY_SURGE     |SPARKLY_SURGE     |[75, 80, 75, 60, 90, 75]      |100.0 |35 |
-|Shaboom      |MAGIC   |GALACTIC|SPARKLY_SURGE     |SPARKLY_SURGE     |SPARKLY_SURGE     |[100, 100, 100, 100, 100, 100]|292.3 |25 |
-|Dragee       |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |MULTISCALE        |[80, 40, 57, 63, 59, 51]      |50.2  |45 |
-|Draga        |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |MULTISCALE        |[85, 75, 80, 90, 75, 60]      |103.4 |35 |
-|Drageye      |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |MULTISCALE        |[95, 85, 90, 115, 125, 90]    |247.2 |25 |
+|Tinkie       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SPARKLY_SURGE     |SUPER_LUCK        |[55, 76, 55, 54, 90, 60]      |10.0  |45 |
+|Shawar       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SPARKLY_SURGE     |SUPER_LUCK        |[75, 80, 75, 60, 90, 75]      |100.0 |35 |
+|Shaboom      |MAGIC   |GALACTIC|SPARKLY_SURGE     |SPARKLY_SURGE     |SUPER_LUCK        |[100, 100, 100, 100, 100, 100]|292.3 |25 |
+|Dragee       |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |ILLUMINATION      |[80, 40, 57, 63, 59, 51]      |50.2  |45 |
+|Draga        |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |ILLUMINATION      |[85, 75, 80, 90, 75, 60]      |103.4 |35 |
+|Drageye      |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |ILLUMINATION      |[95, 85, 90, 115, 125, 90]    |247.2 |25 |
 |Blobmo       |GALACTIC|null    |SHIELD_DUST       |LEVITATE          |REGENERATOR       |[90, 30, 30, 30, 100, 30]     |100.2 |85 |
 |Nebulimb     |GALACTIC|null    |SHIELD_DUST       |GRAVITATION       |MOLD_BREAKER      |[125, 45, 50, 45, 115, 40]    |759.2 |65 |
 |Galactasolder|GALACTIC|FIGHTING|SNIPER            |GRAVITATION       |MOLD_BREAKER      |[170, 135, 70, 55, 115, 50]   |1000.5|35 |
