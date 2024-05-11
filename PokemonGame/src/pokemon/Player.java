@@ -160,7 +160,7 @@ public class Player extends Trainer implements Serializable {
 			numBattled++;
 			this.current.battled = true;
 		}
-		Pokemon.addSwapInTask(current);
+		Pokemon.addSwapInTask(current, current.currentHP);
 		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
 	}
 	

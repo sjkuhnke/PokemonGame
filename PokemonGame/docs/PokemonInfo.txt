@@ -458,7 +458,7 @@ Level Up:
 32 - Rollout
 
 Evolutions:
-Hammo -> HammyBoy (lv. 32 & Knows Rollout)
+Hammo -> HammyBoy (Knows Rollout)
 
 ===================
 017 - HammyBoy
@@ -816,12 +816,11 @@ Level Up:
 42 - Knock Off
 45 - Earthquake
 47 - Power Whip
-50 - Ice Punch
 50 - Thunder Punch
+50 - Ice Punch
 53 - Superpower
-55 - Spiky Shield
-59 - Glittering Sword
-63 - Grassy Terrain
+59 - Grassy Terrain
+63 - Wood Hammer
 70 - Outrage
 
 Evolutions:
@@ -1118,7 +1117,7 @@ Type:
 Grass / None
 
 Ability:
-Anticipation / Fluffy / (None)
+Anticipation / Fluffy / (Chlorophyll)
 
 Base Stats:
 60 HP / 50 Atk / 100 Def / 75 SpA / 105 SpD / 60 Spe / 450 BST
@@ -1152,7 +1151,7 @@ Type:
 Grass / None
 
 Ability:
-Moxie / Defiant / (None)
+Moxie / Defiant / (Reckless)
 
 Base Stats:
 70 HP / 130 Atk / 95 Def / 45 SpA / 80 SpD / 100 Spe / 520 BST
@@ -1173,6 +1172,7 @@ Level Up:
 43 - Double-Edge
 46 - Drill Run
 50 - Head Smash
+55 - Wood Hammer
 60 - Synthesis
 
 ===================
@@ -1182,7 +1182,7 @@ Type:
 Grass / Light
 
 Ability:
-Serene Grace / Competitive / (None)
+Serene Grace / Competitive / (Grassy Surge)
 
 Base Stats:
 70 HP / 45 Atk / 80 Def / 130 SpA / 95 SpD / 100 Spe / 520 BST
@@ -1381,7 +1381,7 @@ Type:
 Magic / Light
 
 Ability:
-Magic Guard / Flash Fire / (None)
+Magic Guard / Flash Fire / (Magic Bounce)
 
 Base Stats:
 60 HP / 40 Atk / 39 Def / 120 SpA / 95 SpD / 101 Spe / 455 BST
@@ -1464,7 +1464,7 @@ Level Up:
 36 - Rock Blast
 
 Evolutions:
-Boulder -> Blaster (lv. 36 & Knows Rock Blast)
+Boulder -> Blaster (Knows Rock Blast)
 Boulder -> Crystallor (lv. up in Electric Tunnel)
 
 ===================
@@ -1821,7 +1821,7 @@ Type:
 Ice / Magic
 
 Ability:
-Snow Cloak / Sparkly Surge / (Magic Guard)
+Snow Cloak / Sparkly Surge / (Magic Bounce)
 
 Base Stats:
 90 HP / 64 Atk / 67 Def / 85 SpA / 71 SpD / 58 Spe / 435 BST
@@ -2241,7 +2241,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Anticipation / Natural Cure / (None)
+Anticipation / Natural Cure / (Unwavering)
 
 Base Stats:
 42 HP / 30 Atk / 45 Def / 56 SpA / 53 SpD / 39 Spe / 265 BST
@@ -2268,7 +2268,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Magic Bounce / Natural Cure / (None)
+Magic Bounce / Natural Cure / (Unwavering)
 
 Base Stats:
 57 HP / 40 Atk / 65 Def / 86 SpA / 73 SpD / 49 Spe / 370 BST
@@ -2298,7 +2298,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Magic Bounce / Natural Cure / (None)
+Magic Bounce / Natural Cure / (Unwavering)
 
 Base Stats:
 82 HP / 65 Atk / 95 Def / 136 SpA / 103 SpD / 29 Spe / 510 BST
@@ -2542,7 +2542,7 @@ Type:
 Psychic / Light
 
 Ability:
-Synchronize / Trace / (None)
+Synchronize / Trace / (Pixilate)
 
 Base Stats:
 28 HP / 25 Atk / 25 Def / 65 SpA / 55 SpD / 40 Spe / 238 BST
@@ -2568,7 +2568,7 @@ Type:
 Psychic / Light
 
 Ability:
-Synchronize / Trace / (None)
+Synchronize / Trace / (Pixilate)
 
 Base Stats:
 38 HP / 35 Atk / 35 Def / 95 SpA / 85 SpD / 50 Spe / 338 BST
@@ -3188,7 +3188,7 @@ Type:
 Magic / None
 
 Ability:
-Shield Dust / Magic Guard / (Serene Grace)
+Shield Dust / Magic Guard / (Magic Bounce)
 
 Base Stats:
 40 HP / 45 Atk / 40 Def / 75 SpA / 65 SpD / 70 Spe / 335 BST
@@ -3216,7 +3216,7 @@ Type:
 Magic / Fire
 
 Ability:
-Shield Dust / Magic Guard / (Serene Grace)
+Shield Dust / Magic Guard / (Magic Bounce)
 
 Base Stats:
 85 HP / 45 Atk / 65 Def / 145 SpA / 110 SpD / 55 Spe / 505 BST
@@ -3433,7 +3433,7 @@ Type:
 Electric / Ground
 
 Ability:
-Static / Fluffy / (None)
+Static / Fluffy / (Unerodible)
 
 Base Stats:
 54 HP / 32 Atk / 53 Def / 65 SpA / 58 SpD / 33 Spe / 295 BST
@@ -3461,7 +3461,7 @@ Type:
 Electric / Ground
 
 Ability:
-Static / Fluffy / (None)
+Static / Fluffy / (Unerodible)
 
 Base Stats:
 65 HP / 80 Atk / 55 Def / 45 SpA / 60 SpD / 50 Spe / 355 BST
@@ -3495,7 +3495,7 @@ Type:
 Electric / Ground
 
 Ability:
-Speed Boost / Fluffy / (None)
+Speed Boost / Fluffy / (Unerodible)
 
 Base Stats:
 85 HP / 128 Atk / 72 Def / 60 SpA / 77 SpD / 98 Spe / 520 BST
@@ -3531,7 +3531,7 @@ Type:
 Grass / Electric
 
 Ability:
-Sap Sipper / Volt Absorb / (None)
+Sap Sipper / Volt Absorb / (Chlorophyll)
 
 Base Stats:
 34 HP / 62 Atk / 43 Def / 58 SpA / 44 SpD / 59 Spe / 300 BST
@@ -3552,7 +3552,7 @@ Type:
 Grass / Electric
 
 Ability:
-Sap Sipper / Volt Absorb / (None)
+Sap Sipper / Volt Absorb / (Chlorophyll)
 
 Base Stats:
 65 HP / 94 Atk / 49 Def / 60 SpA / 54 SpD / 73 Spe / 395 BST
@@ -3578,7 +3578,7 @@ Type:
 Grass / Electric
 
 Ability:
-Sap Sipper / Volt Absorb / (None)
+Sap Sipper / Volt Absorb / (Chlorophyll)
 
 Base Stats:
 90 HP / 70 Atk / 100 Def / 85 SpA / 100 SpD / 55 Spe / 500 BST
@@ -6304,7 +6304,7 @@ Level Up:
 36 - Rock Blast
 
 Evolutions:
-Boulder-E -> Blaster-E (lv. 36 & Knows Rock Blast)
+Boulder-E -> Blaster-E (Knows Rock Blast)
 Boulder-E -> Crystallor-E (lv. up in Electric Tunnel)
 
 ===================

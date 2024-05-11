@@ -158,12 +158,12 @@ Froshrog -> Flashrog/Amphibulb/Ribblink
 Bouncerog -> Blitzoad
 Bugop -> Lunymph
 Opwing -> Feromoth
-Otterpor ->
-Psylotter ->
-Florline ->
+Otterpor -> Whotter/Odder
+Psylotter -> Foresott/Torrentor/Lutrineer
+Florline -> Kitturf/Mosscelot
 Florlion -> Oncaroma/Osceloma/Osceroma
 Psycorb -> Psycorb/Orbronze
-Psyballs -> Silvidol
+Psyballs -> Silvidol/Silvicle
 Psycorboratr -> Auracle
 
 
