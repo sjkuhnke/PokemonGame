@@ -7,11 +7,12 @@ public enum Ability {
 	ANGER_POINT("Maxes Attack after taking a critical hit."),
 	ANTICIPATION("Senses an opposing Pokemon's dangerous moves."),
 	INSOMNIA("Prevents the Pokemon from falling asleep."),
-	BATTLE_ARMOR("This Pokemon cannot be Critical hit"),
+	BATTLE_ARMOR("This Pokemon cannot be Critical hit."),
 	BLAZE("Powers up FIRE moves in a pinch."),
 	BRAINWASH("Forces the opponent's stat changes to have an opposite effect while the user is active."),
 	CHLOROPHYLL("Boosts the Pokemon's Speed stat in SUNSHINE."),
 	CLEAR_BODY("Prevents other Pokemon from lowering its stats."),
+	CLOUD_NINE(""), // TODO
 	COMPETITIVE("Boosts the Pokemon's Special Attack stat when its stats are lowered."),
 	COMPOUND_EYES("The Pokemon's accuracy is boosted."),
 	CONTRARY("Makes stat changes have an opposite effect."),
@@ -30,6 +31,7 @@ public enum Ability {
 	FRIENDLY_GHOST("Gives full immunity to all GHOST moves."),
 	FULL_FORCE("Boosts the Attack stat by 2 stages if the Pokemon's held item is used or lost."),
 	GALACTIC_AURA("Halves the damage of ICE and PSYCHIC moves."),
+	GALVANIZE("NORMAL moves become ELECTRIC moves. The power of those moves is boosted a little."),
 	GLACIER_AURA("Weakens the power of Physical moves."),
 	GRASSY_SURGE("Turns the ground into GRASSY TERRAIN when the Pokemon enters a battle."),
 	GRAVITATION("Creates GRAVITY when the Pokemon enters a battle."),
@@ -88,6 +90,7 @@ public enum Ability {
 	SHARPNESS("Boosts the power of Slicing moves."),
 	SHED_SKIN("The Pokemon may heal its own status conditions."),
 	SHEER_FORCE("Removes additional effects to increase the power of moves when attacking."),
+	SHELL_ARMOR("This Pokemon cannot be Critical hit."),
 	SHIELD_DUST("Blocks the added effects of attacks taken."),
 	SIMPLE("The stat changes the Pokemon receives are doubled."),
 	SLUSH_RUSH("Boosts the Pokemon's Speed stat in SNOW."),
@@ -124,7 +127,9 @@ public enum Ability {
 	VOLT_VORTEX("Boosts the Pokemon's speed in ELECTRIC TERRAIN."),
 	WATER_ABSORB("Restores HP if hit by a WATER move."),
 	WATER_VEIL("Prevents the Pokemon from getting a burn."),
+	WEAK_ARMOR(""), // TODO
 	WONDER_GUARD("Only supereffective moves will hit."),
+	WONDER_SKIN(""), // TODO
 	NULL("No Ability.");
 
 	Ability(String string) {

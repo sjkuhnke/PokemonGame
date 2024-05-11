@@ -15,7 +15,6 @@ public class Bag implements Serializable {
 	public Bag() {
 		bag = new ArrayList<>(Arrays.asList(Item.values()));
 		count = new int[Item.values().length];
-		bag.remove(Item.NULL92);
 		bag.remove(Item.NULL260);
 	}
 	
