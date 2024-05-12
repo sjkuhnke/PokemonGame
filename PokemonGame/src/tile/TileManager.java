@@ -19,7 +19,7 @@ public class TileManager {
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
-		tile = new Tile[500];
+		tile = new Tile[900];
 		mapTileNum = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
 		canFly = new boolean[gp.maxMap];
 		
@@ -182,6 +182,9 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 155, true);
 		loadMap("/maps/house01.txt", 156, true);
 		loadMap("/maps/house01.txt", 157, true);
+		loadMap("/maps/house04.txt", 158, true);
+		loadMap("/maps/gym08.txt", 159, true);
+		loadMap("/maps/space01.txt", 160, true);
 	}
 	
 	public void getTileImage() {
@@ -653,12 +656,101 @@ public class TileManager {
 		setup(480, true);
 		setup(481, false);
 		setup(482, false);
-		
 		setup(483, false);
 		setup(484, true);
 		setup(485, false);
 		setup(486, false);
 		setup(487, false);
+		setup(488, true);
+		setup(489, true);
+		setup(490, true);
+		setup(491, true);
+		setup(492, true);
+		setup(493, true);
+		setup(494, true);
+		setup(495, true);
+		setup(496, true);
+		setup(497, true);
+		setup(498, true);
+		setup(499, true);
+		setup(500, true);
+		setup(501, true);
+		setup(502, true);
+		setup(503, true);
+		setup(504, true);
+		setup(505, false);
+		setup(506, false);
+		setup(507, false);
+		setup(508, false);
+		setup(509, true);
+		setup(510, true);
+		setup(512, true);
+		setup(513, false);
+		setup(514, false);
+		setup(515, true);
+		setup(516, false);
+		setup(517, false);
+		setup(518, true);
+		setup(519, false);
+		setup(520, true);
+		setup(521, true);
+		setup(522, true);
+		setup(523, true);
+		setup(524, true);
+		setup(525, true);
+		setup(526, true);
+		setup(527, true);
+		setup(528, true);
+		setup(529, true);
+		setup(530, true);
+		setup(531, true);
+		setup(532, true);
+		setup(533, true);
+		setup(534, true);
+		setup(535, true);
+		setup(536, true);
+		setup(537, true);
+		setup(538, true);
+		setup(539, true);
+		setup(540, true);
+		setup(541, true);
+		setup(542, true);
+		setup(543, true);
+		setup(544, true);
+		setup(545, true);
+		setup(546, true);
+		setup(547, true);
+		setup(548, true);
+		setup(549, true);
+		setup(550, true);
+		setup(551, true);
+		setup(552, true);
+		setup(553, true);
+		setup(554, true);
+		setup(555, true);
+		setup(556, true);
+		setup(557, true);
+		setup(558, true);
+		setup(559, true);
+		setup(560, true);
+		setup(561, true);
+		setup(562, true);
+		setup(563, true);
+		setup(564, true);
+		setup(565, true);
+		setup(566, true);
+		setup(567, true);
+		setup(568, false);
+		setup(569, true);
+		setup(570, true);
+		setup(571, true);
+		setup(572, true);
+//		setup(573, true);
+//		setup(574, true);
+//		setup(575, true);
+//		setup(576, true);
+//		setup(577, true);
+		
 
 		try {
 			tile[7] = new GrassTile();
@@ -672,6 +764,9 @@ public class TileManager {
 			
 			tile[363] = new GrassTile();
 			tile[363].image = ImageIO.read(getClass().getResourceAsStream("/tiles/363.png"));
+			
+			tile[511] = new GrassTile();
+			tile[511].image = ImageIO.read(getClass().getResourceAsStream("/tiles/511.png"));
 			
 			tile[37] = new Tile();
 			tile[37].image = ImageIO.read(getClass().getResourceAsStream("/tiles/037.png"));
