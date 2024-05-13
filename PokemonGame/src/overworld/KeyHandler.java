@@ -467,6 +467,7 @@ public class KeyHandler implements KeyListener {
 				} else if (gp.ui.showBoxSummary) {
 					if (gp.ui.moveSummaryNum >= 0) {
 						gp.ui.moveSummaryNum = -1;
+						gp.ui.moveSwapNum = -1;
 					} else {
 						gp.ui.showBoxSummary = false;
 					}

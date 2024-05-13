@@ -419,6 +419,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(7, 63, Item.PP_UP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 5, Item.AWAKENING, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(90, 5, Item.TM04, mapNum); // calm mind
+		gp.obj[mapNum][objIndex] = ObjSetup(7, 35, Item.MENTAL_HERB, mapNum);
 		
 		mapNum = 78;
 		objIndex = 0;
@@ -792,7 +793,7 @@ public class AssetSetter {
 		mapNum = 3;
 		index = 0;
 		if (!flags[1]) {
-			gp.npc[mapNum][index] = NPCSetup(31, 40, "I saw a boy named Scott near New Minnow town saying he was looking for a young man that looked like you. Maybe you should check it out?", 1);
+			gp.npc[mapNum][index] = NPCSetup(31, 40, "I saw a boy named Scott near New Minnow Town saying he was looking for a young man that looked like you. Maybe you should check it out?", 1);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -943,6 +944,14 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 78, 12, 68);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 72, 10, 69);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 69, 14, 70);
+		
+		mapNum = 23;
+		index = 0;
+		if (!flags[1]) {
+			gp.npc[mapNum][index] = NPCSetup(31, 40, "Wow, there's a lot of lava over there. It's definitely not safe for any newbie trainers. If I see any of them coming this way... I swear to god...", 1);
+		} else {
+			gp.npc[mapNum][index++] = null;
+		}
 		
 		mapNum = 24;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 65, 63, 75);
@@ -1558,6 +1567,21 @@ public class AssetSetter {
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
+		
+		mapNum = 152;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 29, 16, 347);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 29, 22, 348);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 24, 24, 349);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 32, 37, 350);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 39, 38, 351);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 51, 35, 352);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 50, 26, 353);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 57, 19, 354);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 59, 27, 355);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 56, 40, 356);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 48, 46, 357);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 44, 54, 358);
 		
 		// Nurses
 		gp.npc[153][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
@@ -2233,6 +2257,7 @@ public class AssetSetter {
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		if (flags[1]) {
 			gp.npc[3][0] = null;
+			gp.npc[23][0] = null;
 			gp.npc[119][2] = null;
 		}
 		if (flags[2]) {
