@@ -525,7 +525,7 @@ public abstract class AbstractUI {
 				}
 			}
 			
-			if (moveSummaryNum < 0) {
+			if (moveSummaryNum < 0 && !showBoxSummary) {
 				if (gp.keyH.leftPressed) {
 					gp.keyH.leftPressed = false;
 					if (partyNum > 0) {

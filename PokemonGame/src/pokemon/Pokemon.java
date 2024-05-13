@@ -1058,7 +1058,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (result != null) {
-			Pokemon.addEvoTask(this, result);
+			addEvoTask(this, result);
 	    }
 	}
 
@@ -2993,8 +2993,8 @@ public class Pokemon implements Serializable {
 			stat(this, 2, 2, foe);
 		} else if (move == Move.WATERFALL && first) {
 			foe.vStatuses.add(Status.FLINCHED);
-//		} else if (move == Move.WOOD_FANG && first) {
-//			foe.vStatuses.add(Status.FLINCHED);
+		} else if (move == Move.SPIRIT_BREAK) {
+			stat(this, 1, -1, foe);
 		} else if (move == Move.ZEN_HEADBUTT && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.ROCK_SLIDE && first) {
@@ -3525,7 +3525,7 @@ public class Pokemon implements Serializable {
 				weight = getWeight();
 				int nHP = this.getStat(0);
 				heal(nHP - oHP, nickname + " transformed into Kissyfishy-D!");
-				Pokemon.addTask(Task.SPRITE, "", this);
+				addTask(Task.SPRITE, "", this);
 				setTypes();
 				setAbility(abilitySlot);
 				if (this.playerOwned()) player.pokedex[237] = 2;
@@ -7778,7 +7778,7 @@ public class Pokemon implements Serializable {
 			movebank[24] = new Node(Move.SHADOW_PUNCH);
 			movebank[24].next = new Node(Move.THUNDER_PUNCH);
 			movebank[27] = new Node(Move.MAGNET_RISE);
-			movebank[30] = new Node(Move.SHADOW_BALL);
+			movebank[30] = new Node(Move.PHANTOM_FORCE);
 			break;
 		case 198:
 			movebank = new Node[55];
@@ -7793,11 +7793,10 @@ public class Pokemon implements Serializable {
 			movebank[24] = new Node(Move.SHADOW_PUNCH);
 			movebank[24].next = new Node(Move.THUNDER_PUNCH);
 			movebank[27] = new Node(Move.MAGNET_RISE);
-			movebank[30] = new Node(Move.SHADOW_BALL);
+			movebank[30] = new Node(Move.PHANTOM_FORCE);
 			movebank[34] = new Node(Move.TRI$ATTACK);
-			movebank[37] = new Node(Move.HEADBUTT);
 			movebank[39] = new Node(Move.ELECTRO_BALL);
-			movebank[43] = new Node(Move.PHANTOM_FORCE);
+			movebank[43] = new Node(Move.SHADOW_BALL);
 			movebank[49] = new Node(Move.VOLT_SWITCH);
 			movebank[54] = new Node(Move.THUNDER);
 			break;
@@ -10541,6 +10540,11 @@ public class Pokemon implements Serializable {
 			addAbilityTask(this);
 			field.setWeather(field.new FieldEffect(Effect.SNOW));
 			if (this.item == Item.ICY_ROCK) field.weatherTurns = 8;
+		} else if (this.ability == Ability.CLOUD_NINE && field.weather != null) {
+			addAbilityTask(this);
+			Task t = addTask(Task.WEATHER, "The weather returned to normal!");
+            t.setEffect(null);
+            field.weather = null;
 		} else if (this.ability == Ability.GRASSY_SURGE && !field.equals(field.terrain, Effect.GRASSY)) {
 			addAbilityTask(this);
 			field.setTerrain(field.new FieldEffect(Effect.GRASSY));
@@ -11413,12 +11417,12 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void addEvoTask(Pokemon p, Pokemon result) {
-		Task t = Pokemon.addTask(Task.EVO, p.nickname + " is evolving!\nDo you want to evolve your " + p.nickname + "?", p);
+		Task t = addTask(Task.EVO, p.nickname + " is evolving!\nDo you want to evolve your " + p.nickname + "?", p);
 		t.evo = result;
 	}
 	
 	public void addAbilityTask(Pokemon p) {
-		Task t = Pokemon.addTask(Task.ABILITY, "[" + p.nickname + "'s " + p.ability + "]:", p);
+		Task t = addTask(Task.ABILITY, "[" + p.nickname + "'s " + p.ability + "]:", p);
 		t.setAbility(p.ability);
 	}
 	

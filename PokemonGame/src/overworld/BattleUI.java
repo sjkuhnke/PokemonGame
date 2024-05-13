@@ -311,6 +311,7 @@ public class BattleUI extends AbstractUI {
 			}
 			if (counter >= 100) {
 				counter = 0;
+				tempUser = null;
 				currentTask = null;
 			}
 			break;

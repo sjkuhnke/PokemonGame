@@ -279,7 +279,6 @@ public class Player extends Trainer implements Serializable {
 		swapToFront(team[index], index);
 		
 		Pokemon.addTask(Task.TEXT, current.nickname + " was dragged out!");
-		Pokemon.gp.battleUI.tempUser = current.clone();
 		current.swapIn(foe, true);
 		return true;
 		
