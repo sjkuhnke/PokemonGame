@@ -240,3 +240,7 @@
 |Scraftagon   |DRAGON  |FIGHTING|SCALY_SKIN        |MOXIE             |SHED_SKIN         |[70, 110, 120, 40, 120, 110]  |92.6  |45 |
 |Glimmet      |ROCK    |POISON  |TOXIC_DEBRIS      |TOXIC_DEBRIS      |CORROSION         |[48, 35, 42, 105, 60, 60]     |17.6  |70 |
 |Glimmora     |ROCK    |POISON  |TOXIC_DEBRIS      |TOXIC_DEBRIS      |CORROSION         |[83, 55, 90, 130, 81, 86]     |99.2  |25 |
+|Abra         |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[25, 20, 15, 105, 55, 90]     |43.0  |200|
+|Kadabra      |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[40, 35, 30, 120, 70, 105]    |124.6 |100|
+|Alakazam     |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[55, 50, 45, 135, 95, 120]    |105.8 |50 |
+|Flamigo      |FLYING  |FIGHTING|SCRAPPY           |SCRAPPY           |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
