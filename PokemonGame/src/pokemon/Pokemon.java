@@ -53,7 +53,7 @@ public class Pokemon implements Serializable {
 	
 	public static Field field;
 	public static GamePanel gp;
-	public static final int MAX_POKEMON = 242;
+	public static final int MAX_POKEMON = 246;
 	
 	// Database
 	private static String[] names = new String[MAX_POKEMON];
@@ -1863,6 +1863,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (moveType == PType.STEEL && this.ability == Ability.STEELWORKER) bp *= 1.5;
+			if (moveType == PType.MAGIC && this.ability == Ability.MAGICAL) bp *= 1.5;
 			
 			// Charged
 			if (moveType == PType.ELECTRIC && this.vStatuses.contains(Status.CHARGED)) {
@@ -8603,7 +8604,7 @@ public class Pokemon implements Serializable {
             movebank[51] = new Node(Move.HEAD_SMASH);
             movebank[54] = new Node(Move.CLOSE_COMBAT);
             break;
-     case 239:
+		case 239:
             movebank = new Node[61];
             movebank[0] = new Node(Move.LEER);
             movebank[0].next = new Node(Move.LOW_KICK);
@@ -8623,7 +8624,7 @@ public class Pokemon implements Serializable {
             movebank[54] = new Node(Move.CLOSE_COMBAT);
             movebank[60] = new Node(Move.HEAD_SMASH);
             break;
-     case 240:
+		case 240:
             movebank = new Node[75];
             movebank[0] = new Node(Move.LEER);
             movebank[0].next = new Node(Move.LOW_KICK);
@@ -8647,45 +8648,94 @@ public class Pokemon implements Serializable {
             movebank[64].next = new Node(Move.ABYSSAL_CHOP);
             movebank[74] = new Node(Move.DRAGON_DANCE);
             break;
-     case 241:
-         movebank = new Node[45];
-         movebank[0] = new Node(Move.ROCK_THROW);
-         movebank[0].addToEnd(new Node(Move.HARDEN));
-         movebank[0].addToEnd(new Node(Move.SMACK_DOWN));
-         movebank[4] = new Node(Move.ACID_SPRAY);
-         movebank[9] = new Node(Move.ANCIENT_POWER);
-         movebank[14] = new Node(Move.ROCK_POLISH);
-         movebank[17] = new Node(Move.STEALTH_ROCK);
-         movebank[21] = new Node(Move.VENOSHOCK);
-         movebank[24] = new Node(Move.SANDSTORM);
-         movebank[27] = new Node(Move.SELF$DESTRUCT);
-         movebank[30] = new Node(Move.SPIKES);
-         movebank[34] = new Node(Move.SLUDGE);
-         movebank[38] = new Node(Move.POWER_GEM);
-         movebank[41] = new Node(Move.ACID_ARMOR);
-         movebank[44] = new Node(Move.SLUDGE_WAVE);
-         break;
-     case 242:
-    	 movebank = new Node[50];
-         movebank[0] = new Node(Move.SPIKY_SHIELD);
-         movebank[0].addToEnd(new Node(Move.TOXIC_SPIKES));
-         movebank[0].addToEnd(new Node(Move.ROCK_THROW));
-         movebank[0].addToEnd(new Node(Move.HARDEN));
-         movebank[0].addToEnd(new Node(Move.SMACK_DOWN));
-         movebank[4] = new Node(Move.ACID_SPRAY);
-         movebank[9] = new Node(Move.ANCIENT_POWER);
-         movebank[14] = new Node(Move.ROCK_POLISH);
-         movebank[17] = new Node(Move.STEALTH_ROCK);
-         movebank[21] = new Node(Move.VENOSHOCK);
-         movebank[24] = new Node(Move.SANDSTORM);
-         movebank[27] = new Node(Move.SELF$DESTRUCT);
-         movebank[30] = new Node(Move.SPIKES);
-         movebank[34] = new Node(Move.SLUDGE);
-         movebank[34].next = new Node(Move.MORTAL_SPIN);
-         movebank[38] = new Node(Move.POWER_GEM);
-         movebank[41] = new Node(Move.ACID_ARMOR);
-         movebank[44] = new Node(Move.TOXIC);
-         movebank[49] = new Node(Move.SLUDGE_WAVE);
+	     case 241:
+	         movebank = new Node[45];
+	         movebank[0] = new Node(Move.ROCK_THROW);
+	         movebank[0].addToEnd(new Node(Move.HARDEN));
+	         movebank[0].addToEnd(new Node(Move.SMACK_DOWN));
+	         movebank[4] = new Node(Move.ACID_SPRAY);
+	         movebank[9] = new Node(Move.ANCIENT_POWER);
+	         movebank[14] = new Node(Move.ROCK_POLISH);
+	         movebank[17] = new Node(Move.STEALTH_ROCK);
+	         movebank[21] = new Node(Move.VENOSHOCK);
+	         movebank[24] = new Node(Move.SANDSTORM);
+	         movebank[27] = new Node(Move.SELF$DESTRUCT);
+	         movebank[30] = new Node(Move.SPIKES);
+	         movebank[34] = new Node(Move.SLUDGE);
+	         movebank[38] = new Node(Move.POWER_GEM);
+	         movebank[41] = new Node(Move.ACID_ARMOR);
+	         movebank[44] = new Node(Move.SLUDGE_WAVE);
+	         break;
+	     case 242:
+	    	 movebank = new Node[50];
+	         movebank[0] = new Node(Move.SPIKY_SHIELD);
+	         movebank[0].addToEnd(new Node(Move.TOXIC_SPIKES));
+	         movebank[0].addToEnd(new Node(Move.ROCK_THROW));
+	         movebank[0].addToEnd(new Node(Move.HARDEN));
+	         movebank[0].addToEnd(new Node(Move.SMACK_DOWN));
+	         movebank[4] = new Node(Move.ACID_SPRAY);
+	         movebank[9] = new Node(Move.ANCIENT_POWER);
+	         movebank[14] = new Node(Move.ROCK_POLISH);
+	         movebank[17] = new Node(Move.STEALTH_ROCK);
+	         movebank[21] = new Node(Move.VENOSHOCK);
+	         movebank[24] = new Node(Move.SANDSTORM);
+	         movebank[27] = new Node(Move.SELF$DESTRUCT);
+	         movebank[30] = new Node(Move.SPIKES);
+	         movebank[34] = new Node(Move.SLUDGE);
+	         movebank[34].next = new Node(Move.MORTAL_SPIN);
+	         movebank[38] = new Node(Move.POWER_GEM);
+	         movebank[41] = new Node(Move.ACID_ARMOR);
+	         movebank[44] = new Node(Move.TOXIC);
+	         movebank[49] = new Node(Move.SLUDGE_WAVE);
+	         break;
+	     case 243:
+				movebank = new Node[25];
+				movebank[0] = new Node(Move.ABSORB);
+				movebank[0].next = new Node(Move.SUPERSONIC);
+				movebank[4] = new Node(Move.ASTONISH);
+				movebank[9] = new Node(Move.MEAN_LOOK);
+				movebank[14] = new Node(Move.POISON_FANG);
+				movebank[19] = new Node(Move.BITE);
+				movebank[24] = new Node(Move.WING_ATTACK);
+				break;
+	     case 244:
+				movebank = new Node[25];
+				movebank[0] = new Node(Move.ABSORB);
+				movebank[0].next = new Node(Move.SUPERSONIC);
+				movebank[4] = new Node(Move.ASTONISH);
+				movebank[9] = new Node(Move.MEAN_LOOK);
+				movebank[14] = new Node(Move.POISON_FANG);
+				movebank[19] = new Node(Move.BITE);
+				movebank[24] = new Node(Move.WING_ATTACK);
+				break;
+	     case 245:
+				movebank = new Node[25];
+				movebank[0] = new Node(Move.ABSORB);
+				movebank[0].next = new Node(Move.SUPERSONIC);
+				movebank[4] = new Node(Move.ASTONISH);
+				movebank[9] = new Node(Move.MEAN_LOOK);
+				movebank[14] = new Node(Move.POISON_FANG);
+				movebank[19] = new Node(Move.BITE);
+				movebank[24] = new Node(Move.WING_ATTACK);
+				break;
+	     case 246:
+	         movebank = new Node[54];
+	         movebank[0] = new Node(Move.PECK);
+	         //movebank[0].addToEnd(new Node(Move.COPYCAT));
+	         movebank[4] = new Node(Move.DOUBLE_KICK);
+	         movebank[8] = new Node(Move.DETECT);
+	         movebank[11] = new Node(Move.WING_ATTACK);
+	         movebank[14] = new Node(Move.FOCUS_ENERGY);
+	         movebank[17] = new Node(Move.LOW_KICK);
+	         movebank[20] = new Node(Move.FEINT);
+	         movebank[26] = new Node(Move.PAYBACK);
+	         movebank[30] = new Node(Move.HI_JUMP_KICK);
+	         movebank[34] = new Node(Move.AIR_SLASH);
+	         movebank[38] = new Node(Move.ROOST);
+	         movebank[43] = new Node(Move.CLOSE_COMBAT);
+	         movebank[47] = new Node(Move.THROAT_CHOP);
+	         movebank[53] = new Node(Move.BRAVE_BIRD);
+	         break;
 		}
 	}
 	
@@ -9195,6 +9245,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (moveType == PType.STEEL && this.ability == Ability.STEELWORKER) bp *= 1.5;
+		if (moveType == PType.MAGIC && this.ability == Ability.MAGICAL) bp *= 1.5;
 		
 		// Charged
 		if (moveType == PType.ELECTRIC && this.vStatuses.contains(Status.CHARGED)) bp *= 2;
