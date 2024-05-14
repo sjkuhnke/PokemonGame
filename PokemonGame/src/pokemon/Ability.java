@@ -4,6 +4,7 @@ public enum Ability {
 
 	ADAPTABILITY("Powers up moves of the same type."),
 	AMBUSH("Gives priority to the first move when this Pokemon enters battle."),
+	ANALYTIC("Boosts move power when the Pokemon moves last."),
 	ANGER_POINT("Maxes Attack after taking a critical hit."),
 	ANTICIPATION("Senses an opposing Pokemon's dangerous moves."),
 	INSOMNIA("Prevents the Pokemon from falling asleep."),
@@ -65,6 +66,7 @@ public enum Ability {
 	NORMALIZE("All the Pokemon's moves become Normal type. The power of those moves is boosted."),
 	OVERGROW("Powers up GRASS moves in a pinch."),
 	PARASOCIAL("The Pokemon borrows life force from anyone under its control."),
+	PICKPOCKET("Steals an item from the foe on switch-in if this Pokemon is not holding an item."),
 	PIXILATE("NORMAL moves become LIGHT moves. The power of those moves is boosted a little."),
 	POISON_HEAL("Restores HP if the Pokemon is poisoned instead of losing HP."),
 	POISON_POINT("Contact with the Pokemon may poison the attacker."),

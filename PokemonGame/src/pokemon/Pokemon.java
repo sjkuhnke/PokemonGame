@@ -53,7 +53,7 @@ public class Pokemon implements Serializable {
 	
 	public static Field field;
 	public static GamePanel gp;
-	public static final int MAX_POKEMON = 246;
+	public static final int MAX_POKEMON = 267;
 	
 	// Database
 	private static String[] names = new String[MAX_POKEMON];
@@ -8732,7 +8732,7 @@ public class Pokemon implements Serializable {
 			movebank[14] = new Node(Move.POISON_FANG);
 			movebank[19] = new Node(Move.BITE);
 			movebank[24] = new Node(Move.WING_ATTACK);
-				break;
+			break;
 	     case 244:
 			movebank = new Node[25];
 			movebank[0] = new Node(Move.ABSORB);
@@ -8742,7 +8742,7 @@ public class Pokemon implements Serializable {
 			movebank[14] = new Node(Move.POISON_FANG);
 			movebank[19] = new Node(Move.BITE);
 			movebank[24] = new Node(Move.WING_ATTACK);
-				break;
+			break;
 	     case 245:
 	    	 movebank = new Node[55];
              movebank[0] = new Node(Move.CONFUSION);
@@ -8780,6 +8780,227 @@ public class Pokemon implements Serializable {
 	         movebank[47] = new Node(Move.THROAT_CHOP);
 	         movebank[53] = new Node(Move.BRAVE_BIRD);
 	         break;
+	     case 247:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 248:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 249:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 250:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 251:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 252:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 253:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 254:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 255:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 256:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 257:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 258:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 259:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 260:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 261:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 262:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 263:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 264:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 265:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 266:
+			movebank = new Node[25];
+			movebank[0] = new Node(Move.ABSORB);
+			movebank[0].next = new Node(Move.SUPERSONIC);
+			movebank[4] = new Node(Move.ASTONISH);
+			movebank[9] = new Node(Move.MEAN_LOOK);
+			movebank[14] = new Node(Move.POISON_FANG);
+			movebank[19] = new Node(Move.BITE);
+			movebank[24] = new Node(Move.WING_ATTACK);
+			break;
+	     case 267:
+             movebank = new Node[65];
+             movebank[0] = new Node(Move.CONFUSION);
+             movebank[0].addToEnd(new Node(Move.LEER));
+             movebank[4] = new Node(Move.PSYWAVE);
+             movebank[8] = new Node(Move.COSMIC_POWER);
+             movebank[12] = new Node(Move.COMET_PUNCH);
+             movebank[16] = new Node(Move.CONFUSE_RAY);
+             movebank[19] = new Node(Move.HYPNOSIS);
+             movebank[22] = new Node(Move.TRICK_ROOM);
+             movebank[25] = new Node(Move.SPACE_BEAM);
+             movebank[29] = new Node(Move.ABDUCT);
+             movebank[33] = new Node(Move.RECOVER);
+             movebank[36] = new Node(Move.GALAXY_BLAST);
+             movebank[39] = new Node(Move.RADIO_BURST);
+             movebank[43] = new Node(Move.STAR_STORM);
+             movebank[47] = new Node(Move.CALM_MIND);
+             movebank[51] = new Node(Move.DARK_VOID);   
+             movebank[56] = new Node(Move.CORE_ENFORCER);
+             movebank[64] = new Node(Move.BLACK_HOLE_ECLIPSE);                  
+             break;
 		}
 	}
 	
@@ -9401,6 +9622,7 @@ public class Pokemon implements Serializable {
 		if (mode == 0 && this.item == Item.THROAT_SPRAY && Move.getSound().contains(move)) damage *= 1.5;
 		
 		if (this.item == Item.LIFE_ORB) damage *= 1.3;
+		if (this.ability == Ability.ANALYTIC && !first) damage *= 1.3;
 		if (move == Move.NIGHT_SHADE || move == Move.SEISMIC_TOSS || move == Move.PSYWAVE) damage = this.level;
 		if (move == Move.ENDEAVOR) {
 			if (foe.currentHP > this.currentHP) {
@@ -10697,6 +10919,15 @@ public class Pokemon implements Serializable {
 				addTask(Task.TEXT, foe.nickname + "'s Defense was not lowered!");
 			} else {
 				stat(foe, 1, -1, this);
+			}
+		} else if (this.ability == Ability.PICKPOCKET) {
+			if (this.item == null && foe.item != null) {
+				addAbilityTask(foe);
+				addTask(Task.TEXT, this.nickname + " stole the foe's " + foe.item.toString() + "!");
+				this.item = foe.item;
+				if (!foe.loseItem) foe.lostItem = foe.item;
+				foe.item = null;
+				this.loseItem = true;
 			}
 		} else if (this.ability == Ability.MOUTHWATER) {
 			if (!foe.vStatuses.contains(Status.TAUNTED)) {
