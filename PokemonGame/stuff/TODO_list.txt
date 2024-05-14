@@ -26,3 +26,7 @@ Make Baton Pass pass perish counter and electromag counter since they're not vSt
 Ideas
 Make Dark resist Magic and Fighting no longer resist magic? (Would also make Galactic resist Dark again)
 Make Bipedice Ice/Ground (not Ground/Ice) and redo moveset
+
+Make Galactic resist Dark
+Make Galactic weak to Dragon
+Make Magic weak to Dark

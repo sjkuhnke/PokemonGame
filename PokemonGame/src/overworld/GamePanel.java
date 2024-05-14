@@ -246,6 +246,7 @@ public class GamePanel extends JPanel implements Runnable {
 		battleUI.foe = foe;
 		battleUI.index = trainer;
 		battleUI.staticID = id;
+		battleUI.partyNum = 0;
 		
 		if (foe.trainer != null) {
 			foe.trainer.setSprites();

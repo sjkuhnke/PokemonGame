@@ -274,6 +274,7 @@ public class BattleUI extends AbstractUI {
 				return;
 			}
 			currentDialogue = currentTask.message;
+			if (currentTask.wipe) currentTask.evo.spriteVisible = true;
 			if (currentTask.p.playerOwned()) {
 				if (userHP > currentTask.finish) userHP--;
 				if (userHP < currentTask.finish) userHP++;
@@ -311,6 +312,7 @@ public class BattleUI extends AbstractUI {
 			}
 			if (counter >= 100) {
 				counter = 0;
+				moveNum = 0;
 				tempUser = null;
 				currentTask = null;
 			}
@@ -438,6 +440,10 @@ public class BattleUI extends AbstractUI {
 			foe.setSprites();
 			currentTask = null;
 			break;
+		case Task.SEMI_INV:
+			showMessage(Item.breakString(currentTask.message, 55));
+			currentTask.p.spriteVisible = currentTask.wipe;
+			break;
 		}
 	}
 	
@@ -459,7 +465,7 @@ public class BattleUI extends AbstractUI {
 		drawHPImage(user);
 		drawHPBar(user, userHP, maxUserHP);
 		drawNameLabel(user);
-		drawUserSprite();
+		if (user.spriteVisible) drawUserSprite();
 		drawUserHP();
 		drawStatus(user);
 		drawTypes(user);
@@ -471,7 +477,7 @@ public class BattleUI extends AbstractUI {
 		drawHPImage(foe);
 		drawHPBar(foe, foeHP, foe.getStat(0));
 		drawNameLabel(foe);
-		drawFoeSprite();
+		if (foe.spriteVisible) drawFoeSprite();
 		drawStatus(foe);
 		drawTypes(foe);
 		drawCaughtIndicator();
@@ -625,6 +631,7 @@ public class BattleUI extends AbstractUI {
 				if (arriving) g2.drawImage(ballType.getImage2(), 570, 188, null);
 			} else {
 				foe.setVisible(true);
+				foe.spriteVisible = true;
 			}
 		} else {
 			currentTask.p.setVisible(false);
@@ -643,6 +650,7 @@ public class BattleUI extends AbstractUI {
 				g2.drawImage(Item.POKEBALL.getImage2(), 133, 348, null);
 			} else {
 				user.setVisible(true);
+				user.spriteVisible = true;
 			}
 		} else {
 			currentTask.p.setVisible(false);
@@ -983,8 +991,8 @@ public class BattleUI extends AbstractUI {
 		if (uMove != null && user.ability == Ability.PRANKSTER && uMove.cat == 2) ++uP;
 		if (fMove != null && foe.ability == Ability.PRANKSTER && fMove.cat == 2) ++fP;
 		
-		if (uMove != null && user.ability == Ability.AMBUSH && user.impressive) ++uP;
-		if (fMove != null && foe.ability == Ability.AMBUSH && foe.impressive) ++fP;
+		if (uMove != null && uMove.priority < 1 && uMove.hasPriority(user)) ++uP;
+		if (fMove != null && fMove.priority < 1 && fMove.hasPriority(foe)) ++fP;
 		
 		if (uMove != null) uP = user.checkQuickClaw(uP);
 		if (fMove != null) fP = foe.checkQuickClaw(fP);

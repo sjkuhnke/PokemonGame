@@ -1501,6 +1501,10 @@ public enum Item {
 		return (getID() >= 221 && getID() <= 259);
 	}
 	
+	public boolean isStatusBerry() {
+		return (getID() >= 221 && getID() <= 227);
+	}
+	
 	public boolean isPinchBerry() {
 		return (getID() == 231 || (getID() >= 252 && getID() <= 259));
 	}

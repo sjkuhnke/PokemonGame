@@ -12,7 +12,7 @@ public enum Ability {
 	BRAINWASH("Forces the opponent's stat changes to have an opposite effect while the user is active."),
 	CHLOROPHYLL("Boosts the Pokemon's Speed stat in SUNSHINE."),
 	CLEAR_BODY("Prevents other Pokemon from lowering its stats."),
-	CLOUD_NINE("Nullifies the weather on switch-in."), // TODO
+	CLOUD_NINE("Nullifies the weather on switch-in."),
 	COMPETITIVE("Boosts the Pokemon's Special Attack stat when its stats are lowered."),
 	COMPOUND_EYES("The Pokemon's accuracy is boosted."),
 	CONTRARY("Makes stat changes have an opposite effect."),
@@ -57,13 +57,14 @@ public enum Ability {
 	MIRROR_ARMOR("Bounces back only the stat-lowering effects that the Pokemon receives."),
 	MOLD_BREAKER("Moves can be used on the target regardless of its Abilities."),
 	MOTOR_DRIVE("Raises Speed if hit by an ELECTRIC move."),
-	MOUTHWATER("Prevents the foe from using any non-damaging moves."),
+	MOUTHWATER("Taunts the foe on switch-in for 4 turns."),
 	MOXIE("Boosts the Attack stat after knocking out any Pokemon."),
 	MULTISCALE("Reduces damage the Pokemon takes when its HP is full."),
 	NATURAL_CURE("All status conditions heal when the Pokemon switches out."),
 	NO_GUARD("Ensures the Pokemon and its foe's attacks land."),
 	NORMALIZE("All the Pokemon's moves become Normal type. The power of those moves is boosted."),
 	OVERGROW("Powers up GRASS moves in a pinch."),
+	PARASOCIAL("The Pokemon borrows life force from anyone under its control."),
 	PIXILATE("NORMAL moves become LIGHT moves. The power of those moves is boosted a little."),
 	POISON_HEAL("Restores HP if the Pokemon is poisoned instead of losing HP."),
 	POISON_POINT("Contact with the Pokemon may poison the attacker."),
@@ -94,6 +95,7 @@ public enum Ability {
 	SHELL_ARMOR("This Pokemon cannot be Critical hit."),
 	SHIELD_DUST("Blocks the added effects of attacks taken."),
 	SIMPLE("The stat changes the Pokemon receives are doubled."),
+	SLIGHT_OF_HAND("Gives priority to MAGIC moves when at full HP."),
 	SLUSH_RUSH("Boosts the Pokemon's Speed stat in SNOW."),
 	SNIPER("Powers up moves if they become critical hits."),
 	SNOW_CLOAK("When SNOW is active, this Pokemon is evasive."),
@@ -110,7 +112,7 @@ public enum Ability {
 	SWARM("Powers up BUG moves in a pinch."),
 	SWIFT_SWIM("Boosts the Pokemon's Speed stat in RAIN."),
 	SYNCHRONIZE("Passes a burn, poison, or paralysis to the foe."),
-	TALENTED(""),
+	TALENTED("When the Pokemon enters a battle, it copies the foe's stat changes."),
 	TECHNICIAN("Powers up the Pokemon's weaker moves."),
 	TERRIFY("Lowers the opposing Pokemon's Sp. Atk stat."),
 	THICK_FAT("Boosts resistance to FIRE and ICE moves."),
@@ -129,9 +131,9 @@ public enum Ability {
 	VOLT_VORTEX("Boosts the Pokemon's speed in ELECTRIC TERRAIN."),
 	WATER_ABSORB("Restores HP if hit by a WATER move."),
 	WATER_VEIL("Prevents the Pokemon from getting a burn."),
-	WEAK_ARMOR(""), // TODO
+	WEAK_ARMOR("Physical attacks to the Pokemon lower its Defense stat but sharply raise its Speed stat."),
 	WONDER_GUARD("Only supereffective moves will hit."),
-	WONDER_SKIN(""), // TODO
+	WONDER_SKIN("Makes status moves more likely to miss."),
 	NULL("No Ability.");
 
 	Ability(String string) {
