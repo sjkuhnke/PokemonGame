@@ -92,6 +92,7 @@ public enum Move {
 	CURSE(0,1000,0,0,2,0,PType.GHOST,"User loses half of its total HP. In exchance, foe takes 1/4 of its max HP at the end of every turn",false,10),
 	CUT(55,95,0,3,0,0,PType.NORMAL,"This move always Crits",true,20),
 	DARK_PULSE(80,100,30,0,1,0,PType.DARK,"% chance of causing foe to flinch",false,15),
+	DARK_VOID(0,80,0,0,2,0,PType.GALACTIC,"Causes foe to sleep",false,10),
 	DARKEST_LARIAT(85,100,0,0,0,0,PType.DARK,"Ignores Defense and Evasion changes of foe",true,10),
 	DAZZLING_GLEAM(80,100,0,0,1,0,PType.LIGHT,"A normal attack",false,10),
 	DEEP_SEA_BUBBLE(100,100,0,0,1,0,PType.WATER,"A normal attack. Turns into Draco Meteor when used by Kissyfishy-D",false,5),
@@ -223,6 +224,7 @@ public enum Move {
 	HEX(-1,100,0,0,1,0,PType.GHOST,"Damage is doubled if the foe has a status condition",false,10),
 	HI_JUMP_KICK(130,90,0,0,0,0,PType.FIGHTING,"If this attack misses, user takes 50% of its max HP",true,10),
 	HIDDEN_POWER(60,100,0,0,1,0,PType.NORMAL,"The type of this move depends on the user's IVs",false,15),
+	HOCUS_POCUS(70,95,20,0,1,0,PType.MAGIC,"% to inflict foe with a random Status condition.",false,10),
 	HONE_CLAWS(0,1000,0,0,2,0,PType.DARK,"Raises user's Attack and Accuracy by 1",false,15),
 	HORN_ATTACK(65,100,0,0,0,0,PType.NORMAL,"A normal attack",true,25),
 	HORN_DRILL(0,30,0,0,0,0,PType.NORMAL,"If this move hits, it always K.Os foe",true,5),
@@ -307,7 +309,7 @@ public enum Move {
 	MOONBLAST(95,100,30,0,1,0,PType.LIGHT,"% chance to lower foe's Sp.Atk",false,5),
 	MOONLIGHT(0,1000,0,0,2,0,PType.LIGHT,"Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather",false,5),
 	MORNING_SUN(0,1000,0,0,2,0,PType.LIGHT,"Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather",false,5),
-	MORTAL_SPIN(30,100,100,0,0,0,PType.POISON,"% to poison foe, and frees user of being Spun, Leech Seed, and Hazards",true,15), // TODO
+	MORTAL_SPIN(30,100,100,0,0,0,PType.POISON,"% to poison foe, and frees user of being Spun, Leech Seed, and Hazards",true,15),
 	MUD_BOMB(65,85,30,0,1,0,PType.GROUND,"% to lower foe's Accuracy by 1",false,10),
 	MUD_SHOT(55,95,100,0,1,0,PType.GROUND,"% chance to lower foe's Speed by 1",false,15),
 	MUD_SPORT(0,1000,0,0,2,0,PType.GROUND,"Makes ELECTRIC moves deal 1/3 damage for 8 turns",false,15),
@@ -334,7 +336,7 @@ public enum Move {
 	PERISH_SONG(0,1000,0,0,2,0,PType.GHOST,"All Pokemon hearing this song will faint in 3 turns",false,5),
 	PETAL_BLIZZARD(90,100,0,0,0,0,PType.GRASS,"A normal attack",false,15),
 	PETAL_DANCE(120,100,0,0,1,0,PType.GRASS,"User is locked into this move for 2-3 turns, Confuses user when the effect is done",true,10),
-	PHANTOM_FORCE(100,100,0,0,0,0,PType.GHOST,"A two turn attack. User vanishes on the first, and attacks on the second",true,10),
+	PHANTOM_FORCE(100,100,0,0,0,0,PType.GHOST,"A two turn attack. User vanishes on the first, and attacks on the second. Hits through protect.",true,10),
 	PHOTON_GEYSER(130,90,100,0,1,0,PType.LIGHT,"% to lower user's Sp.Atk by 2",false,5),
 	PIN_MISSILE(25,95,0,0,0,0,PType.BUG,"Hits 2-5 times",false,15),
 	PISTOL_POP(110,70,0,0,0,0,PType.STEEL,"A normal attack",false,5),
@@ -364,6 +366,7 @@ public enum Move {
 	PSYWAVE(0,100,0,0,1,0,PType.PSYCHIC,"Deals damage equal to user's level",false,15),
 	QUICK_ATTACK(40,100,0,0,0,1,PType.NORMAL,"Always attacks first",true,15),
 	QUIVER_DANCE(0,1000,0,0,2,0,PType.BUG,"Raises user's Sp.Atk, Sp.Def and Speed by 1 stage",false,10),
+	RADIO_BURST(40,100,0,0,1,1,PType.GALACTIC,"Always goes first",false,25),
 	RAGE(-1,100,0,0,0,0,PType.NORMAL,"Power increases the more times this move is used in succession",true,20),
 	RAIN_DANCE(0,1000,0,0,2,0,PType.WATER,"Changes the weather to RAIN for 5 turns",false,5),
 	RAPID_SPIN(50,100,100,0,0,0,PType.NORMAL,"% to raise user's Speed by 1, and frees user of being Spun, Leech Seed, and Hazards",true,35),
@@ -521,6 +524,7 @@ public enum Move {
 	UNSEEN_STRANGLE(60,100,100,0,0,3,PType.DARK,"% to cause foe to flinch, only works on user's first turn out",true,5),
 	V$CREATE(180,95,100,0,0,0,PType.FIRE,"% chance to lower user's Defense, Sp.Def, and Speed by 1",true,5),
 	VACUUM_WAVE(40,100,0,0,1,1,PType.FIGHTING,"Always goes first",false,30),
+	VANISHING_ACT(100,100,30,0,1,0,PType.MAGIC,"% to confuse foe, a two turn attack. User vanishes on the first, and attacks on the second. Hits through protect.",false,10),
 	VENOM_DRENCH(0,100,0,0,2,0,PType.POISON,"Lowers a Poisoned/Badly Poisoned foe's Attack and Sp.Atk by 2",false,20),
 	VENOM_SPIT(40,100,100,0,0,1,PType.POISON,"% to Paralyze foe; always goes first",false,5),
 	VENOSHOCK(-1,100,0,0,1,0,PType.POISON,"Damage is doubled if foe is Poisoned or Badly Poisoned",false,10),
@@ -918,4 +922,9 @@ public enum Move {
 		return result;
 	}
 
+	public boolean hasPriority(Pokemon p) {
+		return this.priority >= 1 || (this.cat == 2 && p.ability == Ability.PRANKSTER) ||
+				((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT) && p.ability == Ability.SLIGHT_OF_HAND && p.currentHP == p.getStat(0)) ||
+				(p.impressive && p.ability == Ability.AMBUSH);
+	}
 }

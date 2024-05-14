@@ -23,8 +23,8 @@
 |Centatle     |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[55, 68, 70, 41, 61, 80]      |2.0   |200|
 |Curlatoral   |BUG     |null    |POISON_HEAL       |COMPOUND_EYES     |THREATENING       |[80, 70, 80, 55, 120, 100]    |50.7  |125|
 |Millistone   |BUG     |ROCK    |ROUGH_SKIN        |COMPOUND_EYES     |THREATENING       |[80, 120, 120, 35, 80, 70]    |90.5  |125|
-|Sapwin       |GRASS   |null    |ANGER_POINT       |CHLOROPHYLL       |SAP_SIPPER        |[65, 105, 100, 50, 30, 55]    |100.5 |75 |
-|Treewin      |GRASS   |FIGHTING|ANGER_POINT       |CHLOROPHYLL       |SAP_SIPPER        |[110, 125, 110, 55, 35, 55]   |399.9 |50 |
+|Sapwin       |GRASS   |null    |ANGER_POINT       |CHLOROPHYLL       |SAP_SIPPER        |[65, 90, 85, 50, 30, 55]    |100.5 |75 |
+|Treewin      |GRASS   |FIGHTING|ANGER_POINT       |CHLOROPHYLL       |SAP_SIPPER        |[100, 120, 110, 55, 35, 55]   |399.9 |50 |
 |Winagrow     |GRASS   |DRAGON  |COMPETITIVE       |CHLOROPHYLL       |TERRIFY           |[120, 75, 80, 115, 80, 90]    |412.5 |30 |
 |Budew        |GRASS   |POISON  |POISON_POINT      |NATURAL_CURE      |CORROSION         |[40, 30, 35, 50, 70, 55]      |2.6   |255|
 |Roselia      |GRASS   |POISON  |POISON_POINT      |NATURAL_CURE      |CORROSION         |[50, 60, 45, 100, 80, 65]     |4.4   |150|
@@ -72,9 +72,9 @@
 |Bouncerog    |WATER   |LIGHT   |TORRENT           |SLUSH_RUSH        |SWIFT_SWIM        |[63, 56, 69, 120, 90, 112]    |25.9  |45 |
 |Bugop        |BUG     |DARK    |TECHNICIAN        |INSOMNIA          |TERRIFY           |[52, 59, 51, 33, 46, 58]      |7.5   |135|
 |Opwing       |BUG     |DARK    |TECHNICIAN        |INSOMNIA          |TERRIFY           |[88, 102, 67, 61, 88, 101]    |18.5  |50 |
-|Hatenna      |PSYCHIC |MAGIC   |ANTICIPATION      |NATURAL_CURE      |UNWAVERING        |[42, 30, 45, 56, 53, 39]      |7.5   |235|
-|Hattrem      |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |NATURAL_CURE      |UNWAVERING        |[57, 40, 65, 86, 73, 49]      |10.6  |120|
-|Hatterene    |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |NATURAL_CURE      |UNWAVERING        |[82, 65, 95, 136, 103, 29]    |11.2  |45 |
+|Hatenna      |PSYCHIC |MAGIC   |ANTICIPATION      |SLIGHT_OF_HAND    |UNWAVERING        |[42, 30, 45, 56, 53, 39]      |7.5   |235|
+|Hattrem      |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |SLIGHT_OF_HAND    |UNWAVERING        |[57, 40, 65, 86, 73, 49]      |10.6  |120|
+|Hatterene    |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |SLIGHT_OF_HAND    |UNWAVERING        |[82, 65, 95, 136, 103, 29]    |11.2  |45 |
 |Otterpor     |WATER   |PSYCHIC |WATER_VEIL        |ANTICIPATION      |HYDRATION         |[55, 19, 66, 74, 99, 20]      |16.6  |75 |
 |Psylotter    |WATER   |PSYCHIC |WATER_VEIL        |SWIFT_SWIM        |HYDRATION         |[71, 48, 87, 102, 106, 86]    |41.0  |45 |
 |Florline     |GRASS   |PSYCHIC |GRASSY_SURGE      |PSYCHIC_SURGE     |UNBURDEN          |[43, 43, 43, 88, 80, 43]      |13.1  |75 |
@@ -103,8 +103,8 @@
 |Lafloo       |FIRE    |ROCK    |SOLID_ROCK        |SOLID_ROCK        |MAGMA_ARMOR       |[90, 80, 95, 120, 95, 45]     |450.9 |50 |
 |Houndour     |FIRE    |DARK    |SOLAR_POWER       |FLASH_FIRE        |INTIMIDATE        |[45, 60, 30, 80, 50, 65]      |23.8  |120|
 |Houndoom     |FIRE    |DARK    |SOLAR_POWER       |FLASH_FIRE        |INTIMIDATE        |[75, 90, 50, 110, 80, 95]     |77.2  |45 |
-|Sparkdust    |MAGIC   |null    |SHIELD_DUST       |MAGIC_GUARD       |MAGIC_BOUNCE      |[40, 45, 40, 75, 65, 70]      |3.5   |50 |
-|Splame       |MAGIC   |FIRE    |SHIELD_DUST       |MAGIC_GUARD       |MAGIC_BOUNCE      |[85, 45, 65, 145, 110, 55]    |5.5   |25 |
+|Sparkdust    |MAGIC   |null    |MAGIC_GUARD       |SHIELD_DUST       |MAGIC_BOUNCE      |[40, 45, 40, 75, 65, 70]      |3.5   |50 |
+|Splame       |MAGIC   |FIRE    |SLIGHT_OF_HAND    |SHIELD_DUST       |MAGIC_BOUNCE      |[85, 45, 65, 145, 110, 55]    |5.5   |25 |
 |Sparkitten   |FIRE    |LIGHT   |ANTICIPATION      |ANTICIPATION      |NULL              |[60, 70, 65, 70, 65, 70]      |16.0  |110|
 |Fireblion    |FIRE    |null    |DROUGHT           |DROUGHT           |NULL              |[85, 105, 99, 40, 92, 89]     |295.5 |35 |
 |Flamebless   |FIRE    |LIGHT   |COMPETITIVE       |COMPETITIVE       |NULL              |[70, 40, 55, 120, 115, 110]   |125.0 |35 |
@@ -243,4 +243,4 @@
 |Abra         |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[25, 20, 15, 105, 55, 90]     |43.0  |200|
 |Kadabra      |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[40, 35, 30, 120, 70, 105]    |124.6 |100|
 |Alakazam     |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[55, 50, 45, 135, 95, 120]    |105.8 |50 |
-|Flamigo      |FLYING  |FIGHTING|SCRAPPY           |SCRAPPY           |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Flamigo      |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|

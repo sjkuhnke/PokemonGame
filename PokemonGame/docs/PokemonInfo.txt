@@ -586,16 +586,17 @@ Level Up:
 19 - Low Kick
 20 - Baby-Doll Eyes
 20 - Covet
+20 - Magic Blast
 23 - Encore
 25 - Hypnosis
+25 - Swift
 28 - Knock Off
-30 - Swift
-32 - Fire Punch
-32 - Thunder Punch
-32 - Ice Punch
-34 - Sparkle Strike
-36 - Take Down
-38 - Hi Jump Kick
+31 - Sparkle Strike
+34 - Fire Punch
+34 - Thunder Punch
+34 - Ice Punch
+36 - Hocus Pocus
+38 - Take Down
 40 - Psychic
 40 - Trick
 
@@ -625,24 +626,27 @@ Level Up:
 19 - Low Kick
 20 - Baby-Doll Eyes
 20 - Covet
+20 - Magic Blast
 23 - Encore
 25 - Hypnosis
+25 - Swift
 28 - Knock Off
-30 - Swift
-32 - Fire Punch
-32 - Thunder Punch
-32 - Ice Punch
-34 - Sparkle Strike
-36 - Take Down
-38 - Hi Jump Kick
+31 - Sparkle Strike
+34 - Fire Punch
+34 - Thunder Punch
+34 - Ice Punch
+36 - Hocus Pocus
+38 - Take Down
 40 - Psychic
 40 - Trick
 40 - Desolate Void
-44 - Galaxy Blast
-47 - Cosmic Power
-50 - Memento
-55 - Abduct
-59 - Blizzard
+43 - Blizzard
+46 - Galaxy Blast
+49 - Cosmic Power
+52 - Tri-Attack
+55 - Memento
+58 - Abduct
+61 - Radio Burst
 64 - Genesis Supernova
 70 - Hyper Beam
 
@@ -653,7 +657,7 @@ Type:
 Bug / None
 
 Ability:
-Swarm / Compound Eyes / (None)
+Swarm / Compound Eyes / (Shield Dust)
 
 Base Stats:
 33 HP / 44 Atk / 33 Def / 23 SpA / 29 SpD / 38 Spe / 200 BST
@@ -673,7 +677,7 @@ Type:
 Bug / None
 
 Ability:
-Swarm / Compound Eyes / (None)
+Swarm / Compound Eyes / (Shield Dust)
 
 Base Stats:
 55 HP / 68 Atk / 70 Def / 41 SpA / 61 SpD / 80 Spe / 375 BST
@@ -701,7 +705,7 @@ Type:
 Bug / None
 
 Ability:
-Poison Heal / Compound Eyes / (None)
+Poison Heal / Compound Eyes / (Threatening)
 
 Base Stats:
 80 HP / 70 Atk / 80 Def / 55 SpA / 120 SpD / 100 Spe / 505 BST
@@ -732,7 +736,7 @@ Type:
 Bug / Rock
 
 Ability:
-Rough Skin / Compound Eyes / (None)
+Rough Skin / Compound Eyes / (Threatening)
 
 Base Stats:
 80 HP / 120 Atk / 120 Def / 35 SpA / 80 SpD / 70 Spe / 505 BST
@@ -766,10 +770,10 @@ Type:
 Grass / None
 
 Ability:
-Anger Point / Chlorophyll / (None)
+Anger Point / Chlorophyll / (Sap Sipper)
 
 Base Stats:
-65 HP / 105 Atk / 100 Def / 50 SpA / 30 SpD / 55 Spe / 405 BST
+65 HP / 90 Atk / 85 Def / 50 SpA / 30 SpD / 55 Spe / 375 BST
 
 Level Up:
 1 - Pound
@@ -793,10 +797,10 @@ Type:
 Grass / Fighting
 
 Ability:
-Anger Point / Chlorophyll / (None)
+Anger Point / Chlorophyll / (Sap Sipper)
 
 Base Stats:
-110 HP / 125 Atk / 110 Def / 55 SpA / 35 SpD / 55 Spe / 490 BST
+100 HP / 120 Atk / 110 Def / 55 SpA / 35 SpD / 55 Spe / 475 BST
 
 Level Up:
 1 - Pound
@@ -833,7 +837,7 @@ Type:
 Grass / Dragon
 
 Ability:
-Competitive / Chlorophyll / (None)
+Competitive / Chlorophyll / (Terrify)
 
 Base Stats:
 120 HP / 75 Atk / 80 Def / 115 SpA / 80 SpD / 90 Spe / 560 BST
@@ -952,7 +956,7 @@ Type:
 Bug / Grass
 
 Ability:
-Swarm / Chlorophyll / (None)
+Swarm / Chlorophyll / (Technician)
 
 Base Stats:
 45 HP / 53 Atk / 70 Def / 40 SpA / 60 SpD / 42 Spe / 310 BST
@@ -973,7 +977,7 @@ Type:
 Bug / Grass
 
 Ability:
-Swarm / Chlorophyll / (None)
+Swarm / Chlorophyll / (Technician)
 
 Base Stats:
 55 HP / 63 Atk / 90 Def / 50 SpA / 80 SpD / 42 Spe / 380 BST
@@ -997,7 +1001,7 @@ Type:
 Bug / Grass
 
 Ability:
-Sharpness / Chlorophyll / (None)
+Sharpness / Chlorophyll / (Unburden)
 
 Base Stats:
 75 HP / 108 Atk / 80 Def / 60 SpA / 80 SpD / 97 Spe / 500 BST
@@ -1026,7 +1030,7 @@ Type:
 Bug / None
 
 Ability:
-Swarm / Hyper Cutter / (None)
+Swarm / Hyper Cutter / (Sniper)
 
 Base Stats:
 47 HP / 62 Atk / 45 Def / 55 SpA / 45 SpD / 46 Spe / 300 BST
@@ -1051,7 +1055,7 @@ Type:
 Bug / Electric
 
 Ability:
-Static / Battle Armor / (None)
+Static / Battle Armor / (Volt Absorb)
 
 Base Stats:
 57 HP / 82 Atk / 95 Def / 55 SpA / 75 SpD / 36 Spe / 400 BST
@@ -1084,7 +1088,7 @@ Type:
 Bug / Electric
 
 Ability:
-Levitate / Tinted Lens / (None)
+Levitate / Tinted Lens / (Speed Boost)
 
 Base Stats:
 77 HP / 65 Atk / 90 Def / 110 SpA / 75 SpD / 95 Spe / 512 BST
@@ -1214,7 +1218,7 @@ Type:
 Bug / Fighting
 
 Ability:
-Hyper Cutter / Swarm / (None)
+Hyper Cutter / Swarm / (Threatening)
 
 Base Stats:
 40 HP / 60 Atk / 65 Def / 30 SpA / 50 SpD / 70 Spe / 315 BST
@@ -1237,7 +1241,7 @@ Type:
 Bug / Fighting
 
 Ability:
-Hyper Cutter / Justified / (None)
+Hyper Cutter / Justified / (Threatening)
 
 Base Stats:
 53 HP / 95 Atk / 85 Def / 30 SpA / 53 SpD / 85 Spe / 401 BST
@@ -1267,7 +1271,7 @@ Type:
 Bug / Fighting
 
 Ability:
-Speed Boost / Justified / (None)
+Speed Boost / Justified / (Threatening)
 
 Base Stats:
 63 HP / 120 Atk / 90 Def / 62 SpA / 65 SpD / 105 Spe / 505 BST
@@ -1298,7 +1302,7 @@ Type:
 Water / Grass
 
 Ability:
-Swift Swim / Rain Dish / (None)
+Swift Swim / Rain Dish / (Hydration)
 
 Base Stats:
 40 HP / 30 Atk / 30 Def / 40 SpA / 50 SpD / 30 Spe / 220 BST
@@ -1321,7 +1325,7 @@ Type:
 Water / Grass
 
 Ability:
-Swift Swim / Rain Dish / (None)
+Swift Swim / Rain Dish / (Hydration)
 
 Base Stats:
 60 HP / 50 Atk / 50 Def / 60 SpA / 70 SpD / 50 Spe / 340 BST
@@ -1354,7 +1358,7 @@ Type:
 Water / Grass
 
 Ability:
-Swift Swim / Rain Dish / (None)
+Swift Swim / Rain Dish / (Hydration)
 
 Base Stats:
 80 HP / 70 Atk / 70 Def / 90 SpA / 100 SpD / 70 Spe / 480 BST
@@ -1396,19 +1400,19 @@ Level Up:
 18 - Draining Kiss
 20 - Magic Reflect
 23 - Moonlight
-26 - Charm
-29 - Magic Powder
-30 - Sparkling Terrain
+25 - Charm
+28 - Magic Powder
+28 - Sparkling Terrain
+30 - Magic Blast
 33 - Luster Purge
 35 - Trick
 38 - Sparkly Swirl
 40 - Glitzy Glow
-42 - Tri-Attack
-44 - Magic Blast
-45 - Fiery Dance
-50 - Glitter Dance
-53 - Magic Tomb
-55 - Photon Geyser
+43 - Hocus Pocus
+46 - Fiery Dance
+49 - Magic Tomb
+52 - Glitter Dance
+56 - Vanishing Act
 60 - Prismatic Laser
 65 - Overheat
 70 - Geomancy
@@ -2241,7 +2245,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Anticipation / Natural Cure / (Unwavering)
+Anticipation / Slight Of Hand / (Unwavering)
 
 Base Stats:
 42 HP / 30 Atk / 45 Def / 56 SpA / 53 SpD / 39 Spe / 265 BST
@@ -2250,13 +2254,14 @@ Level Up:
 1 - Confusion
 1 - Play Nice
 5 - Life Dew
-10 - Magic Powder
-15 - Aromatherapy
-17 - Swift
+7 - Swift
+9 - Magic Powder
+12 - Aromatherapy
+16 - Sparkly Swirl
 20 - Psybeam
 24 - Heal Pulse
 27 - Trick
-30 - Sparkly Swirl
+30 - Hocus Pocus
 
 Evolutions:
 Hatenna -> Hattrem (lv. 32)
@@ -2268,7 +2273,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Magic Bounce / Natural Cure / (Unwavering)
+Magic Bounce / Slight Of Hand / (Unwavering)
 
 Base Stats:
 57 HP / 40 Atk / 65 Def / 86 SpA / 73 SpD / 49 Spe / 370 BST
@@ -2277,13 +2282,14 @@ Level Up:
 1 - Confusion
 1 - Play Nice
 5 - Life Dew
-10 - Magic Powder
-15 - Aromatherapy
-17 - Swift
+7 - Swift
+9 - Magic Powder
+12 - Aromatherapy
+16 - Sparkly Swirl
 20 - Psybeam
 24 - Heal Pulse
 27 - Trick
-30 - Sparkly Swirl
+30 - Hocus Pocus
 32 - Brutal Swing
 35 - Magic Blast
 37 - Calm Mind
@@ -2298,7 +2304,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Magic Bounce / Natural Cure / (Unwavering)
+Magic Bounce / Slight Of Hand / (Unwavering)
 
 Base Stats:
 82 HP / 65 Atk / 95 Def / 136 SpA / 103 SpD / 29 Spe / 510 BST
@@ -2308,23 +2314,24 @@ Level Up:
 1 - Confusion
 1 - Play Nice
 5 - Life Dew
-10 - Magic Powder
-15 - Aromatherapy
-17 - Swift
+7 - Swift
+9 - Magic Powder
+12 - Aromatherapy
+16 - Sparkly Swirl
 20 - Psybeam
 24 - Heal Pulse
 27 - Trick
-30 - Sparkly Swirl
+30 - Hocus Pocus
 32 - Brutal Swing
 35 - Magic Blast
 37 - Calm Mind
 42 - Magic Reflect
-45 - Psycho Cut
-49 - Elemental Sparkle
+45 - Elemental Sparkle
+49 - Sparkling Terrain
 52 - Psychic
-55 - Healing Wish
-58 - Magic Tomb
-61 - Sparkling Terrain
+55 - Magic Tomb
+58 - Healing Wish
+61 - Vanishing Act
 65 - Morning Sun
 70 - Expanding Force
 
@@ -3030,7 +3037,7 @@ Type:
 Fire / Rock
 
 Ability:
-Solid Rock / None / (Flame Body)
+Solid Rock / None / (Magma Armor)
 
 Base Stats:
 60 HP / 35 Atk / 78 Def / 50 SpA / 77 SpD / 30 Spe / 330 BST
@@ -3055,7 +3062,7 @@ Type:
 Fire / Rock
 
 Ability:
-Solid Rock / None / (Flame Body)
+Solid Rock / None / (Magma Armor)
 
 Base Stats:
 70 HP / 57 Atk / 105 Def / 51 SpA / 87 SpD / 30 Spe / 400 BST
@@ -3086,7 +3093,7 @@ Type:
 Fire / Rock
 
 Ability:
-Solid Rock / None / (Flame Body)
+Solid Rock / None / (Magma Armor)
 
 Base Stats:
 90 HP / 80 Atk / 95 Def / 120 SpA / 95 SpD / 45 Spe / 525 BST
@@ -3188,7 +3195,7 @@ Type:
 Magic / None
 
 Ability:
-Shield Dust / Magic Guard / (Magic Bounce)
+Magic Guard / Shield Dust / (Magic Bounce)
 
 Base Stats:
 40 HP / 45 Atk / 40 Def / 75 SpA / 65 SpD / 70 Spe / 335 BST
@@ -3216,7 +3223,7 @@ Type:
 Magic / Fire
 
 Ability:
-Shield Dust / Magic Guard / (Magic Bounce)
+Slight Of Hand / Shield Dust / (Magic Bounce)
 
 Base Stats:
 85 HP / 45 Atk / 65 Def / 145 SpA / 110 SpD / 55 Spe / 505 BST
@@ -3233,17 +3240,18 @@ Level Up:
 17 - Swift
 20 - Flame Wheel
 23 - Trick
-25 - Psybeam
+25 - Magic Blast
 29 - Flamethrower
-35 - Magic Blast
-40 - Elemental Sparkle
-43 - Tri-Attack
-45 - Sparkling Terrain
-50 - Fire Blast
+31 - Elemental Sparkle
+35 - Hocus Pocus
+39 - Tri-Attack
+43 - Sparkling Terrain
+47 - Fire Blast
+50 - Magic Tomb
 54 - Magic Reflect
-60 - Magic Tomb
-65 - Spacial Rend
-70 - Blue Flare
+57 - Spacial Rend
+60 - Blue Flare
+65 - Vanishing Act
 
 ===================
 108 - Sparkitten
@@ -3608,7 +3616,7 @@ Type:
 Steel / Normal
 
 Ability:
-Tough Claws / Iron Barbs / (None)
+Tough Claws / Iron Barbs / (Weak Armor)
 
 Base Stats:
 30 HP / 60 Atk / 73 Def / 30 SpA / 65 SpD / 58 Spe / 316 BST
@@ -3634,7 +3642,7 @@ Type:
 Steel / Light
 
 Ability:
-Tough Claws / Iron Barbs / (None)
+Tough Claws / Iron Barbs / (Weak Armor)
 
 Base Stats:
 60 HP / 80 Atk / 95 Def / 65 SpA / 95 SpD / 95 Spe / 490 BST
@@ -3666,7 +3674,7 @@ Type:
 Steel / Magic
 
 Ability:
-Tough Claws / Iron Barbs / (None)
+Tough Claws / Iron Barbs / (Weak Armor)
 
 Base Stats:
 69 HP / 95 Atk / 97 Def / 70 SpA / 95 SpD / 104 Spe / 530 BST
@@ -3696,7 +3704,7 @@ Type:
 Electric / Normal
 
 Ability:
-Electric Surge / Motor Drive / (None)
+Electric Surge / Motor Drive / (Galvanize)
 
 Base Stats:
 30 HP / 45 Atk / 25 Def / 35 SpA / 40 SpD / 60 Spe / 235 BST
@@ -3722,7 +3730,7 @@ Type:
 Electric / Light
 
 Ability:
-Electric Surge / Motor Drive / (None)
+Electric Surge / Motor Drive / (Galvanize)
 
 Base Stats:
 75 HP / 105 Atk / 60 Def / 85 SpA / 60 SpD / 105 Spe / 490 BST
@@ -3755,7 +3763,7 @@ Type:
 Electric / Magic
 
 Ability:
-Electric Surge / Motor Drive / (None)
+Electric Surge / Motor Drive / (Galvanize)
 
 Base Stats:
 75 HP / 120 Atk / 70 Def / 80 SpA / 75 SpD / 125 Spe / 545 BST
@@ -3785,7 +3793,7 @@ Type:
 Fighting / Normal
 
 Ability:
-Guts / Moxie / (None)
+Guts / Moxie / (No Guard)
 
 Base Stats:
 35 HP / 65 Atk / 45 Def / 15 SpA / 40 SpD / 45 Spe / 245 BST
@@ -3811,7 +3819,7 @@ Type:
 Fighting / Light
 
 Ability:
-Guts / Moxie / (None)
+Guts / Moxie / (No Guard)
 
 Base Stats:
 95 HP / 125 Atk / 105 Def / 25 SpA / 75 SpD / 50 Spe / 475 BST
@@ -3847,7 +3855,7 @@ Type:
 Fighting / Magic
 
 Ability:
-Adaptability / Moxie / (None)
+Adaptability / Justified / (No Guard)
 
 Base Stats:
 95 HP / 130 Atk / 100 Def / 85 SpA / 75 SpD / 55 Spe / 540 BST
@@ -3877,7 +3885,7 @@ Type:
 Bug / Ground
 
 Ability:
-Compound Eyes / Tinted Lens / (None)
+Compound Eyes / Tinted Lens / (Swarm)
 
 Base Stats:
 31 HP / 45 Atk / 90 Def / 30 SpA / 30 SpD / 40 Spe / 266 BST
@@ -3902,7 +3910,7 @@ Type:
 Bug / Flying
 
 Ability:
-Speed Boost / Tinted Lens / (None)
+Speed Boost / Tinted Lens / (Swarm)
 
 Base Stats:
 61 HP / 90 Atk / 45 Def / 50 SpA / 50 SpD / 160 Spe / 456 BST
@@ -3960,7 +3968,7 @@ Type:
 Water / Ghost
 
 Ability:
-Swift Swim / Regenerator / (None)
+Swift Swim / Regenerator / (Shell Armor)
 
 Base Stats:
 58 HP / 29 Atk / 71 Def / 31 SpA / 58 SpD / 33 Spe / 280 BST
@@ -3987,7 +3995,7 @@ Type:
 Water / Ghost
 
 Ability:
-Swift Swim / Regenerator / (None)
+Swift Swim / Regenerator / (Shell Armor)
 
 Base Stats:
 67 HP / 61 Atk / 75 Def / 97 SpA / 91 SpD / 83 Spe / 474 BST
@@ -4020,7 +4028,7 @@ Type:
 Water / None
 
 Ability:
-Unaware / Water Absorb / (None)
+Unaware / Water Absorb / (Lightning Rod)
 
 Base Stats:
 34 HP / 14 Atk / 20 Def / 27 SpA / 90 SpD / 15 Spe / 200 BST
@@ -4042,7 +4050,7 @@ Type:
 Water / Flying
 
 Ability:
-Unaware / Water Absorb / (None)
+Unaware / Water Absorb / (Lightning Rod)
 
 Base Stats:
 100 HP / 28 Atk / 45 Def / 72 SpA / 110 SpD / 45 Spe / 400 BST
@@ -4069,7 +4077,7 @@ Type:
 Water / Dragon
 
 Ability:
-Drizzle / Water Absorb / (None)
+Drizzle / Water Absorb / (Lightning Rod)
 
 Base Stats:
 100 HP / 90 Atk / 66 Def / 74 SpA / 84 SpD / 81 Spe / 495 BST
@@ -4105,7 +4113,7 @@ Type:
 Water / None
 
 Ability:
-Swift Swim / Rattled / (None)
+Swift Swim / Rattled / (Multiscale)
 
 Base Stats:
 20 HP / 10 Atk / 55 Def / 15 SpA / 20 SpD / 80 Spe / 200 BST
@@ -4114,7 +4122,7 @@ Level Up:
 1 - Splash
 15 - Tackle
 25 - Flail
-30 - Flail
+30 - Bounce
 40 - Hydro Pump
 
 Evolutions:
@@ -4127,7 +4135,7 @@ Type:
 Water / Flying
 
 Ability:
-Intimidate / Moxie / (None)
+Intimidate / Moxie / (Multiscale)
 
 Base Stats:
 95 HP / 125 Atk / 79 Def / 60 SpA / 100 SpD / 81 Spe / 540 BST
@@ -4140,11 +4148,12 @@ Level Up:
 26 - Crunch
 28 - Rain Dance
 32 - Aqua Tail
-36 - Dragon Dance
-40 - Waterfall
-44 - Hurricane
-48 - Thrash
-52 - Hydro Pump
+36 - Aerial Ace
+40 - Dragon Tail
+44 - Thrash
+48 - Waterfall
+52 - Bounce
+56 - Dragon Dance
 
 ===================
 139 - Staryu
@@ -4218,7 +4227,7 @@ Type:
 Dark / Water
 
 Ability:
-Ambush / Strong Jaw / (None)
+Ambush / Strong Jaw / (Threatening)
 
 Base Stats:
 90 HP / 120 Atk / 80 Def / 45 SpA / 55 SpD / 60 Spe / 450 BST
@@ -4250,7 +4259,7 @@ Type:
 Dark / Flying
 
 Ability:
-Ambush / Strong Jaw / (None)
+Ambush / Strong Jaw / (Threatening)
 
 Base Stats:
 105 HP / 130 Atk / 80 Def / 75 SpA / 55 SpD / 95 Spe / 540 BST
@@ -4270,7 +4279,7 @@ Level Up:
 35 - Sky Attack
 40 - Darkest Lariat
 45 - Knock Off
-50 - Hurricane
+50 - Acrobatics
 55 - Crunch
 60 - Dragon Rush
 65 - Brave Bird
@@ -4284,7 +4293,7 @@ Type:
 Magic / Dragon
 
 Ability:
-Regenerator / Magic Guard / (None)
+Regenerator / Magic Guard / (Wonder Skin)
 
 Base Stats:
 35 HP / 35 Atk / 35 Def / 100 SpA / 45 SpD / 45 Spe / 295 BST
@@ -4293,14 +4302,15 @@ Level Up:
 1 - Magic Powder
 1 - Magic Reflect
 1 - Sparkling Terrain
-1 - Glittering Tornado
+1 - Twister
 5 - Swift
 10 - Magic Blast
 12 - Topsy-Turvy
 16 - Switcheroo
 20 - Elemental Sparkle
-23 - Sparkle Strike
+23 - Dragon Pulse
 25 - Magic Crash
+35 - Vanishing Act
 
 Evolutions:
 Posho -> Shomp (>= 250 happiness)
@@ -4312,7 +4322,7 @@ Type:
 Water / Dragon
 
 Ability:
-Swift Swim / Sniper / (None)
+Swift Swim / Sniper / (Strong Jaw)
 
 Base Stats:
 81 HP / 93 Atk / 63 Def / 93 SpA / 70 SpD / 60 Spe / 460 BST
@@ -4348,7 +4358,7 @@ Type:
 Magic / Dragon
 
 Ability:
-Swift Swim / Magic Guard / (None)
+Swift Swim / Magic Guard / (Wonder Skin)
 
 Base Stats:
 100 HP / 95 Atk / 90 Def / 95 SpA / 90 SpD / 90 Spe / 560 BST
@@ -4356,7 +4366,7 @@ Base Stats:
 Level Up:
 1 - Outrage
 1 - Hyper Beam
-1 - Glittering Tornado
+1 - Twister
 1 - Switcheroo
 5 - Dragon Pulse
 6 - Bite
@@ -4385,7 +4395,7 @@ Type:
 Water / Rock
 
 Ability:
-Tough Claws / Sniper / (None)
+Tough Claws / Sniper / (Shell Armor)
 
 Base Stats:
 42 HP / 52 Atk / 67 Def / 39 SpA / 56 SpD / 50 Spe / 306 BST
@@ -4418,7 +4428,7 @@ Type:
 Water / Rock
 
 Ability:
-Tough Claws / Sniper / (None)
+Tough Claws / Sniper / (Shell Armor)
 
 Base Stats:
 72 HP / 105 Atk / 115 Def / 54 SpA / 86 SpD / 68 Spe / 500 BST
@@ -4531,7 +4541,7 @@ Type:
 Water / Magic
 
 Ability:
-Water Veil / Regenerator / (None)
+Water Veil / Regenerator / (Wonder Skin)
 
 Base Stats:
 40 HP / 40 Atk / 75 Def / 55 SpA / 50 SpD / 90 Spe / 350 BST
@@ -4722,7 +4732,7 @@ Type:
 Ghost / None
 
 Ability:
-Friendly Ghost / Levitate / (Illumination)
+Friendly Ghost / Levitate / (Unwavering)
 
 Base Stats:
 55 HP / 60 Atk / 80 Def / 75 SpA / 65 SpD / 65 Spe / 400 BST
@@ -4929,7 +4939,7 @@ Type:
 Fighting / None
 
 Ability:
-Guts / Iron Fist / (None)
+Guts / Iron Fist / (Scrappy)
 
 Base Stats:
 75 HP / 80 Atk / 55 Def / 25 SpA / 35 SpD / 35 Spe / 305 BST
@@ -4954,7 +4964,7 @@ Type:
 Fighting / None
 
 Ability:
-Guts / Iron Fist / (None)
+Guts / Iron Fist / (Scrappy)
 
 Base Stats:
 85 HP / 105 Atk / 85 Def / 40 SpA / 50 SpD / 40 Spe / 405 BST
@@ -4987,7 +4997,7 @@ Type:
 Fighting / None
 
 Ability:
-Guts / Iron Fist / (None)
+Guts / Iron Fist / (Scrappy)
 
 Base Stats:
 105 HP / 140 Atk / 95 Def / 55 SpA / 65 SpD / 45 Spe / 505 BST
@@ -5256,7 +5266,7 @@ Type:
 Galactic / Light
 
 Ability:
-Magic Guard / Unaware / (None)
+Magic Guard / Unaware / (Cloud Nine)
 
 Base Stats:
 50 HP / 25 Atk / 28 Def / 45 SpA / 55 SpD / 15 Spe / 218 BST
@@ -5280,7 +5290,7 @@ Type:
 Galactic / Light
 
 Ability:
-Magic Guard / Unaware / (None)
+Magic Guard / Unaware / (Cloud Nine)
 
 Base Stats:
 70 HP / 45 Atk / 48 Def / 60 SpA / 65 SpD / 35 Spe / 323 BST
@@ -5293,6 +5303,7 @@ Level Up:
 1 - Trick
 1 - Flash Ray
 1 - Encore
+1 - Comet Punch
 1 - Charm
 1 - Pound
 1 - Flash
@@ -5306,7 +5317,7 @@ Level Up:
 18 - Metronome
 21 - Moonlight
 24 - Gravity
-27 - Comet Punch
+27 - Radio Burst
 30 - Cosmic Power
 33 - Stored Power
 36 - Moonblast
@@ -5326,7 +5337,7 @@ Type:
 Galactic / Light
 
 Ability:
-Magic Guard / Unaware / (None)
+Magic Guard / Unaware / (Cloud Nine)
 
 Base Stats:
 95 HP / 70 Atk / 73 Def / 95 SpA / 90 SpD / 60 Spe / 483 BST
@@ -5339,6 +5350,7 @@ Level Up:
 1 - Knock Off
 1 - Trick
 1 - Encore
+1 - Comet Punch
 1 - Charm
 1 - Wish
 1 - Baby-Doll Eyes
@@ -5349,7 +5361,7 @@ Level Up:
 1 - Metronome
 1 - Moonlight
 1 - Gravity
-1 - Comet Punch
+1 - Meteor Mash
 1 - Stealth Rock
 1 - Stored Power
 1 - Healing Wish
@@ -5358,7 +5370,7 @@ Level Up:
 1 - Growl
 1 - Defense Curl
 1 - Spacial Rend
-1 - Meteor Mash
+1 - Radio Burst
 1 - Cosmic Power
 1 - Moonblast
 
@@ -5433,7 +5445,7 @@ Type:
 Normal / Ghost
 
 Ability:
-Adaptability / Illumination / (None)
+Adaptability / Illumination / (Unwavering)
 
 Base Stats:
 35 HP / 60 Atk / 40 Def / 85 SpA / 40 SpD / 70 Spe / 330 BST
@@ -5460,7 +5472,7 @@ Type:
 Normal / Ghost
 
 Ability:
-Adaptability / Illumination / (None)
+Adaptability / Illumination / (Unwavering)
 
 Base Stats:
 55 HP / 100 Atk / 60 Def / 125 SpA / 60 SpD / 110 Spe / 510 BST
@@ -5586,7 +5598,7 @@ Type:
 Magic / Galactic
 
 Ability:
-Sparkly Surge / None / (None)
+Sparkly Surge / None / (Super Luck)
 
 Base Stats:
 55 HP / 76 Atk / 55 Def / 54 SpA / 90 SpD / 60 Spe / 390 BST
@@ -5611,7 +5623,7 @@ Type:
 Magic / Galactic
 
 Ability:
-Sparkly Surge / None / (None)
+Sparkly Surge / None / (Super Luck)
 
 Base Stats:
 75 HP / 80 Atk / 75 Def / 60 SpA / 90 SpD / 75 Spe / 455 BST
@@ -5631,9 +5643,9 @@ Level Up:
 34 - Comet Punch
 37 - Moonlight
 40 - Magic Reflect
-42 - Take Down
-45 - Desolate Void
-48 - Magic Tomb
+42 - Desolate Void
+45 - Magic Tomb
+48 - Galaxy Blast
 
 Evolutions:
 Shawar -> Shaboom (lv. 50)
@@ -5645,7 +5657,7 @@ Type:
 Magic / Galactic
 
 Ability:
-Sparkly Surge / None / (None)
+Sparkly Surge / None / (Super Luck)
 
 Base Stats:
 100 HP / 100 Atk / 100 Def / 100 SpA / 100 SpD / 100 Spe / 600 BST
@@ -5668,11 +5680,13 @@ Level Up:
 42 - Take Down
 45 - Desolate Void
 48 - Magic Tomb
-50 - Comet Crash
-55 - Magic Crash
-60 - Spacial Rend
-65 - Galaxy Blast
-70 - Meteor Assault
+50 - Magic Crash
+54 - Galaxy Blast
+57 - Spacial Rend
+60 - Comet Crash
+64 - Meteor Assault
+68 - Radio Burst
+72 - Vanishing Act
 75 - Supernova Explosion
 
 ===================
@@ -5682,7 +5696,7 @@ Type:
 Dragon / Light
 
 Ability:
-Multiscale / None / (None)
+Multiscale / None / (Illumination)
 
 Base Stats:
 80 HP / 40 Atk / 57 Def / 63 SpA / 59 SpD / 51 Spe / 350 BST
@@ -5711,7 +5725,7 @@ Type:
 Dragon / Light
 
 Ability:
-Multiscale / None / (None)
+Multiscale / None / (Illumination)
 
 Base Stats:
 85 HP / 75 Atk / 80 Def / 90 SpA / 75 SpD / 60 Spe / 465 BST
@@ -5746,7 +5760,7 @@ Type:
 Dragon / Light
 
 Ability:
-Multiscale / None / (None)
+Multiscale / None / (Illumination)
 
 Base Stats:
 95 HP / 85 Atk / 90 Def / 115 SpA / 125 SpD / 90 Spe / 600 BST
@@ -5797,6 +5811,7 @@ Level Up:
 1 - Splash
 1 - Space Beam
 1 - Vacuum Wave
+15 - Radio Burst
 25 - Mist Ball
 25 - Topsy-Turvy
 
@@ -5820,6 +5835,7 @@ Level Up:
 1 - Splash
 1 - Space Beam
 1 - Vacuum Wave
+15 - Radio Burst
 25 - Mist Ball
 25 - Topsy-Turvy
 40 - Comet Punch
@@ -5849,6 +5865,7 @@ Level Up:
 1 - Splash
 1 - Space Beam
 1 - Vacuum Wave
+15 - Radio Burst
 25 - Mist Ball
 25 - Topsy-Turvy
 40 - Comet Punch
@@ -6018,7 +6035,7 @@ Level Up:
 25 - Shadow Punch
 25 - Thunder Punch
 28 - Magnet Rise
-31 - Shadow Ball
+31 - Phantom Force
 
 Evolutions:
 Poof-E -> Hast-E (lv. 32)
@@ -6047,11 +6064,10 @@ Level Up:
 25 - Shadow Punch
 25 - Thunder Punch
 28 - Magnet Rise
-31 - Shadow Ball
+31 - Phantom Force
 35 - Tri-Attack
-38 - Headbutt
 40 - Electro Ball
-44 - Phantom Force
+44 - Shadow Ball
 50 - Volt Switch
 55 - Thunder
 
@@ -7048,6 +7064,7 @@ Level Up:
 1 - Trick
 1 - Switcheroo
 1 - Thief
+1 - Hocus Pocus
 2 - Ember
 4 - Water Pulse
 6 - Discharge
@@ -7080,7 +7097,8 @@ Level Up:
 72 - Magic Crash
 75 - Parting Shot
 80 - Spectral Thief
-90 - Glitter Dance
+85 - Glitter Dance
+90 - Vanishing Act
 
 ===================
 230 - Vorsuitex
@@ -7155,8 +7173,8 @@ Level Up:
 27 - Toxic
 30 - Toxic Spikes
 33 - Venom Drench
-36 - Dazzling Gleam
-39 - Elemental Sparkle
+36 - Elemental Sparkle
+39 - Hocus Pocus
 42 - Sludge Bomb
 45 - Magic Reflect
 48 - Zen Headbutt
@@ -7483,4 +7501,104 @@ Level Up:
 42 - Acid Armor
 45 - Toxic
 50 - Sludge Wave
+
+===================
+243 - Abra
+===================
+Type:
+Psychic / None
+
+Ability:
+Magical / Synchronize / (Magic Guard)
+
+Base Stats:
+25 HP / 20 Atk / 15 Def / 105 SpA / 55 SpD / 90 Spe / 310 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+244 - Kadabra
+===================
+Type:
+Psychic / None
+
+Ability:
+Magical / Synchronize / (Magic Guard)
+
+Base Stats:
+40 HP / 35 Atk / 30 Def / 120 SpA / 70 SpD / 105 Spe / 400 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+245 - Alakazam
+===================
+Type:
+Psychic / None
+
+Ability:
+Magical / Synchronize / (Magic Guard)
+
+Base Stats:
+55 HP / 50 Atk / 45 Def / 135 SpA / 95 SpD / 120 Spe / 500 BST
+
+Level Up:
+1 - Confusion
+1 - Flash
+1 - Teleport
+5 - Psybeam
+9 - Swift
+13 - Reflect
+16 - Elemental Sparkle
+21 - Psycho Cut
+25 - Recover
+28 - Hocus Pocus
+31 - Psyshock
+35 - Magic Tomb
+40 - Psychic
+45 - Shadow Ball
+50 - Calm Mind
+55 - Vanishing Act
+
+===================
+246 - Flamigo
+===================
+Type:
+Flying / Fighting
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Peck
+5 - Double Kick
+9 - Detect
+12 - Wing Attack
+15 - Focus Energy
+18 - Low Kick
+21 - Feint
+27 - Payback
+31 - Hi Jump Kick
+35 - Air Slash
+39 - Roost
+44 - Close Combat
+48 - Throat Chop
+54 - Brave Bird
 
