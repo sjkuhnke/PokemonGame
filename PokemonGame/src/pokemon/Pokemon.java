@@ -1897,9 +1897,16 @@ public class Pokemon implements Serializable {
 					attackStat = this.getStat(3);
 					if (this.status == Status.FROSTBITE) attackStat /= 2;
 				}
-				if (move.isPhysical() && defenseStat > foe.getStat(2)) defenseStat = foe.getStat(2);
-				if (!move.isPhysical() && defenseStat > foe.getStat(4)) defenseStat = foe.getStat(4);
+				if (move.isPhysical() && defenseStat > foe.getStat(2)) {
+					defenseStat = foe.getStat(2);
+					if (field.equals(field.weather, Effect.SNOW) && (foe.type1 == PType.ICE || foe.type2 == PType.ICE)) defenseStat *= 1.5;
+				}
+				if (!move.isPhysical() && defenseStat > foe.getStat(4)) {
+					defenseStat = foe.getStat(4);
+					if (field.equals(field.weather, Effect.SANDSTORM) && (foe.type1 == PType.ROCK || foe.type2 == PType.ROCK)) defenseStat *= 1.5;
+				}
 				if (foe.item == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
+				
 				damage = calc(attackStat, defenseStat, bp, this.level);
 				damage *= 1.5;
 				if (this.ability == Ability.SNIPER) damage *= 1.5;
@@ -9536,8 +9543,15 @@ public class Pokemon implements Serializable {
 				attackStat = this.getStat(3);
 				if (this.status == Status.FROSTBITE) attackStat /= 2;
 			}
-			if (move.isPhysical() && defenseStat > foe.getStat(2)) defenseStat = foe.getStat(2);
-			if (!move.isPhysical() && defenseStat > foe.getStat(4)) defenseStat = foe.getStat(4);
+			if (move.isPhysical() && defenseStat > foe.getStat(2)) {
+				defenseStat = foe.getStat(2);
+				if (field.equals(field.weather, Effect.SNOW) && (foe.type1 == PType.ICE || foe.type2 == PType.ICE)) defenseStat *= 1.5;
+				
+			}
+			if (!move.isPhysical() && defenseStat > foe.getStat(4)) {
+				defenseStat = foe.getStat(4);
+				if (field.equals(field.weather, Effect.SANDSTORM) && (foe.type1 == PType.ROCK || foe.type2 == PType.ROCK)) defenseStat *= 1.5;
+			}
 			if (mode != 0 && foe.item == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
 			damage = calc(attackStat, defenseStat, bp, this.level, mode);
 			damage *= 1.5;
@@ -9945,6 +9959,10 @@ public class Pokemon implements Serializable {
 		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
 		if (field.contains(side, Effect.SAFEGUARD)) {
 			if (announce) addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
+			return;
+		}
+		if (this.type1 == PType.MAGIC || this.type2 == PType.MAGIC) {
+			if (announce) addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...\n(In this game, Magic is immune to confusion)");
 			return;
 		}
 		if (!this.vStatuses.contains(Status.CONFUSED)) {

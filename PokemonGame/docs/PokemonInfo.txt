@@ -7602,3 +7602,455 @@ Level Up:
 48 - Throat Chop
 54 - Brave Bird
 
+===================
+247 - Sneasel
+===================
+Type:
+Dark / Ice
+
+Ability:
+Inner Focus / Keen Eye / (Pickpocket)
+
+Base Stats:
+55 HP / 95 Atk / 55 Def / 35 SpA / 75 SpD / 115 Spe / 430 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+248 - Weavile
+===================
+Type:
+Dark / Ice
+
+Ability:
+Technician / Pressure / (Pickpocket)
+
+Base Stats:
+70 HP / 120 Atk / 65 Def / 45 SpA / 85 SpD / 125 Spe / 510 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+249 - Sneasel-H
+===================
+Type:
+Fighting / Poison
+
+Ability:
+Inner Focus / Keen Eye / (Pickpocket)
+
+Base Stats:
+55 HP / 95 Atk / 55 Def / 35 SpA / 75 SpD / 115 Spe / 430 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+250 - Sneasler
+===================
+Type:
+Fighting / Poison
+
+Ability:
+Unburden / Pressure / (Poison Touch)
+
+Base Stats:
+80 HP / 130 Atk / 60 Def / 40 SpA / 80 SpD / 120 Spe / 510 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+251 - Solosis
+===================
+Type:
+Psychic / None
+
+Ability:
+Magic Guard / None / (Regenerator)
+
+Base Stats:
+45 HP / 30 Atk / 40 Def / 105 SpA / 50 SpD / 20 Spe / 290 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+252 - Duosion
+===================
+Type:
+Psychic / None
+
+Ability:
+Magic Guard / None / (Regenerator)
+
+Base Stats:
+65 HP / 40 Atk / 50 Def / 125 SpA / 60 SpD / 30 Spe / 370 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+253 - Reuniclus
+===================
+Type:
+Psychic / None
+
+Ability:
+Magic Guard / None / (Regenerator)
+
+Base Stats:
+110 HP / 65 Atk / 75 Def / 125 SpA / 85 SpD / 30 Spe / 490 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+254 - Solosis-X
+===================
+Type:
+Light / None
+
+Ability:
+Radiant / Pixilate / (Mirror Armor)
+
+Base Stats:
+10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe / 60 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+255 - Duosion-X
+===================
+Type:
+Light / None
+
+Ability:
+Radiant / Pixilate / (Mirror Armor)
+
+Base Stats:
+10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe / 60 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+256 - Reuniclus-X
+===================
+Type:
+Light / None
+
+Ability:
+Radiant / Pixilate / (Mirror Armor)
+
+Base Stats:
+10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe / 60 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+257 - Seviper
+===================
+Type:
+Flying / Fighting
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+258 - Seviper-X
+===================
+Type:
+Flying / Fighting
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+259 - Hissimitar
+===================
+Type:
+Flying / Fighting
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+260 - Gulpin
+===================
+Type:
+Flying / Fighting
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+261 - Swalot
+===================
+Type:
+Flying / Fighting
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+262 - Gulpin-X
+===================
+Type:
+Flying / Fighting
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+263 - Swalot-X
+===================
+Type:
+Flying / Fighting
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+264 - Plasamp
+===================
+Type:
+Flying / Fighting
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+265 - Genieova
+===================
+Type:
+Flying / Fighting
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+266 - Elgyem
+===================
+Type:
+Galactic / None
+
+Ability:
+Parasocial / None / (Analytic)
+
+Base Stats:
+55 HP / 55 Atk / 55 Def / 85 SpA / 55 SpD / 30 Spe / 335 BST
+
+Level Up:
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+15 - Poison Fang
+20 - Bite
+25 - Wing Attack
+
+===================
+267 - Beheeyem
+===================
+Type:
+Galactic / None
+
+Ability:
+Parasocial / None / (Analytic)
+
+Base Stats:
+75 HP / 75 Atk / 75 Def / 125 SpA / 95 SpD / 40 Spe / 485 BST
+
+Level Up:
+1 - Confusion
+1 - Leer
+5 - Psywave
+9 - Cosmic Power
+13 - Comet Punch
+17 - Confuse Ray
+20 - Hypnosis
+23 - Trick Room
+26 - Space Beam
+30 - Abduct
+34 - Recover
+37 - Galaxy Blast
+40 - Radio Burst
+44 - Star Storm
+48 - Calm Mind
+52 - Dark Void
+57 - Core Enforcer
+65 - Black Hole Eclipse
+
