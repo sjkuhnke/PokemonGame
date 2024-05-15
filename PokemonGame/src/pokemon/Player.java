@@ -670,6 +670,7 @@ public class Player extends Trainer implements Serializable {
         		p.item = item;
         		gp.ui.showMessage(p.nickname + " was given " + item.toString() + " to hold!");
         	}
+			gp.ui.selectedBagNum = -1;
 		} else {
 			switch (item) {
 			// Potions

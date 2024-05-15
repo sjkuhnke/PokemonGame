@@ -312,7 +312,7 @@ public class BattleUI extends AbstractUI {
 			}
 			if (counter >= 100) {
 				counter = 0;
-				moveNum = 0;
+				if (currentTask.p.playerOwned()) moveNum = 0;
 				tempUser = null;
 				currentTask = null;
 			}

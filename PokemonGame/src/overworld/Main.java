@@ -418,7 +418,7 @@ public class Main {
 		setMoveset("Scott 3", 2, Move.SWORDS_DANCE, Move.LEECH_LIFE, Move.ACROBATICS, Move.POISON_JAB);
 		setMoveset("Scott 3", 4, Move.VOLT_SWITCH, Move.GUILLOTINE, Move.BUG_BUZZ, Move.STICKY_WEB);
 		
-		setItem("Scott 3", 1, Item.FOCUS_SASH);
+		setItem("Scott 3", 1, Item.QUICK_CLAW);
 		setItem("Scott 3", 2, Item.FOCUS_SASH);
 		setItem("Scott 3", 3, Item.LIFE_ORB);
 		setItem("Scott 3", 4, Item.MAGNET);
@@ -739,7 +739,7 @@ public class Main {
 				new Trainer("AY", new Pokemon[]{new Pokemon(91, 43, false, true), new Pokemon(147, 44, false, true)}, new Item[]{Item.FOCUS_SASH, Item.WHITE_HERB}, 100),
 				new Trainer("AZ", new Pokemon[]{new Pokemon(136, 44, false, true), new Pokemon(133, 44, false, true), new Pokemon(139, 45, false, true)}, new Item[]{Item.MYSTICOLA_BERRY, Item.MYSTIC_WATER, Item.ROCKY_HELMET}, 100),
 				new Trainer("BA", new Pokemon[]{new Pokemon(141, 44, false, true), new Pokemon(144, 44, false, true)}, new Item[]{Item.ASSAULT_VEST, Item.CHOICE_SCARF}, 100),
-				new Trainer("BB", new Pokemon[]{new Pokemon(143, 45, false, true), new Pokemon(143, 45, false, true), new Pokemon(143, 60, false, true), new Pokemon(143, 60, false, true), new Pokemon(143, 60, false, true), new Pokemon(145, 44, false, true)}, new Item[]{Item.FOCUS_SASH, Item.FOCUS_BAND, Item.BRIGHT_POWDER, Item.QUICK_CLAW, Item.POWER_HERB, Item.POWER_HERB}, 100), // 155
+				new Trainer("BB", new Pokemon[]{new Pokemon(143, 50, false, true), new Pokemon(143, 50, false, true), new Pokemon(143, 50, false, true), new Pokemon(143, 50, false, true), new Pokemon(143, 50, false, true), new Pokemon(145, 44, false, true)}, new Item[]{Item.FOCUS_SASH, Item.FOCUS_BAND, Item.BRIGHT_POWDER, Item.QUICK_CLAW, Item.POWER_HERB, Item.POWER_HERB}, 100), // 155
 				new Trainer("BC", new Pokemon[]{new Pokemon(138, 44, false, true), new Pokemon(210, 44, false, true)}, new Item[]{Item.WACAN_BERRY, Item.AIR_BALLOON}, 100),
 				new Trainer("BD", new Pokemon[]{new Pokemon(210, 44, false, true), new Pokemon(138, 44, false, true)}, new Item[]{Item.POWER_HERB, Item.LIFE_ORB}, 100),
 				new Trainer("BE", new Pokemon[]{new Pokemon(210, 43, false, true), new Pokemon(119, 44, false, true), new Pokemon(113, 44, false, true)}, new Item[]{Item.MAGNET, Item.LEFTOVERS, Item.AIR_BALLOON}, 100),
