@@ -5810,7 +5810,7 @@ public class Pokemon implements Serializable {
 			movebank[64] = new Node(Move.EXPANDING_FORCE);
 			break;
 		case 88:
-			movebank = new Node[60];
+			movebank = new Node[55];
 			movebank[0] = new Node(Move.TELEPORT);
 			movebank[0].addToEnd(new Node(Move.GROWL));
 			movebank[0].addToEnd(new Node(Move.FLASH));
@@ -5826,16 +5826,16 @@ public class Pokemon implements Serializable {
 			movebank[14] = new Node(Move.DRAINING_KISS);
 			movebank[17] = new Node(Move.PSYBEAM);
 			movebank[19] = new Node(Move.AERIAL_ACE);
-			movebank[22] = new Node(Move.FALSE_SWIPE);
+			movebank[22] = new Node(Move.FEINT);
 			movebank[25] = new Node(Move.SLASH);
 			movebank[27] = new Node(Move.TRICK);
-			movebank[29] = new Node(Move.PSYCHO_CUT);
+			movebank[29] = new Node(Move.ZEN_HEADBUTT);
 			movebank[32] = new Node(Move.SWORDS_DANCE);
-			movebank[36] = new Node(Move.ZEN_HEADBUTT);
-			movebank[44] = new Node(Move.CLOSE_COMBAT);
-			movebank[48] = new Node(Move.KNOCK_OFF);
-			movebank[53] = new Node(Move.FEINT);
-			movebank[59] = new Node(Move.SOLAR_BLADE);
+			movebank[36] = new Node(Move.CLOSE_COMBAT);
+			movebank[40] = new Node(Move.PSYCHO_CUT);
+			movebank[44] = new Node(Move.KNOCK_OFF);
+			movebank[48] = new Node(Move.SACRED_SWORD);
+			movebank[54] = new Node(Move.SOLAR_BLADE);
 			break;
 		case 89:
 			movebank = new Node[75];
@@ -9885,6 +9885,7 @@ public class Pokemon implements Serializable {
 			int r = (int)(Math.random() * 3);
 			if (r == 0) {
 				addAbilityTask(this);
+				this.status = Status.HEALTHY;
 				addTask(Task.STATUS, Status.HEALTHY, nickname + " became healthy!", this);
 			}
 		}
