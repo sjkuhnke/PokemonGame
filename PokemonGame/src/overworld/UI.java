@@ -1302,6 +1302,7 @@ public class UI extends AbstractUI{
 
 	private void rareCandyState() {
 		drawParty(null);
+		drawItemUsingScreen();
 		
 		if (currentTask == null) {
 			if (gp.player.p.bag.count[Item.RARE_CANDY.getID()] <= 0) {
