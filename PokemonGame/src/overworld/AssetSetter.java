@@ -1322,7 +1322,7 @@ public class AssetSetter {
 			int[] yCoords = new int[] {88, 80, 81, 76, 70, 59, 77, 44, 42, 72};
 			
 			for (int i = 224; i <= 233; i++) {
-				if (!gp.player.p.trainersBeat[i]) {
+				if (gp.player.p.trainersBeat == null || !gp.player.p.trainersBeat[i]) {
 					gp.npc[mapNum][index] = NPCSetup(GRUST, xCoords[i-224], yCoords[i-224], i);
 				} else {
 					gp.npc[mapNum][index++] = null;

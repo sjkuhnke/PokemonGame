@@ -46,12 +46,12 @@ public class Player extends Trainer implements Serializable {
 	public Bag bag;
 	public int badges;
 	public int starter;
-	public int[] pokedex = new int[Pokemon.MAX_POKEMON + 1];
+	public int[] pokedex;
 	public int currentMap;
-	public boolean[] trainersBeat = new boolean[Main.trainers.length];
+	public boolean[] trainersBeat;
 	public boolean[][] itemsCollected;
-	public boolean[] flags = new boolean[GamePanel.MAX_FLAGS];
-	public boolean[] locations = new boolean[12]; // NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
+	public boolean[] flags;
+	public boolean[] locations;
 	public boolean random = false;
 	public boolean ghost = false;
 	public int steps;
@@ -83,6 +83,9 @@ public class Player extends Trainer implements Serializable {
 		posX = 79;
 		posY = 46;
 		
+		pokedex = new int[Pokemon.MAX_POKEMON + 1];
+		flags = new boolean[GamePanel.MAX_FLAGS];
+		locations = new boolean[12]; // NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 		locations[0] = true;
 		bag.add(Item.CALCULATOR);
@@ -144,7 +147,7 @@ public class Player extends Trainer implements Serializable {
 			Pokemon.addSwapOutTask(current);
 		}
 		
-		if (current.ability == Ability.REGENERATOR) {
+		if (current.ability == Ability.REGENERATOR && !current.isFainted()) {
 			current.currentHP += current.getStat(0) / 3;
 			current.verifyHP();
 		}
@@ -293,10 +296,14 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	private void updateTrainers() {
-		boolean[] temp = trainersBeat.clone();
-		trainersBeat = new boolean[Main.trainers.length];
-		for (int i = 0; i < temp.length; i++) {
-			trainersBeat[i] = temp[i];
+		if (trainersBeat != null) {
+			boolean[] temp = trainersBeat.clone();
+			trainersBeat = new boolean[Main.trainers.length];
+			for (int i = 0; i < temp.length; i++) {
+				trainersBeat[i] = temp[i];
+			}
+		} else {
+			trainersBeat = new boolean[Main.trainers.length];
 		}
 	}
 	
@@ -838,7 +845,7 @@ public class Player extends Trainer implements Serializable {
 	        	} else {
 	        		Ability oldAbility = p.ability;
 	        		p.abilitySlot = 1 - p.abilitySlot;
-	        		p.setAbility(p.abilitySlot);
+	        		p.setAbility();
 	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was swapped from " + oldAbility + " to " + p.ability + "!", 40));
 	        	}
 				break;
@@ -856,7 +863,7 @@ public class Player extends Trainer implements Serializable {
 	        		} else {
 	        			p.abilitySlot = 2;
 	        		}
-	        		p.setAbility(p.abilitySlot);
+	        		p.setAbility();
 	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was changed from " + oldAbility + " to " + p.ability + "!", 40));
 	        	}
 				break;

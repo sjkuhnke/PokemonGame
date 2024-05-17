@@ -44,6 +44,7 @@ public class Main {
 	public static Trainer[] trainers;
 	public static ArrayList<Trainer> modifiedTrainers;
 	public static JFrame window;
+	public static GamePanel gp;
 
 	public static void main(String[] args) {
 
@@ -52,16 +53,14 @@ public class Main {
 		window.setResizable(false);
 		window.setTitle("Pokemon Game");
 		
-		GamePanel gamePanel = new GamePanel(window);
+		gp = new GamePanel(window);
 		
-		setTrainers();
-		
-		showStartupMenu(window, gamePanel);
+		showStartupMenu(window);
 	}
 	
 	
 
-	private static void showStartupMenu(JFrame window, GamePanel gp) {
+	private static void showStartupMenu(JFrame window) {
 		WelcomeMenu menu = new WelcomeMenu(window, gp);
 		window.add(menu);
 		
@@ -71,7 +70,7 @@ public class Main {
 		window.setVisible(true);
 	}
 
-	public static void loadSave(JFrame window, GamePanel gamePanel, String fileName, WelcomeMenu welcomeMenu, boolean[] selectedOptions) {
+	public static void loadSave(JFrame window, String fileName, WelcomeMenu welcomeMenu, boolean[] selectedOptions) {
 		try {
 			// Check if the directory exists, create it if not
             Path savesDirectory = Paths.get("./saves/");
@@ -84,32 +83,32 @@ public class Main {
             }
             
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./saves/" + fileName));
-	        gamePanel.player.p = (Player) ois.readObject();
-	        if (gamePanel.player.p.version != Player.VERSION) {
-	        	gamePanel.player.p.update(gamePanel);
+	        gp.player.p = (Player) ois.readObject();
+	        if (gp.player.p.version != Player.VERSION) {
+	        	gp.player.p.update(gp);
 	        } else {
-	        	gamePanel.player.p.setSprites();
+	        	gp.player.p.setSprites();
 	        }
-        	for (Pokemon p : gamePanel.player.p.getTeam()) {
+        	for (Pokemon p : gp.player.p.getTeam()) {
 	            if (p != null) p.clearVolatile();
 	        }
-	        gamePanel.player.worldX = gamePanel.player.p.getPosX();
-	        gamePanel.player.worldY = gamePanel.player.p.getPosY();
-	        gamePanel.currentMap = gamePanel.player.p.currentMap;
-	        if (gamePanel.player.p.surf) {
-	        	for (Integer i : gamePanel.tileM.getWaterTiles()) {
-	        		gamePanel.tileM.tile[i].collision = false;
+	        gp.player.worldX = gp.player.p.getPosX();
+	        gp.player.worldY = gp.player.p.getPosY();
+	        gp.currentMap = gp.player.p.currentMap;
+	        if (gp.player.p.surf) {
+	        	for (Integer i : gp.tileM.getWaterTiles()) {
+	        		gp.tileM.tile[i].collision = false;
 				}
 	        }
-	        if (gamePanel.player.p.lavasurf) {
-	        	for (Integer i : gamePanel.tileM.getLavaTiles()) {
-	        		gamePanel.tileM.tile[i].collision = false;
+	        if (gp.player.p.lavasurf) {
+	        	for (Integer i : gp.tileM.getLavaTiles()) {
+	        		gp.tileM.tile[i].collision = false;
 				}
 	        }
 	        ois.close();
 	    } catch (IOException | ClassNotFoundException e) {
 	        // If there's an error reading the file, create a new Player object
-	        gamePanel.player.p = new Player(gamePanel);
+	        gp.player.p = new Player(gp);
 
 	        String[] options = {"Twigle", "Lagma", "Lizish"};
 	        JPanel optionPanel = new JPanel(new GridLayout(1, options.length));
@@ -126,7 +125,7 @@ public class Main {
 	            int finalChoice = index + 1; // To make the variable effectively final
 	            optionButton.addActionListener(f -> {
 	                // Record the selected choice and close the JOptionPane
-	                gamePanel.player.p.starter = finalChoice;
+	                gp.player.p.starter = finalChoice;
 	                JComponent component = (JComponent) f.getSource();
 	                SwingUtilities.getWindowAncestor(component).dispose();
 	            });
@@ -148,44 +147,44 @@ public class Main {
 	        );
 	        
 	        // Add the chosen starter to the player's team
-	        if (gamePanel.player.p.starter <= 0) gamePanel.player.p.starter = (int)(Math.random() * options.length) + 1;
-	        if (gamePanel.player.p.starter == 1) {
-	            gamePanel.player.p.catchPokemon(new Pokemon(1, 5, true, false));
-	        } else if (gamePanel.player.p.starter == 2) {
-	            gamePanel.player.p.catchPokemon(new Pokemon(4, 5, true, false));
-	        } else if (gamePanel.player.p.starter == 3) {
-	            gamePanel.player.p.catchPokemon(new Pokemon(7, 5, true, false));
+	        if (gp.player.p.starter <= 0) gp.player.p.starter = (int)(Math.random() * options.length) + 1;
+	        if (gp.player.p.starter == 1) {
+	            gp.player.p.catchPokemon(new Pokemon(1, 5, true, false));
+	        } else if (gp.player.p.starter == 2) {
+	            gp.player.p.catchPokemon(new Pokemon(4, 5, true, false));
+	        } else if (gp.player.p.starter == 3) {
+	            gp.player.p.catchPokemon(new Pokemon(7, 5, true, false));
 	        }
 	        Random random = new Random();
 	        int secondStarter = -1;
 	        do {
 	        	secondStarter = random.nextInt(3) + 1;
-	        } while (secondStarter == gamePanel.player.p.starter);
-	        gamePanel.player.p.secondStarter = secondStarter;
+	        } while (secondStarter == gp.player.p.starter);
+	        gp.player.p.secondStarter = secondStarter;
 	        int secondItem = -1;
 	        do {
 	        	secondItem = random.nextInt(3) + 1;
-	        } while (secondItem == gamePanel.player.p.secondStarter);
-	        gamePanel.player.p.scottItem = secondItem;
+	        } while (secondItem == gp.player.p.secondStarter);
+	        gp.player.p.scottItem = secondItem;
 	        
-	        gamePanel.player.p.resistBerries = new Item[20];
+	        gp.player.p.resistBerries = new Item[20];
 	        int count = 0;
 			for (int i = 232; i < 252; i++) {
-				 gamePanel.player.p.resistBerries[count] = Item.getItem(i);
+				 gp.player.p.resistBerries[count] = Item.getItem(i);
 				count++;
 			}
-	        List<Item> berryList = Arrays.asList(gamePanel.player.p.resistBerries);
+	        List<Item> berryList = Arrays.asList(gp.player.p.resistBerries);
 	        Collections.shuffle(berryList);
-	        gamePanel.player.p.resistBerries = berryList.toArray(new Item[1]);
+	        gp.player.p.resistBerries = berryList.toArray(new Item[1]);
 	    }
 		
-		PMap.getLoc(gamePanel.currentMap, (int) Math.round(gamePanel.player.worldX * 1.0 / 48), (int) Math.round(gamePanel.player.worldY * 1.0 / 48));
+		PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
 		window.setTitle("Pokemon Game - " + PlayerCharacter.currentMapName);
 		
-		loadGame(window, gamePanel, welcomeMenu, selectedOptions);
+		loadGame(window, welcomeMenu, selectedOptions);
 	}
 	
-	private static void loadGame(JFrame window, GamePanel gamePanel, WelcomeMenu welcomeMenu, boolean[] selectedOptions) {
+	private static void loadGame(JFrame window, WelcomeMenu welcomeMenu, boolean[] selectedOptions) {
 		window.remove(welcomeMenu);
         window.repaint();
         
@@ -196,9 +195,10 @@ public class Main {
 		    fadePanel.setBounds(0, 0, window.getWidth(), window.getHeight());
 		    window.add(fadePanel, 0); // Add the fadePanel at the bottom layer
 		    
-		    modifyTrainers(gamePanel);
-		    gamePanel.setupGame();
-		    gamePanel.startGameThread();
+		    gp.setupGame();
+		    setTrainers();
+		    modifyTrainers(gp);
+		    gp.startGameThread();
 		    
 		    // Create a Timer to gradually change the opacity of the fadePanel
 		    Timer timer = new Timer(20, null);
@@ -220,15 +220,15 @@ public class Main {
 						}
 		            }
 		            
-		    		if (selectedOptions[0]) writeTrainers(gamePanel);
+		    		if (selectedOptions[0]) writeTrainers(gp);
 		    		if (selectedOptions[1]) writePokemon();
 		    		if (selectedOptions[2]) writeEncounters();
 		    		if (selectedOptions[3]) writeMoves();
 		    		if (selectedOptions[4]) writeDefensiveTypes();
 		    		if (selectedOptions[5]) writeOffensiveTypes();
 		    		
-		    		window.add(gamePanel);
-		    		gamePanel.requestFocusInWindow();
+		    		window.add(gp);
+		    		gp.requestFocusInWindow();
 		    		
 		    		window.pack();
 		    		
@@ -244,10 +244,10 @@ public class Main {
 		                }
 		            });
 		    		
-		    		gamePanel.eHandler.p = gamePanel.player.p;
+		    		gp.eHandler.p = gp.player.p;
 		    		
-		    		if (gamePanel.currentMap == 107 && gamePanel.player.p.flags[28]) {
-		    			gamePanel.tileM.openGhostlyBluePortals();
+		    		if (gp.currentMap == 107 && gp.player.p.flags[28]) {
+		    			gp.tileM.openGhostlyBluePortals();
 		    		}
 		        }
 		    });
@@ -582,6 +582,7 @@ public class Main {
 	}
 
 	private static void setTrainers() {
+		
 		modifiedTrainers = new ArrayList<>();
 		trainers = new Trainer[]{
 				new Trainer("Scott 1", new Pokemon[]{new Pokemon(1, 100, false, true)}, 400),
@@ -988,9 +989,12 @@ public class Main {
 //				new Trainer("8 Gym Leader 2", new Pokemon[]{new Pokemon(-79, 82, false, true), new Pokemon(-102, 83, false, true), new Pokemon(-102, 83, false, true), new Pokemon(-122, 85, false, true), new Pokemon(-79, 82, false, true), new Pokemon(-102, 83, false, true)}, 500),
 //				new Trainer("Rival 7", new Pokemon[]{new Pokemon(-132, 90, false, true), new Pokemon(-25, 71, false, true), new Pokemon(-23, 82, false, true), new Pokemon(-41, 74, false, true), new Pokemon(-79, 88, false, true), new Pokemon(-87, 78, false, true)}, 500),
 		};
+		
+		if (gp.player.p.trainersBeat == null) gp.player.p.trainersBeat = new boolean[Main.trainers.length];
 	}
 	
 	private static void setMoveset(String string, int i, Move a, Move b, Move c, Move d) {
+		if (gp.player.p.random) return;
 		Move[] moves = new Move[] {a, b, c, d};
 		Moveslot[] moveslots = new Moveslot[4];
 		for (int j = 0; j < 4; j++) {
@@ -1011,8 +1015,12 @@ public class Main {
 	private static void setAbility(String string, int i, Ability a, boolean hidden) {
 		for (Trainer tr : trainers) {
 			if (tr.getName().equals(string)) {
-				tr.getTeam()[i - 1].ability = a;
 				tr.getTeam()[i - 1].abilitySlot = hidden ? 2 : 1;
+				if (!gp.player.p.random) {
+					tr.getTeam()[i - 1].ability = a;
+				} else {
+					tr.getTeam()[i - 1].setAbility();
+				}
 				if (!modifiedTrainers.contains(tr)) modifiedTrainers.add(tr);
 			}
 		}

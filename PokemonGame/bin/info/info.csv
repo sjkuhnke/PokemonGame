@@ -23,7 +23,7 @@
 |Centatle     |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[55, 68, 70, 41, 61, 80]      |2.0   |200|
 |Curlatoral   |BUG     |null    |POISON_HEAL       |COMPOUND_EYES     |THREATENING       |[80, 70, 80, 55, 120, 100]    |50.7  |125|
 |Millistone   |BUG     |ROCK    |ROUGH_SKIN        |COMPOUND_EYES     |THREATENING       |[80, 120, 120, 35, 80, 70]    |90.5  |125|
-|Sapwin       |GRASS   |null    |ANGER_POINT       |CHLOROPHYLL       |SAP_SIPPER        |[65, 90, 85, 50, 30, 55]    |100.5 |75 |
+|Sapwin       |GRASS   |null    |ANGER_POINT       |CHLOROPHYLL       |SAP_SIPPER        |[65, 90, 85, 50, 30, 55]      |100.5 |75 |
 |Treewin      |GRASS   |FIGHTING|ANGER_POINT       |CHLOROPHYLL       |SAP_SIPPER        |[100, 120, 110, 55, 35, 55]   |399.9 |50 |
 |Winagrow     |GRASS   |DRAGON  |COMPETITIVE       |CHLOROPHYLL       |TERRIFY           |[120, 75, 80, 115, 80, 90]    |412.5 |30 |
 |Budew        |GRASS   |POISON  |POISON_POINT      |NATURAL_CURE      |CORROSION         |[40, 30, 35, 50, 70, 55]      |2.6   |255|
