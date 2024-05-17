@@ -248,7 +248,7 @@ public class Trainer implements Serializable {
 	
 	private void swap(Pokemon oldP, Pokemon newP) {
 		Pokemon.addSwapOutTask(oldP);
-		if (oldP.ability == Ability.REGENERATOR) {
+		if (oldP.ability == Ability.REGENERATOR && !oldP.isFainted()) {
 			oldP.currentHP += current.getStat(0) / 3;
 			oldP.verifyHP();
 		}

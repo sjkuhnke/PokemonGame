@@ -146,6 +146,8 @@ public class Pokemon implements Serializable {
 	private transient BufferedImage miniSprite;
 	
 	public Pokemon(int i, int l, boolean o, boolean t) {
+		if (gp != null && gp.player.p.random) i = new Random().nextInt(MAX_POKEMON) + 1;
+		
 		id = i;
 		name = getName();
 		nickname = name;
@@ -717,6 +719,10 @@ public class Pokemon implements Serializable {
 	
 	public void setAbility(int slot) {
 		ability = abilities[id - 1][slot];
+	}
+	
+	public void setAbility() {
+		ability = abilities[id - 1][abilitySlot];
 	}
 	
 	public int getLevel() {
@@ -3580,7 +3586,7 @@ public class Pokemon implements Serializable {
 			if (id == 150 && announce) {
 				int oHP = this.getStat(0);
 				id = 237;
-				if (nickname == name) nickname = getName();
+				if (nickname.equals(name)) nickname = getName();
 				
 				baseStats = getBaseStats();
 				setStats();
@@ -3589,7 +3595,7 @@ public class Pokemon implements Serializable {
 				heal(nHP - oHP, nickname + " transformed into Kissyfishy-D!");
 				addTask(Task.SPRITE, "", this);
 				setTypes();
-				setAbility(abilitySlot);
+				setAbility();
 				if (this.playerOwned()) player.pokedex[237] = 2;
 			} else if (id == 237) {
 				stat(this, 0, 1, foe, announce);
@@ -9190,7 +9196,7 @@ public class Pokemon implements Serializable {
 		statStages = new int[7];
 		this.impressive = true;
 		setTypes();
-		setAbility(this.abilitySlot);
+		setAbility();
 		if (this.ability == Ability.NATURAL_CURE) this.status = Status.HEALTHY;
 		
 	}
@@ -11932,7 +11938,7 @@ public class Pokemon implements Serializable {
 	
 	public void update() {
 		baseStats = getBaseStats();
-		setAbility(abilitySlot);
+		setAbility();
 		setMoveBank();
 		setTypes();
 		setSprites();
@@ -12003,4 +12009,6 @@ public class Pokemon implements Serializable {
 		result = "#" + result;
 		return result;
 	}
+
+	
 }

@@ -183,7 +183,7 @@ public class WelcomeMenu extends JPanel {
             };
         	
         	gp.player.currentSave = save;
-        	Main.loadSave(window, gp, save, this, selectedOptions);
+        	Main.loadSave(window, save, this, selectedOptions);
         });
         
         newGameButton.addActionListener(e -> {
@@ -219,7 +219,7 @@ public class WelcomeMenu extends JPanel {
         	save += ".dat";
         	gp.player.currentSave = save;
         	
-        	Main.loadSave(window, gp, save, this, selectedOptions);
+        	Main.loadSave(window, save, this, selectedOptions);
         });
         
         manageButton.addActionListener(e -> {
