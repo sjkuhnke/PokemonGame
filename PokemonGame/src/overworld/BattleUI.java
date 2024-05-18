@@ -994,8 +994,10 @@ public class BattleUI extends AbstractUI {
 		if (uMove != null && uMove.priority < 1 && uMove.hasPriority(user)) ++uP;
 		if (fMove != null && fMove.priority < 1 && fMove.hasPriority(foe)) ++fP;
 		
-		if (uMove != null) uP = user.checkQuickClaw(uP);
-		if (fMove != null) fP = foe.checkQuickClaw(fP);
+		if (uMove != null && fMove != null) {
+			uP = user.checkQuickClaw(uP);
+			fP = foe.checkQuickClaw(fP);
+		}
 		if (uMove != null) uP = user.checkCustap(uP, foe);
 		if (fMove != null) fP = foe.checkCustap(fP, user);
 		

@@ -84,11 +84,6 @@ public class Main {
             
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./saves/" + fileName));
 	        gp.player.p = (Player) ois.readObject();
-	        if (gp.player.p.version != Player.VERSION) {
-	        	gp.player.p.update(gp);
-	        } else {
-	        	gp.player.p.setSprites();
-	        }
         	for (Pokemon p : gp.player.p.getTeam()) {
 	            if (p != null) p.clearVolatile();
 	        }
@@ -199,6 +194,12 @@ public class Main {
 		    setTrainers();
 		    modifyTrainers(gp);
 		    gp.startGameThread();
+		    
+		    if (gp.player.p.version != Player.VERSION) {
+	        	gp.player.p.update(gp);
+	        } else {
+	        	gp.player.p.setSprites();
+	        }
 		    
 		    // Create a Timer to gradually change the opacity of the fadePanel
 		    Timer timer = new Timer(20, null);

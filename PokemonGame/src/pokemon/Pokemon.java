@@ -1477,6 +1477,18 @@ public class Pokemon implements Serializable {
 			critChance = move.critChance;
 		}
 		
+		if (this.ability == Ability.PROTEAN && moveType != PType.UNKNOWN) {
+			if (this.type1 == moveType && this.type2 == null) {
+				
+			} else {
+				this.type1 = moveType;
+				this.type2 = null;
+				//announceUseMove(move);
+				addAbilityTask(this);
+				addTask(Task.TEXT, this.nickname + "'s type was updated to " + this.type1.toString() + "!");
+			}
+		}
+		
 		if (foeAbility == Ability.MAGIC_BOUNCE && move.cat == 2 && (acc <= 100 || move == Move.WHIRLWIND || move == Move.ROAR || move == Move.STEALTH_ROCK
 				|| move == Move.SPIKES || move == Move.TOXIC_SPIKES || move == Move.TOXIC || move == Move.STICKY_WEB)) {
 			useMove(move, foe);
@@ -1709,16 +1721,6 @@ public class Pokemon implements Serializable {
 				this.moveMultiplier = 1;
 				this.impressive = false;
 				return;
-			}
-			
-			if (this.ability == Ability.PROTEAN) {
-				if (this.type1 == moveType && this.type2 == null) {
-					
-				} else {
-					this.type1 = moveType;
-					this.type2 = null;
-					addTask(Task.TEXT, this.nickname + "'s type was updated to " + this.type1.toString() + "!");
-				}
 			}
 			
 			if (move.cat == 2) {
