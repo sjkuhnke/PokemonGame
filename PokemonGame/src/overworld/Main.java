@@ -1489,477 +1489,477 @@ public class Main {
 			double[] chances = new double[Pokemon.MAX_POKEMON + 1];
 			
 			ArrayList<Encounter> encounters = Encounter.getEncounters(0, 73, 39, "Standard", "", false); // route 22
-			writer.write("Route 22");
+			writer.write("Route 22 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(0, 73, 38, "Standard", "", false); // route 23
-			writer.write("Route 23");
+			writer.write("Route 23 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(0, 74, 38, "Standard", "", false); // route 42
-			writer.write("Route 42");
+			writer.write("Route 42 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(0, 74, 38, "Fishing", "", false); // route 42
-			writer.write("Route 42");
+			writer.write("Route 42 (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(0, 74, 38, "Surfing", "", false); // route 42
-			writer.write("Route 42");
+			writer.write("Route 42 (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(4, 73, 43, "Standard", "", false); // route 24
-			writer.write("Route 24 pt. 1");
+			writer.write("Route 24 pt. 1 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(11, 44, 55, "Standard", "", false); // route 24 pt. 2
-			writer.write("Route 24 pt. 2");
+			writer.write("Route 24 pt. 2 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(11, 32, 68, "Standard", "", false); // gelb forest
-			writer.write("Gelb Forest (1A)");
+			writer.write("Gelb Forest (1A) (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(11, 32, 68, "Fishing", "", false); // gelb forest
-			writer.write("Gelb Forest (1A)");
+			writer.write("Gelb Forest (1A) (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(11, 32, 68, "Surfing", "", false); // gelb forest
-			writer.write("Gelb Forest (1A)");
+			writer.write("Gelb Forest (1A) (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(144, 32, 68, "Standard", "", false); // gelb forest 2A
-			writer.write("Gelb Forest (2A)");
+			writer.write("Gelb Forest (2A) (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(11, 42, 52, "Standard", "", false); // route 25
-			writer.write("Route 25");
+			writer.write("Route 25 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(13, 73, 38, "Fishing", "", false); // sicab city
-			writer.write("Sicab City");
+			writer.write("Sicab City (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(13, 73, 38, "Surfing", "", false); // sicab city
-			writer.write("Sicab City");
+			writer.write("Sicab City (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(14, 73, 38, "Standard", "", false); // energy plant A
-			writer.write("Energy Plant A");
+			writer.write("Energy Plant A (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(16, 73, 38, "Standard", "", false); // energy plant B
-			writer.write("Energy Plant B");
+			writer.write("Energy Plant B (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(16, 73, 38, "Fishing", "", false); // energy plant B
-			writer.write("Energy Plant B");
+			writer.write("Energy Plant B (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(16, 73, 38, "Surfing", "", false); // energy plant B
-			writer.write("Energy Plant B");
+			writer.write("Energy Plant B (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(22, 73, 38, "Standard", "", false); // route 40
-			writer.write("Route 40");
+			writer.write("Route 40 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(13, 73, 38, "Standard", "", false); // route 26
-			writer.write("Route 26");
+			writer.write("Route 26 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(24, 73, 38, "Standard", "", false); // mt. splinkty 1A
-			writer.write("Mt. Splinkty 1A");
+			writer.write("Mt. Splinkty 1A (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(24, 73, 38, "Fishing", "", false); // mt. splinkty 1A
-			writer.write("Mt. Splinkty 1A");
+			writer.write("Mt. Splinkty 1A (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(24, 73, 38, "Surfing", "", false); // mt. splinkty 1A
-			writer.write("Mt. Splinkty 1A");
+			writer.write("Mt. Splinkty 1A (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(25, 73, 38, "Standard", "", false); // mt. splinkty 2B
-			writer.write("Mt. Splinkty 2B");
+			writer.write("Mt. Splinkty 2B (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(26, 73, 38, "Standard", "", false); // mt. splinkty 3B
-			writer.write("Mt. Splinkty 3B");
+			writer.write("Mt. Splinkty 3B (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(27, 73, 38, "Standard", "", false); // mt. splinkty 3A
-			writer.write("Mt. Splinkty 3A");
+			writer.write("Mt. Splinkty 3A (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(28, 73, 38, "Standard", "", false); // route 27
-			writer.write("Route 27");
+			writer.write("Route 27 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(28, 73, 57, "Fishing", "", false); // route 41
-			writer.write("Route 41");
+			writer.write("Route 41 (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(28, 73, 57, "Surfing", "", false); // route 41
-			writer.write("Route 41");
+			writer.write("Route 41 (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(28, 73, 57, "Standard", "", false); // route 41
-			writer.write("Route 41");
+			writer.write("Route 41 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(4, 73, 42, "Standard", "", false); // route 36
-			writer.write("Route 36");
+			writer.write("Route 36 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(4, 73, 42, "Fishing", "", false); // route 36
-			writer.write("Route 36");
+			writer.write("Route 36 (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(4, 73, 42, "Surfing", "", false); // route 36
-			writer.write("Route 36");
+			writer.write("Route 36 (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(33, 73, 21, "Standard", "", false); // route 28
-			writer.write("Route 28");
+			writer.write("Route 28 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(35, 73, 42, "Standard", "", false); // electric tunnel 01
-			writer.write("Electric Tunnel 01");
+			writer.write("Electric Tunnel 01 (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(36, 73, 42, "Standard", "", false); // route 29
-			writer.write("Route 29");
+			writer.write("Route 29 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(38, 73, 31, "Standard", "", false); // icy fields
-			writer.write("Icy Fields");
+			writer.write("Icy Fields (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(38, 73, 62, "Standard", "", false); // route 30
-			writer.write("Route 30");
+			writer.write("Route 30 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(38, 73, 62, "Fishing", "", false); // route 30
-			writer.write("Route 30");
+			writer.write("Route 30 (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(38, 73, 62, "Surfing", "", false); // route 30
-			writer.write("Route 30");
+			writer.write("Route 30 (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(33, 0, 33, "Standard", "", false); // peaceful park
-			writer.write("Peaceful Park");
+			writer.write("Peaceful Park (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(33, 0, 33, "Fishing", "", false); // peaceful park
-			writer.write("Peaceful Park");
+			writer.write("Peaceful Park (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(33, 0, 33, "Surfing", "", false); // peaceful park
-			writer.write("Peaceful Park");
+			writer.write("Peaceful Park (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(77, 73, 62, "Surfing", "", false); // mindagan lake
-			writer.write("Mindagan Lake");
+			writer.write("Mindagan Lake (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(77, 73, 62, "Fishing", "", false); // mindagan lake
-			writer.write("Mindagan Lake");
+			writer.write("Mindagan Lake (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(78, 73, 62, "Standard", "", false); // mindagan cavern 1A
-			writer.write("Mindagan Cavern 1A");
+			writer.write("Mindagan Cavern 1A (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(80, 73, 41, "Standard", "", false); // route 31
-			writer.write("Route 31");
+			writer.write("Route 31 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(80, 73, 41, "Fishing", "", false); // route 31
-			writer.write("Route 31");
+			writer.write("Route 31 (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(80, 73, 41, "Surfing", "", false); // route 31
-			writer.write("Route 31");
+			writer.write("Route 31 (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(83, 57, 41, "Standard", "", false); // shadow ravine 1B
-			writer.write("Shadow Ravine 1B");
+			writer.write("Shadow Ravine 1B (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(90, 73, 41, "Standard", "", false); // shadow ravine 0
-			writer.write("Shadow Ravine 0");
+			writer.write("Shadow Ravine 0 (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(83, 58, 41, "Standard", "", false); // route 32
-			writer.write("Route 32");
+			writer.write("Route 32 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(83, 58, 41, "Fishing", "", false); // route 32
-			writer.write("Route 32");
+			writer.write("Route 32 (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(83, 58, 41, "Surfing", "", false); // route 32
-			writer.write("Route 32");
+			writer.write("Route 32 (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(95, 58, 41, "Standard", "", false); // Electric 0
-			writer.write("Electric Tunnel 0");
+			writer.write("Electric Tunnel 0 (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(95, 58, 41, "Fishing", "", false); // Electric 0
-			writer.write("Electric Tunnel 0");
+			writer.write("Electric Tunnel 0 (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(95, 58, 41, "Surfing", "", false); // Electric 0
-			writer.write("Electric Tunnel 0");
+			writer.write("Electric Tunnel 0 (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(96, 58, 41, "Standard", "", false); // Electric -1
-			writer.write("Electric Tunnel -1");
+			writer.write("Electric Tunnel -1 (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(97, 58, 41, "Standard", "", false); // Electric -2
-			writer.write("Electric Tunnel -2");
+			writer.write("Electric Tunnel -2 (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(98, 58, 41, "Standard", "", false); // Electric -3
-			writer.write("Electric Tunnel -3");
+			writer.write("Electric Tunnel -3 (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(98, 58, 41, "Fishing", "", false); // Electric -3
-			writer.write("Electric Tunnel -3");
+			writer.write("Electric Tunnel -3 (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(98, 58, 41, "Surfing", "", false); // Electric -3
-			writer.write("Electric Tunnel -3");
+			writer.write("Electric Tunnel -3 (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(99, 58, 41, "Standard", "", false); // Electric H
-			writer.write("Electric Tunnel H");
+			writer.write("Electric Tunnel H (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(100, 58, 41, "Standard", "", false); // Shadow H
-			writer.write("Shadow Ravine H");
+			writer.write("Shadow Ravine H (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(101, 58, 41, "Standard", "", false); // Shadow -1
-			writer.write("Shadow Ravine -1");
+			writer.write("Shadow Ravine -1 (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(101, 58, 41, "Fishing", "", false); // Shadow -1
-			writer.write("Shadow Ravine -1");
+			writer.write("Shadow Ravine -1 (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(101, 58, 41, "Surfing", "", false); // Shadow -1
-			writer.write("Shadow Ravine -1");
+			writer.write("Shadow Ravine -1 (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(102, 58, 41, "Standard", "", false); // Shadow -2
-			writer.write("Shadow Ravine -2");
+			writer.write("Shadow Ravine -2 (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(102, 58, 41, "Lava", "", false); // Shadow -2
-			writer.write("Shadow Ravine -2");
+			writer.write("Shadow Ravine -2 (Lava)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(103, 58, 41, "Standard", "", false); // Shadow -3
-			writer.write("Shadow Ravine -3");
+			writer.write("Shadow Ravine -3 (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(103, 58, 41, "Lava", "", false); // Shadow -3
-			writer.write("Shadow Ravine -3");
+			writer.write("Shadow Ravine -3 (Lava)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(105, 58, 41, "Standard", "", false); // Shadow Path
-			writer.write("Shadow Path");
+			writer.write("Shadow Path (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(85, 58, 41, "Standard", "", false); // Route 33
-			writer.write("Route 33");
+			writer.write("Route 33 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(85, 58, 41, "Fishing", "", false); // Route 33
-			writer.write("Route 33");
+			writer.write("Route 33 (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(85, 58, 41, "Surfing", "", false); // Route 33
-			writer.write("Route 33");
+			writer.write("Route 33 (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(107, 87, 17, "Standard", "", false); // Ghostly Woods
-			writer.write("Ghostly Woods");
+			writer.write("Ghostly Woods (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(110, 58, 41, "Standard", "", false); // Route 34
-			writer.write("Route 34");
+			writer.write("Route 34 (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(110, 58, 41, "Lava", "", false); // Route 34
-			writer.write("Route 34");
+			writer.write("Route 34 (Lava)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(115, 58, 41, "Standard", "", false); // Route 35
-			writer.write("Route 35");
+			writer.write("Route 35 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(117, 58, 41, "Standard", "", false); // Mindagan Cavern 0
-			writer.write("Mindagan Cavern 0");
+			writer.write("Mindagan Cavern 0 (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(119, 21, 41, "Standard", "", false); // Route 43
-			writer.write("Route 43 (W)");
+			writer.write("Route 43 (W) (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(124, 21, 49, "Standard", "", false); // Route 37
-			writer.write("Route 37");
+			writer.write("Route 37 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(124, 21, 49, "Surfing", "", false); // Route 37
-			writer.write("Route 37");
+			writer.write("Route 37 (Surf)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(124, 21, 49, "Fishing", "", false); // Route 37
-			writer.write("Route 37");
+			writer.write("Route 37 (Fish)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(124, 21, 50, "Standard", "", false); // Route 38
-			writer.write("Route 38");
+			writer.write("Route 38 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(137, 21, 50, "Standard", "", false); // MSJ 1A
-			writer.write("Mt. St. Joseph 1A");
+			writer.write("Mt. St. Joseph 1A (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(138, 21, 50, "Standard", "", false); // MSJ 2A
-			writer.write("Mt. St. Joseph 2A");
+			writer.write("Mt. St. Joseph 2A (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(139, 21, 50, "Standard", "", false); // MSJ 2B
-			writer.write("Mt. St. Joseph 2B");
+			writer.write("Mt. St. Joseph 2B (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(140, 21, 50, "Standard", "", false); // MSJ 3A
-			writer.write("Mt. St. Joseph 3A");
+			writer.write("Mt. St. Joseph 3A (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(141, 21, 50, "Standard", "", false); // MSJ 3B
-			writer.write("Mt. St. Joseph 3B");
+			writer.write("Mt. St. Joseph 3B (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(142, 21, 50, "Standard", "", false); // MSJ 4A
-			writer.write("Mt. St. Joseph 4A");
+			writer.write("Mt. St. Joseph 4A (Floor)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(137, 21, 50, "Lava", "", false); // MSJ 1A
-			writer.write("Mt. St. Joseph 1A/2A/2B/3A/3B/4A");
+			writer.write("Mt. St. Joseph 1A/2A/2B/3A/3B/4A (Lava)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(143, 21, 50, "Lava", "", false); // MSJ 4B
-			writer.write("Mt. St. Joseph 4B");
+			writer.write("Mt. St. Joseph 4B (Lava)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(144, 33, 68, "Standard", "", false); // R44
-			writer.write("Route 44");
+			writer.write("Route 44 (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
 			encounters = Encounter.getEncounters(146, 33, 68, "Standard", "", false); // Mt. Splinkty Outside
-			writer.write("Mt. Splinkty (Outside)");
+			writer.write("Mt. Splinkty (Outside) (Grass)");
 			writer.write(writeEncounter(encounters));
 			allEncounters.addAll(encounters);
 			
@@ -1984,7 +1984,7 @@ public class Main {
 
 
 	private static String writeEncounter(ArrayList<Encounter> encounters) {
-		String result = "===============================================================================================\n";
+		String result = "===================================================================\n";
 		for (Encounter e : encounters) {
 			Pokemon ep = new Pokemon(e.getId(), 5, false, false);
 			String percent = String.format("%.0f", e.getEncounterChance() * 100);

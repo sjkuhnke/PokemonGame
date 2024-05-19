@@ -72,9 +72,9 @@
 |Bouncerog    |WATER   |LIGHT   |TORRENT           |SLUSH_RUSH        |SWIFT_SWIM        |[63, 56, 69, 120, 90, 112]    |25.9  |45 |
 |Bugop        |BUG     |DARK    |TECHNICIAN        |INSOMNIA          |TERRIFY           |[52, 59, 51, 33, 46, 58]      |7.5   |135|
 |Opwing       |BUG     |DARK    |TECHNICIAN        |INSOMNIA          |TERRIFY           |[88, 102, 67, 61, 88, 101]    |18.5  |50 |
-|Hatenna      |PSYCHIC |MAGIC   |ANTICIPATION      |SLIGHT_OF_HAND    |UNWAVERING        |[42, 30, 45, 56, 53, 39]      |7.5   |235|
-|Hattrem      |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |SLIGHT_OF_HAND    |UNWAVERING        |[57, 40, 65, 86, 73, 49]      |10.6  |120|
-|Hatterene    |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |SLIGHT_OF_HAND    |UNWAVERING        |[82, 65, 95, 136, 103, 29]    |11.2  |45 |
+|Hatenna      |PSYCHIC |MAGIC   |ANTICIPATION      |SLEIGHT_OF_HAND   |UNWAVERING        |[42, 30, 45, 56, 53, 39]      |7.5   |235|
+|Hattrem      |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |SLEIGHT_OF_HAND   |UNWAVERING        |[57, 40, 65, 86, 73, 49]      |10.6  |120|
+|Hatterene    |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |SLEIGHT_OF_HAND   |UNWAVERING        |[82, 65, 95, 136, 103, 29]    |11.2  |45 |
 |Otterpor     |WATER   |PSYCHIC |WATER_VEIL        |ANTICIPATION      |HYDRATION         |[55, 19, 66, 74, 99, 20]      |16.6  |75 |
 |Psylotter    |WATER   |PSYCHIC |WATER_VEIL        |SWIFT_SWIM        |HYDRATION         |[71, 48, 87, 102, 106, 86]    |41.0  |45 |
 |Florline     |GRASS   |PSYCHIC |GRASSY_SURGE      |PSYCHIC_SURGE     |UNBURDEN          |[43, 43, 43, 88, 80, 43]      |13.1  |75 |
@@ -104,7 +104,7 @@
 |Houndour     |FIRE    |DARK    |SOLAR_POWER       |FLASH_FIRE        |INTIMIDATE        |[45, 60, 30, 80, 50, 65]      |23.8  |120|
 |Houndoom     |FIRE    |DARK    |SOLAR_POWER       |FLASH_FIRE        |INTIMIDATE        |[75, 90, 50, 110, 80, 95]     |77.2  |45 |
 |Sparkdust    |MAGIC   |null    |MAGIC_GUARD       |SHIELD_DUST       |MAGIC_BOUNCE      |[40, 45, 40, 75, 65, 70]      |3.5   |50 |
-|Splame       |MAGIC   |FIRE    |SLIGHT_OF_HAND    |SHIELD_DUST       |MAGIC_BOUNCE      |[85, 45, 65, 145, 110, 55]    |5.5   |25 |
+|Splame       |MAGIC   |FIRE    |SLEIGHT_OF_HAND   |SHIELD_DUST       |MAGIC_BOUNCE      |[85, 45, 65, 145, 110, 55]    |5.5   |25 |
 |Sparkitten   |FIRE    |LIGHT   |ANTICIPATION      |ANTICIPATION      |NULL              |[60, 70, 65, 70, 65, 70]      |16.0  |110|
 |Fireblion    |FIRE    |null    |DROUGHT           |DROUGHT           |NULL              |[85, 105, 99, 40, 92, 89]     |295.5 |35 |
 |Flamebless   |FIRE    |LIGHT   |COMPETITIVE       |COMPETITIVE       |NULL              |[70, 40, 55, 120, 115, 110]   |125.0 |35 |

@@ -952,6 +952,14 @@ public class UI extends AbstractUI{
 		if (!gauntlet) {
 			g2.drawString("<", headX + gp.tileSize / 2, headTextY);
 			g2.drawString(">", headWidth + headX - gp.tileSize / 2 - 8, headTextY);
+		} else {
+			int x2 = headX + gp.tileSize / 2;
+			int y2 = headTextY - gp.tileSize / 2;
+			int width2 = gp.tileSize / 2;
+			int height2 = gp.tileSize / 2;
+			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
+			x2 = headWidth + headX - gp.tileSize / 2 - gp.tileSize / 3;
+			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
 		}
 		String boxText = gauntlet ? "Gauntlet Box" : "Box " + (cBoxIndex + 1);
 		int centerX = headX + (headWidth / 2);
