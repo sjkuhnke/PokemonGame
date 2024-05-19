@@ -996,7 +996,7 @@ public class BattleUI extends AbstractUI {
 		
 		if (uMove != null && fMove != null) {
 			uP = user.checkQuickClaw(uP);
-			fP = foe.checkQuickClaw(fP);
+			if (!foe.vStatuses.contains(Status.SWAP)) fP = foe.checkQuickClaw(fP);
 		}
 		if (uMove != null) uP = user.checkCustap(uP, foe);
 		if (fMove != null) fP = foe.checkCustap(fP, user);

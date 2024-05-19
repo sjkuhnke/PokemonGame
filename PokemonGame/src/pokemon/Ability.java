@@ -97,7 +97,7 @@ public enum Ability {
 	SHELL_ARMOR("This Pokemon cannot be Critical hit."),
 	SHIELD_DUST("Blocks the added effects of attacks taken."),
 	SIMPLE("The stat changes the Pokemon receives are doubled."),
-	SLIGHT_OF_HAND("Gives priority to MAGIC moves when at full HP."),
+	SLEIGHT_OF_HAND("Gives priority to MAGIC moves when at full HP."),
 	SLUSH_RUSH("Boosts the Pokemon's Speed stat in SNOW."),
 	SNIPER("Powers up moves if they become critical hits."),
 	SNOW_CLOAK("When SNOW is active, this Pokemon is evasive."),

@@ -3091,7 +3091,7 @@ public class Pokemon implements Serializable {
 			boolean announce) {
 		boolean fail = false;
 		if (announce && (move == Move.ABDUCT || move == Move.TAKE_OVER)) {
-			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success)) {
+			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success) && !foe.vStatuses.contains(Status.POSESSED)) {
 				foe.vStatuses.add(Status.POSESSED);
 				addTask(Task.TEXT, this.nickname + " posessed " + foe.nickname + "!");
 			} else { fail = fail(announce); }
@@ -5329,6 +5329,8 @@ public class Pokemon implements Serializable {
 		case 60:
 			movebank = new Node[60];
 			movebank[0] = new Node(Move.FROSTBIND);
+			movebank[0].addToEnd(new Node(Move.GLARE));
+			movebank[0].addToEnd(new Node(Move.POWDER_SNOW));
 			movebank[14] = new Node(Move.ICE_SHARD);
 			movebank[19] = new Node(Move.PSYBEAM);
 			movebank[21] = new Node(Move.SCARY_FACE);
@@ -9884,9 +9886,9 @@ public class Pokemon implements Serializable {
 			this.vStatuses.remove(Status.BONDED);
 		}
 		
-		if (this.ability == Ability.SPEED_BOOST && !this.impressive) {
+		if (this.ability == Ability.SPEED_BOOST && !this.impressive && this.statStages[4] != 6) {
 			addAbilityTask(this);
-			if (this.statStages[4] != 6) stat(this, 4, 1, f);
+			stat(this, 4, 1, f);
 		}
 		
 		if (this.ability == Ability.SHED_SKIN && this.status != Status.HEALTHY) {
@@ -11540,7 +11542,7 @@ public class Pokemon implements Serializable {
 		case 5: return "Maguide -> Magron (lv. 36)";
 		case 7: return "Lizish -> Iguaton (lv. 17)";
 		case 8: return "Iguaton -> Dragave (lv. 36)";
-		case 10: return "Hummingspark -> Flashclaw (lv. 17)";
+		case 10: return "Hummingspark -> Flashclaw (lv. 18)";
 		case 11: return "Flashclaw -> Majestiflash (lv. 36)";
 		case 13: return "Pigo -> Pigonat (lv. 17)";
 		case 14: return "Pigonat -> Pigoga (lv. 32)";
@@ -11552,10 +11554,10 @@ public class Pokemon implements Serializable {
 		case 23: return "Centatle -> Curlatoral (lv. 32)\nCentatle -> Millistone (lv. up in Shadow Ravine)";
 		case 26: return "Sapwin -> Treewin (lv. 28)";
 		case 27: return "Treewin -> Winagrow (Leaf Stone)";
-		case 29: return "Budew -> Roselia (>= 160 happiness)";
+		case 29: return "Budew -> Roselia (160+ happiness)";
 		case 30: return "Roselia -> Roserade (Dawn Stone)";
 		case 32: return "Sewaddle -> Swadloon (lv. 20)";
-		case 33: return "Swadloon -> Leavanny (>= 160 happiness)";
+		case 33: return "Swadloon -> Leavanny (160+ happiness)";
 		case 35: return "Grubbin -> Charjabug (lv. 20)";
 		case 36: return "Charjabug -> Vikavolt (lv. up in Electric Tunnel)";
 		case 38: return "Busheep -> Ramant (Valiant Gem)\nBusheep -> Bushewe (Petticoat Gem)";
@@ -11569,7 +11571,7 @@ public class Pokemon implements Serializable {
 		case 53: return "Carinator -> Cairnasaur (lv. up in Shadow Ravine)";
 		case 55: return "Pebblepup -> Boulderoar (lv. 34)";
 		case 57: return "Fightorex -> Raptorex (lv. 36)";
-		case 59: return "Kleinowl -> Hootowl (>= 160 happiness)";
+		case 59: return "Kleinowl -> Hootowl (160+ happiness)";
 		case 62: return "Snom -> Frosmoth (Ice Stone)";
 		case 64: return "Grondor -> Bipedice (Ice Stone)";
 		case 66: return "Tricerpup -> Tricercil (lv. 48)";
@@ -11603,29 +11605,29 @@ public class Pokemon implements Serializable {
 		case 117: return "Twigzap -> Shockbrach (lv. 19)";
 		case 118: return "Shockbranch -> Thunderzap (Leaf Stone)";
 		case 120: return "Magie -> Cumin (lv. 30)";
-		case 121: return "Cumin -> Cinneroph (>= 250 happiness)";
+		case 121: return "Cumin -> Cinneroph (250+ happiness)";
 		case 123: return "Vupp -> Vinnie (lv. 30)";
-		case 124: return "Vinnie -> Suvinero (>= 250 happiness)";
+		case 124: return "Vinnie -> Suvinero (250+ happiness)";
 		case 126: return "Whiskie -> Whiskers (lv. 30)";
-		case 127: return "Whiskers -> Whiskeroar (>= 250 happiness)";
+		case 127: return "Whiskers -> Whiskeroar (250+ happiness)";
 		case 129: return "Nincada -> Ninjask (lv. 20)";
 		case 132: return "Sheltor -> Shelnado (lv. up in Mindagan Lake)";
-		case 134: return "Lilyray -> Daray (>= 160 happiness)";
+		case 134: return "Lilyray -> Daray (160+ happiness)";
 		case 135: return "Daray -> Spinaquata (lv. 30)";
 		case 137: return "Magikarp -> Gyarados (lv. 20)";
 		case 139: return "Staryu -> Starmie (lv. up in Mindagan Lake)";
 		case 141: return "Ali -> Batorali (Dusk Stone)";
-		case 143: return "Posho -> Shomp (>= 250 happiness)";
+		case 143: return "Posho -> Shomp (250+ happiness)";
 		case 144: return "Shomp -> Poshorump (lv. up in Mindagan Lake)";
 		case 146: return "Binacle -> Barbaracle (lv. 39)";
 		case 148: return "Durfish -> Dompster (lv. up in Mindagan Lake)";
 		case 151: return "Ekans -> Arbok (lv. 22)";
 		case 153: return "Zubat -> Golbat (lv. 22)";
-		case 154: return "Golbat -> Crobat (>= 160 happiness)";
+		case 154: return "Golbat -> Crobat (160+ happiness)";
 		case 156: return "Poof -> Hast (lv. 32)";
 		case 158: return "Poov -> Grust (lv. 30)";
 		case 160: return "Cluuz -> Zurrclu (Dusk Stone)";
-		case 161: return "Zurrclu -> Zurroaratr (>= 250 happiness)";
+		case 161: return "Zurrclu -> Zurroaratr (250+ happiness)";
 		case 163: return "Timburr -> Gurdurr (lv. 25)";
 		case 164: return "Gurdurr -> Conkeldurr (lv. 36)";
 		case 166: return "Rhypo -> Rhynee (lv. 30)";
@@ -11633,7 +11635,7 @@ public class Pokemon implements Serializable {
 		case 169: return "Diggie -> Drillatron (lv. 33)";
 		case 171: return "Wormite -> Wormbot (lv. 20)";
 		case 172: return "Wormbot -> Wormatron (lv. 48)";
-		case 174: return "Cleffa -> Clefairy (>= 160 happiness)";
+		case 174: return "Cleffa -> Clefairy (160+ happiness)";
 		case 175: return "Clefairy -> Clefable (Dawn Stone)";
 		case 177: return "Minishoo -> Glittleshoo (Dawn Stone)";
 		case 179: return "Zorua -> Zoroark (lv. 30)";
@@ -11661,7 +11663,7 @@ public class Pokemon implements Serializable {
 		case 217: return "Wormite-S -> Wormbot-S (lv. 20)";
 		case 218: return "Wormbot-S -> Wormatron-S (lv. 45)";
 		case 220: return "Cluuz-S -> Zurrclu-S (Dusk Stone)";
-		case 221: return "Zurrclu-S -> Zurroaratr-S (>= 250 happiness)";
+		case 221: return "Zurrclu-S -> Zurroaratr-S (250+ happiness)";
 		case 223: return "Iglite-S -> Blaxer-S (lv. 16)";
 		case 224: return "Blaxer-S -> Pyrator-S (lv. 36)";
 		case 226: return "Ekans-S -> Arbok-S (lv. 32)";

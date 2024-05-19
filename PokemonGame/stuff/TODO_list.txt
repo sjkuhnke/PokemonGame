@@ -14,7 +14,7 @@ Quality of Life
 Add exp trainer in Schrice City
 Add a nuzlocke check box when creating a new game
 Ctrl + A = Calc in overworld?
-Make NPCs tell about old 
+Make NPCs tell about old features being updated (deletable HMs, updated moves, etc)
 
 Implementation/Bug Fixes
 Finish TMs (legendaries only)
@@ -24,6 +24,7 @@ Encounters on R43 E over vine cross should be same as R43 W
 Swap in text say "forced out"/"forced in" on random switch ins (Whirlwind etc)
 Make Baton Pass pass perish counter and electromag counter since they're not vStati
 Make info screen show the user and foe's current types
+Life Orb + Assault Vest behind optional trainer(s) in 5th gym split
 
 Ideas
 Make Dark resist Magic and Fighting no longer resist magic? (Would also make Galactic resist Dark again)
