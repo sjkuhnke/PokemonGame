@@ -924,7 +924,7 @@ public enum Move {
 
 	public boolean hasPriority(Pokemon p) {
 		return this.priority >= 1 || (this.cat == 2 && p.ability == Ability.PRANKSTER) ||
-				((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT) && p.ability == Ability.SLIGHT_OF_HAND && p.currentHP == p.getStat(0)) ||
+				((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT) && p.ability == Ability.SLEIGHT_OF_HAND && p.currentHP == p.getStat(0)) ||
 				(p.impressive && p.ability == Ability.AMBUSH);
 	}
 }
