@@ -792,7 +792,7 @@ public class EventHandler {
 			
 			// Rawwar City -> Route 39 gate
 			if (hit(124,32,92)) teleport(151, 31, 34,false);
-			if (hit(151,31,33)) teleport(124, 32, 92,false);
+			if (hit(151,31,33)) teleport(124, 32, 91,false);
 			if (hit(151,31,46)) teleport(152, 30, 8,false);
 			if (hit(152,30,7)) teleport(151, 31, 45,false);
 			

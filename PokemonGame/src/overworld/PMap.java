@@ -158,7 +158,7 @@ public class PMap extends JPanel {
 	    if (locations[10]) {
 	    	IT.setBackground(Color.red);
 	    	IT.addActionListener(e -> {
-	    		fly(IT.getToolTipText(), 0, 35, 45); // TODO
+	    		fly(IT.getToolTipText(), 152, 37, 73);
 	    	});
 	    }
 	    if (loc == 39) IT.setBackground(Color.yellow);
@@ -1088,37 +1088,43 @@ public class PMap extends JPanel {
 		case 150:
 			PlayerCharacter.currentMapName = "Shadow Cavern";
 			return -1;
-		case 151: // TODO from here down
-			PlayerCharacter.currentMapName = "";
-			return 15;
+		case 151:
+			PlayerCharacter.currentMapName = "Rawwar City";
+			return 35;
 		case 152:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			if (y <= 61) {
+				PlayerCharacter.currentMapName = "Route 39";
+				return 38;
+			}
+			if (y > 61) {
+				PlayerCharacter.currentMapName = "Iron Town";
+				return 39;
+			}
 		case 153:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Iron Town";
+			return 39;
 		case 154:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Iron Town";
+			return 39;
 		case 155:
-			PlayerCharacter.currentMapName = "";
-			return 4;
+			PlayerCharacter.currentMapName = "Iron Town";
+			return 39;
 		case 156:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Iron Town";
+			return 39;
 		case 157:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Iron Town";
+			return 39;
 		case 158:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Iron Town";
+			return 39;
 		case 159:
-			PlayerCharacter.currentMapName = "";
-			return 20;
+			PlayerCharacter.currentMapName = "Outer Space";
+			return -1;
 		case 160:
-			PlayerCharacter.currentMapName = "";
-			return 28;
-		case 161:
+			PlayerCharacter.currentMapName = "Outer Space";
+			return -1;
+		case 161: // TODO from here down
 			PlayerCharacter.currentMapName = "";
 			return 15;
 		case 162:

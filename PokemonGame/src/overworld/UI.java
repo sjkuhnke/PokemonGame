@@ -72,6 +72,8 @@ public class UI extends AbstractUI{
 	
 	BufferedImage transitionBuffer;
 	
+	private BufferedImage[] bagIcons;
+	
 	public static final int MAX_SHOP_COL = 10;
 	public static final int MAX_SHOP_ROW = 4;
 	
@@ -90,6 +92,12 @@ public class UI extends AbstractUI{
 			marumonica = Font.createFont(Font.TRUETYPE_FONT, is);
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
+		}
+		
+		bagIcons = new BufferedImage[5];
+		for (int i = 0; i < 5; i++) {
+			String imageName = Item.getPocketName(i + 1).toLowerCase().replace(' ', '_');
+			bagIcons[i] = setup("/menu/" + imageName, 2);
 		}
 	}
 	
@@ -1718,20 +1726,33 @@ public class UI extends AbstractUI{
 	
 	private void showBag() {
 		int x = gp.tileSize * 6;
-		int y = gp.tileSize / 2;
+		int y = 0;
 		int width = gp.tileSize * 8;
-		int height = gp.tileSize;
+		int height = (int) (gp.tileSize * 2.5);
 		drawSubWindow(x, y, width, height);
-		String pocketName = Item.getPocketName(currentPocket);
-		g2.drawString(pocketName, this.getCenterAlignedTextX(pocketName, x + (width / 2)), (int) (y + gp.tileSize * 0.75));
+		int startX = x;
+		int startY = y + height;
+		x += gp.tileSize / 2;
+		y += gp.tileSize / 3;
+		for (int i = 0; i < 5; i++) {
+			g2.drawImage(bagIcons[i], x, y, null);
+			if (currentPocket - 1 == i) {
+				g2.drawRoundRect(x, y, gp.tileSize, gp.tileSize, 10, 10);
+			}
+			x += gp.tileSize * 1.5;
+		}
 		
-		y += gp.tileSize;
-		height = gp.tileSize * 10;
+		x = startX;
+		String pocketName = Item.getPocketName(currentPocket);
+		g2.drawString(pocketName, this.getCenterAlignedTextX(pocketName, x + (width / 2)), (int) (y + gp.tileSize * 1.75));
+		
+		y = startY;
+		height = (int) (gp.tileSize * 9.5);
 		
 		drawSubWindow(x, y, width, height);
 		
 		int descX = gp.tileSize / 2;
-		int descY = gp.tileSize * 2;
+		int descY = (int) (gp.tileSize * 2.5);
 		int descWidth = (int) (gp.tileSize * 5.5);
 		int descHeight = gp.tileSize * 8;
 		drawSubWindow(descX, descY, descWidth, descHeight);
@@ -1771,7 +1792,7 @@ public class UI extends AbstractUI{
 		// Down Arrow
 		if (bagNum + 9 < currentItems.size()) {
 			int x2 = gp.tileSize * 5 + width;
-			int y2 = height + (gp.tileSize / 2);
+			int y2 = (int) (height + (gp.tileSize * 1.5));
 			int width2 = gp.tileSize / 2;
 			int height2 = gp.tileSize / 2;
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
@@ -1779,7 +1800,7 @@ public class UI extends AbstractUI{
 		// Up Arrow
 		if (bagNum != 0 && bagState != 2) {
 			int x2 = gp.tileSize * 5 + width;
-			int y2 = gp.tileSize * 2;
+			int y2 = gp.tileSize * 3;
 			int width2 = gp.tileSize / 2;
 			int height2 = gp.tileSize / 2;
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);

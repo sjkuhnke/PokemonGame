@@ -184,7 +184,7 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 157, true);
 		loadMap("/maps/house04.txt", 158, true);
 		loadMap("/maps/gym08.txt", 159, true);
-		loadMap("/maps/space01.txt", 160, true);
+		loadMap("/maps/space01.txt", 160, false);
 	}
 	
 	public void getTileImage() {
