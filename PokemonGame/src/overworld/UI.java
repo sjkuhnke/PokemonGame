@@ -1814,7 +1814,7 @@ public class UI extends AbstractUI{
 				} else if (selectedBagNum == bagNum) {
 					selectedBagNum = -1;
 				} else {
-					gp.player.p.moveItem(currentItems.get(selectedBagNum).getItem(), currentItems.get(bagNum).getItem());
+					gp.player.p.moveItem(indexOf(gp.player.p.bag.itemList, currentItems.get(selectedBagNum).getItem().getID()), indexOf(gp.player.p.bag.itemList, currentItems.get(bagNum).getItem().getID()));
 					currentItems = gp.player.p.getItems(currentPocket);
 					selectedBagNum = -1;
 					if (bagNum > 0) bagNum--;
@@ -1835,6 +1835,15 @@ public class UI extends AbstractUI{
 		}
 		
 		drawToolTips("OK", "Swap", "Back", "Back");
+	}
+	
+	private int indexOf(int[] array, int target) {
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] == target) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private void drawItemOptions() {

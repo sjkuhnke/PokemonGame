@@ -2,22 +2,31 @@ package pokemon;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Bag implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public ArrayList<Item> bag;
+	public int[] itemList;
 	public int[] count;
 	
 	public Bag() {
-		bag = new ArrayList<>(Arrays.asList(Item.values()));
-		count = new int[Item.values().length];
-		bag.remove(Item.NULL260);
+		Item[] items = Item.values();
+		itemList = setupItemList(items);
+		count = new int[items.length];
 	}
 	
+	private int[] setupItemList(Item[] items) {
+		int[] result = new int[items.length];
+		int index = 0;
+		for (Item i : items) {
+			result[index] = i.getID();
+			index++;
+		}
+		return result;
+	}
+
 	public void add(Item item) {
 		count[item.getID()]++;
 	}
@@ -32,9 +41,9 @@ public class Bag implements Serializable {
 	
 	public ArrayList<Entry> getItems() {
 		ArrayList<Entry> items = new ArrayList<>();
-		for (Item i : bag) {
-			if (i.getID() >= count.length || count[i.getID()] <= 0) continue;
-			items.add(new Entry(i, count[i.getID()]));
+		for (int i : itemList) {
+			if (i >= count.length || count[i] <= 0) continue;
+			items.add(new Entry(Item.getItem(i), count[i]));
 		}
 		return items;
 	}
