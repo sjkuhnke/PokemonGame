@@ -538,12 +538,11 @@ public class Player extends Trainer implements Serializable {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
 		JTextField[] counts = new JTextField[bag.count.length];
-		Item[] items = Item.values();
 		
 		for (int i = 0; i < counts.length; i++) {
 			final int index = i;
 			JPanel member = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			member.add(new JLabel(items[i].toString()));
+			member.add(new JLabel(Item.getItem(i).toString()));
 			
 			counts[i] = new JTextField(bag.count[i] + "");
 			counts[i].setPreferredSize(new Dimension(40, counts[i].getPreferredSize().height));

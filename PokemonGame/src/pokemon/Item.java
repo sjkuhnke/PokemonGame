@@ -916,13 +916,12 @@ public enum Item {
         JButton fInfoButton = new JButton("   Info   ");
         
         ArrayList<Item> items = new ArrayList<>();
-        Item[] allItems = Item.values();
         items.add(null);
         for (int i = 47; i < 89; i++) {
-        	items.add(allItems[i]);
+        	items.add(Item.getItem(i));
         }
         for (int i = 201; i < 259; i++) {
-        	items.add(allItems[i]);
+        	items.add(Item.getItem(i));
         }
         
         abilityLabel.addMouseListener(new MouseAdapter() {
