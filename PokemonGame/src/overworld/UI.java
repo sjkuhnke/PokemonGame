@@ -1831,7 +1831,7 @@ public class UI extends AbstractUI{
 		} else if (bagState == 2) {
 			drawSellOptions();
 		} else if (bagState == 3) {
-			drawMoveSummary(gp.tileSize / 2, gp.tileSize * 6, null, null, null, currentItems.get(bagNum).getItem().getMove());
+			drawMoveSummary(gp.tileSize / 2, (int) (gp.tileSize * 6.5), null, null, null, currentItems.get(bagNum).getItem().getMove());
 		}
 		
 		drawToolTips("OK", "Swap", "Back", "Back");

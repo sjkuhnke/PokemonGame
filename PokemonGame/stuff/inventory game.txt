@@ -67,29 +67,7 @@ Game2.9: League is beatable 7/1
 
 Ice Beam (Deep Chasm)
 Iron Head (Iron Town Area)
-Magic Tomb 7
-Flamethrower (Mt. St. Joseph Peak)
-Star Storm 6
-Galaxy Blast 8
-
-HammyBoy (0)
-Bouncerog (2)
-Fireblion (1)
-Shockbranch (0)
-Zurrclu (2)
-Draga (0)
-Blobmo
-Nebulimb
-Rockmite
-Poof-E
-Droid-E
-Flamehox-E
-Blastflames-E
-Boulder-E
-Shockfang
-Electrocobra
-Nightrex
-Durfish-S
+Galaxy Blast (Space)
 
 Codes:
 RAR3: sets Rare Candy count to 999
@@ -98,7 +76,7 @@ BALLZ: sets 25 count of Pokeball, Great Ball and Ultra Ball
 GASTLY: toggles collision
 R: randomizes movebanks for party
 LIGMA: heals team
-KANY3: sets money to 1,000,000
+KANY3: sets money to 1,000,000 and resets all item pickups
 Ben: catches lv 5 Scraggy
 anyi <id> <amt>: gives <id> item, <amt> amount
 Shae <id> <level>: catches <id> pokemon, <level> level
@@ -109,23 +87,27 @@ HP: displays hidden power types for whole team
 nei: fills out entire pokedex with complete
 GENN: opens generate panel
 ASH KETCHUP: makes all trainers battlable again
+exptrainer: exports trainers beaten to a txt
+expitem: exports items gotten to a txt
+EDGEMEDADDY: gives player an edge kit
+GIMMIE: sets count to 1 for every item
 
-Hummingspark -> Sparklet/Chivick/Shimmick/Hummisong/Throchirp
-Flashclaw -> Humbrill/Billumina/Photochili
+Hummingspark -> Sparklet/Chivick/Shimmick/Hummisong/Throchirp   Chivick
+Flashclaw -> Humbrill/Billumina/Photochili   Humbrill
 Majestiflash -> Vivolant/Prismalon/Huminescence
-Pigo -> Scigeon
-Pigonat -> Thieven/Shruv
-Pigoga -> Armraven/Armoraven
-Hammo -> Piggly/Hammo
-HammyBoy -> Grunswine
-Hamthorno -> Hoghoncho
-Sheabear -> Grisly/Teddull
-Dualbear -> Teddigician/Sorcerbear
-Spacebear -> Teddinaut/Ursanaut
-Bealtle -> Minipede
-Centatle -> Morphopede
-Curlatoral -> Megapede
-Millistone -> Purpypede
+Pigo -> Scigeon   Scigeon
+Pigonat -> Thieven/Shruv   Thieven
+Pigoga -> Armraven/Armoraven   Armoraven
+Hammo -> Piggly/Hammo   Hammo
+HammyBoy -> Grunswine   Grunswine
+Hamthorno -> Hoghoncho   Hoghoncho
+Sheabear -> Grisly/Teddull   Teddull
+Dualbear -> Teddician/Sorcerbear   Teddician
+Spacebear -> Teddinaut/Ursanaut   Teddinaut
+Bealtle -> Minipede   Minipede
+Centatle -> Morphopede/Milimace   Morphopede
+Curlatoral -> Megapede/Centinel   Megapede
+Millistone -> Purpypede/Terrapleura
 Sapwin -> Rootle/Ferndish
 Treewin -> Kappalm/Shrubbully
 Winagrow -> Serpenge/Verdrake
@@ -135,8 +117,8 @@ Bushewe ->
 Bugik -> Bealiddle/Beatiny/Centidden
 Swordik -> Scarabit/Scimitarb/Spartipede/Scarabrute
 Ninjakik -> Bedental/Bidentalis/Beadental/Gladipede/Vermarshal
-Bluebunn -> Willolagos
-Rocky -> Sedinister
+Bluebunn -> Willolagos/Willagos
+Rocky -> Sedinister/Sedister
 Boulder -> Metaslate
 Blaster -> Sedisoftra
 Crystallor -> Obsidicite/Prismodon
@@ -147,13 +129,13 @@ Pebblepup -> Sabretite/Sabore/Bitiger/Kiteeth/Sabare/Machairoc/Sabrunt
 Boulderoar -> Staglodon/Graniteeth/Saberock/Stalagbite/Statatrox/Terratooth
 Fightorex -> Rexisilt
 Raptorex -> Pterator
-Kleinowl -> Frostus/Owlcicle/Hoover/Snowl/Snowlet
-Hootowl -> Nixnerva/Clairfrost/Zeroost/Devasnowl
-Dualmoose -> Cervora
-Grondor ->
-Bipedice ->
-Tricerpup ->
-Tricercil ->
+Kleinowl -> Frostus/Owlcicle/Hoover/Snowl/Snowlet   Snowlet
+Hootowl -> Nixnerva/Clairfrost/Zeroost/Devasnowl   Nixnerva
+Dualmoose -> Cervora   Cervora
+Grondor -> Grislush
+Bipedice -> Thalarctic
+Tricerpup -> Ceramber
+Tricercil -> Topazatops
 Froshrog -> Flashrog/Amphibulb/Ribblink
 Bouncerog -> Blitzoad
 Bugop -> Lunymph
@@ -166,24 +148,60 @@ Psycorb -> Psycorb/Orbronze
 Psyballs -> Silvidol/Silvicle
 Psycorboratr -> Auracle
 
+Iglite -> Sember
+Blaxer -> Kaboon
+Pyrator -> Detonape
 
-Trainer Classes:
-Ace Trainer
-Actor
-Actress
-Team Nuke Grunt
-Team Nuke Admin
-Team Nuke Boss
-Rival Scott
-Rival Fred
-Athlete
+
+Trainer Classes: Ice
+Ace Trainer (mixed types/dragon)
+Actor (Light/Normal)
+Actress (Light/Normal)
+Team Nuke Grunt redo
+Team Nuke Admin redo
+Team Nuke Boss redo
+Rival Scott redo
+Rival Fred redo
+Athlete (Fire/Electric)
+Backpacker/Hiker (Ground/Rock/Steel)
+Burglar (Crook/Dark)
+Bird Keeper (Flying)
+Black Belt (Fighting)
+Bug Catcher (Bug)
+Camper (Bug/Grass)
+Student (Normal)
+Fisher (Water)
+Surfer (Male)
+Swimmer (Female)
+Gentleman
+Maniac (Ghost)
+Magician (Magic)
+Psychic ('')
+Pokemon Professor
+Male Block/Female Block
+Astronomer (Galactic)
+Youngster (Normal/Poison)
+Ryder
+Elite Four Poison (chemist)/Ground/Fighting/Steel
+Gym Leader redos
+
+
 
 Gym Leader Names:
-Robin
+Robin (postman)
 Stanford
-Millie
+Millie (child actor)
 Glacius
 Mindy
 Rayna
 Merlin
 Nova
+
+Town Names:
+New Minnow ->
+Bananaville Town -> Emeryii Town
+Poppy Grove -> 
+Sicab City -> 
+Frenco City -> Marlin City
+Electric Tunnel -> Alumos Tunnel
+Shadow Ravine -> Nyxus Ravine

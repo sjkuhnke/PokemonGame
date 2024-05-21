@@ -442,13 +442,24 @@ public class GamePanel extends JPanel implements Runnable {
 	private void drawOverworldToolTips(Graphics2D g2) {
 		if (!keyH.shiftPressed || gameState != PLAY_STATE) return;
 		int x = 0;
-		int y = tileSize * 9;
-		int width = tileSize * 8;
+		int y = (int) (tileSize * 7.5);
+		int width = tileSize * 4;
 		int height = (int) (tileSize * 1.5);
 		
 		ui.drawSubWindow(x, y, width, height);
 		
 		g2.setFont(g2.getFont().deriveFont(24F));
+		x += tileSize / 2;
+		y += tileSize;
+		
+		g2.drawString("[Ctrl]+[A] Calc", x, y);
+		
+		width = tileSize * 8;
+		x -= tileSize / 2;
+		y += tileSize / 2;
+		
+		ui.drawSubWindow(x, y, width, height);
+		
 		x += tileSize / 2;
 		y += tileSize;
 		

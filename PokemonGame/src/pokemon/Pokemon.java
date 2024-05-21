@@ -2372,7 +2372,7 @@ public class Pokemon implements Serializable {
 	                remainingExp--;
 	            }
 	            if (p.level < 100) {
-	            	if (p.item == Item.LUCKY_EGG) expAwarded *= 1.5;
+	            	if (p.item == Item.LUCKY_EGG) expAwarded = (int) Math.ceil(expAwarded * 1.5);
 	                p.exp += expAwarded;
 	                String flavor = p.item == Item.LUCKY_EGG ? "a boosted " : p.item == Item.EXP_SHARE && !p.visible ? "a shared " : "";
                 	Task t = addTask(Task.EXP, p.nickname + " gained " + flavor + expAwarded + " experience points!", p);
@@ -5064,7 +5064,7 @@ public class Pokemon implements Serializable {
 			movebank[49] = new Node(Move.HYDRO_PUMP);
 			break;
 		case 46:
-			movebank = new Node[1];
+			movebank = new Node[50];
 			movebank[0] = new Node(Move.TEETER_DANCE);
 			movebank[0].addToEnd(new Node(Move.THIEF));
 			movebank[0].addToEnd(new Node(Move.FAKE_OUT));
@@ -5074,10 +5074,11 @@ public class Pokemon implements Serializable {
 			movebank[0].addToEnd(new Node(Move.BUBBLEBEAM));
 			movebank[0].addToEnd(new Node(Move.GIGA_DRAIN));
 			movebank[0].addToEnd(new Node(Move.KNOCK_OFF));
-			movebank[0].addToEnd(new Node(Move.RAIN_DANCE));
 			movebank[0].addToEnd(new Node(Move.ZEN_HEADBUTT));
+			movebank[0].addToEnd(new Node(Move.RAIN_DANCE));
 			movebank[0].addToEnd(new Node(Move.ENERGY_BALL));
 			movebank[0].addToEnd(new Node(Move.HYDRO_PUMP));
+			movebank[49] = new Node(Move.LEECH_SEED);
 			break;
 		case 47:
 			movebank = new Node[70];
@@ -11668,7 +11669,7 @@ public class Pokemon implements Serializable {
 		case 224: return "Blaxer-S -> Pyrator-S (lv. 36)";
 		case 226: return "Ekans-S -> Arbok-S (lv. 32)";
 		case 238: return "Scraggy -> Scrafty (lv. 39)";
-		case 239: return "Scrafty -> Scraftagon (>= 5 Headbutt Crits in Trainer Battles)";
+		case 239: return "Scrafty -> Scraftagon (5+ Headbutt Crits in Trainer Battles)";
 		default:
 			return null;
 		}

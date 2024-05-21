@@ -384,10 +384,15 @@ public class PlayerCharacter extends Entity {
 			}
 		}
 		if (keyH.aPressed) {
-			if (p.fish) {
-				int result = gp.cChecker.checkTileType(this);
-				if (result == 3 || (result >= 24 && result <= 36) || (result >= 313 && result <= 324)) {
-					gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, "Fishing");
+			if (keyH.ctrlPressed) {
+				keyH.ctrlPressed = false;
+				Item.useCalc(p, null);
+			} else {
+				if (p.fish) {
+					int result = gp.cChecker.checkTileType(this);
+					if (result == 3 || (result >= 24 && result <= 36) || (result >= 313 && result <= 324)) {
+						gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, "Fishing");
+					}
 				}
 			}
 		}
@@ -1212,6 +1217,11 @@ public class PlayerCharacter extends Entity {
 			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("EDGEMEDADDY")) {
 			p.bag.add(Item.EDGE_KIT);
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("GIMMIE")) {
+			for (int i = 0; i < p.bag.count.length; i++) {
+				p.bag.count[i] = 1;
+			}
 			SwingUtilities.getWindowAncestor(cheats).dispose();
 		}
 	}
