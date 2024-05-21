@@ -1839,7 +1839,7 @@ public class UI extends AbstractUI{
 
 	private void drawItemOptions() {
 		int x = gp.tileSize * 12;
-		int y = (int) (gp.tileSize * 1.5);
+		int y = (int) (gp.tileSize * 2.5);
 		int width = gp.tileSize * 3;
 		int height = (int) (gp.tileSize * 3.5);
 		drawSubWindow(x, y, width, height);
