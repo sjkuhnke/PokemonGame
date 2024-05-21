@@ -425,12 +425,9 @@ public enum Item {
 	
 	public static ArrayList<Move> getTMs() {
 		ArrayList<Move> result = new ArrayList<>();
-		Item[] items = Item.values();
 
 		for (int i = 93; i <= 199; i++) {
-            if (i < items.length) {
-                result.add(items[i].getMove());
-            }
+            result.add(Item.getItem(i).getMove());
         }
 		
 		return result;
