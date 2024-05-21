@@ -72,7 +72,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 10;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 17;
+	public static final int VERSION = 18;
 	
 	public Player(GamePanel gp) {
 		super(true);
@@ -654,10 +654,22 @@ public class Player extends Trainer implements Serializable {
 		return result;
 	}
 
-	public void moveItem(Item item, Item addAbove) {
-		bag.bag.remove(item);
-		int index = bag.bag.indexOf(addAbove);
-		bag.bag.add(index, item);
+	public void moveItem(int moveIndex, int moveAboveIndex) {
+		int itemID = bag.itemList[moveIndex];
+		
+		if (moveIndex > moveAboveIndex) {
+			for (int i = moveIndex; i > moveAboveIndex; i--) {
+				bag.itemList[i] = bag.itemList[i - 1];
+			}
+			bag.itemList[moveAboveIndex] = itemID;
+		} else if (moveIndex < moveAboveIndex) {
+			for (int i = moveIndex; i < moveAboveIndex - 1; i++) {
+				bag.itemList[i] = bag.itemList[i + 1];
+			}
+			bag.itemList[moveAboveIndex - 1] = itemID;
+		} else {
+			throw new IllegalStateException("moveIndex can't equal moveAboveIndex");
+		}
 	}
 
 	public void sellItem(Item item, int amt) {
@@ -1089,11 +1101,14 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	private void updateBag() {
-		Bag temp = new Bag();
-		if (bag.bag.size() == temp.bag.size()) return;
+		Item[] items = Item.values();
+		if (bag.itemList != null && items.length == bag.itemList.length) return;
+		
 		int[] counts = bag.count;
 		bag = new Bag();
-		bag.count = counts;
+		for (int i = 0; i < counts.length; i++) {
+			bag.count[i] = counts[i];
+		}
 	}
 
 	public void setSprites() {
