@@ -56,6 +56,12 @@ public enum Item {
 	REVIVE(16,500,250,new Color(219, 194, 0),Item.MEDICINE,null,"Recovers a Pokemon from fainting with 50% HP"),
 	MAX_REVIVE(17,1000,500,new Color(219, 194, 0),Item.MEDICINE,null,"Recovers a Pokemon from fainting with full HP"),
 	RARE_CANDY(18,0,0,new Color(124, 54, 255),Item.MEDICINE,null,"Elevates a Pokemon by 1 level"),
+	ELIXIR(40,200,100,new Color(230, 146, 78),Item.MEDICINE,null,"Restores PP of a selected move"),
+	MAX_ELIXIR(41,250,200,new Color(246, 255, 120),Item.MEDICINE,null,"Restores PP of all moves on a Pokemon"),
+	PP_UP(42,2500,1000,new Color(150, 51, 156),Item.MEDICINE,null,"Increases max PP of a selected move by 20%"),
+	PP_MAX(43,0,1500,new Color(142, 230, 21),Item.MEDICINE,null,"Increases max PP of a selected move by its max PP, which is 160%"),
+	BOTTLE_CAP(27,1000,500,new Color(192, 192, 192),Item.OTHER,null,"Maxes out an IV of choosing"),
+	GOLD_BOTTLE_CAP(28,0,1000,new Color(255, 215, 0),Item.OTHER,null,"Maxes out all IVs of a Pokemon"),
 	EUPHORIAN_GEM(19,500,250,new Color(138, 237, 255),Item.OTHER,null,"Grants a Pokemon 100 friendship points"),
 	LEAF_STONE(20,1000,500,new Color(0, 120, 20),Item.OTHER,null,"Evolves a certain species of Pokemon"),
 	DUSK_STONE(21,1000,500,new Color(64, 64, 64),Item.OTHER,null,"Evolves a certain species of Pokemon"),
@@ -64,8 +70,7 @@ public enum Item {
 	VALIANT_GEM(24,2000,500,new Color(72, 75, 219),Item.OTHER,null,"Grants Masculine energy to a Pokemon, evolving them into their male evolution"),
 	PETTICOAT_GEM(25,2000,500,new Color(204, 61, 140),Item.OTHER,null,"Grants Feminine energy to a Pokemon, evolving them into their female evolution"),
 	ABILITY_CAPSULE(26,2500,1250,new Color(102, 7, 143),Item.OTHER,null,"Swaps a Pokemon's ability with its other possible ability"),
-	BOTTLE_CAP(27,1000,500,new Color(192, 192, 192),Item.OTHER,null,"Maxes out an IV of choosing"),
-	GOLD_BOTTLE_CAP(28,0,1000,new Color(255, 215, 0),Item.OTHER,null,"Maxes out all IVs of a Pokemon"),
+	ABILITY_PATCH(91,0,0,Color.BLACK,Item.OTHER,null,"A patch that can be used to change the regular Ability of a Pokemon to a rarer Ability."),
 	ADAMANT_MINT(29,2500,1000,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +Atk, -SpA"),
 	BOLD_MINT(30,1750,750,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +Def, -Atk"),
 	BRAVE_MINT(31,1000,250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +Atk, -Spe"),
@@ -77,11 +82,6 @@ public enum Item {
 	QUIET_MINT(37,1000,250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +SpA, -Spe"),
 	SERIOUS_MINT(38,1250,300,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to Neutral"),
 	TIMID_MINT(39,2500,1250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +Spe, -Atk"),
-	ELIXIR(40,200,100,new Color(230, 146, 78),Item.MEDICINE,null,"Restores PP of a selected move"),
-	MAX_ELIXIR(41,250,200,new Color(246, 255, 120),Item.MEDICINE,null,"Restores PP of all moves on a Pokemon"),
-	PP_UP(42,2500,1000,new Color(150, 51, 156),Item.MEDICINE,null,"Increases max PP of a selected move by 20%"),
-	PP_MAX(43,0,1500,new Color(142, 230, 21),Item.MEDICINE,null,"Increases max PP of a selected move by its max PP, which is 160%"),
-	EDGE_KIT(44,0,0,new Color(232, 52, 54),Item.OTHER,null,"Edges ;) your Pokemon until they're about to bust :{D"),
 	THUNDER_SCALES_FOSSIL(45,5000,1000,new Color(201, 169, 81),Item.OTHER,null,"A fossil of an ancient Pokemon that lived in a desert. It appears to have an electric charge ridden in the scales."),
 	DUSK_SCALES_FOSSIL(46,5000,1000,new Color(45, 47, 51),Item.OTHER,null,"A fossil of an ancient Pokemon that lived in a forest. It appears to give off a dark energy within the scales."),
 	CHOICE_BAND(47,0,0,new Color(224, 152, 159),Item.HELD_ITEM,null,"A curious headband that boosts the holder's Attack stat but only allows the use of a single move."),
@@ -118,18 +118,17 @@ public enum Item {
 	SHED_SHELL(78,0,200,new Color(243, 241, 140),Item.HELD_ITEM,null,"Hard and sturdy, this discarded carapace enables the holder to switch out of battle without fail."),
 	MUSCLE_BAND(79,0,150,new Color(225, 200, 50),Item.HELD_ITEM,null,"This headband exudes strength, slightly boosting the power of the holder's physical moves."),
 	WISE_GLASSES(80,0,150,new Color(92, 105, 117),Item.HELD_ITEM,null,"This thick pair of glasses slightly boosts the power of the holder's special moves."),
+	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
+	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
 	FOCUS_SASH(81,0,500,new Color(232, 80, 80),Item.HELD_ITEM,null,"If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP—but only once."),
 	AIR_BALLOON(82,0,300,new Color(232, 72, 72),Item.HELD_ITEM,null,"This balloon makes the holder float in the air. If the holder is hit with an attack, the balloon will burst."),
 	POWER_HERB(83,0,50,new Color(253, 80, 77),Item.HELD_ITEM,null,"A herb that allows the holder to immediately use a move that normally requires a turn to charge—but only once."),
 	WHITE_HERB(84,0,50,new Color(242, 242, 242),Item.HELD_ITEM,null,"A herb that will restore any lowered stat in battle—but only once."),
+	MENTAL_HERB(92,0,0,Color.BLACK,Item.HELD_ITEM,null,"An item to be held by a Pokemon. The holder shakes off move-binding effects to move freely. It can be used only once."),
 	WEAKNESS_POLICY(85,0,400,new Color(215, 233, 195),Item.HELD_ITEM,null,"If the holder is hit with a move it's weak to, this policy sharply boosts its Attack and Sp. Atk stats."),
 	BLUNDER_POLICY(86,0,400,new Color(239, 239, 178),Item.HELD_ITEM,null,"If the holder misses with a move due to low accuracy, this policy will sharply boost its Speed stat."),
 	RED_CARD(87,0,250,new Color(216, 35, 22),Item.HELD_ITEM,null,"If the holder is damaged by an attack, the mysterious power of this card can remove the attacker from the battle."),
 	THROAT_SPRAY(88,0,150,new Color(96, 120, 168),Item.HELD_ITEM,null,"If the holder uses a sound-based move, this throat spray will boost its Sp. Atk stat."),
-	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
-	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
-	ABILITY_PATCH(91,0,0,Color.BLACK,Item.OTHER,null,"A patch that can be used to change the regular Ability of a Pokemon to a rarer Ability."),
-	MENTAL_HERB(92,0,0,Color.BLACK,Item.HELD_ITEM,null,"An item to be held by a Pokemon. The holder shakes off move-binding effects to move freely. It can be used only once."),
 	HM01(93,0,0,Color.BLACK,Item.TMS,Move.CUT,"Teaches a Pokemon this move."),
 	HM02(94,0,0,Color.BLACK,Item.TMS,Move.ROCK_SMASH,"Teaches a Pokemon this move."),
 	HM03(95,0,0,Color.BLACK,Item.TMS,Move.VINE_CROSS,"Teaches a Pokemon this move."),
@@ -237,6 +236,7 @@ public enum Item {
 	TM97(197,0,0,Color.BLACK,Item.TMS,Move.SPIRIT_BREAK,"Teaches a Pokemon this move."),
 	TM98(198,0,0,Color.BLACK,Item.TMS,Move.FLIP_TURN,"Teaches a Pokemon this move."),
 	TM99(199,0,0,Color.BLACK,Item.TMS,Move.RETURN,"Teaches a Pokemon this move."),
+	EDGE_KIT(44,0,0,new Color(232, 52, 54),Item.OTHER,null,"Edges ;) your Pokemon until they're about to bust :{D"),
 	CALCULATOR(200,0,0,Color.BLACK,Item.OTHER,null,"Calculates damage simulating a battle"),
 	BLACK_BELT(201,0,0,PType.FIGHTING.getColor(),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."),
 	BLACK_GLASSES(202,0,0,PType.DARK.getColor(),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."),
@@ -316,6 +316,8 @@ public enum Item {
     public static final int TMS = 3;
     public static final int HELD_ITEM = 4;
     public static final int BERRY = 5;
+    
+    public static Item[] itemTable = setupItemTable();
 	
 	Item(int id, int cost, int sell, Color color, int pocket, Move move, String desc) {
 		this.id = id;
@@ -353,6 +355,15 @@ public enum Item {
 					healAmount = 0;
 			}
 		}
+	}
+
+	private static Item[] setupItemTable() {
+		Item[] values = Item.values();
+		Item[] result = new Item[values.length];
+		for (int i = 0; i < values.length; i++) {
+			result[values[i].id] = values[i];
+		}
+		return result;
 	}
 
 	private BufferedImage setupImage(String path) {
@@ -409,8 +420,7 @@ public enum Item {
 	public BufferedImage getImage2() { return image2; }
 	
 	public static Item getItem(int id) {
-		Item[] items = Item.values();
-		return items[id];
+		return itemTable[id];
 	}
 	
 	public static ArrayList<Move> getTMs() {

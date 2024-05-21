@@ -195,6 +195,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(16, 47, Item.APICOT_BERRY, mapNum, 3, 6);
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 73, Item.FOCUS_SASH, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(28, 73, Item.RED_CARD, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 34, Item.MENTAL_HERB, mapNum);
 		
 		mapNum = 14;
 		objIndex = 0;
@@ -259,6 +260,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(58, 74, Item.FULL_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(59, 79, Item.SOFT_SAND, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 84, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 70, Item.SUPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(56, 60, Item.MENTAL_HERB, mapNum);
 		
 		mapNum = 26;
 		gp.obj[mapNum][objIndex] = ObjSetup(62, 69, Item.REPEL, mapNum);
@@ -727,6 +730,7 @@ public class AssetSetter {
 		mapNum = 146;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 48, Item.EVIOLITE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(89, 38, Item.TM47, mapNum); // star storm
 	}
 
 	public void setNPC() {
@@ -2172,6 +2176,11 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(75, 34, 3, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(80, 31, 2, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(80, 32, 2, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 44, 2, 5, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 43, 2, 5, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 42, 2, 5, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 41, 2, 5, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 40, 2, 5, mapNum, map);
 		
 		mapNum = 147;
 		iIndex = 0;

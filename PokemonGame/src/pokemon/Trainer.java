@@ -203,12 +203,16 @@ public class Trainer implements Serializable {
 		if (result != current) {
 			int[] oldStats = current.statStages.clone();
 			ArrayList<Status> oldVStatuses = new ArrayList<>(current.vStatuses);
+			int perishCount = current.perishCount;
+			int magCount = current.magCount;
 			swap(current, result);
 			if (baton) {
 				result.statStages = oldStats;
 				result.vStatuses = oldVStatuses;
 				result.vStatuses.remove(Status.SWITCHING);
 				result.vStatuses.remove(Status.SWAP);
+				result.perishCount = perishCount;
+				result.magCount = magCount;
 			}
 			Pokemon.gp.battleUI.foeStatus = result.status;
 			result.swapIn(foe, true);

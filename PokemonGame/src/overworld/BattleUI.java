@@ -1179,6 +1179,8 @@ public class BattleUI extends AbstractUI {
 					gp.player.p.team[partyNum].vStatuses = new ArrayList<>(user.vStatuses);
 					gp.player.p.team[partyNum].vStatuses.remove(Status.SWITCHING);
 					gp.player.p.team[partyNum].vStatuses.remove(Status.SWAP);
+					gp.player.p.team[partyNum].magCount = user.magCount;
+					gp.player.p.team[partyNum].perishCount = user.perishCount;
 				}
 				gp.player.p.swapToFront(gp.player.p.team[partyNum], partyNum);
 				gp.player.p.getCurrent().swapIn(foe, true);
@@ -1219,6 +1221,14 @@ public class BattleUI extends AbstractUI {
 		int startY = y;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		g2.drawString(user.nickname, x, y);
+		
+		y += gp.tileSize / 4;
+		g2.drawImage(user.type1.getImage(), x, y, null);
+		x += gp.tileSize / 2 + 4;
+		if (user.type2 != null) g2.drawImage(user.type2.getImage(), x, y, null);
+		
+		x = userX;
+		y = startY;
 		x = gp.tileSize * 8 - 68;
 		x -= gp.tileSize / 2;
 		y -= gp.tileSize / 2;
@@ -1228,7 +1238,16 @@ public class BattleUI extends AbstractUI {
 		x += 80 + gp.tileSize / 2;
 		y += gp.tileSize / 2;
 		int foeX = x;
+		int foeY = y;
 		g2.drawString(foe.nickname, x, y);
+		
+		y += gp.tileSize / 4;
+		g2.drawImage(foe.type1.getImage(), x, y, null);
+		x += gp.tileSize / 2 + 4;
+		if (foe.type2 != null) g2.drawImage(foe.type2.getImage(), x, y, null);
+		
+		x = foeX;
+		y = foeY;
 		x = (gp.tileSize * 3 + width) - 80;
 		x -= gp.tileSize / 2;
 		y -= gp.tileSize / 2;
