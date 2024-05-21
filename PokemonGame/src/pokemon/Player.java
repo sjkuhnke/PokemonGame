@@ -1068,7 +1068,7 @@ public class Player extends Trainer implements Serializable {
 	        	}
 				return;
 			default:
-				break;
+				return;
 			}
 		}
 		bag.remove(item);
