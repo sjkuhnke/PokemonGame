@@ -1027,7 +1027,7 @@ public class BattleUI extends AbstractUI {
 			if (slower.trainer != null) slower = slower.trainer.getCurrent();
 			
 			// Check for swap (player)
-			if (user.trainer.hasValidMembers() && faster.vStatuses.contains(Status.SWITCHING)) {
+			if (user.trainer.hasValidMembers() && hasAlive() && faster.vStatuses.contains(Status.SWITCHING)) {
 				Task t = Pokemon.addTask(Task.PARTY, "");
 				t.wipe = faster.lastMoveUsed == Move.BATON_PASS;
 				subState = TASK_STATE;
@@ -1069,7 +1069,7 @@ public class BattleUI extends AbstractUI {
 				slower = slower.trainer.getCurrent();
 	        }
 	        // Check for swap
-	        if (user.trainer.hasValidMembers() && slower.vStatuses.contains(Status.SWITCHING)) {
+	        if (user.trainer.hasValidMembers() && hasAlive() && slower.vStatuses.contains(Status.SWITCHING)) {
 	        	Task t = Pokemon.addTask(Task.PARTY, "");
 	        	t.wipe = slower.lastMoveUsed == Move.BATON_PASS;
 	        	subState = TASK_STATE;
