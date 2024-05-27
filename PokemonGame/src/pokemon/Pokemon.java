@@ -1477,6 +1477,10 @@ public class Pokemon implements Serializable {
 			critChance = move.critChance;
 		}
 		
+		if (move == Move.HIDDEN_POWER) moveType = determineHPType();
+		if (move == Move.WEATHER_BALL) moveType = determineWBType();
+		if (move == Move.TERRAIN_PULSE) moveType = determineTPType();
+		
 		if (this.ability == Ability.PROTEAN && moveType != PType.UNKNOWN) {
 			if (this.type1 == moveType && this.type2 == null) {
 				
@@ -1604,10 +1608,6 @@ public class Pokemon implements Serializable {
 				return; // Check for miss
 			}
 		}
-		
-		if (move == Move.HIDDEN_POWER) moveType = determineHPType();
-		if (move == Move.WEATHER_BALL) moveType = determineWBType();
-		if (move == Move.TERRAIN_PULSE) moveType = determineTPType();
 		
 		int numHits = move.getNumHits(this, team);
 		int damageIndex = gp.battleUI.tasks.size();

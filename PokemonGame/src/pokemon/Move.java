@@ -109,7 +109,7 @@ public enum Move {
 	DOUBLE_KICK(30,100,0,0,0,0,PType.FIGHTING,"Attacks twice",true,30),
 	DOUBLE_SLAP(15,85,0,0,0,0,PType.NORMAL,"Attacks 2-5 times",true,25),
 	DOUBLE_TEAM(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Evasion by 1",false,10),
-	DOUBLE$EDGE(120,100,0,0,0,0,PType.NORMAL,"User takes 1/3 of damage inflicted",false,15),
+	DOUBLE$EDGE(120,100,0,0,0,0,PType.NORMAL,"User takes 1/3 of damage inflicted",true,15),
 	DRACO_METEOR(130,90,100,0,1,0,PType.DRAGON,"% to lower user's Sp.Atk by 2",false,5),
 	DRAGON_BREATH(60,100,30,0,1,0,PType.DRAGON,"% chance to Paralyze foe",false,20),
 	DRAGON_CLAW(80,100,0,1,0,0,PType.DRAGON,"Boosted Crit rate",true,15),
