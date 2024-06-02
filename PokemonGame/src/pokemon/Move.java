@@ -927,4 +927,8 @@ public enum Move {
 				((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT) && p.ability == Ability.SLEIGHT_OF_HAND && p.currentHP == p.getStat(0)) ||
 				(p.impressive && p.ability == Ability.AMBUSH);
 	}
+	
+	public String superToString() {
+		return super.toString();
+	}
 }
