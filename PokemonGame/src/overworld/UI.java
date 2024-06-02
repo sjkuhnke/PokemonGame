@@ -29,7 +29,7 @@ import pokemon.Moveslot;
 import pokemon.PType;
 import pokemon.Player;
 import pokemon.Pokemon;
-import pokemon.Pokemon.Node;
+import pokemon.Node;
 import pokemon.Pokemon.Task;
 
 public class UI extends AbstractUI{
@@ -479,8 +479,9 @@ public class UI extends AbstractUI{
 
 		ArrayList<Move> forgottenMoves = new ArrayList<>();
         for (int i = 0; i < p.getLevel(); i++) {
-        	if (i < p.movebank.length) {
-        		Node move = p.movebank[i];
+        	Node[] movebank = p.getMovebank();
+        	if (i < movebank.length) {
+        		Node move = movebank[i];
         		while (move != null) {
         			if (!p.knowsMove(move.data)) {
         				forgottenMoves.add(move.data);
@@ -647,9 +648,10 @@ public class UI extends AbstractUI{
 		test.abilitySlot = 0;
 		test.setAbility(test.abilitySlot);
 		if (mode == 2) {
-			if (test.movebank != null) {
-			    for (int i = 0; i < test.movebank.length; i++) {
-			        Node move = test.movebank[i];
+			Node[] movebank = test.getMovebank();
+			if (movebank != null) {
+			    for (int i = 0; i < movebank.length; i++) {
+			        Node move = movebank[i];
 			        while (move != null) {
 			        	levelMoveList.add(move.data);
 			        	levelLevelList.add(i + 1);

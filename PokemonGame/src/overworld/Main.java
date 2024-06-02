@@ -38,7 +38,7 @@ import pokemon.Player;
 import pokemon.Pokemon;
 import pokemon.Trainer;
 import pokemon.JGradientButton;
-import pokemon.Pokemon.Node;
+import pokemon.Node;
 
 public class Main {
 	public static Trainer[] trainers;
@@ -1085,8 +1085,9 @@ public class Main {
 				writer.write(stats + "\n\n");
 				
 				writer.write("Level Up:\n");
-				for (int j = 0; j < p.movebank.length; j++) {
-					Node n = p.movebank[j];
+				Node[] movebank = p.getMovebank();
+				for (int j = 0; j < movebank.length; j++) {
+					Node n = movebank[j];
 					while (n != null) {
 						String move = j + 1 + " - " + n.data.toString() + "\n";
 						n = n.next;
@@ -1184,8 +1185,9 @@ public class Main {
 			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
 				Pokemon p = new Pokemon(i, 5, false, false);
 				ArrayList<Move> movebank = new ArrayList<>();
-				for (int j = 0; j < p.movebank.length; j++) {
-					Node n = p.movebank[j];
+				Node[] pokemonMovebank = p.getMovebank();
+				for (int j = 0; j < pokemonMovebank.length; j++) {
+					Node n = pokemonMovebank[j];
 					while (n != null) {
 						movebank.add(n.data);
 						n = n.next;
@@ -1208,8 +1210,9 @@ public class Main {
 					for (int i = 1; i <= Pokemon.MAX_POKEMON && count < 3; i++) {
 						Pokemon p = new Pokemon(i, 5, false, false);
 						ArrayList<Move> movebank = new ArrayList<>();
-						for (int j = 0; j < p.movebank.length; j++) {
-							Node n = p.movebank[j];
+						Node[] pokemonMovebank = p.getMovebank();
+						for (int j = 0; j < pokemonMovebank.length; j++) {
+							Node n = pokemonMovebank[j];
 							while (n != null) {
 								movebank.add(n.data);
 								n = n.next;
@@ -1225,8 +1228,9 @@ public class Main {
 					for (int i = 1; i <= Pokemon.MAX_POKEMON && count < 2; i++) {
 						Pokemon p = new Pokemon(i, 5, false, false);
 						ArrayList<Move> movebank = new ArrayList<>();
-						for (int j = 0; j < p.movebank.length; j++) {
-							Node n = p.movebank[j];
+						Node[] pokemonMovebank = p.getMovebank();
+						for (int j = 0; j < pokemonMovebank.length; j++) {
+							Node n = pokemonMovebank[j];
 							while (n != null) {
 								movebank.add(n.data);
 								n = n.next;
@@ -1241,8 +1245,9 @@ public class Main {
 					for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
 						Pokemon p = new Pokemon(i, 5, false, false);
 						ArrayList<Move> movebank = new ArrayList<>();
-						for (int j = 0; j < p.movebank.length; j++) {
-							Node n = p.movebank[j];
+						Node[] pokemonMovebank = p.getMovebank();
+						for (int j = 0; j < pokemonMovebank.length; j++) {
+							Node n = pokemonMovebank[j];
 							while (n != null) {
 								movebank.add(n.data);
 								n = n.next;

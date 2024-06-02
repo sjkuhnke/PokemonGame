@@ -106,6 +106,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.window = window;
 		
 		Pokemon.readInfoFromCSV();
+		Pokemon.readMovebanksFromCSV();
 	}
 	
 	public void startGameThread() {
