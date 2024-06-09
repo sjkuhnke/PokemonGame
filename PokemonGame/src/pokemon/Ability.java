@@ -47,7 +47,7 @@ public enum Ability {
 	INTIMIDATE("Lowers the opposing Pokemon's Attack stat."),
 	IRON_BARBS("Inflicts damage to the Pokemon on contact."),
 	IRON_FIST("Boosts the power of punching moves."),
-	JUSTIFIED("Boosts the Attack stat when it's hit by a DARK move."),
+	JUSTIFIED("Sharply boosts the Attack stat when it's hit by a DARK move."),
 	KEEN_EYE("Prevents the Pokemon from losing accuracy."),
 	LEVITATE("Gives full immunity to all GROUND moves."),
 	LIGHTNING_ROD("Raises Special Attack if hit by an ELECTRIC move."),

@@ -668,6 +668,8 @@ public class Pokemon implements Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGNET_RISE) && this.magCount > 0) bestMoves.removeIf(Move.MAGNET_RISE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MIRROR_MOVE) && foe.lastMoveUsed == null) bestMoves.removeIf(Move.MIRROR_MOVE::equals);
 		
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TELEPORT) && (this.trainer == null || !this.trainer.hasValidMembers())) bestMoves.removeIf(Move.TELEPORT::equals);
+		
 		return bestMoves;
 	}
 	
@@ -2189,7 +2191,7 @@ public class Pokemon implements Serializable {
 			
 			if (moveType == PType.DARK && foeAbility == Ability.JUSTIFIED && !foe.isFainted()) {
 				addAbilityTask(foe);
-				stat(foe, 0, 1, this);
+				stat(foe, 0, 2, this);
 			}
 			if (move == Move.POP_POP && hit == numHits) {
 				addTask(Task.TEXT, "Hit " + hits + " times!");

@@ -85,7 +85,7 @@
 |Ralts        |PSYCHIC |LIGHT   |SYNCHRONIZE       |TRACE             |PIXILATE          |[28, 25, 25, 65, 55, 40]      |14.6  |235|
 |Kirlia       |PSYCHIC |LIGHT   |SYNCHRONIZE       |TRACE             |PIXILATE          |[38, 35, 35, 95, 85, 50]      |44.5  |120|
 |Gardevoir    |PSYCHIC |LIGHT   |EMPATHIC_LINK     |TRACE             |PIXILATE          |[68, 65, 65, 125, 115, 80]    |106.7 |45 |
-|Gallade      |PSYCHIC |FIGHTING|SHARPNESS         |NO_GUARD          |INNER_FOCUS       |[68, 125, 65, 65, 115, 63]    |114.6 |45 |
+|Gallade      |PSYCHIC |FIGHTING|SHARPNESS         |JUSTIFIED         |INNER_FOCUS       |[68, 125, 65, 65, 115, 63]    |114.6 |45 |
 |Tigrette     |LIGHT   |NORMAL  |SIMPLE            |NORMALIZE         |PIXILATE          |[65, 79, 67, 103, 72, 69]     |250.4 |65 |
 |Inkay        |PSYCHIC |DARK    |CONTRARY          |BRAINWASH         |ILLUMINATION      |[53, 54, 53, 37, 46, 45]      |7.7   |190|
 |Malamar      |PSYCHIC |DARK    |CONTRARY          |BRAINWASH         |ILLUMINATION      |[86, 92, 88, 68, 75, 73]      |103.6 |80 |

@@ -277,7 +277,7 @@ Level Up:
 16 - Whirlwind
 
 Evolutions:
-Hummingspark -> Flashclaw (lv. 17)
+Hummingspark -> Flashclaw (lv. 18)
 
 ===================
 011 - Flashclaw
@@ -887,7 +887,7 @@ Level Up:
 16 - Worry Seed
 
 Evolutions:
-Budew -> Roselia (>= 160 happiness)
+Budew -> Roselia (160+ happiness)
 
 ===================
 030 - Roselia
@@ -992,7 +992,7 @@ Level Up:
 33 - Struggle Bug
 
 Evolutions:
-Swadloon -> Leavanny (>= 160 happiness)
+Swadloon -> Leavanny (160+ happiness)
 
 ===================
 034 - Leavanny
@@ -1373,10 +1373,11 @@ Level Up:
 1 - Bubblebeam
 1 - Giga Drain
 1 - Knock Off
-1 - Rain Dance
 1 - Zen Headbutt
+1 - Rain Dance
 1 - Energy Ball
 1 - Hydro Pump
+50 - Leech Seed
 
 ===================
 047 - Bluebunn
@@ -1788,7 +1789,7 @@ Level Up:
 30 - Night Shade
 
 Evolutions:
-Kleinowl -> Hootowl (>= 160 happiness)
+Kleinowl -> Hootowl (160+ happiness)
 
 ===================
 060 - Hootowl
@@ -1804,6 +1805,8 @@ Base Stats:
 
 Level Up:
 1 - Frostbind
+1 - Glare
+1 - Powder Snow
 15 - Ice Shard
 20 - Psybeam
 22 - Scary Face
@@ -2219,21 +2222,22 @@ Base Stats:
 88 HP / 102 Atk / 67 Def / 61 SpA / 88 SpD / 101 Spe / 507 BST
 
 Level Up:
+1 - Bounce
 1 - Infestation
 1 - Flash
+1 - Darkest Lariat
 4 - Payback
 7 - Slash
 10 - Thief
 17 - Bug Bite
-20 - Night Slash
-23 - Bounce
-25 - Fury Cutter
+21 - Feint Attack
+30 - Slash
 30 - Moonlight
 33 - Quiver Dance
 36 - U-Turn
-40 - Night Daze
+40 - Night Slash
 44 - X-Scissor
-47 - Darkest Lariat
+47 - Night Daze
 50 - Extreme Speed
 55 - Knock Off
 60 - First Impression
@@ -2245,7 +2249,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Anticipation / Slight Of Hand / (Unwavering)
+Anticipation / Sleight Of Hand / (Unwavering)
 
 Base Stats:
 42 HP / 30 Atk / 45 Def / 56 SpA / 53 SpD / 39 Spe / 265 BST
@@ -2273,7 +2277,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Magic Bounce / Slight Of Hand / (Unwavering)
+Magic Bounce / Sleight Of Hand / (Unwavering)
 
 Base Stats:
 57 HP / 40 Atk / 65 Def / 86 SpA / 73 SpD / 49 Spe / 370 BST
@@ -2304,7 +2308,7 @@ Type:
 Psychic / Magic
 
 Ability:
-Magic Bounce / Slight Of Hand / (Unwavering)
+Magic Bounce / Sleight Of Hand / (Unwavering)
 
 Base Stats:
 82 HP / 65 Atk / 95 Def / 136 SpA / 103 SpD / 29 Spe / 510 BST
@@ -2663,16 +2667,16 @@ Level Up:
 15 - Draining Kiss
 18 - Psybeam
 20 - Aerial Ace
-23 - False Swipe
+23 - Feint
 26 - Slash
 28 - Trick
-30 - Psycho Cut
+30 - Zen Headbutt
 33 - Swords Dance
-37 - Zen Headbutt
-45 - Close Combat
-49 - Knock Off
-54 - Feint
-60 - Solar Blade
+37 - Close Combat
+41 - Psycho Cut
+45 - Knock Off
+49 - Sacred Sword
+55 - Solar Blade
 
 ===================
 089 - Tigrette
@@ -3223,7 +3227,7 @@ Type:
 Magic / Fire
 
 Ability:
-Slight Of Hand / Shield Dust / (Magic Bounce)
+Sleight Of Hand / Shield Dust / (Magic Bounce)
 
 Base Stats:
 85 HP / 45 Atk / 65 Def / 145 SpA / 110 SpD / 55 Spe / 505 BST
@@ -3665,7 +3669,7 @@ Level Up:
 55 - Twinkle Tackle
 
 Evolutions:
-Cumin -> Cinneroph (>= 250 happiness)
+Cumin -> Cinneroph (250+ happiness)
 
 ===================
 122 - Cinneroph
@@ -3754,7 +3758,7 @@ Level Up:
 55 - Plasma Fists
 
 Evolutions:
-Vinnie -> Suvinero (>= 250 happiness)
+Vinnie -> Suvinero (250+ happiness)
 
 ===================
 125 - Suvinero
@@ -3846,7 +3850,7 @@ Level Up:
 55 - Sky Uppercut
 
 Evolutions:
-Whiskers -> Whiskeroar (>= 250 happiness)
+Whiskers -> Whiskeroar (250+ happiness)
 
 ===================
 128 - Whiskeroar
@@ -4041,7 +4045,7 @@ Level Up:
 20 - Covet
 
 Evolutions:
-Lilyray -> Daray (>= 160 happiness)
+Lilyray -> Daray (160+ happiness)
 
 ===================
 135 - Daray
@@ -4313,7 +4317,7 @@ Level Up:
 35 - Vanishing Act
 
 Evolutions:
-Posho -> Shomp (>= 250 happiness)
+Posho -> Shomp (250+ happiness)
 
 ===================
 144 - Shomp
@@ -4690,7 +4694,7 @@ Level Up:
 62 - Brave Bird
 
 Evolutions:
-Golbat -> Crobat (>= 160 happiness)
+Golbat -> Crobat (160+ happiness)
 
 ===================
 155 - Crobat
@@ -4902,7 +4906,7 @@ Level Up:
 50 - Phantom Force
 
 Evolutions:
-Zurrclu -> Zurroaratr (>= 250 happiness)
+Zurrclu -> Zurroaratr (250+ happiness)
 
 ===================
 162 - Zurroaratr
@@ -5281,7 +5285,7 @@ Level Up:
 16 - Charm
 
 Evolutions:
-Cleffa -> Clefairy (>= 160 happiness)
+Cleffa -> Clefairy (160+ happiness)
 
 ===================
 175 - Clefairy
@@ -6813,7 +6817,7 @@ Level Up:
 55 - Knock Off
 
 Evolutions:
-Zurrclu-S -> Zurroaratr-S (>= 250 happiness)
+Zurrclu-S -> Zurroaratr-S (250+ happiness)
 
 ===================
 222 - Zurroaratr-S
@@ -7403,7 +7407,7 @@ Level Up:
 61 - Head Smash
 
 Evolutions:
-Scrafty -> Scraftagon (>= 5 Headbutt Crits in Trainer Battles)
+Scrafty -> Scraftagon (5+ Headbutt Crits in Trainer Battles)
 
 ===================
 240 - Scraftagon
