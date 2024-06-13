@@ -224,7 +224,7 @@ public enum Move {
 	HEX(-1,100,0,0,1,0,PType.GHOST,"Damage is doubled if the foe has a status condition",false,10),
 	HI_JUMP_KICK(130,90,0,0,0,0,PType.FIGHTING,"If this attack misses, user takes 50% of its max HP",true,10),
 	HIDDEN_POWER(60,100,0,0,1,0,PType.NORMAL,"The type of this move depends on the user's IVs",false,15),
-	HOCUS_POCUS(70,95,20,0,1,0,PType.MAGIC,"% to inflict foe with a random Status condition.",false,10),
+	HOCUS_POCUS(70,95,20,0,1,0,PType.MAGIC,"% to inflict foe with a random Status condition",false,10),
 	HONE_CLAWS(0,1000,0,0,2,0,PType.DARK,"Raises user's Attack and Accuracy by 1",false,15),
 	HORN_ATTACK(65,100,0,0,0,0,PType.NORMAL,"A normal attack",true,25),
 	HORN_DRILL(0,30,0,0,0,0,PType.NORMAL,"If this move hits, it always K.Os foe",true,5),
