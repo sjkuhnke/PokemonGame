@@ -2479,9 +2479,13 @@ Level Up:
 1 - Teleport
 5 - Glare
 9 - Confusion
+12 - Psywave
 15 - Hypnosis
-25 - Dream Eater
-30 - Gravity
+15 - Dream Eater
+20 - Gravity
+24 - Psybeam
+27 - Gravity
+30 - Iron Defense
 
 Evolutions:
 Psycorb -> Psyballs (lv. 32)
@@ -2502,15 +2506,20 @@ Level Up:
 1 - Teleport
 5 - Glare
 9 - Confusion
+12 - Psywave
 15 - Hypnosis
-25 - Dream Eater
-30 - Gravity
+15 - Dream Eater
+20 - Gravity
+24 - Psybeam
+27 - Gravity
+30 - Iron Defense
 32 - Double Hit
-35 - Magnet Bomb
-39 - Iron Defense
-42 - Zen Headbutt
-47 - Extrasensory
-50 - Bullet Punch
+32 - Magnet Bomb
+35 - Zen Headbutt
+38 - Smart Strike
+42 - Mist Ball
+47 - Bullet Punch
+50 - Skull Bash
 
 Evolutions:
 Psyballs -> Psycorboratr (lv. 52)
@@ -2528,23 +2537,32 @@ Base Stats:
 100 HP / 140 Atk / 100 Def / 70 SpA / 100 SpD / 40 Spe / 550 BST
 
 Level Up:
+1 - Heavy Slam
+1 - Magnet Rise
 1 - Teleport
 5 - Glare
 9 - Confusion
+12 - Psywave
 15 - Hypnosis
-25 - Dream Eater
-30 - Gravity
+15 - Dream Eater
+20 - Gravity
+24 - Psybeam
+27 - Gravity
+30 - Iron Defense
 32 - Double Hit
-35 - Magnet Bomb
-39 - Iron Defense
-42 - Zen Headbutt
-47 - Extrasensory
-50 - Bullet Punch
+32 - Magnet Bomb
+35 - Zen Headbutt
+38 - Smart Strike
+42 - Mist Ball
+47 - Bullet Punch
+50 - Skull Bash
 52 - Hammer Arm
-57 - Drill Run
-61 - Psycho Cut
-67 - Skull Bash
-70 - Explosion
+52 - Gravity Punch
+55 - Iron Head
+60 - Psycho Cut
+61 - Drill Run
+65 - Explosion
+70 - Meteor Mash
 
 ===================
 085 - Ralts
@@ -2646,7 +2664,7 @@ Type:
 Psychic / Fighting
 
 Ability:
-Sharpness / No Guard / (Inner Focus)
+Sharpness / Justified / (Inner Focus)
 
 Base Stats:
 68 HP / 125 Atk / 65 Def / 65 SpA / 115 SpD / 63 Spe / 501 BST

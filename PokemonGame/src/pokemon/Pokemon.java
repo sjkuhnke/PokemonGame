@@ -1412,10 +1412,6 @@ public class Pokemon implements Serializable {
 			addTask(Task.TEXT, foe.nickname + " protected itself!");
 			if (move.contact) {
 				if (foe.lastMoveUsed == Move.OBSTRUCT) stat(this, 1, -2, foe);
-				if (foe.lastMoveUsed == Move.AQUA_VEIL) {
-					stat(this, 0, -1, foe);
-					stat(this, 2, -1, foe);
-				}
 				if (foe.lastMoveUsed == Move.LAVA_LAIR) burn(false, foe);
 				if (foe.lastMoveUsed == Move.SPIKY_SHIELD && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 					this.damage(Math.max(this.getStat(0) / 8.0, 1), foe);
@@ -1424,6 +1420,9 @@ public class Pokemon implements Serializable {
 						this.faint(true, foe);
 					}
 				}
+			}
+			if (foe.lastMoveUsed == Move.AQUA_VEIL) {
+				stat(this, 2, -1, foe);
 			}
 			this.impressive = false;
 			this.moveMultiplier = 1;
@@ -1721,7 +1720,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			
-			if ((field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded()) && ((move.priority >= 1 && acc <= 100) || (move.cat == 2 && this.ability == Ability.PRANKSTER))) {
+			if ((field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded()) && ((move.priority >= 1 && acc <= 100 && move != Move.GRAVITY_PUNCH) || (move.cat == 2 && this.ability == Ability.PRANKSTER))) {
 				addTask(Task.TEXT, foe.nickname + " is protected by the Psychic Terrain!");
 				endMove();
 				this.moveMultiplier = 1;
@@ -2137,7 +2136,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			
-			if (move.contact && checkSecondary(30) && this.status == Status.HEALTHY) {
+			if (!this.isFainted() && move.contact && checkSecondary(30) && this.status == Status.HEALTHY) {
 				if (foeAbility == Ability.FLAME_BODY) {
 					addAbilityTask(foe);
 					burn(false, this);
@@ -3220,7 +3219,7 @@ public class Pokemon implements Serializable {
 				stat(this, 1, 1, foe, announce);
 				stat(this, 4, -1, foe, announce);
 			}
-		} else if (announce && (move == Move.DETECT || move == Move.PROTECT || move == Move.LAVA_LAIR || move == Move.OBSTRUCT || move == Move.SPIKY_SHIELD)) {
+		} else if (announce && (move == Move.DETECT || move == Move.PROTECT || move == Move.LAVA_LAIR || move == Move.OBSTRUCT || move == Move.SPIKY_SHIELD || move == Move.AQUA_VEIL)) {
 			if (Move.getNoComboMoves().contains(lastMoveUsed) && success) {
 				fail = fail(announce);
 			} else {

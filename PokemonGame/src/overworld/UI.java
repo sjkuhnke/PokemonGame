@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -230,7 +231,7 @@ public class UI extends AbstractUI{
 		case Task.NICKNAME:
 			currentDialogue = currentTask.message;
 			drawDialogueScreen(true);
-			setNickname(currentTask.p);
+			setNickname();
 			if (nicknaming == 0) {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
@@ -971,10 +972,10 @@ public class UI extends AbstractUI{
 			x2 = headWidth + headX - gp.tileSize / 2 - gp.tileSize / 3;
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
 		}
-		String boxText = gauntlet ? "Gauntlet Box" : "Box " + (cBoxIndex + 1);
+		String boxText = gauntlet ? "Gauntlet Box" : gp.player.p.boxLabels[cBoxIndex];
 		int centerX = headX + (headWidth / 2);
 		g2.drawString(boxText, getCenterAlignedTextX(boxText, centerX), headTextY);
-		int highlightWidth = gauntlet ? gp.tileSize * 2 : gp.tileSize;
+		int highlightWidth = gauntlet ? gp.tileSize * 2 : getHighlightWidth(boxText);
 		if (boxNum < 0) {
 			g2.drawRoundRect(centerX - highlightWidth, (int) (headTextY - gp.tileSize / 2), highlightWidth * 2, (int) (gp.tileSize * 0.6), 10, 10);
 		}
@@ -1045,11 +1046,14 @@ public class UI extends AbstractUI{
 			}
 		}
 		
-		if (!showBoxSummary && !showBoxParty && !release) {
+		if (!showBoxSummary && !showBoxParty && !release && nicknaming < 0) {
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				if (boxNum >= 0) {
 					currentBoxP = cBox[boxNum];
+				} else {
+					nickname = new StringBuilder(gp.player.p.boxLabels[cBoxIndex]);
+					setNicknaming(true);
 				}
 				if (currentBoxP != null) {
 					if (!gp.keyH.ctrlPressed) {
@@ -1302,7 +1306,33 @@ public class UI extends AbstractUI{
 			drawToolTips("OK", null, "Back", "Back");
 		}
 		
+		if (nicknaming >= 0) {
+			currentDialogue = "Change box's name?";
+			drawDialogueScreen(true);
+			setNickname();
+			if (nicknaming == 0) {
+				if (gp.keyH.wPressed) {
+					gp.keyH.wPressed = false;
+					String name = nickname.toString().trim();
+					nickname = new StringBuilder();
+					if (name == null || name.trim().isEmpty()) name = "Box " + (cBoxIndex + 1);
+					gp.player.p.boxLabels[cBoxIndex] = name;
+					nicknaming = -1;
+				}
+				drawToolTips("OK", null, null, null);
+			}
+		}
+		
 		drawBoxToolTips();
+	}
+
+	private int getHighlightWidth(String boxText) {
+		float fontSize = g2.getFont().getSize2D(); // Default font size
+
+	    FontMetrics metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
+	    int textWidth = metrics.stringWidth(boxText);
+	    
+	    return (int) (textWidth * 0.75);
 	}
 
 	private void taskState() {
@@ -2280,7 +2310,14 @@ public class UI extends AbstractUI{
 		
 		g2.drawString("[Ctrl]+[W] Release   [Ctrl]+[A] Calc", x, y);
 		
-		drawToolTips("Info", "Swap", "Back", "Party");
+		String wText;
+		if (boxNum >= 0) {
+			wText = "Info";
+		} else {
+			wText = "Name";
+		}
+		
+		drawToolTips(wText, "Swap", "Back", "Party");
 	}
 	
 	private void evolveMon() {

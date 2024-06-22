@@ -10,8 +10,8 @@ Ghost
 ----------
 Weak to:
 
-Magic
 Fighting
+Magic
 
 ----------
 Resists:
@@ -27,21 +27,21 @@ Ghost
 ----------
 Weak to:
 
-Steel
-Grass
-Magic
-Ground
 Fighting (!!)
+Grass
+Ground
+Magic
 Water
+Steel
 
 ----------
 Resists:
 
 Galactic
-Fire
-Poison
 Normal
+Poison
 Flying
+Fire
 
 ===========================
 Normal - Fire
@@ -53,22 +53,22 @@ Ghost
 ----------
 Weak to:
 
-Rock
 Galactic
-Magic
-Ground
+Rock
 Fighting
+Ground
+Magic
 Water
 
 ----------
 Resists:
 
-Steel
 Grass
 Light
 Bug
 Fire
 Ice
+Steel
 
 ===========================
 Normal - Water
@@ -80,44 +80,44 @@ Ghost
 ----------
 Weak to:
 
-Grass
 Electric
-Magic
 Fighting
+Grass
 Poison
+Magic
 
 ----------
 Resists:
 
-Steel
 Fire
 Water
 Ice
+Steel
 
 ===========================
 Normal - Grass
 ===========================
 Immune to:
 
-Light
 Ghost
+Light
 
 ----------
 Weak to:
 
-Bug
-Magic
-Fire
 Fighting
 Poison
-Ice
+Magic
 Flying
+Bug
+Fire
+Ice
 
 ----------
 Resists:
 
-Grass
 Electric
+Grass
 Ground
 Water
 
@@ -131,19 +131,19 @@ Ghost
 ----------
 Weak to:
 
-Steel
 Rock
-Light
-Magic
-Fire
 Fighting (!!)
+Magic
+Light
+Fire
+Steel
 
 ----------
 Resists:
 
 Galactic
-Ice
 Flying
+Ice
 
 ===========================
 Normal - Electric
@@ -155,16 +155,16 @@ Ghost
 ----------
 Weak to:
 
-Magic
-Ground
 Fighting
+Ground
+Magic
 
 ----------
 Resists:
 
-Steel
 Electric
 Flying
+Steel
 
 ===========================
 Normal - Fighting
@@ -177,16 +177,16 @@ Ghost
 Weak to:
 
 Galactic
-Psychic
 Fighting
 Flying
+Psychic
 
 ----------
 Resists:
 
 Rock
-Bug
 Dark
+Bug
 
 ===========================
 Normal - Poison
@@ -198,15 +198,15 @@ Ghost
 ----------
 Weak to:
 
-Psychic
 Ground
+Psychic
 
 ----------
 Resists:
 
 Grass
-Bug
 Poison
+Bug
 
 ===========================
 Normal - Ground
@@ -219,10 +219,10 @@ Ghost
 ----------
 Weak to:
 
-Grass
 Galactic
-Magic
 Fighting
+Grass
+Magic
 Water
 Ice
 
@@ -264,9 +264,9 @@ Ghost
 ----------
 Weak to:
 
-Bug
-Magic
 Dark
+Magic
+Bug
 
 ----------
 Resists:
@@ -285,38 +285,38 @@ Weak to:
 
 Rock
 Magic
-Fire
 Flying
+Fire
 
 ----------
 Resists:
 
 Grass
-Light
 Ground
+Light
 
 ===========================
 Normal - Ghost
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 Ghost
 
 ----------
 Weak to:
 
-Light
-Magic
 Dark
+Magic
+Light
 
 ----------
 Resists:
 
 Electric
-Bug
 Poison
+Bug
 
 ===========================
 Normal - Dragon
@@ -328,16 +328,16 @@ Ghost
 ----------
 Weak to:
 
-Magic (!!)
-Fighting
-Ice
 Dragon
+Fighting
+Magic (!!)
+Ice
 
 ----------
 Resists:
 
-Grass
 Electric
+Grass
 Fire
 Water
 
@@ -353,40 +353,40 @@ Ghost
 Weak to:
 
 Electric
-Magic (!!)
-Ground
-Fire
 Fighting (!!)
+Ground
+Magic (!!)
+Fire
 
 ----------
 Resists:
 
-Steel
+Galactic
 Rock
+Dragon
+Normal
 Grass
 Light
-Galactic
-Bug
-Normal
-Ice
-Dragon
 Flying
+Bug
+Ice
+Steel
 
 ===========================
 Normal - Dark
 ===========================
 Immune to:
 
-Psychic
 Ghost
+Psychic
 
 ----------
 Weak to:
 
+Fighting (!!)
+Magic
 Light
 Bug
-Magic
-Fighting (!!)
 
 ----------
 Resists:
@@ -403,61 +403,61 @@ Ghost
 ----------
 Weak to:
 
-Steel
-Grass
-Bug
-Magic
 Fighting
+Grass
+Magic
+Bug
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
 Dark
+Light
 
 ===========================
 Normal - Magic
 ===========================
 Immune to:
 
-Ghost
 Dragon
+Ghost
 
 ----------
 Weak to:
 
-Poison
 Normal
+Poison
 
 ----------
 Resists:
 
-Steel
 Psychic
+Steel
 
 ===========================
 Normal - Galactic
 ===========================
 Immune to:
 
-Fire
 Ghost
+Fire
 
 ----------
 Weak to:
 
 Rock
-Light
 Magic
+Light
 Flying
 
 ----------
 Resists:
 
 Grass
-Bug
 Ground
+Bug
 
 ===========================
 Rock - Normal
@@ -469,21 +469,21 @@ Ghost
 ----------
 Weak to:
 
-Steel
-Grass
-Magic
-Ground
 Fighting (!!)
+Grass
+Ground
+Magic
 Water
+Steel
 
 ----------
 Resists:
 
 Galactic
-Fire
-Poison
 Normal
+Poison
 Flying
+Fire
 
 ===========================
 Rock - None
@@ -494,20 +494,20 @@ Immune to:
 ----------
 Weak to:
 
-Steel
+Fighting
 Grass
 Ground
-Fighting
 Water
+Steel
 
 ----------
 Resists:
 
 Galactic
-Fire
-Poison
 Normal
+Poison
 Flying
+Fire
 
 ===========================
 Rock - Fire
@@ -519,20 +519,20 @@ Immune to:
 Weak to:
 
 Rock
-Ground (!!)
 Fighting
+Ground (!!)
 Water (!!)
 
 ----------
 Resists:
 
+Normal
+Poison
 Light
+Flying
 Bug
 Fire (!!)
-Poison
-Normal
 Ice
-Flying
 
 ===========================
 Rock - Water
@@ -543,19 +543,19 @@ Immune to:
 ----------
 Weak to:
 
-Grass (!!)
 Electric
-Ground
 Fighting
+Grass (!!)
+Ground
 
 ----------
 Resists:
 
 Galactic
-Fire (!!)
 Normal
-Ice
 Flying
+Fire (!!)
+Ice
 
 ===========================
 Rock - Grass
@@ -567,17 +567,17 @@ Light
 ----------
 Weak to:
 
-Steel
-Bug
 Fighting
+Bug
 Ice
+Steel
 
 ----------
 Resists:
 
 Galactic
-Electric
 Normal
+Electric
 
 ===========================
 Rock - Ice
@@ -588,22 +588,22 @@ Immune to:
 ----------
 Weak to:
 
-Steel (!!)
 Rock
-Grass
-Light
-Ground
 Fighting (!!)
+Grass
+Ground
+Light
 Water
+Steel (!!)
 
 ----------
 Resists:
 
 Galactic (!!)
-Poison
 Normal
-Ice
+Poison
 Flying (!!)
+Ice
 
 ===========================
 Rock - Electric
@@ -614,21 +614,21 @@ Immune to:
 ----------
 Weak to:
 
+Fighting
 Grass
 Ground (!!)
-Fighting
-Water
 Ghost
+Water
 
 ----------
 Resists:
 
 Galactic
-Electric
-Fire
-Poison
 Normal
+Electric
+Poison
 Flying (!!)
+Fire
 
 ===========================
 Rock - Fighting
@@ -639,23 +639,23 @@ Immune to:
 ----------
 Weak to:
 
-Steel
-Grass
-Psychic
-Ground
 Fighting
+Grass
+Ground
+Psychic
 Water
+Steel
 
 ----------
 Resists:
 
 Rock
-Bug
-Magic
-Fire
-Poison
 Dark
 Normal
+Poison
+Magic
+Bug
+Fire
 
 ===========================
 Rock - Poison
@@ -666,21 +666,21 @@ Immune to:
 ----------
 Weak to:
 
-Steel
-Psychic
 Ground (!!)
+Psychic
 Water
+Steel
 
 ----------
 Resists:
 
 Galactic
-Bug
-Magic
-Fire
-Poison (!!)
 Normal
+Poison (!!)
+Magic
 Flying
+Bug
+Fire
 
 ===========================
 Rock - Ground
@@ -692,21 +692,21 @@ Electric
 ----------
 Weak to:
 
-Steel
+Fighting
 Grass (!!)
 Ground
-Fighting
 Water (!!)
 Ice
+Steel
 
 ----------
 Resists:
 
 Rock
-Fire
-Poison (!!)
 Normal
+Poison (!!)
 Flying
+Fire
 
 ===========================
 Rock - Flying
@@ -718,21 +718,21 @@ Ground
 ----------
 Weak to:
 
-Steel
 Rock
 Electric
 Water
 Ice
+Steel
 
 ----------
 Resists:
 
 Galactic
+Normal
+Poison
+Flying
 Bug
 Fire
-Poison
-Normal
-Flying
 
 ===========================
 Rock - Psychic
@@ -743,23 +743,23 @@ Immune to:
 ----------
 Weak to:
 
-Steel
-Grass
-Bug
-Ground
 Dark
-Water
+Grass
+Ground
 Ghost
+Bug
+Water
+Steel
 
 ----------
 Resists:
 
 Galactic
+Normal
+Poison
+Flying
 Psychic
 Fire
-Poison
-Normal
-Flying
 
 ===========================
 Rock - Bug
@@ -770,46 +770,46 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock
 Water
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
-Poison
 Normal
+Poison
+Light
 
 ===========================
 Rock - Ghost
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Steel
-Grass
-Light
-Ground
 Dark
-Water
+Grass
+Ground
 Ghost
+Light
+Water
+Steel
 
 ----------
 Resists:
 
 Galactic
 Electric
-Bug
-Fire
 Poison (!!)
 Flying
+Bug
+Fire
 
 ===========================
 Rock - Dragon
@@ -820,22 +820,22 @@ Immune to:
 ----------
 Weak to:
 
-Steel
-Magic
-Ground
-Fighting
-Ice
 Dragon
+Fighting
+Ground
+Magic
+Ice
+Steel
 
 ----------
 Resists:
 
 Galactic
-Electric
-Fire (!!)
-Poison
 Normal
+Electric
+Poison
 Flying
+Fire (!!)
 
 ===========================
 Rock - Steel
@@ -848,22 +848,22 @@ Poison
 Weak to:
 
 Electric
-Magic
-Ground (!!)
 Fighting (!!)
+Ground (!!)
+Magic
 Water
 
 ----------
 Resists:
 
-Rock
-Light
 Galactic (!!)
-Bug
-Normal (!!)
-Ice
+Rock
 Dragon
+Normal (!!)
+Light
 Flying (!!)
+Bug
+Ice
 
 ===========================
 Rock - Dark
@@ -875,24 +875,24 @@ Psychic
 ----------
 Weak to:
 
-Steel
+Fighting (!!)
 Grass
+Ground
 Light
 Bug
-Ground
-Fighting (!!)
 Water
+Steel
 
 ----------
 Resists:
 
 Galactic
-Fire
-Poison
 Dark
 Normal
+Poison
 Ghost
 Flying
+Fire
 
 ===========================
 Rock - Light
@@ -903,24 +903,24 @@ Immune to:
 ----------
 Weak to:
 
-Steel (!!)
-Grass (!!)
-Bug
-Ground
 Fighting
+Grass (!!)
+Ground
+Bug
 Water
+Steel (!!)
 
 ----------
 Resists:
 
-Light
 Galactic (!!)
-Fire
-Poison
 Dark
 Normal
+Poison
 Ghost
+Light
 Flying
+Fire
 
 ===========================
 Rock - Magic
@@ -941,9 +941,9 @@ Resists:
 
 Galactic
 Magic
+Flying
 Psychic
 Fire
-Flying
 
 ===========================
 Rock - Galactic
@@ -955,18 +955,18 @@ Fire
 ----------
 Weak to:
 
-Steel
 Rock
 Light
 Water
+Steel
 
 ----------
 Resists:
 
 Galactic
-Bug
-Poison
 Normal
+Poison
+Bug
 
 ===========================
 Fire - Normal
@@ -978,22 +978,22 @@ Ghost
 ----------
 Weak to:
 
-Rock
 Galactic
-Magic
-Ground
+Rock
 Fighting
+Ground
+Magic
 Water
 
 ----------
 Resists:
 
-Steel
 Grass
 Light
 Bug
 Fire
 Ice
+Steel
 
 ===========================
 Fire - Rock
@@ -1005,20 +1005,20 @@ Immune to:
 Weak to:
 
 Rock
-Ground (!!)
 Fighting
+Ground (!!)
 Water (!!)
 
 ----------
 Resists:
 
+Normal
+Poison
 Light
+Flying
 Bug
 Fire (!!)
-Poison
-Normal
 Ice
-Flying
 
 ===========================
 Fire - None
@@ -1029,20 +1029,20 @@ Immune to:
 ----------
 Weak to:
 
-Rock
 Galactic
+Rock
 Ground
 Water
 
 ----------
 Resists:
 
-Steel
 Grass
 Light
 Bug
 Fire
 Ice
+Steel
 
 ===========================
 Fire - Water
@@ -1053,8 +1053,8 @@ Immune to:
 ----------
 Weak to:
 
-Rock
 Galactic
+Rock
 Electric
 Ground
 Poison
@@ -1062,11 +1062,11 @@ Poison
 ----------
 Resists:
 
-Steel (!!)
 Light
 Bug
 Fire (!!)
 Ice (!!)
+Steel (!!)
 
 ===========================
 Fire - Grass
@@ -1078,17 +1078,17 @@ Light
 ----------
 Weak to:
 
-Rock
 Galactic
+Rock
 Poison
 Flying
 
 ----------
 Resists:
 
-Steel
-Grass (!!)
 Electric
+Grass (!!)
+Steel
 
 ===========================
 Fire - Ice
@@ -1100,17 +1100,17 @@ Immune to:
 Weak to:
 
 Rock (!!)
-Ground
 Fighting
+Ground
 Water
 
 ----------
 Resists:
 
 Grass
+Flying
 Bug
 Ice (!!)
-Flying
 
 ===========================
 Fire - Electric
@@ -1121,23 +1121,23 @@ Immune to:
 ----------
 Weak to:
 
-Rock
 Galactic
+Rock
 Ground (!!)
-Water
 Ghost
+Water
 
 ----------
 Resists:
 
-Steel (!!)
+Electric
 Grass
 Light
-Electric
+Flying
 Bug
 Fire
 Ice
-Flying
+Steel (!!)
 
 ===========================
 Fire - Fighting
@@ -1149,22 +1149,22 @@ Immune to:
 Weak to:
 
 Galactic (!!)
-Psychic
 Ground
-Water
 Flying
+Psychic
+Water
 
 ----------
 Resists:
 
-Steel
+Dark
 Grass
+Magic
 Light
 Bug (!!)
-Magic
 Fire
-Dark
 Ice
+Steel
 
 ===========================
 Fire - Poison
@@ -1175,24 +1175,24 @@ Immune to:
 ----------
 Weak to:
 
-Rock
 Galactic
-Psychic
+Rock
 Ground (!!)
+Psychic
 Water
 
 ----------
 Resists:
 
-Steel
+Fighting
 Grass (!!)
+Poison
+Magic
 Light
 Bug (!!)
-Magic
 Fire
-Fighting
-Poison
 Ice
+Steel
 
 ===========================
 Fire - Ground
@@ -1211,11 +1211,11 @@ Water (!!)
 ----------
 Resists:
 
-Steel
+Poison
 Light
 Bug
 Fire
-Poison
+Steel
 
 ===========================
 Fire - Flying
@@ -1227,20 +1227,20 @@ Ground
 ----------
 Weak to:
 
-Rock (!!)
 Galactic
+Rock (!!)
 Electric
 Water
 
 ----------
 Resists:
 
-Steel
+Fighting
 Grass (!!)
 Light
 Bug (!!)
 Fire
-Fighting
+Steel
 
 ===========================
 Fire - Psychic
@@ -1251,23 +1251,23 @@ Immune to:
 ----------
 Weak to:
 
-Rock
 Galactic
-Ground
+Rock
 Dark
-Water
+Ground
 Ghost
+Water
 
 ----------
 Resists:
 
-Steel
+Fighting
 Grass
 Light
 Psychic
 Fire
-Fighting
 Ice
+Steel
 
 ===========================
 Fire - Bug
@@ -1278,49 +1278,49 @@ Immune to:
 ----------
 Weak to:
 
-Rock (!!)
 Galactic
-Water
+Rock (!!)
 Flying
+Water
 
 ----------
 Resists:
 
-Steel
+Fighting
 Grass (!!)
 Light (!!)
 Bug
-Fighting
 Ice
+Steel
 
 ===========================
 Fire - Ghost
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Rock
 Galactic
-Ground
+Rock
 Dark
-Water
+Ground
 Ghost
+Water
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric
+Grass
+Poison
 Bug (!!)
 Fire
-Poison
 Ice
+Steel
 
 ===========================
 Fire - Dragon
@@ -1331,21 +1331,21 @@ Immune to:
 ----------
 Weak to:
 
-Rock
 Galactic
-Magic
-Ground
+Rock
 Dragon
+Ground
+Magic
 
 ----------
 Resists:
 
-Steel
+Electric
 Grass (!!)
 Light
-Electric
 Bug
 Fire (!!)
+Steel
 
 ===========================
 Fire - Steel
@@ -1358,22 +1358,22 @@ Poison
 Weak to:
 
 Electric
-Magic
-Ground (!!)
 Fighting
+Ground (!!)
+Magic
 Water
 
 ----------
 Resists:
 
-Steel (!!)
+Dragon
+Normal
 Grass (!!)
 Light (!!)
-Bug (!!)
-Normal
-Ice (!!)
-Dragon
 Flying
+Bug (!!)
+Ice (!!)
+Steel (!!)
 
 ===========================
 Fire - Dark
@@ -1385,21 +1385,21 @@ Psychic
 ----------
 Weak to:
 
-Rock
 Galactic
-Ground
+Rock
 Fighting
+Ground
 Water
 
 ----------
 Resists:
 
-Steel
-Grass
-Fire
 Dark
+Grass
 Ghost
+Fire
 Ice
+Steel
 
 ===========================
 Fire - Light
@@ -1417,10 +1417,10 @@ Water
 ----------
 Resists:
 
-Light (!!)
-Fire
 Dark
 Ghost
+Light (!!)
+Fire
 Ice
 
 ===========================
@@ -1433,25 +1433,25 @@ Dragon
 ----------
 Weak to:
 
-Rock
 Galactic
+Rock
+Normal
 Ground
 Poison
-Normal
 Water
 
 ----------
 Resists:
 
-Steel (!!)
+Fighting
 Grass
+Magic
 Light
 Bug
-Magic
 Psychic
 Fire
-Fighting
 Ice
+Steel (!!)
 
 ===========================
 Fire - Galactic
@@ -1463,19 +1463,19 @@ Fire
 ----------
 Weak to:
 
-Rock (!!)
 Galactic
-Water
+Rock (!!)
 Flying
+Water
 
 ----------
 Resists:
 
-Steel
+Fighting
 Grass (!!)
 Bug (!!)
-Fighting
 Ice
+Steel
 
 ===========================
 Water - Normal
@@ -1487,19 +1487,19 @@ Ghost
 ----------
 Weak to:
 
-Grass
 Electric
-Magic
 Fighting
+Grass
 Poison
+Magic
 
 ----------
 Resists:
 
-Steel
 Fire
 Water
 Ice
+Steel
 
 ===========================
 Water - Rock
@@ -1510,19 +1510,19 @@ Immune to:
 ----------
 Weak to:
 
-Grass (!!)
 Electric
-Ground
 Fighting
+Grass (!!)
+Ground
 
 ----------
 Resists:
 
 Galactic
-Fire (!!)
 Normal
-Ice
 Flying
+Fire (!!)
+Ice
 
 ===========================
 Water - Fire
@@ -1533,8 +1533,8 @@ Immune to:
 ----------
 Weak to:
 
-Rock
 Galactic
+Rock
 Electric
 Ground
 Poison
@@ -1542,11 +1542,11 @@ Poison
 ----------
 Resists:
 
-Steel (!!)
 Light
 Bug
 Fire (!!)
 Ice (!!)
+Steel (!!)
 
 ===========================
 Water - None
@@ -1557,17 +1557,17 @@ Immune to:
 ----------
 Weak to:
 
-Grass
 Electric
+Grass
 Poison
 
 ----------
 Resists:
 
-Steel
 Fire
 Water
 Ice
+Steel
 
 ===========================
 Water - Grass
@@ -1579,16 +1579,16 @@ Light
 ----------
 Weak to:
 
-Bug
 Poison (!!)
 Flying
+Bug
 
 ----------
 Resists:
 
-Steel
 Ground
 Water (!!)
+Steel
 
 ===========================
 Water - Ice
@@ -1600,19 +1600,19 @@ Immune to:
 Weak to:
 
 Rock
-Grass
-Light
 Electric
 Fighting
+Grass
 Poison
+Light
 
 ----------
 Resists:
 
 Galactic
+Flying
 Water
 Ice (!!)
-Flying
 
 ===========================
 Water - Electric
@@ -1631,11 +1631,11 @@ Ghost
 ----------
 Resists:
 
-Steel (!!)
+Flying
 Fire
 Water
 Ice
-Flying
+Steel (!!)
 
 ===========================
 Water - Fighting
@@ -1646,24 +1646,24 @@ Immune to:
 ----------
 Weak to:
 
-Grass
 Galactic
 Electric
-Psychic
+Grass
 Poison
 Flying
+Psychic
 
 ----------
 Resists:
 
-Steel
 Rock
-Bug
-Magic
-Fire
 Dark
+Magic
+Bug
+Fire
 Water
 Ice
+Steel
 
 ===========================
 Water - Poison
@@ -1675,19 +1675,19 @@ Immune to:
 Weak to:
 
 Electric
-Psychic
 Ground
+Psychic
 
 ----------
 Resists:
 
-Steel
-Bug
-Magic
-Fire
 Fighting
+Magic
+Bug
+Fire
 Water
 Ice
+Steel
 
 ===========================
 Water - Ground
@@ -1699,15 +1699,15 @@ Electric
 ----------
 Weak to:
 
-Grass (!!)
 Galactic
+Grass (!!)
 
 ----------
 Resists:
 
-Steel
 Rock
 Fire
+Steel
 
 ===========================
 Water - Flying
@@ -1726,11 +1726,11 @@ Poison
 ----------
 Resists:
 
-Steel
+Fighting
 Bug
 Fire
-Fighting
 Water
+Steel
 
 ===========================
 Water - Psychic
@@ -1741,22 +1741,22 @@ Immune to:
 ----------
 Weak to:
 
-Grass
-Electric
-Bug
-Poison
 Dark
+Electric
+Grass
+Poison
 Ghost
+Bug
 
 ----------
 Resists:
 
-Steel
+Fighting
 Psychic
 Fire
-Fighting
 Water
 Ice
+Steel
 
 ===========================
 Water - Bug
@@ -1775,37 +1775,37 @@ Flying
 ----------
 Resists:
 
-Steel
-Light
-Ground
 Fighting
+Ground
+Light
 Water
 Ice
+Steel
 
 ===========================
 Water - Ghost
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Grass
-Light
 Dark
+Grass
 Ghost
+Light
 
 ----------
 Resists:
 
-Steel
 Bug
 Fire
 Water
 Ice
+Steel
 
 ===========================
 Water - Dragon
@@ -1816,16 +1816,16 @@ Immune to:
 ----------
 Weak to:
 
-Magic
-Poison
 Dragon
+Poison
+Magic
 
 ----------
 Resists:
 
-Steel
 Fire (!!)
 Water (!!)
+Steel
 
 ===========================
 Water - Steel
@@ -1838,23 +1838,23 @@ Poison
 Weak to:
 
 Electric (!!)
-Magic
-Ground
 Fighting
+Ground
+Magic
 
 ----------
 Resists:
 
-Steel (!!)
-Rock
-Light
 Galactic
-Bug
+Rock
+Dragon
 Normal
+Light
+Flying
+Bug
 Water
 Ice (!!)
-Dragon
-Flying
+Steel (!!)
 
 ===========================
 Water - Dark
@@ -1866,22 +1866,22 @@ Psychic
 ----------
 Weak to:
 
-Grass
-Light
 Electric
-Bug
 Fighting
+Grass
 Poison
+Light
+Bug
 
 ----------
 Resists:
 
-Steel
-Fire
 Dark
-Water
 Ghost
+Fire
+Water
 Ice
+Steel
 
 ===========================
 Water - Light
@@ -1892,20 +1892,20 @@ Immune to:
 ----------
 Weak to:
 
-Grass (!!)
 Electric
-Bug
+Grass (!!)
 Poison
+Bug
 
 ----------
 Resists:
 
-Light
 Galactic
-Fire
 Dark
-Water
 Ghost
+Light
+Fire
+Water
 Ice
 
 ===========================
@@ -1918,21 +1918,21 @@ Dragon
 ----------
 Weak to:
 
-Grass
-Electric
-Poison (!!)
 Normal
+Electric
+Grass
+Poison (!!)
 
 ----------
 Resists:
 
-Steel (!!)
+Fighting
 Magic
 Psychic
 Fire
-Fighting
 Water
 Ice
+Steel (!!)
 
 ===========================
 Water - Galactic
@@ -1945,45 +1945,45 @@ Fire
 Weak to:
 
 Rock
-Light
 Electric
 Poison
+Light
 Flying
 
 ----------
 Resists:
 
-Steel
-Bug
-Ground
 Fighting
+Ground
+Bug
 Water
 Ice
+Steel
 
 ===========================
 Grass - Normal
 ===========================
 Immune to:
 
-Light
 Ghost
+Light
 
 ----------
 Weak to:
 
-Bug
-Magic
-Fire
 Fighting
 Poison
-Ice
+Magic
 Flying
+Bug
+Fire
+Ice
 
 ----------
 Resists:
 
-Grass
 Electric
+Grass
 Ground
 Water
 
@@ -1997,17 +1997,17 @@ Light
 ----------
 Weak to:
 
-Steel
-Bug
 Fighting
+Bug
 Ice
+Steel
 
 ----------
 Resists:
 
 Galactic
-Electric
 Normal
+Electric
 
 ===========================
 Grass - Fire
@@ -2019,17 +2019,17 @@ Light
 ----------
 Weak to:
 
-Rock
 Galactic
+Rock
 Poison
 Flying
 
 ----------
 Resists:
 
-Steel
-Grass (!!)
 Electric
+Grass (!!)
+Steel
 
 ===========================
 Grass - Water
@@ -2041,16 +2041,16 @@ Light
 ----------
 Weak to:
 
-Bug
 Poison (!!)
 Flying
+Bug
 
 ----------
 Resists:
 
-Steel
 Ground
 Water (!!)
+Steel
 
 ===========================
 Grass - None
@@ -2062,17 +2062,17 @@ Light
 ----------
 Weak to:
 
+Poison
+Flying
 Bug
 Fire
-Poison
 Ice
-Flying
 
 ----------
 Resists:
 
-Grass
 Electric
+Grass
 Ground
 Water
 
@@ -2086,19 +2086,19 @@ Light
 ----------
 Weak to:
 
-Steel
 Rock
-Bug
-Fire (!!)
 Fighting
 Poison
+Bug
+Fire (!!)
+Steel
 
 ----------
 Resists:
 
-Grass
 Galactic
 Electric
+Grass
 Ground
 Water
 
@@ -2112,19 +2112,19 @@ Light
 ----------
 Weak to:
 
-Bug
-Fire
 Poison
 Ghost
+Bug
+Fire
 Ice
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric (!!)
+Grass
 Water
+Steel
 
 ===========================
 Grass - Fighting
@@ -2137,21 +2137,21 @@ Light
 Weak to:
 
 Galactic
+Poison
+Flying (!!)
 Psychic
 Fire
-Poison
 Ice
-Flying (!!)
 
 ----------
 Resists:
 
 Rock
-Grass
-Electric
-Magic
-Ground
 Dark
+Electric
+Grass
+Ground
+Magic
 Water
 
 ===========================
@@ -2164,18 +2164,18 @@ Light
 ----------
 Weak to:
 
+Flying
 Psychic
 Fire
 Ice
-Flying
 
 ----------
 Resists:
 
-Grass (!!)
 Electric
-Magic
 Fighting
+Grass (!!)
+Magic
 Water
 
 ===========================
@@ -2183,17 +2183,17 @@ Grass - Ground
 ===========================
 Immune to:
 
-Light
 Electric
+Light
 
 ----------
 Weak to:
 
 Galactic
+Flying
 Bug
 Fire
 Ice (!!)
-Flying
 
 ----------
 Resists:
@@ -2206,23 +2206,23 @@ Grass - Flying
 ===========================
 Immune to:
 
-Light
 Ground
+Light
 
 ----------
 Weak to:
 
 Rock
-Fire
 Poison
-Ice (!!)
 Flying
+Fire
+Ice (!!)
 
 ----------
 Resists:
 
-Grass (!!)
 Fighting
+Grass (!!)
 Water
 
 ===========================
@@ -2235,22 +2235,22 @@ Light
 ----------
 Weak to:
 
+Dark
+Poison
+Ghost
+Flying
 Bug (!!)
 Fire
-Poison
-Dark
-Ghost
 Ice
-Flying
 
 ----------
 Resists:
 
-Grass
 Electric
-Psychic
-Ground
 Fighting
+Grass
+Ground
+Psychic
 Water
 
 ===========================
@@ -2264,19 +2264,19 @@ Light
 Weak to:
 
 Rock
+Poison
+Flying (!!)
 Bug
 Fire (!!)
-Poison
 Ice
-Flying (!!)
 
 ----------
 Resists:
 
-Grass (!!)
 Electric
-Ground (!!)
 Fighting
+Grass (!!)
+Ground (!!)
 Water
 
 ===========================
@@ -2284,24 +2284,24 @@ Grass - Ghost
 ===========================
 Immune to:
 
-Light
-Fighting
 Normal
+Fighting
+Light
 
 ----------
 Weak to:
 
-Fire
 Dark
 Ghost
-Ice
 Flying
+Fire
+Ice
 
 ----------
 Resists:
 
-Grass
 Electric (!!)
+Grass
 Ground
 Water
 
@@ -2315,18 +2315,18 @@ Light
 ----------
 Weak to:
 
-Bug
-Magic
-Poison
-Ice (!!)
 Dragon
+Poison
+Magic
 Flying
+Bug
+Ice (!!)
 
 ----------
 Resists:
 
-Grass (!!)
 Electric (!!)
+Grass (!!)
 Ground
 Water (!!)
 
@@ -2335,26 +2335,26 @@ Grass - Steel
 ===========================
 Immune to:
 
-Light
 Poison
+Light
 
 ----------
 Weak to:
 
+Fighting
 Magic
 Fire (!!)
-Fighting
 
 ----------
 Resists:
 
-Steel
-Rock
-Grass (!!)
 Galactic
-Normal
-Water
+Rock
 Dragon
+Normal
+Grass (!!)
+Water
+Steel
 
 ===========================
 Grass - Dark
@@ -2367,22 +2367,22 @@ Psychic
 ----------
 Weak to:
 
-Bug (!!)
-Fire
 Fighting
 Poison
-Ice
 Flying
+Bug (!!)
+Fire
+Ice
 
 ----------
 Resists:
 
-Grass
-Electric
-Ground
 Dark
-Water
+Electric
+Grass
+Ground
 Ghost
+Water
 
 ===========================
 Grass - Light
@@ -2394,52 +2394,52 @@ Light
 ----------
 Weak to:
 
-Steel
+Poison
+Flying
 Bug (!!)
 Fire
-Poison
 Ice
-Flying
+Steel
 
 ----------
 Resists:
 
 Galactic
+Dark
 Electric
 Ground
-Dark
-Water
 Ghost
+Water
 
 ===========================
 Grass - Magic
 ===========================
 Immune to:
 
-Light
 Dragon
+Light
 
 ----------
 Weak to:
 
+Normal
+Poison (!!)
+Flying
 Bug
 Fire
-Poison (!!)
-Normal
 Ice
-Flying
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric
+Fighting
+Grass
+Ground
 Magic
 Psychic
-Ground
-Fighting
 Water
+Steel
 
 ===========================
 Grass - Galactic
@@ -2454,16 +2454,16 @@ Weak to:
 
 Rock
 Poison
-Ice
 Flying (!!)
+Ice
 
 ----------
 Resists:
 
-Grass (!!)
 Electric
-Ground (!!)
 Fighting
+Grass (!!)
+Ground (!!)
 Water
 
 ===========================
@@ -2476,19 +2476,19 @@ Ghost
 ----------
 Weak to:
 
-Steel
 Rock
-Light
-Magic
-Fire
 Fighting (!!)
+Magic
+Light
+Fire
+Steel
 
 ----------
 Resists:
 
 Galactic
-Ice
 Flying
+Ice
 
 ===========================
 Ice - Rock
@@ -2499,22 +2499,22 @@ Immune to:
 ----------
 Weak to:
 
-Steel (!!)
 Rock
-Grass
-Light
-Ground
 Fighting (!!)
+Grass
+Ground
+Light
 Water
+Steel (!!)
 
 ----------
 Resists:
 
 Galactic (!!)
-Poison
 Normal
-Ice
+Poison
 Flying (!!)
+Ice
 
 ===========================
 Ice - Fire
@@ -2526,17 +2526,17 @@ Immune to:
 Weak to:
 
 Rock (!!)
-Ground
 Fighting
+Ground
 Water
 
 ----------
 Resists:
 
 Grass
+Flying
 Bug
 Ice (!!)
-Flying
 
 ===========================
 Ice - Water
@@ -2548,19 +2548,19 @@ Immune to:
 Weak to:
 
 Rock
-Grass
-Light
 Electric
 Fighting
+Grass
 Poison
+Light
 
 ----------
 Resists:
 
 Galactic
+Flying
 Water
 Ice (!!)
-Flying
 
 ===========================
 Ice - Grass
@@ -2572,19 +2572,19 @@ Light
 ----------
 Weak to:
 
-Steel
 Rock
-Bug
-Fire (!!)
 Fighting
 Poison
+Bug
+Fire (!!)
+Steel
 
 ----------
 Resists:
 
-Grass
 Galactic
 Electric
+Grass
 Ground
 Water
 
@@ -2597,18 +2597,18 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock
+Fighting
 Light
 Fire
-Fighting
+Steel
 
 ----------
 Resists:
 
 Galactic
-Ice
 Flying
+Ice
 
 ===========================
 Ice - Electric
@@ -2620,19 +2620,19 @@ Immune to:
 Weak to:
 
 Rock
-Light
-Ground
-Fire
 Fighting
+Ground
 Ghost
+Light
+Fire
 
 ----------
 Resists:
 
 Galactic
 Electric
-Ice
 Flying (!!)
+Ice
 
 ===========================
 Ice - Fighting
@@ -2643,18 +2643,18 @@ Immune to:
 ----------
 Weak to:
 
-Steel
+Fighting
 Light
 Psychic
 Fire
-Fighting
+Steel
 
 ----------
 Resists:
 
-Bug
-Magic
 Dark
+Magic
+Bug
 Ice
 
 ===========================
@@ -2666,23 +2666,23 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock
+Ground
 Light
 Psychic
-Ground
 Fire
+Steel
 
 ----------
 Resists:
 
-Grass
 Galactic
-Bug
-Magic
+Grass
 Poison
-Ice
+Magic
 Flying
+Bug
+Ice
 
 ===========================
 Ice - Ground
@@ -2694,12 +2694,12 @@ Electric
 ----------
 Weak to:
 
-Steel
+Fighting
 Grass
 Light
 Fire
-Fighting
 Water
+Steel
 
 ----------
 Resists:
@@ -2717,19 +2717,19 @@ Ground
 ----------
 Weak to:
 
-Steel
 Rock (!!)
-Light
 Electric
+Light
 Fire
+Steel
 
 ----------
 Resists:
 
-Grass
 Galactic
-Bug
+Grass
 Flying
+Bug
 
 ===========================
 Ice - Psychic
@@ -2740,21 +2740,21 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock
+Dark
+Ghost
 Light
 Bug
 Fire
-Dark
-Ghost
+Steel
 
 ----------
 Resists:
 
 Galactic
+Flying
 Psychic
 Ice
-Flying
 
 ===========================
 Ice - Bug
@@ -2765,15 +2765,15 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock (!!)
 Fire (!!)
+Steel
 
 ----------
 Resists:
 
-Grass
 Galactic
+Grass
 Ground
 Ice
 
@@ -2782,28 +2782,28 @@ Ice - Ghost
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Steel
 Rock
-Light (!!)
-Fire
 Dark
 Ghost
+Light (!!)
+Fire
+Steel
 
 ----------
 Resists:
 
 Galactic
 Electric
-Bug
 Poison
-Ice
 Flying
+Bug
+Ice
 
 ===========================
 Ice - Dragon
@@ -2814,21 +2814,21 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock
-Light
-Magic
-Fighting
 Dragon
+Fighting
+Magic
+Light
+Steel
 
 ----------
 Resists:
 
-Grass
 Galactic
 Electric
-Water
+Grass
 Flying
+Water
 
 ===========================
 Ice - Steel
@@ -2841,21 +2841,21 @@ Poison
 Weak to:
 
 Electric
-Magic
-Ground
-Fire (!!)
 Fighting (!!)
+Ground
+Magic
+Fire (!!)
 
 ----------
 Resists:
 
-Grass
 Galactic (!!)
-Bug
-Normal
-Ice (!!)
 Dragon
+Normal
+Grass
 Flying (!!)
+Bug
+Ice (!!)
 
 ===========================
 Ice - Dark
@@ -2867,12 +2867,12 @@ Psychic
 ----------
 Weak to:
 
-Steel
 Rock
+Fighting (!!)
 Light (!!)
 Bug
 Fire
-Fighting (!!)
+Steel
 
 ----------
 Resists:
@@ -2880,8 +2880,8 @@ Resists:
 Galactic
 Dark
 Ghost
-Ice
 Flying
+Ice
 
 ===========================
 Ice - Light
@@ -2892,12 +2892,12 @@ Immune to:
 ----------
 Weak to:
 
-Steel (!!)
 Rock
+Fighting
 Grass
 Bug
 Fire
-Fighting
+Steel (!!)
 
 ----------
 Resists:
@@ -2905,8 +2905,8 @@ Resists:
 Galactic (!!)
 Dark
 Ghost
-Ice
 Flying
+Ice
 
 ===========================
 Ice - Magic
@@ -2919,19 +2919,19 @@ Dragon
 Weak to:
 
 Rock
+Normal
+Poison
 Light
 Fire
-Poison
-Normal
 
 ----------
 Resists:
 
 Galactic
 Magic
+Flying
 Psychic
 Ice
-Flying
 
 ===========================
 Ice - Galactic
@@ -2943,17 +2943,17 @@ Fire
 ----------
 Weak to:
 
-Steel
 Rock (!!)
 Light (!!)
+Steel
 
 ----------
 Resists:
 
-Grass
 Galactic
-Bug
+Grass
 Ground
+Bug
 Ice
 
 ===========================
@@ -2966,16 +2966,16 @@ Ghost
 ----------
 Weak to:
 
-Magic
-Ground
 Fighting
+Ground
+Magic
 
 ----------
 Resists:
 
-Steel
 Electric
 Flying
+Steel
 
 ===========================
 Electric - Rock
@@ -2986,21 +2986,21 @@ Immune to:
 ----------
 Weak to:
 
+Fighting
 Grass
 Ground (!!)
-Fighting
-Water
 Ghost
+Water
 
 ----------
 Resists:
 
 Galactic
-Electric
-Fire
-Poison
 Normal
+Electric
+Poison
 Flying (!!)
+Fire
 
 ===========================
 Electric - Fire
@@ -3011,23 +3011,23 @@ Immune to:
 ----------
 Weak to:
 
-Rock
 Galactic
+Rock
 Ground (!!)
-Water
 Ghost
+Water
 
 ----------
 Resists:
 
-Steel (!!)
+Electric
 Grass
 Light
-Electric
+Flying
 Bug
 Fire
 Ice
-Flying
+Steel (!!)
 
 ===========================
 Electric - Water
@@ -3046,11 +3046,11 @@ Ghost
 ----------
 Resists:
 
-Steel (!!)
+Flying
 Fire
 Water
 Ice
-Flying
+Steel (!!)
 
 ===========================
 Electric - Grass
@@ -3062,19 +3062,19 @@ Light
 ----------
 Weak to:
 
-Bug
-Fire
 Poison
 Ghost
+Bug
+Fire
 Ice
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric (!!)
+Grass
 Water
+Steel
 
 ===========================
 Electric - Ice
@@ -3086,19 +3086,19 @@ Immune to:
 Weak to:
 
 Rock
-Light
-Ground
-Fire
 Fighting
+Ground
 Ghost
+Light
+Fire
 
 ----------
 Resists:
 
 Galactic
 Electric
-Ice
 Flying (!!)
+Ice
 
 ===========================
 Electric - None
@@ -3115,9 +3115,9 @@ Ghost
 ----------
 Resists:
 
-Steel
 Electric
 Flying
+Steel
 
 ===========================
 Electric - Fighting
@@ -3129,19 +3129,19 @@ Immune to:
 Weak to:
 
 Galactic
-Psychic
 Ground
 Ghost
+Psychic
 
 ----------
 Resists:
 
-Steel
 Rock
-Electric
-Bug
-Magic
 Dark
+Electric
+Magic
+Bug
+Steel
 
 ===========================
 Electric - Poison
@@ -3152,21 +3152,21 @@ Immune to:
 ----------
 Weak to:
 
-Psychic
 Ground (!!)
 Ghost
+Psychic
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric
-Bug
-Magic
 Fighting
+Grass
 Poison
+Magic
 Flying
+Bug
+Steel
 
 ===========================
 Electric - Ground
@@ -3178,20 +3178,20 @@ Electric
 ----------
 Weak to:
 
-Grass
 Galactic
+Grass
 Ground
-Water
 Ghost
+Water
 Ice
 
 ----------
 Resists:
 
-Steel
 Rock
 Poison
 Flying
+Steel
 
 ===========================
 Electric - Flying
@@ -3210,11 +3210,11 @@ Ice
 ----------
 Resists:
 
-Steel
-Grass
-Bug
 Fighting
+Grass
 Flying
+Bug
+Steel
 
 ===========================
 Electric - Psychic
@@ -3225,19 +3225,19 @@ Immune to:
 ----------
 Weak to:
 
-Bug
-Ground
 Dark
+Ground
 Ghost (!!)
+Bug
 
 ----------
 Resists:
 
-Steel
 Electric
-Psychic
 Fighting
 Flying
+Psychic
+Steel
 
 ===========================
 Electric - Bug
@@ -3249,42 +3249,42 @@ Immune to:
 Weak to:
 
 Rock
-Fire
 Ghost
+Fire
 
 ----------
 Resists:
 
-Steel
-Grass
-Light
 Electric
 Fighting
+Grass
+Light
+Steel
 
 ===========================
 Electric - Ghost
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Light
-Ground
 Dark
+Ground
 Ghost (!!)
+Light
 
 ----------
 Resists:
 
-Steel
 Electric (!!)
-Bug
 Poison
 Flying
+Bug
+Steel
 
 ===========================
 Electric - Dragon
@@ -3295,21 +3295,21 @@ Immune to:
 ----------
 Weak to:
 
-Magic
+Dragon
 Ground
+Magic
 Ghost
 Ice
-Dragon
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric (!!)
+Grass
+Flying
 Fire
 Water
-Flying
+Steel
 
 ===========================
 Electric - Steel
@@ -3321,25 +3321,25 @@ Poison
 ----------
 Weak to:
 
-Magic
-Ground (!!)
-Fire
 Fighting
+Ground (!!)
+Magic
 Ghost
+Fire
 
 ----------
 Resists:
 
-Steel (!!)
+Galactic
 Rock
+Dragon
+Normal
 Grass
 Light
-Galactic
-Bug
-Normal
-Ice
-Dragon
 Flying (!!)
+Bug
+Ice
+Steel (!!)
 
 ===========================
 Electric - Dark
@@ -3351,18 +3351,18 @@ Psychic
 ----------
 Weak to:
 
+Fighting
+Ground
 Light
 Bug
-Ground
-Fighting
 
 ----------
 Resists:
 
-Steel
-Electric
 Dark
+Electric
 Flying
+Steel
 
 ===========================
 Electric - Light
@@ -3374,16 +3374,16 @@ Immune to:
 Weak to:
 
 Grass
-Bug
 Ground
+Bug
 
 ----------
 Resists:
 
-Light
 Galactic
-Electric
 Dark
+Electric
+Light
 Flying
 
 ===========================
@@ -3396,20 +3396,20 @@ Dragon
 ----------
 Weak to:
 
+Normal
 Ground
 Poison
-Normal
 Ghost
 
 ----------
 Resists:
 
-Steel (!!)
 Electric
-Magic
-Psychic
 Fighting
+Magic
 Flying
+Psychic
+Steel (!!)
 
 ===========================
 Electric - Galactic
@@ -3422,17 +3422,17 @@ Fire
 Weak to:
 
 Rock
-Light
 Ghost
+Light
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric
-Bug
 Fighting
+Grass
+Bug
+Steel
 
 ===========================
 Fighting - Normal
@@ -3445,16 +3445,16 @@ Ghost
 Weak to:
 
 Galactic
-Psychic
 Fighting
 Flying
+Psychic
 
 ----------
 Resists:
 
 Rock
-Bug
 Dark
+Bug
 
 ===========================
 Fighting - Rock
@@ -3465,23 +3465,23 @@ Immune to:
 ----------
 Weak to:
 
-Steel
-Grass
-Psychic
-Ground
 Fighting
+Grass
+Ground
+Psychic
 Water
+Steel
 
 ----------
 Resists:
 
 Rock
-Bug
-Magic
-Fire
-Poison
 Dark
 Normal
+Poison
+Magic
+Bug
+Fire
 
 ===========================
 Fighting - Fire
@@ -3493,22 +3493,22 @@ Immune to:
 Weak to:
 
 Galactic (!!)
-Psychic
 Ground
-Water
 Flying
+Psychic
+Water
 
 ----------
 Resists:
 
-Steel
+Dark
 Grass
+Magic
 Light
 Bug (!!)
-Magic
 Fire
-Dark
 Ice
+Steel
 
 ===========================
 Fighting - Water
@@ -3519,24 +3519,24 @@ Immune to:
 ----------
 Weak to:
 
-Grass
 Galactic
 Electric
-Psychic
+Grass
 Poison
 Flying
+Psychic
 
 ----------
 Resists:
 
-Steel
 Rock
-Bug
-Magic
-Fire
 Dark
+Magic
+Bug
+Fire
 Water
 Ice
+Steel
 
 ===========================
 Fighting - Grass
@@ -3549,21 +3549,21 @@ Light
 Weak to:
 
 Galactic
+Poison
+Flying (!!)
 Psychic
 Fire
-Poison
 Ice
-Flying (!!)
 
 ----------
 Resists:
 
 Rock
-Grass
-Electric
-Magic
-Ground
 Dark
+Electric
+Grass
+Ground
+Magic
 Water
 
 ===========================
@@ -3575,18 +3575,18 @@ Immune to:
 ----------
 Weak to:
 
-Steel
+Fighting
 Light
 Psychic
 Fire
-Fighting
+Steel
 
 ----------
 Resists:
 
-Bug
-Magic
 Dark
+Magic
+Bug
 Ice
 
 ===========================
@@ -3599,19 +3599,19 @@ Immune to:
 Weak to:
 
 Galactic
-Psychic
 Ground
 Ghost
+Psychic
 
 ----------
 Resists:
 
-Steel
 Rock
-Electric
-Bug
-Magic
 Dark
+Electric
+Magic
+Bug
+Steel
 
 ===========================
 Fighting - None
@@ -3623,16 +3623,16 @@ Immune to:
 Weak to:
 
 Galactic
-Psychic
 Flying
+Psychic
 
 ----------
 Resists:
 
 Rock
-Bug
-Magic
 Dark
+Magic
+Bug
 
 ===========================
 Fighting - Poison
@@ -3644,20 +3644,20 @@ Immune to:
 Weak to:
 
 Galactic
-Psychic (!!)
 Ground
 Flying
+Psychic (!!)
 
 ----------
 Resists:
 
 Rock
-Grass
-Bug (!!)
-Magic (!!)
-Fighting
-Poison
 Dark
+Fighting
+Grass
+Poison
+Magic (!!)
+Bug (!!)
 
 ===========================
 Fighting - Ground
@@ -3669,21 +3669,21 @@ Electric
 ----------
 Weak to:
 
-Grass
 Galactic (!!)
+Grass
+Flying
 Psychic
 Water
 Ice
-Flying
 
 ----------
 Resists:
 
 Rock (!!)
-Bug
-Magic
-Poison
 Dark
+Poison
+Magic
+Bug
 
 ===========================
 Fighting - Flying
@@ -3697,18 +3697,18 @@ Weak to:
 
 Galactic
 Electric
+Flying
 Psychic
 Ice
-Flying
 
 ----------
 Resists:
 
-Grass
-Bug (!!)
-Magic
-Fighting
 Dark
+Fighting
+Grass
+Magic
+Bug (!!)
 
 ===========================
 Fighting - Psychic
@@ -3727,8 +3727,8 @@ Flying
 Resists:
 
 Rock
-Magic
 Fighting
+Magic
 
 ===========================
 Fighting - Bug
@@ -3740,46 +3740,46 @@ Immune to:
 Weak to:
 
 Galactic
+Flying (!!)
 Psychic
 Fire
-Flying (!!)
 
 ----------
 Resists:
 
+Dark
+Fighting
 Grass
+Ground
+Magic
 Light
 Bug
-Magic
-Ground
-Fighting
-Dark
 
 ===========================
 Fighting - Ghost
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Light
 Galactic
-Psychic
 Ghost
+Light
 Flying
+Psychic
 
 ----------
 Resists:
 
 Rock
 Electric
-Bug (!!)
-Magic
 Poison
+Magic
+Bug (!!)
 
 ===========================
 Fighting - Dragon
@@ -3791,20 +3791,20 @@ Immune to:
 Weak to:
 
 Galactic
-Psychic
-Ice
 Dragon
 Flying
+Psychic
+Ice
 
 ----------
 Resists:
 
 Rock
-Grass
+Dark
 Electric
+Grass
 Bug
 Fire
-Dark
 Water
 
 ===========================
@@ -3818,23 +3818,23 @@ Poison
 Weak to:
 
 Electric
-Psychic
-Ground
-Fire
 Fighting
+Ground
+Psychic
+Fire
 
 ----------
 Resists:
 
-Steel
 Rock (!!)
+Dragon
+Dark
+Normal
 Grass
 Light
 Bug (!!)
-Dark
-Normal
 Ice
-Dragon
+Steel
 
 ===========================
 Fighting - Dark
@@ -3846,17 +3846,17 @@ Psychic
 ----------
 Weak to:
 
-Light
 Galactic
 Fighting
+Light
 Flying
 
 ----------
 Resists:
 
 Rock
-Magic
 Dark (!!)
+Magic
 Ghost
 
 ===========================
@@ -3868,19 +3868,19 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Grass
-Psychic
 Flying
+Psychic
+Steel
 
 ----------
 Resists:
 
 Rock
-Light
-Magic
 Dark (!!)
+Magic
 Ghost
+Light
 
 ===========================
 Fighting - Magic
@@ -3893,19 +3893,19 @@ Dragon
 Weak to:
 
 Galactic
-Poison
 Normal
+Poison
 Flying
 
 ----------
 Resists:
 
-Steel
 Rock
-Bug
-Magic (!!)
-Fighting
 Dark
+Fighting
+Magic (!!)
+Bug
+Steel
 
 ===========================
 Fighting - Galactic
@@ -3917,20 +3917,20 @@ Fire
 ----------
 Weak to:
 
-Light
 Galactic
-Psychic
+Light
 Flying (!!)
+Psychic
 
 ----------
 Resists:
 
-Grass
-Bug (!!)
-Magic
-Ground
-Fighting
 Dark
+Fighting
+Grass
+Ground
+Magic
+Bug (!!)
 
 ===========================
 Poison - Normal
@@ -3942,15 +3942,15 @@ Ghost
 ----------
 Weak to:
 
-Psychic
 Ground
+Psychic
 
 ----------
 Resists:
 
 Grass
-Bug
 Poison
+Bug
 
 ===========================
 Poison - Rock
@@ -3961,21 +3961,21 @@ Immune to:
 ----------
 Weak to:
 
-Steel
-Psychic
 Ground (!!)
+Psychic
 Water
+Steel
 
 ----------
 Resists:
 
 Galactic
-Bug
-Magic
-Fire
-Poison (!!)
 Normal
+Poison (!!)
+Magic
 Flying
+Bug
+Fire
 
 ===========================
 Poison - Fire
@@ -3986,24 +3986,24 @@ Immune to:
 ----------
 Weak to:
 
-Rock
 Galactic
-Psychic
+Rock
 Ground (!!)
+Psychic
 Water
 
 ----------
 Resists:
 
-Steel
+Fighting
 Grass (!!)
+Poison
+Magic
 Light
 Bug (!!)
-Magic
 Fire
-Fighting
-Poison
 Ice
+Steel
 
 ===========================
 Poison - Water
@@ -4015,19 +4015,19 @@ Immune to:
 Weak to:
 
 Electric
-Psychic
 Ground
+Psychic
 
 ----------
 Resists:
 
-Steel
-Bug
-Magic
-Fire
 Fighting
+Magic
+Bug
+Fire
 Water
 Ice
+Steel
 
 ===========================
 Poison - Grass
@@ -4039,18 +4039,18 @@ Light
 ----------
 Weak to:
 
+Flying
 Psychic
 Fire
 Ice
-Flying
 
 ----------
 Resists:
 
-Grass (!!)
 Electric
-Magic
 Fighting
+Grass (!!)
+Magic
 Water
 
 ===========================
@@ -4062,23 +4062,23 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock
+Ground
 Light
 Psychic
-Ground
 Fire
+Steel
 
 ----------
 Resists:
 
-Grass
 Galactic
-Bug
-Magic
+Grass
 Poison
-Ice
+Magic
 Flying
+Bug
+Ice
 
 ===========================
 Poison - Electric
@@ -4089,21 +4089,21 @@ Immune to:
 ----------
 Weak to:
 
-Psychic
 Ground (!!)
 Ghost
+Psychic
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric
-Bug
-Magic
 Fighting
+Grass
 Poison
+Magic
 Flying
+Bug
+Steel
 
 ===========================
 Poison - Fighting
@@ -4115,20 +4115,20 @@ Immune to:
 Weak to:
 
 Galactic
-Psychic (!!)
 Ground
 Flying
+Psychic (!!)
 
 ----------
 Resists:
 
 Rock
-Grass
-Bug (!!)
-Magic (!!)
-Fighting
-Poison
 Dark
+Fighting
+Grass
+Poison
+Magic (!!)
+Bug (!!)
 
 ===========================
 Poison - None
@@ -4139,17 +4139,17 @@ Immune to:
 ----------
 Weak to:
 
-Psychic
 Ground
+Psychic
 
 ----------
 Resists:
 
-Grass
-Bug
-Magic
 Fighting
+Grass
 Poison
+Magic
+Bug
 
 ===========================
 Poison - Ground
@@ -4162,8 +4162,8 @@ Electric
 Weak to:
 
 Galactic
-Psychic
 Ground
+Psychic
 Water
 Ice
 
@@ -4171,10 +4171,10 @@ Ice
 Resists:
 
 Rock
-Bug
-Magic
 Fighting
 Poison (!!)
+Magic
+Bug
 
 ===========================
 Poison - Flying
@@ -4194,11 +4194,11 @@ Ice
 ----------
 Resists:
 
-Grass (!!)
-Bug (!!)
-Magic
 Fighting (!!)
+Grass (!!)
 Poison
+Magic
+Bug (!!)
 
 ===========================
 Poison - Psychic
@@ -4209,17 +4209,17 @@ Immune to:
 ----------
 Weak to:
 
-Ground
 Dark
+Ground
 Ghost
 
 ----------
 Resists:
 
-Grass
-Magic
 Fighting (!!)
+Grass
 Poison
+Magic
 
 ===========================
 Poison - Bug
@@ -4231,45 +4231,45 @@ Immune to:
 Weak to:
 
 Rock
+Flying
 Psychic
 Fire
-Flying
 
 ----------
 Resists:
 
+Fighting (!!)
 Grass (!!)
+Poison
+Magic
 Light
 Bug
-Magic
-Fighting (!!)
-Poison
 
 ===========================
 Poison - Ghost
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
+Dark
+Ground
+Ghost
 Light
 Psychic
-Ground
-Dark
-Ghost
 
 ----------
 Resists:
 
-Grass
 Electric
-Bug (!!)
-Magic
+Grass
 Poison (!!)
+Magic
+Bug (!!)
 
 ===========================
 Poison - Dragon
@@ -4280,20 +4280,20 @@ Immune to:
 ----------
 Weak to:
 
-Psychic
-Ground
-Ice
 Dragon
+Ground
+Psychic
+Ice
 
 ----------
 Resists:
 
-Grass (!!)
 Electric
+Fighting
+Grass (!!)
+Poison
 Bug
 Fire
-Fighting
-Poison
 Water
 
 ===========================
@@ -4307,23 +4307,23 @@ Poison
 Weak to:
 
 Electric
-Psychic
 Ground (!!)
+Psychic
 Fire
 
 ----------
 Resists:
 
-Steel
+Galactic
 Rock
+Dragon
+Normal
 Grass (!!)
 Light
-Galactic
-Bug (!!)
-Normal
-Ice
-Dragon
 Flying
+Bug (!!)
+Ice
+Steel
 
 ===========================
 Poison - Dark
@@ -4335,16 +4335,16 @@ Psychic
 ----------
 Weak to:
 
-Light
 Ground
+Light
 
 ----------
 Resists:
 
-Grass
-Magic
-Poison
 Dark
+Grass
+Poison
+Magic
 Ghost
 
 ===========================
@@ -4356,20 +4356,20 @@ Immune to:
 ----------
 Weak to:
 
-Steel
-Psychic
 Ground
+Psychic
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
-Magic
+Dark
 Fighting
 Poison
-Dark
+Magic
 Ghost
+Light
 
 ===========================
 Poison - Magic
@@ -4381,17 +4381,17 @@ Dragon
 ----------
 Weak to:
 
-Ground
 Normal
+Ground
 
 ----------
 Resists:
 
-Steel
-Grass
-Bug
-Magic (!!)
 Fighting (!!)
+Grass
+Magic (!!)
+Bug
+Steel
 
 ===========================
 Poison - Galactic
@@ -4405,17 +4405,17 @@ Weak to:
 
 Rock
 Light
-Psychic
 Flying
+Psychic
 
 ----------
 Resists:
 
-Grass (!!)
-Bug (!!)
-Magic
 Fighting (!!)
+Grass (!!)
 Poison
+Magic
+Bug (!!)
 
 ===========================
 Ground - Normal
@@ -4428,10 +4428,10 @@ Ghost
 ----------
 Weak to:
 
-Grass
 Galactic
-Magic
 Fighting
+Grass
+Magic
 Water
 Ice
 
@@ -4451,21 +4451,21 @@ Electric
 ----------
 Weak to:
 
-Steel
+Fighting
 Grass (!!)
 Ground
-Fighting
 Water (!!)
 Ice
+Steel
 
 ----------
 Resists:
 
 Rock
-Fire
-Poison (!!)
 Normal
+Poison (!!)
 Flying
+Fire
 
 ===========================
 Ground - Fire
@@ -4484,11 +4484,11 @@ Water (!!)
 ----------
 Resists:
 
-Steel
+Poison
 Light
 Bug
 Fire
-Poison
+Steel
 
 ===========================
 Ground - Water
@@ -4500,32 +4500,32 @@ Electric
 ----------
 Weak to:
 
-Grass (!!)
 Galactic
+Grass (!!)
 
 ----------
 Resists:
 
-Steel
 Rock
 Fire
+Steel
 
 ===========================
 Ground - Grass
 ===========================
 Immune to:
 
-Light
 Electric
+Light
 
 ----------
 Weak to:
 
 Galactic
+Flying
 Bug
 Fire
 Ice (!!)
-Flying
 
 ----------
 Resists:
@@ -4543,12 +4543,12 @@ Electric
 ----------
 Weak to:
 
-Steel
+Fighting
 Grass
 Light
 Fire
-Fighting
 Water
+Steel
 
 ----------
 Resists:
@@ -4566,20 +4566,20 @@ Electric
 ----------
 Weak to:
 
-Grass
 Galactic
+Grass
 Ground
-Water
 Ghost
+Water
 Ice
 
 ----------
 Resists:
 
-Steel
 Rock
 Poison
 Flying
+Steel
 
 ===========================
 Ground - Fighting
@@ -4591,21 +4591,21 @@ Electric
 ----------
 Weak to:
 
-Grass
 Galactic (!!)
+Grass
+Flying
 Psychic
 Water
 Ice
-Flying
 
 ----------
 Resists:
 
 Rock (!!)
-Bug
-Magic
-Poison
 Dark
+Poison
+Magic
+Bug
 
 ===========================
 Ground - Poison
@@ -4618,8 +4618,8 @@ Electric
 Weak to:
 
 Galactic
-Psychic
 Ground
+Psychic
 Water
 Ice
 
@@ -4627,10 +4627,10 @@ Ice
 Resists:
 
 Rock
-Bug
-Magic
 Fighting
 Poison (!!)
+Magic
+Bug
 
 ===========================
 Ground - None
@@ -4642,8 +4642,8 @@ Electric
 ----------
 Weak to:
 
-Grass
 Galactic
+Grass
 Water
 Ice
 
@@ -4671,9 +4671,9 @@ Ice (!!)
 ----------
 Resists:
 
-Bug
 Fighting
 Poison
+Bug
 
 ===========================
 Ground - Psychic
@@ -4685,21 +4685,21 @@ Electric
 ----------
 Weak to:
 
-Grass
 Galactic
-Bug
 Dark
-Water
+Grass
 Ghost
+Bug
+Water
 Ice
 
 ----------
 Resists:
 
 Rock
-Psychic
 Fighting
 Poison
+Psychic
 
 ===========================
 Ground - Bug
@@ -4712,45 +4712,45 @@ Electric
 Weak to:
 
 Galactic
+Flying
 Fire
 Water
 Ice
-Flying
 
 ----------
 Resists:
 
-Light
-Ground
 Fighting
+Ground
 Poison
+Light
 
 ===========================
 Ground - Ghost
 ===========================
 Immune to:
 
+Normal
 Electric
 Fighting
-Normal
 
 ----------
 Weak to:
 
-Grass
-Light
 Galactic
 Dark
-Water
+Grass
 Ghost
+Light
+Water
 Ice
 
 ----------
 Resists:
 
 Rock
-Bug
 Poison (!!)
+Bug
 
 ===========================
 Ground - Dragon
@@ -4763,16 +4763,16 @@ Electric
 Weak to:
 
 Galactic
+Dragon
 Magic
 Ice (!!)
-Dragon
 
 ----------
 Resists:
 
 Rock
-Fire
 Poison
+Fire
 
 ===========================
 Ground - Steel
@@ -4785,22 +4785,22 @@ Poison
 ----------
 Weak to:
 
-Magic
-Ground
-Fire
 Fighting
+Ground
+Magic
+Fire
 Water
 
 ----------
 Resists:
 
-Steel
 Rock (!!)
-Light
-Bug
-Normal
 Dragon
+Normal
+Light
 Flying
+Bug
+Steel
 
 ===========================
 Ground - Dark
@@ -4813,11 +4813,11 @@ Psychic
 ----------
 Weak to:
 
+Galactic
+Fighting
 Grass
 Light
-Galactic
 Bug
-Fighting
 Water
 Ice
 
@@ -4825,8 +4825,8 @@ Ice
 Resists:
 
 Rock
-Poison
 Dark
+Poison
 Ghost
 
 ===========================
@@ -4839,46 +4839,46 @@ Electric
 ----------
 Weak to:
 
-Steel
 Grass (!!)
 Bug
 Water
 Ice
+Steel
 
 ----------
 Resists:
 
 Rock
-Light
-Poison
 Dark
+Poison
 Ghost
+Light
 
 ===========================
 Ground - Magic
 ===========================
 Immune to:
 
-Electric
 Dragon
+Electric
 
 ----------
 Weak to:
 
-Grass
 Galactic
 Normal
+Grass
 Water
 Ice
 
 ----------
 Resists:
 
-Steel
 Rock
+Fighting
 Magic
 Psychic
-Fighting
+Steel
 
 ===========================
 Ground - Galactic
@@ -4891,19 +4891,19 @@ Fire
 ----------
 Weak to:
 
-Light
 Galactic
+Light
+Flying
 Water
 Ice
-Flying
 
 ----------
 Resists:
 
-Bug
-Ground
 Fighting
+Ground
 Poison
+Bug
 
 ===========================
 Flying - Normal
@@ -4937,21 +4937,21 @@ Ground
 ----------
 Weak to:
 
-Steel
 Rock
 Electric
 Water
 Ice
+Steel
 
 ----------
 Resists:
 
 Galactic
+Normal
+Poison
+Flying
 Bug
 Fire
-Poison
-Normal
-Flying
 
 ===========================
 Flying - Fire
@@ -4963,20 +4963,20 @@ Ground
 ----------
 Weak to:
 
-Rock (!!)
 Galactic
+Rock (!!)
 Electric
 Water
 
 ----------
 Resists:
 
-Steel
+Fighting
 Grass (!!)
 Light
 Bug (!!)
 Fire
-Fighting
+Steel
 
 ===========================
 Flying - Water
@@ -4995,34 +4995,34 @@ Poison
 ----------
 Resists:
 
-Steel
+Fighting
 Bug
 Fire
-Fighting
 Water
+Steel
 
 ===========================
 Flying - Grass
 ===========================
 Immune to:
 
-Light
 Ground
+Light
 
 ----------
 Weak to:
 
 Rock
-Fire
 Poison
-Ice (!!)
 Flying
+Fire
+Ice (!!)
 
 ----------
 Resists:
 
-Grass (!!)
 Fighting
+Grass (!!)
 Water
 
 ===========================
@@ -5035,19 +5035,19 @@ Ground
 ----------
 Weak to:
 
-Steel
 Rock (!!)
-Light
 Electric
+Light
 Fire
+Steel
 
 ----------
 Resists:
 
-Grass
 Galactic
-Bug
+Grass
 Flying
+Bug
 
 ===========================
 Flying - Electric
@@ -5066,11 +5066,11 @@ Ice
 ----------
 Resists:
 
-Steel
-Grass
-Bug
 Fighting
+Grass
 Flying
+Bug
+Steel
 
 ===========================
 Flying - Fighting
@@ -5084,18 +5084,18 @@ Weak to:
 
 Galactic
 Electric
+Flying
 Psychic
 Ice
-Flying
 
 ----------
 Resists:
 
-Grass
-Bug (!!)
-Magic
-Fighting
 Dark
+Fighting
+Grass
+Magic
+Bug (!!)
 
 ===========================
 Flying - Poison
@@ -5115,11 +5115,11 @@ Ice
 ----------
 Resists:
 
-Grass (!!)
-Bug (!!)
-Magic
 Fighting (!!)
+Grass (!!)
 Poison
+Magic
+Bug (!!)
 
 ===========================
 Flying - Ground
@@ -5139,9 +5139,9 @@ Ice (!!)
 ----------
 Resists:
 
-Bug
 Fighting
 Poison
+Bug
 
 ===========================
 Flying - None
@@ -5160,9 +5160,9 @@ Ice
 ----------
 Resists:
 
+Fighting
 Grass
 Bug
-Fighting
 
 ===========================
 Flying - Psychic
@@ -5175,17 +5175,17 @@ Ground
 Weak to:
 
 Rock
-Electric
 Dark
+Electric
 Ghost
 Ice
 
 ----------
 Resists:
 
+Fighting (!!)
 Grass
 Psychic
-Fighting (!!)
 
 ===========================
 Flying - Bug
@@ -5199,42 +5199,42 @@ Weak to:
 
 Rock (!!)
 Electric
+Flying
 Fire
 Ice
-Flying
 
 ----------
 Resists:
 
+Fighting (!!)
 Grass (!!)
 Light
 Bug
-Fighting (!!)
 
 ===========================
 Flying - Ghost
 ===========================
 Immune to:
 
-Ground
-Fighting
 Normal
+Fighting
+Ground
 
 ----------
 Weak to:
 
 Rock
-Light
 Dark
 Ghost
+Light
 Ice
 
 ----------
 Resists:
 
 Grass
-Bug (!!)
 Poison
+Bug (!!)
 
 ===========================
 Flying - Dragon
@@ -5247,17 +5247,17 @@ Ground
 Weak to:
 
 Rock
+Dragon
 Magic
 Ice (!!)
-Dragon
 
 ----------
 Resists:
 
+Fighting
 Grass (!!)
 Bug
 Fire
-Fighting
 Water
 
 ===========================
@@ -5278,36 +5278,36 @@ Fire
 ----------
 Resists:
 
-Steel
+Galactic
+Dragon
+Normal
 Grass (!!)
 Light
-Galactic
-Bug (!!)
-Normal
-Dragon
 Flying
+Bug (!!)
+Steel
 
 ===========================
 Flying - Dark
 ===========================
 Immune to:
 
-Psychic
 Ground
+Psychic
 
 ----------
 Weak to:
 
 Rock
-Light
 Electric
+Light
 Ice
 
 ----------
 Resists:
 
-Grass
 Dark
+Grass
 Ghost
 
 ===========================
@@ -5320,46 +5320,46 @@ Ground
 ----------
 Weak to:
 
-Steel
 Rock
 Electric
 Ice
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
-Fighting
 Dark
+Fighting
 Ghost
+Light
 
 ===========================
 Flying - Magic
 ===========================
 Immune to:
 
-Ground
 Dragon
+Ground
 
 ----------
 Weak to:
 
 Rock
+Normal
 Electric
 Poison
-Normal
 Ice
 
 ----------
 Resists:
 
-Steel
-Grass
-Bug
-Magic
-Psychic
 Fighting (!!)
+Grass
+Magic
+Bug
+Psychic
+Steel
 
 ===========================
 Flying - Galactic
@@ -5373,17 +5373,17 @@ Fire
 Weak to:
 
 Rock (!!)
-Light
 Electric
-Ice
+Light
 Flying
+Ice
 
 ----------
 Resists:
 
+Fighting (!!)
 Grass (!!)
 Bug (!!)
-Fighting (!!)
 
 ===========================
 Psychic - Normal
@@ -5395,9 +5395,9 @@ Ghost
 ----------
 Weak to:
 
-Bug
-Magic
 Dark
+Magic
+Bug
 
 ----------
 Resists:
@@ -5413,23 +5413,23 @@ Immune to:
 ----------
 Weak to:
 
-Steel
-Grass
-Bug
-Ground
 Dark
-Water
+Grass
+Ground
 Ghost
+Bug
+Water
+Steel
 
 ----------
 Resists:
 
 Galactic
+Normal
+Poison
+Flying
 Psychic
 Fire
-Poison
-Normal
-Flying
 
 ===========================
 Psychic - Fire
@@ -5440,23 +5440,23 @@ Immune to:
 ----------
 Weak to:
 
-Rock
 Galactic
-Ground
+Rock
 Dark
-Water
+Ground
 Ghost
+Water
 
 ----------
 Resists:
 
-Steel
+Fighting
 Grass
 Light
 Psychic
 Fire
-Fighting
 Ice
+Steel
 
 ===========================
 Psychic - Water
@@ -5467,22 +5467,22 @@ Immune to:
 ----------
 Weak to:
 
-Grass
-Electric
-Bug
-Poison
 Dark
+Electric
+Grass
+Poison
 Ghost
+Bug
 
 ----------
 Resists:
 
-Steel
+Fighting
 Psychic
 Fire
-Fighting
 Water
 Ice
+Steel
 
 ===========================
 Psychic - Grass
@@ -5494,22 +5494,22 @@ Light
 ----------
 Weak to:
 
+Dark
+Poison
+Ghost
+Flying
 Bug (!!)
 Fire
-Poison
-Dark
-Ghost
 Ice
-Flying
 
 ----------
 Resists:
 
-Grass
 Electric
-Psychic
-Ground
 Fighting
+Grass
+Ground
+Psychic
 Water
 
 ===========================
@@ -5521,21 +5521,21 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock
+Dark
+Ghost
 Light
 Bug
 Fire
-Dark
-Ghost
+Steel
 
 ----------
 Resists:
 
 Galactic
+Flying
 Psychic
 Ice
-Flying
 
 ===========================
 Psychic - Electric
@@ -5546,19 +5546,19 @@ Immune to:
 ----------
 Weak to:
 
-Bug
-Ground
 Dark
+Ground
 Ghost (!!)
+Bug
 
 ----------
 Resists:
 
-Steel
 Electric
-Psychic
 Fighting
 Flying
+Psychic
+Steel
 
 ===========================
 Psychic - Fighting
@@ -5577,8 +5577,8 @@ Flying
 Resists:
 
 Rock
-Magic
 Fighting
+Magic
 
 ===========================
 Psychic - Poison
@@ -5589,17 +5589,17 @@ Immune to:
 ----------
 Weak to:
 
-Ground
 Dark
+Ground
 Ghost
 
 ----------
 Resists:
 
-Grass
-Magic
 Fighting (!!)
+Grass
 Poison
+Magic
 
 ===========================
 Psychic - Ground
@@ -5611,21 +5611,21 @@ Electric
 ----------
 Weak to:
 
-Grass
 Galactic
-Bug
 Dark
-Water
+Grass
 Ghost
+Bug
+Water
 Ice
 
 ----------
 Resists:
 
 Rock
-Psychic
 Fighting
 Poison
+Psychic
 
 ===========================
 Psychic - Flying
@@ -5638,17 +5638,17 @@ Ground
 Weak to:
 
 Rock
-Electric
 Dark
+Electric
 Ghost
 Ice
 
 ----------
 Resists:
 
+Fighting (!!)
 Grass
 Psychic
-Fighting (!!)
 
 ===========================
 Psychic - None
@@ -5659,15 +5659,15 @@ Immune to:
 ----------
 Weak to:
 
-Bug
 Dark
 Ghost
+Bug
 
 ----------
 Resists:
 
-Psychic
 Fighting
+Psychic
 
 ===========================
 Psychic - Bug
@@ -5679,42 +5679,42 @@ Immune to:
 Weak to:
 
 Rock
-Bug
-Fire
 Dark
 Ghost
 Flying
+Bug
+Fire
 
 ----------
 Resists:
 
+Fighting (!!)
 Grass
+Ground
 Light
 Psychic
-Ground
-Fighting (!!)
 
 ===========================
 Psychic - Ghost
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Light
 Dark (!!)
 Ghost (!!)
+Light
 
 ----------
 Resists:
 
 Electric
-Psychic
 Poison
+Psychic
 
 ===========================
 Psychic - Dragon
@@ -5725,21 +5725,21 @@ Immune to:
 ----------
 Weak to:
 
-Bug
-Magic
-Dark
-Ghost
-Ice
 Dragon
+Dark
+Magic
+Ghost
+Bug
+Ice
 
 ----------
 Resists:
 
-Grass
 Electric
+Fighting
+Grass
 Psychic
 Fire
-Fighting
 Water
 
 ===========================
@@ -5752,26 +5752,26 @@ Poison
 ----------
 Weak to:
 
-Electric
-Magic
-Ground
-Fire
 Dark
+Electric
+Ground
+Magic
 Ghost
+Fire
 
 ----------
 Resists:
 
-Steel
+Galactic
 Rock
+Dragon
+Normal
 Grass
 Light
-Galactic
-Psychic
-Normal
-Ice
-Dragon
 Flying
+Psychic
+Ice
+Steel
 
 ===========================
 Psychic - Dark
@@ -5799,17 +5799,17 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Grass
 Bug (!!)
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
-Psychic
 Fighting
+Light
+Psychic
 
 ===========================
 Psychic - Magic
@@ -5821,19 +5821,19 @@ Dragon
 ----------
 Weak to:
 
-Bug
-Poison
 Dark
 Normal
+Poison
 Ghost
+Bug
 
 ----------
 Resists:
 
-Steel
+Fighting (!!)
 Magic
 Psychic (!!)
-Fighting (!!)
+Steel
 
 ===========================
 Psychic - Galactic
@@ -5846,18 +5846,18 @@ Fire
 Weak to:
 
 Rock
-Light
 Dark
 Ghost
+Light
 Flying
 
 ----------
 Resists:
 
-Grass
-Psychic
-Ground
 Fighting (!!)
+Grass
+Ground
+Psychic
 
 ===========================
 Bug - Normal
@@ -5871,15 +5871,15 @@ Weak to:
 
 Rock
 Magic
-Fire
 Flying
+Fire
 
 ----------
 Resists:
 
 Grass
-Light
 Ground
+Light
 
 ===========================
 Bug - Rock
@@ -5890,17 +5890,17 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock
 Water
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
-Poison
 Normal
+Poison
+Light
 
 ===========================
 Bug - Fire
@@ -5911,20 +5911,20 @@ Immune to:
 ----------
 Weak to:
 
-Rock (!!)
 Galactic
-Water
+Rock (!!)
 Flying
+Water
 
 ----------
 Resists:
 
-Steel
+Fighting
 Grass (!!)
 Light (!!)
 Bug
-Fighting
 Ice
+Steel
 
 ===========================
 Bug - Water
@@ -5943,12 +5943,12 @@ Flying
 ----------
 Resists:
 
-Steel
-Light
-Ground
 Fighting
+Ground
+Light
 Water
 Ice
+Steel
 
 ===========================
 Bug - Grass
@@ -5961,19 +5961,19 @@ Light
 Weak to:
 
 Rock
+Poison
+Flying (!!)
 Bug
 Fire (!!)
-Poison
 Ice
-Flying (!!)
 
 ----------
 Resists:
 
-Grass (!!)
 Electric
-Ground (!!)
 Fighting
+Grass (!!)
+Ground (!!)
 Water
 
 ===========================
@@ -5985,15 +5985,15 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock (!!)
 Fire (!!)
+Steel
 
 ----------
 Resists:
 
-Grass
 Galactic
+Grass
 Ground
 Ice
 
@@ -6007,17 +6007,17 @@ Immune to:
 Weak to:
 
 Rock
-Fire
 Ghost
+Fire
 
 ----------
 Resists:
 
-Steel
-Grass
-Light
 Electric
 Fighting
+Grass
+Light
+Steel
 
 ===========================
 Bug - Fighting
@@ -6029,20 +6029,20 @@ Immune to:
 Weak to:
 
 Galactic
+Flying (!!)
 Psychic
 Fire
-Flying (!!)
 
 ----------
 Resists:
 
+Dark
+Fighting
 Grass
+Ground
+Magic
 Light
 Bug
-Magic
-Ground
-Fighting
-Dark
 
 ===========================
 Bug - Poison
@@ -6054,19 +6054,19 @@ Immune to:
 Weak to:
 
 Rock
+Flying
 Psychic
 Fire
-Flying
 
 ----------
 Resists:
 
+Fighting (!!)
 Grass (!!)
+Poison
+Magic
 Light
 Bug
-Magic
-Fighting (!!)
-Poison
 
 ===========================
 Bug - Ground
@@ -6079,18 +6079,18 @@ Electric
 Weak to:
 
 Galactic
+Flying
 Fire
 Water
 Ice
-Flying
 
 ----------
 Resists:
 
-Light
-Ground
 Fighting
+Ground
 Poison
+Light
 
 ===========================
 Bug - Flying
@@ -6104,17 +6104,17 @@ Weak to:
 
 Rock (!!)
 Electric
+Flying
 Fire
 Ice
-Flying
 
 ----------
 Resists:
 
+Fighting (!!)
 Grass (!!)
 Light
 Bug
-Fighting (!!)
 
 ===========================
 Bug - Psychic
@@ -6126,20 +6126,20 @@ Immune to:
 Weak to:
 
 Rock
-Bug
-Fire
 Dark
 Ghost
 Flying
+Bug
+Fire
 
 ----------
 Resists:
 
+Fighting (!!)
 Grass
+Ground
 Light
 Psychic
-Ground
-Fighting (!!)
 
 ===========================
 Bug - None
@@ -6151,42 +6151,42 @@ Immune to:
 Weak to:
 
 Rock
-Fire
 Flying
+Fire
 
 ----------
 Resists:
 
-Grass
-Light
-Ground
 Fighting
+Grass
+Ground
+Light
 
 ===========================
 Bug - Ghost
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
 Rock
-Fire
 Dark
 Ghost
 Flying
+Fire
 
 ----------
 Resists:
 
-Grass
 Electric
-Bug
+Grass
 Ground
 Poison
+Bug
 
 ===========================
 Bug - Dragon
@@ -6198,19 +6198,19 @@ Immune to:
 Weak to:
 
 Rock
-Magic
-Ice
 Dragon
+Magic
 Flying
+Ice
 
 ----------
 Resists:
 
-Grass (!!)
-Light
 Electric
-Ground
 Fighting
+Grass (!!)
+Ground
+Light
 Water
 
 ===========================
@@ -6230,14 +6230,14 @@ Fire (!!)
 ----------
 Resists:
 
-Steel
+Galactic
+Dragon
+Normal
 Grass (!!)
 Light (!!)
-Galactic
 Bug
-Normal
 Ice
-Dragon
+Steel
 
 ===========================
 Bug - Dark
@@ -6250,16 +6250,16 @@ Psychic
 Weak to:
 
 Rock
+Flying
 Bug
 Fire
-Flying
 
 ----------
 Resists:
 
+Dark
 Grass
 Ground
-Dark
 Ghost
 
 ===========================
@@ -6271,21 +6271,21 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock
+Flying
 Bug
 Fire
-Flying
+Steel
 
 ----------
 Resists:
 
-Light (!!)
 Galactic
-Ground
-Fighting
 Dark
+Fighting
+Ground
 Ghost
+Light (!!)
 
 ===========================
 Bug - Magic
@@ -6298,21 +6298,21 @@ Dragon
 Weak to:
 
 Rock
-Fire
-Poison
 Normal
+Poison
 Flying
+Fire
 
 ----------
 Resists:
 
-Steel
-Grass
-Light
-Magic
-Psychic
-Ground
 Fighting (!!)
+Grass
+Ground
+Magic
+Light
+Psychic
+Steel
 
 ===========================
 Bug - Galactic
@@ -6330,140 +6330,140 @@ Flying (!!)
 ----------
 Resists:
 
-Grass (!!)
-Bug
-Ground (!!)
 Fighting (!!)
+Grass (!!)
+Ground (!!)
+Bug
 
 ===========================
 Ghost - Normal
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 Ghost
 
 ----------
 Weak to:
 
-Light
-Magic
 Dark
+Magic
+Light
 
 ----------
 Resists:
 
 Electric
-Bug
 Poison
+Bug
 
 ===========================
 Ghost - Rock
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Steel
-Grass
-Light
-Ground
 Dark
-Water
+Grass
+Ground
 Ghost
+Light
+Water
+Steel
 
 ----------
 Resists:
 
 Galactic
 Electric
-Bug
-Fire
 Poison (!!)
 Flying
+Bug
+Fire
 
 ===========================
 Ghost - Fire
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Rock
 Galactic
-Ground
+Rock
 Dark
-Water
+Ground
 Ghost
+Water
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric
+Grass
+Poison
 Bug (!!)
 Fire
-Poison
 Ice
+Steel
 
 ===========================
 Ghost - Water
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Grass
-Light
 Dark
+Grass
 Ghost
+Light
 
 ----------
 Resists:
 
-Steel
 Bug
 Fire
 Water
 Ice
+Steel
 
 ===========================
 Ghost - Grass
 ===========================
 Immune to:
 
-Light
-Fighting
 Normal
+Fighting
+Light
 
 ----------
 Weak to:
 
-Fire
 Dark
 Ghost
-Ice
 Flying
+Fire
+Ice
 
 ----------
 Resists:
 
-Grass
 Electric (!!)
+Grass
 Ground
 Water
 
@@ -6472,254 +6472,254 @@ Ghost - Ice
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Steel
 Rock
-Light (!!)
-Fire
 Dark
 Ghost
+Light (!!)
+Fire
+Steel
 
 ----------
 Resists:
 
 Galactic
 Electric
-Bug
 Poison
-Ice
 Flying
+Bug
+Ice
 
 ===========================
 Ghost - Electric
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Light
-Ground
 Dark
+Ground
 Ghost (!!)
+Light
 
 ----------
 Resists:
 
-Steel
 Electric (!!)
-Bug
 Poison
 Flying
+Bug
+Steel
 
 ===========================
 Ghost - Fighting
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Light
 Galactic
-Psychic
 Ghost
+Light
 Flying
+Psychic
 
 ----------
 Resists:
 
 Rock
 Electric
-Bug (!!)
-Magic
 Poison
+Magic
+Bug (!!)
 
 ===========================
 Ghost - Poison
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
+Dark
+Ground
+Ghost
 Light
 Psychic
-Ground
-Dark
-Ghost
 
 ----------
 Resists:
 
-Grass
 Electric
-Bug (!!)
-Magic
+Grass
 Poison (!!)
+Magic
+Bug (!!)
 
 ===========================
 Ghost - Ground
 ===========================
 Immune to:
 
+Normal
 Electric
 Fighting
-Normal
 
 ----------
 Weak to:
 
-Grass
-Light
 Galactic
 Dark
-Water
+Grass
 Ghost
+Light
+Water
 Ice
 
 ----------
 Resists:
 
 Rock
-Bug
 Poison (!!)
+Bug
 
 ===========================
 Ghost - Flying
 ===========================
 Immune to:
 
-Ground
-Fighting
 Normal
+Fighting
+Ground
 
 ----------
 Weak to:
 
 Rock
-Light
 Dark
 Ghost
+Light
 Ice
 
 ----------
 Resists:
 
 Grass
-Bug (!!)
 Poison
+Bug (!!)
 
 ===========================
 Ghost - Psychic
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Light
 Dark (!!)
 Ghost (!!)
+Light
 
 ----------
 Resists:
 
 Electric
-Psychic
 Poison
+Psychic
 
 ===========================
 Ghost - Bug
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
 Rock
-Fire
 Dark
 Ghost
 Flying
+Fire
 
 ----------
 Resists:
 
-Grass
 Electric
-Bug
+Grass
 Ground
 Poison
+Bug
 
 ===========================
 Ghost - None
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Light
 Dark
 Ghost
+Light
 
 ----------
 Resists:
 
 Electric
-Bug
 Poison
+Bug
 
 ===========================
 Ghost - Dragon
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Light
-Magic
-Dark
-Ghost
-Ice
 Dragon
+Dark
+Magic
+Ghost
+Light
+Ice
 
 ----------
 Resists:
 
-Grass
 Electric (!!)
+Grass
+Poison
 Bug
 Fire
-Poison
 Water
 
 ===========================
@@ -6727,39 +6727,39 @@ Ghost - Steel
 ===========================
 Immune to:
 
+Normal
 Fighting
 Poison
-Normal
 
 ----------
 Weak to:
 
-Magic
-Ground
-Fire
 Dark
+Ground
+Magic
 Ghost
+Fire
 
 ----------
 Resists:
 
-Steel
-Rock
-Grass
 Galactic
+Rock
+Dragon
+Grass
+Flying
 Bug (!!)
 Ice
-Dragon
-Flying
+Steel
 
 ===========================
 Ghost - Dark
 ===========================
 Immune to:
 
-Psychic
-Fighting
 Normal
+Fighting
+Psychic
 
 ----------
 Weak to:
@@ -6777,14 +6777,14 @@ Ghost - Light
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Steel
 Grass
+Steel
 
 ----------
 Resists:
@@ -6798,52 +6798,52 @@ Ghost - Magic
 ===========================
 Immune to:
 
-Fighting
-Normal
 Dragon
+Normal
+Fighting
 
 ----------
 Weak to:
 
-Light
 Dark
 Ghost
+Light
 
 ----------
 Resists:
 
-Steel
 Electric
-Bug
 Magic
+Bug
 Psychic
+Steel
 
 ===========================
 Ghost - Galactic
 ===========================
 Immune to:
 
-Fire
-Fighting
 Normal
+Fighting
+Fire
 
 ----------
 Weak to:
 
 Rock
-Light (!!)
 Dark
 Ghost
+Light (!!)
 Flying
 
 ----------
 Resists:
 
-Grass
 Electric
-Bug (!!)
+Grass
 Ground
 Poison
+Bug (!!)
 
 ===========================
 Dragon - Normal
@@ -6855,16 +6855,16 @@ Ghost
 ----------
 Weak to:
 
-Magic (!!)
-Fighting
-Ice
 Dragon
+Fighting
+Magic (!!)
+Ice
 
 ----------
 Resists:
 
-Grass
 Electric
+Grass
 Fire
 Water
 
@@ -6877,22 +6877,22 @@ Immune to:
 ----------
 Weak to:
 
-Steel
-Magic
-Ground
-Fighting
-Ice
 Dragon
+Fighting
+Ground
+Magic
+Ice
+Steel
 
 ----------
 Resists:
 
 Galactic
-Electric
-Fire (!!)
-Poison
 Normal
+Electric
+Poison
 Flying
+Fire (!!)
 
 ===========================
 Dragon - Fire
@@ -6903,21 +6903,21 @@ Immune to:
 ----------
 Weak to:
 
-Rock
 Galactic
-Magic
-Ground
+Rock
 Dragon
+Ground
+Magic
 
 ----------
 Resists:
 
-Steel
+Electric
 Grass (!!)
 Light
-Electric
 Bug
 Fire (!!)
+Steel
 
 ===========================
 Dragon - Water
@@ -6928,16 +6928,16 @@ Immune to:
 ----------
 Weak to:
 
-Magic
-Poison
 Dragon
+Poison
+Magic
 
 ----------
 Resists:
 
-Steel
 Fire (!!)
 Water (!!)
+Steel
 
 ===========================
 Dragon - Grass
@@ -6949,18 +6949,18 @@ Light
 ----------
 Weak to:
 
-Bug
-Magic
-Poison
-Ice (!!)
 Dragon
+Poison
+Magic
 Flying
+Bug
+Ice (!!)
 
 ----------
 Resists:
 
-Grass (!!)
 Electric (!!)
+Grass (!!)
 Ground
 Water (!!)
 
@@ -6973,21 +6973,21 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock
-Light
-Magic
-Fighting
 Dragon
+Fighting
+Magic
+Light
+Steel
 
 ----------
 Resists:
 
-Grass
 Galactic
 Electric
-Water
+Grass
 Flying
+Water
 
 ===========================
 Dragon - Electric
@@ -6998,21 +6998,21 @@ Immune to:
 ----------
 Weak to:
 
-Magic
+Dragon
 Ground
+Magic
 Ghost
 Ice
-Dragon
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric (!!)
+Grass
+Flying
 Fire
 Water
-Flying
+Steel
 
 ===========================
 Dragon - Fighting
@@ -7024,20 +7024,20 @@ Immune to:
 Weak to:
 
 Galactic
-Psychic
-Ice
 Dragon
 Flying
+Psychic
+Ice
 
 ----------
 Resists:
 
 Rock
-Grass
+Dark
 Electric
+Grass
 Bug
 Fire
-Dark
 Water
 
 ===========================
@@ -7049,20 +7049,20 @@ Immune to:
 ----------
 Weak to:
 
-Psychic
-Ground
-Ice
 Dragon
+Ground
+Psychic
+Ice
 
 ----------
 Resists:
 
-Grass (!!)
 Electric
+Fighting
+Grass (!!)
+Poison
 Bug
 Fire
-Fighting
-Poison
 Water
 
 ===========================
@@ -7076,16 +7076,16 @@ Electric
 Weak to:
 
 Galactic
+Dragon
 Magic
 Ice (!!)
-Dragon
 
 ----------
 Resists:
 
 Rock
-Fire
 Poison
+Fire
 
 ===========================
 Dragon - Flying
@@ -7098,17 +7098,17 @@ Ground
 Weak to:
 
 Rock
+Dragon
 Magic
 Ice (!!)
-Dragon
 
 ----------
 Resists:
 
+Fighting
 Grass (!!)
 Bug
 Fire
-Fighting
 Water
 
 ===========================
@@ -7120,21 +7120,21 @@ Immune to:
 ----------
 Weak to:
 
-Bug
-Magic
-Dark
-Ghost
-Ice
 Dragon
+Dark
+Magic
+Ghost
+Bug
+Ice
 
 ----------
 Resists:
 
-Grass
 Electric
+Fighting
+Grass
 Psychic
 Fire
-Fighting
 Water
 
 ===========================
@@ -7147,19 +7147,19 @@ Immune to:
 Weak to:
 
 Rock
-Magic
-Ice
 Dragon
+Magic
 Flying
+Ice
 
 ----------
 Resists:
 
-Grass (!!)
-Light
 Electric
-Ground
 Fighting
+Grass (!!)
+Ground
+Light
 Water
 
 ===========================
@@ -7167,27 +7167,27 @@ Dragon - Ghost
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Light
-Magic
-Dark
-Ghost
-Ice
 Dragon
+Dark
+Magic
+Ghost
+Light
+Ice
 
 ----------
 Resists:
 
-Grass
 Electric (!!)
+Grass
+Poison
 Bug
 Fire
-Poison
 Water
 
 ===========================
@@ -7199,15 +7199,15 @@ Immune to:
 ----------
 Weak to:
 
+Dragon
 Magic
 Ice
-Dragon
 
 ----------
 Resists:
 
-Grass
 Electric
+Grass
 Fire
 Water
 
@@ -7221,22 +7221,22 @@ Poison
 ----------
 Weak to:
 
-Magic (!!)
-Ground
 Fighting
+Ground
+Magic (!!)
 
 ----------
 Resists:
 
-Steel
+Galactic
 Rock
+Normal
 Grass (!!)
 Light
-Galactic
-Bug
-Normal
-Water
 Flying
+Bug
+Water
+Steel
 
 ===========================
 Dragon - Dark
@@ -7248,22 +7248,22 @@ Psychic
 ----------
 Weak to:
 
+Dragon
+Fighting
+Magic
 Light
 Bug
-Magic
-Fighting
 Ice
-Dragon
 
 ----------
 Resists:
 
-Grass
-Electric
-Fire
 Dark
-Water
+Electric
+Grass
 Ghost
+Fire
+Water
 
 ===========================
 Dragon - Light
@@ -7274,22 +7274,22 @@ Immune to:
 ----------
 Weak to:
 
-Steel
-Bug
-Magic
-Ice
 Dragon
+Magic
+Bug
+Ice
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
-Electric
-Fire
 Dark
-Water
+Electric
 Ghost
+Light
+Fire
+Water
 
 ===========================
 Dragon - Magic
@@ -7301,20 +7301,20 @@ Dragon
 ----------
 Weak to:
 
-Poison
 Normal
+Poison
 Ice
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric
+Fighting
+Grass
 Psychic
 Fire
-Fighting
 Water
+Steel
 
 ===========================
 Dragon - Galactic
@@ -7327,20 +7327,20 @@ Fire
 Weak to:
 
 Rock
-Light
-Magic
-Ice
 Dragon
+Magic
+Light
 Flying
+Ice
 
 ----------
 Resists:
 
-Grass (!!)
 Electric
-Bug
-Ground
 Fighting
+Grass (!!)
+Ground
+Bug
 Water
 
 ===========================
@@ -7355,24 +7355,24 @@ Ghost
 Weak to:
 
 Electric
-Magic (!!)
-Ground
-Fire
 Fighting (!!)
+Ground
+Magic (!!)
+Fire
 
 ----------
 Resists:
 
-Steel
+Galactic
 Rock
+Dragon
+Normal
 Grass
 Light
-Galactic
-Bug
-Normal
-Ice
-Dragon
 Flying
+Bug
+Ice
+Steel
 
 ===========================
 Steel - Rock
@@ -7385,22 +7385,22 @@ Poison
 Weak to:
 
 Electric
-Magic
-Ground (!!)
 Fighting (!!)
+Ground (!!)
+Magic
 Water
 
 ----------
 Resists:
 
-Rock
-Light
 Galactic (!!)
-Bug
-Normal (!!)
-Ice
+Rock
 Dragon
+Normal (!!)
+Light
 Flying (!!)
+Bug
+Ice
 
 ===========================
 Steel - Fire
@@ -7413,22 +7413,22 @@ Poison
 Weak to:
 
 Electric
-Magic
-Ground (!!)
 Fighting
+Ground (!!)
+Magic
 Water
 
 ----------
 Resists:
 
-Steel (!!)
+Dragon
+Normal
 Grass (!!)
 Light (!!)
-Bug (!!)
-Normal
-Ice (!!)
-Dragon
 Flying
+Bug (!!)
+Ice (!!)
+Steel (!!)
 
 ===========================
 Steel - Water
@@ -7441,49 +7441,49 @@ Poison
 Weak to:
 
 Electric (!!)
-Magic
-Ground
 Fighting
+Ground
+Magic
 
 ----------
 Resists:
 
-Steel (!!)
-Rock
-Light
 Galactic
-Bug
+Rock
+Dragon
 Normal
+Light
+Flying
+Bug
 Water
 Ice (!!)
-Dragon
-Flying
+Steel (!!)
 
 ===========================
 Steel - Grass
 ===========================
 Immune to:
 
-Light
 Poison
+Light
 
 ----------
 Weak to:
 
+Fighting
 Magic
 Fire (!!)
-Fighting
 
 ----------
 Resists:
 
-Steel
-Rock
-Grass (!!)
 Galactic
-Normal
-Water
+Rock
 Dragon
+Normal
+Grass (!!)
+Water
+Steel
 
 ===========================
 Steel - Ice
@@ -7496,21 +7496,21 @@ Poison
 Weak to:
 
 Electric
-Magic
-Ground
-Fire (!!)
 Fighting (!!)
+Ground
+Magic
+Fire (!!)
 
 ----------
 Resists:
 
-Grass
 Galactic (!!)
-Bug
-Normal
-Ice (!!)
 Dragon
+Normal
+Grass
 Flying (!!)
+Bug
+Ice (!!)
 
 ===========================
 Steel - Electric
@@ -7522,25 +7522,25 @@ Poison
 ----------
 Weak to:
 
-Magic
-Ground (!!)
-Fire
 Fighting
+Ground (!!)
+Magic
 Ghost
+Fire
 
 ----------
 Resists:
 
-Steel (!!)
+Galactic
 Rock
+Dragon
+Normal
 Grass
 Light
-Galactic
-Bug
-Normal
-Ice
-Dragon
 Flying (!!)
+Bug
+Ice
+Steel (!!)
 
 ===========================
 Steel - Fighting
@@ -7553,23 +7553,23 @@ Poison
 Weak to:
 
 Electric
-Psychic
-Ground
-Fire
 Fighting
+Ground
+Psychic
+Fire
 
 ----------
 Resists:
 
-Steel
 Rock (!!)
+Dragon
+Dark
+Normal
 Grass
 Light
 Bug (!!)
-Dark
-Normal
 Ice
-Dragon
+Steel
 
 ===========================
 Steel - Poison
@@ -7582,23 +7582,23 @@ Poison
 Weak to:
 
 Electric
-Psychic
 Ground (!!)
+Psychic
 Fire
 
 ----------
 Resists:
 
-Steel
+Galactic
 Rock
+Dragon
+Normal
 Grass (!!)
 Light
-Galactic
-Bug (!!)
-Normal
-Ice
-Dragon
 Flying
+Bug (!!)
+Ice
+Steel
 
 ===========================
 Steel - Ground
@@ -7611,22 +7611,22 @@ Poison
 ----------
 Weak to:
 
-Magic
-Ground
-Fire
 Fighting
+Ground
+Magic
+Fire
 Water
 
 ----------
 Resists:
 
-Steel
 Rock (!!)
-Light
-Bug
-Normal
 Dragon
+Normal
+Light
 Flying
+Bug
+Steel
 
 ===========================
 Steel - Flying
@@ -7646,14 +7646,14 @@ Fire
 ----------
 Resists:
 
-Steel
+Galactic
+Dragon
+Normal
 Grass (!!)
 Light
-Galactic
-Bug (!!)
-Normal
-Dragon
 Flying
+Bug (!!)
+Steel
 
 ===========================
 Steel - Psychic
@@ -7665,26 +7665,26 @@ Poison
 ----------
 Weak to:
 
-Electric
-Magic
-Ground
-Fire
 Dark
+Electric
+Ground
+Magic
 Ghost
+Fire
 
 ----------
 Resists:
 
-Steel
+Galactic
 Rock
+Dragon
+Normal
 Grass
 Light
-Galactic
-Psychic
-Normal
-Ice
-Dragon
 Flying
+Psychic
+Ice
+Steel
 
 ===========================
 Steel - Bug
@@ -7703,44 +7703,44 @@ Fire (!!)
 ----------
 Resists:
 
-Steel
+Galactic
+Dragon
+Normal
 Grass (!!)
 Light (!!)
-Galactic
 Bug
-Normal
 Ice
-Dragon
+Steel
 
 ===========================
 Steel - Ghost
 ===========================
 Immune to:
 
+Normal
 Fighting
 Poison
-Normal
 
 ----------
 Weak to:
 
-Magic
-Ground
-Fire
 Dark
+Ground
+Magic
 Ghost
+Fire
 
 ----------
 Resists:
 
-Steel
-Rock
-Grass
 Galactic
+Rock
+Dragon
+Grass
+Flying
 Bug (!!)
 Ice
-Dragon
-Flying
+Steel
 
 ===========================
 Steel - Dragon
@@ -7752,22 +7752,22 @@ Poison
 ----------
 Weak to:
 
-Magic (!!)
-Ground
 Fighting
+Ground
+Magic (!!)
 
 ----------
 Resists:
 
-Steel
+Galactic
 Rock
+Normal
 Grass (!!)
 Light
-Galactic
-Bug
-Normal
-Water
 Flying
+Bug
+Water
+Steel
 
 ===========================
 Steel - None
@@ -7780,55 +7780,55 @@ Poison
 Weak to:
 
 Electric
-Magic
-Ground
-Fire
 Fighting
+Ground
+Magic
+Fire
 
 ----------
 Resists:
 
-Steel
+Galactic
 Rock
+Dragon
+Normal
 Grass
 Light
-Galactic
-Bug
-Normal
-Ice
-Dragon
 Flying
+Bug
+Ice
+Steel
 
 ===========================
 Steel - Dark
 ===========================
 Immune to:
 
-Psychic
 Poison
+Psychic
 
 ----------
 Weak to:
 
 Electric
-Magic
-Ground
-Fire
 Fighting (!!)
+Ground
+Magic
+Fire
 
 ----------
 Resists:
 
-Steel
-Rock
-Grass
 Galactic
+Rock
+Dragon
 Dark
 Normal
+Grass
 Ghost
-Ice
-Dragon
 Flying
+Ice
+Steel
 
 ===========================
 Steel - Light
@@ -7841,31 +7841,31 @@ Poison
 Weak to:
 
 Electric
-Magic
-Ground
-Fire
 Fighting
+Ground
+Magic
+Fire
 
 ----------
 Resists:
 
-Rock
-Light (!!)
 Galactic (!!)
+Rock
+Dragon
 Dark
 Normal
 Ghost
-Ice
-Dragon
+Light (!!)
 Flying
+Ice
 
 ===========================
 Steel - Magic
 ===========================
 Immune to:
 
-Poison
 Dragon
+Poison
 
 ----------
 Weak to:
@@ -7877,23 +7877,23 @@ Fire
 ----------
 Resists:
 
-Steel (!!)
+Galactic
 Rock
 Grass
 Light
-Galactic
+Flying
 Bug
 Psychic
 Ice
-Flying
+Steel (!!)
 
 ===========================
 Steel - Galactic
 ===========================
 Immune to:
 
-Fire
 Poison
+Fire
 
 ----------
 Weak to:
@@ -7904,29 +7904,29 @@ Magic
 ----------
 Resists:
 
-Steel
-Grass (!!)
 Galactic
-Bug (!!)
-Normal
-Ice
 Dragon
+Normal
+Grass (!!)
+Bug (!!)
+Ice
+Steel
 
 ===========================
 Dark - Normal
 ===========================
 Immune to:
 
-Psychic
 Ghost
+Psychic
 
 ----------
 Weak to:
 
+Fighting (!!)
+Magic
 Light
 Bug
-Magic
-Fighting (!!)
 
 ----------
 Resists:
@@ -7943,24 +7943,24 @@ Psychic
 ----------
 Weak to:
 
-Steel
+Fighting (!!)
 Grass
+Ground
 Light
 Bug
-Ground
-Fighting (!!)
 Water
+Steel
 
 ----------
 Resists:
 
 Galactic
-Fire
-Poison
 Dark
 Normal
+Poison
 Ghost
 Flying
+Fire
 
 ===========================
 Dark - Fire
@@ -7972,21 +7972,21 @@ Psychic
 ----------
 Weak to:
 
-Rock
 Galactic
-Ground
+Rock
 Fighting
+Ground
 Water
 
 ----------
 Resists:
 
-Steel
-Grass
-Fire
 Dark
+Grass
 Ghost
+Fire
 Ice
+Steel
 
 ===========================
 Dark - Water
@@ -7998,22 +7998,22 @@ Psychic
 ----------
 Weak to:
 
-Grass
-Light
 Electric
-Bug
 Fighting
+Grass
 Poison
+Light
+Bug
 
 ----------
 Resists:
 
-Steel
-Fire
 Dark
-Water
 Ghost
+Fire
+Water
 Ice
+Steel
 
 ===========================
 Dark - Grass
@@ -8026,22 +8026,22 @@ Psychic
 ----------
 Weak to:
 
-Bug (!!)
-Fire
 Fighting
 Poison
-Ice
 Flying
+Bug (!!)
+Fire
+Ice
 
 ----------
 Resists:
 
-Grass
-Electric
-Ground
 Dark
-Water
+Electric
+Grass
+Ground
 Ghost
+Water
 
 ===========================
 Dark - Ice
@@ -8053,12 +8053,12 @@ Psychic
 ----------
 Weak to:
 
-Steel
 Rock
+Fighting (!!)
 Light (!!)
 Bug
 Fire
-Fighting (!!)
+Steel
 
 ----------
 Resists:
@@ -8066,8 +8066,8 @@ Resists:
 Galactic
 Dark
 Ghost
-Ice
 Flying
+Ice
 
 ===========================
 Dark - Electric
@@ -8079,18 +8079,18 @@ Psychic
 ----------
 Weak to:
 
+Fighting
+Ground
 Light
 Bug
-Ground
-Fighting
 
 ----------
 Resists:
 
-Steel
-Electric
 Dark
+Electric
 Flying
+Steel
 
 ===========================
 Dark - Fighting
@@ -8102,17 +8102,17 @@ Psychic
 ----------
 Weak to:
 
-Light
 Galactic
 Fighting
+Light
 Flying
 
 ----------
 Resists:
 
 Rock
-Magic
 Dark (!!)
+Magic
 Ghost
 
 ===========================
@@ -8125,16 +8125,16 @@ Psychic
 ----------
 Weak to:
 
-Light
 Ground
+Light
 
 ----------
 Resists:
 
-Grass
-Magic
-Poison
 Dark
+Grass
+Poison
+Magic
 Ghost
 
 ===========================
@@ -8148,11 +8148,11 @@ Psychic
 ----------
 Weak to:
 
+Galactic
+Fighting
 Grass
 Light
-Galactic
 Bug
-Fighting
 Water
 Ice
 
@@ -8160,8 +8160,8 @@ Ice
 Resists:
 
 Rock
-Poison
 Dark
+Poison
 Ghost
 
 ===========================
@@ -8169,22 +8169,22 @@ Dark - Flying
 ===========================
 Immune to:
 
-Psychic
 Ground
+Psychic
 
 ----------
 Weak to:
 
 Rock
-Light
 Electric
+Light
 Ice
 
 ----------
 Resists:
 
-Grass
 Dark
+Grass
 Ghost
 
 ===========================
@@ -8215,16 +8215,16 @@ Psychic
 Weak to:
 
 Rock
+Flying
 Bug
 Fire
-Flying
 
 ----------
 Resists:
 
+Dark
 Grass
 Ground
-Dark
 Ghost
 
 ===========================
@@ -8232,9 +8232,9 @@ Dark - Ghost
 ===========================
 Immune to:
 
-Psychic
-Fighting
 Normal
+Fighting
+Psychic
 
 ----------
 Weak to:
@@ -8257,53 +8257,53 @@ Psychic
 ----------
 Weak to:
 
+Dragon
+Fighting
+Magic
 Light
 Bug
-Magic
-Fighting
 Ice
-Dragon
 
 ----------
 Resists:
 
-Grass
-Electric
-Fire
 Dark
-Water
+Electric
+Grass
 Ghost
+Fire
+Water
 
 ===========================
 Dark - Steel
 ===========================
 Immune to:
 
-Psychic
 Poison
+Psychic
 
 ----------
 Weak to:
 
 Electric
-Magic
-Ground
-Fire
 Fighting (!!)
+Ground
+Magic
+Fire
 
 ----------
 Resists:
 
-Steel
-Rock
-Grass
 Galactic
+Rock
+Dragon
 Dark
 Normal
+Grass
 Ghost
-Ice
-Dragon
 Flying
+Ice
+Steel
 
 ===========================
 Dark - None
@@ -8315,9 +8315,9 @@ Psychic
 ----------
 Weak to:
 
+Fighting
 Light
 Bug
-Fighting
 
 ----------
 Resists:
@@ -8335,10 +8335,10 @@ Psychic
 ----------
 Weak to:
 
-Steel
+Fighting
 Grass
 Bug (!!)
-Fighting
+Steel
 
 ----------
 Resists:
@@ -8352,24 +8352,24 @@ Dark - Magic
 ===========================
 Immune to:
 
-Psychic
 Dragon
+Psychic
 
 ----------
 Weak to:
 
+Normal
+Poison
 Light
 Bug
-Poison
-Normal
 
 ----------
 Resists:
 
-Steel
-Magic
 Dark
+Magic
 Ghost
+Steel
 
 ===========================
 Dark - Galactic
@@ -8389,9 +8389,9 @@ Flying
 ----------
 Resists:
 
+Dark
 Grass
 Ground
-Dark
 Ghost
 
 ===========================
@@ -8404,18 +8404,18 @@ Ghost
 ----------
 Weak to:
 
-Steel
-Grass
-Bug
-Magic
 Fighting
+Grass
+Magic
+Bug
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
 Dark
+Light
 
 ===========================
 Light - Rock
@@ -8426,24 +8426,24 @@ Immune to:
 ----------
 Weak to:
 
-Steel (!!)
-Grass (!!)
-Bug
-Ground
 Fighting
+Grass (!!)
+Ground
+Bug
 Water
+Steel (!!)
 
 ----------
 Resists:
 
-Light
 Galactic (!!)
-Fire
-Poison
 Dark
 Normal
+Poison
 Ghost
+Light
 Flying
+Fire
 
 ===========================
 Light - Fire
@@ -8461,10 +8461,10 @@ Water
 ----------
 Resists:
 
-Light (!!)
-Fire
 Dark
 Ghost
+Light (!!)
+Fire
 Ice
 
 ===========================
@@ -8476,20 +8476,20 @@ Immune to:
 ----------
 Weak to:
 
-Grass (!!)
 Electric
-Bug
+Grass (!!)
 Poison
+Bug
 
 ----------
 Resists:
 
-Light
 Galactic
-Fire
 Dark
-Water
 Ghost
+Light
+Fire
+Water
 Ice
 
 ===========================
@@ -8502,22 +8502,22 @@ Light
 ----------
 Weak to:
 
-Steel
+Poison
+Flying
 Bug (!!)
 Fire
-Poison
 Ice
-Flying
+Steel
 
 ----------
 Resists:
 
 Galactic
+Dark
 Electric
 Ground
-Dark
-Water
 Ghost
+Water
 
 ===========================
 Light - Ice
@@ -8528,12 +8528,12 @@ Immune to:
 ----------
 Weak to:
 
-Steel (!!)
 Rock
+Fighting
 Grass
 Bug
 Fire
-Fighting
+Steel (!!)
 
 ----------
 Resists:
@@ -8541,8 +8541,8 @@ Resists:
 Galactic (!!)
 Dark
 Ghost
-Ice
 Flying
+Ice
 
 ===========================
 Light - Electric
@@ -8554,16 +8554,16 @@ Immune to:
 Weak to:
 
 Grass
-Bug
 Ground
+Bug
 
 ----------
 Resists:
 
-Light
 Galactic
-Electric
 Dark
+Electric
+Light
 Flying
 
 ===========================
@@ -8575,19 +8575,19 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Grass
-Psychic
 Flying
+Psychic
+Steel
 
 ----------
 Resists:
 
 Rock
-Light
-Magic
 Dark (!!)
+Magic
 Ghost
+Light
 
 ===========================
 Light - Poison
@@ -8598,20 +8598,20 @@ Immune to:
 ----------
 Weak to:
 
-Steel
-Psychic
 Ground
+Psychic
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
-Magic
+Dark
 Fighting
 Poison
-Dark
+Magic
 Ghost
+Light
 
 ===========================
 Light - Ground
@@ -8623,20 +8623,20 @@ Electric
 ----------
 Weak to:
 
-Steel
 Grass (!!)
 Bug
 Water
 Ice
+Steel
 
 ----------
 Resists:
 
 Rock
-Light
-Poison
 Dark
+Poison
 Ghost
+Light
 
 ===========================
 Light - Flying
@@ -8648,19 +8648,19 @@ Ground
 ----------
 Weak to:
 
-Steel
 Rock
 Electric
 Ice
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
-Fighting
 Dark
+Fighting
 Ghost
+Light
 
 ===========================
 Light - Psychic
@@ -8671,17 +8671,17 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Grass
 Bug (!!)
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
-Psychic
 Fighting
+Light
+Psychic
 
 ===========================
 Light - Bug
@@ -8692,35 +8692,35 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Rock
+Flying
 Bug
 Fire
-Flying
+Steel
 
 ----------
 Resists:
 
-Light (!!)
 Galactic
-Ground
-Fighting
 Dark
+Fighting
+Ground
 Ghost
+Light (!!)
 
 ===========================
 Light - Ghost
 ===========================
 Immune to:
 
-Fighting
 Normal
+Fighting
 
 ----------
 Weak to:
 
-Steel
 Grass
+Steel
 
 ----------
 Resists:
@@ -8738,22 +8738,22 @@ Immune to:
 ----------
 Weak to:
 
-Steel
-Bug
-Magic
-Ice
 Dragon
+Magic
+Bug
+Ice
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
-Electric
-Fire
 Dark
-Water
+Electric
 Ghost
+Light
+Fire
+Water
 
 ===========================
 Light - Steel
@@ -8766,23 +8766,23 @@ Poison
 Weak to:
 
 Electric
-Magic
-Ground
-Fire
 Fighting
+Ground
+Magic
+Fire
 
 ----------
 Resists:
 
-Rock
-Light (!!)
 Galactic (!!)
+Rock
+Dragon
 Dark
 Normal
 Ghost
-Ice
-Dragon
+Light (!!)
 Flying
+Ice
 
 ===========================
 Light - Dark
@@ -8794,10 +8794,10 @@ Psychic
 ----------
 Weak to:
 
-Steel
+Fighting
 Grass
 Bug (!!)
-Fighting
+Steel
 
 ----------
 Resists:
@@ -8815,17 +8815,17 @@ Immune to:
 ----------
 Weak to:
 
-Steel
 Grass
 Bug
+Steel
 
 ----------
 Resists:
 
-Light
 Galactic
 Dark
 Ghost
+Light
 
 ===========================
 Light - Magic
@@ -8837,21 +8837,21 @@ Dragon
 ----------
 Weak to:
 
-Grass
-Bug
-Poison
 Normal
+Grass
+Poison
+Bug
 
 ----------
 Resists:
 
-Light
 Galactic
-Magic
-Psychic
-Fighting
 Dark
+Fighting
+Magic
 Ghost
+Light
+Psychic
 
 ===========================
 Light - Galactic
@@ -8863,17 +8863,17 @@ Fire
 ----------
 Weak to:
 
-Steel
 Rock
 Flying
+Steel
 
 ----------
 Resists:
 
 Galactic
-Ground
-Fighting
 Dark
+Fighting
+Ground
 Ghost
 
 ===========================
@@ -8881,20 +8881,20 @@ Magic - Normal
 ===========================
 Immune to:
 
-Ghost
 Dragon
+Ghost
 
 ----------
 Weak to:
 
-Poison
 Normal
+Poison
 
 ----------
 Resists:
 
-Steel
 Psychic
+Steel
 
 ===========================
 Magic - Rock
@@ -8915,9 +8915,9 @@ Resists:
 
 Galactic
 Magic
+Flying
 Psychic
 Fire
-Flying
 
 ===========================
 Magic - Fire
@@ -8929,25 +8929,25 @@ Dragon
 ----------
 Weak to:
 
-Rock
 Galactic
+Rock
+Normal
 Ground
 Poison
-Normal
 Water
 
 ----------
 Resists:
 
-Steel (!!)
+Fighting
 Grass
+Magic
 Light
 Bug
-Magic
 Psychic
 Fire
-Fighting
 Ice
+Steel (!!)
 
 ===========================
 Magic - Water
@@ -8959,51 +8959,51 @@ Dragon
 ----------
 Weak to:
 
-Grass
-Electric
-Poison (!!)
 Normal
+Electric
+Grass
+Poison (!!)
 
 ----------
 Resists:
 
-Steel (!!)
+Fighting
 Magic
 Psychic
 Fire
-Fighting
 Water
 Ice
+Steel (!!)
 
 ===========================
 Magic - Grass
 ===========================
 Immune to:
 
-Light
 Dragon
+Light
 
 ----------
 Weak to:
 
+Normal
+Poison (!!)
+Flying
 Bug
 Fire
-Poison (!!)
-Normal
 Ice
-Flying
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric
+Fighting
+Grass
+Ground
 Magic
 Psychic
-Ground
-Fighting
 Water
+Steel
 
 ===========================
 Magic - Ice
@@ -9016,19 +9016,19 @@ Dragon
 Weak to:
 
 Rock
+Normal
+Poison
 Light
 Fire
-Poison
-Normal
 
 ----------
 Resists:
 
 Galactic
 Magic
+Flying
 Psychic
 Ice
-Flying
 
 ===========================
 Magic - Electric
@@ -9040,20 +9040,20 @@ Dragon
 ----------
 Weak to:
 
+Normal
 Ground
 Poison
-Normal
 Ghost
 
 ----------
 Resists:
 
-Steel (!!)
 Electric
-Magic
-Psychic
 Fighting
+Magic
 Flying
+Psychic
+Steel (!!)
 
 ===========================
 Magic - Fighting
@@ -9066,19 +9066,19 @@ Dragon
 Weak to:
 
 Galactic
-Poison
 Normal
+Poison
 Flying
 
 ----------
 Resists:
 
-Steel
 Rock
-Bug
-Magic (!!)
-Fighting
 Dark
+Fighting
+Magic (!!)
+Bug
+Steel
 
 ===========================
 Magic - Poison
@@ -9090,70 +9090,70 @@ Dragon
 ----------
 Weak to:
 
-Ground
 Normal
+Ground
 
 ----------
 Resists:
 
-Steel
-Grass
-Bug
-Magic (!!)
 Fighting (!!)
+Grass
+Magic (!!)
+Bug
+Steel
 
 ===========================
 Magic - Ground
 ===========================
 Immune to:
 
-Electric
 Dragon
+Electric
 
 ----------
 Weak to:
 
-Grass
 Galactic
 Normal
+Grass
 Water
 Ice
 
 ----------
 Resists:
 
-Steel
 Rock
+Fighting
 Magic
 Psychic
-Fighting
+Steel
 
 ===========================
 Magic - Flying
 ===========================
 Immune to:
 
-Ground
 Dragon
+Ground
 
 ----------
 Weak to:
 
 Rock
+Normal
 Electric
 Poison
-Normal
 Ice
 
 ----------
 Resists:
 
-Steel
-Grass
-Bug
-Magic
-Psychic
 Fighting (!!)
+Grass
+Magic
+Bug
+Psychic
+Steel
 
 ===========================
 Magic - Psychic
@@ -9165,19 +9165,19 @@ Dragon
 ----------
 Weak to:
 
-Bug
-Poison
 Dark
 Normal
+Poison
 Ghost
+Bug
 
 ----------
 Resists:
 
-Steel
+Fighting (!!)
 Magic
 Psychic (!!)
-Fighting (!!)
+Steel
 
 ===========================
 Magic - Bug
@@ -9190,46 +9190,46 @@ Dragon
 Weak to:
 
 Rock
-Fire
-Poison
 Normal
+Poison
 Flying
+Fire
 
 ----------
 Resists:
 
-Steel
-Grass
-Light
-Magic
-Psychic
-Ground
 Fighting (!!)
+Grass
+Ground
+Magic
+Light
+Psychic
+Steel
 
 ===========================
 Magic - Ghost
 ===========================
 Immune to:
 
-Fighting
-Normal
 Dragon
+Normal
+Fighting
 
 ----------
 Weak to:
 
-Light
 Dark
 Ghost
+Light
 
 ----------
 Resists:
 
-Steel
 Electric
-Bug
 Magic
+Bug
 Psychic
+Steel
 
 ===========================
 Magic - Dragon
@@ -9241,28 +9241,28 @@ Dragon
 ----------
 Weak to:
 
-Poison
 Normal
+Poison
 Ice
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric
+Fighting
+Grass
 Psychic
 Fire
-Fighting
 Water
+Steel
 
 ===========================
 Magic - Steel
 ===========================
 Immune to:
 
-Poison
 Dragon
+Poison
 
 ----------
 Weak to:
@@ -9274,39 +9274,39 @@ Fire
 ----------
 Resists:
 
-Steel (!!)
+Galactic
 Rock
 Grass
 Light
-Galactic
+Flying
 Bug
 Psychic
 Ice
-Flying
+Steel (!!)
 
 ===========================
 Magic - Dark
 ===========================
 Immune to:
 
-Psychic
 Dragon
+Psychic
 
 ----------
 Weak to:
 
+Normal
+Poison
 Light
 Bug
-Poison
-Normal
 
 ----------
 Resists:
 
-Steel
-Magic
 Dark
+Magic
 Ghost
+Steel
 
 ===========================
 Magic - Light
@@ -9318,21 +9318,21 @@ Dragon
 ----------
 Weak to:
 
-Grass
-Bug
-Poison
 Normal
+Grass
+Poison
+Bug
 
 ----------
 Resists:
 
-Light
 Galactic
-Magic
-Psychic
-Fighting
 Dark
+Fighting
+Magic
 Ghost
+Light
+Psychic
 
 ===========================
 Magic - None
@@ -9344,67 +9344,67 @@ Dragon
 ----------
 Weak to:
 
-Poison
 Normal
+Poison
 
 ----------
 Resists:
 
-Steel
+Fighting
 Magic
 Psychic
-Fighting
+Steel
 
 ===========================
 Magic - Galactic
 ===========================
 Immune to:
 
-Fire
 Dragon
+Fire
 
 ----------
 Weak to:
 
 Rock
-Light
-Poison
 Normal
+Poison
+Light
 Flying
 
 ----------
 Resists:
 
-Steel
-Grass
-Bug
-Magic
-Psychic
-Ground
 Fighting (!!)
+Grass
+Ground
+Magic
+Bug
+Psychic
+Steel
 
 ===========================
 Galactic - Normal
 ===========================
 Immune to:
 
-Fire
 Ghost
+Fire
 
 ----------
 Weak to:
 
 Rock
-Light
 Magic
+Light
 Flying
 
 ----------
 Resists:
 
 Grass
-Bug
 Ground
+Bug
 
 ===========================
 Galactic - Rock
@@ -9416,18 +9416,18 @@ Fire
 ----------
 Weak to:
 
-Steel
 Rock
 Light
 Water
+Steel
 
 ----------
 Resists:
 
 Galactic
-Bug
-Poison
 Normal
+Poison
+Bug
 
 ===========================
 Galactic - Fire
@@ -9439,19 +9439,19 @@ Fire
 ----------
 Weak to:
 
-Rock (!!)
 Galactic
-Water
+Rock (!!)
 Flying
+Water
 
 ----------
 Resists:
 
-Steel
+Fighting
 Grass (!!)
 Bug (!!)
-Fighting
 Ice
+Steel
 
 ===========================
 Galactic - Water
@@ -9464,20 +9464,20 @@ Fire
 Weak to:
 
 Rock
-Light
 Electric
 Poison
+Light
 Flying
 
 ----------
 Resists:
 
-Steel
-Bug
-Ground
 Fighting
+Ground
+Bug
 Water
 Ice
+Steel
 
 ===========================
 Galactic - Grass
@@ -9492,16 +9492,16 @@ Weak to:
 
 Rock
 Poison
-Ice
 Flying (!!)
+Ice
 
 ----------
 Resists:
 
-Grass (!!)
 Electric
-Ground (!!)
 Fighting
+Grass (!!)
+Ground (!!)
 Water
 
 ===========================
@@ -9514,17 +9514,17 @@ Fire
 ----------
 Weak to:
 
-Steel
 Rock (!!)
 Light (!!)
+Steel
 
 ----------
 Resists:
 
-Grass
 Galactic
-Bug
+Grass
 Ground
+Bug
 Ice
 
 ===========================
@@ -9538,17 +9538,17 @@ Fire
 Weak to:
 
 Rock
-Light
 Ghost
+Light
 
 ----------
 Resists:
 
-Steel
-Grass
 Electric
-Bug
 Fighting
+Grass
+Bug
+Steel
 
 ===========================
 Galactic - Fighting
@@ -9560,20 +9560,20 @@ Fire
 ----------
 Weak to:
 
-Light
 Galactic
-Psychic
+Light
 Flying (!!)
+Psychic
 
 ----------
 Resists:
 
-Grass
-Bug (!!)
-Magic
-Ground
-Fighting
 Dark
+Fighting
+Grass
+Ground
+Magic
+Bug (!!)
 
 ===========================
 Galactic - Poison
@@ -9587,17 +9587,17 @@ Weak to:
 
 Rock
 Light
-Psychic
 Flying
+Psychic
 
 ----------
 Resists:
 
-Grass (!!)
-Bug (!!)
-Magic
 Fighting (!!)
+Grass (!!)
 Poison
+Magic
+Bug (!!)
 
 ===========================
 Galactic - Ground
@@ -9610,19 +9610,19 @@ Fire
 ----------
 Weak to:
 
-Light
 Galactic
+Light
+Flying
 Water
 Ice
-Flying
 
 ----------
 Resists:
 
-Bug
-Ground
 Fighting
+Ground
 Poison
+Bug
 
 ===========================
 Galactic - Flying
@@ -9636,17 +9636,17 @@ Fire
 Weak to:
 
 Rock (!!)
-Light
 Electric
-Ice
+Light
 Flying
+Ice
 
 ----------
 Resists:
 
+Fighting (!!)
 Grass (!!)
 Bug (!!)
-Fighting (!!)
 
 ===========================
 Galactic - Psychic
@@ -9659,18 +9659,18 @@ Fire
 Weak to:
 
 Rock
-Light
 Dark
 Ghost
+Light
 Flying
 
 ----------
 Resists:
 
-Grass
-Psychic
-Ground
 Fighting (!!)
+Grass
+Ground
+Psychic
 
 ===========================
 Galactic - Bug
@@ -9688,37 +9688,37 @@ Flying (!!)
 ----------
 Resists:
 
-Grass (!!)
-Bug
-Ground (!!)
 Fighting (!!)
+Grass (!!)
+Ground (!!)
+Bug
 
 ===========================
 Galactic - Ghost
 ===========================
 Immune to:
 
-Fire
-Fighting
 Normal
+Fighting
+Fire
 
 ----------
 Weak to:
 
 Rock
-Light (!!)
 Dark
 Ghost
+Light (!!)
 Flying
 
 ----------
 Resists:
 
-Grass
 Electric
-Bug (!!)
+Grass
 Ground
 Poison
+Bug (!!)
 
 ===========================
 Galactic - Dragon
@@ -9731,20 +9731,20 @@ Fire
 Weak to:
 
 Rock
-Light
-Magic
-Ice
 Dragon
+Magic
+Light
 Flying
+Ice
 
 ----------
 Resists:
 
-Grass (!!)
 Electric
-Bug
-Ground
 Fighting
+Grass (!!)
+Ground
+Bug
 Water
 
 ===========================
@@ -9752,8 +9752,8 @@ Galactic - Steel
 ===========================
 Immune to:
 
-Fire
 Poison
+Fire
 
 ----------
 Weak to:
@@ -9764,13 +9764,13 @@ Magic
 ----------
 Resists:
 
-Steel
-Grass (!!)
 Galactic
-Bug (!!)
-Normal
-Ice
 Dragon
+Normal
+Grass (!!)
+Bug (!!)
+Ice
+Steel
 
 ===========================
 Galactic - Dark
@@ -9790,9 +9790,9 @@ Flying
 ----------
 Resists:
 
+Dark
 Grass
 Ground
-Dark
 Ghost
 
 ===========================
@@ -9805,17 +9805,17 @@ Fire
 ----------
 Weak to:
 
-Steel
 Rock
 Flying
+Steel
 
 ----------
 Resists:
 
 Galactic
-Ground
-Fighting
 Dark
+Fighting
+Ground
 Ghost
 
 ===========================
@@ -9823,28 +9823,28 @@ Galactic - Magic
 ===========================
 Immune to:
 
-Fire
 Dragon
+Fire
 
 ----------
 Weak to:
 
 Rock
-Light
-Poison
 Normal
+Poison
+Light
 Flying
 
 ----------
 Resists:
 
-Steel
-Grass
-Bug
-Magic
-Psychic
-Ground
 Fighting (!!)
+Grass
+Ground
+Magic
+Bug
+Psychic
+Steel
 
 ===========================
 Galactic - None
@@ -9863,7 +9863,7 @@ Flying
 ----------
 Resists:
 
-Grass
-Bug
-Ground
 Fighting
+Grass
+Ground
+Bug
