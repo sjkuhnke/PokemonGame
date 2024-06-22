@@ -270,6 +270,11 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void openBox(NPC_PC target) {
 		keyH.resetKeys();
+		
+		if (player.p.boxLabels == null) {
+			player.p.boxLabels = player.p.setupBoxLabels();
+		}
+		
 		ui.isGauntlet = target.isGauntlet();
 		if (ui.isGauntlet) ui.gauntlet = true;
 		ui.boxSwapNum = -1;

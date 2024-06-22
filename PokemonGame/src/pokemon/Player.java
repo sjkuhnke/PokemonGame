@@ -40,6 +40,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public Pokemon[][] boxes;
 	public Pokemon[] gauntletBox;
+	public String[] boxLabels;
 	private int numBattled;
 	private int posX;
 	private int posY;
@@ -78,6 +79,7 @@ public class Player extends Trainer implements Serializable {
 		super(true);
 		boxes = new Pokemon[MAX_BOXES][30];
 		gauntletBox = new Pokemon[GAUNTLET_BOX_SIZE];
+		boxLabels = setupBoxLabels();
 
 		bag = new Bag();
 		posX = 79;
@@ -92,7 +94,7 @@ public class Player extends Trainer implements Serializable {
 		
 		version = VERSION;
 	}
-	
+
 	public void catchPokemon(Pokemon p, Item ball) {
 	    if (p.isFainted()) return;
 	    boolean hasNull = false;
@@ -1153,6 +1155,14 @@ public class Player extends Trainer implements Serializable {
 			if (pokedex[i] > 0) {
 				result[pokedex[i] - 1]++;
 			}
+		}
+		return result;
+	}
+	
+	public String[] setupBoxLabels() {
+		String[] result = new String[MAX_BOXES];
+		for (int i = 0; i < MAX_BOXES; i++) {
+			result[i] = "Box " + (i + 1);
 		}
 		return result;
 	}

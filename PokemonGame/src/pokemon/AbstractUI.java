@@ -586,7 +586,7 @@ public abstract class AbstractUI {
 		} else {
 			currentDialogue = "Change " + p.name + "'s nickname?";
 			drawDialogueScreen(true);
-			setNickname(p);
+			setNickname();
 			if (nicknaming == 0) {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
@@ -680,7 +680,7 @@ public abstract class AbstractUI {
 	    return fontSize;
 	}
 
-	public void setNickname(Pokemon p) {
+	public void setNickname() {
 		int x = gp.tileSize * 3;
 		int y = gp.tileSize * 5;
 		int width = gp.tileSize*10;

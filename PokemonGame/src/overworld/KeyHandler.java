@@ -500,7 +500,7 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (code == KeyEvent.VK_D) {
-			if (!gp.ui.showBoxSummary && !gp.ui.release) {
+			if (!gp.ui.showBoxSummary && !gp.ui.release && gp.ui.nicknaming < 0) {
 				gp.ui.partyNum = 0;
 				gp.ui.showBoxParty = !gp.ui.showBoxParty;
 			} else {
