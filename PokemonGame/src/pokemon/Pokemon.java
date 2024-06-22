@@ -2764,7 +2764,7 @@ public class Pokemon implements Serializable {
     	} else if (move == Move.STAFF_JAB) {
     		stat(foe, 0, -2, this);
 		} else if (move == Move.MAGIC_CRASH) {
-			int randomNum = ((int) Math.random() * 5);
+			int randomNum = new Random().nextInt(5);
 			switch (randomNum) {
 			case 0:
 				foe.burn(false, this);
