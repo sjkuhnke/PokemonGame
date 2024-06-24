@@ -24,6 +24,7 @@ import entity.PlayerCharacter;
 import pokemon.Ability;
 import pokemon.AbstractUI;
 import pokemon.Bag;
+import pokemon.Encounter;
 import pokemon.Item;
 import pokemon.Move;
 import pokemon.Moveslot;
@@ -70,6 +71,8 @@ public class UI extends AbstractUI{
 	public int tmDexNum;
 	
 	public int remindNum;
+	
+	private ArrayList<ArrayList<Encounter>> encounters;
 	
 	BufferedImage transitionBuffer;
 	
@@ -127,6 +130,10 @@ public class UI extends AbstractUI{
 		if (gp.gameState == GamePanel.DIALOGUE_STATE) {
 			drawDialogueScreen(true);
 			drawToolTips("OK", null, null, null);
+		}
+		
+		if (gp.gameState == GamePanel.DEX_NAV_STATE) {
+			drawDexNav();
 		}
 		
 		if (gp.gameState == GamePanel.MENU_STATE) {
@@ -989,9 +996,9 @@ public class UI extends AbstractUI{
 		for (int i = 0; i < 30; i++) {
 			if (i == boxSwapNum) {
 				g2.setColor(new Color(100, 100, 220, 200));
-				g2.fillRoundRect(cX - 8, cY - 8, spriteWidth, spriteHeight, 10, 10);
+				g2.fillRoundRect(cX - 2, cY - 2, spriteWidth - 10, spriteHeight - 10, 10, 10);
 				g2.setColor(g2.getColor().darker());
-				g2.drawRoundRect(cX - 8, cY - 8, spriteWidth, spriteHeight, 10, 10);
+				g2.drawRoundRect(cX - 2, cY - 2, spriteWidth - 10, spriteHeight - 10, 10, 10);
 			}
 			
 			if (i < cBox.length && cBox[i] != null) {
@@ -1054,6 +1061,7 @@ public class UI extends AbstractUI{
 				} else {
 					nickname = new StringBuilder(gp.player.p.boxLabels[cBoxIndex]);
 					setNicknaming(true);
+					return;
 				}
 				if (currentBoxP != null) {
 					if (!gp.keyH.ctrlPressed) {
@@ -1903,6 +1911,9 @@ public class UI extends AbstractUI{
 					bagState = 0;
 				} else if (currentItem == Item.CALCULATOR) {
 					Item.useCalc(gp.player.p, null);
+				} else if (currentItem == Item.DEX_NAV) {
+					encounters = Encounter.getAllEncounters(gp);
+					gp.gameState = GamePanel.DEX_NAV_STATE;
 				} else {
 					gp.gameState = GamePanel.USE_ITEM_STATE;
 				}
@@ -2295,6 +2306,108 @@ public class UI extends AbstractUI{
 		}
 	}
 	
+	private void drawDexNav() {		
+		int x = gp.tileSize;
+		int y = 0;
+		int winX = x;
+		int winY = y;
+		int width = gp.tileSize * 14;
+		int spriteWidth = 80;
+		int spriteHeight = 80;
+		
+		String[] labels = new String[] {"Standard", "Fishing", "Surfing", "Lava Surf"};
+		int index = 0;
+		int totalHeight = 0;
+		
+		for (ArrayList<Encounter> es : encounters) {
+			int size = es.size();
+			
+			if (size > 0) {
+				int height = (((size / 9) + 1) * 2) * gp.tileSize;
+				height += gp.tileSize / 2;
+				totalHeight += height;
+			}
+		}
+		
+		if (totalHeight > 0) {
+			y = (gp.screenHeight / 2) - (totalHeight / 2);
+		} else {
+			int height = gp.tileSize * 4;
+			drawSubWindow(winX, gp.screenHeight / 2 - height / 2, width, height);
+			String message = "NO ENCOUNTERS AVAILABLE";
+			g2.setFont(g2.getFont().deriveFont(48F));
+			g2.drawString(message, getCenterAlignedTextX(message, gp.screenWidth / 2), gp.screenHeight / 2);
+		}
+		
+		for (ArrayList<Encounter> es : encounters) {
+			int size = es.size();
+			if (size == 0) {
+				index++;
+				continue;
+			}
+			int height = (((size / 9) + 1) * 2) * gp.tileSize;
+			height += gp.tileSize / 2;
+			drawSubWindow(winX, y, width, height);
+			String label = labels[index];
+			
+			int labelX = winX + width / 2;
+			y += 30;
+			g2.setFont(g2.getFont().deriveFont(24F));
+			g2.drawString(label, getCenterAlignedTextX(label, labelX), y);
+			
+			x = winX + gp.tileSize / 3;
+			winY = y;
+			
+			for (int i = 0; i < es.size(); i++) {
+				Encounter e = es.get(i);
+				int id = e.getId();
+				Pokemon p = new Pokemon(id, 5, false, false);
+				if (gp.player.p.pokedex[id] == 2) {
+					g2.drawImage(p.getSprite(), x, y, null);
+				} else {
+					g2.drawImage(getSilhouette(p.getSprite()), x, y, null);
+				}
+				g2.setFont(g2.getFont().deriveFont(16F));
+				g2.drawString(String.format("%.0f%%", e.getEncounterChance() * 100), x + 60, y + 75);
+				if (i > 0 && i % 7 == 0) {
+					x = winX + gp.tileSize / 3;
+					y += spriteHeight;
+				} else {
+					x += spriteWidth;
+				}
+			}
+			
+			y = winY + height - gp.tileSize * 2 / 3;
+			x = winX;
+			index++;
+		}
+	}
+	
+	private BufferedImage getSilhouette(BufferedImage sprite) {
+		int width = sprite.getWidth();
+	    int height = sprite.getHeight();
+	    BufferedImage silhouette = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+	    
+	    // Define the light grey color
+	    int lightGrey = new Color(211, 211, 211).getRGB(); // Light grey color with RGB (211, 211, 211)
+	    
+	    for (int y = 0; y < height; y++) {
+	        for (int x = 0; x < width; x++) {
+	            int pixel = sprite.getRGB(x, y);
+	            // Check if the pixel is transparent
+	            if ((pixel >> 24) == 0x00) {
+	                // Copy the transparent pixel to the silhouette
+	                silhouette.setRGB(x, y, pixel);
+	            } else {
+	                // Set the non-transparent pixel to light grey
+	                silhouette.setRGB(x, y, lightGrey);
+	            }
+	        }
+	    }
+	    
+	    return silhouette;
+	}
+
 	private void drawBoxToolTips() {
 		if (!gp.keyH.shiftPressed || showBoxSummary || showBoxParty || release) return;
 		int x = 0;

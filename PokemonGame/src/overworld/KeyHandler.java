@@ -48,6 +48,8 @@ public class KeyHandler implements KeyListener {
 			taskState(code);
 		} else if (gp.gameState == GamePanel.BOX_STATE) {
 			boxState(code);
+		} else if (gp.gameState == GamePanel.DEX_NAV_STATE) {
+			dexNavState(code);
 		}
 		
 		
@@ -593,6 +595,12 @@ public class KeyHandler implements KeyListener {
 		
 		if (code == KeyEvent.VK_W) {
 			wPressed = true;
+		}
+	}
+	
+	private void dexNavState(int code) {
+		if (code == KeyEvent.VK_S) {
+			gp.gameState = GamePanel.MENU_STATE;
 		}
 	}
 	

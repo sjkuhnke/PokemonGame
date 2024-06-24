@@ -2,6 +2,9 @@ package pokemon;
 
 import java.util.ArrayList;
 
+import entity.PlayerCharacter;
+import overworld.GamePanel;
+
 public class Encounter {
 	private int id;
 	private int minLevel;
@@ -655,8 +658,34 @@ public class Encounter {
 		for (Encounter e : encounters) {
 			total += e.encounterChance;
 		}
-		if (!String.format("%.2f", total).equals("1.00")) System.out.println("Encounters do not add up to 100: area " + area + ", instead " + total);
+		if (!String.format("%.2f", total).equals("1.00") && total > 0) System.out.println("Encounters do not add up to 100: area " + area + ", instead " + total);
 		return encounters;
+	}
+
+	public static ArrayList<ArrayList<Encounter>> getAllEncounters(GamePanel gp) {
+		PlayerCharacter pl = gp.player;
+		int map = gp.currentMap;
+		int x = pl.worldX / gp.tileSize;
+		int y = pl.worldY / gp.tileSize;
+		
+		ArrayList<Encounter> encountersReg = getEncounters(map, x, y, "Standard", "", false);
+		ArrayList<Encounter> encountersFish = getEncounters(map, x, y, "Fishing", "", false);
+		ArrayList<Encounter> encountersSurf = getEncounters(map, x, y, "Surfing", "", false);
+		ArrayList<Encounter> encountersLava = getEncounters(map, x, y, "Lava", "", false);
+		
+		ArrayList<ArrayList<Encounter>> result = new ArrayList<>(4);
+		
+		result.add(encountersReg);
+		result.add(encountersFish);
+		result.add(encountersSurf);
+		result.add(encountersLava);
+		
+		return result;
+	}
+	
+	@Override
+	public String toString() {
+		return Pokemon.getName(getId());
 	}
 
 }

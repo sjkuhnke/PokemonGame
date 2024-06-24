@@ -92,6 +92,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public static final int USE_ITEM_STATE = 12;
 	public static final int USE_REPEL_STATE = 13;
 	public static final int RARE_CANDY_STATE = 14;
+	public static final int DEX_NAV_STATE = 15;
 
 	public static Map<Entity, Integer> volatileTrainers = new HashMap<>();
 	
