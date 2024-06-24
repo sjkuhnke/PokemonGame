@@ -238,6 +238,7 @@ public enum Item {
 	TM99(199,0,0,Color.BLACK,Item.TMS,Move.RETURN,"Teaches a Pokemon this move."),
 	EDGE_KIT(44,0,0,new Color(232, 52, 54),Item.OTHER,null,"Edges ;) your Pokemon until they're about to bust :{D"),
 	CALCULATOR(200,0,0,Color.BLACK,Item.OTHER,null,"Calculates damage simulating a battle"),
+	DEX_NAV(263,0,0,Color.BLACK,Item.OTHER,null,"Shows wild Pokemon nearby"),
 	BLACK_BELT(201,0,0,PType.FIGHTING.getColor(),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."),
 	BLACK_GLASSES(202,0,0,PType.DARK.getColor(),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."),
 	CHARCOAL(203,0,0,PType.FIRE.getColor(),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."),
