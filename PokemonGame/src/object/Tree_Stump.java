@@ -11,7 +11,7 @@ public class Tree_Stump extends InteractiveTile {
 		super(gp);
 		this.gp = gp;
 		
-		down1 = setup("/npc/cut_stump");
+		down1 = setup("/interactive/cut_stump");
 		destructible = true;
 		collision = false;
 	}

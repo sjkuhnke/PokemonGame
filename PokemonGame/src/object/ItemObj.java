@@ -28,7 +28,7 @@ public class ItemObj {
 		this.gp = gp;
 		
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/npc/item.png"));
+			image = ImageIO.read(getClass().getResourceAsStream("/interactive/item.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

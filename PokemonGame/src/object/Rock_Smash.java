@@ -14,7 +14,7 @@ public class Rock_Smash extends InteractiveTile {
 		
 		this.gp = gp;
 		
-		down1 = setup("/npc/rock_smash");
+		down1 = setup("/interactive/rock_smash");
 		destructible = true;
 		collision = true;
 	}

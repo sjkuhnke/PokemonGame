@@ -1,7 +1,6 @@
 package object;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
@@ -15,7 +14,7 @@ public class Whirlpool extends InteractiveTile {
 			super(gp);
 			this.gp = gp;
 			
-			down1 = setup("/npc/whirlpool0");
+			down1 = setup("/interactive/whirlpool0");
 			destructible = false;
 			collision = true;
 			
@@ -33,7 +32,8 @@ public class Whirlpool extends InteractiveTile {
 			
 			try {
 				image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
-			} catch (IOException e) {
+			} catch (Exception e) {
+				System.out.println(imageName);
 				e.printStackTrace();
 			}
 			return image;
