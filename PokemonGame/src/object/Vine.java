@@ -11,7 +11,7 @@ public class Vine extends InteractiveTile {
 		super(gp);
 		this.gp = gp;
 		
-		down1 = setup("/npc/vines");
+		down1 = setup("/interactive/vines");
 		destructible = false;
 		collision = false;
 	}

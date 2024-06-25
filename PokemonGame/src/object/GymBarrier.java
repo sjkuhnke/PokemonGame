@@ -11,7 +11,7 @@ public class GymBarrier extends InteractiveTile {
 		super(gp);
 		this.gp = gp;
 		
-		down1 = setup("/npc/gym_barrier");
+		down1 = setup("/interactive/gym_barrier");
 		destructible = false;
 		collision = true;
 	}

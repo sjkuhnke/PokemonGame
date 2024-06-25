@@ -3076,8 +3076,10 @@ public class Pokemon implements Serializable {
 			foe.confuse(false, this);
 		} else if (move == Move.WATERFALL && first) {
 			foe.vStatuses.add(Status.FLINCHED);
-		} else if (move == Move.SPIRIT_BREAK) {
+		} else if (move == Move.WHIP_SMASH) {
 			stat(this, 1, -1, foe);
+		} else if (move == Move.SPIRIT_BREAK) {
+			stat(this, 2, -1, foe);
 		} else if (move == Move.ZEN_HEADBUTT && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.ROCK_SLIDE && first) {
@@ -4427,6 +4429,7 @@ public class Pokemon implements Serializable {
 	}
 
 	public void faint(boolean announce, Pokemon foe) {
+		if (this.isFainted()) return;
 		this.currentHP = 0;
 		this.fainted = true;
 		this.battled = false;
@@ -4941,6 +4944,22 @@ public class Pokemon implements Serializable {
 
 	public void endOfTurn(Pokemon f) {
 		if (this.isFainted()) return;
+		
+		if (this.ability == Ability.SHED_SKIN && this.status != Status.HEALTHY) {
+			int r = (int)(Math.random() * 3);
+			if (r == 0) {
+				addAbilityTask(this);
+				this.status = Status.HEALTHY;
+				addTask(Task.STATUS, Status.HEALTHY, nickname + " became healthy!", this);
+			}
+		}
+		
+		if (this.ability == Ability.HYDRATION && field.equals(field.weather, Effect.RAIN)) {
+			addAbilityTask(this);
+			addTask(Task.STATUS, Status.HEALTHY, nickname + " became healthy!", this);
+		}
+		
+		
 		if (this.status == Status.TOXIC && toxic < 16) toxic++;
 		if (this.status == Status.FROSTBITE && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f, this.nickname + " was hurt by frostbite!");
@@ -5151,20 +5170,6 @@ public class Pokemon implements Serializable {
 		if (this.ability == Ability.SPEED_BOOST && !this.impressive && this.statStages[4] != 6) {
 			addAbilityTask(this);
 			stat(this, 4, 1, f);
-		}
-		
-		if (this.ability == Ability.SHED_SKIN && this.status != Status.HEALTHY) {
-			int r = (int)(Math.random() * 3);
-			if (r == 0) {
-				addAbilityTask(this);
-				this.status = Status.HEALTHY;
-				addTask(Task.STATUS, Status.HEALTHY, nickname + " became healthy!", this);
-			}
-		}
-		
-		if (this.ability == Ability.HYDRATION && field.equals(field.weather, Effect.RAIN)) {
-			addAbilityTask(this);
-			addTask(Task.STATUS, Status.HEALTHY, nickname + " became healthy!", this);
 		}
 		
 		if (this.item == Item.FLAME_ORB && this.status == Status.HEALTHY) {

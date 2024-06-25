@@ -15,7 +15,7 @@ public class Pit extends InteractiveTile {
 		super(gp);
 		this.gp = gp;
 		
-		down1 = setup("/npc/pit0");
+		down1 = setup("/interactive/pit0");
 		destructible = false;
 		collision = true;
 		

@@ -13,7 +13,7 @@ public class Cut_Tree extends InteractiveTile {
 		super(gp);
 		this.gp = gp;
 		
-		down1 = setup("/npc/cut_tree");
+		down1 = setup("/interactive/cut_tree");
 		destructible = true;
 		collision = true;
 	}

@@ -525,7 +525,7 @@ public class Main {
 		setAbility("7 Gym Leader 1", 1, Ability.IRON_BARBS);
 		setMoveset("7 Gym Leader 1", 2, Move.DEEP_SEA_BUBBLE, Move.SEA_DRAGON, Move.SUPERCHARGED_SPLASH, Move.RAIN_DANCE);
 		setMoveset("7 Gym Leader 1", 3, Move.PRISMATIC_LASER, Move.ELEMENTAL_SPARKLE, Move.GEOMANCY, Move.FIERY_DANCE);
-		setMoveset("7 Gym Leader 1", 4, Move.FREEZE$DRY, Move.CALM_MIND, Move.BLUE_FLARE, Move.ELEMENTAL_SPARKLE);
+		setMoveset("7 Gym Leader 1", 4, Move.FREEZE$DRY, Move.CALM_MIND, Move.BLUE_FLARE, Move.VANISHING_ACT);
 		setMoveset("7 Gym Leader 1", 5, Move.TOXIC, Move.SPIKES, Move.ELEMENTAL_SPARKLE, Move.PSYCHIC);
 		setMoveset("7 Gym Leader 1", 6, Move.SPECTRAL_THIEF, Move.FLARE_BLITZ, Move.VOLT_TACKLE, Move.SWITCHEROO);
 		

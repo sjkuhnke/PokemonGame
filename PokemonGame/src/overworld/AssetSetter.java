@@ -1921,7 +1921,6 @@ public class AssetSetter {
 		
 		mapNum = 103;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(46, 42, 2, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 38, 2, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(46, 59, 1, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 58, 0, 1, mapNum, map);
@@ -2625,10 +2624,10 @@ public class AssetSetter {
 			Whirlpool current;
 	        if (i % 2 == 0) {
 	            current = new Whirlpool_Side(gp, offsetX, offsetY);
-	            current.down1 = current.setup("/npc/whirlpool" + (i + 1));
+	            current.down1 = current.setup("/interactive/whirlpool" + (i + 1));
 	        } else {
 	            current = new Whirlpool_Corner(gp, offsetX, offsetY);
-	            current.down1 = current.setup("/npc/whirlpool" + (i + 1));
+	            current.down1 = current.setup("/interactive/whirlpool" + (i + 1));
 	        }
 			
 			gp.iTile[mapNum][iIndex] = current;

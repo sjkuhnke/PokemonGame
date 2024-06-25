@@ -13,7 +13,7 @@ public class Vine_Crossable extends InteractiveTile {
 		super(gp);
 		this.gp = gp;
 		
-		down1 = setup("/npc/vine_crossable");
+		down1 = setup("/interactive/vine_crossable");
 		destructible = false;
 		collision = true;
 	}
