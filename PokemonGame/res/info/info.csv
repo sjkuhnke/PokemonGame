@@ -254,25 +254,24 @@
 |Solosis-X    |LIGHT   |null    |RADIANT           |PIXILATE          |MIRROR_ARMOR      |[10, 10, 10, 10, 10, 10]      |1.0   |1  |
 |Duosion-X    |LIGHT   |null    |RADIANT           |PIXILATE          |MIRROR_ARMOR      |[10, 10, 10, 10, 10, 10]      |1.0   |1  |
 |Reuniclus-X  |LIGHT   |null    |RADIANT           |PIXILATE          |MIRROR_ARMOR      |[10, 10, 10, 10, 10, 10]      |1.0   |1  |
-|Seviper      |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Seviper-X    |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Hissimitar   |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Gulpin       |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Swalot       |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Gulpin-X     |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Swalot-X     |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Plasamp      |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Genieova     |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Seviper      |POISON  |null    |SHARP_TAIL        |MERCILESS         |SHED_SKIN         |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Hissimitar   |POISON  |STEEL   |SHARP_TAIL        |MERCILESS         |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Gulpin       |POISON  |NORMAL  |STICKY_HOLD       |GOOEY             |SIMPLE            |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Swalot       |POISON  |NORMAL  |STICKY_HOLD       |GOOEY             |SIMPLE            |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Gulpin-X     |GALACTIC|POISON  |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Swalot-X     |GALACTIC|POISON  |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Plasamp      |STEEL   |GALACTIC|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Genieova     |STEEL   |GALACTIC|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
 |Elgyem       |GALACTIC|null    |PARASOCIAL        |PARASOCIAL        |ANALYTIC          |[55, 55, 55, 85, 55, 30]      |19.8  |125|
 |Beheeyem     |GALACTIC|null    |PARASOCIAL        |PARASOCIAL        |ANALYTIC          |[75, 75, 75, 125, 95, 40]     |76.1  |70 |
-|Elgyem-E     |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Beheeyem-E   |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Caterpie     |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Metapod      |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Butterfree   |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Metapod-X    |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Butterfree-X |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Bronzor      |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Bronzong     |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Bronzor-X    |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Bronzong-X   |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Elgyem-E     |GALACTIC|ELECTRIC|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Beheeyem-E   |GALACTIC|ELECTRIC|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Caterpie     |BUG     |null    |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Metapod      |BUG     |null    |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Butterfree   |BUG     |FLYING  |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Metapod-X    |BUG     |MAGIC   |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Butterfree-X |BUG     |MAGIC   |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Bronzor      |STEEL   |PSYCHIC |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Bronzong     |STEEL   |PSYCHIC |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Bronzor-X    |MAGIC   |null    |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Bronzong-X   |MAGIC   |GHOST   |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|

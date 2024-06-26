@@ -1592,4 +1592,8 @@ public enum Item {
 			return "getPocketName() doesn't have a case for " + pocket;
 		}
 	}
+
+	public String superToString() {
+		return super.toString();
+	}
 }

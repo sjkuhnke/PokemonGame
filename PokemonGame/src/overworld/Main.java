@@ -45,6 +45,8 @@ public class Main {
 	public static ArrayList<Trainer> modifiedTrainers;
 	public static JFrame window;
 	public static GamePanel gp;
+	
+	public static ArrayList<String> bosses = new ArrayList<String>(List.of("Scott", "Fred", "Rick", "Leader", "Maxwell", "Arthra", "Robin", "Stanford", "Millie", "Glacius", "Mindy", "Rayna", "Merlin", "Nova"));
 
 	public static void main(String[] args) {
 
@@ -1103,7 +1105,7 @@ public class Main {
 			}
 			writer.close();
 			//writeUnusedMoves();
-			//writeTypeStats();
+			writeTypeStats();
 			
 		} catch (IOException e1) {
 			e1.printStackTrace();
