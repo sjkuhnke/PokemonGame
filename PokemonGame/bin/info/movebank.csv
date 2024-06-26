@@ -4702,24 +4702,32 @@
 ===================
 243
 ===================
-1  |ABSORB
-1  |SUPERSONIC
-5  |ASTONISH
-10 |MEAN_LOOK
-15 |POISON_FANG
-20 |BITE
-25 |WING_ATTACK
+1  |CONFUSION
+1  |FLASH
+1  |TELEPORT
+1  |HIDDEN_POWER
+
 
 ===================
 244
 ===================
-1  |ABSORB
-1  |SUPERSONIC
-5  |ASTONISH
-10 |MEAN_LOOK
-15 |POISON_FANG
-20 |BITE
-25 |WING_ATTACK
+1  |CONFUSION
+1  |FLASH
+1  |TELEPORT
+1  |HIDDEN_POWER
+5  |PSYBEAM
+9  |SWIFT
+13 |REFLECT
+16 |ELEMENTAL_SPARKLE
+21 |PSYCHO_CUT
+25 |RECOVER
+28 |HOCUS_POCUS
+31 |PSYSHOCK
+35 |MAGIC_TOMB
+40 |PSYCHIC
+45 |SHADOW_BALL
+50 |CALM_MIND
+55 |VANISHING_ACT
 
 ===================
 245
@@ -4727,6 +4735,7 @@
 1  |CONFUSION
 1  |FLASH
 1  |TELEPORT
+1  |HIDDEN_POWER
 5  |PSYBEAM
 9  |SWIFT
 13 |REFLECT
@@ -4762,13 +4771,24 @@
 ===================
 247
 ===================
-1  |ABSORB
-1  |SUPERSONIC
-5  |ASTONISH
-10 |MEAN_LOOK
-15 |POISON_FANG
-20 |BITE
-25 |WING_ATTACK
+1  |SCRATCH
+1  |LEER
+1  |TAUNT
+1  |FAKE_TEARS
+5  |QUICK_ATTACK
+9  |TORMENT
+11 |FEINT_ATTACK
+14 |ICY_WIND
+16 |FURY_SWIPES
+19 |METAL_CLAW
+22 |THIEF
+22 |HONE_CLAWS
+25 |ICE_SHARD
+28 |BEAT_UP
+31 |AGILITY
+35 |SLASH
+38 |NIGHT_SLASH
+42 |ICICLE_SPEAR
 
 ===================
 248
@@ -4872,13 +4892,30 @@
 ===================
 257
 ===================
-1  |ABSORB
-1  |SUPERSONIC
-5  |ASTONISH
-10 |MEAN_LOOK
-15 |POISON_FANG
-20 |BITE
-25 |WING_ATTACK
+1  |WRAP
+1  |SWAGGER
+1  |DRAGON_DANCE
+5  |BITE
+6  |LICK
+9  |POISON_FANG
+11 |FEINT
+14 |SCREECH
+14 |DRAGON_TAIL
+17 |GLARE
+19 |TOXIC_SPIKES
+21 |POISON_JAB
+23 |VENOSHOCK
+25 |NIGHT_SLASH
+27 |SWORDS_DANCE
+29 |GASTRO_ACID
+31 |POISON_TAIL
+34 |HAZE
+39 |CRUNCH
+44 |COIL
+46 |IRON_TAIL
+46 |AQUA_TAIL
+50 |GUNK_SHOT
+55 |VENOM_SPIT
 
 ===================
 258
@@ -4894,24 +4931,37 @@
 ===================
 259
 ===================
-1  |ABSORB
-1  |SUPERSONIC
-5  |ASTONISH
-10 |MEAN_LOOK
-15 |POISON_FANG
-20 |BITE
-25 |WING_ATTACK
+1  |POUND
+5  |YAWN
+8  |POISON_GAS
+10 |SLUDGE
+12 |HEADBUTT
+15 |AMNESIA
+17 |ACID_SPRAY
+20 |ENCORE
+23 |TOXIC
 
 ===================
 260
 ===================
-1  |ABSORB
-1  |SUPERSONIC
-5  |ASTONISH
-10 |MEAN_LOOK
-15 |POISON_FANG
-20 |BITE
-25 |WING_ATTACK
+1  |GUNK_SHOT
+1  |SEED_BOMB
+1  |POUND
+5  |YAWN
+8  |POISON_GAS
+10 |SLUDGE
+12 |HEADBUTT
+15 |AMNESIA
+17 |ACID_SPRAY
+20 |ENCORE
+23 |TOXIC
+26 |BODY_SLAM
+30 |STOCKPILE
+33 |SLACK_OFF
+36 |SLUDGE_BOMB
+39 |DESTINY_BOND
+42 |GASTRO_ACID
+49 |BELCH
 
 ===================
 261
@@ -4960,27 +5010,22 @@
 ===================
 265
 ===================
-1  |ABSORB
-1  |SUPERSONIC
-5  |ASTONISH
-10 |MEAN_LOOK
-15 |POISON_FANG
-20 |BITE
-25 |WING_ATTACK
+1  |CONFUSION
+1  |LEER
+5  |PSYWAVE
+9  |COSMIC_POWER
+13 |COMET_PUNCH
+17 |CONFUSE_RAY
+20 |HYPNOSIS
+23 |TRICK_ROOM
+26 |SPACE_BEAM
+30 |ABDUCT
+34 |RECOVER
+37 |GALAXY_BLAST
+40 |RADIO_BURST
 
 ===================
 266
-===================
-1  |ABSORB
-1  |SUPERSONIC
-5  |ASTONISH
-10 |MEAN_LOOK
-15 |POISON_FANG
-20 |BITE
-25 |WING_ATTACK
-
-===================
-267
 ===================
 1  |CONFUSION
 1  |LEER
@@ -5001,3 +5046,57 @@
 57 |CORE_ENFORCER
 65 |BLACK_HOLE_ECLIPSE
 
+===================
+267
+===================
+1  |CONFUSION
+
+===================
+268
+===================
+1  |CONFUSION
+
+===================
+269
+===================
+1  |CONFUSION
+
+===================
+270
+===================
+1  |CONFUSION
+
+===================
+271
+===================
+1  |CONFUSION
+
+===================
+272
+===================
+1  |CONFUSION
+
+===================
+273
+===================
+1  |CONFUSION
+
+===================
+274
+===================
+1  |CONFUSION
+
+===================
+275
+===================
+1  |CONFUSION
+
+===================
+276
+===================
+1  |CONFUSION
+
+===================
+277
+===================
+1  |CONFUSION

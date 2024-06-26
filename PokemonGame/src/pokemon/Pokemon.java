@@ -53,7 +53,7 @@ public class Pokemon implements Serializable {
 	
 	public static Field field;
 	public static GamePanel gp;
-	public static final int MAX_POKEMON = 267;
+	public static final int MAX_POKEMON = 277;
 	
 	// Database
 	private static String[] names = new String[MAX_POKEMON];
@@ -7275,11 +7275,11 @@ public class Pokemon implements Serializable {
 		Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/movebank.csv"));
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
-			if (line.charAt(0) == '=') {
+			if (line.length() > 0 && line.charAt(0) == '=') {
 				line = scanner.nextLine();
 				int id = Integer.parseInt(line);
 				scanner.nextLine();
-				while (true) {
+				while (scanner.hasNextLine()) {
 					line = scanner.nextLine();
 					if (!line.isEmpty() && Character.isDigit(line.charAt(0))) {
 						String[] moveLine = line.split("\\|");

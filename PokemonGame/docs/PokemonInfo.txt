@@ -7537,13 +7537,10 @@ Base Stats:
 25 HP / 20 Atk / 15 Def / 105 SpA / 55 SpD / 90 Spe / 310 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Confusion
+1 - Flash
+1 - Teleport
+1 - Hidden Power
 
 ===================
 244 - Kadabra
@@ -7558,13 +7555,23 @@ Base Stats:
 40 HP / 35 Atk / 30 Def / 120 SpA / 70 SpD / 105 Spe / 400 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Confusion
+1 - Flash
+1 - Teleport
+1 - Hidden Power
+5 - Psybeam
+9 - Swift
+13 - Reflect
+16 - Elemental Sparkle
+21 - Psycho Cut
+25 - Recover
+28 - Hocus Pocus
+31 - Psyshock
+35 - Magic Tomb
+40 - Psychic
+45 - Shadow Ball
+50 - Calm Mind
+55 - Vanishing Act
 
 ===================
 245 - Alakazam
@@ -7582,6 +7589,7 @@ Level Up:
 1 - Confusion
 1 - Flash
 1 - Teleport
+1 - Hidden Power
 5 - Psybeam
 9 - Swift
 13 - Reflect
@@ -7637,13 +7645,24 @@ Base Stats:
 55 HP / 95 Atk / 55 Def / 35 SpA / 75 SpD / 115 Spe / 430 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Scratch
+1 - Leer
+1 - Taunt
+1 - Fake Tears
+5 - Quick Attack
+9 - Torment
+11 - Feint Attack
+14 - Icy Wind
+16 - Fury Swipes
+19 - Metal Claw
+22 - Thief
+22 - Hone Claws
+25 - Ice Shard
+28 - Beat Up
+31 - Agility
+35 - Slash
+38 - Night Slash
+42 - Icicle Spear
 
 ===================
 248 - Weavile
@@ -7838,31 +7857,48 @@ Level Up:
 257 - Seviper
 ===================
 Type:
-Flying / Fighting
+Poison / None
 
 Ability:
-Scrappy / Unburden / (Talented)
+Sharp Tail / Merciless / (Shed Skin)
 
 Base Stats:
 82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Wrap
+1 - Swagger
+1 - Dragon Dance
+5 - Bite
+6 - Lick
+9 - Poison Fang
+11 - Feint
+14 - Screech
+14 - Dragon Tail
+17 - Glare
+19 - Toxic Spikes
+21 - Poison Jab
+23 - Venoshock
+25 - Night Slash
+27 - Swords Dance
+29 - Gastro Acid
+31 - Poison Tail
+34 - Haze
+39 - Crunch
+44 - Coil
+46 - Iron Tail
+46 - Aqua Tail
+50 - Gunk Shot
+55 - Venom Spit
 
 ===================
-258 - Seviper-X
+258 - Hissimitar
 ===================
 Type:
-Flying / Fighting
+Poison / Steel
 
 Ability:
-Scrappy / Unburden / (Talented)
+Sharp Tail / Merciless / (Talented)
 
 Base Stats:
 82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
@@ -7877,52 +7913,65 @@ Level Up:
 25 - Wing Attack
 
 ===================
-259 - Hissimitar
+259 - Gulpin
 ===================
 Type:
-Flying / Fighting
+Poison / Normal
 
 Ability:
-Scrappy / Unburden / (Talented)
+Sticky Hold / Gooey / (Simple)
 
 Base Stats:
 82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Pound
+5 - Yawn
+8 - Poison Gas
+10 - Sludge
+12 - Headbutt
+15 - Amnesia
+17 - Acid Spray
+20 - Encore
+23 - Toxic
 
 ===================
-260 - Gulpin
+260 - Swalot
 ===================
 Type:
-Flying / Fighting
+Poison / Normal
 
 Ability:
-Scrappy / Unburden / (Talented)
+Sticky Hold / Gooey / (Simple)
 
 Base Stats:
 82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Gunk Shot
+1 - Seed Bomb
+1 - Pound
+5 - Yawn
+8 - Poison Gas
+10 - Sludge
+12 - Headbutt
+15 - Amnesia
+17 - Acid Spray
+20 - Encore
+23 - Toxic
+26 - Body Slam
+30 - Stockpile
+33 - Slack Off
+36 - Sludge Bomb
+39 - Destiny Bond
+42 - Gastro Acid
+49 - Belch
 
 ===================
-261 - Swalot
+261 - Gulpin-X
 ===================
 Type:
-Flying / Fighting
+Galactic / Poison
 
 Ability:
 Scrappy / Unburden / (Talented)
@@ -7940,10 +7989,10 @@ Level Up:
 25 - Wing Attack
 
 ===================
-262 - Gulpin-X
+262 - Swalot-X
 ===================
 Type:
-Flying / Fighting
+Galactic / Poison
 
 Ability:
 Scrappy / Unburden / (Talented)
@@ -7961,10 +8010,10 @@ Level Up:
 25 - Wing Attack
 
 ===================
-263 - Swalot-X
+263 - Plasamp
 ===================
 Type:
-Flying / Fighting
+Steel / Galactic
 
 Ability:
 Scrappy / Unburden / (Talented)
@@ -7982,10 +8031,10 @@ Level Up:
 25 - Wing Attack
 
 ===================
-264 - Plasamp
+264 - Genieova
 ===================
 Type:
-Flying / Fighting
+Steel / Galactic
 
 Ability:
 Scrappy / Unburden / (Talented)
@@ -8003,28 +8052,7 @@ Level Up:
 25 - Wing Attack
 
 ===================
-265 - Genieova
-===================
-Type:
-Flying / Fighting
-
-Ability:
-Scrappy / Unburden / (Talented)
-
-Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
-
-Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
-
-===================
-266 - Elgyem
+265 - Elgyem
 ===================
 Type:
 Galactic / None
@@ -8036,16 +8064,22 @@ Base Stats:
 55 HP / 55 Atk / 55 Def / 85 SpA / 55 SpD / 30 Spe / 335 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Confusion
+1 - Leer
+5 - Psywave
+9 - Cosmic Power
+13 - Comet Punch
+17 - Confuse Ray
+20 - Hypnosis
+23 - Trick Room
+26 - Space Beam
+30 - Abduct
+34 - Recover
+37 - Galaxy Blast
+40 - Radio Burst
 
 ===================
-267 - Beheeyem
+266 - Beheeyem
 ===================
 Type:
 Galactic / None
@@ -8076,3 +8110,190 @@ Level Up:
 57 - Core Enforcer
 65 - Black Hole Eclipse
 
+===================
+267 - Elgyem-E
+===================
+Type:
+Galactic / Electric
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Confusion
+
+===================
+268 - Beheeyem-E
+===================
+Type:
+Galactic / Electric
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Confusion
+
+===================
+269 - Caterpie
+===================
+Type:
+Bug / None
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Confusion
+
+===================
+270 - Metapod
+===================
+Type:
+Bug / None
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Confusion
+
+===================
+271 - Butterfree
+===================
+Type:
+Bug / Flying
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Confusion
+
+===================
+272 - Metapod-X
+===================
+Type:
+Bug / Magic
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Confusion
+
+===================
+273 - Butterfree-X
+===================
+Type:
+Bug / Magic
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Confusion
+
+===================
+274 - Bronzor
+===================
+Type:
+Steel / Psychic
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Confusion
+
+===================
+275 - Bronzong
+===================
+Type:
+Steel / Psychic
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Confusion
+
+===================
+276 - Bronzor-X
+===================
+Type:
+Magic / None
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Confusion
+
+===================
+277 - Bronzong-X
+===================
+Type:
+Magic / Ghost
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+
+Level Up:
+1 - Confusion
+
+Stats:
+Type,HP,Atk,Def,SpA,SpD,Spe,Amt
+Normal,69.8,77.1,66.7,61.1,64.3,67.0,18
+Rock,79.8,82.2,97.0,65.2,76.0,52.1,29
+Fire,74.9,67.1,71.5,87.0,74.2,71.3,26
+Water,66.7,63.8,70.7,64.9,75.8,66.2,33
+Grass,66.3,69.3,71.6,72.2,76.5,62.9,23
+Ice,74.7,85.6,72.1,74.0,83.4,70.1,17
+Electric,70.1,82.3,70.6,72.2,68.2,73.1,32
+Fighting,73.5,104.7,83.4,50.2,73.2,71.1,32
+Poison,68.6,80.6,62.4,81.2,77.1,86.3,23
+Ground,61.3,79.0,86.0,54.6,58.0,55.5,24
+Flying,69.1,68.4,72.6,72.5,79.8,83.9,22
+Psychic,63.8,62.4,62.6,89.0,80.9,61.2,30
+Bug,60.1,82.4,71.0,55.8,62.3,73.6,25
+Ghost,66.2,70.8,70.8,80.0,71.9,70.2,20
+Dragon,87.0,93.4,85.2,91.8,82.9,82.3,20
+Steel,71.4,92.3,90.1,68.8,76.4,72.8,18
+Dark,71.7,87.9,63.6,67.3,71.2,82.3,27
+Light,62.4,55.1,57.3,80.4,79.9,69.7,29
+Magic,67.6,89.8,68.8,87.5,80.2,81.2,26
+Galactic,85.1,80.7,76.5,78.5,81.4,70.4,26
