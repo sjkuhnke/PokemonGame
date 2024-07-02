@@ -1720,7 +1720,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			
-			if ((field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded()) && ((move.priority >= 1 && acc <= 100 && move != Move.GRAVITY_PUNCH) || (move.cat == 2 && this.ability == Ability.PRANKSTER))) {
+			if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded() && move.hasPriority(this) && move != Move.GRAVITY_PUNCH) {
 				addTask(Task.TEXT, foe.nickname + " is protected by the Psychic Terrain!");
 				endMove();
 				this.moveMultiplier = 1;
@@ -4334,6 +4334,8 @@ public class Pokemon implements Serializable {
 		public static final int CONFIRM = 25; // counter: 0 = gauntlet at mt. splinkty
 		public static final int TELEPORT = 26;
 		public static final int SEMI_INV = 27;
+		public static final int FLASH_IN = 28;
+		public static final int FLASH_OUT = 29;
 		
 		public int type;
 		public String message;
@@ -4637,7 +4639,7 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded() && move.hasPriority(this)) {
+		if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded() && move.hasPriority(this) && move != Move.GRAVITY_PUNCH) {
 			return 0;
 		}
 		

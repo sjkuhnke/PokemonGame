@@ -71,6 +71,7 @@ public class UI extends AbstractUI{
 	public int tmDexNum;
 	
 	public int remindNum;
+	public boolean drawFlash;
 	
 	private ArrayList<ArrayList<Encounter>> encounters;
 	
@@ -122,6 +123,10 @@ public class UI extends AbstractUI{
 		g2.setFont(marumonica);
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2.setColor(Color.WHITE);
+		
+		if (drawFlash) {
+			drawFlash(0);
+		}
 		
 		if (showArea) {
 			drawAreaName();
@@ -280,7 +285,38 @@ public class UI extends AbstractUI{
 		case Task.TELEPORT:
 			gp.gameState = GamePanel.TRANSITION_STATE;
 			break;
+		case Task.FLASH_IN:
+			drawFlash(1);
+			break;
+		case Task.FLASH_OUT:
+			drawFlash(-1);
+			break;
 		}
+	}
+
+	private void drawFlash(int i) {
+		if (i == 0) {
+			g2.setColor(Color.WHITE);
+			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+			return;
+		}
+		counter += i;
+		g2.setColor(new Color(0,0,0,counter*5));
+		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+		if (i > 0) {
+			if (counter >= 50) {
+				counter = 0;
+				drawFlash = true;
+				currentTask = null;
+			}
+		} else if (i < 0) {
+			if (counter <= -50) {
+				counter = 0;
+				drawFlash = true;
+				currentTask = null;
+			}
+		}
+		
 	}
 
 	private void drawConfirmWindow(int type) {
@@ -1314,7 +1350,7 @@ public class UI extends AbstractUI{
 			drawToolTips("OK", null, "Back", "Back");
 		}
 		
-		if (nicknaming >= 0) {
+		if (nicknaming >= 0 && !showBoxSummary) {
 			currentDialogue = "Change box's name?";
 			drawDialogueScreen(true);
 			setNickname();
