@@ -387,7 +387,7 @@ public class KeyHandler implements KeyListener {
 				} else if (gp.ui.bagState == 0) {
 					gp.ui.currentPocket--;
 					if (gp.ui.currentPocket < Item.MEDICINE) {
-						gp.ui.currentPocket = Item.BERRY;
+						gp.ui.currentPocket = Item.KEY_ITEM;
 					}
 					gp.ui.bagNum = 0;
 					gp.ui.selectedBagNum = -1;
@@ -403,7 +403,7 @@ public class KeyHandler implements KeyListener {
 					if (gp.ui.sellAmt > max) gp.ui.sellAmt -= max;
 				} else if (gp.ui.bagState == 0) {
 					gp.ui.currentPocket++;
-					if (gp.ui.currentPocket > Item.BERRY) {
+					if (gp.ui.currentPocket > Item.KEY_ITEM) {
 						gp.ui.currentPocket = Item.MEDICINE;
 					}
 					gp.ui.bagNum = 0;

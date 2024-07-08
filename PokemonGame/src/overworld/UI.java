@@ -99,8 +99,8 @@ public class UI extends AbstractUI{
 			e.printStackTrace();
 		}
 		
-		bagIcons = new BufferedImage[5];
-		for (int i = 0; i < 5; i++) {
+		bagIcons = new BufferedImage[6];
+		for (int i = 0; i < 6; i++) {
 			String imageName = Item.getPocketName(i + 1).toLowerCase().replace(' ', '_');
 			bagIcons[i] = setup("/menu/" + imageName, 2);
 		}
@@ -1396,6 +1396,10 @@ public class UI extends AbstractUI{
 		drawParty(null);
 		drawItemUsingScreen();
 		
+		if (currentTask == null && tasks.size() > 0) {
+			currentTask = tasks.remove(0);
+		}
+		
 		if (currentTask == null) {
 			if (gp.player.p.bag.count[Item.RARE_CANDY.getID()] <= 0) {
 				gp.gameState = GamePanel.MENU_STATE;
@@ -1413,10 +1417,6 @@ public class UI extends AbstractUI{
 			}
 		} else {
 			drawTask();
-		}
-		
-		if (currentTask == null && tasks.size() > 0) {
-			currentTask = tasks.remove(0);
 		}
 	}
 
@@ -1808,14 +1808,14 @@ public class UI extends AbstractUI{
 		drawSubWindow(x, y, width, height);
 		int startX = x;
 		int startY = y + height;
-		x += gp.tileSize / 2;
+		x += 18;
 		y += gp.tileSize / 3;
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			g2.drawImage(bagIcons[i], x, y, null);
 			if (currentPocket - 1 == i) {
 				g2.drawRoundRect(x, y, gp.tileSize, gp.tileSize, 10, 10);
 			}
-			x += gp.tileSize * 1.5;
+			x += gp.tileSize * 1.25;
 		}
 		
 		x = startX;
@@ -1838,7 +1838,7 @@ public class UI extends AbstractUI{
 		if (currentItems.size() > 0) {
 			if (bagNum >= currentItems.size()) bagNum--;
 			String desc = currentItems.get(bagNum).getItem().getDesc();
-			for (String line : Item.breakString(desc, 25).split("\n")) {
+			for (String line : Item.breakString(desc, 24).split("\n")) {
 				g2.drawString(line, textX, textY);
 				textY += 32;
 			}

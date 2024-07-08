@@ -64,6 +64,8 @@ public class Pokemon implements Serializable {
 	private static int[] catch_rates = new int[MAX_POKEMON];
 	private static Node[][] movebanks = new Node[MAX_POKEMON][100];
 	
+	private static ArrayList<Integer> rivalIndices = new ArrayList<>();
+	
 	// id fields
 	public int id;
 	public String name;
@@ -2066,7 +2068,8 @@ public class Pokemon implements Serializable {
 			
 			int recoil = 0;
 			if (Move.getRecoil().contains(move) && ability != Ability.ROCK_HEAD && ability != Ability.MAGIC_GUARD && ability != Ability.SCALY_SKIN) {
-				recoil = Math.max(Math.floorDiv(damage, 3), 1);
+				int denom = move == Move.HEAD_SMASH ? 2 : move == Move.SUBMISSION || move == Move.TAKE_DOWN ? 4 : 3;
+				recoil = Math.max(Math.floorDiv(damage, denom), 1);
 				if (damage >= foe.currentHP) recoil = Math.max(Math.floorDiv(foe.currentHP, 3), 1);
 				if (move == Move.STEEL_BEAM) recoil = (int) (this.getStat(0) * 1.0 / 2);
 				if (move == Move.STRUGGLE) recoil = (int) (this.getStat(0) * 1.0 / 4);
@@ -7294,6 +7297,14 @@ public class Pokemon implements Serializable {
 				}
 			}
 		}
+	}
+	
+	public static void readTrainersFromCSV() {
+		
+	}
+	
+	public static void updateRivals() {
+		
 	}
 	
 	public static void setupNode(int id, int level, Move move) {
