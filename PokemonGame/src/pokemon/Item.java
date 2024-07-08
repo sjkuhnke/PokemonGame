@@ -236,9 +236,9 @@ public enum Item {
 	TM97(197,0,0,Color.BLACK,Item.TMS,Move.SPIRIT_BREAK,"Teaches a Pokemon this move."),
 	TM98(198,0,0,Color.BLACK,Item.TMS,Move.FLIP_TURN,"Teaches a Pokemon this move."),
 	TM99(199,0,0,Color.BLACK,Item.TMS,Move.RETURN,"Teaches a Pokemon this move."),
-	EDGE_KIT(44,0,0,new Color(232, 52, 54),Item.OTHER,null,"Edges ;) your Pokemon until they're about to bust :{D"),
-	CALCULATOR(200,0,0,Color.BLACK,Item.OTHER,null,"Calculates damage simulating a battle"),
-	DEX_NAV(263,0,0,Color.BLACK,Item.OTHER,null,"Shows wild Pokemon nearby"),
+	EDGE_KIT(44,0,0,new Color(232, 52, 54),Item.KEY_ITEM,null,"Edges ;) your Pokemon until they're about to bust :{D"),
+	CALCULATOR(200,0,0,Color.BLACK,Item.KEY_ITEM,null,"Calculates damage simulating a battle"),
+	DEX_NAV(263,0,0,Color.BLACK,Item.KEY_ITEM,null,"Shows wild Pokemon nearby"),
 	BLACK_BELT(201,0,0,PType.FIGHTING.getColor(),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."),
 	BLACK_GLASSES(202,0,0,PType.DARK.getColor(),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."),
 	CHARCOAL(203,0,0,PType.FIRE.getColor(),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."),
@@ -298,9 +298,9 @@ public enum Item {
 	STARF_BERRY(257,500,200,new Color(184, 232, 152),Item.BERRY,null,"If a Pokemon holds one of these Berries, one of its stats will be sharply boosted should it find itself in a pinch."),
 	MICLE_BERRY(258,200,40,new Color(64, 200, 64),Item.BERRY,null,"If a Pokemon holds one of these Berries, its accuracy will be boosted should it find itself in a pinch."),
 	CUSTAP_BERRY(259,200,40,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to act faster in a pinch—but only for the next move."),
-	LETTER_A(260,0,0,Color.BLACK,Item.OTHER,null,""),
-	LETTER_B(261,0,0,Color.BLACK,Item.OTHER,null,""),
-	LETTER_C(262,0,0,Color.BLACK,Item.OTHER,null,""),
+	LETTER_A(260,0,0,Color.BLACK,Item.KEY_ITEM,null,""),
+	LETTER_B(261,0,0,Color.BLACK,Item.KEY_ITEM,null,""),
+	LETTER_C(262,0,0,Color.BLACK,Item.KEY_ITEM,null,""),
 	;
 	
 	private int id;
@@ -319,6 +319,7 @@ public enum Item {
     public static final int TMS = 3;
     public static final int HELD_ITEM = 4;
     public static final int BERRY = 5;
+    public static final int KEY_ITEM = 6;
     
     public static Item[] itemTable = setupItemTable();
 	
@@ -1588,6 +1589,8 @@ public enum Item {
 			return "Held Items";
 		case BERRY:
 			return "Berries";
+		case KEY_ITEM:
+			return "Key Items";
 		default:
 			return "getPocketName() doesn't have a case for " + pocket;
 		}

@@ -659,7 +659,8 @@ public class PlayerCharacter extends Entity {
 			Random gift = new Random();
 			int index = gift.nextInt(ids.length - 1);
 			if (p.pokedex[ids[0]] == 2 || p.pokedex[ids[1]] == 2) {
-				Pokemon.addTask(Task.TEXT, "Oh, you already have a " + Pokemon.getName(ids[index]) + "? Well, take this really rare Pokemon instead!");
+				Pokemon.addTask(Task.TEXT, "Oh, you already have a " + Pokemon.getName(ids[index]) + "? I'll give it to someone else to look after then.");
+				Pokemon.addTask(Task.TEXT, "Here, take this really rare baby Pokemon instead!");
 				index = 2;
 			}
 			
