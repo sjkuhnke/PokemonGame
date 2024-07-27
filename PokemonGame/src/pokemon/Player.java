@@ -28,7 +28,6 @@ import javax.swing.SwingUtilities;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import overworld.GamePanel;
-import overworld.Main;
 import pokemon.Bag.Entry;
 import pokemon.Pokemon.Task;
 
@@ -73,7 +72,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 10;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 24;
+	public static final int VERSION = 25;
 	
 	public Player(GamePanel gp) {
 		super(true);
@@ -300,12 +299,12 @@ public class Player extends Trainer implements Serializable {
 	private void updateTrainers() {
 		if (trainersBeat != null) {
 			boolean[] temp = trainersBeat.clone();
-			trainersBeat = new boolean[Main.trainers.length];
+			trainersBeat = new boolean[Trainer.MAX_TRAINERS];
 			for (int i = 0; i < temp.length; i++) {
 				trainersBeat[i] = temp[i];
 			}
 		} else {
-			trainersBeat = new boolean[Main.trainers.length];
+			trainersBeat = new boolean[Trainer.MAX_TRAINERS];
 		}
 	}
 	
@@ -834,9 +833,11 @@ public class Player extends Trainer implements Serializable {
 			case DAWN_STONE:
 			case DUSK_STONE:
 			case ICE_STONE:
+			case FIRE_STONE:
 			case LEAF_STONE:
 			case PETTICOAT_GEM:
 			case VALIANT_GEM:
+			case RAZOR_CLAW:
 				boolean eligible = item.getEligible(p.id);
 				if (!eligible) {
 	        		gp.ui.showMessage(p.nickname + " isn't compatible with " + item.toString() + ".");
@@ -844,7 +845,7 @@ public class Player extends Trainer implements Serializable {
 	        	} else {
 	        		gp.gameState = GamePanel.RARE_CANDY_STATE;
 	        		Task t = Pokemon.addTask(Task.EVO_ITEM, "", p);
-	        		t.evo = new Pokemon(p.getEvolved(item.getID()), p);
+	        		t.evo = new Pokemon(p.getEvolved(item), p);
 	        		Pokemon.addTask(Task.CLOSE, "");
 	        	}
 				break;
@@ -1089,7 +1090,7 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public void update(GamePanel gp) {
-		updateTrainers();
+		if (this.trainersBeat.length != Trainer.MAX_TRAINERS) updateTrainers();
 		updateItems(gp.obj.length, gp.obj[1].length);
 		updateFlags();
 		updatePokedex();

@@ -744,6 +744,10 @@ public class Pokemon implements Serializable {
 		ability = abilities[id - 1][abilitySlot];
 	}
 	
+	public Ability getAbility(int slot) {
+		return abilities[id - 1][slot];
+	}
+	
 	public int getLevel() {
 		return level;
 	}
@@ -1082,6 +1086,34 @@ public class Pokemon implements Serializable {
 		} else if (id == 239 && headbuttCrit >= 5) {
 		    result = new Pokemon(id + 1, this);
 		} else if (id == 241 && level >= 35) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 243 && level >= 16) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 244 && level >= 36) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 251 && level >= 32) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 252 && level >= 41) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 254 && level >= 32) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 255 && level >= 41) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 259 && level >= 26) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 265 && level >= 42) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 267 && level >= 42) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 269 && level >= 7) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 270 && level >= 10) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 272 && level >= 10) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 274 && level >= 33) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 276 && level >= 33) {
             result = new Pokemon(id + 1, this);
 		}
 		
@@ -6578,23 +6610,27 @@ public class Pokemon implements Serializable {
 		return catch_rates[id - 1];
 	}
 
-	public int getEvolved(int itemid) {
-		if (itemid == 20) {
+	public int getEvolved(Item item) {
+		if (item == Item.LEAF_STONE) {
 			return id + 1;
-		} else if (itemid == 21) {
+		} else if (item == Item.DUSK_STONE) {
 			return id + 1;
-		} else if (itemid == 22) {
+		} else if (item == Item.DAWN_STONE) {
 			return id + 1;
-		} else if (itemid == 23) {
+		} else if (item == Item.ICE_STONE) {
 			return id + 1;
-		} else if (itemid == 24) {
+		} else if (item == Item.VALIANT_GEM) {
 			if (id == 86) {
 				return id + 2;
 			} else {
 				return id + 1;
 			}
-		} else if (itemid == 25) {
+		} else if (item == Item.PETTICOAT_GEM) {
 			return id + 2;
+		} else if (item == Item.FIRE_STONE) {
+			return id + 1;
+		} else if (item == Item.RAZOR_CLAW) {
+			return id + 1;
 		} else {
 			return 10;
 		}
@@ -6939,6 +6975,30 @@ public class Pokemon implements Serializable {
 		case 226: return "Ekans-S -> Arbok-S (lv. 32)";
 		case 238: return "Scraggy -> Scrafty (lv. 39)";
 		case 239: return "Scrafty -> Scraftagon (5+ Headbutt Crits in Trainer Battles)";
+		case 241: return "Glimmet -> Glimmora (lv. 35)";
+		case 243: return "Abra -> Kadabra (lv. 16)";
+		case 244: return "Kadabra -> Alakazam (lv. 36)";
+		case 247: return "Sneasel -> Weavile (Razor Claw)";
+		case 249: return "Sneasel-H -> Sneasler (Razor Claw)";
+		case 251: return "Solosis -> Duosion (lv. 32)";
+		case 252: return "Duosion -> Reuniclus (lv. 41)";
+		case 254: return "Solosis-X -> Duosion-X (lv. 32)";
+		case 255: return "Duosion-X -> Reuniclus-X (lv. 41)";
+		case 257: return "Seviper -> Hissimitar ()";
+		case 259: return "Gulpin -> Swalot (lv. 26)";
+		case 261: return "Gulpin-X -> Swalot-X ()";
+		case 263: return "Plasamp -> Genieova ()";
+		case 265: return "Elgyem -> Beheeyem (lv. 42)";
+		case 267: return "Elgyem-E -> Beheeyem-E (lv. 42)";
+		case 269: return "Caterpie -> Metapod-X (lv. 7)";
+		case 270: return "Metapod -> Butterfree (lv. 10)";
+		case 272: return "Metapod-X -> Butterfree-X (lv. 10)";
+		case 274: return "Bronzor -> Bronzong (lv. 33)";
+		case 276: return "Bronzor-X -> Bronzong-X (lv. 33)";
+		case 278: return "Capsakid -> Scovillain (Fire Stone)";
+		case 279: return "Scovillain -> Kerbernero ()";
+		case 281: return "Capsakid-S -> Scovillain-S (Fire Stone)";
+		case 282: return "Scovillain-S -> Kerbernero-S ()";
 		default:
 			return null;
 		}
@@ -7300,7 +7360,91 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void readTrainersFromCSV() {
+		Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/trainers.csv"));
 		
+		// skip header
+		if (scanner.hasNextLine()) {
+	        scanner.nextLine();
+	    }
+		
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+			
+			int teamDataIndex = line.indexOf('<');
+			String trainerData = line.substring(0, teamDataIndex - 1);
+			String teamData = line.substring(teamDataIndex);
+			
+			String[] parts = trainerData.split("\\|");
+			int index = Integer.parseInt(parts[0]);
+			String name = parts[1];
+			int money = Integer.parseInt(parts[2]);
+			int flagIndex = Integer.parseInt(parts[3]);
+			Item item = parts[4].equals("null") ? null : Item.valueOf(parts[4]);
+			
+			// pokemon team
+			String[] pokemonStrings = teamData.split("><");
+			Pokemon[] team = new Pokemon[pokemonStrings.length];
+			Item[] items = new Item[pokemonStrings.length];
+			
+			for (int i = 0; i < pokemonStrings.length; i++) {
+				String pokemonString = pokemonStrings[i].replace("<", "").replace(">", "");
+				String[] pokemonParts = pokemonString.split("\\|");
+				
+				int id = Integer.parseInt(pokemonParts[0]);
+				int level = Integer.parseInt(pokemonParts[1]);
+				Ability ability = Ability.valueOf(pokemonParts[2]);
+				Item heldItem = pokemonParts[3].equals("null") ? null : Item.valueOf(pokemonParts[3]);
+				
+				String[] moveStrings = pokemonParts[4].split(",");
+				Moveslot[] moves = new Moveslot[4];
+				for (int j = 0; j < 4; j++) {
+					moves[j] = j >= moveStrings.length || moveStrings[j].isEmpty() ? null : new Moveslot(Move.valueOf(moveStrings[j]));
+				}
+				
+				Pokemon pokemon = new Pokemon(id, level, false, true);
+				pokemon.moveset = moves;
+				
+				boolean abilitySet = false;
+				
+				for (int k = 0; k < 3; k++) {
+					Ability slot = pokemon.getAbility(k);
+					if (ability == slot) {
+						pokemon.abilitySlot = k;
+						pokemon.setAbility();
+						abilitySet = true;
+						break;
+					}
+				}
+				
+				// DEBUGGING
+				if (!abilitySet) {
+					scanner.close();
+					throw new IllegalStateException("Trainer " + name + " at index " + index + " has an illegal ability on mon " + pokemon.getName() + " in slot " + i + ": " + ability);
+				}
+				
+				team[i] = pokemon;
+				items[i] = heldItem;
+			}
+			
+			Trainer trainer = new Trainer(name, team, items, money, item, flagIndex);
+			Trainer.trainers[index] = trainer;
+			
+			if (name.contains("Scott") || name.contains("Fred")) {
+				rivalIndices.add(index);
+				Trainer.bossTrainers.add(trainer);
+			}
+			
+			for (String s : Trainer.bosses) {
+				if (name.contains(s)) {
+					Trainer.bossTrainers.add(trainer);
+					break;
+				}
+			}
+		}
+		
+		updateRivals();
+		
+		scanner.close();
 	}
 	
 	public static void updateRivals() {

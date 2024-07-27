@@ -2,6 +2,7 @@ package pokemon;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Trainer implements Serializable {
@@ -15,6 +16,12 @@ public class Trainer implements Serializable {
 	Item item;
 	int flagIndex;
 	Pokemon current;
+	
+	public static final int MAX_TRAINERS = 400;
+	public static Trainer[] trainers = new Trainer[MAX_TRAINERS];
+	
+	public static ArrayList<Trainer> bossTrainers = new ArrayList<>();
+	public static ArrayList<String> bosses = new ArrayList<String>(Arrays.asList("Scott", "Fred", "Rick", "Leader", "Maxwell", "Arthra", "Robin", "Stanford", "Millie", "Glacius", "Mindy", "Rayna", "Merlin", "Nova"));
 	
 	public Trainer(String name, Pokemon[] team, int money) {
 		this(name, team, money, null, 0);
@@ -288,5 +295,9 @@ public class Trainer implements Serializable {
 			if (p != null) p.setSprites();
 		}
 		
+	}
+	
+	public static Trainer getTrainer(int i) {
+		return trainers[i];
 	}
 }

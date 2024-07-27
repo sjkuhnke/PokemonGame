@@ -27,6 +27,7 @@ import pokemon.Encounter;
 import pokemon.Field;
 import pokemon.Item;
 import pokemon.Pokemon;
+import pokemon.Trainer;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -94,7 +95,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public static final int RARE_CANDY_STATE = 14;
 	public static final int DEX_NAV_STATE = 15;
 
-	public static Map<Entity, Integer> volatileTrainers = new HashMap<>();
+	public static Map<Entity, Integer> volatileTrainers = new HashMap<>(); // TODO: remove this once aSetter.setNPC() is correctly configured to not have volatile npcs
 	
 	public GamePanel(JFrame window) {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -108,6 +109,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		Pokemon.readInfoFromCSV();
 		Pokemon.readMovebanksFromCSV();
+		Pokemon.readTrainersFromCSV();
 	}
 	
 	public void startGameThread() {
@@ -217,10 +219,10 @@ public class GamePanel extends JPanel implements Runnable {
 		if (player.p.trainersBeat[trainer]) return;
 		if (player.p.wiped()) return;
 		
-		Pokemon foe = Main.trainers[trainer].getCurrent();
+		Pokemon foe = Trainer.getTrainer(trainer).getCurrent();
 		
 		// Heal if Gym Leader
-		if (Main.trainers[trainer].getMoney() == 500) {
+		if (Trainer.getTrainer(trainer).getMoney() == 500) {
 			player.p.heal();
 		}
 		
@@ -256,7 +258,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void startBattle(int trainer, int id) {
-		Pokemon foe = Main.trainers[trainer].getCurrent();
+		Pokemon foe = Trainer.getTrainer(trainer).getCurrent();
 		startBattle(trainer, id, foe);
 	}
 	
@@ -405,6 +407,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public void setupGame() {
 		aSetter.setNPC();
+		//aSetter.updateNPC(currentMap); TODO: redo setNPC() to always set npcs and then use updateNPC to correctly configure npcs for current game state. do this after generating player docs ideally
 		aSetter.setObject();
 		aSetter.setInteractiveTile(currentMap);
 		
