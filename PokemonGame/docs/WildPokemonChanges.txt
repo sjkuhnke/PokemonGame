@@ -1,0 +1,1100 @@
+Route 22 (Grass)===================================================================
+25% Pigo (Lv. 2)
+16% Hammo (Lv. 2 - 4)
+20% Bealtle (Lv. 2 - 3)
+10% Sapwin (Lv. 2 - 4)
+20% Budew (Lv. 3)
+*15% Caterpie
+
+Route 23 (Grass)===================================================================
+*25% Hummingspark (Lv. 2 - 3)
+20% Pigo (Lv. 3 - 4)
+24% Hammo (Lv. 4)
+16% Sewaddle (Lv. 2 - 3)
+6% Busheep (Lv. 3 - 5)
+8% Bugik (Lv. 2 - 3)
+*10% Caterpie
+
+Bananaville Meadow (Grass)=========================================================
+4% Pigo
+5% Hammo
+8% Hummingspark
+7% Busheep
+4% Caterpie
+5% Sheabear
+6% Hatenna
+5% Psycorb
+1% Tigrette
+8% Flameruff
+5% Sparkitten
+5% Ekans
+4% Timburr
+3% Cleffa
+5% Minishoo
+7% Scraggy
+9% Abra
+9% Solosis-X
+
+
+Route 42 (Grass)===================================================================
+20% Wormite (Lv. 2)
+16% Wormite-S (Lv. 2 - 3)
+13% Iglite-S (Lv. 2)
+17% Rhypo (Lv. 2 - 3)
+11% Zorua (Lv. 2 - 3)
+15% Nincada (Lv. 2)
+8% Posho (Lv. 2)
+*Diggie
+Ekans-S
+Ekans
+
+Route 42 (Fish)===================================================================
+25% Sheltor (Lv. 11 - 12)
+15% Magikarp (Lv. 10 - 11)
+10% Ali (Lv. 12 - 14)
+10% Binacle (Lv. 11 - 12)
+40% Durfish-S (Lv. 10 - 12)
+
+Route 42 (Surf)===================================================================
+20% Spheal (Lv. 28 - 31)
+25% Froshrog (Lv. 27 - 30)
+25% Sheltor (Lv. 28 - 31)
+30% Durfish-S (Lv. 28 - 31)
+
+Route 24 pt. 1 (Grass)===================================================================
+10% Sheabear (Lv. 5)
+10% Budew (Lv. 3 - 5)
+15% Lotad (Lv. 3 - 5)
+15% Grubbin (Lv. 3 - 5)
+5% Busheep (Lv. 4 - 6)
+25% Rocky (Lv. 4 - 6)
+5% Bugop (Lv. 4 - 5)
+10% Ralts (Lv. 3 - 5)
+5% Elelamb (Lv. 4 - 6)
+
+Route 24 pt. 2 (Grass)===================================================================
+30% Hummingspark (Lv. 8 - 9)
+3% Pebblepup (Lv. 10)
+12% Hatenna (Lv. 8 - 10)
+10% Inkay (Lv. 9 - 10)
+5% Cleffa (Lv. 8 - 9)
+5% Snom (Lv. 8)
+20% Ekans (Lv. 9 - 10)
+*10% Bealtle (Lv. 9 - 10)
+Abra
+Gulpin-X
+Bronzor-X
+
+Gelb Forest (1A) (Grass)===================================================================
+15% Bealtle (Lv. 12 - 14)
+12% Sapwin (Lv. 13 - 17)
+8% Budew (Lv. 12 - 16)
+2% Roselia (Lv. 15 - 16)
+10% Sewaddle (Lv. 12 - 16)
+5% Grubbin (Lv. 14 - 17)
+12% Lotad (Lv. 13 - 15)
+3% Bluebunn (Lv. 15 - 17)
+8% Busheep (Lv. 14 - 18)
+4% Bugik (Lv. 12 - 14)
+1% Swordik (Lv. 15 - 16)
+1% Psycorb (Lv. 14 - 17)
+5% Nincada (Lv. 12 - 15)
+5% Cluuz (Lv. 14 - 17)
+9% Zubat (Lv. 16 - 17)
+
+Gelb Forest (1A) (Fish)===================================================================
+15% Inkay (Lv. 15 - 18)
+20% Sheltor (Lv. 15 - 17)
+35% Magikarp (Lv. 15 - 16)
+30% Binacle (Lv. 16 - 17)
+
+Gelb Forest (1A) (Surf)===================================================================
+70% Lotad (Lv. 13 - 15)
+20% Froshrog (Lv. 16 - 17)
+10% Sheltor (Lv. 15 - 16)
+
+Gelb Forest (2A) (Grass)===================================================================
+20% Sapwin (Lv. 14 - 18)
+10% Sewaddle (Lv. 13 - 16)
+7% Grubbin (Lv. 14 - 17)
+10% Busheep (Lv. 15 - 18)
+10% Bugik (Lv. 13 - 14)
+5% Swordik (Lv. 15 - 17)
+9% Psycorb (Lv. 15 - 17)
+19% Cluuz (Lv. 15 - 18)
+10% Zubat (Lv. 16 - 18)
+Seviper
+Gulpin-X
+Glimmet
+
+Route 25 (Grass)===================================================================
+20% Hammo (Lv. 12)
+20% Sheabear (Lv. 13)
+15% Busheep (Lv. 11 - 13)
+20% Ekans (Lv. 11 - 13)
+10% Florline (Lv. 11 - 13)
+10% Timburr (Lv. 11)
+5% Rhypo (Lv. 10 - 12)
+Seviper
+
+Sicab City (Fish)===================================================================
+35% Magikarp (Lv. 15 - 18)
+25% Inkay (Lv. 15 - 17)
+20% Binacle (Lv. 15 - 16)
+10% Durfish (Lv. 15 - 17)
+10% Staryu (Lv. 15 - 17)
+Glimmet
+Gulpin-X
+
+Sicab City (Surf)===================================================================
+50% Staryu (Lv. 20)
+25% Lilyray (Lv. 20)
+20% Otterpor (Lv. 20)
+5% Ali (Lv. 20)
+
+Energy Plant A (Floor)===================================================================
+50% Shookwat (Lv. 12 - 14)
+30% Vupp (Lv. 12)
+15% Droid (Lv. 15)
+5% Droid-E (Lv. 15)
+
+Energy Plant B (Floor)===================================================================
+30% Shookwat (Lv. 12 - 14)
+10% Vupp (Lv. 12)
+40% Timburr (Lv. 15)
+*20% Rocky-E (Lv. 15)
+Elgyem-E
+Poof-E
+
+Energy Plant B (Fish)===================================================================
+40% Magikarp (Lv. 15)
+15% Magikarp-E (Lv. 15)
+45% Durfish (Lv. 13 - 17)
+
+Energy Plant B (Surf)===================================================================
+20% Magikarp (Lv. 25)
+20% Gyarados (Lv. 25)
+30% Magikarp-E (Lv. 25)
+30% Gyarados-E (Lv. 25)
+
+Route 40 (Grass)===================================================================
+15% Hummingspark (Lv. 2 - 3)
+20% Iglite (Lv. 2)
+6% Bugop (Lv. 2 - 3)
+2% Carinx (Lv. 3)
+20% Houndour (Lv. 2 - 3)
+12% Tiowoo (Lv. 2 - 3)
+5% Rhypo (Lv. 3)
+20% Cleffa (Lv. 2)
+Solosis-X
+Sparkitten
+
+Route 26 (Grass)===================================================================
+20% Sapwin (Lv. 14 - 18)
+10% Sheabear (Lv. 16 - 18)
+15% Bluebunn (Lv. 15)
+15% Rocky (Lv. 14 - 18)
+15% Florline (Lv. 15 - 17)
+20% Ralts (Lv. 15 - 17)
+5% Sparkdust (Lv. 16 - 17)
+Sneasel-H
+Scraggy
+Solosis-X
+
+Mt. Splinkty 1A (Floor)===================================================================
+50% Rocky (Lv. 17 - 19)
+15% Carinx (Lv. 18 - 19)
+25% Zubat (Lv. 18 - 19)
+10% Poof (Lv. 18 - 19)
+Glimmet
+Bronzor-X
+Sneasel-H
+Solosis-X
+Scraggy
+
+Mt. Splinkty 1A (Fish)===================================================================
+15% Inkay (Lv. 17 - 19)
+10% Magikarp (Lv. 16 - 18)
+10% Durfish (Lv. 18 - 20)
+25% Posho (Lv. 18 - 20)
+40% Kissyfishy (Lv. 20)
+
+Mt. Splinkty 1A (Surf)===================================================================
+60% Staryu (Lv. 20)
+25% Sheltor (Lv. 20)
+15% Posho (Lv. 18 - 19)
+
+Mt. Splinkty 2B (Floor)===================================================================
+30% Rocky (Lv. 18 - 19)
+25% Carinx (Lv. 19 - 20)
+10% Poof (Lv. 18 - 19)
+15% Zubat (Lv. 17 - 19)
+10% Blaxer (Lv. 18 - 19)
+10% Tricerpup (Lv. 19)
+Glimmet
+Bronzor-X
+Sneasel-H
+
+Mt. Splinkty 3B (Floor)===================================================================
+40% Poof (Lv. 16 - 19)
+60% Zubat (Lv. 17 - 19)
+Diggie
+Glimmet
+
+Mt. Splinkty 3A (Floor)===================================================================
+80% Bugop (Lv. 17 - 19)
+20% Cluuz (Lv. 16 - 20)
+Bronzor-X
+Sneasel-H
+
+Route 27 (Grass)===================================================================
+15% Grubbin (Lv. 17 - 19)
+10% Sewaddle (Lv. 16 - 18)
+10% Lombre (Lv. 18 - 20)
+15% Flameruff (Lv. 19)
+20% Cleffa (Lv. 16 - 17)
+5% Wormite (Lv. 16 - 18)
+5% Zorua (Lv. 18 - 19)
+5% Minishoo (Lv. 18 - 19)
+15% Hatenna (Lv. 16 - 18)
+Bronzor-X
+Butterfree-X
+
+Route 41 (Fish)===================================================================
+25% Spheal (Lv. 16 - 18)
+25% Lilyray (Lv. 15 - 17)
+45% Magikarp (Lv. 16 - 18)
+5% Ali (Lv. 19 - 20)
+
+Route 41 (Surf)===================================================================
+50% Staryu (Lv. 20)
+25% Lilyray (Lv. 20)
+20% Otterpor (Lv. 20)
+5% Ali (Lv. 20)
+
+Route 41 (Grass)===================================================================
+15% Froshrog (Lv. 25 - 28)
+20% Sparkitten (Lv. 26 - 28)
+11% Pigonat (Lv. 25 - 28)
+15% Arbok (Lv. 26 - 29)
+10% Dualmoose (Lv. 25 - 29)
+15% Grondor (Lv. 26 - 29)
+14% Florline (Lv. 25 - 28)
+Seviper
+Sneasel-H
+
+Route 36 (Grass)===================================================================
+20% Bealtle (Lv. 12 - 13)
+20% Bugik (Lv. 13 - 14)
+15% Fightorex (Lv. 15)
+10% Psycorb (Lv. 14 - 15)
+15% Iglite (Lv. 16 - 17)
+15% Tiowoo (Lv. 15 - 17)
+5% Sparkitten (Lv. 18 - 19)
+Sneasel-H
+Butterfree-X
+Scraggy
+
+Route 36 (Fish)===================================================================
+15% Inkay (Lv. 16 - 18)
+25% Lilyray (Lv. 15 - 17)
+35% Magikarp (Lv. 16 - 18)
+25% Staryu (Lv. 16)
+
+Route 36 (Surf)===================================================================
+50% Staryu (Lv. 20)
+25% Lilyray (Lv. 20)
+20% Otterpor (Lv. 20)
+5% Ali (Lv. 20)
+
+Route 28 (Grass)===================================================================
+10% Sapwin (Lv. 19 - 20)
+10% Pigonat (Lv. 18 - 19)
+15% Charjabug (Lv. 20)
+15% Elelamb (Lv. 18 - 20)
+40% Twigzap (Lv. 15 - 16)
+5% Vupp (Lv. 16 - 18)
+5% Nincada (Lv. 17 - 18)
+Elgyem-E
+Gulpin-X
+
+Electric Tunnel 01 (Floor)===================================================================
+*10% Zubat (Lv. 19 - 20)
+*6% Elelamb (Lv. 18 - 19)
+*6% Vupp (Lv. 17 - 18)
+20% Poof-E (Lv. 18 - 19)
+18% Droid-E (Lv. 17 - 19)
+15% Flamehox-E (Lv. 20)
+24% Rocky-E (Lv. 18 - 19)
+Elgyem-E
+
+Route 29 (Grass)===================================================================
+12% Flashclaw (Lv. 20 - 22)
+12% Budew (Lv. 18 - 21)
+19% Bluebunn (Lv. 21)
+10% Hatenna (Lv. 19 - 22)
+8% Kirlia (Lv. 19 - 22)
+4% Elelamb (Lv. 19 - 21)
+25% Twigzap (Lv. 16 - 18)
+6% Snom (Lv. 18 - 20)
+4% Kleinowl (Lv. 19 - 20)
+Solosis-X
+
+Icy Fields (Grass)===================================================================
+25% Kleinowl (Lv. 22)
+15% Dualmoose (Lv. 22)
+20% Snom (Lv. 22)
+20% Grondor (Lv. 22)
+12% Froshrog (Lv. 22)
+8% Poov (Lv. 22)
+Sneasel
+
+Route 30 (Grass)===================================================================
+15% Flashclaw (Lv. 24 - 25)
+20% Whiskie (Lv. 22 - 24)
+25% Bluebunn (Lv. 24)
+15% Psycorb (Lv. 23 - 25)
+25% Tigrette (Lv. 25)
+Sneasel
+
+Route 30 (Fish)===================================================================
+10% Inkay (Lv. 19)
+25% Magikarp (Lv. 16 - 18)
+30% Lilyray (Lv. 16 - 18)
+10% Sheltor (Lv. 18 - 19)
+15% Binacle (Lv. 18 - 19)
+10% Froshrog (Lv. 19 - 20)
+
+Route 30 (Surf)===================================================================
+20% Staryu (Lv. 20)
+35% Spheal (Lv. 20)
+20% Lilyray (Lv. 20)
+10% Otterpor (Lv. 20)
+5% Ali (Lv. 20)
+10% Froshrog (Lv. 20)
+
+Peaceful Park (Grass)===================================================================
+9% Centatle (Lv. 23 - 25)
+5% Sapwin (Lv. 25 - 26)
+5% Roselia (Lv. 24 - 25)
+6% Swadloon (Lv. 23 - 25)
+13% Snom (Lv. 22 - 24)
+10% Magie (Lv. 20 - 25)
+10% Vupp (Lv. 20 - 25)
+10% Whiskie (Lv. 20 - 25)
+2% Ninjask (Lv. 23 - 25)
+15% Tigrette (Lv. 24 - 25)
+12% Flameruff (Lv. 23 - 26)
+3% Shockbranch (Lv. 24 - 25)
+Butterfree-X
+
+Peaceful Park (Fish)===================================================================
+35% Magikarp (Lv. 15 - 18)
+25% Inkay (Lv. 19 - 23)
+20% Binacle (Lv. 20 - 22)
+10% Durfish (Lv. 21 - 24)
+10% Staryu (Lv. 20 - 23)
+
+Peaceful Park (Surf)===================================================================
+50% Staryu (Lv. 20)
+25% Lilyray (Lv. 20)
+20% Otterpor (Lv. 20)
+5% Ali (Lv. 20)
+
+Mindagan Lake (Surf)===================================================================
+8% Spheal (Lv. 20 - 25)
+15% Froshrog (Lv. 20 - 25)
+18% Otterpor (Lv. 20 - 25)
+13% Lilyray (Lv. 20 - 25)
+5% Daray (Lv. 20 - 25)
+21% Staryu (Lv. 20 - 25)
+20% Posho (Lv. 20 - 25)
+
+Mindagan Lake (Fish)===================================================================
+8% Inkay (Lv. 20 - 25)
+8% Sheltor (Lv. 20 - 25)
+15% Magikarp (Lv. 20 - 25)
+15% Ali (Lv. 20 - 25)
+10% Posho (Lv. 20 - 25)
+7% Binacle (Lv. 20 - 25)
+12% Durfish (Lv. 20 - 25)
+25% Kissyfishy (Lv. 20 - 25)
+
+Mindagan Cavern 1A (Floor)===================================================================
+12% Clefairy (Lv. 26 - 30)
+13% Minishoo (Lv. 26 - 30)
+25% Tinkie (Lv. 24 - 28)
+25% Dragee (Lv. 25 - 30)
+10% Blobmo (Lv. 24 - 28)
+15% Rockmite (Lv. 26 - 30)
+Bronzor-X
+
+Route 31 (Grass)===================================================================
+14% Swadloon (Lv. 25 - 28)
+15% Swordik (Lv. 27 - 29)
+20% Bugop (Lv. 25 - 28)
+16% Poov (Lv. 25 - 28)
+25% Pebblepup (Lv. 26 - 28)
+10% Tricerpup (Lv. 28 - 29)
+Kadabra
+
+Route 31 (Fish)===================================================================
+20% Inkay (Lv. 22 - 25)
+10% Sheltor (Lv. 22 - 25)
+20% Binacle (Lv. 22 - 25)
+25% Ali (Lv. 24 - 26)
+25% Durfish-S (Lv. 22 - 24)
+
+Route 31 (Surf)===================================================================
+20% Daray (Lv. 22 - 24)
+15% Sheltor (Lv. 24 - 25)
+20% Posho (Lv. 22 - 25)
+20% Ali (Lv. 24 - 26)
+25% Durfish-S (Lv. 22 - 24)
+
+Shadow Ravine 1B (Grass)===================================================================
+15% Wormbot (Lv. 25 - 29)
+25% Wormbot-S (Lv. 25 - 29)
+8% Cluuz-S (Lv. 26 - 28)
+17% Blaxer-S (Lv. 27 - 29)
+35% Ekans-S (Lv. 26 - 28)
+
+Shadow Ravine 0 (Floor)===================================================================
+25% Diggie (Lv. 26 - 28)
+10% Poov (Lv. 26 - 28)
+25% Wormbot-S (Lv. 25 - 29)
+8% Cluuz-S (Lv. 26 - 28)
+17% Blaxer-S (Lv. 27 - 29)
+15% Ekans-S (Lv. 26 - 28)
+
+Route 32 (Grass)===================================================================
+15% Flashclaw (Lv. 26 - 28)
+15% Pigonat (Lv. 27 - 29)
+15% Bugop (Lv. 26 - 28)
+20% Psycorb (Lv. 26 - 28)
+15% Fightorex (Lv. 27 - 28)
+20% Houndoom (Lv. 26 - 28)
+Glimmet
+
+Route 32 (Fish)===================================================================
+20% Inkay (Lv. 24 - 27)
+10% Sheltor (Lv. 24 - 27)
+20% Binacle (Lv. 24 - 27)
+25% Ali (Lv. 27 - 29)
+25% Durfish-S (Lv. 25 - 27)
+
+Route 32 (Surf)===================================================================
+20% Daray (Lv. 24 - 26)
+15% Sheltor (Lv. 24 - 27)
+20% Posho (Lv. 24 - 27)
+20% Ali (Lv. 27 - 29)
+25% Durfish-S (Lv. 25 - 27)
+
+Electric Tunnel 0 (Floor)===================================================================
+15% Vinnie (Lv. 32 - 35)
+20% Hast-E (Lv. 32 - 35)
+20% Armoid-E (Lv. 32 - 35)
+20% Flamehox-E (Lv. 30 - 34)
+5% Fireshard-E (Lv. 35 - 36)
+20% Boulder-E (Lv. 32 - 35)
+
+Electric Tunnel 0 (Fish)===================================================================
+80% Magikarp-E (Lv. 15)
+20% Gyarados-E (Lv. 35)
+
+Electric Tunnel 0 (Surf)===================================================================
+80% Magikarp-E (Lv. 15)
+20% Gyarados-E (Lv. 35)
+
+Electric Tunnel -1 (Floor)===================================================================
+25% Carinator (Lv. 35 - 38)
+21% Hast-E (Lv. 35 - 38)
+19% Armoid-E (Lv. 35 - 38)
+10% Fireshard-E (Lv. 35 - 38)
+25% Boulder-E (Lv. 32 - 35)
+
+Electric Tunnel -2 (Floor)===================================================================
+20% Drillatron (Lv. 39 - 43)
+20% Wormbot (Lv. 38 - 42)
+13% Hast-E (Lv. 39 - 43)
+12% Armoid-E (Lv. 39 - 43)
+20% Fireshard-E (Lv. 39 - 43)
+15% Boulder-E (Lv. 39 - 43)
+
+Electric Tunnel -3 (Floor)===================================================================
+40% Hast-E (Lv. 42 - 46)
+20% Armoid-E (Lv. 42 - 46)
+20% Fireshard-E (Lv. 42 - 46)
+20% Boulder-E (Lv. 42 - 46)
+
+Electric Tunnel -3 (Fish)===================================================================
+80% Magikarp-E (Lv. 15)
+20% Gyarados-E (Lv. 35)
+
+Electric Tunnel -3 (Surf)===================================================================
+80% Magikarp-E (Lv. 15)
+20% Gyarados-E (Lv. 35)
+
+Electric Tunnel H (Floor)===================================================================
+25% Carinator (Lv. 35 - 38)
+21% Hast-E (Lv. 35 - 38)
+19% Armoid-E (Lv. 35 - 38)
+10% Fireshard-E (Lv. 35 - 38)
+25% Boulder-E (Lv. 32 - 35)
+
+Shadow Ravine H (Floor)===================================================================
+20% Drillatron (Lv. 33 - 36)
+20% Opwing (Lv. 33 - 36)
+25% Wormbot-S (Lv. 32 - 35)
+10% Cluuz-S (Lv. 33 - 36)
+10% Blaxer-S (Lv. 32 - 35)
+15% Arbok-S (Lv. 32 - 36)
+
+Shadow Ravine -1 (Floor)===================================================================
+20% Drillatron (Lv. 33 - 36)
+20% Opwing (Lv. 33 - 36)
+25% Wormbot-S (Lv. 32 - 35)
+10% Cluuz-S (Lv. 33 - 36)
+10% Blaxer-S (Lv. 32 - 35)
+15% Arbok-S (Lv. 32 - 36)
+
+Shadow Ravine -1 (Fish)===================================================================
+20% Drillatron (Lv. 33 - 36)
+20% Opwing (Lv. 33 - 36)
+25% Wormbot-S (Lv. 32 - 35)
+10% Cluuz-S (Lv. 33 - 36)
+10% Blaxer-S (Lv. 32 - 35)
+15% Arbok-S (Lv. 32 - 36)
+
+Shadow Ravine -1 (Surf)===================================================================
+20% Drillatron (Lv. 33 - 36)
+20% Opwing (Lv. 33 - 36)
+25% Wormbot-S (Lv. 32 - 35)
+10% Cluuz-S (Lv. 33 - 36)
+10% Blaxer-S (Lv. 32 - 35)
+15% Arbok-S (Lv. 32 - 36)
+
+Shadow Ravine -2 (Floor)===================================================================
+25% Drillatron (Lv. 35 - 37)
+25% Wormbot-S (Lv. 34 - 36)
+30% Cluuz-S (Lv. 34 - 37)
+5% Pyrator-S (Lv. 36)
+15% Arbok-S (Lv. 34 - 37)
+
+Shadow Ravine -2 (Lava)===================================================================
+20% Iglite-S (Lv. 30)
+70% Blaxer-S (Lv. 40)
+10% Pyrator-S (Lv. 50)
+
+Shadow Ravine -3 (Floor)===================================================================
+25% Wormatron-S (Lv. 50 - 55)
+20% Cluuz-S (Lv. 46 - 49)
+15% Zurrclu-S (Lv. 49 - 53)
+5% Zurroaratr-S (Lv. 55)
+25% Pyrator-S (Lv. 49 - 55)
+10% Arbok-S (Lv. 50 - 54)
+
+Shadow Ravine -3 (Lava)===================================================================
+100% Pyrator-S (Lv. 55)
+
+Shadow Path (Floor)===================================================================
+11% Hast-E (Lv. 40 - 45)
+10% Armoid-E (Lv. 40 - 45)
+10% Fireshard-E (Lv. 40 - 45)
+4% Boulder-E (Lv. 40 - 45)
+5% Blaster-E (Lv. 40 - 45)
+5% Crystallor-E (Lv. 40 - 45)
+12% Wormbot-S (Lv. 40 - 44)
+2% Wormatron-S (Lv. 45)
+10% Cluuz-S (Lv. 40 - 45)
+6% Zurrclu-S (Lv. 40 - 45)
+2% Zurroaratr-S (Lv. 40 - 45)
+11% Pyrator-S (Lv. 40 - 45)
+10% Arbok-S (Lv. 40 - 45)
+1% Electrocobra (Lv. 45)
+1% Shadowsaur (Lv. 45)
+
+Route 33 (Grass)===================================================================
+15% Dualbear (Lv. 34 - 38)
+11% Florline (Lv. 34 - 38)
+16% Barkflare (Lv. 35 - 39)
+13% Houndoom (Lv. 35 - 39)
+20% Splame (Lv. 35 - 39)
+25% Gurdurr (Lv. 34 - 39)
+
+Route 33 (Fish)===================================================================
+25% Magikarp (Lv. 15 - 25)
+10% Gyarados (Lv. 30 - 35)
+35% Ali (Lv. 30 - 35)
+30% Durfish (Lv. 20 - 30)
+
+Route 33 (Surf)===================================================================
+30% Psylotter (Lv. 35 - 38)
+40% Shelnado (Lv. 34 - 38)
+15% Lilyray (Lv. 37 - 39)
+15% Spinaquata (Lv. 37 - 39)
+
+Ghostly Woods (Grass)===================================================================
+5% Curlatoral (Lv. 36 - 39)
+7% Treewin (Lv. 36 - 39)
+10% Grust (Lv. 37 - 40)
+12% Cluuz (Lv. 35 - 38)
+2% Zurrclu (Lv. 37 - 40)
+5% Opwing (Lv. 36 - 39)
+2% Hattrem (Lv. 36 - 39)
+12% Arbok (Lv. 36 - 39)
+10% Golbat (Lv. 35 - 38)
+6% Hast (Lv. 36 - 39)
+7% Zoroark (Lv. 37 - 38)
+9% Cluuz-S (Lv. 35 - 39)
+2% Zurrclu-S (Lv. 37 - 40)
+5% Dompster-S (Lv. 40)
+6% Arbok-S (Lv. 36 - 39)
+
+Route 34 (Floor)===================================================================
+17% Carinator (Lv. 40 - 42)
+13% Grondor (Lv. 37 - 41)
+2% Bipedice (Lv. 41 - 44)
+12% Boulderoar (Lv. 40 - 43)
+10% Tricercil (Lv. 41 - 44)
+15% Rhynee (Lv. 40 - 43)
+14% Armoid (Lv. 40 - 43)
+17% Rockmite (Lv. 40 - 42)
+
+Route 34 (Lava)===================================================================
+100% Flamehox (Lv. 40)
+
+Route 35 (Grass)===================================================================
+15% Kirlia (Lv. 40 - 42)
+5% Gardevoir (Lv. 37 - 41)
+14% Tigrette (Lv. 41 - 44)
+13% Magestiflash (Lv. 40 - 43)
+14% Busheep (Lv. 41 - 44)
+21% Sparkitten (Lv. 40 - 43)
+9% Cumin (Lv. 40 - 43)
+9% Whiskers (Lv. 40 - 42)
+
+Mindagan Cavern 0 (Floor)===================================================================
+12% Clefairy (Lv. 26 - 30)
+13% Minishoo (Lv. 26 - 30)
+25% Tinkie (Lv. 24 - 28)
+25% Dragee (Lv. 25 - 30)
+10% Blobmo (Lv. 24 - 28)
+15% Rockmite (Lv. 26 - 30)
+
+Route 43 (W) (Grass)===================================================================
+9% Sewaddle (Lv. 2 - 3)
+12% Lotad (Lv. 2 - 3)
+21% Kleinowl (Lv. 2 - 3)
+16% Froshrog (Lv. 2 - 4)
+14% Ralts (Lv. 2 - 3)
+13% Sparkdust (Lv. 2 - 3)
+15% Twigzap (Lv. 2 - 3)
+Caterpie
+Bronzor-X
+
+Route 37 (Grass)===================================================================
+12% Ninjakik (Lv. 45 - 48)
+9% Drillatron (Lv. 45 - 48)
+17% Wattwo (Lv. 43 - 45)
+16% Armoid (Lv. 44 - 47)
+17% Psyballs (Lv. 44 - 47)
+12% Tigrette (Lv. 43 - 46)
+17% Raptorex (Lv. 45 - 48)
+
+Route 37 (Surf)===================================================================
+13% Lombre (Lv. 42 - 45)
+10% Ludicolo (Lv. 45 - 48)
+15% Bouncerog (Lv. 46 - 48)
+7% Sheltor (Lv. 42 - 44)
+5% Shelnado (Lv. 45 - 48)
+8% Lilyray (Lv. 40 - 44)
+7% Daray (Lv. 42 - 46)
+9% Spinaquata (Lv. 44 - 48)
+8% Ali (Lv. 44 - 47)
+11% Sealeo (Lv. 40 - 43)
+7% Walrein (Lv. 44 - 47)
+
+Route 37 (Fish)===================================================================
+20% Malamar (Lv. 40 - 44)
+10% Sheltor (Lv. 40 - 42)
+8% Shelnado (Lv. 43 - 46)
+40% Gyarados (Lv. 44 - 47)
+22% Barbaracle (Lv. 44 - 47)
+
+Route 38 (Grass)===================================================================
+9% HammyBoy (Lv. 45 - 49)
+1% Magmaclang (Lv. 50)
+14% Fireshard (Lv. 44 - 48)
+17% Lafloo (Lv. 45 - 49)
+15% Sparkitten (Lv. 40 - 44)
+4% Conkeldurr (Lv. 45 - 49)
+7% Houndoom (Lv. 45 - 48)
+18% Barkflare (Lv. 44 - 48)
+3% Splame (Lv. 45 - 48)
+8% Wattwo (Lv. 43 - 47)
+4% Superchargo (Lv. 48 - 49)
+
+Mt. St. Joseph 1A (Floor)===================================================================
+10% Crystallor (Lv. 46 - 50)
+9% Cairnasaur (Lv. 46 - 50)
+8% Boulderoar (Lv. 44 - 48)
+7% Tricerpup (Lv. 42 - 47)
+14% Fireshard (Lv. 44 - 48)
+17% Lafloo (Lv. 45 - 49)
+13% Fireblion (Lv. 50)
+10% Houndoom (Lv. 45 - 49)
+12% Pyrator (Lv. 46 - 50)
+
+Mt. St. Joseph 2A (Floor)===================================================================
+11% Blaster (Lv. 48 - 52)
+8% Cairnasaur (Lv. 48 - 52)
+9% Boulderoar (Lv. 46 - 50)
+5% Tricerpup (Lv. 44 - 47)
+15% Fireshard (Lv. 46 - 50)
+18% Lafloo (Lv. 47 - 51)
+14% Flamebless (Lv. 50 - 52)
+7% Houndoom (Lv. 47 - 51)
+13% Pyrator (Lv. 48 - 52)
+
+Mt. St. Joseph 2B (Floor)===================================================================
+11% Blaster (Lv. 48 - 52)
+8% Cairnasaur (Lv. 48 - 52)
+9% Boulderoar (Lv. 46 - 50)
+5% Tricerpup (Lv. 44 - 47)
+15% Fireshard (Lv. 46 - 50)
+18% Lafloo (Lv. 47 - 51)
+14% Flamebless (Lv. 50 - 52)
+7% Houndoom (Lv. 47 - 51)
+13% Pyrator (Lv. 48 - 52)
+
+Mt. St. Joseph 3A (Floor)===================================================================
+8% Blaster (Lv. 50 - 54)
+8% Crystallor (Lv. 50 - 54)
+9% Cairnasaur (Lv. 50 - 54)
+8% Boulderoar (Lv. 48 - 52)
+20% Fireshard (Lv. 48 - 52)
+14% Lafloo (Lv. 50 - 54)
+6% Fireblion (Lv. 52 - 54)
+6% Flamebless (Lv. 52 - 54)
+5% Houndoom (Lv. 49 - 53)
+16% Pyrator (Lv. 50 - 54)
+
+Mt. St. Joseph 3B (Floor)===================================================================
+8% Blaster (Lv. 50 - 54)
+8% Crystallor (Lv. 50 - 54)
+9% Cairnasaur (Lv. 50 - 54)
+8% Boulderoar (Lv. 48 - 52)
+20% Fireshard (Lv. 48 - 52)
+14% Lafloo (Lv. 50 - 54)
+6% Fireblion (Lv. 52 - 54)
+6% Flamebless (Lv. 52 - 54)
+5% Houndoom (Lv. 49 - 53)
+16% Pyrator (Lv. 50 - 54)
+
+Mt. St. Joseph 4A (Floor)===================================================================
+30% Blastflames (Lv. 60 - 65)
+25% Fireblion (Lv. 65)
+25% Flamebless (Lv. 65)
+5% Houndoom (Lv. 58 - 63)
+15% Pyrator (Lv. 60 - 65)
+
+Mt. St. Joseph 1A/2A/2B/3A/3B/4A (Lava)===================================================================
+50% Blastflames (Lv. 70 - 75)
+50% Lafloo (Lv. 68 - 73)
+
+Mt. St. Joseph 4B (Lava)===================================================================
+100% Iglite (Lv. 100)
+
+Route 44 (Grass)===================================================================
+20% Sapwin (Lv. 14 - 18)
+10% Sewaddle (Lv. 13 - 16)
+7% Grubbin (Lv. 14 - 17)
+10% Busheep (Lv. 15 - 18)
+10% Bugik (Lv. 13 - 14)
+5% Swordik (Lv. 15 - 17)
+9% Psycorb (Lv. 15 - 17)
+19% Cluuz (Lv. 15 - 18)
+10% Zubat (Lv. 16 - 18)
+
+Mt. Splinkty (Outside) (Grass)===================================================================
+6% Treewin (Lv. 33 - 35)
+11% Dualbear (Lv. 30 - 32)
+8% Bluebunn (Lv. 29 - 32)
+5% Swordik (Lv. 31 - 34)
+7% Hattrem (Lv. 32 - 33)
+5% Sparkitten (Lv. 28 - 31)
+4% Arbok (Lv. 30 - 32)
+15% Minishoo (Lv. 29 - 32)
+7% Dualmoose (Lv. 30)
+10% Consodust (Lv. 29 - 34)
+14% Splame (Lv. 31 - 34)
+8% Tinkie (Lv. 24 - 25)
+
+1,Twigle,0,0.00%
+2,Torgged,0,0.00%
+3,Tortugis,0,0.00%
+4,Lagma,0,0.00%
+5,Maguide,0,0.00%
+6,Magron,0,0.00%
+7,Lizish,0,0.00%
+8,Iguaton,0,0.00%
+9,Dragave,0,0.00%
+10,Hummingspark,3,21.00%
+11,Flashclaw,3,14.00%
+12,Magestiflash,1,13.00%
+13,Pigo,2,25.00%
+14,Pigonat,3,12.00%
+15,Pigoga,0,0.00%
+16,Hammo,3,20.67%
+17,HammyBoy,1,9.00%
+18,Hamthorno,0,0.00%
+19,Sheabear,3,13.33%
+20,Dualbear,2,13.00%
+21,Spacebear,0,0.00%
+22,Bealtle,4,18.00%
+23,Centatle,1,9.00%
+24,Curlatoral,1,5.00%
+25,Millistone,0,0.00%
+26,Sapwin,7,13.86%
+27,Treewin,2,6.50%
+28,Winagrow,0,0.00%
+29,Budew,4,13.50%
+30,Roselia,2,3.50%
+31,Roserade,0,0.00%
+32,Sewaddle,6,11.50%
+33,Swadloon,2,10.00%
+34,Leavanny,0,0.00%
+35,Grubbin,5,9.80%
+36,Charjabug,1,15.00%
+37,Vikavolt,0,0.00%
+38,Busheep,7,9.71%
+39,Ramant,0,0.00%
+40,Bushewe,0,0.00%
+41,Bugik,5,10.40%
+42,Swordik,5,6.20%
+43,Ninjakik,1,12.00%
+44,Lotad,4,27.25%
+45,Lombre,2,11.50%
+46,Ludicolo,1,10.00%
+47,Bluebunn,5,14.00%
+48,Rocky,4,30.00%
+49,Boulder,0,0.00%
+50,Blaster,4,9.50%
+51,Crystallor,3,8.67%
+52,Carinx,3,14.00%
+53,Carinator,3,22.33%
+54,Cairnasaur,5,8.60%
+55,Pebblepup,2,14.00%
+56,Boulderoar,6,9.00%
+57,Fightorex,2,15.00%
+58,Raptorex,1,17.00%
+59,Kleinowl,3,16.67%
+60,Hootowl,0,0.00%
+61,Dualmoose,3,10.67%
+62,Snom,4,11.00%
+63,Frosmoth,0,0.00%
+64,Grondor,3,16.00%
+65,Bipedice,1,2.00%
+66,Tricerpup,5,7.40%
+67,Tricercil,1,10.00%
+68,Spheal,4,22.00%
+69,Sealeo,1,11.00%
+70,Walrein,1,7.00%
+71,Froshrog,8,15.37%
+72,Bouncerog,1,15.00%
+73,Bugop,5,25.20%
+74,Opwing,5,17.00%
+75,Hatenna,3,12.33%
+76,Hattrem,2,4.50%
+77,Hatterene,0,0.00%
+78,Otterpor,6,18.00%
+79,Psylotter,1,30.00%
+80,Florline,4,12.50%
+81,Florlion,0,0.00%
+82,Psycorb,6,10.67%
+83,Psyballs,1,17.00%
+84,Psycorboratr,0,0.00%
+85,Ralts,3,14.67%
+86,Kirlia,2,11.50%
+87,Gardevoir,1,5.00%
+88,Gallade,0,0.00%
+89,Tigrette,4,16.50%
+90,Inkay,10,16.30%
+91,Malamar,1,20.00%
+92,Flameruff,2,13.50%
+93,Barkflare,2,17.00%
+94,Iglite,3,45.00%
+95,Blaxer,1,10.00%
+96,Pyrator,6,14.17%
+97,Magmaclang,1,1.00%
+98,Flamehox,1,100.00%
+99,Fireshard,6,16.33%
+100,Blastflames,2,40.00%
+101,Tiowoo,2,13.50%
+102,Magwoo,0,0.00%
+103,Lafloo,7,21.14%
+104,Houndour,1,20.00%
+105,Houndoom,9,8.78%
+106,Sparkdust,2,9.00%
+107,Splame,3,12.33%
+108,Sparkitten,5,13.20%
+109,Fireblion,4,12.50%
+110,Flamebless,5,13.00%
+111,Shookwat,2,45.00%
+112,Wattwo,2,12.50%
+113,Megawatt,0,0.00%
+114,Elelamb,4,8.50%
+115,Electroram,0,0.00%
+116,Superchargo,1,4.00%
+117,Twigzap,3,26.67%
+118,Shockbranch,1,3.00%
+119,Thunderzap,0,0.00%
+120,Magie,1,10.00%
+121,Cumin,1,9.00%
+122,Cinneroph,0,0.00%
+123,Vupp,5,13.00%
+124,Vinnie,1,15.00%
+125,Suvinero,0,0.00%
+126,Whiskie,2,15.00%
+127,Whiskers,1,9.00%
+128,Whiskeroar,0,0.00%
+129,Nincada,3,8.33%
+130,Ninjask,1,2.00%
+131,Shedinja,0,0.00%
+132,Sheltor,13,14.62%
+133,Shelnado,3,17.67%
+134,Lilyray,11,21.45%
+135,Daray,4,13.00%
+136,Spinaquata,2,12.00%
+137,Magikarp,12,27.92%
+138,Gyarados,3,23.33%
+139,Staryu,10,34.60%
+140,Starmie,0,0.00%
+141,Ali,14,13.43%
+142,Batorali,0,0.00%
+143,Posho,7,16.86%
+144,Shomp,0,0.00%
+145,Poshorump,0,0.00%
+146,Binacle,8,17.75%
+147,Barbaracle,1,22.00%
+148,Durfish,6,19.50%
+149,Dompster,0,0.00%
+150,Kissyfishy,2,32.50%
+151,Ekans,2,20.00%
+152,Arbok,3,10.33%
+153,Zubat,7,20.57%
+154,Golbat,1,10.00%
+155,Crobat,0,0.00%
+156,Poof,3,20.00%
+157,Hast,1,6.00%
+158,Poov,3,11.33%
+159,Grust,1,10.00%
+160,Cluuz,5,15.00%
+161,Zurrclu,1,2.00%
+162,Zurroaratr,0,0.00%
+163,Timburr,2,27.50%
+164,Gurdurr,1,25.00%
+165,Conkeldurr,1,4.00%
+166,Rhypo,3,9.00%
+167,Rhynee,1,15.00%
+168,Rhypolar,0,0.00%
+169,Diggie,1,25.00%
+170,Drillatron,7,19.14%
+171,Wormite,2,12.50%
+172,Wormbot,2,17.50%
+173,Wormatron,0,0.00%
+174,Cleffa,3,15.00%
+175,Clefairy,2,12.00%
+176,Clefable,0,0.00%
+177,Minishoo,4,11.50%
+178,Glittleshoo,0,0.00%
+179,Zorua,2,8.00%
+180,Zoroark,1,7.00%
+181,Droid,1,15.00%
+182,Armoid,2,15.00%
+183,Soldrota,0,0.00%
+184,Tinkie,3,19.33%
+185,Shawar,0,0.00%
+186,Shaboom,0,0.00%
+187,Dragee,2,25.00%
+188,Draga,0,0.00%
+189,Drageye,0,0.00%
+190,Blobmo,2,10.00%
+191,Nebulimb,0,0.00%
+192,Galactasolder,0,0.00%
+193,Consodust,1,10.00%
+194,Cosmocrash,0,0.00%
+195,Rockmite,3,15.67%
+196,Stellarock,0,0.00%
+197,Poof-E,1,15.00%
+198,Hast-E,6,21.00%
+199,Droid-E,2,9.00%
+200,Armoid-E,6,16.67%
+201,Soldrota-E,0,0.00%
+202,Flamehox-E,2,16.00%
+203,Fireshard-E,6,12.50%
+204,Blastflames-E,0,0.00%
+205,Rocky-E,2,15.00%
+206,Boulder-E,6,18.17%
+207,Blaster-E,1,5.00%
+208,Crystallor-E,1,5.00%
+209,Magikarp-E,6,60.83%
+210,Gyarados-E,5,22.00%
+211,Shockfang,0,0.00%
+212,Electrocobra,1,1.00%
+213,Nightrex,0,0.00%
+214,Shadowsaur,1,1.00%
+215,Durfish-S,6,28.33%
+216,Dompster-S,1,5.00%
+217,Wormite-S,1,16.00%
+218,Wormbot-S,8,23.38%
+219,Wormatron-S,2,13.50%
+220,Cluuz-S,10,12.50%
+221,Zurrclu-S,3,7.67%
+222,Zurroaratr-S,2,3.50%
+223,Iglite-S,2,16.50%
+224,Blaxer-S,7,20.57%
+225,Pyrator-S,5,30.20%
+226,Ekans-S,2,25.00%
+227,Arbok-S,8,12.63%
+228,Soarwhell,0,0.00%
+229,Diftery,0,0.00%
+230,Vorsuitex,0,0.00%
+231,Kleinyeti,0,0.00%
+232,Triwandoliz,0,0.00%
+233,Relomidel,0,0.00%
+234,Relopamil,0,0.00%
+235,Dragowrath,0,0.00%
+236,Solaroxyous,0,0.00%
+237,Kissyfishy-D,0,0.00%
+238,Scraggy,0,0.00%
+239,Scrafty,0,0.00%
+240,Scraftagon,0,0.00%
+241,Glimmet,0,0.00%
+242,Glimmora,0,0.00%
+243,Abra,0,0.00%
+244,Kadabra,0,0.00%
+245,Alakazam,0,0.00%
+246,Flamigo,0,0.00%
+247,Sneasel,0,0.00%
+248,Weavile,0,0.00%
+249,Sneasel-H,0,0.00%
+250,Sneasler,0,0.00%
+251,Solosis,0,0.00%
+252,Duosion,0,0.00%
+253,Reuniclus,0,0.00%
+254,Solosis-X,0,0.00%
+255,Duosion-X,0,0.00%
+256,Reuniclus-X,0,0.00%
+257,Seviper,0,0.00%
+258,Seviper-X,0,0.00%
+259,Hissimitar,0,0.00%
+260,Gulpin,0,0.00%
+261,Swalot,0,0.00%
+262,Gulpin-X,0,0.00%
+263,Swalot-X,0,0.00%
+264,Plasamp,0,0.00%
+265,Genieova,0,0.00%
+266,Elgyem,0,0.00%
+267,Beheeyem,0,0.00%

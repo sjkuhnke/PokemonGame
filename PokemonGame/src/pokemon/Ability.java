@@ -59,6 +59,7 @@ public enum Ability {
 	MERCILESS(""), // TODO
 	MIRROR_ARMOR("Bounces back only the stat-lowering effects that the Pokemon receives."),
 	MOLD_BREAKER("Moves can be used on the target regardless of its Abilities."),
+	MOODY(""), // TODO
 	MOTOR_DRIVE("Raises Speed if hit by an ELECTRIC move."),
 	MOUTHWATER("Taunts the foe on switch-in for 4 turns."),
 	MOXIE("Boosts the Attack stat after knocking out any Pokemon."),

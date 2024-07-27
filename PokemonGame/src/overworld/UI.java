@@ -792,7 +792,7 @@ public class UI extends AbstractUI{
 		g2.drawString(seenString, infoTextX, infoTextY);
 		
 		String wText = dexMode == 0 ? "Moves": null;
-		drawToolTips(wText, null, "Back", null);
+		drawToolTips(wText, null, "Back", "Back");
 	}
 
 	private void drawDexSummary(Pokemon p, int mode, ArrayList<Move> levelMoveList, ArrayList<Integer> levelLevelList, ArrayList<Item> tmList) {
