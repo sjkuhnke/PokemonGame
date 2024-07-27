@@ -109,6 +109,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(80, 62, Item.KING1S_ROCK, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(70, 63, Item.GLOWING_PRISM, mapNum);
 		
+		gp.obj[mapNum][objIndex] = ObjSetup(34, 76, Item.FIRE_STONE, mapNum);
+		
 		mapNum = 4;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(86, 56, Item.TM31, mapNum); // false swipe
@@ -1467,7 +1469,7 @@ public class AssetSetter {
 		mapNum = 131;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 31, 41, -1, true, Item.EUPHORIAN_GEM, Item.LEAF_STONE, Item.DUSK_STONE, Item.DAWN_STONE, Item.ICE_STONE,
-                Item.VALIANT_GEM, Item.PETTICOAT_GEM, Item.EVERSTONE, Item.HEAT_ROCK, Item.DAMP_ROCK, Item.SMOOTH_ROCK, Item.ICY_ROCK);
+				Item.FIRE_STONE, Item.VALIANT_GEM, Item.PETTICOAT_GEM, Item.EVERSTONE, Item.HEAT_ROCK, Item.DAMP_ROCK, Item.SMOOTH_ROCK, Item.ICY_ROCK);
 		
 		mapNum = 137;
 		index = 0;
@@ -1602,6 +1604,7 @@ public class AssetSetter {
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(60, 53, 0, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(82, 59, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 72, 0, mapNum, map);
 		
 		mapNum = 4;
 		iIndex = 0;

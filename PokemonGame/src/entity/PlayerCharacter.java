@@ -43,6 +43,7 @@ import pokemon.Item;
 import pokemon.Move;
 import pokemon.Player;
 import pokemon.Pokemon;
+import pokemon.Trainer;
 import pokemon.JGradientButton;
 import pokemon.Pokemon.Task;
 
@@ -1182,7 +1183,7 @@ public class PlayerCharacter extends Entity {
 			JOptionPane.showMessageDialog(null, panel);
     	    SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("ASH KETCHUP")) {
-			p.trainersBeat = new boolean[Main.trainers.length];
+			p.trainersBeat = new boolean[Trainer.MAX_TRAINERS];
 			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("exptrainer")) {
 			StringBuilder result = new StringBuilder();

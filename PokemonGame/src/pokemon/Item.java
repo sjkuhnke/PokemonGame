@@ -34,8 +34,6 @@ import javax.swing.SwingUtilities;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
-import overworld.Main;
-
 public enum Item {
 	REPEL(0,10,5,new Color(0, 92, 5),Item.OTHER,null,"Prevents wild Pokemon encounters for 200 steps"),
 	POKEBALL(1,10,5,new Color(176, 0, 12),Item.OTHER,null,"A standard device for capturing wild Pokemon"),
@@ -67,8 +65,10 @@ public enum Item {
 	DUSK_STONE(21,1000,500,new Color(64, 64, 64),Item.OTHER,null,"Evolves a certain species of Pokemon"),
 	DAWN_STONE(22,1000,500,new Color(0, 176, 179),Item.OTHER,null,"Evolves a certain species of Pokemon"),
 	ICE_STONE(23,1000,500,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon"),
+	FIRE_STONE(264,1000,500,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon"),
 	VALIANT_GEM(24,2000,500,new Color(72, 75, 219),Item.OTHER,null,"Grants Masculine energy to a Pokemon, evolving them into their male evolution"),
 	PETTICOAT_GEM(25,2000,500,new Color(204, 61, 140),Item.OTHER,null,"Grants Feminine energy to a Pokemon, evolving them into their female evolution"),
+	RAZOR_CLAW(265,1000,500,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon"),
 	ABILITY_CAPSULE(26,2500,1250,new Color(102, 7, 143),Item.OTHER,null,"Swaps a Pokemon's ability with its other possible ability"),
 	ABILITY_PATCH(91,0,0,Color.BLACK,Item.OTHER,null,"A patch that can be used to change the regular Ability of a Pokemon to a rarer Ability."),
 	ADAMANT_MINT(29,2500,1000,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +Atk, -SpA"),
@@ -811,6 +811,10 @@ public enum Item {
 			check = new int[] {38, 86, 108};
 		} else if (this == Item.PETTICOAT_GEM) {
 			check = new int[] {38, 108};
+		} else if (this == Item.FIRE_STONE) {
+			check = new int[] {278, 281};
+		} else if (this == Item.RAZOR_CLAW) {
+			check = new int[] {247, 249};
 		} else {
 			check = new int[] {};
 		}
@@ -919,7 +923,7 @@ public enum Item {
         for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
         	foeMons.addItem(new Pokemon(k, 50, false, true));
         }
-        for (Trainer tr : Main.modifiedTrainers) {
+        for (Trainer tr : Trainer.bossTrainers) {
         	for (Pokemon po : tr.getTeam()) {
         		Pokemon add = po.clone();
         		add.nickname = tr.getName();

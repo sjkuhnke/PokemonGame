@@ -152,8 +152,8 @@ public class EventHandler {
 			if (hit(21,53,47)) gp.iTile[21][4] = null;
 			
 			// Bannana Grove to Route 40 gate
-			if (hit(0,17,58)) teleport(23, 31, 34,false);
-			if (hit(23,31,33)) teleport(0, 17, 57,false);
+			if (hit(0,17,78)) teleport(23, 31, 34,false);
+			if (hit(23,31,33)) teleport(0, 17, 77,false);
 			if (hit(23,31,46)) teleport(22, 76, 8,false);
 			if (hit(22,76,7)) teleport(23, 31, 45,false);
 			
