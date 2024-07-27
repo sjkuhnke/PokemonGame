@@ -1135,7 +1135,7 @@ public class Main {
 			StringBuilder header = new StringBuilder();
 			header.append("Type");
 			for (int i = 0; i < sums[1].length; i++) {
-				header.append("," + Pokemon.getStatType(i).strip());
+				header.append("," + Pokemon.getStatType(i).trim());
 			}
 			header.append(",Amt\n");
 			writer.write(header.toString());

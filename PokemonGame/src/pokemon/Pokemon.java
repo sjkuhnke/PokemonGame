@@ -53,7 +53,7 @@ public class Pokemon implements Serializable {
 	
 	public static Field field;
 	public static GamePanel gp;
-	public static final int MAX_POKEMON = 277;
+	public static final int MAX_POKEMON = 291;
 	
 	// Database
 	private static String[] names = new String[MAX_POKEMON];
