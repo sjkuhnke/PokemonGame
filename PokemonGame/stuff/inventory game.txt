@@ -144,14 +144,16 @@ Otterpor -> Whotter/Odder
 Psylotter -> Foresott/Torrentor/Lutrineer
 Florline -> Kitturf/Mosscelot
 Florlion -> Oncaroma/Osceloma/Osceroma
-Psycorb -> Psycorb/Orbronze
-Psyballs -> Silvidol/Silvicle
-Psycorboratr -> Auracle
-
+Psycorb -> Psycorb/Orbronze/Atocule
+Psyballs -> Silvidol/Silvicle/Orbitin/Atomene
+Psycorboratr -> Auracle/Spheracle/Attomicaze
+Tigrette -> Benglow
+Flameruff -> 
+Barkflare -> 
 Iglite -> Sember
 Blaxer -> Kaboon
 Pyrator -> Detonape
-
+Magmaclang -> Apie
 
 Trainer Classes: Ice
 Ace Trainer (mixed types/dragon)

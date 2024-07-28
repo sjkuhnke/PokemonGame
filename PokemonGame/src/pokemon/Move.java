@@ -105,6 +105,7 @@ public enum Move {
 	DIG(80,100,0,0,0,0,PType.GROUND,"A two turn attack. Digs underground on the first, attacks on the second",true,15),
 	DISCHARGE(80,100,30,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false,15),
 	DIVE(80,100,0,0,0,0,PType.WATER,"A two turn attack. Dives underwater on the first, attacks on the second",true,15),
+	DIZZY_PUNCH(70,100,20,0,0,0,PType.NORMAL,"% to confuse foe",true,10),
 	DOUBLE_HIT(35,90,0,0,0,0,PType.NORMAL,"Attacks twice",true,20),
 	DOUBLE_KICK(30,100,0,0,0,0,PType.FIGHTING,"Attacks twice",true,30),
 	DOUBLE_SLAP(15,85,0,0,0,0,PType.NORMAL,"Attacks 2-5 times",true,25),

@@ -55,7 +55,12 @@ public class Pokemon implements Serializable {
 	public static GamePanel gp;
 	public static final int MAX_POKEMON = 291;
 	
+	public static final int POKEDEX_1_SIZE = 244;
+	public static final int POKEDEX_METEOR_SIZE = 18;
+	public static final int POKEDEX_2_SIZE = 9;
+	
 	// Database
+	private static int[] dexNos = new int[MAX_POKEMON];
 	private static String[] names = new String[MAX_POKEMON];
 	private static PType[][] types = new PType[MAX_POKEMON][2];
 	private static Ability[][] abilities = new Ability[MAX_POKEMON][3];
@@ -124,6 +129,8 @@ public class Pokemon implements Serializable {
 	private int tormentCount;
 	private int toxic;
 	public int headbuttCrit;
+	public int tailCrit;
+	public int spaceEat;
 	public int happinessCap;
 	
 	// boolean fields
@@ -239,6 +246,8 @@ public class Pokemon implements Serializable {
 		
 		happiness = pokemon.happiness;
 		headbuttCrit = pokemon.headbuttCrit;
+		tailCrit = pokemon.tailCrit;
+		spaceEat = pokemon.spaceEat;
 		catchRate = getCatchRate();
 		happinessCap = pokemon.happinessCap;
 		item = pokemon.item;
@@ -736,6 +745,14 @@ public class Pokemon implements Serializable {
 		return names[id - 1];
 	}
 	
+	public int getDexNo() {
+		return getDexNo(id);
+	}
+	
+	public static int getDexNo(int id) {
+		return dexNos[id - 1];
+	}
+	
 	public void setAbility(int slot) {
 		ability = abilities[id - 1][slot];
 	}
@@ -1099,8 +1116,12 @@ public class Pokemon implements Serializable {
             result = new Pokemon(id + 1, this);
 		} else if (id == 255 && level >= 41) {
             result = new Pokemon(id + 1, this);
+		} else if (id == 257 && tailCrit >= 5) {
+		    result = new Pokemon(id + 1, this);
 		} else if (id == 259 && level >= 26) {
             result = new Pokemon(id + 1, this);
+		} else if (id == 261 && spaceEat >= 5) {
+		    result = new Pokemon(id + 1, this);
 		} else if (id == 265 && level >= 42) {
             result = new Pokemon(id + 1, this);
 		} else if (id == 267 && level >= 42) {
@@ -1704,7 +1725,9 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB) ||
-					(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER)) && !(move.cat == 2 && acc > 100)) {
+					(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.DARK || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)) &&
+					!(move.cat == 2 && acc > 100)) {
+				if (foeAbility == Ability.BLACK_HOLE && moveType == PType.GALACTIC && this.trainerOwned()) foe.spaceEat++;
 				if (foe.currentHP == foe.getStat(0)) {
 					addAbilityTask(foe);
 					addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
@@ -1949,6 +1972,7 @@ public class Pokemon implements Serializable {
 			if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && critCheck(critChance)) {
 				addTask(Task.TEXT, "A critical hit!");
 				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++;
+				if (foe.trainerOwned() && move.isTail()) tailCrit++;
 				if (move.isPhysical() && attackStat < this.getStat(1)) {
 					attackStat = this.getStat(1);
 					if (this.status == Status.BURNED) attackStat /= 2;
@@ -2570,6 +2594,8 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.DISCHARGE) {
 			foe.paralyze(false, this);
+		} else if (move == Move.DIZZY_PUNCH) {
+			foe.confuse(false, this);
 		} else if (move == Move.DIAMOND_STORM) {
 			stat(this, 1, 2, foe);
 //		} else if (move == Move.DOUBLE_SLICE) {
@@ -6798,6 +6824,8 @@ public class Pokemon implements Serializable {
 	    clonedPokemon.tormentCount = this.tormentCount;
 	    clonedPokemon.toxic = this.toxic;
 	    clonedPokemon.headbuttCrit = this.headbuttCrit;
+	    clonedPokemon.tailCrit = this.tailCrit;
+	    clonedPokemon.spaceEat = this.spaceEat;
 	    clonedPokemon.happinessCap = this.happinessCap;
 	    
 	    // Clone boolean fields
@@ -7021,9 +7049,9 @@ public class Pokemon implements Serializable {
 		case 252: return "Duosion -> Reuniclus (lv. 41)";
 		case 254: return "Solosis-X -> Duosion-X (lv. 32)";
 		case 255: return "Duosion-X -> Reuniclus-X (lv. 41)";
-		case 257: return "Seviper -> Hissimitar ()";
+		case 257: return "Seviper -> Hissimitar (5+ Tail Move Crits in Trainer Battles)";
 		case 259: return "Gulpin -> Swalot (lv. 26)";
-		case 261: return "Gulpin-X -> Swalot-X ()";
+		case 261: return "Gulpin-X -> Swalot-X (5+ Galactic Moves Eaten in Trainer Battles)";
 		case 263: return "Plasamp -> Genieova ()";
 		case 265: return "Elgyem -> Beheeyem (lv. 42)";
 		case 267: return "Elgyem-E -> Beheeyem-E (lv. 42)";
@@ -7358,6 +7386,7 @@ public class Pokemon implements Serializable {
         for (int i = 0; i < MAX_POKEMON; i++) {
         	String line = scanner.nextLine();
         	String[] tokens = line.split("\\|");
+        	dexNos[i] = Integer.parseInt(tokens[0].trim());
         	names[i] = tokens[1].trim();
         	types[i][0] = PType.valueOf(tokens[2].trim());
         	types[i][1] = tokens[3].trim().equals("null") ? null : PType.valueOf(tokens[3].trim());
@@ -7497,11 +7526,43 @@ public class Pokemon implements Serializable {
 		}
 	}
 
-	public static String getFormattedID(int id) {
-		String result = id + "";
+	public static String getFormattedDexNo(int n) {
+		if (n == 0) return "#---";
+		String result = Math.abs(n) + "";
 		while (result.length() < 3) result = "0" + result;
 		result = "#" + result;
 		return result;
+	}
+
+	public static Color getDexNoColor(int id) {
+		int dexSec = getDexSection(id);
+		switch (dexSec) {
+		case 0:
+			return Color.white;
+		case 1:
+			return new Color(82, 82, 82);
+		case 2:
+			return new Color(214, 185, 60);
+		case 3:
+			return new Color(134, 184, 118);
+		default:
+			return Color.black;
+		}
+	}
+	
+	public static int getDexSection(int id) {
+		int dexNo = getDexNo(id);
+		if (dexNo >= 0) {
+			return 0;
+		}
+		String name = getName(id);
+		if (name.contains("-S") || id == 213 || id == 214) {
+			return 1;
+		} else if (name.contains("-E") || id == 211 || id == 212) {
+			return 2;
+		} else {
+			return 3;
+		}
 	}
 	
 }
