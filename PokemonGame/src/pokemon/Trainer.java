@@ -300,4 +300,11 @@ public class Trainer implements Serializable {
 	public static Trainer getTrainer(int i) {
 		return trainers[i];
 	}
+
+	public int indexOf(Pokemon p) {
+		for (int i = 0; i < team.length; i++) {
+			if (p == team[i]) return i;
+		}
+		return -1;
+	}
 }

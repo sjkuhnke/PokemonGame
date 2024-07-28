@@ -34,10 +34,11 @@ public enum Ability {
 	GALACTIC_AURA("Halves the damage of ICE and PSYCHIC moves."),
 	GALVANIZE("NORMAL moves become ELECTRIC moves. The power of those moves is boosted a little."),
 	GLACIER_AURA("Weakens the power of Physical moves."),
-	GOOEY(""), // TODO
+	GOOEY("Contact with the Pokemon lowers the attacker's Speed stat."),
 	GRASSY_SURGE("Turns the ground into GRASSY TERRAIN when the Pokemon enters a battle."),
 	GRAVITATION("Creates GRAVITY when the Pokemon enters a battle."),
 	GUTS("Boosts the Attack stat if the Pokemon has a status condition."),
+	HEATPROOF("The Pokemon's heatproof body halves the damage taken from FIRE moves."),
 	HUGE_POWER("Doubles the Pokemon's Attack stat."),
 	HYDRATION("Cures the Pokemon's status conditions in RAIN."),
 	HYPER_CUTTER("Prevents other Pokemon from lowering Attack stat."),
@@ -56,10 +57,10 @@ public enum Ability {
 	MAGIC_GUARD("The Pokemon only takes damage from attacks."),
 	MAGICAL("Powers up MAGIC moves."),
 	MAGMA_ARMOR("Prevents the Pokemon from getting a frostbite."),
-	MERCILESS(""), // TODO
+	MERCILESS("The Pokemon's attacks become critical hits if the target is poisoned."),
 	MIRROR_ARMOR("Bounces back only the stat-lowering effects that the Pokemon receives."),
 	MOLD_BREAKER("Moves can be used on the target regardless of its Abilities."),
-	MOODY(""), // TODO
+	MOODY("Raises one stat sharply and lowers another every turn."),
 	MOTOR_DRIVE("Raises Speed if hit by an ELECTRIC move."),
 	MOUTHWATER("Taunts the foe on switch-in for 4 turns."),
 	MOXIE("Boosts the Attack stat after knocking out any Pokemon."),
@@ -94,7 +95,7 @@ public enum Ability {
 	SERENE_GRACE("Boosts the likelihood of additional effects occurring when attacking."),
 	SCALY_SKIN("Lowers the foe's Attack, and this Pokemon only takes damage from attacks."),
 	SCRAPPY("The Pokemon can hit GHOST Pokemon with NORMAL and FIGHTING moves; ignores Intimidate, Threatening and Terrify."),
-	SHARP_TAIL(""), // TODO
+	SHARP_TAIL("Boosts the power of Tail-using moves."),
 	SHARPNESS("Boosts the power of Slicing moves."),
 	SHED_SKIN("The Pokemon may heal its own status conditions."),
 	SHEER_FORCE("Removes additional effects to increase the power of moves when attacking."),
@@ -112,7 +113,7 @@ public enum Ability {
 	SPEED_BOOST("Its Speed stat is gradually boosted."),
 	STATIC("Contact with the Pokemon may paralyze the attacker."),
 	STEELWORKER("Powers up STEEL moves."),
-	STICKY_HOLD(""), // TODO
+	STICKY_HOLD("Protects the Pokemon from item theft."),
 	STRONG_JAW("The Pokemon's strong jaw boosts the power of its biting moves."),
 	STURDY("It cannot be knocked out with one hit. One-hit KO moves cannot knock it out, either."),
 	SUPER_LUCK("Heightens the critical-hit ratios of moves."),

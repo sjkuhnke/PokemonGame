@@ -266,15 +266,15 @@
 |Beheeyem     |GALACTIC|null    |PARASOCIAL        |PARASOCIAL        |ANALYTIC          |[75, 75, 75, 125, 95, 40]     |76.1  |70 |
 |Elgyem-E     |GALACTIC|ELECTRIC|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
 |Beheeyem-E   |GALACTIC|ELECTRIC|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Caterpie     |BUG     |null    |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Metapod      |BUG     |null    |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Butterfree   |BUG     |FLYING  |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Caterpie     |BUG     |null    |SHIELD_DUST       |SHIELD_DUST       |SWARM             |[45, 30, 35, 20, 20, 45]      |81.6  |100|
+|Metapod      |BUG     |null    |SHED_SKIN         |SHED_SKIN         |SWARM             |[50, 20, 55, 25, 25, 30]      |81.6  |100|
+|Butterfree   |BUG     |FLYING  |COMPOUND_EYES     |COMPOUND_EYES     |TINTED_LENS       |[60, 45, 50, 95, 80, 70]      |81.6  |100|
 |Metapod-X    |BUG     |MAGIC   |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
 |Butterfree-X |BUG     |MAGIC   |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Bronzor      |STEEL   |PSYCHIC |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Bronzong     |STEEL   |PSYCHIC |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Bronzor-X    |MAGIC   |null    |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-|Bronzong-X   |MAGIC   |GHOST   |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Bronzor      |STEEL   |PSYCHIC |LEVITATE          |HEATPROOF         |BATTLE_ARMOR      |[57, 24, 86, 24, 86, 23]      |81.6  |100|
+|Bronzong     |STEEL   |PSYCHIC |LEVITATE          |HEATPROOF         |BATTLE_ARMOR      |[67, 89, 116, 79, 116, 33]    |81.6  |100|
+|Bronzor-X    |MAGIC   |null    |SCRAPPY           |UNBURDEN          |WONDER_SKIN       |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+|Bronzong-X   |MAGIC   |GHOST   |SCRAPPY           |UNBURDEN          |WONDER_SKIN       |[82, 115, 74, 75, 64, 90]     |81.6  |100|
 |Capsakid     |GRASS   |null    |CHLOROPHYLL       |INSOMNIA          |MOODY             |[50, 62, 40, 62, 40, 50]      |81.6  |100|
 |Scovillain   |GRASS   |FIRE    |CHLOROPHYLL       |INSOMNIA          |MOODY             |[65, 108, 65, 108, 65, 75]    |81.6  |100|
 |Kerbernero   |GRASS   |FIRE    |CHLOROPHYLL       |SOLAR_POWER       |MOODY             |[89, 108, 75, 128, 75, 75]    |81.6  |100|
