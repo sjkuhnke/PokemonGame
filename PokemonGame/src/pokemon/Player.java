@@ -88,6 +88,7 @@ public class Player extends Trainer implements Serializable {
 		flags = new boolean[GamePanel.MAX_FLAGS];
 		locations = new boolean[12]; // NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
+		trainersBeat = new boolean[MAX_TRAINERS];
 		locations[0] = true;
 		bag.add(Item.CALCULATOR);
 		
@@ -299,12 +300,12 @@ public class Player extends Trainer implements Serializable {
 	private void updateTrainers() {
 		if (trainersBeat != null) {
 			boolean[] temp = trainersBeat.clone();
-			trainersBeat = new boolean[Trainer.MAX_TRAINERS];
+			trainersBeat = new boolean[MAX_TRAINERS];
 			for (int i = 0; i < temp.length; i++) {
 				trainersBeat[i] = temp[i];
 			}
 		} else {
-			trainersBeat = new boolean[Trainer.MAX_TRAINERS];
+			trainersBeat = new boolean[MAX_TRAINERS];
 		}
 	}
 	
@@ -1090,7 +1091,7 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public void update(GamePanel gp) {
-		if (this.trainersBeat.length != Trainer.MAX_TRAINERS) updateTrainers();
+		if (this.trainersBeat.length != MAX_TRAINERS) updateTrainers();
 		updateItems(gp.obj.length, gp.obj[1].length);
 		updateFlags();
 		updatePokedex();

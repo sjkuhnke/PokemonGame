@@ -1826,6 +1826,8 @@ public class Pokemon implements Serializable {
 			
 			if (this.ability == Ability.SHARPNESS && move.isSlicing()) bp *= 1.5;
 			
+			if (this.ability == Ability.SHARP_TAIL && move.isTail()) bp *= 1.5;
+			
 			if (this.ability == Ability.STRONG_JAW && (move == Move.BITE || move == Move.CRUNCH || move == Move.FIRE_FANG || move == Move.HYPER_FANG
 					|| move == Move.ICE_FANG || move == Move.JAW_LOCK || move == Move.POISON_FANG || move == Move.PSYCHIC_FANGS || move == Move.THUNDER_FANG
 					|| move == Move.LEECH_LIFE || move == Move.MAGIC_FANG)) {
@@ -1943,6 +1945,7 @@ public class Pokemon implements Serializable {
 			if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 			if (this.ability == Ability.SUPER_LUCK) critChance++;
 			if (item == Item.SCOPE_LENS) critChance++;
+			if (this.ability == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC)) critChance = 3; 
 			if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && critCheck(critChance)) {
 				addTask(Task.TEXT, "A critical hit!");
 				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++;
@@ -2203,6 +2206,10 @@ public class Pokemon implements Serializable {
 				if (this.ability == Ability.POISON_TOUCH && foe.status == Status.HEALTHY && checkSecondary(30)) {
 					addAbilityTask(this);
 					foe.poison(false, this);
+				}
+				if (foeAbility == Ability.GOOEY) {
+					addAbilityTask(foe);
+					stat(this, 4, -1, foe);
 				}
 			}
 			
@@ -2507,7 +2514,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.BUBBLEBEAM) {
 			stat(foe, 4, -1, this);
 		} else if (move == Move.BUG_BITE || move == Move.PLUCK) {
-			if (foe.item != null && foe.item.isBerry()) {
+			if (foe.item != null && foe.item.isBerry() && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
 				addTask(Task.TEXT, this.nickname + " stole and ate " + foe.nickname + "'s " + foe.item.toString() + "!");
 				eatBerry(foe.item, false, foe);
 				foe.consumeItem(this);
@@ -2538,7 +2545,7 @@ public class Pokemon implements Serializable {
 //		} else if (move == Move.CONSTRICT) {
 //			stat(foe, 4, -1);
 		} else if (move == Move.COVET || move == Move.THIEF) {
-			if (this.item == null && foe.item != null) {
+			if (this.item == null && foe.item != null && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
 				addTask(Task.TEXT, this.nickname + " stole the foe's " + foe.item.toString() + "!");
 				this.item = foe.item;
 				if (!foe.loseItem) foe.lostItem = foe.item;
@@ -2705,7 +2712,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.HYPER_FANG && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.INCINERATE) {
-			if (foe.item != null && foe.item.isBerry()) {
+			if (foe.item != null && foe.item.isBerry() && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
 				addTask(Task.TEXT, this.nickname + " incinerated " + foe.nickname + "'s " + foe.item.toString() + "!");
 				foe.item = null;
 			}
@@ -2755,7 +2762,7 @@ public class Pokemon implements Serializable {
 				addTask(Task.TEXT, foe.nickname + " was trapped!");
 			}
 		} else if (move == Move.KNOCK_OFF) {
-			if (foe.item != null) {
+			if (foe.item != null && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
 				Item oldItem = foe.item;
 				if (foe.lostItem == null) foe.lostItem = foe.item;
 				addTask(Task.TEXT, this.nickname + " knocked off " + foe.nickname + "'s " + oldItem.toString() + "!");
@@ -3766,23 +3773,25 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.TOXIC_SPIKES) {
 			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.TOXIC_SPIKES));
 		} else if (move == Move.TRICK || move == Move.SWITCHEROO) {
-			if (announce) addTask(Task.TEXT, this.nickname + " switched items with its target!");
-			Item userItem = this.item;
-			Item foeItem = foe.item;
-			if (userItem != null) if (announce) addTask(Task.TEXT, foe.nickname + " obtained a " + userItem.toString() + "!");
-			if (foeItem != null) if (announce) addTask(Task.TEXT, this.nickname + " obtained a " + foeItem.toString() + "!");
-			this.item = foeItem;
-			foe.item = userItem;
-			if (this.lostItem == null) {
-				this.lostItem = userItem;
+			if (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER) {
+				if (announce) addTask(Task.TEXT, this.nickname + " switched items with its target!");
+				Item userItem = this.item;
+				Item foeItem = foe.item;
+				if (userItem != null) if (announce) addTask(Task.TEXT, foe.nickname + " obtained a " + userItem.toString() + "!");
+				if (foeItem != null) if (announce) addTask(Task.TEXT, this.nickname + " obtained a " + foeItem.toString() + "!");
+				this.item = foeItem;
+				foe.item = userItem;
 				if (this.lostItem == null) {
-					this.lostItem = Item.POTION;
+					this.lostItem = userItem;
+					if (this.lostItem == null) {
+						this.lostItem = Item.POTION;
+					}
 				}
-			}
-			if (foe.lostItem == null) {
-				foe.lostItem = foeItem;
 				if (foe.lostItem == null) {
-					foe.lostItem = Item.POTION;
+					foe.lostItem = foeItem;
+					if (foe.lostItem == null) {
+						foe.lostItem = Item.POTION;
+					}
 				}
 			}
 		} else if (announce && move == Move.TRICK_ROOM) {
@@ -4730,6 +4739,10 @@ public class Pokemon implements Serializable {
 			bp *= 1.5;
 		}
 		
+		if (this.ability == Ability.SHARP_TAIL && move.isTail()) {
+			bp *= 1.5;
+		}
+		
 		if (this.ability == Ability.IRON_FIST && (move == Move.BULLET_PUNCH || move == Move.COMET_PUNCH || move == Move.DRAIN_PUNCH
 				|| move == Move.FIRE_PUNCH || move == Move.ICE_PUNCH || move == Move.MACH_PUNCH || move == Move.POWER$UP_PUNCH || move == Move.SHADOW_PUNCH
 				|| move == Move.SKY_UPPERCUT || move == Move.THUNDER_PUNCH || move == Move.METEOR_MASH || move == Move.PLASMA_FISTS || move == Move.SUCKER_PUNCH
@@ -4929,6 +4942,7 @@ public class Pokemon implements Serializable {
 		if (foeAbility == Ability.UNERODIBLE && (moveType == PType.GRASS || moveType == PType.WATER || moveType == PType.GROUND)) damage /= 4;
 		if (foeAbility == Ability.THICK_FAT && (moveType == PType.FIRE || moveType == PType.ICE)) damage /= 2;
 		if (foeAbility == Ability.UNWAVERING && (moveType == PType.DARK || moveType == PType.GHOST)) damage /= 2;
+		if (foeAbility == Ability.HEATPROOF && moveType == PType.FIRE) damage /= 2;
 		if (foeAbility == Ability.FLUFFY && move.contact) damage /= 2;
 		
 		if (foeAbility == Ability.PSYCHIC_AURA && move.cat == 1) damage *= 0.8;
@@ -5207,6 +5221,25 @@ public class Pokemon implements Serializable {
 		if (this.ability == Ability.SPEED_BOOST && !this.impressive && this.statStages[4] != 6) {
 			addAbilityTask(this);
 			stat(this, 4, 1, f);
+		}
+		
+		if (this.ability == Ability.MOODY) {
+			addAbilityTask(this);
+			Random random = new Random();
+			int raise;
+			int counter = 0;
+			do {
+				raise = random.nextInt(5);
+				counter++;
+			} while (this.statStages[raise] < 6 && counter < 25);
+			int lower;
+			counter = 0;
+			do {
+				lower = random.nextInt(5);
+				counter++;
+			} while ((this.statStages[lower] > -6 || lower == raise) && counter < 25);
+			stat(this, raise, 2, f);
+			stat(this, lower, -1, f);
 		}
 		
 		if (this.item == Item.FLAME_ORB && this.status == Status.HEALTHY) {
@@ -6254,7 +6287,7 @@ public class Pokemon implements Serializable {
 				stat(foe, 1, -1, this);
 			}
 		} else if (this.ability == Ability.PICKPOCKET) {
-			if (this.item == null && foe.item != null) {
+			if (this.item == null && foe.item != null && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
 				addAbilityTask(foe);
 				addTask(Task.TEXT, this.nickname + " stole the foe's " + foe.item.toString() + "!");
 				this.item = foe.item;
@@ -6377,8 +6410,12 @@ public class Pokemon implements Serializable {
 		
 		t.setFinish(this.currentHP < 0 ? 0 : this.currentHP);
 		
-		if (move != null && currentHP > 0 && move != Move.INCINERATE && move != Move.KNOCK_OFF && move != Move.BUG_BITE && move != Move.PLUCK &&
-				move != Move.THIEF && move != Move.COVET) this.checkBerry(foe);
+		Ability thisAbility = ability;
+		
+		if (move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || foe.ability == Ability.MOLD_BREAKER) thisAbility = Ability.NULL;
+		
+		if (move != null && currentHP > 0 && (move != Move.INCINERATE && move != Move.KNOCK_OFF && move != Move.BUG_BITE && move != Move.PLUCK &&
+				move != Move.THIEF && move != Move.COVET) || thisAbility == Ability.STICKY_HOLD) this.checkBerry(foe);
 	}
 
 	private void checkBerry(Pokemon foe) {

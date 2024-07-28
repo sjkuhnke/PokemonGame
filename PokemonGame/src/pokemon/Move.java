@@ -831,6 +831,22 @@ public enum Move {
 		return false;
 	}
 	
+	public boolean isTail() {
+		ArrayList<Move> result = new ArrayList<>();
+		result.add(AQUA_TAIL);
+		result.add(DRAGON_TAIL);
+		result.add(IRON_TAIL);
+		result.add(POISON_TAIL);
+		result.add(DRAGON_RUSH);
+		result.add(SLAM);
+		result.add(WRAP);
+		
+		if (result.contains(this)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public static ArrayList<Move> getNoComboMoves() {
 		ArrayList<Move> result = new ArrayList<>();
 		result.add(DETECT);

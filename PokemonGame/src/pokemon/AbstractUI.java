@@ -300,6 +300,7 @@ public abstract class AbstractUI {
 		y += gp.tileSize / 4;
 		int startX = x;
 		g2.setFont(g2.getFont().deriveFont(36F));
+		g2.setFont(g2.getFont().deriveFont(getFontSize(p.name, (float) (gp.tileSize * 4))));
 		g2.drawString(p.name, x, y + gp.tileSize / 2);
 		
 		// Item
@@ -525,7 +526,7 @@ public abstract class AbstractUI {
 				}
 			}
 			
-			if (moveSummaryNum < 0 && !showBoxSummary) {
+			if (moveSummaryNum < 0 && !showBoxSummary && !gp.battleUI.showFoeSummary) {
 				if (gp.keyH.leftPressed) {
 					gp.keyH.leftPressed = false;
 					if (partyNum > 0) {
@@ -551,22 +552,24 @@ public abstract class AbstractUI {
 			
 			if (gp.keyH.aPressed) {
 				gp.keyH.aPressed = false;
-				if (moveSummaryNum < 0) {
-					if (p.item != null && foe == null) {
-						showMessage("Took " + p.nickname + "'s " + p.item + ".");
-						gp.player.p.bag.add(p.item);
-						p.item = null;
-					}
-				} else {
-					if (moveSwapNum > -1) {
-						if (moveSummaryNum != moveSwapNum) {
-							Moveslot temp = p.moveset[moveSummaryNum];
-							p.moveset[moveSummaryNum] = p.moveset[moveSwapNum];
-							p.moveset[moveSwapNum] = temp;
+				if (p.playerOwned()) {
+					if (moveSummaryNum < 0) {
+						if (p.item != null && foe == null) {
+							showMessage("Took " + p.nickname + "'s " + p.item + ".");
+							gp.player.p.bag.add(p.item);
+							p.item = null;
 						}
-						moveSwapNum = -1;
 					} else {
-						moveSwapNum = moveSummaryNum;
+						if (moveSwapNum > -1) {
+							if (moveSummaryNum != moveSwapNum) {
+								Moveslot temp = p.moveset[moveSummaryNum];
+								p.moveset[moveSummaryNum] = p.moveset[moveSwapNum];
+								p.moveset[moveSwapNum] = temp;
+							}
+							moveSwapNum = -1;
+						} else {
+							moveSwapNum = moveSummaryNum;
+						}
 					}
 				}
 			}
@@ -580,8 +583,8 @@ public abstract class AbstractUI {
 			}
 			
 			String wText = moveSummaryNum < 0 ? "Moves" : null;
-			String aText = moveSummaryNum < 0 ? p.item == null || foe != null ? null : "Take" : "Swap";
-			String dText = gp.gameState == GamePanel.BATTLE_STATE || moveSummaryNum > -1 ? null : "Name";
+			String aText = moveSummaryNum < 0 ? p.item == null || foe != null ? null : "Take" : p.playerOwned() ? "Swap" : null;
+			String dText = gp.gameState == GamePanel.BATTLE_STATE || moveSummaryNum > -1 ? gp.battleUI.showFoeSummary ? "Back" : null : "Name";
 			drawToolTips(wText, aText, "Back", dText);
 		} else {
 			currentDialogue = "Change " + p.name + "'s nickname?";

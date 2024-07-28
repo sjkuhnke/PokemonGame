@@ -67,6 +67,8 @@ public class BattleUI extends AbstractUI {
 	
 	public boolean cancellableParty;
 	public boolean showMoveSummary;
+	public boolean showFoeSummary;
+	public Pokemon foeSummary;
 	
 	private BufferedImage battle;
 	private BufferedImage userHPBar;
@@ -457,7 +459,7 @@ public class BattleUI extends AbstractUI {
 			Item.useCalc(user.getPlayer(), null);
 		}
 		drawCatchWindow();
-		drawToolTips("OK", null, null, null);
+		if (!showFoeSummary) drawToolTips("OK", null, null, "Foe");
 	}
 
 	private void drawUser() {
@@ -770,7 +772,7 @@ public class BattleUI extends AbstractUI {
 		g2.drawString("FIGHT", x + 30, y + 50);
 		if (commandNum == 0) {
 			g2.drawRoundRect(x, y, width, height, 10, 10);
-			if (gp.keyH.wPressed) {
+			if (gp.keyH.wPressed && !showFoeSummary) {
 				gp.keyH.wPressed = false;
 				subState = MOVE_SELECTION_STATE;
 			}
@@ -783,7 +785,7 @@ public class BattleUI extends AbstractUI {
 		g2.drawString("PARTY", x + 30, y + 50);
 		if (commandNum == 1) {
 			g2.drawRoundRect(x, y, width, height, 10, 10);
-			if (gp.keyH.wPressed) {
+			if (gp.keyH.wPressed && !showFoeSummary) {
 				gp.keyH.resetKeys();
 				currentDialogue = "";
 				cancellableParty = true;
@@ -799,7 +801,7 @@ public class BattleUI extends AbstractUI {
 		g2.drawString("INFO", x + 30, y + 50);
 		if (commandNum == 2) {
 			g2.drawRoundRect(x, y, width, height, 10, 10);
-			if (gp.keyH.wPressed) {
+			if (gp.keyH.wPressed && !showFoeSummary) {
 				gp.keyH.wPressed = false;
 				currentDialogue = "";
 				subState = INFO_STATE;
@@ -813,7 +815,7 @@ public class BattleUI extends AbstractUI {
 		g2.drawString("RUN", x + 30, y + 50);
 		if (commandNum == 3) {
 			g2.drawRoundRect(x, y, width, height, 10, 10);
-			if (gp.keyH.wPressed) {
+			if (gp.keyH.wPressed && !showFoeSummary) {
 				gp.keyH.wPressed = false;
 				subState = TASK_STATE;
 				if (foe.trainerOwned()) {
@@ -832,8 +834,89 @@ public class BattleUI extends AbstractUI {
 				}
 			}
 		}
+		
+		if (gp.keyH.dPressed) {
+			gp.keyH.dPressed = false;
+			if (foeSummary == null && !showFoeSummary) foeSummary = foe;
+			if (showFoeSummary) foeSummary = null;
+			moveSummaryNum = -1;
+			showFoeSummary = !showFoeSummary;
+		}
+		
+		if (showFoeSummary) {
+			drawFoeSummaryParty();
+			drawSummary(foeSummary, user);
+			if (gp.keyH.sPressed) {
+				gp.keyH.sPressed = false;
+				if (moveSummaryNum < 0) {
+					foeSummary = null;
+					showFoeSummary = false;
+				} else {
+					moveSummaryNum = -1;
+				}
+			}
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (moveSummaryNum < 0) {
+					int currentIndex = foeSummary.trainer.indexOf(foeSummary);
+					currentIndex = (currentIndex - 1 + foeSummary.trainer.team.length) % foeSummary.trainer.team.length;
+					foeSummary = foeSummary.trainer.team[currentIndex];
+				}
+			}
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				if (moveSummaryNum < 0) {
+					int currentIndex = foeSummary.trainer.indexOf(foeSummary);
+					currentIndex = (currentIndex + 1) % foeSummary.trainer.team.length;
+					foeSummary = foeSummary.trainer.team[currentIndex];
+				}
+			}
+		}
 	}
 	
+	private void drawFoeSummaryParty() {
+		if (!foe.trainerOwned()) return;
+		int windowWidth = gp.tileSize * 3;
+		
+		int x = gp.screenWidth / 2 - windowWidth / 2;
+		int y = 0;
+		int width = 20;
+		int height = gp.tileSize / 2;
+		
+		Color background = new Color(0, 0, 0, 200);
+		g2.setColor(background);
+		g2.fillRoundRect(x, y, windowWidth, height, 10, 10);
+		
+		Color border = new Color(255, 255, 255);
+		g2.setColor(border);
+		g2.setStroke(new BasicStroke(2));
+		g2.drawRoundRect(x+3, y+3, windowWidth-6, height-6, 8, 8);
+		
+		g2.setStroke(new BasicStroke(5));
+		
+		x += gp.tileSize / 4;
+		y += 4;
+		
+		int yellowIndex = foeSummary.trainer.indexOf(foeSummary);
+		for (int i = 0; i < 6; i++) {
+		   BufferedImage image = ballIcon;
+
+		    if (i < foe.trainer.getTeam().length) {
+	            if (foeSummary.trainer.team[i].isFainted()) {
+	                image = faintedIcon;
+	            }
+	            if (i == yellowIndex && foe.isVisible()) {
+	            	image = currentIcon;
+	            }
+		    } else {
+		    	image = emptyIcon;
+		    }
+		    g2.drawImage(image, x, y, null);
+            x += width;
+		}
+		
+	}
+
 	private void drawMoveSelectionScreen() {
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);

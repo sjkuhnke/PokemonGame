@@ -183,44 +183,55 @@ public class KeyHandler implements KeyListener {
 		}
 		if (gp.battleUI.subState == BattleUI.IDLE_STATE) {
 			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
-				if ((gp.battleUI.foe.trainerOwned() && gp.battleUI.commandNum > 1) || ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.commandNum >= 0)) {
+				if ((gp.battleUI.foe.trainerOwned() && gp.battleUI.commandNum > 1) || ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.commandNum >= 0) && !gp.battleUI.showFoeSummary) {
 					gp.battleUI.commandNum -= 2;
 				}
 			}
 			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
-				if (gp.battleUI.commandNum < 2) {
+				if (gp.battleUI.commandNum < 2 && !gp.battleUI.showFoeSummary) {
 					gp.battleUI.commandNum += 2;
 				}
 			}
 			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
-				if (gp.battleUI.commandNum >= 0) {
-					if (gp.battleUI.commandNum % 2 == 1) {
-						gp.battleUI.commandNum--;
+				if (!gp.battleUI.showFoeSummary) {
+					if (gp.battleUI.commandNum >= 0) {
+						if (gp.battleUI.commandNum % 2 == 1) {
+							gp.battleUI.commandNum--;
+						}
+					} else {
+						if ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.balls.size() > 1) {
+							int index = gp.battleUI.balls.indexOf(gp.battleUI.ball);
+							if (--index < 0) {
+								index = gp.battleUI.balls.size() - 1;
+							}
+							gp.battleUI.ball = gp.battleUI.balls.get(index);
+						}
 					}
 				} else {
-					if ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.balls.size() > 1) {
-						int index = gp.battleUI.balls.indexOf(gp.battleUI.ball);
-						if (--index < 0) {
-							index = gp.battleUI.balls.size() - 1;
-						}
-						gp.battleUI.ball = gp.battleUI.balls.get(index);
-					}
+					leftPressed = true;
 				}
 			}
 			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
-				if (gp.battleUI.commandNum >= 0) {
-					if (gp.battleUI.commandNum % 2 == 0) {
-						gp.battleUI.commandNum++;
+				if (!gp.battleUI.showFoeSummary) {
+					if (gp.battleUI.commandNum >= 0) {
+						if (gp.battleUI.commandNum % 2 == 0) {
+							gp.battleUI.commandNum++;
+						}
+					} else {
+						if ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.balls.size() > 1) {
+							int index = gp.battleUI.balls.indexOf(gp.battleUI.ball);
+							if (++index >= gp.battleUI.balls.size()) {
+								index = 0;
+							}
+							gp.battleUI.ball = gp.battleUI.balls.get(index);
+						}
 					}
 				} else {
-					if ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.balls.size() > 1) {
-						int index = gp.battleUI.balls.indexOf(gp.battleUI.ball);
-						if (++index >= gp.battleUI.balls.size()) {
-							index = 0;
-						}
-						gp.battleUI.ball = gp.battleUI.balls.get(index);
-					}
+					rightPressed = true;
 				}
+			}
+			if (code == KeyEvent.VK_S) {
+				sPressed = true;
 			}
 		} else if (gp.battleUI.subState == BattleUI.MOVE_SELECTION_STATE) {
 			if (code == KeyEvent.VK_S) {
