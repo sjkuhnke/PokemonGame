@@ -74,6 +74,13 @@ public class Player extends Trainer implements Serializable {
 	public static final int GAUNTLET_BOX_SIZE = 4;
 	public static final int VERSION = 25;
 	
+	public static final int MAX_POKEDEX_PAGES = 4;
+	
+	public static Pokemon[] pokedex1 = new Pokemon[Pokemon.POKEDEX_1_SIZE]; // regular
+	public static Pokemon[] pokedex2 = new Pokemon[Pokemon.POKEDEX_METEOR_SIZE]; // shadow
+	public static Pokemon[] pokedex3 = new Pokemon[Pokemon.POKEDEX_METEOR_SIZE]; // electric
+	public static Pokemon[] pokedex4 = new Pokemon[Pokemon.POKEDEX_2_SIZE]; // regional
+	
 	public Player(GamePanel gp) {
 		super(true);
 		boxes = new Pokemon[MAX_BOXES][30];
@@ -1167,5 +1174,34 @@ public class Player extends Trainer implements Serializable {
 			result[i] = "Box " + (i + 1);
 		}
 		return result;
+	}
+
+	public static void setupPokedex() {
+		for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
+			int dexNo = Math.abs(Pokemon.getDexNo(i));
+			if (dexNo == 0) continue;
+			int dexSec = Pokemon.getDexSection(i);
+			
+			Pokemon test = new Pokemon(i, 5, false, false);
+			test.abilitySlot = 0;
+			test.setAbility(test.abilitySlot);
+			
+			Pokemon[] dex = null;
+			if (dexSec == 0) {
+				dex = pokedex1;
+			} else if (dexSec == 1) {
+				dex = pokedex2;
+			} else if (dexSec == 2) {
+				dex = pokedex3;
+			} else {
+				dex = pokedex4;
+			}
+			
+			if (dex[dexNo - 1] == null) {
+				dex[dexNo - 1] = test;
+			} else {
+				throw new IllegalStateException("Pokedex slot isn't empty when initalizing Pokedex: " + dex[dexNo - 1].getName() + " and " + test.getName() + " have the same Dex No. of " + dexNo);
+			}
+		}
 	}
 }

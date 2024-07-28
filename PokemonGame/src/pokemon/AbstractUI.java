@@ -291,9 +291,11 @@ public abstract class AbstractUI {
 		// ID
 		x += gp.tileSize / 2;
 		y += gp.tileSize * 0.75;
-		g2.setColor(Color.WHITE);
+		g2.setColor(Pokemon.getDexNoColor(p.id));
 		g2.setFont(g2.getFont().deriveFont(20F));
-		g2.drawString(Pokemon.getFormattedID(p.id), x, y);
+		g2.drawString(Pokemon.getFormattedDexNo(p.getDexNo()), x, y);
+		
+		g2.setColor(Color.WHITE);
 		
 		// Name
 		x += gp.tileSize / 2;

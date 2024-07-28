@@ -67,6 +67,7 @@ public class UI extends AbstractUI{
 	
 	public int dexNum = 1;
 	public int dexMode;
+	public int dexType;
 	public int levelDexNum;
 	public int tmDexNum;
 	
@@ -663,7 +664,7 @@ public class UI extends AbstractUI{
 				if (mode == 2) {
 					g2.drawImage(ballIcon, x, y + 8, null);
 					x += gp.tileSize / 2;
-					g2.drawString(Pokemon.getFormattedID(i) + " " + Pokemon.getName(i), x, textY);
+					g2.drawString(Pokemon.getFormattedDexNo(i) + " " + Pokemon.getName(i), x, textY);
 					x += gp.tileSize * 4;
 					g2.drawImage(Pokemon.getType1(i).getImage(), x, y + 4, null);
 					x += gp.tileSize / 2;
@@ -674,10 +675,10 @@ public class UI extends AbstractUI{
 					g2.fillOval(x, y + 8, circleDiameter, circleDiameter);
 					g2.setColor(Color.WHITE);
 					x += gp.tileSize / 2;
-					g2.drawString(Pokemon.getFormattedID(i) + " " + Pokemon.getName(i), x, textY);
+					g2.drawString(Pokemon.getFormattedDexNo(i) + " " + Pokemon.getName(i), x, textY);
 				} else {
 					x += gp.tileSize / 2;
-					g2.drawString(Pokemon.getFormattedID(i) + " " + "---", x, textY);
+					g2.drawString(Pokemon.getFormattedDexNo(i) + " " + "---", x, textY);
 				}
 				x = startX;
 				y += textWidth;
@@ -807,9 +808,11 @@ public class UI extends AbstractUI{
 		// ID
 		x += gp.tileSize / 2;
 		y += gp.tileSize * 0.75;
-		g2.setColor(Color.WHITE);
+		g2.setColor(Pokemon.getDexNoColor(p.id));
 		g2.setFont(g2.getFont().deriveFont(20F));
-		g2.drawString(Pokemon.getFormattedID(p.id), x, y);
+		g2.drawString(Pokemon.getFormattedDexNo(p.getDexNo()), x, y);
+		
+		g2.setColor(Color.WHITE);
 		
 		// Name
 		x += gp.tileSize / 2;

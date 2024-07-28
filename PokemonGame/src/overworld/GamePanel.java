@@ -26,6 +26,7 @@ import object.ItemObj;
 import pokemon.Encounter;
 import pokemon.Field;
 import pokemon.Item;
+import pokemon.Player;
 import pokemon.Pokemon;
 import pokemon.Trainer;
 import tile.TileManager;
@@ -110,6 +111,8 @@ public class GamePanel extends JPanel implements Runnable {
 		Pokemon.readInfoFromCSV();
 		Pokemon.readMovebanksFromCSV();
 		Pokemon.readTrainersFromCSV();
+		
+		Player.setupPokedex();
 	}
 	
 	public void startGameThread() {

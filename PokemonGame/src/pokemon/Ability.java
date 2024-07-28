@@ -9,6 +9,7 @@ public enum Ability {
 	ANTICIPATION("Senses an opposing Pokemon's dangerous moves."),
 	INSOMNIA("Prevents the Pokemon from falling asleep."),
 	BATTLE_ARMOR("This Pokemon cannot be Critical hit."),
+	BLACK_HOLE("Restores HP if hit by a LIGHT, DARK, or GALACTIC move."),
 	BLAZE("Powers up FIRE moves in a pinch."),
 	BRAINWASH("Forces the opponent's stat changes to have an opposite effect while the user is active."),
 	CHLOROPHYLL("Boosts the Pokemon's Speed stat in SUNSHINE."),
