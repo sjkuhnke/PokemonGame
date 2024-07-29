@@ -76,7 +76,7 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 49, true);
 		loadMap("/maps/house01.txt", 50, true);
 		loadMap("/maps/house01.txt", 51, true); // new minnow town
-		loadMap("/maps/house01.txt", 52, true);
+		loadMap("/maps/lab01.txt", 52, true);
 		loadMap("/maps/house01.txt", 53, true); // frenco berry shoppe
 		loadMap("/maps/house01.txt", 54, true);
 		loadMap("/maps/house01.txt", 55, true); // bananaville town
@@ -769,6 +769,48 @@ public class TileManager {
 		setup(593, false);
 		setup(594, true);
 		setup(595, true);
+		
+		setup(596, false);
+		setup(597, true);
+		setup(598, true);
+		setup(599, true);
+		setup(600, true);
+		setup(601, true);
+		setup(602, false);
+		setup(603, true);
+		setup(604, false);
+		setup(605, true);
+		setup(606, true);
+		setup(607, true);
+		setup(608, true);
+		setup(609, true);
+		setup(610, true);
+		setup(611, true);
+		setup(612, true);
+		setup(613, true);
+		setup(614, true);
+		setup(615, false);
+		setup(616, false);
+		setup(617, false);
+		setup(618, false);
+		setup(619, true);
+		setup(620, true);
+		setup(621, false);
+		setup(622, true);
+		setup(623, true);
+		setup(624, true);
+		setup(625, true);
+		setup(626, true);
+		setup(627, true);
+		setup(628, true);
+		setup(629, true);
+		setup(630, true);
+		setup(631, true);
+		setup(632, true);
+		setup(633, false);
+		setup(634, false);
+		
+//		setup(635, true);	
 //		setup(596, true);
 //		setup(597, true);
 		

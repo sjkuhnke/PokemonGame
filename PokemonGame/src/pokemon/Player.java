@@ -72,7 +72,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 10;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 25;
+	public static final int VERSION = 26;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -81,6 +81,8 @@ public class Player extends Trainer implements Serializable {
 	public static Pokemon[] pokedex3 = new Pokemon[Pokemon.POKEDEX_METEOR_SIZE]; // electric
 	public static Pokemon[] pokedex4 = new Pokemon[Pokemon.POKEDEX_2_SIZE]; // regional
 	
+	public static int[] spawn = new int[] {52, 31, 41}; // map, x, y
+	
 	public Player(GamePanel gp) {
 		super(true);
 		boxes = new Pokemon[MAX_BOXES][30];
@@ -88,8 +90,9 @@ public class Player extends Trainer implements Serializable {
 		boxLabels = setupBoxLabels();
 
 		bag = new Bag();
-		posX = 79;
-		posY = 46;
+		currentMap = spawn[0];
+		posX = spawn[1];
+		posY = spawn[2];
 		
 		pokedex = new int[Pokemon.MAX_POKEMON + 1];
 		flags = new boolean[GamePanel.MAX_FLAGS];

@@ -2050,7 +2050,7 @@ public class UI extends AbstractUI{
 			
 			String currentMap = PlayerCharacter.currentMapName;
 			PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
-			Main.window.setTitle("Pokemon Game - " + PlayerCharacter.currentMapName);
+			Main.window.setTitle(gp.gameTitle + " - " + PlayerCharacter.currentMapName);
 			if (!currentMap.equals(PlayerCharacter.currentMapName)) showAreaName();
 		}
 	}

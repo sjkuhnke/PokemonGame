@@ -208,10 +208,10 @@
 -4 |Crystallor-E |LIGHT   |ELECTRIC|CLEAR_BODY        |FILTER            |NULL              |[120, 95, 70, 65, 130, 45]    |770.5 |35 |
 -5 |Magikarp-E   |WATER   |ELECTRIC|SWIFT_SWIM        |RATTLED           |NULL              |[20, 10, 25, 45, 30, 70]      |16.5  |155|
 -6 |Gyarados-E   |WATER   |ELECTRIC|VOLT_VORTEX       |MOTOR_DRIVE       |NULL              |[105, 135, 80, 25, 110, 85]   |510.9 |35 |
--17|Shockfang    |DRAGON  |ELECTRIC|STRONG_JAW        |SHED_SKIN         |NULL              |[50, 105, 65, 65, 65, 80]     |102.6 |45 |
--18|Electrocobra |DRAGON  |ELECTRIC|STRONG_JAW        |SHED_SKIN         |NULL              |[75, 124, 90, 70, 70, 101]    |237.6 |45 |
--17|Nightrex     |DRAGON  |DARK    |MOXIE             |DEFIANT           |NULL              |[95, 105, 65, 35, 55, 75]     |145.8 |45 |
--18|Shadowsaur   |DRAGON  |DARK    |MOXIE             |DEFIANT           |NULL              |[134, 110, 101, 35, 85, 65]   |394.5 |45 |
+-17|Shockfang    |DRAGON  |ELECTRIC|STATIC            |REGENERATOR       |HYDRATION         |[80, 65, 65, 105, 65, 50]     |102.6 |45 |
+-18|Electrocobra |DRAGON  |ELECTRIC|STATIC            |REGENERATOR       |HYDRATION         |[90, 75, 75, 114, 70, 106]    |237.6 |45 |
+-17|Nightrex     |DRAGON  |DARK    |MOXIE             |DEFIANT           |PRESSURE          |[95, 105, 65, 35, 55, 75]     |145.8 |45 |
+-18|Shadowsaur   |DRAGON  |DARK    |MOXIE             |DEFIANT           |PRESSURE          |[134, 110, 101, 35, 85, 65]   |394.5 |45 |
 -15|Durfish-S    |GROUND  |GHOST   |ILLUMINATION      |PRANKSTER         |NULL              |[60, 45, 52, 64, 65, 59]      |2.5   |90 |
 -16|Dompster-S   |DRAGON  |GHOST   |ILLUMINATION      |PRANKSTER         |NULL              |[65, 135, 65, 50, 70, 100]    |94.2  |30 |
 -1 |Wormite-S    |GROUND  |DARK    |ADAPTABILITY      |SAND_RUSH         |REGENERATOR       |[20, 50, 50, 35, 50, 70]      |5.6   |255|
@@ -237,7 +237,7 @@
 0  |Kissyfishy-D |WATER   |DRAGON  |ADAPTABILITY      |ADAPTABILITY      |ADAPTABILITY      |[110, 100, 75, 100, 75, 90]   |895.4 |3  |
 89 |Scraggy      |DARK    |FIGHTING|INTIMIDATE        |MOXIE             |SHED_SKIN         |[50, 75, 70, 35, 70, 48]      |26.0  |180|
 90 |Scrafty      |DARK    |FIGHTING|INTIMIDATE        |MOXIE             |SHED_SKIN         |[65, 90, 115, 45, 115, 58]    |66.1  |90 |
-91 |Scraftagon   |DRAGON  |FIGHTING|SCALY_SKIN        |MOXIE             |SHED_SKIN         |[70, 110, 120, 40, 120, 110]  |92.6  |45 |
+91 |Scraftagon   |DRAGON  |FIGHTING|SCALY_SKIN        |MOXIE             |SHED_SKIN         |[70, 110, 120, 45, 120, 90]   |92.6  |45 |
 193|Glimmet      |ROCK    |POISON  |TOXIC_DEBRIS      |TOXIC_DEBRIS      |CORROSION         |[48, 35, 42, 105, 60, 60]     |17.6  |70 |
 194|Glimmora     |ROCK    |POISON  |TOXIC_DEBRIS      |TOXIC_DEBRIS      |CORROSION         |[83, 55, 90, 130, 81, 86]     |99.2  |25 |
 46 |Abra         |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[25, 20, 15, 105, 55, 90]     |43.0  |200|

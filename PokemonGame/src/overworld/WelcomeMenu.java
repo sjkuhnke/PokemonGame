@@ -54,12 +54,12 @@ public class WelcomeMenu extends JPanel {
             e.printStackTrace();
         }
 		
-		titleLabel = new OutlineLabel("Shae’s Pokemon Game", SwingConstants.CENTER);
+		titleLabel = new OutlineLabel(gp.gameTitle, SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(textColor);
         titleLabel.setOutlineColor(Color.BLACK);
         
-        subtitleLabel = new OutlineLabel("Welcome to Shae’s Pokemon Game!", SwingConstants.CENTER);
+        subtitleLabel = new OutlineLabel(gp.gameTitle, SwingConstants.CENTER);
         subtitleLabel.setFont(new Font("Arial", Font.ITALIC, 18));
         subtitleLabel.setForeground(textColor);
         subtitleLabel.setOutlineColor(Color.BLACK);
