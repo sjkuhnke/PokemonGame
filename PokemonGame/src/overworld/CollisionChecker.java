@@ -12,6 +12,7 @@ import entity.NPC_Trainer;
 import tile.BuildingTile;
 import tile.CaveTile;
 import tile.GrassTile;
+import tile.Tile;
 
 public class CollisionChecker {
 	
@@ -22,80 +23,111 @@ public class CollisionChecker {
 	}
 	
 	public void checkTile(Entity entity) {
-		int entityLeftWorldX = entity.worldX + entity.solidArea.x;
-		int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
-		int entityTopWorldY = entity.worldY + entity.solidArea.y;
-		int entityBottomWorldY = entity.worldY + entity.solidArea.y + entity.solidArea.height;
-		
-		int entityLeftCol = entityLeftWorldX/gp.tileSize;
-		int entityRightCol = entityRightWorldX/gp.tileSize;
-		int entityTopRow = entityTopWorldY/gp.tileSize;
-		int entityBottomRow = entityBottomWorldY/gp.tileSize;
-		
-		int tileNum1, tileNum2;
-		
-		tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
+	    int entityLeftWorldX = entity.worldX + entity.solidArea.x;
+	    int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
+	    int entityTopWorldY = entity.worldY + entity.solidArea.y;
+	    int entityBottomWorldY = entity.worldY + entity.solidArea.y + entity.solidArea.height;
+
+	    int entityLeftCol = entityLeftWorldX / gp.tileSize;
+	    int entityRightCol = entityRightWorldX / gp.tileSize;
+	    int entityTopRow = entityTopWorldY / gp.tileSize;
+	    int entityBottomRow = entityBottomWorldY / gp.tileSize;
+
+	    int tileNum1, tileNum2;
+
+	    tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
 	    tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
+
 	    if (gp.tileM.tile[tileNum1] instanceof GrassTile || gp.tileM.tile[tileNum2] instanceof GrassTile
-	    	|| gp.tileM.tile[tileNum1] instanceof BuildingTile || gp.tileM.tile[tileNum2] instanceof BuildingTile
-	    	|| gp.tileM.tile[tileNum1] instanceof CaveTile || gp.tileM.tile[tileNum2] instanceof CaveTile) {
+	        || gp.tileM.tile[tileNum1] instanceof BuildingTile || gp.tileM.tile[tileNum2] instanceof BuildingTile
+	        || gp.tileM.tile[tileNum1] instanceof CaveTile || gp.tileM.tile[tileNum2] instanceof CaveTile) {
 	        entity.inTallGrass = true;
 	    } else {
 	        entity.inTallGrass = false;
 	    }
-		
-		switch(entity.direction) {
-		case "up":
-			entityTopRow = (entityTopWorldY - entity.speed)/gp.tileSize;
-			tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
-			tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
-			if (gp.tileM.tile[tileNum1].collision && 
-					(gp.tileM.tile[tileNum1].collisionDirection.equals("all") || !entity.direction.equals(gp.tileM.tile[tileNum1].collisionDirection))) {
-                entity.collisionOn = true;
-            } else if (gp.tileM.tile[tileNum2].collision &&
-                (gp.tileM.tile[tileNum2].collisionDirection.equals("all") || !entity.direction.equals(gp.tileM.tile[tileNum2].collisionDirection))) {
-                entity.collisionOn = true;
-            }
-            break;
-		case "down":
-	        entityBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
-	        tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow];
-	        tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
-	        if (gp.tileM.tile[tileNum1].collision &&
-	            (gp.tileM.tile[tileNum1].collisionDirection.equals("all") || !entity.direction.equals(gp.tileM.tile[tileNum1].collisionDirection))) {
-	            entity.collisionOn = true;
-	        } else if (gp.tileM.tile[tileNum2].collision && !gp.tileM.tile[tileNum2].collisionDirection.equals("up") &&
-	            (gp.tileM.tile[tileNum2].collisionDirection.equals("all") || !entity.direction.equals(gp.tileM.tile[tileNum2].collisionDirection))) {
-	            entity.collisionOn = true;
-	        }
-	        break;
 
-	    case "left":
-	        entityLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
-	        tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
-	        tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow];
-	        if (gp.tileM.tile[tileNum1].collision &&
-	            (gp.tileM.tile[tileNum1].collisionDirection.equals("all") || !entity.direction.equals(gp.tileM.tile[tileNum1].collisionDirection))) {
-	            entity.collisionOn = true;
-	        } else if (gp.tileM.tile[tileNum2].collision && !gp.tileM.tile[tileNum2].collisionDirection.equals("right") &&
-	            (gp.tileM.tile[tileNum2].collisionDirection.equals("all") || !entity.direction.equals(gp.tileM.tile[tileNum2].collisionDirection))) {
-	            entity.collisionOn = true;
-	        }
-	        break;
+	    int delta = entity.speed / 2;
 
-	    case "right":
-	        entityRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
-	        tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
-	        tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
-	        if (gp.tileM.tile[tileNum1].collision &&
-	            (gp.tileM.tile[tileNum1].collisionDirection.equals("all") || !entity.direction.equals(gp.tileM.tile[tileNum1].collisionDirection))) {
-	            entity.collisionOn = true;
-	        } else if (gp.tileM.tile[tileNum2].collision && !gp.tileM.tile[tileNum2].collisionDirection.equals("left") &&
-	            (gp.tileM.tile[tileNum2].collisionDirection.equals("all") || !entity.direction.equals(gp.tileM.tile[tileNum2].collisionDirection))) {
+	    switch (entity.direction) {
+	        case "up":
+	            entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
+	            tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
+	            tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
+	            checkCollision(tileNum1, entityLeftCol, entityTopRow, entity, "up", delta);
+	            checkCollision(tileNum2, entityRightCol, entityTopRow, entity, "up", delta);
+	            break;
+	        case "down":
+	            entityBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
+	            tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow];
+	            tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
+	            checkCollision(tileNum1, entityLeftCol, entityBottomRow, entity, "down", delta);
+	            checkCollision(tileNum2, entityRightCol, entityBottomRow, entity, "down", delta);
+	            break;
+	        case "left":
+	            entityLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
+	            tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
+	            tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow];
+	            checkCollision(tileNum1, entityLeftCol, entityTopRow, entity, "left", delta);
+	            checkCollision(tileNum2, entityLeftCol, entityBottomRow, entity, "left", delta);
+	            break;
+	        case "right":
+	            entityRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
+	            tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
+	            tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
+	            checkCollision(tileNum1, entityRightCol, entityTopRow, entity, "right", delta);
+	            checkCollision(tileNum2, entityRightCol, entityBottomRow, entity, "right", delta);
+	            break;
+	    }
+	}
+
+	private void checkCollision(int tileNum, int col, int row, Entity entity, String direction, int delta) {
+	    Tile tile = gp.tileM.tile[tileNum];
+	    if (tile.collision) {
+	        // Get the collision rectangle in world coordinates
+	        Rectangle tileCollisionArea = new Rectangle(
+	            col * gp.tileSize + tile.collisionArea.x,
+	            row * gp.tileSize + tile.collisionArea.y,
+	            tile.collisionArea.width,
+	            tile.collisionArea.height
+	        );
+
+	        Rectangle entityArea = new Rectangle(
+	            entity.worldX + entity.solidArea.x,
+	            entity.worldY + entity.solidArea.y,
+	            entity.solidArea.width,
+	            entity.solidArea.height
+	        );
+
+	        boolean touching = isTouching(entityArea, tileCollisionArea, direction, delta);
+	        if (touching && (tile.collisionDirection.equals("all") || !tile.collisionDirection.equals(direction))) {
 	            entity.collisionOn = true;
 	        }
-	        break;
-		}
+	    }
+	}
+
+	private boolean isTouching(Rectangle r1, Rectangle r2, String direction, int delta) {
+	    int r1Bottom = r1.y + r1.height;
+	    int r1Top = r1.y;
+	    int r1Left = r1.x;
+	    int r1Right = r1.x + r1.width;
+
+	    int r2Bottom = r2.y + r2.height;
+	    int r2Top = r2.y;
+	    int r2Left = r2.x;
+	    int r2Right = r2.x + r2.width;
+
+	    switch (direction) {
+	        case "up":
+	            return (r1Top - delta <= r2Bottom && r1Top >= r2Bottom && r1Right > r2Left && r1Left < r2Right);
+	        case "down":
+	            return (r1Bottom + delta >= r2Top && r1Bottom <= r2Top && r1Right > r2Left && r1Left < r2Right);
+	        case "left":
+	            return (r1Left - delta <= r2Right && r1Left >= r2Right && r1Bottom > r2Top && r1Top < r2Bottom);
+	        case "right":
+	            return (r1Right + delta >= r2Left && r1Right <= r2Left && r1Bottom > r2Top && r1Top < r2Bottom);
+	        default:
+	            return false;
+	    }
 	}
 	
 	public int checkObject(Entity entity) {

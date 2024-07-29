@@ -141,6 +141,9 @@ public class PlayerCharacter extends Entity {
 					worldX += speed;
 					break;
 				}
+			} else if (speed == 8) {
+				speed = 4;
+				return;
 			}
 			
 			if (spriteCounter > 8) {
