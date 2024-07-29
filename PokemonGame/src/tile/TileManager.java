@@ -1,6 +1,7 @@
 package tile;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,11 +18,15 @@ public class TileManager {
 	public int mapTileNum[][][];
 	public boolean canFly[];
 	
+	public static Rectangle[] collisionRectangles;
+	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
 		tile = new Tile[900];
 		mapTileNum = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
 		canFly = new boolean[gp.maxMap];
+		
+		setupCollisionRectangles();
 		
 		getTileImage();
 		loadMap("/maps/map01.txt", 0, true);
@@ -187,6 +192,15 @@ public class TileManager {
 		loadMap("/maps/space01.txt", 160, true);
 	}
 	
+	private void setupCollisionRectangles() {
+		collisionRectangles = new Rectangle[5];
+		collisionRectangles[0] = new Rectangle(0, 0, gp.tileSize, gp.tileSize); // full tile
+		collisionRectangles[1] = new Rectangle(0, 0, gp.tileSize, gp.tileSize / 2); // top half
+		collisionRectangles[2] = new Rectangle(0, gp.tileSize / 2, gp.tileSize, gp.tileSize / 2); // bottom half
+		collisionRectangles[3] = new Rectangle(0, 0, gp.tileSize / 2, gp.tileSize); // left half
+		collisionRectangles[4] = new Rectangle(gp.tileSize / 2, 0, gp.tileSize / 2, gp.tileSize); // right half
+	}
+
 	public void getTileImage() {
 		setup(0, true);
 		setup(1, false);
@@ -238,11 +252,11 @@ public class TileManager {
 		setup(59, true);
 		setup(60, false);
 		setup(61, false);
-		setup(62, false);
-		setup(63, false);
-		setup(64, false);
-		setup(65, false);
-		setup(66, false);
+		setup(62, true, 2);
+		setup(63, true, 2);
+		setup(64, true, 2);
+		setup(65, true, 2);
+		setup(66, true, 2);
 		setup(67, true);
 		setup(68, true);
 		setup(69, true);
@@ -322,9 +336,9 @@ public class TileManager {
 		setup(143, true);
 		setup(144, true);
 		setup(145, true);
-		setup(146, true);
-		setup(147, true);
-		setup(148, true);
+		setup(146, true, 2);
+		setup(147, true, 2);
+		setup(148, true, 2);
 		setup(149, true);
 		setup(150, true);
 		setup(151, true);
@@ -356,12 +370,12 @@ public class TileManager {
 		setup(177, true);
 		setup(178, true);
 		setup(179, true);
-		setup(180, false);
-		setup(181, false);
-		setup(182, true);
+		setup(180, true, 1);
+		setup(181, true, 1);
+		setup(182, true, 4);
 		setup(183, false);
-		setup(184, true);
-		setup(185, false);
+		setup(184, true, 3);
+		setup(185, true, 1);
 		setup(186, true);
 		setup(187, true);
 		setup(188, true);
@@ -371,9 +385,9 @@ public class TileManager {
 		setup(192, true);
 		setup(193, false);
 		setup(194, false);
-		setup(195, true);
+		setup(195, true, 1);
 		setup(196, true);
-		setup(197, true);
+		setup(197, true, 1);
 		setup(198, false);
 		setup(199, false);
 		setup(200, false);
@@ -381,15 +395,15 @@ public class TileManager {
 		setup(202, false);
 		setup(203, false);
 		setup(204, false);
-		setup(205, true);
+		setup(205, true, 2);
 		setup(206, true);
-		setup(207, true);
+		setup(207, true, 2);
 		setup(208, false);
 		setup(209, false);
 		
-		setup(210, false);
-		setup(211, false);
-		setup(212, false);
+		setup(210, true, 2);
+		setup(211, true, 2);
+		setup(212, true, 2);
 		setup(213, true);
 		setup(214, true);
 		setup(215, true);
@@ -581,16 +595,16 @@ public class TileManager {
 		setup(407, true);
 		setup(408, true);
 		setup(409, true);
-		setup(410, false);
-		setup(411, false);
-		setup(412, false);
+		setup(410, true, 1);
+		setup(411, true, 1);
+		setup(412, true, 1);
 		
 		setup(413, true);
 		setup(414, true);
 		
-		setup(415, false);
-		setup(416, false);
-		setup(417, false);
+		setup(415, true, 2);
+		setup(416, true, 2);
+		setup(417, true, 2);
 		setup(418, true);
 		setup(419, true);
 		setup(420, true);
@@ -603,10 +617,10 @@ public class TileManager {
 		setup(427, true);
 		setup(428, true);
 		setup(429, true);
-		setup(430, false);
-		setup(431, false);
-		setup(432, false);
-		setup(433, false);
+		setup(430, true, 2);
+		setup(431, true, 2);
+		setup(432, true, 2);
+		setup(433, true, 1);
 		setup(434, true);
 		setup(435, true);
 		setup(436, true);
@@ -737,12 +751,12 @@ public class TileManager {
 		setup(562, true);
 		setup(563, true);
 		setup(564, true);
-		setup(565, true);
-		setup(566, true);
-		setup(567, true);
+		setup(565, true, 1);
+		setup(566, true, 1);
+		setup(567, true, 4);
 		setup(568, false);
-		setup(569, true);
-		setup(570, true);
+		setup(569, true, 3);
+		setup(570, true, 1);
 		setup(571, true);
 		setup(572, true);
 		setup(573, true);
@@ -776,21 +790,21 @@ public class TileManager {
 		setup(599, true);
 		setup(600, true);
 		setup(601, true);
-		setup(602, false);
+		setup(602, true, 1);
 		setup(603, true);
-		setup(604, false);
+		setup(604, true, 1);
 		setup(605, true);
 		setup(606, true);
 		setup(607, true);
 		setup(608, true);
 		setup(609, true);
 		setup(610, true);
-		setup(611, true);
-		setup(612, true);
+		setup(611, true, 2);
+		setup(612, true, 2);
 		setup(613, true);
 		setup(614, true);
-		setup(615, false);
-		setup(616, false);
+		setup(615, true, 1);
+		setup(616, true, 1);
 		setup(617, false);
 		setup(618, false);
 		setup(619, true);
@@ -799,13 +813,13 @@ public class TileManager {
 		setup(622, true);
 		setup(623, true);
 		setup(624, true);
-		setup(625, true);
-		setup(626, true);
+		setup(625, true, 2);
+		setup(626, true, 2);
 		setup(627, true);
 		setup(628, true);
 		setup(629, true);
 		setup(630, true);
-		setup(631, true);
+		setup(631, true, 2);
 		setup(632, true);
 		setup(633, false);
 		setup(634, false);
@@ -831,138 +845,76 @@ public class TileManager {
 			tile[511] = new GrassTile();
 			tile[511].image = ImageIO.read(getClass().getResourceAsStream("/tiles/511.png"));
 			
-			tile[37] = new Tile();
-			tile[37].image = ImageIO.read(getClass().getResourceAsStream("/tiles/037.png"));
-			tile[37].collisionDirection = "down";
-			tile[37].collision = true;
-			
-			tile[38] = new Tile();
-			tile[38].image = ImageIO.read(getClass().getResourceAsStream("/tiles/038.png"));
-			tile[38].collisionDirection = "down";
-			tile[38].collision = true;
-			
-			tile[39] = new Tile();
-			tile[39].image = ImageIO.read(getClass().getResourceAsStream("/tiles/039.png"));
-			tile[39].collisionDirection = "down";
-			tile[39].collision = true;
-			
-			tile[40] = new Tile();
-			tile[40].image = ImageIO.read(getClass().getResourceAsStream("/tiles/040.png"));
-			tile[40].collisionDirection = "up";
-			tile[40].collision = true;
-			
-			tile[41] = new Tile();
-			tile[41].image = ImageIO.read(getClass().getResourceAsStream("/tiles/041.png"));
-			tile[41].collisionDirection = "up";
-			tile[41].collision = true;
-			
-			tile[42] = new Tile();
-			tile[42].image = ImageIO.read(getClass().getResourceAsStream("/tiles/042.png"));
-			tile[42].collisionDirection = "up";
-			tile[42].collision = true;
-			
-			tile[43] = new Tile();
-			tile[43].image = ImageIO.read(getClass().getResourceAsStream("/tiles/043.png"));
-			tile[43].collisionDirection = "right";
-			tile[43].collision = true;
-			
-			tile[44] = new Tile();
-			tile[44].image = ImageIO.read(getClass().getResourceAsStream("/tiles/044.png"));
-			tile[44].collisionDirection = "right";
-			tile[44].collision = true;
-			
-			tile[45] = new Tile();
-			tile[45].image = ImageIO.read(getClass().getResourceAsStream("/tiles/045.png"));
-			tile[45].collisionDirection = "right";
-			tile[45].collision = true;
-			
-			tile[46] = new Tile();
-			tile[46].image = ImageIO.read(getClass().getResourceAsStream("/tiles/046.png"));
-			tile[46].collisionDirection = "left";
-			tile[46].collision = true;
-			
-			tile[47] = new Tile();
-			tile[47].image = ImageIO.read(getClass().getResourceAsStream("/tiles/047.png"));
-			tile[47].collisionDirection = "left";
-			tile[47].collision = true;
-			
-			tile[48] = new Tile();
-			tile[48].image = ImageIO.read(getClass().getResourceAsStream("/tiles/048.png"));
-			tile[48].collisionDirection = "left";
-			tile[48].collision = true;
-			
-			
-			tile[325] = new Tile();
-			tile[325].image = ImageIO.read(getClass().getResourceAsStream("/tiles/325.png"));
-			tile[325].collisionDirection = "down";
-			tile[325].collision = true;
-			
-			tile[326] = new Tile();
-			tile[326].image = ImageIO.read(getClass().getResourceAsStream("/tiles/326.png"));
-			tile[326].collisionDirection = "down";
-			tile[326].collision = true;
-			
-			tile[327] = new Tile();
-			tile[327].image = ImageIO.read(getClass().getResourceAsStream("/tiles/327.png"));
-			tile[327].collisionDirection = "down";
-			tile[327].collision = true;
-			
-			tile[328] = new Tile();
-			tile[328].image = ImageIO.read(getClass().getResourceAsStream("/tiles/328.png"));
-			tile[328].collisionDirection = "up";
-			tile[328].collision = true;
-			
-			tile[329] = new Tile();
-			tile[329].image = ImageIO.read(getClass().getResourceAsStream("/tiles/329.png"));
-			tile[329].collisionDirection = "up";
-			tile[329].collision = true;
-			
-			tile[330] = new Tile();
-			tile[330].image = ImageIO.read(getClass().getResourceAsStream("/tiles/330.png"));
-			tile[330].collisionDirection = "up";
-			tile[330].collision = true;
-			
-			tile[331] = new Tile();
-			tile[331].image = ImageIO.read(getClass().getResourceAsStream("/tiles/331.png"));
-			tile[331].collisionDirection = "right";
-			tile[331].collision = true;
-			
-			tile[332] = new Tile();
-			tile[332].image = ImageIO.read(getClass().getResourceAsStream("/tiles/332.png"));
-			tile[332].collisionDirection = "right";
-			tile[332].collision = true;
-			
-			tile[333] = new Tile();
-			tile[333].image = ImageIO.read(getClass().getResourceAsStream("/tiles/333.png"));
-			tile[333].collisionDirection = "right";
-			tile[333].collision = true;
-			
-			tile[334] = new Tile();
-			tile[334].image = ImageIO.read(getClass().getResourceAsStream("/tiles/334.png"));
-			tile[334].collisionDirection = "left";
-			tile[334].collision = true;
-			
-			tile[335] = new Tile();
-			tile[335].image = ImageIO.read(getClass().getResourceAsStream("/tiles/335.png"));
-			tile[335].collisionDirection = "left";
-			tile[335].collision = true;
-			
-			tile[336] = new Tile();
-			tile[336].image = ImageIO.read(getClass().getResourceAsStream("/tiles/336.png"));
-			tile[336].collisionDirection = "left";
-			tile[336].collision = true;
-			
-			tile[372] = new Tile();
-			tile[372].image = ImageIO.read(getClass().getResourceAsStream("/tiles/372.png"));
-			tile[372].collisionDirection = "down";
-			tile[372].collision = true;
-			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		setupCliff(37, 2);
+		setupCliff(38, 2);
+		setupCliff(39, 2);
+		setupCliff(40, 1);
+		setupCliff(41, 1);
+		setupCliff(42, 1);
+		setupCliff(43, 4);
+		setupCliff(44, 4);
+		setupCliff(45, 4);
+		setupCliff(46, 3);
+		setupCliff(47, 3);
+		setupCliff(48, 3);
+		
+		setupCliff(325, 2);
+		setupCliff(326, 2);
+		setupCliff(327, 2);
+		setupCliff(328, 1);
+		setupCliff(329, 1);
+		setupCliff(330, 1);
+		setupCliff(331, 4);
+		setupCliff(332, 4);
+		setupCliff(333, 4);
+		setupCliff(334, 3);
+		setupCliff(335, 3);
+		setupCliff(336, 3);
+		
+		setupCliff(372, 2);
+	}
+	
+	private void setupCliff(int index, int collisionType) {
+		tile[index] = new Tile();
+		String imageName = index + "";
+		while (imageName.length() < 3) imageName = "0" + imageName;
+		try {
+			tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
+			String direction = "";
+			switch (collisionType) {
+			case 0:
+				direction = "all";
+				break;
+			case 1:
+				direction = "up";
+				break;
+			case 2:
+				direction = "down";
+				break;
+			case 3:
+				direction = "left";
+				break;
+			case 4:
+				direction = "right";
+				break;
+			}
+			tile[index].collision = true;
+			tile[index].collisionDirection = direction;
+			tile[index].collisionArea = collisionRectangles[collisionType];
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setup(int index, boolean collision) {
+		setup(index, collision, 0);
+	}
+	
+	public void setup(int index, boolean collision, int collisionType) {
 		tile[index] = new Tile();
 		String imageName = index + "";
 		while (imageName.length() < 3) imageName = "0" + imageName;
@@ -971,6 +923,7 @@ public class TileManager {
 			tile[index].collision = collision;
 			if (collision) {
 				tile[index].collisionDirection = "all";
+				tile[index].collisionArea = collisionRectangles[collisionType];
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
