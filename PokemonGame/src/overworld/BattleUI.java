@@ -19,6 +19,7 @@ import pokemon.Item;
 import pokemon.Move;
 import pokemon.Moveslot;
 import pokemon.PType;
+import pokemon.Player;
 import pokemon.Pokemon;
 import pokemon.Status;
 import pokemon.Bag.Entry;
@@ -1229,7 +1230,7 @@ public class BattleUI extends AbstractUI {
 	private void wipe() {
 		gp.endBattle(-1, -1);
 		user.getPlayer().setMoney(user.getPlayer().getMoney() - 500);
-		gp.eHandler.teleport(0, 79, 46, false);
+		gp.eHandler.teleport(Player.spawn[0], Player.spawn[1], Player.spawn[2], false);
 		user.trainer.heal();
 		if (foe.trainer != null) {
 			foe.trainer.heal();

@@ -48,15 +48,14 @@ public class Main {
 		window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
-		window.setTitle("Pokemon Game");
 		
 		gp = new GamePanel(window);
+		
+		window.setTitle(gp.gameTitle);
 		
 		showStartupMenu(window);
 	}
 	
-	
-
 	private static void showStartupMenu(JFrame window) {
 		WelcomeMenu menu = new WelcomeMenu(window, gp);
 		window.add(menu);
@@ -170,8 +169,8 @@ public class Main {
 	        gp.player.p.resistBerries = berryList.toArray(new Item[1]);
 	    }
 		
-		PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
-		window.setTitle("Pokemon Game - " + PlayerCharacter.currentMapName);
+		PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / gp.tileSize), (int) Math.round(gp.player.worldY * 1.0 / gp.tileSize));
+		window.setTitle(gp.gameTitle + " - " + PlayerCharacter.currentMapName);
 		
 		loadGame(window, welcomeMenu, selectedOptions);
 	}

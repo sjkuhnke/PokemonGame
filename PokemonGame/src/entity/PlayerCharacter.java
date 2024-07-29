@@ -81,8 +81,9 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	public void setDefaultValues() {
-		worldX = gp.tileSize * 79;
-		worldY = gp.tileSize * 46;
+		gp.currentMap = Player.spawn[0];
+		worldX = gp.tileSize * Player.spawn[1];
+		worldY = gp.tileSize * Player.spawn[2];
 		speed = 4;
 		direction = "down";
 	}
@@ -244,7 +245,7 @@ public class PlayerCharacter extends Entity {
 			String currentMap = currentMapName;
 			PMap.getLoc(gp.currentMap, (int) Math.round(worldX * 1.0 / gp.tileSize), (int) Math.round(worldY * 1.0 / gp.tileSize));
 			if (!currentMap.equals(currentMapName)) gp.ui.showAreaName();
-			Main.window.setTitle("Pokemon Game - " + currentMapName);
+			Main.window.setTitle(gp.gameTitle + " - " + currentMapName);
 		}
 		if (gp.currentMap == 107 && gp.checkSpin && gp.ticks == 4 && new Random().nextInt(3) == 0) {
 			int index = new Random().nextInt(10);

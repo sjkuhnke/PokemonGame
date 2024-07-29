@@ -58,6 +58,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int worldHeight = tileSize * maxWorldRow;
 	public static final int MAX_FLAGS = 50;
 	
+	public final String gameTitle = "Pokemon Xhenos";
+	
 	public KeyHandler keyH = new KeyHandler(this);
 	public AssetSetter aSetter = new AssetSetter(this);
 	public EventHandler eHandler = new EventHandler(this);
