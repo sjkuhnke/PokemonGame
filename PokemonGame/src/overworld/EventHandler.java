@@ -28,9 +28,9 @@ public class EventHandler {
 		while(map < gp.maxMap && col < gp.maxWorldCol && row < gp.maxWorldRow) {
 			
 			eventRect[map][col][row] = new EventRect();
-			eventRect[map][col][row].x = gp.tileSize / 6;
+			eventRect[map][col][row].x = gp.tileSize / 8;
 			eventRect[map][col][row].y = gp.tileSize / 8;
-			eventRect[map][col][row].width = gp.tileSize * 2 / 3;
+			eventRect[map][col][row].width = gp.tileSize * 3 / 4;
 			eventRect[map][col][row].height = gp.tileSize * 3 / 4;
 			eventRect[map][col][row].eventRectDefaultX = eventRect[map][col][row].x;
 			eventRect[map][col][row].eventRectDefaultY = eventRect[map][col][row].y;
