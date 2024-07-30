@@ -193,12 +193,14 @@ public class TileManager {
 	}
 	
 	private void setupCollisionRectangles() {
-		collisionRectangles = new Rectangle[5];
+		collisionRectangles = new Rectangle[7];
 		collisionRectangles[0] = new Rectangle(0, 0, gp.tileSize, gp.tileSize); // full tile
 		collisionRectangles[1] = new Rectangle(0, 0, gp.tileSize, gp.tileSize / 2); // top half
 		collisionRectangles[2] = new Rectangle(0, gp.tileSize / 2, gp.tileSize, gp.tileSize / 2); // bottom half
 		collisionRectangles[3] = new Rectangle(0, 0, gp.tileSize / 2, gp.tileSize); // left half
 		collisionRectangles[4] = new Rectangle(gp.tileSize / 2, 0, gp.tileSize / 2, gp.tileSize); // right half
+		collisionRectangles[5] = new Rectangle(0, 0, gp.tileSize, gp.tileSize * 2 / 3); // top 2/3
+		collisionRectangles[6] = new Rectangle(0, gp.tileSize / 3, gp.tileSize, gp.tileSize * 2 / 3); // bottom 2/3
 	}
 
 	public void getTileImage() {
@@ -600,7 +602,7 @@ public class TileManager {
 		setup(412, true, 1);
 		
 		setup(413, true);
-		setup(414, true);
+		setup(414, true, 6);
 		
 		setup(415, true, 2);
 		setup(416, true, 2);
@@ -819,7 +821,7 @@ public class TileManager {
 		setup(628, true);
 		setup(629, true);
 		setup(630, true);
-		setup(631, true, 2);
+		setup(631, true, 6);
 		setup(632, true);
 		setup(633, false);
 		setup(634, false);
