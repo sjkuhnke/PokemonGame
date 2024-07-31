@@ -1,7 +1,22 @@
 package overworld;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import javax.imageio.ImageIO;
 
 import pokemon.Item;
 import pokemon.Pokemon;
@@ -50,6 +65,8 @@ public class KeyHandler implements KeyListener {
 			boxState(code);
 		} else if (gp.gameState == GamePanel.DEX_NAV_STATE) {
 			dexNavState(code);
+		} else if (gp.gameState == GamePanel.STARTER_STATE) {
+			starterMachineState(code);
 		}
 		
 		
@@ -101,6 +118,10 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_CONTROL) {
 			ctrlPressed = true;
 		}
+		
+		if (code == KeyEvent.VK_ENTER) {
+            takeScreenshot();
+        }
 	}
 
 	@Override
@@ -615,6 +636,21 @@ public class KeyHandler implements KeyListener {
 		}
 	}
 	
+	private void starterMachineState(int code) {
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		if (code == KeyEvent.VK_S) {
+			if (gp.ui.starterConfirm) {
+				gp.ui.starterConfirm = false;
+				gp.ui.commandNum = 0;
+			} else {
+				gp.gameState = GamePanel.PLAY_STATE;
+				gp.ui.starter = 0;
+			}
+		}
+	}
+	
 	public void resetKeys() {
 		upPressed = false;
 		downPressed = false;
@@ -626,5 +662,67 @@ public class KeyHandler implements KeyListener {
 		aPressed = false;
 		ctrlPressed = false;
 	}
+	
+	 private void takeScreenshot() {
+        try {
+            // Create a BufferedImage from the JPanel's graphics
+            BufferedImage screenshot = new BufferedImage(gp.getWidth(), gp.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            gp.paint(screenshot.getGraphics());
+
+            // Save to a file
+            String fileName = "screenshot_" + System.currentTimeMillis() + ".png";
+            Path screenshotsDirectory = Paths.get("./screenshots/");
+            if (!Files.exists(screenshotsDirectory)) {
+                Files.createDirectories(screenshotsDirectory);
+            }
+            File screenshotFile = new File(screenshotsDirectory.toFile(), fileName);
+            ImageIO.write(screenshot, "png", screenshotFile);
+
+            // Copy to clipboard
+            copyImageToClipboard(screenshot);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void copyImageToClipboard(BufferedImage image) {
+    	// Convert to a compatible format
+        BufferedImage compatibleImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics g = compatibleImage.createGraphics();
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+
+        // Copy to clipboard
+        TransferableImage transferableImage = new TransferableImage(compatibleImage);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(transferableImage, null);
+    }
+
+    private static class TransferableImage implements Transferable {
+        private Image image;
+
+        public TransferableImage(Image image) {
+            this.image = image;
+        }
+
+        @Override
+        public DataFlavor[] getTransferDataFlavors() {
+            return new DataFlavor[]{DataFlavor.imageFlavor};
+        }
+
+        @Override
+        public boolean isDataFlavorSupported(DataFlavor flavor) {
+            return DataFlavor.imageFlavor.equals(flavor);
+        }
+
+        @Override
+        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+            if (!isDataFlavorSupported(flavor)) {
+                throw new UnsupportedFlavorException(flavor);
+            }
+            return image;
+        }
+    }
 
 }

@@ -50,6 +50,15 @@ public class Player extends Trainer implements Serializable {
 	public int currentMap;
 	public boolean[] trainersBeat;
 	public boolean[][] itemsCollected;
+	public boolean[][] flag;
+	
+	/**
+	 * This field is deprecated and should not be used in new code.
+	 * Use {@link #flag} instead.
+	 *
+	 * @deprecated This field has been replaced by {@link #flag} which supports a two-dimensional boolean array.
+	 */
+	@Deprecated
 	public boolean[] flags;
 	public boolean[] locations;
 	public boolean random = false;
@@ -72,7 +81,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 10;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 26;
+	public static final int VERSION = 27;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -95,12 +104,12 @@ public class Player extends Trainer implements Serializable {
 		posY = spawn[2];
 		
 		pokedex = new int[Pokemon.MAX_POKEMON + 1];
-		flags = new boolean[GamePanel.MAX_FLAGS];
+		flags = new boolean[50];
+		flag = new boolean[10][GamePanel.MAX_FLAG];
 		locations = new boolean[12]; // NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 		trainersBeat = new boolean[MAX_TRAINERS];
 		locations[0] = true;
-		bag.add(Item.CALCULATOR);
 		
 		version = VERSION;
 	}
@@ -301,10 +310,27 @@ public class Player extends Trainer implements Serializable {
 	
 	private void updateFlags() {
 		boolean[] tempFlag = flags.clone();
-		flags = new boolean[GamePanel.MAX_FLAGS];
+		flags = new boolean[50];
 		for (int i = 0; i < tempFlag.length; i++) {
 			flags[i] = tempFlag[i];
 		}
+		
+		if (flag == null) {
+			flag = new boolean[10][GamePanel.MAX_FLAG];
+			updateLegacyFlags();
+		} else {
+			boolean[][] temp = flag.clone();
+			flag = new boolean[10][GamePanel.MAX_FLAG];
+			for (int i = 0; i < temp.length; i++) {
+				for (int j = 0; j < temp[1].length; j++) {
+					flag[i][j] = temp[i][j];
+				}
+			}
+		}
+	}
+	
+	private void updateLegacyFlags() {
+		// TODO: map flags to flag indices
 	}
 	
 	private void updateTrainers() {
@@ -359,7 +385,7 @@ public class Player extends Trainer implements Serializable {
 		JComboBox<Pokemon> starter = new JComboBox<>();
 		JButton pokedexButton = new JButton("Pokedex");
 		JButton bagButton = new JButton("Bag");
-		JCheckBox[] flags = new JCheckBox[GamePanel.MAX_FLAGS];
+		JCheckBox[] flags = new JCheckBox[50]; // TODO: replace with flag
 		JCheckBox[] locations = new JCheckBox[12];
 		JButton importTrainers = new JButton("Import Trainers");
 		JButton importItems = new JButton("Import ObjectItems");
@@ -1205,6 +1231,18 @@ public class Player extends Trainer implements Serializable {
 			} else {
 				throw new IllegalStateException("Pokedex slot isn't empty when initalizing Pokedex: " + dex[dexNo - 1].getName() + " and " + test.getName() + " have the same Dex No. of " + dexNo);
 			}
+		}
+	}
+	
+	public int calculatePokedexes() {
+		if (!flag[0][2]) {
+			return 0;
+		} else if (flag[0][2] && badges < 1) { // TODO: change to flag for talking to Dad after Gym 1 (For upgrading to E forms)
+			return 2;
+		} else if (badges > 1 && badges < 3) { // TODO: change to flag for talking to Dad after Gym 1 (For upgrading to E forms) and a flag for whenever we add tradebacks for regional counterparts
+			return 4;
+		} else {
+			return 4;
 		}
 	}
 }
