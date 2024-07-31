@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public int currentMap = 0;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
-	public static final int MAX_FLAGS = 50;
+	public static final int MAX_FLAG = 10;
 	
 	public final String gameTitle = "Pokemon Xhenos";
 	
@@ -97,6 +97,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public static final int USE_REPEL_STATE = 13;
 	public static final int RARE_CANDY_STATE = 14;
 	public static final int DEX_NAV_STATE = 15;
+	public static final int STARTER_STATE = 16;
 
 	public static Map<Entity, Integer> volatileTrainers = new HashMap<>(); // TODO: remove this once aSetter.setNPC() is correctly configured to not have volatile npcs
 	
@@ -112,7 +113,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		Pokemon.readInfoFromCSV();
 		Pokemon.readMovebanksFromCSV();
-		Pokemon.readTrainersFromCSV();
+		Pokemon.readEntiresFromCSV();
 		
 		Player.setupPokedex();
 	}
@@ -421,6 +422,8 @@ public class GamePanel extends JPanel implements Runnable {
 		Pokemon.field = new Field();
 		Pokemon.gp = this;
 		checkSpin = true;
+		
+		Pokemon.readTrainersFromCSV();
 	}
 	
 	public void setSlots() {
@@ -469,7 +472,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		g2.drawString("[Ctrl]+[A] Calc", x, y);
 		
-		width = tileSize * 8;
+		width = tileSize * 12;
 		x -= tileSize / 2;
 		y += tileSize / 2;
 		
@@ -478,7 +481,7 @@ public class GamePanel extends JPanel implements Runnable {
 		x += tileSize / 2;
 		y += tileSize;
 		
-		g2.drawString("[\u2190][\u2191][\u2192][\u2193] Move    [TAB] Speedup", x, y);
+		g2.drawString("[\u2190][\u2191][\u2192][\u2193] Move    [TAB] Speedup    [ENTER] Screenshot", x, y);
 		
 		String aText = player.p.fish ? "Fish" : null;
 		ui.drawToolTips("Talk", aText, "Run", "Menu");

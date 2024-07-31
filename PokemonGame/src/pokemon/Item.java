@@ -298,9 +298,10 @@ public enum Item {
 	STARF_BERRY(257,500,200,new Color(184, 232, 152),Item.BERRY,null,"If a Pokemon holds one of these Berries, one of its stats will be sharply boosted should it find itself in a pinch."),
 	MICLE_BERRY(258,200,40,new Color(64, 200, 64),Item.BERRY,null,"If a Pokemon holds one of these Berries, its accuracy will be boosted should it find itself in a pinch."),
 	CUSTAP_BERRY(259,200,40,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to act faster in a pinch—but only for the next move."),
-	LETTER_A(260,0,0,Color.BLACK,Item.KEY_ITEM,null,""),
-	LETTER_B(261,0,0,Color.BLACK,Item.KEY_ITEM,null,""),
-	LETTER_C(262,0,0,Color.BLACK,Item.KEY_ITEM,null,""),
+	PACKAGE_A(260,0,0,Color.BLACK,Item.KEY_ITEM,null,"A letter to be delivered to the following business:\nThe Pound\nPoppy Grove"),
+	PACKAGE_B(261,0,0,Color.BLACK,Item.KEY_ITEM,null,"A letter to be delivered to the following recipient:\nExp Lady\nPoppy Grove"),
+	PACKAGE_C(262,0,0,Color.BLACK,Item.KEY_ITEM,null,"A letter to be delivered to the following recipient:\nChef Eddie\nPoppy Grove"),
+	PACKAGE_D(266,0,0,Color.BLACK,Item.KEY_ITEM,null,"A letter to be delivered to the following recipient:\nThe Warehouse\nPoppy Grove"),
 	;
 	
 	private int id;

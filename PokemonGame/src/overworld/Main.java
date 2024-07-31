@@ -101,62 +101,11 @@ public class Main {
 	        // If there's an error reading the file, create a new Player object
 	        gp.player.p = new Player(gp);
 
-	        String[] options = {"Twigle", "Lagma", "Lizish"};
-	        JPanel optionPanel = new JPanel(new GridLayout(1, options.length));
-
-	        int index = 0;
-	        for (int i = 1; i < 8; i += 3) {
-	            Pokemon dummy = new Pokemon(i, 1, false, false);
-	            JGradientButton optionButton = new JGradientButton(options[index]);
-	            ImageIcon spriteIcon = new ImageIcon(dummy.getSprite(i));
-	            optionButton.setIcon(spriteIcon);
-	            optionButton.setBackground(dummy.type1.getColor());
-
-	            // Add an ActionListener to the button to handle user selection
-	            int finalChoice = index + 1; // To make the variable effectively final
-	            optionButton.addActionListener(f -> {
-	                // Record the selected choice and close the JOptionPane
-	                gp.player.p.starter = finalChoice;
-	                JComponent component = (JComponent) f.getSource();
-	                SwingUtilities.getWindowAncestor(component).dispose();
-	            });
-
-	            optionPanel.add(optionButton);
-	            index++;
-	        }
-
-	        // Show the JOptionPane with the custom option panel
-	        JOptionPane.showOptionDialog(
-	            null, 
-	            optionPanel, 
-	            "Choose your starter Pokemon", 
-	            JOptionPane.DEFAULT_OPTION, 
-	            JOptionPane.QUESTION_MESSAGE, 
-	            null, 
-	            null, 
-	            null
-	        );
-	        
-	        // Add the chosen starter to the player's team
-	        if (gp.player.p.starter <= 0) gp.player.p.starter = (int)(Math.random() * options.length) + 1;
-	        if (gp.player.p.starter == 1) {
-	            gp.player.p.catchPokemon(new Pokemon(1, 5, true, false));
-	        } else if (gp.player.p.starter == 2) {
-	            gp.player.p.catchPokemon(new Pokemon(4, 5, true, false));
-	        } else if (gp.player.p.starter == 3) {
-	            gp.player.p.catchPokemon(new Pokemon(7, 5, true, false));
-	        }
-	        Random random = new Random();
-	        int secondStarter = -1;
-	        do {
-	        	secondStarter = random.nextInt(3) + 1;
-	        } while (secondStarter == gp.player.p.starter);
-	        gp.player.p.secondStarter = secondStarter;
-	        int secondItem = -1;
-	        do {
-	        	secondItem = random.nextInt(3) + 1;
-	        } while (secondItem == gp.player.p.secondStarter);
-	        gp.player.p.scottItem = secondItem;
+//	        int secondItem = -1;
+//	        do {
+//	        	secondItem = random.nextInt(3) + 1;
+//	        } while (secondItem == gp.player.p.secondStarter);
+//	        gp.player.p.scottItem = secondItem;
 	        
 	        gp.player.p.resistBerries = new Item[20];
 	        int count = 0;

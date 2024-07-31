@@ -819,16 +819,42 @@ public class TileManager {
 		setup(626, true, 2);
 		setup(627, true);
 		setup(628, true);
-		setup(629, true);
-		setup(630, true);
+		setup(629, false);
+		setup(630, false);
 		setup(631, true, 6);
 		setup(632, true);
 		setup(633, false);
 		setup(634, false);
 		
-//		setup(635, true, 3);
-//		setup(636, true, 4);
-//		setup(597, true);
+		setup(635, true);
+		setup(636, true);
+		setup(637, true);
+		setup(638, true);
+		setup(639, true);
+		setup(640, true);
+		setup(641, true);
+		setup(642, true);
+		setup(643, false);
+		setup(644, true, 2);
+		setup(645, true, 2);
+		setup(646, true, 2);
+		setup(647, true);
+		setup(648, true);
+		setup(649, true);
+		setup(650, false);
+		setup(651, false);
+		setup(652, false);
+		setup(653, false);
+		setup(654, false);
+		setup(655, false);
+		setup(656, false);
+		setup(657, false);
+		setup(658, false);
+		setup(659, false);
+		setup(660, false);
+		setup(661, false);
+		setup(662, false);
+		setup(663, true, 6);
 		
 
 		try {

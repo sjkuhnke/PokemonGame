@@ -30,6 +30,7 @@ import object.InteractiveTile;
 import object.Pit;
 import object.Rock_Climb;
 import object.Rock_Smash;
+import object.Starter_Machine;
 import object.Tree_Stump;
 import object.Vine;
 import object.Vine_Crossable;
@@ -384,6 +385,8 @@ public class PlayerCharacter extends Entity {
 					interactWhirlpool(iTileIndex);
 				} else if (target instanceof Rock_Climb) {
 					interactRockClimb(iTileIndex);
+				} else if (target instanceof Starter_Machine) {
+					interactStarterMachine(iTileIndex);
 				}
 			}
 		}
@@ -494,6 +497,38 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	private void interactBlock(NPC_Block npc) {
+		if (gp.currentMap == 52) { // Professor Dad
+			if (!p.flag[0][0]) {
+				p.flag[0][0] = true;
+				Pokemon.addTask(Task.TEXT, "Add text about the Pokemon or something");
+			} else if (p.flag[0][0] && !p.flag[0][1]) {
+				Pokemon.addTask(Task.TEXT, "Go pick your starter!");
+			} else if (p.flag[0][1] && !p.flag[0][2]) {
+				p.flag[0][2] = true;
+				Pokemon.addTask(Task.TEXT, "Add text about getting your Pokedex");
+				Pokemon.addTask(Task.TEXT, "Add more text about it having a page for Shadow Pokemon and explain what they are");
+				gp.aSetter.updateNPC(gp.currentMap);
+				Pokemon.addTask(Task.TEXT, "Add text about a calculator");
+				Pokemon.addTask(Task.TEXT, "You got a calculator!");
+				gp.player.p.bag.add(Item.CALCULATOR);
+			} else if (p.flag[0][1] && !p.flag[0][4]) {
+				gp.ui.showMessage("There are two Pokemon still inside the machine. Wonder what Dad will do with them?");
+			} else if (p.flag[0][4] && p.badges < 1) {
+				gp.ui.showMessage("There's still a Pokemon left! Dad must've given one to Scott as well!");
+			} else if (p.badges > 1) {
+				gp.ui.showMessage("There aren't any Pokemon inside.");
+			}
+		}
+		
+		if (gp.currentMap == 51) { // Dad's Mom
+			if (!p.flag[0][3]) {
+				Pokemon.addTask(Task.TEXT, "Something about lore or something");
+				Pokemon.addTask(Task.TEXT, "Here's a Soothe Bell");
+				Pokemon.addTask(Task.TEXT, "You got a Soothe Bell!");
+				gp.player.p.bag.add(Item.SOOTHE_BELL);
+			}
+		}
+		
 		if (gp.currentMap == 32 && !p.flags[30]) {
 			p.flags[30] = true;
 			p.fish = true;
@@ -1007,6 +1042,22 @@ public class PlayerCharacter extends Entity {
 		} else {
 			gp.ui.showMessage("This wall looks like it can be scaled!");
 		}	
+	}
+	
+	private void interactStarterMachine(int i) {
+		if (!p.flag[0][0]) { // Before talking to Dad first
+			gp.ui.showMessage("It's a machine housing three rare Pokemon!");
+		} else if (p.flag[0][0] && !p.flag[0][1]) { // After talking to Dad and before picking a starter
+			gp.keyH.wPressed = false;
+			gp.gameState = GamePanel.STARTER_STATE;
+		} else if (p.flag[0][1] && !p.flag[0][4]) { // After picking a starter and before the first gate
+			gp.ui.showMessage(Item.breakString("There are two Pokemon still inside the machine. Wonder what Dad will do with them?", 42));
+		} else if (p.flag[0][4] && p.badges < 1) { // After the first gate but before beating Gym 1
+			gp.ui.showMessage(Item.breakString("There's still a Pokemon left! Dad must've given one to Scott as well!", 42));
+		} else if (p.badges > 1) { // After beating Gym 1 TODO add different dialogue after beating Fred 1 but before Gym 2
+			gp.ui.showMessage("There aren't any Pokemon inside.");
+		}
+		
 	}
 	
 	private int getTileForwardX() {

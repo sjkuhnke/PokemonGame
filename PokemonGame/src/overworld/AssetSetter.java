@@ -25,6 +25,7 @@ import object.Pit;
 import object.PitEdge;
 import object.Rock_Climb;
 import object.Rock_Smash;
+import object.Starter_Machine;
 import object.Tree_Stump;
 import object.Vine;
 import object.Vine_Crossable;
@@ -367,10 +368,6 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(48, 17, Item.TERRAIN_EXTENDER, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 18, Item.SUPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 42, Item.PARALYZE_HEAL, mapNum);
-		
-		mapNum = 51;
-		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(31, 41, Item.SOOTHE_BELL, mapNum);
 		
 		mapNum = 56;
 		objIndex = 0;
@@ -1160,6 +1157,15 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(31, 41, "WOAOAOHAOH!!! Hehehehehe I just popped a naughty yerkocet!! Pick one of these NUTTY \"starters\" tehehee", 14, true, "YEEEOOEEOOOOeeeoooeeooeee.....");
 		
+		mapNum = 51;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Well hiya there grandson!", true); // Dad's Mom
+		
+		mapNum = 52;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(31, 36, "Well hiya there son!", true); // Professor Dad
+		gp.npc[mapNum][index] = NPCSetup(31, 45, "Talk to your dad");
+		
 		mapNum = 53;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 31, 41, -1, true, Item.ORAN_BERRY, Item.CHERI_BERRY, Item.CHESTO_BERRY, Item.PECHA_BERRY, Item.RAWST_BERRY, Item.ASPEAR_BERRY,
@@ -1756,6 +1762,11 @@ public class AssetSetter {
 		
 		SetupPit(mapNum, 58, 56, 95, 42, 49, map);
 		
+		mapNum = 52;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 37, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(28, 37, 6, mapNum, map);
+		
 		mapNum = 60;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(30, 44, 1, mapNum, map);
@@ -2227,6 +2238,7 @@ public class AssetSetter {
 
 	public void updateNPC(int map) {
 		boolean[] flags = gp.player.p.flags;
+		boolean[][] flag = gp.player.p.flag;
 		// flags[0] is true after walking into first gate
 		// flags[1] is true after beating Scott 1
 		// flags[2] is true after beating Rick 1
@@ -2264,6 +2276,12 @@ public class AssetSetter {
 		// flags[34] is true after beating Rick 3
 		// flags[35] is true after fighting Triwandoliz
 		// flags[36] is true after fighting Diftery
+		if (flag[0][2]) {
+			gp.npc[52][1] = null;
+		}
+		
+		
+		
 		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
 		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		if (flags[1]) {
@@ -2556,6 +2574,7 @@ public class AssetSetter {
 			result = new Vine(gp);
 			break;
 		case 6:
+			result = new Starter_Machine(gp);
 			break;
 		}
 		

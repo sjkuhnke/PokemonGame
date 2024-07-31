@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import entity.Entity;
 import entity.PlayerCharacter;
@@ -73,6 +74,9 @@ public class UI extends AbstractUI{
 	
 	public int remindNum;
 	public boolean drawFlash;
+	
+	public int starter;
+	public boolean starterConfirm;
 	
 	private ArrayList<ArrayList<Encounter>> encounters;
 	
@@ -140,6 +144,10 @@ public class UI extends AbstractUI{
 		
 		if (gp.gameState == GamePanel.DEX_NAV_STATE) {
 			drawDexNav();
+		}
+		
+		if (gp.gameState == GamePanel.STARTER_STATE) {
+			drawStarterState();
 		}
 		
 		if (gp.gameState == GamePanel.MENU_STATE) {
@@ -793,7 +801,7 @@ public class UI extends AbstractUI{
 		g2.drawString(seenString, infoTextX, infoTextY);
 		
 		String wText = dexMode == 0 ? "Moves": null;
-		drawToolTips(wText, null, "Back", "Back");
+		drawToolTips(wText, "Switch", "Back", "Back");
 	}
 
 	private void drawDexSummary(Pokemon p, int mode, ArrayList<Move> levelMoveList, ArrayList<Integer> levelLevelList, ArrayList<Item> tmList) {
@@ -1588,6 +1596,9 @@ public class UI extends AbstractUI{
 		int width = gp.tileSize * 5;
 		int height = gp.tileSize * 10;
 		
+		if (!gp.player.p.flag[0][1]) height -= gp.tileSize;
+		if (!gp.player.p.flag[0][2]) height -= gp.tileSize;
+		
 		if (subState == 0) drawSubWindow(x, y, width, height);
 		
 		switch(subState) {
@@ -1686,29 +1697,41 @@ public class UI extends AbstractUI{
 		g2.setFont(g2.getFont().deriveFont(24F));
 		
 		// Pokedex
-		text = "Pokedex";
-		textX = x + gp.tileSize * 2;
-		textY += gp.tileSize;
-		g2.drawImage(setup("/menu/" + text.toLowerCase(), 2), textX - gp.tileSize, textY - gp.tileSize / 2, null);
-		g2.drawString(text, textX, textY);
+		if (gp.player.p.flag[0][2]) {
+			text = "Pokedex";
+			textX = x + gp.tileSize * 2;
+			textY += gp.tileSize;
+			g2.drawImage(setup("/menu/" + text.toLowerCase(), 2), textX - gp.tileSize, textY - gp.tileSize / 2, null);
+			g2.drawString(text, textX, textY);
+		}
 		if (menuNum == 0) {
-			g2.drawString(">", textX- (25 + gp.tileSize), textY);
-			if (gp.keyH.wPressed) {
-				gp.keyH.wPressed = false;
-				subState = 1;
+			if (gp.player.p.flag[0][2]) {
+				g2.drawString(">", textX- (25 + gp.tileSize), textY);
+				if (gp.keyH.wPressed) {
+					gp.keyH.wPressed = false;
+					subState = 1;
+				}
+			} else {
+				menuNum++;
 			}
 		}
 		
 		// Party
-		text = "Party";
-		textY += gp.tileSize;
-		g2.drawImage(setup("/menu/" + text.toLowerCase(), 2), textX - gp.tileSize, textY - gp.tileSize / 2, null);
-		g2.drawString(text, textX, textY);
+		if (gp.player.p.flag[0][1]) {
+			text = "Party";
+			textY += gp.tileSize;
+			g2.drawImage(setup("/menu/" + text.toLowerCase(), 2), textX - gp.tileSize, textY - gp.tileSize / 2, null);
+			g2.drawString(text, textX, textY);
+		}
 		if (menuNum == 1) {
-			g2.drawString(">", textX- (25 + gp.tileSize), textY);
-			if (gp.keyH.wPressed) {
-				gp.keyH.wPressed = false;
-				subState = 2;
+			if (gp.player.p.flag[0][1]) {
+				g2.drawString(">", textX- (25 + gp.tileSize), textY);
+				if (gp.keyH.wPressed) {
+					gp.keyH.wPressed = false;
+					subState = 2;
+				}
+			} else {
+				menuNum++;
 			}
 		}
 		
@@ -1823,7 +1846,7 @@ public class UI extends AbstractUI{
 		
 		x = startX;
 		String pocketName = Item.getPocketName(currentPocket);
-		g2.drawString(pocketName, this.getCenterAlignedTextX(pocketName, x + (width / 2)), (int) (y + gp.tileSize * 1.75));
+		g2.drawString(pocketName, getCenterAlignedTextX(pocketName, x + (width / 2)), (int) (y + gp.tileSize * 1.75));
 		
 		y = startY;
 		height = (int) (gp.tileSize * 9.5);
@@ -1899,7 +1922,7 @@ public class UI extends AbstractUI{
 					if (bagNum > 0) bagNum--;
 				}
 			}
-			if (bagState == 0 && gp.keyH.wPressed) {
+			if (bagState == 0 && !currentItems.isEmpty() && gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				bagState = 1;
 			}
@@ -2420,6 +2443,8 @@ public class UI extends AbstractUI{
 			x = winX;
 			index++;
 		}
+		
+		drawToolTips(null, null, "Back", null);
 	}
 	
 	private BufferedImage getSilhouette(BufferedImage sprite) {
@@ -2445,6 +2470,147 @@ public class UI extends AbstractUI{
 	    }
 	    
 	    return silhouette;
+	}
+	
+	private void drawStarterState() {
+		int x = gp.tileSize;
+		int y = gp.tileSize * 2;
+		int width = gp.tileSize * 4;
+		int height = gp.tileSize * 8;
+		
+		int gap = gp.tileSize;
+		
+		Pokemon[] starters = new Pokemon[] {new Pokemon(1, 5, true, false), new Pokemon(4, 5, true, false), new Pokemon(7, 5, true, false)};
+		
+		for (int i = 0; i < 3; i++) {
+			int startX = x;
+			int startY = y;
+			Pokemon p = starters[i];
+			
+			drawSubWindow(x, y, width, height, 240);
+			
+			if (starter == i) {
+				//x -= gp.tileSize / 4;
+				//y -= gp.tileSize / 4;
+				g2.setColor(p.type1.getColor());
+				g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+				//g2.drawRoundRect(x, y, width + gp.tileSize / 2, height + gp.tileSize / 2, 45, 45);
+				//x = startX;
+				//y = startY;
+			}
+			
+			x += gp.tileSize / 3;
+			y += gp.tileSize / 3;
+			g2.drawImage(p.type1.getImage2(), x, y, null);
+			
+			x += width - gp.tileSize * 2 / 3;
+			y += gp.tileSize / 3;
+			g2.setFont(g2.getFont().deriveFont(20F));
+			String no = Pokemon.getFormattedDexNo(p.getDexNo());
+			g2.drawString(no, getRightAlignedTextX(no, x), y);
+			
+			x = startX;
+			y = startY;
+			
+			x += gp.tileSize / 2;
+			
+			g2.drawImage(p.getFrontSprite(), x, y, null);
+			
+			y += gp.tileSize * 4;
+			g2.setFont(g2.getFont().deriveFont(24F));
+			String label = p.getName() + " lv 5";
+			g2.drawString(label, getCenterAlignedTextX(label, startX + width / 2), y);
+			
+			y += gp.tileSize * 0.75;
+			g2.setFont(g2.getFont().deriveFont(20F));
+			label = "The Pokemon Pokemon";
+			g2.drawString(label, getCenterAlignedTextX(label, startX + width / 2), y);
+			
+			y += gp.tileSize / 2;
+			g2.setFont(g2.getFont().deriveFont(14F));
+			label = p.getDexEntry();
+			String[] entryLines = Item.breakString(label, 26).split("\n");
+			for (String s : entryLines) {
+				g2.drawString(s, getCenterAlignedTextX(s, startX + width / 2), y);
+				y += gp.tileSize / 3;
+			}
+			
+			x = startX + width + gap;
+			y = startY;
+		}
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (starterConfirm) {
+				if (commandNum == 0) {
+					gp.player.p.flag[0][1] = true;
+					gp.player.p.starter = starter;
+					gp.gameState = GamePanel.TASK_STATE;
+					Pokemon.addTask(Task.GIFT, "", starters[starter]);
+					starterConfirm = false;
+					
+					Random random = new Random();
+			        int secondStarter = -1;
+			        do {
+			        	secondStarter = random.nextInt(3) + 1;
+			        } while (secondStarter == gp.player.p.starter);
+			        gp.player.p.secondStarter = secondStarter;
+			        
+			        Pokemon.updateRivals();
+				} else {
+					starterConfirm = false;
+					commandNum = 0;
+				}
+			} else {
+				starterConfirm = true;
+			}
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			commandNum = 1 - commandNum;
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			commandNum = 1 - commandNum;
+		}
+		
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			starter = starterConfirm ? starter : (starter + 2) % 3;
+		}
+		
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			starter = starterConfirm ? starter : (starter + 1) % 3;
+		}
+		
+		if (starterConfirm) {
+			currentDialogue = "Are you sure you want to choose " + starters[starter] + "?";
+			drawDialogueScreen(true);
+			
+			int x2 = gp.tileSize * 11;
+			int y2 = gp.tileSize * 4;
+			int width2 = gp.tileSize * 3;
+			int height2 = (int) (gp.tileSize * 2.5);
+			drawSubWindow(x2, y2, width2, height2);
+			
+			x2 += gp.tileSize;
+			y2 += gp.tileSize;
+			g2.drawString("Yes", x2, y2);
+			if (commandNum == 0) {
+				g2.drawString(">", x2-24, y2);
+			}
+			
+			y2 += gp.tileSize;
+			g2.drawString("No", x2, y2);
+			if (commandNum == 1) {
+				g2.drawString(">", x2-24, y2);
+			}
+		}
+		
+		drawToolTips("Pick", null, "Back", null);
 	}
 
 	private void drawBoxToolTips() {

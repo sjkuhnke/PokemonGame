@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -68,6 +69,7 @@ public class Pokemon implements Serializable {
 	private static double[] weights = new double[MAX_POKEMON];
 	private static int[] catch_rates = new int[MAX_POKEMON];
 	private static Node[][] movebanks = new Node[MAX_POKEMON][100];
+	private static String[] entries = new String[MAX_POKEMON];
 	
 	private static ArrayList<Integer> rivalIndices = new ArrayList<>();
 	
@@ -751,6 +753,14 @@ public class Pokemon implements Serializable {
 	
 	public static int getDexNo(int id) {
 		return dexNos[id - 1];
+	}
+	
+	public String getDexEntry() {
+		return getDexEntry(id);
+	}
+	
+	public static String getDexEntry(int id) {
+		return entries[id - 1];
 	}
 	
 	public void setAbility(int slot) {
@@ -7153,38 +7163,38 @@ public class Pokemon implements Serializable {
 		return result;
 	}
 	
-	public static Task createTask(int text, String string) {
-		return createTask(text, string, null);
+	public static Task createTask(int type, String string) {
+		return createTask(type, string, null);
 	}
 	
-	public static Task createTask(int text, String string, Pokemon p) {
+	public static Task createTask(int type, String string, Pokemon p) {
 		Pokemon dummy = new Pokemon(1, 1, false, false);
-		return dummy.new Task(text, string, p);
+		return dummy.new Task(type, string, p);
 	}
 	
-	public static Task addTask(int text, String string) {
-		return addTask(text, string, null);
+	public static Task addTask(int type, String string) {
+		return addTask(type, string, null);
 	}
 	
-	public static Task addTask(int text, Status status, String string, Pokemon p) {
-		Task t = addTask(text, string, p);
+	public static Task addTask(int type, Status status, String string, Pokemon p) {
+		Task t = addTask(type, string, p);
 		t.status = status;
 		return t;
 	}
 	
-	public static Task addTask(int text, String string, Pokemon p) {
+	public static Task addTask(int type, String string, Pokemon p) {
 		if (gp != null && gp.gameState == GamePanel.BATTLE_STATE) {
-			Task t = createTask(text, string, p);
+			Task t = createTask(type, string, p);
 			gp.battleUI.tasks.add(t);
 			return t;
 		} else if (gp != null && (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE)) {
-			Task t = createTask(text, string, p);
+			Task t = createTask(type, string, p);
 			gp.ui.tasks.add(t);
 			return t;
 		} else {
-			if (text == Task.TEXT) {
+			if (type == Task.TEXT) {
 				gp.ui.showMessage(string);
-			} else if (text == Task.NICKNAME) {
+			} else if (type == Task.NICKNAME) {
 				p.setNickname();
 			}
 			return null;
@@ -7497,7 +7507,6 @@ public class Pokemon implements Serializable {
 			
 			if (name.contains("Scott") || name.contains("Fred")) {
 				rivalIndices.add(index);
-				Trainer.bossTrainers.add(trainer);
 			}
 			
 			for (String s : Trainer.bosses) {
@@ -7514,8 +7523,21 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void updateRivals() {
-		
+		if (gp.player.p.starter == 0) return;
 	}
+	
+	public static void readEntiresFromCSV() {
+        Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/entries.csv"));
+        for (int i = 0; i < MAX_POKEMON; i++) {
+        	try {
+        		String line = scanner.nextLine();
+            	entries[i] = line.replace("#", getName(i + 1));
+        	} catch (NoSuchElementException e) {
+        		System.out.println(i);
+        		e.printStackTrace();
+        	}
+        }
+    }
 	
 	public static void setupNode(int id, int level, Move move) {
 		Node[] movebank = getMovebank(id);
