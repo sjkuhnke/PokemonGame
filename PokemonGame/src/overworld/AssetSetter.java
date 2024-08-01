@@ -795,11 +795,8 @@ public class AssetSetter {
 		
 		mapNum = 3;
 		index = 0;
-		if (!flags[1]) {
-			gp.npc[mapNum][index] = NPCSetup(31, 40, "I saw a boy named Scott near New Minnow Town saying he was looking for a young man that looked like you. Maybe you should check it out?", 1);
-		} else {
-			gp.npc[mapNum][index++] = null;
-		}
+		gp.npc[mapNum][index] = NPCSetup(31, 34, "Sorry, we are blocking the road because this gentleman here demands we look for a young trainer headed this way. You might want to ask him about it.");
+		gp.npc[mapNum][index] = NPCSetup(35, 39, "Oh! You must be that young trainer Scott mentioned! I’m his quite elegant father Avery!", true); // Avery
 		
 		mapNum = 4;
 		if (!flags[2]) {
@@ -2498,7 +2495,7 @@ public class AssetSetter {
 	private Entity NPCSetup(int x, int y, String message, int flag, boolean a, String altDialogue) {
 		String messages[] = message.split("\n");
 		for (int i = 0; i < messages.length; i++) {
-			messages[i] = Item.breakString(messages[i], 44);
+			messages[i] = Item.breakString(messages[i], 42);
 		}
 		Entity result = new NPC_Block(gp, messages, flag, a, Item.breakString(altDialogue, 44));
 		

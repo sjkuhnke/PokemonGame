@@ -68,10 +68,7 @@ public class EventHandler {
 			if (hit(2,31,46)) teleport(0, 27, 54,false);
 			
 			// Route 23 <-> Poppy Grove gate
-			if (hit(0,20,10)) {
-				teleport(3, 31, 45,false);
-				gp.player.p.flags[0] = true;
-			}
+			if (hit(0,20,10)) teleport(3, 31, 45,false);
 			if (hit(3,31,46)) teleport(0, 20, 11,false);
 			if (hit(3,31,33)) teleport(4, 74, 84,false);
 			if (hit(4,74,85)) teleport(3, 31, 34,false);

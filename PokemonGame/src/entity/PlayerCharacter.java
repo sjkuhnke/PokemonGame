@@ -519,14 +519,19 @@ public class PlayerCharacter extends Entity {
 				gp.ui.showMessage("There aren't any Pokemon inside.");
 			}
 		}
-		
 		if (gp.currentMap == 51) { // Dad's Mom
 			if (!p.flag[0][3]) {
 				Pokemon.addTask(Task.TEXT, "Something about lore or something");
 				Pokemon.addTask(Task.TEXT, "Here's a Soothe Bell");
 				Pokemon.addTask(Task.TEXT, "You got a Soothe Bell!");
-				gp.player.p.bag.add(Item.SOOTHE_BELL);
+				p.flag[0][3] = true;
+				p.bag.add(Item.SOOTHE_BELL);
 			}
+		}
+		if (gp.currentMap == 3) {
+			Pokemon.addTask(Task.TEXT, "I believe he was looking to introduce himself to you, he mentioned he was heading towards New Minnow Town.");
+			Pokemon.addTask(Task.TEXT, "Please do make haste, I do hope he's okay.");
+			p.flag[0][4] = true;
 		}
 		
 		if (gp.currentMap == 32 && !p.flags[30]) {
