@@ -84,8 +84,20 @@ public class Trainer implements Serializable {
 		return item;
 	}
 	
+	/**
+	 * Should only be used for testing whether or not a trainer has a flagIndex (!= 0)
+	 * 
+	 */
 	public int getFlagIndex() {
 		return flagIndex;
+	}
+	
+	public int getFlagX() {
+		return (flagIndex >> 5) & 0xF;
+	}
+	
+	public int getFlagY() {
+		return flagIndex & 0x1F;
 	}
 	
 	public void setMoney(int amt) {

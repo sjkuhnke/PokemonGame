@@ -39,4 +39,12 @@ public class NPC_Block extends Entity {
 			Pokemon.addTask(Task.TEXT, dialogues[dialogueIndex]);
 		}
 	}
+	
+	public int getFlagX() {
+		return (flag >> 5) & 0xF;
+	}
+	
+	public int getFlagY() {
+		return flag & 0x1F;
+	}
 }

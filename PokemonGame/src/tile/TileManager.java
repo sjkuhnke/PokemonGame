@@ -861,6 +861,14 @@ public class TileManager {
 		setup(667, true);
 		setup(668, true);
 		setup(669, true);
+		setup(670, true);
+		setup(671, true);
+		setup(672, true);
+		setup(673, true);
+		setup(674, false);
+		setup(675, true);
+		setup(676, false);
+		setup(677, false);
 		
 
 		try {

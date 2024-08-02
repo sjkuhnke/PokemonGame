@@ -736,21 +736,12 @@ public class AssetSetter {
 		boolean[] flags = gp.player.p.flags;
 		int mapNum = 0;
 		
-		if (flags[0] && !flags[1]) {
-			gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 72, 48, 0);
-		} else {
-			gp.npc[mapNum][index++] = null;
-			GamePanel.volatileTrainers.put(NPCSetup(SCOTT_UP, 72, 48, 0), mapNum);
-		}
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 18, 18, 1);
-		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 23, 19, 2);
-		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 23, 27, 3);
-		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 21, 31, 4);
-		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 21, 14, 102);
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 7, 175);
@@ -796,7 +787,7 @@ public class AssetSetter {
 		mapNum = 3;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(31, 34, "Sorry, we are blocking the road because this gentleman here demands we look for a young trainer headed this way. You might want to ask him about it.");
-		gp.npc[mapNum][index] = NPCSetup(35, 39, "Oh! You must be that young trainer Scott mentioned! I’m his quite elegant father Avery!", true); // Avery
+		gp.npc[mapNum][index] = NPCSetup(35, 39, "Oh! You must be that young trainer Scott mentioned! I'm his quite elegant father Avery!", true); // Avery
 		
 		mapNum = 4;
 		if (!flags[2]) {
@@ -947,11 +938,7 @@ public class AssetSetter {
 		
 		mapNum = 23;
 		index = 0;
-		if (!flags[1]) {
-			gp.npc[mapNum][index] = NPCSetup(31, 40, "Wow, there's a lot of lava over there. It's definitely not safe for any newbie trainers. If I see any of them coming this way... I swear to god...", 1);
-		} else {
-			gp.npc[mapNum][index++] = null;
-		}
+		gp.npc[mapNum][index] = NPCSetup(31, 45, "Wow, there's a lot of lava over there. It's definitely not safe for any newbie trainers. If I see any of them coming this way... I swear to god...", 5);
 		
 		mapNum = 24;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 65, 63, 75);
@@ -1136,7 +1123,7 @@ public class AssetSetter {
 		
 		mapNum = 47;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Here, take this as a gift!", 10, true, "Why have one partner when you can have two, am I right?");
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Hello there, welcome to Bananaville's Pokemon Ranch!", 6, true, "Why have one partner when you can have two, am I right?");
 		
 		mapNum = 48;
 		index = 0;
@@ -1156,12 +1143,12 @@ public class AssetSetter {
 		
 		mapNum = 51;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Well hiya there grandson!", true); // Dad's Mom
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Why what a surprise! Hello there dear, I'm glad you could visit your grandmother before you left home.", 3, true, "Glad you could check in dear, but I'm fine. You still got an adventure ahead of you."); // Dad's Mom
 		
 		mapNum = 52;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(31, 36, "Well hiya there son!", true); // Professor Dad
-		gp.npc[mapNum][index] = NPCSetup(31, 45, "Talk to your dad");
+		gp.npc[mapNum][index] = NPCSetup(31, 45, "Heh, you're definitely excited to head out there, but your Dad wanted to see you off before you start your adventure.");
 		
 		mapNum = 53;
 		index = 0;
@@ -1170,6 +1157,10 @@ public class AssetSetter {
                 Item.YACHE_BERRY, Item.CHOPLE_BERRY, Item.KEBIA_BERRY, Item.SHUCA_BERRY, Item.COBA_BERRY, Item.PAYAPA_BERRY, Item.TANGA_BERRY, Item.CHARTI_BERRY,
                 Item.KASIB_BERRY, Item.HABAN_BERRY, Item.COLBUR_BERRY, Item.BABIRI_BERRY, Item.CHILAN_BERRY, Item.ROSELI_BERRY, Item.MYSTICOLA_BERRY, Item.GALAXEED_BERRY,
                 Item.LIECHI_BERRY, Item.GANLON_BERRY, Item.SALAC_BERRY, Item.PETAYA_BERRY, Item.APICOT_BERRY, Item.STARF_BERRY, Item.MICLE_BERRY, Item.CUSTAP_BERRY);
+		
+		mapNum = 57;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(31, 41, "Hello there young man! What brings you to the famous Chef Eddie's residence?");
 		
 		mapNum = 58;
 		index = 0;
@@ -1396,11 +1387,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 32, 79, 264);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 37, 76, 265);
 		
-		if (!flags[1]) {
-			gp.npc[mapNum][index] = NPCSetup(23, 76, "You're not ready to fight those guys over there yet, sorry bud.", 1);
-		} else {
-			gp.npc[mapNum][index++] = null;
-		}
+		gp.npc[mapNum][index] = NPCSetup(23, 76, "You're not ready to fight those guys over there yet, sorry bud.", 5);
 		
 		mapNum = 121;
 		index = 0;
@@ -2273,14 +2260,22 @@ public class AssetSetter {
 		// flags[34] is true after beating Rick 3
 		// flags[35] is true after fighting Triwandoliz
 		// flags[36] is true after fighting Diftery
-		if (flag[0][2]) {
+		
+		if (flag[0][2]) { // Lab helper blocking exit
 			gp.npc[52][1] = null;
 		}
+		if (!flag[0][4] || flag[0][5]) gp.npc[0][0] = null; // Scott 1
+		if (flag[0][4] && !flag[0][5]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
 		
+		if (flag[0][5]) {
+			gp.npc[3][0] = null;
+			gp.npc[23][0] = null;
+			gp.npc[119][2] = null;
+		}
 		
-		
-		if (!flags[0] || flags[1]) gp.npc[0][0] = null;
-		if (flags[0] && !flags[1]) gp.npc[0][0] = NPCSetup(SCOTT_UP, 72, 48, 0);
+		/**
+		 * All of this is old and should be removed/reworked
+		 */
 		if (flags[1]) {
 			gp.npc[3][0] = null;
 			gp.npc[23][0] = null;

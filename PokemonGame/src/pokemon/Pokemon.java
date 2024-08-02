@@ -7524,6 +7524,55 @@ public class Pokemon implements Serializable {
 	
 	public static void updateRivals() {
 		if (gp.player.p.starter == 0) return;
+		
+		Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
+		ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(items));
+		
+		Item scottItem = items[gp.player.p.starter];
+		
+		itemList.remove(scottItem);
+		itemList.remove(items[gp.player.p.secondStarter]);
+		
+		Item fredItem = itemList.remove(0);
+		
+		if (!itemList.isEmpty()) throw new IllegalStateException("itemList isn't empty, some item overlap happened");
+		
+		for (Integer i : rivalIndices) {
+			Trainer t = Trainer.trainers[i];
+			int newLength = t.team.length - 2;
+			int twigleIndex = -1;
+			int index = 0;
+			for (Pokemon p : t.team) {
+				if (p.id >= 1 && p.id <= 3) {
+					twigleIndex = index;
+				}
+				index++;
+			}
+			int starterIndex = t.getName().contains("Scott") ? ((gp.player.p.starter - 1) + 3) % 3 : t.getName().contains("Fred") ? (gp.player.p.starter + 1) % 3 : -1;
+			if (starterIndex == -1) System.err.println("Something went wrong with updating the rivals");
+			Pokemon[] team = new Pokemon[newLength];
+			
+			int j;
+			for (j = 0; j < twigleIndex; j++) {
+				team[j] = t.team[j];
+			}
+			team[j++] = t.team[twigleIndex + starterIndex];
+			for (int k = j + 2; k < t.team.length; k++) {
+				team[j] = t.team[k];
+				j++;
+			}
+			t.team = team;
+			t.current = t.team[0];
+			if (t.item == Item.CALCULATOR) {
+				if (t.getName().contains("Scott")) {
+					t.item = scottItem;
+				} else if (t.getName().contains("Fred")) {
+					t.item = fredItem;
+				} else {
+					throw new IllegalStateException(t.getName() + " gives a Calculator, that is reserved exclusively as a placeholder for Scott and Fred first battles for starter type boosting items.");
+				}
+			}
+		}
 	}
 	
 	public static void readEntiresFromCSV() {

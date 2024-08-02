@@ -479,7 +479,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactNPC(NPC_Block npc) {
 		gp.keyH.wPressed = false;
-		if (npc.flag == -1 || !p.flags[npc.flag]) {
+		if (npc.flag == -1 || !p.flag[npc.getFlagX()][npc.getFlagY()]) {
 			gp.gameState = GamePanel.DIALOGUE_STATE;
 			npc.speak(0);
 			if (npc.more) {
@@ -500,15 +500,24 @@ public class PlayerCharacter extends Entity {
 		if (gp.currentMap == 52) { // Professor Dad
 			if (!p.flag[0][0]) {
 				p.flag[0][0] = true;
-				Pokemon.addTask(Task.TEXT, "Add text about the Pokemon or something");
+				Pokemon.addTask(Task.TEXT, "Welcome to the wonderful world of Pokemon! I'm sure you're familiar with them considering your old man is a top scientist here in Xhenos.");
+				Pokemon.addTask(Task.TEXT, "But, as a reminder, Pokemon are pocket monsters with unique typings and traits that coexist with us humans.");
+				Pokemon.addTask(Task.TEXT, "And I think it's high time you go on a Pokemon adventure of your own, get outta town, and see what this region has to offer.");
+				Pokemon.addTask(Task.TEXT, "You see that machine over there son? I’ve started a program to help new trainers, and you and two other bright young boys are to be the first participants.");
+				Pokemon.addTask(Task.TEXT, "Inside that machine holds three Pokemon I have chosen to be the starting options. So go pick your starter!");
 			} else if (p.flag[0][0] && !p.flag[0][1]) {
-				Pokemon.addTask(Task.TEXT, "Go pick your starter!");
+				Pokemon.addTask(Task.TEXT, "Go ahead, go pick your starter from my machine! The world of Xhenos awaits!");
 			} else if (p.flag[0][1] && !p.flag[0][2]) {
 				p.flag[0][2] = true;
-				Pokemon.addTask(Task.TEXT, "Add text about getting your Pokedex");
-				Pokemon.addTask(Task.TEXT, "Add more text about it having a page for Shadow Pokemon and explain what they are");
+				Pokemon.addTask(Task.TEXT, "This little doohickey is the Neodex! In a region as unique as ours, I've had to make plenty of modifications to account for them.");
+				Pokemon.addTask(Task.TEXT, "It's one of my finest inventions yet, and I even got help from Professor Oak, the greatest professor of all time!");
+				Pokemon.addTask(Task.TEXT, "Instead of Rotom, it taps into a shared database that allows for identifying new forms for old Pokemon. Give it a whirl!");
+				Pokemon.addTask(Task.TEXT, "As you know son, my specialty as a Professor is studying Shadow Pokemon.");
+				Pokemon.addTask(Task.TEXT, "These Pokemon had their DNA changed long ago by the meteor in Shadow Ravine, which happens to be just north of here.");
+				Pokemon.addTask(Task.TEXT, "These Pokemon often have taken Dark and Ghost typings, and have significant changes in mentality, similar to Xhenovian Pokemon.");
 				gp.aSetter.updateNPC(gp.currentMap);
-				Pokemon.addTask(Task.TEXT, "Add text about a calculator");
+				Pokemon.addTask(Task.TEXT, "You've always loved battling, so I made this just for you. A state of the line BATTLECALC 3000! Or you could just call it your calculator.");
+				Pokemon.addTask(Task.TEXT, "It provides accurate data during a battle, just press 'A' in a battle, or 'Ctrl + A' outside, and you can check how much damage a move can do!");
 				Pokemon.addTask(Task.TEXT, "You got a calculator!");
 				gp.player.p.bag.add(Item.CALCULATOR);
 			} else if (p.flag[0][1] && !p.flag[0][4]) {
@@ -521,9 +530,15 @@ public class PlayerCharacter extends Entity {
 		}
 		if (gp.currentMap == 51) { // Dad's Mom
 			if (!p.flag[0][3]) {
-				Pokemon.addTask(Task.TEXT, "Something about lore or something");
-				Pokemon.addTask(Task.TEXT, "Here's a Soothe Bell");
+				Pokemon.addTask(Task.TEXT, "Ah, I remember my first time having a Pokemon adventure, before I had your father. I was around your age now actually. Brings back fond memories…");
+				Pokemon.addTask(Task.TEXT, "...Oh, you want advice? I believe being a Pokemon trainer isn't about being the strongest, or collecting them all.");
+				Pokemon.addTask(Task.TEXT, "It's about forming a life-long bond with your Pokemon, becoming partners. Friendship is key to becoming a better trainer, and a better person.");
+				Pokemon.addTask(Task.TEXT, "That's how it was with your grandfather. Back in my day, I wanted to be the best there ever was.");
+				Pokemon.addTask(Task.TEXT, "He helped me see the value in friendship, how Pokemon were great companions in life. He's the person who gave me Duchess' dinky old Soothe Bell.");
+				Pokemon.addTask(Task.TEXT, "I miss him every day, even with my Pokemon, you and your father by my side.");
+				Pokemon.addTask(Task.TEXT, "So, this is my parting gift to you, to show you the power of friendship. I'm so thankful to have been your grandmother.");
 				Pokemon.addTask(Task.TEXT, "You got a Soothe Bell!");
+				Pokemon.addTask(Task.TEXT, "Go out there and make the world a better place, dear. I know you will.");
 				p.flag[0][3] = true;
 				p.bag.add(Item.SOOTHE_BELL);
 			}
@@ -532,6 +547,17 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "I believe he was looking to introduce himself to you, he mentioned he was heading towards New Minnow Town.");
 			Pokemon.addTask(Task.TEXT, "Please do make haste, I do hope he's okay.");
 			p.flag[0][4] = true;
+		}
+		if (gp.currentMap == 47 && p.secondStarter != -1) {
+			Pokemon.addTask(Task.TEXT, "Here, we breed and house rare Pokemon to right against their extinction.");
+			Pokemon.addTask(Task.TEXT, "...What's that? You have a " + Pokemon.getName(((p.starter + 1) * 3) - 2) + "?? That's insanely rare. Did you get that from the professor?");
+			Pokemon.addTask(Task.TEXT, "Oh, you're his son, and you're helping him research? Well, in that case, take this one as well. This should help your guys' study!");
+			p.flag[0][6] = true;
+			Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
+			Pokemon result = new Pokemon(((p.secondStarter + 1) * 3) - 2, 5, true, false);
+			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
+			Task t = Pokemon.addTask(Task.GIFT, "", result);
+			t.item = result.item = items[p.secondStarter];
 		}
 		
 		if (gp.currentMap == 32 && !p.flags[30]) {
@@ -571,14 +597,6 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "You adopted a gift dog!");
 			Task t = Pokemon.addTask(Task.GIFT, "", dogP);
 			t.item = Item.SILK_SCARF;
-		}
-		if (gp.currentMap == 47 && !p.flags[10] && p.secondStarter != 0) {
-			p.flags[10] = true;
-			Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
-			Pokemon result = new Pokemon((p.secondStarter * 3) - 2, 5, true, false);
-			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
-			Task t = Pokemon.addTask(Task.GIFT, "", result);
-			t.item = result.item = items[p.secondStarter - 1];
 		}
 		if (gp.currentMap == 18 && !p.flags[12]) {
 			p.flags[12] = true;
