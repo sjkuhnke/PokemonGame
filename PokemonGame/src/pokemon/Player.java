@@ -103,6 +103,7 @@ public class Player extends Trainer implements Serializable {
 		posX = spawn[1];
 		posY = spawn[2];
 		
+		secondStarter = -1;
 		pokedex = new int[Pokemon.MAX_POKEMON + 1];
 		flags = new boolean[50];
 		flag = new boolean[10][GamePanel.MAX_FLAG];

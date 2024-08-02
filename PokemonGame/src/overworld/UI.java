@@ -2071,6 +2071,9 @@ public class UI extends AbstractUI{
 			gp.player.p.surf = false;
 			gp.player.p.lavasurf = false;
 			
+			gp.aSetter.updateNPC(gp.currentMap);
+			gp.aSetter.setInteractiveTile(gp.currentMap);
+			
 			String currentMap = PlayerCharacter.currentMapName;
 			PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
 			Main.window.setTitle(gp.gameTitle + " - " + PlayerCharacter.currentMapName);
@@ -2552,7 +2555,7 @@ public class UI extends AbstractUI{
 					Random random = new Random();
 			        int secondStarter = -1;
 			        do {
-			        	secondStarter = random.nextInt(3) + 1;
+			        	secondStarter = random.nextInt(3);
 			        } while (secondStarter == gp.player.p.starter);
 			        gp.player.p.secondStarter = secondStarter;
 			        

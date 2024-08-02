@@ -847,8 +847,5 @@ public class EventHandler {
 //		
 //		previousEventX = gp.player.worldX;
 //		previousEventY = gp.player.worldY;
-		
-		gp.aSetter.updateNPC(map);
-		gp.aSetter.setInteractiveTile(map);
 	}
 }
