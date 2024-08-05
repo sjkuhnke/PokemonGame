@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public int currentMap = 0;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
-	public static final int MAX_FLAG = 10;
+	public static final int MAX_FLAG = 20;
 	
 	public final String gameTitle = "Pokemon Xhenos";
 	

@@ -84,8 +84,12 @@ public class EventHandler {
 			// Poppy Grove Warehouse
 			if (hit(4,66,79)) teleport(7, 31, 45,false);
 			if (hit(7,31,46)) teleport(4, 66, 80,false);
-			if (hit(7,40,39)) teleport(8, 28, 39,false);
-			if (hit(8,27,39)) teleport(7, 39, 39,false);
+			if (hit(7,40,33)) teleport(8, 28, 39,false);
+			if (hit(8,27,39)) teleport(7, 39, 33,false);
+			
+			// Poppy Grove Post Office
+			if (hit(4,81,79)) teleport(161, 50, 50,false);
+			if (hit(161,50,51)) teleport(4, 81, 80,false);
 			
 			// Poppy Grove Gym
 			if (hit(4,81,61)) teleport(9, 31, 45,false);

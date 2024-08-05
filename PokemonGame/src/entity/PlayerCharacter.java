@@ -27,6 +27,7 @@ import org.jdesktop.swingx.VerticalLayout;
 
 import object.Cut_Tree;
 import object.InteractiveTile;
+import object.Locked_Door;
 import object.Pit;
 import object.Rock_Climb;
 import object.Rock_Smash;
@@ -387,6 +388,8 @@ public class PlayerCharacter extends Entity {
 					interactRockClimb(iTileIndex);
 				} else if (target instanceof Starter_Machine) {
 					interactStarterMachine(iTileIndex);
+				} else if (target instanceof Locked_Door) {
+					interactLockedDoor(iTileIndex);
 				}
 			}
 		}
@@ -406,12 +409,15 @@ public class PlayerCharacter extends Entity {
 	}
 
 	private void pickUpObject(int objIndex) {
+		gp.keyH.wPressed = false;
+		gp.gameState = GamePanel.TASK_STATE;
 		Item item = gp.obj[gp.currentMap][objIndex].item;
 		int count = gp.obj[gp.currentMap][objIndex].count;
-		p.bag.add(item, count);
 		String itemName = item.toString();
 		if (count > 1 && itemName.contains("Berry")) itemName = itemName.replace("Berry", "Berries");
-		gp.ui.showMessage("You found " + count + " " + itemName + "!");
+		Task t = Pokemon.addTask(Task.ITEM, "You found " + count + " " + itemName + "!");
+		t.item = item;
+		t.counter = count;
 		if (gp.currentMap == 121) {
 			if (gp.obj[gp.currentMap][objIndex].item == Item.CHOICE_BAND) {
 				gp.player.p.itemsCollected[gp.currentMap][objIndex + 1] = true;
@@ -527,8 +533,7 @@ public class PlayerCharacter extends Entity {
 			} else if (p.badges > 1) {
 				gp.ui.showMessage("There aren't any Pokemon inside.");
 			}
-		}
-		if (gp.currentMap == 51) { // Dad's Mom
+		} else if (gp.currentMap == 51) { // Dad's Mom
 			if (!p.flag[0][3]) {
 				Pokemon.addTask(Task.TEXT, "Ah, I remember my first time having a Pokemon adventure, before I had your father. I was around your age now actually. Brings back fond memories…");
 				Pokemon.addTask(Task.TEXT, "...Oh, you want advice? I believe being a Pokemon trainer isn't about being the strongest, or collecting them all.");
@@ -537,18 +542,16 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.TEXT, "He helped me see the value in friendship, how Pokemon were great companions in life. He's the person who gave me Duchess' dinky old Soothe Bell.");
 				Pokemon.addTask(Task.TEXT, "I miss him every day, even with my Pokemon, you and your father by my side.");
 				Pokemon.addTask(Task.TEXT, "So, this is my parting gift to you, to show you the power of friendship. I'm so thankful to have been your grandmother.");
-				Pokemon.addTask(Task.TEXT, "You got a Soothe Bell!");
+				Task t = Pokemon.addTask(Task.ITEM, "");
+				t.item = Item.SOOTHE_BELL;
 				Pokemon.addTask(Task.TEXT, "Go out there and make the world a better place, dear. I know you will.");
 				p.flag[0][3] = true;
-				p.bag.add(Item.SOOTHE_BELL);
 			}
-		}
-		if (gp.currentMap == 3) {
+		} else if (gp.currentMap == 3) {
 			Pokemon.addTask(Task.TEXT, "I believe he was looking to introduce himself to you, he mentioned he was heading towards New Minnow Town.");
 			Pokemon.addTask(Task.TEXT, "Please do make haste, I do hope he's okay.");
 			p.flag[0][4] = true;
-		}
-		if (gp.currentMap == 47 && p.secondStarter != -1) {
+		} else if (gp.currentMap == 47 && p.secondStarter != -1) {
 			Pokemon.addTask(Task.TEXT, "Here, we breed and house rare Pokemon to right against their extinction.");
 			Pokemon.addTask(Task.TEXT, "...What's that? You have a " + Pokemon.getName(((p.starter + 1) * 3) - 2) + "?? That's insanely rare. Did you get that from the professor?");
 			Pokemon.addTask(Task.TEXT, "Oh, you're his son, and you're helping him research? Well, in that case, take this one as well. This should help your guys' study!");
@@ -558,26 +561,106 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 			Task t = Pokemon.addTask(Task.GIFT, "", result);
 			t.item = result.item = items[p.secondStarter];
+		} else if (gp.currentMap == 4) {
+			if (p.flag[0][11] && !p.flag[0][12]) {
+				Pokemon.addTask(Task.TEXT, "...");
+				Pokemon.addTask(Task.TEXT, "What? You have a package for the warehouse owner?");
+				Pokemon.addTask(Task.TEXT, "...pfft. You can't be older than 10.");
+				Pokemon.addTask(Task.TEXT, "Good luck getting in here anyways. My coworker JUST locked the door and ran off to Gelb Forest with the key.");
+				Pokemon.addTask(Task.TEXT, "See ya idiot!");
+				Pokemon.addTask(Task.UPDATE, "");
+				p.flag[0][12] = true;
+			}
+		} else if (gp.currentMap == 161) {
+			if (!p.flag[0][7]) {
+				Pokemon.addTask(Task.TEXT, "Sugma balls");
+				Task t = Pokemon.addTask(Task.ITEM, "");
+				t.item = Item.PACKAGE_A;
+				t = Pokemon.addTask(Task.ITEM, "");
+				t.item = Item.PACKAGE_B;
+				t = Pokemon.addTask(Task.ITEM, "");
+				t.item = Item.PACKAGE_C;
+				p.flag[0][7] = true;
+			} else if (p.flag[0][7] && !p.flag[0][11]) {
+				if (p.flag[0][8] && p.flag[0][9] && p.flag[0][10]) {
+					Pokemon.addTask(Task.TEXT, "Good kitten");
+					Pokemon.addTask(Task.TEXT, "I'm a greedy little FUCK tho so take this too");
+					Task t = Pokemon.addTask(Task.ITEM, "");
+					t.item = Item.PACKAGE_D;
+					p.flag[0][11] = true;
+				} else {
+					Pokemon.addTask(Task.TEXT, "Go deliver my letters bitch");
+				}
+			} else if (p.flag[0][11] && !p.flag[0][15]) {
+				Pokemon.addTask(Task.TEXT, "Go deliver my letters bitch again");
+			} else if (p.flag[0][15]) {
+				Pokemon.addTask(Task.TEXT, "Ty gang i'll go back to the gym i suppose you little fuck");
+				p.flag[0][16] = true;
+			}
+		} else if (gp.currentMap == 57) {
+			if (p.flag[0][7] && !p.flag[0][9]) {
+				Pokemon.addTask(Task.TEXT, "Oh shit gangy that's my fuckin package you the goat");
+				Pokemon.addTask(Task.TEXT, "Here take this as thanks kitten.");
+				Task t = Pokemon.addTask(Task.ITEM, "");
+				t.item = Item.FLAME_ORB;
+				p.bag.remove(Item.PACKAGE_B);
+				p.flag[0][9] = true;
+			} else {
+				Pokemon.addTask(Task.TEXT, "Be sure to check me out in Rawwar city sometime!");
+			}
+		} else if (gp.currentMap == 58) {
+			if (p.flag[0][7] && !p.flag[0][17]) { // TODO: change to flag for finding the exp share
+				if (!p.flag[0][8]) {
+					Pokemon.addTask(Task.TEXT, "...Oh, is that my package?");
+					Pokemon.addTask(Task.TEXT, "Thank you so much young man! Sorry for jumping at you, I'm just really unsettled right now.");
+					p.bag.remove(Item.PACKAGE_A);
+					p.flag[0][8] = true;
+				} else {
+					Pokemon.addTask(Task.TEXT, "Oh, hello there. Sorry for being alarmed, I'm just a little unsettled right now.");
+				}
+				Pokemon.addTask(Task.TEXT, "Some rampant Pokemon sniffing out berries all burst into my house, but I was just making juice.");
+				Pokemon.addTask(Task.TEXT, "In the midst of all the chaos, some crook snuck in and stole my precious item right off my poor Pokemon!");
+				Pokemon.addTask(Task.TEXT, "Whatever will I do to find it?");
+			} else if (p.flag[0][7] && p.flag[0][15]) {
+				p.flag[0][16] = true;
+				Pokemon.addTask(Task.TEXT, "Oh my god, my item! You found it! Wow, you really are impressive!");
+				Pokemon.addTask(Task.TEXT, "You know what, since you're so kind, why don't you just keep it? It'll be better off with a stronger trainer like you.");
+				Pokemon.addTask(Task.TEXT, "Here, take this for your troubles too. Really, it's the least I can do.");
+				Task t = Pokemon.addTask(Task.ITEM, "Obtained a Lucky Egg!");
+				t.item = Item.LUCKY_EGG;
+			}
+		} else if (gp.currentMap == 48) {
+			if (!p.flag[0][7]) {
+				Pokemon.addTask(Task.TEXT, "Feel free to look around!");
+			} else {
+				Pokemon.addTask(Task.TEXT, "Oh, you have a package for us? Thank you so much! I'm sure Robin greatly appreciates the help!");
+				Pokemon.addTask(Task.TEXT, "Here, have a complimentary gift dog! No really, we insist.");
+				
+				Random dog = new Random();
+				int id = dog.nextInt(3);
+				id = 120 + (id * 3);
+				Pokemon dogP = new Pokemon(id, 5, true, false);
+				Pokemon.addTask(Task.TEXT, "You adopted a gift dog!");
+				Task t = Pokemon.addTask(Task.GIFT, "", dogP);
+				t.item = Item.SILK_SCARF;
+				p.bag.remove(Item.PACKAGE_C);
+				p.flag[0][10] = true;
+			}
+		} else if (gp.currentMap == 8) {
+			if (p.flag[0][14] && !p.flag[0][15]) {
+				Pokemon.addTask(Task.TEXT, "Thanks for saving me! Oh, you have a package for me?");
+				Pokemon.addTask(Task.TEXT, "Thank you! Here's Cut bruh");
+				Task t = Pokemon.addTask(Task.ITEM, "");
+				t.item = Item.HM01;
+				p.bag.remove(Item.PACKAGE_D);
+				p.flag[0][15] = true;
+			}
 		}
 		
 		if (gp.currentMap == 32 && !p.flags[30]) {
 			p.flags[30] = true;
 			p.fish = true;
 			Pokemon.addTask(Task.TEXT, "You got a Fishing Rod!\n(Press 'A' to fish)");
-		}
-		if (gp.currentMap == 58 && !p.flags[33]) {
-			if (!p.flags[32]) {
-				Pokemon.addTask(Task.TEXT, "Some rampant Pokemon sniffing out berries all burst into my house, but I was just making juice.");
-				Pokemon.addTask(Task.TEXT, "In the midst of all the chaos, some crook snuck in and stole my precious item right off my poor Pokemon!");
-				Pokemon.addTask(Task.TEXT, "Whatever will I do to find it?");
-			} else {
-				p.flags[33] = true;
-				Pokemon.addTask(Task.TEXT, "Oh my god, my item! You found it! Wow, you really are impressive!");
-				Pokemon.addTask(Task.TEXT, "You know what, since you're so kind, why don't you just keep it? It'll be better off with a stronger trainer like you.");
-				Pokemon.addTask(Task.TEXT, "Here, take this for your troubles too. Really, it's the least I can do.");
-				Pokemon.addTask(Task.TEXT, "Obtained a Lucky Egg!");
-				p.bag.add(Item.LUCKY_EGG);
-			}
 		}
 		if (gp.currentMap == 41 && p.flags[8] && p.flags[9] && !p.flags[31]) {
 			p.flags[31] = true;
@@ -587,16 +670,6 @@ public class PlayerCharacter extends Entity {
 		}
 		if (gp.currentMap == 46) {
 			Pokemon.addTask(Task.HP, "Check your team's Hidden Power types here!");
-		}
-		if (gp.currentMap == 48 && !p.flags[11]) {
-			Random dog = new Random();
-			int id = dog.nextInt(3);
-			id = 120 + (id * 3);
-			p.flags[11] = true;
-			Pokemon dogP = new Pokemon(id, 5, true, false);
-			Pokemon.addTask(Task.TEXT, "You adopted a gift dog!");
-			Task t = Pokemon.addTask(Task.GIFT, "", dogP);
-			t.item = Item.SILK_SCARF;
 		}
 		if (gp.currentMap == 18 && !p.flags[12]) {
 			p.flags[12] = true;
@@ -1081,6 +1154,21 @@ public class PlayerCharacter extends Entity {
 			gp.ui.showMessage("There aren't any Pokemon inside.");
 		}
 		
+	}
+	
+	private void interactLockedDoor(int i) {
+		if (gp.currentMap == 4) { // Poppy Grove Warehouse
+			if (!p.bag.contains(Item.WAREHOUSE_KEY)) {
+				gp.ui.showMessage("The door is locked!");
+			} else {
+				gp.keyH.wPressed = false;
+				gp.ui.showMessage("Used the warehouse key! The door unlocked!");
+				generateParticle(gp.iTile[gp.currentMap][i]);
+				gp.iTile[gp.currentMap][i] = null;
+				p.flag[0][13] = true;
+				p.bag.remove(Item.WAREHOUSE_KEY);
+			}
+		}
 	}
 	
 	private int getTileForwardX() {

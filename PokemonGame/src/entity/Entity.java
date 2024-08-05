@@ -28,7 +28,7 @@ public class Entity {
 	public boolean collisionOn = false;
 	public boolean inTallGrass;
 	
-	public int trainer;
+	public int trainer = -1;
 	public boolean collision = true;
 	public String dialogues[] = new String[20];
 	int dialogueIndex = 0;
@@ -39,6 +39,8 @@ public class Entity {
 	Color color;
 	int size;
 	int maxLife;
+	
+	public int flag = -1;
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;
@@ -144,5 +146,13 @@ public class Entity {
 			Particle p = new Particle(gp, x, y, color, size, speed, maxLife);
 			gp.particleList.add(p);
 		}
+	}
+	
+	public int getFlagX() {
+		return (flag >> 5) & 0xF;
+	}
+	
+	public int getFlagY() {
+		return flag & 0x1F;
 	}
 }

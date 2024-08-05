@@ -81,7 +81,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 10;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 27;
+	public static final int VERSION = 30;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -103,6 +103,7 @@ public class Player extends Trainer implements Serializable {
 		posX = spawn[1];
 		posY = spawn[2];
 		
+		starter = -1;
 		secondStarter = -1;
 		pokedex = new int[Pokemon.MAX_POKEMON + 1];
 		flags = new boolean[50];
@@ -310,12 +311,6 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	private void updateFlags() {
-		boolean[] tempFlag = flags.clone();
-		flags = new boolean[50];
-		for (int i = 0; i < tempFlag.length; i++) {
-			flags[i] = tempFlag[i];
-		}
-		
 		if (flag == null) {
 			flag = new boolean[10][GamePanel.MAX_FLAG];
 			updateLegacyFlags();
@@ -332,6 +327,8 @@ public class Player extends Trainer implements Serializable {
 	
 	private void updateLegacyFlags() {
 		// TODO: map flags to flag indices
+		secondStarter--;
+		//flags = null;
 	}
 	
 	private void updateTrainers() {
@@ -621,10 +618,10 @@ public class Player extends Trainer implements Serializable {
 		return false;
 	}
 
-	public int getDexShowing() {
+	public int getDexShowing(Pokemon[] pokedex) {
 		int result = -1;
 		for (int i = pokedex.length - 1; i >= 0; i--) {
-			if (pokedex[i] != 0) {
+			if (this.pokedex[pokedex[i].id] != 0) {
 				result = i;
 				break;
 			}
@@ -1188,11 +1185,11 @@ public class Player extends Trainer implements Serializable {
     	team[5] = null;
 	}
 
-	public int[] getDexAmounts() {
+	public int[] getDexAmounts(Pokemon[] pokedex) {
 		int[] result = new int[2];
-		for (int i = 1; i <= getDexShowing(); i++) {
-			if (pokedex[i] > 0) {
-				result[pokedex[i] - 1]++;
+		for (int i = 0; i <= getDexShowing(pokedex); i++) {
+			if (this.pokedex[pokedex[i].id] > 0) {
+				result[this.pokedex[pokedex[i].id] - 1]++;
 			}
 		}
 		return result;
@@ -1245,5 +1242,60 @@ public class Player extends Trainer implements Serializable {
 		} else {
 			return 4;
 		}
+	}
+
+	public String getDexTitle(int dexType) {
+		String[] options = new String[] {"Xhenovian Pokedex", "Shadow Pokedex", "Electric Pokedex", "Variant Pokedex"};
+		return options[dexType];
+	}
+	
+	public Pokemon[] getDexType(int dexType) {
+		switch (dexType) {
+		case 0:
+			return pokedex1;
+		case 1:
+			return pokedex2;
+		case 2:
+			return pokedex3;
+		case 3:
+			return pokedex4;
+		default:
+			return null;
+		}
+	}
+	
+	public int getMaxDex(int dexType) {
+		switch (dexType) {
+		case 0:
+			return Pokemon.POKEDEX_1_SIZE;
+		case 1:
+		case 2:
+			return Pokemon.POKEDEX_METEOR_SIZE;
+		case 3:
+			return Pokemon.POKEDEX_2_SIZE;
+		default:
+			return -1;
+		}
+	}
+
+	public int calculateStars() {
+		int result = 0;
+		boolean allSeen = true;
+		for (int i = 0; i < 4; i++) {
+			Pokemon[] dex = getDexType(i);
+			int[] amt = getDexAmounts(dex);
+			int maxDex = getMaxDex(i);
+			
+			if (allSeen && amt[0] + amt[1] < maxDex) {
+				allSeen = false;
+			}
+			if (amt[1] >= maxDex) {
+				result++;
+			}
+		}
+		
+		if (allSeen) result++;
+		
+		return result;
 	}
 }

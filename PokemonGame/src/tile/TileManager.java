@@ -190,10 +190,11 @@ public class TileManager {
 		loadMap("/maps/house04.txt", 158, true);
 		loadMap("/maps/gym08.txt", 159, true);
 		loadMap("/maps/space01.txt", 160, true);
+		loadMap("/maps/post.txt", 161, true);
 	}
 	
 	private void setupCollisionRectangles() {
-		collisionRectangles = new Rectangle[7];
+		collisionRectangles = new Rectangle[11];
 		collisionRectangles[0] = new Rectangle(0, 0, gp.tileSize, gp.tileSize); // full tile
 		collisionRectangles[1] = new Rectangle(0, 0, gp.tileSize, gp.tileSize / 2); // top half
 		collisionRectangles[2] = new Rectangle(0, gp.tileSize / 2, gp.tileSize, gp.tileSize / 2); // bottom half
@@ -201,6 +202,10 @@ public class TileManager {
 		collisionRectangles[4] = new Rectangle(gp.tileSize / 2, 0, gp.tileSize / 2, gp.tileSize); // right half
 		collisionRectangles[5] = new Rectangle(0, 0, gp.tileSize, gp.tileSize * 2 / 3); // top 2/3
 		collisionRectangles[6] = new Rectangle(0, gp.tileSize / 3, gp.tileSize, gp.tileSize * 2 / 3); // bottom 2/3
+		collisionRectangles[7] = new Rectangle(0, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2); // bottom left corner
+		collisionRectangles[8] = new Rectangle(gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2); // bottom right corner
+		collisionRectangles[9] = new Rectangle(0, 0, gp.tileSize, gp.tileSize * 3 / 4); // top 3/4
+		collisionRectangles[10] = new Rectangle(0, gp.tileSize / 4, gp.tileSize, gp.tileSize * 3 / 4); // bottom 3/4
 	}
 
 	public void getTileImage() {
@@ -869,6 +874,124 @@ public class TileManager {
 		setup(675, true);
 		setup(676, false);
 		setup(677, false);
+		setup(678, true);
+		setup(679, true);
+		setup(680, true);
+		setup(681, true);
+		setup(682, true);
+		setup(683, true);
+		setup(684, true);
+		setup(685, true);
+		setup(686, true);
+		setup(687, true);
+		setup(688, false);
+		setup(689, true);
+		setup(690, true);
+		setup(691, true);
+		setup(692, false);
+		setup(693, false);
+		setup(694, false);
+		setup(695, true, 8);
+		setup(696, true, 7);
+		setup(697, true);
+		setup(698, true);
+		setup(699, true);
+		setup(700, true);
+		setup(701, true);
+		setup(702, true);
+		setup(703, true);
+		setup(704, true);
+		setup(705, true);
+		setup(706, true);
+		setup(707, true);
+		setup(708, true);
+		setup(709, true);
+		setup(710, true);
+		setup(711, true, 1);
+		setup(712, true, 1);
+		setup(713, true, 1);
+		setup(714, false);
+		setup(715, false);
+		setup(716, false);
+		setup(717, false);
+		setup(718, true);
+		setup(719, true);
+		setup(720, true, 10);
+		setup(721, true, 10);
+		setup(722, true);
+		setup(723, true);
+		setup(724, true, 1);
+		setup(725, true, 1);
+		setup(726, true);
+		setup(727, true);
+		setup(728, true);
+		setup(729, true);
+		setup(730, true);
+		setup(731, true);
+		setup(732, true);
+		setup(733, true);
+		setup(734, true, 2);
+		setup(735, true);
+		setup(736, true);
+		setup(737, true, 2);
+		setup(738, true);
+		setup(739, true);
+		setup(740, true);
+		setup(741, true);
+		setup(742, true, 2);
+//		setup(743, true);
+//		setup(744, true);
+//		setup(745, true);
+//		setup(746, true);
+//		setup(747, true);
+//		setup(748, true);
+//		setup(749, true);
+//		setup(750, true);
+//		setup(751, true);
+//		setup(752, true);
+//		setup(753, true);
+//		setup(754, true);
+//		setup(755, true);
+//		setup(756, true);
+//		setup(757, true);
+//		setup(758, true);
+//		setup(759, true);
+//		setup(760, true);
+//		setup(761, true);
+//		setup(762, true);
+//		setup(763, true);
+//		setup(764, true);
+//		setup(765, true);
+//		setup(766, true);
+//		setup(767, true);
+//		setup(768, true);
+//		setup(769, true);
+//		setup(770, true);
+//		setup(771, true);
+//		setup(772, true);
+//		setup(773, true);
+//		setup(774, true);
+//		setup(775, true);
+//		setup(776, true);
+//		setup(777, true);
+//		setup(778, true);
+//		setup(779, true);
+//		setup(780, true);
+//		setup(781, true);
+//		setup(782, true);
+//		setup(783, true);
+//		setup(784, true);
+//		setup(785, true);
+//		setup(786, true);
+//		setup(787, true);
+//		setup(788, true);
+//		setup(789, true);
+//		setup(790, true);
+//		setup(791, true);
+//		setup(792, true);
+//		setup(793, true);
+//		setup(794, true);
+//		setup(795, true);
 		
 
 		try {

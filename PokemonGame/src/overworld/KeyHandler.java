@@ -377,10 +377,17 @@ public class KeyHandler implements KeyListener {
 					}
 				} else if (gp.ui.bagState == 2) { // sell
 					gp.ui.sellAmt++;
-					if (gp.ui.sellAmt > gp.ui.currentItems.get(gp.ui.bagNum).getMaxSell()) gp.ui.sellAmt = 1;
+					if (gp.ui.sellAmt > gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell()) gp.ui.sellAmt = 1;
 				} else {
-					if (gp.ui.bagNum > 0) {
-						gp.ui.bagNum--;
+					int amt;
+					if (ctrlPressed) {
+						amt = 5;
+					} else {
+						amt = 1;
+					}
+					gp.ui.bagNum[gp.ui.currentPocket - 1] -= amt;
+					if (gp.ui.bagNum[gp.ui.currentPocket - 1] <= 0) {
+						gp.ui.bagNum[gp.ui.currentPocket - 1] = 0;
 					}
 				}
 			} else if (gp.ui.subState == 4) { // save
@@ -400,10 +407,19 @@ public class KeyHandler implements KeyListener {
 					}
 				} else if (gp.ui.bagState == 2) { // sell
 					gp.ui.sellAmt--;
-					if (gp.ui.sellAmt < 1) gp.ui.sellAmt = gp.ui.currentItems.get(gp.ui.bagNum).getMaxSell();
+					if (gp.ui.sellAmt < 1) gp.ui.sellAmt = gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell();
 				} else {
-					if (gp.ui.bagNum < gp.ui.currentItems.size() - 1) {
-						gp.ui.bagNum++;
+					int amt;
+					if (ctrlPressed) {
+						amt = 5;
+					} else {
+						amt = 1;
+					}
+					if (gp.ui.currentItems.size() > 0) {
+						gp.ui.bagNum[gp.ui.currentPocket - 1] += amt;
+						if (gp.ui.bagNum[gp.ui.currentPocket - 1] >= gp.ui.currentItems.size() - 1) {
+							gp.ui.bagNum[gp.ui.currentPocket - 1] = gp.ui.currentItems.size() - 1;
+						}
 					}
 				}
 			} else if (gp.ui.subState == 4) { // save
@@ -413,7 +429,7 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
 			if (gp.ui.subState == 3) { // bag
 				if (gp.ui.bagState == 2) { // sell
-					int max = gp.ui.currentItems.get(gp.ui.bagNum).getMaxSell();
+					int max = gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell();
 					gp.ui.sellAmt -= max > 10 ? 10 : 1;
 					if (gp.ui.sellAmt < 1) gp.ui.sellAmt += max;
 				} else if (gp.ui.bagState == 0) {
@@ -421,7 +437,6 @@ public class KeyHandler implements KeyListener {
 					if (gp.ui.currentPocket < Item.MEDICINE) {
 						gp.ui.currentPocket = Item.KEY_ITEM;
 					}
-					gp.ui.bagNum = 0;
 					gp.ui.selectedBagNum = -1;
 					gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
 				}
@@ -430,7 +445,7 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
 			if (gp.ui.subState == 3) { // bag
 				if (gp.ui.bagState == 2) { // sell
-					int max = gp.ui.currentItems.get(gp.ui.bagNum).getMaxSell();
+					int max = gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell();
 					gp.ui.sellAmt += max > 10 ? 10 : 1;
 					if (gp.ui.sellAmt > max) gp.ui.sellAmt -= max;
 				} else if (gp.ui.bagState == 0) {
@@ -438,7 +453,6 @@ public class KeyHandler implements KeyListener {
 					if (gp.ui.currentPocket > Item.KEY_ITEM) {
 						gp.ui.currentPocket = Item.MEDICINE;
 					}
-					gp.ui.bagNum = 0;
 					gp.ui.selectedBagNum = -1;
 					gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
 				}
