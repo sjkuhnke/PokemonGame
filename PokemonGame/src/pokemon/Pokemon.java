@@ -4416,6 +4416,8 @@ public class Pokemon implements Serializable {
 		public static final int SEMI_INV = 27;
 		public static final int FLASH_IN = 28;
 		public static final int FLASH_OUT = 29;
+		public static final int ITEM = 30;
+		public static final int UPDATE = 31;
 		
 		public int type;
 		public String message;
@@ -4440,7 +4442,11 @@ public class Pokemon implements Serializable {
 		public Task(int type, String message, Pokemon p) {
 			this.message = message;
 			this.type = type;
-			this.counter = 50;
+			if (type == ITEM) {
+				this.counter = 1;
+			} else {
+				this.counter = 50;
+			}
 			setPokemon(p);
 			start = -1;
 		}
@@ -7503,17 +7509,18 @@ public class Pokemon implements Serializable {
 			}
 			
 			Trainer trainer = new Trainer(name, team, items, money, item, flagIndex);
+			if (Trainer.trainers[index] != null) {
+				scanner.close();
+				throw new IllegalStateException(Trainer.trainers[index].getName() + " already occupies index " + index + ", change " + trainer.getName() + "'s index");
+			}
 			Trainer.trainers[index] = trainer;
 			
 			if (name.contains("Scott") || name.contains("Fred")) {
 				rivalIndices.add(index);
 			}
 			
-			for (String s : Trainer.bosses) {
-				if (name.contains(s)) {
-					Trainer.bossTrainers.add(trainer);
-					break;
-				}
+			if (Trainer.bosses.stream().anyMatch(name::contains)) {
+				Trainer.bossTrainers.add(trainer);
 			}
 		}
 		
@@ -7523,7 +7530,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void updateRivals() {
-		if (gp.player.p.starter == 0) return;
+		if (gp.player.p.starter == -1) return;
 		
 		Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
 		ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(items));

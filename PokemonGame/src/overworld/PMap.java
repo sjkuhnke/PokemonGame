@@ -571,10 +571,10 @@ public class PMap extends JPanel {
 			PlayerCharacter.currentMapName = "Poppy Grove";
 			return 4;
 		case 7:
-			PlayerCharacter.currentMapName = "Poppy Grove";
+			PlayerCharacter.currentMapName = "Warehouse";
 			return 4;
 		case 8:
-			PlayerCharacter.currentMapName = "Poppy Grove";
+			PlayerCharacter.currentMapName = "Warehouse";
 			return 4;
 		case 9:
 			PlayerCharacter.currentMapName = "Poppy Grove";
@@ -1124,10 +1124,10 @@ public class PMap extends JPanel {
 		case 160:
 			PlayerCharacter.currentMapName = "Outer Space";
 			return -1;
-		case 161: // TODO from here down
-			PlayerCharacter.currentMapName = "";
-			return 15;
-		case 162:
+		case 161:
+			PlayerCharacter.currentMapName = "Post Office";
+			return 4;
+		case 162: // TODO from here down
 			PlayerCharacter.currentMapName = "";
 			return 20;
 		case 163:

@@ -1,5 +1,6 @@
 package overworld;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -21,6 +22,7 @@ import object.Cut_Tree;
 import object.GymBarrier;
 import object.InteractiveTile;
 import object.ItemObj;
+import object.Locked_Door;
 import object.Pit;
 import object.PitEdge;
 import object.Rock_Climb;
@@ -44,6 +46,13 @@ public class AssetSetter {
 	
 	public ArrayList<Entity> clerks = new ArrayList<>();
 	
+	private static final int KLARA = -15;
+	private static final int AVERY = -14;
+	private static final int GRANDMOTHER = -13;
+	private static final int RESEARCHER = -12;
+	private static final int PROFESSOR = -11;
+	private static final int BLOCK_DEFAULT = -10;
+	
 	private static final int NPC_PC_GAUNTLET = -9;
 	private static final int ZURROARATR = -8;
 	private static final int TRIWANDOLIZ = -7;
@@ -54,14 +63,14 @@ public class AssetSetter {
 	private static final int NPC_CLERK = -2;
 	private static final int NPC_PC = -1;
 	private static final int NPC_NURSE = 0;
-	private static final int GYM_1 = 1;
-	private static final int GYM_2 = 2;
-	private static final int GYM_3 = 3;
-	private static final int GYM_4 = 4;
-	private static final int GYM_5 = 5;
-	private static final int GYM_6 = 6;
-	private static final int GYM_7 = 7;
-	private static final int GYM_8 = 8;
+	private static final int ROBIN = 1;
+	private static final int STANFORD = 2;
+	private static final int MILLIE = 3;
+	private static final int GLACIUS = 4;
+	private static final int MINDY = 5;
+	private static final int RAYNA = 6;
+	private static final int MERLIN = 7;
+	private static final int NOVA = 8;
 	private static final int SCOTT_UP = 9;
 	private static final int SCOTT_DOWN = 10;
 	private static final int FRED_UP = 11;
@@ -140,11 +149,19 @@ public class AssetSetter {
 		
 		mapNum = 7;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(27, 42, Item.BLACK_GLASSES, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 42, Item.BLACK_GLASSES, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 44, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 45, Item.AWAKENING, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 36, Item.POKEBALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 38, Item.REPEL, mapNum);
 		
 		mapNum = 8;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(27, 45, Item.EXPERT_BELT, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(30, 51, Item.EXPERT_BELT, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(33, 50, Item.PARALYZE_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(27, 43, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(36, 49, Item.GREAT_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 38, Item.REVIVE, mapNum);
 		
 		mapNum = 9;
 		objIndex = 0;
@@ -372,10 +389,6 @@ public class AssetSetter {
 		mapNum = 56;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(31, 41, Item.EVERSTONE, mapNum);
-		
-		mapNum = 57;
-		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(31, 41, Item.FLAME_ORB, mapNum);
 		
 		mapNum = 59;
 		objIndex = 0;
@@ -752,7 +765,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 63, 14, 329);
 		
 		if (!flags[15]) {
-			gp.npc[mapNum][index] = NPCSetup(85, 5, "The road is closed from this direction, there's a MASSIVE sinkhole on the other side of this gate.\nIf you come from Schrice City straight North of here it should be clear.", 15);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 85, 5, "The road is closed from this direction, there's a MASSIVE sinkhole on the other side of this gate.\nIf you come from Schrice City straight North of here it should be clear.", 15);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -763,7 +776,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 63, 40, 262);
 		
 		if (!flags[2]) {
-			gp.npc[mapNum][index] = NPCSetup(60, 44, "The Pokemon here are going FERAL over these berry trees. Come back later!", 2);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 60, 44, "The Pokemon here are going FERAL over these berry trees. Come back later!", 2);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -786,15 +799,13 @@ public class AssetSetter {
 		
 		mapNum = 3;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 34, "Sorry, we are blocking the road because this gentleman here demands we look for a young trainer headed this way. You might want to ask him about it.");
-		gp.npc[mapNum][index] = NPCSetup(35, 39, "Oh! You must be that young trainer Scott mentioned! I'm his quite elegant father Avery!", true); // Avery
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 34, "Sorry, we are blocking the road because this gentleman here demands we look for a young trainer headed this way. You might want to ask him about it.");
+		gp.npc[mapNum][index] = NPCSetup(AVERY, 35, 39, "Oh! You must be that young trainer Scott mentioned! I'm his quite elegant father Avery!", true); // Avery
 		
 		mapNum = 4;
-		if (!flags[2]) {
-			gp.npc[mapNum][index] = NPCSetup(81, 61, "The gym is currently closed because the Leader is trying to help the Warehouse owner get rid of Team Nuke. Come back later.", 2);
-		} else {
-			gp.npc[mapNum][index++] = null;
-		}
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 81, 61, "Robin is swamped check post office");
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 66, 79, "Scram kid!", true);
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 32, 62, 18);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 23, 65, 19); // make way lower levels
@@ -810,31 +821,31 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 72, 28, 101);
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 44, 81, 263);
-//		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 15, 70, 23);
-//		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 15, 70, 23);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 44, 68, 359);
 		
 		mapNum = 7;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 30, 42, 5);
-		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 33, 42, 6);
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 36, 39, 7);
-		gp.npc[mapNum][index] = NPCSetup(TN_UP, 36, 42, 8);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 28, 37, 5);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 28, 41, 6);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 37, 32, 7);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 37, 36, 8);
 		
 		mapNum = 8;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 30, 39, 9);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 32, 39, 9);
 		gp.npc[mapNum][index] = NPCSetup(TN_UP, 28, 41, 10);
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 32, 39, 11);
-		gp.npc[mapNum][index] = NPCSetup(TN_UP, 32, 45, 12);
-		gp.npc[mapNum][index] = NPCSetup(RICK, 35, 41, 13);
-		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 30, 44, 258);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 36, 42, 11);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 36, 47, 12);
+		gp.npc[mapNum][index] = NPCSetup(RICK, 40, 48, 13);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 28, 49, 258);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 37, 38, "Who are these dudes bruh", 15, true, "Thank you so much for your help! Those guys are up to no good.");
 		
 		mapNum = 9;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 34, 42, 14);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 27, 39, 15);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 42, 34, 16);
-		gp.npc[mapNum][index] = NPCSetup(GYM_1, 38, 28, 17);
+		gp.npc[mapNum][index] = NPCSetup(ROBIN, 38, 28, 17);
 		
 		mapNum = 11;
 		index = 0;
@@ -863,7 +874,7 @@ public class AssetSetter {
 		mapNum = 13;
 		index = 0;
 		if (!flags[4]) {
-			gp.npc[mapNum][index] = NPCSetup(15, 56, "The gym leader is stuck in the office upstairs trying to help Scott with Team Nuke. Go find Scott and help!", 4);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 15, 56, "The gym leader is stuck in the office upstairs trying to help Scott with Team Nuke. Go find Scott and help!", 4);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -902,8 +913,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 56, 43, 54);
 		
 		if (!flags[3]) {
-			gp.npc[mapNum][index] = NPCSetup(49, 53, "Quick! Team Nuke is taking over our office! Please help!", 3);
-			gp.npc[mapNum][index] = NPCSetup(57, 53, "Quick! Team Nuke is taking over our office! Please help!", 3);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 49, 53, "Quick! Team Nuke is taking over our office! Please help!", 3);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 57, 53, "Quick! Team Nuke is taking over our office! Please help!", 3);
 		} else {
 			gp.npc[mapNum][index++] = null;
 			gp.npc[mapNum][index++] = null;
@@ -913,7 +924,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 48, 45, 55);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 45, 38, 146);
-		gp.npc[mapNum][index] = NPCSetup(46, 33, "That was an impressive battle! I found a rare MAGIC Pokemon, but after watching that, you'd be a better trainer. Here!", 12, true, "Enjoy all the wonders of the MAGIC type!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 46, 33, "That was an impressive battle! I found a rare MAGIC Pokemon, but after watching that, you'd be a better trainer. Here!", 12, true, "Enjoy all the wonders of the MAGIC type!");
 		
 		mapNum = 21;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 55, 60, 56);
@@ -927,7 +938,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 54, 46, 64);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 54, 48, 65);
 		
-		gp.npc[mapNum][index] = NPCSetup(GYM_2, 63, 39, 66);
+		gp.npc[mapNum][index] = NPCSetup(STANFORD, 63, 39, 66);
 		
 		mapNum = 22;
 		index = 0;
@@ -938,7 +949,7 @@ public class AssetSetter {
 		
 		mapNum = 23;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 45, "Wow, there's a lot of lava over there. It's definitely not safe for any newbie trainers. If I see any of them coming this way... I swear to god...", 5);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 45, "Wow, there's a lot of lava over there. It's definitely not safe for any newbie trainers. If I see any of them coming this way... I swear to god...", 5);
 		
 		mapNum = 24;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 65, 63, 75);
@@ -1012,16 +1023,16 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 65, 61, 91);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 45, 63, 92);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 38, 70, 93);
-		gp.npc[mapNum][index] = NPCSetup(GYM_3, 51, 61, 94);
+		gp.npc[mapNum][index] = NPCSetup(MILLIE, 51, 61, 94);
 		
 		mapNum = 32;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 40, "Take my spare fishing rod! Look at water and press 'A' to fish!", 30, true, "Look at water and press 'A' to fish!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 40, "Take my spare fishing rod! Look at water and press 'A' to fish!", 30, true, "Look at water and press 'A' to fish!");
 		
 		mapNum = 33;
 		index = 0;
 		if (gp.player.p.badges >= 5 && !flags[19]) {
-			gp.npc[mapNum][index] = NPCSetup(62, 17, "There's some SCARY people wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.", 19);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 62, 17, "There's some SCARY people wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.", 19);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1051,7 +1062,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 91, 43, 116);
 		
 		if (gp.player.p.badges >= 5 && !flags[19]) {
-			gp.npc[mapNum][index] = NPCSetup(15, 46, "There's some SCARY people wearing black in there somewhere. I heard one of their leaders go to Ghostly Woods and is planning something evil.", 19);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 15, 46, "There's some SCARY people wearing black in there somewhere. I heard one of their leaders go to Ghostly Woods and is planning something evil.", 19);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1061,7 +1072,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 53, 7, 327);
 		
 		if (!flags[8] || !flags[9]) {
-			gp.npc[mapNum][index] = NPCSetup(62, 41, "What is going on at the school?! Where is everybody?!?!");
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 62, 41, "What is going on at the school?! Where is everybody?!?!");
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1079,13 +1090,13 @@ public class AssetSetter {
 		index = 0;
 		
 		if (!flags[7]) {
-			gp.npc[mapNum][index] = NPCSetup(13, 24, "Room B is locked! Where could Key B be?", 7);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 13, 24, "Room B is locked! Where could Key B be?", 7);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
 		
 		if (!flags[6]) {
-			gp.npc[mapNum][index] = NPCSetup(50, 24, "Room A is locked! Where could Key A be?", 6);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 50, 24, "Room A is locked! Where could Key A be?", 6);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1107,7 +1118,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 36, 17, 131);
 		gp.npc[mapNum][index] = NPCSetup(TN_UP, 32, 18, 132);
 		
-		gp.npc[mapNum][index] = NPCSetup(29, 18, "Who are these people?? Have you cleared both rooms yet?", 31, true, "Thank you for restoring peace to our wonderful school!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 29, 18, "Who are these people?? Have you cleared both rooms yet?", 31, true, "Thank you for restoring peace to our wonderful school!");
 		
 		mapNum = 44;
 		index = 0;
@@ -1115,15 +1126,15 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 66, 57, 134);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 60, 52, 135);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 66, 46, 136);
-		gp.npc[mapNum][index] = NPCSetup(GYM_4, 63, 39, 137);
+		gp.npc[mapNum][index] = NPCSetup(GLACIUS, 63, 39, 137);
 		
 		mapNum = 46;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Check your team's Hidden Power types here!", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Check your team's Hidden Power types here!", true);
 		
 		mapNum = 47;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Hello there, welcome to Bananaville's Pokemon Ranch!", 6, true, "Why have one partner when you can have two, am I right?");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Hello there, welcome to Bananaville's Pokemon Ranch!", 6, true, "Why have one partner when you can have two, am I right?");
 		
 		mapNum = 48;
 		index = 0;
@@ -1131,24 +1142,24 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 33, 42, 143);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 31, 36, 144);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 28, 39, 145);
-		gp.npc[mapNum][index] = NPCSetup(24, 37, "Here, take this as a gift!", 11, true, "That little pup treating you alright? I bet he'll grow strong if you give it lots of love!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 24, 37, "Hi there, welcome to The Pound!", 10, true, "That little pup treating you alright? I bet he'll grow strong if you give it lots of love!");
 		
 		mapNum = 49;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Deep below ELECTRIC TUNNEL there's a secret trail called SHADOW PATH.", 13, true, "Now don't go telling the feds I gave you that. It's definitely illegal.");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Deep below ELECTRIC TUNNEL there's a secret trail called SHADOW PATH.", 13, true, "Now don't go telling the feds I gave you that. It's definitely illegal.");
 		
 		mapNum = 50;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "WOAOAOHAOH!!! Hehehehehe I just popped a naughty yerkocet!! Pick one of these NUTTY \"starters\" tehehee", 14, true, "YEEEOOEEOOOOeeeoooeeooeee.....");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "WOAOAOHAOH!!! Hehehehehe I just popped a naughty yerkocet!! Pick one of these NUTTY \"starters\" tehehee", 14, true, "YEEEOOEEOOOOeeeoooeeooeee.....");
 		
 		mapNum = 51;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Why what a surprise! Hello there dear, I'm glad you could visit your grandmother before you left home.", 3, true, "Glad you could check in dear, but I'm fine. You still got an adventure ahead of you."); // Dad's Mom
+		gp.npc[mapNum][index] = NPCSetup(GRANDMOTHER, 31, 41, "Why what a surprise! Hello there dear, I'm glad you could visit your grandmother before you left home.", 3, true, "Glad you could check in dear, but I'm fine. You still got an adventure ahead of you."); // Dad's Mom
 		
 		mapNum = 52;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 36, "Well hiya there son!", true); // Professor Dad
-		gp.npc[mapNum][index] = NPCSetup(31, 45, "Heh, you're definitely excited to head out there, but your Dad wanted to see you off before you start your adventure.");
+		gp.npc[mapNum][index] = NPCSetup(PROFESSOR, 31, 36, "Well hiya there son!", true); // Professor Dad
+		gp.npc[mapNum][index] = NPCSetup(RESEARCHER, 31, 45, "Heh, you're definitely excited to head out there, but your Dad wanted to see you off before you start your adventure.");
 		
 		mapNum = 53;
 		index = 0;
@@ -1160,11 +1171,11 @@ public class AssetSetter {
 		
 		mapNum = 57;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Hello there young man! What brings you to the famous Chef Eddie's residence?");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Hello there young man! What brings you to the famous Chef Eddie's residence?", 9, true, "Be sure to check me out in Rawwar city sometime!");
 		
 		mapNum = 58;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(33, 42, "Who are you?!?!?! Oh, hello there. Sorry for being alarmed, I'm a little unsettled right now.", 33, true, "Thank you so much for your kindness! I hope you have a great day :)");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 33, 42, "AAAGHHHHH!! GET OUT THIEF!", 15, true, "Thank you so much for your kindness! I hope you have a great day :)");
 		
 		mapNum = 60;
 		index = 0;
@@ -1217,7 +1228,7 @@ public class AssetSetter {
 		mapNum = 85;
 		index = 0;
 		if (!flags[16]) {
-			gp.npc[mapNum][index] = NPCSetup(58, 64, "Talk to Grandpa (bottom house all the way southwest)", 16);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 58, 64, "Talk to Grandpa (bottom house all the way southwest)", 16);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1229,7 +1240,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 88, 40, 223);
 		
 		if (!flags[17]) {
-			gp.npc[mapNum][index] = NPCSetup(63, 67, "EEEK! DON'T GO THIS WAY! I saw some really scary men dressed up in black go towards the woods this way. BE CAREFUL!", 17);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 63, 67, "EEEK! DON'T GO THIS WAY! I saw some really scary men dressed up in black go towards the woods this way. BE CAREFUL!", 17);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1244,7 +1255,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 51, 53, 191);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 41, 47, 192);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 55, 47, 193);
-		gp.npc[mapNum][index] = NPCSetup(GYM_5, 63, 35, 194);
+		gp.npc[mapNum][index] = NPCSetup(MINDY, 63, 35, 194);
 		
 		mapNum = 90;
 		index = 0;
@@ -1254,7 +1265,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 29, 45, 183);
 		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 33, 45, 184);
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Thank you so much for saving me! Here, take this as a gift!", 16, true, "Love you grandson. Keep doing good things!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Thank you so much for saving me! Here, take this as a gift!", 16, true, "Love you grandson. Keep doing good things!");
 		
 		mapNum = 92;
 		index = 0;
@@ -1265,11 +1276,11 @@ public class AssetSetter {
 		
 		mapNum = 93;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Would you like to remember a move? Which Pokemon should remember?", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Would you like to remember a move? Which Pokemon should remember?", true);
 		
 		mapNum = 94;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "There have been 2 meteorites that have crashed into our region.", 18, true, "You should explore the Hearts of the ELECTRIC TUNNEL and SHADOW\nRAVINE. They're really pretty.");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "There have been 2 meteorites that have crashed into our region.", 18, true, "You should explore the Hearts of the ELECTRIC TUNNEL and SHADOW\nRAVINE. They're really pretty.");
 		
 		mapNum = 104;
 		index = 0;
@@ -1350,7 +1361,7 @@ public class AssetSetter {
 			gp.npc[mapNum][index++] = null;
 			GamePanel.volatileTrainers.put(NPCSetup(SCOTT_DOWN, 21, 40, 242), mapNum);
 		}
-		gp.npc[mapNum][index] = NPCSetup(44, 39, "I found this infant Pokemon abandoned here.", 22, true, "Please raise it with love and care!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 44, 39, "I found this infant Pokemon abandoned here.", 22, true, "Please raise it with love and care!");
 		
 		mapNum = 110;
 		index = 0;
@@ -1370,7 +1381,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 62, 47, 252);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 63, 41, 253);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 54, 43, 254);
-		gp.npc[mapNum][index] = NPCSetup(GYM_6, 53, 30, 255);
+		gp.npc[mapNum][index] = NPCSetup(RAYNA, 53, 30, 255);
 		
 		mapNum = 115;
 		index = 0;
@@ -1380,21 +1391,21 @@ public class AssetSetter {
 		
 		mapNum = 118;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(31, 41, "Hi! I can revive fossils for you!", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Hi! I can revive fossils for you!", true);
 		
 		mapNum = 119;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 32, 79, 264);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 37, 76, 265);
 		
-		gp.npc[mapNum][index] = NPCSetup(23, 76, "You're not ready to fight those guys over there yet, sorry bud.", 5);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 23, 76, "You're not ready to fight those guys over there yet, sorry bud.", 5);
 		
 		mapNum = 121;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 34, 42, 270);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 28, 37, 271);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 34, 35, 272);
-		gp.npc[mapNum][index] = NPCSetup(31, 34, "You're definitely not strong enough to go up here. Also, the items on the floor are really powerful, so you can only choose one for now.");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 34, "You're definitely not strong enough to go up here. Also, the items on the floor are really powerful, so you can only choose one for now.");
 		
 		mapNum = 122;
 		index = 0;
@@ -1419,15 +1430,15 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 86, 72, 290);
 		
 		if (!flags[26]) {
-			gp.npc[mapNum][index] = NPCSetup(25, 82, "The gym is closed right now. Why, you ask? Because a goddamn Team Nuke member came here and KIDNAPPED one of our employees.\n\nYeah, what the hell is right! Last I saw him, he was bringing Marcus towards the volcano. I just hope that Marcus doesn't sue us...", 26);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 25, 82, "The gym is closed right now. Why, you ask? Because a goddamn Team Nuke member came here and KIDNAPPED one of our employees.\n\nYeah, what the hell is right! Last I saw him, he was bringing Marcus towards the volcano. I just hope that Marcus doesn't sue us...", 26);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
 		
 		mapNum = 127;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(27, 39, "Welcome to the Blackjack table!", true);
-		gp.npc[mapNum][index] = NPCSetup(35, 39, "This game isn't ready yet!", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 27, 39, "Welcome to the Blackjack table!", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 35, 39, "This game isn't ready yet!", true);
 		
 		mapNum = 128;
 		index = 0;
@@ -1445,16 +1456,16 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 49, 59, 302);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 54, 54, 303);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 53, 56, 304);
-		gp.npc[mapNum][index] = NPCSetup(GYM_7, 53, 54, 305);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, 53, 54, 305);
 		
 		mapNum = 129;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(37, 44, "Hi there! Here, you can exchange coins for money!", true);
-		gp.npc[mapNum][index] = NPCSetup(31, 39, "Hi there! Here, you can exchange coins for prizes!", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 37, 44, "Hi there! Here, you can exchange coins for money!", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 39, "Hi there! Here, you can exchange coins for prizes!", true);
 		
 		mapNum = 130;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(24, 36, "Aren't you lookin like you want some SPICE!", 25, true, "ICE SPICE is my idol <3");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 24, 36, "Aren't you lookin like you want some SPICE!", 25, true, "ICE SPICE is my idol <3");
 		
 		mapNum = 131;
 		index = 0;
@@ -1479,7 +1490,7 @@ public class AssetSetter {
 			gp.npc[mapNum][index++] = null;
 			GamePanel.volatileTrainers.put(NPCSetup(TN_DOWN, 53, 73, 311), mapNum);
 		}
-		gp.npc[mapNum][index] = NPCSetup(55, 72, "Thank you so much for saving me!", 26, true, "It's so hot in here. How the \"hell\" do I leave???");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 55, 72, "Thank you so much for saving me!", 26, true, "It's so hot in here. How the \"hell\" do I leave???");
 		
 		mapNum = 139;
 		index = 0;
@@ -1503,7 +1514,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 79, 27, -1);
 		if (!flags[28]) {
-			gp.npc[mapNum][index] = NPCSetup(82, 27, "Inside there is quite the function in there. You are only allowed to bring 10 of your strongest Pokemon, and that's it. Good luck.", true);
+			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 82, 27, "Inside there is quite the function in there. You are only allowed to bring 10 of your strongest Pokemon, and that's it. Good luck.", true);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1587,6 +1598,10 @@ public class AssetSetter {
 		gp.npc[154][index] = NPCSetup(NPC_CLERK, 30, 39, -1);
 		gp.npc[155][index] = NPCSetup(NPC_MARKET, 34, 38, -1, true, Item.TM46, Item.TM63);
 		
+		mapNum = 161;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(ROBIN, 50, 37, "Whattup jit", true);
+		
 	}
 	
 	public void setInteractiveTile(int map) {
@@ -1605,6 +1620,8 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(74, 43, 0, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(75, 24, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(85, 72, 0, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = SetupLockedDoor(66, 79, 13, mapNum, map);
 		
 		mapNum = 11;
 		iIndex = 0;
@@ -2269,8 +2286,46 @@ public class AssetSetter {
 		
 		if (flag[0][5]) {
 			gp.npc[3][0] = null;
+			gp.npc[3][1] = null;
+			if (gp.npc[55][0] == null) gp.npc[55][0] = NPCSetup(AVERY, 31, 41, "Oh, what an unexpected visit. Quite pleasant of you to drop by, but Scott isn't here right now. Do feel free to look around."
+					+ "\nAh, I remember the days when I was in the Master Dojo, training to be a Gym Leader. I don't play dirty anymore, certainly not something an elegant Gym Leader would do."
+					+ "\nScott speaks very highly of you, as a partner he can trust. I do hope you two are getting along, though I can imagine he's very clingy."
+					+ "\nIt's quite a fine day here in Xhenos, reminds me of the Isle of Armor. Though it's much less humid here, thank heavens for that."
+					+ "\nOh, yes I am a Psychic. But not a very good one, the best I can do is telekinesis. I come from a long bloodline of them actually."
+					+ "\nIf you do notice that Scott has any psychic abilities, please inform me at once!"
+					+ "\nOh, these long magnificent locks of mine? I just use a splendid shampoo imported from Galar called Weezfresh. Truly a wondrous product, you should try it."
+					+ "\nOh, if you wanted to find Scott, you just missed him. You know, he used to spend most of his time with my Pokemon, like they were his friends."); // Avery
 			gp.npc[23][0] = null;
 			gp.npc[119][2] = null;
+		}
+		
+		if (flag[0][12]) {
+			gp.npc[4][1] = null;
+			gp.npc[4][14] = NPCSetup(TN_UP, 44, 68, 359);
+		} else {
+			gp.npc[4][14] = null;
+		}
+		
+		if (flag[0][13]) {
+			gp.npc[4][14] = null;
+		}
+		
+		if (flag[0][15]) {
+			gp.npc[7][0] = null;
+			gp.npc[7][1] = null;
+			gp.npc[7][2] = null;
+			gp.npc[7][3] = null;
+			gp.npc[8][0] = null;
+			gp.npc[8][1] = null;
+			gp.npc[8][2] = null;
+			gp.npc[8][3] = null;
+			gp.npc[8][4] = null;
+			gp.npc[8][5] = null;
+		}
+		
+		if (flag[0][16]) {
+			gp.npc[161][0] = null;
+			gp.npc[4][0] = null;
 		}
 		
 		/**
@@ -2379,28 +2434,28 @@ public class AssetSetter {
 		case NPC_NURSE_FULL:
 			result = new NPC_Nurse(gp, "up");
 			break;
-		case GYM_1:
+		case ROBIN:
 			result = new NPC_GymLeader(gp, "down", team);
 			break;
-		case GYM_2:
+		case STANFORD:
 			result = new NPC_GymLeader(gp, "down2", team);
 			break;
-		case GYM_3:
+		case MILLIE:
 			result = new NPC_GymLeader(gp, "up", team);
 			break;
-		case GYM_4:
+		case GLACIUS:
 			result = new NPC_GymLeader(gp, "up2", team);
 			break;
-		case GYM_5:
+		case MINDY:
 			result = new NPC_GymLeader(gp, "left", team);
 			break;
-		case GYM_6:
+		case RAYNA:
 			result = new NPC_GymLeader(gp, "left2", team);
 			break;
-		case GYM_7:
+		case MERLIN:
 			result = new NPC_GymLeader(gp, "right", team);
 			break;
-		case GYM_8:
+		case NOVA:
 			result = new NPC_GymLeader(gp, "right2", team);
 			break;
 		case SCOTT_DOWN:
@@ -2475,24 +2530,42 @@ public class AssetSetter {
 		return result;
 	}
 	
-	private Entity NPCSetup(int x, int y, String message) {
-		return NPCSetup(x, y, message, -1);
+	private Entity NPCSetup(int type, int x, int y, String message) {
+		return NPCSetup(type, x, y, message, -1);
 	}
 	
-	private Entity NPCSetup(int x, int y, String message, int flag) {
-		return NPCSetup(x, y, message, flag, false, null);
+	private Entity NPCSetup(int type, int x, int y, String message, int flag) {
+		return NPCSetup(type, x, y, message, flag, false, null);
 	}
 	
-	private Entity NPCSetup(int x, int y, String message, boolean a) {
-		return NPCSetup(x, y, message, -1, a, null);
+	private Entity NPCSetup(int type, int x, int y, String message, boolean a) {
+		return NPCSetup(type, x, y, message, -1, a, null);
 	}
 	
-	private Entity NPCSetup(int x, int y, String message, int flag, boolean a, String altDialogue) {
+	private Entity NPCSetup(int type, int x, int y, String message, int flag, boolean a, String altDialogue) {
 		String messages[] = message.split("\n");
 		for (int i = 0; i < messages.length; i++) {
 			messages[i] = Item.breakString(messages[i], 42);
 		}
 		Entity result = new NPC_Block(gp, messages, flag, a, Item.breakString(altDialogue, 44));
+		
+		BufferedImage image;
+		switch (type) {
+			case BLOCK_DEFAULT:
+			default:
+				image = result.setup("/npc/block");
+				break;
+			case ROBIN:
+				image = result.setup("/npc/robin");
+				break;
+			case STANFORD:
+				image = result.setup("/npc/stanford");
+				break;
+			case TN_DOWN:
+				image = result.setup("/npc/tn1");
+		}
+		
+		result.down1 = image;
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;
@@ -2648,5 +2721,20 @@ public class AssetSetter {
 			iIndex++;
 		}
 		
+	}
+	
+	private InteractiveTile SetupLockedDoor(int x, int y, int flag, int mapNum, int map) {
+		if (mapNum != map) return null;
+		InteractiveTile result = null;
+		result = new Locked_Door(gp, flag);
+		
+		if (gp.player.p.flag[result.getFlagX()][result.getFlagY()]) return null;
+		
+		result.worldX = gp.tileSize*x;
+		result.worldY = gp.tileSize*y;
+		
+		iIndex++;
+		
+		return result;
 	}
 }

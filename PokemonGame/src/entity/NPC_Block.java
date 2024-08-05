@@ -7,7 +7,6 @@ import pokemon.Pokemon.Task;
 public class NPC_Block extends Entity {
 	
 	boolean more;
-	public int flag;
 	
 	public NPC_Block(GamePanel gp, String[] message, int flag, boolean more, String altDialogue) {
 		super(gp);
@@ -38,13 +37,5 @@ public class NPC_Block extends Entity {
 			gp.gameState = GamePanel.TASK_STATE;
 			Pokemon.addTask(Task.TEXT, dialogues[dialogueIndex]);
 		}
-	}
-	
-	public int getFlagX() {
-		return (flag >> 5) & 0xF;
-	}
-	
-	public int getFlagY() {
-		return flag & 0x1F;
 	}
 }

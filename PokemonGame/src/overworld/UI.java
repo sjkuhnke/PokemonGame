@@ -42,7 +42,7 @@ public class UI extends AbstractUI{
 	public Entity npc;
 	public int slotCol = 0;
 	public int slotRow = 0;
-	public int bagNum = 0;
+	public int bagNum[] = new int[Item.KEY_ITEM];
 	public int selectedBagNum = -1;
 	public int currentPocket = Item.MEDICINE;
 	public int bagState;
@@ -66,17 +66,19 @@ public class UI extends AbstractUI{
 	public boolean release;
 	public boolean gauntlet;
 	
-	public int dexNum = 1;
+	public int dexNum[] = new int[4];
 	public int dexMode;
 	public int dexType;
 	public int levelDexNum;
 	public int tmDexNum;
+	public int starAmt;
 	
 	public int remindNum;
 	public boolean drawFlash;
 	
 	public int starter;
 	public boolean starterConfirm;
+	public boolean addItem;
 	
 	private ArrayList<ArrayList<Encounter>> encounters;
 	
@@ -300,6 +302,58 @@ public class UI extends AbstractUI{
 		case Task.FLASH_OUT:
 			drawFlash(-1);
 			break;
+		case Task.ITEM:
+			drawItem();
+			break;
+		case Task.UPDATE:
+			gp.aSetter.updateNPC(gp.currentMap);
+			currentTask = null;
+			break;
+		}
+	}
+
+	private void drawItem() {
+		BufferedImage image = null;
+		if (!currentTask.wipe) { // showing item
+			if (currentTask.message.isEmpty()) {
+				currentDialogue = currentTask.item.isTM() ? "Obtained " + currentTask.item.toString() + "!" : "You got a " + currentTask.item.toString() + "!";
+			} else {
+				currentDialogue = currentTask.message;
+			}
+			image = currentTask.item.getImage2();
+			if (!gp.player.p.bag.contains(currentTask.item)) {
+				Task t = Pokemon.createTask(Task.ITEM, "");
+				t.item = currentTask.item;
+				t.wipe = true;
+				t.counter = currentTask.counter;
+				Pokemon.insertTask(t, 0);
+			}
+			if (!addItem) {
+				gp.player.p.bag.add(currentTask.item, currentTask.counter);
+				addItem = true;
+			}
+		} else { // showing what pocket i put it in
+			String descriptor = !currentTask.item.isTM() ? "the " : "";
+			String itemName = currentTask.item.toString();
+			if (currentTask.counter > 1 && itemName.contains("Berry")) itemName = itemName.replace("Berry", "Berries");
+			currentDialogue = "Put " + descriptor + itemName + " in the " + Item.getPocketName(currentTask.item.getPocket()) + " pocket!";
+			image = bagIcons[currentTask.item.getPocket() - 1];
+		}
+		drawDialogueScreen(true);
+		int x = gp.tileSize * 12;
+		int y = (int) (gp.tileSize * 2.5);
+		int width = (int) (gp.tileSize * 1.5);
+		int height = (int) (gp.tileSize * 1.5);
+		drawSubWindow(x, y, width, height);
+		x += gp.tileSize / 4;
+		y += gp.tileSize / 4;
+		g2.drawImage(image, x, y, null);
+		
+		if (gp.keyH.wPressed || gp.keyH.sPressed) {
+			gp.keyH.wPressed = false;
+			gp.keyH.sPressed = false;
+			addItem = false;
+			currentTask = null;
 		}
 	}
 
@@ -652,52 +706,60 @@ public class UI extends AbstractUI{
 		
 		drawSubWindow(x, y, width, height);
 		
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		
+		drawSubWindow(x, y, width, (int) (gp.tileSize * 1.25));
+		y += gp.tileSize * 5 / 6;
+		
+		String dexTitle = gp.player.p.getDexTitle(dexType);
+		g2.drawString(dexTitle, getCenterAlignedTextX(dexTitle, x + width / 2), y);
+		
+		g2.setFont(g2.getFont().deriveFont(24F));		
 		x += gp.tileSize / 2;
 		y += gp.tileSize / 2;
 		int startX = x;
-		int textWidth = (int) (gp.tileSize * 0.75);
+		int textHeight = (int) (gp.tileSize * 0.75);
 		
-		g2.setColor(Color.WHITE);
-		g2.setFont(g2.getFont().deriveFont(24F));
-		
-		int maxShow = gp.player.p.getDexShowing();
-		for (int i = dexNum; i < dexNum + 12; i++) {
+		Pokemon[] dex = gp.player.p.getDexType(dexType);
+		int maxShow = gp.player.p.getDexShowing(dex);
+		for (int i = dexNum[dexType]; i < dexNum[dexType] + 11; i++) {
 			int textY = y + gp.tileSize / 2;
-			if (i == dexNum) {
+			if (i == dexNum[dexType]) {
 				g2.drawString(">", x, textY);
 			}
 			x += gp.tileSize / 3;
 			if (i <= maxShow) {
-				int mode = gp.player.p.pokedex[i];
+				int mode = gp.player.p.pokedex[dex[i].id];
 				if (mode == 2) {
 					g2.drawImage(ballIcon, x, y + 8, null);
 					x += gp.tileSize / 2;
-					g2.drawString(Pokemon.getFormattedDexNo(i) + " " + Pokemon.getName(i), x, textY);
+					g2.drawString(Pokemon.getFormattedDexNo(dex[i].getDexNo()) + " " + Pokemon.getName(dex[i].id), x, textY);
 					x += gp.tileSize * 4;
-					g2.drawImage(Pokemon.getType1(i).getImage(), x, y + 4, null);
+					g2.drawImage(Pokemon.getType1(dex[i].id).getImage(), x, y + 4, null);
 					x += gp.tileSize / 2;
-					if (Pokemon.getType2(i) != null) g2.drawImage(Pokemon.getType2(i).getImage(), x, y + 4, null);
+					if (Pokemon.getType2(dex[i].id) != null) g2.drawImage(Pokemon.getType2(dex[i].id).getImage(), x, y + 4, null);
 				} else if (mode == 1) {
 					g2.setColor(Color.DARK_GRAY);
 					int circleDiameter = 16;
 					g2.fillOval(x, y + 8, circleDiameter, circleDiameter);
 					g2.setColor(Color.WHITE);
 					x += gp.tileSize / 2;
-					g2.drawString(Pokemon.getFormattedDexNo(i) + " " + Pokemon.getName(i), x, textY);
+					g2.drawString(Pokemon.getFormattedDexNo(dex[i].getDexNo()) + " " + Pokemon.getName(dex[i].id), x, textY);
 				} else {
 					x += gp.tileSize / 2;
-					g2.drawString(Pokemon.getFormattedDexNo(i) + " " + "---", x, textY);
+					g2.drawString(Pokemon.getFormattedDexNo(dex[i].getDexNo()) + " " + "---", x, textY);
 				}
 				x = startX;
-				y += textWidth;
+				y += textHeight;
 			}
 		}
 		
-		int mode = gp.player.p.pokedex[dexNum];
+		int mode = gp.player.p.pokedex[dex[dexNum[dexType]].id];
 		ArrayList<Move> levelMoveList = new ArrayList<>();
 		ArrayList<Integer> levelLevelList = new ArrayList<>();
 		ArrayList<Item> tmList = new ArrayList<>();
-		Pokemon test = new Pokemon(dexNum, 5, false, false);
+		Pokemon test = new Pokemon(dex[dexNum[dexType]].id, 5, false, false);
 		test.abilitySlot = 0;
 		test.setAbility(test.abilitySlot);
 		if (mode == 2) {
@@ -725,8 +787,16 @@ public class UI extends AbstractUI{
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
 			if (dexMode == 0) {
-				if (dexNum > 1) {
-					dexNum--;
+				int amt;
+				if (gp.keyH.ctrlPressed) {
+					amt = 5;
+				} else {
+					amt = 1;
+				}
+				dexNum[dexType] -= amt;
+				if (dexNum[dexType] <= 0) {
+					dexNum[dexType] = 0;
+				} else {
 					levelDexNum = 0;
 					tmDexNum = 0;
 				}
@@ -743,8 +813,16 @@ public class UI extends AbstractUI{
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
 			if (dexMode == 0) {
-				if (dexNum < maxShow) {
-					dexNum++;
+				int amt;
+				if (gp.keyH.ctrlPressed) {
+					amt = 5;
+				} else {
+					amt = 1;
+				}
+				dexNum[dexType] += amt;
+				if (dexNum[dexType] >= maxShow) {
+					dexNum[dexType] = maxShow;					
+				} else {
 					levelDexNum = 0;
 					tmDexNum = 0;
 				}
@@ -773,6 +851,14 @@ public class UI extends AbstractUI{
 			gp.keyH.sPressed = false;
 		}
 		
+		if (gp.keyH.aPressed) {
+			gp.keyH.aPressed = false;
+			int max = starAmt >= 5 ? 4 : gp.player.p.calculatePokedexes();
+			dexType = (dexType + 1) % max;
+			levelDexNum = 0;
+			tmDexNum = 0;
+		}
+		
 		int infoX = 0;
 		int infoY = (int) (gp.screenHeight - gp.tileSize * 2.5);
 		int infoWidth = width;
@@ -783,22 +869,37 @@ public class UI extends AbstractUI{
 		int infoTextX = infoX + gp.tileSize / 2;
 		int infoTextY = infoY + gp.tileSize;
 		g2.setFont(g2.getFont().deriveFont(32F));
-		int[] amounts = gp.player.p.getDexAmounts();
+		int[] amounts = gp.player.p.getDexAmounts(dex);
 		int caughtAmt = amounts[1];
 		int seenAmt = amounts[0] + caughtAmt;
 		String caughtString = "Caught: " + caughtAmt;
 		String seenString = "Seen: " + seenAmt;
-		if (caughtAmt >= Pokemon.MAX_POKEMON) {
+		if (caughtAmt >= dex.length) {
 			g2.setPaint(new GradientPaint(infoTextX, infoTextY, new Color(255, 215, 0), infoTextX + gp.tileSize, infoTextY - gp.tileSize, new Color(245, 225, 210)));
 		}
 		g2.drawString(caughtString, infoTextX, infoTextY);
 		
 		g2.setColor(Color.WHITE);
 		infoTextY += gp.tileSize;
-		if (seenAmt >= Pokemon.MAX_POKEMON) {
+		if (seenAmt >= dex.length) {
 			g2.setPaint(new GradientPaint(infoTextX, infoTextY, new Color(192, 192, 192), infoTextX + gp.tileSize, infoTextY - gp.tileSize, new Color(245, 225, 210)));
 		}
 		g2.drawString(seenString, infoTextX, infoTextY);
+		
+		infoTextX += gp.tileSize * 3.2;
+		infoTextY -= gp.tileSize / 2;
+		g2.setFont(g2.getFont().deriveFont(40F));
+		int starWidth = (gp.tileSize * 2 / 3) - 4;
+		for (int i = 0; i < starAmt; i++) {
+			// Create a GradientPaint for each star individually
+		    int starX = infoTextX + (i * starWidth);
+		    GradientPaint starPaint = new GradientPaint(
+		        starX + 6, infoTextY - 6, new Color(255, 215, 0), // Start point and color
+		        starX + starWidth - 10, infoTextY - starWidth + 10, new Color(245, 225, 210) // End point and color
+		    );
+		    g2.setPaint(starPaint);
+		    g2.drawString('\u2605' + "", starX, infoTextY);
+		}
 		
 		String wText = dexMode == 0 ? "Moves": null;
 		drawToolTips(wText, "Switch", "Back", "Back");
@@ -818,7 +919,11 @@ public class UI extends AbstractUI{
 		y += gp.tileSize * 0.75;
 		g2.setColor(Pokemon.getDexNoColor(p.id));
 		g2.setFont(g2.getFont().deriveFont(20F));
-		g2.drawString(Pokemon.getFormattedDexNo(p.getDexNo()), x, y);
+		if (gp.keyH.shiftPressed) {
+			g2.drawString(Pokemon.getFormattedDexNo(p.getID()), x, y);
+		} else {
+			g2.drawString(Pokemon.getFormattedDexNo(p.getDexNo()), x, y);
+		}
 		
 		g2.setColor(Color.WHITE);
 		
@@ -1667,7 +1772,8 @@ public class UI extends AbstractUI{
 	                oos.close();
 	                showMessage("Game saved sucessfully!");
 	            } catch (IOException ex) {
-	            	showMessage("Error writing player to file:\n" + ex.getMessage());
+	            	String message = Item.breakString("Error: " + ex.getMessage(), 42);
+	            	showMessage(message);
 	            }
 			}
 		}
@@ -1710,6 +1816,7 @@ public class UI extends AbstractUI{
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
 					subState = 1;
+					starAmt = gp.player.p.calculateStars();
 				}
 			} else {
 				menuNum++;
@@ -1862,8 +1969,8 @@ public class UI extends AbstractUI{
 		int textY = descY + gp.tileSize;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		if (currentItems.size() > 0) {
-			if (bagNum >= currentItems.size()) bagNum--;
-			String desc = currentItems.get(bagNum).getItem().getDesc();
+			if (bagNum[currentPocket - 1] >= currentItems.size()) bagNum[currentPocket - 1]--;
+			String desc = currentItems.get(bagNum[currentPocket - 1]).getItem().getDesc();
 			for (String line : Item.breakString(desc, 24).split("\n")) {
 				g2.drawString(line, textX, textY);
 				textY += 32;
@@ -1873,9 +1980,9 @@ public class UI extends AbstractUI{
 		
 		x += gp.tileSize;
 		y += gp.tileSize / 2;
-		for (int i = bagNum; i < bagNum + 9; i++) {
+		for (int i = bagNum[currentPocket - 1]; i < bagNum[currentPocket - 1] + 9; i++) {
 			g2.setColor(Color.WHITE);
-			if (i == bagNum) {
+			if (i == bagNum[currentPocket - 1]) {
 				g2.drawString(">", (x - gp.tileSize / 2) - 2, y + gp.tileSize / 2);
 			}
 			if (i == selectedBagNum) {
@@ -1892,7 +1999,7 @@ public class UI extends AbstractUI{
 			}
 		}
 		// Down Arrow
-		if (bagNum + 9 < currentItems.size()) {
+		if (bagNum[currentPocket - 1] + 9 < currentItems.size()) {
 			int x2 = gp.tileSize * 5 + width;
 			int y2 = (int) (height + (gp.tileSize * 1.5));
 			int width2 = gp.tileSize / 2;
@@ -1900,7 +2007,7 @@ public class UI extends AbstractUI{
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
 		}
 		// Up Arrow
-		if (bagNum != 0 && bagState != 2) {
+		if (bagNum[currentPocket - 1] != 0 && bagState != 2) {
 			int x2 = gp.tileSize * 5 + width;
 			int y2 = gp.tileSize * 3;
 			int width2 = gp.tileSize / 2;
@@ -1912,14 +2019,14 @@ public class UI extends AbstractUI{
 			if (gp.keyH.aPressed) {
 				gp.keyH.aPressed = false;
 				if (selectedBagNum == -1) {
-					selectedBagNum = bagNum;
-				} else if (selectedBagNum == bagNum) {
+					selectedBagNum = bagNum[currentPocket - 1];
+				} else if (selectedBagNum == bagNum[currentPocket - 1]) {
 					selectedBagNum = -1;
 				} else {
-					gp.player.p.moveItem(indexOf(gp.player.p.bag.itemList, currentItems.get(selectedBagNum).getItem().getID()), indexOf(gp.player.p.bag.itemList, currentItems.get(bagNum).getItem().getID()));
+					gp.player.p.moveItem(indexOf(gp.player.p.bag.itemList, currentItems.get(selectedBagNum).getItem().getID()), indexOf(gp.player.p.bag.itemList, currentItems.get(bagNum[currentPocket - 1]).getItem().getID()));
 					currentItems = gp.player.p.getItems(currentPocket);
 					selectedBagNum = -1;
-					if (bagNum > 0) bagNum--;
+					if (bagNum[currentPocket - 1] > 0) bagNum[currentPocket - 1]--;
 				}
 			}
 			if (bagState == 0 && !currentItems.isEmpty() && gp.keyH.wPressed) {
@@ -1933,7 +2040,7 @@ public class UI extends AbstractUI{
 		} else if (bagState == 2) {
 			drawSellOptions();
 		} else if (bagState == 3) {
-			drawMoveSummary(gp.tileSize / 2, (int) (gp.tileSize * 6.5), null, null, null, currentItems.get(bagNum).getItem().getMove());
+			drawMoveSummary(gp.tileSize / 2, (int) (gp.tileSize * 6.5), null, null, null, currentItems.get(bagNum[currentPocket - 1]).getItem().getMove());
 		}
 		
 		drawToolTips("OK", "Swap", "Back", "Back");
@@ -1963,7 +2070,7 @@ public class UI extends AbstractUI{
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				currentItem = currentItems.get(bagNum).getItem();
+				currentItem = currentItems.get(bagNum[currentPocket - 1]).getItem();
 				if (currentItem == Item.REPEL) {
 					if (!gp.player.p.repel) {
 						useRepel();
@@ -1983,12 +2090,14 @@ public class UI extends AbstractUI{
 		}
 		y += gp.tileSize;
 		String option2 = currentPocket == Item.TMS ? "Info" : "Sell";
+		if (currentPocket == Item.KEY_ITEM) g2.setColor(Color.GRAY);
 		g2.drawString(option2, x, y);
+		g2.setColor(Color.WHITE);
 		if (commandNum == 1) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				bagState = currentPocket == Item.TMS ? 3 : 2;
+				bagState = currentPocket == Item.TMS ? 3 : currentPocket == Item.KEY_ITEM ? 1 : 2;
 			}
 		}
 		y += gp.tileSize;
@@ -2025,12 +2134,12 @@ public class UI extends AbstractUI{
 		x -= gp.tileSize;
 		y += gp.tileSize * 2.5;
 		g2.setFont(g2.getFont().deriveFont(24F));
-		g2.drawString("+$" + currentItems.get(bagNum).getItem().getSell() * sellAmt, x, y);
+		g2.drawString("+$" + currentItems.get(bagNum[currentPocket - 1]).getItem().getSell() * sellAmt, x, y);
 		
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
-			showMessage("Sold " + sellAmt + " " + currentItems.get(bagNum).getItem().toString() + " for $" + sellAmt * currentItems.get(bagNum).getItem().getSell());
-			gp.player.p.sellItem(currentItems.get(bagNum).getItem(), sellAmt);
+			showMessage("Sold " + sellAmt + " " + currentItems.get(bagNum[currentPocket - 1]).getItem().toString() + " for $" + sellAmt * currentItems.get(bagNum[currentPocket - 1]).getItem().getSell());
+			gp.player.p.sellItem(currentItems.get(bagNum[currentPocket - 1]).getItem(), sellAmt);
 			currentItems = gp.player.p.getItems(currentPocket);
 			bagState = 0;
 			commandNum = 0;
