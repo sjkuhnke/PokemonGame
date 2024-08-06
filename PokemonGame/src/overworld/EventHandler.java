@@ -108,14 +108,14 @@ public class EventHandler {
 			if (hit(13,28,90)) teleport(12, 31, 34,false);
 			
 			// Energy Plant A
-			if (hit(13,19,85)) teleport(14, 31, 49,false);
-			if (hit(14,31,50)) teleport(13, 19, 86,false);
+			if (hit(13,19,85)) teleport(14, 34, 49,false);
+			if (hit(14,34,50)) teleport(13, 19, 86,false);
 			if (hit(14,21,37)) teleport(15, 50, 40,false);
 			if (hit(15,51,40)) teleport(14, 22, 37,false);
 			
 			// Energy Plant B
-			if (hit(15,32,9)) teleport(16, 32, 46,false);
-			if (hit(16,31,46)) teleport(15, 31, 9,false);
+			if (hit(15,29,9)) teleport(16, 32, 46,false);
+			if (hit(16,31,46)) teleport(15, 28, 9,false);
 			
 			// Office
 			if (hit(13,48,57)) teleport(17, 53, 56,false);

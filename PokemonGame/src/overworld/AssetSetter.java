@@ -219,12 +219,12 @@ public class AssetSetter {
 		
 		mapNum = 14;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(22, 48, Item.TM57, mapNum); // charge beam
-		gp.obj[mapNum][objIndex] = ObjSetup(42, 35, Item.FULL_HEAL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(36, 30, Item.BRAVE_MINT, mapNum); // brave
-		gp.obj[mapNum][objIndex] = ObjSetup(39, 32, Item.PP_UP, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(23, 47, Item.MAGNET, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(31, 31, Item.WISE_GLASSES, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 48, Item.TM57, mapNum); // charge beam
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 44, Item.FULL_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 35, Item.BRAVE_MINT, mapNum); // brave
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 48, Item.PP_UP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(21, 43, Item.MAGNET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 30, Item.WISE_GLASSES, mapNum);
 		
 		mapNum = 15;
 		objIndex = 0;
@@ -804,8 +804,8 @@ public class AssetSetter {
 		
 		mapNum = 4;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 81, 61, "Robin is swamped check post office");
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 66, 79, "Scram kid!", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 81, 61, "Sorry, but the gym leader has been busy with mail these past few weeks, so gym battles are unavailable. You may check the post office for more details.");
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 66, 79, "Yo, scram kid! This is some top secret space operation that you don’t got the clearance to see! Move it!", true);
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 32, 62, 18);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 23, 65, 19); // make way lower levels
@@ -838,7 +838,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TN_UP, 36, 47, 12);
 		gp.npc[mapNum][index] = NPCSetup(RICK, 40, 48, 13);
 		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 28, 49, 258);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 37, 38, "Who are these dudes bruh", 15, true, "Thank you so much for your help! Those guys are up to no good.");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 37, 38, "Oh, thank Arceus! These strange spaced-themed goons took over this warehouse.", 15, true, "Thank you so much for your help! Those guys are up to no good.");
 		
 		mapNum = 9;
 		index = 0;
@@ -887,11 +887,11 @@ public class AssetSetter {
 		
 		mapNum = 14;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 33, 41, 44);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 26, 29, 40);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 39, 39, 41);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 22, 43, 42);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 26, 48, 43);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 36, 41, 44);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 27, 30, 40);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 38, 38, 41);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 25, 43, 42);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 30, 43, 43);
 		
 		mapNum = 16;
 		index = 0;
@@ -1142,7 +1142,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 33, 42, 143);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 31, 36, 144);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 28, 39, 145);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 24, 37, "Hi there, welcome to The Pound!", 10, true, "That little pup treating you alright? I bet he'll grow strong if you give it lots of love!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 24, 37, "Hello, and welcome to the Poundtown, where your dog can train and play at the same time! Feel free to look around at all of our amenities.", 10, true, "That little pup treating you alright? I bet he'll grow strong if you give it lots of love!");
 		
 		mapNum = 49;
 		index = 0;
@@ -1171,7 +1171,7 @@ public class AssetSetter {
 		
 		mapNum = 57;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Hello there young man! What brings you to the famous Chef Eddie's residence?", 9, true, "Be sure to check me out in Rawwar city sometime!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Eyy! What brings a scrawny kid like you into the famous Guy Eddie’s culinary residence!", 9, true, "By the way, if you’re ever in Rawwar City, head over to my restaurant. You won’t wanna miss the Eddie special, Smoked Pie! It’s gonna be a blast burn!");
 		
 		mapNum = 58;
 		index = 0;
@@ -1600,7 +1600,7 @@ public class AssetSetter {
 		
 		mapNum = 161;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(ROBIN, 50, 37, "Whattup jit", true);
+		gp.npc[mapNum][index] = NPCSetup(ROBIN, 50, 37, "AHH!", true);
 		
 	}
 	

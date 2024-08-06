@@ -1,0 +1,133 @@
+================================================================================
+Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
+================================================================================
+256 Reuniclus-X*
+272 Metapod-X*
+273 Butterfree-X*
+280 Kerbernero*
+281 Capsakid-X*
+282 Scovillain-X*
+283 Kerbernero-X*
+156 Poof (E forms of these guys are more important, these guys can wait)
+157 Hast (E forms of these guys are more important, these guys can wait)
+197 Poof-E
+198 Hast-E (First stage is lowkey the most important, this guy can wait)
+098 Flamehead (E forms of these guys are more important, these guys can wait)
+099 Fireshard (E forms of these guys are more important, these guys can wait)
+100 Blastflames (E forms of these guys are more important, these guys can wait)
+202 Flamehead-E
+203 Fireshard-E (First stage is lowkey the most important, these 2 can wait)
+204 Blastflames-E (First stage is lowkey the most important, these 2 can wait)
+276 Bronzor-X
+277 Bronzong-X
+267 Elgyem-E*
+268 Beheeyem-E*
+258 Hissimitar
+285 Icy Serpant
+213 Nightrex*
+214 Shadowsaur*
+263 Plasamp*
+264 Geniova*
+106 Sparkdust
+107 Splame
+111 Shookwat
+112 Wattwo
+113 Megawatt
+101 Tiowoo
+102 Magwoo
+103 Lafloo
+108 Sparkitten
+109 Fireblion
+110 Flamebless
+114 Elelamb
+115 Electroram
+116 Superchargo
+
+================================================================================
+Overworld Pokemon Sprites (* are the ones that already have battle sprites, probably best to do that first)
+================================================================================
+----- Most Urgent -----
+Poof-E
+Flamehox-E
+Gyarados-E*
+
+----- Less Urgent -----
+Icy Serpant
+Shocky Spire
+Dust Sorcerer
+Fever Dream
+Dusk Skater
+Whiskeroar
+
+----- FAR Less Urgent -----
+Legendaries
+
+================================================================================
+Sketches
+================================================================================
+Anything in the sprites category pretty much are the most important ones,
+I'd just go down the list from the top
+
+================================================================================
+NPC Overworld Sprites (Preferred Order, can be changed around if needed) [16x16 like the player sprite you made]
+(Down = Looking Down, Up = Looking Up, etc.)
+* = I have the sprites for them already, just should be redone in your style (bc it's far better)
+================================================================================
+Professor Dad (Down)
+Professor Assistant/Research/Scientist (Down/Up)
+Grandmother (Down)
+*Team Nuke Grunt (Down/Up/Left/Right)
+*Team Nuke Admin (Down/Left)
+*Rival Scott (Down/Up)
+*Rival Fred (Down/Up)
+Avery (Down) from Sword/Shield DLC
+Klara (Down) from Sword/Shield DLC
+*Male NPC Block (just a default NPC that blocks your path for progression) (Down/Up/Left/Right)
+Female NPC Block (Down/Up/Left/Right)
+Guard? Like for blocking your path in the gates would be nice
+Mailman/Woman (Down/Up/Left/Right)
+Ryder (Down/Up/Left/Right) (THE CHAMPION!!)
+*Team Nuke Admin (Down/Left?/Right?)
+Mother (Down)
+
+--- Gym Leaders ---
+*Robin (Down)
+*Stanford (Down/Up?)
+*Millie (Down/?)
+*Glacius (Down/?)
+*Mindy (Down/?)
+*Rayna (Down)
+*Merlin (Down/Up/Left?/Right?)
+*Nova (Down/Up/Left?/Right?)
+Elite Four Poison (A chemist) (Down)
+Elite Four Ground (Your mom, same sprite as above) (Down)
+Elite Four Steel (?) (Down)
+--------------------
+
+--- The rest are just trainer sprites for different types ---
+Ace Trainer (mixed teams/Dragon)
+Actor (Light/Normal)
+Actress (Light/Normal)
+Athlete (Fire/Electric)
+Backpacker/Hiker (Ground/Rock/Steel)
+Burglar (Crook/Dark)
+Bird Keeper (Flying)
+Black Belt (Fighting)
+Bug Catcher (Bug)
+Camper (Bug/Grass)
+Student (Normal)
+Fisher (Water)
+Surfer (M) (Water)
+Swimmer (F) (Water)
+Explorer (Ice)
+Gentleman (Any)
+Maniac (Ghost)
+Magician (Magic)
+Psychic (Psychic)
+Astronomer (Galactic)
+Youngster (Normal/Poison)
+-------------------------------------------------------------
+
+================================================================================
+Tiles
+================================================================================
