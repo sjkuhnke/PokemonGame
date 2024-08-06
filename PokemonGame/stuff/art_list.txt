@@ -24,6 +24,8 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 268 Beheeyem-E*
 258 Hissimitar
 285 Icy Serpant
+158 Poov
+159 Grust
 213 Nightrex*
 214 Shadowsaur*
 263 Plasamp*
@@ -49,6 +51,7 @@ Overworld Pokemon Sprites (* are the ones that already have battle sprites, prob
 ----- Most Urgent -----
 Poof-E
 Flamehox-E
+Rocky-E*
 Gyarados-E*
 
 ----- Less Urgent -----
@@ -57,6 +60,7 @@ Shocky Spire
 Dust Sorcerer
 Fever Dream
 Dusk Skater
+Grust
 Whiskeroar
 
 ----- FAR Less Urgent -----
