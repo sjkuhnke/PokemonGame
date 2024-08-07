@@ -1298,4 +1298,42 @@ public class Player extends Trainer implements Serializable {
 		
 		return result;
 	}
+
+	public void beatGymTrainers() {
+		int[] indices;
+		switch (badges) {
+		case 1:
+			indices = new int[] {14, 15, 16};
+			break;
+		case 2:
+			indices = new int[] {56, 57, 58, 59, 60, 61, 62, 63, 64, 65};
+			break;
+		case 3:
+			indices = new int[] {90, 91, 92, 93};
+			break;
+		case 4:
+			indices = new int[] {133, 134, 135, 136};
+			break;
+		case 5:
+			indices = new int[] {186, 187, 188, 189, 190, 191, 192, 193};
+			break;
+		case 6:
+			indices = new int[] {246, 247, 248, 249, 250, 251, 252, 253, 254};
+			break;
+		case 7:
+			indices = new int[] {291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304};
+			break;
+		case 8:
+			indices = new int[] {};
+			System.out.println("Gym 8 isn't implemented yet for Player.beatGymTrainers()");
+			break;
+		default:
+			indices = new int[] {};
+			System.out.println(badges + " is illegal for Player.beatGymTrainers()");
+			break;
+		}
+		for (int i = 0; i < indices.length; i++) {
+			trainersBeat[indices[i]] = true;
+		}
+	}
 }

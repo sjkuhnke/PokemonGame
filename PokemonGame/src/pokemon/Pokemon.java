@@ -4510,6 +4510,14 @@ public class Pokemon implements Serializable {
 			case FOSSIL: return "FOSSIL";
 			case HP: return "HP";
 			case EVO_ITEM: return "EVO_ITEM";
+			case SPRITE: return "SPRITE";
+			case CONFIRM: return "CONFIRM";
+			case TELEPORT: return "TELEPORT";
+			case SEMI_INV: return "SEMI_INV";
+			case FLASH_IN: return "FLASH_IN";
+			case FLASH_OUT: return "FLASH_OUT";
+			case ITEM: return "ITEM";
+			case UPDATE: return "UPDATE";
 			default:
 				return "getTypeString() doesn't have a case for this type";
 			}
@@ -4702,7 +4710,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if ((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB) ||
-				(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER)) {
+				(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.DARK || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)) {
 			return 0;
 		}
 		

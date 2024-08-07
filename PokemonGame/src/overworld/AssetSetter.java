@@ -775,11 +775,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 55, 37, 261);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 63, 40, 262);
 		
-		if (!flags[2]) {
-			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 60, 44, "The Pokemon here are going FERAL over these berry trees. Come back later!", 2);
-		} else {
-			gp.npc[mapNum][index++] = null;
-		}
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 60, 44, "The Pokemon here are going FERAL over these berry trees. Come back later!", 15);
+		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 68, 63, 266);
 		
 		index = 0;
@@ -873,11 +870,8 @@ public class AssetSetter {
 		
 		mapNum = 13;
 		index = 0;
-		if (!flags[4]) {
-			gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 15, 56, "The gym leader is stuck in the office upstairs trying to help Scott with Team Nuke. Go find Scott and help!", 4);
-		} else {
-			gp.npc[mapNum][index++] = null;
-		}
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 20, 63, "Oh hello there kid, I'm a research assistant for the Professor that specializes in Electric forms of Pokemon.", 33, true, "");
+		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 29, 49, 104);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 23, 49, 105);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 29, 34, 71);
@@ -1175,7 +1169,7 @@ public class AssetSetter {
 		
 		mapNum = 58;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 33, 42, "AAAGHHHHH!! GET OUT THIEF!", 15, true, "Thank you so much for your kindness! I hope you have a great day :)");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 33, 42, "AAAGHHHHH!! GET OUT THIEF!", 18, true, "Thank you so much for your kindness! I hope you have a great day :)");
 		
 		mapNum = 60;
 		index = 0;
@@ -2278,6 +2272,9 @@ public class AssetSetter {
 		// flags[35] is true after fighting Triwandoliz
 		// flags[36] is true after fighting Diftery
 		
+		/**
+		 * First split
+		 */
 		if (flag[0][2]) { // Lab helper blocking exit
 			gp.npc[52][1] = null;
 		}
@@ -2321,6 +2318,8 @@ public class AssetSetter {
 			gp.npc[8][3] = null;
 			gp.npc[8][4] = null;
 			gp.npc[8][5] = null;
+			
+			gp.npc[0][17] = null;
 		}
 		
 		if (flag[0][16]) {
@@ -2329,17 +2328,19 @@ public class AssetSetter {
 		}
 		
 		/**
+		 * Second Split
+		 */
+		if (flag[1][0]) {
+			gp.npc[11][7] = null;
+		}
+		
+		if (flag[1][1]) {
+			gp.npc[13][0] = null;
+		}
+		
+		/**
 		 * All of this is old and should be removed/reworked
 		 */
-		if (flags[1]) {
-			gp.npc[3][0] = null;
-			gp.npc[23][0] = null;
-			gp.npc[119][2] = null;
-		}
-		if (flags[2]) {
-			gp.npc[4][1] = null;
-			gp.npc[0][18] = null;
-		}
 		if (flags[3]) {
 			gp.npc[17][6] = null;
 			gp.npc[17][7] = null;
