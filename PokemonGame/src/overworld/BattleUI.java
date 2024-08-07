@@ -1193,6 +1193,7 @@ public class BattleUI extends AbstractUI {
 					Pokemon.addTask(Task.END, message);
 		            if (foe.trainer.getMoney() == 500 && user.getPlayer().badges < 8) {
 		            	user.getPlayer().badges++;
+		            	user.getPlayer().beatGymTrainers();
 		            	for (Pokemon p : user.trainer.team) {
 		            		if (p != null) p.awardHappiness(15, true);
 		            	}

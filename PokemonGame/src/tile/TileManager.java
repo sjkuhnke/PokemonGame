@@ -406,8 +406,8 @@ public class TileManager {
 		setup(206, true);
 		setup(207, true, 2);
 		setup(208, false);
-		setup(209, false);
 		
+		setup(209, true, 2);
 		setup(210, true, 2);
 		setup(211, true, 2);
 		setup(212, true, 2);

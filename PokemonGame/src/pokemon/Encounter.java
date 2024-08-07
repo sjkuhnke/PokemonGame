@@ -87,7 +87,7 @@ public class Encounter {
 			encounters.add(new Encounter(62, 8, 8, 0.05));
 			encounters.add(new Encounter(151, 9, 10, 0.20));
 			encounters.add(new Encounter(22, 9, 10, 0.15));
-		} else if (area == 11 && x <= 42 && y >= 53 && type.equals("Standard")) { // gelb forest
+		} else if (area == 11 && x <= 42 && y >= 52 && type.equals("Standard")) { // gelb forest
 			encounters.add(new Encounter(22, 12, 14, 0.15));
 			encounters.add(new Encounter(26, 13, 17, 0.12));
 			encounters.add(new Encounter(29, 12, 16, 0.08));
@@ -112,7 +112,7 @@ public class Encounter {
 			encounters.add(new Encounter(44, 13, 15, 0.70));
 			encounters.add(new Encounter(71, 16, 17, 0.20));
 			encounters.add(new Encounter(132, 15, 16, 0.10));
-		} else if (area == 11 && x <= 42 && y < 53 && type.equals("Standard")) { // route 25
+		} else if (area == 11 && x <= 42 && y < 52 && type.equals("Standard")) { // route 25
 			encounters.add(new Encounter(16, 12, 12, 0.20));
 			encounters.add(new Encounter(19, 13, 13, 0.20));
 			encounters.add(new Encounter(38, 11, 13, 0.15));

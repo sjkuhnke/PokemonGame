@@ -636,7 +636,7 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.TEXT, "Be sure to check me out in Rawwar city sometime!");
 			}
 		} else if (gp.currentMap == 58) {
-			if (p.flag[0][7] && !p.flag[0][17]) { // TODO: change to flag for finding the exp share
+			if (p.flag[0][7] && !p.flag[0][17]) {
 				if (!p.flag[0][8]) {
 					Pokemon.addTask(Task.TEXT, "...Oh, is that my package?");
 					Pokemon.addTask(Task.TEXT, "Thank you so much young man! Sorry for jumping at you, I'm just really unsettled right now.");
@@ -648,8 +648,9 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.TEXT, "Some rampant Pokemon sniffing out berries all burst into my house, but I was just making juice.");
 				Pokemon.addTask(Task.TEXT, "In the midst of all the chaos, some crook snuck in and stole my precious item right off my poor Pokemon!");
 				Pokemon.addTask(Task.TEXT, "Whatever will I do to find it?");
-			} else if (p.flag[0][7] && p.flag[0][15]) {
-				p.flag[0][16] = true;
+			} else if (p.flag[0][7] && p.flag[0][17]) {
+				p.flag[0][18] = true;
+				Pokemon.addTask(Task.TEXT, "Oh, hello there. Sorry for being alarmed, I'm just a little unsettled right now.");
 				Pokemon.addTask(Task.TEXT, "Oh my god, my item! You found it! Wow, you really are impressive!");
 				Pokemon.addTask(Task.TEXT, "You know what, since you're so kind, why don't you just keep it? It'll be better off with a stronger trainer like you.");
 				Pokemon.addTask(Task.TEXT, "Here, take this for your troubles too. Really, it's the least I can do.");
@@ -686,6 +687,21 @@ public class PlayerCharacter extends Entity {
 			} else if (!p.flag[0][14]) {
 				Pokemon.addTask(Task.TEXT, "Can you please help me get rid of these criminals? I don't have any Pokemon of my own, I won't be of much help to you I'm afraid.");
 			}
+		} else if (gp.currentMap == 13) {
+			Pokemon.addTask(Task.TEXT, "Wait, you're his kid? Oh my goodness, your father has told me all about you. Did you come here trying to challenge the gym?");
+			Pokemon.addTask(Task.TEXT, "...");
+			Pokemon.addTask(Task.TEXT, "You did? Well, that's going to be a difficult task considering the city's gone into full black-out, no power or anything.");
+			Pokemon.addTask(Task.TEXT, "I'd try and fix it, but the Control Center door is jammed, and that's our best shot at figuring out what's wrong.");
+			Pokemon.addTask(Task.TEXT, "Most of the buildings in this city have electric doors, and they all seem to not be working.");
+			Pokemon.addTask(Task.TEXT, "Actually, you know what we could try?");
+			Pokemon.addTask(Task.TEXT, "We can grab enough auxillery energy to keep the Control Center door open, and then give it a go from there.");
+			Pokemon.addTask(Task.TEXT, "Could you meet me there? It's straight North of this city, up Route 26 and then just a bit East.");
+			Pokemon.addTask(Task.TEXT, "I'll go on up ahead to set everything up, please don't keep me waiting!");
+			Pokemon.addTask(Task.TEXT, "I'm sure your father would be proud of you for helping out.");
+			Pokemon.addTask(Task.FLASH_IN, "");
+			Pokemon.addTask(Task.UPDATE, "");
+			Pokemon.addTask(Task.FLASH_OUT, "");
+			p.flag[1][1] = true;
 		}
 		
 		if (gp.currentMap == 32 && !p.flags[30]) {

@@ -359,24 +359,29 @@ public class UI extends AbstractUI{
 
 	private void drawFlash(int i) {
 		if (i == 0) {
+			counter++;
 			g2.setColor(Color.WHITE);
 			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
-			return;
-		}
-		counter += i;
-		g2.setColor(new Color(0,0,0,counter*5));
-		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
-		if (i > 0) {
-			if (counter >= 50) {
-				counter = 0;
-				drawFlash = true;
+			if (counter >= 1) {
+				counter = 25;
+				drawFlash = false;
 				currentTask = null;
 			}
-		} else if (i < 0) {
-			if (counter <= -50) {
-				counter = 0;
-				drawFlash = true;
-				currentTask = null;
+			return;
+		} else if (!drawFlash) {
+			counter += i;
+			g2.setColor(new Color(255,255,255,Math.abs(counter * 10)));
+			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+			if (i > 0) {
+				if (counter >= 25) {
+					counter = 0;
+					drawFlash = true;
+				}
+			} else if (i < 0) {
+				if (counter <= 0) {
+					counter = 0;
+					currentTask = null;
+				}
 			}
 		}
 		
