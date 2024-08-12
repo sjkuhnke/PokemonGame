@@ -79,9 +79,9 @@ public class Player extends Trainer implements Serializable {
 	public int currentBox;
 	public int version;
 	
-	public static final int MAX_BOXES = 10;
+	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 30;
+	public static final int VERSION = 31;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -1135,6 +1135,7 @@ public class Player extends Trainer implements Serializable {
 				p.update();
 			}
 		}
+		updateBoxes();
 		version = VERSION;
 	}
 	
@@ -1147,6 +1148,19 @@ public class Player extends Trainer implements Serializable {
 		for (int i = 0; i < counts.length; i++) {
 			bag.count[i] = counts[i];
 		}
+	}
+	
+	private void updateBoxes() {
+		if (boxes.length == MAX_BOXES) return;
+		Pokemon[][] temp = boxes.clone();
+		boxes = new Pokemon[MAX_BOXES][30];
+		
+		for (int i = 0; i < temp.length; i++) {
+			for (int j = 0; j < temp[1].length; j++) {
+				boxes[i][j] = temp[i][j];
+			}
+		}
+		boxLabels = setupBoxLabels();
 	}
 
 	public void setSprites() {

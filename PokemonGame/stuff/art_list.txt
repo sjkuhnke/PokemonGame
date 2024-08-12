@@ -8,31 +8,32 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 281 Capsakid-X*
 282 Scovillain-X*
 283 Kerbernero-X*
-156 Poof (E forms of these guys are more important, these guys can wait)
-157 Hast (E forms of these guys are more important, these guys can wait)
-197 Poof-E
-198 Hast-E (First stage is lowkey the most important, this guy can wait)
+156 Poof* (E forms of these guys are more important, these guys can wait)
+157 Hast* (E forms of these guys are more important, these guys can wait)
+197 Poof-E*
+198 Hast-E* (First stage is lowkey the most important, this guy can wait)
 098 Flamehead (E forms of these guys are more important, these guys can wait)
 099 Fireshard (E forms of these guys are more important, these guys can wait)
 100 Blastflames (E forms of these guys are more important, these guys can wait)
 202 Flamehead-E
 203 Fireshard-E (First stage is lowkey the most important, these 2 can wait)
 204 Blastflames-E (First stage is lowkey the most important, these 2 can wait)
-276 Bronzor-X
-277 Bronzong-X
+276 Bronzor-X*
+277 Bronzong-X*
 267 Elgyem-E*
 268 Beheeyem-E*
-258 Hissimitar
-285 Icy Serpant
+258 Hissimitar*
+285 Icy Serpant*
+287 Dust Sorcerer*
 158 Poov
 159 Grust
 213 Nightrex*
 214 Shadowsaur*
 263 Plasamp*
 264 Geniova*
-106 Sparkdust
-107 Splame
-111 Shookwat
+106 Sparkdust*
+107 Splame*
+111 Shookwat*
 112 Wattwo
 113 Megawatt
 101 Tiowoo
@@ -44,6 +45,7 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 114 Elelamb
 115 Electroram
 116 Superchargo
+235 Dragowrath*
 
 ================================================================================
 Overworld Pokemon Sprites (* are the ones that already have battle sprites, probably best to do that first)

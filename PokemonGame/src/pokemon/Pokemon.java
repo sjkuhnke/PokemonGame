@@ -7406,7 +7406,7 @@ public class Pokemon implements Serializable {
 	}    
 	
 	public static void readInfoFromCSV() {
-        Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/info.csv"));
+        Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/pokemon.csv"));
         for (int i = 0; i < MAX_POKEMON; i++) {
         	String line = scanner.nextLine();
         	String[] tokens = line.split("\\|");
