@@ -5124,7 +5124,7 @@ public class Pokemon implements Serializable {
 			}
 			
 		}
-		if (this.ability == Ability.PARASOCIAL && f.ability != Ability.MAGIC_GUARD && f.ability != Ability.SCALY_SKIN && !f.isFainted() && (f.vStatuses.contains(Status.POSESSED) || f.status == Status.ASLEEP)) {
+		if (this.ability == Ability.PARASOCIAL && f.ability != Ability.MAGIC_GUARD && f.ability != Ability.SCALY_SKIN && !f.isFainted() && (f.vStatuses.contains(Status.POSESSED) || f.vStatuses.contains(Status.CONFUSED) || f.status == Status.ASLEEP)) {
 			int hp = (int) Math.max(f.getStat(0) * 1.0 / 8, 1);
 			if (hp >= f.currentHP) hp = f.currentHP;
 			addAbilityTask(this);
