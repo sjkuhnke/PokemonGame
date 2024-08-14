@@ -1,6 +1,8 @@
-/pokemon/
-/tools/
-/maps/
-/overworld/
 /entity/
+/info/
+/maps/
+/object/
+/overworld/
 /tile/
+/tools/
+/pokemon/

@@ -68,6 +68,7 @@ public enum Move {
 	BULK_UP(0,1000,0,0,2,0,PType.FIGHTING,"Raises user's Attack and Defense by 1",false,10),
 	BULLDOZE(60,100,100,0,0,0,PType.GROUND,"% chance to lower foe's Speed by 1",false,20),
 	BULLET_PUNCH(40,100,0,0,0,1,PType.STEEL,"Always goes first",true,15),
+	BULLET_SEED(25,100,0,0,0,0,PType.GRASS,"",false,15), // TODO
 	BURN_UP(130,100,100,0,1,0,PType.FIRE,"% to cause user to lose it's FIRE type if it has it",false,5),
 	CALM_MIND(0,1000,0,0,2,0,PType.PSYCHIC,"Raises user's Sp.Atk and Sp.Def by 1",false,10),
 	CAPTIVATE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Sp.Atk by 2",false,10),
@@ -349,6 +350,7 @@ public enum Move {
 	POISON_FANG(50,100,50,0,0,0,PType.POISON,"% to Toxic foe",true,15),
 	POISON_GAS(0,80,0,0,2,0,PType.POISON,"Poisons foe",true,30),
 	POISON_JAB(80,100,30,0,0,0,PType.POISON,"% to Poison foe",true,20),
+	POISON_POWDER(0,75,0,0,2,0,PType.POISON,"Poisons foe",true,30), // TODO
 	POISON_STING(15,100,30,0,0,0,PType.POISON,"% chance to Poison foe",false,35),
 	POISON_TAIL(85,100,10,1,0,0,PType.POISON,"% chance to Poison foe. Boosted crit rate",true,15),
 	POP_POP(70,80,0,0,0,0,PType.STEEL,"Attacks twice, seperate accuracy checks for each hit",false,5),
@@ -398,6 +400,7 @@ public enum Move {
 	SACRED_FIRE(100,95,50,0,0,0,PType.FIRE,"% chance to Burn foe",false,5),
 	SACRED_SWORD(90,100,0,0,0,0,PType.FIGHTING,"Ignores Defense and Evasion changes of foe",true,10),
 	SAFEGUARD(0,1000,0,0,2,0,PType.NORMAL,"Protects user's team from Status effects for 8 turns",false,20),
+	SAMBAL_SEAR(80,100,30,0,1,0,PType.GRASS,"% chance to Burn foe",false,15), // TODO
 	SAND_ATTACK(0,100,0,0,2,0,PType.GROUND,"Lowers foe's Accuracy by 1",false,20),
 	SANDSTORM(0,1000,0,0,2,0,PType.ROCK,"Changes the weather to SANDSTORM for 5 turns",false,10),
 	SCALD(80,100,30,0,1,0,PType.WATER,"% chance to Burn foe",false,15),

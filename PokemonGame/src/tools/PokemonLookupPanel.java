@@ -9,8 +9,6 @@ import pokemon.Pokemon;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class PokemonLookupPanel extends JPanel {
 
@@ -22,9 +20,6 @@ public class PokemonLookupPanel extends JPanel {
 	private JComboBox<Pokemon> pokemonComboBox;
 	private JTextField idField;
 	private JButton summaryButton;
-	private JRadioButton searchByIdButton;
-	private JRadioButton searchByNameButton;
-	private ButtonGroup searchOptions;
 	private Pokemon p;
 	private JLabel selectedPokemon;
 	
@@ -33,8 +28,6 @@ public class PokemonLookupPanel extends JPanel {
 		
 		JPanel searchPanel = new JPanel();
 		searchPanel.setLayout(new GridLayout(0, 2));
-		searchPanel.add(searchByIdButton);
-		searchPanel.add(searchByNameButton);
 		searchPanel.add(new JLabel("ID:"));
 		searchPanel.add(idField);
 		searchPanel.add(new JLabel("Name:"));
@@ -60,22 +53,8 @@ public class PokemonLookupPanel extends JPanel {
 			}
 		});
 		
-		idField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (searchByIdButton.isSelected()) {
-						searchById();
-					}
-				}
-			}
-		});
-		
-		pokemonComboBox.addActionListener(e -> {
-			if (searchByNameButton.isSelected()) {
-				searchByName();
-			}
-		});
+		idField.addActionListener(e -> searchById());
+		pokemonComboBox.addActionListener(e -> searchByName());
 	}
 
 	private void initialize() {
@@ -84,13 +63,6 @@ public class PokemonLookupPanel extends JPanel {
 		pokemonComboBox = new JComboBox<>();
 		idField = new JTextField(10);
 		summaryButton = new JButton("Summary");
-		
-		searchByIdButton = new JRadioButton("ID");
-		searchByNameButton = new JRadioButton("Name");
-		searchOptions = new ButtonGroup();
-		searchOptions.add(searchByIdButton);
-		searchOptions.add(searchByNameButton);
-		searchByIdButton.setSelected(true);
 		
 		selectedPokemon = new JLabel("N/A");
 		

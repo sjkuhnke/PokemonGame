@@ -120,7 +120,7 @@ public class TrainerLookupPanel extends JPanel {
 		infoPanel.add(new JLabel(moneyInfo));
 		infoPanel.add(new JLabel(itemInfo));
 		infoPanel.add(new JLabel(flagInfo));
-		infoPanel.add(new JLabel("________________________________________________________"));
+		infoPanel.add(new JLabel("________________________________"));
 		
 		panel.add(infoPanel, BorderLayout.NORTH);
 		
@@ -131,7 +131,7 @@ public class TrainerLookupPanel extends JPanel {
 			JPanel pokemonPanel = new JPanel();
 			pokemonPanel.setLayout(new BorderLayout());
 			
-			String pokemonName = p.name + " @ " + p.item;
+			String pokemonName = p.name + " Lv. " + p.level + " @ " + p.item;
 			String abilityName = "Ability: " + p.ability;
 			JLabel nameLabel = new JLabel(pokemonName);
 			JLabel abilityLabel = new JLabel(abilityName);
@@ -142,7 +142,10 @@ public class TrainerLookupPanel extends JPanel {
 			movesPanel.setLayout(new GridLayout(2, 2));
 			
 			for (Moveslot slot : p.moveset) {
-				if (slot == null) break;
+				if (slot == null) {
+					movesPanel.add(new JGradientButton("N/A"));
+					continue;
+				}
 				Move m = slot.move;
 				JButton moveButton = new JGradientButton(m.toString());
 				
