@@ -197,6 +197,13 @@ public class PMap extends JPanel {
 	    if (loc == 10) R26.setBackground(Color.yellow);
 	    add(R26);
 	    
+	    JButton R45 = new JButton("");
+	    R45.setBounds(64, 68, 36, 14);
+	    R45.setToolTipText("Route 36");
+	    R45.setBackground(new Color(153, 255, 102));
+	    if (loc == 47) R45.setBackground(Color.yellow);
+	    add(R45);
+	    
 	    JGradientButton MtSpl = new JGradientButton("");
 	    MtSpl.setBounds(30, 30, 50, 33);
 	    MtSpl.setToolTipText("Mt. Splinkty");
@@ -602,8 +609,13 @@ public class PMap extends JPanel {
 			return 8;
 		case 13:
 			if (y <= 52) {
-				PlayerCharacter.currentMapName = "Route 26";
-				return 10;
+				if (x <= 44) {
+					PlayerCharacter.currentMapName = "Route 26";
+					return 10;
+				} else {
+					PlayerCharacter.currentMapName = "Route 45";
+					return 47;
+				}
 			}
 			if (y > 52) {
 				PlayerCharacter.currentMapName = "Sicab City";

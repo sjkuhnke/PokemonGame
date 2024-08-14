@@ -695,7 +695,8 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "Most of the buildings in this city have electric doors, and they all seem to not be working.");
 			Pokemon.addTask(Task.TEXT, "Actually, you know what we could try?");
 			Pokemon.addTask(Task.TEXT, "We can grab enough auxillery energy to keep the Control Center door open, and then give it a go from there.");
-			Pokemon.addTask(Task.TEXT, "Could you meet me there? It's straight North of this city, up Route 26 and then just a bit East.");
+			Pokemon.addTask(Task.TEXT, "Could you meet me there? It's located at the end of Route 45.");
+			Pokemon.addTask(Task.TEXT, "It's up straight North of this city, and then just a bit East.");
 			Pokemon.addTask(Task.TEXT, "I'll go on up ahead to set everything up, please don't keep me waiting!");
 			Pokemon.addTask(Task.TEXT, "I'm sure your father would be proud of you for helping out.");
 			Pokemon.addTask(Task.FLASH_IN, "");
