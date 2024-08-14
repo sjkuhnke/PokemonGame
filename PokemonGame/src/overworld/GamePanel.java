@@ -52,11 +52,11 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public final int maxWorldCol = 100;
 	public final int maxWorldRow = 100;
-	public final int maxMap = 200;
 	public int currentMap = 0;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
-	public static final int MAX_FLAG = 20;
+	public static final int MAX_MAP = 200;
+	public static final int MAX_FLAG = 20; // should not be >31
 	
 	public final String gameTitle = "Pokemon Xhenos";
 	
@@ -66,9 +66,9 @@ public class GamePanel extends JPanel implements Runnable {
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public PlayerCharacter player = new PlayerCharacter(this, keyH);
-	public Entity npc[][] = new Entity[maxMap][20];
-	public ItemObj obj[][] = new ItemObj[maxMap][35];
-	public InteractiveTile iTile[][] = new InteractiveTile[maxMap][55];
+	public Entity npc[][] = new Entity[MAX_MAP][20];
+	public ItemObj obj[][] = new ItemObj[MAX_MAP][35];
+	public InteractiveTile iTile[][] = new InteractiveTile[MAX_MAP][55];
 	public ArrayList<Entity> particleList = new ArrayList<>();
 	
 	public NPC_Pokemon[] grusts = new NPC_Pokemon[10];

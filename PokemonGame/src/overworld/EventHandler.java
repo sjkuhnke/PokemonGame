@@ -20,12 +20,12 @@ public class EventHandler {
 	public EventHandler(GamePanel gp) {
 		this.gp = gp;
 		
-		eventRect = new EventRect[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
+		eventRect = new EventRect[GamePanel.MAX_MAP][gp.maxWorldCol][gp.maxWorldRow];
 		
 		int map = 0;
 		int col = 0;
 		int row = 0;
-		while(map < gp.maxMap && col < gp.maxWorldCol && row < gp.maxWorldRow) {
+		while(map < GamePanel.MAX_MAP && col < gp.maxWorldCol && row < gp.maxWorldRow) {
 			
 			eventRect[map][col][row] = new EventRect();
 			eventRect[map][col][row].x = gp.tileSize / 8;

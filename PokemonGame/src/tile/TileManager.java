@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -19,12 +20,13 @@ public class TileManager {
 	public boolean canFly[];
 	
 	public static Rectangle[] collisionRectangles;
+	public static String[] mapNames = new String[GamePanel.MAX_MAP];
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
 		tile = new Tile[900];
-		mapTileNum = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
-		canFly = new boolean[gp.maxMap];
+		mapTileNum = new int[GamePanel.MAX_MAP][gp.maxWorldCol][gp.maxWorldRow];
+		canFly = new boolean[GamePanel.MAX_MAP];
 		
 		setupCollisionRectangles();
 		
@@ -1097,6 +1099,7 @@ public class TileManager {
 	}
 	
 	public void loadMap(String filePath, int map, boolean canFly) {
+		addName(filePath, map);
 		try {
 			InputStream is = getClass().getResourceAsStream(filePath);
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -1189,5 +1192,11 @@ public class TileManager {
 		for (int i = 0; i < xCoords.length; i++) {
 			mapTileNum[107][xCoords[i]][yCoords[i]] = 483;
 		}
+	}
+	
+	public void addName(String name, int map) {
+		name = name.replace("/maps/", "");
+		name = name.replace(".txt", "");
+		mapNames[map] = name;
 	}
 }

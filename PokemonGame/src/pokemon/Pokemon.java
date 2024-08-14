@@ -1232,7 +1232,7 @@ public class Pokemon implements Serializable {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 	    sb.append(name);
-	    if (!nickname.equals(name)) {
+	    if (nickname != null && !nickname.equals(name)) {
 	    	sb.append(" (");
 		    sb.append(nickname);
 		    sb.append(")");
@@ -7538,7 +7538,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void updateRivals() {
-		if (gp.player.p.starter == -1) return;
+		if (gp == null || gp.player.p.starter == -1) return;
 		
 		Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
 		ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(items));
