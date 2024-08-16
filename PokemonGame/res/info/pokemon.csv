@@ -247,7 +247,7 @@
 195|Sneasel      |DARK    |ICE     |INNER_FOCUS       |KEEN_EYE          |PICKPOCKET        |[55, 95, 55, 35, 75, 115]     |61.7  |60 |
 196|Weavile      |DARK    |ICE     |TECHNICIAN        |PRESSURE          |PICKPOCKET        |[70, 120, 65, 45, 85, 125]    |75.0  |45 |
 197|Sneasel-H    |FIGHTING|POISON  |INNER_FOCUS       |KEEN_EYE          |PICKPOCKET        |[55, 95, 55, 35, 75, 115]     |59.5  |60 |
-198|Sneasler     |FIGHTING|POISON  |UNBURDEN          |PRESSURE          |POISON_TOUCH      |[80, 130, 60, 40, 80, 120]    |94.8  |20 |
+198|Sneasler     |FIGHTING|POISON  |UNBURDEN          |POISON_TOUCH      |PICKPOCKET        |[80, 130, 60, 40, 80, 120]    |94.8  |20 |
 -3 |Solosis      |PSYCHIC |null    |MAGIC_GUARD       |EMPATHIC_LINK     |REGENERATOR       |[45, 30, 40, 105, 50, 20]     |2.2   |200|
 -4 |Duosion      |PSYCHIC |null    |MAGIC_GUARD       |EMPATHIC_LINK     |REGENERATOR       |[65, 40, 50, 125, 60, 30]     |17.6  |100|
 -5 |Reuniclus    |PSYCHIC |null    |MAGIC_GUARD       |EMPATHIC_LINK     |REGENERATOR       |[110, 65, 75, 125, 85, 30]    |44.3  |50 |
@@ -270,7 +270,7 @@
 -1 |Metapod      |BUG     |null    |SHED_SKIN         |SHED_SKIN         |SWARM             |[50, 20, 55, 25, 25, 30]      |21.8  |120|
 -2 |Butterfree   |BUG     |FLYING  |COMPOUND_EYES     |COMPOUND_EYES     |TINTED_LENS       |[60, 45, 50, 95, 80, 70]      |70.5  |45 |
 24 |Metapod-X    |BUG     |MAGIC   |WONDER_SKIN       |MAGICAL           |MAGIC_BOUNCE      |[50, 20, 50, 30, 30, 25]      |26.2  |120|
-25 |Butterfree-X |BUG     |MAGIC   |MOSAIC_WINGS      |MAGICAL           |TINTED_LENS       |[60, 20, 55, 105, 90, 75]     |101.1 |40 |
+25 |Butterfree-X |BUG     |MAGIC   |MOSAIC_WINGS      |MAGICAL           |SERENE_GRACE      |[60, 20, 55, 105, 90, 75]     |101.1 |40 |
 -8 |Bronzor      |STEEL   |PSYCHIC |LEVITATE          |HEATPROOF         |BATTLE_ARMOR      |[57, 24, 86, 24, 86, 23]      |81.6  |100|
 -9 |Bronzong     |STEEL   |PSYCHIC |LEVITATE          |HEATPROOF         |BATTLE_ARMOR      |[67, 89, 116, 79, 116, 33]    |81.6  |100|
 110|Bronzor-X    |MAGIC   |null    |SCRAPPY           |UNBURDEN          |WONDER_SKIN       |[82, 115, 74, 75, 64, 90]     |81.6  |100|
