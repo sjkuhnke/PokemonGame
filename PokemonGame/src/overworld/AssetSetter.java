@@ -879,6 +879,13 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 35, 24, 73);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 28, 18, 74);
 		
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 44, 18, 360);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 54, 17, 362);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 71, 17, 363);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 59, 28, 361);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 79, 11, 364);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 28, 365);
+		
 		mapNum = 14;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 36, 41, 44);

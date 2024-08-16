@@ -609,7 +609,7 @@ public class PMap extends JPanel {
 			return 8;
 		case 13:
 			if (y <= 52) {
-				if (x <= 44) {
+				if (x <= 43) {
 					PlayerCharacter.currentMapName = "Route 26";
 					return 10;
 				} else {

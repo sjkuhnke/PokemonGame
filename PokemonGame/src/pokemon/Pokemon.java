@@ -5051,6 +5051,7 @@ public class Pokemon implements Serializable {
 			if (r == 0) {
 				addAbilityTask(this);
 				this.status = Status.HEALTHY;
+				this.toxic = 0;
 				addTask(Task.STATUS, Status.HEALTHY, nickname + " became healthy!", this);
 			}
 		}
