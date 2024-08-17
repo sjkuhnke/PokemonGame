@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -91,7 +90,7 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 57, true); // poppy grove
 		loadMap("/maps/house01.txt", 58, true);
 		loadMap("/maps/house01.txt", 59, true); // sicab city
-		loadMap("/maps/house02.txt", 60, true);
+		loadMap("/maps/control.txt", 60, true);
 		loadMap("/maps/house01.txt", 61, true); // kleine village
 		loadMap("/maps/house01.txt", 62, true); // schrice city
 		loadMap("/maps/house01.txt", 63, true);
@@ -193,6 +192,7 @@ public class TileManager {
 		loadMap("/maps/gym08.txt", 159, true);
 		loadMap("/maps/space01.txt", 160, true);
 		loadMap("/maps/post.txt", 161, true);
+		loadMap("/maps/lab03.txt", 162, true);
 	}
 	
 	private void setupCollisionRectangles() {
@@ -941,21 +941,22 @@ public class TileManager {
 		setup(740, true);
 		setup(741, true);
 		setup(742, true, 2);
-//		setup(743, true);
-//		setup(744, true);
-//		setup(745, true);
-//		setup(746, true);
-//		setup(747, true);
-//		setup(748, true);
-//		setup(749, true);
-//		setup(750, true);
-//		setup(751, true);
-//		setup(752, true);
-//		setup(753, true);
-//		setup(754, true);
-//		setup(755, true);
-//		setup(756, true);
-//		setup(757, true);
+		setup(743, true, 2);
+		setup(744, true, 2);
+		setup(745, true, 2);
+		setup(746, false);
+		
+		setup(747, true);
+		setup(748, true);
+		setup(749, true);
+		setup(750, true);
+		setup(751, true);
+		setup(752, true);
+		setup(753, true);
+		setup(754, false);
+		setup(755, true);
+		setup(756, true, 2);
+		setup(757, true);
 //		setup(758, true);
 //		setup(759, true);
 //		setup(760, true);

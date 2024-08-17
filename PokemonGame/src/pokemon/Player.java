@@ -1249,10 +1249,10 @@ public class Player extends Trainer implements Serializable {
 	public int calculatePokedexes() {
 		if (!flag[0][2]) {
 			return 0;
-		} else if (flag[0][2] && badges < 1) { // TODO: change to flag for talking to Dad after Gym 1 (For upgrading to E forms)
+		} else if (flag[0][2] && !flag[1][2]) {
 			return 2;
-		} else if (badges > 1 && badges < 3) { // TODO: change to flag for talking to Dad after Gym 1 (For upgrading to E forms) and a flag for whenever we add tradebacks for regional counterparts
-			return 4;
+		} else if (flag[1][2] && !flag[2][1]) {
+			return 3;
 		} else {
 			return 4;
 		}
