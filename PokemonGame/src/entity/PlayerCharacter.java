@@ -26,6 +26,7 @@ import javax.swing.SwingUtilities;
 import org.jdesktop.swingx.VerticalLayout;
 
 import object.Cut_Tree;
+import object.Fuse_Box;
 import object.InteractiveTile;
 import object.Locked_Door;
 import object.Pit;
@@ -390,6 +391,8 @@ public class PlayerCharacter extends Entity {
 					interactStarterMachine(iTileIndex);
 				} else if (target instanceof Locked_Door) {
 					interactLockedDoor(iTileIndex);
+				} else if (target instanceof Fuse_Box) {
+					interactFuseBox(iTileIndex);
 				}
 			}
 		}
@@ -703,6 +706,33 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.UPDATE, "");
 			Pokemon.addTask(Task.FLASH_OUT, "");
 			p.flag[1][1] = true;
+		} else if (gp.currentMap == 162) {
+			if (!p.flag[1][2]) {
+				Pokemon.addTask(Task.TEXT, "You're just in time, I almost have the energy prepared.");
+				Pokemon.addTask(Task.TEXT, "In the meantime, can we chat for a bit about what I do here?");
+				Pokemon.addTask(Task.TEXT, "I have this research post out here in the sticks because of the close proximity to Electric Tunnel, the birthplace of another type of Pokemon.");
+				Pokemon.addTask(Task.TEXT, "They're the Electric forms, and I've seen a lot of them migrating to Sicab City to feast on the power.");
+				Pokemon.addTask(Task.TEXT, "I suspect the outage has been caused by them finishing off all of the energy there, causing the outage.");
+				Pokemon.addTask(Task.TEXT, "When we head back to try and fix it, I figure we'll probably run into some Electric forms there.");
+				Pokemon.addTask(Task.TEXT, "Thankfully, your dad told me to work on an extension to record all of the new forms, and I'd like to give it to you to help me document them.");
+				Pokemon.addTask(Task.TEXT, "So, without further ado, here's an update to your Neodex!");
+				Pokemon.addTask(Task.TEXT, "...");
+				Pokemon.addTask(Task.TEXT, "There, I added an 'Electric Pokedex' section. That way you can be prepared to take note of any new forms you see there!");
+				Pokemon.addTask(Task.TEXT, "...");
+				Pokemon.addTask(Task.TEXT, "Okay! I believe I have enough auxillary power here to open the door of the Control Center for a bit.");
+				Pokemon.addTask(Task.TEXT, "However, I don't think we have enough time to get back there on foot. But, who says you need to walk?");
+				Pokemon.addTask(Task.TEXT, "Here's a high-tech invention I've made so you can warp back! Let me upgrade your map real quick to integerate the tech.");
+				Pokemon.addTask(Task.TEXT, "...");
+				Pokemon.addTask(Task.TEXT, "Now you can teleport instantly to any town you've already been! Use it to get back to the city in time, and the doors to the center should be open.");
+				Pokemon.addTask(Task.TEXT, "At least if my calculations are correct.");
+				Pokemon.addTask(Task.TEXT, "God speed kid, and tell your dad I said hi!");
+				p.flag[1][2] = true;
+			} else if (p.flag[1][2] && !p.flag[1][10]) { // TODO: change to flag for restoring city with power
+				Pokemon.addTask(Task.TEXT, "The energy levels are getting low? Hold on, I can get them up for a little longer.");
+			} else {
+				Pokemon.addTask(Task.TEXT, "Have you seen any new Electric forms? Can I take a look?");
+			}
+			
 		}
 		
 		if (gp.currentMap == 32 && !p.flags[30]) {
@@ -1215,6 +1245,23 @@ public class PlayerCharacter extends Entity {
 				gp.iTile[gp.currentMap][i] = null;
 				p.flag[0][13] = true;
 				p.bag.remove(Item.WAREHOUSE_KEY);
+			}
+		} else if (gp.currentMap == 13) {
+			gp.ui.showMessage("...the electric door doesn't budge.");
+		}
+	}
+	
+	private void interactFuseBox(int i) {
+		if (gp.currentMap == 60) { // control center
+			if (gp.iTile[gp.currentMap][i].direction == "down") { // fuse box 1
+				if (!p.flag[1][4]) {
+					gp.ui.showMessage("Powered on the fuse box!\nA clicking sound played!");
+					p.flag[1][4] = true;
+				} else {
+					gp.ui.showMessage("The fuse box is whirring with power!");
+				}
+			} else { // fuse box 2
+				
 			}
 		}
 	}

@@ -68,7 +68,7 @@ public enum Move {
 	BULK_UP(0,1000,0,0,2,0,PType.FIGHTING,"Raises user's Attack and Defense by 1",false,10),
 	BULLDOZE(60,100,100,0,0,0,PType.GROUND,"% chance to lower foe's Speed by 1",false,20),
 	BULLET_PUNCH(40,100,0,0,0,1,PType.STEEL,"Always goes first",true,15),
-	BULLET_SEED(25,100,0,0,0,0,PType.GRASS,"",false,15), // TODO
+	BULLET_SEED(25,100,0,0,0,0,PType.GRASS,"Attacks 2-5 times",false,30),
 	BURN_UP(130,100,100,0,1,0,PType.FIRE,"% to cause user to lose it's FIRE type if it has it",false,5),
 	CALM_MIND(0,1000,0,0,2,0,PType.PSYCHIC,"Raises user's Sp.Atk and Sp.Def by 1",false,10),
 	CAPTIVATE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Sp.Atk by 2",false,10),
@@ -350,7 +350,7 @@ public enum Move {
 	POISON_FANG(50,100,50,0,0,0,PType.POISON,"% to Toxic foe",true,15),
 	POISON_GAS(0,80,0,0,2,0,PType.POISON,"Poisons foe",true,30),
 	POISON_JAB(80,100,30,0,0,0,PType.POISON,"% to Poison foe",true,20),
-	POISON_POWDER(0,75,0,0,2,0,PType.POISON,"Poisons foe",true,30), // TODO
+	POISON_POWDER(0,75,0,0,2,0,PType.POISON,"Poisons foe",false,35),
 	POISON_STING(15,100,30,0,0,0,PType.POISON,"% chance to Poison foe",false,35),
 	POISON_TAIL(85,100,10,1,0,0,PType.POISON,"% chance to Poison foe. Boosted crit rate",true,15),
 	POP_POP(70,80,0,0,0,0,PType.STEEL,"Attacks twice, seperate accuracy checks for each hit",false,5),
@@ -400,7 +400,7 @@ public enum Move {
 	SACRED_FIRE(100,95,50,0,0,0,PType.FIRE,"% chance to Burn foe",false,5),
 	SACRED_SWORD(90,100,0,0,0,0,PType.FIGHTING,"Ignores Defense and Evasion changes of foe",true,10),
 	SAFEGUARD(0,1000,0,0,2,0,PType.NORMAL,"Protects user's team from Status effects for 8 turns",false,20),
-	SAMBAL_SEAR(80,100,30,0,1,0,PType.GRASS,"% chance to Burn foe",false,15), // TODO
+	SAMBAL_SEAR(80,100,30,0,1,0,PType.GRASS,"% chance to Burn foe",false,15),
 	SAND_ATTACK(0,100,0,0,2,0,PType.GROUND,"Lowers foe's Accuracy by 1",false,20),
 	SANDSTORM(0,1000,0,0,2,0,PType.ROCK,"Changes the weather to SANDSTORM for 5 turns",false,10),
 	SCALD(80,100,30,0,1,0,PType.WATER,"% chance to Burn foe",false,15),
@@ -410,7 +410,7 @@ public enum Move {
 	SCRATCH(40,100,0,0,0,0,PType.NORMAL,"A normal attack",true,35),
 	SCREECH(0,85,0,0,2,0,PType.NORMAL,"Lowers foe's Defense by 2",false,35),
 	SEA_DRAGON(0,1000,0,0,2,0,PType.MAGIC,"Transforms Kissyfishy into Kissyfishy-D: raised Atk, SpAtk, Acc by 1 if Kissyfishy-D",false,5),
-	SEED_BOMB(80,100,0,0,0,0,PType.GRASS,"",false,20), // TODO
+	SEED_BOMB(80,100,0,0,0,0,PType.GRASS,"A normal attack",false,15),
 	SEISMIC_TOSS(0,100,0,0,0,0,PType.FIGHTING,"Damage dealt is equal to the user's level",true,20),
 	SELF$DESTRUCT(200,100,0,0,0,0,PType.NORMAL,"User faints",false,5),
 	SHADOW_BALL(80,100,30,0,1,0,PType.GHOST,"% to lower foe's Sp.Def by 1",false,15),
@@ -563,7 +563,7 @@ public enum Move {
 	WORRY_SEED(0,100,0,0,2,0,PType.GRASS,"Changes foe's ability to INSOMNIA",false,10),
 	WRAP(15,90,100,0,0,0,PType.NORMAL,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,20),
 	X$SCISSOR(80,100,0,1,0,0,PType.BUG,"Boosted Crit rate",true,15),
-	YAWN(0,100,0,0,2,0,PType.NORMAL,"",false,15), // TODO
+	YAWN(0,100,0,0,2,0,PType.NORMAL,"",false,10), // TODO
 	ZAP_CANNON(120,50,100,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false,5),
 	ZEN_HEADBUTT(80,90,30,0,0,0,PType.PSYCHIC,"% of causing foe to flinch",true,15),
 	ZING_ZAP(80,100,30,0,0,0,PType.ELECTRIC,"% of causing foe to flinch",true,15),
@@ -743,7 +743,7 @@ public enum Move {
 	public int getNumHits(Pokemon user, Pokemon[] team) {
 		if (this == Move.DOUBLE_SLAP || this == Move.FURY_ATTACK ||this == Move.FURY_SWIPES || this == Move.ICICLE_SPEAR ||
 				this == Move.PIN_MISSILE || this == Move.ROCK_BLAST|| this == Move.SCALE_SHOT || this == Move.SPIKE_CANNON ||
-				this == Move.SHOOTING_STARS) {
+				this == Move.SHOOTING_STARS || this == Move.BULLET_SEED) {
 			int randomNum = (int) (Math.random() * 100) + 1; // Generate a random number between 1 and 100 (inclusive)
 			if (user.item == Item.LOADED_DICE) {
 				if (randomNum <= 50) {

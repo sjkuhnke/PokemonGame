@@ -2989,6 +2989,8 @@ public class Pokemon implements Serializable {
 //			foe.paralyze(false, this);
 		} else if (move == Move.SACRED_FIRE) {
 			foe.burn(false, this);
+		} else if (move == Move.SAMBAL_SEAR) {
+			foe.burn(false, this);
 		} else if (move == Move.SCALD) {
 			foe.burn(false, this);
 		} else if (move == Move.SCORCHING_SANDS) {
@@ -3599,6 +3601,14 @@ public class Pokemon implements Serializable {
 			boolean success = field.setTerrain(field.new FieldEffect(Effect.PSYCHIC));
 			if (success && item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
 		} else if (announce && move == Move.POISON_GAS) {
+			foe.poison(true, this);
+		} else if (announce && move == Move.POISON_POWDER) {
+			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
+				if (announce) addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
+				success = false;
+				fail = true;
+				return;
+			}
 			foe.poison(true, this);
 		} else if (announce && move == Move.STUN_SPORE) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
@@ -6252,6 +6262,45 @@ public class Pokemon implements Serializable {
 		return types[++index];
 	}
 	
+	private static int[] determineOptimalIVs(PType hpType) {
+		// initialization for error message
+		Pokemon tempPokemon = new Pokemon(1, 5, true, false);
+	    int[] ivs = null;
+		
+	    // get target index
+	    int targetIndex = hpType.ordinal() - 1;
+	    
+	    // find range of sums that map to target type index
+	    int lowerBoundSum = (targetIndex * 63) / 18;
+	    int upperBoundSum = ((targetIndex + 1) * 63) / 18 - 1;
+
+	    // iterate from highest possible sum to lowest
+	    for (int sum = upperBoundSum; sum >= lowerBoundSum; sum--) {
+	        // create new array
+	        ivs = new int[6];
+	        int tempSum = sum;
+
+	        // try to assign highest set of ivs
+	        for (int i = 5; i >= 0; i--) {
+	            if ((tempSum & (1 << i)) != 0) {
+	                ivs[i] = 31; // max iv if bit is set
+	            } else {
+	                ivs[i] = 30; // highest even iv to not set the bit
+	            }
+	        }
+
+	        // verification
+	        tempPokemon.ivs = ivs;
+	        if (tempPokemon.determineHPType() == hpType) {
+	            return ivs;
+	        }
+	        
+	    }
+	    
+	    // if no iv set is found (we're fucked)
+	    throw new IllegalStateException("The algorithm returned an array of " + Arrays.toString(ivs) + " which resulted in HP " + tempPokemon.determineHPType() + " instead of " + hpType);
+	}
+	
 	private PType determineWBType() {
 		PType result = PType.NORMAL;
 		if (field.equals(field.weather, Effect.SUN)) result = PType.FIRE;
@@ -7488,12 +7537,28 @@ public class Pokemon implements Serializable {
 				
 				String[] moveStrings = pokemonParts[4].split(",");
 				Moveslot[] moves = new Moveslot[4];
+				PType type = null;
 				for (int j = 0; j < 4; j++) {
-					moves[j] = j >= moveStrings.length || moveStrings[j].isEmpty() ? null : new Moveslot(Move.valueOf(moveStrings[j]));
+					String moveString = j >= moveStrings.length ? "" : moveStrings[j];
+					if (moveString.contains("HIDDEN_POWER")) {
+						if (moveString.length() > 12) {
+							type = PType.valueOf(moveString.substring(13));
+						} else {
+							type = PType.GALACTIC;
+						}
+						moves[j] = new Moveslot(Move.HIDDEN_POWER);
+					} else {
+						moves[j] = moveString.isEmpty() ? null : new Moveslot(Move.valueOf(moveString));
+					}
+					
 				}
 				
 				Pokemon pokemon = new Pokemon(id, level, false, true);
 				pokemon.moveset = moves;
+				
+				if (type != null) {
+					pokemon.ivs = Pokemon.determineOptimalIVs(type);
+				}
 				
 				boolean abilitySet = false;
 				
@@ -7537,7 +7602,7 @@ public class Pokemon implements Serializable {
 		
 		scanner.close();
 	}
-	
+
 	public static void updateRivals() {
 		if (gp == null || gp.player.p.starter == -1) return;
 		

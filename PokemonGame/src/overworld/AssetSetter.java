@@ -19,6 +19,7 @@ import entity.NPC_TN;
 import entity.NPC_TN_Admin;
 import entity.NPC_Trainer;
 import object.Cut_Tree;
+import object.Fuse_Box;
 import object.GymBarrier;
 import object.InteractiveTile;
 import object.ItemObj;
@@ -216,6 +217,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 73, Item.FOCUS_SASH, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(28, 73, Item.RED_CARD, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 34, Item.MENTAL_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(79, 25, Item.TM73, mapNum); // gyro ball
 		
 		mapNum = 14;
 		objIndex = 0;
@@ -396,11 +398,10 @@ public class AssetSetter {
 		
 		mapNum = 60;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(31, 41, Item.LEFTOVERS, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(24, 36, Item.DRAGON_FANG, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(38, 44, Item.TM73, mapNum); // gyro ball
-		gp.obj[mapNum][objIndex] = ObjSetup(32, 44, Item.MUSCLE_BAND, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(24, 44, Item.TM02, mapNum); // dragon claw
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 45, Item.LEFTOVERS, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 35, Item.DRAGON_FANG, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 43, Item.MUSCLE_BAND, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 36, Item.TM02, mapNum); // dragon claw
 		
 		mapNum = 61;
 		objIndex = 0;
@@ -886,6 +887,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 79, 11, 364);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 28, 365);
 		
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 20, 63, "", 33, true, "");
+		
 		mapNum = 14;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 36, 41, 44);
@@ -1180,8 +1183,8 @@ public class AssetSetter {
 		
 		mapNum = 60;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 29, 42, 147);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 33, 42, 148);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 38, 38, 147);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 38, 42, 148);
 		
 		mapNum = 77;
 		index = 0;
@@ -1601,7 +1604,11 @@ public class AssetSetter {
 		
 		mapNum = 161;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(ROBIN, 50, 37, "AHH!", true);
+		gp.npc[mapNum][index] = NPCSetup(ROBIN, 50, 37, "AGHH!", true);
+		
+		mapNum = 162;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 38, "Oh hello there, welcome to PROFESSOR PHOTON's humble abode!", true);
 		
 	}
 	
@@ -1642,6 +1649,11 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(30, 10, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(30, 9, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(30, 8, 4, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = SetupLockedDoor(26, 64, 34, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupLockedDoor(19, 85, 36, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupLockedDoor(48, 57, 36, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupLockedDoor(15, 56, 47, mapNum, map);
 		
 		mapNum = 16;
 		iIndex = 0;
@@ -1771,11 +1783,16 @@ public class AssetSetter {
 		
 		mapNum = 60;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(30, 44, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(31, 43, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(32, 43, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(31, 42, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 70, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 40, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 40, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(36, 40, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 40, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 41, 1, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 36, 7, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 35, 8, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 35, 8, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 35, 8, mapNum, map);
 		
 		mapNum = 78;
 		iIndex = 0;
@@ -2649,6 +2666,13 @@ public class AssetSetter {
 		case 6:
 			result = new Starter_Machine(gp);
 			break;
+		case 7:
+			result = new Fuse_Box(gp);
+			break;
+		case 8:
+			result = new Fuse_Box(gp);
+			result.direction = "up";
+			break;
 		}
 		
 		result.worldX = gp.tileSize*x;
@@ -2735,6 +2759,21 @@ public class AssetSetter {
 		if (mapNum != map) return null;
 		InteractiveTile result = null;
 		result = new Locked_Door(gp, flag);
+		
+		if (gp.player.p.flag[result.getFlagX()][result.getFlagY()]) return null;
+		
+		result.worldX = gp.tileSize*x;
+		result.worldY = gp.tileSize*y;
+		
+		iIndex++;
+		
+		return result;
+	}
+	
+	private InteractiveTile SetupBarrier(int x, int y, int flag, int mapNum, int map) {
+		if (mapNum != map) return null;
+		InteractiveTile result = null;
+		result = new GymBarrier(gp, flag);
 		
 		if (gp.player.p.flag[result.getFlagX()][result.getFlagY()]) return null;
 		

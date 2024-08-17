@@ -162,6 +162,10 @@ public class EventHandler {
 			if (hit(13,27,5)) teleport(24, 56, 84,false);
 			if (hit(24,56,85)) teleport(13, 27, 6,false);
 			
+			// Route 45 research facility
+			if (hit(13,77,9)) teleport(162, 31, 45, false);
+			if (hit(162,31,46)) teleport(13, 77, 10, false);
+			
 			// Mt. Splinkty
 			if (hit(24,73,63)) teleport(25, 73, 69,true);
 			if (hit(25,73,69)) teleport(24, 73, 63,true);
@@ -198,7 +202,7 @@ public class EventHandler {
 			if (hit(24,52,74)) teleport(145, 59, 70,true);
 			if (hit(145,59,70)) teleport(24, 52, 74,true);
 			if (hit(24,51,75)) teleport(147, 60, 58,true);
-			if (hit(147,60,58)) teleport(24, 51, 75,true);
+			if (hit(147,60,58)) teleport(24, 51, 75,true);			
 			
 			// Mt. Splinkty Outside
 			if (hit(146,77,38)) teleport(148, 50, 75,false);

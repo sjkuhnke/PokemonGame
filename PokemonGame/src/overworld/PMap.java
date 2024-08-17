@@ -491,7 +491,9 @@ public class PMap extends JPanel {
 	    btnNewButton_1.setBounds(9, 55, 59, 34);
 	    panel.add(btnNewButton_1);
 	    
-	    JLabel lblCanFly = new JLabel("= CAN FLY HERE");
+	    String text = gp.player.p.flag[1][2] ? "= CAN WARP HERE" : "= VISITED HERE";
+	    
+	    JLabel lblCanFly = new JLabel(text);
 	    lblCanFly.setFont(new Font("Tahoma", Font.BOLD, 16));
 	    lblCanFly.setBounds(71, 63, 141, 20);
 	    panel.add(lblCanFly);
@@ -500,12 +502,13 @@ public class PMap extends JPanel {
 	}
 
 	private void fly(String loc, int map, int x, int y) {
+		if (!gp.player.p.flag[1][2]) return;
 		if (!gp.tileM.canFly[gp.currentMap]) {
-			JOptionPane.showMessageDialog(null, "Can't fly right now: you're indoors!");
+			JOptionPane.showMessageDialog(null, "Something is blocking the teleporter from working here!");
 			return;
 		}
 		int answer = JOptionPane.showOptionDialog(null,
-				"Would you like to fly to " + loc + "?",
+				"Would you like to warp to " + loc + "?",
 	            "Fly?",
 	            JOptionPane.YES_NO_OPTION,
 	            JOptionPane.QUESTION_MESSAGE,
@@ -1139,10 +1142,10 @@ public class PMap extends JPanel {
 		case 161:
 			PlayerCharacter.currentMapName = "Post Office";
 			return 4;
-		case 162: // TODO from here down
-			PlayerCharacter.currentMapName = "";
-			return 20;
-		case 163:
+		case 162:
+			PlayerCharacter.currentMapName = "Research Post";
+			return 47;
+		case 163: // TODO from here down
 			PlayerCharacter.currentMapName = "";
 			return 20;
 		case 164:
