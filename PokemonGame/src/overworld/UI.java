@@ -801,10 +801,9 @@ public class UI extends AbstractUI{
 				dexNum[dexType] -= amt;
 				if (dexNum[dexType] <= 0) {
 					dexNum[dexType] = 0;
-				} else {
-					levelDexNum = 0;
-					tmDexNum = 0;
 				}
+				levelDexNum = 0;
+				tmDexNum = 0;
 			} else if (dexMode == 1) {
 				if (levelDexNum > 0) {
 					levelDexNum--;
@@ -827,10 +826,9 @@ public class UI extends AbstractUI{
 				dexNum[dexType] += amt;
 				if (dexNum[dexType] >= maxShow) {
 					dexNum[dexType] = maxShow;					
-				} else {
-					levelDexNum = 0;
-					tmDexNum = 0;
 				}
+				levelDexNum = 0;
+				tmDexNum = 0;
 			} else if (dexMode == 1) {
 				if (levelDexNum < levelMoveList.size() - 1) {
 					levelDexNum++;
@@ -2086,8 +2084,18 @@ public class UI extends AbstractUI{
 				} else if (currentItem == Item.CALCULATOR) {
 					Item.useCalc(gp.player.p, null);
 				} else if (currentItem == Item.DEX_NAV) {
-					encounters = Encounter.getAllEncounters(gp);
+					encounters = Encounter.getAllEncounters();
 					gp.gameState = GamePanel.DEX_NAV_STATE;
+				} else if (currentItem == Item.FISHING_ROD) {
+					int result = gp.cChecker.checkTileType(gp.player);
+					if (result == 3 || (result >= 24 && result <= 36) || (result >= 313 && result <= 324)) {
+						gp.gameState = GamePanel.PLAY_STATE;
+						bagState = 0;
+						subState = 0;
+						gp.startWild(PlayerCharacter.currentMapName, 'F');
+					} else {
+						showMessage("Can't use now!");
+					}
 				} else {
 					gp.gameState = GamePanel.USE_ITEM_STATE;
 				}

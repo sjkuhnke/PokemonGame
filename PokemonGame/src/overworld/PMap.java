@@ -495,7 +495,7 @@ public class PMap extends JPanel {
 	    
 	    JLabel lblCanFly = new JLabel(text);
 	    lblCanFly.setFont(new Font("Tahoma", Font.BOLD, 16));
-	    lblCanFly.setBounds(71, 63, 141, 20);
+	    lblCanFly.setBounds(71, 63, 161, 20);
 	    panel.add(lblCanFly);
 	    
 	    if (loc == -1) lblNewLabel.setText("= YOU ARE ???");

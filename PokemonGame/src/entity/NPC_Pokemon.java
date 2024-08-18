@@ -8,7 +8,7 @@ public class NPC_Pokemon extends Entity {
 	int id;
 	boolean spin;
 
-	public NPC_Pokemon(GamePanel gp, int id, int t, boolean spin) {
+	public NPC_Pokemon(GamePanel gp, int id, int t, boolean spin, int flag) {
 		super(gp);
 		
 		direction = "down";
@@ -18,6 +18,8 @@ public class NPC_Pokemon extends Entity {
 		this.spin = spin;
 		getImage(id);
 		if (spin) turnRandom();
+		
+		this.flag = flag;
 		
 	}
 	

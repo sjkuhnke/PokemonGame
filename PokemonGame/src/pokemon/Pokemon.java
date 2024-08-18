@@ -7411,6 +7411,8 @@ public class Pokemon implements Serializable {
 	
 	public void update() {
 		baseStats = getBaseStats();
+		if (nickname.equals(name)) nickname = getName();
+		name = getName();
 		setAbility();
 		setTypes();
 		setSprites();
@@ -7515,7 +7517,13 @@ public class Pokemon implements Serializable {
 			String teamData = line.substring(teamDataIndex);
 			
 			String[] parts = trainerData.split("\\|");
-			int index = Integer.parseInt(parts[0]);
+			String indexS = parts[0];
+			boolean staticEnc = false;
+			if (indexS.contains("*")) {
+				staticEnc = true;
+				indexS = indexS.replace("*", "");
+			}
+			int index = Integer.parseInt(indexS);
 			String name = parts[1];
 			int money = Integer.parseInt(parts[2]);
 			int flagIndex = Integer.parseInt(parts[3]);
@@ -7552,8 +7560,7 @@ public class Pokemon implements Serializable {
 					}
 					
 				}
-				
-				Pokemon pokemon = new Pokemon(id, level, false, true);
+				Pokemon pokemon = staticEnc ? new Pokemon(id, level, true) : new Pokemon(id, level, false, true);
 				pokemon.moveset = moves;
 				
 				if (type != null) {
@@ -7668,6 +7675,41 @@ public class Pokemon implements Serializable {
         	}
         }
     }
+	
+	public static void readEncountersFromCSV() {
+		Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/encounters.csv"));
+		String currentKey = null;
+		ArrayList<Encounter> currentList = null;
+		
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine().trim();
+			if (line.length() > 0 && line.contains("|")) {
+				if (currentKey != null && currentList != null) {
+					Encounter.encounters.put(currentKey, currentList);
+				}
+				currentKey = line;
+				currentList = new ArrayList<>();
+			} else if (line.length() > 0 && Character.isDigit(line.charAt(0))) {
+				String[] parts = line.split("\\[");
+				int id = Integer.parseInt(parts[0].trim());
+				String[] rest = parts[1].split("\\]");
+				String[] levels = rest[0].split(",");
+				
+				int minLevel = Integer.parseInt(levels[0].trim());
+				int maxLevel = Integer.parseInt(levels[1].trim());
+				int chance = Integer.parseInt(rest[1].replace("%", "").trim());
+				double c = chance * 1.0 / 100;
+				
+				currentList.add(new Encounter(id, minLevel, maxLevel, c));
+			} else if (line.startsWith("=")) {
+				continue;
+			}
+		}
+		
+		if (currentKey != null && currentList != null) {
+			Encounter.encounters.put(currentKey, currentList);
+		}
+	}
 	
 	public static void setupNode(int id, int level, Move move) {
 		Node[] movebank = getMovebank(id);

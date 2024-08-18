@@ -114,6 +114,7 @@ public class GamePanel extends JPanel implements Runnable {
 		Pokemon.readInfoFromCSV();
 		Pokemon.readMovebanksFromCSV();
 		Pokemon.readEntiresFromCSV();
+		Pokemon.readEncountersFromCSV();
 		
 		Player.setupPokedex();
 	}
@@ -268,13 +269,13 @@ public class GamePanel extends JPanel implements Runnable {
 		startBattle(trainer, id, foe);
 	}
 	
-	public void startWild(int area, int x, int y, String type) {
-		Pokemon foe = encounterPokemon(area, x, y, player.p.random, type);
+	public void startWild(String area, char type) {
+		Pokemon foe = encounterPokemon(area, type, player.p.random);
 		startBattle(-2, -1, foe);
 	}
 	
-	public void startFish(int area, int x, int y) {
-		startWild(area, x, y, "Fishing");
+	public void startFish(String area) {
+		startWild(area, 'F');
 	}
 	
 	public void openBox(NPC_PC target) {
@@ -299,15 +300,13 @@ public class GamePanel extends JPanel implements Runnable {
 
 
 	public void endBattle(int trainer, int id) {
-		
 		if (trainer > -1 && !player.p.wiped() && trainer != 256) player.p.trainersBeat[trainer] = true;
-		if (id == 159) {
-			player.p.grustCount++;
-			aSetter.updateNPC(107);
+		
+		if (id >= 0) {
+			if (id == 159) player.p.grustCount++;
+			aSetter.updateNPC(currentMap);
 		}
-		if (id == 232) npc[148][0] = null;
-		if (id == 229) npc[150][0] = null;
-		if (id == 162) npc[107][11] = null;
+
 		Pokemon[] teamTemp = Arrays.copyOf(player.p.team, 6);
 		for (int i = 0; i < 6; i++) {
 			if (teamTemp[i] != null) {
@@ -432,8 +431,8 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
-	public Pokemon encounterPokemon(int area, int x, int y, boolean random, String type) {
-	    ArrayList<Encounter> encounters = Encounter.getEncounters(area, x, y, type, "D", random);
+	public Pokemon encounterPokemon(String area, char type, boolean random) {
+	    ArrayList<Encounter> encounters = Encounter.getEncounters(area, type, random);
 
 	    // Calculate the total encounter chance for the route
 	    double totalChance = 0.0;

@@ -620,6 +620,12 @@ public class BattleUI extends AbstractUI {
 	    		foe.stat(foe, i, 1, new Pokemon(1, 1, false, false));
 	    	}
 	    }
+		if (staticID == 205 || staticID == 210 || staticID == 197 || staticID == 202) {
+			Pokemon.addTask(Task.TEXT, foe.nickname + " is surrounded by immense electricity!");
+	    	for (int i = 0; i < 5; i++) {
+	    		foe.stat(foe, i, 1, new Pokemon(1, 1, false, false));
+	    	}
+	    }
 	    Pokemon.addSwapInTask(user);
 	    Pokemon fasterInit = user.getFaster(foe, 0, 0);
 		Pokemon slowerInit = fasterInit == user ? foe : user;

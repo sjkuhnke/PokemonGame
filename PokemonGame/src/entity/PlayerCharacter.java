@@ -165,10 +165,10 @@ public class PlayerCharacter extends Entity {
 				int random = r.nextInt(150);
 				if (random < speed) {
 					cooldown = 0;
-					String area = "Standard";
-					if (p.surf) area = "Surfing";
-					if (p.lavasurf) area = "Lava";
-					gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, area);
+					char type = 'G';
+					if (p.surf) type = 'S';
+					if (p.lavasurf) type = 'L';
+					gp.startWild(currentMapName, type);
 				}
 			}
 			if (p.steps == 202 && p.repel) {
@@ -404,7 +404,7 @@ public class PlayerCharacter extends Entity {
 				if (p.fish) {
 					int result = gp.cChecker.checkTileType(this);
 					if (result == 3 || (result >= 24 && result <= 36) || (result >= 313 && result <= 324)) {
-						gp.startWild(gp.currentMap, worldX / gp.tileSize, worldY / gp.tileSize, "Fishing");
+						gp.startWild(currentMapName, 'F');
 					}
 				}
 			}
@@ -727,19 +727,48 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.TEXT, "At least if my calculations are correct.");
 				Pokemon.addTask(Task.TEXT, "God speed kid, and tell your dad I said hi!");
 				p.flag[1][2] = true;
-			} else if (p.flag[1][2] && !p.flag[1][10]) { // TODO: change to flag for restoring city with power
+			} else if (p.flag[1][2] && !p.flag[1][16]) {
 				Pokemon.addTask(Task.TEXT, "The energy levels are getting low? Hold on, I can get them up for a little longer.");
 			} else {
 				Pokemon.addTask(Task.TEXT, "Have you seen any new Electric forms? Can I take a look?");
 			}
 			
+		} else if (gp.currentMap == 32 && !p.flag[1][17]) {
+			p.flag[1][17] = true;
+			p.fish = true;
+			Pokemon.addTask(Task.TEXT, "Say, you look like you'd be great at fishing. Here, take this spare I got lying around. Maybe you'll fish up a Durfish!");
+			Task t = Pokemon.addTask(Task.ITEM, "");
+			t.item = Item.FISHING_ROD;
+			Pokemon.addTask(Task.TEXT, "Look at water and press 'A', or use the item in your bag to fish!");
+		} else if (gp.currentMap == 16) {
+			if (!p.flag[1][7]) {
+				Pokemon.addTask(Task.TEXT, "Name's Stanford, the leader of this here town, though I haven't done much work here. At least not recently.");
+				Pokemon.addTask(Task.TEXT, "Honestly, this town is pretty neglected and has gone to shit recently. You're like the first person I've met that's given a fuck.");
+				Pokemon.addTask(Task.TEXT, "This stupid electric ghost is running through my team, and I'm running out of options.");
+				Pokemon.addTask(Task.TEXT, "I'm a Normal-type gym leader for fuck's sake! It doesn't get affected by most of my attacks!");
+			} else if (p.flag[1][7] && !p.flag[1][8]) {
+				Pokemon.addTask(Task.TEXT, "Oh, the ghost is gone. Good job kiddo.");
+				Pokemon.addTask(Task.TEXT, "The fuse box might be usable now, could you try turning it on?");
+			} else {
+				Pokemon.addTask(Task.TEXT, "Thanks for the hand squirt, though don't doubt Normal types because of this, they can still be very strong.");
+				Pokemon.addTask(Task.TEXT, "Just not against supernatural shit, fuck whatever that was. Those ones seemed extra powerful too.");
+				Pokemon.addTask(Task.TEXT, "Did you notice that they all had their hidden abilities? Those are special abilities only accessible through a special item.");
+				Pokemon.addTask(Task.TEXT, "Tell you what, as thanks for helping, I'd like to give you this. Try it out to get a special ability of your own!");
+				p.flag[1][9] = true;
+				Task t = Pokemon.addTask(Task.ITEM, "");
+				t.item = Item.ABILITY_PATCH;
+				Pokemon.addTask(Task.TEXT, "That fuse box should've opened a gate in the Control Center, you should check out the situation there.");
+				if (!p.flag[1][15]) {
+					Pokemon.addTask(Task.TEXT, "The energy field still seems to not be fully fixed yet though, and I noticed some commotion at the office.");
+				}
+				Pokemon.addTask(Task.TEXT, "But, you know what, I'm heading to the bar or something. See ya kid.");
+				Pokemon.addTask(Task.FLASH_IN, "");
+				Pokemon.addTask(Task.UPDATE, "");
+				Pokemon.addTask(Task.FLASH_OUT, "");
+			}
 		}
 		
-		if (gp.currentMap == 32 && !p.flags[30]) {
-			p.flags[30] = true;
-			p.fish = true;
-			Pokemon.addTask(Task.TEXT, "You got a Fishing Rod!\n(Press 'A' to fish)");
-		}
+		
 		if (gp.currentMap == 41 && p.flags[8] && p.flags[9] && !p.flags[31]) {
 			p.flags[31] = true;
 			Pokemon.addTask(Task.TEXT, "Oh you have?! Thank you so much!\nHere, take this as a reward!");
@@ -1262,6 +1291,24 @@ public class PlayerCharacter extends Entity {
 				}
 			} else { // fuse box 2
 				
+			}
+		} else if (gp.currentMap == 14) { // power plant 1
+			if (!p.flag[1][5]) {
+				gp.ui.showMessage(Item.breakString("...the power seems to be getting sapped by something.", 42));
+			} else if (p.flag[1][5] && !p.flag[1][6]) {
+				gp.ui.showMessage("Powered on the fuse box!\nA clicking sound played!");
+				p.flag[1][6] = true;
+			} else {
+				gp.ui.showMessage("The fuse box is whirring with power!");
+			}
+		} else if (gp.currentMap == 16) { // power plant 2
+			if (!p.flag[1][7]) {
+				gp.ui.showMessage(Item.breakString("...the power seems to be getting sapped by something.", 42));
+			} else if (p.flag[1][7] && !p.flag[1][8]) {
+				gp.ui.showMessage("Powered on the fuse box!\nA clicking sound played!");
+				p.flag[1][8] = true;
+			} else {
+				gp.ui.showMessage("The fuse box is whirring with power!");
 			}
 		}
 	}
