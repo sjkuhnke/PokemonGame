@@ -154,6 +154,9 @@ Iglite -> Sember
 Blaxer -> Kaboon
 Pyrator -> Detonape
 Magmaclang -> Apie
+Shookwat ->
+Wattwo ->
+Megawatt -> Mechamo
 
 Trainer Classes:
 Ace Trainer (mixed types/dragon)

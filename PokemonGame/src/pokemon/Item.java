@@ -303,6 +303,7 @@ public enum Item {
 	PACKAGE_C(262,0,0,Color.BLACK,Item.KEY_ITEM,null,"Inside is a bunch of dog toys, and the address says it's for a place called \"Poundtown\"."),
 	PACKAGE_D(266,0,0,Color.BLACK,Item.KEY_ITEM,null,"A Drednaw stapler, for an old friend of Robin's. Sent all the way from Galar, the deliver address is for the local warehouse."),
 	WAREHOUSE_KEY(267,0,0,Color.BLACK,Item.KEY_ITEM,null,"A key that unlocks Poppy Grove's Warehouse."),
+	FISHING_ROD(268,0,0,Color.BLACK,Item.KEY_ITEM,null,"Use when looking at water to fish! Can also press 'A' in the world to fish."),
 	;
 	
 	private int id;

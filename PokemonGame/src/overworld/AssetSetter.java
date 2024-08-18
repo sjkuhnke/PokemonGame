@@ -36,6 +36,7 @@ import object.Whirlpool;
 import object.Whirlpool_Corner;
 import object.Whirlpool_Side;
 import pokemon.Item;
+import pokemon.Pokemon;
 
 public class AssetSetter {
 
@@ -55,9 +56,7 @@ public class AssetSetter {
 	private static final int BLOCK_DEFAULT = -10;
 	
 	private static final int NPC_PC_GAUNTLET = -9;
-	private static final int ZURROARATR = -8;
-	private static final int TRIWANDOLIZ = -7;
-	private static final int DIFTERY = -6;
+
 	private static final int GRUST = -5;
 	private static final int NPC_MARKET = -4;
 	private static final int NPC_NURSE_FULL = -3;
@@ -236,7 +235,7 @@ public class AssetSetter {
 		mapNum = 16;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(44, 33, Item.SUPER_POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(21, 37, Item.ULTRA_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(21, 38, Item.ULTRA_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(22, 27, Item.TM27, mapNum); // taunt
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 27, Item.TM14, mapNum); // drain punch
 		gp.obj[mapNum][objIndex] = ObjSetup(46, 28, Item.BOTTLE_CAP, mapNum);
@@ -887,7 +886,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 79, 11, 364);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 28, 365);
 		
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 20, 63, "", 33, true, "");
+		//gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 20, 63, "", 33, true, ""); // TODO: regional trades
 		
 		mapNum = 14;
 		index = 0;
@@ -896,6 +895,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 38, 38, 41);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 25, 43, 42);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 30, 43, 43);
+		gp.npc[mapNum][index] = SetupStaticEncounter(205, 34, 31, 366, 37);
 		
 		mapNum = 16;
 		index = 0;
@@ -905,7 +905,9 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 21, 39, 48);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 62, 39, 273);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 67, 42, 274);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 72, 40, 275);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 72, 41, 275);
+		gp.npc[mapNum][index] = SetupStaticEncounter(197, 32, 28, 367, 39);
+		gp.npc[mapNum][index] = NPCSetup(STANFORD, 31, 28, "*growls* Um, what the hell do you want? Oh, right...", 41, true, "");
 		
 		mapNum = 17;
 		index = 0;
@@ -1031,7 +1033,7 @@ public class AssetSetter {
 		
 		mapNum = 32;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 40, "Take my spare fishing rod! Look at water and press 'A' to fish!", 30, true, "Look at water and press 'A' to fish!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 40, "Back in my day, I used to be a top angler. Felt good reeling in them in, but I think I've outgrown it.", 49, true, "Look at water and press 'A' to fish!");
 		
 		mapNum = 33;
 		index = 0;
@@ -1347,7 +1349,7 @@ public class AssetSetter {
 			index += 10;
 		}
 		if (!flags[29]) {
-			gp.npc[mapNum][index] = NPCSetup(ZURROARATR, 50, 58, 346);
+			//gp.npc[mapNum][index] = NPCSetup(ZURROARATR, 50, 58, 346);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1526,7 +1528,7 @@ public class AssetSetter {
 		mapNum = 148;
 		index = 0;
 		if (!flags[35] && flags[29]) {
-			gp.npc[mapNum][index] = NPCSetup(TRIWANDOLIZ, 50, 68, 326);
+			//gp.npc[mapNum][index] = NPCSetup(TRIWANDOLIZ, 50, 68, 326);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1574,7 +1576,7 @@ public class AssetSetter {
 		mapNum = 150;
 		index = 0;
 		if (!flags[36]) {
-			gp.npc[mapNum][index] = NPCSetup(DIFTERY, 46, 66, 325);
+			//gp.npc[mapNum][index] = NPCSetup(DIFTERY, 46, 66, 325);
 		} else {
 			gp.npc[mapNum][index++] = null;
 		}
@@ -1611,7 +1613,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 38, "Oh hello there, welcome to PROFESSOR PHOTON's humble abode!", true);
 		
 	}
-	
+
 	public void setInteractiveTile(int map) {
 		int mapNum = 0;
 		iIndex = 0;
@@ -1655,9 +1657,18 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupLockedDoor(48, 57, 36, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupLockedDoor(15, 56, 47, mapNum, map);
 		
+		mapNum = 14;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 30, 8, mapNum, map);
+		
+		mapNum = 15;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupBarrier(27, 24, 38, mapNum, map);
+		
 		mapNum = 16;
 		iIndex = 0;
 		SetupWhirlpool(mapNum, 65, 35, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 27, 8, mapNum, map);
 		
 		mapNum = 18;
 		iIndex = 0;
@@ -1791,8 +1802,8 @@ public class AssetSetter {
 		
 		gp.iTile[mapNum][iIndex] = ITileSetup(27, 36, 7, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(31, 35, 8, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 35, 8, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 35, 8, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 38, 40, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 37, 44, mapNum, map);
 		
 		mapNum = 78;
 		iIndex = 0;
@@ -2362,6 +2373,16 @@ public class AssetSetter {
 			gp.npc[13][0] = null;
 		}
 		
+		if (flag[1][5]) { // Rocky-E
+			gp.npc[14][5] = null;
+		}
+		if (flag[1][7]) { // Poof-E
+			gp.npc[16][7] = null;
+		}
+		if (flag[1][8]) {
+			gp.npc[16][8] = null;
+		}
+		
 		/**
 		 * All of this is old and should be removed/reworked
 		 */
@@ -2512,17 +2533,8 @@ public class AssetSetter {
 			result.setItems(items);
 			break;
 		case GRUST:
-			result = new NPC_Pokemon(gp, 159, team, true);
+			result = new NPC_Pokemon(gp, 159, team, true, -1);
 			gp.grusts[index - 1] = ((NPC_Pokemon) result);
-			break;
-		case DIFTERY:
-			result = new NPC_Pokemon(gp, 229, team, false);
-			break;
-		case TRIWANDOLIZ:
-			result = new NPC_Pokemon(gp, 232, team, false);
-			break;
-		case ZURROARATR:
-			result = new NPC_Pokemon(gp, 162, team, false);
 			break;
 		case RICK:
 			result = new NPC_TN_Admin(gp, "down", team);
@@ -2781,6 +2793,21 @@ public class AssetSetter {
 		result.worldY = gp.tileSize*y;
 		
 		iIndex++;
+		
+		return result;
+	}
+	
+	private NPC_Pokemon SetupStaticEncounter(int id, int x, int y, int t, int flag) {
+		NPC_Pokemon result = new NPC_Pokemon(gp, id, t, id == 159, flag);
+		if (gp.player.p.flag[result.getFlagX()][result.getFlagY()]) {
+			index++;
+			return null;
+		}
+		
+		result.worldX = gp.tileSize*x;
+		result.worldY = gp.tileSize*y;
+		
+		index++;
 		
 		return result;
 	}
