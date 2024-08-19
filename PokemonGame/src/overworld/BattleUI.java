@@ -1255,7 +1255,7 @@ public class BattleUI extends AbstractUI {
 				currentDialogue = select.nickname + " has no energy to battle!";
 			} else if (select == select.trainer.getCurrent()) {
 				currentDialogue = select.nickname + " is already out!";
-			} else if (cancellableParty && user.isTrapped()) {
+			} else if (cancellableParty && user.isTrapped(foe)) {
         		currentDialogue = "You are trapped and cannot switch!";
 			} else {
 				subState = TASK_STATE;

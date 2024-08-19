@@ -576,7 +576,7 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "Please do make haste, I do hope he's okay.");
 			p.flag[0][4] = true;
 		} else if (gp.currentMap == 47 && p.secondStarter != -1) {
-			Pokemon.addTask(Task.TEXT, "Here, we breed and house rare Pokemon to right against their extinction.");
+			Pokemon.addTask(Task.TEXT, "Here, we breed and house rare Pokemon to fight against their extinction.");
 			Pokemon.addTask(Task.TEXT, "...What's that? You have a " + Pokemon.getName(((p.starter + 1) * 3) - 2) + "?? That's insanely rare. Did you get that from the professor?");
 			Pokemon.addTask(Task.TEXT, "Oh, you're his son, and you're helping him research? Well, in that case, take this one as well. This should help your guys' study!");
 			p.flag[0][6] = true;
@@ -677,6 +677,8 @@ public class PlayerCharacter extends Entity {
 				p.bag.remove(Item.PACKAGE_C);
 				p.flag[0][10] = true;
 			}
+		} else if (gp.currentMap == 46) {
+			Pokemon.addTask(Task.HP, "Check your team's Hidden Power types here!");
 		} else if (gp.currentMap == 8) {
 			Pokemon.addTask(Task.TEXT, "And at the worst time too, I was expecting a package all the way from Galar.");
 			if (p.flag[0][14] && !p.flag[0][15]) {
@@ -740,6 +742,8 @@ public class PlayerCharacter extends Entity {
 				p.flag[1][2] = true;
 			} else if (p.flag[1][2] && !p.flag[1][16]) {
 				Pokemon.addTask(Task.TEXT, "The energy levels are getting low? Hold on, I can get them up for a little longer.");
+				Pokemon.addTask(Task.TEXT, "...");
+				Pokemon.addTask(Task.TEXT, "Alright, keep at it champ.");
 			} else {
 				Pokemon.addTask(Task.TEXT, "Have you seen any new Electric forms? Can I take a look?");
 			}
@@ -785,9 +789,6 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "Oh you have?! Thank you so much!\nHere, take this as a reward!");
 			Pokemon.addTask(Task.TEXT, "Obtained HM04 Surf!");
 			p.bag.add(Item.HM04);
-		}
-		if (gp.currentMap == 46) {
-			Pokemon.addTask(Task.HP, "Check your team's Hidden Power types here!");
 		}
 		if (gp.currentMap == 18 && !p.flags[12]) {
 			p.flags[12] = true;
