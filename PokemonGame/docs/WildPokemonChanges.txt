@@ -18,22 +18,23 @@ Route 23 (Grass)================================================================
 Bananaville Meadow (Grass)=========================================================
 4% Pigo
 5% Hammo
-8% Hummingspark
+7% Hummingspark
 7% Busheep
 4% Caterpie
 5% Sheabear
-6% Hatenna
+5% Hatenna
 5% Psycorb
 1% Tigrette
 8% Flameruff
 5% Sparkitten
 5% Ekans
-4% Timburr
+3% Timburr
 3% Cleffa
 5% Minishoo
 7% Scraggy
-9% Abra
-9% Solosis-X
+8% Abra
+8% Solosis-X
+5% Azurill
 
 
 Route 42 (Grass)===================================================================
@@ -74,17 +75,16 @@ Route 24 pt. 1 (Grass)==========================================================
 5% Elelamb (Lv. 4 - 6)
 
 Route 24 pt. 2 (Grass)===================================================================
-30% Hummingspark (Lv. 8 - 9)
+23% Hummingspark (Lv. 8 - 9)
 3% Pebblepup (Lv. 10)
-12% Hatenna (Lv. 8 - 10)
-10% Inkay (Lv. 9 - 10)
+11% Hatenna (Lv. 8 - 10)
+9% Inkay (Lv. 9 - 10)
 5% Cleffa (Lv. 8 - 9)
 5% Snom (Lv. 8)
-20% Ekans (Lv. 9 - 10)
+14% Ekans (Lv. 9 - 10)
 *10% Bealtle (Lv. 9 - 10)
-Abra
-Gulpin-X
-Bronzor-X
+Gulpin-X 15%
+Bronzor-X 5%
 
 Gelb Forest (1A) (Grass)===================================================================
 15% Bealtle (Lv. 12 - 14)
@@ -139,6 +139,7 @@ Route 25 (Grass)================================================================
 10% Timburr (Lv. 11)
 5% Rhypo (Lv. 10 - 12)
 Seviper
+Marill
 
 Sicab City (Fish)===================================================================
 35% Magikarp (Lv. 15 - 18)
@@ -210,11 +211,11 @@ Mt. Splinkty 1A (Floor)=========================================================
 15% Carinx (Lv. 18 - 19)
 25% Zubat (Lv. 18 - 19)
 10% Poof (Lv. 18 - 19)
+Scraggy
 Glimmet
 Bronzor-X
 Sneasel-H
 Solosis-X
-Scraggy
 
 Mt. Splinkty 1A (Fish)===================================================================
 15% Inkay (Lv. 17 - 19)
@@ -261,7 +262,6 @@ Route 27 (Grass)================================================================
 5% Zorua (Lv. 18 - 19)
 5% Minishoo (Lv. 18 - 19)
 15% Hatenna (Lv. 16 - 18)
-Bronzor-X
 Butterfree-X
 Capsakid
 
@@ -286,7 +286,7 @@ Route 41 (Grass)================================================================
 15% Grondor (Lv. 26 - 29)
 14% Florline (Lv. 25 - 28)
 Seviper
-Sneasel-H
+Azumarill
 
 Route 36 (Grass)===================================================================
 20% Bealtle (Lv. 12 - 13)
@@ -296,7 +296,6 @@ Route 36 (Grass)================================================================
 15% Iglite (Lv. 16 - 17)
 15% Tiowoo (Lv. 15 - 17)
 5% Sparkitten (Lv. 18 - 19)
-Sneasel-H
 Butterfree-X
 Scraggy
 Capsakid
@@ -345,6 +344,7 @@ Route 29 (Grass)================================================================
 6% Snom (Lv. 18 - 20)
 4% Kleinowl (Lv. 19 - 20)
 Solosis-X
+Azumarill
 
 Icy Fields (Grass)===================================================================
 25% Kleinowl (Lv. 22)
@@ -437,14 +437,15 @@ Mindagan Cavern 1A (Floor)======================================================
 Bronzor-X
 
 Route 31 (Grass)===================================================================
-14% Swadloon (Lv. 25 - 28)
+12% Swadloon (Lv. 25 - 28)
 15% Swordik (Lv. 27 - 29)
-20% Bugop (Lv. 25 - 28)
+17% Bugop (Lv. 25 - 28)
 16% Poov (Lv. 25 - 28)
-25% Pebblepup (Lv. 26 - 28)
+15% Pebblepup (Lv. 26 - 28)
 10% Tricerpup (Lv. 28 - 29)
-Kadabra
-Capsakid-S
+5% Kadabra
+9% Shroodle 25 - 27
+1% Grafaiai 28
 
 Route 31 (Fish)===================================================================
 20% Inkay (Lv. 22 - 25)
@@ -628,10 +629,11 @@ Shadow Path (Floor)=============================================================
 Route 33 (Grass)===================================================================
 15% Dualbear (Lv. 34 - 38)
 11% Florline (Lv. 34 - 38)
-16% Barkflare (Lv. 35 - 39)
+13% Barkflare (Lv. 35 - 39)
 13% Houndoom (Lv. 35 - 39)
-20% Splame (Lv. 35 - 39)
-25% Gurdurr (Lv. 34 - 39)
+15% Splame (Lv. 35 - 39)
+19% Gurdurr (Lv. 34 - 39)
+14% Grafaiai (LV. 34 - 39)
 
 Route 33 (Fish)===================================================================
 25% Magikarp (Lv. 15 - 25)
@@ -684,6 +686,7 @@ Route 35 (Grass)================================================================
 21% Sparkitten (Lv. 40 - 43)
 9% Cumin (Lv. 40 - 43)
 9% Whiskers (Lv. 40 - 42)
+Azumarill
 
 Mindagan Cavern 0 (Floor)===================================================================
 12% Clefairy (Lv. 26 - 30)
@@ -701,7 +704,7 @@ Route 43 (W) (Grass)============================================================
 14% Ralts (Lv. 2 - 3)
 13% Sparkdust (Lv. 2 - 3)
 15% Twigzap (Lv. 2 - 3)
-Caterpie
+Azurill
 Bronzor-X
 
 Route 37 (Grass)===================================================================

@@ -81,7 +81,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 32;
+	public static final int VERSION = 33;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -119,7 +119,8 @@ public class Player extends Trainer implements Serializable {
 	public void catchPokemon(Pokemon p, Item ball) {
 	    if (p.isFainted()) return;
 	    boolean hasNull = false;
-	    Pokemon.addTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?", p);
+	    Task t = Pokemon.createTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?", p);
+	    Pokemon.insertTask(t, 0);
 	    pokedex[p.id] = 2;
 	    p.clearVolatile();
 	    p.consumeItem(null);
@@ -135,7 +136,8 @@ public class Player extends Trainer implements Serializable {
 	            if (team[i] == null) {
 	                team[i] = p;
 	                p.slot = i;
-	                Pokemon.addTask(Task.END, "Caught " + p.nickname + ", added to party!");
+	                t = Pokemon.createTask(Task.END, "Caught " + p.nickname + ", added to party!");
+	                Pokemon.insertTask(t, 1);
 	                current = team[0];
 	                break;
 	            }
@@ -152,11 +154,13 @@ public class Player extends Trainer implements Serializable {
 	            }
 	            if (index >= 0) {
 	                boxes[i][index] = p;
-	                Pokemon.addTask(Task.END, "Caught " + p.nickname + ", sent to box " + (i + 1) + "!");
+	                t = Pokemon.createTask(Task.END, "Caught " + p.nickname + ", sent to box " + (i + 1) + "!");
+	                Pokemon.insertTask(t, 1);
 	                return;  // Exit the method after catching the Pokemon
 	            }
 	        }
-	        Pokemon.addTask(Task.END, "Cannot catch " + p.nickname + ", all boxes are full.");
+	        t = Pokemon.createTask(Task.END, "Cannot catch " + p.nickname + ", all boxes are full.");
+	        Pokemon.insertTask(t, 1);
 	    }
 	}
 	

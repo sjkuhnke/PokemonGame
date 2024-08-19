@@ -40,6 +40,8 @@ public class Encounter {
 		String key = area + "|" + type;
 		ArrayList<Encounter> en = encounters.get(key);
 		
+		if (en == null) en = new ArrayList<>();
+		
 		double total = 0;
 		for (Encounter e : en) {
 			total += e.encounterChance;

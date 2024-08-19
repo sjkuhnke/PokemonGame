@@ -690,6 +690,17 @@ public class PlayerCharacter extends Entity {
 			} else if (!p.flag[0][14]) {
 				Pokemon.addTask(Task.TEXT, "Can you please help me get rid of these criminals? I don't have any Pokemon of my own, I won't be of much help to you I'm afraid.");
 			}
+		} else if (gp.currentMap == 10) {
+			Pokemon.addTask(Task.TEXT, "That's hello where I come from. I'm Ryder, adventurer extraordinaire at the ripe old age of 16.");
+			Pokemon.addTask(Task.TEXT, "Say, you look like a competent Pokemon trainer. Mind taking care of something for me?");
+			Pokemon abra = new Pokemon(243, 15, true, false);
+			Pokemon.addTask(Task.GIFT, "", abra);
+			Pokemon.addTask(Task.TEXT, "Yeah, I noticed Abra seems to gain a new ability here, probably because of that new magic type I've been hearing about.");
+			Pokemon.addTask(Task.TEXT, "Anyways, it was pleasure doing business with you mate, I'm sure I'll see you around. I gotta see what the rest of the region has in store for me!");
+			Pokemon.addTask(Task.FLASH_IN, "");
+			Pokemon.addTask(Task.UPDATE, "");
+			Pokemon.addTask(Task.FLASH_OUT, "");
+			p.flag[1][3] = true;
 		} else if (gp.currentMap == 13) {
 			Pokemon.addTask(Task.TEXT, "Wait, you're his kid? Oh my goodness, your father has told me all about you. Did you come here trying to challenge the gym?");
 			Pokemon.addTask(Task.TEXT, "...");

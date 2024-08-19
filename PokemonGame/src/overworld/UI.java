@@ -2479,7 +2479,7 @@ public class UI extends AbstractUI{
 		String message = PlayerCharacter.currentMapName;
 		if (message.length() < 15) {
 			g2.setFont(g2.getFont().deriveFont(32F));
-		} else if (message.length() < 19) {
+		} else if (message.length() < 18) {
 			g2.setFont(g2.getFont().deriveFont(28F));
 		} else {
 			g2.setFont(g2.getFont().deriveFont(24F));

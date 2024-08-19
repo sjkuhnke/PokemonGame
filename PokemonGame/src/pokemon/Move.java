@@ -43,6 +43,7 @@ public enum Move {
 	BEAT_UP(12,100,0,0,0,0,PType.DARK,"Attacks once per healthy Pokemon on your team",false,10),
 	BEEFY_BASH(100,85,50,0,0,-1,PType.FIGHTING,"% chance to paralyze foe, moves last",true,5),
 	BELCH(120,100,0,0,1,0,PType.POISON,"Only works on the first turn out",false,10),
+	BELLY_DRUM(0,1000,0,0,2,0,PType.NORMAL,"Maximizes Attack at the cost of 1/2 HP",false,10),
 	BIND(15,85,100,0,0,0,PType.NORMAL,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,20),
 	BITE(60,100,30,0,0,0,PType.DARK,"% chance of causing foe to flinch",true,20),
 	BITTER_MALICE(75,100,30,0,1,0,PType.GHOST,"% chance to Frostbite foe",false,10),
@@ -303,6 +304,7 @@ public enum Move {
 	METEOR_ASSAULT(120,100,100,0,0,0,PType.GALACTIC,"% to lower user's Attack and Defense by 1",false,5),
 	METEOR_MASH(90,90,20,0,0,0,PType.STEEL,"% chance to raise user's Attack by 1",true,10),
 	METRONOME(-1,1000,0,0,2,0,PType.MAGIC,"Uses a random move, can't be blocked by taunt",false,20),
+	MIMIC(0,1000,0,0,2,0,PType.NORMAL,"Uses the move last used by the foe, fails if foe hasn't used a move yet",false,10),
 	MINIMIZE(0,1000,0,0,2,0,PType.GHOST,"Raises user's Evasion by 2",false,5),
 	MIRROR_MOVE(0,1000,0,0,2,0,PType.FLYING,"Uses the move last used by the foe, fails if foe hasn't used a move yet",false,15),
 	MIRROR_SHOT(65,85,100,0,1,0,PType.STEEL,"% chance to lower foe's Accuracy by 1",false,10),
@@ -423,6 +425,7 @@ public enum Move {
 	SHOCK_WAVE(60,1000,0,0,1,0,PType.ELECTRIC,"This attack never misses",false,20),
 	SHOOTING_STARS(25,100,0,0,0,0,PType.GALACTIC,"Hits 2-5 times",false,10),
 	SILVER_WIND(60,100,10,0,1,0,PType.BUG,"% chance to raise all of user's stats",false,5),
+	SING(0,55,0,0,2,0,PType.NORMAL,"Foe falls asleep",false,15),
 	SKULL_BASH(100,100,100,0,0,0,PType.NORMAL,"% to raise the user's Defense by 1, user must charge on the first turn",true,10),
 	SKY_ATTACK(140,90,30,1,0,0,PType.FLYING,"% chance to flinch. User must charge up on the first turn, attacks on the second. Boosted Crit rate",false,5),
 	SKY_UPPERCUT(85,90,0,0,0,0,PType.FIGHTING,"A normal attack",true,15),
@@ -515,6 +518,7 @@ public enum Move {
 	THUNDER_WAVE(0,90,0,0,2,0,PType.ELECTRIC,"Paralyzes foe",false,15),
 	THUNDERBOLT(90,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false,10),
 	THUNDERSHOCK(40,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false,30),
+	TICKLE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack and Defense by 1",false,20),
 	TOPSY$TURVY(0,1000,0,0,2,0,PType.DARK,"Inverses every stat change the foe has",false,20),
 	TORMENT(0,100,0,0,2,0,PType.DARK,"Causes foe to not be able to use the same move in succession for 4 turns",false,15),
 	TORNADO_SPIN(60,95,100,0,0,0,PType.FIGHTING,"% to raise user's Speed and Accuracy by 1, and frees user of being Spun",true,15),
@@ -530,6 +534,7 @@ public enum Move {
 	UNSEEN_STRANGLE(60,100,100,0,0,3,PType.DARK,"% to cause foe to flinch, only works on user's first turn out",true,5),
 	V$CREATE(180,95,100,0,0,0,PType.FIRE,"% chance to lower user's Defense, Sp.Def, and Speed by 1",true,5),
 	VACUUM_WAVE(40,100,0,0,1,1,PType.FIGHTING,"Always goes first",false,30),
+	VANDALIZE(0,100,0,0,2,0,PType.NORMAL,"Steals the foe's ability",false,10),
 	VANISHING_ACT(100,100,30,0,1,0,PType.MAGIC,"% to confuse foe, a two turn attack. User vanishes on the first, and attacks on the second. Hits through protect.",false,10),
 	VENOM_DRENCH(0,100,0,0,2,0,PType.POISON,"Lowers a Poisoned/Badly Poisoned foe's Attack and Sp.Atk by 2",false,20),
 	VENOM_SPIT(40,100,100,0,0,1,PType.POISON,"% to Paralyze foe; always goes first",false,5),
@@ -887,6 +892,7 @@ public enum Move {
 		result.add(Move.SUPERSONIC);
 		result.add(Move.HYPER_VOICE);
 		result.add(Move.PARTING_SHOT);
+		result.add(Move.SING);
 		return result;
 	}
 	
