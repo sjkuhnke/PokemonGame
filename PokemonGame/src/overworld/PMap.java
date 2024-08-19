@@ -538,8 +538,12 @@ public class PMap extends JPanel {
 				PlayerCharacter.currentMapName = "Route 22";
 				return 1;
 			}
-			if (x <= 41 && y > 41) {
+			if (x <= 41 && y > 41 && y <= 58) {
 				PlayerCharacter.currentMapName = "Bananaville Town";
+				return 2;
+			}
+			if (x <= 41 && y > 58) {
+				PlayerCharacter.currentMapName = "Bananaville Meadow";
 				return 2;
 			}
 			if (x <= 40 && y <= 41) {

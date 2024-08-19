@@ -864,7 +864,7 @@ public class BattleUI extends AbstractUI {
 			}
 			if (gp.keyH.leftPressed) {
 				gp.keyH.leftPressed = false;
-				if (moveSummaryNum < 0) {
+				if (foeSummary.trainer != null && moveSummaryNum < 0) {
 					int currentIndex = foeSummary.trainer.indexOf(foeSummary);
 					currentIndex = (currentIndex - 1 + foeSummary.trainer.team.length) % foeSummary.trainer.team.length;
 					foeSummary = foeSummary.trainer.team[currentIndex];
@@ -872,7 +872,7 @@ public class BattleUI extends AbstractUI {
 			}
 			if (gp.keyH.rightPressed) {
 				gp.keyH.rightPressed = false;
-				if (moveSummaryNum < 0) {
+				if (foeSummary.trainer != null && moveSummaryNum < 0) {
 					int currentIndex = foeSummary.trainer.indexOf(foeSummary);
 					currentIndex = (currentIndex + 1) % foeSummary.trainer.team.length;
 					foeSummary = foeSummary.trainer.team[currentIndex];

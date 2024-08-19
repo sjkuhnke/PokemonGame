@@ -54,7 +54,7 @@ public class Pokemon implements Serializable {
 	
 	public static Field field;
 	public static GamePanel gp;
-	public static final int MAX_POKEMON = 291;
+	public static final int MAX_POKEMON = 296;
 	
 	public static final int POKEDEX_1_SIZE = 244;
 	public static final int POKEDEX_METEOR_SIZE = 18;
@@ -683,6 +683,8 @@ public class Pokemon implements Serializable {
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TELEPORT) && (this.trainer == null || !this.trainer.hasValidMembers())) bestMoves.removeIf(Move.TELEPORT::equals);
 		
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.VANDALIZE) && foe.ability == Ability.NULL) bestMoves.removeIf(Move.VANDALIZE::equals);
+		
 		return bestMoves;
 	}
 	
@@ -1146,7 +1148,13 @@ public class Pokemon implements Serializable {
             result = new Pokemon(id + 1, this);
 		} else if (id == 276 && level >= 33) {
             result = new Pokemon(id + 1, this);
-		}
+		} else if (id == 292 && happiness >= 160) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 293 && level >= 18) {
+			result = new Pokemon(id + 1, this);
+		} else if (id == 295 && level >= 28) {
+            result = new Pokemon(id + 1, this);
+        }
 		
 		if (result != null) {
 			addEvoTask(this, result);
@@ -1541,10 +1549,10 @@ public class Pokemon implements Serializable {
 			critChance = move.critChance;
 		}
 		
-		if (move == Move.MIRROR_MOVE) {
+		if (move == Move.MIRROR_MOVE || move == Move.MIMIC) {
 			useMove(move, foe);
 			move = foe.lastMoveUsed;
-			if (move == null) {
+			if (move == null || move == Move.MIRROR_MOVE || move == Move.MIMIC) {
 				addTask(Task.TEXT, "But it failed!");
 				this.impressive = false;
 				this.moveMultiplier = 1;
@@ -3259,6 +3267,13 @@ public class Pokemon implements Serializable {
 			} else {
 				fail = fail(announce);
 			}
+		} else if (move == Move.BELLY_DRUM) {
+			if (this.statStages[0] < 6 && this.currentHP >= this.getStat(0) / 2) {
+				stat(this, 0, 12, foe, announce);
+				this.damage((this.getStat(0) * 1.0 / 2), foe);
+			} else {
+				fail = fail(announce);
+			}
 		} else if (move == Move.BULK_UP) {
 			stat(this, 0, 1, foe, announce);
 			stat(this, 1, 1, foe, announce);
@@ -3724,6 +3739,8 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SHIFT_GEAR) {
 			stat(this, 0, 1, foe, announce);
 			stat(this, 4, 2, foe, announce);
+		} else if (announce && move == Move.SING) {
+			foe.sleep(true, this);
 		} else if (move == Move.SMOKESCREEN) {
 			stat(foe, 5, -1, this, announce);
 //		} else if (move == Move.STARE) {
@@ -3809,6 +3826,9 @@ public class Pokemon implements Serializable {
 			foe.confuse(true, this);
 		} else if (announce && move == Move.THUNDER_WAVE) {
 			foe.paralyze(true, this);
+		} else if (move == Move.TICKLE) {
+			stat(foe, 0, -1, this, announce);
+			stat(foe, 1, -1, this, announce);
 		} else if (move == Move.TOPSY$TURVY) {
 			for (int i = 0; i < 7; i++) {
 				foe.statStages[i] *= -1;
@@ -3849,6 +3869,11 @@ public class Pokemon implements Serializable {
 			} else {
 				fail = fail(announce);
 			}
+		} else if (announce && move == Move.VANDALIZE) {
+			this.ability = foe.ability;
+			if (announce) addTask(Task.TEXT, this.nickname + "'s ability became " + this.ability.toString() + "!");
+			this.swapIn(this, false);
+			foe.ability = Ability.NULL;
 		} else if (announce && move == Move.WATER_SPORT) {
 			field.setEffect(field.new FieldEffect(Effect.WATER_SPORT));
 			if (announce) addTask(Task.TEXT, "Fire's power was weakened!");
@@ -7138,6 +7163,9 @@ public class Pokemon implements Serializable {
 		case 279: return "Scovillain -> Kerbernero ()";
 		case 281: return "Capsakid-S -> Scovillain-S (Fire Stone)";
 		case 282: return "Scovillain-S -> Kerbernero-S ()";
+		case 292: return "Azurill -> Marill (160+ happiness)";
+		case 293: return "Marill -> Azumarill (lv. 18)";
+		case 295: return "Shroodle -> Grafaiai (lv. 28)";
 		default:
 			return null;
 		}

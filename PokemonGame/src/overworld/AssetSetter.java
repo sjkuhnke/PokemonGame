@@ -48,6 +48,8 @@ public class AssetSetter {
 	
 	public ArrayList<Entity> clerks = new ArrayList<>();
 	
+	private static final int RYDER = -17;
+	private static final int ALAKAZAM = -16;
 	private static final int KLARA = -15;
 	private static final int AVERY = -14;
 	private static final int GRANDMOTHER = -13;
@@ -843,6 +845,11 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 27, 39, 15);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 42, 34, 16);
 		gp.npc[mapNum][index] = NPCSetup(ROBIN, 38, 28, 17);
+		
+		mapNum = 10;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM, 30, 38, "Vxxxvhh...");
+		gp.npc[mapNum][index] = NPCSetup(RYDER, 29, 38, "Oh! Uh, mabuhay!", true);
 		
 		mapNum = 11;
 		index = 0;
@@ -2373,6 +2380,11 @@ public class AssetSetter {
 			gp.npc[13][0] = null;
 		}
 		
+		if (flag[1][3]) {
+			gp.npc[10][0] = null;
+			gp.npc[10][1] = null;
+		}
+		
 		if (flag[1][5]) { // Rocky-E
 			gp.npc[14][5] = null;
 		}
@@ -2600,6 +2612,10 @@ public class AssetSetter {
 				break;
 			case TN_DOWN:
 				image = result.setup("/npc/tn1");
+				break;
+			case ALAKAZAM:
+				image = result.setup("/overworlds/245_0");
+				break;
 		}
 		
 		result.down1 = image;
