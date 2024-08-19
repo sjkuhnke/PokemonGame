@@ -14,7 +14,7 @@ import javax.swing.*;
 public enum Move {
 	ABDUCT(0,100,0,0,2,0,PType.GALACTIC,"Abducts the foe and forces their next move to be used on themselves. Can be used once every other turn, and not on the first turn out.",false,5),
 	ABSORB(20,100,0,0,1,0,PType.GRASS,"Heals 50% of damage dealt to foe",false,25),
-	ABYSSAL_CHOP(-1,90,50,0,0,0,PType.DRAGON,"% chance to paralyse foe. Damage is doulbed if foe is paralyzed",true,10),
+	ABYSSAL_CHOP(-1,90,50,0,0,0,PType.DRAGON,"% chance to paralyse foe. Damage is doubled if foe is paralyzed",true,10),
 	ACCELEROCK(40,100,0,0,0,1,PType.ROCK,"Always goes first",true,15),
 	ACID(40,100,10,0,1,0,PType.POISON,"% chance to lower foe's Sp.Def by 1",false,30),
 	ACID_ARMOR(0,1000,0,0,2,0,PType.POISON,"Raises user's Defense by 2",false,15),

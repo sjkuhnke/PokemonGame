@@ -56,7 +56,7 @@ public class Pokemon implements Serializable {
 	public static GamePanel gp;
 	public static final int MAX_POKEMON = 296;
 	
-	public static final int POKEDEX_1_SIZE = 244;
+	public static final int POKEDEX_1_SIZE = 249;
 	public static final int POKEDEX_METEOR_SIZE = 18;
 	public static final int POKEDEX_2_SIZE = 9;
 	
@@ -142,6 +142,7 @@ public class Pokemon implements Serializable {
 	private boolean visible;
 	public boolean spriteVisible;
 	public boolean consumedItem;
+	public boolean illusion;
 	
 	// battle fields
 	public Move lastMoveUsed;
@@ -455,7 +456,7 @@ public class Pokemon implements Serializable {
         // Check if there are no valid moves with non-zero PP
         if (moveToDamage.isEmpty()) {
         	// 100% chance to swap in a partner if you can only struggle
-        	if (tr.hasValidMembers() && !isTrapped()) {
+        	if (tr.hasValidMembers() && !isTrapped(foe)) {
         		System.out.println("all valid moves have 0 PP : 100%");
         		this.vStatuses.add(Status.SWAP);
         		return Move.GROWL;
@@ -467,7 +468,7 @@ public class Pokemon implements Serializable {
         // Find the maximum damage value
         int maxDamage = Collections.max(moveToDamage.values());
         
-        if (tr.hasValidMembers() && !isTrapped()) {
+        if (tr.hasValidMembers() && !isTrapped(foe)) {
         	// 25% chance to swap in a partner if they resist and you don't
         	if (foe.lastMoveUsed != null && foe.lastMoveUsed.cat != 2 && !tr.resists(this, foe.lastMoveUsed.mtype)
         			&& tr.hasResist(foe.lastMoveUsed.mtype)) {
@@ -2109,6 +2110,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (this.item == Item.LIFE_ORB) damage *= 1.3;
+			if (this.ability == Ability.ILLUSION && this.illusion) damage *= 1.2;
 			if (move == Move.NIGHT_SHADE || move == Move.SEISMIC_TOSS || move == Move.PSYWAVE) damage = this.level;
 			if (move == Move.ENDEAVOR) {
 				if (foe.currentHP > this.currentHP) {
@@ -2179,6 +2181,10 @@ public class Pokemon implements Serializable {
 			if (foe.item == Item.AIR_BALLOON) {
 				addTask(Task.TEXT, foe.nickname + "'s Air Balloon popped!");
 				foe.consumeItem(this);
+			}
+			if (foe.ability == Ability.ILLUSION && foe.illusion) {
+				addTask(Task.TEXT, foe.nickname + "'s Illusion was broken!");
+				foe.illusion = false;
 			}
 			if (this.item == Item.THROAT_SPRAY && Move.getSound().contains(move)) {
 				addTask(Task.TEXT, this.nickname + " used its Throat Spray!");
@@ -5027,7 +5033,6 @@ public class Pokemon implements Serializable {
 		if (foeAbility == Ability.UNERODIBLE && (moveType == PType.GRASS || moveType == PType.WATER || moveType == PType.GROUND)) damage /= 4;
 		if (foeAbility == Ability.THICK_FAT && (moveType == PType.FIRE || moveType == PType.ICE)) damage /= 2;
 		if (foeAbility == Ability.UNWAVERING && (moveType == PType.DARK || moveType == PType.GHOST)) damage /= 2;
-		if (foeAbility == Ability.HEATPROOF && moveType == PType.FIRE) damage /= 2;
 		if (foeAbility == Ability.FLUFFY && move.contact) damage /= 2;
 		
 		if (foeAbility == Ability.PSYCHIC_AURA && move.cat == 1) damage *= 0.8;
@@ -5047,6 +5052,7 @@ public class Pokemon implements Serializable {
 		if (mode == 0 && this.item == Item.THROAT_SPRAY && Move.getSound().contains(move)) damage *= 1.5;
 		
 		if (this.item == Item.LIFE_ORB) damage *= 1.3;
+		if (this.ability == Ability.ILLUSION && this.illusion) damage *= 1.2;
 		if (this.ability == Ability.ANALYTIC && !first) damage *= 1.3;
 		if (move == Move.NIGHT_SHADE || move == Move.SEISMIC_TOSS || move == Move.PSYWAVE) damage = this.level;
 		if (move == Move.ENDEAVOR) {
@@ -6411,6 +6417,9 @@ public class Pokemon implements Serializable {
 			} else {
 				stat(foe, 1, -1, this);
 			}
+		} else if (this.ability == Ability.ILLUSION) {
+			addAbilityTask(this);
+			addTask(Task.TEXT, foe.nickname + " creates a terrifying illusion!");
 		} else if (this.ability == Ability.PICKPOCKET) {
 			if (this.item == null && foe.item != null && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
 				addAbilityTask(foe);
@@ -7171,11 +7180,12 @@ public class Pokemon implements Serializable {
 		}
 	}
 
-	public boolean isTrapped() {
+	public boolean isTrapped(Pokemon foe) {
 		if (this.vStatuses.contains(Status.SPUN) || this.vStatuses.contains(Status.CHARGING) || this.vStatuses.contains(Status.RECHARGE) || this.vStatuses.contains(Status.LOCKED) || this.vStatuses.contains(Status.SEMI_INV)) {
 			return true;
 		}
 		if ((this.vStatuses.contains(Status.NO_SWITCH) || this.vStatuses.contains(Status.TRAPPED)) && this.item != Item.SHED_SHELL) return true;
+		if (foe.ability == Ability.ILLUSION && foe.illusion && this.type1 != PType.GHOST && this.type2 != PType.GHOST) return true;
 		return false;
 	}
 	
@@ -7444,6 +7454,7 @@ public class Pokemon implements Serializable {
 		setAbility();
 		setTypes();
 		setSprites();
+		setAbility();
 	}
 	
 	public void setSprites() {
