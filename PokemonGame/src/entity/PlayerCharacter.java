@@ -704,21 +704,31 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.FLASH_OUT, "");
 			p.flag[1][3] = true;
 		} else if (gp.currentMap == 13) {
-			Pokemon.addTask(Task.TEXT, "Wait, you're his kid? Oh my goodness, your father has told me all about you. Did you come here trying to challenge the gym?");
-			Pokemon.addTask(Task.TEXT, "...");
-			Pokemon.addTask(Task.TEXT, "You did? Well, that's going to be a difficult task considering the city's gone into full black-out, no power or anything.");
-			Pokemon.addTask(Task.TEXT, "I'd try and fix it, but the Control Center door is jammed, and that's our best shot at figuring out what's wrong.");
-			Pokemon.addTask(Task.TEXT, "Most of the buildings in this city have electric doors, and they all seem to not be working.");
-			Pokemon.addTask(Task.TEXT, "Actually, you know what we could try?");
-			Pokemon.addTask(Task.TEXT, "We can grab enough auxillery energy to keep the Control Center door open, and then give it a go from there.");
-			Pokemon.addTask(Task.TEXT, "Could you meet me there? It's located at the end of Route 45.");
-			Pokemon.addTask(Task.TEXT, "It's up straight North of this city, and then just a bit East.");
-			Pokemon.addTask(Task.TEXT, "I'll go on up ahead to set everything up, please don't keep me waiting!");
-			Pokemon.addTask(Task.TEXT, "I'm sure your father would be proud of you for helping out.");
-			Pokemon.addTask(Task.FLASH_IN, "");
-			Pokemon.addTask(Task.UPDATE, "");
-			Pokemon.addTask(Task.FLASH_OUT, "");
-			p.flag[1][1] = true;
+			if (worldY / gp.tileSize >= 59) {
+				Pokemon.addTask(Task.TEXT, "Wait, you're his kid? Oh my goodness, your father has told me all about you. Did you come here trying to challenge the gym?");
+				Pokemon.addTask(Task.TEXT, "...");
+				Pokemon.addTask(Task.TEXT, "You did? Well, that's going to be a difficult task considering the city's gone into full black-out, no power or anything.");
+				Pokemon.addTask(Task.TEXT, "I'd try and fix it, but the Control Center door is jammed, and that's our best shot at figuring out what's wrong.");
+				Pokemon.addTask(Task.TEXT, "Most of the buildings in this city have electric doors, and they all seem to not be working.");
+				Pokemon.addTask(Task.TEXT, "Actually, you know what we could try?");
+				Pokemon.addTask(Task.TEXT, "We can grab enough auxillery energy to keep the Control Center door open, and then give it a go from there.");
+				Pokemon.addTask(Task.TEXT, "Could you meet me there? It's located at the end of Route 45.");
+				Pokemon.addTask(Task.TEXT, "It's up straight North of this city, and then just a bit East.");
+				Pokemon.addTask(Task.TEXT, "I'll go on up ahead to set everything up, please don't keep me waiting!");
+				Pokemon.addTask(Task.TEXT, "I'm sure your father would be proud of you for helping out.");
+				Pokemon.addTask(Task.FLASH_IN, "");
+				Pokemon.addTask(Task.UPDATE, "");
+				Pokemon.addTask(Task.FLASH_OUT, "");
+				p.flag[1][1] = true;
+			} else if (worldY / gp.tileSize < 59 && worldY / gp.tileSize >= 51) {
+				Pokemon.addTask(Task.TEXT, "As much as I appreciate the help, don't think I'll go easy on you. Normal types really shouldn't be underestimated.");
+				Pokemon.addTask(Task.TEXT, "Good luck to you both, see you guys inside.");
+				p.flag[1][16] = true;
+				Pokemon.addTask(Task.FLASH_IN, "");
+				Pokemon.addTask(Task.UPDATE, "");
+				Pokemon.addTask(Task.FLASH_OUT, "");
+			}
+			
 		} else if (gp.currentMap == 162) {
 			if (!p.flag[1][2]) {
 				Pokemon.addTask(Task.TEXT, "You're just in time, I almost have the energy prepared.");
@@ -781,6 +791,56 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.UPDATE, "");
 				Pokemon.addTask(Task.FLASH_OUT, "");
 			}
+		} else if (gp.currentMap == 18) {
+			if (worldX / gp.tileSize >= 49) {
+				if (!p.flag[1][11]) {
+					Pokemon.addTask(Task.TEXT, "Not... strong... enough...");
+				} else if (p.flag[1][11] && !p.flag[1][12]) {
+					Pokemon.addTask(Task.TEXT, "Bro, the fuse box is usable now that you defeated that Electric Pokemon.");
+					Pokemon.addTask(Task.TEXT, "Quit fooling around and go turn it on!");
+				} else if (p.flag[1][12] && !p.flag[1][13]) {
+					p.flag[1][13] = true;
+					Pokemon.addTask(Task.TEXT, "Yada yada yada here's a really important HM");
+					Task t = Pokemon.addTask(Task.ITEM, "");
+					t.item = Item.HM02;
+					Pokemon.addTask(Task.TEXT, "Peace out girl scout, something about him going to find Stanford to tell him to go back to the gym or something");
+					Pokemon.addTask(Task.FLASH_IN, "");
+					Pokemon.addTask(Task.UPDATE, "");
+					Pokemon.addTask(Task.FLASH_OUT, "");
+				}
+			} else {
+				p.flag[2][2] = true;
+				Random gift = new Random();
+				int id = 0;
+				int counter = 0;
+				do {
+					counter++;
+					id = gift.nextInt(6); // Dualmoose, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie
+					switch (id) {
+					case 0:
+						id = 61;
+						break;
+					case 1:
+						id = 106;
+						break;
+					case 2:
+						id = 143;
+						break;
+					case 3:
+						id = 150;
+						break;
+					case 4:
+						id = 177;
+						break;
+					case 5:
+						id = 184;
+						break;
+					}
+				} while (p.pokedex[id] == 2 && counter < 100);
+				Pokemon result = new Pokemon(id, 15, true, false);
+				Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
+				Pokemon.addTask(Task.GIFT, "", result);
+			}
 		}
 		
 		
@@ -789,39 +849,6 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "Oh you have?! Thank you so much!\nHere, take this as a reward!");
 			Pokemon.addTask(Task.TEXT, "Obtained HM04 Surf!");
 			p.bag.add(Item.HM04);
-		}
-		if (gp.currentMap == 18 && !p.flags[12]) {
-			p.flags[12] = true;
-			Random gift = new Random();
-			int id = 0;
-			int counter = 0;
-			do {
-				counter++;
-				id = gift.nextInt(6); // Dualmoose, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie
-				switch (id) {
-				case 0:
-					id = 61;
-					break;
-				case 1:
-					id = 106;
-					break;
-				case 2:
-					id = 143;
-					break;
-				case 3:
-					id = 150;
-					break;
-				case 4:
-					id = 177;
-					break;
-				case 5:
-					id = 184;
-					break;
-				}
-			} while (p.pokedex[id] == 2 && counter < 100);
-			Pokemon result = new Pokemon(id, 15, true, false);
-			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
-			Pokemon.addTask(Task.GIFT, "", result);
 		}
 		if (gp.currentMap == 49 && !p.flags[13]) {
 			p.flags[13] = true;
@@ -1302,7 +1329,12 @@ public class PlayerCharacter extends Entity {
 					gp.ui.showMessage("The fuse box is whirring with power!");
 				}
 			} else { // fuse box 2
-				
+				if (!p.flag[1][15]) {
+					gp.ui.showMessage("Powered on the main fuse box!\nThe Control Center erupted in power!");
+					p.flag[1][15] = true;
+				} else {
+					gp.ui.showMessage("The fuse box is whirring with power!");
+				}
 			}
 		} else if (gp.currentMap == 14) { // power plant 1
 			if (!p.flag[1][5]) {
@@ -1319,6 +1351,15 @@ public class PlayerCharacter extends Entity {
 			} else if (p.flag[1][7] && !p.flag[1][8]) {
 				gp.ui.showMessage("Powered on the fuse box!\nA clicking sound played!");
 				p.flag[1][8] = true;
+			} else {
+				gp.ui.showMessage("The fuse box is whirring with power!");
+			}
+		} else if (gp.currentMap == 18) { // office 2
+			if (!p.flag[1][11]) {
+				gp.ui.showMessage(Item.breakString("...the power seems to be getting sapped by something.", 42));
+			} else if (p.flag[1][11] && !p.flag[1][12]) {
+				gp.ui.showMessage("Powered on the fuse box!\nA clicking sound played!");
+				p.flag[1][12] = true;
 			} else {
 				gp.ui.showMessage("The fuse box is whirring with power!");
 			}

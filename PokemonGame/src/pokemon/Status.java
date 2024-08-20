@@ -46,6 +46,8 @@ public enum Status {
 	SWAP("AUT",Color.BLACK,Color.BLACK),
 	CHARGED("AUT",Color.BLACK,Color.BLACK),
 	LOADED("AUT",Color.BLACK,Color.BLACK),
+	YAWNING("AUT",Color.BLACK,Color.BLACK),
+	DROWSY("AUT",Color.BLACK,Color.BLACK),
 	;
 	
 	Status(String name, Color color, Color textColor) {

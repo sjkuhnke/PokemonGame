@@ -568,7 +568,7 @@ public enum Move {
 	WORRY_SEED(0,100,0,0,2,0,PType.GRASS,"Changes foe's ability to INSOMNIA",false,10),
 	WRAP(15,90,100,0,0,0,PType.NORMAL,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,20),
 	X$SCISSOR(80,100,0,1,0,0,PType.BUG,"Boosted Crit rate",true,15),
-	YAWN(0,100,0,0,2,0,PType.NORMAL,"",false,10), // TODO
+	YAWN(0,1000,0,0,2,0,PType.NORMAL,"Causes foe to fall asleep next turn",false,10),
 	ZAP_CANNON(120,50,100,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false,5),
 	ZEN_HEADBUTT(80,90,30,0,0,0,PType.PSYCHIC,"% of causing foe to flinch",true,15),
 	ZING_ZAP(80,100,30,0,0,0,PType.ELECTRIC,"% of causing foe to flinch",true,15),
