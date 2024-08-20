@@ -1583,7 +1583,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (foeAbility == Ability.MAGIC_BOUNCE && move.cat == 2 && (acc <= 100 || move == Move.WHIRLWIND || move == Move.ROAR || move == Move.STEALTH_ROCK
-				|| move == Move.SPIKES || move == Move.TOXIC_SPIKES || move == Move.TOXIC || move == Move.STICKY_WEB)) {
+				|| move == Move.SPIKES || move == Move.TOXIC_SPIKES || move == Move.TOXIC || move == Move.STICKY_WEB || move == Move.YAWN)) {
 			useMove(move, foe);
 			addAbilityTask(foe);
 			foe.move(this, move, true);
@@ -3905,6 +3905,13 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.WORRY_SEED) {
 			foe.ability = Ability.INSOMNIA;
 			if (announce) addTask(Task.TEXT, foe.nickname + "'s ability became Insomnia!");
+		} else if (announce && move == Move.YAWN) {
+			if (foe.vStatuses.contains(Status.YAWNING) || foe.vStatuses.contains(Status.DROWSY)) {
+				fail(announce);
+			} else {
+				foe.vStatuses.add(Status.YAWNING);
+				if (announce) addTask(Task.TEXT, foe.nickname + " became drowsy!");
+			}
 		} else if (move == Move.ROCK_POLISH) {
 			stat(this, 4, 2, foe, announce);
 		}
@@ -5166,6 +5173,10 @@ public class Pokemon implements Serializable {
 			}
 			
 		}
+		if (this.vStatuses.contains(Status.DROWSY)) {
+			this.sleep(false, f);
+			this.vStatuses.remove(Status.DROWSY);
+		}
 		if (this.ability == Ability.PARASOCIAL && f.ability != Ability.MAGIC_GUARD && f.ability != Ability.SCALY_SKIN && !f.isFainted() && (f.vStatuses.contains(Status.POSESSED) || f.vStatuses.contains(Status.CONFUSED) || f.status == Status.ASLEEP)) {
 			int hp = (int) Math.max(f.getStat(0) * 1.0 / 8, 1);
 			if (hp >= f.currentHP) hp = f.currentHP;
@@ -5339,6 +5350,10 @@ public class Pokemon implements Serializable {
 		}
 		if (this.item == Item.TOXIC_ORB && this.status == Status.HEALTHY) {
 			this.toxic(false, this);
+		}
+		if (this.vStatuses.contains(Status.YAWNING)) {
+			this.vStatuses.remove(Status.YAWNING);
+			this.vStatuses.add(Status.DROWSY);
 		}
 		
 		checkBerry(f);
@@ -6422,7 +6437,7 @@ public class Pokemon implements Serializable {
 			addTask(Task.TEXT, foe.nickname + " creates a terrifying illusion!");
 		} else if (this.ability == Ability.PICKPOCKET) {
 			if (this.item == null && foe.item != null && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
-				addAbilityTask(foe);
+				addAbilityTask(this);
 				addTask(Task.TEXT, this.nickname + " stole the foe's " + foe.item.toString() + "!");
 				this.item = foe.item;
 				if (!foe.loseItem) foe.lostItem = foe.item;

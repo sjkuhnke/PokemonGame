@@ -460,7 +460,8 @@ public class BattleUI extends AbstractUI {
 			Item.useCalc(user.getPlayer(), null);
 		}
 		drawCatchWindow();
-		if (!showFoeSummary) drawToolTips("OK", null, null, "Foe");
+		String dText = foe.trainerOwned() ? "Foe" : null;
+		if (!showFoeSummary) drawToolTips("OK", null, null, dText);
 	}
 
 	private void drawUser() {
@@ -844,10 +845,12 @@ public class BattleUI extends AbstractUI {
 		
 		if (gp.keyH.dPressed) {
 			gp.keyH.dPressed = false;
-			if (foeSummary == null && !showFoeSummary) foeSummary = foe;
-			if (showFoeSummary) foeSummary = null;
-			moveSummaryNum = -1;
-			showFoeSummary = !showFoeSummary;
+			if (foe.trainerOwned()) {
+				if (foeSummary == null && !showFoeSummary) foeSummary = foe;
+				if (showFoeSummary) foeSummary = null;
+				moveSummaryNum = -1;
+				showFoeSummary = !showFoeSummary;
+			}
 		}
 		
 		if (showFoeSummary) {

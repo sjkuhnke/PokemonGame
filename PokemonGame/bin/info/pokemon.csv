@@ -148,8 +148,8 @@
 176|Durfish      |WATER   |GROUND  |ILLUMINATION      |PRANKSTER         |NULL              |[55, 60, 64, 62, 55, 49]      |6.8   |95 |
 177|Dompster     |WATER   |GROUND  |ILLUMINATION      |PRANKSTER         |NULL              |[70, 115, 100, 60, 80, 60]    |67.9  |35 |
 217|Kissyfishy   |WATER   |MAGIC   |WATER_VEIL        |REGENERATOR       |WONDER_SKIN       |[40, 40, 75, 55, 50, 90]      |10.6  |25 |
-44 |Ekans        |POISON  |null    |INTIMIDATE        |SHED_SKIN         |CORROSION         |[35, 60, 44, 40, 54, 55]      |15.2  |255|
-45 |Arbok        |POISON  |null    |INTIMIDATE        |SHED_SKIN         |CORROSION         |[60, 110, 70, 55, 80, 80]     |143.3 |90 |
+44 |Ekans        |POISON  |DRAGON  |INTIMIDATE        |SHED_SKIN         |CORROSION         |[35, 60, 44, 40, 54, 55]      |15.2  |255|
+45 |Arbok        |POISON  |DRAGON  |INTIMIDATE        |SHED_SKIN         |CORROSION         |[60, 110, 70, 55, 80, 80]     |143.3 |90 |
 119|Zubat        |POISON  |FLYING  |STRONG_JAW        |INNER_FOCUS       |POISON_TOUCH      |[40, 45, 35, 30, 40, 55]      |16.5  |255|
 120|Golbat       |POISON  |FLYING  |STRONG_JAW        |INNER_FOCUS       |POISON_TOUCH      |[75, 80, 70, 65, 75, 90]      |121.3 |90 |
 121|Crobat       |POISON  |FLYING  |STRONG_JAW        |INNER_FOCUS       |POISON_TOUCH      |[85, 90, 80, 70, 80, 130]     |165.3 |90 |
@@ -256,8 +256,8 @@
 88 |Reuniclus-X  |LIGHT   |null    |RADIANT           |PIXILATE          |MIRROR_ARMOR      |[70, 75, 55, 125, 70, 95]     |78.0  |50 |
 172|Seviper      |POISON  |null    |SHARP_TAIL        |MERCILESS         |SHED_SKIN         |[73, 100, 60, 100, 60, 65]    |115.7 |90 |
 173|Hissimitar   |POISON  |STEEL   |SHARP_TAIL        |MERCILESS         |TALENTED          |[10, 10, 10, 10, 10, 10]      |1.0   |100|
--6 |Gulpin       |POISON  |NORMAL  |STICKY_HOLD       |GOOEY             |SIMPLE            |[80, 43, 53, 43, 53, 40]      |22.7  |225|
--7 |Swalot       |POISON  |NORMAL  |STICKY_HOLD       |GOOEY             |SIMPLE            |[120, 73, 83, 73, 83, 55]     |176.4 |75 |
+-6 |Gulpin       |POISON  |null    |STICKY_HOLD       |GOOEY             |SIMPLE            |[80, 43, 53, 43, 53, 40]      |22.7  |225|
+-7 |Swalot       |POISON  |null    |STICKY_HOLD       |GOOEY             |SIMPLE            |[120, 73, 83, 73, 83, 55]     |176.4 |75 |
 157|Gulpin-X     |GALACTIC|POISON  |BLACK_HOLE        |BLACK_HOLE        |BLACK_HOLE        |[75, 38, 63, 53, 58, 45]      |105.5 |200|
 158|Swalot-X     |GALACTIC|POISON  |BLACK_HOLE        |STICKY_HOLD       |SIMPLE            |[150, 39, 80, 93, 95, 40]     |999.9 |65 |
 221|Plasamp      |STEEL   |GALACTIC|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|

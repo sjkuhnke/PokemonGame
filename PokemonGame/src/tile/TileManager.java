@@ -21,6 +21,20 @@ public class TileManager {
 	public static Rectangle[] collisionRectangles;
 	public static String[] mapNames = new String[GamePanel.MAX_MAP];
 	
+	private static final int FULL = 0; // default, shouldn't ever be explicitly used
+	private static final int TOP_HALF = 1;
+	private static final int BOTTOM_HALF = 2;
+	private static final int LEFT_HALF = 3;
+	private static final int RIGHT_HALF = 4;
+	private static final int TOP_TWO_THIRDS = 5;
+	private static final int BOTTOM_TWO_THIRDS = 6;
+	private static final int BOTTOM_LEFT_CORNER = 7;
+	private static final int BOTTOM_RIGHT_CORNER = 8;
+	private static final int TOP_THREE_FOURTHS = 9;
+	private static final int BOTTOM_THREE_FOURTHS = 10;
+	private static final int TOP_FOURTH = 11;
+	private static final int BOTTOM_FOURTH = 12;
+	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
 		tile = new Tile[900];
@@ -196,18 +210,20 @@ public class TileManager {
 	}
 	
 	private void setupCollisionRectangles() {
-		collisionRectangles = new Rectangle[11];
-		collisionRectangles[0] = new Rectangle(0, 0, gp.tileSize, gp.tileSize); // full tile
-		collisionRectangles[1] = new Rectangle(0, 0, gp.tileSize, gp.tileSize / 2); // top half
-		collisionRectangles[2] = new Rectangle(0, gp.tileSize / 2, gp.tileSize, gp.tileSize / 2); // bottom half
-		collisionRectangles[3] = new Rectangle(0, 0, gp.tileSize / 2, gp.tileSize); // left half
-		collisionRectangles[4] = new Rectangle(gp.tileSize / 2, 0, gp.tileSize / 2, gp.tileSize); // right half
-		collisionRectangles[5] = new Rectangle(0, 0, gp.tileSize, gp.tileSize * 2 / 3); // top 2/3
-		collisionRectangles[6] = new Rectangle(0, gp.tileSize / 3, gp.tileSize, gp.tileSize * 2 / 3); // bottom 2/3
-		collisionRectangles[7] = new Rectangle(0, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2); // bottom left corner
-		collisionRectangles[8] = new Rectangle(gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2); // bottom right corner
-		collisionRectangles[9] = new Rectangle(0, 0, gp.tileSize, gp.tileSize * 3 / 4); // top 3/4
-		collisionRectangles[10] = new Rectangle(0, gp.tileSize / 4, gp.tileSize, gp.tileSize * 3 / 4); // bottom 3/4
+		collisionRectangles = new Rectangle[13];
+		collisionRectangles[FULL] = new Rectangle(0, 0, gp.tileSize, gp.tileSize); // full tile
+		collisionRectangles[TOP_HALF] = new Rectangle(0, 0, gp.tileSize, gp.tileSize / 2); // top half
+		collisionRectangles[BOTTOM_HALF] = new Rectangle(0, gp.tileSize / 2, gp.tileSize, gp.tileSize / 2); // bottom half
+		collisionRectangles[LEFT_HALF] = new Rectangle(0, 0, gp.tileSize / 2, gp.tileSize); // left half
+		collisionRectangles[RIGHT_HALF] = new Rectangle(gp.tileSize / 2, 0, gp.tileSize / 2, gp.tileSize); // right half
+		collisionRectangles[TOP_TWO_THIRDS] = new Rectangle(0, 0, gp.tileSize, gp.tileSize * 2 / 3); // top 2/3
+		collisionRectangles[BOTTOM_TWO_THIRDS] = new Rectangle(0, gp.tileSize / 3, gp.tileSize, gp.tileSize * 2 / 3); // bottom 2/3
+		collisionRectangles[BOTTOM_LEFT_CORNER] = new Rectangle(0, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2); // bottom left corner
+		collisionRectangles[BOTTOM_RIGHT_CORNER] = new Rectangle(gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2); // bottom right corner
+		collisionRectangles[TOP_THREE_FOURTHS] = new Rectangle(0, 0, gp.tileSize, gp.tileSize * 3 / 4); // top 3/4
+		collisionRectangles[BOTTOM_THREE_FOURTHS] = new Rectangle(0, gp.tileSize / 4, gp.tileSize, gp.tileSize * 3 / 4); // bottom 3/4
+		collisionRectangles[TOP_FOURTH] = new Rectangle(0, 0, gp.tileSize, gp.tileSize / 4); // top fourth
+		collisionRectangles[BOTTOM_FOURTH] = new Rectangle(0, gp.tileSize * 3 / 4, gp.tileSize, gp.tileSize / 4); // bottom fourth
 	}
 
 	public void getTileImage() {
@@ -261,11 +277,11 @@ public class TileManager {
 		setup(59, true);
 		setup(60, false);
 		setup(61, false);
-		setup(62, true, 2);
-		setup(63, true, 2);
-		setup(64, true, 2);
-		setup(65, true, 2);
-		setup(66, true, 2);
+		setup(62, true, BOTTOM_HALF);
+		setup(63, true, BOTTOM_HALF);
+		setup(64, true, BOTTOM_HALF);
+		setup(65, true, BOTTOM_HALF);
+		setup(66, true, BOTTOM_HALF);
 		setup(67, true);
 		setup(68, true);
 		setup(69, true);
@@ -316,9 +332,9 @@ public class TileManager {
 		setup(114, false);
 		setup(115, false);
 		setup(116, false);
-		setup(117, true, 3);
+		setup(117, true, LEFT_HALF);
 		setup(118, false);
-		setup(119, true, 4);
+		setup(119, true, RIGHT_HALF);
 		setup(120, true);
 		setup(121, true);
 		setup(122, true);
@@ -331,9 +347,9 @@ public class TileManager {
 		setup(129, true);
 		setup(130, true);
 		setup(131, true);
-		setup(132, true, 3);
+		setup(132, true, LEFT_HALF);
 		setup(133, false);
-		setup(134, true, 4);
+		setup(134, true, RIGHT_HALF);
 		setup(135, true);
 		setup(136, false);
 		setup(137, false);
@@ -345,9 +361,9 @@ public class TileManager {
 		setup(143, true);
 		setup(144, true);
 		setup(145, true);
-		setup(146, true, 2);
-		setup(147, true, 2);
-		setup(148, true, 2);
+		setup(146, true, BOTTOM_HALF);
+		setup(147, true, BOTTOM_HALF);
+		setup(148, true, BOTTOM_HALF);
 		setup(149, true);
 		setup(150, true);
 		setup(151, true);
@@ -379,12 +395,12 @@ public class TileManager {
 		setup(177, true);
 		setup(178, true);
 		setup(179, true);
-		setup(180, true, 1);
-		setup(181, true, 1);
-		setup(182, true, 4);
+		setup(180, true, TOP_HALF);
+		setup(181, true, TOP_HALF);
+		setup(182, true, RIGHT_HALF);
 		setup(183, false);
-		setup(184, true, 3);
-		setup(185, true, 1);
+		setup(184, true, LEFT_HALF);
+		setup(185, true, TOP_HALF);
 		setup(186, true);
 		setup(187, true);
 		setup(188, true);
@@ -394,9 +410,9 @@ public class TileManager {
 		setup(192, true);
 		setup(193, false);
 		setup(194, false);
-		setup(195, true, 1);
+		setup(195, true, TOP_HALF);
 		setup(196, true);
-		setup(197, true, 1);
+		setup(197, true, TOP_HALF);
 		setup(198, false);
 		setup(199, false);
 		setup(200, false);
@@ -404,15 +420,15 @@ public class TileManager {
 		setup(202, false);
 		setup(203, false);
 		setup(204, false);
-		setup(205, true, 2);
+		setup(205, true, BOTTOM_HALF);
 		setup(206, true);
-		setup(207, true, 2);
+		setup(207, true, BOTTOM_HALF);
 		setup(208, false);
 		
-		setup(209, true, 2);
-		setup(210, true, 2);
-		setup(211, true, 2);
-		setup(212, true, 2);
+		setup(209, true, BOTTOM_HALF);
+		setup(210, true, BOTTOM_HALF);
+		setup(211, true, BOTTOM_HALF);
+		setup(212, true, BOTTOM_HALF);
 		setup(213, true);
 		setup(214, true);
 		setup(215, true);
@@ -604,16 +620,16 @@ public class TileManager {
 		setup(407, true);
 		setup(408, true);
 		setup(409, true);
-		setup(410, true, 1);
-		setup(411, true, 1);
-		setup(412, true, 1);
+		setup(410, true, TOP_HALF);
+		setup(411, true, TOP_HALF);
+		setup(412, true, TOP_HALF);
 		
 		setup(413, true);
-		setup(414, true, 6);
+		setup(414, true, BOTTOM_TWO_THIRDS);
 		
-		setup(415, true, 2);
-		setup(416, true, 2);
-		setup(417, true, 2);
+		setup(415, true, BOTTOM_HALF);
+		setup(416, true, BOTTOM_HALF);
+		setup(417, true, BOTTOM_HALF);
 		setup(418, true);
 		setup(419, true);
 		setup(420, true);
@@ -626,10 +642,10 @@ public class TileManager {
 		setup(427, true);
 		setup(428, true);
 		setup(429, true);
-		setup(430, true, 2);
-		setup(431, true, 2);
-		setup(432, true, 2);
-		setup(433, true, 1);
+		setup(430, true, BOTTOM_HALF);
+		setup(431, true, BOTTOM_HALF);
+		setup(432, true, BOTTOM_HALF);
+		setup(433, true, TOP_HALF);
 		setup(434, true);
 		setup(435, true);
 		setup(436, true);
@@ -760,12 +776,12 @@ public class TileManager {
 		setup(562, true);
 		setup(563, true);
 		setup(564, true);
-		setup(565, true, 1);
-		setup(566, true, 1);
-		setup(567, true, 4);
+		setup(565, true, TOP_HALF);
+		setup(566, true, TOP_HALF);
+		setup(567, true, RIGHT_HALF);
 		setup(568, false);
-		setup(569, true, 3);
-		setup(570, true, 1);
+		setup(569, true, LEFT_HALF);
+		setup(570, true, TOP_HALF);
 		setup(571, true);
 		setup(572, true);
 		setup(573, true);
@@ -799,21 +815,21 @@ public class TileManager {
 		setup(599, true);
 		setup(600, true);
 		setup(601, true);
-		setup(602, true, 1);
+		setup(602, true, TOP_HALF);
 		setup(603, true);
-		setup(604, true, 1);
+		setup(604, true, TOP_HALF);
 		setup(605, true);
 		setup(606, true);
 		setup(607, true);
 		setup(608, true);
 		setup(609, true);
 		setup(610, true);
-		setup(611, true, 2);
-		setup(612, true, 2);
+		setup(611, true, BOTTOM_HALF);
+		setup(612, true, BOTTOM_HALF);
 		setup(613, true);
 		setup(614, true);
-		setup(615, true, 1);
-		setup(616, true, 1);
+		setup(615, true, TOP_HALF);
+		setup(616, true, TOP_HALF);
 		setup(617, false);
 		setup(618, false);
 		setup(619, true);
@@ -822,13 +838,13 @@ public class TileManager {
 		setup(622, true);
 		setup(623, true);
 		setup(624, true);
-		setup(625, true, 2);
-		setup(626, true, 2);
+		setup(625, true, BOTTOM_HALF);
+		setup(626, true, BOTTOM_HALF);
 		setup(627, true);
 		setup(628, true);
 		setup(629, false);
 		setup(630, false);
-		setup(631, true, 6);
+		setup(631, true, BOTTOM_TWO_THIRDS);
 		setup(632, true);
 		setup(633, false);
 		setup(634, false);
@@ -842,9 +858,9 @@ public class TileManager {
 		setup(641, true);
 		setup(642, true);
 		setup(643, false);
-		setup(644, true, 2);
-		setup(645, true, 2);
-		setup(646, true, 2);
+		setup(644, true, BOTTOM_HALF);
+		setup(645, true, BOTTOM_HALF);
+		setup(646, true, BOTTOM_HALF);
 		setup(647, true);
 		setup(648, true);
 		setup(649, true);
@@ -861,7 +877,7 @@ public class TileManager {
 		setup(660, false);
 		setup(661, false);
 		setup(662, false);
-		setup(663, true, 6);
+		setup(663, true, BOTTOM_TWO_THIRDS);
 		setup(664, true);
 		setup(665, true);
 		setup(666, true);
@@ -893,8 +909,8 @@ public class TileManager {
 		setup(692, false);
 		setup(693, false);
 		setup(694, false);
-		setup(695, true, 8);
-		setup(696, true, 7);
+		setup(695, true, BOTTOM_RIGHT_CORNER);
+		setup(696, true, BOTTOM_LEFT_CORNER);
 		setup(697, true);
 		setup(698, true);
 		setup(699, true);
@@ -909,21 +925,21 @@ public class TileManager {
 		setup(708, true);
 		setup(709, true);
 		setup(710, true);
-		setup(711, true, 1);
-		setup(712, true, 1);
-		setup(713, true, 1);
+		setup(711, true, TOP_HALF);
+		setup(712, true, TOP_HALF);
+		setup(713, true, TOP_HALF);
 		setup(714, false);
 		setup(715, false);
 		setup(716, false);
 		setup(717, false);
 		setup(718, true);
 		setup(719, true);
-		setup(720, true, 10);
-		setup(721, true, 10);
+		setup(720, true);
+		setup(721, true);
 		setup(722, true);
 		setup(723, true);
-		setup(724, true, 1);
-		setup(725, true, 1);
+		setup(724, true, TOP_HALF);
+		setup(725, true, TOP_HALF);
 		setup(726, true);
 		setup(727, true);
 		setup(728, true);
@@ -932,18 +948,18 @@ public class TileManager {
 		setup(731, true);
 		setup(732, true);
 		setup(733, true);
-		setup(734, true, 2);
+		setup(734, true, BOTTOM_HALF);
 		setup(735, true);
 		setup(736, true);
-		setup(737, true, 2);
+		setup(737, true, BOTTOM_HALF);
 		setup(738, true);
 		setup(739, true);
 		setup(740, true);
 		setup(741, true);
-		setup(742, true, 2);
-		setup(743, true, 2);
-		setup(744, true, 2);
-		setup(745, true, 2);
+		setup(742, true, BOTTOM_HALF);
+		setup(743, true, BOTTOM_HALF);
+		setup(744, true, BOTTOM_HALF);
+		setup(745, true, BOTTOM_HALF);
 		setup(746, false);
 		
 		setup(747, true);
@@ -955,16 +971,16 @@ public class TileManager {
 		setup(753, true);
 		setup(754, false);
 		setup(755, true);
-		setup(756, true, 2);
+		setup(756, true, BOTTOM_HALF);
 		setup(757, true);
-//		setup(758, true);
-//		setup(759, true);
-//		setup(760, true);
-//		setup(761, true);
-//		setup(762, true);
-//		setup(763, true);
-//		setup(764, true);
-//		setup(765, true);
+		setup(758, false);
+		setup(759, true, TOP_FOURTH);
+		setup(760, true, TOP_FOURTH);
+		setup(761, true, BOTTOM_HALF);
+		setup(762, true, BOTTOM_HALF);
+		setup(763, true, BOTTOM_HALF);
+		setup(764, true);
+		setup(765, true, BOTTOM_TWO_THIRDS);
 //		setup(766, true);
 //		setup(767, true);
 //		setup(768, true);
