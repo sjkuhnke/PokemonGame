@@ -413,12 +413,12 @@ public class PlayerCharacter extends Entity {
 
 	private void pickUpObject(int objIndex) {
 		gp.keyH.wPressed = false;
-		gp.gameState = GamePanel.TASK_STATE;
 		Item item = gp.obj[gp.currentMap][objIndex].item;
 		int count = gp.obj[gp.currentMap][objIndex].count;
 		String itemName = item.toString();
 		if (count > 1 && itemName.contains("Berry")) itemName = itemName.replace("Berry", "Berries");
-		Task t = Pokemon.addTask(Task.ITEM, "You found " + count + " " + itemName + "!");
+		Task t = Pokemon.createTask(Task.ITEM, "You found " + count + " " + itemName + "!");
+		gp.ui.tasks.add(t);
 		t.item = item;
 		t.counter = count;
 		if (gp.currentMap == 121) {
@@ -436,7 +436,7 @@ public class PlayerCharacter extends Entity {
 		gp.player.p.itemsCollected[gp.currentMap][objIndex] = true;
 		gp.obj[gp.currentMap][objIndex] = null;
 		
-		
+		gp.gameState = GamePanel.TASK_STATE;
 	}
 	
 	public void showPlayer() {
@@ -587,12 +587,15 @@ public class PlayerCharacter extends Entity {
 			t.item = result.item = items[p.secondStarter];
 		} else if (gp.currentMap == 4) {
 			if (p.flag[0][11] && !p.flag[0][12]) {
+				p.flag[0][12] = true;
 				Pokemon.addTask(Task.TEXT, "...");
 				Pokemon.addTask(Task.TEXT, "What, you've got a package, pipsqueak? Pfft! You can't be older than 10... Didn't know Robin stooped that low.");
 				Pokemon.addTask(Task.TEXT, "Last time I checked, the boss wasn't expecting any packages. You can't even get in here anyway, I JUST locked the door and I'm getting the hell outta here.");
+				Pokemon.addTask(Task.TEXT, "I'm running off to the woods and you'll NEVER find me in there, don't even TRY to follow me.");
 				Pokemon.addTask(Task.TEXT, "So yeah, big whoop. Tell that bundle of nerves - A.K.A. your boss - to deal with it. See ya idiot!");
+				Pokemon.addTask(Task.FLASH_IN, "");
 				Pokemon.addTask(Task.UPDATE, "");
-				p.flag[0][12] = true;
+				Pokemon.addTask(Task.FLASH_OUT, "");
 			}
 		} else if (gp.currentMap == 161) {
 			if (!p.flag[0][7]) {
@@ -624,7 +627,9 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.TEXT, "Oh, hello my helper! How's it going at the warehouse? Did you manage to get in okay?");
 			} else if (p.flag[0][15]) {
 				Pokemon.addTask(Task.TEXT, "Oh, you've delivered my last package? I can't thank you enough, I can finally have a break from all this mail. I'll open the gym up right away, with no delay!");
+				Pokemon.addTask(Task.FLASH_IN, "");
 				Pokemon.addTask(Task.UPDATE, "");
+				Pokemon.addTask(Task.FLASH_OUT, "");
 				p.flag[0][16] = true;
 			}
 		} else if (gp.currentMap == 57) {
@@ -696,6 +701,7 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "That's hello where I come from. I'm Ryder, adventurer extraordinaire at the ripe old age of 16.");
 			Pokemon.addTask(Task.TEXT, "Say, you look like a competent Pokemon trainer. Mind taking care of something for me?");
 			Pokemon abra = new Pokemon(243, 15, true, false);
+			Pokemon.addTask(Task.TEXT, "You recieved " + abra.name + "!");
 			Pokemon.addTask(Task.GIFT, "", abra);
 			Pokemon.addTask(Task.TEXT, "Yeah, I noticed Abra seems to gain a new ability here, probably because of that new magic type I've been hearing about.");
 			Pokemon.addTask(Task.TEXT, "Anyways, it was pleasure doing business with you mate, I'm sure I'll see you around. I gotta see what the rest of the region has in store for me!");
@@ -727,6 +733,39 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.FLASH_IN, "");
 				Pokemon.addTask(Task.UPDATE, "");
 				Pokemon.addTask(Task.FLASH_OUT, "");
+			} else if (worldY / gp.tileSize < 51) {
+				if (worldX / gp.tileSize < 50) {
+					Pokemon.addTask(Task.TEXT, "Wow, you beat Stanford? And you restored power to the city? You're impressive!");
+					Pokemon.addTask(Task.TEXT, "Say, you're helping your dad do research, right? I'm sure you've come across a couple Xhenovian forms then.");
+					Pokemon.addTask(Task.TEXT, "You seem like you love Pokemon so this might be obvious to you, but those Pokemon are variants of Pokemon from other regions.");
+					Pokemon.addTask(Task.TEXT, "My mom's friend is actually a researcher studying the forms here, and I'm sure you guys could help each other out!");
+					Pokemon.addTask(Task.TEXT, "She's camped out right near here, come with me, let me introduce you to her!");
+					Task t = Pokemon.addTask(Task.TELEPORT, "");
+					t.counter = 13;
+					t.start = 88;
+					t.finish = 19;
+					t.wipe = false;
+					p.flag[2][1] = true;
+					t = Pokemon.addTask(Task.FLAG, "");
+					t.start = 2;
+					t.finish = 3;
+					Pokemon.addTask(Task.TEXT, "Hello there Ryder! Who's this that you brought with?");
+					Pokemon.addTask(Task.TEXT, "... Well, nice to meet you young man! What do I owe the pleasure of this visit to?");
+					Pokemon.addTask(Task.TEXT, "...");
+					Pokemon.addTask(Task.TEXT, "Yes, I do research Xhenovian forms! If you can bring me a regional form, I can trade you for its counterpart!");
+					Pokemon.addTask(Task.TEXT, "First though, I'll have to upgrade your Pokedex to add a 'Variant' Pokedex for you to keep track of these forms");
+					Pokemon.addTask(Task.TEXT, "... And there you go! All upgraded. Come talk to me when you have a Xhenovian Pokemon to trade!");
+					Pokemon.addTask(Task.TEXT, "Ryder, it was great to see you as always. Take care boys!");
+					t = Pokemon.addTask(Task.TURN, "");
+					t.counter = 3;
+					Pokemon.addTask(Task.TEXT, "Thanks for your patience, I just figured that this little connection would help out you both mutually.");
+					Pokemon.addTask(Task.TEXT, "I'm gonna head out, I'll see you soon!");
+					Pokemon.addTask(Task.FLASH_IN, "");
+					Pokemon.addTask(Task.UPDATE, "");
+					Pokemon.addTask(Task.FLASH_OUT, "");
+				} else {
+					
+				}
 			}
 			
 		} else if (gp.currentMap == 162) {
@@ -796,14 +835,15 @@ public class PlayerCharacter extends Entity {
 				if (!p.flag[1][11]) {
 					Pokemon.addTask(Task.TEXT, "Not... strong... enough...");
 				} else if (p.flag[1][11] && !p.flag[1][12]) {
-					Pokemon.addTask(Task.TEXT, "Bro, the fuse box is usable now that you defeated that Electric Pokemon.");
-					Pokemon.addTask(Task.TEXT, "Quit fooling around and go turn it on!");
+					Pokemon.addTask(Task.TEXT, "None of my usual tricks were getting to it, and I was on the ropes... So thanks for the hand...");
+					Pokemon.addTask(Task.TEXT, "Anyways, I think now that you deal with... whatever Electric Pokémon that was... that the fuse box is working. Try turning it on real quick, my head is buzzing...");
 				} else if (p.flag[1][12] && !p.flag[1][13]) {
 					p.flag[1][13] = true;
-					Pokemon.addTask(Task.TEXT, "Yada yada yada here's a really important HM");
+					Pokemon.addTask(Task.TEXT, "None of my usual tricks were getting to it, and I was on the ropes... So thanks for the hand...");
+					Pokemon.addTask(Task.TEXT, "Oh, by the way, I found something here that might be useful. Consider it as a token of appreciation...");
 					Task t = Pokemon.addTask(Task.ITEM, "");
 					t.item = Item.HM02;
-					Pokemon.addTask(Task.TEXT, "Peace out girl scout, something about him going to find Stanford to tell him to go back to the gym or something");
+					Pokemon.addTask(Task.TEXT, "It's a magic trick that makes rocks disappear! Anyways, I should get back to the gym to see if the gym leader finally came back. Presto!");
 					Pokemon.addTask(Task.FLASH_IN, "");
 					Pokemon.addTask(Task.UPDATE, "");
 					Pokemon.addTask(Task.FLASH_OUT, "");
@@ -815,7 +855,7 @@ public class PlayerCharacter extends Entity {
 				int counter = 0;
 				do {
 					counter++;
-					id = gift.nextInt(6); // Dualmoose, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie
+					id = gift.nextInt(8); // Dualmoose, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie, Bronzor-X, Bluebunn
 					switch (id) {
 					case 0:
 						id = 61;
@@ -834,6 +874,12 @@ public class PlayerCharacter extends Entity {
 						break;
 					case 5:
 						id = 184;
+						break;
+					case 6:
+						id = 276;
+						break;
+					case 7:
+						id = 47;
 						break;
 					}
 				} while (p.pokedex[id] == 2 && counter < 100);

@@ -66,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable {
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public PlayerCharacter player = new PlayerCharacter(this, keyH);
-	public Entity npc[][] = new Entity[MAX_MAP][20];
+	public Entity npc[][] = new Entity[MAX_MAP][25];
 	public ItemObj obj[][] = new ItemObj[MAX_MAP][35];
 	public InteractiveTile iTile[][] = new InteractiveTile[MAX_MAP][55];
 	public ArrayList<Entity> particleList = new ArrayList<>();

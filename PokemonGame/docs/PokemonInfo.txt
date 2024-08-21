@@ -293,8 +293,8 @@ Base Stats:
 Level Up:
 1 - Tackle
 5 - Sand Attack
-9 - Leer
-13 - Peck
+9 - Peck
+13 - Leer
 15 - Air Cutter
 17 - Fury Attack
 20 - Wing Attack
@@ -321,8 +321,8 @@ Base Stats:
 Level Up:
 1 - Tackle
 5 - Sand Attack
-9 - Leer
-13 - Peck
+9 - Peck
+13 - Leer
 15 - Air Cutter
 17 - Fury Attack
 20 - Wing Attack
@@ -666,7 +666,9 @@ Base Stats:
 45 HP / 30 Atk / 35 Def / 20 SpA / 20 SpD / 45 Spe / 195 BST
 
 Level Up:
-1 - Confusion
+1 - Tackle
+1 - String Shot
+10 - Bug Bite
 
 Evolutions:
 Caterpie -> Metapod-X (lv. 7)
@@ -678,13 +680,17 @@ Type:
 Bug / Magic
 
 Ability:
-Scrappy / Unburden / (Talented)
+Wonder Skin / Magical / (Magic Bounce)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+50 HP / 20 Atk / 50 Def / 30 SpA / 30 SpD / 25 Spe / 205 BST
 
 Level Up:
-1 - Confusion
+1 - Harden
+7 - Harden
+7 - Magic Blast
+7 - Metronome
+11 - Iron Defense
 
 Evolutions:
 Metapod-X -> Butterfree-X (lv. 10)
@@ -696,13 +702,45 @@ Type:
 Bug / Magic
 
 Ability:
-Scrappy / Unburden / (Talented)
+Mosaic Wings / Magical / (Serene Grace)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+60 HP / 20 Atk / 55 Def / 105 SpA / 90 SpD / 75 Spe / 405 BST
 
 Level Up:
-1 - Confusion
+1 - Harden
+1 - Iron Defense
+1 - Magic Blast
+1 - Metronome
+1 - Sparkly Swirl
+1 - Tackle
+1 - String Shot
+1 - Bug Bite
+10 - Magic Powder
+10 - Confusion
+10 - Supersonic
+12 - Swift
+14 - Magic Reflect
+14 - Stun Spore
+14 - Sleep Powder
+15 - Psybeam
+16 - Sparkling Terrain
+17 - Trick
+18 - Whirlwind
+20 - Silver Wind
+23 - Elemental Sparkle
+25 - Captivate
+27 - Hocus Pocus
+28 - Tailwind
+31 - Struggle Bug
+33 - Reflect
+33 - Light Screen
+35 - Bug Buzz
+37 - Roost
+40 - Infestation
+44 - Magic Tomb
+48 - Quiver Dance
+52 - Vanishing Act
 
 ===================
 #026 - Sapwin                                                                                          [026]
@@ -1264,7 +1302,7 @@ Level Up:
 #044 - Ekans                                                                                           [151]
 ===================
 Type:
-Poison / None
+Poison / Dragon
 
 Ability:
 Intimidate / Shed Skin / (Corrosion)
@@ -1279,7 +1317,8 @@ Level Up:
 7 - Bite
 10 - Acid
 12 - Glare
-15 - Mud Bomb
+14 - Dragon Breath
+16 - Mud Bomb
 17 - Screech
 20 - Poison Fang
 22 - Stockpile
@@ -1291,7 +1330,7 @@ Ekans -> Arbok (lv. 22)
 #045 - Arbok                                                                                           [152]
 ===================
 Type:
-Poison / None
+Poison / Dragon
 
 Ability:
 Intimidate / Shed Skin / (Corrosion)
@@ -1310,19 +1349,26 @@ Level Up:
 1 - Poison Sting
 1 - Bite
 1 - Glare
+1 - Dragon Breath
 1 - Screech
 20 - Poison Fang
 22 - Stockpile
-25 - Acid Spray
+23 - Acid Spray
+25 - Breaking Swipe
 27 - Gastro Acid
 29 - Thief
 31 - Poison Tail
 34 - Dragon Tail
 36 - Haze
+38 - Scale Shot
 40 - Coil
-45 - Sucker Punch
+43 - Dragon Rush
+46 - Sucker Punch
 50 - Venom Spit
-55 - Gunk Shot
+53 - Gunk Shot
+55 - Outrage
+60 - Dragon Dance
+70 - Abyssal Chop
 
 ===================
 #046 - Abra                                                                                            [243]
@@ -1989,14 +2035,15 @@ Level Up:
 1 - Baby-Doll Eyes
 1 - Wing Attack
 4 - Calm Mind
+6 - Gust
 8 - Wish
 12 - Flash
-14 - Flash Ray
+14 - Swift
 17 - Sweet Kiss
 20 - Charm
 24 - Safeguard
 27 - Air Slash
-30 - Swift
+30 - Sparkly Swirl
 34 - Draining Kiss
 39 - Moonblast
 45 - Magic Blast
@@ -2021,6 +2068,7 @@ Base Stats:
 Level Up:
 1 - Glittering Tornado
 1 - Mirror Shot
+5 - Gust
 10 - Glitter Dance
 13 - Feather Dance
 16 - Wish
@@ -2031,6 +2079,7 @@ Level Up:
 31 - Charm
 34 - Air Slash
 37 - Charge Beam
+40 - Sparkly Swirl
 43 - Magic Blast
 50 - Fiery Dance
 54 - Tri-Attack
@@ -2956,7 +3005,21 @@ Base Stats:
 50 HP / 62 Atk / 40 Def / 62 SpA / 40 SpD / 50 Spe / 304 BST
 
 Level Up:
-1 - Confusion
+1 - Leafage
+1 - Leer
+1 - Bite
+1 - Growth
+4 - Flame Charge
+7 - Razor Leaf
+10 - Sunny Day
+13 - Mega Drain
+16 - Headbutt
+20 - Bullet Seed
+23 - Zen Headbutt
+25 - Flame Wheel
+28 - Crunch
+33 - Seed Bomb
+38 - Solar Beam
 
 Evolutions:
 Capsakid -> Scovillain (Fire Stone)
@@ -2974,13 +3037,33 @@ Base Stats:
 65 HP / 108 Atk / 65 Def / 108 SpA / 65 SpD / 75 Spe / 486 BST
 
 Level Up:
-1 - Confusion
+1 - Fire Fang
+1 - Incinerate
+1 - Leafage
+1 - Leer
+1 - Bite
+1 - Growth
+4 - Flame Charge
+7 - Razor Leaf
+10 - Sunny Day
+13 - Mega Drain
+16 - Headbutt
+20 - Bullet Seed
+23 - Zen Headbutt
+25 - Flame Wheel
+28 - Crunch
+33 - Seed Bomb
+35 - Flamethrower
+40 - Solar Beam
+45 - Overheat
+50 - Energy Ball
+60 - Burn Up
 
 Evolutions:
 Scovillain -> Kerbernero ()
 
 ===================
-#100 - Kerbernero                                                                                      [280]
+#100 - Despenero                                                                                       [280]
 ===================
 Type:
 Grass / Fire
@@ -2992,7 +3075,33 @@ Base Stats:
 89 HP / 108 Atk / 75 Def / 128 SpA / 75 SpD / 75 Spe / 550 BST
 
 Level Up:
-1 - Confusion
+1 - Fire Fang
+1 - Incinerate
+1 - Will-O-Wisp
+1 - Leafage
+1 - Leer
+1 - Bite
+1 - Growth
+4 - Flame Charge
+7 - Razor Leaf
+10 - Sunny Day
+13 - Mega Drain
+16 - Headbutt
+20 - Bullet Seed
+23 - Zen Headbutt
+25 - Flame Wheel
+28 - Crunch
+33 - Seed Bomb
+35 - Flamethrower
+38 - Solar Beam
+42 - Tri-Attack
+45 - Petal Dance
+50 - Sambal Sear
+55 - Overheat
+60 - Fiery Dance
+65 - Frenzy Plant
+65 - Blast Burn
+70 - Synthesis
 
 ===================
 #101 - Tiowoo                                                                                          [101]
@@ -3088,7 +3197,110 @@ Level Up:
 65 - Hyper Beam
 
 ===================
-#104 - Carinx                                                                                          [052]
+#104 - Azurill                                                                                         [292]
+===================
+Type:
+Water / Normal
+
+Ability:
+Thick Fat / Huge Power / (Sap Sipper)
+
+Base Stats:
+50 HP / 20 Atk / 40 Def / 20 SpA / 40 SpD / 20 Spe / 190 BST
+
+Level Up:
+1 - Splash
+1 - Water Gun
+1 - Tail Whip
+3 - Tickle
+5 - Draining Kiss
+8 - Sing
+9 - Charm
+12 - Slam
+15 - Bounce
+
+Evolutions:
+Azurill -> Marill (160+ happiness)
+
+===================
+#105 - Marill                                                                                          [293]
+===================
+Type:
+Water / Normal
+
+Ability:
+Thick Fat / Huge Power / (Sap Sipper)
+
+Base Stats:
+70 HP / 20 Atk / 50 Def / 20 SpA / 50 SpD / 40 Spe / 250 BST
+
+Level Up:
+1 - Rollout
+1 - Defense Curl
+1 - Tackle
+1 - Water Gun
+1 - Tail Whip
+1 - Sing
+1 - Tickle
+3 - Draining Kiss
+6 - Bubblebeam
+9 - Charm
+12 - Slam
+15 - Bounce
+19 - Aqua Tail
+21 - Ice Punch
+21 - Play Rough
+25 - Encore
+
+Evolutions:
+Marill -> Azumarill (lv. 18)
+
+===================
+#106 - Azumarill                                                                                       [294]
+===================
+Type:
+Water / Normal
+
+Ability:
+Thick Fat / Huge Power / (Sap Sipper)
+
+Base Stats:
+100 HP / 50 Atk / 80 Def / 60 SpA / 80 SpD / 50 Spe / 420 BST
+
+Level Up:
+1 - Knock Off
+1 - Amnesia
+1 - Endure
+1 - Rollout
+1 - Defense Curl
+1 - Tackle
+1 - Water Gun
+1 - Tail Whip
+1 - Sing
+1 - Tickle
+3 - Draining Kiss
+6 - Bubblebeam
+9 - Charm
+12 - Slam
+15 - Bounce
+18 - Aqua Jet
+18 - Quick Attack
+21 - Aqua Tail
+24 - Ice Punch
+26 - Play Rough
+28 - Encore
+30 - Aqua Ring
+33 - Waterfall
+35 - Rain Dance
+38 - Hyper Voice
+40 - Hydro Pump
+43 - Double-Edge
+45 - Belly Drum
+50 - Superpower
+55 - Perish Song
+
+===================
+#107 - Carinx                                                                                          [052]
 ===================
 Type:
 Rock / Psychic
@@ -3115,7 +3327,7 @@ Evolutions:
 Carinx -> Carinator (lv. 30)
 
 ===================
-#105 - Carinator                                                                                       [053]
+#108 - Carinator                                                                                       [053]
 ===================
 Type:
 Rock / Psychic
@@ -3148,7 +3360,7 @@ Evolutions:
 Carinator -> Cairnasaur (lv. up in Shadow Ravine)
 
 ===================
-#106 - Cairnasaur                                                                                      [054]
+#109 - Cairnasaur                                                                                      [054]
 ===================
 Type:
 Rock / Psychic
@@ -3183,7 +3395,7 @@ Level Up:
 70 - Expanding Force
 
 ===================
-#107 - Sparkitten                                                                                      [108]
+#110 - Sparkitten                                                                                      [108]
 ===================
 Type:
 Fire / Light
@@ -3216,7 +3428,7 @@ Sparkitten -> Fireblion (Valiant Gem)
 Sparkitten -> Flamebless (Petticoat Gem)
 
 ===================
-#108 - Fireblion                                                                                       [109]
+#111 - Fireblion                                                                                       [109]
 ===================
 Type:
 Fire / None
@@ -3246,7 +3458,7 @@ Level Up:
 55 - Flare Blitz
 
 ===================
-#109 - Flamebless                                                                                      [110]
+#112 - Flamebless                                                                                      [110]
 ===================
 Type:
 Fire / Light
@@ -3276,7 +3488,7 @@ Level Up:
 55 - Overheat
 
 ===================
-#110 - Bronzor-X                                                                                       [276]
+#113 - Bronzor-X                                                                                       [276]
 ===================
 Type:
 Magic / None
@@ -3294,7 +3506,7 @@ Evolutions:
 Bronzor-X -> Bronzong-X (lv. 33)
 
 ===================
-#111 - Bronzong-X                                                                                      [277]
+#114 - Bronzong-X                                                                                      [277]
 ===================
 Type:
 Magic / Ghost
@@ -3309,7 +3521,7 @@ Level Up:
 1 - Confusion
 
 ===================
-#112 - Diggie                                                                                          [169]
+#115 - Diggie                                                                                          [169]
 ===================
 Type:
 Ground / None
@@ -3336,7 +3548,7 @@ Evolutions:
 Diggie -> Drillatron (lv. 33)
 
 ===================
-#113 - Drillatron                                                                                      [170]
+#116 - Drillatron                                                                                      [170]
 ===================
 Type:
 Ground / Light
@@ -3370,13 +3582,13 @@ Level Up:
 65 - Darkest Lariat
 
 ===================
-#114 - Zorua                                                                                           [179]
+#117 - Zorua                                                                                           [179]
 ===================
 Type:
 Normal / Ghost
 
 Ability:
-Adaptability / Illumination / (Unwavering)
+Illusion / Illumination / (Adaptability)
 
 Base Stats:
 35 HP / 60 Atk / 40 Def / 85 SpA / 40 SpD / 70 Spe / 330 BST
@@ -3397,13 +3609,13 @@ Evolutions:
 Zorua -> Zoroark (lv. 30)
 
 ===================
-#115 - Zoroark                                                                                         [180]
+#118 - Zoroark                                                                                         [180]
 ===================
 Type:
 Normal / Ghost
 
 Ability:
-Adaptability / Illumination / (Unwavering)
+Illusion / Illumination / (Adaptability)
 
 Base Stats:
 55 HP / 100 Atk / 60 Def / 125 SpA / 60 SpD / 110 Spe / 510 BST
@@ -3433,7 +3645,7 @@ Level Up:
 70 - Magic Tomb
 
 ===================
-#116 - Zubat                                                                                           [153]
+#119 - Zubat                                                                                           [153]
 ===================
 Type:
 Poison / Flying
@@ -3457,7 +3669,7 @@ Evolutions:
 Zubat -> Golbat (lv. 22)
 
 ===================
-#117 - Golbat                                                                                          [154]
+#120 - Golbat                                                                                          [154]
 ===================
 Type:
 Poison / Flying
@@ -3493,7 +3705,7 @@ Evolutions:
 Golbat -> Crobat (160+ happiness)
 
 ===================
-#118 - Crobat                                                                                          [155]
+#121 - Crobat                                                                                          [155]
 ===================
 Type:
 Poison / Flying
@@ -3526,7 +3738,7 @@ Level Up:
 62 - Brave Bird
 
 ===================
-#119 - Grubbin                                                                                         [035]
+#122 - Grubbin                                                                                         [035]
 ===================
 Type:
 Bug / None
@@ -3551,7 +3763,7 @@ Evolutions:
 Grubbin -> Charjabug (lv. 20)
 
 ===================
-#120 - Charjabug                                                                                       [036]
+#123 - Charjabug                                                                                       [036]
 ===================
 Type:
 Bug / Electric
@@ -3584,7 +3796,7 @@ Evolutions:
 Charjabug -> Vikavolt (lv. up in Electric Tunnel)
 
 ===================
-#121 - Vikavolt                                                                                        [037]
+#124 - Vikavolt                                                                                        [037]
 ===================
 Type:
 Bug / Electric
@@ -3617,7 +3829,7 @@ Level Up:
 64 - Zap Cannon
 
 ===================
-#122 - Rocky                                                                                           [048]
+#125 - Rocky                                                                                           [048]
 ===================
 Type:
 Rock / Ground
@@ -3641,7 +3853,7 @@ Evolutions:
 Rocky -> Boulder (lv. 22)
 
 ===================
-#123 - Boulder                                                                                         [049]
+#126 - Boulder                                                                                         [049]
 ===================
 Type:
 Rock / Ground
@@ -3671,7 +3883,7 @@ Boulder -> Blaster (Knows Rock Blast)
 Boulder -> Crystallor (lv. up in Electric Tunnel)
 
 ===================
-#124 - Blaster                                                                                         [050]
+#127 - Blaster                                                                                         [050]
 ===================
 Type:
 Rock / Ground
@@ -3704,7 +3916,7 @@ Level Up:
 70 - Hyper Beam
 
 ===================
-#125 - Crystallor                                                                                      [051]
+#128 - Crystallor                                                                                      [051]
 ===================
 Type:
 Rock / Light
@@ -3740,7 +3952,7 @@ Level Up:
 70 - Light Of Ruin
 
 ===================
-#126 - Bluebunn                                                                                        [047]
+#129 - Bluebunn                                                                                        [047]
 ===================
 Type:
 Magic / Light
@@ -3779,7 +3991,7 @@ Level Up:
 70 - Geomancy
 
 ===================
-#127 - Pebblepup                                                                                       [055]
+#130 - Pebblepup                                                                                       [055]
 ===================
 Type:
 Rock / None
@@ -3808,7 +4020,7 @@ Evolutions:
 Pebblepup -> Boulderoar (lv. 34)
 
 ===================
-#128 - Boulderoar                                                                                      [056]
+#131 - Boulderoar                                                                                      [056]
 ===================
 Type:
 Rock / Dark
@@ -3845,7 +4057,7 @@ Level Up:
 70 - Jaw Lock
 
 ===================
-#129 - Psycorb                                                                                         [082]
+#132 - Psycorb                                                                                         [082]
 ===================
 Type:
 Psychic / None
@@ -3872,7 +4084,7 @@ Evolutions:
 Psycorb -> Psyballs (lv. 32)
 
 ===================
-#130 - Psyballs                                                                                        [083]
+#133 - Psyballs                                                                                        [083]
 ===================
 Type:
 Psychic / Steel
@@ -3906,7 +4118,7 @@ Evolutions:
 Psyballs -> Psycorboratr (lv. 52)
 
 ===================
-#131 - Psycorboratr                                                                                    [084]
+#134 - Psycorboratr                                                                                    [084]
 ===================
 Type:
 Psychic / Steel
@@ -3946,7 +4158,93 @@ Level Up:
 70 - Meteor Mash
 
 ===================
-#132 - Inkay                                                                                           [090]
+#135 - Shroodle                                                                                        [295]
+===================
+Type:
+Poison / Normal
+
+Ability:
+Prankster / Pickpocket / (Unburden)
+
+Base Stats:
+40 HP / 65 Atk / 35 Def / 40 SpA / 35 SpD / 75 Spe / 290 BST
+
+Level Up:
+1 - Leer
+1 - Scratch
+3 - Acid Spray
+5 - Fury Swipes
+7 - Mimic
+9 - Bite
+10 - Taunt
+13 - Poison Fang
+15 - Endure
+16 - Endeavor
+18 - Thief
+20 - Flatter
+23 - Slash
+25 - U-Turn
+27 - Mud Shot
+28 - Venoshock
+29 - Swagger
+31 - Parting Shot
+32 - Encore
+33 - Poison Jab
+35 - Switcheroo
+40 - Cross Poison
+42 - Knock Off
+48 - Dig
+51 - Gunk Shot
+
+Evolutions:
+Shroodle -> Grafaiai (lv. 28)
+
+===================
+#136 - Grafaiai                                                                                        [296]
+===================
+Type:
+Poison / Normal
+
+Ability:
+Prankster / Poison Touch / (Unburden)
+
+Base Stats:
+63 HP / 95 Atk / 65 Def / 80 SpA / 72 SpD / 110 Spe / 485 BST
+
+Level Up:
+1 - Scary Face
+1 - Swagger
+1 - Metronome
+1 - Foul Play
+1 - Leer
+1 - Scratch
+3 - Acid Spray
+5 - Fury Swipes
+7 - Mimic
+9 - Bite
+10 - Taunt
+13 - Poison Fang
+15 - Endure
+16 - Endeavor
+18 - Thief
+20 - Flatter
+24 - Slash
+25 - U-Turn
+26 - Mud Shot
+28 - Venoshock
+28 - Fake Out
+28 - Vandalize
+33 - Poison Jab
+34 - Parting Shot
+37 - Encore
+39 - Switcheroo
+43 - Cross Poison
+49 - Knock Off
+53 - Dig
+55 - Gunk Shot
+
+===================
+#137 - Inkay                                                                                           [090]
 ===================
 Type:
 Psychic / Dark
@@ -3976,7 +4274,7 @@ Evolutions:
 Inkay -> Malamar (lv. 30)
 
 ===================
-#133 - Malamar                                                                                         [091]
+#138 - Malamar                                                                                         [091]
 ===================
 Type:
 Psychic / Dark
@@ -4011,7 +4309,7 @@ Level Up:
 60 - Parting Shot
 
 ===================
-#134 - Elelamb                                                                                         [114]
+#139 - Elelamb                                                                                         [114]
 ===================
 Type:
 Electric / Ground
@@ -4039,7 +4337,7 @@ Evolutions:
 Elelamb -> Electroram (lv. 28)
 
 ===================
-#135 - Electroram                                                                                      [115]
+#140 - Electroram                                                                                      [115]
 ===================
 Type:
 Electric / Ground
@@ -4073,7 +4371,7 @@ Evolutions:
 Electroram -> Superchargo (lv. 48)
 
 ===================
-#136 - Superchargo                                                                                     [116]
+#141 - Superchargo                                                                                     [116]
 ===================
 Type:
 Electric / Ground
@@ -4109,7 +4407,7 @@ Level Up:
 65 - Magnet Rise
 
 ===================
-#137 - Magie                                                                                           [120]
+#142 - Magie                                                                                           [120]
 ===================
 Type:
 Steel / Normal
@@ -4135,7 +4433,7 @@ Evolutions:
 Magie -> Cumin (lv. 30)
 
 ===================
-#138 - Cumin                                                                                           [121]
+#143 - Cumin                                                                                           [121]
 ===================
 Type:
 Steel / Light
@@ -4167,7 +4465,7 @@ Evolutions:
 Cumin -> Cinneroph (250+ happiness)
 
 ===================
-#139 - Cinneroph                                                                                       [122]
+#144 - Cinneroph                                                                                       [122]
 ===================
 Type:
 Steel / Magic
@@ -4197,7 +4495,7 @@ Level Up:
 60 - Steel Beam
 
 ===================
-#140 - Vupp                                                                                            [123]
+#145 - Vupp                                                                                            [123]
 ===================
 Type:
 Electric / Normal
@@ -4223,7 +4521,7 @@ Evolutions:
 Vupp -> Vinnie (lv. 30)
 
 ===================
-#141 - Vinnie                                                                                          [124]
+#146 - Vinnie                                                                                          [124]
 ===================
 Type:
 Electric / Light
@@ -4256,7 +4554,7 @@ Evolutions:
 Vinnie -> Suvinero (250+ happiness)
 
 ===================
-#142 - Suvinero                                                                                        [125]
+#147 - Suvinero                                                                                        [125]
 ===================
 Type:
 Electric / Magic
@@ -4286,7 +4584,7 @@ Level Up:
 75 - Plasma Fists
 
 ===================
-#143 - Whiskie                                                                                         [126]
+#148 - Whiskie                                                                                         [126]
 ===================
 Type:
 Fighting / Normal
@@ -4312,7 +4610,7 @@ Evolutions:
 Whiskie -> Whiskers (lv. 30)
 
 ===================
-#144 - Whiskers                                                                                        [127]
+#149 - Whiskers                                                                                        [127]
 ===================
 Type:
 Fighting / Light
@@ -4348,7 +4646,7 @@ Evolutions:
 Whiskers -> Whiskeroar (250+ happiness)
 
 ===================
-#145 - Whiskeroar                                                                                      [128]
+#150 - Whiskeroar                                                                                      [128]
 ===================
 Type:
 Fighting / Magic
@@ -4378,7 +4676,7 @@ Level Up:
 60 - Focus Blast
 
 ===================
-#146 - Twigzap                                                                                         [117]
+#151 - Twigzap                                                                                         [117]
 ===================
 Type:
 Grass / Electric
@@ -4399,7 +4697,7 @@ Evolutions:
 Twigzap -> Shockbrach (lv. 19)
 
 ===================
-#147 - Shockbranch                                                                                     [118]
+#152 - Shockbranch                                                                                     [118]
 ===================
 Type:
 Grass / Electric
@@ -4425,7 +4723,7 @@ Evolutions:
 Shockbranch -> Thunderzap (Leaf Stone)
 
 ===================
-#148 - Thunderzap                                                                                      [119]
+#153 - Thunderzap                                                                                      [119]
 ===================
 Type:
 Grass / Electric
@@ -4455,7 +4753,7 @@ Level Up:
 50 - Nasty Plot
 
 ===================
-#149 - Lilyray                                                                                         [134]
+#154 - Lilyray                                                                                         [134]
 ===================
 Type:
 Water / None
@@ -4477,7 +4775,7 @@ Evolutions:
 Lilyray -> Daray (160+ happiness)
 
 ===================
-#150 - Daray                                                                                           [135]
+#155 - Daray                                                                                           [135]
 ===================
 Type:
 Water / Flying
@@ -4504,7 +4802,7 @@ Evolutions:
 Daray -> Spinaquata (lv. 30)
 
 ===================
-#151 - Spinaquata                                                                                      [136]
+#156 - Spinaquata                                                                                      [136]
 ===================
 Type:
 Water / Dragon
@@ -4540,7 +4838,7 @@ Level Up:
 60 - Outrage
 
 ===================
-#152 - Gulpin-X                                                                                        [261]
+#157 - Gulpin-X                                                                                        [261]
 ===================
 Type:
 Galactic / Poison
@@ -4581,7 +4879,7 @@ Evolutions:
 Gulpin-X -> Swalot-X (5+ Galactic Moves Eaten in Trainer Battles)
 
 ===================
-#153 - Swalot-X                                                                                        [262]
+#158 - Swalot-X                                                                                        [262]
 ===================
 Type:
 Galactic / Poison
@@ -4626,7 +4924,7 @@ Level Up:
 75 - Slack Off
 
 ===================
-#154 - Posho                                                                                           [143]
+#159 - Posho                                                                                           [143]
 ===================
 Type:
 Magic / Dragon
@@ -4655,7 +4953,7 @@ Evolutions:
 Posho -> Shomp (250+ happiness)
 
 ===================
-#155 - Shomp                                                                                           [144]
+#160 - Shomp                                                                                           [144]
 ===================
 Type:
 Water / Dragon
@@ -4691,7 +4989,7 @@ Evolutions:
 Shomp -> Poshorump (lv. up in Mindagan Lake)
 
 ===================
-#156 - Poshorump                                                                                       [145]
+#161 - Poshorump                                                                                       [145]
 ===================
 Type:
 Magic / Dragon
@@ -4728,7 +5026,7 @@ Level Up:
 80 - Dragon Dance
 
 ===================
-#157 - Snom                                                                                            [062]
+#162 - Snom                                                                                            [062]
 ===================
 Type:
 Ice / Bug
@@ -4748,7 +5046,7 @@ Evolutions:
 Snom -> Frosmoth (Ice Stone)
 
 ===================
-#158 - Frosmoth                                                                                        [063]
+#163 - Frosmoth                                                                                        [063]
 ===================
 Type:
 Ice / Bug
@@ -4779,7 +5077,7 @@ Level Up:
 55 - Frostbind
 
 ===================
-#159 - Shookwat                                                                                        [111]
+#164 - Shookwat                                                                                        [111]
 ===================
 Type:
 Electric / None
@@ -4804,7 +5102,7 @@ Evolutions:
 Shookwat -> Wattwo (lv. 30)
 
 ===================
-#160 - Wattwo                                                                                          [112]
+#165 - Wattwo                                                                                          [112]
 ===================
 Type:
 Electric / None
@@ -4836,7 +5134,7 @@ Evolutions:
 Wattwo -> Megawatt (lv. up in Electric Tunnel)
 
 ===================
-#161 - Megawatt                                                                                        [113]
+#166 - Megawatt                                                                                        [113]
 ===================
 Type:
 Electric / Steel
@@ -4867,7 +5165,7 @@ Level Up:
 65 - Meteor Mash
 
 ===================
-#162 - Magikarp                                                                                        [137]
+#167 - Magikarp                                                                                        [137]
 ===================
 Type:
 Water / None
@@ -4889,7 +5187,7 @@ Evolutions:
 Magikarp -> Gyarados (lv. 20)
 
 ===================
-#163 - Gyarados                                                                                        [138]
+#168 - Gyarados                                                                                        [138]
 ===================
 Type:
 Water / Flying
@@ -4916,7 +5214,7 @@ Level Up:
 56 - Dragon Dance
 
 ===================
-#164 - Cluuz                                                                                           [160]
+#169 - Cluuz                                                                                           [160]
 ===================
 Type:
 Ghost / Poison
@@ -4944,7 +5242,7 @@ Evolutions:
 Cluuz -> Zurrclu (Dusk Stone)
 
 ===================
-#165 - Zurrclu                                                                                         [161]
+#170 - Zurrclu                                                                                         [161]
 ===================
 Type:
 Ghost / Rock
@@ -4975,7 +5273,7 @@ Evolutions:
 Zurrclu -> Zurroaratr (250+ happiness)
 
 ===================
-#166 - Zurroaratr                                                                                      [162]
+#171 - Zurroaratr                                                                                      [162]
 ===================
 Type:
 Ghost / Rock
@@ -5003,7 +5301,7 @@ Level Up:
 70 - Rock Wrecker
 
 ===================
-#167 - Seviper                                                                                         [257]
+#172 - Seviper                                                                                         [257]
 ===================
 Type:
 Poison / None
@@ -5045,7 +5343,7 @@ Evolutions:
 Seviper -> Hissimitar (5+ Tail Move Crits in Trainer Battles)
 
 ===================
-#168 - Hissimitar                                                                                      [258]
+#173 - Hissimitar                                                                                      [258]
 ===================
 Type:
 Poison / Steel
@@ -5066,7 +5364,7 @@ Level Up:
 25 - Wing Attack
 
 ===================
-#169 - Binacle                                                                                         [146]
+#174 - Binacle                                                                                         [146]
 ===================
 Type:
 Water / Rock
@@ -5099,7 +5397,7 @@ Evolutions:
 Binacle -> Barbaracle (lv. 39)
 
 ===================
-#170 - Barbaracle                                                                                      [147]
+#175 - Barbaracle                                                                                      [147]
 ===================
 Type:
 Water / Rock
@@ -5138,7 +5436,7 @@ Level Up:
 65 - Focus Energy
 
 ===================
-#171 - Durfish                                                                                         [148]
+#176 - Durfish                                                                                         [148]
 ===================
 Type:
 Water / Ground
@@ -5174,7 +5472,7 @@ Evolutions:
 Durfish -> Dompster (lv. up in Mindagan Lake)
 
 ===================
-#172 - Dompster                                                                                        [149]
+#177 - Dompster                                                                                        [149]
 ===================
 Type:
 Water / Ground
@@ -5212,7 +5510,7 @@ Level Up:
 70 - Parting Shot
 
 ===================
-#173 - Florline                                                                                        [080]
+#178 - Florline                                                                                        [080]
 ===================
 Type:
 Grass / Psychic
@@ -5240,7 +5538,7 @@ Evolutions:
 Florline -> Florlion (lv. 40)
 
 ===================
-#174 - Florlion                                                                                        [081]
+#179 - Florlion                                                                                        [081]
 ===================
 Type:
 Grass / Psychic
@@ -5273,7 +5571,7 @@ Level Up:
 70 - Petal Dance
 
 ===================
-#175 - Fightorex                                                                                       [057]
+#180 - Fightorex                                                                                       [057]
 ===================
 Type:
 Fighting / Ground
@@ -5301,7 +5599,7 @@ Evolutions:
 Fightorex -> Raptorex (lv. 36)
 
 ===================
-#176 - Raptorex                                                                                        [058]
+#181 - Raptorex                                                                                        [058]
 ===================
 Type:
 Fighting / Flying
@@ -5337,7 +5635,7 @@ Level Up:
 70 - Magic Blast
 
 ===================
-#177 - Staryu                                                                                          [139]
+#182 - Staryu                                                                                          [139]
 ===================
 Type:
 Water / Galactic
@@ -5369,7 +5667,7 @@ Evolutions:
 Staryu -> Starmie (lv. up in Mindagan Lake)
 
 ===================
-#178 - Starmie                                                                                         [140]
+#183 - Starmie                                                                                         [140]
 ===================
 Type:
 Water / Galactic
@@ -5402,7 +5700,7 @@ Level Up:
 50 - Ice Beam
 
 ===================
-#179 - Elgyem                                                                                          [265]
+#184 - Elgyem                                                                                          [265]
 ===================
 Type:
 Galactic / None
@@ -5432,7 +5730,7 @@ Evolutions:
 Elgyem -> Beheeyem (lv. 42)
 
 ===================
-#180 - Beheeyem                                                                                        [266]
+#185 - Beheeyem                                                                                        [266]
 ===================
 Type:
 Galactic / None
@@ -5464,7 +5762,7 @@ Level Up:
 65 - Black Hole Eclipse
 
 ===================
-#181 - Spheal                                                                                          [068]
+#186 - Spheal                                                                                          [068]
 ===================
 Type:
 Ice / Water
@@ -5494,7 +5792,7 @@ Evolutions:
 Spheal -> Sealeo (lv. 32)
 
 ===================
-#182 - Sealeo                                                                                          [069]
+#187 - Sealeo                                                                                          [069]
 ===================
 Type:
 Ice / Water
@@ -5528,7 +5826,7 @@ Evolutions:
 Sealeo -> Walrein (lv. 44)
 
 ===================
-#183 - Walrein                                                                                         [070]
+#188 - Walrein                                                                                         [070]
 ===================
 Type:
 Ice / Water
@@ -5563,7 +5861,7 @@ Level Up:
 60 - Hydro Pump
 
 ===================
-#184 - Otterpor                                                                                        [078]
+#189 - Otterpor                                                                                        [078]
 ===================
 Type:
 Water / Psychic
@@ -5591,7 +5889,7 @@ Evolutions:
 Otterpor -> Psylotter (lv. 30)
 
 ===================
-#185 - Psylotter                                                                                       [079]
+#190 - Psylotter                                                                                       [079]
 ===================
 Type:
 Water / Psychic
@@ -5626,7 +5924,7 @@ Level Up:
 70 - Water Spout
 
 ===================
-#186 - Magmaclang                                                                                      [097]
+#191 - Magmaclang                                                                                      [097]
 ===================
 Type:
 Fire / Ghost
@@ -5655,7 +5953,7 @@ Level Up:
 65 - Eruption
 
 ===================
-#187 - Sheltor                                                                                         [132]
+#192 - Sheltor                                                                                         [132]
 ===================
 Type:
 Water / Ghost
@@ -5682,7 +5980,7 @@ Evolutions:
 Sheltor -> Shelnado (lv. up in Mindagan Lake)
 
 ===================
-#188 - Shelnado                                                                                        [133]
+#193 - Shelnado                                                                                        [133]
 ===================
 Type:
 Water / Ghost
@@ -5715,7 +6013,7 @@ Level Up:
 60 - Water Spout
 
 ===================
-#189 - Poof                                                                                            [156]
+#194 - Poof                                                                                            [156]
 ===================
 Type:
 Ghost / None
@@ -5743,7 +6041,7 @@ Evolutions:
 Poof -> Hast (lv. 32)
 
 ===================
-#190 - Hast                                                                                            [157]
+#195 - Hast                                                                                            [157]
 ===================
 Type:
 Ghost / Steel
@@ -5776,7 +6074,7 @@ Level Up:
 55 - Spectral Thief
 
 ===================
-#191 - Poov                                                                                            [158]
+#196 - Poov                                                                                            [158]
 ===================
 Type:
 Ghost / Dark
@@ -5803,7 +6101,7 @@ Evolutions:
 Poov -> Grust (lv. 30)
 
 ===================
-#192 - Grust                                                                                           [159]
+#197 - Grust                                                                                           [159]
 ===================
 Type:
 Ghost / Dark
@@ -5835,7 +6133,7 @@ Level Up:
 55 - Destiny Bond
 
 ===================
-#193 - Glimmet                                                                                         [241]
+#198 - Glimmet                                                                                         [241]
 ===================
 Type:
 Rock / Poison
@@ -5867,7 +6165,7 @@ Evolutions:
 Glimmet -> Glimmora (lv. 35)
 
 ===================
-#194 - Glimmora                                                                                        [242]
+#199 - Glimmora                                                                                        [242]
 ===================
 Type:
 Rock / Poison
@@ -5900,7 +6198,7 @@ Level Up:
 50 - Sludge Wave
 
 ===================
-#195 - Sneasel                                                                                         [247]
+#200 - Sneasel                                                                                         [247]
 ===================
 Type:
 Dark / Ice
@@ -5912,6 +6210,7 @@ Base Stats:
 55 HP / 95 Atk / 55 Def / 35 SpA / 75 SpD / 115 Spe / 430 BST
 
 Level Up:
+1 - Feint
 1 - Scratch
 1 - Leer
 1 - Taunt
@@ -5929,13 +6228,14 @@ Level Up:
 31 - Agility
 35 - Slash
 38 - Night Slash
+40 - Fake Out
 42 - Icicle Spear
 
 Evolutions:
 Sneasel -> Weavile (Razor Claw)
 
 ===================
-#196 - Weavile                                                                                         [248]
+#201 - Weavile                                                                                         [248]
 ===================
 Type:
 Dark / Ice
@@ -5947,16 +6247,34 @@ Base Stats:
 70 HP / 120 Atk / 65 Def / 45 SpA / 85 SpD / 125 Spe / 510 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Dark Pulse
+1 - Switcheroo
+1 - Slash
+1 - Feint
+1 - Beat Up
+1 - Quick Attack
+1 - Agility
+1 - Scratch
+1 - Leer
+1 - Taunt
+1 - Fake Tears
+1 - Torment
+18 - Feint Attack
+22 - Icy Wind
+26 - Fury Swipes
+30 - Metal Claw
+34 - Thief
+38 - Hone Claws
+42 - Ice Shard
+46 - Night Slash
+50 - Fake Out
+53 - Icicle Spear
+56 - Nasty Plot
+58 - False Surrender
+60 - Icicle Crash
 
 ===================
-#197 - Sneasel-H                                                                                       [249]
+#202 - Sneasel-H                                                                                       [249]
 ===================
 Type:
 Fighting / Poison
@@ -5968,45 +6286,76 @@ Base Stats:
 55 HP / 95 Atk / 55 Def / 35 SpA / 75 SpD / 115 Spe / 430 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Feint
+1 - Scratch
+1 - Leer
+1 - Taunt
+1 - Rock Smash
+5 - Quick Attack
+9 - Torment
+11 - Sludge
+14 - Circle Throw
+16 - Brick Break
+19 - Metal Claw
+22 - Poison Jab
+22 - Hone Claws
+25 - Tornado Spin
+28 - Low Kick
+31 - Agility
+35 - Slash
+38 - Night Slash
+40 - Fake Out
+42 - Sky Uppercut
 
 Evolutions:
 Sneasel-H -> Sneasler (Razor Claw)
 
 ===================
-#198 - Sneasler                                                                                        [250]
+#203 - Sneasler                                                                                        [250]
 ===================
 Type:
 Fighting / Poison
 
 Ability:
-Unburden / Pressure / (Poison Touch)
+Unburden / Poison Touch / (Pickpocket)
 
 Base Stats:
 80 HP / 130 Atk / 60 Def / 40 SpA / 80 SpD / 120 Spe / 510 BST
 
 Level Up:
-1 - Psywave
-1 - Protect
-3 - Trick
-7 - Confusion
-10 - Heal Pulse
-14 - Hidden Power
-16 - Light Screen
-19 - Psybeam
-22 - Charm
-24 - Recover
-27 - Psyshock
-30 - Endeavor
+1 - Hi Jump Kick
+1 - Reversal
+1 - Night Slash
+1 - Switcheroo
+1 - Slash
+1 - Feint
+1 - Beat Up
+1 - Quick Attack
+1 - Agility
+1 - Scratch
+1 - Leer
+1 - Taunt
+1 - Mach Punch
+1 - Torment
+1 - Rock Smash
+1 - Low Kick
+18 - Circle Throw
+22 - Poison Jab
+26 - Brick Break
+30 - Metal Claw
+34 - Tornado Spin
+38 - Hone Claws
+42 - Sky Uppercut
+46 - Poison Tail
+50 - Fake Out
+53 - Summit Strike
+56 - Screech
+58 - Gunk Shot
+60 - Close Combat
+70 - Toxic Spikes
 
 ===================
-#199 - Dualmoose                                                                                       [061]
+#204 - Dualmoose                                                                                       [061]
 ===================
 Type:
 Ice / Magic
@@ -6038,7 +6387,7 @@ Level Up:
 60 - Trick Room
 
 ===================
-#200 - Grondor                                                                                         [064]
+#205 - Grondor                                                                                         [064]
 ===================
 Type:
 Ground / Ice
@@ -6067,7 +6416,7 @@ Evolutions:
 Grondor -> Bipedice (Ice Stone)
 
 ===================
-#201 - Bipedice                                                                                        [065]
+#206 - Bipedice                                                                                        [065]
 ===================
 Type:
 Fighting / Ice
@@ -6099,7 +6448,7 @@ Level Up:
 65 - Play Rough
 
 ===================
-#202 - Tricerpup                                                                                       [066]
+#207 - Tricerpup                                                                                       [066]
 ===================
 Type:
 Rock / Fighting
@@ -6126,7 +6475,7 @@ Evolutions:
 Tricerpup -> Tricercil (lv. 48)
 
 ===================
-#203 - Tricercil                                                                                       [067]
+#208 - Tricercil                                                                                       [067]
 ===================
 Type:
 Rock / Fighting
@@ -6156,7 +6505,7 @@ Level Up:
 70 - Meteor Assault
 
 ===================
-#204 - Flamehox                                                                                        [098]
+#209 - Flamehox                                                                                        [098]
 ===================
 Type:
 Fire / Ground
@@ -6183,7 +6532,7 @@ Evolutions:
 Flamehox -> Fireshard (lv. 35)
 
 ===================
-#205 - Fireshard                                                                                       [099]
+#210 - Fireshard                                                                                       [099]
 ===================
 Type:
 Fire / Flying
@@ -6216,7 +6565,7 @@ Evolutions:
 Fireshard -> Blastflames (lv. 55)
 
 ===================
-#206 - Blastflames                                                                                     [100]
+#211 - Blastflames                                                                                     [100]
 ===================
 Type:
 Fire / Dragon
@@ -6252,7 +6601,7 @@ Level Up:
 85 - Hyper Beam
 
 ===================
-#207 - Ali                                                                                             [141]
+#212 - Ali                                                                                             [141]
 ===================
 Type:
 Dark / Water
@@ -6284,7 +6633,7 @@ Evolutions:
 Ali -> Batorali (Dusk Stone)
 
 ===================
-#208 - Batorali                                                                                        [142]
+#213 - Batorali                                                                                        [142]
 ===================
 Type:
 Dark / Flying
@@ -6318,7 +6667,7 @@ Level Up:
 75 - Outrage
 
 ===================
-#209 - Droid                                                                                           [181]
+#214 - Droid                                                                                           [181]
 ===================
 Type:
 Steel / None
@@ -6341,7 +6690,7 @@ Evolutions:
 Droid -> Armoid (lv. 25)
 
 ===================
-#210 - Armoid                                                                                          [182]
+#215 - Armoid                                                                                          [182]
 ===================
 Type:
 Steel / None
@@ -6371,7 +6720,7 @@ Evolutions:
 Armoid -> Soldrota (lv. 50)
 
 ===================
-#211 - Soldrota                                                                                        [183]
+#216 - Soldrota                                                                                        [183]
 ===================
 Type:
 Steel / None
@@ -6408,7 +6757,7 @@ Level Up:
 70 - Steel Beam
 
 ===================
-#212 - Kissyfishy                                                                                      [150]
+#217 - Kissyfishy                                                                                      [150]
 ===================
 Type:
 Water / Magic
@@ -6442,7 +6791,7 @@ Level Up:
 65 - Sea Dragon
 
 ===================
-#213 - Consodust                                                                                       [193]
+#218 - Consodust                                                                                       [193]
 ===================
 Type:
 Galactic / Ice
@@ -6469,7 +6818,7 @@ Evolutions:
 Consodust -> Cosmocrash (Ice Stone)
 
 ===================
-#214 - Cosmocrash                                                                                      [194]
+#219 - Cosmocrash                                                                                      [194]
 ===================
 Type:
 Galactic / Ice
@@ -6501,7 +6850,7 @@ Level Up:
 55 - Meteor Assault
 
 ===================
-#215 - Flamigo                                                                                         [246]
+#220 - Flamigo                                                                                         [246]
 ===================
 Type:
 Flying / Fighting
@@ -6529,7 +6878,7 @@ Level Up:
 54 - Brave Bird
 
 ===================
-#216 - Plasamp                                                                                         [263]
+#221 - Plasamp                                                                                         [263]
 ===================
 Type:
 Steel / Galactic
@@ -6553,7 +6902,7 @@ Evolutions:
 Plasamp -> Genieova ()
 
 ===================
-#217 - Genieova                                                                                        [264]
+#222 - Genieova                                                                                        [264]
 ===================
 Type:
 Steel / Galactic
@@ -6574,7 +6923,7 @@ Level Up:
 25 - Wing Attack
 
 ===================
-#218 - Rockmite                                                                                        [195]
+#223 - Rockmite                                                                                        [195]
 ===================
 Type:
 Galactic / Rock
@@ -6610,7 +6959,7 @@ Evolutions:
 Rockmite -> Stellarock (lv. up in Shadow Ravine Heart)
 
 ===================
-#219 - Stellarock                                                                                      [196]
+#224 - Stellarock                                                                                      [196]
 ===================
 Type:
 Galactic / Rock
@@ -6646,7 +6995,7 @@ Level Up:
 75 - Rock Wrecker
 
 ===================
-#220 - Blobmo                                                                                          [190]
+#225 - Blobmo                                                                                          [190]
 ===================
 Type:
 Galactic / None
@@ -6670,7 +7019,7 @@ Evolutions:
 Blobmo -> Nebulimb (lv. 40)
 
 ===================
-#221 - Nebulimb                                                                                        [191]
+#226 - Nebulimb                                                                                        [191]
 ===================
 Type:
 Galactic / None
@@ -6700,7 +7049,7 @@ Evolutions:
 Nebulimb -> Galactasolder (lv. 60)
 
 ===================
-#222 - Galactasolder                                                                                   [192]
+#227 - Galactasolder                                                                                   [192]
 ===================
 Type:
 Galactic / Fighting
@@ -6732,7 +7081,7 @@ Level Up:
 80 - Genesis Supernova
 
 ===================
-#223 - Tinkie                                                                                          [184]
+#228 - Tinkie                                                                                          [184]
 ===================
 Type:
 Magic / Galactic
@@ -6757,7 +7106,7 @@ Evolutions:
 Tinkie -> Shawar (lv. 26)
 
 ===================
-#224 - Shawar                                                                                          [185]
+#229 - Shawar                                                                                          [185]
 ===================
 Type:
 Magic / Galactic
@@ -6791,7 +7140,7 @@ Evolutions:
 Shawar -> Shaboom (lv. 50)
 
 ===================
-#225 - Shaboom                                                                                         [186]
+#230 - Shaboom                                                                                         [186]
 ===================
 Type:
 Magic / Galactic
@@ -6830,7 +7179,7 @@ Level Up:
 75 - Supernova Explosion
 
 ===================
-#226 - Dragee                                                                                          [187]
+#231 - Dragee                                                                                          [187]
 ===================
 Type:
 Dragon / Light
@@ -6859,7 +7208,7 @@ Evolutions:
 Dragee -> Draga (lv. 36)
 
 ===================
-#227 - Draga                                                                                           [188]
+#232 - Draga                                                                                           [188]
 ===================
 Type:
 Dragon / Light
@@ -6894,7 +7243,7 @@ Evolutions:
 Draga -> Drageye (lv. 55)
 
 ===================
-#228 - Drageye                                                                                         [189]
+#233 - Drageye                                                                                         [189]
 ===================
 Type:
 Dragon / Light
@@ -6935,7 +7284,7 @@ Level Up:
 75 - Hyper Beam
 
 ===================
-#229 - Cage Critter                                                                                    [284]
+#234 - Cage Critter                                                                                    [284]
 ===================
 Type:
 Galactic / Bug
@@ -6944,13 +7293,13 @@ Ability:
 Scrappy / Unburden / (Talented)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+83 HP / 79 Atk / 83 Def / 157 SpA / 67 SpD / 101 Spe / 570 BST
 
 Level Up:
 1 - Confusion
 
 ===================
-#230 - Icy Serpent                                                                                     [285]
+#235 - Icy Serpent                                                                                     [285]
 ===================
 Type:
 Ice / Light
@@ -6965,7 +7314,7 @@ Level Up:
 1 - Confusion
 
 ===================
-#231 - Shocky Spire                                                                                    [286]
+#236 - Shocky Spire                                                                                    [286]
 ===================
 Type:
 Water / Steel
@@ -6980,7 +7329,7 @@ Level Up:
 1 - Confusion
 
 ===================
-#232 - Dust Sorcerer                                                                                   [287]
+#237 - Dust Sorcerer                                                                                   [287]
 ===================
 Type:
 Ground / Flying
@@ -6995,7 +7344,7 @@ Level Up:
 1 - Confusion
 
 ===================
-#233 - Fever Dream                                                                                     [288]
+#238 - Fever Dream                                                                                     [288]
 ===================
 Type:
 Fire / Ice
@@ -7010,7 +7359,7 @@ Level Up:
 1 - Confusion
 
 ===================
-#234 - Dusk Skater                                                                                     [289]
+#239 - Dusk Skater                                                                                     [289]
 ===================
 Type:
 Dark / Steel
@@ -7025,7 +7374,7 @@ Level Up:
 1 - Confusion
 
 ===================
-#235 - Diftery                                                                                         [229]
+#240 - Diftery                                                                                         [229]
 ===================
 Type:
 Dark / Magic
@@ -7079,7 +7428,7 @@ Level Up:
 90 - Vanishing Act
 
 ===================
-#236 - Triwandoliz                                                                                     [232]
+#241 - Triwandoliz                                                                                     [232]
 ===================
 Type:
 Poison / Magic
@@ -7127,7 +7476,7 @@ Level Up:
 95 - Core Enforcer
 
 ===================
-#237 - Kleinyeti                                                                                       [231]
+#242 - Kleinyeti                                                                                       [231]
 ===================
 Type:
 Ice / Magic
@@ -7148,7 +7497,7 @@ Level Up:
 70 - Icicle Crash
 
 ===================
-#238 - Soarwhell                                                                                       [228]
+#243 - Soarwhell                                                                                       [228]
 ===================
 Type:
 Water / Flying
@@ -7172,7 +7521,7 @@ Level Up:
 26 - Thunder Wave
 
 ===================
-#239 - Vorsuitex                                                                                       [230]
+#244 - Vorsuitex                                                                                       [230]
 ===================
 Type:
 Ice / Light
@@ -7196,7 +7545,7 @@ Level Up:
 26 - Thunder Wave
 
 ===================
-#240 - Relomidel                                                                                       [233]
+#245 - Relomidel                                                                                       [233]
 ===================
 Type:
 Ice / Dragon
@@ -7217,7 +7566,7 @@ Level Up:
 25 - Wing Attack
 
 ===================
-#241 - Relopamil                                                                                       [234]
+#246 - Relopamil                                                                                       [234]
 ===================
 Type:
 Psychic / Dragon
@@ -7241,7 +7590,7 @@ Level Up:
 26 - Thunder Wave
 
 ===================
-#242 - Dragowrath                                                                                      [235]
+#247 - Dragowrath                                                                                      [235]
 ===================
 Type:
 Galactic / Dragon
@@ -7265,7 +7614,7 @@ Level Up:
 26 - Thunder Wave
 
 ===================
-#243 - Necrozma                                                                                        [290]
+#248 - Necrozma                                                                                        [290]
 ===================
 Type:
 Light / Dark
@@ -7280,7 +7629,7 @@ Level Up:
 1 - Confusion
 
 ===================
-#244 - Solaroxyous                                                                                     [236]
+#249 - Solaroxyous                                                                                     [236]
 ===================
 Type:
 Fire / Galactic
@@ -7574,16 +7923,34 @@ Level Up:
 #009 - Capsakid-S                                                                                      [281]
 ===================
 Type:
-Grass / Dark
+Grass / Ghost
 
 Ability:
-Chlorophyll / Insect Feeder / (Flash Fire)
+Chlorophyll / Pickpocket / (Flash Fire)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+45 HP / 67 Atk / 40 Def / 47 SpA / 40 SpD / 65 Spe / 304 BST
 
 Level Up:
-1 - Confusion
+1 - Leafage
+1 - Scary Face
+1 - Bite
+1 - Growth
+4 - Astonish
+6 - Confuse Ray
+7 - Razor Leaf
+10 - Minimize
+12 - Mega Drain
+14 - Sunny Day
+16 - Shadow Sneak
+18 - Curse
+20 - Bullet Seed
+23 - Zen Headbutt
+25 - Shadow Punch
+28 - Crunch
+33 - Seed Bomb
+38 - Solar Beam
+40 - Spectral Thief
 
 Evolutions:
 Capsakid-S -> Scovillain-S (Fire Stone)
@@ -7598,16 +7965,45 @@ Ability:
 Chlorophyll / Insect Feeder / (Flash Fire)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+65 HP / 113 Atk / 60 Def / 103 SpA / 65 SpD / 80 Spe / 486 BST
 
 Level Up:
-1 - Confusion
+1 - Parting Shot
+1 - Torment
+1 - Flatter
+1 - Shadow Punch
+1 - Shadow Sneak
+1 - Fire Fang
+1 - Leafage
+1 - Scary Face
+1 - Bite
+1 - Growth
+4 - Payback
+6 - Confuse Ray
+7 - Razor Leaf
+10 - Minimize
+12 - Mega Drain
+14 - Sunny Day
+16 - Beat Up
+18 - Feint Attack
+20 - Bullet Seed
+23 - Sucker Punch
+25 - Thief
+28 - Crunch
+31 - Jaw Lock
+33 - Seed Bomb
+35 - Knock Off
+38 - Dark Pulse
+40 - Solar Beam
+45 - Night Daze
+50 - Energy Ball
+55 - Obstruct
 
 Evolutions:
 Scovillain-S -> Kerbernero-S ()
 
 ===================
-#011 - Kerbernero-S                                                                                    [283]
+#011 - Despenero-S                                                                                     [283]
 ===================
 Type:
 Grass / Dark
@@ -7616,10 +8012,44 @@ Ability:
 Chlorophyll / Insect Feeder / (Flash Fire)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+84 HP / 118 Atk / 75 Def / 108 SpA / 75 SpD / 90 Spe / 550 BST
 
 Level Up:
-1 - Confusion
+1 - Parting Shot
+1 - Torment
+1 - Flatter
+1 - Shadow Punch
+1 - Shadow Sneak
+1 - Fire Fang
+1 - Will-O-Wisp
+1 - Leafage
+1 - Scary Face
+1 - Bite
+1 - Growth
+4 - Payback
+6 - Confuse Ray
+7 - Razor Leaf
+10 - Minimize
+12 - Mega Drain
+14 - Sunny Day
+16 - Beat Up
+18 - Feint Attack
+20 - Bullet Seed
+23 - Sucker Punch
+25 - Thief
+28 - Crunch
+31 - Jaw Lock
+33 - Seed Bomb
+35 - Knock Off
+38 - Dark Pulse
+40 - Solar Beam
+42 - Tri-Attack
+45 - Night Daze
+50 - Sambal Sear
+55 - Obstruct
+60 - Fiery Dance
+65 - Frenzy Plant
+70 - Synthesis
 
 ===================
 #012 - Cluuz-S                                                                                         [220]
@@ -7890,7 +8320,7 @@ Type:
 Rock / Electric
 
 Ability:
-Sturdy / Lightning Rod / (None)
+Sturdy / Lightning Rod / (Unerodible)
 
 Base Stats:
 40 HP / 65 Atk / 74 Def / 49 SpA / 53 SpD / 44 Spe / 325 BST
@@ -7916,7 +8346,7 @@ Type:
 Rock / Electric
 
 Ability:
-Sturdy / Lightning Rod / (None)
+Sturdy / Lightning Rod / (Unerodible)
 
 Base Stats:
 80 HP / 77 Atk / 90 Def / 77 SpA / 56 SpD / 45 Spe / 425 BST
@@ -7948,7 +8378,7 @@ Type:
 Rock / Electric
 
 Ability:
-Sturdy / Lightning Rod / (None)
+Sturdy / Lightning Rod / (Unerodible)
 
 Base Stats:
 120 HP / 66 Atk / 92 Def / 122 SpA / 80 SpD / 45 Spe / 525 BST
@@ -7985,7 +8415,7 @@ Type:
 Light / Electric
 
 Ability:
-Clear Body / Filter / (None)
+Clear Body / Galvanize / (Filter)
 
 Base Stats:
 120 HP / 95 Atk / 70 Def / 65 SpA / 130 SpD / 45 Spe / 525 BST
@@ -8024,7 +8454,7 @@ Type:
 Water / Electric
 
 Ability:
-Swift Swim / Rattled / (None)
+Swift Swim / Rattled / (Multiscale)
 
 Base Stats:
 20 HP / 10 Atk / 25 Def / 45 SpA / 30 SpD / 70 Spe / 200 BST
@@ -8044,7 +8474,7 @@ Type:
 Water / Electric
 
 Ability:
-Volt Vortex / Motor Drive / (None)
+Volt Vortex / Motor Drive / (Defiant)
 
 Base Stats:
 105 HP / 135 Atk / 80 Def / 25 SpA / 110 SpD / 85 Spe / 540 BST
@@ -8262,7 +8692,7 @@ Type:
 Fire / Electric
 
 Ability:
-Static / Flame Body / (None)
+Static / Flame Body / (Adaptability)
 
 Base Stats:
 60 HP / 65 Atk / 50 Def / 75 SpA / 50 SpD / 60 Spe / 360 BST
@@ -8289,7 +8719,7 @@ Type:
 Fire / Electric
 
 Ability:
-Levitate / Flame Body / (None)
+Levitate / Flame Body / (Adaptability)
 
 Base Stats:
 90 HP / 70 Atk / 80 Def / 85 SpA / 65 SpD / 70 Spe / 460 BST
@@ -8322,7 +8752,7 @@ Type:
 Fire / Electric
 
 Ability:
-Levitate / Flame Body / (None)
+Levitate / Flame Body / (Adaptability)
 
 Base Stats:
 95 HP / 90 Atk / 90 Def / 120 SpA / 90 SpD / 75 Spe / 560 BST
@@ -8447,7 +8877,9 @@ Base Stats:
 50 HP / 20 Atk / 55 Def / 25 SpA / 25 SpD / 30 Spe / 205 BST
 
 Level Up:
-1 - Confusion
+1 - Harden
+7 - Harden
+11 - Iron Defense
 
 Evolutions:
 Metapod -> Butterfree (lv. 10)
@@ -8465,7 +8897,28 @@ Base Stats:
 60 HP / 45 Atk / 50 Def / 95 SpA / 80 SpD / 70 Spe / 400 BST
 
 Level Up:
-1 - Confusion
+1 - Harden
+1 - Iron Defense
+1 - Tackle
+1 - String Shot
+1 - Bug Bite
+10 - Gust
+10 - Confusion
+10 - Supersonic
+12 - Poison Powder
+12 - Stun Spore
+12 - Sleep Powder
+15 - Psybeam
+18 - Whirlwind
+20 - Silver Wind
+23 - Air Slash
+25 - Tailwind
+28 - Captivate
+31 - Struggle Bug
+34 - Bug Buzz
+37 - Roost
+40 - Infestation
+45 - Quiver Dance
 
 ===================
 #003 - Solosis                                                                                         [251]
@@ -8572,7 +9025,7 @@ Level Up:
 #006 - Gulpin                                                                                          [259]
 ===================
 Type:
-Poison / Normal
+Poison / None
 
 Ability:
 Sticky Hold / Gooey / (Simple)
@@ -8598,7 +9051,7 @@ Gulpin -> Swalot (lv. 26)
 #007 - Swalot                                                                                          [260]
 ===================
 Type:
-Poison / Normal
+Poison / None
 
 Ability:
 Sticky Hold / Gooey / (Simple)
@@ -8621,7 +9074,8 @@ Level Up:
 26 - Body Slam
 30 - Stockpile
 33 - Slack Off
-36 - Sludge Bomb
+35 - Sludge Bomb
+37 - Curse
 39 - Destiny Bond
 42 - Gastro Acid
 45 - Toxic Spikes
@@ -8634,13 +9088,26 @@ Type:
 Steel / Psychic
 
 Ability:
-Levitate / Heatproof / (Battle Armor)
+Levitate / Unwavering / (Battle Armor)
 
 Base Stats:
 57 HP / 24 Atk / 86 Def / 24 SpA / 86 SpD / 23 Spe / 300 BST
 
 Level Up:
+1 - Tackle
 1 - Confusion
+1 - Night Shade
+4 - Confuse Ray
+7 - Payback
+10 - Hypnosis
+13 - Safeguard
+17 - Gyro Ball
+20 - Hex
+23 - Stored Power
+25 - Iron Defense
+27 - Trick
+29 - Extrasensory
+31 - Gravity
 
 Evolutions:
 Bronzor -> Bronzong (lv. 33)
@@ -8652,11 +9119,34 @@ Type:
 Steel / Psychic
 
 Ability:
-Levitate / Heatproof / (Battle Armor)
+Levitate / Unwavering / (Battle Armor)
 
 Base Stats:
 67 HP / 89 Atk / 116 Def / 79 SpA / 116 SpD / 33 Spe / 500 BST
 
 Level Up:
+1 - Sunny Day
+1 - Rain Dance
+1 - Tackle
 1 - Confusion
+1 - Night Shade
+4 - Confuse Ray
+7 - Payback
+10 - Hypnosis
+13 - Safeguard
+17 - Gyro Ball
+20 - Hex
+23 - Stored Power
+25 - Iron Defense
+27 - Trick
+29 - Extrasensory
+31 - Gravity
+33 - Heavy Slam
+36 - Metal Sound
+39 - Trick Room
+43 - Zen Headbutt
+46 - Stealth Rock
+49 - Steel Beam
+55 - Expanding Force
+60 - Body Press
 

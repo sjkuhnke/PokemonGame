@@ -981,10 +981,10 @@ public class TileManager {
 		setup(763, true, BOTTOM_HALF);
 		setup(764, true);
 		setup(765, true, BOTTOM_TWO_THIRDS);
-//		setup(766, true);
-//		setup(767, true);
-//		setup(768, true);
-//		setup(769, true);
+		setup(766, false);
+		setup(767, false);
+		setup(768, false);
+		setup(769, false);
 //		setup(770, true);
 //		setup(771, true);
 //		setup(772, true);

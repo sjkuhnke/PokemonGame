@@ -48,7 +48,14 @@ public class AssetSetter {
 	
 	public ArrayList<Entity> clerks = new ArrayList<>();
 	
-	private static final int RYDER = -17;
+	private static final int UP_PHEROMOSA = -24;
+	private static final int UP_BUZZWOLE = -23;
+	private static final int UP_SPLAME = -22;
+	private static final int UP_SHOOKWAT = -21;
+	private static final int UP_CAIRNASAUR = -20;
+	private static final int UP_XURKITREE = -19;
+	private static final int RYDER_UP = -18;
+	private static final int RYDER_DOWN = -17;
 	private static final int ALAKAZAM = -16;
 	private static final int KLARA = -15;
 	private static final int AVERY = -14;
@@ -122,6 +129,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(70, 63, Item.GLOWING_PRISM, mapNum);
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 76, Item.FIRE_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(23, 70, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(33, 64, Item.POTION, mapNum);
 		
 		mapNum = 4;
 		objIndex = 0;
@@ -219,6 +228,11 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(28, 73, Item.RED_CARD, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 34, Item.MENTAL_HERB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(79, 25, Item.TM73, mapNum); // gyro ball
+		
+		gp.obj[mapNum][objIndex] = ObjSetup(71, 28, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(58, 28, Item.SUPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(51, 8, Item.ULTRA_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(80, 8, Item.FULL_HEAL, mapNum);
 		
 		mapNum = 14;
 		objIndex = 0;
@@ -849,7 +863,7 @@ public class AssetSetter {
 		mapNum = 10;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM, 30, 38, "Vxxxvhh...");
-		gp.npc[mapNum][index] = NPCSetup(RYDER, 29, 38, "Oh! Uh, mabuhay!", true);
+		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, 29, 38, "Oh! Uh, mabuhay!", true);
 		
 		mapNum = 11;
 		index = 0;
@@ -880,7 +894,12 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 20, 63, "Oh hello there kid, I'm a research assistant for the Professor that specializes in Electric forms of Pokemon.", 33, true, "");
 		gp.npc[mapNum][index++] = null;
 		gp.npc[mapNum][index++] = null;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 90, 18, "", true); // TODO: regional trades
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 88, 18, "", true); // TODO: regional trades
+		gp.npc[mapNum][index++] = null; // scott 2
+		gp.npc[mapNum][index++] = null; // ryder 2
+		gp.npc[mapNum][index++] = null; // alakazam
+		gp.npc[mapNum][index++] = null; // ryder 2.1
+		gp.npc[mapNum][index++] = null; // alakazam 2.1
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 29, 49, 104);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 23, 49, 105);
@@ -934,7 +953,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index++] = null;
 		gp.npc[mapNum][index] = SetupStaticEncounter(202, 53, 34, 368, 43);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 45, 38, 146);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 46, 33, "That was an impressive battle! I found a rare MAGIC Pokemon, but after watching that, you'd be a better trainer. Here!", 12, true, "Enjoy all the wonders of the MAGIC type!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 46, 33, "That was an impressive battle! I found a rare MAGIC Pokemon, but after watching that, you'd be a better trainer. Here!", 66, true, "Enjoy all the wonders of the MAGIC type!");
 		
 		mapNum = 21;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 55, 60, 56);
@@ -1624,7 +1643,7 @@ public class AssetSetter {
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(60, 53, 0, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(82, 59, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(33, 72, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 72, 1, mapNum, map);
 		
 		mapNum = 4;
 		iIndex = 0;
@@ -1648,6 +1667,7 @@ public class AssetSetter {
 		
 		mapNum = 13;
 		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(86, 23, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(26, 7, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(25, 9, 0, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(26, 9, 0, mapNum, map);
@@ -2379,7 +2399,7 @@ public class AssetSetter {
 			gp.npc[13][0] = null;
 		}
 		
-		if (flag[1][3]) {
+		if (flag[1][3] || flag[1][18]) {
 			gp.npc[10][0] = null;
 			gp.npc[10][1] = null;
 		}
@@ -2407,7 +2427,7 @@ public class AssetSetter {
 		
 		if (flag[1][11]) {
 			gp.npc[18][0] = null;
-			if (!flag[1][13]) gp.npc[18][1] = NPCSetup(SCOTT_UP, 54, 40, "Oh hey bro, I was so exhausted I didn't even see you. OMG YOU SAVED ME type shi", true);
+			if (!flag[1][13]) gp.npc[18][1] = NPCSetup(SCOTT_UP, 54, 40, "Oh, talk about a stroke of luck! Thank goodness you showed up, that thing was really strong…", true);
 			gp.npc[18][2] = null;
 		}
 		if (flag[1][13]) {
@@ -2424,6 +2444,33 @@ public class AssetSetter {
 		}
 		if (flag[1][14]) { // Gyarados-E
 			gp.npc[60][2] = null;
+		}
+		
+		/**
+		 * Third Split
+		 */
+		if (flag[1][18]) {
+			if (!flag[2][0]) {
+				gp.npc[13][4] = NPCSetup(SCOTT_DOWN, 28, 10, 55); // scott 2
+			} else {
+				gp.npc[13][4] = null;
+			}
+			if (!flag[2][1]) {
+				gp.npc[13][5] = NPCSetup(ALAKAZAM, 27, 6, "Vxxxvhh...");
+				gp.npc[13][6] = NPCSetup(RYDER_DOWN, 26, 6, "Hello my friend! Just the person I was looking for!", true);
+			} else {
+				gp.npc[13][5] = null;
+				gp.npc[13][6] = null;
+			}
+		}
+		if (flag[2][1]) {
+			if (!flag[2][3]) {
+				gp.npc[13][7] = NPCSetup(RYDER_UP, 89, 19, "You shouldn't be seeing this");
+				gp.npc[13][8] = NPCSetup(ALAKAZAM, 90, 19, "Vxxxvhh...");
+			} else {
+				gp.npc[13][7] = null;
+				gp.npc[13][8] = null;
+			}
 		}
 		
 		/**
@@ -2825,7 +2872,10 @@ public class AssetSetter {
 		InteractiveTile result = null;
 		result = new Locked_Door(gp, flag);
 		
-		if (gp.player.p.flag[result.getFlagX()][result.getFlagY()]) return null;
+		if (gp.player.p.flag[result.getFlagX()][result.getFlagY()]) {
+			iIndex++;
+			return null;
+		}
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;
@@ -2840,7 +2890,10 @@ public class AssetSetter {
 		InteractiveTile result = null;
 		result = new GymBarrier(gp, flag);
 		
-		if (gp.player.p.flag[result.getFlagX()][result.getFlagY()]) return null;
+		if (gp.player.p.flag[result.getFlagX()][result.getFlagY()]) {
+			iIndex++;
+			return null;
+		}
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;

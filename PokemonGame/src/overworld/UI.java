@@ -309,6 +309,31 @@ public class UI extends AbstractUI{
 			gp.aSetter.updateNPC(gp.currentMap);
 			currentTask = null;
 			break;
+		case Task.TURN:
+			switch(currentTask.counter) {
+			case 0:
+				gp.player.direction = "down";
+				break;
+			case 1:
+				gp.player.direction = "up";
+				break;
+			case 2:
+				gp.player.direction = "left";
+				break;
+			case 3:
+				gp.player.direction = "right";
+				break;
+			default:
+				System.out.println(currentTask.counter + " isn't a direction for Task.TURN");
+				gp.player.direction = "down";
+				break;
+			}
+			currentTask = null;
+			break;
+		case Task.FLAG:
+			gp.player.p.flag[currentTask.start][currentTask.finish] = true;
+			currentTask = null;
+			break;
 		}
 	}
 
@@ -2173,7 +2198,8 @@ public class UI extends AbstractUI{
 				gp.currentMap = currentTask.counter;
 				gp.player.worldX = gp.tileSize * currentTask.start;
 				gp.player.worldY = gp.tileSize * currentTask.finish;
-				gp.player.worldY -= gp.tileSize / 4;
+				//gp.player.worldY -= gp.tileSize / 4;
+				gp.player.spriteNum = 1;
 				gp.eHandler.previousEventX = gp.player.worldX;
 				gp.eHandler.previousEventY = gp.player.worldY;
 				gp.player.p.currentMap = currentTask.counter;

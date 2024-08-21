@@ -1,8 +1,10 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-281 Capsakid-X*
-283 Kerbernero-X*
+277 Bronzong-X*
+267 Elgyem-E*
+268 Beheeyem-E*
+258 Hissimitar*
 156 Poof* (E forms of these guys are more important, these guys can wait)
 157 Hast* (E forms of these guys are more important, these guys can wait)
 197 Poof-E*
@@ -13,17 +15,12 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 202 Flamehead-E
 203 Fireshard-E (First stage is lowkey the most important, these 2 can wait)
 204 Blastflames-E (First stage is lowkey the most important, these 2 can wait)
-276 Bronzor-X*
-277 Bronzong-X*
-267 Elgyem-E*
-268 Beheeyem-E*
-258 Hissimitar*
 285 Icy Serpant*
 263 Plasamp*
 264 Geniova*
 287 Dust Sorcerer*
-158 Poov
-159 Grust
+158 Poov*
+159 Grust*
 213 Nightrex*
 214 Shadowsaur*
 106 Sparkdust*

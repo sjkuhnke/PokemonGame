@@ -712,7 +712,7 @@ public class Main {
 
 
 	private static String writeEncounter(ArrayList<Encounter> encounters) {
-		String result = "";
+		String result = "===================================================================\n";
 		for (Encounter e : encounters) {
 			Pokemon ep = new Pokemon(e.getId(), 5, false, false);
 			String percent = String.format("%.0f", e.getEncounterChance() * 100);

@@ -1255,7 +1255,7 @@ public class Player extends Trainer implements Serializable {
 			return 0;
 		} else if (flag[0][2] && !flag[1][2]) {
 			return 2;
-		} else if (flag[1][2] && !flag[2][1]) {
+		} else if (flag[1][2] && !flag[2][3]) {
 			return 3;
 		} else {
 			return 4;
