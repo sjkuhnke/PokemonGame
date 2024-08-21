@@ -61,7 +61,7 @@ Unseen Strangle : Physical / 60 / 100 : 100% to cause foe to flinch, only works 
 ===============
 Dragon
 ===============
-Abyssal Chop : Physical / 70 / 90 : 50% chance to paralyse foe. Damage is doulbed if foe is paralyzed
+Abyssal Chop : Physical / 70 / 90 : 50% chance to paralyse foe. Damage is doubled if foe is paralyzed
 Breaking Swipe : Physical / 60 / 100 : 100% chance to lower foe's Attack by 1
 Draco Meteor : Special / 130 / 90 : 100% to lower user's Sp.Atk by 2
 Dragon Breath : Special / 60 / 100 : 30% chance to Paralyze foe
@@ -130,14 +130,14 @@ Low Sweep : Physical / 65 / 100 : 100% chance to lower foe's Speed by 1
 Mach Punch : Physical / 40 / 100 : Always goes first
 No Retreat : Status / 0 / -- : Raises all of user's stats by 1, user can't switch out. Can only be used once
 Power-Up Punch : Physical / 40 / 100 : 100% chance to raise user's Attack by 1
-Revenge : Physical / 60 / 100 : Power is doubled if user is slower than foe
+Revenge : Physical / 120 / 100 : Power is doubled if user is slower than foe
 Reversal : Physical / 0 / 100 : Deals more damage the lower the user's HP is
 Rock Smash : Physical / 40 / 100 : 100% to lower foe's Defense by 1
 Sacred Sword : Physical / 90 / 100 : Ignores Defense and Evasion changes of foe
 Seismic Toss : Physical / 0 / 100 : Damage dealt is equal to the user's level
 Sky Uppercut : Physical / 85 / 90 : A normal attack
 Storm Throw : Physical / 60 / 100 : This move always Crits
-Submission : Physical / 80 / 90 : User takes 1/3 of damage inflicted as recoil
+Submission : Physical / 80 / 90 : User takes 1/4 of damage inflicted as recoil
 Summit Strike : Physical / 70 / 95 : 100% to lower foe's Defense by one stage. 30% to flinch foe
 Superpower : Physical / 120 / 100 : 100% of lowering user's Attack and Defense by 1
 Tornado Spin : Physical / 60 / 95 : 100% to raise user's Speed and Accuracy by 1, and frees user of being Spun
@@ -257,6 +257,7 @@ Grass
 Absorb : Special / 20 / 100 : Heals 50% of damage dealt to foe
 Aromatherapy : Status / 0 / -- : Cures team of any status conditions
 Branch Poke : Physical / 40 / 100 : A normal attack
+Bullet Seed : Physical / 25 / 100 : Attacks 2-5 times
 Cotton Guard : Status / 0 / -- : Raises user's Defense by 3
 Energy Ball : Special / 90 / 100 : 10% chance to lower foe's Sp.Def by 1
 Forests Curse : Status / 0 / 100 : Changes foe's type to GRASS
@@ -280,6 +281,8 @@ Petal Blizzard : Physical / 90 / 100 : A normal attack
 Petal Dance : Special / 120 / 100 : User is locked into this move for 2-3 turns, Confuses user when the effect is done
 Power Whip : Physical / 120 / 85 : A normal attack
 Razor Leaf : Physical / 55 / 95 : Boosted Crit rate
+Sambal Sear : Special / 80 / 100 : 30% chance to Burn foe
+Seed Bomb : Physical / 80 / 100 : A normal attack
 Sleep Powder : Status / 0 / 75 : Foe falls asleep
 Solar Beam : Special / 120 / 100 : User must charge up on the first turn, attacks on the second. No charge in SUN
 Solar Blade : Physical / 125 / 100 : User must charge up on the first turn, attacks on the second. No charge in SUN
@@ -387,12 +390,14 @@ Vanishing Act : Special / 100 / 100 : 30% to confuse foe, a two turn attack. Use
 Normal
 ===============
 Baton Pass : Status / 0 / -- : Causes user to switch and passes all stat changes with it
+Belly Drum : Status / 0 / -- : Maximizes Attack at the cost of 1/2 HP
 Bind : Physical / 15 / 85 : 100% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch
 Body Slam : Physical / 85 / 100 : 30% chance to Paralyze foe
 Captivate : Status / 0 / 100 : Lowers foe's Sp.Atk by 2
 Covet : Physical / 60 / 100 : 100% chance to steal opponents item
 Cut : Physical / 55 / 95 : This move always Crits
 Defense Curl : Status / 0 / -- : Raises user's Defense by 1
+Dizzy Punch : Physical / 70 / 100 : 20% to confuse foe
 Double Hit : Physical / 35 / 90 : Attacks twice
 Double Slap : Physical / 15 / 85 : Attacks 2-5 times
 Double Team : Status / 0 / -- : Raises user's Evasion by 1
@@ -429,6 +434,7 @@ Leer : Status / 0 / 100 : Lowers foe's Defense by 1
 Lock-On : Status / 0 / -- : Raises user's Accuracy by 6
 Lovely Kiss : Status / 0 / 75 : Sleeps foe
 Mean Look : Status / 0 / 100 : Causes foe to be unable to switch
+Mimic : Status / 0 / -- : Uses the move last used by the foe, fails if foe hasn't used a move yet
 Noble Roar : Status / 0 / 100 : Lowers foe's Attack and Sp.Atk by 1
 Odor Sleuth : Status / 0 / -- : Indentifies foe, replacing their Ghost typing with Normal if they have it. It also lowers foe's Evasion by 1
 Play Nice : Status / 0 / 100 : Lowers foe's Attack by 1
@@ -447,6 +453,7 @@ Scratch : Physical / 40 / 100 : A normal attack
 Screech : Status / 0 / 85 : Lowers foe's Defense by 2
 Self-Destruct : Physical / 200 / 100 : User faints
 Shell Smash : Status / 0 / -- : Raises user's Attack, Sp.Atk, and Speed by 2, at the cost of lowering its Defense and Sp.Def by 1
+Sing : Status / 0 / 55 : Foe falls asleep
 Skull Bash : Physical / 100 / 100 : 100% to raise the user's Defense by 1, user must charge on the first turn
 Slack Off : Status / 0 / -- : Restores 1/2 of user's total HP
 Slam : Physical / 80 / 75 : A normal attack
@@ -466,16 +473,19 @@ Sweet Scent : Status / 0 / -- : Lowers foe's Evasion by 2
 Swords Dance : Status / 0 / -- : Raises user's Attack by 2
 Tackle : Physical / 50 / 100 : A normal attack
 Tail Whip : Status / 0 / 100 : Lowers foe's Defense by 1
-Take Down : Physical / 90 / 85 : User takes 1/3 of damage dealt as recoil
+Take Down : Physical / 90 / 85 : User takes 1/4 of damage dealt as recoil
 Teeter Dance : Status / 0 / 100 : Confuses foe
 Terrain Pulse : Special / 50 / 100 : Type changes to match the current terrain, double BP if type of the move changes
 Thrash : Physical / 120 / 100 : User is locked into this move for 2-3 turns, Confuses user when the effect is done
+Tickle : Status / 0 / 100 : Lowers foe's Attack and Defense by 1
 Tri-Attack : Special / 80 / 100 : 20% chance to either Burn, Paralyze or Frostbite foe
+Vandalize : Status / 0 / 100 : Steals the foe's ability
 Vise Grip : Physical / 55 / 100 : A normal attack
 Weather Ball : Special / 50 / 100 : Type changes to match the current weather, double BP if type of the move changes
 Whip Smash : Physical / 120 / 100 : 100% to lower user's Defense by 1
 Wish : Status / 0 / -- : Heals a Pokemon by 50% of the user's max HP the next turn
 Wrap : Physical / 15 / 90 : 100% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch
+Yawn : Status / 0 / -- : Causes foe to fall asleep next turn
 
 ===============
 Poison
@@ -492,6 +502,7 @@ Mortal Spin : Physical / 30 / 100 : 100% to poison foe, and frees user of being 
 Poison Fang : Physical / 50 / 100 : 50% to Toxic foe
 Poison Gas : Status / 0 / 80 : Poisons foe
 Poison Jab : Physical / 80 / 100 : 30% to Poison foe
+Poison Powder : Status / 0 / 75 : Poisons foe
 Poison Sting : Physical / 15 / 100 : 30% chance to Poison foe
 Poison Tail : Physical / 85 / 100 : 10% chance to Poison foe. Boosted crit rate
 Sludge : Special / 75 / 100 : 30% to Poison foe
@@ -542,7 +553,7 @@ Rock
 Accelerock : Physical / 40 / 100 : Always goes first
 Ancient Power : Special / 60 / 100 : 10% chance to raise all of the user's stats by 1
 Diamond Storm : Special / 100 / 95 : 50% chance to raise user's Defense by 2
-Head Smash : Physical / 150 / 80 : User takes 1/3 of damage inflicted
+Head Smash : Physical / 150 / 80 : User takes 1/2 of damage inflicted
 Power Gem : Special / 80 / 100 : A normal attack
 Rock Blast : Physical / 25 / 90 : Hits 2-5 times
 Rock Climb : Physical / 80 / 95 : 20% chance to confuse foe

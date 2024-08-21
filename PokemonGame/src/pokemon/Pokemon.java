@@ -2077,6 +2077,13 @@ public class Pokemon implements Serializable {
 			
 			if (foeAbility == Ability.FLUFFY && moveType == PType.FIRE) multiplier *= 2;
 			
+			if (foeAbility == Ability.MOSAIC_WINGS && moveType != PType.UNKNOWN && multiplier == 1) {
+				addAbilityTask(foe);
+				addTask(Task.TEXT, foe.nickname + " is distorting type matchups!");
+				damageIndex += 3;
+				multiplier = 0.5;
+			}
+			
 			damage *= multiplier;
 			
 			if (foeAbility == Ability.UNERODIBLE && (moveType == PType.GRASS || moveType == PType.WATER || moveType == PType.GROUND)) damage /= 4;
@@ -2150,8 +2157,8 @@ public class Pokemon implements Serializable {
 				int denom = move == Move.HEAD_SMASH ? 2 : move == Move.SUBMISSION || move == Move.TAKE_DOWN ? 4 : 3;
 				recoil = Math.max(Math.floorDiv(damage, denom), 1);
 				if (damage >= foe.currentHP) recoil = Math.max(Math.floorDiv(foe.currentHP, 3), 1);
-				if (move == Move.STEEL_BEAM) recoil = (int) (this.getStat(0) * 1.0 / 2);
-				if (move == Move.STRUGGLE) recoil = (int) (this.getStat(0) * 1.0 / 4);
+				if (move == Move.STEEL_BEAM) recoil = Math.max(Math.floorDiv(this.getStat(0), 2), 1);
+				if (move == Move.STRUGGLE) recoil = Math.max(Math.floorDiv(this.getStat(0), 4), 1);
 			}
 			
 			boolean fullHP = foe.currentHP == foe.getStat(0);
@@ -4466,6 +4473,8 @@ public class Pokemon implements Serializable {
 		public static final int FLASH_OUT = 29;
 		public static final int ITEM = 30;
 		public static final int UPDATE = 31;
+		public static final int TURN = 32; // counter: 0 = down, 1 = up, 2 = left, 3 = right
+		public static final int FLAG = 33; // start: x finish: y
 		
 		public int type;
 		public String message;
@@ -5027,6 +5036,10 @@ public class Pokemon implements Serializable {
 		for (PType type : weak) {
 			if (foe.type1 == type) multiplier *= 2;
 			if (foe.type2 == type) multiplier *= 2;
+		}
+		
+		if (foeAbility == Ability.MOSAIC_WINGS && moveType != PType.UNKNOWN && multiplier == 1) {
+			multiplier = 0.5;
 		}
 		
 		if (foeAbility == Ability.WONDER_GUARD && multiplier <= 1) {
