@@ -334,7 +334,60 @@ public class UI extends AbstractUI{
 			gp.player.p.flag[currentTask.start][currentTask.finish] = true;
 			currentTask = null;
 			break;
+		case Task.REGIONAL_TRADE:
+			drawRegionalTrade();
+			break;
 		}
+	}
+
+	private void drawRegionalTrade() {
+		int[] acceptedIndices = new int[] {254, 255, 256,  261, 262,  272, 273,  276, 277};
+		int[] tradeIndices = new int[] {251, 252, 253,  259, 260,  270, 271,  274, 275};
+		
+		drawParty(null);
+		
+		int x = gp.tileSize*3;
+		int y = 0;
+		int width = gp.tileSize*10;
+		int height = gp.tileSize;
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize * 0.75;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.setColor(Color.WHITE);
+		String text = "Select a Xhenovain form:";
+		g2.drawString(text, x, y);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			Pokemon p = gp.player.p.team[partyNum];
+			int trade = -1;
+			for (int i = 0; i < acceptedIndices.length; i++) {
+				if (acceptedIndices[i] == p.id) {
+					trade = i;
+					break;
+				}
+			}
+			if (trade >= 0) {
+				Pokemon tr = new Pokemon(tradeIndices[trade], p.level, true, false);
+				Task t = Pokemon.addTask(Task.CONFIRM, "Would you like to trade " + p.nickname + " for my " + tr.name + "?", tr);
+				t.counter = 1;
+				currentTask = null;
+			} else {
+				Pokemon.addTask(Task.TEXT, "That's not a Xhenovian form! Do you have any to show me?");
+				Pokemon.addTask(Task.REGIONAL_TRADE, "");
+				currentTask = null;
+			}
+			currentTask = null;
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			currentTask = null;
+		}
+		
+		drawToolTips("OK", null, "Back", null);
 	}
 
 	private void drawItem() {
@@ -430,6 +483,14 @@ public class UI extends AbstractUI{
 					currentTask = null;
 					gp.eHandler.teleport(149, 49, 76, false);
 					break;
+				case 1: // regional trade confirm
+					Pokemon.addTask(Task.TEXT, "You traded for " + currentTask.p.name + "!");
+					gp.player.p.team[partyNum] = currentTask.p;
+					gp.player.p.pokedex[currentTask.p.id] = 2;
+					currentTask.p.trainer = gp.player.p;
+					currentTask = null;
+					partyNum = 0;
+					break;
 				}
 			}
 		}
@@ -441,7 +502,14 @@ public class UI extends AbstractUI{
 				gp.keyH.wPressed = false;
 				currentTask = null;
 				gp.gameState = GamePanel.PLAY_STATE;
-				showMessage("Come back when you're ready!");
+				switch (type) {
+				case 0:
+					showMessage("Come back when you're ready!");
+					break;
+				case 1:
+					showMessage("That's okay! Take your time, I get it.");
+					break;
+				}
 				commandNum = 0;
 			}
 		}

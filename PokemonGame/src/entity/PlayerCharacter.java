@@ -764,7 +764,7 @@ public class PlayerCharacter extends Entity {
 					Pokemon.addTask(Task.UPDATE, "");
 					Pokemon.addTask(Task.FLASH_OUT, "");
 				} else {
-					
+					Pokemon.addTask(Task.REGIONAL_TRADE, "");
 				}
 			}
 			
@@ -836,7 +836,7 @@ public class PlayerCharacter extends Entity {
 					Pokemon.addTask(Task.TEXT, "Not... strong... enough...");
 				} else if (p.flag[1][11] && !p.flag[1][12]) {
 					Pokemon.addTask(Task.TEXT, "None of my usual tricks were getting to it, and I was on the ropes... So thanks for the hand...");
-					Pokemon.addTask(Task.TEXT, "Anyways, I think now that you deal with... whatever Electric Pokémon that was... that the fuse box is working. Try turning it on real quick, my head is buzzing...");
+					Pokemon.addTask(Task.TEXT, "Anyways, I think now that you deal with... whatever Electric Pokï¿½mon that was... that the fuse box is working. Try turning it on real quick, my head is buzzing...");
 				} else if (p.flag[1][12] && !p.flag[1][13]) {
 					p.flag[1][13] = true;
 					Pokemon.addTask(Task.TEXT, "None of my usual tricks were getting to it, and I was on the ropes... So thanks for the hand...");

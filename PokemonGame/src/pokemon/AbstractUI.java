@@ -159,7 +159,7 @@ public abstract class AbstractUI {
 		
 		drawSubWindow(x, y, width, height);
 		
-		if (!showMoveOptions && !showIVOptions && !showBoxSummary && (currentTask == null || currentTask.type == Task.PARTY)) {
+		if (!showMoveOptions && !showIVOptions && !showBoxSummary && (currentTask == null || currentTask.type == Task.PARTY || currentTask.type == Task.REGIONAL_TRADE)) {
 			int maxPartyIndex = 0;
 			for (int i = 1; i < gp.player.p.team.length; i++) {
 				if (gp.player.p.team[i] == null) {

@@ -818,7 +818,7 @@ public class AssetSetter {
 		mapNum = 4;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 81, 61, "Sorry, but the gym leader has been busy with mail these past few weeks, so gym battles are unavailable. You may check the post office for more details.");
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 66, 79, "Yo, scram kid! This is some top secret space operation that you don’t got the clearance to see! Move it!", true);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 66, 79, "Yo, scram kid! This is some top secret space operation that you donï¿½t got the clearance to see! Move it!", true);
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 32, 62, 18);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 23, 65, 19); // make way lower levels
@@ -894,7 +894,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 20, 63, "Oh hello there kid, I'm a research assistant for the Professor that specializes in Electric forms of Pokemon.", 33, true, "");
 		gp.npc[mapNum][index++] = null;
 		gp.npc[mapNum][index++] = null;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 88, 18, "", true); // TODO: regional trades
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 88, 18, "Hey there! Got any Xhenovain forms to trade me?", true);
 		gp.npc[mapNum][index++] = null; // scott 2
 		gp.npc[mapNum][index++] = null; // ryder 2
 		gp.npc[mapNum][index++] = null; // alakazam
@@ -1200,7 +1200,7 @@ public class AssetSetter {
 		
 		mapNum = 57;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Eyy! What brings a scrawny kid like you into the famous Guy Eddie’s culinary residence!", 9, true, "By the way, if you’re ever in Rawwar City, head over to my restaurant. You won’t wanna miss the Eddie special, Smoked Pie! It’s gonna be a blast burn!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Eyy! What brings a scrawny kid like you into the famous Guy Eddieï¿½s culinary residence!", 9, true, "By the way, if youï¿½re ever in Rawwar City, head over to my restaurant. You wonï¿½t wanna miss the Eddie special, Smoked Pie! Itï¿½s gonna be a blast burn!");
 		
 		mapNum = 58;
 		index = 0;
@@ -2427,7 +2427,7 @@ public class AssetSetter {
 		
 		if (flag[1][11]) {
 			gp.npc[18][0] = null;
-			if (!flag[1][13]) gp.npc[18][1] = NPCSetup(SCOTT_UP, 54, 40, "Oh, talk about a stroke of luck! Thank goodness you showed up, that thing was really strong…", true);
+			if (!flag[1][13]) gp.npc[18][1] = NPCSetup(SCOTT_UP, 54, 40, "Oh, talk about a stroke of luck! Thank goodness you showed up, that thing was really strongï¿½", true);
 			gp.npc[18][2] = null;
 		}
 		if (flag[1][13]) {
