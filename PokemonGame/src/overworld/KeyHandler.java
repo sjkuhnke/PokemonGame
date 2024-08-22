@@ -69,7 +69,6 @@ public class KeyHandler implements KeyListener {
 			starterMachineState(code);
 		}
 		
-		
 		if (!gp.ui.showMessage) {
 			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
 				upPressed = true;

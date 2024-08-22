@@ -120,7 +120,7 @@ public class Player extends Trainer implements Serializable {
 	    if (p.isFainted()) return;
 	    boolean hasNull = false;
 	    Task t = Pokemon.createTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?", p);
-	    Pokemon.insertTask(t, 0);
+	    if (Pokemon.gp.gameState != GamePanel.PLAY_STATE) Pokemon.insertTask(t, 0);
 	    pokedex[p.id] = 2;
 	    p.clearVolatile();
 	    p.consumeItem(null);
