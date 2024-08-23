@@ -931,7 +931,7 @@ public class PlayerCharacter extends Entity {
 						} else {
 							Pokemon.addTask(Task.TEXT, "Thank Arceus you're back... I was so petrified in fear.");
 							Pokemon.addTask(Task.TEXT, "What did you find out? ... Oh, ... Oh my. What?!?!?");
-							Pokemon.addTask(Task.TEXT, "There's a poor Pokemon chained up to the tower?? That is so cruel! Ack, that makes me so sick.");
+							Pokemon.addTask(Task.TEXT, "There's a poor Pokemon chained up to the tower?? That is so cruel! Ack! That makes me so sick.");
 							Pokemon.addTask(Task.TEXT, "It has to be a pretty powerful Pokemon to be able to transmit such strong radio waves to possess all of these people.");
 							Pokemon.addTask(Task.TEXT, "Did you happen to notice what Pokemon it was?");
 							Pokemon.addTask(Task.TEXT, "...");
