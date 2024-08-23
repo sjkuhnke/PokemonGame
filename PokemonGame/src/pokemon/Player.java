@@ -737,9 +737,12 @@ public class Player extends Trainer implements Serializable {
 			case HYPER_POTION:
 			case MAX_POTION:
 			case FULL_RESTORE:
-				if (p.currentHP == p.getStat(0) || p.isFainted()) {
+				if (p.currentHP == p.getStat(0)) {
 	        		gp.ui.showMessage(p.nickname + " is already full HP!");
 	        		return;
+				} else if (p.isFainted()) {
+					gp.ui.showMessage("It won't have any effect.");
+					return;
 	        	} else {
 	        		int difference = 0;
 	        		int healAmt = item.getHealAmount();
@@ -769,8 +772,8 @@ public class Player extends Trainer implements Serializable {
 		        target = p.status == Status.TOXIC && target == Status.POISONED ? Status.TOXIC : target;
 
 	    		if (p.status != target || p.isFainted()) {
-	        		gp.ui.showMessage(p.nickname + " is already healthy!");
-	        		return;
+	    			gp.ui.showMessage("It won't have any effect.");
+	        		return;	    			
 	        	} else {
 	        		Status temp = p.status;
 	        		p.status = Status.HEALTHY;

@@ -503,8 +503,8 @@ public class PMap extends JPanel {
 
 	private void fly(String loc, int map, int x, int y) {
 		if (!gp.player.p.flag[1][2]) return;
-		if (!gp.tileM.canFly[gp.currentMap]) {
-			JOptionPane.showMessageDialog(null, "Something is blocking the teleporter from working here!");
+		if (!gp.tileM.canFly[gp.currentMap] || (gp.currentMap == 28 && !gp.player.p.flag[2][10])) {
+			JOptionPane.showMessageDialog(null, "A weird energy is rendering the teleporter obsolete here!");
 			return;
 		}
 		int answer = JOptionPane.showOptionDialog(null,

@@ -764,7 +764,13 @@ public class PlayerCharacter extends Entity {
 					Pokemon.addTask(Task.UPDATE, "");
 					Pokemon.addTask(Task.FLASH_OUT, "");
 				} else {
-					Pokemon.addTask(Task.REGIONAL_TRADE, "");
+					if (!p.flag[2][1]) {
+						Pokemon.addTask(Task.TEXT, "I think you might have went the wrong way...");
+						Pokemon.addTask(Task.TEXT, "Are you looking for Mt. Splinkty? You have to go back to Route 26 and head North!");
+					} else {
+						Pokemon.addTask(Task.TEXT, "Got any Xhenovian forms to trade me?");
+						Pokemon.addTask(Task.REGIONAL_TRADE, "");
+					}
 				}
 			}
 			
@@ -886,6 +892,86 @@ public class PlayerCharacter extends Entity {
 				Pokemon result = new Pokemon(id, 15, true, false);
 				Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 				Pokemon.addTask(Task.GIFT, "", result);
+			}
+		} else if (gp.currentMap == 28) {
+			if (worldX / gp.tileSize <= 70) { // Millie 1
+				Pokemon.addTask(Task.TEXT, "Add text about introducing herself");
+				Pokemon.addTask(Task.TEXT, "Explain the situation about possessed trainers");
+				Pokemon.addTask(Task.TEXT, "Explain that you can look around and fight some of the trainers (but in a more 'fend off' kinda way)");
+				Pokemon.addTask(Task.TEXT, "Inform that once you come with her, you'll have to face a lot of trainers in a row");
+				Pokemon.addTask(Task.TEXT, "Explain that there's a PC by the cell tower but the weird waves are messing with it, and that you can only use Pokemon in the gauntlet box.");
+				Pokemon.addTask(Task.TEXT, "Encourage the trainer to add Pokemon to the gauntlet box to take with them once you go with Millie");
+				int selected = p.getAmountSelected();
+				String message = "Are you ready to fight once you come with me? We need to defend our town and there's no going back!";
+				if (selected < Player.GAUNTLET_BOX_SIZE) { // Not enough selected
+					message = "You don't have 10 Pokemon selected to bring! You'll be at a huge disadvantage!\nYou can choose what Pokemon to bring using the Gauntlet Box in this PC (press [\u2191] when selecting a box).\n" + message;
+				}
+				for (String s : message.split("\n")) {
+					Pokemon.addTask(Task.TEXT, s);
+				}
+				Task t = Pokemon.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?");
+				t.counter = 2;
+				// Millie 2
+				t = Pokemon.addTask(Task.TURN, "");
+				t.counter = 2;
+				Pokemon.addTask(Task.TEXT, "There's this strange boy here that's in a trance, something about how he's special/you know him or something");
+				Pokemon.addTask(Task.TEXT, "He won't budge, he's in a deep trance (somehow find a way to wake him up)");
+				t = Pokemon.addTask(Task.TURN, "");
+				t.counter = 1;
+				Pokemon.addTask(Task.TEXT, "AHHHH HE'S AWAKE!");
+				t = Pokemon.addTask(Task.FLAG, "");
+				t.start = 2;
+				t.finish = 5;
+			} else {
+				if (worldY / gp.tileSize < 36) {
+					if (worldY / gp.tileSize > 33) { // Millie 3
+						if (!p.flag[2][7]) {
+							Pokemon.addTask(Task.TEXT, "It's too dangerous to come back here until we figure out what's causing the strange radio waves");
+							Pokemon.addTask(Task.TEXT, "Let me know if you figure out what's going on! Please... I'm scared...");
+						} else {
+							Pokemon.addTask(Task.TEXT, "Thank Arceus you're back... I was so petrified in fear.");
+							Pokemon.addTask(Task.TEXT, "What did you find out? ... Oh, ... Oh my. What?!?!?");
+							Pokemon.addTask(Task.TEXT, "There's a poor Pokemon chained up to the tower?? That is so cruel! Ack, that makes me so sick.");
+							Pokemon.addTask(Task.TEXT, "It has to be a pretty powerful Pokemon to be able to transmit such strong radio waves to possess all of these people.");
+							Pokemon.addTask(Task.TEXT, "Did you happen to notice what Pokemon it was?");
+							Pokemon.addTask(Task.TEXT, "...");
+							Pokemon.addTask(Task.TEXT, "A... what? An alien spider? What??");
+							Pokemon.addTask(Task.TEXT, "I have no idea what you're talking about, I've never heard of anything like that in my life.");
+							Pokemon.addTask(Task.TEXT, "If it's a spider though, I'm sure we can be great friends. I love bugs!");
+							Pokemon.addTask(Task.TEXT, "Alien bugs might take a bit more to get used to. I wonder where it came from?");
+							Pokemon.addTask(Task.TEXT, "And I can't believe it's chained up! We have to set it free!");
+							Pokemon.addTask(Task.TEXT, "Come to think of it, I did notice an evil grunt run off towards Mt. Splinkty, maybe we can stop him?");
+							Pokemon.addTask(Task.TEXT, "Go check out the Mountain and see if you can find the grunt, I'll stand guard here!");
+							p.flag[2][8] = true;
+							Pokemon.addTask(Task.FLASH_IN, "");
+							Pokemon.addTask(Task.UPDATE, "");
+							Pokemon.addTask(Task.FLASH_OUT, "");
+						}
+					} else if (worldY / gp.tileSize > 25) { // Millie 4
+						if (!p.flag[2][9]) {
+							Pokemon.addTask(Task.TEXT, "*pant pant* ..I've been holding them off okay. Any luck finding the grunt?");
+							Pokemon.addTask(Task.TEXT, "I believe that there's a secret room that you can access on the 2nd floor, check that out if you haven't yet.");
+						} else {
+							Pokemon.addTask(Task.TEXT, "You found him? How'd it go, are you and your Pokemon okay?");
+							Pokemon.addTask(Task.TEXT, "...");
+							Pokemon.addTask(Task.TEXT, "You got wire cutters? Quick, let's try and cut that creature free and stop this madness!");
+							Pokemon.addTask(Task.TEXT, "I'll try and make sure the possessed people are okay. Good luck!");
+							p.flag[2][9] = true;
+							Pokemon.addTask(Task.FLASH_IN, "");
+							Pokemon.addTask(Task.UPDATE, "");
+							Pokemon.addTask(Task.FLASH_OUT, "");
+						}
+					} else { // chained up xurkitree
+						
+					}
+				} else { // Player wiped, talked to her from the other side
+					Pokemon.addTask(Task.TEXT, "Player wiped and is talking to her from the other side, sends him back in");
+					Task t = Pokemon.addTask(Task.TELEPORT, "");
+					t.counter = 28;
+					t.start = 82;
+					t.finish = 36;
+					t.wipe = false;
+				}
 			}
 		}
 		

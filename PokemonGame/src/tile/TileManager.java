@@ -28,12 +28,16 @@ public class TileManager {
 	private static final int RIGHT_HALF = 4;
 	private static final int TOP_TWO_THIRDS = 5;
 	private static final int BOTTOM_TWO_THIRDS = 6;
-	private static final int BOTTOM_LEFT_CORNER = 7;
-	private static final int BOTTOM_RIGHT_CORNER = 8;
-	private static final int TOP_THREE_FOURTHS = 9;
-	private static final int BOTTOM_THREE_FOURTHS = 10;
-	private static final int TOP_FOURTH = 11;
-	private static final int BOTTOM_FOURTH = 12;
+	private static final int LEFT_TWO_THIRDS = 7;
+	private static final int RIGHT_TWO_THIRDS = 8;
+	private static final int BOTTOM_LEFT_CORNER = 9;
+	private static final int BOTTOM_RIGHT_CORNER = 10;
+	private static final int TOP_THREE_FOURTHS = 11;
+	private static final int BOTTOM_THREE_FOURTHS = 12;
+	private static final int TOP_FOURTH = 13;
+	private static final int BOTTOM_FOURTH = 14;
+	private static final int LEFT_FOURTH = 15;
+	private static final int RIGHT_FOURTH = 16;
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
@@ -62,7 +66,7 @@ public class TileManager {
 		loadMap("/maps/energy01B.txt", 15, true);
 		loadMap("/maps/energy02.txt", 16, true);
 		loadMap("/maps/office01.txt", 17, true);
-		loadMap("/maps/office02.txt", 18, true);
+		loadMap("/maps/office02.txt", 18, false);
 		loadMap("/maps/pc.txt", 19, true);
 		loadMap("/maps/mart.txt", 20, true);
 		loadMap("/maps/gym02.txt", 21, true);
@@ -210,7 +214,7 @@ public class TileManager {
 	}
 	
 	private void setupCollisionRectangles() {
-		collisionRectangles = new Rectangle[13];
+		collisionRectangles = new Rectangle[17];
 		collisionRectangles[FULL] = new Rectangle(0, 0, gp.tileSize, gp.tileSize); // full tile
 		collisionRectangles[TOP_HALF] = new Rectangle(0, 0, gp.tileSize, gp.tileSize / 2); // top half
 		collisionRectangles[BOTTOM_HALF] = new Rectangle(0, gp.tileSize / 2, gp.tileSize, gp.tileSize / 2); // bottom half
@@ -218,12 +222,16 @@ public class TileManager {
 		collisionRectangles[RIGHT_HALF] = new Rectangle(gp.tileSize / 2, 0, gp.tileSize / 2, gp.tileSize); // right half
 		collisionRectangles[TOP_TWO_THIRDS] = new Rectangle(0, 0, gp.tileSize, gp.tileSize * 2 / 3); // top 2/3
 		collisionRectangles[BOTTOM_TWO_THIRDS] = new Rectangle(0, gp.tileSize / 3, gp.tileSize, gp.tileSize * 2 / 3); // bottom 2/3
+		collisionRectangles[LEFT_TWO_THIRDS] = new Rectangle(0, 0, gp.tileSize * 2 / 3, gp.tileSize); // left 2/3
+		collisionRectangles[RIGHT_TWO_THIRDS] = new Rectangle(gp.tileSize / 3, 0, gp.tileSize * 2 / 3, gp.tileSize); // right 2/3
 		collisionRectangles[BOTTOM_LEFT_CORNER] = new Rectangle(0, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2); // bottom left corner
 		collisionRectangles[BOTTOM_RIGHT_CORNER] = new Rectangle(gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2); // bottom right corner
 		collisionRectangles[TOP_THREE_FOURTHS] = new Rectangle(0, 0, gp.tileSize, gp.tileSize * 3 / 4); // top 3/4
 		collisionRectangles[BOTTOM_THREE_FOURTHS] = new Rectangle(0, gp.tileSize / 4, gp.tileSize, gp.tileSize * 3 / 4); // bottom 3/4
 		collisionRectangles[TOP_FOURTH] = new Rectangle(0, 0, gp.tileSize, gp.tileSize / 4); // top fourth
 		collisionRectangles[BOTTOM_FOURTH] = new Rectangle(0, gp.tileSize * 3 / 4, gp.tileSize, gp.tileSize / 4); // bottom fourth
+		collisionRectangles[LEFT_FOURTH] = new Rectangle(0, 0, gp.tileSize / 4, gp.tileSize); // top fourth
+		collisionRectangles[RIGHT_FOURTH] = new Rectangle(gp.tileSize * 3 / 4, 0, gp.tileSize / 4, gp.tileSize); // bottom fourth
 	}
 
 	public void getTileImage() {
@@ -985,20 +993,21 @@ public class TileManager {
 		setup(767, false);
 		setup(768, false);
 		setup(769, false);
-//		setup(770, true);
-//		setup(771, true);
-//		setup(772, true);
-//		setup(773, true);
-//		setup(774, true);
-//		setup(775, true);
-//		setup(776, true);
-//		setup(777, true);
-//		setup(778, true);
-//		setup(779, true);
-//		setup(780, true);
-//		setup(781, true);
-//		setup(782, true);
-//		setup(783, true);
+		
+		setup(770, true);
+		setup(771, true);
+		setup(772, true);
+		setup(773, true);
+		setup(774, true);
+		setup(775, true, RIGHT_FOURTH);
+		setup(776, true);
+		setup(777, false);
+		setup(778, true, LEFT_HALF);
+		setup(779, true);
+		setup(780, true, RIGHT_HALF);
+		setup(781, true, LEFT_TWO_THIRDS);
+		setup(782, true, TOP_TWO_THIRDS);
+		setup(783, true, RIGHT_TWO_THIRDS);
 //		setup(784, true);
 //		setup(785, true);
 //		setup(786, true);

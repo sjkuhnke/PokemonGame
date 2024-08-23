@@ -302,7 +302,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void endBattle(int trainer, int id) {
 		if (trainer > -1 && !player.p.wiped() && trainer != 256) player.p.trainersBeat[trainer] = true;
 		
-		if (id >= 0) {
+		if (id >= 0 || trainer == 89) {
 			if (id == 159) player.p.grustCount++;
 			aSetter.updateNPC(currentMap);
 		}
@@ -412,7 +412,6 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public void setupGame() {
 		aSetter.setNPC();
-		//aSetter.updateNPC(currentMap); TODO: redo setNPC() to always set npcs and then use updateNPC to correctly configure npcs for current game state. do this after generating player docs ideally
 		aSetter.setObject();
 		aSetter.setInteractiveTile(currentMap);
 		

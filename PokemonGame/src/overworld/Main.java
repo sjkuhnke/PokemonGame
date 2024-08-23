@@ -93,12 +93,6 @@ public class Main {
 	    } catch (IOException | ClassNotFoundException e) {
 	        // If there's an error reading the file, create a new Player object
 	        gp.player.p = new Player(gp);
-
-//	        int secondItem = -1;
-//	        do {
-//	        	secondItem = random.nextInt(3) + 1;
-//	        } while (secondItem == gp.player.p.secondStarter);
-//	        gp.player.p.scottItem = secondItem;
 	        
 	        gp.player.p.resistBerries = new Item[20];
 	        int count = 0;

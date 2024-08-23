@@ -621,7 +621,7 @@ public class Pokemon implements Serializable {
 		
 		ArrayList<Move> noRepeat = Move.getNoComboMoves();
 		for (Move m : noRepeat) {
-			if (bestMoves.size() > 1 && bestMoves.contains(m) && lastMoveUsed == m) bestMoves.removeIf(m::equals);
+			if (bestMoves.size() > 1 && bestMoves.contains(m) && noRepeat.contains(lastMoveUsed)) bestMoves.removeIf(m::equals);
 		}
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_REFLECT) && this.impressive) bestMoves.removeIf(Move.MAGIC_REFLECT::equals);
