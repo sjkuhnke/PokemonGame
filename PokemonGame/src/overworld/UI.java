@@ -491,6 +491,11 @@ public class UI extends AbstractUI{
 					currentTask = null;
 					partyNum = 0;
 					break;
+				case 2: // kleine village gauntlet
+					currentTask = null;
+					gp.player.p.flag[2][4] = true;
+					gp.eHandler.teleport(28, 82, 36, false);
+					break;
 				}
 			}
 		}
@@ -504,7 +509,9 @@ public class UI extends AbstractUI{
 				gp.gameState = GamePanel.PLAY_STATE;
 				switch (type) {
 				case 0:
+				case 2:
 					showMessage("Come back when you're ready!");
+					tasks.clear();
 					break;
 				case 1:
 					showMessage("That's okay! Take your time, I get it.");
@@ -516,6 +523,7 @@ public class UI extends AbstractUI{
 		
 		if (gp.keyH.sPressed) {
 			currentTask = null;
+			tasks.clear();
 		}
 		
 		if (gp.keyH.upPressed || gp.keyH.downPressed) {
@@ -2274,7 +2282,11 @@ public class UI extends AbstractUI{
 				gp.eHandler.canTouchEvent = !currentTask.wipe;
 				currentTask = null;
 			} else {
-				gp.gameState = GamePanel.PLAY_STATE;
+				if (tasks.isEmpty()) {
+					gp.gameState = GamePanel.PLAY_STATE;
+				} else {
+					gp.gameState = GamePanel.TASK_STATE;
+				}
 				gp.currentMap = gp.eHandler.tempMap;
 				gp.player.worldX = gp.tileSize * gp.eHandler.tempCol;
 				gp.player.worldY = gp.tileSize * gp.eHandler.tempRow;

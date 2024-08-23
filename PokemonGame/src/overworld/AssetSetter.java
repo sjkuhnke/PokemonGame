@@ -1,6 +1,7 @@
 package overworld;
 
 import java.awt.image.BufferedImage;
+import java.nio.file.FileSystemLoopException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -301,6 +302,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(56, 60, Item.MENTAL_HERB, mapNum);
 		
 		mapNum = 26;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = null; // will be HM03
 		gp.obj[mapNum][objIndex] = ObjSetup(62, 69, Item.REPEL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 69, Item.IMPISH_MINT, mapNum); // impish
 		
@@ -894,7 +897,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 20, 63, "Oh hello there kid, I'm a research assistant for the Professor that specializes in Electric forms of Pokemon.", 33, true, "");
 		gp.npc[mapNum][index++] = null;
 		gp.npc[mapNum][index++] = null;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 88, 18, "Hey there! Got any Xhenovain forms to trade me?", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 88, 18, "Well hello there young man!", true);
 		gp.npc[mapNum][index++] = null; // scott 2
 		gp.npc[mapNum][index++] = null; // ryder 2
 		gp.npc[mapNum][index++] = null; // alakazam
@@ -992,7 +995,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 66, 87, 78);
 		
 		mapNum = 26;
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 58, 70, 79);
+		index = 0;
+		gp.npc[mapNum][index] = null;
 		
 		index = 0;
 		// Nurses/PCs
@@ -1021,6 +1025,11 @@ public class AssetSetter {
 		
 		mapNum = 28;
 		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(MILLIE, 62, 46, "EEK! Wait... your eyes aren't radioactive green.", true);
+		gp.npc[mapNum][index++] = null; // replace with millie_up when we have it
+		gp.npc[mapNum][index] = NPCSetup(UP_XURKITREE, 82, 22, "Zzzzt.", true);
+		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 82, 32, "glorglorglorg (Conveyed in a \"we can't fight now\" kinda way)");
+		gp.npc[mapNum][index++] = null; // Fred 2 Trainer
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 12, 52, 85);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 13, 55, 86);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 30, 50, 80);
@@ -1029,15 +1038,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 56, 46, 82);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 60, 49, 88);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 38, 36, 83);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 50, 36, 84);
-		
-		if (!flags[5]) {
-			gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 87, 45, 89);
-		} else {
-			gp.npc[mapNum][index++] = null;
-			GamePanel.volatileTrainers.put(NPCSetup(FRED_DOWN, 87, 45, 89), mapNum);
-		}
-		
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 50, 36, 84);		
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 77, 26, 95);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 20, 96);
@@ -2473,6 +2474,24 @@ public class AssetSetter {
 			}
 		}
 		
+		if (flag[2][8] && !flag[2][9]) {
+			gp.npc[26][0] = NPCSetup(TN_DOWN, 58, 70, 79);
+			gp.obj[26][0] = ObjSetup(58, 69, Item.HM03, 26);
+		} else {
+			gp.npc[26][0] = null;
+		}
+		
+		if (flag[2][4]) {
+			gp.npc[28][0] = null;
+			gp.npc[28][3] = null;
+			gp.npc[28][1] = NPCSetup(MILLIE, 81, 36, "*whimpers* This is so scary...", true);
+			gp.npc[28][4] = NPCSetup(FRED_DOWN, 82, 32, 89);
+		}
+		if (flag[2][6]) {
+			System.out.println("clearing fred");
+			gp.npc[28][4] = null;
+		}
+		
 		/**
 		 * All of this is old and should be removed/reworked
 		 */
@@ -2688,6 +2707,9 @@ public class AssetSetter {
 			case STANFORD:
 				image = result.setup("/npc/stanford");
 				break;
+			case MILLIE:
+				image = result.setup("/npc/millie");
+				break;
 			case TN_DOWN:
 				image = result.setup("/npc/tn1");
 				break;
@@ -2699,6 +2721,15 @@ public class AssetSetter {
 				break;
 			case SCOTT_UP:
 				image = result.setup("/npc/scott2");
+				break;
+			case FRED_DOWN:
+				image = result.setup("/npc/fred1");
+				break;
+			case FRED_UP:
+				image = result.setup("/npc/fred2");
+				break;
+			case UP_XURKITREE:
+				image = result.setup("/overworlds/284_0");
 				break;
 		}
 		
@@ -2714,6 +2745,7 @@ public class AssetSetter {
 	
 	private ItemObj ObjSetup(int x, int y, Item item, int mapNum, int lower, int upper) {
 		if (gp.player.p.itemsCollected[mapNum][objIndex] == true) {
+			if (mapNum == 26) System.out.println(mapNum + " " + objIndex);
 			objIndex++;
 			return null;
 		}
