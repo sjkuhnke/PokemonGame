@@ -586,7 +586,7 @@ public class Main {
 			}
 			
 			writer.close();
-			//writeTrainerUsageStats();
+			writeTrainerUsageStats();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -602,6 +602,7 @@ public class Main {
 			int totalPokemon = 0;
 			
 			for (Trainer tr : Trainer.trainers) {
+				if (tr == null) break;
 				for (Pokemon p : tr.getTeam()) {
 					if (p.id <= 9 && (tr.getName().contains("Scott") || tr.getName().contains("Fred"))) {
 						if (p.id == 1 || p.id == 4 || p.id == 7) {

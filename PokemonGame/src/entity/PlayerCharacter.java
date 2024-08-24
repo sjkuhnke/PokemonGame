@@ -895,8 +895,8 @@ public class PlayerCharacter extends Entity {
 			}
 		} else if (gp.currentMap == 28) {
 			if (worldX / gp.tileSize <= 70) { // Millie 1
-				Pokemon.addTask(Task.TEXT, "Add text about introducing herself");
-				Pokemon.addTask(Task.TEXT, "Explain the situation about possessed trainers");
+				Pokemon.addTask(Task.TEXT, "I’m Millie, kind of a big deal here. I’ve starred in several movies and TV stuff, like Magikarp Jump: The Motion Picture, and Mystery Doors of the Magical Land: The Animated Series.");
+				Pokemon.addTask(Task.TEXT, "Anyways, yeah this isn’t a shoot or scene, the trainers here are possessed or something! They just attack anything that try to enter the town.");
 				Pokemon.addTask(Task.TEXT, "Explain that you can look around and fight some of the trainers (but in a more 'fend off' kinda way)");
 				Pokemon.addTask(Task.TEXT, "Inform that once you come with her, you'll have to face a lot of trainers in a row");
 				Pokemon.addTask(Task.TEXT, "Explain that there's a PC by the cell tower but the weird waves are messing with it, and that you can only use Pokemon in the gauntlet box.");

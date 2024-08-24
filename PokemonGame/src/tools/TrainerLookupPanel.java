@@ -129,14 +129,27 @@ public class TrainerLookupPanel extends JPanel {
 		
 		for (Pokemon p : t.team) {
 			JPanel pokemonPanel = new JPanel();
-			pokemonPanel.setLayout(new BorderLayout());
+			pokemonPanel.setLayout(new BoxLayout(pokemonPanel, BoxLayout.Y_AXIS));
 			
+			String idDexNo = "[" + p.id + "] " + Pokemon.getFormattedDexNo(p.getDexNo());
 			String pokemonName = p.name + " Lv. " + p.level + " @ " + p.item;
 			String abilityName = "Ability: " + p.ability;
+			
+			JLabel idLabel = new JLabel(idDexNo);
 			JLabel nameLabel = new JLabel(pokemonName);
 			JLabel abilityLabel = new JLabel(abilityName);
-			pokemonPanel.add(nameLabel, BorderLayout.NORTH);
-			pokemonPanel.add(abilityLabel, BorderLayout.CENTER);
+
+			JPanel idPanel = new JPanel(new BorderLayout());
+			idPanel.add(idLabel, BorderLayout.WEST);
+			pokemonPanel.add(idPanel);
+
+			JPanel namePanel = new JPanel(new BorderLayout());
+			namePanel.add(nameLabel, BorderLayout.WEST);
+			pokemonPanel.add(namePanel);
+
+			JPanel abilityPanel = new JPanel(new BorderLayout());
+			abilityPanel.add(abilityLabel, BorderLayout.WEST);
+			pokemonPanel.add(abilityPanel);
 			
 			JPanel movesPanel = new JPanel();
 			movesPanel.setLayout(new GridLayout(2, 2));
@@ -155,7 +168,7 @@ public class TrainerLookupPanel extends JPanel {
 				movesPanel.add(moveButton);
 			}
 			
-			pokemonPanel.add(movesPanel, BorderLayout.SOUTH);
+			pokemonPanel.add(movesPanel);
 			teamPanel.add(pokemonPanel);
 		}
 		

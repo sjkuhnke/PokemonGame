@@ -1028,7 +1028,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(MILLIE, 62, 46, "EEK! Wait... your eyes aren't radioactive green.", true);
 		gp.npc[mapNum][index++] = null; // replace with millie_up when we have it
 		gp.npc[mapNum][index] = NPCSetup(UP_XURKITREE, 82, 22, "Zzzzt.", true);
-		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 82, 32, "glorglorglorg (Conveyed in a \"we can't fight now\" kinda way)");
+		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 82, 32, "Ugh... Can't... Move... glrglg....");
 		gp.npc[mapNum][index++] = null; // Fred 2 Trainer
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 12, 52, 85);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 13, 55, 86);
