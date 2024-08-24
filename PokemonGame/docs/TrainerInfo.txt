@@ -2,10 +2,10 @@ Trainers:
 *** Note: if the Scott/Fred have 3 starters listed, regenerate docs after you picked your starter. ***
 Route 22------------------------------------------
 
-Trainer Scott 1             Lizish Lv. 7
+Trainer Scott 1             Lagma Lv. 7
 
 Scott 1
-Lizish (Lv. 7) @ Mystic Water           /   Protean        /   Scratch, Growl, Water Gun, 
+Lagma (Lv. 7) @ Charcoal                /   Dry Skin       /   Tackle, Harden, Ember, 
 
 Trainer B A                 Hammo Lv. 14
 Trainer B B                 Roselia Lv. 14
@@ -101,11 +101,11 @@ Trainer P                   Sapwin Lv. 18 @ (Hard Stone)
 
 Gelb Forest (1A)----------------------------------
 
-Trainer Fred 1              Otterpor Lv. 18, Maguide Lv. 20
+Trainer Fred 1              Otterpor Lv. 18, Torgged Lv. 20
 
 Fred 1
 Otterpor (Lv. 18) @ Leftovers           /   Water Veil     /   Confusion, Aqua Ring, Water Pulse, Aqua Veil
-Maguide (Lv. 20) @ Charcoal             /   Dry Skin       /   Smokescreen, Incinerate, Headbutt, Flame Wheel
+Torgged (Lv. 20) @ Miracle Seed         /   Rough Skin     /   Smack Down, Headbutt, Razor Leaf, Sand Attack
 
 Trainer Q                   Inkay Lv. 18, Psycorb Lv. 19 @ (Black Glasses, Terrain Extender)
 Trainer R                   Grondor Lv. 19 @ (Expert Belt)
@@ -216,10 +216,6 @@ Trainer MS B                Flameruff Lv. 29, Cluuz Lv. 30 @ (Passho Berry, Paya
 Trainer MS C                Electroram Lv. 30 @ (Soft Sand)
 Trainer MS D                Crobat Lv. 51, Zurrclu Lv. 53 @ (Power Herb, Eviolite)
 
-Mt. Splinkty (3B)---------------------------------
-
-Trainer TN MS 1             Carinator Lv. 30 @ (Rawst Berry)
-
 Route 27------------------------------------------
 
 Trainer AG                  Bugop Lv. 29, Malamar Lv. 30 @ (Choice Band, Tanga Berry)
@@ -233,14 +229,6 @@ Trainer AE                  Pyrator Lv. 37 @ (Galaxeed Berry)
 Trainer AF                  Flamebless Lv. 38 @ (Passho Berry)
 
 Kleine Village------------------------------------
-
-Trainer Fred 2              Flamehox Lv. 29, Gyarados-E Lv. 30, Maguide Lv. 30, Psylotter Lv. 31
-
-Fred 2
-Flamehox (Lv. 29) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud Bomb
-Gyarados-E (Lv. 30) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Thunder Fang, Dragon Rage
-Maguide (Lv. 30) @ Expert Belt          /   Dry Skin       /   Iron Defense, Take Down, Bulldoze, Lava Plume
-Psylotter (Lv. 31) @ Rocky Helmet       /   Water Veil     /   Psybeam, Water Pulse, Aqua Veil, Confuse Ray
 
 Trainer RR A                Froshrog Lv. 30, Spheal Lv. 31 @ (Life Orb, Silk Scarf)
 Trainer RR B                Treewin Lv. 30, Roselia Lv. 31 @ (Sitrus Berry, Black Sludge)
@@ -368,12 +356,12 @@ Route 31------------------------------------------
 Trainer BL                  Rockmite Lv. 46, Wormatron-S Lv. 45 @ (Assault Vest, Smooth Rock)
 Trainer BM                  Cluuz-S Lv. 47, Zurrclu-S Lv. 45, Cluuz-S Lv. 47, Zurrclu-S Lv. 46 @ (Focus Sash, Sitrus Berry, Roseli Berry, Salac Berry)
 Trainer BN                  Durfish Lv. 47, Dompster Lv. 45, Durfish-S Lv. 47, Dompster-S Lv. 45 @ (Choice Specs, Choice Band, Eviolite, Power Herb)
-Trainer Scott 3             Hatterene Lv. 47, Ninjask Lv. 47, Dragave Lv. 47, Vikavolt Lv. 46, Rhynee Lv. 48
+Trainer Scott 3             Hatterene Lv. 47, Ninjask Lv. 47, Magron Lv. 47, Vikavolt Lv. 46, Rhynee Lv. 48
 
 Scott 3
 Hatterene (Lv. 47) @ Quick Claw         /   Magic Bounce   /   Magic Reflect, Psychic, Magic Tomb, Calm Mind
 Ninjask (Lv. 47) @ Focus Sash           /   Speed Boost    /   Swords Dance, Leech Life, Acrobatics, Poison Jab
-Dragave (Lv. 47) @ Life Orb             /   Protean        /   Channeling Blow, Liquidation, Hammer Arm, Dragon Rush
+Magron (Lv. 47) @ Life Orb              /   Dry Skin       /   Heat Crash, Earth Power, Fire Blast, Heavy Slam
 Vikavolt (Lv. 46) @ Magnet              /   Levitate       /   Volt Switch, Guillotine, Bug Buzz, Sticky Web
 Rhynee (Lv. 48) @ Leftovers             /   Sand Stream    /   Stone Edge, Body Press, Horn Drill, Magnitude
 
@@ -447,13 +435,13 @@ Trainer TN B9               Rhypolar Lv. 54, Tricercil Lv. 54 @ (Assault Vest, R
 Trainer TN B10              Bipedice Lv. 54, Soldrota-E Lv. 54 @ (Choice Band, Life Orb)
 Trainer TN B11              Blaster-E Lv. 55, Gyarados-E Lv. 55 @ (Air Balloon, Choice Scarf)
 Trainer TN B12              Crystallor-E Lv. 55, Hast-E Lv. 55 @ (White Herb, Choice Scarf)
-Trainer Fred 3              Blastflames Lv. 56, Gyarados-E Lv. 56, Wormatron-S Lv. 57, Magron Lv. 57, Stellarock Lv. 56, Psylotter Lv. 58
+Trainer Fred 3              Blastflames Lv. 56, Gyarados-E Lv. 56, Wormatron-S Lv. 57, Tortugis Lv. 57, Stellarock Lv. 56, Psylotter Lv. 58
 
 Fred 3
 Blastflames (Lv. 56) @ Mysticola Berry  /   Levitate       /   Iron Blast, Dragon Pulse, Flamethrower, Hurricane
 Gyarados-E (Lv. 56) @ Rindo Berry       /   Volt Vortex    /   Bounce, Volt Tackle, Comet Crash, Waterfall
 Wormatron-S (Lv. 57) @ Black Glasses    /   Adaptability   /   Sucker Punch, Breaking Swipe, Earthquake, Swords Dance
-Magron (Lv. 57) @ Expert Belt           /   Dry Skin       /   Heat Crash, Earth Power, Aura Sphere, Steel Beam
+Tortugis (Lv. 57) @ Expert Belt         /   Rough Skin     /   Spiky Shield, Dragon Tail, Leaf Storm, Earth Power
 Stellarock (Lv. 56) @ Sitrus Berry      /   Gravitation    /   Cosmic Power, Stone Edge, Meteor Mash, Comet Crash
 Psylotter (Lv. 58) @ Weakness Policy    /   Water Veil     /   Blizzard, Light Screen, Hydro Pump, Psychic
 
@@ -489,13 +477,13 @@ Trainer CI                  Barkflare Lv. 55, Gallade Lv. 54, Splame Lv. 55 @ (L
 Glurg Town----------------------------------------
 
 Trainer CJ                  Roserade Lv. 55, Crobat Lv. 55, Cluuz Lv. 57 @ (Sitrus Berry, Power Herb, Bright Powder)
-Trainer Scott 4             Hatterene Lv. 59, Ninjask Lv. 60, Drageye Lv. 58, Dragave Lv. 60, Vikavolt Lv. 59, Rhypolar Lv. 61
+Trainer Scott 4             Hatterene Lv. 59, Ninjask Lv. 60, Drageye Lv. 58, Magron Lv. 60, Vikavolt Lv. 59, Rhypolar Lv. 61
 
 Scott 4
 Hatterene (Lv. 59) @ Chilan Berry       /   Magic Bounce   /   Magic Tomb, Nuzzle, Reflect, Light Screen
 Ninjask (Lv. 60) @ Focus Sash           /   Speed Boost    /   Swords Dance, Leech Life, Baton Pass, Protect
 Drageye (Lv. 58) @ Chesto Berry         /   Multiscale     /   Prismatic Laser, Dragon Pulse, Thunderbolt, Rest
-Dragave (Lv. 60) @ Life Orb             /   Protean        /   Dragon Rush, Bulk Up, Close Combat, Double-Edge
+Magron (Lv. 60) @ Life Orb              /   Dry Skin       /   Flare Blitz, Earth Power, Aura Sphere, Steel Beam
 Vikavolt (Lv. 59) @ Magnet              /   Levitate       /   Photon Geyser, Bug Buzz, Volt Switch, Sticky Web
 Rhypolar (Lv. 61) @ Leftovers           /   Sand Stream    /   Earthquake, Spikes, Smack Down, Body Press
 
@@ -644,13 +632,13 @@ Ludicolo (Lv. 74) @ Choice Specs        /   Swift Swim     /   Scald, Giga Drain
 Tricercil (Lv. 73) @ Big Root           /   Rock Head      /   Head Smash, Drain Punch, No Retreat, Stealth Rock
 Cinneroph (Lv. 75) @ Power Herb         /   Tough Claws    /   Spiky Shield, Iron Head, Magic Crash, Hone Claws
 
-Trainer Fred 4              Stellarock Lv. 77, Gyarados-E Lv. 76, Wormatron-S Lv. 77, Magron Lv. 77, Blastflames Lv. 76, Psylotter Lv. 78
+Trainer Fred 4              Stellarock Lv. 77, Gyarados-E Lv. 76, Wormatron-S Lv. 77, Tortugis Lv. 77, Blastflames Lv. 76, Psylotter Lv. 78
 
 Fred 4
 Stellarock (Lv. 77) @ Loaded Dice       /   Huge Power     /   Shooting Stars, Rock Blast, Drain Punch, Bulk Up
 Gyarados-E (Lv. 76) @ Weakness Policy   /   Volt Vortex    /   Dragon Dance, Waterfall, Volt Tackle, Breaking Swipe
 Wormatron-S (Lv. 77) @ Rocky Helmet     /   Adaptability   /   Glare, Breaking Swipe, Earth Power, Dark Pulse
-Magron (Lv. 77) @ Sitrus Berry          /   Dry Skin       /   Steel Beam, Flare Blitz, Eruption, Stealth Rock
+Tortugis (Lv. 77) @ Sitrus Berry        /   Rough Skin     /   Spiky Shield, Giga Drain, Head Smash, Earth Power
 Blastflames (Lv. 76) @ Choice Scarf     /   Levitate       /   Eruption, Draco Meteor, Volt Switch, Dark Pulse
 Psylotter (Lv. 78) @ Leftovers          /   Water Veil     /   Aqua Veil, Scald, Psychic, Calm Mind
 
@@ -680,3 +668,303 @@ Trainer EW                  Shadowsaur Lv. 80, Pyrator-S Lv. 82, Opwing Lv. 81, 
 Trainer EX                  Dompster Lv. 82, Rhypolar Lv. 81, Drillatron Lv. 81, Wormatron Lv. 82, Wormatron-S Lv. 82, Blaster Lv. 83 @ (Rindo Berry, Smooth Rock, Expert Belt, White Herb, Focus Band, Weakness Policy)
 Trainer EY                  Drageye Lv. 80, Dompster-S Lv. 82, Blastflames Lv. 81, Poshorump Lv. 82, Winagrow Lv. 83, Scraftagon Lv. 84 @ (Glowing Prism, Muscle Band, Choice Scarf, White Herb, Covert Cloak, Lum Berry)
 
+Stats:
+Num,Pokemon,Amt,%
+1,Twigle,2,0.20%
+2,Torgged,3,0.30%
+3,Tortugis,6,0.59%
+4,Lagma,2,0.20%
+5,Maguide,3,0.30%
+6,Magron,9,0.89%
+7,Lizish,2,0.20%
+8,Iguaton,3,0.30%
+9,Dragave,6,0.59%
+10,Hummingspark,6,0.59%
+11,Flashclaw,1,0.10%
+12,Magestiflash,8,0.79%
+13,Pigo,5,0.49%
+14,Pigonat,4,0.39%
+15,Pigoga,6,0.59%
+16,Hammo,6,0.59%
+17,HammyBoy,2,0.20%
+18,Hamthorno,4,0.39%
+19,Sheabear,7,0.69%
+20,Dualbear,3,0.30%
+21,Spacebear,3,0.30%
+22,Bealtle,6,0.59%
+23,Centatle,3,0.30%
+24,Curlatoral,6,0.59%
+25,Millistone,8,0.79%
+26,Sapwin,3,0.30%
+27,Treewin,6,0.59%
+28,Winagrow,6,0.59%
+29,Budew,2,0.20%
+30,Roselia,4,0.39%
+31,Roserade,8,0.79%
+32,Sewaddle,3,0.30%
+33,Swadloon,5,0.49%
+34,Leavanny,10,0.98%
+35,Grubbin,1,0.10%
+36,Charjabug,5,0.49%
+37,Vikavolt,8,0.79%
+38,Busheep,2,0.20%
+39,Ramant,4,0.39%
+40,Bushewe,7,0.69%
+41,Bugik,1,0.10%
+42,Swordik,5,0.49%
+43,Ninjakik,4,0.39%
+44,Lotad,2,0.20%
+45,Lombre,2,0.20%
+46,Ludicolo,9,0.89%
+47,Bluebunn,11,1.08%
+48,Rocky,1,0.10%
+49,Boulder,1,0.10%
+50,Blaster,5,0.49%
+51,Crystallor,6,0.59%
+52,Carinx,3,0.30%
+53,Carinator,5,0.49%
+54,Cairnasaur,6,0.59%
+55,Pebblepup,1,0.10%
+56,Boulderoar,6,0.59%
+57,Fightorex,3,0.30%
+58,Raptorex,3,0.30%
+59,Kleinowl,3,0.30%
+60,Hootowl,11,1.08%
+61,Dualmoose,7,0.69%
+62,Snom,1,0.10%
+63,Frosmoth,8,0.79%
+64,Grondor,3,0.30%
+65,Bipedice,5,0.49%
+66,Tricerpup,2,0.20%
+67,Tricercil,5,0.49%
+68,Spheal,2,0.20%
+69,Sealeo,6,0.59%
+70,Walrein,4,0.39%
+71,Froshrog,3,0.30%
+72,Bouncerog,5,0.49%
+73,Bugop,4,0.39%
+74,Opwing,9,0.89%
+75,Hatenna,2,0.20%
+76,Hattrem,1,0.10%
+77,Hatterene,9,0.89%
+78,Otterpor,1,0.10%
+79,Psylotter,10,0.98%
+80,Florline,4,0.39%
+81,Florlion,3,0.30%
+82,Psycorb,4,0.39%
+83,Psyballs,5,0.49%
+84,Psycorboratr,4,0.39%
+85,Ralts,4,0.39%
+86,Kirlia,4,0.39%
+87,Gardevoir,7,0.69%
+88,Gallade,5,0.49%
+89,Tigrette,4,0.39%
+90,Inkay,4,0.39%
+91,Malamar,8,0.79%
+92,Flameruff,3,0.30%
+93,Barkflare,5,0.49%
+94,Iglite,2,0.20%
+95,Blaxer,2,0.20%
+96,Pyrator,8,0.79%
+97,Magmaclang,8,0.79%
+98,Flamehox,2,0.20%
+99,Fireshard,1,0.10%
+100,Blastflames,8,0.79%
+101,Tiowoo,2,0.20%
+102,Magwoo,3,0.30%
+103,Lafloo,5,0.49%
+104,Houndour,3,0.30%
+105,Houndoom,10,0.98%
+106,Sparkdust,1,0.10%
+107,Splame,10,0.98%
+108,Sparkitten,2,0.20%
+109,Fireblion,6,0.59%
+110,Flamebless,6,0.59%
+111,Shookwat,1,0.10%
+112,Wattwo,1,0.10%
+113,Megawatt,7,0.69%
+114,Elelamb,2,0.20%
+115,Electroram,2,0.20%
+116,Superchargo,5,0.49%
+117,Twigzap,1,0.10%
+118,Shockbranch,1,0.10%
+119,Thunderzap,9,0.89%
+120,Magie,5,0.49%
+121,Cumin,2,0.20%
+122,Cinneroph,10,0.98%
+123,Vupp,4,0.39%
+124,Vinnie,2,0.20%
+125,Suvinero,9,0.89%
+126,Whiskie,5,0.49%
+127,Whiskers,3,0.30%
+128,Whiskeroar,7,0.69%
+129,Nincada,3,0.30%
+130,Ninjask,3,0.30%
+131,Shedinja,5,0.49%
+132,Sheltor,3,0.30%
+133,Shelnado,5,0.49%
+134,Lilyray,2,0.20%
+135,Daray,3,0.30%
+136,Spinaquata,7,0.69%
+137,Magikarp,10,0.98%
+138,Gyarados,10,0.98%
+139,Staryu,6,0.59%
+140,Starmie,7,0.69%
+141,Ali,6,0.59%
+142,Batorali,6,0.59%
+143,Posho,11,1.08%
+144,Shomp,5,0.49%
+145,Poshorump,9,0.89%
+146,Binacle,1,0.10%
+147,Barbaracle,5,0.49%
+148,Durfish,4,0.39%
+149,Dompster,7,0.69%
+150,Kissyfishy,12,1.18%
+151,Ekans,2,0.20%
+152,Arbok,6,0.59%
+153,Zubat,4,0.39%
+154,Golbat,2,0.20%
+155,Crobat,8,0.79%
+156,Poof,1,0.10%
+157,Hast,5,0.49%
+158,Poov,2,0.20%
+159,Grust,15,1.48%
+160,Cluuz,7,0.69%
+161,Zurrclu,3,0.30%
+162,Zurroaratr,5,0.49%
+163,Timburr,1,0.10%
+164,Gurdurr,3,0.30%
+165,Conkeldurr,7,0.69%
+166,Rhypo,1,0.10%
+167,Rhynee,3,0.30%
+168,Rhypolar,6,0.59%
+169,Diggie,2,0.20%
+170,Drillatron,11,1.08%
+171,Wormite,3,0.30%
+172,Wormbot,2,0.20%
+173,Wormatron,7,0.69%
+174,Cleffa,3,0.30%
+175,Clefairy,3,0.30%
+176,Clefable,5,0.49%
+177,Minishoo,3,0.30%
+178,Glittleshoo,9,0.89%
+179,Zorua,3,0.30%
+180,Zoroark,9,0.89%
+181,Droid,1,0.10%
+182,Armoid,2,0.20%
+183,Soldrota,5,0.49%
+184,Tinkie,1,0.10%
+185,Shawar,2,0.20%
+186,Shaboom,3,0.30%
+187,Dragee,1,0.10%
+188,Draga,1,0.10%
+189,Drageye,4,0.39%
+190,Blobmo,2,0.20%
+191,Nebulimb,2,0.20%
+192,Galactasolder,3,0.30%
+193,Consodust,3,0.30%
+194,Cosmocrash,2,0.20%
+195,Rockmite,2,0.20%
+196,Stellarock,5,0.49%
+197,Poof-E,1,0.10%
+198,Hast-E,4,0.39%
+199,Droid-E,0,0.00%
+200,Armoid-E,0,0.00%
+201,Soldrota-E,5,0.49%
+202,Flamehox-E,1,0.10%
+203,Fireshard-E,2,0.20%
+204,Blastflames-E,4,0.39%
+205,Rocky-E,1,0.10%
+206,Boulder-E,0,0.00%
+207,Blaster-E,5,0.49%
+208,Crystallor-E,6,0.59%
+209,Magikarp-E,2,0.20%
+210,Gyarados-E,11,1.08%
+211,Shockfang,1,0.10%
+212,Electrocobra,3,0.30%
+213,Nightrex,1,0.10%
+214,Shadowsaur,5,0.49%
+215,Durfish-S,2,0.20%
+216,Dompster-S,8,0.79%
+217,Wormite-S,0,0.00%
+218,Wormbot-S,0,0.00%
+219,Wormatron-S,8,0.79%
+220,Cluuz-S,2,0.20%
+221,Zurrclu-S,2,0.20%
+222,Zurroaratr-S,5,0.49%
+223,Iglite-S,0,0.00%
+224,Blaxer-S,0,0.00%
+225,Pyrator-S,8,0.79%
+226,Ekans-S,2,0.20%
+227,Arbok-S,5,0.49%
+228,Soarwhell,0,0.00%
+229,Diftery,2,0.20%
+230,Vorsuitex,0,0.00%
+231,Kleinyeti,0,0.00%
+232,Triwandoliz,2,0.20%
+233,Relomidel,0,0.00%
+234,Relopamil,0,0.00%
+235,Dragowrath,0,0.00%
+236,Solaroxyous,0,0.00%
+237,Kissyfishy-D,0,0.00%
+238,Scraggy,1,0.10%
+239,Scrafty,0,0.00%
+240,Scraftagon,1,0.10%
+241,Glimmet,2,0.20%
+242,Glimmora,1,0.10%
+243,Abra,1,0.10%
+244,Kadabra,1,0.10%
+245,Alakazam,0,0.00%
+246,Flamigo,1,0.10%
+247,Sneasel,0,0.00%
+248,Weavile,0,0.00%
+249,Sneasel-H,1,0.10%
+250,Sneasler,0,0.00%
+251,Solosis,0,0.00%
+252,Duosion,0,0.00%
+253,Reuniclus,0,0.00%
+254,Solosis-X,3,0.30%
+255,Duosion-X,0,0.00%
+256,Reuniclus-X,0,0.00%
+257,Seviper,0,0.00%
+258,Hissimitar,0,0.00%
+259,Gulpin,0,0.00%
+260,Swalot,0,0.00%
+261,Gulpin-X,3,0.30%
+262,Swalot-X,0,0.00%
+263,Plasamp,0,0.00%
+264,Genieova,0,0.00%
+265,Elgyem,3,0.30%
+266,Beheeyem,0,0.00%
+267,Elgyem-E,0,0.00%
+268,Beheeyem-E,0,0.00%
+269,Caterpie,1,0.10%
+270,Metapod,0,0.00%
+271,Butterfree,0,0.00%
+272,Metapod-X,1,0.10%
+273,Butterfree-X,1,0.10%
+274,Bronzor,0,0.00%
+275,Bronzong,0,0.00%
+276,Bronzor-X,2,0.20%
+277,Bronzong-X,0,0.00%
+278,Capsakid,2,0.20%
+279,Scovillain,0,0.00%
+280,Despenero,0,0.00%
+281,Capsakid-S,0,0.00%
+282,Scovillain-S,0,0.00%
+283,Despenero-S,0,0.00%
+284,Cage Critter,0,0.00%
+285,Icy Serpent,0,0.00%
+286,Shocky Spire,0,0.00%
+287,Dust Sorcerer,0,0.00%
+288,Fever Dream,0,0.00%
+289,Dusk Skater,0,0.00%
+290,Necrozma,0,0.00%
+291,Necrozma-Ult,0,0.00%
+292,Azurill,0,0.00%
+293,Marill,0,0.00%
+294,Azumarill,0,0.00%
+295,Shroodle,1,0.10%
+296,Grafaiai,0,0.00%
+
+Total: 1016
