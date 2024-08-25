@@ -456,15 +456,31 @@ public abstract class AbstractUI {
 		
 		// Nature
 		x = startX;
-		x += gp.tileSize * 3;
 		y += gp.tileSize / 4;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		g2.setColor(Color.WHITE);
 		String nature = p.getNature() + " Nature";
-		g2.drawString(nature, getCenterAlignedTextX(nature, x), y);
+		g2.drawString(nature, x, y);
+		
+		// Met At
+		x += gp.tileSize * 3;
+		int metY = y;
+		if (p.metAt != null) {
+			int centerX = x + (int) (gp.tileSize * 1.25);
+			y -= gp.tileSize / 4;
+			g2.setFont(g2.getFont().deriveFont(22F));
+			String metAt = "Met at:";
+			String metAtLoc = p.metAt;
+			g2.drawString(metAt, getCenterAlignedTextX(metAt, centerX), y);
+			
+			y += gp.tileSize / 2;
+			g2.setFont(g2.getFont().deriveFont(20F));
+			g2.drawString(metAtLoc, getCenterAlignedTextX(metAtLoc, centerX), y);
+		}
 		
 		// Moves
 		x += gp.tileSize * 3;
+		y = metY;
 		y -= gp.tileSize * 3.5;
 		int moveWidth = gp.tileSize * 3;
 		int moveHeight = (int) (gp.tileSize * 0.75);
@@ -478,7 +494,8 @@ public abstract class AbstractUI {
 					g2.setColor(g2.getColor().darker());
 					g2.drawRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 				} else {
-					g2.setColor(m.move.mtype.getColor());
+					Color color = m.move == Move.HIDDEN_POWER ? p.determineHPType().getColor() : m.move.mtype.getColor();
+					g2.setColor(color);
 					g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 				}
 				g2.setColor(Color.BLACK);

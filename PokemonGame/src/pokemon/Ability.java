@@ -9,7 +9,7 @@ public enum Ability {
 	ANTICIPATION("Senses an opposing Pokemon's dangerous moves."),
 	INSOMNIA("Prevents the Pokemon from falling asleep."),
 	BATTLE_ARMOR("This Pokemon cannot be Critical hit."),
-	BLACK_HOLE("Restores HP if hit by a LIGHT, DARK, or GALACTIC move."),
+	BLACK_HOLE("Restores HP if hit by a LIGHT or GALACTIC move."),
 	BLAZE("Powers up FIRE moves in a pinch."),
 	BRAINWASH("Forces the opponent's stat changes to have an opposite effect while the user is active."),
 	CHLOROPHYLL("Boosts the Pokemon's Speed stat in SUNSHINE."),
@@ -19,6 +19,7 @@ public enum Ability {
 	COMPOUND_EYES("The Pokemon's accuracy is boosted."),
 	CONTRARY("Makes stat changes have an opposite effect."),
 	CORROSION("The Pokemon can hit STEEL Pokemon with POISON moves, and can always Poison the target regardless of typing."),
+	COSMIC_WARP("Twists the dimensions for 4 turns when the Pokemon enters the battle, reversing the speed order."),
 	DEFIANT("Boosts the Pokemon's Attack stat when its stats are lowered."),
 	DRIZZLE("The Pokemon makes it RAIN when it enters a battle."),
 	DRY_SKIN("Restores HP in RAIN or when hit by WATER moves, but reduces HP in SUN and is weaker to FIRE."),
@@ -86,6 +87,7 @@ public enum Ability {
 	RAIN_DISH("The Pokemon gradually regains HP in RAIN."),
 	RATTLED("DARK, GHOST, and BUG moves scare the Pokemon and boost its Speed stat."),
 	RECKLESS("Powers up moves that have recoil damage."),
+	REFORGE("Restores 1/16 HP at the end of each turn."),
 	REGENERATOR("Restores a little HP when withdrawn from battle."),
 	ROCK_HEAD("Prevents recoil damage."),
 	ROUGH_SKIN("Inflicts damage to the Pokemon on contact."),
@@ -97,6 +99,7 @@ public enum Ability {
 	SERENE_GRACE("Boosts the likelihood of additional effects occurring when attacking."),
 	SCALY_SKIN("Lowers the foe's Attack, and this Pokemon only takes damage from attacks."),
 	SCRAPPY("The Pokemon can hit GHOST Pokemon with NORMAL and FIGHTING moves; ignores Intimidate, Threatening and Terrify."),
+	SHADOW_TAG("This Pokemon steps on the opposing Pokemon's shadow to prevent it from escaping."),
 	SHARP_TAIL("Boosts the power of Tail-using moves."),
 	SHARPNESS("Boosts the power of Slicing moves."),
 	SHED_SKIN("The Pokemon may heal its own status conditions."),
@@ -144,7 +147,8 @@ public enum Ability {
 	WEAK_ARMOR("Physical attacks to the Pokemon lower its Defense stat but sharply raise its Speed stat."),
 	WONDER_GUARD("Only supereffective moves will hit."),
 	WONDER_SKIN("Makes status moves more likely to miss."),
-	NULL("No Ability.");
+	NULL("No Ability."),
+	;
 
 	Ability(String string) {
 		desc = string;

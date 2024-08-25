@@ -255,26 +255,26 @@
 87 |Duosion-X    |LIGHT   |null    |RADIANT           |PIXILATE          |MIRROR_ARMOR      |[60, 25, 60, 125, 65, 35]     |56.3  |100|
 88 |Reuniclus-X  |LIGHT   |null    |RADIANT           |PIXILATE          |MIRROR_ARMOR      |[70, 75, 55, 125, 70, 95]     |78.0  |50 |
 172|Seviper      |POISON  |null    |SHARP_TAIL        |MERCILESS         |SHED_SKIN         |[73, 100, 60, 100, 60, 65]    |115.7 |90 |
-173|Hissimitar   |POISON  |STEEL   |SHARP_TAIL        |MERCILESS         |TALENTED          |[10, 10, 10, 10, 10, 10]      |1.0   |100|
+173|Hissimitar   |POISON  |STEEL   |SHARP_TAIL        |MERCILESS         |TALENTED          |[10, 10, 10, 10, 10, 10]      |224.1 |45 |
 -6 |Gulpin       |POISON  |null    |STICKY_HOLD       |GOOEY             |SIMPLE            |[80, 43, 53, 43, 53, 40]      |22.7  |225|
 -7 |Swalot       |POISON  |null    |STICKY_HOLD       |GOOEY             |SIMPLE            |[120, 73, 83, 73, 83, 55]     |176.4 |75 |
 157|Gulpin-X     |GALACTIC|POISON  |BLACK_HOLE        |BLACK_HOLE        |BLACK_HOLE        |[75, 38, 63, 53, 58, 45]      |105.5 |200|
 158|Swalot-X     |GALACTIC|POISON  |BLACK_HOLE        |STICKY_HOLD       |SIMPLE            |[150, 39, 80, 93, 95, 40]     |999.9 |65 |
 221|Plasamp      |STEEL   |GALACTIC|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
 222|Genieova     |STEEL   |GALACTIC|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-184|Elgyem       |GALACTIC|null    |PARASOCIAL        |PARASOCIAL        |ANALYTIC          |[55, 55, 55, 85, 55, 30]      |19.8  |125|
-185|Beheeyem     |GALACTIC|null    |PARASOCIAL        |PARASOCIAL        |ANALYTIC          |[75, 75, 75, 125, 95, 40]     |76.1  |70 |
--12|Elgyem-E     |GALACTIC|ELECTRIC|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
--13|Beheeyem-E   |GALACTIC|ELECTRIC|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+184|Elgyem       |GALACTIC|null    |COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[55, 55, 55, 85, 55, 30]      |19.8  |125|
+185|Beheeyem     |GALACTIC|null    |COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[75, 75, 75, 125, 95, 40]     |76.1  |70 |
+-12|Elgyem-E     |GALACTIC|ELECTRIC|COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[75, 55, 55, 75, 45, 30]      |49.3  |125|
+-13|Beheeyem-E   |GALACTIC|ELECTRIC|COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[95, 85, 70, 130, 65, 40]     |145.9 |70 |
 23 |Caterpie     |BUG     |null    |SHIELD_DUST       |SHIELD_DUST       |SWARM             |[45, 30, 35, 20, 20, 45]      |6.4   |255|
 -1 |Metapod      |BUG     |null    |SHED_SKIN         |SHED_SKIN         |SWARM             |[50, 20, 55, 25, 25, 30]      |21.8  |120|
 -2 |Butterfree   |BUG     |FLYING  |COMPOUND_EYES     |COMPOUND_EYES     |TINTED_LENS       |[60, 45, 50, 95, 80, 70]      |70.5  |45 |
 24 |Metapod-X    |BUG     |MAGIC   |WONDER_SKIN       |MAGICAL           |MAGIC_BOUNCE      |[50, 20, 50, 30, 30, 25]      |26.2  |120|
 25 |Butterfree-X |BUG     |MAGIC   |MOSAIC_WINGS      |MAGICAL           |SERENE_GRACE      |[60, 20, 55, 105, 90, 75]     |101.1 |40 |
--8 |Bronzor      |STEEL   |PSYCHIC |LEVITATE          |UNWAVERING        |BATTLE_ARMOR      |[57, 24, 86, 24, 86, 23]      |81.6  |100|
--9 |Bronzong     |STEEL   |PSYCHIC |LEVITATE          |UNWAVERING        |BATTLE_ARMOR      |[67, 89, 116, 79, 116, 33]    |81.6  |100|
-113|Bronzor-X    |MAGIC   |null    |SCRAPPY           |UNBURDEN          |WONDER_SKIN       |[82, 115, 74, 75, 64, 90]     |81.6  |100|
-114|Bronzong-X   |MAGIC   |GHOST   |SCRAPPY           |UNBURDEN          |WONDER_SKIN       |[82, 115, 74, 75, 64, 90]     |81.6  |100|
+-8 |Bronzor      |STEEL   |PSYCHIC |LEVITATE          |UNWAVERING        |BATTLE_ARMOR      |[57, 24, 86, 24, 86, 23]      |133.4 |255|
+-9 |Bronzong     |STEEL   |PSYCHIC |LEVITATE          |UNWAVERING        |BATTLE_ARMOR      |[67, 89, 116, 79, 116, 33]    |412.3 |90 |
+113|Bronzor-X    |MAGIC   |null    |REFORGE           |WONDER_SKIN       |BATTLE_ARMOR      |[57, 14, 76, 44, 86, 23]      |104.7 |135|
+114|Bronzong-X   |MAGIC   |GHOST   |REFORGE           |SHADOW_TAG        |BATTLE_ARMOR      |[67, 99, 111, 79, 111, 33]    |428.2 |75 |
 98 |Capsakid     |GRASS   |null    |CHLOROPHYLL       |INSOMNIA          |MOODY             |[50, 62, 40, 62, 40, 50]      |6.6   |190|
 99 |Scovillain   |GRASS   |FIRE    |CHLOROPHYLL       |INSOMNIA          |MOODY             |[65, 108, 65, 108, 65, 75]    |33.1  |75 |
 100|Despenero    |GRASS   |FIRE    |CHLOROPHYLL       |SOLAR_POWER       |MOODY             |[89, 108, 75, 128, 75, 75]    |145.0 |40 |
