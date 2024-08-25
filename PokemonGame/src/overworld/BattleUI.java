@@ -65,6 +65,7 @@ public class BattleUI extends AbstractUI {
 	private int cooldownCounter = 0;
 	private Field field;
 	private boolean baton;
+	private boolean aura;
 	
 	public boolean cancellableParty;
 	public boolean showMoveSummary;
@@ -610,6 +611,7 @@ public class BattleUI extends AbstractUI {
 	    userHP = user.currentHP;
 	    maxUserHP = user.getStat(0);
 	    foeHP = foe.currentHP;
+	    aura = false;
 		
 		if (foe.trainerOwned() && staticID == -1) {
 			Pokemon.addSwapInTask(foe);
@@ -620,12 +622,14 @@ public class BattleUI extends AbstractUI {
 	    	for (int i = 0; i < 5; i++) {
 	    		foe.stat(foe, i, 1, new Pokemon(1, 1, false, false));
 	    	}
+	    	aura = true;
 	    }
 		if (staticID == 205 || staticID == 210 || staticID == 197 || staticID == 202) {
 			Pokemon.addTask(Task.TEXT, foe.nickname + " is surrounded by immense electricity!");
 	    	for (int i = 0; i < 5; i++) {
 	    		foe.stat(foe, i, 1, new Pokemon(1, 1, false, false));
 	    	}
+	    	aura = true;
 	    }
 	    Pokemon.addSwapInTask(user);
 	    Pokemon fasterInit = user.getFaster(foe, 0, 0);
@@ -962,7 +966,7 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void drawCatchWindow() {
-		if (foe.trainerOwned() && staticID < 0) return;
+		if (foe.trainerOwned() && (staticID < 0 || aura)) return;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		int x = gp.screenWidth - (gp.tileSize * 4);
 		int y = (int) (gp.screenHeight - (gp.tileSize * 5.5));
@@ -1036,8 +1040,9 @@ public class BattleUI extends AbstractUI {
 		        } else if (i != 0) {
 		            x += width + gp.tileSize;
 		        }
-
-		        g2.setColor(moves[i].move.mtype.getColor());
+		        
+		        Color color = moves[i].move == Move.HIDDEN_POWER ? user.determineHPType().getColor() : moves[i].move.mtype.getColor();
+		        g2.setColor(color);
 		        g2.fillRoundRect(x, y, width, height, 10, 10);
 		        g2.setColor(moves[i].getPPColor());
 		        String text = moves[i].move.toString();

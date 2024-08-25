@@ -1806,7 +1806,7 @@ public class UI extends AbstractUI{
 		int height = gp.tileSize * 10;
 		
 		if (!gp.player.p.flag[0][1]) height -= gp.tileSize;
-		if (!gp.player.p.flag[0][2]) height -= gp.tileSize;
+		if (!gp.player.p.flag[0][2]) height -= gp.tileSize * 2;
 		
 		if (subState == 0) drawSubWindow(x, y, width, height);
 		
@@ -1987,15 +1987,21 @@ public class UI extends AbstractUI{
 		}
 		
 		// Map
-		text = "Map";
-		textY += gp.tileSize;
-		g2.drawImage(setup("/menu/" + text.toLowerCase(), 2), textX - gp.tileSize, textY - gp.tileSize / 2, null);
-		g2.drawString(text, textX, textY);
+		if (gp.player.p.flag[0][2]) {
+			text = "Map";
+			textY += gp.tileSize;
+			g2.drawImage(setup("/menu/" + text.toLowerCase(), 2), textX - gp.tileSize, textY - gp.tileSize / 2, null);
+			g2.drawString(text, textX, textY);
+		}
 		if (menuNum == 5) {
-			g2.drawString(">", textX- (25 + gp.tileSize), textY);
-			if (gp.keyH.wPressed) {
-				gp.keyH.wPressed = false;
-				subState = 6;
+			if (gp.player.p.flag[0][2]) {
+				g2.drawString(">", textX- (25 + gp.tileSize), textY);
+				if (gp.keyH.wPressed) {
+					gp.keyH.wPressed = false;
+					subState = 6;
+				}
+			} else {
+				menuNum++;
 			}
 		}
 		

@@ -27,6 +27,7 @@ import javax.swing.SwingUtilities;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
+import entity.PlayerCharacter;
 import overworld.GamePanel;
 import pokemon.Bag.Entry;
 import pokemon.Pokemon.Task;
@@ -125,6 +126,8 @@ public class Player extends Trainer implements Serializable {
 	    p.clearVolatile();
 	    p.consumeItem(null);
 	    p.trainer = this;
+	    int parenthesisIndex = PlayerCharacter.currentMapName.indexOf('(');
+	    p.metAt = (parenthesisIndex == -1 || PlayerCharacter.currentMapName.contains("pt.")) ? PlayerCharacter.currentMapName.trim() : PlayerCharacter.currentMapName.substring(0, parenthesisIndex).trim();
 	    for (int i = 0; i < team.length; i++) {
 	        if (team[i] == null) {
 	            hasNull = true;

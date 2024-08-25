@@ -3494,13 +3494,30 @@ Type:
 Magic / None
 
 Ability:
-Scrappy / Unburden / (Wonder Skin)
+Reforge / Wonder Skin / (Battle Armor)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+57 HP / 14 Atk / 76 Def / 44 SpA / 86 SpD / 23 Spe / 300 BST
 
 Level Up:
-1 - Confusion
+1 - Rapid Spin
+1 - Magic Blast
+1 - Night Shade
+1 - Magic Reflect
+4 - Confuse Ray
+7 - Payback
+9 - Hypnosis
+11 - Magic Powder
+13 - Safeguard
+15 - Foresight
+17 - Elemental Sparkle
+19 - Swift
+21 - Hex
+23 - Stored Power
+25 - Iron Defense
+27 - Trick
+29 - Hocus Pocus
+31 - Sparkling Terrain
 
 Evolutions:
 Bronzor-X -> Bronzong-X (lv. 33)
@@ -3512,13 +3529,52 @@ Type:
 Magic / Ghost
 
 Ability:
-Scrappy / Unburden / (Wonder Skin)
+Reforge / Shadow Tag / (Battle Armor)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+67 HP / 99 Atk / 111 Def / 79 SpA / 111 SpD / 33 Spe / 500 BST
 
 Level Up:
-1 - Confusion
+1 - Sunny Day
+1 - Rain Dance
+1 - Body Press
+1 - Rapid Spin
+1 - Magic Blast
+1 - Astonish
+1 - Shadow Punch
+1 - Sparkle Strike
+1 - Sparkly Swirl
+1 - Night Shade
+1 - Magic Reflect
+4 - Confuse Ray
+7 - Payback
+9 - Hypnosis
+11 - Magic Powder
+13 - Safeguard
+15 - Foresight
+17 - Elemental Sparkle
+19 - Swift
+21 - Hex
+23 - Stored Power
+25 - Iron Defense
+27 - Trick
+29 - Hocus Pocus
+31 - Sparkling Terrain
+33 - Shadow Claw
+35 - Curse
+37 - Metal Sound
+39 - Trick Room
+41 - Shadow Ball
+43 - Magic Fang
+46 - Shadow Sneak
+49 - Magic Tomb
+51 - Take Over
+53 - Magic Crash
+55 - Phantom Force
+57 - Vanishing Act
+60 - Destiny Bond
+65 - Spectral Thief
+70 - Perish Song
 
 ===================
 #115 - Diggie                                                                                          [169]
@@ -5706,7 +5762,7 @@ Type:
 Galactic / None
 
 Ability:
-Parasocial / None / (Analytic)
+Cosmic Warp / Parasocial / (Analytic)
 
 Base Stats:
 55 HP / 55 Atk / 55 Def / 85 SpA / 55 SpD / 30 Spe / 335 BST
@@ -5736,7 +5792,7 @@ Type:
 Galactic / None
 
 Ability:
-Parasocial / None / (Analytic)
+Cosmic Warp / Parasocial / (Analytic)
 
 Base Stats:
 75 HP / 75 Atk / 75 Def / 125 SpA / 95 SpD / 40 Spe / 485 BST
@@ -8659,13 +8715,30 @@ Type:
 Galactic / Electric
 
 Ability:
-Scrappy / Unburden / (Talented)
+Cosmic Warp / Parasocial / (Analytic)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+75 HP / 55 Atk / 55 Def / 75 SpA / 45 SpD / 30 Spe / 335 BST
 
 Level Up:
-1 - Confusion
+1 - Shock Wave
+1 - Charge
+5 - Psywave
+9 - Cosmic Power
+11 - Electric Terrain
+13 - Comet Punch
+17 - Confuse Ray
+20 - Hypnosis
+22 - Trick Room
+24 - Charge Beam
+26 - Space Beam
+30 - Abduct
+32 - Parabolic Charge
+33 - Recover
+36 - Thunder Wave
+38 - Galaxy Blast
+40 - Radio Burst
+40 - Discharge
 
 Evolutions:
 Elgyem-E -> Beheeyem-E (lv. 42)
@@ -8677,13 +8750,39 @@ Type:
 Galactic / Electric
 
 Ability:
-Scrappy / Unburden / (Talented)
+Cosmic Warp / Parasocial / (Analytic)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+95 HP / 85 Atk / 70 Def / 130 SpA / 65 SpD / 40 Spe / 485 BST
 
 Level Up:
-1 - Confusion
+1 - Shock Wave
+1 - Charge
+5 - Psywave
+9 - Cosmic Power
+11 - Electric Terrain
+13 - Comet Punch
+17 - Confuse Ray
+20 - Hypnosis
+22 - Trick Room
+24 - Charge Beam
+26 - Space Beam
+30 - Abduct
+32 - Parabolic Charge
+33 - Recover
+36 - Thunder Wave
+38 - Galaxy Blast
+40 - Radio Burst
+40 - Discharge
+42 - Thunder Punch
+45 - Volt Switch
+48 - Star Storm
+50 - Thunderbolt
+52 - Dark Void
+55 - Zap Cannon
+60 - Core Enforcer
+65 - Black Hole Eclipse
+70 - Thunder
 
 ===================
 #014 - Flamehox-E                                                                                      [202]
@@ -9102,7 +9201,8 @@ Level Up:
 10 - Hypnosis
 13 - Safeguard
 17 - Gyro Ball
-20 - Hex
+19 - Rapid Spin
+21 - Hex
 23 - Stored Power
 25 - Iron Defense
 27 - Trick
@@ -9135,7 +9235,8 @@ Level Up:
 10 - Hypnosis
 13 - Safeguard
 17 - Gyro Ball
-20 - Hex
+19 - Rapid Spin
+21 - Hex
 23 - Stored Power
 25 - Iron Defense
 27 - Trick

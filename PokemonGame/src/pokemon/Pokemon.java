@@ -157,6 +157,8 @@ public class Pokemon implements Serializable {
 	private transient Image backSprite;
 	private transient BufferedImage miniSprite;
 	
+	public String metAt;
+	
 	public Pokemon(int i, int l, boolean o, boolean t) {
 		if (gp != null && gp.player.p.random) i = new Random().nextInt(MAX_POKEMON) + 1;
 		
@@ -1744,7 +1746,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB) ||
-					(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.DARK || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)) &&
+					(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)) &&
 					!(move.cat == 2 && acc > 100)) {
 				if (foeAbility == Ability.BLACK_HOLE && moveType == PType.GALACTIC && this.trainerOwned()) foe.spaceEat++;
 				if (foe.currentHP == foe.getStat(0)) {
@@ -4768,7 +4770,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if ((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB) ||
-				(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.DARK || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)) {
+				(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)) {
 			return 0;
 		}
 		
@@ -5242,6 +5244,11 @@ public class Pokemon implements Serializable {
 		} if (this.item == Item.LEFTOVERS) {
 			if (this.currentHP < this.getStat(0)) {
 				heal(getHPAmount(1.0/16), this.nickname + " restored a little HP using its Leftovers!");
+			}
+		} if (this.ability == Ability.REFORGE) {
+			if (this.currentHP < this.getStat(0)) {
+				addAbilityTask(this);
+				heal(getHPAmount(1.0/16), this.nickname + " restored a little HP!");
 			}
 		} if (this.item == Item.BLACK_SLUDGE) {
 			if (this.type1 == PType.POISON || this.type2 == PType.POISON) {
@@ -6422,6 +6429,9 @@ public class Pokemon implements Serializable {
 		} else if (this.ability == Ability.GRAVITATION) {
 			addAbilityTask(this);
 			field.setEffect(field.new FieldEffect(Effect.GRAVITY));
+		} else if (this.ability == Ability.COSMIC_WARP) {
+			addAbilityTask(this);
+			field.setEffect(field.new FieldEffect(Effect.TRICK_ROOM));
 		} else if (this.ability == Ability.INTIMIDATE || this.ability == Ability.SCALY_SKIN) {
 			addAbilityTask(this);
 			if (foe.ability == Ability.INNER_FOCUS || foe.ability == Ability.SCRAPPY || foe.ability == Ability.UNWAVERING) {
@@ -6448,7 +6458,8 @@ public class Pokemon implements Serializable {
 			}
 		} else if (this.ability == Ability.ILLUSION) {
 			addAbilityTask(this);
-			addTask(Task.TEXT, foe.nickname + " creates a terrifying illusion!");
+			addTask(Task.TEXT, this.nickname + " casts a terrifying illusion!");
+			this.illusion = true;
 		} else if (this.ability == Ability.PICKPOCKET) {
 			if (this.item == null && foe.item != null && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
 				addAbilityTask(this);
@@ -7215,6 +7226,7 @@ public class Pokemon implements Serializable {
 		}
 		if ((this.vStatuses.contains(Status.NO_SWITCH) || this.vStatuses.contains(Status.TRAPPED)) && this.item != Item.SHED_SHELL) return true;
 		if (foe.ability == Ability.ILLUSION && foe.illusion && this.type1 != PType.GHOST && this.type2 != PType.GHOST) return true;
+		if (foe.ability == Ability.SHADOW_TAG && this.type1 != PType.GHOST && this.type2 != PType.GHOST) return true;
 		return false;
 	}
 	
