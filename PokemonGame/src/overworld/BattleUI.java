@@ -458,7 +458,7 @@ public class BattleUI extends AbstractUI {
 		drawCalcWindow();
 		if (gp.keyH.aPressed) {
 			gp.keyH.aPressed = false;
-			Item.useCalc(user.getPlayer(), null);
+			Item.useCalc(user.getPlayer(), null, foe);
 		}
 		drawCatchWindow();
 		String dText = foe.trainerOwned() ? "Foe" : null;
@@ -937,7 +937,7 @@ public class BattleUI extends AbstractUI {
 		drawMoves();
 		if (gp.keyH.aPressed) {
 			gp.keyH.aPressed = false;
-			Item.useCalc(user.getPlayer(), null);
+			Item.useCalc(user.getPlayer(), null, foe);
 		}
 		if (gp.keyH.dPressed) {
 			gp.keyH.dPressed = false;

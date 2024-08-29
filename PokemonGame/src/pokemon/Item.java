@@ -120,10 +120,10 @@ public enum Item {
 	WISE_GLASSES(80,0,150,new Color(92, 105, 117),Item.HELD_ITEM,null,"This thick pair of glasses slightly boosts the power of the holder's special moves."),
 	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
 	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
-	FOCUS_SASH(81,0,500,new Color(232, 80, 80),Item.HELD_ITEM,null,"If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP�but only once."),
+	FOCUS_SASH(81,0,500,new Color(232, 80, 80),Item.HELD_ITEM,null,"If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP, but only once."),
 	AIR_BALLOON(82,0,300,new Color(232, 72, 72),Item.HELD_ITEM,null,"This balloon makes the holder float in the air. If the holder is hit with an attack, the balloon will burst."),
-	POWER_HERB(83,0,50,new Color(253, 80, 77),Item.HELD_ITEM,null,"A herb that allows the holder to immediately use a move that normally requires a turn to charge�but only once."),
-	WHITE_HERB(84,0,50,new Color(242, 242, 242),Item.HELD_ITEM,null,"A herb that will restore any lowered stat in battle�but only once."),
+	POWER_HERB(83,0,50,new Color(253, 80, 77),Item.HELD_ITEM,null,"A herb that allows the holder to immediately use a move that normally requires a turn to charge, but only once."),
+	WHITE_HERB(84,0,50,new Color(242, 242, 242),Item.HELD_ITEM,null,"A herb that will restore any lowered stat in battle, but only once."),
 	MENTAL_HERB(92,0,0,Color.BLACK,Item.HELD_ITEM,null,"An item to be held by a Pokemon. The holder shakes off move-binding effects to move freely. It can be used only once."),
 	WEAKNESS_POLICY(85,0,400,new Color(215, 233, 195),Item.HELD_ITEM,null,"If the holder is hit with a move it's weak to, this policy sharply boosts its Attack and Sp. Atk stats."),
 	BLUNDER_POLICY(86,0,400,new Color(239, 239, 178),Item.HELD_ITEM,null,"If the holder misses with a move due to low accuracy, this policy will sharply boost its Speed stat."),
@@ -297,7 +297,7 @@ public enum Item {
 	APICOT_BERRY(256,75,15,new Color(104, 128, 184),Item.BERRY,null,"If a Pokemon holds one of these Berries, its Sp. Def stat will be boosted should it find itself in a pinch."),
 	STARF_BERRY(257,500,200,new Color(184, 232, 152),Item.BERRY,null,"If a Pokemon holds one of these Berries, one of its stats will be sharply boosted should it find itself in a pinch."),
 	MICLE_BERRY(258,200,40,new Color(64, 200, 64),Item.BERRY,null,"If a Pokemon holds one of these Berries, its accuracy will be boosted should it find itself in a pinch."),
-	CUSTAP_BERRY(259,200,40,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to act faster in a pinch�but only for the next move."),
+	CUSTAP_BERRY(259,200,40,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to act faster in a pinch, but only for the next move."),
 	PACKAGE_A(260,0,0,Color.BLACK,Item.KEY_ITEM,null,"A large industrial juicer, designed to make berries into healthy juice quickly and effectively. Belongs to one Ms. Plum."),
 	PACKAGE_B(261,0,0,Color.BLACK,Item.KEY_ITEM,null,"Contains a new state of the art frying pan, meant for a master chef. It's said to be for a Guy Eddie."),
 	PACKAGE_C(262,0,0,Color.BLACK,Item.KEY_ITEM,null,"Inside is a bunch of dog toys, and the address says it's for a place called \"Poundtown\"."),
@@ -836,7 +836,7 @@ public enum Item {
 		return result;
 	}
 
-	public static void useCalc(Player p, Pokemon[] box) {
+	public static void useCalc(Player p, Pokemon[] box, Pokemon f) {
 		JPanel calc = new JPanel();
 	    calc.setLayout(new GridBagLayout());
 	    
@@ -908,7 +908,7 @@ public enum Item {
         
         JSpinner.DefaultEditor fEditor = (JSpinner.DefaultEditor)foeLevel.getEditor();
         JTextField fTextField = fEditor.getTextField();
-        fTextField.addFocusListener( new FocusAdapter() {
+        fTextField.addFocusListener(new FocusAdapter() {
             public void focusGained(final FocusEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
@@ -923,10 +923,24 @@ public enum Item {
         JLabel[] foeStatLabels = new JLabel[6];
         @SuppressWarnings("unchecked")
 		JComboBox<Integer>[] foeStages = new JComboBox[6];
+        JButton foeCurrentHP = new JButton();
+        JLabel foeHPP = new JLabel();
         JLabel foeSpeed = new JLabel();
         JGradientButton[] foeMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
         JLabel[] foeDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
         JCheckBox fCritCheck = new JCheckBox("Crit");
+        if (f != null && f.trainerOwned()) {
+        	Trainer tr = f.trainer;
+        	Pokemon add = f.clone();
+        	add.nickname = tr.getName();
+        	foeMons.addItem(add);
+        	for (Pokemon po : tr.getTeam()) {
+        		if (po == f) continue;
+        		add = po.clone();
+        		add.nickname = tr.getName();
+        		foeMons.addItem(add);
+        	}
+        }
         for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
         	foeMons.addItem(new Pokemon(k, 50, false, true));
         }
@@ -980,22 +994,6 @@ public enum Item {
         JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
         JComboBox<Item> foeItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
         
-        userItem.addActionListener(l -> {
-        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	userCurrent.item = (Item) userItem.getSelectedItem();
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
-        });
-        
-        foeItem.addActionListener(l -> {
-        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	foeCurrent.item = (Item) foeItem.getSelectedItem();
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
-        });
-        
         AutoCompleteDecorator.decorate(userItem);
         AutoCompleteDecorator.decorate(foeItem);
         
@@ -1004,59 +1002,14 @@ public enum Item {
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
             userLevel.setValue(userCurrent.getLevel());
             updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
+            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), fAbilityLabel, foeItem);
         });
         
         foeMons.addActionListener(l -> {
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
         	foeLevel.setValue(foeCurrent.getLevel());
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
-        });
-        
-        userLevel.addChangeListener(l ->{
-        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	try {
-        		int level = (int) userLevel.getValue();
-    			if (level >= 1 && level <= 100) {
-    				userCurrent.level = level;
-    			} else {
-    				userCurrent.level = 50;
-    			}
-    		} catch (NumberFormatException e1) {
-    			userCurrent.level = 50;
-    		}
-        	int oHP = userCurrent.getStat(0);
-        	userCurrent.setStats();
-        	int nHP = userCurrent.getStat(0);
-        	userCurrent.currentHP += nHP - oHP;
-        	userCurrent.verifyHP();
-        	
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
-        });
-        
-        foeLevel.addChangeListener(l ->{
-        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	try {
-        		int level = (int) foeLevel.getValue();
-    			if (level >= 1 && level <= 100) {
-    				foeCurrent.level = level;
-    			} else {
-    				foeCurrent.level = 50;
-    			}
-    		} catch (NumberFormatException e1) {
-    			foeCurrent.level = 50;
-    		}
-        	foeCurrent.setStats();
-        	foeCurrent.currentHP = foeCurrent.getStat(0);
-        	foeCurrent.verifyHP();
-        	if (!foeCurrent.toString().contains("(")) foeCurrent.setMoves();
-        	
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), fAbilityLabel, foeItem);
         	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
         });
         
@@ -1112,7 +1065,7 @@ public enum Item {
         			int amt = (int) userStages[index].getSelectedItem();
         			current.statStages[index - 1] = amt;
         			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
-        			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
+        			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), fAbilityLabel, foeItem);
         			if (index == 5) userSpeed.setText((current.getSpeed()) + "");
         		});
         		statsPanel.add(userStages[i]);
@@ -1141,7 +1094,8 @@ public enum Item {
         	JLabel blank = new JLabel("");
         	fStatsPanel.add(foeStatLabels[i]);
         	if (i == 0) {
-        		fStatsPanel.add(new JButton());
+        		foeCurrentHP.setText(foeC.currentHP + "");
+        		fStatsPanel.add(foeCurrentHP);
         	} else {
         		int index = i;
         		foeStages[i].addActionListener(e -> {
@@ -1149,14 +1103,18 @@ public enum Item {
         			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         			int amt = (int) foeStages[index].getSelectedItem();
         			current.statStages[index - 1] = amt;
-        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), abilityLabel, foeItem);
+        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), abilityLabel, foeItem);
         			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), fAbilityLabel, userItem);
         			if (index == 5) foeSpeed.setText((current.getSpeed()) + "");
         		});
         		fStatsPanel.add(foeStages[i]);
         	}
         	
-        	if (i == 5) {
+        	if (i == 0) {
+        		double percent = foeC.currentHP * 100.0 / foeC.getStat(0);
+        		foeHPP.setText(String.format("%.1f", percent) + "%");
+        		fStatsPanel.add(foeHPP);
+        	} else if (i == 5) {
         		foeSpeed.setText((foeC.getSpeed()) + "");
         		fStatsPanel.add(foeSpeed);
         	} else {
@@ -1169,7 +1127,68 @@ public enum Item {
         updateMoves(userC, userMoves, userDamage, foeC, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
         
         foeLevel.setValue(foeC.getLevel());
-        updateMoves(foeC, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
+        updateMoves(foeC, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), fAbilityLabel, foeItem);
+        
+        userLevel.addChangeListener(l ->{
+        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+        	try {
+        		int level = (int) userLevel.getValue();
+    			if (level >= 1 && level <= 100) {
+    				userCurrent.level = level;
+    			} else {
+    				userCurrent.level = 50;
+    			}
+    		} catch (NumberFormatException e1) {
+    			userCurrent.level = 50;
+    		}
+        	int oHP = userCurrent.getStat(0);
+        	userCurrent.setStats();
+        	int nHP = userCurrent.getStat(0);
+        	userCurrent.currentHP += nHP - oHP;
+        	userCurrent.verifyHP();
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), fAbilityLabel, foeItem);
+        });
+        
+        foeLevel.addChangeListener(l ->{
+        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+        	try {
+        		int level = (int) foeLevel.getValue();
+    			if (level >= 1 && level <= 100) {
+    				foeCurrent.level = level;
+    			} else {
+    				foeCurrent.level = 50;
+    			}
+    		} catch (NumberFormatException e1) {
+    			foeCurrent.level = 50;
+    		}
+        	int oHP = foeCurrent.getStat(0);
+        	foeCurrent.setStats();
+        	int nHP = foeCurrent.getStat(0);
+        	foeCurrent.currentHP += nHP - oHP;
+        	foeCurrent.verifyHP();
+        	if (!foeCurrent.toString().contains("(")) foeCurrent.setMoves();
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), fAbilityLabel, foeItem);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
+        });
+        
+        userItem.addActionListener(l -> {
+        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+        	userCurrent.item = (Item) userItem.getSelectedItem();
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
+            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), fAbilityLabel, foeItem);
+        });
+        
+        foeItem.addActionListener(l -> {
+        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+        	foeCurrent.item = (Item) foeItem.getSelectedItem();
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), fAbilityLabel, foeItem);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), abilityLabel, userItem);
+        });
         
         calc.add(statsPanel, gbc);
         gbc.gridx++;
@@ -1221,7 +1240,7 @@ public enum Item {
         fCritCheck.addActionListener(e -> {
         	Pokemon current = ((Pokemon) userMons.getSelectedItem());
 			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
+			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), fAbilityLabel, foeItem);
         });
         
         JPanel resetButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -1245,7 +1264,7 @@ public enum Item {
         	Pokemon uCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon fCurrent = ((Pokemon) foeMons.getSelectedItem());
         	fCurrent.setMoves();
-        	updateMoves(fCurrent, foeMoves, foeDamage, uCurrent, foeStatLabels, foeStages, foeSpeed, null, null, fCritCheck.isSelected(), fAbilityLabel, foeItem);
+        	updateMoves(fCurrent, foeMoves, foeDamage, uCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), fAbilityLabel, foeItem);
         });
         fResetButtonPanel.add(fResetButton);
         fResetButtonPanel.add(fCritCheck);

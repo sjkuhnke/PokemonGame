@@ -540,7 +540,7 @@ public class KeyHandler implements KeyListener {
 			if (ctrlPressed) {
 				ctrlPressed = false;
 				Pokemon[] cBox = gp.ui.gauntlet ? gp.player.p.gauntletBox : gp.player.p.boxes[gp.player.p.currentBox];
-				Item.useCalc(gp.player.p, cBox);
+				Item.useCalc(gp.player.p, cBox, null);
 			} else {
 				aPressed = true;
 			}

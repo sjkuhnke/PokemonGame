@@ -781,7 +781,8 @@ public abstract class AbstractUI {
 		}
 		if (m != null) {
 			x += gp.tileSize * 11 / 6;
-			g2.setColor(m.mtype.getColor());
+			Color color = m == Move.HIDDEN_POWER ? p.determineHPType().getColor() : m.mtype.getColor();
+			g2.setColor(color);
 			g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 			g2.setColor(Color.BLACK);
 	        String text = m.toString();
