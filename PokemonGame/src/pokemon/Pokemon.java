@@ -1142,7 +1142,7 @@ public class Pokemon implements Serializable {
 		} else if (id == 267 && level >= 42) {
             result = new Pokemon(id + 1, this);
 		} else if (id == 269 && level >= 7) {
-            result = new Pokemon(id + 1, this);
+            result = new Pokemon(272, this);
 		} else if (id == 270 && level >= 10) {
             result = new Pokemon(id + 1, this);
 		} else if (id == 272 && level >= 10) {
@@ -4810,7 +4810,7 @@ public class Pokemon implements Serializable {
 			bp = determineBasePower(foe, move, first, null, false);
 		}
 		
-		if (mode == 0 && (move == Move.KNOCK_OFF || ((move == Move.COVET || move == Move.THIEF) && this.item == null)) && foe.item != null && checkSecondary(new Random().nextInt(25))) bp *= 2;
+		if (mode == 0 && (move == Move.KNOCK_OFF || ((move == Move.COVET || move == Move.THIEF) && this.item == null)) && foe.item != null && checkSecondary(new Random().nextInt(33))) bp *= 2;
 		
 		if (moveType == PType.FIRE && this.vStatuses.contains(Status.FLASH_FIRE)) bp *= 1.5;
 		
@@ -6431,7 +6431,9 @@ public class Pokemon implements Serializable {
 			field.setEffect(field.new FieldEffect(Effect.GRAVITY));
 		} else if (this.ability == Ability.COSMIC_WARP) {
 			addAbilityTask(this);
-			field.setEffect(field.new FieldEffect(Effect.TRICK_ROOM));
+			FieldEffect effect = field.new FieldEffect(Effect.TRICK_ROOM);
+			effect.turns = 4;
+			field.setEffect(effect);
 		} else if (this.ability == Ability.INTIMIDATE || this.ability == Ability.SCALY_SKIN) {
 			addAbilityTask(this);
 			if (foe.ability == Ability.INNER_FOCUS || foe.ability == Ability.SCRAPPY || foe.ability == Ability.UNWAVERING) {
@@ -7538,46 +7540,52 @@ public class Pokemon implements Serializable {
 	}    
 	
 	public static void readInfoFromCSV() {
-        Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/pokemon.csv"));
-        for (int i = 0; i < MAX_POKEMON; i++) {
-        	String line = scanner.nextLine();
-        	String[] tokens = line.split("\\|");
-        	dexNos[i] = Integer.parseInt(tokens[0].trim());
-        	names[i] = tokens[1].trim();
-        	types[i][0] = PType.valueOf(tokens[2].trim());
-        	types[i][1] = tokens[3].trim().equals("null") ? null : PType.valueOf(tokens[3].trim());
-        	abilities[i][0] = Ability.valueOf(tokens[4].trim());
-        	abilities[i][1] = Ability.valueOf(tokens[5].trim());
-        	abilities[i][2] = Ability.valueOf(tokens[6].trim());
-        	String[] baseStatsStr = tokens[7].trim().replaceAll("\\[|\\]", "").split(", ");
-        	for (int j = 0; j < 6; j++) {
-                base_stats[i][j] = Integer.parseInt(baseStatsStr[j]);
-            }
-        	weights[i] = Double.parseDouble(tokens[8].trim());
-        	catch_rates[i] = Integer.parseInt(tokens[9].trim());
-        }
+        try (Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/pokemon.csv"))) {
+			for (int i = 0; i < MAX_POKEMON; i++) {
+				String line = scanner.nextLine();
+				String[] tokens = line.split("\\|");
+				dexNos[i] = Integer.parseInt(tokens[0].trim());
+				names[i] = tokens[1].trim();
+				types[i][0] = PType.valueOf(tokens[2].trim());
+				types[i][1] = tokens[3].trim().equals("null") ? null : PType.valueOf(tokens[3].trim());
+				abilities[i][0] = Ability.valueOf(tokens[4].trim());
+				abilities[i][1] = Ability.valueOf(tokens[5].trim());
+				abilities[i][2] = Ability.valueOf(tokens[6].trim());
+				String[] baseStatsStr = tokens[7].trim().replaceAll("\\[|\\]", "").split(", ");
+				for (int j = 0; j < 6; j++) {
+			        base_stats[i][j] = Integer.parseInt(baseStatsStr[j]);
+			    }
+				weights[i] = Double.parseDouble(tokens[8].trim());
+				catch_rates[i] = Integer.parseInt(tokens[9].trim());
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
     }
 	
 	public static void readMovebanksFromCSV() {
-		Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/movebank.csv"));
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine();
-			if (line.length() > 0 && line.charAt(0) == '=') {
-				line = scanner.nextLine();
-				int id = Integer.parseInt(line);
-				scanner.nextLine();
-				while (scanner.hasNextLine()) {
+		try (Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/movebank.csv"))) {
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				if (line.length() > 0 && line.charAt(0) == '=') {
 					line = scanner.nextLine();
-					if (!line.isEmpty() && Character.isDigit(line.charAt(0))) {
-						String[] moveLine = line.split("\\|");
-						int level = Integer.parseInt(moveLine[0].trim());
-						Move move = Move.valueOf(moveLine[1]);
-						setupNode(id, level, move);
-					} else {
-						break;
+					int id = Integer.parseInt(line);
+					scanner.nextLine();
+					while (scanner.hasNextLine()) {
+						line = scanner.nextLine();
+						if (!line.isEmpty() && Character.isDigit(line.charAt(0))) {
+							String[] moveLine = line.split("\\|");
+							int level = Integer.parseInt(moveLine[0].trim());
+							Move move = Move.valueOf(moveLine[1]);
+							setupNode(id, level, move);
+						} else {
+							break;
+						}
 					}
 				}
 			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -7744,50 +7752,54 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void readEntiresFromCSV() {
-        Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/entries.csv"));
-        for (int i = 0; i < MAX_POKEMON; i++) {
-        	try {
-        		String line = scanner.nextLine();
-            	entries[i] = line.replace("#", getName(i + 1));
-        	} catch (NoSuchElementException e) {
-        		System.out.println(i);
-        		e.printStackTrace();
-        	}
-        }
+        try (Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/entries.csv"))) {
+			for (int i = 0; i < MAX_POKEMON; i++) {
+				try {
+					String line = scanner.nextLine();
+			    	entries[i] = line.replace("#", getName(i + 1));
+				} catch (NoSuchElementException e) {
+					System.out.println(i);
+					e.printStackTrace();
+				}
+			}
+		}
     }
 	
 	public static void readEncountersFromCSV() {
-		Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/encounters.csv"));
-		String currentKey = null;
-		ArrayList<Encounter> currentList = null;
-		
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine().trim();
-			if (line.length() > 0 && line.contains("|")) {
-				if (currentKey != null && currentList != null) {
-					Encounter.encounters.put(currentKey, currentList);
+		try (Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/encounters.csv"))) {
+			String currentKey = null;
+			ArrayList<Encounter> currentList = null;
+			
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine().trim();
+				if (line.length() > 0 && line.contains("|")) {
+					if (currentKey != null && currentList != null) {
+						Encounter.encounters.put(currentKey, currentList);
+					}
+					currentKey = line;
+					currentList = new ArrayList<>();
+				} else if (line.length() > 0 && Character.isDigit(line.charAt(0))) {
+					String[] parts = line.split("\\[");
+					int id = Integer.parseInt(parts[0].trim());
+					String[] rest = parts[1].split("\\]");
+					String[] levels = rest[0].split(",");
+					
+					int minLevel = Integer.parseInt(levels[0].trim());
+					int maxLevel = Integer.parseInt(levels[1].trim());
+					int chance = Integer.parseInt(rest[1].replace("%", "").trim());
+					double c = chance * 1.0 / 100;
+					
+					currentList.add(new Encounter(id, minLevel, maxLevel, c));
+				} else if (line.startsWith("=")) {
+					continue;
 				}
-				currentKey = line;
-				currentList = new ArrayList<>();
-			} else if (line.length() > 0 && Character.isDigit(line.charAt(0))) {
-				String[] parts = line.split("\\[");
-				int id = Integer.parseInt(parts[0].trim());
-				String[] rest = parts[1].split("\\]");
-				String[] levels = rest[0].split(",");
-				
-				int minLevel = Integer.parseInt(levels[0].trim());
-				int maxLevel = Integer.parseInt(levels[1].trim());
-				int chance = Integer.parseInt(rest[1].replace("%", "").trim());
-				double c = chance * 1.0 / 100;
-				
-				currentList.add(new Encounter(id, minLevel, maxLevel, c));
-			} else if (line.startsWith("=")) {
-				continue;
 			}
-		}
-		
-		if (currentKey != null && currentList != null) {
-			Encounter.encounters.put(currentKey, currentList);
+			
+			if (currentKey != null && currentList != null) {
+				Encounter.encounters.put(currentKey, currentList);
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
 		}
 	}
 	

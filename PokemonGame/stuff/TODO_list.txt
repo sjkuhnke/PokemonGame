@@ -26,6 +26,9 @@ Make Dark resist Magic and Fighting no longer resist magic? (Would also make Gal
 Make Bipedice Ice/Ground (not Ground/Ice) and redo moveset
 Kissyfishy making out as a Ying-Yang thing
 
+Calc
+Get rid of enter press on level spinner, just make it an action listener
+
 Make Galactic resist Dark
 Make Galactic weak to Dragon
 Make Magic weak to Dark

@@ -399,7 +399,7 @@ public class PlayerCharacter extends Entity {
 		if (keyH.aPressed) {
 			if (keyH.ctrlPressed) {
 				keyH.ctrlPressed = false;
-				Item.useCalc(p, null);
+				Item.useCalc(p, null, null);
 			} else {
 				if (p.fish) {
 					int result = gp.cChecker.checkTileType(this);
@@ -780,7 +780,7 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.TEXT, "In the meantime, can we chat for a bit about what I do here?");
 				Pokemon.addTask(Task.TEXT, "I have this research post out here in the sticks because of the close proximity to Electric Tunnel, the birthplace of another type of Pokemon.");
 				Pokemon.addTask(Task.TEXT, "They're the Electric forms, and I've seen a lot of them migrating to Sicab City to feast on the power.");
-				Pokemon.addTask(Task.TEXT, "I suspect the outage has been caused by them finishing off all of the energy there, causing the outage.");
+				Pokemon.addTask(Task.TEXT, "I suspect the power issues have been caused by them finishing off all of the energy there, causing the outage.");
 				Pokemon.addTask(Task.TEXT, "When we head back to try and fix it, I figure we'll probably run into some Electric forms there.");
 				Pokemon.addTask(Task.TEXT, "Thankfully, your dad told me to work on an extension to record all of the new forms, and I'd like to give it to you to help me document them.");
 				Pokemon.addTask(Task.TEXT, "So, without further ado, here's an update to your Neodex!");
@@ -788,7 +788,7 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.TEXT, "There, I added an 'Electric Pokedex' section. That way you can be prepared to take note of any new forms you see there!");
 				Pokemon.addTask(Task.TEXT, "...");
 				Pokemon.addTask(Task.TEXT, "Okay! I believe I have enough auxillary power here to open the door of the Control Center for a bit.");
-				Pokemon.addTask(Task.TEXT, "However, I don't think we have enough time to get back there on foot. But, who says you need to walk?");
+				Pokemon.addTask(Task.TEXT, "However, I don't think you have enough time to get back there on foot. But, who says you need to walk?");
 				Pokemon.addTask(Task.TEXT, "Here's a high-tech invention I've made so you can warp back! Let me upgrade your map real quick to integerate the tech.");
 				Pokemon.addTask(Task.TEXT, "...");
 				Pokemon.addTask(Task.TEXT, "Now you can teleport instantly to any town you've already been! Use it to get back to the city in time, and the doors to the center should be open.");
@@ -842,7 +842,7 @@ public class PlayerCharacter extends Entity {
 					Pokemon.addTask(Task.TEXT, "Not... strong... enough...");
 				} else if (p.flag[1][11] && !p.flag[1][12]) {
 					Pokemon.addTask(Task.TEXT, "None of my usual tricks were getting to it, and I was on the ropes... So thanks for the hand...");
-					Pokemon.addTask(Task.TEXT, "Anyways, I think now that you deal with... whatever Electric Pok�mon that was... that the fuse box is working. Try turning it on real quick, my head is buzzing...");
+					Pokemon.addTask(Task.TEXT, "Anyways, I think now that you deal with... whatever Electric Pokemon that was... that the fuse box is working. Try turning it on real quick, my head is buzzing...");
 				} else if (p.flag[1][12] && !p.flag[1][13]) {
 					p.flag[1][13] = true;
 					Pokemon.addTask(Task.TEXT, "None of my usual tricks were getting to it, and I was on the ropes... So thanks for the hand...");

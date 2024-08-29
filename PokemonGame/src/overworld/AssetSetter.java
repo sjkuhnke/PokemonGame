@@ -952,7 +952,7 @@ public class AssetSetter {
 		
 		mapNum = 18;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 53, 35, "Can't... keep... fighting", true);
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 53, 35, "Can't... keep... fighting...", true);
 		gp.npc[mapNum][index++] = null;
 		gp.npc[mapNum][index] = SetupStaticEncounter(202, 53, 34, 368, 43);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 45, 38, 146);
@@ -2428,7 +2428,7 @@ public class AssetSetter {
 		
 		if (flag[1][11]) {
 			gp.npc[18][0] = null;
-			if (!flag[1][13]) gp.npc[18][1] = NPCSetup(SCOTT_UP, 54, 40, "Oh, talk about a stroke of luck! Thank goodness you showed up, that thing was really strong�", true);
+			if (!flag[1][13]) gp.npc[18][1] = NPCSetup(SCOTT_UP, 54, 40, "Oh, talk about a stroke of luck! Thank goodness you showed up, that thing was really strong.", true);
 			gp.npc[18][2] = null;
 		}
 		if (flag[1][13]) {

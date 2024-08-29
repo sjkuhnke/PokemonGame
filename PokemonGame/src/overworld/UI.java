@@ -2189,7 +2189,7 @@ public class UI extends AbstractUI{
 				    }
 					bagState = 0;
 				} else if (currentItem == Item.CALCULATOR) {
-					Item.useCalc(gp.player.p, null);
+					Item.useCalc(gp.player.p, null, null);
 				} else if (currentItem == Item.DEX_NAV) {
 					encounters = Encounter.getAllEncounters();
 					gp.gameState = GamePanel.DEX_NAV_STATE;

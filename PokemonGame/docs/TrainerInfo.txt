@@ -44,10 +44,10 @@ Trainer TN Grunt            Elgyem Lv. 10, Gulpin-X Lv. 10, Nincada Lv. 10, Ekan
 
 Route 36------------------------------------------
 
-Trainer CR                  Kirlia Lv. 18, Lombre Lv. 19 @ (Twisted Spoon, Expert Belt)
-Trainer CS                  Charjabug Lv. 20 @ (Occa Berry)
-Trainer CT                  Spheal Lv. 20 @ (Sitrus Berry)
-Trainer CU                  Swordik Lv. 20 @ (Focus Sash)
+Trainer CR                  Kirlia Lv. 18, Flashclaw Lv. 18, Lombre Lv. 19 @ (Twisted Spoon, Red Card, Expert Belt)
+Trainer CS                  Grubbin Lv. 25, Charjabug Lv. 20 @ (Custap Berry, Occa Berry)
+Trainer CT                  Binacle Lv. 19, Spheal Lv. 20 @ (Scope Lens, Sitrus Berry)
+Trainer CU                  Bugik Lv. 24, Swordik Lv. 20 @ (Focus Sash, Focus Sash)
 
 Warehouse-----------------------------------------
 
@@ -132,26 +132,26 @@ Route 45------------------------------------------
 
 Trainer Research A          Busheep Lv. 20, Roselia Lv. 21, Capsakid Lv. 21 @ (Pecha Berry, Coba Berry, Focus Sash)
 Trainer Research C          Sparkitten Lv. 21, Solosis-X Lv. 22, Bluebunn Lv. 21 @ (Choice Specs, Assault Vest, Rindo Berry)
-Trainer Research D          Butterfree-X Lv. 21, Minishoo Lv. 21, Bronzor-X Lv. 22 @ (Kebia Berry, Sitrus Berry, Chilan Berry)
+Trainer Research D          Butterfree-X Lv. 21, Minishoo Lv. 21, Bronzor-X Lv. 22 @ (Kebia Berry, Sitrus Berry, Leftovers)
 Trainer Research B          Kadabra Lv. 20, Florline Lv. 21, Kirlia Lv. 22 @ (Focus Sash, Tanga Berry, Bright Powder)
 Trainer Research E          Gulpin-X Lv. 23, Elgyem Lv. 23, Staryu Lv. 22 @ (Leftovers, Big Root, Coba Berry)
 Trainer Research F          Sneasel-H Lv. 22, Glimmet Lv. 22, Scraggy Lv. 22, Sapwin Lv. 22, Tricerpup Lv. 22, Flamigo Lv. 23 @ (None, Focus Sash, Toxic Orb, Assault Vest, Rocky Helmet, Rawst Berry)
 
 Energy Plant (pt. 1)------------------------------
 
-Trainer EP-AE               Whiskie Lv. 22, Vupp Lv. 22, Magie Lv. 22 @ (Focus Band, Focus Band, Focus Band)
-Trainer EP-AA               Droid-E Lv. 22, Inkay Lv. 22 @ (Scope Lens, Roseli Berry)
-Trainer EP-AB               Charjabug Lv. 22, Pebblepup Lv. 22, Durfish Lv. 22 @ (Rawst Berry, Loaded Dice, Rindo Berry)
-Trainer EP-AC               Elelamb Lv. 22, Fightorex Lv. 22 @ (Rindo Berry, Rindo Berry)
-Trainer EP-AD               Droid Lv. 22, Elgyem-E Lv. 22 @ (Metal Coat, None)
+Trainer EP-AE               Whiskie Lv. 24, Vupp Lv. 24, Magie Lv. 24 @ (Focus Band, Focus Band, Focus Band)
+Trainer EP-AA               Droid-E Lv. 23, Inkay Lv. 24 @ (Scope Lens, Roseli Berry)
+Trainer EP-AB               Charjabug Lv. 22, Pebblepup Lv. 23, Durfish Lv. 23 @ (Rawst Berry, Loaded Dice, Rindo Berry)
+Trainer EP-AC               Elelamb Lv. 23, Fightorex Lv. 23 @ (Assault Vest, Expert Belt)
+Trainer EP-AD               Droid Lv. 23, Elgyem-E Lv. 23 @ (Metal Coat, Red Card)
 Trainer Rocky-E             Rocky-E Lv. 22 @ (Magnet)
 
 Energy Plant (pt. 2)------------------------------
 
 Trainer EP-BA               Gyarados Lv. 22, Gyarados Lv. 22 @ (Cheri Berry, Rawst Berry)
-Trainer EP-BB               Otterpor Lv. 22, Azumarill Lv. 22, Durfish Lv. 22 @ (Wacan Berry, Sitrus Berry, Expert Belt)
-Trainer EP-BC               Staryu Lv. 23, Starmie Lv. 22 @ (Coba Berry, None)
-Trainer EP-BD               Shomp Lv. 22 @ (Mysticola Berry)
+Trainer EP-BB               Otterpor Lv. 23, Azumarill Lv. 22, Durfish Lv. 23 @ (Wacan Berry, Sitrus Berry, Expert Belt)
+Trainer EP-BC               Staryu Lv. 24, Starmie Lv. 22 @ (Coba Berry, None)
+Trainer EP-BD               Shomp Lv. 23 @ (Mysticola Berry)
 Trainer EP-BE               Walrein Lv. 45, Hootowl Lv. 44, Frosmoth Lv. 45 @ (Icy Rock, Bright Powder, Occa Berry)
 Trainer EP-BF               Wattwo Lv. 66, Thunderzap Lv. 65, Glittleshoo Lv. 65 @ (Eviolite, Wide Lens, Chilan Berry)
 Trainer EP-BG               Fireblion Lv. 66, Houndoom Lv. 67, Blastflames-E Lv. 65, Blastflames Lv. 65, Magron Lv. 66 @ (Heat Rock, Blunder Policy, Passho Berry, Rocky Helmet, Red Card)
@@ -159,39 +159,39 @@ Trainer Poof-E              Poof-E Lv. 22 @ (Oran Berry)
 
 Sicab Office (1A)---------------------------------
 
-Trainer TN O1               Centatle Lv. 22, Wormbot-S Lv. 22 @ (Poison Barb, Power Herb)
-Trainer TN O2               Bugop Lv. 22, Sneasel Lv. 22 @ (Lum Berry, Muscle Band)
-Trainer TN O3               Blaxer Lv. 22, Capsakid-S Lv. 22 @ (Galaxeed Berry, Loaded Dice)
-Trainer TN O4               Houndour Lv. 22, Blaxer-S Lv. 22 @ (Salac Berry, Flame Orb)
-Trainer TN O5               Carinx Lv. 22, Ali Lv. 21 @ (White Herb, Rawst Berry)
-Trainer TN O6               Inkay Lv. 22, Shomp Lv. 21 @ (Life Orb, Persim Berry)
+Trainer TN O1               Centatle Lv. 23, Wormbot-S Lv. 23 @ (Poison Barb, Power Herb)
+Trainer TN O2               Bugop Lv. 23, Sneasel Lv. 23 @ (Lum Berry, Muscle Band)
+Trainer TN O3               Blaxer Lv. 23, Capsakid-S Lv. 23 @ (Galaxeed Berry, Loaded Dice)
+Trainer TN O4               Houndour Lv. 23, Blaxer-S Lv. 23 @ (Salac Berry, Flame Orb)
+Trainer TN O5               Carinx Lv. 24, Ali Lv. 22 @ (White Herb, Rawst Berry)
+Trainer TN O6               Inkay Lv. 24, Shomp Lv. 22 @ (Life Orb, Persim Berry)
 
 Sicab Office (2A)---------------------------------
 
 Trainer Flamehox-E          Flamehox-E Lv. 22 @ (Expert Belt)
-Trainer O3                  Glittleshoo Lv. 28, Dragee Lv. 29, Shomp Lv. 28 @ (Chilan Berry, Babiri Berry, Haban Berry)
+Trainer O3                  Glittleshoo Lv. 30, Dragee Lv. 31, Shomp Lv. 30 @ (Chilan Berry, Babiri Berry, Haban Berry)
 
 Sicab City----------------------------------------
 
-Trainer 2 Gym A             Flameruff Lv. 23, Hammo Lv. 23 @ (Passho Berry, Rawst Berry)
-Trainer 2 Gym B             Shroodle Lv. 23, Hammo Lv. 23 @ (None, Muscle Band)
-Trainer 2 Gym C             Pigonat Lv. 23, Azumarill Lv. 23 @ (Cheri Berry, Mystic Water)
-Trainer 2 Gym D             Magie Lv. 23, Pigonat Lv. 23 @ (Rocky Helmet, Charti Berry)
-Trainer 2 Gym E             Dualbear Lv. 24 @ (Chilan Berry)
-Trainer 2 Gym F             Dualbear Lv. 24 @ (Silk Scarf)
-Trainer 2 Gym G             Sheabear Lv. 24, Sheabear Lv. 25 @ (Oran Berry, None)
-Trainer 2 Gym H             Sheabear Lv. 24, Sheabear Lv. 25 @ (None, Sitrus Berry)
-Trainer 2 Gym I             Zorua Lv. 24, Hammo Lv. 24 @ (Mysticola Berry, Weakness Policy)
-Trainer 2 Gym J             Shroodle Lv. 25, Pigonat Lv. 24 @ (Sitrus Berry, Sharp Beak)
-Trainer 2 Gym Leader 1      Hammo Lv. 26, Zorua Lv. 26, Flameruff Lv. 26, Azumarill Lv. 26, Tigrette Lv. 26, Dualbear Lv. 27
+Trainer 2 Gym A             Flameruff Lv. 25, Hammo Lv. 25 @ (Passho Berry, Rawst Berry)
+Trainer 2 Gym B             Shroodle Lv. 23, Hammo Lv. 25 @ (None, Muscle Band)
+Trainer 2 Gym C             Pigonat Lv. 25, Azumarill Lv. 25 @ (Cheri Berry, Mystic Water)
+Trainer 2 Gym D             Magie Lv. 25, Pigonat Lv. 25 @ (Rocky Helmet, Charti Berry)
+Trainer 2 Gym E             Dualbear Lv. 26 @ (Chilan Berry)
+Trainer 2 Gym F             Dualbear Lv. 26 @ (Silk Scarf)
+Trainer 2 Gym G             Sheabear Lv. 26, Sheabear Lv. 27 @ (Oran Berry, None)
+Trainer 2 Gym H             Sheabear Lv. 26, Sheabear Lv. 27 @ (None, Sitrus Berry)
+Trainer 2 Gym I             Zorua Lv. 26, Hammo Lv. 26 @ (Mysticola Berry, Weakness Policy)
+Trainer 2 Gym J             Shroodle Lv. 27, Pigonat Lv. 26 @ (Sitrus Berry, Sharp Beak)
+Trainer 2 Gym Leader 1      Hammo Lv. 28, Zorua Lv. 28, Flameruff Lv. 28, Azumarill Lv. 28, Tigrette Lv. 28, Dualbear Lv. 29
 
 2 Gym Leader 1
-Hammo (Lv. 26) @ Eviolite               /   Mouthwater     /   Super Fang, Bite, Headbutt, Bulk Up
-Zorua (Lv. 26) @ Colbur Berry           /   Adaptability   /   Will-O-Wisp, Hex, Round, Taunt
-Flameruff (Lv. 26) @ Muscle Band        /   Intimidate     /   Super Fang, Metal Claw, Flame Wheel, Body Slam
-Azumarill (Lv. 26) @ Blunder Policy     /   Huge Power     /   Ice Punch, Play Rough, Aqua Tail, Quick Attack
-Tigrette (Lv. 26) @ Starf Berry         /   Simple         /   Light Beam, Flash Cannon, Thunderbolt, Tail Glow
-Dualbear (Lv. 27) @ Enchanted Amulet    /   Adaptability   /   Dizzy Punch, Hypnosis, Feint Attack, Swift
+Hammo (Lv. 28) @ Eviolite               /   Mouthwater     /   Super Fang, Bite, Dizzy Punch, Bulk Up
+Zorua (Lv. 28) @ Colbur Berry           /   Adaptability   /   Will-O-Wisp, Hex, Round, Taunt
+Flameruff (Lv. 28) @ Muscle Band        /   Intimidate     /   Super Fang, Metal Claw, Flame Wheel, Body Slam
+Azumarill (Lv. 28) @ Blunder Policy     /   Huge Power     /   Ice Punch, Encore, Aqua Tail, Quick Attack
+Tigrette (Lv. 28) @ Starf Berry         /   Simple         /   Light Beam, Flash Cannon, Thunderbolt, Tail Glow
+Dualbear (Lv. 29) @ Enchanted Amulet    /   Adaptability   /   Dizzy Punch, Hypnosis, Knock Off, Swift
 
 Trainer SCT A               Crobat Lv. 47, Batorali Lv. 48, Nebulimb Lv. 49, Hast Lv. 48, Kissyfishy Lv. 49, Shedinja Lv. 49 @ (Black Sludge, Power Herb, Eviolite, Occa Berry, Sitrus Berry, Focus Band)
 Trainer SCT B               Fireblion Lv. 48, Houndoom Lv. 49, Arbok Lv. 50, Fireshard-E Lv. 48, Clefable Lv. 50, Lafloo Lv. 50 @ (Heat Rock, Wise Glasses, Black Sludge, Choice Scarf, Leftovers, White Herb)
@@ -202,29 +202,29 @@ Route 40------------------------------------------
 Trainer SA                  Ekans Lv. 8, Glimmet Lv. 8 @ (Oran Berry, Hard Stone)
 Trainer SB                  Lotad Lv. 9, Shroodle Lv. 9 @ (Big Root, Black Glasses)
 Trainer SC                  Metapod-X Lv. 9, Grubbin Lv. 9 @ (Focus Band, Oran Berry)
-Trainer SD                  Zubat Lv. 8, Bronzor-X Lv. 9 @ (Expert Belt, Focus Sash)
+Trainer SD                  Zubat Lv. 8, Bronzor-X Lv. 9 @ (Expert Belt, Mental Herb)
 
 Mt. Splinkty (1A)---------------------------------
 
-Trainer MS A                Dualmoose Lv. 29 @ (Expert Belt)
-Trainer MS E                Consodust Lv. 31, Grondor Lv. 31 @ (Roseli Berry, Sitrus Berry)
-Trainer MS F                Hootowl Lv. 30, Bouncerog Lv. 31 @ (Icy Rock, Power Herb)
+Trainer MS A                Hatenna Lv. 30, Dualmoose Lv. 30 @ (Enchanted Amulet, Expert Belt)
+Trainer MS E                Consodust Lv. 32, Grondor Lv. 32 @ (Roseli Berry, Sitrus Berry)
+Trainer MS F                Hootowl Lv. 32, Bouncerog Lv. 32 @ (Icy Rock, Power Herb)
 
 Mt. Splinkty (2B)---------------------------------
 
-Trainer MS B                Flameruff Lv. 29, Cluuz Lv. 30 @ (Passho Berry, Payapa Berry)
-Trainer MS C                Electroram Lv. 30 @ (Soft Sand)
+Trainer MS B                Flameruff Lv. 31, Cluuz Lv. 30, Electroram Lv. 31 @ (Passho Berry, Payapa Berry, Soft Sand)
+Trainer MS C                Bronzor Lv. 32, Butterfree Lv. 30, Solosis Lv. 31, Duosion Lv. 32, Swalot Lv. 30 @ (Leftovers, Focus Sash, Quick Claw, Sitrus Berry, Leftovers)
 Trainer MS D                Crobat Lv. 51, Zurrclu Lv. 53 @ (Power Herb, Eviolite)
 
 Route 27------------------------------------------
 
-Trainer AG                  Bugop Lv. 29, Malamar Lv. 30 @ (Choice Band, Tanga Berry)
-Trainer AH                  Magmaclang Lv. 30 @ (Lum Berry)
-Trainer AB                  Kirlia Lv. 28, Psycorb Lv. 30, Kirlia Lv. 29, Hatenna Lv. 30, Psylotter Lv. 30 @ (Rindo Berry, Terrain Extender, Tanga Berry, Colbur Berry, Focus Band)
-Trainer AI                  Tigrette Lv. 30, Bluebunn Lv. 31 @ (Salac Berry, Leftovers)
-Trainer AC                  Boulder Lv. 30, Carinator Lv. 31 @ (Choice Band, Focus Band)
-Trainer AD                  Flamehox Lv. 30, Magwoo Lv. 31, Houndoom Lv. 31 @ (Passho Berry, Sitrus Berry, Apicot Berry)
-Trainer AJ                  Ludicolo Lv. 30, Treewin Lv. 31 @ (Damp Rock, Assault Vest)
+Trainer AG                  Bugop Lv. 30, Malamar Lv. 31 @ (Choice Band, Tanga Berry)
+Trainer AH                  Magmaclang Lv. 31 @ (Lum Berry)
+Trainer AB                  Gardevoir Lv. 30, Psycorb Lv. 31, Kirlia Lv. 31, Hattrem Lv. 32, Psylotter Lv. 31 @ (Rindo Berry, Terrain Extender, Tanga Berry, Colbur Berry, Focus Band)
+Trainer AI                  Tigrette Lv. 31, Bluebunn Lv. 32 @ (Salac Berry, Leftovers)
+Trainer AC                  Boulder Lv. 32, Carinator Lv. 31 @ (Choice Band, Focus Band)
+Trainer AD                  Flamehox Lv. 32, Magwoo Lv. 32, Houndoom Lv. 31 @ (Air Balloon, Sitrus Berry, Apicot Berry)
+Trainer AJ                  Ludicolo Lv. 31, Treewin Lv. 32 @ (Damp Rock, Assault Vest)
 Trainer AE                  Pyrator Lv. 37 @ (Galaxeed Berry)
 Trainer AF                  Flamebless Lv. 38 @ (Passho Berry)
 
@@ -328,8 +328,8 @@ Cosmocrash (Lv. 42) @ Choice Band       /   Slush Rush     /   Ice Spinner, Come
 
 Control Center------------------------------------
 
-Trainer CCA                 Cleffa Lv. 30, Clefairy Lv. 30, Clefable Lv. 28 @ (Focus Sash, Focus Band, Leftovers)
-Trainer CCB                 Zorua Lv. 29, Wormite Lv. 30, Diggie Lv. 28 @ (Focus Band, Soft Sand, King's Rock)
+Trainer CCA                 Cleffa Lv. 33, Clefairy Lv. 32, Clefable Lv. 30 @ (Focus Sash, Focus Band, Leftovers)
+Trainer CCB                 Zorua Lv. 30, Wormbot Lv. 30, Diggie Lv. 30 @ (Focus Band, Lum Berry, King's Rock)
 Trainer Gyarados-E          Gyarados-E Lv. 22 @ (Rawst Berry)
 
 Mindagan Lake-------------------------------------
@@ -672,114 +672,114 @@ Stats:
 Num,Pokemon,Amt,%
 1,Twigle,2,0.19%
 2,Torgged,3,0.29%
-3,Tortugis,6,0.58%
+3,Tortugis,6,0.57%
 4,Lagma,2,0.19%
 5,Maguide,3,0.29%
 6,Magron,9,0.86%
 7,Lizish,2,0.19%
 8,Iguaton,3,0.29%
-9,Dragave,6,0.58%
-10,Hummingspark,6,0.58%
-11,Flashclaw,1,0.10%
-12,Magestiflash,8,0.77%
+9,Dragave,6,0.57%
+10,Hummingspark,6,0.57%
+11,Flashclaw,2,0.19%
+12,Magestiflash,8,0.76%
 13,Pigo,5,0.48%
 14,Pigonat,4,0.38%
-15,Pigoga,6,0.58%
-16,Hammo,6,0.58%
+15,Pigoga,6,0.57%
+16,Hammo,6,0.57%
 17,HammyBoy,2,0.19%
 18,Hamthorno,4,0.38%
 19,Sheabear,7,0.67%
 20,Dualbear,3,0.29%
 21,Spacebear,3,0.29%
-22,Bealtle,6,0.58%
+22,Bealtle,6,0.57%
 23,Centatle,3,0.29%
-24,Curlatoral,6,0.58%
-25,Millistone,8,0.77%
+24,Curlatoral,6,0.57%
+25,Millistone,8,0.76%
 26,Sapwin,3,0.29%
-27,Treewin,6,0.58%
-28,Winagrow,6,0.58%
+27,Treewin,6,0.57%
+28,Winagrow,6,0.57%
 29,Budew,2,0.19%
 30,Roselia,4,0.38%
-31,Roserade,8,0.77%
+31,Roserade,8,0.76%
 32,Sewaddle,3,0.29%
 33,Swadloon,5,0.48%
-34,Leavanny,10,0.96%
-35,Grubbin,1,0.10%
-36,Charjabug,6,0.58%
-37,Vikavolt,8,0.77%
+34,Leavanny,10,0.95%
+35,Grubbin,2,0.19%
+36,Charjabug,6,0.57%
+37,Vikavolt,8,0.76%
 38,Busheep,2,0.19%
 39,Ramant,4,0.38%
 40,Bushewe,7,0.67%
-41,Bugik,1,0.10%
+41,Bugik,2,0.19%
 42,Swordik,5,0.48%
 43,Ninjakik,4,0.38%
 44,Lotad,2,0.19%
 45,Lombre,2,0.19%
 46,Ludicolo,9,0.86%
-47,Bluebunn,11,1.06%
+47,Bluebunn,11,1.05%
 48,Rocky,1,0.10%
 49,Boulder,1,0.10%
 50,Blaster,5,0.48%
-51,Crystallor,6,0.58%
+51,Crystallor,6,0.57%
 52,Carinx,3,0.29%
 53,Carinator,5,0.48%
-54,Cairnasaur,6,0.58%
+54,Cairnasaur,6,0.57%
 55,Pebblepup,2,0.19%
-56,Boulderoar,6,0.58%
+56,Boulderoar,6,0.57%
 57,Fightorex,4,0.38%
 58,Raptorex,3,0.29%
 59,Kleinowl,3,0.29%
-60,Hootowl,11,1.06%
+60,Hootowl,11,1.05%
 61,Dualmoose,7,0.67%
 62,Snom,2,0.19%
-63,Frosmoth,8,0.77%
+63,Frosmoth,8,0.76%
 64,Grondor,3,0.29%
 65,Bipedice,5,0.48%
 66,Tricerpup,2,0.19%
 67,Tricercil,5,0.48%
 68,Spheal,2,0.19%
-69,Sealeo,6,0.58%
+69,Sealeo,6,0.57%
 70,Walrein,4,0.38%
 71,Froshrog,3,0.29%
 72,Bouncerog,5,0.48%
 73,Bugop,4,0.38%
 74,Opwing,9,0.86%
 75,Hatenna,2,0.19%
-76,Hattrem,1,0.10%
+76,Hattrem,2,0.19%
 77,Hatterene,9,0.86%
 78,Otterpor,2,0.19%
-79,Psylotter,10,0.96%
+79,Psylotter,10,0.95%
 80,Florline,3,0.29%
 81,Florlion,3,0.29%
 82,Psycorb,3,0.29%
 83,Psyballs,5,0.48%
 84,Psycorboratr,4,0.38%
 85,Ralts,4,0.38%
-86,Kirlia,4,0.38%
-87,Gardevoir,7,0.67%
+86,Kirlia,3,0.29%
+87,Gardevoir,8,0.76%
 88,Gallade,5,0.48%
 89,Tigrette,4,0.38%
 90,Inkay,4,0.38%
-91,Malamar,8,0.77%
+91,Malamar,8,0.76%
 92,Flameruff,4,0.38%
 93,Barkflare,5,0.48%
 94,Iglite,3,0.29%
 95,Blaxer,2,0.19%
-96,Pyrator,8,0.77%
-97,Magmaclang,8,0.77%
+96,Pyrator,8,0.76%
+97,Magmaclang,8,0.76%
 98,Flamehox,2,0.19%
 99,Fireshard,1,0.10%
-100,Blastflames,8,0.77%
+100,Blastflames,8,0.76%
 101,Tiowoo,2,0.19%
 102,Magwoo,3,0.29%
 103,Lafloo,5,0.48%
 104,Houndour,3,0.29%
-105,Houndoom,10,0.96%
+105,Houndoom,10,0.95%
 106,Sparkdust,1,0.10%
-107,Splame,10,0.96%
+107,Splame,10,0.95%
 108,Sparkitten,2,0.19%
-109,Fireblion,6,0.58%
-110,Flamebless,6,0.58%
+109,Fireblion,6,0.57%
+110,Flamebless,6,0.57%
 111,Shookwat,1,0.10%
 112,Wattwo,1,0.10%
 113,Megawatt,7,0.67%
@@ -789,9 +789,9 @@ Num,Pokemon,Amt,%
 117,Twigzap,1,0.10%
 118,Shockbranch,1,0.10%
 119,Thunderzap,9,0.86%
-120,Magie,6,0.58%
+120,Magie,6,0.57%
 121,Cumin,2,0.19%
-122,Cinneroph,10,0.96%
+122,Cinneroph,10,0.95%
 123,Vupp,4,0.38%
 124,Vinnie,2,0.19%
 125,Suvinero,9,0.86%
@@ -806,29 +806,29 @@ Num,Pokemon,Amt,%
 134,Lilyray,2,0.19%
 135,Daray,3,0.29%
 136,Spinaquata,7,0.67%
-137,Magikarp,10,0.96%
-138,Gyarados,10,0.96%
-139,Staryu,6,0.58%
+137,Magikarp,10,0.95%
+138,Gyarados,10,0.95%
+139,Staryu,6,0.57%
 140,Starmie,7,0.67%
-141,Ali,6,0.58%
-142,Batorali,6,0.58%
-143,Posho,11,1.06%
+141,Ali,6,0.57%
+142,Batorali,6,0.57%
+143,Posho,11,1.05%
 144,Shomp,5,0.48%
 145,Poshorump,9,0.86%
-146,Binacle,1,0.10%
+146,Binacle,2,0.19%
 147,Barbaracle,5,0.48%
 148,Durfish,5,0.48%
 149,Dompster,7,0.67%
-150,Kissyfishy,12,1.15%
+150,Kissyfishy,12,1.14%
 151,Ekans,2,0.19%
-152,Arbok,6,0.58%
+152,Arbok,6,0.57%
 153,Zubat,4,0.38%
 154,Golbat,2,0.19%
-155,Crobat,8,0.77%
+155,Crobat,8,0.76%
 156,Poof,1,0.10%
 157,Hast,5,0.48%
 158,Poov,2,0.19%
-159,Grust,15,1.44%
+159,Grust,15,1.43%
 160,Cluuz,7,0.67%
 161,Zurrclu,3,0.29%
 162,Zurroaratr,5,0.48%
@@ -837,11 +837,11 @@ Num,Pokemon,Amt,%
 165,Conkeldurr,7,0.67%
 166,Rhypo,1,0.10%
 167,Rhynee,3,0.29%
-168,Rhypolar,6,0.58%
+168,Rhypolar,6,0.57%
 169,Diggie,2,0.19%
-170,Drillatron,11,1.06%
-171,Wormite,3,0.29%
-172,Wormbot,2,0.19%
+170,Drillatron,11,1.05%
+171,Wormite,2,0.19%
+172,Wormbot,3,0.29%
 173,Wormatron,7,0.67%
 174,Cleffa,2,0.19%
 175,Clefairy,3,0.29%
@@ -877,24 +877,24 @@ Num,Pokemon,Amt,%
 205,Rocky-E,1,0.10%
 206,Boulder-E,0,0.00%
 207,Blaster-E,5,0.48%
-208,Crystallor-E,6,0.58%
+208,Crystallor-E,6,0.57%
 209,Magikarp-E,2,0.19%
-210,Gyarados-E,11,1.06%
+210,Gyarados-E,11,1.05%
 211,Shockfang,1,0.10%
 212,Electrocobra,3,0.29%
 213,Nightrex,1,0.10%
 214,Shadowsaur,5,0.48%
 215,Durfish-S,2,0.19%
-216,Dompster-S,8,0.77%
+216,Dompster-S,8,0.76%
 217,Wormite-S,1,0.10%
 218,Wormbot-S,1,0.10%
-219,Wormatron-S,8,0.77%
+219,Wormatron-S,8,0.76%
 220,Cluuz-S,2,0.19%
 221,Zurrclu-S,2,0.19%
 222,Zurroaratr-S,5,0.48%
 223,Iglite-S,1,0.10%
 224,Blaxer-S,2,0.19%
-225,Pyrator-S,8,0.77%
+225,Pyrator-S,8,0.76%
 226,Ekans-S,2,0.19%
 227,Arbok-S,5,0.48%
 228,Soarwhell,0,0.00%
@@ -920,8 +920,8 @@ Num,Pokemon,Amt,%
 248,Weavile,0,0.00%
 249,Sneasel-H,1,0.10%
 250,Sneasler,0,0.00%
-251,Solosis,0,0.00%
-252,Duosion,0,0.00%
+251,Solosis,1,0.10%
+252,Duosion,1,0.10%
 253,Reuniclus,0,0.00%
 254,Solosis-X,3,0.29%
 255,Duosion-X,0,0.00%
@@ -929,7 +929,7 @@ Num,Pokemon,Amt,%
 257,Seviper,1,0.10%
 258,Hissimitar,0,0.00%
 259,Gulpin,0,0.00%
-260,Swalot,0,0.00%
+260,Swalot,1,0.10%
 261,Gulpin-X,3,0.29%
 262,Swalot-X,0,0.00%
 263,Plasamp,0,0.00%
@@ -940,10 +940,10 @@ Num,Pokemon,Amt,%
 268,Beheeyem-E,0,0.00%
 269,Caterpie,1,0.10%
 270,Metapod,0,0.00%
-271,Butterfree,0,0.00%
+271,Butterfree,1,0.10%
 272,Metapod-X,1,0.10%
 273,Butterfree-X,2,0.19%
-274,Bronzor,0,0.00%
+274,Bronzor,1,0.10%
 275,Bronzong,0,0.00%
 276,Bronzor-X,2,0.19%
 277,Bronzong-X,0,0.00%
@@ -967,4 +967,4 @@ Num,Pokemon,Amt,%
 295,Shroodle,3,0.29%
 296,Grafaiai,0,0.00%
 
-Total: 1042
+Total: 1052
