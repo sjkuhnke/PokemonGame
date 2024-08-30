@@ -311,13 +311,11 @@ public abstract class AbstractUI {
 			g2.drawString("@", x, y + gp.tileSize / 2);
 			x += gp.tileSize * 0.5;
 			g2.drawImage(scaleImage(p.item.getImage(), 2), x, y - gp.tileSize / 4, null);
-			if (foe == null) {
-				y += gp.tileSize * 1.1;
-				g2.setFont(g2.getFont().deriveFont(12F));
-				String itemTake = "[A] Take " + p.item.toString();
-				g2.drawString(itemTake, getCenterAlignedTextX(itemTake, x + 8), y);
-				y -= gp.tileSize * 1.1;
-			}
+			y += gp.tileSize;
+			g2.setFont(g2.getFont().deriveFont(12F));
+			String item = foe == null ? "[A] Take " + p.item.toString() : p.item.toString();
+			g2.drawString(item, getCenterAlignedTextX(item, x + 8), y);
+			y -= gp.tileSize;
 		}
 		
 		// Status
@@ -806,7 +804,7 @@ public abstract class AbstractUI {
 				if (!gp.player.p.hasTM(ms.move) && !movebankList.contains(ms.move)) {
 		        	g2.setPaint(new GradientPaint(x, y, ms.move.mtype.getColor(), x + moveWidth, y + moveHeight, new Color(245, 225, 210)));
 		        } else {
-		        	g2.setColor(ms.move.mtype.getColor());	
+		        	g2.setColor(ms.move == Move.HIDDEN_POWER ? p.determineHPType().getColor() : ms.move.mtype.getColor());	
 		        }
 				g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 				g2.setColor(Color.BLACK);

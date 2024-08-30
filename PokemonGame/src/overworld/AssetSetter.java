@@ -158,6 +158,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(35, 58, mapNum, 5, 15);
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(13, 78, mapNum, 5, 15);
 		gp.obj[mapNum][objIndex] = ObjSetup(44, 8, Item.LUM_BERRY, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = ObjSetup(76, 27, Item.DAWN_STONE, mapNum);
 		
 		mapNum = 7;
 		objIndex = 0;
@@ -821,7 +822,7 @@ public class AssetSetter {
 		mapNum = 4;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 81, 61, "Sorry, but the gym leader has been busy with mail these past few weeks, so gym battles are unavailable. You may check the post office for more details.");
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 66, 79, "Yo, scram kid! This is some top secret space operation that you don�t got the clearance to see! Move it!", true);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 66, 79, "Yo, scram kid! This is some top secret space operation that you don't got the clearance to see! Move it!", true);
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 32, 62, 18);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 23, 65, 19); // make way lower levels
@@ -1201,7 +1202,7 @@ public class AssetSetter {
 		
 		mapNum = 57;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Eyy! What brings a scrawny kid like you into the famous Guy Eddie�s culinary residence!", 9, true, "By the way, if you�re ever in Rawwar City, head over to my restaurant. You won�t wanna miss the Eddie special, Smoked Pie! It�s gonna be a blast burn!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Eyy! What brings a scrawny kid like you into the famous Guy Eddie's culinary residence!", 9, true, "By the way, if you're ever in Rawwar City, head over to my restaurant. You won't wanna miss the Eddie special, Smoked Pie! It's gonna be a blast burn!");
 		
 		mapNum = 58;
 		index = 0;
