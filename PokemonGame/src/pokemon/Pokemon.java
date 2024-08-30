@@ -2304,6 +2304,10 @@ public class Pokemon implements Serializable {
 		if (checkSecondary(secChance)) {
 			secondaryEffect(foe, move, first, userSide, enemySide, player, enemy);
 		}
+		if (!foe.isFainted() && this.ability == Ability.RADIANT && moveType == PType.LIGHT && foe.item != Item.COVERT_CLOAK && foeAbility != Ability.SHIELD_DUST) {
+			addAbilityTask(this);
+			stat(foe, 5, -1, this, true);
+		}
 		
 		if (this.item == Item.LIFE_ORB && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 			this.damage(this.getStat(0) / 10, foe);

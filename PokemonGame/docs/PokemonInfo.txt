@@ -3247,6 +3247,7 @@ Level Up:
 9 - Charm
 12 - Slam
 15 - Bounce
+17 - Round
 19 - Aqua Tail
 21 - Ice Punch
 21 - Play Rough
@@ -3283,6 +3284,7 @@ Level Up:
 9 - Charm
 12 - Slam
 15 - Bounce
+17 - Round
 18 - Aqua Jet
 18 - Quick Attack
 21 - Aqua Tail
@@ -5646,8 +5648,10 @@ Level Up:
 13 - Mud Bomb
 15 - Revenge
 20 - Ancient Power
+23 - Circle Throw
 26 - Magic Blast
-30 - Detect
+28 - Storm Throw
+31 - Detect
 34 - Acrobatics
 36 - Earth Power
 
@@ -5674,8 +5678,10 @@ Level Up:
 13 - Mud Bomb
 15 - Revenge
 20 - Ancient Power
+23 - Circle Throw
 26 - Magic Blast
-30 - Detect
+28 - Storm Throw
+31 - Detect
 34 - Acrobatics
 36 - Earth Power
 36 - Air Slash
