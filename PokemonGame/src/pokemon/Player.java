@@ -308,6 +308,7 @@ public class Player extends Trainer implements Serializable {
 		while (team[index] == null || team[index].isFainted() || team[index] == current) {
 			index = rand.nextInt(team.length);
 		}
+		current.clearVolatile();
 		
 		swapToFront(team[index], index);
 		

@@ -424,6 +424,7 @@ public enum Move {
 	SHIFT_GEAR(0,1000,0,0,2,0,PType.STEEL,"Raises user's Attack by 1 and Speed by 2",false,10),
 	SHOCK_WAVE(60,1000,0,0,1,0,PType.ELECTRIC,"This attack never misses",false,20),
 	SHOOTING_STARS(25,100,0,0,0,0,PType.GALACTIC,"Hits 2-5 times",false,10),
+	SIGNAL_BEAM(75,100,10,0,1,0,PType.BUG,"% chance to confuse foe",false,15),
 	SILVER_WIND(60,100,10,0,1,0,PType.BUG,"% chance to raise all of user's stats",false,5),
 	SING(0,55,0,0,2,0,PType.NORMAL,"Foe falls asleep",false,15),
 	SKULL_BASH(100,100,100,0,0,0,PType.NORMAL,"% to raise the user's Defense by 1, user must charge on the first turn",true,10),
@@ -539,6 +540,7 @@ public enum Move {
 	VENOM_DRENCH(0,100,0,0,2,0,PType.POISON,"Lowers a Poisoned/Badly Poisoned foe's Attack and Sp.Atk by 2",false,20),
 	VENOM_SPIT(40,100,100,0,0,1,PType.POISON,"% to Paralyze foe; always goes first",false,5),
 	VENOSHOCK(-1,100,0,0,1,0,PType.POISON,"Damage is doubled if foe is Poisoned or Badly Poisoned",false,10),
+	VENOSTEEL_CROSSCUT(100,90,20,1,0,0,PType.STEEL,"% to Paralyze or Badly Poison foe, boosted crit rate",true,10),
 	VINE_CROSS(70,95,100,0,0,0,PType.GRASS,"% chance to lower foe's Speed by 1",false,15),
 	VINE_WHIP(45,100,0,0,0,0,PType.GRASS,"A normal attack",true,25),
 	VISE_GRIP(55,100,0,0,0,0,PType.NORMAL,"A normal attack",true,30),
@@ -827,12 +829,15 @@ public enum Move {
 		result.add(PSYCHO_CUT);
 		result.add(RAZOR_SHELL);
 		result.add(SACRED_SWORD);
+		result.add(GLITTERING_SWORD);
+		result.add(SWORD_SPIN);
 		result.add(SLASH);
 		result.add(SOLAR_BLADE);
 		result.add(X$SCISSOR);
 		result.add(CROSS_POISON);
 		result.add(CUT);
 		result.add(RAZOR_LEAF);
+		result.add(VENOSTEEL_CROSSCUT);
 		
 		if (result.contains(this)) {
 			return true;

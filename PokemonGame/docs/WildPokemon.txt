@@ -321,6 +321,25 @@ Route 27 (Standard)
 12% Butterfree-X (Lv. 23 - 24)
 12% Capsakid (Lv. 22 - 24)
 ===================================================================
+Cell Park (Standard)
+===================================================================
+8% Centatle (Lv. 23 - 25)
+6% Charjabug (Lv. 24 - 26)
+4% Shockbranch (Lv. 22 - 25)
+10% Magie (Lv. 21 - 24)
+7% Kadabra (Lv. 24 - 25)
+7% Solosis-X (Lv. 23 - 25)
+5% Scraggy (Lv. 23 - 25)
+4% Rhypo (Lv. 22 - 25)
+5% Seviper (Lv. 25)
+5% Blobmo (Lv. 21 - 24)
+8% Tigrette (Lv. 25)
+6% Rockmite (Lv. 24 - 26)
+5% Tinkie (Lv. 21 - 23)
+5% Staryu (Lv. 22 - 25)
+7% Elgyem (Lv. 22 - 25)
+8% Elgyem-E (Lv. 22 - 25)
+===================================================================
 Route 41 (Fish)
 ===================================================================
 25% Spheal (Lv. 21 - 23)
@@ -987,7 +1006,7 @@ Mt. Splinkty (Outside) (Standard)
 20,Dualbear,2,13.00%
 21,Spacebear,0,0.00%
 22,Bealtle,4,12.50%
-23,Centatle,0,0.00%
+23,Centatle,1,8.00%
 24,Curlatoral,1,5.00%
 25,Millistone,0,0.00%
 26,Sapwin,5,12.00%
@@ -1000,7 +1019,7 @@ Mt. Splinkty (Outside) (Standard)
 33,Swadloon,2,10.00%
 34,Leavanny,0,0.00%
 35,Grubbin,3,6.67%
-36,Charjabug,2,11.50%
+36,Charjabug,3,9.67%
 37,Vikavolt,0,0.00%
 38,Busheep,7,8.57%
 39,Ramant,0,0.00%
@@ -1053,7 +1072,7 @@ Mt. Splinkty (Outside) (Standard)
 86,Kirlia,2,10.00%
 87,Gardevoir,1,5.00%
 88,Gallade,0,0.00%
-89,Tigrette,4,13.00%
+89,Tigrette,5,12.00%
 90,Inkay,10,14.70%
 91,Malamar,2,15.00%
 92,Flameruff,2,10.00%
@@ -1082,9 +1101,9 @@ Mt. Splinkty (Outside) (Standard)
 115,Electroram,0,0.00%
 116,Superchargo,1,4.00%
 117,Twigzap,3,18.67%
-118,Shockbranch,0,0.00%
+118,Shockbranch,1,4.00%
 119,Thunderzap,0,0.00%
-120,Magie,0,0.00%
+120,Magie,1,10.00%
 121,Cumin,1,9.00%
 122,Cinneroph,0,0.00%
 123,Vupp,4,12.25%
@@ -1103,7 +1122,7 @@ Mt. Splinkty (Outside) (Standard)
 136,Spinaquata,2,12.00%
 137,Magikarp,12,27.50%
 138,Gyarados,3,23.33%
-139,Staryu,10,34.60%
+139,Staryu,11,31.91%
 140,Starmie,0,0.00%
 141,Ali,14,13.79%
 142,Batorali,0,0.00%
@@ -1130,7 +1149,7 @@ Mt. Splinkty (Outside) (Standard)
 163,Timburr,3,10.67%
 164,Gurdurr,1,19.00%
 165,Conkeldurr,1,4.00%
-166,Rhypo,3,8.00%
+166,Rhypo,4,7.00%
 167,Rhynee,1,14.00%
 168,Rhypolar,0,0.00%
 169,Diggie,3,15.67%
@@ -1148,18 +1167,18 @@ Mt. Splinkty (Outside) (Standard)
 181,Droid,2,11.00%
 182,Armoid,2,15.00%
 183,Soldrota,0,0.00%
-184,Tinkie,2,16.50%
+184,Tinkie,3,12.67%
 185,Shawar,1,24.00%
 186,Shaboom,0,0.00%
 187,Dragee,1,25.00%
 188,Draga,1,24.00%
 189,Drageye,0,0.00%
-190,Blobmo,2,10.00%
+190,Blobmo,3,8.33%
 191,Nebulimb,0,0.00%
 192,Galactasolder,0,0.00%
 193,Consodust,2,8.00%
 194,Cosmocrash,0,0.00%
-195,Rockmite,3,15.67%
+195,Rockmite,4,13.25%
 196,Stellarock,0,0.00%
 197,Poof-E,2,13.50%
 198,Hast-E,6,16.33%
@@ -1202,13 +1221,13 @@ Mt. Splinkty (Outside) (Standard)
 235,Dragowrath,0,0.00%
 236,Solaroxyous,0,0.00%
 237,Kissyfishy-D,0,0.00%
-238,Scraggy,4,7.75%
+238,Scraggy,5,7.20%
 239,Scrafty,0,0.00%
 240,Scraftagon,0,0.00%
 241,Glimmet,6,9.83%
 242,Glimmora,1,6.00%
 243,Abra,2,9.50%
-244,Kadabra,1,5.00%
+244,Kadabra,2,6.00%
 245,Alakazam,0,0.00%
 246,Flamigo,0,0.00%
 247,Sneasel,2,13.00%
@@ -1218,10 +1237,10 @@ Mt. Splinkty (Outside) (Standard)
 251,Solosis,0,0.00%
 252,Duosion,0,0.00%
 253,Reuniclus,0,0.00%
-254,Solosis-X,5,7.60%
+254,Solosis-X,6,7.50%
 255,Duosion-X,0,0.00%
 256,Reuniclus-X,0,0.00%
-257,Seviper,3,8.33%
+257,Seviper,4,7.50%
 258,Hissimitar,0,0.00%
 259,Gulpin,0,0.00%
 260,Swalot,0,0.00%
@@ -1229,9 +1248,9 @@ Mt. Splinkty (Outside) (Standard)
 262,Swalot-X,0,0.00%
 263,Plasamp,2,12.50%
 264,Genieova,0,0.00%
-265,Elgyem,1,12.00%
+265,Elgyem,2,9.50%
 266,Beheeyem,0,0.00%
-267,Elgyem-E,8,13.88%
+267,Elgyem-E,9,13.22%
 268,Beheeyem-E,2,12.00%
 269,Caterpie,3,9.33%
 270,Metapod,0,0.00%

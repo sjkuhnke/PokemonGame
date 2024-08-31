@@ -631,6 +631,9 @@ public class BattleUI extends AbstractUI {
 	    	}
 	    	aura = true;
 	    }
+		if (staticID >= 284 && staticID <= 289) {
+			aura = true;
+		}
 	    Pokemon.addSwapInTask(user);
 	    Pokemon fasterInit = user.getFaster(foe, 0, 0);
 		Pokemon slowerInit = fasterInit == user ? foe : user;

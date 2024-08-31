@@ -337,6 +337,16 @@ public class UI extends AbstractUI{
 		case Task.REGIONAL_TRADE:
 			drawRegionalTrade();
 			break;
+		case Task.BATTLE:
+			int trainer = currentTask.counter;
+			int id = currentTask.start;
+			currentTask = null;
+			if (id > 0) {
+				gp.startBattle(trainer, id);
+			} else {
+				gp.startBattle(trainer);
+			}
+			break;
 		}
 	}
 
@@ -1226,7 +1236,7 @@ public class UI extends AbstractUI{
 		if (!gauntlet) {
 			g2.drawString("<", headX + gp.tileSize / 2, headTextY);
 			g2.drawString(">", headWidth + headX - gp.tileSize / 2 - 8, headTextY);
-		} else {
+		} else if (!isGauntlet) {
 			int x2 = headX + gp.tileSize / 2;
 			int y2 = headTextY - gp.tileSize / 2;
 			int width2 = gp.tileSize / 2;
@@ -1394,7 +1404,7 @@ public class UI extends AbstractUI{
 				gp.keyH.upPressed = false;
 				if (boxNum >= 0) {
 					boxNum -= 6;
-				} else if (!gp.ui.isGauntlet) {
+				} else if (!isGauntlet) {
 					gauntlet = !gauntlet;
 					boxSwapNum = -1;
 				}
@@ -2668,7 +2678,7 @@ public class UI extends AbstractUI{
 				}
 				g2.setFont(g2.getFont().deriveFont(16F));
 				g2.drawString(String.format("%.0f%%", e.getEncounterChance() * 100), x + 60, y + 75);
-				if (i > 0 && i % 7 == 0) {
+				if ((i + 1) % 8 == 0) {
 					x = winX + gp.tileSize / 3;
 					y += spriteHeight;
 				} else {
