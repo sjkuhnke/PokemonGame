@@ -686,8 +686,13 @@ public class PMap extends JPanel {
 				return 12;
 			}
 			if (x > 61) {
-				PlayerCharacter.currentMapName = "Kleine Village";
-				return 13;
+				if (y <= 31) {
+					PlayerCharacter.currentMapName = "Cell Park";
+					return 13;
+				} else {
+					PlayerCharacter.currentMapName = "Kleine Village";
+					return 13;
+				}	
 			}
 		case 29:
 			PlayerCharacter.currentMapName = "Kleine Village";

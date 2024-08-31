@@ -1,4 +1,10 @@
-/pokemon/
+/entity/
+/object/
 /overworld/
+/pokemon/
+/sprites/
+/tile/
+/tiles/
+/tools/
 /info/
 /maps/

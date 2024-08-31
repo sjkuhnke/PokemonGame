@@ -5380,6 +5380,7 @@ Level Up:
 11 - Feint
 14 - Screech
 14 - Dragon Tail
+15 - Fury Cutter
 17 - Glare
 19 - Toxic Spikes
 21 - Poison Jab
@@ -5389,13 +5390,18 @@ Level Up:
 29 - Gastro Acid
 31 - Poison Tail
 34 - Haze
-39 - Crunch
+34 - Sword Spin
+36 - Crunch
+38 - Cross Poison
+40 - Focus Energy
 42 - Dragon Rush
 44 - Coil
 46 - Iron Tail
 46 - Aqua Tail
 50 - Gunk Shot
 55 - Venom Spit
+60 - Fatal Bind
+65 - Glittering Sword
 
 Evolutions:
 Seviper -> Hissimitar (5+ Tail Move Crits in Trainer Battles)
@@ -5407,19 +5413,50 @@ Type:
 Poison / Steel
 
 Ability:
-Sharp Tail / Merciless / (Talented)
+Sharp Tail / Merciless / (Sharpness)
 
 Base Stats:
-10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe / 60 BST
+78 HP / 140 Atk / 79 Def / 70 SpA / 63 SpD / 105 Spe / 535 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Wrap
+1 - Haze
+1 - Heavy Slam
+1 - Metal Sound
+1 - Psycho Cut
+1 - Swagger
+1 - Dragon Dance
+5 - Bite
+6 - Lick
+9 - Poison Fang
+11 - Feint
+14 - Screech
+14 - Dragon Tail
+15 - Fury Cutter
+16 - Iron Defense
+17 - Glare
+19 - Toxic Spikes
+20 - Smart Strike
+21 - Poison Jab
+23 - Venoshock
+25 - Night Slash
+27 - Swords Dance
+29 - Gastro Acid
+31 - Poison Tail
+34 - Iron Head
+34 - Sword Spin
+36 - Crunch
+38 - Cross Poison
+40 - Focus Energy
+42 - Dragon Rush
+44 - Coil
+46 - Iron Tail
+46 - Aqua Tail
+50 - Venosteel Crosscut
+55 - Gunk Shot
+60 - Sacred Sword
+65 - Fatal Bind
+70 - Glittering Sword
 
 ===================
 #174 - Binacle                                                                                         [146]
@@ -7358,7 +7395,26 @@ Base Stats:
 83 HP / 79 Atk / 83 Def / 157 SpA / 67 SpD / 101 Spe / 570 BST
 
 Level Up:
-1 - Confusion
+1 - Tail Glow
+1 - Wrap
+1 - Space Beam
+1 - String Shot
+1 - Gravity
+3 - Infestation
+7 - Radio Burst
+13 - Pin Missile
+17 - Struggle Bug
+19 - Cosmic Power
+23 - Desolate Void
+29 - Sticky Web
+31 - Signal Beam
+37 - Galaxy Blast
+43 - Abduct
+47 - Leech Life
+53 - Bug Buzz
+59 - Core Enforcer
+67 - Fatal Bind
+73 - Black Hole Eclipse
 
 ===================
 #235 - Icy Serpent                                                                                     [285]

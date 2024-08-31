@@ -304,7 +304,7 @@ public enum Item {
 	PACKAGE_D(266,0,0,Color.BLACK,Item.KEY_ITEM,null,"A Drednaw stapler, for an old friend of Robin's. Sent all the way from Galar, the deliver address is for the local warehouse."),
 	WAREHOUSE_KEY(267,0,0,Color.BLACK,Item.KEY_ITEM,null,"A key that unlocks Poppy Grove's Warehouse."),
 	FISHING_ROD(268,0,0,Color.BLACK,Item.KEY_ITEM,null,"Use when looking at water to fish! Can also press 'A' in the world to fish."),
-	WIRE_CUTTERS(269,0,0,Color.BLACK,Item.KEY_ITEM,null,"WRITE DESCRIPTION"),
+	WIRE_CUTTERS(269,0,0,Color.BLACK,Item.KEY_ITEM,null,"Heavy duty wire cutters that can cut through any wire, big or small. A favorite for electricians."),
 	;
 	
 	private int id;

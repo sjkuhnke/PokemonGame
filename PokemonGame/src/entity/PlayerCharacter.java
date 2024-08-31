@@ -895,38 +895,43 @@ public class PlayerCharacter extends Entity {
 			}
 		} else if (gp.currentMap == 28) {
 			if (worldX / gp.tileSize <= 70) { // Millie 1
-				Pokemon.addTask(Task.TEXT, "I’m Millie, kind of a big deal here. I’ve starred in several movies and TV stuff, like Magikarp Jump: The Motion Picture, and Mystery Doors of the Magical Land: The Animated Series.");
-				Pokemon.addTask(Task.TEXT, "Anyways, yeah this isn’t a shoot or scene, the trainers here are possessed or something! They just attack anything that try to enter the town.");
-				Pokemon.addTask(Task.TEXT, "Explain that you can look around and fight some of the trainers (but in a more 'fend off' kinda way)");
-				Pokemon.addTask(Task.TEXT, "Inform that once you come with her, you'll have to face a lot of trainers in a row");
-				Pokemon.addTask(Task.TEXT, "Explain that there's a PC by the cell tower but the weird waves are messing with it, and that you can only use Pokemon in the gauntlet box.");
-				Pokemon.addTask(Task.TEXT, "Encourage the trainer to add Pokemon to the gauntlet box to take with them once you go with Millie");
+				Pokemon.addTask(Task.TEXT, "I'm Millie, kind of a big deal here. I've starred in several movies and TV stuff!");
+				Pokemon.addTask(Task.TEXT, "You've probably heard of Magikarp Jump: The Motion Picture, and Mystery Doors of the Magical Land: The Animated Series.");
+				Pokemon.addTask(Task.TEXT, "Anyways, yeah this isn't a shoot or scene, the trainers here are possessed or something! They just attack anything that try to enter the town.");
+				Pokemon.addTask(Task.TEXT, "You're going to have to fend them off back to back, and from what I've seen most of the town is infected! I'm not one to be in horror movies...");
+				Pokemon.addTask(Task.TEXT, "There won't be any breaks in between once we go in, so you're gonna need some strong Pokemon.");
+				Pokemon.addTask(Task.TEXT, "I saw those evil guys by the cell tower. They messed with the PC's signal somehow, and now you can only use Pokemon in the Gauntlet Box!");
+				Pokemon.addTask(Task.TEXT, "You might wanna put some Pokemon in there, preferably 4. If you don't have a full Gauntlet Box as well as a full team, you'll have a huge disadvantage!");
 				int selected = p.getAmountSelected();
 				String message = "Are you ready to fight once you come with me? We need to defend our town and there's no going back!";
 				if (selected < Player.GAUNTLET_BOX_SIZE) { // Not enough selected
-					message = "You don't have 10 Pokemon selected to bring! You'll be at a huge disadvantage!\nYou can choose what Pokemon to bring using the Gauntlet Box in this PC (press [\u2191] when selecting a box).\n" + message;
+					message = "You don't have 4 Pokemon selected to bring in the Gauntlet Box! You'll be at a huge disadvantage!\nYou can choose what Pokemon to bring using the Gauntlet Box in this PC (press [\u2191] when selecting a box).\n" + message;
 				}
 				for (String s : message.split("\n")) {
 					Pokemon.addTask(Task.TEXT, s);
 				}
+				Pokemon.addTask(Task.TEXT, "Trust me, I had to fight off some of them, they hit hard. Especially the stunt doubles...");
 				Task t = Pokemon.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?");
 				t.counter = 2;
 				// Millie 2
 				t = Pokemon.addTask(Task.TURN, "");
 				t.counter = 2;
-				Pokemon.addTask(Task.TEXT, "There's this strange boy here that's in a trance, something about how he's special/you know him or something");
-				Pokemon.addTask(Task.TEXT, "He won't budge, he's in a deep trance (somehow find a way to wake him up)");
+				Pokemon.addTask(Task.TEXT, "There's this weird kid that's been in a trance blocking the way to the tower. He hasn't moved an inch, almost like he's guarding the place.");
+				Pokemon.addTask(Task.TEXT, "I've heard him mutter a few things. \"Toxic\", \"Get decked\", it's off-putting.");
+				Pokemon.addTask(Task.TEXT, "Wait, that's your rival? Maybe he'll recognize you, try saying something that'll, I don't know, make him angry!");
+				Pokemon.addTask(Task.TEXT, "Y'know, like in method acting! Give it a shot.");
 				t = Pokemon.addTask(Task.TURN, "");
 				t.counter = 1;
-				Pokemon.addTask(Task.TEXT, "AHHHH HE'S AWAKE!");
+				Pokemon.addTask(Task.TEXT, "...");
+				Pokemon.addTask(Task.TEXT, "AHHH! HE'S DEFINITELY AWAKE NOW! JEEZ, WHAT DID YOU EVEN SAY!?");
 				t = Pokemon.addTask(Task.FLAG, "");
 				t.start = 2;
 				t.finish = 5;
 			} else {
-				if (worldY / gp.tileSize < 36) {
+				if (worldY / gp.tileSize < 37) {
 					if (worldY / gp.tileSize > 33) { // Millie 3
 						if (!p.flag[2][7]) {
-							Pokemon.addTask(Task.TEXT, "It's too dangerous to come back here until we figure out what's causing the strange radio waves");
+							Pokemon.addTask(Task.TEXT, "It's definitely too dangerous to go back to the town, at least for now. You need to scout the area to find the source of these strange radio waves...");
 							Pokemon.addTask(Task.TEXT, "Let me know if you figure out what's going on! Please... I'm scared...");
 						} else {
 							Pokemon.addTask(Task.TEXT, "Thank Arceus you're back... I was so petrified in fear.");
@@ -934,13 +939,12 @@ public class PlayerCharacter extends Entity {
 							Pokemon.addTask(Task.TEXT, "There's a poor Pokemon chained up to the tower?? That is so cruel! Ack! That makes me so sick.");
 							Pokemon.addTask(Task.TEXT, "It has to be a pretty powerful Pokemon to be able to transmit such strong radio waves to possess all of these people.");
 							Pokemon.addTask(Task.TEXT, "Did you happen to notice what Pokemon it was?");
-							Pokemon.addTask(Task.TEXT, "...");
 							Pokemon.addTask(Task.TEXT, "A... what? An alien spider? What??");
 							Pokemon.addTask(Task.TEXT, "I have no idea what you're talking about, I've never heard of anything like that in my life.");
 							Pokemon.addTask(Task.TEXT, "If it's a spider though, I'm sure we can be great friends. I love bugs!");
 							Pokemon.addTask(Task.TEXT, "Alien bugs might take a bit more to get used to. I wonder where it came from?");
-							Pokemon.addTask(Task.TEXT, "And I can't believe it's chained up! We have to set it free!");
-							Pokemon.addTask(Task.TEXT, "Come to think of it, I did notice an evil grunt run off towards Mt. Splinkty, maybe we can stop him?");
+							Pokemon.addTask(Task.TEXT, "And I can't believe it's chained up! We have to set it free! I bet it was those space goons.");
+							Pokemon.addTask(Task.TEXT, "Come to think of it, I did notice an evil grunt run off towards Mt. Splinkty. Maybe we can stop him?");
 							Pokemon.addTask(Task.TEXT, "Go check out the Mountain and see if you can find the grunt, I'll stand guard here!");
 							p.flag[2][8] = true;
 							Pokemon.addTask(Task.FLASH_IN, "");
@@ -948,24 +952,42 @@ public class PlayerCharacter extends Entity {
 							Pokemon.addTask(Task.FLASH_OUT, "");
 						}
 					} else if (worldY / gp.tileSize > 25) { // Millie 4
+						Pokemon.addTask(Task.TEXT, "OHHH! YOU! I'm so sorry, that was a reflex, there's so many of them.");
 						if (!p.flag[2][9]) {
-							Pokemon.addTask(Task.TEXT, "*pant pant* ..I've been holding them off okay. Any luck finding the grunt?");
+							Pokemon.addTask(Task.TEXT, "Any luck finding the grunt? ..I've been holding them off okay.");
 							Pokemon.addTask(Task.TEXT, "I believe that there's a secret room that you can access on the 2nd floor, check that out if you haven't yet.");
 						} else {
-							Pokemon.addTask(Task.TEXT, "You found him? How'd it go, are you and your Pokemon okay?");
-							Pokemon.addTask(Task.TEXT, "...");
+							Pokemon.addTask(Task.TEXT, "You found him? How'd it go? Are you and your Pokemon okay?");
 							Pokemon.addTask(Task.TEXT, "You got wire cutters? Quick, let's try and cut that creature free and stop this madness!");
 							Pokemon.addTask(Task.TEXT, "I'll try and make sure the possessed people are okay. Good luck!");
-							p.flag[2][9] = true;
+							p.flag[2][10] = true;
 							Pokemon.addTask(Task.FLASH_IN, "");
 							Pokemon.addTask(Task.UPDATE, "");
 							Pokemon.addTask(Task.FLASH_OUT, "");
 						}
 					} else { // chained up xurkitree
-						
+						if (!p.flag[2][11]) {
+							Pokemon.addTask(Task.TEXT, "(The mysterious Pokemon seems to be alive, though it's unable to move because it's chained up.)");
+							if (!p.flag[2][9]) {
+								p.flag[2][7] = true;
+							} else {
+								p.bag.remove(Item.WIRE_CUTTERS);
+								p.flag[2][11] = true;
+								Pokemon.addTask(Task.TEXT, "You used the wire cutters to set it free!");
+								Pokemon.addTask(Task.FLASH_IN, "");
+								Pokemon.addTask(Task.UPDATE, "");
+								Pokemon.addTask(Task.FLASH_OUT, "");
+								Pokemon.addTask(Task.TEXT, "Bzzz....Zzzzttt..... ZUZUZUURRKIII!!!");
+								Pokemon.addTask(Task.TEXT, "(The mysterious creature seems shell-shocked, and is now lashing out at everything around it!)");
+								Task t = Pokemon.addTask(Task.BATTLE, "");
+								t.counter = 387;
+								t.start = 284;
+							}	
+						}
 					}
 				} else { // Player wiped, talked to her from the other side
-					Pokemon.addTask(Task.TEXT, "Player wiped and is talking to her from the other side, sends him back in");
+					Pokemon.addTask(Task.TEXT, "Oh, there you are. What happened?");
+					Pokemon.addTask(Task.TEXT, "They must have beaten you up... You're definitely a tough kid, but I need you back in there. Maybe be extra careful this time.");
 					Task t = Pokemon.addTask(Task.TELEPORT, "");
 					t.counter = 28;
 					t.start = 82;

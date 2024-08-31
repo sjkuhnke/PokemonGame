@@ -562,7 +562,8 @@ public class Pokemon implements Serializable {
         		}
         	}
         	if (move.cat == 2 || move == Move.NUZZLE || move == Move.SWORD_SPIN || move == Move.POWER$UP_PUNCH || move == Move.VENOM_SPIT
-        			|| move == Move.FATAL_BIND || move == Move.MOLTEN_CONSUME || ((move == Move.WHIRLPOOL || move == Move.WRAP || move == Move.BIND || move == Move.FIRE_SPIN)
+        			|| move == Move.FATAL_BIND || move == Move.MOLTEN_CONSUME || move == Move.TORNADO_SPIN
+        			|| ((move == Move.WHIRLPOOL || move == Move.WRAP || move == Move.BIND || move == Move.FIRE_SPIN)
         					&& !foe.vStatuses.contains(Status.SPUN))) {
         		if (move.accuracy > 100) {
         			Pokemon freshYou = this.clone();
@@ -1787,6 +1788,8 @@ public class Pokemon implements Serializable {
 				if (getImmune(foe, moveType) || (moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST)) {
 					if (this.ability == Ability.SCRAPPY && (moveType == PType.NORMAL || moveType == PType.FIGHTING)) {
 						// Nothing: scrappy allows normal and fighting type moves to hit ghosts
+					} else if (this.ability == Ability.CORROSION && moveType == PType.POISON) {
+						// Nothing: corrosion allows poison moves to hit steel
 					} else {
 						if (foeAbility == Ability.FRIENDLY_GHOST && moveType == PType.GHOST) addAbilityTask(foe);
 						addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
@@ -3024,6 +3027,8 @@ public class Pokemon implements Serializable {
 			foe.burn(false, this);
 		} else if (move == Move.SHADOW_BALL) {
 			stat(foe, 3, -1, this);
+		} else if (move == Move.SIGNAL_BEAM) {
+			foe.confuse(false, this);
 		} else if (move == Move.SILVER_WIND) {
 			for (int i = 0; i < 5; ++i) {
 				stat(this, i, 1, foe);
@@ -3163,6 +3168,14 @@ public class Pokemon implements Serializable {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.VENOM_SPIT) {
 			foe.paralyze(false, this);
+		} else if (move == Move.VENOSTEEL_CROSSCUT) {
+			Random random = new Random();
+			boolean type = random.nextBoolean();
+			if (type) {
+				foe.paralyze(false, this);
+			} else {
+				foe.toxic(false, this);
+			}
 		} else if (move == Move.VOLT_TACKLE) {
 			foe.paralyze(false, this);
 		} else if (move == Move.V$CREATE) {
@@ -4482,6 +4495,7 @@ public class Pokemon implements Serializable {
 		public static final int TURN = 32; // counter: 0 = down, 1 = up, 2 = left, 3 = right
 		public static final int FLAG = 33; // start: x finish: y
 		public static final int REGIONAL_TRADE = 34;
+		public static final int BATTLE = 35; // counter: trainer
 		
 		public int type;
 		public String message;
