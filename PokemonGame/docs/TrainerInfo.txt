@@ -121,6 +121,14 @@ Trainer W                   Gyarados Lv. 20 @ (Focus Band)
 
 Route 26------------------------------------------
 
+Trainer Scott 2             Ninjask Lv. 29, Charjabug Lv. 29, Maguide Lv. 30, Rhypo Lv. 31
+
+Scott 2
+Ninjask (Lv. 29) @ Focus Sash           /   Speed Boost    /   Dragon Claw, Smack Down, Bug Bite, Aerial Ace
+Charjabug (Lv. 29) @ Lum Berry          /   Static         /   Spark, Bug Bite, Sticky Web, Bite
+Maguide (Lv. 30) @ Sitrus Berry         /   Dry Skin       /   Bulldoze, Headbutt, Lava Plume, Iron Defense
+Rhypo (Lv. 31) @ Passho Berry           /   Rattled        /   Aerial Ace, Bulldoze, Stealth Rock, Stomp
+
 Trainer AB1                 Blaxer-S Lv. 19, Poof Lv. 20 @ (Scope Lens, Leftovers)
 Trainer AC1                 Wormite-S Lv. 19, Poov Lv. 20 @ (Focus Sash, Roseli Berry)
 Trainer X                   Sheltor Lv. 21, Timburr Lv. 22 @ (Leftovers, Custap Berry)
@@ -213,6 +221,40 @@ Trainer MS B                Flameruff Lv. 31, Cluuz Lv. 30, Electroram Lv. 31 @ 
 Trainer MS C                Bronzor Lv. 32, Butterfree Lv. 30, Solosis Lv. 31, Duosion Lv. 32, Swalot Lv. 30 @ (Leftovers, Focus Sash, Quick Claw, Sitrus Berry, Leftovers)
 Trainer MS D                Crobat Lv. 51, Zurrclu Lv. 53 @ (Power Herb, Eviolite)
 
+Kleine Village------------------------------------
+
+Trainer Fred 2              Flamehox Lv. 32, Gyarados-E Lv. 31, Torgged Lv. 33, Psylotter Lv. 34
+
+Fred 2
+Flamehox (Lv. 32) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud-Slap
+Gyarados-E (Lv. 31) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Zing Zap, Dragon Rage
+Torgged (Lv. 33) @ Expert Belt          /   Rough Skin     /   Magnitude, Rock Tomb, Sleep Powder, Mega Drain
+Psylotter (Lv. 34) @ Rocky Helmet       /   Water Veil     /   Psybeam, Bubblebeam, Aqua Veil, Confuse Ray
+
+Trainer Possessed A         Grafaiai Lv. 32, HammyBoy Lv. 32 @ (Shuca Berry, Lum Berry)
+Trainer Possessed C         Snom Lv. 75, Sneasel Lv. 32 @ (Sitrus Berry, None)
+Trainer Possessed H         Crobat Lv. 32, Flashclaw Lv. 33 @ (Choice Band, Sharp Beak)
+Trainer Possessed D         Boulder-E Lv. 32, Boulder Lv. 32 @ (Covert Cloak, Quick Claw)
+Trainer Possessed N         Duosion-X Lv. 32, Vinnie Lv. 32 @ (Eviolite, Scope Lens)
+Trainer Possessed O         Kissyfishy Lv. 32, Dualbear Lv. 32 @ (Bright Powder, Choice Band)
+Trainer Possessed K         Spinaquata Lv. 32, Dragee Lv. 34 @ (Kebia Berry, Weakness Policy)
+Trainer Possessed G         Fightorex Lv. 33, Electroram Lv. 32 @ (None, Sitrus Berry)
+Trainer Possessed P         Plasamp Lv. 32, Swalot-X Lv. 32 @ (None, Leftovers)
+Trainer 3 Gym A             Swadloon Lv. 29, Bugop Lv. 29, Swadloon Lv. 30, Leavanny Lv. 31 @ (Coba Berry, Focus Sash, Occa Berry, Choice Band)
+Trainer 3 Gym B             Centatle Lv. 30, Charjabug Lv. 31, Swordik Lv. 32 @ (Sitrus Berry, Lum Berry, Focus Band)
+Trainer 3 Gym C             Snom Lv. 31, Frosmoth Lv. 31 @ (None, Charti Berry)
+Trainer 3 Gym D             Centatle Lv. 31, Millistone Lv. 31 @ (Leftovers, Leftovers)
+Trainer 3 Gym Leader 1      Millistone Lv. 31, Vikavolt Lv. 32, Leavanny Lv. 32, Swordik Lv. 32, Opwing Lv. 32, Frosmoth Lv. 33
+
+3 Gym Leader 1
+Millistone (Lv. 31) @ Wiki Berry        /   Compound Eyes  /   Fell Stinger, Iron Tail, Stone Edge, Stealth Rock
+Vikavolt (Lv. 32) @ Wise Glasses        /   Levitate       /   Sticky Web, Thunderbolt, Bug Buzz, Thunder Wave
+Leavanny (Lv. 32) @ Coba Berry          /   Sharpness      /   Leaf Blade, X-Scissor, Fell Stinger, Swords Dance
+Swordik (Lv. 32) @ Life Orb             /   Hyper Cutter   /   First Impression, U-Turn, Close Combat, Rock Slide
+Opwing (Lv. 32) @ Lum Berry             /   Technician     /   Bug Bite, Moonlight, Feint Attack, Fell Stinger
+Frosmoth (Lv. 33) @ Heavy-Duty Boots    /   Icy Scales     /   Aurora Beam, Bug Buzz, Snowscape, Quiver Dance
+
+
 Route 27------------------------------------------
 
 Trainer AG                  Bugop Lv. 30, Malamar Lv. 31 @ (Choice Band, Tanga Berry)
@@ -238,32 +280,6 @@ Trainer Possessed L         Hissimitar Lv. 32, Bronzong Lv. 33 @ (Shuca Berry, T
 Trainer Possessed I         Kadabra Lv. 32, Duosion Lv. 33 @ (Focus Sash, Rocky Helmet)
 Trainer Possessed E         Scraggy Lv. 32, Flamigo Lv. 32 @ (Life Orb, Wide Lens)
 Trainer Possessed F         Glimmet Lv. 32, Sneasel-H Lv. 32 @ (Focus Sash, Payapa Berry)
-
-Kleine Village------------------------------------
-
-Trainer Possessed A         Grafaiai Lv. 32, HammyBoy Lv. 32 @ (Shuca Berry, Lum Berry)
-Trainer Possessed C         Snom Lv. 75, Sneasel Lv. 32 @ (Sitrus Berry, None)
-Trainer Possessed H         Crobat Lv. 32, Flashclaw Lv. 33 @ (Choice Band, Sharp Beak)
-Trainer Possessed D         Boulder-E Lv. 32, Boulder Lv. 32 @ (Covert Cloak, Quick Claw)
-Trainer Possessed N         Duosion-X Lv. 32, Vinnie Lv. 32 @ (Eviolite, Scope Lens)
-Trainer Possessed O         Kissyfishy Lv. 32, Dualbear Lv. 32 @ (Bright Powder, Choice Band)
-Trainer Possessed K         Spinaquata Lv. 32, Dragee Lv. 34 @ (Kebia Berry, Weakness Policy)
-Trainer Possessed G         Fightorex Lv. 33, Electroram Lv. 32 @ (None, Sitrus Berry)
-Trainer Possessed P         Plasamp Lv. 32, Swalot-X Lv. 32 @ (None, Leftovers)
-Trainer 3 Gym A             Swadloon Lv. 29, Bugop Lv. 29, Swadloon Lv. 30, Leavanny Lv. 31 @ (Coba Berry, Focus Sash, Occa Berry, Choice Band)
-Trainer 3 Gym B             Centatle Lv. 30, Charjabug Lv. 31, Swordik Lv. 32 @ (Sitrus Berry, Lum Berry, Focus Band)
-Trainer 3 Gym C             Snom Lv. 31, Frosmoth Lv. 31 @ (None, Charti Berry)
-Trainer 3 Gym D             Centatle Lv. 31, Millistone Lv. 31 @ (Leftovers, Leftovers)
-Trainer 3 Gym Leader 1      Millistone Lv. 31, Vikavolt Lv. 32, Leavanny Lv. 32, Swordik Lv. 32, Opwing Lv. 32, Frosmoth Lv. 33
-
-3 Gym Leader 1
-Millistone (Lv. 31) @ Wiki Berry        /   Compound Eyes  /   Fell Stinger, Iron Tail, Stone Edge, Stealth Rock
-Vikavolt (Lv. 32) @ Wise Glasses        /   Levitate       /   Sticky Web, Thunderbolt, Bug Buzz, Thunder Wave
-Leavanny (Lv. 32) @ Coba Berry          /   Sharpness      /   Leaf Blade, X-Scissor, Fell Stinger, Swords Dance
-Swordik (Lv. 32) @ Life Orb             /   Hyper Cutter   /   First Impression, U-Turn, Close Combat, Rock Slide
-Opwing (Lv. 32) @ Lum Berry             /   Technician     /   Bug Bite, Moonlight, Feint Attack, Fell Stinger
-Frosmoth (Lv. 33) @ Heavy-Duty Boots    /   Icy Scales     /   Aurora Beam, Bug Buzz, Snowscape, Quiver Dance
-
 
 Route 41------------------------------------------
 

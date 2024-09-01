@@ -47,6 +47,10 @@ public class Entity {
 	}
 	
 	public BufferedImage setup(String imageName) {
+		return setup(imageName, true);
+	}
+	
+	public BufferedImage setup(String imageName, boolean setHitbox) {
 		BufferedImage image = null;
 		
 		try {
@@ -54,6 +58,14 @@ public class Entity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		if (setHitbox) {
+			int height = image.getHeight() * gp.scale;
+			int offset = height - gp.tileSize;
+			
+			solidArea = new Rectangle(0, 0 - offset, 48, height);
+		}
+		
 		return image;
 	}
 
@@ -94,7 +106,10 @@ public class Entity {
 				break;
 			}
 			
-			g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+			int height = image.getHeight() * gp.scale;
+			int offset = height - gp.tileSize;
+			
+			g2.drawImage(image, screenX, screenY - offset, gp.tileSize, height, null);
 		}
 		
 	}
