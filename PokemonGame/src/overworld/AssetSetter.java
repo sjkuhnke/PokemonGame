@@ -2740,7 +2740,10 @@ public class AssetSetter {
 		switch (type) {
 			case BLOCK_DEFAULT:
 			default:
-				image = result.setup("/npc/block");
+				image = result.setup("/npc/block1");
+				break;
+			case AVERY:
+				image = result.setup("/npc/magician1");
 				break;
 			case ROBIN:
 				image = result.setup("/npc/robin");

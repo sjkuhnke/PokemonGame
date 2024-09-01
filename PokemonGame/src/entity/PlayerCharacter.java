@@ -71,13 +71,9 @@ public class PlayerCharacter extends Entity {
 		screenX = gp.screenWidth / 2 - (gp.tileSize/2);
 		screenY = gp.screenHeight / 2 - (gp.tileSize/2);
 		
-		solidArea = new Rectangle();
-		solidArea.x = 8;
-		solidArea.y = 16;
+		solidArea = new Rectangle(8, 16, 32, 32);
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
-		solidArea.width = 32;
-		solidArea.height = 32;
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -91,19 +87,19 @@ public class PlayerCharacter extends Entity {
 		direction = "down";
 	}
 	public void getPlayerImage() {
-		up1 = setup("/player/red2");
-		up2 = setup("/player/red2_1");
-		down1 = setup("/player/red1");
-		down2 = setup("/player/red1_1");
-		left1 = setup("/player/red3");
-		left2 = setup("/player/red3_1");
-		right1 = setup("/player/red4");
-		right2 = setup("/player/red4_1");
+		up1 = setup("/player/red2", false);
+		up2 = setup("/player/red2_1", false);
+		down1 = setup("/npc/ryder1", false);
+		down2 = setup("/player/red1_1", false);
+		left1 = setup("/player/red3", false);
+		left2 = setup("/player/red3_1", false);
+		right1 = setup("/player/red4", false);
+		right2 = setup("/player/red4_1", false);
 		
-		surf1 = setup("/player/surf1");
-		surf2 = setup("/player/surf2");
-		surf3 = setup("/player/surf3");
-		surf4 = setup("/player/surf4");
+		surf1 = setup("/player/surf1", false);
+		surf2 = setup("/player/surf2", false);
+		surf3 = setup("/player/surf3", false);
+		surf4 = setup("/player/surf4", false);
 	}
 	
 	public void update() {
@@ -1571,7 +1567,11 @@ public class PlayerCharacter extends Entity {
 			if (p.surf || p.lavasurf) image = surf4;
 			break;
 		}
-		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+		
+		int height = image.getHeight() * gp.scale;
+		int offset = height - gp.tileSize;
+		
+		g2.drawImage(image, screenX, screenY - offset, gp.tileSize, height, null);
 	}
 	
 	public Item[] getItems() {
