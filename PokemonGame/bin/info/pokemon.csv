@@ -281,12 +281,12 @@
 -9 |Capsakid-S   |GRASS   |GHOST   |CHLOROPHYLL       |PICKPOCKET        |FLASH_FIRE        |[45, 67, 40, 47, 40, 65]      |3.6   |160|
 -10|Scovillain-S |GRASS   |DARK    |CHLOROPHYLL       |INSECT_FEEDER     |FLASH_FIRE        |[65, 113, 60, 103, 65, 80]    |35.1  |70 |
 -11|Despenero-S  |GRASS   |DARK    |CHLOROPHYLL       |INSECT_FEEDER     |FLASH_FIRE        |[84, 118, 75, 108, 75, 90]    |116.7 |25 |
-234|Cage Critter |GALACTIC|BUG     |SCRAPPY           |UNBURDEN          |TALENTED          |[83, 79, 83, 157, 67, 101]    |81.6  |5  |
-235|Icy Serpent  |ICE     |LIGHT   |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |5  |
-236|Shocky Spire |WATER   |STEEL   |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |5  |
-237|Dust Sorcerer|GROUND  |FLYING  |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |5  |
-238|Fever Dream  |FIRE    |ICE     |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |5  |
-239|Dusk Skater  |DARK    |STEEL   |SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |5  |
+234|Cage Critter |GALACTIC|BUG     |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[83, 79, 83, 157, 67, 101]    |280.5 |5  |
+235|Icy Serpent  |ICE     |LIGHT   |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[82, 115, 74, 75, 64, 90]     |81.6  |5  |
+236|Shocky Spire |WATER   |STEEL   |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[82, 115, 74, 75, 64, 90]     |81.6  |5  |
+237|Dust Sorcerer|GROUND  |FLYING  |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[82, 115, 74, 75, 64, 90]     |81.6  |5  |
+238|Fever Dream  |FIRE    |ICE     |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[82, 115, 74, 75, 64, 90]     |81.6  |5  |
+239|Dusk Skater  |DARK    |STEEL   |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[82, 115, 74, 75, 64, 90]     |81.6  |5  |
 248|Necrozma     |LIGHT   |DARK    |SCRAPPY           |UNBURDEN          |TALENTED          |[97, 107, 111, 147, 99, 119]  |507.1 |3  |
 0  |Necrozma-Ult |LIGHT   |DARK    |SCRAPPY           |UNBURDEN          |TALENTED          |[97, 147, 97, 187, 97, 129]   |507.1 |3  |
 104|Azurill      |WATER   |NORMAL  |THICK_FAT         |HUGE_POWER        |SAP_SIPPER        |[50, 20, 40, 20, 40, 20]      |4.4   |150|

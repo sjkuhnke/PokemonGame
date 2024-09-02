@@ -1067,6 +1067,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 75, 69, 202);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 78, 83, 203);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 85, 28, -1);
+		gp.npc[mapNum][index++] = null;
 		
 		mapNum = 31;
 		index = 0;
@@ -2526,9 +2527,13 @@ public class AssetSetter {
 		}
 		if (flag[2][12]) {
 			gp.npc[28][2] = null;
-			for (int i = 19; i <= 35; i++) {
+			for (int i = 19; i <= 34; i++) {
 				gp.npc[28][i] = null;
 			}
+			gp.npc[28][38] = NPCSetup(MILLIE, 87, 45, "You... you really did it! You are a seriously impressive trainer.", true);
+		}
+		if (flag[2][13]) {
+			gp.npc[28][38] = null;
 		}
 		
 		/**

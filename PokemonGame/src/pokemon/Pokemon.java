@@ -2227,6 +2227,10 @@ public class Pokemon implements Serializable {
 					addAbilityTask(this);
 					stat(this, 0, 1, foe);
 				}
+				if (this.ability == Ability.BEAST_BOOST) {
+					addAbilityTask(this);
+					stat(this, getHighestStat(), 1, foe);
+				}
 			}
 			
 			if (recoil != 0) {
@@ -7508,6 +7512,19 @@ public class Pokemon implements Serializable {
 			result.add("Perish in " + perishCount);
 		}
 		return result;
+	}
+	
+	public int getHighestStat() {
+		int max = this.getStat(1);
+		int result = 1;
+		for (int i = result + 1; i < this.stats.length; i++) {
+			if (this.stats[i] > max) {
+				max = this.stats[i];
+				result = i;
+			}
+		}
+		
+		return --result;
 	}
 	
 	public void update() {

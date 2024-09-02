@@ -989,7 +989,7 @@ public class PlayerCharacter extends Entity {
 							}	
 						}
 					}
-				} else { // Player wiped, talked to her from the other side
+				} else if (worldY / gp.tileSize < 42) { // Player wiped, talked to her from the other side
 					Pokemon.addTask(Task.TEXT, "Oh, there you are. What happened?");
 					Pokemon.addTask(Task.TEXT, "They must have beaten you up... You're definitely a tough kid, but I need you back in there. Maybe be extra careful this time.");
 					Task t = Pokemon.addTask(Task.TELEPORT, "");
@@ -997,6 +997,28 @@ public class PlayerCharacter extends Entity {
 					t.start = 82;
 					t.finish = 36;
 					t.wipe = false;
+				} else { // millie 5
+					p.flag[2][13] = true;
+					Pokemon.addTask(Task.TEXT, "Even though bug Pokemon aren't as flimsy and weak as they seem, I still have a feeling that you'll be able to defeat me.");
+					Pokemon.addTask(Task.TEXT, "I mean, you were literally able to fend off a huge alien bug and save me and my town!");
+					Pokemon.addTask(Task.TEXT, "Have you noticed the big openings in the Earth around this area? There's lots more around this region.");
+					Pokemon.addTask(Task.TEXT, "There's a pretty interesting myth that the terrain wasn't always so rough, and that it's actually the result of an ancient war that happened.");
+					Pokemon.addTask(Task.TEXT, "According to the myth, there used to be a cult-like following of an all-powerful diety that apparently created the Pokemon and people living here!");
+					Pokemon.addTask(Task.TEXT, "But once people discovered the existance of alien Pokemon and the Galactic type, their religion was proven obsolete by the athiests.");
+					Pokemon.addTask(Task.TEXT, "Or at least the athiests tried to disprove it that way. As you can imagine, it didn't go over too well with the believers, erupting in the massive conflict.");
+					Pokemon.addTask(Task.TEXT, "Apparently the destruction of the terrain was actually caused by the leaders of each group fighting, who are rumored to both be powerful Pokemon.");
+					Pokemon.addTask(Task.TEXT, "But, as one of my favorite creators would say, that's \"just a theory\", after all.");
+					Pokemon.addTask(Task.TEXT, "I do like thinking about it though, it's pretty interesting, wouldn't you agree?");
+					Pokemon.addTask(Task.TEXT, "..What's that? Oh right! Silly me, I was going to give you a technique to help traverse the gaps!");
+					Pokemon.addTask(Task.TEXT, "I just got side-tracked thinking about all of the cool films that could be made about that myth. It's a pretty popular one around here!");
+					Pokemon.addTask(Task.TEXT, "Anyways, I'm only giving you this technique because even though you can't use it until you beat me, I know you have the skills to do it.");
+					Task t = Pokemon.addTask(Task.ITEM, "");
+					t.item = Item.HM03;
+					Pokemon.addTask(Task.TEXT, "Come fight me inside when you're ready, I know it'll be an amazing battle. Maybe even one we'll turn into a film when you're a world-famous trainer someday!");
+					Pokemon.addTask(Task.TEXT, "Good luck, my friend. You're going to need it! EEK I'm so excited!!");
+					Pokemon.addTask(Task.FLASH_IN, "");
+					Pokemon.addTask(Task.UPDATE, "");
+					Pokemon.addTask(Task.FLASH_OUT, "");
 				}
 			}
 		}
