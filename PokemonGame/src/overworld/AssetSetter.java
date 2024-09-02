@@ -1,7 +1,6 @@
 package overworld;
 
 import java.awt.image.BufferedImage;
-import java.nio.file.FileSystemLoopException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -37,7 +36,6 @@ import object.Whirlpool;
 import object.Whirlpool_Corner;
 import object.Whirlpool_Side;
 import pokemon.Item;
-import pokemon.Pokemon;
 
 public class AssetSetter {
 
@@ -821,8 +819,8 @@ public class AssetSetter {
 		
 		mapNum = 4;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 81, 61, "Sorry, but the gym leader has been busy with mail these past few weeks, so gym battles are unavailable. You may check the post office for more details.");
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 66, 79, "Yo, scram kid! This is some top secret space operation that you don't got the clearance to see! Move it!", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 81, 62, "Sorry, but the gym leader has been busy with mail these past few weeks, so gym battles are unavailable. You may check the post office for more details.");
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 66, 80, "Yo, scram kid! This is some top secret space operation that you don't got the clearance to see! Move it!", true);
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 32, 62, 18);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 23, 65, 19); // make way lower levels
@@ -1050,10 +1048,10 @@ public class AssetSetter {
 		
 		// Possessed trainers (will clear)
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 37, 370); // normal
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 80, 24, 382); // dark
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 84, 24, 371); // electric
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 84, 23, 379); // ghost
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 80, 23, 381); // steel
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 80, 24, 382); // dark
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 84, 24, 371); // electric
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 25, 378); // psychic
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 87, 31, 374); // fighting
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 77, 31, 375); // poison
@@ -2706,6 +2704,7 @@ public class AssetSetter {
 			break;
 		case NPC_PC_GAUNTLET:
 			result = new NPC_PC(gp, true);
+			result.down1 = result.setup("/npc/gauntletbox");
 			break;
 		}
 		
@@ -2742,8 +2741,14 @@ public class AssetSetter {
 			default:
 				image = result.setup("/npc/block1");
 				break;
+			case PROFESSOR:
+				image = result.setup("/npc/professor");
+				break;
+			case GRANDMOTHER:
+				image = result.setup("/npc/grandma");
+				break;
 			case AVERY:
-				image = result.setup("/npc/magician1");
+				image = result.setup("/npc/avery1");
 				break;
 			case ROBIN:
 				image = result.setup("/npc/robin");
@@ -2789,7 +2794,6 @@ public class AssetSetter {
 	
 	private ItemObj ObjSetup(int x, int y, Item item, int mapNum, int lower, int upper) {
 		if (gp.player.p.itemsCollected[mapNum][objIndex] == true) {
-			if (mapNum == 26) System.out.println(mapNum + " " + objIndex);
 			objIndex++;
 			return null;
 		}

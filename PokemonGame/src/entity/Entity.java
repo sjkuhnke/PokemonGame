@@ -105,11 +105,13 @@ public class Entity {
 				image = right2;
 				break;
 			}
+			int width = image.getWidth() * gp.scale;
+			int wOffset = (width - gp.tileSize) / 2;
 			
 			int height = image.getHeight() * gp.scale;
-			int offset = height - gp.tileSize;
+			int hOffset = height - gp.tileSize;
 			
-			g2.drawImage(image, screenX, screenY - offset, gp.tileSize, height, null);
+			g2.drawImage(image, screenX - wOffset, screenY - hOffset, width, height, null);
 		}
 		
 	}

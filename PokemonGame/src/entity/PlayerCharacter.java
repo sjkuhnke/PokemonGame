@@ -64,6 +64,8 @@ public class PlayerCharacter extends Entity {
 	
 	public static String currentMapName;
 	
+	private BufferedImage up3, up4, down3, down4, left3, left4, right3, right4;
+	
 	public PlayerCharacter(GamePanel gp, KeyHandler keyH) {
 		super(gp);
 		this.keyH = keyH;
@@ -89,12 +91,20 @@ public class PlayerCharacter extends Entity {
 	public void getPlayerImage() {
 		up1 = setup("/player/red2", false);
 		up2 = setup("/player/red2_1", false);
-		down1 = setup("/npc/ryder1", false);
+		up3 = setup("/player/red2_2", false);
+		up4 = setup("/player/red2_3", false);
+		down1 = setup("/player/red1", false);
 		down2 = setup("/player/red1_1", false);
+		down3 = setup("/player/red1_2", false);
+		down4 = setup("/player/red1_3", false);
 		left1 = setup("/player/red3", false);
 		left2 = setup("/player/red3_1", false);
+		left3 = setup("/player/red3_2", false);
+		left4 = setup("/player/red3_3", false);
 		right1 = setup("/player/red4", false);
 		right2 = setup("/player/red4_1", false);
+		right3 = setup("/player/red4_2", false);
+		right4 = setup("/player/red4_3", false);
 		
 		surf1 = setup("/player/surf1", false);
 		surf2 = setup("/player/surf2", false);
@@ -146,10 +156,8 @@ public class PlayerCharacter extends Entity {
 			}
 			
 			if (spriteCounter > 8) {
-				if (spriteNum == 1) {
-					spriteNum = 2;
-				}
-				else if (spriteNum == 2) {
+				spriteNum++;
+				if (spriteNum > 4) {
 					spriteNum = 1;
 				}
 				spriteCounter = 0;
@@ -1549,21 +1557,29 @@ public class PlayerCharacter extends Entity {
 		case "up":
 			if (spriteNum == 1) image = up1;
 			if (spriteNum == 2) image = up2;
+			if (spriteNum == 3) image = up3;
+			if (spriteNum == 4) image = up4;
 			if (p.surf || p.lavasurf) image = surf2;
 			break;
 		case "down":
 			if (spriteNum == 1) image = down1;
 			if (spriteNum == 2) image = down2;
+			if (spriteNum == 3) image = down3;
+			if (spriteNum == 4) image = down4;
 			if (p.surf || p.lavasurf) image = surf1;
 			break;
 		case "left":
 			if (spriteNum == 1) image = left1;
 			if (spriteNum == 2) image = left2;
+			if (spriteNum == 3) image = left3;
+			if (spriteNum == 4) image = left4;
 			if (p.surf || p.lavasurf) image = surf3;
 			break;
 		case "right":
 			if (spriteNum == 1) image = right1;
 			if (spriteNum == 2) image = right2;
+			if (spriteNum == 3) image = right3;
+			if (spriteNum == 4) image = right4;
 			if (p.surf || p.lavasurf) image = surf4;
 			break;
 		}

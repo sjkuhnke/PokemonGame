@@ -424,7 +424,8 @@ public class UI extends AbstractUI{
 			String descriptor = !currentTask.item.isTM() ? "the " : "";
 			String itemName = currentTask.item.toString();
 			if (currentTask.counter > 1 && itemName.contains("Berry")) itemName = itemName.replace("Berry", "Berries");
-			currentDialogue = "Put " + descriptor + itemName + " in the " + Item.getPocketName(currentTask.item.getPocket()) + " pocket!";
+			String message = "Put " + descriptor + itemName + " in the " + Item.getPocketName(currentTask.item.getPocket()) + " pocket!";
+			currentDialogue = Item.breakString(message, 42);
 			image = bagIcons[currentTask.item.getPocket() - 1];
 		}
 		drawDialogueScreen(true);
