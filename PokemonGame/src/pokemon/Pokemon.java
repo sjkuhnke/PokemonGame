@@ -260,6 +260,8 @@ public class Pokemon implements Serializable {
 		lostItem = pokemon.lostItem;
 		consumedItem = pokemon.consumedItem;
 		
+		metAt = pokemon.metAt;
+		
 		moveMultiplier = pokemon.moveMultiplier;
 		
 		visible = pokemon.visible;

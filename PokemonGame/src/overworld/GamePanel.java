@@ -171,13 +171,6 @@ public class GamePanel extends JPanel implements Runnable {
 			// Draw Tiles
 			tileM.draw(g2);
 			
-			// Draw NPCs
-			for (int i = 0; i < npc[1].length; i++) {
-				if (npc[currentMap][i] != null) {
-					npc[currentMap][i].draw(g2);
-				}
-			}
-			
 			// Draw Items
 			for (int i = 0; i < obj[1].length; i++) {
 				if (obj[currentMap][i] != null) {
@@ -189,6 +182,13 @@ public class GamePanel extends JPanel implements Runnable {
 			for (int i = 0; i < iTile[1].length; i++) {
 				if (iTile[currentMap][i] != null) {
 					iTile[currentMap][i].draw(g2);
+				}
+			}
+			
+			// Draw NPCs
+			for (int i = 0; i < npc[1].length; i++) {
+				if (npc[currentMap][i] != null) {
+					npc[currentMap][i].draw(g2);
 				}
 			}
 			
