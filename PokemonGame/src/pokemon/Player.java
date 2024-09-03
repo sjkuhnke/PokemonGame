@@ -6,6 +6,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -462,7 +463,8 @@ public class Player extends Trainer implements Serializable {
 			String filePath = "./docs/trainers.txt";
 
 		    try {
-		        String data = Files.readString(Paths.get(filePath));
+		        byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
+		        String data = new String(fileBytes, StandardCharsets.UTF_8);
 
 		        String[] entries = data.split(",");
 		        for (int i = 0; i < trainersBeat.length; i++) {
@@ -477,7 +479,8 @@ public class Player extends Trainer implements Serializable {
 			String filePath = "./docs/items.txt";
 
 		    try {
-		        String data = Files.readString(Paths.get(filePath));
+		    	byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
+		        String data = new String(fileBytes, StandardCharsets.UTF_8);
 
 		        String[] rows = data.split("\n");
 		        int numRows = rows.length;

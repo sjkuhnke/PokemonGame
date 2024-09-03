@@ -1,12 +1,5 @@
-/entity/
-/object/
-/overworld/
 /pokemon/
-/sprites/
-/tile/
-/tiles/
-/tools/
+/entity/
+/overworld/
 /info/
 /npc/
-/player/
-/maps/

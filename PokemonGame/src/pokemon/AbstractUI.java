@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
+import entity.Entity;
 import overworld.GamePanel;
 import pokemon.Pokemon.Task;
 
@@ -38,6 +39,8 @@ public abstract class AbstractUI {
 	
 	public Task currentTask;
 	public ArrayList<Task> tasks;
+	
+	public Entity entity;
 	
 	public StringBuilder nickname = new StringBuilder();
 	public int nicknaming = -1;

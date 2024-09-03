@@ -1066,8 +1066,8 @@ public class AssetSetter {
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 75, 69, 202);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 78, 83, 203);
-		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 85, 28, -1);
-		gp.npc[mapNum][index++] = null;
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 83, 33, -1);
+		gp.npc[mapNum][index++] = null; // millie 5
 		
 		mapNum = 31;
 		index = 0;
@@ -1198,7 +1198,7 @@ public class AssetSetter {
 		
 		mapNum = 49;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Deep below ELECTRIC TUNNEL there's a secret trail called SHADOW PATH.", 13, true, "Now don't go telling the feds I gave you that. It's definitely illegal.");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 31, 41, "Deep below ELECTRIC TUNNEL there's a secret trail called SHADOW PATH.", 78, true, "Now don't go telling the feds I gave you that. It's definitely illegal.");
 		
 		mapNum = 50;
 		index = 0;

@@ -121,13 +121,13 @@ Trainer W                   Gyarados Lv. 20 @ (Focus Band)
 
 Route 26------------------------------------------
 
-Trainer Scott 2             Ninjask Lv. 29, Charjabug Lv. 29, Maguide Lv. 30, Rhypo Lv. 31
+Trainer Scott 2             Ninjask Lv. 29, Charjabug Lv. 29, Maguide Lv. 30, Rhynee Lv. 31
 
 Scott 2
 Ninjask (Lv. 29) @ Focus Sash           /   Speed Boost    /   Dragon Claw, Smack Down, Bug Bite, Aerial Ace
 Charjabug (Lv. 29) @ Lum Berry          /   Static         /   Spark, Bug Bite, Sticky Web, Bite
 Maguide (Lv. 30) @ Sitrus Berry         /   Dry Skin       /   Bulldoze, Headbutt, Lava Plume, Iron Defense
-Rhypo (Lv. 31) @ Passho Berry           /   Rattled        /   Aerial Ace, Bulldoze, Stealth Rock, Stomp
+Rhynee (Lv. 31) @ Passho Berry          /   Sand Stream    /   Aerial Ace, Bulldoze, Stealth Rock, Stomp
 
 Trainer AB1                 Blaxer-S Lv. 19, Poof Lv. 20 @ (Scope Lens, Leftovers)
 Trainer AC1                 Wormite-S Lv. 19, Poov Lv. 20 @ (Focus Sash, Roseli Berry)
@@ -223,22 +223,22 @@ Trainer MS D                Crobat Lv. 51, Zurrclu Lv. 53 @ (Power Herb, Eviolit
 
 Kleine Village------------------------------------
 
-Trainer Fred 2              Flamehox Lv. 32, Gyarados-E Lv. 31, Torgged Lv. 33, Psylotter Lv. 34
+Trainer Fred 2              Flamehox Lv. 32, Gyarados-E Lv. 31, Torgged Lv. 33, Psylotter Lv. 33
 
 Fred 2
 Flamehox (Lv. 32) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud-Slap
 Gyarados-E (Lv. 31) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Zing Zap, Dragon Rage
 Torgged (Lv. 33) @ Expert Belt          /   Rough Skin     /   Magnitude, Rock Tomb, Sleep Powder, Mega Drain
-Psylotter (Lv. 34) @ Rocky Helmet       /   Water Veil     /   Psybeam, Bubblebeam, Aqua Veil, Confuse Ray
+Psylotter (Lv. 33) @ Rocky Helmet       /   Water Veil     /   Psybeam, Bubblebeam, Aqua Veil, Confuse Ray
 
-Trainer Possessed A         Grafaiai Lv. 32, HammyBoy Lv. 32 @ (Shuca Berry, Lum Berry)
+Trainer Possessed A         Grafaiai Lv. 31, HammyBoy Lv. 32 @ (Shuca Berry, Lum Berry)
 Trainer Possessed C         Snom Lv. 75, Sneasel Lv. 32 @ (Sitrus Berry, None)
 Trainer Possessed H         Crobat Lv. 32, Flashclaw Lv. 33 @ (Choice Band, Sharp Beak)
-Trainer Possessed D         Boulder-E Lv. 32, Boulder Lv. 32 @ (Covert Cloak, Quick Claw)
+Trainer Possessed D         Boulder-E Lv. 33, Boulder Lv. 32 @ (Covert Cloak, Quick Claw)
 Trainer Possessed N         Duosion-X Lv. 32, Vinnie Lv. 32 @ (Eviolite, Scope Lens)
 Trainer Possessed O         Kissyfishy Lv. 32, Dualbear Lv. 32 @ (Bright Powder, Choice Band)
-Trainer Possessed K         Spinaquata Lv. 32, Dragee Lv. 34 @ (Kebia Berry, Weakness Policy)
-Trainer Possessed G         Fightorex Lv. 33, Electroram Lv. 32 @ (None, Sitrus Berry)
+Trainer Possessed K         Spinaquata Lv. 32, Dragee Lv. 33 @ (Kebia Berry, Weakness Policy)
+Trainer Possessed G         Fightorex Lv. 32, Electroram Lv. 32 @ (None, Sitrus Berry)
 Trainer Possessed P         Plasamp Lv. 32, Swalot-X Lv. 32 @ (None, Leftovers)
 Trainer 3 Gym A             Swadloon Lv. 29, Bugop Lv. 29, Swadloon Lv. 30, Leavanny Lv. 31 @ (Coba Berry, Focus Sash, Occa Berry, Choice Band)
 Trainer 3 Gym B             Centatle Lv. 30, Charjabug Lv. 31, Swordik Lv. 32 @ (Sitrus Berry, Lum Berry, Focus Band)
@@ -257,7 +257,7 @@ Frosmoth (Lv. 33) @ Heavy-Duty Boots    /   Icy Scales     /   Aurora Beam, Bug 
 
 Route 27------------------------------------------
 
-Trainer AG                  Bugop Lv. 30, Malamar Lv. 31 @ (Choice Band, Tanga Berry)
+Trainer AG                  Opwing Lv. 30, Malamar Lv. 31 @ (Choice Band, Tanga Berry)
 Trainer AH                  Magmaclang Lv. 31 @ (Lum Berry)
 Trainer AB                  Gardevoir Lv. 30, Psycorb Lv. 31, Kirlia Lv. 31, Hattrem Lv. 32, Psylotter Lv. 31 @ (Rindo Berry, Terrain Extender, Tanga Berry, Colbur Berry, Focus Band)
 Trainer AI                  Tigrette Lv. 31, Bluebunn Lv. 32 @ (Salac Berry, Leftovers)
@@ -272,14 +272,14 @@ Cell Park-----------------------------------------
 Trainer RR A                Binacle Lv. 32, Sealeo Lv. 32 @ (Rindo Berry, Leftovers)
 Trainer RR B                Treewin Lv. 32, Roselia Lv. 32 @ (Hard Stone, Rocky Helmet)
 Trainer RR C                Sparkitten Lv. 32, Splame Lv. 32 @ (Wiki Berry, Charcoal)
-Trainer RR D                Blaxer Lv. 33, Gyarados-E Lv. 32, Arbok Lv. 33, Elgyem-E Lv. 33, Butterfree Lv. 34 @ (Assault Vest, Air Balloon, Clear Amulet, Focus Band, Red Card)
+Trainer RR D                Blaxer Lv. 32, Gyarados-E Lv. 32, Arbok Lv. 33, Elgyem-E Lv. 33, Butterfree Lv. 34 @ (Assault Vest, Air Balloon, Clear Amulet, Focus Band, Red Card)
+Trainer Possessed J         Bronzong-X Lv. 33, Zurrclu Lv. 33 @ (Red Card, Weakness Policy)
+Trainer Possessed L         Hissimitar Lv. 31, Bronzong Lv. 33 @ (Shuca Berry, Toxic Orb)
 Trainer Possessed M         Scovillain-S Lv. 32, Nightrex Lv. 32 @ (Loaded Dice, Assault Vest)
 Trainer Possessed B         Armoid-E Lv. 32, Shockfang Lv. 32 @ (Expert Belt, Big Root)
-Trainer Possessed J         Bronzong-X Lv. 33, Zurrclu Lv. 31 @ (Red Card, Weakness Policy)
-Trainer Possessed L         Hissimitar Lv. 32, Bronzong Lv. 33 @ (Shuca Berry, Toxic Orb)
-Trainer Possessed I         Kadabra Lv. 32, Duosion Lv. 33 @ (Focus Sash, Rocky Helmet)
-Trainer Possessed E         Scraggy Lv. 32, Flamigo Lv. 32 @ (Life Orb, Wide Lens)
-Trainer Possessed F         Glimmet Lv. 32, Sneasel-H Lv. 32 @ (Focus Sash, Payapa Berry)
+Trainer Possessed I         Kadabra Lv. 31, Duosion Lv. 32 @ (Focus Sash, Rocky Helmet)
+Trainer Possessed E         Scraggy Lv. 31, Flamigo Lv. 31 @ (Life Orb, Wide Lens)
+Trainer Possessed F         Glimmet Lv. 31, Sneasel-H Lv. 31 @ (Focus Sash, Payapa Berry)
 
 Route 41------------------------------------------
 
@@ -703,37 +703,37 @@ Trainer EY                  Drageye Lv. 80, Dompster-S Lv. 82, Blastflames Lv. 8
 Stats:
 Num,Pokemon,Amt,%
 1,Twigle,2,0.18%
-2,Torgged,3,0.28%
+2,Torgged,3,0.27%
 3,Tortugis,6,0.55%
 4,Lagma,2,0.18%
-5,Maguide,3,0.28%
-6,Magron,9,0.83%
+5,Maguide,3,0.27%
+6,Magron,9,0.82%
 7,Lizish,2,0.18%
-8,Iguaton,3,0.28%
+8,Iguaton,3,0.27%
 9,Dragave,6,0.55%
 10,Hummingspark,6,0.55%
-11,Flashclaw,3,0.28%
+11,Flashclaw,3,0.27%
 12,Magestiflash,8,0.73%
 13,Pigo,5,0.46%
 14,Pigonat,4,0.37%
 15,Pigoga,6,0.55%
 16,Hammo,6,0.55%
-17,HammyBoy,3,0.28%
+17,HammyBoy,3,0.27%
 18,Hamthorno,4,0.37%
 19,Sheabear,7,0.64%
 20,Dualbear,4,0.37%
-21,Spacebear,3,0.28%
+21,Spacebear,3,0.27%
 22,Bealtle,6,0.55%
-23,Centatle,3,0.28%
+23,Centatle,3,0.27%
 24,Curlatoral,6,0.55%
 25,Millistone,8,0.73%
-26,Sapwin,3,0.28%
+26,Sapwin,3,0.27%
 27,Treewin,6,0.55%
 28,Winagrow,6,0.55%
 29,Budew,2,0.18%
 30,Roselia,4,0.37%
 31,Roserade,8,0.73%
-32,Sewaddle,3,0.28%
+32,Sewaddle,3,0.27%
 33,Swadloon,5,0.46%
 34,Leavanny,10,0.92%
 35,Grubbin,2,0.18%
@@ -747,25 +747,25 @@ Num,Pokemon,Amt,%
 43,Ninjakik,4,0.37%
 44,Lotad,2,0.18%
 45,Lombre,2,0.18%
-46,Ludicolo,9,0.83%
+46,Ludicolo,9,0.82%
 47,Bluebunn,11,1.01%
 48,Rocky,1,0.09%
 49,Boulder,2,0.18%
 50,Blaster,5,0.46%
 51,Crystallor,6,0.55%
-52,Carinx,3,0.28%
+52,Carinx,3,0.27%
 53,Carinator,5,0.46%
 54,Cairnasaur,6,0.55%
 55,Pebblepup,2,0.18%
 56,Boulderoar,6,0.55%
 57,Fightorex,5,0.46%
-58,Raptorex,3,0.28%
-59,Kleinowl,3,0.28%
+58,Raptorex,3,0.27%
+59,Kleinowl,3,0.27%
 60,Hootowl,11,1.01%
 61,Dualmoose,7,0.64%
-62,Snom,3,0.28%
+62,Snom,3,0.27%
 63,Frosmoth,8,0.73%
-64,Grondor,3,0.28%
+64,Grondor,3,0.27%
 65,Bipedice,5,0.46%
 66,Tricerpup,2,0.18%
 67,Tricercil,5,0.46%
@@ -774,20 +774,20 @@ Num,Pokemon,Amt,%
 70,Walrein,4,0.37%
 71,Froshrog,2,0.18%
 72,Bouncerog,5,0.46%
-73,Bugop,4,0.37%
-74,Opwing,9,0.83%
+73,Bugop,3,0.27%
+74,Opwing,10,0.92%
 75,Hatenna,2,0.18%
 76,Hattrem,2,0.18%
-77,Hatterene,9,0.83%
+77,Hatterene,9,0.82%
 78,Otterpor,2,0.18%
 79,Psylotter,10,0.92%
-80,Florline,3,0.28%
-81,Florlion,3,0.28%
-82,Psycorb,3,0.28%
+80,Florline,3,0.27%
+81,Florlion,3,0.27%
+82,Psycorb,3,0.27%
 83,Psyballs,5,0.46%
 84,Psycorboratr,4,0.37%
 85,Ralts,4,0.37%
-86,Kirlia,3,0.28%
+86,Kirlia,3,0.27%
 87,Gardevoir,8,0.73%
 88,Gallade,5,0.46%
 89,Tigrette,4,0.37%
@@ -796,16 +796,16 @@ Num,Pokemon,Amt,%
 92,Flameruff,4,0.37%
 93,Barkflare,5,0.46%
 94,Iglite,2,0.18%
-95,Blaxer,3,0.28%
+95,Blaxer,3,0.27%
 96,Pyrator,8,0.73%
 97,Magmaclang,8,0.73%
 98,Flamehox,2,0.18%
 99,Fireshard,1,0.09%
 100,Blastflames,8,0.73%
 101,Tiowoo,2,0.18%
-102,Magwoo,3,0.28%
+102,Magwoo,3,0.27%
 103,Lafloo,5,0.46%
-104,Houndour,3,0.28%
+104,Houndour,3,0.27%
 105,Houndoom,10,0.92%
 106,Sparkdust,1,0.09%
 107,Splame,10,0.92%
@@ -816,27 +816,27 @@ Num,Pokemon,Amt,%
 112,Wattwo,1,0.09%
 113,Megawatt,7,0.64%
 114,Elelamb,2,0.18%
-115,Electroram,3,0.28%
+115,Electroram,3,0.27%
 116,Superchargo,5,0.46%
 117,Twigzap,1,0.09%
 118,Shockbranch,1,0.09%
-119,Thunderzap,9,0.83%
+119,Thunderzap,9,0.82%
 120,Magie,6,0.55%
 121,Cumin,2,0.18%
 122,Cinneroph,10,0.92%
 123,Vupp,4,0.37%
-124,Vinnie,3,0.28%
-125,Suvinero,9,0.83%
+124,Vinnie,3,0.27%
+125,Suvinero,9,0.82%
 126,Whiskie,4,0.37%
-127,Whiskers,3,0.28%
+127,Whiskers,3,0.27%
 128,Whiskeroar,7,0.64%
-129,Nincada,3,0.28%
-130,Ninjask,3,0.28%
+129,Nincada,3,0.27%
+130,Ninjask,3,0.27%
 131,Shedinja,5,0.46%
-132,Sheltor,3,0.28%
+132,Sheltor,3,0.27%
 133,Shelnado,5,0.46%
 134,Lilyray,2,0.18%
-135,Daray,3,0.28%
+135,Daray,3,0.27%
 136,Spinaquata,8,0.73%
 137,Magikarp,10,0.92%
 138,Gyarados,10,0.92%
@@ -846,8 +846,8 @@ Num,Pokemon,Amt,%
 142,Batorali,6,0.55%
 143,Posho,11,1.01%
 144,Shomp,5,0.46%
-145,Poshorump,9,0.83%
-146,Binacle,3,0.28%
+145,Poshorump,9,0.82%
+146,Binacle,3,0.27%
 147,Barbaracle,5,0.46%
 148,Durfish,5,0.46%
 149,Dompster,7,0.64%
@@ -856,45 +856,45 @@ Num,Pokemon,Amt,%
 152,Arbok,7,0.64%
 153,Zubat,4,0.37%
 154,Golbat,2,0.18%
-155,Crobat,9,0.83%
+155,Crobat,9,0.82%
 156,Poof,1,0.09%
 157,Hast,5,0.46%
 158,Poov,2,0.18%
-159,Grust,15,1.38%
+159,Grust,15,1.37%
 160,Cluuz,7,0.64%
 161,Zurrclu,4,0.37%
 162,Zurroaratr,5,0.46%
 163,Timburr,1,0.09%
-164,Gurdurr,3,0.28%
+164,Gurdurr,3,0.27%
 165,Conkeldurr,7,0.64%
-166,Rhypo,1,0.09%
-167,Rhynee,3,0.28%
+166,Rhypo,0,0.00%
+167,Rhynee,4,0.37%
 168,Rhypolar,6,0.55%
 169,Diggie,2,0.18%
 170,Drillatron,11,1.01%
 171,Wormite,2,0.18%
-172,Wormbot,3,0.28%
+172,Wormbot,3,0.27%
 173,Wormatron,7,0.64%
 174,Cleffa,2,0.18%
-175,Clefairy,3,0.28%
+175,Clefairy,3,0.27%
 176,Clefable,5,0.46%
-177,Minishoo,3,0.28%
-178,Glittleshoo,9,0.83%
+177,Minishoo,3,0.27%
+178,Glittleshoo,9,0.82%
 179,Zorua,4,0.37%
-180,Zoroark,9,0.83%
+180,Zoroark,9,0.82%
 181,Droid,1,0.09%
 182,Armoid,2,0.18%
 183,Soldrota,5,0.46%
 184,Tinkie,1,0.09%
 185,Shawar,2,0.18%
-186,Shaboom,3,0.28%
+186,Shaboom,3,0.27%
 187,Dragee,2,0.18%
 188,Draga,1,0.09%
 189,Drageye,4,0.37%
 190,Blobmo,2,0.18%
 191,Nebulimb,2,0.18%
-192,Galactasolder,3,0.28%
-193,Consodust,3,0.28%
+192,Galactasolder,3,0.27%
+193,Consodust,3,0.27%
 194,Cosmocrash,2,0.18%
 195,Rockmite,2,0.18%
 196,Stellarock,5,0.46%
@@ -913,7 +913,7 @@ Num,Pokemon,Amt,%
 209,Magikarp-E,2,0.18%
 210,Gyarados-E,12,1.10%
 211,Shockfang,2,0.18%
-212,Electrocobra,3,0.28%
+212,Electrocobra,3,0.27%
 213,Nightrex,2,0.18%
 214,Shadowsaur,5,0.46%
 215,Durfish-S,2,0.18%
@@ -942,31 +942,31 @@ Num,Pokemon,Amt,%
 238,Scraggy,2,0.18%
 239,Scrafty,0,0.00%
 240,Scraftagon,1,0.09%
-241,Glimmet,3,0.28%
+241,Glimmet,3,0.27%
 242,Glimmora,1,0.09%
 243,Abra,1,0.09%
-244,Kadabra,3,0.28%
+244,Kadabra,3,0.27%
 245,Alakazam,0,0.00%
 246,Flamigo,2,0.18%
 247,Sneasel,2,0.18%
-248,Weavile,0,0.00%
+248,Weavile,1,0.09%
 249,Sneasel-H,2,0.18%
 250,Sneasler,0,0.00%
 251,Solosis,1,0.09%
 252,Duosion,2,0.18%
 253,Reuniclus,0,0.00%
-254,Solosis-X,3,0.28%
+254,Solosis-X,3,0.27%
 255,Duosion-X,1,0.09%
 256,Reuniclus-X,0,0.00%
 257,Seviper,1,0.09%
 258,Hissimitar,1,0.09%
 259,Gulpin,0,0.00%
 260,Swalot,1,0.09%
-261,Gulpin-X,3,0.28%
+261,Gulpin-X,4,0.37%
 262,Swalot-X,1,0.09%
 263,Plasamp,1,0.09%
 264,Genieova,0,0.00%
-265,Elgyem,3,0.28%
+265,Elgyem,3,0.27%
 266,Beheeyem,0,0.00%
 267,Elgyem-E,2,0.18%
 268,Beheeyem-E,0,0.00%
@@ -995,8 +995,8 @@ Num,Pokemon,Amt,%
 291,Necrozma-Ult,0,0.00%
 292,Azurill,1,0.09%
 293,Marill,1,0.09%
-294,Azumarill,3,0.28%
-295,Shroodle,3,0.28%
+294,Azumarill,3,0.27%
+295,Shroodle,3,0.27%
 296,Grafaiai,1,0.09%
 
-Total: 1090
+Total: 1092
