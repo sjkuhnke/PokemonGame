@@ -296,7 +296,7 @@ public class PlayerCharacter extends Entity {
 				} else if (target instanceof NPC_GymLeader) {
 					gp.startBattle(target.trainer);
 				} else if (target instanceof NPC_PC) {
-					gp.openBox((NPC_PC) target);
+					interactPC((NPC_PC) target);
 				} else if (target instanceof NPC_Pokemon) {
 					gp.startBattle(target.trainer, ((NPC_Pokemon) target).id);
 				}
@@ -413,6 +413,12 @@ public class PlayerCharacter extends Entity {
 				}
 			}
 		}
+	}
+
+	private void interactPC(NPC_PC target) {
+		if (!target.isGauntlet()) target.direction = "up";
+		
+		gp.openBox(target);
 	}
 
 	private void pickUpObject(int objIndex) {
@@ -927,7 +933,11 @@ public class PlayerCharacter extends Entity {
 				t = Pokemon.addTask(Task.TURN, "");
 				t.counter = 1;
 				Pokemon.addTask(Task.TEXT, "...");
+				t = Pokemon.addTask(Task.TURN, "");
+				t.counter = 2;
 				Pokemon.addTask(Task.TEXT, "AHHH! HE'S DEFINITELY AWAKE NOW! JEEZ, WHAT DID YOU EVEN SAY!?");
+				t = Pokemon.addTask(Task.TURN, "");
+				t.counter = 1;
 				t = Pokemon.addTask(Task.FLAG, "");
 				t.start = 2;
 				t.finish = 5;
@@ -1021,17 +1031,8 @@ public class PlayerCharacter extends Entity {
 					Pokemon.addTask(Task.FLASH_OUT, "");
 				}
 			}
-		}
-		
-		
-		if (gp.currentMap == 41 && p.flags[8] && p.flags[9] && !p.flags[31]) {
-			p.flags[31] = true;
-			Pokemon.addTask(Task.TEXT, "Oh you have?! Thank you so much!\nHere, take this as a reward!");
-			Pokemon.addTask(Task.TEXT, "Obtained HM04 Surf!");
-			p.bag.add(Item.HM04);
-		}
-		if (gp.currentMap == 49 && !p.flags[13]) {
-			p.flags[13] = true;
+		} else if (gp.currentMap == 49) {
+			p.flag[2][14] = true;
 			Pokemon.addTask(Task.TEXT, "I encountered this very strong Pokemon, and I don't think I'm strong enough to train it. Here!");
 			Random gift = new Random();
 			int id;
@@ -1057,9 +1058,16 @@ public class PlayerCharacter extends Entity {
 					break;
 				}
 			} while (p.pokedex[id] == 2 && counter < 50);
-			Pokemon result = new Pokemon(id, 15, true, false);
+			Pokemon result = new Pokemon(id, 25, true, false);
 			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 			Pokemon.addTask(Task.GIFT, "", result);
+		}
+				
+		if (gp.currentMap == 41 && p.flags[8] && p.flags[9] && !p.flags[31]) {
+			p.flags[31] = true;
+			Pokemon.addTask(Task.TEXT, "Oh you have?! Thank you so much!\nHere, take this as a reward!");
+			Pokemon.addTask(Task.TEXT, "Obtained HM04 Surf!");
+			p.bag.add(Item.HM04);
 		}
 		if (gp.currentMap == 50 && !p.flags[14]) {
 			p.flags[14] = true;

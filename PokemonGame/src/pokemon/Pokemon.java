@@ -1503,6 +1503,13 @@ public class Pokemon implements Serializable {
 			if (foe.lastMoveUsed == Move.AQUA_VEIL) {
 				stat(this, 2, -1, foe);
 			}
+			if (move == Move.HI_JUMP_KICK) {
+				this.damage(this.getStat(0) / 2.0, foe);
+				addTask(Task.TEXT, this.nickname + " kept going and crashed!");
+				if (this.currentHP < 0) {
+					this.faint(true, foe);
+				}
+			}
 			this.impressive = false;
 			this.moveMultiplier = 1;
 			return;
@@ -1781,6 +1788,13 @@ public class Pokemon implements Serializable {
 			if (moveType == PType.GROUND && !foe.isGrounded() && move.cat != 2) {
 				if (foeAbility == Ability.LEVITATE) addAbilityTask(foe);
 				addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
+				if (move == Move.HI_JUMP_KICK) {
+					this.damage(this.getStat(0) / 2.0, foe);
+					addTask(Task.TEXT, this.nickname + " kept going and crashed!");
+					if (this.currentHP < 0) {
+						this.faint(true, foe);
+					}
+				}
 				endMove();
 				this.moveMultiplier = 1;
 				return; // Check for immunity
@@ -1803,7 +1817,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			
-			if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded() && move.hasPriority(this) && move != Move.GRAVITY_PUNCH) {
+			if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded() && move.hasPriority(this) && move.accuracy <= 100 && move != Move.GRAVITY_PUNCH) {
 				addTask(Task.TEXT, foe.nickname + " is protected by the Psychic Terrain!");
 				endMove();
 				this.moveMultiplier = 1;

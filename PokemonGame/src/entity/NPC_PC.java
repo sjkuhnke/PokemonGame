@@ -20,6 +20,7 @@ public class NPC_PC extends Entity {
 	
 	public void getImage() {
 		down1 = setup("/npc/pcbox");
+		up1 = setup("/npc/pcbox1");
 	}
 
 	public boolean isGauntlet() {

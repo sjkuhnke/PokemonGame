@@ -901,6 +901,13 @@ public enum Item {
 				}
 			}
 		}
+        if (p.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
+        	for (Pokemon q : box) {
+				if (q != null) {
+					userMons.addItem(q.clone());
+				}
+			}
+        }
         AutoCompleteDecorator.decorate(userMons);
         
         JComboBox<Pokemon> foeMons = new JComboBox<>();

@@ -5,9 +5,6 @@ import java.awt.Rectangle;
 import entity.Entity;
 import entity.NPC_Clerk;
 import entity.NPC_Nurse;
-import entity.NPC_Rival;
-import entity.NPC_Rival2;
-import entity.NPC_TN;
 import entity.NPC_Trainer;
 import tile.BuildingTile;
 import tile.CaveTile;
@@ -227,9 +224,9 @@ public class CollisionChecker {
 	    int visionRange = 4 * gp.tileSize;
 	    boolean result = false;
 
-	    if ((target instanceof NPC_Trainer || target instanceof NPC_TN || target instanceof NPC_Rival || target instanceof NPC_Rival2) && target != null) {
+	    if ((target instanceof NPC_Trainer) && target != null) {
 	        Rectangle entityRange = new Rectangle(entity.worldX + entity.solidArea.x, entity.worldY + entity.solidArea.y, entity.solidArea.width, entity.solidArea.height);
-	        Rectangle trainerRange = new Rectangle(target.worldX + target.solidArea.x, target.worldY + target.solidArea.y, target.solidArea.width, target.solidArea.height);
+	        Rectangle trainerRange = new Rectangle(target.worldX, target.worldY + target.height - gp.tileSize, gp.tileSize, gp.tileSize);
 
 	        switch (target.direction) {
 	            case "up": {

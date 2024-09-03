@@ -40,10 +40,13 @@ public class Entity {
 	int size;
 	int maxLife;
 	
+	public int height;
+	
 	public int flag = -1;
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;
+		height = gp.tileSize;
 	}
 	
 	public BufferedImage setup(String imageName) {
@@ -60,7 +63,7 @@ public class Entity {
 		}
 		
 		if (setHitbox) {
-			int height = image.getHeight() * gp.scale;
+			height = image.getHeight() * gp.scale;
 			int offset = height - gp.tileSize;
 			
 			solidArea = new Rectangle(0, 0 - offset, 48, height);
