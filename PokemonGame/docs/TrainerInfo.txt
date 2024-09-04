@@ -221,6 +221,10 @@ Trainer MS B                Flameruff Lv. 31, Cluuz Lv. 30, Electroram Lv. 31 @ 
 Trainer MS C                Bronzor Lv. 32, Butterfree Lv. 30, Solosis Lv. 31, Duosion Lv. 32, Swalot Lv. 30 @ (Leftovers, Focus Sash, Quick Claw, Sitrus Berry, Leftovers)
 Trainer MS D                Crobat Lv. 51, Zurrclu Lv. 53 @ (Power Herb, Eviolite)
 
+Mt. Splinkty (3B)---------------------------------
+
+Trainer TN MS 1             Carinator Lv. 33, Gulpin-X Lv. 33, Weavile Lv. 33 @ (Life Orb, Coba Berry, None)
+
 Kleine Village------------------------------------
 
 Trainer Fred 2              Flamehox Lv. 32, Gyarados-E Lv. 31, Torgged Lv. 33, Psylotter Lv. 33
@@ -275,10 +279,10 @@ Trainer RR C                Sparkitten Lv. 32, Splame Lv. 32 @ (Wiki Berry, Char
 Trainer RR D                Blaxer Lv. 32, Gyarados-E Lv. 32, Arbok Lv. 33, Elgyem-E Lv. 33, Butterfree Lv. 34 @ (Assault Vest, Air Balloon, Clear Amulet, Focus Band, Red Card)
 Trainer Possessed J         Bronzong-X Lv. 33, Zurrclu Lv. 33 @ (Red Card, Weakness Policy)
 Trainer Possessed L         Hissimitar Lv. 31, Bronzong Lv. 33 @ (Shuca Berry, Toxic Orb)
-Trainer Possessed M         Scovillain-S Lv. 32, Nightrex Lv. 32 @ (Loaded Dice, Assault Vest)
-Trainer Possessed B         Armoid-E Lv. 32, Shockfang Lv. 32 @ (Expert Belt, Big Root)
-Trainer Possessed I         Kadabra Lv. 31, Duosion Lv. 32 @ (Focus Sash, Rocky Helmet)
-Trainer Possessed E         Scraggy Lv. 31, Flamigo Lv. 31 @ (Life Orb, Wide Lens)
+Trainer Possessed M         Scovillain-S Lv. 30, Nightrex Lv. 31 @ (Loaded Dice, Assault Vest)
+Trainer Possessed B         Armoid-E Lv. 31, Shockfang Lv. 31 @ (Expert Belt, Big Root)
+Trainer Possessed I         Kadabra Lv. 30, Duosion Lv. 32 @ (Covert Cloak, Rocky Helmet)
+Trainer Possessed E         Scraggy Lv. 31, Flamigo Lv. 30 @ (Life Orb, Wide Lens)
 Trainer Possessed F         Glimmet Lv. 31, Sneasel-H Lv. 31 @ (Focus Sash, Payapa Berry)
 
 Route 41------------------------------------------

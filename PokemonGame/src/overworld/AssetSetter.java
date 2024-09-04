@@ -995,7 +995,7 @@ public class AssetSetter {
 		
 		mapNum = 26;
 		index = 0;
-		gp.npc[mapNum][index] = null;
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 58, 70, 79);;
 		
 		index = 0;
 		// Nurses/PCs
