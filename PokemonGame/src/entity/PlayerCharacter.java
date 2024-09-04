@@ -1012,7 +1012,8 @@ public class PlayerCharacter extends Entity {
 					Pokemon.addTask(Task.TEXT, "Even though bug Pokemon aren't as flimsy and weak as they seem, I still have a feeling that you'll be able to defeat me.");
 					Pokemon.addTask(Task.TEXT, "I mean, you were literally able to fend off a huge alien bug and save me and my town!");
 					Pokemon.addTask(Task.TEXT, "Have you noticed the big openings in the Earth around this area? There's lots more around this region.");
-					Pokemon.addTask(Task.TEXT, "There's a pretty interesting myth that the terrain wasn't always so rough, and that it's actually the result of an ancient war that happened.");
+					Pokemon.addTask(Task.TEXT, "There's a pretty interesting myth that my mom would tell me stories of when I was younger.");
+					Pokemon.addTask(Task.TEXT, "She said that the terrain wasn't always so rough, that it's actually the result of an ancient war that happened.");
 					Pokemon.addTask(Task.TEXT, "According to the myth, there used to be a cult-like following of an all-powerful diety that apparently created the Pokemon and people living here!");
 					Pokemon.addTask(Task.TEXT, "But once people discovered the existance of alien Pokemon and the Galactic type, their religion was proven obsolete by the athiests.");
 					Pokemon.addTask(Task.TEXT, "Or at least the athiests tried to disprove it that way. As you can imagine, it didn't go over too well with the believers, erupting in the massive conflict.");

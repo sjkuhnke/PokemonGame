@@ -690,6 +690,8 @@ public class Pokemon implements Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TELEPORT) && (this.trainer == null || !this.trainer.hasValidMembers())) bestMoves.removeIf(Move.TELEPORT::equals);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.VANDALIZE) && foe.ability == Ability.NULL) bestMoves.removeIf(Move.VANDALIZE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENCORE) && foe.lastMoveUsed == null) bestMoves.removeIf(Move.ENCORE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MIMIC) && foe.lastMoveUsed == null) bestMoves.removeIf(Move.MIMIC::equals);
 		
 		return bestMoves;
 	}
@@ -6545,7 +6547,7 @@ public class Pokemon implements Serializable {
 			this.swapIn(foe, false);
 		} else if (this.ability == Ability.TALENTED) {
 			addAbilityTask(this);
-			addTask(Task.TEXT, this.nickname + " copied " + foe.nickname + "'s stat changes!");
+			addTask(Task.TEXT, this.nickname + " copied " + foe.nickname + "'s stat boosts!");
 			for (int i = 0; i < 7; ++i) {
 				if (foe.statStages[i] > 0) {
 					stat(this, i, foe.statStages[i], foe);
@@ -6555,7 +6557,7 @@ public class Pokemon implements Serializable {
 		if (this.item == Item.AIR_BALLOON) {
 			addTask(Task.TEXT, this.nickname + " floated on its Air Balloon!");
 		}
-		if (hazards && this.item != Item.HEAVY$DUTY_BOOTS) {
+		if (hazards && this.item != Item.HEAVY$DUTY_BOOTS && this.ability != Ability.SHIELD_DUST) {
 			ArrayList<FieldEffect> side = playerOwned() ? field.playerSide : field.foeSide;
 			if (field.contains(side, Effect.STEALTH_ROCKS)) {
 				double multiplier = getEffectiveMultiplier(PType.ROCK);

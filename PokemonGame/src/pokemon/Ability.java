@@ -106,7 +106,7 @@ public enum Ability {
 	SHED_SKIN("The Pokemon may heal its own status conditions."),
 	SHEER_FORCE("Removes additional effects to increase the power of moves when attacking."),
 	SHELL_ARMOR("This Pokemon cannot be Critical hit."),
-	SHIELD_DUST("Blocks the added effects of attacks taken."),
+	SHIELD_DUST("Blocks the added effects of attacks taken and is immune to entry hazards."),
 	SIMPLE("The stat changes the Pokemon receives are doubled."),
 	SLEIGHT_OF_HAND("Gives priority to MAGIC moves when at full HP."),
 	SLUSH_RUSH("Boosts the Pokemon's Speed stat in SNOW."),
