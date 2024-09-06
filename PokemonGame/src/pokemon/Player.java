@@ -1149,6 +1149,7 @@ public class Player extends Trainer implements Serializable {
 				p.update();
 			}
 		}
+		while (starter >= 3) starter--;
 		updateBoxes();
 		version = VERSION;
 	}

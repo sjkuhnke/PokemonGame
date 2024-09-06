@@ -1104,7 +1104,7 @@ public class TileManager {
 	}
 
 	public void setup(int index, boolean collision) {
-		setup(index, collision, 0);
+		setup(index, collision, FULL);
 	}
 	
 	public void setup(int index, boolean collision, int collisionType) {

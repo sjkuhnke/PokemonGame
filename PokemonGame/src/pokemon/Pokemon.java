@@ -1298,7 +1298,8 @@ public class Pokemon implements Serializable {
 		if (move != this.lastMoveUsed) this.moveMultiplier = 1;
 		
 		if (!this.vStatuses.contains(Status.CHARGING) && !this.vStatuses.contains(Status.SEMI_INV) && !this.vStatuses.contains(Status.LOCKED) &&
-				!this.vStatuses.contains(Status.ENCORED) && !Move.getNoComboMoves().contains(move) && move != Move.STRUGGLE) this.lastMoveUsed = move;
+				!this.vStatuses.contains(Status.ENCORED) && !this.vStatuses.contains(Status.RECHARGE) && !Move.getNoComboMoves().contains(move) &&
+				move != Move.STRUGGLE) this.lastMoveUsed = move;
 		
 		if (move == Move.SUCKER_PUNCH && !first) move = Move.FAILED_SUCKER;
 		
@@ -1336,6 +1337,7 @@ public class Pokemon implements Serializable {
 					
 				} else {
 					this.impressive = false;
+					this.lastMoveUsed = null;
 					this.vStatuses.remove(Status.LOCKED);
 					this.vStatuses.remove(Status.CHARGING);
 					return;
@@ -1367,6 +1369,7 @@ public class Pokemon implements Serializable {
 					endMove();
 					this.vStatuses.remove(Status.LOCKED);
 					this.vStatuses.remove(Status.CHARGING);
+					this.lastMoveUsed = null;
 					return;
 				} else {
 					confusionCounter--;
@@ -1379,6 +1382,7 @@ public class Pokemon implements Serializable {
 			this.impressive = false;
 			this.vStatuses.remove(Status.LOCKED);
 			this.vStatuses.remove(Status.CHARGING);
+			this.lastMoveUsed = null;
 			return;
 		}
 		
@@ -1397,6 +1401,7 @@ public class Pokemon implements Serializable {
 				this.impressive = false;
 				this.vStatuses.remove(Status.LOCKED);
 				this.vStatuses.remove(Status.CHARGING);
+				this.lastMoveUsed = null;
 				return;
 			}
 		}
@@ -3747,7 +3752,7 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.SAFEGUARD) {
 			if (!(field.contains(userSide, Effect.SAFEGUARD))) {
 				userSide.add(field.new FieldEffect(Effect.SAFEGUARD));
-				if (announce) addTask(Task.TEXT, "A veil was added to protect the team from Status!");
+				if (announce) addTask(Task.TEXT, "A veil was added to protect the team from statuses!");
 			} else {
 				fail = fail(announce);
 			}
@@ -6528,8 +6533,12 @@ public class Pokemon implements Serializable {
 			for (Moveslot moveslot : foe.moveset) {
 				if (moveslot != null) {
 					Move move = moveslot.move;
-					if (move != null) {
-						double multiplier = getEffectiveMultiplier(move.mtype);
+					if (move != null && move.isAttack()) {
+						PType mtype = move.mtype;
+						if (move == Move.HIDDEN_POWER) mtype = this.determineHPType();
+						if (move == Move.WEATHER_BALL) mtype = this.determineWBType();
+						if (move == Move.TERRAIN_PULSE) mtype = determineTPType();
+						double multiplier = getEffectiveMultiplier(mtype);
 						
 						if (multiplier > 1) shuddered = true;
 					}
