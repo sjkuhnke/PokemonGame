@@ -303,7 +303,7 @@ public enum Move {
 	METAL_SOUND(0,100,0,0,2,0,PType.STEEL,"Lowers foe's Sp.Def by 2",false,30),
 	METEOR_ASSAULT(120,100,100,0,0,0,PType.GALACTIC,"% to lower user's Attack and Defense by 1",false,5),
 	METEOR_MASH(90,90,20,0,0,0,PType.STEEL,"% chance to raise user's Attack by 1",true,10),
-	METRONOME(-1,1000,0,0,2,0,PType.MAGIC,"Uses a random move, can't be blocked by taunt",false,20),
+	METRONOME(0,1000,0,0,2,0,PType.MAGIC,"Uses a random move, can't be blocked by taunt",false,20),
 	MIMIC(0,1000,0,0,2,0,PType.NORMAL,"Uses the move last used by the foe, fails if foe hasn't used a move yet",false,10),
 	MINIMIZE(0,1000,0,0,2,0,PType.GHOST,"Raises user's Evasion by 2",false,5),
 	MIRROR_MOVE(0,1000,0,0,2,0,PType.FLYING,"Uses the move last used by the foe, fails if foe hasn't used a move yet",false,15),
