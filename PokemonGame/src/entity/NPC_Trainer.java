@@ -3,14 +3,15 @@ package entity;
 import overworld.GamePanel;
 
 public class NPC_Trainer extends Entity {
-
-	public NPC_Trainer(GamePanel gp, String d, int t) {
+	
+	public NPC_Trainer(GamePanel gp, String d, int t, String[] message) {
 		super(gp);
 		
 		direction = d;
 		trainer = t;
 		
 		getImage();
+		setDialogue(message);
 	}
 	
 	public void getImage() {

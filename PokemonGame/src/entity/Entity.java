@@ -175,4 +175,10 @@ public class Entity {
 	public int getFlagY() {
 		return flag & 0x1F;
 	}
+	
+	public void setDialogue(String[] message) {
+		for (int i = 0; i < message.length; i++) {
+			dialogues[i] = message[i];
+		}
+	}
 }

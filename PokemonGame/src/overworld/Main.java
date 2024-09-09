@@ -129,8 +129,6 @@ public class Main {
 	        }
 		    
 		    gp.setupGame();
-
-		    gp.startGameThread();
 		    
 		    // Create a Timer to gradually change the opacity of the fadePanel
 		    Timer timer = new Timer(20, null);
@@ -184,6 +182,8 @@ public class Main {
 		    		if (gp.currentMap == 107 && gp.player.p.flags[28]) {
 		    			gp.tileM.openGhostlyBluePortals();
 		    		}
+		    		
+		    		gp.startGameThread();
 		        }
 		    });
 			

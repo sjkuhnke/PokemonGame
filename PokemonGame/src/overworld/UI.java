@@ -1,5 +1,6 @@
 package overworld;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -18,7 +19,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 import entity.Entity;
 import entity.PlayerCharacter;
@@ -35,7 +42,7 @@ import pokemon.Pokemon;
 import pokemon.Node;
 import pokemon.Pokemon.Task;
 
-public class UI extends AbstractUI{
+public class UI extends AbstractUI {
 
 	public int menuNum = 0;
 	public int subState = 0;
@@ -80,8 +87,15 @@ public class UI extends AbstractUI{
 	public boolean starterConfirm;
 	public boolean addItem;
 	
+	// Light Distortion fields
+	public boolean drawLightOverlay;
+	private List<BufferedImage> lightFrames;
+	private int currentFrame;
+	private long lastFrameTime;
+	
 	private ArrayList<ArrayList<Encounter>> encounters;
 	
+	BufferedImage interactIcon;
 	BufferedImage transitionBuffer;
 	
 	private BufferedImage[] bagIcons;
@@ -111,6 +125,9 @@ public class UI extends AbstractUI{
 			String imageName = Item.getPocketName(i + 1).toLowerCase().replace(' ', '_');
 			bagIcons[i] = setup("/menu/" + imageName, 2);
 		}
+		
+		lightFrames = extractFrames("/battle/light.gif");
+		interactIcon = setup("/interactive/interact", 3);
 	}
 	
 	@Override
@@ -130,6 +147,10 @@ public class UI extends AbstractUI{
 		g2.setFont(marumonica);
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2.setColor(Color.WHITE);
+		
+		if (drawLightOverlay && gp.gameState != GamePanel.START_BATTLE_STATE) {
+			drawLightDistortion(0.8f);
+		}
 		
 		if (drawFlash) {
 			drawFlash(0);
@@ -342,12 +363,88 @@ public class UI extends AbstractUI{
 			int id = currentTask.start;
 			currentTask = null;
 			if (id > 0) {
-				gp.startBattle(trainer, id);
+				Pokemon.addStartBattleTask(trainer, id);
 			} else {
-				gp.startBattle(trainer);
+				Pokemon.addStartBattleTask(trainer);
 			}
 			break;
+		case Task.SPOT:
+			drawSpot();
+			break;
+		case Task.START_BATTLE:
+			startBattle();
+			break;
 		}
+	}
+	
+	private void startBattle() {
+		gp.player.p.setSlots();
+		gp.keyH.resetKeys();
+		
+		transitionBuffer = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
+		gp.gameState = GamePanel.START_BATTLE_STATE;
+		
+		// Make sure the front Pokemon isn't fainted
+		int index = 0;
+		Pokemon user = gp.player.p.getCurrent();
+		while (user.isFainted()) {
+			gp.player.p.swapToFront(gp.player.p.team[++index], index);
+			user = gp.player.p.getCurrent();
+		}
+		
+		gp.player.p.clearBattled();
+		user.battled = true;
+		gp.battleUI.user = user;
+		gp.battleUI.foe = currentTask.p;
+		gp.battleUI.index = currentTask.counter;
+		gp.battleUI.staticID = currentTask.start;
+		gp.battleUI.partyNum = 0;
+		
+		if (currentTask.p.trainer != null) {
+			currentTask.p.trainer.setSprites();
+		}
+		
+		currentTask = null;
+	}
+	
+	private void drawSpot() {
+		Entity t = currentTask.e;
+		
+		int screenX = t.worldX - gp.player.worldX + gp.player.screenX;
+		int screenY = t.worldY - gp.player.worldY + gp.player.screenY;
+		
+		g2.drawImage(interactIcon, screenX - 3, screenY - gp.tileSize - 16, null);
+		
+		counter++;
+		
+		if (counter > 30) {
+			counter = 0;
+			currentTask = null;
+		}
+		
+	}
+
+	private void drawLightDistortion(float alpha) {
+		long currentTime = System.currentTimeMillis();
+		int totalFrames = lightFrames.size();
+		
+		if (currentTime - lastFrameTime > 75) {
+			currentFrame = (currentFrame + 1) % totalFrames;
+			lastFrameTime = currentTime;
+		}
+		
+		
+		BufferedImage current = lightFrames.get(currentFrame);
+		BufferedImage next = lightFrames.get((currentFrame + 1) % totalFrames);
+		
+		drawImageWithAlpha(current, alpha);
+		
+		drawImageWithAlpha(next, alpha);
+	}
+
+	private void drawImageWithAlpha(BufferedImage image, float alpha) {
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		g2.drawImage(image, 0, 0, gp.screenWidth, gp.screenHeight, null);
 	}
 
 	private void drawRegionalTrade() {
@@ -2210,7 +2307,7 @@ public class UI extends AbstractUI{
 						gp.gameState = GamePanel.PLAY_STATE;
 						bagState = 0;
 						subState = 0;
-						gp.startWild(PlayerCharacter.currentMapName, 'F');
+						gp.player.startWild(PlayerCharacter.currentMapName, 'F');
 					} else {
 						showMessage("Can't use now!");
 					}
@@ -2911,5 +3008,33 @@ public class UI extends AbstractUI{
         newP.checkMove(1);
         
         currentTask = null;
+	}
+	
+	private ArrayList<BufferedImage> extractFrames(String path) {
+		ArrayList<BufferedImage> frames = new ArrayList<>();
+		
+		try {
+			ImageInputStream stream = ImageIO.createImageInputStream(getClass().getResourceAsStream(path));
+			
+			Iterator<ImageReader> readers = ImageIO.getImageReadersByFormatName("gif");
+			if (readers.hasNext()) {
+				ImageReader reader = readers.next();
+				reader.setInput(stream);
+				
+				int numFrames = reader.getNumImages(true);
+				
+				for (int i = 0; i < numFrames; i++) {
+					BufferedImage frame = reader.read(i);
+					frames.add(frame);
+				}
+			}
+			
+			stream.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return frames;
 	}
 }

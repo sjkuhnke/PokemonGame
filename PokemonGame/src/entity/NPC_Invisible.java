@@ -4,8 +4,8 @@ import overworld.GamePanel;
 
 public class NPC_Invisible extends NPC_Trainer {
 
-	public NPC_Invisible(GamePanel gp, String d, int t) {
-		super(gp, d, t);
+	public NPC_Invisible(GamePanel gp, String d, int t, String[] message) {
+		super(gp, d, t, message);
 		
 		getImage();
 	}

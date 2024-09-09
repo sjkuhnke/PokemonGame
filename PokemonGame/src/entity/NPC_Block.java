@@ -17,13 +17,7 @@ public class NPC_Block extends Entity {
 		this.altDialogue = altDialogue;
 		
 		getImage();
-		setDialog(message);
-	}
-	
-	public void setDialog(String[] message) {
-		for (int i = 0; i < message.length; i++) {
-			dialogues[i] = message[i];
-		}
+		setDialogue(message);
 	}
 	
 	public void getImage() {

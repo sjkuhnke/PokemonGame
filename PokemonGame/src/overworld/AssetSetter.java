@@ -21,6 +21,7 @@ import entity.NPC_Trainer;
 import object.Cut_Tree;
 import object.Fuse_Box;
 import object.GymBarrier;
+import object.IceBlock;
 import object.InteractiveTile;
 import object.ItemObj;
 import object.Locked_Door;
@@ -28,6 +29,7 @@ import object.Pit;
 import object.PitEdge;
 import object.Rock_Climb;
 import object.Rock_Smash;
+import object.Snowball;
 import object.Starter_Machine;
 import object.Tree_Stump;
 import object.Vine;
@@ -801,11 +803,11 @@ public class AssetSetter {
 		
 		// Nurses/PCs
 		gp.npc[1][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
-		gp.npc[1][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[1][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		gp.npc[5][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
-		gp.npc[5][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[5][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		gp.npc[19][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
-		gp.npc[19][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[19][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		
 		// Clerks
 		gp.npc[2][index] = NPCSetup(NPC_CLERK, 27, 39, -1);
@@ -924,7 +926,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 38, 38, 41);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 25, 43, 42);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 30, 43, 43);
-		gp.npc[mapNum][index] = SetupStaticEncounter(205, 34, 31, 366, 37);
+		gp.npc[mapNum][index] = SetupStaticEncounter(205, 34, 31, 366, 37, "Bzzt.");
 		
 		mapNum = 16;
 		index = 0;
@@ -935,7 +937,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 62, 39, 273);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 67, 42, 274);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 72, 41, 275);
-		gp.npc[mapNum][index] = SetupStaticEncounter(197, 32, 28, 367, 39);
+		gp.npc[mapNum][index] = SetupStaticEncounter(197, 32, 28, 367, 39, "Bzzt.");
 		gp.npc[mapNum][index] = NPCSetup(STANFORD, 31, 28, "*growls* Um, what the hell do you want? Oh, right...", 41, true, "");
 		
 		mapNum = 17;
@@ -953,7 +955,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 53, 35, "Can't... keep... fighting...", true);
 		gp.npc[mapNum][index++] = null;
-		gp.npc[mapNum][index] = SetupStaticEncounter(202, 53, 34, 368, 43);
+		gp.npc[mapNum][index] = SetupStaticEncounter(202, 53, 34, 368, 43, "Bzzt.");
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 45, 38, 146);
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DEFAULT, 46, 33, "That was an impressive battle! I found a rare MAGIC Pokemon, but after watching that, you'd be a better trainer. Here!", 66, true, "Enjoy all the wonders of the MAGIC type!");
 		
@@ -1000,15 +1002,15 @@ public class AssetSetter {
 		index = 0;
 		// Nurses/PCs
 		gp.npc[29][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
-		gp.npc[29][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[29][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		gp.npc[39][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
-		gp.npc[39][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[39][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		gp.npc[86][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
-		gp.npc[86][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[86][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		gp.npc[111][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
-		gp.npc[111][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[111][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		gp.npc[125][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
-		gp.npc[125][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[125][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		
 		// Clerks
 		gp.npc[30][index] = NPCSetup(NPC_MARKET, 31, 41, -1, true, Item.REPEL, Item.POKEBALL, Item.KLEINE_BAR, Item.BOTTLE_CAP, Item.TM49, Item.TM51);
@@ -1134,6 +1136,11 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 46, 85, 140);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 36, 84, 141);
 		
+		mapNum = 39;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, 26, 6, "Hello my friend! Just the person I was looking for!", true);
+		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM, 27, 6, "Vxxxvhh...");
+		
 		mapNum = 43;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 31, 42, 328);
@@ -1233,7 +1240,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 38, 38, 147);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 38, 42, 148);
-		gp.npc[mapNum][index] = SetupStaticEncounter(210, 31, 36, 369, 46);
+		gp.npc[mapNum][index] = SetupStaticEncounter(210, 31, 36, 369, 46, "Bzzt.");
 		
 		mapNum = 77;
 		index = 0;
@@ -1323,7 +1330,7 @@ public class AssetSetter {
 		mapNum = 92;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
-		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 22, 37, -1, true, Item.ADAMANT_MINT, Item.BOLD_MINT, Item.BRAVE_MINT, Item.CALM_MINT, Item.CAREFUL_MINT, Item.IMPISH_MINT,
                 Item.JOLLY_MINT, Item.MODEST_MINT, Item.QUIET_MINT, Item.SERIOUS_MINT, Item.TIMID_MINT);
 		
@@ -1645,7 +1652,7 @@ public class AssetSetter {
 		
 		// Nurses
 		gp.npc[153][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
-		gp.npc[153][index] = NPCSetup(NPC_PC, 35, 36, -1);
+		gp.npc[153][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		
 		// Clerks
 		gp.npc[154][index] = NPCSetup(NPC_CLERK, 30, 39, -1);
@@ -2523,7 +2530,7 @@ public class AssetSetter {
 			gp.npc[28][5] = null;
 		}
 		if (flag[2][11]) {
-			gp.npc[28][2] = SetupStaticEncounter(284, 82, 22, 387, 76);
+			gp.npc[28][2] = SetupStaticEncounter(284, 82, 22, 387, 76, "Bzzt.");
 		}
 		if (flag[2][12]) {
 			gp.npc[28][2] = null;
@@ -2606,6 +2613,13 @@ public class AssetSetter {
 
 	private Entity NPCSetup(int type, int x, int y, int team, boolean increase, Item... items) {
 		Entity result = null;
+		String message = "Hello there.";
+		
+		String messages[] = message.split("\n");
+		for (int i = 0; i < messages.length; i++) {
+			messages[i] = Item.breakString(messages[i], 42);
+		}
+		
 		switch (type) {
 		case NPC_PC:
 			result = new NPC_PC(gp);
@@ -2619,93 +2633,93 @@ public class AssetSetter {
 			clerks.add(result);
 			break;
 		case TRAINER_DOWN:
-			result = new NPC_Trainer(gp, "down", team);
+			result = new NPC_Trainer(gp, "down", team, messages);
 			break;
 		case TRAINER_UP:
-			result = new NPC_Trainer(gp, "up", team);
+			result = new NPC_Trainer(gp, "up", team, messages);
 			break;
 		case TRAINER_LEFT:
-			result = new NPC_Trainer(gp, "left", team);
+			result = new NPC_Trainer(gp, "left", team, messages);
 			break;
 		case TRAINER_RIGHT:
-			result = new NPC_Trainer(gp, "right", team);
+			result = new NPC_Trainer(gp, "right", team, messages);
 			break;
 		case NPC_NURSE_FULL:
 			result = new NPC_Nurse(gp, "up");
 			break;
 		case ROBIN:
-			result = new NPC_GymLeader(gp, "down", team);
+			result = new NPC_GymLeader(gp, "down", team, messages);
 			break;
 		case STANFORD:
-			result = new NPC_GymLeader(gp, "down2", team);
+			result = new NPC_GymLeader(gp, "down2", team, messages);
 			break;
 		case MILLIE:
-			result = new NPC_GymLeader(gp, "up", team);
+			result = new NPC_GymLeader(gp, "up", team, messages);
 			break;
 		case GLACIUS:
-			result = new NPC_GymLeader(gp, "up2", team);
+			result = new NPC_GymLeader(gp, "up2", team, messages);
 			break;
 		case MINDY:
-			result = new NPC_GymLeader(gp, "left", team);
+			result = new NPC_GymLeader(gp, "left", team, messages);
 			break;
 		case RAYNA:
-			result = new NPC_GymLeader(gp, "left2", team);
+			result = new NPC_GymLeader(gp, "left2", team, messages);
 			break;
 		case MERLIN:
-			result = new NPC_GymLeader(gp, "right", team);
+			result = new NPC_GymLeader(gp, "right", team, messages);
 			break;
 		case NOVA:
-			result = new NPC_GymLeader(gp, "right2", team);
+			result = new NPC_GymLeader(gp, "right2", team, messages);
 			break;
 		case SCOTT_DOWN:
-			result = new NPC_Rival(gp, "down", team); // scott down
+			result = new NPC_Rival(gp, "down", team, messages); // scott down
 			break;
 		case SCOTT_UP:
-			result = new NPC_Rival(gp, "up", team); // scott up
+			result = new NPC_Rival(gp, "up", team, messages); // scott up
 			break;
 		case TN_DOWN:
-			result = new NPC_TN(gp, "down", team);
+			result = new NPC_TN(gp, "down", team, messages);
 			break;
 		case TN_UP:
-			result = new NPC_TN(gp, "up", team);
+			result = new NPC_TN(gp, "up", team, messages);
 			break;
 		case TN_LEFT:
-			result = new NPC_TN(gp, "left", team);
+			result = new NPC_TN(gp, "left", team, messages);
 			break;
 		case TN_RIGHT:
-			result = new NPC_TN(gp, "right", team);
+			result = new NPC_TN(gp, "right", team, messages);
 			break;
 		case FRED_DOWN:
-			result = new NPC_Rival2(gp, "down", team); // fred down
+			result = new NPC_Rival2(gp, "down", team, messages); // fred down
 			break;
 		case FRED_UP:
-			result = new NPC_Rival2(gp, "up", team); // fred up
+			result = new NPC_Rival2(gp, "up", team, messages); // fred up
 			break;
 		case NPC_MARKET:
 			result = new NPC_Market(gp);
 			result.setItems(items);
 			break;
 		case GRUST:
-			result = new NPC_Pokemon(gp, 159, team, true, -1);
+			result = new NPC_Pokemon(gp, 159, team, true, -1, messages);
 			gp.grusts[index - 1] = ((NPC_Pokemon) result);
 			break;
 		case RICK:
-			result = new NPC_TN_Admin(gp, "down", team);
+			result = new NPC_TN_Admin(gp, "down", team, messages);
 			break;
 		case MAXWELL:
-			result = new NPC_TN_Admin(gp, "up", team);
+			result = new NPC_TN_Admin(gp, "up", team, messages);
 			break;
 		case INVIS_DOWN:
-			result = new NPC_Invisible(gp, "down", team);
+			result = new NPC_Invisible(gp, "down", team, messages);
 			break;
 		case INVIS_UP:
-			result = new NPC_Invisible(gp, "up", team);
+			result = new NPC_Invisible(gp, "up", team, messages);
 			break;
 		case INVIS_LEFT:
-			result = new NPC_Invisible(gp, "left", team);
+			result = new NPC_Invisible(gp, "left", team, messages);
 			break;
 		case INVIS_RIGHT:
-			result = new NPC_Invisible(gp, "right", team);
+			result = new NPC_Invisible(gp, "right", team, messages);
 			break;
 		case NPC_PC_GAUNTLET:
 			result = new NPC_PC(gp, true);
@@ -2756,7 +2770,7 @@ public class AssetSetter {
 				image = result.setup("/npc/avery1");
 				break;
 			case ROBIN:
-				image = result.setup("/npc/robin");
+				image = result.setup("/npc/robin1");
 				break;
 			case STANFORD:
 				image = result.setup("/npc/stanford");
@@ -2869,6 +2883,12 @@ public class AssetSetter {
 		case 8:
 			result = new Fuse_Box(gp);
 			result.direction = "up";
+			break;
+		case 9:
+			result = new Snowball(gp);
+			break;
+		case 10:
+			result = new IceBlock(gp);
 			break;
 		}
 		
@@ -2988,8 +3008,14 @@ public class AssetSetter {
 		return result;
 	}
 	
-	private NPC_Pokemon SetupStaticEncounter(int id, int x, int y, int t, int flag) {
-		NPC_Pokemon result = new NPC_Pokemon(gp, id, t, id == 159, flag);
+	private NPC_Pokemon SetupStaticEncounter(int id, int x, int y, int t, int flag, String message) {
+		
+		String messages[] = message.split("\n");
+		for (int i = 0; i < messages.length; i++) {
+			messages[i] = Item.breakString(messages[i], 42);
+		}
+		
+		NPC_Pokemon result = new NPC_Pokemon(gp, id, t, id == 159, flag, messages);
 		if (gp.player.p.flag[result.getFlagX()][result.getFlagY()]) {
 			index++;
 			return null;

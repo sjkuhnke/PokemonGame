@@ -41,6 +41,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
+import entity.Entity;
 import overworld.GamePanel;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
@@ -4523,6 +4524,8 @@ public class Pokemon implements Serializable {
 		public static final int FLAG = 33; // start: x finish: y
 		public static final int REGIONAL_TRADE = 34;
 		public static final int BATTLE = 35; // counter: trainer
+		public static final int SPOT = 36;
+		public static final int START_BATTLE = 37; // counter: trainer
 		
 		public int type;
 		public String message;
@@ -4539,6 +4542,8 @@ public class Pokemon implements Serializable {
 		public Move move;
 		public FieldEffect fe;
 		public Item item;
+		
+		public Entity e;
 		
 		public Task(int type, String message) {
 			this(type, message, null);
@@ -4623,6 +4628,12 @@ public class Pokemon implements Serializable {
 			case FLASH_OUT: return "FLASH_OUT";
 			case ITEM: return "ITEM";
 			case UPDATE: return "UPDATE";
+			case TURN: return "TURN";
+			case FLAG: return "FLAG";
+			case REGIONAL_TRADE: return "REGIONAL_TRADE";
+			case BATTLE: return "BATTLE";
+			case SPOT: return "SPOT";
+			case START_BATTLE: return "START_BATTLE";
 			default:
 				return "getTypeString() doesn't have a case for this type";
 			}
@@ -7398,6 +7409,37 @@ public class Pokemon implements Serializable {
 	public static void addEvoTask(Pokemon p, Pokemon result) {
 		Task t = addTask(Task.EVO, p.nickname + " is evolving!\nDo you want to evolve your " + p.nickname + "?", p);
 		t.evo = result;
+	}
+	
+	public static void addTrainerTask(Entity t, int id) {
+		Pokemon foe = Trainer.getTrainer(t.trainer).getCurrent();
+		addTrainerTask(t, id, foe);
+	}
+	
+	public static void addTrainerTask(Entity t, int id, Pokemon foe) {
+		Task task = null;
+		for (int i = 0; i < t.dialogues.length; i++) {
+			if (t.dialogues[i] != null) {
+				task = addTask(Task.TEXT, t.dialogues[i]);
+				task.e = t;
+			}
+		}
+		addStartBattleTask(t.trainer, id);
+	}
+	
+	public static void addStartBattleTask(int trainer) {
+		addStartBattleTask(trainer, -1);
+	}
+	
+	public static void addStartBattleTask(int trainer, int id) {
+		Pokemon foe = Trainer.getTrainer(trainer).getCurrent();
+		addStartBattleTask(trainer, id, foe);
+	}
+	
+	public static void addStartBattleTask(int trainer, int id, Pokemon foe) {
+		Task t = addTask(Task.START_BATTLE, "", foe);
+		t.counter = trainer;
+		t.start = id;
 	}
 	
 	public void addAbilityTask(Pokemon p) {

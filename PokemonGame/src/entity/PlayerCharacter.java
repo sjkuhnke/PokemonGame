@@ -27,11 +27,13 @@ import org.jdesktop.swingx.VerticalLayout;
 
 import object.Cut_Tree;
 import object.Fuse_Box;
+import object.IceBlock;
 import object.InteractiveTile;
 import object.Locked_Door;
 import object.Pit;
 import object.Rock_Climb;
 import object.Rock_Smash;
+import object.Snowball;
 import object.Starter_Machine;
 import object.Tree_Stump;
 import object.Vine;
@@ -89,22 +91,22 @@ public class PlayerCharacter extends Entity {
 		direction = "down";
 	}
 	public void getPlayerImage() {
-		up1 = setup("/player/red2", false);
-		up2 = setup("/player/red2_1", false);
-		up3 = setup("/player/red2_2", false);
-		up4 = setup("/player/red2_3", false);
-		down1 = setup("/player/red1", false);
-		down2 = setup("/player/red1_1", false);
-		down3 = setup("/player/red1_2", false);
-		down4 = setup("/player/red1_3", false);
-		left1 = setup("/player/red3", false);
-		left2 = setup("/player/red3_1", false);
-		left3 = setup("/player/red3_2", false);
-		left4 = setup("/player/red3_3", false);
-		right1 = setup("/player/red4", false);
-		right2 = setup("/player/red4_1", false);
-		right3 = setup("/player/red4_2", false);
-		right4 = setup("/player/red4_3", false);
+		up1 = setup("/player/redV2", false);
+		up2 = setup("/player/redV2_1", false);
+		up3 = setup("/player/redV2_2", false);
+		up4 = setup("/player/redV2_3", false);
+		down1 = setup("/player/redV1", false);
+		down2 = setup("/player/redV1_1", false);
+		down3 = setup("/player/redV1_2", false);
+		down4 = setup("/player/redV1_3", false);
+		left1 = setup("/player/redV3", false);
+		left2 = setup("/player/redV3_1", false);
+		left3 = setup("/player/redV3_2", false);
+		left4 = setup("/player/redV3_3", false);
+		right1 = setup("/player/redV4", false);
+		right2 = setup("/player/redV4_1", false);
+		right3 = setup("/player/redV4_2", false);
+		right4 = setup("/player/redV4_3", false);
 		
 		surf1 = setup("/player/surf1", false);
 		surf2 = setup("/player/surf2", false);
@@ -172,7 +174,7 @@ public class PlayerCharacter extends Entity {
 					char type = 'G';
 					if (p.surf) type = 'S';
 					if (p.lavasurf) type = 'L';
-					gp.startWild(currentMapName, type);
+					startWild(currentMapName, type);
 				}
 			}
 			if (p.steps == 202 && p.repel) {
@@ -275,10 +277,10 @@ public class PlayerCharacter extends Entity {
 		}
 		for (int i = 0; i < gp.npc[1].length; i++) {
 			int trainer = gp.npc[gp.currentMap][i] == null ? 0 : gp.npc[gp.currentMap][i].trainer;
-			if (gp.ticks == 0 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "down") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
-			if (gp.ticks == 1 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "up") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
-			if (gp.ticks == 2 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "left") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
-			if (gp.ticks == 3 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "right") gp.startBattle(gp.npc[gp.currentMap][i].trainer);
+			if (gp.ticks == 0 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "down") trainerSpot(gp.npc[gp.currentMap][i]);
+			if (gp.ticks == 1 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "up") trainerSpot(gp.npc[gp.currentMap][i]);
+			if (gp.ticks == 2 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "left") trainerSpot(gp.npc[gp.currentMap][i]);
+			if (gp.ticks == 3 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "right") trainerSpot(gp.npc[gp.currentMap][i]);
 		}
 		if (keyH.wPressed) {
 			// Check trainers
@@ -292,13 +294,13 @@ public class PlayerCharacter extends Entity {
 				} else if (target instanceof NPC_Block) {
 					interactNPC((NPC_Block) target);
 				} else if (target instanceof NPC_Trainer) {
-					gp.startBattle(target.trainer);
+					interactTrainer(target, -1);
 				} else if (target instanceof NPC_GymLeader) {
-					gp.startBattle(target.trainer);
+					interactTrainer(target, -1);
 				} else if (target instanceof NPC_PC) {
 					interactPC((NPC_PC) target);
 				} else if (target instanceof NPC_Pokemon) {
-					gp.startBattle(target.trainer, ((NPC_Pokemon) target).id);
+					interactTrainer(target, ((NPC_Pokemon) target).id);
 				}
 			}
 			
@@ -397,6 +399,10 @@ public class PlayerCharacter extends Entity {
 					interactLockedDoor(iTileIndex);
 				} else if (target instanceof Fuse_Box) {
 					interactFuseBox(iTileIndex);
+				} else if (target instanceof Snowball) {
+					interactSnowball(iTileIndex);
+				} else if (target instanceof IceBlock) {
+					interactIceBlock(iTileIndex);
 				}
 			}
 		}
@@ -408,11 +414,58 @@ public class PlayerCharacter extends Entity {
 				if (p.fish) {
 					int result = gp.cChecker.checkTileType(this);
 					if (result == 3 || (result >= 24 && result <= 36) || (result >= 313 && result <= 324)) {
-						gp.startWild(currentMapName, 'F');
+						startWild(currentMapName, 'F');
 					}
 				}
 			}
 		}
+	}
+	
+	private void trainerSpot(Entity entity) {
+		int trainer = entity.trainer;
+		if (trainer == -1) return;
+		if (p.trainersBeat[trainer]) return;
+		if (p.wiped()) return;
+		
+		gp.gameState = GamePanel.TASK_STATE;
+		
+		Task t = Pokemon.addTask(Task.SPOT, "");
+		t.e = entity;
+		
+		Pokemon.addTrainerTask(entity, -1);
+	}
+
+	public void interactTrainer(Entity entity, int id) {
+		gp.keyH.wPressed = false;
+		
+		int trainer = entity.trainer;
+		if (trainer == -1) return;
+		if (p.wiped()) return;
+		
+		if (!p.trainersBeat[trainer]) {
+			gp.gameState = GamePanel.TASK_STATE;
+			
+			Pokemon foe = Trainer.getTrainer(trainer).getCurrent();
+			
+			Pokemon.addTrainerTask(entity, id, foe);
+			
+			// Heal if Gym Leader
+			if (Trainer.getTrainer(trainer).getMoney() == 500) {
+				p.heal();
+			}
+		} else if (entity.altDialogue != null) {
+			gp.gameState = GamePanel.DIALOGUE_STATE;
+			entity.speak(1);
+		}
+	}
+	
+	public void startWild(String area, char type) {
+		Pokemon foe = gp.encounterPokemon(area, type, p.random);
+		Pokemon.addStartBattleTask(-2, -1, foe);
+	}
+	
+	public void startFish(String area) {
+		startWild(area, 'F');
 	}
 
 	private void interactPC(NPC_PC target) {
@@ -1553,6 +1606,28 @@ public class PlayerCharacter extends Entity {
 				gp.ui.showMessage("The fuse box is whirring with power!");
 			}
 		}
+	}
+	
+	private void interactSnowball(int i) {
+		if (p.bag.contains(Item.SHOVEL)) {
+			gp.keyH.wPressed = false;
+			generateParticle(gp.iTile[gp.currentMap][i]);
+			gp.iTile[gp.currentMap][i] = null;
+		} else {
+			gp.ui.showMessage("This pile of snow looks like it can be shoveled!");
+		}
+		
+	}
+	
+	private void interactIceBlock(int i) {
+		if (p.bag.contains(Item.ICE_PICK)) {
+			gp.keyH.wPressed = false;
+			generateParticle(gp.iTile[gp.currentMap][i]);
+			gp.iTile[gp.currentMap][i] = null;
+		} else {
+			gp.ui.showMessage("This block of ice looks like it can be broken!");
+		}
+		
 	}
 	
 	private int getTileForwardX() {

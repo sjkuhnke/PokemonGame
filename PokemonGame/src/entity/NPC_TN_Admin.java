@@ -4,8 +4,8 @@ import overworld.GamePanel;
 
 public class NPC_TN_Admin extends NPC_GymLeader {
 
-	public NPC_TN_Admin(GamePanel gp, String d, int t) {
-		super(gp, d, t);
+	public NPC_TN_Admin(GamePanel gp, String d, int t, String[] message) {
+		super(gp, d, t, message);
 	}
 	
 	public void getImage() {
