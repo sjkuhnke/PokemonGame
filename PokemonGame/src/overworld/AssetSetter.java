@@ -4,39 +4,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-import entity.Entity;
-import entity.NPC_Block;
-import entity.NPC_Clerk;
-import entity.NPC_GymLeader;
-import entity.NPC_Invisible;
-import entity.NPC_Market;
-import entity.NPC_Nurse;
-import entity.NPC_PC;
-import entity.NPC_Pokemon;
-import entity.NPC_Rival;
-import entity.NPC_Rival2;
-import entity.NPC_TN;
-import entity.NPC_TN_Admin;
-import entity.NPC_Trainer;
-import object.Cut_Tree;
-import object.Fuse_Box;
-import object.GymBarrier;
-import object.IceBlock;
-import object.InteractiveTile;
-import object.ItemObj;
-import object.Locked_Door;
-import object.Pit;
-import object.PitEdge;
-import object.Rock_Climb;
-import object.Rock_Smash;
-import object.Snowball;
-import object.Starter_Machine;
-import object.Tree_Stump;
-import object.Vine;
-import object.Vine_Crossable;
-import object.Whirlpool;
-import object.Whirlpool_Corner;
-import object.Whirlpool_Side;
+import entity.*;
+import object.*;
 import pokemon.Item;
 
 public class AssetSetter {
@@ -99,6 +68,117 @@ public class AssetSetter {
 	private static final int INVIS_UP = 24;
 	private static final int INVIS_LEFT = 25;
 	private static final int INVIS_RIGHT = 26;
+	
+	private static final int ACTOR_DOWN = 100;
+	private static final int ACTOR_UP = 101;
+	private static final int ACTOR_LEFT = 102;
+	private static final int ACTOR_RIGHT = 103;
+	private static final int ACTRESS_DOWN = 104;
+	private static final int ACTRESS_UP = 105;
+	private static final int ACTRESS_LEFT = 106;
+	private static final int ACTRESS_RIGHT = 107;
+	private static final int ATHLETE_DOWN = 108;
+	private static final int ATHLETE_UP = 109;
+	private static final int ATHLETE_LEFT = 110;
+	private static final int ATHLETE_RIGHT = 111;
+	private static final int BIRD_KEEPER_DOWN = 112;
+	private static final int BIRD_KEEPER_UP = 113;
+	private static final int BIRD_KEEPER_LEFT = 114;
+	private static final int BIRD_KEEPER_RIGHT = 115;
+	private static final int BLACK_BELT_DOWN = 116;
+	private static final int BLACK_BELT_UP = 117;
+	private static final int BLACK_BELT_LEFT = 118;
+	private static final int BLACK_BELT_RIGHT = 119;
+	private static final int BUG_CATCHER_DOWN = 120;
+	private static final int BUG_CATCHER_UP = 121;
+	private static final int BUG_CATCHER_LEFT = 122;
+	private static final int BUG_CATCHER_RIGHT = 123;
+	private static final int BURGLAR_DOWN = 124;
+	private static final int BURGLAR_UP = 125;
+	private static final int BURGLAR_LEFT = 126;
+	private static final int BURGLAR_RIGHT = 127;
+	private static final int EXPLORER_DOWN = 128;
+	private static final int EXPLORER_UP = 129;
+	private static final int EXPLORER_LEFT = 130;
+	private static final int EXPLORER_RIGHT = 131;
+	private static final int FISHERMAN_DOWN = 132;
+	private static final int FISHERMAN_UP = 133;
+	private static final int FISHERMAN_LEFT = 134;
+	private static final int FISHERMAN_RIGHT = 135;
+	private static final int GENTLEMAN_DOWN = 136;
+	private static final int GENTLEMAN_UP = 137;
+	private static final int GENTLEMAN_LEFT = 138;
+	private static final int GENTLEMAN_RIGHT = 139;
+	private static final int HIKER_DOWN = 140;
+	private static final int HIKER_UP = 141;
+	private static final int HIKER_LEFT = 142;
+	private static final int HIKER_RIGHT = 143;
+	private static final int LADY_DOWN = 144;
+	private static final int LADY_UP = 145;
+	private static final int LADY_LEFT = 146;
+	private static final int LADY_RIGHT = 147;
+	private static final int MAGICIAN_F_DOWN = 148;
+	private static final int MAGICIAN_F_UP = 149;
+	private static final int MAGICIAN_F_LEFT = 150;
+	private static final int MAGICIAN_F_RIGHT = 151;
+	private static final int MAGICIAN_M_DOWN = 152;
+	private static final int MAGICIAN_M_UP = 153;
+	private static final int MAGICIAN_M_LEFT = 154;
+	private static final int MAGICIAN_M_RIGHT = 155;
+	private static final int MANIAC_DOWN = 156;
+	private static final int MANIAC_UP = 157;
+	private static final int MANIAC_LEFT = 158;
+	private static final int MANIAC_RIGHT = 159;
+	private static final int PICKNICKER_DOWN = 160;
+	private static final int PICKNICKER_UP = 161;
+	private static final int PICKNICKER_LEFT = 162;
+	private static final int PICKNICKER_RIGHT = 163;
+	private static final int POSTMAN_DOWN = 164;
+	private static final int POSTMAN_UP = 165;
+	private static final int POSTMAN_LEFT = 166;
+	private static final int POSTMAN_RIGHT = 167;
+	private static final int PSYCHIC_DOWN = 168;
+	private static final int PSYCHIC_UP = 169;
+	private static final int PSYCHIC_LEFT = 170;
+	private static final int PSYCHIC_RIGHT = 171;
+	private static final int STUDENT_F_DOWN = 172;
+	private static final int STUDENT_F_UP = 173;
+	private static final int STUDENT_F_LEFT = 174;
+	private static final int STUDENT_F_RIGHT = 175;
+	private static final int STUDENT_M_DOWN = 176;
+	private static final int STUDENT_M_UP = 177;
+	private static final int STUDENT_M_LEFT = 178;
+	private static final int STUDENT_M_RIGHT = 179;
+	private static final int SWIMMER_F_DOWN = 180;
+	private static final int SWIMMER_F_UP = 181;
+	private static final int SWIMMER_F_LEFT = 182;
+	private static final int SWIMMER_F_RIGHT = 183;
+	private static final int SWIMMER_M_DOWN = 184;
+	private static final int SWIMMER_M_UP = 185;
+	private static final int SWIMMER_M_LEFT = 186;
+	private static final int SWIMMER_M_RIGHT = 187;
+	private static final int YOUNGSTER_DOWN = 188;
+	private static final int YOUNGSTER_UP = 189;
+	private static final int YOUNGSTER_LEFT = 190;
+	private static final int YOUNGSTER_RIGHT = 191;
+//	private static final int T = 192;
+//	private static final int T = 193;
+//	private static final int T = 194;
+//	private static final int T = 195;
+//	private static final int T = 196;
+//	private static final int T = 197;
+//	private static final int T = 198;
+//	private static final int T = 199;
+//	private static final int T = 200;
+//	private static final int T = 201;
+//	private static final int T = 202;
+//	private static final int T = 203;
+//	private static final int T = 204;
+//	private static final int T = 205;
+//	private static final int T = 206;
+//	private static final int T = 207;
+//	private static final int T = 208;
+//	private static final int T = 209;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -2648,52 +2728,52 @@ public class AssetSetter {
 			result = new NPC_Nurse(gp, "up");
 			break;
 		case ROBIN:
-			result = new NPC_GymLeader(gp, "down", team, messages);
+			result = new GL_Robin(gp, "down", team, messages);
 			break;
 		case STANFORD:
-			result = new NPC_GymLeader(gp, "down2", team, messages);
+			result = new GL_Stanford(gp, "down", team, messages);
 			break;
 		case MILLIE:
-			result = new NPC_GymLeader(gp, "up", team, messages);
+			result = new GL_Millie(gp, "down", team, messages);
 			break;
 		case GLACIUS:
-			result = new NPC_GymLeader(gp, "up2", team, messages);
+			result = new GL_Glacius(gp, "down", team, messages);
 			break;
 		case MINDY:
-			result = new NPC_GymLeader(gp, "left", team, messages);
+			result = new GL_Mindy(gp, "down", team, messages);
 			break;
 		case RAYNA:
-			result = new NPC_GymLeader(gp, "left2", team, messages);
+			result = new GL_Rayna(gp, "down", team, messages);
 			break;
 		case MERLIN:
-			result = new NPC_GymLeader(gp, "right", team, messages);
+			result = new GL_Merlin(gp, "down", team, messages);
 			break;
 		case NOVA:
-			result = new NPC_GymLeader(gp, "right2", team, messages);
+			result = new GL_Nova(gp, "down", team, messages);
 			break;
 		case SCOTT_DOWN:
-			result = new NPC_Rival(gp, "down", team, messages); // scott down
+			result = new T_Scott(gp, "down", team, messages); // scott down
 			break;
 		case SCOTT_UP:
-			result = new NPC_Rival(gp, "up", team, messages); // scott up
+			result = new T_Scott(gp, "up", team, messages); // scott up
 			break;
 		case TN_DOWN:
-			result = new NPC_TN(gp, "down", team, messages);
+			result = new T_TN(gp, "down", team, messages);
 			break;
 		case TN_UP:
-			result = new NPC_TN(gp, "up", team, messages);
+			result = new T_TN(gp, "up", team, messages);
 			break;
 		case TN_LEFT:
-			result = new NPC_TN(gp, "left", team, messages);
+			result = new T_TN(gp, "left", team, messages);
 			break;
 		case TN_RIGHT:
-			result = new NPC_TN(gp, "right", team, messages);
+			result = new T_TN(gp, "right", team, messages);
 			break;
 		case FRED_DOWN:
-			result = new NPC_Rival2(gp, "down", team, messages); // fred down
+			result = new T_Fred(gp, "down", team, messages); // fred down
 			break;
 		case FRED_UP:
-			result = new NPC_Rival2(gp, "up", team, messages); // fred up
+			result = new T_Fred(gp, "up", team, messages); // fred up
 			break;
 		case NPC_MARKET:
 			result = new NPC_Market(gp);
@@ -2704,22 +2784,274 @@ public class AssetSetter {
 			gp.grusts[index - 1] = ((NPC_Pokemon) result);
 			break;
 		case RICK:
-			result = new NPC_TN_Admin(gp, "down", team, messages);
+			result = new GL_Rick(gp, "down", team, messages);
 			break;
 		case MAXWELL:
-			result = new NPC_TN_Admin(gp, "up", team, messages);
+			result = new GL_Maxwell(gp, "down", team, messages);
 			break;
 		case INVIS_DOWN:
-			result = new NPC_Invisible(gp, "down", team, messages);
+			result = new T_Invisible(gp, "down", team, messages);
 			break;
 		case INVIS_UP:
-			result = new NPC_Invisible(gp, "up", team, messages);
+			result = new T_Invisible(gp, "up", team, messages);
 			break;
 		case INVIS_LEFT:
-			result = new NPC_Invisible(gp, "left", team, messages);
+			result = new T_Invisible(gp, "left", team, messages);
 			break;
 		case INVIS_RIGHT:
-			result = new NPC_Invisible(gp, "right", team, messages);
+			result = new T_Invisible(gp, "right", team, messages);
+			break;
+		case ATHLETE_DOWN:
+			result = new T_Athlete(gp, "down", team, messages);
+			break;
+		case ATHLETE_UP:
+			result = new T_Athlete(gp, "up", team, messages);
+			break;
+		case ATHLETE_LEFT:
+			result = new T_Athlete(gp, "left", team, messages);
+			break;
+		case ATHLETE_RIGHT:
+			result = new T_Athlete(gp, "right", team, messages);
+			break;
+		case BIRD_KEEPER_DOWN:
+			result = new T_BirdKeeper(gp, "down", team, messages);
+			break;
+		case BIRD_KEEPER_UP:
+			result = new T_BirdKeeper(gp, "up", team, messages);
+			break;
+		case BIRD_KEEPER_LEFT:
+			result = new T_BirdKeeper(gp, "left", team, messages);
+			break;
+		case BIRD_KEEPER_RIGHT:
+			result = new T_BirdKeeper(gp, "right", team, messages);
+			break;
+		case BLACK_BELT_DOWN:
+			result = new T_BlackBelt(gp, "down", team, messages);
+			break;
+		case BLACK_BELT_UP:
+			result = new T_BlackBelt(gp, "up", team, messages);
+			break;
+		case BLACK_BELT_LEFT:
+			result = new T_BlackBelt(gp, "left", team, messages);
+			break;
+		case BLACK_BELT_RIGHT:
+			result = new T_BlackBelt(gp, "right", team, messages);
+			break;
+		case BUG_CATCHER_DOWN:
+			result = new T_BugCatcher(gp, "down", team, messages);
+			break;
+		case BUG_CATCHER_UP:
+			result = new T_BugCatcher(gp, "up", team, messages);
+			break;
+		case BUG_CATCHER_LEFT:
+			result = new T_BugCatcher(gp, "left", team, messages);
+			break;
+		case BUG_CATCHER_RIGHT:
+			result = new T_BugCatcher(gp, "right", team, messages);
+			break;
+		case BURGLAR_DOWN:
+			result = new T_Burglar(gp, "down", team, messages);
+			break;
+		case BURGLAR_UP:
+			result = new T_Burglar(gp, "up", team, messages);
+			break;
+		case BURGLAR_LEFT:
+			result = new T_Burglar(gp, "left", team, messages);
+			break;
+		case BURGLAR_RIGHT:
+			result = new T_Burglar(gp, "right", team, messages);
+			break;
+		case EXPLORER_DOWN:
+			result = new T_Explorer(gp, "down", team, messages);
+			break;
+		case EXPLORER_UP:
+			result = new T_Explorer(gp, "up", team, messages);
+			break;
+		case EXPLORER_LEFT:
+			result = new T_Explorer(gp, "left", team, messages);
+			break;
+		case EXPLORER_RIGHT:
+			result = new T_Explorer(gp, "right", team, messages);
+			break;
+		case FISHERMAN_DOWN:
+			result = new T_Fisherman(gp, "down", team, messages);
+			break;
+		case FISHERMAN_UP:
+			result = new T_Fisherman(gp, "up", team, messages);
+			break;
+		case FISHERMAN_LEFT:
+			result = new T_Fisherman(gp, "left", team, messages);
+			break;
+		case FISHERMAN_RIGHT:
+			result = new T_Fisherman(gp, "right", team, messages);
+			break;
+		case GENTLEMAN_DOWN:
+			result = new T_Gentleman(gp, "down", team, messages);
+			break;
+		case GENTLEMAN_UP:
+			result = new T_Gentleman(gp, "up", team, messages);
+			break;
+		case GENTLEMAN_LEFT:
+			result = new T_Gentleman(gp, "left", team, messages);
+			break;
+		case GENTLEMAN_RIGHT:
+			result = new T_Gentleman(gp, "right", team, messages);
+			break;
+		case HIKER_DOWN:
+			result = new T_Hiker(gp, "down", team, messages);
+			break;
+		case HIKER_UP:
+			result = new T_Hiker(gp, "up", team, messages);
+			break;
+		case HIKER_LEFT:
+			result = new T_Hiker(gp, "left", team, messages);
+			break;
+		case HIKER_RIGHT:
+			result = new T_Hiker(gp, "right", team, messages);
+			break;
+		case LADY_DOWN:
+			result = new T_Lady(gp, "down", team, messages);
+			break;
+		case LADY_UP:
+			result = new T_Lady(gp, "up", team, messages);
+			break;
+		case LADY_LEFT:
+			result = new T_Lady(gp, "left", team, messages);
+			break;
+		case LADY_RIGHT:
+			result = new T_Lady(gp, "right", team, messages);
+			break;
+		case MAGICIAN_F_DOWN:
+			result = new T_MagicianF(gp, "down", team, messages);
+			break;
+		case MAGICIAN_F_UP:
+			result = new T_MagicianF(gp, "up", team, messages);
+			break;
+		case MAGICIAN_F_LEFT:
+			result = new T_MagicianF(gp, "left", team, messages);
+			break;
+		case MAGICIAN_F_RIGHT:
+			result = new T_MagicianF(gp, "right", team, messages);
+			break;
+		case MAGICIAN_M_DOWN:
+			result = new T_MagicianM(gp, "down", team, messages);
+			break;
+		case MAGICIAN_M_UP:
+			result = new T_MagicianM(gp, "up", team, messages);
+			break;
+		case MAGICIAN_M_LEFT:
+			result = new T_MagicianM(gp, "left", team, messages);
+			break;
+		case MAGICIAN_M_RIGHT:
+			result = new T_MagicianM(gp, "right", team, messages);
+			break;
+		case MANIAC_DOWN:
+			result = new T_Maniac(gp, "down", team, messages);
+			break;
+		case MANIAC_UP:
+			result = new T_Maniac(gp, "up", team, messages);
+			break;
+		case MANIAC_LEFT:
+			result = new T_Maniac(gp, "left", team, messages);
+			break;
+		case MANIAC_RIGHT:
+			result = new T_Maniac(gp, "right", team, messages);
+			break;
+		case PICKNICKER_DOWN:
+			result = new T_Picknicker(gp, "down", team, messages);
+			break;
+		case PICKNICKER_UP:
+			result = new T_Picknicker(gp, "up", team, messages);
+			break;
+		case PICKNICKER_LEFT:
+			result = new T_Picknicker(gp, "left", team, messages);
+			break;
+		case PICKNICKER_RIGHT:
+			result = new T_Picknicker(gp, "right", team, messages);
+			break;
+		case POSTMAN_DOWN:
+			result = new T_Postman(gp, "down", team, messages);
+			break;
+		case POSTMAN_UP:
+			result = new T_Postman(gp, "up", team, messages);
+			break;
+		case POSTMAN_LEFT:
+			result = new T_Postman(gp, "left", team, messages);
+			break;
+		case POSTMAN_RIGHT:
+			result = new T_Postman(gp, "right", team, messages);
+			break;
+		case PSYCHIC_DOWN:
+			result = new T_Psychic(gp, "down", team, messages);
+			break;
+		case PSYCHIC_UP:
+			result = new T_Psychic(gp, "up", team, messages);
+			break;
+		case PSYCHIC_LEFT:
+			result = new T_Psychic(gp, "left", team, messages);
+			break;
+		case PSYCHIC_RIGHT:
+			result = new T_Psychic(gp, "right", team, messages);
+			break;
+		case STUDENT_F_DOWN:
+			result = new T_StudentF(gp, "down", team, messages);
+			break;
+		case STUDENT_F_UP:
+			result = new T_StudentF(gp, "up", team, messages);
+			break;
+		case STUDENT_F_LEFT:
+			result = new T_StudentF(gp, "left", team, messages);
+			break;
+		case STUDENT_F_RIGHT:
+			result = new T_StudentF(gp, "right", team, messages);
+			break;
+		case STUDENT_M_DOWN:
+			result = new T_StudentM(gp, "down", team, messages);
+			break;
+		case STUDENT_M_UP:
+			result = new T_StudentM(gp, "up", team, messages);
+			break;
+		case STUDENT_M_LEFT:
+			result = new T_StudentM(gp, "left", team, messages);
+			break;
+		case STUDENT_M_RIGHT:
+			result = new T_StudentM(gp, "right", team, messages);
+			break;
+		case SWIMMER_F_DOWN:
+			result = new T_SwimmerF(gp, "down", team, messages);
+			break;
+		case SWIMMER_F_UP:
+			result = new T_SwimmerF(gp, "up", team, messages);
+			break;
+		case SWIMMER_F_LEFT:
+			result = new T_SwimmerF(gp, "left", team, messages);
+			break;
+		case SWIMMER_F_RIGHT:
+			result = new T_SwimmerF(gp, "right", team, messages);
+			break;
+		case SWIMMER_M_DOWN:
+			result = new T_SwimmerM(gp, "down", team, messages);
+			break;
+		case SWIMMER_M_UP:
+			result = new T_SwimmerM(gp, "up", team, messages);
+			break;
+		case SWIMMER_M_LEFT:
+			result = new T_SwimmerM(gp, "left", team, messages);
+			break;
+		case SWIMMER_M_RIGHT:
+			result = new T_SwimmerM(gp, "right", team, messages);
+			break;
+		case YOUNGSTER_DOWN:
+			result = new T_Youngster(gp, "down", team, messages);
+			break;
+		case YOUNGSTER_UP:
+			result = new T_Youngster(gp, "up", team, messages);
+			break;
+		case YOUNGSTER_LEFT:
+			result = new T_Youngster(gp, "left", team, messages);
+			break;
+		case YOUNGSTER_RIGHT:
+			result = new T_Youngster(gp, "right", team, messages);
 			break;
 		case NPC_PC_GAUNTLET:
 			result = new NPC_PC(gp, true);
