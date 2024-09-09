@@ -1,6 +1,7 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
+285 Icy Serpant*
 156 Poof* (E forms of these guys are more important, these guys can wait)
 157 Hast* (E forms of these guys are more important, these guys can wait)
 197 Poof-E*
@@ -11,7 +12,6 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 202 Flamehead-E
 203 Fireshard-E (First stage is lowkey the most important, these 2 can wait)
 204 Blastflames-E (First stage is lowkey the most important, these 2 can wait)
-285 Icy Serpant*
 263 Plasamp*
 264 Geniova*
 287 Dust Sorcerer*
@@ -99,30 +99,30 @@ Elite Four Steel (?) (Down)
 --------------------
 
 --- The rest are just trainer sprites for different types ---
-X Ace Trainer (mixed teams/Dragon)
-X Actor (Light/Normal)
-X Actress (Light/Normal)
-X Athlete (Fire/Electric)
-X Hiker (Ground/Rock/Steel)
-X Burglar (Crook/Dark)
-X Bird Keeper (Flying)
-X Black Belt (Fighting)
-X Bug Catcher (Bug)
-X Picknicker (Bug/Grass)
-X Student (M) (Normal)
-X Student (F) (Normal)
-X Fisher (Water)
-X Surfer (M) (Water)
-X Swimmer (F) (Water)
-X Explorer (Ice)
-X Gentleman (Any)
-X Lady (Any)
-X Maniac (Ghost)
-X Magician (M) (Magic)
-X Magician (F) (Magic)
+Ace Trainer (mixed teams/Dragon)
+Actor (Light/Normal)
+Actress (Light/Normal)
+Athlete (Fire/Electric)
+Hiker (Ground/Rock/Steel)
+Burglar (Crook/Dark)
+Bird Keeper (Flying)
+Black Belt (Fighting)
+Bug Catcher (Bug)
+Picknicker (Bug/Grass)
+Student (M) (Normal)
+Student (F) (Normal)
+Fisher (Water)
+Surfer (M) (Water)
+Swimmer (F) (Water)
+Explorer (Ice)
+Gentleman (Any)
+Lady (Any)
+Maniac (Ghost)
+Magician (M) (Magic)
+Magician (F) (Magic)
 Psychic (Psychic)
-X Astronomer (Galactic)
-X Youngster (Normal/Poison)
+Astronomer (Galactic)
+Youngster (Normal/Poison)
 -------------------------------------------------------------
 
 ================================================================================

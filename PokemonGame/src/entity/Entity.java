@@ -181,4 +181,16 @@ public class Entity {
 			dialogues[i] = message[i];
 		}
 	}
+	
+	public void setupImages(String name) {
+		BufferedImage down = setup(name + "1");
+		BufferedImage up = setup(name + "2");
+		BufferedImage left = setup(name + "3");
+		BufferedImage right = setup(name + "4");
+		
+		down1 = down;
+		up1 = up;
+		left1 = left;
+		right1 = right;
+	}
 }
