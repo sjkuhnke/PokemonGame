@@ -161,14 +161,14 @@ public class AssetSetter {
 	private static final int YOUNGSTER_UP = 189;
 	private static final int YOUNGSTER_LEFT = 190;
 	private static final int YOUNGSTER_RIGHT = 191;
-//	private static final int T = 192;
-//	private static final int T = 193;
-//	private static final int T = 194;
-//	private static final int T = 195;
-//	private static final int T = 196;
-//	private static final int T = 197;
-//	private static final int T = 198;
-//	private static final int T = 199;
+	private static final int ACE_TRAINER_F_DOWN = 192;
+	private static final int ACE_TRAINER_F_UP = 193;
+	private static final int ACE_TRAINER_F_LEFT = 194;
+	private static final int ACE_TRAINER_F_RIGHT = 195;
+	private static final int ACE_TRAINER_M_DOWN = 196;
+	private static final int ACE_TRAINER_M_UP = 197;
+	private static final int ACE_TRAINER_M_LEFT = 198;
+	private static final int ACE_TRAINER_M_RIGHT = 199;
 //	private static final int T = 200;
 //	private static final int T = 201;
 //	private static final int T = 202;
@@ -3053,6 +3053,30 @@ public class AssetSetter {
 		case YOUNGSTER_RIGHT:
 			result = new T_Youngster(gp, "right", team, messages);
 			break;
+		case ACE_TRAINER_F_DOWN:
+			result = new T_AceTrainerF(gp, "down", team, messages);
+			break;
+		case ACE_TRAINER_F_UP:
+			result = new T_AceTrainerF(gp, "up", team, messages);
+			break;
+		case ACE_TRAINER_F_LEFT:
+			result = new T_AceTrainerF(gp, "left", team, messages);
+			break;
+		case ACE_TRAINER_F_RIGHT:
+			result = new T_AceTrainerF(gp, "right", team, messages);
+			break;
+		case ACE_TRAINER_M_DOWN:
+			result = new T_AceTrainerM(gp, "down", team, messages);
+			break;
+		case ACE_TRAINER_M_UP:
+			result = new T_AceTrainerM(gp, "up", team, messages);
+			break;
+		case ACE_TRAINER_M_LEFT:
+			result = new T_AceTrainerM(gp, "left", team, messages);
+			break;
+		case ACE_TRAINER_M_RIGHT:
+			result = new T_AceTrainerM(gp, "right", team, messages);
+			break;
 		case NPC_PC_GAUNTLET:
 			result = new NPC_PC(gp, true);
 			result.down1 = result.setup("/npc/gauntletbox");
@@ -3086,54 +3110,59 @@ public class AssetSetter {
 		}
 		Entity result = new NPC_Block(gp, messages, flag, a, Item.breakString(altDialogue, 44));
 		
-		BufferedImage image;
+		BufferedImage image = null;
+		
 		switch (type) {
 			case BLOCK_DEFAULT:
 			default:
-				image = result.setup("/npc/block1");
+				result.setupImages("/npc/block");
 				break;
 			case PROFESSOR:
-				image = result.setup("/npc/professor");
+				result.setupImages("/npc/professor");
 				break;
 			case GRANDMOTHER:
-				image = result.setup("/npc/grandma");
+				result.setupImages("/npc/grandma");
 				break;
 			case AVERY:
-				image = result.setup("/npc/avery1");
+				result.setupImages("/npc/avery");
 				break;
 			case ROBIN:
-				image = result.setup("/npc/robin1");
+				result.setupImages("/npc/robin");
 				break;
 			case STANFORD:
-				image = result.setup("/npc/stanford");
+				result.setupImages("/npc/stanford");
 				break;
 			case MILLIE:
-				image = result.setup("/npc/millie");
+				result.setupImages("/npc/millie");
 				break;
 			case TN_DOWN:
-				image = result.setup("/npc/tn1");
+				result.setupImages("/npc/tn");
 				break;
 			case ALAKAZAM:
 				image = result.setup("/overworlds/245_0");
 				break;
 			case SCOTT_DOWN:
-				image = result.setup("/npc/scott1");
+				result.setupImages("/npc/scott");
+				result.direction = "down";
 				break;
 			case SCOTT_UP:
-				image = result.setup("/npc/scott2");
+				result.setupImages("/npc/scott");
+				result.direction = "up";
 				break;
 			case FRED_DOWN:
-				image = result.setup("/npc/fred1");
+				result.setupImages("/npc/fred");
+				result.direction = "down";
 				break;
 			case FRED_UP:
-				image = result.setup("/npc/fred2");
+				result.setupImages("/npc/fred");
+				result.direction = "up";
 				break;
 			case UP_XURKITREE:
 				image = result.setup("/overworlds/284_0");
 				break;
 		}
 		
-		result.down1 = image;
+		if (image != null) result.down1 = image;
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;
