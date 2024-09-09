@@ -305,6 +305,11 @@ public enum Item {
 	WAREHOUSE_KEY(267,0,0,Color.BLACK,Item.KEY_ITEM,null,"A key that unlocks Poppy Grove's Warehouse."),
 	FISHING_ROD(268,0,0,Color.BLACK,Item.KEY_ITEM,null,"Use when looking at water to fish! Can also press 'A' in the world to fish."),
 	WIRE_CUTTERS(269,0,0,Color.BLACK,Item.KEY_ITEM,null,"Heavy duty wire cutters that can cut through any wire, big or small. A favorite for electricians."),
+	VISOR(270,0,0,Color.BLACK,Item.KEY_ITEM,null,"A rainbow pair of shades that blocks 90% of harsh light."),
+	ICE_KEY(271,0,0,Color.BLACK,Item.KEY_ITEM,null,"A key that unlocks Ice Master's Classroom."),
+	GROUND_KEY(272,0,0,Color.BLACK,Item.KEY_ITEM,null,"A key that unlocks Ground Master's Classroom."),
+	SHOVEL(273,0,0,Color.BLACK,Item.KEY_ITEM,null,"A handy tool that can shovel snowballs to clear them."),
+	ICE_PICK(274,0,0,Color.BLACK,Item.KEY_ITEM,null,"A cold metal pickaxe used for breaking blocks of ice."),
 	;
 	
 	private int id;

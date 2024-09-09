@@ -1365,4 +1365,10 @@ public class Player extends Trainer implements Serializable {
 			trainersBeat[indices[i]] = true;
 		}
 	}
+	
+	public void setSlots() {
+		for (int i = 0; i < 6; i++) {
+			if (team[i] != null) team[i].slot = i;
+		}
+	}
 }

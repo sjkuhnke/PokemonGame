@@ -4,8 +4,8 @@ import overworld.GamePanel;
 
 public class NPC_Rival2 extends NPC_Trainer {
 
-	public NPC_Rival2(GamePanel gp, String d, int t) {
-		super(gp, d, t);
+	public NPC_Rival2(GamePanel gp, String d, int t, String[] message) {
+		super(gp, d, t, message);
 	}
 	
 	public void getImage() {
