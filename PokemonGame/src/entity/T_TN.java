@@ -2,9 +2,9 @@ package entity;
 
 import overworld.GamePanel;
 
-public class NPC_TN extends NPC_Trainer {
+public class T_TN extends NPC_Trainer {
 
-	public NPC_TN(GamePanel gp, String d, int t, String[] message) {
+	public T_TN(GamePanel gp, String d, int t, String[] message) {
 		super(gp, d, t, message);
 	}
 	

@@ -2,9 +2,9 @@ package entity;
 
 import overworld.GamePanel;
 
-public class NPC_Invisible extends NPC_Trainer {
+public class T_Invisible extends NPC_Trainer {
 
-	public NPC_Invisible(GamePanel gp, String d, int t, String[] message) {
+	public T_Invisible(GamePanel gp, String d, int t, String[] message) {
 		super(gp, d, t, message);
 		
 		getImage();

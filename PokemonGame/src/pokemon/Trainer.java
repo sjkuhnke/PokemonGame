@@ -107,12 +107,7 @@ public class Trainer implements Serializable {
 	
 	@Override // implementation
 	public String toString() {
-		if (getName() != "[SELECT]") {
-			if (!getName().contains("Leader") && !getName().contains("Rival")) return getName() + " trainer";
-			return getName();
-		} else {
-			return getName();
-		}
+		return getName();
 	}
 
 	public boolean hasNext() {

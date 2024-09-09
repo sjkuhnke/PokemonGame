@@ -560,7 +560,7 @@ public class Pokemon implements Serializable {
         		bestMoves.add(move);
         		bestMoves.add(move);
         		bestMoves.add(move);
-        		if (move.hasPriority(this)) {
+        		if (move.hasPriority(this) || move == Move.FELL_STINGER) {
         			bestMoves.add(move);
         		}
         	}
@@ -3543,6 +3543,7 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.INGRAIN) {
 			if (!(this.vStatuses.contains(Status.AQUA_RING))) {
 			    this.vStatuses.add(Status.AQUA_RING);
+			    if (announce) addTask(Task.TEXT, this.nickname + " planted its roots!");
 			} else {
 			    fail = fail(announce);
 			}
@@ -7417,11 +7418,9 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void addTrainerTask(Entity t, int id, Pokemon foe) {
-		Task task = null;
 		for (int i = 0; i < t.dialogues.length; i++) {
 			if (t.dialogues[i] != null) {
-				task = addTask(Task.TEXT, t.dialogues[i]);
-				task.e = t;
+				 addTask(Task.TEXT, t.dialogues[i]);
 			}
 		}
 		addStartBattleTask(t.trainer, id);

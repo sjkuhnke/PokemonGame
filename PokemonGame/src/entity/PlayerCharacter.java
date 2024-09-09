@@ -295,7 +295,7 @@ public class PlayerCharacter extends Entity {
 					interactNPC((NPC_Block) target);
 				} else if (target instanceof NPC_Trainer) {
 					interactTrainer(target, -1);
-				} else if (target instanceof NPC_GymLeader) {
+				} else if (target instanceof GL_Robin) {
 					interactTrainer(target, -1);
 				} else if (target instanceof NPC_PC) {
 					interactPC((NPC_PC) target);
