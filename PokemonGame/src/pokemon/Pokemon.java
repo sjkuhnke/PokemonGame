@@ -2350,7 +2350,7 @@ public class Pokemon implements Serializable {
 		
 		if ((move == Move.VOLT_SWITCH || move == Move.FLIP_TURN || move == Move.U$TURN) && !this.isFainted()) {
 			if (this.trainerOwned() && enemy.hasValidMembers()) {
-				addTask(Task.TEXT, this.nickname + " went back to " + enemy.getName() + "!");
+				addTask(Task.TEXT, this.nickname + " went back to " + enemy.toString() + "!");
 			}
 			this.vStatuses.add(Status.SWITCHING);
 		}
@@ -3319,7 +3319,7 @@ public class Pokemon implements Serializable {
 			stat(foe, 0, -1, this, announce);
 		} else if (announce && (move == Move.BATON_PASS || move == Move.TELEPORT)) {
 			if (this.trainerOwned() && enemy.hasValidMembers()) {
-				addTask(Task.TEXT, this.nickname + " went back to " + enemy.getName() + "!");
+				addTask(Task.TEXT, this.nickname + " went back to " + enemy.toString() + "!");
 				this.vStatuses.add(Status.SWITCHING);
 			} else if (this.playerOwned() && player.hasValidMembers()) {
 				addTask(Task.TEXT, this.nickname + " went back to you!");
@@ -3658,7 +3658,7 @@ public class Pokemon implements Serializable {
 			stat(foe, 0, -1, this, announce);
 			stat(foe, 2, -1, this, announce);
 			if (this.trainerOwned() && enemy.hasValidMembers()) {
-				addTask(Task.TEXT, this.nickname + " went back to " + enemy.getName() + "!");
+				addTask(Task.TEXT, this.nickname + " went back to " + enemy.toString() + "!");
 				this.vStatuses.add(Status.SWITCHING);
 			} else if (this.playerOwned() && player.hasValidMembers()) {
 				addTask(Task.TEXT, this.nickname + " went back to you!");

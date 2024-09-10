@@ -107,7 +107,7 @@ public class Trainer implements Serializable {
 	
 	@Override // implementation
 	public String toString() {
-		return getName();
+		return getName().replaceAll("\\s*\\d+$", "");
 	}
 
 	public boolean hasNext() {
