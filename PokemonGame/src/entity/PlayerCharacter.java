@@ -91,22 +91,7 @@ public class PlayerCharacter extends Entity {
 		direction = "down";
 	}
 	public void getPlayerImage() {
-		up1 = setup("/player/redV2", false);
-		up2 = setup("/player/redV2_1", false);
-		up3 = setup("/player/redV2_2", false);
-		up4 = setup("/player/redV2_3", false);
-		down1 = setup("/player/redV1", false);
-		down2 = setup("/player/redV1_1", false);
-		down3 = setup("/player/redV1_2", false);
-		down4 = setup("/player/redV1_3", false);
-		left1 = setup("/player/redV3", false);
-		left2 = setup("/player/redV3_1", false);
-		left3 = setup("/player/redV3_2", false);
-		left4 = setup("/player/redV3_3", false);
-		right1 = setup("/player/redV4", false);
-		right2 = setup("/player/redV4_1", false);
-		right3 = setup("/player/redV4_2", false);
-		right4 = setup("/player/redV4_3", false);
+		setupPlayerImages(false);
 		
 		surf1 = setup("/player/surf1", false);
 		surf2 = setup("/player/surf2", false);
@@ -460,6 +445,8 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	public void startWild(String area, char type) {
+		gp.gameState = GamePanel.TASK_STATE;
+		
 		Pokemon foe = gp.encounterPokemon(area, type, p.random);
 		Pokemon.addStartBattleTask(-2, -1, foe);
 	}
@@ -1861,6 +1848,44 @@ public class PlayerCharacter extends Entity {
 				p.bag.count[i] = 1;
 			}
 			SwingUtilities.getWindowAncestor(cheats).dispose();
+		}
+	}
+
+	public void setupPlayerImages(boolean visor) {
+		if (visor) {
+			up1 = setup("/player/redV2", false);
+			up2 = setup("/player/redV2_1", false);
+			up3 = setup("/player/redV2_2", false);
+			up4 = setup("/player/redV2_3", false);
+			down1 = setup("/player/redV1", false);
+			down2 = setup("/player/redV1_1", false);
+			down3 = setup("/player/redV1_2", false);
+			down4 = setup("/player/redV1_3", false);
+			left1 = setup("/player/redV3", false);
+			left2 = setup("/player/redV3_1", false);
+			left3 = setup("/player/redV3_2", false);
+			left4 = setup("/player/redV3_3", false);
+			right1 = setup("/player/redV4", false);
+			right2 = setup("/player/redV4_1", false);
+			right3 = setup("/player/redV4_2", false);
+			right4 = setup("/player/redV4_3", false);
+		} else {
+			up1 = setup("/player/red2", false);
+			up2 = setup("/player/red2_1", false);
+			up3 = setup("/player/red2_2", false);
+			up4 = setup("/player/red2_3", false);
+			down1 = setup("/player/red1", false);
+			down2 = setup("/player/red1_1", false);
+			down3 = setup("/player/red1_2", false);
+			down4 = setup("/player/red1_3", false);
+			left1 = setup("/player/red3", false);
+			left2 = setup("/player/red3_1", false);
+			left3 = setup("/player/red3_2", false);
+			left4 = setup("/player/red3_3", false);
+			right1 = setup("/player/red4", false);
+			right2 = setup("/player/red4_1", false);
+			right3 = setup("/player/red4_2", false);
+			right4 = setup("/player/red4_3", false);
 		}
 	}
 }

@@ -89,6 +89,7 @@ public class Main {
 	        		gp.tileM.tile[i].collision = false;
 				}
 	        }
+	        if (gp.player.p.visor) gp.player.setupPlayerImages(true);
 	        ois.close();
 	    } catch (IOException | ClassNotFoundException e) {
 	        // If there's an error reading the file, create a new Player object
@@ -518,7 +519,7 @@ public class Main {
 				writer.write("\n");
 				for (Trainer tr : trainers) {
 					boolean hasItems = false;
-					String name = "Trainer " + tr.getName();
+					String name = tr.getName();
 					while (name.length() < 28) {
 						name += " ";
 					}
@@ -542,7 +543,7 @@ public class Main {
 					
 					if (Trainer.bosses.stream().anyMatch(tr.getName()::contains)) {
 						writer.write("\n");
-						writer.write(tr.getName() + "\n");
+						writer.write(tr.toString() + "\n");
 						for (Pokemon p : tr.getTeam()) {
 							String pName = p.name + " (Lv. " + p.level + ")";
 							if (gp.player.p.starter == -1 && (tr.getName().contains("Scott") || tr.getName().contains("Fred")) && p.id >= 1 && p.id <= 9) {

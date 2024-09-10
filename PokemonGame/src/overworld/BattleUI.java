@@ -269,7 +269,7 @@ public class BattleUI extends AbstractUI {
 	private void drawTask() {
 		switch (currentTask.type) {
 		case Task.TEXT:
-			String message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 55);
+			String message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 64);
 			showMessage(message);
 			break;
 		case Task.DAMAGE:
@@ -445,7 +445,7 @@ public class BattleUI extends AbstractUI {
 			currentTask = null;
 			break;
 		case Task.SEMI_INV:
-			showMessage(Item.breakString(currentTask.message, 55));
+			showMessage(Item.breakString(currentTask.message, 64));
 			currentTask.p.spriteVisible = currentTask.wipe;
 			break;
 		}
@@ -1194,7 +1194,7 @@ public class BattleUI extends AbstractUI {
 					user.battled = true;
 				} else {
 					user.getPlayer().setMoney(user.getPlayer().getMoney() + foe.trainer.getMoney());
-					String message = foe.trainer.getName() + " was defeated!\nWon $" + foe.trainer.getMoney() + "!";
+					String message = foe.trainer.toString() + " was defeated!\nWon $" + foe.trainer.getMoney() + "!";
 					if (foe.trainer.getItem() != null) {
 		            	user.getPlayer().bag.add(foe.trainer.getItem());
 		            	message += "\nYou were given " + foe.trainer.getItem().toString() + "!";
@@ -1483,7 +1483,7 @@ public class BattleUI extends AbstractUI {
 
 	private void startingState() {
 		if (foe.trainerOwned() && staticID == -1) {
-			showMessage("You are challenged by " + foe.trainer.getName() + "!");
+			showMessage("You are challenged by " + foe.trainer.toString() + "!");
 			foeStatus = foe.status;
 		} else {
 			foe.setVisible(true);

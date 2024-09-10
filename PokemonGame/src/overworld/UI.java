@@ -2208,7 +2208,7 @@ public class UI extends AbstractUI {
 			}
 			if (i < currentItems.size()) {
 				Bag.Entry current = currentItems.get(i);
-				g2.drawImage(current.getItem().getImage(), x, y, null);
+				g2.drawImage(current.getItem().getImage(), x - 4, y, null);
 				y += gp.tileSize / 2;
 				String itemString = current.getItem().toString();
 				if (currentPocket != Item.TMS) itemString += " x " + current.getCount();
@@ -2311,6 +2311,15 @@ public class UI extends AbstractUI {
 					} else {
 						showMessage("Can't use now!");
 					}
+				} else if (currentItem == Item.VISOR) {
+					if (gp.player.p.visor) {
+						showMessage("You took off the visor.");
+					} else {
+						showMessage("You put on the visor!");
+					}
+					bagState = 0;
+					gp.player.p.visor = !gp.player.p.visor;
+					gp.player.setupPlayerImages(gp.player.p.visor);
 				} else {
 					gp.gameState = GamePanel.USE_ITEM_STATE;
 				}

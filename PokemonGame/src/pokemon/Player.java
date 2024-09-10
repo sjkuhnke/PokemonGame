@@ -70,6 +70,7 @@ public class Player extends Trainer implements Serializable {
 	public boolean repel;
 	public boolean surf;
 	public boolean lavasurf;
+	public boolean visor;
 	public int grustCount;
 	public int scottItem;
 	public Item[] resistBerries;
@@ -83,7 +84,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 35;
+	public static final int VERSION = 36;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
