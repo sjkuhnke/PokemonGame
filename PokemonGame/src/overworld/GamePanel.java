@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -153,7 +154,14 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void update() {
 		if (gameState == PLAY_STATE) {
+			ticks++;
+			if (ticks >= 12) {
+				ticks = 0;
+			}
 			player.update();
+			if (ticks % 5 == 0) {
+				updateEntity();
+			}
 		}
 		if (keyH.tabPressed) {
 			FPS = 120;
@@ -162,6 +170,13 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 	
+	private void updateEntity() {
+		int index = new Random().nextInt(npc[1].length);
+		
+		if (npc[currentMap][index] != null) npc[currentMap][index].spinRandom();
+		
+	}
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
