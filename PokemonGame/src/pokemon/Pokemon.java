@@ -4844,6 +4844,8 @@ public class Pokemon implements Serializable {
 			if (getImmune(foe, moveType) || (moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST)) {
 				if (this.ability == Ability.SCRAPPY && (moveType == PType.NORMAL || moveType == PType.FIGHTING)) {
 					// Nothing: scrappy allows normal and fighting type moves to hit ghosts
+				} else if (this.ability == Ability.CORROSION && moveType == PType.POISON) {
+					// Nothing: corrosion allows poison moves to hit steel
 				} else {
 					return 0;
 				}
@@ -7403,6 +7405,7 @@ public class Pokemon implements Serializable {
 			} else if (type == Task.NICKNAME) {
 				p.setNickname();
 			}
+			System.out.println("GameState wasn't Task or Rare Candy state, it was: " + gp.gameState);
 			return null;
 		}
 	}
@@ -7447,7 +7450,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void addSwapInTask(Pokemon p, int start) {
-		String message = p.playerOwned() ? "Go! " + p.nickname + "!" : p.trainer.getName() + " sends out " + p.nickname + "!";
+		String message = p.playerOwned() ? "Go! " + p.nickname + "!" : p.trainer.toString() + " sends out " + p.nickname + "!";
 		Task t = addTask(Task.SWAP_IN, message, p);
 		if (t != null) {
 			t.start = start;
@@ -7461,7 +7464,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void addSwapOutTask(Pokemon p) {
-		String message = p.playerOwned() ? p.nickname + ", come back!" : p.trainer.getName() + " withdrew " + p.nickname + "!";
+		String message = p.playerOwned() ? p.nickname + ", come back!" : p.trainer.toString() + " withdrew " + p.nickname + "!";
 		addTask(Task.SWAP_OUT, message, p);
 	}
 	
