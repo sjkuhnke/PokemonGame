@@ -423,7 +423,7 @@ public enum Move {
 	SHELL_SMASH(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Attack, Sp.Atk, and Speed by 2, at the cost of lowering its Defense and Sp.Def by 1",false,5),
 	SHIFT_GEAR(0,1000,0,0,2,0,PType.STEEL,"Raises user's Attack by 1 and Speed by 2",false,10),
 	SHOCK_WAVE(60,1000,0,0,1,0,PType.ELECTRIC,"This attack never misses",false,20),
-	SHOOTING_STARS(25,100,0,0,0,0,PType.GALACTIC,"Hits 2-5 times",false,10),
+	SHOOTING_STARS(20,100,0,0,0,0,PType.GALACTIC,"Hits 2-5 times",false,10),
 	SIGNAL_BEAM(75,100,10,0,1,0,PType.BUG,"% chance to confuse foe",false,15),
 	SILVER_WIND(60,100,10,0,1,0,PType.BUG,"% chance to raise all of user's stats",false,5),
 	SING(0,55,0,0,2,0,PType.NORMAL,"Foe falls asleep",false,15),
