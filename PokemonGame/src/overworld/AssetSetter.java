@@ -183,6 +183,12 @@ public class AssetSetter {
 //	private static final int T = 208;
 //	private static final int T = 209;
 	
+	private static final int DOWN = 1;
+	private static final int UP = 2;
+	private static final int LEFT = 4;
+	private static final int RIGHT = 8;
+	private static final int ALL = DOWN + UP + LEFT + RIGHT;
+	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
 		index = 0;
@@ -1096,16 +1102,16 @@ public class AssetSetter {
 		gp.npc[125][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		
 		// Clerks
-		gp.npc[30][index] = NPCSetup(NPC_MARKET, 31, 41, -1, Item.REPEL, Item.POKEBALL, Item.KLEINE_BAR, Item.BOTTLE_CAP, Item.TM49, Item.TM51);
-		gp.npc[40][index] = NPCSetup(NPC_MARKET, 34, 38, -1, Item.TM12, Item.TM13, Item.TM15, Item.TM16, Item.TM23, Item.TM24);
+		gp.npc[30][index] = SetupClerk(NPC_MARKET, 31, 41, Item.REPEL, Item.POKEBALL, Item.KLEINE_BAR, Item.BOTTLE_CAP, Item.TM49, Item.TM51);
+		gp.npc[40][index] = SetupClerk(NPC_MARKET, 34, 38, Item.TM12, Item.TM13, Item.TM15, Item.TM16, Item.TM23, Item.TM24);
 		gp.npc[45][index] = NPCSetup(NPC_CLERK, 30, 39, -1);
 		gp.npc[87][index] = NPCSetup(NPC_CLERK, 27, 39, -1);
-		gp.npc[89][index] = NPCSetup(NPC_MARKET, 24, 36, -1, Item.TM45, Item.TM50, Item.TM54, Item.TM74, Item.TM75,
+		gp.npc[89][index] = SetupClerk(NPC_MARKET, 24, 36, Item.TM45, Item.TM50, Item.TM54, Item.TM74, Item.TM75,
                 Item.TM76, Item.TM77, Item.TM79, Item.TM80, Item.TM81, Item.TM82, Item.TM95);
-		gp.npc[112][index] = NPCSetup(NPC_MARKET, 31, 41, -1, Item.MAX_ELIXIR, Item.PP_UP, Item.TM41, Item.TM42, Item.TM43, Item.TM44, Item.TM91);
+		gp.npc[112][index] = SetupClerk(NPC_MARKET, 31, 41, Item.MAX_ELIXIR, Item.PP_UP, Item.TM41, Item.TM42, Item.TM43, Item.TM44, Item.TM91);
 		gp.npc[126][index] = NPCSetup(NPC_CLERK, 27, 39, -1);
 		gp.npc[132][index] = NPCSetup(NPC_CLERK, 30, 39, -1);
-		gp.npc[133][index] = NPCSetup(NPC_MARKET, 34, 38, -1, Item.TM46, Item.TM63, Item.TM38);
+		gp.npc[133][index] = SetupClerk(NPC_MARKET, 34, 38, Item.TM46, Item.TM63, Item.TM38);
 		
 		mapNum = 28;
 		index = 0;
@@ -1305,7 +1311,7 @@ public class AssetSetter {
 		
 		mapNum = 53;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 31, 41, -1, Item.ORAN_BERRY, Item.CHERI_BERRY, Item.CHESTO_BERRY, Item.PECHA_BERRY, Item.RAWST_BERRY, Item.ASPEAR_BERRY,
+		gp.npc[mapNum][index] = SetupClerk(NPC_MARKET, 31, 41, Item.ORAN_BERRY, Item.CHERI_BERRY, Item.CHESTO_BERRY, Item.PECHA_BERRY, Item.RAWST_BERRY, Item.ASPEAR_BERRY,
                 Item.PERSIM_BERRY, Item.LUM_BERRY, Item.LEPPA_BERRY, Item.SITRUS_BERRY, Item.WIKI_BERRY, Item.OCCA_BERRY, Item.PASSHO_BERRY, Item.WACAN_BERRY, Item.RINDO_BERRY,
                 Item.YACHE_BERRY, Item.CHOPLE_BERRY, Item.KEBIA_BERRY, Item.SHUCA_BERRY, Item.COBA_BERRY, Item.PAYAPA_BERRY, Item.TANGA_BERRY, Item.CHARTI_BERRY,
                 Item.KASIB_BERRY, Item.HABAN_BERRY, Item.COLBUR_BERRY, Item.BABIRI_BERRY, Item.CHILAN_BERRY, Item.ROSELI_BERRY, Item.MYSTICOLA_BERRY, Item.GALAXEED_BERRY,
@@ -1414,7 +1420,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 36, 35, -1);
-		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 22, 37, -1, Item.ADAMANT_MINT, Item.BOLD_MINT, Item.BRAVE_MINT, Item.CALM_MINT, Item.CAREFUL_MINT, Item.IMPISH_MINT,
+		gp.npc[mapNum][index] = SetupClerk(NPC_MARKET, 22, 37, Item.ADAMANT_MINT, Item.BOLD_MINT, Item.BRAVE_MINT, Item.CALM_MINT, Item.CAREFUL_MINT, Item.IMPISH_MINT,
                 Item.JOLLY_MINT, Item.MODEST_MINT, Item.QUIET_MINT, Item.SERIOUS_MINT, Item.TIMID_MINT);
 		
 		mapNum = 93;
@@ -1613,7 +1619,7 @@ public class AssetSetter {
 		
 		mapNum = 131;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(NPC_MARKET, 31, 41, -1, Item.EUPHORIAN_GEM, Item.LEAF_STONE, Item.DUSK_STONE, Item.DAWN_STONE, Item.ICE_STONE,
+		gp.npc[mapNum][index] = SetupClerk(NPC_MARKET, 31, 41, Item.EUPHORIAN_GEM, Item.LEAF_STONE, Item.DUSK_STONE, Item.DAWN_STONE, Item.ICE_STONE,
 				Item.FIRE_STONE, Item.VALIANT_GEM, Item.PETTICOAT_GEM, Item.EVERSTONE, Item.HEAT_ROCK, Item.DAMP_ROCK, Item.SMOOTH_ROCK, Item.ICY_ROCK);
 		
 		mapNum = 137;
@@ -1740,7 +1746,7 @@ public class AssetSetter {
 		
 		// Clerks
 		gp.npc[154][index] = NPCSetup(NPC_CLERK, 30, 39, -1);
-		gp.npc[155][index] = NPCSetup(NPC_MARKET, 34, 38, -1, Item.TM46, Item.TM63);
+		gp.npc[155][index] = SetupClerk(NPC_MARKET, 34, 38, Item.TM46, Item.TM63);
 		
 		mapNum = 161;
 		index = 0;
@@ -2702,12 +2708,20 @@ public class AssetSetter {
 			gp.tileM.openGhostlyBluePortals();
 		}
 	}
-
-	private Entity NPCSetup(int type, int x, int y, int team) {
-		return NPCSetup(type, x, y, team, new Item[] {});
+	
+	private Entity SetupClerk(int type, int x, int y, Item... items) {
+		Entity e = NPCSetup(type, x, y, -1);
+		e.setItems(items);
+		return e;
+	}
+	
+	private Entity NPCSetup(int type, int x, int y, int team, int spin) {
+		Entity e = NPCSetup(type, x, y, team);
+		e.setSpin(spin);
+		return e;
 	}
 
-	private Entity NPCSetup(int type, int x, int y, int team, Item... items) {
+	private Entity NPCSetup(int type, int x, int y, int team) {
 		Entity result = null;
 		String message = "Hello there.";
 		
@@ -2725,7 +2739,6 @@ public class AssetSetter {
 			break;
 		case NPC_CLERK:
 			result = new NPC_Clerk(gp);
-			result.setItems(gp.player.getItems());
 			clerks.add(result);
 			break;
 		case TRAINER_DOWN:
@@ -2793,7 +2806,6 @@ public class AssetSetter {
 			break;
 		case NPC_MARKET:
 			result = new NPC_Market(gp);
-			result.setItems(items);
 			break;
 		case GRUST:
 			result = new NPC_Pokemon(gp, 159, team, true, -1, messages);

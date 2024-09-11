@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -43,6 +44,7 @@ public class Entity {
 	public int height;
 	
 	public int flag = -1;
+	private int spin;
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;
@@ -192,5 +194,26 @@ public class Entity {
 		up1 = up;
 		left1 = left;
 		right1 = right;
+	}
+
+	public void setSpin(int spin) {
+		this.spin = spin;
+	}
+	
+	public void spinRandom() {
+		if (spin == 0) return;
+		
+		ArrayList<String> directions = new ArrayList<>();
+		
+		if ((spin & 1) != 0) directions.add("down");
+		if ((spin & 2) != 0) directions.add("up");
+		if ((spin & 4) != 0) directions.add("left");
+		if ((spin & 8) != 0) directions.add("right");
+		
+		if (!directions.isEmpty()) {
+			int index = new Random().nextInt(directions.size());
+			String direction = directions.get(index);
+			this.direction = direction;
+		}
 	}
 }
