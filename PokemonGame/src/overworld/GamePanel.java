@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,7 +28,6 @@ import pokemon.Field;
 import pokemon.Item;
 import pokemon.Player;
 import pokemon.Pokemon;
-import pokemon.Trainer;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -436,6 +434,10 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		String aText = player.p.fish ? "Fish" : null;
 		ui.drawToolTips("Talk", aText, "Run", "Menu");
+	}
+
+	public boolean determineLightOverlay() {
+		return currentMap == 38 && !player.p.flag[3][8];
 	}
 
 }

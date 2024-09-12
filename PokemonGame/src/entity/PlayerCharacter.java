@@ -276,7 +276,7 @@ public class PlayerCharacter extends Entity {
 					interactNPC((NPC_Block) target);
 				} else if (target instanceof NPC_Trainer) {
 					interactTrainer(target, -1);
-				} else if (target instanceof GL_Robin) {
+				} else if (target instanceof NPC_GymLeader) {
 					interactTrainer(target, -1);
 				} else if (target instanceof NPC_PC) {
 					interactPC((NPC_PC) target);
@@ -1098,16 +1098,8 @@ public class PlayerCharacter extends Entity {
 			Pokemon result = new Pokemon(id, 25, true, false);
 			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 			Pokemon.addTask(Task.GIFT, "", result);
-		}
-				
-		if (gp.currentMap == 41 && p.flags[8] && p.flags[9] && !p.flags[31]) {
-			p.flags[31] = true;
-			Pokemon.addTask(Task.TEXT, "Oh you have?! Thank you so much!\nHere, take this as a reward!");
-			Pokemon.addTask(Task.TEXT, "Obtained HM04 Surf!");
-			p.bag.add(Item.HM04);
-		}
-		if (gp.currentMap == 50 && !p.flags[14]) {
-			p.flags[14] = true;
+		} else if (gp.currentMap == 50) {
+			p.flag[3][9] = true;
 			Pokemon.addTask(Task.TEXT, "Great choice young cracka!!!!");
 			Random gift = new Random();
 			int id = gift.nextInt(3); // Otterpor, Florline, Flameruff
@@ -1135,6 +1127,32 @@ public class PlayerCharacter extends Entity {
 			Pokemon result = new Pokemon(id, 25, true, false);
 			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 			Pokemon.addTask(Task.GIFT, "", result);
+		} else if (gp.currentMap == 39) {
+			p.flag[3][0] = true;
+			Pokemon.addTask(Task.TEXT, "Holy BALLS it is bright out there mah boi");
+			Pokemon.addTask(Task.TEXT, "Thankfully I have these sick ass pit vipers");
+			Pokemon.addTask(Task.TEXT, "Here you go jitty jit jit, try and see what's causing the bright ahh light");
+			Task t = Pokemon.addTask(Task.ITEM, "");
+			t.item = Item.VISOR;
+			Pokemon.addTask(Task.TEXT, "Go into your bag and equip them if you wanna see. They're pretty drippy too!");
+			Pokemon.addTask(Task.TEXT, "Imma dip and go jack my shit to Zam here :>");
+			Pokemon.addTask(Task.FLASH_IN, "");
+			Pokemon.addTask(Task.UPDATE, "");
+			Pokemon.addTask(Task.FLASH_OUT, "");
+		} else if (gp.currentMap == 38) { // ice master
+			p.flag[3][10] = true;
+			Task t = Pokemon.addTask(Task.ITEM, "");
+			t.item = Item.PETTICOAT_GEM;
+		} else if (gp.currentMap == 43) { // ground master
+			p.flag[3][11] = true;
+			Task t = Pokemon.addTask(Task.ITEM, "");
+			t.item = Item.VALIANT_GEM;
+		}
+		if (gp.currentMap == 41 && p.flags[8] && p.flags[9] && !p.flags[31]) {
+			p.flags[31] = true;
+			Pokemon.addTask(Task.TEXT, "Oh you have?! Thank you so much!\nHere, take this as a reward!");
+			Pokemon.addTask(Task.TEXT, "Obtained HM04 Surf!");
+			p.bag.add(Item.HM04);
 		} if (gp.currentMap == 91 && !p.flags[16]) {
 			p.flags[16] = true;
 			Pokemon.addTask(Task.TEXT, "Obtained HM05 Slow Fall!");
@@ -1597,7 +1615,7 @@ public class PlayerCharacter extends Entity {
 			generateParticle(gp.iTile[gp.currentMap][i]);
 			gp.iTile[gp.currentMap][i] = null;
 		} else {
-			gp.ui.showMessage("This pile of snow looks like it can be shoveled!");
+			gp.ui.showMessage("This pile of snow looks like it can be\nshoveled!");
 		}
 		
 	}
@@ -1608,7 +1626,7 @@ public class PlayerCharacter extends Entity {
 			generateParticle(gp.iTile[gp.currentMap][i]);
 			gp.iTile[gp.currentMap][i] = null;
 		} else {
-			gp.ui.showMessage("This block of ice looks like it can be broken!");
+			gp.ui.showMessage("This block of ice looks like it can be\nbroken!");
 		}
 		
 	}
@@ -1804,6 +1822,11 @@ public class PlayerCharacter extends Entity {
     	    SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("ASH KETCHUP")) {
 			p.trainersBeat = new boolean[Trainer.MAX_TRAINERS];
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("ASH MUSTARD")) {
+			for (int i = 0; i < p.trainersBeat.length; i++) {
+				p.trainersBeat[i] = true;
+			}
 			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("exptrainer")) {
 			StringBuilder result = new StringBuilder();
