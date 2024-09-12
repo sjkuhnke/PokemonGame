@@ -971,7 +971,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(FRED_UP, 43, 61, 34);
 		
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_LEFT, 40, 66, 31);
-		gp.npc[mapNum][index] = NPCSetup(EXPLORER_LEFT, 36, 67, 32);
+		gp.npc[mapNum][index] = NPCSetup(EXPLORER_LEFT, 34, 67, 32, LEFT + UP + RIGHT);
 		gp.npc[mapNum][index] = NPCSetup(STUDENT_M_UP, 38, 78, 33);
 		
 		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE_FULL, 19, 49, -1);
@@ -979,7 +979,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(LADY_RIGHT, 28, 43, 35);
 		gp.npc[mapNum][index] = NPCSetup(STUDENT_F_RIGHT, 15, 37, 36);
 		gp.npc[mapNum][index] = NPCSetup(STUDENT_M_LEFT, 19, 37, 37);
-		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 21, 33, 38);
+		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 21, 33, 38, DOWN + RIGHT);
 		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_RIGHT, 22, 21, 39);
 		
 		mapNum = 13;
@@ -1074,14 +1074,14 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, 31, 45, "Wow, there's a lot of lava over there. It's definitely not safe for any newbie trainers. If I see any of them coming this way... I swear to god...", 5);
 		
 		mapNum = 24;
-		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_RIGHT, 65, 63, 75);
+		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_RIGHT, 68, 63, 75, ALL);
 		gp.npc[mapNum][index] = NPCSetup(EXPLORER_UP, 79, 59, 267);
 		gp.npc[mapNum][index] = NPCSetup(EXPLORER_DOWN, 83, 55, 268);
 		
 		mapNum = 25;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_RIGHT, 70, 65, 76);
-		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 70, 80, 77);
+		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_RIGHT, 71, 65, 76, LEFT + RIGHT);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 73, 80, 77, ALL);
 		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 66, 87, 78);
 		
 		mapNum = 26;
@@ -1092,8 +1092,6 @@ public class AssetSetter {
 		// Nurses/PCs
 		gp.npc[29][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
 		gp.npc[29][index] = NPCSetup(NPC_PC, 36, 35, -1);
-		gp.npc[39][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
-		gp.npc[39][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		gp.npc[86][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
 		gp.npc[86][index] = NPCSetup(NPC_PC, 36, 35, -1);
 		gp.npc[111][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
@@ -1133,27 +1131,27 @@ public class AssetSetter {
 		
 		// These stay: blocking certain items (Acrobatics and Ability Capsule)
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 67, 17, 95);
-		gp.npc[mapNum][index] = NPCSetup(ATHLETE_DOWN, 71, 11, 96);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_DOWN, 71, 12, 96);
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 75, 17, 97);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_UP, 68, 28, 386);
 		
 		// Possessed trainers (will clear)
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 37, 370); // normal
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 37, 370, DOWN + LEFT); // normal
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 84, 23, 379); // ghost
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 80, 23, 381); // steel
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 80, 24, 382); // dark
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 84, 24, 371); // electric
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 25, 378); // psychic
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 26, 378); // psychic
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 87, 31, 374); // fighting
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 77, 31, 375); // poison
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 78, 43, 372); // ice
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 87, 45, 377); // flying
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 79, 50, 373); // rock
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 78, 43, 372, RIGHT + DOWN); // ice
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 87, 45, 377, LEFT + DOWN); // flying
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 79, 50, 373, RIGHT + DOWN); // rock
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 83, 57, 383); // light
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 71, 41, 384); // magic
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 76, 47, 380); // dragon
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 66, 49, 376); // ground
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 73, 51, 385); // galactic
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 71, 41, 384, RIGHT + DOWN); // magic
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 76, 47, 380, LEFT + RIGHT + UP); // dragon
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 66, 49, 376, LEFT + UP); // ground
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 73, 51, 385, LEFT + UP + DOWN); // galactic
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 75, 69, 202);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 78, 83, 203);
@@ -1163,9 +1161,9 @@ public class AssetSetter {
 		mapNum = 31;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_DOWN, 48, 50, 90);
-		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_LEFT, 65, 61, 91);
-		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_DOWN, 45, 63, 92);
-		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_RIGHT, 38, 70, 93);
+		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_LEFT, 65, 61, 91, LEFT + RIGHT);
+		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_DOWN, 45, 63, 92, DOWN + UP + RIGHT);
+		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_RIGHT, 38, 70, 93, DOWN + RIGHT);
 		gp.npc[mapNum][index] = NPCSetup(MILLIE, 51, 61, 94);
 		
 		mapNum = 32;
@@ -1212,13 +1210,9 @@ public class AssetSetter {
 		
 		mapNum = 38;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 53, 7, 327);
+		gp.npc[mapNum][index] = NPCSetup(EXPLORER_DOWN, 53, 7, 327);
 		
-		if (!flags[8] || !flags[9]) {
-			gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, 62, 41, "What is going on at the school?! Where is everybody?!?!");
-		} else {
-			gp.npc[mapNum][index++] = null;
-		}
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, 62, 41, "What is going on at the school?! Where is everybody?!?!");
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 35, 74, 138);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 51, 74, 139);
@@ -1227,12 +1221,14 @@ public class AssetSetter {
 		
 		mapNum = 39;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, 26, 6, "Hello my friend! Just the person I was looking for!", true);
-		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM, 27, 6, "Vxxxvhh...");
+		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 36, 35, -1);
+		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, 28, 41, "Hello my friend! Just the person I was looking for!", true);
+		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM, 27, 41, "Vxxxvhh...");
 		
 		mapNum = 43;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 31, 42, 328);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_DOWN, 31, 42, 328);
 		
 		mapNum = 41;
 		index = 0;
@@ -1298,7 +1294,7 @@ public class AssetSetter {
 		
 		mapNum = 50;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, 31, 41, "WOAOAOHAOH!!! Hehehehehe I just popped a naughty yerkocet!! Pick one of these NUTTY \"starters\" tehehee", 14, true, "YEEEOOEEOOOOeeeoooeeooeee.....");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, 31, 41, "WOAOAOHAOH!!! Hehehehehe I just popped a naughty yerkocet!! Pick one of these NUTTY \"starters\" tehehee", 105, true, "YEEEOOEEOOOOeeeoooeeooeee.....");
 		
 		mapNum = 51;
 		index = 0;
@@ -1948,6 +1944,9 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(50, 10, 9, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(51, 12, 9, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(53, 5, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 7, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(42, 8, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(43, 7, 9, mapNum, map);
 		
 		mapNum = 52;
 		iIndex = 0;
@@ -2650,18 +2649,25 @@ public class AssetSetter {
 		}
 		
 		/**
+		 * Fourth Split
+		 */
+		if (flag[3][0]) {
+			gp.npc[39][2] = null;
+			gp.npc[39][3] = null;
+		}
+		if (flag[3][1]) {
+			gp.npc[38][0] = NPCSetup(EXPLORER_DOWN, 53, 7, "Giving you a petticoat gem for some reason idk", 106, true, "Go save my school lol");
+		}
+		if (flag[3][2]) {
+			gp.npc[43][0] = NPCSetup(HIKER_DOWN, 31, 42, "Giving you a valiant gem for some reason idk", 106, true, "Go save my school lol");
+		}
+		if (flag[3][7]) {
+			gp.npc[38][1] = null;
+		}
+		
+		/**
 		 * All of this is old and should be removed/reworked
 		 */
-		if (flags[3]) {
-			gp.npc[17][6] = null;
-			gp.npc[17][7] = null;
-		}
-		if (flags[4]) gp.npc[13][0] = null;
-		if (flags[5]) gp.npc[28][9] = null;
-		
-		if (flags[7]) gp.npc[41][0] = null;
-		if (flags[6]) gp.npc[41][1] = null;
-		if (flags[8] && flags[9]) gp.npc[38][1] = null;
 		if (flags[15]) gp.npc[0][13] = null;
 		if (flags[16]) gp.npc[85][0] = null;
 		if (flags[17]) gp.npc[85][7] = null;
@@ -2739,6 +2745,7 @@ public class AssetSetter {
 			break;
 		case NPC_CLERK:
 			result = new NPC_Clerk(gp);
+			result.setItems(gp.player.getItems());
 			clerks.add(result);
 			break;
 		case TRAINER_DOWN:
@@ -3227,6 +3234,14 @@ public class AssetSetter {
 				break;
 			case UP_XURKITREE:
 				image = result.setup("/overworlds/284_0");
+				break;
+			case EXPLORER_DOWN:
+				result.setupImages("/npc/explorer");
+				result.direction = "down";
+				break;
+			case HIKER_DOWN:
+				result.setupImages("/npc/hiker");
+				result.direction = "down";
 				break;
 		}
 		

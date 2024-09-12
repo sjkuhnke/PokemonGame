@@ -7252,7 +7252,7 @@ public class Pokemon implements Serializable {
 		case 224: return "Blaxer-S -> Pyrator-S (lv. 36)";
 		case 226: return "Ekans-S -> Arbok-S (lv. 32)";
 		case 238: return "Scraggy -> Scrafty (lv. 39)";
-		case 239: return "Scrafty -> Scraftagon (5+ Headbutt Crits in Trainer Battles)";
+		case 239: return "Scrafty -> Scraftagon\n(5+ Headbutt Crits in Trainer Battles)";
 		case 241: return "Glimmet -> Glimmora (lv. 35)";
 		case 243: return "Abra -> Kadabra (lv. 16)";
 		case 244: return "Kadabra -> Alakazam (lv. 36)";
@@ -7262,9 +7262,9 @@ public class Pokemon implements Serializable {
 		case 252: return "Duosion -> Reuniclus (lv. 41)";
 		case 254: return "Solosis-X -> Duosion-X (lv. 32)";
 		case 255: return "Duosion-X -> Reuniclus-X (lv. 41)";
-		case 257: return "Seviper -> Hissimitar (5+ Tail Move Crits in Trainer Battles)";
+		case 257: return "Seviper -> Hissimitar\n(5+ Tail Move Crits in Trainer Battles)";
 		case 259: return "Gulpin -> Swalot (lv. 26)";
-		case 261: return "Gulpin-X -> Swalot-X (5+ Galactic Moves Eaten in Trainer Battles)";
+		case 261: return "Gulpin-X -> Swalot-X\n(5+ Galactic Moves Eaten in Trainer Battles)";
 		case 263: return "Plasamp -> Genieova ()";
 		case 265: return "Elgyem -> Beheeyem (lv. 42)";
 		case 267: return "Elgyem-E -> Beheeyem-E (lv. 42)";
@@ -7439,9 +7439,10 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void addStartBattleTask(int trainer, int id, Pokemon foe) {
-		Task t = addTask(Task.START_BATTLE, "", foe);
+		Task t = createTask(Task.START_BATTLE, "", foe);
 		t.counter = trainer;
 		t.start = id;
+		gp.ui.tasks.add(t);
 	}
 	
 	public void addAbilityTask(Pokemon p) {

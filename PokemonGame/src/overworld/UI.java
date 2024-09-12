@@ -148,8 +148,10 @@ public class UI extends AbstractUI {
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2.setColor(Color.WHITE);
 		
-		if (drawLightOverlay && gp.gameState != GamePanel.START_BATTLE_STATE) {
-			drawLightDistortion(0.8f);
+		if (drawLightOverlay) {
+			float opacity = gp.player.p.visor ? 0.2f : 0.8f;
+			drawLightDistortion(opacity);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 		}
 		
 		if (drawFlash) {
@@ -2410,6 +2412,7 @@ public class UI extends AbstractUI {
 				} else {
 					gp.gameState = GamePanel.TASK_STATE;
 				}
+
 				gp.currentMap = gp.eHandler.tempMap;
 				gp.player.worldX = gp.tileSize * gp.eHandler.tempCol;
 				gp.player.worldY = gp.tileSize * gp.eHandler.tempRow;
@@ -2418,6 +2421,8 @@ public class UI extends AbstractUI {
 				gp.eHandler.previousEventY = gp.player.worldY;
 				gp.player.p.currentMap = gp.eHandler.tempMap;
 				gp.eHandler.canTouchEvent = !gp.eHandler.tempCooldown;
+				
+				drawLightOverlay = gp.determineLightOverlay();
 			}
 			gp.player.p.surf = false;
 			gp.player.p.lavasurf = false;

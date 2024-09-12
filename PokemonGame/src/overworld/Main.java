@@ -90,6 +90,7 @@ public class Main {
 				}
 	        }
 	        if (gp.player.p.visor) gp.player.setupPlayerImages(true);
+	        gp.ui.drawLightOverlay = gp.determineLightOverlay();
 	        ois.close();
 	    } catch (IOException | ClassNotFoundException e) {
 	        // If there's an error reading the file, create a new Player object
