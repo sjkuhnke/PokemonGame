@@ -6,9 +6,9 @@ public class NPC_PC extends Entity {
 	private boolean isGauntlet = false;
 
 	public NPC_PC(GamePanel gp) {
-		super(gp);
+		super(gp, null);
 		
-		this.direction = "down";
+		this.setDirection("down");
 		
 		getImage();
 	}

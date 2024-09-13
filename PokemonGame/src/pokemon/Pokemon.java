@@ -4527,6 +4527,8 @@ public class Pokemon implements Serializable {
 		public static final int BATTLE = 35; // counter: trainer
 		public static final int SPOT = 36;
 		public static final int START_BATTLE = 37; // counter: trainer
+		public static final int DIALOGUE = 38;
+		public static final int SPEAK = 39;
 		
 		public int type;
 		public String message;
@@ -4635,6 +4637,8 @@ public class Pokemon implements Serializable {
 			case BATTLE: return "BATTLE";
 			case SPOT: return "SPOT";
 			case START_BATTLE: return "START_BATTLE";
+			case DIALOGUE: return "DIALOGUE";
+			case SPEAK: return "SPEAK";
 			default:
 				return "getTypeString() doesn't have a case for this type";
 			}
@@ -7415,12 +7419,11 @@ public class Pokemon implements Serializable {
 		t.evo = result;
 	}
 	
-	public static void addTrainerTask(Entity t, int id) {
-		Pokemon foe = Trainer.getTrainer(t.trainer).getCurrent();
-		addTrainerTask(t, id, foe);
-	}
-	
-	public static void addTrainerTask(Entity t, int id, Pokemon foe) {
+	public static void addTrainerTask(Entity t, int id, Pokemon foe, boolean spot) {
+		if (spot) {
+			Task task = Pokemon.addTask(Task.SPOT, "");
+			task.e = t;
+		}
 		for (int i = 0; i < t.dialogues.length; i++) {
 			if (t.dialogues[i] != null) {
 				 addTask(Task.TEXT, t.dialogues[i]);

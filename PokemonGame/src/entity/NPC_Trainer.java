@@ -5,9 +5,9 @@ import overworld.GamePanel;
 public class NPC_Trainer extends Entity {
 	
 	public NPC_Trainer(GamePanel gp, String d, int t, String[] message) {
-		super(gp);
+		super(gp, null);
 		
-		direction = d;
+		this.setDirection(d);
 		trainer = t;
 		
 		getImage();

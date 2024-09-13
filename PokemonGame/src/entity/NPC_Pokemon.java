@@ -3,15 +3,16 @@ package entity;
 import java.util.Random;
 
 import overworld.GamePanel;
+import pokemon.Pokemon;
 
 public class NPC_Pokemon extends Entity {
 	int id;
 	boolean spin;
 
 	public NPC_Pokemon(GamePanel gp, int id, int t, boolean spin, int flag, String[] message) {
-		super(gp);
+		super(gp, Pokemon.getName(id));
 		
-		direction = "down";
+		this.setDirection("down");
 		trainer = t;
 		this.id = id;
 		

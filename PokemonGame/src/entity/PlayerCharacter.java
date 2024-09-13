@@ -69,7 +69,7 @@ public class PlayerCharacter extends Entity {
 	private BufferedImage up3, up4, down3, down4, left3, left4, right3, right4;
 	
 	public PlayerCharacter(GamePanel gp, KeyHandler keyH) {
-		super(gp);
+		super(gp, null);
 		this.keyH = keyH;
 		
 		screenX = gp.screenWidth / 2 - (gp.tileSize/2);
@@ -275,13 +275,13 @@ public class PlayerCharacter extends Entity {
 				} else if (target instanceof NPC_Block) {
 					interactNPC((NPC_Block) target);
 				} else if (target instanceof NPC_Trainer) {
-					interactTrainer(target, -1);
+					interactTrainer(target, -1, true);
 				} else if (target instanceof NPC_GymLeader) {
-					interactTrainer(target, -1);
+					interactTrainer(target, -1, true);
 				} else if (target instanceof NPC_PC) {
 					interactPC((NPC_PC) target);
 				} else if (target instanceof NPC_Pokemon) {
-					interactTrainer(target, ((NPC_Pokemon) target).id);
+					interactTrainer(target, ((NPC_Pokemon) target).id, true);
 				}
 			}
 			
@@ -404,31 +404,29 @@ public class PlayerCharacter extends Entity {
 	
 	private void trainerSpot(Entity entity) {
 		int trainer = entity.trainer;
-		if (trainer == -1) return;
 		if (p.trainersBeat[trainer]) return;
-		if (p.wiped()) return;
 		
-		gp.gameState = GamePanel.TASK_STATE;
-		
-		Task t = Pokemon.addTask(Task.SPOT, "");
-		t.e = entity;
-		
-		Pokemon.addTrainerTask(entity, -1);
+		interactTrainer(entity, -1, false);
 	}
 
-	public void interactTrainer(Entity entity, int id) {
+	public void interactTrainer(Entity entity, int id, boolean turn) {
 		gp.keyH.wPressed = false;
 		
 		int trainer = entity.trainer;
 		if (trainer == -1) return;
 		if (p.wiped()) return;
 		
+		gp.ui.npc = entity;
+		
+		if (turn) entity.facePlayer(direction);
+		entity.setName();
+		
 		if (!p.trainersBeat[trainer]) {
 			gp.gameState = GamePanel.TASK_STATE;
 			
 			Pokemon foe = Trainer.getTrainer(trainer).getCurrent();
 			
-			Pokemon.addTrainerTask(entity, id, foe);
+			Pokemon.addTrainerTask(entity, id, foe, !(entity instanceof NPC_GymLeader));
 			
 			// Heal if Gym Leader
 			if (Trainer.getTrainer(trainer).getMoney() == 500) {
@@ -529,13 +527,16 @@ public class PlayerCharacter extends Entity {
 	private void interactClerk(Entity npc) {
 		gp.keyH.wPressed = false;
 		gp.gameState = GamePanel.SHOP_STATE;
+		npc.facePlayer(direction);
 		npc.speak(0);
 	}
 	
 	private void interactNPC(NPC_Block npc) {
 		gp.keyH.wPressed = false;
+		npc.facePlayer(direction);
 		if (npc.flag == -1 || !p.flag[npc.getFlagX()][npc.getFlagY()]) {
 			gp.gameState = GamePanel.DIALOGUE_STATE;
+			gp.ui.npc = npc;
 			npc.speak(0);
 			if (npc.more) {
 				SwingUtilities.invokeLater(() -> {

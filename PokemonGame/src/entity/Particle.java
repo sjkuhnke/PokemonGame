@@ -20,7 +20,7 @@ public class Particle extends Entity {
 	}
 	
 	public Particle(GamePanel gp, int x, int y, Color color, int size, int speed, int maxLife) {
-		super(gp);
+		super(gp, null);
 		
 		this.color = color;
 		this.size = size;

@@ -242,7 +242,7 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		
 		ui.isGauntlet = target.isGauntlet();
-		ui.entity = target;
+		ui.npc = target;
 		if (ui.isGauntlet) ui.gauntlet = true;
 		ui.boxSwapNum = -1;
 		gameState = GamePanel.BOX_STATE;

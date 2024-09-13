@@ -529,7 +529,7 @@ public class KeyHandler implements KeyListener {
 					gp.ui.boxSwapNum = -1;
 				} else {
 					gp.gameState = GamePanel.PLAY_STATE;
-					gp.ui.entity.direction = "down";
+					gp.ui.npc.direction = "down";
 					gp.ui.boxNum = 0;
 					gp.ui.partySelectedNum = -1;
 					gp.ui.boxSwapNum = -1;

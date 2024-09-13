@@ -5,9 +5,9 @@ import overworld.GamePanel;
 public class NPC_GymLeader extends Entity {
 	
 	public NPC_GymLeader(GamePanel gp, String d, int t, String[] message) {
-		super(gp);
+		super(gp, null);
 		
-		direction = d;
+		setDirection(d);
 		trainer = t;
 		
 		setDialogue(message);
