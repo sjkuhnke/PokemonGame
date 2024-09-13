@@ -6,7 +6,6 @@ public class T_Scott extends NPC_Trainer {
 
 	public T_Scott(GamePanel gp, String d, int t, String[] message) {
 		super(gp, d, t, message);
-		
 	}
 	
 	public void getImage() {

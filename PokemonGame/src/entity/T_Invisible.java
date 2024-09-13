@@ -6,8 +6,6 @@ public class T_Invisible extends NPC_Trainer {
 
 	public T_Invisible(GamePanel gp, String d, int t, String[] message) {
 		super(gp, d, t, message);
-		
-		getImage();
 	}
 	
 	public void getImage() {

@@ -40,7 +40,7 @@ public abstract class AbstractUI {
 	public Task currentTask;
 	public ArrayList<Task> tasks;
 	
-	public Entity entity;
+	public Entity npc;
 	
 	public StringBuilder nickname = new StringBuilder();
 	public int nicknaming = -1;

@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import overworld.GamePanel;
 import pokemon.Item;
+import pokemon.Trainer;
 
 public class Entity {
 	
@@ -20,7 +21,10 @@ public class Entity {
 	
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2, surf1, surf2, surf3, surf4;
 	public String direction;
+	public String defaultDirection;
 	GamePanel gp;
+	
+	public String name;
 
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
@@ -46,9 +50,15 @@ public class Entity {
 	public int flag = -1;
 	private int spin;
 	
-	public Entity(GamePanel gp) {
+	public Entity(GamePanel gp, String name) {
 		this.gp = gp;
 		height = gp.tileSize;
+		this.name = name;
+	}
+	
+	public void setDirection(String direction) {
+		this.direction = direction;
+		this.defaultDirection = direction;
 	}
 	
 	public BufferedImage setup(String imageName) {
@@ -215,5 +225,39 @@ public class Entity {
 			String direction = directions.get(index);
 			this.direction = direction;
 		}
+	}
+
+	public void facePlayer(String playerDirection) {
+		switch(playerDirection) {
+			case "up":
+				this.direction = "down";
+				break;
+			case "down":
+				this.direction = "up";
+				break;
+			case "left":
+				this.direction = "right";
+				break;
+			case "right":
+				this.direction = "left";
+				break;
+		}
+	}
+
+	public void setName() {
+		if (trainer < 0 || name != null) return;
+		Trainer tr = Trainer.getTrainer(trainer);
+		String name = tr.toString();
+		String[] words = name.split(" ");
+		if (words.length == 1) {
+			this.name = words[0];
+			return;
+		}
+		if (words[1].equals("Master")) {
+			this.name = name;
+			return;
+		}
+		this.name = words[words.length - 1];
+		return;
 	}
 }

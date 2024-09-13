@@ -211,3 +211,387 @@ Sicab City ->
 Frenco City -> Marlin City
 Electric Tunnel -> Alumos Tunnel
 Shadow Ravine -> Nyxus Ravine
+
+Ace Trainer (Mixed/Dragon)
+Before
+
+"My skills are legendary. Let's see if you can keep up."
+"Dragons bow to no one. You'll understand soon enough."
+"You might think you stand a chance... but that's a fantasy."
+"I've trained for years—are you prepared to be humbled?"
+"Strength isn't just power, it's knowing when to strike."
+After
+
+"Looks like you've earned some respect... for now."
+"Even the best fall. I'll rise again."
+"Guess dragons aren't invincible after all. This time."
+"A solid victory. You've earned this one."
+"I underestimated you. Won't happen again."
+
+Actor (Light/Normal)
+Before
+
+"Lights, camera, battle! I'll be the star of this scene!"
+"Acting's all about deception. Are you ready for a plot twist?"
+"Let's see if you can handle the spotlight!"
+"I don't break character—even when I'm breaking you!"
+"My performance is flawless—just like this battle will be."
+After
+
+"That wasn't in the script… but I'll take the loss."
+"Bravo! You've outperformed me this time."
+"This scene's not over yet. I'll be back for a sequel."
+"Guess this wasn't my shining moment."
+"Well, you've won this act. Enjoy the applause while it lasts."
+
+Actress (Light/Normal)
+Before
+
+"Watch and learn. I'm about to steal the show!"
+"Prepare for a performance you'll never forget."
+"Don't think I'll go easy on you just because I'm in the spotlight."
+"It's time for the grand finale. Too bad it'll be your defeat."
+"Get ready for a dazzling display of skill!"
+After
+
+"No worries, darling, I'll be back for the encore."
+"You think you've won the role? We'll see about that."
+"Even stars lose sometimes... but I'll rise again."
+"I may have lost, but my spotlight never dims."
+"A tragic ending... but every story has one."
+
+Athlete (Fire/Electric)
+Before
+
+"You better be quick if you wanna keep up with me!"
+"Let's see if your endurance matches your strategy."
+"Speed and power are all that matter here!"
+"I'm always in top shape. Can you say the same?"
+"Time to light this battle up! You ready?"
+After
+
+"Alright, you've got game. I respect that."
+"Looks like I need to step up my training."
+"Pushed me to the limit there. I'll get you next time."
+"Not bad... but this athlete never stays down for long."
+"I'll hit the track and come back even stronger."
+
+Hiker (Ground/Rock/Steel)
+Before
+
+"Bet you're not ready for the weight of this battle."
+"Mountains don't move, and neither will I."
+"Tread lightly, or the ground will swallow you whole!"
+"I've seen rough terrain, but nothing rougher than what's coming for you."
+"Strength isn't just in your fists, it's in your foundation."
+After
+
+"Even mountains can be climbed, I guess."
+"A tough fight, but I'll bounce back."
+"Seems like you've found your footing."
+"You're tougher than granite, I'll give you that."
+"I'll build myself back up after this."
+
+Burglar (Crook/Dark)
+Before
+
+"Oi, buzz off brat! I'm trying to sneaky here!"
+"Don't do the crime if you can't take the time. Lucky I've got plenty of time on my hands!"
+"Thank goodness nobody saw me, I might be in the clear… Wait a minute, where'd you come from?"
+"You've got good timing... too bad for you it's bad luck."
+"Looks like I've been caught in the act. Let's make this quick!"
+After
+
+"Guess I'll have to make a quick getaway."
+"You got lucky this time. I'm outta here!"
+"Alright, alright, I surrender… for now."
+"Good thing I always have a backup plan!"
+"You won the battle, but I'm still walking away with the loot!"
+
+Bird Keeper (Flying)
+Before
+
+"The skies are where I dominate. You won't last long up here."
+"Wings beat strength every time. Let me show you how."
+"Let's see if you can keep up with my birds!"
+"Up here, you're just a speck in the wind."
+"Flying high is all I know. Are you ready to fall?"
+After
+
+"Grounded... for now. I'll soar again soon."
+"I'll fly higher next time. Count on it!"
+"Looks like I was blown off course today."
+"A loss is just turbulence. I'll be back in the air soon."
+"Guess you clipped my wings this time."
+
+Black Belt (Fighting)
+Before
+
+"Strength is all that matters. Show me what you've got!"
+"Every battle is a test of willpower. Let's see if yours breaks."
+"I fight with honor, but I won't go easy on you."
+"This is gonna hurt... but only for you."
+"My fists are my words. Let's have a ‘conversation.'"
+After
+
+"You've earned my respect. For now."
+"Even the strongest fall... but I'll rise again."
+"A powerful opponent. I'll train harder for the next round."
+"Defeated, but never broken."
+"You hit hard, but next time, I'll hit harder."
+
+Bug Catcher (Bug)
+Before
+
+"Bugs may be small, but they've got big power. Watch out!"
+"Get ready to be swarmed!"
+"You're about to find out why bugs rule the world!"
+"You think you can squash my team? Think again!"
+"These little guys pack a punch, don't underestimate them!"
+After
+
+"I guess I'll need to find some stronger bugs..."
+"You're tougher than a Caterpie. I'll give you that."
+"Looks like I need to evolve too..."
+"Squashed me, huh? Next time, I'll sting harder!"
+"I may have lost, but bugs always come back."
+
+Picnicker (Bug/Grass)
+Before
+
+"A lovely day for a battle, isn't it? Let's make it interesting!"
+"I packed a lunch, but you're about to get served!"
+"Don't let my peaceful vibe fool you—I'll fight hard!"
+"Let's enjoy the outdoors... before I take you down!"
+"You think I'm just here to relax? I'll prove you wrong!"
+After
+
+"Well, that didn't go as planned. At least I've still got snacks!"
+"I'll admit it, you've got me beat. Want a sandwich?"
+"Looks like you're tougher than I thought. Good battle!"
+"I guess I'll stick to picnics... for now."
+"I lost, but at least I've got a great view!"
+
+Student (M) (Normal)
+Before
+
+"Studying for battles? Pfft, I don't need to. Let's go!"
+"I'll show you what I've learned outside the classroom!"
+"Test time! And guess what—you're failing!"
+"You might be the teacher's pet, but I'm no slouch!"
+"This is one test you're not passing!"
+After
+
+"Okay, so maybe I do need to study more..."
+"You win... I guess I'll hit the books after all."
+"I failed the test... but I'll ace the next one!"
+"That was tough. Maybe I'll ask you for tutoring?"
+"I lost, but at least I'm still learning!"
+
+Student (F) (Normal)
+Before
+
+"I always pass my tests, and I won't fail this battle!"
+"Let's see if you've done your homework!"
+"This is going to be an easy A for me."
+"Ready for a pop quiz? Hope you're prepared!"
+"Battles are like exams, and I'm always at the top of the class!"
+After
+
+"Guess I need to study harder next time..."
+"You aced this one. I'll get you next time!"
+"Ugh, a bad grade. I'm not used to this!"
+"Well, I'll just have to do better on the final!"
+"You passed this time. Next time, it's my turn to win."
+
+Fisher (Water)
+Before
+
+"Fishing's all about patience... but I'm not waiting to win this!"
+"You're about to be hooked by my strategy!"
+"The water's calm, but I'm about to make some waves!"
+"I've reeled in bigger fish than you. Let's do this!"
+"You're on my line now, and I'm not letting go!"
+After
+
+"Looks like I'm the one who got caught this time."
+"Well, back to fishing. Maybe I'll catch a win next time."
+"You slipped away this time, but I'll reel you in eventually!"
+"Guess I'll have to find a new spot to fish and train."
+"Not my day, but the sea's full of second chances."
+
+Surfer (M) (Water)
+Before
+
+"Dude, I'm about to ride the wave of victory!"
+"The ocean's my playground, and you're about to get washed away!"
+"You think you can handle the waves? Let's find out!"
+"It's surf time! Let's hang ten... over your defeat!"
+"I'm as smooth as the sea. Try to keep up!"
+After
+
+"Wiped out, huh? Well, that's the life of a surfer!"
+"Guess I'll be hitting the waves instead of winning today."
+"Good match! I'll train harder... between sets, of course."
+"You've got skills, dude. Respect!"
+"This wave knocked me down, but I'll catch the next one!"
+
+Swimmer (F) (Water)
+Before
+
+"The water's my element, and you're about to get drowned out!"
+"Let's see if you can keep afloat in this battle!"
+"Ready to make a splash? I'll be the tidal wave that crashes you!"
+"I'm fast in the water, and even faster in battle!"
+"Hope you brought your swim gear, because I'm about to flood you out!"
+After
+
+"Looks like I sank this time. I'll swim harder next round!"
+"You got the better of me... this time."
+"Guess I'll need more laps to catch up to you."
+"Good match! I'll see you back in the deep end!"
+"I'm not going under just yet... next time, I'll win."
+
+Explorer (Ice)
+Before
+
+"The cold never bothered me... but it's about to bother you!"
+"I've scaled icy peaks, but this battle might be the real challenge."
+"Hope you're not afraid of the cold—this battle's about to freeze you out!"
+"I've seen harsh conditions, but you're about to face the frost of defeat."
+"Prepare for an expedition into icy defeat!"
+After
+
+"Looks like I've hit a frozen patch... but I'll thaw out soon."
+"Even explorers get lost sometimes. I'll find my way back."
+"You're tougher than the frostbite I've faced... I respect that."
+"I'll be better prepared for the next expedition."
+"The cold got to me this time... but I'll warm up next time."
+
+Gentleman (Any)
+Before
+
+"A fine battle calls for refinement and skill. Let's proceed with grace."
+"A proper duel, wouldn't you say? Let's make this dignified."
+"May the best trainer win, but rest assured, it will be me."
+"Good form, good strategy—that's all it takes. Prepare yourself."
+"Let's make this a fight to remember—one you'll never forget."
+After
+
+"Well played, my friend. A loss is but a lesson in disguise."
+"You've bested me, and I commend you for it."
+"You fought with honor. I respect that greatly."
+"A defeat, yes, but hardly a disgrace. I'll return better."
+"Splendid match. I look forward to our next encounter."
+
+Lady (Any)
+Before
+
+"Don't expect me to go easy on you just because I'm refined."
+"Elegance is key, but strength is where I shine."
+"Let's keep this battle civilized, but make no mistake—I plan to win."
+"You may think I'm all grace, but you'll soon learn otherwise."
+"Prepare for a match of wit and power, darling."
+After
+
+"Well, I never! I suppose you've earned that victory."
+"I've been bested, but you've gained my respect."
+"A surprising result... but I won't dwell on it for long."
+"You've won this round. Enjoy it while it lasts."
+"I suppose I'll have to work on my strategy. Well done."
+
+Maniac (Ghost)
+Before
+
+"I've seen things... dark, twisted things... You won't survive."
+"The spirits whisper to me... They say you're next."
+"Fear the shadows, for I command them. Prepare to tremble."
+"I collect the macabre... and your defeat will be my latest addition."
+"You're about to face your nightmares made real."
+After
+
+"The spirits... they were wrong this time... but they won't be forever."
+"I've tasted defeat... but I'll rise again, like the restless dead."
+"You survived this... but you won't be so lucky next time."
+"Even in loss, I feel their presence... You'll face them again."
+"I disappear... for now. But don't think this is over."
+
+Magician (M) (Magic)
+Before
+
+"You're about to see a trick you'll never forget."
+"I'll make your victory... disappear!"
+"This battle is going to be magic. Too bad you're not prepared for it."
+"Watch closely... or you'll miss the moment your chances vanish!"
+"Prepare to be amazed... as I pull a win out of thin air!"
+After
+
+"Well, that wasn't part of the act... I'll need to work on my tricks."
+"The magic didn't work this time, but next time, I'll be the master of illusions!"
+"You're good... but I'll conjure a victory eventually."
+"Looks like my sleight of hand wasn't enough this time."
+"The show's not over yet... I'll be back with something better."
+
+Magician (F) (Magic)
+Before
+
+"Welcome to the grand performance! Prepare to be dazzled!"
+"Let's make your chances disappear in a puff of smoke!"
+"I'm about to cast a spell... on your defeat!"
+"A bit of illusion, a touch of flair... and a victory for me!"
+"Let's see if you can keep up with my magical performance!"
+After
+
+"Oh dear, looks like I've lost the trick. I'll rehearse for next time!"
+"You may have bested me, but magic is full of surprises."
+"My illusions failed me, but I'll perfect them soon enough."
+"I'll make sure this defeat disappears from memory."
+"The show's not over yet... just you wait for the encore!"
+
+Psychic (Psychic)
+Before
+
+"I foresaw this battle... and your loss."
+"You cannot escape fate. It's already decided."
+"Your thoughts are clear to me... and they're full of doubt."
+"I'll bend your mind and your Pokémon to my will."
+"Prepare yourself... I've already seen how this ends."
+After
+
+"Strange... I didn't foresee this outcome..."
+"Your future is bright... but I'll be ready to change it next time."
+"You've disrupted the flow of destiny... but I'll recalibrate."
+"You've shown surprising strength... but the stars still favor me."
+"It's just a temporary lapse in foresight... Next time, I'll win."
+
+Astronomer (Galactic)
+Before
+
+"The stars guide my team. Let's see if you can handle their cosmic power."
+"You're about to be eclipsed by the brilliance of the universe!"
+"The galaxy is vast... and you're about to be lost in it."
+"Prepare to face forces beyond your understanding."
+"The stars align for my victory... not yours."
+After
+
+"The stars... must have misaligned this time."
+"You've won this time, but the cosmos never stays the same for long."
+"I'll recalibrate my strategy... and the stars will guide me to victory."
+"You've navigated the stars well... but I'll see you again in the cosmos."
+"The universe is vast, but next time, I'll show you the true power of the stars."
+
+Youngster (Normal/Poison)
+Before
+
+"I'm young, but I'm ready to win! Let's do this!"
+"You're gonna lose to me, just like everyone else!"
+"Age doesn't matter—my Pokémon are tough!"
+"I might be small, but my Pokémon pack a punch!"
+"Ready for a lesson from someone younger than you?"
+After
+
+"No fair! You got lucky!"
+"I guess I still have some growing to do..."
+"You won this time, but I'm just getting started!"
+"I'll get stronger, just you wait!"
+"Next time, I'll wipe that smirk off your face!"

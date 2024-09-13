@@ -5,8 +5,8 @@ import overworld.GamePanel;
 public class NPC_Nurse extends Entity {
 	
 	public NPC_Nurse(GamePanel gp, String direction) {
-		super(gp);
-		this.direction = direction;
+		super(gp, null);
+		this.setDirection(direction);
 		
 		getImage();
 		setDialogue();

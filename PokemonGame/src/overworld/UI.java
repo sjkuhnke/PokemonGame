@@ -46,7 +46,6 @@ public class UI extends AbstractUI {
 
 	public int menuNum = 0;
 	public int subState = 0;
-	public Entity npc;
 	public int slotCol = 0;
 	public int slotRow = 0;
 	public int bagNum[] = new int[Item.KEY_ITEM];
@@ -61,6 +60,7 @@ public class UI extends AbstractUI {
 	public int btY = 0;
 	
 	public boolean showMessage;
+	public boolean above;
 	public boolean showArea;
 	public int areaCounter;
 	public Pokemon currentPokemon;
@@ -132,6 +132,7 @@ public class UI extends AbstractUI {
 	
 	@Override
 	public void showMessage(String text) {
+		above = true;
 		if (gp.gameState == GamePanel.PLAY_STATE) {
 			gp.gameState = GamePanel.DIALOGUE_STATE;
 		} else {
@@ -234,7 +235,7 @@ public class UI extends AbstractUI {
 		}
 		
 		if (showMessage) {
-			drawDialogueScreen(true);
+			drawDialogueScreen(above);
 			drawToolTips("OK", null, null, null);
 		}
 	}
@@ -376,6 +377,15 @@ public class UI extends AbstractUI {
 		case Task.START_BATTLE:
 			startBattle();
 			break;
+		case Task.DIALOGUE:
+			showMessage(Item.breakString(currentTask.message, 42));
+			drawNameLabel(above);
+			break;
+		case Task.SPEAK:
+			showMessage(Item.breakString(currentTask.message, 42));
+			above = false;
+			drawNameLabel(above);
+			break;
 		}
 	}
 	
@@ -424,6 +434,22 @@ public class UI extends AbstractUI {
 			currentTask = null;
 		}
 		
+	}
+	
+	private void drawNameLabel(boolean above) {
+		int x;
+		int y;
+		int width;
+		int height;
+		if (above) {
+			x = gp.tileSize*2;
+			y = (int) (gp.tileSize * 4.5);
+		} else {
+			x = 0;
+			y = gp.screenHeight - (gp.tileSize*4);
+		}
+		width = gp.screenWidth - (gp.tileSize*4);
+		height = gp.tileSize * 4;
 	}
 
 	private void drawLightDistortion(float alpha) {
@@ -1435,6 +1461,7 @@ public class UI extends AbstractUI {
 					} else {
 						gp.keyH.ctrlPressed = false;
 						release = true;
+						commandNum = 1;
 					}
 				}
 			}
@@ -2428,6 +2455,7 @@ public class UI extends AbstractUI {
 			gp.player.p.lavasurf = false;
 			
 			gp.aSetter.updateNPC(gp.currentMap);
+			gp.aSetter.resetNPCDirection(gp.currentMap);
 			gp.aSetter.setInteractiveTile(gp.currentMap);
 			
 			String currentMap = PlayerCharacter.currentMapName;
@@ -2551,10 +2579,10 @@ public class UI extends AbstractUI {
 	}
 	
 	public void shopBuy() {
-		drawInventory(npc);
+		drawInventory();
 	}
 	
-	private void drawInventory(Entity entity) {
+	private void drawInventory() {
 		int x = gp.tileSize * 2;
 		int y = gp.tileSize;
 		int width = gp.tileSize * 12;
@@ -2568,7 +2596,7 @@ public class UI extends AbstractUI {
 		int slotY = slotYstart;
 		int slotSize = gp.tileSize + 5;
 		
-		for (int i = 0; i < entity.inventory.size(); i++) {
+		for (int i = 0; i < npc.inventory.size(); i++) {
 			g2.drawImage(npc.inventory.get(i).getImage2(), slotX, slotY, null);
 			
 			slotX += slotSize;
@@ -2599,8 +2627,8 @@ public class UI extends AbstractUI {
 		
 		int itemIndex = getItemIndexOnSlot();
 		
-		if (itemIndex < entity.inventory.size()) {
-			Item current = entity.inventory.get(itemIndex);
+		if (itemIndex < npc.inventory.size()) {
+			Item current = npc.inventory.get(itemIndex);
 			drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
 			g2.drawString(current.toString(), textX, textY);
 			String price = "$" + current.getCost();
@@ -2628,7 +2656,7 @@ public class UI extends AbstractUI {
 			if (gp.keyH.wPressed) {
 				if (gp.player.p.buy(current)) {
 					if (current.isTM()) {
-						entity.inventory.remove(current);
+						npc.inventory.remove(current);
 					}
 				} else {
 					showMessage("Not enough money!");

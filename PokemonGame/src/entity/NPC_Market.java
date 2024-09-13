@@ -4,8 +4,8 @@ import overworld.GamePanel;
 
 public class NPC_Market extends Entity {
 	public NPC_Market(GamePanel gp) {
-		super(gp);
-		this.direction = "down";
+		super(gp, null);
+		this.setDirection("down");
 		
 		getImage();
 		setDialogue();
