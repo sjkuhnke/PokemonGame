@@ -965,4 +965,25 @@ public enum Move {
 	public String superToString() {
 		return super.toString();
 	}
+
+	boolean isBiting() {
+		ArrayList<Move> result = new ArrayList<>();
+		result.add(BITE);
+		result.add(CRUNCH);
+		result.add(FIRE_FANG);
+		result.add(HYPER_FANG);
+		result.add(ICE_FANG);
+		result.add(JAW_LOCK);
+		result.add(POISON_FANG);
+		result.add(PSYCHIC_FANGS);
+		result.add(THUNDER_FANG);
+		result.add(LEECH_LIFE);
+		result.add(MAGIC_FANG);
+
+		
+		if (result.contains(this)) {
+			return true;
+		}
+		return false;
+	}
 }

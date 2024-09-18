@@ -199,7 +199,7 @@ public class PMap extends JPanel {
 	    
 	    JButton R45 = new JButton("");
 	    R45.setBounds(64, 68, 36, 14);
-	    R45.setToolTipText("Route 36");
+	    R45.setToolTipText("Route 45");
 	    R45.setBackground(new Color(153, 255, 102));
 	    if (loc == 47) R45.setBackground(Color.yellow);
 	    add(R45);
@@ -707,11 +707,11 @@ public class PMap extends JPanel {
 			PlayerCharacter.currentMapName = "Sicab City";
 			return 9;
 		case 33:
-			if (y <= 22) {
+			if (y <= 25) {
 				PlayerCharacter.currentMapName = "Route 28";
 				return 17;
 			}
-			if (y > 22) {
+			if (y > 25) {
 				PlayerCharacter.currentMapName = "Peaceful Park";
 				return 15;
 			}

@@ -1590,6 +1590,21 @@ public class Pokemon implements Serializable {
 		if (move == Move.WEATHER_BALL) moveType = determineWBType();
 		if (move == Move.TERRAIN_PULSE) moveType = determineTPType();
 		
+		if (this.ability == Ability.NORMALIZE && moveType != PType.NORMAL) {
+			moveType = PType.NORMAL;
+			bp *= 1.2;
+		}
+		
+		if (this.ability == Ability.PIXILATE && moveType == PType.NORMAL) {
+			moveType = PType.LIGHT;
+			bp *= 1.2;
+		}
+		
+		if (this.ability == Ability.GALVANIZE && moveType == PType.NORMAL) {
+			moveType = PType.ELECTRIC;
+			bp *= 1.2;
+		}
+		
 		if (this.ability == Ability.PROTEAN && moveType != PType.UNKNOWN) {
 			if (this.type1 == moveType && this.type2 == null) {
 				
@@ -1856,21 +1871,6 @@ public class Pokemon implements Serializable {
 			
 			if (moveType == PType.FIRE && this.vStatuses.contains(Status.FLASH_FIRE)) bp *= 1.5;
 			
-			if (this.ability == Ability.NORMALIZE && moveType != PType.NORMAL) {
-				moveType = PType.NORMAL;
-				bp *= 1.2;
-			}
-			
-			if (this.ability == Ability.PIXILATE && moveType == PType.NORMAL) {
-				moveType = PType.LIGHT;
-				bp *= 1.2;
-			}
-			
-			if (this.ability == Ability.GALVANIZE && moveType == PType.NORMAL) {
-				moveType = PType.ELECTRIC;
-				bp *= 1.2;
-			}
-			
 			if (this.ability == Ability.SHEER_FORCE && move.cat != 2 && secChance > 0) {
 				secChance = 0;
 				bp *= 1.3;
@@ -1899,11 +1899,7 @@ public class Pokemon implements Serializable {
 			
 			if (this.ability == Ability.SHARP_TAIL && move.isTail()) bp *= 1.5;
 			
-			if (this.ability == Ability.STRONG_JAW && (move == Move.BITE || move == Move.CRUNCH || move == Move.FIRE_FANG || move == Move.HYPER_FANG
-					|| move == Move.ICE_FANG || move == Move.JAW_LOCK || move == Move.POISON_FANG || move == Move.PSYCHIC_FANGS || move == Move.THUNDER_FANG
-					|| move == Move.LEECH_LIFE || move == Move.MAGIC_FANG)) {
-				bp *= 1.5;
-			}
+			if (this.ability == Ability.STRONG_JAW && move.isBiting()) bp *= 1.5;
 			
 			if (this.ability == Ability.RECKLESS && Move.getRecoil().contains(move) && move != Move.STRUGGLE) {
 				bp *= 1.3;
@@ -4826,6 +4822,21 @@ public class Pokemon implements Serializable {
 		if (move == Move.WEATHER_BALL) moveType = determineWBType();
 		if (move == Move.TERRAIN_PULSE) moveType = determineTPType();
 		
+		if (this.ability == Ability.NORMALIZE && moveType != PType.NORMAL) {
+			moveType = PType.NORMAL;
+			bp *= 1.2;
+		}
+		
+		if (this.ability == Ability.PIXILATE && moveType == PType.NORMAL) {
+			moveType = PType.LIGHT;
+			bp *= 1.2;
+		}
+		
+		if (this.ability == Ability.GALVANIZE && moveType == PType.NORMAL) {
+			moveType = PType.ELECTRIC;
+			bp *= 1.2;
+		}
+		
 		if (moveType == PType.FIRE && foeAbility == Ability.FLASH_FIRE) {
 			return 0;
 		}
@@ -4877,21 +4888,6 @@ public class Pokemon implements Serializable {
 		
 		if (moveType == PType.FIRE && this.vStatuses.contains(Status.FLASH_FIRE)) bp *= 1.5;
 		
-		if (this.ability == Ability.NORMALIZE && moveType != PType.NORMAL) {
-			moveType = PType.NORMAL;
-			bp *= 1.2;
-		}
-		
-		if (this.ability == Ability.PIXILATE && moveType == PType.NORMAL) {
-			moveType = PType.LIGHT;
-			bp *= 1.2;
-		}
-		
-		if (this.ability == Ability.GALVANIZE && moveType == PType.NORMAL) {
-			moveType = PType.ELECTRIC;
-			bp *= 1.2;
-		}
-		
 		if (this.ability == Ability.SHEER_FORCE && move.cat != 2 && secChance > 0) {
 			bp *= 1.3;
 		}
@@ -4923,9 +4919,7 @@ public class Pokemon implements Serializable {
 			bp *= 1.3;
 		}
 		
-		if (this.ability == Ability.STRONG_JAW && (move == Move.BITE || move == Move.CRUNCH || move == Move.FIRE_FANG || move == Move.HYPER_FANG
-				|| move == Move.ICE_FANG || move == Move.JAW_LOCK || move == Move.POISON_FANG || move == Move.PSYCHIC_FANGS || move == Move.THUNDER_FANG
-				|| move == Move.LEECH_LIFE)) {
+		if (this.ability == Ability.STRONG_JAW && move.isBiting()) {
 			bp *= 1.5;
 		}
 		
@@ -7287,15 +7281,18 @@ public class Pokemon implements Serializable {
 		default:
 			return null;
 		}
-	}
+	} 
 
 	public boolean isTrapped(Pokemon foe) {
-		if (this.vStatuses.contains(Status.SPUN) || this.vStatuses.contains(Status.CHARGING) || this.vStatuses.contains(Status.RECHARGE) || this.vStatuses.contains(Status.LOCKED) || this.vStatuses.contains(Status.SEMI_INV)) {
+		if (this.vStatuses.contains(Status.CHARGING) || this.vStatuses.contains(Status.RECHARGE) || this.vStatuses.contains(Status.LOCKED) || this.vStatuses.contains(Status.SEMI_INV)) {
 			return true;
 		}
-		if ((this.vStatuses.contains(Status.NO_SWITCH) || this.vStatuses.contains(Status.TRAPPED)) && this.item != Item.SHED_SHELL) return true;
-		if (foe.ability == Ability.ILLUSION && foe.illusion && this.type1 != PType.GHOST && this.type2 != PType.GHOST) return true;
-		if (foe.ability == Ability.SHADOW_TAG && this.type1 != PType.GHOST && this.type2 != PType.GHOST) return true;
+		if (this.type1 == PType.GHOST || this.type2 == PType.GHOST || this.item == Item.SHED_SHELL) return false;
+		if (this.vStatuses.contains(Status.SPUN) || this.vStatuses.contains(Status.NO_SWITCH) || this.vStatuses.contains(Status.TRAPPED)) {
+			return true;
+		}
+		if (foe.ability == Ability.ILLUSION && foe.illusion) return true;
+		if (foe.ability == Ability.SHADOW_TAG) return true;
 		return false;
 	}
 	

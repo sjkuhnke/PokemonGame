@@ -837,7 +837,7 @@ public class BattleUI extends AbstractUI {
 					Pokemon.addTask(Task.TEXT, "No! There's no running from a trainer battle!");
 				} else {
 					Pokemon faster = user.getFaster(foe, 0, 0);
-					boolean isFaster = faster == user || user.item == Item.SHED_SHELL;
+					boolean isFaster = faster == user || user.item == Item.SHED_SHELL || user.type1 == PType.GHOST || user.type2 == PType.GHOST;
 					
 					if (isFaster || new Random().nextBoolean()) {
 						Pokemon.addTask(Task.END, "Got away safely!");
