@@ -281,7 +281,7 @@ public class PlayerCharacter extends Entity {
 				} else if (target instanceof NPC_PC) {
 					interactPC((NPC_PC) target);
 				} else if (target instanceof NPC_Pokemon) {
-					interactTrainer(target, ((NPC_Pokemon) target).id, true);
+					interactTrainer(target, ((NPC_Pokemon) target).id, false);
 				}
 			}
 			

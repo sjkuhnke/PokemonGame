@@ -7044,6 +7044,7 @@ public class Pokemon implements Serializable {
 	    clonedPokemon.battled = this.battled;
 	    clonedPokemon.success = this.success;
 	    clonedPokemon.consumedItem = this.consumedItem;
+	    clonedPokemon.illusion = this.illusion;
 	    
 	    // Clone battle fields
 	    clonedPokemon.lastMoveUsed = this.lastMoveUsed;
