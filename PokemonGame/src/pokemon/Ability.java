@@ -64,7 +64,7 @@ public enum Ability {
 	MIRROR_ARMOR("Bounces back only the stat-lowering effects that the Pokemon receives."),
 	MOLD_BREAKER("Moves can be used on the target regardless of its Abilities."),
 	MOODY("Raises one stat sharply and lowers another every turn."),
-	MOSAIC_WINGS("Distorts type matchups to make non-super effective attacks resisted."), // TODO
+	MOSAIC_WINGS("Distorts type matchups to make non-super effective attacks resisted."),
 	MOTOR_DRIVE("Raises Speed if hit by an ELECTRIC move."),
 	MOUTHWATER("Taunts the foe on switch-in for 4 turns."),
 	MOXIE("Boosts the Attack stat after knocking out any Pokemon."),
@@ -84,7 +84,7 @@ public enum Ability {
 	PROTEAN("Makes the Pokemon's type to the move type it's about to use."),
 	PSYCHIC_AURA("Weakens the power of Special moves."),
 	PSYCHIC_SURGE("Turns the ground into PSYCHIC TERRAIN when the Pokemon enters a battle."),
-	RADIANT("Lowers foe's Accuracy when this Pokemon hits with a LIGHT move"),
+	RADIANT("Lowers foe's Accuracy when this Pokemon hits with a LIGHT move."),
 	RAIN_DISH("The Pokemon gradually regains HP in RAIN."),
 	RATTLED("DARK, GHOST, and BUG moves scare the Pokemon and boost its Speed stat."),
 	RECKLESS("Powers up moves that have recoil damage."),

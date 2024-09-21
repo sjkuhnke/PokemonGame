@@ -1130,13 +1130,18 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.GIFT, "", result);
 		} else if (gp.currentMap == 39) {
 			p.flag[3][0] = true;
-			Pokemon.addTask(Task.TEXT, "Holy BALLS it is bright out there mah boi");
-			Pokemon.addTask(Task.TEXT, "Thankfully I have these sick ass pit vipers");
-			Pokemon.addTask(Task.TEXT, "Here you go jitty jit jit, try and see what's causing the bright ahh light");
+			Pokemon.addTask(Task.TEXT, "Well, I say it's weather, more like the atmospheric nonsense going outside.");
+			Pokemon.addTask(Task.TEXT, "Jeez it's so bright, worse than the time I stared directly at the sun.");
+			Pokemon.addTask(Task.TEXT, "But hey Alakazam, you live and you learn. Thankfully I brought these awesome Pit Sevipers!");
+			Pokemon.addTask(Task.TEXT, "These suckers block out all kinds of rays, heat rays, UV rays, even Confuse Rays!");
+			Pokemon.addTask(Task.TEXT, "You look quite strained, I'll let you borrow these since I wasn't planning on sticking around long anyways.");
 			Task t = Pokemon.addTask(Task.ITEM, "");
 			t.item = Item.VISOR;
-			Pokemon.addTask(Task.TEXT, "Go into your bag and equip them if you wanna see. They're pretty drippy too!");
-			Pokemon.addTask(Task.TEXT, "Imma dip and go jack my shit to Zam here :>");
+			Pokemon.addTask(Task.TEXT, "If you put those on you should be able to see a lot better outside, it's crazy out there.");
+			Pokemon.addTask(Task.TEXT, "To be honest with you dude, I'm not even sure why it's so darn bright... and the local school is in a full blown panic about it.");
+			Pokemon.addTask(Task.TEXT, "The classrooms are all locked and there's no sign of the teachers... come to think of it, that should probably be looked at.");
+			Pokemon.addTask(Task.TEXT, "Just don't think I'll be doing too much of the \"looking\", because you have my one and only pair of shades.");
+			Pokemon.addTask(Task.TEXT, "Thankfully I don't ever have to go outside, I can teleport around! Alakazam, let's show him our newest trick!");
 			Pokemon.addTask(Task.FLASH_IN, "");
 			Pokemon.addTask(Task.UPDATE, "");
 			Pokemon.addTask(Task.FLASH_OUT, "");

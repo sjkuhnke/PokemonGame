@@ -516,79 +516,53 @@ public class Main {
 				while (loc.length() < 50) {
 					loc += "-";
 				}
-				writer.write(loc + "\n");
-				writer.write("\n");
+				writer.write("\n" + loc + "\n");
+				
 				for (Trainer tr : trainers) {
-					boolean hasItems = false;
 					String name = tr.getName();
 					while (name.length() < 28) {
 						name += " ";
 					}
-					writer.write(name);
-					for (int i = 0; i < tr.getTeam().length; i++) {
-						Pokemon p = tr.getTeam()[i];
-						writer.write(p.name + " Lv. " + p.level);
-						if (i != tr.getTeam().length - 1) writer.write(", ");
-						if (!hasItems && p.item != null) hasItems = true;
-					}
-					if (hasItems && Trainer.bosses.stream().noneMatch(tr.getName()::contains)) {
-						writer.write(" @ (");
-						for (int i = 0; i < tr.getTeam().length; i++) {
-							String item = tr.getTeam()[i].item == null ? "None" : tr.getTeam()[i].item.toString();
-							writer.write(item);
-							if (i != tr.getTeam().length - 1) writer.write(", ");
-						}
-						writer.write(")");
-					}
 					writer.write("\n");
-					
-					if (Trainer.bosses.stream().anyMatch(tr.getName()::contains)) {
-						writer.write("\n");
-						writer.write(tr.toString() + "\n");
-						for (Pokemon p : tr.getTeam()) {
-							String pName = p.name + " (Lv. " + p.level + ")";
-							if (gp.player.p.starter == -1 && (tr.getName().contains("Scott") || tr.getName().contains("Fred")) && p.id >= 1 && p.id <= 9) {
-								pName = "*" + pName;
-							}
-							if (p.item != null) {
-								pName += " @ " + p.item.toString();
-								while (pName.length() < 40) {
-									pName += " ";
-								}
-							} else {
-								while (pName.length() < 22) {
-									pName += " ";
-								}
-							}
-							
-							pName += "/";
-							writer.write(pName);
-							
-							String aName = "   " + p.ability.toString();
-							while (aName.length() < 18) {
-								aName += " ";
-							}
-							aName += "/";
-							writer.write(aName);
-							
-							String mName = "   ";
-							for (int i = 0; i < 4; i++) {
-								if (p.moveset[i] != null) {
-									mName += p.moveset[i].move.toString();
-									if (i != 3) mName += ", ";
-								}
-							}
-							writer.write(mName);
-							writer.write("\n");
+
+					writer.write(tr.toString() + "\n");
+					for (Pokemon p : tr.getTeam()) {
+						String pName = p.name + " (Lv. " + p.level + ")";
+						if (gp.player.p.starter == -1 && (tr.getName().contains("Scott") || tr.getName().contains("Fred")) && p.id >= 1 && p.id <= 9) {
+							pName = "*" + pName;
 						}
+						String string = p.item == null ? " @ None" : " @ " + p.item.toString();
+						pName += string;
+						while (pName.length() < 40) {
+							pName += " ";
+						}
+						
+						pName += "/";
+						writer.write(pName);
+						
+						String aName = "   " + p.ability.toString();
+						while (aName.length() < 18) {
+							aName += " ";
+						}
+						aName += "/";
+						writer.write(aName);
+						
+						String mName = "   ";
+						for (int i = 0; i < 4; i++) {
+							if (p.moveset[i] != null) {
+								mName += p.moveset[i].move.toString();
+								if (i != 3) mName += ", ";
+							}
+						}
+						writer.write(mName);
 						writer.write("\n");
 					}
 				}
-				writer.write("\n");
 			}
+			writer.write("\n");
 			
 			writer.close();
-			writeTrainerUsageStats();
+			//writeTrainerUsageStats();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
