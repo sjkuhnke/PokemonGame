@@ -18,6 +18,7 @@ public class AssetSetter {
 	
 	public ArrayList<Entity> clerks = new ArrayList<>();
 	
+	private static final int CHEF = -25;
 	private static final int UP_PHEROMOSA = -24;
 	private static final int UP_BUZZWOLE = -23;
 	private static final int UP_SPLAME = -22;
@@ -1168,7 +1169,7 @@ public class AssetSetter {
 		
 		mapNum = 32;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 40, "Back in my day, I used to be a top angler. Felt good reeling in them in, but I think I've outgrown it.", true, 49, "Look at water and press 'A' to fish!");
+		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_DOWN, null, 31, 40, "Back in my day, I used to be a top angler. Felt good reeling in them in, but I think I've outgrown it.", true, 49, "Look at water and press 'A' to fish!");
 		
 		mapNum = 33;
 		index = 0;
@@ -1190,17 +1191,17 @@ public class AssetSetter {
 		
 		mapNum = 36;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 20, 45, 106);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 39, 47, 107);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 42, 27, 108);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 44, 32, 109);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 60, 31, 110);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 53, 44, 111);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 65, 48, 112);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 82, 39, 113);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 67, 30, 114);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 76, 25, 115);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 91, 43, 116);
+		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_DOWN, 20, 45, 106);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 39, 47, 107);
+		gp.npc[mapNum][index] = NPCSetup(STUDENT_F_DOWN, 42, 27, 108);
+		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 44, 32, 109);
+		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_DOWN, 60, 31, 110);
+		gp.npc[mapNum][index] = NPCSetup(BLACK_BELT_RIGHT, 53, 44, 111);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_UP, 65, 48, 112);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 82, 39, 113);
+		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_RIGHT, 67, 30, 114);
+		gp.npc[mapNum][index] = NPCSetup(BURGLAR_DOWN, 76, 25, 115);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_UP, 91, 43, 116);
 		
 		if (gp.player.p.badges >= 5 && !flags[19]) {
 			gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 15, 46, "There's some SCARY people wearing black in there somewhere. I heard one of their leaders go to Ghostly Woods and is planning something evil.", 19);
@@ -1223,7 +1224,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE, 31, 37, -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 36, 35, -1);
-		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, "Ryder", 28, 41, "Hello my friend! Just the person I was looking for!", true);
+		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, "Ryder", 28, 41, "Howdy there! Glad to see you could make it in this weather.", true);
 		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM, null, 27, 41, "Vxxxvhh...");
 		
 		mapNum = 43;
@@ -1315,11 +1316,11 @@ public class AssetSetter {
 		
 		mapNum = 57;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "Eyy! What brings a scrawny kid like you into the famous Guy Eddie's culinary residence!", true, 9, "By the way, if you're ever in Rawwar City, head over to my restaurant. You won't wanna miss the Eddie special, Smoked Pie! It's gonna be a blast burn!");
+		gp.npc[mapNum][index] = NPCSetup(CHEF, null, 31, 41, "Eyy! What brings a scrawny kid like you into the famous Guy Eddie's culinary residence!", true, 9, "By the way, if you're ever in Rawwar City, head over to my restaurant. You won't wanna miss the Eddie special, Smoked Pie! It's gonna be a blast burn!");
 		
 		mapNum = 58;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 33, 42, "AAAGHHHHH!! GET OUT THIEF!", true, 18, "Thank you so much for your kindness! I hope you have a great day :)");
+		gp.npc[mapNum][index] = NPCSetup(LADY_DOWN, null, 33, 42, "AAAGHHHHH!! GET OUT THIEF!", true, 18, "Thank you so much for your kindness! I hope you have a great day :)");
 		
 		mapNum = 60;
 		index = 0;
@@ -2430,43 +2431,6 @@ public class AssetSetter {
 	public void updateNPC(int map) {
 		boolean[] flags = gp.player.p.flags;
 		boolean[][] flag = gp.player.p.flag;
-		// flags[0] is true after walking into first gate
-		// flags[1] is true after beating Scott 1
-		// flags[2] is true after beating Rick 1
-		// flags[3] is true after beating all TN Grunts in the office
-		// flags[4] is true after beating Scott 2
-		// flags[5] is true after beating Fred 2
-		// flags[6] is true after key A
-		// flags[7] is true after key B
-		// flags[8] is true after clearing room A
-		// flags[9] is true after clearing room B
-		// flags[10] is true after getting gift starter
-		// flags[11] is true after getting gift dog
-		// flags[12] is true after getting gift magic pokemon
-		// flags[13] is true after getting gift fossil/ancient pokemon
-		// flags[14] is true after getting gift "starter" pokemon
-		// flags[15] is true after beating Scott 3
-		// flags[16] is true after talking to Grandpa
-		// flags[17] is true after beating Gym 5
-		// flags[18] is true after getting gift E/S pokemon
-		// flags[19] is true after beating Rick 2
-		// flags[20] is true after beating Maxwell 1
-		// flags[21] is true after beating Scott 4
-		// flags[22] is true after getting Glurg Town gift
-		// flags[23] is true after getting coins
-		// flags[24] is true after being prompted that casino will auto-save
-		// flags[25] is true after getting gift magmaclang
-		// flags[26] is true after beating TN guy in MSJ
-		// flags[27] is true after beating Fred 4
-		// flags[28] is true after beating Maxwell 2 (and disbanding TN)
-		// flags[29] is true after beating Zurroaratr
-		// flags[30] is true after getting fishing rod
-		// flags[31] is true after getting Surf
-		// flags[32] is true after getting Exp. Share
-		// flags[33] is true after getting Lucky Egg
-		// flags[34] is true after beating Rick 3
-		// flags[35] is true after fighting Triwandoliz
-		// flags[36] is true after fighting Diftery
 		
 		/**
 		 * First split
@@ -3209,6 +3173,9 @@ public class AssetSetter {
 			case AVERY:
 				result.setupImages("/npc/avery");
 				break;
+			case KLARA:
+				result.setupImages("/npc/klara");
+				break;
 			case ROBIN:
 				result.setupImages("/npc/robin");
 				break;
@@ -3251,6 +3218,19 @@ public class AssetSetter {
 				result.setupImages("/npc/hiker");
 				result.setDirection("down");
 				break;
+			case FISHERMAN_DOWN:
+				result.setupImages("/npc/fisherman");
+				result.setDirection("down");
+				break;
+			case CHEF:
+				result.setupImages("/npc/chef");
+				result.setDirection("down");
+				break;
+			case LADY_DOWN:
+				result.setupImages("/npc/lady");
+				result.setDirection("down");
+				break;
+				
 		}
 		
 		if (image != null) result.down1 = image;
