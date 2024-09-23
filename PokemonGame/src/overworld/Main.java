@@ -550,7 +550,8 @@ public class Main {
 						String mName = "   ";
 						for (int i = 0; i < 4; i++) {
 							if (p.moveset[i] != null) {
-								mName += p.moveset[i].move.toString();
+								Move move = p.moveset[i].move;
+								mName += move == Move.HIDDEN_POWER ? move.toString() + " " + p.determineHPType().toString() : move.toString();
 								if (i != 3) mName += ", ";
 							}
 						}
