@@ -39,6 +39,7 @@ public abstract class AbstractUI {
 	
 	public Task currentTask;
 	public ArrayList<Task> tasks;
+	public boolean checkTasks;
 	
 	public Entity npc;
 	

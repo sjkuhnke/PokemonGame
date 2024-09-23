@@ -440,4 +440,9 @@ public class GamePanel extends JPanel implements Runnable {
 		return currentMap == 38 && !player.p.flag[3][8];
 	}
 
+	public void setTaskState() {
+		ui.checkTasks = false;
+		gameState = TASK_STATE;
+	}
+
 }

@@ -7396,10 +7396,12 @@ public class Pokemon implements Serializable {
 		if (gp != null && gp.gameState == GamePanel.BATTLE_STATE) {
 			Task t = createTask(type, string, p);
 			gp.battleUI.tasks.add(t);
+			gp.battleUI.checkTasks = true;
 			return t;
 		} else if (gp != null && (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE)) {
 			Task t = createTask(type, string, p);
 			gp.ui.tasks.add(t);
+			gp.ui.checkTasks = true;
 			return t;
 		} else {
 			if (type == Task.TEXT) {
@@ -7440,10 +7442,9 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void addStartBattleTask(int trainer, int id, Pokemon foe) {
-		Task t = createTask(Task.START_BATTLE, "", foe);
+		Task t = addTask(Task.START_BATTLE, "", foe);
 		t.counter = trainer;
 		t.start = id;
-		gp.ui.tasks.add(t);
 	}
 	
 	public void addAbilityTask(Pokemon p) {

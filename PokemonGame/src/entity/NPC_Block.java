@@ -28,7 +28,7 @@ public class NPC_Block extends Entity {
 		if (!more || mode != 0) {
 			super.speak(mode);
 		} else {
-			gp.gameState = GamePanel.TASK_STATE;
+			gp.setTaskState();
 			Pokemon.addTask(Task.TEXT, dialogues[dialogueIndex]);
 		}
 	}

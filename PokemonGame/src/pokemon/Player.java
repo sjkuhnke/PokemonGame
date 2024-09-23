@@ -1189,7 +1189,7 @@ public class Player extends Trainer implements Serializable {
 
 	public void handleExpShare() {
 		for (Pokemon p : team) {
-			if (p != null && !p.battled && p.item == Item.EXP_SHARE) {
+			if (p != null && !p.battled && p.item == Item.EXP_SHARE && !p.isFainted()) {
 				numBattled++;
 				p.battled = true;
 			}

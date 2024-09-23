@@ -557,7 +557,7 @@ public class EventHandler {
 			if (hit(107,53,63)) teleport(107, 66, 50,true); // F
 			if (hit(107,47,63)) {
 				if (!gp.player.p.flags[19] || !gp.player.p.flags[20]) {
-					gp.gameState = GamePanel.TASK_STATE;
+					gp.setTaskState();
 					Task t = Pokemon.addTask(Task.TELEPORT, "");
 					t.counter = 107;
 					t.start = 42;

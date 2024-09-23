@@ -422,7 +422,7 @@ public class PlayerCharacter extends Entity {
 		entity.setName();
 		
 		if (!p.trainersBeat[trainer]) {
-			gp.gameState = GamePanel.TASK_STATE;
+			gp.setTaskState();
 			
 			Pokemon foe = Trainer.getTrainer(trainer).getCurrent();
 			
@@ -439,7 +439,7 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	public void startWild(String area, char type) {
-		gp.gameState = GamePanel.TASK_STATE;
+		gp.setTaskState();
 		
 		Pokemon foe = gp.encounterPokemon(area, type, p.random);
 		Pokemon.addStartBattleTask(-2, -1, foe);
@@ -461,8 +461,10 @@ public class PlayerCharacter extends Entity {
 		int count = gp.obj[gp.currentMap][objIndex].count;
 		String itemName = item.toString();
 		if (count > 1 && itemName.contains("Berry")) itemName = itemName.replace("Berry", "Berries");
-		Task t = Pokemon.createTask(Task.ITEM, "You found " + count + " " + itemName + "!");
-		gp.ui.tasks.add(t);
+		
+		gp.setTaskState();
+		
+		Task t = Pokemon.addTask(Task.ITEM, "You found " + count + " " + itemName + "!");
 		t.item = item;
 		t.counter = count;
 		if (gp.currentMap == 121) {
@@ -480,7 +482,6 @@ public class PlayerCharacter extends Entity {
 		gp.player.p.itemsCollected[gp.currentMap][objIndex] = true;
 		gp.obj[gp.currentMap][objIndex] = null;
 		
-		gp.gameState = GamePanel.TASK_STATE;
 	}
 	
 	public void showPlayer() {
@@ -541,7 +542,7 @@ public class PlayerCharacter extends Entity {
 			if (npc.more) {
 				SwingUtilities.invokeLater(() -> {
 					gp.keyH.resetKeys();
-					gp.gameState = GamePanel.TASK_STATE;
+					gp.setTaskState();
 					interactBlock(npc);
 				});
 			}

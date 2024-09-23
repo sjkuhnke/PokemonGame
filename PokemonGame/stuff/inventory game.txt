@@ -455,15 +455,15 @@ After
 Explorer (Ice)
 Before
 
-"The cold never bothered me... but it's about to bother you!"
-"I've scaled icy peaks, but this battle might be the real challenge."
+""
+""
 "Hope you're not afraid of the cold—this battle's about to freeze you out!"
 "I've seen harsh conditions, but you're about to face the frost of defeat."
 "Prepare for an expedition into icy defeat!"
 After
 
-"Looks like I've hit a frozen patch... but I'll thaw out soon."
-"Even explorers get lost sometimes. I'll find my way back."
+""
+""
 "You're tougher than the frostbite I've faced... I respect that."
 "I'll be better prepared for the next expedition."
 "The cold got to me this time... but I'll warm up next time."
@@ -551,15 +551,15 @@ After
 Psychic (Psychic)
 Before
 
-"I foresaw this battle... and your loss."
-"You cannot escape fate. It's already decided."
+""
+""
 "Your thoughts are clear to me... and they're full of doubt."
 "I'll bend your mind and your Pokémon to my will."
 "Prepare yourself... I've already seen how this ends."
 After
 
-"Strange... I didn't foresee this outcome..."
-"Your future is bright... but I'll be ready to change it next time."
+""
+""
 "You've disrupted the flow of destiny... but I'll recalibrate."
 "You've shown surprising strength... but the stars still favor me."
 "It's just a temporary lapse in foresight... Next time, I'll win."
@@ -583,15 +583,42 @@ After
 Youngster (Normal/Poison)
 Before
 
-"I'm young, but I'm ready to win! Let's do this!"
-"You're gonna lose to me, just like everyone else!"
+""
+""
 "Age doesn't matter—my Pokémon are tough!"
 "I might be small, but my Pokémon pack a punch!"
 "Ready for a lesson from someone younger than you?"
 After
 
-"No fair! You got lucky!"
-"I guess I still have some growing to do..."
+""
+""
 "You won this time, but I'm just getting started!"
 "I'll get stronger, just you wait!"
 "Next time, I'll wipe that smirk off your face!"
+
+Team Eclipse
+Before Battle
+
+""
+""
+""
+""
+""
+""
+""
+""
+""
+"Dragowrath's will is absolute. You'll comply or face defeat."
+
+After Battle
+
+""
+""
+""
+""
+""
+""
+""
+""
+""
+"Temporary setback. Dragowrath will not be deterred."

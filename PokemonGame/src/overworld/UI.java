@@ -241,6 +241,7 @@ public class UI extends AbstractUI {
 	}
 
 	private void drawTask() {
+		if (currentTask == null) return;
 		switch(currentTask.type) {
 		case Task.LEVEL_UP:
 		case Task.TEXT:
@@ -1737,7 +1738,7 @@ public class UI extends AbstractUI {
 	}
 
 	private void taskState() {
-		if (currentTask == null) {
+		if (checkTasks && currentTask == null) {
 			if (tasks.size() > 0) {
 				currentTask = tasks.remove(0);
 			} else {
@@ -2422,7 +2423,7 @@ public class UI extends AbstractUI {
 		if (counter == 50) {
 			counter = 0;
 			if (currentTask != null && currentTask.type == Task.TELEPORT) {
-				gp.gameState = GamePanel.TASK_STATE;
+				gp.setTaskState();
 				gp.currentMap = currentTask.counter;
 				gp.player.worldX = gp.tileSize * currentTask.start;
 				gp.player.worldY = gp.tileSize * currentTask.finish;
@@ -2437,7 +2438,7 @@ public class UI extends AbstractUI {
 				if (tasks.isEmpty()) {
 					gp.gameState = GamePanel.PLAY_STATE;
 				} else {
-					gp.gameState = GamePanel.TASK_STATE;
+					gp.setTaskState();
 				}
 
 				gp.currentMap = gp.eHandler.tempMap;
@@ -2932,7 +2933,7 @@ public class UI extends AbstractUI {
 				if (commandNum == 0) {
 					gp.player.p.flag[0][1] = true;
 					gp.player.p.starter = starter;
-					gp.gameState = GamePanel.TASK_STATE;
+					gp.setTaskState();
 					Pokemon.addTask(Task.GIFT, "", starters[starter]);
 					starterConfirm = false;
 					

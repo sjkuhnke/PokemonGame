@@ -1103,8 +1103,8 @@ public enum Item {
         			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         			int amt = (int) foeStages[index].getSelectedItem();
         			current.statStages[index - 1] = amt;
-        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), userAbility, foeItem);
-        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), foeAbility, userItem);
+        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
+        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
         			if (index == 5) foeSpeed.setText((current.getSpeed()) + "");
         		});
         		fStatsPanel.add(foeStages[i]);
