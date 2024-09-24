@@ -2633,7 +2633,7 @@ public class Pokemon implements Serializable {
 //		} else if (move == Move.CONSTRICT) {
 //			stat(foe, 4, -1);
 		} else if (move == Move.COVET || move == Move.THIEF) {
-			if (this.item == null && foe.item != null && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
+			if (this.item == null && foe.item != null && foe.ability != Ability.STICKY_HOLD && this.ability != Ability.MOLD_BREAKER) {
 				addTask(Task.TEXT, this.nickname + " stole the foe's " + foe.item.toString() + "!");
 				this.item = foe.item;
 				if (!foe.loseItem) foe.lostItem = foe.item;
@@ -4036,7 +4036,7 @@ public class Pokemon implements Serializable {
 				if (announce) addAbilityTask(p);
 				if (announce) addTask(Task.TEXT, p.nickname + "'s " + type + " was not lowered!");
 				return;
-			} else if (item == Item.CLEAR_AMULET && a < 0) {
+			} else if (p.item == Item.CLEAR_AMULET && a < 0) {
 				if (announce) addTask(Task.TEXT, p.nickname + "'s Clear Amulet blocked the stat drop!");
 				return;
 			} else if (p.ability == Ability.KEEN_EYE && a < 0 && i == 5) {
@@ -7559,6 +7559,7 @@ public class Pokemon implements Serializable {
 		}
 		switch (item) {
 		case ABILITY_CAPSULE:
+			if (abilitySlot == 2) return 2;
 			Pokemon test = new Pokemon(id, 1, false, false);
 	        test.setAbility(1 - abilitySlot);
 	        return ability == test.ability ? 0 : 1;
@@ -7582,6 +7583,9 @@ public class Pokemon implements Serializable {
 		}
 		if (perishCount > 0) {
 			result.add("Perish in " + perishCount);
+		}
+		if (illusion) {
+			result.add("Illusion");
 		}
 		return result;
 	}
@@ -7716,9 +7720,15 @@ public class Pokemon implements Serializable {
 			String[] parts = trainerData.split("\\|");
 			String indexS = parts[0];
 			boolean staticEnc = false;
+			boolean update = false;
 			if (indexS.contains("*")) {
 				staticEnc = true;
+				update = true;
 				indexS = indexS.replace("*", "");
+			}
+			if (indexS.contains("+")) {
+				update = true;
+				indexS = indexS.replace("+", "");
 			}
 			int index = Integer.parseInt(indexS);
 			String name = parts[1];
@@ -7792,6 +7802,7 @@ public class Pokemon implements Serializable {
 				throw new IllegalStateException(Trainer.trainers[index].getName() + " already occupies index " + index + ", change " + trainer.getName() + "'s index");
 			}
 			Trainer.trainers[index] = trainer;
+			trainer.update = update;
 			
 			if (name.contains("Scott") || name.contains("Fred")) {
 				rivalIndices.add(index);

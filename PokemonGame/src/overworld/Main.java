@@ -96,15 +96,8 @@ public class Main {
 	        // If there's an error reading the file, create a new Player object
 	        gp.player.p = new Player(gp);
 	        
-	        gp.player.p.resistBerries = new Item[20];
-	        int count = 0;
-			for (int i = 232; i < 252; i++) {
-				 gp.player.p.resistBerries[count] = Item.getItem(i);
-				count++;
-			}
-	        List<Item> berryList = Arrays.asList(gp.player.p.resistBerries);
-	        Collections.shuffle(berryList);
-	        gp.player.p.resistBerries = berryList.toArray(new Item[1]);
+	        gp.player.p.setupStatBerries();
+	        gp.player.p.setupResistBerries();
 	    }
 		
 		PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / gp.tileSize), (int) Math.round(gp.player.worldY * 1.0 / gp.tileSize));
@@ -519,13 +512,9 @@ public class Main {
 				writer.write("\n" + loc + "\n");
 				
 				for (Trainer tr : trainers) {
-					String name = tr.getName();
-					while (name.length() < 28) {
-						name += " ";
-					}
 					writer.write("\n");
 
-					writer.write(tr.toString() + "\n");
+					writer.write(tr.getName() + "\n");
 					for (Pokemon p : tr.getTeam()) {
 						String pName = p.name + " (Lv. " + p.level + ")";
 						if (gp.player.p.starter == -1 && (tr.getName().contains("Scott") || tr.getName().contains("Fred")) && p.id >= 1 && p.id <= 9) {

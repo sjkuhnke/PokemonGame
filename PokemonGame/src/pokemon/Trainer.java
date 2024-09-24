@@ -16,6 +16,7 @@ public class Trainer implements Serializable {
 	Item item;
 	int flagIndex;
 	Pokemon current;
+	public boolean update;
 	
 	public static final int MAX_TRAINERS = 400;
 	public static Trainer[] trainers = new Trainer[MAX_TRAINERS];

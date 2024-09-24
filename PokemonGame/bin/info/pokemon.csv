@@ -11,8 +11,8 @@
 14 |Flashclaw    |LIGHT   |FLYING  |MIRROR_ARMOR      |INSECT_FEEDER     |RADIANT           |[50, 40, 45, 75, 70, 100]     |5.0   |150|
 15 |Magestiflash |LIGHT   |FLYING  |MIRROR_ARMOR      |INSECT_FEEDER     |RADIANT           |[70, 40, 60, 100, 100, 130]   |30.5  |90 |
 10 |Pigo         |NORMAL  |FLYING  |INSOMNIA          |INSECT_FEEDER     |AMBUSH            |[56, 61, 65, 20, 29, 45]      |5.5   |245|
-11 |Pigonat      |NORMAL  |FLYING  |INSOMNIA          |INSECT_FEEDER     |AMBUSH            |[66, 76, 86, 35, 60, 78]      |40.9  |150|
-12 |Pigoga       |STEEL   |FLYING  |BATTLE_ARMOR      |TOUGH_CLAWS       |IRON_BARBS        |[73, 85, 110, 56, 90, 81]     |129.2 |85 |
+11 |Pigonat      |NORMAL  |FLYING  |INSOMNIA          |INSECT_FEEDER     |AMBUSH            |[66, 76, 76, 40, 50, 78]      |40.9  |150|
+12 |Pigoga       |STEEL   |FLYING  |BATTLE_ARMOR      |TOUGH_CLAWS       |IRON_BARBS        |[76, 95, 100, 56, 80, 81]     |129.2 |85 |
 16 |Hammo        |NORMAL  |null    |MOUTHWATER        |THICK_FAT         |UNAWARE           |[99, 61, 51, 40, 79, 20]      |95.6  |255|
 17 |HammyBoy     |NORMAL  |null    |MOUTHWATER        |THICK_FAT         |UNAWARE           |[150, 79, 75, 43, 108, 35]    |445.9 |190|
 18 |Hamthorno    |NORMAL  |ROCK    |ROUGH_SKIN        |ROCK_HEAD         |SOLID_ROCK        |[150, 105, 110, 40, 85, 45]   |205.0 |100|
@@ -120,9 +120,9 @@
 142|Magie        |STEEL   |NORMAL  |TOUGH_CLAWS       |IRON_BARBS        |WEAK_ARMOR        |[30, 60, 73, 30, 65, 58]      |50.5  |100|
 143|Cumin        |STEEL   |LIGHT   |TOUGH_CLAWS       |IRON_BARBS        |WEAK_ARMOR        |[60, 80, 95, 65, 95, 95]      |125.7 |65 |
 144|Cinneroph    |STEEL   |MAGIC   |TOUGH_CLAWS       |IRON_BARBS        |WEAK_ARMOR        |[69, 95, 97, 70, 95, 104]     |130.6 |35 |
-145|Vupp         |ELECTRIC|NORMAL  |ELECTRIC_SURGE    |MOTOR_DRIVE       |GALVANIZE         |[30, 45, 25, 35, 40, 60]      |8.1   |100|
-146|Vinnie       |ELECTRIC|LIGHT   |ELECTRIC_SURGE    |MOTOR_DRIVE       |GALVANIZE         |[75, 105, 60, 85, 60, 105]    |25.1  |65 |
-147|Suvinero     |ELECTRIC|MAGIC   |ELECTRIC_SURGE    |MOTOR_DRIVE       |GALVANIZE         |[75, 120, 70, 80, 75, 125]    |26.0  |35 |
+145|Vupp         |ELECTRIC|NORMAL  |ELECTRIC_SURGE    |MOTOR_DRIVE       |GALVANIZE         |[30, 45, 25, 35, 40, 60]      |10.1  |100|
+146|Vinnie       |ELECTRIC|LIGHT   |ELECTRIC_SURGE    |MOTOR_DRIVE       |GALVANIZE         |[75, 95, 60, 95, 60, 105]     |45.1  |65 |
+147|Suvinero     |ELECTRIC|MAGIC   |ELECTRIC_SURGE    |MOTOR_DRIVE       |GALVANIZE         |[75, 105, 70, 95, 75, 125]    |51.0  |35 |
 148|Whiskie      |FIGHTING|NORMAL  |GUTS              |MOXIE             |NO_GUARD          |[35, 65, 45, 15, 40, 45]      |35.6  |100|
 149|Whiskers     |FIGHTING|LIGHT   |GUTS              |MOXIE             |NO_GUARD          |[95, 125, 105, 25, 75, 50]    |100.9 |65 |
 150|Whiskeroar   |FIGHTING|MAGIC   |ADAPTABILITY      |JUSTIFIED         |NO_GUARD          |[95, 130, 100, 85, 75, 55]    |145.1 |35 |

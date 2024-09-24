@@ -1837,6 +1837,19 @@ public class UI extends AbstractUI {
 		        	}
 					showIVOptions = false;
 				}
+			} else if (currentItem == Item.RUSTY_BOTTLE_CAP) {
+				if (moveOption >= 0) {
+					if (currentPokemon.ivs[moveOption] > 0) {
+						currentPokemon.ivs[moveOption] = 0;
+						currentPokemon.setStats();
+			        	showMessage(currentPokemon + "'s " + Pokemon.getStatType(moveOption) + "IV was set to 0!");
+			        	gp.player.p.bag.remove(currentItem);
+		        		currentItems = gp.player.p.getItems(currentPocket);
+		        	} else {
+		        		showMessage("It won't have any effect.");
+		        	}
+					showIVOptions = false;
+				}
 			}
 		}
 	}

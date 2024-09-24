@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -28,6 +29,7 @@ import pokemon.Field;
 import pokemon.Item;
 import pokemon.Player;
 import pokemon.Pokemon;
+import pokemon.Trainer;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -69,6 +71,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public ItemObj obj[][] = new ItemObj[MAX_MAP][35];
 	public InteractiveTile iTile[][] = new InteractiveTile[MAX_MAP][55];
 	public ArrayList<Entity> particleList = new ArrayList<>();
+	
+	public ArrayList<Entity> renderableNPCs = new ArrayList<>();
 	
 	public NPC_Pokemon[] grusts = new NPC_Pokemon[10];
 	public boolean checkSpin = false;
@@ -182,7 +186,7 @@ public class GamePanel extends JPanel implements Runnable {
 		if (gameState != BATTLE_STATE) {
 			
 			// Draw Tiles
-			tileM.draw(g2);
+			tileM.draw(g2, false);
 			
 			// Draw Items
 			for (int i = 0; i < obj[1].length; i++) {
@@ -199,14 +203,11 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 			
 			// Draw NPCs
-			for (int i = 0; i < npc[1].length; i++) {
-				if (npc[currentMap][i] != null) {
-					npc[currentMap][i].draw(g2);
-				}
+			for (Entity npc : renderableNPCs) {
+				npc.draw(g2);
 			}
 			
-			// Draw Player
-			player.draw(g2);
+			tileM.draw(g2, true);
 			
 			// Draw Particles
 			for (int i = 0; i < particleList.size(); i++) {
@@ -259,7 +260,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void endBattle(int trainer, int id) {
 		if (trainer > -1 && !player.p.wiped() && trainer != 256) player.p.trainersBeat[trainer] = true;
 		
-		if (id >= 0 || trainer == 89) {
+		if (trainer > -1 && Trainer.getTrainer(trainer).update) {
 			if (id == 159) player.p.grustCount++;
 			aSetter.updateNPC(currentMap);
 		}
@@ -443,6 +444,17 @@ public class GamePanel extends JPanel implements Runnable {
 	public void setTaskState() {
 		ui.checkTasks = false;
 		gameState = TASK_STATE;
+	}
+
+	public void setRenderableNPCs() {
+		renderableNPCs.clear();
+		for (int i = 0; i < npc[1].length; i++) {
+			if (npc[currentMap][i] != null) {
+				renderableNPCs.add(npc[currentMap][i]);
+			}
+		}
+		renderableNPCs.add(player);
+		renderableNPCs.sort(Comparator.comparingInt(Entity::getWorldY));
 	}
 
 }

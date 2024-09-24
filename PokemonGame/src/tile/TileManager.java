@@ -1,5 +1,6 @@
 package tile;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.BufferedReader;
@@ -20,6 +21,8 @@ public class TileManager {
 	
 	public static Rectangle[] collisionRectangles;
 	public static String[] mapNames = new String[GamePanel.MAX_MAP];
+	
+	private static final int OVER = -1;
 	
 	private static final int FULL = 0; // default, shouldn't ever be explicitly used
 	private static final int TOP_HALF = 1;
@@ -211,6 +214,9 @@ public class TileManager {
 		loadMap("/maps/space01.txt", 160, true);
 		loadMap("/maps/post.txt", 161, true);
 		loadMap("/maps/lab03.txt", 162, true);
+		loadMap("/maps/school02.txt", 163, true);
+		loadMap("/maps/school03.txt", 164, true);
+		loadMap("/maps/school04.txt", 165, true);
 	}
 	
 	private void setupCollisionRectangles() {
@@ -285,11 +291,11 @@ public class TileManager {
 		setup(59, true);
 		setup(60, false);
 		setup(61, false);
-		setup(62, true, BOTTOM_HALF);
-		setup(63, true, BOTTOM_HALF);
-		setup(64, true, BOTTOM_HALF);
-		setup(65, true, BOTTOM_HALF);
-		setup(66, true, BOTTOM_HALF);
+		setup(62, false, OVER);
+		setup(63, false, OVER);
+		setup(64, false, OVER);
+		setup(65, false, OVER);
+		setup(66, false, OVER);
 		setup(67, true);
 		setup(68, true);
 		setup(69, true);
@@ -369,9 +375,9 @@ public class TileManager {
 		setup(143, true);
 		setup(144, true);
 		setup(145, true);
-		setup(146, true, BOTTOM_HALF);
-		setup(147, true, BOTTOM_HALF);
-		setup(148, true, BOTTOM_HALF);
+		setup(146, false, OVER);
+		setup(147, false, OVER);
+		setup(148, false, OVER);
 		setup(149, true);
 		setup(150, true);
 		setup(151, true);
@@ -433,18 +439,18 @@ public class TileManager {
 		setup(207, false);
 		setup(208, false);
 		
-		setup(209, true, BOTTOM_HALF);
-		setup(210, true, BOTTOM_HALF);
-		setup(211, true, BOTTOM_HALF);
-		setup(212, true, BOTTOM_HALF);
-		setup(213, true);
-		setup(214, true);
-		setup(215, true);
-		setup(216, true);
-		setup(217, true);
-		setup(218, true);
-		setup(219, true);
-		setup(220, true);
+		setup(209, false, OVER);
+		setup(210, false, OVER);
+		setup(211, false, OVER);
+		setup(212, false, OVER);
+		setup(213, false, OVER);
+		setup(214, false, OVER);
+		setup(215, false, OVER);
+		setup(216, false, OVER);
+		setup(217, false, OVER);
+		setup(218, false, OVER);
+		setup(219, false, OVER);
+		setup(220, false, OVER);
 		setup(221, true);
 		setup(222, true);
 		setup(223, true);
@@ -633,11 +639,11 @@ public class TileManager {
 		setup(412, true, TOP_HALF);
 		
 		setup(413, true);
-		setup(414, true, BOTTOM_TWO_THIRDS);
+		setup(414, false, OVER);
 		
-		setup(415, true, BOTTOM_HALF);
-		setup(416, true, BOTTOM_HALF);
-		setup(417, true, BOTTOM_HALF);
+		setup(415, false, OVER);
+		setup(416, false, OVER);
+		setup(417, false, OVER);
 		setup(418, true);
 		setup(419, true);
 		setup(420, true);
@@ -650,9 +656,9 @@ public class TileManager {
 		setup(427, true);
 		setup(428, true);
 		setup(429, true);
-		setup(430, true, BOTTOM_HALF);
-		setup(431, true, BOTTOM_HALF);
-		setup(432, true, BOTTOM_HALF);
+		setup(430, false, OVER);
+		setup(431, false, OVER);
+		setup(432, false, OVER);
 		setup(433, true, TOP_HALF);
 		setup(434, true);
 		setup(435, true);
@@ -832,8 +838,8 @@ public class TileManager {
 		setup(608, true);
 		setup(609, true);
 		setup(610, true);
-		setup(611, true, BOTTOM_HALF);
-		setup(612, true, BOTTOM_HALF);
+		setup(611, false, OVER);
+		setup(612, false, OVER);
 		setup(613, true);
 		setup(614, true);
 		setup(615, true, TOP_HALF);
@@ -846,13 +852,13 @@ public class TileManager {
 		setup(622, true);
 		setup(623, true);
 		setup(624, true);
-		setup(625, true, BOTTOM_HALF);
-		setup(626, true, BOTTOM_HALF);
+		setup(625, false, OVER);
+		setup(626, false, OVER);
 		setup(627, true);
 		setup(628, true);
 		setup(629, false);
 		setup(630, false);
-		setup(631, true, BOTTOM_TWO_THIRDS);
+		setup(631, false, OVER);
 		setup(632, true);
 		setup(633, false);
 		setup(634, false);
@@ -866,9 +872,9 @@ public class TileManager {
 		setup(641, true);
 		setup(642, true);
 		setup(643, false);
-		setup(644, true, BOTTOM_HALF);
-		setup(645, true, BOTTOM_HALF);
-		setup(646, true, BOTTOM_HALF);
+		setup(644, true, BOTTOM_FOURTH);
+		setup(645, true, BOTTOM_FOURTH);
+		setup(646, true, BOTTOM_FOURTH);
 		setup(647, true);
 		setup(648, true);
 		setup(649, true);
@@ -885,7 +891,7 @@ public class TileManager {
 		setup(660, false);
 		setup(661, false);
 		setup(662, false);
-		setup(663, true, BOTTOM_TWO_THIRDS);
+		setup(663, false, OVER);
 		setup(664, true);
 		setup(665, true);
 		setup(666, true);
@@ -921,7 +927,7 @@ public class TileManager {
 		setup(696, true, BOTTOM_LEFT_CORNER);
 		setup(697, true);
 		setup(698, true);
-		setup(699, true);
+		setup(699, false, OVER);
 		setup(700, true);
 		setup(701, true);
 		setup(702, true);
@@ -956,18 +962,18 @@ public class TileManager {
 		setup(731, true);
 		setup(732, true);
 		setup(733, true);
-		setup(734, true, BOTTOM_HALF);
+		setup(734, false, OVER);
 		setup(735, true);
 		setup(736, true);
-		setup(737, true, BOTTOM_HALF);
+		setup(737, false, OVER);
 		setup(738, true);
 		setup(739, true);
 		setup(740, true);
 		setup(741, true);
-		setup(742, true, BOTTOM_HALF);
-		setup(743, true, BOTTOM_HALF);
-		setup(744, true, BOTTOM_HALF);
-		setup(745, true, BOTTOM_HALF);
+		setup(742, false, OVER);
+		setup(743, false, OVER);
+		setup(744, false, OVER);
+		setup(745, false, OVER);
 		setup(746, false);
 		
 		setup(747, true);
@@ -979,16 +985,16 @@ public class TileManager {
 		setup(753, true);
 		setup(754, false);
 		setup(755, true);
-		setup(756, true, BOTTOM_HALF);
+		setup(756, false, OVER);
 		setup(757, true);
 		setup(758, false);
-		setup(759, true, TOP_FOURTH);
-		setup(760, true, TOP_FOURTH);
-		setup(761, true, BOTTOM_HALF);
-		setup(762, true, BOTTOM_HALF);
-		setup(763, true, BOTTOM_HALF);
+		setup(759, false);
+		setup(760, false);
+		setup(761, false, OVER);
+		setup(762, false, OVER);
+		setup(763, false, OVER);
 		setup(764, true);
-		setup(765, true, BOTTOM_TWO_THIRDS);
+		setup(765, false, OVER);
 		setup(766, false);
 		setup(767, false);
 		setup(768, false);
@@ -997,14 +1003,14 @@ public class TileManager {
 		setup(770, true);
 		setup(771, true);
 		setup(772, true);
-		setup(773, true);
-		setup(774, true);
-		setup(775, true, RIGHT_FOURTH);
-		setup(776, true);
-		setup(777, false);
-		setup(778, true, LEFT_HALF);
-		setup(779, true);
-		setup(780, true, RIGHT_HALF);
+		setup(773, false, OVER);
+		setup(774, false, OVER);
+		setup(775, false, OVER);
+		setup(776, false, OVER);
+		setup(777, false, OVER);
+		setup(778, false, OVER);
+		setup(779, false, OVER);
+		setup(780, false, OVER);
 		setup(781, true, LEFT_TWO_THIRDS);
 		setup(782, true, TOP_TWO_THIRDS);
 		setup(783, true, RIGHT_TWO_THIRDS);
@@ -1054,7 +1060,7 @@ public class TileManager {
 		setup(826, false);
 		setup(827, true);
 		setup(828, false);
-//		setup(829, true);
+		setup(829, false);
 //		setup(830, true);
 //		setup(831, true);
 //		setup(832, true);
@@ -1321,6 +1327,11 @@ public class TileManager {
 			if (collision) {
 				tile[index].collisionDirection = "all";
 				tile[index].collisionArea = collisionRectangles[collisionType];
+			} else {
+				if (collisionType == OVER) {
+					tile[index].drawAbove = true;
+					tile[index].mask = ImageIO.read(getClass().getResourceAsStream("/masks/" + imageName + ".png"));
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -1362,7 +1373,7 @@ public class TileManager {
 		this.canFly[map] = canFly;
 	}
 	
-	public void draw(Graphics2D g2) {
+	public void draw(Graphics2D g2, boolean drawAbove) {
 		int worldCol = 0;
 		int worldRow = 0;
 		
@@ -1379,7 +1390,27 @@ public class TileManager {
 					worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
 					worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
 					worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
-				g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+				
+				if (tile[tileNum].mask == null) {
+					if (tile[tileNum].drawAbove == drawAbove) {
+						g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+					}
+				} else {
+					for (int y = 0; y < tile[tileNum].image.getHeight(); y++) {
+						for (int x = 0; x < tile[tileNum].image.getWidth(); x++) {
+							int maskPixel = tile[tileNum].mask.getRGB(x, y);
+							int imagePixel = tile[tileNum].image.getRGB(x, y);
+							
+							if (drawAbove && maskPixel == Color.white.getRGB()) {
+								g2.setColor(new Color(imagePixel));
+								g2.fillRect(screenX + (x * gp.scale), screenY + (y * gp.scale), gp.scale, gp.scale);
+							} else if (!drawAbove && maskPixel == Color.black.getRGB()) {
+								g2.setColor(new Color(imagePixel));
+								g2.fillRect(screenX + (x * gp.scale), screenY + (y * gp.scale), gp.scale, gp.scale);
+							}
+						}
+					}
+				}
 			}
 			
 			worldCol++;

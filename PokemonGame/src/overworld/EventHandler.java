@@ -121,10 +121,6 @@ public class EventHandler {
 			if (hit(13,48,57)) teleport(17, 53, 56,false);
 			if (hit(17,53,57)) teleport(13, 48, 58,false);
 			
-			if (hit(17,52,46)) gp.aSetter.updateNPC(17);
-			if (hit(17,53,46)) gp.aSetter.updateNPC(17);
-			if (hit(17,54,46)) gp.aSetter.updateNPC(17);
-			
 			if (hit(17,48,53)) teleport(18, 54, 51,false);
 			if (hit(18,55,51)) teleport(17, 49, 53,false);
 			if (hit(17,58,53)) teleport(18, 42, 51,false);
@@ -252,8 +248,8 @@ public class EventHandler {
 			if (hit(40,26,38)) teleport(45, 35, 38,false);
 			
 			// Schrice School
-			if (hit(38,28,55)) teleport(41, 31, 45,false);
-			if (hit(41,31,46)) teleport(38, 28, 56,false);
+			if (hit(38,28,55)) teleport(41, 31, 46,false);
+			if (hit(41,31,47)) teleport(38, 28, 56,false);
 			
 			// Radio Tower
 			if (hit(38,62,57)) teleport(42, 31, 45,false);
@@ -793,7 +789,7 @@ public class EventHandler {
 			if (hit(149,39,65)) gp.iTile[149][2] = null;
 			if (hit(149,51,63) && gp.player.p.flags[34]) gp.iTile[149][3] = null; // beat rick, unlock fred gate
 			if (hit(149,54,62) && gp.player.p.flags[27]) gp.iTile[149][4] = null; // beat fred, unlock maxwell gate
-			if (hit(149,49,59)) gp.aSetter.updateNPC(149); // clear all tn members
+			if (hit(149,49,59)) gp.aSetter.updateNPC(149); // clear all tn members TODO: replace with maxwell updating npc to make him a block, and after having a long convo with him it'll have update task
 			
 			// Rawwar City -> Route 39 gate
 			if (hit(124,32,92)) teleport(151, 31, 34,false);

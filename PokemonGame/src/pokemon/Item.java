@@ -58,8 +58,9 @@ public enum Item {
 	MAX_ELIXIR(41,250,200,new Color(246, 255, 120),Item.MEDICINE,null,"Restores PP of all moves on a Pokemon"),
 	PP_UP(42,2500,1000,new Color(150, 51, 156),Item.MEDICINE,null,"Increases max PP of a selected move by 20%"),
 	PP_MAX(43,0,1500,new Color(142, 230, 21),Item.MEDICINE,null,"Increases max PP of a selected move by its max PP, which is 160%"),
-	BOTTLE_CAP(27,1000,500,new Color(192, 192, 192),Item.OTHER,null,"Maxes out an IV of choosing"),
-	GOLD_BOTTLE_CAP(28,0,1000,new Color(255, 215, 0),Item.OTHER,null,"Maxes out all IVs of a Pokemon"),
+	RUSTY_BOTTLE_CAP(282,300,150,Color.BLACK,Item.OTHER,null,"Lowers an IV of choosing to 0."),
+	BOTTLE_CAP(27,1000,500,new Color(192, 192, 192),Item.OTHER,null,"Maxes out an IV of choosing."),
+	GOLD_BOTTLE_CAP(28,0,1000,new Color(255, 215, 0),Item.OTHER,null,"Maxes out all IVs of a Pokemon."),
 	EUPHORIAN_GEM(19,500,250,new Color(138, 237, 255),Item.OTHER,null,"Grants a Pokemon 100 friendship points"),
 	LEAF_STONE(20,1000,500,new Color(0, 120, 20),Item.OTHER,null,"Evolves a certain species of Pokemon"),
 	DUSK_STONE(21,1000,500,new Color(64, 64, 64),Item.OTHER,null,"Evolves a certain species of Pokemon"),
@@ -310,6 +311,13 @@ public enum Item {
 	GROUND_KEY(272,0,0,Color.BLACK,Item.KEY_ITEM,null,"A key that unlocks Ground Master's Classroom."),
 	SHOVEL(273,0,0,Color.BLACK,Item.KEY_ITEM,null,"A handy tool that can shovel snowballs to clear them."),
 	ICE_PICK(274,0,0,Color.BLACK,Item.KEY_ITEM,null,"A cold metal pickaxe used for breaking blocks of ice."),
+	SPELON_BERRY(275,40,10,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Attack is lowered, that stat will be restored."),
+	BELUE_BERRY(276,50,10,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Defense is lowered, that stat will be restored."),
+	PAMTRE_BERRY(277,60,15,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Sp. Atk is lowered, that stat will be restored."),
+	DURIN_BERRY(278,50,10,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Sp. Def is lowered, that stat will be restored."),
+	WATMEL_BERRY(279,40,10,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Speed is lowered, that stat will be restored."),
+	WEPEAR_BERRY(280,60,15,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Accuracy is lowered, that stat will be restored."),
+	BLUK_BERRY(281,30,5,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Evasion is lowered, that stat will be restored."),
 	;
 	
 	private int id;
