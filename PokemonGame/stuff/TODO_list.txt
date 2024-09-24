@@ -38,8 +38,3 @@ Add Klara and Fred's house to Sicab City
 
 Fix Illusion working in calc (have it say true outside of battling actively)
 Fix Trainer collision when interacting (can force 1v1s in back to backs if trainers are adjacent to the wall)
-Fix Trainer collision above to be 15x15 or 16x16 (depending on above solution) and draw below trainers "above" (z axis) the player so the player can
-walk "behind" the trainer
-Change tile engine to have "below" and "above" tiles that some tiles render above the player (z axis)
-Fix wild pokemon encounters and other task adding because even though you implicitly set the task state, the thread checks if the tasks are empty and will set it back to
-play state "randomly"

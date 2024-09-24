@@ -10,6 +10,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.AbstractButton;
@@ -74,6 +76,7 @@ public class Player extends Trainer implements Serializable {
 	public int grustCount;
 	public int scottItem;
 	public Item[] resistBerries;
+	public Item[] statBerries;
 	public int secondStarter;
 	public Item choiceChoice;
 	public int coins;
@@ -84,7 +87,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 36;
+	public static final int VERSION = 37;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -933,11 +936,18 @@ public class Player extends Trainer implements Serializable {
 				break;
 				
 			// Bottle Caps
+			case RUSTY_BOTTLE_CAP:
 			case BOTTLE_CAP:
 			case GOLD_BOTTLE_CAP:
 				if (item == Item.BOTTLE_CAP) {
 	        		gp.ui.currentPokemon = p;
 	        		gp.ui.currentHeader = "Which IV to max out?";
+	        		gp.ui.moveOption = -1;
+	        		gp.ui.showIVOptions = true;
+	        		return;
+	        	} else if (item == Item.RUSTY_BOTTLE_CAP) {
+	        		gp.ui.currentPokemon = p;
+	        		gp.ui.currentHeader = "Which IV to set to 0?";
 	        		gp.ui.moveOption = -1;
 	        		gp.ui.showIVOptions = true;
 	        		return;
@@ -1152,9 +1162,10 @@ public class Player extends Trainer implements Serializable {
 		}
 		while (starter >= 3) starter--;
 		updateBoxes();
+		updateBerries();
 		version = VERSION;
 	}
-	
+
 	private void updateBag() {
 		Item[] items = Item.values();
 		if (bag.itemList != null && items.length == bag.itemList.length) return;
@@ -1371,5 +1382,34 @@ public class Player extends Trainer implements Serializable {
 		for (int i = 0; i < 6; i++) {
 			if (team[i] != null) team[i].slot = i;
 		}
+	}
+	
+	private void updateBerries() {
+		if (statBerries == null) setupStatBerries();
+		if (resistBerries == null) setupResistBerries();
+	}
+
+	public void setupStatBerries() {
+		statBerries = new Item[7];
+        int count = 0;
+		for (int i = 275; i < 282; i++) {
+			 statBerries[count] = Item.getItem(i);
+			count++;
+		}
+        List<Item> berryList = Arrays.asList(statBerries);
+        Collections.shuffle(berryList);
+        statBerries = berryList.toArray(new Item[1]);
+	}
+	
+	public void setupResistBerries() {
+		resistBerries = new Item[20];
+        int count = 0;
+		for (int i = 275; i < 282; i++) {
+			 resistBerries[count] = Item.getItem(i);
+			count++;
+		}
+        List<Item> berryList = Arrays.asList(resistBerries);
+        Collections.shuffle(berryList);
+        resistBerries = berryList.toArray(new Item[1]);
 	}
 }

@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,10 +94,10 @@ public class PlayerCharacter extends Entity {
 	public void getPlayerImage() {
 		setupPlayerImages(false);
 		
-		surf1 = setup("/player/surf1", false);
-		surf2 = setup("/player/surf2", false);
-		surf3 = setup("/player/surf3", false);
-		surf4 = setup("/player/surf4", false);
+		surf1 = setup("/player/surf1");
+		surf2 = setup("/player/surf2");
+		surf3 = setup("/player/surf3");
+		surf4 = setup("/player/surf4");
 	}
 	
 	public void update() {
@@ -125,9 +126,11 @@ public class PlayerCharacter extends Entity {
 				switch(direction) {
 				case "up":
 					worldY -= speed;
+					gp.renderableNPCs.sort(Comparator.comparingInt(Entity::getWorldY));
 					break;
 				case "down":
 					worldY += speed;
+					gp.renderableNPCs.sort(Comparator.comparingInt(Entity::getWorldY));
 					break;
 				case "left":
 					worldX -= speed;
@@ -597,7 +600,7 @@ public class PlayerCharacter extends Entity {
 				t.item = Item.CALCULATOR;
 				Pokemon.addTask(Task.TEXT, "Now go out there and make me proud - and most importantly...");
 				Pokemon.addTask(Task.TEXT, "COLLECT THAT DATA!");
-				gp.aSetter.updateNPC(gp.currentMap);
+				Pokemon.addTask(Task.UPDATE, "");
 			} else if (p.flag[0][1] && !p.flag[0][4]) {
 				gp.ui.showMessage("There are two Pokemon still inside the machine. Wonder what Dad will do with them?");
 			} else if (p.flag[0][4] && p.badges < 1) {
@@ -1566,6 +1569,31 @@ public class PlayerCharacter extends Entity {
 			}
 		} else if (gp.currentMap == 13) {
 			gp.ui.showMessage("...the electric door doesn't budge.");
+		} else if (gp.currentMap == 41) { // Schrice City School
+			if (worldX / gp.tileSize < 31) { // Ice Master
+				if (!p.bag.contains(Item.ICE_KEY)) {
+					gp.ui.showMessage("The door is locked!");
+				} else {
+					gp.keyH.wPressed = false;
+					gp.ui.showMessage("Used Ice Master's Key!\nThe door unlocked!");
+					generateParticle(gp.iTile[gp.currentMap][i]);
+					gp.iTile[gp.currentMap][i] = null;
+					p.flag[3][3] = true;
+					p.bag.remove(Item.ICE_KEY);
+				}
+			} else { // Ground Master
+				if (!p.bag.contains(Item.GROUND_KEY)) {
+					gp.ui.showMessage("The door is locked!");
+				} else {
+					gp.keyH.wPressed = false;
+					gp.ui.showMessage("Used Ground Master's Key!\nThe door unlocked!");
+					generateParticle(gp.iTile[gp.currentMap][i]);
+					gp.iTile[gp.currentMap][i] = null;
+					p.flag[3][4] = true;
+					p.bag.remove(Item.GROUND_KEY);
+				}
+			}
+			
 		}
 	}
 	
@@ -1879,39 +1907,39 @@ public class PlayerCharacter extends Entity {
 
 	public void setupPlayerImages(boolean visor) {
 		if (visor) {
-			up1 = setup("/player/redV2", false);
-			up2 = setup("/player/redV2_1", false);
-			up3 = setup("/player/redV2_2", false);
-			up4 = setup("/player/redV2_3", false);
-			down1 = setup("/player/redV1", false);
-			down2 = setup("/player/redV1_1", false);
-			down3 = setup("/player/redV1_2", false);
-			down4 = setup("/player/redV1_3", false);
-			left1 = setup("/player/redV3", false);
-			left2 = setup("/player/redV3_1", false);
-			left3 = setup("/player/redV3_2", false);
-			left4 = setup("/player/redV3_3", false);
-			right1 = setup("/player/redV4", false);
-			right2 = setup("/player/redV4_1", false);
-			right3 = setup("/player/redV4_2", false);
-			right4 = setup("/player/redV4_3", false);
+			up1 = setup("/player/redV2");
+			up2 = setup("/player/redV2_1");
+			up3 = setup("/player/redV2_2");
+			up4 = setup("/player/redV2_3");
+			down1 = setup("/player/redV1");
+			down2 = setup("/player/redV1_1");
+			down3 = setup("/player/redV1_2");
+			down4 = setup("/player/redV1_3");
+			left1 = setup("/player/redV3");
+			left2 = setup("/player/redV3_1");
+			left3 = setup("/player/redV3_2");
+			left4 = setup("/player/redV3_3");
+			right1 = setup("/player/redV4");
+			right2 = setup("/player/redV4_1");
+			right3 = setup("/player/redV4_2");
+			right4 = setup("/player/redV4_3");
 		} else {
-			up1 = setup("/player/red2", false);
-			up2 = setup("/player/red2_1", false);
-			up3 = setup("/player/red2_2", false);
-			up4 = setup("/player/red2_3", false);
-			down1 = setup("/player/red1", false);
-			down2 = setup("/player/red1_1", false);
-			down3 = setup("/player/red1_2", false);
-			down4 = setup("/player/red1_3", false);
-			left1 = setup("/player/red3", false);
-			left2 = setup("/player/red3_1", false);
-			left3 = setup("/player/red3_2", false);
-			left4 = setup("/player/red3_3", false);
-			right1 = setup("/player/red4", false);
-			right2 = setup("/player/red4_1", false);
-			right3 = setup("/player/red4_2", false);
-			right4 = setup("/player/red4_3", false);
+			up1 = setup("/player/red2");
+			up2 = setup("/player/red2_1");
+			up3 = setup("/player/red2_2");
+			up4 = setup("/player/red2_3");
+			down1 = setup("/player/red1");
+			down2 = setup("/player/red1_1");
+			down3 = setup("/player/red1_2");
+			down4 = setup("/player/red1_3");
+			left1 = setup("/player/red3");
+			left2 = setup("/player/red3_1");
+			left3 = setup("/player/red3_2");
+			left4 = setup("/player/red3_3");
+			right1 = setup("/player/red4");
+			right2 = setup("/player/red4_1");
+			right3 = setup("/player/red4_2");
+			right4 = setup("/player/red4_3");
 		}
 	}
 }

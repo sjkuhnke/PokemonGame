@@ -62,23 +62,12 @@ public class Entity {
 	}
 	
 	public BufferedImage setup(String imageName) {
-		return setup(imageName, true);
-	}
-	
-	public BufferedImage setup(String imageName, boolean setHitbox) {
 		BufferedImage image = null;
 		
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
-		if (setHitbox) {
-			height = image.getHeight() * gp.scale;
-			int offset = height - gp.tileSize;
-			
-			solidArea = new Rectangle(0, 0 - offset, 48, height);
 		}
 		
 		return image;
@@ -259,5 +248,9 @@ public class Entity {
 		}
 		this.name = words[words.length - 1];
 		return;
+	}
+	
+	public int getWorldY() {
+		return worldY;
 	}
 }

@@ -1201,11 +1201,6 @@ public class BattleUI extends AbstractUI {
 		            }
 					if (foe.trainer.getFlagIndex() != 0) {						
 		            	user.getPlayer().flag[foe.trainer.getFlagX()][foe.trainer.getFlagY()] = true;
-//		            	if (flag == 6) { TODO replace with flags and items in 4th gym split
-//		            		message += "\nObtained A Key!";
-//		            	} else if (flag == 7) {
-//		            		message += "\nObtained B Key!";
-//		            	}
 		            }
 					Pokemon.addTask(Task.END, message);
 		            if (foe.trainer.getMoney() == 500 && user.getPlayer().badges < 8) {
