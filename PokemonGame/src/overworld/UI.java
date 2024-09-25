@@ -378,11 +378,15 @@ public class UI extends AbstractUI {
 		case Task.START_BATTLE:
 			startBattle();
 			break;
-		case Task.DIALOGUE:
+		case Task.DIALOGUE: // for the npc speaking
+			if (currentTask.e.name == null) {
+				currentTask.type = Task.TEXT;
+				return;
+			}
 			showMessage(Item.breakString(currentTask.message, 42));
 			drawNameLabel(above);
 			break;
-		case Task.SPEAK:
+		case Task.SPEAK: // for the player speaking
 			showMessage(Item.breakString(currentTask.message, 42));
 			above = false;
 			drawNameLabel(above);
@@ -449,8 +453,15 @@ public class UI extends AbstractUI {
 			x = 0;
 			y = gp.screenHeight - (gp.tileSize*4);
 		}
-		width = gp.screenWidth - (gp.tileSize*4);
-		height = gp.tileSize * 4;
+		width = gp.tileSize*4;
+		height = (int) (gp.tileSize * 1.5);
+		
+		String name = currentTask.e.getName();
+		
+		drawSubWindow(x, y, width, height);
+		y += gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.drawString(name, getCenterAlignedTextX(name, x + width / 2), y);
 	}
 
 	private void drawLightDistortion(float alpha) {
@@ -1738,10 +1749,10 @@ public class UI extends AbstractUI {
 	}
 
 	private void taskState() {
-		if (checkTasks && currentTask == null) {
+		if (currentTask == null) {
 			if (tasks.size() > 0) {
 				currentTask = tasks.remove(0);
-			} else {
+			} else if (checkTasks) {
 				gp.gameState = GamePanel.PLAY_STATE;
 				return;
 			}

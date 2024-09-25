@@ -2,11 +2,13 @@ package overworld;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import entity.*;
 import object.*;
 import pokemon.Item;
+import pokemon.Trainer;
 
 public class AssetSetter {
 
@@ -18,6 +20,7 @@ public class AssetSetter {
 	private int sBerryIndex;
 	
 	public ArrayList<Entity> clerks = new ArrayList<>();
+	public HashMap<Item, Integer> itemMap = new HashMap<>();
 	
 	private static final int CHEF = -25;
 	private static final int UP_PHEROMOSA = -24;
@@ -228,6 +231,20 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = StatBerrySetup(51, 27, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = StatBerrySetup(52, 11, mapNum, 5, 10);
 		
+		gp.obj[mapNum][objIndex] = ObjSetup(34, 13, Item.POKEBALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(64, 9, Item.ORAN_BERRY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(30, 38, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 19, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(38, 31, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(72, 14, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 40, Item.PECHA_BERRY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(30, 11, Item.ORAN_BERRY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(49, 32, Item.ORAN_BERRY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 20, Item.CHERI_BERRY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 24, Item.CHESTO_BERRY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(70, 22, Item.WATER_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(71, 9, Item.RUSTY_BOTTLE_CAP, mapNum);
+		
 		mapNum = 4;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(86, 56, Item.TM31, mapNum); // false swipe
@@ -330,6 +347,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(58, 28, Item.SUPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 8, Item.ULTRA_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(80, 8, Item.FULL_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = StatBerrySetup(70, 35, mapNum, 5, 10);
 		
 		mapNum = 14;
 		objIndex = 0;
@@ -363,6 +381,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 45, Item.TM61, mapNum); // smack down
 		gp.obj[mapNum][objIndex] = ObjSetup(53, 36, Item.MAX_ELIXIR, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(59, 41, Item.HYPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 53, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 56, Item.REPEL, mapNum);
 		
 		mapNum = 18;
 		objIndex = 0;
@@ -405,6 +425,7 @@ public class AssetSetter {
 		mapNum = 27;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(65, 68, Item.ENCHANTED_AMULET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 70, Item.RUSTY_BOTTLE_CAP, mapNum);
 		
 		mapNum = 28;
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(18, 46, mapNum, 5, 15);
@@ -416,11 +437,13 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(85, 19, Item.THROAT_SPRAY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 37, Item.DAWN_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(95, 27, Item.GREAT_BALL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(75, 29, Item.AWAKENING, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(75, 29, Item.RUSTY_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(70, 23, Item.HYPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(28, 29, Item.PP_UP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(47, 48, Item.BIG_ROOT, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 24, Item.ABILITY_CAPSULE, mapNum);
+		gp.obj[mapNum][objIndex] = StatBerrySetup(42, 26, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = StatBerrySetup(79, 19, mapNum, 5, 10);
 		
 		mapNum = 33;
 		objIndex = 0;
@@ -851,6 +874,7 @@ public class AssetSetter {
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 23, Item.LIECHI_BERRY, mapNum, 2, 5);
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 29, Item.PETAYA_BERRY, mapNum, 2, 5);
+		gp.obj[mapNum][objIndex] = ObjSetup(11, 15, Item.RUSTY_BOTTLE_CAP, mapNum, 2, 5);
 		
 		mapNum = 146;
 		objIndex = 0;
@@ -897,6 +921,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 60, 44, "The Pokemon here are going feral over these berry trees. Come back later!", 15);
 		
 		gp.npc[mapNum][index] = NPCSetup(ACTRESS_UP, 68, 63, "Woah, don't interrupt my improv sesh back here!", "Maybe my Bluebunn isn't as good of an actress as me.", 266);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 34, 35, "I'm always in top shape. Can you say the same?", "Not bad... but this athlete never stays down for long.", 390);
+		gp.npc[mapNum][index] = NPCSetup(EXPLORER_DOWN, 42, 30, "Hope you're not afraid of the cold - this battle's about to freeze you out!", "You're tougher than the frostbite I've faced... I respect that.", 389);
 		
 		index = 0;
 		
@@ -921,7 +947,7 @@ public class AssetSetter {
 		mapNum = 4;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 81, 62, "Sorry, but the gym leader has been busy with mail these past few weeks, so gym battles are unavailable. You may check the post office for more details.");
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, "Grunt", 66, 80, "Yo, scram kid! This is some top secret space operation that you don't got the clearance to see! Move it!", true);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, "Grunt", 66, 80, "Yo, scram kid! This is some top secret space operation that you don't got the clearance to see!", true);
 		
 		gp.npc[mapNum][index] = NPCSetup(ACTOR_UP, 32, 62, "Lights, camera, battle! I'll be the star of this scene!", "That wasn't in the script... but I'll take the loss.", 18);
 		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_UP, 23, 65, "Get ready to be swarmed!", "You're tougher than a Caterpie. I'll give you that.", 19);
@@ -1059,12 +1085,12 @@ public class AssetSetter {
 		
 		mapNum = 17;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 51, 44, "Its' will is absolute. You'll comply or face defeat.", "Temporary setback. It will not be deterred.", 49);
-		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 55, 44, "You won't be the first to try and fail. Prepare yourself.", "You may have won, but you're too late to stop us.", 50);
-		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 51, 41, "Resistance is pointless. Team Eclipse is unstoppable.", "Defeated... but the mission goes on. You've gained nothing.", 51);
-		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 55, 41, "You think you're a hero? Let's see how long that lasts.", "This isn't the end. Team Eclipse always has a backup plan.", 52);
-		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 51, 38, "Unauthorized entry detected. Initiating combat sequence.", "You got lucky this time. Next time, you won't stand a chance.", 53);
-		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 55, 38, "Our goals are beyond your understanding. Defeating me changes nothing.", "Consider this a minor setback. We'll be back stronger.", 54);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 51, 45, "Its' will is absolute. You'll comply or face defeat.", "Temporary setback. It will not be deterred.", 49);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 55, 45, "You won't be the first to try and fail. Prepare yourself.", "You may have won, but you're too late to stop us.", 50);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 51, 42, "Resistance is pointless. Team Eclipse is unstoppable.", "Defeated... but the mission goes on. You've gained nothing.", 51);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 55, 42, "You think you're a hero? Let's see how long that lasts.", "This isn't the end. Team Eclipse always has a backup plan.", 52);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 51, 39, "Unauthorized entry detected. Initiating combat sequence.", "You got lucky this time. Next time, you won't stand a chance.", 53);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 55, 39, "Our goals are beyond your understanding. Defeating me changes nothing.", "Consider this a minor setback. We'll be back stronger.", 54);
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_RIGHT, null, 49, 53, "Quick! Team Nuke is taking over our office! Please help!", 42);
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_LEFT, null, 57, 53, "Quick! Team Nuke is taking over our office! Please help!", 42);
 		
@@ -1777,6 +1803,13 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(60, 53, 0, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(82, 59, 0, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(33, 72, 1, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = ITileSetup(71, 10, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 27, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 16, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 17, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 18, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 19, 4, mapNum, map);
 		
 		mapNum = 4;
 		iIndex = 0;
@@ -3156,6 +3189,8 @@ public class AssetSetter {
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;
 		
+		result.altDialogue = alt;
+		
 		index++;
 		
 		return result;
@@ -3297,6 +3332,8 @@ public class AssetSetter {
 		result.count = amt;
 		
 		objIndex++;
+		
+		itemMap.put(item, itemMap.getOrDefault(item, 0) + 1);
 		
 		return result;
 	}

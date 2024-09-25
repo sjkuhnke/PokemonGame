@@ -1019,23 +1019,17 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 129 && level >= 20) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 132 && area == 77) {
-			result = new Pokemon(id + 1, this);
 		} else if (id == 134 && happiness >= 160) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 135 && level >= 30) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 137 && level >= 20) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 139 && area == 77) {
-			result = new Pokemon(id + 1, this);
 		} else if (id == 143 && happiness >= 250) { // ?? maybe stone???? idfk
 			result = new Pokemon(id + 1, this);
 		} else if (id == 144 && area == 77) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 146 && level >= 39) {
-			result = new Pokemon(id + 1, this);
-		} else if (id == 148 && area == 77) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 151 && level >= 22) {
 			result = new Pokemon(id + 1, this);
@@ -1157,6 +1151,10 @@ public class Pokemon implements Serializable {
             result = new Pokemon(id + 1, this);
 		} else if (id == 276 && level >= 33) {
             result = new Pokemon(id + 1, this);
+		} else if (id == 279 && level >= 50) {
+            result = new Pokemon(id + 1, this);
+		} else if (id == 282 && level >= 50) {
+            result = new Pokemon(id + 1, this);
 		} else if (id == 292 && happiness >= 160) {
             result = new Pokemon(id + 1, this);
 		} else if (id == 293 && level >= 18) {
@@ -1259,6 +1257,24 @@ public class Pokemon implements Serializable {
 	
 	public int[] getBaseStats() {
 		return base_stats[id - 1];
+	}
+	
+	public void moveInit(Pokemon foe, Move move, boolean first) {
+		int[] userStages = this.statStages.clone();
+		int[] foeStages = foe.statStages.clone();
+		
+		move(foe, move, first);
+		
+		Pokemon faster = first ? this : foe;
+		Pokemon slower = faster == this ? foe : this;
+		
+		if (faster.item == Item.WHITE_HERB) {
+			faster.handleWhiteHerb(userStages, slower);
+		}
+		
+		if (slower.item == Item.WHITE_HERB) {
+			slower.handleWhiteHerb(foeStages, faster);
+		}
 	}
 
 	
@@ -2494,6 +2510,26 @@ public class Pokemon implements Serializable {
 		if (this.item == Item.MYSTICOLA_BERRY && type == PType.MAGIC) return true;
 		if (this.item == Item.GALAXEED_BERRY && type == PType.GALACTIC) return true;
 		return false;
+	}
+	
+	private void handleWhiteHerb(int[] oldStages, Pokemon foe) {
+		if (oldStages == null) return;
+		int[] restore = new int[statStages.length];
+		boolean herb = false;
+		for (int i = 0; i < statStages.length; i++) {
+			int change = Math.max(oldStages[i] - statStages[i], 0);
+			if (change > 0) herb = true;
+			restore[i] = change;
+		}
+		
+		if (herb) {
+			for (int i = 0; i < restore.length; i++) {
+				statStages[i] += restore[i];
+			}
+			
+			addTask(Task.TEXT, this.nickname + " returned its stats to normal using its White Herb!");
+			this.consumeItem(foe);
+		}
 	}
 
 	public void awardxp(int amt) {
@@ -4049,27 +4085,44 @@ public class Pokemon implements Serializable {
 				return;
 			}
 		}
-		if (foe.ability == Ability.EMPATHIC_LINK && a > 0) {
-			if (announce) addAbilityTask(foe);
-			foe.stat(foe, 2, 1, this);
-		}
+		boolean statBerry = p.checkStatBerry(i, a);
+		int difference = statBerry ? Math.max(-6 - p.statStages[i], a) : 0;
+		
 		if (p.statStages[i] >= 6 && a > 0) {
 			if (announce) addTask(Task.TEXT, p.nickname + "'s " + type + " won't go any higher!");
 		} else if (p.statStages[i] <= -6 && a < 0) {
 			if (a != 12 && announce) addTask(Task.TEXT, p.nickname + "'s " + type + " won't go any lower!");
 		} else {
 			if (announce) addTask(Task.TEXT, p.nickname + "'s " + type + amount + "!");
-			if (p.item == Item.WHITE_HERB && p.statStages[i] > -6 && a < 0) {
-				if (announce) addTask(Task.TEXT, p.nickname + " returned its stats to normal using its White Herb!");
-			}
+		}
+		if (foe.ability == Ability.EMPATHIC_LINK && a > 0) {
+			if (announce) addAbilityTask(foe);
+			foe.stat(foe, 2, 1, this);
 		}
 		p.statStages[i] += a;
 		p.statStages[i] = p.statStages[i] < -6 ? -6 : p.statStages[i];
 		p.statStages[i] = p.statStages[i] > 6 ? 6 : p.statStages[i];
-		if (p.item == Item.WHITE_HERB && p.statStages[i] > -6 && a < 0) {
-			p.statStages[i] -= a;
+		if (statBerry) {
+			addTask(Task.TEXT, p.nickname + " ate its " + p.item + " to restore its " + type + "!");
+			p.stat(p, i, Math.abs(difference), foe, true);
 			p.consumeItem(foe);
 		}
+	}
+
+	private boolean checkStatBerry(int stat, int amt) {
+		if (amt >= 0) return false;
+		if (this.item == null) return false;
+		if (!this.item.isStatBerry()) return false;
+		if (this.statStages[stat] <= -6) return false;
+		
+		if (this.item == Item.SPELON_BERRY && stat == 0) return true;
+		if (this.item == Item.BELUE_BERRY && stat == 1) return true;
+		if (this.item == Item.PAMTRE_BERRY && stat == 2) return true;
+		if (this.item == Item.DURIN_BERRY && stat == 3) return true;
+		if (this.item == Item.WATMEL_BERRY && stat == 4) return true;
+		if (this.item == Item.WEPEAR_BERRY && stat == 5) return true;
+		if (this.item == Item.BLUK_BERRY && stat == 6) return true;
+		return false;
 	}
 
 	public double asModifier(int index) {
@@ -4086,53 +4139,17 @@ public class Pokemon implements Serializable {
         return numerator / denominator;
 	}
 	
-	public double asAccModifier(int value) {
-		double modifier = 1;
-		switch(value) {
-		case -6:
-			modifier = 3.0/9.0;
-			break;
-		case -5:
-			modifier = 3.0/8.0;
-			break;
-		case -4:
-			modifier = 3.0/7.0;
-			break;
-		case -3:
-			modifier = 3.0/6.0;
-			break;
-		case -2:
-			modifier = 3.0/5.0;
-			break;
-		case -1:
-			modifier = 3.0/4.0;
-			break;
-		case 0:
-			modifier = 3.0/3.0;
-			break;
-		case 1:
-			modifier = 4.0/3.0;
-			break;
-		case 2:
-			modifier = 5.0/3.0;
-			break;
-		case 3:
-			modifier = 6.0/3.0;
-			break;
-		case 4:
-			modifier = 7.0/3.0;
-			break;
-		case 5:
-			modifier = 8.0/3.0;
-			break;
-		case 6:
-			modifier = 9.0/3.0;
-			break;
-		default:
-			modifier = 1;
-			break;
-		}
-		return modifier;
+	public double asAccModifier(int accEv) {
+		double numerator = 3.0;
+        double denominator = 3.0;
+
+        if (accEv < 0) {
+            denominator -= accEv;
+        } else if (accEv > 0) {
+            numerator += accEv;
+        }
+        
+        return numerator / denominator;
 	}
 
 	public boolean getImmune(Pokemon p, PType type) {
@@ -5167,6 +5184,8 @@ public class Pokemon implements Serializable {
 	public void endOfTurn(Pokemon f) {
 		if (this.isFainted()) return;
 		
+		int[] userStages = this.statStages.clone();
+		
 		if (this.ability == Ability.SHED_SKIN && this.status != Status.HEALTHY) {
 			int r = (int)(Math.random() * 3);
 			if (r == 0) {
@@ -5438,6 +5457,10 @@ public class Pokemon implements Serializable {
 		
 		if ((this.status != Status.HEALTHY || this.vStatuses.contains(Status.CONFUSED)) && this.item != null && this.item.isStatusBerry()) {
 			eatBerry(this.item, true, f);
+		}
+		
+		if (this.item == Item.WHITE_HERB) {
+			this.handleWhiteHerb(userStages, f);
 		}
 		
 		this.vStatuses.remove(Status.FLINCHED);
@@ -6446,6 +6469,9 @@ public class Pokemon implements Serializable {
 	}
 
 	public void swapIn(Pokemon foe, boolean hazards) {
+		int[] userStages = this.statStages.clone();
+		int[] foeStages = foe.statStages.clone();
+		
 		if (this.ability == Ability.DROUGHT && !field.equals(field.weather, Effect.SUN)) {
 			addAbilityTask(this);
 			field.setWeather(field.new FieldEffect(Effect.SUN));
@@ -6612,6 +6638,18 @@ public class Pokemon implements Serializable {
 				this.faint(true, foe);
 			}
 		}
+		
+		Pokemon faster = this.getFaster(foe, 0, 0);
+		Pokemon slower = faster == this ? this : foe;
+		
+		if (faster.item == Item.WHITE_HERB) {
+			faster.handleWhiteHerb(userStages, slower);
+		}
+		
+		if (slower.item == Item.WHITE_HERB) {
+			slower.handleWhiteHerb(foeStages, faster);
+		}
+		
 		if (gp.player.p.pokedex[this.id] < 1) gp.player.p.pokedex[this.id] = 1;
 		
 	}
@@ -6902,6 +6940,8 @@ public class Pokemon implements Serializable {
 		} else if (item == Item.PETTICOAT_GEM) {
 			return id + 2;
 		} else if (item == Item.FIRE_STONE) {
+			return id + 1;
+		} else if (item == Item.WATER_STONE) {
 			return id + 1;
 		} else if (item == Item.RAZOR_CLAW) {
 			return id + 1;
@@ -7194,16 +7234,16 @@ public class Pokemon implements Serializable {
 		case 126: return "Whiskie -> Whiskers (lv. 30)";
 		case 127: return "Whiskers -> Whiskeroar (250+ happiness)";
 		case 129: return "Nincada -> Ninjask (lv. 20)";
-		case 132: return "Sheltor -> Shelnado (lv. up in Mindagan Lake)";
+		case 132: return "Sheltor -> Shelnado (Water Stone)";
 		case 134: return "Lilyray -> Daray (160+ happiness)";
 		case 135: return "Daray -> Spinaquata (lv. 30)";
 		case 137: return "Magikarp -> Gyarados (lv. 20)";
-		case 139: return "Staryu -> Starmie (lv. up in Mindagan Lake)";
+		case 139: return "Staryu -> Starmie (Water Stone)";
 		case 141: return "Ali -> Batorali (Dusk Stone)";
 		case 143: return "Posho -> Shomp (250+ happiness)";
 		case 144: return "Shomp -> Poshorump (lv. up in Mindagan Lake)";
 		case 146: return "Binacle -> Barbaracle (lv. 39)";
-		case 148: return "Durfish -> Dompster (lv. up in Mindagan Lake)";
+		case 148: return "Durfish -> Dompster (Water Stone)";
 		case 151: return "Ekans -> Arbok (lv. 22)";
 		case 153: return "Zubat -> Golbat (lv. 22)";
 		case 154: return "Golbat -> Crobat (160+ happiness)";
@@ -7273,9 +7313,9 @@ public class Pokemon implements Serializable {
 		case 274: return "Bronzor -> Bronzong (lv. 33)";
 		case 276: return "Bronzor-X -> Bronzong-X (lv. 33)";
 		case 278: return "Capsakid -> Scovillain (Fire Stone)";
-		case 279: return "Scovillain -> Kerbernero ()";
+		case 279: return "Scovillain -> Kerbernero (lv. 50)";
 		case 281: return "Capsakid-S -> Scovillain-S (Fire Stone)";
-		case 282: return "Scovillain-S -> Kerbernero-S ()";
+		case 282: return "Scovillain-S -> Kerbernero-S (lv. 50)";
 		case 292: return "Azurill -> Marill (160+ happiness)";
 		case 293: return "Marill -> Azumarill (lv. 18)";
 		case 295: return "Shroodle -> Grafaiai (lv. 28)";
@@ -7414,6 +7454,12 @@ public class Pokemon implements Serializable {
 		}
 	}
 	
+	public static Task addTask(int type, Entity e, String string) {
+		Task t = addTask(type, string);
+		t.e = e;
+		return t;
+	}
+	
 	public static void addEvoTask(Pokemon p, Pokemon result) {
 		Task t = addTask(Task.EVO, p.nickname + " is evolving!\nDo you want to evolve your " + p.nickname + "?", p);
 		t.evo = result;
@@ -7426,7 +7472,7 @@ public class Pokemon implements Serializable {
 		}
 		for (int i = 0; i < t.dialogues.length; i++) {
 			if (t.dialogues[i] != null) {
-				 addTask(Task.TEXT, t.dialogues[i]);
+				 addTask(Task.DIALOGUE, t, t.dialogues[i]);
 			}
 		}
 		addStartBattleTask(t.trainer, id);

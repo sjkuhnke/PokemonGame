@@ -37,4 +37,6 @@ New Story
 Add Klara and Fred's house to Sicab City
 
 Fix Illusion working in calc (have it say true outside of battling actively)
-Fix Trainer collision when interacting (can force 1v1s in back to backs if trainers are adjacent to the wall)
+Make Sky Uppercut super-effective against flying types
+Make map05 (lava lake) to the left 3-4 tiles
+Make Roost give a "Landed" status that at the end of the turn will replace unknown type back with Flying

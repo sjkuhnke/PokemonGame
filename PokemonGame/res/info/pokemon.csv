@@ -129,8 +129,8 @@
 78 |Nincada      |BUG     |GROUND  |COMPOUND_EYES     |TINTED_LENS       |SWARM             |[31, 45, 90, 30, 30, 40]      |12.1  |255|
 79 |Ninjask      |BUG     |FLYING  |SPEED_BOOST       |TINTED_LENS       |SWARM             |[61, 90, 45, 50, 50, 160]     |26.5  |120|
 80 |Shedinja     |BUG     |GHOST   |WONDER_GUARD      |WONDER_GUARD      |WONDER_GUARD      |[1, 90, 45, 30, 30, 40]       |2.6   |5  |
-192|Sheltor      |WATER   |GHOST   |SWIFT_SWIM        |REGENERATOR       |SHELL_ARMOR       |[58, 29, 71, 31, 58, 33]      |9.5   |200|
-193|Shelnado     |WATER   |GHOST   |SWIFT_SWIM        |REGENERATOR       |SHELL_ARMOR       |[67, 61, 75, 97, 91, 83]      |65.7  |45 |
+192|Sheltor      |WATER   |GHOST   |SWIFT_SWIM        |REGENERATOR       |SHELL_ARMOR       |[68, 29, 71, 31, 58, 33]      |9.5   |200|
+193|Shelnado     |WATER   |GHOST   |SWIFT_SWIM        |REGENERATOR       |SHELL_ARMOR       |[87, 51, 75, 97, 86, 83]      |65.7  |45 |
 154|Lilyray      |WATER   |null    |UNAWARE           |WATER_ABSORB      |LIGHTNING_ROD     |[34, 14, 20, 27, 90, 15]      |9.9   |140|
 155|Daray        |WATER   |FLYING  |UNAWARE           |WATER_ABSORB      |LIGHTNING_ROD     |[100, 28, 45, 72, 110, 45]    |41.8  |140|
 156|Spinaquata   |WATER   |DRAGON  |DRIZZLE           |WATER_ABSORB      |LIGHTNING_ROD     |[100, 90, 66, 74, 84, 81]     |129.5 |75 |
