@@ -87,7 +87,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 37;
+	public static final int VERSION = 38;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -887,6 +887,7 @@ public class Player extends Trainer implements Serializable {
 			case DUSK_STONE:
 			case ICE_STONE:
 			case FIRE_STONE:
+			case WATER_STONE:
 			case LEAF_STONE:
 			case PETTICOAT_GEM:
 			case VALIANT_GEM:

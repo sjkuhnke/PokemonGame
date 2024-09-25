@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -436,8 +437,9 @@ public class PlayerCharacter extends Entity {
 				p.heal();
 			}
 		} else if (entity.altDialogue != null) {
-			gp.gameState = GamePanel.DIALOGUE_STATE;
-			entity.speak(1);
+			gp.setTaskState();
+			
+			entity.speak(2);
 		}
 	}
 	
@@ -525,14 +527,14 @@ public class PlayerCharacter extends Entity {
     	
 		gp.keyH.wPressed = false;
 		gp.gameState = GamePanel.NURSE_STATE;
-		npc.speak(0);
+		npc.speak(-1);
 	}
 	
 	private void interactClerk(Entity npc) {
 		gp.keyH.wPressed = false;
 		gp.gameState = GamePanel.SHOP_STATE;
 		npc.facePlayer(direction);
-		npc.speak(0);
+		npc.speak(-1);
 	}
 	
 	private void interactNPC(NPC_Block npc) {
@@ -550,7 +552,8 @@ public class PlayerCharacter extends Entity {
 				});
 			}
 		} else if (npc.altDialogue != null) {
-			gp.gameState = GamePanel.DIALOGUE_STATE;
+			gp.setTaskState();
+			
 			npc.speak(1);
 		}
 		
@@ -560,76 +563,72 @@ public class PlayerCharacter extends Entity {
 		if (gp.currentMap == 52) { // Professor Dad
 			if (!p.flag[0][0]) {
 				p.flag[0][0] = true;
-				Pokemon.addTask(Task.TEXT, "Welcome to the wonderful world of Pokemon! I'm sure you're familiar with them considering your old man is a top scientist here in Xhenos.");
-				Pokemon.addTask(Task.TEXT, "But, as a reminder, Pokemon are pocket monsters with unique typings and traits that coexist with us humans.");
-				Pokemon.addTask(Task.TEXT, "And I think it's high time you go on a Pokemon adventure of your own, get outta town, and see what this region has to offer.");
-				Pokemon.addTask(Task.TEXT, "You see that machine over there son? I've started a program to help new trainers, and you and two other bright young boys are to be the first participants.");
-				Pokemon.addTask(Task.TEXT, "Inside that machine holds three Pokemon I have chosen to be the starting options. So go pick your starter!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Welcome to the wonderful world of Pokemon! I'm sure you're familiar with them considering your old man is a top scientist here in Xhenos.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "But, as a reminder, Pokemon are pocket monsters with unique typings and traits that coexist with us humans.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "And I think it's high time you go on a Pokemon adventure of your own, get outta town, and see what this region has to offer.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You see that machine over there son? I've started a program to help new trainers, and you and two other bright young boys are to be the first participants.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Inside that machine holds three Pokemon I have chosen to be the starting options. So go pick your starter!");
 			} else if (p.flag[0][0] && !p.flag[0][1]) {
-				Pokemon.addTask(Task.TEXT, "Go ahead, go pick your starter from my machine! The world of Xhenos awaits!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Go ahead, go pick your starter from my machine! The world of Xhenos awaits!");
 			} else if (p.flag[0][1] && !p.flag[0][2]) {
 				p.flag[0][2] = true;
-				Pokemon.addTask(Task.TEXT, "You picked " + p.team[0].getName() + "? Wonderful pick! It seems very eager to get out and explore, as I'm sure you are too.");
-				Pokemon.addTask(Task.TEXT, "But!");
-				Pokemon.addTask(Task.TEXT, "As your Dad, I must make sure you have adequate equipment to not get lost out there.");
-				Pokemon.addTask(Task.TEXT, "So first, I'm giving you this digital map, equipped with Cellular Data that will always update with where you are!");
-				Pokemon.addTask(Task.TEXT, "You got the Map!");
-				Pokemon.addTask(Task.TEXT, "And as your Professor, I need your help for collecting as much data about the Pokemon inhabiting our world with us!");
-				Pokemon.addTask(Task.TEXT, "This little doohickey is the Neodex! In a region as unique as ours, I've had to make plenty of modifications to account for them.");
-				Pokemon.addTask(Task.TEXT, "It's one of my finest inventions yet, and I even got help from Professor Oak, the greatest professor of all time!");
-				Pokemon.addTask(Task.TEXT, "Instead of Rotom, it taps into a shared database that allows for identifying new forms for old Pokemon. Give it a whirl!");
-				Pokemon.addTask(Task.TEXT, "You got the Pokedex!");
-				Pokemon.addTask(Task.TEXT, "Oh right! Speaking of collecting data, I made a little something to help you find as many different species as you can.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You picked " + p.team[0].getName() + "? Wonderful pick! It seems very eager to get out and explore, as I'm sure you are too.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "But!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "As your Dad, I must make sure you have adequate equipment to not get lost out there.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "So first, I'm giving you this digital map, equipped with Cellular Data that will always update with where you are!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You got the Map!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "And as your Professor, I need your help for collecting as much data about the Pokemon inhabiting our world with us!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "This little doohickey is the Neodex! In a region as unique as ours, I've had to make plenty of modifications to account for them.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "It's one of my finest inventions yet, and I even got help from Professor Oak, the greatest professor of all time!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Instead of Rotom, it taps into a shared database that allows for identifying new forms for old Pokemon. Give it a whirl!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You got the Pokedex!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh right! Speaking of collecting data, I made a little something to help you find as many different species as you can.");
 				Task t = Pokemon.addTask(Task.ITEM, "");
 				t.item = Item.DEX_NAV;
-				Pokemon.addTask(Task.TEXT, "Just open your bag and open the \"Key Items\" pocket, you should see it there. When you're near grass, it'll show you the Pokemon there!");
-				Pokemon.addTask(Task.TEXT, "I would've installed it in the Neodex, but I have all of the slots reserved for special database add-ons to keep track of all the unique forms here.");
-				Pokemon.addTask(Task.TEXT, "Speaking of which, as you know son, my specialty as a Professor is studying Shadow Pokemon.");
-				Pokemon.addTask(Task.TEXT, "These Pokemon had their DNA changed long ago by the meteor in Shadow Ravine, which happens to be just north of here.");
-				Pokemon.addTask(Task.TEXT, "They often have taken Dark and Ghost typings, and have significant changes in mentality, similar to Xhenovian Pokemon.");
-				Pokemon.addTask(Task.TEXT, "Here, can I see your Pokedex for a second?");
-				Pokemon.addTask(Task.TEXT, "...");
-				Pokemon.addTask(Task.TEXT, "There, I added a 'Shadow Pokedex' section to your Neodex. That way, if you run into any Shadow forms near Shadow Ravine, you can record them!");
-				Pokemon.addTask(Task.TEXT, "...What's that? Oh right, I should probably explain how to use the Neodex.");
-				Pokemon.addTask(Task.TEXT, "You can see a Pokemon you've registered in the Neodex and their information, like their moves, abilities, typings, and much more!");
-				Pokemon.addTask(Task.TEXT, "If you want to toggle which section you're in, just press the 'A' key and it will cycle through all of your sections you have installed!");
-				Pokemon.addTask(Task.TEXT, "Oh and one more thing! Oh my Arceus, I can't believe I almost forgot to tell you about my favorite creation yet!");
-				Pokemon.addTask(Task.TEXT, "You've always loved battling, so I made this just for you. A state of the line BATTLECALC 3000! Or you could just call it your calculator.");
-				Pokemon.addTask(Task.TEXT, "It provides accurate data during a battle, just press 'A' in a battle, or 'Ctrl + A' outside, and you can check how much damage a move can do!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Just open your bag and open the \"Key Items\" pocket, you should see it there. When you're near grass, it'll show you the Pokemon there!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I would've installed it in the Neodex, but I have all of the slots reserved for special database add-ons to keep track of all the unique forms here.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Speaking of which, as you know son, my specialty as a Professor is studying Shadow Pokemon.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "These Pokemon had their DNA changed long ago by the meteor in Shadow Ravine, which happens to be just north of here.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "They often have taken Dark and Ghost typings, and have significant changes in mentality, similar to Xhenovian Pokemon.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Here, can I see your Pokedex for a second?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "There, I added a 'Shadow Pokedex' section to your Neodex. That way, if you run into any Shadow forms near Shadow Ravine, you can record them!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "...What's that? Oh right, I should probably explain how to use the Neodex.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You can see a Pokemon you've registered in the Neodex and their information, like their moves, abilities, typings, and much more!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "If you want to toggle which section you're in, just press the 'A' key and it will cycle through all of your sections you have installed!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh and one more thing! Oh my Arceus, I can't believe I almost forgot to tell you about my favorite creation yet!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You've always loved battling, so I made this just for you. A state of the line BATTLECALC 3000! Or you could just call it your calculator.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "It provides accurate data during a battle, just press 'A' in a battle, or 'Ctrl + A' outside, and you can check how much damage a move can do!");
 				t = Pokemon.addTask(Task.ITEM, "");
 				t.item = Item.CALCULATOR;
-				Pokemon.addTask(Task.TEXT, "Now go out there and make me proud - and most importantly...");
-				Pokemon.addTask(Task.TEXT, "COLLECT THAT DATA!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Now go out there and make me proud - and most importantly...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "COLLECT THAT DATA!");
 				Pokemon.addTask(Task.UPDATE, "");
-			} else if (p.flag[0][1] && !p.flag[0][4]) {
-				gp.ui.showMessage("There are two Pokemon still inside the machine. Wonder what Dad will do with them?");
-			} else if (p.flag[0][4] && p.badges < 1) {
-				gp.ui.showMessage("There's still a Pokemon left! Dad must've given one to Scott as well!");
-			} else if (p.badges > 1) {
-				gp.ui.showMessage("There aren't any Pokemon inside.");
+			} else {
+				Pokemon.addTask(Task.DIALOGUE, npc, "How's it going?");
 			}
 		} else if (gp.currentMap == 51) { // Dad's Mom
 			if (!p.flag[0][3]) {
-				Pokemon.addTask(Task.TEXT, "Ah, I remember my first time having a Pokemon adventure, before I had your father. I was around your age now actually. Brings back fond memories...");
-				Pokemon.addTask(Task.TEXT, "...Oh, you want advice? I believe being a Pokemon trainer isn't about being the strongest, or collecting them all.");
-				Pokemon.addTask(Task.TEXT, "It's about forming a life-long bond with your Pokemon, becoming partners. Friendship is key to becoming a better trainer, and a better person.");
-				Pokemon.addTask(Task.TEXT, "That's how it was with your grandfather. Back in my day, I wanted to be the best there ever was.");
-				Pokemon.addTask(Task.TEXT, "He helped me see the value in friendship, how Pokemon were great companions in life. He's the person who gave me Duchess' dinky old Soothe Bell.");
-				Pokemon.addTask(Task.TEXT, "I miss him every day, even with my Pokemon, you and your father by my side.");
-				Pokemon.addTask(Task.TEXT, "So, this is my parting gift to you, to show you the power of friendship. I'm so thankful to have been your grandmother.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Ah, I remember my first time having a Pokemon adventure, before I had your father. I was around your age now actually. Brings back fond memories...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "...Oh, you want advice? I believe being a Pokemon trainer isn't about being the strongest, or collecting them all.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "It's about forming a life-long bond with your Pokemon, becoming partners. Friendship is key to becoming a better trainer, and a better person.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "That's how it was with your grandfather. Back in my day, I wanted to be the best there ever was.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "He helped me see the value in friendship, how Pokemon were great companions in life. He's the person who gave me Duchess' dinky old Soothe Bell.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I miss him every day, even with my Pokemon, you and your father by my side.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "So, this is my parting gift to you, to show you the power of friendship. I'm so thankful to have been your grandmother.");
 				Task t = Pokemon.addTask(Task.ITEM, "");
 				t.item = Item.SOOTHE_BELL;
-				Pokemon.addTask(Task.TEXT, "Go out there and make the world a better place, dear. I know you will.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Go out there and make the world a better place, dear. I know you will.");
 				p.flag[0][3] = true;
 			}
 		} else if (gp.currentMap == 3) {
-			Pokemon.addTask(Task.TEXT, "I believe he was looking to introduce himself to you, he mentioned he was heading towards New Minnow Town.");
-			Pokemon.addTask(Task.TEXT, "Please do make haste, I do hope he's okay.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "I believe he was looking to introduce himself to you, he mentioned he was heading towards New Minnow Town.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Please do make haste, I do hope he's okay.");
 			p.flag[0][4] = true;
 		} else if (gp.currentMap == 47 && p.secondStarter != -1) {
-			Pokemon.addTask(Task.TEXT, "Here, we breed and house rare Pokemon to fight against their extinction.");
-			Pokemon.addTask(Task.TEXT, "...What's that? You have a " + Pokemon.getName(((p.starter + 1) * 3) - 2) + "?? That's insanely rare. Did you get that from the professor?");
-			Pokemon.addTask(Task.TEXT, "Oh, you're his son, and you're helping him research? Well, in that case, take this one as well. This should help your guys' study!");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Here, we breed and house rare Pokemon to fight against their extinction.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "...What's that? You have a " + Pokemon.getName(((p.starter + 1) * 3) - 2) + "?? That's insanely rare. Did you get that from the professor?");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Oh, you're his son, and you're helping him research? Well, in that case, take this one as well. This should help your guys' study!");
 			p.flag[0][6] = true;
 			Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
 			Pokemon result = new Pokemon(((p.secondStarter + 1) * 3) - 2, 5, true, false);
@@ -639,20 +638,22 @@ public class PlayerCharacter extends Entity {
 		} else if (gp.currentMap == 4) {
 			if (p.flag[0][11] && !p.flag[0][12]) {
 				p.flag[0][12] = true;
-				Pokemon.addTask(Task.TEXT, "...");
-				Pokemon.addTask(Task.TEXT, "What, you've got a package, pipsqueak? Pfft! You can't be older than 10... Didn't know Robin stooped that low.");
-				Pokemon.addTask(Task.TEXT, "Last time I checked, the boss wasn't expecting any packages. You can't even get in here anyway, I JUST locked the door and I'm getting the hell outta here.");
-				Pokemon.addTask(Task.TEXT, "I'm running off to the woods and you'll NEVER find me in there, don't even TRY to follow me.");
-				Pokemon.addTask(Task.TEXT, "So yeah, big whoop. Tell that bundle of nerves - A.K.A. your boss - to deal with it. See ya idiot!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "What, you've got a package, pipsqueak? Pfft! You can't be older than 10... Didn't know Robin stooped that low.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Last time I checked, the boss wasn't expecting any packages. You can't even get in here anyway, I JUST locked the door and I'm getting the hell outta here.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I'm running off to the woods and you'll NEVER find me in there, don't even TRY to follow me.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "So yeah, big whoop. Tell that bundle of nerves - A.K.A. your boss - to deal with it. See ya idiot!");
 				Pokemon.addTask(Task.FLASH_IN, "");
 				Pokemon.addTask(Task.UPDATE, "");
 				Pokemon.addTask(Task.FLASH_OUT, "");
+			} else {
+				Pokemon.addTask(Task.DIALOGUE, npc, "BEAT IT!");
 			}
 		} else if (gp.currentMap == 161) {
 			if (!p.flag[0][7]) {
-				Pokemon.addTask(Task.TEXT, "Sorry, I'm a little busy right now. As the only mailman in this entire region, I've been running ragged delivering letters across Xhenos.");
-				Pokemon.addTask(Task.TEXT, "I can't afford to waste any time, even for a gym battle.");
-				Pokemon.addTask(Task.TEXT, "Oh? You'll help me? Thank you, thank you, thank you! Maybe then I'll have enough time to open the gym... Here, take these!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Sorry, I'm a little busy right now. As the only mailman in this entire region, I've been running ragged delivering letters across Xhenos.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I can't afford to waste any time, even for a gym battle.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh? You'll help me? Thank you, thank you, thank you! Maybe then I'll have enough time to open the gym... Here, take these!");
 				Task t = Pokemon.addTask(Task.ITEM, "");
 				t.item = Item.PACKAGE_A;
 				t = Pokemon.addTask(Task.ITEM, "");
@@ -662,22 +663,22 @@ public class PlayerCharacter extends Entity {
 				p.flag[0][7] = true;
 			} else if (p.flag[0][7] && !p.flag[0][11]) {
 				if (p.flag[0][8] && p.flag[0][9] && p.flag[0][10]) {
-					Pokemon.addTask(Task.TEXT, "Oh it's you, thanks for delivering all those packages! You're a lifesaver, and I truly thank you for being selfless.");
-					Pokemon.addTask(Task.TEXT, "But... there's one last package to deliver.");
-					Pokemon.addTask(Task.TEXT, "It's been sitting here for weeks for the warehouse, but I can't get in to the building and the owner isn't answering any of my calls.");
-					Pokemon.addTask(Task.TEXT, "I've been far too busy to look into it though, could you look into it for me? I've seen some pretty suspicious activity going on there.");
-					Pokemon.addTask(Task.TEXT, "Oh, you will? Thank you so much! Don't worry, it's just a short walk away. Once that's done, I'll have a small window where I can open the gym.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Oh it's you, thanks for delivering all those packages! You're a lifesaver, and I truly thank you for being selfless.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "But... there's one last package to deliver.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "It's been sitting here for weeks for the warehouse, but I can't get in to the building and the owner isn't answering any of my calls.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "I've been far too busy to look into it though, could you look into it for me? I've seen some pretty suspicious activity going on there.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Oh, you will? Thank you so much! Don't worry, it's just a short walk away. Once that's done, I'll have a small window where I can open the gym.");
 					Task t = Pokemon.addTask(Task.ITEM, "");
 					t.item = Item.PACKAGE_D;
 					p.flag[0][11] = true;
-					Pokemon.addTask(Task.TEXT, "Welp, the clock is ticking, and I need more caffeine.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Welp, the clock is ticking, and I need more caffeine.");
 				} else {
-					Pokemon.addTask(Task.TEXT, "The addresses are on the back of the boxes. You're doing me a massive favor, so once you're done I can give you that battle. So get to it!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "The addresses are on the back of the boxes. You're doing me a massive favor, so once you're done I can give you that battle. So get to it!");
 				}
 			} else if (p.flag[0][11] && !p.flag[0][15]) {
-				Pokemon.addTask(Task.TEXT, "Oh, hello my helper! How's it going at the warehouse? Did you manage to get in okay?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh, hello my helper! How's it going at the warehouse? Did you manage to get in okay?");
 			} else if (p.flag[0][15]) {
-				Pokemon.addTask(Task.TEXT, "Oh, you've delivered my last package? I can't thank you enough, I can finally have a break from all this mail. I'll open the gym up right away, with no delay!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh, you've delivered my last package? I can't thank you enough, I can finally have a break from all this mail. I'll open the gym up right away, with no delay!");
 				Pokemon.addTask(Task.FLASH_IN, "");
 				Pokemon.addTask(Task.UPDATE, "");
 				Pokemon.addTask(Task.FLASH_OUT, "");
@@ -685,43 +686,43 @@ public class PlayerCharacter extends Entity {
 			}
 		} else if (gp.currentMap == 57) {
 			if (p.flag[0][7] && !p.flag[0][9]) {
-				Pokemon.addTask(Task.TEXT, "Oh! That's my new frying pan! Thanks squirt, I owe you something.");
-				Pokemon.addTask(Task.TEXT, "I got a little trinket I've been wanting to get rid of - I mean pass off - to a worthy kiddo like you. Consider this your appetizer!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh! That's my new frying pan! Thanks squirt, I owe you something.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I got a little trinket I've been wanting to get rid of - I mean pass off - to a worthy kiddo like you. Consider this your appetizer!");
 				Task t = Pokemon.addTask(Task.ITEM, "");
 				t.item = Item.FLAME_ORB;
 				p.bag.remove(Item.PACKAGE_B);
 				p.flag[0][9] = true;
 			} else {
-				Pokemon.addTask(Task.TEXT, "Be sure to check me out in Rawwar city sometime!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Be sure to check me out in Rawwar city sometime!");
 			}
 		} else if (gp.currentMap == 58) {
 			if (p.flag[0][7] && !p.flag[0][17]) {
 				if (!p.flag[0][8]) {
-					Pokemon.addTask(Task.TEXT, "...Oh, is that my package?");
-					Pokemon.addTask(Task.TEXT, "Thank you so much young man! Sorry for jumping at you, I'm just really unsettled right now.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "...Oh, is that my package?");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Thank you so much young man! Sorry for jumping at you, I'm just really unsettled right now.");
 					p.bag.remove(Item.PACKAGE_A);
 					p.flag[0][8] = true;
 				} else {
-					Pokemon.addTask(Task.TEXT, "Oh, hello there. Sorry for being alarmed, I'm just a little unsettled right now.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Oh, hello there. Sorry for being alarmed, I'm just a little unsettled right now.");
 				}
-				Pokemon.addTask(Task.TEXT, "Some rampant Pokemon sniffing out berries all burst into my house, but I was just making juice.");
-				Pokemon.addTask(Task.TEXT, "In the midst of all the chaos, some crook snuck in and stole my precious item right off my poor Pokemon!");
-				Pokemon.addTask(Task.TEXT, "Whatever will I do to find it?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Some rampant Pokemon sniffing out berries all burst into my house, but I was just making juice.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "In the midst of all the chaos, some crook snuck in and stole my precious item right off my poor Pokemon!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Whatever will I do to find it?");
 			} else if (p.flag[0][7] && p.flag[0][17]) {
 				p.flag[0][18] = true;
-				Pokemon.addTask(Task.TEXT, "Oh, hello there. Sorry for being alarmed, I'm just a little unsettled right now.");
-				Pokemon.addTask(Task.TEXT, "Oh my god, my item! You found it! Wow, you really are impressive!");
-				Pokemon.addTask(Task.TEXT, "You know what, since you're so kind, why don't you just keep it? It'll be better off with a stronger trainer like you.");
-				Pokemon.addTask(Task.TEXT, "Here, take this for your troubles too. Really, it's the least I can do.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh, hello there. Sorry for being alarmed, I'm just a little unsettled right now.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh my god, my item! You found it! Wow, you really are impressive!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You know what, since you're so kind, why don't you just keep it? It'll be better off with a stronger trainer like you.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Here, take this for your troubles too. Really, it's the least I can do.");
 				Task t = Pokemon.addTask(Task.ITEM, "Obtained a Lucky Egg!");
 				t.item = Item.LUCKY_EGG;
 			}
 		} else if (gp.currentMap == 48) {
 			if (!p.flag[0][7]) {
-				Pokemon.addTask(Task.TEXT, "Feel free to look around!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Feel free to look around!");
 			} else {
-				Pokemon.addTask(Task.TEXT, "Oh, you have a package for us? Thank you so much! I'm sure Robin greatly appreciates the help!");
-				Pokemon.addTask(Task.TEXT, "Here, have a complimentary gift dog! No really, we insist.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh, you have a package for us? Thank you so much! I'm sure Robin greatly appreciates the help!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Here, have a complimentary gift dog! No really, we insist.");
 				
 				Random dog = new Random();
 				int id = dog.nextInt(3);
@@ -736,61 +737,61 @@ public class PlayerCharacter extends Entity {
 		} else if (gp.currentMap == 46) {
 			Pokemon.addTask(Task.HP, "Check your team's Hidden Power types here!");
 		} else if (gp.currentMap == 8) {
-			Pokemon.addTask(Task.TEXT, "And at the worst time too, I was expecting a package all the way from Galar.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "And at the worst time too, I was expecting a package all the way from Galar.");
 			if (p.flag[0][14] && !p.flag[0][15]) {
-				Pokemon.addTask(Task.TEXT, "What's that? You have the package for me? That must be my lucky stapler! Please hand it here, young one.");
-				Pokemon.addTask(Task.TEXT, "Robin must be swamped if he's making you do all this delivery work. Is this his version of a gym puzzle?");
-				Pokemon.addTask(Task.TEXT, "Heh! I'm just messing with you, you must have volunteered. Here, for your generosity and service.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "What's that? You have the package for me? That must be my lucky stapler! Please hand it here, young one.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Robin must be swamped if he's making you do all this delivery work. Is this his version of a gym puzzle?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Heh! I'm just messing with you, you must have volunteered. Here, for your generosity and service.");
 				Task t = Pokemon.addTask(Task.ITEM, "");
 				t.item = Item.HM01;
 				p.bag.remove(Item.PACKAGE_D);
 				p.flag[0][15] = true;
 			} else if (!p.flag[0][14]) {
-				Pokemon.addTask(Task.TEXT, "Can you please help me get rid of these criminals? I don't have any Pokemon of my own, I won't be of much help to you I'm afraid.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Can you please help me get rid of these criminals? I don't have any Pokemon of my own, I won't be of much help to you I'm afraid.");
 			}
 		} else if (gp.currentMap == 10) {
-			Pokemon.addTask(Task.TEXT, "That's hello where I come from. I'm Ryder, adventurer extraordinaire at the ripe old age of 16.");
-			Pokemon.addTask(Task.TEXT, "Say, you look like a competent Pokemon trainer. Mind taking care of something for me?");
+			Pokemon.addTask(Task.DIALOGUE, npc, "That's hello where I come from. I'm Ryder, adventurer extraordinaire at the ripe old age of 16.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Say, you look like a competent Pokemon trainer. Mind taking care of something for me?");
 			Pokemon abra = new Pokemon(243, 15, true, false);
 			Pokemon.addTask(Task.TEXT, "You recieved " + abra.name + "!");
 			Pokemon.addTask(Task.GIFT, "", abra);
-			Pokemon.addTask(Task.TEXT, "Yeah, I noticed Abra seems to gain a new ability here, probably because of that new magic type I've been hearing about.");
-			Pokemon.addTask(Task.TEXT, "Anyways, it was pleasure doing business with you mate, I'm sure I'll see you around. I gotta see what the rest of the region has in store for me!");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Yeah, I noticed Abra seems to gain a new ability here, probably because of that new magic type I've been hearing about.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Anyways, it was pleasure doing business with you mate, I'm sure I'll see you around. I gotta see what the rest of the region has in store for me!");
 			Pokemon.addTask(Task.FLASH_IN, "");
 			Pokemon.addTask(Task.UPDATE, "");
 			Pokemon.addTask(Task.FLASH_OUT, "");
 			p.flag[1][3] = true;
 		} else if (gp.currentMap == 13) {
 			if (worldY / gp.tileSize >= 59) {
-				Pokemon.addTask(Task.TEXT, "Wait, you're his kid? Oh my goodness, your father has told me all about you. Did you come here trying to challenge the gym?");
-				Pokemon.addTask(Task.TEXT, "...");
-				Pokemon.addTask(Task.TEXT, "You did? Well, that's going to be a difficult task considering the city's gone into full black-out, no power or anything.");
-				Pokemon.addTask(Task.TEXT, "I'd try and fix it, but the Control Center door is jammed, and that's our best shot at figuring out what's wrong.");
-				Pokemon.addTask(Task.TEXT, "Most of the buildings in this city have electric doors, and they all seem to not be working.");
-				Pokemon.addTask(Task.TEXT, "Actually, you know what we could try?");
-				Pokemon.addTask(Task.TEXT, "We can grab enough auxillery energy to keep the Control Center door open, and then give it a go from there.");
-				Pokemon.addTask(Task.TEXT, "Could you meet me there? It's located at the end of Route 45.");
-				Pokemon.addTask(Task.TEXT, "It's up straight North of this city, and then just a bit East.");
-				Pokemon.addTask(Task.TEXT, "I'll go on up ahead to set everything up, please don't keep me waiting!");
-				Pokemon.addTask(Task.TEXT, "I'm sure your father would be proud of you for helping out.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Wait, you're his kid? Oh my goodness, your father has told me all about you. Did you come here trying to challenge the gym?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You did? Well, that's going to be a difficult task considering the city's gone into full black-out, no power or anything.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I'd try and fix it, but the Control Center door is jammed, and that's our best shot at figuring out what's wrong.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Most of the buildings in this city have electric doors, and they all seem to not be working.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Actually, you know what we could try?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "We can grab enough auxillery energy to keep the Control Center door open, and then give it a go from there.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Could you meet me there? It's located at the end of Route 45.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "It's up straight North of this city, and then just a bit East.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I'll go on up ahead to set everything up, please don't keep me waiting!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I'm sure your father would be proud of you for helping out.");
 				Pokemon.addTask(Task.FLASH_IN, "");
 				Pokemon.addTask(Task.UPDATE, "");
 				Pokemon.addTask(Task.FLASH_OUT, "");
 				p.flag[1][1] = true;
 			} else if (worldY / gp.tileSize < 59 && worldY / gp.tileSize >= 51) {
-				Pokemon.addTask(Task.TEXT, "As much as I appreciate the help, don't think I'll go easy on you. Normal types really shouldn't be underestimated.");
-				Pokemon.addTask(Task.TEXT, "Good luck to you both, see you guys inside.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "As much as I appreciate the help, don't think I'll go easy on you. Normal types really shouldn't be underestimated.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Good luck to you both, see you guys inside.");
 				p.flag[1][16] = true;
 				Pokemon.addTask(Task.FLASH_IN, "");
 				Pokemon.addTask(Task.UPDATE, "");
 				Pokemon.addTask(Task.FLASH_OUT, "");
 			} else if (worldY / gp.tileSize < 51) {
 				if (worldX / gp.tileSize < 50) {
-					Pokemon.addTask(Task.TEXT, "Wow, you beat Stanford? And you restored power to the city? You're impressive!");
-					Pokemon.addTask(Task.TEXT, "Say, you're helping your dad do research, right? I'm sure you've come across a couple Xhenovian forms then.");
-					Pokemon.addTask(Task.TEXT, "You seem like you love Pokemon so this might be obvious to you, but those Pokemon are variants of Pokemon from other regions.");
-					Pokemon.addTask(Task.TEXT, "My mom's friend is actually a researcher studying the forms here, and I'm sure you guys could help each other out!");
-					Pokemon.addTask(Task.TEXT, "She's camped out right near here, come with me, let me introduce you to her!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Wow, you beat Stanford? And you restored power to the city? You're impressive!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Say, you're helping your dad do research, right? I'm sure you've come across a couple Xhenovian forms then.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "You seem like you love Pokemon so this might be obvious to you, but those Pokemon are variants of Pokemon from other regions.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "My mom's friend is actually a researcher studying the forms here, and I'm sure you guys could help each other out!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "She's camped out right near here, come with me, let me introduce you to her!");
 					Task t = Pokemon.addTask(Task.TELEPORT, "");
 					t.counter = 13;
 					t.start = 88;
@@ -800,26 +801,26 @@ public class PlayerCharacter extends Entity {
 					t = Pokemon.addTask(Task.FLAG, "");
 					t.start = 2;
 					t.finish = 3;
-					Pokemon.addTask(Task.TEXT, "Hello there Ryder! Who's this that you brought with?");
-					Pokemon.addTask(Task.TEXT, "... Well, nice to meet you young man! What do I owe the pleasure of this visit to?");
-					Pokemon.addTask(Task.TEXT, "...");
-					Pokemon.addTask(Task.TEXT, "Yes, I do research Xhenovian forms! If you can bring me a regional form, I can trade you for its counterpart!");
-					Pokemon.addTask(Task.TEXT, "First though, I'll have to upgrade your Pokedex to add a 'Variant' Pokedex for you to keep track of these forms");
-					Pokemon.addTask(Task.TEXT, "... And there you go! All upgraded. Come talk to me when you have a Xhenovian Pokemon to trade!");
-					Pokemon.addTask(Task.TEXT, "Ryder, it was great to see you as always. Take care boys!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Hello there Ryder! Who's this that you brought with?");
+					Pokemon.addTask(Task.DIALOGUE, npc, "... Well, nice to meet you young man! What do I owe the pleasure of this visit to?");
+					Pokemon.addTask(Task.DIALOGUE, npc, "...");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Yes, I do research Xhenovian forms! If you can bring me a regional form, I can trade you for its counterpart!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "First though, I'll have to upgrade your Pokedex to add a 'Variant' Pokedex for you to keep track of these forms");
+					Pokemon.addTask(Task.DIALOGUE, npc, "... And there you go! All upgraded. Come talk to me when you have a Xhenovian Pokemon to trade!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Ryder, it was great to see you as always. Take care boys!");
 					t = Pokemon.addTask(Task.TURN, "");
 					t.counter = 3;
-					Pokemon.addTask(Task.TEXT, "Thanks for your patience, I just figured that this little connection would help out you both mutually.");
-					Pokemon.addTask(Task.TEXT, "I'm gonna head out, I'll see you soon!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Thanks for your patience, I just figured that this little connection would help out you both mutually.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "I'm gonna head out, I'll see you soon!");
 					Pokemon.addTask(Task.FLASH_IN, "");
 					Pokemon.addTask(Task.UPDATE, "");
 					Pokemon.addTask(Task.FLASH_OUT, "");
 				} else {
 					if (!p.flag[2][1]) {
-						Pokemon.addTask(Task.TEXT, "I think you might have went the wrong way...");
-						Pokemon.addTask(Task.TEXT, "Are you looking for Mt. Splinkty? You have to go back to Route 26 and head North!");
+						Pokemon.addTask(Task.DIALOGUE, npc, "I think you might have went the wrong way...");
+						Pokemon.addTask(Task.DIALOGUE, npc, "Are you looking for Mt. Splinkty? You have to go back to Route 26 and head North!");
 					} else {
-						Pokemon.addTask(Task.TEXT, "Got any Xhenovian forms to trade me?");
+						Pokemon.addTask(Task.DIALOGUE, npc, "Got any Xhenovian forms to trade me?");
 						Pokemon.addTask(Task.REGIONAL_TRADE, "");
 					}
 				}
@@ -827,62 +828,62 @@ public class PlayerCharacter extends Entity {
 			
 		} else if (gp.currentMap == 162) {
 			if (!p.flag[1][2]) {
-				Pokemon.addTask(Task.TEXT, "You're just in time, I almost have the energy prepared.");
-				Pokemon.addTask(Task.TEXT, "In the meantime, can we chat for a bit about what I do here?");
-				Pokemon.addTask(Task.TEXT, "I have this research post out here in the sticks because of the close proximity to Electric Tunnel, the birthplace of another type of Pokemon.");
-				Pokemon.addTask(Task.TEXT, "They're the Electric forms, and I've seen a lot of them migrating to Sicab City to feast on the power.");
-				Pokemon.addTask(Task.TEXT, "I suspect the power issues have been caused by them finishing off all of the energy there, causing the outage.");
-				Pokemon.addTask(Task.TEXT, "When we head back to try and fix it, I figure we'll probably run into some Electric forms there.");
-				Pokemon.addTask(Task.TEXT, "Thankfully, your dad told me to work on an extension to record all of the new forms, and I'd like to give it to you to help me document them.");
-				Pokemon.addTask(Task.TEXT, "So, without further ado, here's an update to your Neodex!");
-				Pokemon.addTask(Task.TEXT, "...");
-				Pokemon.addTask(Task.TEXT, "There, I added an 'Electric Pokedex' section. That way you can be prepared to take note of any new forms you see there!");
-				Pokemon.addTask(Task.TEXT, "...");
-				Pokemon.addTask(Task.TEXT, "Okay! I believe I have enough auxillary power here to open the door of the Control Center for a bit.");
-				Pokemon.addTask(Task.TEXT, "However, I don't think you have enough time to get back there on foot. But, who says you need to walk?");
-				Pokemon.addTask(Task.TEXT, "Here's a high-tech invention I've made so you can warp back! Let me upgrade your map real quick to integerate the tech.");
-				Pokemon.addTask(Task.TEXT, "...");
-				Pokemon.addTask(Task.TEXT, "Now you can teleport instantly to any town you've already been! Use it to get back to the city in time, and the doors to the center should be open.");
-				Pokemon.addTask(Task.TEXT, "At least if my calculations are correct.");
-				Pokemon.addTask(Task.TEXT, "God speed kid, and tell your dad I said hi!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You're just in time, I almost have the energy prepared.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "In the meantime, can we chat for a bit about what I do here?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I have this research post out here in the sticks because of the close proximity to Electric Tunnel, the birthplace of another type of Pokemon.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "They're the Electric forms, and I've seen a lot of them migrating to Sicab City to feast on the power.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I suspect the power issues have been caused by them finishing off all of the energy there, causing the outage.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "When we head back to try and fix it, I figure we'll probably run into some Electric forms there.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Thankfully, your dad told me to work on an extension to record all of the new forms, and I'd like to give it to you to help me document them.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "So, without further ado, here's an update to your Neodex!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "There, I added an 'Electric Pokedex' section. That way you can be prepared to take note of any new forms you see there!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Okay! I believe I have enough auxillary power here to open the door of the Control Center for a bit.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "However, I don't think you have enough time to get back there on foot. But, who says you need to walk?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Here's a high-tech invention I've made so you can warp back! Let me upgrade your map real quick to integerate the tech.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Now you can teleport instantly to any town you've already been! Use it to get back to the city in time, and the doors to the center should be open.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "At least if my calculations are correct.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "God speed kid, and tell your dad I said hi!");
 				p.flag[1][2] = true;
 			} else if (p.flag[1][2] && !p.flag[1][16]) {
-				Pokemon.addTask(Task.TEXT, "The energy levels are getting low? Hold on, I can get them up for a little longer.");
-				Pokemon.addTask(Task.TEXT, "...");
-				Pokemon.addTask(Task.TEXT, "Alright, keep at it champ.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "The energy levels are getting low? Hold on, I can get them up for a little longer.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Alright, keep at it champ.");
 			} else {
-				Pokemon.addTask(Task.TEXT, "Have you seen any new Electric forms? Can I take a look?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Have you seen any new Electric forms? Can I take a look?");
 			}
 			
 		} else if (gp.currentMap == 32 && !p.flag[1][17]) {
 			p.flag[1][17] = true;
 			p.fish = true;
-			Pokemon.addTask(Task.TEXT, "Say, you look like you'd be great at fishing. Here, take this spare I got lying around. Maybe you'll fish up a Durfish!");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Say, you look like you'd be great at fishing. Here, take this spare I got lying around. Maybe you'll fish up a Durfish!");
 			Task t = Pokemon.addTask(Task.ITEM, "");
 			t.item = Item.FISHING_ROD;
-			Pokemon.addTask(Task.TEXT, "Look at water and press 'A', or use the item in your bag to fish!");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Look at water and press 'A', or use the item in your bag to fish!");
 		} else if (gp.currentMap == 16) {
 			if (!p.flag[1][7]) {
-				Pokemon.addTask(Task.TEXT, "Name's Stanford, the leader of this here town, though I haven't done much work here. At least not recently.");
-				Pokemon.addTask(Task.TEXT, "Honestly, this town is pretty neglected and has gone to shit recently. You're like the first person I've met that's given a fuck.");
-				Pokemon.addTask(Task.TEXT, "This stupid electric ghost is running through my team, and I'm running out of options.");
-				Pokemon.addTask(Task.TEXT, "I'm a Normal-type gym leader for fuck's sake! It doesn't get affected by most of my attacks!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Name's Stanford, the leader of this here town, though I haven't done much work here. At least not recently.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Honestly, this town is pretty neglected and has gone to shit recently. You're like the first person I've met that's given a fuck.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "This stupid electric ghost is running through my team, and I'm running out of options.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I'm a Normal-type gym leader for fuck's sake! It doesn't get affected by most of my attacks!");
 			} else if (p.flag[1][7] && !p.flag[1][8]) {
-				Pokemon.addTask(Task.TEXT, "Oh, the ghost is gone. Good job kiddo.");
-				Pokemon.addTask(Task.TEXT, "The fuse box might be usable now, could you try turning it on?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh, the ghost is gone. Good job kiddo.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "The fuse box might be usable now, could you try turning it on?");
 			} else {
-				Pokemon.addTask(Task.TEXT, "Thanks for the hand squirt, though don't doubt Normal types because of this, they can still be very strong.");
-				Pokemon.addTask(Task.TEXT, "Just not against supernatural shit, fuck whatever that was. Those ones seemed extra powerful too.");
-				Pokemon.addTask(Task.TEXT, "Did you notice that they all had their hidden abilities? Those are special abilities only accessible through a special item.");
-				Pokemon.addTask(Task.TEXT, "Tell you what, as thanks for helping, I'd like to give you this. Try it out to get a special ability of your own!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Thanks for the hand squirt, though don't doubt Normal types because of this, they can still be very strong.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Just not against supernatural shit, fuck whatever that was. Those ones seemed extra powerful too.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Did you notice that they all had their hidden abilities? Those are special abilities only accessible through a special item.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Tell you what, as thanks for helping, I'd like to give you this. Try it out to get a special ability of your own!");
 				p.flag[1][9] = true;
 				Task t = Pokemon.addTask(Task.ITEM, "");
 				t.item = Item.ABILITY_PATCH;
-				Pokemon.addTask(Task.TEXT, "That fuse box should've opened a gate in the Control Center, you should check out the situation there.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "That fuse box should've opened a gate in the Control Center, you should check out the situation there.");
 				if (!p.flag[1][15]) {
-					Pokemon.addTask(Task.TEXT, "The energy field still seems to not be fully fixed yet though, and I noticed some commotion at the office.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "The energy field still seems to not be fully fixed yet though, and I noticed some commotion at the office.");
 				}
-				Pokemon.addTask(Task.TEXT, "But, you know what, I'm heading to the bar or something. See ya kid.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "But, you know what, I'm heading to the bar or something. See ya kid.");
 				Pokemon.addTask(Task.FLASH_IN, "");
 				Pokemon.addTask(Task.UPDATE, "");
 				Pokemon.addTask(Task.FLASH_OUT, "");
@@ -890,17 +891,17 @@ public class PlayerCharacter extends Entity {
 		} else if (gp.currentMap == 18) {
 			if (worldX / gp.tileSize >= 49) {
 				if (!p.flag[1][11]) {
-					Pokemon.addTask(Task.TEXT, "Not... strong... enough...");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Not... strong... enough...");
 				} else if (p.flag[1][11] && !p.flag[1][12]) {
-					Pokemon.addTask(Task.TEXT, "None of my usual tricks were getting to it, and I was on the ropes... So thanks for the hand...");
-					Pokemon.addTask(Task.TEXT, "Anyways, I think now that you deal with... whatever Electric Pokemon that was... that the fuse box is working. Try turning it on real quick, my head is buzzing...");
+					Pokemon.addTask(Task.DIALOGUE, npc, "None of my usual tricks were getting to it, and I was on the ropes... So thanks for the hand...");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Anyways, I think now that you deal with... whatever Electric Pokemon that was... that the fuse box is working. Try turning it on real quick, my head is buzzing...");
 				} else if (p.flag[1][12] && !p.flag[1][13]) {
 					p.flag[1][13] = true;
-					Pokemon.addTask(Task.TEXT, "None of my usual tricks were getting to it, and I was on the ropes... So thanks for the hand...");
-					Pokemon.addTask(Task.TEXT, "Oh, by the way, I found something here that might be useful. Consider it as a token of appreciation...");
+					Pokemon.addTask(Task.DIALOGUE, npc, "None of my usual tricks were getting to it, and I was on the ropes... So thanks for the hand...");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Oh, by the way, I found something here that might be useful. Consider it as a token of appreciation...");
 					Task t = Pokemon.addTask(Task.ITEM, "");
 					t.item = Item.HM02;
-					Pokemon.addTask(Task.TEXT, "It's a magic trick that makes rocks disappear! Anyways, I should get back to the gym to see if the gym leader finally came back. Presto!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "It's a magic trick that makes rocks disappear! Anyways, I should get back to the gym to see if the gym leader finally came back. Presto!");
 					Pokemon.addTask(Task.FLASH_IN, "");
 					Pokemon.addTask(Task.UPDATE, "");
 					Pokemon.addTask(Task.FLASH_OUT, "");
@@ -946,37 +947,37 @@ public class PlayerCharacter extends Entity {
 			}
 		} else if (gp.currentMap == 28) {
 			if (worldX / gp.tileSize <= 70) { // Millie 1
-				Pokemon.addTask(Task.TEXT, "I'm Millie, kind of a big deal here. I've starred in several movies and TV stuff!");
-				Pokemon.addTask(Task.TEXT, "You've probably heard of Magikarp Jump: The Motion Picture, and Mystery Doors of the Magical Land: The Animated Series.");
-				Pokemon.addTask(Task.TEXT, "Anyways, yeah this isn't a shoot or scene, the trainers here are possessed or something! They just attack anything that try to enter the town.");
-				Pokemon.addTask(Task.TEXT, "You're going to have to fend them off back to back, and from what I've seen most of the town is infected! I'm not one to be in horror movies...");
-				Pokemon.addTask(Task.TEXT, "There won't be any breaks in between once we go in, so you're gonna need some strong Pokemon.");
-				Pokemon.addTask(Task.TEXT, "I saw those evil guys by the cell tower. They messed with the PC's signal somehow, and now you can only use Pokemon in the Gauntlet Box!");
-				Pokemon.addTask(Task.TEXT, "You might wanna put some Pokemon in there, preferably 4. If you don't have a full Gauntlet Box as well as a full team, you'll have a huge disadvantage!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I'm Millie, kind of a big deal here. I've starred in several movies and TV stuff!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You've probably heard of Magikarp Jump: The Motion Picture, and Mystery Doors of the Magical Land: The Animated Series.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Anyways, yeah this isn't a shoot or scene, the trainers here are possessed or something! They just attack anything that try to enter the town.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You're going to have to fend them off back to back, and from what I've seen most of the town is infected! I'm not one to be in horror movies...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "There won't be any breaks in between once we go in, so you're gonna need some strong Pokemon.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I saw those evil guys by the cell tower. They messed with the PC's signal somehow, and now you can only use Pokemon in the Gauntlet Box!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You might wanna put some Pokemon in there, preferably 4. If you don't have a full Gauntlet Box as well as a full team, you'll have a huge disadvantage!");
 				int selected = p.getAmountSelected();
 				String message = "Are you ready to fight once you come with me? We need to defend our town and there's no going back!";
 				if (selected < Player.GAUNTLET_BOX_SIZE) { // Not enough selected
 					message = "You don't have 4 Pokemon selected to bring in the Gauntlet Box! You'll be at a huge disadvantage!\nYou can choose what Pokemon to bring using the Gauntlet Box in this PC (press [\u2191] when selecting a box).\n" + message;
 				}
 				for (String s : message.split("\n")) {
-					Pokemon.addTask(Task.TEXT, s);
+					Pokemon.addTask(Task.DIALOGUE, s);
 				}
-				Pokemon.addTask(Task.TEXT, "Trust me, I had to fight off some of them, they hit hard. Especially the stunt doubles...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Trust me, I had to fight off some of them, they hit hard. Especially the stunt doubles...");
 				Task t = Pokemon.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?");
 				t.counter = 2;
 				// Millie 2
 				t = Pokemon.addTask(Task.TURN, "");
 				t.counter = 2;
-				Pokemon.addTask(Task.TEXT, "There's this weird kid that's been in a trance blocking the way to the tower. He hasn't moved an inch, almost like he's guarding the place.");
-				Pokemon.addTask(Task.TEXT, "I've heard him mutter a few things. \"Toxic\", \"Get decked\", it's off-putting.");
-				Pokemon.addTask(Task.TEXT, "Wait, that's your rival? Maybe he'll recognize you, try saying something that'll, I don't know, make him angry!");
-				Pokemon.addTask(Task.TEXT, "Y'know, like in method acting! Give it a shot.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "There's this weird kid that's been in a trance blocking the way to the tower. He hasn't moved an inch, almost like he's guarding the place.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I've heard him mutter a few things. \"Toxic\", \"Get decked\", it's off-putting.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Wait, that's your rival? Maybe he'll recognize you, try saying something that'll, I don't know, make him angry!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Y'know, like in method acting! Give it a shot.");
 				t = Pokemon.addTask(Task.TURN, "");
 				t.counter = 1;
-				Pokemon.addTask(Task.TEXT, "...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "...");
 				t = Pokemon.addTask(Task.TURN, "");
 				t.counter = 2;
-				Pokemon.addTask(Task.TEXT, "AHHH! HE'S DEFINITELY AWAKE NOW! JEEZ, WHAT DID YOU EVEN SAY!?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "AHHH! HE'S DEFINITELY AWAKE NOW! JEEZ, WHAT DID YOU EVEN SAY!?");
 				t = Pokemon.addTask(Task.TURN, "");
 				t.counter = 1;
 				t = Pokemon.addTask(Task.FLAG, "");
@@ -986,35 +987,35 @@ public class PlayerCharacter extends Entity {
 				if (worldY / gp.tileSize < 37) {
 					if (worldY / gp.tileSize > 33) { // Millie 3
 						if (!p.flag[2][7]) {
-							Pokemon.addTask(Task.TEXT, "It's definitely too dangerous to go back to the town, at least for now. You need to scout the area to find the source of these strange radio waves...");
-							Pokemon.addTask(Task.TEXT, "Let me know if you figure out what's going on! Please... I'm scared...");
+							Pokemon.addTask(Task.DIALOGUE, npc, "It's definitely too dangerous to go back to the town, at least for now. You need to scout the area to find the source of these strange radio waves...");
+							Pokemon.addTask(Task.DIALOGUE, npc, "Let me know if you figure out what's going on! Please... I'm scared...");
 						} else {
-							Pokemon.addTask(Task.TEXT, "Thank Arceus you're back... I was so petrified in fear.");
-							Pokemon.addTask(Task.TEXT, "What did you find out? ... Oh, ... Oh my. What?!?!?");
-							Pokemon.addTask(Task.TEXT, "There's a poor Pokemon chained up to the tower?? That is so cruel! Ack! That makes me so sick.");
-							Pokemon.addTask(Task.TEXT, "It has to be a pretty powerful Pokemon to be able to transmit such strong radio waves to possess all of these people.");
-							Pokemon.addTask(Task.TEXT, "Did you happen to notice what Pokemon it was?");
-							Pokemon.addTask(Task.TEXT, "A... what? An alien spider? What??");
-							Pokemon.addTask(Task.TEXT, "I have no idea what you're talking about, I've never heard of anything like that in my life.");
-							Pokemon.addTask(Task.TEXT, "If it's a spider though, I'm sure we can be great friends. I love bugs!");
-							Pokemon.addTask(Task.TEXT, "Alien bugs might take a bit more to get used to. I wonder where it came from?");
-							Pokemon.addTask(Task.TEXT, "And I can't believe it's chained up! We have to set it free! I bet it was those space goons.");
-							Pokemon.addTask(Task.TEXT, "Come to think of it, I did notice an evil grunt run off towards Mt. Splinkty. Maybe we can stop him?");
-							Pokemon.addTask(Task.TEXT, "Go check out the Mountain and see if you can find the grunt, I'll stand guard here!");
+							Pokemon.addTask(Task.DIALOGUE, npc, "Thank Arceus you're back... I was so petrified in fear.");
+							Pokemon.addTask(Task.DIALOGUE, npc, "What did you find out? ... Oh, ... Oh my. What?!?!?");
+							Pokemon.addTask(Task.DIALOGUE, npc, "There's a poor Pokemon chained up to the tower?? That is so cruel! Ack! That makes me so sick.");
+							Pokemon.addTask(Task.DIALOGUE, npc, "It has to be a pretty powerful Pokemon to be able to transmit such strong radio waves to possess all of these people.");
+							Pokemon.addTask(Task.DIALOGUE, npc, "Did you happen to notice what Pokemon it was?");
+							Pokemon.addTask(Task.DIALOGUE, npc, "A... what? An alien spider? What??");
+							Pokemon.addTask(Task.DIALOGUE, npc, "I have no idea what you're talking about, I've never heard of anything like that in my life.");
+							Pokemon.addTask(Task.DIALOGUE, npc, "If it's a spider though, I'm sure we can be great friends. I love bugs!");
+							Pokemon.addTask(Task.DIALOGUE, npc, "Alien bugs might take a bit more to get used to. I wonder where it came from?");
+							Pokemon.addTask(Task.DIALOGUE, npc, "And I can't believe it's chained up! We have to set it free! I bet it was those space goons.");
+							Pokemon.addTask(Task.DIALOGUE, npc, "Come to think of it, I did notice an evil grunt run off towards Mt. Splinkty. Maybe we can stop him?");
+							Pokemon.addTask(Task.DIALOGUE, npc, "Go check out the Mountain and see if you can find the grunt, I'll stand guard here!");
 							p.flag[2][8] = true;
 							Pokemon.addTask(Task.FLASH_IN, "");
 							Pokemon.addTask(Task.UPDATE, "");
 							Pokemon.addTask(Task.FLASH_OUT, "");
 						}
 					} else if (worldY / gp.tileSize > 25) { // Millie 4
-						Pokemon.addTask(Task.TEXT, "OHHH! YOU! I'm so sorry, that was a reflex, there's so many of them.");
+						Pokemon.addTask(Task.DIALOGUE, npc, "OHHH! YOU! I'm so sorry, that was a reflex, there's so many of them.");
 						if (!p.flag[2][9]) {
-							Pokemon.addTask(Task.TEXT, "Any luck finding the grunt? ..I've been holding them off okay.");
-							Pokemon.addTask(Task.TEXT, "I believe that there's a secret room that you can access on the 2nd floor, check that out if you haven't yet.");
+							Pokemon.addTask(Task.DIALOGUE, npc, "Any luck finding the grunt? ..I've been holding them off okay.");
+							Pokemon.addTask(Task.DIALOGUE, npc, "I believe that there's a secret room that you can access on the 2nd floor, check that out if you haven't yet.");
 						} else {
-							Pokemon.addTask(Task.TEXT, "You found him? How'd it go? Are you and your Pokemon okay?");
-							Pokemon.addTask(Task.TEXT, "You got wire cutters? Quick, let's try and cut that creature free and stop this madness!");
-							Pokemon.addTask(Task.TEXT, "I'll try and make sure the possessed people are okay. Good luck!");
+							Pokemon.addTask(Task.DIALOGUE, npc, "You found him? How'd it go? Are you and your Pokemon okay?");
+							Pokemon.addTask(Task.DIALOGUE, npc, "You got wire cutters? Quick, let's try and cut that creature free and stop this madness!");
+							Pokemon.addTask(Task.DIALOGUE, npc, "I'll try and make sure the possessed people are okay. Good luck!");
 							p.flag[2][10] = true;
 							Pokemon.addTask(Task.FLASH_IN, "");
 							Pokemon.addTask(Task.UPDATE, "");
@@ -1032,8 +1033,8 @@ public class PlayerCharacter extends Entity {
 								Pokemon.addTask(Task.FLASH_IN, "");
 								Pokemon.addTask(Task.UPDATE, "");
 								Pokemon.addTask(Task.FLASH_OUT, "");
-								Pokemon.addTask(Task.TEXT, "Bzzz....Zzzzttt..... ZUZUZUURRKIII!!!");
-								Pokemon.addTask(Task.TEXT, "(The mysterious creature seems shell-shocked, and is now lashing out at everything around it!)");
+								Pokemon.addTask(Task.DIALOGUE, npc, "Bzzz....Zzzzttt..... ZUZUZUURRKIII!!!");
+								Pokemon.addTask(Task.DIALOGUE, npc, "(The mysterious creature seems shell-shocked, and is now lashing out at everything around it!)");
 								Task t = Pokemon.addTask(Task.BATTLE, "");
 								t.counter = 387;
 								t.start = 284;
@@ -1041,8 +1042,8 @@ public class PlayerCharacter extends Entity {
 						}
 					}
 				} else if (worldY / gp.tileSize < 42) { // Player wiped, talked to her from the other side
-					Pokemon.addTask(Task.TEXT, "Oh, there you are. What happened?");
-					Pokemon.addTask(Task.TEXT, "They must have beaten you up... You're definitely a tough kid, but I need you back in there. Maybe be extra careful this time.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Oh, there you are. What happened?");
+					Pokemon.addTask(Task.DIALOGUE, npc, "They must have beaten you up... You're definitely a tough kid, but I need you back in there. Maybe be extra careful this time.");
 					Task t = Pokemon.addTask(Task.TELEPORT, "");
 					t.counter = 28;
 					t.start = 82;
@@ -1050,24 +1051,24 @@ public class PlayerCharacter extends Entity {
 					t.wipe = false;
 				} else { // millie 5
 					p.flag[2][13] = true;
-					Pokemon.addTask(Task.TEXT, "Even though bug Pokemon aren't as flimsy and weak as they seem, I still have a feeling that you'll be able to defeat me.");
-					Pokemon.addTask(Task.TEXT, "I mean, you were literally able to fend off a huge alien bug and save me and my town!");
-					Pokemon.addTask(Task.TEXT, "Have you noticed the big openings in the Earth around this area? There's lots more around this region.");
-					Pokemon.addTask(Task.TEXT, "There's a pretty interesting myth that my mom would tell me stories of when I was younger.");
-					Pokemon.addTask(Task.TEXT, "She said that the terrain wasn't always so rough, that it's actually the result of an ancient war that happened.");
-					Pokemon.addTask(Task.TEXT, "According to the myth, there used to be a cult-like following of an all-powerful diety that apparently created the Pokemon and people living here!");
-					Pokemon.addTask(Task.TEXT, "But once people discovered the existance of alien Pokemon and the Galactic type, their religion was proven obsolete by the athiests.");
-					Pokemon.addTask(Task.TEXT, "Or at least the athiests tried to disprove it that way. As you can imagine, it didn't go over too well with the believers, erupting in the massive conflict.");
-					Pokemon.addTask(Task.TEXT, "Apparently the destruction of the terrain was actually caused by the leaders of each group fighting, who are rumored to both be powerful Pokemon.");
-					Pokemon.addTask(Task.TEXT, "But, as one of my favorite creators would say, that's \"just a theory\", after all.");
-					Pokemon.addTask(Task.TEXT, "I do like thinking about it though, it's pretty interesting, wouldn't you agree?");
-					Pokemon.addTask(Task.TEXT, "..What's that? Oh right! Silly me, I was going to give you a technique to help traverse the gaps!");
-					Pokemon.addTask(Task.TEXT, "I just got side-tracked thinking about all of the cool films that could be made about that myth. It's a pretty popular one around here!");
-					Pokemon.addTask(Task.TEXT, "Anyways, I'm only giving you this technique because even though you can't use it until you beat me, I know you have the skills to do it.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Even though bug Pokemon aren't as flimsy and weak as they seem, I still have a feeling that you'll be able to defeat me.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "I mean, you were literally able to fend off a huge alien bug and save me and my town!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Have you noticed the big openings in the Earth around this area? There's lots more around this region.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "There's a pretty interesting myth that my mom would tell me stories of when I was younger.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "She said that the terrain wasn't always so rough, that it's actually the result of an ancient war that happened.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "According to the myth, there used to be a cult-like following of an all-powerful diety that apparently created the Pokemon and people living here!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "But once people discovered the existance of alien Pokemon and the Galactic type, their religion was proven obsolete by the athiests.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Or at least the athiests tried to disprove it that way. As you can imagine, it didn't go over too well with the believers, erupting in the massive conflict.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Apparently the destruction of the terrain was actually caused by the leaders of each group fighting, who are rumored to both be powerful Pokemon.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "But, as one of my favorite creators would say, that's \"just a theory\", after all.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "I do like thinking about it though, it's pretty interesting, wouldn't you agree?");
+					Pokemon.addTask(Task.DIALOGUE, npc, "..What's that? Oh right! Silly me, I was going to give you a technique to help traverse the gaps!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "I just got side-tracked thinking about all of the cool films that could be made about that myth. It's a pretty popular one around here!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Anyways, I'm only giving you this technique because even though you can't use it until you beat me, I know you have the skills to do it.");
 					Task t = Pokemon.addTask(Task.ITEM, "");
 					t.item = Item.HM03;
-					Pokemon.addTask(Task.TEXT, "Come fight me inside when you're ready, I know it'll be an amazing battle. Maybe even one we'll turn into a film when you're a world-famous trainer someday!");
-					Pokemon.addTask(Task.TEXT, "Good luck, my friend. You're going to need it! EEK I'm so excited!!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Come fight me inside when you're ready, I know it'll be an amazing battle. Maybe even one we'll turn into a film when you're a world-famous trainer someday!");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Good luck, my friend. You're going to need it! EEK I'm so excited!!");
 					Pokemon.addTask(Task.FLASH_IN, "");
 					Pokemon.addTask(Task.UPDATE, "");
 					Pokemon.addTask(Task.FLASH_OUT, "");
@@ -1075,7 +1076,7 @@ public class PlayerCharacter extends Entity {
 			}
 		} else if (gp.currentMap == 49) {
 			p.flag[2][14] = true;
-			Pokemon.addTask(Task.TEXT, "I encountered this very strong Pokemon, and I don't think I'm strong enough to train it. Here!");
+			Pokemon.addTask(Task.DIALOGUE, npc, "I encountered this very strong Pokemon, and I don't think I'm strong enough to train it. Here!");
 			Random gift = new Random();
 			int id;
 			int counter = 0;
@@ -1105,7 +1106,7 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.GIFT, "", result);
 		} else if (gp.currentMap == 50) {
 			p.flag[3][9] = true;
-			Pokemon.addTask(Task.TEXT, "Great choice young cracka!!!!");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Great choice young cracka!!!!");
 			Random gift = new Random();
 			int id = gift.nextInt(3); // Otterpor, Florline, Flameruff
 			switch (id) {
@@ -1120,7 +1121,7 @@ public class PlayerCharacter extends Entity {
 				break;
 			}
 			if (p.pokedex[id] == 2) {
-				Pokemon.addTask(Task.TEXT, "Wait..... you have that\none?!?!? Shit. Well, take\nthis one instead bozo");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Wait..... you have that\none?!?!? Shit. Well, take\nthis one instead bozo");
 				Random gift2 = new Random();
 				boolean sparkitten = gift2.nextBoolean();
 				if (sparkitten) {
@@ -1134,18 +1135,18 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.GIFT, "", result);
 		} else if (gp.currentMap == 39) {
 			p.flag[3][0] = true;
-			Pokemon.addTask(Task.TEXT, "Well, I say it's weather, more like the atmospheric nonsense going outside.");
-			Pokemon.addTask(Task.TEXT, "Jeez it's so bright, worse than the time I stared directly at the sun.");
-			Pokemon.addTask(Task.TEXT, "But hey Alakazam, you live and you learn. Thankfully I brought these awesome Pit Sevipers!");
-			Pokemon.addTask(Task.TEXT, "These suckers block out all kinds of rays, heat rays, UV rays, even Confuse Rays!");
-			Pokemon.addTask(Task.TEXT, "You look quite strained, I'll let you borrow these since I wasn't planning on sticking around long anyways.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Well, I say it's weather, more like the atmospheric nonsense going outside.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Jeez it's so bright, worse than the time I stared directly at the sun.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "But hey Alakazam, you live and you learn. Thankfully I brought these awesome Pit Sevipers!");
+			Pokemon.addTask(Task.DIALOGUE, npc, "These suckers block out all kinds of rays, heat rays, UV rays, even Confuse Rays!");
+			Pokemon.addTask(Task.DIALOGUE, npc, "You look quite strained, I'll let you borrow these since I wasn't planning on sticking around long anyways.");
 			Task t = Pokemon.addTask(Task.ITEM, "");
 			t.item = Item.VISOR;
-			Pokemon.addTask(Task.TEXT, "If you put those on you should be able to see a lot better outside, it's crazy out there.");
-			Pokemon.addTask(Task.TEXT, "To be honest with you dude, I'm not even sure why it's so darn bright... and the local school is in a full blown panic about it.");
-			Pokemon.addTask(Task.TEXT, "The classrooms are all locked and there's no sign of the teachers... come to think of it, that should probably be looked at.");
-			Pokemon.addTask(Task.TEXT, "Just don't think I'll be doing too much of the \"looking\", because you have my one and only pair of shades.");
-			Pokemon.addTask(Task.TEXT, "Thankfully I don't ever have to go outside, I can teleport around! Alakazam, let's show him our newest trick!");
+			Pokemon.addTask(Task.DIALOGUE, npc, "If you put those on you should be able to see a lot better outside, it's crazy out there.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "To be honest with you dude, I'm not even sure why it's so darn bright... and the local school is in a full blown panic about it.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "The classrooms are all locked and there's no sign of the teachers... come to think of it, that should probably be looked at.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Just don't think I'll be doing too much of the \"looking\", because you have my one and only pair of shades.");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Thankfully I don't ever have to go outside, I can teleport around! Alakazam, let's show him our newest trick!");
 			Pokemon.addTask(Task.FLASH_IN, "");
 			Pokemon.addTask(Task.UPDATE, "");
 			Pokemon.addTask(Task.FLASH_OUT, "");
@@ -1549,8 +1550,10 @@ public class PlayerCharacter extends Entity {
 			gp.ui.showMessage(Item.breakString("There are two Pokemon still inside the machine. Wonder what Dad will do with them?", 42));
 		} else if (p.flag[0][4] && p.badges < 1) { // After the first gate but before beating Gym 1
 			gp.ui.showMessage(Item.breakString("There's still a Pokemon left! Dad must've given one to Scott as well!", 42));
-		} else if (p.badges > 1) { // After beating Gym 1 TODO add different dialogue after beating Fred 1 but before Gym 2
+		} else if (p.badges > 1 && !p.flag[1][0]) { // After beating Gym 1
 			gp.ui.showMessage("There aren't any Pokemon inside.");
+		} else { // Dialogue after beating Fred 1 but before Gym 2
+			gp.ui.showMessage(Item.breakString("There aren't any Pokemon left, Dad must've given one to Scott and one to Fred.", 42));
 		}
 		
 	}
@@ -1901,6 +1904,19 @@ public class PlayerCharacter extends Entity {
 			for (int i = 0; i < p.bag.count.length; i++) {
 				p.bag.count[i] = 1;
 			}
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("ITEMHASH")) {
+			// Create a list from the entry set of the itemMap
+		    List<Map.Entry<Item, Integer>> itemList = new ArrayList<>(gp.aSetter.itemMap.entrySet());
+		    itemList.removeIf(entry -> entry.getKey() == null);
+
+		    // Sort the list based on the item name (assuming Item class has a getName() method)
+		    itemList.sort((entry1, entry2) -> entry1.getKey().toString().compareToIgnoreCase(entry2.getKey().toString()));
+
+		    // Print the sorted item list
+		    for (Map.Entry<Item, Integer> entry : itemList) {
+		        System.out.println(entry.getKey().toString() + "," + entry.getValue());
+		    }
 			SwingUtilities.getWindowAncestor(cheats).dispose();
 		}
 	}

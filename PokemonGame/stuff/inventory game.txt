@@ -266,14 +266,14 @@ Before
 ""
 ""
 ""
-"I'm always in top shape. Can you say the same?"
+""
 "Time to light this battle up! You ready?"
 After
 
 ""
 ""
 ""
-"Not bad... but this athlete never stays down for long."
+""
 "I'll hit the track and come back even stronger."
 
 Hiker (Ground/Rock/Steel)
@@ -459,14 +459,14 @@ Before
 
 ""
 ""
-"Hope you're not afraid of the cold—this battle's about to freeze you out!"
+""
 "I've seen harsh conditions, but you're about to face the frost of defeat."
 "Prepare for an expedition into icy defeat!"
 After
 
 ""
 ""
-"You're tougher than the frostbite I've faced... I respect that."
+""
 "I'll be better prepared for the next expedition."
 "The cold got to me this time... but I'll warm up next time."
 

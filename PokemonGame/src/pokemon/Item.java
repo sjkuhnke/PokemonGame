@@ -63,10 +63,11 @@ public enum Item {
 	GOLD_BOTTLE_CAP(28,0,1000,new Color(255, 215, 0),Item.OTHER,null,"Maxes out all IVs of a Pokemon."),
 	EUPHORIAN_GEM(19,500,250,new Color(138, 237, 255),Item.OTHER,null,"Grants a Pokemon 100 friendship points"),
 	LEAF_STONE(20,1000,500,new Color(0, 120, 20),Item.OTHER,null,"Evolves a certain species of Pokemon"),
+	FIRE_STONE(264,1000,500,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon"),
+	WATER_STONE(283,1000,500,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon"),
 	DUSK_STONE(21,1000,500,new Color(64, 64, 64),Item.OTHER,null,"Evolves a certain species of Pokemon"),
 	DAWN_STONE(22,1000,500,new Color(0, 176, 179),Item.OTHER,null,"Evolves a certain species of Pokemon"),
 	ICE_STONE(23,1000,500,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon"),
-	FIRE_STONE(264,1000,500,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon"),
 	VALIANT_GEM(24,2000,500,new Color(72, 75, 219),Item.OTHER,null,"Grants Masculine energy to a Pokemon, evolving them into their male evolution"),
 	PETTICOAT_GEM(25,2000,500,new Color(204, 61, 140),Item.OTHER,null,"Grants Feminine energy to a Pokemon, evolving them into their female evolution"),
 	RAZOR_CLAW(265,1000,500,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon"),
@@ -271,6 +272,13 @@ public enum Item {
 	ORAN_BERRY(229,25,5,new Color(80, 160, 240),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to restore 10 HP to itself."),
 	SITRUS_BERRY(230,50,15,new Color(248, 232, 104),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to restore 25% of HP to itself."),
 	WIKI_BERRY(231,75,20,new Color(144, 112, 224),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to restore 33% HP should it find itself in a pinch."),
+	SPELON_BERRY(275,40,10,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Attack is lowered, that stat will be restored."),
+	BELUE_BERRY(276,50,10,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Defense is lowered, that stat will be restored."),
+	PAMTRE_BERRY(277,60,15,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Sp. Atk is lowered, that stat will be restored."),
+	DURIN_BERRY(278,50,10,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Sp. Def is lowered, that stat will be restored."),
+	WATMEL_BERRY(279,40,10,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Speed is lowered, that stat will be restored."),
+	WEPEAR_BERRY(280,60,15,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Accuracy is lowered, that stat will be restored."),
+	BLUK_BERRY(281,30,5,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Evasion is lowered, that stat will be restored."),
 	OCCA_BERRY(232,50,10,PType.FIRE.getColor(),Item.BERRY,null,"If a Pokemon holding this Berry is hit with a supereffective Fire-type move, the power of that move will be weakened."),
 	PASSHO_BERRY(233,50,10,PType.WATER.getColor(),Item.BERRY,null,"If a Pokemon holding this Berry is hit with a supereffective Water-type move, the power of that move will be weakened."),
 	WACAN_BERRY(234,50,10,PType.ELECTRIC.getColor(),Item.BERRY,null,"If a Pokemon holding this Berry is hit with a supereffective Electric-type move, the power of that move will be weakened."),
@@ -311,13 +319,6 @@ public enum Item {
 	GROUND_KEY(272,0,0,Color.BLACK,Item.KEY_ITEM,null,"A key that unlocks Ground Master's Classroom."),
 	SHOVEL(273,0,0,Color.BLACK,Item.KEY_ITEM,null,"A handy tool that can shovel snowballs to clear them."),
 	ICE_PICK(274,0,0,Color.BLACK,Item.KEY_ITEM,null,"A cold metal pickaxe used for breaking blocks of ice."),
-	SPELON_BERRY(275,40,10,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Attack is lowered, that stat will be restored."),
-	BELUE_BERRY(276,50,10,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Defense is lowered, that stat will be restored."),
-	PAMTRE_BERRY(277,60,15,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Sp. Atk is lowered, that stat will be restored."),
-	DURIN_BERRY(278,50,10,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Sp. Def is lowered, that stat will be restored."),
-	WATMEL_BERRY(279,40,10,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Speed is lowered, that stat will be restored."),
-	WEPEAR_BERRY(280,60,15,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Accuracy is lowered, that stat will be restored."),
-	BLUK_BERRY(281,30,5,Color.BLACK,Item.BERRY,null,"If a Pokemon holds one of these Berries and its' Evasion is lowered, that stat will be restored."),
 	;
 	
 	private int id;
@@ -458,7 +459,7 @@ public enum Item {
 	public String toString() {
 	    String result = "";
 	    String name = super.toString();
-	    if (name.contains("HM") || name.contains("TM")) {
+	    if (this.isTM()) {
 	        result = name + " " + getMove().toString();
 	    } else {
 	    	name = name.replace('$', '-');
@@ -729,7 +730,7 @@ public enum Item {
 				{false,false,true ,true ,true ,true ,false,true ,true ,false,false,true ,true ,true ,false,false,false,true ,true ,true ,true ,true ,false,false,false,false,false,false,true ,true ,true ,true ,true ,true ,false,false,false,true ,false,false,true ,true ,true ,true ,false,true ,true ,false,true ,true ,false,false,true ,false,false,false,true ,true ,true ,true ,true ,true ,true ,false,true ,false,false,true ,false,false,false,false,false,false,false,true ,false,false,false,false,false,false,false,true ,false,false,false,false,false,false,true ,true ,false,false,true ,false,false,true ,true ,false,false,true ,true ,true ,true ,false,true },
 				{false,false,true ,true ,true ,true ,false,true ,true ,false,false,true ,true ,true ,false,false,false,true ,true ,true ,true ,true ,false,true ,false,false,false,false,true ,true ,true ,true ,true ,true ,false,false,false,true ,false,false,true ,true ,true ,true ,false,true ,true ,false,true ,true ,false,false,true ,false,false,false,true ,true ,true ,true ,true ,true ,true ,false,true ,true ,false,true ,false,false,false,false,true ,true ,false,true ,false,false,false,false,false,false,false,true ,false,false,false,false,false,false,true ,true ,false,false,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,false,true }, // 227
 				{false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true },
-				{false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true }, // 229
+				{true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true ,true }, // 229
 				{false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true },
 				{false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true }, // 231
 				{false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true },
@@ -833,6 +834,8 @@ public enum Item {
 			check = new int[] {38, 108};
 		} else if (this == Item.FIRE_STONE) {
 			check = new int[] {278, 281};
+		} else if (this == Item.WATER_STONE) {
+			check = new int[] {132, 139, 148};
 		} else if (this == Item.RAZOR_CLAW) {
 			check = new int[] {247, 249};
 		} else {
@@ -1579,7 +1582,7 @@ public enum Item {
 	}
 	
 	public boolean isBerry() {
-		return (getID() >= 221 && getID() <= 259);
+		return pocket == Item.BERRY;
 	}
 	
 	public boolean isStatusBerry() {
@@ -1644,5 +1647,9 @@ public enum Item {
 
 	public String superToString() {
 		return super.toString();
+	}
+
+	boolean isStatBerry() {
+		return (getID() >= 275 && getID() <= 281);
 	}
 }

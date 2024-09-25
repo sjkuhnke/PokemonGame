@@ -12,6 +12,8 @@ import javax.imageio.ImageIO;
 
 import overworld.GamePanel;
 import pokemon.Item;
+import pokemon.Pokemon;
+import pokemon.Pokemon.Task;
 import pokemon.Trainer;
 
 public class Entity {
@@ -121,14 +123,27 @@ public class Entity {
 	}
 	
 	public void speak(int mode) {
-		if (mode == 0) {
+		if (mode == -1) {
 			if (dialogues[dialogueIndex] == null) {
 				dialogueIndex = 0;
 			}
 			gp.ui.currentDialogue = dialogues[dialogueIndex];
 			dialogueIndex++;
+		} else if (mode == 0) {
+			if (dialogues[dialogueIndex] == null) {
+				dialogueIndex = 0;
+			}
+			gp.setTaskState();
+			Pokemon.addTask(Task.DIALOGUE, this, dialogues[dialogueIndex]);
+			dialogueIndex++;
 		} else if (mode == 1) {
-			gp.ui.currentDialogue = altDialogue;
+			gp.setTaskState();
+			Pokemon.addTask(Task.DIALOGUE, this, altDialogue);
+		} else if (mode == 2) {
+			String[] altDialogues = altDialogue.split("\n");
+			for (String s : altDialogues) {
+				Pokemon.addTask(Task.DIALOGUE, this, s);
+			}
 		}
 	}
 	
@@ -252,5 +267,14 @@ public class Entity {
 	
 	public int getWorldY() {
 		return worldY;
+	}
+
+	public String getName() {
+		if (trainer > 0) {
+			String[] words = Trainer.getTrainer(trainer).toString().split(" ");
+			return words[words.length - 1];
+		} else {
+			return name;
+		}
 	}
 }

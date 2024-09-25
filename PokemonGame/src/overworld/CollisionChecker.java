@@ -226,7 +226,7 @@ public class CollisionChecker {
 
 	    if ((target instanceof NPC_Trainer) && target != null) {
 	        Rectangle entityRange = new Rectangle(entity.worldX + entity.solidArea.x, entity.worldY + entity.solidArea.y, entity.solidArea.width, entity.solidArea.height);
-	        Rectangle trainerRange = new Rectangle(target.worldX, target.worldY + target.height - gp.tileSize, gp.tileSize, gp.tileSize - 16);
+	        Rectangle trainerRange = new Rectangle(target.worldX, target.worldY, target.solidArea.width, target.solidArea.height);
 
 	        switch (target.direction) {
 	            case "up": {

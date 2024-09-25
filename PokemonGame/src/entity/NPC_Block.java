@@ -29,7 +29,7 @@ public class NPC_Block extends Entity {
 			super.speak(mode);
 		} else {
 			gp.setTaskState();
-			Pokemon.addTask(Task.TEXT, dialogues[dialogueIndex]);
+			Pokemon.addTask(Task.DIALOGUE, this, dialogues[dialogueIndex]);
 		}
 	}
 }

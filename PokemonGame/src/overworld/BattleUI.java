@@ -1123,7 +1123,7 @@ public class BattleUI extends AbstractUI {
 			}
 			
 			if (fMove != null && uMove == Move.SUCKER_PUNCH && fMove.cat == 2) uMove = Move.FAILED_SUCKER;
-			faster.move(slower, uMove, true);
+			faster.moveInit(slower, uMove, true);
 			faster = faster.trainer.getCurrent();
 			if (slower.trainer != null) slower = slower.trainer.getCurrent();
 			
@@ -1136,7 +1136,7 @@ public class BattleUI extends AbstractUI {
 			}
 			
 	        if (!(foe.trainer != null && slower != foe.trainer.getCurrent()) && foeCanMove) {
-	        	slower.move(faster, fMove, false);
+	        	slower.moveInit(faster, fMove, false);
 	        	faster = faster.trainer.getCurrent();
 	        	if (foe.trainer != null) slower = foe.trainer.getCurrent();
 	        }
@@ -1154,7 +1154,7 @@ public class BattleUI extends AbstractUI {
 			
 			if (uMove != null && fMove == Move.SUCKER_PUNCH && uMove.cat == 2) fMove = Move.FAILED_SUCKER;
 			if (foeCanMove) {
-				faster.move(slower, fMove, true);
+				faster.moveInit(slower, fMove, true);
 				if (faster.trainer != null) faster = faster.trainer.getCurrent();
 				slower = slower.trainer.getCurrent();
 				foeMove = null;
@@ -1165,7 +1165,7 @@ public class BattleUI extends AbstractUI {
 	        }
 			
 	        if (slower == user.trainer.getCurrent()) {
-	        	slower.move(faster, uMove, false);
+	        	slower.moveInit(faster, uMove, false);
 	        	if (faster.trainer != null) faster = faster.trainer.getCurrent();
 				slower = slower.trainer.getCurrent();
 	        }
