@@ -2449,7 +2449,7 @@ public class UI extends AbstractUI {
 		if (counter == 50) {
 			counter = 0;
 			if (currentTask != null && currentTask.type == Task.TELEPORT) {
-				gp.setTaskState();
+				gp.gameState = GamePanel.TASK_STATE;
 				gp.currentMap = currentTask.counter;
 				gp.player.worldX = gp.tileSize * currentTask.start;
 				gp.player.worldY = gp.tileSize * currentTask.finish;
@@ -2464,7 +2464,7 @@ public class UI extends AbstractUI {
 				if (tasks.isEmpty()) {
 					gp.gameState = GamePanel.PLAY_STATE;
 				} else {
-					gp.setTaskState();
+					gp.gameState = GamePanel.TASK_STATE;
 				}
 
 				gp.currentMap = gp.eHandler.tempMap;

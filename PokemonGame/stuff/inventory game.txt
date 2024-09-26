@@ -332,29 +332,29 @@ Before
 ""
 ""
 "I fight with honor, but I won't go easy on you."
-"This is gonna hurt... but only for you."
-"My fists are my words. Let's have a ‘conversation.'"
+""
+""
 After
 
 ""
 ""
 "A powerful opponent. I'll train harder for the next round."
-"Defeated, but never broken."
-"You hit hard, but next time, I'll hit harder."
+""
+""
 
 Bug Catcher (Bug)
 Before
 
-"Bugs may be small, but they've got big power. Watch out!"
-"Get ready to be swarmed!"
-"You're about to find out why bugs rule the world!"
+""
+""
+""
 "You think you can squash my team? Think again!"
 "These little guys pack a punch, don't underestimate them!"
 After
 
-"I guess I'll need to find some stronger bugs..."
-"You're tougher than a Caterpie. I'll give you that."
-"Looks like I need to evolve too..."
+""
+""
+""
 "Squashed me, huh? Next time, I'll sting harder!"
 "I may have lost, but bugs always come back."
 
@@ -460,29 +460,29 @@ Before
 ""
 ""
 ""
-"I've seen harsh conditions, but you're about to face the frost of defeat."
-"Prepare for an expedition into icy defeat!"
+""
+""
 After
 
 ""
 ""
 ""
-"I'll be better prepared for the next expedition."
-"The cold got to me this time... but I'll warm up next time."
+""
+""
 
 Gentleman (Any)
 Before
 
-"A fine battle calls for refinement and skill. Let's proceed with grace."
 ""
-"May the best trainer win, but rest assured, it will be me."
+""
+""
 "Good form, good strategy - that's all it takes. Prepare yourself."
 "Let's make this a fight to remember - one you'll never forget."
 After
 
-"Well played, my friend. A loss is but a lesson in disguise."
 ""
-"You fought with honor. I respect that greatly."
+""
+""
 "A defeat, yes, but hardly a disgrace. I'll return better."
 "Splendid match. I look forward to our next encounter."
 
@@ -491,62 +491,62 @@ Before
 
 ""
 ""
-"Let's keep this battle civilized, but make no mistake - I plan to win."
-"You may think I'm all grace, but you'll soon learn otherwise."
+""
+""
 "Prepare for a match of wit and power, darling."
 After
 
 ""
 ""
-"A surprising result... but I won't dwell on it for long."
-"You've won this round. Enjoy it while it lasts."
+""
+""
 "I suppose I'll have to work on my strategy. Well done."
 
 Maniac (Ghost)
 Before
 
 ""
-"The spirits whisper to me... They say you're next."
 ""
 ""
-"You're about to face your nightmares made real."
+""
+""
 After
 
 ""
-"I've tasted defeat... but I'll rise again, like the restless dead."
 ""
 ""
-"I disappear... for now. But don't think this is over."
+""
+""
 
 Magician (M) (Magic)
 Before
 
 ""
-"I'll make your victory... disappear!"
-"This battle is going to be magic. Too bad you're not prepared for it."
+""
+""
 "Watch closely... or you'll miss the moment your chances vanish!"
 "Prepare to be amazed... as I pull a win out of thin air!"
 After
 
 ""
-"The magic didn't work this time, but next time, I'll be the master of illusions!"
-"You're good... but I'll conjure a victory eventually."
+""
+""
 "Looks like my sleight of hand wasn't enough this time."
 "The show's not over yet... I'll be back with something better."
 
 Magician (F) (Magic)
 Before
 
-"Welcome to the grand performance! Prepare to be dazzled!"
-"Let's make your chances disappear in a puff of smoke!"
-"I'm about to cast a spell... on your defeat!"
+""
+""
+""
 "A bit of illusion, a touch of flair... and a victory for me!"
 "Let's see if you can keep up with my magical performance!"
 After
 
-"Oh dear, looks like I've lost the trick. I'll rehearse for next time!"
-"You may have bested me, but magic is full of surprises."
-"My illusions failed me, but I'll perfect them soon enough."
+""
+""
+""
 "I'll make sure this defeat disappears from memory."
 "The show's not over yet... just you wait for the encore!"
 
@@ -586,17 +586,18 @@ Youngster (Normal/Poison)
 Before
 
 ""
+"Just because I'm small doesn't mean my Pokemon won't crush you!"
+"This is going to be a quick win for me!"
+"Get ready, ‘cause my Normal-types are anything but boring!"
 ""
-"Age doesn't matter - my Pokemon are tough!"
-"I might be small, but my Pokemon pack a punch!"
-"Ready for a lesson from someone younger than you?"
+
 After
 
 ""
+"Ugh, maybe I should train a little harder…"
+"You just got lucky this time!"
+"Okay, okay... I guess you're pretty good."
 ""
-"You won this time, but I'm just getting started!"
-"I'll get stronger, just you wait!"
-"Next time, I'll wipe that smirk off your face!"
 
 Team Eclipse
 Before Battle

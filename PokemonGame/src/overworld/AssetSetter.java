@@ -886,8 +886,13 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(38, 39, Item.ICE_PICK, mapNum);
 		
 		mapNum = 164;
+		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(32, 38, Item.TERRAIN_EXTENDER, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 38, Item.SHOVEL, mapNum);
+		
+		mapNum = 165;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 41, Item.RAZOR_CLAW, mapNum);
 		
 		mapNum = 166;
 		gp.obj[mapNum][objIndex] = ObjSetup(41, 45, Item.ICE_STONE, mapNum);
@@ -1025,7 +1030,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_UP, 69, 53, "It's the perfect day for a picnic... and a battle!", "Well... that put a damper on my picnic plans.", 24);
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_UP, 50, 60, "Let's see if your endurance matches your strategy.", "Looks like I need to step up my training.", 25);
 		gp.npc[mapNum][index] = NPCSetup(BURGLAR_UP, 59, 62, "Don't do the crime if you can't take the time. Lucky I've got plenty of time on my hands!", "You got lucky this time. I'm outta here!", 26);
-		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_UP, 76, 56, "Welcome to the grand performance! Prepare to be dazzled!", "", 27);
+		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_UP, 76, 56, "Welcome to the grand performance! Prepare to be dazzled!", "Oh dear, looks like I've lost the trick. I'll rehearse for next time!", 27);
 		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_DOWN, 53, 47, "My brother's a top angler! Look what he caught!", "Guess we need to hit the creek.", 28);
 		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_UP, 53, 53, "I caught a rare fish! Wouldn't you like to get destroyed by it!", "Just wait until it evolves. I'll be back.", 29);
 		gp.npc[mapNum][index] = NPCSetup(HIKER_UP, 76, 47, "Bet you're not ready for the weight of this battle.", "Even mountains can be climbed, I guess.", 30);
@@ -1116,40 +1121,48 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 46, 33, "That was an impressive battle! I found a rare MAGIC Pokemon, but after watching that, you'd be a better trainer. Here!", true, 66, "Enjoy all the wonders of the MAGIC type!");
 		
 		mapNum = 21;
-		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_DOWN, 55, 60, "", "", 56);
-		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_UP, 55, 62, "", "", 57);
-		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_DOWN, 72, 52, "", "", 58);
-		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_UP, 72, 54, "", "", 59);
-		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_RIGHT, 73, 57, "", "", 60);
-		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_LEFT, 75, 57, "", "", 61);
-		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_DOWN, 72, 46, "", "", 62);
-		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_UP, 72, 48, "", "", 63);
-		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_DOWN, 54, 46, "", "", 64);
-		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_UP, 54, 48, "", "", 65);
+		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_DOWN, 55, 60, "A fine battle calls for refinement and skill. Let's proceed with grace.", "Well played, my friend. A loss is but a lesson in disguise.", 56);
+		gp.npc[mapNum][index] = NPCSetup(LADY_UP, 55, 62, "Let's keep this battle civilized, but make no mistake - we plan to win.", "A surprising result... but I won't dwell on it for long.", 57);
+		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_DOWN, 72, 52, "Ready for a lesson from someone younger than you?", "Next time, I'll wipe that smirk off your face!", 58);
+		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_UP, 72, 54, "We might be small, but our Pokemon pack a punch!", "I'll get stronger, just you wait!", 59);
+		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_RIGHT, 73, 57, "Let's make your chances disappear in a puff of smoke!", "You may have bested us, but magic is full of surprises.", 60);
+		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_M_LEFT, 75, 57, "This battle is going to be magic. Too bad you're not prepared for it.", "You're good... but I'll conjure a victory eventually.", 61);
+		gp.npc[mapNum][index] = NPCSetup(BLACK_BELT_DOWN, 72, 46, "This is gonna hurt... but only for you.", "Defeated, but never broken.", 62);
+		gp.npc[mapNum][index] = NPCSetup(BLACK_BELT_UP, 72, 48, "My fists are my words. Let's have a 'conversation.'", "You hit hard, but next time, I'll hit harder.", 63);
+		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_DOWN, 54, 46, "We've been training nonstop! You don't stand a chance!", "Aw man! How did you beat me?!", 64);
+		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_UP, 54, 48, "We may be young, but my Pokemon have bite - literally!", "You won, but next time I'll ruin your chances!", 65);
 		
-		gp.npc[mapNum][index] = NPCSetup(STANFORD, 63, 39, "", "", 66);
+		gp.npc[mapNum][index] = NPCSetup(STANFORD, 63, 39, "So you made it, huh. Seems like you're floating on your momentum right now, and I don't like it.\n"
+				+ "I appreciate you actually caring about our town, but I'm giving you an ego check.\n"
+				+ "Don't expect any special treatment from me. I don't care how many favors you've done - this battle is no different.\n"
+				+ "Normal Pokemon don't need fancy tricks to win. We're strong, steady, and tough.\n"
+				+ "So come on, let's see if you've got what it takes.",
+				"Hmph... You actually beat me. Fuck.\n"
+				+ "Maybe you're tougher than you look. I'll admit, you earned it, but don't let it go to your head.\n"
+				+ "You saved my town, sure, but that doesn't mean I'll go easy on you next time.\n"
+				+ "Take the badge and get out of here before I change my mind.\n", 66);
 		
 		mapNum = 22;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(LADY_DOWN, 80, 8, "", "", 67);
-		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 78, 12, "", "", 68);
-		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_DOWN, 72, 10, "", "", 69);
-		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_M_UP, 69, 14, "", "", 70);
+		gp.npc[mapNum][index] = NPCSetup(LADY_DOWN, 80, 8, "You may think I'm all grace, but you'll soon learn otherwise.", "You've won this round. Enjoy it while it lasts.", 67);
+		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 78, 12, "You're about to face your nightmares made real.", "I disappear... for now. But don't think this is over.", 68);
+		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_DOWN, 72, 10, "You're about to find out why bugs rule the world!", "Looks like I need to evolve too...", 69);
+		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_M_UP, 69, 14, "I'll make your victory... disappear!", "The magic didn't work this time, but next time, I'll be the master of illusions!", 70);
 		
 		mapNum = 23;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 45, "Wow, there's a lot of lava over there. It's definitely not safe for any newbie trainers. If I see any of them coming this way... I swear to god...", 5);
 		
 		mapNum = 24;
-		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_RIGHT, 68, 63, "", "", 75, ALL);
-		gp.npc[mapNum][index] = NPCSetup(EXPLORER_UP, 79, 59, "", "", 267);
-		gp.npc[mapNum][index] = NPCSetup(EXPLORER_DOWN, 83, 55, "", "", 268);
+		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_RIGHT, 68, 63, "I'm about to cast a spell... on your defeat!", "My illusions failed me, but I'll perfect them soon enough.", 75, ALL);
+		gp.npc[mapNum][index] = NPCSetup(EXPLORER_UP, 79, 59, "I've seen harsh conditions, but you're about to face the frost of defeat.", "I'll be better prepared for the next expedition.", 267);
+		gp.npc[mapNum][index] = NPCSetup(EXPLORER_DOWN, 83, 55, "Prepare for an expedition into icy defeat!", "The cold got to me this time... but I'll warm up next time.", 268);
 		
 		mapNum = 25;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_RIGHT, 71, 65, "", "", 76, LEFT + RIGHT);
-		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 73, 80, "", "", 77, ALL);
-		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 66, 87, "", "", 78);
+		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_RIGHT, 71, 65, "May the best trainer win, but rest assured, it will be me.", "You fought with honor. I respect that greatly.", 76, LEFT + RIGHT);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 73, 80, "I've seen all sorts of things, I've traveled all over the world. Check out my exotic team!", "Maybe I should look under my nose for some more power. These guys weren't good enough...", 77, ALL);
+		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 66, 87, "The spirits whisper to me... They say you're next.", "I've tasted defeat... but I'll rise again, like the restless dead.", 78);
 		
 		mapNum = 26;
 		index = 0;
@@ -1184,7 +1197,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index++] = null; // replace with millie_up when we have it
 		gp.npc[mapNum][index] = NPCSetup(UP_XURKITREE, null, 82, 22, "Zzzzt.", true);
 		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, "Fred", 82, 32, "Ugh... Can't... Move... glrglg....");
-		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 82, 32, "", "", 89);
+		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 82, 32, "In updateNPC", "", 89);
 		gp.npc[mapNum][index++] = null; // millie 4
 		gp.npc[mapNum][index] = NPCSetup(BURGLAR_DOWN, 12, 52, "", "", 85);
 		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 13, 55, "", "", 86);
@@ -2752,7 +2765,10 @@ public class AssetSetter {
 			gp.npc[28][0] = null;
 			gp.npc[28][3] = null;
 			gp.npc[28][1] = NPCSetup(MILLIE, "Millie", 81, 36, "People say bugs are scary... This is so so much worse...", true);
-			gp.npc[28][4] = NPCSetup(FRED_DOWN, 82, 32, "Hello there.", "", 89);
+			gp.npc[28][4] = NPCSetup(FRED_DOWN, 82, 32, "AGHHH!! WHAT THE FUCK IS HAPPENING?!?!??! DIE!!!!!!",
+					"Ugh... where am I? What... what happened?\n"
+					+ "You... it was you, wasn't it? You saved me. I... don't know what to say. Thanks, I guess.\n"
+					+ "I didn't need your help, though. I could've handled it on my own. Next time we meet, I'll be ready, and I won't lose.", 89);
 		} else {
 			gp.npc[28][4] = null;
 		}

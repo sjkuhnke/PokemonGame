@@ -960,7 +960,7 @@ public class PlayerCharacter extends Entity {
 					message = "You don't have 4 Pokemon selected to bring in the Gauntlet Box! You'll be at a huge disadvantage!\nYou can choose what Pokemon to bring using the Gauntlet Box in this PC (press [\u2191] when selecting a box).\n" + message;
 				}
 				for (String s : message.split("\n")) {
-					Pokemon.addTask(Task.DIALOGUE, s);
+					Pokemon.addTask(Task.DIALOGUE, npc, s);
 				}
 				Pokemon.addTask(Task.DIALOGUE, npc, "Trust me, I had to fight off some of them, they hit hard. Especially the stunt doubles...");
 				Task t = Pokemon.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?");

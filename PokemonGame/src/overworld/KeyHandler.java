@@ -624,7 +624,7 @@ public class KeyHandler implements KeyListener {
 	
 	private void taskState(int code) {
 		if (code == KeyEvent.VK_D) {
-			if (gp.ui.currentTask == null && gp.ui.tasks.isEmpty()) {
+			if (gp.ui.currentTask == null && gp.ui.checkTasks) {
 				gp.gameState = GamePanel.PLAY_STATE;
 			} else {
 				dPressed = true;
@@ -632,7 +632,7 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (code == KeyEvent.VK_S) {
-			if (gp.ui.currentTask == null && gp.ui.tasks.isEmpty()) {
+			if (gp.ui.currentTask == null && gp.ui.checkTasks) {
 				gp.gameState = GamePanel.PLAY_STATE;
 			} else {
 				sPressed = true;

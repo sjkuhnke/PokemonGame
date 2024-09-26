@@ -61,8 +61,8 @@
 204|Dualmoose    |ICE     |MAGIC   |SNOW_CLOAK        |SPARKLY_SURGE     |MAGIC_BOUNCE      |[90, 64, 67, 85, 71, 58]      |100.0 |35 |
 162|Snom         |ICE     |BUG     |ICY_SCALES        |SWARM             |TINTED_LENS       |[30, 25, 35, 45, 30, 20]      |8.4   |190|
 163|Frosmoth     |ICE     |BUG     |ICY_SCALES        |SHIELD_DUST       |TINTED_LENS       |[70, 65, 60, 125, 90, 65]     |92.6  |75 |
-205|Grondor      |GROUND  |ICE     |STURDY            |TECHNICIAN        |NULL              |[80, 74, 87, 25, 96, 33]      |135.6 |135|
-206|Bipedice     |FIGHTING|ICE     |GUTS              |SLUSH_RUSH        |NULL              |[95, 130, 90, 45, 85, 40]     |208.1 |30 |
+205|Grondor      |GROUND  |ICE     |STURDY            |TECHNICIAN        |REFRIGERATE       |[80, 74, 87, 25, 96, 33]      |135.6 |135|
+206|Bipedice     |FIGHTING|ICE     |GUTS              |SLUSH_RUSH        |REFRIGERATE       |[95, 130, 90, 45, 85, 40]     |208.1 |30 |
 207|Tricerpup    |ROCK    |FIGHTING|ROCK_HEAD         |SAND_FORCE        |ROUGH_SKIN        |[65, 90, 120, 20, 65, 20]     |95.4  |100|
 208|Tricercil    |ROCK    |FIGHTING|ROCK_HEAD         |SAND_FORCE        |ROUGH_SKIN        |[114, 124, 130, 20, 130, 20]  |900.9 |30 |
 186|Spheal       |ICE     |WATER   |UNAWARE           |THICK_FAT         |ICE_BODY          |[70, 40, 50, 55, 50, 25]      |87.1  |255|
