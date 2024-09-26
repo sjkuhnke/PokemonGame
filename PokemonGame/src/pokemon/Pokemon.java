@@ -207,6 +207,7 @@ public class Pokemon implements Serializable {
 		
 		happiness = 70;
 		if (id == 29 || id == 134 || id == 174) happiness = 110;
+		if (t) happiness = 255;
 		catchRate = getCatchRate();
 		happinessCap = 50;
 		
@@ -1618,6 +1619,11 @@ public class Pokemon implements Serializable {
 		
 		if (this.ability == Ability.GALVANIZE && moveType == PType.NORMAL) {
 			moveType = PType.ELECTRIC;
+			bp *= 1.2;
+		}
+		
+		if (this.ability == Ability.REFRIGERATE && moveType == PType.NORMAL) {
+			moveType = PType.ICE;
 			bp *= 1.2;
 		}
 		
@@ -4537,7 +4543,7 @@ public class Pokemon implements Serializable {
 		public static final int TURN = 32; // counter: 0 = down, 1 = up, 2 = left, 3 = right
 		public static final int FLAG = 33; // start: x finish: y
 		public static final int REGIONAL_TRADE = 34;
-		public static final int BATTLE = 35; // counter: trainer
+		public static final int BATTLE = 35; // counter: trainer, start: id (optional)
 		public static final int SPOT = 36;
 		public static final int START_BATTLE = 37; // counter: trainer
 		public static final int DIALOGUE = 38;
@@ -4851,6 +4857,11 @@ public class Pokemon implements Serializable {
 		
 		if (this.ability == Ability.GALVANIZE && moveType == PType.NORMAL) {
 			moveType = PType.ELECTRIC;
+			bp *= 1.2;
+		}
+		
+		if (this.ability == Ability.REFRIGERATE && moveType == PType.NORMAL) {
+			moveType = PType.ICE;
 			bp *= 1.2;
 		}
 		

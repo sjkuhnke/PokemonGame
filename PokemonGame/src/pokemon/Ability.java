@@ -90,6 +90,7 @@ public enum Ability {
 	RECKLESS("Powers up moves that have recoil damage."),
 	REFORGE("Restores 1/16 HP at the end of each turn."),
 	REGENERATOR("Restores a little HP when withdrawn from battle."),
+	REFRIGERATE("NORMAL moves become ICE moves. The power of those moves is boosted a little."),
 	ROCK_HEAD("Prevents recoil damage."),
 	ROUGH_SKIN("Inflicts damage to the Pokemon on contact."),
 	SAND_FORCE("Boosts the power of ROCK, GROUND, and STEEL moves in a SANDSTORM."),
