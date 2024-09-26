@@ -332,7 +332,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 48, Item.TM37, mapNum); // rock tomb
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 45, Item.FREEZE_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(35, 30, Item.QUIET_MINT, mapNum); // quiet
-		gp.obj[mapNum][objIndex] = ObjSetup(31, 8, Item.TM72, mapNum); // ice spinner (v.cross)
+		//gp.obj[mapNum][objIndex] = ObjSetup(31, 8, Item.TM72, mapNum); // ice spinner (v.cross)
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(10, 72, Item.POISON_BARB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 8, Item.WIDE_LENS, mapNum);
@@ -503,7 +503,6 @@ public class AssetSetter {
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(16, 34, Item.SERIOUS_MINT, mapNum); // serious
 		gp.obj[mapNum][objIndex] = ObjSetup(41, 34, Item.HYPER_POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(54, 7, Item.ICE_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 30, Item.NEVER$MELT_ICE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(40, 30, Item.FREEZE_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 75, Item.ABILITY_CAPSULE, mapNum);
@@ -874,12 +873,26 @@ public class AssetSetter {
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 23, Item.LIECHI_BERRY, mapNum, 2, 5);
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 29, Item.PETAYA_BERRY, mapNum, 2, 5);
-		gp.obj[mapNum][objIndex] = ObjSetup(11, 15, Item.RUSTY_BOTTLE_CAP, mapNum, 2, 5);
+		gp.obj[mapNum][objIndex] = ObjSetup(11, 15, Item.RUSTY_BOTTLE_CAP, mapNum);
 		
 		mapNum = 146;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 48, Item.EVIOLITE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(89, 38, Item.TM47, mapNum); // star storm
+		
+		mapNum = 163;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(28, 39, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(38, 39, Item.ICE_PICK, mapNum);
+		
+		mapNum = 164;
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 38, Item.TERRAIN_EXTENDER, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 38, Item.SHOVEL, mapNum);
+		
+		mapNum = 166;
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 45, Item.ICE_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(38, 25, Item.ICE_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(49, 44, Item.TM72, mapNum); // ice spinner (v.cross)
 	}
 
 	public void setNPC() {
@@ -1154,7 +1167,7 @@ public class AssetSetter {
 		gp.npc[125][index] = NPCSetup(NPC_PC, 36, 35, "", "", -1);
 		
 		// Clerks
-		gp.npc[30][index] = SetupClerk(NPC_MARKET, 31, 41, Item.REPEL, Item.POKEBALL, Item.KLEINE_BAR, Item.BOTTLE_CAP, Item.TM49, Item.TM51);
+		gp.npc[30][index] = SetupClerk(NPC_MARKET, 31, 41, Item.REPEL, Item.POKEBALL, Item.KLEINE_BAR, Item.RUSTY_BOTTLE_CAP, Item.BOTTLE_CAP, Item.TM49, Item.TM51);
 		gp.npc[40][index] = SetupClerk(NPC_MARKET, 34, 38, Item.TM12, Item.TM13, Item.TM15, Item.TM16, Item.TM23, Item.TM24);
 		gp.npc[45][index] = NPCSetup(NPC_CLERK, 30, 39, "", "", -1);
 		gp.npc[87][index] = NPCSetup(NPC_CLERK, 27, 39, "", "", -1);
@@ -1264,9 +1277,7 @@ public class AssetSetter {
 		
 		mapNum = 38;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(EXPLORER_DOWN, 53, 7, "", "", 327);
-		
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 62, 41, "What is going on at the school?! Where is everybody?!?!");
+		gp.npc[mapNum][index] = NPCSetup(EXPLORER_DOWN, 53, 7, "Ah, you're here to seek my key, are you?\nI don't know what's causing this blinding light, but I can't afford to let just anyone enter my classroom. You'll need to prove your resilience first.", "You fought well - better than I expected. The Ice Master's key is yours.\nUse it wisely... those Grunts won't go down easily, but if anyone can drive them out, it's you.", 327);
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 35, 74, "", "", 138);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 51, 74, "", "", 139);
@@ -1282,33 +1293,40 @@ public class AssetSetter {
 		
 		mapNum = 41;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 42, 31, "", "", 117);
-		gp.npc[mapNum][index] = NPCSetup(TN_UP, 42, 36, "", "", 118);
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 20, 31, "", "", 119);
-		gp.npc[mapNum][index] = NPCSetup(TN_UP, 20, 36, "", "", 120);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 42, 31, "A school is just another battlefield. Don't think you're safe here.", "Fine, you beat us. But the true challenge awaits deeper inside.", 117);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 42, 36, "We've taken over the classrooms, and no one's getting in without a fight.", "You beat us, but you'll never stop what we've set in motion.", 118);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 20, 31, "You think you can unlock those classrooms? Over my defeated Pokemon!", "It's not the key you should be worried about. It's what's waiting for you next.", 119);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 20, 36, "No one escapes from Team Eclipse's field trip. You'll be schooled in defeat.", "We've lost this battle, but the school's still ours.", 120);
 		
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 14, 22, "", "", 121);
-		gp.npc[mapNum][index] = NPCSetup(TN_UP, 14, 26, "", "", 122);
-		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 19, 24, "", "", 123);
-		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 21, 22, "", "", 124);
-		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 25, 22, "", "", 125);
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 23, 16, "", "", 126);
+		mapNum = 163;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 32, 43, "You made it this far, but you won't disrupt our plans in this school.", "So you've won... but going further will only lead you to more trouble.", 121);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 30, 46, "Interrupting class? That's a grave mistake. Time for detention!", "Defeated in class... how embarrassing. Don't think it ends here.", 122);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 34, 46, "You're too late to stop us from securing the tools we need. Prepare yourself!", "You think this is over just because you've won? There are more of us waiting.", 123);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 36, 40, "You're out of your league. We've taken control of the curriculum now.", "Enjoy your little victory. You're still just another stepping stone for us.", 124);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 41, 42, "This is no place for a hero. You'll learn your lesson the hard way.", "You're smarter than you look, but that won't save you underground.", 125);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 36, 45, "It's my turn now. You got lucky last time, but your streak ends here!", "This is just a setback. Our plans won't be stopped by you!", 126);
 		
-		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 32, 24, "", "", 127);
-		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 37, 24, "", "", 128);
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 40, 18, "", "", 129);
-		gp.npc[mapNum][index] = NPCSetup(TN_UP, 40, 21, "", "", 130);
-		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 36, 17, "", "", 131);
-		gp.npc[mapNum][index] = NPCSetup(TN_UP, 32, 18, "", "", 132);
+		mapNum = 164;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 29, 46, "You're walking into a trap. This isn't just a school anymore; it's our stronghold.", "You may have passed this test, but Team Eclipse doesn't give out easy grades.", 127);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 35, 46, "You think you can handle both of us? You're in for double the trouble!", "Ugh... I guess I couldn't carry the team. You're still not out of this yet!", 128);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 30, 42, "Team Eclipse doesn't fight fair. You'll have to get through both of us!", "You may have beaten us, but our partners are next. They'll crush you!", 129);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 34, 42, "Ready for a lesson in teamwork? We'll show you what real coordination looks like.", "Fine, I'm out. Good luck with the rest of us though.", 130);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 36, 36, "You're after the shovel, huh? You'll have to go through us to get it!", "Consider this your only win. The real battle is waiting for you next.", 131);
+		gp.npc[mapNum][index] = NPCSetup(TN_UP, 37, 40, "This tool is crucial for our mission. You won't be digging your way out of this fight.", "Fine, take the shovel. It won't save you from what's coming next.", 132);
 		
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 29, 18, "Who are these people?? Have you cleared both rooms yet?", true, 31, "Thank you for restoring peace to our wonderful school!");
+		mapNum = 165;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, "Principal", 33, 41, "Ahh! Oh hello there, you gave me quite a scare - those Team Eclipse thugs are everywhere!", true, 103, "I feel like I can finally breathe again now that those Grunts are gone. It's a relief to have the school safe once more... and it's all thanks to you!");
 		
 		mapNum = 43;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(HIKER_DOWN, 31, 42, "", "", 328);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_DOWN, 31, 42, "You've come for the key, huh?\nI don't mind the bright light much, it's nothing compared to the blazing heat beneath the earth's surface.\nBut these Grunts are wreaking havoc, and I won't let them win so easily.\n Show me your strength!", "You've earned it. Take the key, and with it, take on those Grunts who've infested the school. We can't let them win.", 328);
 		
 		mapNum = 44;
 		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, "Student", 63, 64, "Sorry, but the gym's off-limits right now.", true);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 60, 61, "", "", 133);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 66, 57, "", "", 134);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 60, 52, "", "", 135);
@@ -1795,6 +1813,10 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 38, "Oh hello there, welcome to PROFESSOR PHOTON's humble abode!", true);
 		
+		mapNum = 166;
+		index = 0;
+		gp.npc[mapNum][index] = SetupStaticEncounter(285, 39, 29, 388, 104, "Gzssisssss!");
+		
 	}
 
 	public void setInteractiveTile(int map) {
@@ -1997,6 +2019,25 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(41, 7, 9, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(42, 8, 9, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(43, 7, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 16, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 22, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 27, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 11, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 15, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 17, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 23, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 26, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 27, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 8, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(61, 5, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 6, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(65, 8, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(67, 6, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(67, 13, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(66, 18, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(67, 26, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(67, 29, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(66, 30, 9, mapNum, map);
 		
 		mapNum = 41;
 		iIndex = 0;
@@ -2015,6 +2056,8 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(36, 40, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(39, 40, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(38, 41, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 41, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(37, 41, 1, mapNum, map);
 		
 		gp.iTile[mapNum][iIndex] = ITileSetup(27, 36, 7, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(31, 35, 8, mapNum, map);
@@ -2480,6 +2523,65 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(52, 68, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(48, 67, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(52, 66, 1, mapNum, map);
+		
+		mapNum = 166;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 50, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 50, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 50, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 51, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 51, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 51, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 51, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 51, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 51, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 51, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 52, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 52, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 53, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 54, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 56, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 56, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 52, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 53, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 53, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 53, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 54, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 54, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 55, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 55, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 56, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 46, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 48, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(42, 46, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 48, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 42, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 42, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 42, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 41, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 41, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 41, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 33, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 31, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(37, 29, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 28, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(36, 26, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 25, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(44, 27, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 45, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 46, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 48, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 47, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 50, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 49, 10, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(35, 31, 1, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 30, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(49, 47, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(44, 50, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 57, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 51, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 58, 3, 1, mapNum, map);
 	}
 
 	public void updateNPC(int map) {
@@ -2686,13 +2788,16 @@ public class AssetSetter {
 			gp.npc[39][3] = null;
 		}
 		if (flag[3][1]) {
-			gp.npc[38][0] = NPCSetup(EXPLORER_DOWN, "Ice Master", 53, 7, "Giving you a petticoat gem for some reason idk", true, 106, "Go save my school lol");
+			gp.npc[38][0] = NPCSetup(EXPLORER_DOWN, "Ice Master", 53, 7, "Ah, I see you've returned. This petticoat gem... I once found it in the frozen north.", true, 106, "The ice teaches patience, but it also teaches strength.");
 		}
 		if (flag[3][2]) {
-			gp.npc[43][0] = NPCSetup(HIKER_DOWN, "Ground Master", 31, 42, "Giving you a valiant gem for some reason idk", true, 107, "Go save my school lol");
+			gp.npc[43][0] = NPCSetup(HIKER_DOWN, "Ground Master", 31, 42, "I've been thinking. There's one more thing I can offer you. This valiant gem - found it on one of my most challenging digs.", true, 107, "It's good to see you again. You've got a fighting spirit that I admire.\nYou should come to my classes someday! I'm sure we could teach each other about our journeys.");
 		}
-		if (flag[3][7]) {
-			gp.npc[38][1] = null;
+		if (flag[3][7] && flag[3][8]) {
+			gp.npc[44][0] = null;
+		}
+		if (flag[3][8]) { // Icy Serpant
+			gp.npc[166][0] = null;
 		}
 		
 		/**

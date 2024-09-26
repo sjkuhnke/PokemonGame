@@ -218,7 +218,7 @@ Before
 ""
 "Dragons bow to no one. You'll understand soon enough."
 ""
-"I've trained for years—are you prepared to be humbled?"
+"I've trained for years - are you prepared to be humbled?"
 "Strength isn't just power, it's knowing when to strike."
 After
 
@@ -234,8 +234,8 @@ Before
 ""
 ""
 "Let's see if you can handle the spotlight!"
-"I don't break character—even when I'm breaking you!"
-"My performance is flawless—just like this battle will be."
+"I don't break character - even when I'm breaking you!"
+"My performance is flawless - just like this battle will be."
 After
 
 ""
@@ -476,8 +476,8 @@ Before
 "A fine battle calls for refinement and skill. Let's proceed with grace."
 ""
 "May the best trainer win, but rest assured, it will be me."
-"Good form, good strategy—that's all it takes. Prepare yourself."
-"Let's make this a fight to remember—one you'll never forget."
+"Good form, good strategy - that's all it takes. Prepare yourself."
+"Let's make this a fight to remember - one you'll never forget."
 After
 
 "Well played, my friend. A loss is but a lesson in disguise."
@@ -491,7 +491,7 @@ Before
 
 ""
 ""
-"Let's keep this battle civilized, but make no mistake—I plan to win."
+"Let's keep this battle civilized, but make no mistake - I plan to win."
 "You may think I'm all grace, but you'll soon learn otherwise."
 "Prepare for a match of wit and power, darling."
 After
@@ -587,7 +587,7 @@ Before
 
 ""
 ""
-"Age doesn't matter—my Pokemon are tough!"
+"Age doesn't matter - my Pokemon are tough!"
 "I might be small, but my Pokemon pack a punch!"
 "Ready for a lesson from someone younger than you?"
 After

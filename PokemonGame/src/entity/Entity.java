@@ -6,6 +6,8 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -149,6 +151,9 @@ public class Entity {
 	
 	public void setItems(Item... items) {
 		inventory.clear();
+		
+		Arrays.sort(items, Comparator.comparingInt(Item::getID));
+		
 		for (Item item : items) {
 			if (!item.isTM() || !gp.player.p.hasTM(item.getMove())) inventory.add(item);
 		}

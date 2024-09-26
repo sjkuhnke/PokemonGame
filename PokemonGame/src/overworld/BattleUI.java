@@ -1199,7 +1199,7 @@ public class BattleUI extends AbstractUI {
 		            	user.getPlayer().bag.add(foe.trainer.getItem());
 		            	message += "\nYou were given " + foe.trainer.getItem().toString() + "!";
 		            }
-					if (foe.trainer.getFlagIndex() != 0) {						
+					if (foe.trainer.getFlagIndex() != 0) {
 		            	user.getPlayer().flag[foe.trainer.getFlagX()][foe.trainer.getFlagY()] = true;
 		            }
 					Pokemon.addTask(Task.END, message);
