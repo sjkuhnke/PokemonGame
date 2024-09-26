@@ -263,6 +263,7 @@ public class GamePanel extends JPanel implements Runnable {
 		if (trainer > -1 && Trainer.getTrainer(trainer).update) {
 			if (id == 159) player.p.grustCount++;
 			aSetter.updateNPC(currentMap);
+			if (id == 285) ui.drawLightOverlay = determineLightOverlay();
 		}
 
 		Pokemon[] teamTemp = Arrays.copyOf(player.p.team, 6);
@@ -438,7 +439,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public boolean determineLightOverlay() {
-		return currentMap == 38 && !player.p.flag[3][8];
+		return (currentMap == 38 || currentMap == 166) && !player.p.flag[3][8];
 	}
 
 	public void setTaskState() {

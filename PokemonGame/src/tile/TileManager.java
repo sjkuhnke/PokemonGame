@@ -217,6 +217,7 @@ public class TileManager {
 		loadMap("/maps/school02.txt", 163, true);
 		loadMap("/maps/school03.txt", 164, true);
 		loadMap("/maps/school04.txt", 165, true);
+		loadMap("/maps/icy_path.txt", 166, true);
 	}
 	
 	private void setupCollisionRectangles() {
@@ -1061,7 +1062,7 @@ public class TileManager {
 		setup(827, true);
 		setup(828, false);
 		setup(829, false);
-//		setup(830, true);
+		setup(830, false, OVER);
 //		setup(831, true);
 //		setup(832, true);
 //		setup(833, true);

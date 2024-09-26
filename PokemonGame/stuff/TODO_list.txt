@@ -40,3 +40,8 @@ Fix Illusion working in calc (have it say true outside of battling actively)
 Make Sky Uppercut super-effective against flying types
 Make map05 (lava lake) to the left 3-4 tiles
 Make Roost give a "Landed" status that at the end of the turn will replace unknown type back with Flying
+
+Add Treasure Chests (with HP Gems) to the following areas:
+Center of R23 maze
+Route 28 (where Ice Spinner was)
+Icy Path Rock Climb near ladder

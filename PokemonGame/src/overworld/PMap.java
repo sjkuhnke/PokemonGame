@@ -1154,19 +1154,19 @@ public class PMap extends JPanel {
 		case 162:
 			PlayerCharacter.currentMapName = "Research Post";
 			return 47;
-		case 163: // TODO from here down
-			PlayerCharacter.currentMapName = "";
+		case 163:
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 164:
-			PlayerCharacter.currentMapName = "";
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
 		case 165:
-			PlayerCharacter.currentMapName = "";
-			return 4;
-		case 166:
-			PlayerCharacter.currentMapName = "";
+			PlayerCharacter.currentMapName = "Schrice City";
 			return 20;
-		case 167:
+		case 166:
+			PlayerCharacter.currentMapName = "Icy Path";
+			return 20;
+		case 167: // TODO from here down
 			PlayerCharacter.currentMapName = "";
 			return 20;
 		case 168:

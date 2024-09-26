@@ -1151,20 +1151,62 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.UPDATE, "");
 			Pokemon.addTask(Task.FLASH_OUT, "");
 		} else if (gp.currentMap == 38) { // ice master
+			Pokemon.addTask(Task.DIALOGUE, npc, "It may help you in your journey, maybe even in ways you don't expect. Consider it a token of my thanks for your help with the school.");
 			p.flag[3][10] = true;
 			Task t = Pokemon.addTask(Task.ITEM, "");
 			t.item = Item.PETTICOAT_GEM;
 		} else if (gp.currentMap == 43) { // ground master
+			Pokemon.addTask(Task.DIALOGUE, npc, "It's rare, even among explorers. Use it wisely - it could be the edge you need.");
 			p.flag[3][11] = true;
 			Task t = Pokemon.addTask(Task.ITEM, "");
 			t.item = Item.VALIANT_GEM;
+			Pokemon.addTask(Task.DIALOGUE, npc, "That gem was unearthed during a deep excavation, and I was saving it for someone special. Looks like that's you.");
+		} else if (gp.currentMap == 165) { // principal
+			Pokemon.addTask(Task.DIALOGUE, npc, "I don't have any Pokemon, so I wasn't sure what to do! But now that I see you're here to help... maybe there's hope.");
+			if (!p.flag[3][1] && !p.flag[3][2]) { // haven't found either ground or ice master
+				Pokemon.addTask(Task.DIALOGUE, npc, "Listen, this whole situation is a mess! Those Grunts have taken over the classrooms, and I can't do anything to stop them.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "The teachers - Ice Master and Ground Master - might be able to help, but I haven't seen them in a while.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I think Ice Master is somewhere in the fields north of town, and Ground Master... I believe he's hiding out in the city.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Find them, please!");
+			} else if ((p.flag[3][1] || p.flag[3][2]) && !p.flag[3][3] && !p.flag[3][4]) { // got at least one of the keys but hasn't unlocked the classrooms yet
+				String teacher = "";
+				if (p.flag[3][1] && !p.flag[3][2]) teacher = "Ice Master's";
+				if (p.flag[3][2] && !p.flag[3][1]) teacher = "Ground Master's";
+				if (p.flag[3][1] && p.flag[3][2]) teacher = "both of their";
+				Pokemon.addTask(Task.DIALOGUE, npc, "You've got " + teacher + " keys? That's amazing!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Now you can get into the classrooms and see what those Team Eclipse Grunts are up to.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I wish I could do more, but... I don't have any Pokemon, and I - I just can't face them.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Please, go and clear them out! I'll do whatever I can to help once they're gone.");
+			} else if ((p.flag[3][3] || p.flag[3][4]) && (!p.flag[3][5] || !p.flag[3][6])) {
+				Pokemon.addTask(Task.DIALOGUE, npc, "You've unlocked a classroom, right? Go check inside! There are Grunts taking over the school, and it's a disaster.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I know I should be the one handling this, but without Pokemon, I'm helpless! Please, clear out those rooms!");
+			} else if (p.flag[3][5] && p.flag[3][6]) {
+				Pokemon.addTask(Task.DIALOGUE, npc, "You did it! You cleared both classrooms! I - I don't know how to thank you enough.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I may not be able to help in battle, but I can give you something that will aid you on your journey.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Here - take this, it's the HM for Surf. I know you'll make great use of it.");
+				p.flag[3][7] = true;
+				Task t = Pokemon.addTask(Task.ITEM, "");
+				t.item = Item.HM04;
+				if (!p.flag[3][8]) {
+					Pokemon.addTask(Task.DIALOGUE, npc, "Now, go find the cause of the extreme light outside with your new tools and put a stop to it!");
+				}
+			}
+		} else if (gp.currentMap == 44) {
+			Pokemon.addTask(Task.DIALOGUE, npc, "Leader Glacius said no battles until we can get things under control in the city.");
+			if (!p.flag[3][5] || !p.flag[3][6]) {
+				Pokemon.addTask(Task.DIALOGUE, npc, "You're wondering why the gym's closed, right? Well, it's not just the gym - there's trouble over at the school too.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "The gym's been shut down ever since the school got overrun by those Team Eclipse guys.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "If you're looking to challenge Glacius, you'll need to sort out what's happening at the school first.");
+			} else if (p.flag[3][5] && p.flag[3][6] && !p.flag[3][7]) {
+				Pokemon.addTask(Task.DIALOGUE, npc, "I heard you cleared the whole school out of those goons! The principal mentioned he wants to thank you for everything you've done.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Might be a good idea to visit him before you come back here. He should be in his office in the school.");
+			} else if (p.flag[3][7] && !p.flag[3][8]) {
+				Pokemon.addTask(Task.DIALOGUE, npc, "You did great clearing the school of those Grunts, but that bright light's still making things difficult.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Leader Glacius won't accept challengers until the light's sorted out. Maybe you can do something about it?");
+			}
 		}
-		if (gp.currentMap == 41 && p.flags[8] && p.flags[9] && !p.flags[31]) {
-			p.flags[31] = true;
-			Pokemon.addTask(Task.TEXT, "Oh you have?! Thank you so much!\nHere, take this as a reward!");
-			Pokemon.addTask(Task.TEXT, "Obtained HM04 Surf!");
-			p.bag.add(Item.HM04);
-		} if (gp.currentMap == 91 && !p.flags[16]) {
+		
+		if (gp.currentMap == 91 && !p.flags[16]) {
 			p.flags[16] = true;
 			Pokemon.addTask(Task.TEXT, "Obtained HM05 Slow Fall!");
 			p.bag.add(Item.HM05);
@@ -1738,7 +1780,7 @@ public class PlayerCharacter extends Entity {
 	public Item[] getItems() {
 		int available = 8;
 	    if (p.badges > 7) available += 2;
-	    if (p.badges > 6) available ++;
+	    if (p.badges > 5) available ++;
 	    if (p.badges > 3) available += 2;
 	    if (p.badges > 2) available += 2;
 	    if (p.badges > 1) available ++;
@@ -1748,7 +1790,7 @@ public class PlayerCharacter extends Entity {
 	    		Item.ELIXIR, // 2 badges
 	    		Item.FULL_HEAL, Item.REVIVE, // 3 badges
 	    		Item.ULTRA_BALL, Item.HYPER_POTION, // 4 badges
-	    		Item.MAX_POTION, // 7 badges
+	    		Item.MAX_POTION, // 6 badges
 	    		Item.FULL_RESTORE, Item.MAX_REVIVE}; // 8 badges
 	    Item[] result = new Item[available];
 	    for (int i = 0; i < available; i++) {

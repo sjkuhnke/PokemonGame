@@ -251,6 +251,13 @@ public class EventHandler {
 			if (hit(38,28,55)) teleport(41, 31, 46,false);
 			if (hit(41,31,47)) teleport(38, 28, 56,false);
 			
+			if (hit(41,18,30)) teleport(163, 32, 46,false);
+			if (hit(163,32,47)) teleport(41, 18, 31,false);
+			if (hit(41,44,30)) teleport(164, 32, 46,false);
+			if (hit(164,32,47)) teleport(41, 44, 31,false);
+			if (hit(41,31,30)) teleport(165, 32, 46,false);
+			if (hit(165,32,47)) teleport(41, 31, 31,false);
+			
 			// Radio Tower
 			if (hit(38,62,57)) teleport(42, 31, 45,false);
 			if (hit(42,31,46)) teleport(38, 62, 58,false);
@@ -261,6 +268,10 @@ public class EventHandler {
 			// Schrice Gym
 			if (hit(38,62,41)) teleport(44, 63, 67,false);
 			if (hit(44,63,68)) teleport(38, 62, 42,false);
+			
+			// Icy Path
+			if (hit(38,42,7)) teleport(166, 51, 53,true);
+			if (hit(166,51,53)) teleport(38, 42, 7,true);
 			
 			// Poppy Grove HP House
 			if (hit(4,80,71)) teleport(46, 31, 45,false);
