@@ -71,30 +71,30 @@ Route 42 (Surf)
 ===================================================================
 Route 24 (pt. 1) (Standard)
 ===================================================================
-12% Sheabear (Lv. 5)
-5% Budew (Lv. 3 - 5)
-12% Lotad (Lv. 3 - 5)
-10% Grubbin (Lv. 3 - 5)
-5% Busheep (Lv. 4 - 6)
-23% Rocky (Lv. 4 - 6)
-7% Bugop (Lv. 4 - 5)
-9% Ralts (Lv. 3 - 5)
-6% Elelamb (Lv. 4 - 6)
-11% Shroodle (Lv. 3 - 5)
+12% Sheabear (Lv. 6)
+5% Budew (Lv. 4 - 6)
+12% Lotad (Lv. 4 - 6)
+10% Grubbin (Lv. 4 - 6)
+5% Busheep (Lv. 5 - 7)
+23% Rocky (Lv. 5 - 7)
+7% Bugop (Lv. 5 - 6)
+9% Ralts (Lv. 4 - 6)
+6% Elelamb (Lv. 5 - 7)
+11% Shroodle (Lv. 4 - 6)
 ===================================================================
 Route 40 (Standard)
 ===================================================================
-9% Hummingspark (Lv. 3 - 4)
-15% Iglite (Lv. 2 - 4)
-6% Bugop (Lv. 3 - 4)
-5% Carinx (Lv. 3 - 4)
-14% Houndour (Lv. 3 - 4)
-10% Tiowoo (Lv. 3 - 4)
-6% Rhypo (Lv. 4)
-12% Cleffa (Lv. 2 - 4)
-12% Solosis-X (Lv. 3 - 4)
-7% Sparkitten (Lv. 3 - 4)
-4% Capsakid (Lv. 2 - 4)
+9% Hummingspark (Lv. 5 - 6)
+15% Iglite (Lv. 4 - 6)
+6% Bugop (Lv. 5 - 6)
+5% Carinx (Lv. 5 - 6)
+14% Houndour (Lv. 5 - 6)
+10% Tiowoo (Lv. 5 - 6)
+6% Rhypo (Lv. 6)
+12% Cleffa (Lv. 4 - 6)
+12% Solosis-X (Lv. 5 - 6)
+7% Sparkitten (Lv. 5 - 6)
+4% Capsakid (Lv. 4 - 6)
 ===================================================================
 Route 43 (Standard)
 ===================================================================
@@ -440,6 +440,24 @@ Icy Fields (Standard)
 9% Froshrog (Lv. 25 - 27)
 8% Poov (Lv. 25 - 27)
 16% Sneasel (Lv. 25 - 27)
+===================================================================
+Icy Path (Standard)
+===================================================================
+11% Boulder (Lv. 26 - 30)
+2% Crystallor (Lv. 28 - 32)
+9% Kleinowl (Lv. 22 - 24)
+2% Hootowl (Lv. 27 - 32)
+6% Snom (Lv. 19 - 21)
+1% Frosmoth (Lv. 27 - 32)
+14% Sneasel (Lv. 27 - 30)
+5% Solosis-X (Lv. 25 - 28)
+14% Grondor (Lv. 26 - 30)
+9% Dualmoose (Lv. 27 - 29)
+5% Poov (Lv. 26 - 29)
+4% Gulpin-X (Lv. 24 - 26)
+8% Carinx (Lv. 25 - 29)
+5% Magwoo (Lv. 26 - 30)
+5% Diggie (Lv. 25 - 28)
 ===================================================================
 Route 30 (Standard)
 ===================================================================
@@ -1032,22 +1050,22 @@ Mt. Splinkty (Outside) (Standard)
 46,Ludicolo,1,10.00%
 47,Bluebunn,5,11.80%
 48,Rocky,4,19.75%
-49,Boulder,0,0.00%
+49,Boulder,1,11.00%
 50,Blaster,4,9.50%
-51,Crystallor,3,8.67%
-52,Carinx,3,13.33%
+51,Crystallor,4,7.00%
+52,Carinx,4,12.00%
 53,Carinator,2,15.00%
 54,Cairnasaur,5,8.60%
 55,Pebblepup,3,9.33%
 56,Boulderoar,6,8.83%
 57,Fightorex,4,10.50%
 58,Raptorex,1,17.00%
-59,Kleinowl,3,13.00%
-60,Hootowl,0,0.00%
-61,Dualmoose,3,8.67%
-62,Snom,3,9.67%
-63,Frosmoth,0,0.00%
-64,Grondor,3,13.33%
+59,Kleinowl,4,12.00%
+60,Hootowl,1,2.00%
+61,Dualmoose,4,8.75%
+62,Snom,4,8.75%
+63,Frosmoth,1,1.00%
+64,Grondor,4,13.50%
 65,Bipedice,1,2.00%
 66,Tricerpup,5,7.40%
 67,Tricercil,1,10.00%
@@ -1085,7 +1103,7 @@ Mt. Splinkty (Outside) (Standard)
 99,Fireshard,6,16.33%
 100,Blastflames,2,40.00%
 101,Tiowoo,2,10.00%
-102,Magwoo,0,0.00%
+102,Magwoo,1,5.00%
 103,Lafloo,7,21.14%
 104,Houndour,2,11.00%
 105,Houndoom,9,7.67%
@@ -1141,7 +1159,7 @@ Mt. Splinkty (Outside) (Standard)
 155,Crobat,0,0.00%
 156,Poof,3,13.33%
 157,Hast,1,6.00%
-158,Poov,3,11.33%
+158,Poov,4,9.75%
 159,Grust,1,10.00%
 160,Cluuz,4,12.50%
 161,Zurrclu,1,2.00%
@@ -1152,7 +1170,7 @@ Mt. Splinkty (Outside) (Standard)
 166,Rhypo,4,7.00%
 167,Rhynee,1,14.00%
 168,Rhypolar,0,0.00%
-169,Diggie,3,15.67%
+169,Diggie,4,13.00%
 170,Drillatron,6,17.00%
 171,Wormite,2,12.50%
 172,Wormbot,3,11.00%
@@ -1230,21 +1248,21 @@ Mt. Splinkty (Outside) (Standard)
 244,Kadabra,2,6.00%
 245,Alakazam,0,0.00%
 246,Flamigo,0,0.00%
-247,Sneasel,2,13.00%
+247,Sneasel,3,13.33%
 248,Weavile,0,0.00%
 249,Sneasel-H,4,13.00%
 250,Sneasler,0,0.00%
 251,Solosis,0,0.00%
 252,Duosion,0,0.00%
 253,Reuniclus,0,0.00%
-254,Solosis-X,6,7.50%
+254,Solosis-X,7,7.14%
 255,Duosion-X,0,0.00%
 256,Reuniclus-X,0,0.00%
 257,Seviper,4,7.50%
 258,Hissimitar,0,0.00%
 259,Gulpin,0,0.00%
 260,Swalot,0,0.00%
-261,Gulpin-X,4,8.75%
+261,Gulpin-X,5,7.80%
 262,Swalot-X,0,0.00%
 263,Plasamp,2,12.50%
 264,Genieova,0,0.00%

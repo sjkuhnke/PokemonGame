@@ -3346,7 +3346,7 @@ public class Pokemon implements Serializable {
 					fail = fail(announce);
 				}
 			} else { fail = fail(announce); }
-		} else if (move == Move.AUTOMOTIZE) {
+		} else if (move == Move.AUTOTOMIZE) {
 			stat(this, 4, 2, foe, announce);
 		} else if (move == Move.LOAD_FIREARMS) {
 			if (announce) addTask(Task.TEXT, this.nickname + " upgraded its weapon!");

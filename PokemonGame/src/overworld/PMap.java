@@ -503,7 +503,12 @@ public class PMap extends JPanel {
 
 	private void fly(String loc, int map, int x, int y) {
 		if (!gp.player.p.flag[1][2]) return;
-		if (!gp.tileM.canFly[gp.currentMap] || (gp.currentMap == 28 && !gp.player.p.flag[2][10])) {
+		boolean canFly = true;
+		if (!gp.tileM.canFly[gp.currentMap]) canFly = false;
+		if (gp.currentMap == 18 && !gp.player.p.flag[1][13]) canFly = false; // Sicab Office Scott
+		if (gp.currentMap == 28 && !gp.player.p.flag[2][10]) canFly = false; // Kleine Village Cage Critter
+		if (gp.currentMap == 44 && gp.player.p.flag[3][12] && !gp.player.p.flag[4][0]) canFly = false; // After beating Glacius but still needing to do Robin cutscene
+		if (!canFly) {
 			JOptionPane.showMessageDialog(null, "A weird energy is rendering the teleporter obsolete here!");
 			return;
 		}
@@ -538,11 +543,11 @@ public class PMap extends JPanel {
 				PlayerCharacter.currentMapName = "Route 22";
 				return 1;
 			}
-			if (x <= 41 && y > 41 && y <= 58) {
+			if (x <= 40 && y > 41 && y <= 58) {
 				PlayerCharacter.currentMapName = "Bananaville Town";
 				return 2;
 			}
-			if (x <= 41 && y > 58) {
+			if (x <= 40 && y > 58) {
 				PlayerCharacter.currentMapName = "Bananaville Meadow";
 				return 2;
 			}
