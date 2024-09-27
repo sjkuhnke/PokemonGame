@@ -1,5 +1,6 @@
 package overworld;
 
+import entity.NPC_Block;
 import pokemon.Player;
 import pokemon.Pokemon;
 import pokemon.Pokemon.Task;
@@ -268,6 +269,9 @@ public class EventHandler {
 			// Schrice Gym
 			if (hit(38,62,41)) teleport(44, 63, 67,false);
 			if (hit(44,63,68)) teleport(38, 62, 42,false);
+			
+			// Cutscene with Robin
+			if (hit(38,62,42) && gp.player.p.flag[3][12] && !gp.player.p.flag[4][0]) gp.player.interactNPC((NPC_Block) gp.npc[38][1]);
 			
 			// Icy Path
 			if (hit(38,42,7)) teleport(166, 51, 53,true);

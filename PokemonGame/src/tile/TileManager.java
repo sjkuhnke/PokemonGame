@@ -69,7 +69,7 @@ public class TileManager {
 		loadMap("/maps/energy01B.txt", 15, true);
 		loadMap("/maps/energy02.txt", 16, true);
 		loadMap("/maps/office01.txt", 17, true);
-		loadMap("/maps/office02.txt", 18, false);
+		loadMap("/maps/office02.txt", 18, true);
 		loadMap("/maps/pc.txt", 19, true);
 		loadMap("/maps/mart.txt", 20, true);
 		loadMap("/maps/gym02.txt", 21, true);
@@ -199,9 +199,9 @@ public class TileManager {
 		loadMap("/maps/splinkty02A.txt", 145, true);
 		loadMap("/maps/splinkty01B.txt", 146, true);
 		loadMap("/maps/splinktyH.txt", 147, true);
-		loadMap("/maps/splinkty04A.txt", 148, false);
+		loadMap("/maps/splinkty04A.txt", 148, true);
 		loadMap("/maps/splinkty05A.txt", 149, false);
-		loadMap("/maps/shadow_cavern.txt", 150, false);
+		loadMap("/maps/shadow_cavern.txt", 150, true);
 		loadMap("/maps/gate01.txt", 151, true);
 		loadMap("/maps/map21.txt", 152, true);
 		loadMap("/maps/pc.txt", 153, true);

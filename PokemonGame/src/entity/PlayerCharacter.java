@@ -537,7 +537,7 @@ public class PlayerCharacter extends Entity {
 		npc.speak(-1);
 	}
 	
-	private void interactNPC(NPC_Block npc) {
+	public void interactNPC(NPC_Block npc) {
 		gp.keyH.wPressed = false;
 		npc.facePlayer(direction);
 		if (npc.flag == -1 || !p.flag[npc.getFlagX()][npc.getFlagY()]) {
@@ -1150,11 +1150,15 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.FLASH_IN, "");
 			Pokemon.addTask(Task.UPDATE, "");
 			Pokemon.addTask(Task.FLASH_OUT, "");
-		} else if (gp.currentMap == 38) { // ice master
-			Pokemon.addTask(Task.DIALOGUE, npc, "It may help you in your journey, maybe even in ways you don't expect. Consider it a token of my thanks for your help with the school.");
-			p.flag[3][10] = true;
-			Task t = Pokemon.addTask(Task.ITEM, "");
-			t.item = Item.PETTICOAT_GEM;
+		} else if (gp.currentMap == 38) { // ice master/robin
+			if (worldY / gp.tileSize < 30) { // ice master
+				Pokemon.addTask(Task.DIALOGUE, npc, "It may help you in your journey, maybe even in ways you don't expect. Consider it a token of my thanks for your help with the school.");
+				p.flag[3][10] = true;
+				Task t = Pokemon.addTask(Task.ITEM, "");
+				t.item = Item.PETTICOAT_GEM;
+			} else { // robin cutscene
+				Pokemon.addTask(Task.TEXT, "Hello my cracka");
+			}
 		} else if (gp.currentMap == 43) { // ground master
 			Pokemon.addTask(Task.DIALOGUE, npc, "It's rare, even among explorers. Use it wisely - it could be the edge you need.");
 			p.flag[3][11] = true;

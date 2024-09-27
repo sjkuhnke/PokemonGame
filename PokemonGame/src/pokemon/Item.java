@@ -1562,7 +1562,7 @@ public enum Item {
 	}
 
 	public boolean isEvoItem() {
-		return getID() >= 20 && getID() < 26;
+		return (getID() >= 20 && getID() < 26) || (this == Item.FIRE_STONE || this == Item.WATER_STONE || this == Item.RAZOR_CLAW);
 	}
 
 	public boolean isStatusHealer() {

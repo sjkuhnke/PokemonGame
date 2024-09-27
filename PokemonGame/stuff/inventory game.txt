@@ -64,6 +64,12 @@ Game2.88: Elite four maps are added and warps are working 6/14
 Game2.89: Trainers and teams are added 6/21
 Game2.9: League is beatable 7/1
 
+Roof of Grandpa/Grandma House
+Roof of Lab
+Gate (top) tiles
+Gate (left/right) tiles
+All interior walls should all be over the player
+
 
 Ice Beam (Deep Chasm)
 Iron Head (Iron Town Area)
@@ -218,14 +224,14 @@ Before
 ""
 "Dragons bow to no one. You'll understand soon enough."
 ""
-"I've trained for years - are you prepared to be humbled?"
+""
 "Strength isn't just power, it's knowing when to strike."
 After
 
 ""
 "Even the best fall. I'll rise again."
 ""
-"A solid victory. You've earned this one."
+""
 "I underestimated you. Won't happen again."
 
 Actor (Light/Normal)
@@ -249,64 +255,66 @@ Before
 
 ""
 ""
-"Don't think I'll go easy on you just because I'm in the spotlight."
-"It's time for the grand finale. Too bad it'll be your defeat."
+""
+""
 "Get ready for a dazzling display of skill!"
 After
 
 ""
 ""
-"Even stars lose sometimes... but I'll rise again."
-"I may have lost, but my spotlight never dims."
+""
+""
 "A tragic ending... but every story has one."
 
 Athlete (Fire/Electric)
-Before
+Before Battle:
 
 ""
 ""
 ""
 ""
-"Time to light this battle up! You ready?"
-After
+""
+"I'm here to win, and I'll burn through anyone in my way!"
+After Battle:
 
 ""
 ""
 ""
 ""
-"I'll hit the track and come back even stronger."
+""
+"I'll be back with more fire and more power! Just you wait!"
 
 Hiker (Ground/Rock/Steel)
 Before
 
 ""
 ""
-"Tread lightly, or the ground will swallow you whole!"
-"I've seen rough terrain, but nothing rougher than what's coming for you."
-"Strength isn't just in your fists, it's in your foundation."
+""
+""
+""
 After
 
 ""
 ""
-"Seems like you've found your footing."
-"You're tougher than granite, I'll give you that."
-"I'll build myself back up after this."
+""
+""
+""
 
 Burglar (Crook/Dark)
-Before
+Before Battle:
 
 ""
 ""
-""
-""
-""
-After
+"I've stolen plenty, and now I'm stealing this battle!"
+"A little mischief never hurt anyone, right? Let's see if you can handle it!"
+"I always play dirty, and you're about to find out why!"
+After Battle:
 
 ""
 ""
-""
-""
-""
+"I guess I'm the one who got robbed this time."
+"I'll take my loss, but this isn't over!"
+"Maybe I'll stick to thievery... Battling isn't my strong suit."
 
 Bird Keeper (Flying)
 Before
@@ -327,51 +335,54 @@ After
 "Guess you clipped my wings this time."
 
 Black Belt (Fighting)
-Before
+Before Battle:
 
 ""
 ""
-"I fight with honor, but I won't go easy on you."
-""
-""
-After
+"My fists are ready, and so are my Pokemon! Let's fight!"
+"Strength and discipline - two things you'll need to survive this battle!"
+"Prepare yourself! My Pokemon fight with the heart of a true warrior!"
+"I've trained for years. Let's see if you can keep up with me!"
+After Battle:
 
 ""
 ""
-"A powerful opponent. I'll train harder for the next round."
-""
-""
+"I'll train harder. This loss will only make me stronger!"
+"A warrior never truly loses; this is just part of the path!"
+"Impressive! I'll need to push myself even further!"
+"You've won, but I'll come back stronger than ever!"
 
 Bug Catcher (Bug)
-Before
+Before Battle:
 
 ""
 ""
-""
-"You think you can squash my team? Think again!"
-"These little guys pack a punch, don't underestimate them!"
-After
+"I've caught some of the best bugs around. Let's see how you handle them!"
+"Bugs have hidden strength! You're about to find out!"
+"My bugs are ready for battle, and they're itching for a fight!"
+After Battle:
 
 ""
 ""
-""
-"Squashed me, huh? Next time, I'll sting harder!"
-"I may have lost, but bugs always come back."
+"I guess I need to catch even stronger bugs!"
+"You may have won, but my bugs are still awesome!"
+"I'll come back with more bugs, and next time I won't lose!"
+
 
 Picnicker (Bug/Grass)
 Before
 
 ""
-"The sun's shining, the bugs are buzzing... and you're about to lose!"
 ""
-"You better not trample the flowers... or my Pokemon!"
+""
+""
 "Don't underestimate me just because I'm relaxing!"
 After
 
 ""
-"I guess I should've focused more on training than snacking..."
 ""
-"Losing makes the picnic food taste a little less sweet."
+""
+""
 "I'll work up an appetite for victory next time!"
 
 Student (M) (Normal)
@@ -395,32 +406,34 @@ Before
 
 ""
 ""
-"This is going to be an easy A for me."
+""
 "Ready for a pop quiz? Hope you're prepared!"
 "Battles are like exams, and I'm always at the top of the class!"
 After
 
 ""
 ""
-"Ugh, a bad grade. I'm not used to this!"
+""
 "Well, I'll just have to do better on the final!"
 "You passed this time. Next time, it's my turn to win."
 
 Fisher (Water)
-Before
+Before Battle:
 
 ""
 ""
-""
-""
-"You're on my line now, and I'm not letting go!"
-After
+"I've caught rare Pokemon in the deepest seas. You won't stand a chance!"
+"Fishing takes patience, but when I strike, it's game over!"
+"A fisherman never lets his prey escape. Let's see if you can!"
+"The water's been kind to me, but I won't be kind to you!"
+After Battle:
 
 ""
 ""
-""
-""
-"Not my day, but the sea's full of second chances."
+"You're one tough catch... Guess I need to reel it in."
+"I've fished in rough waters, but that battle was something else."
+"You won this round, but I'll be casting my line again soon!"
+"Seems like I was out of my depth this time."
 
 Surfer (M) (Water)
 Before
@@ -455,20 +468,20 @@ After
 "I'm not going under just yet... next time, I'll win."
 
 Explorer (Ice)
-Before
+Before Battle:
 
 ""
 ""
 ""
 ""
-""
-After
+"I hope you're ready for a chill battle... because here I come!"
+After Battle:
 
 ""
 ""
 ""
 ""
-""
+"The cold didn't bother me, but your strength did!"
 
 Gentleman (Any)
 Before
@@ -487,36 +500,38 @@ After
 "Splendid match. I look forward to our next encounter."
 
 Lady (Any)
-Before
+Before Battle:
 
 ""
-""
-""
-""
-"Prepare for a match of wit and power, darling."
-After
+"A little battle before tea? I suppose I can entertain you."
+"Don't be fooled by my appearance. I have elegance and strength!"
+"You look like you could use a good lesson in class... and battling!"
+"Charming as you may be, my Pokemon are far superior!"
+"You can't possibly think you'll beat me, can you?"
+After Battle:
 
 ""
-""
-""
-""
-"I suppose I'll have to work on my strategy. Well done."
+"Well, that was... unexpected. I shall reconsider my strategy."
+"I suppose even the best of us lose sometimes..."
+"You've won, but you lack the refinement of a true lady."
+"How vexing! I'll need to make some adjustments."
+"A loss? How unbecoming! I'll be more careful next time."
 
 Maniac (Ghost)
-Before
+Before Battle:
 
 ""
 ""
-""
-""
-""
-After
+"Once you step into the shadows, you'll never escape!"
+"I'm fascinated by the eerie... You'll soon fear the unknown!"
+"The dead tell no tales, but I'll make sure you remember this battle!"
+After Battle:
 
 ""
 ""
-""
-""
-""
+"Perhaps the ghosts were too quiet today."
+"I'll commune with the spirits... next time will be different!"
+"I may have lost, but the supernatural is always watching..."
 
 Magician (M) (Magic)
 Before
@@ -551,42 +566,42 @@ After
 "The show's not over yet... just you wait for the encore!"
 
 Psychic (Psychic)
-Before
+Before Battle:
 
 ""
-""
-""
-""
-"Prepare yourself... I've already seen how this ends."
-After
+"Your thoughts betray you... I can see your strategy already!"
+"Prepare yourself... My mind and Pokemon are in perfect harmony!"
+"You cannot resist the power of the mind. Let's see if you can survive!"
+"The stars have aligned for this battle... But will they favor you?"
+After Battle:
 
 ""
-""
-""
-""
-"It's just a temporary lapse in foresight... Next time, I'll win."
+"Even psychics make mistakes... I underestimated you."
+"You've altered the future, but I'll be back to correct it!"
+"Hmph, perhaps my vision was clouded by arrogance."
+"Our minds were in sync, but you still won... impressive."
 
 Astronomer (Galactic)
 Before
 
 ""
-"You're about to be eclipsed by the brilliance of the universe!"
-"The galaxy is vast... and you're about to be lost in it."
-"Prepare to face forces beyond your understanding."
+""
+""
+""
 "The stars align for my victory... not yours."
 After
 
 ""
-"You've won this time, but the cosmos never stays the same for long."
-"I'll recalibrate my strategy... and the stars will guide me to victory."
-"You've navigated the stars well... but I'll see you again in the cosmos."
+""
+""
+""
 "The universe is vast, but next time, I'll show you the true power of the stars."
 
 Youngster (Normal/Poison)
 Before
 
 ""
-"Just because I'm small doesn't mean my Pokemon won't crush you!"
+""
 "This is going to be a quick win for me!"
 "Get ready, ‘cause my Normal-types are anything but boring!"
 ""
@@ -594,7 +609,7 @@ Before
 After
 
 ""
-"Ugh, maybe I should train a little harder…"
+""
 "You just got lucky this time!"
 "Okay, okay... I guess you're pretty good."
 ""

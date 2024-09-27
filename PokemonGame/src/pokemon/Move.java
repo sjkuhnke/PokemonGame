@@ -37,7 +37,7 @@ public enum Move {
 	AURORA_BEAM(75,100,10,0,1,0,PType.ICE,"% chance to lower foe's Attack by 1",false,20),
 	AURORA_BOOST(0,1000,0,0,2,0,PType.MAGIC,"Raises user's Defense and Sp.Def by 1, and user's Sp.Atk by 2",false,10),
 	AURORA_VEIL(0,1000,0,0,2,0,PType.ICE,"Can only be used in SNOW, reduces both physical and special damage on user's team recieved for 5 turns",false,10),
-	AUTOMOTIZE(0,1000,0,0,2,0,PType.STEEL,"Raises user's Speed by 2",false,15),
+	AUTOTOMIZE(0,1000,0,0,2,0,PType.STEEL,"Raises user's Speed by 2",false,15),
 	BABY$DOLL_EYES(0,100,0,0,2,1,PType.LIGHT,"Lowers foe's Attack by 1, moves first",false,30),
 	BATON_PASS(0,1000,0,0,2,0,PType.NORMAL,"Causes user to switch and passes all stat changes with it",false,3),
 	BEAT_UP(12,100,0,0,0,0,PType.DARK,"Attacks once per healthy Pokemon on your team",false,10),

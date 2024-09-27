@@ -288,7 +288,7 @@ Ability:
 Insomnia / Insect Feeder / (Ambush)
 
 Base Stats:
-66 HP / 76 Atk / 86 Def / 35 SpA / 60 SpD / 78 Spe / 401 BST
+66 HP / 76 Atk / 76 Def / 40 SpA / 50 SpD / 78 Spe / 386 BST
 
 Level Up:
 1 - Tackle
@@ -316,7 +316,7 @@ Ability:
 Battle Armor / Tough Claws / (Iron Barbs)
 
 Base Stats:
-73 HP / 85 Atk / 110 Def / 56 SpA / 90 SpD / 81 Spe / 495 BST
+76 HP / 95 Atk / 100 Def / 56 SpA / 80 SpD / 81 Spe / 488 BST
 
 Level Up:
 1 - Tackle
@@ -612,7 +612,7 @@ Level Up:
 30 - Aqua Tail
 32 - Iron Tail
 34 - Toxic Spikes
-37 - Poison Jab
+37 - Poison Tail
 40 - Endeavor
 45 - Fell Stinger
 50 - Quiver Dance
@@ -648,7 +648,7 @@ Level Up:
 40 - X-Scissor
 44 - Bulldoze
 45 - Sandstorm
-50 - Flail
+50 - Stone Edge
 55 - Rock Wrecker
 60 - Earthquake
 65 - Fatal Bind
@@ -920,7 +920,16 @@ Base Stats:
 Level Up:
 1 - Leaf Storm
 1 - Venom Drench
-1 - Mega Drain
+1 - Toxic Spikes
+1 - Spikes
+1 - Synthesis
+1 - Mud Shot
+1 - Sweet Scent
+1 - Ingrain
+1 - Toxic
+1 - Aromatherapy
+1 - Petal Dance
+1 - Giga Drain
 1 - Poison Sting
 1 - Sweet Scent
 1 - Grassy Terrain
@@ -968,6 +977,7 @@ Level Up:
 15 - Razor Leaf
 20 - Protect
 25 - Grass Whistle
+30 - First Impression
 33 - Struggle Bug
 
 Evolutions:
@@ -1001,6 +1011,7 @@ Level Up:
 50 - Psycho Cut
 55 - Sticky Web
 60 - Solar Blade
+65 - First Impression
 
 ===================
 #035 - Bugik                                                                                           [041]
@@ -1351,6 +1362,7 @@ Level Up:
 1 - Glare
 1 - Dragon Breath
 1 - Screech
+1 - Venom Drench
 20 - Poison Fang
 22 - Stockpile
 23 - Acid Spray
@@ -1360,6 +1372,7 @@ Level Up:
 31 - Poison Tail
 34 - Dragon Tail
 36 - Haze
+36 - Crunch
 38 - Scale Shot
 40 - Coil
 43 - Dragon Rush
@@ -1973,6 +1986,7 @@ Level Up:
 28 - Charm
 30 - Dazzling Gleam
 35 - Calm Mind
+38 - Hyper Voice
 42 - Glitzy Glow
 45 - Psychic
 49 - Moonblast
@@ -2765,7 +2779,8 @@ Level Up:
 61 - Head Smash
 
 Evolutions:
-Scrafty -> Scraftagon (5+ Headbutt Crits in Trainer Battles)
+Scrafty -> Scraftagon
+(5+ Headbutt Crits in Trainer Battles)
 
 ===================
 #091 - Scraftagon                                                                                      [240]
@@ -3060,7 +3075,7 @@ Level Up:
 60 - Burn Up
 
 Evolutions:
-Scovillain -> Kerbernero ()
+Scovillain -> Kerbernero (lv. 50)
 
 ===================
 #100 - Despenero                                                                                       [280]
@@ -3503,12 +3518,13 @@ Base Stats:
 
 Level Up:
 1 - Rapid Spin
-1 - Magic Blast
+1 - Mirror Shot
 1 - Night Shade
 1 - Magic Reflect
 4 - Confuse Ray
 7 - Payback
 9 - Hypnosis
+10 - Magic Blast
 11 - Magic Powder
 13 - Safeguard
 15 - Foresight
@@ -4135,7 +4151,7 @@ Level Up:
 15 - Dream Eater
 20 - Gravity
 24 - Psybeam
-27 - Gravity
+27 - Mirror Shot
 30 - Iron Defense
 
 Evolutions:
@@ -4162,7 +4178,7 @@ Level Up:
 15 - Dream Eater
 20 - Gravity
 24 - Psybeam
-27 - Gravity
+27 - Mirror Shot
 30 - Iron Defense
 32 - Double Hit
 32 - Magnet Bomb
@@ -4198,7 +4214,7 @@ Level Up:
 15 - Dream Eater
 20 - Gravity
 24 - Psybeam
-27 - Gravity
+27 - Mirror Shot
 30 - Iron Defense
 32 - Double Hit
 32 - Magnet Bomb
@@ -4588,7 +4604,7 @@ Ability:
 Electric Surge / Motor Drive / (Galvanize)
 
 Base Stats:
-75 HP / 105 Atk / 60 Def / 85 SpA / 60 SpD / 105 Spe / 490 BST
+75 HP / 95 Atk / 60 Def / 95 SpA / 60 SpD / 105 Spe / 490 BST
 
 Level Up:
 1 - Howl
@@ -4621,7 +4637,7 @@ Ability:
 Electric Surge / Motor Drive / (Galvanize)
 
 Base Stats:
-75 HP / 120 Atk / 70 Def / 80 SpA / 75 SpD / 125 Spe / 545 BST
+75 HP / 105 Atk / 70 Def / 95 SpA / 75 SpD / 125 Spe / 545 BST
 
 Level Up:
 1 - Volt Tackle
@@ -4934,7 +4950,8 @@ Level Up:
 49 - Belch
 
 Evolutions:
-Gulpin-X -> Swalot-X (5+ Galactic Moves Eaten in Trainer Battles)
+Gulpin-X -> Swalot-X
+(5+ Galactic Moves Eaten in Trainer Battles)
 
 ===================
 #158 - Swalot-X                                                                                        [262]
@@ -5216,7 +5233,7 @@ Level Up:
 37 - Magnet Rise
 40 - Smart Strike
 43 - Bullet Punch
-46 - Automotize
+46 - Autotomize
 50 - Heavy Slam
 55 - Superpower
 60 - Volt Tackle
@@ -5374,6 +5391,7 @@ Level Up:
 1 - Wrap
 1 - Swagger
 1 - Dragon Dance
+1 - Venom Drench
 5 - Bite
 6 - Lick
 9 - Poison Fang
@@ -5404,7 +5422,8 @@ Level Up:
 65 - Glittering Sword
 
 Evolutions:
-Seviper -> Hissimitar (5+ Tail Move Crits in Trainer Battles)
+Seviper -> Hissimitar
+(5+ Tail Move Crits in Trainer Battles)
 
 ===================
 #173 - Hissimitar                                                                                      [258]
@@ -5426,6 +5445,7 @@ Level Up:
 1 - Psycho Cut
 1 - Swagger
 1 - Dragon Dance
+1 - Venom Drench
 5 - Bite
 6 - Lick
 9 - Poison Fang
@@ -5564,7 +5584,7 @@ Level Up:
 50 - Topsy-Turvy
 
 Evolutions:
-Durfish -> Dompster (lv. up in Mindagan Lake)
+Durfish -> Dompster (Water Stone)
 
 ===================
 #177 - Dompster                                                                                        [149]
@@ -5763,7 +5783,7 @@ Level Up:
 50 - Light Screen
 
 Evolutions:
-Staryu -> Starmie (lv. up in Mindagan Lake)
+Staryu -> Starmie (Water Stone)
 
 ===================
 #183 - Starmie                                                                                         [140]
@@ -5918,7 +5938,8 @@ Level Up:
 31 - Snore
 32 - Frostbind
 36 - Snowscape
-40 - Aurora Veil
+38 - Aurora Veil
+40 - Slack Off
 43 - Blizzard
 
 Evolutions:
@@ -5952,7 +5973,8 @@ Level Up:
 31 - Snore
 32 - Frostbind
 36 - Snowscape
-40 - Aurora Veil
+38 - Aurora Veil
+40 - Slack Off
 43 - Blizzard
 44 - Ice Fang
 50 - Sheer Cold
@@ -6043,7 +6065,7 @@ Level Up:
 25 - Will-O-Wisp
 29 - Earth Power
 32 - Hex
-36 - Automotize
+36 - Autotomize
 40 - Switcheroo
 45 - Fire Blast
 50 - Explosion
@@ -6061,7 +6083,7 @@ Ability:
 Swift Swim / Regenerator / (Shell Armor)
 
 Base Stats:
-58 HP / 29 Atk / 71 Def / 31 SpA / 58 SpD / 33 Spe / 280 BST
+68 HP / 29 Atk / 71 Def / 31 SpA / 58 SpD / 33 Spe / 290 BST
 
 Level Up:
 1 - Tackle
@@ -6076,7 +6098,7 @@ Level Up:
 35 - Shell Smash
 
 Evolutions:
-Sheltor -> Shelnado (lv. up in Mindagan Lake)
+Sheltor -> Shelnado (Water Stone)
 
 ===================
 #193 - Shelnado                                                                                        [133]
@@ -6088,7 +6110,7 @@ Ability:
 Swift Swim / Regenerator / (Shell Armor)
 
 Base Stats:
-67 HP / 61 Atk / 75 Def / 97 SpA / 91 SpD / 83 Spe / 474 BST
+87 HP / 51 Atk / 75 Def / 97 SpA / 86 SpD / 83 Spe / 479 BST
 
 Level Up:
 1 - Gust
@@ -6248,9 +6270,10 @@ Level Up:
 1 - Harden
 1 - Smack Down
 5 - Acid Spray
-10 - Ancient Power
-15 - Rock Polish
-18 - Stealth Rock
+9 - Ancient Power
+13 - Rock Polish
+16 - Stealth Rock
+18 - Venom Drench
 22 - Venoshock
 25 - Sandstorm
 28 - Self-Destruct
@@ -6282,15 +6305,15 @@ Level Up:
 1 - Harden
 1 - Smack Down
 5 - Acid Spray
-10 - Ancient Power
-15 - Rock Polish
-18 - Stealth Rock
+9 - Ancient Power
+13 - Rock Polish
+16 - Stealth Rock
+18 - Venom Drench
 22 - Venoshock
 25 - Sandstorm
 28 - Self-Destruct
 31 - Spikes
 35 - Sludge
-35 - Mortal Spin
 39 - Power Gem
 42 - Acid Armor
 45 - Toxic
@@ -6492,7 +6515,7 @@ Type:
 Ground / Ice
 
 Ability:
-Sturdy / Technician / (None)
+Sturdy / Technician / (Refrigerate)
 
 Base Stats:
 80 HP / 74 Atk / 87 Def / 25 SpA / 96 SpD / 33 Spe / 395 BST
@@ -6521,7 +6544,7 @@ Type:
 Fighting / Ice
 
 Ability:
-Guts / Slush Rush / (None)
+Guts / Slush Rush / (Refrigerate)
 
 Base Stats:
 95 HP / 130 Atk / 90 Def / 45 SpA / 85 SpD / 40 Spe / 485 BST
@@ -6782,7 +6805,7 @@ Level Up:
 5 - Protect
 10 - Pop Pop
 15 - Headbutt
-20 - Automotize
+20 - Autotomize
 25 - Lock-On
 
 Evolutions:
@@ -6806,7 +6829,7 @@ Level Up:
 5 - Protect
 10 - Pop Pop
 15 - Headbutt
-20 - Automotize
+20 - Autotomize
 25 - Lock-On
 25 - Iron Defense
 30 - Reboot
@@ -6837,7 +6860,7 @@ Level Up:
 5 - Protect
 10 - Pop Pop
 15 - Headbutt
-20 - Automotize
+20 - Autotomize
 25 - Lock-On
 25 - Iron Defense
 30 - Reboot
@@ -6911,7 +6934,7 @@ Level Up:
 20 - Cosmic Power
 25 - Space Beam
 30 - Freeze-Dry
-45 - Sheer Cold
+40 - Sheer Cold
 
 Evolutions:
 Consodust -> Cosmocrash (Ice Stone)
@@ -7389,7 +7412,7 @@ Type:
 Galactic / Bug
 
 Ability:
-Scrappy / Unburden / (Talented)
+Beast Boost / None / (None)
 
 Base Stats:
 83 HP / 79 Atk / 83 Def / 157 SpA / 67 SpD / 101 Spe / 570 BST
@@ -7423,13 +7446,40 @@ Type:
 Ice / Light
 
 Ability:
-Scrappy / Unburden / (Talented)
+Beast Boost / None / (None)
 
 Base Stats:
 82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
 
 Level Up:
-1 - Confusion
+1 - Glitter Dance
+1 - Dragon Dance
+1 - Wrap
+1 - Light Beam
+1 - Screech
+1 - Elemental Sparkle
+3 - Glaciate
+7 - Swift
+7 - Dragon Rage
+13 - Haze
+13 - Sparkling Terrain
+17 - Ice Fang
+17 - Magic Fang
+19 - Snowscape
+19 - Aurora Veil
+19 - Frostbind
+23 - Breaking Swipe
+23 - Icicle Spear
+29 - Spirit Break
+31 - Ice Shard
+37 - Dragon Tail
+43 - Magic Reflect
+47 - Sparkle Strike
+47 - Icicle Crash
+53 - Scale Shot
+59 - Glittering Sword
+67 - Dragon Rush
+73 - Sheer Cold
 
 ===================
 #236 - Shocky Spire                                                                                    [286]
@@ -7438,7 +7488,7 @@ Type:
 Water / Steel
 
 Ability:
-Scrappy / Unburden / (Talented)
+Beast Boost / None / (None)
 
 Base Stats:
 82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
@@ -7453,7 +7503,7 @@ Type:
 Ground / Flying
 
 Ability:
-Scrappy / Unburden / (Talented)
+Beast Boost / None / (None)
 
 Base Stats:
 82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
@@ -7468,7 +7518,7 @@ Type:
 Fire / Ice
 
 Ability:
-Scrappy / Unburden / (Talented)
+Beast Boost / None / (None)
 
 Base Stats:
 82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
@@ -7483,7 +7533,7 @@ Type:
 Dark / Steel
 
 Ability:
-Scrappy / Unburden / (Talented)
+Beast Boost / None / (None)
 
 Base Stats:
 82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
@@ -8118,7 +8168,7 @@ Level Up:
 55 - Obstruct
 
 Evolutions:
-Scovillain-S -> Kerbernero-S ()
+Scovillain-S -> Kerbernero-S (lv. 50)
 
 ===================
 #011 - Despenero-S                                                                                     [283]
@@ -8632,7 +8682,7 @@ Level Up:
 12 - Karate Chop
 16 - Nuzzle
 19 - Spark
-22 - Automotize
+22 - Autotomize
 
 Evolutions:
 Droid-E -> Armoid-E (lv. 25)
@@ -8658,7 +8708,7 @@ Level Up:
 12 - Karate Chop
 16 - Nuzzle
 19 - Spark
-22 - Automotize
+22 - Autotomize
 25 - Brick Break
 29 - Comet Punch
 32 - Bullet Punch
@@ -8695,7 +8745,7 @@ Level Up:
 12 - Karate Chop
 16 - Nuzzle
 19 - Spark
-22 - Automotize
+22 - Autotomize
 25 - Brick Break
 29 - Comet Punch
 32 - Bullet Punch
