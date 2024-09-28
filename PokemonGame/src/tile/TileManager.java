@@ -1063,8 +1063,8 @@ public class TileManager {
 		setup(828, false);
 		setup(829, false);
 		setup(830, false, OVER);
-//		setup(831, true);
-//		setup(832, true);
+		setup(831, false, OVER);
+		setup(832, false, OVER);
 //		setup(833, true);
 //		setup(834, true);
 //		setup(835, true);
