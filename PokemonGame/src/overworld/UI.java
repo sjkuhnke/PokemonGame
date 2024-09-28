@@ -3106,4 +3106,13 @@ public class UI extends AbstractUI {
 		
 		return frames;
 	}
+
+	public boolean tasksContainsTask(int type) {
+		if (currentTask == null && checkTasks) return false;
+		if (currentTask != null && currentTask.type == type) return true;
+		for (Task t : tasks) {
+			if (t.type == type) return true;
+		}
+		return false;
+	}
 }
