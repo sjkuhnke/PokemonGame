@@ -22,13 +22,14 @@ public class AssetSetter {
 	public ArrayList<Entity> clerks = new ArrayList<>();
 	public HashMap<Item, Integer> itemMap = new HashMap<>();
 	
+	private static final int MILLIE_UP = -27;
 	private static final int ROBIN_UP = -26;
 	private static final int CHEF = -25;
-	private static final int UP_PHEROMOSA = -24;
-	private static final int UP_BUZZWOLE = -23;
-	private static final int UP_SPLAME = -22;
-	private static final int UP_SHOOKWAT = -21;
-	private static final int UP_CAIRNASAUR = -20;
+//	private static final int UP_PHEROMOSA = -24;
+//	private static final int UP_BUZZWOLE = -23;
+//	private static final int UP_SPLAME = -22;
+//	private static final int UP_SHOOKWAT = -21;
+//	private static final int UP_CAIRNASAUR = -20;
 	private static final int UP_XURKITREE = -19;
 	private static final int RYDER_UP = -18;
 	private static final int RYDER_DOWN = -17;
@@ -1212,27 +1213,27 @@ public class AssetSetter {
 		
 		// These stay: blocking certain items (Acrobatics and Ability Capsule)
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 67, 17, "Whether it's the field or the battlefield, I always come out on top!", "Hmph, not bad. But next time, I'll be unstoppable!", 95);
-		gp.npc[mapNum][index] = NPCSetup(ATHLETE_DOWN, 71, 12, "I've got the energy, and my Pokemon are fired up! Let's go!", "Looks like I lost this race... but I'll train harder!", 96);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_DOWN, 71, 11, "I've got the energy, and my Pokemon are fired up! Let's go!", "Looks like I lost this race... but I'll train harder!", 96);
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 75, 17, "Speed and power, that's my game! Let's see if you can keep up!", "Guess I need to pick up the pace... I'll be faster next time!", 97);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_UP, 68, 28, "I've trained for years - are you prepared to be humbled?", "A solid victory. You've earned this one.", 386);
 		
 		// Possessed trainers (will clear)
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 37, "", "", 370, DOWN + LEFT); // normal
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 84, 23, "", "", 379); // ghost
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 80, 23, "", "", 381); // steel
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 80, 24, "", "", 382); // dark
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 84, 24, "", "", 371); // electric
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 26, "", "", 378); // psychic
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 87, 31, "", "", 374); // fighting
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 77, 31, "", "", 375); // poison
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 78, 43, "", "", 372, RIGHT + DOWN); // ice
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 87, 45, "", "", 377, LEFT + DOWN); // flying
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 79, 50, "", "", 373, RIGHT + DOWN); // rock
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 83, 57, "", "", 383); // light
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 71, 41, "", "", 384, RIGHT + DOWN); // magic
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 76, 47, "", "", 380, LEFT + RIGHT + UP); // dragon
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 66, 49, "", "", 376, LEFT + UP); // ground
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 73, 51, "", "", 385, LEFT + UP + DOWN); // galactic
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 37, "..!", "...", 370, DOWN + LEFT); // normal
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 84, 23, "..!", "...", 379); // ghost
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 80, 23, "..!", "...", 381); // steel
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 80, 24, "..!", "...", 382); // dark
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 84, 24, "..!", "...", 371); // electric
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 82, 25, "..!", "...", 378); // psychic
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 87, 31, "..!", "...", 374); // fighting
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 77, 31, "..!", "...", 375); // poison
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 78, 43, "..!", "...", 372, RIGHT + DOWN); // ice
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 87, 45, "..!", "...", 377, LEFT + DOWN); // flying
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 79, 50, "..!", "...", 373, RIGHT + DOWN); // rock
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 83, 57, "..!", "...", 383); // light
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 71, 41, "..!", "...", 384, RIGHT + DOWN); // magic
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 76, 47, "..!", "...", 380, LEFT + RIGHT + UP); // dragon
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 66, 49, "..!", "...", 376, LEFT + UP); // ground
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 73, 51, "..!", "...", 385, LEFT + UP + DOWN); // galactic
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 75, 69, "", "", 202);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 78, 83, "", "", 203);
@@ -2790,7 +2791,7 @@ public class AssetSetter {
 		if (flag[2][4]) {
 			gp.npc[28][0] = null;
 			gp.npc[28][3] = null;
-			gp.npc[28][1] = NPCSetup(MILLIE, "Millie", 81, 36, "People say bugs are scary... This is so so much worse...", true);
+			gp.npc[28][1] = NPCSetup(MILLIE_UP, "Millie", 81, 36, "People say bugs are scary... This is so so much worse...", true);
 			gp.npc[28][4] = NPCSetup(FRED_DOWN, 82, 32, "AGHHH!! WHAT THE FUCK IS HAPPENING?!?!??! DIE!!!!!!",
 					"Ugh... where am I? What... what happened?\n"
 					+ "You... it was you, wasn't it? You saved me. I... don't know what to say. Thanks, I guess.\n"
@@ -3414,6 +3415,10 @@ public class AssetSetter {
 				break;
 			case MILLIE:
 				result.setupImages("/npc/millie");
+				break;
+			case MILLIE_UP:
+				result.setupImages("/npc/millie");
+				result.setDirection("up");
 				break;
 			case TN_DOWN:
 				result.setupImages("/npc/tn");
