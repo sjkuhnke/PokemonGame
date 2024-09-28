@@ -1032,8 +1032,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_UP, 50, 60, "Let's see if your endurance matches your strategy.", "Looks like I need to step up my training.", 25);
 		gp.npc[mapNum][index] = NPCSetup(BURGLAR_UP, 59, 62, "Don't do the crime if you can't take the time. Lucky I've got plenty of time on my hands!", "You got lucky this time. I'm outta here!", 26);
 		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_UP, 76, 56, "Welcome to the grand performance! Prepare to be dazzled!", "Oh dear, looks like I've lost the trick. I'll rehearse for next time!", 27);
-		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_DOWN, 53, 47, "My brother's a top angler! Look what he caught!", "Guess we need to hit the creek.", 28);
-		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_UP, 53, 53, "I caught a rare fish! Wouldn't you like to get destroyed by it!", "Just wait until it evolves. I'll be back.", 29);
+		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_DOWN, 53, 47, "I caught a rare fish! Wouldn't you like to get destroyed by it!", "Just wait until it evolves. I'll be back.", 28);
+		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_UP, 53, 53, "My brother's a top angler! Look what he caught!", "Guess we need to hit the creek.", 29);
 		gp.npc[mapNum][index] = NPCSetup(HIKER_UP, 76, 47, "Bet you're not ready for the weight of this battle.", "Even mountains can be climbed, I guess.", 30);
 		
 		gp.npc[mapNum][index] = NPCSetup(FRED_UP, 43, 61, "Heh, you must be pretty tough to make it this far, but don't get too full of yourself.\n"
@@ -1057,10 +1057,10 @@ public class AssetSetter {
 		
 		mapNum = 13;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 20, 63, "Oh hello there kid, I'm a research assistant for the Professor that specializes in Electric forms of Pokemon.", true, 33, "");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, "Photon", 20, 63, "Oh hello there kid, I'm a research assistant for the Professor that specializes in Electric forms of Pokemon.", true, 33, "");
 		gp.npc[mapNum][index++] = null;
 		gp.npc[mapNum][index++] = null;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 88, 18, "Well hello there young man!", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, "Researcher", 88, 18, "Well hello there young man!", true);
 		gp.npc[mapNum][index] = NPCSetup(SCOTT_DOWN, 28, 10, "In updateNPC", "", 55); // scott 2
 		gp.npc[mapNum][index++] = null; // ryder 2
 		gp.npc[mapNum][index++] = null; // alakazam
@@ -1083,7 +1083,7 @@ public class AssetSetter {
 		
 		mapNum = 14;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(MANIAC_LEFT, 36, 41, "Fear the shadows, for I command them. Prepare to tremble.", "You survived this... but you won't be so lucky next time.", 44);
+		gp.npc[mapNum][index] = NPCSetup(MANIAC_LEFT, 36, 42, "Fear the shadows, for I command them. Prepare to tremble.", "You survived this... but you won't be so lucky next time.", 44);
 		gp.npc[mapNum][index] = NPCSetup(BLACK_BELT_DOWN, 27, 30, "Every battle is a test of willpower. Let's see if yours breaks.", "Even the strongest fall... but I'll rise again.", 40);
 		gp.npc[mapNum][index] = NPCSetup(MANIAC_DOWN, 38, 38, "I collect the macabre... and your defeat will be my latest addition.", "Even in loss, I feel their presence... You'll face them again.", 41);
 		gp.npc[mapNum][index] = NPCSetup(BURGLAR_RIGHT, 25, 43, "Thank goodness nobody saw me, I might be in the clear... Wait a minute, where'd you come from?", "Good thing I always have a backup plan!", 42);
@@ -1256,7 +1256,7 @@ public class AssetSetter {
 		
 		mapNum = 32;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_DOWN, null, 31, 40, "Back in my day, I used to be a top angler. Felt good reeling in them in, but I think I've outgrown it.", true, 49, "Look at water and press 'A' to fish!");
+		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_DOWN, "Fisherman", 31, 40, "Back in my day, I used to be a top angler. Felt good reeling in them in, but I think I've outgrown it.", true, 49, "Look at water and press 'A' to fish!");
 		
 		mapNum = 33;
 		index = 0;
@@ -1301,10 +1301,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(EXPLORER_DOWN, 53, 7, "Ah, you're here to seek my key, are you?\nI don't know what's causing this blinding light, but I can't afford to let just anyone enter my classroom. You'll need to prove your resilience first.", "You fought well - better than I expected. The Ice Master's key is yours.\nUse it wisely... those Grunts won't go down easily, but if anyone can drive them out, it's you.", 327);
 		gp.npc[mapNum][index++] = null; // robin
 		
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 35, 74, "", "", 138);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 51, 74, "", "", 139);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 46, 85, "", "", 140);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 36, 84, "", "", 141);
+		gp.npc[mapNum][index] = NPCSetup(BIRD_KEEPER_LEFT, 35, 74, "Flying high is all I know. Are you ready to fall?", "You grounded me... but I'll be back in the skies soon!", 138);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_RIGHT, 49, 74, "I just got an awesome TM move! Check it out!", "Fine, I'll tell you my secrets. I found it near New Minnow Town... that's all I'll say, for now.", 139, ALL);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 46, 85, "", "", 140, ALL);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 36, 84, "Guess what? I delayed my Twigzap's evolution to get a really powerful move. Wanna see?", "Guess even my secret technique wasn't good enough. Gave you a run for your money though!", 141);
 		
 		mapNum = 39;
 		index = 0;
@@ -1850,7 +1850,7 @@ public class AssetSetter {
 		
 		mapNum = 162;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 38, "Oh hello there, welcome to PROFESSOR PHOTON's humble abode!", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, "Photon", 31, 38, "Oh hello there, welcome to PROFESSOR PHOTON's humble abode!", true);
 		
 		mapNum = 166;
 		index = 0;

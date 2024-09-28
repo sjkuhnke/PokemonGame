@@ -419,6 +419,7 @@ public class PlayerCharacter extends Entity {
 		int trainer = entity.trainer;
 		if (trainer == -1) return;
 		if (p.wiped()) return;
+		if (gp.ui.tasksContainsTask(Task.DIALOGUE)) return;
 		
 		gp.ui.npc = entity;
 		

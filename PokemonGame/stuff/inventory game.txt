@@ -70,6 +70,15 @@ Gate (top) tiles
 Gate (left/right) tiles
 All interior walls should all be over the player
 
+Trainers to redo:
+139-141
+149-203
+257
+270-275
+
+Dialogues to add:
+All of above
+142-145
 
 Ice Beam (Deep Chasm)
 Iron Head (Iron Town Area)
@@ -319,7 +328,7 @@ After Battle:
 Bird Keeper (Flying)
 Before
 
-"Flying high is all I know. Are you ready to fall?"
+""
 "My Pokemon soar through the skies... and soon, so will my victory!"
 "You can't catch my birds, and you won't catch a win either!"
 "Feel the wind? It's blowing in my favor!"
@@ -327,7 +336,7 @@ Before
 "I train my birds to be fast and fierce... just like me!"
 After
 
-"You grounded me... but I'll be back in the skies soon!"
+""
 "Even a bird has to land sometimes... I'll fly higher next time."
 "You clipped my wings, but I'll soar again."
 "That loss was like a gust of wind knocking me down..."

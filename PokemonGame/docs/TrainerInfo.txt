@@ -16,7 +16,7 @@ Athlete Tasmin
 Fightorex (Lv. 14) @ None               /   No Guard       /   Mud Bomb, Double Kick, Mud-Slap, Headbutt
 
 Picknicker Bekki
-Elelamb (Lv. 14) @ None                 /   Static         /   Mud-Slap, Mud Bomb, Growl, Baby-Doll Eyes
+Elelamb (Lv. 14) @ None                 /   Static         /   Thundershock, Mud Bomb, Growl, Baby-Doll Eyes
 
 Actress Georgina
 Bluebunn (Lv. 21) @ Chilan Berry        /   Magic Guard    /   Swift, Magical Leaf, Draining Kiss, Magic Reflect
@@ -75,7 +75,7 @@ Vinnie (Lv. 44) @ Assault Vest          /   Electric Surge /   Thunderbolt, Whip
 Thunderzap (Lv. 45) @ Rocky Helmet      /   Sap Sipper     /   Aromatherapy, Thunder, Leaf Storm, Thunderbolt
 
 Crook
-Houndour (Lv. 13) @ Oran Berry          /   Solar Power    /   Smog, Roar, Howl, Bite
+Houndour (Lv. 13) @ Oran Berry          /   Solar Power    /   Ember, Roar, Howl, Bite
 Ralts (Lv. 14) @ Rindo Berry            /   Synchronize    /   Confusion, Hypnosis, Flash Ray, Double Team
 Wormite (Lv. 14) @ Rocky Helmet         /   Sand Veil      /   Pound, Tail Whip, Sand Attack, Wrap
 
@@ -213,19 +213,19 @@ Ekans-S (Lv. 16) @ Oran Berry           /   Lightning Rod  /   Gust, Glare, Nigh
 Minishoo (Lv. 15) @ Enchanted Amulet    /   Serene Grace   /   Calm Mind, Wish, Magic Blast, Gust
 Pigonat (Lv. 17) @ Scope Lens           /   Insomnia       /   Sand Attack, Leer, Aerial Ace, Quick Attack
 
-BVA
+Youngster Zacarias
 Whiskie (Lv. 8) @ Coba Berry            /   Guts           /   Play Nice, Quick Attack, Tail Whip, Charm
 Magie (Lv. 8) @ None                    /   Tough Claws    /   Scratch, Growl, Quick Attack, 
 
-BVB
+Youngster Olive
 Vupp (Lv. 8) @ Rawst Berry              /   Electric Surge /   Nuzzle, Quick Attack, Tail Whip, Charge
 Whiskie (Lv. 8) @ None                  /   Guts           /   Play Nice, Quick Attack, Tail Whip, Charm
 
-BVC
+Youngster Thanatos
 Magie (Lv. 8) @ Persim Berry            /   Tough Claws    /   Scratch, Growl, Quick Attack, 
 Vupp (Lv. 8) @ None                     /   Electric Surge /   Nuzzle, Quick Attack, Tail Whip, Charge
 
-BVD
+Youngster Eusebio
 Whiskie (Lv. 9) @ Bright Powder         /   Guts           /   Play Nice, Quick Attack, Tail Whip, Charm
 Magie (Lv. 9) @ None                    /   Tough Claws    /   Scratch, Growl, Quick Attack, 
 Vupp (Lv. 9) @ None                     /   Electric Surge /   Spark, Quick Attack, Tail Whip, Charge
@@ -1955,3 +1955,303 @@ Icy Path------------------------------------------
 Icy Serpant
 Icy Serpent (Lv. 53) @ None             /   Beast Boost    /   Icicle Spear, Spirit Break, Magic Reflect, Scale Shot
 
+Stats:
+Num,Pokemon,Amt,%
+1,Twigle,2,0.18%
+2,Torgged,3,0.27%
+3,Tortugis,6,0.55%
+4,Lagma,2,0.18%
+5,Maguide,3,0.27%
+6,Magron,9,0.82%
+7,Lizish,2,0.18%
+8,Iguaton,3,0.27%
+9,Dragave,6,0.55%
+10,Hummingspark,6,0.55%
+11,Flashclaw,3,0.27%
+12,Magestiflash,8,0.73%
+13,Pigo,5,0.45%
+14,Pigonat,4,0.36%
+15,Pigoga,6,0.55%
+16,Hammo,6,0.55%
+17,HammyBoy,3,0.27%
+18,Hamthorno,4,0.36%
+19,Sheabear,7,0.64%
+20,Dualbear,4,0.36%
+21,Spacebear,3,0.27%
+22,Bealtle,6,0.55%
+23,Centatle,2,0.18%
+24,Curlatoral,7,0.64%
+25,Millistone,8,0.73%
+26,Sapwin,3,0.27%
+27,Treewin,6,0.55%
+28,Winagrow,6,0.55%
+29,Budew,2,0.18%
+30,Roselia,4,0.36%
+31,Roserade,8,0.73%
+32,Sewaddle,3,0.27%
+33,Swadloon,3,0.27%
+34,Leavanny,10,0.91%
+35,Grubbin,2,0.18%
+36,Charjabug,5,0.45%
+37,Vikavolt,9,0.82%
+38,Busheep,2,0.18%
+39,Ramant,4,0.36%
+40,Bushewe,7,0.64%
+41,Bugik,2,0.18%
+42,Swordik,5,0.45%
+43,Ninjakik,4,0.36%
+44,Lotad,2,0.18%
+45,Lombre,2,0.18%
+46,Ludicolo,9,0.82%
+47,Bluebunn,11,1.00%
+48,Rocky,1,0.09%
+49,Boulder,2,0.18%
+50,Blaster,5,0.45%
+51,Crystallor,6,0.55%
+52,Carinx,3,0.27%
+53,Carinator,5,0.45%
+54,Cairnasaur,6,0.55%
+55,Pebblepup,2,0.18%
+56,Boulderoar,6,0.55%
+57,Fightorex,3,0.27%
+58,Raptorex,4,0.36%
+59,Kleinowl,2,0.18%
+60,Hootowl,10,0.91%
+61,Dualmoose,7,0.64%
+62,Snom,2,0.18%
+63,Frosmoth,7,0.64%
+64,Grondor,4,0.36%
+65,Bipedice,5,0.45%
+66,Tricerpup,2,0.18%
+67,Tricercil,5,0.45%
+68,Spheal,2,0.18%
+69,Sealeo,6,0.55%
+70,Walrein,4,0.36%
+71,Froshrog,2,0.18%
+72,Bouncerog,5,0.45%
+73,Bugop,2,0.18%
+74,Opwing,11,1.00%
+75,Hatenna,2,0.18%
+76,Hattrem,2,0.18%
+77,Hatterene,9,0.82%
+78,Otterpor,2,0.18%
+79,Psylotter,10,0.91%
+80,Florline,3,0.27%
+81,Florlion,3,0.27%
+82,Psycorb,3,0.27%
+83,Psyballs,5,0.45%
+84,Psycorboratr,4,0.36%
+85,Ralts,4,0.36%
+86,Kirlia,3,0.27%
+87,Gardevoir,8,0.73%
+88,Gallade,5,0.45%
+89,Tigrette,4,0.36%
+90,Inkay,4,0.36%
+91,Malamar,8,0.73%
+92,Flameruff,4,0.36%
+93,Barkflare,5,0.45%
+94,Iglite,2,0.18%
+95,Blaxer,2,0.18%
+96,Pyrator,8,0.73%
+97,Magmaclang,7,0.64%
+98,Flamehox,2,0.18%
+99,Fireshard,2,0.18%
+100,Blastflames,8,0.73%
+101,Tiowoo,2,0.18%
+102,Magwoo,3,0.27%
+103,Lafloo,5,0.45%
+104,Houndour,3,0.27%
+105,Houndoom,10,0.91%
+106,Sparkdust,2,0.18%
+107,Splame,10,0.91%
+108,Sparkitten,2,0.18%
+109,Fireblion,6,0.55%
+110,Flamebless,6,0.55%
+111,Shookwat,1,0.09%
+112,Wattwo,2,0.18%
+113,Megawatt,7,0.64%
+114,Elelamb,2,0.18%
+115,Electroram,3,0.27%
+116,Superchargo,5,0.45%
+117,Twigzap,1,0.09%
+118,Shockbranch,1,0.09%
+119,Thunderzap,9,0.82%
+120,Magie,6,0.55%
+121,Cumin,2,0.18%
+122,Cinneroph,10,0.91%
+123,Vupp,4,0.36%
+124,Vinnie,3,0.27%
+125,Suvinero,9,0.82%
+126,Whiskie,4,0.36%
+127,Whiskers,3,0.27%
+128,Whiskeroar,7,0.64%
+129,Nincada,3,0.27%
+130,Ninjask,4,0.36%
+131,Shedinja,5,0.45%
+132,Sheltor,3,0.27%
+133,Shelnado,5,0.45%
+134,Lilyray,2,0.18%
+135,Daray,3,0.27%
+136,Spinaquata,8,0.73%
+137,Magikarp,10,0.91%
+138,Gyarados,10,0.91%
+139,Staryu,6,0.55%
+140,Starmie,7,0.64%
+141,Ali,6,0.55%
+142,Batorali,6,0.55%
+143,Posho,11,1.00%
+144,Shomp,5,0.45%
+145,Poshorump,9,0.82%
+146,Binacle,2,0.18%
+147,Barbaracle,5,0.45%
+148,Durfish,4,0.36%
+149,Dompster,8,0.73%
+150,Kissyfishy,13,1.18%
+151,Ekans,2,0.18%
+152,Arbok,7,0.64%
+153,Zubat,4,0.36%
+154,Golbat,2,0.18%
+155,Crobat,9,0.82%
+156,Poof,1,0.09%
+157,Hast,5,0.45%
+158,Poov,2,0.18%
+159,Grust,14,1.27%
+160,Cluuz,7,0.64%
+161,Zurrclu,4,0.36%
+162,Zurroaratr,5,0.45%
+163,Timburr,2,0.18%
+164,Gurdurr,1,0.09%
+165,Conkeldurr,8,0.73%
+166,Rhypo,2,0.18%
+167,Rhynee,4,0.36%
+168,Rhypolar,6,0.55%
+169,Diggie,1,0.09%
+170,Drillatron,12,1.09%
+171,Wormite,2,0.18%
+172,Wormbot,3,0.27%
+173,Wormatron,7,0.64%
+174,Cleffa,2,0.18%
+175,Clefairy,2,0.18%
+176,Clefable,6,0.55%
+177,Minishoo,3,0.27%
+178,Glittleshoo,9,0.82%
+179,Zorua,4,0.36%
+180,Zoroark,9,0.82%
+181,Droid,1,0.09%
+182,Armoid,2,0.18%
+183,Soldrota,5,0.45%
+184,Tinkie,1,0.09%
+185,Shawar,2,0.18%
+186,Shaboom,3,0.27%
+187,Dragee,2,0.18%
+188,Draga,1,0.09%
+189,Drageye,4,0.36%
+190,Blobmo,2,0.18%
+191,Nebulimb,2,0.18%
+192,Galactasolder,3,0.27%
+193,Consodust,4,0.36%
+194,Cosmocrash,2,0.18%
+195,Rockmite,2,0.18%
+196,Stellarock,5,0.45%
+197,Poof-E,1,0.09%
+198,Hast-E,4,0.36%
+199,Droid-E,1,0.09%
+200,Armoid-E,1,0.09%
+201,Soldrota-E,5,0.45%
+202,Flamehox-E,1,0.09%
+203,Fireshard-E,2,0.18%
+204,Blastflames-E,4,0.36%
+205,Rocky-E,1,0.09%
+206,Boulder-E,1,0.09%
+207,Blaster-E,5,0.45%
+208,Crystallor-E,6,0.55%
+209,Magikarp-E,2,0.18%
+210,Gyarados-E,12,1.09%
+211,Shockfang,2,0.18%
+212,Electrocobra,3,0.27%
+213,Nightrex,2,0.18%
+214,Shadowsaur,5,0.45%
+215,Durfish-S,2,0.18%
+216,Dompster-S,8,0.73%
+217,Wormite-S,1,0.09%
+218,Wormbot-S,2,0.18%
+219,Wormatron-S,8,0.73%
+220,Cluuz-S,2,0.18%
+221,Zurrclu-S,2,0.18%
+222,Zurroaratr-S,5,0.45%
+223,Iglite-S,2,0.18%
+224,Blaxer-S,2,0.18%
+225,Pyrator-S,8,0.73%
+226,Ekans-S,2,0.18%
+227,Arbok-S,5,0.45%
+228,Soarwhell,0,0.00%
+229,Diftery,2,0.18%
+230,Vorsuitex,0,0.00%
+231,Kleinyeti,0,0.00%
+232,Triwandoliz,2,0.18%
+233,Relomidel,0,0.00%
+234,Relopamil,0,0.00%
+235,Dragowrath,0,0.00%
+236,Solaroxyous,0,0.00%
+237,Kissyfishy-D,0,0.00%
+238,Scraggy,2,0.18%
+239,Scrafty,1,0.09%
+240,Scraftagon,1,0.09%
+241,Glimmet,3,0.27%
+242,Glimmora,1,0.09%
+243,Abra,1,0.09%
+244,Kadabra,3,0.27%
+245,Alakazam,0,0.00%
+246,Flamigo,2,0.18%
+247,Sneasel,3,0.27%
+248,Weavile,3,0.27%
+249,Sneasel-H,2,0.18%
+250,Sneasler,0,0.00%
+251,Solosis,1,0.09%
+252,Duosion,2,0.18%
+253,Reuniclus,0,0.00%
+254,Solosis-X,3,0.27%
+255,Duosion-X,1,0.09%
+256,Reuniclus-X,0,0.00%
+257,Seviper,1,0.09%
+258,Hissimitar,1,0.09%
+259,Gulpin,0,0.00%
+260,Swalot,1,0.09%
+261,Gulpin-X,4,0.36%
+262,Swalot-X,1,0.09%
+263,Plasamp,1,0.09%
+264,Genieova,0,0.00%
+265,Elgyem,3,0.27%
+266,Beheeyem,0,0.00%
+267,Elgyem-E,2,0.18%
+268,Beheeyem-E,0,0.00%
+269,Caterpie,1,0.09%
+270,Metapod,0,0.00%
+271,Butterfree,3,0.27%
+272,Metapod-X,1,0.09%
+273,Butterfree-X,3,0.27%
+274,Bronzor,1,0.09%
+275,Bronzong,1,0.09%
+276,Bronzor-X,2,0.18%
+277,Bronzong-X,1,0.09%
+278,Capsakid,2,0.18%
+279,Scovillain,2,0.18%
+280,Despenero,0,0.00%
+281,Capsakid-S,2,0.18%
+282,Scovillain-S,1,0.09%
+283,Despenero-S,0,0.00%
+284,Cage Critter,1,0.09%
+285,Icy Serpent,1,0.09%
+286,Shocky Spire,0,0.00%
+287,Dust Sorcerer,0,0.00%
+288,Fever Dream,0,0.00%
+289,Dusk Skater,0,0.00%
+290,Necrozma,0,0.00%
+291,Necrozma-Ult,0,0.00%
+292,Azurill,1,0.09%
+293,Marill,1,0.09%
+294,Azumarill,3,0.27%
+295,Shroodle,3,0.27%
+296,Grafaiai,2,0.18%
+
+Total: 1100
