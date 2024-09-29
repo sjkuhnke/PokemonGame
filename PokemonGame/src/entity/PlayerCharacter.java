@@ -881,7 +881,7 @@ public class PlayerCharacter extends Entity {
 				Task t = Pokemon.addTask(Task.ITEM, "");
 				t.item = Item.ABILITY_PATCH;
 				Pokemon.addTask(Task.DIALOGUE, npc, "That fuse box should've opened a gate in the Control Center, you should check out the situation there.");
-				if (!p.flag[1][15]) {
+				if (!p.flag[1][12]) {
 					Pokemon.addTask(Task.DIALOGUE, npc, "The energy field still seems to not be fully fixed yet though, and I noticed some commotion at the office.");
 				}
 				Pokemon.addTask(Task.DIALOGUE, npc, "But, you know what, I'm heading to the bar or something. See ya kid.");
