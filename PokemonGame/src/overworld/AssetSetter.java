@@ -2735,8 +2735,8 @@ public class AssetSetter {
 		}
 		if (flag[1][15]) {
 			if (!flag[1][16]) {
-				gp.npc[13][1] = NPCSetup(SCOTT_DOWN, "Scott", 14, 57, "Hey there! Stanford said he's so motivated by our help that he'll reopen the gym! Isn't that wonderful?");
-				gp.npc[13][2] = NPCSetup(STANFORD, "Stanford", 15, 56, "*grumbles* Yeah, you guys are alright I suppose.", true);
+				gp.npc[13][1] = NPCSetup(SCOTT_DOWN, "Scott", 14, 58, "Hey there! Stanford said he's so motivated by our help that he'll reopen the gym! Isn't that wonderful?");
+				gp.npc[13][2] = NPCSetup(STANFORD, "Stanford", 15, 57, "*grumbles* Yeah, you guys are alright I suppose.", true);
 			} else {
 				gp.npc[13][1] = null;
 				gp.npc[13][2] = null;

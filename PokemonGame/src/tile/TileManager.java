@@ -619,9 +619,9 @@ public class TileManager {
 		setup(392, false);
 		setup(393, false);
 		
-		setup(394, true);
-		setup(395, true);
-		setup(396, true);
+		setup(394, false, OVER);
+		setup(395, false, OVER);
+		setup(396, false, OVER);
 		setup(397, true);
 		setup(398, true);
 		setup(399, true);
@@ -661,9 +661,9 @@ public class TileManager {
 		setup(431, false, OVER);
 		setup(432, false, OVER);
 		setup(433, true, TOP_HALF);
-		setup(434, true);
-		setup(435, true);
-		setup(436, true);
+		setup(434, false, OVER);
+		setup(435, false, OVER);
+		setup(436, false, OVER);
 		setup(437, true);
 		setup(438, true);
 		setup(439, true);
@@ -803,11 +803,11 @@ public class TileManager {
 		setup(574, true);
 		setup(575, true);
 		
-		setup(576, true);
-		setup(577, true);
-		setup(578, true);
-		setup(579, true);
-		setup(580, true);
+		setup(576, false, OVER);
+		setup(577, false, OVER);
+		setup(578, false, OVER);
+		setup(579, false, OVER);
+		setup(580, false, OVER);
 		setup(581, true);
 		setup(582, true);
 		setup(583, true);
