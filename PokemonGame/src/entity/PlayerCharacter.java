@@ -1158,7 +1158,16 @@ public class PlayerCharacter extends Entity {
 				Task t = Pokemon.addTask(Task.ITEM, "");
 				t.item = Item.PETTICOAT_GEM;
 			} else { // robin cutscene
-				Pokemon.addTask(Task.TEXT, "Hello my cracka");
+				Pokemon.addTask(Task.DIALOGUE, npc, "*pant* I even had to jam your portal system just so I could track you down.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I've got an urgent letter from your mom. Don't know what's in it, but she said it was really important.");
+				Task t = Pokemon.addTask(Task.ITEM, "");
+				t.item = Item.LETTER;
+				Pokemon.addTask(Task.DIALOGUE, npc, "She was pretty insistent I get this to you right away. You might want to open it as soon as you can.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Anyway, I'm just glad I finally found you. Take care of yourself, alright?");
+				p.flag[4][0] = true;
+				Pokemon.addTask(Task.FLASH_IN, "");
+				Pokemon.addTask(Task.UPDATE, "");
+				Pokemon.addTask(Task.FLASH_OUT, "");
 			}
 		} else if (gp.currentMap == 43) { // ground master
 			Pokemon.addTask(Task.DIALOGUE, npc, "It's rare, even among explorers. Use it wisely - it could be the edge you need.");
@@ -1600,7 +1609,7 @@ public class PlayerCharacter extends Entity {
 		} else if (p.badges > 1 && !p.flag[1][0]) { // After beating Gym 1
 			gp.ui.showMessage("There aren't any Pokemon inside.");
 		} else { // Dialogue after beating Fred 1 but before Gym 2
-			gp.ui.showMessage(Item.breakString("There aren't any Pokemon left, Dad must've given one to Scott and one to Fred.", 42));
+			gp.ui.showMessage(Item.breakString("There aren't any Pokemon left, Dad must've given one to Scott and one to Fredrick.", 42));
 		}
 		
 	}

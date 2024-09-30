@@ -1198,7 +1198,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(MILLIE, "Millie", 62, 46, "EEK! Wait... your eyes aren't radioactive green.", true);
 		gp.npc[mapNum][index++] = null; // replace with millie_up when we have it
 		gp.npc[mapNum][index] = NPCSetup(UP_XURKITREE, null, 82, 22, "Zzzzt.", true);
-		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, "Fred", 82, 32, "Ugh... Can't... Move... glrglg....");
+		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, "Fredrick", 82, 32, "Ugh... Can't... Move... glrglg....");
 		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 82, 32, "In updateNPC", "", 89);
 		gp.npc[mapNum][index++] = null; // millie 4
 		gp.npc[mapNum][index] = NPCSetup(BURGLAR_DOWN, 12, 52, "Caught me red-handed? I'll just take your victory instead!", "Tch... Guess I can't steal a win from you.", 85);
@@ -1304,7 +1304,7 @@ public class AssetSetter {
 		
 		gp.npc[mapNum][index] = NPCSetup(BIRD_KEEPER_LEFT, 35, 74, "Flying high is all I know. Are you ready to fall?", "You grounded me... but I'll be back in the skies soon!", 138);
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_RIGHT, 49, 74, "I just got an awesome TM move! Check it out!", "Fine, I'll tell you my secrets. I found it near New Minnow Town... that's all I'll say, for now.", 139, ALL);
-		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 46, 85, "", "", 140, ALL);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 46, 84, "", "", 140, ALL);
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 36, 84, "Guess what? I delayed my Twigzap's evolution to get a really powerful move. Wanna see?", "Guess even my secret technique wasn't good enough. Gave you a run for your money though!", 141);
 		
 		mapNum = 39;
@@ -1421,29 +1421,39 @@ public class AssetSetter {
 		
 		mapNum = 77;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 46, 18, "", "", 149);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 51, 24, "", "", 150);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 45, 30, "", "", 151);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 52, 64, "", "", 152);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 54, 37, "", "", 153);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 54, 52, "", "", 154);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 86, 33, "", "", 155);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 67, 34, "", "", 156);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 74, 61, "", "", 157);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 32, 45, "", "", 158);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 18, 20, "", "", 159);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 18, 24, "", "", 160);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 87, 15, "", "", 161);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 67, 41, "", "", 162);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 83, 47, "", "", 163);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 23, 60, "", "", 164);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 46, 18, "", "", 149);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_LEFT, 51, 24, "", "", 150);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 45, 30, "", "", 151);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 52, 64, "", "", 152);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_LEFT, 54, 37, "", "", 153);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_LEFT, 54, 52, "", "", 154);
+		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_LEFT, 86, 33, "", "", 155);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_UP, 67, 34, "", "", 156);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_RIGHT, 74, 61, "", "", 157);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 32, 45, "", "", 158);
+		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_DOWN, 18, 20, "", "", 159);
+		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_UP, 18, 24, "", "", 160);
+		gp.npc[mapNum][index] = NPCSetup(MANIAC_LEFT, 87, 15, "", "", 161);
+		gp.npc[mapNum][index] = NPCSetup(BLACK_BELT_RIGHT, 67, 41, "", "", 162);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 83, 47, "", "", 163);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 23, 60, "", "", 164);
 		
 		mapNum = 80;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 33, 19, "", "", 165);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 27, 22, "", "", 166);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 28, 28, "", "", 167);
-		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 35, 41, "", "", 185);
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 35, 41, "There you are! I was looking for you!\n"
+				+ "You've been really strong in all our battles, so I wanted to see if I've finally gotten strong enough to beat you!\n"
+				+ "Oh wait... you seem like you're in a hurry.\n"
+				+ "Uh, sorry! I didn't realize you were dealing with something serious.\n"
+				+ "Well, it's too late now, right? I'll make this quick, don't worry.",
+				"Oh man, I really messed up! I didn't know you were trying to get to your granpda...\n"
+				+ "I should've let you go instead of battling. Sorry, I guess I got carried away again.\n"
+				+ "I hope that Ability Patch makes up for it. I got it from Stanford a while back, but haven't found a use yet.\n"
+				+ "I really just wanted to see if I could keep up with you. I will, some day. Maybe I need to work on myself more...\n"
+				+ "I've been feeling a little more tapped in to my senses, and I'm going to try and hone in on those.\n"
+				+ "I'll catch up to you next time, just you wait. Uh... after you've checked on your grandpa, of course.", 185);
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 41, 51, "", "", 168);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 31, 64, "", "", 169);
@@ -2842,12 +2852,32 @@ public class AssetSetter {
 		if (flag[3][8]) { // Icy Serpant
 			gp.npc[166][0] = null;
 		}
+		if (flag[3][7]) {
+			gp.npc[41][0] = null;
+			gp.npc[41][1] = null;
+			gp.npc[41][2] = null;
+			gp.npc[41][3] = null;
+			
+			gp.npc[163][0] = null;
+			gp.npc[163][1] = null;
+			gp.npc[163][2] = null;
+			gp.npc[163][3] = null;
+			gp.npc[163][4] = null;
+			gp.npc[163][5] = null;
+			
+			gp.npc[164][0] = null;
+			gp.npc[164][1] = null;
+			gp.npc[164][2] = null;
+			gp.npc[164][3] = null;
+			gp.npc[164][4] = null;
+			gp.npc[164][5] = null;
+		}
 		
 		/**
 		 * Fifth Split
 		 */
 		if (flag[3][12] && !flag[4][0]) {
-			gp.npc[38][1] = NPCSetup(ROBIN_UP, "Robin", 62, 43, "HEY!", true);
+			gp.npc[38][1] = NPCSetup(ROBIN_UP, "Robin", 62, 43, "Finally, there you are! I've been searching everywhere for you!", true);
 		} else {
 			gp.npc[38][1] = null;
 		}

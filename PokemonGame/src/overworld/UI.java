@@ -10,9 +10,11 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -100,6 +102,10 @@ public class UI extends AbstractUI {
 	
 	private BufferedImage[] bagIcons;
 	
+	private String[][] letter;
+	private int maxLine = 13;
+	public int pageNum = 0;
+	
 	public static final int MAX_SHOP_COL = 10;
 	public static final int MAX_SHOP_ROW = 4;
 	
@@ -113,9 +119,17 @@ public class UI extends AbstractUI {
 		
 		ballIcon = setup("/icons/ball", 1);
 		
+		String[] message = loadText("/messages/letter1.txt").split("\n");
+		message = breakMessage(message, 53);
+		letter = splitMessage(message);
+		
 		try {
 			InputStream is = getClass().getResourceAsStream("/font/marumonica.ttf");
 			marumonica = Font.createFont(Font.TRUETYPE_FONT, is);
+			is = getClass().getResourceAsStream("/font/creattion.ttf");
+			creattion = Font.createFont(Font.TRUETYPE_FONT, is);
+			is = getClass().getResourceAsStream("/font/monsier-la-doulaise.ttf");
+			monsier = Font.createFont(Font.TRUETYPE_FONT, is);
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
@@ -129,7 +143,7 @@ public class UI extends AbstractUI {
 		lightFrames = extractFrames("/battle/light.gif");
 		interactIcon = setup("/interactive/interact", 3);
 	}
-	
+
 	@Override
 	public void showMessage(String text) {
 		above = true;
@@ -172,6 +186,10 @@ public class UI extends AbstractUI {
 		
 		if (gp.gameState == GamePanel.DEX_NAV_STATE) {
 			drawDexNav();
+		}
+		
+		if (gp.gameState == GamePanel.LETTER_STATE) {
+			drawLetterState();
 		}
 		
 		if (gp.gameState == GamePanel.STARTER_STATE) {
@@ -2376,6 +2394,8 @@ public class UI extends AbstractUI {
 					bagState = 0;
 					gp.player.p.visor = !gp.player.p.visor;
 					gp.player.setupPlayerImages(gp.player.p.visor);
+				} else if (currentItem == Item.LETTER) {
+					gp.gameState = GamePanel.LETTER_STATE;
 				} else {
 					gp.gameState = GamePanel.USE_ITEM_STATE;
 				}
@@ -2477,6 +2497,8 @@ public class UI extends AbstractUI {
 				gp.eHandler.canTouchEvent = !gp.eHandler.tempCooldown;
 				
 				drawLightOverlay = gp.determineLightOverlay();
+				
+				if (gp.currentMap == 38) gp.eHandler.checkEvent();
 			}
 			gp.player.p.surf = false;
 			gp.player.p.lavasurf = false;
@@ -2886,6 +2908,109 @@ public class UI extends AbstractUI {
 	    return silhouette;
 	}
 	
+	private void drawLetterState() {
+		int x = gp.tileSize * 2;
+		int y = gp.tileSize / 2;
+		int width = gp.screenWidth - x * 2;
+		int height = gp.screenHeight - y * 2;
+		
+		g2.setColor(new Color(0, 0, 0, 100));
+		g2.fillRoundRect(x - 4, y - 4, width + 8, height + 8, 15, 15);
+		
+		g2.setColor(new Color(245, 234, 221));
+		g2.fillRoundRect(x, y, width, height, 15, 15);
+		
+		int lineX = x + gp.tileSize / 2;
+		int lineY = y + gp.tileSize;
+		int lineWidth = width - gp.tileSize;
+		int lineHeight = (int) (gp.tileSize * 0.75);
+		g2.setColor(new Color(63, 67, 114, 150));
+		
+		for (int i = 0; i < 13; i++) {
+			g2.drawLine(lineX, lineY, lineX + lineWidth, lineY);
+			lineY += lineHeight;
+		}
+		
+		int textX = x + (int) (gp.tileSize * 0.75);
+		int textY = (int) (y + gp.tileSize * 0.9);
+		
+		g2.setFont(monsier);
+		g2.setColor(Color.BLACK);
+		
+		if (pageNum == 0) {
+			g2.setFont(g2.getFont().deriveFont(24F));
+			String date = "9 /29/ 41";
+			int dateX = (int) (textX + width * 0.9);
+			g2.drawString(date, getRightAlignedTextX(date, dateX), textY - gp.tileSize / 4);
+		}
+		
+		g2.setFont(g2.getFont().deriveFont(30F));		
+		String[] message = letter[pageNum];
+		
+		for (String s : message) {
+			g2.drawString(s, textX, textY);
+			textY += lineHeight;
+		}
+		g2.setFont(marumonica);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			pageNum++;
+			if (pageNum > letter.length - 1) {
+				pageNum = 0;
+				gp.gameState = GamePanel.MENU_STATE;
+			}
+		}
+	}
+	
+	private String loadText(String path) {
+		String str = "";
+		StringBuffer buf = new StringBuffer();
+		InputStream is = getClass().getResourceAsStream(path);
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			if (is != null) {
+				while ((str = reader.readLine()) != null) {
+					buf.append(str + "\n");
+				}
+			}
+			is.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return buf.toString();
+	}
+	
+	private String[] breakMessage(String[] message, int length) {
+		ArrayList<String> result = new ArrayList<>();
+		for (String s : message) {
+			String[] m = Item.breakString(s, length).split("\n");
+			for (String s1 : m) {
+				result.add(s1);
+			}
+		}
+		return result.toArray(new String[1]);
+	}
+	
+	private String[][] splitMessage(String[] message) {
+		int numPages = (int) Math.ceil((double) message.length / maxLine);
+		
+		String[][] result = new String[numPages][];
+
+		for (int i = 0; i < numPages; i++) {
+			int start = i * maxLine;
+			int finish = Math.min(start + maxLine, message.length);
+			
+			String[] page = new String[finish - start];
+			for (int j = 0; j < page.length; j++) {
+				page[j] = message[start + j];
+			}
+			result[i] = page;
+		}
+		
+		return result;
+	}
+
 	private void drawStarterState() {
 		int x = gp.tileSize;
 		int y = gp.tileSize * 2;
@@ -2904,13 +3029,8 @@ public class UI extends AbstractUI {
 			drawSubWindow(x, y, width, height, 240);
 			
 			if (starter == i) {
-				//x -= gp.tileSize / 4;
-				//y -= gp.tileSize / 4;
 				g2.setColor(p.type1.getColor());
 				g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
-				//g2.drawRoundRect(x, y, width + gp.tileSize / 2, height + gp.tileSize / 2, 45, 45);
-				//x = startX;
-				//y = startY;
 			}
 			
 			x += gp.tileSize / 3;
