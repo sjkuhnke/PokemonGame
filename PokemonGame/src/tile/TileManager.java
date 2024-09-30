@@ -344,12 +344,12 @@ public class TileManager {
 		setup(111, true);
 		setup(112, true);
 		setup(113, true);
-		setup(114, false);
-		setup(115, false);
-		setup(116, false);
-		setup(117, true, LEFT_HALF);
-		setup(118, false);
-		setup(119, true, RIGHT_HALF);
+		setup(114, false, OVER);
+		setup(115, false, OVER);
+		setup(116, false, OVER);
+		setup(117, true, LEFT_HALF, OVER);
+		setup(118, false, OVER);
+		setup(119, true, RIGHT_HALF, OVER);
 		setup(120, true);
 		setup(121, true);
 		setup(122, true);
@@ -416,23 +416,23 @@ public class TileManager {
 		setup(183, false);
 		setup(184, true, LEFT_HALF);
 		setup(185, true, TOP_HALF);
-		setup(186, true);
-		setup(187, true);
-		setup(188, true);
-		setup(189, false);
-		setup(190, true);
+		setup(186, true, OVER);
+		setup(187, true, OVER);
+		setup(188, true, OVER);
+		setup(189, false, OVER);
+		setup(190, true, OVER);
 		setup(191, true);
-		setup(192, true);
-		setup(193, false);
-		setup(194, false);
-		setup(195, true, TOP_HALF);
+		setup(192, true, OVER);
+		setup(193, false, OVER);
+		setup(194, false, OVER);
+		setup(195, true, TOP_HALF, OVER);
 		setup(196, true);
-		setup(197, true, TOP_HALF);
-		setup(198, false);
+		setup(197, true, TOP_HALF, OVER);
+		setup(198, false, OVER);
 		setup(199, false);
-		setup(200, false);
+		setup(200, false, OVER);
 		setup(201, true);
-		setup(202, false);
+		setup(202, false, OVER);
 		setup(203, false);
 		setup(204, false);
 		setup(205, false);
@@ -1319,6 +1319,10 @@ public class TileManager {
 	}
 	
 	public void setup(int index, boolean collision, int collisionType) {
+		setup(index, collision, collisionType, FULL);
+	}
+	
+	public void setup(int index, boolean collision, int collisionType, int over) {
 		tile[index] = new Tile();
 		String imageName = index + "";
 		while (imageName.length() < 3) imageName = "0" + imageName;
@@ -1327,12 +1331,11 @@ public class TileManager {
 			tile[index].collision = collision;
 			if (collision) {
 				tile[index].collisionDirection = "all";
-				tile[index].collisionArea = collisionRectangles[collisionType];
-			} else {
-				if (collisionType == OVER) {
-					tile[index].drawAbove = true;
-					tile[index].mask = ImageIO.read(getClass().getResourceAsStream("/masks/" + imageName + ".png"));
-				}
+				tile[index].collisionArea = collisionRectangles[collisionType == OVER ? FULL : collisionType];
+			}
+			if (collisionType == OVER || over == OVER) {
+				tile[index].drawAbove = true;
+				tile[index].mask = ImageIO.read(getClass().getResourceAsStream("/masks/" + imageName + ".png"));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

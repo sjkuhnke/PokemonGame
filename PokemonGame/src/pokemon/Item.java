@@ -319,6 +319,7 @@ public enum Item {
 	GROUND_KEY(272,0,0,Color.BLACK,Item.KEY_ITEM,null,"A key that unlocks Ground Master's Classroom."),
 	SHOVEL(273,0,0,Color.BLACK,Item.KEY_ITEM,null,"A handy tool that can shovel snowballs to clear them."),
 	ICE_PICK(274,0,0,Color.BLACK,Item.KEY_ITEM,null,"A cold metal pickaxe used for breaking blocks of ice."),
+	LETTER(284,0,0,Color.BLACK,Item.KEY_ITEM,null,"A letter from your mother delivered by Robin. It's of urgent matter."),
 	;
 	
 	private int id;

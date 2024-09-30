@@ -29,6 +29,8 @@ public abstract class AbstractUI {
 	public int partySelectedNum = -1;
 	public int moveOption = -1;
 	public Font marumonica;
+	public Font creattion;
+	public Font monsier;
 	public int counter = 0;
 	public boolean showMoveOptions;
 	public boolean showIVOptions;

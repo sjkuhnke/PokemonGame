@@ -64,8 +64,6 @@ Game2.88: Elite four maps are added and warps are working 6/14
 Game2.89: Trainers and teams are added 6/21
 Game2.9: League is beatable 7/1
 
-Gate (top) tiles
-Gate (left/right) tiles
 All interior walls should all be over the player
 
 Trainers to redo:
@@ -77,6 +75,10 @@ Trainers to redo:
 Dialogues to add:
 All of above
 142-145
+
+Player: Finn
+Dad: Stellan Lund
+Mom: Astrid Solberg
 
 Ice Beam (Deep Chasm)
 Iron Head (Iron Town Area)
