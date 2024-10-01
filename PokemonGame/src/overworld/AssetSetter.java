@@ -8,7 +8,6 @@ import java.util.Random;
 import entity.*;
 import object.*;
 import pokemon.Item;
-import pokemon.Trainer;
 
 public class AssetSetter {
 
@@ -3473,7 +3472,7 @@ public class AssetSetter {
 				result.setDirection("down");
 				break;
 			case UP_XURKITREE:
-				image = result.setup("/overworlds/284_0");
+				result.setupImages("/npc/cage_critter");
 				break;
 			case EXPLORER_DOWN:
 				result.setupImages("/npc/explorer");
