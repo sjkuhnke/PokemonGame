@@ -1542,7 +1542,7 @@ public enum Item {
 			
 			resultPokemon.heal();
 			
-			p.catchPokemon(resultPokemon);
+			p.catchPokemon(resultPokemon, false);
 			
 		});
 		result.add(generate);

@@ -122,11 +122,14 @@ public class Player extends Trainer implements Serializable {
 		version = VERSION;
 	}
 
-	public void catchPokemon(Pokemon p, Item ball) {
+	public void catchPokemon(Pokemon p, boolean nickname, Item ball) {
 	    if (p.isFainted()) return;
 	    boolean hasNull = false;
-	    Task t = Pokemon.createTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?", p);
-	    if (Pokemon.gp.gameState != GamePanel.PLAY_STATE) Pokemon.insertTask(t, 0);
+	    Task t = null;
+	    if (nickname) {
+	    	t = Pokemon.createTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?", p);
+		    if (Pokemon.gp.gameState != GamePanel.PLAY_STATE) Pokemon.insertTask(t, 0);
+	    }
 	    pokedex[p.id] = 2;
 	    p.clearVolatile();
 	    p.consumeItem(null);
@@ -144,8 +147,10 @@ public class Player extends Trainer implements Serializable {
 	            if (team[i] == null) {
 	                team[i] = p;
 	                p.slot = i;
-	                t = Pokemon.createTask(Task.END, "Caught " + p.nickname + ", added to party!");
-	                Pokemon.insertTask(t, 1);
+	                if (nickname) {
+	                	t = Pokemon.createTask(Task.END, "Caught " + p.nickname + ", added to party!");
+		                Pokemon.insertTask(t, 1);
+	                }
 	                current = team[0];
 	                break;
 	            }
@@ -162,18 +167,26 @@ public class Player extends Trainer implements Serializable {
 	            }
 	            if (index >= 0) {
 	                boxes[i][index] = p;
-	                t = Pokemon.createTask(Task.END, "Caught " + p.nickname + ", sent to box " + (i + 1) + "!");
-	                Pokemon.insertTask(t, 1);
+	                if (nickname) {
+	                	t = Pokemon.createTask(Task.END, "Caught " + p.nickname + ", sent to box " + (i + 1) + "!");
+		                Pokemon.insertTask(t, 1);
+	                }
 	                return;  // Exit the method after catching the Pokemon
 	            }
 	        }
-	        t = Pokemon.createTask(Task.END, "Cannot catch " + p.nickname + ", all boxes are full.");
-	        Pokemon.insertTask(t, 1);
+	        if (nickname) {
+	        	t = Pokemon.createTask(Task.END, "Cannot catch " + p.nickname + ", all boxes are full.");
+		        Pokemon.insertTask(t, 1);
+	        }
 	    }
 	}
 	
+	public void catchPokemon(Pokemon p, boolean nickname) {
+		catchPokemon(p, nickname, Item.POKEBALL);
+	}
+	
 	public void catchPokemon(Pokemon p) {
-		catchPokemon(p, Item.POKEBALL);
+		catchPokemon(p, true);
 	}
 
 

@@ -917,6 +917,9 @@ public abstract class AbstractUI {
 		        Pokemon.insertTask(text, 0);
 		        newP.exp = oldP.exp;
 		        gp.player.p.pokedex[newP.id] = 2;
+		        if (oldP.id == 129) {
+		        	gp.player.p.catchPokemon(new Pokemon(131, oldP.level, true, false), false);
+		        }
 		        
 		        // Update player team
 		        int index = Arrays.asList(gp.player.p.getTeam()).indexOf(oldP);
