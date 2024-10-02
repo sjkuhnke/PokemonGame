@@ -378,7 +378,7 @@ public class BattleUI extends AbstractUI {
 			if (counter >= 75) {
 				counter = 0;
 				if (currentTask.wipe) {
-					user.getPlayer().catchPokemon(foe, currentTask.item);
+					user.getPlayer().catchPokemon(foe, true, currentTask.item);
 					setNicknaming(true);
 				} else {
 					currentTask.p.setVisible(true);

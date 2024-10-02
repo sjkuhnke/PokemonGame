@@ -28,7 +28,7 @@ public class AssetSetter {
 //	private static final int UP_BUZZWOLE = -23;
 //	private static final int UP_SPLAME = -22;
 //	private static final int UP_SHOOKWAT = -21;
-//	private static final int UP_CAIRNASAUR = -20;
+	private static final int GRANDFATHER = -20;
 	private static final int UP_XURKITREE = -19;
 	private static final int RYDER_UP = -18;
 	private static final int RYDER_DOWN = -17;
@@ -1167,7 +1167,7 @@ public class AssetSetter {
 		
 		mapNum = 26;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 58, 70, "", "", 79);
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 58, 70, "In updateNPC", "", 79);
 		
 		index = 0;
 		// Nurses/PCs
@@ -1196,7 +1196,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(MILLIE, "Millie", 62, 46, "EEK! Wait... your eyes aren't radioactive green.", true);
 		gp.npc[mapNum][index++] = null; // replace with millie_up when we have it
-		gp.npc[mapNum][index] = NPCSetup(UP_XURKITREE, null, 82, 22, "Zzzzt.", true);
+		gp.npc[mapNum][index] = SetupStaticEncounter(284, 82, 22, 387, 76, "Bzzt.");
 		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, "Fredrick", 82, 32, "Ugh... Can't... Move... glrglg....");
 		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 82, 32, "In updateNPC", "", 89);
 		gp.npc[mapNum][index++] = null; // millie 4
@@ -1520,7 +1520,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 29, 45, "", "", 183);
 		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 33, 45, "", "", 184);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "Thank you so much for saving me! Here, take this as a gift!", true, 16, "Love you grandson. Keep doing good things!");
+		gp.npc[mapNum][index] = NPCSetup(GRANDFATHER, "Grandpa", 31, 41, "Finn... is that you?", true, 131, "I heard about what happened - thank you for stopping that alien Pokemon! It's good to see you safe.");
 		
 		mapNum = 92;
 		index = 0;
@@ -2792,7 +2792,15 @@ public class AssetSetter {
 		}
 		
 		if (flag[2][8] && !flag[2][9]) {
-			gp.npc[26][0] = NPCSetup(TN_DOWN, 58, 70, "Hello there.", "", 79);
+			gp.npc[26][0] = NPCSetup(TN_DOWN, 58, 70, "So, you found me, huh? I didn't think you guys would make it this far!\n"
+					+ "You should be impressed. I managed to chain up an Ultra Paradox Pokemon! You have no idea what kind of power we've tapped into.\n"
+					+ "Kleine Village is already under its control, and soon, the entire region will follow!\n"
+					+ "But you want to free it, don't you? You think you can stop us? Hah! You'll have to beat me first!",
+					"Ugh... I can't believe I lost. You're just lucky!\n"
+					+ "You think freeing it will make things better? You're a fool. Unleashing that kind of power won't fix anything - just watch.\n"
+					+ "But fine, take the wire cutters. Not like it'll help. It's more dangerous unchained than you can imagine.\n"
+					+ "Go ahead, free it if you dare. But when that Pokemon goes wild, don't come crying to me!\n"
+					+ "Team Eclipse's plan is already in motion. You're just delaying the inevitable.", 79);
 		} else {
 			gp.npc[26][0] = null;
 		}
@@ -2820,12 +2828,15 @@ public class AssetSetter {
 		}
 		if (flag[2][11]) {
 			gp.npc[28][2] = SetupStaticEncounter(284, 82, 22, 387, 76, "Bzzt.");
+		} else {
+			gp.npc[28][2] = NPCSetup(UP_XURKITREE, null, 82, 22, "Zzzzt.", true);
 		}
 		if (flag[2][12]) {
 			gp.npc[28][2] = null;
 			for (int i = 19; i <= 34; i++) {
 				gp.npc[28][i] = null;
 			}
+			gp.npc[28][37] = null;
 			gp.npc[28][38] = NPCSetup(MILLIE, "Millie", 87, 45, "You... you really did it! You are a seriously impressive trainer.", true);
 		}
 		if (flag[2][13]) {
@@ -3425,6 +3436,9 @@ public class AssetSetter {
 				break;
 			case GRANDMOTHER:
 				result.setupImages("/npc/grandma");
+				break;
+			case GRANDFATHER:
+				result.setupImages("/npc/grandpa");
 				break;
 			case AVERY:
 				result.setupImages("/npc/avery");

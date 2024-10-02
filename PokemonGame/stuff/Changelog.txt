@@ -1,0 +1,10 @@
+Demo 1.0 Released
+
+Changed the lv. 75 Snom in Possessed Trainer 3 to have Swarm instead of Icy Scales
+**Added Shedinja to be obtainable in the standard way** (subject to change - extremely OP)
+Shedinja will have random IVs and nature (to avoid bottle capping/minting Nincada is better than bottle capping Shedinja since it would be 2 for 1)
+Gave Eclipse Grunt 15's (Wire Cutters guy) Weavile Chople Berry instead of None
+Made Cage Critter appear on Trainer Docs
+Made Kleine Village Gauntlet PC Disappear after beating Cage Critter
+Added dialogue to the Wire Cutters grunt
+Fixed Generating a Pokemon throw an error when trying to prompt you to nickname it

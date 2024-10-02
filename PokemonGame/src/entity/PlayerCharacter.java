@@ -81,6 +81,8 @@ public class PlayerCharacter extends Entity {
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		
+		name = "Finn";
+		
 		setDefaultValues();
 		getPlayerImage();
 	}
@@ -1012,6 +1014,7 @@ public class PlayerCharacter extends Entity {
 						Pokemon.addTask(Task.DIALOGUE, npc, "OHHH! YOU! I'm so sorry, that was a reflex, there's so many of them.");
 						if (!p.flag[2][9]) {
 							Pokemon.addTask(Task.DIALOGUE, npc, "Any luck finding the grunt? ..I've been holding them off okay.");
+							Pokemon.addTask(Task.DIALOGUE, npc, "Like I said, ");
 							Pokemon.addTask(Task.DIALOGUE, npc, "I believe that there's a secret room that you can access on the 2nd floor, check that out if you haven't yet.");
 						} else {
 							Pokemon.addTask(Task.DIALOGUE, npc, "You found him? How'd it go? Are you and your Pokemon okay?");
@@ -1218,14 +1221,36 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.DIALOGUE, npc, "You did great clearing the school of those Grunts, but that bright light's still making things difficult.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "Leader Glacius won't accept challengers until the light's sorted out. Maybe you can do something about it?");
 			}
-		}
-		
-		if (gp.currentMap == 91 && !p.flags[16]) {
-			p.flags[16] = true;
-			Pokemon.addTask(Task.TEXT, "Obtained HM05 Slow Fall!");
-			p.bag.add(Item.HM05);
-			Pokemon.addTask(Task.TEXT, "Also, if you haven't yet, you should be sure to check out the bottom right house in the quadrant above. I hear he has a gift!");
-		} if (gp.currentMap == 93) { // Move reminder
+		} else if (gp.currentMap == 91) { // grandpa
+			if (!p.flag[4][2]) {
+				p.flag[4][2] = true;
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh... thank Arceus you're here. I was afraid I wouldn't make it through this.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Those thugs - Team Eclipse - stormed in, demanding something that I don't fully understand.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You beat them, right? Why are they still here? Can you do anything?");
+				Task t = Pokemon.addTask(Task.TURN, "");
+				t.counter = 0;
+				Pokemon.addTask(Task.SPEAK, this, "Get out, you creeps! Leave us alone. I already destroyed your flimsy Pokemon, you want some more?");
+				Pokemon.addTask(Task.SPEAK, this, "Didn't think so. Then, GET!");
+				Pokemon.addTask(Task.FLASH_IN, "");
+				Pokemon.addTask(Task.UPDATE, "");
+				Pokemon.addTask(Task.FLASH_OUT, "");
+				t = Pokemon.addTask(Task.TURN, "");
+				t.counter = 1;
+				Pokemon.addTask(Task.DIALOGUE, npc, "Thank you Finn, I don't know what I would've done without you.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "They said something about summoning an Ultra Paradox Pokemon... I think it's some dangerous creature they're after.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I heard they were headed for Peaceful Park next, something about unleashing that alien there, probably.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You might want to stop them before they cause more chaos.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh! But before you go, I have a gift for you.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Take this, it's the HM for Slow Fall. It should help you out exploring Xhenos once you take down Mindy.");
+				t = Pokemon.addTask(Task.ITEM, "");
+				t.item = Item.HM04;
+				Pokemon.addTask(Task.DIALOGUE, npc, "Be careful out there. These aren't just ordinary trainers - they're after something far more dangerous than I've ever seen.");
+			} else {
+				Pokemon.addTask(Task.DIALOGUE, npc, "Still here, eh? You'd better hurry to Peaceful Park before those Team Eclipse thugs cause even more trouble.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "They were talking about summoning an Ultra Paradox Pokemon, some terrible creature. The park's just south of Kleine Village - head there quickly!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Be careful, that thing's dangerous. I know you can handle it, but don't take it lightly.");
+			}
+		} else if (gp.currentMap == 93) { // Move reminder
 			Pokemon.addTask(Task.PARTY, "");
 		} if (gp.currentMap == 94 && !p.flags[18]) {
 			p.flags[18] = true;
