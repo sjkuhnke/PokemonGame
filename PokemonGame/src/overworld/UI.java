@@ -329,7 +329,7 @@ public class UI extends AbstractUI {
 			drawHiddenPowerScreen(gp.player.p.team);
 			break;
 		case Task.FOSSIL:
-			currentDialogue = currentTask.message;
+			currentDialogue = Item.breakString(currentTask.message, 42);
 			drawDialogueScreen(true);
 			drawFossilScreen(gp.player.p.bag);
 			break;

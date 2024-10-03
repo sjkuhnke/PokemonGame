@@ -248,14 +248,14 @@ Before
 
 ""
 ""
-"Let's see if you can handle the spotlight!"
+""
 "I don't break character - even when I'm breaking you!"
 "My performance is flawless - just like this battle will be."
 After
 
 ""
 ""
-"This scene's not over yet. I'll be back for a sequel."
+""
 "Guess this wasn't my shining moment."
 "Well, you've won this act. Enjoy the applause while it lasts."
 
@@ -266,14 +266,14 @@ Before
 ""
 ""
 ""
-"Get ready for a dazzling display of skill!"
+""
 After
 
 ""
 ""
 ""
 ""
-"A tragic ending... but every story has one."
+""
 
 Athlete (Fire/Electric)
 Before Battle:
@@ -283,7 +283,7 @@ Before Battle:
 ""
 ""
 ""
-"I'm here to win, and I'll burn through anyone in my way!"
+""
 After Battle:
 
 ""
@@ -291,7 +291,7 @@ After Battle:
 ""
 ""
 ""
-"I'll be back with more fire and more power! Just you wait!"
+""
 
 Hiker (Ground/Rock/Steel)
 Before
@@ -348,7 +348,7 @@ Before Battle:
 
 ""
 ""
-"My fists are ready, and so are my Pokemon! Let's fight!"
+""
 "Strength and discipline - two things you'll need to survive this battle!"
 "Prepare yourself! My Pokemon fight with the heart of a true warrior!"
 "I've trained for years. Let's see if you can keep up with me!"
@@ -356,7 +356,7 @@ After Battle:
 
 ""
 ""
-"I'll train harder. This loss will only make me stronger!"
+""
 "A warrior never truly loses; this is just part of the path!"
 "Impressive! I'll need to push myself even further!"
 "You've won, but I'll come back stronger than ever!"
@@ -431,7 +431,7 @@ Before Battle:
 
 ""
 ""
-"I've caught rare Pokemon in the deepest seas. You won't stand a chance!"
+""
 "Fishing takes patience, but when I strike, it's game over!"
 "A fisherman never lets his prey escape. Let's see if you can!"
 "The water's been kind to me, but I won't be kind to you!"
@@ -439,7 +439,7 @@ After Battle:
 
 ""
 ""
-"You're one tough catch... Guess I need to reel it in."
+""
 "I've fished in rough waters, but that battle was something else."
 "You won this round, but I'll be casting my line again soon!"
 "Seems like I was out of my depth this time."
@@ -447,32 +447,32 @@ After Battle:
 Surfer (M) (Water)
 Before
 
-"Dude, I'm about to ride the wave of victory!"
-"The ocean's my playground, and you're about to get washed away!"
-"You think you can handle the waves? Let's find out!"
-"It's surf time! Let's hang ten... over your defeat!"
-"I'm as smooth as the sea. Try to keep up!"
+""
+""
+""
+""
+""
 After
 
-"Wiped out, huh? Well, that's the life of a surfer!"
-"Guess I'll be hitting the waves instead of winning today."
-"Good match! I'll train harder... between sets, of course."
-"You've got skills, dude. Respect!"
-"This wave knocked me down, but I'll catch the next one!"
+""
+""
+""
+""
+""
 
 Swimmer (F) (Water)
 Before
 
-"The water's my element, and you're about to get drowned out!"
-"Let's see if you can keep afloat in this battle!"
-"Ready to make a splash? I'll be the tidal wave that crashes you!"
+""
+""
+""
 "I'm fast in the water, and even faster in battle!"
 "Hope you brought your swim gear, because I'm about to flood you out!"
 After
 
-"Looks like I sank this time. I'll swim harder next round!"
-"You got the better of me... this time."
-"Guess I'll need more laps to catch up to you."
+""
+""
+""
 "Good match! I'll see you back in the deep end!"
 "I'm not going under just yet... next time, I'll win."
 
@@ -531,14 +531,14 @@ Before Battle:
 
 ""
 ""
-"Once you step into the shadows, you'll never escape!"
+""
 "I'm fascinated by the eerie... You'll soon fear the unknown!"
 "The dead tell no tales, but I'll make sure you remember this battle!"
 After Battle:
 
 ""
 ""
-"Perhaps the ghosts were too quiet today."
+""
 "I'll commune with the spirits... next time will be different!"
 "I may have lost, but the supernatural is always watching..."
 
@@ -564,14 +564,14 @@ Before
 ""
 ""
 ""
-"A bit of illusion, a touch of flair... and a victory for me!"
+""
 "Let's see if you can keep up with my magical performance!"
 After
 
 ""
 ""
 ""
-"I'll make sure this defeat disappears from memory."
+""
 "The show's not over yet... just you wait for the encore!"
 
 Psychic (Psychic)
