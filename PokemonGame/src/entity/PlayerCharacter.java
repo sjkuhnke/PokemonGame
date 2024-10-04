@@ -182,8 +182,6 @@ public class PlayerCharacter extends Entity {
 				p.steps++;
 			}
 			
-			gp.eHandler.checkEvent();
-			
 			if (p.surf) {
 				double surfXD =  worldX / (1.0 * gp.tileSize);
 				double surfYD =  worldY / (1.0 * gp.tileSize);
@@ -249,6 +247,9 @@ public class PlayerCharacter extends Entity {
 			if (!currentMap.equals(currentMapName)) gp.ui.showAreaName();
 			Main.window.setTitle(gp.gameTitle + " - " + currentMapName);
 		}
+		
+		gp.eHandler.checkEvent();
+		
 		if (gp.currentMap == 107 && gp.checkSpin && gp.ticks % 4 == 0 && new Random().nextInt(3) == 0) {
 			int index = new Random().nextInt(10);
 			if (gp.grusts[index] != null) gp.grusts[index].turnRandom();
