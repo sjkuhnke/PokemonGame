@@ -2497,8 +2497,6 @@ public class UI extends AbstractUI {
 				gp.eHandler.canTouchEvent = !gp.eHandler.tempCooldown;
 				
 				drawLightOverlay = gp.determineLightOverlay();
-				
-				if (gp.currentMap == 38) gp.eHandler.checkEvent();
 			}
 			gp.player.p.surf = false;
 			gp.player.p.lavasurf = false;
@@ -2961,6 +2959,8 @@ public class UI extends AbstractUI {
 				gp.gameState = GamePanel.MENU_STATE;
 			}
 		}
+		
+		drawToolTips("Next", null, "Back", null);
 	}
 	
 	private String loadText(String path) {

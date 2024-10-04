@@ -5487,16 +5487,15 @@ public class Pokemon implements Serializable {
 		if (this.status == Status.PARALYZED) speed *= 0.5;
 		if (this.item == Item.CHOICE_SCARF) speed *= 1.5;
 		if (this.ability == Ability.UNBURDEN && consumedItem) speed *= 2;
+		if (checkAbilitySpeedBoost(this.ability)) speed *= 2;
 		return (int) speed;
 	}
 	
 	public Pokemon getFaster(Pokemon other, int thisP, int otherP) {
 		int speed1 = this.getSpeed();
 		if (field.contains(field.playerSide, Effect.TAILWIND)) speed1 *= 2;
-		if (checkAbilitySpeedBoost(this.ability)) speed1 *= 2;
 		int speed2 = other.getSpeed();
 		if (field.contains(field.foeSide, Effect.TAILWIND)) speed2 *= 2;
-		if (checkAbilitySpeedBoost(other.ability)) speed2 *= 2;
 		Pokemon faster = speed1 > speed2 ? this : other;
 		if (speed1 == speed2) {
 			Random random = new Random();

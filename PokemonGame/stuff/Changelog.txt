@@ -8,3 +8,6 @@ Made Cage Critter appear on Trainer Docs
 Made Kleine Village Gauntlet PC Disappear after beating Cage Critter
 Added dialogue to the Wire Cutters grunt
 Fixed Generating a Pokemon throw an error when trying to prompt you to nickname it
+Added Crunch to Dragave's moveset
+Made calc show ability speed boosts (Swift Swim etc.)
+Made the event check happen every frame regardless of whether or not the player is moving

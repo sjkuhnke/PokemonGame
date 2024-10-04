@@ -1109,8 +1109,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 55, 42, "You think you're a hero? Let's see how long that lasts.", "This isn't the end. Team Eclipse always has a backup plan.", 52);
 		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 51, 39, "Unauthorized entry detected. Initiating combat sequence.", "You got lucky this time. Next time, you won't stand a chance.", 53);
 		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 55, 39, "Our goals are beyond your understanding. Defeating me changes nothing.", "Consider this a minor setback. We'll be back stronger.", 54);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_RIGHT, null, 49, 53, "Quick! Team Nuke is taking over our office! Please help!", 42);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_LEFT, null, 57, 53, "Quick! Team Nuke is taking over our office! Please help!", 42);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_RIGHT, "Worker", 49, 53, "Quick! Team Nuke is taking over our office! Please help!", 42);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_LEFT, "Worker", 57, 53, "Quick! Team Nuke is taking over our office! Please help!", 42);
 		
 		mapNum = 18;
 		index = 0;
