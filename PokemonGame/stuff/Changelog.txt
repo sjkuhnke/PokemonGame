@@ -11,3 +11,13 @@ Fixed Generating a Pokemon throw an error when trying to prompt you to nickname 
 Added Crunch to Dragave's moveset
 Made calc show ability speed boosts (Swift Swim etc.)
 Made the event check happen every frame regardless of whether or not the player is moving
+**FIXED A GAME CRASHING BUG THAT OCCURS WHEN LEAVING 4TH GYM TO ACTIVATE CUTSCENE WITHOUT RELOADING GAME**
+FIXED GLACIUS'S WALREIN ACCIDENTALLY BEING A SEALEO
+
+Demo 1.01 Released
+Fixed Pressure to announce on switch in
+Fixed Mold Breaker to announce on switch in
+Added '+ Shedinja' text to Nincada's Pokedex page for evo
+IN PROGRESS: Switch out AI work
+Gave Sleep Talk AI (Not sure why I didn't before)
+Gave Duosion-X and Reuniclus-X Tri-Attack and gave Reuniclus-X Hyper Voice
