@@ -525,11 +525,13 @@ public class Pokemon implements Serializable {
         	}
     		boolean moveKills = false;
     		PType type = null;
+    		boolean hasResist = false;
         	for (Moveslot m : foe.moveset) {
         		if (m != null && m.currentPP > 0) {
         			Move move = m.move;
-            		int damage = foe.calcWithTypes(this, move, true, 1, false);
-            		if (damage >= this.currentHP && tr.hasResist(move.mtype)) {
+            		int damage = foe.calcWithTypes(this, move, true, 0, false);
+            		hasResist = tr.hasResist(move.mtype);
+            		if (damage >= this.currentHP) {
             			moveKills = true;
             			type = move.mtype;
             			break;
@@ -540,7 +542,12 @@ public class Pokemon implements Serializable {
         		double chance = (this.currentHP * 1.0 / this.getStat(0)) * 100;
         		chance *= 0.6;
         		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
-        		if (maxDamage >= foe.currentHP) chance /= 2;
+        		if (maxDamage >= foe.currentHP) chance /= 1.5;
+        		if (hasResist) {
+        			chance *= 1.5;
+        		} else {
+        			chance /= 5;
+        		}
         		if (checkSecondary((int) chance)) {
         			System.out.print("enemy kills me : ");
         			System.out.println(String.format("%.1f", chance) + "%");
@@ -6610,6 +6617,12 @@ public class Pokemon implements Serializable {
 					stat(this, i, foe.statStages[i], foe);
 				}
 			}
+		} else if (this.ability == Ability.PRESSURE) {
+			addAbilityTask(this);
+			addTask(Task.TEXT, this.nickname + " is exerting its Pressure!");
+		} else if (this.ability == Ability.MOLD_BREAKER) {
+			addAbilityTask(this);
+			addTask(Task.TEXT, this.nickname + " breaks the mold!");
 		}
 		if (this.item == Item.AIR_BALLOON) {
 			addTask(Task.TEXT, this.nickname + " floated on its Air Balloon!");
@@ -7243,7 +7256,7 @@ public class Pokemon implements Serializable {
 		case 124: return "Vinnie -> Suvinero (250+ happiness)";
 		case 126: return "Whiskie -> Whiskers (lv. 30)";
 		case 127: return "Whiskers -> Whiskeroar (250+ happiness)";
-		case 129: return "Nincada -> Ninjask (lv. 20)";
+		case 129: return "Nincada -> Ninjask (lv. 20)\n+ Shedinja";
 		case 132: return "Sheltor -> Shelnado (Water Stone)";
 		case 134: return "Lilyray -> Daray (160+ happiness)";
 		case 135: return "Daray -> Spinaquata (lv. 30)";
