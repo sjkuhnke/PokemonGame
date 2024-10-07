@@ -864,7 +864,7 @@ public class UI extends AbstractUI {
         	if (i < movebank.length) {
         		Node move = movebank[i];
         		while (move != null) {
-        			if (!p.knowsMove(move.data)) {
+        			if (!p.knowsMove(move.data) && forgottenMoves.contains(move.data)) {
         				forgottenMoves.add(move.data);
         			}
         			move = move.next;
@@ -1031,7 +1031,7 @@ public class UI extends AbstractUI {
 		
 		int mode = gp.player.p.pokedex[dex[dexNum[dexType]].id];
 		ArrayList<Move> levelMoveList = new ArrayList<>();
-		ArrayList<Integer> levelLevelList = new ArrayList<>();
+		ArrayList<String> levelLevelList = new ArrayList<>();
 		ArrayList<Item> tmList = new ArrayList<>();
 		Pokemon test = new Pokemon(dex[dexNum[dexType]].id, 5, false, false);
 		test.abilitySlot = 0;
@@ -1043,7 +1043,7 @@ public class UI extends AbstractUI {
 			        Node move = movebank[i];
 			        while (move != null) {
 			        	levelMoveList.add(move.data);
-			        	levelLevelList.add(i + 1);
+			        	levelLevelList.add(i == 0 ? "Evo." : i + "");
 			            move = move.next;
 			        }
 			    }
@@ -1177,7 +1177,7 @@ public class UI extends AbstractUI {
 		drawToolTips(wText, "Switch", "Back", "Back");
 	}
 
-	private void drawDexSummary(Pokemon p, int mode, ArrayList<Move> levelMoveList, ArrayList<Integer> levelLevelList, ArrayList<Item> tmList) {
+	private void drawDexSummary(Pokemon p, int mode, ArrayList<Move> levelMoveList, ArrayList<String> levelLevelList, ArrayList<Item> tmList) {
 		if (mode == 0) return;
 		int x = gp.tileSize * 7;
 		int y = 0;
@@ -3194,7 +3194,8 @@ public class UI extends AbstractUI {
         	gp.battleUI.userHP = newP.currentHP;
         	gp.battleUI.maxUserHP = newP.getStat(0);
         }
-        newP.checkMove(1);
+        int i = newP.checkMove(1, 0);
+        newP.checkMove(i, newP.level);
         
         currentTask = null;
 	}

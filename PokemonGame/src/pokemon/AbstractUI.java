@@ -932,7 +932,8 @@ public abstract class AbstractUI {
                 	gp.battleUI.userHP = newP.currentHP;
                 	gp.battleUI.maxUserHP = newP.getStat(0);
                 }
-                newP.checkMove(1);
+                int i = newP.checkMove(1, 0);
+                newP.checkMove(i, newP.level);
 		        
 		        currentTask = null;
 			}
