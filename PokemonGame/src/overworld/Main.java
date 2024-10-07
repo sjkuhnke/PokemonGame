@@ -258,7 +258,8 @@ public class Main {
 				for (int j = 0; j < movebank.length; j++) {
 					Node n = movebank[j];
 					while (n != null) {
-						String move = j + 1 + " - " + n.data.toString() + "\n";
+						String level = j == 0 ? "E" : j + "";
+						String move = level + " - " + n.data.toString() + "\n";
 						n = n.next;
 						writer.write(move);
 					}

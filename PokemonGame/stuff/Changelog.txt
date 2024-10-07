@@ -21,3 +21,17 @@ Added '+ Shedinja' text to Nincada's Pokedex page for evo
 IN PROGRESS: Switch out AI work
 Gave Sleep Talk AI (Not sure why I didn't before)
 Gave Duosion-X and Reuniclus-X Tri-Attack and gave Reuniclus-X Hyper Voice
+ADDED EVOLUTION MOVES!
+(There's so many changes I made to movesets due to this I'm not going to list them all here)
+Changed Hammo's evo method from Knows Rollout to Knows Bulk Up
+Made Hammo compatible with TM08 Bulk Up
+Fixed Needle Arm being Physical not Special
+Fixed Move Reminder showing the same move multiple times if the Pokemon gets that move at multiple different levels (i.e. on evolution and lv 30)
+Gave Psylotter a signature move Hydro Vortex (90 bp 40% chance to confuse water special)
+Changed Psylotter's evolution to lv 35
+Buffed Fury Swipes, Fury Attack, Double Slap, and Double Hit (the vanilla moves are horrid)
+Buffed Supercharged Splash to be 3 stages (instead of 2) of SpAtk boost at 75% proc chance (instead of 50%)
+Added Acupressure, Shore Up and Soak for the Durfish line(s)
+Changed Swagger's accuracy to 90
+Added Simple Beam and gave to the Elgyem lines
+Changed Cairnasaur's first ability to Rock Head (from Psychic Surge)

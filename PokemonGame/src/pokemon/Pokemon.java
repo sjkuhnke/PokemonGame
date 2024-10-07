@@ -69,7 +69,7 @@ public class Pokemon implements Serializable {
 	private static int[][] base_stats = new int[MAX_POKEMON][6];
 	private static double[] weights = new double[MAX_POKEMON];
 	private static int[] catch_rates = new int[MAX_POKEMON];
-	private static Node[][] movebanks = new Node[MAX_POKEMON][100];
+	private static Node[][] movebanks = new Node[MAX_POKEMON][101];
 	private static String[] entries = new String[MAX_POKEMON];
 	
 	private static ArrayList<Integer> rivalIndices = new ArrayList<>();
@@ -398,7 +398,7 @@ public class Pokemon implements Serializable {
 		int index = 0;
 		moveset = new Moveslot[4];
 		Node[] movebank = this.getMovebank();
-		for (int i = 0; i < level && i < movebank.length; i++) {
+		for (int i = 1; i <= level && i <= movebank.length; i++) {
 			Node node = movebank[i];
 	        while (node != null) {
 	            moveset[index] = new Moveslot(node.data);
@@ -658,9 +658,9 @@ public class Pokemon implements Serializable {
 		
 		if (bestMoves.size() > 1 && (bestMoves.contains(Move.ROOST) || bestMoves.contains(Move.SYNTHESIS) || bestMoves.contains(Move.MOONLIGHT) || bestMoves.contains(Move.MORNING_SUN) ||
 				bestMoves.contains(Move.RECOVER) || bestMoves.contains(Move.SLACK_OFF) || bestMoves.contains(Move.WISH) || bestMoves.contains(Move.REST) ||
-				bestMoves.contains(Move.LIFE_DEW) || bestMoves.contains(Move.STRENGTH_SAP))) {
+				bestMoves.contains(Move.LIFE_DEW) || bestMoves.contains(Move.STRENGTH_SAP) || bestMoves.contains(Move.SHORE_UP))) {
 			if (this.getStat(0) == this.currentHP) {
-				bestMoves.removeAll(Arrays.asList(new Move[] {Move.ROOST, Move.SYNTHESIS, Move.MOONLIGHT, Move.MORNING_SUN, Move.RECOVER, Move.SLACK_OFF, Move.WISH, Move.REST, Move.LIFE_DEW, Move.STRENGTH_SAP}));
+				bestMoves.removeAll(Arrays.asList(new Move[] {Move.ROOST, Move.SYNTHESIS, Move.MOONLIGHT, Move.MORNING_SUN, Move.RECOVER, Move.SLACK_OFF, Move.WISH, Move.REST, Move.LIFE_DEW, Move.STRENGTH_SAP, Move.SHORE_UP}));
 			}
 		}
 		
@@ -679,9 +679,11 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.WORRY_SEED) && foe.ability == Ability.INSOMNIA) bestMoves.removeIf(Move.WORRY_SEED::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SIMPLE_BEAM) && foe.ability == Ability.SIMPLE) bestMoves.removeIf(Move.SIMPLE_BEAM::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.GASTRO_ACID) && foe.ability == Ability.NULL) bestMoves.removeIf(Move.GASTRO_ACID::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.FORESTS_CURSE) && (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS)) bestMoves.removeIf(Move.FORESTS_CURSE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_POWDER) && (foe.type1 == PType.MAGIC || foe.type2 == PType.MAGIC)) bestMoves.removeIf(Move.MAGIC_POWDER::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SOAK) && (foe.type1 == PType.WATER || foe.type2 == PType.WATER)) bestMoves.removeIf(Move.SOAK::equals);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.VENOM_DRENCH) && (foe.status != Status.POISONED || foe.status != Status.TOXIC)) bestMoves.removeIf(Move.VENOM_DRENCH::equals);
 		
@@ -755,7 +757,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static Node getNode(int id, int level) {
-		return movebanks[id - 1][level - 1];
+		return movebanks[id - 1][level];
 	}
 	
 	public String getName() {
@@ -819,7 +821,7 @@ public class Pokemon implements Serializable {
 		t.setFinish(amt);
 		
 		ArrayList<Task> check = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.ui.tasks;
-		checkMove(check.size());
+		checkMove(check.size(), this.level);
 		this.checkEvo(player);
 	}
 	
@@ -846,16 +848,20 @@ public class Pokemon implements Serializable {
 		return 0;
 	}
 
-	public void checkMove(int index) {
-	    Node node = this.getNode();
+	public int checkMove(int index, int level) {
+	    Node node = getNode(this.id, level);
 	    while (node != null) {
 	        Move move = node.data;
+	        if (level != 0 && this.hasMoveAtLevel(move, 0)) {
+	        	node = node.next;
+	        	continue;
+	        }
 	        if (move != null && !this.knowsMove(move)) {
 	            boolean learnedMove = false;
 	            for (int i = 0; i < 4; i++) {
 	                if (this.moveset[i] == null) {
 	                    this.moveset[i] = new Moveslot(move);
-	                    if (gp.gameState == GamePanel.BATTLE_STATE) {
+	                    if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
 	                    	Task t = createTask(Task.TEXT, this.nickname + " learned " + move.toString() + "!");
 		                    insertTask(t, index++);
 	                    } else {
@@ -881,8 +887,18 @@ public class Pokemon implements Serializable {
 	        }
 	        node = node.next;
 	    }
+	    return index;
 	}
 
+
+	private boolean hasMoveAtLevel(Move m, int level) {
+		Node n = getNode(this.id, level);
+		while (n != null) {
+			if (n.data == m) return true;
+			n = n.next;
+		}
+		return false;
+	}
 
 	private void checkEvo(Player player) {
 		if (this.item == Item.EVERSTONE) return;
@@ -909,7 +925,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 14 && level >= 32) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 16 && knowsMove(Move.ROLLOUT)) {
+		} else if (id == 16 && knowsMove(Move.BULK_UP)) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 17 && area == 100) {
 			result = new Pokemon(id + 1, this);
@@ -971,7 +987,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 76 && level >= 42) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 78 && level >= 30) {
+		} else if (id == 78 && level >= 35) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 80 && level >= 40) {
 			result = new Pokemon(id + 1, this);
@@ -997,7 +1013,7 @@ public class Pokemon implements Serializable {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 101 && level >= 20) {
 			result = new Pokemon(id + 1, this);
-		} else if (id == 102 && level >= 40) {
+		} else if (id == 102 && level >= 42) {
 			result = new Pokemon(id + 1, this);
 		} else if (id == 104 && level >= 24) {
 			result = new Pokemon(id + 1, this);
@@ -2848,6 +2864,13 @@ public class Pokemon implements Serializable {
 			}
 		} else if (move == Move.HURRICANE) {
 			foe.confuse(false, this);
+		} else if (move == Move.HYDRO_VORTEX) {
+			boolean random = new Random().nextBoolean();
+			if (random) {
+				foe.confuse(false, this);
+			} else {
+				if (first) foe.vStatuses.add(Status.FLINCHED);
+			}
 		} else if (move == Move.HYPER_FANG && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.INCINERATE) {
@@ -3114,7 +3137,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SUMMIT_STRIKE) {
 		    stat(foe, 1, -1, this);
 		    double random = Math.random();
-		    if (random <= 0.3 && first) {
+		    if (random < 0.3 && first) {
 		        foe.vStatuses.add(Status.FLINCHED);
 		    }
 		} else if (move == Move.NUZZLE) {
@@ -3264,7 +3287,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.WATER_SMACK && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.SUPERCHARGED_SPLASH) {
-			stat(this, 2, 2, foe);
+			stat(this, 2, 3, foe);
 		} else if (move == Move.VANISHING_ACT) {
 			foe.confuse(false, this);
 		} else if (move == Move.WATERFALL && first) {
@@ -3316,6 +3339,17 @@ public class Pokemon implements Serializable {
 			this.lastMoveUsed = move;
 		} else if (move == Move.ACID_ARMOR) {
 			stat(this, 1, 2, foe, announce);
+		} else if (move == Move.ACUPRESSURE) {
+			if (this.hasMaxedStatStages(true)) {
+				fail = fail(announce);
+			} else {
+				Random random = new Random();
+				int stat;
+				do {
+					stat = random.nextInt(7);
+				} while(this.statStages[stat] >= 6);
+				stat(this, new Random().nextInt(7), 2, foe, announce);
+			}
 		} else if (move == Move.AGILITY) {
 			stat(this, 4, 2, foe, announce);
 		} else if (move == Move.AMNESIA) {
@@ -3731,6 +3765,20 @@ public class Pokemon implements Serializable {
 				return;
 			}
 			foe.poison(true, this);
+		} else if (announce && move == Move.SHORE_UP) {
+			if (this.currentHP == this.getStat(0)) {
+				if (announce) addTask(Task.TEXT, this.nickname + "'s HP is full!");
+			} else {
+				if (field.equals(field.weather, Effect.SANDSTORM)) {
+					heal(getHPAmount(1.0/1.5), this.nickname + " restored HP.");
+				} else {
+					heal(getHPAmount(1.0/2), this.nickname + " restored HP.");
+				}
+			}
+		} else if (announce && move == Move.SOAK) {
+			foe.type1 = PType.WATER;
+			foe.type2 = null;
+			if (announce) addTask(Task.TEXT, foe.nickname + "'s type changed to WATER!");
 		} else if (announce && move == Move.STUN_SPORE) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
 				if (announce) addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
@@ -3834,6 +3882,9 @@ public class Pokemon implements Serializable {
 			}
 			
 
+		} else if (announce && move == Move.SIMPLE_BEAM) {
+			foe.ability = Ability.SIMPLE;
+			if (announce) addTask(Task.TEXT, foe.nickname + "'s ability became Simple!");
 		} else if (announce && move == Move.SLEEP_POWDER) {
 			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
 				if (announce) addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
@@ -4019,6 +4070,13 @@ public class Pokemon implements Serializable {
 		return;
 	}
 	
+	private boolean hasMaxedStatStages(boolean checkAccEv) {
+		for (int i = 0; i < (checkAccEv ? 5 : this.statStages.length); i++) {
+			if (this.statStages[i] < 6) return false;
+		}
+		return true;
+	}
+
 	public void verifyHP() {
 		if (currentHP > this.getStat(0)) currentHP = this.getStat(0);
 	}
@@ -5443,20 +5501,22 @@ public class Pokemon implements Serializable {
 		
 		if (this.ability == Ability.MOODY) {
 			addAbilityTask(this);
+			boolean ignoreRaise = this.hasMaxedStatStages(false);
+			
 			Random random = new Random();
-			int raise;
-			int counter = 0;
-			do {
-				raise = random.nextInt(5);
-				counter++;
-			} while (this.statStages[raise] < 6 && counter < 25);
+			int raise = 0;
+			if (!ignoreRaise) {
+				do {
+					raise = random.nextInt(5);
+				} while (this.statStages[raise] < 6);
+			}
 			int lower;
-			counter = 0;
+			int counter = 0;
 			do {
 				lower = random.nextInt(5);
 				counter++;
-			} while ((this.statStages[lower] > -6 || lower == raise) && counter < 25);
-			stat(this, raise, 2, f);
+			} while ((this.statStages[lower] > -6 || (!ignoreRaise && lower == raise)) && counter < 25);
+			if (!ignoreRaise) stat(this, raise, 2, f);
 			stat(this, lower, -1, f);
 		}
 		
@@ -6916,7 +6976,7 @@ public class Pokemon implements Serializable {
 	
 	public ArrayList<Move> movebankAsList() {
 		ArrayList<Move> movebankList = new ArrayList<>();
-        for (int i = 1; i <= movebanks[id].length; i++) {
+        for (int i = 0; i < movebanks[id].length; i++) {
         	Node n = getNode(id, i);
         	while (n != null) {
         		movebankList.add(n.data);
@@ -7192,7 +7252,7 @@ public class Pokemon implements Serializable {
 		case 11: return "Flashclaw -> Majestiflash (lv. 36)";
 		case 13: return "Pigo -> Pigonat (lv. 17)";
 		case 14: return "Pigonat -> Pigoga (lv. 32)";
-		case 16: return "Hammo -> HammyBoy (Knows Rollout)";
+		case 16: return "Hammo -> HammyBoy (Knows Bulk Up)";
 		case 17: return "HammyBoy -> Hamthorno (lv. up in Shadow Ravine Heart)";
 		case 19: return "Sheabear -> Dualbear (lv. 20)";
 		case 20: return "Dualbear -> Spacebear (lv. 40)";
@@ -7227,7 +7287,7 @@ public class Pokemon implements Serializable {
 		case 73: return "Bugop -> Opwing (lv. 30)";
 		case 75: return "Hatenna -> Hattrem (lv. 32)";
 		case 76: return "Hattrem -> Hatterene (lv. 42)";
-		case 78: return "Otterpor -> Psylotter (lv. 30)";
+		case 78: return "Otterpor -> Psylotter (lv. 35)";
 		case 80: return "Florline -> Florlion (lv. 40)";
 		case 82: return "Psycorb -> Psyballs (lv. 32)";
 		case 83: return "Psyballs -> Psycorboratr (lv. 52)";
@@ -7240,7 +7300,7 @@ public class Pokemon implements Serializable {
 		case 98: return "Flamehox -> Fireshard (lv. 35)";
 		case 99: return "Fireshard -> Blastflames (lv. 55)";
 		case 101: return "Tiowoo -> Magwoo (lv. 20)";
-		case 102: return "Magwoo -> Lafloo (lv. 40)";
+		case 102: return "Magwoo -> Lafloo (lv. 42)";
 		case 104: return "Houndour -> Houndoom (lv. 24)";
 		case 106: return "Sparkdust -> Splame (lv. 25)";
 		case 108: return "Sparkitten -> Fireblion (Valiant Gem)\nSparkitten -> Flamebless (Petticoat Gem)";
@@ -7994,10 +8054,10 @@ public class Pokemon implements Serializable {
 	
 	public static void setupNode(int id, int level, Move move) {
 		Node[] movebank = getMovebank(id);
-		if (movebank[level - 1] == null) {
-			movebank[level - 1] = new Node(move);
+		if (movebank[level] == null) {
+			movebank[level] = new Node(move);
 		} else {
-			movebank[level - 1].addToEnd(new Node(move));
+			movebank[level].addToEnd(new Node(move));
 		}
 	}
 

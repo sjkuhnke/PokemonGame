@@ -34,6 +34,7 @@ Base Stats:
 73 HP / 75 Atk / 80 Def / 48 SpA / 89 SpD / 37 Spe / 402 BST
 
 Level Up:
+Evo - Stealth Rock
 1 - Pound
 1 - Withdraw
 7 - Razor Leaf
@@ -249,8 +250,9 @@ Level Up:
 41 - Hammer Arm
 46 - Dragon Rush
 50 - Bulk Up
-54 - Close Combat
-59 - Double-Edge
+54 - Crunch
+59 - Close Combat
+63 - Double-Edge
 66 - Wave Crash
 72 - Outrage
 80 - Summit Strike
@@ -2390,6 +2392,7 @@ Level Up:
 
 Evolutions:
 Nincada -> Ninjask (lv. 20)
++ Shedinja
 
 ===================
 #079 - Ninjask                                                                                         [130]
@@ -2626,6 +2629,7 @@ Level Up:
 27 - Magic Reflect
 30 - Luster Purge
 30 - Endeavor
+31 - Tri-Attack
 35 - Rapid Spin
 
 Evolutions:
@@ -2660,6 +2664,7 @@ Level Up:
 27 - Magic Reflect
 30 - Luster Purge
 30 - Endeavor
+31 - Tri-Attack
 32 - Dazzling Gleam
 33 - Glitter Dance
 36 - Sunny Doom
@@ -2698,11 +2703,13 @@ Level Up:
 27 - Magic Reflect
 30 - Luster Purge
 30 - Endeavor
+31 - Tri-Attack
 32 - Dazzling Gleam
 33 - Glitter Dance
 36 - Sunny Doom
 39 - Encore
 41 - Glitzy Glow
+43 - Hyper Voice
 43 - Agility
 45 - Amnesia
 48 - Prismatic Laser
@@ -4375,6 +4382,7 @@ Level Up:
 27 - Psycho Cut
 30 - Switcheroo
 33 - Throat Chop
+35 - Flatter
 37 - Foul Play
 42 - Topsy-Turvy
 47 - Superpower
@@ -5772,13 +5780,17 @@ Level Up:
 7 - Psywave
 10 - Water Gun
 13 - Swift
-16 - Space Beam
-20 - Confuse Ray
+13 - Life Dew
+15 - Space Beam
+18 - Confuse Ray
+21 - Water Pulse
 23 - Light Beam
+25 - Icy Wind
 27 - Bubblebeam
 31 - Shooting Stars
-36 - Psychic
-40 - Recover
+34 - Flip Turn
+36 - Recover
+40 - Psychic
 45 - Hydro Pump
 50 - Light Screen
 

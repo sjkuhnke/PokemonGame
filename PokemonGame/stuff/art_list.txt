@@ -1,9 +1,6 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-285 Icy Serpant*
-156 Poof* (E forms of these guys are more important, these guys can wait)
-157 Hast* (E forms of these guys are more important, these guys can wait)
 197 Poof-E*
 198 Hast-E* (First stage is lowkey the most important, this guy can wait)
 098 Flamehead (E forms of these guys are more important, these guys can wait)
@@ -41,13 +38,10 @@ Overworld Pokemon Sprites (* are the ones that already have battle sprites, prob
 ----- Most Urgent -----
 Poof-E
 Flamehox-E
-Rocky-E*
-Gyarados-E*
-
------ Less Urgent -----
-Icy Serpant
 Shocky Spire
 Dust Sorcerer
+
+----- Less Urgent -----
 Fever Dream
 Dusk Skater
 Grust
@@ -60,69 +54,36 @@ Legendaries
 Sketches
 ================================================================================
 Anything in the sprites category pretty much are the most important ones,
-I'd just go down the list from the top
+I'd just go down the list from the top for anything not starred
 
 ================================================================================
-NPC Overworld Sprites (Preferred Order, can be changed around if needed) [16x16 like the player sprite you made]
-(Down = Looking Down, Up = Looking Up, etc.)
+NPC Overworld Sprites (Preferred Order, can be changed around if needed) [16xN where N is a number in the range [8, 32]]
 * = I have the sprites for them already, just should be redone in your style (bc it's far better)
 ================================================================================
-Professor Dad (Down)
-Professor Assistant/Research/Scientist (Down/Up)
-Grandmother (Down)
-*Team Nuke Grunt (Down/Up/Left/Right)
-*Team Nuke Admin (Down/Left)
-*Rival Scott (Down/Up)
-*Rival Fred (Down/Up)
-Avery (Down) from Sword/Shield DLC
-Klara (Down) from Sword/Shield DLC
-X *Male NPC Block (just a default NPC that blocks your path for progression) (Down/Up/Left/Right)
-Female NPC Block (Down/Up/Left/Right)
+*Rival Scott
+*Rival Fred
+Astronomer (Galactic)
+*Team Nuke Grunt
+*Team Nuke Admin
+Ryder (THE CHAMPION!!)
+Professor Dad
+Professor Assistant/Research/Scientist
+Custom Player Sprite
+Custom Player Surfing Sprite?
+Custom Player Lavasurfing Sprite?
+Female NPC Block
 Guard? Like for blocking your path in the gates would be nice
-Mailman/Woman (Down/Up/Left/Right)
-Ryder (Down/Up/Left/Right) (THE CHAMPION!!)
-*Team Nuke Admin (Down/Left?/Right?)
-Mother (Down)
+Mother
 
 --- Gym Leaders ---
-*Robin (Down)
-*Stanford (Down/Up?)
-*Millie (Down/?)
-*Glacius (Down/?)
-*Mindy (Down/?)
-*Rayna (Down)
-*Merlin (Down/Up/Left?/Right?)
-*Nova (Down/Up/Left?/Right?)
-Elite Four Poison (A chemist) (Down)
-Elite Four Ground (Your mom, same sprite as above) (Down)
-Elite Four Steel (?) (Down)
---------------------
-
---- The rest are just trainer sprites for different types ---
-Ace Trainer (mixed teams/Dragon)
-Actor (Light/Normal)
-Actress (Light/Normal)
-Athlete (Fire/Electric)
-Hiker (Ground/Rock/Steel)
-Burglar (Crook/Dark)
-Bird Keeper (Flying)
-Black Belt (Fighting)
-Bug Catcher (Bug)
-Picknicker (Bug/Grass)
-Student (M) (Normal)
-Student (F) (Normal)
-Fisher (Water)
-Surfer (M) (Water)
-Swimmer (F) (Water)
-Explorer (Ice)
-Gentleman (Any)
-Lady (Any)
-Maniac (Ghost)
-Magician (M) (Magic)
-Magician (F) (Magic)
-Psychic (Psychic)
-Astronomer (Galactic)
-Youngster (Normal/Poison)
+*Glacius
+*Mindy
+*Rayna
+*Merlin
+*Nova
+Elite Four Poison (A chemist)
+Elite Four Ground (Your mom, same sprite as above)
+Elite Four Steel (?)
 -------------------------------------------------------------
 
 ================================================================================

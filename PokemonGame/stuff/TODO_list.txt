@@ -1,11 +1,8 @@
 TODO
-Movesets:
-Legendaries (TMs)
 
 Polishing stuff
 Make whirlpool spin (jk fuck that)
 Make wild pokemon sometimes hold items (for balancing, can't covet bc it'll clear)
-Lava Surf sprite tinted red, surf one tinted blue
 Add PP to move info doc
 
 Quality of Life
@@ -29,8 +26,9 @@ Kissyfishy making out as a Ying-Yang thing
 Calc
 Get rid of enter press on level spinner, just make it an action listener
 
-Make Galactic resist Dark
 Make Galactic weak to Dragon
+(Not sure about these two)
+Make Galactic resist Dark
 Make Magic weak to Dark
 
 New Story

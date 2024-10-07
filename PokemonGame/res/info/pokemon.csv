@@ -51,7 +51,7 @@
 128|Crystallor   |ROCK    |LIGHT   |STURDY            |FILTER            |MIRROR_ARMOR      |[90, 75, 50, 110, 150, 50]    |370.5 |35 |
 107|Carinx       |ROCK    |PSYCHIC |SHED_SKIN         |REGENERATOR       |FILTER            |[62, 68, 45, 62, 65, 60]      |140.3 |120|
 108|Carinator    |ROCK    |PSYCHIC |SYNCHRONIZE       |REGENERATOR       |INTIMIDATE        |[72, 75, 73, 75, 70, 75]      |173.2 |65 |
-109|Cairnasaur   |ROCK    |PSYCHIC |PSYCHIC_SURGE     |REGENERATOR       |INTIMIDATE        |[99, 120, 80, 80, 76, 80]     |252.9 |30 |
+109|Cairnasaur   |ROCK    |PSYCHIC |ROCK_HEAD         |REGENERATOR       |INTIMIDATE        |[99, 120, 80, 80, 76, 80]     |252.9 |30 |
 130|Pebblepup    |ROCK    |null    |INTIMIDATE        |TECHNICIAN        |STURDY            |[55, 90, 60, 45, 50, 80]      |40.6  |100|
 131|Boulderoar   |ROCK    |DARK    |INTIMIDATE        |TECHNICIAN        |STURDY            |[75, 111, 75, 90, 64, 85]     |190.0 |35 |
 180|Fightorex    |FIGHTING|GROUND  |NO_GUARD          |GUTS              |ADAPTABILITY      |[52, 72, 69, 77, 56, 67]      |62.5  |65 |
