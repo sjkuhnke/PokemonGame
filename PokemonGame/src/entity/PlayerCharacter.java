@@ -1151,7 +1151,13 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.DIALOGUE, npc, "To be honest with you dude, I'm not even sure why it's so darn bright... and the local school is in a full blown panic about it.");
 			Pokemon.addTask(Task.DIALOGUE, npc, "The classrooms are all locked and there's no sign of the teachers... come to think of it, that should probably be looked at.");
 			Pokemon.addTask(Task.DIALOGUE, npc, "Just don't think I'll be doing too much of the \"looking\", because you have my one and only pair of shades.");
-			Pokemon.addTask(Task.DIALOGUE, npc, "Thankfully I don't ever have to go outside, I can teleport around! Alakazam, let's show him our newest trick!");
+			Pokemon.addTask(Task.DIALOGUE, npc, "Oh, one more thing before I leave you to save the town alone! There's a lot of Ice-type Pokemon in this area...");
+			Pokemon.addTask(Task.DIALOGUE, npc, "So I'm entrusting you with one of my favorite Pokemon!");
+			Pokemon.addTask(Task.DIALOGUE, npc, "I brought a couple Flamigo as travel buddies from my home region, and I'm entrusting one to help you out with the Ice-types!");
+			Pokemon.addTask(Task.TEXT, "You received Flamigo!");
+			Pokemon p = new Pokemon(246, 35, true, false);
+			t = Pokemon.addTask(Task.GIFT, "", p);
+			Pokemon.addTask(Task.DIALOGUE, npc, "...Just probably don't let it get hit by an Ice move. Anyways, toodles, and good luck kid!");
 			Pokemon.addTask(Task.FLASH_IN, "");
 			Pokemon.addTask(Task.UPDATE, "");
 			Pokemon.addTask(Task.FLASH_OUT, "");

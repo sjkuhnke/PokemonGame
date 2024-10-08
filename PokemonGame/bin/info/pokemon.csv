@@ -89,8 +89,8 @@
 83 |Tigrette     |LIGHT   |NORMAL  |SIMPLE            |NORMALIZE         |PIXILATE          |[65, 79, 67, 103, 72, 69]     |250.4 |65 |
 137|Inkay        |PSYCHIC |DARK    |CONTRARY          |BRAINWASH         |ILLUMINATION      |[53, 54, 53, 37, 46, 45]      |7.7   |190|
 138|Malamar      |PSYCHIC |DARK    |CONTRARY          |BRAINWASH         |ILLUMINATION      |[86, 92, 88, 68, 75, 73]      |103.6 |80 |
-52 |Flameruff    |FIRE    |NORMAL  |INTIMIDATE        |FLASH_FIRE        |GUTS              |[46, 74, 68, 48, 58, 81]      |21.0  |75 |
-53 |Barkflare    |FIRE    |NORMAL  |INTIMIDATE        |FLASH_FIRE        |GUTS              |[65, 103, 82, 66, 79, 100]    |93.6  |50 |
+52 |Flameruff    |FIRE    |NORMAL  |INTIMIDATE        |FLASH_FIRE        |RECKLESS          |[46, 74, 68, 48, 58, 81]      |21.0  |75 |
+53 |Barkflare    |FIRE    |NORMAL  |INTIMIDATE        |FLASH_FIRE        |RECKLESS          |[65, 103, 82, 66, 79, 100]    |93.6  |50 |
 54 |Iglite       |FIRE    |null    |FLAME_BODY        |FLASH_FIRE        |UNBURDEN          |[30, 20, 40, 103, 30, 83]     |10.0  |195|
 55 |Blaxer       |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[43, 88, 50, 74, 52, 93]      |145.6 |100|
 56 |Pyrator      |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[65, 115, 55, 106, 75, 100]   |195.0 |50 |
