@@ -1438,9 +1438,9 @@ public class AssetSetter {
 		
 		mapNum = 80;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 33, 19, "", "", 165);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 27, 22, "", "", 166);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 28, 28, "", "", 167);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 33, 19, "", "", 165);
+		gp.npc[mapNum][index] = NPCSetup(BURGLAR_RIGHT, 27, 22, "", "", 166);
+		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_RIGHT, 28, 28, "", "", 167);
 		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 35, 41, "There you are! I was looking for you!\n"
 				+ "You've been really strong in all our battles, so I wanted to see if I've finally gotten strong enough to beat you!\n"
 				+ "Oh wait... you seem like you're in a hurry.\n"
@@ -1453,18 +1453,18 @@ public class AssetSetter {
 				+ "I've been feeling a little more tapped in to my senses, and I'm going to try and hone in on those.\n"
 				+ "I'll catch up to you next time, just you wait. Uh... after you've checked on your grandpa, of course.", 185);
 		
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 41, 51, "", "", 168);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 31, 64, "", "", 169);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 75, 57, "", "", 170);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 49, 74, "", "", 171);
+		gp.npc[mapNum][index] = NPCSetup(ACTRESS_DOWN, 41, 51, "", "", 168);
+		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_RIGHT, 31, 64, "", "", 169);
+		gp.npc[mapNum][index] = NPCSetup(BLACK_BELT_UP, 75, 57, "", "", 170);
+		gp.npc[mapNum][index] = NPCSetup(BURGLAR_LEFT, 49, 74, "", "", 171);
 		
 		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE_FULL, 25, 11, "", "", -1);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 17, 68, "", "", 257);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_DOWN, 17, 68, "", "", 257);
 		
 		mapNum = 83;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 48, 64, "", "", 172);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 48, 67, "", "", 173);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_DOWN, 48, 64, "", "", 172);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_UP, 48, 67, "", "", 173);
 		
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 60, 70, "", "", 180);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 61, 66, "", "", 181);
@@ -1513,7 +1513,7 @@ public class AssetSetter {
 		
 		mapNum = 90;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 48, 10, "", "", 174);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 48, 10, "", "", 174);
 		
 		mapNum = 91;
 		index = 0;
@@ -3413,8 +3413,6 @@ public class AssetSetter {
 		}
 		Entity result = new NPC_Block(gp, name, messages, a, flag, Item.breakString(altDialogue, 44));
 		
-		BufferedImage image = null;
-		
 		switch (type) {
 			case BLOCK_DOWN:
 			default:
@@ -3527,8 +3525,6 @@ public class AssetSetter {
 				break;
 				
 		}
-		
-		if (image != null) result.down1 = image;
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;
