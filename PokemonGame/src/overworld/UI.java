@@ -656,6 +656,7 @@ public class UI extends AbstractUI {
 					gp.player.p.team[partyNum] = currentTask.p;
 					gp.player.p.pokedex[currentTask.p.id] = 2;
 					currentTask.p.trainer = gp.player.p;
+					currentTask.p.metAt = "???";
 					currentTask = null;
 					partyNum = 0;
 					break;

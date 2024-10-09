@@ -230,80 +230,87 @@ Shadow Ravine -> Nyxus Ravine
 Ace Trainer (Mixed/Dragon)
 Before
 
-""
 "Dragons bow to no one. You'll understand soon enough."
 ""
-""
-"Strength isn't just power, it's knowing when to strike."
+"I've trained with the best, and now you're next!"
+"Only those who can adapt survive - let's see if you're up for the challenge!"
+"Don't think my dragons will go easy on you. They're as tough as they come!"
+"Strength isn't enough - you need skill to win this battle!"
+"My team is balanced, and my strategy is flawless. Good luck!"
 After
 
-""
 "Even the best fall. I'll rise again."
 ""
-""
-"I underestimated you. Won't happen again."
+"Looks like I still have more training to do..."
+"You're strong, but next time, I'll have the upper hand!"
+"I thought I had it all figured out... Guess I need to rethink my strategy."
+"You outplayed me this time, but I'll be back even stronger."
+"Losing isn't the end. It's just a reason to get better!"
 
 Actor (Light/Normal)
 Before
 
-""
-""
-""
 "I don't break character - even when I'm breaking you!"
 "My performance is flawless - just like this battle will be."
+"The stage is set, and you're about to witness a perfect performance!"
+"Lights, camera, battle! Watch me shine!"
+"Every move, every attack - it's all part of my grand show!"
+"Prepare yourself for a battle worthy of the spotlight!"
+"They say I'm a natural-born star... Let's see if you can handle the pressure!"
 After
 
-""
-""
-""
 "Guess this wasn't my shining moment."
 "Well, you've won this act. Enjoy the applause while it lasts."
+"That wasn't in the script... but I'll be back for the encore!"
+"I guess even the best actors stumble sometimes..."
+"A little setback, that's all. The show must go on!"
+"No matter what, I'll always play the leading role in my story!"
+"Next time, I'll be the star of this battle. Just wait!"
+
 
 Actress (Light/Normal)
 Before
 
 ""
-""
-""
-""
-""
+"My performance is flawless, and you won't outshine me!"
+"Prepare for an elegant battle - grace meets power!"
+"I'll make this battle one to remember, with me as the star!"
+"Lights, action, battle! Time to put on a show you won't forget!"
 After
 
 ""
-""
-""
-""
-""
+"That wasn't the ending I had in mind, but every story has a twist."
+"I'll take this loss with grace. Next time, I'll have my shining moment!"
+"You may have stolen the spotlight, but I'll take it back!"
+"The curtain falls... for now. I'll be back stronger!"
 
 Athlete (Fire/Electric)
 Before Battle:
 
 ""
-""
-""
-""
-""
-""
+"I'm always at my peak, and this battle will prove it!"
+"I play to win, and I'm not holding back!"
+"Think you can keep up with my high-energy Pokemon? Let's see!"
+"Time to turn up the heat and shock you with my skills!"
 After Battle:
 
 ""
-""
-""
-""
-""
-""
+"Even the best athletes lose sometimes... but I'll come back stronger!"
+"Looks like you outran me this time. Well played!"
+"A defeat won't slow me down. I'll train harder!"
+"You won the battle, but I'll be back in top form soon!"
 
 Hiker (Ground/Rock/Steel)
 Before
 
-""
+"I've climbed mountains tougher than you. Let's see if you can handle the pressure!"
 ""
 ""
 ""
 ""
 After
 
-""
+"Looks like even mountains can crumble sometimes..."
 ""
 ""
 ""
@@ -314,21 +321,20 @@ Before Battle:
 
 ""
 ""
-"I've stolen plenty, and now I'm stealing this battle!"
-"A little mischief never hurt anyone, right? Let's see if you can handle it!"
+""
+""
 "I always play dirty, and you're about to find out why!"
 After Battle:
 
 ""
 ""
-"I guess I'm the one who got robbed this time."
-"I'll take my loss, but this isn't over!"
+""
+""
 "Maybe I'll stick to thievery... Battling isn't my strong suit."
 
 Bird Keeper (Flying)
 Before
 
-""
 "My Pokemon soar through the skies... and soon, so will my victory!"
 "You can't catch my birds, and you won't catch a win either!"
 "Feel the wind? It's blowing in my favor!"
@@ -336,7 +342,6 @@ Before
 "I train my birds to be fast and fierce... just like me!"
 After
 
-""
 "Even a bird has to land sometimes... I'll fly higher next time."
 "You clipped my wings, but I'll soar again."
 "That loss was like a gust of wind knocking me down..."
@@ -349,7 +354,7 @@ Before Battle:
 ""
 ""
 ""
-"Strength and discipline - two things you'll need to survive this battle!"
+""
 "Prepare yourself! My Pokemon fight with the heart of a true warrior!"
 "I've trained for years. Let's see if you can keep up with me!"
 After Battle:
@@ -357,7 +362,7 @@ After Battle:
 ""
 ""
 ""
-"A warrior never truly loses; this is just part of the path!"
+""
 "Impressive! I'll need to push myself even further!"
 "You've won, but I'll come back stronger than ever!"
 
@@ -366,14 +371,14 @@ Before Battle:
 
 ""
 ""
-"I've caught some of the best bugs around. Let's see how you handle them!"
+""
 "Bugs have hidden strength! You're about to find out!"
 "My bugs are ready for battle, and they're itching for a fight!"
 After Battle:
 
 ""
 ""
-"I guess I need to catch even stronger bugs!"
+""
 "You may have won, but my bugs are still awesome!"
 "I'll come back with more bugs, and next time I won't lose!"
 
@@ -381,17 +386,19 @@ After Battle:
 Picnicker (Bug/Grass)
 Before
 
-""
-""
-""
-""
+"Nature's on my side, and so are my Pokemon!"
+"A sunny day, a perfect picnic, and a battle with you - let's go!"
+"Let's see if you can handle my Bug and Grass Pokemon!"
+"I love a good outdoor battle. Let's have some fun!"
+"My Pokemon may seem small, but they're full of surprises!"
 "Don't underestimate me just because I'm relaxing!"
 After
 
-""
-""
-""
-""
+"I guess it wasn't my day... Time to pack up and train harder."
+"Looks like I'll have to plan a new strategy for next time!"
+"Well, that battle didn't go as planned, but I won't give up!"
+"I guess my Pokemon need a bit more sunshine and training."
+"You won this time, but I'll come back with even stronger partners!"
 "I'll work up an appetite for victory next time!"
 
 Student (M) (Normal)
@@ -432,7 +439,7 @@ Before Battle:
 ""
 ""
 ""
-"Fishing takes patience, but when I strike, it's game over!"
+""
 "A fisherman never lets his prey escape. Let's see if you can!"
 "The water's been kind to me, but I won't be kind to you!"
 After Battle:
@@ -440,25 +447,25 @@ After Battle:
 ""
 ""
 ""
-"I've fished in rough waters, but that battle was something else."
+""
 "You won this round, but I'll be casting my line again soon!"
 "Seems like I was out of my depth this time."
 
 Surfer (M) (Water)
 Before
 
-""
-""
-""
-""
-""
+"The waves and I are in sync - let's ride this battle out!"
+"My Water Pokemon will wash you away!"
+"Dude, this battle's gonna be smooth sailing for me!"
+"You're about to get totally wiped out!"
+"The ocean's my playground, and my Pokemon rule the waves!"
 After
 
-""
-""
-""
-""
-""
+"Wiped out! Guess I need to catch some new moves."
+"Whoa, you totally swamped me!"
+"Looks like I got caught in the undertow... But I'll come back stronger!"
+"Even the best surfers wipe out sometimes... I'll ride higher next time!"
+"You got the better of me this time, but I'll be back with the tide!"
 
 Swimmer (F) (Water)
 Before
@@ -479,32 +486,38 @@ After
 Explorer (Ice)
 Before Battle:
 
-""
-""
-""
-""
+"I've braved the coldest peaks and the toughest battles!"
+"My Ice-type Pokemon will freeze you in your tracks!"
+"Think you can survive this frozen battlefield? Let's find out!"
+"It's always an adventure when I battle. Ready to face the cold?"
+"Prepare to feel the chill of defeat!"
 "I hope you're ready for a chill battle... because here I come!"
 After Battle:
 
-""
-""
-""
-""
+"Looks like I'll have to thaw out and train again..."
+"You beat me this time, but I'll be back with more frozen fury!"
+"This loss stings like frostbite... but I'll shake it off."
+"Even the coldest winds can't stop me from trying again!"
+"You won today, but I'll return stronger, like an icy storm."
 "The cold didn't bother me, but your strength did!"
 
 Gentleman (Any)
 Before
 
-""
-""
-""
+"A battle of skill and grace - shall we begin?"
+"Let's have a proper match, with honor and style."
+"I may be older, but I'm still quite the capable trainer!"
+"Let's see if you can keep up with my well-trained Pokemon."
+"A good match is a true test of character. Let's give it our all!"
 "Good form, good strategy - that's all it takes. Prepare yourself."
 "Let's make this a fight to remember - one you'll never forget."
 After
 
-""
-""
-""
+"Well fought! You've certainly earned my respect."
+"A loss, but a graceful one. I'll improve for next time!"
+"You've bested me, but I still maintain my honor."
+"I tip my hat to you, a battle well-fought."
+"Even in defeat, I'll keep my composure and train harder."
 "A defeat, yes, but hardly a disgrace. I'll return better."
 "Splendid match. I look forward to our next encounter."
 
@@ -529,49 +542,59 @@ After Battle:
 Maniac (Ghost)
 Before Battle:
 
-""
-""
-""
+"You ever feel like something's watching you... even when you're alone?"
+"My Ghost Pokemon will haunt your dreams! You won't stand a chance!"
+"You're about to face something beyond the living... Are you ready?"
+"This battle will chill you to the bone! My Ghosts are ready!"
+"Beware! My Pokemon come from the shadows... and so will your defeat!"
 "I'm fascinated by the eerie... You'll soon fear the unknown!"
 "The dead tell no tales, but I'll make sure you remember this battle!"
 After Battle:
 
-""
-""
-""
+"The spirits aren't pleased with this loss... but they'll return stronger!"
+"You beat me? Impossible! The ghosts will have their revenge!"
+"I've been bested... but you haven't seen the last of my haunted team."
+"I'll have to consult with the spirits... they won't be happy about this."
+"This defeat... it feels like a nightmare. But I'll wake up stronger!"
 "I'll commune with the spirits... next time will be different!"
 "I may have lost, but the supernatural is always watching..."
 
 Magician (M) (Magic)
 Before
 
-""
-""
-""
+"Prepare for a dazzling display of magic... and Pokemon!"
+"This battle will be as spectacular as my tricks!"
+"A little sleight of hand... and I'll make your victory disappear!"
+"Abracadabra! Watch as I turn this battle into my victory!"
+"Prepare yourself for a magical showdown like no other!"
 "Watch closely... or you'll miss the moment your chances vanish!"
 "Prepare to be amazed... as I pull a win out of thin air!"
 After
 
-""
-""
-""
+"Looks like my trick didn't work this time..."
+"A loss... well, I'll just have to work some new magic!"
+"My illusions couldn't save me this time... but I'll be back!"
+"Next time, I'll pull victory out of my hat!"
+"You've bested my magic... this time!"
 "Looks like my sleight of hand wasn't enough this time."
 "The show's not over yet... I'll be back with something better."
 
 Magician (F) (Magic)
 Before
 
-""
-""
-""
-""
+"Are you ready to be enchanted by my Pokemon?"
+"A little bit of magic and a lot of skill - let's see if you can keep up!"
+"I'll make your hopes of winning disappear in the blink of an eye!"
+"My Pokemon and I are masters of illusion. Can you handle the magic?"
+"Prepare to be amazed by this magical battle!"
 "Let's see if you can keep up with my magical performance!"
 After
 
-""
-""
-""
-""
+"That wasn't the result I was expecting... I'll need a new spell!"
+"It seems your skill broke my illusion this time."
+"Even my magic couldn't help me win today... but I'll be back!"
+"You saw through my tricks... but next time, I'll have something new up my sleeve!"
+"You've defeated me... for now. My magic will be stronger next time!"
 "The show's not over yet... just you wait for the encore!"
 
 Psychic (Psychic)
@@ -582,6 +605,11 @@ Before Battle:
 "Prepare yourself... My mind and Pokemon are in perfect harmony!"
 "You cannot resist the power of the mind. Let's see if you can survive!"
 "The stars have aligned for this battle... But will they favor you?"
+"I can already foresee your defeat. Shall we begin?"
+"Your thoughts are clear to me... and so is your loss."
+"My Psychic Pokemon will bend your will and your Pokemon to their power!"
+"You won't even see your defeat coming... but I already have."
+"Prepare yourself for a battle of the mind!"
 After Battle:
 
 ""
@@ -589,39 +617,90 @@ After Battle:
 "You've altered the future, but I'll be back to correct it!"
 "Hmph, perhaps my vision was clouded by arrogance."
 "Our minds were in sync, but you still won... impressive."
+"How...? My vision must have been clouded."
+"You changed your future... but I'll see to it that next time, it's different."
+"A rare miscalculation... I'll hone my skills further."
+"Your strength caught me off guard... but I'll be prepared next time."
+"I didn't foresee this loss... but I won't let it cloud my judgment."
 
 Astronomer (Galactic)
 Before
 
-""
-""
-""
-""
+"The cosmos has aligned for this moment... and you're about to face defeat!"
+"I study the stars, but my Pokemon will bring you crashing down to Earth!"
+"The galaxy is vast, and my Pokemon are as powerful as the stars themselves!"
+"You'll be seeing stars after this battle! My cosmic Pokemon won't hold back!"
+"The universe is full of mysteries... but your defeat is certain!"
 "The stars align for my victory... not yours."
 After
 
-""
-""
-""
-""
+"A misalignment... I'll have to study harder to ensure victory next time."
+"The stars didn't favor me today... but I'll rise again!"
+"Even the brightest stars flicker out sometimes... but I'll return!"
+"It seems the galaxy had other plans for me today... but I'll keep reaching for the stars."
+"I may have lost this battle, but the cosmos holds endless possibilities!"
 "The universe is vast, but next time, I'll show you the true power of the stars."
 
 Youngster (Normal/Poison)
 Before
 
 ""
+"Get ready, 'cause my Normal-types are anything but boring!"
 ""
-"This is going to be a quick win for me!"
-"Get ready, ‘cause my Normal-types are anything but boring!"
 ""
+"I'm not scared! My Pokemon and I are ready for anything!"
+"Don't underestimate me just because I'm young! I'm tougher than I look!"
+"I bet I can beat you with just a couple of strong moves!"
+"I just caught this Pokemon! Wanna see how strong it is?"
+"I'm super excited to battle you! Get ready!"
+"My Pokemon are the best! I've trained them myself!"
+"I know a secret move that'll totally surprise you!"
+""
+"I'm not afraid of you! My Pokemon are ready for anything!"
+"I may be small, but I've got big dreams of being a champion!"
+"You look tough, but I've got some tricks up my sleeve!"
+"I've been practicing with my Pokemon every day. We're ready!"
+"This is gonna be the best battle ever! Let's go!"
+"My Pokemon and I are super close! There's no way we'll lose!"
+"I've got some cool Pokemon! Wanna see them in action?"
+"I love battling! Let's see who's stronger!"
+"I've trained all week for this battle! You're going down!"
+"Don't think I'll go easy on you just because I'm young!"
+"You think you can beat me? My Pokemon are super tough!"
+"I've been waiting for a battle like this! Let's do it!"
+"I know all the best strategies! You're gonna lose!"
+"My Pokemon and I are in perfect sync! Get ready!"
+"Let's have an awesome battle! I won't hold back!"
 
 After
 
 ""
-""
-"You just got lucky this time!"
 "Okay, okay... I guess you're pretty good."
 ""
+""
+"That didn't go like I planned... But I'll come back stronger!"
+"I lost this time, but next time I'll be ready!"
+"Wow, you're good! I'll keep working hard until I can beat you!"
+"What? No way! I thought I was gonna win!"
+"I guess I need to practice more... I'll get you next time!"
+"I wasn't expecting that! You're really good!"
+"Aw, I'll have to train harder... But I'll beat you one day!"
+""
+"Aw, I thought I was gonna win that one!"
+"I'll get stronger and challenge you again, just wait!"
+"I'm not giving up, no way! Next time, I'll be even tougher!"
+"Losing stinks, but I'll keep training until I'm the best!"
+"That was fun, even though I lost... I'll come back stronger!"
+"No way! I thought I had that!"
+"You're really strong! I guess I need to train more."
+"That was so close! I almost won!"
+"I'm not giving up! Next time, I'll be the one winning!"
+"You won, but next time I'll be even tougher!"
+"Whoa, you're good! I need to get stronger!"
+"I lost this one, but I'll train harder and win next time!"
+"That was so much fun, even though I lost!"
+"I've gotta work on my strategies... I'll be back!"
+"You're really strong! But I'll beat you someday, I promise!"
 
 Team Eclipse
 Before Battle

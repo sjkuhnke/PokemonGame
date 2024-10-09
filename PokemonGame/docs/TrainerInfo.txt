@@ -4,7 +4,7 @@ Trainers:
 Route 22------------------------------------------
 
 Rival Scott 1
-Lizish (Lv. 7) @ Mystic Water           /   Protean        /   Scratch, Growl, Water Gun, 
+Twigle (Lv. 7) @ Miracle Seed           /   Rough Skin     /   Pound, Withdraw, Razor Leaf, 
 
 Youngster York
 Hammo (Lv. 14) @ None                   /   Mouthwater     /   Headbutt, Growl, Leer, Double Slap
@@ -53,23 +53,29 @@ Sparkdust (Lv. 6) @ Pamtre Berry        /   Shield Dust    /   Magic Powder, Wil
 
 Route 42------------------------------------------
 
-BU
-Vikavolt (Lv. 45) @ Kasib Berry         /   Levitate       /   Discharge, Guillotine, Bug Buzz, Silver Wind
-Spacebear (Lv. 46) @ Choice Scarf       /   Adaptability   /   Blizzard, Galaxy Blast, Trick, Desolate Void
+Astronomer Urbano
+Shawar (Lv. 48) @ Scope Lens            /   Super Luck     /   Shooting Stars, Magic Reflect, Shadow Claw, Sparkle Strike
+Nebulimb (Lv. 48) @ Eviolite            /   Shield Dust    /   Desolate Void, Body Slam, Freeze-Dry, Radio Burst
+Beheeyem-E (Lv. 47) @ Life Orb          /   Analytic       /   Volt Switch, Abduct, Radio Burst, Galaxy Blast
+Spacebear (Lv. 47) @ Choice Scarf       /   Adaptability   /   Blizzard, Galaxy Blast, Trick, Hyper Beam
 
-BV
-Gardevoir (Lv. 46) @ Focus Sash         /   Empathic Link  /   Dazzling Gleam, Calm Mind, Glitzy Glow, Psychic
-Hatterene (Lv. 45) @ Focus Band         /   Magic Bounce   /   Elemental Sparkle, Magic Blast, Calm Mind, Magic Reflect
+Psychic Rosie
+Gardevoir (Lv. 47) @ Lum Berry          /   Trace          /   Destiny Bond, Calm Mind, Glitzy Glow, Psychic
+Reuniclus (Lv. 47) @ Terrain Extender   /   Empathic Link  /   Terrain Pulse, Psychic Terrain, Flash, Focus Blast
+Alakazam (Lv. 47) @ Focus Sash          /   Magical        /   Magic Reflect, Psychic, Magic Tomb, Shadow Ball
+Hatterene (Lv. 47) @ Custap Berry       /   Sleight Of Hand/   Hocus Pocus, Psyshock, Calm Mind, Magic Reflect
 
-BW1
-Pyrator (Lv. 45) @ Galaxeed Berry       /   Flame Body     /   Wake-Up Slap, Cross Poison, Blaze Kick, Knock Off
-Ninjakik (Lv. 44) @ Assault Vest        /   Speed Boost    /   Sacred Sword, Staff Jab, First Impression, X-Scissor
+Black Belt Berend
+Pyrator (Lv. 46) @ Galaxeed Berry       /   Iron Fist      /   Drain Punch, Cross Poison, Blaze Kick, Knock Off
+Seviper (Lv. 47) @ Assault Vest         /   Shed Skin      /   Coil, Rest, Cross Poison, Dragon Tail
+Ninjakik (Lv. 46) @ Assault Vest        /   Threatening    /   Sacred Sword, Staff Jab, First Impression, U-Turn
 
-BW2
-Pyrator-S (Lv. 45) @ Flame Orb          /   Guts           /   Taunt, Circle Throw, Foul Play, Drain Punch
-Leavanny (Lv. 45) @ Expert Belt         /   Sharpness      /   X-Scissor, Entrainment, Knock Off, Leaf Blade
+Black Belt Red
+Pyrator-S (Lv. 46) @ Rocky Helmet       /   Flame Body     /   Knock Off, Circle Throw, Aerial Ace, Drain Punch
+Sneasler (Lv. 46) @ None                /   Pickpocket     /   Poison Tail, Rock Smash, Hi Jump Kick, Night Slash
+Leavanny (Lv. 46) @ Focus Sash          /   Unburden       /   X-Scissor, Cross Poison, Knock Off, Leaf Blade
 
-BX
+Athlete Percy
 Electroram (Lv. 46) @ Focus Band        /   Static         /   Cotton Guard, Spark, Twinkle Tackle, Electric Terrain
 Vinnie (Lv. 44) @ Assault Vest          /   Electric Surge /   Thunderbolt, Whip Smash, Thunder Punch, Play Rough
 Thunderzap (Lv. 45) @ Rocky Helmet      /   Sap Sipper     /   Aromatherapy, Thunder, Leaf Storm, Thunderbolt
@@ -225,7 +231,7 @@ Youngster Thanatos
 Magie (Lv. 8) @ Persim Berry            /   Tough Claws    /   Scratch, Growl, Quick Attack, 
 Vupp (Lv. 8) @ None                     /   Electric Surge /   Nuzzle, Quick Attack, Tail Whip, Charge
 
-Youngster Eusebio
+Gentleman Eusebio
 Whiskie (Lv. 9) @ Bright Powder         /   Guts           /   Play Nice, Quick Attack, Tail Whip, Charm
 Magie (Lv. 9) @ None                    /   Tough Claws    /   Scratch, Growl, Quick Attack, 
 Vupp (Lv. 9) @ None                     /   Electric Surge /   Spark, Quick Attack, Tail Whip, Charge
@@ -261,9 +267,9 @@ Sapwin (Lv. 18) @ Expert Belt           /   Anger Point    /   Rock Smash, Leaf 
 
 Gelb Forest (1A)----------------------------------
 
-Rival Fred 1
+Rival Fredrick 1
 Otterpor (Lv. 18) @ Leftovers           /   Water Veil     /   Confusion, Aqua Ring, Water Pulse, Aqua Veil
-Maguide (Lv. 20) @ Charcoal             /   Dry Skin       /   Smokescreen, Incinerate, Headbutt, Flame Wheel
+Iguaton (Lv. 20) @ Mystic Water         /   Protean        /   Bubblebeam, Mud Sport, Bite, Mean Look
 
 Psychic Kaytlynne
 Inkay (Lv. 18) @ Black Glasses          /   Contrary       /   Payback, Pluck, Psybeam, Swagger
@@ -309,9 +315,9 @@ Gyarados (Lv. 20) @ Focus Band          /   Intimidate     /   Splash, Tackle, B
 Route 26------------------------------------------
 
 Rival Scott 2
-Ninjask (Lv. 29) @ Focus Sash           /   Speed Boost    /   Dragon Claw, Smack Down, Bug Bite, Aerial Ace
 Charjabug (Lv. 29) @ Lum Berry          /   Static         /   Spark, Bug Bite, Sticky Web, Bite
-Iguaton (Lv. 30) @ Sitrus Berry         /   Protean        /   Aqua Jet, Fire Fang, Bite, Cut
+Ekans-S (Lv. 29) @ Belue Berry          /   Shed Skin      /   Glare, Hex, Air Cutter, Wrap
+Torgged (Lv. 30) @ Sitrus Berry         /   Rough Skin     /   Magnitude, Smack Down, Mega Drain, Sleep Powder
 Rhynee (Lv. 31) @ Passho Berry          /   Sand Stream    /   Aerial Ace, Bulldoze, Stealth Rock, Stomp
 
 Burglar Jeroen
@@ -599,22 +605,74 @@ Mt. Splinkty (3B)---------------------------------
 Eclipse Grunt 15
 Carinator (Lv. 33) @ Life Orb           /   Synchronize    /   Rock Tomb, Stealth Rock, Rock Polish, Psycho Cut
 Gulpin-X (Lv. 33) @ Coba Berry          /   Black Hole     /   Desolate Void, Abduct, Toxic, Venoshock
-Weavile (Lv. 33) @ None                 /   Technician     /   Thief, Ice Shard, Fury Swipes, Metal Claw
+Weavile (Lv. 33) @ Chople Berry         /   Technician     /   Thief, Ice Shard, Fury Swipes, Metal Claw
+
+Cell Park-----------------------------------------
+
+Cage Critter
+Cage Critter (Lv. 41) @ None            /   Beast Boost    /   Signal Beam, Sticky Web, Galaxy Blast, Radio Burst
+
+Athlete Cesar
+Binacle (Lv. 32) @ Rindo Berry          /   Tough Claws    /   Fake Out, Razor Shell, Hone Claws, Smack Down
+Sealeo (Lv. 32) @ Leftovers             /   Unaware        /   Frostbind, Body Slam, Aurora Beam, Brine
+
+Athlete Laertes
+Treewin (Lv. 32) @ Hard Stone           /   Anger Point    /   Submission, Mach Punch, Rock Tomb, Ingrain
+Roselia (Lv. 32) @ Rocky Helmet         /   Poison Point   /   Sludge, Giga Drain, Toxic Spikes, Extrasensory
+
+Athlete Osvaldo
+Sparkitten (Lv. 32) @ Wiki Berry        /   Anticipation   /   Spirit Break, Will-O-Wisp, Flame Burst, Charge Beam
+Splame (Lv. 32) @ Charcoal              /   Shield Dust    /   Flamethrower, Glittering Tornado, Elemental Sparkle, Trick
+
+Ace Trainer Avianna
+Blaxer (Lv. 32) @ Assault Vest          /   Flame Body     /   Blaze Kick, Brick Break, Mach Punch, Aerial Ace
+Gyarados-E (Lv. 32) @ Air Balloon       /   Motor Drive    /   Zing Zap, Crunch, Dragon Rage, Aerial Ace
+Arbok (Lv. 33) @ Clear Amulet           /   Intimidate     /   Poison Tail, Dragon Tail, Gastro Acid, Thief
+Elgyem-E (Lv. 33) @ Focus Band          /   Cosmic Warp    /   Abduct, Charge Beam, Recover, Space Beam
+Butterfree (Lv. 34) @ Red Card          /   Compound Eyes  /   Air Slash, Tailwind, Silver Wind, Sleep Powder
+
+Possessed Trainer 10
+Bronzong-X (Lv. 33) @ Red Card          /   Shadow Tag     /   Night Shade, Sparkling Terrain, Hocus Pocus, Mirror Shot
+Zurrclu (Lv. 33) @ Weakness Policy      /   Levitate       /   Rock Slide, Shadow Sneak, Bullet Punch, Will-O-Wisp
+
+Possessed Trainer 12
+Hissimitar (Lv. 31) @ Shuca Berry       /   Sharp Tail     /   Poison Tail, Swords Dance, Smart Strike, Dragon Tail
+Bronzong (Lv. 33) @ Toxic Orb           /   Levitate       /   Heavy Slam, Trick, Iron Defense, Stored Power
+
+Possessed Trainer 13
+Scovillain-S (Lv. 30) @ Loaded Dice     /   Insect Feeder  /   Crunch, Sucker Punch, Bullet Seed, Fire Fang
+Nightrex (Lv. 31) @ Assault Vest        /   Defiant        /   False Surrender, Dragon Rage, Breaking Swipe, Flame Charge
+
+Possessed Trainer 2
+Armoid-E (Lv. 31) @ Expert Belt         /   Iron Fist      /   Comet Punch, Autotomize, Spark, Drain Punch
+Shockfang (Lv. 31) @ Big Root           /   Static         /   Parabolic Charge, Nuzzle, Dragon Breath, Brine
+
+Possessed Trainer 9
+Kadabra (Lv. 30) @ Covert Cloak         /   Magical        /   Psybeam, Hocus Pocus, Recover, Reflect
+Duosion (Lv. 32) @ Rocky Helmet         /   Magic Guard    /   Light Screen, Psyshock, Charm, Hidden Power Light
+
+Possessed Trainer 5
+Scraggy (Lv. 31) @ Life Orb             /   Moxie          /   Drain Punch, Payback, Scary Face, Dragon Claw
+Flamigo (Lv. 30) @ Oran Berry           /   Scrappy        /   Low Kick, Wing Attack, Focus Energy, Feint
+
+Possessed Trainer 6
+Glimmet (Lv. 31) @ Focus Sash           /   Toxic Debris   /   Spikes, Stealth Rock, Venoshock, Ancient Power
+Sneasel-H (Lv. 31) @ Payapa Berry       /   Keen Eye       /   Tornado Spin, Low Kick, Poison Jab, Hone Claws
 
 Kleine Village------------------------------------
 
-Rival Fred 2
+Rival Fredrick 2
 Flamehox (Lv. 32) @ Passho Berry        /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud-Slap
 Gyarados-E (Lv. 31) @ Air Balloon       /   Volt Vortex    /   Crunch, Tackle, Zing Zap, Dragon Rage
-Maguide (Lv. 33) @ Expert Belt          /   Dry Skin       /   Iron Defense, Play Rough, Bulldoze, Lava Plume
-Psylotter (Lv. 33) @ Rocky Helmet       /   Water Veil     /   Psybeam, Bubblebeam, Aqua Veil, Confuse Ray
+Iguaton (Lv. 33) @ Expert Belt          /   Protean        /   Bite, Dragon Tail, Fire Fang, Aqua Jet
+Otterpor (Lv. 33) @ Rocky Helmet        /   Water Veil     /   Psybeam, Bubblebeam, Aqua Veil, Confuse Ray
 
 Possessed Trainer 1
 Grafaiai (Lv. 31) @ Shuca Berry         /   Poison Touch   /   Fake Out, Venoshock, U-Turn, Vandalize
 HammyBoy (Lv. 32) @ Lum Berry           /   Mouthwater     /   Rock Tomb, Drain Punch, Dizzy Punch, Stockpile
 
 Possessed Trainer 3
-Snom (Lv. 75) @ Sitrus Berry            /   Icy Scales     /   Sticky Web, Struggle Bug, Powder Snow, Hidden Power Water
+Snom (Lv. 75) @ Sitrus Berry            /   Swarm          /   Sticky Web, Struggle Bug, Powder Snow, Hidden Power Water
 Sneasel (Lv. 32) @ None                 /   Inner Focus    /   Thief, Ice Shard, Hone Claws, Aerial Ace
 
 Possessed Trainer 8
@@ -626,7 +684,7 @@ Boulder-E (Lv. 33) @ Covert Cloak       /   Sturdy         /   Discharge, Rock T
 Boulder (Lv. 32) @ Quick Claw           /   Sturdy         /   Stealth Rock, Self-Destruct, Rock Tomb, Magnitude
 
 Possessed Trainer 14
-Duosion-X (Lv. 32) @ Eviolite           /   Radiant        /   Dazzling Gleam, Morning Sun, Glitter Dance, Hidden Power Ice
+Duosion-X (Lv. 32) @ Eviolite           /   Radiant        /   Dazzling Gleam, Morning Sun, Magic Reflect, Hidden Power Ice
 Vinnie (Lv. 32) @ Scope Lens            /   Electric Surge /   Whip Smash, Spark, Roar, Aerial Ace
 
 Possessed Trainer 15
@@ -686,7 +744,7 @@ Gardevoir (Lv. 30) @ Rindo Berry        /   Trace          /   Psybeam, Life Dew
 Psycorb (Lv. 31) @ Terrain Extender     /   Psychic Surge  /   Gravity, Iron Defense, Mirror Shot, Psybeam
 Kirlia (Lv. 31) @ Tanga Berry           /   Synchronize    /   Psybeam, Hidden Power Fire, Charm, Draining Kiss
 Hattrem (Lv. 32) @ Colbur Berry         /   Magic Bounce   /   Hidden Power Light, Aromatherapy, Hocus Pocus, Psybeam
-Psylotter (Lv. 31) @ Focus Band         /   Water Veil     /   Psybeam, Water Pulse, Trick, Aqua Veil
+Otterpor (Lv. 32) @ Focus Band          /   Water Veil     /   Psybeam, Bubblebeam, Hypnosis, Aqua Veil
 
 Actress Melantha
 Tigrette (Lv. 31) @ Salac Berry         /   Simple         /   Play Rough, Flash Cannon, Thunderbolt, Confuse Ray
@@ -710,55 +768,6 @@ Pyrator (Lv. 37) @ Galaxeed Berry       /   Flame Body     /   Mach Punch, Brick
 
 Actress Xavia
 Flamebless (Lv. 38) @ Passho Berry      /   Competitive    /   Agility, Play Rough, Flamethrower, Glitzy Glow
-
-Cell Park-----------------------------------------
-
-Athlete Cesar
-Binacle (Lv. 32) @ Rindo Berry          /   Tough Claws    /   Fake Out, Razor Shell, Hone Claws, Smack Down
-Sealeo (Lv. 32) @ Leftovers             /   Unaware        /   Frostbind, Body Slam, Aurora Beam, Brine
-
-Athlete Laertes
-Treewin (Lv. 32) @ Hard Stone           /   Anger Point    /   Submission, Mach Punch, Rock Tomb, Ingrain
-Roselia (Lv. 32) @ Rocky Helmet         /   Poison Point   /   Sludge, Giga Drain, Toxic Spikes, Extrasensory
-
-Athlete Osvaldo
-Sparkitten (Lv. 32) @ Wiki Berry        /   Anticipation   /   Spirit Break, Will-O-Wisp, Flame Burst, Charge Beam
-Splame (Lv. 32) @ Charcoal              /   Shield Dust    /   Flamethrower, Glittering Tornado, Elemental Sparkle, Trick
-
-Ace Trainer Avianna
-Blaxer (Lv. 32) @ Assault Vest          /   Flame Body     /   Blaze Kick, Brick Break, Mach Punch, Aerial Ace
-Gyarados-E (Lv. 32) @ Air Balloon       /   Motor Drive    /   Zing Zap, Crunch, Dragon Rage, Aerial Ace
-Arbok (Lv. 33) @ Clear Amulet           /   Intimidate     /   Poison Tail, Dragon Tail, Gastro Acid, Thief
-Elgyem-E (Lv. 33) @ Focus Band          /   Cosmic Warp    /   Abduct, Charge Beam, Recover, Space Beam
-Butterfree (Lv. 34) @ Red Card          /   Compound Eyes  /   Air Slash, Tailwind, Silver Wind, Sleep Powder
-
-Possessed Trainer 10
-Bronzong-X (Lv. 33) @ Red Card          /   Shadow Tag     /   Night Shade, Sparkling Terrain, Hocus Pocus, Mirror Shot
-Zurrclu (Lv. 33) @ Weakness Policy      /   Levitate       /   Rock Slide, Shadow Sneak, Bullet Punch, Will-O-Wisp
-
-Possessed Trainer 12
-Hissimitar (Lv. 31) @ Shuca Berry       /   Sharp Tail     /   Poison Tail, Swords Dance, Smart Strike, Dragon Tail
-Bronzong (Lv. 33) @ Toxic Orb           /   Levitate       /   Heavy Slam, Trick, Iron Defense, Stored Power
-
-Possessed Trainer 13
-Scovillain-S (Lv. 30) @ Loaded Dice     /   Insect Feeder  /   Crunch, Sucker Punch, Bullet Seed, Fire Fang
-Nightrex (Lv. 31) @ Assault Vest        /   Defiant        /   False Surrender, Dragon Rage, Breaking Swipe, Flame Charge
-
-Possessed Trainer 2
-Armoid-E (Lv. 31) @ Expert Belt         /   Iron Fist      /   Comet Punch, Autotomize, Spark, Drain Punch
-Shockfang (Lv. 31) @ Big Root           /   Static         /   Parabolic Charge, Nuzzle, Dragon Breath, Brine
-
-Possessed Trainer 9
-Kadabra (Lv. 30) @ Covert Cloak         /   Magical        /   Psybeam, Hocus Pocus, Recover, Reflect
-Duosion (Lv. 32) @ Rocky Helmet         /   Magic Guard    /   Light Screen, Psyshock, Charm, Hidden Power Light
-
-Possessed Trainer 5
-Scraggy (Lv. 31) @ Life Orb             /   Moxie          /   Drain Punch, Payback, Scary Face, Dragon Claw
-Flamigo (Lv. 30) @ Wide Lens            /   Scrappy        /   Low Kick, Wing Attack, Focus Energy, Feint
-
-Possessed Trainer 6
-Glimmet (Lv. 31) @ Focus Sash           /   Toxic Debris   /   Spikes, Stealth Rock, Venoshock, Ancient Power
-Sneasel-H (Lv. 31) @ Payapa Berry       /   Keen Eye       /   Tornado Spin, Low Kick, Poison Jab, Hone Claws
 
 Route 41------------------------------------------
 
@@ -885,22 +894,22 @@ Magestiflash (Lv. 42) @ Heavy-Duty Boots/   Mirror Armor   /   Air Slash, Dazzli
 Glittleshoo (Lv. 42) @ Chilan Berry     /   Serene Grace   /   Feather Dance, Sparkly Swirl, Air Slash, Charge Beam
 Fireshard-E (Lv. 42) @ Wiki Berry       /   Flame Body     /   Thunder Wave, Volt Switch, Air Slash, Flamethrower
 
-AS
-Malamar (Lv. 42) @ Black Glasses        /   Contrary       /   Topsy-Turvy, Switcheroo, Throat Chop, Foul Play
-Psylotter (Lv. 43) @ Wiki Berry         /   Water Veil     /   Bubblebeam, Psychic, Magic Tomb, Light Screen
-Starmie (Lv. 41) @ Expert Belt          /   Illumination   /   Recover, Psychic, Moonblast, Hydro Pump
-Spinaquata (Lv. 42) @ Leftovers         /   Drizzle        /   Dragon Pulse, Whirlpool, Breaking Swipe, Aqua Jet
+Swimmer Dionne
+Malamar (Lv. 44) @ Life Orb             /   Brainwash      /   Swagger, Night Slash, Psycho Cut, Pluck
+Psylotter (Lv. 45) @ Mystic Water       /   Swift Swim     /   Hydro Vortex, Psychic, Magic Tomb, Flip Turn
+Starmie (Lv. 44) @ Leftovers            /   Regenerator    /   Hydro Pump, Flip Turn, Space Beam, Hidden Power Ice
+Spinaquata (Lv. 45) @ Damp Rock         /   Drizzle        /   Hurricane, Aqua Jet, Flip Turn, Breaking Swipe
 
-AT
-Gyarados (Lv. 41) @ Wacan Berry         /   Intimidate     /   Dragon Tail, Rain Dance, Aqua Tail, Aerial Ace
-Gyarados (Lv. 42) @ Charti Berry        /   Intimidate     /   Dragon Tail, Rain Dance, Aqua Tail, Aerial Ace
-Spinaquata (Lv. 43) @ Damp Rock         /   Drizzle        /   Dragon Pulse, Whirlpool, Breaking Swipe, Aqua Jet
-Dompster (Lv. 42) @ Rindo Berry         /   Illumination   /   Drill Run, Aqua Jet, Play Rough, Sucker Punch
+Swimmer Xanthus
+Gyarados (Lv. 44) @ Wacan Berry         /   Intimidate     /   Thrash, Rain Dance, Aqua Tail, Aerial Ace
+Gyarados (Lv. 45) @ Choice Scarf        /   Multiscale     /   Giga Impact, Aqua Tail, Ice Fang, Aerial Ace
+Azumarill (Lv. 45) @ Mental Herb        /   Huge Power     /   Belly Drum, Aqua Jet, Waterfall, Double-Edge
+Dompster (Lv. 45) @ Rindo Berry         /   Illumination   /   Earthquake, Sucker Punch, Liquidation, Mud Sport
 
-AU
-Crobat (Lv. 43) @ Expert Belt           /   Strong Jaw     /   Confuse Ray, Cross Poison, Magic Fang, Crunch
-Suvinero (Lv. 43) @ Air Balloon         /   Electric Surge /   Whip Smash, Play Rough, Thunder Punch, Thunder
-Thunderzap (Lv. 42) @ Assault Vest      /   Sap Sipper     /   Aromatherapy, Thunder, Giga Drain, Thunderbolt
+Athlete Arsenio
+Crobat (Lv. 45) @ Black Sludge          /   Poison Touch   /   Cross Poison, U-Turn, Super Fang, Crunch
+Suvinero (Lv. 46) @ Assault Vest        /   Electric Surge /   Whip Smash, Play Rough, Thunder Punch, Leaf Blade
+Thunderzap (Lv. 46) @ Kasib Berry       /   Volt Absorb    /   Leaf Storm, Thunder, Strength Sap, U-Turn
 
 Schrice City--------------------------------------
 
@@ -947,7 +956,7 @@ Bipedice (Lv. 41) @ Rawst Berry         /   Slush Rush     /   Submission, Ice P
 
 Leader Glacius 1
 Hootowl (Lv. 44) @ Icy Rock             /   Snow Warning   /   Blizzard, Psychic, Volt Switch, Galaxy Blast
-Sealeo (Lv. 44) @ Heavy-Duty Boots      /   Ice Body       /   Freeze-Dry, Aurora Veil, Scald, Slack Off
+Walrein (Lv. 44) @ Heavy-Duty Boots     /   Ice Body       /   Freeze-Dry, Aurora Veil, Scald, Slack Off
 Dualmoose (Lv. 44) @ Bright Powder      /   Snow Cloak     /   Aurora Boost, Magic Blast, Snowscape, Freeze-Dry
 Weavile (Lv. 44) @ Life Orb             /   Technician     /   Icicle Spear, Rock Smash, Feint Attack, Aerial Ace
 Bipedice (Lv. 43) @ Flame Orb           /   Guts           /   Ice Punch, Close Combat, Ice Shard, Swords Dance
@@ -1018,142 +1027,148 @@ Gyarados-E (Lv. 22) @ Rawst Berry       /   Defiant        /   Thunder Fang, Liq
 
 Mindagan Lake-------------------------------------
 
-AV
-Sealeo (Lv. 42) @ Light Clay            /   Unaware        /   Snore, Frostbind, Snowscape, Aurora Veil
-Sealeo (Lv. 43) @ Wide Lens             /   Unaware        /   Blizzard, Frostbind, Snowscape, Aurora Veil
-Walrein (Lv. 44) @ Sitrus Berry         /   Unaware        /   Blizzard, Ice Fang, Snowscape, Aurora Veil
+Swimmer Mulan
+Sealeo (Lv. 47) @ Mental Herb           /   Unaware        /   Snowscape, Frostbind, Surf, Blizzard
+Swalot (Lv. 46) @ Mental Herb           /   Gooey          /   Destiny Bond, Sludge Bomb, Encore, Scald
+Beheeyem (Lv. 46) @ Mental Herb         /   Parasocial     /   Calm Mind, Abduct, Star Storm, Hidden Power Fighting
 
-AW
-Lombre (Lv. 44) @ Kebia Berry           /   Swift Swim     /   Knock Off, Zen Headbutt, Giga Drain, Rain Dance
-Bouncerog (Lv. 43) @ Rindo Berry        /   Torrent        /   Hydro Pump, Elemental Sparkle, Bounce, Dazzling Gleam
-Ludicolo (Lv. 42) @ Expert Belt         /   Swift Swim     /   Hydro Pump, Zen Headbutt, Rain Dance, Energy Ball
+Swimmer Laurie
+Lombre (Lv. 50) @ Eviolite              /   Swift Swim     /   Knock Off, Fake Out, Energy Ball, Rain Dance
+Bouncerog (Lv. 46) @ Rindo Berry        /   Torrent        /   Sparkling Aria, Flash, Freeze-Dry, Dazzling Gleam
+Ludicolo (Lv. 42) @ Kebia Berry         /   Hydration      /   Hydro Pump, Zen Headbutt, Energy Ball, Rest
 
-AX
-Spinaquata (Lv. 43) @ Damp Rock         /   Drizzle        /   Dragon Pulse, Whirlpool, Breaking Swipe, Aqua Jet
-Psylotter (Lv. 44) @ Leftovers          /   Water Veil     /   Bubblebeam, Psychic, Magic Tomb, Light Screen
+Swimmer Frey
+Swalot-X (Lv. 46) @ Weakness Policy     /   Simple         /   Calm Mind, Slack Off, Sludge Bomb, Surf
+Psylotter (Lv. 47) @ Blunder Policy     /   Water Veil     /   Hydro Pump, Freeze-Dry, Hypnosis, Calm Mind
 
-AY
-Malamar (Lv. 43) @ Focus Sash           /   Contrary       /   Topsy-Turvy, Switcheroo, Throat Chop, Foul Play
-Barbaracle (Lv. 44) @ White Herb        /   Tough Claws    /   Shell Smash, Night Slash, Rock Slide, Liquidation
+Swimmer Salomon
+Malamar (Lv. 47) @ Focus Sash           /   Contrary       /   Throat Chop, Superpower, Psychic Fangs, Trick Room
+Barbaracle (Lv. 46) @ Rindo Berry       /   Shell Armor    /   Rock Slide, Hone Claws, Liquidation, Knock Off
 
-AZ
-Spinaquata (Lv. 44) @ Mysticola Berry   /   Drizzle        /   Dragon Pulse, Whirlpool, Breaking Swipe, Aqua Jet
-Shelnado (Lv. 44) @ Mystic Water        /   Swift Swim     /   Sparkling Aria, Shell Smash, Liquidation, Glittering Tornado
-Staryu (Lv. 45) @ Rocky Helmet          /   Illumination   /   Recover, Hydro Pump, Shooting Stars, Psychic
+Swimmer Candida
+Spinaquata (Lv. 46) @ Choice Specs      /   Drizzle        /   Dragon Pulse, Hurricane, Surf, Flip Turn
+Shelnado (Lv. 46) @ Weakness Policy     /   Swift Swim     /   Sparkling Aria, Aura Sphere, Shadow Ball, Whirlpool
+Staryu (Lv. 50) @ Rocky Helmet          /   Regenerator    /   Recover, Hydro Pump, Light Screen, Space Beam
 
-BA
-Ali (Lv. 44) @ Assault Vest             /   Ambush         /   Thunder Fang, Psychic Fangs, Ice Fang, Fire Fang
-Shomp (Lv. 44) @ Choice Scarf           /   Swift Swim     /   Dragon Pulse, Liquidation, Dragon Rush, Magic Fang
+Swimmer Crew
+Ali (Lv. 46) @ Choice Band              /   Ambush         /   Knock Off, Psychic Fangs, Ice Fang, Flip Turn
+Shomp (Lv. 47) @ Eviolite               /   Strong Jaw     /   Dragon Dance, Magic Fang, Liquidation, Thunder Fang
 
-BB
-Posho (Lv. 50) @ Focus Sash             /   Regenerator    /   Elemental Sparkle, Dragon Pulse, Magic Crash, Vanishing Act
-Posho (Lv. 50) @ Focus Band             /   Regenerator    /   Elemental Sparkle, Dragon Pulse, Magic Crash, Vanishing Act
-Posho (Lv. 50) @ Bright Powder          /   Regenerator    /   Elemental Sparkle, Dragon Pulse, Magic Crash, Vanishing Act
-Posho (Lv. 50) @ Quick Claw             /   Regenerator    /   Elemental Sparkle, Dragon Pulse, Magic Crash, Vanishing Act
-Posho (Lv. 50) @ Power Herb             /   Regenerator    /   Elemental Sparkle, Dragon Pulse, Magic Crash, Vanishing Act
-Poshorump (Lv. 44) @ Power Herb         /   Swift Swim     /   Magic Fang, Sky Attack, Iron Blast, Sparkle Strike
+Magician Trevor
+Posho (Lv. 55) @ Focus Sash             /   Wonder Skin    /   Magic Reflect, Photon Geyser, Psychic, Vanishing Act
+Bronzong-X (Lv. 45) @ Wiki Berry        /   Shadow Tag     /   Shadow Sneak, Iron Defense, Body Press, Sparkle Strike
+Posho (Lv. 55) @ Bright Powder          /   Regenerator    /   Elemental Sparkle, Dragon Pulse, Magic Powder, Sparkling Terrain
+Posho (Lv. 55) @ Quick Claw             /   Magic Guard    /   Magic Reflect, Draco Meteor, Thunder Wave, Magic Tomb
+Shawar (Lv. 48) @ Eviolite              /   Sparkly Surge  /   Moonlight, Calm Mind, Desolate Void, Ancient Power
+Poshorump (Lv. 45) @ Choice Scarf       /   Magic Guard    /   Magic Fang, Tri-Attack, Iron Blast, Switcheroo
 
-BC
-Gyarados (Lv. 44) @ Wacan Berry         /   Intimidate     /   Dragon Tail, Thrash, Aqua Tail, Aerial Ace
-Gyarados-E (Lv. 44) @ Air Balloon       /   Volt Vortex    /   Bounce, Volt Tackle, Aqua Tail, Dragon Rush
+Swimmer Michel
+Gyarados (Lv. 46) @ Weakness Policy     /   Multiscale     /   Aerial Ace, Ice Fang, Aqua Tail, Crunch
+Gyarados-E (Lv. 46) @ Air Balloon       /   Volt Vortex    /   Electric Terrain, Volt Tackle, Aqua Tail, Dragon Rush
 
-BD
-Gyarados-E (Lv. 44) @ Power Herb        /   Volt Vortex    /   Bounce, Volt Tackle, Aqua Tail, Dragon Rush
-Gyarados (Lv. 44) @ Life Orb            /   Intimidate     /   Dragon Tail, Thrash, Aqua Tail, Aerial Ace
+Fisherman Merle
+Gyarados-E (Lv. 46) @ Never-Melt Ice    /   Defiant        /   Taunt, Volt Tackle, Aqua Tail, Ice Spinner
+Gyarados (Lv. 46) @ Wacan Berry         /   Intimidate     /   Dragon Tail, Thrash, Aqua Tail, Aerial Ace
 
-BE
-Gyarados-E (Lv. 43) @ Magnet            /   Volt Vortex    /   Bounce, Zing Zap, Aqua Tail, Dragon Rush
-Thunderzap (Lv. 44) @ Leftovers         /   Sap Sipper     /   Aromatherapy, Thunder, Giga Drain, Thunderbolt
-Megawatt (Lv. 44) @ Air Balloon         /   Huge Power     /   Iron Defense, Magnet Rise, Smart Strike, Bullet Punch
+Swimmer Beckham
+Megawatt (Lv. 46) @ Air Balloon         /   Electric Surge /   Super Fang, Knock Off, U-Turn, Hidden Power Psychic
+Gyarados-E (Lv. 47) @ King's Rock       /   Volt Vortex    /   Volt Tackle, Liquidation, Crunch, Dragon Rush
+Thunderzap (Lv. 46) @ Pamtre Berry      /   Sap Sipper     /   Leech Seed, Leaf Storm, Volt Switch, Acrobatics
 
-BF
-Ramant (Lv. 45) @ Sitrus Berry          /   Moxie          /   Double-Edge, Cotton Guard, Power Whip, Horn Leech
+Actor Freyja
+Ramant (Lv. 48) @ Big Root              /   Defiant        /   Horn Leech, Cotton Guard, Double-Edge, Drill Run
 
-BG
-Bushewe (Lv. 45) @ Tanga Berry          /   Serene Grace   /   Glitzy Glow, Giga Drain, Cotton Guard, Energy Ball
+Actress Ardath
+Bushewe (Lv. 48) @ Tanga Berry          /   Competitive    /   Glitter Dance, Hidden Power Flying, Photon Geyser, Giga Drain
 
-BH
+Maniac Telmo
 Cluuz (Lv. 45) @ Bright Powder          /   Levitate       /   Toxic Spikes, Sludge Bomb, Shadow Ball, Minimize
 Zurrclu (Lv. 44) @ Quick Claw           /   Levitate       /   Shadow Ball, Rock Slide, Shadow Sneak, Smart Strike
 Cluuz (Lv. 45) @ Roseli Berry           /   Levitate       /   Toxic Spikes, Sludge Bomb, Shadow Ball, Minimize
 
-BI
+Black Belt Lawson
 Conkeldurr (Lv. 44) @ Flame Orb         /   Guts           /   Hammer Arm, Scary Face, Dynamic Punch, Knock Off
 Whiskers (Lv. 45) @ Flame Orb           /   Guts           /   Play Rough, Bulk Up, Circle Throw, Hammer Arm
 Whiskeroar (Lv. 43) @ Wiki Berry        /   Adaptability   /   Beefy Bash, Aura Sphere, Superpower, Calm Mind
 
-BJ
+Hiker Lugh
 Rhynee (Lv. 46) @ Smooth Rock           /   Sand Stream    /   Stone Edge, Body Press, Horn Drill, Magnitude
 Drillatron (Lv. 43) @ Expert Belt       /   Sand Force     /   Stone Edge, Low Kick, Drill Run, Glitzy Glow
 Wormbot (Lv. 45) @ Eviolite             /   Sand Veil      /   Spikes, Earthquake, Iron Head, Iron Tail
 
-BK
+Athlete Leandro
 Fireblion (Lv. 45) @ Heat Rock          /   Drought        /   Drill Run, Swords Dance, Fire Fang, Heat Crash
 Magmaclang (Lv. 45) @ Leftovers         /   Steelworker    /   Autotomize, Switcheroo, Fire Blast, Hex
 
 Route 31------------------------------------------
 
-BL
-Rockmite (Lv. 46) @ Assault Vest        /   Gravitation    /   Shooting Stars, Rock Slide, Meteor Mash, Cosmic Power
-Wormatron-S (Lv. 45) @ Smooth Rock      /   Adaptability   /   Glare, Fissure, Sandstorm, Earth Power
+Hiker Rasmus
+Rockmite (Lv. 49) @ Eviolite            /   Gravitation    /   Desolate Void, Rock Slide, Drain Punch, Sandstorm
+Duosion-X (Lv. 49) @ Light Clay         /   Radiant        /   Draining Kiss, Light Screen, Magic Reflect, Glitter Dance
+Wormatron-S (Lv. 47) @ Soft Sand        /   Adaptability   /   Glare, Knock Off, Smack Down, Earth Power
 
-BM
-Cluuz-S (Lv. 47) @ Focus Sash           /   Levitate       /   Toxic Spikes, Switcheroo, Sludge Bomb, Dark Pulse
-Zurrclu-S (Lv. 45) @ Sitrus Berry       /   Levitate       /   False Surrender, Sludge Bomb, Acid Armor, Shadow Ball
-Cluuz-S (Lv. 47) @ Roseli Berry         /   Levitate       /   Toxic Spikes, Switcheroo, Sludge Bomb, Dark Pulse
-Zurrclu-S (Lv. 46) @ Salac Berry        /   Levitate       /   False Surrender, Sludge Bomb, Acid Armor, Shadow Ball
+Burglar Tiril
+Cluuz-S (Lv. 49) @ Focus Sash           /   Levitate       /   Toxic Spikes, Will-O-Wisp, Sludge Bomb, Dark Pulse
+Zurrclu-S (Lv. 48) @ Choice Band        /   Levitate       /   Explosion, False Surrender, 
+Cluuz-S (Lv. 49) @ Roseli Berry         /   Levitate       /   Nasty Plot, Sludge Bomb, Dark Pulse, Freeze-Dry
+Zurrclu-S (Lv. 48) @ Blunder Policy     /   Levitate       /   Belch, Focus Blast, Dark Pulse, Flatter
 
-BN
-Durfish (Lv. 47) @ Choice Specs         /   Illumination   /   Dark Pulse, Earth Power, Luster Purge, Muddy Water
-Dompster (Lv. 45) @ Choice Band         /   Illumination   /   Earthquake, Aqua Jet, Play Rough, Sucker Punch
-Durfish-S (Lv. 47) @ Eviolite           /   Illumination   /   Earth Power, Muddy Water, Switcheroo, Phantom Force
-Dompster-S (Lv. 45) @ Power Herb        /   Illumination   /   Unseen Strangle, Darkest Lariat, Phantom Force, Breaking Swipe
+Fisherman Marius
+Glimmora (Lv. 48) @ Focus Sash          /   Toxic Debris   /   Venoshock, Stealth Rock, Power Gem, Earth Power
+Dompster (Lv. 49) @ Rindo Berry         /   Prankster      /   Captivate, Flip Turn, Charm, Earthquake
+Durfish-S (Lv. 52) @ Eviolite           /   Illumination   /   Earth Power, Muddy Water, Tail Glow, Shadow Ball
+Dompster-S (Lv. 48) @ Power Herb        /   Illumination   /   Unseen Strangle, Dragon Claw, Phantom Force, U-Turn
 
 Scott 3
-Hatterene (Lv. 47) @ Quick Claw         /   Magic Bounce   /   Magic Reflect, Psychic, Magic Tomb, Calm Mind
-Ninjask (Lv. 47) @ Focus Sash           /   Speed Boost    /   Swords Dance, Leech Life, Acrobatics, Poison Jab
-Dragave (Lv. 47) @ Life Orb             /   Protean        /   Channeling Blow, Liquidation, Hammer Arm, Dragon Rush
-Vikavolt (Lv. 46) @ Magnet              /   Levitate       /   Volt Switch, Guillotine, Bug Buzz, Sticky Web
-Rhynee (Lv. 48) @ Leftovers             /   Sand Stream    /   Stone Edge, Body Press, Horn Drill, Magnitude
+Hatterene (Lv. 50) @ Quick Claw         /   Magic Bounce   /   Magic Reflect, Psychic, Magic Tomb, Calm Mind
+Arbok-S (Lv. 50) @ Leftovers            /   Pressure       /   Protect, Bitter Malice, Hurricane, Super Fang
+Tortugis (Lv. 51) @ Rocky Helmet        /   Rough Skin     /   Rockfall Frenzy, Earthquake, Leaf Storm, Dragon Tail
+Vikavolt (Lv. 50) @ Magnet              /   Levitate       /   Volt Switch, Captivate, Bug Buzz, Sticky Web
+Rhynee (Lv. 51) @ Galaxeed Berry        /   Sand Stream    /   Stone Edge, Body Press, Horn Drill, Magnitude
 
 Shadow Ravine (1A)--------------------------------
 
-BO
-Magestiflash (Lv. 48) @ Bright Powder   /   Mirror Armor   /   Hurricane, Dazzling Gleam, Roost, Prismatic Laser
+Actress Semele
+Reuniclus-X (Lv. 48) @ Rindo Berry      /   Pixilate       /   Hyper Voice, Flame Charge, Endeavor, Magic Reflect
+Draga (Lv. 50) @ Belue Berry            /   Multiscale     /   Scale Shot, Calm Mind, Scald, Focus Blast
+Magestiflash (Lv. 49) @ Bright Powder   /   Insect Feeder  /   Hurricane, Dazzling Gleam, Rain Dance, Weather Ball
 
-BP
-Opwing (Lv. 46) @ Clear Amulet          /   Technician     /   U-Turn, Night Slash, X-Scissor, Quiver Dance
-Leavanny (Lv. 46) @ Coba Berry          /   Sharpness      /   X-Scissor, Entrainment, Knock Off, Leaf Blade
+Bug Catcher Lucy
+Opwing (Lv. 49) @ Clear Amulet          /   Terrify        /   U-Turn, Night Daze, Moonlight, Bounce
+Butterfree-X (Lv. 49) @ Choice Scarf    /   Magical        /   Magic Blast, Elemental Sparkle, Magic Tomb, Metronome
+Leavanny (Lv. 49) @ Focus Sash          /   Sharpness      /   Cross Poison, Swords Dance, Knock Off, Leaf Blade
 
-BQ
-Raptorex (Lv. 46) @ Choice Scarf        /   No Guard       /   Hi Jump Kick, Drill Peck, Earth Power, Air Slash
-Hatterene (Lv. 46) @ Chilan Berry       /   Magic Bounce   /   Elemental Sparkle, Magic Blast, Calm Mind, Magic Reflect
-Gallade (Lv. 47) @ Muscle Band          /   Sharpness      /   Close Combat, Psycho Cut, Knock Off, Swords Dance
-Starmie (Lv. 45) @ Petaya Berry         /   Illumination   /   Recover, Core Enforcer, Moonblast, Hydro Pump
-Poshorump (Lv. 46) @ Assault Vest       /   Swift Swim     /   Magic Fang, Sky Attack, Iron Blast, Sparkle Strike
+Black Belt Maxton
+Raptorex (Lv. 48) @ Choice Scarf        /   No Guard       /   Focus Blast, Air Slash, Earth Power, U-Turn
+Sneasler (Lv. 48) @ Focus Sash          /   Unburden       /   Reversal, Acrobatics, Poison Tail, Night Slash
+Gallade (Lv. 48) @ White Herb           /   Inner Focus    /   Close Combat, Acrobatics, Knock Off, Zen Headbutt
+Starmie (Lv. 49) @ Petaya Berry         /   Illumination   /   Recover, Core Enforcer, Moonblast, Hydro Pump
+Scrafty (Lv. 49) @ Weakness Policy      /   Intimidate     /   Fake Out, Knock Off, Drain Punch, Scary Face
 
-BR
-Conkeldurr (Lv. 46) @ Black Glasses     /   Guts           /   Hammer Arm, Scary Face, Dynamic Punch, Knock Off
-Pyrator-S (Lv. 47) @ Rocky Helmet       /   Guts           /   Taunt, Circle Throw, Foul Play, Drain Punch
-Tricercil (Lv. 48) @ Leftovers          /   Rock Head      /   Storm Throw, Body Press, Mach Punch, Stone Edge
+Burglar Fermin
+Flamigo (Lv. 50) @ White Herb           /   Scrappy        /   Close Combat, Focus Energy, Acrobatics, Feint
+Despenero-S (Lv. 50) @ Wiki Berry       /   Insect Feeder  /   Jaw Lock, Minimize, Sambal Sear, Acrobatics
+Tricercil (Lv. 49) @ Lum Berry          /   Rock Head      /   Iron Defense, Body Press, Mach Punch, Stone Edge
 
-BP1
-HammyBoy (Lv. 48) @ Chople Berry        /   Mouthwater     /   Take Down, Zen Headbutt, Rollout, Crunch
-Spacebear (Lv. 47) @ Life Orb           /   Adaptability   /   Blizzard, Galaxy Blast, Trick, Desolate Void
-Barkflare (Lv. 48) @ Expert Belt        /   Intimidate     /   Flamethrower, Flash Cannon, Volt Tackle, Flare Blitz
-Tigrette (Lv. 48) @ Starf Berry         /   Simple         /   Play Rough, Glitzy Glow, Volt Tackle, Minimize
-Zurrclu (Lv. 47) @ Spell Tag            /   Levitate       /   Shadow Ball, Rock Slide, Shadow Sneak, Smart Strike
-Draga (Lv. 48) @ Wiki Berry             /   Multiscale     /   Dragon Tail, Glitzy Glow, Scale Shot, Dragon Pulse
+Ace Trainer Susanne
+HammyBoy (Lv. 50) @ Eviolite            /   Mouthwater     /   Body Slam, Bulk Up, Baton Pass, Crunch
+Spacebear (Lv. 50) @ Wide Lens          /   Levitate       /   Blizzard, Hocus Pocus, Hypnosis, Desolate Void
+Alakazam (Lv. 50) @ Life Orb            /   Magic Guard    /   Psychic, Magic Reflect, Foul Play, Hidden Power Light
+Tigrette (Lv. 50) @ Power Herb          /   Simple         /   Hyper Beam, Light Beam, Calm Mind, Minimize
+Zurrclu (Lv. 50) @ Power Herb           /   Levitate       /   Will-O-Wisp, Rock Slide, Phantom Force, Bulk Up
+Draga (Lv. 50) @ Wiki Berry             /   Multiscale     /   Dragon Tail, Glitzy Glow, Surf, Thunder Wave
 
 Shadow Ravine (1B)--------------------------------
 
-BS1
-Boulderoar (Lv. 47) @ Focus Sash        /   Intimidate     /   Stealth Rock, Dark Pulse, Power Gem, Magic Fang
-Blaster (Lv. 46) @ Covert Cloak         /   Sturdy         /   Fire Blast, Stone Edge, Iron Defense, Rock Blast
+Hiker Iisakki
+Bronzong (Lv. 50) @ Mysticola Berry     /   Levitate       /   Stealth Rock, Heavy Slam, Trick Room, Body Slam
+Boulderoar (Lv. 50) @ Weakness Policy   /   Sturdy         /   Acrobatics, Knock Off, Magic Fang, Accelerock
+Blaster (Lv. 50) @ Covert Cloak         /   Sturdy         /   Earthquake, Stone Edge, Fire Blast, Zing Zap
 
-BS2
-Barkflare (Lv. 47) @ Assault Vest       /   Intimidate     /   Flamethrower, Flash Cannon, Volt Tackle, Flare Blitz
-Crystallor (Lv. 46) @ Custap Berry      /   Sturdy         /   Flash Cannon, Dazzling Gleam, Shell Smash, Glitter Dance
+Hiker Peyton
+Reuniclus (Lv. 50) @ Light Clay         /   Magic Guard    /   Reflect, Psychic, Recover, Focus Blast
+Barkflare (Lv. 50) @ Life Orb           /   Reckless       /   Double-Edge, Flare Blitz, Volt Tackle, Agility
+Crystallor (Lv. 50) @ Pamtre Berry      /   Sturdy         /   Photon Geyser, Glitter Dance, Power Gem, Focus Blast
 
 Route 32------------------------------------------
 
@@ -1216,7 +1231,7 @@ Hatterene (Lv. 49) @ Colbur Berry       /   Magic Bounce   /   Elemental Sparkle
 
 5 Gym C
 Carinator (Lv. 48) @ Clear Amulet       /   Synchronize    /   Curse, Skull Bash, Iron Tail, Psychic Fangs
-Cairnasaur (Lv. 49) @ Lum Berry         /   Psychic Surge  /   Psychic Fangs, Skull Bash, Iron Tail, Psychic Terrain
+Cairnasaur (Lv. 49) @ Lum Berry         /   Intimidate     /   Psychic Fangs, Skull Bash, Iron Tail, Psychic Terrain
 
 5 Gym D
 Gardevoir (Lv. 49) @ Focus Sash         /   Empathic Link  /   Moonblast, Calm Mind, Glitzy Glow, Psychic
@@ -1257,11 +1272,11 @@ Crystallor-E (Lv. 48) @ White Herb      /   Clear Body     /   Glitter Dance, Re
 
 Shadow Ravine (0A)--------------------------------
 
-BT
-Rhynee (Lv. 48) @ Smooth Rock           /   Sand Stream    /   Stone Edge, Body Press, Horn Drill, Magnitude
-Drillatron (Lv. 46) @ Life Orb          /   Sand Force     /   Stone Edge, Spirit Break, Drill Run, Glitzy Glow
-Glittleshoo (Lv. 47) @ Quick Claw       /   Serene Grace   /   Magic Blast, Charm, Air Slash, Charge Beam
-Drillatron (Lv. 47) @ Focus Sash        /   Sand Force     /   Stone Edge, Spirit Break, Drill Run, Glitzy Glow
+Hiker Mitchell
+Rhynee (Lv. 50) @ Smooth Rock           /   Sand Stream    /   Stealth Rock, Body Press, Magnitude, Spikes
+Drillatron (Lv. 49) @ Life Orb          /   Sand Force     /   Stone Edge, Spirit Break, Earthquake, Fell Stinger
+Glittleshoo (Lv. 48) @ Quick Claw       /   Serene Grace   /   Hocus Pocus, Charm, Air Slash, Wish
+Wormatron-S (Lv. 49) @ Focus Sash       /   Sand Rush      /   Knock Off, Earth Power, Fissure, Glare
 
 Team Nuke Base------------------------------------
 
@@ -1313,11 +1328,11 @@ TN B12
 Crystallor-E (Lv. 55) @ White Herb      /   Clear Body     /   Comet Crash, Reflect, Shell Smash, Prismatic Laser
 Hast-E (Lv. 55) @ Choice Scarf          /   Friendly Ghost /   Thunder, Electro Ball, Shadow Ball, Volt Switch
 
-Fred 3
+Rival Fredrick 3
 Blastflames (Lv. 56) @ Mysticola Berry  /   Levitate       /   Iron Blast, Dragon Pulse, Flamethrower, Hurricane
 Gyarados-E (Lv. 56) @ Rindo Berry       /   Volt Vortex    /   Bounce, Volt Tackle, Comet Crash, Waterfall
 Wormatron-S (Lv. 57) @ Black Glasses    /   Adaptability   /   Sucker Punch, Breaking Swipe, Earthquake, Swords Dance
-Magron (Lv. 57) @ Expert Belt           /   Dry Skin       /   Heat Crash, Earth Power, Aura Sphere, Steel Beam
+Dragave (Lv. 57) @ Expert Belt          /   Protean        /   Hammer Arm, Dragon Rush, Bulk Up, Close Combat
 Stellarock (Lv. 56) @ Sitrus Berry      /   Gravitation    /   Cosmic Power, Stone Edge, Meteor Mash, Comet Crash
 Psylotter (Lv. 58) @ Weakness Policy    /   Water Veil     /   Blizzard, Light Screen, Hydro Pump, Psychic
 
@@ -1367,7 +1382,7 @@ CH
 Crystallor (Lv. 54) @ Rindo Berry       /   Sturdy         /   Flash Cannon, Play Rough, Reflect, Glitter Dance
 Magmaclang (Lv. 55) @ Air Balloon       /   Steelworker    /   Shadow Ball, Switcheroo, Fire Blast, Explosion
 Hamthorno (Lv. 54) @ Assault Vest       /   Rough Skin     /   Super Fang, Head Smash, Zen Headbutt, Rock Slide
-Cairnasaur (Lv. 54) @ Choice Scarf      /   Psychic Surge  /   Psychic Fangs, Skull Bash, Iron Tail, Psychic Terrain
+Cairnasaur (Lv. 54) @ Choice Scarf      /   Intimidate     /   Psychic Fangs, Skull Bash, Iron Tail, Psychic Terrain
 
 CI
 Barkflare (Lv. 55) @ Life Orb           /   Intimidate     /   Double-Edge, Agility, Volt Tackle, Flare Blitz
@@ -1385,7 +1400,7 @@ Scott 4
 Hatterene (Lv. 59) @ Chilan Berry       /   Magic Bounce   /   Magic Tomb, Nuzzle, Reflect, Light Screen
 Ninjask (Lv. 60) @ Focus Sash           /   Speed Boost    /   Swords Dance, Leech Life, Baton Pass, Protect
 Drageye (Lv. 58) @ Chesto Berry         /   Multiscale     /   Prismatic Laser, Dragon Pulse, Thunderbolt, Rest
-Dragave (Lv. 60) @ Life Orb             /   Protean        /   Dragon Rush, Bulk Up, Close Combat, Double-Edge
+Tortugis (Lv. 60) @ Life Orb            /   Rough Skin     /   Dragon Tail, Leaf Storm, Earth Power, Spiky Shield
 Vikavolt (Lv. 59) @ Magnet              /   Levitate       /   Photon Geyser, Bug Buzz, Volt Switch, Sticky Web
 Rhypolar (Lv. 61) @ Leftovers           /   Sand Stream    /   Earthquake, Spikes, Smack Down, Body Press
 
@@ -1554,7 +1569,7 @@ Pyrator-S (Lv. 65) @ Black Glasses      /   Guts           /   Darkest Lariat, N
 
 DS
 Blastflames (Lv. 65) @ Rocky Helmet     /   Levitate       /   Iron Tail, Dragon Rush, Fire Blast, Dragon Pulse
-Cairnasaur (Lv. 65) @ Starf Berry       /   Psychic Surge  /   Photon Geyser, Head Smash, Outrage, Earthquake
+Cairnasaur (Lv. 65) @ Starf Berry       /   Rock Head      /   Photon Geyser, Head Smash, Outrage, Earthquake
 Poshorump (Lv. 64) @ Assault Vest       /   Swift Swim     /   Magic Fang, Dragon Darts, Magic Crash, Spacial Rend
 Wormatron (Lv. 65) @ Sitrus Berry       /   Sand Veil      /   Dragon Pulse, Earth Power, Dragon Dance, Fatal Bind
 
@@ -1733,7 +1748,7 @@ Raptorex (Lv. 72) @ Expert Belt         /   No Guard       /   Dazzling Gleam, M
 Pigoga (Lv. 71) @ Assault Vest          /   Battle Armor   /   Iron Head, Brave Bird, Night Slash, Gyro Ball
 
 EK
-Cairnasaur (Lv. 72) @ Twisted Spoon     /   Psychic Surge  /   Expanding Force, Head Smash, Outrage, Earthquake
+Cairnasaur (Lv. 72) @ Twisted Spoon     /   Rock Head      /   Expanding Force, Head Smash, Outrage, Earthquake
 Dompster-S (Lv. 71) @ Starf Berry       /   Illumination   /   Dragon Dance, Earthquake, Spectral Thief, Parting Shot
 Pyrator-S (Lv. 72) @ Flame Orb          /   Guts           /   Darkest Lariat, Focus Energy, Close Combat, No Retreat
 
@@ -1778,7 +1793,7 @@ TN MS 6
 Blaster-E (Lv. 69) @ Choice Specs       /   Sturdy         /   Fire Blast, Zap Cannon, Power Gem, Aura Sphere
 Crystallor (Lv. 69) @ Rindo Berry       /   Sturdy         /   Glittering Sword, Play Rough, Reflect, Diamond Storm
 Electrocobra (Lv. 69) @ Choice Scarf    /   Static         /   Outrage, Dragon Rush, Stone Edge, Volt Tackle
-Cairnasaur (Lv. 69) @ Assault Vest      /   Psychic Surge  /   Photon Geyser, Head Smash, Outrage, Earthquake
+Cairnasaur (Lv. 69) @ Assault Vest      /   Rock Head      /   Photon Geyser, Head Smash, Outrage, Earthquake
 
 TN MS 7
 Crystallor-E (Lv. 69) @ Choice Scarf    /   Clear Body     /   Comet Crash, Overheat, Glittering Sword, Plasma Fists
@@ -1836,11 +1851,11 @@ Ludicolo (Lv. 74) @ Choice Specs        /   Swift Swim     /   Scald, Giga Drain
 Tricercil (Lv. 73) @ Big Root           /   Rock Head      /   Head Smash, Drain Punch, No Retreat, Stealth Rock
 Cinneroph (Lv. 75) @ Power Herb         /   Tough Claws    /   Spiky Shield, Iron Head, Magic Crash, Hone Claws
 
-Fred 4
+Rival Fredrick 4
 Stellarock (Lv. 77) @ Loaded Dice       /   Huge Power     /   Shooting Stars, Rock Blast, Drain Punch, Bulk Up
 Gyarados-E (Lv. 76) @ Weakness Policy   /   Volt Vortex    /   Dragon Dance, Waterfall, Volt Tackle, Breaking Swipe
 Wormatron-S (Lv. 77) @ Rocky Helmet     /   Adaptability   /   Glare, Breaking Swipe, Earth Power, Dark Pulse
-Magron (Lv. 77) @ Sitrus Berry          /   Dry Skin       /   Steel Beam, Flare Blitz, Eruption, Stealth Rock
+Dragave (Lv. 77) @ Sitrus Berry         /   Protean        /   Close Combat, Double-Edge, Wave Crash, Outrage
 Blastflames (Lv. 76) @ Choice Scarf     /   Levitate       /   Eruption, Draco Meteor, Volt Switch, Dark Pulse
 Psylotter (Lv. 78) @ Leftovers          /   Water Veil     /   Aqua Veil, Scald, Psychic, Calm Mind
 
@@ -1888,7 +1903,7 @@ Fireblion (Lv. 81) @ Heat Rock          /   Drought        /   Drill Run, Swords
 
 ER
 Blaster-E (Lv. 80) @ Weakness Policy    /   Sturdy         /   Fire Blast, Zap Cannon, Hyper Beam, Aura Sphere
-Cairnasaur (Lv. 80) @ Choice Scarf      /   Psychic Surge  /   Expanding Force, Head Smash, Outrage, Earthquake
+Cairnasaur (Lv. 80) @ Choice Scarf      /   Rock Head      /   Expanding Force, Head Smash, Outrage, Earthquake
 Boulderoar (Lv. 80) @ Chople Berry      /   Intimidate     /   Parting Shot, Plasma Fists, Jaw Lock, Psychic Fangs
 Hamthorno (Lv. 79) @ Rocky Helmet       /   Rough Skin     /   Volt Tackle, Earthquake, Superpower, Amnesia
 Tricercil (Lv. 78) @ Lum Berry          /   Rock Head      /   Superpower, Plasma Fists, No Retreat, Meteor Assault
@@ -1955,303 +1970,3 @@ Icy Path------------------------------------------
 Icy Serpant
 Icy Serpent (Lv. 53) @ None             /   Beast Boost    /   Icicle Spear, Spirit Break, Magic Reflect, Scale Shot
 
-Stats:
-Num,Pokemon,Amt,%
-1,Twigle,2,0.18%
-2,Torgged,3,0.27%
-3,Tortugis,6,0.55%
-4,Lagma,2,0.18%
-5,Maguide,3,0.27%
-6,Magron,9,0.82%
-7,Lizish,2,0.18%
-8,Iguaton,3,0.27%
-9,Dragave,6,0.55%
-10,Hummingspark,6,0.55%
-11,Flashclaw,3,0.27%
-12,Magestiflash,8,0.73%
-13,Pigo,5,0.45%
-14,Pigonat,4,0.36%
-15,Pigoga,6,0.55%
-16,Hammo,6,0.55%
-17,HammyBoy,3,0.27%
-18,Hamthorno,4,0.36%
-19,Sheabear,7,0.64%
-20,Dualbear,4,0.36%
-21,Spacebear,3,0.27%
-22,Bealtle,6,0.55%
-23,Centatle,2,0.18%
-24,Curlatoral,7,0.64%
-25,Millistone,8,0.73%
-26,Sapwin,3,0.27%
-27,Treewin,6,0.55%
-28,Winagrow,6,0.55%
-29,Budew,2,0.18%
-30,Roselia,4,0.36%
-31,Roserade,8,0.73%
-32,Sewaddle,3,0.27%
-33,Swadloon,3,0.27%
-34,Leavanny,10,0.91%
-35,Grubbin,2,0.18%
-36,Charjabug,5,0.45%
-37,Vikavolt,9,0.82%
-38,Busheep,2,0.18%
-39,Ramant,4,0.36%
-40,Bushewe,7,0.64%
-41,Bugik,2,0.18%
-42,Swordik,5,0.45%
-43,Ninjakik,4,0.36%
-44,Lotad,2,0.18%
-45,Lombre,2,0.18%
-46,Ludicolo,9,0.82%
-47,Bluebunn,11,1.00%
-48,Rocky,1,0.09%
-49,Boulder,2,0.18%
-50,Blaster,5,0.45%
-51,Crystallor,6,0.55%
-52,Carinx,3,0.27%
-53,Carinator,5,0.45%
-54,Cairnasaur,6,0.55%
-55,Pebblepup,2,0.18%
-56,Boulderoar,6,0.55%
-57,Fightorex,3,0.27%
-58,Raptorex,4,0.36%
-59,Kleinowl,2,0.18%
-60,Hootowl,10,0.91%
-61,Dualmoose,7,0.64%
-62,Snom,2,0.18%
-63,Frosmoth,7,0.64%
-64,Grondor,4,0.36%
-65,Bipedice,5,0.45%
-66,Tricerpup,2,0.18%
-67,Tricercil,5,0.45%
-68,Spheal,2,0.18%
-69,Sealeo,6,0.55%
-70,Walrein,4,0.36%
-71,Froshrog,2,0.18%
-72,Bouncerog,5,0.45%
-73,Bugop,2,0.18%
-74,Opwing,11,1.00%
-75,Hatenna,2,0.18%
-76,Hattrem,2,0.18%
-77,Hatterene,9,0.82%
-78,Otterpor,2,0.18%
-79,Psylotter,10,0.91%
-80,Florline,3,0.27%
-81,Florlion,3,0.27%
-82,Psycorb,3,0.27%
-83,Psyballs,5,0.45%
-84,Psycorboratr,4,0.36%
-85,Ralts,4,0.36%
-86,Kirlia,3,0.27%
-87,Gardevoir,8,0.73%
-88,Gallade,5,0.45%
-89,Tigrette,4,0.36%
-90,Inkay,4,0.36%
-91,Malamar,8,0.73%
-92,Flameruff,4,0.36%
-93,Barkflare,5,0.45%
-94,Iglite,2,0.18%
-95,Blaxer,2,0.18%
-96,Pyrator,8,0.73%
-97,Magmaclang,7,0.64%
-98,Flamehox,2,0.18%
-99,Fireshard,2,0.18%
-100,Blastflames,8,0.73%
-101,Tiowoo,2,0.18%
-102,Magwoo,3,0.27%
-103,Lafloo,5,0.45%
-104,Houndour,3,0.27%
-105,Houndoom,10,0.91%
-106,Sparkdust,2,0.18%
-107,Splame,10,0.91%
-108,Sparkitten,2,0.18%
-109,Fireblion,6,0.55%
-110,Flamebless,6,0.55%
-111,Shookwat,1,0.09%
-112,Wattwo,2,0.18%
-113,Megawatt,7,0.64%
-114,Elelamb,2,0.18%
-115,Electroram,3,0.27%
-116,Superchargo,5,0.45%
-117,Twigzap,1,0.09%
-118,Shockbranch,1,0.09%
-119,Thunderzap,9,0.82%
-120,Magie,6,0.55%
-121,Cumin,2,0.18%
-122,Cinneroph,10,0.91%
-123,Vupp,4,0.36%
-124,Vinnie,3,0.27%
-125,Suvinero,9,0.82%
-126,Whiskie,4,0.36%
-127,Whiskers,3,0.27%
-128,Whiskeroar,7,0.64%
-129,Nincada,3,0.27%
-130,Ninjask,4,0.36%
-131,Shedinja,5,0.45%
-132,Sheltor,3,0.27%
-133,Shelnado,5,0.45%
-134,Lilyray,2,0.18%
-135,Daray,3,0.27%
-136,Spinaquata,8,0.73%
-137,Magikarp,10,0.91%
-138,Gyarados,10,0.91%
-139,Staryu,6,0.55%
-140,Starmie,7,0.64%
-141,Ali,6,0.55%
-142,Batorali,6,0.55%
-143,Posho,11,1.00%
-144,Shomp,5,0.45%
-145,Poshorump,9,0.82%
-146,Binacle,2,0.18%
-147,Barbaracle,5,0.45%
-148,Durfish,4,0.36%
-149,Dompster,8,0.73%
-150,Kissyfishy,13,1.18%
-151,Ekans,2,0.18%
-152,Arbok,7,0.64%
-153,Zubat,4,0.36%
-154,Golbat,2,0.18%
-155,Crobat,9,0.82%
-156,Poof,1,0.09%
-157,Hast,5,0.45%
-158,Poov,2,0.18%
-159,Grust,14,1.27%
-160,Cluuz,7,0.64%
-161,Zurrclu,4,0.36%
-162,Zurroaratr,5,0.45%
-163,Timburr,2,0.18%
-164,Gurdurr,1,0.09%
-165,Conkeldurr,8,0.73%
-166,Rhypo,2,0.18%
-167,Rhynee,4,0.36%
-168,Rhypolar,6,0.55%
-169,Diggie,1,0.09%
-170,Drillatron,12,1.09%
-171,Wormite,2,0.18%
-172,Wormbot,3,0.27%
-173,Wormatron,7,0.64%
-174,Cleffa,2,0.18%
-175,Clefairy,2,0.18%
-176,Clefable,6,0.55%
-177,Minishoo,3,0.27%
-178,Glittleshoo,9,0.82%
-179,Zorua,4,0.36%
-180,Zoroark,9,0.82%
-181,Droid,1,0.09%
-182,Armoid,2,0.18%
-183,Soldrota,5,0.45%
-184,Tinkie,1,0.09%
-185,Shawar,2,0.18%
-186,Shaboom,3,0.27%
-187,Dragee,2,0.18%
-188,Draga,1,0.09%
-189,Drageye,4,0.36%
-190,Blobmo,2,0.18%
-191,Nebulimb,2,0.18%
-192,Galactasolder,3,0.27%
-193,Consodust,4,0.36%
-194,Cosmocrash,2,0.18%
-195,Rockmite,2,0.18%
-196,Stellarock,5,0.45%
-197,Poof-E,1,0.09%
-198,Hast-E,4,0.36%
-199,Droid-E,1,0.09%
-200,Armoid-E,1,0.09%
-201,Soldrota-E,5,0.45%
-202,Flamehox-E,1,0.09%
-203,Fireshard-E,2,0.18%
-204,Blastflames-E,4,0.36%
-205,Rocky-E,1,0.09%
-206,Boulder-E,1,0.09%
-207,Blaster-E,5,0.45%
-208,Crystallor-E,6,0.55%
-209,Magikarp-E,2,0.18%
-210,Gyarados-E,12,1.09%
-211,Shockfang,2,0.18%
-212,Electrocobra,3,0.27%
-213,Nightrex,2,0.18%
-214,Shadowsaur,5,0.45%
-215,Durfish-S,2,0.18%
-216,Dompster-S,8,0.73%
-217,Wormite-S,1,0.09%
-218,Wormbot-S,2,0.18%
-219,Wormatron-S,8,0.73%
-220,Cluuz-S,2,0.18%
-221,Zurrclu-S,2,0.18%
-222,Zurroaratr-S,5,0.45%
-223,Iglite-S,2,0.18%
-224,Blaxer-S,2,0.18%
-225,Pyrator-S,8,0.73%
-226,Ekans-S,2,0.18%
-227,Arbok-S,5,0.45%
-228,Soarwhell,0,0.00%
-229,Diftery,2,0.18%
-230,Vorsuitex,0,0.00%
-231,Kleinyeti,0,0.00%
-232,Triwandoliz,2,0.18%
-233,Relomidel,0,0.00%
-234,Relopamil,0,0.00%
-235,Dragowrath,0,0.00%
-236,Solaroxyous,0,0.00%
-237,Kissyfishy-D,0,0.00%
-238,Scraggy,2,0.18%
-239,Scrafty,1,0.09%
-240,Scraftagon,1,0.09%
-241,Glimmet,3,0.27%
-242,Glimmora,1,0.09%
-243,Abra,1,0.09%
-244,Kadabra,3,0.27%
-245,Alakazam,0,0.00%
-246,Flamigo,2,0.18%
-247,Sneasel,3,0.27%
-248,Weavile,3,0.27%
-249,Sneasel-H,2,0.18%
-250,Sneasler,0,0.00%
-251,Solosis,1,0.09%
-252,Duosion,2,0.18%
-253,Reuniclus,0,0.00%
-254,Solosis-X,3,0.27%
-255,Duosion-X,1,0.09%
-256,Reuniclus-X,0,0.00%
-257,Seviper,1,0.09%
-258,Hissimitar,1,0.09%
-259,Gulpin,0,0.00%
-260,Swalot,1,0.09%
-261,Gulpin-X,4,0.36%
-262,Swalot-X,1,0.09%
-263,Plasamp,1,0.09%
-264,Genieova,0,0.00%
-265,Elgyem,3,0.27%
-266,Beheeyem,0,0.00%
-267,Elgyem-E,2,0.18%
-268,Beheeyem-E,0,0.00%
-269,Caterpie,1,0.09%
-270,Metapod,0,0.00%
-271,Butterfree,3,0.27%
-272,Metapod-X,1,0.09%
-273,Butterfree-X,3,0.27%
-274,Bronzor,1,0.09%
-275,Bronzong,1,0.09%
-276,Bronzor-X,2,0.18%
-277,Bronzong-X,1,0.09%
-278,Capsakid,2,0.18%
-279,Scovillain,2,0.18%
-280,Despenero,0,0.00%
-281,Capsakid-S,2,0.18%
-282,Scovillain-S,1,0.09%
-283,Despenero-S,0,0.00%
-284,Cage Critter,1,0.09%
-285,Icy Serpent,1,0.09%
-286,Shocky Spire,0,0.00%
-287,Dust Sorcerer,0,0.00%
-288,Fever Dream,0,0.00%
-289,Dusk Skater,0,0.00%
-290,Necrozma,0,0.00%
-291,Necrozma-Ult,0,0.00%
-292,Azurill,1,0.09%
-293,Marill,1,0.09%
-294,Azumarill,3,0.27%
-295,Shroodle,3,0.27%
-296,Grafaiai,2,0.18%
-
-Total: 1100

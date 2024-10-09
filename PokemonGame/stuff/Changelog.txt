@@ -35,3 +35,6 @@ Added Acupressure, Shore Up and Soak for the Durfish line(s)
 Changed Swagger's accuracy to 90
 Added Simple Beam and gave to the Elgyem lines
 Changed Cairnasaur's first ability to Rock Head (from Psychic Surge)
+
+Demo 1.02(1) Released
+Added over collision to Post Office roof tiles

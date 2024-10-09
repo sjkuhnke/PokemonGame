@@ -207,7 +207,6 @@ public class PlayerCharacter extends Entity {
 					int snapY = (int) Math.round(worldY * 1.0 / gp.tileSize);
 					snapX *= gp.tileSize;
 					snapY *= gp.tileSize;
-					snapY -= gp.tileSize / 2;
 					this.worldX = snapX;
 					this.worldY = snapY;
 				}
@@ -237,7 +236,6 @@ public class PlayerCharacter extends Entity {
 					int snapY = (int) Math.round(worldY * 1.0 / gp.tileSize);
 					snapX *= gp.tileSize;
 					snapY *= gp.tileSize;
-					snapY -= gp.tileSize / 2;
 					this.worldX = snapX;
 					this.worldY = snapY;
 				}
@@ -720,6 +718,11 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.DIALOGUE, npc, "Here, take this for your troubles too. Really, it's the least I can do.");
 				Task t = Pokemon.addTask(Task.ITEM, "Obtained a Lucky Egg!");
 				t.item = Item.LUCKY_EGG;
+			} else {
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh, hello there. Sorry for being alarmed, I'm just a little unsettled right now.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I just got robbed! And at the worst time too, I was expecting a new juicer I was so excited for...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "And I heard a noise at my door thinking it was Robin with my package, but it was a criminal who burst right in!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "It's times like this where I wish I was still married.");
 			}
 		} else if (gp.currentMap == 48) {
 			if (!p.flag[0][7]) {
