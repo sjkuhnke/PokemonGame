@@ -4152,7 +4152,7 @@ public class Pokemon implements Serializable {
 				return;
 			} else if (p.ability == Ability.HYPER_CUTTER && a < 0 && i == 0) {
 				if (announce) addAbilityTask(p);
-				if (announce) addTask(Task.TEXT, nickname + "'s " + type + " was not lowered!");
+				if (announce) addTask(Task.TEXT, p.nickname + "'s " + type + " was not lowered!");
 				return;
 			}
 		}

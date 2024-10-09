@@ -16,7 +16,6 @@ Level Up:
 7 - Razor Leaf
 11 - Sand Attack
 15 - Smack Down
-18 - Headbutt
 
 Evolutions:
 Twigle -> Torrged (lv. 18)
@@ -34,7 +33,7 @@ Base Stats:
 73 HP / 75 Atk / 80 Def / 48 SpA / 89 SpD / 37 Spe / 402 BST
 
 Level Up:
-Evo - Stealth Rock
+E - Headbutt
 1 - Pound
 1 - Withdraw
 7 - Razor Leaf
@@ -62,6 +61,7 @@ Base Stats:
 95 HP / 87 Atk / 91 Def / 95 SpA / 110 SpD / 39 Spe / 517 BST
 
 Level Up:
+E - Rockfall Frenzy
 1 - Pound
 1 - Withdraw
 7 - Razor Leaf
@@ -118,6 +118,7 @@ Base Stats:
 80 HP / 75 Atk / 65 Def / 75 SpA / 60 SpD / 50 Spe / 405 BST
 
 Level Up:
+E - Headbutt
 1 - Tackle
 1 - Harden
 7 - Ember
@@ -148,6 +149,7 @@ Base Stats:
 109 HP / 81 Atk / 71 Def / 101 SpA / 67 SpD / 92 Spe / 521 BST
 
 Level Up:
+E - Molten Steelspike
 1 - Tackle
 1 - Harden
 7 - Ember
@@ -208,6 +210,7 @@ Base Stats:
 60 HP / 90 Atk / 76 Def / 49 SpA / 55 SpD / 70 Spe / 400 BST
 
 Level Up:
+E - Bite
 1 - Scratch
 1 - Growl
 7 - Water Gun
@@ -235,6 +238,7 @@ Base Stats:
 85 HP / 110 Atk / 105 Def / 65 SpA / 85 SpD / 80 Spe / 530 BST
 
 Level Up:
+E - Channeling Blow
 1 - Scratch
 1 - Growl
 7 - Water Gun
@@ -293,6 +297,7 @@ Base Stats:
 66 HP / 76 Atk / 76 Def / 40 SpA / 50 SpD / 78 Spe / 386 BST
 
 Level Up:
+E - Fury Attack
 1 - Tackle
 5 - Sand Attack
 9 - Peck
@@ -321,6 +326,7 @@ Base Stats:
 76 HP / 95 Atk / 100 Def / 56 SpA / 80 SpD / 81 Spe / 488 BST
 
 Level Up:
+E - Metal Sound
 1 - Tackle
 5 - Sand Attack
 9 - Peck
@@ -358,8 +364,8 @@ Base Stats:
 
 Level Up:
 1 - Flash
-5 - Leer
-8 - Flash Ray
+5 - Flash Ray
+8 - Leer
 10 - Gust
 13 - Quick Attack
 16 - Whirlwind
@@ -380,6 +386,7 @@ Base Stats:
 50 HP / 40 Atk / 45 Def / 75 SpA / 70 SpD / 100 Spe / 380 BST
 
 Level Up:
+E - Twister
 1 - Flash
 5 - Leer
 8 - Flash Ray
@@ -410,6 +417,7 @@ Base Stats:
 70 HP / 40 Atk / 60 Def / 100 SpA / 100 SpD / 130 Spe / 500 BST
 
 Level Up:
+E - Dazzling Gleam
 1 - Flash
 5 - Leer
 8 - Flash Ray
@@ -458,10 +466,11 @@ Level Up:
 26 - Stockpile
 28 - Dizzy Punch
 30 - Ice Ball
-32 - Rollout
+30 - Rollout
+32 - Bulk Up
 
 Evolutions:
-Hammo -> HammyBoy (Knows Rollout)
+Hammo -> HammyBoy (Knows Bulk Up)
 
 ===================
 #017 - HammyBoy                                                                                        [017]
@@ -476,6 +485,7 @@ Base Stats:
 150 HP / 79 Atk / 75 Def / 43 SpA / 108 SpD / 35 Spe / 490 BST
 
 Level Up:
+E - Body Slam
 1 - Pound
 3 - Growl
 5 - Leer
@@ -487,7 +497,8 @@ Level Up:
 26 - Stockpile
 28 - Dizzy Punch
 30 - Ice Ball
-32 - Rollout
+30 - Rollout
+32 - Bulk Up
 34 - Crunch
 37 - Take Down
 43 - Zen Headbutt
@@ -514,6 +525,9 @@ Base Stats:
 150 HP / 105 Atk / 110 Def / 40 SpA / 85 SpD / 45 Spe / 535 BST
 
 Level Up:
+E - Rock Blast
+E - Rock Slide
+E - Stealth Rock
 1 - Pound
 3 - Growl
 5 - Leer
@@ -525,7 +539,9 @@ Level Up:
 26 - Stockpile
 28 - Dizzy Punch
 30 - Ice Ball
-32 - Rollout
+30 - Rollout
+32 - Body Slam
+32 - Bulk Up
 34 - Crunch
 36 - Rock Blast
 40 - Stealth Rock
@@ -558,6 +574,7 @@ Level Up:
 1 - Bug Bite
 10 - Protect
 15 - Hidden Power
+18 - Focus Energy
 
 Evolutions:
 Bealtle -> Centatle (lv. 18)
@@ -575,11 +592,11 @@ Base Stats:
 55 HP / 68 Atk / 70 Def / 41 SpA / 61 SpD / 80 Spe / 375 BST
 
 Level Up:
+E - Poison Fang
 1 - Bug Bite
 10 - Protect
 15 - Hidden Power
 18 - Focus Energy
-18 - Poison Fang
 20 - Coil
 22 - Thief
 25 - Pin Missile
@@ -603,6 +620,7 @@ Base Stats:
 80 HP / 70 Atk / 80 Def / 55 SpA / 120 SpD / 100 Spe / 505 BST
 
 Level Up:
+E - Infestation
 1 - Bug Bite
 10 - Protect
 15 - Hidden Power
@@ -620,6 +638,7 @@ Level Up:
 50 - Quiver Dance
 55 - Sticky Web
 60 - Fatal Bind
+65 - First Impression
 
 ===================
 #022 - Millistone                                                                                      [025]
@@ -634,6 +653,7 @@ Base Stats:
 80 HP / 120 Atk / 120 Def / 35 SpA / 80 SpD / 70 Spe / 505 BST
 
 Level Up:
+E - Stealth Rock
 1 - Bug Bite
 10 - Protect
 15 - Hidden Power
@@ -654,6 +674,7 @@ Level Up:
 55 - Rock Wrecker
 60 - Earthquake
 65 - Fatal Bind
+75 - First Impression
 
 ===================
 #023 - Caterpie                                                                                        [269]
@@ -688,10 +709,10 @@ Base Stats:
 50 HP / 20 Atk / 50 Def / 30 SpA / 30 SpD / 25 Spe / 205 BST
 
 Level Up:
+E - Harden
+E - Magic Blast
+E - Metronome
 1 - Harden
-7 - Harden
-7 - Magic Blast
-7 - Metronome
 11 - Iron Defense
 
 Evolutions:
@@ -710,6 +731,7 @@ Base Stats:
 60 HP / 20 Atk / 55 Def / 105 SpA / 90 SpD / 75 Spe / 405 BST
 
 Level Up:
+E - Magic Powder
 1 - Harden
 1 - Iron Defense
 1 - Magic Blast
@@ -718,7 +740,6 @@ Level Up:
 1 - Tackle
 1 - String Shot
 1 - Bug Bite
-10 - Magic Powder
 10 - Confusion
 10 - Supersonic
 12 - Swift
@@ -784,6 +805,7 @@ Base Stats:
 100 HP / 120 Atk / 110 Def / 55 SpA / 35 SpD / 55 Spe / 475 BST
 
 Level Up:
+E - Mach Punch
 1 - Pound
 3 - Leer
 5 - Absorb
@@ -824,6 +846,8 @@ Base Stats:
 120 HP / 75 Atk / 80 Def / 115 SpA / 80 SpD / 90 Spe / 560 BST
 
 Level Up:
+E - Dragon Breath
+E - Grass Knot
 1 - Stealth Rock
 1 - Spiky Shield
 1 - Dragon Tail
@@ -846,6 +870,7 @@ Level Up:
 60 - Nasty Plot
 70 - Thunder
 80 - Draco Meteor
+90 - Frenzy Plant
 
 ===================
 #029 - Budew                                                                                           [029]
@@ -883,12 +908,14 @@ Base Stats:
 50 HP / 60 Atk / 45 Def / 100 SpA / 80 SpD / 65 Spe / 400 BST
 
 Level Up:
+E - Acid
 1 - Absorb
 1 - Growth
 1 - Water Sport
 1 - Poison Sting
 5 - Extrasensory
-10 - Sleep Powder
+9 - Acid Spray
+13 - Sleep Powder
 16 - Leech Seed
 19 - Magical Leaf
 21 - Sludge
@@ -920,6 +947,7 @@ Base Stats:
 70 HP / 60 Atk / 65 Def / 125 SpA / 105 SpD / 90 Spe / 515 BST
 
 Level Up:
+E - Sludge Bomb
 1 - Leaf Storm
 1 - Venom Drench
 1 - Toxic Spikes
@@ -973,14 +1001,19 @@ Base Stats:
 55 HP / 63 Atk / 90 Def / 50 SpA / 80 SpD / 42 Spe / 380 BST
 
 Level Up:
+E - Protect
 1 - String Shot
 1 - Tackle
 8 - Bug Bite
 15 - Razor Leaf
 20 - Protect
+22 - Struggle Bug
 25 - Grass Whistle
+28 - Spiky Shield
 30 - First Impression
-33 - Struggle Bug
+30 - Synthesis
+33 - U-Turn
+36 - Sticky Web
 
 Evolutions:
 Swadloon -> Leavanny (160+ happiness)
@@ -998,10 +1031,14 @@ Base Stats:
 75 HP / 108 Atk / 80 Def / 60 SpA / 80 SpD / 97 Spe / 500 BST
 
 Level Up:
+E - Pin Missile
 1 - Slash
 1 - False Swipe
 1 - Razor Leaf
 1 - Pin Missile
+1 - Spiky Shield
+1 - Grass Whistle
+1 - Synthesis
 22 - Struggle Bug
 29 - Fell Stinger
 32 - Cross Poison
@@ -1051,6 +1088,7 @@ Base Stats:
 53 HP / 95 Atk / 85 Def / 30 SpA / 53 SpD / 85 Spe / 401 BST
 
 Level Up:
+E - Sword Spin
 1 - Low Kick
 3 - Leer
 5 - Fury Cutter
@@ -1058,7 +1096,8 @@ Level Up:
 12 - Brutal Swing
 15 - Sword Spin
 19 - Bug Bite
-23 - Slash
+22 - Slash
+24 - Tornado Spin
 26 - Cross Chop
 29 - U-Turn
 31 - Agility
@@ -1081,6 +1120,7 @@ Base Stats:
 63 HP / 120 Atk / 90 Def / 62 SpA / 65 SpD / 105 Spe / 505 BST
 
 Level Up:
+E - Staff Jab
 1 - Low Kick
 3 - Leer
 5 - Fury Cutter
@@ -1088,7 +1128,8 @@ Level Up:
 12 - Brutal Swing
 15 - Sword Spin
 19 - Bug Bite
-23 - Slash
+22 - Slash
+24 - Tornado Spin
 26 - Cross Chop
 29 - U-Turn
 31 - Agility
@@ -1146,6 +1187,7 @@ Base Stats:
 70 HP / 130 Atk / 95 Def / 45 SpA / 80 SpD / 100 Spe / 520 BST
 
 Level Up:
+E - Horn Leech
 1 - Power Whip
 1 - Horn Leech
 1 - Flame Charge
@@ -1177,6 +1219,8 @@ Base Stats:
 70 HP / 45 Atk / 80 Def / 130 SpA / 95 SpD / 100 Spe / 520 BST
 
 Level Up:
+E - Light Beam
+E - Energy Ball
 1 - Dazzling Gleam
 1 - Draining Kiss
 1 - Light Screen
@@ -1235,6 +1279,7 @@ Base Stats:
 75 HP / 75 Atk / 75 Def / 75 SpA / 75 SpD / 75 Spe / 450 BST
 
 Level Up:
+E - Magic Blast
 1 - Double Kick
 3 - Tackle
 5 - Growl
@@ -1245,7 +1290,6 @@ Level Up:
 19 - Low Kick
 20 - Baby-Doll Eyes
 20 - Covet
-20 - Magic Blast
 22 - Dizzy Punch
 23 - Encore
 25 - Hypnosis
@@ -1276,6 +1320,7 @@ Base Stats:
 80 HP / 60 Atk / 75 Def / 135 SpA / 85 SpD / 80 Spe / 515 BST
 
 Level Up:
+E - Desolate Void
 1 - Double Kick
 3 - Tackle
 5 - Growl
@@ -1334,7 +1379,6 @@ Level Up:
 16 - Mud Bomb
 17 - Screech
 20 - Poison Fang
-22 - Stockpile
 
 Evolutions:
 Ekans -> Arbok (lv. 22)
@@ -1352,6 +1396,7 @@ Base Stats:
 60 HP / 110 Atk / 70 Def / 55 SpA / 80 SpD / 80 Spe / 455 BST
 
 Level Up:
+E - Stockpile
 1 - Ice Fang
 1 - Thunder Fang
 1 - Fire Fang
@@ -1366,7 +1411,6 @@ Level Up:
 1 - Screech
 1 - Venom Drench
 20 - Poison Fang
-22 - Stockpile
 23 - Acid Spray
 25 - Breaking Swipe
 27 - Gastro Acid
@@ -1419,23 +1463,20 @@ Base Stats:
 40 HP / 35 Atk / 30 Def / 120 SpA / 70 SpD / 105 Spe / 400 BST
 
 Level Up:
+E - Psybeam
 1 - Confusion
 1 - Flash
 1 - Teleport
 1 - Hidden Power
-5 - Psybeam
 9 - Swift
 13 - Reflect
 16 - Elemental Sparkle
-21 - Psycho Cut
-25 - Recover
+19 - Psycho Cut
+23 - Recover
+25 - Trick
 28 - Hocus Pocus
 31 - Psyshock
-35 - Magic Tomb
-40 - Psychic
-45 - Shadow Ball
-50 - Calm Mind
-55 - Vanishing Act
+34 - Magic Tomb
 
 Evolutions:
 Kadabra -> Alakazam (lv. 36)
@@ -1453,23 +1494,33 @@ Base Stats:
 55 HP / 50 Atk / 45 Def / 135 SpA / 95 SpD / 120 Spe / 500 BST
 
 Level Up:
+E - Magic Reflect
+1 - Safeguard
+1 - Metronome
+1 - Hypnosis
+1 - Grass Knot
+1 - Stored Power
+1 - Foul Play
 1 - Confusion
 1 - Flash
 1 - Teleport
 1 - Hidden Power
-5 - Psybeam
 9 - Swift
 13 - Reflect
 16 - Elemental Sparkle
-21 - Psycho Cut
-25 - Recover
+19 - Psycho Cut
+23 - Recover
+25 - Trick
 28 - Hocus Pocus
 31 - Psyshock
-35 - Magic Tomb
-40 - Psychic
-45 - Shadow Ball
-50 - Calm Mind
-55 - Vanishing Act
+34 - Magic Tomb
+39 - Psychic
+43 - Shadow Ball
+48 - Calm Mind
+51 - Vanishing Act
+55 - Dream Eater
+60 - Nasty Plot
+65 - Encore
 
 ===================
 #049 - Hatenna                                                                                         [075]
@@ -1512,6 +1563,7 @@ Base Stats:
 57 HP / 40 Atk / 65 Def / 86 SpA / 73 SpD / 49 Spe / 370 BST
 
 Level Up:
+E - Brutal Swing
 1 - Confusion
 1 - Play Nice
 5 - Life Dew
@@ -1523,9 +1575,9 @@ Level Up:
 24 - Heal Pulse
 27 - Trick
 30 - Hocus Pocus
-32 - Brutal Swing
-35 - Magic Blast
+34 - Magic Blast
 37 - Calm Mind
+40 - Psyshock
 
 Evolutions:
 Hattrem -> Hatterene (lv. 42)
@@ -1543,6 +1595,7 @@ Base Stats:
 82 HP / 65 Atk / 95 Def / 136 SpA / 103 SpD / 29 Spe / 510 BST
 
 Level Up:
+E - Magic Reflect
 1 - Nuzzle
 1 - Confusion
 1 - Play Nice
@@ -1558,15 +1611,14 @@ Level Up:
 32 - Brutal Swing
 35 - Magic Blast
 37 - Calm Mind
-42 - Magic Reflect
-45 - Elemental Sparkle
-49 - Sparkling Terrain
-52 - Psychic
-55 - Magic Tomb
-58 - Healing Wish
-61 - Vanishing Act
-65 - Morning Sun
-70 - Expanding Force
+44 - Elemental Sparkle
+47 - Sparkling Terrain
+50 - Psychic
+53 - Magic Tomb
+55 - Healing Wish
+58 - Vanishing Act
+60 - Morning Sun
+65 - Expanding Force
 
 ===================
 #052 - Flameruff                                                                                       [092]
@@ -1575,7 +1627,7 @@ Type:
 Fire / Normal
 
 Ability:
-Intimidate / Flash Fire / (Guts)
+Intimidate / Flash Fire / (Reckless)
 
 Base Stats:
 46 HP / 74 Atk / 68 Def / 48 SpA / 58 SpD / 81 Spe / 375 BST
@@ -1605,12 +1657,13 @@ Type:
 Fire / Normal
 
 Ability:
-Intimidate / Flash Fire / (Guts)
+Intimidate / Flash Fire / (Reckless)
 
 Base Stats:
 65 HP / 103 Atk / 82 Def / 66 SpA / 79 SpD / 100 Spe / 495 BST
 
 Level Up:
+E - Take Down
 1 - Ember
 3 - Tackle
 5 - Growl
@@ -1624,14 +1677,13 @@ Level Up:
 25 - Fire Fang
 28 - Covet
 31 - Flamethrower
-36 - Flash Cannon
-40 - Volt Tackle
-44 - Flare Blitz
+36 - Volt Tackle
+40 - Flare Blitz
+44 - Agility
 50 - Double-Edge
-55 - Agility
-60 - Morning Sun
+55 - Morning Sun
+60 - Extreme Speed
 65 - Sunny Day
-75 - Extreme Speed
 
 ===================
 #054 - Iglite                                                                                          [094]
@@ -1665,6 +1717,7 @@ Base Stats:
 43 HP / 88 Atk / 50 Def / 74 SpA / 52 SpD / 93 Spe / 400 BST
 
 Level Up:
+E - Karate Chop
 1 - Will-O-Wisp
 15 - Ember
 16 - Flame Wheel
@@ -1689,6 +1742,7 @@ Base Stats:
 65 HP / 115 Atk / 55 Def / 106 SpA / 75 SpD / 100 Spe / 516 BST
 
 Level Up:
+E - Knock Off
 1 - Will-O-Wisp
 15 - Ember
 16 - Flame Wheel
@@ -1740,6 +1794,7 @@ Base Stats:
 70 HP / 45 Atk / 48 Def / 60 SpA / 65 SpD / 35 Spe / 323 BST
 
 Level Up:
+E - Space Beam
 1 - Lovely Kiss
 1 - Sweet Kiss
 1 - Thief
@@ -1758,10 +1813,12 @@ Level Up:
 9 - Space Beam
 12 - Minimize
 15 - Swift
+18 - Light Beam
 18 - Metronome
 21 - Moonlight
 24 - Gravity
 27 - Radio Burst
+30 - Dazzling Gleam
 30 - Cosmic Power
 33 - Stored Power
 36 - Moonblast
@@ -1787,6 +1844,7 @@ Base Stats:
 95 HP / 70 Atk / 73 Def / 95 SpA / 90 SpD / 60 Spe / 483 BST
 
 Level Up:
+E - Galaxy Blast
 1 - Lovely Kiss
 1 - Sweet Kiss
 1 - Flash Ray
@@ -1854,6 +1912,8 @@ Base Stats:
 60 HP / 50 Atk / 50 Def / 60 SpA / 70 SpD / 50 Spe / 340 BST
 
 Level Up:
+E - Water Sport
+E - Water Pulse
 1 - Astonish
 1 - Teeter Dance
 1 - Fury Swipes
@@ -1864,10 +1924,13 @@ Level Up:
 12 - Mega Drain
 16 - Fake Out
 20 - Bubblebeam
-25 - Giga Drain
-30 - Rain Dance
+22 - Grass Knot
+25 - Rain Dance
+28 - Giga Drain
+31 - Synthesis
 35 - Knock Off
-40 - Zen Headbutt
+38 - Flip Turn
+41 - Zen Headbutt
 45 - Energy Ball
 50 - Hydro Pump
 
@@ -1887,7 +1950,13 @@ Base Stats:
 80 HP / 70 Atk / 70 Def / 90 SpA / 100 SpD / 70 Spe / 480 BST
 
 Level Up:
+E - Energy Ball
+E - Aqua Jet
+1 - Life Dew
+1 - Water Sport
+1 - Water Pulse
 1 - Teeter Dance
+1 - Muddy Water
 1 - Thief
 1 - Fake Out
 1 - Fury Swipes
@@ -1923,7 +1992,6 @@ Level Up:
 9 - Hypnosis
 12 - Flash Ray
 15 - Draining Kiss
-18 - Psybeam
 
 Evolutions:
 Ralts -> Kirlia (lv. 18)
@@ -1941,6 +2009,7 @@ Base Stats:
 38 HP / 35 Atk / 35 Def / 95 SpA / 85 SpD / 50 Spe / 338 BST
 
 Level Up:
+E - Psybeam
 1 - Teleport
 1 - Growl
 1 - Flash
@@ -1949,9 +2018,10 @@ Level Up:
 9 - Hypnosis
 12 - Flash Ray
 15 - Draining Kiss
-18 - Psybeam
-23 - Life Dew
-28 - Charm
+20 - Life Dew
+23 - Charm
+26 - Mystical Fire
+30 - Wish
 
 Evolutions:
 Kirlia -> Gardevoir (lv. 30)
@@ -1970,7 +2040,9 @@ Base Stats:
 68 HP / 65 Atk / 65 Def / 125 SpA / 115 SpD / 80 Spe / 518 BST
 
 Level Up:
+E - Dazzling Gleam
 1 - Aura Sphere
+1 - Destiny Bond
 1 - Dream Eater
 1 - Thief
 1 - Trick
@@ -1986,7 +2058,7 @@ Level Up:
 18 - Psybeam
 23 - Life Dew
 28 - Charm
-30 - Dazzling Gleam
+30 - Wish
 35 - Calm Mind
 38 - Hyper Voice
 42 - Glitzy Glow
@@ -2009,6 +2081,7 @@ Base Stats:
 68 HP / 125 Atk / 65 Def / 65 SpA / 115 SpD / 63 Spe / 501 BST
 
 Level Up:
+E - Swords Dance
 1 - Teleport
 1 - Growl
 1 - Flash
@@ -2053,6 +2126,7 @@ Level Up:
 4 - Calm Mind
 6 - Gust
 8 - Wish
+10 - Magic Blast
 12 - Flash
 14 - Swift
 17 - Sweet Kiss
@@ -2062,7 +2136,7 @@ Level Up:
 30 - Sparkly Swirl
 34 - Draining Kiss
 39 - Moonblast
-45 - Magic Blast
+45 - Magic Tomb
 50 - Tri-Attack
 55 - Glitter Dance
 
@@ -2082,6 +2156,8 @@ Base Stats:
 70 HP / 45 Atk / 75 Def / 135 SpA / 115 SpD / 80 Spe / 520 BST
 
 Level Up:
+E - Air Cutter
+E - Hocus Pocus
 1 - Glittering Tornado
 1 - Mirror Shot
 5 - Gust
@@ -2137,17 +2213,22 @@ Base Stats:
 50 HP / 80 Atk / 100 Def / 60 SpA / 35 SpD / 60 Spe / 385 BST
 
 Level Up:
+E - Iron Defense
 1 - Pound
 1 - Tail Whip
 7 - Sand Attack
 13 - Wrap
 17 - Mud Shot
 20 - Dig
-26 - Iron Defense
+23 - Heavy Slam
+26 - Metal Sound
 30 - Iron Tail
 33 - Spikes
+36 - Shore Up
 39 - Earthquake
+41 - Dragon Tail
 43 - Iron Head
+46 - Fissure
 
 Evolutions:
 Wormbot -> Wormatron (lv. 48)
@@ -2165,18 +2246,24 @@ Base Stats:
 60 HP / 100 Atk / 120 Def / 105 SpA / 70 SpD / 65 Spe / 520 BST
 
 Level Up:
+E - Coil
+E - Dual Chop
 1 - Pound
 1 - Tail Whip
 7 - Sand Attack
 13 - Wrap
 17 - Mud Shot
 20 - Dig
-26 - Iron Defense
+23 - Heavy Slam
+26 - Metal Sound
 30 - Iron Tail
 33 - Spikes
+36 - Shore Up
 39 - Earthquake
+41 - Dragon Tail
 43 - Iron Head
-48 - Fissure
+46 - Fissure
+50 - Scale Shot
 53 - Dragon Pulse
 57 - Earth Power
 60 - Dragon Dance
@@ -2288,10 +2375,12 @@ Level Up:
 1 - Defense Curl
 5 - Growl
 9 - Tail Whip
-15 - Fury Attack
-19 - Rapid Spin
-23 - Stomp
-28 - Stealth Rock
+12 - Fury Attack
+15 - Rapid Spin
+18 - Stomp
+22 - Drill Run
+25 - Stealth Rock
+28 - Bulldoze
 
 Evolutions:
 Rhypo -> Rhynee (lv. 30)
@@ -2309,15 +2398,18 @@ Base Stats:
 57 HP / 73 Atk / 112 Def / 55 SpA / 95 SpD / 20 Spe / 412 BST
 
 Level Up:
+E - Sandstorm
 1 - Horn Attack
 1 - Defense Curl
 5 - Growl
 9 - Tail Whip
-15 - Fury Attack
-19 - Rapid Spin
-23 - Stomp
-28 - Stealth Rock
-30 - Bulldoze
+12 - Fury Attack
+15 - Rapid Spin
+18 - Stomp
+22 - Drill Run
+25 - Stealth Rock
+28 - Bulldoze
+30 - Sandstorm
 33 - Spikes
 36 - Horn Drill
 39 - Magnitude
@@ -2342,15 +2434,18 @@ Base Stats:
 75 HP / 100 Atk / 145 Def / 70 SpA / 95 SpD / 25 Spe / 510 BST
 
 Level Up:
+E - Shore Up
 1 - Horn Attack
 1 - Defense Curl
 5 - Growl
 9 - Tail Whip
-15 - Fury Attack
-19 - Rapid Spin
-23 - Stomp
-28 - Stealth Rock
-30 - Bulldoze
+12 - Fury Attack
+15 - Rapid Spin
+18 - Stomp
+22 - Drill Run
+25 - Stealth Rock
+28 - Bulldoze
+30 - Sandstorm
 33 - Spikes
 36 - Horn Drill
 39 - Magnitude
@@ -2407,8 +2502,10 @@ Base Stats:
 61 HP / 90 Atk / 45 Def / 50 SpA / 50 SpD / 160 Spe / 456 BST
 
 Level Up:
-1 - Double Team
-1 - Screech
+E - Double Team
+E - Screech
+E - Fury Cutter
+E - Wing Attack
 1 - Baton Pass
 1 - Aerial Ace
 1 - Metal Claw
@@ -2417,7 +2514,7 @@ Level Up:
 5 - Harden
 10 - False Swipe
 15 - Mud-Slap
-21 - Fury Cutter
+23 - Mind Reader
 23 - Absorb
 29 - Bug Bite
 36 - Fury Swipes
@@ -2474,8 +2571,9 @@ Level Up:
 15 - Water Pulse
 18 - Light Beam
 20 - Ice Shard
-24 - Aqua Jet
-27 - Bounce
+20 - Aqua Jet
+24 - Bounce
+27 - Draining Kiss
 30 - Aurora Beam
 
 Evolutions:
@@ -2494,6 +2592,7 @@ Base Stats:
 63 HP / 56 Atk / 69 Def / 120 SpA / 90 SpD / 112 Spe / 510 BST
 
 Level Up:
+E - Glitzy Glow
 1 - Bubble
 3 - Pound
 5 - Flash
@@ -2503,16 +2602,20 @@ Level Up:
 15 - Water Pulse
 18 - Light Beam
 20 - Ice Shard
-24 - Aqua Jet
-27 - Bounce
-32 - Dazzling Gleam
-36 - Hydro Pump
-40 - Elemental Sparkle
+20 - Aqua Jet
+24 - Bounce
+27 - Draining Kiss
+30 - Aurora Beam
+32 - Glitzy Glow
+36 - Elemental Sparkle
+39 - Hydro Pump
+42 - Charm
 44 - Sparkling Aria
 47 - Sheer Cold
 52 - Hurricane
 55 - Blizzard
 60 - Moonblast
+65 - Glitter Dance
 
 ===================
 #083 - Tigrette                                                                                        [089]
@@ -2584,7 +2687,8 @@ Base Stats:
 85 HP / 30 Atk / 65 Def / 120 SpA / 120 SpD / 75 Spe / 495 BST
 
 Level Up:
-1 - Frostbind
+E - Frostbind
+E - Aurora Beam
 1 - Glare
 1 - Powder Snow
 15 - Ice Shard
@@ -2648,6 +2752,7 @@ Base Stats:
 60 HP / 25 Atk / 60 Def / 125 SpA / 65 SpD / 35 Spe / 370 BST
 
 Level Up:
+E - Dazzling Gleam
 1 - Rapid Spin
 1 - Flash Ray
 1 - Protect
@@ -2665,7 +2770,6 @@ Level Up:
 30 - Luster Purge
 30 - Endeavor
 31 - Tri-Attack
-32 - Dazzling Gleam
 33 - Glitter Dance
 36 - Sunny Doom
 39 - Encore
@@ -2686,6 +2790,7 @@ Base Stats:
 70 HP / 75 Atk / 55 Def / 125 SpA / 70 SpD / 95 Spe / 490 BST
 
 Level Up:
+E - Glitzy Glow
 1 - Rapid Spin
 1 - Flash Ray
 1 - Reflect
@@ -2708,8 +2813,7 @@ Level Up:
 33 - Glitter Dance
 36 - Sunny Doom
 39 - Encore
-41 - Glitzy Glow
-43 - Hyper Voice
+41 - Hyper Voice
 43 - Agility
 45 - Amnesia
 48 - Prismatic Laser
@@ -2736,19 +2840,18 @@ Level Up:
 1 - Leer
 1 - Low Kick
 4 - Payback
-8 - Headbutt
-12 - Sand Attack
-16 - Facade
-20 - Protect
-24 - Beat Up
-28 - Scary Face
+7 - Headbutt
+10 - Sand Attack
+13 - Facade
+16 - Protect
+19 - Low Sweep
+22 - Beat Up
+24 - Torment
+27 - Feint Attack
+29 - Scary Face
 32 - Brick Break
-36 - Swagger
-40 - Crunch
-42 - Hi Jump Kick
-48 - Swords Dance
-52 - Head Smash
-55 - Close Combat
+34 - Fake Out
+37 - Swagger
 
 Evolutions:
 Scraggy -> Scrafty (lv. 39)
@@ -2766,24 +2869,30 @@ Base Stats:
 65 HP / 90 Atk / 115 Def / 45 SpA / 115 SpD / 58 Spe / 488 BST
 
 Level Up:
+E - Knock Off
 1 - Leer
 1 - Low Kick
 4 - Payback
-8 - Headbutt
-12 - Sand Attack
-16 - Facade
-20 - Protect
-23 - Beat Up
-26 - Fake Out
-28 - Scary Face
+7 - Headbutt
+10 - Sand Attack
+13 - Facade
+16 - Protect
+19 - Low Sweep
+22 - Beat Up
+24 - Torment
+27 - Feint Attack
+29 - Scary Face
 32 - Brick Break
-36 - Swagger
-40 - Crunch
-42 - Hi Jump Kick
+34 - Fake Out
+37 - Swagger
+41 - Crunch
+43 - Hi Jump Kick
 45 - Focus Energy
 48 - Swords Dance
-55 - Close Combat
-61 - Head Smash
+50 - Parting Shot
+52 - False Surrender
+54 - Close Combat
+60 - Head Smash
 
 Evolutions:
 Scrafty -> Scraftagon
@@ -2802,25 +2911,32 @@ Base Stats:
 70 HP / 110 Atk / 120 Def / 45 SpA / 120 SpD / 90 Spe / 555 BST
 
 Level Up:
+E - Dual Chop
+1 - Breaking Swipe
+1 - Knock Off
 1 - Leer
 1 - Low Kick
 4 - Payback
-8 - Headbutt
-12 - Sand Attack
-16 - Facade
-20 - Protect
-23 - Beat Up
-26 - Fake Out
-28 - Scary Face
+7 - Headbutt
+10 - Sand Attack
+13 - Facade
+16 - Protect
+19 - Low Sweep
+22 - Beat Up
+24 - Torment
+27 - Feint Attack
+29 - Scary Face
 32 - Brick Break
-36 - Swagger
-40 - Crunch
-44 - Hi Jump Kick
+34 - Fake Out
+37 - Swagger
+41 - Crunch
+43 - Hi Jump Kick
 45 - Focus Energy
 48 - Swords Dance
-53 - Dragon Rush
+51 - Dragon Rush
 55 - Close Combat
-60 - Roost
+58 - Roost
+62 - Parting Shot
 65 - Summit Strike
 65 - Abyssal Chop
 75 - Dragon Dance
@@ -2866,6 +2982,7 @@ Base Stats:
 85 HP / 45 Atk / 65 Def / 145 SpA / 110 SpD / 55 Spe / 505 BST
 
 Level Up:
+E - Magic Blast
 1 - Double Team
 1 - Magic Powder
 1 - Ember
@@ -2929,6 +3046,7 @@ Base Stats:
 88 HP / 102 Atk / 67 Def / 61 SpA / 88 SpD / 101 Spe / 507 BST
 
 Level Up:
+E - Moonlight
 1 - Bounce
 1 - Infestation
 1 - Flash
@@ -2939,7 +3057,6 @@ Level Up:
 17 - Bug Bite
 21 - Feint Attack
 30 - Slash
-30 - Moonlight
 33 - Quiver Dance
 36 - U-Turn
 40 - Night Slash
@@ -3059,7 +3176,7 @@ Base Stats:
 65 HP / 108 Atk / 65 Def / 108 SpA / 65 SpD / 75 Spe / 486 BST
 
 Level Up:
-1 - Fire Fang
+E - Fire Fang
 1 - Incinerate
 1 - Leafage
 1 - Leer
@@ -3097,6 +3214,7 @@ Base Stats:
 89 HP / 108 Atk / 75 Def / 128 SpA / 75 SpD / 75 Spe / 550 BST
 
 Level Up:
+E - Sambal Sear
 1 - Fire Fang
 1 - Incinerate
 1 - Will-O-Wisp
@@ -3163,6 +3281,7 @@ Base Stats:
 70 HP / 57 Atk / 105 Def / 51 SpA / 87 SpD / 30 Spe / 400 BST
 
 Level Up:
+E - Recover
 1 - Tackle
 1 - Harden
 6 - Will-O-Wisp
@@ -3171,7 +3290,6 @@ Level Up:
 15 - Incinerate
 18 - Rock Polish
 20 - Screech
-20 - Recover
 23 - Smack Down
 26 - Protect
 28 - Burn Up
@@ -3179,7 +3297,7 @@ Level Up:
 33 - Lava Plume
 
 Evolutions:
-Magwoo -> Lafloo (lv. 40)
+Magwoo -> Lafloo (lv. 42)
 
 ===================
 #103 - Lafloo                                                                                          [103]
@@ -3194,6 +3312,7 @@ Base Stats:
 90 HP / 80 Atk / 95 Def / 120 SpA / 95 SpD / 45 Spe / 525 BST
 
 Level Up:
+E - Molten Consume
 1 - Tackle
 1 - Harden
 6 - Will-O-Wisp
@@ -3363,6 +3482,7 @@ Base Stats:
 72 HP / 75 Atk / 73 Def / 75 SpA / 70 SpD / 75 Spe / 440 BST
 
 Level Up:
+E - Mind Reader
 1 - Harden
 1 - Tackle
 6 - Screech
@@ -3373,7 +3493,7 @@ Level Up:
 22 - Psycho Cut
 24 - Rock Tomb
 28 - Stealth Rock
-30 - Rock Polish
+32 - Rock Polish
 35 - Psychic Fangs
 38 - Curse
 42 - Skull Bash
@@ -3390,14 +3510,19 @@ Type:
 Rock / Psychic
 
 Ability:
-Psychic Surge / Regenerator / (Intimidate)
+Rock Head / Regenerator / (Intimidate)
 
 Base Stats:
 99 HP / 120 Atk / 80 Def / 80 SpA / 76 SpD / 80 Spe / 535 BST
 
 Level Up:
+E - Diamond Storm
+1 - Mind Reader
 1 - Harden
 1 - Tackle
+1 - Bite
+1 - Crunch
+1 - Curse
 6 - Screech
 9 - Confusion
 11 - Bind
@@ -3410,13 +3535,13 @@ Level Up:
 33 - Dragon Rage
 37 - Psychic Fangs
 41 - Skull Bash
-45 - Iron Tail
-49 - Psychic Terrain
-55 - Photon Geyser
-59 - Head Smash
-63 - Outrage
-65 - Earthquake
-70 - Expanding Force
+44 - Iron Tail
+47 - Psychic Terrain
+50 - Head Smash
+53 - Outrage
+56 - Earthquake
+60 - Rock Wrecker
+65 - Expanding Force
 
 ===================
 #110 - Sparkitten                                                                                      [108]
@@ -3464,6 +3589,7 @@ Base Stats:
 85 HP / 105 Atk / 99 Def / 40 SpA / 92 SpD / 89 Spe / 510 BST
 
 Level Up:
+E - Heat Crash
 1 - Flame Charge
 1 - Bite
 1 - Roar
@@ -3494,6 +3620,7 @@ Base Stats:
 70 HP / 40 Atk / 55 Def / 120 SpA / 115 SpD / 110 Spe / 510 BST
 
 Level Up:
+E - Heat Wave
 1 - Charm
 1 - Fiery Dance
 1 - Roar
@@ -3560,6 +3687,7 @@ Base Stats:
 67 HP / 99 Atk / 111 Def / 79 SpA / 111 SpD / 33 Spe / 500 BST
 
 Level Up:
+E - Shadow Claw
 1 - Sunny Day
 1 - Rain Dance
 1 - Body Press
@@ -3641,6 +3769,7 @@ Base Stats:
 65 HP / 128 Atk / 55 Def / 80 SpA / 55 SpD / 120 Spe / 503 BST
 
 Level Up:
+E - Dazzling Gleam
 1 - Dig
 1 - Leer
 5 - Thief
@@ -3702,6 +3831,7 @@ Base Stats:
 55 HP / 100 Atk / 60 Def / 125 SpA / 60 SpD / 110 Spe / 510 BST
 
 Level Up:
+E - Shadow Claw
 1 - Thief
 1 - Trick
 1 - Scratch
@@ -3742,9 +3872,11 @@ Level Up:
 1 - Supersonic
 5 - Astonish
 10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+12 - Mega Drain
+13 - Poison Fang
+16 - Wing Attack
+18 - Bite
+21 - Whirlwind
 
 Evolutions:
 Zubat -> Golbat (lv. 22)
@@ -3766,21 +3898,25 @@ Level Up:
 1 - Supersonic
 5 - Astonish
 10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
-27 - Thief
+12 - Mega Drain
+13 - Poison Fang
+16 - Wing Attack
+18 - Bite
+21 - Whirlwind
+24 - Thief
+27 - Defog
 30 - Fire Fang
 30 - Thunder Fang
 30 - Ice Fang
 30 - Magic Fang
-34 - Crunch
+32 - Crunch
+34 - Giga Drain
 37 - Confuse Ray
+39 - Leech Life
 41 - Haze
 45 - Fly
 48 - Venoshock
-55 - Leech Life
-62 - Brave Bird
+53 - Brave Bird
 
 Evolutions:
 Golbat -> Crobat (160+ happiness)
@@ -3798,25 +3934,34 @@ Base Stats:
 85 HP / 90 Atk / 80 Def / 70 SpA / 80 SpD / 130 Spe / 535 BST
 
 Level Up:
+E - Confuse Ray
 1 - Cross Poison
 1 - Tailwind
 1 - Toxic
 1 - Screech
-15 - Poison Fang
-20 - Wing Attack
-27 - Thief
+1 - Absorb
+1 - Supersonic
+5 - Astonish
+10 - Mean Look
+12 - Mega Drain
+13 - Poison Fang
+16 - Wing Attack
+18 - Bite
+21 - Whirlwind
+24 - Thief
+27 - Defog
 30 - Fire Fang
 30 - Thunder Fang
 30 - Ice Fang
 30 - Magic Fang
-34 - Crunch
-37 - Confuse Ray
-40 - Cross Poison
+33 - Crunch
+36 - Giga Drain
+39 - Leech Life
+41 - Cross Poison
 44 - Haze
-48 - Venoshock
-51 - Fly
-55 - Leech Life
-62 - Brave Bird
+48 - Fly
+52 - Venoshock
+59 - Brave Bird
 
 ===================
 #122 - Grubbin                                                                                         [035]
@@ -3889,6 +4034,7 @@ Base Stats:
 77 HP / 65 Atk / 90 Def / 110 SpA / 75 SpD / 95 Spe / 512 BST
 
 Level Up:
+E - Electric Terrain
 1 - Vise Grip
 1 - Mud-Slap
 5 - String Shot
@@ -3904,8 +4050,9 @@ Level Up:
 39 - Discharge
 41 - Guillotine
 43 - Bug Buzz
-47 - Thunderbolt
-50 - Fly
+45 - Volt Switch
+48 - Fly
+53 - Thunderbolt
 57 - Agility
 64 - Zap Cannon
 
@@ -3976,6 +4123,7 @@ Base Stats:
 95 HP / 110 Atk / 150 Def / 70 SpA / 45 SpD / 55 Spe / 525 BST
 
 Level Up:
+E - Steel Beam
 1 - Tackle
 3 - Defense Curl
 6 - Mud Sport
@@ -4009,6 +4157,7 @@ Base Stats:
 90 HP / 75 Atk / 50 Def / 110 SpA / 150 SpD / 50 Spe / 525 BST
 
 Level Up:
+E - Glittering Sword
 1 - Knock Off
 1 - Tackle
 3 - Defense Curl
@@ -4021,15 +4170,15 @@ Level Up:
 26 - Rollout
 29 - Stealth Rock
 32 - Self-Destruct
-36 - Rock Blast
+36 - Power Gem
 36 - Dazzling Gleam
 40 - Shell Smash
 43 - Glitter Dance
 45 - Flash Cannon
-49 - Play Rough
+49 - Photon Geyser
 52 - Reflect
 55 - Diamond Storm
-60 - Glittering Sword
+60 - Prismatic Laser
 70 - Light Of Ruin
 
 ===================
@@ -4113,6 +4262,7 @@ Base Stats:
 75 HP / 111 Atk / 75 Def / 90 SpA / 64 SpD / 85 Spe / 500 BST
 
 Level Up:
+E - Snarl
 1 - Tackle
 3 - Defense Curl
 5 - Rock Throw
@@ -4129,13 +4279,13 @@ Level Up:
 38 - Dark Pulse
 41 - Power Gem
 45 - Magic Fang
-49 - Accelerock
+48 - Accelerock
+50 - Sucker Punch
 53 - Throat Chop
 55 - Fire Blast
-59 - Psychic Fangs
-63 - Parting Shot
-67 - Plasma Fists
-70 - Jaw Lock
+58 - Psychic Fangs
+60 - Parting Shot
+65 - Jaw Lock
 
 ===================
 #132 - Psycorb                                                                                         [082]
@@ -4177,6 +4327,8 @@ Base Stats:
 50 HP / 70 Atk / 90 Def / 70 SpA / 90 SpD / 30 Spe / 400 BST
 
 Level Up:
+E - Magnet Bomb
+E - Double Hit
 1 - Teleport
 5 - Glare
 9 - Confusion
@@ -4187,8 +4339,6 @@ Level Up:
 24 - Psybeam
 27 - Mirror Shot
 30 - Iron Defense
-32 - Double Hit
-32 - Magnet Bomb
 35 - Zen Headbutt
 38 - Smart Strike
 42 - Mist Ball
@@ -4211,6 +4361,7 @@ Base Stats:
 100 HP / 140 Atk / 100 Def / 70 SpA / 100 SpD / 40 Spe / 550 BST
 
 Level Up:
+E - Gravity Punch
 1 - Heavy Slam
 1 - Magnet Rise
 1 - Teleport
@@ -4231,7 +4382,6 @@ Level Up:
 47 - Bullet Punch
 50 - Skull Bash
 52 - Hammer Arm
-52 - Gravity Punch
 55 - Iron Head
 60 - Psycho Cut
 61 - Drill Run
@@ -4431,6 +4581,7 @@ Base Stats:
 65 HP / 80 Atk / 55 Def / 45 SpA / 60 SpD / 50 Spe / 355 BST
 
 Level Up:
+E - Headbutt
 1 - Charge
 3 - Thundershock
 5 - Growl
@@ -4442,7 +4593,6 @@ Level Up:
 22 - Draining Kiss
 23 - Covet
 26 - Thunder Wave
-28 - Headbutt
 28 - Magnitude
 32 - Spark
 37 - Twinkle Tackle
@@ -4465,6 +4615,7 @@ Base Stats:
 85 HP / 128 Atk / 72 Def / 60 SpA / 77 SpD / 98 Spe / 520 BST
 
 Level Up:
+E - Skull Bash
 1 - Charge
 3 - Thundershock
 5 - Growl
@@ -4527,6 +4678,7 @@ Base Stats:
 60 HP / 80 Atk / 95 Def / 65 SpA / 95 SpD / 95 Spe / 490 BST
 
 Level Up:
+E - Flash
 1 - Scratch
 1 - Defense Curl
 1 - Howl
@@ -4535,7 +4687,6 @@ Level Up:
 15 - Snarl
 20 - Take Down
 25 - Rollout
-30 - Flash
 30 - Flash Cannon
 35 - Play Rough
 40 - Bullet Punch
@@ -4559,6 +4710,7 @@ Base Stats:
 69 HP / 95 Atk / 97 Def / 70 SpA / 95 SpD / 104 Spe / 530 BST
 
 Level Up:
+E - Magic Fang
 1 - Flash Cannon
 1 - Magic Blast
 1 - Howl
@@ -4615,6 +4767,7 @@ Base Stats:
 75 HP / 95 Atk / 60 Def / 95 SpA / 60 SpD / 105 Spe / 490 BST
 
 Level Up:
+E - Flash
 1 - Howl
 1 - Charge
 1 - Quick Attack
@@ -4623,7 +4776,6 @@ Level Up:
 15 - Thunder Wave
 20 - Double Team
 25 - Roar
-30 - Flash
 30 - Whip Smash
 35 - Thunder Punch
 35 - Play Rough
@@ -4648,6 +4800,7 @@ Base Stats:
 75 HP / 105 Atk / 70 Def / 95 SpA / 75 SpD / 125 Spe / 545 BST
 
 Level Up:
+E - Bounce
 1 - Volt Tackle
 1 - Bounce
 1 - Howl
@@ -4663,6 +4816,7 @@ Level Up:
 45 - Sparkle Strike
 50 - Electro Ball
 55 - Magic Crash
+60 - Fly
 75 - Plasma Fists
 
 ===================
@@ -4704,6 +4858,7 @@ Base Stats:
 95 HP / 125 Atk / 105 Def / 25 SpA / 75 SpD / 50 Spe / 475 BST
 
 Level Up:
+E - Flash
 1 - Growl
 1 - Bite
 1 - Crunch
@@ -4713,7 +4868,6 @@ Level Up:
 15 - Roar
 20 - Power-Up Punch
 25 - Drain Punch
-30 - Flash
 30 - Beefy Bash
 35 - Mach Punch
 35 - Play Rough
@@ -4740,6 +4894,7 @@ Base Stats:
 95 HP / 130 Atk / 100 Def / 85 SpA / 75 SpD / 55 Spe / 540 BST
 
 Level Up:
+E - Sparkle Strike
 1 - Hammer Arm
 1 - Play Rough
 1 - Howl
@@ -4752,7 +4907,7 @@ Level Up:
 30 - Aura Sphere
 35 - Superpower
 40 - Calm Mind
-45 - Sparkle Strike
+45 - Twinkle Tackle
 50 - Vacuum Wave
 55 - Magic Tomb
 60 - Focus Blast
@@ -4791,15 +4946,16 @@ Base Stats:
 65 HP / 94 Atk / 49 Def / 60 SpA / 54 SpD / 73 Spe / 395 BST
 
 Level Up:
+E - Needle Arm
 1 - Branch Poke
 1 - Thundershock
 1 - Forests Curse
 10 - Grassy Terrain
 10 - Electric Terrain
 15 - Leech Seed
-25 - Needle Arm
+23 - Thunder Punch
 27 - Thunder Wave
-30 - Thunder Punch
+30 - Grass Knot
 
 Evolutions:
 Shockbranch -> Thunderzap (Leaf Stone)
@@ -4817,6 +4973,7 @@ Base Stats:
 90 HP / 70 Atk / 100 Def / 85 SpA / 100 SpD / 55 Spe / 500 BST
 
 Level Up:
+E - Parabolic Charge
 1 - Branch Poke
 1 - Thundershock
 1 - Ingrain
@@ -4869,6 +5026,8 @@ Base Stats:
 100 HP / 28 Atk / 45 Def / 72 SpA / 110 SpD / 45 Spe / 400 BST
 
 Level Up:
+E - Roost
+E - Aqua Ring
 1 - Double Slap
 3 - Leer
 7 - Wing Attack
@@ -4896,6 +5055,11 @@ Base Stats:
 100 HP / 90 Atk / 66 Def / 74 SpA / 84 SpD / 81 Spe / 495 BST
 
 Level Up:
+E - Twister
+E - Gust
+E - Glittering Tornado
+E - Leaf Tornado
+E - Whirlpool
 1 - Double Slap
 3 - Leer
 7 - Wing Attack
@@ -4906,18 +5070,16 @@ Level Up:
 23 - Air Slash
 26 - Haze
 30 - Defog
-30 - Twister
-30 - Gust
-30 - Glittering Tornado
-30 - Leaf Tornado
-33 - Breaking Swipe
-36 - Aqua Jet
+32 - Breaking Swipe
+34 - Aqua Jet
+37 - Muddy Water
 39 - Dragon Pulse
-42 - Whirlpool
+42 - Waterfall
 45 - Hurricane
 49 - Dragon Dance
 53 - Wave Crash
 60 - Outrage
+65 - Water Spout
 
 ===================
 #157 - Gulpin-X                                                                                        [261]
@@ -4974,6 +5136,7 @@ Base Stats:
 150 HP / 39 Atk / 80 Def / 93 SpA / 95 SpD / 40 Spe / 497 BST
 
 Level Up:
+E - Belch
 1 - Sludge Wave
 1 - Pound
 1 - Acid
@@ -5048,6 +5211,8 @@ Base Stats:
 81 HP / 93 Atk / 63 Def / 93 SpA / 70 SpD / 60 Spe / 460 BST
 
 Level Up:
+E - Dragon Breath
+E - Bubblebeam
 1 - Bite
 3 - Dragon Dance
 5 - Rage
@@ -5084,8 +5249,10 @@ Base Stats:
 100 HP / 95 Atk / 90 Def / 95 SpA / 90 SpD / 90 Spe / 560 BST
 
 Level Up:
+E - Magic Fang
+E - Dragon Rush
+E - Hyper Beam
 1 - Outrage
-1 - Hyper Beam
 1 - Twister
 1 - Switcheroo
 5 - Dragon Pulse
@@ -5102,11 +5269,12 @@ Level Up:
 37 - Sparkle Strike
 44 - Magic Fang
 48 - Dragon Darts
-54 - Magic Crash
-60 - Spacial Rend
-70 - Draco Meteor
-75 - Wave Crash
-80 - Dragon Dance
+51 - Magic Crash
+54 - Comet Crash
+60 - Draco Meteor
+65 - Dragon Dance
+70 - Wave Crash
+75 - Spacial Rend
 
 ===================
 #162 - Snom                                                                                            [062]
@@ -5123,7 +5291,7 @@ Base Stats:
 Level Up:
 1 - Powder Snow
 1 - Struggle Bug
-40 - Sticky Web
+30 - Sticky Web
 
 Evolutions:
 Snom -> Frosmoth (Ice Stone)
@@ -5141,10 +5309,13 @@ Base Stats:
 70 HP / 65 Atk / 60 Def / 125 SpA / 90 SpD / 65 Spe / 475 BST
 
 Level Up:
+E - Icy Wind
+E - Silver Wind
 1 - Powder Snow
 1 - Struggle Bug
 1 - Icy Wind
 1 - Captivate
+1 - Sticky Web
 4 - Stun Spore
 8 - Infestation
 12 - Haze
@@ -5197,6 +5368,7 @@ Base Stats:
 83 HP / 65 Atk / 92 Def / 105 SpA / 80 SpD / 50 Spe / 475 BST
 
 Level Up:
+E - Double Hit
 1 - Thundershock
 4 - Charge
 8 - Wrap
@@ -5205,7 +5377,6 @@ Level Up:
 21 - Spark
 25 - Scary Face
 27 - Thunder Fang
-30 - Double Hit
 30 - Parabolic Charge
 34 - Discharge
 37 - Magnet Rise
@@ -5229,6 +5400,7 @@ Base Stats:
 85 HP / 65 Atk / 120 Def / 92 SpA / 98 SpD / 55 Spe / 515 BST
 
 Level Up:
+E - Metal Claw
 1 - Gyro Ball
 1 - Iron Defense
 1 - Night Slash
@@ -5282,6 +5454,7 @@ Base Stats:
 95 HP / 125 Atk / 79 Def / 60 SpA / 100 SpD / 81 Spe / 540 BST
 
 Level Up:
+E - Bite
 1 - Splash
 15 - Tackle
 20 - Bite
@@ -5337,6 +5510,8 @@ Base Stats:
 80 HP / 90 Atk / 96 Def / 71 SpA / 85 SpD / 58 Spe / 480 BST
 
 Level Up:
+E - Rock Blast
+E - Shadow Sneak
 1 - Rock Polish
 1 - Rock Tomb
 6 - Force Palm
@@ -5368,6 +5543,7 @@ Base Stats:
 100 HP / 109 Atk / 110 Def / 67 SpA / 99 SpD / 55 Spe / 540 BST
 
 Level Up:
+E - Take Over
 1 - Rock Polish
 1 - Rock Blast
 1 - Force Palm
@@ -5446,6 +5622,8 @@ Base Stats:
 78 HP / 140 Atk / 79 Def / 70 SpA / 63 SpD / 105 Spe / 535 BST
 
 Level Up:
+E - Smart Strike
+E - Iron Defense
 1 - Wrap
 1 - Haze
 1 - Heavy Slam
@@ -5461,10 +5639,8 @@ Level Up:
 14 - Screech
 14 - Dragon Tail
 15 - Fury Cutter
-16 - Iron Defense
 17 - Glare
 19 - Toxic Spikes
-20 - Smart Strike
 21 - Poison Jab
 23 - Venoshock
 25 - Night Slash
@@ -5579,15 +5755,20 @@ Level Up:
 12 - Mud Shot
 15 - Flash Ray
 19 - Mud Bomb
-22 - Thief
+21 - Thief
+23 - Confuse Ray
+23 - Haze
 25 - Life Dew
 28 - Mud Sport
 28 - Water Sport
-31 - Charm
+30 - Charm
+32 - Amnesia
+32 - Soak
 34 - Switcheroo
 36 - Luster Purge
-39 - Muddy Water
-42 - Dark Pulse
+38 - Acupressure
+40 - Muddy Water
+42 - Flip Turn
 45 - Earth Power
 50 - Topsy-Turvy
 
@@ -5607,12 +5788,22 @@ Base Stats:
 70 HP / 115 Atk / 100 Def / 60 SpA / 80 SpD / 60 Spe / 485 BST
 
 Level Up:
+E - Shore Up
+E - Swagger
+E - Torment
+1 - Flip Turn
+1 - Acupressure
+1 - Amnesia
 1 - Mud Sport
+1 - Water Sport
 1 - Brine
 1 - Mud Shot
 1 - Muddy Water
 1 - Magic Fang
 1 - Feint Attack
+1 - Haze
+1 - Switcheroo
+1 - Soak
 5 - Night Slash
 10 - Hyper Fang
 15 - Take Down
@@ -5628,9 +5819,11 @@ Level Up:
 50 - Wave Crash
 53 - Magic Crash
 55 - Phantom Force
+58 - Spikes
 60 - Twinkle Tackle
 65 - Unseen Strangle
 70 - Parting Shot
+80 - Topsy-Turvy
 
 ===================
 #178 - Florline                                                                                        [080]
@@ -5673,6 +5866,7 @@ Base Stats:
 67 HP / 72 Atk / 87 Def / 96 SpA / 93 SpD / 104 Spe / 519 BST
 
 Level Up:
+E - Psychic
 1 - Vine Whip
 3 - Scratch
 5 - Fake Tears
@@ -5684,7 +5878,6 @@ Level Up:
 29 - Psybeam
 34 - Light Screen
 39 - Leaf Storm
-40 - Psychic
 43 - Reflect
 45 - Grass Whistle
 50 - Psychic Terrain
@@ -5736,6 +5929,7 @@ Base Stats:
 66 HP / 74 Atk / 85 Def / 106 SpA / 95 SpD / 97 Spe / 523 BST
 
 Level Up:
+E - Air Slash
 1 - Karate Chop
 3 - Double Kick
 5 - Mud-Slap
@@ -5749,7 +5943,6 @@ Level Up:
 31 - Detect
 34 - Acrobatics
 36 - Earth Power
-36 - Air Slash
 40 - Hi Jump Kick
 44 - Drill Peck
 47 - Focus Blast
@@ -5810,6 +6003,8 @@ Base Stats:
 60 HP / 75 Atk / 85 Def / 100 SpA / 85 SpD / 115 Spe / 520 BST
 
 Level Up:
+E - Galaxy Blast
+1 - Rapid Spin
 1 - Flash
 1 - Foresight
 1 - Luster Purge
@@ -5853,6 +6048,7 @@ Level Up:
 23 - Trick Room
 26 - Space Beam
 30 - Abduct
+32 - Simple Beam
 34 - Recover
 37 - Galaxy Blast
 40 - Radio Burst
@@ -5883,6 +6079,7 @@ Level Up:
 23 - Trick Room
 26 - Space Beam
 30 - Abduct
+32 - Simple Beam
 34 - Recover
 37 - Galaxy Blast
 40 - Radio Burst
@@ -5935,6 +6132,7 @@ Base Stats:
 90 HP / 60 Atk / 70 Def / 75 SpA / 70 SpD / 45 Spe / 410 BST
 
 Level Up:
+E - Frostbind
 1 - Defense Curl
 1 - Powder Snow
 1 - Growl
@@ -5948,7 +6146,8 @@ Level Up:
 28 - Body Slam
 31 - Rest
 31 - Snore
-32 - Frostbind
+33 - Flip Turn
+35 - Ice Shard
 36 - Snowscape
 38 - Aurora Veil
 40 - Slack Off
@@ -5970,6 +6169,8 @@ Base Stats:
 110 HP / 80 Atk / 90 Def / 95 SpA / 90 SpD / 65 Spe / 530 BST
 
 Level Up:
+E - Ice Fang
+1 - Frostbind
 1 - Defense Curl
 1 - Powder Snow
 1 - Growl
@@ -5983,12 +6184,13 @@ Level Up:
 28 - Body Slam
 31 - Rest
 31 - Snore
-32 - Frostbind
+33 - Flip Turn
+35 - Ice Shard
 36 - Snowscape
 38 - Aurora Veil
 40 - Slack Off
 43 - Blizzard
-44 - Ice Fang
+46 - Aqua Jet
 50 - Sheer Cold
 55 - Psychic Fangs
 60 - Hydro Pump
@@ -6010,16 +6212,20 @@ Level Up:
 1 - Tail Whip
 5 - Water Gun
 8 - Baby-Doll Eyes
-11 - Confusion
-13 - Aqua Ring
-16 - Water Pulse
-18 - Aqua Veil
-21 - Psybeam
-26 - Confuse Ray
+10 - Water Sport
+12 - Confusion
+15 - Aqua Ring
+17 - Water Pulse
+20 - Aqua Veil
+23 - Psybeam
+25 - Confuse Ray
+27 - Bubblebeam
 29 - Trick
+31 - Hypnosis
+34 - Extrasensory
 
 Evolutions:
-Otterpor -> Psylotter (lv. 30)
+Otterpor -> Psylotter (lv. 35)
 
 ===================
 #190 - Psylotter                                                                                       [079]
@@ -6034,21 +6240,24 @@ Base Stats:
 71 HP / 48 Atk / 87 Def / 102 SpA / 106 SpD / 86 Spe / 500 BST
 
 Level Up:
+E - Hydro Vortex
 1 - Psywave
 1 - Tail Whip
 5 - Water Gun
 8 - Baby-Doll Eyes
-11 - Confusion
-13 - Aqua Ring
-16 - Water Pulse
-18 - Aqua Veil
-21 - Psybeam
-26 - Confuse Ray
+10 - Water Sport
+12 - Confusion
+15 - Aqua Ring
+17 - Water Pulse
+20 - Aqua Veil
+23 - Psybeam
+25 - Confuse Ray
+27 - Bubblebeam
 29 - Trick
 31 - Hypnosis
-34 - Bubblebeam
-37 - Psychic
-40 - Magic Tomb
+34 - Extrasensory
+37 - Magic Tomb
+40 - Psychic
 43 - Light Screen
 46 - Hydro Pump
 50 - Expanding Force
@@ -6106,7 +6315,9 @@ Level Up:
 13 - Astonish
 16 - Aqua Ring
 20 - Night Shade
-25 - Water Pulse
+24 - Water Pulse
+28 - Bubblebeam
+32 - Muddy Water
 35 - Shell Smash
 
 Evolutions:
@@ -6125,6 +6336,8 @@ Base Stats:
 87 HP / 51 Atk / 75 Def / 97 SpA / 86 SpD / 83 Spe / 479 BST
 
 Level Up:
+E - Shadow Ball
+E - Whirlpool
 1 - Gust
 1 - Leaf Tornado
 1 - Aqua Jet
@@ -6139,11 +6352,15 @@ Level Up:
 29 - Glittering Tornado
 33 - Sparkling Aria
 36 - Shell Smash
-40 - Liquidation
-45 - Aeroblast
-50 - Focus Blast
-55 - Hurricane
+38 - Liquidation
+42 - Hurricane
+45 - Focus Blast
+48 - Surf
+50 - Curse
+53 - Hydro Vortex
+56 - Aeroblast
 60 - Water Spout
+65 - Wave Crash
 
 ===================
 #194 - Poof                                                                                            [156]
@@ -6186,6 +6403,7 @@ Base Stats:
 65 HP / 70 Atk / 120 Def / 60 SpA / 120 SpD / 65 Spe / 500 BST
 
 Level Up:
+E - Iron Defense
 1 - Night Shade
 3 - Screech
 7 - Scary Face
@@ -6246,6 +6464,7 @@ Base Stats:
 115 HP / 105 Atk / 55 Def / 105 SpA / 60 SpD / 59 Spe / 499 BST
 
 Level Up:
+E - Shadow Punch
 1 - Night Shade
 3 - Thief
 7 - Lick
@@ -6290,9 +6509,8 @@ Level Up:
 25 - Sandstorm
 28 - Self-Destruct
 31 - Spikes
-35 - Sludge
-39 - Power Gem
-42 - Acid Armor
+36 - Power Gem
+40 - Acid Armor
 45 - Sludge Wave
 
 Evolutions:
@@ -6311,6 +6529,7 @@ Base Stats:
 83 HP / 55 Atk / 90 Def / 130 SpA / 81 SpD / 86 Spe / 525 BST
 
 Level Up:
+E - Sludge
 1 - Spiky Shield
 1 - Toxic Spikes
 1 - Rock Throw
@@ -6381,8 +6600,8 @@ Base Stats:
 70 HP / 120 Atk / 65 Def / 45 SpA / 85 SpD / 125 Spe / 510 BST
 
 Level Up:
-1 - Dark Pulse
-1 - Switcheroo
+E - Dark Pulse
+E - Switcheroo
 1 - Slash
 1 - Feint
 1 - Beat Up
@@ -6457,8 +6676,8 @@ Base Stats:
 80 HP / 130 Atk / 60 Def / 40 SpA / 80 SpD / 120 Spe / 510 BST
 
 Level Up:
+E - Reversal
 1 - Hi Jump Kick
-1 - Reversal
 1 - Night Slash
 1 - Switcheroo
 1 - Slash
@@ -6562,6 +6781,7 @@ Base Stats:
 95 HP / 130 Atk / 90 Def / 45 SpA / 85 SpD / 40 Spe / 485 BST
 
 Level Up:
+E - Submission
 1 - Icicle Spear
 1 - Mach Punch
 3 - Tail Whip
@@ -6576,10 +6796,12 @@ Level Up:
 31 - Snowscape
 35 - Ice Punch
 38 - Submission
-45 - Close Combat
-50 - Ice Spinner
+42 - Play Rough
+45 - Ice Spinner
+50 - Close Combat
+55 - Icicle Crash
 60 - Fissure
-65 - Play Rough
+65 - Superpower
 
 ===================
 #207 - Tricerpup                                                                                       [066]
@@ -6604,6 +6826,7 @@ Level Up:
 30 - Stealth Rock
 35 - Storm Throw
 40 - Body Press
+45 - Stone Edge
 
 Evolutions:
 Tricerpup -> Tricercil (lv. 48)
@@ -6621,6 +6844,7 @@ Base Stats:
 114 HP / 124 Atk / 130 Def / 20 SpA / 130 SpD / 20 Spe / 538 BST
 
 Level Up:
+E - Mach Punch
 1 - Headbutt
 1 - Circle Throw
 5 - Feint Attack
@@ -6631,8 +6855,7 @@ Level Up:
 30 - Stealth Rock
 35 - Storm Throw
 40 - Body Press
-48 - Mach Punch
-48 - Stone Edge
+45 - Stone Edge
 50 - Superpower
 55 - Plasma Fists
 60 - No Retreat
@@ -6678,6 +6901,7 @@ Base Stats:
 75 HP / 75 Atk / 75 Def / 90 SpA / 75 SpD / 70 Spe / 460 BST
 
 Level Up:
+E - Wing Attack
 1 - Tackle
 1 - Tail Whip
 5 - Ember
@@ -6688,7 +6912,6 @@ Level Up:
 25 - Mud Bomb
 29 - Will-O-Wisp
 33 - Detect
-35 - Wing Attack
 38 - Fire Fang
 42 - Air Slash
 45 - Dragon Breath
@@ -6711,6 +6934,7 @@ Base Stats:
 95 HP / 75 Atk / 87 Def / 140 SpA / 80 SpD / 83 Spe / 560 BST
 
 Level Up:
+E - Iron Tail
 1 - Tackle
 1 - Tail Whip
 5 - Ember
@@ -6727,7 +6951,6 @@ Level Up:
 45 - Dragon Breath
 50 - Flamethrower
 53 - Dragon Pulse
-55 - Iron Tail
 58 - Dragon Rush
 63 - Fire Blast
 70 - Eruption
@@ -6779,6 +7002,8 @@ Base Stats:
 105 HP / 130 Atk / 80 Def / 75 SpA / 55 SpD / 95 Spe / 540 BST
 
 Level Up:
+E - Sky Attack
+E - Throat Chop
 1 - Extreme Speed
 1 - Dragon Pulse
 1 - Bite
@@ -6793,7 +7018,7 @@ Level Up:
 35 - Sky Attack
 40 - Darkest Lariat
 45 - Knock Off
-50 - Acrobatics
+50 - Fly
 55 - Crunch
 60 - Dragon Rush
 65 - Brave Bird
@@ -6836,6 +7061,7 @@ Base Stats:
 65 HP / 75 Atk / 105 Def / 50 SpA / 75 SpD / 60 Spe / 430 BST
 
 Level Up:
+E - Iron Defense
 1 - Knock Off
 1 - Scratch
 5 - Protect
@@ -6843,7 +7069,6 @@ Level Up:
 15 - Headbutt
 20 - Autotomize
 25 - Lock-On
-25 - Iron Defense
 30 - Reboot
 35 - Bullet Punch
 40 - Iron Head
@@ -6866,6 +7091,8 @@ Base Stats:
 70 HP / 115 Atk / 115 Def / 90 SpA / 75 SpD / 65 Spe / 530 BST
 
 Level Up:
+E - Pistol Pop
+E - Load Firearms
 1 - Knock Off
 1 - Focus Energy
 1 - Scratch
@@ -6880,8 +7107,6 @@ Level Up:
 40 - Iron Head
 45 - Metal Sound
 50 - Meteor Mash
-50 - Pistol Pop
-50 - Load Firearms
 52 - Flamethrower
 54 - Iron Blast
 56 - Hydro Pump
@@ -6964,7 +7189,7 @@ Base Stats:
 90 HP / 150 Atk / 60 Def / 65 SpA / 60 SpD / 100 Spe / 525 BST
 
 Level Up:
-1 - Comet Crash
+E - Comet Crash
 1 - Brave Bird
 1 - Head Smash
 1 - Take Down
@@ -7105,6 +7330,7 @@ Base Stats:
 80 HP / 75 Atk / 180 Def / 65 SpA / 80 SpD / 60 Spe / 540 BST
 
 Level Up:
+E - Diamond Storm
 1 - Wake-Up Slap
 1 - Defense Curl
 3 - Ancient Power
@@ -7165,6 +7391,7 @@ Base Stats:
 125 HP / 45 Atk / 50 Def / 45 SpA / 115 SpD / 40 Spe / 420 BST
 
 Level Up:
+E - Comet Punch
 1 - Cosmic Power
 1 - Splash
 1 - Space Beam
@@ -7173,11 +7400,11 @@ Level Up:
 25 - Mist Ball
 25 - Topsy-Turvy
 40 - Comet Punch
-44 - Bulk Up
-48 - Desolate Void
+43 - Bulk Up
+45 - Desolate Void
+49 - Shooting Stars
 52 - Aura Sphere
 56 - Meteor Mash
-60 - Drain Punch
 
 Evolutions:
 Nebulimb -> Galactasolder (lv. 60)
@@ -7195,6 +7422,7 @@ Base Stats:
 170 HP / 135 Atk / 70 Def / 55 SpA / 115 SpD / 50 Spe / 595 BST
 
 Level Up:
+E - Star-Struck Arrow
 1 - Cosmic Power
 1 - Splash
 1 - Space Beam
@@ -7203,13 +7431,12 @@ Level Up:
 25 - Mist Ball
 25 - Topsy-Turvy
 40 - Comet Punch
-44 - Bulk Up
-48 - Desolate Void
+43 - Bulk Up
+45 - Desolate Void
+49 - Shooting Stars
 52 - Aura Sphere
 56 - Meteor Mash
-60 - Drain Punch
-60 - Star-Struck Arrow
-60 - Close Combat
+62 - Close Combat
 65 - No Retreat
 70 - Meteor Assault
 80 - Genesis Supernova
@@ -7286,6 +7513,7 @@ Base Stats:
 100 HP / 100 Atk / 100 Def / 100 SpA / 100 SpD / 100 Spe / 600 BST
 
 Level Up:
+E - Magic Crash
 1 - Magic Powder
 1 - Shooting Stars
 5 - Swift
@@ -7389,6 +7617,7 @@ Base Stats:
 95 HP / 85 Atk / 90 Def / 115 SpA / 125 SpD / 90 Spe / 600 BST
 
 Level Up:
+E - Prismatic Laser
 1 - Fiery Dance
 1 - Wrap
 1 - Leer
@@ -7887,6 +8116,7 @@ Base Stats:
 40 HP / 75 Atk / 75 Def / 60 SpA / 50 SpD / 85 Spe / 385 BST
 
 Level Up:
+E - Dig
 1 - Pound
 1 - Tail Whip
 3 - Sand Attack
@@ -7902,6 +8132,7 @@ Level Up:
 36 - Glare
 39 - Fissure
 42 - Sandstorm
+45 - Dragon Tail
 
 Evolutions:
 Wormbot-S -> Wormatron-S (lv. 45)
@@ -7919,6 +8150,7 @@ Base Stats:
 100 HP / 100 Atk / 90 Def / 100 SpA / 50 SpD / 80 Spe / 520 BST
 
 Level Up:
+E - Coil
 1 - Pound
 1 - Tail Whip
 3 - Sand Attack
@@ -7978,6 +8210,7 @@ Base Stats:
 47 HP / 98 Atk / 60 Def / 40 SpA / 62 SpD / 93 Spe / 400 BST
 
 Level Up:
+E - Karate Chop
 1 - Fake Tears
 1 - Will-O-Wisp
 5 - Ember
@@ -8006,6 +8239,7 @@ Base Stats:
 95 HP / 115 Atk / 65 Def / 46 SpA / 95 SpD / 100 Spe / 516 BST
 
 Level Up:
+E - False Surrender
 1 - Fake Tears
 1 - Will-O-Wisp
 5 - Ember
@@ -8074,6 +8308,7 @@ Base Stats:
 80 HP / 40 Atk / 90 Def / 115 SpA / 90 SpD / 75 Spe / 490 BST
 
 Level Up:
+E - Air Slash
 1 - Wrap
 1 - Astonish
 1 - Scary Face
@@ -8148,6 +8383,7 @@ Base Stats:
 65 HP / 113 Atk / 60 Def / 103 SpA / 65 SpD / 80 Spe / 486 BST
 
 Level Up:
+E - Knock Off
 1 - Parting Shot
 1 - Torment
 1 - Flatter
@@ -8195,6 +8431,7 @@ Base Stats:
 84 HP / 118 Atk / 75 Def / 108 SpA / 75 SpD / 90 Spe / 550 BST
 
 Level Up:
+E - Sambal Sear
 1 - Parting Shot
 1 - Torment
 1 - Flatter
@@ -8273,12 +8510,14 @@ Base Stats:
 80 HP / 70 Atk / 50 Def / 100 SpA / 100 SpD / 80 Spe / 480 BST
 
 Level Up:
+E - Flatter
+E - Belch
+E - Switcheroo
 1 - Explosion
 1 - Smokescreen
 1 - Switcheroo
 3 - Smog
 5 - Poison Gas
-6 - Flatter
 8 - Torment
 10 - Beat Up
 13 - Feint Attack
@@ -8315,8 +8554,8 @@ Base Stats:
 95 HP / 75 Atk / 65 Def / 123 SpA / 97 SpD / 85 Spe / 540 BST
 
 Level Up:
-1 - Explosion
-1 - Nasty Plot
+E - Explosion
+E - Nasty Plot
 1 - Toxic
 1 - Curse
 1 - Belch
@@ -8367,6 +8606,7 @@ Base Stats:
 Level Up:
 1 - Flash
 3 - Fake Tears
+5 - Minimize
 6 - Hex
 9 - Mud-Slap
 12 - Mud Shot
@@ -8378,7 +8618,8 @@ Level Up:
 30 - Tail Glow
 33 - Shadow Ball
 36 - Earth Power
-39 - Muddy Water
+37 - Muddy Water
+40 - Shore Up
 42 - Switcheroo
 45 - Phantom Force
 48 - Topsy-Turvy
@@ -8400,10 +8641,12 @@ Base Stats:
 65 HP / 135 Atk / 65 Def / 50 SpA / 70 SpD / 100 Spe / 485 BST
 
 Level Up:
+E - Flatter
 1 - Magic Fang
 1 - Bite
 1 - Crunch
 1 - Feint Attack
+1 - Minimize
 1 - Knock Off
 5 - Fake Out
 8 - Thief
@@ -8421,8 +8664,10 @@ Level Up:
 47 - Sucker Punch
 50 - Outrage
 53 - Magic Crash
-57 - Earthquake
+56 - Spikes
+58 - Earthquake
 60 - Spectral Thief
+62 - Memento
 65 - Parting Shot
 70 - Dragon Dance
 
@@ -8470,6 +8715,7 @@ Base Stats:
 134 HP / 110 Atk / 101 Def / 35 SpA / 85 SpD / 65 Spe / 530 BST
 
 Level Up:
+E - Dual Chop
 1 - Payback
 1 - Scale Shot
 1 - Dragon Dance
@@ -8564,6 +8810,7 @@ Base Stats:
 120 HP / 66 Atk / 92 Def / 122 SpA / 80 SpD / 45 Spe / 525 BST
 
 Level Up:
+E - Parabolic Charge
 1 - Knock Off
 1 - Tackle
 1 - Charge
@@ -8601,6 +8848,7 @@ Base Stats:
 120 HP / 95 Atk / 70 Def / 65 SpA / 130 SpD / 45 Spe / 525 BST
 
 Level Up:
+E - Spirit Break
 1 - Knock Off
 1 - Tackle
 1 - Charge
@@ -8660,6 +8908,7 @@ Base Stats:
 105 HP / 135 Atk / 80 Def / 25 SpA / 110 SpD / 85 Spe / 540 BST
 
 Level Up:
+E - Thunder Fang
 1 - Spark
 15 - Tackle
 20 - Thunder Fang
@@ -8712,6 +8961,7 @@ Base Stats:
 50 HP / 100 Atk / 75 Def / 45 SpA / 55 SpD / 105 Spe / 430 BST
 
 Level Up:
+E - Brick Break
 1 - Knock Off
 1 - Magnet Rise
 3 - Screech
@@ -8747,6 +8997,7 @@ Base Stats:
 75 HP / 145 Atk / 85 Def / 50 SpA / 65 SpD / 110 Spe / 530 BST
 
 Level Up:
+E - Shift Gear
 1 - Knock Off
 1 - Focus Energy
 1 - Magnet Rise
@@ -8856,6 +9107,7 @@ Level Up:
 22 - Trick Room
 24 - Charge Beam
 26 - Space Beam
+28 - Simple Beam
 30 - Abduct
 32 - Parabolic Charge
 33 - Recover
@@ -8880,6 +9132,7 @@ Base Stats:
 95 HP / 85 Atk / 70 Def / 130 SpA / 65 SpD / 40 Spe / 485 BST
 
 Level Up:
+E - Thunder Punch
 1 - Shock Wave
 1 - Charge
 5 - Psywave
@@ -8891,14 +9144,14 @@ Level Up:
 22 - Trick Room
 24 - Charge Beam
 26 - Space Beam
+28 - Simple Beam
 30 - Abduct
 32 - Parabolic Charge
 33 - Recover
 36 - Thunder Wave
 38 - Galaxy Blast
-40 - Radio Burst
 40 - Discharge
-42 - Thunder Punch
+42 - Radio Burst
 45 - Volt Switch
 48 - Star Storm
 50 - Thunderbolt
@@ -8948,6 +9201,7 @@ Base Stats:
 90 HP / 70 Atk / 80 Def / 85 SpA / 65 SpD / 70 Spe / 460 BST
 
 Level Up:
+E - Wing Attack
 1 - Tackle
 1 - Tail Whip
 5 - Thundershock
@@ -8962,6 +9216,7 @@ Level Up:
 38 - Flamethrower
 42 - Air Slash
 45 - Dragon Pulse
+48 - Heat Wave
 50 - Thunderbolt
 53 - Overheat
 
@@ -8981,6 +9236,7 @@ Base Stats:
 95 HP / 90 Atk / 90 Def / 120 SpA / 90 SpD / 75 Spe / 560 BST
 
 Level Up:
+E - Fire Blast
 1 - Tackle
 1 - Tail Whip
 5 - Thundershock
@@ -8995,6 +9251,7 @@ Level Up:
 38 - Flamethrower
 42 - Air Slash
 45 - Dragon Pulse
+48 - Heat Wave
 50 - Thunderbolt
 53 - Overheat
 55 - Fire Blast
@@ -9052,6 +9309,7 @@ Base Stats:
 90 HP / 75 Atk / 75 Def / 114 SpA / 70 SpD / 106 Spe / 530 BST
 
 Level Up:
+E - Fatal Bind
 1 - Thunder Fang
 1 - Dragon Dance
 1 - Dual Chop
@@ -9072,7 +9330,6 @@ Level Up:
 33 - Zing Zap
 36 - Flip Turn
 39 - Electroweb
-40 - Fatal Bind
 40 - Dive
 42 - Aqua Jet
 42 - Electric Terrain
@@ -9100,8 +9357,8 @@ Base Stats:
 50 HP / 20 Atk / 55 Def / 25 SpA / 25 SpD / 30 Spe / 205 BST
 
 Level Up:
+E - Harden
 1 - Harden
-7 - Harden
 11 - Iron Defense
 
 Evolutions:
@@ -9120,13 +9377,13 @@ Base Stats:
 60 HP / 45 Atk / 50 Def / 95 SpA / 80 SpD / 70 Spe / 400 BST
 
 Level Up:
+E - Gust
+E - Confusion
 1 - Harden
 1 - Iron Defense
 1 - Tackle
 1 - String Shot
 1 - Bug Bite
-10 - Gust
-10 - Confusion
 10 - Supersonic
 12 - Poison Powder
 12 - Stun Spore
@@ -9217,6 +9474,7 @@ Base Stats:
 110 HP / 65 Atk / 75 Def / 125 SpA / 85 SpD / 30 Spe / 490 BST
 
 Level Up:
+E - Dizzy Punch
 1 - Psywave
 1 - Reflect
 1 - Rollout
@@ -9283,6 +9541,7 @@ Base Stats:
 120 HP / 73 Atk / 83 Def / 73 SpA / 83 SpD / 55 Spe / 487 BST
 
 Level Up:
+E - Body Slam
 1 - Gunk Shot
 1 - Seed Bomb
 1 - Pound
@@ -9349,6 +9608,7 @@ Base Stats:
 67 HP / 89 Atk / 116 Def / 79 SpA / 116 SpD / 33 Spe / 500 BST
 
 Level Up:
+E - Heavy Slam
 1 - Sunny Day
 1 - Rain Dance
 1 - Tackle

@@ -907,9 +907,9 @@ public class TileManager {
 		setup(675, true);
 		setup(676, false);
 		setup(677, false);
-		setup(678, true);
-		setup(679, true);
-		setup(680, true);
+		setup(678, false, OVER);
+		setup(679, false, OVER);
+		setup(680, false, OVER);
 		setup(681, true);
 		setup(682, true);
 		setup(683, true);
