@@ -194,8 +194,8 @@
 219|Cosmocrash   |GALACTIC|ICE     |SNOW_WARNING      |SLUSH_RUSH        |RECKLESS          |[90, 150, 60, 65, 60, 100]    |378.2 |45 |
 223|Rockmite     |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |MOLD_BREAKER      |[70, 65, 130, 55, 75, 55]     |632.5 |75 |
 224|Stellarock   |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |MOLD_BREAKER      |[80, 75, 180, 65, 80, 60]     |1000.5|35 |
--10|Poof-E       |GHOST   |ELECTRIC|FRIENDLY_GHOST    |COMPETITIVE       |LEVITATE          |[60, 30, 70, 80, 80, 80]      |1.0   |135|
--11|Hast-E       |GHOST   |ELECTRIC|FRIENDLY_GHOST    |COMPETITIVE       |LEVITATE          |[70, 75, 35, 150, 55, 115]    |45.2  |45 |
+-10|Poof-E       |GHOST   |ELECTRIC|FRIENDLY_GHOST    |COMPETITIVE       |LEVITATE          |[40, 35, 70, 85, 85, 85]      |1.0   |135|
+-11|Hast-E       |GHOST   |ELECTRIC|FRIENDLY_GHOST    |COMPETITIVE       |LEVITATE          |[45, 75, 70, 150, 45, 115]    |145.2 |45 |
 -7 |Droid-E      |FIGHTING|ELECTRIC|SNIPER            |IRON_FIST         |FULL_FORCE        |[40, 75, 70, 30, 30, 85]      |94.9  |135|
 -8 |Armoid-E     |FIGHTING|ELECTRIC|SNIPER            |IRON_FIST         |FULL_FORCE        |[50, 100, 75, 45, 55, 105]    |144.9 |95 |
 -9 |Soldrota-E   |FIGHTING|ELECTRIC|SNIPER            |IRON_FIST         |FULL_FORCE        |[75, 145, 85, 50, 65, 110]    |194.9 |45 |

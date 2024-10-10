@@ -303,14 +303,14 @@ After Battle:
 Hiker (Ground/Rock/Steel)
 Before
 
-"I've climbed mountains tougher than you. Let's see if you can handle the pressure!"
+""
 ""
 ""
 ""
 ""
 After
 
-"Looks like even mountains can crumble sometimes..."
+""
 ""
 ""
 ""

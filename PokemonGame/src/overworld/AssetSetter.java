@@ -338,7 +338,6 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 48, Item.TM37, mapNum); // rock tomb
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 45, Item.FREEZE_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(35, 30, Item.QUIET_MINT, mapNum); // quiet
-		//gp.obj[mapNum][objIndex] = ObjSetup(31, 8, Item.TM72, mapNum); // ice spinner (v.cross)
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(10, 72, Item.POISON_BARB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 8, Item.WIDE_LENS, mapNum);
@@ -354,6 +353,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 8, Item.ULTRA_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(80, 8, Item.FULL_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = StatBerrySetup(70, 35, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 8, Item.DUSK_STONE, mapNum);
 		
 		mapNum = 14;
 		objIndex = 0;
@@ -450,6 +450,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 24, Item.ABILITY_CAPSULE, mapNum);
 		gp.obj[mapNum][objIndex] = StatBerrySetup(42, 26, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = StatBerrySetup(79, 19, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = ObjSetup(82, 19, Item.EUPHORIAN_GEM, mapNum);
 		
 		mapNum = 33;
 		objIndex = 0;
@@ -576,6 +577,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 5, Item.AWAKENING, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(90, 5, Item.TM04, mapNum); // calm mind
 		gp.obj[mapNum][objIndex] = ObjSetup(7, 35, Item.MENTAL_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(8, 25, Item.WATER_STONE, mapNum);
 		
 		mapNum = 78;
 		objIndex = 0;
@@ -803,6 +805,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(30, 66, Item.PERSIM_BERRY, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = ObjSetup(12, 87, Item.WIKI_BERRY, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(21, 87, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = ObjSetup(18, 90, Item.FIRE_STONE, mapNum);
 		
 		mapNum = 121;
 		objIndex = 0;
@@ -1444,7 +1447,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 33, 19, "I've been through rough terrain and tougher battles. You're next!", "Guess I'll head back down the ravine and train some more!", 165);
 		gp.npc[mapNum][index] = NPCSetup(BURGLAR_RIGHT, 27, 22, "I've stolen plenty, and now I'm stealing this battle!", "I guess I'm the one who got robbed this time.", 166);
-		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_RIGHT, 28, 28, "Fishing takes patience, but when I strike, it's game over!", "I've fished in rough waters, but that battle was something else.", 167);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 28, 28, "Wading here takes patience, but when I strike, it's game over!", "I've swam in rough waters, but that battle was something else.", 167, ALL);
 		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 35, 41, "There you are! I was looking for you!\n"
 				+ "You've been really strong in all our battles, so I wanted to see if I've finally gotten strong enough to beat you!\n"
 				+ "Oh wait... you seem like you're in a hurry.\n"
@@ -1517,7 +1520,7 @@ public class AssetSetter {
 		
 		mapNum = 90;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 48, 10, "", "", 174);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 48, 10, "I've climbed mountains tougher than you. Let's see if you can handle the pressure!", "Looks like even mountains can crumble sometimes...", 174);
 		
 		mapNum = 91;
 		index = 0;

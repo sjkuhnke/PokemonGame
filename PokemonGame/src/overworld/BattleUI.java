@@ -1044,7 +1044,7 @@ public class BattleUI extends AbstractUI {
 		            x += width + gp.tileSize;
 		        }
 		        
-		        Color color = moves[i].move == Move.HIDDEN_POWER ? user.determineHPType().getColor() : moves[i].move.mtype.getColor();
+		        Color color = moves[i].move == Move.HIDDEN_POWER || moves[i].move == Move.RETURN ? user.determineHPType().getColor() : moves[i].move.mtype.getColor();
 		        g2.setColor(color);
 		        g2.fillRoundRect(x, y, width, height, 10, 10);
 		        g2.setColor(moves[i].getPPColor());

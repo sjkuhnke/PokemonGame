@@ -498,7 +498,7 @@ public abstract class AbstractUI {
 					g2.setColor(g2.getColor().darker());
 					g2.drawRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 				} else {
-					Color color = m.move == Move.HIDDEN_POWER ? p.determineHPType().getColor() : m.move.mtype.getColor();
+					Color color = m.move == Move.HIDDEN_POWER || m.move == Move.RETURN ? p.determineHPType().getColor() : m.move.mtype.getColor();
 					g2.setColor(color);
 					g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 				}
@@ -642,7 +642,7 @@ public abstract class AbstractUI {
 		
 		x += gp.tileSize * 3.5;
 		y -= gp.tileSize * 0.75;
-		PType type = move == Move.HIDDEN_POWER && p != null ? p.determineHPType() : move.mtype;
+		PType type = move == Move.HIDDEN_POWER || move == Move.RETURN && p != null ? p.determineHPType() : move.mtype;
 		g2.drawImage(type.getImage2(), x, y, null);
 		
 		x += gp.tileSize * 1.5;
@@ -786,7 +786,7 @@ public abstract class AbstractUI {
 		}
 		if (m != null) {
 			x += gp.tileSize * 11 / 6;
-			Color color = m == Move.HIDDEN_POWER ? p.determineHPType().getColor() : m.mtype.getColor();
+			Color color = m == Move.HIDDEN_POWER || m == Move.RETURN ? p.determineHPType().getColor() : m.mtype.getColor();
 			g2.setColor(color);
 			g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 			g2.setColor(Color.BLACK);
@@ -811,7 +811,7 @@ public abstract class AbstractUI {
 				if (!gp.player.p.hasTM(ms.move) && !movebankList.contains(ms.move)) {
 		        	g2.setPaint(new GradientPaint(x, y, ms.move.mtype.getColor(), x + moveWidth, y + moveHeight, new Color(245, 225, 210)));
 		        } else {
-		        	g2.setColor(ms.move == Move.HIDDEN_POWER ? p.determineHPType().getColor() : ms.move.mtype.getColor());	
+		        	g2.setColor(ms.move == Move.HIDDEN_POWER || ms.move == Move.RETURN ? p.determineHPType().getColor() : ms.move.mtype.getColor());	
 		        }
 				g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 				g2.setColor(Color.BLACK);

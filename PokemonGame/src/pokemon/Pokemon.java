@@ -205,9 +205,19 @@ public class Pokemon implements Serializable {
 			currentHP = this.getStat(0);
 		}
 		
-		happiness = 70;
-		if (id == 29 || id == 134 || id == 174) happiness = 110;
-		if (t) happiness = 255;
+		if (id == 29 || id == 134 || id == 174) {
+			happiness = 110;
+		} else if (id == 59) {
+			happiness = 0;
+		} else {
+			happiness = 70;
+		}
+		
+		if (t) {
+			happiness = 255;
+		} else if (gp != null) {
+			happiness = determineHappiness(gp.player.p);
+		}
 		catchRate = getCatchRate();
 		happinessCap = 50;
 		
@@ -215,7 +225,7 @@ public class Pokemon implements Serializable {
 		
 		if (!t) setSprites();
 	}
-	
+
 	public Pokemon(int i, Pokemon pokemon) {
 		id = i;
 		name = getName();
@@ -1627,6 +1637,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.HIDDEN_POWER) moveType = determineHPType();
+		if (move == Move.RETURN) moveType = determineHPType();
 		if (move == Move.WEATHER_BALL) moveType = determineWBType();
 		if (move == Move.TERRAIN_PULSE) moveType = determineTPType();
 		
@@ -4907,6 +4918,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.HIDDEN_POWER) moveType = determineHPType();
+		if (move == Move.RETURN) moveType = determineHPType();
 		if (move == Move.WEATHER_BALL) moveType = determineWBType();
 		if (move == Move.TERRAIN_PULSE) moveType = determineTPType();
 		
@@ -5971,10 +5983,13 @@ public class Pokemon implements Serializable {
 			} else {
 				bp = 100;
 			}
-		} else if (move == Move.RETURN || move == Move.FRUSTRATION) {
+		} else if (move == Move.FRUSTRATION) {
 			int f = this.happiness;
-			if (move == Move.FRUSTRATION) f = 255 - f;
+			f = 255 - this.happiness;
 			bp = Math.max(f * 2 / 5, 1);
+		} else if (move == Move.RETURN) {
+			int f = this.happiness;
+			bp = Math.max(f * 11 / 40, 1);
 		} else if (move == Move.REVENGE) {
 			if (this.getSpeed() > foe.getSpeed()) {
 				bp = 60;
@@ -6650,9 +6665,10 @@ public class Pokemon implements Serializable {
 					Move move = moveslot.move;
 					if (move != null && move.isAttack()) {
 						PType mtype = move.mtype;
-						if (move == Move.HIDDEN_POWER) mtype = this.determineHPType();
-						if (move == Move.WEATHER_BALL) mtype = this.determineWBType();
-						if (move == Move.TERRAIN_PULSE) mtype = determineTPType();
+						if (move == Move.HIDDEN_POWER) mtype = foe.determineHPType();
+						if (move == Move.RETURN) mtype = foe.determineHPType();
+						if (move == Move.WEATHER_BALL) mtype = foe.determineWBType();
+						if (move == Move.TERRAIN_PULSE) mtype = foe.determineTPType();
 						double multiplier = getEffectiveMultiplier(mtype);
 						
 						if (multiplier > 1) shuddered = true;
@@ -7891,6 +7907,13 @@ public class Pokemon implements Serializable {
 							type = PType.GALACTIC;
 						}
 						moves[j] = new Moveslot(Move.HIDDEN_POWER);
+					} else if (moveString.contains("RETURN")) {
+						if (moveString.length() > 6) {
+							type = PType.valueOf(moveString.substring(7));
+						} else {
+							type = PType.GALACTIC;
+						}
+						moves[j] = new Moveslot(Move.RETURN);
 					} else {
 						moves[j] = moveString.isEmpty() ? null : new Moveslot(Move.valueOf(moveString));
 					}
@@ -8098,6 +8121,10 @@ public class Pokemon implements Serializable {
 		} else {
 			return 3;
 		}
+	}
+	
+	private int determineHappiness(Player p) {
+		return Math.max(this.happiness + (50 * p.badges), 255);
 	}
 	
 }

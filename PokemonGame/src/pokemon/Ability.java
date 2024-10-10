@@ -135,7 +135,7 @@ public enum Ability {
 	TINTED_LENS("Powers up \"not very effective\" moves."),
 	TORRENT("Powers up WATER moves in a pinch."),
 	TOUGH_CLAWS("Powers up moves that make direct contact."),
-	TOXIC_DEBRIS("Puts toxic spikes on the opposing side when the hit by physical moves."),
+	TOXIC_DEBRIS("Puts toxic spikes on the opposing side when hit by physical moves."),
 	TRACE("The Pokemon copies a foe's Ability."),
 	TYPE_MASTER("Grants STAB on all moves."),
 	UNAWARE("Ignores the opposing Pokemon's stat changes."),

@@ -1004,8 +1004,8 @@ public class TileManager {
 		setup(770, true);
 		setup(771, true);
 		setup(772, true);
-		setup(773, false, OVER);
-		setup(774, false, OVER);
+		setup(773, true, FULL, OVER);
+		setup(774, true, FULL, OVER);
 		setup(775, false, OVER);
 		setup(776, false, OVER);
 		setup(777, false, OVER);

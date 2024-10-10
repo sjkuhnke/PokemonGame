@@ -539,7 +539,7 @@ public class Main {
 						for (int i = 0; i < 4; i++) {
 							if (p.moveset[i] != null) {
 								Move move = p.moveset[i].move;
-								mName += move == Move.HIDDEN_POWER ? move.toString() + " " + p.determineHPType().toString() : move.toString();
+								mName += move == Move.HIDDEN_POWER || move == Move.RETURN ? move.toString() + " " + p.determineHPType().toString() : move.toString();
 								if (i != 3) mName += ", ";
 							}
 						}
