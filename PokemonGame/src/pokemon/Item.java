@@ -1287,7 +1287,7 @@ public enum Item {
         	if (current.moveset[k] != null) {
         		moves[k].setText(current.moveset[k].move.toString());
         		moves[k].setBackground(current.moveset[k].move.mtype.getColor());
-        		if (current.moveset[k].move == Move.HIDDEN_POWER) moves[k].setBackground(current.determineHPType().getColor());
+        		if (current.moveset[k].move == Move.HIDDEN_POWER || current.moveset[k].move == Move.RETURN) moves[k].setBackground(current.determineHPType().getColor());
         		int minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, -1, crit);
         		int maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, 1, crit);
         		double minDamageD = minDamage * 1.0 / foe.getStat(0);

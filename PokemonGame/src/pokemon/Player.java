@@ -1264,7 +1264,7 @@ public class Player extends Trainer implements Serializable {
 			if (dexNo == 0) continue;
 			int dexSec = Pokemon.getDexSection(i);
 			
-			Pokemon test = new Pokemon(i, 5, false, false);
+			Pokemon test = new Pokemon(i, 5, true, false);
 			test.abilitySlot = 0;
 			test.setAbility(test.abilitySlot);
 			

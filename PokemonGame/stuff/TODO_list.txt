@@ -27,6 +27,7 @@ Calc
 Get rid of enter press on level spinner, just make it an action listener
 
 Make Galactic weak to Dragon
+Make Poison not resist Bug
 (Not sure about these two)
 Make Galactic resist Dark
 Make Magic weak to Dark

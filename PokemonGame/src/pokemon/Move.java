@@ -385,7 +385,7 @@ public enum Move {
 	RECOVER(0,1000,0,0,2,0,PType.NORMAL,"Restores 1/2 of user's max HP",false,5),
 	REFLECT(0,1000,0,0,2,0,PType.PSYCHIC,"Creates a screen that halves physical damage on user's team for 5 turns",false,20),
 	REST(0,1000,0,0,2,0,PType.PSYCHIC,"Restores user's HP to full and clears any status conditions, and user falls asleep for 2 turns",false,5),
-	RETURN(-1,100,0,0,0,0,PType.NORMAL,"Damage is based on user's friendship: the higher, the stronger",true,15),
+	RETURN(-1,100,0,0,0,0,PType.NORMAL,"Type is user's Hidden Power type, and the power is up to 70 (based on friendship)",true,15),
 	REVENGE(-1,100,0,0,0,0,PType.FIGHTING,"Power is doubled if user is slower than foe",true,10),
 	REVERSAL(-1,100,0,0,0,0,PType.FIGHTING,"Deals more damage the lower the user's HP is",true,15),
 	ROAR(0,1000,0,0,2,-6,PType.NORMAL,"Forces foe to switch out into a random teammate, always goes last",false,20),
@@ -538,7 +538,7 @@ public enum Move {
 	TWINKLE_TACKLE(85,90,20,0,0,0,PType.MAGIC,"% chance to lower foe's Attack and Sp.Atk by 1",true,10),
 	TWISTER(40,100,10,0,1,0,PType.DRAGON,"% of causing foe to flinch",false,20),
 	U$TURN(70,100,0,0,0,0,PType.BUG,"Causes user to switch out after use",true,15),
-	UNSEEN_STRANGLE(60,100,100,0,0,3,PType.DARK,"% to cause foe to flinch, only works on user's first turn out",true,5),
+	UNSEEN_STRANGLE(60,100,100,0,0,3,PType.DARK,"% to cause foe to flinch and will always go first, only works on user's first turn out",true,5),
 	V$CREATE(180,95,100,0,0,0,PType.FIRE,"% chance to lower user's Defense, Sp.Def, and Speed by 1",true,5),
 	VACUUM_WAVE(40,100,0,0,1,1,PType.FIGHTING,"Always goes first",false,30),
 	VANDALIZE(0,100,0,0,2,0,PType.NORMAL,"Steals the foe's ability",false,10),
@@ -565,7 +565,7 @@ public enum Move {
 	WATERFALL(80,100,10,0,0,0,PType.WATER,"% of causing foe to flinch",true,10),
 	WAVE_CRASH(120,100,0,0,0,0,PType.WATER,"User takes 1/3 of damage dealt as recoil",true,10),
 	WEATHER_BALL(-1,100,0,0,1,0,PType.NORMAL,"Type changes to match the current weather, double BP if type of the move changes",false,10),
-	WHIP_SMASH(120,100,100,0,0,0,PType.NORMAL,"% to lower user's Defense by 1",true,5),
+	WHIP_SMASH(100,100,100,0,0,0,PType.NORMAL,"% to lower user's Defense by 1",true,5),
 	WHIRLPOOL(35,95,100,0,1,0,PType.WATER,"% to spin non-WATER foes for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
 	WHIRLWIND(0,1000,0,0,2,-6,PType.FLYING,"Forces foe to switch out to a random teammate, always goes last",false,20),
 	WILL$O$WISP(0,85,0,0,2,0,PType.FIRE,"Burns foe",false,15),
@@ -580,7 +580,6 @@ public enum Move {
 	ZAP_CANNON(120,50,100,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false,5),
 	ZEN_HEADBUTT(80,90,30,0,0,0,PType.PSYCHIC,"% of causing foe to flinch",true,15),
 	ZING_ZAP(80,100,30,0,0,0,PType.ELECTRIC,"% of causing foe to flinch",true,15),
-	
 	;
 	
 	public static Move getMove(String moveName) {
