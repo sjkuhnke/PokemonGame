@@ -24,6 +24,7 @@ import entity.Particle;
 import entity.PlayerCharacter;
 import object.InteractiveTile;
 import object.ItemObj;
+import object.TreasureChest;
 import pokemon.Encounter;
 import pokemon.Field;
 import pokemon.Item;
@@ -68,11 +69,12 @@ public class GamePanel extends JPanel implements Runnable {
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public PlayerCharacter player = new PlayerCharacter(this, keyH);
 	public Entity npc[][] = new Entity[MAX_MAP][40];
-	public ItemObj obj[][] = new ItemObj[MAX_MAP][35];
+	public ItemObj obj[][] = new ItemObj[MAX_MAP][40];
 	public InteractiveTile iTile[][] = new InteractiveTile[MAX_MAP][55];
 	public ArrayList<Entity> particleList = new ArrayList<>();
 	
 	public ArrayList<Entity> renderableNPCs = new ArrayList<>();
+	public ArrayList<TreasureChest> chests = new ArrayList<>();
 	
 	public NPC_Pokemon[] grusts = new NPC_Pokemon[10];
 	public boolean checkSpin = false;
@@ -454,6 +456,9 @@ public class GamePanel extends JPanel implements Runnable {
 			if (npc[currentMap][i] != null) {
 				renderableNPCs.add(npc[currentMap][i]);
 			}
+		}
+		for (TreasureChest chest : chests) {
+			if (chest.map == currentMap) renderableNPCs.add(chest);
 		}
 		renderableNPCs.add(player);
 		renderableNPCs.sort(Comparator.comparingInt(Entity::getWorldY));

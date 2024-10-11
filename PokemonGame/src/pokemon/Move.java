@@ -699,8 +699,8 @@ public enum Move {
 	    // Move Name
 	    JLabel nameLabel = new JLabel(toString());
 	    nameLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
-	    JGradientButton typeButton = new JGradientButton(mtype.toString());
-	    typeButton.setBackground(mtype.getColor());
+	    JGradientButton typeButton = new JGradientButton(this == Move.HIDDEN_POWER || this == Move.RETURN ? user.determineHPType().toString() : mtype.toString());
+	    typeButton.setBackground(this == Move.HIDDEN_POWER || this == Move.RETURN ? user.determineHPType().getColor() : mtype.getColor());
 
 	    // Category
 	    JLabel categoryLabel = new JLabel("Cat");

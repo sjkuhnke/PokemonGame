@@ -1,31 +1,23 @@
 package object;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import entity.Entity;
 import overworld.GamePanel;
 import pokemon.Item;
 
-public class ItemObj {
+public class ItemObj extends Entity {
 
 	public BufferedImage image;
 	public Item item;
 	public int count;
 	
-	GamePanel gp;
-	
-	public int worldX, worldY;
-	
-	public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
-	public int solidAreaDefaultX, solidAreaDefaultY = 0;
-	
 	public ItemObj(GamePanel gp) {
-		
-		this.gp = gp;
+		super(gp, null);
 		
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/interactive/item.png"));

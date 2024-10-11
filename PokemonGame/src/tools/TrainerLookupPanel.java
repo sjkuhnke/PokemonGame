@@ -162,7 +162,7 @@ public class TrainerLookupPanel extends JPanel {
 				Move m = slot.move;
 				JButton moveButton = new JGradientButton(m.toString());
 				
-				moveButton.setBackground(m.mtype.getColor());
+				moveButton.setBackground(m == Move.HIDDEN_POWER || m == Move.RETURN ? p.determineHPType().getColor() : m.mtype.getColor());
 				moveButton.addActionListener(e -> JOptionPane.showMessageDialog(null, m.getMoveSummary(p, null), m.toString() + " Details", JOptionPane.PLAIN_MESSAGE));
 				
 				movesPanel.add(moveButton);

@@ -16,6 +16,7 @@ public class AssetSetter {
 	private int iIndex;
 	private int berryIndex;
 	private int sBerryIndex;
+	private int cIndex;
 	
 	public ArrayList<Entity> clerks = new ArrayList<>();
 	public HashMap<Item, Integer> itemMap = new HashMap<>();
@@ -250,6 +251,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(71, 9, Item.RUSTY_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(80, 16, Item.POWER_HERB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(91, 11, Item.MENTAL_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(44, 26, mapNum);
 		
 		mapNum = 4;
 		objIndex = 0;
@@ -354,6 +356,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(80, 8, Item.FULL_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = StatBerrySetup(70, 35, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = ObjSetup(31, 8, Item.DUSK_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(46, 44, mapNum);
 		
 		mapNum = 14;
 		objIndex = 0;
@@ -909,6 +912,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(49, 44, Item.TM72, mapNum); // ice spinner
 		gp.obj[mapNum][objIndex] = ObjSetup(47, 56, Item.EUPHORIAN_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(38, 27, Item.WHITE_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(41, 51, mapNum);
 	}
 
 	public void setNPC() {
@@ -1287,7 +1291,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_DOWN, 20, 45, "The sun's shining, the bugs are buzzing... and you're about to lose!", "I guess I should've focused more on training than snacking...", 106);
 		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 39, 47, "I've seen rough terrain, but nothing rougher than what's coming for you.", "You're tougher than granite, I'll give you that.", 107);
 		gp.npc[mapNum][index] = NPCSetup(STUDENT_F_DOWN, 42, 27, "This is going to be an easy A for me.", "Ugh, a bad grade. I'm not used to this!", 108);
-		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 44, 32, "I've already foreseen this battle's outcome. Care to test fate?", "Impossible! This wasn't what I foresaw...", 109);
+		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 44, 32, "I've already foreseen this battle's outcome. Care to test fate?", "Impossible! This wasn't what I foresaw...", 109, RIGHT + UP);
 		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_DOWN, 60, 31, "You're on my line now, and I'm not letting go!", "Not my day, but the sea's full of second chances.", 110);
 		gp.npc[mapNum][index] = NPCSetup(BLACK_BELT_RIGHT, 53, 44, "A true warrior never backs down from a challenge!", "Your strength is commendable... I've been bested.", 111);
 		gp.npc[mapNum][index] = NPCSetup(HIKER_UP, 65, 48, "Strength isn't just in your fists, it's in your foundation.", "I'll build myself back up after this.", 112);
@@ -1304,7 +1308,10 @@ public class AssetSetter {
 		
 		mapNum = 38;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(EXPLORER_DOWN, 53, 7, "Ah, you're here to seek my key, are you?\nI don't know what's causing this blinding light, but I can't afford to let just anyone enter my classroom. You'll need to prove your resilience first.", "You fought well - better than I expected. The Ice Master's key is yours.\nUse it wisely... those Grunts won't go down easily, but if anyone can drive them out, it's you.", 327);
+		gp.npc[mapNum][index] = NPCSetup(EXPLORER_DOWN, 53, 7, "Ah, you're here to seek my key, are you?\n"
+				+ "I don't know what's causing this blinding light, but I can't afford to let just anyone enter my classroom. You'll need to prove your resilience first.",
+				"You fought well - better than I expected. The Ice Master's key is yours.\n"
+				+ "Use it wisely... those Grunts won't go down easily, but if anyone can drive them out, it's you.", 327);
 		gp.npc[mapNum][index++] = null; // robin
 		
 		gp.npc[mapNum][index] = NPCSetup(BIRD_KEEPER_LEFT, 35, 74, "Flying high is all I know. Are you ready to fall?", "You grounded me... but I'll be back in the skies soon!", 138);
@@ -1888,6 +1895,9 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(70, 18, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(70, 19, 4, mapNum, map);
 		
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 25, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 25, 4, mapNum, map);
+		
 		mapNum = 4;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(17, 63, 0, mapNum, map);
@@ -1924,6 +1934,14 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupLockedDoor(19, 85, 36, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupLockedDoor(48, 57, 36, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupLockedDoor(15, 56, 47, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 22, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 23, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 24, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 24, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 24, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 25, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 26, 4, mapNum, map);
 		
 		mapNum = 14;
 		iIndex = 0;
@@ -2963,7 +2981,7 @@ public class AssetSetter {
 	
 	private Entity SetupClerk(int type, int x, int y, Item... items) {
 		Entity e = NPCSetup(type, x, y, "", "", -1);
-		e.setItems(items);
+		e.setItems(false, items);
 		return e;
 	}
 	
@@ -2990,7 +3008,7 @@ public class AssetSetter {
 			break;
 		case NPC_CLERK:
 			result = new NPC_Clerk(gp);
-			result.setItems(gp.player.getItems());
+			result.setItems(true, gp.player.getItems());
 			clerks.add(result);
 			break;
 		case TRAINER_DOWN:
@@ -3770,6 +3788,20 @@ public class AssetSetter {
 		result.worldY = gp.tileSize*y;
 		
 		index++;
+		
+		return result;
+	}
+	
+	private ItemObj SetupChest(int x, int y, int mapNum) {
+		boolean open = gp.player.p.itemsCollected[mapNum][objIndex];
+		
+		TreasureChest result = new TreasureChest(gp, open, mapNum);
+		result.setItems(false, gp.player.p.crystals[cIndex++]);
+		
+		result.worldX = gp.tileSize*x;
+		result.worldY = gp.tileSize*y;
+
+		objIndex++;
 		
 		return result;
 	}

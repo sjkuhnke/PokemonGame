@@ -1211,7 +1211,7 @@ public class BattleUI extends AbstractUI {
 		            	}
 		            	user.getPlayer().updateHappinessCaps();
 		            	for (Entity clerk : gp.aSetter.clerks) {
-		            		clerk.setItems(gp.player.getItems());
+		            		clerk.setItems(true, gp.player.getItems());
 		            	}
 		            }
 		            break;

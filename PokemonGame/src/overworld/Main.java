@@ -93,9 +93,6 @@ public class Main {
 	    } catch (IOException | ClassNotFoundException e) {
 	        // If there's an error reading the file, create a new Player object
 	        gp.player.p = new Player(gp);
-	        
-	        gp.player.p.setupStatBerries();
-	        gp.player.p.setupResistBerries();
 	    }
 		
 		PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / gp.tileSize), (int) Math.round(gp.player.worldY * 1.0 / gp.tileSize));
