@@ -26,7 +26,7 @@ public class Entity {
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2, surf1, surf2, surf3, surf4;
 	public String direction;
 	public String defaultDirection;
-	GamePanel gp;
+	public GamePanel gp;
 	
 	public String name;
 
@@ -149,10 +149,10 @@ public class Entity {
 		}
 	}
 	
-	public void setItems(Item... items) {
+	public void setItems(boolean sort, Item... items) {
 		inventory.clear();
 		
-		Arrays.sort(items, Comparator.comparingInt(Item::getID));
+		if (sort) Arrays.sort(items, Comparator.comparingInt(Item::getID));
 		
 		for (Item item : items) {
 			if (!item.isTM() || !gp.player.p.hasTM(item.getMove())) inventory.add(item);

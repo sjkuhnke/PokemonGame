@@ -77,6 +77,7 @@ public class Player extends Trainer implements Serializable {
 	public int scottItem;
 	public Item[] resistBerries;
 	public Item[] statBerries;
+	public Item[] crystals;
 	public int secondStarter;
 	public Item choiceChoice;
 	public int coins;
@@ -87,7 +88,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 41;
+	public static final int VERSION = 42;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -118,6 +119,10 @@ public class Player extends Trainer implements Serializable {
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 		trainersBeat = new boolean[MAX_TRAINERS];
 		locations[0] = true;
+		
+		setupStatBerries();
+        setupResistBerries();
+        setupCrystals();
 		
 		version = VERSION;
 	}
@@ -1155,12 +1160,50 @@ public class Player extends Trainer implements Serializable {
 		            }
 	        	}
 				return;
+			case BUG_CRYSTAL:
+			case DARK_CRYSTAL:
+			case DRAGON_CRYSTAL:
+			case ELECTRIC_CRYSTAL:
+			case FIGHTING_CRYSTAL:
+			case FIRE_CRYSTAL:
+			case FLYING_CRYSTAL:
+			case GALACTIC_CRYSTAL:
+			case GHOST_CRYSTAL:
+			case GRASS_CRYSTAL:
+			case GROUND_CRYSTAL:
+			case ICE_CRYSTAL:
+			case LIGHT_CRYSTAL:
+			case MAGIC_CRYSTAL:
+			case POISON_CRYSTAL:
+			case PSYCHIC_CRYSTAL:
+			case ROCK_CRYSTAL:
+			case STEEL_CRYSTAL:
+			case WATER_CRYSTAL:
+				PType type = PType.values()[item.getID() - 284];
+				int[] optimalIVs = Pokemon.determineOptimalIVs(type);
+				if (arrayEquals(optimalIVs, p.ivs)) {
+					gp.ui.showMessage(Item.breakString(p.nickname + " already has the optimized IVs for the " + type.toString() + " power!", 40));
+					return;
+				} else {
+					gp.ui.showMessage(Item.breakString(p.nickname + "'s IVs were optimized to the " + type.toString() + " power!", 40));
+					p.ivs = optimalIVs;
+					p.setStats();
+				}
+				break;
 			default:
 				return;
 			}
 		}
 		bag.remove(item);
 		gp.ui.currentItems = getItems(gp.ui.currentPocket);
+	}
+
+	private boolean arrayEquals(int[] a1, int[] a2) {
+		if (a1.length != a2.length) return false;
+		for (int i = 0; i < a1.length; i++) {
+			if (a1[i] != a2[i]) return false;
+		}
+		return true;
 	}
 
 	public void update(GamePanel gp) {
@@ -1401,6 +1444,7 @@ public class Player extends Trainer implements Serializable {
 	private void updateBerries() {
 		if (statBerries == null) setupStatBerries();
 		if (resistBerries == null) setupResistBerries();
+		if (crystals == null) setupCrystals();
 	}
 
 	public void setupStatBerries() {
@@ -1425,5 +1469,17 @@ public class Player extends Trainer implements Serializable {
         List<Item> berryList = Arrays.asList(resistBerries);
         Collections.shuffle(berryList);
         resistBerries = berryList.toArray(new Item[1]);
+	}
+	
+	public void setupCrystals() {
+		crystals = new Item[19];
+        int count = 0;
+		for (int i = 285; i < 304; i++) {
+			crystals[count] = Item.getItem(i);
+			count++;
+		}
+        List<Item> crystalList = Arrays.asList(crystals);
+        Collections.shuffle(crystalList);
+        crystals = crystalList.toArray(new Item[1]);
 	}
 }

@@ -5520,14 +5520,14 @@ public class Pokemon implements Serializable {
 			if (!ignoreRaise) {
 				do {
 					raise = random.nextInt(5);
-				} while (this.statStages[raise] < 6);
+				} while (this.statStages[raise] >= 6);
 			}
 			int lower;
 			int counter = 0;
 			do {
 				lower = random.nextInt(5);
 				counter++;
-			} while ((this.statStages[lower] > -6 || (!ignoreRaise && lower == raise)) && counter < 25);
+			} while ((this.statStages[lower] <= -6 || (!ignoreRaise && lower == raise)) && counter < 25);
 			if (!ignoreRaise) stat(this, raise, 2, f);
 			stat(this, lower, -1, f);
 		}
@@ -5989,7 +5989,7 @@ public class Pokemon implements Serializable {
 			bp = Math.max(f * 2 / 5, 1);
 		} else if (move == Move.RETURN) {
 			int f = this.happiness;
-			bp = Math.max(f * 11 / 40, 1);
+			bp = (int) (-3.0 / 14450 * f * f + 11.0 / 34 * f + 1);
 		} else if (move == Move.REVENGE) {
 			if (this.getSpeed() > foe.getSpeed()) {
 				bp = 60;
@@ -6501,7 +6501,7 @@ public class Pokemon implements Serializable {
 		return types[++index];
 	}
 	
-	private static int[] determineOptimalIVs(PType hpType) {
+	public static int[] determineOptimalIVs(PType hpType) {
 		// initialization for error message
 		Pokemon tempPokemon = new Pokemon(1, 5, true, false);
 	    int[] ivs = null;

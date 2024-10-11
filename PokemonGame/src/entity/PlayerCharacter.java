@@ -31,12 +31,14 @@ import object.Cut_Tree;
 import object.Fuse_Box;
 import object.IceBlock;
 import object.InteractiveTile;
+import object.ItemObj;
 import object.Locked_Door;
 import object.Pit;
 import object.Rock_Climb;
 import object.Rock_Smash;
 import object.Snowball;
 import object.Starter_Machine;
+import object.TreasureChest;
 import object.Tree_Stump;
 import object.Vine;
 import object.Vine_Crossable;
@@ -292,7 +294,14 @@ public class PlayerCharacter extends Entity {
 			
 			// Check items
 			int objIndex = gp.cChecker.checkObject(this);
-			if (objIndex != -1) pickUpObject(objIndex);
+			if (objIndex != -1) {
+				ItemObj item = (ItemObj) gp.obj[gp.currentMap][objIndex];
+				if (item instanceof TreasureChest) {
+					openChest((TreasureChest) item, objIndex);
+				} else {
+					pickUpObject(objIndex);
+				}
+			}
 			
 			if (p.hasMove(Move.SURF) && !p.surf) {
 				int result = gp.cChecker.checkTileType(this);
@@ -406,7 +415,7 @@ public class PlayerCharacter extends Entity {
 			}
 		}
 	}
-	
+
 	private void trainerSpot(Entity entity) {
 		int trainer = entity.trainer;
 		if (p.trainersBeat[trainer]) return;
@@ -489,6 +498,23 @@ public class PlayerCharacter extends Entity {
 		gp.player.p.itemsCollected[gp.currentMap][objIndex] = true;
 		gp.obj[gp.currentMap][objIndex] = null;
 		
+	}
+	
+	private void openChest(TreasureChest chest, int objIndex) {
+		gp.keyH.wPressed = false;
+		if (chest.open) {
+			gp.ui.showMessage("The chest is empty...");
+		} else {
+			gp.setTaskState();
+			chest.open();
+			
+			for (Item i : chest.items) {
+				Task t = Pokemon.addTask(Task.ITEM, "You found 1 " + i.toString() + "!");
+				t.item = i;
+			}
+			
+			gp.player.p.itemsCollected[gp.currentMap][objIndex] = true;
+		}
 	}
 	
 	public void showPlayer() {
