@@ -610,8 +610,6 @@ public class Main {
 		}
 	}
 
-
-
 	private static void writeEncounters() {
 		try {
 			FileWriter writer = new FileWriter("./docs/WildPokemon.txt");

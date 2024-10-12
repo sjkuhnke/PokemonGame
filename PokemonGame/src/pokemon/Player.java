@@ -88,7 +88,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 42;
+	public static final int VERSION = 43;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -1443,15 +1443,22 @@ public class Player extends Trainer implements Serializable {
 	
 	private void updateBerries() {
 		if (statBerries == null) setupStatBerries();
-		if (resistBerries == null) setupResistBerries();
+		if (resistBerries == null || arrayContains(resistBerries, null)) setupResistBerries();
 		if (crystals == null) setupCrystals();
+	}
+
+	private boolean arrayContains(Object[] array, Object object) {
+		for (Object i : array) {
+			if (i == object) return true;
+		}
+		return false;
 	}
 
 	public void setupStatBerries() {
 		statBerries = new Item[7];
         int count = 0;
 		for (int i = 275; i < 282; i++) {
-			 statBerries[count] = Item.getItem(i);
+			statBerries[count] = Item.getItem(i);
 			count++;
 		}
         List<Item> berryList = Arrays.asList(statBerries);
@@ -1462,8 +1469,8 @@ public class Player extends Trainer implements Serializable {
 	public void setupResistBerries() {
 		resistBerries = new Item[20];
         int count = 0;
-		for (int i = 275; i < 282; i++) {
-			 resistBerries[count] = Item.getItem(i);
+		for (int i = 232; i < 252; i++) {
+			resistBerries[count] = Item.getItem(i);
 			count++;
 		}
         List<Item> berryList = Arrays.asList(resistBerries);
