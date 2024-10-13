@@ -886,6 +886,14 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 23, Item.LIECHI_BERRY, mapNum, 2, 5);
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 29, Item.PETAYA_BERRY, mapNum, 2, 5);
 		gp.obj[mapNum][objIndex] = ObjSetup(11, 15, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(22, 44, Item.BIG_MUSHROOM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(14, 42, Item.WHITE_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(10, 42, mapNum);
+		
+		mapNum = 145;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = SetupChest(57, 62, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 61, Item.STAR_PIECE, mapNum);
 		
 		mapNum = 146;
 		objIndex = 0;
@@ -1165,6 +1173,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 45, "Wow, there's a lot of lava over there. It's definitely not safe for any newbie trainers. If I see any of them coming this way... I swear to god...", 5);
 		
 		mapNum = 24;
+		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_RIGHT, 68, 63, "I'm about to cast a spell... on your defeat!", "My illusions failed me, but I'll perfect them soon enough.", 75, ALL);
 		gp.npc[mapNum][index] = NPCSetup(EXPLORER_UP, 79, 59, "I've seen harsh conditions, but you're about to face the frost of defeat.", "I'll be better prepared for the next expedition.", 267);
 		gp.npc[mapNum][index] = NPCSetup(EXPLORER_DOWN, 83, 55, "Prepare for an expedition into icy defeat!", "The cold got to me this time... but I'll warm up next time.", 268);
@@ -1173,7 +1182,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_RIGHT, 71, 65, "May the best trainer win, but rest assured, it will be me.", "You fought with honor. I respect that greatly.", 76, LEFT + RIGHT);
 		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 73, 80, "I've seen all sorts of things, I've traveled all over the world. Check out my exotic team!", "Maybe I should look under my nose for some more power. These guys weren't good enough...", 77, ALL);
-		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 66, 87, "The spirits whisper to me... They say you're next.", "I've tasted defeat... but I'll rise again, like the restless dead.", 78);
+		gp.npc[mapNum][index] = NPCSetup(MANIAC_RIGHT, 51, 87, "The spirits whisper to me... They say you're next.", "I've tasted defeat... but I'll rise again, like the restless dead.", 78);
 		
 		mapNum = 26;
 		index = 0;
@@ -1769,8 +1778,8 @@ public class AssetSetter {
 		
 		mapNum = 144;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 14, 17, "", "", 316);
-		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_LEFT, 24, 16, "", "", 317);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 14, 17, "I've got strength like a boulder, and my Pokemon are even tougher!", "Looks like I've still got some training to do... but I'll be back!", 316);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_LEFT, 24, 16, "Dragons bow to no one. You'll understand soon enough.", "Even the best fall. I'll rise again.", 317);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 40, 40, "", "", 318);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 50, 42, "", "", 319);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 55, 44, "", "", 320);
@@ -1984,7 +1993,7 @@ public class AssetSetter {
 		mapNum = 25;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(73, 73, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(65, 85, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 86, 1, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(47, 80, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(47, 79, 4, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(46, 77, 4, mapNum, map);
@@ -3575,7 +3584,7 @@ public class AssetSetter {
 		result.item = item;
 		int amt = lower;
 		if (lower != upper) {
-			Random random = new Random();
+			Random random = new Random(generateSeed(gp.player.p.getID(), x, y, mapNum));
 			amt = random.nextInt(upper - lower + 1) + lower;
 		}
 		result.count = amt;
@@ -3587,6 +3596,13 @@ public class AssetSetter {
 		return result;
 	}
 	
+	public int generateSeed(int id, int x, int y, int mapNum) {
+		int p1 = 31;
+		int p2 = 37;
+		int p3 = 41;
+		return id * p1 + x * p2 + y * p3 + mapNum;
+	}
+
 	private ItemObj ObjSetup(int x, int y, Item item, int mapNum, int amt) {
 		return ObjSetup(x, y, item, mapNum, amt, amt);
 	}

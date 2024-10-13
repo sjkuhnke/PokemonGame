@@ -21,8 +21,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -31,6 +33,7 @@ import javax.imageio.stream.ImageInputStream;
 
 import entity.Entity;
 import entity.PlayerCharacter;
+import object.TreasureChest;
 import pokemon.Ability;
 import pokemon.AbstractUI;
 import pokemon.Bag;
@@ -299,7 +302,7 @@ public class UI extends AbstractUI {
 		case Task.NICKNAME:
 			currentDialogue = currentTask.message;
 			drawDialogueScreen(true);
-			setNickname();
+			setNickname(currentTask.p);
 			if (nicknaming == 0) {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
@@ -411,9 +414,12 @@ public class UI extends AbstractUI {
 			above = false;
 			drawNameLabel(above);
 			break;
+		case Task.ITEM_SUM:
+			drawItemSum();
+			break;
 		}
 	}
-	
+
 	private void startBattle() {
 		gp.player.p.setSlots();
 		gp.keyH.resetKeys();
@@ -1743,7 +1749,7 @@ public class UI extends AbstractUI {
 		if (nicknaming >= 0 && !showBoxSummary) {
 			currentDialogue = "Change box's name?";
 			drawDialogueScreen(true);
-			setNickname();
+			setNickname(null);
 			if (nicknaming == 0) {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
@@ -2358,7 +2364,9 @@ public class UI extends AbstractUI {
 		x += gp.tileSize;
 		y += gp.tileSize;
 		String option1 = currentPocket == Item.BERRY || currentPocket == Item.HELD_ITEM ? "Give" : "Use";
+		if (!currentItems.get(bagNum[currentPocket - 1]).getItem().isUsable()) g2.setColor(Color.GRAY);
 		g2.drawString(option1, x, y);
+		g2.setColor(Color.WHITE);
 		if (commandNum == 0) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
@@ -2397,6 +2405,8 @@ public class UI extends AbstractUI {
 					gp.player.setupPlayerImages(gp.player.p.visor);
 				} else if (currentItem == Item.LETTER) {
 					gp.gameState = GamePanel.LETTER_STATE;
+				} else if (!currentItem.isUsable()) {
+					// do nothing
 				} else {
 					gp.gameState = GamePanel.USE_ITEM_STATE;
 				}
@@ -3236,5 +3246,51 @@ public class UI extends AbstractUI {
 			if (t.type == type) return true;
 		}
 		return false;
+	}
+	
+	private void drawItemSum() {
+		HashMap<Item, Integer> itemCounts = new HashMap<>();
+		int x = gp.tileSize * 3;
+		int y = gp.tileSize / 2;
+		int width = gp.screenWidth - x*2;
+		int height;
+		
+		TreasureChest chest = (TreasureChest) currentTask.e;
+		
+		for (Item i : chest.items) {
+			itemCounts.put(i, itemCounts.getOrDefault(i, 0) + 1);
+		}
+		
+		int itemCount = itemCounts.size();
+		
+		int itemX = x + gp.tileSize;
+		int itemY = (int) (y + gp.tileSize * 1.5);
+		int textHeight = gp.tileSize;
+		
+		height = (int) (itemCount * textHeight + gp.tileSize * 1.25);
+		drawSubWindow(x, y, width, height);
+		
+		g2.setFont(g2.getFont().deriveFont(48F));
+		String text = "You got:";
+		g2.drawString(text, getCenterAlignedTextX(text, gp.screenWidth / 2), itemY);
+		
+		itemY += gp.tileSize / 2;
+		
+		g2.setFont(g2.getFont().deriveFont(32F));
+		
+		for (Map.Entry<Item, Integer> e : itemCounts.entrySet()) {
+			g2.drawImage(e.getKey().getImage(), itemX, itemY, null);
+			itemY += gp.tileSize / 2;
+			String itemString = e.getValue() + " x " + e.getKey().toString();
+			g2.drawString(itemString, (int) (itemX + gp.tileSize * 0.75), itemY);
+			itemY += gp.tileSize / 3;
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			currentTask = null;
+		}
+		
+		drawToolTips(null, null, "Close", null);
 	}
 }
