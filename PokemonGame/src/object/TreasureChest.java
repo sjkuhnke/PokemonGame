@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -18,9 +19,9 @@ public class TreasureChest extends ItemObj {
 	public boolean open;
 	public int map;
 	
-	private static HashMap<Item, Integer> resourcePool = new HashMap<>();
-	private static HashMap<Item, Integer> treasurePool = new HashMap<>();
-	private static HashMap<Item, Integer> stonePool = new HashMap<>();
+	private static LinkedHashMap<Item, Integer> resourcePool = new LinkedHashMap<>();
+	private static LinkedHashMap<Item, Integer> treasurePool = new LinkedHashMap<>();
+	private static LinkedHashMap<Item, Integer> stonePool = new LinkedHashMap<>();
 	
 	static {
 		resourcePool.put(Item.RARE_CANDY, 5);
@@ -110,8 +111,8 @@ public class TreasureChest extends ItemObj {
 	private ArrayList<Item> addChestLoot() {
 		ArrayList<Item> loot = new ArrayList<>();
 		
-		loot.addAll(pickRandomItems(resourcePool, 1, 4));   // Pick 1-5 from resources
-        loot.addAll(pickRandomItems(treasurePool, 3, 5));   // Pick 4-8 from treasure
+		loot.addAll(pickRandomItems(resourcePool, 1, 4));   // Pick 1-4 from resources
+        loot.addAll(pickRandomItems(treasurePool, 3, 5));   // Pick 3-5 from treasure
         loot.addAll(pickRandomItems(stonePool, 0, 2));      // Pick 0-2 from stones
 		
 		return loot;
@@ -119,7 +120,8 @@ public class TreasureChest extends ItemObj {
 
 	private ArrayList<Item> pickRandomItems(HashMap<Item, Integer> pool, int min, int max) {
 		ArrayList<Item> result = new ArrayList<>();
-		Random random = new Random();
+		int seed = gp.aSetter.generateSeed(gp.player.p.getID(), worldX / gp.tileSize + min, worldY / gp.tileSize + max, map + pool.size());
+		Random random = new Random(seed);
 		
 		int numItems = random.nextInt((max - min) + 1) + min;
 		

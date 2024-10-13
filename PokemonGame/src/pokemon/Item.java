@@ -1620,6 +1620,26 @@ public enum Item {
 		return (getID() == 231 || (getID() >= 252 && getID() <= 259));
 	}
 	
+	public boolean isTreasure() {
+		return (getID() >= 304 && getID() <= 310);
+	}
+
+	public boolean isStatBerry() {
+		return (getID() >= 275 && getID() <= 281);
+	}
+	
+	public boolean isUsable() {
+		if (pocket != OTHER) return true;
+		if (isTreasure() || isBall() || isFossil()) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean isFossil() {
+		return (getID() == 45 || getID() == 46);
+	}
+	
 	public static String breakString(String input, int maxChar) {
 	    if (input == null || maxChar <= 0) {
 	        return null; // Or handle this case according to your requirements
@@ -1671,12 +1691,8 @@ public enum Item {
 			return "getPocketName() doesn't have a case for " + pocket;
 		}
 	}
-
+	
 	public String superToString() {
 		return super.toString();
-	}
-
-	boolean isStatBerry() {
-		return (getID() >= 275 && getID() <= 281);
 	}
 }

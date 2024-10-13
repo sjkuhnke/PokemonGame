@@ -4624,6 +4624,7 @@ public class Pokemon implements Serializable {
 		public static final int START_BATTLE = 37; // counter: trainer
 		public static final int DIALOGUE = 38;
 		public static final int SPEAK = 39;
+		public static final int ITEM_SUM = 40;
 		
 		public int type;
 		public String message;

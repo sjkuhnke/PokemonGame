@@ -513,6 +513,8 @@ public class PlayerCharacter extends Entity {
 				t.item = i;
 			}
 			
+			Pokemon.addTask(Task.ITEM_SUM, chest, "");
+			
 			gp.player.p.itemsCollected[gp.currentMap][objIndex] = true;
 		}
 	}

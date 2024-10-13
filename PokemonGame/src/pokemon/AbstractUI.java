@@ -612,7 +612,7 @@ public abstract class AbstractUI {
 		} else {
 			currentDialogue = "Change " + p.name + "'s nickname?";
 			drawDialogueScreen(true);
-			setNickname();
+			setNickname(p);
 			if (nicknaming == 0) {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
@@ -707,13 +707,14 @@ public abstract class AbstractUI {
 	    return fontSize;
 	}
 
-	public void setNickname() {
+	public void setNickname(Pokemon p) {
 		int x = gp.tileSize * 3;
 		int y = gp.tileSize * 5;
 		int width = gp.tileSize*10;
 		int height = gp.tileSize*3;
 		
 		drawSubWindow(x, y, width, height);
+		drawPokemonWindow(p, y - gp.tileSize * 4);
 		
 		g2.setFont(g2.getFont().deriveFont(36F));
 		
@@ -753,6 +754,21 @@ public abstract class AbstractUI {
 		}
 	}
 	
+	private void drawPokemonWindow(Pokemon p, int topY) {
+		if (p == null) return;
+		
+		int centerX = gp.screenWidth / 2;
+		int width = gp.tileSize * 4;
+		int height = gp.tileSize * 4;
+		int topX = centerX - width / 2;
+		
+		drawSubWindow(topX, topY, width, height);
+		topX += gp.tileSize / 4;
+		topY += gp.tileSize / 4;
+		g2.drawImage(p.getFrontSprite(), topX, topY, null);
+		
+	}
+
 	public void drawMoveOptions(Move m, Pokemon p) {
 		if (p.knowsMove(m)) {
 			showMoveOptions = false;
