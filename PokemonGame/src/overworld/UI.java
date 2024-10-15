@@ -3250,10 +3250,6 @@ public class UI extends AbstractUI {
 	
 	private void drawItemSum() {
 		HashMap<Item, Integer> itemCounts = new HashMap<>();
-		int x = gp.tileSize * 3;
-		int y = gp.tileSize / 2;
-		int width = gp.screenWidth - x*2;
-		int height;
 		
 		TreasureChest chest = (TreasureChest) currentTask.e;
 		
@@ -3263,11 +3259,17 @@ public class UI extends AbstractUI {
 		
 		int itemCount = itemCounts.size();
 		
+		int x = gp.tileSize * 3;
+		int y = itemCount > 10 ? 0 : gp.tileSize / 2;
+		int width = gp.screenWidth - x*2;
+		int height;
+		
 		int itemX = x + gp.tileSize;
 		int itemY = (int) (y + gp.tileSize * 1.5);
 		int textHeight = gp.tileSize;
 		
 		height = (int) (itemCount * textHeight + gp.tileSize * 1.25);
+		if (itemCount > 9) height -= (gp.tileSize / 2) * (itemCount % 9);
 		drawSubWindow(x, y, width, height);
 		
 		g2.setFont(g2.getFont().deriveFont(48F));

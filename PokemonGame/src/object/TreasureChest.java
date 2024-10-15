@@ -114,8 +114,17 @@ public class TreasureChest extends ItemObj {
 		loot.addAll(pickRandomItems(resourcePool, 1, 4));   // Pick 1-4 from resources
         loot.addAll(pickRandomItems(treasurePool, 3, 5));   // Pick 3-5 from treasure
         loot.addAll(pickRandomItems(stonePool, 0, 2));      // Pick 0-2 from stones
+        loot.add(randomMint());
 		
 		return loot;
+	}
+
+	private Item randomMint() {
+		int seed = gp.aSetter.generateSeed(gp.player.p.getID(), worldX / gp.tileSize, worldY / gp.tileSize, map);
+		Random random = new Random(seed);
+		
+		int[] ids = new int[] {311, 29, 312, 31, 30, 34, 313, 314, 36, 315, 316, 37, 32, 317, 33, 318, 39, 319, 35, 320, 38};
+		return Item.getItem(ids[random.nextInt(ids.length)]);
 	}
 
 	private ArrayList<Item> pickRandomItems(HashMap<Item, Integer> pool, int min, int max) {
