@@ -893,6 +893,16 @@ public class AssetSetter {
 		mapNum = 145;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = SetupChest(57, 62, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(58, 62, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(59, 62, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(60, 62, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(61, 62, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(62, 62, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(63, 62, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(64, 62, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(65, 62, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(66, 62, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(67, 62, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(52, 61, Item.STAR_PIECE, mapNum);
 		
 		mapNum = 146;
@@ -3812,10 +3822,11 @@ public class AssetSetter {
 		boolean open = gp.player.p.itemsCollected[mapNum][objIndex];
 		
 		TreasureChest result = new TreasureChest(gp, open, mapNum);
-		result.setItems(false, gp.player.p.crystals[cIndex++]);
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;
+		
+		result.setItems(false, gp.player.p.crystals[cIndex++]);
 
 		objIndex++;
 		
