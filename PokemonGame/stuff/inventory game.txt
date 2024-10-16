@@ -443,14 +443,14 @@ Before
 
 "The waves and I are in sync - let's ride this battle out!"
 "My Water Pokemon will wash you away!"
-"Dude, this battle's gonna be smooth sailing for me!"
+""
 "You're about to get totally wiped out!"
 "The ocean's my playground, and my Pokemon rule the waves!"
 After
 
 "Wiped out! Guess I need to catch some new moves."
 "Whoa, you totally swamped me!"
-"Looks like I got caught in the undertow... But I'll come back stronger!"
+""
 "Even the best surfers wipe out sometimes... I'll ride higher next time!"
 "You got the better of me this time, but I'll be back with the tide!"
 

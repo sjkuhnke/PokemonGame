@@ -1551,7 +1551,7 @@ public class Pokemon implements Serializable {
 				if (foe.lastMoveUsed == Move.OBSTRUCT) stat(this, 1, -2, foe);
 				if (foe.lastMoveUsed == Move.LAVA_LAIR) burn(false, foe);
 				if (foe.lastMoveUsed == Move.SPIKY_SHIELD && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-					this.damage(Math.max(this.getStat(0) / 8.0, 1), foe);
+					this.damage(this.getHPAmount(1.0/8), foe);
 					addTask(Task.TEXT, this.nickname + " was hurt!");
 					if (this.currentHP <= 0) { // Check for kill
 						this.faint(true, foe);
@@ -1753,6 +1753,8 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.TOXIC && (this.type1 == PType.POISON || this.type2 == PType.POISON)) acc = 1000;
+		
+		if (foe.ability == Ability.WONDER_SKIN && move.cat == 2 && acc <= 100) acc = 50;
 		
 		if (move == Move.POP_POP) acc = 1000;
 		
@@ -2393,7 +2395,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (this.item == Item.LIFE_ORB && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-			this.damage(this.getStat(0) / 10, foe);
+			this.damage(getHPAmount(1.0/10), foe);
 			addTask(Task.TEXT, this.nickname + " lost some of its HP!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, foe);
@@ -6708,13 +6710,13 @@ public class Pokemon implements Serializable {
 			ArrayList<FieldEffect> side = playerOwned() ? field.playerSide : field.foeSide;
 			if (field.contains(side, Effect.STEALTH_ROCKS)) {
 				double multiplier = getEffectiveMultiplier(PType.ROCK);
-				double damage = (this.getStat(0) / 8.0) * multiplier;
+				double damage = (this.getHPAmount(1.0/8)) * multiplier;
 				this.damage((int) Math.max(Math.floor(damage), 1), foe);
 				addTask(Task.TEXT, "Pointed stones dug into " + this.nickname + "!");
 			}
 			if (field.contains(side, Effect.SPIKES) && this.isGrounded() && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 				double layers = field.getLayers(side, Effect.SPIKES);
-				double damage = (this.getStat(0) / 8.0) * ((layers + 1) / 2);
+				double damage = (this.getHPAmount(1.0/8) * (layers + 1) / 2);
 				this.damage((int) Math.max(Math.floor(damage), 1), foe);
 				addTask(Task.TEXT, this.nickname + " was hurt by Spikes!");
 			}
@@ -6840,7 +6842,7 @@ public class Pokemon implements Serializable {
 				stat(this, 5, 1, foe);
 				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.ORAN_BERRY || berry == Item.SITRUS_BERRY) {
-				int healAmt = berry == Item.ORAN_BERRY ? 10 : (this.getStat(0) / 4);
+				int healAmt = (int) (berry == Item.ORAN_BERRY ? 10 : (this.getHPAmount(1.0/4)));
 				heal(healAmt, this.nickname + " ate its " + berry.toString() + " to restore HP!");
 				if (consume) this.consumeItem(foe);
 			}
@@ -6993,7 +6995,7 @@ public class Pokemon implements Serializable {
 	
 	public ArrayList<Move> movebankAsList() {
 		ArrayList<Move> movebankList = new ArrayList<>();
-        for (int i = 0; i < movebanks[id].length; i++) {
+        for (int i = 0; i < movebanks[id - 1].length; i++) {
         	Node n = getNode(id, i);
         	while (n != null) {
         		movebankList.add(n.data);
@@ -8125,7 +8127,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	private int determineHappiness(Player p) {
-		return Math.max(this.happiness + (50 * p.badges), 255);
+		return Math.min(this.happiness + (50 * p.badges), 255);
 	}
 	
 }

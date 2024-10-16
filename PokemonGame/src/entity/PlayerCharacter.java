@@ -843,8 +843,12 @@ public class PlayerCharacter extends Entity {
 					Pokemon.addTask(Task.DIALOGUE, npc, "First though, I'll have to upgrade your Pokedex to add a 'Variant' Pokedex for you to keep track of these forms");
 					Pokemon.addTask(Task.DIALOGUE, npc, "... And there you go! All upgraded. Come talk to me when you have a Xhenovian Pokemon to trade!");
 					Pokemon.addTask(Task.DIALOGUE, npc, "Ryder, it was great to see you as always. Take care boys!");
-					t = Pokemon.addTask(Task.TURN, "");
+					t = Pokemon.addTask(Task.TURN, this, "");
 					t.counter = 3;
+					t = Pokemon.addTask(Task.TURN, gp.npc[13][7], "");
+					t.counter = 2;
+					t.start = 13;
+					t.finish = 7;
 					Pokemon.addTask(Task.DIALOGUE, npc, "Thanks for your patience, I just figured that this little connection would help out you both mutually.");
 					Pokemon.addTask(Task.DIALOGUE, npc, "I'm gonna head out, I'll see you soon!");
 					Pokemon.addTask(Task.FLASH_IN, "");

@@ -279,6 +279,11 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(13, 78, mapNum, 5, 15);
 		gp.obj[mapNum][objIndex] = ObjSetup(44, 8, Item.LUM_BERRY, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = ObjSetup(76, 27, Item.DAWN_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 35, Item.RASH_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 34, Item.BIG_MUSHROOM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 47, Item.SASSY_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(50, 49, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(30, 7, Item.BIG_NUGGET, mapNum);
 		
 		mapNum = 7;
 		objIndex = 0;
@@ -333,6 +338,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(13, 66, mapNum, 5, 15);
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(38, 30, mapNum, 5, 15);
 		gp.obj[mapNum][objIndex] = ObjSetup(14, 49, Item.ORAN_BERRY, mapNum, 15, 30);
+		gp.obj[mapNum][objIndex] = SetupChest(51, 25, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(58, 38, Item.NAUGHTY_MINT, mapNum);
 		
 		mapNum = 13;
 		objIndex = 0;
@@ -413,9 +420,13 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(69, 84, Item.TM69, mapNum); // rock polish
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 75, Item.HYPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(78, 52, Item.TM68, mapNum); // flash
-		gp.obj[mapNum][objIndex] = ObjSetup(58, 50, Item.TM56, mapNum); // sparkle strike
+		gp.obj[mapNum][objIndex] = ObjSetup(76, 43, Item.TM56, mapNum); // sparkle strike
 		gp.obj[mapNum][objIndex] = ObjSetup(81, 57, Item.LIGHT_CLAY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(87, 57, Item.HEAVY$DUTY_BOOTS, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(58, 50, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 44, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 60, Item.GENTLE_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(74, 38, mapNum);
 		
 		mapNum = 25;
 		objIndex = 0;
@@ -780,13 +791,14 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(78, 76, Item.ULTRA_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(56, 65, Item.AIR_BALLOON, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(48, 66, Item.CHOICE_SCARF, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(36, 77, Item.ANTIDOTE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 88, Item.MILD_MINT, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(57, 82, Item.BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(77, 88, Item.MAX_ELIXIR, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(34, 65, Item.TM19, mapNum); // photon geyser
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 79, Item.TM19, mapNum); // photon geyser
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 70, Item.FULL_RESTORE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 84, Item.MICLE_BERRY, mapNum, 2, 5);
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(42, 67, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = SetupChest(34, 62, mapNum);
 		
 		mapNum = 117;
 		objIndex = 0;
@@ -893,22 +905,13 @@ public class AssetSetter {
 		mapNum = 145;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = SetupChest(57, 62, mapNum);
-		gp.obj[mapNum][objIndex] = SetupChest(58, 62, mapNum);
-		gp.obj[mapNum][objIndex] = SetupChest(59, 62, mapNum);
-		gp.obj[mapNum][objIndex] = SetupChest(60, 62, mapNum);
-		gp.obj[mapNum][objIndex] = SetupChest(61, 62, mapNum);
-		gp.obj[mapNum][objIndex] = SetupChest(62, 62, mapNum);
-		gp.obj[mapNum][objIndex] = SetupChest(63, 62, mapNum);
-		gp.obj[mapNum][objIndex] = SetupChest(64, 62, mapNum);
-		gp.obj[mapNum][objIndex] = SetupChest(65, 62, mapNum);
-		gp.obj[mapNum][objIndex] = SetupChest(66, 62, mapNum);
-		gp.obj[mapNum][objIndex] = SetupChest(67, 62, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(52, 61, Item.STAR_PIECE, mapNum);
 		
 		mapNum = 146;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 48, Item.EVIOLITE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(89, 38, Item.TM47, mapNum); // star storm
+		gp.obj[mapNum][objIndex] = SetupChest(51, 34, mapNum);
 		
 		mapNum = 163;
 		objIndex = 0;
@@ -1335,7 +1338,7 @@ public class AssetSetter {
 		
 		gp.npc[mapNum][index] = NPCSetup(BIRD_KEEPER_LEFT, 35, 74, "Flying high is all I know. Are you ready to fall?", "You grounded me... but I'll be back in the skies soon!", 138);
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_RIGHT, 49, 74, "I just got an awesome TM move! Check it out!", "Fine, I'll tell you my secrets. I found it near New Minnow Town... that's all I'll say, for now.", 139, ALL);
-		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 46, 84, "", "", 140, ALL);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 46, 84, "Dude, this battle's gonna be smooth sailing for me!", "Looks like I got caught in the undertow... But I'll come back stronger!", 140, ALL);
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 36, 84, "Guess what? I delayed my Twigzap's evolution to get a really powerful move. Wanna see?", "Guess even my secret technique wasn't good enough. Gave you a run for your money though!", 141);
 		
 		mapNum = 39;
@@ -1558,8 +1561,9 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE, 31, 37, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 36, 35, "", "", -1);
-		gp.npc[mapNum][index] = SetupClerk(NPC_MARKET, 22, 37, Item.ADAMANT_MINT, Item.BOLD_MINT, Item.BRAVE_MINT, Item.CALM_MINT, Item.CAREFUL_MINT, Item.IMPISH_MINT,
-                Item.JOLLY_MINT, Item.MODEST_MINT, Item.QUIET_MINT, Item.SERIOUS_MINT, Item.TIMID_MINT);
+		gp.npc[mapNum][index] = SetupClerk(NPC_MARKET, 22, 37, Item.LONELY_MINT, Item.ADAMANT_MINT, Item.NAUGHTY_MINT, Item.BRAVE_MINT, Item.BOLD_MINT, Item.IMPISH_MINT,
+				Item.LAX_MINT, Item.RELAXED_MINT, Item.MODEST_MINT, Item.MILD_MINT, Item.RASH_MINT, Item.QUIET_MINT, Item.CALM_MINT, Item.GENTLE_MINT, Item.CAREFUL_MINT,
+                Item.SASSY_MINT, Item.TIMID_MINT, Item.HASTY_MINT, Item.JOLLY_MINT, Item.NAIVE_MINT, Item.SERIOUS_MINT);
 		
 		mapNum = 93;
 		index = 0;
@@ -3570,6 +3574,14 @@ public class AssetSetter {
 			case BREEDER:
 				result.setupImages("/npc/breeder");
 				result.setDirection("down");
+				break;
+			case RYDER_DOWN:
+				result.setupImages("/npc/block");
+				result.setDirection("down");
+				break;
+			case RYDER_UP:
+				result.setupImages("/npc/block");
+				result.setDirection("up");
 				break;
 		}
 		
