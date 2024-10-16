@@ -841,17 +841,27 @@ public class Player extends Trainer implements Serializable {
 				break;
 				
 			// Mints
+			case LONELY_MINT:
 			case ADAMANT_MINT:
-			case BOLD_MINT:
+			case NAUGHTY_MINT:
 			case BRAVE_MINT:
-			case CALM_MINT:
-			case CAREFUL_MINT:
+			case BOLD_MINT:
 			case IMPISH_MINT:
-			case JOLLY_MINT:
+			case LAX_MINT:
+			case RELAXED_MINT:
 			case MODEST_MINT:
+			case MILD_MINT:
+			case RASH_MINT:
 			case QUIET_MINT:
-			case SERIOUS_MINT:
+			case CALM_MINT:
+			case GENTLE_MINT:
+			case CAREFUL_MINT:
+			case SASSY_MINT:
 			case TIMID_MINT:
+			case HASTY_MINT:
+			case JOLLY_MINT:
+			case NAIVE_MINT:
+			case SERIOUS_MINT:
 				double nature[];
 	        	switch (item.getID()) {
 	        	case 29:

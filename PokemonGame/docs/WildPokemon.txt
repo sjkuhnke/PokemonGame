@@ -183,6 +183,19 @@ Route 25 (Standard)
 7% Seviper (Lv. 15)
 12% Marill (Lv. 12 - 15)
 ===================================================================
+Route 25 (Fish)
+===================================================================
+15% Inkay (Lv. 15 - 18)
+20% Sheltor (Lv. 15 - 17)
+35% Magikarp (Lv. 15 - 16)
+30% Binacle (Lv. 16 - 17)
+===================================================================
+Route 25 (Surf)
+===================================================================
+70% Lotad (Lv. 13 - 15)
+20% Froshrog (Lv. 16 - 17)
+10% Sheltor (Lv. 15 - 16)
+===================================================================
 Sicab City (Fish)
 ===================================================================
 30% Magikarp (Lv. 15 - 18)
@@ -280,6 +293,17 @@ Mt. Splinkty (1A) (Surf)
 60% Staryu (Lv. 25)
 25% Sheltor (Lv. 25)
 15% Posho (Lv. 22 - 25)
+===================================================================
+Mt. Splinkty (2A) (Standard)
+===================================================================
+10% Rocky (Lv. 21 - 22)
+5% Carinx (Lv. 22 - 23)
+15% Blaxer (Lv. 22 - 23)
+15% Tricerpup (Lv. 23)
+15% Diggie (Lv. 21 - 22)
+10% Grondor (Lv. 22 - 23)
+15% Bronzor-X (Lv. 21 - 22)
+15% Sneasel-H (Lv. 23)
 ===================================================================
 Mt. Splinkty (2B) (Standard)
 ===================================================================
@@ -1045,15 +1069,15 @@ Mt. Splinkty (Outside) (Standard)
 41,Bugik,4,9.00%
 42,Swordik,4,6.00%
 43,Ninjakik,1,12.00%
-44,Lotad,4,25.50%
+44,Lotad,5,34.40%
 45,Lombre,2,11.00%
 46,Ludicolo,1,10.00%
 47,Bluebunn,5,11.80%
-48,Rocky,4,19.75%
+48,Rocky,5,17.80%
 49,Boulder,1,11.00%
 50,Blaster,4,9.50%
 51,Crystallor,4,7.00%
-52,Carinx,4,12.00%
+52,Carinx,5,10.60%
 53,Carinator,2,15.00%
 54,Cairnasaur,5,8.60%
 55,Pebblepup,3,9.33%
@@ -1065,14 +1089,14 @@ Mt. Splinkty (Outside) (Standard)
 61,Dualmoose,4,8.75%
 62,Snom,4,8.75%
 63,Frosmoth,1,1.00%
-64,Grondor,4,13.50%
+64,Grondor,5,12.80%
 65,Bipedice,1,2.00%
-66,Tricerpup,5,7.40%
+66,Tricerpup,6,8.67%
 67,Tricercil,1,10.00%
 68,Spheal,4,22.00%
 69,Sealeo,1,11.00%
 70,Walrein,1,7.00%
-71,Froshrog,8,14.12%
+71,Froshrog,9,14.78%
 72,Bouncerog,1,15.00%
 73,Bugop,4,17.50%
 74,Opwing,5,14.00%
@@ -1091,12 +1115,12 @@ Mt. Splinkty (Outside) (Standard)
 87,Gardevoir,1,5.00%
 88,Gallade,0,0.00%
 89,Tigrette,5,12.00%
-90,Inkay,10,14.70%
+90,Inkay,11,14.73%
 91,Malamar,2,15.00%
 92,Flameruff,2,10.00%
 93,Barkflare,2,15.50%
 94,Iglite,8,78.13%
-95,Blaxer,2,9.00%
+95,Blaxer,3,11.00%
 96,Pyrator,6,14.17%
 97,Magmaclang,1,1.00%
 98,Flamehox,2,56.00%
@@ -1133,12 +1157,12 @@ Mt. Splinkty (Outside) (Standard)
 129,Nincada,3,7.00%
 130,Ninjask,0,0.00%
 131,Shedinja,0,0.00%
-132,Sheltor,13,14.23%
+132,Sheltor,15,14.33%
 133,Shelnado,3,17.67%
 134,Lilyray,10,21.10%
 135,Daray,5,15.40%
 136,Spinaquata,2,12.00%
-137,Magikarp,12,27.50%
+137,Magikarp,13,28.08%
 138,Gyarados,3,23.33%
 139,Staryu,11,31.91%
 140,Starmie,0,0.00%
@@ -1147,7 +1171,7 @@ Mt. Splinkty (Outside) (Standard)
 143,Posho,6,16.17%
 144,Shomp,0,0.00%
 145,Poshorump,0,0.00%
-146,Binacle,9,17.44%
+146,Binacle,10,18.70%
 147,Barbaracle,1,22.00%
 148,Durfish,6,18.67%
 149,Dompster,0,0.00%
@@ -1170,7 +1194,7 @@ Mt. Splinkty (Outside) (Standard)
 166,Rhypo,4,7.00%
 167,Rhynee,1,14.00%
 168,Rhypolar,0,0.00%
-169,Diggie,4,13.00%
+169,Diggie,5,13.40%
 170,Drillatron,6,17.00%
 171,Wormite,2,12.50%
 172,Wormbot,3,11.00%
@@ -1250,7 +1274,7 @@ Mt. Splinkty (Outside) (Standard)
 246,Flamigo,0,0.00%
 247,Sneasel,3,13.33%
 248,Weavile,0,0.00%
-249,Sneasel-H,4,13.00%
+249,Sneasel-H,5,13.40%
 250,Sneasler,0,0.00%
 251,Solosis,0,0.00%
 252,Duosion,0,0.00%
@@ -1277,7 +1301,7 @@ Mt. Splinkty (Outside) (Standard)
 273,Butterfree-X,2,8.50%
 274,Bronzor,0,0.00%
 275,Bronzong,0,0.00%
-276,Bronzor-X,5,10.80%
+276,Bronzor-X,6,11.50%
 277,Bronzong-X,0,0.00%
 278,Capsakid,6,7.17%
 279,Scovillain,0,0.00%

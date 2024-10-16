@@ -388,8 +388,8 @@ Base Stats:
 Level Up:
 E - Twister
 1 - Flash
-5 - Leer
-8 - Flash Ray
+5 - Flash Ray
+8 - Leer
 10 - Gust
 13 - Quick Attack
 16 - Whirlwind
@@ -419,8 +419,8 @@ Base Stats:
 Level Up:
 E - Dazzling Gleam
 1 - Flash
-5 - Leer
-8 - Flash Ray
+5 - Flash Ray
+8 - Leer
 10 - Gust
 13 - Quick Attack
 16 - Whirlwind
@@ -3295,6 +3295,8 @@ E - Recover
 28 - Burn Up
 30 - Rock Blast
 33 - Lava Plume
+35 - Fire Spin
+39 - Inferno
 
 Evolutions:
 Magwoo -> Lafloo (lv. 42)
@@ -9033,7 +9035,7 @@ Ability:
 Friendly Ghost / Competitive / (Levitate)
 
 Base Stats:
-60 HP / 30 Atk / 70 Def / 80 SpA / 80 SpD / 80 Spe / 400 BST
+40 HP / 35 Atk / 70 Def / 85 SpA / 85 SpD / 85 Spe / 400 BST
 
 Level Up:
 1 - Night Shade
@@ -9062,7 +9064,7 @@ Ability:
 Friendly Ghost / Competitive / (Levitate)
 
 Base Stats:
-70 HP / 75 Atk / 35 Def / 150 SpA / 55 SpD / 115 Spe / 500 BST
+45 HP / 75 Atk / 70 Def / 150 SpA / 45 SpD / 115 Spe / 500 BST
 
 Level Up:
 1 - Night Shade
