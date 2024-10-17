@@ -630,8 +630,13 @@ public class PMap extends JPanel {
 				}
 			}
 			if (y > 52) {
-				PlayerCharacter.currentMapName = "Sicab City";
-				return 9;
+				if (x <= 63) {
+					PlayerCharacter.currentMapName = "Sicab City";
+					return 9;
+				} else {
+					PlayerCharacter.currentMapName = "Sicab River";
+					return 9;
+				}
 			}
 		case 14:
 			PlayerCharacter.currentMapName = "Energy Plant (pt. 1)";
@@ -1171,13 +1176,13 @@ public class PMap extends JPanel {
 		case 166:
 			PlayerCharacter.currentMapName = "Icy Path";
 			return 20;
-		case 167: // TODO from here down
-			PlayerCharacter.currentMapName = "";
-			return 20;
+		case 167:
+			PlayerCharacter.currentMapName = "Peaceful Park";
+			return 15;
 		case 168:
-			PlayerCharacter.currentMapName = "";
-			return 20;
-		case 169:
+			PlayerCharacter.currentMapName = "Gelb Cavern";
+			return 7;
+		case 169: // TODO from here down
 			PlayerCharacter.currentMapName = "";
 			return 20;
 		}

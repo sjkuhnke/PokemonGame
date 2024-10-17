@@ -340,6 +340,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(14, 49, Item.ORAN_BERRY, mapNum, 15, 30);
 		gp.obj[mapNum][objIndex] = SetupChest(51, 25, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(58, 38, Item.NAUGHTY_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(58, 38, Item.PP_MAX, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(79, 39, Item.RARE_CANDY, mapNum);
 		
 		mapNum = 13;
 		objIndex = 0;
@@ -364,6 +366,10 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = StatBerrySetup(70, 35, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = ObjSetup(31, 8, Item.DUSK_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = SetupChest(46, 44, mapNum);
+		
+		gp.obj[mapNum][objIndex] = ObjSetup(69, 79, Item.THROAT_SPRAY, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(74, 79, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(80, 80, Item.LAX_MINT, mapNum);
 		
 		mapNum = 14;
 		objIndex = 0;
@@ -928,12 +934,25 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 41, Item.RAZOR_CLAW, mapNum);
 		
 		mapNum = 166;
+		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(41, 45, Item.ICE_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(38, 25, Item.ICE_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(49, 44, Item.TM72, mapNum); // ice spinner
 		gp.obj[mapNum][objIndex] = ObjSetup(47, 56, Item.EUPHORIAN_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(38, 27, Item.WHITE_HERB, mapNum);
 		gp.obj[mapNum][objIndex] = SetupChest(41, 51, mapNum);
+		
+		mapNum = 168;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 61, Item.NAIVE_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(61, 64, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(49, 74, Item.GOLD_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 73, Item.RAZOR_CLAW, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(66, 81, Item.HASTY_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(56, 87, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(59, 88, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(64, 88, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 87, Item.FOCUS_SASH, mapNum);
 	}
 
 	public void setNPC() {
@@ -1940,6 +1959,7 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(34, 35, 0, mapNum, map);
 		
 		SetupWhirlpool(mapNum, 15, 76, map);
+		SetupPit(mapNum, 56, 19, 168, 49, 55, map);
 		
 		mapNum = 13;
 		iIndex = 0;
@@ -2678,6 +2698,10 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 57, 0, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 51, 0, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 58, 3, 1, mapNum, map);
+		
+		mapNum = 168;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(66, 77, 0, 1, mapNum, map);
 	}
 
 	public void updateNPC(int map) {

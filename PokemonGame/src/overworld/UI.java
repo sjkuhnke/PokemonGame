@@ -302,7 +302,7 @@ public class UI extends AbstractUI {
 		case Task.NICKNAME:
 			currentDialogue = currentTask.message;
 			drawDialogueScreen(true);
-			setNickname(currentTask.p);
+			setNickname(currentTask.p, false);
 			if (nicknaming == 0) {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
@@ -1750,7 +1750,7 @@ public class UI extends AbstractUI {
 		if (nicknaming >= 0 && !showBoxSummary) {
 			currentDialogue = "Change box's name?";
 			drawDialogueScreen(true);
-			setNickname(null);
+			setNickname(null, false);
 			if (nicknaming == 0) {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;

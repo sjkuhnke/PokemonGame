@@ -512,10 +512,20 @@ Route 30 (Surf)
 ===================================================================
 Peaceful Park (Standard)
 ===================================================================
-50% Staryu (Lv. 20)
-25% Lilyray (Lv. 20)
-20% Otterpor (Lv. 20)
-5% Ali (Lv. 20)
+6% Centatle (Lv. 29 - 31)
+5% Treewin (Lv. 31 - 33)
+5% Roselia (Lv. 30 - 31)
+5% Swadloon (Lv. 30 - 31)
+11% Snom (Lv. 25 - 27)
+10% Magie (Lv. 24 - 28)
+10% Vupp (Lv. 24 - 28)
+10% Whiskie (Lv. 24 - 28)
+2% Ninjask (Lv. 30 - 32)
+15% Tigrette (Lv. 30 - 32)
+10% Flameruff (Lv. 29 - 31)
+3% Shockbranch (Lv. 29 - 31)
+4% Butterfree-X (Lv. 29 - 31)
+4% Capsakid (Lv. 28 - 30)
 ===================================================================
 Peaceful Park (Fish)
 ===================================================================
@@ -524,6 +534,13 @@ Peaceful Park (Fish)
 20% Binacle (Lv. 15 - 16)
 10% Durfish (Lv. 15 - 17)
 10% Staryu (Lv. 15 - 17)
+===================================================================
+Peaceful Park (Surf)
+===================================================================
+50% Staryu (Lv. 20)
+25% Lilyray (Lv. 20)
+20% Otterpor (Lv. 20)
+5% Ali (Lv. 20)
 ===================================================================
 Mindagan Lake (Surf)
 ===================================================================
@@ -1048,17 +1065,17 @@ Mt. Splinkty (Outside) (Standard)
 20,Dualbear,2,13.00%
 21,Spacebear,0,0.00%
 22,Bealtle,4,12.50%
-23,Centatle,1,8.00%
+23,Centatle,2,7.00%
 24,Curlatoral,1,5.00%
 25,Millistone,0,0.00%
 26,Sapwin,5,12.00%
-27,Treewin,2,6.50%
+27,Treewin,3,6.00%
 28,Winagrow,0,0.00%
 29,Budew,3,9.67%
-30,Roselia,2,5.50%
+30,Roselia,3,5.33%
 31,Roserade,0,0.00%
 32,Sewaddle,4,9.50%
-33,Swadloon,2,10.00%
+33,Swadloon,3,8.33%
 34,Leavanny,0,0.00%
 35,Grubbin,3,6.67%
 36,Charjabug,3,9.67%
@@ -1087,7 +1104,7 @@ Mt. Splinkty (Outside) (Standard)
 59,Kleinowl,4,12.00%
 60,Hootowl,1,2.00%
 61,Dualmoose,4,8.75%
-62,Snom,4,8.75%
+62,Snom,5,9.20%
 63,Frosmoth,1,1.00%
 64,Grondor,5,12.80%
 65,Bipedice,1,2.00%
@@ -1114,10 +1131,10 @@ Mt. Splinkty (Outside) (Standard)
 86,Kirlia,2,10.00%
 87,Gardevoir,1,5.00%
 88,Gallade,0,0.00%
-89,Tigrette,5,12.00%
+89,Tigrette,6,12.50%
 90,Inkay,11,14.73%
 91,Malamar,2,15.00%
-92,Flameruff,2,10.00%
+92,Flameruff,3,10.00%
 93,Barkflare,2,15.50%
 94,Iglite,8,78.13%
 95,Blaxer,3,11.00%
@@ -1143,19 +1160,19 @@ Mt. Splinkty (Outside) (Standard)
 115,Electroram,0,0.00%
 116,Superchargo,1,4.00%
 117,Twigzap,3,18.67%
-118,Shockbranch,1,4.00%
+118,Shockbranch,2,3.50%
 119,Thunderzap,0,0.00%
-120,Magie,1,10.00%
+120,Magie,2,10.00%
 121,Cumin,1,9.00%
 122,Cinneroph,0,0.00%
-123,Vupp,4,12.25%
+123,Vupp,5,11.80%
 124,Vinnie,1,10.00%
 125,Suvinero,0,0.00%
-126,Whiskie,1,15.00%
+126,Whiskie,2,12.50%
 127,Whiskers,1,9.00%
 128,Whiskeroar,0,0.00%
 129,Nincada,3,7.00%
-130,Ninjask,0,0.00%
+130,Ninjask,1,2.00%
 131,Shedinja,0,0.00%
 132,Sheltor,15,14.33%
 133,Shelnado,3,17.67%
@@ -1298,12 +1315,12 @@ Mt. Splinkty (Outside) (Standard)
 270,Metapod,0,0.00%
 271,Butterfree,0,0.00%
 272,Metapod-X,0,0.00%
-273,Butterfree-X,2,8.50%
+273,Butterfree-X,3,7.00%
 274,Bronzor,0,0.00%
 275,Bronzong,0,0.00%
 276,Bronzor-X,6,11.50%
 277,Bronzong-X,0,0.00%
-278,Capsakid,6,7.17%
+278,Capsakid,7,6.71%
 279,Scovillain,0,0.00%
 280,Despenero,0,0.00%
 281,Capsakid-S,7,12.29%
