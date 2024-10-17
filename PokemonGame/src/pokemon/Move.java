@@ -580,16 +580,47 @@ public enum Move {
 	ZAP_CANNON(120,50,100,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false,5),
 	ZEN_HEADBUTT(80,90,30,0,0,0,PType.PSYCHIC,"% of causing foe to flinch",true,15),
 	ZING_ZAP(80,100,30,0,0,0,PType.ELECTRIC,"% of causing foe to flinch",true,15),
-	;
 	
-	public static Move getMove(String moveName) {
-	    for (Move move : Move.values()) {
-	        if (move.toString().equalsIgnoreCase(moveName)) {
-	            return move;
-	        }
-	    }
-	    return null;
-	}
+	HP_ROCK(60,100,0,0,1,0,PType.ROCK,"Calc only move",false,15),
+	HP_FIRE(60,100,0,0,1,0,PType.FIRE,"Calc only move",false,15),
+	HP_WATER(60,100,0,0,1,0,PType.WATER,"Calc only move",false,15),
+	HP_GRASS(60,100,0,0,1,0,PType.GRASS,"Calc only move",false,15),
+	HP_ICE(60,100,0,0,1,0,PType.ICE,"Calc only move",false,15),
+	HP_ELECTRIC(60,100,0,0,1,0,PType.ELECTRIC,"Calc only move",false,15),
+	HP_FIGHTING(60,100,0,0,1,0,PType.FIGHTING,"Calc only move",false,15),
+	HP_POISON(60,100,0,0,1,0,PType.POISON,"Calc only move",false,15),
+	HP_GROUND(60,100,0,0,1,0,PType.GROUND,"Calc only move",false,15),
+	HP_FLYING(60,100,0,0,1,0,PType.FLYING,"Calc only move",false,15),
+	HP_PSYCHIC(60,100,0,0,1,0,PType.PSYCHIC,"Calc only move",false,15),
+	HP_BUG(60,100,0,0,1,0,PType.BUG,"Calc only move",false,15),
+	HP_GHOST(60,100,0,0,1,0,PType.GHOST,"Calc only move",false,15),
+	HP_DRAGON(60,100,0,0,1,0,PType.DRAGON,"Calc only move",false,15),
+	HP_STEEL(60,100,0,0,1,0,PType.STEEL,"Calc only move",false,15),
+	HP_DARK(60,100,0,0,1,0,PType.DARK,"Calc only move",false,15),
+	HP_LIGHT(60,100,0,0,1,0,PType.LIGHT,"Calc only move",false,15),
+	HP_MAGIC(60,100,0,0,1,0,PType.MAGIC,"Calc only move",false,15),
+	HP_GALACTIC(60,100,0,0,1,0,PType.GALACTIC,"Calc only move",false,15),
+	
+	RETURN_ROCK(70,100,0,0,0,0,PType.ROCK,"Calc only move",true,15),
+	RETURN_FIRE(70,100,0,0,0,0,PType.FIRE,"Calc only move",true,15),
+	RETURN_WATER(70,100,0,0,0,0,PType.WATER,"Calc only move",true,15),
+	RETURN_GRASS(70,100,0,0,0,0,PType.GRASS,"Calc only move",true,15),
+	RETURN_ICE(70,100,0,0,0,0,PType.ICE,"Calc only move",true,15),
+	RETURN_ELECTRIC(70,100,0,0,0,0,PType.ELECTRIC,"Calc only move",true,15),
+	RETURN_FIGHTING(70,100,0,0,0,0,PType.FIGHTING,"Calc only move",true,15),
+	RETURN_POISON(70,100,0,0,0,0,PType.POISON,"Calc only move",true,15),
+	RETURN_GROUND(70,100,0,0,0,0,PType.GROUND,"Calc only move",true,15),
+	RETURN_FLYING(70,100,0,0,0,0,PType.FLYING,"Calc only move",true,15),
+	RETURN_PSYCHIC(70,100,0,0,0,0,PType.PSYCHIC,"Calc only move",true,15),
+	RETURN_BUG(70,100,0,0,0,0,PType.BUG,"Calc only move",true,15),
+	RETURN_GHOST(70,100,0,0,0,0,PType.GHOST,"Calc only move",true,15),
+	RETURN_DRAGON(70,100,0,0,0,0,PType.DRAGON,"Calc only move",true,15),
+	RETURN_STEEL(70,100,0,0,0,0,PType.STEEL,"Calc only move",true,15),
+	RETURN_DARK(70,100,0,0,0,0,PType.DARK,"Calc only move",true,15),
+	RETURN_LIGHT(70,100,0,0,0,0,PType.LIGHT,"Calc only move",true,15),
+	RETURN_MAGIC(70,100,0,0,0,0,PType.MAGIC,"Calc only move",true,15),
+	RETURN_GALACTIC(70,100,0,0,0,0,PType.GALACTIC,"Calc only move",true,15),
+	;
 	
 	public static Move moveOfType(PType type) {
 		for (Move m : values()) {
@@ -608,6 +639,19 @@ public enum Move {
 	public int pp;
 	public int priority;
 	public int secondary;
+	
+	public static final int DUMMY_MOVES_AMOUNT = 38;
+	
+	public static Move[] getAllMoves() {
+		Move[] allMoves = values();
+		
+		int validMoveCount = allMoves.length - DUMMY_MOVES_AMOUNT;
+		Move[] validMoves = new Move[validMoveCount];
+		
+		System.arraycopy(allMoves, 0, validMoves, 0, validMoveCount);
+		
+		return validMoves;
+	}
 	
 	Move(int bp, int acc, int sec, int crit, int cat, int p, PType type, String desc, boolean contact, int pp){
 		this.basePower = bp;

@@ -218,6 +218,8 @@ public class TileManager {
 		loadMap("/maps/school03.txt", 164, true);
 		loadMap("/maps/school04.txt", 165, true);
 		loadMap("/maps/icy_path.txt", 166, true);
+		loadMap("/maps/gate02.txt", 167, true);
+		loadMap("/maps/gelb_cavern.txt", 168, true);
 	}
 	
 	private void setupCollisionRectangles() {

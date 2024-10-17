@@ -1895,23 +1895,6 @@ public class PlayerCharacter extends Entity {
 			String onoff = p.ghost ? "on!" : "off.";
 			JOptionPane.showMessageDialog(null, "Walk-through-walls mode was turned " + onoff);
 			SwingUtilities.getWindowAncestor(cheats).dispose();
-//		} else if (code.equals("R")) {
-//			for (Pokemon p : p.team) {
-//				if (p != null) {
-//					for (int i = 0; i < p.movebank.length; i++) {
-//						Node current = p.movebank[i];
-//						while (current != null) {
-//							Move[] options = Move.values();
-//							Random random = new Random();
-//							int index = random.nextInt(options.length);
-//							current.data = options[index];
-//							current = current.next;
-//							
-//						}
-//					}
-//				}
-//			}
-//			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("LIGMA")) {
 			for (Pokemon pokemon : p.team) {
 				if (pokemon != null) pokemon.heal();

@@ -163,6 +163,12 @@ public class EventHandler {
 			if (hit(13,77,9)) teleport(162, 31, 45, false);
 			if (hit(162,31,46)) teleport(13, 77, 10, false);
 			
+			// Sicab River to gate to Peaceful Park
+			if (hit(13,86,74)) teleport(167, 23, 40,false);
+			if (hit(167,22,40)) teleport(13, 85, 74,false);
+			if (hit(167,37,40)) teleport(33, 10, 68,false);
+			if (hit(33,9,68)) teleport(167, 36, 40,false);
+			
 			// Mt. Splinkty
 			if (hit(24,73,63)) teleport(25, 73, 69,true);
 			if (hit(25,73,69)) teleport(24, 73, 63,true);
@@ -793,6 +799,10 @@ public class EventHandler {
 			// Gelb Forest 1 -> 2
 			if (hit(11,42,77)) teleport(144, 11, 28,false);
 			if (hit(144,10,28)) teleport(11, 41, 77,false);
+			
+			// Gelb Cavern Exit
+			if (hit(11,75,26)) teleport(168, 59, 74,true);
+			if (hit(168,59,74)) teleport(11, 75, 26,true);
 			
 			// Shadow Path -> Shadow Cavern
 			if (hit(105,12,46)) teleport(150, 54, 77,false);

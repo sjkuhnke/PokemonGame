@@ -1169,7 +1169,7 @@ public class Pokemon implements Serializable {
 		    result = new Pokemon(id + 1, this);
 		} else if (id == 259 && level >= 26) {
             result = new Pokemon(id + 1, this);
-		} else if (id == 261 && spaceEat >= 5) {
+		} else if (id == 261 && spaceEat >= 25) {
 		    result = new Pokemon(id + 1, this);
 		} else if (id == 265 && level >= 42) {
             result = new Pokemon(id + 1, this);
@@ -1703,7 +1703,7 @@ public class Pokemon implements Serializable {
 		}
 		if (move == Move.METRONOME) {
 			useMove(move, foe);
-			Move[] moves = Move.values();
+			Move[] moves = Move.getAllMoves();
 			move = moves[new Random().nextInt(moves.length)];
 			bp = move.basePower;
 			acc = move.accuracy;
@@ -2440,7 +2440,7 @@ public class Pokemon implements Serializable {
 		
 		if (move == Move.MAGIC_BLAST) {
 			ArrayList<Move> moves = new ArrayList<>();
-			for (Move cand : Move.values()) {
+			for (Move cand : Move.getAllMoves()) {
 				if (cand.mtype == PType.ROCK || cand.mtype == PType.GRASS || cand.mtype == PType.GROUND) {
 					moves.add(cand);
 				}
@@ -2450,7 +2450,7 @@ public class Pokemon implements Serializable {
 		}
 		if (move == Move.ELEMENTAL_SPARKLE) {
 			ArrayList<Move> moves = new ArrayList<>();
-			for (Move cand : Move.values()) {
+			for (Move cand : Move.getAllMoves()) {
 				if (cand.mtype == PType.FIRE || cand.mtype == PType.WATER || cand.mtype == PType.GRASS) {
 					moves.add(cand);
 				}
@@ -4839,7 +4839,7 @@ public class Pokemon implements Serializable {
 		if (mode == 0 && (move == Move.MAGIC_BLAST || move == Move.ELEMENTAL_SPARKLE)) {
 			if (move == Move.MAGIC_BLAST) {
 				ArrayList<Move> moves = new ArrayList<>();
-				for (Move cand : Move.values()) {
+				for (Move cand : Move.getAllMoves()) {
 					if (cand.mtype == PType.ROCK || cand.mtype == PType.GRASS || cand.mtype == PType.GROUND) {
 						moves.add(cand);
 					}
@@ -4850,7 +4850,7 @@ public class Pokemon implements Serializable {
 			}
 			if (move == Move.ELEMENTAL_SPARKLE) {
 				ArrayList<Move> moves = new ArrayList<>();
-				for (Move cand : Move.values()) {
+				for (Move cand : Move.getAllMoves()) {
 					if (cand.mtype == PType.FIRE || cand.mtype == PType.WATER || cand.mtype == PType.GRASS) {
 						moves.add(cand);
 					}
@@ -7405,7 +7405,7 @@ public class Pokemon implements Serializable {
 		case 255: return "Duosion-X -> Reuniclus-X (lv. 41)";
 		case 257: return "Seviper -> Hissimitar\n(5+ Tail Move Crits in Trainer Battles)";
 		case 259: return "Gulpin -> Swalot (lv. 26)";
-		case 261: return "Gulpin-X -> Swalot-X\n(5+ Galactic Moves Eaten in Trainer Battles)";
+		case 261: return "Gulpin-X -> Swalot-X\n(25+ Galactic Moves Eaten in Trainer Battles)";
 		case 263: return "Plasamp -> Genieova ()";
 		case 265: return "Elgyem -> Beheeyem (lv. 42)";
 		case 267: return "Elgyem-E -> Beheeyem-E (lv. 42)";

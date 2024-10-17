@@ -392,7 +392,7 @@ public class BattleUI extends AbstractUI {
 			break;
 		case Task.NICKNAME:
 			currentDialogue = currentTask.message;
-			setNickname(currentTask.p);
+			setNickname(currentTask.p, true);
 			if (nicknaming == 0) {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
