@@ -1005,19 +1005,27 @@ public class PlayerCharacter extends Entity {
 				Task t = Pokemon.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?");
 				t.counter = 2;
 				// Millie 2
-				t = Pokemon.addTask(Task.TURN, "");
+				t = Pokemon.addTask(Task.TURN, this, "");
 				t.counter = 2;
 				Pokemon.addTask(Task.DIALOGUE, npc, "There's this weird kid that's been in a trance blocking the way to the tower. He hasn't moved an inch, almost like he's guarding the place.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "I've heard him mutter a few things. \"Toxic\", \"Get decked\", it's off-putting.");
+				t = Pokemon.addTask(Task.TURN, gp.npc[28][1], "");
+				t.counter = 3;
+				t.start = 28;
+				t.finish = 1;
 				Pokemon.addTask(Task.DIALOGUE, npc, "Wait, that's your rival? Maybe he'll recognize you, try saying something that'll, I don't know, make him angry!");
 				Pokemon.addTask(Task.DIALOGUE, npc, "Y'know, like in method acting! Give it a shot.");
-				t = Pokemon.addTask(Task.TURN, "");
+				t = Pokemon.addTask(Task.TURN, this, "");
 				t.counter = 1;
+				t = Pokemon.addTask(Task.TURN, gp.npc[28][1], "");
+				t.counter = 1;
+				t.start = 28;
+				t.finish = 1;
 				Pokemon.addTask(Task.DIALOGUE, npc, "...");
-				t = Pokemon.addTask(Task.TURN, "");
+				t = Pokemon.addTask(Task.TURN, this, "");
 				t.counter = 2;
 				Pokemon.addTask(Task.DIALOGUE, npc, "AHHH! HE'S DEFINITELY AWAKE NOW! JEEZ, WHAT DID YOU EVEN SAY!?");
-				t = Pokemon.addTask(Task.TURN, "");
+				t = Pokemon.addTask(Task.TURN, this, "");
 				t.counter = 1;
 				t = Pokemon.addTask(Task.FLAG, "");
 				t.start = 2;
@@ -1050,8 +1058,7 @@ public class PlayerCharacter extends Entity {
 						Pokemon.addTask(Task.DIALOGUE, npc, "OHHH! YOU! I'm so sorry, that was a reflex, there's so many of them.");
 						if (!p.flag[2][9]) {
 							Pokemon.addTask(Task.DIALOGUE, npc, "Any luck finding the grunt? ..I've been holding them off okay.");
-							Pokemon.addTask(Task.DIALOGUE, npc, "Like I said, ");
-							Pokemon.addTask(Task.DIALOGUE, npc, "I believe that there's a secret room that you can access on the 2nd floor, check that out if you haven't yet.");
+							Pokemon.addTask(Task.DIALOGUE, npc, "Like I said, before, I believe that there's a secret room that you can access on the 2nd floor, check that out if you haven't yet.");
 						} else {
 							Pokemon.addTask(Task.DIALOGUE, npc, "You found him? How'd it go? Are you and your Pokemon okay?");
 							Pokemon.addTask(Task.DIALOGUE, npc, "You got wire cutters? Quick, let's try and cut that creature free and stop this madness!");
@@ -1269,14 +1276,14 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.DIALOGUE, npc, "Oh... thank Arceus you're here. I was afraid I wouldn't make it through this.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "Those thugs - Team Eclipse - stormed in, demanding something that I don't fully understand.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "You beat them, right? Why are they still here? Can you do anything?");
-				Task t = Pokemon.addTask(Task.TURN, "");
+				Task t = Pokemon.addTask(Task.TURN, this, "");
 				t.counter = 0;
 				Pokemon.addTask(Task.SPEAK, this, "Get out, you creeps! Leave us alone. I already destroyed your flimsy Pokemon, you want some more?");
 				Pokemon.addTask(Task.SPEAK, this, "Didn't think so. Then, GET!");
 				Pokemon.addTask(Task.FLASH_IN, "");
 				Pokemon.addTask(Task.UPDATE, "");
 				Pokemon.addTask(Task.FLASH_OUT, "");
-				t = Pokemon.addTask(Task.TURN, "");
+				t = Pokemon.addTask(Task.TURN, this, "");
 				t.counter = 1;
 				Pokemon.addTask(Task.DIALOGUE, npc, "Thank you Finn, I don't know what I would've done without you.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "They said something about summoning an Ultra Paradox Pokemon... I think it's some dangerous creature they're after.");
