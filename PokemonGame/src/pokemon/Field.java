@@ -381,6 +381,16 @@ public class Field {
 		return result;
 	}
 	
+	/**
+	 * A method solely used for checking if the AI should click Brick Break/Magic Reflect even if it isn't most damage
+	 * @param side to check for screens, foe to check for magic reflect
+	 * @return true if there is a screen or magic reflect up, false if not
+	 */
+	public boolean hasScreens(ArrayList<FieldEffect> side, Pokemon foe) {
+		ArrayList<FieldEffect> result = getScreens(side);
+		return !result.isEmpty() || foe.vStatuses.contains(Status.REFLECT);
+	}
+	
 	public int getLayers(ArrayList<FieldEffect> side, Effect effect) {
 		for (FieldEffect e : side) {
 			if (e.effect == effect) {

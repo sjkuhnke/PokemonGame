@@ -1364,6 +1364,13 @@ public enum Item {
 			    		if (result == JOptionPane.OK_OPTION) {
 			    			Move selectedMove = (Move) moveComboBox.getSelectedItem();
 			    			current.moveset[kndex] = new Moveslot(selectedMove);
+			    			if (selectedMove.isCalcHiddenPowerReturn()) {
+			    				int cHP = current.currentHP;
+			    				current.ivs = Pokemon.determineOptimalIVs(selectedMove.mtype);
+			    				current.setStats();
+			    				int nHP = current.getStat(0);
+			    				current.currentHP += nHP - cHP;
+			    			}
 			    		}
 			    		updateMoves(current, moves, damages, foe, statLabels, stages, speed, currentHP, HPP, crit, currentAbility, currentItem);
 			    	}

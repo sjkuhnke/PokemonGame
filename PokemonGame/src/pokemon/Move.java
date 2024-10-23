@@ -7,9 +7,12 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import pokemon.Field.Effect;
 
 public enum Move {
 	ABDUCT(0,100,0,0,2,0,PType.GALACTIC,"Abducts the foe and forces their next move to be used on themselves. Can be used once every other turn, and not on the first turn out.",false,5),
@@ -211,7 +214,7 @@ public enum Move {
 	GRAVITY(0,1000,0,0,2,0,PType.GALACTIC,"Sets GRAVITY for 6 turns, in which the accuracy of all Pokemon is increased",false,10),
 	GRAVITY_PUNCH(40,100,0,0,0,2,PType.PSYCHIC,"Always goes first with extra priority. Still works in PSYCHIC TERRAIN.",true,5),
 	GROWL(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack by 1",false,35),
-	GROWTH(0,1000,0,0,2,0,PType.GRASS,"Raises user's Attack and Sp.Atk by 1",false,15),
+	GROWTH(0,1000,0,0,2,0,PType.GRASS,"Raises user's Attack and Sp.Atk by 1, 2 each in the SUN",false,15),
 	GUILLOTINE(0,30,0,0,0,0,PType.NORMAL,"If this move hits, it always K.Os foe",true,5),
 	GUNK_SHOT(120,80,30,0,0,0,PType.POISON,"% chance to Poison foe",false,5),
 	GUST(40,100,0,0,1,0,PType.FLYING,"A normal attack",false,30),
@@ -629,6 +632,7 @@ public enum Move {
 		return Move.STRUGGLE;
 	}
 	
+	public int id;
 	public int accuracy;
 	public int basePower;
 	public int cat;
@@ -640,6 +644,7 @@ public enum Move {
 	public int priority;
 	public int secondary;
 	
+	private static int globalID = 0;
 	public static final int DUMMY_MOVES_AMOUNT = 38;
 	
 	public static Move[] getAllMoves() {
@@ -664,6 +669,12 @@ public enum Move {
 		this.desc = desc;
 		this.contact = contact;
 		this.pp = pp;
+		
+		setID();
+	}
+	
+	private void setID() {
+		this.id = globalID++;
 	}
 
 	public String formatbp(Pokemon user, Pokemon foe) {
@@ -1035,4 +1046,88 @@ public enum Move {
 		}
 		return false;
 	}
+	
+	boolean isBinding() {
+		ArrayList<Move> result = new ArrayList<>();
+		result.add(JAW_LOCK);
+		result.add(FIRE_SPIN);
+		result.add(WHIRLPOOL);
+		result.add(BIND);
+		result.add(WRAP);
+		result.add(INFESTATION);
+		
+		if (result.contains(this)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isCalcHiddenPowerReturn() {
+        return this.superToString().contains("HP") || this.superToString().contains("HIDDEN_POWER") || this.superToString().contains("RETURN");
+    }
+	
+	public static boolean treatAsStatus(Move m, Pokemon me, Pokemon foe) {
+		// covert cloak or shield dust make secondary 0
+		// sparkly terrain + grounded or serene grace make secondary 2x
+		double effectiveness = Trainer.getEffective(foe, m.mtype, false);
+		if (effectiveness == 0) return false;
+		int sec = m.secondary;
+		if (foe.item == Item.COVERT_CLOAK) sec = 0;
+		if (foe.ability == Ability.SHIELD_DUST && me.ability != Ability.MOLD_BREAKER) sec = 0;
+		if (Pokemon.field.equals(Pokemon.field.terrain, Effect.SPARKLY) && me.isGrounded()) sec *= 2;
+		if (me.ability == Ability.SERENE_GRACE) sec *= 2;
+		if (m == Move.MAGIC_FANG && effectiveness < 2) return false;
+		
+		// *** unimplemented moves primarily used for secondary effects: Circle Throw, Dragon Tail, Fatal Bind, Spectral Thief ***
+		if (sec > 0) {
+			if (m.secondary == 100) {
+				if (m.isBinding() && !foe.vStatuses.contains(Status.SPUN) && !foe.vStatuses.contains(Status.TRAPPED)) {
+					return true;
+				}
+				// Foe lowering moves (same as self boosting)
+				if (m == Move.BREAKING_SWIPE || m == Move.ACID_SPRAY || m == Move.BULLDOZE || m == Move.ELECTROWEB || m == Move.GLACIATE || m == Move.ICY_WIND || m == Move.LOW_SWEEP ||
+						m == Move.MUD_SHOT || m == Move.MUD$SLAP || m == Move.MYSTICAL_FIRE || m == Move.ROCK_SMASH || m == Move.ROCK_TOMB || m == Move.SNARL ||
+						m == Move.SPIRIT_BREAK || m == Move.STAFF_JAB || m == Move.STRUGGLE_BUG || m == Move.SUMMIT_STRIKE || m == Move.VINE_CROSS) {
+					return true;
+				}
+				if (foe.ability != Ability.STICKY_HOLD || me.ability == Ability.MOLD_BREAKER) {
+					if (m == Move.BUG_BITE || m == Move.PLUCK || m == Move.INCINERATE) return true;
+				}
+				if (Pokemon.field.hasScreens(Pokemon.field.playerSide, foe)) {
+					if (m == Move.BRICK_BREAK || m == Move.PSYCHIC_FANGS) return true;
+				}
+				// Foe inflicting status moves (potentially add checks for if they're already statused)
+				if (m == Move.MAGIC_CRASH || m == Move.MOLTEN_CONSUME || m == Move.NUZZLE || m == Move.MORTAL_SPIN || m == Move.VENOM_SPIT) {
+					return true;
+				}
+				// Spin moves
+				if (m == Move.RAPID_SPIN && !Pokemon.field.getHazards(Pokemon.field.foeSide).isEmpty()) {
+					return true;
+				}
+				// Self boosting moves (potentially add AI later if they're already at +6 in the stat by sending them through the other stat boosting check block in Pokemon.bestMove())
+				if (m == Move.FLAME_CHARGE || m == Move.POWER$UP_PUNCH || m == Move.SCALE_SHOT || m == Move.SWORD_SPIN || m == Move.TORNADO_SPIN) {
+					return true;
+				}
+				// Ability changing moves
+				if (m == Move.SLOW_FALL && me.ability != Ability.LEVITATE) {
+					return true;
+				}
+				if (m == Move.SMACK_DOWN && !foe.isGrounded()) {
+					return true;
+				}
+				if (m == Move.SPARKLING_ARIA && me.status == Status.BURNED) {
+					return true;
+				}
+				if (m == Move.ROCKFALL_FRENZY && !Pokemon.field.contains(Pokemon.field.playerSide, Effect.STEALTH_ROCKS)) {
+					return true;
+				}
+				
+				return false;
+			}
+			return new Random().nextInt(100) < sec;
+		} else {
+			return false;
+		}
+	}
+
 }

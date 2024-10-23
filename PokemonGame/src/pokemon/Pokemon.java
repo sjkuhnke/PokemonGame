@@ -582,10 +582,7 @@ public class Pokemon implements Serializable {
         			bestMoves.add(move);
         		}
         	}
-        	if (move.cat == 2 || move == Move.NUZZLE || move == Move.SWORD_SPIN || move == Move.POWER$UP_PUNCH || move == Move.VENOM_SPIT
-        			|| move == Move.FATAL_BIND || move == Move.MOLTEN_CONSUME || move == Move.TORNADO_SPIN
-        			|| ((move == Move.WHIRLPOOL || move == Move.WRAP || move == Move.BIND || move == Move.FIRE_SPIN)
-        					&& !foe.vStatuses.contains(Status.SPUN))) {
+        	if (move.cat == 2 || Move.treatAsStatus(move, this, foe)) {
         		if (move.accuracy > 100) {
         			Pokemon freshYou = this.clone();
         			freshYou.statStages = new int[freshYou.statStages.length];
@@ -637,11 +634,27 @@ public class Pokemon implements Serializable {
 	
 
 	private ArrayList<Move> modifyStatus(ArrayList<Move> bestMoves, Pokemon foe) {
+		ArrayList<Move> checkForImmunity = new ArrayList<Move>(bestMoves);
+		Collections.shuffle(checkForImmunity);
+		for (Move m : checkForImmunity) {
+			if (bestMoves.size() > 1 && Trainer.getEffective(foe, m.mtype, true) == 0 && m.accuracy <= 100) bestMoves.removeIf(m::equals);
+		}
+		
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.THUNDER_WAVE) && foe.type1 == PType.GROUND || foe.type2 == PType.GROUND) bestMoves.removeIf(Move.THUNDER_WAVE::equals);
+		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.STICKY_WEB) && field.contains(field.playerSide, Effect.STICKY_WEBS)) bestMoves.removeIf(Move.STICKY_WEB::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.STEALTH_ROCK) && field.contains(field.playerSide, Effect.STEALTH_ROCKS)) bestMoves.removeIf(Move.STEALTH_ROCK::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPIKES) && field.getLayers(field.playerSide, Effect.SPIKES) == 3) bestMoves.removeIf(Move.SPIKES::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TOXIC_SPIKES) && field.getLayers(field.playerSide, Effect.TOXIC_SPIKES) == 2) bestMoves.removeIf(Move.TOXIC_SPIKES::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.DEFOG) && field.getHazards(field.foeSide).isEmpty() && field.getScreens(field.playerSide).isEmpty() && field.terrain == null) bestMoves.removeIf(Move.DEFOG::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.DEFOG)) {
+			if (field.getHazards(field.foeSide).isEmpty() && field.getScreens(field.playerSide).isEmpty() && field.terrain == null) {
+				bestMoves.removeIf(Move.DEFOG::equals);
+			} else {
+				bestMoves.add(Move.DEFOG);
+				bestMoves.add(Move.DEFOG);
+				bestMoves.add(Move.DEFOG);
+			}
+		}
 		
 		ArrayList<Move> noRepeat = Move.getNoComboMoves();
 		for (Move m : noRepeat) {
@@ -2296,8 +2309,10 @@ public class Pokemon implements Serializable {
 				if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
 				if (move == Move.SUNNY_DOOM) field.setWeather(field.new FieldEffect(Effect.SUN));
 				if (this.vStatuses.contains(Status.BONDED)) {
-					addTask(Task.TEXT, foe.nickname + " took its attacker down with it!");
-					this.faint(true, foe);
+					this.damage(this.currentHP, foe, foe.nickname + " took its attacker down with it!");
+					if (this.currentHP <= 0) {
+						this.faint(true, foe);
+					}
 				}
 				if (this.ability == Ability.MOXIE) {
 					addAbilityTask(this);
@@ -4146,12 +4161,6 @@ public class Pokemon implements Serializable {
 				if (announce) addAbilityTask(p);
 				stat(this, i, amt, foe);
 				return;
-			} else if (p.ability == Ability.DEFIANT && foe.ability != Ability.BRAINWASH && a < 0) {
-				if (announce) addAbilityTask(p);
-				stat(p, 0, 2, foe);
-			} else if (p.ability == Ability.COMPETITIVE && foe.ability != Ability.BRAINWASH && a < 0) {
-				if (announce) addAbilityTask(p);
-				stat(p, 2, 2, foe);
 			} else if (p.ability == Ability.CLEAR_BODY && a < 0) {
 				if (announce) addAbilityTask(p);
 				if (announce) addTask(Task.TEXT, p.nickname + "'s " + type + " was not lowered!");
@@ -4190,6 +4199,16 @@ public class Pokemon implements Serializable {
 			addTask(Task.TEXT, p.nickname + " ate its " + p.item + " to restore its " + type + "!");
 			p.stat(p, i, Math.abs(difference), foe, true);
 			p.consumeItem(foe);
+		}
+		
+		if (this != p) {
+			if (p.ability == Ability.DEFIANT && foe.ability != Ability.BRAINWASH && a < 0) {
+				if (announce) addAbilityTask(p);
+				stat(p, 0, 2, foe);
+			} else if (p.ability == Ability.COMPETITIVE && foe.ability != Ability.BRAINWASH && a < 0) {
+				if (announce) addAbilityTask(p);
+				stat(p, 2, 2, foe);
+			}
 		}
 	}
 
@@ -6505,43 +6524,47 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static int[] determineOptimalIVs(PType hpType) {
-		// initialization for error message
-		Pokemon tempPokemon = new Pokemon(1, 5, true, false);
-	    int[] ivs = null;
-		
-	    // get target index
-	    int targetIndex = hpType.ordinal() - 1;
-	    
-	    // find range of sums that map to target type index
-	    int lowerBoundSum = (targetIndex * 63) / 18;
-	    int upperBoundSum = ((targetIndex + 1) * 63) / 18 - 1;
+        if (hpType == PType.NORMAL || hpType == PType.UNKNOWN) {
+            return new int[] {31, 31, 31, 31, 31, 31};
+        }
+        
+        // initialization for error message
+        Pokemon tempPokemon = new Pokemon(1, 5, true, false);
+        int[] ivs = null;
+        
+        // get target index
+        int targetIndex = hpType.ordinal() - 1;
+        
+        // find range of sums that map to target type index
+        int lowerBoundSum = (targetIndex * 63) / 18;
+        int upperBoundSum = ((targetIndex + 1) * 63) / 18 - 1;
 
-	    // iterate from highest possible sum to lowest
-	    for (int sum = upperBoundSum; sum >= lowerBoundSum; sum--) {
-	        // create new array
-	        ivs = new int[6];
-	        int tempSum = sum;
+        // iterate from highest possible sum to lowest
+        for (int sum = upperBoundSum; sum >= lowerBoundSum; sum--) {
+            // create new array
+            ivs = new int[6];
+            int tempSum = sum;
 
-	        // try to assign highest set of ivs
-	        for (int i = 5; i >= 0; i--) {
-	            if ((tempSum & (1 << i)) != 0) {
-	                ivs[i] = 31; // max iv if bit is set
-	            } else {
-	                ivs[i] = 30; // highest even iv to not set the bit
-	            }
-	        }
+            // try to assign highest set of ivs
+            for (int i = 5; i >= 0; i--) {
+                if ((tempSum & (1 << i)) != 0) {
+                    ivs[i] = 31; // max iv if bit is set
+                } else {
+                    ivs[i] = 30; // highest even iv to not set the bit
+                }
+            }
 
-	        // verification
-	        tempPokemon.ivs = ivs;
-	        if (tempPokemon.determineHPType() == hpType) {
-	            return ivs;
-	        }
-	        
-	    }
-	    
-	    // if no iv set is found (we're fucked)
-	    throw new IllegalStateException("The algorithm returned an array of " + Arrays.toString(ivs) + " which resulted in HP " + tempPokemon.determineHPType() + " instead of " + hpType);
-	}
+            // verification
+            tempPokemon.ivs = ivs;
+            if (tempPokemon.determineHPType() == hpType) {
+                return ivs;
+            }
+            
+        }
+        
+        // if no iv set is found (we're fucked)
+        throw new IllegalStateException("The algorithm returned an array of " + Arrays.toString(ivs) + " which resulted in HP " + tempPokemon.determineHPType() + " instead of " + hpType);
+    }
 	
 	private PType determineWBType() {
 		PType result = PType.NORMAL;
@@ -6916,7 +6939,7 @@ public class Pokemon implements Serializable {
 		return multiplier;
 	}
 
-	private boolean isGrounded() {
+	public boolean isGrounded() {
 		boolean result = true;
 		if (this.type1 == PType.FLYING || this.type2 == PType.FLYING) result = false;
 		if (this.item == Item.AIR_BALLOON) result = false;
@@ -7272,7 +7295,7 @@ public class Pokemon implements Serializable {
 		case 13: return "Pigo -> Pigonat (lv. 17)";
 		case 14: return "Pigonat -> Pigoga (lv. 32)";
 		case 16: return "Hammo -> HammyBoy (Knows Bulk Up)";
-		case 17: return "HammyBoy -> Hamthorno (lv. up in Shadow Ravine Heart)";
+		case 17: return "HammyBoy -> Hamthorno (lv. in Shadow Ravine Heart)";
 		case 19: return "Sheabear -> Dualbear (lv. 20)";
 		case 20: return "Dualbear -> Spacebear (lv. 40)";
 		case 22: return "Bealtle -> Centatle (lv. 18)";
@@ -7373,7 +7396,7 @@ public class Pokemon implements Serializable {
 		case 190: return "Blobmo -> Nebulimb (lv. 40)";
 		case 191: return "Nebulimb -> Galactasolder (lv. 60)";
 		case 193: return "Consodust -> Cosmocrash (Ice Stone)";
-		case 195: return "Rockmite -> Stellarock (lv. up in Shadow Ravine Heart)";
+		case 195: return "Rockmite -> Stellarock (lv. in Shadow Ravine Heart)";
 		case 197: return "Poof-E -> Hast-E (lv. 32)";
 		case 199: return "Droid-E -> Armoid-E (lv. 25)";
 		case 200: return "Armoid-E -> Soldrota-E (lv. 50)";

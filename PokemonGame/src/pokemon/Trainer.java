@@ -244,9 +244,9 @@ public class Trainer implements Serializable {
 		return false;
 	}
 	
-	public boolean resists(Pokemon p, PType type) {
-		if (p.isFainted()) return false;
-		double multiplier = p.getEffectiveMultiplier(type);
+	public static double getEffective(Pokemon p, PType type, boolean onlyCheckAbility) {
+		double multiplier = 1;
+		if (!onlyCheckAbility) multiplier = p.getEffectiveMultiplier(type);
 		if (p.ability == Ability.DRY_SKIN && type == PType.WATER) multiplier = 0;
 		if (p.ability == Ability.BLACK_HOLE && (type == PType.LIGHT || type == PType.GALACTIC)) multiplier = 0;
 		if (p.ability == Ability.ILLUMINATION && (type == PType.GHOST || type == PType.DARK || type == PType.LIGHT || type == PType.GALACTIC)) multiplier *= 0.5;
@@ -256,6 +256,7 @@ public class Trainer implements Serializable {
 		if (p.ability == Ability.UNWAVERING && (type == PType.DARK || type == PType.GHOST)) multiplier *= 0.5;
 		if (p.ability == Ability.INSECT_FEEDER && type == PType.BUG) multiplier = 0;
 		if (p.ability == Ability.LEVITATE && type == PType.GROUND) multiplier = 0;
+		if (p.item == Item.AIR_BALLOON && type == PType.GROUND) multiplier = 0;
 		if (p.ability == Ability.LIGHTNING_ROD && type == PType.ELECTRIC) multiplier = 0;
 		if (p.ability == Ability.MOTOR_DRIVE && type == PType.ELECTRIC) multiplier = 0;
 		if (p.ability == Ability.SAP_SIPPER && type == PType.GRASS) multiplier = 0;
@@ -265,7 +266,12 @@ public class Trainer implements Serializable {
 		if (p.ability == Ability.MOSAIC_WINGS && multiplier == 1.0) multiplier = 0.5;
 		if (p.ability == Ability.WONDER_GUARD && multiplier < 2.0) multiplier = 0;
 		
-		return multiplier < 1;
+		return multiplier;
+	}
+	
+	public boolean resists(Pokemon p, PType type) {
+		if (p.isFainted()) return false;
+		return getEffective(p, type, false) < 1;
 	}
 	
 	private void swap(Pokemon oldP, Pokemon newP) {
