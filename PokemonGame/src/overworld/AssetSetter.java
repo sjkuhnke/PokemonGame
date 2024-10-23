@@ -545,7 +545,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(8, 45, Item.ULTRA_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 18, Item.LOADED_DICE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 46, Item.SUPER_POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(56, 37, Item.TERRAIN_EXTENDER, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(56, 37, Item.THROAT_SPRAY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 17, Item.SUPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 42, Item.PARALYZE_HEAL, mapNum);
 		
