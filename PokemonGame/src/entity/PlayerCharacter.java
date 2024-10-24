@@ -1292,7 +1292,7 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.DIALOGUE, npc, "Oh! But before you go, I have a gift for you.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "Take this, it's the HM for Slow Fall. It should help you out exploring Xhenos once you take down Mindy.");
 				t = Pokemon.addTask(Task.ITEM, "");
-				t.item = Item.HM04;
+				t.item = Item.HM05;
 				Pokemon.addTask(Task.DIALOGUE, npc, "Be careful out there. These aren't just ordinary trainers - they're after something far more dangerous than I've ever seen.");
 			} else {
 				Pokemon.addTask(Task.DIALOGUE, npc, "Still here, eh? You'd better hurry to Peaceful Park before those Team Eclipse thugs cause even more trouble.");

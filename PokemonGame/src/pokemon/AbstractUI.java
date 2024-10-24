@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 
 import entity.Entity;
 import overworld.GamePanel;
+import overworld.UI;
 import pokemon.Pokemon.Task;
 
 public abstract class AbstractUI {
@@ -66,9 +67,14 @@ public abstract class AbstractUI {
 			width = gp.screenWidth - (gp.tileSize*4);
 			height = gp.tileSize * 4;
 		} else {
-			x = 0;
+			if (this instanceof UI) {
+				x = gp.tileSize*2;
+				width = gp.screenWidth - (gp.tileSize*4);
+			} else {
+				x = 0;
+				width = gp.screenWidth;
+			}
 			y = gp.screenHeight - (gp.tileSize*4);
-			width = gp.screenWidth;
 			height = gp.tileSize * 4;
 		}
 		
