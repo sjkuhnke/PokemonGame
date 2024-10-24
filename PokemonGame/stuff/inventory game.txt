@@ -46,10 +46,6 @@ Trainers to redo:
 257
 270-275
 
-Dialogues to add:
-All of above
-142-145
-
 Player: Finn
 Dad: Stellan Lund
 Mom: Astrid Solberg
@@ -493,7 +489,7 @@ Before
 
 "A battle of skill and grace - shall we begin?"
 "Let's have a proper match, with honor and style."
-"I may be older, but I'm still quite the capable trainer!"
+""
 "Let's see if you can keep up with my well-trained Pokemon."
 "A good match is a true test of character. Let's give it our all!"
 "Good form, good strategy - that's all it takes. Prepare yourself."
@@ -502,7 +498,7 @@ After
 
 "Well fought! You've certainly earned my respect."
 "A loss, but a graceful one. I'll improve for next time!"
-"You've bested me, but I still maintain my honor."
+""
 "I tip my hat to you, a battle well-fought."
 "Even in defeat, I'll keep my composure and train harder."
 "A defeat, yes, but hardly a disgrace. I'll return better."
@@ -512,7 +508,7 @@ Lady (Any)
 Before Battle:
 
 ""
-"A little battle before tea? I suppose I can entertain you."
+""
 "Don't be fooled by my appearance. I have elegance and strength!"
 "You look like you could use a good lesson in class... and battling!"
 "Charming as you may be, my Pokemon are far superior!"
@@ -520,7 +516,7 @@ Before Battle:
 After Battle:
 
 ""
-"Well, that was... unexpected. I shall reconsider my strategy."
+""
 "I suppose even the best of us lose sometimes..."
 "You've won, but you lack the refinement of a true lady."
 "How vexing! I'll need to make some adjustments."
@@ -529,7 +525,7 @@ After Battle:
 Maniac (Ghost)
 Before Battle:
 
-"You ever feel like something's watching you... even when you're alone?"
+""
 "My Ghost Pokemon will haunt your dreams! You won't stand a chance!"
 "You're about to face something beyond the living... Are you ready?"
 "This battle will chill you to the bone! My Ghosts are ready!"
@@ -538,7 +534,7 @@ Before Battle:
 "The dead tell no tales, but I'll make sure you remember this battle!"
 After Battle:
 
-"The spirits aren't pleased with this loss... but they'll return stronger!"
+""
 "You beat me? Impossible! The ghosts will have their revenge!"
 "I've been bested... but you haven't seen the last of my haunted team."
 "I'll have to consult with the spirits... they won't be happy about this."

@@ -477,8 +477,8 @@ public class UI extends AbstractUI {
 			x = gp.tileSize*2;
 			y = (int) (gp.tileSize * 4.5);
 		} else {
-			x = 0;
-			y = gp.screenHeight - (gp.tileSize*4);
+			x = gp.tileSize*10;
+			y = (int) (gp.screenHeight - (gp.tileSize*5.5));
 		}
 		width = gp.tileSize*4;
 		height = (int) (gp.tileSize * 1.5);
@@ -867,12 +867,12 @@ public class UI extends AbstractUI {
 		int sumY = (int) (gp.tileSize * 3.25);
 
 		ArrayList<Move> forgottenMoves = new ArrayList<>();
+		Node[] movebank = p.getMovebank();
         for (int i = 0; i < p.getLevel(); i++) {
-        	Node[] movebank = p.getMovebank();
         	if (i < movebank.length) {
         		Node move = movebank[i];
         		while (move != null) {
-        			if (!p.knowsMove(move.data) && forgottenMoves.contains(move.data)) {
+        			if (!p.knowsMove(move.data) && !forgottenMoves.contains(move.data)) {
         				forgottenMoves.add(move.data);
         			}
         			move = move.next;
@@ -905,6 +905,7 @@ public class UI extends AbstractUI {
 				y += gp.tileSize * 0.6;
 				String moveString = move.toString();
 				g2.setColor(Color.BLACK);
+				g2.setFont(g2.getFont().deriveFont(getFontSize(moveString, moveWidth + 16)));
 				g2.drawString(moveString, getCenterAlignedTextX(moveString, x + (moveWidth / 2)), y);
 				y += gp.tileSize / 3;
 			}
@@ -2498,7 +2499,7 @@ public class UI extends AbstractUI {
 				} else {
 					gp.gameState = GamePanel.TASK_STATE;
 				}
-
+				
 				gp.currentMap = gp.eHandler.tempMap;
 				gp.player.worldX = gp.tileSize * gp.eHandler.tempCol;
 				gp.player.worldY = gp.tileSize * gp.eHandler.tempRow;
@@ -2513,7 +2514,7 @@ public class UI extends AbstractUI {
 			gp.player.p.surf = false;
 			gp.player.p.lavasurf = false;
 			
-			gp.aSetter.updateNPC(gp.currentMap);
+			gp.aSetter.updateNPC(gp.eHandler.tempMap);
 			gp.aSetter.resetNPCDirection(gp.currentMap);
 			gp.aSetter.setInteractiveTile(gp.currentMap);
 			

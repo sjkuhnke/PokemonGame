@@ -914,6 +914,7 @@ public enum Move {
 		result.add(DRAGON_RUSH);
 		result.add(SLAM);
 		result.add(WRAP);
+		result.add(VENOSTEEL_CROSSCUT);
 		
 		if (result.contains(this)) {
 			return true;

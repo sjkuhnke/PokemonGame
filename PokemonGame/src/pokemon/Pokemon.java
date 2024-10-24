@@ -5148,7 +5148,7 @@ public class Pokemon implements Serializable {
 		if (moveType == PType.STEEL && this.vStatuses.contains(Status.LOADED)) bp *= 2;
 		
 		// Multi hit moves calc to use
-		if (mode == 0) bp *= move.getNumHits(this, null);
+		if (mode == 0) bp *= move.getNumHits(this, this.trainer.team);
 		
 		// Crit Check
 		if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
@@ -6764,15 +6764,12 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		Pokemon faster = this.getFaster(foe, 0, 0);
-		Pokemon slower = faster == this ? this : foe;
-		
-		if (faster.item == Item.WHITE_HERB) {
-			faster.handleWhiteHerb(userStages, slower);
+		if (this.item == Item.WHITE_HERB) {
+			this.handleWhiteHerb(userStages, foe);
 		}
 		
-		if (slower.item == Item.WHITE_HERB) {
-			slower.handleWhiteHerb(foeStages, faster);
+		if (foe.item == Item.WHITE_HERB) {
+			foe.handleWhiteHerb(foeStages, this);
 		}
 		
 		if (gp.player.p.pokedex[this.id] < 1) gp.player.p.pokedex[this.id] = 1;
