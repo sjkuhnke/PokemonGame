@@ -454,6 +454,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(55, 70, Item.RUSTY_BOTTLE_CAP, mapNum);
 		
 		mapNum = 28;
+		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(18, 46, mapNum, 5, 15);
 		gp.obj[mapNum][objIndex] = ObjSetup(15, 43, Item.ANTIDOTE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(25, 46, Item.TM83, mapNum); // captivate
@@ -471,6 +472,11 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = StatBerrySetup(42, 26, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = StatBerrySetup(79, 19, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = ObjSetup(82, 19, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(73, 65, Item.LONELY_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(86, 85, Item.NAIVE_MINT, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 71, Item.ICE_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(89, 75, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(89, 68, Item.TINY_MUSHROOM, mapNum);
 		
 		mapNum = 33;
 		objIndex = 0;
@@ -1285,8 +1291,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 66, 49, "..!", "...", 376, LEFT + UP); // ground
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 73, 51, "..!", "...", 385, LEFT + UP + DOWN); // galactic
 		
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 75, 69, "", "", 202);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 78, 83, "", "", 203);
+		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_RIGHT, 75, 69, "Bugs have hidden strength! You're about to find out!", "You may have won, but my bugs are still awesome!", 202, UP + LEFT + RIGHT);
+		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_RIGHT, 78, 83, "Get ready, 'cause my Normal-types are anything but boring!", "Okay, okay... you're right. My Seviper doesn't really fit in.", 203);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 83, 33, "", "", -1);
 		gp.npc[mapNum][index++] = null; // millie 5
 		
@@ -1318,13 +1324,13 @@ public class AssetSetter {
 		}
 		
 		gp.npc[mapNum][index] = SetupStaticEncounter(286, 33, 61, 391, 131, "Bloooghawooooooooarooo!"); // UP Shookwat
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 49, 78, "", "", 195);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 40, 84, "", "", 196);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 35, 73, "", "", 197);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 22, 81, "", "", 198);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 25, 45, "", "", 199);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 32, 41, "", "", 200);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 41, 44, "", "", 201);
+		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_DOWN, 49, 78, "My bugs are ready for battle, and they're itching for a fight!", "I'll come back with more bugs, and next time I won't lose!", 195, ALL);
+		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_DOWN, 40, 84, "Nature's on my side, and so are my Pokemon!", "I guess it wasn't my day... Time to pack up and train harder.", 196, ALL);
+		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_LEFT, 35, 73, "I love a good outdoor battle in a beautiful park. Let's have some fun!", "I guess my Pokemon need a bit more sunshine and training.", 197, ALL);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 22, 81, "My Pokemon are sturdy like the earth... try and break through!", "I've been knocked down, but I'll get back up and keep hiking!", 198, ALL);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 25, 45, "I play to win, and I'm not holding back!", "Looks like you outran me this time. Well played!", 199, ALL);
+		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_RIGHT, 32, 41, "Let's see if you can handle my Bug and Grass Pokemon!", "Well, that battle didn't go as planned, but I won't give up!", 200, ALL);
+		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_LEFT, 41, 44, "A sunny day, a perfect picnic, and a battle with you - let's go!", "Looks like I'll have to plan a new strategy for next time!", 201, ALL);
 		
 		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 71, 18, "You're about to be eclipsed by the brilliance of the universe!", "You've won this time, but the cosmos never stays the same for long.", 269);
 		
@@ -1483,7 +1489,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_LEFT, 50, 52, "It's surf time! Let's hang ten... over your defeat!", "You've got skills, dude. Respect!", 154, ALL);
 		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_LEFT, 86, 33, "A bit of illusion, a touch of flair... and a victory for me!", "I'll make sure this defeat disappears from memory.", 155);
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_UP, 67, 31, "I'm as smooth as the sea. Try to keep up!", "This wave knocked me down, but I'll catch the next one!", 156, ALL);
-		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_RIGHT, 74, 61, "I've caught rare Pokemon in the deepest seas. You won't stand a chance!", "You're one tough catch... Guess I need to reel it in.", 157);
+		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_RIGHT, 74, 61, "I've caught rare Pokemon in the deepest seas. You won't stand a chance!", "You're one tough catch... Guess I need to reel it in.", 157, ALL);
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 37, 45, "Ready to make a splash? I'll be the tidal wave that crashes you!", "Guess I'll need more laps to catch up to you.", 158, ALL);
 		gp.npc[mapNum][index] = NPCSetup(ACTOR_DOWN, 18, 20, "Let's see if you can handle the spotlight!", "This scene's not over yet. I'll be back for a sequel.", 159);
 		gp.npc[mapNum][index] = NPCSetup(ACTRESS_UP, 18, 24, "Get ready for a dazzling display of skill!", "A tragic ending... but every story has one.", 160);

@@ -1869,11 +1869,16 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (((moveType == PType.ELECTRIC && (foeAbility == Ability.MOTOR_DRIVE || foeAbility == Ability.LIGHTNING_ROD)) ||
-					(moveType == PType.GRASS && foeAbility == Ability.SAP_SIPPER)) && !(move.cat == 2 && acc > 100)) {
+					(moveType == PType.GRASS && foeAbility == Ability.SAP_SIPPER) || (moveType == PType.FIRE && foeAbility == Ability.HEAT_COMPACTION)) &&
+					!(move.cat == 2 && acc > 100)) {
 				addAbilityTask(foe);
 				if (foeAbility == Ability.MOTOR_DRIVE) stat(foe, 4, 1, this);
 				if (foeAbility == Ability.LIGHTNING_ROD) stat(foe, 2, 1, this);
 				if (foeAbility == Ability.SAP_SIPPER) stat(foe, 0, 1, this);
+				if (foeAbility == Ability.HEAT_COMPACTION) {
+					stat(foe, 1, 1, this);
+					stat(foe, 3, 1, this);
+				}
 				endMove();
 				this.moveMultiplier = 1;
 				return;
@@ -4974,7 +4979,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if ((moveType == PType.ELECTRIC && (foeAbility == Ability.MOTOR_DRIVE || foeAbility == Ability.LIGHTNING_ROD)) ||
-				(moveType == PType.GRASS && foeAbility == Ability.SAP_SIPPER)) {
+				(moveType == PType.GRASS && foeAbility == Ability.SAP_SIPPER) || (moveType == PType.FIRE && foeAbility == Ability.HEAT_COMPACTION)) {
 			return 0;
 		}
 		

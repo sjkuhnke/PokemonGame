@@ -251,9 +251,9 @@
 -3 |Solosis      |PSYCHIC |null    |MAGIC_GUARD       |EMPATHIC_LINK     |REGENERATOR       |[45, 30, 40, 105, 50, 20]     |2.2   |200|
 -4 |Duosion      |PSYCHIC |null    |MAGIC_GUARD       |EMPATHIC_LINK     |REGENERATOR       |[65, 40, 50, 125, 60, 30]     |17.6  |100|
 -5 |Reuniclus    |PSYCHIC |null    |MAGIC_GUARD       |EMPATHIC_LINK     |REGENERATOR       |[110, 65, 75, 125, 85, 30]    |44.3  |50 |
-86 |Solosis-X    |LIGHT   |null    |RADIANT           |PIXILATE          |MIRROR_ARMOR      |[45, 20, 45, 105, 55, 20]     |11.2  |200|
-87 |Duosion-X    |LIGHT   |null    |RADIANT           |PIXILATE          |MIRROR_ARMOR      |[60, 25, 60, 125, 65, 35]     |56.3  |100|
-88 |Reuniclus-X  |LIGHT   |null    |RADIANT           |PIXILATE          |MIRROR_ARMOR      |[70, 75, 55, 125, 70, 95]     |78.0  |50 |
+86 |Solosis-X    |LIGHT   |null    |RADIANT           |HEAT_COMPACTION   |PIXILATE          |[45, 20, 45, 105, 55, 20]     |11.2  |200|
+87 |Duosion-X    |LIGHT   |null    |RADIANT           |HEAT_COMPACTION   |PIXILATE          |[60, 25, 60, 125, 65, 35]     |56.3  |100|
+88 |Reuniclus-X  |LIGHT   |null    |RADIANT           |HEAT_COMPACTION   |PIXILATE          |[70, 75, 55, 125, 70, 95]     |78.0  |50 |
 172|Seviper      |POISON  |null    |SHARP_TAIL        |MERCILESS         |SHED_SKIN         |[73, 100, 60, 100, 60, 65]    |115.7 |90 |
 173|Hissimitar   |POISON  |STEEL   |SHARP_TAIL        |MERCILESS         |SHARPNESS         |[78, 140, 79, 70, 63, 105]    |224.1 |45 |
 -6 |Gulpin       |POISON  |null    |STICKY_HOLD       |GOOEY             |SIMPLE            |[80, 43, 53, 43, 53, 40]      |22.7  |225|

@@ -260,6 +260,7 @@ public class Trainer implements Serializable {
 		if (p.ability == Ability.LIGHTNING_ROD && type == PType.ELECTRIC) multiplier = 0;
 		if (p.ability == Ability.MOTOR_DRIVE && type == PType.ELECTRIC) multiplier = 0;
 		if (p.ability == Ability.SAP_SIPPER && type == PType.GRASS) multiplier = 0;
+		if (p.ability == Ability.HEAT_COMPACTION && type == PType.FIRE) multiplier = 0;
 		if (p.ability == Ability.THICK_FAT && (type == PType.FIRE || type == PType.ICE)) multiplier *= 0.5;
 		if (p.ability == Ability.VOLT_ABSORB && type == PType.ELECTRIC) multiplier = 0;
 		if (p.ability == Ability.WATER_ABSORB && type == PType.WATER) multiplier = 0;

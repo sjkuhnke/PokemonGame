@@ -41,6 +41,7 @@ public enum Ability {
 	GRASSY_SURGE("Turns the ground into GRASSY TERRAIN when the Pokemon enters a battle."),
 	GRAVITATION("Creates GRAVITY when the Pokemon enters a battle."),
 	GUTS("Boosts the Attack stat if the Pokemon has a status condition."),
+	HEAT_COMPACTION("Raises Defense and Sp.Def if hit by an FIRE move."),
 	HUGE_POWER("Doubles the Pokemon's Attack stat."),
 	HYDRATION("Cures the Pokemon's status conditions in RAIN."),
 	HYPER_CUTTER("Prevents other Pokemon from lowering Attack stat."),
