@@ -265,14 +265,14 @@ Before Battle:
 
 ""
 "I'm always at my peak, and this battle will prove it!"
-"I play to win, and I'm not holding back!"
+""
 "Think you can keep up with my high-energy Pokemon? Let's see!"
 "Time to turn up the heat and shock you with my skills!"
 After Battle:
 
 ""
 "Even the best athletes lose sometimes... but I'll come back stronger!"
-"Looks like you outran me this time. Well played!"
+""
 "A defeat won't slow me down. I'll train harder!"
 "You won the battle, but I'll be back in top form soon!"
 
@@ -282,14 +282,14 @@ Before:
 "I've hiked through mountains, and my Pokemon are as tough as rock!"
 "The ground trembles under my feet, and so will you!"
 "I've trained in the toughest conditions! Let's see if you can handle it!"
-"My Pokemon are sturdy like the earth... try and break through!"
+""
 ""
 After:
 
 "Guess I've got to go back to training in the mountains..."
 "You're strong, but I'll come back tougher than ever!"
 "That loss was rough, but I'll climb back up to the top!"
-"I've been knocked down, but I'll get back up and keep hiking!"
+""
 ""
 
 Burglar (Crook/Dark)
@@ -349,8 +349,8 @@ After Battle:
 Bug Catcher (Bug)
 Before Battle:
 
-"Bugs have hidden strength! You're about to find out!"
-"My bugs are ready for battle, and they're itching for a fight!"
+""
+""
 "Bugs might be small, but they're full of surprises!"
 "I caught these bugs myself! They're gonna swarm you!"
 "My bugs are stronger than they look! Let's battle!"
@@ -358,8 +358,8 @@ Before Battle:
 "Ready to get tangled up in my web of bug tactics?"
 After Battle:
 
-"You may have won, but my bugs are still awesome!"
-"I'll come back with more bugs, and next time I won't lose!"
+""
+""
 "My bugs fought hard... I guess it's back to the forest for more training."
 "Next time, I'll have even more bugs to battle with!"
 "I'll raise my bugs to be stronger... We'll win next time!"
@@ -369,18 +369,18 @@ After Battle:
 Picnicker (Bug/Grass)
 Before
 
-"Nature's on my side, and so are my Pokemon!"
-"A sunny day, a perfect picnic, and a battle with you - let's go!"
-"Let's see if you can handle my Bug and Grass Pokemon!"
-"I love a good outdoor battle. Let's have some fun!"
+""
+""
+""
+""
 "My Pokemon may seem small, but they're full of surprises!"
 "Don't underestimate me just because I'm relaxing!"
 After
 
-"I guess it wasn't my day... Time to pack up and train harder."
-"Looks like I'll have to plan a new strategy for next time!"
-"Well, that battle didn't go as planned, but I won't give up!"
-"I guess my Pokemon need a bit more sunshine and training."
+""
+""
+""
+""
 "You won this time, but I'll come back with even stronger partners!"
 "I'll work up an appetite for victory next time!"
 
@@ -628,7 +628,7 @@ Youngster (Normal/Poison)
 Before
 
 ""
-"Get ready, 'cause my Normal-types are anything but boring!"
+""
 ""
 ""
 "I'm not scared! My Pokemon and I are ready for anything!"
@@ -658,7 +658,7 @@ Before
 After
 
 ""
-"Okay, okay... I guess you're pretty good."
+""
 ""
 ""
 "That didn't go like I planned... But I'll come back stronger!"
