@@ -33,6 +33,7 @@ public class NPC_Pokemon extends Entity {
 			up1 = setup(path + "_2");
 			right1 = setup(path + "_3");
 		}
+		down2 = setup("/overworlds/invis");
 	}
 	
 	public void turnRandom() {

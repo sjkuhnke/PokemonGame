@@ -221,6 +221,7 @@ public class Player extends Trainer implements Serializable {
 		if (lead.vStatuses.contains(Status.HEALING)) team[index].vStatuses.add(Status.HEALING);
 		if (lead.vStatuses.contains(Status.WISH)) team[index].vStatuses.add(Status.WISH);
 		lead.clearVolatile();
+		if (lead.ability == Ability.ILLUSION) lead.illusion = true; // just here for calc
 		this.current = pokemon;
 		
 		this.team[0] = pokemon;

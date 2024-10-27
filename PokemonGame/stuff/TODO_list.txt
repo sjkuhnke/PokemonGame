@@ -35,11 +35,4 @@ Make Magic weak to Dark
 New Story
 Add Klara and Fred's house to Sicab City
 
-Fix Illusion working in calc (have it say true outside of battling actively)
-Make Sky Uppercut super-effective against flying types
 Make map05 (lava lake) to the left 3-4 tiles
-Make Roost give a "Landed" status that at the end of the turn will replace unknown type back with Flying
-fix energy plant pt 2 tile next to whirlpool
-2 items next to this chest on the same tile: pp max is 1 of them on Gelb Forest chest area
-add haze AI
-ADD LUCKY CHANT

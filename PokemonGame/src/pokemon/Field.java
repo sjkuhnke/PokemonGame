@@ -51,6 +51,7 @@ public class Field {
 		TOXIC_SPIKES(-1, false, false),
 		STICKY_WEBS(-1, false, false),
 		SAFEGUARD(8, false, false),
+		LUCKY_CHANT(8, false, false),
 		WATER_SPORT(8, false, false),
 		MUD_SPORT(8, false, false),
 		;
@@ -155,6 +156,8 @@ public class Field {
 				return new Color(249, 85, 135);
 			case SAFEGUARD:
 				return new Color(168, 167, 122);
+			case LUCKY_CHANT:
+				return new Color(188, 210, 232);
 			case SANDSTORM:
 				return new Color(182, 161, 54);
 			case SNOW:

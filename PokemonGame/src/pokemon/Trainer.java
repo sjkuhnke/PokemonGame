@@ -284,6 +284,7 @@ public class Trainer implements Serializable {
 		if (oldP.vStatuses.contains(Status.HEALING)) newP.vStatuses.add(Status.HEALING);
 		if (oldP.vStatuses.contains(Status.WISH)) newP.vStatuses.add(Status.WISH);
 		oldP.clearVolatile();
+		if (oldP.ability == Ability.ILLUSION) oldP.illusion = true; // just here for calc
 		this.current = newP;
 		Pokemon.addSwapInTask(newP, newP.currentHP);
 		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();

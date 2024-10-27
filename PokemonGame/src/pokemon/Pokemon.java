@@ -678,6 +678,9 @@ public class Pokemon implements Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.LIGHT_SCREEN) && field.contains(field.foeSide, Effect.LIGHT_SCREEN)) bestMoves.removeIf(Move.LIGHT_SCREEN::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_VEIL) && (field.contains(field.foeSide, Effect.AURORA_VEIL) || !field.equals(field.weather, Effect.SNOW))) bestMoves.removeIf(Move.AURORA_VEIL::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.SAFEGUARD) && field.contains(field.foeSide, Effect.SAFEGUARD)) bestMoves.removeIf(Move.SAFEGUARD::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.LUCKY_CHANT) && field.contains(field.foeSide, Effect.LUCKY_CHANT)) bestMoves.removeIf(Move.LUCKY_CHANT::equals);
+		
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.HAZE) && arrayGreaterOrEqual(new int[] {0, 0, 0, 0, 0, 0, 0}, foe.statStages) && arrayGreaterOrEqual(statStages, new int[] {0, 0, 0, 0, 0, 0, 0})) bestMoves.removeIf(Move.HAZE::equals);
 		
 		if (bestMoves.size() > 1 && (bestMoves.contains(Move.ROOST) || bestMoves.contains(Move.SYNTHESIS) || bestMoves.contains(Move.MOONLIGHT) || bestMoves.contains(Move.MORNING_SUN) ||
 				bestMoves.contains(Move.RECOVER) || bestMoves.contains(Move.SLACK_OFF) || bestMoves.contains(Move.WISH) || bestMoves.contains(Move.REST) ||
@@ -1925,7 +1928,6 @@ public class Pokemon implements Serializable {
 			
 			if (foe.magCount > 0) foe.magCount--;
 			
-			
 			if (move == Move.DREAM_EATER && foe.status != Status.ASLEEP) {
 				addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 				endMove();
@@ -2089,7 +2091,7 @@ public class Pokemon implements Serializable {
 			if (this.ability == Ability.SUPER_LUCK) critChance++;
 			if (item == Item.SCOPE_LENS) critChance++;
 			if (this.ability == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC)) critChance = 3; 
-			if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && critCheck(critChance)) {
+			if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && !field.contains(enemySide, Effect.LUCKY_CHANT) && critCheck(critChance)) {
 				addTask(Task.TEXT, "A critical hit!");
 				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++;
 				if (foe.trainerOwned() && move.isTail()) tailCrit++;
@@ -2131,12 +2133,13 @@ public class Pokemon implements Serializable {
 			double multiplier = 1;
 			// Check type effectiveness
 			PType[] resist = getResistances(moveType);
-			if (move == Move.FREEZE$DRY) {
+			if (move == Move.FREEZE$DRY || move == Move.SKY_UPPERCUT) {
 				ArrayList<PType> types = new ArrayList<>();
 				for (PType type : resist) {
 					types.add(type);
 				}
-				types.remove(PType.WATER);
+				if (move == Move.FREEZE$DRY) types.remove(PType.WATER);
+				if (move == Move.SKY_UPPERCUT) types.remove(PType.FLYING);
 				resist = types.toArray(new PType[0]);
 			}
 			
@@ -2154,13 +2157,18 @@ public class Pokemon implements Serializable {
 			
 			// Check type effectiveness
 			PType[] weak = getWeaknesses(moveType);
-			if (move == Move.FREEZE$DRY) {
+			if (move == Move.FREEZE$DRY || move == Move.SKY_UPPERCUT) {
 				PType[] temp = new PType[weak.length + 1];
 				for (int i = 0; i < weak.length; i++) {
 					temp[i] = weak[i];
 				}
-				temp[weak.length] = PType.WATER;
+				if (move == Move.FREEZE$DRY) temp[weak.length] = PType.WATER;
+				if (move == Move.SKY_UPPERCUT) temp[weak.length] = PType.FLYING;
 				weak = temp;
+			}
+			for (PType type : weak) {
+				if (foe.type1 == type) multiplier *= 2;
+				if (foe.type2 == type) multiplier *= 2;
 			}
 			for (PType type : weak) {
 				if (foe.type1 == type) multiplier *= 2;
@@ -3695,6 +3703,13 @@ public class Pokemon implements Serializable {
 			stat(this, 5, 6, foe, announce);
 		} else if (announce && move == Move.LOVELY_KISS) {
 			foe.sleep(true, this);
+		} else if (announce && move == Move.LUCKY_CHANT) {
+			if (!(field.contains(userSide, Effect.LUCKY_CHANT))) {
+				userSide.add(field.new FieldEffect(Effect.LUCKY_CHANT));
+				if (announce) addTask(Task.TEXT, "The Lucky Chant shielded the team from critical hits!");
+			} else {
+				fail = fail(announce);
+			}
 		} else if (announce && move == Move.MAGIC_POWDER) {
 			foe.type1 = PType.MAGIC;
 			foe.type2 = null;
@@ -3869,11 +3884,25 @@ public class Pokemon implements Serializable {
 				this.vStatuses.remove(Status.CONFUSED);
 				heal(healAmt, this.nickname + " slept and became healthy!");
 			}
-		} else if (announce && (move == Move.ROOST || move == Move.RECOVER || move == Move.SLACK_OFF)) {
+		} else if (announce && (move == Move.RECOVER || move == Move.SLACK_OFF)) {
 			if (this.currentHP == this.getStat(0)) {
 				if (announce) addTask(Task.TEXT, this.nickname + "'s HP is full!");
 			} else {
 				heal(getHPAmount(1.0/2), this.nickname + " restored HP.");
+			}
+		} else if (announce && (move == Move.ROOST)) {
+			if (this.currentHP == this.getStat(0)) {
+				if (announce) addTask(Task.TEXT, this.nickname + "'s HP is full!");
+			} else {
+				heal(getHPAmount(1.0/2), this.nickname + " restored HP.");
+				if (this.type1 == PType.FLYING) {
+					this.type1 = PType.UNKNOWN;
+					this.vStatuses.add(Status.LANDED);
+				}
+				if (this.type2 == PType.FLYING) {
+					this.type2 = PType.UNKNOWN;
+					this.vStatuses.add(Status.LANDED);
+				}
 			}
 		} else if (move == Move.SAND_ATTACK) {
 			stat(foe, 5, -1, this, announce);
@@ -5158,7 +5187,8 @@ public class Pokemon implements Serializable {
 		// Crit Check
 		if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 		if (this.ability == Ability.SUPER_LUCK) critChance++;
-		if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && ((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 3 || crit)))) {
+		if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && !field.contains(enemySide, Effect.LUCKY_CHANT) &&
+				((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 3 || crit)))) {
 			if (move.isPhysical() && attackStat < this.getStat(1)) {
 				attackStat = this.getStat(1);
 				if (this.status == Status.BURNED) attackStat /= 2;
@@ -5194,12 +5224,13 @@ public class Pokemon implements Serializable {
 		double multiplier = 1;
 		// Check type effectiveness
 		PType[] resist = getResistances(moveType);
-		if (move == Move.FREEZE$DRY) {
+		if (move == Move.FREEZE$DRY || move == Move.SKY_UPPERCUT) {
 			ArrayList<PType> types = new ArrayList<>();
 			for (PType type : resist) {
 				types.add(type);
 			}
-			types.remove(PType.WATER);
+			if (move == Move.FREEZE$DRY) types.remove(PType.WATER);
+			if (move == Move.SKY_UPPERCUT) types.remove(PType.FLYING);
 			resist = types.toArray(new PType[0]);
 		}
 		
@@ -5217,12 +5248,13 @@ public class Pokemon implements Serializable {
 		
 		// Check type effectiveness
 		PType[] weak = getWeaknesses(moveType);
-		if (move == Move.FREEZE$DRY) {
+		if (move == Move.FREEZE$DRY || move == Move.SKY_UPPERCUT) {
 			PType[] temp = new PType[weak.length + 1];
 			for (int i = 0; i < weak.length; i++) {
 				temp[i] = weak[i];
 			}
-			temp[weak.length] = PType.WATER;
+			if (move == Move.FREEZE$DRY) temp[weak.length] = PType.WATER;
+			if (move == Move.SKY_UPPERCUT) temp[weak.length] = PType.FLYING;
 			weak = temp;
 		}
 		for (PType type : weak) {
@@ -5584,6 +5616,15 @@ public class Pokemon implements Serializable {
 		this.vStatuses.remove(Status.PROTECT);
 		this.vStatuses.remove(Status.ENDURE);
 		this.vStatuses.remove(Status.SWITCHING);
+		if (this.vStatuses.contains(Status.LANDED)) {
+			if (this.type1 == PType.UNKNOWN) {
+				this.type1 = PType.FLYING;
+			}
+			if (this.type2 == PType.UNKNOWN) {
+				this.type2 = PType.FLYING;
+			}
+			this.vStatuses.remove(Status.LANDED);
+		}
 		boolean result = this.vStatuses.remove(Status.SWAP);
 		if (result) System.out.println(this.nickname + " had swap at the end of the turn (bad)");
 	}
