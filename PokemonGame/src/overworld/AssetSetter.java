@@ -186,10 +186,10 @@ public class AssetSetter {
 	private static final int ASTRONOMER_UP = 201;
 	private static final int ASTRONOMER_LEFT = 202;
 	private static final int ASTRONOMER_RIGHT = 203;
-//	private static final int T = 204;
-//	private static final int T = 205;
-//	private static final int T = 206;
-//	private static final int T = 207;
+	private static final int ARTHRA_DOWN = 204;
+	private static final int ARTHRA_UP = 205;
+	private static final int ARTHRA_LEFT = 206;
+	private static final int ARTHRA_RIGHT = 207;
 //	private static final int T = 208;
 //	private static final int T = 209;
 	
@@ -340,7 +340,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(14, 49, Item.ORAN_BERRY, mapNum, 15, 30);
 		gp.obj[mapNum][objIndex] = SetupChest(51, 25, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(58, 38, Item.NAUGHTY_MINT, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(58, 38, Item.PP_MAX, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(77, 27, Item.PP_MAX, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(79, 39, Item.RARE_CANDY, mapNum);
 		
 		mapNum = 13;
@@ -387,14 +387,16 @@ public class AssetSetter {
 
 		mapNum = 16;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(44, 33, Item.SUPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 33, Item.FOCUS_SASH, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(21, 38, Item.ULTRA_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(22, 27, Item.TM27, mapNum); // taunt
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 27, Item.TM14, mapNum); // drain punch
 		gp.obj[mapNum][objIndex] = ObjSetup(46, 28, Item.BOTTLE_CAP, mapNum);
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(60, 41, Item.WEAKNESS_POLICY, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(62, 32, Item.BLUNDER_POLICY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 43, Item.PP_MAX, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 43, Item.ICE_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(63, 32, Item.BLUNDER_POLICY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 32, Item.FULL_RESTORE, mapNum);
 		if (gp.player.p.choiceChoice != null) gp.obj[mapNum][objIndex] = ObjSetup(77, 41, gp.player.p.choiceChoice, mapNum);
 		
@@ -474,7 +476,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(82, 19, Item.EUPHORIAN_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(73, 65, Item.LONELY_MINT, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(86, 85, Item.NAIVE_MINT, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(67, 71, Item.ICE_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 71, Item.WATER_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(89, 75, Item.REPEL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(89, 68, Item.TINY_MUSHROOM, mapNum);
 		
@@ -1598,7 +1600,7 @@ public class AssetSetter {
 		
 		mapNum = 94;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "There have been 2 meteorites that have crashed into our region.", true, 18, "You should explore the Hearts of the ELECTRIC TUNNEL and SHADOW\nRAVINE. They're really pretty.");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "There have been 2 meteorites that have crashed into our region.", true, 132, "You should explore the Hearts of the ELECTRIC TUNNEL and SHADOW\nRAVINE. They're really pretty.");
 		
 		mapNum = 104;
 		index = 0;
@@ -1661,11 +1663,8 @@ public class AssetSetter {
 		} else {
 			index += 10;
 		}
-		if (!flags[29]) {
-			//gp.npc[mapNum][index] = NPCSetup(ZURROARATR, 50, 58, 346);
-		} else {
-			gp.npc[mapNum][index++] = null;
-		}
+		gp.npc[mapNum][index] = SetupStaticEncounter(289, 50, 59, 391, 226, "Xvringzzi!"); // UP Pheromosa
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 49, 90, "Hmm... you can hide all you want, but I'll still spot you. Tricky little specters... there's nothing unnatural here...", true);
 		
 		
 		mapNum = 109;
@@ -2989,6 +2988,15 @@ public class AssetSetter {
 		}
 		
 		/**
+		 * Sixth Split
+		 */
+		if (flag[5][0] && !flag[5][1]) {
+			gp.npc[107][12] = NPCSetup(ARTHRA_DOWN, "Arthra", 49, 90, "Ugh... alright, fine. Maybe you're not completely useless.", true);
+		} else if (flag[5][1]) {
+			gp.npc[107][12] = null;
+		}
+		
+		/**
 		 * All of this is old and should be removed/reworked
 		 */
 		if (!flags[19] && gp.player.p.grustCount >= 10) {
@@ -3474,6 +3482,18 @@ public class AssetSetter {
 			result = new NPC_PC(gp, true);
 			result.down1 = result.setup("/npc/gauntletbox");
 			break;
+		case ARTHRA_DOWN:
+			result = new T_AceTrainerF(gp, "down", team, messages);
+			break;
+		case ARTHRA_UP:
+			result = new T_AceTrainerF(gp, "up", team, messages);
+			break;
+		case ARTHRA_LEFT:
+			result = new T_AceTrainerF(gp, "left", team, messages);
+			break;
+		case ARTHRA_RIGHT:
+			result = new T_AceTrainerF(gp, "right", team, messages);
+			break;
 		}
 		
 		result.worldX = gp.tileSize*x;
@@ -3625,6 +3645,14 @@ public class AssetSetter {
 				break;
 			case RYDER_UP:
 				result.setupImages("/npc/block");
+				result.setDirection("up");
+				break;
+			case ARTHRA_DOWN:
+				result.setupImages("/npc/arthra");
+				result.setDirection("down");
+				break;
+			case ARTHRA_UP:
+				result.setupImages("/npc/arthra");
 				result.setDirection("up");
 				break;
 		}

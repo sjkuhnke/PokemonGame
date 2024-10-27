@@ -559,6 +559,9 @@ public class EventHandler {
 			if (hit(106,31,33)) teleport(107, 49, 92,false);
 			if (hit(107,49,93)) teleport(106, 31, 34,false);
 			
+			// Arthra Cutscene
+			if (hit(107,49,92) && gp.player.p.flag[4][5] && !gp.player.p.flag[5][0]) gp.player.interactNPC((NPC_Block) gp.npc[107][12]);
+			
 			// Ghostly Woods
 			if (hit(107,57,91)) teleport(107, 26, 81,true); // A
 			if (hit(107,26,81)) teleport(107, 57, 91,true); // A

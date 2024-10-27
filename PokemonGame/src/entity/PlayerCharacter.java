@@ -1301,8 +1301,8 @@ public class PlayerCharacter extends Entity {
 			}
 		} else if (gp.currentMap == 93) { // Move reminder
 			Pokemon.addTask(Task.PARTY, "");
-		} if (gp.currentMap == 94 && !p.flags[18]) {
-			p.flags[18] = true;
+		} else if (gp.currentMap == 94) {
+			p.flag[4][4] = true;
 			Pokemon.addTask(Task.TEXT, "One makes Pokemon surge with electricity, and another casts them in a strange shadow.");
 			Pokemon.addTask(Task.TEXT, "Here's a gift of one of the Pokemon affected!");
 			int[] ids = new int[] {197, 199, 202, 205, 209, 215, 217, 220, 223, 226};
@@ -1317,24 +1317,51 @@ public class PlayerCharacter extends Entity {
 			Pokemon result = new Pokemon(ids[index], 30, true, false);
 			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 			Pokemon.addTask(Task.GIFT, "", result);
-			
-		} if (gp.currentMap == 109 && !p.flags[22]) {
-			p.flags[22] = true;
-			Pokemon.addTask(Task.TEXT, "Here, could you raise it for me?");
-			int[] ids = new int[] {177, 179, 98};
-			Random gift = new Random();
-			int index = gift.nextInt(ids.length - 1);
-			if (p.pokedex[ids[0]] == 2 || p.pokedex[ids[1]] == 2) {
-				Pokemon.addTask(Task.TEXT, "Oh, you already have a " + Pokemon.getName(ids[index]) + "? I'll give it to someone else to look after then.");
-				Pokemon.addTask(Task.TEXT, "Here, take this really rare baby Pokemon instead!");
-				index = 2;
+		} else if (gp.currentMap == 107) {
+			if (!p.flag[5][0]) {
+				Task t = Pokemon.addTask(Task.TURN, npc, "");
+				t.counter = 0;
+				Pokemon.addTask(Task.SPOT, npc, "");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh, didn't expect company out here. You must be here for the same reason, yeah? You've noticed these ghosts swarming the woods?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Name's Arthra, by the way. Merlin's my grandfather; you'll meet him someday if you get that far. Right now, I'm trying to figure out what's causing this mess.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "These ghosts are sneaky, but I've got them down. They're phasing in and out like something's messing with their energy.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "And I'm willing to bet it's no accident.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "But if you're serious about this, let's see if you can keep up. I don't have time to drag around dead weight.");
+				t = Pokemon.addTask(Task.BATTLE, "");
+				t.counter = 392;
+			} else {
+				p.flag[5][1] = true;
+				Pokemon.addTask(Task.DIALOGUE, npc, "But don't get too comfortable with that win. I'll make sure you regret it next time we battle.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You want to play hero here? Be my guest! If you're so great, then take care of those ghosts yourself. I've got better things to do.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh, and here you go, hero! You can probably make far better use of this than I ever could!");
+				Task t = Pokemon.addTask(Task.ITEM, "");
+				t.item = Item.ABILITY_PATCH;
+				Pokemon.addTask(Task.DIALOGUE, npc, "I really hate your hero attitude. You don't know shit. But like I said, have at it here.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Just don't mess it up. And keep an eye out - these ghosts aren't the only threat around here.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "There's something bigger going on, and I'll figure it out - no thanks to you. See you around, hero.");
+				Pokemon.addTask(Task.FLASH_IN, "");
+				Pokemon.addTask(Task.UPDATE, "");
+				Pokemon.addTask(Task.FLASH_OUT, "");
 			}
-			
-			Pokemon result = new Pokemon(ids[index], 1, true, false);
-			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
-			Pokemon.addTask(Task.GIFT, "", result);
-			
-		} if (gp.currentMap == 118) {
+		}
+		if (gp.currentMap == 109 && !p.flags[22]) {
+				p.flags[22] = true;
+				Pokemon.addTask(Task.TEXT, "Here, could you raise it for me?");
+				int[] ids = new int[] {177, 179, 98};
+				Random gift = new Random();
+				int index = gift.nextInt(ids.length - 1);
+				if (p.pokedex[ids[0]] == 2 || p.pokedex[ids[1]] == 2) {
+					Pokemon.addTask(Task.TEXT, "Oh, you already have a " + Pokemon.getName(ids[index]) + "? I'll give it to someone else to look after then.");
+					Pokemon.addTask(Task.TEXT, "Here, take this really rare baby Pokemon instead!");
+					index = 2;
+				}
+				
+				Pokemon result = new Pokemon(ids[index], 1, true, false);
+				Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
+				Pokemon.addTask(Task.GIFT, "", result);
+				
+		}
+		if (gp.currentMap == 118) {
 			Pokemon.addTask(Task.TEXT, "Do you have any fossils for me to resurrect?");
 			Pokemon.addTask(Task.FOSSIL, "Do you have any fossils for me to resurrect?");
 		} if (gp.currentMap == 127) {

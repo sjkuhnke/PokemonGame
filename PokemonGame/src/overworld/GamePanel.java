@@ -25,6 +25,7 @@ import entity.PlayerCharacter;
 import object.InteractiveTile;
 import object.ItemObj;
 import object.TreasureChest;
+import pokemon.Ability;
 import pokemon.Encounter;
 import pokemon.Field;
 import pokemon.Item;
@@ -281,6 +282,7 @@ public class GamePanel extends JPanel implements Runnable {
 					teamTemp[i].weight = teamTemp[i].getWeight();
 					teamTemp[i].setTypes();
 					teamTemp[i].setAbility(teamTemp[i].abilitySlot);
+					if (teamTemp[i].ability == Ability.ILLUSION) teamTemp[i].illusion = true; // just here for calc
 					teamTemp[i].currentHP = teamTemp[i].currentHP > teamTemp[i].getStat(0) ? teamTemp[i].getStat(0) : teamTemp[i].currentHP;
 				}
 				player.p.team[teamTemp[i].slot] = teamTemp[i];
