@@ -31,6 +31,7 @@ Make Poison not resist Bug
 (Not sure about these two)
 Make Galactic resist Dark
 Make Magic weak to Dark
+Make Psychic resist Poison?
 
 New Story
 Add Klara and Fred's house to Sicab City

@@ -2170,10 +2170,6 @@ public class Pokemon implements Serializable {
 				if (foe.type1 == type) multiplier *= 2;
 				if (foe.type2 == type) multiplier *= 2;
 			}
-			for (PType type : weak) {
-				if (foe.type1 == type) multiplier *= 2;
-				if (foe.type2 == type) multiplier *= 2;
-			}
 			
 			if (foeAbility == Ability.WONDER_GUARD && multiplier <= 1) {
 				addAbilityTask(foe);
