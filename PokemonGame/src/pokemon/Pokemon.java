@@ -2029,7 +2029,7 @@ public class Pokemon implements Serializable {
 			
 			if ((field.contains(field.fieldEffects, Effect.MUD_SPORT) && moveType == PType.ELECTRIC) || (field.contains(field.fieldEffects, Effect.WATER_SPORT) && moveType == PType.FIRE)) bp *= 0.33;
 			
-			if (field.equals(field.weather, Effect.SANDSTORM) && this.ability == Ability.SAND_FORCE && (moveType == PType.ROCK || moveType == PType.GROUND || moveType == PType.STEEL)) bp *= 1.3;
+			if (field.equals(field.weather, Effect.SANDSTORM) && this.ability == Ability.SAND_FORCE) bp *= 1.3;
 			
 			if ((field.equals(field.weather, Effect.RAIN) || field.equals(field.weather, Effect.SNOW) || field.equals(field.weather, Effect.SANDSTORM)) && (move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE)) bp *= 0.5;
 			
@@ -3802,8 +3802,12 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.POISON_GAS) {
 			foe.poison(true, this);
 		} else if (announce && move == Move.POISON_POWDER) {
-			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
-				if (announce) addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
+			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS || foe.item == Item.SAFETY_GOGGLES) {
+				if (foe.item == Item.SAFETY_GOGGLES) {
+					if (announce) addTask(Task.TEXT, "It doesn't effect " + foe.nickname + " due to its Safety Goggles!");
+				} else {
+					if (announce) addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
+				}
 				success = false;
 				fail = true;
 				return;
@@ -3824,8 +3828,12 @@ public class Pokemon implements Serializable {
 			foe.type2 = null;
 			if (announce) addTask(Task.TEXT, foe.nickname + "'s type changed to WATER!");
 		} else if (announce && move == Move.STUN_SPORE) {
-			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
-				if (announce) addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
+			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS || foe.item == Item.SAFETY_GOGGLES) {
+				if (foe.item == Item.SAFETY_GOGGLES) {
+					if (announce) addTask(Task.TEXT, "It doesn't effect " + foe.nickname + " due to its Safety Goggles!");
+				} else {
+					if (announce) addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
+				}
 				success = false;
 				fail = true;
 				return;
@@ -3931,6 +3939,7 @@ public class Pokemon implements Serializable {
 				setTypes();
 				setAbility();
 				if (this.playerOwned()) player.pokedex[237] = 2;
+				this.swapIn(foe, false);
 			} else if (id == 237) {
 				stat(this, 0, 1, foe, announce);
 				stat(this, 2, 1, foe, announce);
@@ -3944,8 +3953,12 @@ public class Pokemon implements Serializable {
 			foe.ability = Ability.SIMPLE;
 			if (announce) addTask(Task.TEXT, foe.nickname + "'s ability became Simple!");
 		} else if (announce && move == Move.SLEEP_POWDER) {
-			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS) {
-				if (announce) addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
+			if (foe.type1 == PType.GRASS || foe.type2 == PType.GRASS || foe.item == Item.SAFETY_GOGGLES) {
+				if (foe.item == Item.SAFETY_GOGGLES) {
+					if (announce) addTask(Task.TEXT, "It doesn't effect " + foe.nickname + " due to its Safety Goggles!");
+				} else {
+					if (announce) addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
+				}
 				success = false;
 				fail = true;
 				return;
@@ -5129,7 +5142,7 @@ public class Pokemon implements Serializable {
 		
 		if ((field.contains(field.fieldEffects, Effect.MUD_SPORT) && moveType == PType.ELECTRIC) || (field.contains(field.fieldEffects, Effect.WATER_SPORT) && moveType == PType.FIRE)) bp *= 0.33;
 		
-		if (field.equals(field.weather, Effect.SANDSTORM) && this.ability == Ability.SAND_FORCE && (moveType == PType.ROCK || moveType == PType.GROUND || moveType == PType.STEEL)) bp *= 1.3;
+		if (field.equals(field.weather, Effect.SANDSTORM) && this.ability == Ability.SAND_FORCE) bp *= 1.3;
 		
 		if ((field.equals(field.weather, Effect.RAIN) || field.equals(field.weather, Effect.SNOW) || field.equals(field.weather, Effect.SANDSTORM)) && (move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE)) bp *= 0.5;
 		
@@ -5354,6 +5367,10 @@ public class Pokemon implements Serializable {
 			}
 			
 		} else if (this.status == Status.BURNED && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
+			if (this.ability == Ability.WATER_VEIL) {
+				addAbilityTask(this);
+				addTask(Task.STATUS, Status.HEALTHY, nickname + " became healthy!", this);
+			}
 			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f, this.nickname + " was hurt by its burn!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, f);
@@ -5507,7 +5524,8 @@ public class Pokemon implements Serializable {
 		}
 		if (field.equals(field.weather, Effect.SANDSTORM) && this.type1 != PType.ROCK && this.type1 != PType.STEEL && this.type1 != PType.GROUND
 				&& this.ability != Ability.SAND_FORCE && this.ability != Ability.SAND_RUSH && this.ability != Ability.SAND_VEIL && this.type2 != PType.ROCK 
-				&& this.type2 != PType.STEEL && this.type2 != PType.GROUND && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
+				&& this.type2 != PType.STEEL && this.type2 != PType.GROUND && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN
+				&& this.item != Item.SAFETY_GOGGLES) {
 			this.damage(Math.max(this.getStat(0) * 1.0 / 16, 1), f, this.nickname + " was buffeted by the sandstorm!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, f);

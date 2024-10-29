@@ -1720,11 +1720,11 @@ public class AssetSetter {
 		
 		mapNum = 121;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 34, 42, "", "", 270);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 28, 37, "", "", 271);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 34, 35, "", "", 272);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 34, "You're definitely not strong enough to go up here. Also, the items on the floor are really powerful, so you can only choose one for now.");
-		
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_LEFT, 34, 42, "Only those who can adapt survive - let's see if you're up for the challenge!", "You're strong, but next time, I'll have the upper hand!", 270);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_RIGHT, 28, 37, "Strength isn't enough - you need skill to win this battle!", "You outplayed me this time, but I'll be back even stronger.", 271);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_LEFT, 34, 35, "I've trained with the best, and now you're next!", "Looks like I still have more training to do...", 272);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 34, "You're definitely not strong enough to go up here. Also, the items on the floor are really powerful, so you can only choose one for now.\nIf you're more Physical, check out the left item! Otherwise if you prefer brains over brawn, the right is for you.");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 34, "Hey! This is an exclusive tower for really strong trainers that dedicate their lives to being the very best.\nThe three trainers above are quite strong, but if you want to give it a go, have at it!");
 		mapNum = 122;
 		index = 0;
 		
