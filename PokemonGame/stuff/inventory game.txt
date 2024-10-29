@@ -208,19 +208,19 @@ Before
 
 ""
 ""
-"I've trained with the best, and now you're next!"
-"Only those who can adapt survive - let's see if you're up for the challenge!"
+""
+""
 "Don't think my dragons will go easy on you. They're as tough as they come!"
-"Strength isn't enough - you need skill to win this battle!"
+""
 "My team is balanced, and my strategy is flawless. Good luck!"
 After
 
 ""
 ""
-"Looks like I still have more training to do..."
-"You're strong, but next time, I'll have the upper hand!"
+""
+""
 "I thought I had it all figured out... Guess I need to rethink my strategy."
-"You outplayed me this time, but I'll be back even stronger."
+""
 "Losing isn't the end. It's just a reason to get better!"
 
 Actor (Light/Normal)

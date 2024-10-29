@@ -94,7 +94,7 @@ public enum Ability {
 	REFRIGERATE("NORMAL moves become ICE moves. The power of those moves is boosted a little."),
 	ROCK_HEAD("Prevents recoil damage."),
 	ROUGH_SKIN("Inflicts damage to the Pokemon on contact."),
-	SAND_FORCE("Boosts the power of ROCK, GROUND, and STEEL moves in a SANDSTORM."),
+	SAND_FORCE("Boosts the power of moves in a SANDSTORM."),
 	SAND_RUSH("Boosts the Pokemon's Speed stat in a SANDSTORM."),
 	SAND_STREAM("The Pokemon summons a SANDSTORM when it enters a battle."),
 	SAND_VEIL("When SANDSTORM is active, this Pokemon is evasive."),
