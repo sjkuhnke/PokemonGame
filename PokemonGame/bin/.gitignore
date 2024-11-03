@@ -1,4 +1,7 @@
 /entity/
+/icons/
+/info/
+/interactive/
 /items/
 /maps/
 /masks/
@@ -15,4 +18,3 @@
 /tile/
 /tiles/
 /tools/
-/info/

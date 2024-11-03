@@ -254,7 +254,8 @@ E - Channeling Blow
 41 - Hammer Arm
 46 - Dragon Rush
 50 - Bulk Up
-54 - Crunch
+53 - Crunch
+56 - Sky Uppercut
 59 - Close Combat
 63 - Double-Edge
 66 - Wave Crash
@@ -400,6 +401,7 @@ E - Twister
 27 - Mirror Move
 30 - Glitter Dance
 33 - Air Slash
+35 - Lucky Chant
 
 Evolutions:
 Flashclaw -> Majestiflash (lv. 36)
@@ -431,7 +433,7 @@ E - Dazzling Gleam
 27 - Mirror Move
 30 - Glitter Dance
 33 - Air Slash
-36 - Dazzling Gleam
+35 - Lucky Chant
 41 - Roost
 43 - Prismatic Laser
 46 - Hurricane
@@ -510,7 +512,7 @@ E - Body Slam
 70 - Earthquake
 
 Evolutions:
-HammyBoy -> Hamthorno (lv. up in Shadow Ravine Heart)
+HammyBoy -> Hamthorno (lv. in Shadow Ravine Heart)
 
 ===================
 #018 - Hamthorno                                                                                       [018]
@@ -547,7 +549,7 @@ E - Stealth Rock
 40 - Stealth Rock
 43 - Zen Headbutt
 45 - Rock Slide
-50 - Super Fang
+50 - Sky Uppercut
 53 - Head Smash
 55 - Double-Edge
 57 - Swords Dance
@@ -732,6 +734,7 @@ Base Stats:
 
 Level Up:
 E - Magic Powder
+E - Lucky Chant
 1 - Harden
 1 - Iron Defense
 1 - Magic Blast
@@ -772,7 +775,7 @@ Type:
 Grass / None
 
 Ability:
-Anger Point / Chlorophyll / (Sap Sipper)
+Anger Point / Chlorophyll / (Guts)
 
 Base Stats:
 65 HP / 90 Atk / 85 Def / 50 SpA / 30 SpD / 55 Spe / 375 BST
@@ -799,7 +802,7 @@ Type:
 Grass / Fighting
 
 Ability:
-Anger Point / Chlorophyll / (Sap Sipper)
+Anger Point / Chlorophyll / (Guts)
 
 Base Stats:
 100 HP / 120 Atk / 110 Def / 55 SpA / 35 SpD / 55 Spe / 475 BST
@@ -825,7 +828,8 @@ E - Mach Punch
 47 - Power Whip
 50 - Thunder Punch
 50 - Ice Punch
-53 - Superpower
+53 - Sky Uppercut
+56 - Superpower
 59 - Grassy Terrain
 63 - Wood Hammer
 70 - Outrage
@@ -1139,6 +1143,7 @@ E - Staff Jab
 42 - First Impression
 45 - Detect
 50 - No Retreat
+55 - Sky Uppercut
 
 ===================
 #038 - Busheep                                                                                         [038]
@@ -1158,7 +1163,8 @@ Level Up:
 6 - Leafage
 9 - Endure
 12 - Odor Sleuth
-15 - Protect
+14 - Protect
+17 - Lucky Chant
 19 - Covet
 22 - Leaf Tornado
 24 - Slack Off
@@ -1192,6 +1198,7 @@ E - Horn Leech
 1 - Horn Leech
 1 - Flame Charge
 1 - Covet
+1 - Lucky Chant
 15 - Stomp
 16 - Headbutt
 18 - Frustration
@@ -1226,6 +1233,7 @@ E - Energy Ball
 1 - Light Screen
 1 - Sunny Day
 1 - Covet
+1 - Lucky Chant
 15 - Swift
 18 - Synthesis
 20 - Grassy Terrain
@@ -1292,6 +1300,7 @@ E - Magic Blast
 20 - Covet
 22 - Dizzy Punch
 23 - Encore
+23 - Lucky Chant
 25 - Hypnosis
 25 - Swift
 28 - Knock Off
@@ -1334,6 +1343,7 @@ E - Desolate Void
 20 - Magic Blast
 22 - Dizzy Punch
 23 - Encore
+23 - Lucky Chant
 25 - Hypnosis
 25 - Swift
 28 - Knock Off
@@ -1541,6 +1551,7 @@ Level Up:
 7 - Swift
 9 - Magic Powder
 12 - Aromatherapy
+14 - Lucky Chant
 16 - Sparkly Swirl
 20 - Psybeam
 24 - Heal Pulse
@@ -1570,6 +1581,7 @@ E - Brutal Swing
 7 - Swift
 9 - Magic Powder
 12 - Aromatherapy
+14 - Lucky Chant
 16 - Sparkly Swirl
 20 - Psybeam
 24 - Heal Pulse
@@ -1603,6 +1615,7 @@ E - Magic Reflect
 7 - Swift
 9 - Magic Powder
 12 - Aromatherapy
+14 - Lucky Chant
 16 - Sparkly Swirl
 20 - Psybeam
 24 - Heal Pulse
@@ -1663,6 +1676,7 @@ Base Stats:
 65 HP / 103 Atk / 82 Def / 66 SpA / 79 SpD / 100 Spe / 495 BST
 
 Level Up:
+E - Lucky Chant
 E - Take Down
 1 - Ember
 3 - Tackle
@@ -1743,6 +1757,7 @@ Base Stats:
 
 Level Up:
 E - Knock Off
+1 - Sky Uppercut
 1 - Will-O-Wisp
 15 - Ember
 16 - Flame Wheel
@@ -2082,6 +2097,7 @@ Base Stats:
 
 Level Up:
 E - Swords Dance
+1 - Sky Uppercut
 1 - Teleport
 1 - Growl
 1 - Flash
@@ -2130,7 +2146,8 @@ Level Up:
 12 - Flash
 14 - Swift
 17 - Sweet Kiss
-20 - Charm
+19 - Charm
+21 - Lucky Chant
 24 - Safeguard
 27 - Air Slash
 30 - Sparkly Swirl
@@ -2160,6 +2177,8 @@ E - Air Cutter
 E - Hocus Pocus
 1 - Glittering Tornado
 1 - Mirror Shot
+1 - Lucky Chant
+1 - Safeguard
 5 - Gust
 10 - Glitter Dance
 13 - Feather Dance
@@ -2630,24 +2649,29 @@ Base Stats:
 65 HP / 79 Atk / 67 Def / 103 SpA / 72 SpD / 69 Spe / 455 BST
 
 Level Up:
+1 - Encore
 1 - Charge Beam
 1 - Foresight
 1 - Flash
 1 - Tail Glow
-10 - Light Beam
-15 - Flash Cannon
-20 - Thunderbolt
-25 - Confuse Ray
-30 - Play Rough
-35 - Glitzy Glow
-40 - Volt Tackle
-45 - Minimize
-50 - Hyper Beam
-55 - Thunder
-60 - Tri-Attack
-65 - Moonblast
-70 - Entrainment
-75 - Extreme Speed
+5 - Light Beam
+10 - Flash Cannon
+15 - Thunderbolt
+15 - Confuse Ray
+20 - Play Rough
+20 - Lucky Chant
+25 - Glitzy Glow
+30 - Entrainment
+30 - Minimize
+35 - Hyper Beam
+35 - Glitter Dance
+40 - Tri-Attack
+45 - Moonblast
+50 - Power Gem
+55 - Hyper Voice
+60 - Prismatic Laser
+65 - Swords Dance
+70 - Extreme Speed
 
 ===================
 #084 - Kleinowl                                                                                        [059]
@@ -2712,7 +2736,7 @@ Type:
 Light / None
 
 Ability:
-Radiant / Pixilate / (Mirror Armor)
+Radiant / Heat Compaction / (Pixilate)
 
 Base Stats:
 45 HP / 20 Atk / 45 Def / 105 SpA / 55 SpD / 20 Spe / 290 BST
@@ -2746,7 +2770,7 @@ Type:
 Light / None
 
 Ability:
-Radiant / Pixilate / (Mirror Armor)
+Radiant / Heat Compaction / (Pixilate)
 
 Base Stats:
 60 HP / 25 Atk / 60 Def / 125 SpA / 65 SpD / 35 Spe / 370 BST
@@ -2784,7 +2808,7 @@ Type:
 Light / None
 
 Ability:
-Radiant / Pixilate / (Mirror Armor)
+Radiant / Heat Compaction / (Pixilate)
 
 Base Stats:
 70 HP / 75 Atk / 55 Def / 125 SpA / 70 SpD / 95 Spe / 490 BST
@@ -2816,6 +2840,7 @@ E - Glitzy Glow
 41 - Hyper Voice
 43 - Agility
 45 - Amnesia
+45 - Lucky Chant
 48 - Prismatic Laser
 51 - Stored Power
 54 - Photon Geyser
@@ -2959,8 +2984,9 @@ Level Up:
 1 - Ember
 1 - Will-O-Wisp
 5 - Smokescreen
-8 - Confusion
-10 - Glittering Tornado
+7 - Lucky Chant
+9 - Confusion
+12 - Glittering Tornado
 14 - Hypnosis
 17 - Swift
 20 - Flame Wheel
@@ -3121,6 +3147,7 @@ Level Up:
 22 - Incinerate
 25 - Feint Attack
 28 - Crunch
+30 - Lucky Chant
 32 - Flame Burst
 36 - Dark Pulse
 40 - Flamethrower
@@ -3378,8 +3405,8 @@ Base Stats:
 70 HP / 20 Atk / 50 Def / 20 SpA / 50 SpD / 40 Spe / 250 BST
 
 Level Up:
-1 - Rollout
-1 - Defense Curl
+E - Defense Curl
+E - Rollout
 1 - Tackle
 1 - Water Gun
 1 - Tail Whip
@@ -3573,6 +3600,7 @@ Level Up:
 29 - Fire Spin
 32 - Spirit Break
 32 - Glitzy Glow
+35 - Lucky Chant
 
 Evolutions:
 Sparkitten -> Fireblion (Valiant Gem)
@@ -3627,6 +3655,7 @@ E - Heat Wave
 1 - Fiery Dance
 1 - Roar
 1 - Play Nice
+1 - Lucky Chant
 5 - Confuse Ray
 10 - Mystical Fire
 15 - Light Beam
@@ -3672,6 +3701,7 @@ Level Up:
 27 - Trick
 29 - Hocus Pocus
 31 - Sparkling Terrain
+31 - Lucky Chant
 
 Evolutions:
 Bronzor-X -> Bronzong-X (lv. 33)
@@ -4211,6 +4241,7 @@ Level Up:
 30 - Magic Blast
 33 - Luster Purge
 35 - Trick
+35 - Lucky Chant
 38 - Sparkly Swirl
 40 - Glitzy Glow
 43 - Hocus Pocus
@@ -4275,6 +4306,7 @@ E - Snarl
 21 - Rock Blast
 24 - Flame Wheel
 27 - Play Rough
+29 - Crunch
 31 - Thunder Fang
 33 - Knock Off
 35 - Stealth Rock
@@ -4687,7 +4719,7 @@ E - Flash
 1 - Spiky Shield
 10 - Metal Claw
 15 - Snarl
-20 - Take Down
+20 - Iron Defense
 25 - Rollout
 30 - Flash Cannon
 35 - Play Rough
@@ -4720,7 +4752,7 @@ E - Magic Fang
 5 - Metal Claw
 10 - Snarl
 15 - Magic Fang
-20 - Take Down
+20 - Iron Defense
 25 - Iron Head
 30 - Iron Blast
 35 - Double-Edge
@@ -4983,6 +5015,7 @@ E - Parabolic Charge
 1 - Stun Spore
 1 - Forests Curse
 1 - Grass Knot
+1 - Needle Arm
 10 - Horn Leech
 15 - Leaf Tornado
 20 - Parabolic Charge
@@ -4992,6 +5025,8 @@ E - Parabolic Charge
 40 - Thunder
 45 - Leaf Storm
 50 - Nasty Plot
+55 - Forests Curse
+65 - Leech Seed
 
 ===================
 #154 - Lilyray                                                                                         [134]
@@ -5116,14 +5151,14 @@ Level Up:
 34 - Slack Off
 36 - Sludge Bomb
 38 - Destiny Bond
-40 - Slack Off
+40 - Galaxy Blast
 42 - Gastro Acid
 45 - Cosmic Power
 49 - Belch
 
 Evolutions:
 Gulpin-X -> Swalot-X
-(5+ Galactic Moves Eaten in Trainer Battles)
+(25+ Galactic Moves Eaten in Trainer Battles)
 
 ===================
 #158 - Swalot-X                                                                                        [262]
@@ -5169,7 +5204,6 @@ E - Belch
 59 - Spacial Rend
 62 - Genesis Supernova
 65 - Supernova Explosion
-75 - Slack Off
 
 ===================
 #159 - Posho                                                                                           [143]
@@ -5189,6 +5223,7 @@ Level Up:
 1 - Sparkling Terrain
 1 - Twister
 5 - Swift
+8 - Lucky Chant
 10 - Magic Blast
 12 - Topsy-Turvy
 16 - Switcheroo
@@ -5257,6 +5292,7 @@ E - Hyper Beam
 1 - Outrage
 1 - Twister
 1 - Switcheroo
+1 - Lucky Chant
 5 - Dragon Pulse
 6 - Bite
 9 - Dragon Breath
@@ -5318,6 +5354,7 @@ E - Silver Wind
 1 - Icy Wind
 1 - Captivate
 1 - Sticky Web
+1 - Lucky Chant
 4 - Stun Spore
 8 - Infestation
 12 - Haze
@@ -5402,7 +5439,8 @@ Base Stats:
 85 HP / 65 Atk / 120 Def / 92 SpA / 98 SpD / 55 Spe / 515 BST
 
 Level Up:
-E - Metal Claw
+E - Smart Strike
+E - Thunder Punch
 1 - Gyro Ball
 1 - Iron Defense
 1 - Night Slash
@@ -5410,16 +5448,22 @@ E - Metal Claw
 1 - Spark
 1 - Double Hit
 1 - Knock Off
+1 - Zap Cannon
+1 - Curse
 31 - Dynamic Punch
-34 - Iron Defense
+33 - Iron Defense
+35 - Iron Blast
 37 - Magnet Rise
-40 - Smart Strike
+37 - Reboot
+40 - Discharge
 43 - Bullet Punch
 46 - Autotomize
 50 - Heavy Slam
 55 - Superpower
 60 - Volt Tackle
 65 - Meteor Mash
+70 - Plasma Fists
+75 - Shift Gear
 
 ===================
 #167 - Magikarp                                                                                        [137]
@@ -5806,6 +5850,7 @@ E - Torment
 1 - Haze
 1 - Switcheroo
 1 - Soak
+1 - Confuse Ray
 5 - Night Slash
 10 - Hyper Fang
 15 - Take Down
@@ -5826,6 +5871,7 @@ E - Torment
 65 - Unseen Strangle
 70 - Parting Shot
 80 - Topsy-Turvy
+90 - Magic Reflect
 
 ===================
 #178 - Florline                                                                                        [080]
@@ -5847,7 +5893,8 @@ Level Up:
 12 - Detect
 16 - Leech Seed
 19 - Magical Leaf
-24 - Leaf Tornado
+23 - Lucky Chant
+26 - Leaf Tornado
 29 - Psybeam
 34 - Light Screen
 39 - Leaf Storm
@@ -5876,7 +5923,8 @@ E - Psychic
 12 - Detect
 16 - Leech Seed
 19 - Magical Leaf
-24 - Leaf Tornado
+23 - Lucky Chant
+26 - Leaf Tornado
 29 - Psybeam
 34 - Light Screen
 39 - Leaf Storm
@@ -5932,6 +5980,7 @@ Base Stats:
 
 Level Up:
 E - Air Slash
+1 - Sky Uppercut
 1 - Karate Chop
 3 - Double Kick
 5 - Mud-Slap
@@ -6020,6 +6069,7 @@ E - Galaxy Blast
 1 - Star Storm
 1 - Sparkly Swirl
 1 - Light Screen
+1 - Flip Turn
 1 - Psychic
 1 - Moonblast
 1 - Hydro Pump
@@ -6371,7 +6421,7 @@ Type:
 Ghost / None
 
 Ability:
-Friendly Ghost / Levitate / (Unwavering)
+Friendly Ghost / Levitate / (Prankster)
 
 Base Stats:
 55 HP / 60 Atk / 80 Def / 75 SpA / 65 SpD / 65 Spe / 400 BST
@@ -6399,7 +6449,7 @@ Type:
 Ghost / Steel
 
 Ability:
-Friendly Ghost / Levitate / (Iron Barbs)
+Friendly Ghost / Levitate / (Prankster)
 
 Base Stats:
 65 HP / 70 Atk / 120 Def / 60 SpA / 120 SpD / 65 Spe / 500 BST
@@ -6701,7 +6751,7 @@ E - Reversal
 34 - Tornado Spin
 38 - Hone Claws
 42 - Sky Uppercut
-46 - Poison Tail
+46 - Cross Poison
 50 - Fake Out
 53 - Summit Strike
 56 - Screech
@@ -6724,8 +6774,9 @@ Base Stats:
 Level Up:
 1 - Take Down
 1 - Leer
-5 - Headbutt
-10 - Powder Snow
+4 - Headbutt
+8 - Lucky Chant
+11 - Powder Snow
 15 - Horn Leech
 20 - Aurora Boost
 23 - Ice Shard
@@ -6858,9 +6909,10 @@ E - Mach Punch
 35 - Storm Throw
 40 - Body Press
 45 - Stone Edge
-50 - Superpower
-55 - Plasma Fists
+50 - Sky Uppercut
+55 - Superpower
 60 - No Retreat
+65 - Plasma Fists
 70 - Meteor Assault
 
 ===================
@@ -7124,10 +7176,44 @@ Type:
 Water / Magic
 
 Ability:
-Water Veil / Regenerator / (Wonder Skin)
+Swift Swim / Regenerator / (Wonder Skin)
 
 Base Stats:
-40 HP / 40 Atk / 75 Def / 55 SpA / 50 SpD / 90 Spe / 350 BST
+45 HP / 45 Atk / 75 Def / 60 SpA / 75 SpD / 100 Spe / 400 BST
+
+Level Up:
+1 - Splash
+1 - Sweet Kiss
+1 - Lovely Kiss
+5 - Draining Kiss
+7 - Double Slap
+12 - Water Gun
+16 - Aqua Ring
+20 - Flash
+25 - Aqua Jet
+29 - Psybeam
+32 - Sea Dragon
+36 - Sparkling Water
+40 - Water Flick
+44 - Water Smack
+46 - Sea Dragon
+48 - Water Clap
+52 - Water Kick
+56 - Supercharged Splash
+60 - Deep Sea Bubble
+65 - Sea Dragon
+
+===================
+#--- - Kissyfishy-D                                                                                    [237]
+===================
+Type:
+Water / Dragon
+
+Ability:
+Adaptability / Water Veil / (Intimidate)
+
+Base Stats:
+160 HP / 100 Atk / 75 Def / 100 SpA / 75 SpD / 90 Spe / 600 BST
 
 Level Up:
 1 - Splash
@@ -7317,7 +7403,7 @@ Level Up:
 55 - Stone Edge
 
 Evolutions:
-Rockmite -> Stellarock (lv. up in Shadow Ravine Heart)
+Rockmite -> Stellarock (lv. in Shadow Ravine Heart)
 
 ===================
 #224 - Stellarock                                                                                      [196]
@@ -7354,6 +7440,7 @@ E - Diamond Storm
 55 - Stone Edge
 60 - Comet Crash
 65 - Meteor Assault
+70 - Stealth Rock
 75 - Rock Wrecker
 
 ===================
@@ -7425,6 +7512,7 @@ Base Stats:
 
 Level Up:
 E - Star-Struck Arrow
+1 - Sky Uppercut
 1 - Cosmic Power
 1 - Splash
 1 - Space Beam
@@ -7458,6 +7546,7 @@ Base Stats:
 Level Up:
 1 - Magic Powder
 1 - Shooting Stars
+1 - Lucky Chant
 5 - Swift
 10 - Glittering Tornado
 13 - Tailwind
@@ -7483,6 +7572,7 @@ Base Stats:
 Level Up:
 1 - Magic Powder
 1 - Shooting Stars
+1 - Lucky Chant
 5 - Swift
 10 - Glittering Tornado
 13 - Tailwind
@@ -7518,6 +7608,7 @@ Level Up:
 E - Magic Crash
 1 - Magic Powder
 1 - Shooting Stars
+1 - Lucky Chant
 5 - Swift
 10 - Glittering Tornado
 13 - Tailwind
@@ -7658,7 +7749,7 @@ Ability:
 Beast Boost / None / (None)
 
 Base Stats:
-83 HP / 79 Atk / 83 Def / 157 SpA / 67 SpD / 101 Spe / 570 BST
+89 HP / 73 Atk / 97 Def / 157 SpA / 73 SpD / 101 Spe / 590 BST
 
 Level Up:
 1 - Tail Glow
@@ -7692,7 +7783,7 @@ Ability:
 Beast Boost / None / (None)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+103 HP / 113 Atk / 139 Def / 71 SpA / 97 SpD / 67 Spe / 590 BST
 
 Level Up:
 1 - Glitter Dance
@@ -7734,10 +7825,58 @@ Ability:
 Beast Boost / None / (None)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+233 HP / 59 Atk / 89 Def / 83 SpA / 67 SpD / 59 Spe / 590 BST
 
 Level Up:
-1 - Confusion
+1 - Shift Gear
+1 - Reboot
+1 - Autotomize
+1 - Curse
+1 - Wrap
+1 - Thundershock
+1 - Scary Face
+1 - Water Pulse
+3 - Metal Sound
+3 - Water Sport
+7 - Whirlpool
+7 - Dive
+13 - Screech
+13 - Rain Dance
+17 - Gyro Ball
+17 - Knock Off
+19 - Coil
+19 - Iron Defense
+19 - Shock Wave
+23 - Brine
+23 - Smart Strike
+25 - Aqua Ring
+25 - Life Dew
+27 - Charge
+27 - Discharge
+29 - Aqua Jet
+31 - Soak
+33 - Magnet Rise
+35 - Aqua Tail
+37 - Flash Cannon
+43 - Nuzzle
+47 - Liquidation
+47 - Iron Tail
+50 - Flip Turn
+53 - Muddy Water
+55 - Aqua Tail
+59 - Scald
+67 - Surf
+73 - Hydro Pump
+75 - Iron Blast
+79 - Hydro Vortex
+83 - Iron Head
+85 - Water Spout
+88 - Heavy Slam
+91 - Thunder
+93 - Hydro Cannon
+95 - Zap Cannon
+97 - Steel Beam
+100 - Fatal Bind
 
 ===================
 #237 - Dust Sorcerer                                                                                   [287]
@@ -7749,7 +7888,7 @@ Ability:
 Beast Boost / None / (None)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+79 HP / 61 Atk / 79 Def / 127 SpA / 131 SpD / 113 Spe / 590 BST
 
 Level Up:
 1 - Confusion
@@ -7851,6 +7990,7 @@ Base Stats:
 75 HP / 85 Atk / 90 Def / 134 SpA / 105 SpD / 126 Spe / 615 BST
 
 Level Up:
+1 - Lucky Chant
 1 - Poison Sting
 1 - Poison Gas
 1 - Magic Powder
@@ -8040,6 +8180,21 @@ Level Up:
 1 - Confusion
 
 ===================
+#--- - Necrozma-Ult                                                                                    [291]
+===================
+Type:
+Light / Dark
+
+Ability:
+Scrappy / Unburden / (Talented)
+
+Base Stats:
+97 HP / 147 Atk / 97 Def / 187 SpA / 97 SpD / 129 Spe / 754 BST
+
+Level Up:
+1 - Confusion
+
+===================
 #249 - Solaroxyous                                                                                     [236]
 ===================
 Type:
@@ -8209,7 +8364,7 @@ Ability:
 Guts / Super Luck / (Flame Body)
 
 Base Stats:
-47 HP / 98 Atk / 60 Def / 40 SpA / 62 SpD / 93 Spe / 400 BST
+67 HP / 88 Atk / 70 Def / 40 SpA / 72 SpD / 63 Spe / 400 BST
 
 Level Up:
 E - Karate Chop
@@ -8238,7 +8393,7 @@ Ability:
 Guts / Super Luck / (Flame Body)
 
 Base Stats:
-95 HP / 115 Atk / 65 Def / 46 SpA / 95 SpD / 100 Spe / 516 BST
+115 HP / 115 Atk / 75 Def / 46 SpA / 90 SpD / 75 Spe / 516 BST
 
 Level Up:
 E - False Surrender
@@ -8335,6 +8490,7 @@ E - Air Slash
 50 - Venom Spit
 55 - Frostbind
 60 - Aeroblast
+65 - Roost
 
 ===================
 #009 - Capsakid-S                                                                                      [281]
@@ -8615,8 +8771,9 @@ Level Up:
 15 - Flash Ray
 18 - Feint Attack
 21 - Mud Bomb
-24 - Thief
-27 - Shadow Sneak
+23 - Thief
+26 - Confuse Ray
+28 - Shadow Sneak
 30 - Tail Glow
 33 - Shadow Ball
 36 - Earth Power
@@ -8650,6 +8807,7 @@ E - Flatter
 1 - Feint Attack
 1 - Minimize
 1 - Knock Off
+1 - Confuse Ray
 5 - Fake Out
 8 - Thief
 12 - Shadow Sneak
@@ -8672,6 +8830,7 @@ E - Flatter
 62 - Memento
 65 - Parting Shot
 70 - Dragon Dance
+80 - Magic Reflect
 
 ===================
 #017 - Nightrex                                                                                        [213]
@@ -9457,6 +9616,7 @@ Level Up:
 27 - Psyshock
 30 - Endeavor
 33 - Encore
+33 - Lucky Chant
 36 - Mist Ball
 39 - Psychic Terrain
 
@@ -9493,6 +9653,7 @@ E - Dizzy Punch
 27 - Psyshock
 30 - Endeavor
 33 - Encore
+33 - Lucky Chant
 36 - Mist Ball
 39 - Psychic Terrain
 41 - Dizzy Punch
