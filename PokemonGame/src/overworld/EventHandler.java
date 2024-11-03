@@ -29,10 +29,10 @@ public class EventHandler {
 		while(map < GamePanel.MAX_MAP && col < gp.maxWorldCol && row < gp.maxWorldRow) {
 			
 			eventRect[map][col][row] = new EventRect();
-			eventRect[map][col][row].x = gp.tileSize / 8;
-			eventRect[map][col][row].y = gp.tileSize / 8;
-			eventRect[map][col][row].width = gp.tileSize * 3 / 4;
-			eventRect[map][col][row].height = gp.tileSize * 3 / 4;
+			eventRect[map][col][row].x = gp.tileSize / 6;
+			eventRect[map][col][row].y = gp.tileSize / 6;
+			eventRect[map][col][row].width = gp.tileSize * 2 / 3;
+			eventRect[map][col][row].height = gp.tileSize * 2 / 3;
 			eventRect[map][col][row].eventRectDefaultX = eventRect[map][col][row].x;
 			eventRect[map][col][row].eventRectDefaultY = eventRect[map][col][row].y;
 			
@@ -152,8 +152,8 @@ public class EventHandler {
 			// Bannana Grove to Route 40 gate
 			if (hit(0,17,78)) teleport(23, 31, 34,false);
 			if (hit(23,31,33)) teleport(0, 17, 77,false);
-			if (hit(23,31,46)) teleport(22, 76, 8,false);
-			if (hit(22,76,7)) teleport(23, 31, 45,false);
+			if (hit(23,31,46)) teleport(22, 71, 8,false);
+			if (hit(22,71,7)) teleport(23, 31, 45,false);
 			
 			// Route 26 to Mt. Splinkty
 			if (hit(13,27,5)) teleport(24, 56, 84,false);
@@ -443,8 +443,8 @@ public class EventHandler {
 			if (hit(88,81,53)) teleport(88, 71, 67,true); // B
 			if (hit(88,75,67)) teleport(88, 51, 63,true); // C
 			if (hit(88,51,63)) teleport(88, 75, 67,true); // C
-			if (hit(88,71,63)) teleport(88, 51, 47,true); // D
-			if (hit(88,51,47)) teleport(88, 71, 63,true); // D
+			if (hit(88,75,57)) teleport(88, 51, 47,true); // D
+			if (hit(88,51,47)) teleport(88, 75, 57,true); // D
 			if (hit(88,71,57)) teleport(88, 81, 63,true); // E
 			if (hit(88,81,63)) teleport(88, 71, 57,true); // E
 			if (hit(88,81,67)) teleport(88, 55, 43,true); // F
@@ -453,32 +453,32 @@ public class EventHandler {
 			if (hit(88,41,67)) teleport(88, 85, 67,true); // G
 			if (hit(88,71,53)) teleport(88, 55, 53,true); // H
 			if (hit(88,55,53)) teleport(88, 71, 53,true); // H
-			if (hit(88,75,53)) teleport(88, 51, 43,true); // I
-			if (hit(88,51,43)) teleport(88, 75, 53,true); // I
-			if (hit(88,85,53)) teleport(88, 85, 57,true); // J
-			if (hit(88,85,57)) teleport(88, 85, 53,true); // J
-			if (hit(88,71,43)) teleport(88, 55, 57,true); // K
-			if (hit(88,55,57)) teleport(88, 71, 43,true); // K
+			if (hit(88,75,53)) teleport(88, 85, 53,true); // I
+			if (hit(88,85,53)) teleport(88, 75, 53,true); // I
+			if (hit(88,85,53)) teleport(88, 51, 43,true); // J
+			if (hit(88,51,43)) teleport(88, 85, 53,true); // J
+			if (hit(88,41,53)) teleport(88, 55, 57,true); // K
+			if (hit(88,55,57)) teleport(88, 41, 53,true); // K
 			if (hit(88,75,43)) teleport(88, 41, 63,true); // L
 			if (hit(88,41,63)) teleport(88, 75, 43,true); // L
 			if (hit(88,71,47)) teleport(88, 81, 43,true); // M
 			if (hit(88,81,43)) teleport(88, 71, 47,true); // M
 			if (hit(88,75,47)) teleport(88, 45, 53,true); // N
 			if (hit(88,45,53)) teleport(88, 75, 47,true); // N
-			if (hit(88,45,57)) teleport(88, 85, 43,true); // O
-			if (hit(88,85,43)) teleport(88, 45, 57,true); // O
+			if (hit(88,45,57)) teleport(88, 81, 57,true); // O
+			if (hit(88,81,57)) teleport(88, 45, 57,true); // O
 			if (hit(88,81,47)) teleport(88, 41, 57,true); // P
 			if (hit(88,41,57)) teleport(88, 81, 47,true); // P
-			if (hit(88,45,47)) teleport(88, 85, 47,true); // Q
-			if (hit(88,85,47)) teleport(88, 45, 47,true); // Q
+			if (hit(88,41,47)) teleport(88, 85, 47,true); // Q
+			if (hit(88,85,47)) teleport(88, 41, 47,true); // Q
 			if (hit(88,41,43)) teleport(88, 63, 39,true); // R
 			if (hit(88,63,39)) teleport(88, 41, 43,true); // R
-			if (hit(88,45,43)) teleport(88, 55, 63,true); // S
-			if (hit(88,55,63)) teleport(88, 45, 43,true); // S
-			if (hit(88,51,67)) teleport(88, 51, 57,true); // T
-			if (hit(88,51,57)) teleport(88, 51, 67,true); // T
-			if (hit(88,55,67)) teleport(88, 45, 63,true); // U
-			if (hit(88,45,63)) teleport(88, 55, 67,true); // U
+			if (hit(88,45,43)) teleport(88, 55, 67,true); // S
+			if (hit(88,55,67)) teleport(88, 45, 43,true); // S
+			if (hit(88,45,67)) teleport(88, 51, 57,true); // T
+			if (hit(88,51,57)) teleport(88, 45, 67,true); // T
+			if (hit(88,51,67)) teleport(88, 45, 63,true); // U
+			if (hit(88,45,63)) teleport(88, 51, 67,true); // U
 			if (hit(88,67,37)) teleport(88, 61, 65,true); // V
 			
 			// Frenco City Pawn Shop

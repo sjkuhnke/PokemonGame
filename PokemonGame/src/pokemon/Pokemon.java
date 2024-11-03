@@ -2194,6 +2194,7 @@ public class Pokemon implements Serializable {
 			if (foeAbility == Ability.UNERODIBLE && (moveType == PType.GRASS || moveType == PType.WATER || moveType == PType.GROUND)) damage /= 4;
 			if (foeAbility == Ability.THICK_FAT && (moveType == PType.FIRE || moveType == PType.ICE)) damage /= 2;
 			if (foeAbility == Ability.UNWAVERING && (moveType == PType.DARK || moveType == PType.GHOST)) damage /= 2;
+			if (foeAbility == Ability.JUSTIFIED && moveType == PType.DARK) damage /= 2;
 			if (foeAbility == Ability.FLUFFY && move.contact) damage /= 2;
 			
 			if (foeAbility == Ability.PSYCHIC_AURA && move.cat == 1) damage *= 0.8;
@@ -5286,6 +5287,7 @@ public class Pokemon implements Serializable {
 		if (foeAbility == Ability.UNERODIBLE && (moveType == PType.GRASS || moveType == PType.WATER || moveType == PType.GROUND)) damage /= 4;
 		if (foeAbility == Ability.THICK_FAT && (moveType == PType.FIRE || moveType == PType.ICE)) damage /= 2;
 		if (foeAbility == Ability.UNWAVERING && (moveType == PType.DARK || moveType == PType.GHOST)) damage /= 2;
+		if (foeAbility == Ability.JUSTIFIED && moveType == PType.DARK) damage /= 2;
 		if (foeAbility == Ability.FLUFFY && move.contact) damage /= 2;
 		
 		if (foeAbility == Ability.PSYCHIC_AURA && move.cat == 1) damage *= 0.8;

@@ -415,13 +415,13 @@ public class AssetSetter {
 		
 		mapNum = 22;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(60, 15, Item.TM28, mapNum); // flame charge
-		gp.obj[mapNum][objIndex] = ObjSetup(94, 15, Item.EUPHORIAN_GEM, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(72, 18, Item.BURN_HEAL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(82, 14, Item.POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(66, 14, Item.RAWST_BERRY, mapNum, 15, 30);
-		gp.obj[mapNum][objIndex] = ObjSetup(55, 12, Item.FOCUS_SASH, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(57, 14, Item.POWER_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 15, Item.TM28, mapNum); // flame charge
+		gp.obj[mapNum][objIndex] = ObjSetup(89, 15, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 18, Item.BURN_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(77, 14, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(61, 14, Item.RAWST_BERRY, mapNum, 15, 30);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 12, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 14, Item.POWER_HERB, mapNum);
 		
 		mapNum = 24;
 		objIndex = 0;
@@ -1203,10 +1203,10 @@ public class AssetSetter {
 		
 		mapNum = 22;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(LADY_DOWN, 80, 8, "You may think I'm all grace, but you'll soon learn otherwise.", "You've won this round. Enjoy it while it lasts.", 67);
-		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 78, 12, "You're about to face your nightmares made real.", "I disappear... for now. But don't think this is over.", 68);
-		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_DOWN, 72, 10, "You're about to find out why bugs rule the world!", "Looks like I need to evolve too...", 69);
-		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_M_UP, 69, 14, "I'll make your victory... disappear!", "The magic didn't work this time, but next time, I'll be the master of illusions!", 70);
+		gp.npc[mapNum][index] = NPCSetup(LADY_DOWN, 75, 8, "You may think I'm all grace, but you'll soon learn otherwise.", "You've won this round. Enjoy it while it lasts.", 67);
+		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 73, 12, "You're about to face your nightmares made real.", "I disappear... for now. But don't think this is over.", 68);
+		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_DOWN, 67, 10, "You're about to find out why bugs rule the world!", "Looks like I need to evolve too...", 69);
+		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_M_UP, 64, 14, "I'll make your victory... disappear!", "The magic didn't work this time, but next time, I'll be the master of illusions!", 70);
 		
 		mapNum = 23;
 		index = 0;
@@ -1551,14 +1551,14 @@ public class AssetSetter {
 		
 		mapNum = 88;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 75, 57, "", "", 186);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 81, 57, "", "", 187);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 85, 63, "", "", 188);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 45, 67, "", "", 189);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 41, 53, "", "", 190);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 51, 53, "", "", 191);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 41, 47, "", "", 192);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 55, 47, "", "", 193);
+		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 71, 63, "Prepare yourself... My mind and Pokemon are in perfect harmony!", "You've altered the future, but I'll be back to correct it!", 186);
+		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_UP, 85, 43, "You cannot resist the power of the mind. Let's see if you can survive!", "Hmph, perhaps my vision was clouded by arrogance.", 187, LEFT + DOWN);
+		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_DOWN, 85, 63, "The stars have aligned for this battle... But will they favor you?", "Our minds were in sync, but you still won... impressive.", 188, LEFT + DOWN);
+		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_LEFT, 55, 63, "I can already foresee your defeat. Shall we begin?", "How...? My vision must have been clouded.", 189, LEFT + DOWN);
+		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 41, 53, "Your thoughts are clear to me... and so is your loss.", "You changed your future... but I'll see to it that next time, it's different.", 190, RIGHT + DOWN);
+		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_DOWN, 51, 53, "My Psychic Pokemon will bend your will and your Pokemon to their power!", "A rare miscalculation... I'll hone my skills further.", 191, RIGHT + DOWN);
+		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_UP, 45, 47, "You won't even see your defeat coming... but I already have.", "Your strength caught me off guard... but I'll be prepared next time.", 192, UP + LEFT);
+		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_LEFT, 55, 47, "Prepare yourself for a battle of the mind!", "I didn't foresee this loss... but I won't let it cloud my judgment.", 193, UP + LEFT);
 		gp.npc[mapNum][index] = NPCSetup(MINDY, 63, 35, "It's you. I sensed you would come.\n"
 				+ "You've been quite the force for good in our world, especially after helping my daughter, Millie.\n"
 				+ "She's told me all about how you saved her town from the Ultra Paradox Pokemon.\n"
@@ -2021,7 +2021,7 @@ public class AssetSetter {
 		
 		mapNum = 22;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(60, 13, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 13, 1, mapNum, map);
 		
 		mapNum = 24;
 		iIndex = 0;

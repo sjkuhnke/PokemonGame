@@ -185,11 +185,17 @@ public class Main {
 		try {
 			FileWriter writer = new FileWriter("./docs/PokemonInfo.txt");
 			
-			int[] ids = new int[Pokemon.POKEDEX_1_SIZE + Pokemon.POKEDEX_METEOR_SIZE * 2 + Pokemon.POKEDEX_2_SIZE];
+			int[] ids = new int[Pokemon.POKEDEX_1_SIZE + Pokemon.POKEDEX_METEOR_SIZE * 2 + Pokemon.POKEDEX_2_SIZE + 2];
 			int counter = 0;
 			for (Pokemon p : Player.pokedex1) {
 				ids[counter] = p.getID();
 				counter++;
+				if (p.getID() == 150) {
+					ids[counter++] = 237;
+				}
+				if (p.getID() == 290) {
+					ids[counter++] = 291;
+				}
 			}
 			for (Pokemon p : Player.pokedex2) {
 				ids[counter] = p.getID();

@@ -584,27 +584,10 @@ Psychic (Psychic)
 Before Battle:
 
 ""
-"Your thoughts betray you... I can see your strategy already!"
-"Prepare yourself... My mind and Pokemon are in perfect harmony!"
-"You cannot resist the power of the mind. Let's see if you can survive!"
-"The stars have aligned for this battle... But will they favor you?"
-"I can already foresee your defeat. Shall we begin?"
-"Your thoughts are clear to me... and so is your loss."
-"My Psychic Pokemon will bend your will and your Pokemon to their power!"
-"You won't even see your defeat coming... but I already have."
-"Prepare yourself for a battle of the mind!"
+
 After Battle:
 
 ""
-"Even psychics make mistakes... I underestimated you."
-"You've altered the future, but I'll be back to correct it!"
-"Hmph, perhaps my vision was clouded by arrogance."
-"Our minds were in sync, but you still won... impressive."
-"How...? My vision must have been clouded."
-"You changed your future... but I'll see to it that next time, it's different."
-"A rare miscalculation... I'll hone my skills further."
-"Your strength caught me off guard... but I'll be prepared next time."
-"I didn't foresee this loss... but I won't let it cloud my judgment."
 
 Astronomer (Galactic)
 Before

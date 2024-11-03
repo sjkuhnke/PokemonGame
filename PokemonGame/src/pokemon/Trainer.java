@@ -254,6 +254,7 @@ public class Trainer implements Serializable {
 		if (p.ability == Ability.FRIENDLY_GHOST && type == PType.GHOST) multiplier = 0;
 		if (p.ability == Ability.GALACTIC_AURA && (type == PType.ICE || type == PType.PSYCHIC)) multiplier *= 0.5;
 		if (p.ability == Ability.UNWAVERING && (type == PType.DARK || type == PType.GHOST)) multiplier *= 0.5;
+		if (p.ability == Ability.JUSTIFIED && type == PType.DARK) multiplier *= 2;
 		if (p.ability == Ability.INSECT_FEEDER && type == PType.BUG) multiplier = 0;
 		if (p.ability == Ability.LEVITATE && type == PType.GROUND) multiplier = 0;
 		if (p.item == Item.AIR_BALLOON && type == PType.GROUND) multiplier = 0;
