@@ -454,13 +454,13 @@ public class BattleUI extends AbstractUI {
 	private void drawIdleScreen() {
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);
-		drawActionScreen(user);
 		drawCalcWindow();
 		if (gp.keyH.aPressed) {
 			gp.keyH.aPressed = false;
 			Item.useCalc(user.getPlayer(), null, foe);
 		}
 		drawCatchWindow();
+		drawActionScreen(user);
 		String dText = foe.trainerOwned() ? "Foe" : null;
 		if (!showFoeSummary) drawToolTips("OK", null, null, dText);
 	}

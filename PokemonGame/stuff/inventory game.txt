@@ -19,6 +19,11 @@ Nebulimb
 Consodust
 Rockmite
 
+Arthra Team:
+Butterfree-X Bronzong-X Hissimitar Suvinero Bouncerog Winagrow
+Unused Boss Pokemon:
+Curlatoral Crystallor Cairnasaur Ramant Boulderoar Raptorex Pyrator Magmaclang Lafloo Houndoom Fireblion Flamebless Megawatt Thunderzap Spinaquata Gyarados Barbaracle Hast Zurroaratr Conkeldurr Soldrota
+
 Game2.72: Encounters and TN base stuff done 3/27
 Game2.721: Items for Mt Splinkty done 3/29
 Game2.725: Ghostly woods stuff done 4/2
@@ -264,30 +269,30 @@ Athlete (Fire/Electric)
 Before Battle:
 
 ""
-"I'm always at my peak, and this battle will prove it!"
 ""
-"Think you can keep up with my high-energy Pokemon? Let's see!"
-"Time to turn up the heat and shock you with my skills!"
+""
+""
+""
 After Battle:
 
 ""
-"Even the best athletes lose sometimes... but I'll come back stronger!"
 ""
-"A defeat won't slow me down. I'll train harder!"
-"You won the battle, but I'll be back in top form soon!"
+""
+""
+""
 
 Hiker (Ground/Rock/Steel)
 Before:
 
 "I've hiked through mountains, and my Pokemon are as tough as rock!"
-"The ground trembles under my feet, and so will you!"
+""
 "I've trained in the toughest conditions! Let's see if you can handle it!"
 ""
 ""
 After:
 
 "Guess I've got to go back to training in the mountains..."
-"You're strong, but I'll come back tougher than ever!"
+""
 "That loss was rough, but I'll climb back up to the top!"
 ""
 ""
@@ -456,15 +461,15 @@ Before
 ""
 ""
 ""
-"I'm fast in the water, and even faster in battle!"
-"Hope you brought your swim gear, because I'm about to flood you out!"
+""
+""
 After
 
 ""
 ""
 ""
-"Good match! I'll see you back in the deep end!"
-"I'm not going under just yet... next time, I'll win."
+""
+""
 
 Explorer (Ice)
 Before Battle:

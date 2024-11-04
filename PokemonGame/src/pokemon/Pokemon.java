@@ -1496,12 +1496,14 @@ public class Pokemon implements Serializable {
 			return;
 		}
 		
-		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN)) || this.vStatuses.contains(Status.CHARGING) || move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY) {
+		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN))
+				|| this.vStatuses.contains(Status.CHARGING) || move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY || move == Move.METEOR_BEAM) {
 			if (this.item == Item.POWER_HERB) {
 				announceUseMove(move);
 				addTask(Task.TEXT, this.nickname + " started charging up!");
 				this.vStatuses.add(Status.CHARGING);
 				if (move == Move.SKULL_BASH) stat(this, 1, 1, foe);
+				if (move == Move.METEOR_BEAM) stat(this, 2, 1, foe);
 				if (move == Move.BLACK_HOLE_ECLIPSE) stat(this, 3, 1, foe);
 				addTask(Task.TEXT, this.nickname + " became fully charged due to its Power Herb!");
 				this.consumeItem(foe);
@@ -1511,6 +1513,7 @@ public class Pokemon implements Serializable {
 				addTask(Task.TEXT, this.nickname + " started charging up!");
 				this.vStatuses.add(Status.CHARGING);
 				if (move == Move.SKULL_BASH) stat(this, 1, 1, foe);
+				if (move == Move.METEOR_BEAM) stat(this, 2, 1, foe);
 				if (move == Move.BLACK_HOLE_ECLIPSE) stat(this, 3, 1, foe);
 				this.moveMultiplier = 1;
 				this.impressive = false;

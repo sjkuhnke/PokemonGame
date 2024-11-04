@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -288,7 +289,8 @@ public class PlayerCharacter extends Entity {
 				} else if (target instanceof NPC_PC) {
 					interactPC((NPC_PC) target);
 				} else if (target instanceof NPC_Pokemon) {
-					interactTrainer(target, ((NPC_Pokemon) target).id, false);
+					NPC_Pokemon pokemon = (NPC_Pokemon) target;
+					interactTrainer(target, pokemon.id, pokemon.id == 159);
 				}
 			}
 			
