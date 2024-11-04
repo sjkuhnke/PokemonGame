@@ -8,11 +8,13 @@ Fatal Bind : Physical / 70 / 85 : 100% to cause the user and foe to faint in 3 t
 Fell Stinger : Physical / 50 / 100 : Raises user's attack by 3 if it faints the foe
 First Impression : Physical / 90 / 100 : Always attacks first, fails after the first turn a user is out in battle
 Fury Cutter : Physical / 40 / 95 : Power increases the more times this move is used in succession
+Hp Bug : Special / 60 / 100 : Calc only move
 Infestation : Special / 20 / 100 : 100% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch
 Leech Life : Physical / 80 / 100 : Heals 50% of damage dealt
 Megahorn : Physical / 120 / 85 : A normal attack
 Pin Missile : Physical / 25 / 95 : Hits 2-5 times
 Quiver Dance : Status / 0 / -- : Raises user's Sp.Atk, Sp.Def and Speed by 1 stage
+Return Bug : Physical / 70 / 100 : Calc only move
 Signal Beam : Special / 75 / 100 : 10% chance to confuse foe
 Silver Wind : Special / 60 / 100 : 10% chance to raise all of user's stats
 Staff Jab : Physical / 75 / 90 : 100% to lower foe's Attack by 2
@@ -40,6 +42,7 @@ Feint Attack : Physical / 60 / -- : This attack always hits
 Flatter : Status / 0 / 100 : Confuses foe, and raises their Sp.Atk by 2
 Foul Play : Physical / 95 / 100 : Uses the foe's attack stat instead of the user's
 Hone Claws : Status / 0 / -- : Raises user's Attack and Accuracy by 1
+Hp Dark : Special / 60 / 100 : Calc only move
 Jaw Lock : Physical / 80 / 100 : 100% to cause foe to not be able to switch
 Knock Off : Physical / 65 / 100 : 100% to remove foe's item
 Memento : Status / 0 / 100 : User faints. Foe's Attack and Sp.Atk are lowered by 2 stages
@@ -49,6 +52,7 @@ Night Slash : Physical / 70 / 100 : Boosted Crit rate
 Obstruct : Status / 0 / -- : User protects itself, can't be used in succession. Lowers foe's Defense by 2 if they make contact
 Parting Shot : Status / 0 / 100 : Lower foe's Atk and Sp.Atk by 1, user switches out
 Payback : Physical / 50 / 100 : Power is doubled if the user moves after foe
+Return Dark : Physical / 70 / 100 : Calc only move
 Snarl : Special / 55 / 95 : 100% chance to lower foe's Sp.Atk
 Sucker Punch : Physical / 70 / 100 : Always attacks first. Fails if foe didn't use an attacking move
 Switcheroo : Status / 0 / 100 : Swaps the user's and foe's held items
@@ -74,7 +78,9 @@ Dragon Rage : Special / 0 / 100 : Always does 40 HP damage
 Dragon Rush : Physical / 100 / 75 : 20% chance of causing foe to flinch
 Dragon Tail : Physical / 60 / 90 : 100% chance to switch out foe, always moves last
 Dual Chop : Physical / 40 / 90 : Attacks twice
+Hp Dragon : Special / 60 / 100 : Calc only move
 Outrage : Physical / 120 / 100 : User is locked into this move for 2-3 turns, Confuses user when the effect is done
+Return Dragon : Physical / 70 / 100 : Calc only move
 Scale Shot : Physical / 25 / 90 : 100% chance to lower user's Defense by 1 and raise user's Speed by 1. Hits 2-5 times
 Twister : Special / 40 / 100 : 10% of causing foe to flinch
 
@@ -89,9 +95,11 @@ Electric Terrain : Status / 0 / -- : Sets the terrain to ELECTRIC for 5 turns
 Electro Ball : Special / 0 / 100 : Power is higher the faster the user is than the target
 Electroweb : Special / 55 / 95 : 100% chance to lower foe's Speed by 1
 Fusion Bolt : Physical / 100 / 100 : This attack ignores the effects of the foe's ability
+Hp Electric : Special / 60 / 100 : Calc only move
 Nuzzle : Physical / 20 / 100 : 100% chance to Paralyze foe
 Parabolic Charge : Special / 65 / 100 : Heals 50% of damage dealt to foe
 Plasma Fists : Physical / 100 / 100 : A normal attack
+Return Electric : Physical / 70 / 100 : Calc only move
 Shock Wave : Special / 60 / -- : This attack never misses
 Spark : Physical / 65 / 100 : 30% to Paralyze foe
 Thunder : Special / 110 / 70 : 30% of Paralyzing foe, doesn't check accuracy in RAIN
@@ -125,18 +133,20 @@ Focus Blast : Special / 120 / 70 : 10% to lower foe's Sp.Def
 Force Palm : Physical / 60 / 100 : 30% chance to Paralyze foe
 Hammer Arm : Physical / 100 / 90 : 100% chance to lower user's speed by 1
 Hi Jump Kick : Physical / 130 / 90 : If this attack misses, user takes 50% of its max HP
+Hp Fighting : Special / 60 / 100 : Calc only move
 Karate Chop : Physical / 50 / 100 : Boosted Crit rate
 Low Kick : Physical / 0 / 100 : Damage is based on how heavy foe is
 Low Sweep : Physical / 65 / 100 : 100% chance to lower foe's Speed by 1
 Mach Punch : Physical / 40 / 100 : Always goes first
 No Retreat : Status / 0 / -- : Raises all of user's stats by 1, user can't switch out. Can only be used once
 Power-Up Punch : Physical / 40 / 100 : 100% chance to raise user's Attack by 1
-Revenge : Physical / 120 / 100 : Power is doubled if user is slower than foe
+Return Fighting : Physical / 70 / 100 : Calc only move
+Revenge : Physical / 60 / 100 : Power is doubled if user is slower than foe
 Reversal : Physical / 0 / 100 : Deals more damage the lower the user's HP is
 Rock Smash : Physical / 40 / 100 : 100% to lower foe's Defense by 1
 Sacred Sword : Physical / 90 / 100 : Ignores Defense and Evasion changes of foe
 Seismic Toss : Physical / 0 / 100 : Damage dealt is equal to the user's level
-Sky Uppercut : Physical / 85 / 90 : A normal attack
+Sky Uppercut : Physical / 85 / 90 : Super effective against FLYING types too
 Storm Throw : Physical / 60 / 100 : This move always Crits
 Submission : Physical / 80 / 90 : User takes 1/4 of damage inflicted as recoil
 Summit Strike : Physical / 70 / 95 : 100% to lower foe's Defense by one stage. 30% to flinch foe
@@ -168,6 +178,7 @@ Flare Blitz : Physical / 120 / 100 : 10% to Burn foe, user takes 1/3 of damage i
 Fusion Flare : Special / 100 / 100 : This attack ignores the effects of the foe's ability
 Heat Crash : Physical / 0 / 100 : Damage is based on how heavy the user is compared to the foe
 Heat Wave : Special / 95 / 90 : 10% to Burn foe
+Hp Fire : Special / 60 / 100 : Calc only move
 Incinerate : Special / 60 / 100 : 100% to burn up foe's berry
 Inferno : Special / 100 / 50 : 100% chance to Burn foe
 Lava Lair : Status / 0 / -- : User protects itself, can't be used in succession. Burns foe if they make contact
@@ -176,6 +187,7 @@ Lava Surf : Special / 90 / 100 : A normal attack
 Molten Consume : Physical / 50 / 100 : 100% chance to Burn foe
 Mystical Fire : Special / 75 / 100 : 100% chance to lower foe's Sp.Atk by 1
 Overheat : Special / 130 / 90 : 100% to lower user's Sp.Atk by 2
+Return Fire : Physical / 70 / 100 : Calc only move
 Sacred Fire : Physical / 100 / 95 : 50% chance to Burn foe
 Sunny Day : Status / 0 / -- : Changes the weather to SUNNY for 5 turns
 V-Create : Physical / 180 / 95 : 100% chance to lower user's Defense, Sp.Def, and Speed by 1
@@ -197,10 +209,12 @@ Drill Peck : Physical / 80 / 100 : Boosted Crit rate
 Feather Dance : Status / 0 / 100 : Lowers foe's Attack by 2
 Fly : Physical / 100 / 100 : Goes into the air on the first turn, and attacks on the second
 Gust : Special / 40 / 100 : A normal attack
+Hp Flying : Special / 60 / 100 : Calc only move
 Hurricane : Special / 110 / 70 : 30% chance to confuse foe, doesn't check Accuracy in RAIN
 Mirror Move : Status / 0 / -- : Uses the move last used by the foe, fails if foe hasn't used a move yet
 Peck : Physical / 35 / 100 : A normal attack
 Pluck : Physical / 60 / 100 : 100% chance to eat foe's berry
+Return Flying : Physical / 70 / 100 : Calc only move
 Roost : Status / 0 / -- : Restores 1/2 of user's max HP
 Sky Attack : Physical / 140 / 90 : 30% chance to flinch. User must charge up on the first turn, attacks on the second. Boosted Crit rate
 Tailwind : Status / 0 / -- : Doubles Speed for user's team for 5 turns
@@ -221,8 +235,10 @@ Desolate Void : Special / 65 / 85 : 50% chance to Paralyze, Sleep or Frostbite f
 Galaxy Blast : Special / 90 / 100 : A normal attack
 Genesis Supernova : Special / 120 / 95 : User takes 1/3 of damage dealt as recoil
 Gravity : Status / 0 / -- : Sets GRAVITY for 6 turns, in which the accuracy of all Pokemon is increased
+Hp Galactic : Special / 60 / 100 : Calc only move
 Meteor Assault : Physical / 120 / 100 : 100% to lower user's Attack and Defense by 1
 Radio Burst : Special / 40 / 100 : Always goes first
+Return Galactic : Physical / 70 / 100 : Calc only move
 Shooting Stars : Physical / 20 / 100 : Hits 2-5 times
 Space Beam : Special / 60 / 100 : 30% chance to lower foe's Sp.Def
 Spacial Rend : Special / 100 / 95 : Boosted Crit rate
@@ -239,12 +255,14 @@ Confuse Ray : Status / 0 / 100 : Confuses foe
 Curse : Status / 0 / -- : User loses half of its total HP. In exchance, foe takes 1/4 of its max HP at the end of every turn
 Destiny Bond : Status / 0 / -- : Always goes first; can't be used twice in a row. If foe knocks out user the same turn, foe faints as well
 Hex : Special / 65 / 100 : Damage is doubled if the foe has a status condition
+Hp Ghost : Special / 60 / 100 : Calc only move
 Lick : Physical / 20 / 100 : 30% to Paralyze foe
 Minimize : Status / 0 / -- : Raises user's Evasion by 2
 Night Shade : Special / 0 / 100 : Deals damage equal to user's level
 Nightmare : Status / 0 / 100 : Foe loses 1/4 of max HP each turn; wears off when foe wakes up
 Perish Song : Status / 0 / -- : All Pokemon hearing this song will faint in 3 turns
 Phantom Force : Physical / 100 / 100 : A two turn attack. User vanishes on the first, and attacks on the second. Hits through protect.
+Return Ghost : Physical / 70 / 100 : Calc only move
 Shadow Ball : Special / 80 / 100 : 30% to lower foe's Sp.Def by 1
 Shadow Claw : Physical / 80 / 100 : Boosted crit rate
 Shadow Punch : Physical / 80 / -- : This attack never misses
@@ -267,8 +285,9 @@ Giga Drain : Special / 75 / 100 : Heals 50% of damage dealt to foe
 Grass Knot : Special / 0 / 100 : A normal attack
 Grass Whistle : Status / 0 / 55 : Foe falls asleep
 Grassy Terrain : Status / 0 / -- : Sets the terrain to GRASSY for 5 turns
-Growth : Status / 0 / -- : Raises user's Attack and Sp.Atk by 1
+Growth : Status / 0 / -- : Raises user's Attack and Sp.Atk by 1, 2 each in the SUN
 Horn Leech : Physical / 75 / 100 : Heals 50% of damage dealt to foe
+Hp Grass : Special / 60 / 100 : Calc only move
 Ingrain : Status / 0 / -- : Restores a small amount of HP at the end of every turn, user can't switch out
 Leaf Blade : Physical / 90 / 100 : Boosted Crit rate
 Leaf Storm : Special / 130 / 90 : 100% to lower user's Sp.Atk by 2
@@ -282,6 +301,7 @@ Petal Blizzard : Physical / 90 / 100 : A normal attack
 Petal Dance : Special / 120 / 100 : User is locked into this move for 2-3 turns, Confuses user when the effect is done
 Power Whip : Physical / 120 / 85 : A normal attack
 Razor Leaf : Physical / 55 / 95 : Boosted Crit rate
+Return Grass : Physical / 70 / 100 : Calc only move
 Sambal Sear : Special / 80 / 100 : 30% chance to Burn foe
 Seed Bomb : Physical / 80 / 100 : A normal attack
 Sleep Powder : Status / 0 / 75 : Foe falls asleep
@@ -305,11 +325,13 @@ Drill Run : Physical / 80 / 95 : Boosted Crit rate
 Earth Power : Special / 90 / 100 : 10% chance to lower foe's Sp.Def by 1
 Earthquake : Physical / 100 / 100 : A normal attack
 Fissure : Physical / 0 / 30 : If this move hits, it always K.Os foe
+Hp Ground : Special / 60 / 100 : Calc only move
 Magnitude : Physical / 70 / 100 : A random Magnitude between 4-10 will be used, corresponding to its power
 Mud Bomb : Special / 65 / 85 : 30% to lower foe's Accuracy by 1
 Mud Shot : Special / 55 / 95 : 100% chance to lower foe's Speed by 1
 Mud Sport : Status / 0 / -- : Makes ELECTRIC moves deal 1/3 damage for 8 turns
 Mud-Slap : Special / 20 / 100 : 100% to lower foe's Accuracy by 1
+Return Ground : Physical / 70 / 100 : Calc only move
 Sand Attack : Status / 0 / 100 : Lowers foe's Accuracy by 1
 Scorching Sands : Special / 70 / 100 : 30% chance to burn foe
 Shore Up : Status / 0 / -- : Restores 1/2 of user's total HP, 2/3 in SANDSTORM
@@ -325,6 +347,7 @@ Freeze-Dry : Special / 70 / 100 : 10% chance to Frostbite foe, super effective a
 Frostbind : Status / 0 / 90 : Inflicts foe with Frostbite
 Glaciate : Special / 65 / 95 : 100% chance to lower foe's Speed by 1
 Haze : Status / 0 / -- : Clears all stat changes on the field
+Hp Ice : Special / 60 / 100 : Calc only move
 Ice Ball : Physical / 15 / 90 : Attacks up to 5 times, damage doubles each time. While active, user cannot switch out
 Ice Beam : Special / 90 / 100 : 10% chance to Frostbite foe
 Ice Fang : Physical / 65 / 95 : 10% chance to Flinch and/or Frostbite foe
@@ -335,6 +358,7 @@ Icicle Crash : Physical / 85 / 90 : 30% chance to cause foe to Flinch
 Icicle Spear : Physical / 25 / 100 : Hits 2-5 times
 Icy Wind : Special / 55 / 95 : 100% chance to lower foe's Speed by 1
 Powder Snow : Special / 40 / 100 : 50% chance to Frostbite foe
+Return Ice : Physical / 70 / 100 : Calc only move
 Sheer Cold : Special / 0 / 30 : If this move hits, it always K.Os foe. Doesn't effect ICE types
 Snowscape : Status / 0 / -- : Sets the weather to SNOW for 5 turns
 
@@ -352,6 +376,7 @@ Glitter Dance : Status / 0 / -- : Raises user's Sp.Atk and Speed by 1
 Glittering Sword : Physical / 95 / 100 : 20% chance to lower foe's Defense by 1
 Glittering Tornado : Special / 55 / 100 : 30% chance to lower foe's Accuracy by 1
 Glitzy Glow : Special / 80 / 100 : 30% chance to raise user's Sp.Def by 1
+Hp Light : Special / 60 / 100 : Calc only move
 Light Beam : Special / 60 / 100 : 20% chance to raise user's Sp.Atk by 1
 Light Of Ruin : Special / 140 / 90 : User takes 1/3 of damage dealt as recoil
 Luster Purge : Special / 70 / 100 : 50% chance to lower foe's Sp.Def by 1
@@ -361,6 +386,7 @@ Morning Sun : Status / 0 / -- : Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 i
 Photon Geyser : Special / 130 / 90 : 100% to lower user's Sp.Atk by 2
 Play Rough : Physical / 90 / 90 : 10% chance to lower foe's Attack by 1
 Prismatic Laser : Special / 100 / 100 : A normal attack
+Return Light : Physical / 70 / 100 : Calc only move
 Spirit Break : Physical / 75 / 100 : 100% chance to lower foe's Sp.Atk by 1
 Sunny Doom : Special / 80 / 100 : If this attack faints foe, causes weather to turn SUNNY
 Sweet Kiss : Status / 0 / 75 : Confuses foe
@@ -372,6 +398,7 @@ Aurora Boost : Status / 0 / -- : Raises user's Defense and Sp.Def by 1, and user
 Elemental Sparkle : Special / 45 / 90 : A random Grass, Fire, or Water move is also used
 Foresight : Status / 0 / -- : Indentifies foe, replacing their Ghost typing with Normal if they have it. It also raises user's Accuracy by 1 stage
 Hocus Pocus : Special / 70 / 95 : 20% to inflict foe with a random Status condition
+Hp Magic : Special / 60 / 100 : Calc only move
 Magic Blast : Special / 30 / 95 : A random Rock, Ground or Grass move is also used
 Magic Crash : Physical / 110 / 80 : 100% to inflict foe with a random Status condition. User must rest after using
 Magic Fang : Physical / 70 / 95 : 75% to flinch foe if this move is Super-Effective against it
@@ -379,6 +406,7 @@ Magic Powder : Status / 0 / 100 : Changes foe's type to MAGIC
 Magic Reflect : Status / 0 / -- : Foe's next attack will be reflected against them. Can be used every other turn, and not on the first turn out.
 Magic Tomb : Special / 90 / 100 : A normal attack
 Metronome : Status / 0 / -- : Uses a random move, can't be blocked by taunt
+Return Magic : Physical / 70 / 100 : Calc only move
 Sea Dragon : Status / 0 / -- : Transforms Kissyfishy into Kissyfishy-D: raised Atk, SpAtk, Acc by 1 if Kissyfishy-D
 Sparkle Strike : Physical / 80 / -- : This attack never misses
 Sparkling Terrain : Status / 0 / -- : Sets the terrain to SPARKLY for 5 turns
@@ -436,6 +464,7 @@ Hyper Voice : Special / 90 / 100 : A normal attack
 Leer : Status / 0 / 100 : Lowers foe's Defense by 1
 Lock-On : Status / 0 / -- : Raises user's Accuracy by 6
 Lovely Kiss : Status / 0 / 75 : Sleeps foe
+Lucky Chant : Status / 0 / -- : Protects user's team from Critical Hits for 8 turns
 Mean Look : Status / 0 / 100 : Causes foe to be unable to switch
 Mimic : Status / 0 / -- : Uses the move last used by the foe, fails if foe hasn't used a move yet
 Noble Roar : Status / 0 / 100 : Lowers foe's Attack and Sp.Atk by 1
@@ -502,6 +531,7 @@ Coil : Status / 0 / -- : Raises user's Atk, Def, and Acc by 1
 Cross Poison : Physical / 90 / 100 : 10% chance to Poison foe, boosted Crit rate
 Gastro Acid : Status / 0 / 100 : Supresses the foe's ability
 Gunk Shot : Physical / 120 / 80 : 30% chance to Poison foe
+Hp Poison : Special / 60 / 100 : Calc only move
 Mortal Spin : Physical / 30 / 100 : 100% to poison foe, and frees user of being Spun, Leech Seed, and Hazards
 Poison Fang : Physical / 50 / 100 : 50% to Toxic foe
 Poison Gas : Status / 0 / 80 : Poisons foe
@@ -509,6 +539,7 @@ Poison Jab : Physical / 80 / 100 : 30% to Poison foe
 Poison Powder : Status / 0 / 75 : Poisons foe
 Poison Sting : Physical / 15 / 100 : 30% chance to Poison foe
 Poison Tail : Physical / 85 / 100 : 10% chance to Poison foe. Boosted crit rate
+Return Poison : Physical / 70 / 100 : Calc only move
 Sludge : Special / 65 / 100 : 30% to Poison foe
 Sludge Bomb : Special / 90 / 100 : 30% to Poison foe
 Sludge Wave : Special / 95 / 100 : 10% chance to Poison foe
@@ -528,10 +559,11 @@ Confusion : Special / 50 / 100 : 10% chance to Confuse foe
 Dream Eater : Special / 100 / 100 : Only works if target is asleep. Heals 50% of damage dealt to foe
 Expanding Force : Special / 80 / 100 : Power is 1.5x if the terrain is PSYCHIC
 Extrasensory : Special / 80 / 100 : 10% chance of flinching foe
-Freezing Glare : Special / 90 / 100 : 20% chance to Frostbite foe
+Freezing Glare : Special / 90 / 100 : 30% chance to Frostbite foe
 Gravity Punch : Physical / 40 / 100 : Always goes first with extra priority. Still works in PSYCHIC TERRAIN.
 Heal Pulse : Status / 0 / -- : Heals foe by 50% HP
 Healing Wish : Status / 0 / -- : User faints. The next Pokemon sent in will be fully healed
+Hp Psychic : Special / 60 / 100 : Calc only move
 Hypnosis : Status / 0 / 60 : Causes foe to sleep
 Light Screen : Status / 0 / -- : Creates a screen that halves special damage on user's team for 5 turns
 Lunar Dance : Status / 0 / -- : User faints. The next Pokemon sent in will be fully healed
@@ -546,6 +578,7 @@ Psyshock : Special / 80 / 100 : Uses foe's Defense instead of Sp.Def in damage c
 Psywave : Special / 0 / 100 : Deals damage equal to user's level
 Reflect : Status / 0 / -- : Creates a screen that halves physical damage on user's team for 5 turns
 Rest : Status / 0 / -- : Restores user's HP to full and clears any status conditions, and user falls asleep for 2 turns
+Return Psychic : Physical / 70 / 100 : Calc only move
 Slow Fall : Special / 75 / 90 : 100% chance to change user's ability to LEVITATE
 Stored Power : Special / 20 / 100 : +20 BP for each stat boost
 Teleport : Status / 0 / -- : User switches out, bringing in a teammate for free. This always moves last
@@ -559,7 +592,9 @@ Accelerock : Physical / 40 / 100 : Always goes first
 Ancient Power : Special / 60 / 100 : 10% chance to raise all of the user's stats by 1
 Diamond Storm : Special / 100 / 95 : 50% chance to raise user's Defense by 2
 Head Smash : Physical / 150 / 80 : User takes 1/2 of damage inflicted
+Hp Rock : Special / 60 / 100 : Calc only move
 Power Gem : Special / 80 / 100 : A normal attack
+Return Rock : Physical / 70 / 100 : Calc only move
 Rock Blast : Physical / 25 / 90 : Hits 2-5 times
 Rock Climb : Physical / 80 / 95 : 20% chance to confuse foe
 Rock Polish : Status / 0 / -- : Raises user's Speed by 2
@@ -583,6 +618,7 @@ Bullet Punch : Physical / 40 / 100 : Always goes first
 Flash Cannon : Special / 80 / 100 : 10% chance to lower foe's Sp.Def by 1
 Gyro Ball : Physical / 0 / 100 : The lower the user's speed compared to the foe, the more power
 Heavy Slam : Physical / 0 / 100 : Damage is based on how heavy the user is compared to the foe
+Hp Steel : Special / 60 / 100 : Calc only move
 Iron Blast : Special / 85 / 95 : 30% chance to cause foe to Flinch
 Iron Defense : Status / 0 / -- : Raises user's Defense by 2
 Iron Head : Physical / 80 / 100 : 30% of causing foe to flinch
@@ -598,6 +634,7 @@ Molten Steelspike : Special / 100 / 90 : 30% chance to Burn foe
 Pistol Pop : Physical / 110 / 70 : A normal attack
 Pop Pop : Physical / 70 / 80 : Attacks twice, seperate accuracy checks for each hit
 Reboot : Status / 0 / -- : Clears user of any Status condition, and raises user's Speed by 1
+Return Steel : Physical / 70 / 100 : Calc only move
 Shift Gear : Status / 0 / -- : Raises user's Attack by 1 and Speed by 2
 Smart Strike : Physical / 70 / -- : This attack never misses
 Steel Beam : Special / 140 / 95 : 100% chance to deal 1/2 of user's HP in recoil
@@ -624,6 +661,7 @@ Bubblebeam : Special / 65 / 100 : 10% to lower foe's Speed by 1
 Deep Sea Bubble : Special / 100 / 100 : A normal attack. Turns into Draco Meteor when used by Kissyfishy-D
 Dive : Physical / 80 / 100 : A two turn attack. Dives underwater on the first, attacks on the second
 Flip Turn : Physical / 60 / 100 : Causes user to switch out after use
+Hp Water : Special / 60 / 100 : Calc only move
 Hydro Cannon : Special / 150 / 90 : User must rest after using this move
 Hydro Pump : Special / 110 / 80 : A normal attack
 Hydro Vortex : Special / 90 / 100 : 40% chance of confusing foe or causing foe to flinch
@@ -632,6 +670,7 @@ Liquidation : Physical / 85 / 100 : 20% chance to lower foe's Defense by 1
 Muddy Water : Special / 90 / 85 : 30% chance to lower foe's Accuracy by 1
 Rain Dance : Status / 0 / -- : Changes the weather to RAIN for 5 turns
 Razor Shell : Physical / 75 / 95 : 50% chance to lower foe's Defense by 1
+Return Water : Physical / 70 / 100 : Calc only move
 Scald : Special / 80 / 100 : 30% chance to Burn foe
 Soak : Status / 0 / 100 : Changes foe's type to WATER
 Sparkling Aria : Special / 90 / 100 : 100% to cure user of its Burn if it has one

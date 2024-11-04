@@ -576,7 +576,7 @@ public class EventHandler {
 			if (hit(107,66,50)) teleport(107, 53, 63,true); // F
 			if (hit(107,53,63)) teleport(107, 66, 50,true); // F
 			if (hit(107,47,63)) {
-				if (!gp.player.p.flags[19] || !gp.player.p.flags[20]) {
+				if (!gp.player.p.flag[5][2] || !gp.player.p.flag[5][5]) {
 					gp.setTaskState();
 					Task t = Pokemon.addTask(Task.TELEPORT, "");
 					t.counter = 107;
@@ -586,7 +586,7 @@ public class EventHandler {
 					if (gp.player.p.grustCount < 10) {
 						Pokemon.addTask(Task.TEXT, "This portal seems to be jammed by the Ghosts everywhere...");
 						Pokemon.addTask(Task.TEXT, "There are " + (10 - gp.player.p.grustCount) + " Ghosts remaining!");
-					} else if (!gp.player.p.flags[19]) {
+					} else if (!gp.player.p.flag[5][2]) {
 						Pokemon.addTask(Task.TEXT, "This portal seems to be jammed by Rick...");
 					} else {
 						Pokemon.addTask(Task.TEXT, "This portal seems to be jammed by Team Nuke...");

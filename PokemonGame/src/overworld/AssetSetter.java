@@ -374,7 +374,7 @@ public class AssetSetter {
 		mapNum = 14;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 48, Item.TM57, mapNum); // charge beam
-		gp.obj[mapNum][objIndex] = ObjSetup(43, 44, Item.FULL_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 44, Item.SAFETY_GOGGLES, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(41, 35, Item.BRAVE_MINT, mapNum); // brave
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 48, Item.PP_UP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(21, 43, Item.MAGNET, mapNum);
@@ -654,8 +654,9 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 42, Item.PETTICOAT_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(93, 35, Item.VALIANT_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(82, 26, Item.HYPER_POTION, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(90, 28, Item.THROAT_SPRAY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(91, 29, Item.THROAT_SPRAY, mapNum);
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(80, 31, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = ObjSetup(82, 62, Item.FOCUS_SASH, mapNum);
 		
 		mapNum = 90;
 		objIndex = 0;
@@ -666,11 +667,12 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 37, Item.PP_MAX, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(69, 13, Item.RARE_CANDY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(32, 11, Item.COVERT_CLOAK, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 11, Item.FOCUS_SASH, mapNum);
 		
 		mapNum = 95;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(44, 63, Item.TM32, mapNum); // zing zap
-		gp.obj[mapNum][objIndex] = ObjSetup(56, 58, Item.TIMID_MINT, mapNum); // timid
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 62, Item.TIMID_MINT, mapNum); // timid
 		gp.obj[mapNum][objIndex] = ObjSetup(56, 48, Item.HYPER_POTION, mapNum);
 		
 		mapNum = 96;
@@ -1319,11 +1321,7 @@ public class AssetSetter {
 		
 		mapNum = 33;
 		index = 0;
-		if (gp.player.p.badges >= 5 && !flags[19]) {
-			gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 62, 17, "There's some SCARY people wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.", 19);
-		} else {
-			gp.npc[mapNum][index++] = null;
-		}
+		gp.npc[mapNum][index++] = null; // electric tunnel guard
 		
 		gp.npc[mapNum][index] = SetupStaticEncounter(286, 33, 61, 391, 131, "Bloooghawooooooooarooo!"); // UP Shookwat
 		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_DOWN, 49, 78, "My bugs are ready for battle, and they're itching for a fight!", "I'll come back with more bugs, and next time I won't lose!", 195, ALL);
@@ -1350,11 +1348,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(BURGLAR_DOWN, 76, 25, "You can't stop a professional! I'll swipe this win!", "You're good... Too good for my tricks.", 115);
 		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_UP, 91, 43, "The galaxy is vast... and you're about to be lost in it.", "I'll recalibrate my strategy... and the stars will guide me to victory.", 116);
 		
-		if (gp.player.p.badges >= 5 && !flags[19]) {
-			gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 15, 46, "There's some SCARY people wearing black in there somewhere. I heard one of their leaders go to Ghostly Woods and is planning something evil.", 19);
-		} else {
-			gp.npc[mapNum][index++] = null;
-		}
+		gp.npc[mapNum][index++] = null; // electric tunnel guard
 		
 		mapNum = 38;
 		index = 0;
@@ -1540,12 +1534,12 @@ public class AssetSetter {
 				+ "She's talking to her daughter Millie about those Ultra Paradox Pokemon.\n"
 				+ "Millie's been through a lot after what happened in her town with Xurkitree. Guess they're trying to figure out the next move.\n"
 				+ "Come back later once things calm down.", 131);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 67, 69, "", "", 218);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 85, 64, "", "", 219);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 93, 54, "", "", 220);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 83, 51, "", "", 221);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 85, 37, "", "", 222);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 88, 40, "", "", 223);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 67, 69, "I'm always at my peak, and this battle will prove it!", "Even the best athletes lose sometimes... but I'll come back stronger!", 218);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 85, 64, "The ground trembles under my feet, and so will you!", "You're strong, but I'll come back tougher than ever!", 219);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_DOWN, 92, 55, "Think you can keep up with my high-energy Pokemon? Let's see!", "A defeat won't slow me down. I'll train harder!", 220);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 84, 49, "Time to turn up the heat and shock you with my skills!", "You won the battle, but I'll be back in top form soon!", 221);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_LEFT, 85, 37, "Hope you brought your swim gear, because I'm about to flood you out!", "I'm not going under just yet... next time, I'll win.", 222);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_RIGHT, 88, 40, "I'm fast in the water, and even faster in battle!", "Good match! I'll see you back in the deep end!", 223);
 		
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_LEFT, null, 63, 67, "EEEK! DON'T GO THIS WAY! I saw some really scary men dressed up in black go towards the woods this way. BE CAREFUL!", 133);
 		
@@ -1641,28 +1635,15 @@ public class AssetSetter {
 		
 		mapNum = 107;
 		index = 0;
-		if (!flags[19] && gp.player.p.grustCount >= 10) {
-			gp.npc[mapNum][index] = NPCSetup(RICK, 46, 60, "", "", 234);
-		} else {
-			gp.npc[mapNum][index++] = null;
-			GamePanel.volatileTrainers.put(NPCSetup(RICK, 46, 60, "", "", 234), mapNum);
-			index--;
+		gp.npc[mapNum][index] = NPCSetup(RICK, 46, 60, "In updateNPC", "", 234);
+		
+		int[] xCoords = new int[] {49, 78, 62, 61, 61, 79, 42, 75, 60, 17};
+		int[] yCoords = new int[] {88, 80, 81, 76, 70, 59, 77, 44, 42, 72};
+		
+		for (int i = 224; i <= 233; i++) {
+			gp.npc[mapNum][index] = NPCSetup(GRUST, xCoords[i-224], yCoords[i-224], "Groououuuooo!", "Gru...", i);
 		}
 		
-		if (gp.player.p.grustCount < 10) {
-			int[] xCoords = new int[] {49, 78, 62, 61, 61, 79, 42, 75, 60, 17};
-			int[] yCoords = new int[] {88, 80, 81, 76, 70, 59, 77, 44, 42, 72};
-			
-			for (int i = 224; i <= 233; i++) {
-				if (gp.player.p.trainersBeat == null || !gp.player.p.trainersBeat[i]) {
-					gp.npc[mapNum][index] = NPCSetup(GRUST, xCoords[i-224], yCoords[i-224], "", "", i);
-				} else {
-					gp.npc[mapNum][index++] = null;
-				}
-			}
-		} else {
-			index += 10;
-		}
 		gp.npc[mapNum][index] = SetupStaticEncounter(289, 50, 59, 391, 226, "Xvringzzi!"); // UP Pheromosa
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 49, 90, "Hmm... you can hide all you want, but I'll still spot you. Tricky little specters... there's nothing unnatural here...", true);
 		
@@ -2996,29 +2977,43 @@ public class AssetSetter {
 			gp.npc[107][12] = null;
 		}
 		
-		/**
-		 * All of this is old and should be removed/reworked
-		 */
-		if (!flags[19] && gp.player.p.grustCount >= 10) {
-			gp.npc[107][0] = NPCSetup(RICK, 46, 60, "", "", 234);
-			index--;
+		// electric tunnel guards
+		if (flag[4][5] && !flag[5][2]) {
+			gp.npc[33][0] = NPCSetup(BLOCK_DOWN, null, 62, 17, "There's some scary aliens wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.", 162);
+			gp.npc[36][11] = NPCSetup(BLOCK_DOWN, null, 62, 17, "There's some scary aliens wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.", 162);
 		} else {
-			gp.npc[107][0] = null;
-		}
-		if (flags[19]) {
 			gp.npc[33][0] = null;
 			gp.npc[36][11] = null;
 		}
 		
-		if (!flags[19]) {
+		// grusts
+		if (map == 107) {
 			int gIndex = 1;
 			for (int i = 224; i <= 233; i++) {
 				if (gp.player.p.trainersBeat[i]) {
-					gp.npc[107][gIndex] = null;
+					gp.npc[map][gIndex] = null;
 				}
 				gIndex++;
 			}
 		}
+		
+		if (!flag[5][3] && gp.player.p.grustCount >= 10) {
+			gp.npc[107][0] = NPCSetup(RICK, 46, 60, "Well, well. Look who decided to show up - the meddling pest who can't keep their nose out of Eclipse's business.\n"
+					+ "Do you have any idea what you've done? Those ghosts were just the beginning!\n"
+					+ "You may have beaten a few, but I can summon hundreds more if I want. Once I'm done with you, Ghostly Woods will be overrun!\n"
+					+ "But hey, maybe I should give you a chance to run. After all, once we're done here, not even the bravest of trainers will stand in Team Eclipse's way.",
+					"So you got lucky. Fine. You want to play hero? Then go ahead - I'll even tell you where we are hiding!\n"
+					+ "The rest of us are below Electric Tunnel, deep underground, working on another piece of the puzzle.\n"
+					+ "But don't get your hopes up. Maxwell's already started, and by the time you get there, it'll be too late to stop us.\n"
+					+ "Good luck with that! See you around - if you survive what's coming.", 234);
+		} else {
+			gp.npc[107][0] = null;
+		}
+		
+		
+		/**
+		 * All of this is old and should be removed/reworked
+		 */
 		if (flags[20]) {
 			for (int i = 0; i < 14; i++) {
 				gp.npc[104][i] = null;

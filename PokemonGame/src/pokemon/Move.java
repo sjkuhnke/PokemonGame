@@ -54,7 +54,7 @@ public enum Move {
 	BLACK_HOLE_ECLIPSE(140,100,100,0,1,0,PType.GALACTIC,"% chance to raise user's Sp.Def by 1, user must charge on the first turn",false,5),
 	BLAST_BURN(150,90,0,0,1,0,PType.FIRE,"User must rest after using this move",false,5),
 	BLAZE_KICK(90,100,10,1,0,0,PType.FIRE,"% chance to Burn foe",true,10),
-	BLIZZARD(110,70,20,0,1,0,PType.ICE,"% chance to Frostbite foe",false,5),
+	BLIZZARD(110,70,20,0,1,0,PType.ICE,"% chance to Frostbite foe, doesn't check accuracy in SNOW",false,5),
 	BLUE_FLARE(130,85,20,0,1,0,PType.FIRE,"% chance to Burn foe",false,5),
 	BODY_PRESS(80,100,0,0,0,0,PType.FIGHTING,"Uses user's Defense stat instead of Attack",true,10),
 	BODY_SLAM(85,100,30,0,0,0,PType.NORMAL,"% chance to Paralyze foe",true,15),
@@ -308,6 +308,7 @@ public enum Move {
 	METAL_CLAW(50,95,10,0,0,0,PType.STEEL,"% chance to raise user's Attack by 1",true,30),
 	METAL_SOUND(0,100,0,0,2,0,PType.STEEL,"Lowers foe's Sp.Def by 2",false,30),
 	METEOR_ASSAULT(120,100,100,0,0,0,PType.GALACTIC,"% to lower user's Attack and Defense by 1",false,5),
+	METEOR_BEAM(120,90,100,0,1,0,PType.ROCK,"% to raise the user's Sp.Atk by 1, user must charge on the first turn",false,10),
 	METEOR_MASH(90,90,20,0,0,0,PType.STEEL,"% chance to raise user's Attack by 1",true,10),
 	METRONOME(0,1000,0,0,2,0,PType.MAGIC,"Uses a random move, can't be blocked by taunt",false,20),
 	MIMIC(0,1000,0,0,2,0,PType.NORMAL,"Uses the move last used by the foe, fails if foe hasn't used a move yet",false,10),
@@ -960,6 +961,7 @@ public enum Move {
 		result.add(Move.HYPER_VOICE);
 		result.add(Move.PARTING_SHOT);
 		result.add(Move.SING);
+		result.add(Move.BELCH);
 		return result;
 	}
 	

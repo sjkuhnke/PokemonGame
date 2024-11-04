@@ -1625,11 +1625,11 @@ E - Magic Reflect
 35 - Magic Blast
 37 - Calm Mind
 44 - Elemental Sparkle
-47 - Sparkling Terrain
-50 - Psychic
-53 - Magic Tomb
-55 - Healing Wish
-58 - Vanishing Act
+46 - Sparkling Terrain
+49 - Psychic
+52 - Magic Tomb
+54 - Healing Wish
+57 - Vanishing Act
 60 - Morning Sun
 65 - Expanding Force
 
@@ -2079,8 +2079,9 @@ E - Dazzling Gleam
 42 - Glitzy Glow
 45 - Psychic
 49 - Moonblast
-55 - Glitter Dance
-60 - Black Hole Eclipse
+54 - Glitter Dance
+57 - Black Hole Eclipse
+60 - Moonlight
 65 - Expanding Force
 
 ===================
@@ -3562,9 +3563,10 @@ E - Diamond Storm
 28 - Stealth Rock
 30 - Shadow Claw
 33 - Dragon Rage
-37 - Psychic Fangs
-41 - Skull Bash
-44 - Iron Tail
+36 - Psychic Fangs
+39 - Skull Bash
+42 - Iron Tail
+45 - Zen Headbutt
 47 - Psychic Terrain
 50 - Head Smash
 53 - Outrage
@@ -4569,9 +4571,10 @@ Level Up:
 35 - Flatter
 37 - Foul Play
 42 - Topsy-Turvy
-47 - Superpower
-50 - Gravity
-55 - Knock Off
+46 - Superpower
+49 - Gravity
+52 - Knock Off
+55 - Unseen Strangle
 60 - Parting Shot
 
 ===================
