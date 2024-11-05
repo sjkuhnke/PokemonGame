@@ -61,6 +61,9 @@ public class GamePanel extends JPanel implements Runnable {
 	public static final int MAX_MAP = 200;
 	public static final int MAX_FLAG = 20; // should not be >31
 	
+	public int offsetX;
+	public int offsetY;
+	
 	public final String gameTitle = "Pokemon Xhenos";
 	
 	public KeyHandler keyH = new KeyHandler(this);
@@ -182,7 +185,8 @@ public class GamePanel extends JPanel implements Runnable {
 		if (npc[currentMap][index] != null) npc[currentMap][index].spinRandom();
 		
 	}
-
+	
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;

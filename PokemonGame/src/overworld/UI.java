@@ -109,6 +109,8 @@ public class UI extends AbstractUI {
 	private int maxLine = 13;
 	public int pageNum = 0;
 	
+	private Random rand = new Random();
+	
 	public static final int MAX_SHOP_COL = 10;
 	public static final int MAX_SHOP_ROW = 4;
 	
@@ -346,9 +348,11 @@ public class UI extends AbstractUI {
 			break;
 		case Task.FLASH_IN:
 			drawFlash(1);
+			drawDialogueScreen(false);
 			break;
 		case Task.FLASH_OUT:
 			drawFlash(-1);
+			drawDialogueScreen(false);
 			break;
 		case Task.ITEM:
 			drawItem();
@@ -418,6 +422,25 @@ public class UI extends AbstractUI {
 		case Task.ITEM_SUM:
 			drawItemSum();
 			break;
+		case Task.SHAKE:
+			if (!currentTask.message.isEmpty()) showMessage(Item.breakString(currentTask.message, 42));
+			drawShake();
+			break;
+		}
+	}
+
+	private void drawShake() {
+		counter += 1;
+		int maxShake = (int) ((300 - counter) / 2.0);
+	    maxShake = Math.max(0, Math.min(maxShake, 150));
+
+	    gp.offsetX = rand.nextInt(2 * maxShake + 1) - maxShake;
+	    gp.offsetY = rand.nextInt(2 * maxShake + 1) - maxShake;
+		if (counter >= 299) {
+			counter = 0;
+			gp.offsetX = 0;
+			gp.offsetY = 0;
+			currentTask = null;
 		}
 	}
 
@@ -454,8 +477,8 @@ public class UI extends AbstractUI {
 	private void drawSpot() {
 		Entity t = currentTask.e;
 		
-		int screenX = t.worldX - gp.player.worldX + gp.player.screenX;
-		int screenY = t.worldY - gp.player.worldY + gp.player.screenY;
+		int screenX = t.worldX - gp.player.worldX + gp.player.screenX + gp.offsetX;
+		int screenY = t.worldY - gp.player.worldY + gp.player.screenY + gp.offsetY;
 		
 		g2.drawImage(interactIcon, screenX - 3, screenY - gp.tileSize - 16, null);
 		
@@ -3096,10 +3119,9 @@ public class UI extends AbstractUI {
 					Pokemon.addTask(Task.GIFT, "", starters[starter]);
 					starterConfirm = false;
 					
-					Random random = new Random();
 			        int secondStarter = -1;
 			        do {
-			        	secondStarter = random.nextInt(3);
+			        	secondStarter = rand.nextInt(3);
 			        } while (secondStarter == gp.player.p.starter);
 			        gp.player.p.secondStarter = secondStarter;
 			        

@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -1319,7 +1318,7 @@ public class PlayerCharacter extends Entity {
 			Pokemon result = new Pokemon(ids[index], 30, true, false);
 			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 			Pokemon.addTask(Task.GIFT, "", result);
-		} else if (gp.currentMap == 107) {
+		} else if (gp.currentMap == 107) { // arthra
 			if (!p.flag[5][0]) {
 				Task t = Pokemon.addTask(Task.TURN, npc, "");
 				t.counter = 0;
@@ -1341,6 +1340,30 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.DIALOGUE, npc, "I really hate your hero attitude. You don't know shit. But like I said, have at it here.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "Just don't mess it up. And keep an eye out - these ghosts aren't the only threat around here.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "There's something bigger going on, and I'll figure it out - no thanks to you. See you around, hero.");
+				Pokemon.addTask(Task.FLASH_IN, "");
+				Pokemon.addTask(Task.UPDATE, "");
+				Pokemon.addTask(Task.FLASH_OUT, "");
+			}
+		} else if (gp.currentMap == 103) { // maxwell 1
+			if (!p.flag[5][4]) {
+				Pokemon.addTask(Task.DIALOGUE, npc, "Thra'knash koru'dan Gzhaz... Zhar'mir vakta da'tor!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Vahl'orim Dragowrath! Zhar'kor-Gzazha... vass'dar athra!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Zharkh'nir da'kash! Gzazha, ir'thar vak'tai khar... rise'thil an'dor!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Vahl'krim da'sharak... rise! KHAR DA'ZHAR GZAZHA!");
+				Pokemon.addTask(Task.SHAKE, "BOOOOOOOOOOOOOOOOOOOOOM!");
+				Task t = Pokemon.addTask(Task.TURN, npc, "");
+				t.counter = 1;
+				Pokemon.addTask(Task.SPOT, npc, "");
+				Pokemon.addTask(Task.DIALOGUE, npc, "BWAHAHAHAH! The pest finally arrives! Did you really think you could follow us all the way down here and stop what's already in motion? How amusingly naive.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You see, child, I am far more than just a 'trainer'. I am the vanguard of an empire – we are here to prepare this world for something beyond your comprehension.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "My master, Dragowrath, watches from the stars. Earth is merely the first of many worlds he'll claim, and when the Sorcerer rises, this land will be ours.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "But enough talk. You've come this far, so let's end this with a little... demonstration of power. Prepare yourself – my Pokemon and I will not hold back.");
+				t = Pokemon.addTask(Task.BATTLE, "");
+				t.counter = 217;
+			} else {
+				Pokemon.addTask(Task.DIALOGUE, npc, "Impressive... but don't think this victory means anything. The master plan is already in place, and there's nothing you can do to stop us.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Enjoy your hollow victory while it lasts. Soon, this world will be torn apart, and you'll see just how powerless you truly are.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Farewell... and enjoy what little time your precious world has left.");
 				Pokemon.addTask(Task.FLASH_IN, "");
 				Pokemon.addTask(Task.UPDATE, "");
 				Pokemon.addTask(Task.FLASH_OUT, "");
@@ -1891,7 +1914,7 @@ public class PlayerCharacter extends Entity {
 		int height = image.getHeight() * gp.scale;
 		int offset = height - gp.tileSize;
 		
-		g2.drawImage(image, screenX, screenY - offset, gp.tileSize, height, null);
+		g2.drawImage(image, screenX + gp.offsetX, screenY - offset + gp.offsetY, gp.tileSize, height, null);
 	}
 	
 	public Item[] getItems() {

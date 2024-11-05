@@ -960,7 +960,7 @@ public class PMap extends JPanel {
 			PlayerCharacter.currentMapName = "Shadow Ravine (-3A)";
 			return 25;
 		case 104:
-			PlayerCharacter.currentMapName = "Team Nuke Base";
+			PlayerCharacter.currentMapName = "Team Eclipse Base";
 			return -1;
 		case 105:
 			PlayerCharacter.currentMapName = "Shadow Path";
