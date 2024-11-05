@@ -727,7 +727,7 @@ public class AssetSetter {
 		mapNum = 104;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 61, Item.PP_UP, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(39, 61, Item.HM06, mapNum); // whirlpool
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 61, Item.HM06, mapNum); // whirlpool TODO
 		
 		mapNum = 105;
 		objIndex = 0;
@@ -1596,42 +1596,33 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "There have been 2 meteorites that have crashed into our region.", true, 132, "You should explore the Hearts of the ELECTRIC TUNNEL and SHADOW\nRAVINE. They're really pretty.");
 		
+		mapNum = 103;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(MAXWELL, "Maxwell", 47, 38, "...", true);
+		
 		mapNum = 104;
 		index = 0;
-		if (!flags[20]) {
-			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 47, "", "", 204);
-			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 47, "", "", 205);
-			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 49, "", "", 206);
-			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 49, "", "", 207);
-			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 51, "", "", 208);
-			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 51, "", "", 209);
-			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 53, "", "", 210);
-			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 53, "", "", 211);
-			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 55, "", "", 212);
-			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 55, "", "", 213);
-			gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 57, "", "", 214);
-			gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 57, "", "", 215);
-			
-			gp.npc[mapNum][index] = NPCSetup(FRED_UP, 44, 62, "", "", 216);
-			gp.npc[mapNum][index] = NPCSetup(MAXWELL, 41, 59, "", "", 217);
-		} else {
-//			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 44, 47, 204), mapNum);
-//			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 49, 47, 205), mapNum);
-//			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 44, 49, 206), mapNum);
-//			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 49, 49, 207), mapNum);
-//			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 44, 51, 208), mapNum);
-//			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 49, 51, 209), mapNum);
-//			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 44, 53, 210), mapNum);
-//			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 49, 53, 211), mapNum);
-//			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 44, 55, 212), mapNum);
-//			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 49, 55, 213), mapNum);
-//			GamePanel.volatileTrainers.put(NPCSetup(TN_RIGHT, 44, 57, 214), mapNum);
-//			GamePanel.volatileTrainers.put(NPCSetup(TN_LEFT, 49, 57, 215), mapNum);
-//			
-//			GamePanel.volatileTrainers.put(NPCSetup(FRED_UP, 44, 62, 216), mapNum);
-//			GamePanel.volatileTrainers.put(NPCSetup(MAXWELL, 41, 59, 217), mapNum);
-		}
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 47, "So, you think you're just going to waltz in here and stop us? Not a chance!", "How..? Maxwell is going to be furious with us!", 204);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 47, "Maxwell's plans are unstoppable, and we're here to make sure you don't interfere!", "Go ahead, keep pushing forward. You'll only meet more resistance!", 205);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 49, "You're in way over your head. This isn't some kid's game!", "No way! How did you manage that?!", 206);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 49, "You've got guts coming down here... but guts won't get you through us!", "Tch. Fine, but you won't get past the next guards so easily!", 207);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 51, "We're not like those weaklings you faced before. We're the real deal!", "Impossible... Maxwell promised we'd be unstoppable...", 208);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 51, "We'll be the ones who stop you in your tracks. Prepare to lose!", "Fine! But Maxwell won't let you ruin our mission!", 209);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 53, "Maxwell is so close to completing the summoning... You're too late!", "No... all that training, and we couldn't stop you.", 210);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 53, "We're not the last line of defense you'll face - you won't make it past here!", "Fine, go on. But Maxwell will deal with you himself!", 211);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 55, "You're meddling with powers you can't understand! This goes way beyond you!", "All our plans... ruined by a kid?!", 212);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 55, "We're not letting some wannabe hero ruin all our hard work!", "Keep going. Maxwell will make you regret crossing Team Eclipse!", 213);
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 44, 57, "You've made it this far, but we're not letting you get to Maxwell!", "No way... all this effort... and we still failed.", 214);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 49, 57, "Maxwell is counting on us. We're the last line of defense!", "Just know this: Maxwell won't show you the mercy we did.", 215);
 		
+		gp.npc[mapNum][index] = NPCSetup(FRED_UP, 47, 62, "Well, look who stumbled into the wrong place at the wrong time.\n"
+				+ "Didn't expect me to be here, did you? That's right, I'm with Team Eclipse now - I finally joined a group with real power.\n"
+				+ "You think you're stopping us? Hah! Maxwell's already at the brink of summoning a force you can't even imagine.\n"
+				+ "It's too late for you to meddle. So let's settle this right here.\n"
+				+ "You beat me, and maybe you get a chance to fail anyway. But I don't plan on letting you through!",
+				"Fine. Go ahead - get yourself beaten trying to stop Maxwell.\n"
+				+ "He's behind me in Shadow Ravine as we speak, and nothing you do will stop the power he's about to unleash.\n"
+				+ "Good luck... not that you'll need it where you're going.", 216);
 		
 		mapNum = 107;
 		index = 0;
@@ -1646,7 +1637,6 @@ public class AssetSetter {
 		
 		gp.npc[mapNum][index] = SetupStaticEncounter(289, 50, 59, 391, 226, "Xvringzzi!"); // UP Pheromosa
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 49, 90, "Hmm... you can hide all you want, but I'll still spot you. Tricky little specters... there's nothing unnatural here...", true);
-		
 		
 		mapNum = 109;
 		index = 0;
@@ -3010,18 +3000,32 @@ public class AssetSetter {
 			gp.npc[107][0] = null;
 		}
 		
-		
-		/**
-		 * All of this is old and should be removed/reworked
-		 */
-		if (flags[20]) {
-			for (int i = 0; i < 14; i++) {
+		if (flag[5][3]) {
+			gp.npc[104][12].worldX = 46 * gp.tileSize;
+		}
+		if (flag[5][4]) {
+			gp.npc[103][0] = null;
+		}
+		if (flag[5][5]) {
+			for (int i = 0; i < 13; i++) {
 				gp.npc[104][i] = null;
 			}
 		}
-		if (flags[21]) gp.npc[109][3] = null;
+		if (flag[5][6]) {
+			gp.npc[109][3] = null;
+		}
 		
-		if (map == 16 && gp.player.p.choiceChoice != null) gp.obj[map][objIndex] = ObjSetup(46, 28, gp.player.p.choiceChoice, map);
+		/**
+		 * Seventh Split
+		 */
+		if (map == 16 && gp.player.p.choiceChoice != null) {
+			gp.obj[map][objIndex] = ObjSetup(46, 28, gp.player.p.choiceChoice, map);
+		}
+		
+		
+		/**
+		 * All of this is old and should be removed/reworked
+		 */		
 		if (flags[26]) {
 			gp.npc[138][0] = null;
 			gp.npc[124][15] = null;
@@ -3649,6 +3653,10 @@ public class AssetSetter {
 			case ARTHRA_UP:
 				result.setupImages("/npc/arthra");
 				result.setDirection("up");
+				break;
+			case MAXWELL:
+				result.setupImages("/npc/maxwell");
+				result.setDirection("down");
 				break;
 		}
 		
