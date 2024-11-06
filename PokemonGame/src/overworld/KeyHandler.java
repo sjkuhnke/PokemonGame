@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 
 import pokemon.Item;
 import pokemon.Pokemon;
+import pokemon.Pokemon.Task;
 
 public class KeyHandler implements KeyListener {
 
@@ -316,7 +317,9 @@ public class KeyHandler implements KeyListener {
 				gp.ui.bagState = 0;
 				gp.ui.commandNum = 0;
 			} else if (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
-				gp.ui.currentTask = null;
+				if (gp.ui.currentTask != null && gp.ui.currentTask.type != Task.SHAKE) {
+					gp.ui.currentTask = null;
+				}
 			}
 		}
 	}

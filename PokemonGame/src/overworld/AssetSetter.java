@@ -723,11 +723,11 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 56, Item.GOLD_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(57, 54, Item.EUPHORIAN_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 35, Item.ABILITY_CAPSULE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(51, 39, Item.HM06, mapNum);
 		
 		mapNum = 104;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 61, Item.PP_UP, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(39, 61, Item.HM06, mapNum); // whirlpool TODO
 		
 		mapNum = 105;
 		objIndex = 0;
@@ -1599,6 +1599,7 @@ public class AssetSetter {
 		mapNum = 103;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(MAXWELL, "Maxwell", 47, 38, "...", true);
+		gp.npc[mapNum][index] = SetupStaticEncounter(287, 48, 49, 393, 165, "Cvvshugizgi!", "up");
 		
 		mapNum = 104;
 		index = 0;
@@ -1644,12 +1645,17 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 67, 72, "", "", 236);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 49, 44, "", "", 237);
 		
-		if (!flags[21]) {
-			gp.npc[mapNum][index] = NPCSetup(SCOTT_DOWN, 21, 40, "", "", 242);;
-		} else {
-			gp.npc[mapNum][index++] = null;
-			GamePanel.volatileTrainers.put(NPCSetup(SCOTT_DOWN, 21, 40, "", "", 242), mapNum);
-		}
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_DOWN, 21, 40, "Hey, it’s been a while, hasn't it? How have you been?\n"
+				+ "...\n"
+				+ "You beat Team Eclipse? Even their leader? Wow! Hopefully they'll be gone for good now.\n"
+				+ "Well, while you were dealing with them, I've been training - intensely.\n"
+				+ "My psychic powers have been growing stronger, and I've been trying to sharpen my mind to read your strategies.\n"
+				+ "I can feel it... I think I'm ready to beat you this time!\n"
+				+ "Let's see if my training has paid off. Maybe this time, I'll finally be able to read your mind and outsmart you!",
+				"Argh! I thought I had it this time!\n"
+				+ "I spent so long training my psychic powers, trying to predict your moves... but I forgot something really important.\n"
+				+ "It's not about reading your mind - it's about training my Pokemon. They're the ones doing the battling, after all.\n"
+				+ "Guess I still have a lot to learn. But don't worry! Next time, I'll focus on them, and I'll definitely beat you!", 242);
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 44, 39, "I found this infant Pokemon abandoned here.", true, 22, "Please raise it with love and care!");
 		
 		mapNum = 110;
@@ -3003,7 +3009,7 @@ public class AssetSetter {
 		if (flag[5][3]) {
 			gp.npc[104][12].worldX = 46 * gp.tileSize;
 		}
-		if (flag[5][4]) {
+		if (flag[5][9]) {
 			gp.npc[103][0] = null;
 		}
 		if (flag[5][5]) {
@@ -3885,6 +3891,10 @@ public class AssetSetter {
 	}
 	
 	private NPC_Pokemon SetupStaticEncounter(int id, int x, int y, int t, int flag, String message) {
+		return SetupStaticEncounter(id, x, y, t, flag, message, "down");
+	}
+	
+	private NPC_Pokemon SetupStaticEncounter(int id, int x, int y, int t, int flag, String message, String direction) {
 		
 		String messages[] = message.split("\n");
 		for (int i = 0; i < messages.length; i++) {
@@ -3892,6 +3902,7 @@ public class AssetSetter {
 		}
 		
 		NPC_Pokemon result = new NPC_Pokemon(gp, id, t, id == 159, flag, messages);
+		result.setDirection(direction);
 		if (gp.player.p.flag[result.getFlagX()][result.getFlagY()]) {
 			index++;
 			return null;

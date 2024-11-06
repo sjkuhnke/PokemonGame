@@ -1350,8 +1350,9 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.DIALOGUE, npc, "Vahl'orim Dragowrath! Zhar'kor-Gzazha... vass'dar athra!");
 				Pokemon.addTask(Task.DIALOGUE, npc, "Zharkh'nir da'kash! Gzazha, ir'thar vak'tai khar... rise'thil an'dor!");
 				Pokemon.addTask(Task.DIALOGUE, npc, "Vahl'krim da'sharak... rise! KHAR DA'ZHAR GZAZHA!");
-				Pokemon.addTask(Task.SHAKE, "BOOOOOOOOOOOOOOOOOOOOOM!");
-				Task t = Pokemon.addTask(Task.TURN, npc, "");
+				Task t = Pokemon.addTask(Task.SHAKE, "BOOOOOOOOOOOOOOOOOOOOOM!");
+				t.counter = 300;
+				t = Pokemon.addTask(Task.TURN, npc, "");
 				t.counter = 1;
 				Pokemon.addTask(Task.SPOT, npc, "");
 				Pokemon.addTask(Task.DIALOGUE, npc, "BWAHAHAHAH! The pest finally arrives! Did you really think you could follow us all the way down here and stop what's already in motion? How amusingly naive.");
@@ -1360,13 +1361,54 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.DIALOGUE, npc, "But enough talk. You've come this far, so let's end this with a little... demonstration of power. Prepare yourself – my Pokemon and I will not hold back.");
 				t = Pokemon.addTask(Task.BATTLE, "");
 				t.counter = 217;
-			} else {
+			} else if (!p.flag[5][9]) {
+				p.flag[5][9] = true;
 				Pokemon.addTask(Task.DIALOGUE, npc, "Impressive... but don't think this victory means anything. The master plan is already in place, and there's nothing you can do to stop us.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "Enjoy your hollow victory while it lasts. Soon, this world will be torn apart, and you'll see just how powerless you truly are.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "Farewell... and enjoy what little time your precious world has left.");
 				Pokemon.addTask(Task.FLASH_IN, "");
 				Pokemon.addTask(Task.UPDATE, "");
 				Pokemon.addTask(Task.FLASH_OUT, "");
+				Task t = Pokemon.addTask(Task.SHAKE, "");
+				t.counter = 100;
+				t = Pokemon.addTask(Task.MOVE_CAMERA, "");
+				t.counter = 2;
+				t.start = 1;
+				t.finish = -400;
+				
+				t = Pokemon.addTask(Task.MOVE_NPC, gp.npc[103][1], "");
+				t.counter = 2;
+				t.start = 1;
+				t.finish = 45 * gp.tileSize;
+				t.wipe = true;
+				
+				t = Pokemon.addTask(Task.TURN, gp.npc[103][1], "");
+				t.counter = Task.RIGHT;
+				
+				t = Pokemon.addTask(Task.MOVE_NPC, gp.npc[103][1], "");
+				t.counter = 2;
+				t.start = 0;
+				t.finish = 51 * gp.tileSize;
+				t.wipe = true;
+				
+				t = Pokemon.addTask(Task.TURN, gp.npc[103][1], "");
+				t.counter = Task.UP;
+				
+				t = Pokemon.addTask(Task.MOVE_NPC, gp.npc[103][1], "");
+				t.counter = 2;
+				t.start = 1;
+				t.finish = 41 * gp.tileSize;
+				t.wipe = true;
+				
+				t = Pokemon.addTask(Task.TURN, gp.npc[103][1], "");
+				t.counter = Task.DOWN;
+				
+				t = Pokemon.addTask(Task.MOVE_CAMERA, "");
+				t.wipe = true;
+				t.counter = 60;
+				t.start = 0;
+				t.finish = 0;
+				Pokemon.addTask(Task.TEXT, "A powerful presense awaits...");
 			}
 		}
 		if (gp.currentMap == 109 && !p.flags[22]) {

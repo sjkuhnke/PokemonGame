@@ -1393,9 +1393,10 @@ public class TileManager {
 			int screenY = worldY - gp.player.worldY + gp.player.screenY + gp.offsetY;
 			
 			if (worldX + gp.tileSize + gp.offsetX > gp.player.worldX - gp.player.screenX &&
-					worldX - gp.tileSize - gp.offsetX < gp.player.worldX + gp.player.screenX + gp.offsetX &&
-					worldY + gp.tileSize + gp.offsetY > gp.player.worldY - gp.player.screenY &&
-					worldY - gp.tileSize - gp.offsetY < gp.player.worldY + gp.player.screenY + gp.offsetY) {
+				worldX - gp.tileSize + gp.offsetX < gp.player.worldX + gp.player.screenX &&
+				worldY + gp.tileSize + gp.offsetY > gp.player.worldY - gp.player.screenY &&
+				worldY - gp.tileSize + gp.offsetY < gp.player.worldY + gp.player.screenY) {
+				
 				if (tile[tileNum].mask == null) {
 					if (tile[tileNum].drawAbove == drawAbove) {
 						g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);

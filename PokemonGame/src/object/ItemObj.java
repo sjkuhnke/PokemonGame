@@ -33,9 +33,9 @@ public class ItemObj extends Entity {
 		int screenY = worldY - gp.player.worldY + gp.player.screenY + gp.offsetY;
 		
 		if (worldX + gp.tileSize + gp.offsetX > gp.player.worldX - gp.player.screenX &&
-			worldX - gp.tileSize - gp.offsetX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
+			worldX - gp.tileSize + gp.offsetX < gp.player.worldX + gp.player.screenX &&
 			worldY + gp.tileSize + gp.offsetY > gp.player.worldY - gp.player.screenY &&
-			worldY - gp.tileSize - gp.offsetY < gp.player.worldY + gp.player.screenY + gp.tileSize) {
+			worldY - gp.tileSize + gp.offsetY < gp.player.worldY + gp.player.screenY) {
 			
 			g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 		}

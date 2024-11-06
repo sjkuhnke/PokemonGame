@@ -28,11 +28,9 @@ public class NPC_Pokemon extends Entity {
 	public void getImage(int id) {
 		String path = "/overworlds/" + id;
 		down1 = setup(path + "_0");
-		if (spin) {
-			left1 = setup(path + "_1");
-			up1 = setup(path + "_2");
-			right1 = setup(path + "_3");
-		}
+		left1 = setup(path + "_1");
+		up1 = setup(path + "_2");
+		right1 = setup(path + "_3");
 		down2 = setup("/overworlds/invis");
 	}
 	
