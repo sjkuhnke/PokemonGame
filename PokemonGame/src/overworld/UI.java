@@ -348,11 +348,9 @@ public class UI extends AbstractUI {
 			break;
 		case Task.FLASH_IN:
 			drawFlash(1);
-			drawDialogueScreen(false);
 			break;
 		case Task.FLASH_OUT:
 			drawFlash(-1);
-			drawDialogueScreen(false);
 			break;
 		case Task.ITEM:
 			drawItem();
@@ -426,17 +424,88 @@ public class UI extends AbstractUI {
 			if (!currentTask.message.isEmpty()) showMessage(Item.breakString(currentTask.message, 42));
 			drawShake();
 			break;
+		case Task.MOVE_CAMERA:
+			drawCameraMove();
+			break;
+		case Task.MOVE_NPC:
+			drawNPCMove();
+			break;
+		}
+	}
+
+	private void drawNPCMove() {
+		boolean moveX = currentTask.start % 2 == 0;
+		int pos = moveX ? currentTask.e.worldX : currentTask.e.worldY;
+		
+		int direction = Integer.signum(currentTask.finish - pos);
+		boolean finished = (direction > 0 && pos >= currentTask.finish) ||
+						   (direction < 0 && pos <= currentTask.finish) ||
+						   (direction == 0);
+		
+		if (finished) {
+			currentTask = null;
+		} else {
+			if (moveX) {
+				currentTask.e.worldX += direction * currentTask.counter;
+				if (currentTask.wipe) gp.offsetX -= direction * currentTask.counter;
+			} else {
+				currentTask.e.worldY += direction * currentTask.counter;
+				if (currentTask.wipe) gp.offsetY -= direction * currentTask.counter;
+			}
+		}
+		
+	}
+
+	private void drawCameraMove() {
+		if (currentTask.wipe) { // diagonal
+			System.out.println(gp.offsetX);
+			System.out.println(gp.offsetY);
+			float deltaX = (float)(currentTask.start - gp.offsetX) / currentTask.counter;
+			float deltaY = (float)(currentTask.finish - gp.offsetY) / currentTask.counter;
+			System.out.printf("deltaX %f, deltaY %f\n", deltaX, deltaY);
+			
+			float moveX = gp.offsetX + deltaX;
+			float moveY = gp.offsetY + deltaY;
+			
+			gp.offsetX = Math.round(moveX);
+			gp.offsetY = Math.round(moveY);
+			
+			currentTask.counter--;
+			if (currentTask.counter <= 0) {
+				gp.offsetX = currentTask.start;
+				gp.offsetY = currentTask.finish;
+				currentTask = null;
+			}
+		} else { // cardinal
+			boolean moveX = currentTask.start % 2 == 0;
+			int offset = moveX ? gp.offsetX : gp.offsetY;
+			
+			int direction = Integer.signum(currentTask.finish - offset);
+			
+			boolean finished = (direction > 0 && offset >= currentTask.finish) ||
+							   (direction < 0 && offset <= currentTask.finish) ||
+							   (direction == 0);
+			
+			if (finished) {
+				currentTask = null;
+			} else {
+				if (moveX) {
+					gp.offsetX += direction * currentTask.counter;
+				} else {
+					gp.offsetY += direction * currentTask.counter;
+				}
+			}
 		}
 	}
 
 	private void drawShake() {
 		counter += 1;
-		int maxShake = (int) ((300 - counter) / 2.0);
-	    maxShake = Math.max(0, Math.min(maxShake, 150));
+		int maxShake = (int) ((currentTask.counter - counter) / 4.0);
+	    maxShake = Math.max(0, Math.min(maxShake, currentTask.counter/2));
 
 	    gp.offsetX = rand.nextInt(2 * maxShake + 1) - maxShake;
 	    gp.offsetY = rand.nextInt(2 * maxShake + 1) - maxShake;
-		if (counter >= 299) {
+		if (counter >= currentTask.counter - 1) {
 			counter = 0;
 			gp.offsetX = 0;
 			gp.offsetY = 0;

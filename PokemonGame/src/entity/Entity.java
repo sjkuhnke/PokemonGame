@@ -70,8 +70,15 @@ public class Entity {
 		
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			try {
+				image = ImageIO.read(getClass().getResourceAsStream("/overworlds/invis.png"));
+				if (!(this instanceof NPC_Pokemon)) {
+					System.out.println(imageName + ".png is null!");
+				}
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 		return image;
@@ -82,10 +89,10 @@ public class Entity {
 		int screenX = worldX - gp.player.worldX + gp.player.screenX + gp.offsetX;
 		int screenY = worldY - gp.player.worldY + gp.player.screenY + gp.offsetY;
 		
-		if (worldX + gp.tileSize + gp.offsetX > gp.player.worldX - gp.player.screenX &&
-			worldX - gp.tileSize - gp.offsetX < gp.player.worldX + gp.player.screenX + gp.offsetX &&
-			worldY + gp.tileSize + gp.offsetY > gp.player.worldY - gp.player.screenY &&
-			worldY - gp.tileSize - gp.offsetY < gp.player.worldY + gp.player.screenY + gp.offsetY) {
+		if (worldX + gp.tileSize*2 + gp.offsetX > gp.player.worldX - gp.player.screenX &&
+			worldX - gp.tileSize*2 + gp.offsetX < gp.player.worldX + gp.player.screenX &&
+			worldY + gp.tileSize*2 + gp.offsetY > gp.player.worldY - gp.player.screenY &&
+			worldY - gp.tileSize*2 + gp.offsetY < gp.player.worldY + gp.player.screenY) {
 			
 			switch(direction) {
 			case "up":

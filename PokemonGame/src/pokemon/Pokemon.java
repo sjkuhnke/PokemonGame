@@ -4652,6 +4652,11 @@ public class Pokemon implements Serializable {
 	}
 	
 	public class Task {
+		public static final int DOWN = 0;
+		public static final int UP = 1;
+		public static final int LEFT = 2;
+		public static final int RIGHT = 3;
+		
 		public static final int TEXT = 0;
 		public static final int DAMAGE = 1;
 		public static final int ABILITY = 2;
@@ -4694,6 +4699,8 @@ public class Pokemon implements Serializable {
 		public static final int SPEAK = 39;
 		public static final int ITEM_SUM = 40;
 		public static final int SHAKE = 41;
+		public static final int MOVE_CAMERA = 42; // start: 0 for X, 1 for Y, finish: offsetX/offsetY to end at
+		public static final int MOVE_NPC = 43; // start: 0 for X, 1 for Y, finish: TILE COORDINATE to end at
 		
 		public int type;
 		public String message;
@@ -4804,6 +4811,10 @@ public class Pokemon implements Serializable {
 			case START_BATTLE: return "START_BATTLE";
 			case DIALOGUE: return "DIALOGUE";
 			case SPEAK: return "SPEAK";
+			case ITEM_SUM: return "ITEM_SUM";
+			case SHAKE: return "SHAKE";
+			case MOVE_CAMERA: return "MOVE_CAMERA";
+			case MOVE_NPC: return "MOVE_NPC";
 			default:
 				return "getTypeString() doesn't have a case for this type";
 			}
