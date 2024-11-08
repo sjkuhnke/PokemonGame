@@ -193,6 +193,7 @@ public class Pokemon implements Serializable {
 		moveset = new Moveslot[4];
 		setMoves();
 		moveMultiplier = 1;
+		rollCount = 1;
 		
 		status = Status.HEALTHY;
 		vStatuses = new ArrayList<Status>();
@@ -205,7 +206,7 @@ public class Pokemon implements Serializable {
 			currentHP = this.getStat(0);
 		}
 		
-		if (id == 29 || id == 134 || id == 174) {
+		if (id == 29 || id == 174 || id == 292) {
 			happiness = 110;
 		} else if (id == 59) {
 			happiness = 0;
@@ -1612,9 +1613,11 @@ public class Pokemon implements Serializable {
 		if (move == Move.ROLLOUT || move == Move.ICE_BALL) {
 			if (!this.vStatuses.contains(Status.LOCKED)) {
 				this.vStatuses.add(Status.LOCKED);
-				this.rollCount = 0;
+			} else {
+				this.rollCount++;
 			}
-			this.rollCount++;
+		} else {
+			this.rollCount = 1;
 		}
 		
 		if (id == 237) {
@@ -3508,6 +3511,7 @@ public class Pokemon implements Serializable {
 			foe.sleep(true, this);
 		} else if (move == Move.DEFENSE_CURL) {
 			stat(this, 1, 1, foe, announce);
+			rollCount = 2;
 		} else if (announce && move == Move.DEFOG) {
 			stat(foe, 6, -1, this, announce);
 			for (FieldEffect fe : field.getHazards(userSide)) {
@@ -4701,6 +4705,7 @@ public class Pokemon implements Serializable {
 		public static final int SHAKE = 41;
 		public static final int MOVE_CAMERA = 42; // start: 0 for X, 1 for Y, finish: offsetX/offsetY to end at
 		public static final int MOVE_NPC = 43; // start: 0 for X, 1 for Y, finish: TILE COORDINATE to end at
+		public static final int SLEEP = 44; // counter: frames to sleep for
 		
 		public int type;
 		public String message;
@@ -6001,10 +6006,10 @@ public class Pokemon implements Serializable {
 				bp = 200;
 			}
 		} else if (move == Move.FURY_CUTTER) {
+			bp = Math.min(160, 40 * this.moveMultiplier);
 			if (this.lastMoveUsed == Move.FURY_CUTTER) {
 				if (announce) this.moveMultiplier *= 2;
 			}
-			bp = Math.min(160, 40 * this.moveMultiplier);
 		} else if (move == Move.GRASS_KNOT || move == Move.LOW_KICK) {
 			if (foe.weight < 21.9) {
 				bp = 20;
@@ -6072,10 +6077,10 @@ public class Pokemon implements Serializable {
 				if (announce) addTask(Task.TEXT, "Magnitude 10!");
 			}
 		} else if (move == Move.RAGE) {
+			bp = Math.min(160, 40 * this.moveMultiplier);
 			if (this.lastMoveUsed == Move.RAGE) {
 				if (announce) this.moveMultiplier *= 2;
 			}
-			bp = Math.min(160, 20 * this.moveMultiplier);
 		} else if (move == Move.PAYBACK) {
 			if (first) {
 				bp = 50;
@@ -6096,7 +6101,7 @@ public class Pokemon implements Serializable {
 				bp = 120;
 			}
 		} else if (move == Move.ROLLOUT || move == Move.ICE_BALL) {
-			bp = (int) (30 * Math.pow(2, this.rollCount-1));
+			bp = (int) (30 * Math.pow(2, this.rollCount));
 		} else if (move == Move.STORED_POWER) {
 			int boosts = 0;
 			for (int i = 0; i < this.statStages.length; i++) {

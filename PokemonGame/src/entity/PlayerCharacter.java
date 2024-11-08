@@ -760,7 +760,7 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.DIALOGUE, npc, "Oh, you have a package for us? Thank you so much! I'm sure Robin greatly appreciates the help!");
 				Pokemon.addTask(Task.DIALOGUE, npc, "Here, have a complimentary gift dog! No really, we insist.");
 				
-				Random dog = new Random();
+				Random dog = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 				int id = dog.nextInt(3);
 				id = 120 + (id * 3);
 				Pokemon dogP = new Pokemon(id, 5, true, false);
@@ -948,7 +948,7 @@ public class PlayerCharacter extends Entity {
 				}
 			} else {
 				p.flag[2][2] = true;
-				Random gift = new Random();
+				Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 				int id = 0;
 				int counter = 0;
 				do {
@@ -1125,7 +1125,7 @@ public class PlayerCharacter extends Entity {
 		} else if (gp.currentMap == 49) {
 			p.flag[2][14] = true;
 			Pokemon.addTask(Task.DIALOGUE, npc, "I encountered this very strong Pokemon, and I don't think I'm strong enough to train it. Here!");
-			Random gift = new Random();
+			Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 			int id;
 			int counter = 0;
 			do {
@@ -1155,7 +1155,7 @@ public class PlayerCharacter extends Entity {
 		} else if (gp.currentMap == 50) {
 			p.flag[3][9] = true;
 			Pokemon.addTask(Task.DIALOGUE, npc, "Great choice young cracka!!!!");
-			Random gift = new Random();
+			Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 			int id = gift.nextInt(3); // Otterpor, Florline, Flameruff
 			switch (id) {
 			case 0:
@@ -1170,8 +1170,7 @@ public class PlayerCharacter extends Entity {
 			}
 			if (p.pokedex[id] == 2) {
 				Pokemon.addTask(Task.DIALOGUE, npc, "Wait..... you have that\none?!?!? Shit. Well, take\nthis one instead bozo");
-				Random gift2 = new Random();
-				boolean sparkitten = gift2.nextBoolean();
+				boolean sparkitten = gift.nextBoolean();
 				if (sparkitten) {
 					id = 108;
 				} else {
@@ -1307,7 +1306,7 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.TEXT, "One makes Pokemon surge with electricity, and another casts them in a strange shadow.");
 			Pokemon.addTask(Task.TEXT, "Here's a gift of one of the Pokemon affected!");
 			int[] ids = new int[] {197, 199, 202, 205, 209, 215, 217, 220, 223, 226};
-			Random gift = new Random();
+			Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 			int index = -1;
 			int counter = 0;
 			do {
@@ -1371,10 +1370,17 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.FLASH_OUT, "");
 				Task t = Pokemon.addTask(Task.SHAKE, "");
 				t.counter = 100;
+				
 				t = Pokemon.addTask(Task.MOVE_CAMERA, "");
 				t.counter = 2;
 				t.start = 1;
 				t.finish = -400;
+				
+				t = Pokemon.addTask(Task.SHAKE, "");
+				t.counter = 50;
+				
+				t = Pokemon.addTask(Task.SLEEP, "");
+				t.counter = 30;
 				
 				t = Pokemon.addTask(Task.MOVE_NPC, gp.npc[103][1], "");
 				t.counter = 2;
@@ -1403,6 +1409,9 @@ public class PlayerCharacter extends Entity {
 				t = Pokemon.addTask(Task.TURN, gp.npc[103][1], "");
 				t.counter = Task.DOWN;
 				
+				t = Pokemon.addTask(Task.SLEEP, "");
+				t.counter = 60;
+				
 				t = Pokemon.addTask(Task.MOVE_CAMERA, "");
 				t.wipe = true;
 				t.counter = 60;
@@ -1415,7 +1424,7 @@ public class PlayerCharacter extends Entity {
 				p.flags[22] = true;
 				Pokemon.addTask(Task.TEXT, "Here, could you raise it for me?");
 				int[] ids = new int[] {177, 179, 98};
-				Random gift = new Random();
+				Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 				int index = gift.nextInt(ids.length - 1);
 				if (p.pokedex[ids[0]] == 2 || p.pokedex[ids[1]] == 2) {
 					Pokemon.addTask(Task.TEXT, "Oh, you already have a " + Pokemon.getName(ids[index]) + "? I'll give it to someone else to look after then.");

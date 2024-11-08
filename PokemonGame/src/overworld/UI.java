@@ -430,7 +430,19 @@ public class UI extends AbstractUI {
 		case Task.MOVE_NPC:
 			drawNPCMove();
 			break;
+		case Task.SLEEP:
+			drawSleep();
+			break;
 		}
+	}
+
+	private void drawSleep() {
+		if (currentTask.counter <= 0) {
+			currentTask = null;
+		} else {
+			currentTask.counter--;
+		}
+		
 	}
 
 	private void drawNPCMove() {
@@ -499,16 +511,20 @@ public class UI extends AbstractUI {
 	}
 
 	private void drawShake() {
+		if (currentTask.start == -1) {
+			currentTask.start = gp.offsetX;
+			currentTask.finish = gp.offsetY;
+		}
 		counter += 1;
 		int maxShake = (int) ((currentTask.counter - counter) / 4.0);
 	    maxShake = Math.max(0, Math.min(maxShake, currentTask.counter/2));
 
-	    gp.offsetX = rand.nextInt(2 * maxShake + 1) - maxShake;
-	    gp.offsetY = rand.nextInt(2 * maxShake + 1) - maxShake;
+	    gp.offsetX = rand.nextInt(2 * maxShake + 1) - maxShake + currentTask.start;
+	    gp.offsetY = rand.nextInt(2 * maxShake + 1) - maxShake + currentTask.finish;
 		if (counter >= currentTask.counter - 1) {
 			counter = 0;
-			gp.offsetX = 0;
-			gp.offsetY = 0;
+			gp.offsetX = currentTask.start;
+			gp.offsetY = currentTask.finish;
 			currentTask = null;
 		}
 	}
