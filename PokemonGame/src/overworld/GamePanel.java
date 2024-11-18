@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
 	public static final int MAX_MAP = 200;
-	public static final int MAX_FLAG = 20; // should not be >31
+	public static final int MAX_FLAG = 24; // should not be >31
 	
 	public int offsetX;
 	public int offsetY;

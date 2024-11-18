@@ -30,7 +30,7 @@ public class WelcomeMenu extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static final int NUM_BACKGROUNDS = 3;
+	private static final int NUM_BACKGROUNDS = 4;
 	
 	private OutlineLabel titleLabel;
 	private OutlineLabel subtitleLabel;
@@ -48,7 +48,7 @@ public class WelcomeMenu extends JPanel {
 			Random rand = new Random();
 			int random = rand.nextInt(NUM_BACKGROUNDS) + 1;
             img = ImageIO.read(getClass().getResourceAsStream("/gen/background" + random + ".png"));
-            Color[] textColors = new Color[] {new Color(221, 184, 188), new Color(247, 229, 123), new Color(196, 197, 83)};
+            Color[] textColors = new Color[] {new Color(221, 184, 188), new Color(247, 229, 123), new Color(196, 197, 83), new Color(0, 77, 129)};
             textColor = textColors[random - 1];
         } catch (IOException e) {
             e.printStackTrace();

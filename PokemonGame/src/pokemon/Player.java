@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -89,7 +90,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 45;
+	public static final int VERSION = 46;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -428,7 +429,6 @@ public class Player extends Trainer implements Serializable {
 		JComboBox<Pokemon> starter = new JComboBox<>();
 		JButton pokedexButton = new JButton("Pokedex");
 		JButton bagButton = new JButton("Bag");
-		JCheckBox[] flags = new JCheckBox[50]; // TODO: replace with flag
 		JCheckBox[] locations = new JCheckBox[12];
 		JButton importTrainers = new JButton("Import Trainers");
 		JButton importItems = new JButton("Import ObjectItems");
@@ -461,24 +461,40 @@ public class Player extends Trainer implements Serializable {
 		});
 		result.add(bagButton);
 		
-		String[] flagDesc = new String[] {
-				"First Gate", "Scott 1", "Rick 1", "TN in Office", "Scott 2", "Fred 2", "Key A SC", "Key B SC", "Clear Room A", "Clear Room B", // 9
-				"Gift Starter", "Gift Dog", "Gift Magic", "Gift Ancient", "Gift \"Starter\"", "Fred 3", "Talk to Grandpa", "Gym 5", "Gift E/S", // 18
-				"Rick 2", "Maxwell 1", "Scott 4", "Gift Glurg", "Coins Gotten", "Autosave Warn", "Magmaclang", "MSJ TN", "Fred 4", // 27
-				"Maxwell 2", "Zurroaratr", "Fishing Rod", "Got Surf", "Exp. Share", "Lucky Egg", "Rick 3", "Triwandoliz", "Diftery" // 36
-				
+		String[][] flagDesc = {
+			{"Dad First", "Starter", "Pokedex 1", "Grandma", "Avery", "Scott 1", "Second Starter", "Talk to Robin", "Letter A", "Letter B", "Letter C", "Tell Robin 1", "WH Grunt", "WH Unlock", "Rick 1", "Letter D", "Tell Robin 2", "Crook", "Lucky Egg"},
+			{"Fred 1", "Researcher", "Teleport", "Ryder 1", "Fuse 1", "Rocky-E", "PP 1", "Poof-E", "PP 2", "Stanford", "TN Office", "Flamehox-E", "Office 2", "Scott", "Gyarados-E", "Fuse 2", "Stanford", "Fishing Rod", "Gym 2"},
+			{"Scott 2", "Ryder 2", "Gift Magic", "Regional", "Millie 1", "Millie 2", "Fred 2", "Chained Xurkitree", "Millie 3", "TN Splinkty", "Millie 4", "Free Xurkitree", "UP Xurkitree", "Millie 5", "Gift Fossil"},
+			{"Ryder 3", "Ice Master", "Ground Master", "I Unlock", "G Unlock", "I Clear", "G Clear", "Principal", "UP Cairnasaur", "Gift \"Starter\"", "Petticoat", "Valiant", "Gym 4"},
+			{"Robin", "Scott 3", "Grandpa", "UP Shookwat", "Gift E/S", "Gym 5"},
+			{"Arthra 1", "Arthra Talk", "Rick 2", "Fred 3", "Maxwell 1", "UP Splame", "Scott 4", "Glurg Gift", "Gym 6", "Maxwell After"},
+			{"Scott Scene", "Coins", "Autosave Casino", "Magmaclang", "UP Buzzwole", "Rock Climb", "Gym 7"},
+			{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""},
+			{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""},			
 		};
-		JPanel flagsPanel = new JPanel();
-		flagsPanel.setLayout(new BoxLayout(flagsPanel, BoxLayout.Y_AXIS));
-		for (int i = 0; i < flagDesc.length; i++) {
-		    flags[i] = new JCheckBox(flagDesc[i]);
-		    flags[i].setSelected(this.flags[i]);
-		    flagsPanel.add(flags[i]);
+		
+		JTabbedPane mainTabbedPane = new JTabbedPane();
+		
+		for (int badgeLevel = 0; badgeLevel < flagDesc.length; badgeLevel++) {
+			JPanel badgePanel = new JPanel();
+			badgePanel.setLayout(new BoxLayout(badgePanel, BoxLayout.Y_AXIS));
+			
+			JCheckBox[] badgeFlags = new JCheckBox[flagDesc[badgeLevel].length];
+			for (int flagIndex = 0; flagIndex < flagDesc[badgeLevel].length; flagIndex++) {
+				badgeFlags[flagIndex] = new JCheckBox(flagDesc[badgeLevel][flagIndex]);
+				badgeFlags[flagIndex].setSelected(this.flag[badgeLevel][flagIndex]);
+				
+				badgePanel.add(badgeFlags[flagIndex]);
+			}
+			
+			JScrollPane badgeScrollPane = new JScrollPane(badgePanel);
+			badgeScrollPane.setPreferredSize(new Dimension(150, 200));
+			badgeScrollPane.getVerticalScrollBar().setUnitIncrement(8);
+			mainTabbedPane.addTab((badgeLevel + 1) + " split", badgeScrollPane);
 		}
-		JScrollPane flagsPane = new JScrollPane(flagsPanel);
-		flagsPane.setPreferredSize(new Dimension(150, 100));
-		flagsPane.getVerticalScrollBar().setUnitIncrement(8);
-		result.add(flagsPane);
+		
+		result.add(mainTabbedPane);
+		
 		// NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
 		String[] locDesc = new String[] {
 				"NMT", "BVT", "PG", "SC", "KV", "PP", "SRC", "GT", "FC", "RC", "IT", "CC" 
@@ -554,7 +570,9 @@ public class Player extends Trainer implements Serializable {
 			this.badges = (int) badges.getSelectedItem();
 			this.starter = starter.getSelectedIndex() + 1;
 			for (int i = 0; i < flagDesc.length; i++) {
-				this.flags[i] = flags[i].isSelected();
+				for (int j = 0; j < flagDesc[i].length; j++) {
+					this.flag[i][j] = ((JCheckBox) ((JPanel) ((JScrollPane) mainTabbedPane.getComponentAt(i)).getViewport().getView()).getComponent(j)).isSelected();
+				}
 			}
 			for (int i = 0; i < locations.length; i++) {
 				this.locations[i] = locations[i].isSelected();
