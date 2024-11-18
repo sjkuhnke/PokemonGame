@@ -162,6 +162,7 @@ public enum Move {
 	FEINT_ATTACK(60,1000,0,0,0,0,PType.DARK,"This attack always hits",true,20),
 	FELL_STINGER(50,100,0,0,0,0,PType.BUG,"Raises user's attack by 3 if it faints the foe",true,15),
 	FIERY_DANCE(80,100,50,0,1,0,PType.FIRE,"% chance to raise user's Sp.Atk by 1",false,10),
+	FIERY_WRATH(90,100,20,0,1,0,PType.DARK,"% of flinching foe",false,10),
 	FIRE_BLAST(110,85,10,0,1,0,PType.FIRE,"% chance to Burn foe",false,5),
 	FIRE_FANG(65,95,10,0,0,0,PType.FIRE,"% of flinching and/or Burning foe",true,15),
 	FIRE_PUNCH(75,100,20,0,0,0,PType.FIRE,"% to Burn foe",true,15),

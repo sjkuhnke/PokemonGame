@@ -73,6 +73,7 @@ public class UI extends AbstractUI {
 	public String currentHeader;
 	
 	public int boxNum;
+	public int pSelectBox;
 	public boolean isGauntlet;
 	public Pokemon currentBoxP;
 	public boolean release;
@@ -97,6 +98,13 @@ public class UI extends AbstractUI {
 	private List<BufferedImage> lightFrames;
 	private int currentFrame;
 	private long lastFrameTime;
+	
+	// diagonal cutscene fields
+	private double errorX;
+	private double errorY;
+	private int startX;
+	private int startY;
+	private boolean assignedStart;
 	
 	private ArrayList<ArrayList<Encounter>> encounters;
 	
@@ -470,41 +478,40 @@ public class UI extends AbstractUI {
 
 	private void drawCameraMove() {
 		if (currentTask.wipe) { // diagonal
-			System.out.println(gp.offsetX);
-			System.out.println(gp.offsetY);
-			int totalFrames = currentTask.counter; // Original total frames
-			int distanceX = currentTask.start - gp.offsetX;
-			int distanceY = currentTask.finish - gp.offsetY;
-
-			// Step size for each frame in pixels, based on the total frame count
-			int stepX = distanceX / totalFrames;
-			int stepY = distanceY / totalFrames;
-
-			// Modulo to handle any remaining pixels after division
-			int modX = Math.abs(distanceX % totalFrames);
-			int modY = Math.abs(distanceY % totalFrames);
-
-			// Update offsetX with an additional pixel at intervals based on modX, if modX is non-zero
-			if (modX > 0 && counter % (totalFrames / modX + 1) == 0) {
-			    gp.offsetX += Integer.signum(distanceX) * (stepX + 1);
-			} else {
-			    gp.offsetX += Integer.signum(distanceX) * stepX;
+			//System.out.printf("Frame %d: X=%d, Y=%d\n", counter, gp.offsetX, gp.offsetY);
+			int totalFrames = currentTask.counter;
+			if (!assignedStart) {
+				startX = gp.offsetX;
+				startY = gp.offsetY;
+				assignedStart = true;
 			}
+			int distanceX = currentTask.start - startX;
+			int distanceY = currentTask.finish - startY;
 
-			// Update offsetY with an additional pixel at intervals based on modY, if modY is non-zero
-			if (modY > 0 && counter % (totalFrames / modY + 1) == 0) {
-			    gp.offsetY += Integer.signum(distanceY) * (stepY + 1);
-			} else {
-			    gp.offsetY += Integer.signum(distanceY) * stepY;
-			}
+			double rateX = (double) distanceX / totalFrames;
+			double rateY = (double) distanceY / totalFrames;
+			
+			errorX += rateX;
+			errorY += rateY;
+			
+			int moveX = (int) errorX;
+			int moveY = (int) errorY;
+			
+			gp.offsetX += moveX;
+			gp.offsetY += moveY;
+			
+			errorX -= moveX;
+			errorY -= moveY;
 
-			counter++; // Increment frame counter
+			counter++;
 
-			// End movement if the duration has been reached
 			if (counter >= totalFrames) {
 			    gp.offsetX = currentTask.start;
 			    gp.offsetY = currentTask.finish;
 			    counter = 0;
+			    errorX = 0;
+			    errorY = 0;
+			    assignedStart = false;
 			    currentTask = null;
 			}
 
@@ -1510,8 +1517,10 @@ public class UI extends AbstractUI {
 	}
 
 	private void drawBoxScreen() {
-		int cBoxIndex = gp.player.p.currentBox;
-		Pokemon[] cBox = gauntlet ? gp.player.p.gauntletBox : gp.player.p.boxes[cBoxIndex];
+		int cBoxIndex = gauntlet ? -1 : gp.player.p.currentBox;
+		Pokemon[][] boxes = gp.player.p.boxes;
+		Pokemon[] cBox = gauntlet ? gp.player.p.gauntletBox : boxes[cBoxIndex];
+		Pokemon[] dBox = pSelectBox >= 0 ? boxes[pSelectBox] : gp.player.p.gauntletBox;
 		
 		int x = (int) (gp.tileSize * 1.75);
 		int y = gp.tileSize;
@@ -1555,7 +1564,7 @@ public class UI extends AbstractUI {
 		int cX = startX;
 		int cY = startY;
 		for (int i = 0; i < 30; i++) {
-			if (i == boxSwapNum) {
+			if (i == boxSwapNum && cBoxIndex == pSelectBox) {
 				g2.setColor(new Color(100, 100, 220, 200));
 				g2.fillRoundRect(cX - 2, cY - 2, spriteWidth - 10, spriteHeight - 10, 10, 10);
 				g2.setColor(g2.getColor().darker());
@@ -1588,7 +1597,7 @@ public class UI extends AbstractUI {
 		}
 		
 		if (boxSwapNum >= 0 || partySelectedNum >= 0) {
-			Pokemon selected = boxSwapNum >= 0 ? cBox[boxSwapNum] : gp.player.p.team[partySelectedNum];
+			Pokemon selected = boxSwapNum >= 0 ? dBox[boxSwapNum] : gp.player.p.team[partySelectedNum];
 			int selectX = 0;
 			int selectY = 0;
 			int selectWidth = gp.tileSize * 2;
@@ -1619,7 +1628,7 @@ public class UI extends AbstractUI {
 				gp.keyH.wPressed = false;
 				if (boxNum >= 0) {
 					currentBoxP = cBox[boxNum];
-				} else {
+				} else if (!gauntlet) {
 					nickname = new StringBuilder(gp.player.p.boxLabels[cBoxIndex]);
 					setNicknaming(true);
 					return;
@@ -1637,7 +1646,7 @@ public class UI extends AbstractUI {
 			
 			if (gp.keyH.aPressed && boxNum >= 0) {
 				gp.keyH.aPressed = false;
-				if (boxSwapNum == boxNum) {
+				if (boxSwapNum == boxNum && cBoxIndex == pSelectBox) {
 					// withdraw
 					if (cBox[boxNum] != null) {
 	    				int nullIndex = -1;
@@ -1687,12 +1696,13 @@ public class UI extends AbstractUI {
 					
 					partySelectedNum = -1;
 				} else if (boxSwapNum >= 0) {
-					Pokemon temp = cBox[boxSwapNum];
-					cBox[boxSwapNum] = cBox[boxNum];
+					Pokemon temp = dBox[boxSwapNum];
+					dBox[boxSwapNum] = cBox[boxNum];
 					cBox[boxNum] = temp;
 					boxSwapNum = -1;
 				} else {
 					boxSwapNum = boxNum;
+					pSelectBox = cBoxIndex;
 				}
 			}
 			
@@ -1702,7 +1712,6 @@ public class UI extends AbstractUI {
 					boxNum -= 6;
 				} else if (!isGauntlet) {
 					gauntlet = !gauntlet;
-					boxSwapNum = -1;
 				}
 			}
 			
@@ -1721,7 +1730,6 @@ public class UI extends AbstractUI {
 				gp.keyH.leftPressed = false;
 				if (boxNum < 0) {
 					if (!gauntlet) {
-						boxSwapNum = -1;
 						gp.player.p.currentBox--;
 				        if (gp.player.p.currentBox < 0) {
 				        	gp.player.p.currentBox = Player.MAX_BOXES - 1;
@@ -1738,7 +1746,6 @@ public class UI extends AbstractUI {
 				gp.keyH.rightPressed = false;
 				if (boxNum < 0) {
 					if (!gauntlet) {
-						boxSwapNum = -1;
 						gp.player.p.currentBox++;
 				        if (gp.player.p.currentBox >= Player.MAX_BOXES) {
 				        	gp.player.p.currentBox = 0;
@@ -1796,7 +1803,7 @@ public class UI extends AbstractUI {
 	                }
 	                partySelectedNum = -1;
 				} else if (boxSwapNum >= 0) {
-					if (cBox[boxSwapNum] == null) {
+					if (dBox[boxSwapNum] == null) {
 						if (partyNum == 0 || gp.player.p.team[partyNum - 1] != null) { // depositing lead or it's not the last pokemon in your party
 							if (partyNum == 0) {
                             	if (gp.player.p.team[partyNum + 1] == null) {
@@ -1815,8 +1822,8 @@ public class UI extends AbstractUI {
 					if (temp != null) {
                         temp.heal();
                     }
-					gp.player.p.team[partyNum] = cBox[boxSwapNum];
-					cBox[boxSwapNum] = temp;
+					gp.player.p.team[partyNum] = dBox[boxSwapNum];
+					dBox[boxSwapNum] = temp;
 					
 					if (gp.player.p.team[partyNum] == null) {
                     	gp.player.p.shiftTeamForward(partyNum);
@@ -1876,7 +1883,7 @@ public class UI extends AbstractUI {
 			drawToolTips("OK", null, "Back", "Back");
 		}
 		
-		if (nicknaming >= 0 && !showBoxSummary) {
+		if (nicknaming >= 0 && !showBoxSummary && !gauntlet) {
 			currentDialogue = "Change box's name?";
 			drawDialogueScreen(true);
 			setNickname(null, false);
@@ -2137,7 +2144,6 @@ public class UI extends AbstractUI {
 			drawPokedex();
 			break;
 		case 2:
-			partyNum = 0;
 			showParty();
 			break;
 		case 3:
@@ -2259,6 +2265,8 @@ public class UI extends AbstractUI {
 				g2.drawString(">", textX- (25 + gp.tileSize), textY);
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
+					gp.keyH.downPressed = false;
+					partyNum = 0;
 					subState = 2;
 				}
 			} else {
