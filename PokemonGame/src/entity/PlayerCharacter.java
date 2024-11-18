@@ -1410,13 +1410,17 @@ public class PlayerCharacter extends Entity {
 				t.counter = Task.DOWN;
 				
 				t = Pokemon.addTask(Task.SLEEP, "");
-				t.counter = 60;
+				t.counter = 30;
 				
 				t = Pokemon.addTask(Task.MOVE_CAMERA, "");
 				t.wipe = true;
-				t.counter = 60;
+				t.counter = 45;
 				t.start = 0;
 				t.finish = 0;
+				
+				t = Pokemon.addTask(Task.SLEEP, "");
+				t.counter = 30;
+				
 				Pokemon.addTask(Task.TEXT, "A powerful presense awaits...");
 			}
 		}
