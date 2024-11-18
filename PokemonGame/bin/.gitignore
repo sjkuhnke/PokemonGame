@@ -1,12 +1,4 @@
 /entity/
-/icons/
-/info/
-/interactive/
-/items/
-/maps/
-/masks/
-/menu/
-/messages/
 /minisprites/
 /npc/
 /object/
@@ -18,3 +10,4 @@
 /tile/
 /tiles/
 /tools/
+/gen/

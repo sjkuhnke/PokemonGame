@@ -472,22 +472,42 @@ public class UI extends AbstractUI {
 		if (currentTask.wipe) { // diagonal
 			System.out.println(gp.offsetX);
 			System.out.println(gp.offsetY);
-			float deltaX = (float)(currentTask.start - gp.offsetX) / currentTask.counter;
-			float deltaY = (float)(currentTask.finish - gp.offsetY) / currentTask.counter;
-			System.out.printf("deltaX %f, deltaY %f\n", deltaX, deltaY);
-			
-			float moveX = gp.offsetX + deltaX;
-			float moveY = gp.offsetY + deltaY;
-			
-			gp.offsetX = Math.round(moveX);
-			gp.offsetY = Math.round(moveY);
-			
-			currentTask.counter--;
-			if (currentTask.counter <= 0) {
-				gp.offsetX = currentTask.start;
-				gp.offsetY = currentTask.finish;
-				currentTask = null;
+			int totalFrames = currentTask.counter; // Original total frames
+			int distanceX = currentTask.start - gp.offsetX;
+			int distanceY = currentTask.finish - gp.offsetY;
+
+			// Step size for each frame in pixels, based on the total frame count
+			int stepX = distanceX / totalFrames;
+			int stepY = distanceY / totalFrames;
+
+			// Modulo to handle any remaining pixels after division
+			int modX = Math.abs(distanceX % totalFrames);
+			int modY = Math.abs(distanceY % totalFrames);
+
+			// Update offsetX with an additional pixel at intervals based on modX, if modX is non-zero
+			if (modX > 0 && counter % (totalFrames / modX + 1) == 0) {
+			    gp.offsetX += Integer.signum(distanceX) * (stepX + 1);
+			} else {
+			    gp.offsetX += Integer.signum(distanceX) * stepX;
 			}
+
+			// Update offsetY with an additional pixel at intervals based on modY, if modY is non-zero
+			if (modY > 0 && counter % (totalFrames / modY + 1) == 0) {
+			    gp.offsetY += Integer.signum(distanceY) * (stepY + 1);
+			} else {
+			    gp.offsetY += Integer.signum(distanceY) * stepY;
+			}
+
+			counter++; // Increment frame counter
+
+			// End movement if the duration has been reached
+			if (counter >= totalFrames) {
+			    gp.offsetX = currentTask.start;
+			    gp.offsetY = currentTask.finish;
+			    counter = 0;
+			    currentTask = null;
+			}
+
 		} else { // cardinal
 			boolean moveX = currentTask.start % 2 == 0;
 			int offset = moveX ? gp.offsetX : gp.offsetY;
@@ -2117,6 +2137,7 @@ public class UI extends AbstractUI {
 			drawPokedex();
 			break;
 		case 2:
+			partyNum = 0;
 			showParty();
 			break;
 		case 3:

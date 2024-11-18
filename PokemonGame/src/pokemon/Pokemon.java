@@ -1408,6 +1408,7 @@ public class Pokemon implements Serializable {
 					this.lastMoveUsed = null;
 					this.vStatuses.remove(Status.LOCKED);
 					this.vStatuses.remove(Status.CHARGING);
+					this.rollCount = 1;
 					return;
 				}
 			} else {
@@ -1438,6 +1439,7 @@ public class Pokemon implements Serializable {
 					this.vStatuses.remove(Status.LOCKED);
 					this.vStatuses.remove(Status.CHARGING);
 					this.lastMoveUsed = null;
+					this.rollCount = 1;
 					return;
 				} else {
 					confusionCounter--;
@@ -1451,6 +1453,7 @@ public class Pokemon implements Serializable {
 			this.vStatuses.remove(Status.LOCKED);
 			this.vStatuses.remove(Status.CHARGING);
 			this.lastMoveUsed = null;
+			this.rollCount = 1;
 			return;
 		}
 		
@@ -1470,6 +1473,7 @@ public class Pokemon implements Serializable {
 				this.vStatuses.remove(Status.LOCKED);
 				this.vStatuses.remove(Status.CHARGING);
 				this.lastMoveUsed = null;
+				this.rollCount = 1;
 				return;
 			}
 		}
@@ -1480,6 +1484,7 @@ public class Pokemon implements Serializable {
 			this.impressive = false;
 			this.vStatuses.remove(Status.LOCKED);
 			this.vStatuses.remove(Status.CHARGING);
+			this.rollCount = 1;
 			return;
 		}
 		
@@ -1487,6 +1492,7 @@ public class Pokemon implements Serializable {
 			addTask(Task.TEXT, this.nickname + " can't use " + move + " after the taunt!");
 			this.lastMoveUsed = null;
 			this.impressive = false;
+			this.rollCount = 1;
 			return;
 		}
 		
@@ -1494,6 +1500,7 @@ public class Pokemon implements Serializable {
 			addTask(Task.TEXT, this.nickname + " can't use " + move + " after the throat chop!");
 			this.lastMoveUsed = null;
 			this.impressive = false;
+			this.rollCount = 1;
 			return;
 		}
 		
@@ -1518,6 +1525,7 @@ public class Pokemon implements Serializable {
 				if (move == Move.BLACK_HOLE_ECLIPSE) stat(this, 3, 1, foe);
 				this.moveMultiplier = 1;
 				this.impressive = false;
+				this.rollCount = 1;
 				return;
 			} else {
 				move = this.lastMoveUsed;
@@ -1552,6 +1560,7 @@ public class Pokemon implements Serializable {
 				this.vStatuses.add(Status.SEMI_INV);
 				this.moveMultiplier = 1;
 				this.impressive = false;
+				this.rollCount = 1;
 				return;
 			} else {
 				move = this.lastMoveUsed;
@@ -1590,6 +1599,7 @@ public class Pokemon implements Serializable {
 			}
 			this.impressive = false;
 			this.moveMultiplier = 1;
+			this.rollCount = 1;
 			return;
 		}
 		
@@ -1609,15 +1619,6 @@ public class Pokemon implements Serializable {
 				this.outCount = (int)(Math.random()*2) + 2;
 			}
 			this.outCount--;
-		}
-		if (move == Move.ROLLOUT || move == Move.ICE_BALL) {
-			if (!this.vStatuses.contains(Status.LOCKED)) {
-				this.vStatuses.add(Status.LOCKED);
-			} else {
-				this.rollCount++;
-			}
-		} else {
-			this.rollCount = 1;
 		}
 		
 		if (id == 237) {
@@ -1649,6 +1650,7 @@ public class Pokemon implements Serializable {
 				addTask(Task.TEXT, "But it failed!");
 				this.impressive = false;
 				this.moveMultiplier = 1;
+				this.rollCount = 1;
 				return;
 			}
 			bp = move.basePower;
@@ -1689,7 +1691,6 @@ public class Pokemon implements Serializable {
 			} else {
 				this.type1 = moveType;
 				this.type2 = null;
-				//announceUseMove(move);
 				addAbilityTask(this);
 				addTask(Task.TEXT, this.nickname + "'s type was updated to " + this.type1.toString() + "!");
 			}
@@ -1809,6 +1810,7 @@ public class Pokemon implements Serializable {
 				endMove();
 				this.vStatuses.remove(Status.LOCKED);
 				this.moveMultiplier = 1;
+				this.rollCount = 1;
 				return; // Check for miss
 			}
 		}
@@ -1844,6 +1846,7 @@ public class Pokemon implements Serializable {
 					endMove();
 					this.vStatuses.remove(Status.LOCKED);
 					this.moveMultiplier = 1;
+					this.rollCount = 1;
 					hits--;
 					continue; // Check for miss
 				}
@@ -1855,6 +1858,7 @@ public class Pokemon implements Serializable {
 				if (!foe.vStatuses.contains(Status.FLASH_FIRE)) foe.vStatuses.add(Status.FLASH_FIRE);
 				endMove();
 				this.moveMultiplier = 1;
+				this.rollCount = 1;
 				return;
 			}
 			
@@ -1867,12 +1871,14 @@ public class Pokemon implements Serializable {
 					addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 					endMove();
 					this.moveMultiplier = 1;
+					this.rollCount = 1;
 					return; // Check for immunity
 				} else {
 					addAbilityTask(foe);
 					foe.heal(foe.getHPAmount(1.0/4), foe.nickname + " restored HP!");
 					endMove();
 					this.moveMultiplier = 1;
+					this.rollCount = 1;
 					return;
 				}
 			}
@@ -1890,6 +1896,7 @@ public class Pokemon implements Serializable {
 				}
 				endMove();
 				this.moveMultiplier = 1;
+				this.rollCount = 1;
 				return;
 			}
 			
@@ -1905,6 +1912,7 @@ public class Pokemon implements Serializable {
 				}
 				endMove();
 				this.moveMultiplier = 1;
+				this.rollCount = 1;
 				return; // Check for immunity
 			}
 			
@@ -1920,6 +1928,7 @@ public class Pokemon implements Serializable {
 						endMove();
 						this.outCount = 0;
 						this.moveMultiplier = 1;
+						this.rollCount = 1;
 						return; // Check for immunity 
 					}
 				}
@@ -1929,6 +1938,7 @@ public class Pokemon implements Serializable {
 				addTask(Task.TEXT, foe.nickname + " is protected by the Psychic Terrain!");
 				endMove();
 				this.moveMultiplier = 1;
+				this.rollCount = 1;
 				return; // Check for immunity 
 			}
 			
@@ -1951,6 +1961,15 @@ public class Pokemon implements Serializable {
 			
 			if (move.basePower < 0) {
 				bp = determineBasePower(foe, move, first, team, true);
+			}
+			
+			if (move == Move.ROLLOUT || move == Move.ICE_BALL) {
+				if (!this.vStatuses.contains(Status.LOCKED)) {
+					this.vStatuses.add(Status.LOCKED);
+				}
+				this.rollCount++;
+			} else {
+				this.rollCount = 1;
 			}
 			
 			if (moveType == PType.FIRE && this.vStatuses.contains(Status.FLASH_FIRE)) bp *= 1.5;
@@ -2183,6 +2202,7 @@ public class Pokemon implements Serializable {
 				endMove();
 				this.outCount = 0;
 				this.moveMultiplier = 1;
+				this.rollCount = 1;
 				return; // Check for immunity
 			}
 			
@@ -2376,7 +2396,7 @@ public class Pokemon implements Serializable {
 					this.faint(true, foe);
 					if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
 				}
-				if (this.ability == Ability.POISON_TOUCH && foe.status == Status.HEALTHY && checkSecondary(30)) {
+				if (this.ability == Ability.POISON_TOUCH && foe.ability != Ability.SHIELD_DUST && foe.status == Status.HEALTHY && checkSecondary(30)) {
 					addAbilityTask(this);
 					foe.poison(false, this);
 				}
@@ -2413,7 +2433,7 @@ public class Pokemon implements Serializable {
 				addTask(Task.TEXT, "Hit " + hit + " times!");
 			}
 			
-			if (first && this.item == Item.KING1S_ROCK && !foe.vStatuses.contains(Status.FLINCHED) && checkSecondary(10)) {
+			if (first && this.item == Item.KING1S_ROCK && foe.ability != Ability.SHIELD_DUST && !foe.vStatuses.contains(Status.FLINCHED) && checkSecondary(10)) {
 				foe.vStatuses.add(Status.FLINCHED);
 			}
 		}
@@ -2465,6 +2485,7 @@ public class Pokemon implements Serializable {
 				insertTask(t, index);
 				foe.consumeItem(this);
 				endMove();
+				this.rollCount = 1;
 				return;
 			}
 		}
@@ -3432,7 +3453,15 @@ public class Pokemon implements Serializable {
 				}
 			} else { fail = fail(announce); }
 		} else if (move == Move.AUTOTOMIZE) {
+			boolean nimble = false;
+			if (announce && this.statStages[4] < 6) {
+				this.weight -= 220;
+				this.weight = Math.max(0.1, this.weight);
+				nimble = true;
+			}
 			stat(this, 4, 2, foe, announce);
+			if (announce && nimble) addTask(Task.TEXT, this.nickname + " became more nimble!");
+			
 		} else if (move == Move.LOAD_FIREARMS) {
 			if (announce) addTask(Task.TEXT, this.nickname + " upgraded its weapon!");
 			stat(this, 4, 1, foe, announce);
@@ -4704,7 +4733,7 @@ public class Pokemon implements Serializable {
 		public static final int ITEM_SUM = 40;
 		public static final int SHAKE = 41;
 		public static final int MOVE_CAMERA = 42; // start: 0 for X, 1 for Y, finish: offsetX/offsetY to end at
-		public static final int MOVE_NPC = 43; // start: 0 for X, 1 for Y, finish: TILE COORDINATE to end at
+		public static final int MOVE_NPC = 43; // start: 0 for X, 1 for Y, finish: TILE COORDINATE to end at, wipe: yes/no to have camera follow the npc
 		public static final int SLEEP = 44; // counter: frames to sleep for
 		
 		public int type;
@@ -4856,6 +4885,7 @@ public class Pokemon implements Serializable {
 		magCount = 0;
 		toxic = 0;
 		perishCount = 0;
+		rollCount = 1;
 		consumedItem = false;
 		this.lastMoveUsed = null;
 		this.moveMultiplier = 1;
@@ -4864,6 +4894,7 @@ public class Pokemon implements Serializable {
 		this.impressive = true;
 		setTypes();
 		setAbility();
+		this.weight = this.getWeight();
 		if (this.ability == Ability.NATURAL_CURE) this.status = Status.HEALTHY;
 		
 	}
@@ -5594,8 +5625,9 @@ public class Pokemon implements Serializable {
 			this.vStatuses.remove(Status.TORMENTED);
 			addTask(Task.TEXT, this.nickname + "'s torment ended!");
 		}
-		if (this.vStatuses.contains(Status.LOCKED) && this.rollCount == 5) {
+		if (this.vStatuses.contains(Status.LOCKED) && this.rollCount > 5) {
 			this.vStatuses.remove(Status.LOCKED);
+			this.rollCount = 1;
 		}
 		if (this.vStatuses.contains(Status.BONDED)) {
 			this.vStatuses.remove(Status.BONDED);
@@ -6101,7 +6133,7 @@ public class Pokemon implements Serializable {
 				bp = 120;
 			}
 		} else if (move == Move.ROLLOUT || move == Move.ICE_BALL) {
-			bp = (int) (30 * Math.pow(2, this.rollCount));
+			bp = (int) (30 * Math.pow(2, this.rollCount - 1));
 		} else if (move == Move.STORED_POWER) {
 			int boosts = 0;
 			for (int i = 0; i < this.statStages.length; i++) {
@@ -7124,6 +7156,10 @@ public class Pokemon implements Serializable {
 	
 	public int getCatchRate() {
 		return catch_rates[id - 1];
+	}
+	
+	public double calcWeight() {
+		return this.item == Item.FLOAT_STONE ? this.weight / 2 : this.weight;
 	}
 
 	public int getEvolved(Item item) {

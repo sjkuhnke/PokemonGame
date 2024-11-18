@@ -841,7 +841,7 @@ public enum Move {
 				team = new Pokemon[1];
 			}
 			for (Pokemon p : team) {
-				if (p != null && !p.isFainted()) {
+				if (p != null && !p.isFainted() && p.status == Status.HEALTHY) {
 					result++;
 				}
 			}
