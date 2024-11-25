@@ -2152,8 +2152,8 @@ public class Pokemon implements Serializable {
 			if ((foeAbility == Ability.ICY_SCALES && !move.isPhysical()) || (foeAbility == Ability.MULTISCALE && foe.currentHP == foe.getStat(0))) damage /= 2;
 			
 			// Screens
-			if (move.isPhysical() && field.contains(enemySide, Effect.REFLECT)) damage /= 2;
-			if (!move.isPhysical() && field.contains(enemySide, Effect.LIGHT_SCREEN)) damage /= 2;
+			if (move.isPhysical() && (field.contains(enemySide, Effect.REFLECT) || field.contains(enemySide, Effect.AURORA_VEIL))) damage /= 2;
+			if (!move.isPhysical() && (field.contains(enemySide, Effect.LIGHT_SCREEN) || field.contains(enemySide, Effect.AURORA_VEIL))) damage /= 2;
 			
 			double multiplier = 1;
 			// Check type effectiveness
@@ -2821,6 +2821,8 @@ public class Pokemon implements Serializable {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.FIERY_DANCE) {
 			stat(this, 2, 1, foe);
+		} else if (move == Move.FIERY_DANCE && first) {
+			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.FIRE_BLAST) {
 			foe.burn(false, this);
 		} else if (move == Move.FATAL_BIND) {

@@ -1421,7 +1421,7 @@ public class PlayerCharacter extends Entity {
 				t = Pokemon.addTask(Task.SLEEP, "");
 				t.counter = 30;
 				
-				Pokemon.addTask(Task.TEXT, "A powerful presense awaits...");
+				Pokemon.addTask(Task.TEXT, "A powerful presence awaits...");
 			}
 		}
 		if (gp.currentMap == 109 && !p.flags[22]) {
