@@ -882,49 +882,79 @@ public class Player extends Trainer implements Serializable {
 			case NAIVE_MINT:
 			case SERIOUS_MINT:
 				double nature[];
-	        	switch (item.getID()) {
-	        	case 29:
-	        		nature = new double[] {1.1,1.0,0.9,1.0,1.0,-1.0};
+	        	switch (item) {
+	        	case LONELY_MINT:
+	        		nature = new double[] {1.1,0.9,1.0,1.0,1.0,-1.0};
 	        		break;
-	        	case 30:
-	        		nature = new double[] {0.9,1.1,1.0,1.0,1.0,-1.0};
+				case ADAMANT_MINT:
+					nature = new double[] {1.1,1.0,0.9,1.0,1.0,-1.0};
 	        		break;
-	        	case 31:
-	        		nature = new double[] {1.1,1.0,1.0,1.0,0.9,-1.0};
+				case NAUGHTY_MINT:
+					nature = new double[] {1.1,1.0,1.0,0.9,1.0,-1.0};
 	        		break;
-	        	case 32:
-	        		nature = new double[] {0.9,1.0,1.0,1.1,1.0,-1.0};
+				case BRAVE_MINT:
+					nature = new double[] {1.1,1.0,1.0,1.0,0.9,-1.0};
 	        		break;
-	        	case 33:
-	        		nature = new double[] {1.0,1.0,0.9,1.1,1.0,-1.0};
+				case BOLD_MINT:
+					nature = new double[] {0.9,1.1,1.0,1.0,1.0,-1.0};
 	        		break;
-	        	case 34:
-	        		nature = new double[] {1.0,1.1,0.9,1.0,1.0,-1.0};
+				case IMPISH_MINT:
+					nature = new double[] {1.0,1.1,0.9,1.0,1.0,-1.0};
 	        		break;
-	        	case 35:
-	        		nature = new double[] {1.0,1.0,0.9,1.0,1.1,-1.0};
+				case LAX_MINT:
+					nature = new double[] {1.0,1.1,1.0,0.9,1.0,-1.0};
 	        		break;
-	        	case 36:
-	        		nature = new double[] {0.9,1.0,1.1,1.0,1.0,-1.0};
+				case RELAXED_MINT:
+					nature = new double[] {1.0,1.1,1.0,1.0,0.9,-1.0};
 	        		break;
-	        	case 37:
-	        		nature = new double[] {1.0,1.0,1.1,1.0,0.9,-1.0};
+				case MODEST_MINT:
+					nature = new double[] {0.9,1.0,1.1,1.0,1.0,-1.0};
 	        		break;
-	        	case 38:
-	        		nature = new double[] {1.0,1.0,1.0,1.0,1.0,4.0};
+				case MILD_MINT:
+					nature = new double[] {1,0,0.9,1.1,1.0,1.0,-1.0};
 	        		break;
-	        	case 39:
-	        		nature = new double[] {0.9,1.0,1.0,1.0,1.1,-1.0};
+				case RASH_MINT:
+					nature = new double[] {1.0,1.0,1.1,0.9,1.0,-1.0};
+	        		break;
+				case QUIET_MINT:
+					nature = new double[] {1.0,1.0,1.1,1.0,0.9,-1.0};
+	        		break;
+				case CALM_MINT:
+					nature = new double[] {0.9,1.0,1.0,1.1,1.0,-1.0};
+	        		break;
+				case GENTLE_MINT:
+					nature = new double[] {1.0,0.9,1.0,1.1,1.0,-1.0};
+	        		break;
+				case CAREFUL_MINT:
+					nature = new double[] {1.0,1.0,0.9,1.1,1.0,-1.0};
+	        		break;
+				case SASSY_MINT:
+					nature = new double[] {1.0,1.0,1.0,1.1,0.9,-1.0};
+	        		break;
+				case TIMID_MINT:
+					nature = new double[] {0.9,1.0,1.0,1.0,1.1,-1.0};
+	        		break;
+				case HASTY_MINT:
+					nature = new double[] {1.0,0.9,1.0,1.0,1.1,-1.0};
+	        		break;
+				case JOLLY_MINT:
+					nature = new double[] {1.0,1.0,0.9,1.0,1.1,-1.0};
+	        		break;
+				case NAIVE_MINT:
+					nature = new double[] {1.0,1.0,1.0,0.9,1.1,-1.0};
+	        		break;
+				case SERIOUS_MINT:
+					nature = new double[] {1.0,1.0,1.0,1.0,1.0,4.0};
 	        		break;
 	    		default:
 	    			nature = null;
 	    			break;
 	        	}
 	    		
-	    		String natureOld = p.getNature();
+	    		String natureOld = p.nature == null ? "null" : p.getNature();
 	        	p.nature = nature;
 	        	p.setStats();
-	        	gp.ui.showMessage(p.nickname + "'s nature was changed from " + natureOld + " to\n" + p.getNature() + "!");
+	        	gp.ui.showMessage(Item.breakString(p.nickname + "'s nature was changed from " + natureOld + " to " + p.getNature() + "!", 42));
 				break;
 				
 			// Euphorian Gem
