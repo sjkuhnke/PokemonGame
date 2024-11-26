@@ -3938,13 +3938,15 @@ public class Pokemon implements Serializable {
 				if (announce) addTask(Task.TEXT, this.nickname + "'s HP is full!");
 			} else {
 				heal(getHPAmount(1.0/2), this.nickname + " restored HP.");
-				if (this.type1 == PType.FLYING) {
+				if (this.type1 == PType.FLYING && announce) {
 					this.type1 = PType.UNKNOWN;
 					this.vStatuses.add(Status.LANDED);
+					addTask(Task.TEXT, this.nickname + " landed!");
 				}
-				if (this.type2 == PType.FLYING) {
+				if (this.type2 == PType.FLYING && announce) {
 					this.type2 = PType.UNKNOWN;
 					this.vStatuses.add(Status.LANDED);
+					addTask(Task.TEXT, this.nickname + " landed!");
 				}
 			}
 		} else if (move == Move.SAND_ATTACK) {

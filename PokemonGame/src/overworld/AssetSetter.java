@@ -1156,7 +1156,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_RIGHT, 26, 29, "You're about to be hooked by my strategy!", "Well, back to fishing. Maybe I'll catch a win next time.", 46);
 		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_LEFT, 46, 29, "The water's calm, but I'm about to make some waves!", "You slipped away this time, but I'll reel you in eventually!", 47);
 		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_RIGHT, 21, 39, "I've reeled in bigger fish than you. Let's do this!", "Guess I'll have to find a new spot to fish and train.", 48);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 62, 39, "", "", 273);
+		gp.npc[mapNum][index] = NPCSetup(EXPLORER_LEFT, 62, 39, "Think you can survive this frozen battlefield? Let's find out!", "This loss stings like frostbite... but I'll shake it off.", 273);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 67, 42, "", "", 274);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 72, 41, "", "", 275);
 		gp.npc[mapNum][index] = SetupStaticEncounter(197, 32, 28, 367, 39, "Bzrollzfffff...");
@@ -1496,7 +1496,7 @@ public class AssetSetter {
 		
 		mapNum = 80;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 33, 19, "I've been through rough terrain and tougher battles. You're next!", "Guess I'll head back down the ravine and train some more!", 165);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 33, 19, "I've been through rough terrain and tougher battles. You're next!", "Guess I'll head back down the ravine and train some more!", 165, LEFT + RIGHT);
 		gp.npc[mapNum][index] = NPCSetup(BURGLAR_RIGHT, 27, 22, "I've stolen plenty, and now I'm stealing this battle!", "I guess I'm the one who got robbed this time.", 166);
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 28, 28, "Wading here takes patience, but when I strike, it's game over!", "I've swam in rough waters, but that battle was something else.", 167, ALL);
 		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, 35, 41, "There you are! I was looking for you!\n"
@@ -1701,7 +1701,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_RIGHT, 28, 37, "Strength isn't enough - you need skill to win this battle!", "You outplayed me this time, but I'll be back even stronger.", 271);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_LEFT, 34, 35, "I've trained with the best, and now you're next!", "Looks like I still have more training to do...", 272);
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 34, "You're definitely not strong enough to go up here. Also, the items on the floor are really powerful, so you can only choose one for now.\nIf you're more Physical, check out the left item! Otherwise if you prefer brains over brawn, the right is for you.");
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 34, "Hey! This is an exclusive tower for really strong trainers that dedicate their lives to being the very best.\nThe three trainers above are quite strong, but if you want to give it a go, have at it!");
+		//gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 34, "Hey! This is an exclusive tower for really strong trainers that dedicate their lives to being the very best.\nThe three trainers above are quite strong, but if you want to give it a go, have at it!"); TODO: make appear when the player beats the league
 		mapNum = 122;
 		index = 0;
 		

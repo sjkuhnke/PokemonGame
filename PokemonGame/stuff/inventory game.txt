@@ -476,7 +476,7 @@ Before Battle:
 
 "I've braved the coldest peaks and the toughest battles!"
 "My Ice-type Pokemon will freeze you in your tracks!"
-"Think you can survive this frozen battlefield? Let's find out!"
+""
 "It's always an adventure when I battle. Ready to face the cold?"
 "Prepare to feel the chill of defeat!"
 "I hope you're ready for a chill battle... because here I come!"
@@ -484,7 +484,7 @@ After Battle:
 
 "Looks like I'll have to thaw out and train again..."
 "You beat me this time, but I'll be back with more frozen fury!"
-"This loss stings like frostbite... but I'll shake it off."
+""
 "Even the coldest winds can't stop me from trying again!"
 "You won today, but I'll return stronger, like an icy storm."
 "The cold didn't bother me, but your strength did!"
