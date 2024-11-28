@@ -1549,7 +1549,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_UP, 85, 43, "You cannot resist the power of the mind. Let's see if you can survive!", "Hmph, perhaps my vision was clouded by arrogance.", 187, LEFT + DOWN);
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_DOWN, 85, 63, "The stars have aligned for this battle... But will they favor you?", "Our minds were in sync, but you still won... impressive.", 188, LEFT + DOWN);
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_LEFT, 55, 63, "I can already foresee your defeat. Shall we begin?", "How...? My vision must have been clouded.", 189, LEFT + DOWN);
-		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 41, 53, "Your thoughts are clear to me... and so is your loss.", "You changed your future... but I'll see to it that next time, it's different.", 190, RIGHT + DOWN);
+		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 71, 43, "Your thoughts are clear to me... and so is your loss.", "You changed your future... but I'll see to it that next time, it's different.", 190, RIGHT + DOWN);
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_DOWN, 51, 53, "My Psychic Pokemon will bend your will and your Pokemon to their power!", "A rare miscalculation... I'll hone my skills further.", 191, RIGHT + DOWN);
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_UP, 45, 47, "You won't even see your defeat coming... but I already have.", "Your strength caught me off guard... but I'll be prepared next time.", 192, UP + LEFT);
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_LEFT, 55, 47, "Prepare yourself for a battle of the mind!", "I didn't foresee this loss... but I won't let it cloud my judgment.", 193, UP + LEFT);
@@ -2948,6 +2948,7 @@ public class AssetSetter {
 		}
 		if (flag[4][1]) {
 			gp.npc[0][12] = null;
+			gp.npc[80][3] = null;
 		}
 		if (flag[4][2]) {
 			if (gp.npc[33][1] == null) gp.npc[33][1] = SetupStaticEncounter(286, 33, 61, 391, 131, "Bloooghawooooooooarooo!");
