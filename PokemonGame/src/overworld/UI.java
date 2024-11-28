@@ -1003,7 +1003,7 @@ public class UI extends AbstractUI {
 
 		ArrayList<Move> forgottenMoves = new ArrayList<>();
 		Node[] movebank = p.getMovebank();
-        for (int i = 0; i < p.getLevel(); i++) {
+        for (int i = 0; i <= p.getLevel(); i++) {
         	if (i < movebank.length) {
         		Node move = movebank[i];
         		while (move != null) {
@@ -2618,6 +2618,7 @@ public class UI extends AbstractUI {
 		
 		if (counter == 50) {
 			counter = 0;
+			int prevMap = gp.currentMap;
 			if (currentTask != null && currentTask.type == Task.TELEPORT) {
 				gp.gameState = GamePanel.TASK_STATE;
 				gp.currentMap = currentTask.counter;
@@ -2652,7 +2653,7 @@ public class UI extends AbstractUI {
 			gp.player.p.lavasurf = false;
 			
 			gp.aSetter.updateNPC(gp.eHandler.tempMap);
-			gp.aSetter.resetNPCDirection(gp.currentMap);
+			if (prevMap != gp.currentMap) gp.aSetter.resetNPCDirection(gp.currentMap);
 			gp.aSetter.setInteractiveTile(gp.currentMap);
 			
 			String currentMap = PlayerCharacter.currentMapName;
@@ -2816,7 +2817,7 @@ public class UI extends AbstractUI {
 		int dFrameX = x;
 		int dFrameY = y + height;
 		int dFrameWidth = width;
-		int dFrameHeight = gp.tileSize * 3;
+		int dFrameHeight = (int) (gp.tileSize * 3.5);
 		
 		int textX = dFrameX + 20;
 		int textY = (int) (dFrameY + gp.tileSize * 0.8);

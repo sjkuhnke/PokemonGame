@@ -1903,13 +1903,6 @@ public class Pokemon implements Serializable {
 			if (moveType == PType.GROUND && !foe.isGrounded() && move.cat != 2) {
 				if (foeAbility == Ability.LEVITATE) addAbilityTask(foe);
 				addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
-				if (move == Move.HI_JUMP_KICK) {
-					this.damage(this.getStat(0) / 2.0, foe);
-					addTask(Task.TEXT, this.nickname + " kept going and crashed!");
-					if (this.currentHP < 0) {
-						this.faint(true, foe);
-					}
-				}
 				endMove();
 				this.moveMultiplier = 1;
 				this.rollCount = 1;
@@ -1923,6 +1916,13 @@ public class Pokemon implements Serializable {
 					} else if (this.ability == Ability.CORROSION && moveType == PType.POISON) {
 						// Nothing: corrosion allows poison moves to hit steel
 					} else {
+						if (move == Move.HI_JUMP_KICK) {
+							this.damage(this.getStat(0) / 2.0, foe);
+							addTask(Task.TEXT, this.nickname + " kept going and crashed!");
+							if (this.currentHP < 0) {
+								this.faint(true, foe);
+							}
+						}
 						if (foeAbility == Ability.FRIENDLY_GHOST && moveType == PType.GHOST) addAbilityTask(foe);
 						addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 						endMove();
@@ -2445,7 +2445,7 @@ public class Pokemon implements Serializable {
 			stat(foe, 5, -1, this, true);
 		}
 		
-		if (this.item == Item.LIFE_ORB && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
+		if (this.item == Item.LIFE_ORB && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN && this.isFainted()) {
 			this.damage(getHPAmount(1.0/10), foe);
 			addTask(Task.TEXT, this.nickname + " lost some of its HP!");
 			if (this.currentHP <= 0) { // Check for kill

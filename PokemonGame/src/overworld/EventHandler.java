@@ -455,8 +455,8 @@ public class EventHandler {
 			if (hit(88,55,53)) teleport(88, 71, 53,true); // H
 			if (hit(88,75,53)) teleport(88, 85, 53,true); // I
 			if (hit(88,85,53)) teleport(88, 75, 53,true); // I
-			if (hit(88,85,53)) teleport(88, 51, 43,true); // J
-			if (hit(88,51,43)) teleport(88, 85, 53,true); // J
+			if (hit(88,85,57)) teleport(88, 51, 43,true); // J
+			if (hit(88,51,43)) teleport(88, 85, 57,true); // J
 			if (hit(88,41,53)) teleport(88, 55, 57,true); // K
 			if (hit(88,55,57)) teleport(88, 41, 53,true); // K
 			if (hit(88,75,43)) teleport(88, 41, 63,true); // L
