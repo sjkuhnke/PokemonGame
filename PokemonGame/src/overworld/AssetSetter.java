@@ -1656,7 +1656,7 @@ public class AssetSetter {
 				+ "I spent so long training my psychic powers, trying to predict your moves... but I forgot something really important.\n"
 				+ "It's not about reading your mind - it's about training my Pokemon. They're the ones doing the battling, after all.\n"
 				+ "Guess I still have a lot to learn. But don't worry! Next time, I'll focus on them, and I'll definitely beat you!", 242);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 44, 39, "I found this infant Pokemon abandoned here.", true, 22, "Please raise it with love and care!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 44, 39, "I found this infant Pokemon abandoned here.", true, 167, "Please raise it with love and care!");
 		
 		mapNum = 110;
 		index = 0;
@@ -1760,12 +1760,12 @@ public class AssetSetter {
 		
 		mapNum = 130;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 24, 36, "Aren't you lookin like you want some SPICE!", true, 25, "ICE SPICE is my idol <3");
+		gp.npc[mapNum][index] = NPCSetup(CHEF, "Guy Eddie", 24, 36, "Aren't you lookin like you want some SPICE!", true, 195, "ICE SPICE is my idol <3");
 		
 		mapNum = 131;
 		index = 0;
-		gp.npc[mapNum][index] = SetupClerk(NPC_MARKET, 31, 41, Item.EUPHORIAN_GEM, Item.LEAF_STONE, Item.DUSK_STONE, Item.DAWN_STONE, Item.ICE_STONE,
-				Item.FIRE_STONE, Item.VALIANT_GEM, Item.PETTICOAT_GEM, Item.EVERSTONE, Item.HEAT_ROCK, Item.DAMP_ROCK, Item.SMOOTH_ROCK, Item.ICY_ROCK);
+		gp.npc[mapNum][index] = SetupClerk(NPC_MARKET, 31, 41, Item.EUPHORIAN_GEM, Item.LEAF_STONE, Item.FIRE_STONE, Item.WATER_STONE, Item.ICE_STONE, Item.DAWN_STONE, Item.DUSK_STONE,
+				Item.VALIANT_GEM, Item.PETTICOAT_GEM, Item.EVERSTONE, Item.HEAT_ROCK, Item.DAMP_ROCK, Item.SMOOTH_ROCK, Item.ICY_ROCK);
 		
 		mapNum = 137;
 		index = 0;

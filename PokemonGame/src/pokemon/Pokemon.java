@@ -5979,7 +5979,7 @@ public class Pokemon implements Serializable {
 		        bp = 70;
 		    }
 		} else if (move == Move.ACROBATICS) {
-		    if (this.item == null) {
+		    if (this.item == null && this.headbuttCrit >= 0) {
 		        bp = 110;
 		    } else {
 		        bp = 55;
@@ -5991,7 +5991,7 @@ public class Pokemon implements Serializable {
 				bp = 130;
 			}
 		} else if (move == Move.COMET_CRASH) {
-			if (this.currentHP == this.getStat(0)) {
+			if (this.currentHP == this.getStat(0) && this.headbuttCrit >= 0) {
 				bp = 160;
 			} else {
 				bp = 80;
@@ -6118,7 +6118,7 @@ public class Pokemon implements Serializable {
 				if (announce) this.moveMultiplier *= 2;
 			}
 		} else if (move == Move.PAYBACK) {
-			if (first) {
+			if (first || this.headbuttCrit < 0) {
 				bp = 50;
 			} else {
 				bp = 100;
@@ -6131,7 +6131,7 @@ public class Pokemon implements Serializable {
 			int f = this.happiness;
 			bp = (int) (-3.0 / 14450 * f * f + 11.0 / 34 * f + 1);
 		} else if (move == Move.REVENGE) {
-			if (this.getSpeed() > foe.getSpeed()) {
+			if (!first || this.headbuttCrit < 0) {
 				bp = 60;
 			} else {
 				bp = 120;

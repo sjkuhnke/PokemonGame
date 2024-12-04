@@ -13,8 +13,8 @@ public class NPC_Clerk extends Entity {
 	}
 	
 	public void getImage() {
-		down1 = setup("/npc/clerk");
-		right1 = setup("/npc/clerk");
+		down1 = setup("/npc/mart");
+		right1 = setup("/npc/mart");
 	}
 	
 	private void setDialogue() {

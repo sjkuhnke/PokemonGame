@@ -1179,6 +1179,7 @@ public class UI extends AbstractUI {
 		ArrayList<Item> tmList = new ArrayList<>();
 		Pokemon test = new Pokemon(dex[dexNum[dexType]].id, 5, false, false);
 		test.abilitySlot = 0;
+		test.headbuttCrit = -1;
 		test.setAbility(test.abilitySlot);
 		if (mode == 2) {
 			Node[] movebank = test.getMovebank();

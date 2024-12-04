@@ -682,7 +682,7 @@ public enum Move {
 
 	public String formatbp(Pokemon user, Pokemon foe) {
 		double bp = getbp(user, foe);
-		if (basePower == 0 || this == Move.MAGNITUDE) return "--";
+		if (bp == 0 || this == Move.MAGNITUDE) return "--";
 		return String.format("%.0f", bp);
 	}
 	
@@ -701,7 +701,7 @@ public enum Move {
 		if (basePower == -1) {
 			if (this == Move.STORED_POWER && foe == null) return 20;
 			boolean faster = user == null || foe == null ? true : user.getFaster(foe, 0, 0) == user;
-			if (user == null) {
+			if (user == null || user.headbuttCrit < 0) {
 				if (this == Move.ELECTRO_BALL || this == Move.FLAIL || this == Move.REVERSAL || this == Move.GRASS_KNOT || this == Move.LOW_KICK
 						|| this == Move.GYRO_BALL || this == Move.HEAT_CRASH || this == Move.HEAVY_SLAM || this == Move.RETURN || this == Move.FRUSTRATION) return 0;
 				user = new Pokemon(1, 1, false, false);
