@@ -648,7 +648,7 @@ public abstract class AbstractUI {
 		
 		x += gp.tileSize * 3.5;
 		y -= gp.tileSize * 0.75;
-		PType type = move == Move.HIDDEN_POWER || move == Move.RETURN && p != null ? p.determineHPType() : move.mtype;
+		PType type = (move == Move.HIDDEN_POWER || move == Move.RETURN) && p != null && p.headbuttCrit >= 0 ? p.determineHPType() : move.mtype;
 		g2.drawImage(type.getImage2(), x, y, null);
 		
 		x += gp.tileSize * 1.5;

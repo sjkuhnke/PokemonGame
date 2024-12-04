@@ -220,6 +220,15 @@ public class TileManager {
 		loadMap("/maps/icy_path.txt", 166, true);
 		loadMap("/maps/gate02.txt", 167, true);
 		loadMap("/maps/gelb_cavern.txt", 168, true);
+		loadMap("/maps/house01.txt", 169, true);
+		loadMap("/maps/house01.txt", 170, true);
+		loadMap("/maps/house01.txt", 171, true);
+		loadMap("/maps/house01.txt", 172, true);
+		loadMap("/maps/house01.txt", 173, true);
+		loadMap("/maps/house01.txt", 174, true);
+		loadMap("/maps/house01.txt", 175, true);
+		loadMap("/maps/house01.txt", 176, true);
+		loadMap("/maps/house01.txt", 177, true);
 	}
 	
 	private void setupCollisionRectangles() {

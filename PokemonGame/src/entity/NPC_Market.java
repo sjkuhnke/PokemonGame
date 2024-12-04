@@ -12,7 +12,10 @@ public class NPC_Market extends Entity {
 	}
 	
 	public void getImage() {
-		down1 = setup("/npc/clerk2");
+		down1 = setup("/npc/market1");
+		up1 = setup("/npc/market2");
+		left1 = setup("/npc/market3");
+		right1 = setup("/npc/market4");
 	}
 	
 	private void setDialogue() {

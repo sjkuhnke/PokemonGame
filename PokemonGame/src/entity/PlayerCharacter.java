@@ -1424,8 +1424,8 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.TEXT, "A powerful presence awaits...");
 			}
 		}
-		if (gp.currentMap == 109 && !p.flags[22]) {
-				p.flags[22] = true;
+		if (gp.currentMap == 109) {
+				p.flag[5][7] = true;
 				Pokemon.addTask(Task.TEXT, "Here, could you raise it for me?");
 				int[] ids = new int[] {177, 179, 98};
 				Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
@@ -1439,7 +1439,6 @@ public class PlayerCharacter extends Entity {
 				Pokemon result = new Pokemon(ids[index], 1, true, false);
 				Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 				Pokemon.addTask(Task.GIFT, "", result);
-				
 		}
 		if (gp.currentMap == 118) {
 			Pokemon.addTask(Task.TEXT, "Do you have any fossils for me to resurrect?");
@@ -1646,9 +1645,9 @@ public class PlayerCharacter extends Entity {
 			shopPanel.add(tmPanel);
 			shopPanel.add(pokemonPanel);
 			showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
-		} if (gp.currentMap == 130 && !p.flags[25]) {
-			p.flags[25] = true;
-			Pokemon.addTask(Task.TEXT, "Here, take this rare Pokemon!");
+		} if (gp.currentMap == 130) {
+			p.flag[6][3] = true;
+			Pokemon.addTask(Task.DIALOGUE, npc, "Here, take this rare Pokemon!");
 			Pokemon result = new Pokemon(97, 50, true, false);
 			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 			Pokemon.addTask(Task.GIFT, "", result);

@@ -501,6 +501,34 @@ public class EventHandler {
 			if (hit(85,23,64)) teleport(94, 31, 45,false);
 			if (hit(94,31,46)) teleport(85, 23, 65,false);
 			
+			// Frenco City Houses
+			if (hit(85,23,76)) teleport(169, 31, 45,false);
+			if (hit(169,31,46)) teleport(85, 23, 77,false);
+			
+			if (hit(85,18,64)) teleport(170, 31, 45,false);
+			if (hit(170,31,46)) teleport(85, 18, 65,false);
+			
+			if (hit(85,13,64)) teleport(171, 31, 45,false);
+			if (hit(171,31,46)) teleport(85, 13, 65,false);
+			
+			if (hit(85,23,60)) teleport(172, 31, 45,false);
+			if (hit(172,31,46)) teleport(85, 23, 61,false);
+			
+			if (hit(85,18,60)) teleport(173, 31, 45,false);
+			if (hit(173,31,46)) teleport(85, 18, 61,false);
+			
+			if (hit(85,13,60)) teleport(174, 31, 45,false);
+			if (hit(174,31,46)) teleport(85, 13, 61,false);
+			
+			if (hit(85,23,56)) teleport(175, 31, 45,false);
+			if (hit(175,31,46)) teleport(85, 23, 57,false);
+			
+			if (hit(85,18,56)) teleport(176, 31, 45,false);
+			if (hit(176,31,46)) teleport(85, 18, 57,false);
+			
+			if (hit(85,13,56)) teleport(177, 31, 45,false);
+			if (hit(177,31,46)) teleport(85, 13, 57,false);
+			
 			// Electric Tunnel 0 -> 1
 			if (hit(95,52,46)) teleport(35, 65, 42,true);
 			if (hit(35,65,42)) teleport(95, 52, 46,true);
