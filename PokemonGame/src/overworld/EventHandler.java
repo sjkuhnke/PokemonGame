@@ -565,7 +565,7 @@ public class EventHandler {
 			
 			// TN Base -> Shadow Ravine -3
 			if (hit(104,47,63)) teleport(103, 47, 35,false);
-			if (hit(103,47,34)) teleport(104, 47, 62,false);
+			if (hit(103,47,34)) teleport(104, 47, 63,true); // intentionally 1 below
 			
 			// Shadow Ravine 0 -> -1
 			if (hit(90,25,10)) teleport(101, 24, 45,true);
@@ -617,7 +617,7 @@ public class EventHandler {
 					} else if (!gp.player.p.flag[5][2]) {
 						Pokemon.addTask(Task.TEXT, "This portal seems to be jammed by Rick...");
 					} else {
-						Pokemon.addTask(Task.TEXT, "This portal seems to be jammed by Team Nuke...");
+						Pokemon.addTask(Task.TEXT, "This portal seems to be jammed by Team Eclipse...");
 						Pokemon.addTask(Task.TEXT, "Rick said that they're at the bottom of Electric Tunnel!");
 					}
 				} else {

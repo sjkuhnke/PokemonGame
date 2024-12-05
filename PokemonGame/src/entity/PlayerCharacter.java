@@ -1408,6 +1408,7 @@ public class PlayerCharacter extends Entity {
 				
 				t = Pokemon.addTask(Task.TURN, gp.npc[103][1], "");
 				t.counter = Task.DOWN;
+				t.wipe = true;
 				
 				t = Pokemon.addTask(Task.SLEEP, "");
 				t.counter = 30;

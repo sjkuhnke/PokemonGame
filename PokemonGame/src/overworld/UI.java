@@ -369,23 +369,29 @@ public class UI extends AbstractUI {
 			break;
 		case Task.TURN:
 			Entity target = currentTask.e == null ? gp.npc[currentTask.start][currentTask.finish] : currentTask.e;
+			String direction;
 			switch(currentTask.counter) {
 			case 0:
-				target.direction = "down";
+				direction = "down";
 				break;
 			case 1:
-				target.direction = "up";
+				direction = "up";
 				break;
 			case 2:
-				target.direction = "left";
+				direction = "left";
 				break;
 			case 3:
-				target.direction = "right";
+				direction = "right";
 				break;
 			default:
 				System.out.println(currentTask.counter + " isn't a direction for Task.TURN");
-				target.direction = "down";
+				direction = "down";
 				break;
+			}
+			if (currentTask.wipe) {
+				target.setDirection(direction);
+			} else {
+				target.direction = direction;
 			}
 			currentTask = null;
 			break;
