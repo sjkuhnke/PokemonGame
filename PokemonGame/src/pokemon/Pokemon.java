@@ -4726,7 +4726,7 @@ public class Pokemon implements Serializable {
 		public static final int FLASH_OUT = 29;
 		public static final int ITEM = 30;
 		public static final int UPDATE = 31;
-		public static final int TURN = 32; // counter: 0 = down, 1 = up, 2 = left, 3 = right
+		public static final int TURN = 32; // counter: 0 = down, 1 = up, 2 = left, 3 = right, wipe = setDirection()
 		public static final int FLAG = 33; // start: x finish: y
 		public static final int REGIONAL_TRADE = 34;
 		public static final int BATTLE = 35; // counter: trainer, start: id (optional)

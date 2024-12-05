@@ -3008,15 +3008,19 @@ public class AssetSetter {
 		}
 		
 		if (flag[5][3]) {
-			gp.npc[104][12].worldX = 46 * gp.tileSize;
+			if (gp.currentMap == 104 && gp.player.worldY >= 61 * gp.tileSize && gp.player.worldX >= 44 * gp.tileSize && gp.player.worldX <= 50 * gp.tileSize) {
+				gp.player.worldY -= gp.tileSize;
+			}
+			if (gp.npc[104][12] != null) gp.npc[104][12].worldX = 46 * gp.tileSize;
 		}
 		if (flag[5][9]) {
 			gp.npc[103][0] = null;
-		}
-		if (flag[5][5]) {
 			for (int i = 0; i < 13; i++) {
 				gp.npc[104][i] = null;
 			}
+		}
+		if (flag[5][5]) {
+			gp.npc[103][1] = null;
 		}
 		if (flag[5][6]) {
 			gp.npc[109][3] = null;
