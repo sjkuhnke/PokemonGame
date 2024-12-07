@@ -199,6 +199,13 @@ public class Trainer implements Serializable {
 		} else if (foe.lastMoveUsed != null) {
 			type = foe.lastMoveUsed.mtype;
 		}
+		if (type == PType.NORMAL) {
+			if (foe.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
+			if (foe.ability == Ability.REFRIGERATE) type = PType.ICE;
+			if (foe.ability == Ability.PIXILATE) type = PType.LIGHT;
+		} else if (type != null) {
+			if (foe.ability == Ability.NORMALIZE) type = PType.NORMAL;
+		}
 		if (m == Move.GROWL || type == null) {
 			return getNext(foe);
 		} else if (foe.lastMoveUsed != null || m == Move.SPLASH || hasResist(type)) {

@@ -534,6 +534,12 @@ public class Pokemon implements Serializable {
         		this.vStatuses.add(Status.SWAP);
         		return Move.GROWL;
         	}
+        	// 10% chance to swap if i'm leech seeded
+        	if (this.vStatuses.contains(Status.LEECHED)) {
+        		System.out.println("leeched : 100%");
+        		this.vStatuses.add(Status.SWAP);
+        		return Move.GROWL;
+        	}
     		boolean moveKills = false;
     		PType type = null;
     		boolean hasResist = false;
@@ -691,8 +697,9 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (bestMoves.size() > 1) bestMoves.removeIf(Move.HEALING_WISH::equals);
-		if (bestMoves.size() > 1) bestMoves.removeIf(Move.LUNAR_DANCE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.HEALING_WISH) && foe.trainerOwned() && !foe.trainer.hasValidMembers()) bestMoves.removeIf(Move.HEALING_WISH::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.LUNAR_DANCE) && foe.trainerOwned() && !foe.trainer.hasValidMembers()) bestMoves.removeIf(Move.LUNAR_DANCE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.BATON_PASS) && foe.trainerOwned() && !foe.trainer.hasValidMembers()) bestMoves.removeIf(Move.BATON_PASS::equals);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TRICK_ROOM) && field.contains(field.fieldEffects, Effect.TRICK_ROOM)) bestMoves.removeIf(Move.TRICK_ROOM::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAILWIND) && field.contains(field.foeSide, Effect.TAILWIND)) bestMoves.removeIf(Move.TAILWIND::equals);
@@ -1590,7 +1597,7 @@ public class Pokemon implements Serializable {
 			if (foe.lastMoveUsed == Move.AQUA_VEIL) {
 				stat(this, 2, -1, foe);
 			}
-			if (move == Move.HI_JUMP_KICK) {
+			if (move == Move.HI_JUMP_KICK && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 				this.damage(this.getStat(0) / 2.0, foe);
 				addTask(Task.TEXT, this.nickname + " kept going and crashed!");
 				if (this.currentHP < 0) {
@@ -1795,7 +1802,7 @@ public class Pokemon implements Serializable {
 			if (!hit(accuracy) || foe.vStatuses.contains(Status.SEMI_INV) && acc <= 100) {
 				useMove(move, foe);
 				addTask(Task.TEXT, this.nickname + "'s attack missed!");
-				if (move == Move.HI_JUMP_KICK) {
+				if (move == Move.HI_JUMP_KICK && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 					this.damage(this.getStat(0) / 2.0, foe);
 					addTask(Task.TEXT, this.nickname + " kept going and crashed!");
 					if (this.currentHP < 0) {
@@ -1916,7 +1923,7 @@ public class Pokemon implements Serializable {
 					} else if (this.ability == Ability.CORROSION && moveType == PType.POISON) {
 						// Nothing: corrosion allows poison moves to hit steel
 					} else {
-						if (move == Move.HI_JUMP_KICK) {
+						if (move == Move.HI_JUMP_KICK && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 							this.damage(this.getStat(0) / 2.0, foe);
 							addTask(Task.TEXT, this.nickname + " kept going and crashed!");
 							if (this.currentHP < 0) {
@@ -2445,7 +2452,7 @@ public class Pokemon implements Serializable {
 			stat(foe, 5, -1, this, true);
 		}
 		
-		if (this.item == Item.LIFE_ORB && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN && this.isFainted()) {
+		if (this.item == Item.LIFE_ORB && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN && !this.isFainted()) {
 			this.damage(getHPAmount(1.0/10), foe);
 			addTask(Task.TEXT, this.nickname + " lost some of its HP!");
 			if (this.currentHP <= 0) { // Check for kill

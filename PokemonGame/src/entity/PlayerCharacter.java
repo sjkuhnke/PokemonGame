@@ -1276,8 +1276,12 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.DIALOGUE, npc, "Oh... thank Arceus you're here. I was afraid I wouldn't make it through this.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "Those thugs - Team Eclipse - stormed in, demanding something that I don't fully understand.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "You beat them, right? Why are they still here? Can you do anything?");
-				Task t = Pokemon.addTask(Task.TURN, this, "");
+				Task t = Pokemon.addTask(Task.SLEEP, "");
+				t.counter = 30;
+				t = Pokemon.addTask(Task.TURN, this, "");
 				t.counter = 0;
+				t = Pokemon.addTask(Task.SLEEP, "");
+				t.counter = 60;
 				Pokemon.addTask(Task.SPEAK, this, "Get out, you creeps! Leave us alone. I already destroyed your flimsy Pokemon, you want some more?");
 				Pokemon.addTask(Task.SPEAK, this, "Didn't think so. Then, GET!");
 				Pokemon.addTask(Task.FLASH_IN, "");
