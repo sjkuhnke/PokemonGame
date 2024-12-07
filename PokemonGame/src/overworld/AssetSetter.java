@@ -1535,7 +1535,7 @@ public class AssetSetter {
 				+ "Millie's been through a lot after what happened in her town with Xurkitree. Guess they're trying to figure out the next move.\n"
 				+ "Come back later once things calm down.", 131);
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 67, 69, "I'm always at my peak, and this battle will prove it!", "Even the best athletes lose sometimes... but I'll come back stronger!", 218);
-		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 85, 64, "The ground trembles under my feet, and so will you!", "You're strong, but I'll come back tougher than ever!", 219);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 86, 64, "The ground trembles under my feet, and so will you!", "You're strong, but I'll come back tougher than ever!", 219, LEFT + UP + RIGHT);
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_DOWN, 92, 55, "Think you can keep up with my high-energy Pokemon? Let's see!", "A defeat won't slow me down. I'll train harder!", 220);
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 84, 49, "Time to turn up the heat and shock you with my skills!", "You won the battle, but I'll be back in top form soon!", 221);
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_LEFT, 85, 37, "Hope you brought your swim gear, because I'm about to flood you out!", "I'm not going under just yet... next time, I'll win.", 222);
@@ -1570,7 +1570,7 @@ public class AssetSetter {
 		
 		mapNum = 91;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 29, 45, "You thought you could save this old man? Too bad, you’re too late!\n"
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 29, 45, "You thought you could save this old man? Too bad, you're too late!\n"
 				+ "Team Eclipse controls this place now. Get lost or get wrecked!",
 				"No way... How did you-\n"
 				+ "This isn't over... you'll never stop what's coming!", 183);
@@ -1645,7 +1645,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 67, 72, "", "", 236);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 49, 44, "", "", 237);
 		
-		gp.npc[mapNum][index] = NPCSetup(SCOTT_DOWN, 21, 40, "Hey, it’s been a while, hasn't it? How have you been?\n"
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_DOWN, 21, 40, "Hey, it's been a while, hasn't it? How have you been?\n"
 				+ "...\n"
 				+ "You beat Team Eclipse? Even their leader? Wow! Hopefully they'll be gone for good now.\n"
 				+ "Well, while you were dealing with them, I've been training - intensely.\n"
