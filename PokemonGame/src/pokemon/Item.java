@@ -133,9 +133,9 @@ public enum Item {
 	WISE_GLASSES(80,0,150,new Color(92, 105, 117),Item.HELD_ITEM,null,"This thick pair of glasses slightly boosts the power of the holder's special moves."),
 	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
 	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
-	FLOAT_STONE(322,0,0,Color.BLACK,Item.HELD_ITEM,null,"This very light stone reduces the weight of the holder."),
-	IRON_BALL(323,0,0,Color.BLACK,Item.HELD_ITEM,null,"A ball of steel that lowers Speed and allows GROUND moves to hit FLYING and levitating holders."),
-	LAGGING_TAIL(324,0,0,Color.BLACK,Item.HELD_ITEM,null,"A tremendously heavy item that makes the holder move slower than usual."),
+	FLOAT_STONE(322,0,0,Color.BLACK,Item.HELD_ITEM,null,"This very light stone reduces the weight of the holder."), // TODO: add in overworld
+	IRON_BALL(323,0,0,Color.BLACK,Item.HELD_ITEM,null,"A ball of steel that lowers Speed and allows GROUND moves to hit FLYING and levitating holders."), // TODO: add in overworld
+	LAGGING_TAIL(324,0,0,Color.BLACK,Item.HELD_ITEM,null,"A tremendously heavy item that makes the holder move slower than usual."), // TODO: add in overworld
 	FOCUS_SASH(81,0,500,new Color(232, 80, 80),Item.HELD_ITEM,null,"If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP, but only once."),
 	AIR_BALLOON(82,0,300,new Color(232, 72, 72),Item.HELD_ITEM,null,"This balloon makes the holder float in the air. If the holder is hit with an attack, the balloon will burst."),
 	POWER_HERB(83,0,50,new Color(253, 80, 77),Item.HELD_ITEM,null,"A herb that allows the holder to immediately use a move that normally requires a turn to charge or recharge, but only once."),
@@ -486,15 +486,26 @@ public enum Item {
 		return itemTable[id];
 	}
 	
-	public static ArrayList<Move> getTMs() {
-		ArrayList<Move> result = new ArrayList<>();
+	public static ArrayList<Item> getTMs() {
+		ArrayList<Item> result = new ArrayList<>();
 
 		for (int i = 93; i <= 199; i++) {
-            result.add(Item.getItem(i).getMove());
+            result.add(Item.getItem(i));
         }
 		
 		return result;
-	}	
+	}
+	
+	public static ArrayList<Move> getTMMoves() {
+		ArrayList<Move> result = new ArrayList<>();
+		ArrayList<Item> tms = getTMs();
+		
+		for (Item i : tms) {
+			result.add(i.getMove());
+		}
+		
+		return result;
+	}
 	
 	@Override
 	public String toString() {

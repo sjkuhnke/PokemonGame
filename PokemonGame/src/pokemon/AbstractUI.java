@@ -69,12 +69,14 @@ public abstract class AbstractUI {
 		} else {
 			if (this instanceof UI) {
 				x = gp.tileSize*2;
+				y = (int) (gp.screenHeight - (gp.tileSize*4.5));
 				width = gp.screenWidth - (gp.tileSize*4);
 			} else {
 				x = 0;
+				y = gp.screenHeight - (gp.tileSize*4);
 				width = gp.screenWidth;
 			}
-			y = gp.screenHeight - (gp.tileSize*4);
+			
 			height = gp.tileSize * 4;
 		}
 		

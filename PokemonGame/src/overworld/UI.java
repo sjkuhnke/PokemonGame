@@ -32,6 +32,7 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
 import entity.Entity;
+import entity.NPC_Prize_Shop;
 import entity.PlayerCharacter;
 import object.TreasureChest;
 import pokemon.Ability;
@@ -46,6 +47,7 @@ import pokemon.Player;
 import pokemon.Pokemon;
 import pokemon.Node;
 import pokemon.Pokemon.Task;
+import util.Pair;
 
 public class UI extends AbstractUI {
 
@@ -121,6 +123,8 @@ public class UI extends AbstractUI {
 	
 	public static final int MAX_SHOP_COL = 10;
 	public static final int MAX_SHOP_ROW = 4;
+	
+	public static final int ITEMS = 0;
 	
 	
 	public UI(GamePanel gp) {
@@ -219,6 +223,10 @@ public class UI extends AbstractUI {
 		
 		if (gp.gameState == GamePanel.SHOP_STATE) {
 			drawShopScreen();
+		}
+		
+		if (gp.gameState == GamePanel.PRIZE_STATE) {
+			drawPrizeScreen((NPC_Prize_Shop) npc);
 		}
 		
 		if (gp.gameState == GamePanel.NURSE_STATE) {
@@ -447,6 +455,24 @@ public class UI extends AbstractUI {
 		case Task.SLEEP:
 			drawSleep();
 			break;
+		case Task.BLACKJACK:
+			Pokemon.addTask(Task.TEXT, "Come play again soon, okay?");
+			// Remove all existing components from the JFrame
+		    Main.window.getContentPane().removeAll();
+
+		    // Create and add the BlackjackPanel
+		    BlackjackPanel bjPanel = new BlackjackPanel(gp);
+		    Main.window.getContentPane().add(bjPanel);
+
+		    // Set focus on the BlackjackPanel
+		    bjPanel.requestFocusInWindow();
+
+		    // Repaint the JFrame to reflect the changes
+		    Main.window.revalidate();
+		    Main.window.repaint();
+		    
+		    currentTask = null;
+		    break;
 		}
 	}
 
@@ -619,7 +645,7 @@ public class UI extends AbstractUI {
 			y = (int) (gp.tileSize * 4.5);
 		} else {
 			x = gp.tileSize*10;
-			y = (int) (gp.screenHeight - (gp.tileSize*5.5));
+			y = gp.screenHeight - (gp.tileSize*6);
 		}
 		width = gp.tileSize*4;
 		height = (int) (gp.tileSize * 1.5);
@@ -812,6 +838,10 @@ public class UI extends AbstractUI {
 					currentTask = null;
 					gp.player.p.flag[2][4] = true;
 					gp.eHandler.teleport(28, 82, 36, false);
+					break;
+				case 3: // casino blackjack table
+					Pokemon.addTask(Task.BLACKJACK, "");
+					currentTask = null;
 					break;
 				}
 			}
@@ -2784,14 +2814,17 @@ public class UI extends AbstractUI {
 	}
 	
 	public void shopBuy() {
-		drawInventory();
+		drawInventory(npc.inventory, ITEMS);
 	}
 	
-	private void drawInventory() {
+	private void drawInventory(ArrayList<?> inventory, int type) {
 		int x = gp.tileSize * 2;
 		int y = gp.tileSize;
 		int width = gp.tileSize * 12;
 		int height = gp.tileSize * 6;
+		
+		boolean items = type == ITEMS;
+		boolean prize = type >= 1 && type <= 3;
 		
 		drawSubWindow(x, y, width, height);
 		
@@ -2801,8 +2834,11 @@ public class UI extends AbstractUI {
 		int slotY = slotYstart;
 		int slotSize = gp.tileSize + 5;
 		
-		for (int i = 0; i < npc.inventory.size(); i++) {
-			g2.drawImage(npc.inventory.get(i).getImage2(), slotX, slotY, null);
+		for (int i = 0; i < inventory.size(); i++) {
+			@SuppressWarnings("unchecked")
+			Item item = items ? (Item) inventory.get(i) : prize ? ((Pair<Item, Integer>) inventory.get(i)).getFirst() : null;
+			
+			g2.drawImage(item.getImage2(), slotX, slotY, null);
 			
 			slotX += slotSize;
 			
@@ -2830,14 +2866,25 @@ public class UI extends AbstractUI {
 		int textY = (int) (dFrameY + gp.tileSize * 0.8);
 		g2.setFont(g2.getFont().deriveFont(32F));
 		
-		int itemIndex = getItemIndexOnSlot();
+		int itemIndex = getItemIndexOnSlot(MAX_SHOP_COL);
 		
-		if (itemIndex < npc.inventory.size()) {
-			Item current = npc.inventory.get(itemIndex);
+		if (itemIndex < inventory.size()) {
+			@SuppressWarnings("unchecked")
+			Item current = items ? (Item) inventory.get(itemIndex) : prize ? ((Pair<Item, Integer>) inventory.get(itemIndex)).getFirst() : null;
 			drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
 			g2.drawString(current.toString(), textX, textY);
-			String price = "$" + current.getCost();
+			
+			String price = "";
+			if (items) {
+				price = "$" + current.getCost();
+			} else if (prize) {
+				@SuppressWarnings("unchecked")
+				Pair<Item, Integer> pair = (Pair<Item, Integer>) inventory.get(itemIndex);
+				String currency = type == 1 ? " Coins" : " Total Wins";
+				price = pair.getSecond() + currency;
+			}
 			g2.drawString(price, getRightAlignedTextX(price, dFrameX + dFrameWidth - gp.tileSize / 2), textY);
+			
 			
 			int amtX = dFrameX + dFrameWidth - gp.tileSize * 4;
 			int amtY = dFrameY + dFrameHeight;
@@ -2859,35 +2906,176 @@ public class UI extends AbstractUI {
 			}
 			
 			if (gp.keyH.wPressed) {
-				if (gp.player.p.buy(current)) {
-					if (current.isTM()) {
-						npc.inventory.remove(current);
-					}
-				} else {
-					showMessage("Not enough money!");
-				}
+				Item i = items ? current : null;
+				@SuppressWarnings("unchecked")
+				Pair<Item, Integer> p = prize ? (Pair<Item, Integer>) inventory.get(itemIndex) : null;
+				gp.player.p.purchaseItem(this, i, p, type, npc);
 			}
 		}
 		
-		int moneyX = x + width - gp.tileSize * 3;
-		int moneyY = y - gp.tileSize;
-		int moneyWidth = gp.tileSize * 3;
-		int moneyHeight = gp.tileSize;
-		
-		drawSubWindow(moneyX, moneyY, moneyWidth, moneyHeight);
-		textX = moneyX + 20;
-		textY = (int) (moneyY + gp.tileSize * 0.75);
-		g2.setFont(g2.getFont().deriveFont(32F));
-		g2.drawString("$" + gp.player.p.getMoney(), textX, textY);
+		if (items) {
+			int moneyX = x + width - gp.tileSize * 3;
+			int moneyY = y - gp.tileSize;
+			int moneyWidth = gp.tileSize * 3;
+			int moneyHeight = gp.tileSize;
+			
+			drawSubWindow(moneyX, moneyY, moneyWidth, moneyHeight);
+			textX = moneyX + 20;
+			textY = (int) (moneyY + gp.tileSize * 0.75);
+			g2.setFont(g2.getFont().deriveFont(32F));
+			g2.drawString("$" + gp.player.p.getMoney(), textX, textY);
+		}
 		
 		drawToolTips("Buy", null, "Back", "Back");
 	}
 
-	private int getItemIndexOnSlot() {
-		int itemIndex = slotCol + (slotRow*MAX_SHOP_COL);
+	private int getItemIndexOnSlot(int maxCol) {
+		int itemIndex = slotCol + (slotRow*maxCol);
 		return itemIndex;
 	}
 	
+	private void drawPrizeScreen(NPC_Prize_Shop ps) {
+		if (subState <= 0) {
+			shopSelect();
+		} else if (subState < 3) {
+			drawInventory(ps.getInventory(subState), subState);
+			drawPrizeHeader(gp.player.p);
+		} else {
+			drawPokemonPrize(ps.prizePokemon);
+			drawPrizeHeader(gp.player.p);
+		}
+		gp.keyH.wPressed = false;
+	}
+	
+	private void drawPokemonPrize(ArrayList<Pair<Pokemon, Integer>> inventory) {
+		int x = gp.tileSize * 2;
+		int y = gp.tileSize;
+		int width = gp.tileSize * 12;
+		int height = gp.tileSize * 6;
+		
+		drawSubWindow(x, y, width, height);
+		
+		final int slotXstart = x + 20;
+		final int slotYstart = y + 20;
+		int slotX = slotXstart;
+		int slotY = slotYstart;
+		
+		int slotSize = 88;
+		
+		for (int i = 0; i < inventory.size(); i++) {
+			g2.drawImage(inventory.get(i).getFirst().getSprite(), slotX, slotY, null);
+			
+			slotX += slotSize;
+			
+			if ((i + 1) % 6 == 0) {
+				slotX = slotXstart;
+				slotY += slotSize;
+			}
+		}
+		
+		int cursorX = slotXstart + (slotSize * slotCol);
+		int cursorY = slotYstart + (slotSize * slotRow);
+		int cursorWidth = 82;
+		int cursorHeight = 82;
+		
+		g2.setColor(Color.WHITE);
+		g2.setStroke(new BasicStroke(3));
+		g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+		
+		int dFrameX = x;
+		int dFrameY = y + height;
+		int dFrameWidth = width;
+		int dFrameHeight = (int) (gp.tileSize * 3.5);
+		
+		int textX = dFrameX + 20;
+		int textY = (int) (dFrameY + gp.tileSize * 0.8);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		
+		int itemIndex = getItemIndexOnSlot(6);
+		
+		if (itemIndex < inventory.size()) {
+			Pair<Pokemon, Integer> current = inventory.get(itemIndex);
+			Pokemon p = current.getFirst();
+			drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
+			g2.drawString(Pokemon.getFormattedDexNo(p.id) + " - " + p.name, textX, textY);
+			
+			String price = current.getSecond() + " win streak";
+			g2.drawString(price, getRightAlignedTextX(price, dFrameX + dFrameWidth - gp.tileSize / 2), textY);
+			
+			textY += gp.tileSize / 2;
+			g2.drawImage(p.type1.getImage2(), textX, textY, null);
+			textX += gp.tileSize * 1.5;
+			if (p.type2 != null) {
+				g2.drawImage(p.type2.getImage2(), textX, textY, null);
+			}
+			
+			if (gp.keyH.wPressed) {
+				if (gp.player.p.winStreak >= current.getSecond()) {
+					gp.setTaskState();
+					setNicknaming(true);
+					gp.player.p.catchPokemon(p);
+					
+					checkTasks = true;
+					subState = 0;
+					commandNum = 0;
+					slotRow = 0;
+					slotCol = 0;
+					
+					NPC_Prize_Shop np = (NPC_Prize_Shop) npc;
+					np.prizePokemon.remove(itemIndex);
+					np.prizePokemon.add(itemIndex, new Pair<Pokemon, Integer>(new Pokemon(p.id, 25, true, false), current.getSecond()));
+					gp.player.p.winStreak -= current.getSecond();
+				} else {
+					showMessage("Not enough wins in a row!");
+				}
+			}
+		}
+	}
+
+	private void drawPrizeHeader(Player p) {
+		int startX = gp.tileSize * 3;
+		int startY = 0;
+		int width = gp.tileSize * 3;
+		int height = gp.tileSize;
+		int gap = gp.tileSize / 2;
+		
+		String labels[] = new String[] {" Coins", " Games Won", " Win Streak"};
+		
+		int x = startX;
+		int y = startY;
+		
+		for (int i = 1; i <= 3; i++) {
+			drawSubWindow(x, y, width, height);
+			int textX = x + 20;
+			int textY = (int) (y + gp.tileSize * 0.75);
+			
+			int amt = 0;
+			switch(i) {
+			case 1:
+				amt = p.coins;
+				break;
+			case 2:
+				amt = p.gamesWon;
+				break;
+			case 3:
+				amt = p.winStreak;
+				break;
+			}
+			String label = amt + labels[i - 1];
+			g2.setFont(g2.getFont().deriveFont(32F));
+			g2.setFont(g2.getFont().deriveFont(getFontSize(label, width)));
+			g2.drawString(label, textX, textY);
+			
+			if (i == subState) {
+				g2.setColor(Color.RED);
+				g2.setStroke(new BasicStroke(5));
+				g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+			}
+			
+			x += width + gap;
+		}
+	}
+
 	public void drawRepelScreen() {
 		currentDialogue = "Repel's effect wore off!\nWould you like to use another?";
 		drawDialogueScreen(true);

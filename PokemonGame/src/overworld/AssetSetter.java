@@ -1,12 +1,15 @@
 package overworld;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import entity.*;
 import object.*;
 import pokemon.Item;
+import util.Pair;
 
 public class AssetSetter {
 
@@ -791,7 +794,7 @@ public class AssetSetter {
 		mapNum = 110;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(44, 36, Item.TM08, mapNum); // bulk up
-		gp.obj[mapNum][objIndex] = ObjSetup(19, 74, Item.ULTRA_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(19, 74, Item.BIG_NUGGET, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(16, 77, Item.CAREFUL_MINT, mapNum); // careful
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 68, Item.PP_UP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(28, 74, Item.ROCKY_HELMET, mapNum);
@@ -1456,7 +1459,8 @@ public class AssetSetter {
 		mapNum = 53;
 		index = 0;
 		gp.npc[mapNum][index] = SetupClerk(NPC_MARKET, 31, 41, Item.ORAN_BERRY, Item.CHERI_BERRY, Item.CHESTO_BERRY, Item.PECHA_BERRY, Item.RAWST_BERRY, Item.ASPEAR_BERRY,
-                Item.PERSIM_BERRY, Item.LUM_BERRY, Item.LEPPA_BERRY, Item.SITRUS_BERRY, Item.WIKI_BERRY, Item.OCCA_BERRY, Item.PASSHO_BERRY, Item.WACAN_BERRY, Item.RINDO_BERRY,
+                Item.PERSIM_BERRY, Item.LUM_BERRY, Item.LEPPA_BERRY, Item.SITRUS_BERRY, Item.WIKI_BERRY, Item.SPELON_BERRY, Item.BELUE_BERRY, Item.PAMTRE_BERRY, Item.DURIN_BERRY,
+                Item.WATMEL_BERRY, Item.WEPEAR_BERRY, Item.BLUK_BERRY, Item.OCCA_BERRY, Item.PASSHO_BERRY, Item.WACAN_BERRY, Item.RINDO_BERRY,
                 Item.YACHE_BERRY, Item.CHOPLE_BERRY, Item.KEBIA_BERRY, Item.SHUCA_BERRY, Item.COBA_BERRY, Item.PAYAPA_BERRY, Item.TANGA_BERRY, Item.CHARTI_BERRY,
                 Item.KASIB_BERRY, Item.HABAN_BERRY, Item.COLBUR_BERRY, Item.BABIRI_BERRY, Item.CHILAN_BERRY, Item.ROSELI_BERRY, Item.MYSTICOLA_BERRY, Item.GALAXEED_BERRY,
                 Item.LIECHI_BERRY, Item.GANLON_BERRY, Item.SALAC_BERRY, Item.PETAYA_BERRY, Item.APICOT_BERRY, Item.STARF_BERRY, Item.MICLE_BERRY, Item.CUSTAP_BERRY);
@@ -1641,29 +1645,30 @@ public class AssetSetter {
 		
 		mapNum = 109;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 76, 89, "", "", 235);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 67, 72, "", "", 236);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 49, 44, "", "", 237);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 76, 89, "I've hiked through mountains, and my Pokemon are as tough as rock!", "Guess I've got to go back to training in the mountains...", 235);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 67, 72, "", "", 236);
+		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_RIGHT, 49, 44, "Don't underestimate me just because I'm young! I'm tougher than I look!", "I lost this time, but next time I'll be ready!", 237);
 		
-		gp.npc[mapNum][index] = NPCSetup(SCOTT_DOWN, 21, 40, "Hey, it's been a while, hasn't it? How have you been?\n"
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_DOWN, 21, 40, "Hey, it's been a while, hasn't it? How have you been?\n" // before beating
 				+ "...\n"
 				+ "You beat Team Eclipse? Even their leader? Wow! Hopefully they'll be gone for good now.\n"
 				+ "Well, while you were dealing with them, I've been training - intensely.\n"
 				+ "My psychic powers have been growing stronger, and I've been trying to sharpen my mind to read your strategies.\n"
 				+ "I can feel it... I think I'm ready to beat you this time!\n"
 				+ "Let's see if my training has paid off. Maybe this time, I'll finally be able to read your mind and outsmart you!",
-				"Argh! I thought I had it this time!\n"
+				"Argh! I thought I had it this time!\n" // After beating
 				+ "I spent so long training my psychic powers, trying to predict your moves... but I forgot something really important.\n"
 				+ "It's not about reading your mind - it's about training my Pokemon. They're the ones doing the battling, after all.\n"
 				+ "Guess I still have a lot to learn. But don't worry! Next time, I'll focus on them, and I'll definitely beat you!", 242);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 44, 39, "I found this infant Pokemon abandoned here.", true, 167, "Please raise it with love and care!");
+		gp.npc[mapNum][index] = NPCSetup(BREEDER, null, 44, 39, "I found this infant Pokemon abandoned here.", true, 167, "Please raise it with love and care!");
+		gp.npc[mapNum][index++] = null; // scott cutscene
 		
 		mapNum = 110;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 35, 84, "", "", 238);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 25, 78, "", "", 239);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 20, 56, "", "", 240);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 26, 54, "", "", 241);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_LEFT, 35, 84, "My team is balanced, and my strategy is flawless. Good luck!", "Losing isn't the end. It's just a reason to get better!", 238);
+		gp.npc[mapNum][index] = NPCSetup(ACTRESS_LEFT, 24, 72, "My performance is flawless, and you won't outshine me!", "That wasn't the ending I had in mind, but every story has a twist.", 239);
+		gp.npc[mapNum][index] = NPCSetup(LADY_RIGHT, 20, 56, "Don't be fooled by my appearance. I have elegance and strength!", "I suppose even the best of us lose sometimes...", 240);
+		gp.npc[mapNum][index] = NPCSetup(BURGLAR_LEFT, 26, 54, "I always play dirty, and you're about to find out why!", "Maybe I'll stick to thievery... Battling isn't my strong suit.", 241);
 		
 		mapNum = 113;
 		index = 0;
@@ -1680,9 +1685,9 @@ public class AssetSetter {
 		
 		mapNum = 115;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 69, "", "", 243);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 62, 74, "", "", 244);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 41, 72, "", "", 245);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 88, 69, "", "", 243);
+		gp.npc[mapNum][index] = NPCSetup(BLACK_BELT_DOWN, 62, 74, "Prepare yourself! My Pokemon fight with the heart of a true warrior!", "Impressive! I'll need to push myself even further!", 244);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_RIGHT, 41, 72, "Don't think my dragons will go easy on you. They're as tough as they come!", "I thought I had it all figured out... Guess I need to rethink my strategy.", 245);
 		
 		mapNum = 118;
 		index = 0;
@@ -1724,11 +1729,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 79, "", "", 287);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 86, 72, "", "", 290);
 		
-		if (!flags[26]) {
-			gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 25, 82, "The gym is closed right now. Why, you ask? Because a goddamn Team Nuke member came here and KIDNAPPED one of our employees.\n\nYeah, what the hell is right! Last I saw him, he was bringing Marcus towards the volcano. I just hope that Marcus doesn't sue us...", 26);
-		} else {
-			gp.npc[mapNum][index++] = null;
-		}
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 25, 83, "The gym is closed right now. Why, you ask? Because a goddamn Team Nuke member came here and KIDNAPPED one of our employees.\n\nYeah, what the hell is right! Last I saw him, he was bringing Marcus towards the volcano. I just hope that Marcus doesn't sue us...", 196);
 		
 		mapNum = 127;
 		index = 0;
@@ -1756,7 +1757,39 @@ public class AssetSetter {
 		mapNum = 129;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 37, 44, "Hi there! Here, you can exchange coins for money!", true);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 39, "Hi there! Here, you can exchange coins for prizes!", true);
+		gp.npc[mapNum][index] = SetupPrizeShop(31, 39, Arrays.asList(
+				// coin items
+				new Pair<>(Item.WHITE_HERB, 5),
+				new Pair<>(Item.POWER_HERB, 5),
+				new Pair<>(Item.MENTAL_HERB, 5),
+				new Pair<>(Item.FOCUS_SASH, 10),
+				new Pair<>(Item.THROAT_SPRAY, 15),
+				new Pair<>(Item.BLUNDER_POLICY, 20),
+				new Pair<>(Item.WEAKNESS_POLICY, 20),
+				new Pair<>(Item.RED_CARD, 25),
+				new Pair<>(Item.AIR_BALLOON, 25)
+		), Arrays.asList(
+				// win TMs
+				new Pair<>(Item.TM59, 10),
+				new Pair<>(Item.TM39, 25),
+				new Pair<>(Item.TM96, 40),
+				new Pair<>(Item.TM21, 60),
+				new Pair<>(Item.TM70, 75),
+				new Pair<>(Item.TM64, 100),
+				new Pair<>(Item.TM94, 150)
+		), Arrays.asList(
+				// win streak prize pokemon
+				new Pair<>(150, 3),
+				new Pair<>(143, 4),
+				new Pair<>(193, 5),
+				new Pair<>(195, 6),
+				new Pair<>(184, 7),
+				new Pair<>(187, 7),
+				new Pair<>(190, 8),
+				new Pair<>(263, 9),
+				new Pair<>(232, 10),
+				new Pair<>(231, 12)
+		));
 		
 		mapNum = 130;
 		index = 0;
@@ -3033,13 +3066,21 @@ public class AssetSetter {
 			gp.obj[map][objIndex] = ObjSetup(46, 28, gp.player.p.choiceChoice, map);
 		}
 		
+		if (flag[5][8] && !flag[6][0]) {
+			gp.npc[109][5] = NPCSetup(SCOTT_UP, "Scott", 15, 44, "FINN!!!", true, 192, "Hurry, Finn! I'm counting on you. Head south through Gelb Forest to reach Rawwar City!");
+		} else {
+			gp.npc[109][5] = null;
+		}
+		
+		if (flag[6][4]) {
+			gp.npc[124][15] = null;
+		}
 		
 		/**
 		 * All of this is old and should be removed/reworked
 		 */		
 		if (flags[26]) {
 			gp.npc[138][0] = null;
-			gp.npc[124][15] = null;
 		}
 		if (flags[28]) {
 			gp.npc[146][1] = null;
@@ -3068,6 +3109,21 @@ public class AssetSetter {
 		Entity e = NPCSetup(type, x, y, "", "", -1);
 		e.setItems(false, items);
 		return e;
+	}
+	
+	private Entity SetupPrizeShop(int x, int y, List<Pair<Item, Integer>> coinItems, List<Pair<Item, Integer>> winItems, List<Pair<Integer, Integer>> prizePokemon) {
+		NPC_Prize_Shop result = new NPC_Prize_Shop(gp);
+		
+		result.setCoinItems(coinItems);
+		result.setWinItems(winItems);
+		result.setPrizePokemon(prizePokemon);
+		
+		result.worldX = gp.tileSize*x;
+		result.worldY = gp.tileSize*y;
+		
+		index++;
+		
+		return result;
 	}
 	
 	private Entity NPCSetup(int type, int x, int y, String dialogue, String alt, int team, int spin) {
@@ -3526,6 +3582,12 @@ public class AssetSetter {
 	
 	private Entity NPCSetup(int type, String name, int x, int y, String message, boolean a) {
 		return NPCSetup(type, name, x, y, message, a, -1, null);
+	}
+	
+	private Entity NPCSetup(int type, String name, int x, int y, String message, boolean a, int flag, String altDialogue, int spin) {
+		Entity e = NPCSetup(type, name, x, y, message, a, flag, altDialogue);
+		e.setSpin(spin);
+		return e;
 	}
 	
 	private Entity NPCSetup(int type, String name, int x, int y, String message, boolean a, int flag, String altDialogue) {

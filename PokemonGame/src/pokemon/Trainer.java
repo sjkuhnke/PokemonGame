@@ -130,7 +130,7 @@ public class Trainer implements Serializable {
 				for (Moveslot m : p.moveset) {
 					if (m != null) {
 						Move move = m.move;
-						int effectiveBP = (int) (move.getbp(p, other) * other.getEffectiveMultiplier(move.mtype) * ((move.mtype == p.type1 || move.mtype == p.type2) ? 1.5 : 1));
+						int effectiveBP = (int) (move.getbp(p, other) * getEffective(other, p, move.mtype, move, false) * ((move.mtype == p.type1 || move.mtype == p.type2) ? 1.5 : 1));
 						if (effectiveBP > highestBP) {
 							//highestBPMove = move;
 							highestBP = effectiveBP;
@@ -199,18 +199,11 @@ public class Trainer implements Serializable {
 		} else if (foe.lastMoveUsed != null) {
 			type = foe.lastMoveUsed.mtype;
 		}
-		if (type == PType.NORMAL) {
-			if (foe.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
-			if (foe.ability == Ability.REFRIGERATE) type = PType.ICE;
-			if (foe.ability == Ability.PIXILATE) type = PType.LIGHT;
-		} else if (type != null) {
-			if (foe.ability == Ability.NORMALIZE) type = PType.NORMAL;
-		}
 		if (m == Move.GROWL || type == null) {
 			return getNext(foe);
-		} else if (foe.lastMoveUsed != null || m == Move.SPLASH || hasResist(type)) {
+		} else if (foe.lastMoveUsed != null || m == Move.SPLASH || hasResist(foe, type, m)) {
 			for (Pokemon p : team) {
-				if (p != current && resists(p, type)) {
+				if (p != current && resists(p, foe, type, m)) {
 					return p;
 				}
 			}
@@ -244,15 +237,25 @@ public class Trainer implements Serializable {
 		return result;
 	}
 	
-	public boolean hasResist(PType type) {
+	public boolean hasResist(Pokemon foe, PType type, Move m) {
 		for (Pokemon p : team) {
-			if (p != current && resists(p, type)) return true;
+			if (p != current && resists(p, foe, type, m)) return true;
 		}
 		return false;
 	}
 	
-	public static double getEffective(Pokemon p, PType type, boolean onlyCheckAbility) {
+	public static double getEffective(Pokemon p, Pokemon foe, PType type, Move m, boolean onlyCheckAbility) {
 		double multiplier = 1;
+		if (m == Move.HIDDEN_POWER || m == Move.RETURN) {
+			type = foe.determineHPType();
+		}
+		if (type == PType.NORMAL) {
+			if (foe.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
+			if (foe.ability == Ability.REFRIGERATE) type = PType.ICE;
+			if (foe.ability == Ability.PIXILATE) type = PType.LIGHT;
+		} else {
+			if (foe.ability == Ability.NORMALIZE) type = PType.NORMAL;
+		}
 		if (!onlyCheckAbility) multiplier = p.getEffectiveMultiplier(type);
 		if (p.ability == Ability.DRY_SKIN && type == PType.WATER) multiplier = 0;
 		if (p.ability == Ability.BLACK_HOLE && (type == PType.LIGHT || type == PType.GALACTIC)) multiplier = 0;
@@ -278,9 +281,9 @@ public class Trainer implements Serializable {
 		return multiplier;
 	}
 	
-	public boolean resists(Pokemon p, PType type) {
+	public boolean resists(Pokemon p, Pokemon foe, PType type, Move m) {
 		if (p.isFainted()) return false;
-		return getEffective(p, type, false) < 1;
+		return getEffective(p, foe, type, m, false) < 1;
 	}
 	
 	private void swap(Pokemon oldP, Pokemon newP) {

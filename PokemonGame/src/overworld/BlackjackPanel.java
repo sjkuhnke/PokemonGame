@@ -271,7 +271,7 @@ public class BlackjackPanel extends JPanel {
 
 		                // Check if the bet is within the allowed range
 		                if (bet >= 1 && bet <= Math.min(p.coins, MAX_BET)) {
-		                	if (!gp.player.p.flags[24]) {
+		                	if (!gp.player.p.flag[6][2]) {
 		    					int answer = JOptionPane.showOptionDialog(null,
 		    							"Would you like to save the game?\n(Won't show this message again:\nWill save every time)",
 		    				            "Save?",
@@ -279,7 +279,7 @@ public class BlackjackPanel extends JPanel {
 		    				            JOptionPane.QUESTION_MESSAGE,
 		    				            null, null, null);
 		    					if (answer == JOptionPane.YES_OPTION) {
-		    						gp.player.p.flags[24] = true;
+		    						gp.player.p.flag[6][2] = true;
 		    					} else {
 		    						return;
 		    					}
@@ -335,11 +335,12 @@ public class BlackjackPanel extends JPanel {
 	    for (Card card : hand) {
 	        if (card != null) {
 	            int rank = card.getRank();
-	            
+
 	            // For face cards (Jack, Queen, King)
 	            if (rank >= 11 && rank <= 13) {
 	                total += 10;
-	            } else if (rank == 1) {  // Ace
+	            } else if (rank == 1) { // Ace
+	                total += 11; // Initially count Ace as 11
 	                numAces++;
 	            } else {
 	                total += rank;
@@ -347,13 +348,10 @@ public class BlackjackPanel extends JPanel {
 	        }
 	    }
 
-	    // Handle Aces
-	    for (int i = 0; i < numAces; i++) {
-	        if (total + 11 <= 21) {
-	            total += 11;
-	        } else {
-	            total += 1;
-	        }
+	    // Adjust total if it exceeds 21 and there are Aces
+	    while (total > 21 && numAces > 0) {
+	        total -= 10; // Change one Ace from 11 to 1
+	        numAces--;
 	    }
 
 	    return total;

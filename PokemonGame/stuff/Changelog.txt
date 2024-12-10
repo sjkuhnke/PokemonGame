@@ -38,3 +38,6 @@ Changed Cairnasaur's first ability to Rock Head (from Psychic Surge)
 
 Demo 1.02(1) Released
 Added over collision to Post Office roof tiles
+
+Demo 1.05 Released
+Implemented Float Stone, Iron Ball, and Lagging Tail

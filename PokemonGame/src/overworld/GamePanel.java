@@ -108,6 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public static final int DEX_NAV_STATE = 15;
 	public static final int STARTER_STATE = 16;
 	public static final int LETTER_STATE = 17;
+	public static final int PRIZE_STATE = 18;
 
 	public static Map<Entity, Integer> volatileTrainers = new HashMap<>(); // TODO: remove this once aSetter.setNPC() is correctly configured to not have volatile npcs
 	

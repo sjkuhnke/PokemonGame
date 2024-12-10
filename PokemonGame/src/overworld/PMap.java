@@ -508,6 +508,7 @@ public class PMap extends JPanel {
 		if (gp.currentMap == 18 && !gp.player.p.flag[1][13]) canFly = false; // Sicab Office Scott
 		if (gp.currentMap == 28 && !gp.player.p.flag[2][10]) canFly = false; // Kleine Village Cage Critter
 		if (gp.currentMap == 44 && gp.player.p.flag[3][12] && !gp.player.p.flag[4][0]) canFly = false; // After beating Glacius but still needing to do Robin cutscene
+		if (gp.currentMap == 113 && gp.player.p.flag[5][8] && !gp.player.p.flag[6][0]) canFly = false; // After beating Rayna but still needing to do Scott cutscene
 		if (!canFly) {
 			JOptionPane.showMessageDialog(null, "A weird energy is rendering the teleporter obsolete here!");
 			return;

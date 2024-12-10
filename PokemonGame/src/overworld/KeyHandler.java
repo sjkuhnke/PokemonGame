@@ -50,6 +50,8 @@ public class KeyHandler implements KeyListener {
 			menuState(code);
 		} else if (gp.gameState == GamePanel.SHOP_STATE) {
 			shopState(code);
+		} else if (gp.gameState == GamePanel.PRIZE_STATE) {
+			prizeState(code);
 		} else if (gp.gameState == GamePanel.NURSE_STATE) {
 			nurseState(code);
 		} else if (gp.gameState == GamePanel.BATTLE_STATE) {
@@ -501,6 +503,65 @@ public class KeyHandler implements KeyListener {
 			}
 			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
 				if (gp.ui.slotCol < UI.MAX_SHOP_COL - 1) {
+					gp.ui.slotCol++;
+				}
+			}
+		}
+	}
+	
+
+	private void prizeState(int code) {
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		
+		if (gp.ui.subState == 0) {
+			if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+				gp.gameState = GamePanel.PLAY_STATE;
+				gp.ui.subState = 0;
+				gp.ui.commandNum = 0;
+				gp.ui.slotRow = 0;
+				gp.ui.slotCol = 0;
+			}
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I || code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				gp.ui.commandNum = 1 - gp.ui.commandNum;
+			}
+		} else {
+			if (code == KeyEvent.VK_S) {
+				gp.ui.subState = 0;
+				gp.ui.currentDialogue = gp.ui.npc.dialogues[0];
+			}
+			if (code == KeyEvent.VK_D) {
+				gp.ui.subState++;
+				if (gp.ui.subState > 3) gp.ui.subState = 1;
+				gp.ui.slotRow = 0;
+				gp.ui.slotCol = 0;
+			}
+			if (code == KeyEvent.VK_A) {
+				gp.ui.subState--;
+				if (gp.ui.subState < 1) gp.ui.subState = 3;
+				gp.ui.slotRow = 0;
+				gp.ui.slotCol = 0;
+			}
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+				if (gp.ui.slotRow > 0) {
+					gp.ui.slotRow--;
+				}
+			}
+			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				int row = gp.ui.subState == 3 ? 2 : UI.MAX_SHOP_ROW;
+				if (gp.ui.slotRow < row) {
+					gp.ui.slotRow++;
+				}
+			}
+			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+				if (gp.ui.slotCol > 0) {
+					gp.ui.slotCol--;
+				}
+			}
+			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+				int col = gp.ui.subState == 3 ? 5 : UI.MAX_SHOP_COL - 1;
+				if (gp.ui.slotCol < col) {
 					gp.ui.slotCol++;
 				}
 			}

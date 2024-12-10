@@ -708,6 +708,9 @@ public class EventHandler {
 			if (hit(109,15,42)) teleport(113, 53, 68,false);
 			if (hit(113,53,69)) teleport(109, 15, 43,false);
 			
+			// Cutscene with Scott
+			if (gp.player.p.flag[5][8] && !gp.player.p.flag[6][0] && hit(109,15,43)) gp.player.interactNPC((NPC_Block) gp.npc[109][5]);
+			
 			// Mindagan Cavern
 			if (hit(78,62,69)) teleport(117, 61, 72,true);
 			if (hit(117,61,72)) teleport(78, 62, 69,true);

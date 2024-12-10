@@ -31,10 +31,14 @@ import javax.swing.SwingUtilities;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
+import entity.Entity;
+import entity.NPC_Prize_Shop;
 import entity.PlayerCharacter;
 import overworld.GamePanel;
+import overworld.UI;
 import pokemon.Bag.Entry;
 import pokemon.Pokemon.Task;
+import util.Pair;
 
 public class Player extends Trainer implements Serializable {
 	/**
@@ -90,7 +94,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 46;
+	public static final int VERSION = 47;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -677,9 +681,11 @@ public class Player extends Trainer implements Serializable {
 
 	public boolean hasTM(Move move) {
 		if (move == null || !move.isTM()) return false;
-		for (int i = 93; i < 200; i++) {
-			if (bag.contains(i) && Item.getItem(i).getMove() == move) return true;
-		}
+		ArrayList<Move> moves = Item.getTMMoves();
+		int index = moves.indexOf(move);
+		if (index == -1) return false;
+		Item item = Item.getItem(index + 93);
+		if (bag.contains(item)) return true;
 		return false;
 	}
 
@@ -1561,5 +1567,39 @@ public class Player extends Trainer implements Serializable {
         List<Item> crystalList = Arrays.asList(crystals);
         Collections.shuffle(crystalList);
         crystals = crystalList.toArray(new Item[1]);
+	}
+
+	public void purchaseItem(UI ui, Item item, Pair<Item, Integer> p, int mode, Entity npc) {
+		switch(mode) {
+		case 0: // regular shop/market
+			if (this.buy(item)) {
+				if (item.isTM()) {
+					ui.npc.inventory.remove(item);
+				}
+			} else {
+				ui.showMessage("Not enough money!");
+			}
+			break;
+		case 1: // prize shop for coins
+			if (this.coins >= p.getSecond()) {
+				this.bag.add(p.getFirst());
+				this.coins -= p.getSecond();
+			} else {
+				ui.showMessage("Not enough coins!");
+			}
+			break;
+		case 2: // prize shop for wins
+			if (this.gamesWon >= p.getSecond()) {
+				this.bag.add(p.getFirst());
+				this.gamesWon -= p.getSecond();
+				if (p.getFirst().isTM()) {
+					NPC_Prize_Shop ps = (NPC_Prize_Shop) ui.npc;
+					ps.winItems.remove(p);
+				}
+			} else {
+				ui.showMessage("Not enough total wins!");
+			}
+		}
+		
 	}
 }
