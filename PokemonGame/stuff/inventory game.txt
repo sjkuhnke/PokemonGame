@@ -215,18 +215,18 @@ Before
 ""
 ""
 ""
-"Don't think my dragons will go easy on you. They're as tough as they come!"
 ""
-"My team is balanced, and my strategy is flawless. Good luck!"
+""
+""
 After
 
 ""
 ""
 ""
 ""
-"I thought I had it all figured out... Guess I need to rethink my strategy."
 ""
-"Losing isn't the end. It's just a reason to get better!"
+""
+""
 
 Actor (Light/Normal)
 Before
@@ -253,14 +253,14 @@ Actress (Light/Normal)
 Before
 
 ""
-"My performance is flawless, and you won't outshine me!"
+""
 "Prepare for an elegant battle - grace meets power!"
 "I'll make this battle one to remember, with me as the star!"
 "Lights, action, battle! Time to put on a show you won't forget!"
 After
 
 ""
-"That wasn't the ending I had in mind, but every story has a twist."
+""
 "I'll take this loss with grace. Next time, I'll have my shining moment!"
 "You may have stolen the spotlight, but I'll take it back!"
 "The curtain falls... for now. I'll be back stronger!"
@@ -284,14 +284,14 @@ After Battle:
 Hiker (Ground/Rock/Steel)
 Before:
 
-"I've hiked through mountains, and my Pokemon are as tough as rock!"
+""
 ""
 "I've trained in the toughest conditions! Let's see if you can handle it!"
 ""
 ""
 After:
 
-"Guess I've got to go back to training in the mountains..."
+""
 ""
 "That loss was rough, but I'll climb back up to the top!"
 ""
@@ -300,7 +300,7 @@ After:
 Burglar (Crook/Dark)
 Before Battle:
 
-"I always play dirty, and you're about to find out why!"
+""
 "You're in the wrong place at the wrong time... this battle's mine!"
 "Heh, think you can stop me? My Pokemon and I don't play fair!"
 "I always take what I want... and today, I'm taking this win!"
@@ -308,7 +308,7 @@ Before Battle:
 "Let's make this quick... I've got places to be and things to steal!"
 After Battle:
 
-"Maybe I'll stick to thievery... Battling isn't my strong suit."
+""
 "Tch, I'll remember this... next time, I'll come out on top!"
 "You might've won, but I'll bounce back, just you wait!"
 "This loss won't stop me... I'll strike from the shadows again!"
@@ -334,7 +334,7 @@ After
 Black Belt (Fighting)
 Before Battle:
 
-"Prepare yourself! My Pokemon fight with the heart of a true warrior!"
+""
 "I've trained for years. Let's see if you can keep up with me!"
 "My fists and my Pokemon are strong. Let's see if you can handle it!"
 "Prepare yourself! My fighting spirit knows no bounds!"
@@ -343,7 +343,7 @@ Before Battle:
 "You're about to experience the true strength of martial arts and Pokemon!"
 After Battle:
 
-"Impressive! I'll need to push myself even further!"
+""
 "You've won, but I'll come back stronger than ever!"
 "A true warrior learns from defeat. I'll grow stronger from this!"
 "You've bested me, but I won't stop training until I win!"
@@ -514,7 +514,7 @@ Before Battle:
 
 ""
 ""
-"Don't be fooled by my appearance. I have elegance and strength!"
+""
 "You look like you could use a good lesson in class... and battling!"
 "Charming as you may be, my Pokemon are far superior!"
 "You can't possibly think you'll beat me, can you?"
@@ -522,7 +522,7 @@ After Battle:
 
 ""
 ""
-"I suppose even the best of us lose sometimes..."
+""
 "You've won, but you lack the refinement of a true lady."
 "How vexing! I'll need to make some adjustments."
 "A loss? How unbecoming! I'll be more careful next time."
@@ -620,7 +620,7 @@ Before
 ""
 ""
 "I'm not scared! My Pokemon and I are ready for anything!"
-"Don't underestimate me just because I'm young! I'm tougher than I look!"
+""
 "I bet I can beat you with just a couple of strong moves!"
 "I just caught this Pokemon! Wanna see how strong it is?"
 "I'm super excited to battle you! Get ready!"
@@ -650,7 +650,7 @@ After
 ""
 ""
 "That didn't go like I planned... But I'll come back stronger!"
-"I lost this time, but next time I'll be ready!"
+""
 "Wow, you're good! I'll keep working hard until I can beat you!"
 "What? No way! I thought I was gonna win!"
 "I guess I need to practice more... I'll get you next time!"

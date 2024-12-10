@@ -384,8 +384,8 @@ public class TileManager {
 		setup(140, true);
 		setup(141, true);
 		setup(142, true);
-		setup(143, true);
-		setup(144, true);
+		setup(143, true, LEFT_HALF);
+		setup(144, true, RIGHT_HALF);
 		setup(145, true);
 		setup(146, false, OVER);
 		setup(147, false, OVER);

@@ -311,7 +311,7 @@ public class Pokemon implements Serializable {
 		return sprite;
 	}
 	
-	public BufferedImage getSprite(int id) {
+	public static BufferedImage getSprite(int id) {
 		return new Pokemon(id, 5, false, false).sprite;
 	}
 	
@@ -487,8 +487,8 @@ public class Pokemon implements Serializable {
         
         if (tr.hasValidMembers() && !isTrapped(foe)) {
         	// 25% chance to swap in a partner if they resist and you don't
-        	if (foe.lastMoveUsed != null && foe.lastMoveUsed.cat != 2 && !tr.resists(this, foe.lastMoveUsed.mtype)
-        			&& tr.hasResist(foe.lastMoveUsed.mtype)) {
+        	if (foe.lastMoveUsed != null && foe.lastMoveUsed.cat != 2 && !tr.resists(this, foe, foe.lastMoveUsed.mtype, foe.lastMoveUsed)
+        			&& tr.hasResist(foe, foe.lastMoveUsed.mtype, foe.lastMoveUsed)) {
         		double chance = 25;
         		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
         		if (this.impressive) chance /= 2;
@@ -547,7 +547,7 @@ public class Pokemon implements Serializable {
         		if (m != null && m.currentPP > 0) {
         			Move move = m.move;
             		int damage = foe.calcWithTypes(this, move, true, 0, false);
-            		hasResist = tr.hasResist(move.mtype);
+            		hasResist = tr.hasResist(foe, move.mtype, move);
             		if (damage >= this.currentHP) {
             			moveKills = true;
             			type = move.mtype;
@@ -644,7 +644,7 @@ public class Pokemon implements Serializable {
 		ArrayList<Move> checkForImmunity = new ArrayList<Move>(bestMoves);
 		Collections.shuffle(checkForImmunity);
 		for (Move m : checkForImmunity) {
-			if (bestMoves.size() > 1 && Trainer.getEffective(foe, m.mtype, true) == 0 && m.accuracy <= 100) bestMoves.removeIf(m::equals);
+			if (bestMoves.size() > 1 && Trainer.getEffective(foe, this, m.mtype, m, true) == 0 && m.accuracy <= 100) bestMoves.removeIf(m::equals);
 		}
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.THUNDER_WAVE) && foe.type1 == PType.GROUND || foe.type2 == PType.GROUND) bestMoves.removeIf(Move.THUNDER_WAVE::equals);
@@ -4746,6 +4746,7 @@ public class Pokemon implements Serializable {
 		public static final int MOVE_CAMERA = 42; // start: 0 for X, 1 for Y, finish: offsetX/offsetY to end at
 		public static final int MOVE_NPC = 43; // start: 0 for X, 1 for Y, finish: TILE COORDINATE to end at, wipe: yes/no to have camera follow the npc
 		public static final int SLEEP = 44; // counter: frames to sleep for
+		public static final int BLACKJACK = 45;
 		
 		public int type;
 		public String message;
@@ -5711,6 +5712,7 @@ public class Pokemon implements Serializable {
 	public int getSpeed() {
 		double speed = this.getStat(5) * this.asModifier(4);
 		if (this.status == Status.PARALYZED) speed *= 0.5;
+		if (this.item == Item.IRON_BALL) speed *= 0.5;
 		if (this.item == Item.CHOICE_SCARF) speed *= 1.5;
 		if (this.ability == Ability.UNBURDEN && consumedItem) speed *= 2;
 		if (checkAbilitySpeedBoost(this.ability)) speed *= 2;
@@ -5722,6 +5724,13 @@ public class Pokemon implements Serializable {
 		if (field.contains(field.playerSide, Effect.TAILWIND)) speed1 *= 2;
 		int speed2 = other.getSpeed();
 		if (field.contains(field.foeSide, Effect.TAILWIND)) speed2 *= 2;
+		
+		if (thisP > otherP) return this;
+		if (otherP > thisP) return other;
+		
+		if (this.item == Item.LAGGING_TAIL && other.item != Item.LAGGING_TAIL) return other;
+		if (other.item == Item.LAGGING_TAIL && this.item != Item.LAGGING_TAIL) return this;
+		
 		Pokemon faster = speed1 > speed2 ? this : other;
 		if (speed1 == speed2) {
 			Random random = new Random();
@@ -5731,8 +5740,7 @@ public class Pokemon implements Serializable {
 		if (field.contains(field.fieldEffects, Effect.TRICK_ROOM)) {
 			faster = faster == this ? other : this;
 		}
-		faster = otherP > thisP ? other : faster;
-		faster = thisP > otherP ? this : faster;
+
 		return faster;
 	}
 	
@@ -7068,6 +7076,7 @@ public class Pokemon implements Serializable {
 		if (this.ability == Ability.LEVITATE) result = false;
 		if (this.magCount > 0) result = false;
 		if (this.vStatuses.contains(Status.SMACK_DOWN)) result = true;
+		if (this.item == Item.IRON_BALL) result = true;
 		if (field.contains(field.fieldEffects, Effect.GRAVITY)) result = true;
 		return result;
 	}

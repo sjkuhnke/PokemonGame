@@ -11,21 +11,16 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-
-import org.jdesktop.swingx.VerticalLayout;
 
 import object.Cut_Tree;
 import object.Fuse_Box;
@@ -43,7 +38,6 @@ import object.Tree_Stump;
 import object.Vine;
 import object.Vine_Crossable;
 import object.Whirlpool;
-import overworld.BlackjackPanel;
 import overworld.GamePanel;
 import overworld.KeyHandler;
 import overworld.Main;
@@ -53,7 +47,6 @@ import pokemon.Move;
 import pokemon.Player;
 import pokemon.Pokemon;
 import pokemon.Trainer;
-import pokemon.JGradientButton;
 import pokemon.Pokemon.Task;
 
 public class PlayerCharacter extends Entity {
@@ -277,7 +270,7 @@ public class PlayerCharacter extends Entity {
 				Entity target = gp.npc[gp.currentMap][npcIndex];
 				if (target instanceof NPC_Nurse) {
 					interactNurse(target);
-				} else if (target instanceof NPC_Clerk || target instanceof NPC_Market) {
+				} else if (target instanceof NPC_Clerk || target instanceof NPC_Market || target instanceof NPC_Prize_Shop) {
 					interactClerk(target);
 				} else if (target instanceof NPC_Block) {
 					interactNPC((NPC_Block) target);
@@ -563,7 +556,6 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactClerk(Entity npc) {
 		gp.keyH.wPressed = false;
-		gp.gameState = GamePanel.SHOP_STATE;
 		npc.facePlayer(direction);
 		npc.speak(-1);
 	}
@@ -1359,9 +1351,9 @@ public class PlayerCharacter extends Entity {
 				t.counter = 1;
 				Pokemon.addTask(Task.SPOT, npc, "");
 				Pokemon.addTask(Task.DIALOGUE, npc, "BWAHAHAHAH! The pest finally arrives! Did you really think you could follow us all the way down here and stop what's already in motion? How amusingly naive.");
-				Pokemon.addTask(Task.DIALOGUE, npc, "You see, child, I am far more than just a 'trainer'. I am the vanguard of an empire – we are here to prepare this world for something beyond your comprehension.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "You see, child, I am far more than just a 'trainer'. I am the vanguard of an empire ï¿½ we are here to prepare this world for something beyond your comprehension.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "My master, Dragowrath, watches from the stars. Earth is merely the first of many worlds he'll claim, and when the Sorcerer rises, this land will be ours.");
-				Pokemon.addTask(Task.DIALOGUE, npc, "But enough talk. You've come this far, so let's end this with a little... demonstration of power. Prepare yourself – my Pokemon and I will not hold back.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "But enough talk. You've come this far, so let's end this with a little... demonstration of power. Prepare yourself ï¿½ my Pokemon and I will not hold back.");
 				t = Pokemon.addTask(Task.BATTLE, "");
 				t.counter = 217;
 			} else if (!p.flag[5][9]) {
@@ -1430,6 +1422,7 @@ public class PlayerCharacter extends Entity {
 			}
 		}
 		if (gp.currentMap == 109) {
+			if (worldX / gp.tileSize > 24) { // breeder
 				p.flag[5][7] = true;
 				Pokemon.addTask(Task.TEXT, "Here, could you raise it for me?");
 				int[] ids = new int[] {177, 179, 98};
@@ -1444,39 +1437,65 @@ public class PlayerCharacter extends Entity {
 				Pokemon result = new Pokemon(ids[index], 1, true, false);
 				Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 				Pokemon.addTask(Task.GIFT, "", result);
+			} else { // scott cutscene
+				Pokemon.addTask(Task.DIALOGUE, npc, "I - I've been looking everywhere for you! You need to listen to me, something HUGE is going on!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "It's... it's Mt. St. Joseph! Something's about to happen - an eruption, but not just any eruption!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "There's some kind of supernatural force messing with the volcano. It's all connected to Team Eclipse.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I don't know the exact details, but...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Well, I don't know how to tell you this, because I know you're friends with him too, but...");
+				Pokemon.addTask(Task.SPEAK, this, "What? What happened? Who are you talking about?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I just ran into Fred, and he told me Eclipse is trying to cause a catastrophe there - and he's part of it!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Can you believe that Farfetch'd nonsense? Fred... joined them!");
+				Pokemon.addTask(Task.SPEAK, this, "...");
+				Pokemon.addTask(Task.SPEAK, this, "Yeah... Scott, I already knew. I fought him in Shadow Path and bested him there.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "WHAT?! Ugh, of course you did... you probably know EVERYTHING by now.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Anyway, I guess that's not the biggest news. The real problem is Mt. St. Joseph - that's where they're going to make their move.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "If we don't stop them, we could be looking at a real disaster.");
+				Pokemon.addTask(Task.SPEAK, this, "Fred told you their plans? Why?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Well, I don't think he's happy with what they're doing, but he's too far gone to stop them. He said they're planning something big at the volcano.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "And I - I think he knew how they're going to do it. I think they're summoning an Ultra Paradox Pokemon to cause an eruption.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "It's going to be a strong enough natural disaster to destroy everything in Xhenos. I... I'm not sure how, but I...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "...");
+				Pokemon.addTask(Task.SPEAK, this, "What, Scott? Spit it out!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I think I have a feeling why they want to wipe out the whole region.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I think they have an alien leader... and I think it wants to colonize this planet.");
+				Pokemon.addTask(Task.SPEAK, this, "WHAT?! They want to... take over all of us??");
+				Pokemon.addTask(Task.SPEAK, this, "Oh God, Scott! How do we stop them?!");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I don't know, Finn! It's going to be very dangerous. You'll need to go South through Gelb Forest to Rawwar City.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "But there's a big problem, you will need to cross an intense vortex of water with Whirlpool.");
+				if (p.bag.contains(Item.HM06)) {
+					Pokemon.addTask(Task.SPEAK, this, "I got the Whirlpool HM, I should be fine. Thanks Scott.");
+				} else {
+					Pokemon.addTask(Task.SPEAK, this, "How can I cross it?");
+					Pokemon.addTask(Task.DIALOGUE, npc, "You can cross it with the Hidden Machine Whirlpool.");
+					Pokemon.addTask(Task.DIALOGUE, npc, "Fred... Fred actually told me where it is - right next to Team Eclipse's underground base...");
+					Pokemon.addTask(Task.DIALOGUE, npc, "At the bottom of Shadow Ravine, by where that Ultra Paradox Pokemon you fought was.");
+					Pokemon.addTask(Task.SPEAK, this, "I must've missed it. Thanks for letting me know.");
+				}
+				Pokemon.addTask(Task.DIALOGUE, npc, "Just... just be careful, alright? I didn't get all the details from Fred, but by the way he was talking...");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Things are much worse than we realize. Please, Finn... I can't lose another friend to Eclipse.");
+				Pokemon.addTask(Task.SPEAK, this, "Don't worry, Scott. I'll stop them. You just stay safe.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Thanks, Finn... I know you can do it. Good luck.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Now, go and stop them before it's too late.");
+				p.flag[6][0] = true;
+			}
 		}
 		if (gp.currentMap == 118) {
 			Pokemon.addTask(Task.TEXT, "Do you have any fossils for me to resurrect?");
 			Pokemon.addTask(Task.FOSSIL, "Do you have any fossils for me to resurrect?");
 		} if (gp.currentMap == 127) {
-			int answer = JOptionPane.showOptionDialog(null,
-					"Would you like to play Blackjack?\n(Warning: Will Auto-Save)",
-		            "Blackjack?",
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.QUESTION_MESSAGE,
-		            null, null, null);
-			if (answer == JOptionPane.YES_OPTION) {
-				// Remove all existing components from the JFrame
-			    Main.window.getContentPane().removeAll();
-
-			    // Create and add the BlackjackPanel
-			    BlackjackPanel bjPanel = new BlackjackPanel(gp);
-			    Main.window.getContentPane().add(bjPanel);
-
-			    // Set focus on the BlackjackPanel
-			    bjPanel.requestFocusInWindow();
-
-			    // Repaint the JFrame to reflect the changes
-			    Main.window.revalidate();
-			    Main.window.repaint();
-			}
+			Task t = Pokemon.addTask(Task.CONFIRM, "Would you like to play Blackjack?\n(Warning: Will Auto-Save)");
+			t.counter = 3;
 		}
 		if (gp.currentMap == 129 && worldY / gp.tileSize > 41) {
-			if (!p.flags[23]) {
-				Pokemon.addTask(Task.TEXT, "Oh, you haven't gotten any coins yet?\nHere, just this once, have some!");
+			if (!p.flag[6][1]) {
+				Pokemon.addTask(Task.TEXT, "Oh, you haven't gotten any coins yet?");
+				Pokemon.addTask(Task.TEXT, "Here, just this once, have some!");
 				Pokemon.addTask(Task.TEXT, "You recieved 100 Coins!");
+				Pokemon.addTask(Task.TEXT, "Yes, now don't go spend them all in one place. I'm not giving you any more!");
 				p.coins += 100;
-				p.flags[23] = true;
+				p.flag[6][1] = true;
 			} else {
 				JPanel panel = new JPanel();
 				JButton coinButton = new JButton("1 Coin to $25");
@@ -1513,143 +1532,6 @@ public class PlayerCharacter extends Entity {
 				});
 				showPrizeMenu(panel, p.coins + " coins   $" + p.getMoney());
 			}
-		} if (gp.currentMap == 129 && worldY / gp.tileSize <= 41) {
-			JPanel shopPanel = new JPanel();
-			shopPanel.setLayout(new GridLayout(0, 3));
-			Map<Pokemon, Integer> pokemonMap = new HashMap<>();
-			pokemonMap.put(new Pokemon(150, 25, true, false), 3); // Kissyfishy
-			pokemonMap.put(new Pokemon(143, 25, true, false), 4); // Posho
-			pokemonMap.put(new Pokemon(238, 25, true, false), 5); // Scraggy
-			pokemonMap.put(new Pokemon(193, 25, true, false), 5); // Consodust
-			pokemonMap.put(new Pokemon(195, 25, true, false), 6); // Rockmite
-			pokemonMap.put(new Pokemon(184, 25, true, false), 8); // Tinkie
-			pokemonMap.put(new Pokemon(187, 25, true, false), 8); // Dragee
-			pokemonMap.put(new Pokemon(190, 25, true, false), 10); // Blobmo
-			pokemonMap.put(new Pokemon(232, 25, true, false), 15); // Triwandoliz
-			pokemonMap.put(new Pokemon(231, 25, true, false), 20); // Kleinyeti
-			JPanel pokemonPanel = new JPanel(new VerticalLayout());
-			
-			List<Map.Entry<Pokemon, Integer>> sortedPokemonList = pokemonMap.entrySet()
-			        .stream()
-			        .sorted(Map.Entry.comparingByValue())
-			        .collect(Collectors.toList());
-			
-			Map<Item, Integer> itemMap = new HashMap<>();
-			itemMap.put(Item.FOCUS_SASH, 10);
-			itemMap.put(Item.AIR_BALLOON, 25);
-			itemMap.put(Item.POWER_HERB, 5);
-			itemMap.put(Item.WHITE_HERB, 5);
-			itemMap.put(Item.WEAKNESS_POLICY, 20);
-			itemMap.put(Item.BLUNDER_POLICY, 20);
-			itemMap.put(Item.RED_CARD, 25);
-			itemMap.put(Item.THROAT_SPRAY, 15);
-			JPanel itemPanel = new JPanel(new VerticalLayout());
-			
-			List<Map.Entry<Item, Integer>> sortedItemList = itemMap.entrySet()
-			        .stream()
-			        .sorted(Map.Entry.comparingByValue())
-			        .collect(Collectors.toList());
-			
-			Map<Item, Integer> tmMap = new HashMap<>();
-			tmMap.put(Item.TM59, 10);
-			tmMap.put(Item.TM39, 25);
-			tmMap.put(Item.TM96, 40);
-			tmMap.put(Item.TM21, 60);
-			tmMap.put(Item.TM70, 75);
-			tmMap.put(Item.TM64, 100);
-			tmMap.put(Item.TM94, 150);
-			JPanel tmPanel = new JPanel(new VerticalLayout());
-			
-			List<Map.Entry<Item, Integer>> sortedTMList = tmMap.entrySet()
-			        .stream()
-			        .sorted(Map.Entry.comparingByValue())
-			        .collect(Collectors.toList());
-			
-			for (Map.Entry<Item, Integer> e : sortedItemList) {
-				JPanel iPanel = new JPanel();
-		    	JGradientButton item = new JGradientButton(e.getKey().toString() + ": " + e.getValue() + " coins");
-		    	item.setBackground(e.getKey().getColor());
-		    	item.addMouseListener(new MouseAdapter() {
-		        	@Override
-				    public void mouseClicked(MouseEvent evt) {
-		    	    	if (p.coins >= e.getValue()) {
-		    	    		JOptionPane.showMessageDialog(null, "Purchased 1 " + e.getKey().toString() + " for " + e.getValue() + " coins");
-		    	    		p.bag.add(e.getKey());
-		    	    		p.coins -= e.getValue();
-		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
-		    	            showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
-		    	        } else {
-		    	            JOptionPane.showMessageDialog(null, "Not enough coins!");
-		    	        }
-		        	}
-		    	});
-		    	JLabel icon = new JLabel();
-		    	icon.setIcon(new ImageIcon(e.getKey().getImage()));
-		    	iPanel.add(icon);
-		    	iPanel.add(item);
-		    	itemPanel.add(iPanel);
-			}
-			
-			for (Map.Entry<Item, Integer> e : sortedTMList) {
-				JPanel iPanel = new JPanel();
-		    	JGradientButton item = new JGradientButton(e.getKey().toString() + ": " + e.getValue() + " games won");
-		    	item.setBackground(e.getKey().getColor());
-		    	item.addMouseListener(new MouseAdapter() {
-		        	@Override
-				    public void mouseClicked(MouseEvent evt) {
-		    	    	if (p.gamesWon >= e.getValue()) {
-		    	    		JOptionPane.showMessageDialog(null, "Purchased 1 " + e.getKey().toString() + " for " + e.getValue() + " games won");
-		    	    		p.bag.add(e.getKey());
-		    	    		p.gamesWon -= e.getValue();
-		    	    		tmPanel.remove(iPanel);
-		    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
-		    	            showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
-		    	        } else {
-		    	            JOptionPane.showMessageDialog(null, "Not enough total wins!");
-		    	        }
-		        	}
-		    	});
-		    	JLabel icon = new JLabel();
-		    	icon.setIcon(new ImageIcon(e.getKey().getImage()));
-		    	iPanel.add(icon);
-		    	iPanel.add(item);
-		    	tmPanel.add(iPanel);
-		    	if (e.getKey().isTM() && p.bag.contains(e.getKey().getID())) tmPanel.remove(iPanel);
-			}
-			
-			for (Map.Entry<Pokemon, Integer> e : sortedPokemonList) {
-				JPanel iPanel = new JPanel();
-				iPanel.setLayout(new VerticalLayout());
-		    	JGradientButton item = new JGradientButton(e.getKey().nickname + ": " + e.getValue() + " win streak");
-		    	Color color2 = e.getKey().type2 == null ? e.getKey().type1.getColor() : e.getKey().type2.getColor();
-		    	item.setBackground(e.getKey().type1.getColor(), color2);
-		    	item.addMouseListener(new MouseAdapter() {
-		        	@Override
-				    public void mouseClicked(MouseEvent evt) {
-		        		if (SwingUtilities.isRightMouseButton(evt)) {
-				            JOptionPane.showMessageDialog(null, e.getKey().showSummary(p, false, null), "Pokemon Summary", JOptionPane.INFORMATION_MESSAGE);
-			    		} else {
-			    	    	if (p.winStreak >= e.getValue()) {
-			    	            JOptionPane.showMessageDialog(null, "Got 1 " + e.getKey().nickname + "!");
-			    	            p.catchPokemon(e.getKey());
-			    	            pokemonPanel.remove(iPanel);
-			    	            SwingUtilities.getWindowAncestor(shopPanel).dispose();
-			    	            showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
-			    	        } else {
-			    	            JOptionPane.showMessageDialog(null, "Not enough wins in a row!");
-			    	        }
-			    		}
-		        	}
-		    	});
-		    	iPanel.add(item);
-		    	pokemonPanel.add(iPanel);
-		    	if (p.pokedex[e.getKey().id] == 2) pokemonPanel.remove(iPanel);
-			}
-			
-			shopPanel.add(itemPanel);
-			shopPanel.add(tmPanel);
-			shopPanel.add(pokemonPanel);
-			showPrizeMenu(shopPanel, p.coins + " coins   " + p.winStreak + " win streak   " + p.gamesWon + " wins");
 		} if (gp.currentMap == 130) {
 			p.flag[6][3] = true;
 			Pokemon.addTask(Task.DIALOGUE, npc, "Here, take this rare Pokemon!");

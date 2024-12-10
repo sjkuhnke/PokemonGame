@@ -967,7 +967,7 @@ public enum Move {
 	}
 	
 	public boolean isTM() {
-		return Item.getTMs().contains(this);
+		return Item.getTMMoves().contains(this);
 	}
 	@Override // implementation
 	public String toString() {
@@ -1074,7 +1074,7 @@ public enum Move {
 	public static boolean treatAsStatus(Move m, Pokemon me, Pokemon foe) {
 		// covert cloak or shield dust make secondary 0
 		// sparkly terrain + grounded or serene grace make secondary 2x
-		double effectiveness = Trainer.getEffective(foe, m.mtype, false);
+		double effectiveness = Trainer.getEffective(foe, me, m.mtype, m, false);
 		if (effectiveness == 0) return false;
 		int sec = m.secondary;
 		if (foe.item == Item.COVERT_CLOAK) sec = 0;
