@@ -1576,7 +1576,11 @@ public class PlayerCharacter extends Entity {
 			Pokemon.addTask(Task.GIFT, "", result);
 		} else if (gp.currentMap == 168) { // shroom guy
 			Pokemon.addTask(Task.MUSHROOM, npc, "Gimmie, gimmie, GIMMIE!");
-		} if (gp.currentMap == 138 && !p.flags[26]) {
+		} else if (gp.currentMap == 178) {
+			Pokemon.addTask(Task.EVO_INFO, npc, "");
+		}
+		
+		if (gp.currentMap == 138 && !p.flags[26]) {
 			p.flags[26] = true;
 			Pokemon.addTask(Task.TEXT, "Here, I have a gift for you for being so kind.");
 			Pokemon.addTask(Task.TEXT, "Obtained HM07 Rock Climb!");

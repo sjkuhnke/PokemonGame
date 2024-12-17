@@ -229,6 +229,7 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 175, true);
 		loadMap("/maps/house01.txt", 176, true);
 		loadMap("/maps/house01.txt", 177, true);
+		loadMap("/maps/lab03.txt", 178, true);
 	}
 	
 	private void setupCollisionRectangles() {

@@ -46,3 +46,29 @@ Fixed Glacius, Fred 3 and Arthra 1 having static encounter teams (3 ivs and rand
 Added item desc to Calc Pokemon summary
 Gave Roserade Sleep Powder and Leech Seed via move reminder
 Fixed Keen Eye/Hyper Cutter not activating if you lower your own accuracy/attack
+Reworked how getting "locked" into a move works (Encore, Charging, etc) so now will only let you click a valid move
+Added all IV combinations and their corresponding HP Type to MoveInfo.txt
+Added Move PP to MoveInfo.txt
+Added all overworld item locations and all item info to a new doc, ItemInfo.txt
+Added last date played to the title screen
+Added Dire Claw and gave it to Sneasler on evo
+Changed Kleinowl's catch rate (50 -> 75)
+Gave Spike Cannon to Hamthorno and Crystallor-E
+Gave Crystallor-E Rapid Spin, Frustration, Self-Destruct, Explosion, Fake Out, Double-Edge, and Extreme Speed (for Galvanize)
+Gave Cluuz line Pressure as their Hidden Ability
+Gave Aura Sphere to Alakazam at lv. 56
+Added Fiery Wrath and gave to Houndoom at lv. 60
+Added Meteor Beam and gave to Lafloo, Blaster, Crystallor, Glimmora, Stellarock
+Gave Scovillain-S and Despenero-S Solar Blade instead of Solar Beam
+Gave Zurrclu-S and Zurroaratr-S Parting Shot
+Gave Magikarp-E Wave Crash at lv. 45
+ADDED AN ADDITIONAL ENCOUNTER (RESEARCH POST) which is a random base regular counterpart of an electric form (Rocky, Magikarp, Droid, Poof, Elgyem, Flamehox)
+Fixed Quick Claw proccing for user when foe switches
+Made Flash not check accuracy anymore (may revert)
+Made adding Hidden Power (real move) to a Pokemon in the calc NOT max their IVs (use "Hp Galactic" to max IVs in calc)
+Fixed Leech Seed always making the foe switch out (now it's a 10% check every turn)
+Fixed white herb having weird interactions with who's faster and slower
+Fixed getting interrupted in Semi Invulnerable states now makes you vulnerable and cancels the attack (Full Para, Yawn, etc)
+Fixed Magic Reflect bouncing back 2-turn attacks causing them to start charging again
+Added a Researcher to R24 pt1 that tells you Headbutt Crits for Scraggy/Scrafty, Tail Crits for Seviper, and Galactic moves eaten for Gulpin-X
+Fixed Photon being in 2 places at once if you don't talk to them in Sicab
