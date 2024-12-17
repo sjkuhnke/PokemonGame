@@ -530,6 +530,7 @@ Level Up:
 E - Rock Blast
 E - Rock Slide
 E - Stealth Rock
+1 - Spike Cannon
 1 - Pound
 3 - Growl
 5 - Leer
@@ -956,9 +957,12 @@ E - Sludge Bomb
 1 - Venom Drench
 1 - Toxic Spikes
 1 - Spikes
+1 - Leech Seed
 1 - Synthesis
 1 - Mud Shot
 1 - Sweet Scent
+1 - Poison Powder
+1 - Sleep Powder
 1 - Ingrain
 1 - Toxic
 1 - Aromatherapy
@@ -1528,7 +1532,8 @@ E - Magic Reflect
 43 - Shadow Ball
 48 - Calm Mind
 51 - Vanishing Act
-55 - Dream Eater
+53 - Dream Eater
+56 - Aura Sphere
 60 - Nasty Plot
 65 - Encore
 
@@ -2667,6 +2672,7 @@ Level Up:
 35 - Hyper Beam
 35 - Glitter Dance
 40 - Tri-Attack
+40 - Agility
 45 - Moonblast
 50 - Power Gem
 55 - Hyper Voice
@@ -3155,8 +3161,9 @@ Level Up:
 43 - Foul Play
 46 - Sunny Doom
 50 - Nasty Plot
-55 - Heat Wave
-60 - Inferno
+53 - Heat Wave
+56 - Inferno
+60 - Fiery Wrath
 65 - Parting Shot
 
 ===================
@@ -3366,6 +3373,7 @@ E - Molten Consume
 57 - Power Gem
 62 - Eruption
 65 - Hyper Beam
+75 - Meteor Beam
 
 ===================
 #104 - Azurill                                                                                         [292]
@@ -3529,6 +3537,7 @@ E - Mind Reader
 42 - Skull Bash
 46 - Iron Tail
 50 - Earthquake
+55 - Coil
 
 Evolutions:
 Carinator -> Cairnasaur (lv. up in Shadow Ravine)
@@ -3569,8 +3578,9 @@ E - Diamond Storm
 45 - Zen Headbutt
 47 - Psychic Terrain
 50 - Head Smash
-53 - Outrage
-56 - Earthquake
+52 - Outrage
+55 - Earthquake
+58 - Coil
 60 - Rock Wrecker
 65 - Expanding Force
 
@@ -4175,8 +4185,9 @@ E - Steel Beam
 46 - Iron Defense
 50 - Earthquake
 54 - Explosion
-60 - Superpower
-70 - Hyper Beam
+58 - Meteor Beam
+62 - Superpower
+65 - Hyper Beam
 
 ===================
 #128 - Crystallor                                                                                      [051]
@@ -4213,6 +4224,7 @@ E - Glittering Sword
 52 - Reflect
 55 - Diamond Storm
 60 - Prismatic Laser
+65 - Meteor Beam
 70 - Light Of Ruin
 
 ===================
@@ -5525,7 +5537,7 @@ Type:
 Ghost / Poison
 
 Ability:
-Levitate / None / (None)
+Levitate / None / (Pressure)
 
 Base Stats:
 60 HP / 42 Atk / 58 Def / 105 SpA / 97 SpD / 73 Spe / 435 BST
@@ -5553,7 +5565,7 @@ Type:
 Ghost / Rock
 
 Ability:
-Levitate / None / (None)
+Levitate / None / (Pressure)
 
 Base Stats:
 80 HP / 90 Atk / 96 Def / 71 SpA / 85 SpD / 58 Spe / 480 BST
@@ -5586,7 +5598,7 @@ Type:
 Ghost / Rock
 
 Ability:
-Levitate / None / (None)
+Levitate / None / (Pressure)
 
 Base Stats:
 100 HP / 109 Atk / 110 Def / 67 SpA / 99 SpD / 55 Spe / 540 BST
@@ -6535,7 +6547,8 @@ E - Shadow Punch
 34 - Curse
 37 - Night Slash
 40 - Shadow Ball
-44 - Nightmare
+43 - Nightmare
+46 - Dark Pulse
 50 - Take Over
 55 - Destiny Bond
 
@@ -6585,6 +6598,7 @@ Base Stats:
 
 Level Up:
 E - Sludge
+E - Mortal Spin
 1 - Spiky Shield
 1 - Toxic Spikes
 1 - Rock Throw
@@ -6604,6 +6618,7 @@ E - Sludge
 42 - Acid Armor
 45 - Toxic
 50 - Sludge Wave
+55 - Meteor Beam
 
 ===================
 #200 - Sneasel                                                                                         [247]
@@ -7440,8 +7455,9 @@ E - Diamond Storm
 43 - Shooting Stars
 46 - Cosmic Power
 50 - Power Gem
-55 - Stone Edge
-60 - Comet Crash
+53 - Stone Edge
+56 - Comet Crash
+60 - Meteor Beam
 65 - Meteor Assault
 70 - Stealth Rock
 75 - Rock Wrecker
@@ -8400,6 +8416,7 @@ Base Stats:
 
 Level Up:
 E - False Surrender
+1 - Karate Chop
 1 - Fake Tears
 1 - Will-O-Wisp
 5 - Ember
@@ -8571,7 +8588,7 @@ E - Knock Off
 33 - Seed Bomb
 35 - Knock Off
 38 - Dark Pulse
-40 - Solar Beam
+40 - Solar Blade
 45 - Night Daze
 50 - Energy Ball
 55 - Obstruct
@@ -8620,7 +8637,7 @@ E - Sambal Sear
 33 - Seed Bomb
 35 - Knock Off
 38 - Dark Pulse
-40 - Solar Beam
+40 - Solar Blade
 42 - Tri-Attack
 45 - Night Daze
 50 - Sambal Sear
@@ -8698,6 +8715,7 @@ E - Switcheroo
 47 - Dark Pulse
 50 - Phantom Force
 55 - Knock Off
+60 - Parting Shot
 
 Evolutions:
 Zurrclu-S -> Zurroaratr-S (250+ happiness)
@@ -8738,6 +8756,7 @@ E - Nasty Plot
 1 - Acid Armor
 1 - Shadow Ball
 1 - Switcheroo
+1 - Knock Off
 1 - Thief
 10 - Sludge Wave
 15 - Hyper Voice
@@ -8750,7 +8769,7 @@ E - Nasty Plot
 50 - Moonblast
 55 - Phantom Force
 60 - Star Storm
-65 - Knock Off
+65 - Parting Shot
 
 ===================
 #015 - Durfish-S                                                                                       [215]
@@ -8994,6 +9013,7 @@ E - Parabolic Charge
 42 - Rock Slide
 45 - Iron Defense
 49 - Power Gem
+52 - Meteor Beam
 55 - Aura Sphere
 59 - Fire Blast
 63 - Zap Cannon
@@ -9013,6 +9033,8 @@ Base Stats:
 
 Level Up:
 E - Spirit Break
+1 - Frustration
+1 - Rapid Spin
 1 - Knock Off
 1 - Tackle
 1 - Charge
@@ -9027,17 +9049,23 @@ E - Spirit Break
 29 - Parabolic Charge
 31 - Discharge
 33 - Glitzy Glow
-36 - Play Rough
+35 - Self-Destruct
+37 - Play Rough
+37 - Fake Out
 39 - Thunderbolt
 42 - Glitter Dance
-45 - Reflect
+42 - Reflect
+45 - Double-Edge
 48 - Shell Smash
-51 - Prismatic Laser
+50 - Explosion
+52 - Prismatic Laser
 55 - Comet Crash
+57 - Spike Cannon
 59 - Overheat
 62 - Glittering Sword
 65 - Plasma Fists
 70 - Light Of Ruin
+75 - Extreme Speed
 
 ===================
 #005 - Magikarp-E                                                                                      [209]
@@ -9055,6 +9083,7 @@ Level Up:
 1 - Spark
 15 - Tackle
 32 - Bolt Strike
+45 - Wave Crash
 
 Evolutions:
 Magikarp-E -> Gyarados-E (lv. 20)

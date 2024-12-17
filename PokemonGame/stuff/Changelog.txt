@@ -41,3 +41,8 @@ Added over collision to Post Office roof tiles
 
 Demo 1.05 Released
 Implemented Float Stone, Iron Ball, and Lagging Tail
+Fixed bug with being fully paralyzed, sleeping, or confuse self hit while semi invulnerable
+Fixed Glacius, Fred 3 and Arthra 1 having static encounter teams (3 ivs and random nature instead of 6 iv)
+Added item desc to Calc Pokemon summary
+Gave Roserade Sleep Powder and Leech Seed via move reminder
+Fixed Keen Eye/Hyper Cutter not activating if you lower your own accuracy/attack

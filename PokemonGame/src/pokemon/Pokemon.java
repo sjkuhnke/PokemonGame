@@ -423,29 +423,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public Move randomMove() {
-	    ArrayList<Move> validMoves = new ArrayList<>();
-
-	    // Add all non-null moves to the validMoves list
-	    for (Moveslot m : moveset) {
-	    	if (m != null && m.currentPP != 0) {
-	    		Move move = m.move;
-	    		if (move != null) {
-		            validMoves.add(move);
-		        }
-	    	}
-	    }
-	    
-	    if (this.vStatuses.contains(Status.TAUNTED)) {
-	    	validMoves.removeIf(move -> move.cat == 2 && move != Move.METRONOME);
-	    }
-	    
-	    if (this.vStatuses.contains(Status.TORMENTED)) {
-	    	validMoves.removeIf(move -> move == this.lastMoveUsed);
-	    }
-	    
-	    if (this.vStatuses.contains(Status.MUTE)) {
-	    	validMoves.removeIf(move -> Move.getSound().contains(move));
-	    }
+	    ArrayList<Move> validMoves = this.getValidMoveset();
 
 	    // Pick a random move from the validMoves list
 	    Random rand = new Random();
@@ -535,8 +513,8 @@ public class Pokemon implements Serializable {
         		return Move.GROWL;
         	}
         	// 10% chance to swap if i'm leech seeded
-        	if (this.vStatuses.contains(Status.LEECHED)) {
-        		System.out.println("leeched : 100%");
+        	if (this.vStatuses.contains(Status.LEECHED) && checkSecondary(10)) {
+        		System.out.println("leeched : 10%");
         		this.vStatuses.add(Status.SWAP);
         		return Move.GROWL;
         	}
@@ -1318,20 +1296,19 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void moveInit(Pokemon foe, Move move, boolean first) {
-		int[] userStages = this.statStages.clone();
-		int[] foeStages = foe.statStages.clone();
+		Pokemon faster = first ? this : foe;
+		Pokemon slower = faster == this ? foe : this;
+		int[] fasterStages = faster.statStages.clone();
+		int[] slowerStages = slower.statStages.clone();
 		
 		move(foe, move, first);
 		
-		Pokemon faster = first ? this : foe;
-		Pokemon slower = faster == this ? foe : this;
-		
 		if (faster.item == Item.WHITE_HERB) {
-			faster.handleWhiteHerb(userStages, slower);
+			faster.handleWhiteHerb(fasterStages, slower);
 		}
 		
 		if (slower.item == Item.WHITE_HERB) {
-			slower.handleWhiteHerb(foeStages, faster);
+			slower.handleWhiteHerb(slowerStages, faster);
 		}
 	}
 
@@ -1415,6 +1392,8 @@ public class Pokemon implements Serializable {
 					this.lastMoveUsed = null;
 					this.vStatuses.remove(Status.LOCKED);
 					this.vStatuses.remove(Status.CHARGING);
+					this.vStatuses.remove(Status.SEMI_INV);
+					this.visible = true;
 					this.rollCount = 1;
 					return;
 				}
@@ -1445,6 +1424,8 @@ public class Pokemon implements Serializable {
 					endMove();
 					this.vStatuses.remove(Status.LOCKED);
 					this.vStatuses.remove(Status.CHARGING);
+					this.vStatuses.remove(Status.SEMI_INV);
+					this.visible = true;
 					this.lastMoveUsed = null;
 					this.rollCount = 1;
 					return;
@@ -1459,6 +1440,8 @@ public class Pokemon implements Serializable {
 			this.impressive = false;
 			this.vStatuses.remove(Status.LOCKED);
 			this.vStatuses.remove(Status.CHARGING);
+			this.vStatuses.remove(Status.SEMI_INV);
+			this.visible = true;
 			this.lastMoveUsed = null;
 			this.rollCount = 1;
 			return;
@@ -1479,6 +1462,8 @@ public class Pokemon implements Serializable {
 				this.impressive = false;
 				this.vStatuses.remove(Status.LOCKED);
 				this.vStatuses.remove(Status.CHARGING);
+				this.vStatuses.remove(Status.SEMI_INV);
+				this.visible = true;
 				this.lastMoveUsed = null;
 				this.rollCount = 1;
 				return;
@@ -1491,6 +1476,8 @@ public class Pokemon implements Serializable {
 			this.impressive = false;
 			this.vStatuses.remove(Status.LOCKED);
 			this.vStatuses.remove(Status.CHARGING);
+			this.vStatuses.remove(Status.SEMI_INV);
+			this.visible = true;
 			this.rollCount = 1;
 			return;
 		}
@@ -1541,7 +1528,7 @@ public class Pokemon implements Serializable {
 				secChance = move.secondary;
 				moveType = move.mtype;
 				critChance = move.critChance;
-				this.vStatuses.remove(Status.CHARGING);
+				if (!foe.vStatuses.contains(Status.REFLECT)) this.vStatuses.remove(Status.CHARGING);
 			}
 		}
 		
@@ -1576,7 +1563,7 @@ public class Pokemon implements Serializable {
 				secChance = move.secondary;
 				moveType = move.mtype;
 				critChance = move.critChance;
-				this.vStatuses.remove(Status.SEMI_INV);
+				if (!foe.vStatuses.contains(Status.REFLECT)) this.vStatuses.remove(Status.SEMI_INV);
 			}
 		}
 		
@@ -2792,6 +2779,16 @@ public class Pokemon implements Serializable {
 				foe.sleep(false, this);
 			} else {
 				foe.freeze(false, this);
+			}
+		} else if (move == Move.DIRE_CLAW) {
+			Random random = new Random();
+			int type = random.nextInt(3);
+			if (type == 0) {
+				foe.paralyze(false, this);
+			} else if (type == 1) {
+				foe.poison(false, this);
+			} else {
+				foe.sleep(false, this);
 			}
 		} else if (move == Move.DISCHARGE) {
 			foe.paralyze(false, this);
@@ -4259,15 +4256,16 @@ public class Pokemon implements Serializable {
 			} else if (p.item == Item.CLEAR_AMULET && a < 0) {
 				if (announce) addTask(Task.TEXT, p.nickname + "'s Clear Amulet blocked the stat drop!");
 				return;
-			} else if (p.ability == Ability.KEEN_EYE && a < 0 && i == 5) {
-				if (announce) addAbilityTask(p);
-				if (announce) addTask(Task.TEXT, p.nickname + "'s " + type + " was not lowered!");
-				return;
-			} else if (p.ability == Ability.HYPER_CUTTER && a < 0 && i == 0) {
-				if (announce) addAbilityTask(p);
-				if (announce) addTask(Task.TEXT, p.nickname + "'s " + type + " was not lowered!");
-				return;
 			}
+		}
+		if (p.ability == Ability.KEEN_EYE && a < 0 && i == 5) {
+			if (announce) addAbilityTask(p);
+			if (announce) addTask(Task.TEXT, p.nickname + "'s " + type + " was not lowered!");
+			return;
+		} else if (p.ability == Ability.HYPER_CUTTER && a < 0 && i == 0) {
+			if (announce) addAbilityTask(p);
+			if (announce) addTask(Task.TEXT, p.nickname + "'s " + type + " was not lowered!");
+			return;
 		}
 		boolean statBerry = p.checkStatBerry(i, a);
 		int difference = statBerry ? Math.max(-6 - p.statStages[i], a) : 0;
@@ -4747,6 +4745,9 @@ public class Pokemon implements Serializable {
 		public static final int MOVE_NPC = 43; // start: 0 for X, 1 for Y, finish: TILE COORDINATE to end at, wipe: yes/no to have camera follow the npc
 		public static final int SLEEP = 44; // counter: frames to sleep for
 		public static final int BLACKJACK = 45;
+		public static final int MUSHROOM = 46;
+		public static final int COIN = 47;
+		public static final int EVO_INFO = 48;
 		
 		public int type;
 		public String message;
@@ -6559,7 +6560,9 @@ public class Pokemon implements Serializable {
 	    
     	JButton takeButton = new JButton("N/A");
 	    JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    JPanel itemDescPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	    JLabel itemLabel = new JLabel("N/A");
+	    JLabel itemDesc = new JLabel("N/A");
 	    if (this.item != null) {
 	    	takeButton.setText("Take " + item.toString());
 	    	itemLabel.setText(item.toString());
@@ -6584,7 +6587,10 @@ public class Pokemon implements Serializable {
 	    	} else {
 	    		itemPanel.add(itemLabel);
 	    	}
+	    	itemDesc.setText("<html>" + Item.breakString(this.item.getDesc(), Math.max(this.ability.desc.length() - 4, 50)).replace("\n", "<br>") + "</html>");
 	    	teamMemberPanel.add(itemPanel);
+	    	itemDescPanel.add(itemDesc);
+	    	teamMemberPanel.add(itemDescPanel);
 	    }
 	    
 	    JPanel happinessPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -7254,13 +7260,15 @@ public class Pokemon implements Serializable {
 		return getValidMoveset().size() == 0;
 	}
 	
-	private ArrayList<Move> getValidMoveset() {
+	public ArrayList<Move> getValidMoveset() {
 		ArrayList<Move> validMoves = new ArrayList<>();
 		for (Moveslot moveslot : moveset) {
 			if (moveslot != null) {
 				Move m = moveslot.move;
 				if ((vStatuses.contains(Status.TORMENTED) && m == this.lastMoveUsed) || (vStatuses.contains(Status.MUTE) && Move.getSound().contains(m)) || (moveslot.currentPP == 0) 
-						|| (this.item != null && this.item.isChoiceItem() && this.lastMoveUsed != null && this.lastMoveUsed != m) || (this.item == Item.ASSAULT_VEST && m.cat == 2)) {
+						|| (this.item != null && this.item.isChoiceItem() && this.lastMoveUsed != null && this.lastMoveUsed != m) || (this.item == Item.ASSAULT_VEST && m.cat == 2)
+						|| (this.vStatuses.contains(Status.LOCKED) && m != this.lastMoveUsed) || (this.vStatuses.contains(Status.ENCORED) && m != this.lastMoveUsed)
+						|| (this.vStatuses.contains(Status.CHARGING) && m != this.lastMoveUsed) || (this.vStatuses.contains(Status.SEMI_INV) && m != this.lastMoveUsed)) {
 	            	// nothing: don't add
 	            } else {
 	            	validMoves.add(m);

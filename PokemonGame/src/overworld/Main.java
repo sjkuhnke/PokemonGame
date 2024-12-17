@@ -21,8 +21,11 @@ import javax.swing.Timer;
 
 import entity.Entity;
 import entity.PlayerCharacter;
+import object.ItemObj;
+import object.TreasureChest;
 import pokemon.Ability;
 import pokemon.Encounter;
+import pokemon.Item;
 import pokemon.Move;
 import pokemon.PType;
 import pokemon.Player;
@@ -146,6 +149,7 @@ public class Main {
 		    		if (selectedOptions[3]) writeMoves();
 		    		if (selectedOptions[4]) writeDefensiveTypes();
 		    		if (selectedOptions[5]) writeOffensiveTypes();
+		    		if (selectedOptions[6]) writeItems(gp);
 		    		
 		    		window.add(gp);
 		    		gp.requestFocusInWindow();
@@ -725,12 +729,31 @@ public class Main {
             		String result = m.toString() + " : ";
 					result += m.getCategory() + " / ";
 					result += (int) m.getbp(null, null) + " / ";
-					result += m.getAccuracy() + " : ";
+					result += m.getAccuracy() + " / ";
+					result += m.pp + " PP : ";
 					result += m.getDescription() + "\n";
 					
 					writer.write(result);
-	            }				
+	            }
 			}
+			
+			writer.write("\n=================================\n");
+			writer.write("IVs | Hidden Power Type");
+			writer.write("\n=================================\n");
+			
+			Pokemon test = new Pokemon(1, 5, true, false);
+			
+			for (int i = 0; i < 64; i++) {
+				int[] ivs = new int[6];
+				for (int j = 0; j < 6; j++) {
+					ivs[j] = (i & (1 << j)) != 0 ? 31 : 30;
+				}
+				
+				test.ivs = ivs;
+				PType type = test.determineHPType();
+				writer.write(String.format("%s | %s\n", Arrays.toString(test.ivs), type.toString()));
+			}
+			
 			writer.close();
 			
 		} catch (IOException e1) {
@@ -901,6 +924,114 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+		
+	}
+	
+	private static void writeItems(GamePanel gp) {
+		try {
+			FileWriter writer = new FileWriter("./docs/ItemsInfo.txt");
+			writer.write("--------------------------------------\n");
+			writer.write("Items Info:\n");
+			writer.write("Item | Pocket | Buy | Sell | Description");
+			writer.write("\n--------------------------------------\n");
+			Item[] allItems = Item.values();
+			for (Item i : allItems) {
+				String item = i.toString();
+				while (item.length() < 22) {
+					item += " ";
+				}
+				String pocket = Item.getPocketName(i.getPocket());
+				while(pocket.length() < 10) {
+					pocket += " ";
+				}
+				int cost = i.getCost();
+				int s = i.getSell();
+				String buy = cost == 0 ? "--" : "$" + cost;
+				while(buy.length() < 5) {
+					buy += " ";
+				}
+				String sell = s == 0 ? "--" : "$" + s;
+				while(sell.length() < 5) {
+					sell += " ";
+				}
+				String desc = i.getDesc().replace("\n", " ");
+				writer.write(String.format("%s | %s | %s | %s | %s\n", item, pocket, buy, sell, desc));
+			}
+			
+			boolean[][] tempItemsCollected = gp.player.p.itemsCollected.clone();
+			gp.player.p.itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
+			gp.aSetter.setObject();
+			ItemObj[][] items = gp.obj;
+			writer.write("\n--------------------------------------\n");
+			writer.write("Overworld Items:\n");
+			writer.write("(Note: the Variable Items:\n");
+			writer.write("- Type Resist Berries\n");
+			writer.write("- Stat Restoring Berries\n");
+			writer.write("- Treasure Chest Items\n");
+			writer.write("will show for only the save file you generated these docs for)");
+			writer.write("\n--------------------------------------\n");
+			Map<String, ArrayList<ItemObj>> itemsMap = new LinkedHashMap<>();
+			for (int loc = 0; loc < items.length; loc++) {
+				for (int col = 0; col < items[loc].length; col++) {
+					ItemObj e = items[loc][col];
+					if (e == null) continue;
+					PMap.getLoc(loc, e.worldX / gp.tileSize, e.worldY / gp.tileSize);
+					String location = PlayerCharacter.currentMapName;
+					if (itemsMap.containsKey(location)) {
+						ArrayList<ItemObj> list = itemsMap.get(location);
+						list.add(e);
+					} else {
+						ArrayList<ItemObj> list = new ArrayList<>();
+						list.add(e);
+						itemsMap.put(location, list);
+					}
+				}
+			}
+			
+			for (Map.Entry<String, ArrayList<ItemObj>> e : itemsMap.entrySet()) {
+				ArrayList<ItemObj> list = e.getValue();
+				String loc = e.getKey();
+				while (loc.length() < 50) {
+					loc += "-";
+				}
+				writer.write("\n\n" + loc + "\n");
+				
+				for (ItemObj i : list) {
+					writer.write("\n");
+					
+					int x = i.worldX / gp.tileSize;
+					int y = i.worldY / gp.tileSize;
+					
+					boolean chest = i instanceof TreasureChest;
+					String itemString = chest ? "Treasure Chest" : i.item.toString();
+					
+					writer.write(String.format("%s (%d, %d)", itemString, x, y));
+					
+					if (i instanceof TreasureChest) {
+						ArrayList<Item> chestItems = ((TreasureChest) i).items;
+						for (Item it : chestItems) {
+							String label = "\n  [";
+							label += it + "]";
+							while (label.length() < 26) label += " ";
+							label += "|";
+							
+							writer.write(label);
+						}
+					}
+					
+				}
+			}
+			writer.write("\n");
+			
+			writer.close();
+			
+			// cleanup
+			gp.player.p.itemsCollected = tempItemsCollected;
+			gp.aSetter.setObject();
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
 	}
 
