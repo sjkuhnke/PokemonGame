@@ -210,6 +210,10 @@ public class AssetSetter {
 	}
 	
 	public void setObject() {
+		objIndex = 0;
+		berryIndex = 0;
+		sBerryIndex = 0;
+		cIndex = 0;
 		int mapNum = 0;
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 45, Item.POTION, mapNum);
@@ -1642,6 +1646,7 @@ public class AssetSetter {
 		
 		gp.npc[mapNum][index] = SetupStaticEncounter(289, 50, 59, 391, 226, "Xvringzzi!"); // UP Pheromosa
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 49, 90, "Hmm... you can hide all you want, but I'll still spot you. Tricky little specters... there's nothing unnatural here...", true);
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, 1, 1, "In updateNPC", "", 1);
 		
 		mapNum = 109;
 		index = 0;
@@ -1937,6 +1942,10 @@ public class AssetSetter {
 		mapNum = 166;
 		index = 0;
 		gp.npc[mapNum][index] = SetupStaticEncounter(285, 39, 29, 388, 104, "Gzssisssss!");
+		
+		mapNum = 168;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(MANIAC_DOWN, "Collector", 44, 59, "Why HELLO THERE, YOUNG ONE!!! GOT ANY SHROOOOOOOMS?!", true, -1, "", ALL);
 		
 	}
 
@@ -3731,6 +3740,10 @@ public class AssetSetter {
 				result.setupImages("/npc/maxwell");
 				result.setDirection("down");
 				break;
+			case MANIAC_DOWN:
+				result.setupImages("/npc/maniac");
+				result.setDirection("down");
+				break;
 		}
 		
 		result.worldX = gp.tileSize*x;
@@ -3771,6 +3784,23 @@ public class AssetSetter {
 		int p2 = 37;
 		int p3 = 41;
 		return id * p1 + x * p2 + y * p3 + mapNum;
+	}
+	
+	public int generateFlagSeed(int id, int x, int y, int currentMap, boolean[][] flag) {
+	    int hash = 7;
+	    hash = 31 * hash + id;
+
+	    hash = 31 * hash + x;
+	    hash = 31 * hash + y;
+	    hash = 31 * hash + currentMap;
+
+	    for (boolean[] row : flag) {
+	        for (boolean b : row) {
+	            hash = 31 * hash + (b ? 1 : 0);
+	        }
+	    }
+
+	    return hash;
 	}
 
 	private ItemObj ObjSetup(int x, int y, Item item, int mapNum, int amt) {

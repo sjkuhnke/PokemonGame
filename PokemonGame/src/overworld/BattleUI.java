@@ -1045,6 +1045,7 @@ public class BattleUI extends AbstractUI {
 		        }
 		        
 		        Color color = moves[i].move == Move.HIDDEN_POWER || moves[i].move == Move.RETURN ? user.determineHPType().getColor() : moves[i].move.mtype.getColor();
+		        if (!user.moveUsable(moves[i].move)) color = new Color(100, 100, 100, 200);
 		        g2.setColor(color);
 		        g2.fillRoundRect(x, y, width, height, 10, 10);
 		        g2.setColor(moves[i].getPPColor());
@@ -1087,17 +1088,17 @@ public class BattleUI extends AbstractUI {
 	public void turn(Move uMove, Move fMove) {
 		// Priority stuff
 		int uP, fP;
-		uP = uMove == null ? 0 : uMove.priority;
-		fP = fMove == null ? 0 : fMove.priority;
+		uP = uMove == null ? 0 : uMove.getPriority(user);
+		fP = fMove == null ? 0 : fMove.getPriority(foe);
 		if (uMove != null && user.ability == Ability.PRANKSTER && uMove.cat == 2) ++uP;
 		if (fMove != null && foe.ability == Ability.PRANKSTER && fMove.cat == 2) ++fP;
 		
 		if (uMove != null && uMove.priority < 1 && uMove.hasPriority(user)) ++uP;
 		if (fMove != null && fMove.priority < 1 && fMove.hasPriority(foe)) ++fP;
 		
-		if (uMove != null && fMove != null) {
+		if (uMove != null && fMove != null && !foe.vStatuses.contains(Status.SWAP)) {
 			uP = user.checkQuickClaw(uP);
-			if (!foe.vStatuses.contains(Status.SWAP)) fP = foe.checkQuickClaw(fP);
+			fP = foe.checkQuickClaw(fP);
 		}
 		if (uMove != null) uP = user.checkCustap(uP, foe);
 		if (fMove != null) fP = foe.checkCustap(fP, user);

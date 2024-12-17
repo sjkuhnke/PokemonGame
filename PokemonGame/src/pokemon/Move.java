@@ -109,6 +109,7 @@ public enum Move {
 	DETECT(0,1000,0,0,2,4,PType.FIGHTING,"Protects user, can't be used in succession",false,5),
 	DIAMOND_STORM(100,95,50,0,1,0,PType.ROCK,"% chance to raise user's Defense by 2",false,5),
 	DIG(80,100,0,0,0,0,PType.GROUND,"A two turn attack. Digs underground on the first, attacks on the second",true,15),
+	DIRE_CLAW(80,100,50,0,0,0,PType.POISON,"% chance to Paralyze, Poison, or Sleep foe",true,15),
 	DISCHARGE(80,100,30,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false,15),
 	DIVE(80,100,0,0,0,0,PType.WATER,"A two turn attack. Dives underwater on the first, attacks on the second",true,15),
 	DIZZY_PUNCH(70,100,20,0,0,0,PType.NORMAL,"% to confuse foe",true,10),
@@ -175,7 +176,7 @@ public enum Move {
 	FLAME_WHEEL(70,100,10,0,0,0,PType.FIRE,"% to Burn foe",true,20),
 	FLAMETHROWER(90,100,10,0,1,0,PType.FIRE,"% to Burn foe",false,10),
 	FLARE_BLITZ(120,100,10,0,0,0,PType.FIRE,"% to Burn foe, user takes 1/3 of damage inflicted",true,15),
-	FLASH(0,100,0,0,2,0,PType.LIGHT,"Lowers foe's Accuracy by 1, and raises user's Sp.Atk by 1",false,10),
+	FLASH(0,1000,0,0,2,0,PType.LIGHT,"Lowers foe's Accuracy by 1, and raises user's Sp.Atk by 1",false,10),
 	FLASH_CANNON(80,100,10,0,1,0,PType.STEEL,"% chance to lower foe's Sp.Def by 1",false,10),
 	FLASH_RAY(40,100,50,0,1,0,PType.LIGHT,"% chance to lower foe's Accuracy by 1",false,25),
 	FLATTER(0,100,0,0,2,0,PType.DARK,"Confuses foe, and raises their Sp.Atk by 2",false,15),
@@ -1023,8 +1024,13 @@ public enum Move {
 
 	public boolean hasPriority(Pokemon p) {
 		return this.priority >= 1 || (this.cat == 2 && p.ability == Ability.PRANKSTER) ||
-				((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT) && p.ability == Ability.SLEIGHT_OF_HAND && p.currentHP == p.getStat(0)) ||
-				(p.impressive && p.ability == Ability.AMBUSH);
+			((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT) && p.ability == Ability.SLEIGHT_OF_HAND && p.currentHP == p.getStat(0)) ||
+			(p.impressive && p.ability == Ability.AMBUSH);
+	}
+	
+	public int getPriority(Pokemon p) {
+		// TODO Auto-generated method stub
+		return this.priority;
 	}
 	
 	public String superToString() {
@@ -1068,7 +1074,7 @@ public enum Move {
 	}
 	
 	public boolean isCalcHiddenPowerReturn() {
-        return this.superToString().contains("HP") || this.superToString().contains("HIDDEN_POWER") || this.superToString().contains("RETURN");
+        return this.superToString().contains("HP") || this.superToString().contains("RETURN_");
     }
 	
 	public static boolean treatAsStatus(Move m, Pokemon me, Pokemon foe) {

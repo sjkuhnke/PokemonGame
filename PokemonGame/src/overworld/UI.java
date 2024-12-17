@@ -473,6 +473,13 @@ public class UI extends AbstractUI {
 		    
 		    currentTask = null;
 		    break;
+		case Task.MUSHROOM:
+			drawMushroom(gp.player.p.bag);
+			break;
+		case Task.COIN:
+			break;
+		case Task.EVO_INFO:
+			break;
 		}
 	}
 
@@ -3074,6 +3081,138 @@ public class UI extends AbstractUI {
 			
 			x += width + gap;
 		}
+	}
+	
+	private void drawMushroom(Bag bag) {
+		int x = (int) (gp.tileSize * 5.5);
+		int y = gp.tileSize * 5;
+		int width = gp.tileSize * 5;
+		int height = (int) (gp.tileSize * 6.25);
+		
+		int seed = gp.aSetter.generateFlagSeed(gp.player.p.getID(), currentTask.e.worldX / gp.tileSize, currentTask.e.worldY / gp.tileSize, gp.currentMap, gp.player.p.flag);
+		Random random = new Random(seed);
+		
+		currentDialogue = currentTask.message;
+		drawDialogueScreen(true);
+		drawSubWindow(x, y, width, height);
+		
+		boolean hasTM = bag.contains(Item.TINY_MUSHROOM);
+		boolean hasBM = bag.contains(Item.BIG_MUSHROOM);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize;
+		
+		int buttonWidth = gp.tileSize * 4;
+		int buttonHeight = gp.tileSize * 2;
+		
+		Item item = Item.TINY_MUSHROOM;
+		
+		Color color = hasTM ? Color.white : Color.gray;
+		g2.setColor(color);
+		g2.fillRoundRect(x, y, buttonWidth, buttonHeight, 20, 20);
+		
+		if (commandNum == 0) {
+			g2.setColor(Color.RED);
+			g2.drawRoundRect(x, y, buttonWidth, buttonHeight, 20, 20);
+		}
+		
+		int startX = x;
+		int startY = y;
+		
+		x += gp.tileSize / 4;
+		g2.drawImage(item.getImage2(), x, y, null);
+		
+		x += gp.tileSize;
+		y += gp.tileSize * 0.75;
+		g2.setColor(Color.BLACK);
+		String text = "x " + bag.count[item.getID()];
+		g2.drawString(text, x, y);
+		
+		y += gp.tileSize * 0.75;
+		int price1 = randomPrice(random, 10, 1000);
+		String amt = "+$" + price1;
+		g2.drawString(amt, getCenterAlignedTextX(amt, x + buttonWidth / 2), y);
+		
+		item = Item.BIG_MUSHROOM;
+		x = startX;
+		y = startY;
+		
+		y += buttonHeight + gp.tileSize / 2;
+		
+		color = hasBM ? Color.white : Color.gray;
+		g2.setColor(color);
+		g2.fillRoundRect(x, y, buttonWidth, buttonHeight, 20, 20);
+		
+		if (commandNum == 1) {
+			g2.setColor(Color.RED);
+			g2.drawRoundRect(x, y, buttonWidth, buttonHeight, 20, 20);
+		}
+		
+		x += gp.tileSize / 4;
+		g2.drawImage(item.getImage2(), x, y, null);
+		
+		x += gp.tileSize;
+		y += gp.tileSize * 0.75;
+		g2.setColor(Color.BLACK);
+		text = "x " + bag.count[item.getID()];
+		g2.drawString(text, x, y);
+		
+		y += gp.tileSize * 0.75;
+		int price2 = randomPrice(random, 50, 4000);
+		amt = "+$" + price2;
+		g2.drawString(amt, getCenterAlignedTextX(amt, x + buttonWidth / 2), y);
+		
+		int moneyX = gp.tileSize * 13;
+		int moneyY = gp.tileSize * 11;
+		int moneyWidth = gp.tileSize * 3;
+		int moneyHeight = gp.tileSize;
+		
+		drawSubWindow(moneyX, moneyY, moneyWidth, moneyHeight);
+		int textX = moneyX + 20;
+		int textY = (int) (moneyY + gp.tileSize * 0.75);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.drawString("$" + gp.player.p.getMoney(), textX, textY);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (commandNum == 0) {
+				if (hasTM) {
+					bag.remove(Item.TINY_MUSHROOM);
+					gp.player.p.setMoney(gp.player.p.getMoney() + price1);
+				} else {
+					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "You don't have any Tiny Mushrooms for your boi?!");
+					Pokemon.addTask(Task.MUSHROOM, currentTask.e, currentTask.message);
+					currentTask = null;
+				}
+			} else if (commandNum == 1) {
+				if (hasBM) {
+					bag.remove(Item.BIG_MUSHROOM);
+					gp.player.p.setMoney(gp.player.p.getMoney() + price2);
+				} else {
+					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "I NEEEED a BIG SHROOM!!");
+					Pokemon.addTask(Task.MUSHROOM, currentTask.e, currentTask.message);
+					currentTask = null;
+				}
+			}
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			Pokemon.addTask(Task.DIALOGUE, currentTask.e, "You BETTER go fetch Daddy some kush!");
+			commandNum = 0;
+			currentTask = null;
+		}
+		
+		if (gp.keyH.upPressed || gp.keyH.downPressed) {
+			gp.keyH.upPressed = false;
+			gp.keyH.downPressed = false;
+			commandNum = 1 - commandNum;
+		}
+	}
+	
+	private int randomPrice(Random random, int min, int max) {
+		double ratio = Math.pow(random.nextDouble(), 2);
+		return min + (int) ((max - min) * ratio);
 	}
 
 	public void drawRepelScreen() {

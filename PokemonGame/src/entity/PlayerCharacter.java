@@ -879,8 +879,44 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.DIALOGUE, npc, "At least if my calculations are correct.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "God speed kid, and tell your dad I said hi!");
 				p.flag[1][2] = true;
+			} else if (!p.flag[1][19]) {
+				Pokemon.addTask(Task.DIALOGUE, npc, "Oh yes, one more thing! As thanks for helping me out here, I have a gift for you.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I have here a Pokemon that has a confirmed Electric form, but there appears to be no way to switch between forms.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "It's not much use to me anymore, so I figured it should have the pleasure of going out and exploring with you!");
+				p.flag[1][19] = true;
+				Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
+				int id = 0;
+				int counter = 0;
+				do {
+					counter++;
+					id = gift.nextInt(6); // Rocky, Magikarp, Droid, Poof, Elgyem, Flamehox
+					switch (id) {
+					case 0:
+						id = 48;
+						break;
+					case 1:
+						id = 137;
+						break;
+					case 2:
+						id = 181;
+						break;
+					case 3:
+						id = 156;
+						break;
+					case 4:
+						id = 265;
+						break;
+					case 5:
+						id = 98;
+						break;
+					}
+				} while (p.pokedex[id] == 2 && counter < 100);
+				Pokemon result = new Pokemon(id, 20, true, false);
+				Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
+				Pokemon.addTask(Task.GIFT, "", result);
 			} else if (p.flag[1][2] && !p.flag[1][16]) {
-				Pokemon.addTask(Task.DIALOGUE, npc, "The energy levels are getting low? Hold on, I can get them up for a little longer.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "The energy levels are getting low at the Control Center?");
+				Pokemon.addTask(Task.DIALOGUE, npc, "Hold on, I can get them up for a little longer.");
 				Pokemon.addTask(Task.DIALOGUE, npc, "...");
 				Pokemon.addTask(Task.DIALOGUE, npc, "Alright, keep at it champ.");
 			} else {
@@ -1532,12 +1568,14 @@ public class PlayerCharacter extends Entity {
 				});
 				showPrizeMenu(panel, p.coins + " coins   $" + p.getMoney());
 			}
-		} if (gp.currentMap == 130) {
+		} else if (gp.currentMap == 130) {
 			p.flag[6][3] = true;
 			Pokemon.addTask(Task.DIALOGUE, npc, "Here, take this rare Pokemon!");
 			Pokemon result = new Pokemon(97, 50, true, false);
 			Pokemon.addTask(Task.TEXT, "You recieved " + result.name + "!");
 			Pokemon.addTask(Task.GIFT, "", result);
+		} else if (gp.currentMap == 168) { // shroom guy
+			Pokemon.addTask(Task.MUSHROOM, npc, "Gimmie, gimmie, GIMMIE!");
 		} if (gp.currentMap == 138 && !p.flags[26]) {
 			p.flags[26] = true;
 			Pokemon.addTask(Task.TEXT, "Here, I have a gift for you for being so kind.");

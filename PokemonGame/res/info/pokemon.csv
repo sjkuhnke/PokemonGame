@@ -56,7 +56,7 @@
 131|Boulderoar   |ROCK    |DARK    |INTIMIDATE        |TECHNICIAN        |STURDY            |[75, 111, 75, 90, 64, 85]     |190.0 |35 |
 180|Fightorex    |FIGHTING|GROUND  |NO_GUARD          |GUTS              |ADAPTABILITY      |[52, 72, 69, 77, 56, 67]      |62.5  |65 |
 181|Raptorex     |FIGHTING|FLYING  |NO_GUARD          |GUTS              |ADAPTABILITY      |[66, 74, 85, 106, 95, 97]     |190.3 |45 |
-84 |Kleinowl     |ICE     |PSYCHIC |SNOW_CLOAK        |MOUTHWATER        |SNOW_WARNING      |[60, 15, 40, 80, 73, 55]      |4.5   |50 |
+84 |Kleinowl     |ICE     |PSYCHIC |SNOW_CLOAK        |MOUTHWATER        |SNOW_WARNING      |[60, 15, 40, 80, 73, 55]      |4.5   |75 |
 85 |Hootowl      |ICE     |PSYCHIC |SNOW_CLOAK        |ICE_BODY          |SNOW_WARNING      |[85, 30, 65, 120, 120, 75]    |89.5  |45 |
 204|Dualmoose    |ICE     |MAGIC   |SNOW_CLOAK        |SPARKLY_SURGE     |MAGIC_BOUNCE      |[90, 64, 67, 85, 71, 58]      |100.0 |35 |
 162|Snom         |ICE     |BUG     |ICY_SCALES        |SWARM             |TINTED_LENS       |[30, 25, 35, 45, 30, 20]      |8.4   |190|

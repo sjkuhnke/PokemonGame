@@ -3,7 +3,6 @@ TODO
 Polishing stuff
 Make whirlpool spin (jk fuck that)
 Make wild pokemon sometimes hold items (for balancing, can't covet bc it'll clear)
-Add PP to move info doc
 
 Quality of Life
 Add exp trainer in Schrice City
