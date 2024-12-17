@@ -292,6 +292,9 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = SetupChest(50, 49, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(30, 7, Item.BIG_NUGGET, mapNum);
 		
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 57, Item.IRON_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 51, Item.FLOAT_STONE, mapNum);
+		
 		mapNum = 7;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 42, Item.BLACK_GLASSES, mapNum);
@@ -1124,7 +1127,7 @@ public class AssetSetter {
 		
 		mapNum = 13;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(PHOTON, "Photon", 20, 63, "Oh hello there kid, I'm a research assistant for the Professor that specializes in Electric forms of Pokemon.", true, 33, "");
+		gp.npc[mapNum][index] = NPCSetup(PHOTON, "Photon", 20, 63, "Oh hello there kid! I'm Photon, a research assistant for the Professor that specializes in Electric forms of Pokemon.", true, 33, "", ALL);
 		gp.npc[mapNum][index++] = null;
 		gp.npc[mapNum][index++] = null;
 		gp.npc[mapNum][index] = NPCSetup(RESEARCHER, "Researcher", 88, 18, "Well hello there young man!", true);
@@ -1937,7 +1940,7 @@ public class AssetSetter {
 		
 		mapNum = 162;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(PHOTON, "Photon", 31, 38, "Oh hello there, welcome to PROFESSOR PHOTON's humble abode!", true);
+		gp.npc[mapNum][index++] = null;
 		
 		mapNum = 166;
 		index = 0;
@@ -1946,6 +1949,10 @@ public class AssetSetter {
 		mapNum = 168;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(MANIAC_DOWN, "Collector", 44, 59, "Why HELLO THERE, YOUNG ONE!!! GOT ANY SHROOOOOOOMS?!", true, -1, "", ALL);
+		
+		mapNum = 178;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_DOWN, "Researcher", 31, 38, "Hello! I specialize in checking those strange evolution methods for your Pokemon. Have any to show me?", true);
 		
 	}
 
@@ -2803,6 +2810,7 @@ public class AssetSetter {
 		
 		if (flag[1][1]) {
 			gp.npc[13][0] = null;
+			gp.npc[162][0] = NPCSetup(PHOTON, "Photon", 31, 38, "Oh hello there, welcome to PROFESSOR PHOTON's humble abode!", true);
 		}
 		
 		if (flag[1][3] || flag[1][18]) {

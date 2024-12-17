@@ -479,6 +479,7 @@ public class UI extends AbstractUI {
 		case Task.COIN:
 			break;
 		case Task.EVO_INFO:
+			drawEvoInfoParty();
 			break;
 		}
 	}
@@ -1157,6 +1158,79 @@ public class UI extends AbstractUI {
 		}
 		
 		drawToolTips("OK", null, "Back", null);
+	}
+	
+	private void drawEvoInfoParty() {
+		drawParty(null);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			Pokemon p = gp.player.p.team[partyNum];
+			switch(p.id) {
+			case 238:
+			case 239: // scraggy
+				Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Hmm... yes, I see...");
+				int headbuttCrits = p.headbuttCrit;
+				if (headbuttCrits >= 5) {
+					if (p.id == 239) {
+						Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Your " + p.nickname + " looks ready to evolve! "
+							+ "It has crit its Headbutts " + headbuttCrits + " times!");
+					} else {
+						Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Your " + p.nickname + " has full potential to evolve, but it's too young right now. "
+							+ "Once it becomes a Scrafty, it might evolve again!");
+					}
+				} else if (headbuttCrits >= 1) {
+					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "You've made great progress as a trainer with you and your " + p.nickname + ". "
+							+ "So far, you've crit Headbutts " + headbuttCrits + " time(s)!");
+				} else {
+					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Your Pokemon will need to reach 5 Headbutt crits in Trainer battles to reach its "
+							+ "full potential. Focus on that if you want your " + p.nickname + " to reach its maximum power!");
+				}
+				break;
+			case 261: // gulpin-x
+				Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Ah! A Xhenovian Gulpin, in the flesh! Can I take a look?");
+				Pokemon.addTask(Task.DIALOGUE, currentTask.e, "...");
+				Pokemon.addTask(Task.DIALOGUE, currentTask.e, "You see, these Pokemon occur here naturally to protect our region from extraterrestrial "
+						+ "forces. Once they swallow enough space matter, they'll evolve!");
+				if (p.spaceEat < 25) {
+					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Your " + p.nickname + " will need to eat " + (25 - p.spaceEat) + " more Galactic-type "
+							+ "attack(s) in Trainer battles in order to reach its full potential.");
+					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "This can be done by switching into an incoming Galactic move to take the hit, as "
+							+ "all Xhenovian Gulpins' will eat it right up!");
+				} else {
+					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Wow! Your " + p.nickname + " has eaten a lot of space matter! It looks ready to "
+							+ "evolve!");
+				}
+				break;
+			case 257: // seviper
+				Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Ah, a Seviper! Y'know, the Professor is surprised that Seviper doesn't have a "
+						+ "regional form here, just an exclusive evolution!");
+				if (p.tailCrit < 5) {
+					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Although, yours will need to hit a few more Critical hits with its tail "
+							+ "in order to unlock its full potential. " + (5 - p.tailCrit) + ", to be exact.");
+				} else {
+					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Woah, and yours looks like its ready to evolve! Once you level it up, "
+							+ "it should evolve!");
+				}
+				break;
+			default:
+				Pokemon.addTask(Task.DIALOGUE, npc, "I'm sorry, that's not a Pokemon I specialize in.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "I look for Pokemon that need to reach certain criteria in battle other than the standard level-up, "
+						+ "such as Headbutt crits or Tail move crits in Trainer battles.");
+				Pokemon.addTask(Task.DIALOGUE, npc, "If you have any of those Pokemon and want to check how close they are to evolving, show them to me!");
+				break;
+			}
+			Pokemon.addTask(Task.EVO_INFO, currentTask.e, "");
+			currentTask = null;
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			currentTask = null;
+		}
+		
+		drawToolTips("OK", null, "Back", null);
+		
 	}
 	
 	private void drawPokedex() {

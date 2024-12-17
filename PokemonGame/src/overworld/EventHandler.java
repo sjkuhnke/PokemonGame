@@ -163,6 +163,10 @@ public class EventHandler {
 			if (hit(13,77,9)) teleport(162, 31, 45, false);
 			if (hit(162,31,46)) teleport(13, 77, 10, false);
 			
+			// Route 24 pt 1 research facility
+			if (hit(4,23,53)) teleport(178, 31, 45, false);
+			if (hit(178,31,46)) teleport(4, 23, 54, false);
+			
 			// Sicab River to gate to Peaceful Park
 			if (hit(13,86,74)) teleport(167, 23, 40,false);
 			if (hit(167,22,40)) teleport(13, 85, 74,false);
