@@ -40,7 +40,7 @@ Demo 1.02(1) Released
 Added over collision to Post Office roof tiles
 
 Demo 1.05 Released
-Implemented Float Stone, Iron Ball, and Lagging Tail
+Implemented Float Stone, Iron Ball, and Lagging Tail, added Float Stone and Iron Ball to overworld so far
 Fixed bug with being fully paralyzed, sleeping, or confuse self hit while semi invulnerable
 Fixed Glacius, Fred 3 and Arthra 1 having static encounter teams (3 ivs and random nature instead of 6 iv)
 Added item desc to Calc Pokemon summary
@@ -72,3 +72,6 @@ Fixed getting interrupted in Semi Invulnerable states now makes you vulnerable a
 Fixed Magic Reflect bouncing back 2-turn attacks causing them to start charging again
 Added a Researcher to R24 pt1 that tells you Headbutt Crits for Scraggy/Scrafty, Tail Crits for Seviper, and Galactic moves eaten for Gulpin-X
 Fixed Photon being in 2 places at once if you don't talk to them in Sicab
+
+Demo 1.06 Released
+Gave Raptorex Vacuum Wave

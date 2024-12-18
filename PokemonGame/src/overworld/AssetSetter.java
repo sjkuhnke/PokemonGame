@@ -272,7 +272,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(9, 75, Item.GREAT_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(71, 29, Item.TM99, mapNum); // return (need cut)
 		gp.obj[mapNum][objIndex] = ObjSetup(74, 19, Item.BOTTLE_CAP, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(69, 15, Item.LEPPA_BERRY, mapNum, 3, 6);
+		gp.obj[mapNum][objIndex] = ObjSetup(70, 16, Item.LEPPA_BERRY, mapNum, 3, 6);
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(70, 48, Item.PERSIM_BERRY, mapNum, 15, 30);
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 80, Item.ORAN_BERRY, mapNum, 15, 30);
