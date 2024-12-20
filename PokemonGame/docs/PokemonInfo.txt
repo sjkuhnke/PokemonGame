@@ -5996,6 +5996,7 @@ Base Stats:
 Level Up:
 E - Air Slash
 1 - Sky Uppercut
+1 - Vacuum Wave
 1 - Karate Chop
 3 - Double Kick
 5 - Mud-Slap
@@ -6746,6 +6747,7 @@ Base Stats:
 80 HP / 130 Atk / 60 Def / 40 SpA / 80 SpD / 120 Spe / 510 BST
 
 Level Up:
+E - Dire Claw
 E - Reversal
 1 - Hi Jump Kick
 1 - Night Slash
@@ -7910,7 +7912,46 @@ Base Stats:
 79 HP / 61 Atk / 79 Def / 127 SpA / 131 SpD / 113 Spe / 590 BST
 
 Level Up:
-1 - Confusion
+1 - Agility
+1 - Twister
+1 - Protect
+1 - Sand Attack
+1 - Gust
+1 - Play Nice
+1 - Icy Wind
+1 - Bounce
+1 - Double Team
+3 - Mud Sport
+7 - Mud-Slap
+7 - Whirlwind
+13 - Haze
+13 - Mud Shot
+13 - Encore
+17 - Leaf Tornado
+17 - Glittering Tornado
+17 - Whirlpool
+17 - Fire Spin
+19 - Sandstorm
+19 - Defog
+19 - Lucky Chant
+23 - Air Cutter
+23 - Mud Bomb
+23 - Sparkly Swirl
+29 - Tailwind
+29 - Fiery Dance
+31 - Stealth Rock
+37 - Scorching Sands
+43 - Air Slash
+47 - Spikes
+47 - Power Gem
+51 - Blizzard
+51 - Vacuum Wave
+53 - Roost
+59 - Hurricane
+63 - Earth Power
+67 - Diamond Storm
+73 - Aeroblast
+79 - Meteor Beam
 
 ===================
 #238 - Fever Dream                                                                                     [288]

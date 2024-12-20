@@ -74,7 +74,7 @@ Ninjakik (Lv. 46) @ Assault Vest        /   Threatening    /   Sacred Sword, Sta
 
 Black Belt Red
 Pyrator-S (Lv. 46) @ Rocky Helmet       /   Flame Body     /   Knock Off, Circle Throw, Aerial Ace, Drain Punch
-Sneasler (Lv. 46) @ None                /   Pickpocket     /   Poison Tail, Rock Smash, Hi Jump Kick, Night Slash
+Sneasler (Lv. 46) @ None                /   Pickpocket     /   Dire Claw, Rock Smash, Hi Jump Kick, Night Slash
 Leavanny (Lv. 46) @ Focus Sash          /   Unburden       /   X-Scissor, Cross Poison, Knock Off, Leaf Blade
 
 Athlete Percy
@@ -433,7 +433,7 @@ Explorer Johannes
 Cosmocrash (Lv. 48) @ Icy Rock          /   Snow Warning   /   Comet Crash, Ice Spinner, Thunder Punch, Liquidation
 Hootowl (Lv. 48) @ Bright Powder        /   Snow Cloak     /   Mist Ball, Ice Beam, Psychic, Trick
 Weavile (Lv. 47) @ Choice Band          /   Pressure       /   Night Slash, Ice Spinner, Sparkle Strike, X-Scissor
-Sneasler (Lv. 47) @ Payapa Berry        /   Unburden       /   Sky Attack, Hone Claws, Cross Poison, Night Slash
+Sneasler (Lv. 47) @ Payapa Berry        /   Unburden       /   Sky Attack, Hone Claws, Dire Claw, Night Slash
 Scraftagon (Lv. 47) @ Life Orb          /   Scaly Skin     /   Knock Off, Hi Jump Kick, Dual Chop, Focus Energy
 Beheeyem (Lv. 49) @ Big Root            /   Parasocial     /   Abduct, Calm Mind, Star Storm, Confuse Ray
 
@@ -491,7 +491,7 @@ Shomp (Lv. 30) @ Haban Berry            /   Swift Swim     /   Dragon Tail, Thun
 Sicab City----------------------------------------
 
 Lady Cleena
-Flameruff (Lv. 26) @ Passho Berry       /   Intimidate     /   Metal Claw, Body Slam, Flame Wheel, Bite
+Flameruff (Lv. 26) @ Passho Berry       /   Intimidate     /   Metal Claw, Headbutt, Flame Wheel, Bite
 Hammo (Lv. 26) @ Rawst Berry            /   Mouthwater     /   Headbutt, Mach Punch, Bite, Rock Tomb
 
 Gentleman Gallagher
@@ -1166,7 +1166,7 @@ Leavanny (Lv. 50) @ Focus Sash          /   Sharpness      /   Cross Poison, Swo
 
 Black Belt Maxton
 Raptorex (Lv. 50) @ Choice Scarf        /   No Guard       /   Focus Blast, Aeroblast, Earth Power, U-Turn
-Sneasler (Lv. 50) @ Focus Sash          /   Unburden       /   Reversal, Acrobatics, Poison Tail, Night Slash
+Sneasler (Lv. 50) @ Focus Sash          /   Unburden       /   Reversal, Acrobatics, Dire Claw, Night Slash
 Gallade (Lv. 50) @ White Herb           /   Inner Focus    /   Close Combat, Acrobatics, Knock Off, Zen Headbutt
 Starmie (Lv. 51) @ Petaya Berry         /   Illumination   /   Recover, Core Enforcer, Ice Beam, Hydro Pump
 Scrafty (Lv. 51) @ Weakness Policy      /   Intimidate     /   Fake Out, Knock Off, Drain Punch, Parting Shot
@@ -1433,10 +1433,13 @@ Grust (Lv. 65) @ None                   /   Adaptability   /   Will-O-Wisp, Hex,
 Shocky Spire
 Shocky Spire (Lv. 67) @ None            /   Beast Boost    /   Scald, Flash Cannon, Reboot, Life Dew
 
-Student Maxi
-Ralts (Lv. 4) @ Tanga Berry             /   Synchronize    /   Teleport, Growl, Flash, Double Team
-Azurill (Lv. 5) @ Rindo Berry           /   Thick Fat      /   Splash, Tickle, Water Gun, Draining Kiss
-Hammo (Lv. 5) @ Oran Berry              /   Mouthwater     /   Pound, Growl, Leer, 
+Rival Arthra 1
+Winagrow (Lv. 57) @ Life Orb            /   Terrify        /   Stealth Rock, Spiky Shield, Draco Meteor, Flamethrower
+Butterfree-X (Lv. 58) @ Throat Spray    /   Mosaic Wings   /   Quiver Dance, Magic Tomb, Bug Buzz, Psyshock
+Bouncerog (Lv. 56) @ Rindo Berry        /   Swift Swim     /   Sparkling Aria, Glitzy Glow, Rain Dance, Hurricane
+Bronzong-X (Lv. 56) @ Leftovers         /   Reforge        /   Phantom Force, Iron Defense, Body Press, Magic Crash
+Suvinero (Lv. 56) @ Belue Berry         /   Galvanize      /   Whip Smash, Extreme Speed, Acrobatics, Leaf Blade
+Hissimitar (Lv. 58) @ Air Balloon       /   Sharp Tail     /   Venosteel Crosscut, Poison Tail, Aqua Tail, Dragon Dance
 
 Route 34 (1A)-------------------------------------
 
@@ -1551,7 +1554,7 @@ Black Belt Antonio
 Conkeldurr (Lv. 63) @ Big Root          /   Iron Fist      /   Bulk Up, Drain Punch, Mach Punch, Knock Off
 Whiskeroar (Lv. 62) @ Assault Vest      /   Adaptability   /   Power-Up Punch, Twinkle Tackle, Beefy Bash, Leaf Blade
 Scrafty (Lv. 63) @ Eviolite             /   Intimidate     /   Swords Dance, Head Smash, Hi Jump Kick, Knock Off
-Sneasler (Lv. 61) @ Clear Amulet        /   Poison Touch   /   Fake Out, U-Turn, Summit Strike, Cross Poison
+Sneasler (Lv. 61) @ Clear Amulet        /   Poison Touch   /   Fake Out, U-Turn, Summit Strike, Dire Claw
 
 Ace Trainer Kaylynn
 Blastflames (Lv. 63) @ Custap Berry     /   Levitate       /   Fire Blast, Volt Switch, Tri-Attack, Dragon Pulse

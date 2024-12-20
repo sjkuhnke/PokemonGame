@@ -368,8 +368,8 @@ Bold Mint (79, 11)
 PP Up (80, 18)
 TM98 Flip Turn (71, 32)
 Chesto Berry (59, 36)
-Watmel Berry (51, 27)
-Durin Berry (52, 11)
+Belue Berry (51, 27)
+Watmel Berry (52, 11)
 Oran Berry (64, 9)
 Potion (57, 19)
 Potion (72, 14)
@@ -381,15 +381,15 @@ Rusty Bottle Cap (71, 9)
 Power Herb (80, 16)
 Mental Herb (91, 11)
 Treasure Chest (44, 26)
-  [PP Up]                |
-  [Bottle Cap]           |
-  [PP Max]               |
-  [Thunder Scales Fossil]|
-  [Dragon Crystal]       |
-  [Nugget]               |
-  [Naughty Mint]         |
-  [Euphorian Gem]        |
+  [Dawn Stone]           |
+  [Gold Bottle Cap]      |
   [Relic Silver]         |
+  [Petticoat Gem]        |
+  [Star Piece]           |
+  [Dark Crystal]         |
+  [Big Mushroom]         |
+  [Lax Mint]             |
+  [PP Up]                |
 
 New Minnow Town-----------------------------------
 
@@ -400,7 +400,7 @@ Bananaville Meadow--------------------------------
 Fire Stone (34, 76)
 Repel (23, 70)
 Potion (33, 64)
-Pamtre Berry (41, 42)
+Wepear Berry (41, 42)
 
 Poppy Grove---------------------------------------
 
@@ -420,25 +420,25 @@ Repel (9, 72)
 Great Ball (9, 75)
 Oran Berry (43, 80)
 Bright Powder (43, 67)
-Wacan Berry (35, 58)
-Tanga Berry (13, 78)
+Coba Berry (35, 58)
+Shuca Berry (13, 78)
 Sassy Mint (29, 47)
 Treasure Chest (50, 49)
-  [Naughty Mint]         |
-  [Relic Gold]           |
+  [Thunder Scales Fossil]|
+  [Careful Mint]         |
+  [Revive]               |
+  [Bottle Cap]           |
+  [Fire Crystal]         |
+  [Bottle Cap]           |
   [Nugget]               |
-  [Bug Crystal]          |
-  [Tiny Mushroom]        |
-  [Relic Silver]         |
-  [Relic Silver]         |
-  [PP Up]                |
-  [PP Max]               |
+Iron Ball (26, 57)
+Float Stone (26, 51)
 
 Route 36------------------------------------------
 
 TM99 Return (71, 29)
 Bottle Cap (74, 19)
-Leppa Berry (69, 15)
+Leppa Berry (70, 16)
 Shed Shell (77, 32)
 Focus Sash (74, 25)
 Lum Berry (44, 8)
@@ -473,15 +473,13 @@ TM40 Facade (80, 53)
 Silver Powder (46, 41)
 Treasure Chest (51, 25)
   [Nugget]               |
-  [Tiny Mushroom]        |
-  [Fire Crystal]         |
-  [Rusty Bottle Cap]     |
-  [Dusk Stone]           |
+  [Bottle Cap]           |
+  [Nugget]               |
+  [Gentle Mint]          |
   [Nugget]               |
   [Ability Patch]        |
-  [Fire Stone]           |
-  [Max Revive]           |
-  [Rash Mint]            |
+  [Galactic Crystal]     |
+  [Nugget]               |
 Naughty Mint (58, 38)
 PP Max (77, 27)
 Rare Candy (79, 39)
@@ -496,7 +494,7 @@ Potion (30, 75)
 Leaf Stone (25, 78)
 Full Heal (16, 69)
 Repel (26, 57)
-Kebia Berry (13, 66)
+Passho Berry (13, 66)
 
 Route 25------------------------------------------
 
@@ -509,8 +507,8 @@ Repel (15, 34)
 Revive (32, 22)
 Euphorian Gem (35, 26)
 Full Heal (35, 32)
-Roseli Berry (42, 37)
-Occa Berry (38, 30)
+Chilan Berry (42, 37)
+Rindo Berry (38, 30)
 Oran Berry (14, 49)
 
 Route 26------------------------------------------
@@ -543,32 +541,30 @@ Repel (71, 28)
 Super Potion (58, 28)
 Ultra Ball (51, 8)
 Full Heal (80, 8)
-Bluk Berry (70, 35)
+Spelon Berry (70, 35)
 Treasure Chest (46, 44)
-  [Revive]               |
-  [Nugget]               |
+  [Rare Candy]           |
+  [Ice Stone]            |
+  [Tiny Mushroom]        |
+  [Bottle Cap]           |
   [Big Nugget]           |
-  [Big Nugget]           |
-  [Star Piece]           |
-  [Electric Crystal]     |
+  [Bottle Cap]           |
+  [Grass Crystal]        |
   [Rusty Bottle Cap]     |
-  [Ability Capsule]      |
-  [Modest Mint]          |
+  [Quiet Mint]           |
 
 Sicab River---------------------------------------
 
 Throat Spray (69, 79)
 Treasure Chest (74, 79)
-  [Revive]               |
-  [Rare Candy]           |
-  [Nugget]               |
+  [Relic Silver]         |
+  [Relic Silver]         |
   [Bottle Cap]           |
-  [Big Nugget]           |
-  [Lax Mint]             |
-  [Rare Candy]           |
-  [Big Mushroom]         |
-  [Grass Crystal]        |
-  [Gold Bottle Cap]      |
+  [Dragon Crystal]       |
+  [Mild Mint]            |
+  [Max Revive]           |
+  [Bottle Cap]           |
+  [Nugget]               |
 Lax Mint (80, 80)
 
 Energy Plant (pt. 1)------------------------------
@@ -630,29 +626,27 @@ TM56 Sparkle Strike (76, 43)
 Light Clay (81, 57)
 Heavy-Duty Boots (87, 57)
 Treasure Chest (58, 50)
-  [Petticoat Gem]        |
-  [Ability Patch]        |
-  [Tiny Mushroom]        |
-  [Lax Mint]             |
-  [Ability Capsule]      |
-  [Psychic Crystal]      |
-  [Euphorian Gem]        |
+  [PP Up]                |
+  [Nugget]               |
+  [Gold Bottle Cap]      |
+  [Rash Mint]            |
   [Big Nugget]           |
-  [Tiny Mushroom]        |
-  [Rusty Bottle Cap]     |
+  [PP Up]                |
+  [Light Crystal]        |
+  [Star Piece]           |
 Star Piece (67, 44)
 Gentle Mint (44, 60)
 Treasure Chest (74, 38)
-  [Light Crystal]        |
-  [Big Nugget]           |
-  [Bottle Cap]           |
-  [Nugget]               |
-  [PP Up]                |
+  [Bug Crystal]          |
   [Relic Gold]           |
+  [Nugget]               |
+  [Ability Patch]        |
+  [Nugget]               |
+  [Revive]               |
+  [Nugget]               |
+  [Relic Silver]         |
   [Careful Mint]         |
-  [PP Max]               |
-  [PP Max]               |
-  [Star Piece]           |
+  [Euphorian Gem]        |
 
 Mt. Splinkty (2B)---------------------------------
 
@@ -675,7 +669,7 @@ Rusty Bottle Cap (55, 70)
 
 Route 27------------------------------------------
 
-Babiri Berry (18, 46)
+Wacan Berry (18, 46)
 Antidote (15, 43)
 TM83 Captivate (25, 46)
 Hyper Potion (52, 43)
@@ -683,7 +677,7 @@ Gold Bottle Cap (43, 37)
 Dawn Stone (51, 37)
 PP Up (28, 29)
 Big Root (47, 48)
-Belue Berry (42, 26)
+Pamtre Berry (42, 26)
 
 Cell Park-----------------------------------------
 
@@ -693,7 +687,7 @@ Great Ball (95, 27)
 Rusty Bottle Cap (75, 29)
 Hyper Potion (70, 23)
 Ability Capsule (66, 24)
-Spelon Berry (79, 19)
+Bluk Berry (79, 19)
 Euphorian Gem (82, 19)
 
 Route 41------------------------------------------
@@ -711,8 +705,8 @@ Freeze Heal (38, 21)
 Spell Tag (68, 11)
 Wiki Berry (56, 11)
 Red Card (73, 21)
-Mysticola Berry (71, 24)
-Haban Berry (75, 22)
+Haban Berry (71, 24)
+Chople Berry (75, 22)
 
 Peaceful Park-------------------------------------
 
@@ -724,8 +718,8 @@ Max Elixir (14, 39)
 Careful Mint (35, 43)
 TM05 Body Slam (42, 39)
 Life Orb (51, 52)
-Coba Berry (57, 56)
-Kasib Berry (57, 78)
+Babiri Berry (57, 56)
+Mysticola Berry (57, 78)
 TM30 U-Turn (64, 70)
 TM53 Volt Switch (72, 69)
 
@@ -756,7 +750,7 @@ Revive (89, 52)
 TM86 X-Scissor (64, 20)
 Air Balloon (38, 47)
 White Herb (49, 32)
-Galaxeed Berry (83, 51)
+Occa Berry (83, 51)
 
 Schrice City--------------------------------------
 
@@ -789,7 +783,7 @@ Ability Capsule (34, 75)
 TM48 Scald (35, 77)
 Adamant Mint (54, 78)
 Max Elixir (54, 79)
-Payapa Berry (48, 67)
+Charti Berry (48, 67)
 
 Control Center------------------------------------
 
@@ -837,7 +831,7 @@ Hyper Potion (28, 18)
 Elixir (35, 13)
 Bottle Cap (39, 11)
 Max Elixir (23, 34)
-Shuca Berry (17, 30)
+Kasib Berry (17, 30)
 
 Shadow Ravine (1A)--------------------------------
 
@@ -845,8 +839,8 @@ Timid Mint (25, 55)
 PP Up (27, 72)
 TM65 Shadow Claw (87, 46)
 Ability Capsule (15, 69)
-Chople Berry (50, 81)
-Colbur Berry (43, 79)
+Tanga Berry (50, 81)
+Roseli Berry (43, 79)
 
 Shadow Ravine (1B)--------------------------------
 
@@ -881,7 +875,7 @@ Petticoat Gem (72, 42)
 Valiant Gem (93, 35)
 Hyper Potion (82, 26)
 Throat Spray (91, 29)
-Passho Berry (80, 31)
+Kebia Berry (80, 31)
 Focus Sash (82, 62)
 
 Shadow Ravine (0A)--------------------------------
@@ -1011,7 +1005,7 @@ Bold Mint (87, 91)
 PP Up (82, 92)
 Bottle Cap (76, 66)
 Gold Bottle Cap (61, 50)
-Yache Berry (68, 87)
+Payapa Berry (68, 87)
 
 Glurg Town----------------------------------------
 
@@ -1042,18 +1036,17 @@ Max Elixir (77, 88)
 TM19 Photon Geyser (35, 79)
 Full Restore (26, 70)
 Micle Berry (29, 84)
-Chilan Berry (42, 67)
+Galaxeed Berry (42, 67)
 Treasure Chest (34, 62)
   [Ghost Crystal]        |
-  [Relaxed Mint]         |
   [PP Up]                |
-  [Nugget]               |
-  [Rusty Bottle Cap]     |
+  [Star Piece]           |
   [Relic Gold]           |
-  [Revive]               |
-  [Ice Stone]            |
-  [Big Mushroom]         |
-  [Valiant Gem]          |
+  [Tiny Mushroom]        |
+  [Petticoat Gem]        |
+  [Dawn Stone]           |
+  [Bottle Cap]           |
+  [Naive Mint]           |
 
 Mindagan Cavern (0A)------------------------------
 
@@ -1073,7 +1066,7 @@ Pecha Berry (29, 69)
 Chesto Berry (30, 68)
 Persim Berry (30, 66)
 Wiki Berry (12, 87)
-Rindo Berry (21, 87)
+Colbur Berry (21, 87)
 Fire Stone (18, 90)
 
 Route 37------------------------------------------
@@ -1086,7 +1079,7 @@ Revive (23, 46)
 
 Route 38------------------------------------------
 
-Charti Berry (48, 88)
+Yache Berry (48, 88)
 Serious Mint (54, 84)
 Air Balloon (66, 69)
 Throat Spray (61, 72)
@@ -1153,28 +1146,26 @@ Rusty Bottle Cap (11, 15)
 Big Mushroom (22, 44)
 White Herb (14, 42)
 Treasure Chest (10, 42)
-  [Max Revive]           |
-  [Ground Crystal]       |
-  [Big Nugget]           |
-  [Leaf Stone]           |
+  [Big Mushroom]         |
+  [Poison Crystal]       |
+  [Gold Bottle Cap]      |
   [PP Up]                |
-  [Nugget]               |
-  [Quiet Mint]           |
-  [Nugget]               |
-  [Relic Silver]         |
+  [Relaxed Mint]         |
+  [Tiny Mushroom]        |
+  [Star Piece]           |
+  [Tiny Mushroom]        |
 
 Mt. Splinkty (2A)---------------------------------
 
 Treasure Chest (57, 62)
-  [Tiny Mushroom]        |
-  [Steel Crystal]        |
-  [PP Max]               |
-  [Euphorian Gem]        |
-  [Modest Mint]          |
-  [PP Up]                |
-  [Tiny Mushroom]        |
-  [PP Max]               |
-  [Star Piece]           |
+  [Relic Silver]         |
+  [Revive]               |
+  [Electric Crystal]     |
+  [Revive]               |
+  [Relic Gold]           |
+  [Thunder Scales Fossil]|
+  [Gentle Mint]          |
+  [Nugget]               |
 Star Piece (52, 61)
 
 Mt. Splinkty (Outside)----------------------------
@@ -1182,14 +1173,13 @@ Mt. Splinkty (Outside)----------------------------
 Eviolite (67, 48)
 TM47 Star Storm (89, 38)
 Treasure Chest (51, 34)
-  [Ability Capsule]      |
-  [Fighting Crystal]     |
-  [Fire Stone]           |
-  [Bottle Cap]           |
-  [Ability Capsule]      |
   [Nugget]               |
-  [Tiny Mushroom]        |
-  [Careful Mint]         |
+  [Nugget]               |
+  [Petticoat Gem]        |
+  [Revive]               |
+  [Hasty Mint]           |
+  [Big Mushroom]         |
+  [Fighting Crystal]     |
 
 Icy Path------------------------------------------
 
@@ -1199,29 +1189,29 @@ TM72 Ice Spinner (49, 44)
 Euphorian Gem (47, 56)
 White Herb (38, 27)
 Treasure Chest (41, 51)
-  [PP Max]               |
-  [Serious Mint]         |
-  [Dark Crystal]         |
-  [Dusk Stone]           |
-  [Bottle Cap]           |
-  [Relic Gold]           |
-  [Dusk Stone]           |
-  [Nugget]               |
+  [Brave Mint]           |
+  [Dawn Stone]           |
+  [Big Nugget]           |
+  [Big Nugget]           |
   [Revive]               |
+  [Relic Gold]           |
+  [Water Stone]          |
+  [Steel Crystal]        |
+  [Star Piece]           |
 
 Gelb Cavern---------------------------------------
 
 Naive Mint (54, 61)
 Treasure Chest (61, 64)
-  [Ability Capsule]      |
-  [Timid Mint]           |
-  [Big Mushroom]         |
   [Dawn Stone]           |
-  [Rusty Bottle Cap]     |
-  [Rock Crystal]         |
-  [Max Revive]           |
+  [Valiant Gem]          |
+  [Tiny Mushroom]        |
   [Ability Patch]        |
+  [Serious Mint]         |
+  [Ability Capsule]      |
+  [Water Crystal]        |
   [Relic Silver]         |
+  [Big Nugget]           |
 Gold Bottle Cap (49, 74)
 Razor Claw (65, 73)
 Hasty Mint (66, 81)
