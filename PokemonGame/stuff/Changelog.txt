@@ -75,3 +75,5 @@ Fixed Photon being in 2 places at once if you don't talk to them in Sicab
 
 Demo 1.06 Released
 Gave Raptorex Vacuum Wave
+Fixed Regional Researcher's name being in the cutscene with Ryder
+Made Second Gym split Ability Patch Ace Trainer face upwards instead of downwards (no more jumpscares)

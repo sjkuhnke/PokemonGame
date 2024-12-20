@@ -1149,7 +1149,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_M_UP, 71, 17, "You're about to see a trick you'll never forget.", "Well, that wasn't part of the act... I'll need to work on my tricks.", 363);
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 59, 28, "I'll bend your mind and your Pokemon to my will.", "You've shown surprising strength... but the stars still favor me.", 361);
 		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 79, 11, "The stars guide my team. Let's see if you can handle their cosmic power.", "The stars... must have misaligned this time.", 364);
-		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_DOWN, 82, 28, "My skills are legendary. Let's see if you can keep up.", "Looks like you've earned some respect... for now.", 365);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_UP, 82, 28, "My skills are legendary. Let's see if you can keep up.", "Looks like you've earned some respect... for now.", 365);
 		
 		mapNum = 14;
 		index = 0;
@@ -1649,7 +1649,7 @@ public class AssetSetter {
 		
 		gp.npc[mapNum][index] = SetupStaticEncounter(289, 50, 59, 391, 226, "Xvringzzi!"); // UP Pheromosa
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 49, 90, "Hmm... you can hide all you want, but I'll still spot you. Tricky little specters... there's nothing unnatural here...", true);
-		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, 1, 1, "In updateNPC", "", 1);
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, 1, 1, "For testing", "", 392);
 		
 		mapNum = 109;
 		index = 0;

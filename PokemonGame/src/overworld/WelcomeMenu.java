@@ -244,6 +244,7 @@ public class WelcomeMenu extends JPanel {
 	            movesCheckBox.isSelected(),
 	            defensiveTypesBox.isSelected(),
 	            offensiveTypesBox.isSelected(),
+	            itemsCheckBox.isSelected()
 	        };
 
 	        save += ".dat";
