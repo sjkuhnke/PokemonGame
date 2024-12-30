@@ -126,6 +126,7 @@ public class GamePanel extends JPanel implements Runnable {
 		Pokemon.readMovebanksFromCSV();
 		Pokemon.readEntiresFromCSV();
 		Pokemon.readEncountersFromCSV();
+		Pokemon.readTMsFromCSV();
 		
 		Player.setupPokedex();
 	}
