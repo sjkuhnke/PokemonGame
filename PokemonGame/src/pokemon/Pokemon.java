@@ -71,6 +71,7 @@ public class Pokemon implements Serializable {
 	private static int[] catch_rates = new int[MAX_POKEMON];
 	private static Node[][] movebanks = new Node[MAX_POKEMON][101];
 	private static String[] entries = new String[MAX_POKEMON];
+	private static boolean[][] tms = new boolean[MAX_POKEMON][107];
 	
 	private static ArrayList<Integer> rivalIndices = new ArrayList<>();
 	
@@ -806,6 +807,10 @@ public class Pokemon implements Serializable {
 	
 	public Ability getAbility(int slot) {
 		return abilities[id - 1][slot];
+	}
+	
+	public boolean getLearned(int row, int col) {
+		return tms[row][col];
 	}
 	
 	public int getLevel() {
@@ -8010,6 +8015,26 @@ public class Pokemon implements Serializable {
 						}
 					}
 				}
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void readTMsFromCSV() {
+		try (Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/tms.csv"))) {
+			int row = 0;
+			while (row < MAX_POKEMON) {
+				String line = scanner.nextLine();
+				String[] parts = line.split(" ");
+				int col = 0;
+				for (int i = 0; i < parts[1].length(); i++) {
+					tms[row][col++] = parts[1].charAt(i) == '1';
+				}
+				for (int i = 0; i < parts[0].length(); i++) {
+					tms[row][col++] = parts[0].charAt(i) == '1';
+				}
+				row++;
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
