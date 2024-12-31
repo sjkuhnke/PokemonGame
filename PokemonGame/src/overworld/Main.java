@@ -279,6 +279,8 @@ public class Main {
 				
 			}
 			writer.close();
+			
+			writeTMLearn();
 			//writeUnusedMoves();
 			//writeTypeStats();
 			
@@ -286,6 +288,46 @@ public class Main {
 			e1.printStackTrace();
 		}
 		
+	}
+	
+	private static void writeTMLearn() {
+		try {
+			FileWriter writer = new FileWriter("./docs/PokemonInfo.txt", true);
+			writer.write("TM Learnsets:\n");
+			
+			boolean[][] tms = Pokemon.getTMTable();
+			int id = 1;
+			
+			StringBuilder header = new StringBuilder("====================================================================================\n");
+			header.append("ID   Name               ");
+			for (int hm = 1; hm <= 8; hm++) {
+	            header.append(String.format("HM%02d  ", hm));
+	        }
+			for (int tm = 1; tm <= 99; tm++) {
+	            header.append(String.format("TM%02d  ", tm));
+	        }
+			header.append("\n");
+	        header.append("====================================================================================\n");
+	        writer.write(header.toString());
+			
+			for (boolean[] row : tms) {
+				if (id % 25 == 0) {
+					writer.write(header.toString());
+				}
+				StringBuilder rowBuilder = new StringBuilder();
+	            String pokemonName = Pokemon.getName(id++);
+	            rowBuilder.append(String.format("#%03d %-20s", id, pokemonName));
+	            for (boolean canLearn : row) {
+	                rowBuilder.append(canLearn ? "Y     " : "N     ");
+	            }
+	            rowBuilder.append("\n");
+	            writer.write(rowBuilder.toString());
+			}
+			writer.write("====================================================================================\n");
+			writer.close();
+		} catch (IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	@SuppressWarnings("unused")

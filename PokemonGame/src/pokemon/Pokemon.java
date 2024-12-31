@@ -813,6 +813,10 @@ public class Pokemon implements Serializable {
 		return tms[row][col];
 	}
 	
+	public static boolean[][] getTMTable() {
+		return tms;
+	}
+	
 	public int getLevel() {
 		return level;
 	}
