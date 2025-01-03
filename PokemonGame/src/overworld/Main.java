@@ -770,7 +770,7 @@ public class Main {
 	            for (Move m : typeMoves) {
             		String result = m.toString() + " : ";
 					result += m.getCategory() + " / ";
-					result += (int) m.getbp(null, null) + " / ";
+					result += m.formatbp(null, null) + " / ";
 					result += m.getAccuracy() + " / ";
 					result += m.pp + " PP : ";
 					result += m.getDescription() + "\n";
