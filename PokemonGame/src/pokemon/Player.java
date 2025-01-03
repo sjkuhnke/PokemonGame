@@ -146,7 +146,7 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public void catchPokemon(Pokemon p, boolean nickname, Item ball) {
-	    if (p.isFainted()) return;
+	    if (p == null || p.isFainted()) return;
 	    boolean hasNull = false;
 	    Task t = null;
 	    if (nickname) {
