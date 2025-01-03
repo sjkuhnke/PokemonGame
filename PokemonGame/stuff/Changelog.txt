@@ -78,3 +78,11 @@ Gave Raptorex Vacuum Wave
 Fixed Regional Researcher's name being in the cutscene with Ryder
 Made Second Gym split Ability Patch Ace Trainer face upwards instead of downwards (no more jumpscares)
 Fixed Venoshock to also work on Toxiced opponents (oops)
+Fixed Bipedice having Flash Ray instead of Earthquake at lv 16 (???)
+FIXED ISSUE OF TYPELESS MOVES NOT BEING ABLE TO HIT WONDER GUARD (STRUGGLE!!)
+Added an "Add" button to the calc to be able to genn in a Pokemon to use in the calc
+Added a "More" button to the calc to be able to tweak the field, typing and status effects that Pokemon have
+Fixed a Pokemon being muted showing as 0 damage in the calc for sound moves
+Added logic for a Pokemon attacking with Magic Reflect/Possession active to use the least damaging move on themselves
+Added TMs to PokemonInfo.txt
+Fixed Move BP in MovesInfo.txt
