@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -23,10 +24,10 @@ public enum Status {
 	AQUA_RING("AQR", new Color(84, 117, 247), Color.BLACK), 
 	SPUN("SPN", new Color(32, 37, 61), Color.WHITE),
 	RECHARGE("SPN", new Color(32, 37, 61), Color.WHITE),
-	POSESSED("SPN", new Color(32, 37, 61), Color.WHITE),
+	POSSESSED("SPN", new Color(32, 37, 61), Color.WHITE),
 	CHARGING("CRG", new Color(219, 216, 15), Color.BLACK),
 	LOCKED("LCK", new Color(219, 216, 15), Color.BLACK),
-	REFLECT("RFL", new Color(219, 216, 15), Color.BLACK),
+	MAGIC_REFLECT("RFL", new Color(219, 216, 15), Color.BLACK),
 	BONDED("AUT", new Color(219, 216, 15), Color.BLACK),
 	TRAPPED("AUT", Color.BLACK, Color.BLACK),
 	PROTECT("AUT",Color.BLACK,Color.BLACK),
@@ -114,5 +115,17 @@ public enum Status {
 
 	public BufferedImage getImage() {
 		return image;
+	}
+
+	public static ArrayList<Status> getNonVolStatuses() {
+		ArrayList<Status> result = new ArrayList<>();
+		result.add(Status.BURNED);
+		result.add(Status.ASLEEP);
+		result.add(Status.PARALYZED);
+		result.add(Status.FROSTBITE);
+		result.add(Status.POISONED);
+		result.add(Status.TOXIC);
+		
+		return result;
 	}
 }

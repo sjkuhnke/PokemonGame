@@ -2,6 +2,7 @@ package pokemon;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,12 +20,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.function.BiConsumer;
+import java.util.stream.IntStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -35,6 +39,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
+import pokemon.Field.Effect;
+import util.Pair;
 
 public enum Item {
 	REPEL(0,10,5,new Color(0, 92, 5),Item.OTHER,null,"Prevents wild Pokemon encounters for 200 steps"),
@@ -791,6 +798,8 @@ public enum Item {
         JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
         JComboBox<Item> foeItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
         
+        Field field = Pokemon.field.clone();
+        
         AutoCompleteDecorator.decorate(userItem);
         AutoCompleteDecorator.decorate(foeItem);
         
@@ -798,16 +807,16 @@ public enum Item {
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
             userLevel.setValue(userCurrent.getLevel());
-            updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
+            updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
         });
         
         foeMons.addActionListener(l -> {
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
         	foeLevel.setValue(foeCurrent.getLevel());
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
         });
         
         userLevel.addFocusListener(new FocusAdapter() {
@@ -861,8 +870,8 @@ public enum Item {
         			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
         			int amt = (int) userStages[index].getSelectedItem();
         			current.statStages[index - 1] = amt;
-        			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
-        			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
+        			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+        			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
         			if (index == 5) userSpeed.setText((current.getSpeed()) + "");
         		});
         		statsPanel.add(userStages[i]);
@@ -900,8 +909,8 @@ public enum Item {
         			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         			int amt = (int) foeStages[index].getSelectedItem();
         			current.statStages[index - 1] = amt;
-        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
-        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
+        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
         			if (index == 5) foeSpeed.setText((current.getSpeed()) + "");
         		});
         		fStatsPanel.add(foeStages[i]);
@@ -921,10 +930,10 @@ public enum Item {
         }
         
         userLevel.setValue(userC.getLevel());
-        updateMoves(userC, userMoves, userDamage, foeC, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
+        updateMoves(userC, userMoves, userDamage, foeC, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
         
         foeLevel.setValue(foeC.getLevel());
-        updateMoves(foeC, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
+        updateMoves(foeC, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
         
         userLevel.addChangeListener(l ->{
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
@@ -944,8 +953,8 @@ public enum Item {
         	int nHP = userCurrent.getStat(0);
         	userCurrent.currentHP += nHP - oHP;
         	userCurrent.verifyHP();
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
         });
         
         foeLevel.addChangeListener(l ->{
@@ -967,24 +976,24 @@ public enum Item {
         	foeCurrent.currentHP += nHP - oHP;
         	foeCurrent.verifyHP();
         	if (!foeCurrent.toString().contains("(")) foeCurrent.setMoves();
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
         });
         
         userItem.addActionListener(l -> {
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
         	userCurrent.item = (Item) userItem.getSelectedItem();
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
         });
         
         foeItem.addActionListener(l -> {
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
         	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
         	foeCurrent.item = (Item) foeItem.getSelectedItem();
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
         });
         
         calc.add(statsPanel, gbc);
@@ -1024,29 +1033,29 @@ public enum Item {
         critCheck.addActionListener(e -> {
         	Pokemon current = ((Pokemon) userMons.getSelectedItem());
 			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
+			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
         });
         
         fCritCheck.addActionListener(e -> {
         	Pokemon current = ((Pokemon) userMons.getSelectedItem());
 			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
+			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
         });
         
         userAbility.addActionListener(l -> {
 			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
 			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
 			userCurrent.ability = (Ability) userAbility.getSelectedItem();
-			updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
+			updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
 		});
 		
 		foeAbility.addActionListener(l -> {
 			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
 			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
 			foeCurrent.ability = (Ability) foeAbility.getSelectedItem();
-			updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem);
+			updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
 		});
         
         JPanel infoButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -1062,19 +1071,71 @@ public enum Item {
         gbc.gridx = 0;
         gbc.gridy++;
         
+        JPanel addButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JButton addButton = new JButton("Add");
+        addButtonPanel.add(addButton);
+        JButton moreButton = new JButton("More");
+        addButtonPanel.add(moreButton);
+        
+        JPanel fAddButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JButton fAddButton = new JButton("Add");
+        fAddButtonPanel.add(fAddButton);
+        JButton fMoreButton = new JButton("More");
+        fAddButtonPanel.add(fMoreButton);
+        
+        gbc.gridx = 0;
+        gbc.gridwidth = 1;
+        calc.add(addButtonPanel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridwidth = 1;
+        calc.add(fAddButtonPanel, gbc);
+        
+        addButton.addActionListener(l -> {
+        	Pokemon result = displayGenerator((Pokemon) userMons.getSelectedItem());
+        	if (result != null) {
+        		result.nickname = "Generated";
+        		userMons.insertItemAt(result, 0);
+        	}
+        });
+        
+        fAddButton.addActionListener(l -> {
+        	Pokemon result = displayGenerator((Pokemon) foeMons.getSelectedItem());
+        	if (result != null) {
+        		result.nickname = "Generated";
+        		foeMons.insertItemAt(result, 0);
+        	}
+        });
+        
+        moreButton.addActionListener(l -> {
+        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+        	moreButton(userCurrent, field);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+        });
+        
+        fMoreButton.addActionListener(l -> {
+        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+        	moreButton(foeCurrent, field);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+        });
+        
         JOptionPane.showMessageDialog(null, calc, "Damage Calculator", JOptionPane.PLAIN_MESSAGE);
 		
 	}
 	
 	private static void updateMoves(Pokemon current, JGradientButton[] moves, JLabel[] damages, Pokemon foe, JLabel[] statLabels, JComboBox<Integer>[] stages,
-			JLabel speed, JButton currentHP, JLabel HPP, boolean crit, JComboBox<Ability> currentAbility, JComboBox<Item> currentItem) {
+			JLabel speed, JButton currentHP, JLabel HPP, boolean crit, JComboBox<Ability> currentAbility, JComboBox<Item> currentItem, Field field) {
         for (int k = 0; k < moves.length; k++) {
         	if (current.moveset[k] != null) {
         		moves[k].setText(current.moveset[k].move.toString());
         		moves[k].setBackground(current.moveset[k].move.mtype.getColor());
         		if (current.moveset[k].move == Move.HIDDEN_POWER || current.moveset[k].move == Move.RETURN) moves[k].setBackground(current.determineHPType().getColor());
-        		int minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, -1, crit);
-        		int maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, 1, crit);
+        		int minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, -1, crit, field);
+        		int maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, 1, crit, field);
         		double minDamageD = minDamage * 1.0 / foe.getStat(0);
         		minDamageD *= 100;
         		String formattedMinD = String.format("%.1f", minDamageD);
@@ -1121,7 +1182,7 @@ public enum Item {
 			    				current.currentHP += nHP - cHP;
 			    			}
 			    		}
-			    		updateMoves(current, moves, damages, foe, statLabels, stages, speed, currentHP, HPP, crit, currentAbility, currentItem);
+			    		updateMoves(current, moves, damages, foe, statLabels, stages, speed, currentHP, HPP, crit, currentAbility, currentItem, field);
 			    	}
 			    }
             });    		
@@ -1149,23 +1210,187 @@ public enum Item {
         currentAbility.setSelectedItem(current.ability);
         currentItem.setSelectedItem(current.item);
 	}
+	
+	private static void moreButton(Pokemon p, Field f) {
+		boolean playerOwned = p.playerOwned();
+		ArrayList<Field.FieldEffect> pSide = playerOwned ? f.playerSide : f.foeSide;
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        // Label at the top
+        JLabel title = new JLabel("Editing: " + p.toString());
+        title.setFont(new Font("Arial", Font.BOLD, 16));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        panel.add(title, gbc);
+        
+        gbc.gridwidth = 1; // Reset gridwidth
 
-	public static JPanel displayGenerator(Player p) {
+        // Weather ComboBox
+        gbc.gridy++;
+        panel.add(new JLabel("Weather:"), gbc);
+        JComboBox<Effect> weatherBox = new JComboBox<>(new Effect[]{Effect.SUN, Effect.RAIN, Effect.SANDSTORM, Effect.SNOW});
+        weatherBox.insertItemAt(null, 0);
+        weatherBox.setSelectedItem(f.weather == null ? null : f.weather.effect);
+        AutoCompleteDecorator.decorate(weatherBox);
+        gbc.gridx = 1;
+        panel.add(weatherBox, gbc);
+
+        // Terrain ComboBox
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(new JLabel("Terrain:"), gbc);
+        JComboBox<Effect> terrainBox = new JComboBox<>(new Effect[]{Effect.GRASSY, Effect.ELECTRIC, Effect.PSYCHIC, Effect.SPARKLY});
+        terrainBox.insertItemAt(null, 0);
+        terrainBox.setSelectedItem(f.terrain == null ? null : f.terrain.effect);
+        AutoCompleteDecorator.decorate(terrainBox);
+        gbc.gridx = 1;
+        panel.add(terrainBox, gbc);
+
+        // Gravity Checkbox
+        gbc.gridx = 0;
+        gbc.gridy++;
+        JCheckBox gravityBox = new JCheckBox("Gravity");
+        gravityBox.setSelected(f.contains(f.fieldEffects, Effect.GRAVITY));
+        panel.add(gravityBox, gbc);
+
+        // Type 1 and Type 2 ComboBoxes
+        gbc.gridy++;
+        gbc.gridx = 0;
+        panel.add(new JLabel("Type 1:"), gbc);
+        JComboBox<PType> type1Box = new JComboBox<>(PType.values());
+        type1Box.setSelectedItem(p.type1);
+        AutoCompleteDecorator.decorate(type1Box);
+        gbc.gridx = 1;
+        panel.add(type1Box, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(new JLabel("Type 2:"), gbc);
+        JComboBox<PType> type2Box = new JComboBox<>(PType.values());
+        type2Box.insertItemAt(null, 0); // Allow null for Type 2
+        type2Box.setSelectedItem(p.type2);
+        AutoCompleteDecorator.decorate(type2Box);
+        gbc.gridx = 1;
+        panel.add(type2Box, gbc);
+
+        // Status ComboBox
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(new JLabel("Status:"), gbc);
+        JComboBox<Status> statusBox = new JComboBox<>(Status.getNonVolStatuses().toArray(new Status[0]));
+        statusBox.insertItemAt(Status.HEALTHY, 0);
+        statusBox.setSelectedItem(p.status);
+        AutoCompleteDecorator.decorate(statusBox);
+        gbc.gridx = 1;
+        panel.add(statusBox, gbc);
+
+        // Add JCheckBoxes for each field effect
+        @SuppressWarnings("unchecked")
+		Pair<Object, JCheckBox>[] effect = new Pair[] {
+				new Pair<Effect, JCheckBox>(Effect.REFLECT, null),
+				new Pair<Effect, JCheckBox>(Effect.LIGHT_SCREEN, null),
+				new Pair<Effect, JCheckBox>(Effect.AURORA_VEIL, null),
+				new Pair<Effect, JCheckBox>(Effect.LUCKY_CHANT, null),
+				new Pair<Status, JCheckBox>(Status.MAGIC_REFLECT, null),
+				new Pair<Status, JCheckBox>(Status.POSSESSED, null),
+				new Pair<Status, JCheckBox>(Status.MUTE, null),
+				new Pair<Status, JCheckBox>(Status.FLASH_FIRE, null),
+				new Pair<Status, JCheckBox>(Status.CHARGED, null),
+				new Pair<Status, JCheckBox>(Status.LOADED, null),};
+        
+        for (int i = 0; i < effect.length; i++) {
+            gbc.gridx = 0;
+            gbc.gridy++;
+            
+            Pair<Object, JCheckBox> pair = effect[i];
+            Object first = pair.getFirst();
+            JCheckBox checkBox = new JCheckBox(first.toString());
+            pair.setSecond(checkBox);
+
+            if (first instanceof Effect) {
+                checkBox.setSelected(f.contains(pSide, (Effect) first));
+            } else {
+                checkBox.setSelected(p.vStatuses.contains((Status) first));
+            }
+            panel.add(checkBox, gbc);
+        }
+
+        // Apply and Cancel Buttons
+        gbc.gridy++;
+        gbc.gridx = 0;
+        JButton applyButton = new JButton("Apply");
+        applyButton.addActionListener(e -> {
+            // Update Field and Pokémon with the selected values
+        	Effect weather = (Field.Effect) weatherBox.getSelectedItem();
+        	f.weather = weather == null ? null : f.new FieldEffect(weather);
+        	Effect terrain = (Field.Effect) terrainBox.getSelectedItem();
+            f.terrain = terrain == null ? null : f.new FieldEffect(terrain);
+            
+            if (gravityBox.isSelected()) {
+            	if (!f.contains(f.fieldEffects, Effect.GRAVITY)) f.fieldEffects.add(f.new FieldEffect(Effect.GRAVITY));
+            } else {
+            	f.remove(f.fieldEffects, Effect.GRAVITY);
+            }
+            p.type1 = (PType) type1Box.getSelectedItem();
+            p.type2 = (PType) type2Box.getSelectedItem();
+            p.status = (Status) statusBox.getSelectedItem();
+            
+            for (int i = 0; i < effect.length; i++) {
+            	Pair<Object, JCheckBox> pair = effect[i];
+                Object first = pair.getFirst();
+                JCheckBox second = pair.getSecond();
+                
+                if (first instanceof Effect) {
+                	Effect ef = (Effect) first;
+                	if (second.isSelected()) {
+                		if (!f.contains(pSide, ef)) pSide.add(f.new FieldEffect(ef));
+                	} else {
+                		f.remove(pSide, ef);
+                	}
+                } else {
+                    Status st = (Status) first;
+                    if (second.isSelected()) {
+                    	if (!p.vStatuses.contains(st)) p.vStatuses.add(st);
+                    } else {
+                    	p.vStatuses.removeIf(st::equals);
+                    }
+                }
+            }
+            
+            SwingUtilities.getWindowAncestor(panel).dispose();
+        });
+        panel.add(applyButton, gbc);
+
+        JOptionPane.showMessageDialog(null, panel);
+	}
+
+	public static Pokemon displayGenerator(Pokemon p) {
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
+		
+		BiConsumer<String, JComponent> addLabeledInput = (labelText, input) -> {
+	        JPanel panel = new JPanel(new GridLayout(1, 2));
+	        panel.add(new JLabel(labelText));
+	        panel.add(input);
+	        result.add(panel);
+	    };
 		
 		JComboBox<Pokemon> nameInput = new JComboBox<Pokemon>();
 		for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
         	nameInput.addItem(new Pokemon(k, 50, false, true));
         }
-		result.add(nameInput);
+		if (p != null) nameInput.setSelectedIndex(p.id);
+		addLabeledInput.accept("Pokemon", nameInput);
 		
-		Integer[] levels = new Integer[100];
-		for (int i = 0; i < 100; i++) {
-			levels[i] = i + 1;
-		}
-		JComboBox<Integer> levelInput = new JComboBox<>(levels);
-		result.add(levelInput);
+		JComboBox<Integer> levelInput = new JComboBox<>(IntStream.rangeClosed(1, 100).boxed().toArray(Integer[]::new));
+		if (p != null) levelInput.setSelectedItem(p.level);
+		addLabeledInput.accept("Level", levelInput);
 		
 		Ability[] abilityOptions = new Ability[3];
 		for (int i = 0; i < 3; i++) {
@@ -1174,7 +1399,8 @@ public enum Item {
 			abilityOptions[i] = test.ability;
 		}
 		JComboBox<Ability> abilityInput = new JComboBox<>(abilityOptions);
-		result.add(abilityInput);
+		if (p != null) abilityInput.setSelectedIndex(p.abilitySlot);
+		addLabeledInput.accept("Ability", abilityInput);
 		
 		JComboBox<String> natures = new JComboBox<>();
 		Pokemon temp = new Pokemon(1, 1, false, false);
@@ -1182,34 +1408,37 @@ public enum Item {
 			temp.nature = temp.getNature(i);
 			natures.addItem(temp.getNature());
 		}
-		result.add(natures);
+		if (p != null) natures.setSelectedItem(p.getNature());
+		addLabeledInput.accept("Nature", natures);
 		
 		@SuppressWarnings("unchecked")
 		JComboBox<Integer>[] ivInputs = new JComboBox[6];
-		Integer[] options = new Integer[32];
-		for (int i = 0; i < 32; i++) {
-			options[i] = i;
-		}
-		for (int i = 0; i < 6; i++) {
-			ivInputs[i] = new JComboBox<Integer>(options);
-			ivInputs[i].setSelectedIndex(31);
-			AutoCompleteDecorator.decorate(ivInputs[i]);
-			result.add(ivInputs[i]);
-		}
+		Integer[] ivOptions = IntStream.rangeClosed(0, 31).boxed().toArray(Integer[]::new);
+		int index = 0;
+		for (String ivLabel : new String[]{"HP", "Atk", "Def", "SpA", "SpD", "Spe"}) {
+	        JComboBox<Integer> ivInput = new JComboBox<>(ivOptions);
+	        if (p != null) {
+	        	ivInput.setSelectedIndex(p.ivs[index]);
+	        } else {
+	        	ivInput.setSelectedIndex(31);
+	        }
+	        addLabeledInput.accept(ivLabel, ivInput);
+	        ivInputs[index++] = ivInput;
+	    }
 		
-		Integer[] happinessOptions = new Integer[256];
-		for (int i = 0; i < happinessOptions.length; i++) {
-			happinessOptions[i] = i;
+		JComboBox<Integer> happiness = new JComboBox<>(IntStream.rangeClosed(0, 255).boxed().toArray(Integer[]::new));
+		if (p != null) {
+			happiness.setSelectedIndex(p.happiness);
+		} else {
+			happiness.setSelectedIndex(70);
 		}
-		JComboBox<Integer> happiness = new JComboBox<>(happinessOptions);
-		happiness.setSelectedIndex(70);
-		result.add(happiness);
+	    addLabeledInput.accept("Happiness", happiness);
 		
-		JTextField happinessCapInput = new JTextField("50");
-		result.add(happinessCapInput);
-		
-		JTextField expInput = new JTextField(2 + "");
-		result.add(expInput);
+	    JTextField happinessCapInput = new JTextField(p == null ? "50" : "" + p.happinessCap, 5);
+	    addLabeledInput.accept("Happiness Cap", happinessCapInput);
+
+	    JTextField expInput = new JTextField(p == null ? "2" : "" + (p.expMax - p.exp), 5);
+	    addLabeledInput.accept("Exp Remaining", expInput);
 		
 		AutoCompleteDecorator.decorate(nameInput);
 		AutoCompleteDecorator.decorate(levelInput);
@@ -1221,9 +1450,12 @@ public enum Item {
 		@SuppressWarnings("unchecked")
 		JComboBox<Move>[] moveInputs = new JComboBox[4];
 		Move[] movebank = Move.values();
-		Pokemon testMoves = (Pokemon) nameInput.getSelectedItem();
-		testMoves.level = 1;
-		testMoves.setMoves();
+		boolean pNull = p == null;
+		Pokemon testMoves = pNull ? (Pokemon) nameInput.getSelectedItem() : p;
+		if (pNull) {
+			testMoves.level = 1;
+			testMoves.setMoves();
+		}
 		for (int i = 0; i < 4; i++) {
 			moveInputs[i] = new JComboBox<Move>(movebank);
 			moveInputs[i].setSelectedItem(Move.STRUGGLE);
@@ -1239,29 +1471,33 @@ public enum Item {
 		nameInput.addActionListener(f -> {
 			abilityInput.removeAllItems();
 			Pokemon test = (Pokemon) nameInput.getSelectedItem();
-			test.level = (Integer) levelInput.getSelectedItem();
-			test.setMoves();
+			if (p == null) {
+				test.level = (Integer) levelInput.getSelectedItem();
+				test.setMoves();
+				for (int j = 0; j < 4; j++) {
+					moveInputs[j].setSelectedItem(Move.STRUGGLE);
+					Moveslot m = test.moveset[j];
+					Move m1 = m == null ? null : m.move;
+					moveInputs[j].setSelectedItem(m1);
+				}
+			}
 			for (int i = 0; i < 3; i++) {
 				test.setAbility(i);
 				abilityInput.addItem(test.ability);
-			}
-			for (int j = 0; j < 4; j++) {
-				moveInputs[j].setSelectedItem(Move.STRUGGLE);
-				Moveslot m = test.moveset[j];
-				Move m1 = m == null ? null : m.move;
-				moveInputs[j].setSelectedItem(m1);
 			}
 		});
 		
 		levelInput.addActionListener(f -> {
 			Pokemon test = (Pokemon) nameInput.getSelectedItem();
 			test.level = (Integer) levelInput.getSelectedItem();
-			test.setMoves();
-			for (int j = 0; j < 4; j++) {
-				moveInputs[j].setSelectedItem(Move.STRUGGLE);
-				Moveslot m = test.moveset[j];
-				Move m1 = m == null ? null : m.move;
-				moveInputs[j].setSelectedItem(m1);
+			if (p == null) {
+				test.setMoves();
+				for (int j = 0; j < 4; j++) {
+					moveInputs[j].setSelectedItem(Move.STRUGGLE);
+					Moveslot m = test.moveset[j];
+					Move m1 = m == null ? null : m.move;
+					moveInputs[j].setSelectedItem(m1);
+				}
 			}
 			test.expMax = test.setExpMax();
 			expInput.setText(test.expMax + "");
@@ -1290,56 +1526,62 @@ public enum Item {
 		result.add(randomize);
 		
 		JButton generate = new JButton("GENERATE");
+		final Pokemon[] resultPokemon = new Pokemon[1];
 		generate.addActionListener(e -> {
-			int id = ((Pokemon) nameInput.getSelectedItem()).id;
-			int level = (Integer) levelInput.getSelectedItem();
-			int ability = abilityInput.getSelectedIndex();
-			int expRemaining = Integer.parseInt(expInput.getText());
-			int happinessCap = Integer.parseInt(happinessCapInput.getText());
-			String selectedNature = (String) natures.getSelectedItem();
-			for (int i = 0; i < 25; i++) {
-				temp.nature = temp.getNature(i);
-				if (temp.getNature().equals(selectedNature)) break;
+			try {
+				int id = ((Pokemon) nameInput.getSelectedItem()).id;
+				int level = (Integer) levelInput.getSelectedItem();
+				int ability = abilityInput.getSelectedIndex();
+				int expRemaining = Integer.parseInt(expInput.getText());
+				int happinessCap = Integer.parseInt(happinessCapInput.getText());
+				String selectedNature = (String) natures.getSelectedItem();
+				for (int i = 0; i < 25; i++) {
+					temp.nature = temp.getNature(i);
+					if (temp.getNature().equals(selectedNature)) break;
+				}
+				double[] nature = temp.nature;
+				int[] ivs = new int[6];
+				for (int i = 0; i < 6; i++) {
+					ivs[i] = (Integer) ivInputs[i].getSelectedItem();
+				}
+				Move[] moveset = new Move[4];
+				for (int i = 0; i < 4; i++) {
+					moveset[i] = (Move) moveInputs[i].getSelectedItem();
+				}
+				
+				Pokemon generated = new Pokemon(id, level, true, false);
+				generated.abilitySlot = ability;
+				generated.setAbility(generated.abilitySlot);
+				generated.nature = nature;
+				generated.ivs = ivs;
+				generated.setStats();
+				int exp = generated.expMax - expRemaining;
+				if (exp < 0 || exp >= generated.expMax) {
+					JOptionPane.showMessageDialog(null, "Exp is not in the range [0, " + generated.expMax + "]");
+					return;
+				} else {
+					generated.exp = exp;
+				}
+				generated.happinessCap = happinessCap;
+				
+				for (int i = 0; i < 4; i++) {
+					generated.moveset[i] = moveset[i] == null ? null : new Moveslot(moveset[i]);
+				}
+				generated.happiness = (Integer) happiness.getSelectedItem();
+				generated.heal();
+				resultPokemon[0] = generated;
+				SwingUtilities.getWindowAncestor(result).dispose();
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(null, "Invalid inputs: " + ex.getMessage());
+				ex.printStackTrace();
 			}
-			double[] nature = temp.nature;
-			int[] ivs = new int[6];
-			for (int i = 0; i < 6; i++) {
-				ivs[i] = (Integer) ivInputs[i].getSelectedItem();
-			}
-			Move[] moveset = new Move[4];
-			for (int i = 0; i < 4; i++) {
-				moveset[i] = (Move) moveInputs[i].getSelectedItem();
-			}
-			
-			Pokemon resultPokemon = new Pokemon(id, level, true, false);
-			resultPokemon.abilitySlot = ability;
-			resultPokemon.setAbility(resultPokemon.abilitySlot);
-			resultPokemon.nature = nature;
-			resultPokemon.ivs = ivs;
-			resultPokemon.setStats();
-			int exp = resultPokemon.expMax - expRemaining;
-			if (exp < 0 || exp >= resultPokemon.expMax) {
-				JOptionPane.showMessageDialog(null, "Exp is not in the range [0, " + resultPokemon.expMax + "]");
-				return;
-			} else {
-				resultPokemon.exp = exp;
-			}
-			resultPokemon.happinessCap = happinessCap;
-			
-			for (int i = 0; i < 4; i++) {
-				resultPokemon.moveset[i] = moveset[i] == null ? null : new Moveslot(moveset[i]);
-			}
-			
-			resultPokemon.happiness = (Integer) happiness.getSelectedItem();
-			
-			resultPokemon.heal();
-			
-			p.catchPokemon(resultPokemon, false);
 			
 		});
 		result.add(generate);
 		
-		return result;
+		JOptionPane.showMessageDialog(null, result);
+		
+		return resultPokemon[0];
 	}
 	
 	public boolean isBall() {

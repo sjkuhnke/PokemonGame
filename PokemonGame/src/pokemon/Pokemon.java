@@ -445,7 +445,7 @@ public class Pokemon implements Serializable {
         Map<Move, Integer> moveToDamage = new HashMap<>();
 
         for (Move move : validMoves) {
-            int damage = calcWithTypes(foe, move, first);
+            int damage = calcWithTypes(foe, move, first, field);
             moveToDamage.put(move, damage);
         }
         
@@ -525,7 +525,7 @@ public class Pokemon implements Serializable {
         	for (Moveslot m : foe.moveset) {
         		if (m != null && m.currentPP > 0) {
         			Move move = m.move;
-            		int damage = foe.calcWithTypes(this, move, true, 0, false);
+            		int damage = foe.calcWithTypes(this, move, true, 0, false, field);
             		hasResist = tr.hasResist(foe, move.mtype, move);
             		if (damage >= this.currentHP) {
             			moveKills = true;
@@ -1537,7 +1537,7 @@ public class Pokemon implements Serializable {
 				secChance = move.secondary;
 				moveType = move.mtype;
 				critChance = move.critChance;
-				if (!foe.vStatuses.contains(Status.REFLECT)) this.vStatuses.remove(Status.CHARGING);
+				if (!foe.vStatuses.contains(Status.MAGIC_REFLECT)) this.vStatuses.remove(Status.CHARGING);
 			}
 		}
 		
@@ -1572,7 +1572,7 @@ public class Pokemon implements Serializable {
 				secChance = move.secondary;
 				moveType = move.mtype;
 				critChance = move.critChance;
-				if (!foe.vStatuses.contains(Status.REFLECT)) this.vStatuses.remove(Status.SEMI_INV);
+				if (!foe.vStatuses.contains(Status.MAGIC_REFLECT)) this.vStatuses.remove(Status.SEMI_INV);
 			}
 		}
 		
@@ -1708,14 +1708,14 @@ public class Pokemon implements Serializable {
 			return;
 		}
 		
-		if (foe.vStatuses.contains(Status.REFLECT) && (move != Move.BRICK_BREAK && move != Move.MAGIC_FANG && move != Move.PSYCHIC_FANGS)) {
+		if (foe.vStatuses.contains(Status.MAGIC_REFLECT) && (move != Move.BRICK_BREAK && move != Move.MAGIC_FANG && move != Move.PSYCHIC_FANGS)) {
 			this.move(this, move, false);
 			addTask(Task.TEXT, move + " was reflected on itself!");
-			foe.vStatuses.remove(Status.REFLECT);
+			foe.vStatuses.remove(Status.MAGIC_REFLECT);
 			return;
 		}
-		if (this.vStatuses.contains(Status.POSESSED)) {
-			this.vStatuses.remove(Status.POSESSED);
+		if (this.vStatuses.contains(Status.POSSESSED)) {
+			this.vStatuses.remove(Status.POSSESSED);
 			this.move(this, move, false);
 			addTask(Task.TEXT, move + " was used on itself!");
 			return;
@@ -2199,7 +2199,7 @@ public class Pokemon implements Serializable {
 				if (foe.type2 == type) multiplier *= 2;
 			}
 			
-			if (foeAbility == Ability.WONDER_GUARD && multiplier <= 1) {
+			if (foeAbility == Ability.WONDER_GUARD && multiplier <= 1 && moveType != PType.UNKNOWN) {
 				addAbilityTask(foe);
 				addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 				endMove();
@@ -3404,15 +3404,15 @@ public class Pokemon implements Serializable {
 			boolean announce) {
 		boolean fail = false;
 		if (announce && (move == Move.ABDUCT || move == Move.TAKE_OVER)) {
-			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success) && !foe.vStatuses.contains(Status.POSESSED)) {
-				foe.vStatuses.add(Status.POSESSED);
+			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success) && !foe.vStatuses.contains(Status.POSSESSED)) {
+				foe.vStatuses.add(Status.POSSESSED);
 				addTask(Task.TEXT, this.nickname + " posessed " + foe.nickname + "!");
 			} else { fail = fail(announce); }
 			this.impressive = false;
 			this.lastMoveUsed = move;
 		} else if (announce && move == Move.MAGIC_REFLECT) {
-			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success) && !vStatuses.contains(Status.REFLECT)) {
-				this.vStatuses.add(Status.REFLECT);
+			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success) && !vStatuses.contains(Status.MAGIC_REFLECT)) {
+				this.vStatuses.add(Status.MAGIC_REFLECT);
 				addTask(Task.TEXT, "A magical reflection surrounds " + this.nickname + "!");
 			} else { fail = fail(announce); }
 			this.impressive = false;
@@ -4945,11 +4945,11 @@ public class Pokemon implements Serializable {
 		return damage;
 	}
 	
-	public int calcWithTypes(Pokemon foe, Move move, boolean first) {
-		return calcWithTypes(foe, move, first, 0, false);
+	public int calcWithTypes(Pokemon foe, Move move, boolean first, Field field) {
+		return calcWithTypes(foe, move, first, 0, false, field);
 	}
 	
-	public int calcWithTypes(Pokemon foe, Move move, boolean first, int mode, boolean crit) {
+	public int calcWithTypes(Pokemon foe, Move move, boolean first, int mode, boolean crit, Field field) {
 		double attackStat;
 		double defenseStat;
 		int damage = 0;
@@ -4982,7 +4982,7 @@ public class Pokemon implements Serializable {
 				}
 				Move[] validMoves = moves.toArray(new Move[moves.size()]);
 				Move pickMove = validMoves[new Random().nextInt(validMoves.length)];
-				magicDamage = calcWithTypes(foe, pickMove, first, mode, crit);
+				magicDamage = calcWithTypes(foe, pickMove, first, mode, crit, field);
 			}
 			if (move == Move.ELEMENTAL_SPARKLE) {
 				ArrayList<Move> moves = new ArrayList<>();
@@ -4993,7 +4993,7 @@ public class Pokemon implements Serializable {
 				}
 				Move[] validMoves = moves.toArray(new Move[moves.size()]);
 				Move pickMove = validMoves[new Random().nextInt(validMoves.length)];
-				magicDamage = calcWithTypes(foe, pickMove, first, mode, crit);
+				magicDamage = calcWithTypes(foe, pickMove, first, mode, crit, field);
 			}
 		}
 		
@@ -5019,6 +5019,10 @@ public class Pokemon implements Serializable {
 			} else {
 				bp *= 6;
 			}
+		}
+		
+		if (this.vStatuses.contains(Status.MUTE) && Move.getSound().contains(move)) {
+			return 0;
 		}
 		
 		if (this.ability == Ability.COMPOUND_EYES) acc *= 1.3;
@@ -5081,6 +5085,23 @@ public class Pokemon implements Serializable {
 			bp *= 1.2;
 		}
 		
+		if (foe.vStatuses.contains(Status.MAGIC_REFLECT) && (move != Move.BRICK_BREAK && move != Move.MAGIC_FANG && move != Move.PSYCHIC_FANGS)) {
+			damage = this.calcWithTypes(this, move, false, mode, crit, field);
+			if (mode == 0) {
+				return 1 - damage;
+			} else {
+				return damage;
+			}
+		}
+		if (this.vStatuses.contains(Status.POSSESSED) && this != foe) {
+			damage = this.calcWithTypes(this, move, false, mode, crit, field);
+			if (mode == 0) {
+				return 1 - damage;
+			} else {
+				return damage;
+			}
+		}
+		
 		if (moveType == PType.FIRE && foeAbility == Ability.FLASH_FIRE) {
 			return 0;
 		}
@@ -5095,7 +5116,7 @@ public class Pokemon implements Serializable {
 			return 0;
 		}
 		
-		if (moveType == PType.GROUND && !foe.isGrounded() && move.cat != 2) {
+		if (moveType == PType.GROUND && !foe.isGrounded(field) && move.cat != 2) {
 			return 0;
 		}
 		
@@ -5111,7 +5132,7 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded() && move.hasPriority(this) && move != Move.GRAVITY_PUNCH) {
+		if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded(field) && move.hasPriority(this) && move != Move.GRAVITY_PUNCH) {
 			return 0;
 		}
 		
@@ -5197,20 +5218,20 @@ public class Pokemon implements Serializable {
 			if (move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) bp *= 0.5;
 		}
 		
-		if (field.equals(field.terrain, Effect.ELECTRIC) && isGrounded()) {
+		if (field.equals(field.terrain, Effect.ELECTRIC) && isGrounded(field)) {
 			if (moveType == PType.ELECTRIC) bp *= 1.5;
 		}
 		
 		if (field.equals(field.terrain, Effect.GRASSY)) {
-			if (isGrounded() && moveType == PType.GRASS) bp *= 1.5;
+			if (isGrounded(field) && moveType == PType.GRASS) bp *= 1.5;
 			if (move == Move.EARTHQUAKE || move == Move.BULLDOZE || move == Move.MAGNITUDE) bp *= 0.5;
 		}
 		
-		if (field.equals(field.terrain, Effect.SPARKLY) && isGrounded()) {
+		if (field.equals(field.terrain, Effect.SPARKLY) && isGrounded(field)) {
 			if (moveType == PType.MAGIC) bp *= 1.5;
 		}
 		
-		if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded()) {
+		if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded(field)) {
 			if (moveType == PType.PSYCHIC) bp *= 1.5;
 		}
 		
@@ -5349,7 +5370,7 @@ public class Pokemon implements Serializable {
 			multiplier = 0.5;
 		}
 		
-		if (foeAbility == Ability.WONDER_GUARD && multiplier <= 1) {
+		if (foeAbility == Ability.WONDER_GUARD && multiplier <= 1 && moveType != PType.UNKNOWN) {
 			return 0;
 		}
 		
@@ -5504,7 +5525,7 @@ public class Pokemon implements Serializable {
 			this.sleep(false, f);
 			this.vStatuses.remove(Status.DROWSY);
 		}
-		if (this.ability == Ability.PARASOCIAL && f.ability != Ability.MAGIC_GUARD && f.ability != Ability.SCALY_SKIN && !f.isFainted() && (f.vStatuses.contains(Status.POSESSED) || f.vStatuses.contains(Status.CONFUSED) || f.status == Status.ASLEEP)) {
+		if (this.ability == Ability.PARASOCIAL && f.ability != Ability.MAGIC_GUARD && f.ability != Ability.SCALY_SKIN && !f.isFainted() && (f.vStatuses.contains(Status.POSSESSED) || f.vStatuses.contains(Status.CONFUSED) || f.status == Status.ASLEEP)) {
 			int hp = (int) Math.max(f.getStat(0) * 1.0 / 8, 1);
 			if (hp >= f.currentHP) hp = f.currentHP;
 			addAbilityTask(this);
@@ -6176,7 +6197,7 @@ public class Pokemon implements Serializable {
 				if (announce) foe.sleepCounter = 0;
 			}
 		} else if (move == Move.VENOSHOCK) {
-			if (foe.status == Status.POISONED) {
+			if (foe.status == Status.POISONED || foe.status == Status.TOXIC) {
 				bp = 130;
 			} else {
 				bp = 65;
@@ -7083,8 +7104,12 @@ public class Pokemon implements Serializable {
 		}
 		return multiplier;
 	}
-
+	
 	public boolean isGrounded() {
+		return isGrounded(field);
+	}
+
+	public boolean isGrounded(Field field) {
 		boolean result = true;
 		if (this.type1 == PType.FLYING || this.type2 == PType.FLYING) result = false;
 		if (this.item == Item.AIR_BALLOON) result = false;

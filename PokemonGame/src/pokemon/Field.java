@@ -129,6 +129,15 @@ public class Field {
 		public String toString() {
 			return effect.toString();
 		}
+		
+		@Override
+		public FieldEffect clone() {
+			FieldEffect result = new FieldEffect(this.effect);
+			result.turns = this.turns;
+			result.layers = this.layers;
+			
+			return result;
+		}
 
 		public String toLowerCaseString() {
 			return effect.toString().toLowerCase();
@@ -391,7 +400,7 @@ public class Field {
 	 */
 	public boolean hasScreens(ArrayList<FieldEffect> side, Pokemon foe) {
 		ArrayList<FieldEffect> result = getScreens(side);
-		return !result.isEmpty() || foe.vStatuses.contains(Status.REFLECT);
+		return !result.isEmpty() || foe.vStatuses.contains(Status.MAGIC_REFLECT);
 	}
 	
 	public int getLayers(ArrayList<FieldEffect> side, Effect effect) {
@@ -421,6 +430,20 @@ public class Field {
 		}
 		return false;
 	}
-
+	
+	@Override
+	public Field clone() {
+		Field result = new Field();
+		if (this.weather != null) result.weather = this.weather.clone();
+		if (this.terrain != null) result.terrain = this.terrain.clone();
+		result.weatherTurns = this.weatherTurns;
+		result.terrainTurns = this.terrainTurns;
+		
+		result.playerSide = new ArrayList<>(this.playerSide);
+		result.foeSide = new ArrayList<>(this.foeSide);
+		result.fieldEffects = new ArrayList<>(this.fieldEffects);
+		
+		return result;
+	}
 
 }

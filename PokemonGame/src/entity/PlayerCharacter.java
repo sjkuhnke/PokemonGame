@@ -833,7 +833,7 @@ public class PlayerCharacter extends Entity {
 					Pokemon.addTask(Task.DIALOGUE, gp.npc[13][3], "... Well, nice to meet you young man! What do I owe the pleasure of this visit to?");
 					Pokemon.addTask(Task.DIALOGUE, gp.npc[13][3], "...");
 					Pokemon.addTask(Task.DIALOGUE, gp.npc[13][3], "Yes, I do research Xhenovian forms! If you can bring me a regional form, I can trade you for its counterpart!");
-					Pokemon.addTask(Task.DIALOGUE, gp.npc[13][3], "First though, I'll have to upgrade your Pokedex to add a 'Variant' Pokedex for you to keep track of these forms");
+					Pokemon.addTask(Task.DIALOGUE, gp.npc[13][3], "First though, I'll have to upgrade your Pokedex to add a 'Variant' Pokedex for you to keep track of these forms.");
 					Pokemon.addTask(Task.DIALOGUE, gp.npc[13][3], "... And there you go! All upgraded. Come talk to me when you have a Xhenovian Pokemon to trade!");
 					Pokemon.addTask(Task.DIALOGUE, gp.npc[13][3], "Ryder, it was great to see you as always. Take care boys!");
 					t = Pokemon.addTask(Task.TURN, this, "");
@@ -1949,6 +1949,7 @@ public class PlayerCharacter extends Entity {
 		} else if (code.equals("KANY3")) {
 			p.setMoney(1000000);
 			p.itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
+			gp.aSetter.setObject();
 			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("Ben")) {
 			p.catchPokemon(new Pokemon(238, 5, true, false));
@@ -2003,8 +2004,8 @@ public class PlayerCharacter extends Entity {
 			}
     	    SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("GENN")) {
-			JPanel panel = Item.displayGenerator(p);
-			JOptionPane.showMessageDialog(null, panel);
+			Pokemon po = Item.displayGenerator(null);
+			p.catchPokemon(po, false);
     	    SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("ASH KETCHUP")) {
 			p.trainersBeat = new boolean[Trainer.MAX_TRAINERS];
