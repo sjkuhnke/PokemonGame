@@ -88,13 +88,14 @@ public class Player extends Trainer implements Serializable {
 	public int coins;
 	public int gamesWon;
 	public int winStreak;
+	public int[] blackjackStats; // 0: games played, 1: games won, 2: games pushed, 3: busts, 4: bust wins, 5: blackjacks 6: doubles 7: double wins, 8: coins won, 9: coins lost: 10: highest coin, 11: highest win streak, 12: lose streak, 13: high lose strk
 	public int currentBox;
 	public int version;
 	private Integer id;
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 47;
+	public static final int VERSION = 49;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -128,6 +129,8 @@ public class Player extends Trainer implements Serializable {
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 		trainersBeat = new boolean[MAX_TRAINERS];
 		locations[0] = true;
+		
+		blackjackStats = new int[20];
 		
 		setupStatBerries();
         setupResistBerries();
@@ -215,7 +218,7 @@ public class Player extends Trainer implements Serializable {
 
 	public void swapToFront(Pokemon pokemon, int index) {
 		if (!current.isFainted()) {
-			Pokemon.addSwapOutTask(current);
+			Pokemon.addSwapOutTask(current, true);
 		}
 		
 		if (current.ability == Ability.REGENERATOR && !current.isFainted()) {
@@ -235,8 +238,9 @@ public class Player extends Trainer implements Serializable {
 			numBattled++;
 			this.current.battled = true;
 		}
-		Pokemon.addSwapInTask(current, current.currentHP);
+		Pokemon.addSwapInTask(current, current.currentHP, true);
 		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
+		Pokemon.field.switches++;
 	}
 	
 	public void swap(int a, int b) {
@@ -311,17 +315,6 @@ public class Player extends Trainer implements Serializable {
 		return true;
 	}
 	
-	public boolean wiped() {
-		boolean result = true;
-		for (int i = 0; i < team.length; i++) {
-			if (this.team[i] != null && !this.team[i].isFainted()) {
-				result = false;
-				break;
-			}
-		}
-		return result;
-	}
-	
 	public boolean hasMove(Move m) {
 		boolean result = false;
 		if (m == Move.CUT && badges < 1) return false;
@@ -376,7 +369,6 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	private void updateLegacyFlags() {
-		// TODO: map flags to flag indices
 		secondStarter--;
 		//flags = null;
 	}
@@ -429,6 +421,7 @@ public class Player extends Trainer implements Serializable {
 		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
 		
 		JTextField money = new JTextField(this.money + "");
+		JTextField coins = new JTextField(this.coins + "");
 		JComboBox<Integer> badges = new JComboBox<>();
 		JComboBox<Pokemon> starter = new JComboBox<>();
 		JButton pokedexButton = new JButton("Pokedex");
@@ -442,6 +435,7 @@ public class Player extends Trainer implements Serializable {
 		JButton confirm = new JButton("Confirm");
 		
 		result.add(money);
+		result.add(coins);
 		
 		for (int i = 0; i < 9; i++) {
 			badges.addItem(i);
@@ -562,7 +556,7 @@ public class Player extends Trainer implements Serializable {
 		for (int i = 0; i < 11; i++) {
 			grustCount.addItem(i);
 		}
-		grustCount.setSelectedIndex(this.grustCount);
+		if (this.grustCount <= grustCount.getItemCount()) grustCount.setSelectedIndex(this.grustCount);
 		result.add(grustCount);
 		
 		AutoCompleteDecorator.decorate(badges);
@@ -571,6 +565,7 @@ public class Player extends Trainer implements Serializable {
 		
 		confirm.addActionListener(e -> {
 			this.money = Integer.parseInt(money.getText());
+			this.coins = Integer.parseInt(coins.getText());
 			this.badges = (int) badges.getSelectedItem();
 			this.starter = starter.getSelectedIndex() + 1;
 			for (int i = 0; i < flagDesc.length; i++) {
@@ -1299,6 +1294,8 @@ public class Player extends Trainer implements Serializable {
 		updateBoxes();
 		updateBerries();
 		if (id == null) setID(gp.player.currentSave);
+		if (blackjackStats == null) blackjackStats = new int[20];
+		if (this.effects == null) this.effects = new ArrayList<>();
 		version = VERSION;
 	}
 

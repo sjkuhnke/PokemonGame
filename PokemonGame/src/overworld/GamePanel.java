@@ -7,8 +7,6 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -90,6 +88,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public UI ui = new UI(this);
 	public BattleUI battleUI = new BattleUI(this);
+	public SimBattleUI simBattleUI = new SimBattleUI(this);
 	
 	public int gameState;
 	public static final int PLAY_STATE = 1;
@@ -109,9 +108,9 @@ public class GamePanel extends JPanel implements Runnable {
 	public static final int STARTER_STATE = 16;
 	public static final int LETTER_STATE = 17;
 	public static final int PRIZE_STATE = 18;
+	public static final int SIM_BATTLE_STATE = 19;
+	public static final int SIM_START_BATTLE_STATE = 20;
 
-	public static Map<Entity, Integer> volatileTrainers = new HashMap<>(); // TODO: remove this once aSetter.setNPC() is correctly configured to not have volatile npcs
-	
 	public GamePanel(JFrame window) {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
@@ -179,6 +178,21 @@ public class GamePanel extends JPanel implements Runnable {
 		} else {
 			FPS = 60;
 		}
+		if (keyH.ctrlPressed && keyH.shiftPressed && keyH.sPressed) {
+			if (gameState == BATTLE_STATE) {
+				System.out.println("------------------------------------------");
+				System.out.println("Current Task: " + battleUI.currentTask);
+				System.out.println(battleUI.tasks.toString());
+			} else if (gameState == SIM_BATTLE_STATE) {
+				System.out.println("------------------------------------------");
+				System.out.println("Current Task: " + simBattleUI.currentTask);
+				System.out.println(simBattleUI.tasks.toString());
+			} else {
+				System.out.println("------------------------------------------");
+				System.out.println("Current Task: " + ui.currentTask);
+				System.out.println(ui.tasks.toString());
+			}
+		}
 	}
 	
 	private void updateEntity() {
@@ -193,7 +207,7 @@ public class GamePanel extends JPanel implements Runnable {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
 		
-		if (gameState != BATTLE_STATE) {
+		if (gameState != BATTLE_STATE && gameState != SIM_BATTLE_STATE) {
 			
 			// Draw Tiles
 			tileM.draw(g2, false);
@@ -237,6 +251,9 @@ public class GamePanel extends JPanel implements Runnable {
 			// Draw Tooltips
 			drawOverworldToolTips(g2);
 		
+		} else if (gameState == SIM_BATTLE_STATE) {
+			// Draw Sim Battle Screen
+			simBattleUI.draw(g2);
 		} else {
 			// Draw Battle Screen
 			battleUI.draw(g2);
@@ -281,7 +298,9 @@ public class GamePanel extends JPanel implements Runnable {
 			if (teamTemp[i] != null) {
 				if (teamTemp[i].id == 237) {
 					teamTemp[i].id = 150;
-					teamTemp[i].nickname = teamTemp[i].nickname.equals("Kissyfishy-D") ? teamTemp[i].nickname = teamTemp[i].getName() : teamTemp[i].nickname;
+					teamTemp[i].setSprites();
+					if (teamTemp[i].nickname.equals(teamTemp[i].name)) teamTemp[i].nickname = teamTemp[i].getName();
+					teamTemp[i].name = teamTemp[i].getName();
 					
 					teamTemp[i].baseStats = teamTemp[i].getBaseStats();
 					teamTemp[i].setStats();
@@ -315,6 +334,17 @@ public class GamePanel extends JPanel implements Runnable {
 		battleUI.terrain = null;
 		battleUI.moveNum = 0;
 		battleUI.foeFainted = 0;
+	}
+	
+	public void endSim() {
+		Pokemon.field = new Field();
+		simBattleUI.tasks = new ArrayList<>();
+		simBattleUI.currentTask = null;
+		simBattleUI.tempUser = null;
+		simBattleUI.weather = null;
+		simBattleUI.terrain = null;
+		simBattleUI.moveNum = 0;
+		simBattleUI.foeFainted = 0;
 	}
 	
 	public void addPanel(JPanel panel, boolean animate) {

@@ -398,7 +398,7 @@ public class PlayerCharacter extends Entity {
 		if (keyH.aPressed) {
 			if (keyH.ctrlPressed) {
 				keyH.ctrlPressed = false;
-				Item.useCalc(p, null, null);
+				Item.useCalc(p.getCurrent(), null, null);
 			} else {
 				if (p.fish) {
 					int result = gp.cChecker.checkTileType(this);
@@ -1456,8 +1456,7 @@ public class PlayerCharacter extends Entity {
 				
 				Pokemon.addTask(Task.TEXT, "A powerful presence awaits...");
 			}
-		}
-		if (gp.currentMap == 109) {
+		} else if (gp.currentMap == 109) {
 			if (worldX / gp.tileSize > 24) { // breeder
 				p.flag[5][7] = true;
 				Pokemon.addTask(Task.TEXT, "Here, could you raise it for me?");
@@ -1516,15 +1515,18 @@ public class PlayerCharacter extends Entity {
 				Pokemon.addTask(Task.DIALOGUE, npc, "Now, go and stop them before it's too late.");
 				p.flag[6][0] = true;
 			}
-		}
-		if (gp.currentMap == 118) {
+		} else if (gp.currentMap == 118) {
 			Pokemon.addTask(Task.TEXT, "Do you have any fossils for me to resurrect?");
 			Pokemon.addTask(Task.FOSSIL, "Do you have any fossils for me to resurrect?");
-		} if (gp.currentMap == 127) {
-			Task t = Pokemon.addTask(Task.CONFIRM, "Would you like to play Blackjack?\n(Warning: Will Auto-Save)");
-			t.counter = 3;
-		}
-		if (gp.currentMap == 129 && worldY / gp.tileSize > 41) {
+		} else if (gp.currentMap == 127) {
+			if (worldX / gp.tileSize > 31) {
+				Task t = Pokemon.addTask(Task.CONFIRM, "Would you like to Battle Bet?\n(Warning: Will Auto-Save)");
+				t.counter = 4;
+			} else {
+				Task t = Pokemon.addTask(Task.CONFIRM, "Would you like to play Blackjack?\n(Warning: Will Auto-Save)");
+				t.counter = 3;
+			}
+		} else if (gp.currentMap == 129 && worldY / gp.tileSize > 41) {
 			if (!p.flag[6][1]) {
 				Pokemon.addTask(Task.TEXT, "Oh, you haven't gotten any coins yet?");
 				Pokemon.addTask(Task.TEXT, "Here, just this once, have some!");

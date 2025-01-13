@@ -56,6 +56,8 @@ public class KeyHandler implements KeyListener {
 			nurseState(code);
 		} else if (gp.gameState == GamePanel.BATTLE_STATE) {
 			battleState(code);
+		} else if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
+			simBattleState(code);
 		} else if (gp.gameState == GamePanel.USE_ITEM_STATE) {
 			useItemState(code);
 		} else if (gp.gameState == GamePanel.USE_REPEL_STATE) {
@@ -298,6 +300,94 @@ public class KeyHandler implements KeyListener {
 				} else {
 					gp.battleUI.moveSummaryNum = -1;
 					gp.battleUI.moveSwapNum = -1;
+				}
+				
+			}
+		}
+	}
+	
+	private void simBattleState(int code) {
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		
+		if (code == KeyEvent.VK_A) {
+			aPressed = true;
+		}
+		
+		if (code == KeyEvent.VK_D) {
+			dPressed = true;
+		}
+		
+		if (code == KeyEvent.VK_S) {
+			sPressed = true;
+		}
+		
+		if (gp.simBattleUI.subState == SimBattleUI.IDLE_STATE) {
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+				if (gp.simBattleUI.commandNum > 1 && !gp.simBattleUI.showFoeSummary) {
+					gp.simBattleUI.commandNum -= 2;
+				}
+			}
+			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				if (gp.simBattleUI.commandNum < 2 && !gp.simBattleUI.showFoeSummary) {
+					gp.simBattleUI.commandNum += 2;
+				}
+			}
+			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+				if (!gp.simBattleUI.showFoeSummary && gp.simBattleUI.commandNum >= 0 && gp.simBattleUI.commandNum % 2 == 1) {
+					gp.simBattleUI.commandNum--;
+				} else {
+					leftPressed = true;
+				}
+			}
+			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+				if (!gp.simBattleUI.showFoeSummary && gp.simBattleUI.commandNum >= 0 && gp.simBattleUI.commandNum % 2 == 0) {
+					gp.simBattleUI.commandNum++;
+				} else {
+					rightPressed = true;
+				}
+			}
+		} else if (gp.simBattleUI.subState == BattleUI.MOVE_SELECTION_STATE) {
+			if (code == KeyEvent.VK_S) {
+				gp.simBattleUI.subState = BattleUI.IDLE_STATE;
+				gp.simBattleUI.showMoveSummary = false;
+			}
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+				if (gp.simBattleUI.moveNum > 1) {
+					gp.simBattleUI.moveNum -= 2;
+				}
+			}
+			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				if (gp.simBattleUI.moveNum < 2 && gp.simBattleUI.user.moveset[gp.simBattleUI.moveNum + 2] != null) {
+					gp.simBattleUI.moveNum += 2;
+				}
+			}
+			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+				if (gp.simBattleUI.moveNum % 2 == 1) {
+					gp.simBattleUI.moveNum--;
+				}
+			}
+			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+				if (gp.simBattleUI.moveNum % 2 == 0 && gp.simBattleUI.user.moveset[gp.simBattleUI.moveNum + 1] != null) {
+					gp.simBattleUI.moveNum++;
+				}
+			}
+		} else if (gp.simBattleUI.subState == BattleUI.PARTY_SELECTION_STATE) {
+			if (code == KeyEvent.VK_S && gp.simBattleUI.cancellableParty) {
+				gp.simBattleUI.subState = BattleUI.IDLE_STATE;
+			}
+		} else if (gp.simBattleUI.subState == BattleUI.INFO_STATE) {
+			if (code == KeyEvent.VK_S) {
+				gp.simBattleUI.subState = BattleUI.IDLE_STATE;
+			}
+		} else if (gp.simBattleUI.subState == BattleUI.SUMMARY_STATE) {
+			if (code == KeyEvent.VK_S) {
+				if (gp.simBattleUI.moveSummaryNum == -1) {
+					gp.simBattleUI.subState = BattleUI.PARTY_SELECTION_STATE;
+				} else {
+					gp.simBattleUI.moveSummaryNum = -1;
+					gp.simBattleUI.moveSwapNum = -1;
 				}
 				
 			}
@@ -607,7 +697,7 @@ public class KeyHandler implements KeyListener {
 			if (ctrlPressed) {
 				ctrlPressed = false;
 				Pokemon[] cBox = gp.ui.gauntlet ? gp.player.p.gauntletBox : gp.player.p.boxes[gp.player.p.currentBox];
-				Item.useCalc(gp.player.p, cBox, null);
+				Item.useCalc(gp.player.p.getCurrent(), cBox, null);
 			} else {
 				aPressed = true;
 			}
@@ -703,6 +793,10 @@ public class KeyHandler implements KeyListener {
 			} else {
 				sPressed = true;
 			}
+		}
+		
+		if (code == KeyEvent.VK_A) {
+			aPressed = true;
 		}
 		
 		if (code == KeyEvent.VK_W) {

@@ -1680,20 +1680,20 @@ public class AssetSetter {
 		
 		mapNum = 113;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 55, 58, "", "", 246);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 51, 56, "", "", 247);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 44, 58, "", "", 248);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 42, 56, "", "", 249);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 44, 49, "", "", 250);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 53, 49, "", "", 251);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 62, 47, "", "", 252);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 63, 41, "", "", 253);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 54, 43, "", "", 254);
+		gp.npc[mapNum][index] = NPCSetup(ACTRESS_LEFT, 55, 58, "Prepare for an elegant battle - grace meets power!", "I'll take this loss with grace. Next time, I'll have my shining moment!", 246);
+		gp.npc[mapNum][index] = NPCSetup(ACTOR_DOWN, 51, 56, "I don't break character - even when I'm breaking you!", "Guess this wasn't my shining moment.", 247);
+		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_UP, 44, 58, "I bet I can beat you with just a couple of strong moves!", "Wow, you're good! I'll keep working hard until I can beat you!", 248);
+		gp.npc[mapNum][index] = NPCSetup(ACTRESS_RIGHT, 42, 56, "I'll make this battle one to remember, with me as the star!", "You may have stolen the spotlight, but I'll take it back!", 249);
+		gp.npc[mapNum][index] = NPCSetup(ACTOR_LEFT, 44, 49, "My performance is flawless - just like this battle will be.", "Well, you've won this act. Enjoy the applause while it lasts.", 250);
+		gp.npc[mapNum][index] = NPCSetup(ACTOR_UP, 53, 49, "The stage is set, and you're about to witness a perfect performance!", "That wasn't in the script... but I'll be back for the encore!", 251);
+		gp.npc[mapNum][index] = NPCSetup(ACTOR_RIGHT, 62, 47, "Lights, camera, battle! Watch me shine!", "I guess even the best actors stumble sometimes...", 252);
+		gp.npc[mapNum][index] = NPCSetup(ACTRESS_DOWN, 63, 41, "Lights, action, battle! Time to put on a show you won't forget!", "The curtain falls... for now. I'll be back stronger!", 253);
+		gp.npc[mapNum][index] = NPCSetup(ACTOR_UP, 54, 43, "Every move, every attack - it's all part of my grand show!", "A little setback, that's all. The show must go on!", 254);
 		gp.npc[mapNum][index] = NPCSetup(RAYNA, 53, 30, "", "", 255);
 		
 		mapNum = 115;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 88, 69, "", "", 243);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 88, 69, "I train with the intensity of a lightning storm! Let's see if you can keep up!", "You're fast... but next time, I'll be faster. Count on it!", 243);
 		gp.npc[mapNum][index] = NPCSetup(BLACK_BELT_DOWN, 62, 74, "Prepare yourself! My Pokemon fight with the heart of a true warrior!", "Impressive! I'll need to push myself even further!", 244);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_RIGHT, 41, 72, "Don't think my dragons will go easy on you. They're as tough as they come!", "I thought I had it all figured out... Guess I need to rethink my strategy.", 245);
 		
@@ -1737,12 +1737,13 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 79, "", "", 287);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 86, 72, "", "", 290);
 		
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 25, 83, "The gym is closed right now. Why, you ask? Because a goddamn Team Nuke member came here and KIDNAPPED one of our employees.\n\nYeah, what the hell is right! Last I saw him, he was bringing Marcus towards the volcano. I just hope that Marcus doesn't sue us...", 196);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 25, 83, "The gym is closed right now. Why, you ask? Because a goddamn Team Nuke member came here and KIDNAPPED one of our employees.\n"
+				+ "Yeah, what the hell is right! Last I saw him, he was bringing Marcus towards the volcano. I just hope that Marcus doesn't sue us...", 196);
 		
 		mapNum = 127;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 27, 39, "Welcome to the Blackjack table!", true);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 35, 39, "This game isn't ready yet!", true);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 35, 39, "Welcome to the Sports Betting - Pokemon Edition table!", true);
 		
 		mapNum = 128;
 		index = 0;
@@ -1820,13 +1821,8 @@ public class AssetSetter {
 		
 		mapNum = 138;
 		index = 0;
-		if (!flags[26]) {
-			gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 53, 73, "", "", 311);
-		} else {
-			gp.npc[mapNum][index++] = null;
-			GamePanel.volatileTrainers.put(NPCSetup(TN_DOWN, 53, 73, "", "", 311), mapNum);
-		}
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 55, 72, "Thank you so much for saving me!", true, 26, "It's so hot in here. How the \"hell\" do I leave???");
+		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 53, 74, "", "", 311);
+		gp.npc[mapNum][index] = SetupStaticEncounter(288, 52, 73, 394, 196, "Azchoozlooagh!");
 		
 		mapNum = 139;
 		index = 0;
@@ -2738,7 +2734,6 @@ public class AssetSetter {
 	}
 
 	public void updateNPC(int map) {
-		boolean[] flags = gp.player.p.flags;
 		boolean[][] flag = gp.player.p.flag;
 		
 		/**
@@ -3068,6 +3063,11 @@ public class AssetSetter {
 			for (int i = 0; i < 13; i++) {
 				gp.npc[104][i] = null;
 			}
+			if (!flag[5][5] && gp.ui.tasks.isEmpty()) {
+				gp.npc[103][1].worldX = 51 * gp.tileSize;
+				gp.npc[103][1].worldY = 41 * gp.tileSize;
+				gp.npc[103][1].direction = "down";
+			}
 		}
 		if (flag[5][5]) {
 			gp.npc[103][1] = null;
@@ -3090,23 +3090,26 @@ public class AssetSetter {
 		}
 		
 		if (flag[6][4]) {
+			gp.npc[138][0] = null;
+			gp.npc[138][1] = null;
 			gp.npc[124][15] = null;
 		}
 		
 		/**
+		 * Eighth Split
+		 */
+		
+		/**
 		 * All of this is old and should be removed/reworked
-		 */		
-		if (flags[26]) {
-			gp.npc[138][0] = null;
-		}
-		if (flags[28]) {
+		 */
+		if (flag[7][5]) {
 			gp.npc[146][1] = null;
 			for (int i = 1; i < gp.npc[1].length; i++) {
 				gp.npc[149][i] = null;
 			}
 		}
 		
-		if (map == 107 && flags[28]) {
+		if (map == 107 && flag[7][5]) {
 			gp.tileM.openGhostlyBluePortals();
 		}
 		

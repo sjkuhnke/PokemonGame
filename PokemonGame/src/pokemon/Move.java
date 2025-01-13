@@ -61,7 +61,7 @@ public enum Move {
 	BOLT_STRIKE(130,85,20,0,0,0,PType.ELECTRIC,"% chance to Paralyze foe",true,5),
 	BOUNCE(85,85,30,0,0,0,PType.FLYING,"% chance to Paralyze foe. Goes into the air on the first turn, and attacks on the second",true,5),
 	BRANCH_POKE(40,100,0,0,0,0,PType.GRASS,"A normal attack",true,35),
-	BRAVE_BIRD(120,100,0,0,0,0,PType.FLYING,"User takes 1/3 of damage inflicted",true,10), 
+	BRAVE_BIRD(120,100,0,0,0,0,PType.FLYING,"User takes 1/3 of damage inflicted",true,10),
 	BREAKING_SWIPE(60,100,100,0,0,0,PType.DRAGON,"% chance to lower foe's Attack by 1",true,15),
 	BRICK_BREAK(75,100,100,0,0,0,PType.FIGHTING,"% to break Screen effects",true,15),
 	BRINE(-1,100,0,0,1,0,PType.WATER,"Damage is doubled if foe is below 50% HP",false,10),
@@ -210,7 +210,7 @@ public enum Move {
 	GLITTERING_SWORD(95,100,20,0,0,0,PType.LIGHT,"% chance to lower foe's Defense by 1",true,10),
 	GLITTERING_TORNADO(55,100,30,0,1,0,PType.LIGHT,"% chance to lower foe's Accuracy by 1",false,25),
 	GLITZY_GLOW(80,100,30,0,1,0,PType.LIGHT,"% chance to raise user's Sp.Def by 1",false,15),
-	GRASS_KNOT(-1,100,0,0,1,0,PType.GRASS,"A normal attack",true,20),
+	GRASS_KNOT(-1,100,0,0,1,0,PType.GRASS,"Damage is based on how heavy foe is",true,20),
 	GRASS_WHISTLE(0,55,0,0,2,0,PType.GRASS,"Foe falls asleep",false,15),
 	GRASSY_TERRAIN(0,1000,0,0,2,0,PType.GRASS,"Sets the terrain to GRASSY for 5 turns",false,10),
 	GRAVITY(0,1000,0,0,2,0,PType.GALACTIC,"Sets GRAVITY for 6 turns, in which the accuracy of all Pokemon is increased",false,10),
@@ -246,7 +246,7 @@ public enum Move {
 	HYDRO_VORTEX(90,100,40,0,1,0,PType.WATER,"% chance of confusing foe or causing foe to flinch",false,5),
 	HYPER_BEAM(150,90,0,0,1,0,PType.NORMAL,"User must rest after using this move",false,5),
 	HYPER_FANG(80,90,10,0,0,0,PType.NORMAL,"% of causing foe to flinch",true,15),
-	HYPER_VOICE(90,100,0,0,1,0,PType.NORMAL,"A normal attack",true,15),
+	HYPER_VOICE(90,100,0,0,1,0,PType.NORMAL,"A normal attack",false,15),
 	HYPNOSIS(0,60,0,0,2,0,PType.PSYCHIC,"Causes foe to sleep",false,10),
 	ICE_BALL(-1,90,0,0,0,0,PType.ICE,"Attacks up to 5 times, damage doubles each time. While active, user cannot switch out",true,20),
 	ICE_BEAM(90,100,10,0,1,0,PType.ICE,"% chance to Frostbite foe",false,10),
@@ -1104,7 +1104,7 @@ public enum Move {
 				if (foe.ability != Ability.STICKY_HOLD || me.ability == Ability.MOLD_BREAKER) {
 					if (m == Move.BUG_BITE || m == Move.PLUCK || m == Move.INCINERATE) return true;
 				}
-				if (Pokemon.field.hasScreens(Pokemon.field.playerSide, foe)) {
+				if (Pokemon.field.hasScreens(foe.getFieldEffects(), foe)) {
 					if (m == Move.BRICK_BREAK || m == Move.PSYCHIC_FANGS) return true;
 				}
 				// Foe inflicting status moves (potentially add checks for if they're already statused)
@@ -1112,7 +1112,7 @@ public enum Move {
 					return true;
 				}
 				// Spin moves
-				if (m == Move.RAPID_SPIN && !Pokemon.field.getHazards(Pokemon.field.foeSide).isEmpty()) {
+				if (m == Move.RAPID_SPIN && !Pokemon.field.getHazards(me.getFieldEffects()).isEmpty()) {
 					return true;
 				}
 				// Self boosting moves (potentially add AI later if they're already at +6 in the stat by sending them through the other stat boosting check block in Pokemon.bestMove())
@@ -1129,7 +1129,7 @@ public enum Move {
 				if (m == Move.SPARKLING_ARIA && me.status == Status.BURNED) {
 					return true;
 				}
-				if (m == Move.ROCKFALL_FRENZY && !Pokemon.field.contains(Pokemon.field.playerSide, Effect.STEALTH_ROCKS)) {
+				if (m == Move.ROCKFALL_FRENZY && !Pokemon.field.contains(foe.getFieldEffects(), Effect.STEALTH_ROCKS)) {
 					return true;
 				}
 				

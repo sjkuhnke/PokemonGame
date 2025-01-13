@@ -173,7 +173,7 @@ public class Main {
 		    		// Update the npcs to the current game state on the current map
 		    		gp.aSetter.updateNPC(gp.currentMap);
 		    		
-		    		if (gp.currentMap == 107 && gp.player.p.flags[28]) {
+		    		if (gp.currentMap == 107 && gp.player.p.flag[7][5]) {
 		    			gp.tileM.openGhostlyBluePortals();
 		    		}
 		    		

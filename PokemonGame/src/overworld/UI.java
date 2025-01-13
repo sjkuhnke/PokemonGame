@@ -47,6 +47,7 @@ import pokemon.Player;
 import pokemon.Pokemon;
 import pokemon.Node;
 import pokemon.Pokemon.Task;
+import pokemon.Trainer;
 import util.Pair;
 
 public class UI extends AbstractUI {
@@ -107,6 +108,10 @@ public class UI extends AbstractUI {
 	private int startX;
 	private int startY;
 	private boolean assignedStart;
+	
+	private static int MAX_PARLAYS = 6;
+	private int[] parlays;
+	private boolean showParlays;
 	
 	private ArrayList<ArrayList<Encounter>> encounters;
 	
@@ -234,7 +239,11 @@ public class UI extends AbstractUI {
 		}
 		
 		if (gp.gameState == GamePanel.START_BATTLE_STATE) {
-			drawBattleStartTransition();
+			drawBattleStartTransition(false);
+		}
+		
+		if (gp.gameState == GamePanel.SIM_START_BATTLE_STATE) {
+			drawBattleStartTransition(true);
 		}
 		
 		if (gp.gameState == GamePanel.USE_ITEM_STATE) {
@@ -424,7 +433,11 @@ public class UI extends AbstractUI {
 			drawSpot();
 			break;
 		case Task.START_BATTLE:
-			startBattle();
+			if (currentTask.wipe) {
+				startSim();
+			} else {
+				startBattle();
+			}
 			break;
 		case Task.DIALOGUE: // for the npc speaking
 			if (currentTask.e.name == null) {
@@ -481,7 +494,335 @@ public class UI extends AbstractUI {
 		case Task.EVO_INFO:
 			drawEvoInfoParty();
 			break;
+		case Task.ODDS:
+			ArrayList<Pokemon> t1Team = new ArrayList<>();
+			ArrayList<Item> t1Items = new ArrayList<>();
+			ArrayList<Pokemon> t2Team = new ArrayList<>();
+			ArrayList<Item> t2Items = new ArrayList<>();
+			
+			int teamSize = 3;
+			
+			for (int i = 0; i < teamSize; i++) {
+				Pokemon p = Pokemon.generateCompetitivePokemon();
+				p.setSprites();
+				t1Team.add(p);
+				t1Items.add(p.item);
+			}
+			for (int i = 0; i < teamSize; i++) {
+				Pokemon p = Pokemon.generateCompetitivePokemon();
+				p.setSprites();
+				t2Team.add(p);
+				t2Items.add(p.item);
+			}
+			
+			Trainer ut = new Trainer("Trainer A", t1Team.toArray(new Pokemon[1]), t1Items.toArray(new Item[1]), 0);
+			Trainer ft = new Trainer("Trainer B", t2Team.toArray(new Pokemon[1]), t2Items.toArray(new Item[1]), 0);
+			
+			int[] odds = Pokemon.simulateBattle(ut, ft);
+			//tasks.clear();
+			
+			System.out.println("Average Crits: " + String.format("%.1f", Pokemon.field.crits * 1.0 / 10));
+			System.out.println("Average Misses: " + String.format("%.1f", Pokemon.field.misses * 1.0 / 10));
+			System.out.println("Average Super Effective Hits: " + String.format("%.1f", Pokemon.field.superEffective * 1.0 / 10));
+			System.out.println("Average Switches: " + String.format("%.1f", Pokemon.field.switches * 1.0 / 10));
+			System.out.println("Average Knockouts: " + String.format("%.1f", Pokemon.field.knockouts * 1.0 / 10));
+			System.out.println("Average Turns: " + String.format("%.1f", Pokemon.field.turns * 1.0 / 10));
+			
+			ArrayList<Pair<Double, String>> parlay = new ArrayList<>(Arrays.asList(
+				new Pair<>(Pokemon.field.crits * 1.0 / 10, "crits"),
+				new Pair<>(Pokemon.field.misses * 1.0 / 10, "misses"),
+				new Pair<>(Pokemon.field.superEffective * 1.0 / 10, "super effective hits"),
+				new Pair<>(Pokemon.field.switches * 1.0 / 10, "switches"),
+				new Pair<>(Pokemon.field.knockouts * 1.0 / 10, "knockouts"),
+				new Pair<>(Pokemon.field.turns * 1.0 / 10, "total turns")
+			));
+			
+			System.out.println("------------------");
+			
+			for (Pair<Double, String> p : parlay) {
+				double avg = p.getFirst();
+				int add = 1;
+				if (avg % 1 == 0 && avg > 0) {
+					add = new Random().nextBoolean() ? 1 : -1;
+				}
+				avg += 0.5 * add;
+				avg = Math.round(avg);
+				avg -= 0.5;
+				p.setFirst(avg);
+				System.out.println(String.format("Average %s: %.1f", p.getSecond(), p.getFirst()));
+			}
+			
+			parlays = new int[MAX_PARLAYS];
+			gp.simBattleUI.parlaySheet = parlay;
+			
+			Task t = Pokemon.addTask(Task.BET_BATTLE, "");
+			t.p = ut.getCurrent();
+			t.evo = ft.getCurrent();
+			t.trainers = new Trainer[] {ut, ft};
+			t.start = odds[0];
+			t.finish = odds[1];
+			
+			currentTask = null;
+			break;
+		case Task.BET_BATTLE:
+			showMessage = false;
+			drawBetBattle();
+			break;
 		}
+	}
+
+	private void drawBetBattle() {		
+		Trainer ut = currentTask.trainers[0];
+		Trainer ft = currentTask.trainers[1];
+		
+		int[] odds = new int[] {currentTask.start, currentTask.finish};
+		
+		drawPartySummary(ut, gp.tileSize / 2, 1);
+		drawPartySummary(ft, (int) (gp.tileSize * 8.5), 2);
+		
+		if (showParlays) {
+			drawParlaySheet();
+			return;
+		}
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (commandNum > 0) {
+				Task t = Pokemon.addTask(Task.START_BATTLE, "");
+				t.wipe = true;
+				t.p = ut.getCurrent();
+				t.evo = ft.getCurrent();
+				t.trainers = new Trainer[] {ut, ft};
+				t.start = odds[0];
+				t.finish = odds[1];
+				commandNum = 0;
+				areaCounter = 0;
+				showParlays = false;
+				currentTask = null;
+			}
+		}
+		
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			if (commandNum == 1) {
+				commandNum = 2;
+			} else if (commandNum == 2) {
+				commandNum = 1;
+			}
+		}
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			if (commandNum == 0) {
+				commandNum = 1;
+			} else if (commandNum == 1) {
+				commandNum = 2;
+			} else if (commandNum == 2) {
+				commandNum = 1;
+			}
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			commandNum = 0;
+		}
+		
+		if (gp.keyH.aPressed) {
+			gp.keyH.aPressed = false;
+			showParlays = true;
+		}
+		drawToolTips(commandNum > 0 ? "Bet" : "Parlay", null, commandNum > 0 ? "Back" : null, null);
+	}
+
+	private void drawParlaySheet() {
+		int x = gp.tileSize * 5;
+		int y = gp.tileSize / 2;
+		int width = gp.tileSize * 6;
+		int height = (int) (gp.tileSize * 11.25);
+		
+		int maxBet = MAX_PARLAYS - 1;
+		
+		drawSubWindow(x, y, width, height, 255);
+		
+		int parlayWidth = (int) (gp.tileSize * 5.5);
+		int parlayHeight = (int) (gp.tileSize * 1.75);
+		
+		int startX = x;
+		for (int i = 0; i < MAX_PARLAYS; i++) {
+			g2.setColor(Color.WHITE);
+			int startY = y;
+			x += width / 2;
+			y += gp.tileSize * 0.75;
+			g2.setFont(g2.getFont().deriveFont(18F));
+			Pair<Double, String> current = gp.simBattleUI.parlaySheet.get(i);
+			String bet = String.format("%.1f %s", current.getFirst(), current.getSecond());
+			g2.drawString(bet, getCenterAlignedTextX(bet, x), y);
+			y += gp.tileSize * 0.75;
+			g2.setStroke(new BasicStroke(2));
+			
+			g2.drawLine((int) (x - gp.tileSize * 1.25), y, x - gp.tileSize, y);
+			
+			if (parlays[i] == 0) {
+				g2.setColor(Color.LIGHT_GRAY);
+				g2.fillOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+				g2.setColor(Color.WHITE);
+				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+			} else {
+				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+			}
+			String X = "x";
+			g2.drawString(X, getCenterAlignedTextX(X, x), y + 8);
+			
+			g2.drawLine((int) (x + gp.tileSize * 1.25), y, x + gp.tileSize, y);
+			
+			int diff = gp.tileSize * 2;
+			x -= diff;
+			if (parlays[i] == -1) {
+				g2.setColor(Color.RED);
+				g2.fillOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+				g2.setColor(Color.WHITE);
+				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+			} else {
+				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+			}
+			String minus = "-";
+			g2.setFont(g2.getFont().deriveFont(30F));
+			g2.drawString(minus, getCenterAlignedTextX(minus, x), y + 8);
+			
+			x += diff * 2;
+			if (parlays[i] == 1) {
+				g2.setColor(Color.GREEN);
+				g2.fillOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+				g2.setColor(Color.WHITE);
+				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+			} else {
+				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+			}
+			String plus = "+";
+			g2.drawString(plus, getCenterAlignedTextX(plus, x), y + 8);
+			x -= diff;
+			
+			g2.setStroke(new BasicStroke(3));
+			if (i == areaCounter) {
+				g2.setColor(Color.RED);
+				g2.drawRoundRect(x - parlayWidth / 2, y - gp.tileSize - 6, parlayWidth, parlayHeight, 45, 45);
+			}
+			
+			x = startX;
+			y = startY + parlayHeight;
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			if (areaCounter < maxBet) {
+				areaCounter++;
+			} else {
+				areaCounter = 0;
+				showParlays = false;
+			}
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			if (areaCounter > 0) {
+				areaCounter--;
+			} else {
+				areaCounter = 0;
+				showParlays = false;
+			}
+		}
+		
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			if (parlays[areaCounter] > -1) {
+				parlays[areaCounter]--;
+				if (areaCounter < maxBet) {
+					areaCounter++;
+				} else {
+					areaCounter = 0;
+					showParlays = false;
+				}
+			}
+		}
+		
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			if (parlays[areaCounter] < 1) {
+				parlays[areaCounter]++;
+				if (areaCounter < maxBet) {
+					areaCounter++;
+				} else {
+					areaCounter = 0;
+					showParlays = false;
+				}
+			}
+		}
+		
+		if (gp.keyH.aPressed || gp.keyH.sPressed) {
+			gp.keyH.aPressed = false;
+			gp.keyH.sPressed = false;
+			showParlays = false;
+		}
+		
+		drawToolTips(null, "Close", "Close", null);
+	}
+
+	private void drawPartySummary(Trainer t, int x, int commandNum) {
+		int y = gp.tileSize / 2;
+		int width = gp.tileSize * 7;
+		int height = gp.tileSize * 11;
+		
+		drawSubWindow(x, y, width, height);
+		
+		if (this.commandNum == commandNum) {
+			g2.setColor(Color.RED);
+			g2.drawRoundRect(x - 5, y - 5, width + 10, height + 10, 25, 25);
+		}
+		
+		g2.setColor(Color.WHITE);
+		
+		int pHeight = (int) (gp.tileSize * 3.25);
+		int startX = x + gp.tileSize / 2;
+		int startY = y + gp.tileSize / 2;
+		x = startX;
+		y = startY;
+		for (Pokemon p : t.getTeam()) {
+			g2.drawImage(p.getSprite(), x, y, null);
+			x += gp.tileSize * 2;
+			g2.setFont(g2.getFont().deriveFont(20F));
+			y += gp.tileSize / 2;
+			g2.drawString(p.getName(), x, y);
+			y += gp.tileSize / 2;
+			g2.drawString("@ " + p.item, x, y);
+			int startX2 = x;
+			x += gp.tileSize * 3.5;
+			y -= gp.tileSize / 2;
+			g2.drawImage(p.item.getImage(), x, y, null);
+			x = startX2;
+			y += gp.tileSize;
+			g2.drawString(p.ability.toString(), x, y);
+			x = startX;
+			y += gp.tileSize / 2;
+			g2.setFont(g2.getFont().deriveFont(16F));
+			for (Moveslot m : p.moveset) {
+				String moveString = m == null ? "" : "- " + m.move.toString();
+				g2.drawString(moveString, x, y);
+				y += gp.tileSize / 3;
+			}
+			
+			x = startX + gp.tileSize * 4;
+			startY += pHeight;
+			y = startY - gp.tileSize;
+			
+			g2.drawImage(p.type1.getImage(), x, y, null);
+			if (p.type2 != null) {
+				x += gp.tileSize * 0.75;
+				g2.drawImage(p.type2.getImage(), x, y, null);
+			}
+			
+			x = startX;
+			y = startY;
+		}
+		
 	}
 
 	private void drawSleep() {
@@ -622,6 +963,24 @@ public class UI extends AbstractUI {
 		if (currentTask.p.trainer != null) {
 			currentTask.p.trainer.setSprites();
 		}
+		
+		currentTask = null;
+	}
+	
+	private void startSim() {
+		gp.keyH.resetKeys();
+		
+		transitionBuffer = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
+		gp.gameState = GamePanel.SIM_START_BATTLE_STATE;
+
+		gp.simBattleUI.user = currentTask.trainers[0].getCurrent();
+		gp.simBattleUI.foe = currentTask.trainers[1].getCurrent();
+		
+		gp.simBattleUI.user.setSprites();
+		gp.simBattleUI.foe.setSprites();
+		
+		System.out.println("Odds of " + currentTask.trainers[0].getName() + " winning: " + currentTask.start);
+		System.out.println("Odds of " + currentTask.trainers[1].getName() + " winning: " + currentTask.finish);
 		
 		currentTask = null;
 	}
@@ -849,6 +1208,12 @@ public class UI extends AbstractUI {
 					break;
 				case 3: // casino blackjack table
 					Pokemon.addTask(Task.BLACKJACK, "");
+					currentTask = null;
+					break;
+				case 4: // casino battle betting
+					above = false;
+					showMessage("Calculating odds...");
+					Pokemon.addTask(Task.ODDS, "Done!");
 					currentTask = null;
 					break;
 				}
@@ -2637,7 +3002,7 @@ public class UI extends AbstractUI {
 				    }
 					bagState = 0;
 				} else if (currentItem == Item.CALCULATOR) {
-					Item.useCalc(gp.player.p, null, null);
+					Item.useCalc(gp.player.p.getCurrent(), null, null);
 				} else if (currentItem == Item.DEX_NAV) {
 					encounters = Encounter.getAllEncounters();
 					gp.gameState = GamePanel.DEX_NAV_STATE;
@@ -2781,7 +3146,7 @@ public class UI extends AbstractUI {
 		}
 	}
 	
-	private void drawBattleStartTransition() {
+	private void drawBattleStartTransition(boolean sim) {
 		int width = gp.tileSize * 2;
 		int height = gp.tileSize * 2;
 		counter++;
@@ -2801,12 +3166,17 @@ public class UI extends AbstractUI {
 				counter = 0;
 				showArea = false;
 				gp.battleUI.commandNum = 0;
-				if (!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) {
-					gp.battleUI.ball = gp.player.p.getBall(gp.battleUI.ball);
-					gp.battleUI.balls = gp.player.p.getBalls();
+				if (sim) {
+					gp.simBattleUI.subState = SimBattleUI.STARTING_STATE;
+					gp.gameState = GamePanel.SIM_BATTLE_STATE;
+				} else {
+					if (!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) {
+						gp.battleUI.ball = gp.player.p.getBall(gp.battleUI.ball);
+						gp.battleUI.balls = gp.player.p.getBalls();
+					}
+					gp.battleUI.subState = BattleUI.STARTING_STATE;
+					gp.gameState = GamePanel.BATTLE_STATE;
 				}
-				gp.battleUI.subState = BattleUI.STARTING_STATE;
-				gp.gameState = GamePanel.BATTLE_STATE;
 			}
 		}
 	}
@@ -3007,7 +3377,7 @@ public class UI extends AbstractUI {
 			g2.drawString("$" + gp.player.p.getMoney(), textX, textY);
 		}
 		
-		drawToolTips("Buy", null, "Back", "Back");
+		drawToolTips("Buy", prize ? "Prev" : null, "Back", prize ? "Next" : "Back");
 	}
 
 	private int getItemIndexOnSlot(int maxCol) {
@@ -3111,6 +3481,7 @@ public class UI extends AbstractUI {
 				}
 			}
 		}
+		drawToolTips("Buy", "Prev", "Back", "Next");
 	}
 
 	private void drawPrizeHeader(Player p) {
@@ -3127,7 +3498,7 @@ public class UI extends AbstractUI {
 		
 		for (int i = 1; i <= 3; i++) {
 			drawSubWindow(x, y, width, height);
-			int textX = x + 20;
+			int textX = x + 16;
 			int textY = (int) (y + gp.tileSize * 0.75);
 			
 			int amt = 0;
@@ -3282,6 +3653,7 @@ public class UI extends AbstractUI {
 			gp.keyH.downPressed = false;
 			commandNum = 1 - commandNum;
 		}
+		drawToolTips("Sell", null, "Back", null);
 	}
 	
 	private int randomPrice(Random random, int min, int max) {

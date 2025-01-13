@@ -209,42 +209,38 @@ Electric Tunnel -> Alumos Tunnel
 Shadow Ravine -> Nyxus Ravine
 
 Ace Trainer (Mixed/Dragon)
-Before
+Before:
 
-""
-""
-""
-""
-""
-""
-""
-After
+"Dragons are the ultimate Pokemon. You're about to face their fury!"
+"Strength, strategy, and skill. That's what it takes to be an Ace Trainer!"
+"No holding back. This will be a battle worthy of legends!"
+"My Pokemon are well-trained and powerful. Can you keep up with them?"
+"You're in for the fight of your life. Let's see if you're ready!"
+After:
 
-""
-""
-""
-""
-""
-""
-""
+"I'm impressed... you've got the makings of a true champion."
+"A setback, nothing more. My Pokemon and I will come back stronger."
+"You've earned this win, but don't get too comfortable - next time will be different."
+"I see... your skills are more refined than I expected. Well done."
+"Even the best fall sometimes. I'll rise again, just you wait!"
 
 Actor (Light/Normal)
 Before
 
-"I don't break character - even when I'm breaking you!"
-"My performance is flawless - just like this battle will be."
-"The stage is set, and you're about to witness a perfect performance!"
-"Lights, camera, battle! Watch me shine!"
-"Every move, every attack - it's all part of my grand show!"
+""
+""
+""
+""
+""
 "Prepare yourself for a battle worthy of the spotlight!"
 "They say I'm a natural-born star... Let's see if you can handle the pressure!"
 After
 
-"Guess this wasn't my shining moment."
-"Well, you've won this act. Enjoy the applause while it lasts."
-"That wasn't in the script... but I'll be back for the encore!"
-"I guess even the best actors stumble sometimes..."
-"A little setback, that's all. The show must go on!"
+""
+""
+""
+""
+""
 "No matter what, I'll always play the leading role in my story!"
 "Next time, I'll be the star of this battle. Just wait!"
 
@@ -254,48 +250,50 @@ Before
 
 ""
 ""
-"Prepare for an elegant battle - grace meets power!"
-"I'll make this battle one to remember, with me as the star!"
-"Lights, action, battle! Time to put on a show you won't forget!"
+""
+""
+""
 After
 
 ""
 ""
-"I'll take this loss with grace. Next time, I'll have my shining moment!"
-"You may have stolen the spotlight, but I'll take it back!"
-"The curtain falls... for now. I'll be back stronger!"
+""
+""
+""
 
 Athlete (Fire/Electric)
 Before Battle:
 
+"Feel the heat of my Fire Pokemon! They're ready to burn through the competition!"
 ""
-""
-""
-""
-""
-After Battle:
+"My speed, my power, my Pokemon - everything's at its peak! Bring it on!"
+"This is no game! My Fire and Electric types are ready to shock and scorch you!"
+"You'll need more than luck to outmatch me. I'm bringing the heat!"
+After:
 
+"What? How did you outrun my strategy? I guess I'll have to train harder!"
 ""
-""
-""
-""
-""
+"I've gotta admit, you've got some serious skills. Respect!"
+"You may have cooled me down this time, but I'm coming back hotter than ever!"
+"A shocking loss... but it's not the end. I'll keep improving!"
 
 Hiker (Ground/Rock/Steel)
 Before:
 
-""
-""
 "I've trained in the toughest conditions! Let's see if you can handle it!"
-""
-""
+"The mountains made me strong, and my Pokemon even stronger!"
+"You'll need more than a little luck to break through my rock-solid team!"
+"Get ready! My Pokemon are as tough as the earth beneath your feet!"
+"Climbing mountains builds strength. Let's see if you can match mine!"
+"You've got guts challenging me. Let's see if you've got the skill to back it up!"
 After:
 
-""
-""
 "That loss was rough, but I'll climb back up to the top!"
-""
-""
+"Whoa, that was like an avalanche... Guess I've gotta train more!"
+"You're one tough trainer. I'll have to step up my game!"
+"Even the strongest mountains can crumble, I guess..."
+"That was a solid battle. I'll be even tougher next time!"
+"You win this one, but don't think I'll be so easy to beat again!"
 
 Burglar (Crook/Dark)
 Before Battle:
@@ -372,51 +370,53 @@ After Battle:
 "Even though I lost, I still love my bugs. They'll grow stronger!"
 
 Picnicker (Bug/Grass)
-Before
+Before:
 
-""
-""
-""
-""
+"Nature's beauty is in full bloom - and so is my team! Let's battle!"
+"I love Grass and Bug types. They're peaceful... but also powerful!"
+"The forest is full of surprises. My Pokemon are ready to show you some!"
+"Don't underestimate these tiny creatures. They pack a punch!"
+"Grass and Bug types might seem gentle, but you'll see their strength soon enough!"
 "My Pokemon may seem small, but they're full of surprises!"
 "Don't underestimate me just because I'm relaxing!"
-After
+After:
 
-""
-""
-""
-""
+"Aww, my poor Pokemon... but they'll bounce back stronger!"
+"You've got some talent. Maybe I'll rethink my strategy next time."
+"I guess I still have some growing to do... just like my Pokemon!"
+"Good battle! I'll keep exploring nature and getting stronger!"
+"Well, that was fun! I'll be ready for you next time!"
 "You won this time, but I'll come back with even stronger partners!"
 "I'll work up an appetite for victory next time!"
 
 Student (M) (Normal)
 Before
 
-""
-""
-""
+"I've been studying battles in class. Let's see how much I've learned!"
+"I may not be the strongest, but I've got strategy on my side!"
+"This is like a test, right? Well, I'm ready to ace it!"
 "You might be the teacher's pet, but I'm no slouch!"
 "This is one test you're not passing!"
 After
 
-""
-""
-""
+"Darn, I failed the test... but I'll study harder for next time!"
+"You're really good... I'll take some notes from this battle!"
+"Even if I lose, it's all part of the learning experience!"
 "That was tough. Maybe I'll ask you for tutoring?"
 "I lost, but at least I'm still learning!"
 
 Student (F) (Normal)
 Before
 
-""
-""
+"Pokemon battling is my favorite subject! Let's test what I've studied!"
+"Let's see if all my training pays off! I'm feeling confident!"
 ""
 "Ready for a pop quiz? Hope you're prepared!"
 "Battles are like exams, and I'm always at the top of the class!"
 After
 
-""
-""
+"Oh no, I guess I need to spend more time in the library!"
+"That was so much fun! I'll get better and battle you again!"
 ""
 "Well, I'll just have to do better on the final!"
 "You passed this time. Next time, it's my turn to win."
@@ -424,18 +424,20 @@ After
 Fisher (Water)
 Before Battle:
 
-""
-""
-""
-""
+"Fishing requires patience, but battling? That's where I make a splash!"
+"My Water Pokemon are strong enough to sink any opponent!"
+"The ocean is full of mysteries... but there's no mystery to my team's strength!"
+"Let's see if you can weather the tide of my Pokemon!"
+"Fishing's my passion, but battling's where I really shine!"
 "A fisherman never lets his prey escape. Let's see if you can!"
 "The water's been kind to me, but I won't be kind to you!"
 After Battle:
 
-""
-""
-""
-""
+"You're like a storm at sea... I couldn't keep up!"
+"Looks like my line snapped... but I'll catch a win next time!"
+"That was a good battle. I'll train harder for the next one!"
+"Even the best anglers have off days... I'll reel in a win eventually!"
+"You beat me this time, but I'll make a comeback, guaranteed!"
 "You won this round, but I'll be casting my line again soon!"
 "Seems like I was out of my depth this time."
 
@@ -456,20 +458,19 @@ After
 "You got the better of me this time, but I'll be back with the tide!"
 
 Swimmer (F) (Water)
-Before
+Before:
+"The water's my home, and my Pokemon rule it! Let's battle!"
+"Think you can keep up with the flow of my Water Pokemon? Let's see!"
+"My team's as fast and powerful as the ocean's waves!"
+"This battle's going to be a splash! Let's dive right in!"
+"Water Pokemon are the best! You're about to see why!"
+After:
 
-""
-""
-""
-""
-""
-After
-
-""
-""
-""
-""
-""
+"Wow, you're amazing! I couldn't even stay afloat in that battle!"
+"Looks like I'm all washed up... but I'll be back stronger!"
+"You're really good! I'll keep swimming and training until I can beat you!"
+"That was fun! Next time, I'll ride the wave to victory!"
+"Even the tides couldn't save me this time. Great battle!"
 
 Explorer (Ice)
 Before Battle:
@@ -621,7 +622,7 @@ Before
 ""
 "I'm not scared! My Pokemon and I are ready for anything!"
 ""
-"I bet I can beat you with just a couple of strong moves!"
+""
 "I just caught this Pokemon! Wanna see how strong it is?"
 "I'm super excited to battle you! Get ready!"
 "My Pokemon are the best! I've trained them myself!"
@@ -651,7 +652,7 @@ After
 ""
 "That didn't go like I planned... But I'll come back stronger!"
 ""
-"Wow, you're good! I'll keep working hard until I can beat you!"
+""
 "What? No way! I thought I was gonna win!"
 "I guess I need to practice more... I'll get you next time!"
 "I wasn't expecting that! You're really good!"
@@ -699,3 +700,72 @@ After Battle
 "Fine, retreating for now. But know this, we don't stay down for long."
 "You've only delayed the inevitable. We will succeed, with or without you."
 "We'll remember this. The next time we meet, you won't be so fortunate."
+
+Rick 3: Final Encounter (Mt. Splinkty)
+Pre-battle:
+"Back again, I see.
+You’ve caused enough trouble already, but you’re too late. Everything is already in place.
+Soon, all of Earth will bow before the power of Team Eclipse.
+But before that... I think it’s time we settled this once and for all.
+You may have beaten me once, but this time, I won’t hold back."
+
+Post-battle:
+"How...? How did you defeat me again?
+It doesn’t matter. The machine is almost complete, and once it’s activated, everything will change.
+You can’t stop what’s coming.
+Enjoy your victory... while it lasts."
+
+Fred 4: Team Eclipse Encounter (Mt. Splinkty Peak)
+Pre-battle:
+"So, you’ve made it all the way to the peak.
+You’re persistent, I’ll give you that. But this is where it ends for you.
+I’ve been working with Team Eclipse to create something powerful—something that will change everything.
+I won’t let you stand in the way of our plans."
+
+Post-battle:
+"Damn it! No matter what I do, you always come out on top!
+What am I even fighting for anymore...?
+Maybe Rick was right. Maybe I’m not cut out for this.
+But I can’t give up. I have to keep pushing forward, no matter what."
+
+6. Rayna (Female, Light)
+Thirties, independent, strong, beautiful
+
+Pre-battle: "It’s been a while, hasn’t it?
+I’ve been keeping an eye on you ever since you helped our town rebuild after that blackout. The people here haven’t forgotten what you did, and neither have I.
+But this battle? It’s different. You’ll be facing the strength and purity of Light Pokémon, which means you’ll need more than just brute force to win.
+Are you ready to shine? Let’s see if your light burns bright enough to stand against mine."
+
+Post-battle: "Wow... You really outshone me today! I can’t believe how far you’ve come since we first met.
+Your light—your strength—radiates in every battle.
+Take this badge. You've more than earned it.
+Remember, no matter how dark the path ahead might seem, your light will always guide you."
+
+7. Merlin (Male, Magic)
+Very old, grandfather to Arthra, magician, wise
+
+Pre-battle: "Ah, I knew you’d come.
+Arthra told me all about your encounter... about the battles you’ve fought and the victories you’ve earned.
+But now, you face something different. Magic is not about what you see... but what you don’t.
+Mystery, illusion, power beyond what you can comprehend—these are the tools I wield, and now you must face them.
+Prepare yourself, young one, for this battle will be unlike any you’ve faced before."
+
+Post-battle: "Ah... well done. You’ve seen through the illusion, found the truth, and prevailed.
+Many challengers falter when they face the unknown, but you... you embraced it.
+Take this badge. You’ve earned it through wit, skill, and perseverance.
+Remember, though... magic is always around us, even when we cannot see it. Continue your journey with an open mind, and the answers will reveal themselves in time."
+
+8. Nova (Female, Galactic)
+Main antagonist's sidekick, lives in space, forties, strong and powerful
+
+Pre-battle: "So, you finally made it. I’ve been waiting.
+You’ve been meddling in our plans for too long. First, you disrupted our operations on Xhenos, then you interfered with our research on Ultra Paradox Pokémon.
+You think you’re some kind of hero, don’t you? But out here, in the vastness of space, power is all that matters.
+And now, you’ll see just how insignificant you really are. This isn’t like the battles you’ve faced before—this time, I’m not holding back."
+
+Post-battle: "Impossible... how could you have beaten me?
+No one has ever stood up to the Galactic force like that. You’re stronger than I gave you credit for, but don’t think this is over.
+Take your badge, if it means that much to you.
+But remember... this is just a small victory. The real battle is yet to come, and next time, you won’t be so lucky."
+
+

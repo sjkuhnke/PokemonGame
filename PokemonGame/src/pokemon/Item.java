@@ -645,7 +645,8 @@ public enum Item {
 		return result;
 	}
 
-	public static void useCalc(Player p, Pokemon[] box, Pokemon f) {
+	public static void useCalc(Pokemon p, Pokemon[] box, Pokemon f) {
+		Trainer pl = p.trainer;
 		JPanel calc = new JPanel();
 	    calc.setLayout(new GridBagLayout());
 	    
@@ -683,13 +684,18 @@ public enum Item {
         JGradientButton[] userMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
         JLabel[] userDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
         JCheckBox critCheck = new JCheckBox("Crit");
-        for (int k = 0; k < p.team.length; k++) {
-        	if (p.team[k] != null) {
-        		userMons.addItem(p.team[k].clone());
-        		if (p.team[k].id == 150) {
-            		Pokemon kD = p.team[k].clone();
+        for (int k = 0; k < pl.team.length; k++) {
+        	if (pl.team[k] != null) {
+            	Pokemon add = pl.team[k].clone();
+            	if (!(pl instanceof Player)) {
+            		add.nickname = pl.getName();
+            	}
+        		userMons.addItem(add.clone());
+        		if (pl.team[k].id == 150) {
+            		Pokemon kD = pl.team[k].clone();
             		int oHP = kD.getStat(0);
     				kD.id = 237;
+    				kD.name = kD.getName();
     				if (kD.nickname == kD.name) kD.nickname = kD.getName();
     				
     				kD.baseStats = kD.getBaseStats();
@@ -698,6 +704,7 @@ public enum Item {
     				int nHP = kD.getStat(0);
     				kD.currentHP += nHP - oHP;
     				kD.setTypes();
+    				kD.setSprites();
     				kD.setAbility(kD.abilitySlot);
     				userMons.addItem(kD);
             	}
@@ -710,13 +717,17 @@ public enum Item {
 				}
 			}
 		}
-        if (box != null && p.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
-        	for (Pokemon q : p.gauntletBox) {
-				if (q != null) {
-					userMons.addItem(q.clone());
-				}
-			}
+        if (box != null) {
+        	Player player = (Player) pl;
+        	if (player.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
+        		for (Pokemon q : player.gauntletBox) {
+    				if (q != null) {
+    					userMons.addItem(q.clone());
+    				}
+    			}
+        	}
         }
+        
         AutoCompleteDecorator.decorate(userMons);
         
         JComboBox<Pokemon> foeMons = new JComboBox<>();
@@ -786,13 +797,13 @@ public enum Item {
         }
         
         infoButton.addActionListener(e -> {
-        	JOptionPane.showMessageDialog(null, ((Pokemon) userMons.getSelectedItem()).showSummary(p, false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+        	JOptionPane.showMessageDialog(null, ((Pokemon) userMons.getSelectedItem()).showSummary(false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
         });
         
         fInfoButton.addActionListener(e -> {
         	Pokemon foe = (Pokemon) foeMons.getSelectedItem();
         	if (foe.getSprite() == null) foe.setSprites();
-        	JOptionPane.showMessageDialog(null, ((Pokemon) foeMons.getSelectedItem()).showSummary(p, false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+        	JOptionPane.showMessageDialog(null, ((Pokemon) foeMons.getSelectedItem()).showSummary(false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
         });
         
         JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
@@ -1211,10 +1222,7 @@ public enum Item {
         currentItem.setSelectedItem(current.item);
 	}
 	
-	private static void moreButton(Pokemon p, Field f) {
-		boolean playerOwned = p.playerOwned();
-		ArrayList<Field.FieldEffect> pSide = playerOwned ? f.playerSide : f.foeSide;
-        
+	private static void moreButton(Pokemon p, Field f) {        
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -1314,7 +1322,7 @@ public enum Item {
             pair.setSecond(checkBox);
 
             if (first instanceof Effect) {
-                checkBox.setSelected(f.contains(pSide, (Effect) first));
+                checkBox.setSelected(f.contains(p.getFieldEffects(), (Effect) first));
             } else {
                 checkBox.setSelected(p.vStatuses.contains((Status) first));
             }
@@ -1349,9 +1357,9 @@ public enum Item {
                 if (first instanceof Effect) {
                 	Effect ef = (Effect) first;
                 	if (second.isSelected()) {
-                		if (!f.contains(pSide, ef)) pSide.add(f.new FieldEffect(ef));
+                		if (!f.contains(p.getFieldEffects(), ef)) p.getFieldEffects().add(f.new FieldEffect(ef));
                 	} else {
-                		f.remove(pSide, ef);
+                		f.remove(p.getFieldEffects(), ef);
                 	}
                 } else {
                     Status st = (Status) first;

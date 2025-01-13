@@ -1895,6 +1895,7 @@ E - Galaxy Blast
 1 - Radio Burst
 1 - Cosmic Power
 1 - Moonblast
+65 - Genesis Supernova
 
 ===================
 #060 - Lotad                                                                                           [044]
@@ -4262,8 +4263,9 @@ Level Up:
 46 - Fiery Dance
 49 - Magic Tomb
 52 - Glitter Dance
-56 - Vanishing Act
-60 - Prismatic Laser
+55 - Vanishing Act
+58 - Prismatic Laser
+62 - Light Of Ruin
 65 - Overheat
 70 - Geomancy
 
@@ -6862,7 +6864,7 @@ E - Submission
 8 - Play Nice
 12 - Headbutt
 14 - Low Kick
-16 - Flash Ray
+16 - Earthquake
 20 - Ice Shard
 24 - Vital Throw
 27 - Aurora Beam
@@ -10107,7 +10109,7 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 #207 Boulder-E           Y     Y     N     N     N     N     Y     N     Y     Y     N     N     Y     Y     N     N     N     N     N     Y     N     Y     N     N     N     Y     N     Y     N     N     Y     Y     Y     Y     N     Y     N     N     N     Y     N     N     N     N     Y     N     N     N     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     Y     N     Y     N     Y     N     N     Y     Y     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     N     Y     Y     Y     Y     N     N     N     Y     Y     N     Y     N     N     Y     N     N     Y     
 #208 Blaster-E           Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     Y     Y     Y     N     N     N     N     Y     N     Y     N     Y     Y     Y     Y     Y     N     N     Y     Y     Y     Y     N     Y     N     N     N     Y     N     N     N     N     Y     N     N     N     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     Y     N     Y     N     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     N     Y     N     N     Y     N     N     Y     Y     Y     Y     N     Y     N     Y     Y     N     Y     N     N     Y     N     N     Y     
 #209 Crystallor-E        Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     Y     Y     Y     N     N     N     N     Y     N     Y     Y     N     Y     Y     Y     Y     N     N     Y     Y     Y     Y     N     Y     N     N     N     Y     N     N     N     N     Y     N     N     N     Y     Y     Y     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     Y     Y     Y     Y     N     Y     N     Y     Y     Y     Y     Y     Y     Y     N     N     Y     Y     Y     N     N     Y     N     N     Y     N     N     Y     Y     Y     Y     N     Y     N     Y     Y     N     Y     N     N     Y     Y     N     Y     
-#210 Magikarp-E          N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     
+#210 Magikarp-E          N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     
 #211 Gyarados-E          Y     N     N     Y     Y     Y     N     N     Y     N     N     N     Y     N     N     N     N     Y     N     Y     N     Y     Y     Y     N     Y     N     Y     N     N     N     N     Y     Y     N     N     Y     N     Y     Y     Y     N     Y     N     N     Y     N     Y     N     N     N     N     N     Y     N     Y     Y     N     Y     Y     Y     Y     N     Y     Y     Y     N     N     N     N     Y     N     N     Y     Y     Y     N     Y     Y     Y     N     N     Y     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     N     N     N     N     Y     
 #212 Shockfang           Y     Y     Y     Y     N     N     Y     N     Y     Y     N     N     Y     N     N     N     N     Y     N     Y     N     Y     N     N     N     Y     N     Y     N     Y     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     Y     N     Y     N     N     N     Y     N     Y     N     N     Y     N     N     Y     Y     Y     N     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     N     Y     N     N     Y     N     N     N     Y     Y     Y     Y     N     N     N     N     Y     N     N     Y     Y     Y     Y     Y     N     N     Y     Y     Y     Y     N     N     N     N     N     Y     
 #213 Electrocobra        Y     Y     Y     Y     N     N     Y     N     Y     Y     N     N     Y     N     N     N     N     Y     N     Y     N     Y     Y     Y     N     Y     N     Y     N     Y     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     Y     N     Y     N     N     N     Y     N     Y     N     N     Y     N     N     Y     Y     Y     N     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     N     Y     Y     Y     Y     N     N     N     Y     Y     Y     Y     N     N     N     N     Y     N     N     Y     Y     Y     Y     Y     N     N     Y     Y     Y     Y     N     N     N     N     N     Y     
