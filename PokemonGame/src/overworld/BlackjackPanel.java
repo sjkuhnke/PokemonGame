@@ -31,12 +31,14 @@ public class BlackjackPanel extends JPanel {
 	private JLabel deckIcon;
 	private JButton hitButton;
 	private JButton standButton;
+	private JButton doubleButton;
 	private JButton startButton;
 	private JButton leaveButton;
 	private JLabel coinText;
 	private JLabel currentBetText;
 	private JLabel winStreakText;
 	private JLabel gamesWonText;
+	private JButton statsButton;
 	
 	private int currentIndex;
 	private Card[] userCards;
@@ -46,7 +48,7 @@ public class BlackjackPanel extends JPanel {
 	private Image backgroundImage;
 	
 	private static final int MAX_BET = 100;
-	private static final int MAX_HAND_SIZE = 5;
+	private static final int MAX_HAND_SIZE = 7;
 	private static final int DECK_SIZE = 52;
 	/**
 	 * 
@@ -84,17 +86,21 @@ public class BlackjackPanel extends JPanel {
 	}
 	
 	private void startGame() {
+		if (p.blackjackStats[10] < p.coins) p.blackjackStats[10] = p.coins;
 		if (getDeckSize() <= 20) {
 			resetDeck();
 			JOptionPane.showMessageDialog(null, "Deck reshuffled!");
 		}
 		hitButton.setVisible(true);
 		standButton.setVisible(true);
+		doubleButton.setVisible(true);
 		startButton.setVisible(false);
 		leaveButton.setVisible(false);
+		statsButton.setVisible(false);
 		currentBetText.setText("Bet: " + bet + " coins");
 		p.coins -= bet;
 		coinText.setText(p.coins + " coins");
+		p.blackjackStats[0]++;
 		
 		userCards[getHandSize(userCards)] = dealCard();
 		foeCards[getHandSize(foeCards)] = dealCard();
@@ -113,8 +119,10 @@ public class BlackjackPanel extends JPanel {
 	private void endGame() {
 		hitButton.setVisible(false);
 		standButton.setVisible(false);
+		doubleButton.setVisible(false);
 		startButton.setVisible(true);
 		leaveButton.setVisible(true);
+		statsButton.setVisible(true);
 		bet = 0;
 		currentBetText.setText("Bet: -- coins");
 		coinText.setText(p.coins + " coins");
@@ -151,6 +159,11 @@ public class BlackjackPanel extends JPanel {
 		standButton.setVisible(false);
 		standButton.setBounds(385, 240, 100, 50);
 		
+		doubleButton = new JButton("Double");
+		this.add(doubleButton);
+		doubleButton.setVisible(false);
+		doubleButton.setBounds(495, 240, 100, 50);
+		
 		leaveButton = new JButton("Leave");
 		leaveButton.setBounds(5, 5, 75, 30);
 		this.add(leaveButton);
@@ -160,6 +173,11 @@ public class BlackjackPanel extends JPanel {
 		startButton.setBounds(300, 200, 150, 60);
 		this.add(startButton);
 		startButton.setVisible(true);
+		
+		statsButton = new JButton("Stats");
+		statsButton.setBounds(335, 5, 80, 30);
+		this.add(statsButton);
+		statsButton.setVisible(true);
 		
 		currentBetText = new JLabel("Bet: -- coins");
 		currentBetText.setBounds(600, 30, 150, 20);
@@ -210,52 +228,28 @@ public class BlackjackPanel extends JPanel {
 		});
 		
 		hitButton.addActionListener(e -> {
-			int handSize = getHandSize(userCards);
-			if (handSize < MAX_HAND_SIZE) {
-				userCards[handSize] = dealCard();
-				userCardIcons.setIcon(createHandIcon(userCards));
-				int handTotal = getHandTotal(userCards);
-				if (handTotal > 21) {
-					JOptionPane.showMessageDialog(null, "Player busts with a hand total of " + handTotal + "!");
-					JOptionPane.showMessageDialog(null, "Dealer won " + bet * 2 + " coins!");
-					loseGame();
-					endGame();
-				}
-			} else {
-				JOptionPane.showMessageDialog(null, "Can't hold any more cards!");
-			}
+			hit();
 		});
 		
 		standButton.addActionListener(e -> {
-			int dealerTotal = getHandTotal(foeCards);
-			int handSize = getHandSize(foeCards);
-			foeCards[1].setVisible(true);
-			foeCardIcons.setIcon(createHandIcon(foeCards));
-			while (dealerTotal < 16 && handSize < MAX_HAND_SIZE) {
-				Card card = dealCard();
-				foeCards[handSize] = card;
-				foeCardIcons.setIcon(createHandIcon(foeCards));
-				JOptionPane.showMessageDialog(null, "Dealer hit and was dealt a \n" + card.getRankString() + " of " + card.getSuitString() + "!");
-				dealerTotal = getHandTotal(foeCards);
-				handSize = getHandSize(foeCards);
-			}
-			if (dealerTotal <= 21) {
-				int playerTotal = getHandTotal(userCards);
-				JOptionPane.showMessageDialog(null, "Dealer stood and had a hand total of " + dealerTotal + "!\nPlayer stood and had a hand total of " + playerTotal + "!");
-				if (playerTotal > dealerTotal) {
-					winGame(bet * 2);
-				} else if (playerTotal == dealerTotal) {
-					JOptionPane.showMessageDialog(null, "It's a push. Bet was returned.");
-					p.coins += bet;
-				} else {
-					JOptionPane.showMessageDialog(null, "Dealer won " + bet * 2 + " coins!");
-					loseGame();
-				}
+			stand();
+		});
+		
+		doubleButton.addActionListener(e -> {
+			if (p.coins >= bet) {
+				p.coins -= bet;
+				bet *= 2;
+				
+				currentBetText.setText("Bet: " + bet + " coins");
+				coinText.setText(p.coins + " coins");
+				
+				p.blackjackStats[6]++;
+				
+				boolean good = hit();
+				if (good) stand(true);
 			} else {
-				JOptionPane.showMessageDialog(null, "Dealer busts with a hand total of " + dealerTotal + "!");
-				winGame(bet * 2);
+				JOptionPane.showMessageDialog(this, "You don't have enough coins!");
 			}
-			endGame();
 		});
 		
 		
@@ -297,6 +291,120 @@ public class BlackjackPanel extends JPanel {
 		        JOptionPane.showMessageDialog(this, "You don't have enough coins!");
 		    }
 		});
+		
+		statsButton.addActionListener(e -> {
+			int games = p.blackjackStats[0];
+			int win = p.blackjackStats[1];
+			int push = p.blackjackStats[2];
+			int lose = games - win - push;
+			int busts = p.blackjackStats[3];
+			int bustWins = p.blackjackStats[4];
+			int blackjacks = p.blackjackStats[5];
+			int doubles = p.blackjackStats[6];
+			int doubleWins = p.blackjackStats[7];
+			int coinWin = p.blackjackStats[8];
+			int coinLost = p.blackjackStats[9];
+			int netCoin = coinWin - coinLost;
+			if (p.blackjackStats[10] < p.coins) p.blackjackStats[10] = p.coins;
+			int maxCoin = p.blackjackStats[10];
+			int winStreak = p.blackjackStats[11];
+			int loseStreak = p.blackjackStats[12];
+			int highLoseStreak = p.blackjackStats[13];
+			
+			String stats = "Blackjack Stats:\n\n";
+			stats += "Total games played: " + games + "\n\n";
+			stats += "Total wins: " + win + ", Win %: " + String.format("%.2f\n", win * 100.0 / games);
+			stats += "Total losses: " + lose + ", Lose %: " + String.format("%.2f\n", lose * 100.0 / games);
+			stats += "Total pushes: " + push + ", Push %: " + String.format("%.2f\n\n", push * 100.0 / games);
+			
+			stats += "Win streak: " + p.winStreak + "\n";
+			stats += "Highest win streak: " + winStreak + "\n";
+			stats += "Lose streak: " + loseStreak + "\n";
+			stats += "Highest lose streak: " + highLoseStreak + "\n\n";
+			
+			stats += "Total busts: " + busts + "\n";
+			stats += "Percentage of losses that are busts: " + String.format("%.2f\n", busts * 100.0 / lose);
+			stats += "Bust %: " + String.format("%.2f\n", busts * 100.0 / games);
+			stats += "Percentage of wins on Dealer busts: " + String.format("%.2f\n\n", bustWins * 100.0 / win);
+			
+			stats += "Total blackjacks: " + blackjacks + "\n";
+			stats += "Blackjack %: " + String.format("%.2f\n\n", blackjacks * 100.0 / games);
+			
+			stats += "Total doubles: " + doubles + "\n";
+			stats += "Double %: " + String.format("%.2f\n", doubles * 100.0 / games);
+			stats += "Total double wins: " + doubleWins + "\n";
+			stats += "Double win %: " + String.format("%.2f\n\n", doubleWins * 100.0 / doubles);
+			
+			stats += "Total coins won: " + coinWin + "\n";
+			stats += "Total coins lost: " + coinLost + "\n";
+			stats += "Net coins: " + (netCoin >= 0 ? "+" + netCoin : netCoin) + "\n";
+			stats += "Highest wallet amount: " + maxCoin + "\n";
+			
+			JOptionPane.showMessageDialog(null, stats);
+		});
+	}
+		
+	private boolean hit() {
+		int handSize = getHandSize(userCards);
+		if (handSize < MAX_HAND_SIZE) {
+			doubleButton.setVisible(false);
+			userCards[handSize] = dealCard();
+			userCardIcons.setIcon(createHandIcon(userCards));
+			int handTotal = getHandTotal(userCards);
+			if (handTotal > 21) {
+				JOptionPane.showMessageDialog(null, "Player busts with a hand total of " + handTotal + "!");
+				JOptionPane.showMessageDialog(null, "Dealer won " + bet * 2 + " coins!");
+				p.blackjackStats[3]++;
+				loseGame();
+				endGame();
+				return false;
+			}
+			return true;
+		} else {
+			JOptionPane.showMessageDialog(null, "Can't hold any more cards!");
+			return false;
+		}
+	}
+	
+	private void stand() {
+		stand(false);
+	}
+	
+	private void stand(boolean dbl) {
+		int playerTotal = getHandTotal(userCards);
+		if (playerTotal == 21 && getHandSize(userCards) == 2) p.blackjackStats[5]++;
+		int dealerTotal = getHandTotal(foeCards);
+		int handSize = getHandSize(foeCards);
+		foeCards[1].setVisible(true);
+		foeCardIcons.setIcon(createHandIcon(foeCards));
+		while (dealerTotal < 16 && handSize < MAX_HAND_SIZE) {
+			Card card = dealCard();
+			foeCards[handSize] = card;
+			foeCardIcons.setIcon(createHandIcon(foeCards));
+			JOptionPane.showMessageDialog(null, "Dealer hit and was dealt a \n" + card.getRankString() + " of " + card.getSuitString() + "!");
+			dealerTotal = getHandTotal(foeCards);
+			handSize = getHandSize(foeCards);
+		}
+		if (dealerTotal <= 21) {
+			JOptionPane.showMessageDialog(null, "Dealer stood and had a hand total of " + dealerTotal + "!\nPlayer stood and had a hand total of " + playerTotal + "!");
+			if (playerTotal > dealerTotal) {
+				winGame(bet * 2);
+				if (dbl) p.blackjackStats[7]++;
+			} else if (playerTotal == dealerTotal) {
+				JOptionPane.showMessageDialog(null, "It's a push. Bet was returned.");
+				p.coins += bet;
+				p.blackjackStats[2]++;
+				if (dbl) p.blackjackStats[7]++;
+			} else {
+				JOptionPane.showMessageDialog(null, "Dealer won " + bet * 2 + " coins!");
+				loseGame();
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Dealer busts with a hand total of " + dealerTotal + "!");
+			p.blackjackStats[4]++;
+			winGame(bet * 2);
+		}
+		endGame();
 	}
 
 	@Override
@@ -322,10 +430,18 @@ public class BlackjackPanel extends JPanel {
 		p.coins += amt;
 		p.winStreak++;
 		p.gamesWon++;
+		p.blackjackStats[1]++;
+		p.blackjackStats[8] += amt / 2;
+		if (p.coins > p.blackjackStats[10]) p.blackjackStats[10] = p.coins;
+		if (p.winStreak > p.blackjackStats[11]) p.blackjackStats[11] = p.winStreak;
+		p.blackjackStats[12] = 0;
 	}
 	
 	private void loseGame() {
 		p.winStreak = 0;
+		p.blackjackStats[9] += bet;
+		p.blackjackStats[12]++;
+		if (p.blackjackStats[12] > p.blackjackStats[13]) p.blackjackStats[13] = p.blackjackStats[12];
 	}
 	
 	private int getHandTotal(Card[] hand) {

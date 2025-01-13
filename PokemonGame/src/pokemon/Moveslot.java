@@ -39,4 +39,11 @@ public class Moveslot implements Serializable {
 			return Color.black;
 		}
 	}
+	
+	public Moveslot clone() {
+		Moveslot result = new Moveslot(this.move);
+		result.maxPP = this.maxPP;
+		result.currentPP = this.currentPP;
+		return result;
+	}
 }

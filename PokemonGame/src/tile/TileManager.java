@@ -1469,6 +1469,7 @@ public class TileManager {
 		for (int i = 0; i < xCoords.length; i++) {
 			mapTileNum[107][xCoords[i]][yCoords[i]] = 483;
 		}
+		// TODO: clear arthra and merlin from Mt Splinkty Peak
 	}
 	
 	public void addName(String name, int map) {

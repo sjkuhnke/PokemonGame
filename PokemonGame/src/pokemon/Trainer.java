@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import overworld.GamePanel;
+import pokemon.Field.FieldEffect;
+
 public class Trainer implements Serializable {
 	/**
 	 * 
@@ -17,6 +20,8 @@ public class Trainer implements Serializable {
 	int flagIndex;
 	Pokemon current;
 	public boolean update;
+	
+	ArrayList<FieldEffect> effects;
 	
 	public static final int MAX_TRAINERS = 400;
 	public static Trainer[] trainers = new Trainer[MAX_TRAINERS];
@@ -67,6 +72,8 @@ public class Trainer implements Serializable {
 		for (Pokemon p : team) {
 			p.setTrainer(this);
 		}
+		
+		this.effects = new ArrayList<>();
 	}
 	
 	public Trainer(boolean player) {
@@ -115,8 +122,9 @@ public class Trainer implements Serializable {
 		return getNumFainted() < team.length;
 	}
 	
-	public Pokemon next(Pokemon other) {
+	public Pokemon next(Pokemon other, boolean userSide) {
 		current = getNext(other);
+		if (userSide) Pokemon.gp.simBattleUI.tempUser = current.clone();
 		return current;
 	}
 	
@@ -151,7 +159,7 @@ public class Trainer implements Serializable {
 		return money;
 	}
 	
-	public boolean swapRandom(Pokemon foe, Player me) {
+	public boolean swapRandom(Pokemon foe) {
 		if (!hasValidMembers()) return false;
 		Random rand = new Random();
 		int index = rand.nextInt(team.length);
@@ -159,7 +167,11 @@ public class Trainer implements Serializable {
 			index = rand.nextInt(team.length);
 		}
 		
-		swap(current, team[index]);
+		Pokemon user = Pokemon.gp.gameState == GamePanel.BATTLE_STATE ? Pokemon.gp.battleUI.user :
+			Pokemon.gp.gameState == GamePanel.SIM_BATTLE_STATE ? Pokemon.gp.simBattleUI.user : null;
+		boolean hasUser = this.hasUser(user);
+		
+		swap(current, team[index], hasUser);
 		current.swapIn(foe, true);
 		return true;
 		
@@ -173,6 +185,17 @@ public class Trainer implements Serializable {
 					result = true;
 					break;
 				}
+			}
+		}
+		return result;
+	}
+	
+	public boolean wiped() {
+		boolean result = true;
+		for (int i = 0; i < team.length; i++) {
+			if (this.team[i] != null && !this.team[i].isFainted()) {
+				result = false;
+				break;
 			}
 		}
 		return result;
@@ -213,14 +236,15 @@ public class Trainer implements Serializable {
 		return getNext(foe);
 	}
 	
-	public Pokemon swapOut(Pokemon foe, Move m, boolean baton) {
+	public Pokemon swapOut(Pokemon foe, Move m, boolean baton, boolean userSide) {
 		Pokemon result = getSwap(foe, m);
 		if (result != current) {
+			if (userSide) Pokemon.gp.simBattleUI.tempUser = result.clone();
 			int[] oldStats = current.statStages.clone();
 			ArrayList<Status> oldVStatuses = new ArrayList<>(current.vStatuses);
 			int perishCount = current.perishCount;
 			int magCount = current.magCount;
-			swap(current, result);
+			swap(current, result, userSide);
 			if (baton) {
 				result.statStages = oldStats;
 				result.vStatuses = oldVStatuses;
@@ -286,8 +310,8 @@ public class Trainer implements Serializable {
 		return getEffective(p, foe, type, m, false) < 1;
 	}
 	
-	private void swap(Pokemon oldP, Pokemon newP) {
-		Pokemon.addSwapOutTask(oldP);
+	private void swap(Pokemon oldP, Pokemon newP, boolean playerSide) {
+		Pokemon.addSwapOutTask(oldP, playerSide);
 		if (oldP.ability == Ability.REGENERATOR && !oldP.isFainted()) {
 			oldP.currentHP += current.getStat(0) / 3;
 			oldP.verifyHP();
@@ -297,8 +321,9 @@ public class Trainer implements Serializable {
 		oldP.clearVolatile();
 		if (oldP.ability == Ability.ILLUSION) oldP.illusion = true; // just here for calc
 		this.current = newP;
-		Pokemon.addSwapInTask(newP, newP.currentHP);
+		Pokemon.addSwapInTask(newP, newP.currentHP, playerSide);
 		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
+		Pokemon.field.switches++;
 	}
 
 	public void setCurrent(Pokemon newCurrent) {
@@ -335,5 +360,29 @@ public class Trainer implements Serializable {
 			if (p == team[i]) return i;
 		}
 		return -1;
+	}
+	
+	public Trainer clone() {		
+		Pokemon[] newTeam = new Pokemon[this.team.length];
+		for (int i = 0; i < this.team.length; i++) {
+			newTeam[i] = this.team[i].clone();
+		}
+		Trainer result = new Trainer(this.name, newTeam, this.money, this.item, this.flagIndex);
+		
+		result.update = this.update;
+		result.effects = new ArrayList<>(this.effects);
+		
+		return result;
+	}
+
+	public boolean hasUser(Pokemon user) {
+		for (Pokemon p : team) {
+			if (p == user) return true;
+		}
+		return false;
+	}
+	
+	public ArrayList<FieldEffect> getFieldEffectList() {
+		return this.effects;
 	}
 }

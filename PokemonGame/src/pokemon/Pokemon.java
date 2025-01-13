@@ -105,6 +105,7 @@ public class Pokemon implements Serializable {
 	// status fields
 	public Status status;
 	public ArrayList<Status> vStatuses;
+	public ArrayList<FieldEffect> fieldEffects; 
 	
 	// xp fields
 	public int exp;
@@ -226,6 +227,8 @@ public class Pokemon implements Serializable {
 		spriteVisible = true;
 		
 		if (!t) setSprites();
+		
+		this.fieldEffects = new ArrayList<>();
 	}
 
 	public Pokemon(int i, Pokemon pokemon) {
@@ -466,11 +469,18 @@ public class Pokemon implements Serializable {
         
         if (tr.hasValidMembers() && !isTrapped(foe)) {
         	// 25% chance to swap in a partner if they resist and you don't
-        	if (foe.lastMoveUsed != null && foe.lastMoveUsed.cat != 2 && !tr.resists(this, foe, foe.lastMoveUsed.mtype, foe.lastMoveUsed)
-        			&& tr.hasResist(foe, foe.lastMoveUsed.mtype, foe.lastMoveUsed)) {
+        	ArrayList<Move> damagingMoveset = foe.getDamagingMoveset();
+        	boolean only1Move = damagingMoveset.size() == 1;
+        	Move check = only1Move ? damagingMoveset.get(0) : foe.lastMoveUsed;
+        	if (check != null && check.cat != 2 && !tr.resists(this, foe, check.mtype, check)
+        			&& tr.hasResist(foe, check.mtype, check)) {
         		double chance = 25;
-        		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
-        		if (this.impressive) chance /= 2;
+        		if (only1Move) {
+        			chance *= 2;
+        		} else {
+        			if (this == this.getFaster(foe, 0, 0)) chance /= 2;
+            		if (this.impressive) chance /= 2;
+        		}
         		if (checkSecondary((int) Math.round(chance))) {
         			System.out.print("partner resists : ");
         			System.out.printf("%.1f%%\n", chance);
@@ -522,16 +532,13 @@ public class Pokemon implements Serializable {
     		boolean moveKills = false;
     		PType type = null;
     		boolean hasResist = false;
-        	for (Moveslot m : foe.moveset) {
-        		if (m != null && m.currentPP > 0) {
-        			Move move = m.move;
-            		int damage = foe.calcWithTypes(this, move, true, 0, false, field);
-            		hasResist = tr.hasResist(foe, move.mtype, move);
-            		if (damage >= this.currentHP) {
-            			moveKills = true;
-            			type = move.mtype;
-            			break;
-            		}
+        	for (Move m : foe.getValidMoveset()) {
+        		int damage = foe.calcWithTypes(this, m, true, 0, false, field);
+        		hasResist = tr.hasResist(foe, m.mtype, m);
+        		if (damage >= this.currentHP) {
+        			moveKills = true;
+        			type = m.mtype;
+        			break;
         		}
         	}
         	if (moveKills) {
@@ -574,13 +581,13 @@ public class Pokemon implements Serializable {
         			freshYou.statStages = new int[freshYou.statStages.length];
         			Pokemon freshFoe = new Pokemon(1, 1, false, false);
         			int[] prevStatsF = freshYou.statStages.clone();
-        			freshYou.statusEffect(freshFoe, move, null, null, null, field.foeSide, field.playerSide, false);
+        			freshYou.statusEffect(freshFoe, move, null, null, null, false);
         			int[] currentStatsF = freshYou.statStages.clone();
         			if (!arrayEquals(prevStatsF, currentStatsF)) {
         				Pokemon you = this.clone();
             			Pokemon foeClone = foe.clone(); // shouldn't matter
             			int[] prevStats = you.statStages.clone();
-            			you.statusEffect(foeClone, move, null, null, null, field.foeSide, field.playerSide, false);
+            			you.statusEffect(foeClone, move, null, null, null, false);
             			int[] currentStats = you.statStages.clone();
             			if (arrayGreaterOrEqual(prevStats, currentStats)) {
             				// nothing: don't add
@@ -628,12 +635,12 @@ public class Pokemon implements Serializable {
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.THUNDER_WAVE) && foe.type1 == PType.GROUND || foe.type2 == PType.GROUND) bestMoves.removeIf(Move.THUNDER_WAVE::equals);
 		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.STICKY_WEB) && field.contains(field.playerSide, Effect.STICKY_WEBS)) bestMoves.removeIf(Move.STICKY_WEB::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.STEALTH_ROCK) && field.contains(field.playerSide, Effect.STEALTH_ROCKS)) bestMoves.removeIf(Move.STEALTH_ROCK::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPIKES) && field.getLayers(field.playerSide, Effect.SPIKES) == 3) bestMoves.removeIf(Move.SPIKES::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TOXIC_SPIKES) && field.getLayers(field.playerSide, Effect.TOXIC_SPIKES) == 2) bestMoves.removeIf(Move.TOXIC_SPIKES::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.STICKY_WEB) && field.contains(foe.getFieldEffects(), Effect.STICKY_WEBS)) bestMoves.removeIf(Move.STICKY_WEB::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.STEALTH_ROCK) && field.contains(foe.getFieldEffects(), Effect.STEALTH_ROCKS)) bestMoves.removeIf(Move.STEALTH_ROCK::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPIKES) && field.getLayers(foe.getFieldEffects(), Effect.SPIKES) == 3) bestMoves.removeIf(Move.SPIKES::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TOXIC_SPIKES) && field.getLayers(foe.getFieldEffects(), Effect.TOXIC_SPIKES) == 2) bestMoves.removeIf(Move.TOXIC_SPIKES::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.DEFOG)) {
-			if (field.getHazards(field.foeSide).isEmpty() && field.getScreens(field.playerSide).isEmpty() && field.terrain == null) {
+			if (field.getHazards(this.getFieldEffects()).isEmpty() && field.getScreens(foe.getFieldEffects()).isEmpty() && field.terrain == null) {
 				bestMoves.removeIf(Move.DEFOG::equals);
 			} else {
 				bestMoves.add(Move.DEFOG);
@@ -660,13 +667,14 @@ public class Pokemon implements Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.PSYCHIC_TERRAIN) && field.equals(field.terrain, Effect.PSYCHIC)) bestMoves.removeIf(Move.PSYCHIC_TERRAIN::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPARKLING_TERRAIN) && field.equals(field.terrain, Effect.SPARKLY)) bestMoves.removeIf(Move.SPARKLING_TERRAIN::equals);
 		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.REFLECT) && field.contains(field.foeSide, Effect.REFLECT)) bestMoves.removeIf(Move.REFLECT::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.LIGHT_SCREEN) && field.contains(field.foeSide, Effect.LIGHT_SCREEN)) bestMoves.removeIf(Move.LIGHT_SCREEN::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_VEIL) && (field.contains(field.foeSide, Effect.AURORA_VEIL) || !field.equals(field.weather, Effect.SNOW))) bestMoves.removeIf(Move.AURORA_VEIL::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SAFEGUARD) && field.contains(field.foeSide, Effect.SAFEGUARD)) bestMoves.removeIf(Move.SAFEGUARD::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.LUCKY_CHANT) && field.contains(field.foeSide, Effect.LUCKY_CHANT)) bestMoves.removeIf(Move.LUCKY_CHANT::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.REFLECT) && field.contains(this.getFieldEffects(), Effect.REFLECT)) bestMoves.removeIf(Move.REFLECT::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.LIGHT_SCREEN) && field.contains(this.getFieldEffects(), Effect.LIGHT_SCREEN)) bestMoves.removeIf(Move.LIGHT_SCREEN::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_VEIL) && (field.contains(this.getFieldEffects(), Effect.AURORA_VEIL) || !field.equals(field.weather, Effect.SNOW))) bestMoves.removeIf(Move.AURORA_VEIL::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SAFEGUARD) && field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) bestMoves.removeIf(Move.SAFEGUARD::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.LUCKY_CHANT) && field.contains(this.getFieldEffects(), Effect.LUCKY_CHANT)) bestMoves.removeIf(Move.LUCKY_CHANT::equals);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.HAZE) && arrayGreaterOrEqual(new int[] {0, 0, 0, 0, 0, 0, 0}, foe.statStages) && arrayGreaterOrEqual(statStages, new int[] {0, 0, 0, 0, 0, 0, 0})) bestMoves.removeIf(Move.HAZE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.BELLY_DRUM) && this.currentHP < this.getStat(0) / 2) bestMoves.removeIf(Move.HAZE::equals);
 		
 		if (bestMoves.size() > 1 && (bestMoves.contains(Move.ROOST) || bestMoves.contains(Move.SYNTHESIS) || bestMoves.contains(Move.MOONLIGHT) || bestMoves.contains(Move.MORNING_SUN) ||
 				bestMoves.contains(Move.RECOVER) || bestMoves.contains(Move.SLACK_OFF) || bestMoves.contains(Move.WISH) || bestMoves.contains(Move.REST) ||
@@ -681,7 +689,7 @@ public class Pokemon implements Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.BATON_PASS) && foe.trainerOwned() && !foe.trainer.hasValidMembers()) bestMoves.removeIf(Move.BATON_PASS::equals);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TRICK_ROOM) && field.contains(field.fieldEffects, Effect.TRICK_ROOM)) bestMoves.removeIf(Move.TRICK_ROOM::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAILWIND) && field.contains(field.foeSide, Effect.TAILWIND)) bestMoves.removeIf(Move.TAILWIND::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAILWIND) && field.contains(this.getFieldEffects(), Effect.TAILWIND)) bestMoves.removeIf(Move.TAILWIND::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MUD_SPORT) && field.contains(field.fieldEffects, Effect.MUD_SPORT)) bestMoves.removeIf(Move.MUD_SPORT::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.WATER_SPORT) && field.contains(field.fieldEffects, Effect.WATER_SPORT)) bestMoves.removeIf(Move.WATER_SPORT::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.GRAVITY) && field.contains(field.fieldEffects, Effect.GRAVITY)) bestMoves.removeIf(Move.GRAVITY::equals);
@@ -1336,21 +1344,15 @@ public class Pokemon implements Serializable {
 		int critChance = move.critChance;
 		Ability foeAbility = foe.ability;
 		
-		ArrayList<FieldEffect> userSide;
-		ArrayList<FieldEffect> enemySide;
 		Player player;
 		Trainer enemy;
 		Pokemon[] team = null;
 		
 		if (this.playerOwned()) {
-			userSide = field.playerSide;
-			enemySide = field.foeSide;
-			player = (Player) this.trainer;
+			player = this.trainer instanceof Player ? (Player) this.trainer : gp.player.p;
 			enemy = foe.trainer;
 			team = player.team;
 		} else {
-			userSide = field.foeSide;
-			enemySide = field.playerSide;
 			player = foe.trainer instanceof Player ? (Player) foe.trainer : gp.player.p;
 			enemy = this.trainer;
 			if (trainer != null) team = enemy.team;
@@ -1402,7 +1404,7 @@ public class Pokemon implements Serializable {
 					this.vStatuses.remove(Status.LOCKED);
 					this.vStatuses.remove(Status.CHARGING);
 					this.vStatuses.remove(Status.SEMI_INV);
-					this.visible = true;
+					this.spriteVisible = true;
 					this.rollCount = 1;
 					return;
 				}
@@ -1434,7 +1436,7 @@ public class Pokemon implements Serializable {
 					this.vStatuses.remove(Status.LOCKED);
 					this.vStatuses.remove(Status.CHARGING);
 					this.vStatuses.remove(Status.SEMI_INV);
-					this.visible = true;
+					this.spriteVisible = true;
 					this.lastMoveUsed = null;
 					this.rollCount = 1;
 					return;
@@ -1450,7 +1452,7 @@ public class Pokemon implements Serializable {
 			this.vStatuses.remove(Status.LOCKED);
 			this.vStatuses.remove(Status.CHARGING);
 			this.vStatuses.remove(Status.SEMI_INV);
-			this.visible = true;
+			this.spriteVisible = true;
 			this.lastMoveUsed = null;
 			this.rollCount = 1;
 			return;
@@ -1472,7 +1474,7 @@ public class Pokemon implements Serializable {
 				this.vStatuses.remove(Status.LOCKED);
 				this.vStatuses.remove(Status.CHARGING);
 				this.vStatuses.remove(Status.SEMI_INV);
-				this.visible = true;
+				this.spriteVisible = true;
 				this.lastMoveUsed = null;
 				this.rollCount = 1;
 				return;
@@ -1486,7 +1488,7 @@ public class Pokemon implements Serializable {
 			this.vStatuses.remove(Status.LOCKED);
 			this.vStatuses.remove(Status.CHARGING);
 			this.vStatuses.remove(Status.SEMI_INV);
-			this.visible = true;
+			this.spriteVisible = true;
 			this.rollCount = 1;
 			return;
 		}
@@ -1798,6 +1800,7 @@ public class Pokemon implements Serializable {
 			if (!hit(accuracy) || foe.vStatuses.contains(Status.SEMI_INV) && acc <= 100) {
 				useMove(move, foe);
 				addTask(Task.TEXT, this.nickname + "'s attack missed!");
+				field.misses++;
 				if (move == Move.HI_JUMP_KICK && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
 					this.damage(this.getStat(0) / 2.0, foe);
 					addTask(Task.TEXT, this.nickname + " kept going and crashed!");
@@ -1819,9 +1822,13 @@ public class Pokemon implements Serializable {
 		}
 		
 		int numHits = move.getNumHits(this, team);
-		int damageIndex = gp.battleUI.tasks.size();
+		
+		ArrayList<Task> tasks = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.simBattleUI.tasks;
+		int damageIndex = tasks.size();
+		
 		useMove(move, foe);
-		String message = getTask(damageIndex).message;
+		Task msgTask = getTask(damageIndex);
+		String message = msgTask == null ? "" : msgTask.message;
 		int hits = 0;
 		for (int hit = 1; hit <= numHits; hit++) {
 			if (hit > 1) bp = move.basePower;
@@ -1842,6 +1849,7 @@ public class Pokemon implements Serializable {
 				if (foe.item == Item.BRIGHT_POWDER) accuracy *= 0.9;
 				if (!hit(accuracy) || foe.vStatuses.contains(Status.SEMI_INV) && acc <= 100) {
 					addTask(Task.TEXT, this.nickname + "'s attack missed!");
+					field.misses++;
 					if (this.item == Item.BLUNDER_POLICY) {
 						stat(this, 4, 2, foe);
 						this.consumeItem(foe);
@@ -1956,7 +1964,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (move.cat == 2) {
-				statusEffect(foe, move, player, team, enemy, userSide, enemySide);
+				statusEffect(foe, move, player, team, enemy);
 				this.impressive = false;
 				this.moveMultiplier = 1;
 				return;
@@ -2119,8 +2127,9 @@ public class Pokemon implements Serializable {
 			if (this.ability == Ability.SUPER_LUCK) critChance++;
 			if (item == Item.SCOPE_LENS) critChance++;
 			if (this.ability == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC)) critChance = 3; 
-			if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && !field.contains(enemySide, Effect.LUCKY_CHANT) && critCheck(critChance)) {
+			if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && !field.contains(foe.getFieldEffects(), Effect.LUCKY_CHANT) && critCheck(critChance)) {
 				addTask(Task.TEXT, "A critical hit!");
+				field.crits++;
 				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++;
 				if (foe.trainerOwned() && move.isTail()) tailCrit++;
 				if (move.isPhysical() && attackStat < this.getStat(1)) {
@@ -2155,8 +2164,8 @@ public class Pokemon implements Serializable {
 			if ((foeAbility == Ability.ICY_SCALES && !move.isPhysical()) || (foeAbility == Ability.MULTISCALE && foe.currentHP == foe.getStat(0))) damage /= 2;
 			
 			// Screens
-			if (move.isPhysical() && (field.contains(enemySide, Effect.REFLECT) || field.contains(enemySide, Effect.AURORA_VEIL))) damage /= 2;
-			if (!move.isPhysical() && (field.contains(enemySide, Effect.LIGHT_SCREEN) || field.contains(enemySide, Effect.AURORA_VEIL))) damage /= 2;
+			if (move.isPhysical() && (field.contains(foe.getFieldEffects(), Effect.REFLECT) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) damage /= 2;
+			if (!move.isPhysical() && (field.contains(foe.getFieldEffects(), Effect.LIGHT_SCREEN) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) damage /= 2;
 			
 			double multiplier = 1;
 			// Check type effectiveness
@@ -2215,6 +2224,7 @@ public class Pokemon implements Serializable {
 				addAbilityTask(foe);
 				addTask(Task.TEXT, foe.nickname + " is distorting type matchups!");
 				damageIndex += 3;
+				if (hit == 1) damageIndex--;
 				multiplier = 0.5;
 			}
 			
@@ -2232,6 +2242,7 @@ public class Pokemon implements Serializable {
 			
 			if (multiplier > 1) {
 				message += "\nIt's super effective!";
+				field.superEffective++;
 				if (foeAbility == Ability.SOLID_ROCK || foeAbility == Ability.FILTER) damage /= 2;
 				if (item == Item.EXPERT_BELT) damage *= 1.2;
 				if (foe.item != null && foe.checkTypeResistBerry(moveType)) {
@@ -2417,7 +2428,7 @@ public class Pokemon implements Serializable {
 				}
 				if (foeAbility == Ability.TOXIC_DEBRIS) {
 					addAbilityTask(foe);
-					field.setHazard(userSide, field.new FieldEffect(Effect.TOXIC_SPIKES));
+					field.setHazard(this.getFieldEffects(), field.new FieldEffect(Effect.TOXIC_SPIKES));
 				}
 			}
 			
@@ -2441,7 +2452,7 @@ public class Pokemon implements Serializable {
 			}
 		}
 		if (checkSecondary(secChance)) {
-			secondaryEffect(foe, move, first, userSide, enemySide, player, enemy);
+			secondaryEffect(foe, move, first, player, enemy);
 		}
 		if (!foe.isFainted() && this.ability == Ability.RADIANT && moveType == PType.LIGHT && foe.item != Item.COVERT_CLOAK && foeAbility != Ability.SHIELD_DUST) {
 			addAbilityTask(this);
@@ -2476,10 +2487,10 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (foe.item == Item.RED_CARD) {
-			int index = gp.battleUI.tasks.size();
+			int index = tasks.size();
 			boolean result = false;
 			if (this.trainerOwned() && enemy != null) {
-				result = enemy.swapRandom(foe, player);
+				result = enemy.swapRandom(foe);
 			} else if (this.playerOwned()) {
 				result = player.swapRandom(foe);
 			}
@@ -2681,7 +2692,7 @@ public class Pokemon implements Serializable {
 		this.happiness = this.happiness > 255 ? 255 : this.happiness;
 	}
 
-	private void secondaryEffect(Pokemon foe, Move move, boolean first, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide, Player player, Trainer enemy) {
+	private void secondaryEffect(Pokemon foe, Move move, boolean first, Player player, Trainer enemy) {
 		if (move == Move.ABYSSAL_CHOP) {
 		    foe.paralyze(false, this);
 		} else if (move == Move.ACID) {
@@ -2727,9 +2738,9 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.BOLT_STRIKE) {
 			foe.paralyze(false, this);
 		} else if (move == Move.BRICK_BREAK || move == Move.PSYCHIC_FANGS) {
-			if (field.remove(enemySide, Effect.REFLECT)) addTask(Task.TEXT, foe.nickname + "'s Reflect wore off!");
-			if (field.remove(enemySide, Effect.LIGHT_SCREEN)) addTask(Task.TEXT, foe.nickname + "'s Light Screen wore off!");
-			if (field.remove(enemySide, Effect.AURORA_VEIL)) addTask(Task.TEXT, foe.nickname + "'s Aurora Veil wore off!");
+			if (field.remove(foe.getFieldEffects(), Effect.REFLECT)) addTask(Task.TEXT, foe.nickname + "'s Reflect wore off!");
+			if (field.remove(foe.getFieldEffects(), Effect.LIGHT_SCREEN)) addTask(Task.TEXT, foe.nickname + "'s Light Screen wore off!");
+			if (field.remove(foe.getFieldEffects(), Effect.AURORA_VEIL)) addTask(Task.TEXT, foe.nickname + "'s Aurora Veil wore off!");
 		} else if (move == Move.BOUNCE) {
 			foe.paralyze(false, this);
 		} else if (move == Move.BUBBLEBEAM) {
@@ -2751,7 +2762,7 @@ public class Pokemon implements Serializable {
 			stat(this, 2, 1, this);
 		} else if ((move == Move.CIRCLE_THROW || move == Move.DRAGON_TAIL) && !foe.isFainted()) {
 			if (foe.trainerOwned() && enemy != null) {
-				enemy.swapRandom(foe, player);
+				enemy.swapRandom(foe);
 			} else if (foe.playerOwned()) {
 				player.swapRandom(foe);
 			}
@@ -3117,9 +3128,9 @@ public class Pokemon implements Serializable {
 				addTask(Task.TEXT, this.nickname + " was freed!");
 				this.spunCount = 0;
 			}
-			for (FieldEffect fe : field.getHazards(userSide)) {
+			for (FieldEffect fe : field.getHazards(this.getFieldEffects())) {
 				addTask(Task.TEXT, fe.toString() + " disappeared from " + this.nickname + "'s side!");
-				userSide.remove(fe);
+				this.getFieldEffects().remove(fe);
 			}
 		} else if (move == Move.MOONBLAST) {
 			stat(foe, 2, -1, this);
@@ -3177,9 +3188,9 @@ public class Pokemon implements Serializable {
 				addTask(Task.TEXT, this.nickname + " was freed!");
 				this.spunCount = 0;
 			}
-			for (FieldEffect fe : field.getHazards(userSide)) {
+			for (FieldEffect fe : field.getHazards(this.getFieldEffects())) {
 				addTask(Task.TEXT, fe.toString() + " disappeared from " + this.nickname + "'s side!");
-				userSide.remove(fe);
+				this.getFieldEffects().remove(fe);
 			}
 		} else if (move == Move.RAZOR_SHELL) {
 			stat(foe, 1, -1, this);
@@ -3190,7 +3201,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.ROCK_TOMB) {
 			stat(foe, 4, -1, this);
 		} else if (move == Move.ROCKFALL_FRENZY) {
-			field.setHazard(enemySide, field.new FieldEffect(Effect.STEALTH_ROCKS));
+			field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.STEALTH_ROCKS));
 //		} else if (move == Move.ROOT_CRUSH) {
 //			foe.paralyze(false, this);
 		} else if (move == Move.SACRED_FIRE) {
@@ -3396,12 +3407,11 @@ public class Pokemon implements Serializable {
 		}
 	}
 	
-	private void statusEffect(Pokemon foe, Move move, Player player, Pokemon[] team, Trainer enemy, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide) {
-		statusEffect(foe, move, player, team, enemy, userSide, enemySide, true);
+	private void statusEffect(Pokemon foe, Move move, Player player, Pokemon[] team, Trainer enemy) {
+		statusEffect(foe, move, player, team, enemy, true);
 	}
 
-	private void statusEffect(Pokemon foe, Move move, Player player, Pokemon[] team, Trainer enemy, ArrayList<FieldEffect> userSide, ArrayList<FieldEffect> enemySide,
-			boolean announce) {
+	private void statusEffect(Pokemon foe, Move move, Player player, Pokemon[] team, Trainer enemy, boolean announce) {
 		boolean fail = false;
 		if (announce && (move == Move.ABDUCT || move == Move.TAKE_OVER)) {
 			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success) && !foe.vStatuses.contains(Status.POSSESSED)) {
@@ -3458,10 +3468,10 @@ public class Pokemon implements Serializable {
 			}
 		} else if (announce && move == Move.AURORA_VEIL) {
 			if (field.equals(field.weather, Effect.SNOW)) {
-				if (!(field.contains(userSide, Effect.AURORA_VEIL))) {
+				if (!(field.contains(this.getFieldEffects(), Effect.AURORA_VEIL))) {
 					FieldEffect a = field.new FieldEffect(Effect.AURORA_VEIL);
 					if (this.item == Item.LIGHT_CLAY) a.turns = 8;
-					userSide.add(a);
+					this.getFieldEffects().add(a);
 					if (announce) addTask(Task.TEXT, "Aurora Veil made " + this.nickname + "'s team stronger against Physical and Special moves!");
 				} else {
 					fail = fail(announce);
@@ -3558,21 +3568,21 @@ public class Pokemon implements Serializable {
 			rollCount = 2;
 		} else if (announce && move == Move.DEFOG) {
 			stat(foe, 6, -1, this, announce);
-			for (FieldEffect fe : field.getHazards(userSide)) {
+			for (FieldEffect fe : field.getHazards(this.getFieldEffects())) {
 				if (announce) addTask(Task.TEXT, fe.toString() + " disappeared from " + this.nickname + "'s side!");
-				userSide.remove(fe);
+				this.getFieldEffects().remove(fe);
 			}
-			for (FieldEffect fe : field.getHazards(enemySide)) {
+			for (FieldEffect fe : field.getHazards(foe.getFieldEffects())) {
 				if (announce) addTask(Task.TEXT, fe.toString() + " disappeared from " + this.nickname + "'s side!");
-				enemySide.remove(fe);
+				foe.getFieldEffects().remove(fe);
 			}
-			for (FieldEffect fe : field.getScreens(userSide)) {
+			for (FieldEffect fe : field.getScreens(this.getFieldEffects())) {
 				if (announce) addTask(Task.TEXT, fe.toString() + " disappeared from " + this.nickname + "'s side!");
-				userSide.remove(fe);
+				this.getFieldEffects().remove(fe);
 			}
-			for (FieldEffect fe : field.getScreens(enemySide)) {
+			for (FieldEffect fe : field.getScreens(foe.getFieldEffects())) {
 				if (announce) addTask(Task.TEXT, fe.toString() + " disappeared from " + this.nickname + "'s side!");
-				enemySide.remove(fe);
+				foe.getFieldEffects().remove(fe);
 			}
 			if (field.terrain != null) {
 				if (announce) {
@@ -3738,10 +3748,10 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.LEER) {
 			stat(foe, 1, -1, this, announce);
 		} else if (announce && move == Move.LIGHT_SCREEN) {
-			if (!(field.contains(userSide, Effect.LIGHT_SCREEN))) {
+			if (!(field.contains(this.getFieldEffects(), Effect.LIGHT_SCREEN))) {
 				FieldEffect a = field.new FieldEffect(Effect.LIGHT_SCREEN);
 				if (this.item == Item.LIGHT_CLAY) a.turns = 8;
-				userSide.add(a);
+				this.getFieldEffects().add(a);
 				if (announce) addTask(Task.TEXT, "Light Screen made " + this.nickname + "'s team stronger against Special moves!");
 			} else {
 				fail = fail(announce);
@@ -3752,8 +3762,8 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.LOVELY_KISS) {
 			foe.sleep(true, this);
 		} else if (announce && move == Move.LUCKY_CHANT) {
-			if (!(field.contains(userSide, Effect.LUCKY_CHANT))) {
-				userSide.add(field.new FieldEffect(Effect.LUCKY_CHANT));
+			if (!(field.contains(this.getFieldEffects(), Effect.LUCKY_CHANT))) {
+				this.getFieldEffects().add(field.new FieldEffect(Effect.LUCKY_CHANT));
 				if (announce) addTask(Task.TEXT, "The Lucky Chant shielded the team from critical hits!");
 			} else {
 				fail = fail(announce);
@@ -3914,10 +3924,10 @@ public class Pokemon implements Serializable {
 			stat(this, 2, 2, foe, announce);
 			stat(this, 3, 1, foe, announce);
 		} else if (announce && move == Move.REFLECT) {
-			if (!(field.contains(userSide, Effect.REFLECT))) {
+			if (!(field.contains(this.getFieldEffects(), Effect.REFLECT))) {
 				FieldEffect a = field.new FieldEffect(Effect.REFLECT);
 				if (this.item == Item.LIGHT_CLAY) a.turns = 8;
-				userSide.add(a);
+				this.getFieldEffects().add(a);
 				if (announce) addTask(Task.TEXT, "Reflect made " + this.nickname + "'s team stronger against Physical moves!");
 			} else {
 				fail = fail(announce);
@@ -3965,8 +3975,8 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.SAND_ATTACK) {
 			stat(foe, 5, -1, this, announce);
 		} else if (announce && move == Move.SAFEGUARD) {
-			if (!(field.contains(userSide, Effect.SAFEGUARD))) {
-				userSide.add(field.new FieldEffect(Effect.SAFEGUARD));
+			if (!(field.contains(this.getFieldEffects(), Effect.SAFEGUARD))) {
+				this.getFieldEffects().add(field.new FieldEffect(Effect.SAFEGUARD));
 				if (announce) addTask(Task.TEXT, "A veil was added to protect the team from statuses!");
 			} else {
 				fail = fail(announce);
@@ -3982,14 +3992,15 @@ public class Pokemon implements Serializable {
 			if (id == 150 && announce) {
 				int oHP = this.getStat(0);
 				id = 237;
-				if (nickname.equals(name)) nickname = getName();
 				
 				baseStats = getBaseStats();
 				setStats();
 				weight = getWeight();
 				int nHP = this.getStat(0);
-				heal(nHP - oHP, nickname + " transformed into Kissyfishy-D!");
 				addTask(Task.SPRITE, "", this);
+				heal(nHP - oHP, nickname + " transformed into " + getName(id) + "!");
+				if (nickname.equals(name)) nickname = getName();
+				name = getName();
 				setTypes();
 				setAbility();
 				if (this.playerOwned()) player.pokedex[237] = 2;
@@ -4034,13 +4045,13 @@ public class Pokemon implements Serializable {
 			boolean success = field.setTerrain(field.new FieldEffect(Effect.SPARKLY));
 			if (success && item == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
 		} else if (announce && move == Move.SPIKES) {
-			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.SPIKES));
+			fail = field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.SPIKES));
 		} else if (move == Move.SPLASH) {
 			if (announce) addTask(Task.TEXT, "But nothing happened!");
 		} else if (announce && move == Move.STEALTH_ROCK) {
-			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.STEALTH_ROCKS));
+			fail = field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.STEALTH_ROCKS));
 		} else if (announce && move == Move.STICKY_WEB) {
-			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.STICKY_WEBS));
+			fail = field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.STICKY_WEBS));
 		} else if (move == Move.STOCKPILE) {
 			stat(this, 1, 1, foe, announce);
 			stat(this, 3, 1, foe, announce);
@@ -4096,8 +4107,8 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.TAIL_GLOW) {
 			stat(this, 2, 3, foe, announce);
 		} else if (announce && move == Move.TAILWIND) {
-			if (!(field.contains(userSide, Effect.TAILWIND))) {
-				userSide.add(field.new FieldEffect(Effect.TAILWIND));
+			if (!(field.contains(this.getFieldEffects(), Effect.TAILWIND))) {
+				this.getFieldEffects().add(field.new FieldEffect(Effect.TAILWIND));
 				if (announce) addTask(Task.TEXT, "A strong wind blew behind the team!");
 			} else {
 				fail = fail(announce);
@@ -4119,7 +4130,7 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.TOXIC) {
 			foe.toxic(true, this);
 		} else if (announce && move == Move.TOXIC_SPIKES) {
-			fail = field.setHazard(enemySide, field.new FieldEffect(Effect.TOXIC_SPIKES));
+			fail = field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.TOXIC_SPIKES));
 		} else if (move == Move.TRICK || move == Move.SWITCHEROO) {
 			if (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER) {
 				if (announce) addTask(Task.TEXT, this.nickname + " switched items with its target!");
@@ -4162,7 +4173,7 @@ public class Pokemon implements Serializable {
 		} else if (announce && (move == Move.WHIRLWIND || move == Move.ROAR)) {
 			boolean result = false;
 			if (foe.trainerOwned() && enemy != null) {
-				result = enemy.swapRandom(foe, player);
+				result = enemy.swapRandom(foe);
 			} else if (foe.playerOwned()) {
 				result = player.swapRandom(foe);
 			}
@@ -4757,6 +4768,8 @@ public class Pokemon implements Serializable {
 		public static final int MUSHROOM = 46;
 		public static final int COIN = 47;
 		public static final int EVO_INFO = 48;
+		public static final int ODDS = 49;
+		public static final int BET_BATTLE = 50;
 		
 		public int type;
 		public String message;
@@ -4775,6 +4788,7 @@ public class Pokemon implements Serializable {
 		public Item item;
 		
 		public Entity e;
+		public Trainer[] trainers;
 		
 		public Task(int type, String message) {
 			this(type, message, null);
@@ -4900,6 +4914,7 @@ public class Pokemon implements Serializable {
 		}
 		if (announce) addTask(Task.FAINT, this.nickname + " fainted!", this);
 		foe.awardxp(getxpReward());
+		field.knockouts++;
 	}
 
 	public void clearVolatile() {
@@ -4961,8 +4976,6 @@ public class Pokemon implements Serializable {
 		Ability foeAbility = foe.ability;
 		
 		int magicDamage = 0;
-		
-		ArrayList<FieldEffect> enemySide = this.playerOwned() ? field.foeSide : field.playerSide;
 		
 		if (id == 237) {
 			move = get150Move(move);
@@ -5291,7 +5304,7 @@ public class Pokemon implements Serializable {
 		// Crit Check
 		if (this.vStatuses.contains(Status.FOCUS_ENERGY)) critChance += 2;
 		if (this.ability == Ability.SUPER_LUCK) critChance++;
-		if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && !field.contains(enemySide, Effect.LUCKY_CHANT) &&
+		if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && !field.contains(foe.getFieldEffects(), Effect.LUCKY_CHANT) &&
 				((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 3 || crit)))) {
 			if (move.isPhysical() && attackStat < this.getStat(1)) {
 				attackStat = this.getStat(1);
@@ -5322,8 +5335,8 @@ public class Pokemon implements Serializable {
 		if ((foeAbility == Ability.ICY_SCALES && !move.isPhysical()) || (foeAbility == Ability.MULTISCALE && foe.currentHP == foe.getStat(0))) damage /= 2;
 		
 		// Screens
-		if (move.isPhysical() && (field.contains(enemySide, Effect.REFLECT) || field.contains(enemySide, Effect.AURORA_VEIL))) damage /= 2;
-		if (!move.isPhysical() && (field.contains(enemySide, Effect.LIGHT_SCREEN) || field.contains(enemySide, Effect.AURORA_VEIL))) damage /= 2;
+		if (move.isPhysical() && (field.contains(foe.getFieldEffects(), Effect.REFLECT) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) damage /= 2;
+		if (!move.isPhysical() && (field.contains(foe.getFieldEffects(), Effect.LIGHT_SCREEN) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) damage /= 2;
 		
 		double multiplier = 1;
 		// Check type effectiveness
@@ -5752,9 +5765,9 @@ public class Pokemon implements Serializable {
 	
 	public Pokemon getFaster(Pokemon other, int thisP, int otherP) {
 		int speed1 = this.getSpeed();
-		if (field.contains(field.playerSide, Effect.TAILWIND)) speed1 *= 2;
+		if (field.contains(this.getFieldEffects(), Effect.TAILWIND)) speed1 *= 2;
 		int speed2 = other.getSpeed();
-		if (field.contains(field.foeSide, Effect.TAILWIND)) speed2 *= 2;
+		if (field.contains(other.getFieldEffects(), Effect.TAILWIND)) speed2 *= 2;
 		
 		if (thisP > otherP) return this;
 		if (otherP > thisP) return other;
@@ -5787,8 +5800,7 @@ public class Pokemon implements Serializable {
 
 	public void confuse(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
-		if (field.contains(side, Effect.SAFEGUARD)) {
+		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
 			return;
 		}
@@ -5814,8 +5826,7 @@ public class Pokemon implements Serializable {
 	
 	public void sleep(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
-		if (field.contains(side, Effect.SAFEGUARD)) {
+		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
 			return;
 		}
@@ -5852,8 +5863,7 @@ public class Pokemon implements Serializable {
 	
 	public void paralyze(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
-		if (field.contains(side, Effect.SAFEGUARD)) {
+		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
 			return;
 		}
@@ -5880,8 +5890,7 @@ public class Pokemon implements Serializable {
 
 	public void burn(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
-		if (field.contains(side, Effect.SAFEGUARD)) {
+		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
 			return;
 		}
@@ -5915,8 +5924,7 @@ public class Pokemon implements Serializable {
 	
 	public void poison(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
-		if (field.contains(side, Effect.SAFEGUARD)) {
+		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
 			return;
 		}
@@ -5943,8 +5951,7 @@ public class Pokemon implements Serializable {
 	
 	public void toxic(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
-		if (field.contains(side, Effect.SAFEGUARD)) {
+		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
 			return;
 		}
@@ -5971,8 +5978,7 @@ public class Pokemon implements Serializable {
 	
 	public void freeze(boolean announce, Pokemon foe) {
 		if (this.isFainted()) return;
-		ArrayList<FieldEffect> side = this.playerOwned() ? field.playerSide : field.foeSide;
-		if (field.contains(side, Effect.SAFEGUARD)) {
+		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
 			return;
 		}
@@ -6441,7 +6447,7 @@ public class Pokemon implements Serializable {
 	}
 
 
-	public JPanel showSummary(Player player, boolean takeItem, JPanel panel) {
+	public JPanel showSummary(boolean takeItem, JPanel panel) {
 	    JPanel teamMemberPanel = new JPanel();
 	    teamMemberPanel.setLayout(new BoxLayout(teamMemberPanel, BoxLayout.Y_AXIS));
 	    
@@ -6604,8 +6610,8 @@ public class Pokemon implements Serializable {
 	    	            JOptionPane.QUESTION_MESSAGE,
 	    	            null, null, null);
 	    	    if (option == JOptionPane.YES_OPTION) {
-	    	    	Item old = this.item;
-					player.bag.add(old);
+	    	    	//Item old = this.item;
+					//player.bag.add(old);
 	        		this.item = null;
 	        		SwingUtilities.getWindowAncestor(teamMemberPanel).dispose();
 	        		if (panel != null) SwingUtilities.getWindowAncestor(panel).dispose();
@@ -6899,33 +6905,32 @@ public class Pokemon implements Serializable {
 			addTask(Task.TEXT, this.nickname + " floated on its Air Balloon!");
 		}
 		if (hazards && this.item != Item.HEAVY$DUTY_BOOTS && this.ability != Ability.SHIELD_DUST) {
-			ArrayList<FieldEffect> side = playerOwned() ? field.playerSide : field.foeSide;
-			if (field.contains(side, Effect.STEALTH_ROCKS)) {
+			if (field.contains(this.getFieldEffects(), Effect.STEALTH_ROCKS)) {
 				double multiplier = getEffectiveMultiplier(PType.ROCK);
 				double damage = (this.getHPAmount(1.0/8)) * multiplier;
 				this.damage((int) Math.max(Math.floor(damage), 1), foe);
 				addTask(Task.TEXT, "Pointed stones dug into " + this.nickname + "!");
 			}
-			if (field.contains(side, Effect.SPIKES) && this.isGrounded() && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-				double layers = field.getLayers(side, Effect.SPIKES);
+			if (field.contains(this.getFieldEffects(), Effect.SPIKES) && this.isGrounded() && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
+				double layers = field.getLayers(this.getFieldEffects(), Effect.SPIKES);
 				double damage = (this.getHPAmount(1.0/8) * (layers + 1) / 2);
 				this.damage((int) Math.max(Math.floor(damage), 1), foe);
 				addTask(Task.TEXT, this.nickname + " was hurt by Spikes!");
 			}
 			
-			if (field.contains(side, Effect.TOXIC_SPIKES) && this.isGrounded()) {
-				int layers = field.getLayers(side, Effect.TOXIC_SPIKES);
+			if (field.contains(this.getFieldEffects(), Effect.TOXIC_SPIKES) && this.isGrounded()) {
+				int layers = field.getLayers(this.getFieldEffects(), Effect.TOXIC_SPIKES);
 				if (layers == 1) this.poison(false, this);
 				if (layers == 2) this.toxic(false, this);
 				
 				if (this.type1 == PType.POISON || this.type2 == PType.POISON) {
-					field.remove(side, Effect.TOXIC_SPIKES);
+					field.remove(this.getFieldEffects(), Effect.TOXIC_SPIKES);
 					addTask(Task.TEXT, "The toxic spikes disappeared from " + this.nickname + "'s feet!");
 				}
 			}
 			
-			if (field.contains(side, Effect.STICKY_WEBS) && this.isGrounded()) {
-				stat(this, 4, -1, foe);
+			if (field.contains(this.getFieldEffects(), Effect.STICKY_WEBS) && this.isGrounded()) {
+				foe.stat(this, 4, -1, foe);
 			}
 			
 			if (this.currentHP <= 0) {
@@ -7078,6 +7083,9 @@ public class Pokemon implements Serializable {
 		if (gp.gameState == GamePanel.BATTLE_STATE) {
 			t.setFinish(currentHP);
 			gp.battleUI.tasks.add(t);
+		} else if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
+			t.setFinish(currentHP);
+			gp.simBattleUI.tasks.add(t);
 		}
 		
 	}
@@ -7314,6 +7322,18 @@ public class Pokemon implements Serializable {
 		
 		return validMoves;
 	}
+	
+	public ArrayList<Move> getDamagingMoveset() {
+		ArrayList<Move> vMoveset = getValidMoveset();
+		ArrayList<Move> result = new ArrayList<>();
+		
+		for (Move m : vMoveset) {
+			if (m.isAttack()) {
+				result.add(m);
+			}
+		}
+		return result;
+	}
 
 	@Override
 	public Pokemon clone() {
@@ -7344,7 +7364,10 @@ public class Pokemon implements Serializable {
 	    clonedPokemon.abilitySlot = this.abilitySlot;
 	    
 	    // Clone move fields
-	    clonedPokemon.moveset = this.moveset.clone();
+	    clonedPokemon.moveset = new Moveslot[this.moveset.length];
+	    for (int i = 0; i < this.moveset.length; i++) {
+	    	if (this.moveset[i] != null) clonedPokemon.moveset[i] = this.moveset[i].clone();
+	    }
 	    
 	    // Clone status fields
 	    clonedPokemon.status = this.status;
@@ -7399,6 +7422,9 @@ public class Pokemon implements Serializable {
 	    clonedPokemon.frontSprite = this.frontSprite;
 	    clonedPokemon.backSprite = this.backSprite;
 	    clonedPokemon.miniSprite = this.miniSprite;
+	    
+	    // Trainer
+	    //clonedPokemon.trainer = this.trainer.clone();
 	    
 	    return clonedPokemon;
 	}
@@ -7459,7 +7485,7 @@ public class Pokemon implements Serializable {
 		return getEvolveString(this.id);
 	}
 	
-	public String getEvolveString(int id) {
+	public static String getEvolveString(int id) {
 		switch (id) {
 		case 1: return "Twigle -> Torrged (lv. 18)";
 		case 2: return "Torrged -> Tortugis (lv. 36)";
@@ -7740,6 +7766,11 @@ public class Pokemon implements Serializable {
 			gp.battleUI.tasks.add(t);
 			gp.battleUI.checkTasks = true;
 			return t;
+		} else if (gp != null && gp.gameState == GamePanel.SIM_BATTLE_STATE) {
+			Task t = createTask(type, string, p);
+			gp.simBattleUI.tasks.add(t);
+			gp.simBattleUI.checkTasks = true;
+			return t;
 		} else if (gp != null && (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE)) {
 			Task t = createTask(type, string, p);
 			gp.ui.tasks.add(t);
@@ -7800,36 +7831,46 @@ public class Pokemon implements Serializable {
 		t.setAbility(p.ability);
 	}
 	
-	public static void addSwapInTask(Pokemon p, int start) {
+	public static void addSwapInTask(Pokemon p, int start, boolean playerSide) {
 		String message = p.playerOwned() ? "Go! " + p.nickname + "!" : p.trainer.toString() + " sends out " + p.nickname + "!";
 		Task t = addTask(Task.SWAP_IN, message, p);
 		if (t != null) {
 			t.start = start;
 			t.status = p.status;
+			t.wipe = playerSide;
 		}
 	}
 	
-	public static void addSwapInTask(Pokemon p) {
-		if (gp.gameState != GamePanel.BATTLE_STATE) return;
-		addSwapInTask(p, -1);
+	public static void addSwapInTask(Pokemon p, boolean playerSide) {
+		if (gp.gameState != GamePanel.BATTLE_STATE && gp.gameState != GamePanel.SIM_BATTLE_STATE) return;
+		addSwapInTask(p, -1, playerSide);
 	}
 	
-	public static void addSwapOutTask(Pokemon p) {
+	public static void addSwapOutTask(Pokemon p, boolean playerSide) {
 		String message = p.playerOwned() ? p.nickname + ", come back!" : p.trainer.toString() + " withdrew " + p.nickname + "!";
-		addTask(Task.SWAP_OUT, message, p);
+		Task t = addTask(Task.SWAP_OUT, message, p);
+		if (t != null) {
+			t.wipe = playerSide;
+		}
 	}
 	
 	public static void setTask(int index, Task task) {
-		gp.battleUI.tasks.set(index, task);
+		ArrayList<Task> tasks = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.simBattleUI.tasks;
+		if (tasks.size() == 0) return;
+		tasks.set(index, task);
 	}
 	
 	public static Task getTask(int index) {
-		return gp.battleUI.tasks.get(index);
+		ArrayList<Task> tasks = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.simBattleUI.tasks;
+		if (tasks.size() == 0) return null;
+		return tasks.get(index);
 	}
 	
 	public static void insertTask(Task t, int index) {
 		if (gp.gameState == GamePanel.BATTLE_STATE) {
 			gp.battleUI.tasks.add(index, t);
+		} else if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
+			gp.simBattleUI.tasks.add(index, t);
 		} else {
 			gp.ui.tasks.add(index, t);
 		}
@@ -7847,7 +7888,8 @@ public class Pokemon implements Serializable {
 		if (this.playerOwned()) {
 			return (Player) this.trainer;
 		} else {
-			throw new IllegalStateException("calling object is not player owned");
+			return gp.player.p;
+			//throw new IllegalStateException("calling object is not player owned");
 		}
 	}
 	
@@ -8348,6 +8390,253 @@ public class Pokemon implements Serializable {
 	
 	private int determineHappiness(Player p) {
 		return Math.min(this.happiness + (50 * p.badges), 255);
+	}
+
+	public static Pokemon generateCompetitivePokemon() {
+		Random rand = new Random();
+		int id;
+		boolean sprite = false;
+		do {
+			id = rand.nextInt(Pokemon.MAX_POKEMON) + 1;
+			try {
+				ImageIO.read(Pokemon.class.getResourceAsStream("/sprites/" + String.format("%03d", id) + ".png"));
+				sprite = true;
+			} catch (Exception e) {
+				sprite = false;
+			}
+		} while (Pokemon.getEvolveString(id) != null || !sprite);
+		
+		Item item;
+		do {
+			Item[] values = Item.values();
+			item = values[rand.nextInt(values.length)];
+		} while (item.getPocket() != Item.HELD_ITEM && item.getPocket() != Item.BERRY);
+		
+		Pokemon result = new Pokemon(id, 100, false, true);
+		result.item = item;
+		return result;
+	}
+
+	public static int[] calculateOdds(Pokemon user, Pokemon foe) {
+		int[] result = new int[2];
+		for (int i = 0; i < 100; i++) {
+			Pokemon u = user.clone();
+			Pokemon f = foe.clone();
+			
+			while (!u.isFainted() && !f.isFainted()) {
+				boolean fFaster = u.getFaster(f, 0, 0) == f;
+				
+				Move uMove = u.bestMove(f, !fFaster);
+				Move fMove = f.bestMove(u, fFaster);
+				
+				int uP, fP;
+				uP = uMove == null ? 0 : uMove.getPriority(u);
+				fP = fMove == null ? 0 : fMove.getPriority(f);
+				if (uMove != null && u.ability == Ability.PRANKSTER && uMove.cat == 2) ++uP;
+				if (fMove != null && f.ability == Ability.PRANKSTER && fMove.cat == 2) ++fP;
+				
+				if (uMove != null && uMove.priority < 1 && uMove.hasPriority(u)) ++uP;
+				if (fMove != null && fMove.priority < 1 && fMove.hasPriority(f)) ++fP;
+				
+				if (uMove != null && fMove != null && !f.vStatuses.contains(Status.SWAP)) {
+					uP = u.checkQuickClaw(uP);
+					fP = f.checkQuickClaw(fP);
+				}
+				if (uMove != null) uP = u.checkCustap(uP, f);
+				if (fMove != null) fP = f.checkCustap(fP, u);
+				
+				Pokemon faster;
+				Pokemon slower;
+				
+				if (uMove == null || fMove == null) {
+					faster = uMove == null ? u : f;
+				} else {
+					faster = u.getFaster(f, uP, fP);
+				}
+				
+				slower = faster == u ? f : u;
+				
+				Move fastMove = faster == u ? uMove : fMove;
+				Move slowMove = faster == u ? fMove : uMove;
+				
+				faster.move(slower, fastMove, false);
+				slower.move(faster, slowMove, false);
+				
+				if (uMove != null || fMove != null) {
+					if (!u.trainer.wiped() && !f.trainer.wiped()) faster.endOfTurn(slower);
+					if (!u.trainer.wiped() && !f.trainer.wiped()) slower.endOfTurn(faster);
+					if (!u.trainer.wiped() && !f.trainer.wiped()) field.endOfTurn(faster, slower);
+				}
+				
+				for (Task t : gp.ui.tasks) {
+					System.out.println(t.message);
+				}
+				System.out.println("--------------------");
+				gp.ui.tasks.clear();
+			}
+			if (u.isFainted() && !f.isFainted()) {
+				result[1]++;
+				//System.out.println(f.name + " defeated " + u.name + "!");
+			}
+			if (!u.isFainted() && f.isFainted()) {
+				result[0]++;
+				//System.out.println(u.name + " defeated " + f.name + "!");
+			}
+			if (u.isFainted() && f.isFainted()) {
+				//System.out.println("Both " + u.name + " and " + f.name + " fainted!");
+			}
+		}
+		return result;
+	}
+	
+	public static int[] simulateBattle(Trainer trainer1, Trainer trainer2) {
+		int[] result = new int[2];
+		field = new Field();
+		for (int i = 0; i < 10; i++) {
+			Trainer t1 = trainer1.clone();
+			Trainer t2 = trainer2.clone();
+			field.clear(t1, t2);
+			
+			while (!t1.wiped() && !t2.wiped()) {
+				Pokemon p1 = t1.getCurrent();
+				Pokemon p2 = t2.getCurrent();
+				boolean fFaster = p1.getFaster(p2, 0, 0) == p2;
+				
+				Move uMove = p1.bestMove(p2, !fFaster);
+				Move fMove = p2.bestMove(p1, fFaster);
+				
+				int uP, fP;
+				uP = uMove == null ? 0 : uMove.getPriority(p1);
+				fP = fMove == null ? 0 : fMove.getPriority(p2);
+				if (uMove != null && p1.ability == Ability.PRANKSTER && uMove.cat == 2) ++uP;
+				if (fMove != null && p2.ability == Ability.PRANKSTER && fMove.cat == 2) ++fP;
+				
+				if (uMove != null && uMove.priority < 1 && uMove.hasPriority(p1)) ++uP;
+				if (fMove != null && fMove.priority < 1 && fMove.hasPriority(p2)) ++fP;
+				
+				if (uMove != null && fMove != null && !p1.vStatuses.contains(Status.SWAP)
+						&& !p2.vStatuses.contains(Status.SWAP)) {
+					uP = p1.checkQuickClaw(uP);
+					fP = p2.checkQuickClaw(fP);
+				}
+				if (uMove != null) uP = p1.checkCustap(uP, p2);
+				if (fMove != null) fP = p2.checkCustap(fP, p1);
+				
+				Pokemon faster;
+				Pokemon slower;
+				
+				if (uMove == null || fMove == null) {
+					faster = uMove == null ? p1 : p2;
+				} else {
+					faster = p1.getFaster(p2, uP, fP);
+				}
+				
+				slower = faster == p1 ? p2 : p1;
+				
+				Move fastMove = faster == p1 ? uMove : fMove;
+				Move slowMove = faster == p1 ? fMove : uMove;
+				
+				boolean fastCanMove = true;
+				boolean slowCanMove = true;
+				
+				if (faster.vStatuses.contains(Status.SWAP)) {
+					faster = faster.trainer.swapOut(slower, fastMove, false, false);
+					fastMove = null;
+					fastCanMove = false;
+				}
+				
+				if (slower.vStatuses.contains(Status.SWAP)) {
+					slower = slower.trainer.swapOut(faster, slowMove, false, false);
+					slowMove = null;
+					slowCanMove = false;
+				}
+				
+				if (slowMove != null && fastMove == Move.SUCKER_PUNCH && slowMove.cat == 2) fastMove = Move.FAILED_SUCKER;
+				
+				if (fastCanMove) {
+					faster.moveInit(slower, fastMove, true);
+					faster = faster.trainer.getCurrent();
+					slower = slower.trainer.getCurrent();
+				}
+				
+				// Check for swap
+				if (faster.trainer.hasValidMembers() && fastCanMove && !slower.trainer.wiped() && faster.vStatuses.contains(Status.SWITCHING)) {
+					faster = faster.trainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS, false);
+				}
+				
+		        if (slowCanMove) {
+		        	slower.moveInit(faster, slowMove, false);
+		        	faster = faster.trainer.getCurrent();
+		        	slower = slower.trainer.getCurrent();
+		        }
+		        
+		        // Check for swap
+		        if (slower.trainer.hasValidMembers() && slowCanMove && !faster.trainer.wiped() && slower.vStatuses.contains(Status.SWITCHING)) {
+		        	slower = slower.trainer.swapOut(faster, null, slower.lastMoveUsed == Move.BATON_PASS, false);
+		        }
+				
+				if (fastMove != null || slowMove != null) {
+					if (!faster.trainer.wiped() && !slower.trainer.wiped()) faster.endOfTurn(slower);
+					if (!faster.trainer.wiped() && !slower.trainer.wiped()) slower.endOfTurn(faster);
+					if (!faster.trainer.wiped() && !slower.trainer.wiped()) field.endOfTurn(faster, slower);
+				}
+				
+				for (int j = 0; j < 2; j++) {
+					Pokemon p;
+					if (j == 0) {
+						p = faster;
+					} else {
+						p = slower;
+					}
+					Pokemon foe = p == faster ? slower : faster;
+					Pokemon next = p.trainer.getCurrent();
+					while (next.isFainted()) {
+						if (next.trainer.hasNext()) {
+							boolean userSide = !next.trainer.hasUser(p1);
+							next = next.trainer.next(foe, userSide);
+							Pokemon.addSwapInTask(next, next.currentHP, false);
+							next.swapIn(foe, true);
+						} else {
+				            break;
+						}
+					}
+				}
+				
+				for (Task t : gp.ui.tasks) {
+					System.out.println(t.message);
+				}
+				System.out.println("--------------------");
+				gp.ui.tasks.clear();
+			}
+			
+			if (t1.wiped() && !t2.wiped()) {
+				result[1]++;
+				System.out.println(t2.name + " defeated " + t1.name + "!");
+				System.out.println("========================================");
+			}
+			if (!t1.wiped() && t2.wiped()){
+				result[0]++;
+				System.out.println(t1.name + " defeated " + t2.name + "!");
+				System.out.println("========================================");
+			}
+			if (t1.wiped() && t2.wiped()) {
+				System.out.println("Both " + t1.name + " and " + t2.name + " fainted!");
+				System.out.println("========================================");
+			}
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<FieldEffect> getFieldEffects() {
+		if (this.trainer == null) {
+			if (this.fieldEffects == null) {
+				throw new IllegalStateException(this.name + " tried fetching their own field effect list and it's null");
+			}
+			return this.fieldEffects;
+		} else {
+			return this.trainer.getFieldEffectList();
+		}
 	}
 	
 }

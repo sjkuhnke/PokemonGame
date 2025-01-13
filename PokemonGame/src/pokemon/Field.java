@@ -20,15 +20,36 @@ public class Field {
 	public int weatherTurns;
 	public FieldEffect terrain;
 	public int terrainTurns;
-	public ArrayList<FieldEffect> playerSide;
-	public ArrayList<FieldEffect> foeSide;
+	//public ArrayList<FieldEffect> playerSide;
+	//public ArrayList<FieldEffect> foeSide;
 	public ArrayList<FieldEffect> fieldEffects;
+	
+	// stat fields
+	public int turns;
+	public int crits;
+	public int misses;
+	public int superEffective;
+	public int switches;
+	public int knockouts;
 	
 	public Field() {
 		weather = null;
-		playerSide = new ArrayList<>();
-		foeSide = new ArrayList<>();
 		fieldEffects = new ArrayList<>();
+		
+		turns = 1;
+		crits = 0;
+		misses = 0;
+		superEffective = 0;
+		switches = 0;
+		knockouts = 0;
+	}
+	
+	public void clear(Trainer t1, Trainer t2) {
+		weather = null;
+		fieldEffects = new ArrayList<>();
+		t1.getFieldEffectList().clear();
+		t2.getFieldEffectList().clear();
+		// don't clear stats: for simulating
 	}
 	
 	public enum Effect {
@@ -328,7 +349,7 @@ public class Field {
 		return false;
 	}
 	
-	public void endOfTurn() {
+	public void endOfTurn(Pokemon faster, Pokemon slower) {
 	    if (weather != null) {
 	        weatherTurns--;
 	        if (weatherTurns == 0) {
@@ -356,7 +377,7 @@ public class Field {
 	        }
 	    }
 	    
-	    iterator = playerSide.iterator();
+	    iterator = faster.getFieldEffects().iterator();
 	    while (iterator.hasNext()) {
 	        FieldEffect effect = iterator.next();
 	        if (effect.turns > 0) effect.turns--;
@@ -366,7 +387,7 @@ public class Field {
 	        }
 	    }
 	    
-	    iterator = foeSide.iterator();
+	    iterator = slower.getFieldEffects().iterator();
 	    while (iterator.hasNext()) {
 	        FieldEffect effect = iterator.next();
 	        if (effect.turns > 0) effect.turns--;
@@ -375,6 +396,8 @@ public class Field {
 	            iterator.remove();
 	        }
 	    }
+	    
+	    turns++;
 	}
 
 	public ArrayList<FieldEffect> getHazards(ArrayList<FieldEffect> side) {
@@ -439,8 +462,6 @@ public class Field {
 		result.weatherTurns = this.weatherTurns;
 		result.terrainTurns = this.terrainTurns;
 		
-		result.playerSide = new ArrayList<>(this.playerSide);
-		result.foeSide = new ArrayList<>(this.foeSide);
 		result.fieldEffects = new ArrayList<>(this.fieldEffects);
 		
 		return result;
