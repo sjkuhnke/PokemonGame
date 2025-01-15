@@ -211,8 +211,6 @@ public class SimBattleUI extends BattleUI {
 	    maxUserHP = user.getStat(0);
 	    foeHP = foe.currentHP;
 	    aura = false;
-	    weather = null;
-	    terrain = null;
 		
 		Pokemon.addSwapInTask(foe, false);
 		foeFainted = foe.trainer.getNumFainted();

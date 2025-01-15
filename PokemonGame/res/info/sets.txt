@@ -1,0 +1,151 @@
+Tortugis @ Rocky Helmet
+Bold Nature
+Ability: Rough Skin
+- Rockfall Frenzy
+- Giga Drain/Leaf Storm
+- Earth Power/U-Turn
+- Spikes/Spiky Shield/Toxic
+
+Tortugis @ Leftovers
+Calm Nature
+Ability: Regenerator
+- Rockfall Frenzy/Power Gem
+- Leaf Storm/Energy Ball
+- Draco Meteor/Dark Pulse
+- Spikes/U-Turn
+
+Tortugis @ Blunder Policy/Assault Vest/Choice Band
+Adamant Nature
+Ability: Regenerator
+- Head Smash
+- Leaf Blade/Vine Cross
+- Dragon Tail/Earthquake
+- Close Combat/Ice Spinner
+
+Magron @ Air Balloon
+Timid Nature
+Ability: Dry Skin
+- Stealth Rocks
+- Spikes/Will-O-Wisp
+- Molten Steelspike/Surf
+- Fire Blast/Flamethrower
+
+Magron @ Choice Scarf
+Timid Nature
+Ability: Drought
+- Eruption
+- Molten Steelspike
+- Weather Ball/Solar Beam
+- Earth Power/Aura Sphere
+
+Dragave @ Sitrus Berry
+Jolly Nature
+Ability: Protean
+- Acrobatics
+- Swords Dance
+- Aqua Jet
+- Drain Punch/Channeling Blow/Close Combat
+
+Dragave @ Rocky Helmet/Leftovers
+Jolly Nature
+Ability: Protean
+- Wave Crash
+- Spikes/Thunder Wave
+- Flip Turn/U-Turn
+- Summit Strike
+
+Dragave @ Big Root
+Adamant Nature
+Ability: Swift Swim
+- Wave Crash
+- Bulk Up
+- Drain Punch
+- Ice Spinner
+
+Magestiflash @ Life Orb/Focus Sash
+Modest Nature
+Ability: Radiant
+- Prismatic Laser
+- Aeroblast/Hurricane
+- Glitter Dance/Volt Switch/Calm Mind
+- Ice Beam/Magic Tomb
+
+Magestiflash @ Choice Specs
+Modest Nature
+Ability: Insect Feeder
+- Photon Geyser
+- Volt Switch
+- Aeroblast
+- Elemental Sparkle/Fire Blast/Star Storm/Bug Buzz/Energy Ball
+
+Pigoga @ Rocky Helmet/Leftovers/Wacan Berry
+Impish Nature
+Ability: Iron Barbs
+- Defog/Spikes
+- Brave Bird
+- Roost
+- U-Turn
+
+Pigoga @ Weakness Policy/Sitrus Berry
+Jolly Nature
+Ability: Tough Claws
+- Acrobatics
+- Swords Dance/Agility
+- Zing Zap/Earthquake
+- Iron Head/Ice Spinner
+
+HammyBoy @ Eviolite
+Impish Nature
+Ability: Mouthwater
+- Super Fang/Body Slam
+- Bulk Up
+- Baton Pass/Drain Punch/Mach Punch
+- Bulldoze/Earthquake
+
+Hamthorno @ Chople Helmet/Rocky Helmet/Leftovers
+Careful Nature
+Ability: Rough Skin
+- Stealth Rock
+- Stone Edge/Body Slam
+- Stockpile/Sandstorm
+- Close Combat/Ice Spinner
+
+Hamthorno @ Choice Band/Assault Vest
+Adamant Nature
+Ability: Rock Head
+- Head Smash
+- Double-Edge
+- Volt Tackle
+- Ice Spinner/Close Combat/Spirit Break/Earthquake/Poison Jab
+
+Hamthorno @ Loaded Dice
+Adamant Nature
+Ability: Solid Rock
+- Rock Blast
+- Spike Cannon
+- Swords Dance
+- Earthquake
+
+Spacebear @ Choice Specs/Choice Scarf
+Timid Nature
+Ability: Adaptability
+- Genesis Supernova
+- Tri-Attack/Hyper Beam
+- Trick
+- Focus Blast/Dazzling Gleam
+
+Spacebear @ Coba Berry/Charti Berry/Focus Sash
+Serious Nature
+Ability: Levitate
+- Desolate Void/Star Storm/Galaxy Blast
+- Abduct
+- Radio Burst/Memento/Thunder Wave
+- Knock Off/Encore/Tri-Attack
+
+Spacebear @ Power Herb/Blunder Policy
+Timid Nature
+Ability: Scrappy
+- Hyper Beam
+- Star Storm
+- Blizzard/Hydro Pump
+- Calm Mind/Charge Beam

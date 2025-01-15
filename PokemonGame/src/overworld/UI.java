@@ -562,6 +562,8 @@ public class UI extends AbstractUI {
 			t.start = odds[0];
 			t.finish = odds[1];
 			
+			gp.simBattleUI.weather = null;
+			gp.simBattleUI.terrain = null;
 			currentTask = null;
 			break;
 		case Task.BET_BATTLE:
