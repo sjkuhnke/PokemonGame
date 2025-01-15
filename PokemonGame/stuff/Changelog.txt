@@ -86,3 +86,25 @@ Fixed a Pokemon being muted showing as 0 damage in the calc for sound moves
 Added logic for a Pokemon attacking with Magic Reflect/Possession active to use the least damaging move on themselves
 Added TMs to PokemonInfo.txt
 Fixed Move BP in MovesInfo.txt
+
+Gave Bluebunn Light Of Ruin at lv 62
+Gave Clefable Genesis Supernova at lv 65
+Fixed some miscellaneous tiles
+Gave Magikarp-E return for consistency with a trainer
+Changed the calc to just take a Pokemon and then fill in the rest of the team instead of a specific player (for sim)
+Added Sports Betting table in the casino!
+Added dialogue for trainers in 6 gym split up through Rayna!
+Fixed Dust Sorcerer's position being consistent after Maxwell cutscene after reloading save
+Increased max blackjack hand size from 5 -> 7
+Added "Doubling" to the blackjack table!
+Added a TON of blackjack statistics for players to analyze their play
+Added a Simulation Battle UI and built it extending the Battle UI for watching 2 npcs fight with AI to bet on!
+Added [Ctrl] + [Shift] + [S] to print the current tasks out in the console for debugging
+FIXED Kissyfishy-D visually (HP bar being wrong on player side, sprites not being set correctly, nicknames not being set correctly)
+Added a bunch of statistic fields to the Field class that keep track of turns, crits, etc
+REMOVED the hard coded side field effects (Player side, Foe side) and added them in the Trainer class to hold the effects diagonally
+Made the field effects end of turns on each trainer's side activate/deactivate dynamically based on speed instead of just player then Trainer
+Fixed Grass Knot's description
+Made Hyper Voice not make contact (bug)
+Added casino coins in the player tweaker (to set with cheats)
+
