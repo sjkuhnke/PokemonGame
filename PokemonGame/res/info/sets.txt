@@ -7,7 +7,7 @@ Ability: Rough Skin
 - Spikes/Spiky Shield/Toxic
 
 Tortugis @ Leftovers
-Calm Nature
+Bold/Calm Nature
 Ability: Regenerator
 - Rockfall Frenzy/Power Gem
 - Leaf Storm/Energy Ball
@@ -55,7 +55,7 @@ Ability: Protean
 - Summit Strike
 
 Dragave @ Big Root
-Adamant Nature
+Adamant/Impish/Careful/Jolly Nature
 Ability: Swift Swim
 - Wave Crash
 - Bulk Up
@@ -63,7 +63,7 @@ Ability: Swift Swim
 - Ice Spinner
 
 Magestiflash @ Life Orb/Focus Sash
-Modest Nature
+Modest/Timid Nature
 Ability: Radiant
 - Prismatic Laser
 - Aeroblast/Hurricane
@@ -76,7 +76,7 @@ Ability: Insect Feeder
 - Photon Geyser
 - Volt Switch
 - Aeroblast
-- Elemental Sparkle/Fire Blast/Star Storm/Bug Buzz/Energy Ball
+- Elemental Sparkle/Heat Wave/Star Storm/Bug Buzz/Energy Ball
 
 Pigoga @ Rocky Helmet/Leftovers/Wacan Berry
 Impish Nature
@@ -87,7 +87,7 @@ Ability: Iron Barbs
 - U-Turn
 
 Pigoga @ Weakness Policy/Sitrus Berry
-Jolly Nature
+Jolly/Adamant Nature
 Ability: Tough Claws
 - Acrobatics
 - Swords Dance/Agility
@@ -95,7 +95,7 @@ Ability: Tough Claws
 - Iron Head/Ice Spinner
 
 HammyBoy @ Eviolite
-Impish Nature
+Impish/Careful Nature
 Ability: Mouthwater
 - Super Fang/Body Slam
 - Bulk Up
@@ -103,7 +103,7 @@ Ability: Mouthwater
 - Bulldoze/Earthquake
 
 Hamthorno @ Chople Helmet/Rocky Helmet/Leftovers
-Careful Nature
+Impish/Careful Nature
 Ability: Rough Skin
 - Stealth Rock
 - Stone Edge/Body Slam
@@ -135,7 +135,7 @@ Ability: Adaptability
 - Focus Blast/Dazzling Gleam
 
 Spacebear @ Coba Berry/Charti Berry/Focus Sash
-Serious Nature
+Timid Nature
 Ability: Levitate
 - Desolate Void/Star Storm/Galaxy Blast
 - Abduct
@@ -149,3 +149,259 @@ Ability: Scrappy
 - Star Storm
 - Blizzard/Hydro Pump
 - Calm Mind/Charge Beam
+
+Curlatoral @ Focus Sash
+Impish Nature
+Ability: Threatening
+- First Impression
+- Sticky Web
+- Toxic Spikes
+- U-Turn/Thunder Wave
+
+Curlatoral @ Toxic Orb
+Impish Nature
+Ability: Poison Heal
+- Fatal Bind/Toxic
+- Protect
+- U-Turn/Taunt
+- X-Scissor/Liquidation
+
+Curlatoral @ Toxic Orb
+Careful Nature
+Ability: Poison Heal
+- Coil/Quiver Dance
+- Baton Pass/U-Turn
+- Pin Missile
+- Sticky Web/Toxic Spikes
+
+Millistone @ Rocky Helmet
+Impish Nature
+Ability: Rough Skin
+- Stealth Rock
+- U-Turn
+- Earthquake
+- Rock Wrecker
+
+Millistone @ Lum Berry/Leftovers/Expert Belt/Red Card
+Adamant Nature
+Ability: Compound Eyes
+- Swords Dance
+- Stone Edge
+- Rock Polish/Ice Spinner
+- Earthquake
+
+Millistone @ Assault Vest/Choice Band
+Adamant Nature
+Ability: Threatening
+- First Impression
+- U-Turn
+- Rock Wrecker
+- Earthquake
+
+Treewin @ Eviolite
+Careful/Impish Nature
+Ability: Guts
+- Knock Off
+- Wood Hammer/Leaf Blade
+- Drain Punch/Mach Punch
+- Bulk Up
+
+Winagrow @ Pamtre Berry
+Timid Nature
+Ability: Terrify
+- Draco Meteor
+- Leaf Storm
+- Spiky Shield/Stealth Rock
+- Thunderbolt
+
+Winagrow @ Power Herb/Yache Berry
+Modest Nature
+Ability: Chlorophyl
+- Sunny Day
+- Nasty Plot/Synthesis
+- Solar Beam
+- Flamethrower
+
+Winagrow @ Leftovers
+Bold/Calm Nature
+Ability: Competitive
+- Giga Drain
+- Spiky Shield/Stealth Rock
+- Draco Meteor/Dragon Pulse
+- Flamethrower/Fire Blast
+
+Roserade @ Black Sludge
+Bold Nature
+Ability: Corrosion
+- Sludge Bomb
+- Toxic Spikes
+- Spikes
+- Leech Seed
+
+Roserade @ Choice Scarf/Choice Specs
+Timid/Modest Nature
+Ability: Corrosion
+- Sludge Bomb
+- Leaf Storm/Energy Ball/Giga Drain
+- Earth Power
+- Shadow Ball/Dazzling Gleam
+
+Roserade @ Choice Specs
+Timid Nature
+Ability: Technician
+- Sludge Bomb
+- Energy Ball
+- Mud Shot
+- Hidden Power Electric/Hidden Power Ice/Hidden Power Rock/Hidden Power Fire/Hidden Power Galactic
+
+Leavanny @ Power Herb
+Jolly Nature
+Ability: Sharpness
+- Solar Blade
+- X-Scissor
+- Cross Poison/Psycho Cut
+- Sticky Web/Swords Dance/Spiky Shield
+
+Leavanny @ Focus Sash
+Jolly/Adamant Nature
+Ability: Unburden
+- Sticky Web
+- Swords Dance
+- Knock Off/Acrobatics/Earthquake
+- Leaf Blade
+
+Leavanny @ Focus Sash
+Adamant Nature
+Ability: Chlorophyll
+- Solar Blade
+- Swords Dance
+- First Impression/U-Turn
+- Sunny Day
+
+Vikavolt @ Blunder Policy
+Modest/Bold Nature
+Ability: Tinted Lens
+- Zap Cannon/Thunder
+- Bug Buzz
+- Hurricane
+- Rain Dance
+
+Vikavolt @ Rocky Helmet/Throat Spray
+Timid Nature
+Ability: Levitate
+- Sticky Web/Thunder Wave
+- Volt Switch
+- Parabolic Charge/Thunderbolt/Discharge
+- Bug Buzz
+
+Vikavolt @ Weakness Policy/Throat Spray
+Modest Nature
+Ability: Speed Boost
+- Calm Mind
+- Thunderbolt
+- Bug Buzz
+- Hidden Power Water/Energy Ball
+
+Busheep @ Eviolite
+Calm Nature
+Ability: Fluffy
+- Leech Seed
+- Protect
+- Ingrain/Cotton Guard
+- Baton Pass
+
+Ramant @ Choice Band/Choice Scarf
+Jolly Nature
+Ability: Reckless
+- Wood Hammer
+- Head Smash
+- Double-Edge
+- Earthquake/U-Turn
+
+Ramant @ Big Root
+Impish/Careful Nature
+Ability: Defiant
+- Leech Seed
+- Cotton Guard
+- Horn Leech
+- Earthquake
+
+Ramant @ Sitrus Berry/Lum Berry
+Jolly Nature
+Ability: Moxie
+- Swords Dance
+- Power Whip
+- Flame Charge
+- Earthquake/Ice Spinner/Acrobatics
+
+Bushewe @ Assault Vest
+Timid Nature
+Ability: Serene Grace
+- Glitzy Glow
+- Energy Ball
+- Extrasensory/Ice Beam/Earth Power
+- Draining Kiss/Volt Switch
+
+Bushewe @ Leftovers
+Modest/Bold Nature
+Ability: Competitive
+- Glitter Dance
+- Synthesis/Cotton Guard/Thunder Wave
+- Star Storm
+- Giga Drain
+
+Bushewe @ Light Clay
+Timid Nature
+Ability: Grassy Surge
+- Reflect
+- Light Screen
+- Thunder Wave/Photon Geyser/Volt Switch
+- Leaf Storm
+
+Ninjakik @ Focus Sash
+Adamant Nature
+Ability: Speed Boost
+- No Retreat
+- X-Scissor
+- Baton Pass/Close Combat
+- Sky Uppercut/Sword Spin/Acrobatics
+
+Ninjakik @ Assault Vest
+Adamant/Impish Nature
+Ability: Justified
+- First Impression/U-Turn
+- Staff Jab
+- Sacred Sword/Close Combat
+- Leaf Blade/Stone Edge/Poison Jab
+
+Ninjakik @ Choice Band
+Jolly/Adamant Nature
+Ability: Threatening
+- U-Turn
+- First Impression
+- Close Combat
+- Zing Zap/Ice Spinner
+
+Ludicolo @ Damp Rock
+Modest Nature
+Ability: Swift Swim
+- Rain Dance
+- Hydro Pump/Scald
+- Energy Ball
+- Flip Turn/Knock Off/Ice Beam
+
+Ludicolo @ Damp Rock
+Bold Nature
+Ability: Hydration
+- Rain Dance
+- Scald
+- Rest
+- Quiver Dance
+
+Ludicolo @ Leftovers
+Serious Nature
+Ability: Rain Dish
+- Fake Out
+- Knock Off/Haze/Leech Seed
+- Flip Turn/U-Turn
+- Ice Beam/Giga Drain/Scald

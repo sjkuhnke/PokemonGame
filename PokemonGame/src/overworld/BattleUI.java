@@ -268,9 +268,10 @@ public class BattleUI extends AbstractUI {
 	}
 
 	protected void drawTask() {
+		String message = null;
 		switch (currentTask.type) {
 		case Task.TEXT:
-			String message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 64);
+			message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 64);
 			showMessage(message);
 			break;
 		case Task.DAMAGE:
@@ -451,7 +452,8 @@ public class BattleUI extends AbstractUI {
 			currentTask = null;
 			break;
 		case Task.SEMI_INV:
-			showMessage(Item.breakString(currentTask.message, 64));
+			message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 64);
+			showMessage(message);
 			currentTask.p.spriteVisible = currentTask.wipe;
 			break;
 		}
