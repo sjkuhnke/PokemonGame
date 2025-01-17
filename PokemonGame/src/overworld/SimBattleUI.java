@@ -20,6 +20,10 @@ import pokemon.Pokemon.Task;
 public class SimBattleUI extends BattleUI {
 	
 	public ArrayList<Pair<Double, String>> parlaySheet;
+	public Pair<Pokemon, ArrayList<Move>> p1Moves;
+	public Pair<Pokemon, ArrayList<Move>> p2Moves;
+	public Pair<Pokemon, String> p1Switch;
+	public Pair<Pokemon, String> p2Switch;
 
 	public SimBattleUI(GamePanel gp) {
 		super(gp);
@@ -534,6 +538,10 @@ public class SimBattleUI extends BattleUI {
 		Pokemon p2 = foe;
 		boolean fFaster = p1.getFaster(p2, 0, 0) == p2;
 		
+		p1Moves = null;
+		p2Moves = null;
+		p1Switch = null;
+		p2Switch = null;
 		Move uMove = p1.bestMove(p2, !fFaster);
 		Move fMove = p2.bestMove(p1, fFaster);
 		

@@ -46,6 +46,7 @@ import overworld.GamePanel;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
 import pokemon.Field.FieldEffect;
+import util.Pair;
 
 public class Pokemon implements Serializable {
 	/**
@@ -442,6 +443,18 @@ public class Pokemon implements Serializable {
 	
 	public Move bestMove(Pokemon foe, boolean first) {
 	    ArrayList<Move> validMoves = this.getValidMoveset();
+	    
+	    Pair<Pokemon, String> switchRsn = null;
+	    if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
+	    	if (gp.simBattleUI.p1Switch == null) {
+	    		gp.simBattleUI.p1Switch = new Pair<>(null, null);
+	    		switchRsn = gp.simBattleUI.p1Switch;
+	    	} else {
+	    		gp.simBattleUI.p2Switch = new Pair<>(null, null);
+	    		switchRsn = gp.simBattleUI.p2Switch;
+	    	}
+	    }
+	    
 	    Trainer tr = this.trainer;
 	    
         // Calculate and store the damage values of each move
@@ -456,7 +469,12 @@ public class Pokemon implements Serializable {
         if (moveToDamage.isEmpty()) {
         	// 100% chance to swap in a partner if you can only struggle
         	if (tr.hasValidMembers() && !isTrapped(foe)) {
-        		System.out.println("all valid moves have 0 PP : 100%");
+        		String rsn = "[All valid moves have 0 PP : 100%]";
+        		System.out.println(rsn);
+        		if (switchRsn != null) {
+    				switchRsn.setFirst(this);
+        			switchRsn.setSecond(rsn);
+    			}
         		this.vStatuses.add(Status.SWAP);
         		return Move.GROWL;
         	} else {
@@ -482,8 +500,12 @@ public class Pokemon implements Serializable {
             		if (this.impressive) chance /= 2;
         		}
         		if (checkSecondary((int) Math.round(chance))) {
-        			System.out.print("partner resists : ");
-        			System.out.printf("%.1f%%\n", chance);
+        			String rsn = "[Partner resists : " + String.format("%.1f", chance) + "%]";
+        			System.out.println(rsn);
+        			if (switchRsn != null) {
+        				switchRsn.setFirst(this);
+            			switchRsn.setSecond(rsn);
+        			}
                 	this.vStatuses.add(Status.SWAP);
                 	return Move.SPLASH;
         		}
@@ -493,8 +515,12 @@ public class Pokemon implements Serializable {
         		double chance = 70;
         		if (this.impressive) chance *= 0.75;
         		if (checkSecondary((int) chance)) {
-        			System.out.print("all moves do 0 damage : ");
-        			System.out.println(String.format("%.1f", chance) + "%");
+        			String rsn = "[All moves do 0 damage : " + String.format("%.1f", chance) + "%]";
+        			System.out.println(rsn);
+        			if (switchRsn != null) {
+        				switchRsn.setFirst(this);
+            			switchRsn.setSecond(rsn);
+        			}
         			this.vStatuses.add(Status.SWAP);
             		return Move.GROWL;
         		}
@@ -506,8 +532,12 @@ public class Pokemon implements Serializable {
         				!validMoves.contains(Move.FLIP_TURN) && !validMoves.contains(Move.PARTING_SHOT) && !validMoves.contains(Move.BATON_PASS)) chance /= 2;
         		if (this.impressive) chance /= 2;
         		if (checkSecondary((int) chance)) {
-        			System.out.print("damage i do is 1/5 or less : ");
-        			System.out.println(String.format("%.1f", chance) + "%");
+        			String rsn = "[Damage i do is 1/5 or less : " + String.format("%.1f", chance) + "%]";
+        			System.out.println(rsn);
+        			if (switchRsn != null) {
+        				switchRsn.setFirst(this);
+            			switchRsn.setSecond(rsn);
+        			}
         			if (validMoves.contains(Move.U$TURN)) return Move.U$TURN;
         			if (validMoves.contains(Move.VOLT_SWITCH)) return Move.VOLT_SWITCH;
         			if (validMoves.contains(Move.FLIP_TURN)) return Move.FLIP_TURN;
@@ -519,13 +549,23 @@ public class Pokemon implements Serializable {
         	}
         	// 100% chance to swap if perishCount is 1
         	if (this.perishCount == 1) {
-        		System.out.println("perish in 1 : 100%");
+        		String rsn = "[Perish in 1 : 100%]";
+        		System.out.println(rsn);
+        		if (switchRsn != null) {
+    				switchRsn.setFirst(this);
+        			switchRsn.setSecond(rsn);
+    			}
         		this.vStatuses.add(Status.SWAP);
         		return Move.GROWL;
         	}
         	// 10% chance to swap if i'm leech seeded
         	if (this.vStatuses.contains(Status.LEECHED) && checkSecondary(10)) {
-        		System.out.println("leeched : 10%");
+        		String rsn = "[Leeched : 10%]";
+        		System.out.println(rsn);
+        		if (switchRsn != null) {
+    				switchRsn.setFirst(this);
+        			switchRsn.setSecond(rsn);
+    			}
         		this.vStatuses.add(Status.SWAP);
         		return Move.GROWL;
         	}
@@ -552,8 +592,12 @@ public class Pokemon implements Serializable {
         			chance /= 5;
         		}
         		if (checkSecondary((int) chance)) {
-        			System.out.print("enemy kills me : ");
-        			System.out.println(String.format("%.1f", chance) + "%");
+        			String rsn = "[Enemy kills me : " + String.format("%.1f", chance) + "%]";
+        			System.out.println(rsn);
+        			if (switchRsn != null) {
+        				switchRsn.setFirst(this);
+            			switchRsn.setSecond(rsn);
+        			}
         			this.vStatuses.add(Status.SWAP);
             		return Move.moveOfType(type);
         		}
@@ -621,6 +665,14 @@ public class Pokemon implements Serializable {
             return validMoves.get(randomIndex);
     	}
         int randomIndex = (int) (Math.random() * bestMoves.size());
+        
+        if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
+        	if (gp.simBattleUI.p1Moves == null) {
+        		gp.simBattleUI.p1Moves = new Pair<>(this, bestMoves);
+        	} else {
+        		gp.simBattleUI.p2Moves = new Pair<>(this, bestMoves);
+        	}
+        }
         return bestMoves.get(randomIndex);
     }
 	
@@ -2553,8 +2605,50 @@ public class Pokemon implements Serializable {
 	}
 	
 	private void announceUseMove(Move move) {
-		Task t = addTask(Task.SEMI_INV, this.nickname + " used " + move.toString() + "!", this);
+		String msg = this.nickname + " used " + move.toString() + "!";
+		if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
+			msg = writeMoveChance(move, msg);
+		}
+		Task t = addTask(Task.SEMI_INV, msg, this);
 		t.wipe = true;
+	}
+
+	private String writeMoveChance(Move move, String msg) {
+		Boolean p1Moves = null;
+		ArrayList<Move> check = null;
+		if (gp.simBattleUI.p1Moves != null) {
+			if (this == gp.simBattleUI.p1Moves.getFirst()) p1Moves = true;
+		}
+		if (gp.simBattleUI.p2Moves != null) {
+			if (this == gp.simBattleUI.p2Moves.getFirst()) p1Moves = false;
+		}
+		
+		if (p1Moves != null) {
+			if (p1Moves) {
+				check = gp.simBattleUI.p1Moves.getSecond();
+			} else {
+				check = gp.simBattleUI.p2Moves.getSecond();
+			}
+		}
+		
+		if (check == null) return msg;
+
+		int occ = 0;
+		for (Move m : check) {
+			if (m == move) occ++;
+		}
+		int total = check.size();
+		double chance = occ * 100.0 / total;
+		
+		msg = String.format("%s\n[%.1f", msg, chance) + "% chance]";
+		
+		if (p1Moves) {
+			gp.simBattleUI.p1Moves = null;
+		} else {
+			gp.simBattleUI.p2Moves = null;
+		}
+		
+		return msg;
 	}
 
 	private void endMove() {
@@ -7848,6 +7942,23 @@ public class Pokemon implements Serializable {
 	
 	public static void addSwapOutTask(Pokemon p, boolean playerSide) {
 		String message = p.playerOwned() ? p.nickname + ", come back!" : p.trainer.toString() + " withdrew " + p.nickname + "!";
+		if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
+			String rsn = "";
+			if (gp.simBattleUI.p1Switch != null) {
+				if (gp.simBattleUI.p1Switch.getFirst() == p) {
+					rsn = gp.simBattleUI.p1Switch.getSecond();
+					gp.simBattleUI.p2Switch = null;
+				}
+			}
+			if (gp.simBattleUI.p2Switch != null) {
+				if (gp.simBattleUI.p2Switch.getFirst() == p) {
+					rsn = gp.simBattleUI.p2Switch.getSecond();
+					gp.simBattleUI.p2Switch = null;
+				}
+			}
+			
+			message = String.format("%s\n%s", message, rsn);
+		}
 		Task t = addTask(Task.SWAP_OUT, message, p);
 		if (t != null) {
 			t.wipe = playerSide;
