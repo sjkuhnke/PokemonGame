@@ -20,7 +20,7 @@ import javax.imageio.ImageIO;
 
 import pokemon.Item;
 import pokemon.Pokemon;
-import pokemon.Pokemon.Task;
+import pokemon.Task;
 
 public class KeyHandler implements KeyListener {
 

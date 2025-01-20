@@ -169,6 +169,17 @@ public enum Ability {
 	    return sb.toString().trim();
 	}
 	
+	public static Ability getEnum(String string) {
+		// Normalize the string
+	    String normalized = string.toUpperCase().replace(' ', '_');
+	    
+	    try {
+	        return Ability.valueOf(normalized);
+	    } catch (IllegalArgumentException e) {
+	        throw new IllegalStateException("No matching Move enum found for string: " + string, e);
+	    }
+	}
+	
 	public String desc;
 
 	public String superToString() {

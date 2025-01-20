@@ -1,9 +1,7 @@
 package overworld;
 
 import entity.NPC_Block;
-import pokemon.Player;
-import pokemon.Pokemon;
-import pokemon.Pokemon.Task;
+import pokemon.*;
 
 public class EventHandler {
 
@@ -610,19 +608,19 @@ public class EventHandler {
 			if (hit(107,47,63)) {
 				if (!gp.player.p.flag[5][2] || !gp.player.p.flag[5][5]) {
 					gp.setTaskState();
-					Task t = Pokemon.addTask(Task.TELEPORT, "");
+					Task t = Task.addTask(Task.TELEPORT, "");
 					t.counter = 107;
 					t.start = 42;
 					t.finish = 57;
 					t.wipe = false;
 					if (gp.player.p.grustCount < 10) {
-						Pokemon.addTask(Task.TEXT, "This portal seems to be jammed by the Ghosts everywhere...");
-						Pokemon.addTask(Task.TEXT, "There are " + (10 - gp.player.p.grustCount) + " Ghosts remaining!");
+						Task.addTask(Task.TEXT, "This portal seems to be jammed by the Ghosts everywhere...");
+						Task.addTask(Task.TEXT, "There are " + (10 - gp.player.p.grustCount) + " Ghosts remaining!");
 					} else if (!gp.player.p.flag[5][2]) {
-						Pokemon.addTask(Task.TEXT, "This portal seems to be jammed by Rick...");
+						Task.addTask(Task.TEXT, "This portal seems to be jammed by Rick...");
 					} else {
-						Pokemon.addTask(Task.TEXT, "This portal seems to be jammed by Team Eclipse...");
-						Pokemon.addTask(Task.TEXT, "Rick said that they're at the bottom of Electric Tunnel!");
+						Task.addTask(Task.TEXT, "This portal seems to be jammed by Team Eclipse...");
+						Task.addTask(Task.TEXT, "Rick said that they're at the bottom of Electric Tunnel!");
 					}
 				} else {
 					teleport(107, 24, 48,true); // G

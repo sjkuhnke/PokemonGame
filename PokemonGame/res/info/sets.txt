@@ -25,7 +25,7 @@ Ability: Regenerator
 Magron @ Air Balloon
 Timid Nature
 Ability: Dry Skin
-- Stealth Rocks
+- Stealth Rock
 - Spikes/Will-O-Wisp
 - Molten Steelspike/Surf
 - Fire Blast/Flamethrower
@@ -102,7 +102,7 @@ Ability: Mouthwater
 - Baton Pass/Drain Punch/Mach Punch
 - Bulldoze/Earthquake
 
-Hamthorno @ Chople Helmet/Rocky Helmet/Leftovers
+Hamthorno @ Chople Berry/Rocky Helmet/Leftovers
 Impish/Careful Nature
 Ability: Rough Skin
 - Stealth Rock
@@ -216,7 +216,7 @@ Ability: Terrify
 
 Winagrow @ Power Herb/Yache Berry
 Modest Nature
-Ability: Chlorophyl
+Ability: Chlorophyll
 - Sunny Day
 - Nasty Plot/Synthesis
 - Solar Beam
@@ -236,7 +236,7 @@ Ability: Corrosion
 - Sludge Bomb
 - Toxic Spikes
 - Spikes
-- Leech Seed
+- Leech Seed/Strength Sap
 
 Roserade @ Choice Scarf/Choice Specs
 Timid/Modest Nature
@@ -252,7 +252,7 @@ Ability: Technician
 - Sludge Bomb
 - Energy Ball
 - Mud Shot
-- Hidden Power Electric/Hidden Power Ice/Hidden Power Rock/Hidden Power Fire/Hidden Power Galactic
+- Hp Electric/Hp Ice/Hp Rock/Hp Fire/Hp Galactic
 
 Leavanny @ Power Herb
 Jolly Nature
@@ -300,7 +300,7 @@ Ability: Speed Boost
 - Calm Mind
 - Thunderbolt
 - Bug Buzz
-- Hidden Power Water/Energy Ball
+- Hp Water/Energy Ball
 
 Busheep @ Eviolite
 Calm Nature
@@ -405,3 +405,219 @@ Ability: Rain Dish
 - Knock Off/Haze/Leech Seed
 - Flip Turn/U-Turn
 - Ice Beam/Giga Drain/Scald
+
+Bluebunn @ Life Orb
+Timid Nature
+Ability: Magic Guard
+- Light Of Ruin
+- Vanishing Act/Magic Tomb
+- Glitter Dance
+- Magic Reflect/Will-O-Wisp
+
+Bluebunn @ Choice Specs/Choice Scarf
+Timid/Modest Nature
+Ability: Flash Fire
+- Prismatic Laser
+- Vanishing Act
+- Trick/Volt Switch
+- Ice Beam/Flamethrower/Fiery Dance
+
+Bluebunn @ Pamtre Berry
+Timid Nature
+Ability: Flash Fire
+- Photon Geyser
+- Overheat/Draco Meteor
+- Glitter Dance/Magic Reflect
+- Vanishing Act/Elemental Sparkle/Magic Tomb
+
+Bluebunn @ Focus Sash
+Timid Nature
+Ability: Magic Bounce
+- Thunder Wave/Will-O-Wisp
+- Moonlight/Magic Reflect
+- Volt Switch/Prismatic Laser
+- Blizzard/Ice Beam
+
+Bluebunn @ Power Herb
+Modest/Timid Nature
+Ability: Magic Guard
+- Geomancy
+- Light Of Ruin
+- Magic Tomb
+- Dark Pulse/Galaxy Blast/Tri-Attack/Psyshock/Focus Blast/Shadow Ball/Surf
+
+Bluebunn @ Light Clay
+Timid/Calm Nature
+Ability: Magic Bounce
+- Light Screen
+- Reflect
+- Magic Reflect/Photon Geyser/Magic Tomb
+- Volt Switch
+
+Blaster @ Custap Berry/Red Card
+Adamant/Impish Nature
+Ability: Sturdy
+- Stealth Rock
+- Explosion/Thunder Wave
+- Earthquake
+- Stone Edge/Rock Tomb
+
+Blaster @ Loaded Dice
+Adamant Nature
+Ability: Unerodible
+- Rock Blast
+- Rock Polish/Flame Charge
+- Earthquake
+- Drain Punch
+
+Blaster @ Leftovers
+Careful Nature
+Ability: Solid Rock
+- Stealth Rock/Bulk Up
+- Rollout/Stone Edge
+- Earthquake
+- Ice Spinner
+
+Crystallor @ Light Clay
+Bold Nature
+Ability: Sturdy
+- Stealth Rock
+- Reflect
+- Light Screen
+- Knock Off/Diamond Storm/Photon Geyser
+
+Crystallor @ White Herb
+Timid Nature
+Ability: Filter
+- Diamond Storm
+- Shell Smash
+- Prismatic Laser
+- Earth Power/Lava Surf
+
+Crystallor @ Power Herb
+Modest Nature
+Ability: Filter
+- Meteor Beam
+- Rock Polish/Thunder Wave
+- Prismatic Laser
+- Earth Power/Ice Beam
+
+Cairnasaur @ Choice Band/Choice Scarf
+Jolly Nature
+Ability: Rock Head
+- Rock Wrecker
+- Earthquake
+- U-Turn
+- Psychic Fangs
+
+Cairnasaur @ Leftovers
+Jolly Nature
+Ability: Rock Head
+- Rock Wrecker
+- Coil/Rock Polish
+- Psychic Fangs
+- Earthquake/Crunch
+
+Cairnasaur @ Rocky Helmet
+Impish/Careful Nature
+Ability: Intimidate/Regenerator
+- Stealth Rock
+- U-Turn
+- Rock Wrecker
+- Thunder Wave/Taunt
+
+Boulderoar @ Focus Sash/Red Card/Rocky Helmet
+Adamant/Jolly/Impish/Careful Nature
+Ability: Intimidate
+- Stealth Rock
+- Knock Off
+- Parting Shot/U-Turn
+- Accelerock/Stone Edge/Taunt
+
+Boulderoar @ Loaded Dice
+Jolly Nature
+Ability: Technician
+- Rock Polish/Flame Charge/Accelerock
+- Rock Blast
+- Bite
+- Swords Dance
+
+Boulderoar @ Liechi Berry
+Adamant Nature
+Ability: Sturdy
+- Swords Dance
+- Sucker Punch
+- Accelerock/Stone Edge
+- Close Combat
+
+Raptorex @ Choice Specs/Assault Vest
+Timid Nature
+Ability: No Guard
+- Focus Blast
+- Hurricane
+- Vacuum Wave
+- Blizzard/Star Storm
+
+Raptorex @ Life Orb
+Timid Nature
+Ability: Adaptability
+- Calm Mind
+- Aeroblast
+- Focus Blast
+- Knock Off/Earth Power/Vacuum Wave
+
+Raptorex @ Flame Orb
+Jolly Nature
+Ability: Guts
+- Bulk Up/U-Turn
+- Drain Punch/Close Combat
+- Brave Bird
+- Knock Off
+
+Hootowl @ Light Clay/Icy Rock
+Bold Nature
+Ability: Snow Warning
+- Aurora Veil
+- Glare
+- Freezing Glare
+- Blizzard
+
+Hootowl @ Choice Scarf
+Modest Nature
+Ability: Snow Warning
+- Trick/Volt Switch
+- Shadow Ball/Focus Blast
+- Freezing Glare
+- Blizzard
+
+Dualmoose @ Sitrus Berry
+Timid Nature
+Ability: Sparkly Surge
+- Aurora Boost
+- Freeze-Dry
+- Frostbind
+- Magic Tomb/Flamethrower
+
+Frosmoth @ Heavy-Duty Boots
+Bold Nature
+Ability: Icy Scales
+- Defog/Sticky Web
+- Haze/Tailwind
+- Frostbind/Stun Spore
+- Ice Beam/Freeze-Dry
+
+Frosmoth @ Heavy-Duty Boots/Throat Spray
+Timid Nature
+Ability: Icy Scales
+- Quiver Dance
+- Ice Beam/Blizzard
+- Bug Buzz
+- Star Storm/Focus Blast
+
+Frosmoth @ Heavy-Duty Boots
+Timid Nature
+Ability: Tinted Lens
+- Infestation/Sticky Web
+- Quiver Dance
+- Bug Buzz
+- Ice Beam

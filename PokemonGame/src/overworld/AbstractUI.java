@@ -1,4 +1,4 @@
-package pokemon;
+package overworld;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -14,9 +14,7 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 
 import entity.Entity;
-import overworld.GamePanel;
-import overworld.UI;
-import pokemon.Pokemon.Task;
+import pokemon.*;
 
 public abstract class AbstractUI {
 	
@@ -431,10 +429,10 @@ public abstract class AbstractUI {
 			type += p.getStat(i);
         	
         	if (i != 0) {
-        	    if (p.nature[i - 1] == 1.1) {
+        	    if (p.nat.getStat(i - 1) == 1.1) {
         	        g2.setColor(Color.red.darker());
         	        g2.drawString("\u2191", x - 15, y);
-        	    } else if (p.nature[i - 1] == 0.9) {
+        	    } else if (p.nat.getStat(i - 1) == 0.9) {
         	    	g2.setColor(Color.blue);
         	    	g2.drawString("\u2193", x - 15, y);
         	    }
@@ -898,11 +896,11 @@ public abstract class AbstractUI {
 			if (moveOption >= 0) {
 				if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.RARE_CANDY_STATE) {
 					if (moveOption == 0) {
-						Task t = Pokemon.createTask(Task.TEXT, p.nickname + " did not learn " + m.toString() + ".");
-						Pokemon.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
+						Task t = Task.createTask(Task.TEXT, p.nickname + " did not learn " + m.toString() + ".");
+						Task.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
 					} else {
-						Task t = Pokemon.createTask(Task.TEXT, Item.breakString(p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!", 44));
-						Pokemon.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
+						Task t = Task.createTask(Task.TEXT, Item.breakString(p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!", 44));
+						Task.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
 					}
 				} else {
 					if (moveOption == 0) {
@@ -941,8 +939,8 @@ public abstract class AbstractUI {
 				int hpDif = oldP.getStat(0) - oldP.currentHP;
 		        newP.currentHP -= hpDif;
 		        newP.moveMultiplier = newP.moveMultiplier;
-		        Task text = Pokemon.createTask(Task.TEXT, oldP.nickname + " evolved into " + newP.name + "!");
-		        Pokemon.insertTask(text, 0);
+		        Task text = Task.createTask(Task.TEXT, oldP.nickname + " evolved into " + newP.name + "!");
+		        Task.insertTask(text, 0);
 		        newP.exp = oldP.exp;
 		        gp.player.p.pokedex[newP.id] = 2;
 		        if (oldP.id == 129) {
@@ -972,8 +970,8 @@ public abstract class AbstractUI {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				Task text = Pokemon.createTask(Task.TEXT, t.p.nickname + " did not evolve.");
-				Pokemon.insertTask(text, 0);
+				Task text = Task.createTask(Task.TEXT, t.p.nickname + " did not evolve.");
+				Task.insertTask(text, 0);
 				currentTask = null;
 				commandNum = 0;
 			}

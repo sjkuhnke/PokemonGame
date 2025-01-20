@@ -13,20 +13,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import entity.Entity;
-import pokemon.Ability;
-import pokemon.AbstractUI;
-import pokemon.Field;
-import pokemon.Item;
-import pokemon.Move;
-import pokemon.Moveslot;
-import pokemon.PType;
-import pokemon.Player;
-import pokemon.Pokemon;
-import pokemon.Status;
+import pokemon.*;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
 import pokemon.Field.FieldEffect;
-import pokemon.Pokemon.Task;
 
 public class BattleUI extends AbstractUI {
 	
@@ -347,7 +337,7 @@ public class BattleUI extends AbstractUI {
 			if (counter >= 100) {
 				counter = 0;
 				if (currentTask.p.playerOwned() && hasAlive()) {
-					Pokemon.addTask(Task.PARTY, "");
+					Task.addTask(Task.PARTY, "");
 				}
 				endTask();
 			}
@@ -384,7 +374,7 @@ public class BattleUI extends AbstractUI {
 					setNicknaming(true);
 				} else {
 					currentTask.p.setVisible(true);
-					Pokemon.addTask(Task.TEXT, "Oh no, " + foe.name + " broke free!");
+					Task.addTask(Task.TEXT, "Oh no, " + foe.name + " broke free!");
 					turn(null, foe.randomMove());
 					ball = gp.player.p.getBall(ball);
 					balls = gp.player.p.getBalls();
@@ -624,18 +614,18 @@ public class BattleUI extends AbstractUI {
 	    aura = false;
 		
 		if (foe.trainerOwned() && staticID == -1) {
-			Pokemon.addSwapInTask(foe, false);
+			Task.addSwapInTask(foe, false);
 			foeFainted = foe.trainer.getNumFainted();
 		}
 		if (staticID == 162) {
-			Pokemon.addTask(Task.TEXT, foe.nickname + "'s aura is radiating!");
+			Task.addTask(Task.TEXT, foe.nickname + "'s aura is radiating!");
 	    	for (int i = 0; i < 5; i++) {
 	    		foe.stat(foe, i, 1, new Pokemon(1, 1, false, false));
 	    	}
 	    	aura = true;
 	    }
 		if (staticID == 205 || staticID == 210 || staticID == 197 || staticID == 202) {
-			Pokemon.addTask(Task.TEXT, foe.nickname + " is surrounded by immense electricity!");
+			Task.addTask(Task.TEXT, foe.nickname + " is surrounded by immense electricity!");
 	    	for (int i = 0; i < 5; i++) {
 	    		foe.stat(foe, i, 1, new Pokemon(1, 1, false, false));
 	    	}
@@ -644,7 +634,7 @@ public class BattleUI extends AbstractUI {
 		if (staticID >= 284 && staticID <= 289) {
 			aura = true;
 		}
-	    Pokemon.addSwapInTask(user, true);
+		Task.addSwapInTask(user, true);
 	    Pokemon fasterInit = user.getFaster(foe, 0, 0);
 		Pokemon slowerInit = fasterInit == user ? foe : user;
 		fasterInit.swapIn(slowerInit, true);
@@ -842,15 +832,15 @@ public class BattleUI extends AbstractUI {
 				gp.keyH.wPressed = false;
 				subState = TASK_STATE;
 				if (foe.trainerOwned()) {
-					Pokemon.addTask(Task.TEXT, "No! There's no running from a trainer battle!");
+					Task.addTask(Task.TEXT, "No! There's no running from a trainer battle!");
 				} else {
 					Pokemon faster = user.getFaster(foe, 0, 0);
 					boolean isFaster = faster == user || user.item == Item.SHED_SHELL || user.type1 == PType.GHOST || user.type2 == PType.GHOST;
 					
 					if (isFaster || new Random().nextBoolean()) {
-						Pokemon.addTask(Task.END, "Got away safely!");
+						Task.addTask(Task.END, "Got away safely!");
 					} else {
-						Pokemon.addTask(Task.TEXT, "Couldn't escape!");
+						Task.addTask(Task.TEXT, "Couldn't escape!");
 						foeMove = foe.randomMove();
 						turn(null, foeMove);
 					}
@@ -996,8 +986,8 @@ public class BattleUI extends AbstractUI {
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				if (ball != null) {
-					Pokemon.addTask(Task.TEXT, "You threw a " + ball.getItem().toString() + "!");
-					Task t = Pokemon.addTask(Task.CATCH, "", foe);
+					Task.addTask(Task.TEXT, "You threw a " + ball.getItem().toString() + "!");
+					Task t = Task.addTask(Task.CATCH, "", foe);
 					t.item = ball.getItem();
 					t.setWipe(user.getCapture(foe, ball));
 					subState = TASK_STATE;
@@ -1139,7 +1129,7 @@ public class BattleUI extends AbstractUI {
 			
 			// Check for swap (player)
 			if (user.trainer.hasValidMembers() && hasAlive() && faster.vStatuses.contains(Status.SWITCHING)) {
-				Task t = Pokemon.addTask(Task.PARTY, "");
+				Task t = Task.addTask(Task.PARTY, "");
 				t.wipe = faster.lastMoveUsed == Move.BATON_PASS;
 				subState = TASK_STATE;
 	        	return;
@@ -1181,7 +1171,7 @@ public class BattleUI extends AbstractUI {
 	        }
 	        // Check for swap
 	        if (user.trainer.hasValidMembers() && hasAlive() && slower.vStatuses.contains(Status.SWITCHING)) {
-	        	Task t = Pokemon.addTask(Task.PARTY, "");
+	        	Task t = Task.addTask(Task.PARTY, "");
 	        	t.wipe = slower.lastMoveUsed == Move.BATON_PASS;
 	        	subState = TASK_STATE;
 	        	return;
@@ -1199,7 +1189,7 @@ public class BattleUI extends AbstractUI {
 				if (foe.trainer.hasNext()) {
 					boolean userSide = foe.trainer.hasUser(user);
 					next = foe.trainer.next(user, userSide);
-					Pokemon.addSwapInTask(next, next.currentHP, false);
+					Task.addSwapInTask(next, next.currentHP, false);
 					next.swapIn(user, true);
 					user.getPlayer().clearBattled();
 					user.battled = true;
@@ -1213,7 +1203,7 @@ public class BattleUI extends AbstractUI {
 					if (foe.trainer.getFlagIndex() != 0) {
 		            	user.getPlayer().flag[foe.trainer.getFlagX()][foe.trainer.getFlagY()] = true;
 		            }
-					Pokemon.addTask(Task.END, message);
+					Task.addTask(Task.END, message);
 		            if (foe.trainer.getMoney() == 500 && user.getPlayer().badges < 8) {
 		            	user.getPlayer().badges++;
 		            	user.getPlayer().beatGymTrainers();
@@ -1229,13 +1219,13 @@ public class BattleUI extends AbstractUI {
 				}
 			} else if (!user.getPlayer().wiped()) {
 				subState = TASK_STATE;
-				Pokemon.addTask(Task.END, foe.name + " was defeated!");
+				Task.addTask(Task.END, foe.name + " was defeated!");
 				break;
 			}
 		}
 	    if (user.getPlayer().wiped()) {
-	    	Pokemon.addTask(Task.TEXT, "You have no more Pokemon that can fight!\nYou lost $500!");
-			Task t = Pokemon.addTask(Task.END, "");
+	    	Task.addTask(Task.TEXT, "You have no more Pokemon that can fight!\nYou lost $500!");
+			Task t = Task.addTask(Task.END, "");
 			t.setWipe(true);
 		}
 	}
