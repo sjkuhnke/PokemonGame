@@ -82,27 +82,27 @@ public enum Item {
 	RAZOR_CLAW(265,1000,500,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon"),
 	ABILITY_CAPSULE(26,2500,1250,new Color(102, 7, 143),Item.OTHER,null,"Swaps a Pokemon's ability with its other possible ability"),
 	ABILITY_PATCH(91,3000,1500,Color.BLACK,Item.OTHER,null,"A patch that can be used to change the regular Ability of a Pokemon to a rarer Ability."),
-	LONELY_MINT(311,500,150,Color.BLACK,Item.MEDICINE,null,"Changes a Pokemon's nature to +Atk, -Def"),
-	ADAMANT_MINT(29,2500,1000,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +Atk, -SpA"),
-	NAUGHTY_MINT(312,500,150,Color.BLACK,Item.MEDICINE,null,"Changes a Pokemon's nature to +Atk, -SpD"),
-	BRAVE_MINT(31,1000,250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +Atk, -Spe"),
-	BOLD_MINT(30,1750,750,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +Def, -Atk"),
-	IMPISH_MINT(34,1750,750,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +Def, -SpA"),
-	LAX_MINT(313,750,200,Color.BLACK,Item.MEDICINE,null,"Changes a Pokemon's nature to +Def, -SpD"),
-	RELAXED_MINT(314,1000,250,Color.BLACK,Item.MEDICINE,null,"Changes a Pokemon's nature to +Def, -Spe"),
-	MODEST_MINT(36,2250,1000,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +SpA, -Atk"),
-	MILD_MINT(315,500,150,Color.BLACK,Item.MEDICINE,null,"Changes a Pokemon's nature to +SpA, -Def"),
-	RASH_MINT(316,500,150,Color.BLACK,Item.MEDICINE,null,"Changes a Pokemon's nature to +SpA, -SpD"),
-	QUIET_MINT(37,1000,250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +SpA, -Spe"),
-	CALM_MINT(32,1500,500,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +SpD, -Atk"),
-	GENTLE_MINT(317,750,200,Color.BLACK,Item.MEDICINE,null,"Changes a Pokemon's nature to +SpD, -Def"),
-	CAREFUL_MINT(33,1250,500,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +SpD, -SpA"),
-	SASSY_MINT(318,1000,250,Color.BLACK,Item.MEDICINE,null,"Changes a Pokemon's nature to +SpD, -Spe"),
-	TIMID_MINT(39,2500,1250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +Spe, -Atk"),
-	HASTY_MINT(319,2000,900,Color.BLACK,Item.MEDICINE,null,"Changes a Pokemon's nature to +Spe, -Def"),
-	JOLLY_MINT(35,2500,1250,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to +Spe, -SpA"),
-	NAIVE_MINT(320,2000,900,Color.BLACK,Item.MEDICINE,null,"Changes a Pokemon's nature to +Spe, -SpD"),
-	SERIOUS_MINT(38,1250,300,new Color(113, 84, 255),Item.MEDICINE,null,"Changes a Pokemon's nature to Neutral"),
+	LONELY_MINT(311,500,150,Color.BLACK,Item.MEDICINE,Nature.LONELY,"Changes a Pokemon's nature to +Atk, -Def"),
+	ADAMANT_MINT(29,2500,1000,new Color(113, 84, 255),Item.MEDICINE,Nature.ADAMANT,"Changes a Pokemon's nature to +Atk, -SpA"),
+	NAUGHTY_MINT(312,500,150,Color.BLACK,Item.MEDICINE,Nature.NAUGHTY,"Changes a Pokemon's nature to +Atk, -SpD"),
+	BRAVE_MINT(31,1000,250,new Color(113, 84, 255),Item.MEDICINE,Nature.BRAVE,"Changes a Pokemon's nature to +Atk, -Spe"),
+	BOLD_MINT(30,1750,750,new Color(113, 84, 255),Item.MEDICINE,Nature.BOLD,"Changes a Pokemon's nature to +Def, -Atk"),
+	IMPISH_MINT(34,1750,750,new Color(113, 84, 255),Item.MEDICINE,Nature.IMPISH,"Changes a Pokemon's nature to +Def, -SpA"),
+	LAX_MINT(313,750,200,Color.BLACK,Item.MEDICINE,Nature.LAX,"Changes a Pokemon's nature to +Def, -SpD"),
+	RELAXED_MINT(314,1000,250,Color.BLACK,Item.MEDICINE,Nature.RELAXED,"Changes a Pokemon's nature to +Def, -Spe"),
+	MODEST_MINT(36,2250,1000,new Color(113, 84, 255),Item.MEDICINE,Nature.MODEST,"Changes a Pokemon's nature to +SpA, -Atk"),
+	MILD_MINT(315,500,150,Color.BLACK,Item.MEDICINE,Nature.MILD,"Changes a Pokemon's nature to +SpA, -Def"),
+	RASH_MINT(316,500,150,Color.BLACK,Item.MEDICINE,Nature.RASH,"Changes a Pokemon's nature to +SpA, -SpD"),
+	QUIET_MINT(37,1000,250,new Color(113, 84, 255),Item.MEDICINE,Nature.QUIET,"Changes a Pokemon's nature to +SpA, -Spe"),
+	CALM_MINT(32,1500,500,new Color(113, 84, 255),Item.MEDICINE,Nature.CALM,"Changes a Pokemon's nature to +SpD, -Atk"),
+	GENTLE_MINT(317,750,200,Color.BLACK,Item.MEDICINE,Nature.GENTLE,"Changes a Pokemon's nature to +SpD, -Def"),
+	CAREFUL_MINT(33,1250,500,new Color(113, 84, 255),Item.MEDICINE,Nature.CAREFUL,"Changes a Pokemon's nature to +SpD, -SpA"),
+	SASSY_MINT(318,1000,250,Color.BLACK,Item.MEDICINE,Nature.SASSY,"Changes a Pokemon's nature to +SpD, -Spe"),
+	TIMID_MINT(39,2500,1250,new Color(113, 84, 255),Item.MEDICINE,Nature.TIMID,"Changes a Pokemon's nature to +Spe, -Atk"),
+	HASTY_MINT(319,2000,900,Color.BLACK,Item.MEDICINE,Nature.HASTY,"Changes a Pokemon's nature to +Spe, -Def"),
+	JOLLY_MINT(35,2500,1250,new Color(113, 84, 255),Item.MEDICINE,Nature.JOLLY,"Changes a Pokemon's nature to +Spe, -SpA"),
+	NAIVE_MINT(320,2000,900,Color.BLACK,Item.MEDICINE,Nature.NAIVE,"Changes a Pokemon's nature to +Spe, -SpD"),
+	SERIOUS_MINT(38,1250,300,new Color(113, 84, 255),Item.MEDICINE,Nature.SERIOUS,"Changes a Pokemon's nature to Neutral"),
 	THUNDER_SCALES_FOSSIL(45,5000,1000,new Color(201, 169, 81),Item.OTHER,null,"A fossil of an ancient Pokemon that lived in a desert. It appears to have an electric charge ridden in the scales."),
 	DUSK_SCALES_FOSSIL(46,5000,1000,new Color(45, 47, 51),Item.OTHER,null,"A fossil of an ancient Pokemon that lived in a forest. It appears to give off a dark energy within the scales."),
 	CHOICE_BAND(47,0,0,new Color(224, 152, 159),Item.HELD_ITEM,null,"A curious headband that boosts the holder's Attack stat but only allows the use of a single move."),
@@ -375,6 +375,7 @@ public enum Item {
 	private Color color;
 	private int pocket;
 	private Move move;
+	private Nature nature;
 	private int cost;
 	private int sell;
 	private int healAmount;
@@ -391,13 +392,17 @@ public enum Item {
     
     public static Item[] itemTable = setupItemTable();
 	
-	Item(int id, int cost, int sell, Color color, int pocket, Move move, String desc) {
+	Item(int id, int cost, int sell, Color color, int pocket, Object o, String desc) {
 		this.id = id;
 		this.cost = cost;
 		this.sell = sell;
 		this.color = color;
 		this.pocket = pocket;
-		this.move = move;
+		if (o instanceof Move) {
+			this.move = (Move) o;
+		} else if (o instanceof Nature) {
+			this.nature = (Nature) o;
+		}
 		this.desc = desc;
 		
 		String path = "/items/";
@@ -477,6 +482,8 @@ public enum Item {
 	
 	public Move getMove() { return move; }
 	
+	public Nature getNature() { return nature; }
+	
 	public int getPocket() { return pocket; }
 	
 	public Color getColor() {
@@ -547,6 +554,17 @@ public enum Item {
 	    }
 
 	    return result;
+	}
+	
+	public static Item getEnum(String string) {
+		// Normalize the string
+	    String normalized = string.toUpperCase().replace('\'', '1').replace('-', '$').replace(' ', '_');
+	    
+	    try {
+	        return Item.valueOf(normalized);
+	    } catch (IllegalArgumentException e) {
+	        throw new IllegalStateException("No matching Item enum found for string: " + string, e);
+	    }
 	}
 
 	public int getHealAmount() {
@@ -1410,13 +1428,8 @@ public enum Item {
 		if (p != null) abilityInput.setSelectedIndex(p.abilitySlot);
 		addLabeledInput.accept("Ability", abilityInput);
 		
-		JComboBox<String> natures = new JComboBox<>();
-		Pokemon temp = new Pokemon(1, 1, false, false);
-		for (int i = 0; i < 25; i++) {
-			temp.nature = temp.getNature(i);
-			natures.addItem(temp.getNature());
-		}
-		if (p != null) natures.setSelectedItem(p.getNature());
+		JComboBox<Nature> natures = new JComboBox<>(Nature.values());
+		if (p != null) natures.setSelectedItem(p);
 		addLabeledInput.accept("Nature", natures);
 		
 		@SuppressWarnings("unchecked")
@@ -1542,12 +1555,7 @@ public enum Item {
 				int ability = abilityInput.getSelectedIndex();
 				int expRemaining = Integer.parseInt(expInput.getText());
 				int happinessCap = Integer.parseInt(happinessCapInput.getText());
-				String selectedNature = (String) natures.getSelectedItem();
-				for (int i = 0; i < 25; i++) {
-					temp.nature = temp.getNature(i);
-					if (temp.getNature().equals(selectedNature)) break;
-				}
-				double[] nature = temp.nature;
+				Nature nature = (Nature) natures.getSelectedItem();
 				int[] ivs = new int[6];
 				for (int i = 0; i < 6; i++) {
 					ivs[i] = (Integer) ivInputs[i].getSelectedItem();
@@ -1560,7 +1568,7 @@ public enum Item {
 				Pokemon generated = new Pokemon(id, level, true, false);
 				generated.abilitySlot = ability;
 				generated.setAbility(generated.abilitySlot);
-				generated.nature = nature;
+				generated.nat = nature;
 				generated.ivs = ivs;
 				generated.setStats();
 				int exp = generated.expMax - expRemaining;
@@ -1596,12 +1604,12 @@ public enum Item {
 		return getID() >= 1 && getID() <= 3;
 	}
 
-	public boolean isMint() {
-		return (getID() >= 29 && getID() <= 39) || (getID() >= 311 && getID() <= 320);
-	}
-
 	public boolean isTM() {
 		return getMove() != null;
+	}
+	
+	public boolean isMint() {
+		return getNature() != null;
 	}
 
 	public boolean isEvoItem() {

@@ -632,6 +632,7 @@
 1  |SLUDGE_BOMB
 1  |MAGICAL_LEAF
 1  |WEATHER_BALL
+70 |STRENGTH_SAP
 
 ===================
 32
@@ -1124,6 +1125,7 @@
 56
 ===================
 0  |SNARL
+0  |ANCIENT_POWER
 1  |TACKLE
 3  |DEFENSE_CURL
 5  |ROCK_THROW

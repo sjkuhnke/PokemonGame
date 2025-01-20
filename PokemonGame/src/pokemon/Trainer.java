@@ -18,7 +18,7 @@ public class Trainer implements Serializable {
 	int money;
 	Item item;
 	int flagIndex;
-	Pokemon current;
+	public Pokemon current;
 	public boolean update;
 	
 	ArrayList<FieldEffect> effects;
@@ -311,7 +311,7 @@ public class Trainer implements Serializable {
 	}
 	
 	private void swap(Pokemon oldP, Pokemon newP, boolean playerSide) {
-		Pokemon.addSwapOutTask(oldP, playerSide);
+		Task.addSwapOutTask(oldP, playerSide);
 		if (oldP.ability == Ability.REGENERATOR && !oldP.isFainted()) {
 			oldP.currentHP += current.getStat(0) / 3;
 			oldP.verifyHP();
@@ -321,7 +321,7 @@ public class Trainer implements Serializable {
 		oldP.clearVolatile();
 		if (oldP.ability == Ability.ILLUSION) oldP.illusion = true; // just here for calc
 		this.current = newP;
-		Pokemon.addSwapInTask(newP, newP.currentHP, playerSide);
+		Task.addSwapInTask(newP, newP.currentHP, playerSide);
 		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
 		Pokemon.field.switches++;
 	}

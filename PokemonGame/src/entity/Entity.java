@@ -13,10 +13,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import overworld.GamePanel;
-import pokemon.Item;
-import pokemon.Pokemon;
-import pokemon.Pokemon.Task;
-import pokemon.Trainer;
+import pokemon.*;
 
 public class Entity {
 	
@@ -143,15 +140,15 @@ public class Entity {
 				dialogueIndex = 0;
 			}
 			gp.setTaskState();
-			Pokemon.addTask(Task.DIALOGUE, this, dialogues[dialogueIndex]);
+			Task.addTask(Task.DIALOGUE, this, dialogues[dialogueIndex]);
 			dialogueIndex++;
 		} else if (mode == 1) {
 			gp.setTaskState();
-			Pokemon.addTask(Task.DIALOGUE, this, altDialogue);
+			Task.addTask(Task.DIALOGUE, this, altDialogue);
 		} else if (mode == 2) {
 			String[] altDialogues = altDialogue.split("\n");
 			for (String s : altDialogues) {
-				Pokemon.addTask(Task.DIALOGUE, this, s);
+				Task.addTask(Task.DIALOGUE, this, s);
 			}
 		}
 	}

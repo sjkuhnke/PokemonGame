@@ -46,4 +46,12 @@ public class Moveslot implements Serializable {
 		result.currentPP = this.currentPP;
 		return result;
 	}
+
+	public void ppUp() {
+		this.maxPP = Math.max((this.move.pp / 5), 1);
+	}
+	
+	public void maxPP() {
+		this.maxPP = (this.move.pp * 8 / 5);
+	}
 }

@@ -29,6 +29,7 @@ import pokemon.Field;
 import pokemon.Item;
 import pokemon.Player;
 import pokemon.Pokemon;
+import pokemon.Task;
 import pokemon.Trainer;
 import tile.TileManager;
 
@@ -419,6 +420,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		Pokemon.field = new Field();
 		Pokemon.gp = this;
+		Task.gp = this;
 		checkSpin = true;
 		
 		Pokemon.readTrainersFromCSV();

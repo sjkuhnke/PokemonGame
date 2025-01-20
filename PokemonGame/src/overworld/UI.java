@@ -30,24 +30,13 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
+import javax.swing.SwingUtilities;
 
 import entity.Entity;
 import entity.NPC_Prize_Shop;
 import entity.PlayerCharacter;
 import object.TreasureChest;
-import pokemon.Ability;
-import pokemon.AbstractUI;
-import pokemon.Bag;
-import pokemon.Encounter;
-import pokemon.Item;
-import pokemon.Move;
-import pokemon.Moveslot;
-import pokemon.PType;
-import pokemon.Player;
-import pokemon.Pokemon;
-import pokemon.Node;
-import pokemon.Pokemon.Task;
-import pokemon.Trainer;
+import pokemon.*;
 import util.Pair;
 
 public class UI extends AbstractUI {
@@ -424,9 +413,9 @@ public class UI extends AbstractUI {
 			int id = currentTask.start;
 			currentTask = null;
 			if (id > 0) {
-				Pokemon.addStartBattleTask(trainer, id);
+				Task.addStartBattleTask(trainer, id);
 			} else {
-				Pokemon.addStartBattleTask(trainer);
+				Task.addStartBattleTask(trainer);
 			}
 			break;
 		case Task.SPOT:
@@ -469,7 +458,7 @@ public class UI extends AbstractUI {
 			drawSleep();
 			break;
 		case Task.BLACKJACK:
-			Pokemon.addTask(Task.TEXT, "Come play again soon, okay?");
+			Task.addTask(Task.TEXT, "Come play again soon, okay?");
 			// Remove all existing components from the JFrame
 		    Main.window.getContentPane().removeAll();
 
@@ -503,13 +492,13 @@ public class UI extends AbstractUI {
 			int teamSize = 3;
 			
 			for (int i = 0; i < teamSize; i++) {
-				Pokemon p = Pokemon.generateCompetitivePokemon();
+				Pokemon p = Pokemon.generateCompetitivePokemon(t1Team);
 				p.setSprites();
 				t1Team.add(p);
 				t1Items.add(p.item);
 			}
 			for (int i = 0; i < teamSize; i++) {
-				Pokemon p = Pokemon.generateCompetitivePokemon();
+				Pokemon p = Pokemon.generateCompetitivePokemon(t2Team);
 				p.setSprites();
 				t2Team.add(p);
 				t2Items.add(p.item);
@@ -555,7 +544,7 @@ public class UI extends AbstractUI {
 			parlays = new int[MAX_PARLAYS];
 			gp.simBattleUI.parlaySheet = parlay;
 			
-			Task t = Pokemon.addTask(Task.BET_BATTLE, "");
+			Task t = Task.addTask(Task.BET_BATTLE, "");
 			t.p = ut.getCurrent();
 			t.evo = ft.getCurrent();
 			t.trainers = new Trainer[] {ut, ft};
@@ -590,7 +579,7 @@ public class UI extends AbstractUI {
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			if (commandNum > 0) {
-				Task t = Pokemon.addTask(Task.START_BATTLE, "");
+				Task t = Task.addTask(Task.START_BATTLE, "");
 				t.wipe = true;
 				t.p = ut.getCurrent();
 				t.evo = ft.getCurrent();
@@ -632,7 +621,7 @@ public class UI extends AbstractUI {
 			gp.keyH.aPressed = false;
 			showParlays = true;
 		}
-		drawToolTips(commandNum > 0 ? "Bet" : "Parlay", null, commandNum > 0 ? "Back" : null, null);
+		drawToolTips(commandNum > 0 ? "Bet" : null, "Parlay", commandNum > 0 ? "Back" : null, null);
 	}
 
 	private void drawParlaySheet() {
@@ -1081,12 +1070,12 @@ public class UI extends AbstractUI {
 			}
 			if (trade >= 0) {
 				Pokemon tr = new Pokemon(tradeIndices[trade], p.level, true, false);
-				Task t = Pokemon.addTask(Task.CONFIRM, "Would you like to trade " + p.nickname + " for my " + tr.name + "?", tr);
+				Task t = Task.addTask(Task.CONFIRM, "Would you like to trade " + p.nickname + " for my " + tr.name + "?", tr);
 				t.counter = 1;
 				currentTask = null;
 			} else {
-				Pokemon.addTask(Task.TEXT, "That's not a Xhenovian form! Do you have any to show me?");
-				Pokemon.addTask(Task.REGIONAL_TRADE, "");
+				Task.addTask(Task.TEXT, "That's not a Xhenovian form! Do you have any to show me?");
+				Task.addTask(Task.REGIONAL_TRADE, "");
 				currentTask = null;
 			}
 			currentTask = null;
@@ -1110,11 +1099,11 @@ public class UI extends AbstractUI {
 			}
 			image = currentTask.item.getImage2();
 			if (!gp.player.p.bag.contains(currentTask.item)) {
-				Task t = Pokemon.createTask(Task.ITEM, "");
+				Task t = Task.createTask(Task.ITEM, "");
 				t.item = currentTask.item;
 				t.wipe = true;
 				t.counter = currentTask.counter;
-				Pokemon.insertTask(t, 0);
+				Task.insertTask(t, 0);
 			}
 			if (!addItem) {
 				gp.player.p.bag.add(currentTask.item, currentTask.counter);
@@ -1195,7 +1184,7 @@ public class UI extends AbstractUI {
 					gp.eHandler.teleport(149, 49, 76, false);
 					break;
 				case 1: // regional trade confirm
-					Pokemon.addTask(Task.TEXT, "You traded for " + currentTask.p.name + "!");
+					Task.addTask(Task.TEXT, "You traded for " + currentTask.p.name + "!");
 					gp.player.p.team[partyNum] = currentTask.p;
 					gp.player.p.pokedex[currentTask.p.id] = 2;
 					currentTask.p.trainer = gp.player.p;
@@ -1209,13 +1198,19 @@ public class UI extends AbstractUI {
 					gp.eHandler.teleport(28, 82, 36, false);
 					break;
 				case 3: // casino blackjack table
-					Pokemon.addTask(Task.BLACKJACK, "");
+					Task.addTask(Task.BLACKJACK, "");
 					currentTask = null;
 					break;
 				case 4: // casino battle betting
 					above = false;
+					if (Pokemon.sets.isEmpty()) {
+						showMessage("Loading sets...");
+						SwingUtilities.invokeLater(() -> {
+							Pokemon.loadCompetitiveSets();
+						});
+					}
 					showMessage("Calculating odds...");
-					Pokemon.addTask(Task.ODDS, "Done!");
+					Task.addTask(Task.ODDS, "Done!");
 					currentTask = null;
 					break;
 				}
@@ -1327,25 +1322,25 @@ public class UI extends AbstractUI {
 			if (commandNum == 0) {
 				if (hasTSF) {
 					currentTask = null;
-					Pokemon.addTask(Task.TEXT, "Okay! I'll go revive this ancient Pokemon!");
-					Pokemon.addTask(Task.GIFT, "", new Pokemon(211, 20, true, false));
+					Task.addTask(Task.TEXT, "Okay! I'll go revive this ancient Pokemon!");
+					Task.addTask(Task.GIFT, "", new Pokemon(211, 20, true, false));
 					bag.remove(Item.THUNDER_SCALES_FOSSIL);
 					commandNum = 0;
 				} else {
-					Pokemon.addTask(Task.TEXT, "You don't have any Thunder Scales Fossils for me to revive!");
-					Pokemon.addTask(Task.FOSSIL, currentTask.message);
+					Task.addTask(Task.TEXT, "You don't have any Thunder Scales Fossils for me to revive!");
+					Task.addTask(Task.FOSSIL, currentTask.message);
 					currentTask = null;
 				}
 			} else if (commandNum == 1) {
 				if (hasDSF) {
 					currentTask = null;
-					Pokemon.addTask(Task.TEXT, "Okay! I'll go revive this ancient Pokemon!");
-					Pokemon.addTask(Task.GIFT, "", new Pokemon(213, 20, true, false));
+					Task.addTask(Task.TEXT, "Okay! I'll go revive this ancient Pokemon!");
+					Task.addTask(Task.GIFT, "", new Pokemon(213, 20, true, false));
 					bag.remove(Item.DUSK_SCALES_FOSSIL);
 					commandNum = 0;
 				} else {
-					Pokemon.addTask(Task.TEXT, "You don't have any Dusk Scales Fossils for me to revive!");
-					Pokemon.addTask(Task.FOSSIL, currentTask.message);
+					Task.addTask(Task.TEXT, "You don't have any Dusk Scales Fossils for me to revive!");
+					Task.addTask(Task.FOSSIL, currentTask.message);
 					currentTask = null;
 				}
 			}
@@ -1426,7 +1421,7 @@ public class UI extends AbstractUI {
         	}
         }
         if (forgottenMoves.isEmpty()) {
-            Pokemon.addTask(Task.TEXT, "This Pokemon has not forgotten any moves.");
+            Task.addTask(Task.TEXT, "This Pokemon has not forgotten any moves.");
             currentTask = null;
             return;
         }
@@ -1480,14 +1475,14 @@ public class UI extends AbstractUI {
 		
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
-			Task t = Pokemon.addTask(Task.MOVE, "", p);
+			Task t = Task.addTask(Task.MOVE, "", p);
 			t.move = m;
 			currentTask = null;
 		}
 		
 		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
-			Pokemon.addTask(Task.PARTY, "");
+			Task.addTask(Task.PARTY, "");
 			currentTask = null;
 		}
 		
@@ -1514,7 +1509,7 @@ public class UI extends AbstractUI {
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			Pokemon p = gp.player.p.team[partyNum];
-			Pokemon.addTask(Task.REMIND, "What move would you like to teach " + p.nickname + "?", p);
+			Task.addTask(Task.REMIND, "What move would you like to teach " + p.nickname + "?", p);
 			remindNum = 0;
 			currentTask = null;
 		}
@@ -1536,58 +1531,58 @@ public class UI extends AbstractUI {
 			switch(p.id) {
 			case 238:
 			case 239: // scraggy
-				Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Hmm... yes, I see...");
+				Task.addTask(Task.DIALOGUE, currentTask.e, "Hmm... yes, I see...");
 				int headbuttCrits = p.headbuttCrit;
 				if (headbuttCrits >= 5) {
 					if (p.id == 239) {
-						Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Your " + p.nickname + " looks ready to evolve! "
+						Task.addTask(Task.DIALOGUE, currentTask.e, "Your " + p.nickname + " looks ready to evolve! "
 							+ "It has crit its Headbutts " + headbuttCrits + " times!");
 					} else {
-						Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Your " + p.nickname + " has full potential to evolve, but it's too young right now. "
+						Task.addTask(Task.DIALOGUE, currentTask.e, "Your " + p.nickname + " has full potential to evolve, but it's too young right now. "
 							+ "Once it becomes a Scrafty, it might evolve again!");
 					}
 				} else if (headbuttCrits >= 1) {
-					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "You've made great progress as a trainer with you and your " + p.nickname + ". "
+					Task.addTask(Task.DIALOGUE, currentTask.e, "You've made great progress as a trainer with you and your " + p.nickname + ". "
 							+ "So far, you've crit Headbutts " + headbuttCrits + " time(s)!");
 				} else {
-					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Your Pokemon will need to reach 5 Headbutt crits in Trainer battles to reach its "
+					Task.addTask(Task.DIALOGUE, currentTask.e, "Your Pokemon will need to reach 5 Headbutt crits in Trainer battles to reach its "
 							+ "full potential. Focus on that if you want your " + p.nickname + " to reach its maximum power!");
 				}
 				break;
 			case 261: // gulpin-x
-				Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Ah! A Xhenovian Gulpin, in the flesh! Can I take a look?");
-				Pokemon.addTask(Task.DIALOGUE, currentTask.e, "...");
-				Pokemon.addTask(Task.DIALOGUE, currentTask.e, "You see, these Pokemon occur here naturally to protect our region from extraterrestrial "
+				Task.addTask(Task.DIALOGUE, currentTask.e, "Ah! A Xhenovian Gulpin, in the flesh! Can I take a look?");
+				Task.addTask(Task.DIALOGUE, currentTask.e, "...");
+				Task.addTask(Task.DIALOGUE, currentTask.e, "You see, these Pokemon occur here naturally to protect our region from extraterrestrial "
 						+ "forces. Once they swallow enough space matter, they'll evolve!");
 				if (p.spaceEat < 25) {
-					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Your " + p.nickname + " will need to eat " + (25 - p.spaceEat) + " more Galactic-type "
+					Task.addTask(Task.DIALOGUE, currentTask.e, "Your " + p.nickname + " will need to eat " + (25 - p.spaceEat) + " more Galactic-type "
 							+ "attack(s) in Trainer battles in order to reach its full potential.");
-					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "This can be done by switching into an incoming Galactic move to take the hit, as "
+					Task.addTask(Task.DIALOGUE, currentTask.e, "This can be done by switching into an incoming Galactic move to take the hit, as "
 							+ "all Xhenovian Gulpins' will eat it right up!");
 				} else {
-					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Wow! Your " + p.nickname + " has eaten a lot of space matter! It looks ready to "
+					Task.addTask(Task.DIALOGUE, currentTask.e, "Wow! Your " + p.nickname + " has eaten a lot of space matter! It looks ready to "
 							+ "evolve!");
 				}
 				break;
 			case 257: // seviper
-				Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Ah, a Seviper! Y'know, the Professor is surprised that Seviper doesn't have a "
+				Task.addTask(Task.DIALOGUE, currentTask.e, "Ah, a Seviper! Y'know, the Professor is surprised that Seviper doesn't have a "
 						+ "regional form here, just an exclusive evolution!");
 				if (p.tailCrit < 5) {
-					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Although, yours will need to hit a few more Critical hits with its tail "
+					Task.addTask(Task.DIALOGUE, currentTask.e, "Although, yours will need to hit a few more Critical hits with its tail "
 							+ "in order to unlock its full potential. " + (5 - p.tailCrit) + ", to be exact.");
 				} else {
-					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "Woah, and yours looks like its ready to evolve! Once you level it up, "
+					Task.addTask(Task.DIALOGUE, currentTask.e, "Woah, and yours looks like its ready to evolve! Once you level it up, "
 							+ "it should evolve!");
 				}
 				break;
 			default:
-				Pokemon.addTask(Task.DIALOGUE, npc, "I'm sorry, that's not a Pokemon I specialize in.");
-				Pokemon.addTask(Task.DIALOGUE, npc, "I look for Pokemon that need to reach certain criteria in battle other than the standard level-up, "
+				Task.addTask(Task.DIALOGUE, npc, "I'm sorry, that's not a Pokemon I specialize in.");
+				Task.addTask(Task.DIALOGUE, npc, "I look for Pokemon that need to reach certain criteria in battle other than the standard level-up, "
 						+ "such as Headbutt crits or Tail move crits in Trainer battles.");
-				Pokemon.addTask(Task.DIALOGUE, npc, "If you have any of those Pokemon and want to check how close they are to evolving, show them to me!");
+				Task.addTask(Task.DIALOGUE, npc, "If you have any of those Pokemon and want to check how close they are to evolving, show them to me!");
 				break;
 			}
-			Pokemon.addTask(Task.EVO_INFO, currentTask.e, "");
+			Task.addTask(Task.EVO_INFO, currentTask.e, "");
 			currentTask = null;
 		}
 		
@@ -2458,10 +2453,10 @@ public class UI extends AbstractUI {
 						Moveslot m = currentPokemon.moveset[moveOption - 1];
 						if (m.maxPP < (m.move.pp * 8 / 5)) {
 			    			if (currentItem == Item.PP_UP) { // PP Up
-			    				m.maxPP += Math.max((m.move.pp / 5), 1);
+			    				m.ppUp();
 			    				showMessage(m.move.toString() + "'s PP was increased!");
 			    			} else { // PP Max
-			    				m.maxPP = (m.move.pp * 8 / 5);
+			    				m.maxPP();
 			    				showMessage(m.move.toString() + "'s PP was maxed!");
 			    			}
 				        	gp.player.p.bag.remove(currentItem);
@@ -3627,8 +3622,8 @@ public class UI extends AbstractUI {
 					bag.remove(Item.TINY_MUSHROOM);
 					gp.player.p.setMoney(gp.player.p.getMoney() + price1);
 				} else {
-					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "You don't have any Tiny Mushrooms for your boi?!");
-					Pokemon.addTask(Task.MUSHROOM, currentTask.e, currentTask.message);
+					Task.addTask(Task.DIALOGUE, currentTask.e, "You don't have any Tiny Mushrooms for your boi?!");
+					Task.addTask(Task.MUSHROOM, currentTask.e, currentTask.message);
 					currentTask = null;
 				}
 			} else if (commandNum == 1) {
@@ -3636,8 +3631,8 @@ public class UI extends AbstractUI {
 					bag.remove(Item.BIG_MUSHROOM);
 					gp.player.p.setMoney(gp.player.p.getMoney() + price2);
 				} else {
-					Pokemon.addTask(Task.DIALOGUE, currentTask.e, "I NEEEED a BIG SHROOM!!");
-					Pokemon.addTask(Task.MUSHROOM, currentTask.e, currentTask.message);
+					Task.addTask(Task.DIALOGUE, currentTask.e, "I NEEEED a BIG SHROOM!!");
+					Task.addTask(Task.MUSHROOM, currentTask.e, currentTask.message);
 					currentTask = null;
 				}
 			}
@@ -3645,7 +3640,7 @@ public class UI extends AbstractUI {
 		
 		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
-			Pokemon.addTask(Task.DIALOGUE, currentTask.e, "You BETTER go fetch Daddy some kush!");
+			Task.addTask(Task.DIALOGUE, currentTask.e, "You BETTER go fetch Daddy some kush!");
 			commandNum = 0;
 			currentTask = null;
 		}
@@ -4013,7 +4008,7 @@ public class UI extends AbstractUI {
 					gp.player.p.flag[0][1] = true;
 					gp.player.p.starter = starter;
 					gp.setTaskState();
-					Pokemon.addTask(Task.GIFT, "", starters[starter]);
+					Task.addTask(Task.GIFT, "", starters[starter]);
 					starterConfirm = false;
 					
 			        int secondStarter = -1;
@@ -4111,8 +4106,8 @@ public class UI extends AbstractUI {
 		int hpDif = oldP.getStat(0) - oldP.currentHP;
         newP.currentHP -= hpDif;
         newP.moveMultiplier = newP.moveMultiplier;
-        Task text = Pokemon.createTask(Task.TEXT, oldP.nickname + " evolved into " + newP.name + "!");
-        Pokemon.insertTask(text, 0);
+        Task text = Task.createTask(Task.TEXT, oldP.nickname + " evolved into " + newP.name + "!");
+        Task.insertTask(text, 0);
         newP.exp = oldP.exp;
         gp.player.p.pokedex[newP.id] = 2;
         

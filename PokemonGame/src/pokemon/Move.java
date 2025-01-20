@@ -662,7 +662,7 @@ public enum Move {
 		return validMoves;
 	}
 	
-	Move(int bp, int acc, int sec, int crit, int cat, int p, PType type, String desc, boolean contact, int pp){
+	Move(int bp, int acc, int sec, int crit, int cat, int p, PType type, String desc, boolean contact, int pp) {
 		this.basePower = bp;
 		this.accuracy = acc;
 		this.secondary = sec;
@@ -1001,6 +1001,17 @@ public enum Move {
 	        }
 	    }
 	    return sb.toString().trim();
+	}
+	
+	public static Move getEnum(String string) {
+		// Normalize the string
+	    String normalized = string.toUpperCase().replace('-', '$').replace(' ', '_');
+	    
+	    try {
+	        return Move.valueOf(normalized);
+	    } catch (IllegalArgumentException e) {
+	        throw new IllegalStateException("No matching Move enum found for string: " + string, e);
+	    }
 	}
 
 	public static ArrayList<Move> getRecoil() {

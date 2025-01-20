@@ -37,7 +37,6 @@ import entity.PlayerCharacter;
 import overworld.GamePanel;
 import overworld.UI;
 import pokemon.Bag.Entry;
-import pokemon.Pokemon.Task;
 import util.Pair;
 
 public class Player extends Trainer implements Serializable {
@@ -95,7 +94,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 49;
+	public static final int VERSION = 50;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -153,8 +152,8 @@ public class Player extends Trainer implements Serializable {
 	    boolean hasNull = false;
 	    Task t = null;
 	    if (nickname) {
-	    	t = Pokemon.createTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?", p);
-		    if (Pokemon.gp.gameState != GamePanel.PLAY_STATE) Pokemon.insertTask(t, 0);
+	    	t = Task.createTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?", p);
+		    if (Pokemon.gp.gameState != GamePanel.PLAY_STATE) Task.insertTask(t, 0);
 	    }
 	    pokedex[p.id] = 2;
 	    p.clearVolatile();
@@ -174,8 +173,8 @@ public class Player extends Trainer implements Serializable {
 	                team[i] = p;
 	                p.slot = i;
 	                if (nickname) {
-	                	t = Pokemon.createTask(Task.END, "Caught " + p.nickname + ", added to party!");
-		                Pokemon.insertTask(t, 1);
+	                	t = Task.createTask(Task.END, "Caught " + p.nickname + ", added to party!");
+	                	Task.insertTask(t, 1);
 	                }
 	                current = team[0];
 	                break;
@@ -194,15 +193,15 @@ public class Player extends Trainer implements Serializable {
 	            if (index >= 0) {
 	                boxes[i][index] = p;
 	                if (nickname) {
-	                	t = Pokemon.createTask(Task.END, "Caught " + p.nickname + ", sent to box " + (i + 1) + "!");
-		                Pokemon.insertTask(t, 1);
+	                	t = Task.createTask(Task.END, "Caught " + p.nickname + ", sent to box " + (i + 1) + "!");
+	                	Task.insertTask(t, 1);
 	                }
 	                return;  // Exit the method after catching the Pokemon
 	            }
 	        }
 	        if (nickname) {
-	        	t = Pokemon.createTask(Task.END, "Cannot catch " + p.nickname + ", all boxes are full.");
-		        Pokemon.insertTask(t, 1);
+	        	t = Task.createTask(Task.END, "Cannot catch " + p.nickname + ", all boxes are full.");
+	        	Task.insertTask(t, 1);
 	        }
 	    }
 	}
@@ -218,7 +217,7 @@ public class Player extends Trainer implements Serializable {
 
 	public void swapToFront(Pokemon pokemon, int index) {
 		if (!current.isFainted()) {
-			Pokemon.addSwapOutTask(current, true);
+			Task.addSwapOutTask(current, true);
 		}
 		
 		if (current.ability == Ability.REGENERATOR && !current.isFainted()) {
@@ -238,7 +237,7 @@ public class Player extends Trainer implements Serializable {
 			numBattled++;
 			this.current.battled = true;
 		}
-		Pokemon.addSwapInTask(current, current.currentHP, true);
+		Task.addSwapInTask(current, current.currentHP, true);
 		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
 		Pokemon.field.switches++;
 	}
@@ -347,7 +346,7 @@ public class Player extends Trainer implements Serializable {
 		
 		swapToFront(team[index], index);
 		
-		Pokemon.addTask(Task.TEXT, current.nickname + " was dragged out!");
+		Task.addTask(Task.TEXT, current.nickname + " was dragged out!");
 		current.swapIn(foe, true);
 		return true;
 		
@@ -882,80 +881,16 @@ public class Player extends Trainer implements Serializable {
 			case JOLLY_MINT:
 			case NAIVE_MINT:
 			case SERIOUS_MINT:
-				double nature[];
-	        	switch (item) {
-	        	case LONELY_MINT:
-	        		nature = new double[] {1.1,0.9,1.0,1.0,1.0,-1.0};
-	        		break;
-				case ADAMANT_MINT:
-					nature = new double[] {1.1,1.0,0.9,1.0,1.0,-1.0};
-	        		break;
-				case NAUGHTY_MINT:
-					nature = new double[] {1.1,1.0,1.0,0.9,1.0,-1.0};
-	        		break;
-				case BRAVE_MINT:
-					nature = new double[] {1.1,1.0,1.0,1.0,0.9,-1.0};
-	        		break;
-				case BOLD_MINT:
-					nature = new double[] {0.9,1.1,1.0,1.0,1.0,-1.0};
-	        		break;
-				case IMPISH_MINT:
-					nature = new double[] {1.0,1.1,0.9,1.0,1.0,-1.0};
-	        		break;
-				case LAX_MINT:
-					nature = new double[] {1.0,1.1,1.0,0.9,1.0,-1.0};
-	        		break;
-				case RELAXED_MINT:
-					nature = new double[] {1.0,1.1,1.0,1.0,0.9,-1.0};
-	        		break;
-				case MODEST_MINT:
-					nature = new double[] {0.9,1.0,1.1,1.0,1.0,-1.0};
-	        		break;
-				case MILD_MINT:
-					nature = new double[] {1,0,0.9,1.1,1.0,1.0,-1.0};
-	        		break;
-				case RASH_MINT:
-					nature = new double[] {1.0,1.0,1.1,0.9,1.0,-1.0};
-	        		break;
-				case QUIET_MINT:
-					nature = new double[] {1.0,1.0,1.1,1.0,0.9,-1.0};
-	        		break;
-				case CALM_MINT:
-					nature = new double[] {0.9,1.0,1.0,1.1,1.0,-1.0};
-	        		break;
-				case GENTLE_MINT:
-					nature = new double[] {1.0,0.9,1.0,1.1,1.0,-1.0};
-	        		break;
-				case CAREFUL_MINT:
-					nature = new double[] {1.0,1.0,0.9,1.1,1.0,-1.0};
-	        		break;
-				case SASSY_MINT:
-					nature = new double[] {1.0,1.0,1.0,1.1,0.9,-1.0};
-	        		break;
-				case TIMID_MINT:
-					nature = new double[] {0.9,1.0,1.0,1.0,1.1,-1.0};
-	        		break;
-				case HASTY_MINT:
-					nature = new double[] {1.0,0.9,1.0,1.0,1.1,-1.0};
-	        		break;
-				case JOLLY_MINT:
-					nature = new double[] {1.0,1.0,0.9,1.0,1.1,-1.0};
-	        		break;
-				case NAIVE_MINT:
-					nature = new double[] {1.0,1.0,1.0,0.9,1.1,-1.0};
-	        		break;
-				case SERIOUS_MINT:
-					nature = new double[] {1.0,1.0,1.0,1.0,1.0,4.0};
-	        		break;
-	    		default:
-	    			nature = null;
-	    			break;
+				boolean changeable = p.canUseItem(item) == 1;
+	    		if (!changeable) {
+	        		gp.ui.showMessage("It won't have any effect.");
+	        		return;
+	        	} else {
+	        		String natureOld = p.nat == null ? "null" : p.getNature();
+		        	p.nat = item.getNature();
+		        	p.setStats();
+		        	gp.ui.showMessage(Item.breakString(p.nickname + "'s nature was changed from " + natureOld + " to " + p.getNature() + "!", 42));
 	        	}
-	    		
-	    		String natureOld = p.nature == null ? "null" : p.getNature();
-	        	p.nature = nature;
-	        	p.setStats();
-	        	gp.ui.showMessage(Item.breakString(p.nickname + "'s nature was changed from " + natureOld + " to " + p.getNature() + "!", 42));
 				break;
 				
 			// Euphorian Gem
@@ -989,9 +924,9 @@ public class Player extends Trainer implements Serializable {
 	        		return;
 	        	} else {
 	        		gp.gameState = GamePanel.RARE_CANDY_STATE;
-	        		Task t = Pokemon.addTask(Task.EVO_ITEM, "", p);
+	        		Task t = Task.addTask(Task.EVO_ITEM, "", p);
 	        		t.evo = new Pokemon(p.getEvolved(item), p);
-	        		Pokemon.addTask(Task.CLOSE, "");
+	        		Task.addTask(Task.CLOSE, "");
 	        	}
 				break;
 				

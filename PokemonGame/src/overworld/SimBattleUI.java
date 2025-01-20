@@ -5,17 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import pokemon.Ability;
-import pokemon.Field;
-import pokemon.Item;
-import pokemon.Move;
-import pokemon.Moveslot;
-import pokemon.PType;
-import pokemon.Player;
-import pokemon.Pokemon;
-import pokemon.Status;
+import pokemon.*;
 import util.Pair;
-import pokemon.Pokemon.Task;
 
 public class SimBattleUI extends BattleUI {
 	
@@ -216,9 +207,9 @@ public class SimBattleUI extends BattleUI {
 	    foeHP = foe.currentHP;
 	    aura = false;
 		
-		Pokemon.addSwapInTask(foe, false);
+	    Task.addSwapInTask(foe, false);
 		foeFainted = foe.trainer.getNumFainted();
-	    Pokemon.addSwapInTask(user, true);
+		Task.addSwapInTask(user, true);
 	    Pokemon fasterInit = user.getFaster(foe, 0, 0);
 		Pokemon slowerInit = fasterInit == user ? foe : user;
 		fasterInit.swapIn(slowerInit, true);
@@ -634,7 +625,7 @@ public class SimBattleUI extends BattleUI {
 				if (next.trainer.hasNext()) {
 					boolean userSide = next.trainer.hasUser(user);
 					next = next.trainer.next(foe, userSide);
-					Pokemon.addSwapInTask(next, next.currentHP, userSide);
+					Task.addSwapInTask(next, next.currentHP, userSide);
 					next.swapIn(foe, true);
 				} else {
 		            break;
@@ -642,11 +633,11 @@ public class SimBattleUI extends BattleUI {
 			}
 		}
 		if (!faster.trainer.wiped() && slower.trainer.wiped()) {
-			Pokemon.addTask(Task.END, faster.trainer.getName() + " defeated " + slower.trainer.getName() + "!");
+			Task.addTask(Task.END, faster.trainer.getName() + " defeated " + slower.trainer.getName() + "!");
 		} else if (faster.trainer.wiped() && !slower.trainer.wiped()) {
-			Pokemon.addTask(Task.END, slower.trainer.getName() + " defeated " + faster.trainer.getName() + "!");
+			Task.addTask(Task.END, slower.trainer.getName() + " defeated " + faster.trainer.getName() + "!");
 		} else if (faster.trainer.wiped() && slower.trainer.wiped()) {
-			Pokemon.addTask(Task.END, "It's a draw: bet was returned!");
+			Task.addTask(Task.END, "It's a draw: bet was returned!");
 		}
 	}
 	
