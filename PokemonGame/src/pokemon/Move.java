@@ -505,7 +505,7 @@ public enum Move {
 	SUPERPOWER(120,100,100,0,0,0,PType.FIGHTING,"% of lowering user's Attack and Defense by 1",true,5),
 	SUPERSONIC(0,55,0,0,2,0,PType.NORMAL,"Confuses foe",false,20),
 	SURF(90,100,0,0,1,0,PType.WATER,"A normal attack",false,10),
-	SWAGGER(0,90,0,0,2,0,PType.NORMAL,"Confuses foe, but raises foe's Attack by 2",false,15),
+	SWAGGER(0,100,0,0,2,0,PType.NORMAL,"Confuses foe, but raises foe's Attack by 2",false,15),
 	SWEET_KISS(0,75,0,0,2,0,PType.LIGHT,"Confuses foe",false,10),
 	SWEET_SCENT(0,1000,0,0,2,0,PType.NORMAL,"Lowers foe's Evasion by 2",false,20),
 	SWIFT(60,1000,0,0,1,0,PType.MAGIC,"This attack never misses",false,20),

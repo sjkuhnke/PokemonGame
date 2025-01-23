@@ -18,8 +18,6 @@ public class Field {
 	public int weatherTurns;
 	public FieldEffect terrain;
 	public int terrainTurns;
-	//public ArrayList<FieldEffect> playerSide;
-	//public ArrayList<FieldEffect> foeSide;
 	public ArrayList<FieldEffect> fieldEffects;
 	
 	// stat fields

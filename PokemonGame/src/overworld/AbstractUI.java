@@ -112,7 +112,7 @@ public abstract class AbstractUI {
 	    return x;
 	}
 	
-	public BufferedImage setup(String imageName, int scale) {
+	public BufferedImage setup(String imageName, double scale) {
 	    BufferedImage image = null;
 	    
 	    try {
@@ -131,10 +131,10 @@ public abstract class AbstractUI {
 	    return image;
 	}
 	
-	public BufferedImage scaleImage(BufferedImage image, int scale) {
+	public BufferedImage scaleImage(BufferedImage image, double scale) {
 		// Calculate the new dimensions based on the scale
-        int newWidth = image.getWidth() * scale;
-        int newHeight = image.getHeight() * scale;
+        int newWidth = (int) (image.getWidth() * scale);
+        int newHeight = (int) (image.getHeight() * scale);
         
         // Create a new BufferedImage with the scaled dimensions
         BufferedImage result = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);

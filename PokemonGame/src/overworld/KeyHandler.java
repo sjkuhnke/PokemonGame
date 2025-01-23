@@ -380,6 +380,7 @@ public class KeyHandler implements KeyListener {
 		} else if (gp.simBattleUI.subState == BattleUI.INFO_STATE) {
 			if (code == KeyEvent.VK_S) {
 				gp.simBattleUI.subState = BattleUI.IDLE_STATE;
+				sPressed = false;
 			}
 		} else if (gp.simBattleUI.subState == BattleUI.SUMMARY_STATE) {
 			if (code == KeyEvent.VK_S) {

@@ -111,7 +111,7 @@ public class Pokemon implements Serializable {
 	// status fields
 	public Status status;
 	public ArrayList<Status> vStatuses;
-	public ArrayList<FieldEffect> fieldEffects; 
+	public transient ArrayList<FieldEffect> fieldEffects;
 	
 	// xp fields
 	public int exp;
@@ -2845,7 +2845,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.BUBBLEBEAM) {
 			stat(foe, 4, -1, this);
 		} else if (move == Move.BUG_BITE || move == Move.PLUCK) {
-			if (foe.item != null && foe.item.isBerry() && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
+			if (foe.item != null && foe.item.isBerry() && !(foe.ability == Ability.STICKY_HOLD && this.ability != Ability.MOLD_BREAKER)) {
 				Task.addTask(Task.TEXT, this.nickname + " stole and ate " + foe.nickname + "'s " + foe.item.toString() + "!");
 				eatBerry(foe.item, false, foe);
 				foe.consumeItem(this);
@@ -2876,7 +2876,7 @@ public class Pokemon implements Serializable {
 //		} else if (move == Move.CONSTRICT) {
 //			stat(foe, 4, -1);
 		} else if (move == Move.COVET || move == Move.THIEF) {
-			if (this.item == null && foe.item != null && foe.ability != Ability.STICKY_HOLD && this.ability != Ability.MOLD_BREAKER) {
+			if (this.item == null && foe.item != null && !(foe.ability == Ability.STICKY_HOLD && this.ability != Ability.MOLD_BREAKER)) {
 				Task.addTask(Task.TEXT, this.nickname + " stole the foe's " + foe.item.toString() + "!");
 				this.item = foe.item;
 				if (!foe.loseItem) foe.lostItem = foe.item;
@@ -3064,7 +3064,7 @@ public class Pokemon implements Serializable {
 		} else if (move == Move.HYPER_FANG && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.INCINERATE) {
-			if (foe.item != null && foe.item.isBerry() && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
+			if (foe.item != null && foe.item.isBerry() && !(foe.ability == Ability.STICKY_HOLD && this.ability != Ability.MOLD_BREAKER)) {
 				Task.addTask(Task.TEXT, this.nickname + " incinerated " + foe.nickname + "'s " + foe.item.toString() + "!");
 				foe.item = null;
 			}
@@ -3114,7 +3114,7 @@ public class Pokemon implements Serializable {
 				Task.addTask(Task.TEXT, foe.nickname + " was trapped!");
 			}
 		} else if (move == Move.KNOCK_OFF) {
-			if (foe.item != null && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
+			if (foe.item != null && !(foe.ability == Ability.STICKY_HOLD && this.ability != Ability.MOLD_BREAKER)) {
 				Item oldItem = foe.item;
 				if (foe.lostItem == null) foe.lostItem = foe.item;
 				Task.addTask(Task.TEXT, this.nickname + " knocked off " + foe.nickname + "'s " + oldItem.toString() + "!");
@@ -3571,7 +3571,7 @@ public class Pokemon implements Serializable {
 					FieldEffect a = field.new FieldEffect(Effect.AURORA_VEIL);
 					if (this.item == Item.LIGHT_CLAY) a.turns = 8;
 					this.getFieldEffects().add(a);
-					if (announce) Task.addTask(Task.TEXT, "Aurora Veil made " + this.nickname + "'s team stronger against Physical and Special moves!");
+					if (announce) Task.addTask(Task.TEXT, "Aurora Veil made " + this.nickname + "'s team stronger against\nPhysical and Special moves!");
 				} else {
 					fail = fail(announce);
 				}
@@ -3851,7 +3851,7 @@ public class Pokemon implements Serializable {
 				FieldEffect a = field.new FieldEffect(Effect.LIGHT_SCREEN);
 				if (this.item == Item.LIGHT_CLAY) a.turns = 8;
 				this.getFieldEffects().add(a);
-				if (announce) Task.addTask(Task.TEXT, "Light Screen made " + this.nickname + "'s team stronger against Special moves!");
+				if (announce) Task.addTask(Task.TEXT, "Light Screen made " + this.nickname + "'s team stronger against\nSpecial moves!");
 			} else {
 				fail = fail(announce);
 			}
@@ -4027,7 +4027,7 @@ public class Pokemon implements Serializable {
 				FieldEffect a = field.new FieldEffect(Effect.REFLECT);
 				if (this.item == Item.LIGHT_CLAY) a.turns = 8;
 				this.getFieldEffects().add(a);
-				if (announce) Task.addTask(Task.TEXT, "Reflect made " + this.nickname + "'s team stronger against Physical moves!");
+				if (announce) Task.addTask(Task.TEXT, "Reflect made " + this.nickname + "'s team stronger against\nPhysical moves!");
 			} else {
 				fail = fail(announce);
 			}
@@ -4231,7 +4231,7 @@ public class Pokemon implements Serializable {
 		} else if (announce && move == Move.TOXIC_SPIKES) {
 			fail = field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.TOXIC_SPIKES));
 		} else if (move == Move.TRICK || move == Move.SWITCHEROO) {
-			if (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER) {
+			if (!(foe.ability == Ability.STICKY_HOLD && this.ability != Ability.MOLD_BREAKER)) {
 				if (announce) Task.addTask(Task.TEXT, this.nickname + " switched items with its target!");
 				Item userItem = this.item;
 				Item foeItem = foe.item;
@@ -6577,7 +6577,7 @@ public class Pokemon implements Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " casts a terrifying illusion!");
 			this.illusion = true;
 		} else if (this.ability == Ability.PICKPOCKET) {
-			if (this.item == null && foe.item != null && (foe.ability != Ability.STICKY_HOLD || this.ability != Ability.MOLD_BREAKER)) {
+			if (this.item == null && foe.item != null && foe.ability != Ability.STICKY_HOLD) {
 				Task.addAbilityTask(this);
 				Task.addTask(Task.TEXT, this.nickname + " stole the foe's " + foe.item.toString() + "!");
 				this.item = foe.item;

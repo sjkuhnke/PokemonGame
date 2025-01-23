@@ -15,9 +15,17 @@ public class SimBattleUI extends BattleUI {
 	public Pair<Pokemon, ArrayList<Move>> p2Moves;
 	public Pair<Pokemon, String> p1Switch;
 	public Pair<Pokemon, String> p2Switch;
+	
+	BufferedImage autoplayOff;
+	BufferedImage autoplayOn;
+	boolean autoplay;
+	boolean startAutoplay;
 
 	public SimBattleUI(GamePanel gp) {
 		super(gp);
+		
+		autoplayOff = setup("/battle/autoplay-off", 0.75);
+		autoplayOn = setup("/battle/autoplay-on", 0.75);
 	}
 	
 	@Override
@@ -28,6 +36,10 @@ public class SimBattleUI extends BattleUI {
 	@Override
 	public void draw(Graphics2D g2) {
 		super.draw(g2);
+		
+		if (subState != INFO_STATE && currentAbility == null) {
+			drawAutoplayWindow();
+		}
 	}
 	
 	@Override
@@ -57,6 +69,12 @@ public class SimBattleUI extends BattleUI {
 	
 	@Override // TODO: Idle screen with odds, a next turn button, a side bets button, etc.
 	protected void drawIdleScreen() {
+		if (autoplay && startAutoplay) {
+			subState = TASK_STATE;
+			turn();
+			return;
+		}
+		startAutoplay = false;
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);
 		drawCalcWindow();
@@ -64,7 +82,6 @@ public class SimBattleUI extends BattleUI {
 			gp.keyH.aPressed = false;
 			Item.useCalc(user, null, foe);
 		}
-		drawCatchWindow();
 		drawActionScreen(user);
 		String dText = foe.trainerOwned() ? "Foe" : null;
 		if (!showFoeSummary) drawToolTips("OK", null, null, dText);
@@ -171,7 +188,7 @@ public class SimBattleUI extends BattleUI {
 		int height = gp.tileSize / 2;
 		g2.setColor(Color.WHITE);
 		g2.fillPolygon(new int[] {x, (x + width), (x + width / 2)}, new int[] {y, y, y + height}, 3);
-		if (gp.keyH.wPressed) {
+		if (gp.keyH.wPressed || autoplay) {
 			gp.keyH.wPressed = false;
 			switch(subState) {
 			case STARTING_STATE:
@@ -372,6 +389,7 @@ public class SimBattleUI extends BattleUI {
 			if (gp.keyH.wPressed && !showFoeSummary) {
 				gp.keyH.wPressed = false;
 				subState = TASK_STATE;
+				startAutoplay = true;
 				turn();
 			}
 		}
@@ -447,6 +465,30 @@ public class SimBattleUI extends BattleUI {
 	@Override
 	protected void drawCatchWindow() {
 		return;
+	}
+	
+	protected void drawAutoplayWindow() {
+		g2.setFont(g2.getFont().deriveFont(24F));
+		int x = gp.screenWidth - (gp.tileSize * 4);
+		int y = (int) (gp.screenHeight - (gp.tileSize * 5.5));
+		int width = gp.tileSize * 2;
+		int height = (int) (gp.tileSize * 1.5);
+		
+		drawSubWindow(x, y, width, height, 125);
+		x += gp.tileSize / 4;
+		y += gp.tileSize / 4;
+		BufferedImage autoIcon = autoplay ? autoplayOn : autoplayOff;
+		g2.drawImage(autoIcon, x, y, null);
+		
+		x += gp.tileSize;
+		y += gp.tileSize * 0.75;
+		g2.drawString("[S]", x, y);
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			autoplay = !autoplay;
+			if (subState != IDLE_STATE) startAutoplay = true;
+		}
 	}
 	
 	@Override
