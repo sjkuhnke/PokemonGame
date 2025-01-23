@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -76,7 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public InteractiveTile iTile[][] = new InteractiveTile[MAX_MAP][55];
 	public ArrayList<Entity> particleList = new ArrayList<>();
 	
-	public ArrayList<Entity> renderableNPCs = new ArrayList<>();
+	public CopyOnWriteArrayList<Entity> renderableNPCs = new CopyOnWriteArrayList<>();
 	public ArrayList<TreasureChest> chests = new ArrayList<>();
 	
 	public NPC_Pokemon[] grusts = new NPC_Pokemon[10];

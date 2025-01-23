@@ -128,6 +128,7 @@ public class Player extends Trainer implements Serializable {
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 		trainersBeat = new boolean[MAX_TRAINERS];
 		locations[0] = true;
+		effects = new ArrayList<>();
 		
 		blackjackStats = new int[20];
 		

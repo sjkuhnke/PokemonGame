@@ -978,7 +978,7 @@ public class BattleUI extends AbstractUI {
 		x += gp.tileSize / 2;
 		y += gp.tileSize / 4;
 		if (ball != null) {
-			g2.drawImage(scaleImage(ball.getItem().getImage(), 2), x, y, null);
+			g2.drawImage(ball.getItem().getImage2(), x, y, null);
 			g2.drawString(ball.getCount() + "", getRightAlignedTextX(ball.getCount() + "", x + 44), y + 42);
 		}
 		if (commandNum < 0) {

@@ -21,6 +21,9 @@ Ideas
 Make Dark resist Magic and Fighting no longer resist magic? (Would also make Galactic resist Dark again)
 Make Bipedice Ice/Ground (not Ground/Ice) and redo moveset
 Kissyfishy making out as a Ying-Yang thing
+Give Malamar a move called Field Flip that does court change effect
+Add Heart Swap
+Give Ingrain its own status effect and make it grounded as well
 
 Calc
 Get rid of enter press on level spinner, just make it an action listener

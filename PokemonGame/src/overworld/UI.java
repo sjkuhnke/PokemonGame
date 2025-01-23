@@ -3764,6 +3764,7 @@ public class UI extends AbstractUI {
 		}
 		
 		for (ArrayList<Encounter> es : encounters) {
+			boolean all = true;
 			int size = es.size();
 			if (size == 0) {
 				index++;
@@ -3789,6 +3790,7 @@ public class UI extends AbstractUI {
 				if (gp.player.p.pokedex[id] == 2) {
 					g2.drawImage(p.getSprite(), x, y, null);
 				} else {
+					all = false;
 					g2.drawImage(getSilhouette(p.getSprite()), x, y, null);
 				}
 				g2.setFont(g2.getFont().deriveFont(16F));
@@ -3799,6 +3801,21 @@ public class UI extends AbstractUI {
 				} else {
 					x += spriteWidth;
 				}
+			}
+			if (all) {
+				int windowY = winY - 30;
+				g2.setPaint(new GradientPaint(winX+5,windowY+5,new Color(255,215,0),winX+5+width-10,windowY+5+height-10,new Color(255,255,210)));
+				g2.drawRoundRect(winX+5, windowY+5, width-10, height-10, 25, 25);
+				int starX = winX + width - gp.tileSize;
+				int starY = windowY + gp.tileSize;
+				int starWidth = (gp.tileSize * 2 / 3) - 4;
+				g2.setFont(g2.getFont().deriveFont(40F));
+			    GradientPaint starPaint = new GradientPaint(
+			        starX + 6, starY - 6, new Color(255, 215, 0), // Start point and color
+			        starX +  - 10, starY - starWidth + 10, new Color(245, 225, 210) // End point and color
+			    );
+			    g2.setPaint(starPaint);
+			    g2.drawString('\u2605' + "", starX, starY);
 			}
 			
 			y = winY + height - gp.tileSize * 2 / 3;
