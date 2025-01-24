@@ -761,7 +761,7 @@ public class SimBattleUI extends BattleUI {
 
 	@Override
 	protected void startingState() {
-		showMessage("A battle is started between " + user.name + " and " + foe.name + "!");
+		showMessage("A battle is started between " + user.trainer.toString() + " and " + foe.trainer.toString() + "!");
 		userStatus = user.status;
 		foeStatus = foe.status;
 	}

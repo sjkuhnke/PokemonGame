@@ -94,7 +94,7 @@ public class PokemonLookupPanel extends JPanel {
 	}
 	
 	private void displaySelected() {
-		selectedPokemon.setText("[" + formatID() + "] " + p.name + " " + Pokemon.getFormattedDexNo(p.getDexNo()));
+		selectedPokemon.setText("[" + formatID() + "] " + p.name() + " " + Pokemon.getFormattedDexNo(p.getDexNo()));
 		
 	}
 	

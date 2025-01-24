@@ -86,7 +86,6 @@ Fixed a Pokemon being muted showing as 0 damage in the calc for sound moves
 Added logic for a Pokemon attacking with Magic Reflect/Possession active to use the least damaging move on themselves
 Added TMs to PokemonInfo.txt
 Fixed Move BP in MovesInfo.txt
-
 Gave Bluebunn Light Of Ruin at lv 62
 Gave Clefable Genesis Supernova at lv 65
 Fixed some miscellaneous tiles
@@ -107,4 +106,21 @@ Made the field effects end of turns on each trainer's side activate/deactivate d
 Fixed Grass Knot's description
 Made Hyper Voice not make contact (bug)
 Added casino coins in the player tweaker (to set with cheats)
-
+Added AI to correctly read that the player is only able to click one damaging move (only has 1, choice locked, encored, rollout, etc) and can make decisions based on that
+Fixed bug that I inadvertedly created when fixing the semi invulnerable moves when getting full para'd with sprites not reappearing
+Fixed slight bug with Mosaic Wings and the popup on multihit moves
+Work on a bunch of competitive sets for every Pokemon for the battle betting (HUGE SHOUTOUT to @ERM_555!!)
+Gave Magestiflash Heat Wave
+Gave Busheep and Bushewe Ingrain
+Gave Ludicolo Hyper Voice, Aura Sphere and Quiver Dance
+Added chances/reasons for the AI doing specific things (clicking a move or switching) in the Simulated Battle UI (betting)
+Gave Roserade Strength Sap
+Gave Boulderoar Ancient Power
+Refactored Natures and Tasks
+Fixed levels on Route 41 grass to scale with the player now being able to access them prior to surf
+Changed Boulder's Rock Blast 36 -> 35 to get Blaster 1 level earlier (36)
+ADDED AUTOPLAY TO SIM BATTLES!!!
+Added a gold border + star to Dex Nav if you have every encounter in the section
+Changed Swagger's accuracy 90 -> 100 to match Flatter
+Fixed a crucial bug with wild Pokemon trying to write their fieldEffects field by making it transient
+Fixed Knock Off, Bug Bite, Trick, etc's interaction with Sticky Hold and Mold Breaker

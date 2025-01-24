@@ -149,19 +149,20 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public void catchPokemon(Pokemon p, boolean nickname, Item ball) {
-	    if (p == null || p.isFainted()) return;
+		if (p == null) return;
+		boolean egg = p instanceof Egg;
+	    if (p == null || (p.isFainted() && !egg)) return;
 	    boolean hasNull = false;
 	    Task t = null;
 	    if (nickname) {
-	    	t = Task.createTask(Task.NICKNAME, "Would you like to nickname " + p.name + "?", p);
+	    	t = Task.createTask(Task.NICKNAME, "Would you like to nickname " + p.name() + "?", p);
 		    if (Pokemon.gp.gameState != GamePanel.PLAY_STATE) Task.insertTask(t, 0);
 	    }
-	    pokedex[p.id] = 2;
+	    if (!egg) pokedex[p.id] = 2;
 	    p.clearVolatile();
 	    p.consumeItem(null);
 	    p.trainer = this;
-	    int parenthesisIndex = PlayerCharacter.currentMapName.indexOf('(');
-	    p.metAt = (parenthesisIndex == -1 || PlayerCharacter.currentMapName.contains("pt.")) ? PlayerCharacter.currentMapName.trim() : PlayerCharacter.currentMapName.substring(0, parenthesisIndex).trim();
+	    p.metAt = PlayerCharacter.getMetAt();
 	    for (int i = 0; i < team.length; i++) {
 	        if (team[i] == null) {
 	            hasNull = true;
@@ -173,8 +174,9 @@ public class Player extends Trainer implements Serializable {
 	            if (team[i] == null) {
 	                team[i] = p;
 	                p.slot = i;
-	                if (nickname) {
-	                	t = Task.createTask(Task.END, "Caught " + p.nickname + ", added to party!");
+	                if (nickname || egg) {
+	                	String s = egg ? "Received " : "Caught ";
+	                	t = Task.createTask(Task.END, s + p.name() + ", added to party!");
 	                	Task.insertTask(t, 1);
 	                }
 	                current = team[0];
@@ -193,15 +195,16 @@ public class Player extends Trainer implements Serializable {
 	            }
 	            if (index >= 0) {
 	                boxes[i][index] = p;
-	                if (nickname) {
-	                	t = Task.createTask(Task.END, "Caught " + p.nickname + ", sent to box " + (i + 1) + "!");
+	                if (nickname || egg) {
+	                	String s = egg ? "Received " : "Caught ";
+	                	t = Task.createTask(Task.END, s + p.name() + ", sent to box " + (i + 1) + "!");
 	                	Task.insertTask(t, 1);
 	                }
 	                return;  // Exit the method after catching the Pokemon
 	            }
 	        }
-	        if (nickname) {
-	        	t = Task.createTask(Task.END, "Cannot catch " + p.nickname + ", all boxes are full.");
+	        if (nickname || egg) {
+	        	t = Task.createTask(Task.END, "Cannot catch " + p.name() + ", all boxes are full.");
 	        	Task.insertTask(t, 1);
 	        }
 	    }
@@ -461,7 +464,7 @@ public class Player extends Trainer implements Serializable {
 		
 		String[][] flagDesc = {
 			{"Dad First", "Starter", "Pokedex 1", "Grandma", "Avery", "Scott 1", "Second Starter", "Talk to Robin", "Letter A", "Letter B", "Letter C", "Tell Robin 1", "WH Grunt", "WH Unlock", "Rick 1", "Letter D", "Tell Robin 2", "Crook", "Lucky Egg"},
-			{"Fred 1", "Researcher", "Teleport", "Ryder 1", "Fuse 1", "Rocky-E", "PP 1", "Poof-E", "PP 2", "Stanford", "TN Office", "Flamehox-E", "Office 2", "Scott", "Gyarados-E", "Fuse 2", "Stanford", "Fishing Rod", "Gym 2", "Photon Gift"},
+			{"Fred 1", "Researcher", "Teleport", "Ryder 1", "Fuse 1", "Rocky-E", "PP 1", "Poof-E", "PP 2", "Stanford", "TN Office", "Flamehox-E", "Office 2", "Scott", "Gyarados-E", "Fuse 2", "Stanford", "Fishing Rod", "Gym 2", "Photon Gift", "Res A Gift"},
 			{"Scott 2", "Ryder 2", "Gift Magic", "Regional", "Millie 1", "Millie 2", "Fred 2", "Chained Xurkitree", "Millie 3", "TN Splinkty", "Millie 4", "Free Xurkitree", "UP Xurkitree", "Millie 5", "Gift Fossil"},
 			{"Ryder 3", "Ice Master", "Ground Master", "I Unlock", "G Unlock", "I Clear", "G Clear", "Principal", "UP Cairnasaur", "Gift \"Starter\"", "Petticoat", "Valiant", "Gym 4"},
 			{"Robin", "Scott 3", "Grandpa", "UP Shookwat", "Gift E/S", "Gym 5"},
@@ -595,7 +598,7 @@ public class Player extends Trainer implements Serializable {
 		
 		for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
 			JPanel member = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			member.add(new JLabel(new Pokemon(i, 5, true, false).name));
+			member.add(new JLabel(new Pokemon(i, 5, true, false).name()));
 			JRadioButton[] buttons = new JRadioButton[3];
 			String[] labels = new String[] {"0", "S", "C"};
 			ButtonGroup buttonLayout = new ButtonGroup();

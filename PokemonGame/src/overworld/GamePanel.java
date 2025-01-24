@@ -180,7 +180,7 @@ public class GamePanel extends JPanel implements Runnable {
 		} else {
 			FPS = 60;
 		}
-		if (keyH.ctrlPressed && keyH.shiftPressed && keyH.sPressed) {
+		if (keyH.ctrlPressed && keyH.shiftPressed) {
 			if (gameState == BATTLE_STATE) {
 				System.out.println("------------------------------------------");
 				System.out.println("Current Task: " + battleUI.currentTask);
@@ -301,8 +301,8 @@ public class GamePanel extends JPanel implements Runnable {
 				if (teamTemp[i].id == 237) {
 					teamTemp[i].id = 150;
 					teamTemp[i].setSprites();
-					if (teamTemp[i].nickname.equals(teamTemp[i].name)) teamTemp[i].nickname = teamTemp[i].getName();
-					teamTemp[i].name = teamTemp[i].getName();
+					if (teamTemp[i].nickname.equals(teamTemp[i].name())) teamTemp[i].nickname = teamTemp[i].getName();
+					teamTemp[i].setName(teamTemp[i].getName());
 					
 					teamTemp[i].baseStats = teamTemp[i].getBaseStats();
 					teamTemp[i].setStats();

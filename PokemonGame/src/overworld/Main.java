@@ -218,7 +218,7 @@ public class Main {
 				Pokemon p = new Pokemon(i, 5, false, false);
 				writer.write("===================\n");
 				String dexNo = Pokemon.getFormattedDexNo(p.getDexNo());
-				String name = dexNo + " - " + p.name;
+				String name = dexNo + " - " + p.name();
 				while (name.length() < 103) {
 					name = name + " ";
 				}
@@ -491,7 +491,7 @@ public class Main {
 	        .sorted(Map.Entry.comparingByValue(Comparator.comparing(Move::toString)))
 	        .forEach(entry -> {
 				try {
-					writer.write(entry.getValue().toString() + " : " + entry.getKey().name + "\n");
+					writer.write(entry.getValue().toString() + " : " + entry.getKey().name() + "\n");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -502,7 +502,7 @@ public class Main {
 			.sorted(Map.Entry.comparingByValue(Comparator.comparing(Move::toString)))
 			.forEach(entry -> {
 				try {
-					writer.write(entry.getValue().toString() + " : " + entry.getKey().name + "\n");
+					writer.write(entry.getValue().toString() + " : " + entry.getKey().name() + "\n");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -513,7 +513,7 @@ public class Main {
 			.sorted(Map.Entry.comparingByValue(Comparator.comparing(Move::toString)))
 			.forEach(entry -> {
 				try {
-					writer.write(entry.getValue().toString() + " : " + entry.getKey().name + "\n");
+					writer.write(entry.getValue().toString() + " : " + entry.getKey().name() + "\n");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -564,7 +564,7 @@ public class Main {
 
 					writer.write(tr.getName() + "\n");
 					for (Pokemon p : tr.getTeam()) {
-						String pName = p.name + " (Lv. " + p.level + ")";
+						String pName = p.name() + " (Lv. " + p.level + ")";
 						if (gp.player.p.starter == -1 && (tr.getName().contains("Scott") || tr.getName().contains("Fred")) && p.id >= 1 && p.id <= 9) {
 							pName = "*" + pName;
 						}
@@ -726,7 +726,7 @@ public class Main {
 			boolean sameLv = e.getMinLevel() == e.getMaxLevel();
 			result += percent;
 			result += "% ";
-			result += ep.name;
+			result += ep.name();
 			result += " (Lv. ";
 			if (sameLv) {
 				result += e.getMinLevel();

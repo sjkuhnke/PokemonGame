@@ -220,8 +220,9 @@ public abstract class AbstractUI {
 		for (int i = 0; i < gp.player.p.team.length; i++) {
 			Pokemon p = gp.player.p.team[i];
 			if (p != null) {
+				boolean egg = p instanceof Egg;
 				Color background;
-				if (p.isFainted()) {
+				if (p.isFainted() && !egg) {
 					background = new Color(200, 0, 0, 200);
 				} else if (p.status == Status.HEALTHY) {
 					background = new Color(0, 220, 0, 200);
@@ -238,31 +239,33 @@ public abstract class AbstractUI {
 					g2.setColor(Color.RED);
 					g2.drawRoundRect(x + 8, y + 8, partyWidth - 4, partyHeight - 4, 18, 18);
 				}
-				g2.drawImage(p.isFainted() ? p.getFaintedSprite() : p.getSprite(), x + (gp.tileSize / 4), y + (gp.tileSize / 2), null);
+				g2.drawImage(p.isFainted() && !egg ? p.getFaintedSprite() : p.getSprite(), x + (gp.tileSize / 4), y + (gp.tileSize / 2), null);
 				if (p.item != null) {
 					g2.drawImage(p.item.getImage(), x + (gp.tileSize / 4) + 8, y + 84, null);
 				}
 				g2.setColor(Color.BLACK);
 				g2.setFont(g2.getFont().deriveFont(24F));
 				g2.drawString(p.nickname, getCenterAlignedTextX(p.nickname, (int) (x + (partyWidth * 0.75) - 12)), y + gp.tileSize);
-				int barX = (x + gp.tileSize * 2) - 4;
-				int barY = (int) (y + (gp.tileSize * 1.25));
-				int barWidth = (int) (gp.tileSize * 2.5);
-				int barHeight = gp.tileSize / 3;
-				g2.fillRoundRect(barX, barY, barWidth, barHeight, 10, 10);
-				double hpRatio = p.currentHP * 1.0 / p.getStat(0);
-				g2.setColor(new Color(195, 190, 195));
-				g2.fillRoundRect(barX + 3, barY + 3, barWidth - 6, barHeight - 6, 8, 8);
-				g2.setColor(getHPBarColor(hpRatio));
-				g2.fillRoundRect(barX + 3, barY + 3, (int) (hpRatio * (barWidth - 6)), barHeight - 6, 8, 8);
-				String lvText = "Lv. " + p.level;
-				g2.setColor(Color.BLACK);
-				g2.drawString(lvText, getCenterAlignedTextX(lvText, x + 60), (int) (y + gp.tileSize * 2.75));
-				int canUseItem = p.canUseItem(item);
-				String hpText = canUseItem == -1 ? p.currentHP + " / " + p.getStat(0) : canUseItem == 0 ? "NOT ABLE" : canUseItem == 2 ? "LEARNED" : "ABLE";
-				g2.drawString(hpText, getCenterAlignedTextX(hpText, (int) (x + (partyWidth * 0.75) - 12)), (int) (y + gp.tileSize * 2.25));
-				if (p.status != Status.HEALTHY) {
-					g2.drawImage(p.status.getImage(), (int) (x + gp.tileSize * 2.5) + 4, (int) (y + gp.tileSize * 2.25) + 8, null);
+				if (!egg) {
+					int barX = (x + gp.tileSize * 2) - 4;
+					int barY = (int) (y + (gp.tileSize * 1.25));
+					int barWidth = (int) (gp.tileSize * 2.5);
+					int barHeight = gp.tileSize / 3;
+					g2.fillRoundRect(barX, barY, barWidth, barHeight, 10, 10);
+					double hpRatio = p.currentHP * 1.0 / p.getStat(0);
+					g2.setColor(new Color(195, 190, 195));
+					g2.fillRoundRect(barX + 3, barY + 3, barWidth - 6, barHeight - 6, 8, 8);
+					g2.setColor(getHPBarColor(hpRatio));
+					g2.fillRoundRect(barX + 3, barY + 3, (int) (hpRatio * (barWidth - 6)), barHeight - 6, 8, 8);
+					String lvText = "Lv. " + p.level;
+					g2.setColor(Color.BLACK);
+					g2.drawString(lvText, getCenterAlignedTextX(lvText, x + 60), (int) (y + gp.tileSize * 2.75));
+					int canUseItem = p.canUseItem(item);
+					String hpText = canUseItem == -1 ? p.currentHP + " / " + p.getStat(0) : canUseItem == 0 ? "NOT ABLE" : canUseItem == 2 ? "LEARNED" : "ABLE";
+					g2.drawString(hpText, getCenterAlignedTextX(hpText, (int) (x + (partyWidth * 0.75) - 12)), (int) (y + gp.tileSize * 2.25));
+					if (p.status != Status.HEALTHY) {
+						g2.drawImage(p.status.getImage(), (int) (x + gp.tileSize * 2.5) + 4, (int) (y + gp.tileSize * 2.25) + 8, null);
+					}
 				}
 			} else {
 				if (partyNum == i) {
@@ -299,14 +302,18 @@ public abstract class AbstractUI {
 		int width = gp.tileSize*10;
 		int height = gp.tileSize*11;
 		
+		boolean egg = p instanceof Egg;
+		
 		drawSubWindow(x, y, width, height);
 		
 		// ID
 		x += gp.tileSize / 2;
 		y += gp.tileSize * 0.75;
-		g2.setColor(Pokemon.getDexNoColor(p.id));
-		g2.setFont(g2.getFont().deriveFont(20F));
-		g2.drawString(Pokemon.getFormattedDexNo(p.getDexNo()), x, y);
+		if (!egg) {
+			g2.setColor(Pokemon.getDexNoColor(p.id));
+			g2.setFont(g2.getFont().deriveFont(20F));
+			g2.drawString(Pokemon.getFormattedDexNo(p.getDexNo()), x, y);
+		}
 		
 		g2.setColor(Color.WHITE);
 		
@@ -315,8 +322,8 @@ public abstract class AbstractUI {
 		y += gp.tileSize / 4;
 		int startX = x;
 		g2.setFont(g2.getFont().deriveFont(36F));
-		g2.setFont(g2.getFont().deriveFont(getFontSize(p.name, (float) (gp.tileSize * 4))));
-		g2.drawString(p.name, x, y + gp.tileSize / 2);
+		g2.setFont(g2.getFont().deriveFont(getFontSize(p.name(), (float) (gp.tileSize * 4))));
+		g2.drawString(p.name(), x, y + gp.tileSize / 2);
 		
 		// Item
 		if (p.item != null) {
@@ -342,140 +349,160 @@ public abstract class AbstractUI {
 		int startY = y;
 		
 		// Sprite
-		g2.drawImage(p.isFainted() ? p.getFaintedSprite() : p.getSprite(), x - 12, y, null);
+		g2.drawImage(p.isFainted() && !egg ? p.getFaintedSprite() : p.getSprite(), x - 12, y, null);
 		x += gp.tileSize * 2;
-		g2.drawImage(p.type1.getImage2(), x - 12, y, null);
-		if (p.type2 != null) {
-			g2.drawImage(p.type2.getImage2(), x + 36, y + 36, null);
+		if (!egg) {
+			g2.drawImage(p.type1.getImage2(), x - 12, y, null);
+			if (p.type2 != null) {
+				g2.drawImage(p.type2.getImage2(), x + 36, y + 36, null);
+			}
 		}
 		
 		// Ability
-		g2.setFont(g2.getFont().deriveFont(24F));
-		x += gp.tileSize * 4.5;
-		String abilityLabel = "Ability:";
-		g2.drawString(abilityLabel, getCenterAlignedTextX(abilityLabel, x), y);
-		y += gp.tileSize / 2;
-		String ability = p.ability.toString();
-		g2.drawString(ability, getCenterAlignedTextX(ability, x), y);
-		
-		g2.setFont(g2.getFont().deriveFont(16F));
-		String[] abilityDesc = Item.breakString(p.ability.desc, 32).split("\n");
-		y += gp.tileSize / 4;
-		for (String s : abilityDesc) {
-			y += gp.tileSize / 2 - 4;
-			g2.drawString(s, getCenterAlignedTextX(s, x), y);
+		if (!egg) {
+			g2.setFont(g2.getFont().deriveFont(24F));
+			x += gp.tileSize * 4.5;
+			String abilityLabel = "Ability:";
+			g2.drawString(abilityLabel, getCenterAlignedTextX(abilityLabel, x), y);
+			y += gp.tileSize / 2;
+			String ability = p.ability.toString();
+			g2.drawString(ability, getCenterAlignedTextX(ability, x), y);
+			
+			g2.setFont(g2.getFont().deriveFont(16F));
+			String[] abilityDesc = Item.breakString(p.ability.desc, 32).split("\n");
+			y += gp.tileSize / 4;
+			for (String s : abilityDesc) {
+				y += gp.tileSize / 2 - 4;
+				g2.drawString(s, getCenterAlignedTextX(s, x), y);
+			}
 		}
 		
 		// Nickname + Level
-		g2.setFont(g2.getFont().deriveFont(24F));
 		int barWidth = (int) (gp.tileSize * 3.75);
 		int barHeight = gp.tileSize / 4;
-		x = startX - gp.tileSize / 2;
-		startX = x;
-		y = startY;
-		y += gp.tileSize * 2.5;
-		String name = p.nickname + " Lv. " + p.level;
-		g2.drawString(name, getCenterAlignedTextX(name, x + (barWidth / 2)), y);
+		if (!egg) {
+			g2.setFont(g2.getFont().deriveFont(24F));
+			x = startX - gp.tileSize / 2;
+			startX = x;
+			y = startY;
+			y += gp.tileSize * 2.5;
+			String name = p.nickname + " Lv. " + p.level;
+			g2.drawString(name, getCenterAlignedTextX(name, x + (barWidth / 2)), y);
+		}
 		
 		// Exp
-		x = startX;
-		y += gp.tileSize / 4;
-		g2.setColor(Color.BLACK);
-		g2.fillRoundRect(x, y, barWidth, barHeight, 10, 10);
-		g2.setColor(new Color(210, 200, 205));
-		g2.fillRoundRect(x + 3, y + 3, barWidth - 6, barHeight - 6, 10, 10);
-		g2.setColor(Color.BLUE.brighter());
-		double xpWidth = (p.exp * 1.0 / p.expMax) * (barWidth - 6);
-		g2.fillRoundRect(x + 3, y + 3, (int) xpWidth, barHeight - 6, 2, 2);
+		if (!egg) {
+			x = startX;
+			y += gp.tileSize / 4;
+			g2.setColor(Color.BLACK);
+			g2.fillRoundRect(x, y, barWidth, barHeight, 10, 10);
+			g2.setColor(new Color(210, 200, 205));
+			g2.fillRoundRect(x + 3, y + 3, barWidth - 6, barHeight - 6, 10, 10);
+			g2.setColor(Color.BLUE.brighter());
+			double xpWidth = (p.exp * 1.0 / p.expMax) * (barWidth - 6);
+			g2.fillRoundRect(x + 3, y + 3, (int) xpWidth, barHeight - 6, 2, 2);
+			
+			g2.setFont(g2.getFont().deriveFont(16F));
+			g2.setColor(Color.WHITE);
+			y += gp.tileSize * 0.75 - 4;
+			String difference = p.level < 100 ? p.expMax - p.exp + "" : "--";
+			String xp = difference + " points to lv. up";
+			g2.drawString(xp, getCenterAlignedTextX(xp, x + (barWidth / 2)), y);
+		}
 		
-		g2.setFont(g2.getFont().deriveFont(16F));
-		g2.setColor(Color.WHITE);
-		y += gp.tileSize * 0.75 - 4;
-		String difference = p.level < 100 ? p.expMax - p.exp + "" : "--";
-		String xp = difference + " points to lv. up";
-		g2.drawString(xp, getCenterAlignedTextX(xp, x + (barWidth / 2)), y);
 		
 		// Friendship
 		g2.setFont(g2.getFont().deriveFont(24F));
 		x = (int) (startX + gp.tileSize * 7);
-		String friendshipLabel = "Friendship:";
+		if (egg) {
+			x -= gp.tileSize * 1.5;
+			y += gp.tileSize / 2;
+		}
+		String friendshipLabel = egg ? "Hatch Status:" : "Friendship:";
 		g2.drawString(friendshipLabel, getCenterAlignedTextX(friendshipLabel, x), y);
 		
 		y += gp.tileSize / 2;
 		String happinessCap = p.happiness >= 255 ? 0 + "" : p.happinessCap + "";
-        String friendship = p.happiness + " (" + happinessCap + " remaining)";
+        String friendship = egg ? ((Egg)p).getSteps() + " cycles remaining" : p.happiness + " (" + happinessCap + " remaining)";
         g2.drawString(friendship, getCenterAlignedTextX(friendship, x), y);
         
         g2.setFont(g2.getFont().deriveFont(16F));
         y += gp.tileSize / 2;
-        String friendshipDesc = p.getHappinessDesc();
+        String friendshipDesc = egg ? ((Egg)p).getHatchDesc() : p.getHappinessDesc();
         g2.drawString(friendshipDesc, getCenterAlignedTextX(friendshipDesc, x), y);
         
         // HP Label
         g2.setFont(g2.getFont().deriveFont(24F));
         x = startX;
         y -= gp.tileSize / 4 + 4;
-        String hp = p.currentHP + " / " + p.getStat(0) + " HP";
-		g2.drawString(hp, getCenterAlignedTextX(hp, x + (barWidth / 2)), y);
+        if (!egg) {
+        	String hp = p.currentHP + " / " + p.getStat(0) + " HP";
+    		g2.drawString(hp, getCenterAlignedTextX(hp, x + (barWidth / 2)), y);
+        }
 		
 		// Stats
 		y += gp.tileSize;
-		for (int i = 0; i < 6; i++) {
-			int sY = y;
-			g2.setFont(g2.getFont().deriveFont(24F));
-			g2.setColor(Color.WHITE);
-			x = startX;
-			String type = Pokemon.getStatType(i);
-			type += p.getStat(i);
-        	
-        	if (i != 0) {
-        	    if (p.nat.getStat(i - 1) == 1.1) {
-        	        g2.setColor(Color.red.darker());
-        	        g2.drawString("\u2191", x - 15, y);
-        	    } else if (p.nat.getStat(i - 1) == 0.9) {
-        	    	g2.setColor(Color.blue);
-        	    	g2.drawString("\u2193", x - 15, y);
-        	    }
-        	}
-        	g2.drawString(type, x, y);
-        	
-        	x += gp.tileSize * 1.5;
-        	y -= 3;
-        	g2.setFont(g2.getFont().deriveFont(16F));
-        	g2.setColor(Color.WHITE);
-        	String iv = "IV: " + p.getIVs()[i];
-        	g2.drawString(iv, x, y);
-        	
-        	x += gp.tileSize;
-        	int statWidth = 3 * gp.tileSize;
-        	int statHeight = gp.tileSize / 2;
-        	y -= gp.tileSize / 3;
-        	g2.setColor(Color.BLACK);
-        	g2.fillRect(x, y, statWidth, statHeight);
-        	g2.setColor(Color.WHITE);
-        	g2.fillRect(x + 2, y + 2, statWidth - 4, statHeight - 4);
-        	double bar = Math.min(p.getBaseStat(i) * 1.0 / 200, 1.0);
-        	g2.setColor(Pokemon.getColor(p.getBaseStat(i)));
-        	g2.fillRect(x + 2, y + 2, (int) ((statWidth - 4) * bar), statHeight - 4);
-        	x += 4;
-        	y += (gp.tileSize / 2) - 4;
-        	g2.setColor(Color.BLACK);
-        	g2.drawString(p.getBaseStat(i) + "", x, y);
-        	
-        	y = sY + gp.tileSize / 2;
+		if (!egg) {
+			for (int i = 0; i < 6; i++) {
+				int sY = y;
+				g2.setFont(g2.getFont().deriveFont(24F));
+				g2.setColor(Color.WHITE);
+				x = startX;
+				String type = Pokemon.getStatType(i);
+				type += p.getStat(i);
+	        	
+	        	if (i != 0) {
+	        	    if (p.nat.getStat(i - 1) == 1.1) {
+	        	        g2.setColor(Color.red.darker());
+	        	        g2.drawString("\u2191", x - 15, y);
+	        	    } else if (p.nat.getStat(i - 1) == 0.9) {
+	        	    	g2.setColor(Color.blue);
+	        	    	g2.drawString("\u2193", x - 15, y);
+	        	    }
+	        	}
+	        	g2.drawString(type, x, y);
+	        	
+	        	x += gp.tileSize * 1.5;
+	        	y -= 3;
+	        	g2.setFont(g2.getFont().deriveFont(16F));
+	        	g2.setColor(Color.WHITE);
+	        	String iv = "IV: " + p.getIVs()[i];
+	        	g2.drawString(iv, x, y);
+	        	
+	        	x += gp.tileSize;
+	        	int statWidth = 3 * gp.tileSize;
+	        	int statHeight = gp.tileSize / 2;
+	        	y -= gp.tileSize / 3;
+	        	g2.setColor(Color.BLACK);
+	        	g2.fillRect(x, y, statWidth, statHeight);
+	        	g2.setColor(Color.WHITE);
+	        	g2.fillRect(x + 2, y + 2, statWidth - 4, statHeight - 4);
+	        	double bar = Math.min(p.getBaseStat(i) * 1.0 / 200, 1.0);
+	        	g2.setColor(Pokemon.getColor(p.getBaseStat(i)));
+	        	g2.fillRect(x + 2, y + 2, (int) ((statWidth - 4) * bar), statHeight - 4);
+	        	x += 4;
+	        	y += (gp.tileSize / 2) - 4;
+	        	g2.setColor(Color.BLACK);
+	        	g2.drawString(p.getBaseStat(i) + "", x, y);
+	        	
+	        	y = sY + gp.tileSize / 2;
+			}
 		}
 		
 		// Nature
-		x = startX;
-		y += gp.tileSize / 4;
-		g2.setFont(g2.getFont().deriveFont(24F));
-		g2.setColor(Color.WHITE);
-		String nature = p.getNature() + " Nature";
-		g2.drawString(nature, x, y);
+		if (!egg) {
+			x = startX;
+			y += gp.tileSize / 4;
+			g2.setFont(g2.getFont().deriveFont(24F));
+			g2.setColor(Color.WHITE);
+			String nature = p.getNature() + " Nature";
+			g2.drawString(nature, x, y);
+		}
 		
 		// Met At
 		x += gp.tileSize * 3;
 		int metY = y;
+		if (egg) y += gp.tileSize * 2;
 		if (p.metAt != null) {
 			int centerX = x + (int) (gp.tileSize * 1.25);
 			y -= gp.tileSize / 4;
@@ -490,36 +517,38 @@ public abstract class AbstractUI {
 		}
 		
 		// Moves
-		x += gp.tileSize * 3;
-		y = metY;
-		y -= gp.tileSize * 3.5;
-		int moveWidth = gp.tileSize * 3;
-		int moveHeight = (int) (gp.tileSize * 0.75);
-		g2.setFont(g2.getFont().deriveFont(18F));
-		for (int i = 0; i < 4; i++) {
-			Moveslot m = p.moveset[i];
-			if (m != null) {
-				if (i == moveSwapNum) {
-					g2.setColor(new Color(245, 225, 210));
-					g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
-					g2.setColor(g2.getColor().darker());
-					g2.drawRoundRect(x, y, moveWidth, moveHeight, 10, 10);
-				} else {
-					Color color = m.move == Move.HIDDEN_POWER || m.move == Move.RETURN ? p.determineHPType().getColor() : m.move.mtype.getColor();
-					g2.setColor(color);
-					g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
+		if (!egg) {
+			x += gp.tileSize * 3;
+			y = metY;
+			y -= gp.tileSize * 3.5;
+			int moveWidth = gp.tileSize * 3;
+			int moveHeight = (int) (gp.tileSize * 0.75);
+			g2.setFont(g2.getFont().deriveFont(18F));
+			for (int i = 0; i < 4; i++) {
+				Moveslot m = p.moveset[i];
+				if (m != null) {
+					if (i == moveSwapNum) {
+						g2.setColor(new Color(245, 225, 210));
+						g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
+						g2.setColor(g2.getColor().darker());
+						g2.drawRoundRect(x, y, moveWidth, moveHeight, 10, 10);
+					} else {
+						Color color = m.move == Move.HIDDEN_POWER || m.move == Move.RETURN ? p.determineHPType().getColor() : m.move.mtype.getColor();
+						g2.setColor(color);
+						g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
+					}
+					g2.setColor(Color.BLACK);
+			        String text = m.move.toString();
+			        g2.drawString(text, getCenterAlignedTextX(text, (x + moveWidth / 2)), y + gp.tileSize / 3);
+			        g2.setColor(m.getPPColor());
+			        String pp = m.currentPP + " / " + m.maxPP;
+			        g2.drawString(pp, getCenterAlignedTextX(pp, (x + moveWidth / 2)), (int) (y + gp.tileSize * 0.75) - 3);
+			        if (moveSummaryNum == i) {
+			            g2.setColor(Color.RED);
+			            g2.drawRoundRect(x - 2, y - 2, moveWidth + 4, moveHeight + 4, 10, 10);
+			        }
+					y += gp.tileSize;
 				}
-				g2.setColor(Color.BLACK);
-		        String text = m.move.toString();
-		        g2.drawString(text, getCenterAlignedTextX(text, (x + moveWidth / 2)), y + gp.tileSize / 3);
-		        g2.setColor(m.getPPColor());
-		        String pp = m.currentPP + " / " + m.maxPP;
-		        g2.drawString(pp, getCenterAlignedTextX(pp, (x + moveWidth / 2)), (int) (y + gp.tileSize * 0.75) - 3);
-		        if (moveSummaryNum == i) {
-		            g2.setColor(Color.RED);
-		            g2.drawRoundRect(x - 2, y - 2, moveWidth + 4, moveHeight + 4, 10, 10);
-		        }
-				y += gp.tileSize;
 			}
 		}
 		
@@ -530,94 +559,96 @@ public abstract class AbstractUI {
 		}
 		
 		if (nicknaming < 0) {
-			if (gp.keyH.wPressed && moveSummaryNum == -1) {
-				gp.keyH.wPressed = false;
-				moveSummaryNum = 0;
-			}
-			
-			if (gp.keyH.upPressed) {
-				gp.keyH.upPressed = false;
-				moveSummaryNum--;
-				if (moveSummaryNum < 0) {
-					int index = 3;
-					while (p.moveset[index] == null) {
-						index--;
-					}
-					moveSummaryNum = index;
-				}
-			}
-			
-			if (gp.keyH.downPressed) {
-				gp.keyH.downPressed = false;
-				if (moveSummaryNum < 3 && p.moveset[moveSummaryNum + 1] != null) {
-					moveSummaryNum++;
-				} else {
+			if (!egg) {
+				if (gp.keyH.wPressed && moveSummaryNum == -1) {
+					gp.keyH.wPressed = false;
 					moveSummaryNum = 0;
 				}
-			}
-			
-			if (moveSummaryNum < 0 && !showBoxSummary && !gp.battleUI.showFoeSummary) {
-				if (gp.keyH.leftPressed) {
-					gp.keyH.leftPressed = false;
-					if (partyNum > 0) {
-						partyNum--;
-					} else {
-						int index = 5;
-						while (gp.player.p.team[index] == null) {
+				
+				if (gp.keyH.upPressed) {
+					gp.keyH.upPressed = false;
+					moveSummaryNum--;
+					if (moveSummaryNum < 0) {
+						int index = 3;
+						while (p.moveset[index] == null) {
 							index--;
 						}
-						partyNum = index;
+						moveSummaryNum = index;
 					}
 				}
 				
-				if (gp.keyH.rightPressed) {
-					gp.keyH.rightPressed = false;
-					if (partyNum < 5 && gp.player.p.team[partyNum + 1] != null) {
-						partyNum++;
+				if (gp.keyH.downPressed) {
+					gp.keyH.downPressed = false;
+					if (moveSummaryNum < 3 && p.moveset[moveSummaryNum + 1] != null) {
+						moveSummaryNum++;
 					} else {
-						partyNum = 0;
+						moveSummaryNum = 0;
 					}
 				}
-			}
-			
-			if (gp.keyH.aPressed) {
-				gp.keyH.aPressed = false;
-				if (p.playerOwned()) {
-					if (moveSummaryNum < 0) {
-						if (p.item != null && foe == null) {
-							showMessage("Took " + p.nickname + "'s " + p.item + ".");
-							gp.player.p.bag.add(p.item);
-							p.item = null;
-						}
-					} else {
-						if (moveSwapNum > -1) {
-							if (moveSummaryNum != moveSwapNum) {
-								Moveslot temp = p.moveset[moveSummaryNum];
-								p.moveset[moveSummaryNum] = p.moveset[moveSwapNum];
-								p.moveset[moveSwapNum] = temp;
-							}
-							moveSwapNum = -1;
+				
+				if (moveSummaryNum < 0 && !showBoxSummary && !gp.battleUI.showFoeSummary) {
+					if (gp.keyH.leftPressed) {
+						gp.keyH.leftPressed = false;
+						if (partyNum > 0) {
+							partyNum--;
 						} else {
-							moveSwapNum = moveSummaryNum;
+							int index = 5;
+							while (gp.player.p.team[index] == null) {
+								index--;
+							}
+							partyNum = index;
 						}
+					}
+					
+					if (gp.keyH.rightPressed) {
+						gp.keyH.rightPressed = false;
+						if (partyNum < 5 && gp.player.p.team[partyNum + 1] != null) {
+							partyNum++;
+						} else {
+							partyNum = 0;
+						}
+					}
+				}
+				
+				if (gp.keyH.aPressed) {
+					gp.keyH.aPressed = false;
+					if (p.playerOwned()) {
+						if (moveSummaryNum < 0) {
+							if (p.item != null && foe == null) {
+								showMessage("Took " + p.nickname + "'s " + p.item + ".");
+								gp.player.p.bag.add(p.item);
+								p.item = null;
+							}
+						} else {
+							if (moveSwapNum > -1) {
+								if (moveSummaryNum != moveSwapNum) {
+									Moveslot temp = p.moveset[moveSummaryNum];
+									p.moveset[moveSummaryNum] = p.moveset[moveSwapNum];
+									p.moveset[moveSwapNum] = temp;
+								}
+								moveSwapNum = -1;
+							} else {
+								moveSwapNum = moveSummaryNum;
+							}
+						}
+					}
+				}
+				
+				if (gp.keyH.dPressed) {
+					gp.keyH.dPressed = false;
+					if (foe == null) {
+						nickname = new StringBuilder(p.nickname);
+						setNicknaming(true);
 					}
 				}
 			}
 			
-			if (gp.keyH.dPressed) {
-				gp.keyH.dPressed = false;
-				if (foe == null) {
-					nickname = new StringBuilder(p.nickname);
-					setNicknaming(true);
-				}
-			}
-			
-			String wText = moveSummaryNum < 0 ? "Moves" : null;
+			String wText = moveSummaryNum < 0 && !egg ? "Moves" : null;
 			String aText = moveSummaryNum < 0 ? p.item == null || foe != null ? null : "Take" : p.playerOwned() ? "Swap" : null;
-			String dText = gp.gameState == GamePanel.BATTLE_STATE || moveSummaryNum > -1 ? gp.battleUI.showFoeSummary ? "Back" : null : "Name";
+			String dText = gp.gameState == GamePanel.BATTLE_STATE || moveSummaryNum > -1 ? gp.battleUI.showFoeSummary ? "Back" : null : egg ? null : "Name";
 			drawToolTips(wText, aText, "Back", dText);
 		} else {
-			currentDialogue = "Change " + p.name + "'s nickname?";
+			currentDialogue = "Change " + p.name() + "'s nickname?";
 			drawDialogueScreen(true);
 			setNickname(p, false);
 			if (nicknaming == 0) {
@@ -625,7 +656,7 @@ public abstract class AbstractUI {
 					gp.keyH.wPressed = false;
 					p.nickname = nickname.toString().trim();
 					nickname = new StringBuilder();
-					if (p.nickname == null || p.nickname.trim().isEmpty()) p.nickname = p.name;
+					if (p.nickname == null || p.nickname.trim().isEmpty()) p.nickname = p.name();
 					nicknaming = -1;
 				}
 				drawToolTips("OK", null, null, null);
@@ -939,7 +970,7 @@ public abstract class AbstractUI {
 				int hpDif = oldP.getStat(0) - oldP.currentHP;
 		        newP.currentHP -= hpDif;
 		        newP.moveMultiplier = newP.moveMultiplier;
-		        Task text = Task.createTask(Task.TEXT, oldP.nickname + " evolved into " + newP.name + "!");
+		        Task text = Task.createTask(Task.TEXT, oldP.nickname + " evolved into " + newP.name() + "!");
 		        Task.insertTask(text, 0);
 		        newP.exp = oldP.exp;
 		        gp.player.p.pokedex[newP.id] = 2;
