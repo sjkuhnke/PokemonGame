@@ -1948,7 +1948,7 @@ public class AssetSetter {
 		
 		mapNum = 178;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_DOWN, "Researcher", 31, 38, "Hello! I specialize in checking those strange evolution methods for your Pokemon. Have any to show me?", true);
+		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_DOWN, "Researcher", 31, 38, "Hello there! Welcome to one of Xhenos's lovely Research Posts!", true);
 		
 	}
 

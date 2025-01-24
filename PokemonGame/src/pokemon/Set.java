@@ -52,7 +52,7 @@ public class Set {
 		}
 		
 		// DEBUGGING
-		throw new IllegalStateException("Set " + p.name + " has an illegal ability: " + ability);
+		throw new IllegalStateException("Set " + p.name() + " has an illegal ability: " + ability);
 	}
 
 	public void setIVs(PType type) {

@@ -42,7 +42,7 @@ import overworld.GamePanel;
 import overworld.KeyHandler;
 import overworld.Main;
 import overworld.PMap;
-import pokemon.Item;
+import util.Pair;
 import pokemon.*;
 
 public class PlayerCharacter extends Entity {
@@ -167,9 +167,33 @@ public class PlayerCharacter extends Entity {
 				}
 			}
 			if (p.steps % 129 == 0) {
-				for (Pokemon p : p.team) {
-            		if (p != null) p.awardHappiness(1, false);
+				ArrayList<Pair<Egg, Integer>> eggs = new ArrayList<>();
+				boolean fast = false;
+				for (int i = 0; i < p.team.length; i++) {
+					Pokemon po = p.team[i];
+            		if (po != null) {
+            			po.awardHappiness(1, false);
+            			if (po instanceof Egg) eggs.add(new Pair<>(((Egg) po), i));
+            			if (po.ability == Ability.FLAME_BODY || po.ability == Ability.MAGMA_ARMOR || po.ability == Ability.HEAT_COMPACTION) fast = true;
+            		}
             	}
+				for (Pair<Egg, Integer> pair : eggs) {
+					Egg e = pair.getFirst();
+					boolean hatch = e.step(fast);
+					if (hatch) {
+						int index = pair.getSecond();
+						Pokemon h = e.hatch();
+						p.pokedex[h.id] = 2;
+						p.team[index] = h;
+						if (index == 0) gp.player.p.setCurrent(h);
+						gp.setTaskState();
+						Task.addTask(Task.TEXT, "Oh?");
+						Task.addTask(Task.TEXT, h.name() + " hatched from the egg!");
+						Task t = Task.addTask(Task.NICKNAME, "Would you like to nickname " + h.name() + "?", h);
+						t.wipe = true; // to reset the nickname when the task gets up
+						break;
+					}
+				}
 				p.steps++;
 			}
 			
@@ -651,7 +675,7 @@ public class PlayerCharacter extends Entity {
 			p.flag[0][6] = true;
 			Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
 			Pokemon result = new Pokemon(((p.secondStarter + 1) * 3) - 2, 5, true, false);
-			Task.addTask(Task.TEXT, "You recieved " + result.name + "!");
+			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task t = Task.addTask(Task.GIFT, "", result);
 			t.item = result.item = items[p.secondStarter];
 		} else if (gp.currentMap == 4) {
@@ -777,7 +801,7 @@ public class PlayerCharacter extends Entity {
 			Task.addTask(Task.DIALOGUE, npc, "That's hello where I come from. I'm Ryder, adventurer extraordinaire at the ripe old age of 16.");
 			Task.addTask(Task.DIALOGUE, npc, "Say, you look like a competent Pokemon trainer. Mind taking care of something for me?");
 			Pokemon abra = new Pokemon(243, 15, true, false);
-			Task.addTask(Task.TEXT, "You recieved " + abra.name + "!");
+			Task.addTask(Task.TEXT, "You recieved " + abra.name() + "!");
 			Task.addTask(Task.GIFT, "", abra);
 			Task.addTask(Task.DIALOGUE, npc, "Yeah, I noticed Abra seems to gain a new ability here, probably because of that new magic type I've been hearing about.");
 			Task.addTask(Task.DIALOGUE, npc, "Anyways, it was pleasure doing business with you mate, I'm sure I'll see you around. I gotta see what the rest of the region has in store for me!");
@@ -908,7 +932,7 @@ public class PlayerCharacter extends Entity {
 					}
 				} while (p.pokedex[id] == 2 && counter < 100);
 				Pokemon result = new Pokemon(id, 20, true, false);
-				Task.addTask(Task.TEXT, "You recieved " + result.name + "!");
+				Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 				Task.addTask(Task.GIFT, "", result);
 			} else if (p.flag[1][2] && !p.flag[1][16]) {
 				Task.addTask(Task.DIALOGUE, npc, "The energy levels are getting low at the Control Center?");
@@ -1006,7 +1030,7 @@ public class PlayerCharacter extends Entity {
 					}
 				} while (p.pokedex[id] == 2 && counter < 100);
 				Pokemon result = new Pokemon(id, 15, true, false);
-				Task.addTask(Task.TEXT, "You recieved " + result.name + "!");
+				Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 				Task.addTask(Task.GIFT, "", result);
 			}
 		} else if (gp.currentMap == 28) {
@@ -1174,7 +1198,7 @@ public class PlayerCharacter extends Entity {
 				}
 			} while (p.pokedex[id] == 2 && counter < 50);
 			Pokemon result = new Pokemon(id, 25, true, false);
-			Task.addTask(Task.TEXT, "You recieved " + result.name + "!");
+			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		} else if (gp.currentMap == 50) {
 			p.flag[3][9] = true;
@@ -1202,7 +1226,7 @@ public class PlayerCharacter extends Entity {
 				}
 			}
 			Pokemon result = new Pokemon(id, 25, true, false);
-			Task.addTask(Task.TEXT, "You recieved " + result.name + "!");
+			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		} else if (gp.currentMap == 39) {
 			p.flag[3][0] = true;
@@ -1343,7 +1367,7 @@ public class PlayerCharacter extends Entity {
 			} while (p.pokedex[ids[index]] == 2 && counter < 100);
 			
 			Pokemon result = new Pokemon(ids[index], 30, true, false);
-			Task.addTask(Task.TEXT, "You recieved " + result.name + "!");
+			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		} else if (gp.currentMap == 107) { // arthra
 			if (!p.flag[5][0]) {
@@ -1465,8 +1489,8 @@ public class PlayerCharacter extends Entity {
 					index = 2;
 				}
 				
-				Pokemon result = new Pokemon(ids[index], 1, true, false);
-				Task.addTask(Task.TEXT, "You recieved " + result.name + "!");
+				Egg result = new Egg(ids[index], 3);
+				Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 				Task.addTask(Task.GIFT, "", result);
 			} else { // scott cutscene
 				Task.addTask(Task.DIALOGUE, npc, "I - I've been looking everywhere for you! You need to listen to me, something HUGE is going on!");
@@ -1570,12 +1594,32 @@ public class PlayerCharacter extends Entity {
 			p.flag[6][3] = true;
 			Task.addTask(Task.DIALOGUE, npc, "Here, take this rare Pokemon!");
 			Pokemon result = new Pokemon(97, 50, true, false);
-			Task.addTask(Task.TEXT, "You recieved " + result.name + "!");
+			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		} else if (gp.currentMap == 168) { // shroom guy
 			Task.addTask(Task.MUSHROOM, npc, "Gimmie, gimmie, GIMMIE!");
 		} else if (gp.currentMap == 178) {
-			Task.addTask(Task.EVO_INFO, npc, "");
+			Task.addTask(Task.DIALOGUE, npc, "I specialize in checking those strange evolution methods for your Pokemon.");
+			if (!p.flag[1][20]) {
+				//p.flag[1][20] = true;
+				Task.addTask(Task.DIALOGUE, npc, "Wait a minute... we haven't met yet, have we?");
+				Task.addTask(Task.DIALOGUE, npc, "You're the Professor's kid, right? Here, he asked me to give you this if you ever passed by.");
+				Random random = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
+				int id = 0;
+				int counter = 0;
+				do {
+					do {
+						id = random.nextInt(Pokemon.MAX_POKEMON) + 1;
+					} while (Pokemon.getEvolveString(id - 1) != null || Pokemon.getCatchRate(id) <= 5);
+					counter++;
+				} while (p.pokedex[id] == 2 && counter < 100);
+				Egg egg = new Egg(id, 3);
+				Task.addTask(Task.GIFT, "", egg);
+				Task.addTask(Task.DIALOGUE, npc, "Let me know if you want to check any strange evolution progress!");
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "Have any to show me?");
+				Task.addTask(Task.EVO_INFO, npc, "");
+			}	
 		}
 		
 		if (gp.currentMap == 138 && !p.flags[26]) {
@@ -2104,5 +2148,11 @@ public class PlayerCharacter extends Entity {
 			right3 = setup("/player/red4_2");
 			right4 = setup("/player/red4_3");
 		}
+	}
+
+	public static String getMetAt() {
+		int parenthesisIndex = PlayerCharacter.currentMapName.indexOf('(');
+		return (parenthesisIndex == -1 || PlayerCharacter.currentMapName.contains("pt.")) ?
+				PlayerCharacter.currentMapName.trim() : PlayerCharacter.currentMapName.substring(0, parenthesisIndex).trim();
 	}
 }

@@ -310,21 +310,26 @@ public class UI extends AbstractUI {
 			currentTask = null;
 			break;
 		case Task.GIFT:
-			gp.player.p.catchPokemon(currentTask.p);
+			// currentTask.wipe = Gift is egg
+			gp.player.p.catchPokemon(currentTask.p, !currentTask.wipe);
 			currentTask.p.item = currentTask.item;
-			setNicknaming(true);
+			if (!currentTask.wipe) setNicknaming(true);
 			currentTask = null;
 			break;
 		case Task.NICKNAME:
 			currentDialogue = currentTask.message;
 			drawDialogueScreen(true);
 			setNickname(currentTask.p, false);
+			if (currentTask.wipe) {
+				currentTask.wipe = false;
+				setNicknaming(true);
+			}
 			if (nicknaming == 0) {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
 					currentTask.p.nickname = nickname.toString().trim();
 					nickname = new StringBuilder();
-					if (currentTask.p.nickname == null || currentTask.p.nickname.trim().isEmpty()) currentTask.p.nickname = currentTask.p.name;
+					if (currentTask.p.nickname == null || currentTask.p.nickname.trim().isEmpty()) currentTask.p.nickname = currentTask.p.name();
 					nicknaming = -1;
 					currentTask = null;
 				}
@@ -1070,7 +1075,7 @@ public class UI extends AbstractUI {
 			}
 			if (trade >= 0) {
 				Pokemon tr = new Pokemon(tradeIndices[trade], p.level, true, false);
-				Task t = Task.addTask(Task.CONFIRM, "Would you like to trade " + p.nickname + " for my " + tr.name + "?", tr);
+				Task t = Task.addTask(Task.CONFIRM, "Would you like to trade " + p.nickname + " for my " + tr.name() + "?", tr);
 				t.counter = 1;
 				currentTask = null;
 			} else {
@@ -1184,7 +1189,7 @@ public class UI extends AbstractUI {
 					gp.eHandler.teleport(149, 49, 76, false);
 					break;
 				case 1: // regional trade confirm
-					Task.addTask(Task.TEXT, "You traded for " + currentTask.p.name + "!");
+					Task.addTask(Task.TEXT, "You traded for " + currentTask.p.name() + "!");
 					gp.player.p.team[partyNum] = currentTask.p;
 					gp.player.p.pokedex[currentTask.p.id] = 2;
 					currentTask.p.trainer = gp.player.p;
@@ -1376,7 +1381,7 @@ public class UI extends AbstractUI {
 			if (p != null) {
 				String message = "";
     			message += p.nickname;
-    			if (!p.nickname.equals(p.name)) message += (" (" + p.name + ")");
+    			if (!p.nickname.equals(p.name())) message += (" (" + p.name() + ")");
     			message += " : ";
     			PType type = p.determineHPType();
     			message += type;
@@ -1828,7 +1833,7 @@ public class UI extends AbstractUI {
 		y += gp.tileSize / 4;
 		int startX = x;
 		g2.setFont(g2.getFont().deriveFont(36F));
-		g2.drawString(p.name, x, y + gp.tileSize / 2);
+		g2.drawString(p.name(), x, y + gp.tileSize / 2);
 		
 		x = startX;
 		y += gp.tileSize;
@@ -2161,6 +2166,10 @@ public class UI extends AbstractUI {
                             }
 						}
 					}
+					if (partySelectedNum == 0 && gp.player.p.teamWouldBeFainted(partySelectedNum) && cBox[boxNum] instanceof Egg) {
+						showMessage("That's your last Pokemon!");
+                        return;
+					}
 					Pokemon temp = gp.player.p.team[partySelectedNum];
 					if (temp != null) {
                         temp.heal();
@@ -2296,6 +2305,11 @@ public class UI extends AbstractUI {
 	                            return;
                             }
 						}
+					}
+					
+					if (partyNum == 0 && gp.player.p.teamWouldBeFainted(partyNum) && dBox[boxSwapNum] instanceof Egg) {
+						showMessage("That's your last Pokemon!");
+                        return;
 					}
 					
 					Pokemon temp = gp.player.p.team[partyNum];
@@ -3445,7 +3459,7 @@ public class UI extends AbstractUI {
 			Pair<Pokemon, Integer> current = inventory.get(itemIndex);
 			Pokemon p = current.getFirst();
 			drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
-			g2.drawString(Pokemon.getFormattedDexNo(p.id) + " - " + p.name, textX, textY);
+			g2.drawString(Pokemon.getFormattedDexNo(p.id) + " - " + p.name(), textX, textY);
 			
 			String price = current.getSecond() + " win streak";
 			g2.drawString(price, getRightAlignedTextX(price, dFrameX + dFrameWidth - gp.tileSize / 2), textY);
@@ -4123,7 +4137,7 @@ public class UI extends AbstractUI {
 		int hpDif = oldP.getStat(0) - oldP.currentHP;
         newP.currentHP -= hpDif;
         newP.moveMultiplier = newP.moveMultiplier;
-        Task text = Task.createTask(Task.TEXT, oldP.nickname + " evolved into " + newP.name + "!");
+        Task text = Task.createTask(Task.TEXT, oldP.nickname + " evolved into " + newP.name() + "!");
         Task.insertTask(text, 0);
         newP.exp = oldP.exp;
         gp.player.p.pokedex[newP.id] = 2;

@@ -1163,7 +1163,7 @@ public class PMap extends JPanel {
 			PlayerCharacter.currentMapName = "Post Office";
 			return 4;
 		case 162:
-			PlayerCharacter.currentMapName = "Research Post";
+			PlayerCharacter.currentMapName = "Research Post B";
 			return 47;
 		case 163:
 			PlayerCharacter.currentMapName = "Schrice City";
@@ -1210,6 +1210,9 @@ public class PMap extends JPanel {
 		case 177:
 			PlayerCharacter.currentMapName = "Frenco City";
 			return 28;
+		case 178:
+			PlayerCharacter.currentMapName = "Research Post A";
+			return 5;
 		}
 		
 		return -1;

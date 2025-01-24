@@ -215,14 +215,16 @@ public class Task {
 			return t;
 		} else if (gp != null && (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE)) {
 			Task t = createTask(type, string, p);
+			if (type == GIFT) {
+				// t.wipe = gift is egg
+				t.wipe = p instanceof Egg ? true : false;
+			}
 			gp.ui.tasks.add(t);
 			gp.ui.checkTasks = true;
 			return t;
 		} else {
 			if (type == Task.TEXT) {
 				gp.ui.showMessage(string);
-			} else if (type == Task.NICKNAME) {
-				p.setNickname();
 			}
 			System.out.println("GameState wasn't Task or Rare Candy state, it was: " + gp.gameState);
 			return null;

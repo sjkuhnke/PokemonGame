@@ -391,6 +391,8 @@ public enum Item {
     public static final int KEY_ITEM = 6;
     
     public static Item[] itemTable = setupItemTable();
+    public static Item[] mints;
+    public static int mintID = 0;
 	
 	Item(int id, int cost, int sell, Color color, int pocket, Object o, String desc) {
 		this.id = id;
@@ -432,6 +434,13 @@ public enum Item {
 					healAmount = 0;
 			}
 		}
+		
+		if (isMint()) addToMintTable();
+	}
+
+	private void addToMintTable() {
+		if (mints == null) mints = new Item[21];
+		mints[mintID++] = this;
 	}
 
 	private static Item[] setupItemTable() {
@@ -713,8 +722,8 @@ public enum Item {
             		Pokemon kD = pl.team[k].clone();
             		int oHP = kD.getStat(0);
     				kD.id = 237;
-    				kD.name = kD.getName();
-    				if (kD.nickname == kD.name) kD.nickname = kD.getName();
+    				kD.setName(kD.getName());
+    				if (kD.nickname == kD.name()) kD.nickname = kD.getName();
     				
     				kD.baseStats = kD.getBaseStats();
     				kD.setStats();

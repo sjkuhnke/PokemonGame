@@ -81,7 +81,7 @@ public class Pokemon implements Serializable {
 	
 	// id fields
 	public int id;
-	public String name;
+	private String name;
 	public String nickname;
 	
 	// stat fields
@@ -161,10 +161,10 @@ public class Pokemon implements Serializable {
 	public Trainer trainer;
 	
 	// Sprite fields
-	private transient BufferedImage sprite;
-	private transient Image frontSprite;
+	protected transient BufferedImage sprite;
+	protected transient Image frontSprite;
 	private transient Image backSprite;
-	private transient BufferedImage miniSprite;
+	protected transient BufferedImage miniSprite;
 	
 	public String metAt;
 	
@@ -342,7 +342,7 @@ public class Pokemon implements Serializable {
 		return setMiniSprite();
 	}
 	
-	private BufferedImage setSprite() {
+	protected BufferedImage setSprite() {
 		BufferedImage image = null;
 		
 		String imageName = id + "";
@@ -360,7 +360,7 @@ public class Pokemon implements Serializable {
 		return image;
 	}
 	
-	private Image setFrontSprite() {
+	protected Image setFrontSprite() {
 		BufferedImage originalSprite = sprite;
 		
 		int scaledWidth = originalSprite.getWidth(null) * 2;
@@ -836,6 +836,14 @@ public class Pokemon implements Serializable {
 	
 	public static Node getNode(int id, int level) {
 		return movebanks[id - 1][level];
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String name() {
+		return this instanceof Egg ? "Egg" : this.name;
 	}
 	
 	public String getName() {
@@ -1356,8 +1364,8 @@ public class Pokemon implements Serializable {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-	    sb.append(name);
-	    if (nickname != null && !nickname.equals(name)) {
+	    sb.append(name());
+	    if (nickname != null && !nickname.equals(name())) {
 	    	sb.append(" (");
 		    sb.append(nickname);
 		    sb.append(")");
@@ -1635,7 +1643,8 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (foe.vStatuses.contains(Status.PROTECT) && (move.accuracy <= 100 || move.cat != 2) && move != Move.FEINT && move != Move.PHANTOM_FORCE && move != Move.VANISHING_ACT) {
+		if (foe.vStatuses.contains(Status.PROTECT) && (move.accuracy <= 100 || move.cat != 2) && move != Move.FEINT && move != Move.PHANTOM_FORCE
+				&& move != Move.VANISHING_ACT && move != Move.MIGHTY_CLEAVE) {
 			useMove(move, foe);
 			Task.addTask(Task.TEXT, foe.nickname + " protected itself!");
 			if (move.contact) {
@@ -2408,7 +2417,7 @@ public class Pokemon implements Serializable {
 					Task.addTask(Task.TEXT, foe.nickname + " hung on using its Focus Sash!");
 					foe.consumeItem(this);
 				} else if (move != Move.FALSE_SWIPE) {
-					Task.addTask(Task.TEXT, foe.name + " endured the hit!");
+					Task.addTask(Task.TEXT, foe.nickname + " endured the hit!");
 				}
 			}
 			if (foe.currentHP <= 0) { // Check for kill
@@ -4098,7 +4107,7 @@ public class Pokemon implements Serializable {
 				int nHP = this.getStat(0);
 				Task.addTask(Task.SPRITE, "", this);
 				heal(nHP - oHP, nickname + " transformed into " + getName(id) + "!");
-				if (nickname.equals(name)) nickname = getName();
+				if (nickname.equals(name())) nickname = getName();
 				name = getName();
 				setTypes();
 				setAbility();
@@ -6208,7 +6217,7 @@ public class Pokemon implements Serializable {
 	    type1B = new JGradientButton("");
 	    type2B = new JGradientButton("");
 	    if (this != null) {
-	        nameLabel = new JLabel(this.name + " Lv. " + this.getLevel());
+	        nameLabel = new JLabel(this.name() + " Lv. " + this.getLevel());
 	        nameLabel.setForeground(this.type1.getColor().darker());
 	        nameLabel.setFont(new Font(nameLabel.getFont().getName(), Font.BOLD, 16));
 	        nicknameLabel = new JLabel(this.nickname);
@@ -6961,6 +6970,10 @@ public class Pokemon implements Serializable {
 	}
 	
 	public int getCatchRate() {
+		return getCatchRate(id);
+	}
+	
+	public static int getCatchRate(int id) {
 		return catch_rates[id - 1];
 	}
 	
@@ -7199,16 +7212,6 @@ public class Pokemon implements Serializable {
 				break;
 		}
 		return type;
-	}
-
-	public void setNickname() {
-		nickname = JOptionPane.showInputDialog(null, "Would you like to nickname " + name + "?");
-	    if (nickname == null || nickname.trim().isEmpty()) nickname = name;
-	    while (nickname.length() > 12) {
-	    	JOptionPane.showMessageDialog(null, "Nickname must be no greater than 12 characters.");
-	    	nickname = JOptionPane.showInputDialog(null, "Would you like to nickname " + name + "?");
-	    	if (nickname == null || nickname.trim().isEmpty()) nickname = name;
-	    }
 	}
 	
 	public boolean canEvolve() {
@@ -7600,7 +7603,7 @@ public class Pokemon implements Serializable {
 	
 	public void update() {
 		baseStats = getBaseStats();
-		if (nickname.equals(name)) nickname = getName();
+		if (nickname.equals(name())) nickname = getName();
 		name = getName();
 		setAbility();
 		setTypes();
@@ -8262,7 +8265,7 @@ public class Pokemon implements Serializable {
 	public ArrayList<FieldEffect> getFieldEffects() {
 		if (this.trainer == null) {
 			if (this.fieldEffects == null) {
-				throw new IllegalStateException(this.name + " tried fetching their own field effect list and it's null");
+				throw new IllegalStateException(this.nickname + " tried fetching their own field effect list and it's null");
 			}
 			return this.fieldEffects;
 		} else {

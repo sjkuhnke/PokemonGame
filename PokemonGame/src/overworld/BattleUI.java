@@ -374,7 +374,7 @@ public class BattleUI extends AbstractUI {
 					setNicknaming(true);
 				} else {
 					currentTask.p.setVisible(true);
-					Task.addTask(Task.TEXT, "Oh no, " + foe.name + " broke free!");
+					Task.addTask(Task.TEXT, "Oh no, " + foe.name() + " broke free!");
 					turn(null, foe.randomMove());
 					ball = gp.player.p.getBall(ball);
 					balls = gp.player.p.getBalls();
@@ -390,7 +390,7 @@ public class BattleUI extends AbstractUI {
 					gp.keyH.wPressed = false;
 					foe.nickname = nickname.toString().trim();
 					nickname = new StringBuilder();
-					if (foe.nickname == null || foe.nickname.trim().isEmpty()) foe.nickname = foe.name;
+					if (foe.nickname == null || foe.nickname.trim().isEmpty()) foe.nickname = foe.name();
 					nicknaming = -1;
 					currentTask = null;
 				}
@@ -497,7 +497,7 @@ public class BattleUI extends AbstractUI {
 		int width = 20;
 		for (Pokemon p : user.getPlayer().getTeam()) {
 			BufferedImage image;
-			if (p == null) {
+			if (p == null || p instanceof Egg) {
 				image = emptyIcon;
 			} else if (p.isFainted() && !p.isVisible()) {
 				image = faintedIcon;
@@ -1219,7 +1219,7 @@ public class BattleUI extends AbstractUI {
 				}
 			} else if (!user.getPlayer().wiped()) {
 				subState = TASK_STATE;
-				Task.addTask(Task.END, foe.name + " was defeated!");
+				Task.addTask(Task.END, foe.name() + " was defeated!");
 				break;
 			}
 		}

@@ -313,6 +313,7 @@ public enum Move {
 	METEOR_BEAM(120,90,100,0,1,0,PType.ROCK,"% to raise the user's Sp.Atk by 1, user must charge on the first turn",false,10),
 	METEOR_MASH(90,90,20,0,0,0,PType.STEEL,"% chance to raise user's Attack by 1",true,10),
 	METRONOME(0,1000,0,0,2,0,PType.MAGIC,"Uses a random move, can't be blocked by taunt",false,20),
+	MIGHTY_CLEAVE(95,100,0,0,0,0,PType.ROCK,"Hits through protect",true,5),
 	MIMIC(0,1000,0,0,2,0,PType.NORMAL,"Uses the move last used by the foe, fails if foe hasn't used a move yet",false,10),
 	MIND_READER(0,1000,0,0,2,0,PType.PSYCHIC,"Raises user's Accuracy by 6",false,5),
 	MINIMIZE(0,1000,0,0,2,0,PType.GHOST,"Raises user's Evasion by 2",false,5),

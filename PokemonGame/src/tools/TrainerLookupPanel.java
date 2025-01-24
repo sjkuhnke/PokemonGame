@@ -132,7 +132,7 @@ public class TrainerLookupPanel extends JPanel {
 			pokemonPanel.setLayout(new BoxLayout(pokemonPanel, BoxLayout.Y_AXIS));
 			
 			String idDexNo = "[" + p.id + "] " + Pokemon.getFormattedDexNo(p.getDexNo());
-			String pokemonName = p.name + " Lv. " + p.level + " @ " + p.item;
+			String pokemonName = p.name() + " Lv. " + p.level + " @ " + p.item;
 			String abilityName = "Ability: " + p.ability;
 			
 			JLabel idLabel = new JLabel(idDexNo);
