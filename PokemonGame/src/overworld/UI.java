@@ -1218,6 +1218,33 @@ public class UI extends AbstractUI {
 					Task.addTask(Task.ODDS, "Done!");
 					currentTask = null;
 					break;
+				case 5: // guy eddie
+					Task t = Task.addTask(Task.TELEPORT, "");
+					t.counter = 124;
+					t.start = 36;
+					t.finish = 79;
+					t = Task.addTask(Task.TURN, gp.player, "");
+					t.counter = 0;
+					if (!gp.player.p.flag[0][19]) {
+						t = Task.addTask(Task.FLAG, "");
+						t.start = 0;
+						t.finish = 19;
+						Task.addTask(Task.DIALOGUE, npc, "Make it in one piece okay squirt? Haha - yeah, that's portal technology!");
+						if (!gp.player.p.flag[1][2]) {
+							Task.addTask(Task.DIALOGUE, npc, "I'm sure you'll get your hands on it one day. It's great!");
+						} else {
+							Task.addTask(Task.DIALOGUE, npc, "You have it too? Wow kiddo, you must be special!");
+							Task.addTask(Task.DIALOGUE, npc, "... ah, Professor's kid. Makes sense!");
+						}
+						Task.addTask(Task.DIALOGUE, npc, "Anyhow mate, this town is home to Merlin, the Magic Gym Leader.");
+						Task.addTask(Task.DIALOGUE, npc, "He's far too strong to challenge right now, so most stuff is going to be blocked off for you.");
+						Task.addTask(Task.DIALOGUE, npc, "My famous restaurant is right behind you! I'll be in there when you want to go home!");
+						Task.addTask(Task.FLASH_IN, "");
+						Task.addTask(Task.UPDATE, "");
+						Task.addTask(Task.FLASH_OUT, "");
+					}
+					currentTask = null;
+					break;
 				}
 			}
 		}
@@ -2166,7 +2193,7 @@ public class UI extends AbstractUI {
                             }
 						}
 					}
-					if (partySelectedNum == 0 && gp.player.p.teamWouldBeFainted(partySelectedNum) && cBox[boxNum] instanceof Egg) {
+					if (cBox[boxNum] instanceof Egg && partySelectedNum == 0 && gp.player.p.teamWouldBeFainted(partySelectedNum)) {
 						showMessage("That's your last Pokemon!");
                         return;
 					}
@@ -2307,7 +2334,7 @@ public class UI extends AbstractUI {
 						}
 					}
 					
-					if (partyNum == 0 && gp.player.p.teamWouldBeFainted(partyNum) && dBox[boxSwapNum] instanceof Egg) {
+					if (dBox[boxSwapNum] instanceof Egg && partyNum == 0 && gp.player.p.teamWouldBeFainted(partyNum)) {
 						showMessage("That's your last Pokemon!");
                         return;
 					}

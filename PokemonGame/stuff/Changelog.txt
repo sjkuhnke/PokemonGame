@@ -124,3 +124,9 @@ Added a gold border + star to Dex Nav if you have every encounter in the section
 Changed Swagger's accuracy 90 -> 100 to match Flatter
 Fixed a crucial bug with wild Pokemon trying to write their fieldEffects field by making it transient
 Fixed Knock Off, Bug Bite, Trick, etc's interaction with Sticky Hold and Mold Breaker
+Gave Tortugis, Hamthrono, Millistone, Tricerpup/Tricercil, Blaxer/Pyrator, Flamehox line, Shookwat line, Magie line, Rhypo line, Wormite line, Flamehox-E line, Blaxer-S/Pyrator-S Endure
+Gave Iglite Fire Spin at lv 5 and Hidden Power at lv 10
+Added Mighty Cleave and gave it to Barbaracle at lv 60
+Changed Iglite-S's delay evo Knock Off from lv 18 -> 17
+ADDED EGGS TO MY GAME FINALLY, changed 6th gym split gift to egg
+Added a new encounter to 2nd gym split where Research Post A gives you an egg of a RANDOM basic stage mon!

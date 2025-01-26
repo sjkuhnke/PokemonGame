@@ -30,8 +30,8 @@ public class AssetSetter {
 	private static final int SCIENTIST_DOWN = -28;
 	private static final int MILLIE_UP = -27;
 	private static final int ROBIN_UP = -26;
-	private static final int CHEF = -25;
-//	private static final int UP_PHEROMOSA = -24;
+	private static final int CHEF_UP = -25;
+	private static final int CHEF_DOWN = -24;
 //	private static final int UP_BUZZWOLE = -23;
 //	private static final int UP_SPLAME = -22;
 //	private static final int UP_SHOOKWAT = -21;
@@ -1474,7 +1474,7 @@ public class AssetSetter {
 		
 		mapNum = 57;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(CHEF, "Guy Eddie", 31, 41, "Eyy! What brings a scrawny kid like you into the famous Guy Eddie's culinary residence!", true, 9, "By the way, if you're ever in Rawwar City, head over to my restaurant. You won't wanna miss the Eddie special, Smoked Pie! It's gonna be a blast burn!");
+		gp.npc[mapNum][index] = NPCSetup(CHEF_DOWN, "Guy Eddie", 31, 41, "Eyy! What brings a scrawny kid like you into the famous Guy Eddie's culinary residence!", true);
 		
 		mapNum = 58;
 		index = 0;
@@ -1740,6 +1740,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 25, 83, "The gym is closed right now. Why, you ask? Because a goddamn Team Nuke member came here and KIDNAPPED one of our employees.\n"
 				+ "Yeah, what the hell is right! Last I saw him, he was bringing Marcus towards the volcano. I just hope that Marcus doesn't sue us...", 196);
 		
+		gp.npc[mapNum][index] = NPCSetup(CHEF_UP, "Guy Eddie", 36, 80, "");
+		
 		mapNum = 127;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 27, 39, "Welcome to the Blackjack table!", true);
@@ -1802,7 +1804,7 @@ public class AssetSetter {
 		
 		mapNum = 130;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(CHEF, "Guy Eddie", 24, 36, "Aren't you lookin like you want some SPICE!", true, 195, "ICE SPICE is my idol <3");
+		gp.npc[mapNum][index] = NPCSetup(CHEF_DOWN, "Guy Eddie", 24, 36, "Welcome to Guy Eddie's SPICY EATS!", true);
 		
 		mapNum = 131;
 		index = 0;
@@ -2796,6 +2798,10 @@ public class AssetSetter {
 			gp.npc[4][0] = null;
 		}
 		
+		if (flag[0][19] || flag[5][8]) {
+			gp.npc[124][16] = null;
+		}
+		
 		/**
 		 * Second Split
 		 */
@@ -3087,6 +3093,10 @@ public class AssetSetter {
 			gp.npc[109][5] = NPCSetup(SCOTT_UP, "Scott", 15, 44, "FINN!!!", true, 192, "Hurry, Finn! I'm counting on you. Head south through Gelb Forest to reach Rawwar City!");
 		} else {
 			gp.npc[109][5] = null;
+		}
+		
+		if (flag[5][8]) {
+			gp.npc[57][0] = null;
 		}
 		
 		if (flag[6][4]) {
@@ -3703,9 +3713,13 @@ public class AssetSetter {
 				result.setupImages("/npc/fisherman");
 				result.setDirection("down");
 				break;
-			case CHEF:
+			case CHEF_DOWN:
 				result.setupImages("/npc/chef");
 				result.setDirection("down");
+				break;
+			case CHEF_UP:
+				result.setupImages("/npc/chef");
+				result.setDirection("up");
 				break;
 			case LADY_DOWN:
 				result.setupImages("/npc/lady");

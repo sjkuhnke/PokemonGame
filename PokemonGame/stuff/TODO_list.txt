@@ -48,11 +48,10 @@ Add a tree tile on Route 37 after the grass encounter area in the middle horizon
 [ Turn ] [ Switch ]
 [ Info ] [ Sheet ]
 
-Have a key [S] for toggling autoplay on the idle screen/task screen
 Make hazards not be clickable if the foe only has 1 mon left
 Change switch in AI to be able to work with disruptive mons (Comp Busheep)
 Make leech seed not clickable if the opponent is a grass type/discourage it
-Make hazards encouraged if the opponent does less than a % to you
+Make hazard/boosting moves encouraged if the opponent does less than a % to you
 
 Make Ryder 1 disappear after beating second gym
 Make Ryder 3 disappear after beating Icy Serpant

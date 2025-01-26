@@ -736,7 +736,11 @@ public class PlayerCharacter extends Entity {
 				p.bag.remove(Item.PACKAGE_B);
 				p.flag[0][9] = true;
 			} else {
-				Task.addTask(Task.DIALOGUE, npc, "Be sure to check me out in Rawwar city sometime!");
+				if (!p.flag[0][19]) {
+					Task.addTask(Task.DIALOGUE, npc, "Hey, thanks for the help squirt! Listen, I have a 5-star restaraunt in Rawwar City, you should come check it out!");
+				}
+				Task t = Task.addTask(Task.CONFIRM, npc, "Interested in coming to Rawwar City with me?");
+				t.counter = 5;
 			}
 		} else if (gp.currentMap == 58) {
 			if (p.flag[0][7] && !p.flag[0][17]) {
@@ -1591,11 +1595,33 @@ public class PlayerCharacter extends Entity {
 				showPrizeMenu(panel, p.coins + " coins   $" + p.getMoney());
 			}
 		} else if (gp.currentMap == 130) {
-			p.flag[6][3] = true;
-			Task.addTask(Task.DIALOGUE, npc, "Here, take this rare Pokemon!");
-			Pokemon result = new Pokemon(97, 50, true, false);
-			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
-			Task.addTask(Task.GIFT, "", result);
+			if (p.flag[5][8] && !p.flag[6][3]) {
+				p.flag[6][3] = true;
+				Task.addTask(Task.DIALOGUE, npc, "Oh hey squirt! You finally got strong enough to make it here on your own!");
+				Task.addTask(Task.DIALOGUE, npc, "Here, take this rare Pokemon!");
+				Pokemon result = new Pokemon(97, 50, true, false);
+				Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
+				Task.addTask(Task.GIFT, "", result);
+			}
+			Task.addTask(Task.DIALOGUE, npc, "Here, grab a seat! You and your Pokemon look like you want some SPICE!");
+			for (Pokemon p : p.team) {
+				if (p != null && p.type1 != PType.FIRE && p.type2 != PType.FIRE) {
+					p.status = Status.BURNED;
+				}
+			}
+			Task.addTask(Task.FLASH_IN, "");
+			Task.addTask(Task.FLASH_OUT, "");
+			Task.addTask(Task.DIALOGUE, npc, "Haha! You guys look like you really enjoyed that!");
+			if (p.flag[5][8]) {
+				Task.addTask(Task.DIALOGUE, npc, "Come back anytime, squirt!");
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "Looks like that might've been too spicy for you. C'mon, let's get you back home.");
+				Task t = Task.addTask(Task.TELEPORT, "");
+				t.counter = 4;
+				t.start = 68;
+				t.finish = 63;
+				
+			}
 		} else if (gp.currentMap == 168) { // shroom guy
 			Task.addTask(Task.MUSHROOM, npc, "Gimmie, gimmie, GIMMIE!");
 		} else if (gp.currentMap == 178) {
@@ -1619,7 +1645,7 @@ public class PlayerCharacter extends Entity {
 			} else {
 				Task.addTask(Task.DIALOGUE, npc, "Have any to show me?");
 				Task.addTask(Task.EVO_INFO, npc, "");
-			}	
+			}
 		}
 		
 		if (gp.currentMap == 138 && !p.flags[26]) {
