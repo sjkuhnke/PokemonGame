@@ -106,7 +106,7 @@ Spark : Physical / 65 / 100 / 20 PP : 30% to Paralyze foe
 Thunder : Special / 110 / 70 / 5 PP : 30% of Paralyzing foe, doesn't check accuracy in RAIN
 Thunder Fang : Physical / 65 / 95 / 15 PP : 10% of Paralyzing and/or flinching foe
 Thunder Punch : Physical / 75 / 100 / 15 PP : 20% of Paralyzing foe
-Thunder Wave : Status / -- / 90 / 15 PP : Paralyzes foe
+Thunder Wave : Status / -- / 90 / 15 PP : Paralyzes foe, ELECTRIC Pokemon can't miss this move
 Thunderbolt : Special / 90 / 100 / 10 PP : 10% of Paralyzing foe
 Thundershock : Special / 40 / 100 / 30 PP : 10% of Paralyzing foe
 Volt Switch : Special / 70 / 100 / 10 PP : Causes user to switch out after use
@@ -192,7 +192,7 @@ Return Fire : Physical / 70 / 100 / 15 PP : Calc only move
 Sacred Fire : Physical / 100 / 95 / 5 PP : 50% chance to Burn foe
 Sunny Day : Status / -- / -- / 5 PP : Changes the weather to SUNNY for 5 turns
 V-Create : Physical / 180 / 95 / 5 PP : 100% chance to lower user's Defense, Sp.Def, and Speed by 1
-Will-O-Wisp : Status / -- / 85 / 15 PP : Burns foe
+Will-O-Wisp : Status / -- / 85 / 15 PP : Burns foe, FIRE Pokemon can't miss this move
 
 ===============
 Flying
@@ -283,7 +283,7 @@ Energy Ball : Special / 90 / 100 / 10 PP : 10% chance to lower foe's Sp.Def by 1
 Forests Curse : Status / -- / 100 / 20 PP : Changes foe's type to GRASS
 Frenzy Plant : Special / 150 / 90 / 10 PP : User must rest after using this move
 Giga Drain : Special / 75 / 100 / 10 PP : Heals 50% of damage dealt to foe
-Grass Knot : Special / -- / 100 / 20 PP : A normal attack
+Grass Knot : Special / -- / 100 / 20 PP : Damage is based on how heavy foe is
 Grass Whistle : Status / -- / 55 / 15 PP : Foe falls asleep
 Grassy Terrain : Status / -- / -- / 10 PP : Sets the terrain to GRASSY for 5 turns
 Growth : Status / -- / -- / 15 PP : Raises user's Attack and Sp.Atk by 1, 2 each in the SUN
@@ -345,7 +345,7 @@ Aurora Beam : Special / 75 / 100 / 20 PP : 10% chance to lower foe's Attack by 1
 Aurora Veil : Status / -- / -- / 10 PP : Can only be used in SNOW, reduces both physical and special damage on user's team recieved for 5 turns
 Blizzard : Special / 110 / 70 / 5 PP : 20% chance to Frostbite foe, doesn't check accuracy in SNOW
 Freeze-Dry : Special / 70 / 100 / 15 PP : 10% chance to Frostbite foe, super effective against WATER types too
-Frostbind : Status / -- / 90 / 10 PP : Inflicts foe with Frostbite
+Frostbind : Status / -- / 90 / 10 PP : Inflicts foe with Frostbite, ICE Pokemon can't miss this move
 Glaciate : Special / 65 / 95 / 10 PP : 100% chance to lower foe's Speed by 1
 Haze : Status / -- / -- / 25 PP : Clears all stat changes on the field
 Hp Ice : Special / 60 / 100 / 15 PP : Calc only move
@@ -502,7 +502,7 @@ Stomp : Physical / 65 / 100 / 20 PP : 30% of causing foe to flinch
 Strength : Physical / 80 / 100 / 10 PP : A normal attack
 Super Fang : Physical / -- / 90 / 10 PP : Halves foe's remaining HP
 Supersonic : Status / -- / 55 / 20 PP : Confuses foe
-Swagger : Status / -- / 90 / 15 PP : Confuses foe, but raises foe's Attack by 2
+Swagger : Status / -- / 100 / 15 PP : Confuses foe, but raises foe's Attack by 2
 Sweet Scent : Status / -- / -- / 20 PP : Lowers foe's Evasion by 2
 Swords Dance : Status / -- / -- / 5 PP : Raises user's Attack by 2
 Tackle : Physical / 50 / 100 / 25 PP : A normal attack
@@ -546,7 +546,7 @@ Sludge : Special / 65 / 100 / 15 PP : 30% to Poison foe
 Sludge Bomb : Special / 90 / 100 / 10 PP : 30% to Poison foe
 Sludge Wave : Special / 95 / 100 / 10 PP : 10% chance to Poison foe
 Smog : Special / 20 / 70 / 30 PP : 50% to Poison foe
-Toxic : Status / -- / 90 / 5 PP : Badly poisons foe
+Toxic : Status / -- / 90 / 5 PP : Badly poisons foe, POISON Pokemon can't miss this move
 Toxic Spikes : Status / -- / -- / 10 PP : Lays poisonous spikes on opponents side. 1 layer will cause any non-grounded foe switching in to be Poisoned, 2 = Toxic. POISON-types swtiching in removes them
 Venom Drench : Status / -- / 100 / 20 PP : Lowers a Poisoned/Badly Poisoned foe's Attack and Sp.Atk by 2
 Venom Spit : Physical / 40 / 100 / 5 PP : 100% to Paralyze foe; always goes first
@@ -596,6 +596,7 @@ Diamond Storm : Special / 100 / 95 / 5 PP : 50% chance to raise user's Defense b
 Head Smash : Physical / 150 / 80 / 5 PP : User takes 1/2 of damage inflicted
 Hp Rock : Special / 60 / 100 / 15 PP : Calc only move
 Meteor Beam : Special / 120 / 90 / 10 PP : 100% to raise the user's Sp.Atk by 1, user must charge on the first turn
+Mighty Cleave : Physical / 95 / 100 / 5 PP : Hits through protect
 Power Gem : Special / 80 / 100 / 20 PP : A normal attack
 Return Rock : Physical / 70 / 100 / 15 PP : Calc only move
 Rock Blast : Physical / 25 / 90 / 10 PP : Hits 2-5 times

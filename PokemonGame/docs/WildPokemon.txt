@@ -380,16 +380,16 @@ Route 41 (Surf)
 ===================================================================
 Route 41 (Standard)
 ===================================================================
-10% Froshrog (Lv. 28 - 30)
-15% Sparkitten (Lv. 30 - 32)
-9% Pigonat (Lv. 28 - 31)
-10% Arbok (Lv. 30 - 33)
-7% Dualmoose (Lv. 29 - 33)
-11% Grondor (Lv. 30 - 33)
-10% Florline (Lv. 29 - 32)
-12% Seviper (Lv. 29 - 32)
-10% Azumarill (Lv. 29 - 32)
-6% Grafaiai (Lv. 28 - 31)
+10% Froshrog (Lv. 22 - 24)
+15% Sparkitten (Lv. 24 - 26)
+9% Pigonat (Lv. 22 - 25)
+10% Arbok (Lv. 24 - 27)
+7% Dualmoose (Lv. 23 - 27)
+11% Grondor (Lv. 24 - 27)
+10% Florline (Lv. 23 - 26)
+12% Seviper (Lv. 23 - 26)
+10% Azumarill (Lv. 23 - 26)
+6% Shroodle (Lv. 22 - 25)
 ===================================================================
 Route 36 (Standard)
 ===================================================================
@@ -1411,5 +1411,5 @@ Mt. Splinkty (Outside) (Standard)
 292,Azurill,2,9.50%
 293,Marill,1,12.00%
 294,Azumarill,4,7.00%
-295,Shroodle,3,6.33%
-296,Grafaiai,3,10.00%
+295,Shroodle,4,6.25%
+296,Grafaiai,2,12.00%

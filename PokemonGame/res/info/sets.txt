@@ -621,3 +621,99 @@ Ability: Tinted Lens
 - Quiver Dance
 - Bug Buzz
 - Ice Beam
+
+Bipedice @ Flame Orb
+Adamant Nature
+Ability: Guts
+- Ice Spinner/Icicle Crash/Ice Punch
+- Close Combat/Drain Punch
+- Swords Dance/Bulk Up/U-Turn
+- Ice Shard/Mach Punch
+
+Bipedice @ Assault Vest/Choice Band
+Adamant Nature
+Ability: Guts
+- Ice Spinner
+- Drain Punch
+- Earthquake/U-Turn
+- Ice Shard
+
+Bipedice @ Loaded Dice
+Jolly Nature
+Ability: Slush Rush
+- Icicle Spear
+- Rock Polish/Snowscape
+- Swords Dance/Bulk Up/Earthquake
+- Close Combat/Drain Punch
+
+Bipedice @ Power Herb
+Adamant Nature
+Ability: Refrigerate
+- Swords Dance
+- Giga Impact
+- Acrobatics/Ice Shard/Mach Punch
+- Earthquake/Close Combat
+
+Tricercil @ Choice Band
+Adamant Nature
+Ability: Rock Head
+- Head Smash
+- Close Combat
+- Mach Punch
+- Earthquake
+
+Tricercil @ Lum Berry/White Herb
+Impish/Adamant Nature
+Ability: Rock Head
+- Head Smash
+- Swords Dance/No Retreat
+- Close Combat
+- Meteor Assault
+
+Tricercil @ Leftovers
+Impish/Careful Nature
+Ability: Rock Head
+- Head Smash
+- Iron Defense
+- Stealth Rock/Spiky Shield
+- Body Press
+
+Tricercil @ Leftovers
+Careful Nature
+Ability: Sand Force
+- Stealth Rock/Thunder Wave/Toxic
+- Sandstorm/Spiky Shield
+- Circle Throw
+- Ice Spinner/Rock Tomb
+
+Tricercil @ Rocky Helmet
+Impish Nature
+Ability: Rough Skin
+- Rest
+- Stone Edge/Sky Uppercut
+- Stealth Rock/Toxic
+- Spiky Shield
+
+Walrein @ Leftovers
+Calm Nature
+Ability: Unaware
+- Flip Turn/Whirlpool
+- Frostbind/Scald
+- Slack Off
+- Ice Beam
+
+Walrein @ Leftovers/Custap Berry
+Bold Nature
+Ability: Ice Body
+- Blizzard
+- Snowscape
+- Aurora Veil
+- Scald/Flip Turn
+
+Walrein @ Sitrus Berry
+Adamant Nature
+Ability: Thick Fat
+- Swords Dance
+- Ice Shard
+- Aqua Jet/Liquidation
+- Whirlpool/Earthquake

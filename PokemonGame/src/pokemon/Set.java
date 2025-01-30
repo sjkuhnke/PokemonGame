@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Set {
+public class Set implements RoleAssignable {
 	private int id;
 	private ArrayList<Ability> abilities;
 	private ArrayList<Item> items;
 	private ArrayList<Nature> natures;
 	private int[] ivs;
+	private int role;
 	
 	private ArrayList<Move>[] moves;
 	
@@ -39,7 +40,7 @@ public class Set {
 		}
 		p.moveset = moveslot;
 		p.ivs = this.ivs;
-		
+		p.role = role;
 		return p;
 	}
 	
@@ -112,5 +113,52 @@ public class Set {
 	           ", ivs=" + Arrays.toString(ivs) +
 	           ", moves=" + Arrays.deepToString(moves) +
 	           '}';
+	}
+	
+	public boolean hasRole(int role) {
+	    return (this.role & role) != 0;
+	}
+
+	public void addRole(int role) {
+	    this.role |= role;
+	}
+
+	public void removeRole(int role) {
+	    this.role &= ~role;
+	}
+	
+	public void setRole(int role) {
+		this.role = role;
+	}
+
+	@Override
+	public ArrayList<Move> getMoves() {
+		ArrayList<Move> allMoves = new ArrayList<>();
+		for (ArrayList<Move> moveSlot : moves) {
+			if (moveSlot != null) {
+				allMoves.addAll(moveSlot);
+			}
+		}
+		return allMoves;
+	}
+
+	@Override
+	public int[] getBaseStats() {
+		return Pokemon.getBaseStats(id);
+	}
+
+	@Override
+	public ArrayList<Ability> getAbilities() {
+		return this.abilities;
+	}
+
+	@Override
+	public ArrayList<Item> getItems() {
+		return this.items;
+	}
+
+	@Override
+	public ArrayList<Nature> getNatures() {
+		return this.natures;
 	}
 }

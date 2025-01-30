@@ -47,7 +47,7 @@ import pokemon.Field.Effect;
 import pokemon.Field.FieldEffect;
 import util.Pair;
 
-public class Pokemon implements Serializable {
+public class Pokemon implements RoleAssignable, Serializable {
 	/**
 	 * 
 	 */
@@ -159,6 +159,7 @@ public class Pokemon implements Serializable {
 	
 	// trainer field
 	public Trainer trainer;
+	public transient int role;
 	
 	// Sprite fields
 	protected transient BufferedImage sprite;
@@ -1373,8 +1374,12 @@ public class Pokemon implements Serializable {
 	    return sb.toString();
 	}
 	
-	public int[] getBaseStats() {
+	public static int[] getBaseStats(int id) {
 		return base_stats[id - 1];
+	}
+	
+	public int[] getBaseStats() {
+		return getBaseStats(id);
 	}
 	
 	public void moveInit(Pokemon foe, Move move, boolean first) {
@@ -1846,6 +1851,9 @@ public class Pokemon implements Serializable {
 			if (move == Move.BLIZZARD) acc = 1000;
 		}
 		
+		if (move == Move.FROSTBIND && (this.type1 == PType.ICE || this.type2 == PType.ICE)) acc = 1000;
+		if (move == Move.THUNDER_WAVE && (this.type1 == PType.ELECTRIC || this.type2 == PType.ELECTRIC)) acc = 1000;
+		if (move == Move.WILL$O$WISP && (this.type1 == PType.FIRE || this.type2 == PType.FIRE)) acc = 1000;
 		if (move == Move.TOXIC && (this.type1 == PType.POISON || this.type2 == PType.POISON)) acc = 1000;
 		
 		if (foe.ability == Ability.WONDER_SKIN && move.cat == 2 && acc <= 100) acc = 50;
@@ -7818,6 +7826,8 @@ public class Pokemon implements Serializable {
 					}
 				}
 				
+				pokemon.role = RoleAssignable.assignRole(pokemon);
+				
 				// DEBUGGING
 				if (!abilitySet) {
 					scanner.close();
@@ -8337,6 +8347,8 @@ public class Pokemon implements Serializable {
 			set.setItems(items);
 			set.setNatures(ns);
 			
+			set.setRole(RoleAssignable.assignRole(set));
+			
 			if (newID) {
 				compIDs.add(currentID);
 			}
@@ -8349,6 +8361,38 @@ public class Pokemon implements Serializable {
 		}
 		
 		scanner.close();
+	}
+
+	@Override
+	public ArrayList<Move> getMoves() {
+		ArrayList<Move> allMoves = new ArrayList<>();
+		for (Moveslot m : this.moveset) {
+			if (m != null) {
+				allMoves.add(m.move);
+			}
+		}
+		return allMoves;
+	}
+
+	@Override
+	public ArrayList<Ability> getAbilities() {
+		ArrayList<Ability> result = new ArrayList<>();
+		result.add(this.ability);
+		return result;
+	}
+
+	@Override
+	public ArrayList<Item> getItems() {
+		ArrayList<Item> result = new ArrayList<>();
+		result.add(this.item);
+		return result;
+	}
+
+	@Override
+	public ArrayList<Nature> getNatures() {
+		ArrayList<Nature> result = new ArrayList<>();
+		result.add(this.nat);
+		return result;
 	}
 	
 }

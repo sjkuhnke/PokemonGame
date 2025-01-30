@@ -52,6 +52,7 @@ Make hazards not be clickable if the foe only has 1 mon left
 Change switch in AI to be able to work with disruptive mons (Comp Busheep)
 Make leech seed not clickable if the opponent is a grass type/discourage it
 Make hazard/boosting moves encouraged if the opponent does less than a % to you
+Make trapping moves insentivized if opponent does less than a % to you
 
 Make Ryder 1 disappear after beating second gym
 Make Ryder 3 disappear after beating Icy Serpant
