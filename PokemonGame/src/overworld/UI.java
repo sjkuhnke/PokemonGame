@@ -2501,6 +2501,7 @@ public class UI extends AbstractUI {
 			    				showMessage(m.move.toString() + "'s PP was maxed!");
 			    			}
 				        	gp.player.p.bag.remove(currentItem);
+				        	moveOption = -1;
 			        		currentItems = gp.player.p.getItems(currentPocket);
 			    		} else {
 			    			showMessage("It won't have any effect.");

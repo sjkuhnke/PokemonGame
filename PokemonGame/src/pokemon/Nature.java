@@ -88,4 +88,52 @@ public enum Nature {
 	public static Nature getByStats(double[] stats) {
 		return STAT_TO_NATURE.get(Arrays.toString(stats));
 	}
+	
+	public boolean raisesStat(int stat) {
+		return stats[stat] == 1.1;
+	}
+	
+	public boolean raisesAtk() {
+		return raisesStat(0);
+	}
+	
+	public boolean raisesDef() {
+		return raisesStat(1);
+	}
+	
+	public boolean raisesSpA() {
+		return raisesStat(2);
+	}
+	
+	public boolean raisesSpD() {
+		return raisesStat(3);
+	}
+	
+	public boolean raisesSpe() {
+		return raisesStat(4);
+	}
+	
+	public boolean lowersStat(int stat) {
+		return stats[stat] == 0.9;
+	}
+	
+	public boolean lowersAtk() {
+		return lowersStat(0);
+	}
+	
+	public boolean lowersDef() {
+		return lowersStat(1);
+	}
+	
+	public boolean lowersSpA() {
+		return lowersStat(2);
+	}
+	
+	public boolean lowersSpD() {
+		return lowersStat(3);
+	}
+	
+	public boolean lowersSpe() {
+		return lowersStat(4);
+	}
 }

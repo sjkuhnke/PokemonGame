@@ -1,43 +1,82 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-287 Dust Sorcerer*
-098 Flamehead (E forms of these guys are more important, these guys can wait)
-099 Fireshard (E forms of these guys are more important, these guys can wait)
+099 Fireshard* (E forms of these guys are more important, these guys can wait)
 100 Blastflames (E forms of these guys are more important, these guys can wait)
 202 Flamehead-E
 203 Fireshard-E (First stage is lowkey the most important, these 2 can wait)
 204 Blastflames-E (First stage is lowkey the most important, these 2 can wait)
+288 Fever Dream*
 263 Plasamp*
 264 Geniova*
+289 Dusk Skater*
 158 Poov*
 159 Grust*
+177 Minishoo*
+178 Glittleshoo*
+171 Wormite*
+172 Wormbot*
+173 Wormatron*
+166 Rhypo*
+167 Rhynee*
+168 Rhypolar*
 213 Nightrex*
 214 Shadowsaur*
-106 Sparkdust*
 235 Dragowrath*
 101 Tiowoo*
 102 Magwoo*
 103 Lafloo*
-166 Rhypo*
-167 Rhynee*
-168 Rhypolar*
-171 Wormite*
-172 Wormbot*
-173 Wormatron*
+240 Scraftagon*
 108 Sparkitten
 109 Fireblion
 110 Flamebless
+169 Diggie*
+170 Drillatron*
 114 Elelamb
 115 Electroram
 116 Superchargo
+120 Magie
+121 Cumin
+122 Cinneroph
+123 Vupp
+124 Vinnie
+125 Suvinero
+126 Whiskie
+127 Whiskers
+128 Whiskeroar
+117 Twigzap
+118 Shockbranch
+119 Thunderzap
+134 Lilyray
+135 Daray
+136 Spinaquata
+143 Posho
+144 Shomp
+145 Poshorump
+160 Cluuz
+161 Zurrclu
+162 Zurroaratr
+220 Cluuz-S
+221 Zurrclu-S
+222 Zurroaratr-S
+148 Durfish
+149 Dompster
+132 Sheltor
+133 Shelnado
+141 Ali*
+142 Batorali*
+181 Droid
+182 Armoid
+183 Soldrota
+199 Droid-E
+200 Armoid-E
+201 Soldrota-E
 
 ================================================================================
 Overworld Pokemon Sprites (* are the ones that already have battle sprites, probably best to do that first)
 ================================================================================
 ----- Most Urgent -----
 Flamehox-E
-Dust Sorcerer
 Fever Dream
 Dusk Skater
 Grust

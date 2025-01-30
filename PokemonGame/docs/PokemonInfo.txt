@@ -62,6 +62,7 @@ Base Stats:
 
 Level Up:
 E - Rockfall Frenzy
+1 - Endure
 1 - Pound
 1 - Withdraw
 7 - Razor Leaf
@@ -437,7 +438,8 @@ E - Dazzling Gleam
 41 - Roost
 43 - Prismatic Laser
 46 - Hurricane
-49 - Sunny Day
+48 - Heat Wave
+50 - Sunny Day
 52 - Morning Sun
 55 - Sunny Doom
 60 - Aeroblast
@@ -531,6 +533,7 @@ E - Rock Blast
 E - Rock Slide
 E - Stealth Rock
 1 - Spike Cannon
+1 - Endure
 1 - Pound
 3 - Growl
 5 - Leer
@@ -657,6 +660,7 @@ Base Stats:
 
 Level Up:
 E - Stealth Rock
+1 - Endure
 1 - Bug Bite
 10 - Protect
 15 - Hidden Power
@@ -974,6 +978,7 @@ E - Sludge Bomb
 1 - Sludge Bomb
 1 - Magical Leaf
 1 - Weather Ball
+70 - Strength Sap
 
 ===================
 #032 - Sewaddle                                                                                        [032]
@@ -1175,7 +1180,8 @@ Level Up:
 26 - Charm
 29 - Rollout
 32 - Cotton Guard
-36 - Endeavor
+34 - Endeavor
+37 - Ingrain
 40 - Leech Seed
 43 - Giga Drain
 47 - Leaf Storm
@@ -1234,6 +1240,7 @@ E - Light Beam
 E - Energy Ball
 1 - Dazzling Gleam
 1 - Draining Kiss
+1 - Ingrain
 1 - Light Screen
 1 - Sunny Day
 1 - Covet
@@ -1718,6 +1725,8 @@ Base Stats:
 
 Level Up:
 1 - Will-O-Wisp
+5 - Fire Spin
+10 - Hidden Power
 15 - Ember
 
 Evolutions:
@@ -1737,7 +1746,10 @@ Base Stats:
 
 Level Up:
 E - Karate Chop
+E - Endure
 1 - Will-O-Wisp
+5 - Fire Spin
+10 - Return
 15 - Ember
 16 - Flame Wheel
 21 - Fury Swipes
@@ -1762,8 +1774,12 @@ Base Stats:
 
 Level Up:
 E - Knock Off
+1 - Karate Chop
+1 - Endure
 1 - Sky Uppercut
 1 - Will-O-Wisp
+5 - Fire Spin
+10 - Return
 15 - Ember
 16 - Flame Wheel
 21 - Fury Swipes
@@ -1974,6 +1990,8 @@ Level Up:
 E - Energy Ball
 E - Aqua Jet
 1 - Life Dew
+1 - Hyper Voice
+1 - Aura Sphere
 1 - Water Sport
 1 - Water Pulse
 1 - Teeter Dance
@@ -1991,6 +2009,7 @@ E - Aqua Jet
 1 - Energy Ball
 1 - Hydro Pump
 50 - Leech Seed
+75 - Quiver Dance
 
 ===================
 #063 - Ralts                                                                                           [085]
@@ -2220,6 +2239,7 @@ Level Up:
 1 - Pound
 1 - Tail Whip
 7 - Sand Attack
+10 - Endure
 13 - Wrap
 17 - Mud Shot
 
@@ -2243,6 +2263,7 @@ E - Iron Defense
 1 - Pound
 1 - Tail Whip
 7 - Sand Attack
+10 - Endure
 13 - Wrap
 17 - Mud Shot
 20 - Dig
@@ -2277,6 +2298,7 @@ E - Dual Chop
 1 - Pound
 1 - Tail Whip
 7 - Sand Attack
+10 - Endure
 13 - Wrap
 17 - Mud Shot
 20 - Dig
@@ -2425,6 +2447,7 @@ Base Stats:
 
 Level Up:
 E - Sandstorm
+1 - Endure
 1 - Horn Attack
 1 - Defense Curl
 5 - Growl
@@ -2461,6 +2484,7 @@ Base Stats:
 
 Level Up:
 E - Shore Up
+1 - Endure
 1 - Horn Attack
 1 - Defense Curl
 5 - Growl
@@ -4149,7 +4173,7 @@ Level Up:
 26 - Rollout
 29 - Stealth Rock
 32 - Self-Destruct
-36 - Rock Blast
+35 - Rock Blast
 
 Evolutions:
 Boulder -> Blaster (Knows Rock Blast)
@@ -4312,6 +4336,7 @@ Base Stats:
 
 Level Up:
 E - Snarl
+E - Ancient Power
 1 - Tackle
 3 - Defense Curl
 5 - Rock Throw
@@ -4709,6 +4734,7 @@ Level Up:
 10 - Covet
 12 - Iron Defense
 15 - Gyro Ball
+18 - Endure
 20 - Metal Sound
 25 - Rollout
 30 - Metal Claw
@@ -4733,6 +4759,7 @@ E - Flash
 1 - Scratch
 1 - Defense Curl
 1 - Howl
+1 - Endure
 1 - Spiky Shield
 10 - Metal Claw
 15 - Snarl
@@ -4765,6 +4792,7 @@ E - Magic Fang
 1 - Flash Cannon
 1 - Magic Blast
 1 - Howl
+1 - Endure
 1 - Spiky Shield
 5 - Metal Claw
 10 - Snarl
@@ -5402,9 +5430,11 @@ Level Up:
 1 - Thundershock
 4 - Charge
 8 - Wrap
-13 - Thunder Wave
-17 - Coil
-21 - Spark
+11 - Endure
+14 - Spark
+16 - Thunder Wave
+18 - Coil
+21 - Shock Wave
 25 - Scary Face
 27 - Thunder Fang
 
@@ -5428,9 +5458,11 @@ E - Double Hit
 1 - Thundershock
 4 - Charge
 8 - Wrap
-13 - Thunder Wave
-17 - Coil
-21 - Spark
+11 - Endure
+14 - Spark
+16 - Thunder Wave
+18 - Coil
+21 - Shock Wave
 25 - Scary Face
 27 - Thunder Fang
 30 - Parabolic Charge
@@ -5754,6 +5786,7 @@ Level Up:
 32 - Hone Claws
 35 - Shell Smash
 38 - Night Slash
+45 - Accelerock
 
 Evolutions:
 Binacle -> Barbaracle (lv. 39)
@@ -5771,6 +5804,7 @@ Base Stats:
 72 HP / 105 Atk / 115 Def / 54 SpA / 86 SpD / 68 Spe / 500 BST
 
 Level Up:
+E - Liquidation
 1 - Switcheroo
 1 - Knock Off
 1 - Scratch
@@ -5790,11 +5824,12 @@ Level Up:
 35 - Shell Smash
 38 - Night Slash
 41 - Rock Slide
-44 - Liquidation
-47 - Cross Chop
-50 - Swords Dance
-54 - Stone Edge
-60 - Wave Crash
+43 - Cross Chop
+45 - Accelerock
+48 - Swords Dance
+51 - Stone Edge
+55 - Wave Crash
+60 - Mighty Cleave
 65 - Focus Energy
 
 ===================
@@ -6261,9 +6296,10 @@ E - Ice Fang
 40 - Slack Off
 43 - Blizzard
 46 - Aqua Jet
-50 - Sheer Cold
-55 - Psychic Fangs
-60 - Hydro Pump
+50 - Ice Beam
+53 - Psychic Fangs
+57 - Hydro Pump
+60 - Sheer Cold
 
 ===================
 #189 - Otterpor                                                                                        [078]
@@ -6389,6 +6425,7 @@ Level Up:
 28 - Bubblebeam
 32 - Muddy Water
 35 - Shell Smash
+39 - Frostbind
 
 Evolutions:
 Sheltor -> Shelnado (Water Stone)
@@ -6430,7 +6467,8 @@ E - Whirlpool
 53 - Hydro Vortex
 56 - Aeroblast
 60 - Water Spout
-65 - Wave Crash
+63 - Frostbind
+66 - Wave Crash
 
 ===================
 #194 - Poof                                                                                            [156]
@@ -6554,6 +6592,7 @@ E - Shadow Punch
 46 - Dark Pulse
 50 - Take Over
 55 - Destiny Bond
+60 - Frostbind
 
 ===================
 #198 - Glimmet                                                                                         [241]
@@ -6895,7 +6934,8 @@ Level Up:
 1 - Circle Throw
 5 - Feint Attack
 8 - Iron Defense
-15 - Drill Run
+13 - Drill Run
+16 - Endure
 20 - Head Smash
 25 - Spiky Shield
 30 - Stealth Rock
@@ -6924,7 +6964,8 @@ E - Mach Punch
 1 - Circle Throw
 5 - Feint Attack
 8 - Iron Defense
-15 - Drill Run
+13 - Drill Run
+16 - Endure
 20 - Head Smash
 25 - Spiky Shield
 30 - Stealth Rock
@@ -6957,6 +6998,7 @@ Level Up:
 11 - Mud-Slap
 14 - Double Team
 19 - Flame Wheel
+22 - Endure
 25 - Mud Bomb
 29 - Will-O-Wisp
 33 - Detect
@@ -6985,6 +7027,7 @@ E - Wing Attack
 11 - Mud-Slap
 14 - Double Team
 19 - Flame Wheel
+22 - Endure
 25 - Mud Bomb
 29 - Will-O-Wisp
 33 - Detect
@@ -7018,6 +7061,7 @@ E - Iron Tail
 11 - Mud-Slap
 14 - Double Team
 19 - Flame Wheel
+22 - Endure
 25 - Mud Bomb
 29 - Will-O-Wisp
 33 - Detect
@@ -8411,7 +8455,7 @@ Level Up:
 5 - Ember
 10 - Fire Spin
 15 - Memento
-18 - Knock Off
+17 - Knock Off
 
 Evolutions:
 Iglite-S -> Blaxer-S (lv. 16)
@@ -8430,6 +8474,7 @@ Base Stats:
 
 Level Up:
 E - Karate Chop
+E - Endure
 1 - Fake Tears
 1 - Will-O-Wisp
 5 - Ember
@@ -8460,6 +8505,7 @@ Base Stats:
 Level Up:
 E - False Surrender
 1 - Karate Chop
+1 - Endure
 1 - Fake Tears
 1 - Will-O-Wisp
 5 - Ember
@@ -9416,7 +9462,8 @@ Level Up:
 9 - Body Slam
 11 - Ember
 14 - Flame Charge
-19 - Spark
+18 - Spark
+21 - Endure
 25 - Flame Wheel
 29 - Thunder Wave
 33 - Charge Beam
@@ -9444,7 +9491,8 @@ E - Wing Attack
 9 - Body Slam
 11 - Ember
 14 - Flame Charge
-19 - Spark
+18 - Spark
+21 - Endure
 25 - Flame Wheel
 29 - Thunder Wave
 33 - Charge Beam
@@ -9479,7 +9527,8 @@ E - Fire Blast
 9 - Body Slam
 11 - Ember
 14 - Flame Charge
-19 - Spark
+18 - Spark
+21 - Endure
 25 - Flame Wheel
 29 - Thunder Wave
 33 - Charge Beam

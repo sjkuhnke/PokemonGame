@@ -153,6 +153,46 @@ Magmaclang -> Apie
 Shookwat ->
 Wattwo ->
 Megawatt -> Mechamo
+Twigzap ->
+Shockbranch ->
+Thunderzap ->
+Magie -> 
+Cumin -> 
+Cinneroph ->
+Vupp -> 
+Vinnie -> 
+Suvinero ->
+Whiskie ->
+Whiskers ->
+Whiskeroar ->
+Sheltor ->
+Shelnado ->
+Lilyray ->
+Daray ->
+Spinaquata ->
+Ali ->
+Batorali ->
+Posho ->
+Shomp ->
+Poshorump ->
+Durfish ->
+Dompster ->
+Kissyfishy ->
+Poof ->
+Hast ->
+Poov ->
+Grust ->
+Cluuz ->
+Zurrclu ->
+Zurroaratr ->
+Rhypo ->
+Rhynee ->
+Rhypolar ->
+Diggie ->
+Drillatron ->
+Wormite ->
+Wormbot ->
+Wormatron ->
 
 Trainer Classes:
 Ace Trainer (mixed types/dragon)
