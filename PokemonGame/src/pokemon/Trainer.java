@@ -280,7 +280,7 @@ public class Trainer implements Serializable {
 		} else {
 			if (foe.ability == Ability.NORMALIZE) type = PType.NORMAL;
 		}
-		if (!onlyCheckAbility) multiplier = p.getEffectiveMultiplier(type);
+		if (!onlyCheckAbility) multiplier = p.getEffectiveMultiplier(type, foe);
 		if (p.ability == Ability.DRY_SKIN && type == PType.WATER) multiplier = 0;
 		if (p.ability == Ability.BLACK_HOLE && (type == PType.LIGHT || type == PType.GALACTIC)) multiplier = 0;
 		if (p.ability == Ability.ILLUMINATION && (type == PType.GHOST || type == PType.DARK || type == PType.LIGHT || type == PType.GALACTIC)) multiplier *= 0.5;

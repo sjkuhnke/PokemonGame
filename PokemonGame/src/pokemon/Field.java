@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -131,7 +132,11 @@ public class Field {
 		}
 	}
 	
-	public class FieldEffect {
+	public class FieldEffect implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		public int turns;
 		public Effect effect;
 		public int layers;

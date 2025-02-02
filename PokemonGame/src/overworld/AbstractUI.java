@@ -533,7 +533,20 @@ public abstract class AbstractUI {
 						g2.setColor(g2.getColor().darker());
 						g2.drawRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 					} else {
-						Color color = m.move == Move.HIDDEN_POWER || m.move == Move.RETURN ? p.determineHPType().getColor() : m.move.mtype.getColor();
+						PType mtype = m.move.mtype;
+						if (m.move == Move.HIDDEN_POWER || m.move == Move.RETURN) mtype = p.determineHPType();
+						if (m.move == Move.WEATHER_BALL) mtype = p.determineWBType();
+						if (m.move == Move.TERRAIN_PULSE) mtype = p.determineTPType();
+						if (m.move.isAttack()) {
+							if (mtype == PType.NORMAL) {
+								if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
+								if (p.ability == Ability.REFRIGERATE) mtype = PType.ICE;
+								if (p.ability == Ability.PIXILATE) mtype = PType.LIGHT;
+							} else {
+								if (p.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
+							}
+						}
+						Color color = mtype.getColor();
 						g2.setColor(color);
 						g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 					}
@@ -680,7 +693,21 @@ public abstract class AbstractUI {
 		
 		x += gp.tileSize * 3.5;
 		y -= gp.tileSize * 0.75;
-		PType type = (move == Move.HIDDEN_POWER || move == Move.RETURN) && p != null && p.headbuttCrit >= 0 ? p.determineHPType() : move.mtype;
+		PType type = move.mtype;
+		if (p != null && p.headbuttCrit >= 0) {
+			if (move == Move.HIDDEN_POWER || move == Move.RETURN) type = p.determineHPType();
+			if (move == Move.WEATHER_BALL) type = p.determineWBType();
+			if (move == Move.TERRAIN_PULSE) type = p.determineTPType();
+			if (move.isAttack()) {
+				if (type == PType.NORMAL) {
+					if (p.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
+					if (p.ability == Ability.REFRIGERATE) type = PType.ICE;
+					if (p.ability == Ability.PIXILATE) type = PType.LIGHT;
+				} else {
+					if (p.ability == Ability.NORMALIZE) type = PType.NORMAL;
+				}
+			}
+		}
 		g2.drawImage(type.getImage2(), x, y, null);
 		
 		x += gp.tileSize * 1.5;
@@ -843,7 +870,20 @@ public abstract class AbstractUI {
 		}
 		if (m != null) {
 			x += gp.tileSize * 11 / 6;
-			Color color = m == Move.HIDDEN_POWER || m == Move.RETURN ? p.determineHPType().getColor() : m.mtype.getColor();
+			PType mtype = m.mtype;
+			if (m == Move.HIDDEN_POWER || m == Move.RETURN) mtype = p.determineHPType();
+			if (m == Move.WEATHER_BALL) mtype = p.determineWBType();
+			if (m == Move.TERRAIN_PULSE) mtype = p.determineTPType();
+			if (m.isAttack()) {
+				if (mtype == PType.NORMAL) {
+					if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
+					if (p.ability == Ability.REFRIGERATE) mtype = PType.ICE;
+					if (p.ability == Ability.PIXILATE) mtype = PType.LIGHT;
+				} else {
+					if (p.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
+				}
+			}
+			Color color = mtype.getColor();
 			g2.setColor(color);
 			g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 			g2.setColor(Color.BLACK);
@@ -865,10 +905,24 @@ public abstract class AbstractUI {
 			Moveslot ms = p.moveset[i - 1];
 			if (ms != null) {
 				g2.setFont(g2.getFont().deriveFont(24F));
+				PType mtype = ms.move.mtype;
+				if (ms.move == Move.HIDDEN_POWER || ms.move == Move.RETURN) mtype = p.determineHPType();
+				if (ms.move == Move.WEATHER_BALL) mtype = p.determineWBType();
+				if (ms.move == Move.TERRAIN_PULSE) mtype = p.determineTPType();
+				if (ms.move.isAttack()) {
+					if (mtype == PType.NORMAL) {
+						if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
+						if (p.ability == Ability.REFRIGERATE) mtype = PType.ICE;
+						if (p.ability == Ability.PIXILATE) mtype = PType.LIGHT;
+					} else {
+						if (p.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
+					}
+				}
+				Color color = mtype.getColor();
 				if (!gp.player.p.hasTM(ms.move) && !movebankList.contains(ms.move)) {
-		        	g2.setPaint(new GradientPaint(x, y, ms.move.mtype.getColor(), x + moveWidth, y + moveHeight, new Color(245, 225, 210)));
+		        	g2.setPaint(new GradientPaint(x, y, color, x + moveWidth, y + moveHeight, new Color(245, 225, 210)));
 		        } else {
-		        	g2.setColor(ms.move == Move.HIDDEN_POWER || ms.move == Move.RETURN ? p.determineHPType().getColor() : ms.move.mtype.getColor());	
+		        	g2.setColor(color);	
 		        }
 				g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 				g2.setColor(Color.BLACK);
