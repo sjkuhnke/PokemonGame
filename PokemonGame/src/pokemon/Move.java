@@ -700,6 +700,11 @@ public enum Move {
 	}
 	
 	public double getbp(Pokemon user, Pokemon foe) {
+		PType type = mtype;
+		if (this == Move.HIDDEN_POWER) mtype = user.determineHPType();
+		if (this == Move.RETURN) mtype = user.determineHPType();
+		if (this == Move.WEATHER_BALL) mtype = user.determineWBType();
+		if (this == Move.TERRAIN_PULSE) mtype = user.determineTPType();
 		if (basePower == -1) {
 			if (this == Move.STORED_POWER && foe == null) return 20;
 			boolean faster = user == null || foe == null ? true : user.getFaster(foe, 0, 0) == user;
@@ -709,7 +714,20 @@ public enum Move {
 				user = new Pokemon(1, 1, false, false);
 			}
 			if (foe == null) foe = new Pokemon(1, 1, false, false);
-			return user.determineBasePower(foe, this, faster, null, false);
+			double bp = user.determineBasePower(foe, this, faster, null, false);
+			if (mtype == PType.NORMAL) {
+				if (user.ability == Ability.GALVANIZE || user.ability == Ability.REFRIGERATE || user.ability == Ability.PIXILATE) bp *= 1.2;
+			} else {
+				if (user.ability == Ability.NORMALIZE) bp *= 1.2;
+			}
+			return bp;
+		}
+		if (user != null) {
+			if (type == PType.NORMAL) {
+				if (user.ability == Ability.GALVANIZE || user.ability == Ability.REFRIGERATE || user.ability == Ability.PIXILATE) return basePower * 1.2;
+			} else {
+				if (user.ability == Ability.NORMALIZE) return basePower * 1.2;
+			}
 		}
 		return basePower;
 	}
@@ -759,8 +777,23 @@ public enum Move {
 	    // Move Name
 	    JLabel nameLabel = new JLabel(toString());
 	    nameLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
-	    JGradientButton typeButton = new JGradientButton(this == Move.HIDDEN_POWER || this == Move.RETURN ? user.determineHPType().toString() : mtype.toString());
-	    typeButton.setBackground(this == Move.HIDDEN_POWER || this == Move.RETURN ? user.determineHPType().getColor() : mtype.getColor());
+	    PType type = mtype;
+	    if (this == Move.HIDDEN_POWER) type = user.determineHPType();
+		if (this == Move.RETURN) type = user.determineHPType();
+		if (this == Move.WEATHER_BALL) type = user.determineWBType();
+		if (this == Move.TERRAIN_PULSE) type = user.determineTPType();
+		if (this.isAttack()) {
+			if (type == PType.NORMAL) {
+				if (user.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
+				if (user.ability == Ability.REFRIGERATE) type = PType.ICE;
+				if (user.ability == Ability.PIXILATE) type = PType.LIGHT;
+			} else {
+				if (user.ability == Ability.NORMALIZE) type = PType.NORMAL;
+			}
+		}
+        Color color = type.getColor();
+	    JGradientButton typeButton = new JGradientButton(type.toString());
+	    typeButton.setBackground(color);
 
 	    // Category
 	    JLabel categoryLabel = new JLabel("Cat");

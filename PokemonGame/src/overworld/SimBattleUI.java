@@ -525,14 +525,29 @@ public class SimBattleUI extends BattleUI {
 		            x += width + gp.tileSize;
 		        }
 		        
-		        Color color = moves[i].move == Move.HIDDEN_POWER || moves[i].move == Move.RETURN ? user.determineHPType().getColor() : moves[i].move.mtype.getColor();
+		        Move move = moves[i].move;
+		        PType mtype = move.mtype;
+		        if (move == Move.HIDDEN_POWER) mtype = user.determineHPType();
+				if (move == Move.RETURN) mtype = user.determineHPType();
+				if (move == Move.WEATHER_BALL) mtype = user.determineWBType();
+				if (move == Move.TERRAIN_PULSE) mtype = user.determineTPType();
+				if (move.isAttack()) {
+					if (mtype == PType.NORMAL) {
+						if (user.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
+						if (user.ability == Ability.REFRIGERATE) mtype = PType.ICE;
+						if (user.ability == Ability.PIXILATE) mtype = PType.LIGHT;
+					} else {
+						if (user.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
+					}
+				}
+		        Color color = mtype.getColor();
 		        if (!user.moveUsable(moves[i].move)) color = new Color(100, 100, 100, 200);
 		        g2.setColor(color);
 		        g2.fillRoundRect(x, y, width, height, 10, 10);
 		        g2.setColor(moves[i].getPPColor());
 		        String text = moves[i].move.toString();
 		        g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
-		        String pp = showMoveSummary ? moves[i].move.cat == 2 ? "Status" : moves[i].move.mtype.effectiveness(foe) : moves[i].currentPP + " / " + moves[i].maxPP;
+		        String pp = showMoveSummary ? moves[i].move.cat == 2 ? "Status" : mtype.effectiveness(foe, user) : moves[i].currentPP + " / " + moves[i].maxPP;
 		        g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
 		        if (moveNum == i) {
 		            g2.setColor(Color.WHITE);

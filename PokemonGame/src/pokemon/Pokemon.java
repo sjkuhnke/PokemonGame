@@ -5837,6 +5837,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...");
 			return;
 		}
+		if (field.equals(field.weather, Effect.SNOW)) {
+			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...\n(In this game, Snow blocks Burn)");
+			return;
+		}
 		if (this.status == Status.HEALTHY) {
 			if (this.ability == Ability.WATER_VEIL) {
 				if (announce) {
@@ -5926,6 +5930,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			return;
 		}
 		if (field.equals(field.weather, Effect.SUN)) {
+			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...\n(In this game, Harsh Sunlight blocks Frostbite)");
 			return;
 		}
 		if (this.status == Status.HEALTHY) {
@@ -6283,7 +6288,23 @@ public class Pokemon implements RoleAssignable, Serializable {
 	        	JButton moveButton = new JGradientButton("");
 	            if (moveset[i] != null) {
 	                moveButton.setText(moveset[i].move.toString() + " " + moveset[i].showPP());
-	                moveButton.setBackground(moveset[i].move.mtype.getColor());
+	                Move move = moveset[i].move;
+	                PType mtype = move.mtype;
+	                if (move == Move.HIDDEN_POWER) mtype = this.determineHPType();
+					if (move == Move.RETURN) mtype = this.determineHPType();
+					if (move == Move.WEATHER_BALL) mtype = this.determineWBType();
+					if (move == Move.TERRAIN_PULSE) mtype = this.determineTPType();
+					if (move.isAttack()) {
+						if (mtype == PType.NORMAL) {
+							if (this.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
+							if (this.ability == Ability.REFRIGERATE) mtype = PType.ICE;
+							if (this.ability == Ability.PIXILATE) mtype = PType.LIGHT;
+						} else {
+							if (this.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
+						}
+					}
+			        Color color = mtype.getColor();
+	                moveButton.setBackground(color);
 	                moveButton.setForeground(moveset[i].getPPColor());
 	                int index = i;
 	                moveButton.addActionListener(e -> {
@@ -6496,7 +6517,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         throw new IllegalStateException("The algorithm returned an array of " + Arrays.toString(ivs) + " which resulted in HP " + tempPokemon.determineHPType() + " instead of " + hpType);
     }
 	
-	private PType determineWBType() {
+	public PType determineWBType() {
 		PType result = PType.NORMAL;
 		if (field.equals(field.weather, Effect.SUN)) result = PType.FIRE;
 		if (field.equals(field.weather, Effect.RAIN)) result = PType.WATER;
@@ -6506,7 +6527,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return result;
 	}
 	
-	private PType determineTPType() {
+	public PType determineTPType() {
 		PType result = PType.NORMAL;
 		if (field.equals(field.terrain, Effect.GRASSY)) result = PType.GRASS;
 		if (field.equals(field.terrain, Effect.ELECTRIC)) result = PType.ELECTRIC;
@@ -6625,7 +6646,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 						if (move == Move.RETURN) mtype = foe.determineHPType();
 						if (move == Move.WEATHER_BALL) mtype = foe.determineWBType();
 						if (move == Move.TERRAIN_PULSE) mtype = foe.determineTPType();
-						double multiplier = getEffectiveMultiplier(mtype);
+						double multiplier = getEffectiveMultiplier(mtype, foe);
 						
 						if (multiplier > 1) shuddered = true;
 					}
@@ -6661,7 +6682,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		if (hazards && this.item != Item.HEAVY$DUTY_BOOTS && this.ability != Ability.SHIELD_DUST) {
 			if (field.contains(this.getFieldEffects(), Effect.STEALTH_ROCKS) && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-				double multiplier = getEffectiveMultiplier(PType.ROCK);
+				double multiplier = getEffectiveMultiplier(PType.ROCK, null);
 				double damage = (this.getHPAmount(1.0/8)) * multiplier;
 				this.damage((int) Math.max(Math.floor(damage), 1), foe);
 				Task.addTask(Task.TEXT, "Pointed stones dug into " + this.nickname + "!");
@@ -6845,26 +6866,36 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 	}
 
-	public double getEffectiveMultiplier(PType mtype) {
+	public double getEffectiveMultiplier(PType mtype, Pokemon foe) {
 		double multiplier = 1.0;
 		
 		if (getImmune(this, mtype)) {
-			multiplier = 0;
-		} else {
-			PType[] resistances = getResistances(mtype);
-	        for (PType resistance : resistances) {
-	            if (this.type1 == resistance || this.type2 == resistance) {
-	                multiplier /= 2;
-	            }
-	        }
-	        
-	        PType[] weaknesses = getWeaknesses(mtype);
-	        for (PType weakness : weaknesses) {
-	            if (this.type1 == weakness || this.type2 == weakness) {
-	                multiplier *= 2;
-	            }
-	        }
+			if (foe != null) {
+				if (foe.ability == Ability.SCRAPPY && (mtype == PType.NORMAL || mtype == PType.FIGHTING)) {
+					// Nothing: scrappy allows normal and fighting type moves to hit ghosts
+				} else if (foe.ability == Ability.CORROSION && mtype == PType.POISON) {
+					// Nothing: corrosion allows poison moves to hit steel
+				} else {
+					return 0;
+				}
+			} else {
+				return 0;
+			}
 		}
+		
+		PType[] resistances = getResistances(mtype);
+        for (PType resistance : resistances) {
+            if (this.type1 == resistance || this.type2 == resistance) {
+                multiplier /= 2;
+            }
+        }
+        
+        PType[] weaknesses = getWeaknesses(mtype);
+        for (PType weakness : weaknesses) {
+            if (this.type1 == weakness || this.type2 == weakness) {
+                multiplier *= 2;
+            }
+        }
 		return multiplier;
 	}
 	

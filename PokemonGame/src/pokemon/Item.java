@@ -1170,8 +1170,23 @@ public enum Item {
         for (int k = 0; k < moves.length; k++) {
         	if (current.moveset[k] != null) {
         		moves[k].setText(current.moveset[k].move.toString());
-        		moves[k].setBackground(current.moveset[k].move.mtype.getColor());
-        		if (current.moveset[k].move == Move.HIDDEN_POWER || current.moveset[k].move == Move.RETURN) moves[k].setBackground(current.determineHPType().getColor());
+        		Move move = current.moveset[k].move;
+        		PType mtype = move.mtype;
+        		if (move == Move.HIDDEN_POWER) mtype = current.determineHPType();
+				if (move == Move.RETURN) mtype = current.determineHPType();
+				if (move == Move.WEATHER_BALL) mtype = current.determineWBType();
+				if (move == Move.TERRAIN_PULSE) mtype = current.determineTPType();
+				if (move.isAttack()) {
+					if (mtype == PType.NORMAL) {
+						if (current.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
+						if (current.ability == Ability.REFRIGERATE) mtype = PType.ICE;
+						if (current.ability == Ability.PIXILATE) mtype = PType.LIGHT;
+					} else {
+						if (current.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
+					}
+				}
+		        Color color = mtype.getColor();
+        		moves[k].setBackground(color);
         		int minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, -1, crit, field);
         		int maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, 1, crit, field);
         		double minDamageD = minDamage * 1.0 / foe.getStat(0);
