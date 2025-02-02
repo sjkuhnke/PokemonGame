@@ -62,6 +62,7 @@ public class Task {
 	public static final int EVO_INFO = 48;
 	public static final int ODDS = 49;
 	public static final int BET_BATTLE = 50;
+	public static final int GAME_STATE = 51; // counetr: what game state to swtich to
 	
 	public static GamePanel gp;
 	

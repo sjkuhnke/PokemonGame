@@ -1,12 +1,9 @@
 package entity;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
@@ -15,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -735,12 +731,14 @@ public class PlayerCharacter extends Entity {
 				t.item = Item.FLAME_ORB;
 				p.bag.remove(Item.PACKAGE_B);
 				p.flag[0][9] = true;
-			} else {
+			} else if (p.flag[0][7]) {
 				if (!p.flag[0][19]) {
 					Task.addTask(Task.DIALOGUE, npc, "Hey, thanks for the help squirt! Listen, I have a 5-star restaraunt in Rawwar City, you should come check it out!");
 				}
 				Task t = Task.addTask(Task.CONFIRM, npc, "Interested in coming to Rawwar City with me?");
 				t.counter = 5;
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "What..? You've never heard of me? I have the most famous restaurant in Xhenos!");
 			}
 		} else if (gp.currentMap == 58) {
 			if (p.flag[0][7] && !p.flag[0][17]) {
@@ -1540,7 +1538,7 @@ public class PlayerCharacter extends Entity {
 				p.flag[6][0] = true;
 			}
 		} else if (gp.currentMap == 118) {
-			Task.addTask(Task.TEXT, "Do you have any fossils for me to resurrect?");
+			Task.addTask(Task.DIALOGUE, npc, "Do you have any fossils for me to resurrect?");
 			Task.addTask(Task.FOSSIL, "Do you have any fossils for me to resurrect?");
 		} else if (gp.currentMap == 127) {
 			if (worldX / gp.tileSize > 31) {
@@ -1552,47 +1550,52 @@ public class PlayerCharacter extends Entity {
 			}
 		} else if (gp.currentMap == 129 && worldY / gp.tileSize > 41) {
 			if (!p.flag[6][1]) {
-				Task.addTask(Task.TEXT, "Oh, you haven't gotten any coins yet?");
-				Task.addTask(Task.TEXT, "Here, just this once, have some!");
-				Task.addTask(Task.TEXT, "You recieved 100 Coins!");
-				Task.addTask(Task.TEXT, "Yes, now don't go spend them all in one place. I'm not giving you any more!");
-				p.coins += 100;
+				Task.addTask(Task.DIALOGUE, npc, "Oh, you haven't gotten any coins yet?");
+				Task.addTask(Task.DIALOGUE, npc, "Here, it's on the house!");
+				Task.addTask(Task.DIALOGUE, npc, "You received 10 Coins!");
+				Task.addTask(Task.DIALOGUE, npc, "Yes, now don't go spend them all in one place. Or do! I don't care!");
+				Task.addTask(Task.DIALOGUE, npc, "But come back when you get more badges. Perhaps I'll have a reward for you!");
+				p.coins += 10;
 				p.flag[6][1] = true;
 			} else {
-				JPanel panel = new JPanel();
-				JButton coinButton = new JButton("1 Coin to $25");
-				coinButton.setPreferredSize(new Dimension(120, 75));
-				panel.setPreferredSize(new Dimension(200, 100));
-				panel.add(coinButton);
-				coinButton.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent evt) {
-		            	if (SwingUtilities.isLeftMouseButton(evt)) {
-		            		if (p.coins > 0) {
-		            			p.coins--;
-		            			p.setMoney(p.getMoney() + 25);
-		            		} else {
-		            			JOptionPane.showMessageDialog(null, "Not enough coins!");
-		            		}
-		            	} else {
-		            		String input = JOptionPane.showInputDialog(null, "Enter the amount of coins to exchange:");
-		                    try {
-		                        int coins = Integer.parseInt(input);
-		                        if (p.coins > coins && coins > 0) {
-		                        	p.coins -= coins;
-		                        	p.setMoney(coins * 25);
-		                        } else {
-		                        	JOptionPane.showMessageDialog(null, "Not enough coins!");
-		                        }
-		                        
-		                    } catch (NumberFormatException e) {
-		                        JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
-		                    }
-		            	}
-		            	SwingUtilities.getWindowAncestor(panel).dispose();
-		            	showPrizeMenu(panel, p.coins + " coins   $" + p.getMoney());
-		            }
-				});
-				showPrizeMenu(panel, p.coins + " coins   $" + p.getMoney());
+				boolean newBadges = false;
+				for (int i = 0; i < p.badges; i++) {
+					if (!p.coinBadges[i]) {
+						newBadges = true;
+						break;
+					}
+				}
+				if (newBadges) {
+					Task.addTask(Task.DIALOGUE, npc, "Hey hey hey, what do we have here?");
+					Task.addTask(Task.DIALOGUE, npc, "Got some new badges, eh? Let me take a look!");
+					String[] messages = new String[] {
+						"Bested Robin in Poppy Grove! Lemme see your case real quick.",
+						"Beat Stanford, huh? I got a shiny reward for you, kid!",
+						"Ah, a shiny new badge! Made quick work of Millie, I see! Guess that calls for a bonus, bub.",
+						"4 badges, huh?  You're halfway through the gyms, and that’s no easy feat. Here's a little something for your troubles.",
+						"Bested Millie's own mom too? You took down that family no trouble! Pass me your case!",
+						"What's that? You beat both Maxwell and Rayna? Wow, I really underestimated you! Here!",
+						"Defeated our resident gambler Merlin? Heck yeah, I never trusted him anyways, heard he always cheated at Blackjack.",
+						"Wow, all 8 badges! Can't believe you struck down the gyms! I got just the reward for a champion in the making like youse!"
+					};
+					for (int i = 0; i < p.badges; i++) {
+						if (!p.coinBadges[i]) {
+							Task.addTask(Task.DIALOGUE, npc, messages[i]);
+							int coins = i > 4 ? 25 : i > 2 ? 20 : i > 0 ? 10 : 5;
+							Task.addTask(Task.TEXT, "You received " + coins + " coins!");
+							p.coinBadges[i] = true;
+							p.coins += coins;
+						}
+					}
+				} else {
+					if (p.coins > 0) {
+						Task t = Task.addTask(Task.GAME_STATE, "");
+						t.counter = GamePanel.COIN_STATE;
+					} else {
+						Task.addTask(Task.DIALOGUE, npc, "Looks like your stash just ran dry, so I can't exchange air for anything. Come back when you're... a little richer.");
+					}
+					
+				}
 			}
 		} else if (gp.currentMap == 130) {
 			if (p.flag[5][8] && !p.flag[6][3]) {
@@ -1631,14 +1634,7 @@ public class PlayerCharacter extends Entity {
 				Task.addTask(Task.DIALOGUE, npc, "Wait a minute... we haven't met yet, have we?");
 				Task.addTask(Task.DIALOGUE, npc, "You're the Professor's kid, right? Here, he asked me to give you this if you ever passed by.");
 				Random random = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
-				int id = 0;
-				int counter = 0;
-				do {
-					do {
-						id = random.nextInt(Pokemon.MAX_POKEMON) + 1;
-					} while (Pokemon.getEvolveString(id - 1) != null || Pokemon.getCatchRate(id) <= 5);
-					counter++;
-				} while (p.pokedex[id] == 2 && counter < 100);
+				int id = getUnregisteredBasePokemon(random);
 				Egg egg = new Egg(id, 3);
 				Task.addTask(Task.GIFT, "", egg);
 				Task.addTask(Task.DIALOGUE, npc, "Let me know if you want to check any strange evolution progress!");
@@ -2180,5 +2176,22 @@ public class PlayerCharacter extends Entity {
 		int parenthesisIndex = PlayerCharacter.currentMapName.indexOf('(');
 		return (parenthesisIndex == -1 || PlayerCharacter.currentMapName.contains("pt.")) ?
 				PlayerCharacter.currentMapName.trim() : PlayerCharacter.currentMapName.substring(0, parenthesisIndex).trim();
+	}
+	
+	public int getUnregisteredBasePokemon(Random random) {
+		int id = 0;
+		int counter = 0;
+		do {
+			id = Pokemon.getRandomBasePokemon(random);
+			counter++;
+		} while (p.pokedex[id] == 2 && counter < 100);
+		
+		return id;
+	}
+	
+	public void setClerkItems() {
+		for (Entity clerk : gp.aSetter.clerks) {
+    		clerk.setItems(true, getItems());
+    	}
 	}
 }

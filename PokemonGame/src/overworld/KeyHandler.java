@@ -74,6 +74,8 @@ public class KeyHandler implements KeyListener {
 			letterState(code);
 		} else if (gp.gameState == GamePanel.STARTER_STATE) {
 			starterMachineState(code);
+		} else if (gp.gameState == GamePanel.COIN_STATE) {
+			coinState(code);
 		}
 		
 		if (!gp.ui.showMessage) {
@@ -833,6 +835,16 @@ public class KeyHandler implements KeyListener {
 				gp.gameState = GamePanel.PLAY_STATE;
 				gp.ui.starter = 0;
 			}
+		}
+	}
+	
+	private void coinState(int code) {
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		if (code == KeyEvent.VK_S) {
+			gp.gameState = GamePanel.PLAY_STATE;
+			gp.ui.sellAmt = 1;
 		}
 	}
 	

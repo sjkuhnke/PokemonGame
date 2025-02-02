@@ -8425,5 +8425,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 		result.add(this.nat);
 		return result;
 	}
+
+	public static int getRandomBasePokemon(Random random) {
+		int id = 0;
+		do {
+			id = random.nextInt(Pokemon.MAX_POKEMON) + 1;
+		} while (Pokemon.getEvolveString(id - 1) != null || Pokemon.getEvolveString(id - 2) == null || Pokemon.getEvolveString(id - 2).contains(Pokemon.getName(id)) || Pokemon.getCatchRate(id) <= 5);
+		
+		return id;
+	}
 	
 }

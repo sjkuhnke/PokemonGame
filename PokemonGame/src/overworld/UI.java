@@ -223,6 +223,10 @@ public class UI extends AbstractUI {
 			drawPrizeScreen((NPC_Prize_Shop) npc);
 		}
 		
+		if (gp.gameState == GamePanel.COIN_STATE) {
+			drawCoinState();
+		}
+		
 		if (gp.gameState == GamePanel.NURSE_STATE) {
 			drawNurseScreen();
 		}
@@ -563,6 +567,10 @@ public class UI extends AbstractUI {
 		case Task.BET_BATTLE:
 			showMessage = false;
 			drawBetBattle();
+			break;
+		case Task.GAME_STATE:
+			gp.gameState = currentTask.counter;
+			currentTask = null;
 			break;
 		}
 	}
@@ -3133,6 +3141,77 @@ public class UI extends AbstractUI {
 		
 	}
 	
+	private void drawCoinState() {
+		final int coinWorth = 50;
+		currentDialogue = "You have: " + gp.player.p.coins + " coins\nThe exchange rate is: 1 coin for $" + coinWorth;
+		
+		drawDialogueScreen(true);
+		
+		int x = gp.tileSize * 12;
+		int y = (int) (gp.tileSize * 4.5);
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 3.5);
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize * 1.25;
+		y += gp.tileSize * 2;
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.drawString(sellAmt + "", x, y);
+		
+		int y2 = y += gp.tileSize / 4;
+		int width2 = gp.tileSize / 2;
+		int height2 = gp.tileSize / 2;
+		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
+		
+		y2 = y -= gp.tileSize * 1.5;
+		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
+		
+		x -= gp.tileSize;
+		y += gp.tileSize * 2.5;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		
+		final int money = coinWorth * sellAmt;
+		
+		g2.drawString("+$" + money, x, y);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			gp.gameState = GamePanel.PLAY_STATE;
+			showMessage("Cashed in " + sellAmt + " coins for $" + money + "!");
+			gp.player.p.coins -= sellAmt;
+			gp.player.p.setMoney(gp.player.p.getMoney() + money);
+			sellAmt = 1;
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			sellAmt++;
+			if (sellAmt > gp.player.p.getMaxCoins()) sellAmt = 1;
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			sellAmt--;
+			if (sellAmt < 1) sellAmt = gp.player.p.getMaxCoins();
+		}
+		
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			int max = gp.player.p.getMaxCoins();
+			sellAmt -= max > 10 ? 10 : 1;
+			if (sellAmt < 1) sellAmt += max;
+		}
+		
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			int max = gp.player.p.getMaxCoins();
+			sellAmt += max > 10 ? 10 : 1;
+			if (sellAmt > max) sellAmt -= max;
+		}
+		
+	}
+	
 	public void drawTransition() {
 		counter++;
 		g2.setColor(new Color(0,0,0,counter*5));
@@ -3513,7 +3592,7 @@ public class UI extends AbstractUI {
 					
 					NPC_Prize_Shop np = (NPC_Prize_Shop) npc;
 					np.prizePokemon.remove(itemIndex);
-					np.prizePokemon.add(itemIndex, new Pair<Pokemon, Integer>(new Pokemon(p.id, 25, true, false), current.getSecond()));
+					np.prizePokemon.add(itemIndex, new Pair<Pokemon, Integer>(new Pokemon(p.id, np.getPrizeLevel(), true, false), current.getSecond()));
 					gp.player.p.winStreak -= current.getSecond();
 				} else {
 					showMessage("Not enough wins in a row!");

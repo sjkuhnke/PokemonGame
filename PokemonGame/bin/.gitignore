@@ -1,4 +1,16 @@
+/battle/
+/cards/
 /entity/
+/field/
+/icons/
+/info/
+/interactive/
+/items/
+/maps/
+/masks/
+/menu/
+/minisprites/
+/npc/
 /object/
 /overworld/
 /pokemon/
@@ -6,4 +18,8 @@
 /tile/
 /tiles/
 /tools/
+/font/
+/gen/
+/overworlds/
+/player/
 /util/

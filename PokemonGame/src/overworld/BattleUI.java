@@ -12,7 +12,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
-import entity.Entity;
 import pokemon.*;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
@@ -1226,9 +1225,7 @@ public class BattleUI extends AbstractUI {
 		            		if (p != null) p.awardHappiness(15, true);
 		            	}
 		            	user.getPlayer().updateHappinessCaps();
-		            	for (Entity clerk : gp.aSetter.clerks) {
-		            		clerk.setItems(true, gp.player.getItems());
-		            	}
+		            	gp.player.setClerkItems();
 		            }
 		            break;
 				}
