@@ -70,7 +70,7 @@ public class Bag implements Serializable {
 		}
 
 		public int getMaxSell() {
-			return Math.min(99, count);
+			return Math.min(999, count);
 		}
 	}
 

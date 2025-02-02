@@ -88,13 +88,14 @@ public class Player extends Trainer implements Serializable {
 	public int gamesWon;
 	public int winStreak;
 	public int[] blackjackStats; // 0: games played, 1: games won, 2: games pushed, 3: busts, 4: bust wins, 5: blackjacks 6: doubles 7: double wins, 8: coins won, 9: coins lost: 10: highest coin, 11: highest win streak, 12: lose streak, 13: high lose strk
+	public boolean[] coinBadges;
 	public int currentBox;
 	public int version;
 	private Integer id;
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 50;
+	public static final int VERSION = 51;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -131,6 +132,7 @@ public class Player extends Trainer implements Serializable {
 		effects = new ArrayList<>();
 		
 		blackjackStats = new int[20];
+		coinBadges = new boolean[12];
 		
 		setupStatBerries();
         setupResistBerries();
@@ -426,7 +428,7 @@ public class Player extends Trainer implements Serializable {
 		JTextField money = new JTextField(this.money + "");
 		JTextField coins = new JTextField(this.coins + "");
 		JComboBox<Integer> badges = new JComboBox<>();
-		JComboBox<Pokemon> starter = new JComboBox<>();
+		JComboBox<String> starter = new JComboBox<>();
 		JButton pokedexButton = new JButton("Pokedex");
 		JButton bagButton = new JButton("Bag");
 		JCheckBox[] locations = new JCheckBox[12];
@@ -447,9 +449,9 @@ public class Player extends Trainer implements Serializable {
 		result.add(badges);
 		
 		for (int i = 1; i < 8; i += 3) {
-			starter.addItem(new Pokemon(i, 5, true, false));
+			starter.addItem(Pokemon.getName(i));
 		}
-		starter.setSelectedIndex(this.starter - 1);
+		starter.setSelectedIndex(this.starter);
 		result.add(starter);
 		
 		pokedexButton.addActionListener(e -> {
@@ -569,8 +571,10 @@ public class Player extends Trainer implements Serializable {
 		confirm.addActionListener(e -> {
 			this.money = Integer.parseInt(money.getText());
 			this.coins = Integer.parseInt(coins.getText());
+			int oldBadges = this.badges;
 			this.badges = (int) badges.getSelectedItem();
-			this.starter = starter.getSelectedIndex() + 1;
+			if (oldBadges != this.badges) Pokemon.gp.player.setClerkItems();
+			this.starter = starter.getSelectedIndex();
 			for (int i = 0; i < flagDesc.length; i++) {
 				for (int j = 0; j < flagDesc[i].length; j++) {
 					this.flag[i][j] = ((JCheckBox) ((JPanel) ((JScrollPane) mainTabbedPane.getComponentAt(i)).getViewport().getView()).getComponent(j)).isSelected();
@@ -1234,6 +1238,7 @@ public class Player extends Trainer implements Serializable {
 		updateBerries();
 		if (id == null) setID(gp.player.currentSave);
 		if (blackjackStats == null) blackjackStats = new int[20];
+		if (coinBadges == null) coinBadges = new boolean[12];
 		if (this.effects == null) this.effects = new ArrayList<>();
 		version = VERSION;
 	}
@@ -1537,5 +1542,9 @@ public class Player extends Trainer implements Serializable {
 			}
 		}
 		
+	}
+
+	public int getMaxCoins() {
+		return Math.min(999, coins);
 	}
 }

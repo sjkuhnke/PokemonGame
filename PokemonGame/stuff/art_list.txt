@@ -1,7 +1,6 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-099 Fireshard* (E forms of these guys are more important, these guys can wait)
 100 Blastflames (E forms of these guys are more important, these guys can wait)
 202 Flamehead-E
 203 Fireshard-E (First stage is lowkey the most important, these 2 can wait)
@@ -61,8 +60,8 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 222 Zurroaratr-S
 148 Durfish
 149 Dompster
-132 Sheltor
-133 Shelnado
+132 Sheltor*
+133 Shelnado*
 141 Ali*
 142 Batorali*
 181 Droid

@@ -1767,40 +1767,8 @@ public class AssetSetter {
 		
 		mapNum = 129;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 37, 44, "Hi there! Here, you can exchange coins for money!", true);
-		gp.npc[mapNum][index] = SetupPrizeShop(31, 39, Arrays.asList(
-				// coin items
-				new Pair<>(Item.WHITE_HERB, 5),
-				new Pair<>(Item.POWER_HERB, 5),
-				new Pair<>(Item.MENTAL_HERB, 5),
-				new Pair<>(Item.FOCUS_SASH, 10),
-				new Pair<>(Item.THROAT_SPRAY, 15),
-				new Pair<>(Item.BLUNDER_POLICY, 20),
-				new Pair<>(Item.WEAKNESS_POLICY, 20),
-				new Pair<>(Item.RED_CARD, 25),
-				new Pair<>(Item.AIR_BALLOON, 25)
-		), Arrays.asList(
-				// win TMs
-				new Pair<>(Item.TM59, 10),
-				new Pair<>(Item.TM39, 25),
-				new Pair<>(Item.TM96, 40),
-				new Pair<>(Item.TM21, 60),
-				new Pair<>(Item.TM70, 75),
-				new Pair<>(Item.TM64, 100),
-				new Pair<>(Item.TM94, 150)
-		), Arrays.asList(
-				// win streak prize pokemon
-				new Pair<>(150, 3),
-				new Pair<>(143, 4),
-				new Pair<>(193, 5),
-				new Pair<>(195, 6),
-				new Pair<>(184, 7),
-				new Pair<>(187, 7),
-				new Pair<>(190, 8),
-				new Pair<>(263, 9),
-				new Pair<>(232, 10),
-				new Pair<>(231, 12)
-		));
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, "Banker", 37, 44, "Hi there! Here, you can exchange coins for money!", true);
+		gp.npc[mapNum][index] = SetupPrizeShop(31, 39, mapNum);
 		
 		mapNum = 130;
 		index = 0;
@@ -3141,15 +3109,16 @@ public class AssetSetter {
 		return e;
 	}
 	
-	private Entity SetupPrizeShop(int x, int y, List<Pair<Item, Integer>> coinItems, List<Pair<Item, Integer>> winItems, List<Pair<Integer, Integer>> prizePokemon) {
+	private Entity SetupPrizeShop(int x, int y, int mapNum) {
 		NPC_Prize_Shop result = new NPC_Prize_Shop(gp);
-		
-		result.setCoinItems(coinItems);
-		result.setWinItems(winItems);
-		result.setPrizePokemon(prizePokemon);
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;
+		result.trainer = mapNum;
+		
+		result.setItems(false, (Item[]) null);
+		
+		clerks.add(result);
 		
 		index++;
 		
