@@ -127,6 +127,19 @@ Fixed Knock Off, Bug Bite, Trick, etc's interaction with Sticky Hold and Mold Br
 Gave Tortugis, Hamthrono, Millistone, Tricerpup/Tricercil, Blaxer/Pyrator, Flamehox line, Shookwat line, Magie line, Rhypo line, Wormite line, Flamehox-E line, Blaxer-S/Pyrator-S Endure
 Gave Iglite Fire Spin at lv 5 and Hidden Power at lv 10
 Added Mighty Cleave and gave it to Barbaracle at lv 60
+Gave Binacle + Barbaracle Accelerock at lv 45
 Changed Iglite-S's delay evo Knock Off from lv 18 -> 17
 ADDED EGGS TO MY GAME FINALLY, changed 6th gym split gift to egg
 Added a new encounter to 2nd gym split where Research Post A gives you an egg of a RANDOM basic stage mon!
+Added Guy Eddit in Poppy Grove to take you to Rawwar City (a closed off version) so the player can access the Casino + Prize Shop early!
+Gave Walrein Ice Beam via Level Up
+Gave Sheltor + Shelnado Frostbind at lv 39 and 63 respectively
+Gave Grust Frostbind at lv 60
+Added sprites for Flamehox and Fireshard!
+CHANGED WILL-O-WISP, THUNDER WAVE, and FROSTBIND to not miss if the user is Fire, Electric or Ice type respectively to match TOXIC!!
+Updated Toxic's description to state that it bypasses accuracy checks if the user is Poison type
+Gave Shookwat Shock Wave at lv 21
+Fixed Move Option being reset when using PP Up/PP Max
+Changed all UI's to show effective types and base power for Galvanize, Refrigerate, Pixilate, and Normalize effected moves
+Made Snow weather block burn to nerf Will-O-Wisp due to the new accuracy and added a message stating such in game
+Added the same message to Frostbite being blocked by Sun weather for consistency
