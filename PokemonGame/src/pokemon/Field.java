@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -132,11 +131,7 @@ public class Field {
 		}
 	}
 	
-	public class FieldEffect implements Serializable {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
+	public class FieldEffect {
 		public int turns;
 		public Effect effect;
 		public int layers;
@@ -383,7 +378,7 @@ public class Field {
 	        FieldEffect effect = iterator.next();
 	        if (effect.turns > 0) effect.turns--;
 	        if (effect.turns == 0) {
-	            Task.addTask(Task.TEXT, "Your " + effect.effect.toString() + " wore off!");
+	            Task.addTask(Task.TEXT, faster.nickname + "'s side's " + effect.effect.toString() + " wore off!");
 	            iterator.remove();
 	        }
 	    }
@@ -393,7 +388,7 @@ public class Field {
 	        FieldEffect effect = iterator.next();
 	        if (effect.turns > 0) effect.turns--;
 	        if (effect.turns == 0) {
-	            Task.addTask(Task.TEXT, "Foe's " + effect.effect.toString() + " wore off!");
+	            Task.addTask(Task.TEXT, slower.nickname + "'s side's " + effect.effect.toString() + " wore off!");
 	            iterator.remove();
 	        }
 	    }

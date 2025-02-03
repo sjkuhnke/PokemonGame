@@ -595,7 +595,6 @@ public class PlayerCharacter extends Entity {
 			
 			npc.speak(1);
 		}
-		
 	}
 	
 	private void interactBlock(NPC_Block npc) {
@@ -1661,10 +1660,6 @@ public class PlayerCharacter extends Entity {
 			Task t = Task.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?");
 			t.counter = 0;
 		}
-	}
-
-	private void showPrizeMenu(JPanel panel, String title) {
-		JOptionPane.showMessageDialog(null, panel, title, JOptionPane.QUESTION_MESSAGE);
 	}
 	
 	private void interactCutTree(int i) {

@@ -1064,7 +1064,7 @@ public class BattleUI extends AbstractUI {
 		        g2.setColor(moves[i].getPPColor());
 		        String text = moves[i].move.toString();
 		        g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
-		        String pp = showMoveSummary ? moves[i].move.cat == 2 ? "Status" : mtype.effectiveness(foe, user) : moves[i].currentPP + " / " + moves[i].maxPP;
+		        String pp = showMoveSummary ? moves[i].move.cat == 2 ? "Status" : mtype.effectiveness(foe, user, moves[i].move) : moves[i].currentPP + " / " + moves[i].maxPP;
 		        g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
 		        if (moveNum == i) {
 		            g2.setColor(Color.WHITE);
