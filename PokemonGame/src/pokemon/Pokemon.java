@@ -725,6 +725,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.PSYCHIC_TERRAIN) && field.equals(field.terrain, Effect.PSYCHIC)) bestMoves.removeIf(Move.PSYCHIC_TERRAIN::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPARKLING_TERRAIN) && field.equals(field.terrain, Effect.SPARKLY)) bestMoves.removeIf(Move.SPARKLING_TERRAIN::equals);
 		
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.WILL$O$WISP) && field.equals(field.weather, Effect.SNOW)) bestMoves.removeIf(Move.WILL$O$WISP::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MOLTEN_CONSUME) && field.equals(field.weather, Effect.SNOW)) bestMoves.removeIf(Move.MOLTEN_CONSUME::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.FROSTBIND) && field.equals(field.weather, Effect.SUN)) bestMoves.removeIf(Move.FROSTBIND::equals);
+		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.REFLECT) && field.contains(this.getFieldEffects(), Effect.REFLECT)) bestMoves.removeIf(Move.REFLECT::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.LIGHT_SCREEN) && field.contains(this.getFieldEffects(), Effect.LIGHT_SCREEN)) bestMoves.removeIf(Move.LIGHT_SCREEN::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_VEIL) && (field.contains(this.getFieldEffects(), Effect.AURORA_VEIL) || !field.equals(field.weather, Effect.SNOW))) bestMoves.removeIf(Move.AURORA_VEIL::equals);
@@ -3564,13 +3568,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Task.addTask(Task.TEXT, "A soothing aroma wafted through the air!");
 			if (team == null) {
 				if (this.status != Status.HEALTHY) {
-					if (announce) Task.addTask(Task.TEXT, this.nickname + " was cured of its " + this.status.getName() + "!");
+					if (announce) Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " was cured of its " + this.status.getName() + "!", this);
 					this.status = Status.HEALTHY;
 				}
 			} else {
 				for (Pokemon p : team) {
 					if (p != null && !p.isFainted() && p.status != Status.HEALTHY) {
-						if (announce) Task.addTask(Task.TEXT, p.nickname + " was cured of its " + p.status.getName() + "!");
+						if (announce) Task.addTask(Task.STATUS, Status.HEALTHY, p.nickname + " was cured of its " + p.status.getName() + "!", this);
 						p.status = Status.HEALTHY;
 					}
 				}
@@ -4309,7 +4313,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.ability = Ability.INSOMNIA;
 			if (announce) Task.addTask(Task.TEXT, foe.nickname + "'s ability became Insomnia!");
 		} else if (announce && move == Move.YAWN) {
-			if (foe.vStatuses.contains(Status.YAWNING) || foe.vStatuses.contains(Status.DROWSY)) {
+			if (foe.vStatuses.contains(Status.YAWNING) || foe.vStatuses.contains(Status.DROWSY) || foe.status == Status.ASLEEP) {
 				fail(announce);
 			} else {
 				foe.vStatuses.add(Status.YAWNING);
@@ -6646,7 +6650,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 						if (move == Move.RETURN) mtype = foe.determineHPType();
 						if (move == Move.WEATHER_BALL) mtype = foe.determineWBType();
 						if (move == Move.TERRAIN_PULSE) mtype = foe.determineTPType();
-						double multiplier = getEffectiveMultiplier(mtype, foe);
+						double multiplier = getEffectiveMultiplier(mtype, move, foe);
 						
 						if (multiplier > 1) shuddered = true;
 					}
@@ -6682,7 +6686,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		if (hazards && this.item != Item.HEAVY$DUTY_BOOTS && this.ability != Ability.SHIELD_DUST) {
 			if (field.contains(this.getFieldEffects(), Effect.STEALTH_ROCKS) && this.ability != Ability.MAGIC_GUARD && this.ability != Ability.SCALY_SKIN) {
-				double multiplier = getEffectiveMultiplier(PType.ROCK, null);
+				double multiplier = getEffectiveMultiplier(PType.ROCK, null, null);
 				double damage = (this.getHPAmount(1.0/8)) * multiplier;
 				this.damage((int) Math.max(Math.floor(damage), 1), foe);
 				Task.addTask(Task.TEXT, "Pointed stones dug into " + this.nickname + "!");
@@ -6866,7 +6870,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 	}
 
-	public double getEffectiveMultiplier(PType mtype, Pokemon foe) {
+	public double getEffectiveMultiplier(PType mtype, Move m, Pokemon foe) {
 		double multiplier = 1.0;
 		
 		if (getImmune(this, mtype)) {
@@ -6884,6 +6888,15 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		PType[] resistances = getResistances(mtype);
+		if (m == Move.FREEZE$DRY || m == Move.SKY_UPPERCUT) {
+			ArrayList<PType> types = new ArrayList<>();
+			for (PType type : resistances) {
+				types.add(type);
+			}
+			if (m == Move.FREEZE$DRY) types.remove(PType.WATER);
+			if (m == Move.SKY_UPPERCUT) types.remove(PType.FLYING);
+			resistances = types.toArray(new PType[0]);
+		}
         for (PType resistance : resistances) {
             if (this.type1 == resistance || this.type2 == resistance) {
                 multiplier /= 2;
@@ -6891,6 +6904,15 @@ public class Pokemon implements RoleAssignable, Serializable {
         }
         
         PType[] weaknesses = getWeaknesses(mtype);
+        if (m == Move.FREEZE$DRY || m == Move.SKY_UPPERCUT) {
+			PType[] temp = new PType[weaknesses.length + 1];
+			for (int i = 0; i < weaknesses.length; i++) {
+				temp[i] = weaknesses[i];
+			}
+			if (m == Move.FREEZE$DRY) temp[weaknesses.length] = PType.WATER;
+			if (m == Move.SKY_UPPERCUT) temp[weaknesses.length] = PType.FLYING;
+			weaknesses = temp;
+		}
         for (PType weakness : weaknesses) {
             if (this.type1 == weakness || this.type2 == weakness) {
                 multiplier *= 2;
@@ -8310,6 +8332,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			return this.fieldEffects;
 		} else {
+			if (this.trainer.getFieldEffectList() == null) {
+				this.trainer.initFieldEffectList();
+			}
 			return this.trainer.getFieldEffectList();
 		}
 	}

@@ -21,7 +21,7 @@ public class Trainer implements Serializable {
 	public Pokemon current;
 	public boolean update;
 	
-	ArrayList<FieldEffect> effects;
+	transient ArrayList<FieldEffect> effects;
 	
 	public static final int MAX_TRAINERS = 400;
 	public static Trainer[] trainers = new Trainer[MAX_TRAINERS];
@@ -280,7 +280,7 @@ public class Trainer implements Serializable {
 		} else {
 			if (foe.ability == Ability.NORMALIZE) type = PType.NORMAL;
 		}
-		if (!onlyCheckAbility) multiplier = p.getEffectiveMultiplier(type, foe);
+		if (!onlyCheckAbility) multiplier = p.getEffectiveMultiplier(type, m, foe);
 		if (p.ability == Ability.DRY_SKIN && type == PType.WATER) multiplier = 0;
 		if (p.ability == Ability.BLACK_HOLE && (type == PType.LIGHT || type == PType.GALACTIC)) multiplier = 0;
 		if (p.ability == Ability.ILLUMINATION && (type == PType.GHOST || type == PType.DARK || type == PType.LIGHT || type == PType.GALACTIC)) multiplier *= 0.5;
@@ -384,5 +384,9 @@ public class Trainer implements Serializable {
 	
 	public ArrayList<FieldEffect> getFieldEffectList() {
 		return this.effects;
+	}
+
+	public void initFieldEffectList() {
+		this.effects = new ArrayList<>();
 	}
 }
