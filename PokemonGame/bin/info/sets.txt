@@ -390,10 +390,10 @@ Ability: Swift Swim
 - Energy Ball
 - Flip Turn/Knock Off/Ice Beam
 
-Ludicolo @ Damp Rock
+Ludicolo @ Leftovers/Chesto Berry
 Bold Nature
 Ability: Hydration
-- Rain Dance
+- Giga Drain
 - Scald
 - Rest
 - Quiver Dance
@@ -717,3 +717,163 @@ Ability: Thick Fat
 - Ice Shard
 - Aqua Jet/Liquidation
 - Whirlpool/Earthquake
+
+Bouncerog @ Focus Sash
+Timid/Modest Nature
+Ability: Torrent
+- Hydro Pump
+- Glitter Dance
+- Moonblast
+- Magic Reflect/Ice Beam/Freeze-Dry
+
+Bouncerog @ Life Orb/Expert Belt
+Modest Nature
+Ability: Slush Rush
+- Blizzard
+- Calm Mind/Magic Reflect
+- Draining Kiss/Moonblast
+- Hydro Pump/Sparkling Aria
+
+Bouncerog @ Sitrus Berry/Expert Belt
+Modest/Timid Nature
+Ability: Swift Swim
+- Hydro Pump/Scald
+- Magic Reflect/Flip Turn/U-Turn
+- Calm Mind/Focus Blast
+- Moonblast
+
+Bouncerog @ Assault Vest
+Calm Nature
+Ability: Torrent
+- Scald
+- U-Turn
+- Draining Kiss/Moonblast
+- Focus Blast/Freeze-Dry
+
+Opwing @ Lum Berry
+Jolly Nature
+Ability: Technician
+- Feint Attack
+- Bug Bite
+- U-Turn/Swords Dance
+- Aerial Ace/Flame Charge
+
+Opwing @ Life Orb/Silver Powder
+Adamant Nature
+Ability: Terrify
+- First Impression
+- U-Turn
+- Knock Off
+- Moonlight
+
+Hatterene @ Sitrus Berry
+Bold Nature
+Ability: Magic Bounce
+- Nuzzle/Mystical Fire
+- Healing Wish
+- Magic Tomb/Magic Reflect
+- Psychic/Psyshock
+
+Hatterene @ Focus Sash
+Quiet Nature
+Ability: Magic Bounce
+- Trick Room
+- Healing Wish
+- Psyshock
+- Elemental Sparkle
+
+Hatterene @ Leftovers
+Bold Nature
+Ability: Unwavering
+- Magic Reflect
+- Nuzzle/Mystical Fire
+- Calm Mind
+- Stored Power
+
+Hatterene @ Leftovers
+Modest Nature
+Ability: Sleight Of Hand
+- Magic Reflect
+- Vanishing Act
+- Aromatherapy
+- Psyshock/Psychic
+
+Hatterene @ Choice Specs
+Modest Nature
+Ability: Sleight Of Hand
+- Vanishing Act/Magic Tomb
+- Trick
+- Psychic
+- Photon Geyser
+
+Psylotter @ Choice Specs
+Modest Nature
+Ability: Swift Swim
+- Water Spout
+- Hydro Vortex
+- Freeze-Dry
+- Psyshock/Trick
+
+Psylotter @ Damp Rock
+Bold/Calm Nature
+Ability: Hydration
+- Scald
+- Rain Dance
+- Rest
+- Calm Mind
+
+Florlion @ Leftovers
+Bold/Calm Nature
+Ability: Grassy Surge
+- Leech Seed
+- Protect
+- U-Turn/Psyshock
+- Leaf Storm
+
+Florlion @ Choice Specs
+Modest Nature
+Ability: Psychic Surge
+- Expanding Force
+- Petal Dance/Energy Ball
+- Blizzard
+- Moonblast
+
+Florlion @ Light Clay
+Bold Nature
+Ability: Grassy Surge
+- Reflect
+- Light Screen
+- Thunder Wave/U-Turn
+- Leaf Storm
+
+Florlion @ Sitrus Berry
+Modest Nature
+Ability: Unburden
+- Leech Seed/Earth Power
+- Calm Mind
+- Psychic
+- Energy Ball
+
+Psycorboratr @ Terrain Extender
+Adamant Nature
+Ability: Psychic Surge
+- Gravity Punch
+- Trick Room/Glare
+- Meteor Mash/Iron Head
+- Hammer Arm
+
+Psycorboratr @ Assault Vest/Choice Band
+Adamant Nature
+Ability: Levitate
+- Bullet Punch
+- Psycho Cut
+- U-Turn
+- Close Combat
+
+Psycorboratr @ Iron Ball
+Adamant Nature
+Ability: Trace
+- Trick Room
+- U-Turn/Teleport/Explosion
+- Gravity Punch
+- Gyro Ball

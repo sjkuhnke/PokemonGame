@@ -1239,7 +1239,6 @@ public class Player extends Trainer implements Serializable {
 		if (id == null) setID(gp.player.currentSave);
 		if (blackjackStats == null) blackjackStats = new int[20];
 		if (coinBadges == null) coinBadges = new boolean[12];
-		if (this.effects == null) this.effects = new ArrayList<>();
 		version = VERSION;
 	}
 

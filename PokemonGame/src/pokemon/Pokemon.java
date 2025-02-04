@@ -4059,13 +4059,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 				fail = fail(announce);
 				return;
 			} else {
-				int healAmt = this.getStat(0) - this.currentHP;
-				this.status = Status.HEALTHY;
 				if (this.ability == Ability.INSOMNIA) {
 					fail = fail(announce);
 					return;
 				}
-				this.sleep(false, foe);
+				int healAmt = this.getStat(0) - this.currentHP;
+				this.status = Status.HEALTHY;
+				this.sleep(false, foe, move);
 				this.sleepCounter = 2;
 				this.vStatuses.remove(Status.CONFUSED);
 				heal(healAmt, this.nickname + " slept and became healthy!");
@@ -4325,7 +4325,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		success = !fail;
 		return;
 	}
-	
+
 	private boolean hasMaxedStatStages(boolean checkAccEv) {
 		for (int i = 0; i < (checkAccEv ? 5 : this.statStages.length); i++) {
 			if (this.statStages[i] < 6) return false;
@@ -5768,6 +5768,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 	
 	public void sleep(boolean announce, Pokemon foe) {
+		sleep(announce, foe, null);
+	}
+	
+	public void sleep(boolean announce, Pokemon foe, Move move) {
 		if (this.isFainted()) return;
 		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
@@ -5777,7 +5781,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " is protected by the Electric Terrain!");
 			return;
 		}
-		if (this.type1 == PType.PSYCHIC || this.type2 == PType.PSYCHIC) {
+		if (move != Move.REST && (this.type1 == PType.PSYCHIC || this.type2 == PType.PSYCHIC)) {
 			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...\n(In this game, Psychic is immune to sleep)");
 			return;
 		}

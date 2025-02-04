@@ -1,15 +1,12 @@
 package overworld;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 import entity.*;
 import object.*;
 import pokemon.Item;
-import util.Pair;
 
 public class AssetSetter {
 
@@ -1739,8 +1736,10 @@ public class AssetSetter {
 		
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 25, 83, "The gym is closed right now. Why, you ask? Because a goddamn Team Nuke member came here and KIDNAPPED one of our employees.\n"
 				+ "Yeah, what the hell is right! Last I saw him, he was bringing Marcus towards the volcano. I just hope that Marcus doesn't sue us...", 196);
-		
 		gp.npc[mapNum][index] = NPCSetup(CHEF_UP, "Guy Eddie", 36, 80, "");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 21, 57, "Sorry, can't let you in here. The nurse is out with a fever. Ironic, isn't it?");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 10, 60, "Not so fast, bucko. This shop's already been ransacked once, we're not trusting anyone for the time being.");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 16, 74, "The clerk is sick - advised to quarantine him. Come back later!");
 		
 		mapNum = 127;
 		index = 0;
@@ -1877,6 +1876,10 @@ public class AssetSetter {
 			gp.npc[mapNum][index++] = null;
 		}
 		
+		mapNum = 151;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_UP, null, 31, 45, "Behind me is possibly the most dangerous route in all of Xhenos. You're not worthy of exploring it kiddo!");
+		
 		mapNum = 152;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 29, 16, "", "", 347);
@@ -1919,6 +1922,14 @@ public class AssetSetter {
 		mapNum = 178;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_DOWN, "Researcher", 31, 38, "Hello there! Welcome to one of Xhenos's lovely Research Posts!", true);
+		
+		mapNum = 179;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 34, "Sorry kid - you're not strong enough to go over there yet. Enjoy Rawwar City!");
+		
+		mapNum = 180;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_LEFT, null, 36, 40, "Are you lost, bud? You do realize there's a freakin' VOLCANO behind me? Get a grip!");
 		
 	}
 
@@ -2984,6 +2995,10 @@ public class AssetSetter {
 			gp.npc[85][7] = null;
 		}
 		
+		if (flag[3][12]) {
+			gp.npc[124][19] = null;
+		}
+		
 		/**
 		 * Sixth Split
 		 */
@@ -3065,6 +3080,10 @@ public class AssetSetter {
 		
 		if (flag[5][8]) {
 			gp.npc[57][0] = null;
+			gp.npc[124][17] = null;
+			gp.npc[124][18] = null;
+			gp.npc[179][0] = null;
+			gp.npc[180][0] = null;
 		}
 		
 		if (flag[6][4]) {

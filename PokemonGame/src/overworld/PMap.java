@@ -1213,6 +1213,12 @@ public class PMap extends JPanel {
 		case 178:
 			PlayerCharacter.currentMapName = "Research Post A";
 			return 5;
+		case 179:
+			PlayerCharacter.currentMapName = "Route 37";
+			return 34;
+		case 180:
+			PlayerCharacter.currentMapName = "Route 38";
+			return 36;
 		}
 		
 		return -1;
