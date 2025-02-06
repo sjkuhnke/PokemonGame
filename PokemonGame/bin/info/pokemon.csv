@@ -276,8 +276,8 @@
 113|Bronzor-X    |MAGIC   |null    |REFORGE           |WONDER_SKIN       |BATTLE_ARMOR      |[57, 14, 76, 44, 86, 23]      |104.7 |135|
 114|Bronzong-X   |MAGIC   |GHOST   |REFORGE           |SHADOW_TAG        |BATTLE_ARMOR      |[67, 99, 111, 79, 111, 33]    |428.2 |75 |
 98 |Capsakid     |GRASS   |null    |CHLOROPHYLL       |INSOMNIA          |MOODY             |[50, 62, 40, 62, 40, 50]      |6.6   |190|
-99 |Scovillain   |GRASS   |FIRE    |CHLOROPHYLL       |INSOMNIA          |MOODY             |[65, 108, 65, 108, 65, 75]    |33.1  |75 |
-100|Despenero    |GRASS   |FIRE    |CHLOROPHYLL       |SOLAR_POWER       |MOODY             |[89, 108, 75, 128, 75, 75]    |145.0 |40 |
+99 |Scovillain   |GRASS   |FIRE    |CHLOROPHYLL       |WATER_ABSORB      |MOODY             |[65, 108, 65, 108, 65, 75]    |33.1  |75 |
+100|Despenero    |GRASS   |FIRE    |CHLOROPHYLL       |WATER_ABSORB      |SOLAR_POWER       |[89, 108, 75, 128, 75, 75]    |145.0 |40 |
 -9 |Capsakid-S   |GRASS   |GHOST   |CHLOROPHYLL       |PICKPOCKET        |FLASH_FIRE        |[45, 67, 40, 47, 40, 65]      |3.6   |160|
 -10|Scovillain-S |GRASS   |DARK    |CHLOROPHYLL       |INSECT_FEEDER     |FLASH_FIRE        |[65, 113, 60, 103, 65, 80]    |35.1  |70 |
 -11|Despenero-S  |GRASS   |DARK    |CHLOROPHYLL       |INSECT_FEEDER     |FLASH_FIRE        |[84, 118, 75, 108, 75, 90]    |116.7 |25 |
