@@ -1218,7 +1218,7 @@ public class PlayerCharacter extends Entity {
 				break;
 			}
 			if (p.pokedex[id] == 2) {
-				Task.addTask(Task.DIALOGUE, npc, "Wait..... you have that\none?!?!? Shit. Well, take\nthis one instead bozo");
+				Task.addTask(Task.DIALOGUE, npc, "Wait..... you have that one?!?!? Shit. Well, take this one instead bozo.");
 				boolean sparkitten = gift.nextBoolean();
 				if (sparkitten) {
 					id = 108;
@@ -1226,7 +1226,7 @@ public class PlayerCharacter extends Entity {
 					id = 190;
 				}
 			}
-			Pokemon result = new Pokemon(id, 25, true, false);
+			Pokemon result = new Pokemon(id, 30, true, false);
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		} else if (gp.currentMap == 39) {

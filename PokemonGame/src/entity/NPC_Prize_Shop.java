@@ -48,10 +48,10 @@ public class NPC_Prize_Shop extends Entity {
 	
 	public void setWinItems(List<Pair<Item, Integer>> winItems) {
 		this.winItems = new ArrayList<>(winItems);
-		for (int i = 0; i < this.winItems.size(); i++) {
-			Pair<Item, Integer> p = this.winItems.get(i);
+		for (int i = 0; i < winItems.size(); i++) {
+			Pair<Item, Integer> p = winItems.get(i);
 			if (gp.player.p.hasTM(p.getFirst().getMove())) {
-				this.winItems.remove(i);
+				this.winItems.remove(p);
 			}
 		}
 	}
