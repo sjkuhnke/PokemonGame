@@ -45,6 +45,10 @@ Covert cloak blocks all secondary effects including drops from foe's Close Comba
 Infinite loop when 2 mons have empathic link and one boosts, test with Mt St Joseph TN fight
 Add a tree tile on Route 37 after the grass encounter area in the middle horizontally of the river
 Make 'D' in the party screen swap items
+GETTING SWITCHED OUT FIRST ALLOWS YOU TO STILL ACT (Metronome calling Dragon Tail, test with a sleeping mon with sleep talk + whirlwind)
+Flinching resets choice lock: look into why flinching needs to clear lastMoveUsed
+Fix double evolution prompts happening when a Pokemon eligible to evolve levels up twice
+Fix Wish + add Future Sight
 
 [ Turn ] [ Switch ]
 [ Info ] [ Sheet ]

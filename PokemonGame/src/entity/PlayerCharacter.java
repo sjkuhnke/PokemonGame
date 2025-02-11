@@ -1408,9 +1408,9 @@ public class PlayerCharacter extends Entity {
 				t.counter = 1;
 				Task.addTask(Task.SPOT, npc, "");
 				Task.addTask(Task.DIALOGUE, npc, "BWAHAHAHAH! The pest finally arrives! Did you really think you could follow us all the way down here and stop what's already in motion? How amusingly naive.");
-				Task.addTask(Task.DIALOGUE, npc, "You see, child, I am far more than just a 'trainer'. I am the vanguard of an empire � we are here to prepare this world for something beyond your comprehension.");
+				Task.addTask(Task.DIALOGUE, npc, "You see, child, I am far more than just a 'trainer'. I am the vanguard of an empire - we are here to prepare this world for something beyond your comprehension.");
 				Task.addTask(Task.DIALOGUE, npc, "My master, Dragowrath, watches from the stars. Earth is merely the first of many worlds he'll claim, and when the Sorcerer rises, this land will be ours.");
-				Task.addTask(Task.DIALOGUE, npc, "But enough talk. You've come this far, so let's end this with a little... demonstration of power. Prepare yourself � my Pokemon and I will not hold back.");
+				Task.addTask(Task.DIALOGUE, npc, "But enough talk. You've come this far, so let's end this with a little... demonstration of power. Prepare yourself - my Pokemon and I will not hold back.");
 				t = Task.addTask(Task.BATTLE, "");
 				t.counter = 217;
 			} else if (!p.flag[5][9]) {
@@ -1485,8 +1485,6 @@ public class PlayerCharacter extends Entity {
 				Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 				int index = gift.nextInt(ids.length - 1);
 				if (p.pokedex[ids[0]] == 2 || p.pokedex[ids[1]] == 2) {
-					Task.addTask(Task.TEXT, "Oh, you already have a " + Pokemon.getName(ids[index]) + "? I'll give it to someone else to look after then.");
-					Task.addTask(Task.TEXT, "Here, take this really rare baby Pokemon instead!");
 					index = 2;
 				}
 				

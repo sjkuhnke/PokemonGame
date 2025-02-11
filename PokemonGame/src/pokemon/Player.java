@@ -156,9 +156,12 @@ public class Player extends Trainer implements Serializable {
 	    if (p == null || (p.isFainted() && !egg)) return;
 	    boolean hasNull = false;
 	    Task t = null;
+	    int index = 1;
 	    if (nickname) {
 	    	t = Task.createTask(Task.NICKNAME, "Would you like to nickname " + p.name() + "?", p);
 		    if (Pokemon.gp.gameState != GamePanel.PLAY_STATE) Task.insertTask(t, 0);
+	    } else {
+	    	index = 0;
 	    }
 	    if (!egg) pokedex[p.id] = 2;
 	    p.clearVolatile();
@@ -179,7 +182,7 @@ public class Player extends Trainer implements Serializable {
 	                if (nickname || egg) {
 	                	String s = egg ? "Received " : "Caught ";
 	                	t = Task.createTask(Task.END, s + p.name() + ", added to party!");
-	                	Task.insertTask(t, 1);
+	                	Task.insertTask(t, index);
 	                }
 	                current = team[0];
 	                break;
@@ -187,27 +190,27 @@ public class Player extends Trainer implements Serializable {
 	        }
 	    } else {
 	    	p.heal();
-	        int index = -1;
+	        int empty = -1;
 	        for (int i = 0; i < boxes.length; i++) {
 	            for (int j = 0; j < boxes[i].length; j++) {
 	                if (boxes[i][j] == null) {
-	                    index = j;
+	                	empty = j;
 	                    break;
 	                }
 	            }
-	            if (index >= 0) {
-	                boxes[i][index] = p;
+	            if (empty >= 0) {
+	                boxes[i][empty] = p;
 	                if (nickname || egg) {
 	                	String s = egg ? "Received " : "Caught ";
 	                	t = Task.createTask(Task.END, s + p.name() + ", sent to box " + (i + 1) + "!");
-	                	Task.insertTask(t, 1);
+	                	Task.insertTask(t, index);
 	                }
 	                return;  // Exit the method after catching the Pokemon
 	            }
 	        }
 	        if (nickname || egg) {
 	        	t = Task.createTask(Task.END, "Cannot catch " + p.name() + ", all boxes are full.");
-	        	Task.insertTask(t, 1);
+	        	Task.insertTask(t, index);
 	        }
 	    }
 	}

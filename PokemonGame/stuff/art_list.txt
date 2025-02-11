@@ -21,9 +21,6 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 213 Nightrex*
 214 Shadowsaur*
 235 Dragowrath*
-101 Tiowoo*
-102 Magwoo*
-103 Lafloo*
 240 Scraftagon*
 108 Sparkitten
 109 Fireblion
