@@ -120,7 +120,7 @@ public enum Move {
 	DOUBLE$EDGE(120,100,0,0,0,0,PType.NORMAL,"User takes 1/3 of damage inflicted",true,15),
 	DRACO_METEOR(130,90,100,0,1,0,PType.DRAGON,"% to lower user's Sp.Atk by 2",false,5),
 	DRAGON_BREATH(60,100,30,0,1,0,PType.DRAGON,"% chance to Paralyze foe",false,20),
-	DRAGON_CLAW(80,100,0,1,0,0,PType.DRAGON,"Boosted Crit rate",true,15),
+	DRAGON_CLAW(85,100,0,1,0,0,PType.DRAGON,"Boosted Crit rate",true,15),
 	DRAGON_DANCE(0,1000,0,0,2,0,PType.DRAGON,"Raises user's Attack and Speed by 1",false,5),
 	DRAGON_DARTS(50,100,0,0,0,0,PType.DRAGON,"Attacks twice",false,10),
 	DRAGON_PULSE(85,100,0,0,1,0,PType.DRAGON,"A normal attack",false,10),

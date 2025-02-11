@@ -674,7 +674,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 37, Item.PP_MAX, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(69, 13, Item.RARE_CANDY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(32, 11, Item.COVERT_CLOAK, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(32, 11, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 17, Item.FOCUS_SASH, mapNum);
 		
 		mapNum = 95;
 		objIndex = 0;
@@ -794,10 +794,11 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(61, 50, Item.GOLD_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 32, Item.GOLD_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(68, 87, mapNum, 5, 15);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 49, Item.TM08, mapNum); // bulk up
 		
 		mapNum = 110;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(44, 36, Item.TM08, mapNum); // bulk up
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 45, Item.HASTY_MINT, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(19, 74, Item.BIG_NUGGET, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(16, 77, Item.CAREFUL_MINT, mapNum); // careful
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 68, Item.PP_UP, mapNum);
@@ -1665,7 +1666,7 @@ public class AssetSetter {
 				+ "I spent so long training my psychic powers, trying to predict your moves... but I forgot something really important.\n"
 				+ "It's not about reading your mind - it's about training my Pokemon. They're the ones doing the battling, after all.\n"
 				+ "Guess I still have a lot to learn. But don't worry! Next time, I'll focus on them, and I'll definitely beat you!", 242);
-		gp.npc[mapNum][index] = NPCSetup(BREEDER, null, 44, 39, "I found this infant Pokemon abandoned here.", true, 167, "Please raise it with love and care!");
+		gp.npc[mapNum][index] = NPCSetup(BREEDER, null, 44, 39, "Thank god! I found this abandoned egg here, and I'm not sure what to do with it.", true, 167, "Please raise it with love and care!");
 		gp.npc[mapNum][index++] = null; // scott cutscene
 		
 		mapNum = 110;

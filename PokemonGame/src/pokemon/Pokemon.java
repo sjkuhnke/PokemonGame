@@ -2521,7 +2521,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			if (move == Move.POP_POP && hit == numHits) {
 				Task.addTask(Task.TEXT, "Hit " + hits + " times!");
-			} else if (hit == numHits && hit > 1) {
+			} else if ((hit == numHits && hit > 1) || move == Move.BEAT_UP) {
 				Task.addTask(Task.TEXT, "Hit " + hit + " times!");
 			}
 			
@@ -4035,7 +4035,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			boolean success = field.setWeather(field.new FieldEffect(Effect.RAIN));
 			if (success && item == Item.DAMP_ROCK) field.weatherTurns = 8;
 		} else if (move == Move.REBOOT) {
-			if (this.status != Status.HEALTHY || !this.vStatuses.isEmpty()) if (announce) Task.addTask(Task.TEXT, this.nickname + " became healthy!");
+			if (this.status != Status.HEALTHY || !this.vStatuses.isEmpty()) if (announce) Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " became healthy!", this);
 			this.status = Status.HEALTHY;
 			removeBad(this.vStatuses);
 			stat(this, 4, 1, foe, announce);
