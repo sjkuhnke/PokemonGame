@@ -101,6 +101,7 @@ public class UI extends AbstractUI {
 	private static int MAX_PARLAYS = 6;
 	private int[] parlays;
 	private boolean showParlays;
+	private int battleBet;
 	
 	private ArrayList<ArrayList<Encounter>> encounters;
 	
@@ -584,6 +585,12 @@ public class UI extends AbstractUI {
 		drawPartySummary(ut, gp.tileSize / 2, 1);
 		drawPartySummary(ft, (int) (gp.tileSize * 8.5), 2);
 		
+		if (starterConfirm) { // spinner for how much to bet
+			int x = (int) (commandNum == 1 ? gp.tileSize / 2 : gp.tileSize * 8.5);
+			drawBattleBets(x, ut, ft, odds);
+			return;
+		}
+		
 		if (showParlays) {
 			drawParlaySheet();
 			return;
@@ -592,17 +599,7 @@ public class UI extends AbstractUI {
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			if (commandNum > 0) {
-				Task t = Task.addTask(Task.START_BATTLE, "");
-				t.wipe = true;
-				t.p = ut.getCurrent();
-				t.evo = ft.getCurrent();
-				t.trainers = new Trainer[] {ut, ft};
-				t.start = odds[0];
-				t.finish = odds[1];
-				commandNum = 0;
-				areaCounter = 0;
-				showParlays = false;
-				currentTask = null;
+				starterConfirm = true;
 			}
 		}
 		
@@ -815,7 +812,7 @@ public class UI extends AbstractUI {
 			
 			x = startX + gp.tileSize * 4;
 			startY += pHeight;
-			y = startY - gp.tileSize;
+			y = (int) (startY - gp.tileSize * 1.5);
 			
 			g2.drawImage(p.type1.getImage(), x, y, null);
 			if (p.type2 != null) {
@@ -823,10 +820,119 @@ public class UI extends AbstractUI {
 				g2.drawImage(p.type2.getImage(), x, y, null);
 			}
 			
+			y += gp.tileSize;
+			
+			String nature = p.getNature() + " Nature";
+			g2.drawString(nature, getCenterAlignedTextX(nature, x), y);
+			
 			x = startX;
 			y = startY;
 		}
 		
+	}
+	
+	private void drawBattleBets(int x, Trainer ut, Trainer ft, int[] odds) {
+		x = (int) (x + gp.tileSize * 2);
+		int y = (int) (gp.tileSize * 3.75);
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 3.5);
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize * 0.25;
+		y += gp.tileSize * 0.75;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		
+		int americanOdds = calculateOdds(odds, commandNum - 1);
+		
+		g2.drawString("Odds: " + americanOdds, x, y);
+		
+		x += gp.tileSize;
+		y += gp.tileSize * 1.25;
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.drawString(battleBet + "", x, y);
+		
+		int y2 = y += gp.tileSize / 4;
+		int width2 = gp.tileSize / 2;
+		int height2 = gp.tileSize / 2;
+		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
+		
+		y2 = y -= gp.tileSize * 1.5;
+		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
+		
+		x -= gp.tileSize;
+		y += gp.tileSize * 2.5;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		
+		int payout = SimBattleUI.calculatePayout(battleBet, commandNum - 1, odds);
+		
+		g2.drawString("Payout: +" + payout, x, y);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			
+			Task t = Task.addTask(Task.START_BATTLE, "");
+			t.wipe = true;
+			t.p = ut.getCurrent();
+			t.evo = ft.getCurrent();
+			t.trainers = new Trainer[] {ut, ft};
+			t.start = odds[0];
+			t.finish = odds[1];
+			commandNum = 0;
+			areaCounter = 0;
+			showParlays = false;
+			starterConfirm = false;
+			currentTask = null;
+			
+			gp.player.p.coins -= battleBet;
+			if (battleBet > gp.player.p.getMaxBet()) battleBet = 1;
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			battleBet++;
+			if (battleBet > gp.player.p.getMaxBet()) battleBet = 1;
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			battleBet--;
+			if (battleBet < 1) battleBet = gp.player.p.getMaxBet();
+		}
+		
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			int max = gp.player.p.getMaxBet();
+			battleBet -= max > 10 ? 10 : 1;
+			if (battleBet < 1) battleBet += max;
+		}
+		
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			int max = gp.player.p.getMaxBet();
+			battleBet += max > 10 ? 10 : 1;
+			if (battleBet > max) battleBet -= max;
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			starterConfirm = false;
+		}
+		
+		drawToolTips(null, null, "Close", null);
+	}
+
+	private int calculateOdds(int[] odds, int choice) {
+		int totalGames = odds[0] + odds[1];
+		double probability = (double) odds[choice] / totalGames;
+		int americanOdds;
+		
+		if (probability > 0.5) {
+			americanOdds = (int) (- (probability / (1 - probability) * 100));
+		} else {
+			americanOdds = (int) ((1 - probability) / probability * 100);
+		}
+		return americanOdds;
 	}
 
 	private void drawSleep() {

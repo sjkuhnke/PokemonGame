@@ -131,7 +131,7 @@ Gave Binacle + Barbaracle Accelerock at lv 45
 Changed Iglite-S's delay evo Knock Off from lv 18 -> 17
 ADDED EGGS TO MY GAME FINALLY, changed 6th gym split gift to egg
 Added a new encounter to 2nd gym split where Research Post A gives you an egg of a RANDOM basic stage mon!
-Added Guy Eddit in Poppy Grove to take you to Rawwar City (a closed off version) so the player can access the Casino + Prize Shop early!
+Added Guy Eddie in Poppy Grove to take you to Rawwar City (a closed off version) so the player can access the Casino + Prize Shop early!
 Gave Walrein Ice Beam via Level Up
 Gave Sheltor + Shelnado Frostbind at lv 39 and 63 respectively
 Gave Grust Frostbind at lv 60
@@ -143,3 +143,19 @@ Fixed Move Option being reset when using PP Up/PP Max
 Changed all UI's to show effective types and base power for Galvanize, Refrigerate, Pixilate, and Normalize effected moves
 Made Snow weather block burn to nerf Will-O-Wisp due to the new accuracy and added a message stating such in game
 Added the same message to Frostbite being blocked by Sun weather for consistency
+Gave Boulder-E line Drain Punch
+Gave Hattrem/Hatterene Mystical Fire at lv 25, gave Hatterene Stored Power at lv 1
+Adjusted a few trainers with Hattrem/Hatterene to give them Mystical Fire
+Fixed Rest healing status of insomnia Pokemon
+Fixed Rest working with Psychic types (still puts them to sleep; normally immune)
+Changed Scovillain's second ability Insomnia -> Water Absorb
+Changed Despenero's second ability Solar Power -> Water Absorb
+Changed Despenero's hidden ability Moody -> Solar Power
+Updated Eclipse Grunt 21 to have Water Absorb Scovillain instead of Insomnia Scovillain
+Fixed Maniac Telmo having a Cluuz instead of a Zurrclu
+Made Schrice's gift "starter" lv 30 instead of 25
+Fixed Swimmer Laurie's Ludicolo lv (42 -> 46)
+Gave Hiker Rasmus's Duosion-X Eviolite instead of Light Clay
+Changed Dragon Claw's BP 80 -> 85
+Fixed Beat Up still announcing how many hits even if it's just once
+Fixed Reboot visually updating a status effect if it cures one

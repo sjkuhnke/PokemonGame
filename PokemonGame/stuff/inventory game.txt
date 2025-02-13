@@ -304,14 +304,14 @@ After
 Athlete (Fire/Electric)
 Before Battle:
 
-"Feel the heat of my Fire Pokemon! They're ready to burn through the competition!"
+""
 ""
 "My speed, my power, my Pokemon - everything's at its peak! Bring it on!"
 "This is no game! My Fire and Electric types are ready to shock and scorch you!"
 "You'll need more than luck to outmatch me. I'm bringing the heat!"
 After:
 
-"What? How did you outrun my strategy? I guess I'll have to train harder!"
+""
 ""
 "I've gotta admit, you've got some serious skills. Respect!"
 "You may have cooled me down this time, but I'm coming back hotter than ever!"
@@ -664,7 +664,7 @@ Before
 ""
 ""
 "I just caught this Pokemon! Wanna see how strong it is?"
-"I'm super excited to battle you! Get ready!"
+""
 "My Pokemon are the best! I've trained them myself!"
 "I know a secret move that'll totally surprise you!"
 ""
@@ -694,7 +694,7 @@ After
 ""
 ""
 "What? No way! I thought I was gonna win!"
-"I guess I need to practice more... I'll get you next time!"
+""
 "I wasn't expecting that! You're really good!"
 "Aw, I'll have to train harder... But I'll beat you one day!"
 ""

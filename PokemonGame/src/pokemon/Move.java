@@ -701,10 +701,10 @@ public enum Move {
 	
 	public double getbp(Pokemon user, Pokemon foe) {
 		PType type = mtype;
-		if (this == Move.HIDDEN_POWER) mtype = user.determineHPType();
-		if (this == Move.RETURN) mtype = user.determineHPType();
-		if (this == Move.WEATHER_BALL) mtype = user.determineWBType();
-		if (this == Move.TERRAIN_PULSE) mtype = user.determineTPType();
+		if (this == Move.HIDDEN_POWER) type = user.determineHPType();
+		if (this == Move.RETURN) type = user.determineHPType();
+		if (this == Move.WEATHER_BALL) type = user.determineWBType();
+		if (this == Move.TERRAIN_PULSE) type = user.determineTPType();
 		if (basePower == -1) {
 			if (this == Move.STORED_POWER && foe == null) return 20;
 			boolean faster = user == null || foe == null ? true : user.getFaster(foe, 0, 0) == user;
@@ -715,7 +715,7 @@ public enum Move {
 			}
 			if (foe == null) foe = new Pokemon(1, 1, false, false);
 			double bp = user.determineBasePower(foe, this, faster, null, false);
-			if (mtype == PType.NORMAL) {
+			if (type == PType.NORMAL) {
 				if (user.ability == Ability.GALVANIZE || user.ability == Ability.REFRIGERATE || user.ability == Ability.PIXILATE) bp *= 1.2;
 			} else {
 				if (user.ability == Ability.NORMALIZE) bp *= 1.2;

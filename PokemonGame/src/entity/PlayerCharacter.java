@@ -1627,7 +1627,7 @@ public class PlayerCharacter extends Entity {
 		} else if (gp.currentMap == 178) {
 			Task.addTask(Task.DIALOGUE, npc, "I specialize in checking those strange evolution methods for your Pokemon.");
 			if (!p.flag[1][20]) {
-				//p.flag[1][20] = true;
+				p.flag[1][20] = true;
 				Task.addTask(Task.DIALOGUE, npc, "Wait a minute... we haven't met yet, have we?");
 				Task.addTask(Task.DIALOGUE, npc, "You're the Professor's kid, right? Here, he asked me to give you this if you ever passed by.");
 				Random random = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
@@ -1639,13 +1639,27 @@ public class PlayerCharacter extends Entity {
 				Task.addTask(Task.DIALOGUE, npc, "Have any to show me?");
 				Task.addTask(Task.EVO_INFO, npc, "");
 			}
-		}
-		
-		if (gp.currentMap == 138 && !p.flags[26]) {
-			p.flags[26] = true;
-			Task.addTask(Task.TEXT, "Here, I have a gift for you for being so kind.");
-			Task.addTask(Task.TEXT, "Obtained HM07 Rock Climb!");
-			p.bag.add(Item.HM07);
+		} else if (gp.currentMap == 124) {
+			p.flag[6][5] = true;
+			Task.addTask(Task.DIALOGUE, npc, "The fever's fading, the mountain's quiet... Seems you handled things nicely. A true magician knows when to step in and when to let the show play out on its own.");
+			Task.addTask(Task.DIALOGUE, npc, "Ah, where are my manners? The name's Merlin, Gym Leader of Rawwar City. If you've met my granddaughter, I imagine she had some... strong opinions about you.");
+			Task.addTask(Task.DIALOGUE, npc, "She sees the world in black and white. Heroes and villains, tricks and truths. But magic, real magic, lies in the in-between.");
+			Task.addTask(Task.DIALOGUE, npc, "You, though... You're full of surprises. And I do love a good surprise.");
+			Task.addTask(Task.DIALOGUE, npc, "Here, consider this a reward for your performance.");
+			Task t = Task.addTask(Task.ITEM, "Obtained HM07 Rock Climb!");
+			t.item = Item.HM07;
+			Task.addTask(Task.DIALOGUE, npc, "You'll need this if you want to keep climbing higher once you defeat me. Just don't let the heights get to your head.");
+			Task.addTask(Task.DIALOGUE, npc, "Now then, you've come all this way. Might as well see if your magic can match mine.");
+			Task.addTask(Task.DIALOGUE, npc, "Step inside when you're ready. But be warned - my tricks aren't just for show.");
+			t = Task.addTask(Task.TURN, npc, "");
+			t.counter = Task.RIGHT;
+			t = Task.addTask(Task.TURN, npc, "");
+			t.counter = Task.UP;
+			t = Task.addTask(Task.TURN, npc, "");
+			t.counter = Task.LEFT;
+			Task.addTask(Task.FLASH_IN, "");
+			Task.addTask(Task.UPDATE, "");
+			Task.addTask(Task.FLASH_OUT, "");
 		} if (gp.currentMap == 146 && !p.flags[28]) {
 			int selected = p.getAmountSelected();
 			String message = "Are you ready to fight as soon as you step into this room?";
