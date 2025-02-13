@@ -62,7 +62,8 @@ public class Task {
 	public static final int EVO_INFO = 48;
 	public static final int ODDS = 49;
 	public static final int BET_BATTLE = 50;
-	public static final int GAME_STATE = 51; // counetr: what game state to swtich to
+	public static final int GAME_STATE = 51; // counter: what game state to swtich to
+	private static final int SHINY = 52;
 	
 	public static GamePanel gp;
 	
@@ -283,6 +284,9 @@ public class Task {
 			t.start = start;
 			t.status = p.status;
 			t.wipe = playerSide;
+			if (p.shiny) {
+				addTask(Task.SHINY, "", p);
+			}
 		}
 	}
 	

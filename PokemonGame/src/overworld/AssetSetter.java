@@ -405,7 +405,10 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(62, 43, Item.ICE_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(63, 32, Item.BLUNDER_POLICY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 32, Item.FULL_RESTORE, mapNum);
-		if (gp.player.p.choiceChoice != null) gp.obj[mapNum][objIndex] = ObjSetup(77, 41, gp.player.p.choiceChoice, mapNum);
+		if (gp.player.p.choiceChoice != null) {
+			gp.player.p.itemsCollected[mapNum][objIndex] = false;
+			gp.obj[mapNum][objIndex] = ObjSetup(77, 41, gp.player.p.choiceChoice, mapNum);
+		}
 		
 		mapNum = 17;
 		objIndex = 0;
@@ -1165,8 +1168,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_LEFT, 46, 29, "The water's calm, but I'm about to make some waves!", "You slipped away this time, but I'll reel you in eventually!", 47);
 		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_RIGHT, 21, 39, "I've reeled in bigger fish than you. Let's do this!", "Guess I'll have to find a new spot to fish and train.", 48);
 		gp.npc[mapNum][index] = NPCSetup(EXPLORER_LEFT, 62, 39, "Think you can survive this frozen battlefield? Let's find out!", "This loss stings like frostbite... but I'll shake it off.", 273);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 67, 42, "", "", 274);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 72, 41, "", "", 275);
+		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_UP, 67, 42, "I'm super excited to battle you, my Dad and I have been training all week! Get ready!", "I guess I need to practice more... I'll get you next time!", 274);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 72, 41, "Feel the heat of my Fire Pokemon! They're ready to burn through the competition!", "What? How did you outrun my strategy? I guess I'll have to train harder!", 275);
 		gp.npc[mapNum][index] = SetupStaticEncounter(197, 32, 28, 367, 39, "Bzrollzfffff...");
 		gp.npc[mapNum][index] = NPCSetup(STANFORD, "Stanford", 31, 28, "*growls* Um, what the hell do you want? Oh, right...", true, 41, "");
 		
@@ -1735,12 +1738,15 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 79, "", "", 287);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 86, 72, "", "", 290);
 		
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 25, 83, "The gym is closed right now. Why, you ask? Because a goddamn Team Nuke member came here and KIDNAPPED one of our employees.\n"
-				+ "Yeah, what the hell is right! Last I saw him, he was bringing Marcus towards the volcano. I just hope that Marcus doesn't sue us...", 196);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 25, 83, "Hey, sorry, but the Gym is closed right now. A really nasty fever has been going around, and we don't want it spreading any further.\n"
+				+ "They say it started just a few days ago... a lot of people are feeling weak, and no medicine seems to work.\n"
+				+ "Some folks think it has something to do with Mt. St. Joseph. Weird stuff's been happening over there. But that's just rumors, right?");
 		gp.npc[mapNum][index] = NPCSetup(CHEF_UP, "Guy Eddie", 36, 80, "");
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 21, 57, "Sorry, can't let you in here. The nurse is out with a fever. Ironic, isn't it?");
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 10, 60, "Not so fast, bucko. This shop's already been ransacked once, we're not trusting anyone for the time being.");
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 16, 74, "The clerk is sick - advised to quarantine him. Come back later!");
+		gp.npc[mapNum][index] = null; // merlin
+		gp.npc[mapNum][index] = null; // arthra
 		
 		mapNum = 127;
 		index = 0;
@@ -1763,7 +1769,23 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 49, 59, "", "", 302);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 54, 54, "", "", 303);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 53, 56, "", "", 304);
-		gp.npc[mapNum][index] = NPCSetup(MERLIN, 53, 54, "", "", 305);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, 53, 54, "Ah, you've made it. You've navigated illusions, misdirection, and maybe even a trick or two. But now, the real show begins.\n"
+				+ "Magic isn't just about deception. It's about control. About understanding the forces around you and bending them to your will.\n"
+				+ "You've already proven you can disrupt the magic of others - breaking illusions, dispelling threats. But can you wield it yourself?\n"
+				+ "This battle won't just be a test of strength. It will be a test of wit, of perception, of knowing when to play your hand and when to keep your secrets.\n"
+				+ "So tell me, challenger - are you ready to step into the unknown?\n"
+				+ "Then let the grand finale begin!",
+				"Well now, wasn't that quite the spectacle? You truly are full of surprises.\n"
+				+ "Power alone doesn't make a magician. It's the mind behind the tricks, the heart behind the illusions. And you...\n"
+				+ "You've got both. But the real show isn't over yet.\n"
+				+ "There are forces at work here far beyond a simple gym battle. The magic in the air is shifting, and not in our favor.\n"
+				+ "Something big is coming. Something that won't be fooled by cheap tricks or clever illusions.\n"
+				+ "You've seen the pieces moving, haven't you? The fever, the mountain, the chaos left in its wake. That wasn't just chance.\n"
+				+ "And it won't stop here.\n"
+				+ "I'm old, Finn. My time for grand heroics is long past... but that doesn't mean I'm out of the game just yet.\n"
+				+ "When the final act begins, you won't be standing alone. The curtain's rising, and I intend to play my part.\n"
+				+ "But for now? You've earned that badge.\n"
+				+ "Wear it well, and remember - true magic isn't about power. It's about knowing when to wield it, and when to trust in something greater.", 305);
 		
 		mapNum = 129;
 		index = 0;
@@ -3070,7 +3092,8 @@ public class AssetSetter {
 		 * Seventh Split
 		 */
 		if (map == 16 && gp.player.p.choiceChoice != null) {
-			gp.obj[map][objIndex] = ObjSetup(46, 28, gp.player.p.choiceChoice, map);
+			objIndex = 10;
+			gp.obj[map][10] = ObjSetup(77, 41, gp.player.p.choiceChoice, map);
 		}
 		
 		if (flag[5][8] && !flag[6][0]) {
@@ -3091,11 +3114,22 @@ public class AssetSetter {
 			gp.npc[138][0] = null;
 			gp.npc[138][1] = null;
 			gp.npc[124][15] = null;
+			gp.npc[124][20] = gp.npc[124][20] = NPCSetup(MERLIN, "Merlin", 25, 83, "Well now, I had a feeling you'd show up sooner or later. And here I was thinking I'd have to clean up that mess myself.", true);
+		}
+		
+		if (flag[6][5] || !flag[6][4]) {
+			gp.npc[124][20] = null;
 		}
 		
 		/**
 		 * Eighth Split
 		 */
+		
+		if (flag[6][6] && !flag[7][0]) {
+			gp.npc[124][21] = NPCSetup(ARTHRA_UP, "Arthra", 25, 84, "", true);
+		} else {
+			gp.npc[124][21] = null;
+		}
 		
 		/**
 		 * All of this is old and should be removed/reworked

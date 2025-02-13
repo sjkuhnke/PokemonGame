@@ -781,4 +781,12 @@ public class SimBattleUI extends BattleUI {
 		foeStatus = foe.status;
 	}
 
+	public static int calculatePayout(int wager, int trainerGuess, int[] odds) {
+		int totalSimulations = odds[0] + odds[1];
+		double probability = (double) odds[trainerGuess] / totalSimulations;
+		double multiplier = 1.0 / probability;
+		
+		return (int) Math.ceil(wager * multiplier);
+	}
+
 }

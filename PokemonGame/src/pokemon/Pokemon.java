@@ -145,6 +145,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public int happinessCap;
 	
 	// boolean fields
+	public boolean shiny;
 	public boolean impressive;
 	public boolean battled;
 	public boolean success;
@@ -231,6 +232,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		catchRate = getCatchRate();
 		happinessCap = 50;
 		
+		if (!t) shiny = determineShiny();
 		spriteVisible = true;
 		
 		if (!t) setSprites();
@@ -269,6 +271,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		status = pokemon.status;
 		vStatuses = new ArrayList<Status>(pokemon.vStatuses);
 		
+		shiny = pokemon.shiny;
 		impressive = true;
 		trainer = pokemon.trainer;
 		lastMoveUsed = pokemon.lastMoveUsed;
@@ -318,6 +321,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 		setAbility(abilitySlot);
 	}
 	
+	private boolean determineShiny() {
+		if (true) return false;
+		@SuppressWarnings("unused")
+		Random random = new Random();
+		return random.nextInt() % 512 == 0;
+	}
+	
 	public BufferedImage getSprite() {
 		return sprite;
 	}
@@ -346,11 +356,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 	protected BufferedImage setSprite() {
 		BufferedImage image = null;
 		
+		String folder = shiny ? "/shiny/" : "/sprites/";
+		
 		String imageName = id + "";
 		while (imageName.length() < 3) imageName = "0" + imageName;
 		
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/sprites/" + imageName + ".png"));
+			image = ImageIO.read(getClass().getResourceAsStream(folder + imageName + ".png"));
 		} catch (Exception e) {
 			try {
 				image = ImageIO.read(getClass().getResourceAsStream("/sprites/000.png"));
@@ -7221,6 +7233,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    clonedPokemon.happinessCap = this.happinessCap;
 	    
 	    // Clone boolean fields
+	    clonedPokemon.shiny = this.shiny;
 	    clonedPokemon.impressive = this.impressive;
 	    clonedPokemon.battled = this.battled;
 	    clonedPokemon.success = this.success;

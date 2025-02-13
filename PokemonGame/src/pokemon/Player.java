@@ -1549,4 +1549,8 @@ public class Player extends Trainer implements Serializable {
 	public int getMaxCoins() {
 		return Math.min(999, coins);
 	}
+	
+	public int getMaxBet() {
+		return Math.min(100, coins);
+	}
 }
