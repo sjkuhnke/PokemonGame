@@ -165,7 +165,8 @@ public class BattleUI extends AbstractUI {
 			drawAbility();
 		}
 		
-		if (subState != IDLE_STATE && subState != MOVE_SELECTION_STATE && subState != INFO_STATE && (currentTask == null || currentTask.type != Task.MOVE)) {
+		if (subState != IDLE_STATE && subState != MOVE_SELECTION_STATE && subState != INFO_STATE &&
+				(currentTask == null || (currentTask.type != Task.MOVE && currentTask.type != Task.PARLAY))) {
 			drawDialogueScreen(false);
 		}
 		

@@ -64,6 +64,8 @@ public class Task {
 	public static final int BET_BATTLE = 50;
 	public static final int GAME_STATE = 51; // counter: what game state to swtich to
 	private static final int SHINY = 52;
+	public static final int PAYOUT = 53;
+	public static final int PARLAY = 54;
 	
 	public static GamePanel gp;
 	
