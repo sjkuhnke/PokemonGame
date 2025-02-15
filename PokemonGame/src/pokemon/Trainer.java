@@ -389,4 +389,15 @@ public class Trainer implements Serializable {
 	public void initFieldEffectList() {
 		this.effects = new ArrayList<>();
 	}
+
+	public ArrayList<Pokemon> getOrderedTeam() {
+		ArrayList<Pokemon> result = new ArrayList<>();
+		result.add(current);
+		for (Pokemon p : team) {
+			if (p == current || p == null) continue;
+			result.add(p);
+		}
+		
+		return result;
+	}
 }

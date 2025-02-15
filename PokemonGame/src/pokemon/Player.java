@@ -1553,4 +1553,14 @@ public class Player extends Trainer implements Serializable {
 	public int getMaxBet() {
 		return Math.min(100, coins);
 	}
+	
+	public ArrayList<Pokemon> getOrderedTeam() {
+		ArrayList<Pokemon> result = new ArrayList<>();
+		for (Pokemon p : team) {
+			if (p == null) continue;
+			result.add(p);
+		}
+		
+		return result;
+	}
 }

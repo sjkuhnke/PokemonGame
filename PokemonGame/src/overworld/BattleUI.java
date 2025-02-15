@@ -459,7 +459,7 @@ public class BattleUI extends AbstractUI {
 		drawCatchWindow();
 		drawActionScreen(user);
 		String dText = foe.trainerOwned() ? "Foe" : null;
-		if (!showFoeSummary) drawToolTips("OK", null, null, dText);
+		if (!showFoeSummary) drawToolTips("OK", "Calc", null, dText);
 	}
 
 	protected void drawUser() {

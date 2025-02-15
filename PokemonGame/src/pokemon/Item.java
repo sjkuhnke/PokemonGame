@@ -711,30 +711,28 @@ public enum Item {
         JGradientButton[] userMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
         JLabel[] userDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
         JCheckBox critCheck = new JCheckBox("Crit");
-        for (int k = 0; k < pl.team.length; k++) {
-        	if (pl.team[k] != null) {
-            	Pokemon add = pl.team[k].clone();
-            	if (!(pl instanceof Player)) {
-            		add.nickname = pl.getName();
-            	}
-        		userMons.addItem(add.clone());
-        		if (pl.team[k].id == 150) {
-            		Pokemon kD = pl.team[k].clone();
-            		int oHP = kD.getStat(0);
-    				kD.id = 237;
-    				kD.setName(kD.getName());
-    				if (kD.nickname == kD.name()) kD.nickname = kD.getName();
-    				
-    				kD.baseStats = kD.getBaseStats();
-    				kD.setStats();
-    				kD.weight = kD.getWeight();
-    				int nHP = kD.getStat(0);
-    				kD.currentHP += nHP - oHP;
-    				kD.setTypes();
-    				kD.setSprites();
-    				kD.setAbility(kD.abilitySlot);
-    				userMons.addItem(kD);
-            	}
+        for (Pokemon pokemon : pl.getOrderedTeam()) {
+        	Pokemon add = pokemon.clone();
+        	if (!(pl instanceof Player)) {
+        		add.nickname = pl.getName();
+        	}
+    		userMons.addItem(add.clone());
+    		if (pokemon.id == 150) {
+        		Pokemon kD = pokemon.clone();
+        		int oHP = kD.getStat(0);
+				kD.id = 237;
+				kD.setName(kD.getName());
+				if (kD.nickname == kD.name()) kD.nickname = kD.getName();
+				
+				kD.baseStats = kD.getBaseStats();
+				kD.setStats();
+				kD.weight = kD.getWeight();
+				int nHP = kD.getStat(0);
+				kD.currentHP += nHP - oHP;
+				kD.setTypes();
+				kD.setSprites();
+				kD.setAbility(kD.abilitySlot);
+				userMons.addItem(kD);
         	}
         }
         if (box != null) {
@@ -785,12 +783,8 @@ public enum Item {
         JCheckBox fCritCheck = new JCheckBox("Crit");
         if (f != null && f.trainerOwned()) {
         	Trainer tr = f.trainer;
-        	Pokemon add = f.clone();
-        	add.nickname = tr.getName();
-        	foeMons.addItem(add);
-        	for (Pokemon po : tr.getTeam()) {
-        		if (po == f) continue;
-        		add = po.clone();
+        	for (Pokemon po : tr.getOrderedTeam()) {
+        		Pokemon add = po.clone();
         		add.nickname = tr.getName();
         		foeMons.addItem(add);
         	}

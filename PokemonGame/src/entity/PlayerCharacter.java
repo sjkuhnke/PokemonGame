@@ -614,12 +614,12 @@ public class PlayerCharacter extends Entity {
 				Task.addTask(Task.DIALOGUE, npc, "But!");
 				Task.addTask(Task.DIALOGUE, npc, "As your Dad, I must make sure you have adequate equipment to not get lost out there.");
 				Task.addTask(Task.DIALOGUE, npc, "So first, I'm giving you this digital map, equipped with Cellular Data that will always update with where you are!");
-				Task.addTask(Task.DIALOGUE, npc, "You got the Map!");
+				Task.addTask(Task.TEXT, "You got the Map!");
 				Task.addTask(Task.DIALOGUE, npc, "And as your Professor, I need your help for collecting as much data about the Pokemon inhabiting our world with us!");
 				Task.addTask(Task.DIALOGUE, npc, "This little doohickey is the Neodex! In a region as unique as ours, I've had to make plenty of modifications to account for them.");
 				Task.addTask(Task.DIALOGUE, npc, "It's one of my finest inventions yet, and I even got help from Professor Oak, the greatest professor of all time!");
 				Task.addTask(Task.DIALOGUE, npc, "Instead of Rotom, it taps into a shared database that allows for identifying new forms for old Pokemon. Give it a whirl!");
-				Task.addTask(Task.DIALOGUE, npc, "You got the Pokedex!");
+				Task.addTask(Task.TEXT, "You got the Pokedex!");
 				Task.addTask(Task.DIALOGUE, npc, "Oh right! Speaking of collecting data, I made a little something to help you find as many different species as you can.");
 				Task t = Task.addTask(Task.ITEM, "");
 				t.item = Item.DEX_NAV;
@@ -1539,8 +1539,12 @@ public class PlayerCharacter extends Entity {
 			Task.addTask(Task.FOSSIL, "Do you have any fossils for me to resurrect?");
 		} else if (gp.currentMap == 127) {
 			if (worldX / gp.tileSize > 31) {
-				Task t = Task.addTask(Task.CONFIRM, "Would you like to Battle Bet?\n(Warning: Will Auto-Save)");
-				t.counter = 4;
+				if (p.coins > 0) {
+					Task t = Task.addTask(Task.CONFIRM, "Would you like to Battle Bet?\n(Warning: Will Auto-Save)");
+					t.counter = 4;
+				} else {
+					Task.addTask(Task.TEXT, "I'm sorry, you don't have any coins to bet with! Come back later!");
+				}
 			} else {
 				Task t = Task.addTask(Task.CONFIRM, "Would you like to play Blackjack?\n(Warning: Will Auto-Save)");
 				t.counter = 3;

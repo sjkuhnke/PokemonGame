@@ -59,6 +59,7 @@ Change switch in AI to be able to work with disruptive mons (Comp Busheep)
 Make leech seed not clickable if the opponent is a grass type/discourage it
 Make hazard/boosting moves encouraged if the opponent does less than a % to you
 Make trapping moves insentivized if opponent does less than a % to you
+Make the "lost $500" text dynamic to how much you actually lost
 
 Make Ryder 1 disappear after beating second gym
 Make Ryder 3 disappear after beating Icy Serpant

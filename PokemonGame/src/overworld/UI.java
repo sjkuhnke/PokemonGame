@@ -98,11 +98,6 @@ public class UI extends AbstractUI {
 	private int startY;
 	private boolean assignedStart;
 	
-	private static int MAX_PARLAYS = 6;
-	private int[] parlays;
-	private boolean showParlays;
-	private int battleBet;
-	
 	private ArrayList<ArrayList<Encounter>> encounters;
 	
 	BufferedImage interactIcon;
@@ -514,8 +509,8 @@ public class UI extends AbstractUI {
 				t2Items.add(p.item);
 			}
 			
-			Trainer ut = new Trainer("Trainer A", t1Team.toArray(new Pokemon[1]), t1Items.toArray(new Item[1]), 0);
-			Trainer ft = new Trainer("Trainer B", t2Team.toArray(new Pokemon[1]), t2Items.toArray(new Item[1]), 0);
+			Trainer ut = new Trainer("Trainer A", t1Team.toArray(new Pokemon[1]), t1Items.toArray(new Item[1]), 0, 1);
+			Trainer ft = new Trainer("Trainer B", t2Team.toArray(new Pokemon[1]), t2Items.toArray(new Item[1]), 0, 2);
 			
 			int[] odds = Pokemon.simulateBattle(ut, ft);
 			//tasks.clear();
@@ -552,6 +547,7 @@ public class UI extends AbstractUI {
 			}
 			
 			parlays = new int[MAX_PARLAYS];
+			sheetFilled = false;
 			gp.simBattleUI.parlaySheet = parlay;
 			
 			Task t = Task.addTask(Task.BET_BATTLE, "");
@@ -582,8 +578,13 @@ public class UI extends AbstractUI {
 		
 		int[] odds = new int[] {currentTask.start, currentTask.finish};
 		
+		drawSheetWindow();
+		drawCoinWindow();
+		
 		drawPartySummary(ut, gp.tileSize / 2, 1);
 		drawPartySummary(ft, (int) (gp.tileSize * 8.5), 2);
+		
+		drawParlayBetWindow();
 		
 		if (starterConfirm) { // spinner for how much to bet
 			int x = (int) (commandNum == 1 ? gp.tileSize / 2 : gp.tileSize * 8.5);
@@ -592,7 +593,7 @@ public class UI extends AbstractUI {
 		}
 		
 		if (showParlays) {
-			drawParlaySheet();
+			drawParlaySheet(true);
 			return;
 		}
 		
@@ -622,6 +623,18 @@ public class UI extends AbstractUI {
 			}
 		}
 		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			parlayBet++;
+			if (parlayBet > gp.player.p.getMaxBet()) parlayBet = 1;
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			parlayBet--;
+			if (parlayBet < 1) parlayBet = gp.player.p.getMaxBet();
+		}
+		
 		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
 			commandNum = 0;
@@ -633,150 +646,75 @@ public class UI extends AbstractUI {
 		}
 		drawToolTips(commandNum > 0 ? "Bet" : null, "Parlay", commandNum > 0 ? "Back" : null, null);
 	}
-
-	private void drawParlaySheet() {
-		int x = gp.tileSize * 5;
-		int y = gp.tileSize / 2;
-		int width = gp.tileSize * 6;
-		int height = (int) (gp.tileSize * 11.25);
+	
+	private void drawParlayBetWindow() {
+		int x = gp.tileSize * 12;
+		int y = (int) (gp.tileSize * 1.5);
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 3.5);
+		drawSubWindow(x, y, width, height);
 		
-		int maxBet = MAX_PARLAYS - 1;
+		x += gp.tileSize * 1.25;
+		y += gp.tileSize * 2;
+		g2.drawString(parlayBet + "", x, y);
 		
-		drawSubWindow(x, y, width, height, 255);
+		int y2 = y += gp.tileSize / 4;
+		int width2 = gp.tileSize / 2;
+		int height2 = gp.tileSize / 2;
+		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
 		
-		int parlayWidth = (int) (gp.tileSize * 5.5);
-		int parlayHeight = (int) (gp.tileSize * 1.75);
+		y2 = y -= gp.tileSize * 1.5;
+		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
 		
-		int startX = x;
-		for (int i = 0; i < MAX_PARLAYS; i++) {
-			g2.setColor(Color.WHITE);
-			int startY = y;
-			x += width / 2;
-			y += gp.tileSize * 0.75;
-			g2.setFont(g2.getFont().deriveFont(18F));
-			Pair<Double, String> current = gp.simBattleUI.parlaySheet.get(i);
-			String bet = String.format("%.1f %s", current.getFirst(), current.getSecond());
-			g2.drawString(bet, getCenterAlignedTextX(bet, x), y);
-			y += gp.tileSize * 0.75;
-			g2.setStroke(new BasicStroke(2));
-			
-			g2.drawLine((int) (x - gp.tileSize * 1.25), y, x - gp.tileSize, y);
-			
-			if (parlays[i] == 0) {
-				g2.setColor(Color.LIGHT_GRAY);
-				g2.fillOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
-				g2.setColor(Color.WHITE);
-				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
-			} else {
-				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
-			}
-			String X = "x";
-			g2.drawString(X, getCenterAlignedTextX(X, x), y + 8);
-			
-			g2.drawLine((int) (x + gp.tileSize * 1.25), y, x + gp.tileSize, y);
-			
-			int diff = gp.tileSize * 2;
-			x -= diff;
-			if (parlays[i] == -1) {
-				g2.setColor(Color.RED);
-				g2.fillOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
-				g2.setColor(Color.WHITE);
-				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
-			} else {
-				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
-			}
-			String minus = "-";
-			g2.setFont(g2.getFont().deriveFont(30F));
-			g2.drawString(minus, getCenterAlignedTextX(minus, x), y + 8);
-			
-			x += diff * 2;
-			if (parlays[i] == 1) {
-				g2.setColor(Color.GREEN);
-				g2.fillOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
-				g2.setColor(Color.WHITE);
-				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
-			} else {
-				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
-			}
-			String plus = "+";
-			g2.drawString(plus, getCenterAlignedTextX(plus, x), y + 8);
-			x -= diff;
-			
-			g2.setStroke(new BasicStroke(3));
-			if (i == areaCounter) {
-				g2.setColor(Color.RED);
-				g2.drawRoundRect(x - parlayWidth / 2, y - gp.tileSize - 6, parlayWidth, parlayHeight, 45, 45);
-			}
-			
-			x = startX;
-			y = startY + parlayHeight;
-		}
-		
-		if (gp.keyH.downPressed) {
-			gp.keyH.downPressed = false;
-			if (areaCounter < maxBet) {
-				areaCounter++;
-			} else {
-				areaCounter = 0;
-				showParlays = false;
-			}
-		}
-		
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-			if (areaCounter > 0) {
-				areaCounter--;
-			} else {
-				areaCounter = 0;
-				showParlays = false;
-			}
-		}
-		
-		if (gp.keyH.leftPressed) {
-			gp.keyH.leftPressed = false;
-			if (parlays[areaCounter] > -1) {
-				parlays[areaCounter]--;
-				if (areaCounter < maxBet) {
-					areaCounter++;
-				} else {
-					areaCounter = 0;
-					showParlays = false;
-				}
-			}
-		}
-		
-		if (gp.keyH.rightPressed) {
-			gp.keyH.rightPressed = false;
-			if (parlays[areaCounter] < 1) {
-				parlays[areaCounter]++;
-				if (areaCounter < maxBet) {
-					areaCounter++;
-				} else {
-					areaCounter = 0;
-					showParlays = false;
-				}
-			}
-		}
-		
-		if (gp.keyH.aPressed || gp.keyH.sPressed) {
-			gp.keyH.aPressed = false;
-			gp.keyH.sPressed = false;
-			showParlays = false;
-		}
-		
-		drawToolTips(null, "Close", "Close", null);
+		x -= gp.tileSize;
+		y += gp.tileSize * 2.5;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.drawString("", x, y);
 	}
 
-	private void drawPartySummary(Trainer t, int x, int commandNum) {
-		int y = gp.tileSize / 2;
+	private void drawSheetWindow() {
+		int x = gp.tileSize / 2;
+		int y = 2;
+		int width = gp.tileSize * 5;
+		int height = (int) (gp.tileSize * 1.1);
+		
+		drawSubWindow(x, y, width, height);
+		x += gp.tileSize / 2;
+		y += gp.tileSize * 0.75;
+		
+		g2.setFont(g2.getFont().deriveFont(28F));
+		g2.setColor(sheetFilled ? Color.GREEN : Color.GRAY);
+		
+		String sheetText = "[A] Parlay Sheet";
+		g2.drawString(sheetText, x, y);
+	}
+
+	private void drawCoinWindow() {
+		int x = (int) (gp.tileSize * 10.5);
+		int y = 2;
+		int width = gp.tileSize * 5;
+		int height = (int) (gp.tileSize * 1.1);
+		
+		drawSubWindow(x, y, width, height);
+		x += width - gp.tileSize / 2;
+		y += gp.tileSize * 0.75;
+		
+		g2.setFont(g2.getFont().deriveFont(28F));
+		
+		String coinText = gp.player.p.coins + " Coins";
+		g2.drawString(coinText, getRightAlignedTextX(coinText, x), y);
+	}
+
+	private void drawPartySummary(Trainer t, int x, int commandNum) {		
+		int y = (int) (gp.tileSize * 1.25);
 		int width = gp.tileSize * 7;
-		int height = gp.tileSize * 11;
+		int height = (int) (gp.tileSize * 10.5);
 		
 		drawSubWindow(x, y, width, height);
 		
 		if (this.commandNum == commandNum) {
 			g2.setColor(Color.RED);
-			g2.drawRoundRect(x - 5, y - 5, width + 10, height + 10, 25, 25);
+			g2.drawRoundRect(x - 3, y - 3, width + 6, height + 6, 35, 35);
 		}
 		
 		g2.setColor(Color.WHITE);
@@ -815,8 +753,8 @@ public class UI extends AbstractUI {
 			y = (int) (startY - gp.tileSize * 1.5);
 			
 			g2.drawImage(p.type1.getImage(), x, y, null);
+			x += gp.tileSize * 0.75;
 			if (p.type2 != null) {
-				x += gp.tileSize * 0.75;
 				g2.drawImage(p.type2.getImage(), x, y, null);
 			}
 			
@@ -839,15 +777,15 @@ public class UI extends AbstractUI {
 		drawSubWindow(x, y, width, height);
 		
 		x += gp.tileSize * 0.25;
-		y += gp.tileSize * 0.75;
+		y += gp.tileSize * 0.65;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		
 		int americanOdds = calculateOdds(odds, commandNum - 1);
 		
-		g2.drawString("Odds: " + americanOdds, x, y);
+		g2.drawString(SimBattleUI.formatOdds(americanOdds), x, y);
 		
 		x += gp.tileSize;
-		y += gp.tileSize * 1.25;
+		y += gp.tileSize * 1.35;
 		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(32F));
 		g2.drawString(battleBet + "", x, y);
@@ -873,11 +811,10 @@ public class UI extends AbstractUI {
 			
 			Task t = Task.addTask(Task.START_BATTLE, "");
 			t.wipe = true;
-			t.p = ut.getCurrent();
-			t.evo = ft.getCurrent();
 			t.trainers = new Trainer[] {ut, ft};
 			t.start = odds[0];
 			t.finish = odds[1];
+			gp.simBattleUI.choice = commandNum;
 			commandNum = 0;
 			areaCounter = 0;
 			showParlays = false;
@@ -886,6 +823,12 @@ public class UI extends AbstractUI {
 			
 			gp.player.p.coins -= battleBet;
 			if (battleBet > gp.player.p.getMaxBet()) battleBet = 1;
+			
+			gp.simBattleUI.playerCoins = gp.player.p.coins;
+			gp.simBattleUI.simOdds = odds;
+			gp.simBattleUI.odds = new int[] { calculateOdds(odds, 0), calculateOdds(odds, 1) };
+			gp.simBattleUI.battleBet = battleBet;
+			gp.simBattleUI.parlays = parlays.clone();
 		}
 		
 		if (gp.keyH.upPressed) {
@@ -922,17 +865,28 @@ public class UI extends AbstractUI {
 		drawToolTips(null, null, "Close", null);
 	}
 
-	private int calculateOdds(int[] odds, int choice) {
+	public static int calculateOdds(int[] odds, int choice) {
 		int totalGames = odds[0] + odds[1];
-		double probability = (double) odds[choice] / totalGames;
-		int americanOdds;
-		
-		if (probability > 0.5) {
-			americanOdds = (int) (- (probability / (1 - probability) * 100));
-		} else {
-			americanOdds = (int) ((1 - probability) / probability * 100);
-		}
-		return americanOdds;
+
+	    // If a trainer won 0 games, return max underdog odds
+	    if (odds[choice] == 0) return +10000;
+	    // If a trainer won all games, return max favorite odds
+	    if (odds[choice] == totalGames) return -10000;
+
+	    double probability = (double) odds[choice] / totalGames;
+	    int americanOdds;
+
+	    if (probability > 0.5) {
+	        americanOdds = (int) (- (probability / (1 - probability) * 100));
+	    } else {
+	        americanOdds = (int) ((1 - probability) / probability * 100);
+	    }
+
+	    // Cap the odds within reasonable bounds
+	    if (americanOdds > 10000) americanOdds = 10000;
+	    if (americanOdds < -10000) americanOdds = -10000;
+
+	    return americanOdds;
 	}
 
 	private void drawSleep() {
@@ -1082,9 +1036,11 @@ public class UI extends AbstractUI {
 		
 		transitionBuffer = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
 		gp.gameState = GamePanel.SIM_START_BATTLE_STATE;
-
-		gp.simBattleUI.user = currentTask.trainers[0].getCurrent();
-		gp.simBattleUI.foe = currentTask.trainers[1].getCurrent();
+		
+		int choice = gp.simBattleUI.choice - 1;
+		
+		gp.simBattleUI.user = currentTask.trainers[choice].getCurrent();
+		gp.simBattleUI.foe = currentTask.trainers[1 - choice].getCurrent();
 		
 		gp.simBattleUI.user.setSprites();
 		gp.simBattleUI.foe.setSprites();

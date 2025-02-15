@@ -27,12 +27,13 @@ public class Field {
 	public int superEffective;
 	public int switches;
 	public int knockouts;
+	public double[] values = new double[6];
 	
 	public Field() {
 		weather = null;
 		fieldEffects = new ArrayList<>();
 		
-		turns = 1;
+		turns = 0;
 		crits = 0;
 		misses = 0;
 		superEffective = 0;
