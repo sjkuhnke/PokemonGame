@@ -5,12 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -134,7 +128,7 @@ public class BlackjackPanel extends JPanel {
 		userCardIcons.setVisible(false);
 		foeCardIcons.setVisible(false);
 		
-		saveGame();
+		gp.saveGame();
 	}
 
 	private void resetDeck() {
@@ -279,7 +273,7 @@ public class BlackjackPanel extends JPanel {
 		    					}
 		    				}
 		                    startGame();
-		                    saveGame();
+		                    gp.saveGame();
 		                } else {
 		                    JOptionPane.showMessageDialog(this, "Invalid bet. Please enter a value between 1 and " + Math.min(p.coins, MAX_BET) + ".");
 		                }
@@ -602,26 +596,5 @@ public class BlackjackPanel extends JPanel {
 	    Main.window.revalidate();
 	    Main.window.repaint();
 		
-	}
-	
-	private void saveGame() {
-		Path savesDirectory = Paths.get("./saves/");
-        if (!Files.exists(savesDirectory)) {
-            try {
-				Files.createDirectories(savesDirectory);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-        }
-        
-    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves/" + gp.player.currentSave))) {
-        	gp.player.p.setPosX(gp.player.worldX);
-        	gp.player.p.setPosY(gp.player.worldY);
-        	gp.player.p.currentMap = gp.currentMap;
-            oos.writeObject(gp.player.p);
-            oos.close();
-        } catch (IOException ex) {
-        	JOptionPane.showMessageDialog(null, "Error writing object to file: " + ex.getMessage());
-        }
 	}
 }

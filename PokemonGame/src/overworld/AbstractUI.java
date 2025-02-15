@@ -56,6 +56,7 @@ public abstract class AbstractUI {
 	public int nicknaming = -1;
 	
 	public BufferedImage ballIcon;
+	public Color coinColor = Color.WHITE;
 
 	public abstract void showMessage(String message);
 
@@ -1191,24 +1192,6 @@ public abstract class AbstractUI {
 	    int parlayHeight = (int) (gp.tileSize * 1.75);
 
 	    int startX = x;
-	    
-	    // Fetch battle bets and expected vs actual values
-	    double[] expectedValues = {
-	        gp.simBattleUI.parlaySheet.get(0).getFirst(),
-	        gp.simBattleUI.parlaySheet.get(1).getFirst(),
-	        gp.simBattleUI.parlaySheet.get(2).getFirst(),
-	        gp.simBattleUI.parlaySheet.get(3).getFirst(),
-	        gp.simBattleUI.parlaySheet.get(4).getFirst(),
-	        gp.simBattleUI.parlaySheet.get(5).getFirst()
-	    };
-	    int[] actualValues = {
-	        Pokemon.field.crits,
-	        Pokemon.field.misses,
-	        Pokemon.field.superEffective,
-	        Pokemon.field.switches,
-	        Pokemon.field.knockouts,
-	        Pokemon.field.turns
-	    };
 
 	    for (int i = 0; i < MAX_PARLAYS; i++) {
 	        g2.setColor(Color.WHITE);
@@ -1269,21 +1252,21 @@ public abstract class AbstractUI {
 			x -= diff;
 
 	        // Display Cost
-	        g2.setFont(g2.getFont().deriveFont(16F));
+	        g2.setFont(g2.getFont().deriveFont(14F));
 	        g2.setColor(parlays[i] != 0 ? Color.WHITE : Color.GRAY);
-	        String costText = "$" + parlayBet;
-	        g2.drawString(costText, x - gp.tileSize * 3, y + 8);
+	        if (editable || parlays[i] != 0) {
+	        	g2.drawString("-" + parlayBet + " coins", (int) (x - gp.tileSize * 2.6), (int) (y - gp.tileSize * 0.75));
+	        }
 
 	        // Calculate Payout if bet is placed
 	        if (parlays[i] != 0) {
-	        	int payout = SimBattleUI.calculateParlayPayout(parlays, null, null, parlayBet);
+	        	int payout = SimBattleUI.calculateParlayPayout(parlays, null, null, parlayBet, -1);
 	            g2.setColor(Color.GREEN);
-	            String payoutText = payout + "";
-	            g2.drawString(payoutText, x + gp.tileSize * 3, y + 8);
+	            g2.drawString("+" + payout + " coins", (int) (x + gp.tileSize * 1.6), (int) (y - gp.tileSize * 0.75));
 	        }
 
 	        g2.setStroke(new BasicStroke(3));
-	        if (editable && i == gp.ui.areaCounter) {
+	        if ((editable && i == gp.ui.areaCounter) || (!editable && i == gp.simBattleUI.currentParlay)) {
 	            g2.setColor(Color.RED);
 	            g2.drawRoundRect(x - parlayWidth / 2, y - gp.tileSize - 6, parlayWidth, parlayHeight, 45, 45);
 	        }
@@ -1316,8 +1299,20 @@ public abstract class AbstractUI {
 	        if (gp.keyH.leftPressed) {
 	            gp.keyH.leftPressed = false;
 	            if (parlays[gp.ui.areaCounter] > -1) {
-	                parlays[gp.ui.areaCounter]--;
-	                sheetFilled = true;
+	            	if (parlays[gp.ui.areaCounter] == 0) {
+	            		if (gp.player.p.coins >= parlayBet) {
+	                    	gp.player.p.coins -= parlayBet;
+	                    	parlays[gp.ui.areaCounter]--;
+	    	                sheetFilled = true;
+	    	                coinColor = Color.WHITE;
+	                    } else {
+	                    	coinColor = Color.RED;
+	                    }
+	            	} else {
+	            		parlays[gp.ui.areaCounter]--;
+	            		gp.player.p.coins += parlayBet;
+	            		coinColor = Color.WHITE;
+	            	}
 	                if (gp.ui.areaCounter < maxBet) {
 	                    gp.ui.areaCounter++;
 	                } else {
@@ -1330,8 +1325,20 @@ public abstract class AbstractUI {
 	        if (gp.keyH.rightPressed) {
 	            gp.keyH.rightPressed = false;
 	            if (parlays[gp.ui.areaCounter] < 1) {
-	                parlays[gp.ui.areaCounter]++;
-	                sheetFilled = true;
+	            	if (parlays[gp.ui.areaCounter] == 0) {
+	            		if (gp.player.p.coins >= parlayBet) {
+	                    	gp.player.p.coins -= parlayBet;
+	                    	parlays[gp.ui.areaCounter]++;
+	    	                sheetFilled = true;
+	    	                coinColor = Color.WHITE;
+	                    } else {
+	                    	coinColor = Color.RED;
+	                    }
+	            	} else {
+	            		parlays[gp.ui.areaCounter]++;
+	            		gp.player.p.coins += parlayBet;
+	            		coinColor = Color.WHITE;
+	            	}
 	                if (gp.ui.areaCounter < maxBet) {
 	                    gp.ui.areaCounter++;
 	                } else {

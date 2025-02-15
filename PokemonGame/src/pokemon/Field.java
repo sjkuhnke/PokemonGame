@@ -464,4 +464,15 @@ public class Field {
 		return result;
 	}
 
+	public int[] getStats() {
+		return new int[] {
+	        this.crits,
+	        this.misses,
+	        this.superEffective,
+	        this.switches,
+	        this.knockouts,
+	        this.turns
+	    };
+	}
+
 }

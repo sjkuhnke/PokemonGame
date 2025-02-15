@@ -4,6 +4,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -504,6 +510,27 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		renderableNPCs.add(player);
 		renderableNPCs.sort(Comparator.comparingInt(Entity::getWorldY));
+	}
+	
+	public void saveGame() {
+		Path savesDirectory = Paths.get("./saves/");
+        if (!Files.exists(savesDirectory)) {
+            try {
+				Files.createDirectories(savesDirectory);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        }
+        
+    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves/" + player.currentSave))) {
+        	player.p.setPosX(player.worldX);
+        	player.p.setPosY(player.worldY);
+        	player.p.currentMap = currentMap;
+            oos.writeObject(player.p);
+            oos.close();
+        } catch (IOException ex) {
+        	JOptionPane.showMessageDialog(null, "Error writing object to file: " + ex.getMessage());
+        }
 	}
 
 }

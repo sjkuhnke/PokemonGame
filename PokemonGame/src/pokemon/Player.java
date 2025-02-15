@@ -1563,4 +1563,10 @@ public class Player extends Trainer implements Serializable {
 		
 		return result;
 	}
+
+	public int getMaxParlayBet(int activeBets) {
+		if (activeBets == 0) return getMaxBet();
+		
+		return Math.min(Math.max(1, coins / activeBets), 100);
+	}
 }

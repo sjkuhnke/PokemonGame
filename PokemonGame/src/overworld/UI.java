@@ -546,6 +546,13 @@ public class UI extends AbstractUI {
 				System.out.println(String.format("Average %s: %.1f", p.getSecond(), p.getFirst()));
 			}
 			
+			int winStreak = gp.player.p.winStreak;
+			gp.player.p.winStreak = 0;
+			gp.player.p.coins--;
+			gp.saveGame();
+			gp.player.p.winStreak = winStreak;
+			gp.player.p.coins++;
+			
 			parlays = new int[MAX_PARLAYS];
 			sheetFilled = false;
 			gp.simBattleUI.parlaySheet = parlay;
@@ -581,19 +588,21 @@ public class UI extends AbstractUI {
 		drawSheetWindow();
 		drawCoinWindow();
 		
+		drawParlayBetWindow();
+		
 		drawPartySummary(ut, gp.tileSize / 2, 1);
 		drawPartySummary(ft, (int) (gp.tileSize * 8.5), 2);
-		
-		drawParlayBetWindow();
 		
 		if (starterConfirm) { // spinner for how much to bet
 			int x = (int) (commandNum == 1 ? gp.tileSize / 2 : gp.tileSize * 8.5);
 			drawBattleBets(x, ut, ft, odds);
+			drawBattleBetHeader(x, commandNum == 1 ? "A" : "B");
 			return;
 		}
 		
 		if (showParlays) {
 			drawParlaySheet(true);
+			drawParlayPayout();
 			return;
 		}
 		
@@ -625,14 +634,28 @@ public class UI extends AbstractUI {
 		
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
+			int prevBet = parlayBet;
+			int activeBets = getActiveBets();
 			parlayBet++;
-			if (parlayBet > gp.player.p.getMaxBet()) parlayBet = 1;
+			if (parlayBet > gp.player.p.getMaxParlayBet(activeBets)) parlayBet = 1;
+			
+			coinColor = Color.WHITE;
+			
+			int diff = (parlayBet - prevBet);
+			gp.player.p.coins -= diff * activeBets;
 		}
 		
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
+			int prevBet = parlayBet;
+			int activeBets = getActiveBets();
 			parlayBet--;
-			if (parlayBet < 1) parlayBet = gp.player.p.getMaxBet();
+			if (parlayBet < 1) parlayBet = gp.player.p.getMaxParlayBet(activeBets);
+			
+			coinColor = Color.WHITE;
+			
+			int diff = (prevBet - parlayBet);
+			gp.player.p.coins += diff * activeBets;
 		}
 		
 		if (gp.keyH.sPressed) {
@@ -646,16 +669,28 @@ public class UI extends AbstractUI {
 		}
 		drawToolTips(commandNum > 0 ? "Bet" : null, "Parlay", commandNum > 0 ? "Back" : null, null);
 	}
-	
+
+	private int getActiveBets() {
+		int result = 0;
+	    
+	    // Count the number of lines the player has bet on
+	    for (int i = 0; i < parlays.length; i++) {
+	        if (parlays[i] != 0) result++;
+	    }
+		return result;
+	}
+
 	private void drawParlayBetWindow() {
-		int x = gp.tileSize * 12;
-		int y = (int) (gp.tileSize * 1.5);
-		int width = gp.tileSize * 3;
-		int height = (int) (gp.tileSize * 3.5);
+		int x = (int) (gp.tileSize * 6.75);
+		int y = 0;
+		int width = (int) (gp.tileSize * 2.5);
+		int height = (int) (gp.tileSize * 3.25);
 		drawSubWindow(x, y, width, height);
 		
-		x += gp.tileSize * 1.25;
+		x += gp.tileSize;
 		y += gp.tileSize * 2;
+		y += 4;
+		g2.setFont(g2.getFont().deriveFont(30F));
 		g2.drawString(parlayBet + "", x, y);
 		
 		int y2 = y += gp.tileSize / 4;
@@ -666,10 +701,45 @@ public class UI extends AbstractUI {
 		y2 = y -= gp.tileSize * 1.5;
 		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
 		
-		x -= gp.tileSize;
-		y += gp.tileSize * 2.5;
+		x += gp.tileSize / 4;
+		y -= gp.tileSize / 8;
 		g2.setFont(g2.getFont().deriveFont(24F));
-		g2.drawString("", x, y);
+		g2.drawString("Parlay Bet", getCenterAlignedTextX("Parlay Bet", x), y);
+	}
+	
+	private void drawParlayPayout() {
+		int activeBets = getActiveBets();
+		if (activeBets < 2) return; // No payout if less than 2 bets are active
+
+	    int x = gp.tileSize * 11;
+	    int y = (int) (gp.tileSize * 2.5);
+	    int width = gp.tileSize * 5;
+	    int height = gp.tileSize * 7;
+
+	    drawSubWindow(x, y, width, height);
+
+	    x += gp.tileSize / 2;
+	    y += gp.tileSize;
+
+	    int lineSpacing = gp.tileSize;
+
+	    g2.setFont(g2.getFont().deriveFont(24F));
+	    g2.setColor(Color.WHITE);
+	    g2.drawString("Net Payouts:", x, y);
+	    y += lineSpacing;
+	    
+	    int amtPaid = parlayBet * activeBets;
+
+	    for (int correct = 2; correct <= activeBets; correct++) {
+	        int payout = SimBattleUI.calculateParlayPayout(parlays, null, null, parlayBet, correct);
+	        int netPayout = payout - amtPaid;
+
+	        // Display correct bets count and corresponding payout
+	        String payoutText = correct + " correct: " + (netPayout >= 0 ? "+" : "") + netPayout + " coins";
+	        g2.drawString(payoutText, x, y);
+	        y += lineSpacing;
+	    }
+		
 	}
 
 	private void drawSheetWindow() {
@@ -700,6 +770,7 @@ public class UI extends AbstractUI {
 		y += gp.tileSize * 0.75;
 		
 		g2.setFont(g2.getFont().deriveFont(28F));
+		g2.setColor(coinColor);
 		
 		String coinText = gp.player.p.coins + " Coins";
 		g2.drawString(coinText, getRightAlignedTextX(coinText, x), y);
@@ -769,6 +840,22 @@ public class UI extends AbstractUI {
 		
 	}
 	
+	private void drawBattleBetHeader(int x, String trainer) {
+		x = x + gp.tileSize;
+		int y = (int) (gp.tileSize * 2.5);
+		int width = gp.tileSize * 5;
+		int height = (int) (gp.tileSize * 1.25);
+		
+		drawSubWindow(x, y, width, height, 250);
+		
+		x += width / 2;
+		y += gp.tileSize * 0.9;
+		
+		g2.setFont(g2.getFont().deriveFont(32F));
+		String text = "Bet on Trainer " + trainer;
+		g2.drawString(text, getCenterAlignedTextX(text, x), y);
+	}
+	
 	private void drawBattleBets(int x, Trainer ut, Trainer ft, int[] odds) {
 		x = (int) (x + gp.tileSize * 2);
 		int y = (int) (gp.tileSize * 3.75);
@@ -788,6 +875,7 @@ public class UI extends AbstractUI {
 		y += gp.tileSize * 1.35;
 		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(32F));
+		battleBet = battleBet > gp.player.p.coins ? gp.player.p.coins : battleBet;
 		g2.drawString(battleBet + "", x, y);
 		
 		int y2 = y += gp.tileSize / 4;
@@ -822,12 +910,11 @@ public class UI extends AbstractUI {
 			currentTask = null;
 			
 			gp.player.p.coins -= battleBet;
-			if (battleBet > gp.player.p.getMaxBet()) battleBet = 1;
 			
-			gp.simBattleUI.playerCoins = gp.player.p.coins;
 			gp.simBattleUI.simOdds = odds;
 			gp.simBattleUI.odds = new int[] { calculateOdds(odds, 0), calculateOdds(odds, 1) };
 			gp.simBattleUI.battleBet = battleBet;
+			gp.simBattleUI.parlayBet = parlayBet;
 			gp.simBattleUI.parlays = parlays.clone();
 		}
 		

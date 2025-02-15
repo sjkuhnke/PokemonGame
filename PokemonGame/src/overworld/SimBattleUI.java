@@ -1,5 +1,6 @@
 package overworld;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -24,7 +25,12 @@ public class SimBattleUI extends BattleUI {
 	public int choice;
 	public int[] simOdds;
 	public int[] odds;
-	public int playerCoins;
+	public int betPayout;
+	public int currentParlay = -1;
+	private boolean parlayDone = true;
+	private int parlayPayout = -1;
+	private boolean payParlay;
+	private boolean awarded;
 
 	public SimBattleUI(GamePanel gp) {
 		super(gp);
@@ -43,7 +49,7 @@ public class SimBattleUI extends BattleUI {
 		super.draw(g2);
 		
 		if (subState != INFO_STATE && !showFoeSummary && !showParlays) {
-			if (currentAbility == null) {
+			if (currentAbility == null && (currentTask == null || currentTask.type != Task.PARLAY)) {
 				drawAutoplayWindow();
 			}
 			drawBetInfo();
@@ -57,14 +63,27 @@ public class SimBattleUI extends BattleUI {
 		g2.setFont(g2.getFont().deriveFont(24F));
 		g2.setColor(Color.BLACK);
 		
-		g2.drawString("Coins: " + playerCoins, x, y);
+		g2.drawString("Coins: " + gp.player.p.coins, x, y);
 		y += 28;
 		
 		g2.drawString("Bet: " + battleBet, x, y);
 		y += 28;
 		
-		int payout = calculatePayout(battleBet, choice - 1, simOdds);
-		g2.drawString("Payout: " + payout, x, y);		
+		g2.drawString("Payout: " + betPayout, x, y);
+		
+		y += 8;
+		g2.setStroke(new BasicStroke(2));
+		g2.drawLine(x - 8, y, x + gp.tileSize * 3, y);
+		g2.setStroke(new BasicStroke(3));
+		
+		y += 26;
+		
+		g2.drawString("Games Won: " + gp.player.p.gamesWon, x, y);
+		y += 28;
+		
+		g2.drawString("Win Streak: " + gp.player.p.winStreak, x, y);
+		
+		if (currentTask != null && currentTask.type == Task.PARLAY) return;
 		
 		int userOdds = user.trainer.getFlagIndex() == 1 ? odds[0] : odds[1];
 		int foeOdds = foe.trainer.getFlagIndex() == 1 ? odds[0] : odds[1];
@@ -96,8 +115,193 @@ public class SimBattleUI extends BattleUI {
 	@Override
 	protected void drawTask() {
 		super.drawTask();
+		
+		if (currentTask != null) {
+			switch (currentTask.type) {
+			case Task.PAYOUT:
+				currentDialogue = currentTask.message;
+				switch (currentTask.start) { // 1 = win, 0 = lose, -1 = draw
+				case -1:
+					if (battleBet > 0) {
+						betPayout = 0;
+						battleBet--;
+						gp.player.p.coins++;
+					} else {
+						cooldownCounter++;
+						if (cooldownCounter >= 125) {
+							cooldownCounter = 0;
+							currentTask = null;
+						}
+					}
+					break;
+				case 0:
+					if (battleBet > 0 || gp.player.p.winStreak > 0) {
+						betPayout = 0;
+						battleBet = battleBet > 0 ? battleBet - 1 : 0;
+						gp.player.p.winStreak = gp.player.p.winStreak > 0 ? gp.player.p.winStreak - 1 : 0;
+					} else {
+						cooldownCounter++;
+						if (cooldownCounter >= 125) {
+							cooldownCounter = 0;
+							currentTask = null;
+						}
+					}
+					break;
+				case 1:
+					if (betPayout > 0) {
+						betPayout--;
+						if (battleBet > 0) {
+							battleBet--;
+						}
+						gp.player.p.coins++;
+						if (!awarded) {
+							gp.player.p.gamesWon++;
+							gp.player.p.winStreak++;
+							awarded = true;
+						}
+					} else {
+						cooldownCounter++;
+						if (cooldownCounter >= 125) {
+							cooldownCounter = 0;
+							currentTask = null;
+							awarded = false;
+						}
+					}
+					break;
+				}
+				break;
+			case Task.PARLAY:
+				dialogueState = DIALOGUE_FREE_STATE;
+				currentDialogue = "";
+				drawParlayPayout();
+				break;
+			}
+		}
 	}
 	
+	private void drawParlayPayout() {
+		drawParlaySheet(false);
+		drawParlays();
+		
+		int x = gp.tileSize / 2;
+		int y = gp.tileSize * 5;
+		int width = (int) (gp.tileSize * 4.5);
+		int height = (int) (gp.tileSize * 6.5);
+		
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize * 2;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		
+		int lineHeight = (int) (gp.tileSize * 0.75);
+		int[] stats = Pokemon.field.getStats();
+		
+		for (int i = 0; i < MAX_PARLAYS; i++) {
+			g2.setColor(Color.WHITE);
+			g2.drawString("Line " + (i + 1) + ":", x, y);
+			
+			if (i > currentParlay) {
+				y += lineHeight;
+				continue;
+			}
+			
+			String text;
+			Color color;
+			
+			if (parlays[i] == 0) {
+				text = "N/A";
+				color = Color.GRAY;
+			} else {
+				boolean correct = parlays[i] > 0 ? stats[i] > parlaySheet.get(i).getFirst() : stats[i] < parlaySheet.get(i).getFirst();
+				text = correct ? "Correct!" : "Incorrect";
+				color = correct ? Color.GREEN : Color.RED;
+			}
+			
+			g2.setColor(color);
+			g2.drawString(text, getRightAlignedTextX(text, (int) (x + gp.tileSize * 3.5)), y);
+			
+			y += lineHeight;
+		}
+		
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(28F));
+		String string1 = "Parlay Sheet";
+		g2.drawString(string1, getCenterAlignedTextX(string1, (int) (gp.tileSize * 2.75)), (int) (gp.tileSize * 5.75));
+		String string2 = "Payout: " + commandNum;
+		g2.drawString(string2, getCenterAlignedTextX(string2, (int) (gp.tileSize * 2.75)), (int) (gp.tileSize * 6.3));
+		
+		if (currentParlay < MAX_PARLAYS) {
+			if (!parlayDone) {
+				cooldownCounter++;
+				if (!awarded) {
+					boolean correct = parlays[currentParlay] != 0;
+					correct = correct
+							? parlays[currentParlay] > 0
+									? stats[currentParlay] > parlaySheet.get(currentParlay).getFirst()
+									: stats[currentParlay] < parlaySheet.get(currentParlay).getFirst()
+							: false;
+					if (correct) {
+						gp.player.p.gamesWon++;
+						awarded = true;
+					}
+				}
+				if (cooldownCounter >= 30) {
+					cooldownCounter = 0;
+					parlayDone = true;
+					awarded = false;
+				}
+			} else {
+				cooldownCounter++;
+				if (cooldownCounter >= 60) {
+					cooldownCounter = 0;
+					parlayDone = false;
+					awarded = false;
+					currentParlay++;
+				}
+			}
+		} else if (!payParlay) {
+			if (parlayPayout == -1) {
+				double[] expectedValues = {
+			        parlaySheet.get(0).getFirst(),
+			        parlaySheet.get(1).getFirst(),
+			        parlaySheet.get(2).getFirst(),
+			        parlaySheet.get(3).getFirst(),
+			        parlaySheet.get(4).getFirst(),
+			        parlaySheet.get(5).getFirst()
+				};
+				parlayPayout = SimBattleUI.calculateParlayPayout(parlays, expectedValues, Pokemon.field.getStats(), parlayBet, -1);
+			}
+			
+			if (commandNum < parlayPayout) {
+				commandNum++;
+			} else {
+				cooldownCounter++;
+				if (cooldownCounter >= 120) {
+					cooldownCounter = 0;
+					parlayPayout = -1;
+					payParlay = true;
+				}
+			}
+		} else {
+			if (commandNum > 0) {
+				commandNum--;
+				gp.player.p.coins++;
+			} else {
+				cooldownCounter++;
+				if (cooldownCounter >= 120) {
+					commandNum = 0;
+					cooldownCounter = 0;
+					currentParlay = -1;
+					parlayPayout = -1;
+					parlayDone = true;
+					payParlay = false;
+					currentTask = null;
+				}
+			}
+		}
+	}
+
 	@Override
 	protected void drawIdleScreen() {
 		if (autoplay && startAutoplay) {
@@ -197,7 +401,7 @@ public class SimBattleUI extends BattleUI {
 		
 	}
 	
-	@Override // TODO: edit the END_STATE case for handling ending a sim
+	@Override
 	protected void drawDialogueState() {
 		int x = gp.screenWidth - gp.tileSize;
 		int y = gp.screenHeight - gp.tileSize;
@@ -215,7 +419,8 @@ public class SimBattleUI extends BattleUI {
 			case END_STATE:
 				if (tasks.isEmpty()) {
 					user.setVisible(false);
-					gp.endBattle(index, staticID);
+					gp.saveGame();
+					Pokemon.field = new Field();
 					gp.gameState = GamePanel.PLAY_STATE;
 				}
 				break;
@@ -470,28 +675,21 @@ public class SimBattleUI extends BattleUI {
 		
 		drawSubWindow(x, y, width, height);
 		
-		x += gp.tileSize / 2;
+		x += gp.tileSize / 3;
 		y += gp.tileSize;
 		
 	    int lineSpacing = (int) (gp.tileSize * 1.75); // Match the parlay spacing
 	    
 	    String[] labels = {"crits:", "misses:", "super effective hits:", "switches:", "knockouts:", "total turns:"};
 	    double[] expectedValues = {
-	        gp.simBattleUI.parlaySheet.get(0).getFirst(),
-	        gp.simBattleUI.parlaySheet.get(1).getFirst(),
-	        gp.simBattleUI.parlaySheet.get(2).getFirst(),
-	        gp.simBattleUI.parlaySheet.get(3).getFirst(),
-	        gp.simBattleUI.parlaySheet.get(4).getFirst(),
-	        gp.simBattleUI.parlaySheet.get(5).getFirst()
+	        parlaySheet.get(0).getFirst(),
+	        parlaySheet.get(1).getFirst(),
+	        parlaySheet.get(2).getFirst(),
+	        parlaySheet.get(3).getFirst(),
+	        parlaySheet.get(4).getFirst(),
+	        parlaySheet.get(5).getFirst()
 	    };
-	    int[] actualValues = {
-	        Pokemon.field.crits,
-	        Pokemon.field.misses,
-	        Pokemon.field.superEffective,
-	        Pokemon.field.switches,
-	        Pokemon.field.knockouts,
-	        Pokemon.field.turns
-	    };
+	    int[] actualValues = Pokemon.field.getStats();
 	    
 	    g2.setFont(g2.getFont().deriveFont(24F));
 	    
@@ -512,7 +710,7 @@ public class SimBattleUI extends BattleUI {
 	            g2.setColor(Color.GRAY);
 	        }
 
-	        g2.drawString(String.valueOf(actual), (int) (x + gp.tileSize * 3.75), y);
+	        g2.drawString(String.valueOf(actual), (int) (x + gp.tileSize * 3.85), y);
 	        y += lineSpacing;
 	    }
 
@@ -686,12 +884,34 @@ public class SimBattleUI extends BattleUI {
 			}
 		}
 		if (!faster.trainer.wiped() && slower.trainer.wiped()) {
-			Task.addTask(Task.END, faster.trainer.getName() + " defeated " + slower.trainer.getName() + "!");
+			endSim(faster.trainer, slower.trainer);
 		} else if (faster.trainer.wiped() && !slower.trainer.wiped()) {
-			Task.addTask(Task.END, slower.trainer.getName() + " defeated " + faster.trainer.getName() + "!");
+			endSim(slower.trainer, faster.trainer);
 		} else if (faster.trainer.wiped() && slower.trainer.wiped()) {
-			Task.addTask(Task.END, "It's a draw: bet was returned!");
+			endSim(null, null);
 		}
+	}
+	
+	private void endSim(Trainer winner, Trainer loser) {
+		gp.saveGame();
+		
+		boolean draw = winner == null || loser == null;
+		boolean win = draw ? false : winner.getFlagIndex() == choice;
+		
+		int mode = win ? 1 : draw ? -1 : 0;
+		
+		int payout = draw ? battleBet : win ? calculatePayout(battleBet, choice - 1, simOdds) : -1;
+		
+		String line1 = draw ? "It's a draw: bet was returned!" : winner.getName() + " defeated " + loser.getName() + "!";
+		String line2 = draw ? "" : win ? "You guessed correctly!\nWon " + payout + " coins!" : "You guessed incorrectly!\nLost " + battleBet + " coins.";
+		
+		Task t = Task.addTask(Task.PAYOUT, line1 + "\n" + line2);
+		t.counter = payout;
+		t.start = mode;
+		
+		Task.addTask(Task.PARLAY, "");
+		
+		Task.addTask(Task.END, "Thanks for playing!");
 	}
 	
 	@Override
@@ -699,16 +919,9 @@ public class SimBattleUI extends BattleUI {
 		return super.hasAlive();
 	}
 	
-	@Override // TODO: this should just end the sim
+	@Override
 	protected void wipe() {
-		gp.endBattle(-1, -1);
-		user.getPlayer().setMoney(user.getPlayer().getMoney() - 500);
-		gp.eHandler.teleport(Player.spawn[0], Player.spawn[1], Player.spawn[2], false);
-		user.trainer.heal();
-		if (foe.trainer != null) {
-			foe.trainer.heal();
-			foe.trainer.setCurrent(foe.trainer.getTeam()[0]);
-		}
+		super.wipe();
 	}
 	
 	@Override
@@ -726,6 +939,7 @@ public class SimBattleUI extends BattleUI {
 		showMessage("A battle is started between " + user.trainer.toString() + " and " + foe.trainer.toString() + "!");
 		userStatus = user.status;
 		foeStatus = foe.status;
+		betPayout = calculatePayout(battleBet, choice - 1, simOdds);
 	}
 
 	public static int calculatePayout(int wager, int trainerGuess, int[] odds) {
@@ -742,18 +956,22 @@ public class SimBattleUI extends BattleUI {
 		return String.format("Odds: %s%d", americanOdds >= 0 ? "+" : "", americanOdds);
 	}
 	
-	public static int calculateParlayPayout(int[] parlayBets, int[] lines, int[] actualResults, int wager) {
+	public static int calculateParlayPayout(int[] parlayBets, double[] lines, int[] actualResults, int wager, int numCorrect) {
 	    double baseMultiplier = 1.8; // Payout for individual parlays
-	    double[] bonusMultipliers = {0.0, 0.0, 0.0, 1.0, 1.5, 2.5, 5.0}; // Bonus multipliers based on correct bets
+	    double[] bonusMultipliers = {0.0, 0.0, 0.0, 0.5, 1.5, 2.0, 4.0}; // Bonus multipliers based on correct bets
 	    int correctBets = 0;
 	    int betsMade = 0;
 
 	    for (int i = 0; i < parlayBets.length; i++) {
 	        if (parlayBets[i] != 0) { // Player placed a bet
 	            betsMade++;
+	            if (lines == null) {
+	            	correctBets = numCorrect > 0 ? numCorrect : 1;
+	            	continue;
+	            }
 	            if (actualResults == null ||
-	            		(parlayBets[i] > 0 && lines[i] > actualResults[i]) ||
-	            		(parlayBets[i] < 0 && lines[i] < actualResults[i])) {
+	            		(parlayBets[i] > 0 && lines[i] < actualResults[i]) ||
+	            		(parlayBets[i] < 0 && lines[i] > actualResults[i])) {
 	                correctBets++;
 	            }
 	        }
