@@ -20,6 +20,11 @@ public class SimBattleUI extends BattleUI {
 	BufferedImage autoplayOn;
 	boolean autoplay;
 	boolean startAutoplay;
+	
+	public int choice;
+	public int[] simOdds;
+	public int[] odds;
+	public int playerCoins;
 
 	public SimBattleUI(GamePanel gp) {
 		super(gp);
@@ -37,11 +42,37 @@ public class SimBattleUI extends BattleUI {
 	public void draw(Graphics2D g2) {
 		super.draw(g2);
 		
-		if (subState != INFO_STATE && currentAbility == null) {
-			drawAutoplayWindow();
+		if (subState != INFO_STATE && !showFoeSummary && !showParlays) {
+			if (currentAbility == null) {
+				drawAutoplayWindow();
+			}
+			drawBetInfo();
 		}
 	}
 	
+	private void drawBetInfo() {
+		int x = 12;
+		int y = 56;
+		
+		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.setColor(Color.BLACK);
+		
+		g2.drawString("Coins: " + playerCoins, x, y);
+		y += 28;
+		
+		g2.drawString("Bet: " + battleBet, x, y);
+		y += 28;
+		
+		int payout = calculatePayout(battleBet, choice - 1, simOdds);
+		g2.drawString("Payout: " + payout, x, y);		
+		
+		int userOdds = user.trainer.getFlagIndex() == 1 ? odds[0] : odds[1];
+		int foeOdds = foe.trainer.getFlagIndex() == 1 ? odds[0] : odds[1];
+		
+		g2.drawString(formatOdds(userOdds), 400, 280);
+		g2.drawString(formatOdds(foeOdds), 290, 30);
+	}
+
 	@Override
 	protected void endTask() {
 		super.endTask();
@@ -67,7 +98,7 @@ public class SimBattleUI extends BattleUI {
 		super.drawTask();
 	}
 	
-	@Override // TODO: Idle screen with odds, a next turn button, a side bets button, etc.
+	@Override
 	protected void drawIdleScreen() {
 		if (autoplay && startAutoplay) {
 			subState = TASK_STATE;
@@ -84,21 +115,7 @@ public class SimBattleUI extends BattleUI {
 		}
 		drawActionScreen(user);
 		String dText = foe.trainerOwned() ? "Foe" : null;
-		if (!showFoeSummary) drawToolTips("OK", null, null, dText);
-		
-		if (gp.keyH.tabPressed) { // TODO: a key for swapping views
-			gp.keyH.tabPressed = false;
-			Pokemon tmp = user;
-			user = foe;
-			foe = tmp;
-			
-			userHP = user.currentHP;
-			foeHP = foe.currentHP;
-			maxUserHP = user.getStat(0);
-			userStatus = user.status;
-			foeStatus = foe.status;
-			userLevel = user.level;
-		}
+		if (!showFoeSummary) drawToolTips("OK", "Calc", "Auto", dText);
 	}
 	
 	@Override
@@ -319,10 +336,10 @@ public class SimBattleUI extends BattleUI {
 	
 	@Override
 	protected String getDialogueStateName() {
-		return super.getDialogueStateName();		
+		return super.getDialogueStateName();
 	}
 	
-	@Override // TODO: replace buttons with buttons specified in drawIdleScreen()
+	@Override
 	protected void drawActionScreen(Pokemon p) {
 		int x = gp.tileSize * 6;
 		int y = gp.screenHeight - (gp.tileSize * 4);
@@ -340,12 +357,14 @@ public class SimBattleUI extends BattleUI {
 		g2.setColor(Color.RED.darker());
 		g2.fillRoundRect(x, y, width, height, 10, 10);
 		g2.setColor(Color.WHITE);
-		g2.drawString("FIGHT", x + 30, y + 50);
+		g2.drawString("TURN", x + 30, y + 50);
 		if (commandNum == 0) {
 			g2.drawRoundRect(x, y, width, height, 10, 10);
 			if (gp.keyH.wPressed && !showFoeSummary) {
 				gp.keyH.wPressed = false;
-				subState = MOVE_SELECTION_STATE;
+				subState = TASK_STATE;
+				startAutoplay = true;
+				turn();
 			}
 		}
 		
@@ -353,14 +372,21 @@ public class SimBattleUI extends BattleUI {
 		g2.setColor(Color.GREEN.darker());
 		g2.fillRoundRect(x, y, width, height, 10, 10);
 		g2.setColor(Color.WHITE);
-		g2.drawString("PARTY", x + 30, y + 50);
+		g2.drawString("SWITCH", x + 30, y + 50);
 		if (commandNum == 1) {
 			g2.drawRoundRect(x, y, width, height, 10, 10);
 			if (gp.keyH.wPressed && !showFoeSummary) {
-				gp.keyH.resetKeys();
-				currentDialogue = "";
-				cancellableParty = true;
-				subState = PARTY_SELECTION_STATE;
+				gp.keyH.wPressed = false;
+				Pokemon tmp = user;
+				user = foe;
+				foe = tmp;
+				
+				userHP = user.currentHP;
+				foeHP = foe.currentHP;
+				maxUserHP = user.getStat(0);
+				userStatus = user.status;
+				foeStatus = foe.status;
+				userLevel = user.level;
 			}
 		}
 		
@@ -383,14 +409,12 @@ public class SimBattleUI extends BattleUI {
 		g2.setColor(Color.BLUE.darker());
 		g2.fillRoundRect(x, y, width, height, 10, 10);
 		g2.setColor(Color.WHITE);
-		g2.drawString("RUN", x + 30, y + 50);
+		g2.drawString("SHEET", x + 30, y + 50);
 		if (commandNum == 3) {
 			g2.drawRoundRect(x, y, width, height, 10, 10);
 			if (gp.keyH.wPressed && !showFoeSummary) {
 				gp.keyH.wPressed = false;
-				subState = TASK_STATE;
-				startAutoplay = true;
-				turn();
+				showParlays = true;
 			}
 		}
 		
@@ -432,32 +456,79 @@ public class SimBattleUI extends BattleUI {
 					foeSummary = foeSummary.trainer.team[currentIndex];
 				}
 			}
+		} else if (showParlays) {
+			drawParlaySheet(false);
+			drawParlays();
 		}
 	}
 	
+	private void drawParlays() {
+	    int x = gp.tileSize * 11;
+	    int y = gp.tileSize / 2;
+	    int width = gp.tileSize * 5;
+		int height = (int) (gp.tileSize * 11.25);
+		
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize;
+		
+	    int lineSpacing = (int) (gp.tileSize * 1.75); // Match the parlay spacing
+	    
+	    String[] labels = {"crits:", "misses:", "super effective hits:", "switches:", "knockouts:", "total turns:"};
+	    double[] expectedValues = {
+	        gp.simBattleUI.parlaySheet.get(0).getFirst(),
+	        gp.simBattleUI.parlaySheet.get(1).getFirst(),
+	        gp.simBattleUI.parlaySheet.get(2).getFirst(),
+	        gp.simBattleUI.parlaySheet.get(3).getFirst(),
+	        gp.simBattleUI.parlaySheet.get(4).getFirst(),
+	        gp.simBattleUI.parlaySheet.get(5).getFirst()
+	    };
+	    int[] actualValues = {
+	        Pokemon.field.crits,
+	        Pokemon.field.misses,
+	        Pokemon.field.superEffective,
+	        Pokemon.field.switches,
+	        Pokemon.field.knockouts,
+	        Pokemon.field.turns
+	    };
+	    
+	    g2.setFont(g2.getFont().deriveFont(24F));
+	    
+	    for (int i = 0; i < labels.length; i++) {
+	        g2.setColor(Color.WHITE);
+	        g2.drawString(labels[i], x, y);
+
+	        int guess = parlays[i]; // Player's guess: 1 (over), -1 (under), 0 (no guess)
+	        int actual = actualValues[i];
+	        double expected = expectedValues[i];
+
+	        // Determine text color
+	        if (guess == 1) { // Player guessed "over"
+	            g2.setColor(actual >= expected ? Color.GREEN : Color.RED);
+	        } else if (guess == -1) { // Player guessed "under"
+	            g2.setColor(actual < expected ? Color.GREEN : Color.RED);
+	        } else { // No guess made
+	            g2.setColor(Color.GRAY);
+	        }
+
+	        g2.drawString(String.valueOf(actual), (int) (x + gp.tileSize * 3.75), y);
+	        y += lineSpacing;
+	    }
+
+	}
+
 	@Override
 	protected void drawFoeSummaryParty() {
 		super.drawFoeSummaryParty();
 	}
 	
-	@Override // TODO: can be behind a "view moves" button on the idle screen that just lets you view the moves
+	@Override
 	protected void drawMoveSelectionScreen() {
-		currentDialogue = "What will\n" + user.nickname + " do?";
-		drawDialogueScreen(false);
-		drawMoves();
-		if (gp.keyH.aPressed) {
-			gp.keyH.aPressed = false;
-			Item.useCalc(user, null, foe);
-		}
-		if (gp.keyH.dPressed) {
-			gp.keyH.dPressed = false;
-			showMoveSummary = !showMoveSummary;
-		}
-		drawCalcWindow();
-		drawToolTips("OK", null, "Back", "Info");
+		super.drawMoveSelectionScreen();
 	}
 	
-	@Override // TODO: should they be allowed to calc?
+	@Override
 	protected void drawCalcWindow() {
 		super.drawCalcWindow();
 	}
@@ -501,84 +572,9 @@ public class SimBattleUI extends BattleUI {
 		super.drawActionBackground(p, x, y, width, height);
 	}
 	
-	@Override // TODO: change to just being able to view moves and not actually press any
+	@Override
 	protected void drawMoves() {
-		int x = gp.tileSize * 6;
-		int y = gp.screenHeight - (gp.tileSize * 4);
-		int width = gp.screenWidth - x;
-		int height = gp.tileSize * 4;
-		
-		drawActionBackground(user, x, y, width, height);
-		
-		x += gp.tileSize;
-		y += gp.tileSize / 4;
-		width = (int) (gp.tileSize * 3.5);
-		height = (int) (gp.tileSize * 1.5);
-		g2.setFont(g2.getFont().deriveFont(24F));
-		Moveslot[] moves = user.moveset;
-		for (int i = 0; i < moves.length; i++) {
-			if (moves[i] != null) {
-		        if (i == 2) {
-		            x = gp.tileSize * 7;
-		            y += height + 16;
-		        } else if (i != 0) {
-		            x += width + gp.tileSize;
-		        }
-		        
-		        Move move = moves[i].move;
-		        PType mtype = move.mtype;
-		        if (move == Move.HIDDEN_POWER) mtype = user.determineHPType();
-				if (move == Move.RETURN) mtype = user.determineHPType();
-				if (move == Move.WEATHER_BALL) mtype = user.determineWBType();
-				if (move == Move.TERRAIN_PULSE) mtype = user.determineTPType();
-				if (move.isAttack()) {
-					if (mtype == PType.NORMAL) {
-						if (user.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
-						if (user.ability == Ability.REFRIGERATE) mtype = PType.ICE;
-						if (user.ability == Ability.PIXILATE) mtype = PType.LIGHT;
-					} else {
-						if (user.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
-					}
-				}
-		        Color color = mtype.getColor();
-		        if (!user.moveUsable(moves[i].move)) color = new Color(100, 100, 100, 200);
-		        g2.setColor(color);
-		        g2.fillRoundRect(x, y, width, height, 10, 10);
-		        g2.setColor(moves[i].getPPColor());
-		        String text = moves[i].move.toString();
-		        g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
-		        String pp = showMoveSummary ? moves[i].move.cat == 2 ? "Status" : mtype.effectiveness(foe, user, moves[i].move) : moves[i].currentPP + " / " + moves[i].maxPP;
-		        g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
-		        if (moveNum == i) {
-		            g2.setColor(Color.WHITE);
-		            g2.drawRoundRect(x, y, width, height, 10, 10);
-		        }
-		    }
-		}
-		if (gp.keyH.wPressed) {
-			gp.keyH.wPressed = false;
-			
-			if (moves[moveNum].currentPP == 0 && !user.movesetEmpty()) {
-				subState = MOVE_MESSAGE_STATE;
-    			showMessage("No more PP remaining!");
-    			return;
-    		}
-        	if (!user.moveUsable(moves[moveNum].move) && !user.movesetEmpty()) {
-        		subState = MOVE_MESSAGE_STATE;
-    			showMessage(moves[moveNum].move + " cannot be used!");
-    			return;
-    		}
-        	Move move = moves[moveNum].move;
-    		if (user.movesetEmpty()) move = Move.STRUGGLE;
-			
-        	foeMove = foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
-        	
-        	showMoveSummary = false;
-        	turn(move, foeMove);
-        }
-		if (showMoveSummary) {
-        	drawMoveSummary(gp.tileSize * 3, (int) (gp.tileSize * 2.5), user, foe, moves[moveNum], null);
-        }
+		super.drawMoves();
 	}
 	
 	public void turn() {
@@ -715,58 +711,9 @@ public class SimBattleUI extends BattleUI {
 		}
 	}
 	
-	@Override // TODO: don't have to worry about this for now
+	@Override
 	public void drawParty(Item item) {
 		super.drawParty(item);
-		currentTask = null;
-		if (gp.keyH.aPressed) {
-			gp.keyH.aPressed = false;
-			Pokemon select = gp.player.p.team[partyNum];
-			if (select.isFainted()) {
-				currentDialogue = select.nickname + " has no energy to battle!";
-			} else if (select == select.trainer.getCurrent()) {
-				currentDialogue = select.nickname + " is already out!";
-			} else if (cancellableParty && user.isTrapped(foe)) {
-        		currentDialogue = "You are trapped and cannot switch!";
-			} else {
-				subState = TASK_STATE;
-				if (user.isFainted()) foeMove = null;
-				if (cancellableParty && !user.isFainted()) {
-					foeMove = foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
-				}
-				tempUser = gp.player.p.team[partyNum].clone();
-				if (baton) {
-					gp.player.p.team[partyNum].statStages = user.statStages.clone();
-					gp.player.p.team[partyNum].vStatuses = new ArrayList<>(user.vStatuses);
-					gp.player.p.team[partyNum].vStatuses.remove(Status.SWITCHING);
-					gp.player.p.team[partyNum].vStatuses.remove(Status.SWAP);
-					gp.player.p.team[partyNum].magCount = user.magCount;
-					gp.player.p.team[partyNum].perishCount = user.perishCount;
-				}
-				gp.player.p.swapToFront(gp.player.p.team[partyNum], partyNum);
-				gp.player.p.getCurrent().swapIn(foe, true);
-				user = gp.player.p.getCurrent();
-				partyNum = 0;
-				moveNum = 0;
-				commandNum = 0;
-				dialogueCounter = 0;
-				baton = false;
-				turn(null, foeMove);
-				foeMove = null;
-			}
-		}
-		if (gp.keyH.wPressed) {
-			gp.keyH.wPressed = false;
-			subState = SUMMARY_STATE;
-		}
-		if (!currentDialogue.equals("")) {
-			drawDialogueScreen(false);
-			dialogueCounter++;
-			if (dialogueCounter >= 50) {
-				dialogueCounter = 0;
-				currentDialogue = "";
-			}
-		}
 	}
 	
 	@Override
@@ -782,11 +729,45 @@ public class SimBattleUI extends BattleUI {
 	}
 
 	public static int calculatePayout(int wager, int trainerGuess, int[] odds) {
-		int totalSimulations = odds[0] + odds[1];
-		double probability = (double) odds[trainerGuess] / totalSimulations;
-		double multiplier = 1.0 / probability;
+		int americanOdds = UI.calculateOdds(odds, trainerGuess);
 		
-		return (int) Math.ceil(wager * multiplier);
+		if (americanOdds > 0) {
+			return (int) Math.ceil(wager * (americanOdds / 100.0 + 1)); // Payout for underdogs
+		} else {
+			return (int) Math.ceil(wager * (100.0 / -americanOdds + 1)); // Payout for favorites
+		}
+	}
+
+	public static String formatOdds(int americanOdds) {
+		return String.format("Odds: %s%d", americanOdds >= 0 ? "+" : "", americanOdds);
+	}
+	
+	public static int calculateParlayPayout(int[] parlayBets, int[] lines, int[] actualResults, int wager) {
+	    double baseMultiplier = 1.8; // Payout for individual parlays
+	    double[] bonusMultipliers = {0.0, 0.0, 0.0, 1.0, 1.5, 2.5, 5.0}; // Bonus multipliers based on correct bets
+	    int correctBets = 0;
+	    int betsMade = 0;
+
+	    for (int i = 0; i < parlayBets.length; i++) {
+	        if (parlayBets[i] != 0) { // Player placed a bet
+	            betsMade++;
+	            if (actualResults == null ||
+	            		(parlayBets[i] > 0 && lines[i] > actualResults[i]) ||
+	            		(parlayBets[i] < 0 && lines[i] < actualResults[i])) {
+	                correctBets++;
+	            }
+	        }
+	    }
+
+	    // Base payout calculation
+	    double payout = correctBets * baseMultiplier * wager;
+
+	    // Apply bonus if applicable
+	    if (betsMade > 0) {
+	        payout += bonusMultipliers[correctBets] * wager;
+	    }
+
+	    return (int) Math.ceil(payout); // Round up to the nearest whole coin
 	}
 
 }

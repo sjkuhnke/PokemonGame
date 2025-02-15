@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 
 import entity.Entity;
 import pokemon.*;
+import util.Pair;
 
 public abstract class AbstractUI {
 	
@@ -41,6 +42,13 @@ public abstract class AbstractUI {
 	public Task currentTask;
 	public ArrayList<Task> tasks;
 	public boolean checkTasks;
+	
+	public static int MAX_PARLAYS = 6;
+	public boolean showParlays;
+	public int battleBet = 1;
+	public int parlayBet = 1;
+	public int[] parlays;
+	public boolean sheetFilled;
 	
 	public Entity npc;
 	
@@ -599,7 +607,7 @@ public abstract class AbstractUI {
 					}
 				}
 				
-				if (moveSummaryNum < 0 && !showBoxSummary && !gp.battleUI.showFoeSummary) {
+				if (moveSummaryNum < 0 && !showBoxSummary && !gp.battleUI.showFoeSummary && !gp.simBattleUI.showFoeSummary) {
 					if (gp.keyH.leftPressed) {
 						gp.keyH.leftPressed = false;
 						if (partyNum > 0) {
@@ -658,7 +666,15 @@ public abstract class AbstractUI {
 			
 			String wText = moveSummaryNum < 0 && !egg ? "Moves" : null;
 			String aText = moveSummaryNum < 0 ? p.item == null || foe != null ? null : "Take" : p.playerOwned() ? "Swap" : null;
-			String dText = gp.gameState == GamePanel.BATTLE_STATE || moveSummaryNum > -1 ? gp.battleUI.showFoeSummary ? "Back" : null : egg ? null : "Name";
+			String dText =
+				gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.SIM_BATTLE_STATE || moveSummaryNum > -1
+				? gp.battleUI.showFoeSummary || gp.simBattleUI.showFoeSummary
+					? "Back"
+					: null
+				: egg
+					? null
+					: "Name";
+			
 			drawToolTips(wText, aText, "Back", dText);
 		} else {
 			currentDialogue = "Change " + p.name() + "'s nickname?";
@@ -1160,4 +1176,183 @@ public abstract class AbstractUI {
 			g2.drawString(d, x, y);
 		}
 	}
+	
+	public void drawParlaySheet(boolean editable) {
+	    int x = gp.tileSize * 5;
+	    int y = gp.tileSize / 2;
+	    int width = gp.tileSize * 6;
+	    int height = (int) (gp.tileSize * 11.25);
+
+	    int maxBet = MAX_PARLAYS - 1;
+
+	    drawSubWindow(x, y, width, height, 255);
+
+	    int parlayWidth = (int) (gp.tileSize * 5.5);
+	    int parlayHeight = (int) (gp.tileSize * 1.75);
+
+	    int startX = x;
+	    
+	    // Fetch battle bets and expected vs actual values
+	    double[] expectedValues = {
+	        gp.simBattleUI.parlaySheet.get(0).getFirst(),
+	        gp.simBattleUI.parlaySheet.get(1).getFirst(),
+	        gp.simBattleUI.parlaySheet.get(2).getFirst(),
+	        gp.simBattleUI.parlaySheet.get(3).getFirst(),
+	        gp.simBattleUI.parlaySheet.get(4).getFirst(),
+	        gp.simBattleUI.parlaySheet.get(5).getFirst()
+	    };
+	    int[] actualValues = {
+	        Pokemon.field.crits,
+	        Pokemon.field.misses,
+	        Pokemon.field.superEffective,
+	        Pokemon.field.switches,
+	        Pokemon.field.knockouts,
+	        Pokemon.field.turns
+	    };
+
+	    for (int i = 0; i < MAX_PARLAYS; i++) {
+	        g2.setColor(Color.WHITE);
+	        int startY = y;
+	        x += width / 2;
+	        y += gp.tileSize * 0.75;
+	        g2.setFont(g2.getFont().deriveFont(18F));
+
+	        Pair<Double, String> current = gp.simBattleUI.parlaySheet.get(i);
+	        String bet = String.format("%.1f %s", current.getFirst(), current.getSecond());
+	        g2.drawString(bet, getCenterAlignedTextX(bet, x), y);
+
+	        y += gp.tileSize * 0.75;
+	        g2.setStroke(new BasicStroke(2));
+	        g2.drawLine((int) (x - gp.tileSize * 1.25), y, x - gp.tileSize, y);
+
+	        // Determine bet color: Gray if unselected, Red if under, Green if over
+	        if (parlays[i] == 0) {
+				g2.setColor(Color.LIGHT_GRAY);
+				g2.fillOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+				g2.setColor(Color.WHITE);
+				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+			} else {
+				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+			}
+			String X = "x";
+			g2.drawString(X, getCenterAlignedTextX(X, x), y + 8);
+			
+			g2.drawLine((int) (x + gp.tileSize * 1.25), y, x + gp.tileSize, y);
+
+	        int diff = gp.tileSize * 2;
+	        x -= diff;
+	        
+	        // Draw Under Button
+	        if (parlays[i] == -1) {
+				g2.setColor(Color.RED);
+				g2.fillOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+				g2.setColor(Color.WHITE);
+				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+			} else {
+				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+			}
+			String minus = "-";
+			g2.setFont(g2.getFont().deriveFont(30F));
+			g2.drawString(minus, getCenterAlignedTextX(minus, x), y + 8);
+			
+			x += diff * 2;
+			if (parlays[i] == 1) {
+				g2.setColor(Color.GREEN);
+				g2.fillOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+				g2.setColor(Color.WHITE);
+				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+			} else {
+				g2.drawOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
+			}
+			String plus = "+";
+			g2.drawString(plus, getCenterAlignedTextX(plus, x), y + 8);
+			x -= diff;
+
+	        // Display Cost
+	        g2.setFont(g2.getFont().deriveFont(16F));
+	        g2.setColor(parlays[i] != 0 ? Color.WHITE : Color.GRAY);
+	        String costText = "$" + parlayBet;
+	        g2.drawString(costText, x - gp.tileSize * 3, y + 8);
+
+	        // Calculate Payout if bet is placed
+	        if (parlays[i] != 0) {
+	        	int payout = SimBattleUI.calculateParlayPayout(parlays, null, null, parlayBet);
+	            g2.setColor(Color.GREEN);
+	            String payoutText = payout + "";
+	            g2.drawString(payoutText, x + gp.tileSize * 3, y + 8);
+	        }
+
+	        g2.setStroke(new BasicStroke(3));
+	        if (editable && i == gp.ui.areaCounter) {
+	            g2.setColor(Color.RED);
+	            g2.drawRoundRect(x - parlayWidth / 2, y - gp.tileSize - 6, parlayWidth, parlayHeight, 45, 45);
+	        }
+
+	        x = startX;
+	        y = startY + parlayHeight;
+	    }
+
+	    if (editable) {
+	        if (gp.keyH.downPressed) {
+	            gp.keyH.downPressed = false;
+	            if (gp.ui.areaCounter < maxBet) {
+	                gp.ui.areaCounter++;
+	            } else {
+	                gp.ui.areaCounter = 0;
+	                showParlays = false;
+	            }
+	        }
+
+	        if (gp.keyH.upPressed) {
+	            gp.keyH.upPressed = false;
+	            if (gp.ui.areaCounter > 0) {
+	                gp.ui.areaCounter--;
+	            } else {
+	                gp.ui.areaCounter = 0;
+	                showParlays = false;
+	            }
+	        }
+
+	        if (gp.keyH.leftPressed) {
+	            gp.keyH.leftPressed = false;
+	            if (parlays[gp.ui.areaCounter] > -1) {
+	                parlays[gp.ui.areaCounter]--;
+	                sheetFilled = true;
+	                if (gp.ui.areaCounter < maxBet) {
+	                    gp.ui.areaCounter++;
+	                } else {
+	                    gp.ui.areaCounter = 0;
+	                    showParlays = false;
+	                }
+	            }
+	        }
+
+	        if (gp.keyH.rightPressed) {
+	            gp.keyH.rightPressed = false;
+	            if (parlays[gp.ui.areaCounter] < 1) {
+	                parlays[gp.ui.areaCounter]++;
+	                sheetFilled = true;
+	                if (gp.ui.areaCounter < maxBet) {
+	                    gp.ui.areaCounter++;
+	                } else {
+	                    gp.ui.areaCounter = 0;
+	                    showParlays = false;
+	                }
+	            }
+	        }
+	        if (gp.keyH.aPressed || gp.keyH.sPressed) {
+				gp.keyH.aPressed = false;
+				gp.keyH.sPressed = false;
+				showParlays = false;
+			}
+		} else {
+			if (gp.keyH.sPressed) {
+				gp.keyH.sPressed = false;
+				showParlays = false;
+			}
+	    }
+
+	    drawToolTips(null, editable ? "Close" : null, "Close", null);
+	}
+
 }

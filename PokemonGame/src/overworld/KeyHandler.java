@@ -327,24 +327,24 @@ public class KeyHandler implements KeyListener {
 		
 		if (gp.simBattleUI.subState == SimBattleUI.IDLE_STATE) {
 			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
-				if (gp.simBattleUI.commandNum > 1 && !gp.simBattleUI.showFoeSummary) {
+				if (gp.simBattleUI.commandNum > 1 && !gp.simBattleUI.showFoeSummary && !gp.simBattleUI.showParlays) {
 					gp.simBattleUI.commandNum -= 2;
 				}
 			}
 			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
-				if (gp.simBattleUI.commandNum < 2 && !gp.simBattleUI.showFoeSummary) {
+				if (gp.simBattleUI.commandNum < 2 && !gp.simBattleUI.showFoeSummary && !gp.simBattleUI.showParlays) {
 					gp.simBattleUI.commandNum += 2;
 				}
 			}
 			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
-				if (!gp.simBattleUI.showFoeSummary && gp.simBattleUI.commandNum >= 0 && gp.simBattleUI.commandNum % 2 == 1) {
+				if (!gp.simBattleUI.showFoeSummary && !gp.simBattleUI.showParlays && gp.simBattleUI.commandNum >= 0 && gp.simBattleUI.commandNum % 2 == 1) {
 					gp.simBattleUI.commandNum--;
 				} else {
 					leftPressed = true;
 				}
 			}
 			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
-				if (!gp.simBattleUI.showFoeSummary && gp.simBattleUI.commandNum >= 0 && gp.simBattleUI.commandNum % 2 == 0) {
+				if (!gp.simBattleUI.showFoeSummary && !gp.simBattleUI.showParlays && gp.simBattleUI.commandNum >= 0 && gp.simBattleUI.commandNum % 2 == 0) {
 					gp.simBattleUI.commandNum++;
 				} else {
 					rightPressed = true;
