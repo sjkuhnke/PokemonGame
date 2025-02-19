@@ -8,8 +8,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import javax.swing.JLabel;
@@ -2130,17 +2128,16 @@ public class PlayerCharacter extends Entity {
 			}
 			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("ITEMHASH")) {
-			// Create a list from the entry set of the itemMap
-		    List<Map.Entry<Item, Integer>> itemList = new ArrayList<>(gp.aSetter.itemMap.entrySet());
-		    itemList.removeIf(entry -> entry.getKey() == null);
+			// Ensure all items from Item.values() are present in the map with at least 0 count
+			for (Item item : Item.values()) {
+			    gp.aSetter.itemMap.putIfAbsent(item, 0);
+			}
 
-		    // Sort the list based on the item name (assuming Item class has a getName() method)
-		    itemList.sort((entry1, entry2) -> entry1.getKey().toString().compareToIgnoreCase(entry2.getKey().toString()));
+			// Print items in the order they appear in Item.values()
+			for (Item item : Item.values()) {
+			    System.out.println(item + "," + gp.aSetter.itemMap.get(item));
+			}
 
-		    // Print the sorted item list
-		    for (Map.Entry<Item, Integer> entry : itemList) {
-		        System.out.println(entry.getKey().toString() + "," + entry.getValue());
-		    }
 			SwingUtilities.getWindowAncestor(cheats).dispose();
 		}
 	}
