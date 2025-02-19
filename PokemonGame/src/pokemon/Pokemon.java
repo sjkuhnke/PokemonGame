@@ -2565,6 +2565,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) {
+			this.damage(this.currentHP, foe, "");
 			this.faint(true, foe);
 		}
 		if (move == Move.HYPER_BEAM || move == Move.BLAST_BURN || move == Move.FRENZY_PLANT || move == Move.GIGA_IMPACT || move == Move.HYDRO_CANNON || move == Move.MAGIC_CRASH) {
@@ -2955,6 +2956,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 //			}
 		} else if (move == Move.DRACO_METEOR) {
 			stat(this, 2, -2, foe);
+		} else if (move == Move.DRAGON_ASCENT) {
+			stat(this, 1, -1, foe);
+			stat(this, 3, -1, foe);
 		} else if (move == Move.DRAGON_RUSH && first) {
 			foe.vStatuses.add(Status.FLINCHED);
 		} else if (move == Move.DRAGON_BREATH) {
@@ -3848,6 +3852,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (announce && move == Move.HYPNOSIS) {
 			foe.sleep(true, this);
 		} else if (announce && (move == Move.HEALING_WISH || move == Move.LUNAR_DANCE)) {
+			this.damage(this.currentHP, foe, "");
 			this.faint(true, foe);
 			this.vStatuses.add(Status.HEALING);
 		} else if (announce && move == Move.INGRAIN) {
@@ -3922,6 +3927,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(foe, 0, -2, this, announce);
 			stat(foe, 2, -2, this, announce);
 			this.currentHP = 0;
+			this.damage(this.currentHP, foe, "");
 			this.faint(true, foe);
 		} else if (move == Move.METAL_SOUND) {
 			stat(foe, 3, -2, this, announce);
@@ -4575,6 +4581,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	private boolean critCheck(int m) {
+		if (m < 0) return false;
 		  int critChance = (int)(Math.random()*100);
 		  int baseCrit;
 		  if (m == 1) {
@@ -5616,6 +5623,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.perishCount--;
 			Task.addTask(Task.TEXT, this.nickname + "'s perish count fell to " + this.perishCount + "!");
 			if (this.perishCount == 0) {
+				this.damage(this.currentHP, f, "");
 				this.faint(true, f);
 				return;
 			}
@@ -6132,6 +6140,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 			bp = Math.min(160, 40 * this.moveMultiplier);
 			if (this.lastMoveUsed == Move.RAGE) {
 				if (announce) this.moveMultiplier *= 2;
+			}
+		} else if (move == Move.RISING_VOLTAGE) {
+			if (field.equals(field.terrain, Effect.ELECTRIC) && foe.isGrounded()) {
+				bp = 140;
+			} else {
+				bp = 70;
 			}
 		} else if (move == Move.PAYBACK) {
 			if (first || this.headbuttCrit < 0) {

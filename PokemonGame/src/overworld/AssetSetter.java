@@ -860,7 +860,7 @@ public class AssetSetter {
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(12, 15, Item.FULL_RESTORE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(18, 26, Item.FOCUS_SASH, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(17, 32, Item.PP_UP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(17, 32, Item.PP_MAX, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(8, 40, Item.FULL_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(23, 46, Item.REVIVE, mapNum);
 		
@@ -1725,7 +1725,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 24, 24, "", "", 281);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 17, 22, "", "", 280);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 22, 32, "", "", 283);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 15, 32, "", "", 277); // DI
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 15, 32, "", "", 277, LEFT + RIGHT); // DI
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 12, 43, "", "", 278); // DJ
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 24, 43, "", "", 279); // DK
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 16, 39, "", "", 284);
