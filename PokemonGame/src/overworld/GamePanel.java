@@ -487,6 +487,21 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		String aText = player.p.fish ? "Fish" : null;
 		ui.drawToolTips("Talk", aText, "Run", "Menu");
+		
+		x = (int) (screenWidth - tileSize * 4.25);
+		y = 0;
+		width = (int) (tileSize * 4.25);
+		ui.drawSubWindow(x, y, width, height);
+		
+		g2.setFont(g2.getFont().deriveFont(28F));
+		
+		x += tileSize / 2;
+		y += tileSize;
+		
+		double xCoord = player.worldX * 1.0 / tileSize;
+		double yCoord = player.worldY * 1.0 / tileSize;
+		
+		g2.drawString(String.format("X: %.2f, Y: %.2f", xCoord, yCoord), x, y);
 	}
 
 	public boolean determineLightOverlay() {

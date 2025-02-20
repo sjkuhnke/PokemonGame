@@ -20,7 +20,7 @@ public class Entity {
 	public int worldX, worldY;
 	public int speed;
 	
-	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2, surf1, surf2, surf3, surf4;
+	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2, surf1, surf2, surf3, surf4, up3, up4, down3, down4, left3, left4, right3, right4;
 	public String direction;
 	public String defaultDirection;
 	public GamePanel gp;
@@ -29,6 +29,7 @@ public class Entity {
 
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
+	public boolean walkable;
 	public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
 	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collisionOn = false;
@@ -50,6 +51,7 @@ public class Entity {
 	
 	public int flag = -1;
 	private int spin;
+	public boolean more;
 	
 	public Entity(GamePanel gp, String name) {
 		this.gp = gp;
@@ -85,7 +87,7 @@ public class Entity {
 		BufferedImage image = null;
 		int screenX = worldX - gp.player.worldX + gp.player.screenX + gp.offsetX;
 		int screenY = worldY - gp.player.worldY + gp.player.screenY + gp.offsetY;
-		
+
 		if (worldX + gp.tileSize*2 + gp.offsetX > gp.player.worldX - gp.player.screenX &&
 			worldX - gp.tileSize*2 + gp.offsetX < gp.player.worldX + gp.player.screenX &&
 			worldY + gp.tileSize*2 + gp.offsetY > gp.player.worldY - gp.player.screenY &&
@@ -93,30 +95,31 @@ public class Entity {
 			
 			switch(direction) {
 			case "up":
-				image = up1;
+				if (spriteNum == 1) image = up1;
+				if (spriteNum == 2) image = up2;
+				if (spriteNum == 3) image = up3;
+				if (spriteNum == 4) image = up4;
 				break;
 			case "down":
-				image = down1;
+				if (spriteNum == 1) image = down1;
+				if (spriteNum == 2) image = down2;
+				if (spriteNum == 3) image = down3;
+				if (spriteNum == 4) image = down4;
 				break;
 			case "left":
-				image = left1;
+				if (spriteNum == 1) image = left1;
+				if (spriteNum == 2) image = left2;
+				if (spriteNum == 3) image = left3;
+				if (spriteNum == 4) image = left4;
 				break;
 			case "right":
-				image = right1;
-				break;
-			case "up2":
-				image = up2;
-				break;
-			case "down2":
-				image = down2;
-				break;
-			case "left2":
-				image = left2;
-				break;
-			case "right2":
-				image = right2;
+				if (spriteNum == 1) image = right1;
+				if (spriteNum == 2) image = right2;
+				if (spriteNum == 3) image = right3;
+				if (spriteNum == 4) image = right4;
 				break;
 			}
+			
 			int width = image.getWidth() * gp.scale;
 			int wOffset = (width - gp.tileSize) / 2;
 			
@@ -217,6 +220,27 @@ public class Entity {
 		up1 = up;
 		left1 = left;
 		right1 = right;
+	}
+	
+	public void setupImages(String name, boolean walkable) {
+		down1 = setup(name + "1");
+		up1 = setup(name + "2");
+		left1 = setup(name + "3");
+		right1 = setup(name + "4");
+		
+		this.walkable = walkable;
+		down2 = setup(name + "1_1");
+		up2 = setup(name + "2_1");
+		left2 = setup(name + "3_1");
+		right2 = setup(name + "4_1");
+		down3 = setup(name + "1");
+		up3 = setup(name + "2");
+		left3 = setup(name + "3");
+		right3 = setup(name + "4");
+		down4 = setup(name + "1_2");
+		up4 = setup(name + "2_2");
+		left4 = setup(name + "3_2");
+		right4 = setup(name + "4_2");
 	}
 
 	public void setSpin(int spin) {

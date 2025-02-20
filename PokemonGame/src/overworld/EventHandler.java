@@ -1,6 +1,5 @@
 package overworld;
 
-import entity.NPC_Block;
 import pokemon.*;
 
 public class EventHandler {
@@ -279,7 +278,7 @@ public class EventHandler {
 			if (hit(44,63,68)) teleport(38, 62, 42,false);
 			
 			// Cutscene with Robin
-			if (gp.player.p.flag[3][12] && !gp.player.p.flag[4][0] && hit(38,62,42)) gp.player.interactNPC((NPC_Block) gp.npc[38][1]);
+			if (gp.player.p.flag[3][12] && !gp.player.p.flag[4][0] && hit(38,62,42)) gp.player.interactNPC(gp.npc[38][1]);
 			
 			// Icy Path
 			if (hit(38,42,7)) teleport(166, 51, 53,true);
@@ -590,7 +589,7 @@ public class EventHandler {
 			if (hit(107,49,93)) teleport(106, 31, 34,false);
 			
 			// Arthra Cutscene
-			if (gp.player.p.flag[4][5] && !gp.player.p.flag[5][0] && hit(107,49,92)) gp.player.interactNPC((NPC_Block) gp.npc[107][12]);
+			if (gp.player.p.flag[4][5] && !gp.player.p.flag[5][0] && hit(107,49,92)) gp.player.interactNPC(gp.npc[107][12]);
 			
 			// Ghostly Woods
 			if (hit(107,57,91)) teleport(107, 26, 81,true); // A
@@ -662,7 +661,7 @@ public class EventHandler {
 			if (hit(107,74,22)) teleport(107, 49, 83,true); // X'
 			
 			// Maxwell 1 Cutscene
-			if (gp.player.p.flag[5][3] && !gp.player.p.flag[5][4] && hit(103,47,35)) gp.player.interactNPC((NPC_Block) gp.npc[103][0]);
+			if (gp.player.p.flag[5][3] && !gp.player.p.flag[5][4] && hit(103,47,35)) gp.player.interactNPC(gp.npc[103][0]);
 			
 			// Ghostly Woods -> Route 34 Gate -> Route 34
 			if (hit(107,45,18)) teleport(108, 31, 45,false);
@@ -711,7 +710,7 @@ public class EventHandler {
 			if (hit(113,53,69)) teleport(109, 15, 43,false);
 			
 			// Cutscene with Scott
-			if (gp.player.p.flag[5][8] && !gp.player.p.flag[6][0] && hit(109,15,43)) gp.player.interactNPC((NPC_Block) gp.npc[109][5]);
+			if (gp.player.p.flag[5][8] && !gp.player.p.flag[6][0] && hit(109,15,43)) gp.player.interactNPC(gp.npc[109][5]);
 			
 			// Mindagan Cavern
 			if (hit(78,62,69)) teleport(117, 61, 72,true);

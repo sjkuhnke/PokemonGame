@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
@@ -95,7 +96,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 51;
+	public static final int VERSION = 52;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -1568,5 +1569,29 @@ public class Player extends Trainer implements Serializable {
 		if (activeBets == 0) return getMaxBet();
 		
 		return Math.min(Math.max(1, coins / activeBets), 100);
+	}
+
+	public void deleteInvalidMoves() {
+		Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/deletedmoves.txt"));
+		ArrayList<Move> moves = new ArrayList<>();
+		
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+			Move m = Move.valueOf(line);
+			moves.add(m);
+		}
+		
+		for (Pokemon p : getAllPokemon()) {
+			for (int i = 0; i < p.moveset.length; i++) {
+				Moveslot m = p.moveset[i];
+				if (m != null && moves.contains(m.move)) {
+					p.moveset[i] = null;
+				}
+			}
+			p.validateMoveset();
+		}
+		
+		scanner.close();
+		
 	}
 }
