@@ -66,3 +66,94 @@ Make Ryder 3 disappear after beating Icy Serpant
 
 TM CHANGES
 Brick Break -> Body Press
+Rock Tomb -> Bulldoze?
+OR Smack Down -> Scorching Sands
+Shadow Sneak/Radio Burst?
+Night Shade?
+Comet Crash -> Meteor Assault
+Defog?
+Outrage -> Breaking Swipe
+Skill Swap? (Otherwise distribute)
+Charge Beam -> 
+Magic Blast ->
+Elemental Sparkle ->  
+Rock Slide -> Power Gem
+ADD POLTERGEIST
+ADD PSYCHIC NOISE
+
+Thief magic move
+Exposing move that works like octolock
+A move that lowers the opponents level by 1 temporarily?
+An attacking move that disables their last used move: "Hex Claw"
+An attacking move that encores the opponent for less turns
+An attacking move that lowers the base power of your last move/all moves by 5/10/20 power
+Add "Quick Spell", a special priority magic move
+Mysterious Magic: special 95/100 does physical damage
+Origin Bullet: special 95/100 uses target's spdef as the attacking stat
+Trick Tackle: switches user and target's item
+An attacking move that lowers the target's crit chance
+A summoning move that summons something (multi-hit move like bullet seed, could maybe have variable base power)
+Disenchant: an attacking special move 70/1000 that also does haze on the foe
+An attacking move that swaps foe's attacking/defending stats
+Alchemy: heals you 33%, a status move that if you're holding an item will knock it off yourself and fully heal you
+"Mana Punch": may flinch or may sharply raise a random stat?
+Healing Circle: creates a healing circle on your side that heals incoming pokemon for 25%
+Magic Missiles: Magic type Shooting stars with less accuracy or smth
+
+Light Drain: Light Giga Drain (remove draining kiss)
+Chromo Beam: Light Fickle Beam
+Floodlight: entry hazard that lowers evasion on entry
+A priority special light move since light is fast asf, "Over Ray"?
+Light type extreme speed: "Light Speed"?
+Change Sunny Doom to Sunny Burst/Sunny Shine which will always change weather to Sun
+Aurora Glow: heals Light and Galactic types for 1/8 hp at the end of every turn, lasts 8 turns or smth?
+Skylight: 70/100: 50% to start Aurora Glow
+Flash Darts: Light Type shooting stars
+Glittering Sword -> something like Light Saber
+Sword of Dawn: gen 1 hyper beam?
+
+Hex Claw: Physical/75/100/10 Disables the target's last used move for 3 turns
+Alchemy: Status/--/100/10 Heals you 33% health, if holding item knocks it off and heals you 100%
+Spellbind: Status/--/100/10 Traps foe for same turns as wrap, lowers defenses by 1 stage each every turn
+Power Drain: Special/85/90/5 Reduces target's level by 1
+Quick Spell: Special/40/100/20 +1 Priority
+*Disenchant: Special/70/100/10 Clears all stat boosts on the target FIRST
+Vitriol: 60/100 special reduces target's crit chance by 1
+Mana Punch: Physical/80/100/15 Raises a random stat by 1, or flinches (count flinch as one of the "stats")
+Healing Circle: Status/1000/10 Creates a field effect on the user's side that heals incoming Pokemon for 25% of their HP. Lasts 5 turns
+Magic Missiles: Special/25/90/15 Hits 2-5 times
+**Arcane Spell: Special/90/95/10 Lowers the base power of all foe moves by 10 permanently (min 40)
+*Trick Tackle: Physical/90/90 Swaps user and foe's item
+Deck Change: Swaps the target's Attack and SpA
+Magic Room: Removes the effects of held items for 8 turns
+MAKE MAGICAL CRASH 95 ACC
+MAKE MAGIC TOMB'S SECONDARY EFFECT TWINKLE TACKLE'S and can never miss, make 80 BP
+
+-Elemental Sparkle
+-Magic Blast
+-Sparkle Strike
+-Sparkly Swirl
+-MAKE SWIFT NORMAL TYPE
+-Twinkle Tackle
+
+*Light Drain: Special/75/100/10 Heals user for 50% of damage dealt
+Chromo Beam: Special/80/100/5 30% chance to double base power
+Floodlight: Status/--/1000/15 Creates a hazard that lowers the evasion of opposing Pokemon when they switch in
+Rainbow Flash: 45/100 special +1 priority
+*Light Speed: 80/100 physical +2 priority
+Aurora Glow: Status/1000/5 Field effect that lasts 5 turns, heals all Light/Ice/Galactic types in the back too for 1/8 HP every turn
+MAKE AN ABILITY FOR DUALMOOSE THAT SETS THIS UP ON SWITCH-IN, remove magic bounce make the aurora ability the default one, snow cloak secondary, sparkly surge hidden
+Flash Darts: Physical/25/90/15 Strikes 2-5 times in succession
+Sword of Dawn: Physical/150/90/5 Must recharge after use unless it KOs the target
+*Spotlight Ray: Special/80/100 Encores opponent for 2 turns
+Sunny Burst: Sunny Doom rename
+Solstice Blade: Glittering Sword rename
+MAKE SOLSTICE BLADE DO 1.5x in SUN AND 0.5x in OTHER WEATHER
+Radiant Break: Spirit Break rename
+
+-Draining Kiss
+-Glittering Tornado
+-Glitzy Glow?
+-Luster Purge
+-Moonblast
+-Play Rough

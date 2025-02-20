@@ -48,12 +48,13 @@ public class PlayerCharacter extends Entity {
 	public Player p;
 
 	public String currentSave;
+	
+	public PType dexType; // for testing
+	public Pokemon[] newDex; // for testing
 
 	private int cooldown;
 	
 	public static String currentMapName;
-	
-	private BufferedImage up3, up4, down3, down4, left3, left4, right3, right4;
 	
 	public PlayerCharacter(GamePanel gp, KeyHandler keyH) {
 		super(gp, null);
@@ -67,6 +68,7 @@ public class PlayerCharacter extends Entity {
 		solidAreaDefaultY = solidArea.y;
 		
 		name = "Finn";
+		walkable = true;
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -574,7 +576,7 @@ public class PlayerCharacter extends Entity {
 		npc.speak(-1);
 	}
 	
-	public void interactNPC(NPC_Block npc) {
+	public void interactNPC(Entity npc) {
 		gp.keyH.wPressed = false;
 		npc.facePlayer(direction);
 		if (npc.flag == -1 || !p.flag[npc.getFlagX()][npc.getFlagY()]) {
@@ -595,7 +597,7 @@ public class PlayerCharacter extends Entity {
 		}
 	}
 	
-	private void interactBlock(NPC_Block npc) {
+	private void interactBlock(Entity npc) {
 		if (gp.currentMap == 52) { // Professor Dad
 			if (!p.flag[0][0]) {
 				p.flag[0][0] = true;
@@ -732,8 +734,7 @@ public class PlayerCharacter extends Entity {
 				if (!p.flag[0][19]) {
 					Task.addTask(Task.DIALOGUE, npc, "Hey, thanks for the help squirt! Listen, I have a 5-star restaraunt in Rawwar City, you should come check it out!");
 				}
-				Task t = Task.addTask(Task.CONFIRM, npc, "Interested in coming to Rawwar City with me?");
-				t.counter = 5;
+				Task.addTask(Task.CONFIRM, npc, "Interested in coming to Rawwar City with me?", 5);
 			} else {
 				Task.addTask(Task.DIALOGUE, npc, "What..? You've never heard of me? I have the most famous restaurant in Xhenos!");
 			}
@@ -855,10 +856,8 @@ public class PlayerCharacter extends Entity {
 					Task.addTask(Task.DIALOGUE, gp.npc[13][3], "First though, I'll have to upgrade your Pokedex to add a 'Variant' Pokedex for you to keep track of these forms.");
 					Task.addTask(Task.DIALOGUE, gp.npc[13][3], "... And there you go! All upgraded. Come talk to me when you have a Xhenovian Pokemon to trade!");
 					Task.addTask(Task.DIALOGUE, gp.npc[13][3], "Ryder, it was great to see you as always. Take care boys!");
-					t = Task.addTask(Task.TURN, this, "");
-					t.counter = 3;
-					t = Task.addTask(Task.TURN, gp.npc[13][7], "");
-					t.counter = 2;
+					t = Task.addTask(Task.TURN, this, "", Task.RIGHT);
+					t = Task.addTask(Task.TURN, gp.npc[13][7], "", Task.LEFT);
 					t.start = 13;
 					t.finish = 7;
 					Task.addTask(Task.DIALOGUE, npc, "Thanks for your patience, I just figured that this little connection would help out you both mutually.");
@@ -1050,31 +1049,24 @@ public class PlayerCharacter extends Entity {
 					Task.addTask(Task.DIALOGUE, npc, s);
 				}
 				Task.addTask(Task.DIALOGUE, npc, "Trust me, I had to fight off some of them, they hit hard. Especially the stunt doubles...");
-				Task t = Task.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?");
-				t.counter = 2;
+				Task.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?", 2);
 				// Millie 2
-				t = Task.addTask(Task.TURN, this, "");
-				t.counter = 2;
+				Task.addTask(Task.TURN, this, "", Task.LEFT);
 				Task.addTask(Task.DIALOGUE, npc, "There's this weird kid that's been in a trance blocking the way to the tower. He hasn't moved an inch, almost like he's guarding the place.");
 				Task.addTask(Task.DIALOGUE, npc, "I've heard him mutter a few things. \"Toxic\", \"Get decked\", it's off-putting.");
-				t = Task.addTask(Task.TURN, gp.npc[28][1], "");
-				t.counter = 3;
+				Task t = Task.addTask(Task.TURN, gp.npc[28][1], "", Task.RIGHT);
 				t.start = 28;
 				t.finish = 1;
 				Task.addTask(Task.DIALOGUE, npc, "Wait, that's your rival? Maybe he'll recognize you, try saying something that'll, I don't know, make him angry!");
 				Task.addTask(Task.DIALOGUE, npc, "Y'know, like in method acting! Give it a shot.");
-				t = Task.addTask(Task.TURN, this, "");
-				t.counter = 1;
-				t = Task.addTask(Task.TURN, gp.npc[28][1], "");
-				t.counter = 1;
+				Task.addTask(Task.TURN, this, "", Task.UP);
+				t = Task.addTask(Task.TURN, gp.npc[28][1], "", Task.UP);
 				t.start = 28;
 				t.finish = 1;
 				Task.addTask(Task.DIALOGUE, npc, "...");
-				t = Task.addTask(Task.TURN, this, "");
-				t.counter = 2;
+				Task.addTask(Task.TURN, this, "", Task.LEFT);
 				Task.addTask(Task.DIALOGUE, npc, "AHHH! HE'S DEFINITELY AWAKE NOW! JEEZ, WHAT DID YOU EVEN SAY!?");
-				t = Task.addTask(Task.TURN, this, "");
-				t.counter = 1;
+				Task.addTask(Task.TURN, this, "", Task.UP);
 				t = Task.addTask(Task.FLAG, "");
 				t.start = 2;
 				t.finish = 5;
@@ -1130,8 +1122,7 @@ public class PlayerCharacter extends Entity {
 								Task.addTask(Task.FLASH_OUT, "");
 								Task.addTask(Task.DIALOGUE, npc, "Bzzz....Zzzzttt..... ZUZUZUURRKIII!!!");
 								Task.addTask(Task.DIALOGUE, npc, "(The mysterious creature seems shell-shocked, and is now lashing out at everything around it!)");
-								Task t = Task.addTask(Task.BATTLE, "");
-								t.counter = 387;
+								Task t = Task.addTask(Task.BATTLE, "", 387);
 								t.start = 284;
 							}	
 						}
@@ -1323,26 +1314,22 @@ public class PlayerCharacter extends Entity {
 				Task.addTask(Task.DIALOGUE, npc, "Oh... thank Arceus you're here. I was afraid I wouldn't make it through this.");
 				Task.addTask(Task.DIALOGUE, npc, "Those thugs - Team Eclipse - stormed in, demanding something that I don't fully understand.");
 				Task.addTask(Task.DIALOGUE, npc, "You beat them, right? Why are they still here? Can you do anything?");
-				Task t = Task.addTask(Task.SLEEP, "");
-				t.counter = 30;
-				t = Task.addTask(Task.TURN, this, "");
-				t.counter = 0;
-				t = Task.addTask(Task.SLEEP, "");
-				t.counter = 60;
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, this, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 60);
 				Task.addTask(Task.SPEAK, this, "Get out, you creeps! Leave us alone. I already destroyed your flimsy Pokemon, you want some more?");
 				Task.addTask(Task.SPEAK, this, "Didn't think so. Then, GET!");
 				Task.addTask(Task.FLASH_IN, "");
 				Task.addTask(Task.UPDATE, "");
 				Task.addTask(Task.FLASH_OUT, "");
-				t = Task.addTask(Task.TURN, this, "");
-				t.counter = 1;
+				Task.addTask(Task.TURN, this, "", Task.UP);
 				Task.addTask(Task.DIALOGUE, npc, "Thank you Finn, I don't know what I would've done without you.");
 				Task.addTask(Task.DIALOGUE, npc, "They said something about summoning an Ultra Paradox Pokemon... I think it's some dangerous creature they're after.");
 				Task.addTask(Task.DIALOGUE, npc, "I heard they were headed for Peaceful Park next, something about unleashing that alien there, probably.");
 				Task.addTask(Task.DIALOGUE, npc, "You might want to stop them before they cause more chaos.");
 				Task.addTask(Task.DIALOGUE, npc, "Oh! But before you go, I have a gift for you.");
 				Task.addTask(Task.DIALOGUE, npc, "Take this, it's the HM for Slow Fall. It should help you out exploring Xhenos once you take down Mindy.");
-				t = Task.addTask(Task.ITEM, "");
+				Task t = Task.addTask(Task.ITEM, "");
 				t.item = Item.HM05;
 				Task.addTask(Task.DIALOGUE, npc, "Be careful out there. These aren't just ordinary trainers - they're after something far more dangerous than I've ever seen.");
 			} else {
@@ -1370,16 +1357,14 @@ public class PlayerCharacter extends Entity {
 			Task.addTask(Task.GIFT, "", result);
 		} else if (gp.currentMap == 107) { // arthra
 			if (!p.flag[5][0]) {
-				Task t = Task.addTask(Task.TURN, npc, "");
-				t.counter = 0;
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
 				Task.addTask(Task.SPOT, npc, "");
 				Task.addTask(Task.DIALOGUE, npc, "Oh, didn't expect company out here. You must be here for the same reason, yeah? You've noticed these ghosts swarming the woods?");
 				Task.addTask(Task.DIALOGUE, npc, "Name's Arthra, by the way. Merlin's my grandfather; you'll meet him someday if you get that far. Right now, I'm trying to figure out what's causing this mess.");
 				Task.addTask(Task.DIALOGUE, npc, "These ghosts are sneaky, but I've got them down. They're phasing in and out like something's messing with their energy.");
 				Task.addTask(Task.DIALOGUE, npc, "And I'm willing to bet it's no accident.");
 				Task.addTask(Task.DIALOGUE, npc, "But if you're serious about this, let's see if you can keep up. I don't have time to drag around dead weight.");
-				t = Task.addTask(Task.BATTLE, "");
-				t.counter = 392;
+				Task.addTask(Task.BATTLE, "", 392);
 			} else {
 				p.flag[5][1] = true;
 				Task.addTask(Task.DIALOGUE, npc, "But don't get too comfortable with that win. I'll make sure you regret it next time we battle.");
@@ -1400,17 +1385,14 @@ public class PlayerCharacter extends Entity {
 				Task.addTask(Task.DIALOGUE, npc, "Vahl'orim Dragowrath! Zhar'kor-Gzazha... vass'dar athra!");
 				Task.addTask(Task.DIALOGUE, npc, "Zharkh'nir da'kash! Gzazha, ir'thar vak'tai khar... rise'thil an'dor!");
 				Task.addTask(Task.DIALOGUE, npc, "Vahl'krim da'sharak... rise! KHAR DA'ZHAR GZAZHA!");
-				Task t = Task.addTask(Task.SHAKE, "BOOOOOOOOOOOOOOOOOOOOOM!");
-				t.counter = 300;
-				t = Task.addTask(Task.TURN, npc, "");
-				t.counter = 1;
+				Task.addTask(Task.SHAKE, "BOOOOOOOOOOOOOOOOOOOOOM!", 300);
+				Task.addTask(Task.TURN, npc, "", Task.UP);
 				Task.addTask(Task.SPOT, npc, "");
 				Task.addTask(Task.DIALOGUE, npc, "BWAHAHAHAH! The pest finally arrives! Did you really think you could follow us all the way down here and stop what's already in motion? How amusingly naive.");
 				Task.addTask(Task.DIALOGUE, npc, "You see, child, I am far more than just a 'trainer'. I am the vanguard of an empire - we are here to prepare this world for something beyond your comprehension.");
 				Task.addTask(Task.DIALOGUE, npc, "My master, Dragowrath, watches from the stars. Earth is merely the first of many worlds he'll claim, and when the Sorcerer rises, this land will be ours.");
 				Task.addTask(Task.DIALOGUE, npc, "But enough talk. You've come this far, so let's end this with a little... demonstration of power. Prepare yourself - my Pokemon and I will not hold back.");
-				t = Task.addTask(Task.BATTLE, "");
-				t.counter = 217;
+				Task.addTask(Task.BATTLE, "", 217);
 			} else if (!p.flag[5][9]) {
 				p.flag[5][9] = true;
 				Task.addTask(Task.DIALOGUE, npc, "Impressive... but don't think this victory means anything. The master plan is already in place, and there's nothing you can do to stop us.");
@@ -1419,59 +1401,32 @@ public class PlayerCharacter extends Entity {
 				Task.addTask(Task.FLASH_IN, "");
 				Task.addTask(Task.UPDATE, "");
 				Task.addTask(Task.FLASH_OUT, "");
-				Task t = Task.addTask(Task.SHAKE, "");
-				t.counter = 100;
+				Task.addTask(Task.SHAKE, "", 100);
 				
-				t = Task.addTask(Task.MOVE_CAMERA, "");
-				t.counter = 2;
-				t.start = 1;
-				t.finish = -400;
+				Task.addCameraMoveTask('y', -400, 2);
 				
-				t = Task.addTask(Task.SHAKE, "");
-				t.counter = 50;
+				Task.addTask(Task.SHAKE, "", 50);
 				
-				t = Task.addTask(Task.SLEEP, "");
-				t.counter = 30;
+				Task.addTask(Task.SLEEP, "", 30);
 				
-				t = Task.addTask(Task.MOVE_NPC, gp.npc[103][1], "");
-				t.counter = 2;
-				t.start = 1;
-				t.finish = 45 * gp.tileSize;
+				Task.addNPCMoveTask('y', 45 * gp.tileSize, gp.npc[103][1], true, 2);
+				
+				Task.addTask(Task.TURN, gp.npc[103][1], "", Task.RIGHT);
+				
+				Task.addNPCMoveTask('x', 51 * gp.tileSize, gp.npc[103][1], true, 2);
+				
+				Task.addTask(Task.TURN, gp.npc[103][1], "", Task.UP);
+				
+				Task.addNPCMoveTask('y', 41 * gp.tileSize, gp.npc[103][1], true, 2);
+				
+				Task t = Task.addTask(Task.TURN, gp.npc[103][1], "", Task.DOWN);
 				t.wipe = true;
 				
-				t = Task.addTask(Task.TURN, gp.npc[103][1], "");
-				t.counter = Task.RIGHT;
+				Task.addTask(Task.SLEEP, "", 30);
 				
-				t = Task.addTask(Task.MOVE_NPC, gp.npc[103][1], "");
-				t.counter = 2;
-				t.start = 0;
-				t.finish = 51 * gp.tileSize;
-				t.wipe = true;
+				Task.addDiagCameraMoveTask(0, 0, 45);
 				
-				t = Task.addTask(Task.TURN, gp.npc[103][1], "");
-				t.counter = Task.UP;
-				
-				t = Task.addTask(Task.MOVE_NPC, gp.npc[103][1], "");
-				t.counter = 2;
-				t.start = 1;
-				t.finish = 41 * gp.tileSize;
-				t.wipe = true;
-				
-				t = Task.addTask(Task.TURN, gp.npc[103][1], "");
-				t.counter = Task.DOWN;
-				t.wipe = true;
-				
-				t = Task.addTask(Task.SLEEP, "");
-				t.counter = 30;
-				
-				t = Task.addTask(Task.MOVE_CAMERA, "");
-				t.wipe = true;
-				t.counter = 45;
-				t.start = 0;
-				t.finish = 0;
-				
-				t = Task.addTask(Task.SLEEP, "");
-				t.counter = 30;
+				Task.addTask(Task.SLEEP, "", 30);
 				
 				Task.addTask(Task.TEXT, "A powerful presence awaits...");
 			}
@@ -1490,7 +1445,18 @@ public class PlayerCharacter extends Entity {
 				Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 				Task.addTask(Task.GIFT, "", result);
 			} else { // scott cutscene
-				Task.addTask(Task.DIALOGUE, npc, "I - I've been looking everywhere for you! You need to listen to me, something HUGE is going on!");
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addNPCMoveTask('y', 40 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, this, "", Task.LEFT);
+				Task.addNPCMoveTask('y', 42 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 11 * gp.tileSize, npc, false, 3);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addNPCMoveTask('y', 2052, gp.npc[109][5], false, 3);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 14 * gp.tileSize, npc, false, 4);
+				
+				Task.addTask(Task.DIALOGUE, npc, "You beat Rayna?! Me too! But that's not important right now. You need to listen to me, something HUGE is going on!");
 				Task.addTask(Task.DIALOGUE, npc, "It's... it's Mt. St. Joseph! Something's about to happen - an eruption, but not just any eruption!");
 				Task.addTask(Task.DIALOGUE, npc, "There's some kind of supernatural force messing with the volcano. It's all connected to Team Eclipse.");
 				Task.addTask(Task.DIALOGUE, npc, "I don't know the exact details, but...");
@@ -1653,12 +1619,11 @@ public class PlayerCharacter extends Entity {
 			Task.addTask(Task.DIALOGUE, npc, "You'll need this if you want to keep climbing higher once you defeat me. Just don't let the heights get to your head.");
 			Task.addTask(Task.DIALOGUE, npc, "Now then, you've come all this way. Might as well see if your magic can match mine.");
 			Task.addTask(Task.DIALOGUE, npc, "Step inside when you're ready. But be warned - my tricks aren't just for show.");
-			t = Task.addTask(Task.TURN, npc, "");
-			t.counter = Task.RIGHT;
-			t = Task.addTask(Task.TURN, npc, "");
-			t.counter = Task.UP;
-			t = Task.addTask(Task.TURN, npc, "");
-			t.counter = Task.LEFT;
+			
+			Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+			Task.addTask(Task.TURN, npc, "", Task.UP);
+			Task.addTask(Task.TURN, npc, "", Task.LEFT);
+			
 			Task.addTask(Task.FLASH_IN, "");
 			Task.addTask(Task.UPDATE, "");
 			Task.addTask(Task.FLASH_OUT, "");
@@ -1671,8 +1636,7 @@ public class PlayerCharacter extends Entity {
 			for (String s : message.split("\n")) {
 				Task.addTask(Task.TEXT, s);
 			}
-			Task t = Task.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?");
-			t.counter = 0;
+			Task.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?", 0);
 		}
 	}
 	
@@ -2027,18 +1991,18 @@ public class PlayerCharacter extends Entity {
 		} else if (code.equals("Ben")) {
 			p.catchPokemon(new Pokemon(238, 5, true, false));
 			SwingUtilities.getWindowAncestor(cheats).dispose();
-		} else if (code.startsWith("anyi")) {
+		} else if (code.startsWith("dex")) {
 			String[] parts = code.split(" ");
-		    if (parts.length >= 3) {
+		    if (parts.length > 1) {
 		        try {
-		            int id = Integer.parseInt(parts[1]);
-		            int amt = Integer.parseInt(parts[2]);
-		            p.bag.add(Item.getItem(id), amt);
+		            PType type = PType.valueOf(parts[1]);
+		            dexType = type;
 		            SwingUtilities.getWindowAncestor(cheats).dispose();
-		        } catch (NumberFormatException g) {
-		            // Handle invalid input (e.g., if the entered value is not a valid integer)
-		            JOptionPane.showMessageDialog(null, "Invalid item ID.");
+		        } catch (IllegalArgumentException g) {
+		            JOptionPane.showMessageDialog(null, "Dex Type reset");
+		            dexType = null;
 		        }
+		        newDex = null;
 		    }
 		} else if (code.startsWith("Shae")) {
 			String[] parts = code.split(" ");
@@ -2139,6 +2103,9 @@ public class PlayerCharacter extends Entity {
 			}
 
 			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("MVFX")) {
+			p.deleteInvalidMoves();
+			SwingUtilities.getWindowAncestor(cheats).dispose();
 		}
 	}
 
@@ -2201,5 +2168,34 @@ public class PlayerCharacter extends Entity {
 		for (Entity clerk : gp.aSetter.clerks) {
     		clerk.setItems(true, getItems());
     	}
+	}
+
+	public Pokemon[] getPokemonOfType(Pokemon[] dex) {
+		if (dexType == null) return dex;
+		if (newDex != null) return newDex;
+		ArrayList<Pokemon> result = new ArrayList<>();
+		for (Pokemon p : Player.pokedex1) {
+			if (p.type1 == dexType || p.type2 == dexType) {
+				result.add(p);
+			}
+		}
+		for (Pokemon p : Player.pokedex2) {
+			if (p.type1 == dexType || p.type2 == dexType) {
+				result.add(p);
+			}
+		}
+		for (Pokemon p : Player.pokedex3) {
+			if (p.type1 == dexType || p.type2 == dexType) {
+				result.add(p);
+			}
+		}
+		for (Pokemon p : Player.pokedex4) {
+			if (p.type1 == dexType || p.type2 == dexType) {
+				result.add(p);
+			}
+		}
+		Pokemon[] resultArray = result.toArray(new Pokemon[1]);
+		newDex = resultArray;
+		return resultArray;
 	}
 }

@@ -58,7 +58,7 @@ public class TreasureChest extends ItemObj {
 	}
 	
 	public TreasureChest(GamePanel gp, boolean open, int map) {
-		super(gp);
+		super(gp, null);
 
 		this.open = open;
 		this.map = map;

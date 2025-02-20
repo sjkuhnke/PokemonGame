@@ -442,6 +442,7 @@ public enum Move {
 	SILVER_WIND(60,100,10,0,1,0,PType.BUG,"% chance to raise all of user's stats",false,5),
 	SIMPLE_BEAM(0,100,0,0,2,0,PType.NORMAL,"Changes foe's ability to SIMPLE",false,10),
 	SING(0,55,0,0,2,0,PType.NORMAL,"Foe falls asleep",false,15),
+	SKILL_SWAP(0,100,0,0,2,0,PType.PSYCHIC,"Swaps user and foe's abilities",false,10),
 	SKULL_BASH(100,100,100,0,0,0,PType.NORMAL,"% to raise the user's Defense by 1, user must charge on the first turn",true,10),
 	SKY_ATTACK(140,90,30,1,0,0,PType.FLYING,"% chance to flinch. User must charge up on the first turn, attacks on the second. Boosted Crit rate",false,5),
 	SKY_UPPERCUT(85,90,0,0,0,0,PType.FIGHTING,"Super effective against FLYING types too",true,15),
@@ -703,10 +704,12 @@ public enum Move {
 	
 	public double getbp(Pokemon user, Pokemon foe) {
 		PType type = mtype;
-		if (this == Move.HIDDEN_POWER) type = user.determineHPType();
-		if (this == Move.RETURN) type = user.determineHPType();
-		if (this == Move.WEATHER_BALL) type = user.determineWBType();
-		if (this == Move.TERRAIN_PULSE) type = user.determineTPType();
+		if (user != null) {
+			if (this == Move.HIDDEN_POWER) type = user.determineHPType();
+			if (this == Move.RETURN) type = user.determineHPType();
+			if (this == Move.WEATHER_BALL) type = user.determineWBType();
+			if (this == Move.TERRAIN_PULSE) type = user.determineTPType();
+		}
 		if (basePower == -1) {
 			if (this == Move.STORED_POWER && foe == null) return 20;
 			boolean faster = user == null || foe == null ? true : user.getFaster(foe, 0, 0) == user;

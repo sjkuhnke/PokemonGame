@@ -987,7 +987,8 @@ public class UI extends AbstractUI {
 
 	private void drawNPCMove() {
 		boolean moveX = currentTask.start % 2 == 0;
-		int pos = moveX ? currentTask.e.worldX : currentTask.e.worldY;
+		Entity target = currentTask.e;
+		int pos = moveX ? target.worldX : target.worldY;
 		
 		int direction = Integer.signum(currentTask.finish - pos);
 		boolean finished = (direction > 0 && pos >= currentTask.finish) ||
@@ -995,14 +996,25 @@ public class UI extends AbstractUI {
 						   (direction == 0);
 		
 		if (finished) {
+			target.spriteNum = 1;
 			currentTask = null;
 		} else {
 			if (moveX) {
-				currentTask.e.worldX += direction * currentTask.counter;
+				target.worldX += direction * currentTask.counter;
 				if (currentTask.wipe) gp.offsetX -= direction * currentTask.counter;
 			} else {
-				currentTask.e.worldY += direction * currentTask.counter;
+				target.worldY += direction * currentTask.counter;
 				if (currentTask.wipe) gp.offsetY -= direction * currentTask.counter;
+			}
+			if (target.walkable) {
+				target.spriteCounter++;
+				if (target.spriteCounter > 5) {
+					target.spriteNum++;
+					if (target.spriteNum > 4) {
+						target.spriteNum = 1;
+					}
+					target.spriteCounter = 0;
+				}
 			}
 		}
 		
@@ -1808,6 +1820,7 @@ public class UI extends AbstractUI {
 		int textHeight = (int) (gp.tileSize * 0.75);
 		
 		Pokemon[] dex = gp.player.p.getDexType(dexType);
+		dex = gp.player.getPokemonOfType(dex);
 		int maxShow = gp.player.p.getDexShowing(dex);
 		for (int i = dexNum[dexType]; i < dexNum[dexType] + 11; i++) {
 			int textY = y + gp.tileSize / 2;
@@ -3399,6 +3412,7 @@ public class UI extends AbstractUI {
 				
 				drawLightOverlay = gp.determineLightOverlay();
 			}
+			gp.player.spriteNum = 1;
 			gp.player.p.surf = false;
 			gp.player.p.lavasurf = false;
 			

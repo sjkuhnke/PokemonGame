@@ -235,9 +235,22 @@ public class Task {
 		}
 	}
 	
+	public static Task addTask(int type, String string, int counter) {
+		Task t = addTask(type, string);
+		t.counter = counter;
+		return t;
+	}
+	
 	public static Task addTask(int type, Entity e, String string) {
 		Task t = addTask(type, string);
 		t.e = e;
+		return t;
+	}
+	
+	public static Task addTask(int type, Entity e, String string, int counter) {
+		Task t = addTask(type, string);
+		t.e = e;
+		t.counter = counter;
 		return t;
 	}
 	
@@ -342,5 +355,28 @@ public class Task {
 		} else {
 			gp.ui.tasks.add(index, t);
 		}
+	}
+	
+	public static void addCameraMoveTask(char m, int dest, int frameInc) {
+		Task t = addTask(MOVE_CAMERA, "");
+		t.start = m == 'x' ? 0 : 1;
+		t.finish = dest;
+		t.counter = frameInc;
+	}
+	
+	public static void addDiagCameraMoveTask(int destX, int destY, int frames) {
+		Task t = addTask(MOVE_CAMERA, "");
+		t.start = destX;
+		t.finish = destY;
+		t.counter = frames;
+		t.wipe = true;
+	}
+	
+	public static void addNPCMoveTask(char m, int dest, Entity target, boolean follow, int frameInc) {
+		Task t = addTask(MOVE_NPC, target, "");
+		t.start = m == 'x' ? 0 : 1;
+		t.finish = dest;
+		t.counter = frameInc;
+		t.wipe = follow;
 	}
 }

@@ -762,20 +762,33 @@ public class Main {
 			
 			for (PType type : sortedTypes) {
 				
-				writer.write("\n===============\n");
-	            writer.write(type.toString() + "\n");
-	            writer.write("===============\n");
+				writer.write("=============================================================================================================\n");
+	            writer.write("                                                  " + type.toString() + "\n");
+	            writer.write("=============================================================================================================\n");
 
 	            List<Move> typeMoves = movesByType.get(type);
 	            for (Move m : typeMoves) {
-            		String result = m.toString() + " : ";
-					result += m.getCategory() + " / ";
-					result += m.formatbp(null, null) + " / ";
-					result += m.getAccuracy() + " / ";
-					result += m.pp + " PP : ";
-					result += m.getDescription() + "\n";
-					
-					writer.write(result);
+	            	String move = " " + m.toString();
+	            	while (move.length() < 20) {
+	            		move += " ";
+	            	}
+	            	String cat = " " + m.getCategory();
+	            	while (cat.length() < 10) {
+	            		cat += " ";
+	            	}
+	            	String bp = " " + m.formatbp(null, null);
+	            	while (bp.length() < 5) {
+	            		bp += " ";
+	            	}
+	            	String acc = " " + m.getAccuracy();
+	            	while (acc.length() < 5) {
+	            		acc += " ";
+	            	}
+	            	String pp = " " + m.pp + " PP ";
+	            	while (pp.length() < 7) {
+	            		pp += " ";
+	            	}
+					writer.write(String.format("%s|%s|%s|%s|%s: %s\n", move, cat, bp, acc, pp, m.getDescription()));
 	            }
 			}
 			

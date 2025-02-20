@@ -5,11 +5,9 @@ import pokemon.*;
 
 public class NPC_Block extends Entity {
 	
-	boolean more;
-	
 	public NPC_Block(GamePanel gp, String name, String[] message, boolean more, int flag, String altDialogue) {
 		super(gp, name);
-		this.setDirection("down");;
+		this.setDirection("down");
 		
 		this.flag = flag;
 		this.more = more;

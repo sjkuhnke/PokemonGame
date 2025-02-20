@@ -1587,6 +1587,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 			return;
 		}
 		
+		if (this.vStatuses.contains(Status.TORMENTED) && move == this.lastMoveUsed) {
+			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the torment!");
+			this.lastMoveUsed = null;
+			this.impressive = false;
+			this.rollCount = 1;
+			return;
+		}
+		
 		if (this.vStatuses.contains(Status.MUTE) && Move.getSound().contains(move)) {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the throat chop!");
 			this.lastMoveUsed = null;
@@ -4172,6 +4180,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(this, 4, 2, foe, announce);
 		} else if (announce && move == Move.SING) {
 			foe.sleep(true, this);
+		} else if (move == Move.SKILL_SWAP) {
+			Ability a = foe.ability;
+			foe.ability = this.ability;
+			this.ability = a;
+			if (announce) Task.addTask(Task.TEXT, this.nickname + " swapped abilities with " + foe.nickname + "!");
+			this.swapIn(foe, false);
+			foe.swapIn(this, false);
 		} else if (move == Move.SMOKESCREEN) {
 			stat(foe, 5, -1, this, announce);
 //		} else if (move == Move.STARE) {
@@ -8489,6 +8504,22 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} while (Pokemon.getEvolveString(id - 1) != null || Pokemon.getEvolveString(id - 2) == null || Pokemon.getEvolveString(id - 2).contains(Pokemon.getName(id)) || Pokemon.getCatchRate(id) <= 5);
 		
 		return id;
+	}
+
+	public void validateMoveset() {
+		Moveslot[] newMoveset = new Moveslot[moveset.length];
+		int index = 0;
+		boolean allNull = true;
+		
+		for (Moveslot m : moveset) {
+			if (m != null) {
+				newMoveset[index++] = m;
+				allNull = false;
+			}
+		}
+		if (allNull) moveset[0] = new Moveslot(Move.PROTECT);
+		
+		moveset = newMoveset;
 	}
 	
 }
