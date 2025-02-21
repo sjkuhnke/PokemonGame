@@ -135,6 +135,7 @@ MAKE MAGIC TOMB'S SECONDARY EFFECT TWINKLE TACKLE'S and can never miss, make 80 
 -Sparkly Swirl
 -MAKE SWIFT NORMAL TYPE
 -Twinkle Tackle
+-Magic Crash
 
 *Light Drain: Special/75/100/10 Heals user for 50% of damage dealt
 Chromo Beam: Special/80/100/5 30% chance to double base power
