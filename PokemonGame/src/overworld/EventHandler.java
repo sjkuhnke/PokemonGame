@@ -99,6 +99,9 @@ public class EventHandler {
 			if (hit(10,22,40)) teleport(11, 91, 49,false);
 			if (hit(11,92,49)) teleport(10, 23, 40,false);
 			
+			// Cutscene with Fred 1
+			if (!gp.player.p.flag[1][0] && hit(11,39,64)) gp.player.interactNPC(gp.npc[11][7]);
+			
 			// Route 25 gate
 			if (hit(11,24,17)) teleport(12, 31, 45,false);
 			if (hit(12,31,46)) teleport(11, 24, 18,false);

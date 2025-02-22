@@ -66,6 +66,7 @@ public class Task {
 	private static final int SHINY = 52;
 	public static final int PAYOUT = 53;
 	public static final int PARLAY = 54;
+	public static final int INTERACTIVE = 55;
 	
 	public static GamePanel gp;
 	

@@ -26,7 +26,9 @@ public class NPC_Block extends Entity {
 			super.speak(mode);
 		} else {
 			gp.setTaskState();
-			Task.addTask(Task.DIALOGUE, this, dialogues[dialogueIndex]);
+			if (!dialogues[dialogueIndex].isEmpty()) {
+				Task.addTask(Task.DIALOGUE, this, dialogues[dialogueIndex]);
+			}
 		}
 	}
 }

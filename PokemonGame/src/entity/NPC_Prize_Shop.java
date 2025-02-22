@@ -106,7 +106,7 @@ public class NPC_Prize_Shop extends Entity {
 		
 		List<Pair<Item, Integer>> items = Arrays.asList(
 			// win TMs
-			new Pair<>(Item.TM59, 10),
+			new Pair<>(Item.TM67, 10),
 			new Pair<>(Item.TM39, 25),
 			new Pair<>(Item.TM96, 40),
 			new Pair<>(Item.TM21, 60),

@@ -576,6 +576,10 @@ public class UI extends AbstractUI {
 			gp.gameState = currentTask.counter;
 			currentTask = null;
 			break;
+		case Task.INTERACTIVE:
+			gp.player.interactWith(currentTask.e, currentTask.counter, true);
+			currentTask = null;
+			break;
 		}
 	}
 
@@ -1008,7 +1012,7 @@ public class UI extends AbstractUI {
 			}
 			if (target.walkable) {
 				target.spriteCounter++;
-				if (target.spriteCounter > 5) {
+				if (target.spriteCounter > (target instanceof PlayerCharacter ? 8 : 5)) {
 					target.spriteNum++;
 					if (target.spriteNum > 4) {
 						target.spriteNum = 1;

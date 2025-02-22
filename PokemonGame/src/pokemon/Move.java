@@ -51,7 +51,7 @@ public enum Move {
 	BEEFY_BASH(100,85,50,0,0,-1,PType.FIGHTING,"% chance to paralyze foe, moves last",true,5),
 	BELCH(120,100,0,0,1,0,PType.POISON,"Only works on the first turn out",false,10),
 	BELLY_DRUM(0,1000,0,0,2,0,PType.NORMAL,"Maximizes Attack at the cost of 1/2 HP",false,10),
-	BIND(15,85,100,0,0,0,PType.NORMAL,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,20),
+	BIND(15,85,100,0,0,0,PType.NORMAL,"% to spin foe for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,20),
 	BITE(60,100,30,0,0,0,PType.DARK,"% chance of causing foe to flinch",true,20),
 	BITTER_MALICE(75,100,30,0,1,0,PType.GHOST,"% chance to Frostbite foe",false,10),
 	BLACK_HOLE_ECLIPSE(140,100,100,0,1,0,PType.GALACTIC,"% chance to raise user's Sp.Def by 1, user must charge on the first turn",false,5),
@@ -174,7 +174,7 @@ public enum Move {
 	FIRE_BLAST(110,85,10,0,1,0,PType.FIRE,"% chance to Burn foe",false,5),
 	FIRE_FANG(65,95,10,0,0,0,PType.FIRE,"% of flinching and/or Burning foe",true,15),
 	FIRE_PUNCH(75,100,20,0,0,0,PType.FIRE,"% to Burn foe",true,15),
-	FIRE_SPIN(35,85,100,0,1,0,PType.FIRE,"% to spin non-FIRE foes for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
+	FIRE_SPIN(35,85,100,0,1,0,PType.FIRE,"% to spin non-FIRE foes for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
 	FIRST_IMPRESSION(90,100,0,0,0,1,PType.BUG,"Always attacks first, fails after the first turn a user is out in battle",true,10),
 	FISSURE(0,30,0,0,0,0,PType.GROUND,"If this move hits, it always K.Os foe",false,5),
 	FLAIL(-1,100,0,0,0,0,PType.NORMAL,"Power is higher the lower HP the user has",true,15),
@@ -188,7 +188,7 @@ public enum Move {
 	FLASH_DARTS(25,90,0,1,0,0,PType.LIGHT,"Hits 2-5 times, each hit has a boosted crit rate",false,15),
 	FLASH_RAY(40,100,50,0,1,0,PType.LIGHT,"% chance to lower foe's Accuracy by 1",false,25),
 	FLATTER(0,100,0,0,2,0,PType.DARK,"Confuses foe, and raises their Sp.Atk by 2",false,15),
-	FLOODLIGHT(0,1000,0,0,2,0,PType.LIGHT,"Lays webs on opponents side. This will cause a grounded foe switching in to have their Speed lowered by 1 stage",false,10),
+	FLOODLIGHT(0,1000,0,0,2,0,PType.LIGHT,"Sets a floodlight on opponents side. This will cause a foe switching in to have their Evasion lowered by 1 stage",false,10),
 	FLIP_TURN(60,100,0,0,0,0,PType.WATER,"Causes user to switch out after use",true,10),
 	FLY(100,100,0,0,0,0,PType.FLYING,"Goes into the air on the first turn, and attacks on the second",true,5),
 	FOCUS_BLAST(120,70,10,0,1,0,PType.FIGHTING,"% to lower foe's Sp.Def",false,5),
@@ -270,7 +270,7 @@ public enum Move {
 	ICY_WIND(55,95,100,0,1,0,PType.ICE,"% chance to lower foe's Speed by 1",false,15),
 	INCINERATE(60,100,100,0,1,0,PType.FIRE,"% to burn up foe's berry",false,15),
 	INFERNO(100,50,100,0,1,0,PType.FIRE,"% chance to Burn foe",false,5),
-	INFESTATION(20,100,100,0,1,0,PType.BUG,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,15),
+	INFESTATION(20,100,100,0,1,0,PType.BUG,"% to spin foe for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,15),
 	INGRAIN(0,1000,0,0,2,0,PType.GRASS,"Restores a small amount of HP at the end of every turn, user can't switch out",false,15),
 	IRON_BLAST(85,95,30,0,1,0,PType.STEEL,"% chance to cause foe to Flinch",false,20),
 	IRON_DEFENSE(0,1000,0,0,2,0,PType.STEEL,"Raises user's Defense by 2",false,10),
@@ -494,7 +494,7 @@ public enum Move {
 	SPARKLING_WATER(0,1000,0,0,2,0,PType.WATER,"Raises Sp.Def by 2. Turns into Sparkling Aria when used by Kissyfishy-D",false,15),
 	SPARKLY_SWIRL(70,100,10,0,1,0,PType.MAGIC,"% chance to lower all of foe's stats by 1",false,15),
 	SPECTRAL_THIEF(90,100,100,0,0,0,PType.GHOST,"% to steal any stat boosts foe has",true,10),
-	SPELLBIND(0,100,0,0,2,0,PType.MAGIC,"Traps non-MAGIC foe for 2-5 turns, lowers foe's Def and SpD every turn",false,10), // TODO
+	SPELLBIND(0,100,0,0,2,0,PType.MAGIC,"Traps non-MAGIC foe for 4-5 turns, lowers foe's Def and SpD every turn",false,10), // TODO
 	SPIKE_CANNON(25,100,0,0,0,0,PType.NORMAL,"Hits 2-5 times",false,15),
 	SPIKES(0,1000,0,0,2,0,PType.GROUND,"Lays spikes on the opponents side. Depending on the layers laid (1-3) will damage any grounded foe (1/8, 1/6, 1/4) upon switch-in",false,20),
 	SPIKY_SHIELD(0,1000,0,0,2,4,PType.GRASS,"User protects itself, can't be used in succession. Damages foe if they make contact",false,10),
@@ -522,7 +522,7 @@ public enum Move {
 	SUBMISSION(80,90,0,0,0,0,PType.FIGHTING,"User takes 1/4 of damage inflicted as recoil",true,20),
 	SUCKER_PUNCH(70,100,0,0,0,2,PType.DARK,"Always attacks first. Fails if foe didn't use an attacking move",true,5),
 	SUMMIT_STRIKE(70,95,100,0,0,0,PType.FIGHTING,"% to lower foe's Defense by one stage. 30% to flinch foe",true,15),
-	SUNNY_BURST(80,100,100,0,1,0,PType.LIGHT,"Turns weather to SUNNY",false,5),
+	SUNNY_BURST(80,100,100,0,1,0,PType.LIGHT,"% to turn weather to SUNNY",false,5),
 	SUNNY_DAY(0,1000,0,0,2,0,PType.FIRE,"Changes the weather to SUNNY for 5 turns",false,5),
 	SUNNY_DOOM(80,100,0,0,1,0,PType.LIGHT,"If this attack faints foe, causes weather to turn SUNNY",false,5),
 	SUNSTEEL_STRIKE(100,100,0,0,0,0,PType.STEEL,"A normal attack",true,5),
@@ -587,7 +587,7 @@ public enum Move {
 	VINE_WHIP(45,100,0,0,0,0,PType.GRASS,"A normal attack",true,25),
 	VISE_GRIP(55,100,0,0,0,0,PType.NORMAL,"A normal attack",true,30),
 	VITAL_THROW(60,1000,0,0,0,-1,PType.FIGHTING,"This attack never misses, but goes last",false,10),
-	VITRIOLIC_ACID(60,100,100,0,1,0,PType.MAGIC,"% chance to decrease foe's crit stage by 1",false,20),
+	VITRIOLIC_HEX(60,100,100,0,1,0,PType.MAGIC,"% chance to decrease foe's crit stage by 1",false,20),
 	VOLT_SWITCH(70,100,0,0,1,0,PType.ELECTRIC,"Causes user to switch out after use",false,10),
 	VOLT_TACKLE(120,100,10,0,0,0,PType.ELECTRIC,"% to Paralyze foe. User takes 1/3 of damage dealt as recoil",true,5),
 	WAKE$UP_SLAP(-1,100,0,0,0,0,PType.FIGHTING,"If foe is asleep, power is doubled, but the foe wakes up",true,10),
@@ -603,7 +603,7 @@ public enum Move {
 	WAVE_CRASH(120,100,0,0,0,0,PType.WATER,"User takes 1/3 of damage dealt as recoil",true,10),
 	WEATHER_BALL(-1,100,0,0,1,0,PType.NORMAL,"Type changes to match the current weather, double BP if type of the move changes",false,10),
 	WHIP_SMASH(100,100,100,0,0,0,PType.NORMAL,"% to lower user's Defense by 1",true,5),
-	WHIRLPOOL(35,95,100,0,1,0,PType.WATER,"% to spin non-WATER foes for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
+	WHIRLPOOL(35,95,100,0,1,0,PType.WATER,"% to spin non-WATER foes for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
 	WHIRLWIND(0,1000,0,0,2,-6,PType.FLYING,"Forces foe to switch out to a random teammate, always goes last",false,20),
 	WILL$O$WISP(0,85,0,0,2,0,PType.FIRE,"Burns foe, FIRE Pokemon can't miss this move",false,15),
 	WING_ATTACK(60,100,0,0,0,0,PType.FLYING,"A normal attack",true,35),
@@ -611,7 +611,7 @@ public enum Move {
 	WITHDRAW(0,1000,0,0,2,0,PType.WATER,"Raises user's Defense by 1",false,35),
 	WOOD_HAMMER(120,100,0,0,0,0,PType.GRASS,"User takes 1/3 of damage inflicted",true,15),
 	WORRY_SEED(0,100,0,0,2,0,PType.GRASS,"Changes foe's ability to INSOMNIA",false,10),
-	WRAP(15,90,100,0,0,0,PType.NORMAL,"% to spin foe for 2-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,20),
+	WRAP(15,90,100,0,0,0,PType.NORMAL,"% to spin foe for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,20),
 	X$SCISSOR(80,100,0,1,0,0,PType.BUG,"Boosted Crit rate",true,15),
 	YAWN(0,1000,0,0,2,0,PType.NORMAL,"Causes foe to fall asleep next turn",false,10),
 	ZAP_CANNON(120,50,100,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false,5),
@@ -1142,7 +1142,7 @@ public enum Move {
 		result.add(BIND);
 		result.add(WRAP);
 		result.add(INFESTATION);
-		
+		result.add(SPELLBIND);	
 		if (result.contains(this)) {
 			return true;
 		}
