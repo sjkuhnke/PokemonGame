@@ -386,29 +386,7 @@ public class PlayerCharacter extends Entity {
 			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
 			if (iTileIndex != 999) {
 				InteractiveTile target = gp.iTile[gp.currentMap][iTileIndex];
-				if (target instanceof Cut_Tree) {
-					interactCutTree(iTileIndex);
-				} else if (target instanceof Rock_Smash) {
-					interactRockSmash(iTileIndex);
-				} else if (target instanceof Vine_Crossable) {
-					interactVines(iTileIndex);
-				} else if (target instanceof Pit) {
-					interactPit(iTileIndex);
-				} else if (target instanceof Whirlpool) {
-					interactWhirlpool(iTileIndex);
-				} else if (target instanceof Rock_Climb) {
-					interactRockClimb(iTileIndex);
-				} else if (target instanceof Starter_Machine) {
-					interactStarterMachine(iTileIndex);
-				} else if (target instanceof Locked_Door) {
-					interactLockedDoor(iTileIndex);
-				} else if (target instanceof Fuse_Box) {
-					interactFuseBox(iTileIndex);
-				} else if (target instanceof Snowball) {
-					interactSnowball(iTileIndex);
-				} else if (target instanceof IceBlock) {
-					interactIceBlock(iTileIndex);
-				}
+				interactWith(target, iTileIndex, p.ghost);
 			}
 		}
 		if (keyH.aPressed) {
@@ -423,6 +401,32 @@ public class PlayerCharacter extends Entity {
 					}
 				}
 			}
+		}
+	}
+
+	public void interactWith(Entity target, int index, boolean override) {
+		if (target instanceof Cut_Tree) {
+			interactCutTree(index, override);
+		} else if (target instanceof Rock_Smash) {
+			interactRockSmash(index, override);
+		} else if (target instanceof Vine_Crossable) {
+			interactVines(index, override);
+		} else if (target instanceof Pit) {
+			interactPit(index, override);
+		} else if (target instanceof Whirlpool) {
+			interactWhirlpool(index, override);
+		} else if (target instanceof Rock_Climb) {
+			interactRockClimb(index, override);
+		} else if (target instanceof Starter_Machine) {
+			interactStarterMachine(index);
+		} else if (target instanceof Locked_Door) {
+			interactLockedDoor(index);
+		} else if (target instanceof Fuse_Box) {
+			interactFuseBox(index);
+		} else if (target instanceof Snowball) {
+			interactSnowball(index, override);
+		} else if (target instanceof IceBlock) {
+			interactIceBlock(index, override);
 		}
 	}
 
@@ -460,7 +464,7 @@ public class PlayerCharacter extends Entity {
 		} else if (entity.altDialogue != null) {
 			gp.setTaskState();
 			
-			entity.speak(2);
+			entity.speak(1);
 		}
 	}
 	
@@ -809,6 +813,59 @@ public class PlayerCharacter extends Entity {
 			Task.addTask(Task.UPDATE, "");
 			Task.addTask(Task.FLASH_OUT, "");
 			p.flag[1][3] = true;
+		} else if (gp.currentMap == 11) { // fred 1
+			if (npc.worldX < 39 * gp.tileSize || npc.worldY > gp.tileSize * 65) {
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				if (worldX < 39 * gp.tileSize) {
+					Task.addTask(Task.TURN, this, "", Task.RIGHT);
+				} else {
+					Task.addTask(Task.TURN, this, "", Task.LEFT);
+				}
+				Task.addNPCMoveTask('x', 39 * gp.tileSize, this, false, 1);
+				if (worldY < 64 * gp.tileSize) {
+					Task.addTask(Task.TURN, this, "", Task.DOWN);
+					Task.addNPCMoveTask('y', 64 * gp.tileSize, this, false, 1);
+				}
+				Task.addTask(Task.TURN, this, "", Task.LEFT);
+				Task.addNPCMoveTask('x', 32 * gp.tileSize, npc, false, 6);
+				Task.addTask(Task.TURN, npc, "", Task.UP);
+				Task.addNPCMoveTask('y', 65 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 33 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, npc, "", Task.UP);
+				Task.addNPCMoveTask('y', 64 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 34 * gp.tileSize, npc, false, 2);
+				Task.addTask(Task.SLEEP, npc, "", 60);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, npc, "", 30);
+				Task.addTask(Task.TURN, gp.npc[11][9], "", Task.UP);
+				Task.addTask(Task.SLEEP, npc, "", 30);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, npc, "", 60);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, npc, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, npc, "", 15);
+				Task.addTask(Task.SPOT, npc, "");
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addNPCMoveTask('y', 66 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, this, "", Task.DOWN);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 39 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, npc, "", Task.UP);
+				Task.addTask(Task.SLEEP, npc, "", 30);
+				Task.addTask(Task.INTERACTIVE, gp.iTile[11][0], "", 0);
+				Task.addTask(Task.SLEEP, npc, "", 15);
+				Task.addNPCMoveTask('y', 65 * gp.tileSize, npc, false, 2);
+				Task.addTask(Task.SLEEP, npc, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "Heh, you must be pretty tough to make it this far, but don't get too full of yourself.");
+				Task.addTask(Task.DIALOGUE, npc, "I'll gladly put an end to your winning streak right here.");
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "Back for more, huh? Go back home, bud.");
+			}
+			Task.addTask(Task.DIALOGUE, npc, "You're just another weak trainer in my way.");
+			Task.addTask(Task.BATTLE, "", 34);
 		} else if (gp.currentMap == 13) {
 			if (worldY / gp.tileSize >= 59) {
 				Task.addTask(Task.DIALOGUE, npc, "Wait, you're his kid? Oh my goodness, your father has told me all about you. Did you come here trying to challenge the gym?");
@@ -937,8 +994,28 @@ public class PlayerCharacter extends Entity {
 				Task.addTask(Task.DIALOGUE, npc, "Hold on, I can get them up for a little longer.");
 				Task.addTask(Task.DIALOGUE, npc, "...");
 				Task.addTask(Task.DIALOGUE, npc, "Alright, keep at it champ.");
-			} else {
+			} else if (!p.flag[1][22]) {
 				Task.addTask(Task.DIALOGUE, npc, "Have you seen any new Electric forms? Can I take a look?");
+				Pokemon[] eDex = p.getDexType(2);
+				int amt = 0;
+				for (Pokemon po : eDex) {
+					if (p.pokedex[po.id] == 2) amt++;
+				}
+				if (!p.flag[1][21] && amt >= 3) {
+					Task.addTask(Task.DIALOGUE, npc, "Wow! You've already seen " + amt + " forms!");
+					Task.addTask(Task.DIALOGUE, npc, "Here, I have a special Electric-type move as a gift for helping me out!");
+					Task t = Task.addTask(Task.ITEM, "");
+					t.item = Item.TM32;
+					p.flag[1][21] = true;
+				}
+				if (amt >= Pokemon.POKEDEX_METEOR_SIZE) {
+					// give master ball
+					Task.addTask(Task.DIALOGUE, npc, "...Oh my god! You did it! You completed the Electric form Pokedex!");
+					Task.addTask(Task.DIALOGUE, npc, "I have here an extremely rare item, use it wisely!");
+					p.flag[1][22] = true;
+				}
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "How's life, Finn? You see your father recently?");
 			}
 			
 		} else if (gp.currentMap == 32 && !p.flag[1][17]) {
@@ -1640,8 +1717,8 @@ public class PlayerCharacter extends Entity {
 		}
 	}
 	
-	private void interactCutTree(int i) {
-		if (p.hasMove(Move.CUT)) {
+	private void interactCutTree(int i, boolean override) {
+		if (override || p.hasMove(Move.CUT)) {
 			gp.keyH.wPressed = false;
 			Cut_Tree temp = (Cut_Tree) gp.iTile[gp.currentMap][i];
 			gp.iTile[gp.currentMap][i] = new Tree_Stump(gp);
@@ -1655,8 +1732,8 @@ public class PlayerCharacter extends Entity {
 		
 	}
 	
-	private void interactRockSmash(int i) {
-		if (p.hasMove(Move.ROCK_SMASH)) {
+	private void interactRockSmash(int i, boolean override) {
+		if (override || p.hasMove(Move.ROCK_SMASH)) {
 			gp.keyH.wPressed = false;
 			generateParticle(gp.iTile[gp.currentMap][i]);
 			gp.iTile[gp.currentMap][i] = null;
@@ -1666,8 +1743,8 @@ public class PlayerCharacter extends Entity {
 		
 	}
 	
-	private void interactVines(int i) {
-		if (p.hasMove(Move.VINE_CROSS)) {
+	private void interactVines(int i, boolean override) {
+		if (override || p.hasMove(Move.VINE_CROSS)) {
 			gp.keyH.wPressed = false;
 			Vine_Crossable temp = (Vine_Crossable) gp.iTile[gp.currentMap][i];
 			gp.iTile[gp.currentMap][i] = new Vine(gp);
@@ -1679,8 +1756,8 @@ public class PlayerCharacter extends Entity {
 		}
 	}
 	
-	private void interactPit(int i) {
-		if (p.hasMove(Move.SLOW_FALL)) {
+	private void interactPit(int i, boolean override) {
+		if (override || p.hasMove(Move.SLOW_FALL)) {
 			gp.keyH.wPressed = false;
 			Pit pit = (Pit) gp.iTile[gp.currentMap][i];
 			gp.eHandler.teleport(pit.mapDest, pit.xDest, pit.yDest, false);
@@ -1691,8 +1768,8 @@ public class PlayerCharacter extends Entity {
 		
 	}
 	
-	private void interactWhirlpool(int i) {
-		if (p.hasMove(Move.WHIRLPOOL)) {
+	private void interactWhirlpool(int i, boolean override) {
+		if (override || p.hasMove(Move.WHIRLPOOL)) {
 			gp.keyH.wPressed = false;
 			int offset = gp.tileSize / 2;
 			int x = gp.iTile[gp.currentMap][i].worldX + offset;
@@ -1722,8 +1799,8 @@ public class PlayerCharacter extends Entity {
 		
 	}
 	
-	private void interactRockClimb(int i) {
-		if (p.hasMove(Move.ROCK_CLIMB)) {
+	private void interactRockClimb(int i, boolean override) {
+		if (override || p.hasMove(Move.ROCK_CLIMB)) {
 			gp.keyH.wPressed = false;
 			Rock_Climb rc = (Rock_Climb) gp.iTile[gp.currentMap][i];
 			int offset = gp.tileSize / 2;
@@ -1849,8 +1926,8 @@ public class PlayerCharacter extends Entity {
 		}
 	}
 	
-	private void interactSnowball(int i) {
-		if (p.bag.contains(Item.SHOVEL)) {
+	private void interactSnowball(int i, boolean override) {
+		if (override || p.bag.contains(Item.SHOVEL)) {
 			gp.keyH.wPressed = false;
 			generateParticle(gp.iTile[gp.currentMap][i]);
 			gp.iTile[gp.currentMap][i] = null;
@@ -1860,8 +1937,8 @@ public class PlayerCharacter extends Entity {
 		
 	}
 	
-	private void interactIceBlock(int i) {
-		if (p.bag.contains(Item.ICE_PICK)) {
+	private void interactIceBlock(int i, boolean override) {
+		if (override || p.bag.contains(Item.ICE_PICK)) {
 			gp.keyH.wPressed = false;
 			generateParticle(gp.iTile[gp.currentMap][i]);
 			gp.iTile[gp.currentMap][i] = null;

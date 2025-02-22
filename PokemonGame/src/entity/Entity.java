@@ -147,8 +147,6 @@ public class Entity {
 			dialogueIndex++;
 		} else if (mode == 1) {
 			gp.setTaskState();
-			Task.addTask(Task.DIALOGUE, this, altDialogue);
-		} else if (mode == 2) {
 			String[] altDialogues = altDialogue.split("\n");
 			for (String s : altDialogues) {
 				Task.addTask(Task.DIALOGUE, this, s);

@@ -2857,7 +2857,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.BIND && !foe.isFainted()) {
 			if (!foe.vStatuses.contains(Status.SPUN)) {
 				foe.vStatuses.add(Status.SPUN);
-				foe.spunCount = (((int) (Math.random() * 4)) + 2);
+				foe.spunCount = (((int) (Math.random() * 2)) + 4);
 				Task.addTask(Task.TEXT, foe.nickname + " was wrapped by " + this.nickname + "!");
 			}
 		} else if (move == Move.BITE && first) {
@@ -3015,7 +3015,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (!foe.vStatuses.contains(Status.SPUN) && !foe.isFainted()) {
 				if (foe.type1 != PType.FIRE && foe.type2 != PType.FIRE) {
 					foe.vStatuses.add(Status.SPUN);
-					foe.spunCount = (((int) (Math.random() * 4)) + 2);
+					foe.spunCount = (((int) (Math.random() * 2)) + 4);
 					Task.addTask(Task.TEXT, foe.nickname + " was trapped in a fiery vortex!");
 				}
 			}
@@ -3023,14 +3023,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (!foe.vStatuses.contains(Status.SPUN) && !foe.isFainted()) {
 				if (foe.type1 != PType.WATER && foe.type2 != PType.WATER) {
 					foe.vStatuses.add(Status.SPUN);
-					foe.spunCount = (((int) (Math.random() * 4)) + 2);
+					foe.spunCount = (((int) (Math.random() * 2)) + 4);
 					Task.addTask(Task.TEXT, foe.nickname + " was trapped in a whirlpool vortex!");
 				}
 			}
 		} else if (move == Move.WRAP) {
 			if (!foe.vStatuses.contains(Status.SPUN) && !foe.isFainted()) {
 				foe.vStatuses.add(Status.SPUN);
-				foe.spunCount = (((int) (Math.random() * 4)) + 2);
+				foe.spunCount = (((int) (Math.random() * 2)) + 4);
 				Task.addTask(Task.TEXT, foe.nickname + " was wrapped by " + this.nickname + "!");
 			}
 //		} else if (move == Move.FIRE_TAIL) {
@@ -3144,7 +3144,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}  else if (move == Move.INFESTATION) {
 			if (!foe.vStatuses.contains(Status.SPUN)) {
 				foe.vStatuses.add(Status.SPUN);
-				foe.spunCount = (((int) (Math.random() * 4)) + 2);
+				foe.spunCount = (((int) (Math.random() * 2)) + 4);
 				Task.addTask(Task.TEXT, foe.nickname + " was infested by " + this.nickname + "!");
 			}
 		} else if (move == Move.IRON_BLAST && first) {

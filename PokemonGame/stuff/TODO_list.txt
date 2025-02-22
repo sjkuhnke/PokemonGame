@@ -133,7 +133,6 @@ MAKE MAGIC TOMB'S SECONDARY EFFECT TWINKLE TACKLE'S and can never miss, make 80 
 -Magic Blast
 -Sparkle Strike
 -Sparkly Swirl
--MAKE SWIFT NORMAL TYPE
 -Twinkle Tackle
 -Magic Crash
 
@@ -158,3 +157,8 @@ Radiant Break: Spirit Break rename
 -Luster Purge
 -Moonblast
 -Play Rough
+
+Search all removed moves and redo the trainer/set movesets
+Go through every Pokemon and deside if they should learn the removed TM moves by level up
+Search all removed TM moves and redo the trainer/set movesets
+Quickly scroll through all Pokemon with edited TM/level up learnsets and search for them in trainers.csv and sets.txt
