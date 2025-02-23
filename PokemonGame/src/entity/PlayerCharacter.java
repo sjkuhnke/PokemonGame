@@ -472,7 +472,7 @@ public class PlayerCharacter extends Entity {
 		gp.setTaskState();
 		
 		Pokemon foe = gp.encounterPokemon(area, type, p.random);
-		Task.addStartBattleTask(-2, -1, foe);
+		Task.addStartBattleTask(-2, -1, foe, type);
 	}
 	
 	public void startFish(String area) {
@@ -1009,9 +1009,10 @@ public class PlayerCharacter extends Entity {
 					p.flag[1][21] = true;
 				}
 				if (amt >= Pokemon.POKEDEX_METEOR_SIZE) {
-					// give master ball
 					Task.addTask(Task.DIALOGUE, npc, "...Oh my god! You did it! You completed the Electric form Pokedex!");
 					Task.addTask(Task.DIALOGUE, npc, "I have here an extremely rare item, use it wisely!");
+					Task t = Task.addTask(Task.ITEM, "");
+					t.item = Item.MASTER_BALL;
 					p.flag[1][22] = true;
 				}
 			} else {

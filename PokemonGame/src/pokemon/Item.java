@@ -45,9 +45,30 @@ import util.Pair;
 
 public enum Item {
 	REPEL(0,10,5,new Color(0, 92, 5),Item.OTHER,null,"Prevents wild Pokemon encounters for 200 steps"),
-	POKEBALL(1,10,5,new Color(176, 0, 12),Item.OTHER,null,"A standard device for capturing wild Pokemon"),
-	GREAT_BALL(2,25,12,new Color(0, 0, 148),Item.OTHER,null,"An upgraded device for capturing wild Pokemon"),
-	ULTRA_BALL(3,50,25,new Color(148, 171, 0),Item.OTHER,null,"A very efficient device for capturing wild Pokemon"),
+	POKEBALL(1,10,5,new Color(176, 0, 12),Item.BALLS,null,"A standard device for capturing wild Pokemon"),
+	GREAT_BALL(2,25,12,new Color(0, 0, 148),Item.BALLS,null,"An upgraded device for capturing wild Pokemon"),
+	ULTRA_BALL(3,50,25,new Color(148, 171, 0),Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	MASTER_BALL(350,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	CHERISH_BALL(351,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	PREMIER_BALL(352,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	HEAL_BALL(353,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	DUSK_BALL(354,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	QUICK_BALL(355,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	TIMER_BALL(356,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	REPEAT_BALL(357,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	LUXURY_BALL(358,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	NEST_BALL(359,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	DIVE_BALL(360,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	NET_BALL(361,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	HEAVY_BALL(362,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	LURE_BALL(363,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	FRIEND_BALL(364,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	LOVE_BALL(365,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	LEVEL_BALL(366,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	FAST_BALL(367,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	MOON_BALL(368,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	DREAM_BALL(369,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
+	BEAST_BALL(370,0,10000,Color.BLACK,Item.BALLS,null,"A very efficient device for capturing wild Pokemon"),
 	POTION(4,25,12,new Color(124, 0, 219),Item.MEDICINE,null,"Restores 20 HP"),
 	SUPER_POTION(5,60,30,new Color(140, 24, 8),Item.MEDICINE,null,"Restores 60 HP"),
 	HYPER_POTION(6,150,75,new Color(255, 0, 191),Item.MEDICINE,null,"Restores 200 HP"),
@@ -410,14 +431,17 @@ public enum Item {
 	
 	public static final int MEDICINE = 1;
     public static final int OTHER = 2;
-    public static final int TMS = 3;
-    public static final int HELD_ITEM = 4;
-    public static final int BERRY = 5;
-    public static final int KEY_ITEM = 6;
+    public static final int BALLS = 3;
+    public static final int TMS = 4;
+    public static final int HELD_ITEM = 5;
+    public static final int BERRY = 6;
+    public static final int KEY_ITEM = 7;
     
     public static Item[] itemTable = setupItemTable();
     public static Item[] mints;
+    public static Item[] balls;
     public static int mintID = 0;
+    public static int ballID = 0;
 	
 	Item(int id, int cost, int sell, Color color, int pocket, Object o, String desc) {
 		this.id = id;
@@ -461,11 +485,17 @@ public enum Item {
 		}
 		
 		if (isMint()) addToMintTable();
+		if (pocket == Item.BALLS) addToBallsTable();
 	}
 
 	private void addToMintTable() {
 		if (mints == null) mints = new Item[21];
 		mints[mintID++] = this;
+	}
+	
+	private void addToBallsTable() {
+		if (balls == null) balls = new Item[24];
+		balls[ballID++] = this;
 	}
 
 	private static Item[] setupItemTable() {
@@ -1386,7 +1416,7 @@ public enum Item {
             if (first instanceof Effect) {
                 checkBox.setSelected(f.contains(p.getFieldEffects(), (Effect) first));
             } else {
-                checkBox.setSelected(p.vStatuses.contains((Status) first));
+                checkBox.setSelected(p.hasStatus((Status) first));
             }
             panel.add(checkBox, gbc);
         }
@@ -1426,9 +1456,9 @@ public enum Item {
                 } else {
                     Status st = (Status) first;
                     if (second.isSelected()) {
-                    	if (!p.vStatuses.contains(st)) p.vStatuses.add(st);
+                    	if (!p.hasStatus(st)) p.addStatus(st);
                     } else {
-                    	p.vStatuses.removeIf(st::equals);
+                    	p.removeStatus(st);
                     }
                 }
             }
@@ -1747,6 +1777,8 @@ public enum Item {
 			return "Medicine";
 		case OTHER:
 			return "Other";
+		case BALLS:
+			return "Balls";
 		case TMS:
 			return "TMs";
 		case HELD_ITEM:
@@ -1762,5 +1794,17 @@ public enum Item {
 	
 	public String superToString() {
 		return super.toString();
+	}
+
+	public int getStat() {
+		if (this == ROOM_SERVICE) return -4;
+		if (this == GRASSY_SEED || this == ELECTRIC_SEED) return 1;
+		if (this == PSYCHIC_SEED || this == SPARKLY_SEED) return 3;
+		if (this == SNOWBALL) return 0;
+		if (this == ADRENALINE_ORB) return 4;
+		if (this == ABSORB_BULB) return 2;
+		if (this == LUMINOUS_MOSS) return 3;
+		if (this == CELL_BATTERY) return 0;
+		return 10;
 	}
 }

@@ -141,8 +141,8 @@ public class UI extends AbstractUI {
 			e.printStackTrace();
 		}
 		
-		bagIcons = new BufferedImage[6];
-		for (int i = 0; i < 6; i++) {
+		bagIcons = new BufferedImage[7];
+		for (int i = 0; i < 7; i++) {
 			String imageName = Item.getPocketName(i + 1).toLowerCase().replace(' ', '_');
 			bagIcons[i] = setup("/menu/" + imageName, 2);
 		}
@@ -418,7 +418,7 @@ public class UI extends AbstractUI {
 			int id = currentTask.start;
 			currentTask = null;
 			if (id > 0) {
-				Task.addStartBattleTask(trainer, id);
+				Task.addStartBattleTask(trainer, id, 'G');
 			} else {
 				Task.addStartBattleTask(trainer);
 			}
@@ -1120,12 +1120,14 @@ public class UI extends AbstractUI {
 		}
 		
 		gp.player.p.clearBattled();
+		gp.player.p.amulet = user.item == Item.AMULET_COIN;
 		user.battled = true;
 		gp.battleUI.user = user;
 		gp.battleUI.foe = currentTask.p;
 		gp.battleUI.index = currentTask.counter;
 		gp.battleUI.staticID = currentTask.start;
 		gp.battleUI.partyNum = 0;
+		gp.battleUI.encType = currentTask.message.charAt(0);
 		
 		if (currentTask.p.trainer != null) {
 			currentTask.p.trainer.setSprites();
@@ -3070,14 +3072,14 @@ public class UI extends AbstractUI {
 	private void showBag() {
 		int x = gp.tileSize * 6;
 		int y = 0;
-		int width = gp.tileSize * 8;
+		int width = (int) (gp.tileSize * 9.25);
 		int height = (int) (gp.tileSize * 2.5);
 		drawSubWindow(x, y, width, height);
 		int startX = x;
 		int startY = y + height;
 		x += 18;
 		y += gp.tileSize / 3;
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 7; i++) {
 			g2.drawImage(bagIcons[i], x, y, null);
 			if (currentPocket - 1 == i) {
 				g2.drawRoundRect(x, y, gp.tileSize, gp.tileSize, 10, 10);
@@ -3456,8 +3458,7 @@ public class UI extends AbstractUI {
 					gp.gameState = GamePanel.SIM_BATTLE_STATE;
 				} else {
 					if (!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) {
-						gp.battleUI.ball = gp.player.p.getBall(gp.battleUI.ball);
-						gp.battleUI.balls = gp.player.p.getBalls();
+						gp.battleUI.setupBalls();
 					}
 					gp.battleUI.subState = BattleUI.STARTING_STATE;
 					gp.gameState = GamePanel.BATTLE_STATE;

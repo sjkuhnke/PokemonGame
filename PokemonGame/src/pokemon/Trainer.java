@@ -241,22 +241,22 @@ public class Trainer implements Serializable {
 		if (result != current) {
 			if (userSide) Pokemon.gp.simBattleUI.tempUser = result.clone();
 			int[] oldStats = current.statStages.clone();
-			ArrayList<Status> oldVStatuses = new ArrayList<>(current.vStatuses);
+			ArrayList<StatusEffect> oldVStatuses = new ArrayList<>(current.vStatuses);
 			int perishCount = current.perishCount;
 			int magCount = current.magCount;
 			swap(current, result, userSide);
 			if (baton) {
 				result.statStages = oldStats;
 				result.vStatuses = oldVStatuses;
-				result.vStatuses.remove(Status.SWITCHING);
-				result.vStatuses.remove(Status.SWAP);
+				result.removeStatus(Status.SWITCHING);
+				result.removeStatus(Status.SWAP);
 				result.perishCount = perishCount;
 				result.magCount = magCount;
 			}
 			Pokemon.gp.battleUI.foeStatus = result.status;
 			result.swapIn(foe, true);
-			foe.vStatuses.remove(Status.TRAPPED);
-			foe.vStatuses.remove(Status.SPUN);
+			foe.removeStatus(Status.TRAPPED);
+			foe.removeStatus(Status.SPUN);
 		}
 		return result;
 	}
@@ -316,13 +316,13 @@ public class Trainer implements Serializable {
 			oldP.currentHP += current.getStat(0) / 3;
 			oldP.verifyHP();
 		}
-		if (oldP.vStatuses.contains(Status.HEALING)) newP.vStatuses.add(Status.HEALING);
-		if (oldP.vStatuses.contains(Status.WISH)) newP.vStatuses.add(Status.WISH);
+		if (oldP.hasStatus(Status.HEALING)) newP.addStatus(Status.HEALING);
+		if (oldP.hasStatus(Status.WISH)) newP.addStatus(Status.WISH);
 		oldP.clearVolatile();
 		if (oldP.ability == Ability.ILLUSION) oldP.illusion = true; // just here for calc
 		this.current = newP;
 		Task.addSwapInTask(newP, newP.currentHP, playerSide);
-		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
+		if (this.current.hasStatus(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
 		Pokemon.field.switches++;
 	}
 

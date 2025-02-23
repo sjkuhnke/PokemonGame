@@ -94,10 +94,11 @@ public class Player extends Trainer implements Serializable {
 	public int currentBox;
 	public int version;
 	private Integer id;
+	public boolean amulet;
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 52;
+	public static final int VERSION = 53;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -168,6 +169,9 @@ public class Player extends Trainer implements Serializable {
 	    if (!egg) pokedex[p.id] = 2;
 	    p.clearVolatile();
 	    p.consumeItem(null);
+	    if (item == Item.HEAL_BALL) p.heal();
+	    if (item == Item.FRIEND_BALL) p.happiness = Math.max(200, p.happiness);
+	    p.ball = ball;
 	    p.trainer = this;
 	    p.metAt = PlayerCharacter.getMetAt();
 	    for (int i = 0; i < team.length; i++) {
@@ -236,8 +240,8 @@ public class Player extends Trainer implements Serializable {
 			current.verifyHP();
 		}
 		Pokemon lead = current;
-		if (lead.vStatuses.contains(Status.HEALING)) team[index].vStatuses.add(Status.HEALING);
-		if (lead.vStatuses.contains(Status.WISH)) team[index].vStatuses.add(Status.WISH);
+		if (lead.hasStatus(Status.HEALING)) team[index].addStatus(Status.HEALING);
+		if (lead.hasStatus(Status.WISH)) team[index].addStatus(Status.WISH);
 		lead.clearVolatile();
 		if (lead.ability == Ability.ILLUSION) lead.illusion = true; // just here for calc
 		this.current = pokemon;
@@ -248,8 +252,11 @@ public class Player extends Trainer implements Serializable {
 			numBattled++;
 			this.current.battled = true;
 		}
+		if (!amulet && this.current.item == Item.AMULET_COIN) {
+			amulet = true;
+		}
 		Task.addSwapInTask(current, current.currentHP, true);
-		if (this.current.vStatuses.contains(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
+		if (this.current.hasStatus(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
 		Pokemon.field.switches++;
 	}
 	
@@ -748,22 +755,10 @@ public class Player extends Trainer implements Serializable {
 		return result;
 	}
 
-	public Entry getBall(Entry ball) {
-		if (ball != null) {
-			ball.count = bag.count[ball.getItem().getID()];
-			if (ball.count <= 0) ball = null;
-			return ball;
-		}
-		for (int i = 1; i < 4; i++) {
-			if (bag.count[i] > 0) return bag.new Entry(Item.getItem(i), bag.count[i]);
-		}
-		return ball;
-	}
-	
 	public ArrayList<Entry> getBalls() {
 		ArrayList<Entry> result = new ArrayList<>();
-		for (int i = 1; i < 4; i++) {
-			if (bag.count[i] > 0) result.add(bag.new Entry(Item.getItem(i), bag.count[i]));
+		for (Item i : Item.balls) {
+			if (bag.count[i.getID()] > 0) result.add(bag.new Entry(i, bag.count[i.getID()]));
 		}
 		return result;
 	}

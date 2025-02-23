@@ -270,20 +270,20 @@ public class Task {
 				 addTask(Task.DIALOGUE, t, t.dialogues[i]);
 			}
 		}
-		addStartBattleTask(t.trainer, id);
+		addStartBattleTask(t.trainer, id, 'G');
 	}
 	
 	public static void addStartBattleTask(int trainer) {
-		addStartBattleTask(trainer, -1);
+		addStartBattleTask(trainer, -1, 'G');
 	}
 	
-	public static void addStartBattleTask(int trainer, int id) {
+	public static void addStartBattleTask(int trainer, int id, char encType) {
 		Pokemon foe = Trainer.getTrainer(trainer).getCurrent();
-		addStartBattleTask(trainer, id, foe);
+		addStartBattleTask(trainer, id, foe, encType);
 	}
 	
-	public static void addStartBattleTask(int trainer, int id, Pokemon foe) {
-		Task t = addTask(Task.START_BATTLE, "", foe);
+	public static void addStartBattleTask(int trainer, int id, Pokemon foe, char encType) {
+		Task t = addTask(Task.START_BATTLE, String.valueOf(encType), foe);
 		t.counter = trainer;
 		t.start = id;
 	}

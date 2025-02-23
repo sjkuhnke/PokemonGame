@@ -229,11 +229,9 @@ public class KeyHandler implements KeyListener {
 						}
 					} else {
 						if ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.balls.size() > 1) {
-							int index = gp.battleUI.balls.indexOf(gp.battleUI.ball);
-							if (--index < 0) {
-								index = gp.battleUI.balls.size() - 1;
+							if (--gp.battleUI.ballIndex < 0) {
+								gp.battleUI.ballIndex = gp.battleUI.balls.size() - 1;
 							}
-							gp.battleUI.ball = gp.battleUI.balls.get(index);
 						}
 					}
 				} else {
@@ -248,11 +246,9 @@ public class KeyHandler implements KeyListener {
 						}
 					} else {
 						if ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.balls.size() > 1) {
-							int index = gp.battleUI.balls.indexOf(gp.battleUI.ball);
-							if (++index >= gp.battleUI.balls.size()) {
-								index = 0;
+							if (++gp.battleUI.ballIndex >= gp.battleUI.balls.size()) {
+								gp.battleUI.ballIndex = 0;
 							}
-							gp.battleUI.ball = gp.battleUI.balls.get(index);
 						}
 					}
 				} else {
