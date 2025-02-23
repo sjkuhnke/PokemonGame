@@ -334,6 +334,7 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 		}
 		player.p.setCurrent(player.p.team[0]);
+		player.p.amulet = false;
 		
 		Pokemon.field = new Field();
 		battleUI.tasks = new ArrayList<>();

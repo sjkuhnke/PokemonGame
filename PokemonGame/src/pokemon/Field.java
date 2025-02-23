@@ -346,6 +346,11 @@ public class Field {
 		return false;
 	}
 	
+	public boolean equals(FieldEffect fe, Effect e, Pokemon affected) {
+		if (e.isWeather || affected.item != Item.UTILITY_UMBRELLA) return equals(fe, e);
+		return false;
+	}
+	
 	public void endOfTurn(Pokemon faster, Pokemon slower) {
 	    if (weather != null) {
 	        weatherTurns--;
@@ -420,7 +425,7 @@ public class Field {
 	 */
 	public boolean hasScreens(ArrayList<FieldEffect> side, Pokemon foe) {
 		ArrayList<FieldEffect> result = getScreens(side);
-		return !result.isEmpty() || foe.vStatuses.contains(Status.MAGIC_REFLECT);
+		return !result.isEmpty() || foe.hasStatus(Status.MAGIC_REFLECT);
 	}
 	
 	public int getLayers(ArrayList<FieldEffect> side, Effect effect) {

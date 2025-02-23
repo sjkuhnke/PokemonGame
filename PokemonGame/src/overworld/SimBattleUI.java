@@ -796,8 +796,8 @@ public class SimBattleUI extends BattleUI {
 		if (uMove != null && uMove.priority < 1 && uMove.hasPriority(p1)) ++uP;
 		if (fMove != null && fMove.priority < 1 && fMove.hasPriority(p2)) ++fP;
 		
-		if (uMove != null && fMove != null && !p1.vStatuses.contains(Status.SWAP)
-				&& !p2.vStatuses.contains(Status.SWAP)) {
+		if (uMove != null && fMove != null && !p1.hasStatus(Status.SWAP)
+				&& !p2.hasStatus(Status.SWAP)) {
 			uP = p1.checkQuickClaw(uP);
 			fP = p2.checkQuickClaw(fP);
 		}
@@ -821,13 +821,13 @@ public class SimBattleUI extends BattleUI {
 		boolean fastCanMove = true;
 		boolean slowCanMove = true;
 		
-		if (faster.vStatuses.contains(Status.SWAP)) {
+		if (faster.hasStatus(Status.SWAP)) {
 			faster = faster.trainer.swapOut(slower, fastMove, false, faster.trainer.hasUser(user));
 			fastMove = null;
 			fastCanMove = false;
 		}
 		
-		if (slower.vStatuses.contains(Status.SWAP)) {
+		if (slower.hasStatus(Status.SWAP)) {
 			slower = slower.trainer.swapOut(faster, slowMove, false, slower.trainer.hasUser(user));
 			slowMove = null;
 			slowCanMove = false;
@@ -842,8 +842,13 @@ public class SimBattleUI extends BattleUI {
 		}
 		
 		// Check for swap
-		if (faster.trainer.hasValidMembers() && fastCanMove && !slower.trainer.wiped() && faster.vStatuses.contains(Status.SWITCHING)) {
+		if (faster.trainer.hasValidMembers() && fastCanMove && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
 			faster = faster.trainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS, faster.trainer.hasUser(user));
+		}
+		// Check for swap
+		if (slower.trainer.hasValidMembers() && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
+			slower = slower.trainer.swapOut(faster, null, false, slower.trainer.hasUser(user));
+			slowCanMove = false;
 		}
 		
         if (slowCanMove) {
@@ -853,9 +858,13 @@ public class SimBattleUI extends BattleUI {
         }
         
         // Check for swap
-        if (slower.trainer.hasValidMembers() && slowCanMove && !faster.trainer.wiped() && slower.vStatuses.contains(Status.SWITCHING)) {
+        if (slower.trainer.hasValidMembers() && slowCanMove && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
         	slower = slower.trainer.swapOut(faster, null, slower.lastMoveUsed == Move.BATON_PASS, slower.trainer.hasUser(user));
         }
+    	// Check for swap
+ 		if (faster.trainer.hasValidMembers() && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
+ 			faster = faster.trainer.swapOut(slower, null, false, faster.trainer.hasUser(user));
+ 		}
 		
 		if (fastMove != null || slowMove != null) {
 			if (!faster.trainer.wiped() && !slower.trainer.wiped()) faster.endOfTurn(slower);

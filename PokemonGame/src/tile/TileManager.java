@@ -16,8 +16,9 @@ import overworld.GamePanel;
 public class TileManager {
 	GamePanel gp;
 	public Tile[] tile;
-	public int mapTileNum[][][];
-	public boolean canFly[];
+	public int[][][] mapTileNum;
+	public boolean[] canFly;
+	public boolean[] isCave;
 	
 	public static Rectangle[] collisionRectangles;
 	public static String[] mapNames = new String[GamePanel.MAX_MAP];
@@ -47,6 +48,7 @@ public class TileManager {
 		tile = new Tile[900];
 		mapTileNum = new int[GamePanel.MAX_MAP][gp.maxWorldCol][gp.maxWorldRow];
 		canFly = new boolean[GamePanel.MAX_MAP];
+		isCave = new boolean[GamePanel.MAX_MAP];
 		
 		setupCollisionRectangles();
 		
@@ -1359,6 +1361,7 @@ public class TileManager {
 	
 	public void loadMap(String filePath, int map, boolean canFly) {
 		addName(filePath, map);
+		boolean cave = false;
 		try {
 			InputStream is = getClass().getResourceAsStream(filePath);
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -1374,6 +1377,7 @@ public class TileManager {
 					String numbers[] = line.split(" ");
 					
 					int num = Integer.parseInt(numbers[col]);
+					if (!cave && num == 235 || num == 266) cave = true;
 					
 					mapTileNum[map][col][row] = num;
 					col++;
@@ -1389,6 +1393,7 @@ public class TileManager {
 			e.printStackTrace();
 		}
 		this.canFly[map] = canFly;
+		this.isCave[map] = cave;
 	}
 	
 	public void draw(Graphics2D g2, boolean drawAbove) {

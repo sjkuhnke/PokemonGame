@@ -470,7 +470,7 @@ public enum Move {
 	SLASH(70,100,0,1,0,0,PType.NORMAL,"Boosted Crit rate",true,20),
 	SLEEP_POWDER(0,75,0,0,2,0,PType.GRASS,"Foe falls asleep",false,10),
 	SLEEP_TALK(0,100,0,0,2,0,PType.NORMAL,"Picks a random move of the user's to use if the user is sleeping",false,10),
-	SLOW_FALL(75,90,100,0,1,0,PType.PSYCHIC,"% chance to change user's ability to LEVITATE",false,15),
+	SLOW_FALL(75,90,100,0,1,0,PType.PSYCHIC,"% chance to change foe's ability to LEVITATE",false,15),
 	SLUDGE(65,100,30,0,1,0,PType.POISON,"% to Poison foe",false,15),
 	SLUDGE_BOMB(90,100,30,0,1,0,PType.POISON,"% to Poison foe",false,10),
 	SLUDGE_WAVE(95,100,10,0,1,0,PType.POISON,"% chance to Poison foe",false,10),
@@ -754,11 +754,14 @@ public enum Move {
 			return bp;
 		}
 		if (user != null) {
+			double bp = basePower;
 			if (type == PType.NORMAL) {
-				if (user.ability == Ability.GALVANIZE || user.ability == Ability.REFRIGERATE || user.ability == Ability.PIXILATE) return basePower * 1.2;
+				if (user.ability == Ability.GALVANIZE || user.ability == Ability.REFRIGERATE || user.ability == Ability.PIXILATE) bp *= 1.2;
 			} else {
-				if (user.ability == Ability.NORMALIZE) return basePower * 1.2;
+				if (user.ability == Ability.NORMALIZE) bp *= 1.2;
 			}
+			if (user.item == Item.METRONOME && this == user.lastMoveUsed) bp *= (1 + ((user.metronome) * 0.2));
+			return bp;
 		}
 		return basePower;
 	}
@@ -974,6 +977,30 @@ public enum Move {
 		return false;
 	}
 	
+	public boolean isPunching() {
+		ArrayList<Move> result = new ArrayList<>();
+		result.add(BULLET_PUNCH);
+		result.add(COMET_PUNCH);
+		result.add(DRAIN_PUNCH);
+		result.add(FIRE_PUNCH);
+		result.add(ICE_PUNCH);
+		result.add(MACH_PUNCH);
+		result.add(POWER$UP_PUNCH);
+		result.add(SHADOW_PUNCH);
+		result.add(SKY_UPPERCUT);
+		result.add(THUNDER_PUNCH);
+		result.add(METEOR_MASH);
+		result.add(PLASMA_FISTS);
+		result.add(SUCKER_PUNCH);
+		result.add(DYNAMIC_PUNCH);
+		result.add(MANA_PUNCH);
+		
+		if (result.contains(this)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean isTail() {
 		ArrayList<Move> result = new ArrayList<>();
 		result.add(AQUA_TAIL);
@@ -1168,7 +1195,7 @@ public enum Move {
 		// *** unimplemented moves primarily used for secondary effects: Circle Throw, Dragon Tail, Fatal Bind, Spectral Thief ***
 		if (sec > 0) {
 			if (m.secondary == 100) {
-				if (m.isBinding() && !foe.vStatuses.contains(Status.SPUN) && !foe.vStatuses.contains(Status.TRAPPED)) {
+				if (m.isBinding() && !foe.hasStatus(Status.SPUN) && !foe.hasStatus(Status.TRAPPED)) {
 					return true;
 				}
 				// Foe lowering moves (same as self boosting)
