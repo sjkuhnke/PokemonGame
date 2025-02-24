@@ -145,7 +145,7 @@ public class PlayerCharacter extends Entity {
 			}
 			if (gp.ticks % 4 == 0 && (inTallGrass || p.surf || p.lavasurf) && !p.repel && cooldown > 2) {
 				Random r = new Random();
-				int random = r.nextInt(150);
+				int random = r.nextInt(p.current != null && p.current.item == Item.CLEANSE_TAG ? 300 : 150);
 				if (random < speed) {
 					cooldown = 0;
 					char type = 'G';
@@ -1698,9 +1698,13 @@ public class PlayerCharacter extends Entity {
 			Task.addTask(Task.DIALOGUE, npc, "Now then, you've come all this way. Might as well see if your magic can match mine.");
 			Task.addTask(Task.DIALOGUE, npc, "Step inside when you're ready. But be warned - my tricks aren't just for show.");
 			
+			Task.addTask(Task.SLEEP, "", 10);
 			Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+			Task.addTask(Task.SLEEP, "", 15);
 			Task.addTask(Task.TURN, npc, "", Task.UP);
+			Task.addTask(Task.SLEEP, "", 15);
 			Task.addTask(Task.TURN, npc, "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 10);
 			
 			Task.addTask(Task.FLASH_IN, "");
 			Task.addTask(Task.UPDATE, "");

@@ -42,6 +42,8 @@ public class ItemObj extends Entity {
 			worldY + gp.tileSize + gp.offsetY > gp.player.worldY - gp.player.screenY &&
 			worldY - gp.tileSize + gp.offsetY < gp.player.worldY + gp.player.screenY) {
 			
+			//g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+			
 			g2.setColor(Color.WHITE);
 			g2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
 			g2.drawImage(image, screenX + 12, screenY + 12, null);

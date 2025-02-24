@@ -4444,6 +4444,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 					if (this.item == null && userItem != null) {
 						this.consumeItem(foe);
 					}
+				} else {
+					fail = fail(announce);
 				}
 			}
 		} else if (announce && move == Move.TRICK_ROOM) {
