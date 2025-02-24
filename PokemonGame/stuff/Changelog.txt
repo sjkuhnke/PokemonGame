@@ -135,7 +135,7 @@ Added Guy Eddie in Poppy Grove to take you to Rawwar City (a closed off version)
 Gave Walrein Ice Beam via Level Up
 Gave Sheltor + Shelnado Frostbind at lv 39 and 63 respectively
 Gave Grust Frostbind at lv 60
-Added sprites for Flamehox and Fireshard!
+Added sprites for Flamehox, Fireshard, Blastflames, Tiowoo, Magwoo, Lafloo!
 CHANGED WILL-O-WISP, THUNDER WAVE, and FROSTBIND to not miss if the user is Fire, Electric or Ice type respectively to match TOXIC!!
 Updated Toxic's description to state that it bypasses accuracy checks if the user is Poison type
 Gave Shookwat Shock Wave at lv 21
@@ -159,3 +159,129 @@ Gave Hiker Rasmus's Duosion-X Eviolite instead of Light Clay
 Changed Dragon Claw's BP 80 -> 85
 Fixed Beat Up still announcing how many hits even if it's just once
 Fixed Reboot visually updating a status effect if it cures one
+Fixed Gardevoir's level on R35 to be 42-44 (from 37-41)
+Fixed slight bug with first Dad convo where it showed his name when receiving the Map and Pokedex
+Fixed Battle UI showing "Calc" for [A] text
+Fixed Calc showing the foe's team in order
+Added Rising Voltage and gave it to Wattwo at lv 55 and Megawatt at lv 56
+Added Dragon Ascent and gave it to Gyarados at lv 70 (might be a really bad idea)
+Added new sprites for Professor Dad!
+Made Night Shade, Dragon Rage and Seismic Toss unable to crit finally!
+Made Exploding moves, Destiny Bond, Perishing etc show your HP depleting when you faint
+Gave Dualmoose Aurora Beam at lv 16 and made Horn Leech lv 13
+Added Skill Swap!
+Gave Elgyem/Beheeyem Teleport at lv 11 and made Comet Punch lv 14 and Dream Eater at lv 28
+Gave Beheeyem Psychic and Skill Swap on evo, Stored Power and Gravity Punch at lv 1, Expanding Force at lv 60
+Made Beheeyem part Psychic type (Galactic/Psychic) from just Galactic!
+Changed Torment to block you from using a move if you used it last turn even if its applied mid-turn
+Gave Eclipse Grunt 10's Sneasel Torment instead of Quick Attack
+Gave Stanford 1's Zorua Torment instead of Taunt
+Gave Burglar Emigidio's Zoroark Torment instead of Curse
+Gave Eclipse Grunt 24's Dompster Torment instead of Play Rough
+Fixed Explorer Johannes's Sneasler to have Swords Dance instead of Sky Attack, and gave his Beheeyem Psychic instead of CM
+Gave Ice Master's Weavile Cut instead of Slash
+Added a "Deleted Moves" file to prep for a bunch of old and frankly boring Magic/Light moves to be deletable and replaced with different moves so you can update your save to the new version
+New Scott sprites, including walking ones!
+Added the following items: Ability Shield, Absorb Bulb, Adrenaline Orb, Amulet Coin, Mirror Herb, Binding Band, Cell Battery, Cleanse Tag, Eject Button, Eject Pack, 4 seeds, Grip Claw, Luminous Moss, Metronome, Protective Pads, Punching Glove, Ring Target, Room Service, Shell Bell, Snowball, Sticky Barb, Utility Umbrella, Zoom Lens
+They all work the same as in regular Pokemon with the exception of the Absorb Bulb esque items making you IMMUNE to the move until they're consumed, which gives you a stat boost, and Utility Umbrella protects from ALL weather effects
+ADDED HOLDING SHIFT IN THE OVERWORLD TO ALSO SHOW YOUR COORDINATES
+Formatted the Move doc better to be a table
+Added Scott and Fred cutscenes of them walking up to the player for more immersion
+Added a code "dex <TYPE>" where type is a name of a PType enum to show only Pokemon of that type in the dex
+Added a code "MVFX" to delete invalid moves of all of your Pokemon so your save can be compatible with the new version
+ADDED THE FOLLOWING NEW MAGIC MOVES:
+Hex Claw: Physical/75/100/10 Disables the target's last used move for 3 turns
+Alchemy: Status/--/100/10 Heals you 33% health, if holding item knocks it off and heals you 100%
+Spellbind: Status/--/100/10 Traps foe for same turns as wrap, lowers defenses by 1 stage each every turn
+Quick Spell: Special/40/100/20 +1 Priority
+*Disenchant: Special/70/100/10 Clears all stat boosts on the target FIRST
+Vitriolic Hex: 60/100 special reduces target's crit chance by 1
+Mana Punch: Physical/80/100/15 Raises a random stat by 1, or flinches (count flinch as one of the "stats")
+Healing Circle: Status/1000/10 Creates a field effect on the user's side that heals incoming Pokemon for 25% of their HP. Lasts 5 turns
+Magic Missiles: Special/25/90/15 Hits 2-5 times
+**Arcane Spell: Special/90/95/10 Lowers the base power of all foe moves by 10 permanently (min 40)
+*Trick Tackle: Physical/90/90 Swaps user and foe's item
+Deck Change: Swaps the target's Attack and SpA
+Magic Room: Removes the effects of held items for 8 turns
+ADDED THE FOLLOWING NEW LIGHT MOVES:
+*Light Drain: Special/75/100/10 Heals user for 50% of damage dealt
+Chromo Beam: Special/80/100/5 30% chance to double base power
+Floodlight: Status/--/1000/15 Creates a hazard that lowers the evasion of opposing Pokemon when they switch in
+Rainbow Flash: 45/100 special +1 priority
+*Light Speed: 80/100 physical +2 priority
+Aurora Glow: Status/1000/5 Field effect that lasts 5 turns, heals all Light/Ice/Galactic types in the back too for 1/8 HP every turn
+MAKE AN ABILITY FOR DUALMOOSE THAT SETS THIS UP ON SWITCH-IN, remove magic bounce make the aurora ability the default one, snow cloak secondary, sparkly surge hidden
+Flash Darts: Physical/25/90/15 Strikes 2-5 times in succession
+Sword of Dawn: Physical/150/90/5 Must recharge after use unless it KOs the target
+*Spotlight Ray: Special/80/100 Encores opponent for 2 turns
+Sunny Burst: Sunny Doom rename
+Solstice Blade: Glittering Sword rename
+MAKE SOLSTICE BLADE DO 1.5x in SUN AND 0.5x in OTHER WEATHER
+Radiant Break: Spirit Break rename
+Gave Ludicolo Encore on evo as well
+Fixed a path tile in Gelb Forest
+Got Fred sprites for the new cutscene!
+Removed the following moves:
+Elemental Sparkle
+Magic Blast
+Sparkle Strike
+Sparkly Swirl
+Twinkle Tackle
+Draining Kiss
+Glitzy Glow
+Luster Purge
+Moonblast
+Play Rough
+Glittering Tornado
+Renamed/revamped the following moves:
+Sunny Doom -> Sunny Burst and now always activates Sunny Day
+Glittering Sword -> Solstice Blade and now gets 1.5x power in Sun, 0.5x in other weathers
+Spirit Break -> Radiant Break
+Magic Crash -> Magical Crash and made it 95% accurate
+Made Proton give you a Master Ball if you caught all Electric Forms
+ADDED THE FOLLOWING POKEBALLS: Beast, Cherish, Dive, Dream, Dusk, Fast, Friend, Heal, Heavy, Level, Love, Lure, Luxury, Master, Moon, Nest, Net, Premier, Quick, Repeat, Timer
+Changed the following TMs:
+02 Dragon Claw -> Radio Burst
+03 Elemental Sparkle -> Arcane Spell
+43 Dazzling Gleam -> Spotlight Ray
+44 Play Rough -> Light Speed
+55 Magic Blast -> Disenchant
+56 Sparkle Strike -> Trick Tackle
+57 Charge Beam -> Defog
+59 Brick Break -> Body Press
+61 Smack Down -> Scorching Sands
+67 Outrage -> Breaking Swipe
+68 Flash -> Light Drain
+85 Rock Slide -> Power Gem
+92 Comet Crash -> Meteor Assault
+97 Spirit Break -> Radiant Break (just a name change)
+Changed the following TM locations:
++ Radio Burst: Cell Park
+Removed Dazzling Gleam and Play Rough from Glurg Town shop, put Radiant Break there instead
+Light Speed: route 31
+Disenchant: Mt. Splinkty 01A
+Trick Tackle: Mt. Splinkty 01A (need Surf)
+Defog: Control Center (need Rock Smash)
+Body Press: Route 32
+Scorching Sands: Route 26
+Breaking Swipe: replaced Brick Break as first TM in Rawwar Prize Shop
+Light Drain: Energy Plant pt 1
+Power Gem: Frenco City
+Zing Zap: from Proton after getting 3+ E Forms registered
+Psychic Fangs: Ghostly Woods
+Magic Tomb: Shadow Ravine -03A
+Dragon Pulse: Kleine village behind Dragon possessed trainer (swapped Dragon and Magic possessed trainers)
+Shadow Claw: Route 43 (need Surf)
+Dark Pulse: Schrice School
++ Bug Buzz: Route 36 (need Rock Smash)
+Iron Blast: Mt. Splinkty 03A (need Vine Cross)
+Shadow Ball: Shadow Ravine 1A
+Rock Tomb: Sicab Office 1
+Spotlight Ray: now the TM you get for beating Rayna
+Fixed Bind, Wrap, Fire Spin, Whirlpool, Infestation to trap for 4-5 turns (prev 2-5)
+Added a "Balls" pocket to the bag
+Added a "ball" field to Pokemon that keeps track of what ball they were caught on and draws it accordingly!
+Fixed bug with your balls in the Battle UI being laggy and not switching to the correct ball
+Changed slow fall to change the FOE'S ability to Levitate (instead of the user's)
+Fixed Trick/Switcheroo to fail if neither Pokemon has a held item
+Fixed Electric Surge not working with Terrain Extender for some reason
