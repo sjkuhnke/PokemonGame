@@ -72,6 +72,8 @@ public class Field {
 		LUCKY_CHANT(8, false, false),
 		WATER_SPORT(8, false, false),
 		MUD_SPORT(8, false, false),
+		AURORA(5, false, false),
+		FLOODLIGHT(-1, false, false),
 		;
 		
 		private Effect(int turns, boolean isWeather, boolean isTerrain) {
@@ -207,10 +209,29 @@ public class Field {
 				return new Color(249, 85, 135);
 			case WATER_SPORT:
 				return new Color(99, 144, 240);
+			case AURORA:
+				return new Color(208, 47, 245);
+			case FLOODLIGHT:
+				return new Color(249, 255, 166);
 			default:
 				return new Color(150, 217, 214);
 			
 			}
+		}
+
+		public void handleAurora(Pokemon p) {
+			if (this.effect == Effect.AURORA) {
+	        	ArrayList<Pokemon> team;
+	        	if (p.trainer != null) {
+	        		team = new ArrayList<>(p.trainer.getOrderedTeam());
+	        	} else {
+	        		team = new ArrayList<>();
+	        		team.add(p);
+	        	}
+	        	for (Pokemon po : team) {
+	        		po.auroraGlow();
+	        	}
+	        }
 		}
 	}
 	
@@ -319,6 +340,16 @@ public class Field {
 				return false;
 			}
 			
+		} else if (hazard.effect == Effect.FLOODLIGHT) {
+			if (!contains(side, Effect.FLOODLIGHT)) {
+				Task.addTask(Task.TEXT, "An overwhelmingly bright light was placed on the Pokemon's side!");
+				side.add(hazard);
+				hazard.layers = 1;
+				return true;
+			} else {
+				Task.addTask(Task.TEXT, "But it failed!");
+				return false;
+			}
 		}
 		return false;
 	}
@@ -382,6 +413,7 @@ public class Field {
 	    iterator = faster.getFieldEffects().iterator();
 	    while (iterator.hasNext()) {
 	        FieldEffect effect = iterator.next();
+	        effect.handleAurora(faster);
 	        if (effect.turns > 0) effect.turns--;
 	        if (effect.turns == 0) {
 	            Task.addTask(Task.TEXT, faster.nickname + "'s side's " + effect.effect.toString() + " wore off!");
@@ -392,6 +424,7 @@ public class Field {
 	    iterator = slower.getFieldEffects().iterator();
 	    while (iterator.hasNext()) {
 	        FieldEffect effect = iterator.next();
+	        effect.handleAurora(slower);
 	        if (effect.turns > 0) effect.turns--;
 	        if (effect.turns == 0) {
 	            Task.addTask(Task.TEXT, slower.nickname + "'s side's " + effect.effect.toString() + " wore off!");
@@ -405,7 +438,8 @@ public class Field {
 	public ArrayList<FieldEffect> getHazards(ArrayList<FieldEffect> side) {
 		ArrayList<FieldEffect> result = new ArrayList<>();
 		for (FieldEffect fe : side) {
-			if (fe.effect == Effect.STEALTH_ROCKS || fe.effect == Effect.SPIKES || fe.effect == Effect.TOXIC_SPIKES || fe.effect == Effect.STICKY_WEBS) result.add(fe);
+			if (fe.effect == Effect.STEALTH_ROCKS || fe.effect == Effect.SPIKES || fe.effect == Effect.TOXIC_SPIKES
+					|| fe.effect == Effect.STICKY_WEBS || fe.effect == Effect.FLOODLIGHT) result.add(fe);
 		}
 		return result;
 	}

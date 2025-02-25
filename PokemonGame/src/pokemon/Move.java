@@ -29,7 +29,7 @@ public enum Move {
 	AGILITY(0,1000,0,0,2,0,PType.FLYING,"Raises user's Speed by 2",false,15),
 	AIR_CUTTER(55,95,0,1,1,0,PType.FLYING,"Boosted Crit Rate",false,25),
 	AIR_SLASH(75,95,30,0,1,0,PType.FLYING,"% chance of causing foe to flinch",false,15),
-	ALCHEMY(0,1000,0,0,2,0,PType.MAGIC,"Heals 33% HP, if user holds an item will consume it and heal 100%",false,10), // TODO
+	ALCHEMY(0,1000,0,0,2,0,PType.MAGIC,"Heals 33% HP, if user holds an item will remove it and heal 100%",false,10), // TODO
 	AMNESIA(0,1000,0,0,2,0,PType.PSYCHIC,"Raises user's Sp.Def by 2",false,20),
 	ANCIENT_POWER(60,100,10,0,1,0,PType.ROCK,"% chance to raise all of the user's stats by 1",false,5),
 	AQUA_JET(40,100,0,0,0,1,PType.WATER,"Always goes first",true,15),
@@ -84,7 +84,7 @@ public enum Move {
 	CHARGE(0,1000,0,0,2,0,PType.ELECTRIC,"User's next electric-type attack damage is doubled. Raises user's Sp.Def by 1",false,20),
 	CHARGE_BEAM(50,90,70,0,1,0,PType.ELECTRIC,"% chance to raise user's Sp.Atk by 1",false,10),
 	CHARM(0,100,0,0,2,0,PType.LIGHT,"Lowers foe's Attack by 2",false,15),
-	CHROMO_BEAM(-1,100,0,0,1,0,PType.LIGHT,"30% chance to double in Base Power",false,5),
+	CHROMO_BEAM(80,100,0,0,1,0,PType.LIGHT,"30% chance to double in Base Power",false,5),
 	CIRCLE_THROW(60,90,100,0,0,-6,PType.FIGHTING,"% chance to switch out foe, always moves last",true,10),
 	CLOSE_COMBAT(120,100,100,0,0,0,PType.FIGHTING,"% to lower user's Defense and Sp.Def by 1",true,5),
 	COIL(0,1000,0,0,2,0,PType.POISON,"Raises user's Atk, Def, and Acc by 1",false,15),
@@ -383,6 +383,7 @@ public enum Move {
 	POISON_POWDER(0,75,0,0,2,0,PType.POISON,"Poisons foe",false,35),
 	POISON_STING(15,100,30,0,0,0,PType.POISON,"% chance to Poison foe",false,35),
 	POISON_TAIL(85,100,10,1,0,0,PType.POISON,"% chance to Poison foe. Boosted crit rate",true,15),
+	POLTERGEIST(110,90,0,0,0,0,PType.GHOST,"Fails if the target isn't holding an item",false,5),
 	POP_POP(70,80,0,0,0,0,PType.STEEL,"Attacks twice, seperate accuracy checks for each hit",false,5),
 	POUND(40,100,0,0,0,0,PType.NORMAL,"A normal attack",true,30),
 	POWDER_SNOW(40,100,50,0,1,0,PType.ICE,"% chance to Frostbite foe",false,25),
@@ -394,6 +395,7 @@ public enum Move {
 	PSYBEAM(65,100,10,0,1,0,PType.PSYCHIC,"% chance to confuse foe",false,20),
 	PSYCHIC(90,100,10,0,1,0,PType.PSYCHIC,"% chance to lower foe's Sp.Def by 1",false,10),
 	PSYCHIC_FANGS(85,100,100,0,0,0,PType.PSYCHIC,"% to break Screen effects",true,10),
+	PSYCHIC_NOISE(75,100,100,0,1,0,PType.PSYCHIC,"% to inflict foe with the Heal Block effect",false,10),
 	PSYCHIC_TERRAIN(0,1000,0,0,2,0,PType.PSYCHIC,"Changes the terrain to PSYCHIC for 5 turns",false,15),
 	PSYCHO_CUT(70,100,0,1,0,0,PType.PSYCHIC,"Boosted Crit rate",false,20),
 	PSYSHOCK(80,100,0,0,1,0,PType.PSYCHIC,"Uses foe's Defense instead of Sp.Def in damage calculation",false,15),
@@ -882,7 +884,7 @@ public enum Move {
 	public int getNumHits(Pokemon user, Pokemon[] team) {
 		if (this == Move.DOUBLE_SLAP || this == Move.FURY_ATTACK ||this == Move.FURY_SWIPES || this == Move.ICICLE_SPEAR ||
 				this == Move.PIN_MISSILE || this == Move.ROCK_BLAST|| this == Move.SCALE_SHOT || this == Move.SPIKE_CANNON ||
-				this == Move.SHOOTING_STARS || this == Move.BULLET_SEED) {
+				this == Move.SHOOTING_STARS || this == Move.BULLET_SEED || this == Move.FLASH_DARTS || this == Move.MAGIC_MISSILES) {
 			int randomNum = (int) (Math.random() * 100) + 1; // Generate a random number between 1 and 100 (inclusive)
 			if (user.item == Item.LOADED_DICE) {
 				if (randomNum <= 50) {
@@ -1056,6 +1058,7 @@ public enum Move {
 		result.add(Move.PARTING_SHOT);
 		result.add(Move.SING);
 		result.add(Move.BELCH);
+		result.add(Move.PSYCHIC_NOISE);
 		return result;
 	}
 	
@@ -1140,7 +1143,7 @@ public enum Move {
 		return super.toString();
 	}
 
-	boolean isBiting() {
+	public boolean isBiting() {
 		ArrayList<Move> result = new ArrayList<>();
 		result.add(BITE);
 		result.add(CRUNCH);
@@ -1161,7 +1164,7 @@ public enum Move {
 		return false;
 	}
 	
-	boolean isBinding() {
+	public boolean isBinding() {
 		ArrayList<Move> result = new ArrayList<>();
 		result.add(JAW_LOCK);
 		result.add(FIRE_SPIN);
@@ -1170,6 +1173,40 @@ public enum Move {
 		result.add(WRAP);
 		result.add(INFESTATION);
 		result.add(SPELLBIND);	
+		if (result.contains(this)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static ArrayList<Move> getDraining() {
+		ArrayList<Move> result = new ArrayList<>();
+		result.add(GIGA_DRAIN);
+		result.add(LEECH_LIFE);
+		result.add(HORN_LEECH);
+		result.add(LIGHT_DRAIN);
+		result.add(MEGA_DRAIN);
+		result.add(PARABOLIC_CHARGE);
+		result.add(DREAM_EATER);
+		result.add(ABSORB);
+		result.add(DRAIN_PUNCH);
+		
+		return result;
+	}
+	
+	public boolean isHealing() {
+		ArrayList<Move> result = getDraining();
+		result.add(LIFE_DEW);
+		result.add(MOONLIGHT);
+		result.add(MORNING_SUN);
+		result.add(RECOVER);
+		result.add(REST);
+		result.add(ROOST);
+		result.add(SHORE_UP);
+		result.add(SLACK_OFF);
+		result.add(SYNTHESIS);
+		result.add(STRENGTH_SAP);
+		result.add(WISH);
 		if (result.contains(this)) {
 			return true;
 		}

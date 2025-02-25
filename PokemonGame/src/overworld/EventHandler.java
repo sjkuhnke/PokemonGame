@@ -837,6 +837,22 @@ public class EventHandler {
 			if (hit(142,73,40)) teleport(143, 53, 49,false);
 			if (hit(143,53,48)) teleport(142, 73, 39,false);
 			
+			// Gym 7 split Shakes
+			if (p.flag[5][8]) {
+				if (!p.flag[6][7] && (hit(11,18,81) || hit(11,19,81) || hit(11,20,81))) shake(6, 7, 25);
+				if (!p.flag[6][8] && hit(124,22,9)) shake(6, 8, 35);
+				if (!p.flag[6][9] && hit(124,16,52)) shake(6, 9, 50);
+				if (!p.flag[6][10] && hit(124,54,74)) shake(6, 10, 100);
+				if (!p.flag[6][11] && hit(124,69,92)) shake(6, 11, 110);
+				if (!p.flag[6][12] && hit(124,79,96)) shake(6, 12, 125);
+				if (!p.flag[6][13] && hit(124,81,84)) shake(6, 13, 135);
+				if (!p.flag[6][14] && hit(137,60,76)) shake(6, 14, 150);
+				if (!p.flag[6][15] && hit(139,49,60)) shake(6, 15, 175);
+				if (!p.flag[6][16] && hit(139,52,52)) shake(6, 16, 200);
+				if (!p.flag[6][17] && hit(139,43,50)) shake(6, 17, 225);
+				if (!p.flag[6][18] && hit(138,53,76)) shake(6, 18, 250);
+			}
+			
 			// Gelb Forest 1 -> 2
 			if (hit(11,42,77)) teleport(144, 11, 28,false);
 			if (hit(144,10,28)) teleport(11, 41, 77,false);
@@ -929,5 +945,11 @@ public class EventHandler {
 //		
 //		previousEventX = gp.player.worldX;
 //		previousEventY = gp.player.worldY;
+	}
+	
+	public void shake(int flagX, int flagY, int intensity) {
+		gp.setTaskState();
+		Task.addTask(Task.SHAKE, "", intensity);
+		p.flag[flagX][flagY] = true;
 	}
 }

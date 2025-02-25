@@ -503,6 +503,18 @@ public class GamePanel extends JPanel implements Runnable {
 		double yCoord = player.worldY * 1.0 / tileSize;
 		
 		g2.drawString(String.format("X: %.2f, Y: %.2f", xCoord, yCoord), x, y);
+		
+		x += tileSize;
+		y += tileSize / 2;
+		width = (int) (tileSize * 2.75);
+		ui.drawSubWindow(x, y, width, height);
+		
+		g2.setFont(g2.getFont().deriveFont(24F));
+		
+		x += tileSize / 2;
+		y += tileSize;
+		
+		g2.drawString(String.format("Map: %d", currentMap), x, y);
 	}
 
 	public boolean determineLightOverlay() {

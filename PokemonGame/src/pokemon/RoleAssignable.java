@@ -75,20 +75,21 @@ public interface RoleAssignable {
 		int[] baseStats = entity.getBaseStats();
 		
 		// HAZARDS
-		if (moveset.contains(Move.SPIKES) || moveset.contains(Move.STEALTH_ROCK) || moveset.contains(Move.ROCKFALL_FRENZY) ||
-				moveset.contains(Move.STICKY_WEB) || moveset.contains(Move.TOXIC_SPIKES) || abilities.contains(Ability.TOXIC_DEBRIS)) {
+		if (moveset.contains(Move.SPIKES) || moveset.contains(Move.STEALTH_ROCK) || moveset.contains(Move.ROCKFALL_FRENZY)
+				|| moveset.contains(Move.STICKY_WEB) || moveset.contains(Move.TOXIC_SPIKES) || abilities.contains(Ability.TOXIC_DEBRIS)
+				|| moveset.contains(Move.FLOODLIGHT)) {
 			role |= Role.HAZARDS;
 		}
 		
 		// HAZARD CONTROL
-		if (moveset.contains(Move.DEFOG) || moveset.contains(Move.RAPID_SPIN) || moveset.contains(Move.MORTAL_SPIN) ||
-				abilities.contains(Ability.MAGIC_BOUNCE)) {
+		if (moveset.contains(Move.DEFOG) || moveset.contains(Move.RAPID_SPIN) || moveset.contains(Move.MORTAL_SPIN)
+				|| abilities.contains(Ability.MAGIC_BOUNCE)) {
 			role |= Role.HAZARD_CONTROL;
 		}
 		
 		// CLERIC
-		if (moveset.contains(Move.HEALING_WISH) || moveset.contains(Move.AROMATHERAPY) || moveset.contains(Move.LUNAR_DANCE) ||
-				moveset.contains(Move.WISH)) {
+		if (moveset.contains(Move.HEALING_WISH) || moveset.contains(Move.AROMATHERAPY) || moveset.contains(Move.LUNAR_DANCE)
+				|| moveset.contains(Move.WISH)) {
 			role |= Role.CLERIC;
 		}
 		
@@ -100,8 +101,8 @@ public interface RoleAssignable {
 		
 		// PRIORITY
 		for (Move m : moveset) {
-			if (m.isAttack() && (m.priority >= 1 || m.mtype == PType.MAGIC && abilities.contains(Ability.SLEIGHT_OF_HAND) ||
-					abilities.contains(Ability.AMBUSH))) {
+			if (m.isAttack() && (m.priority >= 1 || m.mtype == PType.MAGIC && abilities.contains(Ability.SLEIGHT_OF_HAND)
+					|| abilities.contains(Ability.AMBUSH))) {
 				role |= Role.PRIORITY;
 				break;
 			}
@@ -119,8 +120,8 @@ public interface RoleAssignable {
         }
 		
 		// SNOW ABUSER
-		if (abilities.contains(Ability.SLUSH_RUSH) || abilities.contains(Ability.SNOW_CLOAK) || abilities.contains(Ability.ICE_BODY) ||
-				moveset.contains(Move.AURORA_VEIL)) {
+		if (abilities.contains(Ability.SLUSH_RUSH) || abilities.contains(Ability.SNOW_CLOAK) || abilities.contains(Ability.ICE_BODY)
+				|| moveset.contains(Move.AURORA_VEIL)) {
             role |= Role.SNOW_ABUSER;
         }
 		
@@ -130,9 +131,9 @@ public interface RoleAssignable {
         }
 		
 		// RAIN ABUSER
-		if (abilities.contains(Ability.SWIFT_SWIM) || abilities.contains(Ability.RAIN_DISH) || abilities.contains(Ability.DRY_SKIN) ||
-				(!abilities.contains(Ability.NO_GUARD) && !abilities.contains(Ability.COMPOUND_EYES) && (moveset.contains(Move.HURRICANE) ||
-				moveset.contains(Move.THUNDER)))) {
+		if (abilities.contains(Ability.SWIFT_SWIM) || abilities.contains(Ability.RAIN_DISH) || abilities.contains(Ability.DRY_SKIN)
+				|| (!abilities.contains(Ability.NO_GUARD) && !abilities.contains(Ability.COMPOUND_EYES) && (moveset.contains(Move.HURRICANE)
+				|| moveset.contains(Move.THUNDER)))) {
             role |= Role.RAIN_ABUSER;
         }
 		
@@ -142,19 +143,20 @@ public interface RoleAssignable {
         }
 		
 		// SNOW ABUSER
-		if (abilities.contains(Ability.SAND_RUSH) || abilities.contains(Ability.SAND_VEIL) ||
-				moveset.contains(Move.SHORE_UP)) {
+		if (abilities.contains(Ability.SAND_RUSH) || abilities.contains(Ability.SAND_VEIL)
+				|| moveset.contains(Move.SHORE_UP)) {
             role |= Role.SAND_ABUSER;
         }
 		
 		// SUN SETTER
-		if (abilities.contains(Ability.DROUGHT) || moveset.contains(Move.SUNNY_DAY) || moveset.contains(Move.SUNNY_DOOM)) {
+		if (abilities.contains(Ability.DROUGHT) || moveset.contains(Move.SUNNY_DAY)
+				|| moveset.contains(Move.SUNNY_DOOM)) {
             role |= Role.SUN_SETTER;
         }
 		
 		// SNOW ABUSER
-		if (abilities.contains(Ability.CHLOROPHYLL) || abilities.contains(Ability.SOLAR_POWER) ||
-				moveset.contains(Move.SOLAR_BEAM)) {
+		if (abilities.contains(Ability.CHLOROPHYLL) || abilities.contains(Ability.SOLAR_POWER)
+				|| moveset.contains(Move.SOLAR_BEAM)) {
             role |= Role.SUN_ABUSER;
         }
 		

@@ -78,8 +78,6 @@ Charge Beam ->
 Magic Blast ->
 Elemental Sparkle ->  
 Rock Slide -> Power Gem
-ADD POLTERGEIST
-ADD PSYCHIC NOISE
 
 Thief magic move
 Exposing move that works like octolock
