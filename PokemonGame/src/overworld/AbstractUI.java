@@ -457,7 +457,7 @@ public abstract class AbstractUI {
 				g2.setFont(g2.getFont().deriveFont(24F));
 				g2.setColor(Color.WHITE);
 				x = startX;
-				String type = Pokemon.getStatType(i);
+				String type = Pokemon.getStatType(i, false);
 				type += p.getStat(i);
 	        	
 	        	if (i != 0) {

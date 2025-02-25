@@ -255,7 +255,7 @@ public class Main {
 				writer.write("Base Stats:\n");
 				String stats = "";
 				for (int j = 0; j < p.baseStats.length; j++) {
-					stats += p.getBaseStat(j) + " " + Pokemon.getStatType(j) + "/ ";
+					stats += p.getBaseStat(j) + " " + Pokemon.getStatType(j, false) + "/ ";
 				}
 				stats += p.getBST() + " BST";
 				writer.write(stats + "\n\n");
@@ -352,7 +352,7 @@ public class Main {
 			StringBuilder header = new StringBuilder();
 			header.append("Type");
 			for (int i = 0; i < sums[1].length; i++) {
-				header.append("," + Pokemon.getStatType(i).trim());
+				header.append("," + Pokemon.getStatType(i, false).trim());
 			}
 			header.append(",Amt\n");
 			writer.write(header.toString());

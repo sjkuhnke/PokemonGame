@@ -111,7 +111,7 @@ public class UI extends AbstractUI {
 	
 	private Random rand = new Random();
 	
-	public static final int MAX_SHOP_COL = 10;
+	public static final int MAX_SHOP_COL = 11;
 	public static final int MAX_SHOP_ROW = 4;
 	
 	public static final int ITEMS = 0;
@@ -2114,7 +2114,7 @@ public class UI extends AbstractUI {
 			g2.setFont(g2.getFont().deriveFont(24F));
 			g2.setColor(Color.WHITE);
 			x = startX;
-			String type = Pokemon.getStatType(i);
+			String type = Pokemon.getStatType(i, false);
         	g2.drawString(type, x, y);
         	
         	g2.setFont(g2.getFont().deriveFont(16F));
@@ -2702,7 +2702,7 @@ public class UI extends AbstractUI {
 					if (currentPokemon.ivs[moveOption] < 31) {
 						currentPokemon.ivs[moveOption] = 31;
 						currentPokemon.setStats();
-			        	showMessage(currentPokemon + "'s " + Pokemon.getStatType(moveOption) + "IV was maxed out!");
+			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + "IV was maxed out!", 42));
 			        	gp.player.p.bag.remove(currentItem);
 		        		currentItems = gp.player.p.getItems(currentPocket);
 		        	} else {
@@ -2715,7 +2715,7 @@ public class UI extends AbstractUI {
 					if (currentPokemon.ivs[moveOption] > 0) {
 						currentPokemon.ivs[moveOption] = 0;
 						currentPokemon.setStats();
-			        	showMessage(currentPokemon + "'s " + Pokemon.getStatType(moveOption) + "IV was set to 0!");
+			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + "IV was set to 0!", 42));
 			        	gp.player.p.bag.remove(currentItem);
 		        		currentItems = gp.player.p.getItems(currentPocket);
 		        	} else {
@@ -2749,7 +2749,7 @@ public class UI extends AbstractUI {
 			g2.setColor(Color.LIGHT_GRAY);
 			g2.fillRoundRect(x, y, ivWidth, ivHeight, 10, 10);
 			g2.setColor(Color.BLACK);
-	        String text = Pokemon.getStatType(i) + ": " + iv;
+	        String text = Pokemon.getStatType(i, false) + ": " + iv;
 	        g2.drawString(text, getCenterAlignedTextX(text, x + ivWidth / 2), y + gp.tileSize / 2);
 	        if (moveOption == i) {
 	            g2.setColor(Color.RED);
@@ -3555,9 +3555,9 @@ public class UI extends AbstractUI {
 	}
 	
 	private void drawInventory(ArrayList<?> inventory, int type) {
-		int x = gp.tileSize * 2;
+		int x = (int) (gp.tileSize * 1.5);
 		int y = gp.tileSize;
-		int width = gp.tileSize * 12;
+		int width = (int) (gp.tileSize * 12.75) + 5;
 		int height = gp.tileSize * 6;
 		
 		boolean items = type == ITEMS;

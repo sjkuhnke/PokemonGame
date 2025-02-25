@@ -140,22 +140,22 @@ public enum Item {
 	ASSAULT_VEST(58,0,0,new Color(194, 80, 84),Item.HELD_ITEM,null,"An offensive vest boosts the holder's Sp. Def stat but prevents the use of status moves."),
 	BRIGHT_POWDER(59,0,0,new Color(214, 234, 206),Item.HELD_ITEM,null,"A glittery powder that casts a tricky glare which lowers the accuracy of opposing Pokemon's moves."),
 	EXPERT_BELT(60,0,0,new Color(94, 90, 97),Item.HELD_ITEM,null,"A well-worn belt that slightly boosts the power of the holder's supereffective moves."),
-	METRONOME(345,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	METRONOME(345,0,0,Color.BLACK,Item.HELD_ITEM,null,"Boosts the power of a move that's used repeatedly. Once the chain is broken, the move's power returns to normal."),
 	TERRAIN_EXTENDER(61,0,0,new Color(212, 228, 229),Item.HELD_ITEM,null,"A held item that extends the duration of terrain caused by the holder's move or Ability."),
 	ABILITY_SHIELD(325,0,0,Color.BLACK,Item.HELD_ITEM,null,"This cute and rather unique-looking shield protects the holder from having its Ability changed by others."),
 	LIFE_ORB(62,0,0,new Color(184, 72, 144),Item.HELD_ITEM,null,"An orb that boosts the power of the holder's moves, but at the cost of some HP."),
 	FLAME_ORB(63,0,0,new Color(225, 3, 3),Item.HELD_ITEM,null,"A bizarre orb that gives off heat when touched and will afflict the holder with a burn during battle."),
 	TOXIC_ORB(64,0,0,new Color(148, 112, 172),Item.HELD_ITEM,null,"A bizarre orb that exudes toxins when touched and will badly poison the holder during battle."),
 	ROCKY_HELMET(65,0,0,new Color(241, 188, 27),Item.HELD_ITEM,null,"If another Pokemon makes direct contact with the holder, that Pokemon will be damaged."),
-	PROTECTIVE_PADS(342,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	PUNCHING_GLOVE(343,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	PROTECTIVE_PADS(342,0,0,Color.BLACK,Item.HELD_ITEM,null,"These pads protect the holder from effects triggered by making direct contact with another Pokemon."),
+	PUNCHING_GLOVE(343,0,0,Color.BLACK,Item.HELD_ITEM,null,"This protective glove boosts the power of the holder's punching moves and prevents direct contact with targets."),
 	LIGHT_CLAY(66,0,0,new Color(183, 216, 126),Item.HELD_ITEM,null,"An item that when the holder uses protective moves like Light Screen or Reflect, their effects will last longer than usual."),
-	SHELL_BELL(346,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	SHELL_BELL(346,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder restores 25% of the damage dealt with an attack back to itself."),
 	SOOTHE_BELL(67,0,0,new Color(198, 199, 202),Item.HELD_ITEM,null,"The comforting chime of this bell calms the holder, making it friendly."),
 	LOADED_DICE(68,0,0,new Color(144, 232, 16),Item.HELD_ITEM,null,"This loaded dice always rolls a good number, and holding one can ensure that the holder's multistrike moves hit more times."),
 	SCOPE_LENS(69,0,0,new Color(192, 183, 54),Item.HELD_ITEM,null,"A lens for scoping out weak points. It boosts the holder's critical-hit ratio."),
 	WIDE_LENS(70,0,0,new Color(74, 162, 195),Item.HELD_ITEM,null,"A magnifying lens that slightly boosts the accuracy of the holder's moves."),
-	ZOOM_LENS(349,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	ZOOM_LENS(349,0,0,Color.BLACK,Item.HELD_ITEM,null,"When the holder acts after its target, its move will be more accurate than usual."),
 	QUICK_CLAW(71,0,0,new Color(213, 189, 105),Item.HELD_ITEM,null,"This light, sharp claw lets the holder move first occasionally."),
 	BIG_ROOT(72,0,0,new Color(208, 161, 91),Item.HELD_ITEM,null,"This root boosts the amount of HP the holder restores to itself when it uses HP-stealing moves."),
 	CLEAR_AMULET(73,0,0,new Color(204, 204, 243),Item.HELD_ITEM,null,"This clear, sparkling amulet protects the holder from having its stats lowered by moves used against it or by other Pokemon's Abilities."),
@@ -165,42 +165,46 @@ public enum Item {
 	FOCUS_BAND(76,0,0,new Color(232, 80, 80),Item.HELD_ITEM,null,"When the holder is hit with a move that should knock it out, it may be able to endure with 1 HP."),
 	KING1S_ROCK(77,0,200,new Color(224, 206, 58),Item.HELD_ITEM,null,"It may cause the target to flinch whenever the holder successfully inflicts damage on them with an attack."),
 	SHED_SHELL(78,0,200,new Color(243, 241, 140),Item.HELD_ITEM,null,"Hard and sturdy, this discarded carapace enables the holder to switch out of battle without fail."),
-	CLEANSE_TAG(371,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	CLEANSE_TAG(371,0,0,Color.BLACK,Item.HELD_ITEM,null,"Helps keep wild Pokemon away when the holder is the head of the party."),
 	MUSCLE_BAND(79,0,150,new Color(225, 200, 50),Item.HELD_ITEM,null,"This headband exudes strength, slightly boosting the power of the holder's physical moves."),
 	WISE_GLASSES(80,0,150,new Color(92, 105, 117),Item.HELD_ITEM,null,"This thick pair of glasses slightly boosts the power of the holder's special moves."),
 	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
 	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
-	AMULET_COIN(339,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	AMULET_COIN(339,0,0,Color.BLACK,Item.HELD_ITEM,null,"This coin doubles any prize money received as long as the holder joins the battle at least once."),
 	FLOAT_STONE(322,0,0,Color.BLACK,Item.HELD_ITEM,null,"This very light stone reduces the weight of the holder."),
 	IRON_BALL(323,0,0,Color.BLACK,Item.HELD_ITEM,null,"A ball of steel that lowers Speed and allows GROUND moves to hit FLYING and levitating holders."),
 	LAGGING_TAIL(324,0,0,Color.BLACK,Item.HELD_ITEM,null,"A tremendously heavy item that makes the holder move slower than usual."), // TODO: add in overworld
-	BINDING_BAND(340,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	GRIP_CLAW(341,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	RING_TARGET(344,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	STICKY_BARB(347,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	UTILITY_UMBRELLA(348,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	BINDING_BAND(340,0,0,Color.BLACK,Item.HELD_ITEM,null,"This band boosts the damage of the binding effect caused by binding moves used by the holder."),
+	GRIP_CLAW(341,0,0,Color.BLACK,Item.HELD_ITEM,null,"When the holder uses moves that deal damage over several turns, such as Bind or Wrap, their effects will last longer than usual."),
+	RING_TARGET(344,0,0,Color.BLACK,Item.HELD_ITEM,null,"When held, moves that would normally have no effect due to type matchups will still hit the holder."),
+	STICKY_BARB(347,0,0,Color.BLACK,Item.HELD_ITEM,null,"A clingy barb damages the holder every turn and will latch on to Pokemon that make direct contact with the holder."),
+	UTILITY_UMBRELLA(348,0,0,Color.BLACK,Item.HELD_ITEM,null,"This sturdy umbrella protects the holder from the effects of all weather."),
 	FOCUS_SASH(81,0,500,new Color(232, 80, 80),Item.HELD_ITEM,null,"If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP, but only once."),
 	AIR_BALLOON(82,0,300,new Color(232, 72, 72),Item.HELD_ITEM,null,"This balloon makes the holder float in the air. If the holder is hit with an attack, the balloon will burst."),
-	EJECT_BUTTON(329,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	EJECT_PACK(330,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	EJECT_BUTTON(329,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the holder is damaged by an attack, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team."),
+	EJECT_PACK(330,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the holder's stats are lowered, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team."),
 	POWER_HERB(83,0,50,new Color(253, 80, 77),Item.HELD_ITEM,null,"A herb that allows the holder to immediately use a move that normally requires a turn to charge or recharge, but only once."),
 	WHITE_HERB(84,0,50,new Color(242, 242, 242),Item.HELD_ITEM,null,"A herb that will restore any lowered stat in battle, but only once."),
 	MENTAL_HERB(92,0,50,Color.BLACK,Item.HELD_ITEM,null,"An item to be held by a Pokemon. The holder shakes off move-binding effects to move freely. It can be used only once."),
-	MIRROR_HERB(333,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	ELECTRIC_SEED(334,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	GRASSY_SEED(335,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	PSYCHIC_SEED(336,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	SPARKLY_SEED(337,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	MIRROR_HERB(333,0,0,Color.BLACK,Item.HELD_ITEM,null,"This herb will allow the holder to mirror an opponent's stat increases to boost its own stats - but only once."),
+	ELECTRIC_SEED(334,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Electric Terrain, the holder will use this seed to boost its own Defense stat."),
+	GRASSY_SEED(335,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Grassy Terrain, the holder will use this seed to boost its own Defense stat."),
+	PSYCHIC_SEED(336,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Psychic Terrain, the holder will use this seed to boost its own Sp. Def stat."),
+	SPARKLY_SEED(337,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Sparkly Terrain, the holder will use this seed to boost its own Sp. Def stat."),
 	WEAKNESS_POLICY(85,0,400,new Color(215, 233, 195),Item.HELD_ITEM,null,"If the holder is hit with a move it's weak to, this policy sharply boosts its Attack and Sp. Atk stats."),
 	BLUNDER_POLICY(86,0,400,new Color(239, 239, 178),Item.HELD_ITEM,null,"If the holder misses with a move due to low accuracy, this policy will sharply boost its Speed stat."),
-	ROOM_SERVICE(338,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	ROOM_SERVICE(338,0,0,Color.BLACK,Item.HELD_ITEM,null,"If Trick Room takes effect, this item will lower the holder's Speed stat."),
 	RED_CARD(87,0,250,new Color(216, 35, 22),Item.HELD_ITEM,null,"If the holder is damaged by an attack, the mysterious power of this card can remove the attacker from the battle."),
 	THROAT_SPRAY(88,0,150,new Color(96, 120, 168),Item.HELD_ITEM,null,"If the holder uses a sound-based move, this throat spray will boost its Sp. Atk stat."),
-	ADRENALINE_ORB(326,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	ABSORB_BULB(327,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	CELL_BATTERY(328,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	LUMINOUS_MOSS(331,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
-	SNOWBALL(332,0,0,Color.BLACK,Item.HELD_ITEM,null,""),
+	ADRENALINE_ORB(326,0,0,Color.BLACK,Item.HELD_ITEM,null,"This orb will boost the Speed of the Pokemon by 1 stage when it is intimidated."),
+	ABSORB_BULB(327,0,0,Color.BLACK,Item.HELD_ITEM,372,"This single-use bulb will absorb any Water-type attack and boost the Sp. Atk stat of the holder. Any other attack will damage the item."),
+	CELL_BATTERY(328,0,0,Color.BLACK,Item.HELD_ITEM,373,"This single-use battery will absorb any Electric-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
+	LUMINOUS_MOSS(331,0,0,Color.BLACK,Item.HELD_ITEM,374,"This single-use moss will absorb any Water-type attack and boost the Sp. Def stat of the holder. Any other attack will damage the item."),
+	SNOWBALL(332,0,0,Color.BLACK,Item.HELD_ITEM,375,"This single-use ball of snow will absorb any Ice-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
+	DAMAGED_BULB(372,0,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use bulb boosts the Sp. Atk stat if the holder is damaged by a Water-type attack."),
+	DAMAGED_BATTERY(373,0,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use battery boosts the Attack stat if the holder is damaged by an Electric-type attack."),
+	DAMAGED_MOSS(374,0,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use moss boosts the Sp. Def stat if the holder is damaged by a Water-type move."),
+	DAMAGED_SNOWBALL(375,0,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use ball of snow boosts the Attack stat if the holder is damaged by an Ice-type move."),
 	HM01(93,0,0,Color.BLACK,Item.TMS,Move.CUT,"Teaches a Pokemon this move."),
 	HM02(94,0,0,Color.BLACK,Item.TMS,Move.ROCK_SMASH,"Teaches a Pokemon this move."),
 	HM03(95,0,0,Color.BLACK,Item.TMS,Move.VINE_CROSS,"Teaches a Pokemon this move."),
@@ -376,7 +380,13 @@ public enum Item {
 	APICOT_BERRY(256,75,15,new Color(104, 128, 184),Item.BERRY,null,"If a Pokemon holds one of these Berries, its Sp. Def stat will be boosted should it find itself in a pinch."),
 	STARF_BERRY(257,500,200,new Color(184, 232, 152),Item.BERRY,null,"If a Pokemon holds one of these Berries, one of its stats will be sharply boosted should it find itself in a pinch."),
 	MICLE_BERRY(258,200,40,new Color(64, 200, 64),Item.BERRY,null,"If a Pokemon holds one of these Berries, its accuracy will be boosted should it find itself in a pinch."),
+	LANSAT_BERRY(376,25,10,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holds one of these Berries, its critical-hit ratio will be boosted should it find itself in a pinch."),
 	CUSTAP_BERRY(259,200,40,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to act faster in a pinch, but only for the next move."),
+	JABOCA_BERRY(377,50,20,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holding this Berry is hit with a physical move, the attacker will also take damage."),
+	ROWAP_BERRY(378,50,20,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holding this Berry is hit with a special move, the attacker will also take damage."),
+	KEE_BERRY(379,100,40,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holding this Berry is hit with a physical move, the holder's Defense stat will be boosted."),
+	MARANGA_BERRY(380,100,40,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holding this Berry is hit with a special move, the holder's Sp. Def stat will be boosted."),
+	ENIGMA_BERRY(381,50,25,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to regain half of its HP if it is hit with a supereffective move."),
 	PACKAGE_A(260,0,0,Color.BLACK,Item.KEY_ITEM,null,"A large industrial juicer, designed to make berries into healthy juice quickly and effectively. Belongs to one Ms. Plum."),
 	PACKAGE_B(261,0,0,Color.BLACK,Item.KEY_ITEM,null,"Contains a new state of the art frying pan, meant for a master chef. It's said to be for a Guy Eddie."),
 	PACKAGE_C(262,0,0,Color.BLACK,Item.KEY_ITEM,null,"Inside is a bunch of dog toys, and the address says it's for a place called \"Poundtown\"."),
@@ -454,6 +464,8 @@ public enum Item {
 			this.move = (Move) o;
 		} else if (o instanceof Nature) {
 			this.nature = (Nature) o;
+		} else if (o instanceof Integer) {
+			healAmount = (Integer) o;
 		}
 		this.desc = desc;
 		
@@ -1716,7 +1728,7 @@ public enum Item {
 	}
 	
 	public boolean isPinchBerry() {
-		return (getID() == 231 || (getID() >= 252 && getID() <= 259));
+		return (getID() == 231 || (getID() >= 252 && getID() <= 259) || getID() == 376);
 	}
 	
 	public boolean isTreasure() {
@@ -1801,11 +1813,11 @@ public enum Item {
 		if (this == ROOM_SERVICE) return -4;
 		if (this == GRASSY_SEED || this == ELECTRIC_SEED) return 1;
 		if (this == PSYCHIC_SEED || this == SPARKLY_SEED) return 3;
-		if (this == SNOWBALL) return 0;
+		if (this == SNOWBALL || this == DAMAGED_SNOWBALL) return 0;
 		if (this == ADRENALINE_ORB) return 4;
-		if (this == ABSORB_BULB) return 2;
-		if (this == LUMINOUS_MOSS) return 3;
-		if (this == CELL_BATTERY) return 0;
+		if (this == ABSORB_BULB || this == DAMAGED_BULB) return 2;
+		if (this == LUMINOUS_MOSS || this == DAMAGED_MOSS) return 3;
+		if (this == CELL_BATTERY || this == DAMAGED_BATTERY) return 0;
 		return 10;
 	}
 }

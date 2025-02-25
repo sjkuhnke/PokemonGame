@@ -36,7 +36,7 @@ public enum Status {
 	TAUNTED("AUT",Color.BLACK,Color.BLACK),
 	TORMENTED("AUT",Color.BLACK,Color.BLACK),
 	ENDURE("AUT",Color.BLACK,Color.BLACK),
-	FOCUS_ENERGY("AUT",Color.BLACK,Color.BLACK),
+	CRIT_CHANCE("AUT",Color.BLACK,Color.BLACK),
 	FLASH_FIRE("AUT",Color.BLACK,Color.BLACK),
 	NO_SWITCH("AUT",Color.BLACK,Color.BLACK),
 	SMACK_DOWN("AUT",Color.BLACK,Color.BLACK),
@@ -50,6 +50,9 @@ public enum Status {
 	YAWNING("AUT",Color.BLACK,Color.BLACK),
 	DROWSY("AUT",Color.BLACK,Color.BLACK),
 	LANDED("AUT",Color.BLACK,Color.BLACK),
+	HEAL_BLOCK("",Color.BLACK,Color.BLACK),
+	ARCANE_SPELL("",Color.BLACK,Color.BLACK),
+	SPELLBIND("",Color.BLACK,Color.BLACK),
 	;
 	
 	Status(String name, Color color, Color textColor) {

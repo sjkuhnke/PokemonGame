@@ -1398,7 +1398,7 @@ public class BattleUI extends AbstractUI {
         
         for (int i = 2; i < 16; i++) {
         	g2.setColor(Color.WHITE);
-        	String type = Pokemon.getStatType(i / 2);
+        	String type = Pokemon.getStatType(i / 2, false);
         	int stage;
         	if (i % 2 == 0) {
         		stage = user.statStages[i / 2 - 1];
@@ -1424,7 +1424,7 @@ public class BattleUI extends AbstractUI {
         y = startY;
 	    ArrayList<String> addVStatus = user.getStatusLabels();
 	    for (String s : addVStatus) {
-        	g2.drawString(s, x, y);
+        	g2.drawString(s, x - gp.tileSize / 2, y);
         	y += gp.tileSize / 3;
         }
         
