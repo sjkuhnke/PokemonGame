@@ -74,6 +74,8 @@ public class Field {
 		MUD_SPORT(8, false, false),
 		AURORA(5, false, false),
 		FLOODLIGHT(-1, false, false),
+		HEALING_CIRCLE(8, false, false),
+		MAGIC_ROOM(8, false, false),
 		;
 		
 		private Effect(int turns, boolean isWeather, boolean isTerrain) {
@@ -213,6 +215,10 @@ public class Field {
 				return new Color(208, 47, 245);
 			case FLOODLIGHT:
 				return new Color(249, 255, 166);
+			case HEALING_CIRCLE:
+				return new Color(240, 77, 126);
+			case MAGIC_ROOM:
+				return new Color(254, 1, 77);
 			default:
 				return new Color(150, 217, 214);
 			
@@ -273,6 +279,13 @@ public class Field {
 	
 	public void setEffect(FieldEffect effect) {
 		if (effect.effect == Effect.TRICK_ROOM) {
+			if (contains(fieldEffects, effect.effect)) {
+				removeEffect(fieldEffects, effect.effect);
+				Task.addTask(Task.TEXT, "The bizarre area returned to normal!");
+				return;
+			}
+		}
+		if (effect.effect == Effect.MAGIC_ROOM) {
 			if (contains(fieldEffects, effect.effect)) {
 				removeEffect(fieldEffects, effect.effect);
 				Task.addTask(Task.TEXT, "The twisted dimensions returned to normal!");
@@ -378,7 +391,7 @@ public class Field {
 	}
 	
 	public boolean equals(FieldEffect fe, Effect e, Pokemon affected) {
-		if (e.isWeather || affected.item != Item.UTILITY_UMBRELLA) return equals(fe, e);
+		if (e.isWeather || affected.getItem() != Item.UTILITY_UMBRELLA) return equals(fe, e);
 		return false;
 	}
 	

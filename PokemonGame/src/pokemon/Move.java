@@ -29,7 +29,7 @@ public enum Move {
 	AGILITY(0,1000,0,0,2,0,PType.FLYING,"Raises user's Speed by 2",false,15),
 	AIR_CUTTER(55,95,0,1,1,0,PType.FLYING,"Boosted Crit Rate",false,25),
 	AIR_SLASH(75,95,30,0,1,0,PType.FLYING,"% chance of causing foe to flinch",false,15),
-	ALCHEMY(0,1000,0,0,2,0,PType.MAGIC,"Heals 33% HP, if user holds an item will remove it and heal 100%",false,10), // TODO
+	ALCHEMY(0,1000,0,0,2,0,PType.MAGIC,"Heals 33% HP, if user holds an item will remove it and heal 100%",false,10),
 	AMNESIA(0,1000,0,0,2,0,PType.PSYCHIC,"Raises user's Sp.Def by 2",false,20),
 	ANCIENT_POWER(60,100,10,0,1,0,PType.ROCK,"% chance to raise all of the user's stats by 1",false,5),
 	AQUA_JET(40,100,0,0,0,1,PType.WATER,"Always goes first",true,15),
@@ -115,6 +115,7 @@ public enum Move {
 	DIAMOND_STORM(100,95,50,0,1,0,PType.ROCK,"% chance to raise user's Defense by 2",false,5),
 	DIG(80,100,0,0,0,0,PType.GROUND,"A two turn attack. Digs underground on the first, attacks on the second",true,15),
 	DIRE_CLAW(80,100,50,0,0,0,PType.POISON,"% chance to Paralyze, Poison, or Sleep foe",true,15),
+	DISABLE(0,100,0,0,2,0,PType.NORMAL,"Disabled the target's last used move for 4 turns",false,20),
 	DISCHARGE(80,100,30,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false,15),
 	DISENCHANT(70,100,0,0,1,0,PType.MAGIC,"Clears all stat changes on foe before attacking",false,15),
 	DIVE(80,100,0,0,0,0,PType.WATER,"A two turn attack. Dives underwater on the first, attacks on the second",true,15),
@@ -149,7 +150,7 @@ public enum Move {
 	ELEMENTAL_SPARKLE(45,90,0,0,1,0,PType.MAGIC,"A random Grass, Fire, or Water move is also used",false,10),
 	EMBER(40,100,10,0,1,0,PType.FIRE,"% chance to Burn foe",false,25),
 	ENCORE(0,100,0,0,2,0,PType.NORMAL,"Causes foe to use their last used move for 4 turns",false,5),
-	ENDEAVOR(0,100,0,0,0,0,PType.NORMAL,"Sets the foe's health equal to the user's, fails if foe's health is greater than user's",true,5),
+	ENDEAVOR(0,100,0,-1,0,0,PType.NORMAL,"Sets the foe's health equal to the user's, fails if foe's health is greater than user's",true,5),
 	ENDURE(0,1000,0,0,2,4,PType.NORMAL,"The user will survive on at least 1 HP from the next attack. Can't be used in succession",false,10),
 	ENERGY_BALL(90,100,10,0,1,0,PType.GRASS,"% chance to lower foe's Sp.Def by 1",false,10),
 	ENTRAINMENT(0,100,0,0,2,0,PType.NORMAL,"Changes foe's ability to the user's",false,15),
@@ -176,7 +177,7 @@ public enum Move {
 	FIRE_PUNCH(75,100,20,0,0,0,PType.FIRE,"% to Burn foe",true,15),
 	FIRE_SPIN(35,85,100,0,1,0,PType.FIRE,"% to spin non-FIRE foes for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
 	FIRST_IMPRESSION(90,100,0,0,0,1,PType.BUG,"Always attacks first, fails after the first turn a user is out in battle",true,10),
-	FISSURE(0,30,0,0,0,0,PType.GROUND,"If this move hits, it always K.Os foe",false,5),
+	FISSURE(0,30,0,-1,0,0,PType.GROUND,"If this move hits, it always K.Os foe",false,5),
 	FLAIL(-1,100,0,0,0,0,PType.NORMAL,"Power is higher the lower HP the user has",true,15),
 	FLAME_BURST(70,100,0,0,1,0,PType.FIRE,"A normal attack",false,15),
 	FLAME_CHARGE(50,100,100,0,0,0,PType.FIRE,"% chance to raise user's Speed by 1",true,15),
@@ -226,7 +227,7 @@ public enum Move {
 	GRAVITY_PUNCH(40,100,0,0,0,2,PType.PSYCHIC,"Always goes first with extra priority. Still works in PSYCHIC TERRAIN.",true,5),
 	GROWL(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack by 1",false,35),
 	GROWTH(0,1000,0,0,2,0,PType.GRASS,"Raises user's Attack and Sp.Atk by 1, 2 each in the SUN",false,15),
-	GUILLOTINE(0,30,0,0,0,0,PType.NORMAL,"If this move hits, it always K.Os foe",true,5),
+	GUILLOTINE(0,30,0,-1,0,0,PType.NORMAL,"If this move hits, it always K.Os foe",true,5),
 	GUNK_SHOT(120,80,30,0,0,0,PType.POISON,"% chance to Poison foe",false,5),
 	GUST(40,100,0,0,1,0,PType.FLYING,"A normal attack",false,30),
 	GYRO_BALL(-1,100,0,0,0,0,PType.STEEL,"The lower the user's speed compared to the foe, the more power",true,10),
@@ -242,13 +243,13 @@ public enum Move {
 	HEAT_WAVE(95,90,10,0,1,0,PType.FIRE,"% to Burn foe",false,10),
 	HEAVY_SLAM(-1,100,0,0,0,0,PType.STEEL,"Damage is based on how heavy the user is compared to the foe",true,10),
 	HEX(-1,100,0,0,1,0,PType.GHOST,"Damage is doubled if the foe has a status condition",false,10),
-	HEX_CLAW(75,100,100,0,0,0,PType.MAGIC,"% chance to disable the target's last used move for 3 turns",true,10), // TODO
+	HEX_CLAW(75,100,100,0,0,0,PType.MAGIC,"% chance to disable the target's last used move for 3 turns",true,10),
 	HI_JUMP_KICK(130,90,0,0,0,0,PType.FIGHTING,"If this attack misses, user takes 50% of its max HP",true,10),
 	HIDDEN_POWER(60,100,0,0,1,0,PType.NORMAL,"The type of this move depends on the user's IVs",false,15),
 	HOCUS_POCUS(70,95,20,0,1,0,PType.MAGIC,"% to inflict foe with a random Status condition",false,10),
 	HONE_CLAWS(0,1000,0,0,2,0,PType.DARK,"Raises user's Attack and Accuracy by 1",false,15),
 	HORN_ATTACK(65,100,0,0,0,0,PType.NORMAL,"A normal attack",true,25),
-	HORN_DRILL(0,30,0,0,0,0,PType.NORMAL,"If this move hits, it always K.Os foe",true,5),
+	HORN_DRILL(0,30,0,-1,0,0,PType.NORMAL,"If this move hits, it always K.Os foe",true,5),
 	HORN_LEECH(75,100,0,0,0,0,PType.GRASS,"Heals 50% of damage dealt to foe",true,10),
 	HOWL(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Attack by 1",false,20),
 	HURRICANE(110,70,30,0,1,0,PType.FLYING,"% chance to confuse foe, doesn't check Accuracy in RAIN",false,10),
@@ -399,7 +400,7 @@ public enum Move {
 	PSYCHIC_TERRAIN(0,1000,0,0,2,0,PType.PSYCHIC,"Changes the terrain to PSYCHIC for 5 turns",false,15),
 	PSYCHO_CUT(70,100,0,1,0,0,PType.PSYCHIC,"Boosted Crit rate",false,20),
 	PSYSHOCK(80,100,0,0,1,0,PType.PSYCHIC,"Uses foe's Defense instead of Sp.Def in damage calculation",false,15),
-	PSYWAVE(0,100,0,0,1,0,PType.PSYCHIC,"Deals damage equal to user's level",false,15),
+	PSYWAVE(0,100,0,-1,1,0,PType.PSYCHIC,"Deals damage equal to user's level",false,15),
 	QUICK_ATTACK(40,100,0,0,0,1,PType.NORMAL,"Always attacks first",true,15),
 	QUICK_SPELL(40,100,0,0,1,1,PType.MAGIC,"Always attacks first",false,15),
 	QUIVER_DANCE(0,1000,0,0,2,0,PType.BUG,"Raises user's Sp.Atk, Sp.Def and Speed by 1 stage",false,10),
@@ -453,7 +454,7 @@ public enum Move {
 	SHADOW_CLAW(80,100,0,1,0,0,PType.GHOST,"Boosted crit rate",true,15),
 	SHADOW_PUNCH(80,1000,0,0,0,0,PType.GHOST,"This attack never misses",true,20),
 	SHADOW_SNEAK(40,100,0,0,0,1,PType.GHOST,"Always attacks first",true,15),
-	SHEER_COLD(0,30,0,0,1,0,PType.ICE,"If this move hits, it always K.Os foe. Doesn't effect ICE types",false,5),
+	SHEER_COLD(0,30,0,-1,1,0,PType.ICE,"If this move hits, it always K.Os foe. Doesn't effect ICE types",false,5),
 	SHELL_SMASH(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Attack, Sp.Atk, and Speed by 2, at the cost of lowering its Defense and Sp.Def by 1",false,5),
 	SHIFT_GEAR(0,1000,0,0,2,0,PType.STEEL,"Raises user's Attack by 1 and Speed by 2",false,10),
 	SHOCK_WAVE(60,1000,0,0,1,0,PType.ELECTRIC,"This attack never misses",false,20),
@@ -496,7 +497,7 @@ public enum Move {
 	SPARKLING_WATER(0,1000,0,0,2,0,PType.WATER,"Raises Sp.Def by 2. Turns into Sparkling Aria when used by Kissyfishy-D",false,15),
 	SPARKLY_SWIRL(70,100,10,0,1,0,PType.MAGIC,"% chance to lower all of foe's stats by 1",false,15),
 	SPECTRAL_THIEF(90,100,100,0,0,0,PType.GHOST,"% to steal any stat boosts foe has",true,10),
-	SPELLBIND(0,100,0,0,2,0,PType.MAGIC,"Traps non-MAGIC foe for 4-5 turns, lowers foe's Def and SpD every turn",false,10), // TODO
+	SPELLBIND(0,100,0,0,2,0,PType.MAGIC,"Traps non-MAGIC foe for 4-5 turns, lowers foe's Def and SpD by 1 every turn, 2 if Binding Band was held",false,10),
 	SPIKE_CANNON(25,100,0,0,0,0,PType.NORMAL,"Hits 2-5 times",false,15),
 	SPIKES(0,1000,0,0,2,0,PType.GROUND,"Lays spikes on the opponents side. Depending on the layers laid (1-3) will damage any grounded foe (1/8, 1/6, 1/4) upon switch-in",false,20),
 	SPIKY_SHIELD(0,1000,0,0,2,4,PType.GRASS,"User protects itself, can't be used in succession. Damages foe if they make contact",false,10),
@@ -528,7 +529,7 @@ public enum Move {
 	SUNNY_DAY(0,1000,0,0,2,0,PType.FIRE,"Changes the weather to SUNNY for 5 turns",false,5),
 	SUNNY_DOOM(80,100,0,0,1,0,PType.LIGHT,"If this attack faints foe, causes weather to turn SUNNY",false,5),
 	SUNSTEEL_STRIKE(100,100,0,0,0,0,PType.STEEL,"A normal attack",true,5),
-	SUPER_FANG(0,90,0,0,0,0,PType.NORMAL,"Halves foe's remaining HP",true,10),
+	SUPER_FANG(0,90,0,-1,0,0,PType.NORMAL,"Halves foe's remaining HP",true,10),
 	SUPERCHARGED_SPLASH(10,100,75,0,1,0,PType.WATER,"% chance to raise user's Sp.Atk by 2. Turns into Thunder when used by Kissyfishy-D",false,15),
 	SUPERNOVA_EXPLOSION(200,100,0,0,1,0,PType.GALACTIC,"User faints",false,5),
 	SUPERPOWER(120,100,100,0,0,0,PType.FIGHTING,"% of lowering user's Attack and Defense by 1",true,5),
@@ -762,7 +763,18 @@ public enum Move {
 			} else {
 				if (user.ability == Ability.NORMALIZE) bp *= 1.2;
 			}
-			if (user.item == Item.METRONOME && this == user.lastMoveUsed) bp *= (1 + ((user.metronome) * 0.2));
+			if (user.getItem() == Item.METRONOME && this == user.lastMoveUsed) bp *= (1 + ((user.metronome) * 0.2));
+			int arcane = user.getStatusNum(Status.ARCANE_SPELL);
+			if (arcane != 0) {
+				bp = Math.max(bp - arcane, 20);
+			}
+			if (Pokemon.field.equals(Pokemon.field.weather, Effect.SUN, foe)) {
+				if (this == Move.SOLSTICE_BLADE) bp *= 1.5;
+			}
+			if (Pokemon.field.equals(Pokemon.field.weather, Effect.RAIN, foe) || Pokemon.field.equals(Pokemon.field.weather, Effect.SNOW, foe)
+					|| Pokemon.field.equals(Pokemon.field.weather, Effect.SANDSTORM, foe)) {
+				if (this == Move.SOLAR_BEAM || this == Move.SOLAR_BLADE || this == Move.SOLSTICE_BLADE) bp *= 0.5;
+			}
 			return bp;
 		}
 		return basePower;
@@ -886,7 +898,7 @@ public enum Move {
 				this == Move.PIN_MISSILE || this == Move.ROCK_BLAST|| this == Move.SCALE_SHOT || this == Move.SPIKE_CANNON ||
 				this == Move.SHOOTING_STARS || this == Move.BULLET_SEED || this == Move.FLASH_DARTS || this == Move.MAGIC_MISSILES) {
 			int randomNum = (int) (Math.random() * 100) + 1; // Generate a random number between 1 and 100 (inclusive)
-			if (user.item == Item.LOADED_DICE) {
+			if (user.getItem() == Item.LOADED_DICE) {
 				if (randomNum <= 50) {
 					return 4;
 				} else {
@@ -1135,7 +1147,6 @@ public enum Move {
 	}
 	
 	public int getPriority(Pokemon p) {
-		// TODO Auto-generated method stub
 		return this.priority;
 	}
 	
@@ -1197,6 +1208,7 @@ public enum Move {
 	public boolean isHealing() {
 		ArrayList<Move> result = getDraining();
 		result.add(LIFE_DEW);
+		result.add(HEALING_CIRCLE);
 		result.add(MOONLIGHT);
 		result.add(MORNING_SUN);
 		result.add(RECOVER);
@@ -1223,7 +1235,7 @@ public enum Move {
 		double effectiveness = Trainer.getEffective(foe, me, m.mtype, m, false);
 		if (effectiveness == 0) return false;
 		int sec = m.secondary;
-		if (foe.item == Item.COVERT_CLOAK) sec = 0;
+		if (foe.getItem() == Item.COVERT_CLOAK) sec = 0;
 		if (foe.ability == Ability.SHIELD_DUST && me.ability != Ability.MOLD_BREAKER) sec = 0;
 		if (Pokemon.field.equals(Pokemon.field.terrain, Effect.SPARKLY) && me.isGrounded()) sec *= 2;
 		if (me.ability == Ability.SERENE_GRACE) sec *= 2;
@@ -1259,8 +1271,24 @@ public enum Move {
 				if (m == Move.FLAME_CHARGE || m == Move.POWER$UP_PUNCH || m == Move.SCALE_SHOT || m == Move.SWORD_SPIN || m == Move.TORNADO_SPIN) {
 					return true;
 				}
+				// Encore if they aren't
+				if (m == Move.SPOTLIGHT_RAY && !foe.hasStatus(Status.ENCORED)) {
+					return true;
+				}
+				// Change weather to Sunny
+				if (m == Move.SUNNY_BURST && !Pokemon.field.equals(Pokemon.field.weather, Effect.SUN)) {
+					return true;
+				}
 				// Ability changing moves
 				if (m == Move.SLOW_FALL && me.ability != Ability.LEVITATE) {
+					return true;
+				}
+				// Arcane Spell
+				if (m == Move.ARCANE_SPELL) {
+					return true;
+				}
+				// Disenchant
+				if (m == Move.DISENCHANT && !me.arrayGreaterOrEqual(new int[] {0, 0, 0, 0, 0, 0, 0}, foe.statStages)) {
 					return true;
 				}
 				if (m == Move.SMACK_DOWN && !foe.isGrounded()) {
@@ -1270,6 +1298,13 @@ public enum Move {
 					return true;
 				}
 				if (m == Move.ROCKFALL_FRENZY && !Pokemon.field.contains(foe.getFieldEffects(), Effect.STEALTH_ROCKS)) {
+					return true;
+				}
+				// Item removing/stealing
+				if (m == Move.KNOCK_OFF && foe.item != null) {
+					return true;
+				}
+				if ((m == Move.COVET || m == Move.THIEF) && me.item == null) {
 					return true;
 				}
 				

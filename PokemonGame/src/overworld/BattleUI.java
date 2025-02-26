@@ -835,7 +835,7 @@ public class BattleUI extends AbstractUI {
 					Task.addTask(Task.TEXT, "No! There's no running from a trainer battle!");
 				} else {
 					Pokemon faster = user.getFaster(foe, 0, 0);
-					boolean isFaster = faster == user || user.item == Item.SHED_SHELL || user.type1 == PType.GHOST || user.type2 == PType.GHOST;
+					boolean isFaster = faster == user || user.getItem() == Item.SHED_SHELL || user.type1 == PType.GHOST || user.type2 == PType.GHOST;
 					
 					if (isFaster || new Random().nextBoolean()) {
 						Task.addTask(Task.END, "Got away safely!");
@@ -1424,7 +1424,7 @@ public class BattleUI extends AbstractUI {
         y = startY;
 	    ArrayList<String> addVStatus = user.getStatusLabels();
 	    for (String s : addVStatus) {
-        	g2.drawString(s, x - gp.tileSize / 2, y);
+        	g2.drawString(s, (int) (x - gp.tileSize * 1.5), y);
         	y += gp.tileSize / 3;
         }
         

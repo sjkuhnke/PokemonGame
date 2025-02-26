@@ -58,7 +58,7 @@
 181|Raptorex     |FIGHTING|FLYING  |NO_GUARD          |GUTS              |ADAPTABILITY      |[66, 74, 85, 106, 95, 97]     |190.3 |45 |
 84 |Kleinowl     |ICE     |PSYCHIC |SNOW_CLOAK        |MOUTHWATER        |SNOW_WARNING      |[60, 15, 40, 80, 73, 55]      |4.5   |75 |
 85 |Hootowl      |ICE     |PSYCHIC |SNOW_CLOAK        |ICE_BODY          |SNOW_WARNING      |[85, 30, 65, 120, 120, 75]    |89.5  |45 |
-204|Dualmoose    |ICE     |MAGIC   |SNOW_CLOAK        |SPARKLY_SURGE     |MAGIC_BOUNCE      |[90, 64, 67, 85, 71, 58]      |100.0 |35 |
+204|Dualmoose    |ICE     |MAGIC   |EVERGLOW          |SNOW_CLOAK        |SPARKLY_SURGE     |[90, 64, 67, 85, 71, 58]      |100.0 |35 |
 162|Snom         |ICE     |BUG     |ICY_SCALES        |SWARM             |TINTED_LENS       |[30, 25, 35, 45, 30, 20]      |8.4   |190|
 163|Frosmoth     |ICE     |BUG     |ICY_SCALES        |SHIELD_DUST       |TINTED_LENS       |[70, 65, 60, 125, 90, 65]     |92.6  |75 |
 205|Grondor      |GROUND  |ICE     |STURDY            |TECHNICIAN        |REFRIGERATE       |[80, 74, 87, 25, 96, 33]      |135.6 |135|
@@ -74,7 +74,7 @@
 95 |Opwing       |BUG     |DARK    |TECHNICIAN        |INSOMNIA          |TERRIFY           |[88, 102, 67, 61, 88, 101]    |18.5  |50 |
 49 |Hatenna      |PSYCHIC |MAGIC   |ANTICIPATION      |SLEIGHT_OF_HAND   |UNWAVERING        |[42, 30, 45, 56, 53, 39]      |7.5   |235|
 50 |Hattrem      |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |SLEIGHT_OF_HAND   |UNWAVERING        |[57, 40, 65, 86, 73, 49]      |10.6  |120|
-51 |Hatterene    |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |SLEIGHT_OF_HAND   |UNWAVERING        |[82, 65, 95, 136, 103, 29]    |11.2  |45 |
+51 |Hatterene    |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |SLEIGHT_OF_HAND   |MYSTIC_RIFT       |[82, 65, 95, 136, 103, 29]    |11.2  |45 |
 189|Otterpor     |WATER   |PSYCHIC |WATER_VEIL        |ANTICIPATION      |HYDRATION         |[55, 19, 66, 74, 99, 20]      |16.6  |75 |
 190|Psylotter    |WATER   |PSYCHIC |WATER_VEIL        |SWIFT_SWIM        |HYDRATION         |[71, 48, 87, 102, 106, 86]    |41.0  |45 |
 178|Florline     |GRASS   |PSYCHIC |GRASSY_SURGE      |PSYCHIC_SURGE     |UNBURDEN          |[43, 43, 43, 88, 80, 43]      |13.1  |75 |
@@ -174,8 +174,8 @@
 57 |Cleffa       |GALACTIC|LIGHT   |MAGIC_GUARD       |UNAWARE           |CLOUD_NINE        |[50, 25, 28, 45, 55, 15]      |6.6   |150|
 58 |Clefairy     |GALACTIC|LIGHT   |MAGIC_GUARD       |UNAWARE           |CLOUD_NINE        |[70, 45, 48, 60, 65, 35]      |16.5  |150|
 59 |Clefable     |GALACTIC|LIGHT   |MAGIC_GUARD       |UNAWARE           |CLOUD_NINE        |[95, 70, 73, 95, 90, 60]      |88.2  |25 |
-67 |Minishoo     |MAGIC   |FLYING  |SERENE_GRACE      |NATURAL_CURE      |MIRROR_ARMOR      |[40, 45, 65, 100, 105, 65]    |12.9  |100|
-68 |Glittleshoo  |MAGIC   |FLYING  |SERENE_GRACE      |NATURAL_CURE      |MIRROR_ARMOR      |[70, 45, 75, 135, 115, 80]    |75.1  |55 |
+67 |Minishoo     |MAGIC   |FLYING  |SERENE_GRACE      |NATURAL_CURE      |MYSTIC_RIFT       |[40, 45, 65, 100, 105, 65]    |12.9  |100|
+68 |Glittleshoo  |MAGIC   |FLYING  |SERENE_GRACE      |NATURAL_CURE      |MYSTIC_RIFT       |[70, 45, 75, 135, 115, 80]    |75.1  |55 |
 117|Zorua        |NORMAL  |GHOST   |ILLUSION          |ILLUMINATION      |ADAPTABILITY      |[35, 60, 40, 85, 40, 70]      |27.6  |75 |
 118|Zoroark      |NORMAL  |GHOST   |ILLUSION          |ILLUMINATION      |ADAPTABILITY      |[55, 100, 60, 125, 60, 110]   |178.8 |45 |
 214|Droid        |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[50, 70, 55, 50, 50, 55]      |99.9  |135|

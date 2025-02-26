@@ -185,7 +185,7 @@ public enum Item {
 	EJECT_PACK(330,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the holder's stats are lowered, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team."),
 	POWER_HERB(83,0,50,new Color(253, 80, 77),Item.HELD_ITEM,null,"A herb that allows the holder to immediately use a move that normally requires a turn to charge or recharge, but only once."),
 	WHITE_HERB(84,0,50,new Color(242, 242, 242),Item.HELD_ITEM,null,"A herb that will restore any lowered stat in battle, but only once."),
-	MENTAL_HERB(92,0,50,Color.BLACK,Item.HELD_ITEM,null,"An item to be held by a Pokemon. The holder shakes off move-binding effects to move freely. It can be used only once."),
+	MENTAL_HERB(92,0,50,Color.BLACK,Item.HELD_ITEM,null,"An item to be held by a Pokemon. The holder shakes off move-binding effects and flinching to move freely. It can be used only once."),
 	MIRROR_HERB(333,0,0,Color.BLACK,Item.HELD_ITEM,null,"This herb will allow the holder to mirror an opponent's stat increases to boost its own stats - but only once."),
 	ELECTRIC_SEED(334,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Electric Terrain, the holder will use this seed to boost its own Defense stat."),
 	GRASSY_SEED(335,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Grassy Terrain, the holder will use this seed to boost its own Defense stat."),
