@@ -161,3 +161,11 @@ Go through every Pokemon and deside if they should learn the removed TM moves by
 Search all removed TM moves and redo the trainer/set movesets
 Quickly scroll through all Pokemon with edited TM/level up learnsets and search for them in trainers.csv and sets.txt
 Go through sets.txt and decide if any of them should get any of the new items
+
+Arcane Spell works but add a message that it makes them weaker
+Light Drain works
+Sword Of Dawn works
+Solstice Blade works
+Aurora Glow works but heals Dust Sorcerer and Bronzong-X but not my light type, think I have it backwards
+Desk Swap doesnt work, use a StatusEffect instead
+Sunny Burst works

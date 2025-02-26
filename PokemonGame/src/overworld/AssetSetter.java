@@ -1271,7 +1271,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(MILLIE, "Millie", 62, 46, "EEK! Wait... your eyes aren't radioactive green.", true);
 		gp.npc[mapNum][index++] = null; // replace with millie_up when we have it
 		gp.npc[mapNum][index] = SetupStaticEncounter(284, 82, 22, 387, 76, "Bzzt.");
-		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, "Fredrick", 82, 32, "Ugh... Can't... Move... glrglg....");
+		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, "Fred", 82, 32, "Ugh... Can't... Move... glrglg....");
 		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 82, 32, "In updateNPC", "", 89);
 		gp.npc[mapNum][index++] = null; // millie 4
 		gp.npc[mapNum][index] = NPCSetup(BURGLAR_DOWN, 12, 52, "Caught me red-handed? I'll just take your victory instead!", "Tch... Guess I can't steal a win from you.", 85);

@@ -2834,12 +2834,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (m != null && m.move == move) {
 				m.currentPP -= foe.ability == Ability.PRESSURE ? 2 : 1;
 				m.currentPP = m.currentPP < 0 ? 0 : m.currentPP;
-			}
-			if (m.currentPP == 0) {
-				if (this.getItem() == Item.LEPPA_BERRY) {
-					this.eatBerry(this.item, true, foe, m.move);
-				} else {
-					this.encoreCount = 0;
+				
+				if (m.currentPP == 0) {
+					if (this.getItem() == Item.LEPPA_BERRY) {
+						this.eatBerry(this.item, true, foe, m.move);
+					} else {
+						this.encoreCount = 0;
+					}
 				}
 			}
 		}
