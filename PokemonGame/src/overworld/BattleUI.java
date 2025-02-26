@@ -1422,6 +1422,7 @@ public class BattleUI extends AbstractUI {
         x = userX + gp.tileSize * 3;
         int endY = y;
         y = startY;
+        g2.setColor(Color.WHITE);
 	    ArrayList<String> addVStatus = user.getStatusLabels();
 	    for (String s : addVStatus) {
         	g2.drawString(s, (int) (x - gp.tileSize * 1.5), y);
@@ -1430,6 +1431,7 @@ public class BattleUI extends AbstractUI {
         
         x = foeX + gp.tileSize * 2;
         y = startY;
+        g2.setColor(Color.WHITE);
         addVStatus = foe.getStatusLabels();
         for (String s : addVStatus) {
         	g2.drawString(s, x, y);
@@ -1437,6 +1439,7 @@ public class BattleUI extends AbstractUI {
         }
         
         y = endY;
+        g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(24F));
         String fieldLabel = "Field Effects:";
         int middleX = gp.tileSize * 3 + width / 2;
