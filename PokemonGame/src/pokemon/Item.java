@@ -271,7 +271,7 @@ public enum Item {
 	TM56(156,0,0,Color.BLACK,Item.TMS,Move.TRICK_TACKLE,"Teaches a Pokemon this move."),
 	TM57(157,0,0,Color.BLACK,Item.TMS,Move.DEFOG,"Teaches a Pokemon this move."),
 	TM58(158,0,0,Color.BLACK,Item.TMS,Move.DRAGON_PULSE,"Teaches a Pokemon this move."),
-	TM59(159,0,0,Color.BLACK,Item.TMS,Move.BRICK_BREAK,"Teaches a Pokemon this move."),
+	TM59(159,0,0,Color.BLACK,Item.TMS,Move.BODY_PRESS,"Teaches a Pokemon this move."),
 	TM60(160,0,0,Color.BLACK,Item.TMS,Move.FREEZE$DRY,"Teaches a Pokemon this move."),
 	TM61(161,0,0,Color.BLACK,Item.TMS,Move.SCORCHING_SANDS,"Teaches a Pokemon this move."),
 	TM62(162,0,0,Color.BLACK,Item.TMS,Move.BUG_BUZZ,"Teaches a Pokemon this move."),
@@ -955,7 +955,7 @@ public enum Item {
         
         JPanel statsPanel = new JPanel(new GridLayout(6, 3));
         for (int i = 0; i < 6; i++) {
-        	userStatLabels[i] = new JLabel(userC.stats[i] + "");
+        	userStatLabels[i] = new JLabel(userC.getStat(i) + "");
         	Integer[] stages = new Integer[] {-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6};
         	userStages[i] = new JComboBox<Integer>(stages);
         	if (i != 0) userStages[i].setSelectedIndex(userC.statStages[i - 1] + 6);
@@ -994,7 +994,7 @@ public enum Item {
         
         JPanel fStatsPanel = new JPanel(new GridLayout(6, 3));
         for (int i = 0; i < 6; i++) {
-        	foeStatLabels[i] = new JLabel(foeC.stats[i] + "");
+        	foeStatLabels[i] = new JLabel(foeC.getStat(i) + "");
         	Integer[] stages = new Integer[] {-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6};
         	foeStages[i] = new JComboBox<Integer>(stages);
         	if (i != 0) foeStages[i].setSelectedIndex(foeC.statStages[i - 1] + 6);

@@ -86,7 +86,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	// stat fields
 	public int[] baseStats;
-	public int[] stats;
+	private int[] stats;
 	public int level;
 	public int[] statStages;
 	public int[] ivs;
@@ -96,6 +96,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public double weight;
 	public int catchRate;
 	public int happiness;
+	public Pokemon tricked;
 	
 	// type fields
 	public PType type1;
@@ -807,27 +808,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENCORE) && foe.lastMoveUsed == null) bestMoves.removeIf(Move.ENCORE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MIMIC) && foe.lastMoveUsed == null) bestMoves.removeIf(Move.MIMIC::equals);
 		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.DECK_CHANGE)
-				&& ((this.movesetIsCat() == 1 && this.getStat(3) < this.getStat(1))
-				|| (this.movesetIsCat() == 0 && this.getStat(1) < this.getStat(3)))) bestMoves.removeIf(Move.DECK_CHANGE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.DECK_CHANGE) && foe.hasStatus(Status.DECK_CHANGE)) bestMoves.removeIf(Move.DECK_CHANGE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.HEALING_CIRCLE) && field.contains(this.getFieldEffects(), Effect.HEALING_CIRCLE)) bestMoves.removeIf(Move.HEALING_CIRCLE::equals);
 		
 		return bestMoves;
-	}
-	
-	private int movesetIsCat() {
-		int phys = 0;
-		int spec = 0;
-		for (Moveslot m : moveset) {
-			if (m != null) {
-				if (m.move.cat == 0) {
-					phys++;
-				} else if (m.move.cat == 1) {
-					spec++;
-				}
-			}
-		}
-		return phys > spec ? 0 : spec > phys ? 1 : 2;
 	}
 
 	private boolean allMovesAreDamaging(Map<Move, Integer> moves) {
@@ -1352,6 +1336,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 	
 	public int getStat(int type) {
+		if (type > 0 && this.hasStatus(Status.DECK_CHANGE)) {
+			if (type == 1) {
+				type = 3;
+			} else if (type == 3) {
+				type = 1;
+			}
+		}
 		return type > stats.length ? 0 : this.stats[type];
 	}
 
@@ -2261,7 +2252,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			
 			bp *= boostItemCheck(moveType);
 			
-			if (move == Move.CHROMO_BEAM && checkSecondary(30)) {
+			if (move == Move.CHROMO_BEAM && checkSecondary(this.ability == Ability.SERENE_GRACE || field.equals(field.terrain, Effect.SPARKLY) ? 60 : 30)) {
 				Task.insertTask(Task.createTask(Task.TEXT, this.nickname + " is going all out for this attack!"), damageIndex++);
 				bp *= 2;
 			}
@@ -2363,7 +2354,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			
 			// Crit Check
-			critChance = move.critChance + this.getStatusNum(Status.CRIT_CHANCE);
+			critChance += this.getStatusNum(Status.CRIT_CHANCE);
 			if (this.ability == Ability.SUPER_LUCK) critChance++;
 			if (item == Item.SCOPE_LENS) critChance++;
 			if (this.ability == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC)) critChance = 3; 
@@ -3076,6 +3067,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.addStatus(Status.FLINCHED);
 		} else if (move == Move.ARCANE_SPELL) {
 			foe.incrementStatus(Status.ARCANE_SPELL, 10);
+			Task.addTask(Task.TEXT, "The spell caused " + foe.nickname + " to become weaker!");
 		} else if (move == Move.ASTONISH && first) {
 			foe.addStatus(Status.FLINCHED);
 		} else if (move == Move.AURORA_BEAM) {
@@ -3310,6 +3302,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (foe.disabledMove == null && foe.lastMoveUsed != null && foe.lastMoveUsed.pp > 0) {
 				foe.disabledMove = foe.lastMoveUsed;
 				foe.disabledCount = 3;
+				Task.addTask(Task.TEXT, foe.nickname + "'s " + foe.disabledMove + " was disabled!");
 			}
 		} else if (move == Move.HOCUS_POCUS) {
 			int randomNum = ((int) Math.random() * 5);
@@ -3491,7 +3484,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 //		} else if (move == Move.MEGA_PUNCH) {
 //			foe.paralyze(false, this);
 		} else if (move == Move.MANA_PUNCH) {
-			int randomNum = ((int) Math.random() * 8);
+			int randomNum = new Random().nextInt(8);
 			if (randomNum < 7) {
 				stat(this, randomNum, 1, foe);
 			} else {
@@ -3739,6 +3732,41 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			 else if (randomNum == 2) {
 				foe.freeze(false, this);
+			}
+		} else if (move == Move.TRICK_TACKLE) {
+			if (this.tricked != foe) {
+				if (!(foe.ability == Ability.STICKY_HOLD && this.ability != Ability.MOLD_BREAKER)) {
+					if (this.item != null || foe.item != null) {
+						Task.addTask(Task.TEXT, this.nickname + " switched items with its target!");
+						Item userItem = this.item;
+						Item foeItem = foe.item;
+						if (userItem != null) Task.addTask(Task.TEXT, foe.nickname + " obtained a " + userItem.toString() + "!");
+						if (foeItem != null) Task.addTask(Task.TEXT, this.nickname + " obtained a " + foeItem.toString() + "!");
+						this.item = foeItem;
+						foe.item = userItem;
+						if (this.item != Item.METRONOME) this.metronome = 1;
+						if (foe.item != Item.METRONOME) foe.metronome = 1;
+						if (this.lostItem == null) {
+							this.lostItem = userItem;
+							if (this.lostItem == null) {
+								this.lostItem = Item.POTION;
+							}
+						}
+						if (foe.lostItem == null) {
+							foe.lostItem = foeItem;
+							if (foe.lostItem == null) {
+								foe.lostItem = Item.POTION;
+							}
+						}
+						if (foe.item == null && foeItem != null) {
+							foe.consumeItem(this);
+						}
+						if (this.item == null && userItem != null) {
+							this.consumeItem(foe);
+						}
+						this.tricked = foe;
+					}
+				}
 			}
 		} else if (move == Move.TORNADO_SPIN) {
 			stat(this, 4, 1, foe);
@@ -3991,9 +4019,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (announce && move == Move.DARK_VOID) {
 			foe.sleep(true, this);
 		} else if (announce && move == Move.DECK_CHANGE) {
-			int attack = this.getStat(1);
-			this.stats[1] = this.getStat(3);
-			this.stats[3] = attack;
+			if (!foe.hasStatus(Status.DECK_CHANGE)) {
+				foe.addStatus(Status.DECK_CHANGE);
+			} else {
+				foe.removeStatus(Status.DECK_CHANGE);
+			}
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " swapped " + foe.nickname + "'s attacking stats!");
 		} else if (move == Move.DEFENSE_CURL) {
 			stat(this, 1, 1, foe, announce);
@@ -4036,6 +4066,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (foe.disabledMove == null && foe.lastMoveUsed != null && foe.lastMoveUsed.pp > 0) {
 				foe.disabledMove = foe.lastMoveUsed;
 				foe.disabledCount = 4;
+				Task.addTask(Task.TEXT, foe.nickname + "'s " + foe.disabledMove + " was disabled!");
 			} else {
 				fail = fail(announce);
 			}
@@ -5307,12 +5338,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 		tormentCount = 0;
 		consumedItem = false;
 		this.lastMoveUsed = null;
+		this.tricked = null;
 		this.moveMultiplier = 1;
 		this.clearStatuses();
 		statStages = new int[7];
 		this.impressive = true;
 		setTypes();
-		setStats();
 		setAbility();
 		this.weight = this.getWeight();
 		if (this.ability == Ability.NATURAL_CURE) this.status = Status.HEALTHY;
@@ -5627,7 +5658,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		bp *= boostItemCheck(moveType);
 		
-		if (mode == 0 && move == Move.CHROMO_BEAM && checkSecondary(30)) bp *= 2;
+		if (mode == 0 && move == Move.CHROMO_BEAM && checkSecondary(this.ability == Ability.SERENE_GRACE || field.equals(field.terrain, Effect.SPARKLY) ? 60 : 30)) bp *= 2;
 		
 		int arcane = this.getStatusNum(Status.ARCANE_SPELL);
 		if (arcane != 0) {
@@ -5723,7 +5754,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		critChance += this.getStatusNum(Status.CRIT_CHANCE);
 		if (this.ability == Ability.SUPER_LUCK) critChance++;
 		if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && !field.contains(foe.getFieldEffects(), Effect.LUCKY_CHANT) &&
-				((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 3 || crit)))) {
+				((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 3 || (crit && critChance >= 0))))) {
 			if (move.isPhysical() && attackStat < this.getStat(1)) {
 				attackStat = this.getStat(1);
 				if (this.status == Status.BURNED) attackStat /= 2;
@@ -6053,7 +6084,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} if (this.hasStatus(Status.SPELLBIND)) {
 			if (this.spunCount == 0) {
 				Task.addTask(Task.TEXT, this.nickname + " was freed from the spellbind!");
-				this.removeStatus(Status.SPUN);
+				this.removeStatus(Status.SPELLBIND);
 			} else {
 				StatusEffect spin = this.getStatus(Status.SPELLBIND);
 				stat(this, 1, spin.num, f);
@@ -6104,7 +6135,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Task.addTask(Task.TEXT, this.nickname + "'s encore ended!");
 		}
 		if (this.disabledMove != null && --this.disabledCount == 0) {
-			Task.addTask(Task.TEXT, this.nickname + "'s " + disabledMove.toString() + " was no longer disabled!");
+			Task.addTask(Task.TEXT, this.nickname + "'s " + disabledMove.toString() + " is no longer disabled!");
 			this.disabledMove = null;
 		}
 		if (this.hasStatus(Status.TAUNTED) && --this.tauntCount == 0) {
@@ -6686,6 +6717,22 @@ public class Pokemon implements RoleAssignable, Serializable {
 		this.removeStatus(Status.NIGHTMARE);
 		this.removeStatus(Status.FLINCHED);
 		this.removeStatus(Status.SPUN);
+		this.removeStatus(Status.RECHARGE);
+		this.removeStatus(Status.POSSESSED);
+		this.removeStatus(Status.LOCKED);
+		this.removeStatus(Status.TRAPPED);
+		this.removeStatus(Status.ENCORED);
+		this.removeStatus(Status.TAUNTED);
+		this.removeStatus(Status.TORMENTED);
+		if (this.getStatusNum(Status.CRIT_CHANCE) < 0) this.removeStatus(Status.CRIT_CHANCE);
+		this.removeStatus(Status.NO_SWITCH);
+		this.removeStatus(Status.SMACK_DOWN);
+		this.removeStatus(Status.MUTE);
+		this.removeStatus(Status.YAWNING);
+		this.removeStatus(Status.DROWSY);
+		this.removeStatus(Status.HEAL_BLOCK);
+		this.removeStatus(Status.ARCANE_SPELL);
+		this.removeStatus(Status.SPELLBIND);
 	}
 
 	public boolean knowsMove(Move move) {
@@ -6759,17 +6806,17 @@ public class Pokemon implements RoleAssignable, Serializable {
 	        
 	        for (int i = 0; i < 6; i++) {
 	        	String type = getStatType(i, false);
-	        	stats[i] = new JLabel(type + this.stats[i]);
+	        	stats[i] = new JLabel(type + this.getStat(i));
 	        	stats[i].setFont(new Font(stats[i].getFont().getName(), Font.BOLD, 14));
 	        	stats[i].setSize(50, stats[i].getHeight());
 	        	
 	        	if (i != 0) {
 	        	    if (this.nat.getStat(i - 1) == 1.1) {
 	        	        stats[i].setForeground(Color.red.darker().darker());
-	        	        stats[i].setText(type + this.stats[i] + " \u2191"); // Up arrow
+	        	        stats[i].setText(type + this.getStat(i) + " \u2191"); // Up arrow
 	        	    } else if (this.nat.getStat(i - 1) == 0.9) {
 	        	        stats[i].setForeground(Color.blue.darker().darker());
-	        	        stats[i].setText(type + this.stats[i] + " \u2193"); // Down arrow
+	        	        stats[i].setText(type + this.getStat(i) + " \u2193"); // Down arrow
 	        	    }
 	        	}
 	        	
@@ -8392,7 +8439,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			result.add("Illusion");
 		}
 		if (disabledCount > 0) {
-			result.add(disabledMove + " disabled for " + disabledCount);
+			result.add(disabledMove.toString());
+			result.add("Disabled for " + disabledCount);
 		}
 		return result;
 	}
@@ -8401,7 +8449,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		int max = this.getStat(1);
 		int result = 1;
 		for (int i = result + 1; i < this.stats.length; i++) {
-			if (this.stats[i] > max) {
+			if (this.getStat(i) > max) {
 				max = this.stats[i];
 				result = i;
 			}
@@ -8505,6 +8553,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 						line = scanner.nextLine();
 						if (!line.isEmpty() && Character.isDigit(line.charAt(0))) {
 							String[] moveLine = line.split("\\|");
+							if (moveLine.length < 2) {
+								System.out.println(id + " has an invalid move slot");
+								continue;
+							}
 							int level = Integer.parseInt(moveLine[0].trim());
 							Move move = Move.valueOf(moveLine[1]);
 							setupNode(id, level, move);
@@ -8611,8 +8663,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 					}
 					
 				}
-				Pokemon pokemon = staticEnc ? new Pokemon(id, level, true) : new Pokemon(id, level, false, true);
+				Pokemon pokemon = staticEnc ? new Pokemon(id, level, true) : new Pokemon(id, level, false, true);				
 				pokemon.moveset = moves;
+				pokemon.validateMoveset(index, name);
 				
 				if (type != null) {
 					pokemon.ivs = Pokemon.determineOptimalIVs(type);
@@ -8634,8 +8687,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 				
 				// DEBUGGING
 				if (!abilitySet) {
-					scanner.close();
-					throw new IllegalStateException("Trainer " + name + " at index " + index + " has an illegal ability on mon " + pokemon.getName() + " in slot " + i + ": " + ability);
+					System.err.println("Trainer " + name + " at index " + index + " has an illegal ability on mon " + pokemon.getName() + " in slot " + i + ": " + ability);
+					pokemon.abilitySlot = 0;
+					pokemon.setAbility();
 				}
 				
 				team[i] = pokemon;
@@ -8662,6 +8716,87 @@ public class Pokemon implements RoleAssignable, Serializable {
 		updateRivals();
 		
 		scanner.close();
+	}
+
+	private void validateMoveset(int index, String name) {
+		ArrayList<Move> thisMovebank = Pokemon.getMovebankAtLevel(this.id, this.level);
+		ArrayList<Move> tmMoves = Item.getTMMoves();
+		ArrayList<Item> tms = Item.getTMs();
+		boolean[] movesValid = new boolean[this.moveset.length];
+		for (int i = 0; i < this.moveset.length; i++) {
+			if (this.moveset[i] == null) {
+				movesValid[i] = true;
+				continue;
+			}
+			Move m = this.moveset[i].move;
+			int tmIndex = tmMoves.indexOf(m);
+			if (tmIndex >= 0) {
+				Item tmItem = tms.get(tmIndex);
+				if (tmItem.getLearned(this)) {
+					movesValid[i] = true;
+					continue;
+				}
+			}
+			if (thisMovebank.contains(m)) movesValid[i] = true;
+		}
+		
+		boolean movesetValid = true;
+		for (boolean b : movesValid) {
+			if (!b) {
+				movesetValid = false;
+				break;
+			}
+		}
+		int pokemonChecked = 1;
+		int prevoID = this.id;
+		while (!movesetValid && pokemonChecked < 3) { // check prevos
+			prevoID--;
+			String evolvedString = Pokemon.getEvolveString(prevoID);
+			if (evolvedString != null && (evolvedString.contains(Pokemon.getName(this.id)) || evolvedString.contains(Pokemon.getName(this.id - 1)))) {
+				ArrayList<Move> prevoMovebank = Pokemon.getMovebankAtLevel(prevoID, this.level);
+				for (int i = 0; i < this.moveset.length; i++) {
+					if (!movesValid[i]) {
+						Move m = this.moveset[i].move;
+						if (prevoMovebank.contains(m)) movesValid[i] = true;
+					}
+				}
+			}
+			pokemonChecked++;
+			for (boolean b : movesValid) {
+				if (!b) {
+					movesetValid = false;
+					break;
+				}
+			}
+		}
+		
+		if (!movesetValid) {
+			for (int i = 0; i < movesValid.length; i++) {
+				if (!movesValid[i]) {
+					System.err.println(index + " " + name + "'s " + this.name + " (ID " + this.id + ")'s " + this.moveset[i].move.toString()
+							+ " in index " + i + " is illegal");
+				}
+			}
+		}
+		
+		
+	}
+
+	private static ArrayList<Move> getMovebankAtLevel(int id, int level) {
+		ArrayList<Move> forgottenMoves = new ArrayList<>();
+		Node[] movebank = Pokemon.getMovebank(id);
+        for (int i = 0; i <= level; i++) {
+        	if (i < movebank.length) {
+        		Node move = movebank[i];
+        		while (move != null) {
+        			if (!forgottenMoves.contains(move.data)) {
+        				forgottenMoves.add(move.data);
+        			}
+        			move = move.next;
+        		}
+        	}
+        }
+		return forgottenMoves;
 	}
 
 	public static void updateRivals() {
@@ -9148,7 +9283,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return id;
 	}
 
-	public void validateMoveset() {
+	public void shiftMoveset() {
 		Moveslot[] newMoveset = new Moveslot[moveset.length];
 		int index = 0;
 		boolean allNull = true;
@@ -9165,7 +9300,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	public void auroraGlow() {
-		if (!this.isType(PType.GALACTIC) && !this.isType(PType.ICE) && this.isType(PType.LIGHT)) return;
+		if (this.isFainted()) return;
+		if (!this.isType(PType.GALACTIC) && !this.isType(PType.ICE) && !this.isType(PType.LIGHT)) return;
 		if (this.currentHP == this.getStat(0)) return;
 		String message = this.nickname + " restored HP from the Aurora Glow!";
 		int amt = (int) this.getHPAmount(1.0/8);

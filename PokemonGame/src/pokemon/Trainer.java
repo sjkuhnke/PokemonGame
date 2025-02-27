@@ -257,6 +257,7 @@ public class Trainer implements Serializable {
 			result.swapIn(foe, true);
 			foe.removeStatus(Status.TRAPPED);
 			foe.removeStatus(Status.SPUN);
+			foe.removeStatus(Status.SPELLBIND);
 		}
 		return result;
 	}
