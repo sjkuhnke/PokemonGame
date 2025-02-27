@@ -716,7 +716,7 @@ public enum Move {
 
 	public String formatbp(Pokemon user, Pokemon foe) {
 		double bp = getbp(user, foe);
-		if (bp == 0 || this == Move.MAGNITUDE) return "--";
+		if (bp == 0 || this.cat == 2 || this == Move.MAGNITUDE) return "--";
 		return String.format("%.0f", bp);
 	}
 	
@@ -976,6 +976,8 @@ public enum Move {
 		result.add(RAZOR_SHELL);
 		result.add(SACRED_SWORD);
 		result.add(GLITTERING_SWORD);
+		result.add(SOLSTICE_BLADE);
+		result.add(SWORD_OF_DAWN);
 		result.add(SWORD_SPIN);
 		result.add(SLASH);
 		result.add(SOLAR_BLADE);
@@ -1305,6 +1307,9 @@ public enum Move {
 					return true;
 				}
 				if ((m == Move.COVET || m == Move.THIEF) && me.item == null) {
+					return true;
+				}
+				if (m == Move.TRICK_TACKLE && me.tricked != foe) {
 					return true;
 				}
 				

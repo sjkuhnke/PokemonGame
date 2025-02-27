@@ -53,6 +53,7 @@ public enum Status {
 	HEAL_BLOCK("",Color.BLACK,Color.BLACK),
 	ARCANE_SPELL("",Color.BLACK,Color.BLACK),
 	SPELLBIND("",Color.BLACK,Color.BLACK),
+	DECK_CHANGE("",Color.BLACK,Color.BLACK),
 	;
 	
 	Status(String name, Color color, Color textColor) {

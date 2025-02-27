@@ -355,6 +355,7 @@ public class BattleUI extends AbstractUI {
 		case Task.PARTY:
 			currentDialogue = "";
 			cancellableParty = false;
+			partyNum = 0;
 			baton = currentTask.wipe;
 			subState = PARTY_SELECTION_STATE;
 			break;

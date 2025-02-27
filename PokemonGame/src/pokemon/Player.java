@@ -1587,7 +1587,7 @@ public class Player extends Trainer implements Serializable {
 					p.moveset[i] = newM == null ? null : new Moveslot(moves.get(m.move));
 				}
 			}
-			p.validateMoveset();
+			p.shiftMoveset();
 		}
 		
 		scanner.close();
