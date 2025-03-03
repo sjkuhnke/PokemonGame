@@ -18,7 +18,6 @@ Swap in text say "forced out"/"forced in" on random switch ins (Whirlwind etc)
 Life Orb + Assault Vest behind optional trainer(s) in 5th gym split
 
 Ideas
-Make Dark resist Magic and Fighting no longer resist magic? (Would also make Galactic resist Dark again)
 Make Bipedice Ice/Ground (not Ground/Ice) and redo moveset
 Kissyfishy making out as a Ying-Yang thing
 Give Malamar a move called Field Flip that does court change effect
@@ -28,13 +27,13 @@ Give Ingrain its own status effect and make it grounded as well
 Calc
 Get rid of enter press on level spinner, just make it an action listener
 
-Make Galactic weak to Dragon
-Make Poison not resist Bug
 (Not sure about these two)
-Make Galactic resist Dark
+Make Poison not resist Bug
 Make Magic weak to Dark
-Make Psychic resist Poison?
 
+Make Galactic weak to Dragon
+Make Galactic resist Dark
+Make Psychic resist Poison?
 Make Dark resist Magic
 Make Fighting no longer resist Magic
 
@@ -46,10 +45,8 @@ Make map05 (lava lake) to the left 3-4 tiles
 CRUISE
 Covert cloak blocks all secondary effects including drops from foe's Close Combat which is bad, gotta rework
 Infinite loop when 2 mons have empathic link and one boosts, test with Mt St Joseph TN fight
-Add a tree tile on Route 37 after the grass encounter area in the middle horizontally of the river
 Make 'D' in the party screen swap items
 GETTING SWITCHED OUT FIRST ALLOWS YOU TO STILL ACT (Metronome calling Dragon Tail, test with a sleeping mon with sleep talk + whirlwind)
-Flinching resets choice lock: look into why flinching needs to clear lastMoveUsed
 Fix double evolution prompts happening when a Pokemon eligible to evolve levels up twice
 Fix Wish + add Future Sight
 
@@ -62,25 +59,9 @@ Change switch in AI to be able to work with disruptive mons (Comp Busheep)
 Make leech seed not clickable if the opponent is a grass type/discourage it
 Make hazard/boosting moves encouraged if the opponent does less than a % to you
 Make trapping moves insentivized if opponent does less than a % to you
-Make the "lost $500" text dynamic to how much you actually lost
 
 Make Ryder 1 disappear after beating second gym
 Make Ryder 3 disappear after beating Icy Serpant
-
-TM CHANGES
-Brick Break -> Body Press
-Rock Tomb -> Bulldoze?
-OR Smack Down -> Scorching Sands
-Shadow Sneak/Radio Burst?
-Night Shade?
-Comet Crash -> Meteor Assault
-Defog?
-Outrage -> Breaking Swipe
-Skill Swap? (Otherwise distribute)
-Charge Beam -> 
-Magic Blast ->
-Elemental Sparkle ->  
-Rock Slide -> Power Gem
 
 Thief magic move
 Exposing move that works like octolock

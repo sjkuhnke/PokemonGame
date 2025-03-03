@@ -39,7 +39,7 @@ public class TreasureChest extends ItemObj {
         treasurePool.put(Item.BIG_MUSHROOM, 5);
         treasurePool.put(Item.NUGGET, 15);
         treasurePool.put(Item.BIG_NUGGET, 9);
-        treasurePool.put(Item.STAR_PIECE, 10);
+        treasurePool.put(Item.STAR_PIECE, 20);
         treasurePool.put(Item.RELIC_GOLD, 8);
         treasurePool.put(Item.RELIC_SILVER, 14);
         

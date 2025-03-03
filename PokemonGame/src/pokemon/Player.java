@@ -81,6 +81,7 @@ public class Player extends Trainer implements Serializable {
 	public boolean visor;
 	public int grustCount;
 	public int scottItem;
+	public int ballPurchase;
 	public Item[] resistBerries;
 	public Item[] statBerries;
 	public Item[] crystals;
@@ -241,7 +242,6 @@ public class Player extends Trainer implements Serializable {
 		}
 		Pokemon lead = current;
 		if (lead.hasStatus(Status.HEALING)) team[index].addStatus(Status.HEALING);
-		if (lead.hasStatus(Status.WISH)) team[index].addStatus(Status.WISH);
 		lead.clearVolatile();
 		if (lead.ability == Ability.ILLUSION) lead.illusion = true; // just here for calc
 		this.current = pokemon;
@@ -1515,6 +1515,12 @@ public class Player extends Trainer implements Serializable {
 			if (this.buy(item)) {
 				if (item.isTM()) {
 					ui.npc.inventory.remove(item);
+				}
+				if (item.isBall()) {
+					if (++ballPurchase >= 10) {
+						ballPurchase = 0;
+						ui.premier++;
+					};
 				}
 			} else {
 				ui.showMessage("Not enough money!");

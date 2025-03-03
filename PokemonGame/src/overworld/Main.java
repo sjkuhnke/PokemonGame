@@ -1020,6 +1020,7 @@ public class Main {
 			writer.write("\n--------------------------------------\n");
 			writer.write("Overworld Items:\n");
 			writer.write("(Note: the Variable Items:\n");
+			writer.write("- Nature Mints\n");
 			writer.write("- Type Resist Berries\n");
 			writer.write("- Stat Restoring Berries\n");
 			writer.write("- Treasure Chest Items\n");
@@ -1062,7 +1063,7 @@ public class Main {
 					
 					writer.write(String.format("%s (%d, %d)", itemString, x, y));
 					
-					if (i instanceof TreasureChest) {
+					if (chest) {
 						ArrayList<Item> chestItems = ((TreasureChest) i).items;
 						for (Item it : chestItems) {
 							String label = "\n  [";

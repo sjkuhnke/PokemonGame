@@ -572,6 +572,14 @@ public class KeyHandler implements KeyListener {
 		}
 		if (gp.ui.subState > 0) {
 			if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+				if (gp.ui.premier > 0) {
+					gp.setTaskState();
+					Task.addTask(Task.TEXT, "Thanks for being a loyal customer! Here, this is on us!");
+					String itemName = gp.ui.premier > 1 ? "s" : "";
+					Task t = Task.addTask(Task.ITEM, "You got " + gp.ui.premier + " " + Item.PREMIER_BALL.toString() + itemName + "!", gp.ui.premier);
+					t.item = Item.PREMIER_BALL;
+					gp.ui.premier = 0;
+				}
 				gp.ui.subState = 0;
 				gp.ui.currentDialogue = gp.ui.npc.dialogues[0];
 			}

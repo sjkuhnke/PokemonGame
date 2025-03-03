@@ -286,7 +286,9 @@ public class PlayerCharacter extends Entity {
 				Entity target = gp.npc[gp.currentMap][npcIndex];
 				if (target instanceof NPC_Nurse) {
 					interactNurse(target);
-				} else if (target instanceof NPC_Clerk || target instanceof NPC_Market || target instanceof NPC_Prize_Shop) {
+				} else if (target instanceof NPC_Clerk || target instanceof NPC_Market
+						|| target instanceof NPC_Prize_Shop || target instanceof NPC_Star
+						|| target instanceof NPC_Ball) {
 					interactClerk(target);
 				} else if (target instanceof NPC_Block) {
 					interactNPC((NPC_Block) target);
@@ -646,6 +648,27 @@ public class PlayerCharacter extends Entity {
 				Task.addTask(Task.DIALOGUE, npc, "Now go out there and make me proud - and most importantly...");
 				Task.addTask(Task.DIALOGUE, npc, "COLLECT THAT DATA!");
 				Task.addTask(Task.UPDATE, "");
+			} else if (p.flag[0][5] && !p.flag[0][21]) {
+				Task.addTask(Task.DIALOGUE, npc, "Have you seen any new Shadow forms? Can I take a look?");
+				Pokemon[] sDex = p.getDexType(1);
+				int amt = 0;
+				for (Pokemon po : sDex) {
+					if (p.pokedex[po.id] == 2) amt++;
+				}
+				if (!p.flag[0][20] && amt >= 1) {
+					Task.addTask(Task.DIALOGUE, npc, "Oh nice! You've seen " + amt + " forms!");
+					Task.addTask(Task.DIALOGUE, npc, "Here son, take this for helping me out! You'd get better use out of it than me, anyways!");
+					Task t = Task.addTask(Task.ITEM, "");
+					t.item = Item.AMULET_COIN;
+					p.flag[0][20] = true;
+				}
+				if (amt >= Pokemon.POKEDEX_METEOR_SIZE) {
+					Task.addTask(Task.DIALOGUE, npc, "Finn!! You did it! You finished the Shadow Pokedex I gave you!");
+					Task.addTask(Task.DIALOGUE, npc, "This item is extremely rare, so please, use it wisely!");
+					Task t = Task.addTask(Task.ITEM, "");
+					t.item = Item.MASTER_BALL;
+					p.flag[0][21] = true;
+				}
 			} else {
 				Task.addTask(Task.DIALOGUE, npc, "How's it going?");
 			}
@@ -813,6 +836,16 @@ public class PlayerCharacter extends Entity {
 			Task.addTask(Task.UPDATE, "");
 			Task.addTask(Task.FLASH_OUT, "");
 			p.flag[1][3] = true;
+		} else if (gp.currentMap == 22) { // shell bell
+			Task.addTask(Task.DIALOGUE, npc, "Want to know a piece of history? This lake of lava here was formerly a beautiful blue body of water!");
+			Task.addTask(Task.DIALOGUE, npc, "A long long time ago, before the volcano Mt. St. Joseph was active, this area flourished with life everywhere!");
+			Task.addTask(Task.DIALOGUE, npc, "Right where I'm standing used to be a vibrant beach full of shells and coral!");
+			Task.addTask(Task.DIALOGUE, npc, "In fact, if you look hard enough, you might be able to still see some fragrants!");
+			Task.addTask(Task.DIALOGUE, npc, "I've spent a while collecting shell pieces to make a special item for a Pokemon to hold, called a Shell Bell!");
+			Task.addTask(Task.DIALOGUE, npc, "You may have heard of the item before, but this one is special! It heals your Pokemon a whopping 25% of any damage dealt!");
+			Task.addTask(Task.DIALOGUE, npc, "I'm willing to part with it, but for a price. You see, my Cleffa and Azurill will only evolve when they're happy enough...");
+			Task.addTask(Task.DIALOGUE, npc, "But they're far too weak to train on their own, so I'd like to use the unique item to this region, being the Euphorian Gem!");
+			Task.addTask(Task.CONFIRM, "If you have 2 Euphorian Gems to give me, I'll give you this Shell Bell. Do we have a deal?");
 		} else if (gp.currentMap == 11) { // fred 1
 			if (npc.worldX < 39 * gp.tileSize || npc.worldY > gp.tileSize * 65) {
 				Task.addTask(Task.TURN, npc, "", Task.RIGHT);

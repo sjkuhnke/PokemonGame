@@ -208,6 +208,7 @@ public enum Move {
 	FURY_SWIPES(18,95,0,0,0,0,PType.NORMAL,"Attacks 2-5 times",true,15),
 	FUSION_BOLT(100,100,0,0,0,0,PType.ELECTRIC,"This attack ignores the effects of the foe's ability",false,5),
 	FUSION_FLARE(100,100,0,0,1,0,PType.FIRE,"This attack ignores the effects of the foe's ability",false,5),
+	FUTURE_SIGHT(120,100,0,-1,1,0,PType.PSYCHIC,"Attacks the foe 2 turns after this move is used",false,10),
 	GALAXY_BLAST(90,100,0,0,1,0,PType.GALACTIC,"A normal attack",false,10),
 	GASTRO_ACID(0,100,0,0,2,0,PType.POISON,"Supresses the foe's ability",false,20),
 	GENESIS_SUPERNOVA(120,95,0,0,1,0,PType.GALACTIC,"User takes 1/3 of damage dealt as recoil",false,10),
@@ -1291,6 +1292,10 @@ public enum Move {
 				}
 				// Disenchant
 				if (m == Move.DISENCHANT && !me.arrayGreaterOrEqual(new int[] {0, 0, 0, 0, 0, 0, 0}, foe.statStages)) {
+					return true;
+				}
+				// Hex Claw
+				if (m == Move.HEX_CLAW && foe.disabledMove == null && (me.getFaster(foe, 0, 0) == foe || foe.lastMoveUsed != null)) {
 					return true;
 				}
 				if (m == Move.SMACK_DOWN && !foe.isGrounded()) {

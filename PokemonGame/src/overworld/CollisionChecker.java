@@ -2,14 +2,8 @@ package overworld;
 
 import java.awt.Rectangle;
 
-import entity.Entity;
-import entity.NPC_Clerk;
-import entity.NPC_Nurse;
-import entity.NPC_Trainer;
-import tile.BuildingTile;
-import tile.CaveTile;
-import tile.GrassTile;
-import tile.Tile;
+import entity.*;
+import tile.*;
 
 public class CollisionChecker {
 	
@@ -188,7 +182,7 @@ public class CollisionChecker {
 	        if (target[gp.currentMap][i] != null) {
 	            Rectangle entityRange = new Rectangle(entity.worldX + entity.solidArea.x, entity.worldY + entity.solidArea.y, entity.solidArea.width, entity.solidArea.height);
 	            int targetX = target[gp.currentMap][i].worldX;
-	            if (target[gp.currentMap][i] instanceof NPC_Clerk) targetX += gp.tileSize;
+	            if (target[gp.currentMap][i] instanceof NPC_Clerk || target[gp.currentMap][i] instanceof NPC_Ball) targetX += gp.tileSize;
 	            int targetY = target[gp.currentMap][i].worldY;
 	            if (target[gp.currentMap][i] instanceof NPC_Nurse) targetY += gp.tileSize;
 	            Rectangle targetRange = new Rectangle(targetX + target[gp.currentMap][i].solidArea.x, targetY + target[gp.currentMap][i].solidArea.y, target[gp.currentMap][i].solidArea.width, target[gp.currentMap][i].solidArea.height);

@@ -41,7 +41,6 @@ public enum Status {
 	NO_SWITCH("AUT",Color.BLACK,Color.BLACK),
 	SMACK_DOWN("AUT",Color.BLACK,Color.BLACK),
 	SWITCHING("AUT",Color.BLACK,Color.BLACK),
-	WISH("AUT",Color.BLACK,Color.BLACK),
 	HEALING("AUT",Color.BLACK,Color.BLACK),
 	MUTE("AUT",Color.BLACK,Color.BLACK),
 	SWAP("AUT",Color.BLACK,Color.BLACK),
