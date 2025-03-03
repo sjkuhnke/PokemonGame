@@ -149,7 +149,7 @@ public class Entity {
 			gp.setTaskState();
 			String[] altDialogues = altDialogue.split("\n");
 			for (String s : altDialogues) {
-				Task.addTask(Task.DIALOGUE, this, s);
+				Task.addTask(Task.DIALOGUE, this, Item.breakString(s, 48));
 			}
 		}
 	}

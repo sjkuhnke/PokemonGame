@@ -76,6 +76,8 @@ public class Field {
 		FLOODLIGHT(-1, false, false),
 		HEALING_CIRCLE(8, false, false),
 		MAGIC_ROOM(8, false, false),
+		FUTURE_SIGHT(3, false, false),
+		WISH(2, false, false),
 		;
 		
 		private Effect(int turns, boolean isWeather, boolean isTerrain) {
@@ -140,6 +142,8 @@ public class Field {
 		public int turns;
 		public Effect effect;
 		public int layers;
+		public int stat;
+		public int level;
 		
 		public FieldEffect(Effect effect) {
 			this.effect = effect;
@@ -219,6 +223,10 @@ public class Field {
 				return new Color(240, 77, 126);
 			case MAGIC_ROOM:
 				return new Color(254, 1, 77);
+			case WISH:
+				return new Color(168, 167, 122);
+			case FUTURE_SIGHT:
+				return new Color(249, 85, 135);
 			default:
 				return new Color(150, 217, 214);
 			
@@ -238,6 +246,22 @@ public class Field {
 	        		po.auroraGlow();
 	        	}
 	        }
+		}
+
+		public void handleFutureSight(Pokemon reciever, Pokemon foe) {
+			if (this.turns > 0) return;
+			if (this.effect == Effect.FUTURE_SIGHT) {
+				reciever.takeFutureSight(stat, level, 0, foe);
+			}
+			
+		}
+		
+		public void handleWish(Pokemon reciever) {
+			if (this.turns > 0) return;
+			if (this.effect == Effect.WISH) {
+				reciever.takeWish(stat);
+			}
+			
 		}
 	}
 	
@@ -428,8 +452,11 @@ public class Field {
 	        FieldEffect effect = iterator.next();
 	        effect.handleAurora(faster);
 	        if (effect.turns > 0) effect.turns--;
+	        effect.handleFutureSight(faster, slower);
+	        effect.handleWish(faster);
 	        if (effect.turns == 0) {
-	            Task.addTask(Task.TEXT, faster.nickname + "'s side's " + effect.effect.toString() + " wore off!");
+	        	if (effect.effect != Effect.FUTURE_SIGHT && effect.effect != Effect.WISH)
+	        		Task.addTask(Task.TEXT, faster.nickname + "'s side's " + effect.effect.toString() + " wore off!");
 	            iterator.remove();
 	        }
 	    }
@@ -439,8 +466,11 @@ public class Field {
 	        FieldEffect effect = iterator.next();
 	        effect.handleAurora(slower);
 	        if (effect.turns > 0) effect.turns--;
+	        effect.handleFutureSight(slower, faster);
+	        effect.handleWish(slower);
 	        if (effect.turns == 0) {
-	            Task.addTask(Task.TEXT, slower.nickname + "'s side's " + effect.effect.toString() + " wore off!");
+	            if (effect.effect != Effect.FUTURE_SIGHT && effect.effect != Effect.WISH)
+	            	Task.addTask(Task.TEXT, slower.nickname + "'s side's " + effect.effect.toString() + " wore off!");
 	            iterator.remove();
 	        }
 	    }
@@ -479,6 +509,15 @@ public class Field {
 		for (FieldEffect e : side) {
 			if (e.effect == effect) {
 				return e.layers;
+			}
+		}
+		return 0;
+	}
+	
+	public int getStat(ArrayList<FieldEffect> side, Effect effect) {
+		for (FieldEffect e : side) {
+			if (e.effect == effect) {
+				return e.stat;
 			}
 		}
 		return 0;

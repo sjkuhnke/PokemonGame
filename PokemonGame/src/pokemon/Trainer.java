@@ -293,6 +293,10 @@ public class Trainer implements Serializable {
 		if (p.ability == Ability.INSECT_FEEDER && type == PType.BUG) multiplier = 0;
 		if (p.ability == Ability.LEVITATE && type == PType.GROUND) multiplier = 0;
 		if (p.getItem() == Item.AIR_BALLOON && type == PType.GROUND) multiplier = 0;
+		if (p.getItem() == Item.SNOWBALL && type == PType.ICE) multiplier = 0;
+		if (p.getItem() == Item.ABSORB_BULB && type == PType.WATER) multiplier = 0;
+		if (p.getItem() == Item.LUMINOUS_MOSS && type == PType.WATER) multiplier = 0;
+		if (p.getItem() == Item.CELL_BATTERY && type == PType.ELECTRIC) multiplier = 0;
 		if (p.ability == Ability.LIGHTNING_ROD && type == PType.ELECTRIC) multiplier = 0;
 		if (p.ability == Ability.MOTOR_DRIVE && type == PType.ELECTRIC) multiplier = 0;
 		if (p.ability == Ability.SAP_SIPPER && type == PType.GRASS) multiplier = 0;
@@ -318,7 +322,6 @@ public class Trainer implements Serializable {
 			oldP.verifyHP();
 		}
 		if (oldP.hasStatus(Status.HEALING)) newP.addStatus(Status.HEALING);
-		if (oldP.hasStatus(Status.WISH)) newP.addStatus(Status.WISH);
 		oldP.clearVolatile();
 		if (oldP.ability == Ability.ILLUSION) oldP.illusion = true; // just here for calc
 		this.current = newP;

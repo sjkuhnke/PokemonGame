@@ -49,26 +49,26 @@ public enum Item {
 	GREAT_BALL(2,25,12,new Color(0, 0, 148),Item.BALLS,null,"A good, high-performance Poke Ball that provides a higher success rate for catching Pokemon than a standard Poke Ball."),
 	ULTRA_BALL(3,50,25,new Color(148, 171, 0),Item.BALLS,null,"An ultra-high-performance Poke Ball that provides a higher success rate for catching Pokemon than a Great Ball."),
 	MASTER_BALL(350,0,10000,Color.BLACK,Item.BALLS,null,"The very best Poke Ball with the ultimate level of performance. With it, you will catch any wild Pokemon without fail."),
-	CHERISH_BALL(351,0,10000,Color.BLACK,Item.BALLS,null,"A quite rare Poke Ball made to commemorate a special occasion of some sort."),
-	PREMIER_BALL(352,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat rare Poke Ball made to commemorate a special occasion of some sort."),
-	HEAL_BALL(353,0,10000,Color.BLACK,Item.BALLS,null,"A remedial Poke Ball that fully heals a Pokemon caught with it."),
-	DUSK_BALL(354,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon in dark places, such as caves or buildings."),
-	QUICK_BALL(355,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective at catching Pokemon when used first thing in a battle."),
-	TIMER_BALL(356,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that becomes more effective at catching Pokemon the more turns that are taken in battle."),
-	REPEAT_BALL(357,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching a Pokemon of a species that you've caught before."),
-	LUXURY_BALL(358,0,10000,Color.BLACK,Item.BALLS,null,"A particularly comfortable Poke Ball that makes a wild Pokemon quickly grow friendlier after being caught."),
-	NEST_BALL(359,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that becomes more effective the lower the level of the wild Pokemon."),
-	DIVE_BALL(360,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon in or on the water."),
-	NET_BALL(361,0,10000,Color.BLACK,Item.BALLS,null,"	A somewhat different Poke Ball that is more effective when catching Water- or Bug-type Pokemon."),
-	HEAVY_BALL(362,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that becomes more effective the heavier the Pokemon is."),
-	LURE_BALL(363,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon in or on the water."),
-	FRIEND_BALL(364,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that makes a wild Pokemon more friendly toward you immediately after it's caught."),
-	LOVE_BALL(365,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon of the same species as yours."),
-	LEVEL_BALL(366,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that becomes more effective the lower the level of the Pokemon compared to your own Pokemon."),
-	FAST_BALL(367,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon that are very quick."),
-	MOON_BALL(368,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon that can be evolved using a Dawn or Dusk Stone."),
-	DREAM_BALL(369,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon that are asleep."),
-	BEAST_BALL(370,0,10000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is only effective at catching Ultra Paradox Pokemon."),
+	CHERISH_BALL(351,0,1000,Color.BLACK,Item.BALLS,null,"A quite rare Poke Ball made to commemorate a special occasion of some sort."),
+	PREMIER_BALL(352,0,5,Color.BLACK,Item.BALLS,null,"A somewhat rare Poke Ball made to commemorate a special occasion of some sort."),
+	HEAL_BALL(353,15,7,Color.BLACK,Item.BALLS,null,"A remedial Poke Ball that fully heals a Pokemon caught with it."),
+	DUSK_BALL(354,20,10,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon in dark places, such as caves or buildings."),
+	QUICK_BALL(355,50,25,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective at catching Pokemon when used first thing in a battle."),
+	TIMER_BALL(356,50,25,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that becomes more effective at catching Pokemon the more turns that are taken in battle."),
+	REPEAT_BALL(357,50,25,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching a Pokemon of a species that you've caught before."),
+	LUXURY_BALL(358,150,75,Color.BLACK,Item.BALLS,null,"A particularly comfortable Poke Ball that makes a wild Pokemon quickly grow friendlier after being caught."),
+	NEST_BALL(359,30,15,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that becomes more effective the lower the level of the wild Pokemon."),
+	DIVE_BALL(360,50,25,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon in or on the water."),
+	NET_BALL(361,50,25,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Water- or Bug-type Pokemon."),
+	HEAVY_BALL(362,0,250,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that becomes more effective the heavier the Pokemon is."),
+	LURE_BALL(363,0,250,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon in or on the water."),
+	FRIEND_BALL(364,0,250,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that makes a wild Pokemon more friendly toward you immediately after it's caught."),
+	LOVE_BALL(365,0,250,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon of the same species as yours."),
+	LEVEL_BALL(366,0,250,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that becomes more effective the lower the level of the Pokemon compared to your own Pokemon."),
+	FAST_BALL(367,0,250,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon that are very quick."),
+	MOON_BALL(368,0,250,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon that can be evolved using a Dawn or Dusk Stone."),
+	DREAM_BALL(369,0,500,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon that are asleep."),
+	BEAST_BALL(370,0,1000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is only effective at catching Ultra Paradox Pokemon."),
 	POTION(4,25,12,new Color(124, 0, 219),Item.MEDICINE,null,"Restores 20 HP to a Pokemon."),
 	SUPER_POTION(5,60,30,new Color(140, 24, 8),Item.MEDICINE,null,"Restores 60 HP to a Pokemon."),
 	HYPER_POTION(6,150,75,new Color(255, 0, 191),Item.MEDICINE,null,"Restores 200 HP."),
@@ -187,24 +187,24 @@ public enum Item {
 	WHITE_HERB(84,0,50,new Color(242, 242, 242),Item.HELD_ITEM,null,"A herb that will restore any lowered stat in battle, but only once."),
 	MENTAL_HERB(92,0,50,Color.BLACK,Item.HELD_ITEM,null,"An item to be held by a Pokemon. The holder shakes off move-binding effects and flinching to move freely. It can be used only once."),
 	MIRROR_HERB(333,0,0,Color.BLACK,Item.HELD_ITEM,null,"This herb will allow the holder to mirror an opponent's stat increases to boost its own stats - but only once."),
-	ELECTRIC_SEED(334,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Electric Terrain, the holder will use this seed to boost its own Defense stat."),
-	GRASSY_SEED(335,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Grassy Terrain, the holder will use this seed to boost its own Defense stat."),
-	PSYCHIC_SEED(336,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Psychic Terrain, the holder will use this seed to boost its own Sp. Def stat."),
-	SPARKLY_SEED(337,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Sparkly Terrain, the holder will use this seed to boost its own Sp. Def stat."),
+	ELECTRIC_SEED(334,2,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Electric Terrain, the holder will use this seed to boost its own Defense stat."),
+	GRASSY_SEED(335,2,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Grassy Terrain, the holder will use this seed to boost its own Defense stat."),
+	PSYCHIC_SEED(336,2,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Psychic Terrain, the holder will use this seed to boost its own Sp. Def stat."),
+	SPARKLY_SEED(337,2,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Sparkly Terrain, the holder will use this seed to boost its own Sp. Def stat."),
 	WEAKNESS_POLICY(85,0,400,new Color(215, 233, 195),Item.HELD_ITEM,null,"If the holder is hit with a move it's weak to, this policy sharply boosts its Attack and Sp. Atk stats."),
 	BLUNDER_POLICY(86,0,400,new Color(239, 239, 178),Item.HELD_ITEM,null,"If the holder misses with a move due to low accuracy, this policy will sharply boost its Speed stat."),
 	ROOM_SERVICE(338,0,0,Color.BLACK,Item.HELD_ITEM,null,"If Trick Room takes effect, this item will lower the holder's Speed stat."),
 	RED_CARD(87,0,250,new Color(216, 35, 22),Item.HELD_ITEM,null,"If the holder is damaged by an attack, the mysterious power of this card can remove the attacker from the battle."),
 	THROAT_SPRAY(88,0,150,new Color(96, 120, 168),Item.HELD_ITEM,null,"If the holder uses a sound-based move, this throat spray will boost its Sp. Atk stat."),
-	ADRENALINE_ORB(326,0,0,Color.BLACK,Item.HELD_ITEM,null,"This orb will boost the Speed of the Pokemon by 1 stage when it is intimidated."),
-	ABSORB_BULB(327,0,0,Color.BLACK,Item.HELD_ITEM,372,"This single-use bulb will absorb any Water-type attack and boost the Sp. Atk stat of the holder. Any other attack will damage the item."),
-	CELL_BATTERY(328,0,0,Color.BLACK,Item.HELD_ITEM,373,"This single-use battery will absorb any Electric-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
-	LUMINOUS_MOSS(331,0,0,Color.BLACK,Item.HELD_ITEM,374,"This single-use moss will absorb any Water-type attack and boost the Sp. Def stat of the holder. Any other attack will damage the item."),
-	SNOWBALL(332,0,0,Color.BLACK,Item.HELD_ITEM,375,"This single-use ball of snow will absorb any Ice-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
-	DAMAGED_BULB(372,0,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use bulb boosts the Sp. Atk stat if the holder is damaged by a Water-type attack."),
-	DAMAGED_BATTERY(373,0,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use battery boosts the Attack stat if the holder is damaged by an Electric-type attack."),
-	DAMAGED_MOSS(374,0,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use moss boosts the Sp. Def stat if the holder is damaged by a Water-type move."),
-	DAMAGED_SNOWBALL(375,0,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use ball of snow boosts the Attack stat if the holder is damaged by an Ice-type move."),
+	ADRENALINE_ORB(326,1,0,Color.BLACK,Item.HELD_ITEM,null,"This orb will boost the Speed of the Pokemon by 1 stage when it is intimidated."),
+	ABSORB_BULB(327,3,0,Color.BLACK,Item.HELD_ITEM,372,"This single-use bulb will absorb any Water-type attack and boost the Sp. Atk stat of the holder. Any other attack will damage the item."),
+	CELL_BATTERY(328,3,0,Color.BLACK,Item.HELD_ITEM,373,"This single-use battery will absorb any Electric-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
+	LUMINOUS_MOSS(331,3,0,Color.BLACK,Item.HELD_ITEM,374,"This single-use moss will absorb any Water-type attack and boost the Sp. Def stat of the holder. Any other attack will damage the item."),
+	SNOWBALL(332,3,0,Color.BLACK,Item.HELD_ITEM,375,"This single-use ball of snow will absorb any Ice-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
+	DAMAGED_BULB(372,1,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use bulb boosts the Sp. Atk stat if the holder is damaged by a Water-type attack."),
+	DAMAGED_BATTERY(373,1,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use battery boosts the Attack stat if the holder is damaged by an Electric-type attack."),
+	DAMAGED_MOSS(374,1,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use moss boosts the Sp. Def stat if the holder is damaged by a Water-type move."),
+	DAMAGED_SNOWBALL(375,1,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use ball of snow boosts the Attack stat if the holder is damaged by an Ice-type move."),
 	HM01(93,0,0,Color.BLACK,Item.TMS,Move.CUT,"Teaches a Pokemon this move."),
 	HM02(94,0,0,Color.BLACK,Item.TMS,Move.ROCK_SMASH,"Teaches a Pokemon this move."),
 	HM03(95,0,0,Color.BLACK,Item.TMS,Move.VINE_CROSS,"Teaches a Pokemon this move."),
@@ -1688,7 +1688,7 @@ public enum Item {
 	}
 	
 	public boolean isBall() {
-		return getID() >= 1 && getID() <= 3;
+		return pocket == BALLS;
 	}
 
 	public boolean isTM() {
@@ -1740,8 +1740,9 @@ public enum Item {
 	}
 	
 	public boolean isUsable() {
+		if (isBall()) return false;
 		if (pocket != OTHER) return true;
-		if (isTreasure() || isBall() || isFossil()) {
+		if (isTreasure() || isFossil()) {
 			return false;
 		}
 		return true;

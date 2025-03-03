@@ -142,6 +142,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	private int encoreCount;
 	private int tauntCount;
 	private int tormentCount;
+	private int healBlockCount;
 	private int toxic;
 	public int headbuttCrit;
 	public int tailCrit;
@@ -791,7 +792,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.VENOM_DRENCH) && (foe.status != Status.POISONED || foe.status != Status.TOXIC)) bestMoves.removeIf(Move.VENOM_DRENCH::equals);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEAN_LOOK) && foe.hasStatus(Status.TRAPPED)) bestMoves.removeIf(Move.MEAN_LOOK::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.FOCUS_ENERGY) && this.getStatusNum(Status.CRIT_CHANCE) > 0) bestMoves.removeIf(Move.FOCUS_ENERGY::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.FOCUS_ENERGY) && this.getStatusNum(Status.CRIT_CHANCE) > 2) bestMoves.removeIf(Move.FOCUS_ENERGY::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENCORE) && foe.hasStatus(Status.ENCORED)) bestMoves.removeIf(Move.ENCORE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.DISABLE) && foe.disabledMove != null) bestMoves.removeIf(Move.DISABLE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.NO_RETREAT) && this.hasStatus(Status.NO_SWITCH)) bestMoves.removeIf(Move.NO_RETREAT::equals);
@@ -1713,7 +1714,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (foe.hasStatus(Status.PROTECT) && (move.accuracy <= 100 || move.cat != 2) && move != Move.FEINT && move != Move.PHANTOM_FORCE
-				&& move != Move.VANISHING_ACT && move != Move.MIGHTY_CLEAVE) {
+				&& move != Move.VANISHING_ACT && move != Move.MIGHTY_CLEAVE && move != Move.FUTURE_SIGHT) {
 			useMove(move, foe);
 			Task.addTask(Task.TEXT, foe.nickname + " protected itself!");
 			if (contact) {
@@ -1970,6 +1971,29 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.rollCount = 1;
 				this.metronome = 0;
 				return; // Check for miss
+			}
+		}
+		
+		if (move == Move.FUTURE_SIGHT) {
+			useMove(move, foe);
+			if (field.contains(foe.getFieldEffects(), Effect.FUTURE_SIGHT)) {
+				fail();
+				this.impressive	= false;
+				this.moveMultiplier = 1;
+				this.metronome = 0;
+				return;
+			} else {
+				Task.addTask(Task.TEXT, this.nickname + " foresaw an attack!");
+				FieldEffect effect = field.new FieldEffect(Effect.FUTURE_SIGHT);
+				attackStat = this.getStat(3);
+				if (this.getItem() == Item.CHOICE_SPECS) attackStat *= 1.5;
+				if (this.status == Status.FROSTBITE) attackStat /= 2;
+				if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackStat *= 1.5;
+				if (this.isType(moveType)) attackStat *= 1.5;
+				effect.stat = (int) attackStat;
+				effect.level = this.level;
+				foe.getFieldEffects().add(effect);
+				return;
 			}
 		}
 		
@@ -3303,6 +3327,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 				foe.disabledMove = foe.lastMoveUsed;
 				foe.disabledCount = 3;
 				Task.addTask(Task.TEXT, foe.nickname + "'s " + foe.disabledMove + " was disabled!");
+				if (foe.getItem() == Item.MENTAL_HERB) {
+					Task.addTask(Task.TEXT, foe.nickname + " cured its disable using its Mental Herb!");
+					foe.disabledMove = null;
+					foe.disabledCount = 0;
+					foe.consumeItem(this);
+				}
 			}
 		} else if (move == Move.HOCUS_POCUS) {
 			int randomNum = ((int) Math.random() * 5);
@@ -3568,6 +3598,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.PSYCHIC_NOISE) {
 			if (!foe.hasStatus(Status.HEAL_BLOCK)) {
 				foe.addStatus(Status.HEAL_BLOCK);
+				foe.healBlockCount = 2;
+				Task.addTask(Task.TEXT, foe.nickname + " was prevented from healing!");
+				if (foe.getItem() == Item.MENTAL_HERB) {
+					Task.addTask(Task.TEXT, foe.nickname + " cured its Heal Block using its Mental Herb!");
+					foe.removeStatus(Status.HEAL_BLOCK);
+					foe.healBlockCount = 0;
+					foe.consumeItem(this);
+				}
 			}
 		} else if (move == Move.RAPID_SPIN) {
 			stat(this, 4, 1, foe);
@@ -4067,6 +4105,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 				foe.disabledMove = foe.lastMoveUsed;
 				foe.disabledCount = 4;
 				Task.addTask(Task.TEXT, foe.nickname + "'s " + foe.disabledMove + " was disabled!");
+				if (foe.getItem() == Item.MENTAL_HERB) {
+					Task.addTask(Task.TEXT, foe.nickname + " cured its disable using its Mental Herb!");
+					foe.disabledMove = null;
+					foe.disabledCount = 0;
+					foe.consumeItem(this);
+				}
 			} else {
 				fail = fail(announce);
 			}
@@ -4604,7 +4648,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			    if (foe.getItem() == Item.MENTAL_HERB) {
 					Task.addTask(Task.TEXT, foe.nickname + " cured its taunt using its Mental Herb!");
 					foe.removeStatus(Status.TAUNTED);
-					foe.tauntCount = 4;
+					foe.tauntCount = 0;
 					foe.consumeItem(this);
 				}
 			} else {
@@ -4723,10 +4767,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (announce && move == Move.WILL$O$WISP) {
 			foe.burn(true, this);
 		} else if (announce && move == Move.WISH) {
-			if (this.hasStatus(Status.WISH)) {
+			if (field.contains(this.getFieldEffects(),Effect.WISH)) {
 				fail(announce);
 			} else {
-				this.addStatus(Status.WISH);
+				FieldEffect effect = field.new FieldEffect(Effect.WISH);
+				effect.stat = this.getStat(0) / 2;
+				this.getFieldEffects().add(effect);
 				if (announce) Task.addTask(Task.TEXT, this.nickname + " made a wish!");
 			}
 		} else if (move == Move.WITHDRAW) {
@@ -5331,11 +5377,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 		rollCount = 1;
 		metronome = 1;
 		encoreCount = 0;
+		disabledMove = null;
 		disabledCount = 0;
 		spunCount = 0;
 		outCount = 0;
 		tauntCount = 0;
 		tormentCount = 0;
+		healBlockCount = 0;
 		consumedItem = false;
 		this.lastMoveUsed = null;
 		this.tricked = null;
@@ -5884,9 +5932,26 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if ((move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) && mode == 0) {
 			Random rand = new Random();
-			if (rand.nextInt(4) != 1) {
-				return 0;
+		    double hpPercent = this.currentHP * 1.0 / this.getStat(0);
+		    
+		    if (rand.nextDouble() < (hpPercent - 0.1)) {
+		        return 0;
+		    }
+		}
+		if (move == Move.FUTURE_SIGHT) {
+			if (mode == 0) {
+				if (field.contains(foe.getFieldEffects(), Effect.FUTURE_SIGHT)) {
+					return -1;
+				} else {
+					return new Random().nextInt(4) != 1 ? 0 : damage;
+				}
 			}
+			attackStat = this.getStat(3);
+			if (this.getItem() == Item.CHOICE_SPECS) attackStat *= 1.5;
+			if (this.status == Status.FROSTBITE) attackStat /= 2;
+			if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackStat *= 1.5;
+			if (this.isType(moveType)) attackStat *= 1.5;
+			return foe.takeFutureSight((int) attackStat, this.level, mode, this);
 		}
 		return damage;
 	}
@@ -6061,13 +6126,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 					return;
 				}
 			}
-		} if (this.hasStatus(Status.WISH) && this.lastMoveUsed != Move.WISH) {
-			if (this.currentHP < this.getStat(0)) {
-				heal(getHPAmount(1.0/2), this.nickname + "'s wish came true!");
-			} else {
-				Task.addTask(Task.TEXT, this.nickname + "'s HP is full!");
-			}
-			this.removeStatus(Status.WISH);
 		} if (this.hasStatus(Status.SPUN)) {
 			if (this.spunCount == 0) {
 				Task.addTask(Task.TEXT, this.nickname + " was freed from wrap!");
@@ -6145,6 +6203,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this.hasStatus(Status.TORMENTED) && --this.tormentCount == 0) {
 			this.removeStatus(Status.TORMENTED);
 			Task.addTask(Task.TEXT, this.nickname + "'s torment ended!");
+		}
+		if (this.hasStatus(Status.HEAL_BLOCK) && --this.healBlockCount == 0) {
+			this.removeStatus(Status.HEAL_BLOCK);
+			Task.addTask(Task.TEXT, this.nickname + " was freed from Heal Block!");
 		}
 		if (this.hasStatus(Status.LOCKED) && this.rollCount > 5) {
 			this.removeStatus(Status.LOCKED);
@@ -6733,6 +6795,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		this.removeStatus(Status.HEAL_BLOCK);
 		this.removeStatus(Status.ARCANE_SPELL);
 		this.removeStatus(Status.SPELLBIND);
+		this.removeStatus(Status.DECK_CHANGE);
 	}
 
 	public boolean knowsMove(Move move) {
@@ -7211,6 +7274,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (foe.getItem() == Item.MENTAL_HERB) {
 					Task.addTask(Task.TEXT, foe.nickname + " cured its taunt using its Mental Herb!");
 					foe.removeStatus(Status.TAUNTED);
+					foe.tauntCount = 0;
 					foe.consumeItem(this);
 				}
 			}
@@ -7522,7 +7586,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (getImmune(this, mtype)) {
 			if (foe != null) {
-				if (foe.getItem() == Item.RING_TARGET) {
+				if (this.getItem() == Item.RING_TARGET) {
 					// Nothing
 				} else if (foe.ability == Ability.SCRAPPY && (mtype == PType.NORMAL || mtype == PType.FIGHTING)) {
 					// Nothing: scrappy allows normal and fighting type moves to hit ghosts
@@ -7915,6 +7979,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    clonedPokemon.disabledCount = this.disabledCount;
 	    clonedPokemon.tauntCount = this.tauntCount;
 	    clonedPokemon.tormentCount = this.tormentCount;
+	    clonedPokemon.healBlockCount = this.healBlockCount;
 	    clonedPokemon.toxic = this.toxic;
 	    clonedPokemon.headbuttCrit = this.headbuttCrit;
 	    clonedPokemon.tailCrit = this.tailCrit;
@@ -9312,6 +9377,124 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.currentHP += amt;
 			this.verifyHP();
 		}		
+	}
+
+	public int takeFutureSight(int stat, int level, int mode, Pokemon foe) {
+		ArrayList<Task> tasks = mode == 0 ? gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.simBattleUI.tasks : null;
+		int damageIndex = tasks == null ? 0 : tasks.size();
+		boolean immune = false;
+		
+		if (mode == 0) Task.addTask(Task.TEXT, this.nickname + " took the Future Sight attack!");
+		Task msgTask = Task.getTask(damageIndex);
+		String message = msgTask == null ? "" : msgTask.message;
+		
+		double attackStat = stat;
+		double defenseStat = this.getStat(4);
+		defenseStat *= this.asModifier(3);
+		if (this.getItem() == Item.ASSAULT_VEST) defenseStat *= 1.5;
+		if (field.equals(field.weather, Effect.SANDSTORM, this) && this.isType(PType.ROCK)) defenseStat *= 1.5;
+		if (field.contains(this.getFieldEffects(), Effect.LIGHT_SCREEN) || field.contains(this.getFieldEffects(), Effect.AURORA_VEIL)) defenseStat *= 2;
+		if (this.getItem() == Item.EVIOLITE && this.canEvolve()) defenseStat *= 1.5;
+		
+		int damage = this.calc(attackStat, defenseStat, Move.FUTURE_SIGHT.basePower, level, mode);
+		damage = Math.max(damage, 1);
+		
+		double multiplier = this.getEffectiveMultiplier(Move.FUTURE_SIGHT.mtype, Move.FUTURE_SIGHT, null);
+		
+		if (this.ability == Ability.WONDER_GUARD && multiplier <= 1) {
+			if (mode == 0) Task.addAbilityTask(this);
+			immune = true; // Check for immunity
+		}
+		
+		if (this.ability == Ability.MOSAIC_WINGS && multiplier == 1) {
+			if (mode == 0) {
+				Task.addAbilityTask(this);
+				Task.addTask(Task.TEXT, this.nickname + " is distorting type matchups!");
+				damageIndex += 3;
+			}
+			multiplier = 0.5;
+		}
+		
+		damage *= multiplier;
+		
+		if (multiplier == 0) immune = true;
+		
+		if (immune) {
+			if (mode == 0) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...");
+			damage = 0;
+		} else {
+			if (multiplier > 1) {
+				message += "\nIt's super effective!";
+				if (mode == 0) field.superEffective++;
+				if (this.ability == Ability.SOLID_ROCK || this.ability == Ability.FILTER) damage /= 2;
+				if (this.getItem() != null && this.checkTypeResistBerry(Move.FUTURE_SIGHT.mtype)) {
+					if (mode == 0) {
+						Task.addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to weaken the attack!");
+						this.consumeItem(this);
+					}
+					damage /= 2;
+				}
+				if (mode == 0 && this.getItem() == Item.WEAKNESS_POLICY) {
+					Task.addTask(Task.TEXT, this.nickname + " used its " + this.item.toString() + "!");
+					stat(foe, 0, 2, this);
+					stat(foe, 2, 2, this);
+					this.consumeItem(this);
+				}
+				if (mode == 0 && this.getItem() == Item.ENIGMA_BERRY) {
+					this.eatBerry(this.item, true, this);
+				}
+			}
+			if (multiplier < 1) {
+				message += "\nIt's not very effective...";
+				if (ability == Ability.TINTED_LENS) damage *= 2;
+			}
+			
+			boolean fullHP = this.currentHP == this.getStat(0);
+			boolean sturdy = false;
+			if (damage >= this.currentHP && (this.hasStatus(Status.ENDURE)
+					|| (this.getItem() == Item.FOCUS_BAND && checkSecondary(10))
+					|| (fullHP && (this.ability == Ability.STURDY
+					|| this.getItem() == Item.FOCUS_SASH)))) {
+				sturdy = true;
+			}
+			
+			// Damage foe
+			if (mode == 0 && !immune) {
+				int dividend = Math.min(damage, this.currentHP);
+				if (sturdy) dividend--;
+				double percent = dividend * 100.0 / this.getStat(0); // change dividend to damage
+				String formattedPercent = String.format("%.1f", percent);
+				String damagePercentText = "(" + this.nickname + " lost " + formattedPercent + "% of its HP.)";
+				this.damage(damage, this, Move.FUTURE_SIGHT, message, damageIndex, sturdy);
+				Task.addTask(Task.TEXT, damagePercentText);
+				
+				if (this.getItem() == Item.AIR_BALLOON) {
+					Task.addTask(Task.TEXT, this.nickname + "'s Air Balloon popped!");
+					this.consumeItem(this);
+				}
+				if (this.ability == Ability.ILLUSION && this.illusion) {
+					Task.addTask(Task.TEXT, this.nickname + "'s Illusion was broken!");
+					this.illusion = false;
+				}
+				if (sturdy) {
+					this.currentHP = 1;
+					if (fullHP && this.ability == Ability.STURDY) Task.addAbilityTask(this);
+					if (this.getItem() == Item.FOCUS_SASH) {
+						Task.addTask(Task.TEXT, this.nickname + " hung on using its Focus Sash!");
+						this.consumeItem(this);
+					}
+				}
+				if (this.currentHP <= 0) { // Check for kill
+					this.faint(true, this);
+				}
+			}
+		}
+		
+		return damage;
+	}
+
+	public void takeWish(int stat) {
+		this.heal(stat, this.nickname + "'s wish came true!");
 	}
 	
 }
