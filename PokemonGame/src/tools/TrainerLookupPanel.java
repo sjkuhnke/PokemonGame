@@ -16,7 +16,7 @@ public class TrainerLookupPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JTextField trainerIndexField;
+	private JSpinner trainerIndexField;
 	private JTextField trainerNameField;
 	private JLabel trainerIndexResult;
 	private JLabel trainerNameResult;
@@ -46,7 +46,7 @@ public class TrainerLookupPanel extends JPanel {
 		
 		add(resultPanel, BorderLayout.SOUTH);
 		
-		trainerIndexField.addActionListener(e -> searchByIndex());
+		trainerIndexField.addChangeListener(e -> searchByIndex());
 		trainerNameField.addActionListener(e -> searchByName());
 		showInfoButton.addActionListener(e -> showTrainerDetails());
 	}
@@ -54,7 +54,8 @@ public class TrainerLookupPanel extends JPanel {
 	private void initialize() {
 		setLayout(new BorderLayout());
 		
-		trainerIndexField = new JTextField(10);
+		SpinnerNumberModel spinnerModel = new SpinnerNumberModel(0, 0, Trainer.trainers.length - 1, 1);
+		trainerIndexField = new JSpinner(spinnerModel);
 		trainerNameField = new JTextField(10);
 		trainerIndexResult = new JLabel("Trainer Index: N/A");
 		trainerNameResult = new JLabel("Trainer Name: N/A");
@@ -63,7 +64,7 @@ public class TrainerLookupPanel extends JPanel {
 	
 	private void searchByIndex() {
 		try {
-			int index = Integer.parseInt(trainerIndexField.getText());
+			int index = (int) trainerIndexField.getValue();
 			if (index < 0 || index >= Trainer.trainers.length || Trainer.trainers[index] == null) {
 				trainerIndexResult.setText("Invalid trainer index.");
 				trainerNameResult.setText("Trainer Name: N/A");

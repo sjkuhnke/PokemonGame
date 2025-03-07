@@ -1016,7 +1016,7 @@ public class UI extends AbstractUI {
 			}
 			if (target.walkable) {
 				target.spriteCounter++;
-				if (target.spriteCounter > (target instanceof PlayerCharacter ? 8 : 5)) {
+				if (target.spriteCounter > (target instanceof PlayerCharacter ? 16 / currentTask.counter : 5)) {
 					target.spriteNum++;
 					if (target.spriteNum > 4) {
 						target.spriteNum = 1;

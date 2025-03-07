@@ -769,6 +769,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.HEALING_WISH) && this.trainerOwned() && !this.trainer.hasValidMembers()) bestMoves.removeIf(Move.HEALING_WISH::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.LUNAR_DANCE) && this.trainerOwned() && !this.trainer.hasValidMembers()) bestMoves.removeIf(Move.LUNAR_DANCE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.BATON_PASS) && this.trainerOwned() && !this.trainer.hasValidMembers()) bestMoves.removeIf(Move.BATON_PASS::equals);
+		if (bestMoves.contains(Move.TRICK) && this.getItem() == Item.RING_TARGET) bestMoves.add(Move.TRICK);
+		if (bestMoves.contains(Move.SWITCHEROO) && this.getItem() == Item.RING_TARGET) bestMoves.add(Move.SWITCHEROO);
+		if (bestMoves.contains(Move.TRICK_TACKLE) && this.getItem() == Item.RING_TARGET) bestMoves.add(Move.TRICK_TACKLE);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TRICK_ROOM) && field.contains(field.fieldEffects, Effect.TRICK_ROOM)) bestMoves.removeIf(Move.TRICK_ROOM::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_ROOM) && field.contains(field.fieldEffects, Effect.MAGIC_ROOM)) bestMoves.removeIf(Move.MAGIC_ROOM::equals);
@@ -950,7 +953,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		ArrayList<Task> check = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.ui.tasks;
 		checkMove(check.size(), this.level);
-		this.checkEvo(player);
+		this.checkEvo(player, check.size());
 	}
 	
 	public int setExpMax() {
@@ -1028,7 +1031,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return false;
 	}
 
-	private void checkEvo(Player player) {
+	private void checkEvo(Player player, int index) {
 		if (this.item == Item.EVERSTONE) return;
 		Pokemon result = null;
 		int area = player.currentMap;
@@ -1316,7 +1319,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         }
 		
 		if (result != null) {
-			Task.addEvoTask(this, result);
+			Task.addEvoTask(this, result, index);
 	    }
 	}
 
@@ -2154,7 +2157,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			
 			if (move == Move.POLTERGEIST) {
 				if (foe.item == null) {
-					useMove(move, foe);
 					fail();
 					this.impressive	= false;
 					this.moveMultiplier = 1;
@@ -2233,6 +2235,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (this.ability == Ability.SHEER_FORCE && move.cat != 2 && secChance > 0) {
 				secChance = 0;
 				bp *= 1.3;
+			}
+			
+			if (move == Move.FUSION_BOLT && this.lastMoveUsed == Move.FUSION_FLARE) {
+				bp *= 2;
+			}
+			
+			if (move == Move.FUSION_FLARE && this.lastMoveUsed == Move.FUSION_BOLT) {
+				bp *= 2;
 			}
 			
 			if (this.ability == Ability.TECHNICIAN && bp <= 60) {
@@ -3814,7 +3824,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Task.addTask(Task.TEXT, this.nickname + " was freed!");
 				this.spunCount = 0;
 			}
-		} else if (move == Move.TWINKLE_TACKLE) {
+		} else if (move == Move.MAGIC_TOMB) {
 			stat(foe, 0, -1, this);
 			stat(foe, 2, -1, this);
 		} else if (move == Move.TWINEEDLE) {
@@ -4160,6 +4170,17 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(foe, 3, -2, this, announce);
 		} else if (move == Move.FEATHER_DANCE) {
 			stat(foe, 0, -2, this, announce);
+		} else if (move == Move.FIELD_FLIP) {
+			ArrayList<FieldEffect> thisEffects = this.getFieldEffects();
+			ArrayList<FieldEffect> foeEffects = foe.getFieldEffects();
+			boolean announcing = announce && (thisEffects.size() > 0 || foeEffects.size() > 0);
+			if (announcing) {
+				foe.setFieldEffects(new ArrayList<>(thisEffects));
+				this.setFieldEffects(new ArrayList<>(foeEffects));
+				Task.addTask(Task.TEXT, this.nickname + "'s side swapped field effects with " + foe.nickname + "'s side!");
+			} else {
+				if (announce) fail = fail();
+			}
 		} else if (move == Move.FLATTER) {
 			stat(foe, 2, 2, this, announce);
 			foe.confuse(false, this);
@@ -4889,7 +4910,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this != p) {
 			if (p.ability == Ability.MIRROR_ARMOR && a < 0) {
 				if (announce) Task.addAbilityTask(p);
-				stat(this, i, amt, foe);
+				stat(this, i, amt, foe, announce);
 				return;
 			} else if (p.ability == Ability.CLEAR_BODY && a < 0) {
 				if (announce) Task.addAbilityTask(p);
@@ -4909,8 +4930,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (announce) Task.addTask(Task.TEXT, p.nickname + "'s " + type + " was not lowered!");
 			return;
 		}
-		boolean statBerry = p.checkStatBerry(i, a);
-		int difference = statBerry ? Math.max(-6 - p.statStages[i], a) : 0;
+		boolean statBerry = false;
+		int difference = 0;
+		if (announce) {
+			statBerry = p.checkStatBerry(i, a);
+			difference = statBerry ? Math.max(-6 - p.statStages[i], a) : 0;
+		}
 		
 		if (p.statStages[i] >= 6 && a > 0) {
 			if (announce) Task.addTask(Task.TEXT, p.nickname + "'s " + type + " won't go any higher!");
@@ -4921,7 +4946,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		if (foe.ability == Ability.EMPATHIC_LINK && a > 0) {
 			if (announce) Task.addAbilityTask(foe);
-			foe.stat(foe, 2, 1, this);
+			foe.stat(foe, 2, 1, this, announce);
 		}
 		p.statStages[i] += a;
 		p.statStages[i] = p.statStages[i] < -6 ? -6 : p.statStages[i];
@@ -4935,10 +4960,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this != p) {
 			if (p.ability == Ability.DEFIANT && foe.ability != Ability.BRAINWASH && a < 0) {
 				if (announce) Task.addAbilityTask(p);
-				stat(p, 0, 2, foe);
+				stat(p, 0, 2, foe, announce);
 			} else if (p.ability == Ability.COMPETITIVE && foe.ability != Ability.BRAINWASH && a < 0) {
 				if (announce) Task.addAbilityTask(p);
-				stat(p, 2, 2, foe);
+				stat(p, 2, 2, foe, announce);
 			}
 		}
 	}
@@ -5085,6 +5110,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 	
 	public Item getItem() {
+		if (field == null) return this.item;
 		if (field.contains(field.fieldEffects, Effect.MAGIC_ROOM)) return null;
 		return this.item;
 	}
@@ -5124,6 +5150,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				resistantTypes.add(PType.FIGHTING);
 	            resistantTypes.add(PType.DARK);
 	            resistantTypes.add(PType.LIGHT);
+	            resistantTypes.add(PType.GALACTIC);
 	            break;
 			case DRAGON:
 				resistantTypes.add(PType.STEEL);
@@ -5136,7 +5163,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 	            break;
 			case FIGHTING:
 				resistantTypes.add(PType.GALACTIC);
-	            resistantTypes.add(PType.POISON);
 	            resistantTypes.add(PType.FLYING);
 	            resistantTypes.add(PType.BUG);
 	            resistantTypes.add(PType.MAGIC);
@@ -5175,7 +5201,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				break;
 			case MAGIC:
 				resistantTypes.add(PType.POISON);
-	            resistantTypes.add(PType.FIGHTING);
+	            resistantTypes.add(PType.DARK);
 	            resistantTypes.add(PType.MAGIC);
 				break;
 			case POISON:
@@ -5183,6 +5209,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	            resistantTypes.add(PType.GROUND);
 	            resistantTypes.add(PType.ROCK);
 	            resistantTypes.add(PType.GHOST);
+	            resistantTypes.add(PType.PSYCHIC);
 				break;
 			case STEEL:
 				resistantTypes.add(PType.FIRE);
@@ -5195,6 +5222,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				resistantTypes.add(PType.WATER);
 	            resistantTypes.add(PType.GRASS);
 	            resistantTypes.add(PType.DRAGON);
+	            resistantTypes.add(PType.POISON);
 				break;
 			case LIGHT:
 				resistantTypes.add(PType.FIRE);
@@ -5250,6 +5278,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	            break;
 			case DRAGON:
 				weakTypes.add(PType.DRAGON);
+				weakTypes.add(PType.GALACTIC);
 	            break;
 			case ELECTRIC:
 				weakTypes.add(PType.WATER);
@@ -5657,6 +5686,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (this.ability == Ability.SHEER_FORCE && move.cat != 2 && secChance > 0) {
 			bp *= 1.3;
+		}
+		
+		if (move == Move.FUSION_BOLT && this.lastMoveUsed == Move.FUSION_FLARE) {
+			bp *= 2;
+		}
+		
+		if (move == Move.FUSION_FLARE && this.lastMoveUsed == Move.FUSION_BOLT) {
+			bp *= 2;
 		}
 		
 		if (this.ability == Ability.TECHNICIAN && bp <= 60) {
@@ -8129,7 +8166,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		case 112: return "Wattwo -> Megawatt (lv. up in Electric Tunnel)";
 		case 114: return "Elelamb -> Electroram (lv. 28)";
 		case 115: return "Electroram -> Superchargo (lv. 48)";
-		case 117: return "Twigzap -> Shockbrach (lv. 19)";
+		case 117: return "Twigzap -> Shockbranch (lv. 19)";
 		case 118: return "Shockbranch -> Thunderzap (Leaf Stone)";
 		case 120: return "Magie -> Cumin (lv. 30)";
 		case 121: return "Cumin -> Cinneroph (250+ happiness)";
@@ -9224,6 +9261,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.trainer.initFieldEffectList();
 			}
 			return this.trainer.getFieldEffectList();
+		}
+	}
+	
+	private void setFieldEffects(ArrayList<FieldEffect> fieldEffects) {
+		if (this.trainer == null) {
+			this.fieldEffects = fieldEffects;
+		} else {
+			this.trainer.setFieldEffects(fieldEffects);
 		}
 	}
 

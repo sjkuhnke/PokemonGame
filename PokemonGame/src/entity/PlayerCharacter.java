@@ -255,6 +255,9 @@ public class PlayerCharacter extends Entity {
 			PMap.getLoc(gp.currentMap, (int) Math.round(worldX * 1.0 / gp.tileSize), (int) Math.round(worldY * 1.0 / gp.tileSize));
 			if (!currentMap.equals(currentMapName)) gp.ui.showAreaName();
 			Main.window.setTitle(gp.gameTitle + " - " + currentMapName);
+		} else {
+			spriteCounter = 8;
+			spriteNum = 1;
 		}
 		
 		gp.eHandler.checkEvent();
@@ -291,7 +294,7 @@ public class PlayerCharacter extends Entity {
 						|| target instanceof NPC_Ball) {
 					interactClerk(target);
 				} else if (target instanceof NPC_Block) {
-					interactNPC((NPC_Block) target);
+					interactNPC((NPC_Block) target, true);
 				} else if (target instanceof NPC_Trainer) {
 					interactTrainer(target, -1, true);
 				} else if (target instanceof NPC_GymLeader) {
@@ -582,9 +585,9 @@ public class PlayerCharacter extends Entity {
 		npc.speak(-1);
 	}
 	
-	public void interactNPC(Entity npc) {
+	public void interactNPC(Entity npc, boolean face) {
 		gp.keyH.wPressed = false;
-		npc.facePlayer(direction);
+		if (face) npc.facePlayer(direction);
 		if (npc.flag == -1 || !p.flag[npc.getFlagX()][npc.getFlagY()]) {
 			gp.gameState = GamePanel.DIALOGUE_STATE;
 			gp.ui.npc = npc;
@@ -1466,29 +1469,59 @@ public class PlayerCharacter extends Entity {
 			Pokemon result = new Pokemon(ids[index], 30, true, false);
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
-		} else if (gp.currentMap == 107) { // arthra
-			if (!p.flag[5][0]) {
+		} else if (gp.currentMap == 107) { // ghostly woods
+			if (npc.name.equals("Arthra")) {
+				if (!p.flag[5][0]) {
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.TURN, npc, "", Task.DOWN);
+					Task.addTask(Task.SPOT, npc, "");
+					Task.addTask(Task.DIALOGUE, npc, "Oh, didn't expect company out here. You must be here for the same reason, yeah? You've noticed these ghosts swarming the woods?");
+					Task.addTask(Task.DIALOGUE, npc, "Name's Arthra, by the way. Merlin's my grandfather; you'll meet him someday if you get that far. Right now, I'm trying to figure out what's causing this mess.");
+					Task.addTask(Task.DIALOGUE, npc, "These ghosts are sneaky, but I've got them down. They're phasing in and out like something's messing with their energy.");
+					Task.addTask(Task.DIALOGUE, npc, "And I'm willing to bet it's no accident.");
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addNPCMoveTask('y', 91 * gp.tileSize, npc, false, 4);
+					Task.addTask(Task.SLEEP, "", 10);
+					Task.addTask(Task.DIALOGUE, npc, "But if you're serious about this, let's see if you can keep up. I don't have time to drag around dead weight.");
+					Task.addTask(Task.BATTLE, "", 392);
+				} else {
+					p.flag[5][1] = true;
+					Task.addTask(Task.DIALOGUE, npc, "But don't get too comfortable with that win. I'll make sure you regret it next time we battle.");
+					Task.addTask(Task.DIALOGUE, npc, "You want to play hero here? Be my guest! If you're so great, then take care of those ghosts yourself. I've got better things to do.");
+					Task.addTask(Task.DIALOGUE, npc, "Oh, and here you go, hero! You can probably make far better use of this than I ever could!");
+					Task t = Task.addTask(Task.ITEM, "");
+					t.item = Item.ABILITY_PATCH;
+					Task.addTask(Task.DIALOGUE, npc, "I really hate your hero attitude. You don't know shit. But like I said, have at it here.");
+					Task.addTask(Task.DIALOGUE, npc, "Just don't mess it up. And keep an eye out - these ghosts aren't the only threat around here.");
+					Task.addTask(Task.DIALOGUE, npc, "There's something bigger going on, and I'll figure it out - no thanks to you. See you around, hero.");
+					Task.addTask(Task.FLASH_IN, "");
+					Task.addTask(Task.UPDATE, "");
+					Task.addTask(Task.FLASH_OUT, "");
+				}
+			} else if (npc.name.equals("Rick")) {
+				Task.addNPCMoveTask('y', 55 * gp.tileSize, npc, false, 96);
+				Task.addTask(Task.TURN, this, "", Task.UP);
+				Task.addNPCMoveTask('y', 56 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addNPCMoveTask('x', 46 * gp.tileSize, npc, false, 4);
 				Task.addTask(Task.TURN, npc, "", Task.DOWN);
-				Task.addTask(Task.SPOT, npc, "");
-				Task.addTask(Task.DIALOGUE, npc, "Oh, didn't expect company out here. You must be here for the same reason, yeah? You've noticed these ghosts swarming the woods?");
-				Task.addTask(Task.DIALOGUE, npc, "Name's Arthra, by the way. Merlin's my grandfather; you'll meet him someday if you get that far. Right now, I'm trying to figure out what's causing this mess.");
-				Task.addTask(Task.DIALOGUE, npc, "These ghosts are sneaky, but I've got them down. They're phasing in and out like something's messing with their energy.");
-				Task.addTask(Task.DIALOGUE, npc, "And I'm willing to bet it's no accident.");
-				Task.addTask(Task.DIALOGUE, npc, "But if you're serious about this, let's see if you can keep up. I don't have time to drag around dead weight.");
-				Task.addTask(Task.BATTLE, "", 392);
-			} else {
-				p.flag[5][1] = true;
-				Task.addTask(Task.DIALOGUE, npc, "But don't get too comfortable with that win. I'll make sure you regret it next time we battle.");
-				Task.addTask(Task.DIALOGUE, npc, "You want to play hero here? Be my guest! If you're so great, then take care of those ghosts yourself. I've got better things to do.");
-				Task.addTask(Task.DIALOGUE, npc, "Oh, and here you go, hero! You can probably make far better use of this than I ever could!");
-				Task t = Task.addTask(Task.ITEM, "");
-				t.item = Item.ABILITY_PATCH;
-				Task.addTask(Task.DIALOGUE, npc, "I really hate your hero attitude. You don't know shit. But like I said, have at it here.");
-				Task.addTask(Task.DIALOGUE, npc, "Just don't mess it up. And keep an eye out - these ghosts aren't the only threat around here.");
-				Task.addTask(Task.DIALOGUE, npc, "There's something bigger going on, and I'll figure it out - no thanks to you. See you around, hero.");
-				Task.addTask(Task.FLASH_IN, "");
-				Task.addTask(Task.UPDATE, "");
-				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.TURN, this, "", Task.LEFT);
+				Task.addNPCMoveTask('x', 46 * gp.tileSize, this, false, 1);
+				Task.addTask(Task.TURN, this, "", Task.UP);
+				Task.addNPCMoveTask('y', 58 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "Well, well. Look who decided to show up - the meddling pest who can't keep their nose out of Eclipse's business.");
+				Task.addTask(Task.TURN, this, "", Task.UP);
+				Task.addNPCMoveTask('y', 64 * gp.tileSize, this, false, 1);
+				Task.addNPCMoveTask('y', 61 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "Do you have any idea what you've done? Those ghosts were just the beginning!");
+				Task.addTask(Task.DIALOGUE, npc, "You may have beaten a few, but I can summon hundreds more if I want. Once I'm done with you, Ghostly Woods will be overrun!");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addNPCMoveTask('y', 63 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "Once we're done here, not even the bravest of trainers will stand in Team Eclipse's way.");
+				Task.addTask(Task.BATTLE, "", 234);
 			}
 		} else if (gp.currentMap == 103) { // maxwell 1
 			if (!p.flag[5][4]) {
@@ -1502,6 +1535,8 @@ public class PlayerCharacter extends Entity {
 				Task.addTask(Task.DIALOGUE, npc, "BWAHAHAHAH! The pest finally arrives! Did you really think you could follow us all the way down here and stop what's already in motion? How amusingly naive.");
 				Task.addTask(Task.DIALOGUE, npc, "You see, child, I am far more than just a 'trainer'. I am the vanguard of an empire - we are here to prepare this world for something beyond your comprehension.");
 				Task.addTask(Task.DIALOGUE, npc, "My master, Dragowrath, watches from the stars. Earth is merely the first of many worlds he'll claim, and when the Sorcerer rises, this land will be ours.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addNPCMoveTask('y', gp.tileSize * 36, npc, false, 4);
 				Task.addTask(Task.DIALOGUE, npc, "But enough talk. You've come this far, so let's end this with a little... demonstration of power. Prepare yourself - my Pokemon and I will not hold back.");
 				Task.addTask(Task.BATTLE, "", 217);
 			} else if (!p.flag[5][9]) {

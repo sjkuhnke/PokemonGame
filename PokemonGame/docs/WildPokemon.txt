@@ -900,7 +900,7 @@ Route 34 (0A) (Lava)
 Route 35 (Standard)
 ===================================================================
 13% Kirlia (Lv. 40 - 42)
-5% Gardevoir (Lv. 37 - 41)
+5% Gardevoir (Lv. 42 - 44)
 14% Tigrette (Lv. 41 - 44)
 12% Magestiflash (Lv. 40 - 43)
 13% Busheep (Lv. 41 - 44)

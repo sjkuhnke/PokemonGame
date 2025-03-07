@@ -29,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -1035,51 +1036,42 @@ public enum Item {
         
         foeLevel.setValue(foeC.getLevel());
         updateMoves(foeC, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        
-        userLevel.addChangeListener(l ->{
-        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	try {
-        		int level = (int) userLevel.getValue();
-    			if (level >= 1 && level <= 100) {
-    				userCurrent.level = level;
-    			} else {
-    				userCurrent.level = 50;
-    			}
-    		} catch (NumberFormatException e1) {
-    			userCurrent.level = 50;
-    		}
-        	int oHP = userCurrent.getStat(0);
-        	userCurrent.setStats();
-        	int nHP = userCurrent.getStat(0);
-        	userCurrent.currentHP += nHP - oHP;
-        	userCurrent.verifyHP();
+    	
+		userLevel.addChangeListener(l -> {
+			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+	    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+        	updatePokemonLevel(userLevel, userCurrent, foeCurrent, true);
         	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
         	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
         });
-        
-        foeLevel.addChangeListener(l ->{
-        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	try {
-        		int level = (int) foeLevel.getValue();
-    			if (level >= 1 && level <= 100) {
-    				foeCurrent.level = level;
-    			} else {
-    				foeCurrent.level = 50;
-    			}
-    		} catch (NumberFormatException e1) {
-    			foeCurrent.level = 50;
-    		}
-        	int oHP = foeCurrent.getStat(0);
-        	foeCurrent.setStats();
-        	int nHP = foeCurrent.getStat(0);
-        	foeCurrent.currentHP += nHP - oHP;
-        	foeCurrent.verifyHP();
-        	if (!foeCurrent.toString().contains("(")) foeCurrent.setMoves();
+		
+		JComponent editor1 = userLevel.getEditor();
+		JFormattedTextField textField1 = ((JSpinner.DefaultEditor) editor1).getTextField();
+		textField1.addPropertyChangeListener("value", evt -> {
+			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+	    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+			updatePokemonLevel(userLevel, userCurrent, foeCurrent, true);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+		});
+		
+		foeLevel.addChangeListener(l -> {
+			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+	    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+        	updatePokemonLevel(foeLevel, userCurrent, foeCurrent, false);
         	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
         	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
         });
+		
+		JComponent editor2 = userLevel.getEditor();
+		JFormattedTextField textField2 = ((JSpinner.DefaultEditor) editor2).getTextField();
+		textField2.addPropertyChangeListener("value", evt -> {
+			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+	    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+			updatePokemonLevel(foeLevel, userCurrent, foeCurrent, false);
+			updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+		});
         
         userItem.addActionListener(l -> {
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
@@ -1227,7 +1219,7 @@ public enum Item {
         JOptionPane.showMessageDialog(null, calc, "Damage Calculator", JOptionPane.PLAIN_MESSAGE);
 		
 	}
-	
+
 	private static void updateMoves(Pokemon current, JGradientButton[] moves, JLabel[] damages, Pokemon foe, JLabel[] statLabels, JComboBox<Integer>[] stages,
 			JLabel speed, JButton currentHP, JLabel HPP, boolean crit, JComboBox<Ability> currentAbility, JComboBox<Item> currentItem, Field field) {
         for (int k = 0; k < moves.length; k++) {
@@ -1325,6 +1317,27 @@ public enum Item {
 
         currentAbility.setSelectedItem(current.ability);
         currentItem.setSelectedItem(current.item);
+	}
+	
+	private static void updatePokemonLevel(JSpinner spinner, Pokemon userCurrent, Pokemon foeCurrent, boolean isUser) {
+		Pokemon target = isUser ? userCurrent : foeCurrent;
+		
+		try {
+			int level = (int) spinner.getValue();
+			target.level = (level >= 1 && level <= 100) ? level : 50;
+		} catch (NumberFormatException e) {
+			target.level = 50;
+		}
+		
+		int oHP = target.getStat(0);
+		target.setStats();
+		int nHP = target.getStat(0);
+		target.currentHP += nHP - oHP;
+		target.verifyHP();
+		
+		if (!isUser && !foeCurrent.toString().contains("(")) {
+			target.setMoves();
+		}
 	}
 	
 	private static void moreButton(Pokemon p, Field f) {        
