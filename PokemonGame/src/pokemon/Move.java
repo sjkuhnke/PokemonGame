@@ -170,6 +170,7 @@ public enum Move {
 	FEINT(30,100,0,0,0,2,PType.NORMAL,"Always goes first, and hits through protect",false,10),
 	FEINT_ATTACK(60,1000,0,0,0,0,PType.DARK,"This attack always hits",true,20),
 	FELL_STINGER(50,100,0,0,0,0,PType.BUG,"Raises user's attack by 3 if it faints the foe",true,15),
+	FIELD_FLIP(0,1000,0,0,2,0,PType.PSYCHIC,"Swaps field effects on either side of the field",false,10),
 	FIERY_DANCE(80,100,50,0,1,0,PType.FIRE,"% chance to raise user's Sp.Atk by 1",false,10),
 	FIERY_WRATH(90,100,20,0,1,0,PType.DARK,"% of flinching foe",false,10),
 	FIRE_BLAST(110,85,10,0,1,0,PType.FIRE,"% chance to Burn foe",false,5),
@@ -206,8 +207,8 @@ public enum Move {
 	FURY_ATTACK(18,95,0,0,0,0,PType.NORMAL,"Attacks 2-5 times",true,20),
 	FURY_CUTTER(-1,95,0,0,0,0,PType.BUG,"Power increases the more times this move is used in succession",true,10),
 	FURY_SWIPES(18,95,0,0,0,0,PType.NORMAL,"Attacks 2-5 times",true,15),
-	FUSION_BOLT(100,100,0,0,0,0,PType.ELECTRIC,"This attack ignores the effects of the foe's ability",false,5),
-	FUSION_FLARE(100,100,0,0,1,0,PType.FIRE,"This attack ignores the effects of the foe's ability",false,5),
+	FUSION_BOLT(100,100,0,0,1,0,PType.ELECTRIC,"Ignores the effects of the foe's ability, and doubles in power if Fusion Flare was used last turn",false,5),
+	FUSION_FLARE(100,100,0,0,1,0,PType.FIRE,"Ignores the effects of the foe's ability, and doubles in power if Fusion Flare was used last turn",false,5),
 	FUTURE_SIGHT(120,100,0,-1,1,0,PType.PSYCHIC,"Attacks the foe 2 turns after this move is used",false,10),
 	GALAXY_BLAST(90,100,0,0,1,0,PType.GALACTIC,"A normal attack",false,10),
 	GASTRO_ACID(0,100,0,0,2,0,PType.POISON,"Supresses the foe's ability",false,20),
@@ -259,7 +260,7 @@ public enum Move {
 	HYDRO_VORTEX(90,100,40,0,1,0,PType.WATER,"% chance of confusing foe or causing foe to flinch",false,5),
 	HYPER_BEAM(150,90,0,0,1,0,PType.NORMAL,"User must rest after using this move",false,5),
 	HYPER_FANG(80,90,10,0,0,0,PType.NORMAL,"% of causing foe to flinch",true,15),
-	HYPER_VOICE(90,100,0,0,1,0,PType.NORMAL,"A normal attack",false,15),
+	HYPER_VOICE(100,100,0,0,1,0,PType.NORMAL,"A normal attack",false,15),
 	HYPNOSIS(0,60,0,0,2,0,PType.PSYCHIC,"Causes foe to sleep",false,10),
 	ICE_BALL(-1,90,0,0,0,0,PType.ICE,"Attacks up to 5 times, damage doubles each time. While active, user cannot switch out",true,20),
 	ICE_BEAM(90,100,10,0,1,0,PType.ICE,"% chance to Frostbite foe",false,10),
@@ -315,7 +316,7 @@ public enum Move {
 	MAGIC_POWDER(0,100,0,0,2,0,PType.MAGIC,"Changes foe's type to MAGIC",false,15),
 	MAGIC_REFLECT(0,1000,0,0,2,0,PType.MAGIC,"Foe's next attack will be reflected against them. Can be used every other turn, and not on the first turn out.",false,5),
 	MAGIC_ROOM(0,1000,0,0,2,0,PType.MAGIC,"Removes the effects of held items for 8 turns",false,10),
-	MAGIC_TOMB(90,100,0,0,1,0,PType.MAGIC,"A normal attack",true,10),
+	MAGIC_TOMB(85,100,10,0,1,0,PType.MAGIC,"% chance to lower foe's Attack and Sp.Atk by 1",true,10),
 	MAGICAL_LEAF(60,1000,0,0,1,0,PType.GRASS,"This move will never miss",false,20),
 	MAGICAL_CRASH(110,95,100,0,0,0,PType.MAGIC,"% to inflict foe with a random Status condition. User must rest after using",true,5),
 	MAGNET_BOMB(60,1000,0,0,0,0,PType.STEEL,"This move will never miss",false,20),
@@ -573,7 +574,7 @@ public enum Move {
 	TRI$ATTACK(80,100,20,0,1,0,PType.NORMAL,"% chance to either Burn, Paralyze or Frostbite foe",false,10),
 	TRICK(0,100,0,0,2,0,PType.MAGIC,"Swaps the user's and foe's held items",false,10),
 	TRICK_ROOM(0,1000,0,0,2,-7,PType.PSYCHIC,"Speed order is reversed for 6 turns",false,5),
-	TRICK_TACKLE(90,90,100,0,0,0,PType.MAGIC,"% chance to swap user and foe's item",true,15),
+	TRICK_TACKLE(90,90,100,0,0,0,PType.MAGIC,"% to swap items with a unique foe, meaning it won't swap items back unless the user switches out",true,15),
 	TWINEEDLE(25,100,50,0,0,0,PType.BUG,"% chance to Poison foe",false,20),
 	TWINKLE_TACKLE(85,90,20,0,0,0,PType.MAGIC,"% chance to lower foe's Attack and Sp.Atk by 1",true,10),
 	TWISTER(40,100,10,0,1,0,PType.DRAGON,"% of causing foe to flinch",false,20),
@@ -769,12 +770,21 @@ public enum Move {
 			if (arcane != 0) {
 				bp = Math.max(bp - arcane, 20);
 			}
-			if (Pokemon.field.equals(Pokemon.field.weather, Effect.SUN, foe)) {
-				if (this == Move.SOLSTICE_BLADE) bp *= 1.5;
+			if (Pokemon.field != null) {
+				if (Pokemon.field.equals(Pokemon.field.weather, Effect.SUN, foe)) {
+					if (this == Move.SOLSTICE_BLADE) bp *= 1.5;
+				}
+				if (Pokemon.field.equals(Pokemon.field.weather, Effect.RAIN, foe) || Pokemon.field.equals(Pokemon.field.weather, Effect.SNOW, foe)
+						|| Pokemon.field.equals(Pokemon.field.weather, Effect.SANDSTORM, foe)) {
+					if (this == Move.SOLAR_BEAM || this == Move.SOLAR_BLADE || this == Move.SOLSTICE_BLADE) bp *= 0.5;
+				}
 			}
-			if (Pokemon.field.equals(Pokemon.field.weather, Effect.RAIN, foe) || Pokemon.field.equals(Pokemon.field.weather, Effect.SNOW, foe)
-					|| Pokemon.field.equals(Pokemon.field.weather, Effect.SANDSTORM, foe)) {
-				if (this == Move.SOLAR_BEAM || this == Move.SOLAR_BLADE || this == Move.SOLSTICE_BLADE) bp *= 0.5;
+			if (this == Move.FUSION_BOLT && user.lastMoveUsed == Move.FUSION_FLARE) {
+				bp *= 2;
+			}
+			
+			if (this == Move.FUSION_FLARE && user.lastMoveUsed == Move.FUSION_BOLT) {
+				bp *= 2;
 			}
 			return bp;
 		}

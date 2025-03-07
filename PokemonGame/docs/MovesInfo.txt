@@ -91,7 +91,7 @@
  Electric Terrain   | Status   | --  | --  | 10 PP : Sets the terrain to ELECTRIC for 5 turns
  Electro Ball       | Special  | --  | 100 | 10 PP : Power is higher the faster the user is than the target
  Electroweb         | Special  | 55  | 95  | 15 PP : 100% chance to lower foe's Speed by 1
- Fusion Bolt        | Physical | 100 | 100 | 5 PP  : This attack ignores the effects of the foe's ability
+ Fusion Bolt        | Special  | 100 | 100 | 5 PP  : Ignores the effects of the foe's ability, and doubles in power if Fusion Flare was used last turn
  Hp Electric        | Special  | 60  | 100 | 15 PP : Calc only move
  Nuzzle             | Physical | 20  | 100 | 10 PP : 100% chance to Paralyze foe
  Parabolic Charge   | Special  | 65  | 100 | 20 PP : Heals 50% of damage dealt to foe
@@ -171,7 +171,7 @@
  Flame Wheel        | Physical | 70  | 100 | 20 PP : 10% to Burn foe
  Flamethrower       | Special  | 90  | 100 | 10 PP : 10% to Burn foe
  Flare Blitz        | Physical | 120 | 100 | 15 PP : 10% to Burn foe, user takes 1/3 of damage inflicted
- Fusion Flare       | Special  | 100 | 100 | 5 PP  : This attack ignores the effects of the foe's ability
+ Fusion Flare       | Special  | 100 | 100 | 5 PP  : Ignores the effects of the foe's ability, and doubles in power if Fusion Flare was used last turn
  Heat Crash         | Physical | --  | 100 | 10 PP : Damage is based on how heavy the user is compared to the foe
  Heat Wave          | Special  | 95  | 90  | 10 PP : 10% to Burn foe
  Hp Fire            | Special  | 60  | 100 | 15 PP : Calc only move
@@ -256,6 +256,7 @@
  Nightmare          | Status   | --  | 100 | 15 PP : Foe loses 1/4 of max HP each turn; wears off when foe wakes up
  Perish Song        | Status   | --  | --  | 5 PP  : All Pokemon hearing this song will faint in 3 turns
  Phantom Force      | Physical | 100 | 100 | 10 PP : A two turn attack. User vanishes on the first, and attacks on the second. Hits through protect.
+ Poltergeist        | Physical | 110 | 90  | 5 PP  : Fails if the target isn't holding an item
  Return Ghost       | Physical | 70  | 100 | 15 PP : Calc only move
  Shadow Ball        | Special  | 80  | 100 | 15 PP : 30% to lower foe's Sp.Def by 1
  Shadow Claw        | Physical | 80  | 100 | 15 PP : Boosted crit rate
@@ -358,7 +359,7 @@
  Aurora Glow        | Status   | --  | --  | 15 PP : Creates a field effect that heals all LIGHT, ICE and GALACTIC Pokemon on your team for 1/8 HP for 5 turns
  Baby-Doll Eyes     | Status   | --  | 100 | 30 PP : Lowers foe's Attack by 1, moves first
  Charm              | Status   | --  | 100 | 15 PP : Lowers foe's Attack by 2
- Chromo Beam        | Special  | --  | 100 | 5 PP  : 30% chance to double in Base Power
+ Chromo Beam        | Special  | 80  | 100 | 5 PP  : 30% chance to double in Base Power
  Dazzling Gleam     | Special  | 80  | 100 | 10 PP : A normal attack
  Draining Kiss      | Special  | 50  | 100 | 10 PP : Heals 75% of damage dealt to foe
  Flash              | Status   | --  | --  | 10 PP : Lowers foe's Accuracy by 1, and raises user's Sp.Atk by 1
@@ -395,7 +396,7 @@
 =============================================================================================================
                                                   Magic
 =============================================================================================================
- Alchemy            | Status   | --  | --  | 10 PP : Heals 33% HP, if user holds an item will consume it and heal 100%
+ Alchemy            | Status   | --  | --  | 10 PP : Heals 33% HP, if user holds an item will remove it and heal 100%
  Arcane Spell       | Special  | 90  | 95  | 10 PP : 100% to lower the Base Power of all foe's moves by 10
  Aurora Boost       | Status   | --  | --  | 10 PP : Raises user's Defense and Sp.Def by 1, and user's Sp.Atk by 2
  Deck Change        | Status   | --  | 100 | 5 PP  : Swaps the foe's Attack and SpA stats
@@ -423,10 +424,10 @@
  Sparkle Strike     | Physical | 80  | --  | 15 PP : This attack never misses
  Sparkling Terrain  | Status   | --  | --  | 10 PP : Sets the terrain to SPARKLY for 5 turns
  Sparkly Swirl      | Special  | 70  | 100 | 15 PP : 10% chance to lower all of foe's stats by 1
- Spellbind          | Status   | --  | 100 | 10 PP : Traps non-MAGIC foe for 4-5 turns, lowers foe's Def and SpD every turn
+ Spellbind          | Status   | --  | 100 | 10 PP : Traps non-MAGIC foe for 4-5 turns, lowers foe's Def and SpD by 1 every turn, 2 if Binding Band was held
  Swift              | Special  | 60  | --  | 20 PP : This attack never misses
  Trick              | Status   | --  | 100 | 10 PP : Swaps the user's and foe's held items
- Trick Tackle       | Physical | 90  | 90  | 15 PP : 100% chance to swap user and foe's item
+ Trick Tackle       | Physical | 90  | 90  | 15 PP : 100% to swap items with a unique foe, meaning it won't swap items back unless the user switches out
  Twinkle Tackle     | Physical | 85  | 90  | 10 PP : 20% chance to lower foe's Attack and Sp.Atk by 1
  Vanishing Act      | Special  | 100 | 100 | 10 PP : 30% to confuse foe, a two turn attack. User vanishes on the first, and attacks on the second. Hits through protect.
  Vitriolic Hex      | Special  | 60  | 100 | 20 PP : 100% chance to decrease foe's crit stage by 1
@@ -442,6 +443,7 @@
  Covet              | Physical | 60  | 100 | 25 PP : 100% chance to steal opponents item
  Cut                | Physical | 55  | 95  | 20 PP : This move always Crits
  Defense Curl       | Status   | --  | --  | 35 PP : Raises user's Defense by 1
+ Disable            | Status   | --  | 100 | 20 PP : Disabled the target's last used move for 4 turns
  Dizzy Punch        | Physical | 70  | 100 | 10 PP : 20% to confuse foe
  Double Hit         | Physical | 40  | 100 | 20 PP : Attacks twice
  Double Slap        | Physical | 15  | 95  | 25 PP : Attacks 2-5 times
@@ -572,7 +574,9 @@
  Dream Eater        | Special  | 100 | 100 | 15 PP : Only works if target is asleep. Heals 50% of damage dealt to foe
  Expanding Force    | Special  | 80  | 100 | 10 PP : Power is 1.5x if the terrain is PSYCHIC
  Extrasensory       | Special  | 80  | 100 | 20 PP : 10% chance of flinching foe
+ Field Flip         | Status   | --  | --  | 10 PP : Swaps field effects on either side of the field
  Freezing Glare     | Special  | 90  | 100 | 10 PP : 30% chance to Frostbite foe
+ Future Sight       | Special  | 120 | 100 | 10 PP : Attacks the foe 2 turns after this move is used
  Gravity Punch      | Physical | 40  | 100 | 5 PP  : Always goes first with extra priority. Still works in PSYCHIC TERRAIN.
  Heal Pulse         | Status   | --  | --  | 10 PP : Heals foe by 50% HP
  Healing Wish       | Status   | --  | --  | 5 PP  : User faints. The next Pokemon sent in will be fully healed
@@ -585,6 +589,7 @@
  Psybeam            | Special  | 65  | 100 | 20 PP : 10% chance to confuse foe
  Psychic            | Special  | 90  | 100 | 10 PP : 10% chance to lower foe's Sp.Def by 1
  Psychic Fangs      | Physical | 85  | 100 | 10 PP : 100% to break Screen effects
+ Psychic Noise      | Special  | 75  | 100 | 10 PP : 100% to inflict foe with the Heal Block effect
  Psychic Terrain    | Status   | --  | --  | 15 PP : Changes the terrain to PSYCHIC for 5 turns
  Psycho Cut         | Physical | 70  | 100 | 20 PP : Boosted Crit rate
  Psyshock           | Special  | 80  | 100 | 15 PP : Uses foe's Defense instead of Sp.Def in damage calculation

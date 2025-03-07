@@ -100,7 +100,7 @@ public class EventHandler {
 			if (hit(11,92,49)) teleport(10, 23, 40,false);
 			
 			// Cutscene with Fred 1
-			if (!gp.player.p.flag[1][0] && hit(11,39,64)) gp.player.interactNPC(gp.npc[11][7]);
+			if (!gp.player.p.flag[1][0] && hit(11,39,64)) gp.player.interactNPC(gp.npc[11][7], false);
 			
 			// Route 25 gate
 			if (hit(11,24,17)) teleport(12, 31, 45,false);
@@ -281,7 +281,7 @@ public class EventHandler {
 			if (hit(44,63,68)) teleport(38, 62, 42,false);
 			
 			// Cutscene with Robin
-			if (gp.player.p.flag[3][12] && !gp.player.p.flag[4][0] && hit(38,62,42)) gp.player.interactNPC(gp.npc[38][1]);
+			if (gp.player.p.flag[3][12] && !gp.player.p.flag[4][0] && hit(38,62,42)) gp.player.interactNPC(gp.npc[38][1], true);
 			
 			// Icy Path
 			if (hit(38,42,7)) teleport(166, 51, 53,true);
@@ -569,7 +569,7 @@ public class EventHandler {
 			
 			// TN Base -> Shadow Ravine -3
 			if (hit(104,47,63)) teleport(103, 47, 35,false);
-			if (hit(103,47,34)) teleport(104, 47, 63,true); // intentionally 1 below
+			if (hit(103,47,34)) teleport(104, 47, 62,true); // was intentionally 1 below
 			
 			// Shadow Ravine 0 -> -1
 			if (hit(90,25,10)) teleport(101, 24, 45,true);
@@ -592,7 +592,7 @@ public class EventHandler {
 			if (hit(107,49,93)) teleport(106, 31, 34,false);
 			
 			// Arthra Cutscene
-			if (gp.player.p.flag[4][5] && !gp.player.p.flag[5][0] && hit(107,49,92)) gp.player.interactNPC(gp.npc[107][12]);
+			if (gp.player.p.flag[4][5] && !gp.player.p.flag[5][0] && hit(107,49,92)) gp.player.interactNPC(gp.npc[107][12], false);
 			
 			// Ghostly Woods
 			if (hit(107,57,91)) teleport(107, 26, 81,true); // A
@@ -609,18 +609,24 @@ public class EventHandler {
 			if (hit(107,53,63)) teleport(107, 66, 50,true); // F
 			if (hit(107,47,63)) {
 				if (!gp.player.p.flag[5][2] || !gp.player.p.flag[5][5]) {
-					gp.setTaskState();
-					Task t = Task.addTask(Task.TELEPORT, "");
-					t.counter = 107;
-					t.start = 42;
-					t.finish = 57;
-					t.wipe = false;
 					if (gp.player.p.grustCount < 10) {
+						gp.setTaskState();
+						Task t = Task.addTask(Task.TELEPORT, "");
+						t.counter = 107;
+						t.start = 42;
+						t.finish = 57;
+						t.wipe = false;
 						Task.addTask(Task.TEXT, "This portal seems to be jammed by the Ghosts everywhere...");
 						Task.addTask(Task.TEXT, "There are " + (10 - gp.player.p.grustCount) + " Ghosts remaining!");
 					} else if (!gp.player.p.flag[5][2]) {
-						Task.addTask(Task.TEXT, "This portal seems to be jammed by Rick...");
+						gp.player.interactNPC(gp.npc[107][0], true);
 					} else {
+						gp.setTaskState();
+						Task t = Task.addTask(Task.TELEPORT, "");
+						t.counter = 107;
+						t.start = 42;
+						t.finish = 57;
+						t.wipe = false;
 						Task.addTask(Task.TEXT, "This portal seems to be jammed by Team Eclipse...");
 						Task.addTask(Task.TEXT, "Rick said that they're at the bottom of Electric Tunnel!");
 					}
@@ -664,7 +670,7 @@ public class EventHandler {
 			if (hit(107,74,22)) teleport(107, 49, 83,true); // X'
 			
 			// Maxwell 1 Cutscene
-			if (gp.player.p.flag[5][3] && !gp.player.p.flag[5][4] && hit(103,47,35)) gp.player.interactNPC(gp.npc[103][0]);
+			if (gp.player.p.flag[5][3] && !gp.player.p.flag[5][4] && hit(103,47,35)) gp.player.interactNPC(gp.npc[103][0], false);
 			
 			// Ghostly Woods -> Route 34 Gate -> Route 34
 			if (hit(107,45,18)) teleport(108, 31, 45,false);
@@ -713,7 +719,7 @@ public class EventHandler {
 			if (hit(113,53,69)) teleport(109, 15, 43,false);
 			
 			// Cutscene with Scott
-			if (gp.player.p.flag[5][8] && !gp.player.p.flag[6][0] && hit(109,15,43)) gp.player.interactNPC(gp.npc[109][5]);
+			if (gp.player.p.flag[5][8] && !gp.player.p.flag[6][0] && hit(109,15,43)) gp.player.interactNPC(gp.npc[109][5], false);
 			
 			// Mindagan Cavern
 			if (hit(78,62,69)) teleport(117, 61, 72,true);

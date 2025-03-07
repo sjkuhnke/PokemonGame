@@ -12,7 +12,6 @@ Make NPCs tell about old features being updated (deletable HMs, updated moves, e
 Implementation/Bug Fixes
 Finish TMs (legendaries only)
 Add more sashes to Gym 5/6 split
-Test if Assault Vest in showdown actually blocks the move mid turn (i.e. getting Tricked/Encored)
 Encounters on R43 E over vine cross should be same as R43 W
 Swap in text say "forced out"/"forced in" on random switch ins (Whirlwind etc)
 Life Orb + Assault Vest behind optional trainer(s) in 5th gym split
@@ -20,16 +19,13 @@ Life Orb + Assault Vest behind optional trainer(s) in 5th gym split
 Ideas
 Make Bipedice Ice/Ground (not Ground/Ice) and redo moveset
 Kissyfishy making out as a Ying-Yang thing
-Give Malamar a move called Field Flip that does court change effect
 Add Heart Swap
 Give Ingrain its own status effect and make it grounded as well
 
-Calc
-Get rid of enter press on level spinner, just make it an action listener
-
-(Not sure about these two)
+(Not sure about these)
 Make Poison not resist Bug
 Make Magic weak to Dark
+Make Rock not resist Poison
 
 Make Galactic weak to Dragon
 Make Galactic resist Dark

@@ -1720,7 +1720,6 @@ public class AssetSetter {
 		
 		gp.npc[mapNum][index] = SetupStaticEncounter(289, 50, 59, 391, 226, "Xvringzzi!"); // UP Pheromosa
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 49, 90, "Hmm... you can hide all you want, but I'll still spot you. Tricky little specters... there's nothing unnatural here...", true);
-		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, 1, 1, "For testing", "", 392);
 		
 		mapNum = 109;
 		index = 0;
@@ -3123,14 +3122,13 @@ public class AssetSetter {
 		}
 		
 		if (!flag[5][3] && gp.player.p.grustCount >= 10) {
-			gp.npc[107][0] = NPCSetup(RICK, 46, 60, "Well, well. Look who decided to show up - the meddling pest who can't keep their nose out of Eclipse's business.\n"
-					+ "Do you have any idea what you've done? Those ghosts were just the beginning!\n"
-					+ "You may have beaten a few, but I can summon hundreds more if I want. Once I'm done with you, Ghostly Woods will be overrun!\n"
-					+ "But hey, maybe I should give you a chance to run. After all, once we're done here, not even the bravest of trainers will stand in Team Eclipse's way.",
+			int x = flag[5][2] ? 46 : 47;
+			int y = flag[5][2] ? 60 : 3;
+			gp.npc[107][0] = NPCSetup(RICK, "Rick", x, y, "", true, 162,
 					"So you got lucky. Fine. You want to play hero? Then go ahead - I'll even tell you where we are hiding!\n"
 					+ "The rest of us are below Electric Tunnel, deep underground, working on another piece of the puzzle.\n"
 					+ "But don't get your hopes up. Maxwell's already started, and by the time you get there, it'll be too late to stop us.\n"
-					+ "Good luck with that! See you around - if you survive what's coming.", 234);
+					+ "Good luck with that! See you around - if you survive what's coming.");
 		} else {
 			gp.npc[107][0] = null;
 		}
@@ -3856,15 +3854,19 @@ public class AssetSetter {
 				result.setDirection("up");
 				break;
 			case ARTHRA_DOWN:
-				result.setupImages("/npc/arthra");
+				result.setupImages("/npc/arthra", true);
 				result.setDirection("down");
 				break;
 			case ARTHRA_UP:
-				result.setupImages("/npc/arthra");
+				result.setupImages("/npc/arthra", true);
 				result.setDirection("up");
 				break;
+			case RICK:
+				result.setupImages("/npc/rick", true);
+				result.setDirection("down");
+				break;
 			case MAXWELL:
-				result.setupImages("/npc/maxwell");
+				result.setupImages("/npc/maxwell", true);
 				result.setDirection("down");
 				break;
 			case MANIAC_DOWN:

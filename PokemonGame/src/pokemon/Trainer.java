@@ -23,7 +23,7 @@ public class Trainer implements Serializable {
 	
 	transient ArrayList<FieldEffect> effects;
 	
-	public static final int MAX_TRAINERS = 400;
+	public static final int MAX_TRAINERS = 420;
 	public static Trainer[] trainers = new Trainer[MAX_TRAINERS];
 	
 	public static ArrayList<Trainer> bossTrainers = new ArrayList<>();
@@ -403,5 +403,9 @@ public class Trainer implements Serializable {
 		}
 		
 		return result;
+	}
+
+	public void setFieldEffects(ArrayList<FieldEffect> fieldEffects) {
+		this.effects = fieldEffects;
 	}
 }

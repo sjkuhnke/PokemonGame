@@ -256,9 +256,10 @@ public class Task {
 		return t;
 	}
 	
-	public static void addEvoTask(Pokemon p, Pokemon result) {
-		Task t = addTask(Task.EVO, p.nickname + " is evolving!\nDo you want to evolve your " + p.nickname + "?", p);
+	public static void addEvoTask(Pokemon p, Pokemon result, int index) {
+		Task t = createTask(Task.EVO, p.nickname + " is evolving!\nDo you want to evolve your " + p.nickname + "?", p);
 		t.evo = result;
+		insertTask(t, index);
 	}
 	
 	public static void addTrainerTask(Entity t, int id, Pokemon foe, boolean spot) {
