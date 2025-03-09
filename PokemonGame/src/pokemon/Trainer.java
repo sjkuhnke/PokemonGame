@@ -172,6 +172,9 @@ public class Trainer implements Serializable {
 		boolean hasUser = this.hasUser(user);
 		
 		swap(current, team[index], hasUser);
+		foe.removeStatus(Status.TRAPPED);
+		foe.removeStatus(Status.SPUN);
+		foe.removeStatus(Status.SPELLBIND);
 		current.swapIn(foe, true);
 		return true;
 		

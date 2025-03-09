@@ -17,19 +17,21 @@ public class ItemObj extends Entity {
 	public Item item;
 	public int count;
 	
-	private boolean drawItem = true;
+	private boolean drawItem = false;
 	
 	public ItemObj(GamePanel gp, Item item) {
 		super(gp, null);
-		
+		this.item = item;
+		if (item == null) return;
 		if (drawItem) {
-			if (item != null) {
-				this.item = item;
-				image = item.getImage();
-			}
+			image = item.getImage();
 		} else {
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/interactive/item.png"));
+				if (item.isTM()) {
+					image = ImageIO.read(getClass().getResourceAsStream("/interactive/tm.png"));
+				} else {
+					image = ImageIO.read(getClass().getResourceAsStream("/interactive/item.png"));
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -658,21 +658,21 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	protected void drawFoePokeball(boolean arriving) {
-		drawFoePokeball(arriving, foe.ball);
+		drawFoePokeball(arriving, arriving ? foe.ball : currentTask.p.ball);
 	}
 	
 	protected void drawUserPokeball(boolean arriving) {
 		counter++;
 		if (arriving) {
 			if (counter < 50) {
-				g2.drawImage(user.ball.getImage2(), 133, 348, null);
+				g2.drawImage(user.ball.getBackImage(), 133, 348, null);
 			} else {
 				user.setVisible(true);
 				user.spriteVisible = true;
 			}
 		} else {
 			currentTask.p.setVisible(false);
-			g2.drawImage(user.ball.getImage2(), 133, 348, null);
+			g2.drawImage(currentTask.p.ball.getBackImage(), 133, 348, null);
 		}
 	}
 	

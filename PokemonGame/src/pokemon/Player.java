@@ -366,6 +366,9 @@ public class Player extends Trainer implements Serializable {
 		
 		Task.addTask(Task.TEXT, current.nickname + " was dragged out!");
 		current.swapIn(foe, true);
+		foe.removeStatus(Status.TRAPPED);
+		foe.removeStatus(Status.SPUN);
+		foe.removeStatus(Status.SPELLBIND);
 		return true;
 		
 	}
