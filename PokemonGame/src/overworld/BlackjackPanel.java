@@ -371,7 +371,7 @@ public class BlackjackPanel extends JPanel {
 		int handSize = getHandSize(foeCards);
 		foeCards[1].setVisible(true);
 		foeCardIcons.setIcon(createHandIcon(foeCards));
-		while (dealerTotal < 16 && handSize < MAX_HAND_SIZE) {
+		while (dealerTotal < 17 && handSize < MAX_HAND_SIZE) {
 			Card card = dealCard();
 			foeCards[handSize] = card;
 			foeCardIcons.setIcon(createHandIcon(foeCards));

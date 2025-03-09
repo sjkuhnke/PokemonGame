@@ -318,17 +318,20 @@ public abstract class AbstractUI {
 		// ID
 		x += gp.tileSize / 2;
 		y += gp.tileSize * 0.75;
-		if (!egg) {
-			g2.setColor(Pokemon.getDexNoColor(p.id));
-			g2.setFont(g2.getFont().deriveFont(20F));
-			g2.drawString(Pokemon.getFormattedDexNo(p.getDexNo()), x, y);
-		}
+		g2.setColor(p.getDexNoColor());
+		g2.setFont(g2.getFont().deriveFont(20F));
+		g2.drawString(p.getFormattedDexNo(), x, y);
 		
 		g2.setColor(Color.WHITE);
 		
-		// Name
-		x += gp.tileSize / 2;
+		// Ball
+		x -= gp.tileSize / 8;
 		y += gp.tileSize / 4;
+		if (p.ball != null) g2.drawImage(p.ball.getImage(), x, y, null);
+		
+		// Name
+		x += gp.tileSize / 8;
+		x += gp.tileSize / 2;
 		int startX = x;
 		g2.setFont(g2.getFont().deriveFont(36F));
 		g2.setFont(g2.getFont().deriveFont(getFontSize(p.name(), (float) (gp.tileSize * 4))));

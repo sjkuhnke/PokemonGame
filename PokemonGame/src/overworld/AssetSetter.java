@@ -257,7 +257,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(91, 11, Item.MENTAL_HERB, mapNum);
 		gp.obj[mapNum][objIndex] = SetupChest(44, 26, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(82, 28, Item.TINY_MUSHROOM, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(29, 17, Item.DAMAGED_MOSS, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 17, Item.DAMAGED_BULB, mapNum);
 		
 		mapNum = 4;
 		objIndex = 0;
@@ -1182,6 +1182,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(STUDENT_M_LEFT, 19, 37, "Test time! And guess what - you're failing!", "I failed the test... but I'll ace the next one!", 37);
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 21, 33, "Your thoughts are clear to me... and they're full of doubt.", "You've disrupted the flow of destiny... but I'll recalibrate.", 38, DOWN + RIGHT);
 		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_RIGHT, 22, 21, "A proper duel, wouldn't you say? Let's make this dignified.", "You've bested me, and I commend you for it.", 39);
+		gp.npc[mapNum][index] = NPCSetup(FRED_UP, 97, 97, "For calc", "", 34);
 		
 		mapNum = 13;
 		index = 0;
@@ -1720,6 +1721,7 @@ public class AssetSetter {
 		
 		gp.npc[mapNum][index] = SetupStaticEncounter(289, 50, 59, 391, 226, "Xvringzzi!"); // UP Pheromosa
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 49, 90, "Hmm... you can hide all you want, but I'll still spot you. Tricky little specters... there's nothing unnatural here...", true);
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, 1, 1, "For calc", "", 392);
 		
 		mapNum = 109;
 		index = 0;

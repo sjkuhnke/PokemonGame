@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -440,6 +441,7 @@ public enum Item {
 	private String desc;
 	private BufferedImage image;
 	private BufferedImage image2;
+	private BufferedImage backImage;
 	
 	public static final int MEDICINE = 1;
     public static final int OTHER = 2;
@@ -475,6 +477,7 @@ public enum Item {
 		if (isMint()) path = path.replace("_mint", "");
 		image = setupImage(path + ".png");
 		image2 = scaleImage(image, 2);
+		if (isBall()) backImage = setupBackImage();
 		
 		if (id >= 4 && id <= 8) {
 			switch(id) {
@@ -500,6 +503,19 @@ public enum Item {
 		
 		if (isMint()) addToMintTable();
 		if (pocket == Item.BALLS) addToBallsTable();
+	}
+
+	BufferedImage setupBackImage() {
+		Image image = image2;
+		
+		BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D graphics = bufferedImage.createGraphics();
+
+	    // Flip the image horizontally by drawing it with negative width
+	    graphics.drawImage(image, image.getWidth(null), 0, -image.getWidth(null), image.getHeight(null), null);
+	    graphics.dispose();
+
+	    return bufferedImage;
 	}
 
 	private void addToMintTable() {
@@ -576,6 +592,7 @@ public enum Item {
 	
 	public BufferedImage getImage() { return image; }
 	public BufferedImage getImage2() { return image2; }
+	public BufferedImage getBackImage() { return backImage; }
 	
 	public static Item getItem(int id) {
 		return itemTable[id];

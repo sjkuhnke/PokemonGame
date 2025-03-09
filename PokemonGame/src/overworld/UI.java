@@ -1429,11 +1429,14 @@ public class UI extends AbstractUI {
 						Task.addTask(Task.DIALOGUE, npc, "Awesome, thank you man! Here you go!");
 						Task ta = Task.addTask(Task.ITEM, "");
 						ta.item = Item.SHELL_BELL;
+						gp.player.p.bag.remove(Item.EUPHORIAN_GEM);
+						gp.player.p.bag.remove(Item.EUPHORIAN_GEM);
 						gp.player.p.flag[0][22] = true;
 					} else {
 						Task.addTask(Task.DIALOGUE, npc, "Hey! You don't have enough Euphorian Gems!");
 						Task.addTask(Task.DIALOGUE, npc, "Sorry man, not this time. Let me know if we have a deal!");
 					}
+					currentTask = null;
 					break;
 				}
 			}
@@ -2036,7 +2039,7 @@ public class UI extends AbstractUI {
 		// ID
 		x += gp.tileSize / 2;
 		y += gp.tileSize * 0.75;
-		g2.setColor(Pokemon.getDexNoColor(p.id));
+		g2.setColor(p.getDexNoColor());
 		g2.setFont(g2.getFont().deriveFont(20F));
 		if (gp.keyH.shiftPressed) {
 			g2.drawString(Pokemon.getFormattedDexNo(p.getID()), x, y);

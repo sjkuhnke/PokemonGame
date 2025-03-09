@@ -256,8 +256,7 @@ public class PlayerCharacter extends Entity {
 			if (!currentMap.equals(currentMapName)) gp.ui.showAreaName();
 			Main.window.setTitle(gp.gameTitle + " - " + currentMapName);
 		} else {
-			spriteCounter = 8;
-			spriteNum = 1;
+			resetSpriteNum();
 		}
 		
 		gp.eHandler.checkEvent();
@@ -268,6 +267,7 @@ public class PlayerCharacter extends Entity {
 		}
 		
 		if (keyH.dPressed) {
+			resetSpriteNum();
 			gp.gameState = GamePanel.MENU_STATE;
 		}
 		if (keyH.sPressed) {
@@ -287,6 +287,7 @@ public class PlayerCharacter extends Entity {
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			if (npcIndex != 999) {
 				Entity target = gp.npc[gp.currentMap][npcIndex];
+				resetSpriteNum();
 				if (target instanceof NPC_Nurse) {
 					interactNurse(target);
 				} else if (target instanceof NPC_Clerk || target instanceof NPC_Market
@@ -310,6 +311,7 @@ public class PlayerCharacter extends Entity {
 			// Check items
 			int objIndex = gp.cChecker.checkObject(this);
 			if (objIndex != -1) {
+				resetSpriteNum();
 				ItemObj item = (ItemObj) gp.obj[gp.currentMap][objIndex];
 				if (item instanceof TreasureChest) {
 					openChest((TreasureChest) item, objIndex);
@@ -397,16 +399,23 @@ public class PlayerCharacter extends Entity {
 		if (keyH.aPressed) {
 			if (keyH.ctrlPressed) {
 				keyH.ctrlPressed = false;
+				resetSpriteNum();
 				Item.useCalc(p.getCurrent(), null, null);
 			} else {
 				if (p.fish) {
 					int result = gp.cChecker.checkTileType(this);
 					if (result == 3 || (result >= 24 && result <= 36) || (result >= 313 && result <= 324)) {
+						resetSpriteNum();
 						startWild(currentMapName, 'F');
 					}
 				}
 			}
 		}
+	}
+
+	private void resetSpriteNum() {
+		spriteCounter = 8;
+		spriteNum = 1;
 	}
 
 	public void interactWith(Entity target, int index, boolean override) {
@@ -1896,7 +1905,7 @@ public class PlayerCharacter extends Entity {
 		if (!p.flag[0][0]) { // Before talking to Dad first
 			gp.ui.showMessage("It's a machine housing three rare Pokemon!");
 		} else if (p.flag[0][0] && !p.flag[0][1]) { // After talking to Dad and before picking a starter
-			gp.keyH.wPressed = false;
+			gp.keyH.resetKeys();
 			gp.gameState = GamePanel.STARTER_STATE;
 		} else if (p.flag[0][1] && !p.flag[0][4]) { // After picking a starter and before the first gate
 			gp.ui.showMessage(Item.breakString("There are two Pokemon still inside the machine. Wonder what Dad will do with them?", 42));
@@ -1905,7 +1914,7 @@ public class PlayerCharacter extends Entity {
 		} else if (p.badges > 1 && !p.flag[1][0]) { // After beating Gym 1
 			gp.ui.showMessage("There aren't any Pokemon inside.");
 		} else { // Dialogue after beating Fred 1 but before Gym 2
-			gp.ui.showMessage(Item.breakString("There aren't any Pokemon left, Dad must've given one to Scott and one to Fredrick.", 42));
+			gp.ui.showMessage(Item.breakString("There aren't any Pokemon left, Dad must've given one to Scott and one to Fred.", 42));
 		}
 		
 	}
