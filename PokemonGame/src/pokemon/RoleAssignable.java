@@ -66,6 +66,7 @@ public interface RoleAssignable {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	public static int assignRole(RoleAssignable entity) {
 		int role = 0;
 		ArrayList<Move> moveset = entity.getMoves();
