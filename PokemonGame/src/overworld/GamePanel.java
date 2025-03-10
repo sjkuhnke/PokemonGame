@@ -78,6 +78,7 @@ public class GamePanel extends JPanel implements Runnable {
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public PlayerCharacter player = new PlayerCharacter(this, keyH);
+	public Script script;
 	public Entity npc[][] = new Entity[MAX_MAP][40];
 	public ItemObj obj[][] = new ItemObj[MAX_MAP][40];
 	public InteractiveTile iTile[][] = new InteractiveTile[MAX_MAP][55];
@@ -424,6 +425,8 @@ public class GamePanel extends JPanel implements Runnable {
 		aSetter.setNPC();
 		aSetter.setObject();
 		aSetter.setInteractiveTile(currentMap);
+		
+		script = new Script(this);
 		
 		gameState = PLAY_STATE;
 		

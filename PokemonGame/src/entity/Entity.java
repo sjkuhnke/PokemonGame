@@ -41,6 +41,7 @@ public class Entity {
 	int dialogueIndex = 0;
 	public String altDialogue;
 	public ArrayList<Item> inventory = new ArrayList<>();
+	public double scriptIndex = -1;
 	
 	// Particle fields
 	Color color;
@@ -51,7 +52,6 @@ public class Entity {
 	
 	public int flag = -1;
 	private int spin;
-	public boolean more;
 	
 	public Entity(GamePanel gp, String name) {
 		this.gp = gp;

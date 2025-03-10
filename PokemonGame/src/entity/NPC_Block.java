@@ -5,12 +5,12 @@ import pokemon.*;
 
 public class NPC_Block extends Entity {
 	
-	public NPC_Block(GamePanel gp, String name, String[] message, boolean more, int flag, String altDialogue) {
+	public NPC_Block(GamePanel gp, String name, String[] message, double scriptIndex, int flag, String altDialogue) {
 		super(gp, name);
 		this.setDirection("down");
 		
 		this.flag = flag;
-		this.more = more;
+		this.scriptIndex = scriptIndex;
 		this.altDialogue = altDialogue;
 		
 		getImage();
@@ -22,7 +22,7 @@ public class NPC_Block extends Entity {
 	}
 	
 	public void speak(int mode) {
-		if (!more || mode != 0) {
+		if (scriptIndex < 0 || mode != 0) {
 			super.speak(mode);
 		} else {
 			gp.setTaskState();
