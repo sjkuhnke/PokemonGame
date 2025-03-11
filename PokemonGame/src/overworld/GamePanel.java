@@ -11,7 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -22,23 +21,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import entity.Entity;
-import entity.NPC_PC;
-import entity.NPC_Pokemon;
-import entity.Particle;
-import entity.PlayerCharacter;
-import object.InteractiveTile;
-import object.ItemObj;
-import object.TreasureChest;
-import pokemon.Ability;
-import pokemon.Encounter;
-import pokemon.Field;
-import pokemon.Item;
-import pokemon.Player;
-import pokemon.Pokemon;
-import pokemon.Task;
-import pokemon.Trainer;
-import tile.TileManager;
+import entity.*;
+import object.*;
+import pokemon.*;
+import tile.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -303,38 +289,7 @@ public class GamePanel extends JPanel implements Runnable {
 			if (id == 285) ui.drawLightOverlay = determineLightOverlay();
 		}
 
-		Pokemon[] teamTemp = Arrays.copyOf(player.p.team, 6);
-		for (int i = 0; i < 6; i++) {
-			if (teamTemp[i] != null) {
-				if (teamTemp[i].id == 237) {
-					teamTemp[i].id = 150;
-					teamTemp[i].setSprites();
-					if (teamTemp[i].nickname.equals(teamTemp[i].name())) teamTemp[i].nickname = teamTemp[i].getName();
-					teamTemp[i].setName(teamTemp[i].getName());
-					
-					teamTemp[i].baseStats = teamTemp[i].getBaseStats();
-					teamTemp[i].setStats();
-					teamTemp[i].weight = teamTemp[i].getWeight();
-					teamTemp[i].setTypes();
-					teamTemp[i].setAbility(teamTemp[i].abilitySlot);
-					if (teamTemp[i].ability == Ability.ILLUSION) teamTemp[i].illusion = true; // just here for calc
-					teamTemp[i].currentHP = teamTemp[i].currentHP > teamTemp[i].getStat(0) ? teamTemp[i].getStat(0) : teamTemp[i].currentHP;
-				}
-				player.p.team[teamTemp[i].slot] = teamTemp[i];
-				teamTemp[i].clearVolatile();
-				
-				if (teamTemp[i].loseItem) {
-					teamTemp[i].item = null;
-					teamTemp[i].loseItem = false;
-				}
-				if (teamTemp[i].lostItem != null) {
-					teamTemp[i].item = teamTemp[i].lostItem;
-					teamTemp[i].lostItem = null;
-					if (teamTemp[i].item == Item.POTION) teamTemp[i].item = null;
-				}
-			}
-		}
-		player.p.setCurrent(player.p.team[0]);
+		player.p.resetTeam();
 		player.p.amulet = false;
 		
 		Pokemon.field = new Field();

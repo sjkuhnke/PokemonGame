@@ -266,11 +266,11 @@ Hiker Chadwick
 Sapwin (Lv. 18) @ Expert Belt           /   Anger Point    /   Rock Smash, Leaf Tornado, Headbutt, Root Kick
 Rocky (Lv. 18) @ Expert Belt            /   Unerodible     /   Cut, Rock Tomb, Return Fire, Magnitude
 
+Gelb Forest (1A)----------------------------------
+
 Rival Fred 1
 Otterpor (Lv. 20) @ Leftovers           /   Water Veil     /   Confusion, Aqua Ring, Water Pulse, Aqua Veil
 Torgged (Lv. 20) @ Miracle Seed         /   Rough Skin     /   Smack Down, Headbutt, Razor Leaf, Sand Attack
-
-Gelb Forest (1A)----------------------------------
 
 Psychic Kaytlynne
 Inkay (Lv. 18) @ Black Glasses          /   Contrary       /   Payback, Pluck, Psybeam, Swagger
@@ -1318,6 +1318,14 @@ Glittleshoo (Lv. 48) @ Safety Goggles   /   Serene Grace   /   Magic Tomb, Wish,
 Wormatron-S (Lv. 49) @ Focus Sash       /   Sand Rush      /   Knock Off, Earth Power, Fissure, Glare
 
 Shadow Ravine (-3A)-------------------------------
+
+Eclipse Leader Maxwell 1
+Zurroaratr-S (Lv. 61) @ Black Sludge    /   Levitate       /   Toxic Spikes, Belch, Overheat, Knock Off
+Soldrota (Lv. 61) @ White Herb          /   Full Force     /   Shift Gear, Iron Head, Close Combat, Facade
+Dompster-S (Lv. 61) @ Focus Sash        /   Prankster      /   Spectral Thief, Spikes, Will-O-Wisp, Light Screen
+Shadowsaur (Lv. 62) @ Loaded Dice       /   Moxie          /   Knock Off, Fatal Bind, Obstruct, Scale Shot
+Galactasolder (Lv. 62) @ Coba Berry     /   Sniper         /   Drain Punch, Star-Struck Arrow, Bulk Up, Meteor Mash
+Shaboom (Lv. 62) @ Leftovers            /   Sparkly Surge  /   Magic Tomb, Comet Crash, Moonlight, Ice Beam
 
 Dust Sorcerer
 Dust Sorcerer (Lv. 79) @ None           /   Beast Boost    /   Stealth Rock, Aeroblast, Earth Power, Whirlwind

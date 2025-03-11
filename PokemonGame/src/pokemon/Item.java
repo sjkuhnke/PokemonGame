@@ -30,7 +30,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -135,6 +134,8 @@ public enum Item {
 	BLACK_SLUDGE(51,0,0,new Color(144, 138, 169),Item.HELD_ITEM,null,"If the holder is a Poison type, this sludge will gradually restore its HP. It damages any other type."),
 	EVIOLITE(52,0,0,new Color(186, 141, 190),Item.HELD_ITEM,null,"A mysterious evolutionary lump that boosts the Defense and Sp. Def stats when held by a Pokemon that can still evolve."),
 	EVERSTONE(53,100,0,new Color(179, 200, 210),Item.HELD_ITEM,null,"A Pokemon holding this peculiar stone is prevented from evolving."),
+	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
+	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
 	DAMP_ROCK(54,750,0,new Color(37, 99, 179),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to rain, the rain will persist for longer than usual."),
 	HEAT_ROCK(55,750,0,new Color(209, 68, 61),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to harsh sunlight, the sunlight will persist for longer than usual."),
 	SMOOTH_ROCK(56,600,0,new Color(166, 124, 90),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to a sandstorm, the storm will persist for longer than usual."),
@@ -167,15 +168,33 @@ public enum Item {
 	FOCUS_BAND(76,0,0,new Color(232, 80, 80),Item.HELD_ITEM,null,"When the holder is hit with a move that should knock it out, it may be able to endure with 1 HP."),
 	KING1S_ROCK(77,0,200,new Color(224, 206, 58),Item.HELD_ITEM,null,"It may cause the target to flinch whenever the holder successfully inflicts damage on them with an attack."),
 	SHED_SHELL(78,0,200,new Color(243, 241, 140),Item.HELD_ITEM,null,"Hard and sturdy, this discarded carapace enables the holder to switch out of battle without fail."),
-	CLEANSE_TAG(371,0,0,Color.BLACK,Item.HELD_ITEM,null,"Helps keep wild Pokemon away when the holder is the head of the party."),
 	MUSCLE_BAND(79,0,150,new Color(225, 200, 50),Item.HELD_ITEM,null,"This headband exudes strength, slightly boosting the power of the holder's physical moves."),
 	WISE_GLASSES(80,0,150,new Color(92, 105, 117),Item.HELD_ITEM,null,"This thick pair of glasses slightly boosts the power of the holder's special moves."),
-	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
-	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
+	BLACK_BELT(201,0,0,PType.FIGHTING.getColor(),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."),
+	BLACK_GLASSES(202,0,0,PType.DARK.getColor(),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."),
+	CHARCOAL(203,0,0,PType.FIRE.getColor(),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."),
+	COSMIC_CORE(204,0,0,PType.GALACTIC.getColor(),Item.HELD_ITEM,null,"A mysterious core from the heart of the cosmos that boosts the power of Galactic-type moves."),
+	DRAGON_FANG(205,0,0,PType.DRAGON.getColor(),Item.HELD_ITEM,null,"This hard, sharp fang boosts the power of the holder's Dragon-type moves."),
+	ENCHANTED_AMULET(206,0,0,PType.MAGIC.getColor(),Item.HELD_ITEM,null,"An ancient amulet with mystical properties that boosts the power of Magic-type moves."),
+	GLOWING_PRISM(207,0,0,PType.LIGHT.getColor(),Item.HELD_ITEM,null,"A radiant prism that boosts the power of Light-type moves."),
+	HARD_STONE(208,0,0,PType.ROCK.getColor(),Item.HELD_ITEM,null,"A durable stone that boosts the power of the holder's Rock-type moves."),
+	MAGNET(209,0,0,PType.ELECTRIC.getColor(),Item.HELD_ITEM,null,"A powerful magnet that boosts the power of the holder's Electric-type moves."),
+	METAL_COAT(210,0,0,PType.STEEL.getColor(),Item.HELD_ITEM,null,"A special metallic coating that boosts the power of the holder's Steel-type moves."),
+	MIRACLE_SEED(211,0,0,PType.GRASS.getColor(),Item.HELD_ITEM,null,"A seed imbued with life-force that boosts the power of the holder's Grass-type moves."),
+	MYSTIC_WATER(212,0,0,PType.WATER.getColor(),Item.HELD_ITEM,null,"A teardrop-shaped gem boosts the power of the holder's Water-type moves."),
+	NEVER$MELT_ICE(213,0,0,PType.ICE.getColor(),Item.HELD_ITEM,null,"A heat-repelling piece of ice that boosts the power of the holder's Ice- type moves."),
+	POISON_BARB(214,0,0,PType.POISON.getColor(),Item.HELD_ITEM,null,"A small poisonous barb boosts the power of the holder's Poison-type moves."),
+	SHARP_BEAK(215,0,0,PType.FLYING.getColor(),Item.HELD_ITEM,null,"A long, sharp beak that boosts the power of the holder's Flying-type moves."),
+	SILK_SCARF(216,0,0,PType.NORMAL.getColor(),Item.HELD_ITEM,null,"A sumptuous scarf that boosts the power of the holder's Normal-type moves."),
+	SILVER_POWDER(217,0,0,PType.BUG.getColor(),Item.HELD_ITEM,null,"A pile of shiny silver powder that boosts the power of the holder's Bug-type moves."),
+	SOFT_SAND(218,0,0,PType.GROUND.getColor(),Item.HELD_ITEM,null,"A loose, silky sand that boosts the power of the holder's Ground-type moves."),
+	SPELL_TAG(219,0,0,PType.GHOST.getColor(),Item.HELD_ITEM,null,"A sinister, eerie tag that boosts the power of the holder's Ghost-type moves."),
+	TWISTED_SPOON(220,0,0,PType.PSYCHIC.getColor(),Item.HELD_ITEM,null,"This spoon is imbued with telekinetic energy and boosts the power of the holder's Psychic-type moves."),
+	CLEANSE_TAG(371,0,0,Color.BLACK,Item.HELD_ITEM,null,"Helps keep wild Pokemon away when the holder is the head of the party."),
 	AMULET_COIN(339,0,0,Color.BLACK,Item.HELD_ITEM,null,"This coin doubles any prize money received as long as the holder joins the battle at least once."),
 	FLOAT_STONE(322,0,0,Color.BLACK,Item.HELD_ITEM,null,"This very light stone reduces the weight of the holder."),
 	IRON_BALL(323,0,0,Color.BLACK,Item.HELD_ITEM,null,"A ball of steel that lowers Speed and allows GROUND moves to hit FLYING and levitating holders."),
-	LAGGING_TAIL(324,0,0,Color.BLACK,Item.HELD_ITEM,null,"A tremendously heavy item that makes the holder move slower than usual."), // TODO: add in overworld
+	LAGGING_TAIL(324,0,0,Color.BLACK,Item.HELD_ITEM,null,"A tremendously heavy item that makes the holder move slower than usual."),
 	BINDING_BAND(340,0,0,Color.BLACK,Item.HELD_ITEM,null,"This band boosts the damage of the binding effect caused by binding moves used by the holder."),
 	GRIP_CLAW(341,0,0,Color.BLACK,Item.HELD_ITEM,null,"When the holder uses moves that deal damage over several turns, such as Bind or Wrap, their effects will last longer than usual."),
 	RING_TARGET(344,0,0,Color.BLACK,Item.HELD_ITEM,null,"When held, moves that would normally have no effect due to type matchups will still hit the holder."),
@@ -317,26 +336,6 @@ public enum Item {
 	EDGE_KIT(44,0,0,new Color(232, 52, 54),Item.KEY_ITEM,null,"Edges ;) your Pokemon until they're about to bust :{D"),
 	CALCULATOR(200,0,0,Color.BLACK,Item.KEY_ITEM,null,"Calculates damage simulating a battle"),
 	DEX_NAV(263,0,0,Color.BLACK,Item.KEY_ITEM,null,"Shows wild Pokemon nearby"),
-	BLACK_BELT(201,0,0,PType.FIGHTING.getColor(),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."),
-	BLACK_GLASSES(202,0,0,PType.DARK.getColor(),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."),
-	CHARCOAL(203,0,0,PType.FIRE.getColor(),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."),
-	COSMIC_CORE(204,0,0,PType.GALACTIC.getColor(),Item.HELD_ITEM,null,"A mysterious core from the heart of the cosmos that boosts the power of Galactic-type moves."),
-	DRAGON_FANG(205,0,0,PType.DRAGON.getColor(),Item.HELD_ITEM,null,"This hard, sharp fang boosts the power of the holder's Dragon-type moves."),
-	ENCHANTED_AMULET(206,0,0,PType.MAGIC.getColor(),Item.HELD_ITEM,null,"An ancient amulet with mystical properties that boosts the power of Magic-type moves."),
-	GLOWING_PRISM(207,0,0,PType.LIGHT.getColor(),Item.HELD_ITEM,null,"A radiant prism that boosts the power of Light-type moves."),
-	HARD_STONE(208,0,0,PType.ROCK.getColor(),Item.HELD_ITEM,null,"A durable stone that boosts the power of the holder's Rock-type moves."),
-	MAGNET(209,0,0,PType.ELECTRIC.getColor(),Item.HELD_ITEM,null,"A powerful magnet that boosts the power of the holder's Electric-type moves."),
-	METAL_COAT(210,0,0,PType.STEEL.getColor(),Item.HELD_ITEM,null,"A special metallic coating that boosts the power of the holder's Steel-type moves."),
-	MIRACLE_SEED(211,0,0,PType.GRASS.getColor(),Item.HELD_ITEM,null,"A seed imbued with life-force that boosts the power of the holder's Grass-type moves."),
-	MYSTIC_WATER(212,0,0,PType.WATER.getColor(),Item.HELD_ITEM,null,"A teardrop-shaped gem boosts the power of the holder's Water-type moves."),
-	NEVER$MELT_ICE(213,0,0,PType.ICE.getColor(),Item.HELD_ITEM,null,"A heat-repelling piece of ice that boosts the power of the holder's Ice- type moves."),
-	POISON_BARB(214,0,0,PType.POISON.getColor(),Item.HELD_ITEM,null,"A small poisonous barb boosts the power of the holder's Poison-type moves."),
-	SHARP_BEAK(215,0,0,PType.FLYING.getColor(),Item.HELD_ITEM,null,"A long, sharp beak that boosts the power of the holder's Flying-type moves."),
-	SILK_SCARF(216,0,0,PType.NORMAL.getColor(),Item.HELD_ITEM,null,"A sumptuous scarf that boosts the power of the holder's Normal-type moves."),
-	SILVER_POWDER(217,0,0,PType.BUG.getColor(),Item.HELD_ITEM,null,"A pile of shiny silver powder that boosts the power of the holder's Bug-type moves."),
-	SOFT_SAND(218,0,0,PType.GROUND.getColor(),Item.HELD_ITEM,null,"A loose, silky sand that boosts the power of the holder's Ground-type moves."),
-	SPELL_TAG(219,0,0,PType.GHOST.getColor(),Item.HELD_ITEM,null,"A sinister, eerie tag that boosts the power of the holder's Ghost-type moves."),
-	TWISTED_SPOON(220,0,0,PType.PSYCHIC.getColor(),Item.HELD_ITEM,null,"This spoon is imbued with telekinetic energy and boosts the power of the holder's Psychic-type moves."),
 	CHERI_BERRY(221,10,2,new Color(232, 96, 80),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to free itself from paralysis."),
 	CHESTO_BERRY(222,10,2,new Color(144, 112, 224),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to wake itself from sleep."),
 	PECHA_BERRY(223,10,2,new Color(248, 192, 152),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to lift the effects of being poisoned from itself."),
@@ -1062,16 +1061,6 @@ public enum Item {
         	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
         });
 		
-		JComponent editor1 = userLevel.getEditor();
-		JFormattedTextField textField1 = ((JSpinner.DefaultEditor) editor1).getTextField();
-		textField1.addPropertyChangeListener("value", evt -> {
-			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-	    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-			updatePokemonLevel(userLevel, userCurrent, foeCurrent, true);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-		});
-		
 		foeLevel.addChangeListener(l -> {
 			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
 	    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
@@ -1079,16 +1068,6 @@ public enum Item {
         	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
         	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
         });
-		
-		JComponent editor2 = userLevel.getEditor();
-		JFormattedTextField textField2 = ((JSpinner.DefaultEditor) editor2).getTextField();
-		textField2.addPropertyChangeListener("value", evt -> {
-			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-	    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-			updatePokemonLevel(foeLevel, userCurrent, foeCurrent, false);
-			updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-		});
         
         userItem.addActionListener(l -> {
         	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());

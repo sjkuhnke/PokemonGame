@@ -75,7 +75,8 @@ public class Script {
 					if (p.pokedex[po.id] == 2) amt++;
 				}
 				if (!p.flag[0][20] && amt >= 1) {
-					Task.addTask(Task.DIALOGUE, npc, "Oh nice! You've seen " + amt + " forms!");
+					String plural = amt > 1 ? "s!" : "!";
+					Task.addTask(Task.DIALOGUE, npc, "Oh nice! You've seen " + amt + " form" + plural);
 					Task.addTask(Task.DIALOGUE, npc, "Here son, take this for helping me out! You'd get better use out of it than me, anyways!");
 					Task t = Task.addTask(Task.ITEM, "");
 					t.item = Item.AMULET_COIN;
@@ -288,7 +289,7 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "You may have heard of the item before, but this one is special! It heals your Pokemon a whopping 25% of any damage dealt!");
 			Task.addTask(Task.DIALOGUE, npc, "I'm willing to part with it, but for a price. You see, my Cleffa and Azurill will only evolve when they're happy enough...");
 			Task.addTask(Task.DIALOGUE, npc, "But they're far too weak to train on their own, so I'd like to use the unique item to this region, being the Euphorian Gem!");
-			Task.addTask(Task.CONFIRM, "If you have 2 Euphorian Gems to give me, I'll give you this Shell Bell. Do we have a deal?");
+			Task.addTask(Task.CONFIRM, "If you have 2 Euphorian Gems to give me, I'll give you this Shell Bell. Do we have a deal?", 6);
 		});
 		
 		scriptMap.put(11.0, (npc) -> { // fred 1
@@ -485,7 +486,8 @@ public class Script {
 					if (p.pokedex[po.id] == 2) amt++;
 				}
 				if (!p.flag[1][21] && amt >= 3) {
-					Task.addTask(Task.DIALOGUE, npc, "Wow! You've already seen " + amt + " forms!");
+					String plural = amt > 1 ? "s!" : "!";
+					Task.addTask(Task.DIALOGUE, npc, "Wow! You've already seen " + amt + " form" + plural);
 					Task.addTask(Task.DIALOGUE, npc, "Here, I have a special Electric-type move as a gift for helping me out!");
 					Task t = Task.addTask(Task.ITEM, "");
 					t.item = Item.TM32;
