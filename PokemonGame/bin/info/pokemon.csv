@@ -95,9 +95,9 @@
 55 |Blaxer       |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[43, 88, 50, 74, 52, 93]      |145.6 |100|
 56 |Pyrator      |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[65, 115, 55, 106, 75, 100]   |195.0 |50 |
 191|Magmaclang   |FIRE    |GHOST   |STEELWORKER       |STEELWORKER       |STEELWORKER       |[105, 35, 120, 90, 90, 65]    |165.3 |80 |
-209|Flamehox     |FIRE    |GROUND  |FLAME_BODY        |FLAME_BODY        |NULL              |[70, 53, 70, 55, 60, 52]      |290.2 |55 |
-210|Fireshard    |FIRE    |FLYING  |INTIMIDATE        |INTIMIDATE        |NULL              |[75, 75, 75, 90, 75, 70]      |301.3 |35 |
-211|Blastflames  |FIRE    |DRAGON  |LEVITATE          |LEVITATE          |NULL              |[95, 75, 87, 140, 80, 83]     |345.6 |15 |
+209|Flamehox     |FIRE    |GROUND  |FLAME_BODY        |FLAME_BODY        |SAND_VEIL         |[70, 53, 70, 55, 60, 52]      |290.2 |55 |
+210|Fireshard    |FIRE    |FLYING  |INTIMIDATE        |INTIMIDATE        |SAND_VEIL         |[75, 75, 75, 90, 75, 70]      |301.3 |35 |
+211|Blastflames  |FIRE    |DRAGON  |LEVITATE          |LEVITATE          |SHEER_FORCE       |[95, 75, 87, 140, 80, 83]     |345.6 |15 |
 101|Tiowoo       |FIRE    |ROCK    |SOLID_ROCK        |SOLID_ROCK        |MAGMA_ARMOR       |[60, 35, 78, 50, 77, 30]      |28.9  |230|
 102|Magwoo       |FIRE    |ROCK    |SOLID_ROCK        |SOLID_ROCK        |MAGMA_ARMOR       |[70, 57, 105, 51, 87, 30]     |199.3 |110|
 103|Lafloo       |FIRE    |ROCK    |SOLID_ROCK        |SOLID_ROCK        |MAGMA_ARMOR       |[90, 80, 95, 120, 95, 45]     |450.9 |50 |
@@ -187,9 +187,9 @@
 231|Dragee       |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |ILLUMINATION      |[80, 40, 57, 63, 59, 51]      |50.2  |45 |
 232|Draga        |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |ILLUMINATION      |[85, 75, 80, 90, 75, 60]      |103.4 |35 |
 233|Drageye      |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |ILLUMINATION      |[95, 85, 90, 115, 125, 90]    |247.2 |25 |
-225|Blobmo       |GALACTIC|null    |SHIELD_DUST       |LEVITATE          |REGENERATOR       |[90, 30, 30, 30, 100, 30]     |100.2 |85 |
-226|Nebulimb     |GALACTIC|null    |SHIELD_DUST       |GRAVITATION       |MOLD_BREAKER      |[125, 45, 50, 45, 115, 40]    |759.2 |65 |
-227|Galactasolder|GALACTIC|FIGHTING|SNIPER            |GRAVITATION       |MOLD_BREAKER      |[170, 135, 70, 55, 115, 50]   |1000.5|35 |
+225|Blobmo       |GALACTIC|null    |SHIELD_DUST       |REGENERATOR       |LEVITATE          |[90, 30, 30, 30, 100, 30]     |100.2 |85 |
+226|Nebulimb     |GALACTIC|null    |SHIELD_DUST       |REGENERATOR       |GRAVITATION       |[125, 45, 50, 45, 115, 40]    |759.2 |65 |
+227|Galactasolder|GALACTIC|FIGHTING|SNIPER            |SHEER_FORCE       |GRAVITATION       |[170, 135, 70, 55, 115, 50]   |1000.5|35 |
 218|Consodust    |GALACTIC|ICE     |SNOW_WARNING      |SLUSH_RUSH        |RECKLESS          |[70, 33, 76, 58, 93, 85]      |90.3  |100|
 219|Cosmocrash   |GALACTIC|ICE     |SNOW_WARNING      |SLUSH_RUSH        |RECKLESS          |[90, 150, 60, 65, 60, 100]    |378.2 |45 |
 223|Rockmite     |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |MOLD_BREAKER      |[70, 65, 130, 55, 75, 55]     |632.5 |75 |

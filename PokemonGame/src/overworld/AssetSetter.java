@@ -1169,7 +1169,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(FRED_UP, "Fred", 26, 67, "", mapNum, 32,
 				"Tch, I lost? How did that happen?\n"
 				+ "Wait... you know Scott? Ugh, should've figured. Maybe I should've taken you more seriously.\n"
-				+ "But I just got unlucky this time. Next time, you won't be so fortunate.");
+				+ "But I just got unlucky this time. Next time, you won't be so fortunate.", 34);
 		
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_LEFT, 40, 66, "You cannot escape fate. It's already decided.", "Your future is bright... but I'll be ready to change it next time.", 31);
 		gp.npc[mapNum][index] = NPCSetup(EXPLORER_LEFT, 34, 67, "I've scaled icy peaks, but this battle might be the real challenge.", "Even explorers get lost sometimes. I'll find my way back.", 32, LEFT + UP + RIGHT);
@@ -1182,11 +1182,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(STUDENT_M_LEFT, 19, 37, "Test time! And guess what - you're failing!", "I failed the test... but I'll ace the next one!", 37);
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 21, 33, "Your thoughts are clear to me... and they're full of doubt.", "You've disrupted the flow of destiny... but I'll recalibrate.", 38, DOWN + RIGHT);
 		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_RIGHT, 22, 21, "A proper duel, wouldn't you say? Let's make this dignified.", "You've bested me, and I commend you for it.", 39);
-		gp.npc[mapNum][index] = NPCSetup(FRED_UP, 97, 97, "For calc", "", 34);
 		
 		mapNum = 13;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(PHOTON, "Photon", 20, 63, "Oh hello there kid! I'm Photon, a research assistant for the Professor that specializes in Electric forms of Pokemon.", 13.0, 33, "", ALL);
+		gp.npc[mapNum][index] = NPCSetup(PHOTON, "Photon", 20, 63, "Oh hello there kid! I'm Photon, a research assistant for the Professor that specializes in Electric forms of Pokemon.", ALL, 13.0, 33, "");
 		gp.npc[mapNum][index++] = null;
 		gp.npc[mapNum][index++] = null;
 		gp.npc[mapNum][index] = NPCSetup(RESEARCHER, "Researcher", 88, 18, "Well hello there young man!", 13.3);
@@ -1217,7 +1216,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(MANIAC_DOWN, 38, 38, "I collect the macabre... and your defeat will be my latest addition.", "Even in loss, I feel their presence... You'll face them again.", 41);
 		gp.npc[mapNum][index] = NPCSetup(BURGLAR_RIGHT, 25, 43, "Thank goodness nobody saw me, I might be in the clear... Wait a minute, where'd you come from?", "Good thing I always have a backup plan!", 42);
 		gp.npc[mapNum][index] = NPCSetup(BURGLAR_LEFT, 30, 43, "Looks like we've been caught in the act. Let's make this quick!", "You won the battle, but I'm still walking away with the loot!", 43);
-		gp.npc[mapNum][index] = SetupStaticEncounter(205, 34, 31, 366, 37, "Grzzinzsttt!");
+		gp.npc[mapNum][index] = SetupStaticEncounter(205, 34, 31, 366, "Grzzinzsttt!");
 		
 		mapNum = 16;
 		index = 0;
@@ -1228,7 +1227,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(EXPLORER_LEFT, 62, 39, "Think you can survive this frozen battlefield? Let's find out!", "This loss stings like frostbite... but I'll shake it off.", 273);
 		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_UP, 67, 42, "I'm super excited to battle you, my Dad and I have been training all week! Get ready!", "I guess I need to practice more... I'll get you next time!", 274);
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 72, 41, "Feel the heat of my Fire Pokemon! They're ready to burn through the competition!", "What? How did you outrun my strategy? I guess I'll have to train harder!", 275);
-		gp.npc[mapNum][index] = SetupStaticEncounter(197, 32, 28, 367, 39, "Bzrollzfffff...");
+		gp.npc[mapNum][index] = SetupStaticEncounter(197, 32, 28, 367, "Bzrollzfffff...");
 		gp.npc[mapNum][index] = NPCSetup(STANFORD, "Stanford", 31, 28, "*growls* Um, what the hell do you want? Oh, right...", mapNum, 41, "");
 		
 		mapNum = 17;
@@ -1246,7 +1245,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, "Scott", 53, 35, "Can't... keep... fighting...", 18.0);
 		gp.npc[mapNum][index++] = null;
-		gp.npc[mapNum][index] = SetupStaticEncounter(202, 53, 34, 368, 43, "Dgrughhh!");
+		gp.npc[mapNum][index] = SetupStaticEncounter(202, 53, 34, 368, "Dgrughhh!");
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_RIGHT, 45, 38, "You might think you stand a chance... but that's a fantasy.", "Guess dragons aren't invincible after all. This time.", 146);
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 46, 33, "That was an impressive battle! I found a rare MAGIC Pokemon, but after watching that, you'd be a better trainer. Here!", 18.1, 66, "Enjoy all the wonders of the MAGIC type!");
 		
@@ -1278,7 +1277,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 73, 12, "You're about to face your nightmares made real.", "I disappear... for now. But don't think this is over.", 68);
 		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_DOWN, 67, 10, "You're about to find out why bugs rule the world!", "Looks like I need to evolve too...", 69);
 		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_M_UP, 64, 14, "I'll make your victory... disappear!", "The magic didn't work this time, but next time, I'll be the master of illusions!", 70);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 71, 18, "Hello there trainer-in-the-making!", mapNum, 22, "It really is crazy how unstable this region is that a beautiful lake can turn into this overnight.");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, "Trainer", 71, 18, "Hello there trainer-in-the-making!", mapNum, 22, "It really is crazy how unstable this region is that a beautiful lake can turn into this overnight.");
 		
 		mapNum = 23;
 		index = 0;
@@ -1338,9 +1337,12 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(MILLIE, "Millie", 62, 46, "EEK! Wait... your eyes aren't radioactive green.", 28.0);
 		gp.npc[mapNum][index++] = null; // replace with millie_up when we have it
-		gp.npc[mapNum][index] = SetupStaticEncounter(284, 82, 22, 387, 76, "Bzzt.");
+		gp.npc[mapNum][index] = NPCSetup(UP_XURKITREE, null, 82, 22, "Zzzzt.", 28.3, -1, "", 387);
 		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, "Fred", 82, 32, "Ugh... Can't... Move... glrglg....");
-		gp.npc[mapNum][index++] = null; // was fred for trainer
+		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 82, 32, "AGHHH!! WHAT THE FUCK IS HAPPENING?!?!??! DIE!!!!!!",
+				"Ugh... where am I? What... what happened?\n"
+				+ "You... it was you, wasn't it? You saved me. I... don't know what to say. Thanks, I guess.\n"
+				+ "I didn't need your help, though. I could've handled it on my own. Next time we meet, I'll be ready, and I won't lose.", 89);
 		gp.npc[mapNum][index++] = null; // millie 4
 		gp.npc[mapNum][index] = NPCSetup(BURGLAR_DOWN, 12, 52, "Caught me red-handed? I'll just take your victory instead!", "Tch... Guess I can't steal a win from you.", 85);
 		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 13, 55, "The spirits whisper... they're eager for a battle!", "The spirits... they're displeased with this outcome...", 86);
@@ -1404,7 +1406,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index++] = null; // electric tunnel guard
 		
-		gp.npc[mapNum][index] = SetupStaticEncounter(286, 33, 61, 391, 131, "Bloooghawooooooooarooo!"); // UP Shookwat
+		gp.npc[mapNum][index] = SetupStaticEncounter(286, 33, 61, 391, "Bloooghawooooooooarooo!"); // UP Shookwat
 		gp.npc[mapNum][index] = NPCSetup(BUG_CATCHER_DOWN, 49, 78, "My bugs are ready for battle, and they're itching for a fight!", "I'll come back with more bugs, and next time I won't lose!", 195, ALL);
 		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_DOWN, 40, 84, "Nature's on my side, and so are my Pokemon!", "I guess it wasn't my day... Time to pack up and train harder.", 196, ALL);
 		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_LEFT, 35, 73, "I love a good outdoor battle in a beautiful park. Let's have some fun!", "I guess my Pokemon need a bit more sunshine and training.", 197, ALL);
@@ -1556,7 +1558,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_DOWN, 38, 38, "Prepare to face forces beyond your understanding.", "You've navigated the stars well... but I'll see you again in the cosmos.", 147);
 		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 38, 42, "Do you hear that? The ghosts are calling for your defeat!", "This was not foreseen in the shadows...", 148);
-		gp.npc[mapNum][index] = SetupStaticEncounter(210, 31, 36, 369, 46, "Graagzyaraa!!");
+		gp.npc[mapNum][index] = SetupStaticEncounter(210, 31, 36, 369, "Graagzyaraa!!");
 		
 		mapNum = 77;
 		index = 0;
@@ -1681,8 +1683,8 @@ public class AssetSetter {
 		
 		mapNum = 103;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(MAXWELL, "Maxwell", 47, 38, "...", mapNum);
-		gp.npc[mapNum][index] = SetupStaticEncounter(287, 48, 49, 393, 165, "Cvvshugizgi!", "up"); // UP Splame
+		gp.npc[mapNum][index] = NPCSetup(MAXWELL, "Maxwell", 47, 38, "...", mapNum, -1, "", 217);
+		gp.npc[mapNum][index] = SetupStaticEncounter(287, 48, 49, 393, "Cvvshugizgi!", "up"); // UP Splame
 		
 		mapNum = 104;
 		index = 0;
@@ -1719,9 +1721,8 @@ public class AssetSetter {
 			gp.npc[mapNum][index] = NPCSetup(GRUST, xCoords[i-224], yCoords[i-224], "Groououuuooo!", "Gru...", i);
 		}
 		
-		gp.npc[mapNum][index] = SetupStaticEncounter(289, 50, 59, 391, 226, "Xvringzzi!"); // UP Pheromosa
-		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 49, 90, "Hmm... you can hide all you want, but I'll still spot you. Tricky little specters... there's nothing unnatural here...", 107.0);
-		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, 1, 1, "For calc", "", 392);
+		gp.npc[mapNum][index] = SetupStaticEncounter(289, 50, 59, 391, "Xvringzzi!"); // UP Pheromosa
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 49, 90, "Hmm... you can hide all you want, but I'll still spot you. Tricky little specters... there's nothing unnatural here...", 107.0, -1, "", 392);
 		
 		mapNum = 109;
 		index = 0;
@@ -1885,7 +1886,7 @@ public class AssetSetter {
 		mapNum = 138;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 53, 74, "", "", 311);
-		gp.npc[mapNum][index] = SetupStaticEncounter(288, 52, 73, 394, 196, "Azchoozlooagh!");
+		gp.npc[mapNum][index] = SetupStaticEncounter(288, 52, 73, 394, "Azchoozlooagh!");
 		
 		mapNum = 139;
 		index = 0;
@@ -1977,11 +1978,11 @@ public class AssetSetter {
 		
 		mapNum = 166;
 		index = 0;
-		gp.npc[mapNum][index] = SetupStaticEncounter(285, 39, 29, 388, 104, "Gzssisssss!");
+		gp.npc[mapNum][index] = SetupStaticEncounter(285, 39, 29, 388, "Gzssisssss!");
 		
 		mapNum = 168;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(MANIAC_DOWN, "Collector", 44, 59, "Why HELLO THERE, YOUNG ONE!!! GOT ANY SHROOOOOOOMS?!", mapNum, -1, "", ALL);
+		gp.npc[mapNum][index] = NPCSetup(MANIAC_DOWN, "Collector", 44, 59, "Why HELLO THERE, YOUNG ONE!!! GOT ANY SHROOOOOOOMS?!", ALL, mapNum, -1, "");
 		
 		mapNum = 178;
 		index = 0;
@@ -2976,9 +2977,9 @@ public class AssetSetter {
 			gp.npc[28][5] = null;
 		}
 		if (flag[2][11]) {
-			gp.npc[28][2] = SetupStaticEncounter(284, 82, 22, 387, 76, "Bzzt.");
+			gp.npc[28][2] = SetupStaticEncounter(284, 82, 22, 387, "Bzzz....Zzzzttt..... ZUZUZUURRKIII!!!");
 		} else {
-			gp.npc[28][2] = NPCSetup(UP_XURKITREE, null, 82, 22, "Zzzzt.", 28.3);
+			gp.npc[28][2] = NPCSetup(UP_XURKITREE, null, 82, 22, "Zzzzt.", 28.3, -1, "", 387);
 		}
 		if (flag[2][12]) {
 			gp.npc[28][2] = null;
@@ -3045,7 +3046,7 @@ public class AssetSetter {
 			gp.npc[80][3] = null;
 		}
 		if (flag[4][2]) {
-			if (gp.npc[33][1] == null) gp.npc[33][1] = SetupStaticEncounter(286, 33, 61, 391, 131, "Bloooghawooooooooarooo!");
+			if (gp.npc[33][1] == null) gp.npc[33][1] = SetupStaticEncounter(286, 33, 61, 391, "Bloooghawooooooooarooo!");
 			gp.npc[91][0] = null;
 			gp.npc[91][1] = null;
 		} else {
@@ -3099,7 +3100,7 @@ public class AssetSetter {
 					"So you got lucky. Fine. You want to play hero? Then go ahead - I'll even tell you where we are hiding!\n"
 					+ "The rest of us are below Electric Tunnel, deep underground, working on another piece of the puzzle.\n"
 					+ "But don't get your hopes up. Maxwell's already started, and by the time you get there, it'll be too late to stop us.\n"
-					+ "Good luck with that! See you around - if you survive what's coming.");
+					+ "Good luck with that! See you around - if you survive what's coming.", 234);
 		} else {
 			gp.npc[107][0] = null;
 		}
@@ -3320,7 +3321,7 @@ public class AssetSetter {
 			result = new NPC_Star(gp);
 			break;
 		case GRUST:
-			result = new NPC_Pokemon(gp, 159, team, true, -1, messages);
+			result = new NPC_Pokemon(gp, 159, team, true, messages);
 			gp.grusts[index - 1] = ((NPC_Pokemon) result);
 			break;
 		case RICK:
@@ -3681,9 +3682,15 @@ public class AssetSetter {
 		return NPCSetup(type, name, x, y, message, scriptIndex, -1, null);
 	}
 	
-	private Entity NPCSetup(int type, String name, int x, int y, String message, double scriptIndex, int flag, String altDialogue, int spin) {
+	private Entity NPCSetup(int type, String name, int x, int y, String message, int spin, double scriptIndex, int flag, String altDialogue) {
 		Entity e = NPCSetup(type, name, x, y, message, scriptIndex, flag, altDialogue);
 		e.setSpin(spin);
+		return e;
+	}
+	
+	private Entity NPCSetup(int type, String name, int x, int y, String message, double scriptIndex, int flag, String altDialogue, int trainerIndex) {
+		Entity e = NPCSetup(type, name, x, y, message, scriptIndex, flag, altDialogue);
+		e.trainer = trainerIndex;
 		return e;
 	}
 	
@@ -4089,23 +4096,19 @@ public class AssetSetter {
 		return result;
 	}
 	
-	private NPC_Pokemon SetupStaticEncounter(int id, int x, int y, int t, int flag, String message) {
-		return SetupStaticEncounter(id, x, y, t, flag, message, "down");
+	private NPC_Pokemon SetupStaticEncounter(int id, int x, int y, int t, String message) {
+		return SetupStaticEncounter(id, x, y, t, message, "down");
 	}
 	
-	private NPC_Pokemon SetupStaticEncounter(int id, int x, int y, int t, int flag, String message, String direction) {
+	private NPC_Pokemon SetupStaticEncounter(int id, int x, int y, int t, String message, String direction) {
 		
 		String messages[] = message.split("\n");
 		for (int i = 0; i < messages.length; i++) {
 			messages[i] = Item.breakString(messages[i], 42);
 		}
 		
-		NPC_Pokemon result = new NPC_Pokemon(gp, id, t, id == 159, flag, messages);
+		NPC_Pokemon result = new NPC_Pokemon(gp, id, t, id == 159, messages);
 		result.setDirection(direction);
-		if (gp.player.p.flag[result.getFlagX()][result.getFlagY()]) {
-			index++;
-			return null;
-		}
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;

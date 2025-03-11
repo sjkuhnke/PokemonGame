@@ -1288,8 +1288,7 @@ public class BattleUI extends AbstractUI {
 		gp.eHandler.teleport(Player.spawn[0], Player.spawn[1], Player.spawn[2], false);
 		user.trainer.heal();
 		if (foe.trainer != null) {
-			foe.trainer.heal();
-			foe.trainer.setCurrent(foe.trainer.getTeam()[0]);
+			foe.trainer.reset();
 		}
 	}
 	

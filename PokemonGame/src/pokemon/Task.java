@@ -291,6 +291,7 @@ public class Task {
 	}
 	
 	public static void addAbilityTask(Pokemon p) {
+		if (p == null) return;
 		Task t = addTask(Task.ABILITY, "[" + p.nickname + "'s " + p.ability + "]:", p);
 		t.setAbility(p.ability);
 	}

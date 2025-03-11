@@ -92,7 +92,7 @@ public enum Move {
 	COMET_PUNCH(55,100,0,0,0,0,PType.GALACTIC,"A normal attack",true,15),
 	CONFUSE_RAY(0,100,0,0,2,0,PType.GHOST,"Confuses foe",false,10),
 	CONFUSION(50,100,10,0,1,0,PType.PSYCHIC,"% chance to Confuse foe",false,25),
-	CORE_ENFORCER(100,100,10,0,1,0,PType.GALACTIC,"% chance to lower foe's Attack and Sp.Atk by 1",false,10),
+	CORE_ENFORCER(100,100,100,0,1,0,PType.GALACTIC,"% to supress foe's ability if they already moved for the turn",false,10),
 	COSMIC_POWER(0,1000,0,0,2,0,PType.GALACTIC,"Raises user's Def and Sp.Def by 1",false,10),
 	COTTON_GUARD(0,1000,0,0,2,0,PType.GRASS,"Raises user's Defense by 3",false,5),
 	COVET(60,100,-1,0,0,0,PType.NORMAL,"Steals opponents item if user doesn't have one",true,25),

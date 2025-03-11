@@ -75,7 +75,10 @@ public class Main {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./saves/" + fileName));
 	        gp.player.p = (Player) ois.readObject();
         	for (Pokemon p : gp.player.p.getTeam()) {
-	            if (p != null) p.clearVolatile();
+	            if (p != null) {
+	            	p.clearVolatile();
+	            	p.vStatuses.clear();
+	            }
 	        }
 	        gp.player.worldX = gp.player.p.getPosX();
 	        gp.player.worldY = gp.player.p.getPosY();
