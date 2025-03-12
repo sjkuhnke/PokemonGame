@@ -765,7 +765,7 @@ public enum Move {
 			} else {
 				if (user.ability == Ability.NORMALIZE) bp *= 1.2;
 			}
-			if (user.getItem() == Item.METRONOME && this == user.lastMoveUsed) bp *= (1 + ((user.metronome) * 0.2));
+			if (user.getItem() == Item.METRONOME && this == user.lastMoveUsed) bp *= (1 + ((user.metronome + 1) * 0.2));
 			int arcane = user.getStatusNum(Status.ARCANE_SPELL);
 			if (arcane != 0) {
 				bp = Math.max(bp - arcane, 20);

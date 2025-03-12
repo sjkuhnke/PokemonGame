@@ -210,7 +210,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		setMoves();
 		moveMultiplier = 1;
 		rollCount = 1;
-		metronome = 1;
+		metronome = 0;
 		
 		status = Status.HEALTHY;
 		vStatuses = new ArrayList<StatusEffect>();
@@ -1482,6 +1482,17 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (move != this.lastMoveUsed) this.moveMultiplier = 1;
 		
+		if (this.getItem() == Item.METRONOME) {
+			if (move == lastMoveUsed) {
+				this.metronome++;
+				if (this.metronome > 5) this.metronome = 5;
+			} else {
+				this.metronome = 0;
+			}
+		} else {
+			this.metronome = 0;
+		}
+		
 		if (!this.hasStatus(Status.CHARGING) && !this.hasStatus(Status.SEMI_INV) && !this.hasStatus(Status.LOCKED) &&
 				!this.hasStatus(Status.ENCORED) && !this.hasStatus(Status.RECHARGE) && !Move.getNoComboMoves().contains(move) &&
 				move != Move.STRUGGLE) this.lastMoveUsed = move;
@@ -1531,7 +1542,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					this.spriteVisible = true;
 					this.rollCount = 1;
 					this.moveMultiplier = 1;
-					this.metronome = 1;
+					this.metronome = 0;
 					return;
 				}
 			} else {
@@ -1565,7 +1576,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					this.spriteVisible = true;
 					this.lastMoveUsed = null;
 					this.rollCount = 1;
-					this.metronome = 1;
+					this.metronome = 0;
 					this.moveMultiplier = 1;
 					this.impressive = false;
 					return;
@@ -1584,7 +1595,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.spriteVisible = true;
 			this.lastMoveUsed = null;
 			this.rollCount = 1;
-			this.metronome = 1;
+			this.metronome = 0;
 			return;
 		}
 		
@@ -1607,7 +1618,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.spriteVisible = true;
 				//this.lastMoveUsed = null;
 				this.rollCount = 1;
-				this.metronome = 0;
+				this.metronome = -1;
 				return;
 			}
 		}
@@ -1621,7 +1632,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.removeStatus(Status.SEMI_INV);
 			this.spriteVisible = true;
 			this.rollCount = 1;
-			this.metronome = 0;
+			this.metronome = -1;
 			return;
 		}
 		
@@ -1630,7 +1641,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.lastMoveUsed = null;
 			this.impressive = false;
 			this.rollCount = 1;
-			this.metronome = 1;
+			this.metronome = 0;
 			return;
 		}
 		
@@ -1639,7 +1650,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.lastMoveUsed = null;
 			this.impressive = false;
 			this.rollCount = 1;
-			this.metronome = 1;
+			this.metronome = 0;
 			return;
 		}
 		
@@ -1648,7 +1659,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.lastMoveUsed = null;
 			this.impressive = false;
 			this.rollCount = 1;
-			this.metronome = 1;
+			this.metronome = 0;
 			return;
 		}
 		
@@ -1657,7 +1668,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			//this.lastMoveUsed = null;
 			this.impressive = false;
 			this.rollCount = 1;
-			this.metronome = 0;
+			this.metronome = -1;
 			return;
 		}
 		
@@ -1666,7 +1677,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.lastMoveUsed = null;
 			this.impressive = false;
 			this.rollCount = 1;
-			this.metronome = 1;
+			this.metronome = 0;
 			return;
 		}
 		
@@ -1692,7 +1703,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.moveMultiplier = 1;
 				this.impressive = false;
 				this.rollCount = 1;
-				this.metronome = 0;
+				this.metronome = -1;
 				return;
 			} else {
 				move = this.lastMoveUsed;
@@ -1770,7 +1781,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.impressive = false;
 			this.moveMultiplier = 1;
 			this.rollCount = 1;
-			this.metronome = 0;
+			this.metronome = -1;
 			return;
 		}
 		
@@ -1826,7 +1837,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.impressive = false;
 				this.moveMultiplier = 1;
 				this.rollCount = 1;
-				this.metronome = 1;
+				this.metronome = 0;
 				return;
 			}
 			bp = move.basePower;
@@ -1998,7 +2009,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.removeStatus(Status.LOCKED);
 				this.moveMultiplier = 1;
 				this.rollCount = 1;
-				this.metronome = 0;
+				this.metronome = -1;
 				return; // Check for miss
 			}
 		}
@@ -2009,7 +2020,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				fail();
 				this.impressive	= false;
 				this.moveMultiplier = 1;
-				this.metronome = 0;
+				this.metronome = -1;
 				return;
 			} else {
 				Task.addTask(Task.TEXT, this.nickname + " foresaw an attack!");
@@ -2064,7 +2075,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					this.removeStatus(Status.LOCKED);
 					this.moveMultiplier = 1;
 					this.rollCount = 1;
-					this.metronome = 0;
+					this.metronome = -1;
 					hits--;
 					continue; // Check for miss
 				}
@@ -2077,7 +2088,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				endMove();
 				this.moveMultiplier = 1;
 				this.rollCount = 1;
-				this.metronome = 0;
+				this.metronome = -1;
 				return;
 			}
 			
@@ -2091,7 +2102,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					endMove();
 					this.moveMultiplier = 1;
 					this.rollCount = 1;
-					this.metronome = 0;
+					this.metronome = -1;
 					return; // Check for immunity
 				} else {
 					Task.addAbilityTask(foe);
@@ -2099,7 +2110,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					endMove();
 					this.moveMultiplier = 1;
 					this.rollCount = 1;
-					this.metronome = 0;
+					this.metronome = -1;
 					return;
 				}
 			}
@@ -2118,7 +2129,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				endMove();
 				this.moveMultiplier = 1;
 				this.rollCount = 1;
-				this.metronome = 0;
+				this.metronome = -1;
 				return;
 			}
 			
@@ -2128,7 +2139,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				endMove();
 				this.moveMultiplier = 1;
 				this.rollCount = 1;
-				this.metronome = 0;
+				this.metronome = -1;
 				return; // Check for immunity
 			}
 			
@@ -2154,7 +2165,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 						this.outCount = 0;
 						this.moveMultiplier = 1;
 						this.rollCount = 1;
-						this.metronome = 0;
+						this.metronome = -1;
 						return; // Check for immunity 
 					}
 				}
@@ -2165,7 +2176,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				endMove();
 				this.moveMultiplier = 1;
 				this.rollCount = 1;
-				this.metronome = 0;
+				this.metronome = -1;
 				return; // Check for immunity 
 			}
 			
@@ -2176,7 +2187,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				endMove();
 				this.moveMultiplier = 1;
 				this.rollCount = 1;
-				this.metronome = 0;
+				this.metronome = -1;
 				this.impressive = false;
 				return;
 			}
@@ -2186,7 +2197,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					fail();
 					this.impressive	= false;
 					this.moveMultiplier = 1;
-					this.metronome = 0;
+					this.metronome = -1;
 					return;
 				} else {
 					Task t = Task.createTask(Task.TEXT, foe.nickname + " is about to be attacked by its " + foe.item.toString() + "!");
@@ -2207,7 +2218,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				statusEffect(foe, move, player, enemy);
 				this.impressive = false;
 				this.moveMultiplier = 1;
-				this.metronome = 1;
+				this.metronome = 0;
 				return;
 			}
 			
@@ -2220,7 +2231,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				endMove();
 				this.moveMultiplier = 1;
 				this.rollCount = 1;
-				this.metronome = 0;
+				this.metronome = -1;
 				this.impressive = false;
 				return;
 			}
@@ -2236,17 +2247,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.rollCount++;
 			} else {
 				this.rollCount = 1;
-			}
-			
-			if (this.getItem() == Item.METRONOME) {
-				if (move == lastMoveUsed) {
-					this.metronome++;
-					if (this.metronome > 5) this.metronome = 5;
-				} else {
-					this.metronome = 1;
-				}
-			} else {
-				this.metronome = 1;
 			}
 			
 			if (this.getItem() == Item.METRONOME) bp *= (1 + (this.metronome * 0.2));
@@ -2504,7 +2504,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.outCount = 0;
 				this.moveMultiplier = 1;
 				this.rollCount = 1;
-				this.metronome = 0;
+				this.metronome = -1;
 				return; // Check for immunity
 			}
 			
@@ -2838,7 +2838,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				foe.consumeItem(this);
 				endMove();
 				this.rollCount = 1;
-				this.metronome = 1;
+				this.metronome = 0;
 				return;
 			}
 		}
@@ -3137,7 +3137,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (!foe.loseItem) foe.lostItem = foe.item;
 				foe.consumeItem(this);
 				this.loseItem = true;
-				foe.metronome = 1;
+				foe.metronome = 0;
 			}
 		} else if (move == Move.DRACO_METEOR) {
 			stat(this, 2, -2, foe);
@@ -3177,8 +3177,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 						if (foeItem != null) Task.addTask(Task.TEXT, this.nickname + " obtained a " + foeItem.toString() + "!");
 						this.item = foeItem;
 						foe.item = userItem;
-						if (this.item != Item.METRONOME) this.metronome = 1;
-						if (foe.item != Item.METRONOME) foe.metronome = 1;
+						if (this.item != Item.METRONOME) this.metronome = 0;
+						if (foe.item != Item.METRONOME) foe.metronome = 0;
 						if (this.lostItem == null) {
 							this.lostItem = userItem;
 							if (this.lostItem == null) {
@@ -4675,8 +4675,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 					if (foeItem != null) if (announce) Task.addTask(Task.TEXT, this.nickname + " obtained a " + foeItem.toString() + "!");
 					this.item = foeItem;
 					foe.item = userItem;
-					if (this.item != Item.METRONOME) this.metronome = 1;
-					if (foe.item != Item.METRONOME) foe.metronome = 1;
+					if (this.item != Item.METRONOME) this.metronome = 0;
+					if (foe.item != Item.METRONOME) foe.metronome = 0;
 					if (this.lostItem == null) {
 						this.lostItem = userItem;
 						if (this.lostItem == null) {
@@ -5354,7 +5354,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		toxic = 0;
 		perishCount = 0;
 		rollCount = 1;
-		metronome = 1;
+		metronome = 0;
 		encoreCount = 0;
 		disabledMove = null;
 		disabledCount = 0;
@@ -6556,7 +6556,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	public void consumeItem(Pokemon foe) {
 		this.item = null;
-		this.metronome = 1;
+		this.metronome = 0;
 		this.consumedItem = true;
 		if (this.ability == Ability.FULL_FORCE && foe != null) {
 			Task.addAbilityTask(this);

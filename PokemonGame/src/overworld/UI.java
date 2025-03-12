@@ -2720,7 +2720,7 @@ public class UI extends AbstractUI {
 					if (currentPokemon.ivs[moveOption] < 31) {
 						currentPokemon.ivs[moveOption] = 31;
 						currentPokemon.setStats();
-			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + "IV was maxed out!", 42));
+			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + " IV was maxed out!", 42));
 			        	gp.player.p.bag.remove(currentItem);
 		        		currentItems = gp.player.p.getItems(currentPocket);
 		        	} else {
@@ -2733,7 +2733,7 @@ public class UI extends AbstractUI {
 					if (currentPokemon.ivs[moveOption] > 0) {
 						currentPokemon.ivs[moveOption] = 0;
 						currentPokemon.setStats();
-			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + "IV was set to 0!", 42));
+			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + " IV was set to 0!", 42));
 			        	gp.player.p.bag.remove(currentItem);
 		        		currentItems = gp.player.p.getItems(currentPocket);
 		        	} else {
