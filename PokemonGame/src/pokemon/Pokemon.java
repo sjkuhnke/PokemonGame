@@ -836,6 +836,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.DECK_CHANGE) && foe.hasStatus(Status.DECK_CHANGE)) bestMoves.removeIf(Move.DECK_CHANGE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.HEALING_CIRCLE) && field.contains(this.getFieldEffects(), Effect.HEALING_CIRCLE)) bestMoves.removeIf(Move.HEALING_CIRCLE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPELLBIND) && foe.hasStatus(Status.SPELLBIND)) bestMoves.removeIf(Move.HEALING_CIRCLE::equals);
 		
 		return bestMoves;
 	}
@@ -1493,9 +1494,18 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.metronome = 0;
 		}
 		
+		if (this.hasStatus(Status.TORMENTED) && move == this.lastMoveUsed) {
+			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the torment!");
+			this.lastMoveUsed = null;
+			this.impressive = false;
+			this.rollCount = 1;
+			this.metronome = 0;
+			return;
+		}
+		
 		if (!this.hasStatus(Status.CHARGING) && !this.hasStatus(Status.SEMI_INV) && !this.hasStatus(Status.LOCKED) &&
-				!this.hasStatus(Status.ENCORED) && !this.hasStatus(Status.RECHARGE) && !Move.getNoComboMoves().contains(move) &&
-				move != Move.STRUGGLE) this.lastMoveUsed = move;
+				!this.hasStatus(Status.ENCORED) && !this.hasStatus(Status.RECHARGE) &&
+				!Move.getNoComboMoves().contains(move) && move != Move.STRUGGLE) this.lastMoveUsed = move;
 		
 		if (move == Move.SUCKER_PUNCH && !first) move = Move.FAILED_SUCKER;
 		
@@ -1638,15 +1648,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (this.hasStatus(Status.TAUNTED) && move.cat == 2 && move != Move.METRONOME) {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the taunt!");
-			this.lastMoveUsed = null;
-			this.impressive = false;
-			this.rollCount = 1;
-			this.metronome = 0;
-			return;
-		}
-		
-		if (this.hasStatus(Status.TORMENTED) && move == this.lastMoveUsed) {
-			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the torment!");
 			this.lastMoveUsed = null;
 			this.impressive = false;
 			this.rollCount = 1;
@@ -2206,8 +2207,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			
-			if (move == Move.DISENCHANT) {
-				if (!arrayEquals(foe.statStages, new int[7]))
+			if (move == Move.DISENCHANT && !arrayEquals(foe.statStages, new int[7])) {
 				foe.statStages = new int[7];
 				Task t = Task.createTask(Task.TEXT, foe.nickname + " stat changes were eliminated!");
 				Task.insertTask(Task.createTask(Task.TEXT, this.nickname + " used " + move.toString() + "!"), damageIndex++);
@@ -2543,15 +2543,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 					foe.consumeItem(this);
 					damage /= 2;
 				}
-				if (foe.getItem() == Item.WEAKNESS_POLICY) {
-					Task.addTask(Task.TEXT, foe.nickname + " used its " + foe.item.toString() + "!");
-					stat(foe, 0, 2, this);
-					stat(foe, 2, 2, this);
-					foe.consumeItem(this);
-				}
-				if (foe.getItem() == Item.ENIGMA_BERRY) {
-					foe.eatBerry(foe.item, true, this);
-				}
 			}
 			if (multiplier < 1) {
 				message += "\nIt's not very effective...";
@@ -2682,6 +2673,18 @@ public class Pokemon implements RoleAssignable, Serializable {
 						Task.addAbilityTask(this);
 						stat(this, getHighestStat(), 1, foe);
 					}
+				}
+			}
+			
+			if (multiplier > 1 && !foe.isFainted()) {
+				if (foe.getItem() == Item.WEAKNESS_POLICY) {
+					Task.addTask(Task.TEXT, foe.nickname + " used its " + foe.item.toString() + "!");
+					stat(foe, 0, 2, this);
+					stat(foe, 2, 2, this);
+					foe.consumeItem(this);
+				}
+				if (foe.getItem() == Item.ENIGMA_BERRY) {
+					foe.eatBerry(foe.item, true, this);
 				}
 			}
 			
@@ -3102,6 +3105,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 
 
 	public void awardHappiness(int i, boolean override) {
+		if (this instanceof Egg) return;
 		int deduc = 0;
 		if (this.item == Item.SOOTHE_BELL && i > 0) i *= 2;
 		if (this.ball == Item.LUXURY_BALL) i *= 2;
@@ -3422,7 +3426,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 		} else if (move == Move.HOCUS_POCUS) {
-			int randomNum = ((int) Math.random() * 5);
+			int randomNum = new Random().nextInt(5);
 			switch (randomNum) {
 			case 0:
 				foe.burn(false, this);
@@ -3687,6 +3691,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (!foe.hasStatus(Status.ENCORED)) {
 				foe.addStatus(Status.ENCORED);
 				foe.encoreCount = 2;
+				Task.addTask(Task.TEXT, foe.nickname + " was encored!");
 			}
 		} else if (move == Move.SUMMIT_STRIKE) {
 		    stat(foe, 1, -1, this);
@@ -5479,6 +5484,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (this.hasStatus(Status.MUTE) && Move.getSound().contains(move)) {
 			return 0;
+		}
+		
+		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN, this))
+				|| move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY || move == Move.METEOR_BEAM) {
+			if (this.getItem() != Item.POWER_HERB) bp *= 0.5;
 		}
 		
 		if (this.ability == Ability.COMPOUND_EYES) acc *= 1.3;
@@ -9447,15 +9457,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 					}
 					damage /= 2;
 				}
-				if (mode == 0 && this.getItem() == Item.WEAKNESS_POLICY) {
-					Task.addTask(Task.TEXT, this.nickname + " used its " + this.item.toString() + "!");
-					stat(foe, 0, 2, this);
-					stat(foe, 2, 2, this);
-					this.consumeItem(this);
-				}
-				if (mode == 0 && this.getItem() == Item.ENIGMA_BERRY) {
-					this.eatBerry(this.item, true, this);
-				}
 			}
 			if (multiplier < 1) {
 				message += "\nIt's not very effective...";
@@ -9499,6 +9500,17 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, this);
+				}
+				if (multiplier > 1 && this.isFainted()) {
+					if (this.getItem() == Item.WEAKNESS_POLICY) {
+						Task.addTask(Task.TEXT, this.nickname + " used its " + this.item.toString() + "!");
+						stat(foe, 0, 2, this);
+						stat(foe, 2, 2, this);
+						this.consumeItem(this);
+					}
+					if (this.getItem() == Item.ENIGMA_BERRY) {
+						this.eatBerry(this.item, true, this);
+					}
 				}
 			}
 		}
