@@ -1505,7 +1505,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (!this.hasStatus(Status.CHARGING) && !this.hasStatus(Status.SEMI_INV) && !this.hasStatus(Status.LOCKED) &&
 				!this.hasStatus(Status.ENCORED) && !this.hasStatus(Status.RECHARGE) &&
-				!Move.getNoComboMoves().contains(move) && move != Move.STRUGGLE) this.lastMoveUsed = move;
+				!Move.getNoComboMoves().contains(move) && move != Move.STRUGGLE
+				&& move != Move.FUSION_BOLT && move != Move.FUSION_FLARE) this.lastMoveUsed = move;
 		
 		if (move == Move.SUCKER_PUNCH && !first) move = Move.FAILED_SUCKER;
 		
@@ -2267,10 +2268,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 			
 			if (move == Move.FUSION_BOLT && this.lastMoveUsed == Move.FUSION_FLARE) {
 				bp *= 2;
+				this.lastMoveUsed = move;
 			}
 			
 			if (move == Move.FUSION_FLARE && this.lastMoveUsed == Move.FUSION_BOLT) {
 				bp *= 2;
+				this.lastMoveUsed = move;
 			}
 			
 			if (this.ability == Ability.TECHNICIAN && bp <= 60) {

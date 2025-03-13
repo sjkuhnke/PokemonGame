@@ -285,3 +285,24 @@ Fixed bug with your balls in the Battle UI being laggy and not switching to the 
 Changed slow fall to change the FOE'S ability to Levitate (instead of the user's)
 Fixed Trick/Switcheroo to fail if neither Pokemon has a held item
 Fixed Electric Surge not working with Terrain Extender for some reason
+Changed Dualmoose's abilities: Snow Cloak/Sparkly Surge/(Magic Bounce) -> Everglow/Snow Cloak/(Sparkly Surge)
+Added Everglow ability which sets up Aurora Glow for 5 turns
+Changed Hatterene's Hidden Ability: Unwavering -> Mystic Rift
+Changed Minishoo/Glittleshoo's Hidden Abilities: Mirror Armor -> Mystic Rift
+Added Mystic Rift: sets Magic Room for 5 turns
+Updated Mental Herb to include its Flinch-removing effect as well
+Added Disable and distributed to a bunch of Pokemon
+Added Magic Room and distributed to a bunch of Pokemon
+Added Psychic Noise and distributed to a bunch of Pokemon
+Added Future Sight and distributed to a bunch of Pokemon
+Added Poltergeist and distributed to a bunch of Pokemon
+Fixed set damage moves being able to crit/be super effective/resisted (in text only; still works correctly damage-wise)
+Added the following factors effecting the Base Power when viewing a move summary:
+- Arcane Spell
+- Metronome (item)
+- Solstice Blade/Solar Beam being reduced by Rain/Snow/Sandstorm
+- Solstice Blade being boosted by Sun
+- Fixed moves that need both user and foe Pokemon to determine base power (Gyro Ball etc) to only show base power when both are present
+- Fusion Bolt/Fusion Flare doubling when the other was just used
+Added Trainer AI for Covet/Thief/Knock Off
+Fixed Heat Crash/Heavy Slam/Grass Knot/Low Kick correctly calculating the foe's weight with Float Stone/Autotomize in mind
