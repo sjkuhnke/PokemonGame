@@ -424,7 +424,7 @@ public enum Item {
 	BIG_MUSHROOM(305,0,0,Color.BLACK,Item.OTHER,null,"A large and rare mushroom. It is sought after by collectors."), // 1500
 	NUGGET(306,0,500,Color.BLACK,Item.OTHER,null,"A nugget of pure gold that gives off a lustrous gleam. It can be sold at a high price."),
 	BIG_NUGGET(307,0,2000,Color.BLACK,Item.OTHER,null,"A big nugget of pure gold that gives off a lustrous gleam. It can be sold at a very high price."),
-	STAR_PIECE(308,0,400,Color.BLACK,Item.OTHER,null,"A small shard of a beautiful gem that gives off a distinctly red sparkle. It can be sold at a high price."),
+	STAR_PIECE(308,0,0,Color.BLACK,Item.OTHER,null,"A small shard of a beautiful gem that gives off a distinctly red sparkle. It can be sold at a high price."),
 	RELIC_GOLD(309,0,2500,Color.BLACK,Item.OTHER,null,"A gold coin used by an ancient civilization about 3,000 years ago."),
 	RELIC_SILVER(310,0,650,Color.BLACK,Item.OTHER,null,"A silver coin used by an ancient civilization about 3,000 years ago."),
 	;

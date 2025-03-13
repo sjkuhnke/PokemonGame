@@ -108,7 +108,7 @@ public enum Move {
 	DECK_CHANGE(0,100,0,0,2,0,PType.MAGIC,"Swaps the foe's Attack and SpA stats",false,5),
 	DEEP_SEA_BUBBLE(100,100,0,0,1,0,PType.WATER,"A normal attack. Turns into Draco Meteor when used by Kissyfishy-D",false,5),
 	DEFENSE_CURL(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Defense by 1",false,35),
-	DEFOG(0,1000,0,0,2,0,PType.FLYING,"Lowers foe's Evasion by 1, clears all hazards, terrain and screens from both sides",false,15),
+	DEFOG(0,100,0,0,2,0,PType.FLYING,"Lowers foe's Evasion by 1, clears all hazards, terrain and screens from both sides",false,15),
 	DESOLATE_VOID(65,85,50,0,1,0,PType.GALACTIC,"% chance to Paralyze, Sleep or Frostbite foe",false,10),
 	DESTINY_BOND(0,1000,0,0,2,1,PType.GHOST,"Always goes first; can't be used twice in a row. If foe knocks out user the same turn, foe faints as well",false,5),
 	DETECT(0,1000,0,0,2,4,PType.FIGHTING,"Protects user, can't be used in succession",false,5),
@@ -741,25 +741,22 @@ public enum Move {
 			if (this == Move.WEATHER_BALL) type = user.determineWBType();
 			if (this == Move.TERRAIN_PULSE) type = user.determineTPType();
 		}
-		if (basePower == -1) {
+		double bp = basePower;
+		if (bp == -1) {
 			if (this == Move.STORED_POWER && foe == null) return 20;
 			boolean faster = user == null || foe == null ? true : user.getFaster(foe, 0, 0) == user;
 			if (user == null || user.headbuttCrit < 0) {
-				if (this == Move.ELECTRO_BALL || this == Move.FLAIL || this == Move.REVERSAL || this == Move.GRASS_KNOT || this == Move.LOW_KICK
-						|| this == Move.GYRO_BALL || this == Move.HEAT_CRASH || this == Move.HEAVY_SLAM || this == Move.RETURN || this == Move.FRUSTRATION) return 0;
+				if (this == Move.FLAIL || this == Move.REVERSAL	|| this == Move.RETURN || this == Move.FRUSTRATION) return 0;
 				user = new Pokemon(1, 1, false, false);
 			}
-			if (foe == null) foe = new Pokemon(1, 1, false, false);
-			double bp = user.determineBasePower(foe, this, faster, null, false);
-			if (type == PType.NORMAL) {
-				if (user.ability == Ability.GALVANIZE || user.ability == Ability.REFRIGERATE || user.ability == Ability.PIXILATE) bp *= 1.2;
-			} else {
-				if (user.ability == Ability.NORMALIZE) bp *= 1.2;
+			if (foe == null) {
+				if (this == Move.ELECTRO_BALL || this == Move.GRASS_KNOT || this == Move.LOW_KICK || this == Move.HEAT_CRASH
+						|| this == Move.HEAVY_SLAM || this == Move.GYRO_BALL) return 0;
+				foe = new Pokemon(1, 1, false, false);
 			}
-			return bp;
+			bp = user.determineBasePower(foe, this, faster, null, false);
 		}
 		if (user != null) {
-			double bp = basePower;
 			if (type == PType.NORMAL) {
 				if (user.ability == Ability.GALVANIZE || user.ability == Ability.REFRIGERATE || user.ability == Ability.PIXILATE) bp *= 1.2;
 			} else {
@@ -1267,7 +1264,7 @@ public enum Move {
 					return true;
 				}
 				if (foe.ability != Ability.STICKY_HOLD || me.ability == Ability.MOLD_BREAKER) {
-					if (m == Move.BUG_BITE || m == Move.PLUCK || m == Move.INCINERATE) return true;
+					if ((m == Move.BUG_BITE || m == Move.PLUCK || m == Move.INCINERATE) && foe.item != null && foe.item.isBerry()) return true;
 				}
 				if (Pokemon.field.hasScreens(foe.getFieldEffects(), foe)) {
 					if (m == Move.BRICK_BREAK || m == Move.PSYCHIC_FANGS) return true;

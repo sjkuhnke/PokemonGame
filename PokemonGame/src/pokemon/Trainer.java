@@ -313,7 +313,7 @@ public class Trainer implements Serializable {
 		if (p.ability == Ability.MOSAIC_WINGS && multiplier == 1.0) multiplier = 0.5;
 		if (p.ability == Ability.WONDER_GUARD && multiplier < 2.0) multiplier = 0;
 		
-		if (m.critChance < 0 && multiplier > 0) return 1;
+		if (m != null && m.critChance < 0 && multiplier > 0) return 1;
 		
 		return multiplier;
 	}

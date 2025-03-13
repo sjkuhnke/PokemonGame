@@ -112,8 +112,8 @@ public class TreasureChest extends ItemObj {
 		ArrayList<Item> loot = new ArrayList<>();
 		
 		loot.addAll(pickRandomItems(resourcePool, 1, 4));   // Pick 1-4 from resources
-        loot.addAll(pickRandomItems(treasurePool, 3, 5));   // Pick 3-5 from treasure
-        loot.addAll(pickRandomItems(stonePool, 0, 2));      // Pick 0-2 from stones
+        loot.addAll(pickRandomItems(treasurePool, 4, 6));   // Pick 4-6 from treasure
+        loot.addAll(pickRandomItems(stonePool, 1, 2));      // Pick 1-2 from stones
         loot.add(randomMint());
 		
 		return loot;
