@@ -1321,6 +1321,9 @@ public class BattleUI extends AbstractUI {
 					gp.player.p.team[partyNum].perishCount = user.perishCount;
 				}
 				gp.player.p.swapToFront(gp.player.p.team[partyNum], partyNum);
+				foe.removeStatus(Status.TRAPPED);
+				foe.removeStatus(Status.SPUN);
+				foe.removeStatus(Status.SPELLBIND);
 				gp.player.p.getCurrent().swapIn(foe, true);
 				user = gp.player.p.getCurrent();
 				partyNum = 0;

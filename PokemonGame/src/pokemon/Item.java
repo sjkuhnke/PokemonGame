@@ -333,9 +333,9 @@ public enum Item {
 	TM97(197,0,0,Color.BLACK,Item.TMS,Move.RADIANT_BREAK,"Teaches a Pokemon this move."),
 	TM98(198,0,0,Color.BLACK,Item.TMS,Move.FLIP_TURN,"Teaches a Pokemon this move."),
 	TM99(199,0,0,Color.BLACK,Item.TMS,Move.RETURN,"Teaches a Pokemon this move."),
-	EDGE_KIT(44,0,0,new Color(232, 52, 54),Item.KEY_ITEM,null,"Edges ;) your Pokemon until they're about to bust :{D"),
-	CALCULATOR(200,0,0,Color.BLACK,Item.KEY_ITEM,null,"Calculates damage simulating a battle"),
-	DEX_NAV(263,0,0,Color.BLACK,Item.KEY_ITEM,null,"Shows wild Pokemon nearby"),
+	EDGE_KIT(44,0,0,new Color(232, 52, 54),Item.KEY_ITEM,true,"Edges ;) your Pokemon until they're about to bust :{D"),
+	CALCULATOR(200,0,0,Color.BLACK,Item.KEY_ITEM,true,"Calculates damage simulating a battle"),
+	DEX_NAV(263,0,0,Color.BLACK,Item.KEY_ITEM,true,"Shows wild Pokemon nearby"),
 	CHERI_BERRY(221,10,2,new Color(232, 96, 80),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to free itself from paralysis."),
 	CHESTO_BERRY(222,10,2,new Color(144, 112, 224),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to wake itself from sleep."),
 	PECHA_BERRY(223,10,2,new Color(248, 192, 152),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to lift the effects of being poisoned from itself."),
@@ -388,19 +388,19 @@ public enum Item {
 	KEE_BERRY(379,100,40,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holding this Berry is hit with a physical move, the holder's Defense stat will be boosted."),
 	MARANGA_BERRY(380,100,40,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holding this Berry is hit with a special move, the holder's Sp. Def stat will be boosted."),
 	ENIGMA_BERRY(381,50,25,new Color(220, 96, 70),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to regain half of its HP if it is hit with a supereffective move."),
-	PACKAGE_A(260,0,0,Color.BLACK,Item.KEY_ITEM,null,"A large industrial juicer, designed to make berries into healthy juice quickly and effectively. Belongs to one Ms. Plum."),
-	PACKAGE_B(261,0,0,Color.BLACK,Item.KEY_ITEM,null,"Contains a new state of the art frying pan, meant for a master chef. It's said to be for a Guy Eddie."),
-	PACKAGE_C(262,0,0,Color.BLACK,Item.KEY_ITEM,null,"Inside is a bunch of dog toys, and the address says it's for a place called \"Poundtown\"."),
-	PACKAGE_D(266,0,0,Color.BLACK,Item.KEY_ITEM,null,"A Drednaw stapler, for an old friend of Robin's. Sent all the way from Galar, the deliver address is for the local warehouse."),
-	WAREHOUSE_KEY(267,0,0,Color.BLACK,Item.KEY_ITEM,null,"A key that unlocks Poppy Grove's Warehouse."),
-	FISHING_ROD(268,0,0,Color.BLACK,Item.KEY_ITEM,null,"Use when looking at water to fish! Can also press 'A' in the world to fish."),
-	WIRE_CUTTERS(269,0,0,Color.BLACK,Item.KEY_ITEM,null,"Heavy duty wire cutters that can cut through any wire, big or small. A favorite for electricians."),
-	VISOR(270,0,0,Color.BLACK,Item.KEY_ITEM,null,"A rainbow pair of shades that blocks 90% of harsh light."),
-	ICE_KEY(271,0,0,Color.BLACK,Item.KEY_ITEM,null,"A key that unlocks Ice Master's Classroom."),
-	GROUND_KEY(272,0,0,Color.BLACK,Item.KEY_ITEM,null,"A key that unlocks Ground Master's Classroom."),
-	SHOVEL(273,0,0,Color.BLACK,Item.KEY_ITEM,null,"A handy tool that can shovel snowballs to clear them."),
-	ICE_PICK(274,0,0,Color.BLACK,Item.KEY_ITEM,null,"A cold metal pickaxe used for breaking blocks of ice."),
-	LETTER(284,0,0,Color.BLACK,Item.KEY_ITEM,null,"A letter from your mother delivered by Robin. It's of urgent matter."),
+	PACKAGE_A(260,0,0,Color.BLACK,Item.KEY_ITEM,false,"A large industrial juicer, designed to make berries into healthy juice quickly and effectively. Belongs to one Ms. Plum."),
+	PACKAGE_B(261,0,0,Color.BLACK,Item.KEY_ITEM,false,"Contains a new state of the art frying pan, meant for a master chef. It's said to be for a Guy Eddie."),
+	PACKAGE_C(262,0,0,Color.BLACK,Item.KEY_ITEM,false,"Inside is a bunch of dog toys, and the address says it's for a place called \"Poundtown\"."),
+	PACKAGE_D(266,0,0,Color.BLACK,Item.KEY_ITEM,false,"A Drednaw stapler, for an old friend of Robin's. Sent all the way from Galar, the deliver address is for the local warehouse."),
+	WAREHOUSE_KEY(267,0,0,Color.BLACK,Item.KEY_ITEM,false,"A key that unlocks Poppy Grove's Warehouse."),
+	FISHING_ROD(268,0,0,Color.BLACK,Item.KEY_ITEM,true,"Use when looking at water to fish! Can also press 'A' in the world to fish."),
+	WIRE_CUTTERS(269,0,0,Color.BLACK,Item.KEY_ITEM,false,"Heavy duty wire cutters that can cut through any wire, big or small. A favorite for electricians."),
+	VISOR(270,0,0,Color.BLACK,Item.KEY_ITEM,true,"A rainbow pair of shades that blocks 90% of harsh light."),
+	ICE_KEY(271,0,0,Color.BLACK,Item.KEY_ITEM,false,"A key that unlocks Ice Master's Classroom."),
+	GROUND_KEY(272,0,0,Color.BLACK,Item.KEY_ITEM,false,"A key that unlocks Ground Master's Classroom."),
+	SHOVEL(273,0,0,Color.BLACK,Item.KEY_ITEM,false,"A handy tool that can shovel snowballs to clear them."),
+	ICE_PICK(274,0,0,Color.BLACK,Item.KEY_ITEM,false,"A cold metal pickaxe used for breaking blocks of ice."),
+	LETTER(284,0,0,Color.BLACK,Item.KEY_ITEM,true,"A letter from your mother delivered by Robin. It's of urgent matter."),
 	ROCK_CRYSTAL(285,4000,1000,Color.BLACK,Item.OTHER,null,"A sharp crystal exuding Rock energy. Changes a Pokemon's power."),
 	FIRE_CRYSTAL(286,4000,1000,Color.BLACK,Item.OTHER,null,"A sharp crystal exuding Fire energy. Changes a Pokemon's power."),
 	WATER_CRYSTAL(287,4000,1000,Color.BLACK,Item.OTHER,null,"A sharp crystal exuding Water energy. Changes a Pokemon's power."),
@@ -437,6 +437,7 @@ public enum Item {
 	private int cost;
 	private int sell;
 	private int healAmount;
+	private boolean usable;
 	private String desc;
 	private BufferedImage image;
 	private BufferedImage image2;
@@ -467,7 +468,9 @@ public enum Item {
 		} else if (o instanceof Nature) {
 			this.nature = (Nature) o;
 		} else if (o instanceof Integer) {
-			healAmount = (Integer) o;
+			this.healAmount = (Integer) o;
+		} else if (pocket == KEY_ITEM) {
+			this.usable = (boolean) o;
 		}
 		this.desc = desc;
 		
@@ -1750,6 +1753,7 @@ public enum Item {
 	
 	public boolean isUsable() {
 		if (isBall()) return false;
+		if (pocket == KEY_ITEM) return usable;
 		if (pocket != OTHER) return true;
 		if (isTreasure() || isFossil()) {
 			return false;
