@@ -518,7 +518,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(89, 68, Item.TINY_MUSHROOM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(75, 41, Item.TM58, mapNum); // dragon pulse
 		gp.obj[mapNum][objIndex] = ObjSetup(84, 22, Item.TM02, mapNum); // radio burst
-		gp.obj[mapNum][objIndex] = ObjSetup(71, 46, Item.ENIGMA_BERRY, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = ObjSetup(80, 35, Item.ENIGMA_BERRY, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = ObjSetup(91, 50, Item.LAGGING_TAIL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 39, Item.PSYCHIC_SEED, mapNum);
 		
@@ -956,7 +956,7 @@ public class AssetSetter {
 		
 		mapNum = 140;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(62, 66, Item.TM34, mapNum); // magic tomb
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 65, Item.TM34, mapNum); // magic tomb
 		gp.obj[mapNum][objIndex] = MintSetup(46, 60, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(40, 54, Item.MAX_ELIXIR, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 51, Item.TM35, mapNum); // flamethrower
@@ -3877,6 +3877,10 @@ public class AssetSetter {
 		objIndex++;
 		
 		itemMap.put(item, itemMap.getOrDefault(item, 0) + 1);
+		
+		if (gp.tileM.tile[gp.tileM.mapTileNum[mapNum][x][y]].collision) {
+			System.out.println("Item " + item + " at " + x + ", " + y + " on map " + mapNum + " is in a wall");
+		}
 		
 		return result;
 	}

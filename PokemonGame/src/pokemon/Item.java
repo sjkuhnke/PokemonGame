@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -16,6 +17,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
+import java.awt.image.ImageProducer;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,6 +30,7 @@ import java.util.stream.IntStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.GrayFilter;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -202,8 +207,8 @@ public enum Item {
 	UTILITY_UMBRELLA(348,0,0,Color.BLACK,Item.HELD_ITEM,null,"This sturdy umbrella protects the holder from the effects of all weather."),
 	FOCUS_SASH(81,0,500,new Color(232, 80, 80),Item.HELD_ITEM,null,"If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP, but only once."),
 	AIR_BALLOON(82,0,300,new Color(232, 72, 72),Item.HELD_ITEM,null,"This balloon makes the holder float in the air. If the holder is hit with an attack, the balloon will burst."),
-	EJECT_BUTTON(329,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the holder is damaged by an attack, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team."),
-	EJECT_PACK(330,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the holder's stats are lowered, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team."),
+	EJECT_BUTTON(331,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the holder is damaged by an attack, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team."),
+	EJECT_PACK(332,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the holder's stats are lowered, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team."),
 	POWER_HERB(83,0,50,new Color(253, 80, 77),Item.HELD_ITEM,null,"A herb that allows the holder to immediately use a move that normally requires a turn to charge or recharge, but only once."),
 	WHITE_HERB(84,0,50,new Color(242, 242, 242),Item.HELD_ITEM,null,"A herb that will restore any lowered stat in battle, but only once."),
 	MENTAL_HERB(92,0,50,Color.BLACK,Item.HELD_ITEM,null,"An item to be held by a Pokemon. The holder shakes off move-binding effects and flinching to move freely. It can be used only once."),
@@ -220,8 +225,8 @@ public enum Item {
 	ADRENALINE_ORB(326,1,0,Color.BLACK,Item.HELD_ITEM,null,"This orb will boost the Speed of the Pokemon by 1 stage when it is intimidated."),
 	ABSORB_BULB(327,3,0,Color.BLACK,Item.HELD_ITEM,372,"This single-use bulb will absorb any Water-type attack and boost the Sp. Atk stat of the holder. Any other attack will damage the item."),
 	CELL_BATTERY(328,3,0,Color.BLACK,Item.HELD_ITEM,373,"This single-use battery will absorb any Electric-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
-	LUMINOUS_MOSS(331,3,0,Color.BLACK,Item.HELD_ITEM,374,"This single-use moss will absorb any Water-type attack and boost the Sp. Def stat of the holder. Any other attack will damage the item."),
-	SNOWBALL(332,3,0,Color.BLACK,Item.HELD_ITEM,375,"This single-use ball of snow will absorb any Ice-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
+	LUMINOUS_MOSS(329,3,0,Color.BLACK,Item.HELD_ITEM,374,"This single-use moss will absorb any Water-type attack and boost the Sp. Def stat of the holder. Any other attack will damage the item."),
+	SNOWBALL(330,3,0,Color.BLACK,Item.HELD_ITEM,375,"This single-use ball of snow will absorb any Ice-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
 	DAMAGED_BULB(372,1,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use bulb boosts the Sp. Atk stat if the holder is damaged by a Water-type attack."),
 	DAMAGED_BATTERY(373,1,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use battery boosts the Attack stat if the holder is damaged by an Electric-type attack."),
 	DAMAGED_MOSS(374,1,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use moss boosts the Sp. Def stat if the holder is damaged by a Water-type move."),
@@ -442,6 +447,8 @@ public enum Item {
 	private BufferedImage image;
 	private BufferedImage image2;
 	private BufferedImage backImage;
+	private Image greyImage;
+	private Image greyImage2;
 	
 	public static final int MEDICINE = 1;
     public static final int OTHER = 2;
@@ -519,6 +526,15 @@ public enum Item {
 
 	    return bufferedImage;
 	}
+	
+	public Image setupGreyImage(BufferedImage image) {
+		ImageFilter grayFilter = new GrayFilter(true, 25);
+
+        ImageProducer producer = new FilteredImageSource(image.getSource(), grayFilter);
+        Image grayImage = Toolkit.getDefaultToolkit().createImage(producer);
+        
+        return grayImage;
+	}
 
 	private void addToMintTable() {
 		if (mints == null) mints = new Item[21];
@@ -595,6 +611,16 @@ public enum Item {
 	public BufferedImage getImage() { return image; }
 	public BufferedImage getImage2() { return image2; }
 	public BufferedImage getBackImage() { return backImage; }
+	
+	public Image getGreyImage() {
+		if (greyImage == null) greyImage = setupGreyImage(image);
+		return greyImage;
+	}
+	
+	public Image getGreyImage2() {
+		if (greyImage2 == null) greyImage2 = setupGreyImage(image2);
+		return greyImage2;
+	}
 	
 	public static Item getItem(int id) {
 		return itemTable[id];
@@ -1833,5 +1859,12 @@ public enum Item {
 		if (this == LUMINOUS_MOSS || this == DAMAGED_MOSS) return 3;
 		if (this == CELL_BATTERY || this == DAMAGED_BATTERY) return 0;
 		return 10;
+	}
+
+	public boolean isTrickable() {
+		return this != null
+				&& this.isChoiceItem() || this == Item.RING_TARGET
+				|| this == Item.FLAME_ORB || this == Item.TOXIC_ORB
+				|| this == Item.LAGGING_TAIL;
 	}
 }

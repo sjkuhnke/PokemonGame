@@ -679,7 +679,7 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "OHHH! YOU! I'm so sorry, that was a reflex, there's so many of them.");
 			if (!p.flag[2][9]) {
 				Task.addTask(Task.DIALOGUE, npc, "Any luck finding the grunt? ..I've been holding them off okay.");
-				Task.addTask(Task.DIALOGUE, npc, "Like I said, before, I believe that there's a secret room that you can access on the 2nd floor, check that out if you haven't yet.");
+				Task.addTask(Task.DIALOGUE, npc, "Like I said, before, I believe that there's a secret room that you can access from the 2nd floor of the mountain, check that out if you haven't yet.");
 			} else {
 				Task.addTask(Task.DIALOGUE, npc, "You found him? How'd it go? Are you and your Pokemon okay?");
 				Task.addTask(Task.DIALOGUE, npc, "You got wire cutters? Quick, let's try and cut that creature free and stop this madness!");

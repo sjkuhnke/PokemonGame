@@ -216,6 +216,10 @@ public class UI extends AbstractUI {
 			drawShopScreen();
 		}
 		
+		if (gp.gameState == GamePanel.STAR_SHOP_STATE) {
+			drawStarShopScreen();
+		}
+		
 		if (gp.gameState == GamePanel.PRIZE_STATE) {
 			drawPrizeScreen((NPC_Prize_Shop) npc);
 		}
@@ -580,9 +584,6 @@ public class UI extends AbstractUI {
 		case Task.INTERACTIVE:
 			gp.player.interactWith(currentTask.e, currentTask.counter, true);
 			currentTask = null;
-			break;
-		case Task.STAR_PIECE:
-			drawStarShop(currentTask.e);
 			break;
 		}
 	}
@@ -1429,9 +1430,7 @@ public class UI extends AbstractUI {
 						Task.addTask(Task.DIALOGUE, npc, "Awesome, thank you man! Here you go!");
 						Task ta = Task.addTask(Task.ITEM, "");
 						ta.item = Item.SHELL_BELL;
-						gp.player.p.bag.remove(Item.EUPHORIAN_GEM);
-						gp.player.p.bag.remove(Item.EUPHORIAN_GEM);
-						gp.player.p.flag[0][22] = true;
+						gp.player.p.bag.remove(Item.EUPHORIAN_GEM, 2);
 					} else {
 						Task.addTask(Task.DIALOGUE, npc, "Hey! You don't have enough Euphorian Gems!");
 						Task.addTask(Task.DIALOGUE, npc, "Sorry man, not this time. Let me know if we have a deal!");
@@ -2510,6 +2509,7 @@ public class UI extends AbstractUI {
                         cBox[index] = temp;
                         
                         gp.player.p.shiftTeamForward(partyNum);
+                        if (gp.player.p.team[partyNum] == null) partyNum--;
 	                }
 	                partySelectedNum = -1;
 				} else if (boxSwapNum >= 0) {
@@ -3960,6 +3960,62 @@ public class UI extends AbstractUI {
 		drawToolTips("Sell", null, "Back", null);
 	}
 	
+	public void drawStarShopScreen() {
+		switch(subState) {
+		case 0: starShopSelect(); break;
+		case 1: drawStarShop(npc); break;
+		case 2: drawStarRepair(new Item[] {Item.ABSORB_BULB, Item.CELL_BATTERY, Item.LUMINOUS_MOSS, Item.SNOWBALL}); break;
+		}
+		gp.keyH.wPressed = false;
+	}
+	
+	public void starShopSelect() {
+		drawDialogueScreen(true);
+		
+		int x = gp.tileSize * 11;
+		int y = gp.tileSize * 4;
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 3.5);
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize;
+		y += gp.tileSize;
+		g2.drawString("Trade", x, y);
+		if (commandNum == 0) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				subState = 1;
+				remindNum = 0;
+			}
+		}
+		y += gp.tileSize;
+		g2.drawString("Repair", x, y);
+		if (commandNum == 1) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				subState = 2;
+				remindNum = 0;
+			}
+		}
+		y += gp.tileSize;
+		g2.drawString("Exit", x, y);
+		if (commandNum == 2) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
+				showMessage("Come back when you find more Star Pieces!");
+				subState = 0;
+				commandNum = 0;
+				remindNum = 0;
+			}
+		}
+		
+		drawToolTips("OK", null, "Back", "Back");
+	}
+	
 	private void drawStarShop(Entity e) {
 		int x = gp.tileSize * 3;
 		int y = (int) (gp.tileSize * 1.5);
@@ -3970,11 +4026,11 @@ public class UI extends AbstractUI {
 		
 		drawSubWindow(x, y, width, height);
 		
-		x += gp.tileSize / 2;
+		x += gp.tileSize / 4;
 		y += gp.tileSize / 2;
 		
 		int itemSize = gp.tileSize + 5;
-		int gap = 16;
+		int gap = 20;
 		
 		int startX = x;
 		
@@ -3984,23 +4040,23 @@ public class UI extends AbstractUI {
 			int itemY = y;
 			Item item = e.inventory.get(i);
 			
-			if (commandNum == i) {
+			if (remindNum == i) {
 				g2.setColor(Color.RED);
 				g2.drawRoundRect(x - 8, y - 8, itemSize + 16, itemSize + 16, 20, 20);
 			}
 			
-			g2.drawImage(item.getImage2(), x - 4, y, null);
+			g2.drawImage(item.getImage2(), x, y, null);
 			
-			x += gp.tileSize * 0.65;
+			x += gp.tileSize * 0.75;
 			y += gp.tileSize * 0.75;
 			
 			g2.drawImage(Item.STAR_PIECE.getImage(), x - 4, y, null);
-			x += gp.tileSize / 3;
-			y += gp.tileSize / 3;
+			x += gp.tileSize * 0.4;
+			y += 18;
 			
 			g2.setColor(Color.WHITE);
 			g2.setFont(g2.getFont().deriveFont(16F));
-			g2.drawString("x" + item.getCost(), x - 4, y);
+			g2.drawString("" + item.getCost(), x - 4, y);
 			
 			x = itemX + itemSize;
 			y = itemY;
@@ -4022,7 +4078,7 @@ public class UI extends AbstractUI {
 		moneyY += gp.tileSize * 0.75;
 		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(32F));
-		g2.drawString("x" + gp.player.p.bag.count[Item.STAR_PIECE.getID()], moneyX, moneyY);
+		g2.drawString("" + gp.player.p.bag.count[Item.STAR_PIECE.getID()], moneyX, moneyY);
 		
 		int dFrameX = gp.tileSize * 2;
 		int dFrameY = (int) (gp.tileSize * 1.5 + height);
@@ -4033,7 +4089,7 @@ public class UI extends AbstractUI {
 		int textY = (int) (dFrameY + gp.tileSize * 0.8);
 		g2.setFont(g2.getFont().deriveFont(32F));
 		
-		Item current = e.inventory.get(commandNum);
+		Item current = e.inventory.get(remindNum);
 		drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
 		g2.drawString(current.toString(), textX, textY);
 		
@@ -4064,57 +4120,207 @@ public class UI extends AbstractUI {
 		
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
-			if (commandNum == 0) {
-				if (commandNum == 0) {
-					
-				} else {
-					Task.addTask(Task.DIALOGUE, currentTask.e, "You don't have any Tiny Mushrooms for your boi?!");
-					Task.addTask(Task.MUSHROOM, currentTask.e, currentTask.message);
-					currentTask = null;
-				}
-			} else if (commandNum == 1) {
-				if (commandNum == 1) {
-					
-				} else {
-					Task.addTask(Task.DIALOGUE, currentTask.e, "I NEEEED a BIG SHROOM!!");
-					Task.addTask(Task.MUSHROOM, currentTask.e, currentTask.message);
-					currentTask = null;
-				}
+			if (gp.player.p.bag.count[Item.STAR_PIECE.getID()] >= current.getCost()) {
+				showMessage("Thank you! Here's 1 " + current.toString() + "!");
+				gp.player.p.bag.add(current);
+				gp.player.p.bag.remove(Item.STAR_PIECE, current.getCost());
+			} else {
+				showMessage("You don't have enough Star Pieces!");
 			}
-		}
-		
-		if (gp.keyH.sPressed) {
-			gp.keyH.sPressed = false;
-			Task.addTask(Task.TEXT, "Come back when you have Star Pieces to trade!");
-			commandNum = 0;
-			currentTask = null;
 		}
 		
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
-			if (commandNum - maxCol >= 0) {
-				commandNum -= maxCol;
+			if (remindNum - maxCol >= 0) {
+				remindNum -= maxCol;
 			}
 		}
 		if (gp.keyH.downPressed) {
-			if (commandNum + maxCol < e.inventory.size()) {
-				commandNum += maxCol;
+			if (remindNum + maxCol < e.inventory.size()) {
+				remindNum += maxCol;
 			}
 			gp.keyH.downPressed = false;
 		}
 		if (gp.keyH.leftPressed) {
 			gp.keyH.leftPressed = false;
-			if (commandNum % maxCol != 0) {
-				commandNum--;
+			if (remindNum % maxCol != 0) {
+				remindNum--;
 			}
 		}
 		if (gp.keyH.rightPressed) {
 			gp.keyH.rightPressed = false;
-			if (commandNum % maxCol + 1 != maxCol && commandNum + 1 < e.inventory.size()) {
-				commandNum++;
+			if (remindNum % maxCol + 1 != maxCol && remindNum + 1 < e.inventory.size()) {
+				remindNum++;
 			}
 		}
-		drawToolTips("Buy", null, "Back", null);
+		drawToolTips("Buy", null, "Back", "Back");
+	}
+	
+	private void drawStarRepair(Item[] inventory) {
+		int x = gp.tileSize * 4;
+		int y = (int) (gp.tileSize * 1.5);
+		int width = gp.tileSize * 8;
+		int height = (int) (gp.tileSize * 5.5);
+		
+		drawSubWindow(x, y, width, height);
+		
+		y += gp.tileSize / 2;
+		
+		int itemSize = gp.tileSize + 5;
+		int gap = 32;
+		
+		for (int i = 0; i < inventory.length; i++) {
+			x += gap;
+			int itemX = x;
+			int itemY = y;
+			Item item = inventory[i];
+			
+			if (remindNum == i) {
+				g2.setColor(Color.RED);
+				g2.drawRoundRect(x - 12, y - 12, itemSize + 24, itemSize + 24, 20, 20);
+			}
+			
+			boolean afford = gp.player.p.bag.contains(item.getID() + 45);
+			g2.drawImage(afford ? item.getImage2() : item.getGreyImage2(), x, y, null);
+			
+			x -= 4;
+			y += gp.tileSize * 0.75;
+			Item costItem = Item.getItem(item.getID() + 45);
+			g2.drawImage(afford ? costItem.getImage() : costItem.getGreyImage(), x, y, gp);
+			x += 24;
+			y += 18;
+			g2.setColor(Color.WHITE);
+			g2.setFont(g2.getFont().deriveFont(16F));
+			g2.drawString("" + 1, x - 4, y);
+			
+			x += 16;
+			y -= 18;
+			
+			g2.drawImage(Item.STAR_PIECE.getImage(), x - 4, y, null);
+			x += gp.tileSize * 0.4;
+			y += 18;
+			
+			g2.setColor(Color.WHITE);
+			g2.setFont(g2.getFont().deriveFont(16F));
+			g2.drawString("" + (item.getCost() - 1), x - 4, y);
+			
+			x = itemX + itemSize;
+			y = itemY;
+		}
+		
+		int moneyX = gp.tileSize * 4;
+		int moneyY = gp.tileSize / 2;
+		int moneyWidth = gp.tileSize * 3;
+		int moneyHeight = gp.tileSize;
+		
+		drawSubWindow(moneyX, moneyY, moneyWidth, moneyHeight);
+		moneyX += 8;
+		g2.drawImage(Item.STAR_PIECE.getImage2(), moneyX, moneyY, null);
+		moneyX += gp.tileSize * 0.85;
+		moneyY += gp.tileSize * 0.75;
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.drawString("" + gp.player.p.bag.count[Item.STAR_PIECE.getID()], moneyX, moneyY);
+		
+		Item current = inventory[remindNum];
+		int cost = current.getCost() - 1;
+		Item costItem = Item.getItem(current.getID() + 45);
+		
+		int costMoneyX = gp.tileSize * 9;
+		int costMoneyY = gp.tileSize / 4;
+		int costMoneyWidth = moneyWidth;
+		int costMoneyHeight = (int) (gp.tileSize * 1.25);
+		
+		drawSubWindow(costMoneyX, costMoneyY, costMoneyWidth, costMoneyHeight);
+		costMoneyX += gp.tileSize * 2.5;
+		costMoneyY += gp.tileSize * 0.9;
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		String costItemAmt = String.valueOf(gp.player.p.bag.count[costItem.getID()]);
+		g2.drawString(costItemAmt, getRightAlignedTextX(costItemAmt, costMoneyX), costMoneyY);
+		costMoneyX -= gp.tileSize * 2.25;
+		costMoneyY -= gp.tileSize * 0.75;
+		g2.drawImage(costItem.getImage2(), costMoneyX, costMoneyY, null);
+		
+		int dFrameX = gp.tileSize * 2;
+		int dFrameY = (int) (gp.tileSize * 1.5 + height);
+		int dFrameWidth = gp.tileSize * 12;
+		int dFrameHeight = (int) (gp.tileSize * 3.5);
+		
+		int textX = dFrameX + 20;
+		int textY = (int) (dFrameY + gp.tileSize * 0.8);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		
+		drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
+		g2.drawString(current.toString(), textX, textY);
+		
+		int priceX = getRightAlignedTextX("$     ", dFrameX + dFrameWidth - gp.tileSize / 2);
+		textY += gp.tileSize / 4;
+		g2.drawImage(Item.STAR_PIECE.getImage2(), priceX, (int) (textY - gp.tileSize * 0.75), null);
+		String price = String.valueOf(cost);
+		priceX += gp.tileSize * 0.9;
+		g2.drawString(price, priceX, textY);
+		
+		priceX -= gp.tileSize * 2;
+		g2.drawImage(costItem.getImage2(), priceX, (int) (textY - gp.tileSize * 0.75), null);
+		price = String.valueOf(1);
+		priceX += gp.tileSize * 0.9;
+		g2.drawString(price, priceX, textY);
+		
+		int amtX = dFrameX + dFrameWidth - gp.tileSize * 4;
+		int amtY = dFrameY + dFrameHeight;
+		int amtWidth = gp.tileSize * 4;
+		int amtHeight = gp.tileSize;
+			
+		drawSubWindow(amtX, amtY, amtWidth, amtHeight);
+		int amtTextX = amtX + 20;
+		int amtTextY = (int) (amtY + gp.tileSize * 0.75);
+		g2.drawString("You have: " + gp.player.p.bag.count[current.getID()], amtTextX, amtTextY);
+			
+		textY += 38;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		String desc = current.isTM() ? current.getMove().getDescription() : current.getDesc();
+		
+		for (String line : Item.breakString(desc, 58).split("\n")) {
+			g2.drawString(line, textX, textY);
+			textY += 32;
+		}
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (gp.player.p.bag.contains(costItem)) {
+				if (gp.player.p.bag.count[Item.STAR_PIECE.getID()] >= cost) {
+					showMessage(Item.breakString("Thank you! Here's your " + costItem.toString() + " repaired into a " + current.toString() + "!", 42));
+					gp.player.p.bag.add(current);
+					gp.player.p.bag.remove(Item.STAR_PIECE, cost);
+					gp.player.p.bag.remove(costItem);
+				} else {
+					showMessage("You don't have enough Star Pieces to repair your " + costItem.toString() + "!");
+				}
+			} else {
+				showMessage("You don't have a " + costItem.toString() + " to repair!");
+			}
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+		}
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			if (remindNum != 0) {
+				remindNum--;
+			}
+		}
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			if (remindNum + 1 < inventory.length) {
+				remindNum++;
+			}
+		}
+		drawToolTips("Repair", null, "Back", "Back");
 	}
 	
 	private int randomPrice(Random random, int min, int max) {

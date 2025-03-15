@@ -99,7 +99,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 55;
+	public static final int VERSION = 56;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -795,10 +795,10 @@ public class Player extends Trainer implements Serializable {
 				Item old = p.item;
 				bag.add(old);
         		p.item = item;
-	        	gp.ui.showMessage(p.nickname + " swapped its " + old.toString() + " for\na " + p.item.toString() + "!");
+	        	gp.ui.showMessage(Item.breakString(p.nickname + " swapped its " + old.toString() + " for a " + p.item.toString() + "!", 42));
         	} else {
         		p.item = item;
-        		gp.ui.showMessage(p.nickname + " was given " + item.toString() + " to hold!");
+        		gp.ui.showMessage(Item.breakString(p.nickname + " was given " + item.toString() + " to hold!", 42));
         	}
 			gp.ui.selectedBagNum = -1;
 		} else {
@@ -1252,7 +1252,7 @@ public class Player extends Trainer implements Serializable {
 		int[] counts = bag.count;
 		bag = new Bag();
 		for (int i = 0; i < counts.length; i++) {
-			bag.count[i] = counts[i];
+			if (i < bag.count.length) bag.count[i] = counts[i];
 		}
 	}
 	
