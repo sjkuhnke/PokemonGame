@@ -4,9 +4,6 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 202 Flamehead-E
 203 Fireshard-E (First stage is lowkey the most important, these 2 can wait)
 204 Blastflames-E (First stage is lowkey the most important, these 2 can wait)
-288 Fever Dream*
-263 Plasamp*
-264 Geniova*
 289 Dusk Skater*
 158 Poov*
 159 Grust*
@@ -15,6 +12,9 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 171 Wormite*
 172 Wormbot*
 173 Wormatron*
+217 Wormite-S*
+218 Wormbot-S*
+219 Wormatron-S*
 166 Rhypo*
 167 Rhynee*
 168 Rhypolar*
@@ -22,6 +22,8 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 214 Shadowsaur*
 235 Dragowrath*
 240 Scraftagon*
+233 Relomidel
+234 Relopamil
 108 Sparkitten
 109 Fireblion
 110 Flamebless
@@ -56,6 +58,8 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 222 Zurroaratr-S
 148 Durfish
 149 Dompster
+215 Durfish-S
+216 Dompster-S
 132 Sheltor*
 133 Shelnado*
 141 Ali*
@@ -66,6 +70,26 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 199 Droid-E
 200 Armoid-E
 201 Soldrota-E
+150 Kissyfishy
+218 Consodust
+219 Cosmocrash
+195 Rockmite
+196 Stellarock
+190 Blobmo
+191 Nebulimb
+192 Galactasolder
+184 Tinkie
+185 Shawar
+186 Shaboom
+187 Dragee
+188 Draga
+189 Drageye
+229 Diftery
+232 Triwandoliz
+231 Kleinyeti
+228 Soarwhell
+230 Vorsuitex
+236 Solaroxyous
 
 ================================================================================
 Overworld Pokemon Sprites (* are the ones that already have battle sprites, probably best to do that first)

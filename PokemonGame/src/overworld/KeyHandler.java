@@ -50,6 +50,8 @@ public class KeyHandler implements KeyListener {
 			menuState(code);
 		} else if (gp.gameState == GamePanel.SHOP_STATE) {
 			shopState(code);
+		} else if (gp.gameState == GamePanel.STAR_SHOP_STATE) {
+			starShopState(code);
 		} else if (gp.gameState == GamePanel.PRIZE_STATE) {
 			prizeState(code);
 		} else if (gp.gameState == GamePanel.NURSE_STATE) {
@@ -602,6 +604,50 @@ public class KeyHandler implements KeyListener {
 				if (gp.ui.slotCol < UI.MAX_SHOP_COL - 1) {
 					gp.ui.slotCol++;
 				}
+			}
+		}
+	}
+	
+	private void starShopState(int code) {
+		if (code == KeyEvent.VK_W) {
+			wPressed = true;
+		}
+		
+		if (gp.ui.subState == 0) {
+			if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+				gp.gameState = GamePanel.PLAY_STATE;
+				gp.ui.subState = 0;
+				gp.ui.commandNum = 0;
+			}
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+				gp.ui.commandNum--;
+				if (gp.ui.commandNum < 0) {
+					gp.ui.commandNum = 2;
+				}
+			}
+			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				gp.ui.commandNum++;
+				if (gp.ui.commandNum > 2) {
+					gp.ui.commandNum = 0;
+				}
+			}
+		}
+		if (gp.ui.subState > 0) {
+			if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+				gp.ui.subState = 0;
+				gp.ui.currentDialogue = gp.ui.npc.dialogues[0];
+			}
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+				upPressed = true;
+			}
+			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+				downPressed = true;
+			}
+			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+				leftPressed = true;
+			}
+			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+				rightPressed = true;
 			}
 		}
 	}

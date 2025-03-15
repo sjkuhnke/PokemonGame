@@ -186,7 +186,7 @@ Added the following items: Ability Shield, Absorb Bulb, Adrenaline Orb, Amulet C
 They all work the same as in regular Pokemon with the exception of the Absorb Bulb esque items making you IMMUNE to the move until they're consumed, which gives you a stat boost, and Utility Umbrella protects from ALL weather effects
 ADDED HOLDING SHIFT IN THE OVERWORLD TO ALSO SHOW YOUR COORDINATES
 Formatted the Move doc better to be a table
-Added Scott and Fred cutscenes of them walking up to the player for more immersion
+Added Scott, Rick, Maxwell and Fred cutscenes of them walking up to the player for more immersion
 Added a code "dex <TYPE>" where type is a name of a PType enum to show only Pokemon of that type in the dex
 Added a code "MVFX" to delete invalid moves of all of your Pokemon so your save can be compatible with the new version
 ADDED THE FOLLOWING NEW MAGIC MOVES:
@@ -306,3 +306,56 @@ Added the following factors effecting the Base Power when viewing a move summary
 - Fusion Bolt/Fusion Flare doubling when the other was just used
 Added Trainer AI for Covet/Thief/Knock Off
 Fixed Heat Crash/Heavy Slam/Grass Knot/Low Kick correctly calculating the foe's weight with Float Stone/Autotomize in mind
+Fixed running out of PP removing your encore
+Changed Fred's name back to Fred (from Fredrick) because of there being another important character named Rick (why didn't I realize this until now)
+Added a Clerk in the Shops that sells the special Pokeballs!
+Added sprites for the damaged version of the Absorb Bulb esque items (the Absorb Bulb esque items will give full immunity to that type and the stat boost until hit by another attack, which will damage them and only provide the stat boost when hit but no protection against the move type)
+Added Mirror Herb, Room Service, Air Balloon, Eject Button and Eject Pack to the casino prize shop
+Added a Star Piece NPC trader that trades Star Pieces for Adrenaline Orb, the Seeds, the Damaged Absorb Bulb items, and the Absorb Bulb items
+Made Photon and your Dad give you a Master Ball after filling out all of the Electric/Shadow forms in your dex respectively
+Added an NPC trading 2 Euphorian Gems for a Shell Bell
+Made Star Piece twice as likely from chests for the new use of them
+TONS of item work replacing old items and adding new items in the overworld
+Made entities' alternate dialogue handle more than one text box (using "\n" to split text boxes)
+Added a saved counter that keeps track of how many balls you've bought and gives you a premier ball every 10
+Made Nature Mints random in the overworld which mint it is based on your save file
+Fixed wish working correctly and is now a field effect
+Made Focus Energy be able to stack
+Added AI for exploding moves making them more likely when the user is lower HP
+Added Field Flip: a court change clone that is the signature move of Malamar (gave on evo)
+REDID MOST POKEMON'S LEVEL UP MOVESETS WITH THE NEW MOVES AND DISTRIBUTED: way too many changes to list
+REDID ALL TRAINERS UP THROUGH GYM 7 WITH THE UPDATED MOVESETS AND NEW ITEMS IN MIND
+CHANGED THE TYPE CHART IN THE FOLLOWING WAYS:
+- Make Galactic weak to Dragon
+- Make Galactic resist Dark
+- Make Psychic resist Poison
+- Make Dark resist Magic
+- Make Fighting no longer resist Magic
+- Make Poison no longer resist Fighting
+- Make Poison resist Water
+Finally fixed player walking to stop the walking animation when stopping or interacting with things
+Added walking sprites to Rick, Fred, Scott, and Maxwell, to support walking cutscenes with them 4
+Added AI to encourage Trick, Trick Tackle and Switcheroo when the user has a "bad" item (Choice item, Ring Target, Flame/Toxic orb, Lagging Tail)
+Fixed Mirror Armor, Defiant, Competitive, Empathic Link showing the stat change even though its when the AI is testing status moves with clones
+Fixed Stat Berries showing the stat reset for the same reason as above
+Fixed Twigzap's evo string saying "Shockbrach" instead of "Shockbranch"
+Made a bunch of moves have "Primary Effects" instead of everything being a Secondary Effect (so that way Covert Cloak/Sheer Force/Shield Dust will work properly)
+The moves effected are:
+- Any self-stat lowering moves (including Scale Shot)
+- Item stealing/item removal (Thief/Trick Tackle/Knock Off etc)
+- Burn Up removing type
+- Brick Break/Psychic Fangs removing Screens
+- Circle Throw/Dragon Tail force switching
+Made Hyper Voice 100 BP (from 90)
+ADDED THE BALL THAT YOU CAUGHT THE POKEMON IN TO THE SUMMARY AND IN BATTLE WHEN SENDING OUT/SWAPPING BACK
+Fixed Swap Random and Player swapping out removing the foe's trapping effects
+Fixed evolving a Pokemon to copy over ALL fields (left out a bunch of counter ones like taunt/torment/etc (will eventually change to not creating a new Pokemon but instead just updating their ID)
+Gave Flamehox/Fireshard Sand Veil as a Hidden Ability and Blastflames Sheer Force! (previously all had none)
+Changed Blobmo's abilities to Shield Dust/Levitate/(Regenerator) -> Shield Dust/Regenerator/(Levitate)
+Changed Nebulimb's abilities to Shield Dust/Gravitation/(Mold Breaker) -> Shield Dust/Regenerator/(Gravitation)
+Changed Galactasolder's abilities to Sniper/Gravitation/(Mold Breaker) -> Sniper/Sheer Force/(Gravitation)
+Fixed scripts and refactored so that all Battle in cutscenes would appear in the Trainer doc, including Ultra Paradox static encounters
+Fixed Trainers resetting their held items and team order as well as healing in the event that the player wipes
+Changed the order of held items in your bag putting Exp Share and Lucky Egg on top, with the type boosting items being moved up as well
+Made Core Enforcer's secondary effect what it normally is: will supress the target's ability if the user is slower (instead of 10% to lower both offensive stats)
+Fixed Flame Body/Static etc activating visually in battle even when they can't (target is immune/already statused)

@@ -106,6 +106,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public static final int SIM_BATTLE_STATE = 19;
 	public static final int SIM_START_BATTLE_STATE = 20;
 	public static final int COIN_STATE = 21;
+	public static final int STAR_SHOP_STATE = 22;
 
 	public GamePanel(JFrame window) {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));

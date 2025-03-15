@@ -240,7 +240,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		happinessCap = 50;
 		
 		if (!t) shiny = determineShiny();
-		if (t) ball = Item.POKEBALL;
+		ball = Item.POKEBALL;
 		spriteVisible = true;
 		
 		if (!t) setSprites();
@@ -617,6 +617,20 @@ public class Pokemon implements RoleAssignable, Serializable {
         		this.addStatus(Status.SWAP);
         		return Move.GROWL;
         	}
+        	// 5% * toxic counter - 1 chance to swap
+        	if (this.status == Status.TOXIC) {
+        		int chance = (this.toxic - 1) * 5;
+        		if (checkSecondary(chance)) {
+	        		String rsn = "[Toxiced : " + String.format("%.1f", chance) + "%]";
+	        		System.out.println(rsn);
+	        		if (switchRsn != null) {
+	    				switchRsn.setFirst(this);
+	        			switchRsn.setSecond(rsn);
+	    			}
+	        		this.addStatus(Status.SWAP);
+	        		return Move.GROWL;
+        		}
+        	}
     		boolean moveKills = false;
     		PType type = null;
     		boolean hasResist = false;
@@ -748,6 +762,15 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.FIELD_FLIP)) {
+			if (field.getHazards(this.getFieldEffects()).isEmpty() && field.getScreens(foe.getFieldEffects()).isEmpty()) {
+				bestMoves.removeIf(Move.FIELD_FLIP::equals);
+			} else {
+				bestMoves.add(Move.FIELD_FLIP);
+				bestMoves.add(Move.FIELD_FLIP);
+			}
+		}
+		
 		ArrayList<Move> noRepeat = Move.getNoComboMoves();
 		for (Move m : noRepeat) {
 			if (bestMoves.size() > 1 && bestMoves.contains(m) && noRepeat.contains(lastMoveUsed)) bestMoves.removeIf(m::equals);
@@ -791,9 +814,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.HEALING_WISH) && this.trainerOwned() && !this.trainer.hasValidMembers()) bestMoves.removeIf(Move.HEALING_WISH::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.LUNAR_DANCE) && this.trainerOwned() && !this.trainer.hasValidMembers()) bestMoves.removeIf(Move.LUNAR_DANCE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.BATON_PASS) && this.trainerOwned() && !this.trainer.hasValidMembers()) bestMoves.removeIf(Move.BATON_PASS::equals);
-		if (bestMoves.contains(Move.TRICK) && this.getItem() == Item.RING_TARGET) bestMoves.add(Move.TRICK);
-		if (bestMoves.contains(Move.SWITCHEROO) && this.getItem() == Item.RING_TARGET) bestMoves.add(Move.SWITCHEROO);
-		if (bestMoves.contains(Move.TRICK_TACKLE) && this.getItem() == Item.RING_TARGET) bestMoves.add(Move.TRICK_TACKLE);
+		if (bestMoves.contains(Move.TRICK) && this.getItem() != null && this.getItem().isTrickable()) bestMoves.add(Move.TRICK);
+		if (bestMoves.contains(Move.SWITCHEROO) && this.getItem() != null && this.getItem().isTrickable()) bestMoves.add(Move.SWITCHEROO);
+		if (bestMoves.contains(Move.TRICK_TACKLE) && this.getItem() != null && this.getItem().isTrickable()) bestMoves.add(Move.TRICK_TACKLE);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TRICK_ROOM) && field.contains(field.fieldEffects, Effect.TRICK_ROOM)) bestMoves.removeIf(Move.TRICK_ROOM::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_ROOM) && field.contains(field.fieldEffects, Effect.MAGIC_ROOM)) bestMoves.removeIf(Move.MAGIC_ROOM::equals);
@@ -1896,11 +1919,16 @@ public class Pokemon implements RoleAssignable, Serializable {
 			return;
 		}
 		
-		if (foe.hasStatus(Status.MAGIC_REFLECT) && (move != Move.BRICK_BREAK && move != Move.MAGIC_FANG && move != Move.PSYCHIC_FANGS)) {
-			this.move(this, move, false);
-			Task.addTask(Task.TEXT, move + " was reflected on itself!");
-			foe.removeStatus(Status.MAGIC_REFLECT);
-			return;
+		if (foe.hasStatus(Status.MAGIC_REFLECT)) {
+			if (move == Move.BRICK_BREAK && move == Move.MAGIC_FANG && move == Move.PSYCHIC_FANGS) {
+				foe.removeStatus(Status.MAGIC_REFLECT);
+				Task.addTask(Task.TEXT, foe.nickname + " broke the Magic Reflect!");
+			} else {
+				this.move(this, move, false);
+				Task.addTask(Task.TEXT, move + " was reflected on itself!");
+				foe.removeStatus(Status.MAGIC_REFLECT);
+				return;
+			}
 		}
 		if (this.hasStatus(Status.POSSESSED)) {
 			this.removeStatus(Status.POSSESSED);
@@ -2422,7 +2450,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			critChance += this.getStatusNum(Status.CRIT_CHANCE);
 			if (this.ability == Ability.SUPER_LUCK) critChance++;
 			if (item == Item.SCOPE_LENS) critChance++;
-			if (this.ability == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC)) critChance = 3; 
+			if (this.ability == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC)) critChance = 4; 
 			if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && !field.contains(foe.getFieldEffects(), Effect.LUCKY_CHANT) && critCheck(critChance)) {
 				Task.addTask(Task.TEXT, "A critical hit!");
 				field.crits++;
@@ -2717,7 +2745,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					Task.addTask(Task.TEXT, this.nickname + " was hurt!");
 				}
 				if (foe.getItem() == Item.ROCKY_HELMET) {
-					this.damage(this.getHPAmount(1.0/8), foe);
+					this.damage(this.getHPAmount(1.0/6), foe);
 					Task.addTask(Task.TEXT, this.nickname + " was hurt by the Rocky Helmet!");
 				}
 				if ((foeAbility == Ability.ROUGH_SKIN || foeAbility == Ability.IRON_BARBS || foe.getItem() == Item.ROCKY_HELMET) && this.currentHP <= 0) { // Check for kill
@@ -2748,8 +2776,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 					stat(foe, 4, 2, this);
 				}
 				if (foeAbility == Ability.TOXIC_DEBRIS) {
-					Task.addAbilityTask(foe);
-					field.setHazard(this.getFieldEffects(), field.new FieldEffect(Effect.TOXIC_SPIKES));
+					if (field.getLayers(this.getFieldEffects(), Effect.TOXIC_SPIKES) < 2) {
+						Task.addAbilityTask(foe);
+						field.setHazard(this.getFieldEffects(), field.new FieldEffect(Effect.TOXIC_SPIKES));
+					}
 				}
 			}
 			
@@ -3668,7 +3698,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.ROCK_TOMB) {
 			stat(foe, 4, -1, this);
 		} else if (move == Move.ROCKFALL_FRENZY) {
-			field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.STEALTH_ROCKS));
+			if (field.getLayers(foe.getFieldEffects(), Effect.STEALTH_ROCKS) < 1) {
+				field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.STEALTH_ROCKS));
+			}
 		} else if (move == Move.SACRED_FIRE) {
 			foe.burn(false, this);
 		} else if (move == Move.SAMBAL_SEAR) {
@@ -3691,7 +3723,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.SLUDGE_WAVE) {
 			foe.poison(false, this);
 		} else if (move == Move.SPOTLIGHT_RAY) {
-			if (!foe.hasStatus(Status.ENCORED)) {
+			if (!foe.isFainted() && !foe.hasStatus(Status.ENCORED) && foe.lastMoveUsed != null) {
 				foe.addStatus(Status.ENCORED);
 				foe.encoreCount = 2;
 				Task.addTask(Task.TEXT, foe.nickname + " was encored!");
@@ -3861,6 +3893,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success) && !foe.hasStatus(Status.POSSESSED)) {
 				foe.addStatus(Status.POSSESSED);
 				Task.addTask(Task.TEXT, this.nickname + " posessed " + foe.nickname + "!");
+				if (foe.getItem() == Item.MENTAL_HERB) {
+					Task.addTask(Task.TEXT, foe.nickname + " cured its possession using its Mental Herb!");
+					foe.removeStatus(Status.POSSESSED);
+					foe.consumeItem(this);
+				}
 			} else { fail = fail(announce); }
 			this.impressive = false;
 			this.lastMoveUsed = move;
@@ -5054,7 +5091,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			baseCrit = 13;
 		} else if (m == 2) {
 			baseCrit = 25;
-		} else if (m >= 3) {
+		} else if (m == 3) {
+			baseCrit = 50;
+		} else if (m >= 4) {
 			return true;
 		} else {
 			baseCrit = 5;
@@ -5802,7 +5841,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		critChance += this.getStatusNum(Status.CRIT_CHANCE);
 		if (this.ability == Ability.SUPER_LUCK) critChance++;
 		if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && !field.contains(foe.getFieldEffects(), Effect.LUCKY_CHANT) &&
-				((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 3 || (crit && critChance >= 0))))) {
+				((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 4 || (crit && critChance >= 0))))) {
 			if (move.isPhysical() && attackStat < this.getStat(1)) {
 				attackStat = this.getStat(1);
 				if (this.status == Status.BURNED) attackStat /= 2;
@@ -8373,7 +8412,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         case MASTER_BALL:
         	return true;
         case BEAST_BALL:
-        	ballBonus = foe.isUltraBeast() ? 5 : 0.1;
+        	ballBonus = isUltraBeast(foe.id) ? 5 : 0.1;
         case QUICK_BALL:
         	ballBonus = Pokemon.field.turns == 0 ? 5 : 1;
         	break;
@@ -8458,8 +8497,8 @@ public class Pokemon implements RoleAssignable, Serializable {
         return randomValue <= modifiedCatchRate;
 	}
 
-	private boolean isUltraBeast() {
-		return (this.id >= 284 && this.id <= 291);
+	public static boolean isUltraBeast(int id) {
+		return (id >= 284 && id <= 291);
 	}
 
 	/**

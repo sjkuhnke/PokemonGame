@@ -262,7 +262,7 @@ public class BattleUI extends AbstractUI {
 		String message = null;
 		switch (currentTask.type) {
 		case Task.TEXT:
-			message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 64);
+			message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 63);
 			showMessage(message);
 			break;
 		case Task.DAMAGE:
@@ -632,7 +632,7 @@ public class BattleUI extends AbstractUI {
 	    	}
 	    	aura = true;
 	    }
-		if (staticID >= 284 && staticID <= 289) {
+		if (Pokemon.isUltraBeast(staticID)) {
 			aura = true;
 		}
 		Task.addSwapInTask(user, true);
@@ -1538,7 +1538,7 @@ public class BattleUI extends AbstractUI {
 
 	public void setupBalls() {
 		balls = gp.player.p.getBalls();
-		if (ballIndex >= balls.size()) ballIndex = balls.size() - 1;
+		ballIndex = (ballIndex == -1 && !balls.isEmpty()) ? 0 : Math.min(ballIndex, balls.size() - 1);
 	}
 
 }

@@ -2,7 +2,6 @@ package entity;
 
 import overworld.GamePanel;
 import pokemon.Item;
-import pokemon.Task;
 
 public class NPC_Star extends Entity {
 	public NPC_Star(GamePanel gp) {
@@ -26,9 +25,7 @@ public class NPC_Star extends Entity {
 	
 	public void speak(int mode) {
 		super.speak(mode);
-		gp.setTaskState();
-		Task.addTask(Task.TEXT, dialogues[0]);
-		Task.addTask(Task.STAR_PIECE, this, "");
+		gp.gameState = GamePanel.STAR_SHOP_STATE;
 		
 		gp.ui.npc = this;
 	}

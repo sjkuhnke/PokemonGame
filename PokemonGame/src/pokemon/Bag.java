@@ -39,6 +39,11 @@ public class Bag implements Serializable {
 		count[item.getID()]--;
 	}
 	
+	public void remove(Item item, int amt) {
+		if (count[item.getID()] < amt) throw new IllegalArgumentException("You have less " + item.toString() + " then you're trying to remove (" + amt + ")");
+		count[item.getID()] -= amt;
+	}
+	
 	public ArrayList<Entry> getItems() {
 		ArrayList<Entry> items = new ArrayList<>();
 		for (int i : itemList) {
