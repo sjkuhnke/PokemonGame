@@ -312,6 +312,7 @@ Added a Clerk in the Shops that sells the special Pokeballs!
 Added sprites for the damaged version of the Absorb Bulb esque items (the Absorb Bulb esque items will give full immunity to that type and the stat boost until hit by another attack, which will damage them and only provide the stat boost when hit but no protection against the move type)
 Added Mirror Herb, Room Service, Air Balloon, Eject Button and Eject Pack to the casino prize shop
 Added a Star Piece NPC trader that trades Star Pieces for Adrenaline Orb, the Seeds, the Damaged Absorb Bulb items, and the Absorb Bulb items
+The Star Piece trader also repairs your damaged absorb bulb esque items to their new versions for 2 star pieces
 Made Photon and your Dad give you a Master Ball after filling out all of the Electric/Shadow forms in your dex respectively
 Added an NPC trading 2 Euphorian Gems for a Shell Bell
 Made Star Piece twice as likely from chests for the new use of them
@@ -359,3 +360,18 @@ Fixed Trainers resetting their held items and team order as well as healing in t
 Changed the order of held items in your bag putting Exp Share and Lucky Egg on top, with the type boosting items being moved up as well
 Made Core Enforcer's secondary effect what it normally is: will supress the target's ability if the user is slower (instead of 10% to lower both offensive stats)
 Fixed Flame Body/Static etc activating visually in battle even when they can't (target is immune/already statused)
+Fixed fainted Pokemon accidentally being awarded happiness points while walking
+Changed trasure loot to 4-6 drops from the treasure pool, and 1-2 stones (instead of 0-2)
+Made Star Pieces worth nothing sell-wise since they're now a currency
+Made Defog 100% accuracy (instead of infinite) so Wonder Skin can block it
+Added AI for Bug Bite and Incinerate checking if the opponent has a berry
+Made Weakness Policy (and Enigma Berry) only proc when the holder isn't fainted
+Added AI for charge moves/recharge to look like half as much damage when a Power Herb isn't being held (or not Sunny weather for Solar Beam/Blade)
+Made Sword of Dawn look like half as much damage if it isn't calcing that it kills and the holder doesn't have a Power Herb
+Made a bunch of Key Items un-usable to not be confusing (mainly story items)
+Slightly tweaked one of Millie's dialogues to tell the player that the Wire Cutters guy is in "The mountain"
+Updated Brick Break/Psychic Fangs desc to show that they bypass Magic Reflect
+Made Mental Herb remove the Possessed effect from Abduct/Take Over and updated its desc
+Added AI switching out when toxiced with a 5% * (toxic counter - 1) chance each turn
+Changed crit stages from (5% -> 12.5% -> 25% -> 100%) to (5% -> 12.5% -> 25% -> 50% -> 100%) to better mirror real Pokemon
+Fixed Toxic Debris and Rockfall Frenzy still announcing that they failed when there's max layers (changed to silently fail since they're passive effects)

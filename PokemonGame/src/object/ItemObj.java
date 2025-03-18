@@ -17,7 +17,7 @@ public class ItemObj extends Entity {
 	public Item item;
 	public int count;
 	
-	private boolean drawItem = false;
+	private boolean drawItem = true;
 	
 	public ItemObj(GamePanel gp, Item item) {
 		super(gp, null);
