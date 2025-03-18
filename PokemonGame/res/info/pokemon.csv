@@ -155,8 +155,8 @@
 121|Crobat       |POISON  |FLYING  |STRONG_JAW        |INNER_FOCUS       |POISON_TOUCH      |[85, 90, 80, 70, 80, 130]     |165.3 |90 |
 194|Poof         |GHOST   |null    |FRIENDLY_GHOST    |LEVITATE          |PRANKSTER         |[55, 60, 80, 75, 65, 65]      |0.2   |135|
 195|Hast         |GHOST   |STEEL   |FRIENDLY_GHOST    |LEVITATE          |PRANKSTER         |[65, 70, 120, 60, 120, 65]    |200.5 |45 |
-196|Poov         |GHOST   |DARK    |ADAPTABILITY      |ANGER_POINT       |PRESSURE          |[75, 85, 45, 60, 55, 79]      |3.4   |95 |
-197|Grust        |GHOST   |DARK    |ADAPTABILITY      |ANGER_POINT       |PRESSURE          |[115, 105, 55, 105, 60, 59]   |20.7  |35 |
+196|Poov         |GHOST   |DARK    |CURSED_BODY       |ADAPTABILITY      |PERISH_BODY       |[75, 85, 45, 60, 55, 79]      |3.4   |95 |
+197|Grust        |GHOST   |DARK    |CURSED_BODY       |ANGER_POINT       |PERISH_BODY       |[115, 105, 55, 105, 60, 59]   |20.7  |35 |
 169|Cluuz        |GHOST   |POISON  |LEVITATE          |LEVITATE          |PRESSURE          |[60, 42, 58, 105, 97, 73]     |0.5   |175|
 170|Zurrclu      |GHOST   |ROCK    |LEVITATE          |LEVITATE          |PRESSURE          |[80, 90, 96, 71, 85, 58]      |199.1 |55 |
 171|Zurroaratr   |GHOST   |ROCK    |LEVITATE          |LEVITATE          |PRESSURE          |[100, 109, 110, 67, 99, 55]   |600.3 |15 |

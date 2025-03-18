@@ -595,16 +595,19 @@ public class Pokemon implements RoleAssignable, Serializable {
             		return Move.GROWL;
         		}
         	}
-        	// 100% chance to swap if perishCount is 1
-        	if (this.perishCount == 1) {
-        		String rsn = "[Perish in 1 : 100%]";
-        		System.out.println(rsn);
-        		if (switchRsn != null) {
-    				switchRsn.setFirst(this);
-        			switchRsn.setSecond(rsn);
-    			}
-        		this.addStatus(Status.SWAP);
-        		return Move.GROWL;
+        	// 20, 40, 100% chance to swap based on perish counter
+        	if (this.perishCount > 0) {
+        		int chance = (this.perishCount == 1) ? 100 : this.perishCount == 2 ? 40 : 20;
+        		if (checkSecondary(chance)) {
+        			String rsn = "[Perish in " + this.perishCount + " : " + chance + "%]";
+        	        System.out.println(rsn);
+        	        if (switchRsn != null) {
+        	            switchRsn.setFirst(this);
+        	            switchRsn.setSecond(rsn);
+        	        }
+        	        this.addStatus(Status.SWAP);
+        	        return Move.GROWL;
+        		}
         	}
         	// 10% chance to swap if i'm leech seeded
         	if (this.hasStatus(Status.LEECHED) && checkSecondary(10)) {
@@ -816,7 +819,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.BATON_PASS) && this.trainerOwned() && !this.trainer.hasValidMembers()) bestMoves.removeIf(Move.BATON_PASS::equals);
 		if (bestMoves.contains(Move.TRICK) && this.getItem() != null && this.getItem().isTrickable()) bestMoves.add(Move.TRICK);
 		if (bestMoves.contains(Move.SWITCHEROO) && this.getItem() != null && this.getItem().isTrickable()) bestMoves.add(Move.SWITCHEROO);
-		if (bestMoves.contains(Move.TRICK_TACKLE) && this.getItem() != null && this.getItem().isTrickable()) bestMoves.add(Move.TRICK_TACKLE);
+		if (bestMoves.contains(Move.TRICK_TACKLE) && this.tricked != foe && this.getItem() != null && this.getItem().isTrickable()) bestMoves.add(Move.TRICK_TACKLE);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TRICK_ROOM) && field.contains(field.fieldEffects, Effect.TRICK_ROOM)) bestMoves.removeIf(Move.TRICK_ROOM::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_ROOM) && field.contains(field.fieldEffects, Effect.MAGIC_ROOM)) bestMoves.removeIf(Move.MAGIC_ROOM::equals);
@@ -859,7 +862,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.DECK_CHANGE) && foe.hasStatus(Status.DECK_CHANGE)) bestMoves.removeIf(Move.DECK_CHANGE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.HEALING_CIRCLE) && field.contains(this.getFieldEffects(), Effect.HEALING_CIRCLE)) bestMoves.removeIf(Move.HEALING_CIRCLE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPELLBIND) && foe.hasStatus(Status.SPELLBIND)) bestMoves.removeIf(Move.HEALING_CIRCLE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPELLBIND) && foe.hasStatus(Status.SPELLBIND)) bestMoves.removeIf(Move.SPELLBIND::equals);
 		
 		return bestMoves;
 	}
@@ -1598,7 +1601,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					attackStat *= this.asModifier(0);
 					defenseStat *= this.asModifier(1);
 					damage = calc(attackStat, defenseStat, 40, this.level);
-					this.damage(damage, foe, null, this.nickname + " hit itself in confusion!", -1);
+					this.damage(damage, foe, Move.STRUGGLE, this.nickname + " hit itself in confusion!", -1);
 					if (this.currentHP <= 0) {
 						this.faint(true, foe);
 					}
@@ -1797,8 +1800,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				stat(this, 2, -1, foe);
 			}
 			if (move == Move.HI_JUMP_KICK) {
-				this.damage(this.getStat(0) / 2.0, foe);
-				Task.addTask(Task.TEXT, this.nickname + " kept going and crashed!");
+				this.damage(this.getStat(0) / 2.0, foe, this.nickname + " kept going and crashed!");
 				if (this.currentHP < 0) {
 					this.faint(true, foe);
 				}
@@ -2024,8 +2026,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Task.addTask(Task.TEXT, this.nickname + "'s attack missed!");
 				field.misses++;
 				if (move == Move.HI_JUMP_KICK) {
-					this.damage(this.getStat(0) / 2.0, foe);
-					Task.addTask(Task.TEXT, this.nickname + " kept going and crashed!");
+					this.damage(this.getStat(0) / 2.0, foe, this.nickname + " kept going and crashed!");
 					if (this.currentHP < 0) {
 						this.faint(true, foe);
 					}
@@ -2183,8 +2184,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 						// Nothing: corrosion allows poison moves to hit steel
 					} else {
 						if (move == Move.HI_JUMP_KICK) {
-							this.damage(this.getStat(0) / 2.0, foe);
-							Task.addTask(Task.TEXT, this.nickname + " kept going and crashed!");
+							this.damage(this.getStat(0) / 2.0, foe, this.nickname + " kept going and crashed!");
 							if (this.currentHP < 0) {
 								this.faint(true, foe);
 							}
@@ -2690,7 +2690,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				foe.faint(true, this);
 				if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
 				if (this.hasStatus(Status.BONDED)) {
-					this.damage(this.currentHP, foe, foe.nickname + " took its attacker down with it!");
+					this.damage(this.currentHP, foe, move, foe.nickname + " took its attacker down with it!", -1);
 					if (this.currentHP <= 0) {
 						this.faint(true, foe);
 					}
@@ -2738,6 +2738,21 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			
+			if (!this.isFainted() && foeAbility == Ability.CURSED_BODY && checkSecondary(30)) {
+				if (this.disabledMove == null && this.lastMoveUsed != null && this.lastMoveUsed.pp > 0) {
+					this.disabledMove = this.lastMoveUsed;
+					this.disabledCount = 4;
+					Task.addAbilityTask(foe);
+					Task.addTask(Task.TEXT, this.nickname + "'s " + this.disabledMove + " was disabled!");
+					if (this.getItem() == Item.MENTAL_HERB) {
+						Task.addTask(Task.TEXT, this.nickname + " cured its disable using its Mental Herb!");
+						this.disabledMove = null;
+						this.disabledCount = 0;
+						this.consumeItem(this);
+					}
+				}
+			}
+			
 			if (contact) {
 				if (foeAbility == Ability.ROUGH_SKIN || foeAbility == Ability.IRON_BARBS) {
 					Task.addAbilityTask(foe);
@@ -2758,6 +2773,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (foeAbility == Ability.GOOEY) {
 					Task.addAbilityTask(foe);
 					stat(this, 4, -1, foe);
+				}
+				if (foeAbility == Ability.PERISH_BODY && this.perishCount == 0 && foe.perishCount == 0) {
+					Task.addAbilityTask(foe);
+					Task.addTask(Task.TEXT, "Both Pokemon will perish in 3 turns!");
+					this.perishCount = 4;
+					foe.perishCount = 4;
 				}
 				if (this.item == null && foe.getItem() == Item.STICKY_BARB) {
 					Task.addTask(Task.TEXT, "The Sticky Barb clinged to " + this.nickname + "!");
@@ -2828,8 +2849,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (!sheer && this.getItem() == Item.LIFE_ORB && !this.isFainted()) {
-			this.damage(getHPAmount(1.0/10), foe);
-			Task.addTask(Task.TEXT, this.nickname + " lost some of its HP!");
+			this.damage(getHPAmount(1.0/10), foe, this.nickname + " lost some of its HP!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, foe);
 			}
@@ -2843,7 +2863,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) {
-			this.damage(this.currentHP, foe, "");
+			this.damage(this.currentHP, foe, move, "", -1);
 			this.faint(true, foe);
 		}
 		if (move == Move.HYPER_BEAM || move == Move.BLAST_BURN || move == Move.FRENZY_PLANT || move == Move.GIGA_IMPACT
@@ -4009,7 +4029,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.BELLY_DRUM) {
 			if (this.statStages[0] < 6 && this.currentHP >= this.getStat(0) / 2) {
 				stat(this, 0, 12, foe, announce);
-				this.damage((this.getStat(0) * 1.0 / 2), foe);
+				this.damage((int) this.getHPAmount(1.0/2), foe, move, "", -1);
 			} else {
 				fail = fail(announce);
 			}
@@ -4043,7 +4063,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (!foe.hasStatus(Status.CURSED)) {
 					foe.addStatus(Status.CURSED);
 					Task.addTask(Task.TEXT, foe.nickname + " was afflicted with a curse!");
-					this.damage((this.getStat(0) * 1.0 / 2), foe);
+					this.damage((int) this.getHPAmount(1.0/2), foe, move, "", -1);
 					if (this.currentHP <= 0) {
 						this.faint(true, foe);
 					}
@@ -4268,7 +4288,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (announce && move == Move.HYPNOSIS) {
 			foe.sleep(true, this);
 		} else if (announce && (move == Move.HEALING_WISH || move == Move.LUNAR_DANCE)) {
-			this.damage(this.currentHP, foe, "");
+			this.damage(this.currentHP, foe, move, "", -1);
 			this.faint(true, foe);
 			this.addStatus(Status.HEALING);
 		} else if (announce && move == Move.INGRAIN) {
@@ -4343,7 +4363,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(foe, 0, -2, this, announce);
 			stat(foe, 2, -2, this, announce);
 			this.currentHP = 0;
-			this.damage(this.currentHP, foe, "");
+			this.damage(this.currentHP, foe, move, "", -1);
 			this.faint(true, foe);
 		} else if (move == Move.METAL_SOUND) {
 			stat(foe, 3, -2, this, announce);
@@ -5529,8 +5549,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN, this))
-				|| move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY || move == Move.METEOR_BEAM) {
-			if (this.getItem() != Item.POWER_HERB) bp *= 0.5;
+				|| move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY || move == Move.METEOR_BEAM || move == Move.HYPER_BEAM
+				|| move == Move.BLAST_BURN || move == Move.FRENZY_PLANT || move == Move.GIGA_IMPACT
+				|| move == Move.HYDRO_CANNON || move == Move.MAGIC_CRASH) {
+			if (mode == 0 && this.getItem() != Item.POWER_HERB) bp *= 0.5;
 		}
 		
 		if (this.ability == Ability.COMPOUND_EYES) acc *= 1.3;
@@ -5966,6 +5988,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 
 		if (mode == 0 && damage >= foe.currentHP) damage = foe.currentHP; // Check for kill
+		if (mode == 0 && damage < foe.currentHP && move == Move.SWORD_OF_DAWN && this.getItem() != Item.POWER_HERB) bp *= 0.5; 
 		
 		if (mode == 0 && (move == Move.MAGIC_BLAST || move == Move.ELEMENTAL_SPARKLE)) damage += magicDamage;
 		
