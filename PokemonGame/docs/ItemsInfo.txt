@@ -91,6 +91,8 @@ Leftovers              | Held Items | --    | --    | An item that restores the 
 Black Sludge           | Held Items | --    | --    | If the holder is a Poison type, this sludge will gradually restore its HP. It damages any other type.
 Eviolite               | Held Items | --    | --    | A mysterious evolutionary lump that boosts the Defense and Sp. Def stats when held by a Pokemon that can still evolve.
 Everstone              | Held Items | $100  | --    | A Pokemon holding this peculiar stone is prevented from evolving.
+Exp Share              | Held Items | --    | --    | The holder gets a share of a battle's Exp. Points without battling.
+Lucky Egg              | Held Items | --    | --    | An egg filled with happiness that earns the holder extra Exp. Points.
 Damp Rock              | Held Items | $750  | --    | A rock that when the holder changes the weather to rain, the rain will persist for longer than usual.
 Heat Rock              | Held Items | $750  | --    | A rock that when the holder changes the weather to harsh sunlight, the sunlight will persist for longer than usual.
 Smooth Rock            | Held Items | $600  | --    | A rock that when the holder changes the weather to a sandstorm, the storm will persist for longer than usual.
@@ -123,11 +125,29 @@ Heavy-Duty Boots       | Held Items | --    | --    | These boots protect the ho
 Focus Band             | Held Items | --    | --    | When the holder is hit with a move that should knock it out, it may be able to endure with 1 HP.
 King's Rock            | Held Items | --    | $200  | It may cause the target to flinch whenever the holder successfully inflicts damage on them with an attack.
 Shed Shell             | Held Items | --    | $200  | Hard and sturdy, this discarded carapace enables the holder to switch out of battle without fail.
-Cleanse Tag            | Held Items | --    | --    | Helps keep wild Pokemon away when the holder is the head of the party.
 Muscle Band            | Held Items | --    | $150  | This headband exudes strength, slightly boosting the power of the holder's physical moves.
 Wise Glasses           | Held Items | --    | $150  | This thick pair of glasses slightly boosts the power of the holder's special moves.
-Exp Share              | Held Items | --    | --    | The holder gets a share of a battle's Exp. Points without battling.
-Lucky Egg              | Held Items | --    | --    | An egg filled with happiness that earns the holder extra Exp. Points.
+Black Belt             | Held Items | --    | --    | A belt that helps with focus and boosts the power of the holder's Fighting-type moves.
+Black Glasses          | Held Items | --    | --    | A pair of shady- looking glasses that boost the power of the holder's Dark-type moves.
+Charcoal               | Held Items | --    | --    | A combustible fuel that boosts the power of the holder's Fire-type moves.
+Cosmic Core            | Held Items | --    | --    | A mysterious core from the heart of the cosmos that boosts the power of Galactic-type moves.
+Dragon Fang            | Held Items | --    | --    | This hard, sharp fang boosts the power of the holder's Dragon-type moves.
+Enchanted Amulet       | Held Items | --    | --    | An ancient amulet with mystical properties that boosts the power of Magic-type moves.
+Glowing Prism          | Held Items | --    | --    | A radiant prism that boosts the power of Light-type moves.
+Hard Stone             | Held Items | --    | --    | A durable stone that boosts the power of the holder's Rock-type moves.
+Magnet                 | Held Items | --    | --    | A powerful magnet that boosts the power of the holder's Electric-type moves.
+Metal Coat             | Held Items | --    | --    | A special metallic coating that boosts the power of the holder's Steel-type moves.
+Miracle Seed           | Held Items | --    | --    | A seed imbued with life-force that boosts the power of the holder's Grass-type moves.
+Mystic Water           | Held Items | --    | --    | A teardrop-shaped gem boosts the power of the holder's Water-type moves.
+Never-Melt Ice         | Held Items | --    | --    | A heat-repelling piece of ice that boosts the power of the holder's Ice- type moves.
+Poison Barb            | Held Items | --    | --    | A small poisonous barb boosts the power of the holder's Poison-type moves.
+Sharp Beak             | Held Items | --    | --    | A long, sharp beak that boosts the power of the holder's Flying-type moves.
+Silk Scarf             | Held Items | --    | --    | A sumptuous scarf that boosts the power of the holder's Normal-type moves.
+Silver Powder          | Held Items | --    | --    | A pile of shiny silver powder that boosts the power of the holder's Bug-type moves.
+Soft Sand              | Held Items | --    | --    | A loose, silky sand that boosts the power of the holder's Ground-type moves.
+Spell Tag              | Held Items | --    | --    | A sinister, eerie tag that boosts the power of the holder's Ghost-type moves.
+Twisted Spoon          | Held Items | --    | --    | This spoon is imbued with telekinetic energy and boosts the power of the holder's Psychic-type moves.
+Cleanse Tag            | Held Items | --    | --    | Helps keep wild Pokemon away when the holder is the head of the party.
 Amulet Coin            | Held Items | --    | --    | This coin doubles any prize money received as long as the holder joins the battle at least once.
 Float Stone            | Held Items | --    | --    | This very light stone reduces the weight of the holder.
 Iron Ball              | Held Items | --    | --    | A ball of steel that lowers Speed and allows GROUND moves to hit FLYING and levitating holders.
@@ -143,7 +163,7 @@ Eject Button           | Held Items | --    | --    | If the holder is damaged b
 Eject Pack             | Held Items | --    | --    | If the holder's stats are lowered, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team.
 Power Herb             | Held Items | --    | $50   | A herb that allows the holder to immediately use a move that normally requires a turn to charge or recharge, but only once.
 White Herb             | Held Items | --    | $50   | A herb that will restore any lowered stat in battle, but only once.
-Mental Herb            | Held Items | --    | $50   | An item to be held by a Pokemon. The holder shakes off move-binding effects and flinching to move freely. It can be used only once.
+Mental Herb            | Held Items | --    | $50   | An item to be held by a Pokemon. The holder shakes off move-binding effects, flinching, and possession to move freely. It can be used only once.
 Mirror Herb            | Held Items | --    | --    | This herb will allow the holder to mirror an opponent's stat increases to boost its own stats - but only once.
 Electric Seed          | Held Items | $2    | --    | If the terrain becomes Electric Terrain, the holder will use this seed to boost its own Defense stat.
 Grassy Seed            | Held Items | $2    | --    | If the terrain becomes Grassy Terrain, the holder will use this seed to boost its own Defense stat.
@@ -273,26 +293,6 @@ TM99 Return            | TMs        | --    | --    | Teaches a Pokemon this mov
 Edge Kit               | Key Items  | --    | --    | Edges ;) your Pokemon until they're about to bust :{D
 Calculator             | Key Items  | --    | --    | Calculates damage simulating a battle
 Dex Nav                | Key Items  | --    | --    | Shows wild Pokemon nearby
-Black Belt             | Held Items | --    | --    | A belt that helps with focus and boosts the power of the holder's Fighting-type moves.
-Black Glasses          | Held Items | --    | --    | A pair of shady- looking glasses that boost the power of the holder's Dark-type moves.
-Charcoal               | Held Items | --    | --    | A combustible fuel that boosts the power of the holder's Fire-type moves.
-Cosmic Core            | Held Items | --    | --    | A mysterious core from the heart of the cosmos that boosts the power of Galactic-type moves.
-Dragon Fang            | Held Items | --    | --    | This hard, sharp fang boosts the power of the holder's Dragon-type moves.
-Enchanted Amulet       | Held Items | --    | --    | An ancient amulet with mystical properties that boosts the power of Magic-type moves.
-Glowing Prism          | Held Items | --    | --    | A radiant prism that boosts the power of Light-type moves.
-Hard Stone             | Held Items | --    | --    | A durable stone that boosts the power of the holder's Rock-type moves.
-Magnet                 | Held Items | --    | --    | A powerful magnet that boosts the power of the holder's Electric-type moves.
-Metal Coat             | Held Items | --    | --    | A special metallic coating that boosts the power of the holder's Steel-type moves.
-Miracle Seed           | Held Items | --    | --    | A seed imbued with life-force that boosts the power of the holder's Grass-type moves.
-Mystic Water           | Held Items | --    | --    | A teardrop-shaped gem boosts the power of the holder's Water-type moves.
-Never-Melt Ice         | Held Items | --    | --    | A heat-repelling piece of ice that boosts the power of the holder's Ice- type moves.
-Poison Barb            | Held Items | --    | --    | A small poisonous barb boosts the power of the holder's Poison-type moves.
-Sharp Beak             | Held Items | --    | --    | A long, sharp beak that boosts the power of the holder's Flying-type moves.
-Silk Scarf             | Held Items | --    | --    | A sumptuous scarf that boosts the power of the holder's Normal-type moves.
-Silver Powder          | Held Items | --    | --    | A pile of shiny silver powder that boosts the power of the holder's Bug-type moves.
-Soft Sand              | Held Items | --    | --    | A loose, silky sand that boosts the power of the holder's Ground-type moves.
-Spell Tag              | Held Items | --    | --    | A sinister, eerie tag that boosts the power of the holder's Ghost-type moves.
-Twisted Spoon          | Held Items | --    | --    | This spoon is imbued with telekinetic energy and boosts the power of the holder's Psychic-type moves.
 Cheri Berry            | Berries    | $10   | $2    | If a Pokemon holds one of these Berries, it will be able to free itself from paralysis.
 Chesto Berry           | Berries    | $10   | $2    | If a Pokemon holds one of these Berries, it will be able to wake itself from sleep.
 Pecha Berry            | Berries    | $10   | $2    | If a Pokemon holds one of these Berries, it will be able to lift the effects of being poisoned from itself.
@@ -381,7 +381,7 @@ Tiny Mushroom          | Other      | --    | --    | A small and rare mushroom.
 Big Mushroom           | Other      | --    | --    | A large and rare mushroom. It is sought after by collectors.
 Nugget                 | Other      | --    | $500  | A nugget of pure gold that gives off a lustrous gleam. It can be sold at a high price.
 Big Nugget             | Other      | --    | $2000 | A big nugget of pure gold that gives off a lustrous gleam. It can be sold at a very high price.
-Star Piece             | Other      | --    | $400  | A small shard of a beautiful gem that gives off a distinctly red sparkle. It can be sold at a high price.
+Star Piece             | Other      | --    | --    | A small shard of a beautiful gem that gives off a distinctly red sparkle. It can be sold at a high price.
 Relic Gold             | Other      | --    | $2500 | A gold coin used by an ancient civilization about 3,000 years ago.
 Relic Silver           | Other      | --    | $650  | A silver coin used by an ancient civilization about 3,000 years ago.
 
@@ -417,7 +417,7 @@ Repel (30, 38)
 Potion (38, 31)
 Pecha Berry (39, 40)
 Oran Berry (30, 11)
-Damaged Moss (29, 17)
+Damaged Bulb (29, 17)
 
 Route 42------------------------------------------
 
@@ -440,14 +440,16 @@ Rusty Bottle Cap (71, 9)
 Power Herb (80, 16)
 Mental Herb (91, 11)
 Treasure Chest (44, 26)
-  [Star Piece]           |
-  [Relic Gold]           |
   [Electric Crystal]     |
   [Lax Mint]             |
-  [Petticoat Gem]        |
-  [PP Up]                |
+  [Big Nugget]           |
+  [Star Piece]           |
+  [Bottle Cap]           |
   [Tiny Mushroom]        |
+  [Dusk Stone]           |
+  [PP Up]                |
 Tiny Mushroom (82, 28)
+PP Max (81, 7)
 
 New Minnow Town-----------------------------------
 
@@ -483,15 +485,16 @@ Galaxeed Berry (35, 58)
 Chilan Berry (13, 78)
 Brave Mint (29, 47)
 Treasure Chest (50, 49)
-  [Ghost Crystal]        |
   [Star Piece]           |
-  [Rusty Bottle Cap]     |
+  [Star Piece]           |
+  [Ghost Crystal]        |
+  [Relic Gold]           |
   [Brave Mint]           |
-  [Euphorian Gem]        |
-  [Nugget]               |
-  [Rusty Bottle Cap]     |
+  [Bottle Cap]           |
+  [Relic Gold]           |
   [PP Up]                |
-  [Ice Stone]            |
+  [Thunder Scales Fossil]|
+  [Tiny Mushroom]        |
 Iron Ball (26, 57)
 Float Stone (26, 51)
 Sticky Barb (19, 67)
@@ -509,6 +512,8 @@ Quiet Mint (53, 35)
 Big Mushroom (26, 34)
 Big Nugget (30, 7)
 TM62 Bug Buzz (58, 24)
+Rusty Bottle Cap (35, 20)
+Damaged Bulb (25, 14)
 
 Warehouse-----------------------------------------
 
@@ -536,14 +541,14 @@ Grip Claw (50, 66)
 TM40 Facade (80, 53)
 Silver Powder (46, 41)
 Treasure Chest (51, 25)
-  [Dawn Stone]           |
-  [Max Revive]           |
-  [Gold Bottle Cap]      |
-  [Star Piece]           |
-  [Dawn Stone]           |
+  [Big Nugget]           |
+  [Nugget]               |
   [Fire Crystal]         |
-  [Star Piece]           |
+  [Ice Stone]            |
+  [Bottle Cap]           |
+  [Max Revive]           |
   [Brave Mint]           |
+  [Star Piece]           |
 Rash Mint (58, 38)
 PP Max (77, 27)
 Rare Candy (79, 39)
@@ -610,32 +615,34 @@ Ultra Ball (51, 8)
 Room Service (80, 8)
 Belue Berry (70, 35)
 Treasure Chest (46, 44)
-  [Ice Stone]            |
-  [Bottle Cap]           |
+  [Star Piece]           |
+  [Tiny Mushroom]        |
+  [Nugget]               |
+  [Star Piece]           |
+  [Fire Stone]           |
+  [Revive]               |
   [Star Piece]           |
   [Adamant Mint]         |
   [Magic Crystal]        |
-  [Nugget]               |
-  [Revive]               |
-  [Star Piece]           |
-  [Razor Claw]           |
 Grassy Seed (49, 30)
-Tiny Mushroom (48, 13)
+Tiny Mushroom (48, 39)
 
 Sicab River---------------------------------------
 
 Throat Spray (69, 79)
 Treasure Chest (74, 79)
-  [PP Up]                |
+  [Big Mushroom]         |
   [Ability Patch]        |
-  [Big Nugget]           |
   [Bold Mint]            |
-  [Bottle Cap]           |
   [Relic Silver]         |
+  [Star Piece]           |
+  [Euphorian Gem]        |
   [Psychic Crystal]      |
   [Bottle Cap]           |
-  [Nugget]               |
+  [Big Mushroom]         |
+  [PP Up]                |
 Lax Mint (80, 80)
+Electric Seed (72, 59)
 
 Energy Plant (pt. 1)------------------------------
 
@@ -703,30 +710,31 @@ TM56 Trick Tackle (76, 43)
 Light Clay (81, 57)
 Heavy-Duty Boots (87, 57)
 Treasure Chest (58, 50)
-  [Big Mushroom]         |
   [Galactic Crystal]     |
-  [Relic Silver]         |
-  [Euphorian Gem]        |
   [Big Nugget]           |
-  [Star Piece]           |
   [Ability Patch]        |
-  [Petticoat Gem]        |
+  [Relic Gold]           |
   [Sassy Mint]           |
-  [Nugget]               |
+  [Star Piece]           |
+  [Tiny Mushroom]        |
+  [Fire Stone]           |
 Star Piece (67, 44)
 Naive Mint (44, 60)
 Treasure Chest (74, 38)
-  [Rare Candy]           |
-  [Rash Mint]            |
+  [Big Nugget]           |
   [Relic Gold]           |
-  [Nugget]               |
+  [Rash Mint]            |
+  [Big Mushroom]         |
+  [Dusk Stone]           |
+  [Bottle Cap]           |
+  [Relic Silver]         |
   [Dragon Crystal]       |
-  [Euphorian Gem]        |
-  [Nugget]               |
+  [Rare Candy]           |
 Star Piece (56, 62)
 Star Piece (49, 57)
 Damaged Snowball (86, 59)
 Ultra Ball (77, 68)
+Sparkly Seed (49, 71)
 
 Mt. Splinkty (2B)---------------------------------
 
@@ -784,11 +792,13 @@ Impish Mint (86, 85)
 Water Stone (67, 71)
 Repel (89, 75)
 Tiny Mushroom (89, 68)
+Grassy Seed (77, 80)
+Damaged Moss (75, 71)
 
 Kleine Village------------------------------------
 
 TM58 Dragon Pulse (75, 41)
-Enigma Berry (71, 46)
+Enigma Berry (80, 35)
 Lagging Tail (91, 50)
 Scope Lens (31, 41)
 
@@ -806,7 +816,7 @@ Peaceful Park-------------------------------------
 
 Hyper Potion (25, 80)
 Repel (48, 82)
-Elixir (39, 75)
+Adrenaline Orb (39, 75)
 Leaf Stone (16, 76)
 Max Elixir (14, 39)
 Careful Mint (35, 43)
@@ -904,18 +914,18 @@ TM57 Defog (35, 36)
 Mindagan Lake-------------------------------------
 
 TM29 Liquidation (15, 22)
-Gold Bottle Cap (11, 10)
+Gold Bottle Cap (12, 9)
 Revive (86, 11)
-Repel (90, 12)
+Big Mushroom (90, 12)
 Max Potion (81, 28)
 Gentle Mint (94, 28)
 Bottle Cap (69, 43)
-Elixir (66, 40)
+Luminous Moss (66, 40)
 Euphorian Gem (88, 51)
 Hyper Potion (86, 44)
-Full Heal (76, 62)
+Eject Pack (76, 62)
 Dawn Stone (85, 75)
-Max Elixir (42, 76)
+Big Nugget (42, 76)
 Max Revive (18, 73)
 Rare Candy (26, 63)
 PP Up (7, 63)
@@ -923,20 +933,30 @@ Awakening (67, 5)
 TM04 Calm Mind (90, 5)
 Mental Herb (7, 35)
 Water Stone (8, 25)
+Star Piece (8, 14)
+Adrenaline Orb (24, 22)
 
 Mindagan Cavern (1A)------------------------------
 
 Modest Mint (54, 69)
+Careful Mint (58, 69)
+Bold Mint (60, 69)
 
 Route 31------------------------------------------
 
 Hasty Mint (22, 11)
 TM44 Light Speed (21, 25)
 Hyper Potion (28, 18)
-Elixir (35, 13)
+Absorb Bulb (35, 13)
 Bottle Cap (39, 11)
 Max Elixir (23, 34)
 Kasib Berry (17, 30)
+Tiny Mushroom (44, 18)
+Calm Mint (43, 28)
+Kee Berry (49, 27)
+Maranga Berry (50, 23)
+Mirror Herb (54, 34)
+Punching Glove (56, 40)
 
 Shadow Ravine (1A)--------------------------------
 
@@ -946,14 +966,18 @@ TM06 Shadow Ball (87, 46)
 Ability Capsule (15, 69)
 Tanga Berry (50, 81)
 Coba Berry (43, 79)
+Nugget (52, 58)
+Star Piece (30, 43)
+Damaged Bulb (83, 57)
 
 Shadow Ravine (1B)--------------------------------
 
 Jolly Mint (24, 79)
 Euphorian Gem (21, 54)
 PP Up (10, 56)
-Elixir (33, 57)
-Awakening (50, 80)
+Mirror Herb (33, 57)
+Nugget (50, 80)
+Rusty Bottle Cap (12, 66)
 
 Route 32------------------------------------------
 
@@ -977,7 +1001,7 @@ Route 33------------------------------------------
 Euphorian Gem (80, 63)
 Max Revive (88, 59)
 Petticoat Gem (72, 42)
-Valiant Gem (93, 35)
+Valiant Gem (92, 39)
 Hyper Potion (82, 26)
 Throat Spray (91, 29)
 Yache Berry (80, 31)
@@ -990,9 +1014,11 @@ TM87 Poison Jab (48, 18)
 Calm Mint (55, 9)
 Gold Bottle Cap (29, 8)
 PP Max (66, 37)
-Rare Candy (69, 13)
+Rare Candy (68, 19)
 Covert Cloak (32, 11)
 Focus Sash (29, 17)
+Psychic Seed (68, 10)
+Star Piece (60, 37)
 
 Electric Tunnel (0A)------------------------------
 
@@ -1026,20 +1052,37 @@ Thunder Scales Fossil (50, 54)
 Shadow Ravine (H)---------------------------------
 
 Dusk Scales Fossil (54, 62)
+Star Piece (45, 58)
 
 Shadow Ravine (-1A)-------------------------------
 
-PP Up (47, 32)
-Great Ball (57, 41)
-Repel (66, 50)
+PP Up (46, 31)
+Big Mushroom (57, 41)
+Luminous Moss (66, 50)
 Max Revive (45, 58)
 Max Potion (54, 70)
+Dusk Ball (78, 52)
+Room Service (39, 41)
+Adrenaline Orb (26, 51)
+Rusty Bottle Cap (54, 70)
+Treasure Chest (45, 44)
+  [Nugget]               |
+  [Tiny Mushroom]        |
+  [Star Piece]           |
+  [Big Nugget]           |
+  [Relic Gold]           |
+  [Gold Bottle Cap]      |
+  [Naughty Mint]         |
+  [Dawn Stone]           |
+  [Rare Candy]           |
+  [Poison Crystal]       |
 
 Shadow Ravine (-2A)-------------------------------
 
 Adamant Mint (39, 56)
 TM58 Dragon Pulse (37, 49)
 Revive (42, 38)
+Eject Button (56, 40)
 
 Shadow Ravine (-3A)-------------------------------
 
@@ -1145,12 +1188,13 @@ Micle Berry (29, 84)
 Passho Berry (42, 67)
 Treasure Chest (34, 62)
   [Ability Capsule]      |
+  [Dark Crystal]         |
+  [Big Nugget]           |
+  [Tiny Mushroom]        |
+  [Big Nugget]           |
   [Modest Mint]          |
-  [Star Piece]           |
+  [Gold Bottle Cap]      |
   [Euphorian Gem]        |
-  [Poison Crystal]       |
-  [Star Piece]           |
-  [Relic Silver]         |
 
 Mindagan Cavern (0A)------------------------------
 
@@ -1233,7 +1277,7 @@ Max Revive (43, 60)
 
 Mt. St. Joseph (3A)-------------------------------
 
-TM34 Magic Tomb (62, 66)
+TM34 Magic Tomb (62, 65)
 Naughty Mint (46, 60)
 Max Elixir (40, 54)
 TM35 Flamethrower (51, 51)
@@ -1253,15 +1297,15 @@ Rusty Bottle Cap (11, 15)
 Big Mushroom (22, 44)
 White Herb (14, 42)
 Treasure Chest (10, 42)
-  [Gold Bottle Cap]      |
-  [Rusty Bottle Cap]     |
-  [Relic Silver]         |
-  [PP Up]                |
-  [Brave Mint]           |
-  [Dark Crystal]         |
-  [Rusty Bottle Cap]     |
   [Revive]               |
-  [Relic Silver]         |
+  [Ice Crystal]          |
+  [Star Piece]           |
+  [Tiny Mushroom]        |
+  [Brave Mint]           |
+  [Gold Bottle Cap]      |
+  [Nugget]               |
+  [PP Up]                |
+  [Petticoat Gem]        |
 Damaged Snowball (18, 10)
 Jaboca Berry (11, 22)
 Rowap Berry (16, 26)
@@ -1269,18 +1313,18 @@ Rowap Berry (16, 26)
 Mt. Splinkty (2A)---------------------------------
 
 Treasure Chest (57, 62)
+  [Grass Crystal]        |
+  [Nugget]               |
   [Ability Patch]        |
-  [Star Piece]           |
-  [Ice Crystal]          |
-  [Big Mushroom]         |
-  [Modest Mint]          |
+  [Nugget]               |
+  [Nugget]               |
   [Relic Silver]         |
+  [Dusk Stone]           |
   [Max Revive]           |
-  [Fire Stone]           |
-  [Water Stone]          |
-  [Tiny Mushroom]        |
+  [Modest Mint]          |
 Star Piece (52, 61)
 Damaged Moss (67, 62)
+Star Piece (39, 60)
 
 Mt. Splinkty (Outside)----------------------------
 
@@ -1288,13 +1332,14 @@ Eviolite (67, 48)
 TM47 Star Storm (89, 38)
 Treasure Chest (51, 34)
   [Star Piece]           |
-  [Nugget]               |
-  [Gold Bottle Cap]      |
-  [Relaxed Mint]         |
-  [Star Piece]           |
+  [Fire Stone]           |
+  [Bottle Cap]           |
   [Tiny Mushroom]        |
+  [Bug Crystal]          |
+  [Big Mushroom]         |
+  [Gold Bottle Cap]      |
   [Revive]               |
-  [Grass Crystal]        |
+  [Relaxed Mint]         |
 Sparkly Seed (70, 46)
 
 Icy Path------------------------------------------
@@ -1305,28 +1350,29 @@ TM72 Ice Spinner (49, 44)
 Euphorian Gem (47, 56)
 White Herb (38, 27)
 Treasure Chest (41, 51)
+  [Water Crystal]        |
   [Jolly Mint]           |
-  [Nugget]               |
-  [Big Nugget]           |
   [PP Up]                |
-  [Bug Crystal]          |
-  [Water Stone]          |
-  [Big Nugget]           |
+  [Tiny Mushroom]        |
+  [Relic Silver]         |
+  [Gold Bottle Cap]      |
+  [Tiny Mushroom]        |
+  [Ice Stone]            |
 Snowball (62, 50)
 
 Gelb Cavern---------------------------------------
 
 Impish Mint (54, 61)
 Treasure Chest (61, 64)
-  [Water Crystal]        |
-  [Star Piece]           |
+  [Relic Silver]         |
+  [Mild Mint]            |
+  [Relic Silver]         |
+  [Big Nugget]           |
+  [Revive]               |
+  [Dusk Stone]           |
+  [Rock Crystal]         |
   [Relic Silver]         |
   [PP Up]                |
-  [Revive]               |
-  [Mild Mint]            |
-  [Tiny Mushroom]        |
-  [Star Piece]           |
-  [Nugget]               |
 Gold Bottle Cap (49, 74)
 Serious Mint (65, 73)
 Gentle Mint (66, 81)

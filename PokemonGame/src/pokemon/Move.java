@@ -994,6 +994,7 @@ public enum Move {
 		result.add(CUT);
 		result.add(RAZOR_LEAF);
 		result.add(VENOSTEEL_CROSSCUT);
+		result.add(FALSE_SWIPE);
 		
 		if (result.contains(this)) {
 			return true;
@@ -1260,7 +1261,7 @@ public enum Move {
 				// Foe lowering moves (same as self boosting)
 				if (m == Move.BREAKING_SWIPE || m == Move.ACID_SPRAY || m == Move.BULLDOZE || m == Move.ELECTROWEB || m == Move.GLACIATE || m == Move.ICY_WIND || m == Move.LOW_SWEEP ||
 						m == Move.MUD_SHOT || m == Move.MUD$SLAP || m == Move.MYSTICAL_FIRE || m == Move.ROCK_SMASH || m == Move.ROCK_TOMB || m == Move.SNARL ||
-						m == Move.SPIRIT_BREAK || m == Move.STAFF_JAB || m == Move.STRUGGLE_BUG || m == Move.SUMMIT_STRIKE || m == Move.VINE_CROSS) {
+						m == Move.RADIANT_BREAK || m == Move.STAFF_JAB || m == Move.STRUGGLE_BUG || m == Move.SUMMIT_STRIKE || m == Move.VINE_CROSS) {
 					return true;
 				}
 				if (foe.ability != Ability.STICKY_HOLD || me.ability == Ability.MOLD_BREAKER) {
