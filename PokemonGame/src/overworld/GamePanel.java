@@ -392,6 +392,10 @@ public class GamePanel extends JPanel implements Runnable {
 		checkSpin = true;
 		
 		Pokemon.readTrainersFromCSV();
+		
+		Pokemon test = new Pokemon(1, 1, true, false);
+		test.trainer = player.p;
+		Item.useCalc(test, null, null, false);
 	}
 
 	public Pokemon encounterPokemon(String area, char type, boolean random) {

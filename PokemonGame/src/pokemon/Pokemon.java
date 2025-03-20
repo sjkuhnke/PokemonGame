@@ -334,18 +334,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	public Pokemon(int i, int l, boolean isStatic) {
 		this(i, l, false, true);
-		Random rand = new Random();
-		for (int j = 0; j < 6; j++) { this.ivs[j] = rand.nextInt(32); }
-		for (int k = 0; k < 3; k++) {
-			int index = -1;
-			do {
-				index = rand.nextInt(6);
-			} while (this.ivs[index] == 31);
-			this.ivs[rand.nextInt(6)] = 31;
-		}
-		setNature();
-		setStats();
-		currentHP = this.getStat(0);
 		
 		abilitySlot = (int)Math.round(Math.random());
 		setAbility(abilitySlot);
@@ -2837,9 +2825,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			if (move == Move.POP_POP && hit == numHits) {
-				Task.addTask(Task.TEXT, "Hit " + hits + " times!");
-			} else if ((hit == numHits && hit > 1) || move == Move.BEAT_UP) {
-				Task.addTask(Task.TEXT, "Hit " + hit + " times!");
+				Task.addTask(Task.TEXT, "Hit " + hits + " time(s)!");
+			} else if ((hit == numHits && hit > 1) || (move == Move.BEAT_UP && numHits == 1)) {
+				Task.addTask(Task.TEXT, "Hit " + hit + " time(s)!");
 			}
 			
 			if (first && this.getItem() == Item.KING1S_ROCK && foe.ability != Ability.SHIELD_DUST && !foe.hasStatus(Status.FLINCHED) && checkSecondary(10)) {
@@ -6915,6 +6903,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		this.nat = Nature.getRandomNature();
 	}
 	
+	private void setNature(long seed) {
+		this.nat = Nature.getRandomNature(seed);
+	}
+	
 	public String getNature() {
 		return nat.toString();
 	}
@@ -8803,8 +8795,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 				int level = Integer.parseInt(pokemonParts[1]);
 				Ability ability = Ability.valueOf(pokemonParts[2]);
 				Item heldItem = pokemonParts[3].equals("null") ? null : Item.valueOf(pokemonParts[3]);
+				Nature nature = null;
+				if (pokemonParts.length > 5) {
+					nature = Nature.valueOf(pokemonParts[4]);
+				}
 				
-				String[] moveStrings = pokemonParts[4].split(",");
+				String[] moveStrings = pokemonParts[nature == null ? 4 : 5].split(",");
 				Moveslot[] moves = new Moveslot[4];
 				PType type = null;
 				for (int j = 0; j < 4; j++) {
@@ -8830,6 +8826,19 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 				Pokemon pokemon = staticEnc ? new Pokemon(id, level, true) : new Pokemon(id, level, false, true);				
 				pokemon.moveset = moves;
+				if (staticEnc) {
+					pokemon.setStaticIVs();
+				} else {
+					if (nature == null) {
+						long seed = pokemon.generateSeed(pokemon.id, pokemon.level, pokemon.moveset);
+						pokemon.setNature(seed);
+					} else {
+						pokemon.nat = nature;
+					}
+				}
+				
+				pokemon.setStats();
+				pokemon.currentHP = pokemon.getStat(0);
 				pokemon.validateMoveset(index, name);
 				
 				if (type != null) {
@@ -8881,6 +8890,32 @@ public class Pokemon implements RoleAssignable, Serializable {
 		updateRivals();
 		
 		scanner.close();
+	}
+
+	private void setStaticIVs() {
+		long seed = generateSeed(this.id, this.level, this.moveset);
+		Random rand = new Random(seed);
+		for (int j = 0; j < 6; j++) { this.ivs[j] = rand.nextInt(32); }
+		for (int k = 0; k < 3; k++) {
+			int index = -1;
+			do {
+				index = rand.nextInt(6);
+			} while (this.ivs[index] == 31);
+			this.ivs[index] = 31;
+		}
+		setNature(seed);		
+	}
+
+	private long generateSeed(int i, int l, Moveslot[] moveset) {
+		long seed = 31L * i + l;
+	    if (moveset != null) {
+	        for (Moveslot slot : moveset) {
+	            if (slot != null) {
+	                seed = 31L * seed + slot.move.ordinal();
+	            }
+	        }
+	    }
+	    return seed;
 	}
 
 	private void validateMoveset(int index, String name) {

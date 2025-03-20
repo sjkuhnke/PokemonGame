@@ -3235,7 +3235,7 @@ public class UI extends AbstractUI {
 				    }
 					bagState = 0;
 				} else if (currentItem == Item.CALCULATOR) {
-					Item.useCalc(gp.player.p.getCurrent(), null, null);
+					Item.useCalc(gp.player.p.getCurrent(), null, null, true);
 				} else if (currentItem == Item.DEX_NAV) {
 					encounters = Encounter.getAllEncounters();
 					gp.gameState = GamePanel.DEX_NAV_STATE;

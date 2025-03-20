@@ -456,7 +456,7 @@ public class BattleUI extends AbstractUI {
 		drawCalcWindow();
 		if (gp.keyH.aPressed) {
 			gp.keyH.aPressed = false;
-			Item.useCalc(user, null, foe);
+			Item.useCalc(user, null, foe, true);
 		}
 		drawCatchWindow();
 		drawActionScreen(user);
@@ -939,7 +939,7 @@ public class BattleUI extends AbstractUI {
 		drawMoves();
 		if (gp.keyH.aPressed) {
 			gp.keyH.aPressed = false;
-			Item.useCalc(user, null, foe);
+			Item.useCalc(user, null, foe, true);
 		}
 		if (gp.keyH.dPressed) {
 			gp.keyH.dPressed = false;
@@ -1290,6 +1290,7 @@ public class BattleUI extends AbstractUI {
 		if (foe.trainer != null) {
 			foe.trainer.reset();
 		}
+		Item.useCalc(gp.player.p.current, null, null, false);
 	}
 	
 	@Override

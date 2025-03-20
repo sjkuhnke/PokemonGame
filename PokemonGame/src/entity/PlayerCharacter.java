@@ -400,7 +400,7 @@ public class PlayerCharacter extends Entity {
 			if (keyH.ctrlPressed) {
 				keyH.ctrlPressed = false;
 				resetSpriteNum();
-				Item.useCalc(p.getCurrent(), null, null);
+				Item.useCalc(p.getCurrent(), null, null, true);
 			} else {
 				if (p.fish) {
 					int result = gp.cChecker.checkTileType(this);

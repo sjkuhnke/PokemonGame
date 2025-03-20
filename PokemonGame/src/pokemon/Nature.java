@@ -62,6 +62,12 @@ public enum Nature {
 		return values[rand.nextInt(values.length)];
 	}
 	
+	public static Nature getRandomNature(long seed) {
+		Random rand = new Random(seed);
+		Nature[] values = values();
+		return values[rand.nextInt(values.length)];
+	}
+	
 	@Override
 	public String toString() {
 		String name = super.toString().toLowerCase();
