@@ -463,6 +463,11 @@ public enum Item {
     public static Item[] balls;
     public static int mintID = 0;
     public static int ballID = 0;
+    
+    private static JPanel calc;
+    private static JComboBox<Pokemon> userMons;
+    private static JComboBox<Pokemon> foeMons;
+    private static JSpinner userLevel;
 	
 	Item(int id, int cost, int sell, Color color, int pocket, Object o, String desc) {
 		this.id = id;
@@ -787,461 +792,551 @@ public enum Item {
 		return result;
 	}
 
-	public static void useCalc(Pokemon p, Pokemon[] box, Pokemon f) {
+	public static void useCalc(Pokemon p, Pokemon[] box, Pokemon f, boolean display) {
 		Trainer pl = p.trainer;
-		JPanel calc = new JPanel();
-	    calc.setLayout(new GridBagLayout());
-	    
-	    SpinnerModel levelModel = new SpinnerNumberModel(50, 1, 100, 1);
-	    SpinnerModel foeLevelModel = new SpinnerNumberModel(50, 1, 100, 1);
-	    
-	    GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(5, 5, 5, 5); // Add space between components
-        
-        JComboBox<Pokemon> userMons = new JComboBox<>();
-        JSpinner userLevel = new JSpinner(levelModel);
-        
-        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor)userLevel.getEditor();
-        JTextField textField = editor.getTextField();
-        textField.addFocusListener( new FocusAdapter() {
-            public void focusGained(final FocusEvent e) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        JTextField tf = (JTextField)e.getSource();
-                        tf.selectAll();
-                    }
-                });
-            }
-        });
-        
-        JLabel[] userStatLabels = new JLabel[6];
-        @SuppressWarnings("unchecked")
-		JComboBox<Integer>[] userStages = new JComboBox[6];
-        JButton userCurrentHP = new JButton();
-        JLabel userHPP = new JLabel();
-        JLabel userSpeed = new JLabel();
-        JGradientButton[] userMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
-        JLabel[] userDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
-        JCheckBox critCheck = new JCheckBox("Crit");
-        for (Pokemon pokemon : pl.getOrderedTeam()) {
-        	Pokemon add = pokemon.clone();
-        	if (!(pl instanceof Player)) {
-        		add.nickname = pl.getName();
-        	}
-    		userMons.addItem(add.clone());
-    		if (pokemon.id == 150) {
-        		Pokemon kD = pokemon.clone();
-        		int oHP = kD.getStat(0);
-				kD.id = 237;
-				kD.setName(kD.getName());
-				if (kD.nickname == kD.name()) kD.nickname = kD.getName();
-				
-				kD.baseStats = kD.getBaseStats();
-				kD.setStats();
-				kD.weight = kD.getWeight();
-				int nHP = kD.getStat(0);
-				kD.currentHP += nHP - oHP;
-				kD.setTypes();
-				kD.setSprites();
-				kD.setAbility(kD.abilitySlot);
-				userMons.addItem(kD);
-        	}
-        }
-        if (box != null) {
-			for (Pokemon q : box) {
-				if (q != null) {
-					userMons.addItem(q.clone());
+		if (calc == null) {
+			calc = new JPanel();
+		    calc.setLayout(new GridBagLayout());
+		    
+		    SpinnerModel levelModel = new SpinnerNumberModel(50, 1, 100, 1);
+		    SpinnerModel foeLevelModel = new SpinnerNumberModel(50, 1, 100, 1);
+		    
+		    GridBagConstraints gbc = new GridBagConstraints();
+	        gbc.gridx = 0;
+	        gbc.gridy = 0;
+	        gbc.insets = new Insets(5, 5, 5, 5); // Add space between components
+	        
+	        userMons = new JComboBox<>();
+	        userLevel = new JSpinner(levelModel);
+	        
+	        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor)userLevel.getEditor();
+	        JTextField textField = editor.getTextField();
+	        textField.addFocusListener( new FocusAdapter() {
+	            public void focusGained(final FocusEvent e) {
+	                SwingUtilities.invokeLater(new Runnable() {
+	                    @Override
+	                    public void run() {
+	                        JTextField tf = (JTextField)e.getSource();
+	                        tf.selectAll();
+	                    }
+	                });
+	            }
+	        });
+	        
+	        JLabel[] userStatLabels = new JLabel[6];
+	        @SuppressWarnings("unchecked")
+			JComboBox<Integer>[] userStages = new JComboBox[6];
+	        JButton userCurrentHP = new JButton();
+	        JLabel userHPP = new JLabel();
+	        JLabel userSpeed = new JLabel();
+	        JGradientButton[] userMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
+	        JLabel[] userDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
+	        JCheckBox critCheck = new JCheckBox("Crit");
+	        for (Pokemon pokemon : pl.getOrderedTeam()) {
+	        	Pokemon add = pokemon.clone();
+	        	if (!(pl instanceof Player)) {
+	        		add.nickname = pl.getName();
+	        	}
+	    		userMons.addItem(add.clone());
+	    		if (pokemon.id == 150) {
+	        		Pokemon kD = pokemon.clone();
+	        		int oHP = kD.getStat(0);
+					kD.id = 237;
+					kD.setName(kD.getName());
+					if (kD.nickname == kD.name()) kD.nickname = kD.getName();
+					
+					kD.baseStats = kD.getBaseStats();
+					kD.setStats();
+					kD.weight = kD.getWeight();
+					int nHP = kD.getStat(0);
+					kD.currentHP += nHP - oHP;
+					kD.setTypes();
+					kD.setSprites();
+					kD.setAbility(kD.abilitySlot);
+					userMons.addItem(kD);
+	        	}
+	        }
+	        if (box != null) {
+				for (Pokemon q : box) {
+					if (q != null) {
+						userMons.addItem(q.clone());
+					}
 				}
 			}
-		}
-        if (box != null) {
-        	Player player = (Player) pl;
-        	if (player.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
-        		for (Pokemon q : player.gauntletBox) {
-    				if (q != null) {
-    					userMons.addItem(q.clone());
-    				}
-    			}
-        	}
-        }
-        
-        AutoCompleteDecorator.decorate(userMons);
-        
-        JComboBox<Pokemon> foeMons = new JComboBox<>();
-        JSpinner foeLevel = new JSpinner(foeLevelModel);
-        
-        JSpinner.DefaultEditor fEditor = (JSpinner.DefaultEditor)foeLevel.getEditor();
-        JTextField fTextField = fEditor.getTextField();
-        fTextField.addFocusListener(new FocusAdapter() {
-            public void focusGained(final FocusEvent e) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        JTextField tf = (JTextField)e.getSource();
-                        tf.selectAll();
-                    }
-                });
-            }
-        });
-        
-        JLabel[] foeStatLabels = new JLabel[6];
-        @SuppressWarnings("unchecked")
-		JComboBox<Integer>[] foeStages = new JComboBox[6];
-        JButton foeCurrentHP = new JButton();
-        JLabel foeHPP = new JLabel();
-        JLabel foeSpeed = new JLabel();
-        JGradientButton[] foeMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
-        JLabel[] foeDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
-        JCheckBox fCritCheck = new JCheckBox("Crit");
-        if (f != null && f.trainerOwned()) {
-        	Trainer tr = f.trainer;
-        	for (Pokemon po : tr.getOrderedTeam()) {
-        		Pokemon add = po.clone();
-        		add.nickname = tr.getName();
-        		foeMons.addItem(add);
-        	}
-        }
-        for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
-        	foeMons.addItem(new Pokemon(k, 50, false, true));
-        }
-        for (Trainer tr : Trainer.bossTrainers) {
-        	for (Pokemon po : tr.getTeam()) {
-        		Pokemon add = po.clone();
-        		add.nickname = tr.getName();
-        		foeMons.addItem(add);
-        	}
-        }
-        AutoCompleteDecorator.decorate(foeMons);
-        
-        JComboBox<Ability> userAbility = new JComboBox<>(Ability.values());
-        JComboBox<Ability> foeAbility = new JComboBox<>(Ability.values());
-        AutoCompleteDecorator.decorate(userAbility);
-        AutoCompleteDecorator.decorate(foeAbility);
-        
-        JButton infoButton = new JButton("   Info   ");
-        JButton fInfoButton = new JButton("   Info   ");
-        
-        ArrayList<Item> items = new ArrayList<>();
-        items.add(null);
-        for (Item item : Item.values()) {
-        	if (item.getPocket() == Item.HELD_ITEM || item.getPocket() == Item.BERRY) {
-        		items.add(item);
-        	}
-        }
-        
-        infoButton.addActionListener(e -> {
-        	JOptionPane.showMessageDialog(null, ((Pokemon) userMons.getSelectedItem()).showSummary(false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
-        });
-        
-        fInfoButton.addActionListener(e -> {
-        	Pokemon foe = (Pokemon) foeMons.getSelectedItem();
-        	if (foe.getSprite() == null) foe.setSprites();
-        	JOptionPane.showMessageDialog(null, ((Pokemon) foeMons.getSelectedItem()).showSummary(false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
-        });
-        
-        JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
-        JComboBox<Item> foeItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
-        
-        Field field = Pokemon.field.clone();
-        
-        AutoCompleteDecorator.decorate(userItem);
-        AutoCompleteDecorator.decorate(foeItem);
-        
-        userMons.addActionListener(l -> {
-        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-            userLevel.setValue(userCurrent.getLevel());
-            updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        });
-        
-        foeMons.addActionListener(l -> {
-        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	foeLevel.setValue(foeCurrent.getLevel());
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-        });
-        
-        userLevel.addFocusListener(new FocusAdapter() {
-			@Override // implementation
-	    	public void focusGained(FocusEvent e) {
-				JTextField textField = ((JSpinner.DefaultEditor) userLevel.getEditor()).getTextField();
-				textField.selectAll();
-	    	}
-		});
-        
-		foeLevel.addFocusListener(new FocusAdapter() {
-			@Override // implementation
-	    	public void focusGained(FocusEvent e) {
-				JTextField textField = ((JSpinner.DefaultEditor) foeLevel.getEditor()).getTextField();
-				textField.selectAll();
-	    	}
-		});
-        
-        Pokemon userC = ((Pokemon) userMons.getSelectedItem());
-        Pokemon foeC = ((Pokemon) foeMons.getSelectedItem());
-        
-        calc.add(userMons, gbc);
-        gbc.gridx++;
-        calc.add(foeMons, gbc);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        
-        calc.add(userLevel, gbc);
-        gbc.gridx++;
-        JPanel foeLevelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        foeLevelPanel.add(foeLevel);
-        calc.add(foeLevelPanel, gbc);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        
-        JPanel statsPanel = new JPanel(new GridLayout(6, 3));
-        for (int i = 0; i < 6; i++) {
-        	userStatLabels[i] = new JLabel(userC.getStat(i) + "");
-        	Integer[] stages = new Integer[] {-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6};
-        	userStages[i] = new JComboBox<Integer>(stages);
-        	if (i != 0) userStages[i].setSelectedIndex(userC.statStages[i - 1] + 6);
-        	JLabel blank = new JLabel("");
-        	statsPanel.add(userStatLabels[i]);
-        	if (i == 0) {
-        		userCurrentHP.setText(userC.currentHP + "");
-        		statsPanel.add(userCurrentHP);
-        	} else {
-        		int index = i;
-        		userStages[i].addActionListener(e -> {
-        			Pokemon current = ((Pokemon) userMons.getSelectedItem());
-        			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        			int amt = (int) userStages[index].getSelectedItem();
-        			current.statStages[index - 1] = amt;
-        			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-        			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        			if (index == 5) userSpeed.setText((current.getSpeed()) + "");
-        		});
-        		statsPanel.add(userStages[i]);
-        	}
-        	
-        	if (i == 0) {
-        		double percent = userC.currentHP * 100.0 / userC.getStat(0);
-        		userHPP.setText(String.format("%.1f", percent) + "%");
-        		statsPanel.add(userHPP);
-        	} else if (i == 5) {
-        		userSpeed.setText((userC.getSpeed()) + "");
-        		statsPanel.add(userSpeed);
-        	} else {
-        		statsPanel.add(blank);
-        	}
-        	
-        	
-        }
-        
-        JPanel fStatsPanel = new JPanel(new GridLayout(6, 3));
-        for (int i = 0; i < 6; i++) {
-        	foeStatLabels[i] = new JLabel(foeC.getStat(i) + "");
-        	Integer[] stages = new Integer[] {-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6};
-        	foeStages[i] = new JComboBox<Integer>(stages);
-        	if (i != 0) foeStages[i].setSelectedIndex(foeC.statStages[i - 1] + 6);
-        	JLabel blank = new JLabel("");
-        	fStatsPanel.add(foeStatLabels[i]);
-        	if (i == 0) {
-        		foeCurrentHP.setText(foeC.currentHP + "");
-        		fStatsPanel.add(foeCurrentHP);
-        	} else {
-        		int index = i;
-        		foeStages[i].addActionListener(e -> {
-        			Pokemon current = ((Pokemon) foeMons.getSelectedItem());
-        			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-        			int amt = (int) foeStages[index].getSelectedItem();
-        			current.statStages[index - 1] = amt;
-        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-        			if (index == 5) foeSpeed.setText((current.getSpeed()) + "");
-        		});
-        		fStatsPanel.add(foeStages[i]);
-        	}
-        	
-        	if (i == 0) {
-        		double percent = foeC.currentHP * 100.0 / foeC.getStat(0);
-        		foeHPP.setText(String.format("%.1f", percent) + "%");
-        		fStatsPanel.add(foeHPP);
-        	} else if (i == 5) {
-        		foeSpeed.setText((foeC.getSpeed()) + "");
-        		fStatsPanel.add(foeSpeed);
-        	} else {
-        		fStatsPanel.add(blank);
-        	}
-        	
-        }
-        
-        userLevel.setValue(userC.getLevel());
-        updateMoves(userC, userMoves, userDamage, foeC, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-        
-        foeLevel.setValue(foeC.getLevel());
-        updateMoves(foeC, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-    	
-		userLevel.addChangeListener(l -> {
-			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-	    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	updatePokemonLevel(userLevel, userCurrent, foeCurrent, true);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        });
-		
-		foeLevel.addChangeListener(l -> {
-			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-	    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	updatePokemonLevel(foeLevel, userCurrent, foeCurrent, false);
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-        });
-        
-        userItem.addActionListener(l -> {
-        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	userCurrent.item = (Item) userItem.getSelectedItem();
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        });
-        
-        foeItem.addActionListener(l -> {
-        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	foeCurrent.item = (Item) foeItem.getSelectedItem();
-        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-        });
-        
-        calc.add(statsPanel, gbc);
-        gbc.gridx++;
-        calc.add(fStatsPanel, gbc);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        
-        JPanel userMovesPanel = new JPanel(new GridLayout(4,2));
-        for (int k = 0; k < userMoves.length; k++) {
-        	userMovesPanel.add(userMoves[k]);
-        	userMovesPanel.add(userDamage[k]);
-        }
-        calc.add(userMovesPanel, gbc);
-        gbc.gridx++;
-        JPanel foeMovesPanel = new JPanel(new GridLayout(4,2));
-        for (int k = 0; k < userMoves.length; k++) {
-        	foeMovesPanel.add(foeMoves[k]);
-        	foeMovesPanel.add(foeDamage[k]);
-        }
-        calc.add(foeMovesPanel, gbc);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        
-        calc.add(userAbility, gbc);
-        gbc.gridx++;
-        calc.add(foeAbility, gbc);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        
-        calc.add(userItem, gbc);
-        gbc.gridx++;
-        calc.add(foeItem, gbc);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        
-        critCheck.addActionListener(e -> {
-        	Pokemon current = ((Pokemon) userMons.getSelectedItem());
-			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-        });
-        
-        fCritCheck.addActionListener(e -> {
-        	Pokemon current = ((Pokemon) userMons.getSelectedItem());
-			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        });
-        
-        userAbility.addActionListener(l -> {
-			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-			userCurrent.ability = (Ability) userAbility.getSelectedItem();
-			updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-		});
-		
-		foeAbility.addActionListener(l -> {
-			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-			foeCurrent.ability = (Ability) foeAbility.getSelectedItem();
-			updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-		});
-        
-        JPanel infoButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        infoButtonPanel.add(infoButton);
-        infoButtonPanel.add(critCheck);
-        calc.add(infoButtonPanel, gbc);
-        gbc.gridx++;
-        
-        JPanel fInfoButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        fInfoButtonPanel.add(fInfoButton);
-        fInfoButtonPanel.add(fCritCheck);
-        calc.add(fInfoButtonPanel, gbc);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        
-        JPanel addButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JButton addButton = new JButton("Add");
-        addButtonPanel.add(addButton);
-        JButton moreButton = new JButton("More");
-        addButtonPanel.add(moreButton);
-        
-        JPanel fAddButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JButton fAddButton = new JButton("Add");
-        fAddButtonPanel.add(fAddButton);
-        JButton fMoreButton = new JButton("More");
-        fAddButtonPanel.add(fMoreButton);
-        
-        gbc.gridx = 0;
-        gbc.gridwidth = 1;
-        calc.add(addButtonPanel, gbc);
+	        if (box != null) {
+	        	Player player = (Player) pl;
+	        	if (player.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
+	        		for (Pokemon q : player.gauntletBox) {
+	    				if (q != null) {
+	    					userMons.addItem(q.clone());
+	    				}
+	    			}
+	        	}
+	        }
+	        
+	        AutoCompleteDecorator.decorate(userMons);
+	        
+	        foeMons = new JComboBox<>();
+	        JSpinner foeLevel = new JSpinner(foeLevelModel);
+	        
+	        JSpinner.DefaultEditor fEditor = (JSpinner.DefaultEditor)foeLevel.getEditor();
+	        JTextField fTextField = fEditor.getTextField();
+	        fTextField.addFocusListener(new FocusAdapter() {
+	            public void focusGained(final FocusEvent e) {
+	                SwingUtilities.invokeLater(new Runnable() {
+	                    @Override
+	                    public void run() {
+	                        JTextField tf = (JTextField)e.getSource();
+	                        tf.selectAll();
+	                    }
+	                });
+	            }
+	        });
+	        
+	        JLabel[] foeStatLabels = new JLabel[6];
+	        @SuppressWarnings("unchecked")
+			JComboBox<Integer>[] foeStages = new JComboBox[6];
+	        JButton foeCurrentHP = new JButton();
+	        JLabel foeHPP = new JLabel();
+	        JLabel foeSpeed = new JLabel();
+	        JGradientButton[] foeMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
+	        JLabel[] foeDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
+	        JCheckBox fCritCheck = new JCheckBox("Crit");
+	        for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
+	        	foeMons.addItem(new Pokemon(k, 50, false, true));
+	        }
+	        for (Trainer tr : Trainer.trainers) {
+	        	if (tr != null) {
+	        		for (Pokemon po : tr.getTeam()) {
+	            		Pokemon add = po.clone();
+	            		add.nickname = tr.getName();
+	            		foeMons.addItem(add);
+	            	}
+	        	}
+	        }
+	        AutoCompleteDecorator.decorate(foeMons);
+	        
+	        JComboBox<Ability> userAbility = new JComboBox<>(Ability.values());
+	        JComboBox<Ability> foeAbility = new JComboBox<>(Ability.values());
+	        AutoCompleteDecorator.decorate(userAbility);
+	        AutoCompleteDecorator.decorate(foeAbility);
+	        
+	        JButton infoButton = new JButton("   Info   ");
+	        JButton fInfoButton = new JButton("   Info   ");
+	        
+	        ArrayList<Item> items = new ArrayList<>();
+	        items.add(null);
+	        for (Item item : Item.values()) {
+	        	if (item.getPocket() == Item.HELD_ITEM || item.getPocket() == Item.BERRY) {
+	        		items.add(item);
+	        	}
+	        }
+	        
+	        infoButton.addActionListener(e -> {
+	        	JOptionPane.showMessageDialog(null, ((Pokemon) userMons.getSelectedItem()).showSummary(false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+	        });
+	        
+	        fInfoButton.addActionListener(e -> {
+	        	Pokemon foe = (Pokemon) foeMons.getSelectedItem();
+	        	if (foe.getSprite() == null) foe.setSprites();
+	        	JOptionPane.showMessageDialog(null, ((Pokemon) foeMons.getSelectedItem()).showSummary(false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+	        });
+	        
+	        JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
+	        JComboBox<Item> foeItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
+	        
+	        Field field = Pokemon.field.clone();
+	        
+	        AutoCompleteDecorator.decorate(userItem);
+	        AutoCompleteDecorator.decorate(foeItem);
+	        
+	        userMons.addActionListener(l -> {
+	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+	        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+	            userLevel.setValue(userCurrent.getLevel());
+	            updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+	        });
+	        
+	        foeMons.addActionListener(l -> {
+	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+	        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+	        	foeLevel.setValue(foeCurrent.getLevel());
+	        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	        });
+	        
+	        userLevel.addFocusListener(new FocusAdapter() {
+				@Override // implementation
+		    	public void focusGained(FocusEvent e) {
+					JTextField textField = ((JSpinner.DefaultEditor) userLevel.getEditor()).getTextField();
+					textField.selectAll();
+		    	}
+			});
+	        
+			foeLevel.addFocusListener(new FocusAdapter() {
+				@Override // implementation
+		    	public void focusGained(FocusEvent e) {
+					JTextField textField = ((JSpinner.DefaultEditor) foeLevel.getEditor()).getTextField();
+					textField.selectAll();
+		    	}
+			});
+	        
+	        Pokemon userC = ((Pokemon) userMons.getSelectedItem());
+	        Pokemon foeC = ((Pokemon) foeMons.getSelectedItem());
+	        
+	        calc.add(userMons, gbc);
+	        gbc.gridx++;
+	        calc.add(foeMons, gbc);
+	        gbc.gridx = 0;
+	        gbc.gridy++;
+	        
+	        calc.add(userLevel, gbc);
+	        gbc.gridx++;
+	        JPanel foeLevelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	        foeLevelPanel.add(foeLevel);
+	        calc.add(foeLevelPanel, gbc);
+	        gbc.gridx = 0;
+	        gbc.gridy++;
+	        
+	        JPanel statsPanel = new JPanel(new GridLayout(6, 3));
+	        for (int i = 0; i < 6; i++) {
+	        	userStatLabels[i] = new JLabel(userC.getStat(i) + "");
+	        	Integer[] stages = new Integer[] {-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6};
+	        	userStages[i] = new JComboBox<Integer>(stages);
+	        	if (i != 0) userStages[i].setSelectedIndex(userC.statStages[i - 1] + 6);
+	        	JLabel blank = new JLabel("");
+	        	statsPanel.add(userStatLabels[i]);
+	        	if (i == 0) {
+	        		userCurrentHP.setText(userC.currentHP + "");
+	        		statsPanel.add(userCurrentHP);
+	        	} else {
+	        		int index = i;
+	        		userStages[i].addActionListener(e -> {
+	        			Pokemon current = ((Pokemon) userMons.getSelectedItem());
+	        			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+	        			int amt = (int) userStages[index].getSelectedItem();
+	        			current.statStages[index - 1] = amt;
+	        			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	        			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+	        			if (index == 5) userSpeed.setText((current.getSpeed()) + "");
+	        		});
+	        		statsPanel.add(userStages[i]);
+	        	}
+	        	
+	        	if (i == 0) {
+	        		double percent = userC.currentHP * 100.0 / userC.getStat(0);
+	        		userHPP.setText(String.format("%.1f", percent) + "%");
+	        		statsPanel.add(userHPP);
+	        	} else if (i == 5) {
+	        		userSpeed.setText((userC.getSpeed()) + "");
+	        		statsPanel.add(userSpeed);
+	        	} else {
+	        		statsPanel.add(blank);
+	        	}
+	        	
+	        	
+	        }
+	        
+	        JPanel fStatsPanel = new JPanel(new GridLayout(6, 3));
+	        for (int i = 0; i < 6; i++) {
+	        	foeStatLabels[i] = new JLabel(foeC.getStat(i) + "");
+	        	Integer[] stages = new Integer[] {-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6};
+	        	foeStages[i] = new JComboBox<Integer>(stages);
+	        	if (i != 0) foeStages[i].setSelectedIndex(foeC.statStages[i - 1] + 6);
+	        	JLabel blank = new JLabel("");
+	        	fStatsPanel.add(foeStatLabels[i]);
+	        	if (i == 0) {
+	        		foeCurrentHP.setText(foeC.currentHP + "");
+	        		fStatsPanel.add(foeCurrentHP);
+	        	} else {
+	        		int index = i;
+	        		foeStages[i].addActionListener(e -> {
+	        			Pokemon current = ((Pokemon) foeMons.getSelectedItem());
+	        			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+	        			int amt = (int) foeStages[index].getSelectedItem();
+	        			current.statStages[index - 1] = amt;
+	        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+	        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	        			if (index == 5) foeSpeed.setText((current.getSpeed()) + "");
+	        		});
+	        		fStatsPanel.add(foeStages[i]);
+	        	}
+	        	
+	        	if (i == 0) {
+	        		double percent = foeC.currentHP * 100.0 / foeC.getStat(0);
+	        		foeHPP.setText(String.format("%.1f", percent) + "%");
+	        		fStatsPanel.add(foeHPP);
+	        	} else if (i == 5) {
+	        		foeSpeed.setText((foeC.getSpeed()) + "");
+	        		fStatsPanel.add(foeSpeed);
+	        	} else {
+	        		fStatsPanel.add(blank);
+	        	}
+	        	
+	        }
+	        
+	        userLevel.setValue(userC.getLevel());
+	        updateMoves(userC, userMoves, userDamage, foeC, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	        
+	        foeLevel.setValue(foeC.getLevel());
+	        updateMoves(foeC, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+	    	
+			userLevel.addChangeListener(l -> {
+				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+		    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+	        	updatePokemonLevel(userLevel, userCurrent, foeCurrent, true);
+	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+	        });
+			
+			foeLevel.addChangeListener(l -> {
+				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+		    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+	        	updatePokemonLevel(foeLevel, userCurrent, foeCurrent, false);
+	        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	        });
+	        
+	        userItem.addActionListener(l -> {
+	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+	        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+	        	userCurrent.item = (Item) userItem.getSelectedItem();
+	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+	        });
+	        
+	        foeItem.addActionListener(l -> {
+	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+	        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+	        	foeCurrent.item = (Item) foeItem.getSelectedItem();
+	        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	        });
+	        
+	        calc.add(statsPanel, gbc);
+	        gbc.gridx++;
+	        calc.add(fStatsPanel, gbc);
+	        gbc.gridx = 0;
+	        gbc.gridy++;
+	        
+	        JPanel userMovesPanel = new JPanel(new GridLayout(4,2));
+	        for (int k = 0; k < userMoves.length; k++) {
+	        	userMovesPanel.add(userMoves[k]);
+	        	userMovesPanel.add(userDamage[k]);
+	        }
+	        calc.add(userMovesPanel, gbc);
+	        gbc.gridx++;
+	        JPanel foeMovesPanel = new JPanel(new GridLayout(4,2));
+	        for (int k = 0; k < userMoves.length; k++) {
+	        	foeMovesPanel.add(foeMoves[k]);
+	        	foeMovesPanel.add(foeDamage[k]);
+	        }
+	        calc.add(foeMovesPanel, gbc);
+	        gbc.gridx = 0;
+	        gbc.gridy++;
+	        
+	        calc.add(userAbility, gbc);
+	        gbc.gridx++;
+	        calc.add(foeAbility, gbc);
+	        gbc.gridx = 0;
+	        gbc.gridy++;
+	        
+	        calc.add(userItem, gbc);
+	        gbc.gridx++;
+	        calc.add(foeItem, gbc);
+	        gbc.gridx = 0;
+	        gbc.gridy++;
+	        
+	        critCheck.addActionListener(e -> {
+	        	Pokemon current = ((Pokemon) userMons.getSelectedItem());
+				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+				updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	        });
+	        
+	        fCritCheck.addActionListener(e -> {
+	        	Pokemon current = ((Pokemon) userMons.getSelectedItem());
+				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+				updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+	        });
+	        
+	        userAbility.addActionListener(l -> {
+				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+				userCurrent.ability = (Ability) userAbility.getSelectedItem();
+				updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+			});
+			
+			foeAbility.addActionListener(l -> {
+				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+				foeCurrent.ability = (Ability) foeAbility.getSelectedItem();
+				updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+			});
+	        
+	        JPanel infoButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	        infoButtonPanel.add(infoButton);
+	        infoButtonPanel.add(critCheck);
+	        calc.add(infoButtonPanel, gbc);
+	        gbc.gridx++;
+	        
+	        JPanel fInfoButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	        fInfoButtonPanel.add(fInfoButton);
+	        fInfoButtonPanel.add(fCritCheck);
+	        calc.add(fInfoButtonPanel, gbc);
+	        gbc.gridx = 0;
+	        gbc.gridy++;
+	        
+	        JPanel addButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	        JButton addButton = new JButton("Add");
+	        addButtonPanel.add(addButton);
+	        JButton moreButton = new JButton("More");
+	        addButtonPanel.add(moreButton);
+	        
+	        JPanel fAddButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	        JButton fAddButton = new JButton("Add");
+	        fAddButtonPanel.add(fAddButton);
+	        JButton fMoreButton = new JButton("More");
+	        fAddButtonPanel.add(fMoreButton);
+	        
+	        gbc.gridx = 0;
+	        gbc.gridwidth = 1;
+	        calc.add(addButtonPanel, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridwidth = 1;
-        calc.add(fAddButtonPanel, gbc);
+	        gbc.gridx = 1;
+	        gbc.gridwidth = 1;
+	        calc.add(fAddButtonPanel, gbc);
+	        
+	        addButton.addActionListener(l -> {
+	        	Pokemon result = displayGenerator((Pokemon) userMons.getSelectedItem());
+	        	if (result != null) {
+	        		result.nickname = "Generated";
+	        		userMons.insertItemAt(result, 0);
+	        	}
+	        });
+	        
+	        fAddButton.addActionListener(l -> {
+	        	Pokemon result = displayGenerator((Pokemon) foeMons.getSelectedItem());
+	        	if (result != null) {
+	        		result.nickname = "Generated";
+	        		foeMons.insertItemAt(result, 0);
+	        	}
+	        });
+	        
+	        moreButton.addActionListener(l -> {
+	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+	        	moreButton(userCurrent, field);
+	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+	        });
+	        
+	        fMoreButton.addActionListener(l -> {
+	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+	        	moreButton(foeCurrent, field);
+	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+	        });
+		}
+		
+		if (calc != null) {
+			ActionListener[] listeners = userMons.getActionListeners();
+			for (ActionListener al : listeners) {
+			    userMons.removeActionListener(al);
+			}
+			
+			userMons.removeAllItems();
+			for (Pokemon pokemon : pl.getOrderedTeam()) {
+	        	Pokemon add = pokemon.clone();
+	        	if (!(pl instanceof Player)) {
+	        		add.nickname = pl.getName();
+	        	}
+	    		userMons.addItem(add.clone());
+	    		if (pokemon.id == 150) {
+	        		Pokemon kD = pokemon.clone();
+	        		int oHP = kD.getStat(0);
+					kD.id = 237;
+					kD.setName(kD.getName());
+					if (kD.nickname == kD.name()) kD.nickname = kD.getName();
+					
+					kD.baseStats = kD.getBaseStats();
+					kD.setStats();
+					kD.weight = kD.getWeight();
+					int nHP = kD.getStat(0);
+					kD.currentHP += nHP - oHP;
+					kD.setTypes();
+					kD.setSprites();
+					kD.setAbility(kD.abilitySlot);
+					userMons.addItem(kD);
+	        	}
+	        }
+	        if (box != null) {
+				for (Pokemon q : box) {
+					if (q != null) {
+						userMons.addItem(q.clone());
+					}
+				}
+			}
+	        if (box != null) {
+	        	Player player = (Player) pl;
+	        	if (player.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
+	        		for (Pokemon q : player.gauntletBox) {
+	    				if (q != null) {
+	    					userMons.addItem(q.clone());
+	    				}
+	    			}
+	        	}
+	        }
+	        
+	        Pokemon userC = (Pokemon) userMons.getSelectedItem();
+	        userLevel.setValue(userC.getLevel());
+	        
+	        for (ActionListener al : listeners) {
+	            userMons.addActionListener(al);
+	        }
+		}
         
-        addButton.addActionListener(l -> {
-        	Pokemon result = displayGenerator((Pokemon) userMons.getSelectedItem());
-        	if (result != null) {
-        		result.nickname = "Generated";
-        		userMons.insertItemAt(result, 0);
+        if (f != null && f.trainerOwned()) {
+        	int index = getPokemonIndex(f.trainer.getTeam()[0], foeMons);
+        	boolean remove = index >= 0;
+        	if (!remove) index = 0;
+        	
+        	Pokemon[] team = f.trainer.getTeam();
+        	int currentIndex = -1;
+        	for (int i = 0; i < team.length; i++) {
+        		Pokemon updatedMon = team[i].clone();
+        		updatedMon.nickname = f.trainer.getName();
+        		foeMons.insertItemAt(updatedMon, index + i + 1);
+        		if (remove) foeMons.removeItemAt(index + i);
+        		
+        		if (team[i].equals(f)) {
+        			currentIndex = index + i;
+        			if (!remove) currentIndex++;
+        		}
         	}
-        });
-        
-        fAddButton.addActionListener(l -> {
-        	Pokemon result = displayGenerator((Pokemon) foeMons.getSelectedItem());
-        	if (result != null) {
-        		result.nickname = "Generated";
-        		foeMons.insertItemAt(result, 0);
+        	
+        	if (currentIndex >= 0) {
+        		foeMons.setSelectedIndex(currentIndex);
         	}
-        });
+        } else {
+        	foeMons.setSelectedIndex(0);
+        }
         
-        moreButton.addActionListener(l -> {
-        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	moreButton(userCurrent, field);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        });
-        
-        fMoreButton.addActionListener(l -> {
-        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-        	moreButton(foeCurrent, field);
-        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-        });
-        
-        JOptionPane.showMessageDialog(null, calc, "Damage Calculator", JOptionPane.PLAIN_MESSAGE);
+        if (display) JOptionPane.showMessageDialog(null, calc, "Damage Calculator", JOptionPane.PLAIN_MESSAGE);
+		
+	}
+
+	private static int getPokemonIndex(Pokemon p, JComboBox<Pokemon> mons) {
+		for (int i = 0; i < mons.getItemCount(); i++) {
+			Pokemon current = mons.getItemAt(i);
+			if (current.id == p.id && current.trainer == p.trainer && current.slot == p.slot) {
+				return i;
+			}
+		}
+		return -1;
 		
 	}
 
@@ -1536,7 +1631,13 @@ public enum Item {
 		for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
         	nameInput.addItem(new Pokemon(k, 50, false, true));
         }
-		if (p != null) nameInput.setSelectedIndex(p.id);
+		if (p != null) {
+			if (p.getEvolveString() != null) {
+				nameInput.setSelectedIndex(p.id);
+			} else {
+				nameInput.setSelectedIndex(p.id - 1);
+			}
+		}
 		addLabeledInput.accept("Pokemon", nameInput);
 		
 		JComboBox<Integer> levelInput = new JComboBox<>(IntStream.rangeClosed(1, 100).boxed().toArray(Integer[]::new));

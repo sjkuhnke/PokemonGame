@@ -564,21 +564,38 @@ public class Main {
 				
 				for (Trainer tr : trainers) {
 					writer.write("\n");
-
-					writer.write(tr.getName() + "\n");
+					
+					if (tr.toString().equals(tr.getTeam()[0].name())) {
+	                    writer.write(tr.getName() + " (");
+	                    for (int i = 0; i < 6; i++) {
+	                        writer.write(String.valueOf(tr.getTeam()[0].ivs[i]));
+	                        if (i < 5) writer.write(", ");
+	                    }
+	                    writer.write(")\n");
+	                } else {
+	                    writer.write(tr.getName() + "\n");
+	                }
+					
 					for (Pokemon p : tr.getTeam()) {
 						String pName = p.name() + " (Lv. " + p.level + ")";
 						if (gp.player.p.starter == -1 && (tr.getName().contains("Scott") || tr.getName().contains("Fred")) && p.id >= 1 && p.id <= 9) {
 							pName = "*" + pName;
 						}
-						String string = p.item == null ? " @ None" : " @ " + p.item.toString();
-						pName += string;
+						String itemString = p.item == null ? " @ None" : " @ " + p.item.toString();
+						pName += itemString;
 						while (pName.length() < 40) {
 							pName += " ";
 						}
 						
 						pName += "/";
 						writer.write(pName);
+						
+						String nature = " " + p.nat.toString();
+						while (nature.length() < 9) {
+							nature += " ";
+						}
+						nature += "/";
+						writer.write(nature);
 						
 						String aName = "   " + p.ability.toString();
 						while (aName.length() < 18) {
