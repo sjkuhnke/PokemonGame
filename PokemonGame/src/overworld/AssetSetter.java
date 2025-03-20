@@ -783,7 +783,7 @@ public class AssetSetter {
 		
 		mapNum = 101;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(47, 32, Item.PP_UP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(46, 31, Item.PP_UP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(57, 41, Item.BIG_MUSHROOM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 50, Item.LUMINOUS_MOSS, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 58, Item.MAX_REVIVE, mapNum);
@@ -1015,7 +1015,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = SetupChest(57, 62, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(52, 61, Item.STAR_PIECE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 62, Item.DAMAGED_MOSS, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(8, 25, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 60, Item.STAR_PIECE, mapNum);
 		
 		mapNum = 146;
 		objIndex = 0;

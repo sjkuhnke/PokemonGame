@@ -1023,7 +1023,9 @@ Base Stats:
 Level Up:
 1 - String Shot
 1 - Tackle
+5 - Leafage
 8 - Bug Bite
+11 - Endure
 15 - Razor Leaf
 
 Evolutions:
@@ -1045,7 +1047,9 @@ Level Up:
 E - Protect
 1 - String Shot
 1 - Tackle
+5 - Leafage
 8 - Bug Bite
+11 - Endure
 15 - Razor Leaf
 20 - Protect
 22 - Struggle Bug
@@ -1075,11 +1079,17 @@ Level Up:
 E - Pin Missile
 1 - Slash
 1 - False Swipe
-1 - Razor Leaf
 1 - Pin Missile
 1 - Spiky Shield
 1 - Grass Whistle
 1 - Synthesis
+1 - String Shot
+1 - Tackle
+5 - Leafage
+8 - Bug Bite
+11 - Endure
+15 - Razor Leaf
+20 - Protect
 22 - Struggle Bug
 29 - Fell Stinger
 32 - Cross Poison
@@ -1089,9 +1099,10 @@ E - Pin Missile
 45 - Knock Off
 47 - Swords Dance
 50 - Psycho Cut
-55 - Sticky Web
-60 - Solar Blade
-65 - First Impression
+53 - Sticky Web
+56 - Solar Blade
+60 - First Impression
+65 - Solstice Blade
 
 ===================
 #035 - Bugik                                                                                           [041]
@@ -1698,6 +1709,7 @@ Level Up:
 E - Magic Reflect
 1 - Nuzzle
 1 - Stored Power
+1 - Simple Beam
 1 - Brutal Swing
 1 - Spellbind
 1 - Confusion
@@ -2756,6 +2768,7 @@ Level Up:
 36 - Leech Life
 43 - Phantom Force
 50 - Swords Dance
+55 - Poltergeist
 
 ===================
 #081 - Froshrog                                                                                        [071]
@@ -3393,6 +3406,7 @@ Level Up:
 56 - Inferno
 60 - Fiery Wrath
 65 - Parting Shot
+70 - Overheat
 
 ===================
 #098 - Capsakid                                                                                        [278]
@@ -6872,7 +6886,7 @@ Type:
 Ghost / Dark
 
 Ability:
-Adaptability / Anger Point / (Pressure)
+Cursed Body / Adaptability / (Perish Body)
 
 Base Stats:
 75 HP / 85 Atk / 45 Def / 60 SpA / 55 SpD / 79 Spe / 399 BST
@@ -6901,7 +6915,7 @@ Type:
 Ghost / Dark
 
 Ability:
-Adaptability / Anger Point / (Pressure)
+Cursed Body / Anger Point / (Perish Body)
 
 Base Stats:
 115 HP / 105 Atk / 55 Def / 105 SpA / 60 SpD / 59 Spe / 499 BST
@@ -7335,7 +7349,7 @@ Type:
 Fire / Ground
 
 Ability:
-Flame Body / None / (None)
+Flame Body / None / (Sand Veil)
 
 Base Stats:
 70 HP / 53 Atk / 70 Def / 55 SpA / 60 SpD / 52 Spe / 360 BST
@@ -7363,7 +7377,7 @@ Type:
 Fire / Flying
 
 Ability:
-Intimidate / None / (None)
+Intimidate / None / (Sand Veil)
 
 Base Stats:
 75 HP / 75 Atk / 75 Def / 90 SpA / 75 SpD / 70 Spe / 460 BST
@@ -7397,7 +7411,7 @@ Type:
 Fire / Dragon
 
 Ability:
-Levitate / None / (None)
+Levitate / None / (Sheer Force)
 
 Base Stats:
 95 HP / 75 Atk / 87 Def / 140 SpA / 80 SpD / 83 Spe / 560 BST
@@ -7879,7 +7893,7 @@ Type:
 Galactic / None
 
 Ability:
-Shield Dust / Levitate / (Regenerator)
+Shield Dust / Regenerator / (Levitate)
 
 Base Stats:
 90 HP / 30 Atk / 30 Def / 30 SpA / 100 SpD / 30 Spe / 310 BST
@@ -7904,7 +7918,7 @@ Type:
 Galactic / None
 
 Ability:
-Shield Dust / Gravitation / (Mold Breaker)
+Shield Dust / Regenerator / (Gravitation)
 
 Base Stats:
 125 HP / 45 Atk / 50 Def / 45 SpA / 115 SpD / 40 Spe / 420 BST
@@ -7936,7 +7950,7 @@ Type:
 Galactic / Fighting
 
 Ability:
-Sniper / Gravitation / (Mold Breaker)
+Sniper / Sheer Force / (Gravitation)
 
 Base Stats:
 170 HP / 135 Atk / 70 Def / 55 SpA / 115 SpD / 50 Spe / 595 BST
@@ -8988,7 +9002,7 @@ E - False Surrender
 29 - Brick Break
 33 - Knock Off
 36 - Drain Punch
-38 - Taunt
+38 - Torment
 42 - Circle Throw
 45 - Foul Play
 48 - Wake-Up Slap
@@ -10433,7 +10447,7 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 #004 Tortugis            Y     Y     Y     N     N     N     Y     N     N     N     N     N     Y     N     N     Y     Y     N     N     Y     N     N     Y     Y     Y     Y     N     Y     N     N     Y     Y     Y     Y     N     N     N     Y     Y     N     N     N     N     N     Y     N     N     N     Y     N     N     N     N     N     N     N     Y     Y     Y     N     N     N     N     Y     N     Y     Y     N     Y     N     Y     Y     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     N     Y     Y     Y     N     N     N     Y     Y     Y     Y     Y     N     N     N     N     Y     Y     N     Y     Y     N     N     Y     
 #005 Lagma               N     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     N     N     N     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     Y     
 #006 Maguide             N     N     N     N     N     N     N     Y     N     N     N     N     Y     Y     N     N     N     N     N     Y     N     Y     N     N     Y     Y     N     Y     N     N     Y     Y     N     Y     N     Y     N     N     N     N     N     Y     Y     N     Y     N     Y     N     N     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     N     N     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     Y     N     N     N     N     Y     N     N     N     N     Y     N     N     N     Y     
-#007 Magron              N     N     N     Y     N     N     Y     Y     N     Y     Y     N     Y     Y     N     N     N     N     N     Y     N     Y     Y     Y     Y     Y     N     Y     N     N     Y     Y     N     Y     N     Y     N     Y     N     Y     Y     Y     Y     N     Y     N     Y     N     N     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     N     N     N     N     N     Y     Y     N     Y     N     N     N     N     Y     N     Y     Y     N     N     Y     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     N     Y     N     N     N     Y     
+#007 Magron              N     N     N     Y     N     N     Y     Y     N     Y     Y     N     Y     Y     Y     N     N     N     N     Y     N     Y     Y     Y     Y     Y     N     Y     N     N     Y     Y     N     Y     N     Y     N     Y     N     Y     Y     Y     Y     N     Y     N     Y     N     N     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     N     N     N     N     N     Y     Y     N     Y     N     N     N     N     Y     N     Y     Y     N     N     Y     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     N     Y     N     N     N     Y     
 #008 Lizish              Y     Y     N     Y     N     Y     N     N     Y     N     N     N     N     N     N     Y     N     N     N     Y     N     Y     N     N     N     Y     N     N     Y     N     Y     Y     N     Y     N     N     Y     Y     Y     Y     Y     N     N     Y     Y     N     N     Y     N     N     N     N     N     N     N     Y     Y     Y     Y     Y     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     N     N     N     Y     N     N     Y     Y     N     N     N     N     N     N     Y     N     N     N     Y     N     Y     N     Y     N     N     N     N     N     N     Y     Y     
 #009 Iguaton             Y     Y     N     Y     N     Y     Y     N     Y     N     N     N     N     N     N     Y     N     N     N     Y     N     Y     N     N     N     Y     N     Y     Y     N     Y     Y     N     Y     Y     N     Y     Y     Y     Y     Y     N     N     Y     Y     N     N     Y     N     N     N     N     N     N     N     Y     Y     Y     Y     Y     N     Y     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     N     N     N     Y     N     N     Y     Y     N     Y     N     N     N     N     Y     Y     N     Y     Y     N     Y     N     Y     N     N     N     N     N     Y     Y     Y     
 #010 Dragave             Y     Y     N     Y     N     Y     Y     N     Y     N     N     N     Y     N     Y     Y     N     Y     N     Y     N     Y     Y     Y     N     Y     N     Y     Y     N     Y     Y     N     Y     Y     N     Y     Y     Y     Y     Y     N     N     Y     Y     N     N     Y     N     N     N     N     N     N     N     Y     Y     Y     Y     Y     N     Y     Y     Y     N     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     Y     N     Y     N     N     Y     Y     N     Y     N     N     N     N     Y     Y     N     Y     Y     N     Y     N     Y     Y     N     N     N     N     Y     Y     Y     

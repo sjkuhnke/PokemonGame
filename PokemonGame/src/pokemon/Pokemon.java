@@ -2164,6 +2164,16 @@ public class Pokemon implements RoleAssignable, Serializable {
 				return;
 			}
 			
+			if (moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST) {
+				Task.addAbilityTask(foe);
+				Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
+				endMove();
+				this.moveMultiplier = 1;
+				this.rollCount = 1;
+				this.metronome = -1;
+				return;
+			}
+			
 			if (moveType == PType.GROUND && !foe.isGrounded() && move.cat != 2) {
 				if (foeAbility == Ability.LEVITATE) Task.addAbilityTask(foe);
 				Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
@@ -2175,7 +2185,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			
 			if (moveType != PType.GROUND && (move.cat != 2 || move == Move.THUNDER_WAVE)) {
-				if (getImmune(foe, moveType) || (moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST)) {
+				if (getImmune(foe, moveType)) {
 					if (foe.getItem() == Item.RING_TARGET) {
 						// Nothing
 					} else if (this.ability == Ability.SCRAPPY && (moveType == PType.NORMAL || moveType == PType.FIGHTING)) {
@@ -2189,7 +2199,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 								this.faint(true, foe);
 							}
 						}
-						if (foeAbility == Ability.FRIENDLY_GHOST && moveType == PType.GHOST) Task.addAbilityTask(foe);
 						Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 						endMove();
 						this.outCount = 0;
@@ -3687,7 +3696,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.PSYCHIC) {
 			stat(foe, 3, -1, this);
 		} else if (move == Move.PSYCHIC_NOISE) {
-			if (!foe.hasStatus(Status.HEAL_BLOCK)) {
+			if (!foe.hasStatus(Status.HEAL_BLOCK) && !foe.isFainted()) {
 				foe.addStatus(Status.HEAL_BLOCK);
 				foe.healBlockCount = 2;
 				Task.addTask(Task.TEXT, foe.nickname + " was prevented from healing!");
@@ -3794,7 +3803,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					foe.statStages[i] = 0;
 				}
 			}
-		} else if (move == Move.SPIRIT_BREAK) {
+		} else if (move == Move.RADIANT_BREAK) {
 			stat(foe, 2, -1, this);
 		} else if (move == Move.STEEL_WING) {
 			stat(this, 1, 1, foe);
@@ -3984,7 +3993,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (announce && move == Move.AURORA_GLOW) {
 			if (!(field.contains(this.getFieldEffects(), Effect.AURORA))) {
 				this.getFieldEffects().add(field.new FieldEffect(Effect.AURORA));
-				if (announce) Task.addTask(Task.TEXT, "A glowing Aurora surrounded " + this.nickname + "'s team!");
+				Task.addTask(Task.TEXT, "A glowing Aurora surrounded " + this.nickname + "'s team!");
+				this.checkStarborn(foe);
+				foe.checkStarborn(this);
 			} else {
 				fail = fail(announce);
 			}
@@ -4837,7 +4848,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (effect.isTerrain) {
 			if (!field.equals(field.terrain, effect)) return;
 		} else {
-			if (!field.contains(fieldEffects, effect)) return;
+			if (!field.contains(field.fieldEffects, effect)) return;
 		}
 		
 		if (this.item != item && f.item != item) return;
@@ -5643,6 +5654,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			return 0;
 		}
 		
+		if (moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST) {
+			return 0;
+		}
+		
 		if ((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB) ||
 				(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)) {
 			return 0;
@@ -5658,7 +5673,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (moveType != PType.GROUND && (move.cat != 2 || move == Move.THUNDER_WAVE)) {
-			if (getImmune(foe, moveType) || (moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST)) {
+			if (getImmune(foe, moveType)) {
 				if (foe.getItem() == Item.RING_TARGET) {
 					// Nothing
 				} else if (this.ability == Ability.SCRAPPY && (moveType == PType.NORMAL || moveType == PType.FIGHTING)) {
@@ -7289,14 +7304,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 			FieldEffect effect = field.new FieldEffect(Effect.MAGIC_ROOM);
 			effect.turns = 5;
 			field.setEffect(effect);
-			this.checkSeed(foe, Item.ROOM_SERVICE, Effect.TRICK_ROOM);
 		} else if (this.ability == Ability.EVERGLOW) {
-			Task.addAbilityTask(this);
 			if (!(field.contains(this.getFieldEffects(), Effect.AURORA))) {
+				Task.addAbilityTask(this);
 				this.getFieldEffects().add(field.new FieldEffect(Effect.AURORA));
 				Task.addTask(Task.TEXT, "A glowing Aurora surrounded " + this.nickname + "'s team!");
+				foe.checkStarborn(this);
 			}
-			this.checkSeed(foe, Item.ROOM_SERVICE, Effect.TRICK_ROOM);
 		} else if (this.ability == Ability.INTIMIDATE || this.ability == Ability.SCALY_SKIN) {
 			Task.addAbilityTask(this);
 			if (foe.ability == Ability.INNER_FOCUS || foe.ability == Ability.SCRAPPY || foe.ability == Ability.UNWAVERING) {
@@ -7326,6 +7340,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			} else {
 				stat(foe, 1, -1, this);
 			}
+		} else if (this.ability == Ability.STARBORN) {
+			this.checkStarborn(foe);
 		} else if (this.ability == Ability.ILLUSION) {
 			Task.addAbilityTask(this);
 			Task.addTask(Task.TEXT, this.nickname + " casts a terrifying illusion!");
@@ -7382,11 +7398,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.swapIn(foe, false);
 			}
 		} else if (this.ability == Ability.TALENTED) {
-			Task.addAbilityTask(this);
-			Task.addTask(Task.TEXT, this.nickname + " copied " + foe.nickname + "'s stat boosts!");
-			for (int i = 0; i < 7; ++i) {
-				if (foe.statStages[i] > 0) {
-					stat(this, i, foe.statStages[i], foe);
+			if (arrayGreaterOrEqual(new int[] {0, 0, 0, 0, 0, 0, 0}, foe.statStages)) {
+				Task.addAbilityTask(this);
+				Task.addTask(Task.TEXT, this.nickname + " copied " + foe.nickname + "'s stat boosts!");
+				for (int i = 0; i < 7; ++i) {
+					if (foe.statStages[i] > 0) {
+						stat(this, i, foe.statStages[i], foe);
+					}
 				}
 			}
 		} else if (this.ability == Ability.PRESSURE) {
@@ -7474,6 +7492,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 	}
 	
+	private void checkStarborn(Pokemon foe) {
+		if (this.ability == Ability.STARBORN && field.contains(field.fieldEffects, Effect.AURORA)) {
+			Task.addAbilityTask(this);
+			stat(this, 2, 1, foe);
+		}
+	}
+
 	private void damage(double amt, Pokemon foe) {
 		this.damage((int) amt, foe);
 	}

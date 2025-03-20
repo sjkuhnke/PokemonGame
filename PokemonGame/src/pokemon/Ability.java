@@ -123,6 +123,7 @@ public enum Ability {
 	SOLID_ROCK("Reduces damage from supereffective attacks."),
 	SPARKLY_SURGE("Turns the ground into SPARKLY TERRAIN when the Pokemon enters a battle."),
 	SPEED_BOOST("Its Speed stat is gradually boosted."),
+	STARBORN("Raises Sp. Atk stat by 1 if Aurora Glow is active."),
 	STATIC("Contact with the Pokemon may paralyze the attacker."),
 	STEELWORKER("Powers up STEEL moves."),
 	STICKY_HOLD("Protects the Pokemon from item theft."),
