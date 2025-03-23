@@ -1299,30 +1299,32 @@ public enum Item {
 	        }
 		}
         
-        if (f != null && f.trainerOwned()) {
-        	int index = getPokemonIndex(f.trainer.getTeam()[0], foeMons);
-        	boolean remove = index >= 0;
-        	if (!remove) index = 0;
-        	
-        	Pokemon[] team = f.trainer.getTeam();
-        	int currentIndex = -1;
-        	for (int i = 0; i < team.length; i++) {
-        		Pokemon updatedMon = team[i].clone();
-        		updatedMon.nickname = f.trainer.getName();
-        		foeMons.insertItemAt(updatedMon, index + i + 1);
-        		if (remove) foeMons.removeItemAt(index + i);
-        		
-        		if (team[i].equals(f)) {
-        			currentIndex = index + i;
-        			if (!remove) currentIndex++;
-        		}
+        if (f != null) {
+        	if (f.trainerOwned()) {
+        		int index = getPokemonIndex(f.trainer.getTeam()[0], foeMons);
+            	boolean remove = index >= 0;
+            	if (!remove) index = 0;
+            	
+            	Pokemon[] team = f.trainer.getTeam();
+            	int currentIndex = -1;
+            	for (int i = 0; i < team.length; i++) {
+            		Pokemon updatedMon = team[i].clone();
+            		updatedMon.nickname = f.trainer.getName();
+            		foeMons.insertItemAt(updatedMon, index + i + 1);
+            		if (remove) foeMons.removeItemAt(index + i);
+            		
+            		if (team[i].equals(f)) {
+            			currentIndex = index + i;
+            			if (!remove) currentIndex++;
+            		}
+            	}
+            	
+            	if (currentIndex >= 0) {
+            		foeMons.setSelectedIndex(currentIndex);
+            	}
+            } else {
+            	foeMons.setSelectedIndex(0);
         	}
-        	
-        	if (currentIndex >= 0) {
-        		foeMons.setSelectedIndex(currentIndex);
-        	}
-        } else {
-        	foeMons.setSelectedIndex(0);
         }
         
         if (display) JOptionPane.showMessageDialog(null, calc, "Damage Calculator", JOptionPane.PLAIN_MESSAGE);
