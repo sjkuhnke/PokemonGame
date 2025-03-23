@@ -398,7 +398,7 @@ public class PlayerCharacter extends Entity {
 		}
 		if (keyH.aPressed) {
 			if (keyH.ctrlPressed) {
-				keyH.ctrlPressed = false;
+				gp.keyH.resetKeys();
 				resetSpriteNum();
 				Item.useCalc(p.getCurrent(), null, null, true);
 			} else {
