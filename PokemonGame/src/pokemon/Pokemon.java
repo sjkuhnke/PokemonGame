@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8107,6 +8108,19 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    return clonedPokemon;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pokemon other = (Pokemon) obj;
+		return id == other.id && level == other.level && slot == other.slot && Objects.equals(trainer, other.trainer);
+	}
+	
+
 	public static String getStatType(int i, boolean big) {
 		String type = "";
 		switch (i) {
@@ -9518,7 +9532,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this.currentHP == this.getStat(0)) return;
 		String message = this.nickname + " restored HP from the Aurora Glow!";
 		int amt = (int) this.getHPAmount(1.0/8);
-		if (this.visible) {
+		if ((this.trainer != null && this.trainer.getCurrent() == this) || (this.trainer == null && this.visible)) {
 			this.heal(amt, message);
 		} else {
 			Task.addTask(Task.TEXT, message);
@@ -9645,6 +9659,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 
 	public void takeWish(int stat) {
 		this.heal(stat, this.nickname + "'s wish came true!");
+	}
+
+	public void setCalcNickname() {
+		this.nickname = String.format("%s [%d]", this.trainer.getName(), this.slot + 1);
 	}
 	
 }

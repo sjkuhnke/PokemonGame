@@ -835,7 +835,7 @@ public enum Item {
 	        for (Pokemon pokemon : pl.getOrderedTeam()) {
 	        	Pokemon add = pokemon.clone();
 	        	if (!(pl instanceof Player)) {
-	        		add.nickname = pl.getName();
+	        		add.setCalcNickname();
 	        	}
 	    		userMons.addItem(add.clone());
 	    		if (pokemon.id == 150) {
@@ -909,7 +909,7 @@ public enum Item {
 	        	if (tr != null) {
 	        		for (Pokemon po : tr.getTeam()) {
 	            		Pokemon add = po.clone();
-	            		add.nickname = tr.getName();
+	            		add.setCalcNickname();
 	            		foeMons.addItem(add);
 	            	}
 	        	}
@@ -1252,7 +1252,7 @@ public enum Item {
 			for (Pokemon pokemon : pl.getOrderedTeam()) {
 	        	Pokemon add = pokemon.clone();
 	        	if (!(pl instanceof Player)) {
-	        		add.nickname = pl.getName();
+	        		add.setCalcNickname();
 	        	}
 	    		userMons.addItem(add.clone());
 	    		if (pokemon.id == 150) {
@@ -1300,7 +1300,7 @@ public enum Item {
 		}
         
         if (f != null) {
-        	if (f.trainerOwned()) {
+        	if (f.trainerOwned()) {        		
         		int index = getPokemonIndex(f.trainer.getTeam()[0], foeMons);
             	boolean remove = index >= 0;
             	if (!remove) index = 0;
@@ -1309,18 +1309,18 @@ public enum Item {
             	int currentIndex = -1;
             	for (int i = 0; i < team.length; i++) {
             		Pokemon updatedMon = team[i].clone();
-            		updatedMon.nickname = f.trainer.getName();
+            		updatedMon.setCalcNickname();
             		foeMons.insertItemAt(updatedMon, index + i + 1);
             		if (remove) foeMons.removeItemAt(index + i);
             		
-            		if (team[i].equals(f)) {
+            		if (currentIndex < 0 && team[i].equals(f)) {
             			currentIndex = index + i;
             			if (!remove) currentIndex++;
             		}
             	}
             	
             	if (currentIndex >= 0) {
-            		foeMons.setSelectedIndex(currentIndex);
+            		foeMons.setSelectedItem(foeMons.getItemAt(currentIndex));
             	}
             } else {
             	foeMons.setSelectedIndex(0);
@@ -1334,7 +1334,7 @@ public enum Item {
 	private static int getPokemonIndex(Pokemon p, JComboBox<Pokemon> mons) {
 		for (int i = 0; i < mons.getItemCount(); i++) {
 			Pokemon current = mons.getItemAt(i);
-			if (current.id == p.id && current.trainer == p.trainer && current.slot == p.slot) {
+			if (p.equals(current)) {
 				return i;
 			}
 		}
