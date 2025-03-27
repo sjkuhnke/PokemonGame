@@ -22,7 +22,7 @@ Rockmite
 Arthra Team:
 Butterfree-X Bronzong-X Hissimitar Suvinero Bouncerog Winagrow
 Unused Boss Pokemon:
-Curlatoral Crystallor Cairnasaur Ramant Boulderoar Raptorex Pyrator Magmaclang Lafloo Houndoom Fireblion Flamebless Megawatt Thunderzap Spinaquata Gyarados Barbaracle Hast Zurroaratr Conkeldurr Soldrota
+Curlatoral Crystallor Cairnasaur Ramant Boulderoar Raptorex Pyrator Magmaclang Lafloo Houndoom Fireblion Megawatt Thunderzap Spinaquata Gyarados Barbaracle Hast Zurroaratr Conkeldurr Soldrota
 
 Game2.72: Encounters and TN base stuff done 3/27
 Game2.721: Items for Mt Splinkty done 3/29
@@ -227,8 +227,6 @@ Ryder
 Elite Four Poison (chemist)/Ground/Fighting/Steel
 Gym Leader redos
 
-
-
 Gym Leader Names:
 Robin (postman)
 Stanford
@@ -306,15 +304,13 @@ Before Battle:
 
 ""
 ""
-"My speed, my power, my Pokemon - everything's at its peak! Bring it on!"
+""
 "This is no game! My Fire and Electric types are ready to shock and scorch you!"
-"You'll need more than luck to outmatch me. I'm bringing the heat!"
 After:
 
 ""
 ""
-"I've gotta admit, you've got some serious skills. Respect!"
-"You may have cooled me down this time, but I'm coming back hotter than ever!"
+""
 "A shocking loss... but it's not the end. I'll keep improving!"
 
 Hiker (Ground/Rock/Steel)
@@ -324,7 +320,7 @@ Before:
 "The mountains made me strong, and my Pokemon even stronger!"
 "You'll need more than a little luck to break through my rock-solid team!"
 "Get ready! My Pokemon are as tough as the earth beneath your feet!"
-"Climbing mountains builds strength. Let's see if you can match mine!"
+""
 "You've got guts challenging me. Let's see if you've got the skill to back it up!"
 After:
 
@@ -332,7 +328,7 @@ After:
 "Whoa, that was like an avalanche... Guess I've gotta train more!"
 "You're one tough trainer. I'll have to step up my game!"
 "Even the strongest mountains can crumble, I guess..."
-"That was a solid battle. I'll be even tougher next time!"
+""
 "You win this one, but don't think I'll be so easy to beat again!"
 
 Burglar (Crook/Dark)
@@ -464,7 +460,7 @@ After
 Fisher (Water)
 Before Battle:
 
-"Fishing requires patience, but battling? That's where I make a splash!"
+""
 "My Water Pokemon are strong enough to sink any opponent!"
 "The ocean is full of mysteries... but there's no mystery to my team's strength!"
 "Let's see if you can weather the tide of my Pokemon!"
@@ -473,7 +469,7 @@ Before Battle:
 "The water's been kind to me, but I won't be kind to you!"
 After Battle:
 
-"You're like a storm at sea... I couldn't keep up!"
+""
 "Looks like my line snapped... but I'll catch a win next time!"
 "That was a good battle. I'll train harder for the next one!"
 "Even the best anglers have off days... I'll reel in a win eventually!"
@@ -484,14 +480,14 @@ After Battle:
 Surfer (M) (Water)
 Before
 
-"The waves and I are in sync - let's ride this battle out!"
+""
 "My Water Pokemon will wash you away!"
 ""
 "You're about to get totally wiped out!"
 "The ocean's my playground, and my Pokemon rule the waves!"
 After
 
-"Wiped out! Guess I need to catch some new moves."
+""
 "Whoa, you totally swamped me!"
 ""
 "Even the best surfers wipe out sometimes... I'll ride higher next time!"
@@ -499,17 +495,17 @@ After
 
 Swimmer (F) (Water)
 Before:
-"The water's my home, and my Pokemon rule it! Let's battle!"
-"Think you can keep up with the flow of my Water Pokemon? Let's see!"
+""
+""
 "My team's as fast and powerful as the ocean's waves!"
-"This battle's going to be a splash! Let's dive right in!"
+""
 "Water Pokemon are the best! You're about to see why!"
 After:
 
-"Wow, you're amazing! I couldn't even stay afloat in that battle!"
-"Looks like I'm all washed up... but I'll be back stronger!"
+""
+""
 "You're really good! I'll keep swimming and training until I can beat you!"
-"That was fun! Next time, I'll ride the wave to victory!"
+""
 "Even the tides couldn't save me this time. Great battle!"
 
 Explorer (Ice)

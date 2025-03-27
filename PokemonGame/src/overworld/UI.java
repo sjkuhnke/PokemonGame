@@ -1600,7 +1600,7 @@ public class UI extends AbstractUI {
 			if (p != null) {
 				String message = "";
     			message += p.nickname;
-    			if (!p.nickname.equals(p.name())) message += (" (" + p.name() + ")");
+    			//if (!p.nickname.equals(p.name())) message += (" (" + p.name() + ")");
     			message += " : ";
     			PType type = p.determineHPType();
     			message += type;

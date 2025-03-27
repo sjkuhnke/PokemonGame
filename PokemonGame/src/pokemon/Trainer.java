@@ -27,9 +27,6 @@ public class Trainer implements Serializable {
 	public static final int MAX_TRAINERS = 420;
 	public static Trainer[] trainers = new Trainer[MAX_TRAINERS];
 	
-	public static ArrayList<Trainer> bossTrainers = new ArrayList<>();
-	public static ArrayList<String> bosses = new ArrayList<String>(Arrays.asList("Scott", "Fred", "Rick", "Leader", "Maxwell", "Arthra", "Robin", "Stanford", "Millie", "Glacius", "Mindy", "Rayna", "Merlin", "Nova"));
-	
 	public Trainer(String name, Pokemon[] team, int money) {
 		this(name, team, money, null, 0);
 	}

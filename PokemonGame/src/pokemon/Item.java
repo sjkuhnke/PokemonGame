@@ -1373,10 +1373,13 @@ public enum Item {
         		maxDamageD *= 100;
         		String formattedMaxD = String.format("%.1f", maxDamageD);
         		damages[k].setText(formattedMinD + "% - " + formattedMaxD + "%");
+        		damages[k].setForeground(crit && current.moveset[k].move.cat != 2 ? Color.RED : Color.BLACK);
+        		damages[k].setFont(crit && current.moveset[k].move.cat != 2 ? new Font("Arial", Font.BOLD, 12) : new Font("Arial", Font.PLAIN, 12));
         	} else {
         		moves[k].setText("[NO MOVE]");
         		moves[k].setBackground(null);
         		damages[k].setText("0% - 0%");
+        		damages[k].setForeground(Color.BLACK);
         	}
     		MouseListener[] listeners = moves[k].getMouseListeners();
     		for (MouseListener listener : listeners) {

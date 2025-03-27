@@ -8895,10 +8895,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (name.contains("Scott") || name.contains("Fred")) {
 				rivalIndices.add(index);
 			}
-			
-			if (Trainer.bosses.stream().anyMatch(name::contains)) {
-				Trainer.bossTrainers.add(trainer);
-			}
 		}
 		
 		updateRivals();
