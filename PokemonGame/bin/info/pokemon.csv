@@ -260,8 +260,8 @@
 -7 |Swalot       |POISON  |null    |STICKY_HOLD       |GOOEY             |SIMPLE            |[120, 73, 83, 73, 83, 55]     |176.4 |75 |
 157|Gulpin-X     |GALACTIC|POISON  |BLACK_HOLE        |BLACK_HOLE        |BLACK_HOLE        |[75, 38, 63, 53, 58, 45]      |105.5 |200|
 158|Swalot-X     |GALACTIC|POISON  |BLACK_HOLE        |STICKY_HOLD       |SIMPLE            |[150, 39, 80, 93, 95, 40]     |999.9 |65 |
-221|Plasamp      |GALACTIC|STEEL   |STARBORN          |LEVITATE          |TALENTED          |[60, 55, 70, 90, 70, 65]      |88.1  |50 |
-222|Genieova     |GALACTIC|STEEL   |STARBORN          |STARBORN          |TALENTED          |[90, 70, 105, 120, 95, 90]    |619.2 |15 |
+221|Plasamp      |GALACTIC|STEEL   |STARBORN          |LEVITATE          |MYSTIC_ABSORB     |[60, 55, 70, 90, 70, 65]      |88.1  |50 |
+222|Genieova     |GALACTIC|STEEL   |STARBORN          |LEVITATE          |DJINN1S_FAVOR     |[90, 70, 105, 120, 95, 90]    |619.2 |15 |
 184|Elgyem       |GALACTIC|null    |COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[55, 55, 55, 85, 55, 30]      |19.8  |125|
 185|Beheeyem     |GALACTIC|PSYCHIC |COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[75, 75, 75, 125, 95, 40]     |76.1  |70 |
 -12|Elgyem-E     |GALACTIC|ELECTRIC|COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[75, 55, 55, 75, 45, 30]      |49.3  |125|

@@ -1502,6 +1502,7 @@ E - Stockpile
 53 - Gunk Shot
 55 - Outrage
 60 - Dragon Dance
+65 - Toxic Spikes
 70 - Abyssal Chop
 
 ===================
@@ -3330,8 +3331,9 @@ E - Light Speed
 30 - Beat Up
 33 - Quiver Dance
 36 - U-Turn
-40 - Night Slash
-44 - X-Scissor
+39 - Night Slash
+42 - Pin Missile
+45 - X-Scissor
 47 - Night Daze
 50 - Extreme Speed
 53 - Sucker Punch
@@ -7770,22 +7772,42 @@ Level Up:
 #221 - Plasamp                                                                                         [263]
 ===================
 Type:
-Steel / Galactic
+Galactic / Steel
 
 Ability:
-Scrappy / Unburden / (Talented)
+Starborn / Levitate / (Mystic Absorb)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+60 HP / 55 Atk / 70 Def / 90 SpA / 70 SpD / 65 Spe / 410 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Tackle
+1 - Cosmic Power
+3 - Wrap
+6 - Space Beam
+8 - Hocus Pocus
+10 - Magnet Bomb
+12 - Teleport
+12 - Quick Spell
+15 - Mirror Shot
+18 - Gravity
+20 - Metal Sound
+20 - Wish
+22 - Iron Head
+25 - Charge Beam
+27 - Magic Room
+27 - Trick
+30 - Flash Cannon
+30 - Aurora Glow
+32 - Disenchant
+35 - Magic Reflect
+38 - Iron Defense
+40 - Recover
+43 - Magic Missiles
+45 - Galaxy Blast
+48 - Iron Blast
+50 - Future Sight
+55 - Star Storm
 
 Evolutions:
 Plasamp -> Genieova ()
@@ -7794,22 +7816,52 @@ Plasamp -> Genieova ()
 #222 - Genieova                                                                                        [264]
 ===================
 Type:
-Steel / Galactic
+Galactic / Steel
 
 Ability:
-Scrappy / Unburden / (Talented)
+Starborn / Levitate / (Djinn's Favor)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+90 HP / 70 Atk / 105 Def / 120 SpA / 95 SpD / 90 Spe / 570 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Magnet Rise
+1 - Hex Claw
+1 - Flash Darts
+1 - Tackle
+1 - Cosmic Power
+3 - Wrap
+6 - Space Beam
+8 - Hocus Pocus
+10 - Magnet Bomb
+12 - Teleport
+12 - Quick Spell
+15 - Mirror Shot
+18 - Gravity
+20 - Metal Sound
+20 - Wish
+22 - Iron Head
+25 - Charge Beam
+27 - Magic Room
+27 - Trick
+30 - Flash Cannon
+30 - Aurora Glow
+32 - Disenchant
+35 - Magic Reflect
+38 - Iron Defense
+40 - Bullet Punch
+43 - Shooting Stars
+43 - Magic Missiles
+45 - Galaxy Blast
+48 - Iron Head
+50 - Spacial Rend
+52 - Meteor Mash
+55 - Star Storm
+58 - Core Enforcer
+60 - Recover
+65 - Future Sight
+70 - Black Hole Eclipse
+75 - Supernova Explosion
 
 ===================
 #223 - Rockmite                                                                                        [195]
@@ -10361,6 +10413,7 @@ E - Body Slam
 42 - Gastro Acid
 45 - Toxic Spikes
 49 - Belch
+52 - Acid Armor
 
 ===================
 #008 - Bronzor                                                                                         [274]
@@ -10534,7 +10587,7 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 #082 Florlion            Y     N     Y     N     Y     N     Y     N     N     N     Y     Y     N     Y     N     N     N     N     Y     Y     N     N     N     Y     Y     N     Y     N     N     N     N     Y     N     Y     N     Y     N     Y     Y     N     Y     Y     N     Y     N     Y     Y     N     Y     Y     N     N     N     N     Y     N     Y     N     Y     N     N     Y     Y     Y     N     Y     N     N     N     N     Y     N     Y     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     Y     N     Y     N     Y     Y     N     Y     N     N     Y     Y     Y     N     Y     N     Y     Y     Y     N     Y     
 #083 Psycorb             N     Y     Y     N     Y     N     N     N     N     N     N     Y     N     Y     N     N     N     N     Y     Y     N     Y     N     N     N     Y     N     N     N     N     Y     Y     N     Y     N     N     N     Y     N     Y     N     N     N     Y     Y     N     Y     Y     Y     N     N     N     N     N     N     N     Y     N     Y     N     N     Y     Y     N     N     Y     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     Y     N     N     N     Y     N     N     N     Y     N     N     Y     Y     N     N     N     N     Y     N     N     N     N     Y     N     N     N     Y     
 #084 Psyballs            N     Y     Y     N     Y     N     Y     N     N     N     N     Y     N     Y     N     N     N     N     Y     N     N     Y     N     N     N     Y     N     N     N     N     Y     Y     N     Y     N     N     N     Y     N     Y     N     N     N     Y     Y     N     Y     Y     Y     N     N     N     N     N     N     N     Y     N     Y     N     N     Y     Y     N     N     Y     N     N     N     N     Y     N     N     N     N     N     N     N     Y     N     Y     N     N     N     Y     N     N     N     Y     N     N     Y     Y     Y     N     N     N     Y     Y     N     N     N     Y     N     N     N     Y     
-#085 Psycorboratr        N     Y     Y     N     Y     N     Y     N     N     N     N     Y     N     Y     N     N     N     N     Y     N     N     Y     Y     Y     N     Y     Y     Y     N     N     Y     Y     N     Y     N     N     N     Y     N     Y     N     N     N     Y     Y     N     Y     Y     Y     N     N     N     N     N     N     N     Y     N     Y     N     N     Y     Y     Y     N     Y     Y     N     N     N     Y     Y     N     N     N     N     N     N     Y     N     Y     N     N     N     Y     N     N     N     Y     N     N     Y     Y     Y     N     N     N     Y     Y     Y     N     N     Y     N     N     N     Y     
+#085 Psycorboratr        N     Y     Y     N     Y     N     Y     N     N     N     N     Y     N     Y     N     Y     N     N     Y     N     N     Y     Y     Y     N     Y     Y     Y     N     N     Y     Y     N     Y     N     N     N     Y     N     Y     N     N     N     Y     Y     N     Y     Y     Y     N     N     N     N     N     N     N     Y     N     Y     N     N     Y     Y     Y     N     Y     Y     N     N     N     Y     Y     N     N     N     N     N     N     Y     N     Y     N     N     N     Y     N     N     N     Y     N     N     Y     Y     Y     N     N     N     Y     Y     Y     N     N     Y     N     N     N     Y     
 #086 Ralts               N     N     Y     N     Y     N     N     N     N     N     N     Y     N     Y     Y     N     N     N     Y     Y     N     Y     N     Y     N     N     Y     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     Y     Y     N     N     N     N     N     Y     N     Y     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     Y     
 #087 Kirlia              N     N     Y     N     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     Y     Y     N     Y     N     Y     N     N     Y     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     N     Y     N     N     N     N     Y     N     Y     Y     Y     N     Y     N     N     N     Y     N     Y     N     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     Y     
 #088 Gardevoir           N     N     Y     N     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     Y     Y     N     Y     N     Y     N     N     Y     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     N     Y     N     N     N     N     Y     N     Y     Y     Y     N     Y     N     Y     N     Y     N     Y     N     N     Y     Y     N     N     Y     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     Y     Y     Y     N     Y     N     N     Y     N     Y     N     N     N     N     Y     Y     Y     N     Y     
@@ -10564,9 +10617,9 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 #109 Sparkitten          Y     Y     N     N     N     N     Y     Y     Y     N     N     Y     Y     Y     N     N     N     N     N     Y     N     N     N     N     Y     N     Y     N     N     N     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     N     Y     N     N     N     Y     Y     N     N     Y     Y     Y     Y     Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     Y     N     Y     N     N     Y     N     N     N     Y     N     Y     N     N     N     Y     N     N     N     Y     Y     N     N     N     N     Y     N     N     Y     N     Y     N     Y     N     Y     N     Y     
 #110 Fireblion           Y     Y     N     N     N     N     Y     Y     Y     N     N     N     Y     Y     N     N     N     N     N     Y     N     Y     Y     Y     Y     N     Y     N     N     N     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     N     Y     N     N     N     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     Y     N     Y     N     Y     Y     N     Y     N     Y     Y     N     Y     N     Y     N     Y     N     Y     Y     N     N     Y     Y     N     Y     N     N     N     Y     N     N     N     Y     Y     N     N     Y     N     Y     Y     Y     Y     N     Y     N     Y     N     Y     N     Y     
 #111 Flamebless          Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     Y     Y     Y     N     N     Y     Y     Y     N     N     Y     Y     Y     N     Y     N     N     N     Y     Y     Y     Y     N     Y     N     Y     Y     Y     Y     Y     Y     N     N     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     Y     N     Y     Y     N     Y     N     N     Y     Y     N     Y     N     N     N     Y     N     N     N     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     N     Y     N     Y     Y     Y     N     Y     
-#112 Shookwat            N     N     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     Y     N     N     N     Y     Y     N     N     N     Y     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     
-#113 Wattwo              N     Y     N     N     N     N     Y     N     Y     N     N     N     N     Y     N     Y     N     N     Y     Y     N     Y     Y     Y     N     Y     N     N     Y     N     N     N     Y     Y     N     N     Y     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     N     N     N     Y     N     N     N     Y     N     N     N     N     Y     N     N     Y     Y     N     N     N     Y     Y     N     N     N     Y     N     N     N     N     Y     Y     N     N     Y     N     N     Y     N     N     N     N     N     Y     
-#114 Megawatt            N     Y     N     N     N     N     Y     N     Y     Y     N     N     N     Y     Y     Y     N     N     Y     Y     N     Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     Y     Y     N     Y     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     Y     N     N     Y     N     N     N     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     N     N     Y     Y     N     N     N     Y     N     N     N     N     Y     Y     N     N     Y     N     N     Y     N     N     N     Y     N     Y     
+#112 Shookwat            N     N     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     Y     N     N     N     Y     Y     N     N     N     Y     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     
+#113 Wattwo              N     Y     N     N     N     N     Y     N     Y     N     N     N     N     Y     N     Y     N     N     Y     Y     N     Y     Y     Y     N     Y     N     N     Y     N     N     N     Y     Y     N     N     Y     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     N     N     N     Y     N     N     N     Y     N     N     N     N     Y     N     N     Y     Y     N     N     N     Y     Y     N     N     Y     Y     N     N     N     N     Y     Y     N     N     Y     N     N     Y     N     N     N     N     N     Y     
+#114 Megawatt            N     Y     N     N     N     N     Y     N     Y     Y     N     N     N     Y     Y     Y     N     N     Y     Y     N     Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     Y     Y     N     Y     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     Y     N     N     Y     N     N     N     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     N     N     Y     Y     N     N     Y     Y     N     N     N     N     Y     Y     N     N     Y     N     N     Y     N     N     N     Y     N     Y     
 #115 Elelamb             N     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     N     N     N     N     N     N     N     Y     Y     Y     N     Y     N     Y     N     Y     N     N     N     Y     N     N     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     N     N     Y     N     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     N     N     N     Y     
 #116 Electroram          N     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     N     Y     N     Y     N     N     N     Y     Y     Y     N     Y     Y     Y     N     Y     N     N     N     Y     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     Y     Y     N     Y     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     Y     Y     N     N     Y     N     Y     N     N     N     Y     N     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     N     N     N     Y     
 #117 Superchargo         N     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     Y     N     N     Y     Y     N     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     Y     N     Y     Y     Y     N     Y     N     N     Y     Y     Y     N     N     Y     N     N     N     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     Y     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     Y     Y     N     N     Y     N     Y     Y     N     N     Y     N     Y     N     Y     N     N     N     Y     N     N     Y     Y     N     N     N     N     N     Y     
@@ -10772,3 +10825,304 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 #296 Shroodle            Y     N     N     N     N     N     N     N     Y     N     N     N     Y     N     N     N     N     N     N     Y     Y     Y     N     N     N     Y     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     N     N     N     Y     N     N     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     Y     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     Y     N     N     N     N     Y     Y     N     N     Y     N     Y     N     N     N     N     N     N     N     N     N     Y     
 #297 Grafaiai            Y     N     Y     N     N     N     Y     N     Y     N     N     N     Y     N     N     Y     N     N     N     Y     Y     Y     Y     N     N     Y     N     Y     Y     N     N     N     N     Y     N     Y     Y     Y     Y     N     N     N     N     Y     N     N     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     Y     N     N     N     Y     N     N     Y     N     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     Y     Y     N     N     Y     N     N     N     N     Y     Y     N     Y     Y     N     Y     N     N     N     N     N     N     N     Y     N     Y     
 ====================================================================================
+Unused moves:
+Return Light
+Sunny Doom
+Return Magic
+Return Galactic
+Noble Roar
+Return Fighting
+Return Ghost
+Moonblast
+Struggle
+Strength
+Play Rough
+Luster Purge
+Hp Galactic
+Seismic Toss
+Hp Water
+Return Dark
+Hp Magic
+Magic Blast
+Hp Ground
+Petal Blizzard
+Lunar Dance
+Return Ground
+Hp Poison
+Hp Electric
+Sparkly Swirl
+Twinkle Tackle
+Return Flying
+Hp Flying
+Return Rock
+Hp Bug
+Return Dragon
+Magic Crash
+Spirit Break
+Sparkle Strike
+Return Electric
+Failed Sucker
+Draining Kiss
+Glittering Sword
+Return Steel
+Hp Ghost
+Twineedle
+Hp Dragon
+Hp Fighting
+Return Fire
+Glittering Tornado
+Return Ice
+Return Water
+Hp Rock
+Hp Ice
+Glitzy Glow
+Hp Fire
+Hp Grass
+Hp Dark
+Return Bug
+Hp Steel
+Return Poison
+Elemental Sparkle
+Hp Psychic
+Return Psychic
+Hp Light
+Return Grass
+
+TM Only:
+Terrain Pulse
+Vine Cross
+Giga Impact
+Lava Surf
+Sleep Talk
+Rock Climb
+Cut
+Slow Fall
+
+Signature Moves (3):
+Acrobatics : Fightorex
+Acrobatics : Suvinero
+Acrobatics : Raptorex
+Bind : Carinx
+Bind : Cairnasaur
+Bind : Carinator
+Branch Poke : Thunderzap
+Branch Poke : Twigzap
+Branch Poke : Shockbranch
+Bubble : Sheltor
+Bubble : Bouncerog
+Bubble : Froshrog
+Captivate : Butterfree
+Captivate : Butterfree-X
+Captivate : Frosmoth
+Cross Chop : Ninjakik
+Cross Chop : Swordik
+Cross Chop : Barbaracle
+Facade : Scraftagon
+Facade : Scraggy
+Facade : Scrafty
+Fell Stinger : Fever Dream
+Fell Stinger : Leavanny
+Fell Stinger : Curlatoral
+Focus Blast : Shelnado
+Focus Blast : Whiskeroar
+Focus Blast : Raptorex
+Frenzy Plant : Winagrow
+Frenzy Plant : Despenero-S
+Frenzy Plant : Despenero
+Horn Attack : Rhynee
+Horn Attack : Rhypolar
+Horn Attack : Rhypo
+Hydro Vortex : Shocky Spire
+Hydro Vortex : Psylotter
+Hydro Vortex : Shelnado
+Ice Spinner : Bipedice
+Ice Spinner : Cosmocrash
+Ice Spinner : Fever Dream
+Lock-On : Droid
+Lock-On : Soldrota
+Lock-On : Armoid
+Mind Reader : Carinator
+Mind Reader : Cairnasaur
+Mind Reader : Ninjask
+Odor Sleuth : Houndour
+Odor Sleuth : Busheep
+Odor Sleuth : Houndoom
+Pop Pop : Armoid
+Pop Pop : Soldrota
+Pop Pop : Droid
+Power Whip : Ramant
+Power Whip : Treewin
+Rest : Sealeo
+Rest : Spheal
+Rest : Walrein
+Return : Ramant
+Return : Pyrator
+Return : Blaxer
+Sing : Marill
+Sing : Azumarill
+Sing : Azurill
+Snore : Sealeo
+Snore : Spheal
+Snore : Walrein
+Soak : Dompster
+Soak : Durfish
+Soak : Shocky Spire
+Summit Strike : Sneasler
+Summit Strike : Dragave
+Summit Strike : Scraftagon
+Sweet Scent : Roserade
+Sweet Scent : Roselia
+Take Over : Grust
+Take Over : Bronzong-X
+Take Over : Zurroaratr
+Tickle : Azumarill
+Tickle : Marill
+Tickle : Azurill
+Vise Grip : Grubbin
+Vise Grip : Vikavolt
+Vise Grip : Charjabug
+Zing Zap : Gyarados-E
+Zing Zap : Shockfang
+Zing Zap : Electrocobra
+
+Signature Moves (2):
+Abyssal Chop : Arbok
+Abyssal Chop : Scraftagon
+Acupressure : Durfish
+Acupressure : Dompster
+Aerial Ace : Gyarados
+Aerial Ace : Ninjask
+Aqua Veil : Otterpor
+Aqua Veil : Psylotter
+Beefy Bash : Whiskeroar
+Beefy Bash : Whiskers
+Bitter Malice : Arbok-S
+Bitter Malice : Zoroark
+Blaze Kick : Pyrator
+Blaze Kick : Blaxer
+Channeling Blow : Dragave
+Dark Void : Beheeyem-E
+Dark Void : Beheeyem
+Deep Sea Bubble : Kissyfishy-D
+Deep Sea Bubble : Kissyfishy
+Dragon Darts : Poshorump
+Dragon Darts : Shomp
+Drain Punch : Pyrator-S
+Drain Punch : Whiskers
+Drill Peck : Raptorex
+Drill Peck : Pigoga
+Entrainment : Tigrette
+Entrainment : Leavanny
+Feather Dance : Glittleshoo
+Feather Dance : Minishoo
+Field Flip : Malamar
+Freeze-Dry : Zurroaratr-S
+Freeze-Dry : Consodust
+Frustration : Ramant
+Frustration : Crystallor-E
+Geomancy : Reuniclus-X
+Geomancy : Bluebunn
+Glaciate : Fever Dream
+Glaciate : Icy Serpent
+Gravity Punch : Psycorboratr
+Gravity Punch : Beheeyem
+Horn Drill : Rhypolar
+Horn Drill : Rhynee
+Hyper Fang : Fireblion
+Hyper Fang : Dompster
+Mighty Cleave : Barbaracle
+Mighty Cleave : Cairnasaur
+Mimic : Grafaiai
+Mimic : Shroodle
+Mirror Move : Flashclaw
+Mirror Move : Magestiflash
+Molten Consume : Lafloo
+Molten Steelspike : Magron
+Needle Arm : Shockbranch
+Needle Arm : Thunderzap
+Perish Song : Azumarill
+Perish Song : Bronzong-X
+Poison Powder : Roserade
+Poison Powder : Butterfree
+Razor Shell : Binacle
+Razor Shell : Barbaracle
+Revenge : Raptorex
+Revenge : Fightorex
+Rising Voltage : Megawatt
+Rising Voltage : Wattwo
+Rock Smash : Sneasler
+Rock Smash : Sneasel-H
+Rockfall Frenzy : Tortugis
+Root Kick : Treewin
+Root Kick : Sapwin
+Sacred Fire : Fever Dream
+Sacred Fire : Solaroxyous
+Scorching Sands : Rhypolar
+Scorching Sands : Dust Sorcerer
+Sparkling Aria : Bouncerog
+Sparkling Aria : Shelnado
+Sparkling Water : Kissyfishy-D
+Sparkling Water : Kissyfishy
+Staff Jab : Ninjakik
+Steel Wing : Pigoga
+Steel Wing : Poshorump
+Strength Sap : Roserade
+Strength Sap : Twigzap
+Supercharged Splash : Kissyfishy
+Supercharged Splash : Kissyfishy-D
+Surf : Shocky Spire
+Surf : Shelnado
+Teeter Dance : Lombre
+Teeter Dance : Ludicolo
+V-Create : Fever Dream
+V-Create : Solaroxyous
+Vine Whip : Florlion
+Vine Whip : Florline
+Water Clap : Kissyfishy
+Water Clap : Kissyfishy-D
+Water Flick : Kissyfishy-D
+Water Flick : Kissyfishy
+Water Kick : Kissyfishy-D
+Water Kick : Kissyfishy
+Water Smack : Kissyfishy-D
+Water Smack : Kissyfishy
+Whip Smash : Vinnie
+Whip Smash : Suvinero
+Wood Hammer : Treewin
+Wood Hammer : Ramant
+
+Signature Moves (1):
+Aurora Boost : Dualmoose
+Baton Pass : Ninjask
+Belly Drum : Azumarill
+Blast Burn : Despenero
+Blue Flare : Splame
+Bolt Strike : Magikarp-E
+Dire Claw : Sneasler
+Dragon Ascent : Gyarados
+Fiery Wrath : Houndoom
+Freezing Glare : Hootowl
+Fusion Bolt : Blastflames-E
+Fusion Flare : Blastflames-E
+Guillotine : Vikavolt
+Hydro Cannon : Shocky Spire
+Lava Lair : Lafloo
+Leaf Blade : Leavanny
+Load Firearms : Soldrota
+Megahorn : Poshorump
+Mortal Spin : Glimmora
+Nightmare : Grust
+Pistol Pop : Soldrota
+Rage : Shomp
+Scald : Shocky Spire
+Signal Beam : Cage Critter
+Skill Swap : Beheeyem
+Star-Struck Arrow : Galactasolder
+Sunsteel Strike : Fireblion
+Super Fang : HammyBoy
+Thrash : Gyarados
+Vandalize : Grafaiai
+Venosteel Crosscut : Hissimitar
+Vital Throw : Bipedice
+Weather Ball : Roserade
+Worry Seed : Budew

@@ -367,7 +367,7 @@ Bluebunn (Lv. 21) @ Rindo Berry         / Lonely  /   Flash Fire     /   Magic R
 Magician Daedalus
 Butterfree-X (Lv. 21) @ Kebia Berry     / Lax     /   Mosaic Wings   /   Silver Wind, Hocus Pocus, Magic Reflect, Magic Room
 Minishoo (Lv. 21) @ Sitrus Berry        / Serious /   Serene Grace   /   Protect, Wish, Spellbind, Air Cutter
-Bronzor-X (Lv. 22) @ Leftovers          / Modest  /   Reforge        /   Disenchant, Iron Defense, Confuse Ray, Magic Reflect
+Bronzor-X (Lv. 22) @ Leftovers          / Impish  /   Reforge        /   Disenchant, Night Shade, Confuse Ray, Magic Reflect
 
 Psychic Elianna
 Kadabra (Lv. 20) @ Focus Sash           / Impish  /   Synchronize    /   Psybeam, Hidden Power Light, Spellbind, Flash
@@ -443,17 +443,17 @@ Beheeyem (Lv. 49) @ Big Root            / Docile  /   Parasocial     /   Abduct,
 Youngster Arke
 Wattwo (Lv. 69) @ Eviolite              / Docile  /   Static         /   Thunder Wave, Psyshock, Thunderbolt, Volt Switch
 Thunderzap (Lv. 68) @ Big Root          / Brave   /   Sap Sipper     /   U-Turn, Parabolic Charge, Leaf Storm, Leech Seed
-Glittleshoo (Lv. 69) @ Chilan Berry     / Adamant /   Serene Grace   /   Sparkly Swirl, Fiery Dance, Air Slash, Glitter Dance
-Duosion-X (Lv. 70) @ Eviolite           / Docile  /   Radiant        /   Draining Kiss, Calm Mind, Whirlpool, Fire Blast
+Glittleshoo (Lv. 69) @ Blunder Policy   / Bold    /   Serene Grace   /   Arcane Spell, Fiery Dance, Hurricane, Glitter Dance
+Duosion-X (Lv. 70) @ Eviolite           / Sassy   /   Radiant        /   Light Drain, Calm Mind, Whirlpool, Fire Blast
 Scovillain (Lv. 70) @ Eviolite          / Serious /   Moody          /   Burn Up, Will-O-Wisp, Energy Ball, Earth Power
 
 Athlete Luciano
-Fireblion (Lv. 69) @ Heat Rock          / Naive   /   Drought        /   Drill Run, U-Turn, Will-O-Wisp, Flare Blitz
-Houndoom (Lv. 70) @ Blunder Policy      / Jolly   /   Solar Power    /   Heat Wave, Inferno, Fiery Wrath, Nasty Plot
+Fireblion (Lv. 69) @ Heat Rock          / Adamant /   Drought        /   Solstice Blade, U-Turn, Will-O-Wisp, Flare Blitz
+Houndoom (Lv. 70) @ Pamtre Berry        / Lonely  /   Solar Power    /   Overheat, Photon Geyser, Fiery Wrath, Nasty Plot
 Blastflames-E (Lv. 69) @ Choice Specs   / Adamant /   Adaptability   /   Fire Blast, Thunderbolt, Shadow Ball, Solar Beam
 Blastflames (Lv. 70) @ Choice Scarf     / Calm    /   Levitate       /   Eruption, Dragon Pulse, Dark Pulse, U-Turn
 Magron (Lv. 69) @ Red Card              / Mild    /   Drought        /   Fire Blast, Earth Power, Aura Sphere, Steel Beam
-Despenero-S (Lv. 69) @ Focus Sash       / Mild    /   Chlorophyll    /   Solar Blade, Knock Off, Growth, Earth Power
+Despenero-S (Lv. 69) @ Focus Sash       / Hasty   /   Chlorophyll    /   Solar Blade, Knock Off, Growth, Close Combat
 
 Poof-E (31, 30, 30, 31, 30, 30)
 Poof-E (Lv. 22) @ Oran Berry            / Calm    /   Levitate       /   Will-O-Wisp, Hex, Charge Beam, Hidden Power Water
@@ -721,7 +721,7 @@ Fightorex (Lv. 32) @ Eject Button       / Mild    /   Guts           /   Acrobat
 Electroram (Lv. 32) @ Sitrus Berry      / Hasty   /   Fluffy         /   Spark, Magnitude, Thunder Wave, Rock Tomb
 
 Possessed Trainer 16
-Plasamp (Lv. 32) @ None                 / Naive   /   Starborn       /   Cosmic Power, 
+Plasamp (Lv. 32) @ Grip Claw            / Adamant /   Starborn       /   Aurora Glow, Magic Room, Wrap, Flash Cannon
 Swalot-X (Lv. 32) @ Leftovers           / Hardy   /   Sticky Hold    /   Desolate Void, Abduct, Gravity, Hidden Power Ground
 
 Bug Catcher Melba
@@ -1608,7 +1608,7 @@ Blobmo (Lv. 9) @ Coba Berry             / Jolly   /   Shield Dust    /   Cosmic 
 
 Route 37------------------------------------------
 
-Hiker 
+Hiker Diogenes
 Rhypolar (Lv. 66) @ Smooth Rock         / Naughty /   Sand Stream    /   Earthquake, Stealth Rock, Spikes, Close Combat
 Wormite-S (Lv. 100) @ Focus Sash        / Docile  /   Sand Rush      /   Knock Off, U-Turn, Thunder Wave, Earthquake
 Blaster (Lv. 67) @ Leftovers            / Jolly   /   Unerodible     /   Stone Edge, Bulk Up, Earthquake, Ice Spinner
@@ -1616,48 +1616,62 @@ Boulderoar (Lv. 67) @ Weakness Policy   / Rash    /   Sturdy         /   Jaw Loc
 Tricerpup (Lv. 100) @ Eviolite          / Relaxed /   Sand Force     /   Stone Edge, Body Press, Iron Defense, Sandstorm
 Glimmora (Lv. 66) @ Power Herb          / Bold    /   Corrosion      /   Sludge Bomb, Mortal Spin, Meteor Beam, Energy Ball
 
-Fisherman 
+Fisherman Marty
 Spinaquata (Lv. 66) @ Damp Rock         / Brave   /   Drizzle        /   Wave Crash, Flip Turn, Breaking Swipe, Roost
 Sheltor (Lv. 100) @ Eviolite            / Impish  /   Swift Swim     /   Frostbind, Volt Switch, Night Shade, Muddy Water
-Poshorump (Lv. 67) @ White Herb         / Relaxed /   Swift Swim     /   Dragon Dance, Draco Meteor, Magic Fang, Megahorn
+Poshorump (Lv. 67) @ Clear Amulet       / Impish  /   Swift Swim     /   Dragon Dance, Dragon Darts, Hex Claw, Megahorn
 Durfish (Lv. 100) @ Rindo Berry         / Modest  /   Prankster      /   Acupressure, Thunder, Earth Power, Soak
 Barbaracle (Lv. 67) @ Life Orb          / Modest  /   Tough Claws    /   Accelerock, Mighty Cleave, Swords Dance, Wave Crash
-Psylotter (Lv. 66) @ Choice Specs       / Adamant /   Swift Swim     /   Water Spout, Hydro Vortex, Freeze-Dry, Psyshock
+Psylotter (Lv. 66) @ Choice Specs       / Relaxed /   Swift Swim     /   Water Spout, Trick, Freeze-Dry, Psyshock
 
-Swimmer 
+Swimmer Anita
 Dragave (Lv. 66) @ Life Orb             / Naive   /   Torrent        /   Wave Crash, Aqua Jet, U-Turn, Close Combat
 Ludicolo (Lv. 67) @ Kebia Berry         / Modest  /   Rain Dish      /   Leech Seed, Protect, Scald, Rain Dance
 Walrein (Lv. 67) @ Leftovers            / Calm    /   Thick Fat      /   Slack Off, Toxic, Freeze-Dry, Earthquake
-Dualmoose (Lv. 66) @ Focus Band         / Lonely  /   Everglow       /   Aurora Boost, Trick Room, Blizzard, Flamethrower
+Dualmoose (Lv. 66) @ Sparkly Seed       / Naughty /   Sparkly Surge  /   Aurora Boost, Trick Room, Blizzard, Arcane Spell
 
-Swimmer 
-Gyarados (Lv. 67) @ Wacan Berry         / Naughty /   Intimidate     /   Dragon Dance, Earthquake, Waterfall, Thunder Wave
+Swimmer September
+Gyarados (Lv. 67) @ Cell Battery        / Naughty /   Intimidate     /   Dragon Dance, Earthquake, Waterfall, Thunder Wave
 Batorali (Lv. 67) @ Lum Berry           / Lonely  /   Threatening    /   Brave Bird, Jaw Lock, Swords Dance, Extreme Speed
-Winagrow (Lv. 67) @ Red Card            / Calm    /   Terrify        /   Nasty Plot, Ice Beam, Petal Dance, Dragon Pulse
+Winagrow (Lv. 67) @ Eject Button        / Calm    /   Terrify        /   Nasty Plot, Ice Beam, Petal Dance, Dragon Pulse
+Swalot (Lv. 67) @ Black Sludge          / Quirky  /   Simple         /   Acid Armor, Body Press, Toxic Spikes, Scald
 Dompster-S (Lv. 68) @ Red Card          / Naive   /   Illumination   /   Dragon Dance, Earthquake, Spectral Thief, Dragon Claw
 
-DI
-Bushewe (Lv. 64) @ White Herb           / Sassy   /   Serene Grace   /   Earth Power, Leaf Storm, Photon Geyser, Extrasensory
-Magestiflash (Lv. 64) @ Glowing Prism   / Naughty /   Mirror Armor   /   Aeroblast, Solar Beam, Morning Sun, Sunny Burst
+Actress Della
+Duosion-X (Lv. 75) @ Eviolite           / Careful /   Heat Compaction/   Reflect, Aurora Glow, Spotlight Ray, Magic Reflect
+Bushewe (Lv. 67) @ Enigma Berry         / Bashful /   Competitive    /   Chromo Beam, Leaf Storm, Cotton Guard, Body Press
+Magestiflash (Lv. 67) @ Life Orb        / Adamant /   Insect Feeder  /   Chromo Beam, Aeroblast, Will-O-Wisp, Heat Wave
+Swalot-X (Lv. 66) @ Leftovers           / Adamant /   Black Hole     /   Aurora Glow, Toxic, Protect, Disenchant
+Reuniclus-X (Lv. 66) @ Eject Pack       / Modest  /   Radiant        /   Photon Geyser, Aurora Glow, Magic Reflect, Scald
 
-DJ
-Fireblion (Lv. 65) @ Shuca Berry        / Hasty   /   Drought        /   Drill Run, Swords Dance, Sunsteel Strike, Flare Blitz
-Splame (Lv. 65) @ Quick Claw            / Hasty   /   Sleight Of Hand/   Spacial Rend, Blue Flare, Vanishing Act, Magic Reflect
-Blastflames (Lv. 65) @ Focus Band       / Naive   /   Levitate       /   Iron Tail, Dragon Rush, Fire Blast, Dragon Pulse
+Athlete Melvyn
+Fireblion (Lv. 68) @ Heat Rock          / Calm    /   Drought        /   Solstice Blade, Swords Dance, Sunsteel Strike, Flare Blitz
+Winagrow (Lv. 69) @ Pamtre Berry        / Brave   /   Chlorophyll    /   Draco Meteor, Flamethrower, Giga Drain, Stealth Rock
+Leavanny (Lv. 70) @ Focus Sash          / Bold    /   Chlorophyll    /   Swords Dance, Solstice Blade, Solar Blade, X-Scissor
+Splame (Lv. 68) @ Loaded Dice           / Lonely  /   Shield Dust    /   Magic Missiles, Blue Flare, Alchemy, Thunderbolt
+Blastflames (Lv. 69) @ Shell Bell       / Calm    /   Levitate       /   Sunny Burst, Volt Switch, Fire Blast, Dragon Pulse
+Thunderzap (Lv. 69) @ Life Orb          / Calm    /   Chlorophyll    /   Nasty Plot, Giga Drain, Fire Blast, Light Drain
 
-DK
-Flamebless (Lv. 65) @ White Herb        / Quirky  /   Competitive    /   Earth Power, Glitter Dance, Moonblast, Overheat
-Pyrator (Lv. 65) @ Assault Vest         / Jolly   /   Flame Body     /   Flare Blitz, Cross Poison, Close Combat, Earthquake
-Lafloo (Lv. 65) @ Leftovers             / Mild    /   Solid Rock     /   Power Gem, Eruption, Hyper Beam, Lava Lair
+Athlete Virgilio
+Flamebless (Lv. 68) @ Eject Pack        / Bold    /   Competitive    /   Floodlight, Sunny Burst, Scorching Sands, Overheat
+Pyrator (Lv. 69) @ Assault Vest         / Naughty /   Flame Body     /   Flare Blitz, Cross Poison, Trick Tackle, Knock Off
+Bronzong-X (Lv. 68) @ Enigma Berry      / Mild    /   Battle Armor   /   Iron Defense, Body Press, Mana Punch, Poltergeist
+Lafloo (Lv. 68) @ Leftovers             / Careful /   Solid Rock     /   Power Gem, Burn Up, Recover, Lava Lair
+Beheeyem (Lv. 69) @ Power Herb          / Jolly   /   Cosmic Warp    /   Black Hole Eclipse, Psyshock, Abduct, Spotlight Ray
+Raptorex (Lv. 70) @ Life Orb            / Docile  /   Adaptability   /   Vacuum Wave, Calm Mind, Aeroblast, Energy Ball
 
-DP
-Kissyfishy (Lv. 64) @ Life Orb          / Adamant /   Swift Swim     /   Water Kick, Supercharged Splash, Deep Sea Bubble, Water Clap
-Kissyfishy (Lv. 65) @ Mysticola Berry   / Hasty   /   Swift Swim     /   Water Kick, Supercharged Splash, Deep Sea Bubble, Sea Dragon
-Kissyfishy (Lv. 66) @ White Herb        / Lonely  /   Swift Swim     /   Water Kick, Supercharged Splash, Deep Sea Bubble, Sea Dragon
+Swimmer Lance
+Cosmocrash (Lv. 68) @ Choice Scarf      / Bashful /   Reckless       /   Head Smash, Meteor Assault, Trick Tackle, Brave Bird
+Grafaiai (Lv. 68) @ Mirror Herb         / Jolly   /   Prankster      /   Swagger, Disable, Acrobatics, Gunk Shot
+Zurrclu-S (Lv. 70) @ Mirror Herb        / Serious /   Levitate       /   Flatter, Dark Pulse, Sludge Bomb, Spotlight Ray
+Kissyfishy (Lv. 69) @ Eject Pack        / Careful /   Wonder Skin    /   Deep Sea Bubble, Sea Dragon, Sparkling Water, Psychic Noise
 
-DN
-Staryu (Lv. 75) @ Eviolite              / Naive   /   Illumination   /   Recover, Hydro Pump, Light Screen, Psychic
-Starmie (Lv. 65) @ Cosmic Core          / Rash    /   Illumination   /   Recover, Core Enforcer, Ice Beam, Hydro Pump
+Swimmer Asteria
+Psycorboratr (Lv. 67) @ Terrain Extender/ Quiet   /   Psychic Surge  /   Gravity Punch, Earthquake, Mana Punch, Bulk Up
+Staryu (Lv. 90) @ Eject Button          / Gentle  /   Regenerator    /   Hydro Pump, Slow Fall, Galaxy Blast, Spotlight Ray
+Starmie (Lv. 67) @ Grip Claw            / Impish  /   Illumination   /   Recover, Core Enforcer, Freeze-Dry, Whirlpool
+Galactasolder (Lv. 66) @ Life Orb       / Gentle  /   Sheer Force    /   Rock Climb, Throat Chop, Shooting Stars, Close Combat
+Superchargo (Lv. 68) @ Shell Bell       / Lonely  /   Speed Boost    /   Volt Tackle, Earthquake, U-Turn, Taunt
 
 Route 38------------------------------------------
 
@@ -2098,3 +2112,303 @@ Icy Path------------------------------------------
 Icy Serpent (19, 18, 31, 31, 31, 31)
 Icy Serpent (Lv. 53) @ None             / Naive   /   Beast Boost    /   Icicle Spear, Flash Darts, Magic Reflect, Scale Shot
 
+Stats:
+Num,Pokemon,Amt,%
+1,Twigle,4,0.32%
+2,Torgged,9,0.71%
+3,Tortugis,14,1.11%
+4,Lagma,4,0.32%
+5,Maguide,9,0.71%
+6,Magron,17,1.35%
+7,Lizish,4,0.32%
+8,Iguaton,9,0.71%
+9,Dragave,14,1.11%
+10,Hummingspark,6,0.48%
+11,Flashclaw,3,0.24%
+12,Magestiflash,8,0.64%
+13,Pigo,5,0.40%
+14,Pigonat,4,0.32%
+15,Pigoga,7,0.56%
+16,Hammo,6,0.48%
+17,HammyBoy,5,0.40%
+18,Hamthorno,4,0.32%
+19,Sheabear,7,0.56%
+20,Dualbear,4,0.32%
+21,Spacebear,5,0.40%
+22,Bealtle,6,0.48%
+23,Centatle,2,0.16%
+24,Curlatoral,6,0.48%
+25,Millistone,7,0.56%
+26,Sapwin,3,0.24%
+27,Treewin,6,0.48%
+28,Winagrow,10,0.79%
+29,Budew,2,0.16%
+30,Roselia,3,0.24%
+31,Roserade,7,0.56%
+32,Sewaddle,3,0.24%
+33,Swadloon,2,0.16%
+34,Leavanny,9,0.71%
+35,Grubbin,2,0.16%
+36,Charjabug,3,0.24%
+37,Vikavolt,7,0.56%
+38,Busheep,2,0.16%
+39,Ramant,4,0.32%
+40,Bushewe,7,0.56%
+41,Bugik,2,0.16%
+42,Swordik,5,0.40%
+43,Ninjakik,4,0.32%
+44,Lotad,2,0.16%
+45,Lombre,2,0.16%
+46,Ludicolo,9,0.71%
+47,Bluebunn,12,0.95%
+48,Rocky,2,0.16%
+49,Boulder,2,0.16%
+50,Blaster,5,0.40%
+51,Crystallor,5,0.40%
+52,Carinx,3,0.24%
+53,Carinator,3,0.24%
+54,Cairnasaur,7,0.56%
+55,Pebblepup,2,0.16%
+56,Boulderoar,7,0.56%
+57,Fightorex,3,0.24%
+58,Raptorex,6,0.48%
+59,Kleinowl,2,0.16%
+60,Hootowl,10,0.79%
+61,Dualmoose,8,0.64%
+62,Snom,2,0.16%
+63,Frosmoth,6,0.48%
+64,Grondor,4,0.32%
+65,Bipedice,5,0.40%
+66,Tricerpup,3,0.24%
+67,Tricercil,5,0.40%
+68,Spheal,2,0.16%
+69,Sealeo,4,0.32%
+70,Walrein,3,0.24%
+71,Froshrog,2,0.16%
+72,Bouncerog,8,0.64%
+73,Bugop,2,0.16%
+74,Opwing,12,0.95%
+75,Hatenna,2,0.16%
+76,Hattrem,2,0.16%
+77,Hatterene,9,0.71%
+78,Otterpor,4,0.32%
+79,Psylotter,9,0.71%
+80,Florline,3,0.24%
+81,Florlion,3,0.24%
+82,Psycorb,3,0.24%
+83,Psyballs,2,0.16%
+84,Psycorboratr,7,0.56%
+85,Ralts,3,0.24%
+86,Kirlia,4,0.32%
+87,Gardevoir,10,0.79%
+88,Gallade,6,0.48%
+89,Tigrette,6,0.48%
+90,Inkay,4,0.32%
+91,Malamar,7,0.56%
+92,Flameruff,4,0.32%
+93,Barkflare,5,0.40%
+94,Iglite,2,0.16%
+95,Blaxer,2,0.16%
+96,Pyrator,8,0.64%
+97,Magmaclang,7,0.56%
+98,Flamehox,2,0.16%
+99,Fireshard,2,0.16%
+100,Blastflames,8,0.64%
+101,Tiowoo,2,0.16%
+102,Magwoo,3,0.24%
+103,Lafloo,6,0.48%
+104,Houndour,3,0.24%
+105,Houndoom,10,0.79%
+106,Sparkdust,2,0.16%
+107,Splame,9,0.71%
+108,Sparkitten,2,0.16%
+109,Fireblion,6,0.48%
+110,Flamebless,6,0.48%
+111,Shookwat,3,0.24%
+112,Wattwo,2,0.16%
+113,Megawatt,7,0.56%
+114,Elelamb,2,0.16%
+115,Electroram,3,0.24%
+116,Superchargo,6,0.48%
+117,Twigzap,1,0.08%
+118,Shockbranch,1,0.08%
+119,Thunderzap,9,0.71%
+120,Magie,6,0.48%
+121,Cumin,4,0.32%
+122,Cinneroph,10,0.79%
+123,Vupp,4,0.32%
+124,Vinnie,5,0.40%
+125,Suvinero,10,0.79%
+126,Whiskie,4,0.32%
+127,Whiskers,5,0.40%
+128,Whiskeroar,6,0.48%
+129,Nincada,3,0.24%
+130,Ninjask,2,0.16%
+131,Shedinja,5,0.40%
+132,Sheltor,3,0.24%
+133,Shelnado,5,0.40%
+134,Lilyray,2,0.16%
+135,Daray,3,0.24%
+136,Spinaquata,7,0.56%
+137,Magikarp,10,0.79%
+138,Gyarados,10,0.79%
+139,Staryu,5,0.40%
+140,Starmie,8,0.64%
+141,Ali,6,0.48%
+142,Batorali,6,0.48%
+143,Posho,7,0.56%
+144,Shomp,5,0.40%
+145,Poshorump,8,0.64%
+146,Binacle,2,0.16%
+147,Barbaracle,6,0.48%
+148,Durfish,3,0.24%
+149,Dompster,8,0.64%
+150,Kissyfishy,11,0.87%
+151,Ekans,2,0.16%
+152,Arbok,6,0.48%
+153,Zubat,4,0.32%
+154,Golbat,2,0.16%
+155,Crobat,8,0.64%
+156,Poof,1,0.08%
+157,Hast,5,0.40%
+158,Poov,2,0.16%
+159,Grust,14,1.11%
+160,Cluuz,5,0.40%
+161,Zurrclu,4,0.32%
+162,Zurroaratr,4,0.32%
+163,Timburr,2,0.16%
+164,Gurdurr,0,0.00%
+165,Conkeldurr,7,0.56%
+166,Rhypo,2,0.16%
+167,Rhynee,2,0.16%
+168,Rhypolar,8,0.64%
+169,Diggie,1,0.08%
+170,Drillatron,11,0.87%
+171,Wormite,2,0.16%
+172,Wormbot,3,0.24%
+173,Wormatron,7,0.56%
+174,Cleffa,2,0.16%
+175,Clefairy,2,0.16%
+176,Clefable,8,0.64%
+177,Minishoo,3,0.24%
+178,Glittleshoo,9,0.71%
+179,Zorua,4,0.32%
+180,Zoroark,8,0.64%
+181,Droid,1,0.08%
+182,Armoid,2,0.16%
+183,Soldrota,5,0.40%
+184,Tinkie,1,0.08%
+185,Shawar,4,0.32%
+186,Shaboom,3,0.24%
+187,Dragee,2,0.16%
+188,Draga,3,0.24%
+189,Drageye,4,0.32%
+190,Blobmo,2,0.16%
+191,Nebulimb,3,0.24%
+192,Galactasolder,4,0.32%
+193,Consodust,4,0.32%
+194,Cosmocrash,5,0.40%
+195,Rockmite,2,0.16%
+196,Stellarock,5,0.40%
+197,Poof-E,1,0.08%
+198,Hast-E,5,0.40%
+199,Droid-E,1,0.08%
+200,Armoid-E,1,0.08%
+201,Soldrota-E,5,0.40%
+202,Flamehox-E,1,0.08%
+203,Fireshard-E,2,0.16%
+204,Blastflames-E,4,0.32%
+205,Rocky-E,1,0.08%
+206,Boulder-E,1,0.08%
+207,Blaster-E,5,0.40%
+208,Crystallor-E,7,0.56%
+209,Magikarp-E,2,0.16%
+210,Gyarados-E,12,0.95%
+211,Shockfang,2,0.16%
+212,Electrocobra,3,0.24%
+213,Nightrex,2,0.16%
+214,Shadowsaur,5,0.40%
+215,Durfish-S,3,0.24%
+216,Dompster-S,8,0.64%
+217,Wormite-S,2,0.16%
+218,Wormbot-S,3,0.24%
+219,Wormatron-S,9,0.71%
+220,Cluuz-S,2,0.16%
+221,Zurrclu-S,4,0.32%
+222,Zurroaratr-S,5,0.40%
+223,Iglite-S,2,0.16%
+224,Blaxer-S,2,0.16%
+225,Pyrator-S,7,0.56%
+226,Ekans-S,3,0.24%
+227,Arbok-S,7,0.56%
+228,Soarwhell,0,0.00%
+229,Diftery,2,0.16%
+230,Vorsuitex,0,0.00%
+231,Kleinyeti,0,0.00%
+232,Triwandoliz,2,0.16%
+233,Relomidel,0,0.00%
+234,Relopamil,0,0.00%
+235,Dragowrath,0,0.00%
+236,Solaroxyous,0,0.00%
+237,Kissyfishy-D,0,0.00%
+238,Scraggy,2,0.16%
+239,Scrafty,4,0.32%
+240,Scraftagon,4,0.32%
+241,Glimmet,3,0.24%
+242,Glimmora,5,0.40%
+243,Abra,1,0.08%
+244,Kadabra,3,0.24%
+245,Alakazam,7,0.56%
+246,Flamigo,4,0.32%
+247,Sneasel,3,0.24%
+248,Weavile,4,0.32%
+249,Sneasel-H,2,0.16%
+250,Sneasler,4,0.32%
+251,Solosis,1,0.08%
+252,Duosion,3,0.24%
+253,Reuniclus,6,0.48%
+254,Solosis-X,3,0.24%
+255,Duosion-X,4,0.32%
+256,Reuniclus-X,9,0.71%
+257,Seviper,4,0.32%
+258,Hissimitar,4,0.32%
+259,Gulpin,0,0.00%
+260,Swalot,4,0.32%
+261,Gulpin-X,4,0.32%
+262,Swalot-X,5,0.40%
+263,Plasamp,1,0.08%
+264,Genieova,0,0.00%
+265,Elgyem,3,0.24%
+266,Beheeyem,4,0.32%
+267,Elgyem-E,2,0.16%
+268,Beheeyem-E,3,0.24%
+269,Caterpie,1,0.08%
+270,Metapod,0,0.00%
+271,Butterfree,4,0.32%
+272,Metapod-X,1,0.08%
+273,Butterfree-X,6,0.48%
+274,Bronzor,1,0.08%
+275,Bronzong,5,0.40%
+276,Bronzor-X,2,0.16%
+277,Bronzong-X,4,0.32%
+278,Capsakid,2,0.16%
+279,Scovillain,4,0.32%
+280,Despenero,3,0.24%
+281,Capsakid-S,2,0.16%
+282,Scovillain-S,1,0.08%
+283,Despenero-S,4,0.32%
+284,Cage Critter,1,0.08%
+285,Icy Serpent,1,0.08%
+286,Shocky Spire,1,0.08%
+287,Dust Sorcerer,1,0.08%
+288,Fever Dream,1,0.08%
+289,Dusk Skater,1,0.08%
+290,Necrozma,0,0.00%
+291,Necrozma-Ult,0,0.00%
+292,Azurill,1,0.08%
+293,Marill,1,0.08%
+294,Azumarill,5,0.40%
+295,Shroodle,3,0.24%
+296,Grafaiai,4,0.32%
+
+Total: 1259

@@ -3,6 +3,7 @@ package pokemon;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -35,6 +36,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -1291,6 +1293,7 @@ public enum Item {
 	        	}
 	        }
 	        
+	        userMons.setSelectedIndex(0);
 	        Pokemon userC = (Pokemon) userMons.getSelectedItem();
 	        userLevel.setValue(userC.getLevel());
 	        
@@ -1373,8 +1376,9 @@ public enum Item {
         		maxDamageD *= 100;
         		String formattedMaxD = String.format("%.1f", maxDamageD);
         		damages[k].setText(formattedMinD + "% - " + formattedMaxD + "%");
-        		damages[k].setForeground(crit && current.moveset[k].move.cat != 2 ? Color.RED : Color.BLACK);
-        		damages[k].setFont(crit && current.moveset[k].move.cat != 2 ? new Font("Arial", Font.BOLD, 12) : new Font("Arial", Font.PLAIN, 12));
+        		boolean crittable = crit && current.moveset[k].move.cat != 2 && current.moveset[k].move.critChance >= 0;
+        		damages[k].setForeground(crittable ? Color.RED : Color.BLACK);
+        		damages[k].setFont(crittable ? new Font("Arial", Font.BOLD, 12) : new Font("Arial", Font.PLAIN, 12));
         	} else {
         		moves[k].setText("[NO MOVE]");
         		moves[k].setBackground(null);
@@ -1466,6 +1470,7 @@ public enum Item {
 	}
 	
 	private static void moreButton(Pokemon p, Field f) {        
+		JDialog dialog = new JDialog((Frame) null, "Edit Pokemon", true);
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -1575,6 +1580,8 @@ public enum Item {
         // Apply and Cancel Buttons
         gbc.gridy++;
         gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
         JButton applyButton = new JButton("Apply");
         applyButton.addActionListener(e -> {
             // Update Field and Pokemon with the selected values
@@ -1618,7 +1625,10 @@ public enum Item {
         });
         panel.add(applyButton, gbc);
 
-        JOptionPane.showMessageDialog(null, panel);
+        dialog.getContentPane().add(panel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
 	}
 
 	public static Pokemon displayGenerator(Pokemon p) {

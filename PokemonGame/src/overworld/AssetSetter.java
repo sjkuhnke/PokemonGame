@@ -804,7 +804,7 @@ public class AssetSetter {
 		mapNum = 102;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = MintSetup(39, 56, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(37, 49, Item.TM58, mapNum); // dragon pulse
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 49, Item.TM58, mapNum); // dragon pulse TODO: replace
 		gp.obj[mapNum][objIndex] = ObjSetup(42, 38, Item.REVIVE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(56, 40, Item.EJECT_BUTTON, mapNum);
 		
@@ -995,7 +995,7 @@ public class AssetSetter {
 		
 		mapNum = 140;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(62, 65, Item.TM34, mapNum); // magic tomb
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 65, Item.TM34, mapNum); // magic tomb TODO: replace
 		gp.obj[mapNum][objIndex] = MintSetup(46, 60, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(40, 54, Item.MAX_ELIXIR, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 51, Item.TM35, mapNum); // flamethrower
@@ -1077,6 +1077,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(59, 88, Item.FOCUS_SASH, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(64, 88, Item.FOCUS_SASH, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 87, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 70, Item.RAZOR_CLAW, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 81, Item.NUGGET, mapNum);
 	}
 
 	public void setNPC() {
@@ -1844,17 +1846,17 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_LEFT, 24, 24, "Fishing requires patience, but battling? That's where I make a splash!", "You're like a storm at sea... I couldn't keep up!", 281);
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_LEFT, 17, 22, "The water's my home, and my Pokemon rule it! Let's battle!", "Wow, you're amazing! I couldn't even stay afloat in that battle!", 280);
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_LEFT, 22, 32, "Think you can keep up with the flow of my Water Pokemon? Let's see!", "Looks like I'm all washed up... but I'll be back stronger!", 283);
-		gp.npc[mapNum][index] = NPCSetup(ACTRESS_RIGHT, 15, 32, "", "", 277, LEFT + RIGHT); // DI
+		gp.npc[mapNum][index] = NPCSetup(ACTRESS_RIGHT, 16, 32, "", "", 277); // DI
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 12, 43, "You'll need more than luck to outmatch me. I'm bringing the heat!", "You may have cooled me down this time, but I'm coming back hotter than ever!", 278); // DJ
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 24, 43, "My speed, my power, my Pokemon - everything's at its peak! Bring it on!", "I've gotta admit, you've got some serious skills. Respect!", 279); // DK
-		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_UP, 16, 39, "The waves and I are in sync - let's ride this battle out!", "Wiped out! Guess I need to catch some new moves.", 284);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_UP, 16, 39, "The waves and I are in sync - let's ride this battle out!", "Wiped out! Guess I need to catch some new moves.", 284, UP + LEFT + RIGHT);
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_LEFT, 15, 28, "This battle's going to be a splash! Let's dive right in!", "That was fun! Next time, I'll ride the wave to victory!", 282);
 		
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 65, 72, "", "", 285);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 69, 85, "", "", 286);
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 68, 72, "", "", 285);
+		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_DOWN, 67, 85, "", "", 286);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 84, 84, "", "", 288);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 91, 80, "", "", 289);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 88, 79, "", "", 287);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_LEFT, 88, 79, "", "", 287, LEFT + RIGHT);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 86, 72, "", "", 290);
 		
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 25, 83, "Hey, sorry, but the Gym is closed right now. A really nasty fever has been going around, and we don't want it spreading any further.\n"
