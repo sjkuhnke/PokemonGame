@@ -16,18 +16,19 @@ public enum Ability {
 	CHLOROPHYLL("Boosts the Pokemon's Speed stat in SUNSHINE."),
 	CLEAR_BODY("Prevents other Pokemon from lowering its stats."),
 	CLOUD_NINE("Nullifies the weather on switch-in."),
-	COMPETITIVE("Boosts the Pokemon's Special Attack stat when its stats are lowered."),
+	COMPETITIVE("Boosts the Pokemon's Sp. Atk stat when its stats are lowered."),
 	COMPOUND_EYES("The Pokemon's accuracy is boosted."),
 	CONTRARY("Makes stat changes have an opposite effect."),
 	CORROSION("The Pokemon can hit STEEL Pokemon with POISON moves, and can always Poison the target regardless of typing."),
 	COSMIC_WARP("Twists the dimensions for 4 turns when the Pokemon enters the battle, reversing the speed order."),
 	CURSED_BODY("May disable a move used on the Pokemon."),
 	DEFIANT("Boosts the Pokemon's Attack stat when its stats are lowered."),
+	DJINN1S_FAVOR("Raises Sp. Atk if hit by a MAGIC move."),
 	DRIZZLE("The Pokemon makes it RAIN when it enters a battle."),
 	DRY_SKIN("Restores HP in RAIN or when hit by WATER moves, but reduces HP in SUN and is weaker to FIRE."),
 	DROUGHT("Turns the sunlight HARSH when it enters a battle."),
 	ELECTRIC_SURGE("Turns the ground into ELECTRIC TERRAIN when the Pokemon enters a battle."),
-	EMPATHIC_LINK("The Pokemon gets a boost in Sp.Atk after the foe raises any stat."),
+	EMPATHIC_LINK("The Pokemon gets a boost in Sp. Atk after the foe raises any stat."),
 	EVERGLOW("Sets up Aurora Glow effect when the Pokemon enters battle, healing all ally LIGHT, ICE and GALACTIC types."),
 	ILLUMINATION("Grants the user all the resistances from the LIGHT type."),
 	FILTER("Reduces damage from supereffective attacks."),
@@ -43,14 +44,14 @@ public enum Ability {
 	GRASSY_SURGE("Turns the ground into GRASSY TERRAIN when the Pokemon enters a battle."),
 	GRAVITATION("Creates GRAVITY when the Pokemon enters a battle."),
 	GUTS("Boosts the Attack stat if the Pokemon has a status condition."),
-	HEAT_COMPACTION("Raises Defense and Sp.Def if hit by an FIRE move."),
+	HEAT_COMPACTION("Raises Defense and Sp. Def if hit by an FIRE move."),
 	HUGE_POWER("Doubles the Pokemon's Attack stat."),
 	HYDRATION("Cures the Pokemon's status conditions in RAIN."),
 	HYPER_CUTTER("Prevents other Pokemon from lowering Attack stat."),
 	ICE_BODY("The Pokemon gradually regains HP in SNOW."),
 	ICY_SCALES("The Pokemon is protected by ice scales, which halve the damage from special moves."),
 	ILLUSION("The Pokemon enters with an illusion that boosts damage and prevents non GHOST foes from escaping."),
-	INNER_FOCUS("The Pokemon is protected from flinching; ignores Intimidate, Threatening and Terrify."),
+	INNER_FOCUS("The Pokemon is protected from flinching; ignores switch-in stat-lowering Abilities."),
 	INSECT_FEEDER("Restores HP if hit by a BUG move."),
 	INTIMIDATE("Lowers the opposing Pokemon's Attack stat."),
 	IRON_BARBS("Inflicts damage to the Pokemon on contact."),
@@ -58,7 +59,7 @@ public enum Ability {
 	JUSTIFIED("Halves damage from DARK moves and sharply boosts Attack when hit by one."),
 	KEEN_EYE("Prevents the Pokemon from losing accuracy."),
 	LEVITATE("Gives full immunity to all GROUND moves."),
-	LIGHTNING_ROD("Raises Special Attack if hit by an ELECTRIC move."),
+	LIGHTNING_ROD("Raises Sp. Atk if hit by an ELECTRIC move."),
 	MAGIC_BOUNCE("Reflects status moves instead of getting hit by them."),
 	MAGIC_GUARD("The Pokemon only takes damage from attacks."),
 	MAGICAL("Powers up MAGIC moves."),
@@ -72,6 +73,7 @@ public enum Ability {
 	MOUTHWATER("Taunts the foe on switch-in for 4 turns."),
 	MOXIE("Boosts the Attack stat after knocking out any Pokemon."),
 	MULTISCALE("Reduces damage the Pokemon takes when its HP is full."),
+	MYSTIC_ABSORB("Restores HP if hit by a MAGIC move."),
 	MYSTIC_RIFT("Creates a bizzare room for 5 turns when the Pokemon enters the battle, removing the effects of items."),
 	NATURAL_CURE("All status conditions heal when the Pokemon switches out."),
 	NO_GUARD("Ensures the Pokemon and its foe's attacks land."),
@@ -105,7 +107,7 @@ public enum Ability {
 	SAP_SIPPER("Raises Attack if hit by an GRASS move."),
 	SERENE_GRACE("Boosts the likelihood of additional effects occurring when attacking."),
 	SCALY_SKIN("Lowers the foe's Attack, and this Pokemon only takes damage from attacks."),
-	SCRAPPY("The Pokemon can hit GHOST Pokemon with NORMAL and FIGHTING moves; ignores Intimidate, Threatening and Terrify."),
+	SCRAPPY("The Pokemon can hit GHOST Pokemon with NORMAL and FIGHTING moves; ignores switch-in stat-lowering Abilities."),
 	SHADOW_TAG("This Pokemon steps on the opposing Pokemon's shadow to prevent it from escaping."),
 	SHARP_TAIL("Boosts the power of Tail-using moves."),
 	SHARPNESS("Boosts the power of Slicing moves."),
@@ -147,7 +149,7 @@ public enum Ability {
 	UNAWARE("Ignores the opposing Pokemon's stat changes."),
 	UNBURDEN("Doubles the Speed stat if the Pokemon's held item is used or lost."),
 	UNERODIBLE("Reduces damage from GRASS, WATER, and GROUND attacks."),
-	UNWAVERING("Boosts resistance to DARK and GHOST moves; ignores Intimidate, Threatening and Terrify."),
+	UNWAVERING("Boosts resistance to DARK and GHOST moves; ignores switch-in stat-lowering Abilities."),
 	VOLT_ABSORB("Restores HP if hit by a ELECTRIC move."),
 	VOLT_VORTEX("Boosts the Pokemon's speed in ELECTRIC TERRAIN."),
 	WATER_ABSORB("Restores HP if hit by a WATER move."),
@@ -166,6 +168,7 @@ public enum Ability {
 	public String toString() {
 		String name = super.toString();
 	    name = name.toLowerCase().replace('_', ' ');
+	    name = name.replace('1', '\'');
 	    String[] words = name.split(" ");
 	    StringBuilder sb = new StringBuilder();
 	    for (String word : words) {
@@ -177,6 +180,7 @@ public enum Ability {
 	public static Ability getEnum(String string) {
 		// Normalize the string
 	    String normalized = string.toUpperCase().replace(' ', '_');
+	    normalized = string.replace('\'', '1');
 	    
 	    try {
 	        return Ability.valueOf(normalized);

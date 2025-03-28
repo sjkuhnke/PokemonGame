@@ -228,15 +228,30 @@ public class Trainer implements Serializable {
 		if (m == Move.GROWL || type == null) {
 			return getNext(foe);
 		} else if (foe.lastMoveUsed != null || m == Move.SPLASH || hasResist(foe, type, m)) {
-			for (Pokemon p : team) {
-				if (p != current && resists(p, foe, type, m)) {
-					return p;
-				}
-			}
+			Pokemon resist = getBestResist(foe, type, m);
+			if (resist != current) return resist;
 		} else {
 			return getNext(foe);
 		}
 		return getNext(foe);
+	}
+	
+	public Pokemon getBestResist(Pokemon foe, PType type, Move m) {
+		Pokemon bestResist = null;
+		double bestMultiplier = 1;
+		
+		for (Pokemon p : team) {
+			if (p != current && !p.isFainted()) {
+				double multiplier = getEffective(p, foe, type, m, false);
+				if (multiplier < bestMultiplier) {
+					bestMultiplier = multiplier;
+					bestResist = p;
+				}
+				if (multiplier == 0.0) break;
+			}
+		}
+		
+		return bestResist == null ? current : bestResist;
 	}
 	
 	public Pokemon swapOut(Pokemon foe, Move m, boolean baton, boolean userSide) {
@@ -374,7 +389,7 @@ public class Trainer implements Serializable {
 	public Trainer clone() {		
 		Pokemon[] newTeam = new Pokemon[this.team.length];
 		for (int i = 0; i < this.team.length; i++) {
-			newTeam[i] = this.team[i].clone();
+			if (this.team[i] != null) newTeam[i] = this.team[i].clone();
 		}
 		Trainer result = new Trainer(this.name, newTeam, this.money, this.item, this.flagIndex);
 		

@@ -529,7 +529,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         	Move check = only1Move ? damagingMoveset.get(0) : foe.lastMoveUsed;
         	if (check != null && check.cat != 2 && !tr.resists(this, foe, check.mtype, check)
         			&& tr.hasResist(foe, check.mtype, check)) {
-        		double chance = 25;
+        		double chance = ((1 - Trainer.getEffective(tr.getBestResist(foe, check.mtype, check), foe, check.mtype, check, false)) / 2) * 100;
         		if (only1Move) {
         			chance *= 2;
         		} else {
@@ -544,7 +544,7 @@ public class Pokemon implements RoleAssignable, Serializable {
             			switchRsn.setSecond(rsn);
         			}
                 	this.addStatus(Status.SWAP);
-                	return Move.SPLASH;
+                	return only1Move ? check : Move.SPLASH;
         		}
             }
         	// 70% chance to swap if all of your moves do 0 damage
@@ -2112,9 +2112,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 				return;
 			}
 			
-			if (((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB) ||
-					(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)) &&
-					!(move.cat == 2 && acc > 100)) {
+			if (((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB)
+					|| (moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)
+					|| (moveType == PType.MAGIC && foeAbility == Ability.MYSTIC_ABSORB))
+					&& !(move.cat == 2 && acc > 100)) {
 				if (foeAbility == Ability.BLACK_HOLE && moveType == PType.GALACTIC && this.trainerOwned()) foe.spaceEat++;
 				if (foe.currentHP == foe.getStat(0)) {
 					Task.addAbilityTask(foe);
@@ -2135,12 +2136,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			
-			if (((moveType == PType.ELECTRIC && (foeAbility == Ability.MOTOR_DRIVE || foeAbility == Ability.LIGHTNING_ROD)) ||
-					(moveType == PType.GRASS && foeAbility == Ability.SAP_SIPPER) || (moveType == PType.FIRE && foeAbility == Ability.HEAT_COMPACTION)) &&
-					!(move.cat == 2 && acc > 100)) {
+			if (((moveType == PType.ELECTRIC && (foeAbility == Ability.MOTOR_DRIVE || foeAbility == Ability.LIGHTNING_ROD))
+					|| (moveType == PType.GRASS && foeAbility == Ability.SAP_SIPPER) || (moveType == PType.FIRE && foeAbility == Ability.HEAT_COMPACTION))
+					|| (moveType == PType.MAGIC && foeAbility == Ability.DJINN1S_FAVOR)
+					&& !(move.cat == 2 && acc > 100)) {
 				Task.addAbilityTask(foe);
 				if (foeAbility == Ability.MOTOR_DRIVE) stat(foe, 4, 1, this);
 				if (foeAbility == Ability.LIGHTNING_ROD) stat(foe, 2, 1, this);
+				if (foeAbility == Ability.DJINN1S_FAVOR) stat(foe, 2, 1, this);
 				if (foeAbility == Ability.SAP_SIPPER) stat(foe, 0, 1, this);
 				if (foeAbility == Ability.HEAT_COMPACTION) {
 					stat(foe, 1, 1, this);
@@ -5702,7 +5705,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			bp = determineBasePower(foe, move, first, null, false);
 		}
 		
-		if (this.getItem() == Item.METRONOME) bp *= (1 + (this.metronome * 0.2));
+		if (this.getItem() == Item.METRONOME && move == this.lastMoveUsed) bp *= (1 + ((this.metronome + 1) * 0.2));
 		
 		if (this.getItem() == Item.PROTECTIVE_PADS) contact = false;
 		if (this.getItem() == Item.PUNCHING_GLOVE && move.isPunching()) {
@@ -8068,6 +8071,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    clonedPokemon.spunCount = this.spunCount;
 	    clonedPokemon.outCount = this.outCount;
 	    clonedPokemon.rollCount = this.rollCount;
+	    clonedPokemon.metronome = this.metronome;
 	    clonedPokemon.encoreCount = this.encoreCount;
 	    clonedPokemon.disabledCount = this.disabledCount;
 	    clonedPokemon.tauntCount = this.tauntCount;
@@ -9658,7 +9662,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	public void setCalcNickname() {
-		this.nickname = String.format("%s [%d]", this.trainer.getName(), this.slot + 1);
+		String trainerName = this.trainer.getName();
+		String calcName = !playerOwned() && trainerName.equals(this.name) ? "Static" : trainerName;
+		this.nickname = String.format("%s [%d]", calcName, this.slot + 1);
 	}
 	
 }

@@ -1602,4 +1602,57 @@ public class Player extends Trainer implements Serializable {
 		scanner.close();
 		
 	}
+	
+	public Player clone(GamePanel gp) {
+		Player newPlayer = new Player(gp);
+		Pokemon[] newTeam = new Pokemon[this.team.length];
+		for (int i = 0; i < this.team.length; i++) {
+			if (this.team[i] != null) newTeam[i] = this.team[i].clone();
+		}
+		
+//		public Pokemon[][] boxes;
+//		public Pokemon[] gauntletBox;
+//		public String[] boxLabels;
+		newPlayer.numBattled = numBattled;
+		newPlayer.posX = posX;
+		newPlayer.posY = posY;
+//		public Bag bag;
+		newPlayer.badges = badges;
+		newPlayer.starter = starter;
+//		public int[] pokedex;
+		newPlayer.currentMap = currentMap;
+//		public boolean[] trainersBeat;
+//		public boolean[][] itemsCollected;
+//		public boolean[][] flag;
+//		public boolean[] locations;
+		newPlayer.random = random;
+		newPlayer.ghost = ghost;
+		newPlayer.steps = steps;
+		newPlayer.fish = fish;
+		newPlayer.repel = repel;
+		newPlayer.surf = surf;
+		newPlayer.lavasurf = lavasurf;
+		newPlayer.visor = visor;
+		newPlayer.grustCount = grustCount;
+		newPlayer.scottItem = scottItem;
+		newPlayer.ballPurchase = ballPurchase;
+//		public Item[] resistBerries;
+//		public Item[] statBerries;
+//		public Item[] crystals;
+		newPlayer.secondStarter = secondStarter;
+		newPlayer.choiceChoice = choiceChoice;
+		newPlayer.coins = coins;
+		newPlayer.gamesWon = gamesWon;
+		newPlayer.winStreak = winStreak;
+//		public int[] blackjackStats; // 0: games played, 1: games won, 2: games pushed, 3: busts, 4: bust wins, 5: blackjacks 6: doubles 7: double wins, 8: coins won, 9: coins lost: 10: highest coin, 11: highest win streak, 12: lose streak, 13: high lose strk
+//		public boolean[] coinBadges;
+		newPlayer.currentBox = currentBox;
+		newPlayer.version = version;
+		newPlayer.id = id;
+		newPlayer.amulet = amulet;
+		
+		newPlayer.team = newTeam;
+		
+		return newPlayer;
+	}
 }
