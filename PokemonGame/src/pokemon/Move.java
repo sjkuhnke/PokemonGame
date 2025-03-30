@@ -756,13 +756,13 @@ public enum Move {
 			}
 			bp = user.determineBasePower(foe, this, faster, null, false);
 		}
-		if (user != null) {
+		if (user != null && bp > 0) {
 			if (type == PType.NORMAL) {
 				if (user.ability == Ability.GALVANIZE || user.ability == Ability.REFRIGERATE || user.ability == Ability.PIXILATE) bp *= 1.2;
 			} else {
 				if (user.ability == Ability.NORMALIZE) bp *= 1.2;
 			}
-			if (user.getItem() == Item.METRONOME && this == user.lastMoveUsed) bp *= (1 + ((user.metronome + 1) * 0.2));
+			if (user.getItem() == Item.METRONOME && this == user.lastMoveUsed) bp *= (1 + (Math.min(1.0, (user.metronome + 1) * 0.2)));
 			int arcane = user.getStatusNum(Status.ARCANE_SPELL);
 			if (arcane != 0) {
 				bp = Math.max(bp - arcane, 20);

@@ -168,7 +168,7 @@ public class PlayerCharacter extends Entity {
 				for (int i = 0; i < p.team.length; i++) {
 					Pokemon po = p.team[i];
             		if (po != null) {
-            			if (!po.isFainted()) po.awardHappiness(1, false);
+            			po.awardHappiness(1, false);
             			if (po instanceof Egg) eggs.add(new Pair<>(((Egg) po), i));
             			if (po.ability == Ability.FLAME_BODY || po.ability == Ability.MAGMA_ARMOR || po.ability == Ability.HEAT_COMPACTION) fast = true;
             		}

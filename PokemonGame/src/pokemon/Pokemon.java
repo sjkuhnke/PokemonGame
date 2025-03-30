@@ -137,7 +137,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public int moveMultiplier;
 	private int spunCount;
 	private int outCount;
-	private int rollCount;
+	public int rollCount;
 	public int metronome;
 	public int disabledCount;
 	private int encoreCount;
@@ -3156,10 +3156,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    }
 	}
 
-
-
 	public void awardHappiness(int i, boolean override) {
 		if (this instanceof Egg) return;
+		if (this.isFainted()) return;
 		int deduc = 0;
 		if (this.item == Item.SOOTHE_BELL && i > 0) i *= 2;
 		if (this.ball == Item.LUXURY_BALL) i *= 2;
@@ -5489,6 +5488,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		int magicDamage = 0;
 		
+		if (this.hasStatus(Status.TORMENTED) && move == this.lastMoveUsed) {
+			return 0;
+		}
+		
 		if (id == 237) {
 			move = get150Move(move);
 			bp = move.basePower;
@@ -5547,7 +5550,15 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		
+		if (this.hasStatus(Status.HEAL_BLOCK) && move.isHealing()) {
+			return 0;
+		}
+		
 		if (this.hasStatus(Status.MUTE) && Move.getSound().contains(move)) {
+			return 0;
+		}
+		
+		if (move == this.disabledMove) {
 			return 0;
 		}
 		
@@ -5705,7 +5716,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			bp = determineBasePower(foe, move, first, null, false);
 		}
 		
-		if (this.getItem() == Item.METRONOME && move == this.lastMoveUsed) bp *= (1 + ((this.metronome + 1) * 0.2));
+		if (this.getItem() == Item.METRONOME && move == this.lastMoveUsed) bp *= (1 + (Math.min(1.0, (this.metronome + 1) * 0.2)));
 		
 		if (this.getItem() == Item.PROTECTIVE_PADS) contact = false;
 		if (this.getItem() == Item.PUNCHING_GLOVE && move.isPunching()) {
