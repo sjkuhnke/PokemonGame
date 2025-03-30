@@ -1,6 +1,8 @@
 package pokemon;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
@@ -30,6 +32,7 @@ import java.util.function.BiConsumer;
 import java.util.stream.IntStream;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.GrayFilter;
 import javax.swing.JButton;
@@ -37,9 +40,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
@@ -467,6 +473,7 @@ public enum Item {
     public static int ballID = 0;
     
     private static JPanel calc;
+    private static JFrame calcFrame;
     private static JComboBox<Pokemon> userMons;
     private static JComboBox<Pokemon> foeMons;
     private static JSpinner userLevel;
@@ -1103,7 +1110,11 @@ public enum Item {
 	        userItem.addActionListener(l -> {
 	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
 	        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	        	userCurrent.item = (Item) userItem.getSelectedItem();
+	        	Item item = (Item) userItem.getSelectedItem();
+	        	if (item != null) {
+	        		item = field.contains(field.fieldEffects, Effect.MAGIC_ROOM) ? Item.REPEL : item;
+	        	}
+	        	userCurrent.item = item;
 	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
 	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
 	        });
@@ -1111,7 +1122,11 @@ public enum Item {
 	        foeItem.addActionListener(l -> {
 	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
 	        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	        	foeCurrent.item = (Item) foeItem.getSelectedItem();
+	        	Item item = (Item) foeItem.getSelectedItem();
+	        	if (item != null) {
+	        		item = field.contains(field.fieldEffects, Effect.MAGIC_ROOM) ? Item.REPEL : item;
+	        	}
+	        	foeCurrent.item = item;
 	        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
 	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
 	        });
@@ -1242,6 +1257,31 @@ public enum Item {
 	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
 	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
 	        });
+	        
+	        calcFrame = new JFrame("Damage Calculator");
+            calcFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            calcFrame.setLayout(new BorderLayout());
+
+            // Panel to hold calculator and button
+            JPanel contentPanel = new JPanel(new BorderLayout());
+            contentPanel.add(calc, BorderLayout.CENTER);
+
+            // Create "OK" button
+            JButton okButton = new JButton("OK");
+            okButton.addActionListener(e -> calcFrame.dispose()); // Close when clicked
+
+            // Make OK button the default button for Enter key
+            JRootPane rootPane = calcFrame.getRootPane();
+            rootPane.setDefaultButton(okButton);
+
+            // Add button to bottom of the frame
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.add(okButton);
+            contentPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+            calcFrame.add(contentPanel);
+            calcFrame.pack();
+            calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
 		}
 		
 		if (calc != null) {
@@ -1293,13 +1333,14 @@ public enum Item {
 	        	}
 	        }
 	        
-	        userMons.setSelectedIndex(0);
 	        Pokemon userC = (Pokemon) userMons.getSelectedItem();
 	        userLevel.setValue(userC.getLevel());
 	        
 	        for (ActionListener al : listeners) {
 	            userMons.addActionListener(al);
 	        }
+	        
+	        userMons.setSelectedIndex(0);
 		}
         
         if (f != null) {
@@ -1330,7 +1371,10 @@ public enum Item {
         	}
         }
         
-        if (display) JOptionPane.showMessageDialog(null, calc, "Damage Calculator", JOptionPane.PLAIN_MESSAGE);
+        if (display) {
+        	calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
+        	calcFrame.setVisible(true);
+        }
 		
 	}
 
@@ -1445,7 +1489,16 @@ public enum Item {
 		}
 
         currentAbility.setSelectedItem(current.ability);
-        currentItem.setSelectedItem(current.item);
+        if (current.item == Item.REPEL) {
+        	Item item = (Item) currentItem.getSelectedItem();
+        	if (item != null) {
+        		item = field.contains(field.fieldEffects, Effect.MAGIC_ROOM) ? Item.REPEL : item;
+        	}
+        	current.item = item;
+        } else {
+        	currentItem.setSelectedItem(current.item);
+        }
+        if (calcFrame != null) calcFrame.pack();
 	}
 	
 	private static void updatePokemonLevel(JSpinner spinner, Pokemon userCurrent, Pokemon foeCurrent, boolean isUser) {
@@ -1507,13 +1560,40 @@ public enum Item {
         AutoCompleteDecorator.decorate(terrainBox);
         gbc.gridx = 1;
         panel.add(terrainBox, gbc);
+        
+        JPanel fieldEffectsPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints effectGbc = new GridBagConstraints();
+        effectGbc.insets = new Insets(5, 10, 5, 10);
+        effectGbc.anchor = GridBagConstraints.CENTER;
 
-        // Gravity Checkbox
+        int cols = 3; // how many checkboxes per row
+
+        @SuppressWarnings("unchecked")
+        Pair<Effect, JCheckBox>[] fieldEffects = new Pair[] {
+            new Pair<>(Effect.GRAVITY, null),
+            new Pair<>(Effect.TRICK_ROOM, null),
+            new Pair<>(Effect.MAGIC_ROOM, null),
+            new Pair<>(Effect.WATER_SPORT, null),
+            new Pair<>(Effect.MUD_SPORT, null),
+        };
+
+        for (int i = 0; i < fieldEffects.length; i++) {
+            Pair<Effect, JCheckBox> pair = fieldEffects[i];
+            Effect effect = pair.getFirst();
+            JCheckBox checkBox = new JCheckBox(effect.toString());
+            pair.setSecond(checkBox);
+            checkBox.setSelected(f.contains(f.fieldEffects, effect));
+            
+            effectGbc.gridx = i % cols;
+            effectGbc.gridy = i / cols;
+            fieldEffectsPanel.add(checkBox, effectGbc);
+        }
+        
         gbc.gridx = 0;
         gbc.gridy++;
-        JCheckBox gravityBox = new JCheckBox("Gravity");
-        gravityBox.setSelected(f.contains(f.fieldEffects, Effect.GRAVITY));
-        panel.add(gravityBox, gbc);
+        gbc.gridwidth = 2;
+        panel.add(fieldEffectsPanel, gbc);
+        gbc.gridwidth = 1;
 
         // Type 1 and Type 2 ComboBoxes
         gbc.gridy++;
@@ -1545,6 +1625,9 @@ public enum Item {
         AutoCompleteDecorator.decorate(statusBox);
         gbc.gridx = 1;
         panel.add(statusBox, gbc);
+        
+        JPanel sideFieldEffectsPanel = new JPanel(new GridLayout(0, 2, 5, 5));
+        JPanel statusEffectsPanel = new JPanel(new GridLayout(0, 2, 5, 5));
 
         // Add JCheckBoxes for each field effect
         @SuppressWarnings("unchecked")
@@ -1553,17 +1636,21 @@ public enum Item {
 				new Pair<Effect, JCheckBox>(Effect.LIGHT_SCREEN, null),
 				new Pair<Effect, JCheckBox>(Effect.AURORA_VEIL, null),
 				new Pair<Effect, JCheckBox>(Effect.LUCKY_CHANT, null),
+				new Pair<Effect, JCheckBox>(Effect.TAILWIND, null),
+				new Pair<Effect, JCheckBox>(Effect.WATER_SPORT, null),
+				new Pair<Effect, JCheckBox>(Effect.MUD_SPORT, null),
 				new Pair<Status, JCheckBox>(Status.MAGIC_REFLECT, null),
 				new Pair<Status, JCheckBox>(Status.POSSESSED, null),
 				new Pair<Status, JCheckBox>(Status.MUTE, null),
+				new Pair<Status, JCheckBox>(Status.TORMENTED, null),
+				new Pair<Status, JCheckBox>(Status.SMACK_DOWN, null),
+				new Pair<Status, JCheckBox>(Status.HEAL_BLOCK, null),
+				new Pair<Status, JCheckBox>(Status.DECK_CHANGE, null),
 				new Pair<Status, JCheckBox>(Status.FLASH_FIRE, null),
 				new Pair<Status, JCheckBox>(Status.CHARGED, null),
 				new Pair<Status, JCheckBox>(Status.LOADED, null),};
         
         for (int i = 0; i < effect.length; i++) {
-            gbc.gridx = 0;
-            gbc.gridy++;
-            
             Pair<Object, JCheckBox> pair = effect[i];
             Object first = pair.getFirst();
             JCheckBox checkBox = new JCheckBox(first.toString());
@@ -1571,16 +1658,165 @@ public enum Item {
 
             if (first instanceof Effect) {
                 checkBox.setSelected(f.contains(p.getFieldEffects(), (Effect) first));
+                sideFieldEffectsPanel.add(checkBox);
             } else {
                 checkBox.setSelected(p.hasStatus((Status) first));
+                statusEffectsPanel.add(checkBox);
             }
-            panel.add(checkBox, gbc);
         }
+        
+        JScrollPane sideScroll = new JScrollPane(sideFieldEffectsPanel);
+        sideScroll.setPreferredSize(new Dimension(300, 100));
+        sideScroll.getVerticalScrollBar().setUnitIncrement(8);
+        sideScroll.setBorder(BorderFactory.createTitledBorder("Field Effects"));
+        
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        panel.add(sideScroll, gbc);
+        
+        JScrollPane statusScroll = new JScrollPane(statusEffectsPanel);
+        statusScroll.setPreferredSize(new Dimension(300, 125));
+        statusScroll.getVerticalScrollBar().setUnitIncrement(8);
+        statusScroll.setBorder(BorderFactory.createTitledBorder("Status Effects"));
+        
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        panel.add(statusScroll, gbc);
+        
+        // Create "Fields" panel with a titled border
+        JPanel fieldsPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints fieldsGbc = new GridBagConstraints();
+        fieldsGbc.insets = new Insets(2, 5, 2, 5);
+        fieldsGbc.gridx = 0;
+        fieldsGbc.gridy = 0;
+        fieldsGbc.anchor = GridBagConstraints.WEST;
 
+        // ===== Weight =====
+        fieldsPanel.add(new JLabel("Weight:"), fieldsGbc);
+        JTextField weightField = new JTextField(String.valueOf(p.weight), 10);
+        fieldsGbc.gridx = 1;
+        fieldsPanel.add(weightField, fieldsGbc);
+
+        // ===== Current HP =====
+        fieldsGbc.gridx = 0;
+        fieldsGbc.gridy++;
+        fieldsPanel.add(new JLabel("Current HP:"), fieldsGbc);
+        JTextField hpField = new JTextField(String.valueOf(p.currentHP), 10);
+        fieldsGbc.gridx = 1;
+        fieldsPanel.add(hpField, fieldsGbc);
+
+        // ===== Magnet Rise (boolean) =====
+        fieldsGbc.gridx = 0;
+        fieldsGbc.gridy++;
+        fieldsPanel.add(new JLabel("Magnet Rise:"), fieldsGbc);
+        JCheckBox magCountBox = new JCheckBox();
+        magCountBox.setSelected(p.magCount > 0);
+        fieldsGbc.gridx = 1;
+        fieldsPanel.add(magCountBox, fieldsGbc);
+
+        // ===== Move Multiplier =====
+        fieldsGbc.gridx = 0;
+        fieldsGbc.gridy++;
+        fieldsPanel.add(new JLabel("Move Multiplier:"), fieldsGbc);
+        JComboBox<Integer> moveMultBox = new JComboBox<>(new Integer[]{1, 2, 4});
+        moveMultBox.setSelectedItem(p.moveMultiplier);
+        fieldsGbc.gridx = 1;
+        fieldsPanel.add(moveMultBox, fieldsGbc);
+
+        // ===== Roll Count =====
+        fieldsGbc.gridx = 0;
+        fieldsGbc.gridy++;
+        fieldsPanel.add(new JLabel("Roll Count:"), fieldsGbc);
+        JComboBox<Integer> rollBox = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5});
+        rollBox.setSelectedItem(p.rollCount);
+        fieldsGbc.gridx = 1;
+        fieldsPanel.add(rollBox, fieldsGbc);
+
+        // ===== Metronome =====
+        fieldsGbc.gridx = 0;
+        fieldsGbc.gridy++;
+        fieldsPanel.add(new JLabel("Metronome:"), fieldsGbc);
+        JComboBox<Integer> metroBox = new JComboBox<>(new Integer[]{-1, 0, 1, 2, 3, 4, 5});
+        metroBox.setSelectedItem(p.metronome);
+        fieldsGbc.gridx = 1;
+        fieldsPanel.add(metroBox, fieldsGbc);
+        
+        // ===== Last Move Used =====
+        fieldsGbc.gridx = 0;
+        fieldsGbc.gridy++;
+        fieldsPanel.add(new JLabel("Last Used Move:"), fieldsGbc);
+        JComboBox<Move> lastBox = new JComboBox<>(Move.values());
+        lastBox.insertItemAt(null, 0);
+        lastBox.setSelectedItem(p.lastMoveUsed);
+        AutoCompleteDecorator.decorate(lastBox);
+        fieldsGbc.gridx = 1;
+        fieldsPanel.add(lastBox, fieldsGbc);
+
+        // ===== Disabled Move =====
+        fieldsGbc.gridx = 0;
+        fieldsGbc.gridy++;
+        fieldsPanel.add(new JLabel("Disabled Move:"), fieldsGbc);
+        JComboBox<Move> disabledBox = new JComboBox<>(Move.values());
+        disabledBox.insertItemAt(null, 0);
+        disabledBox.setSelectedItem(p.disabledMove);
+        AutoCompleteDecorator.decorate(disabledBox);
+        fieldsGbc.gridx = 1;
+        fieldsPanel.add(disabledBox, fieldsGbc);
+
+        // ===== Illusion =====
+        fieldsGbc.gridx = 0;
+        fieldsGbc.gridy++;
+        fieldsPanel.add(new JLabel("Illusion:"), fieldsGbc);
+        JCheckBox illusionBox = new JCheckBox();
+        illusionBox.setSelected(p.illusion);
+        fieldsGbc.gridx = 1;
+        fieldsPanel.add(illusionBox, fieldsGbc);
+
+        // 🔹 Status Effects Panel (Nested inside "Fields")
+        JPanel statusPanel = new JPanel(new GridBagLayout());
+        statusPanel.setBorder(BorderFactory.createTitledBorder("Status Effects"));
+        GridBagConstraints statusGbc = new GridBagConstraints();
+        statusGbc.insets = new Insets(2, 5, 2, 5);
+        statusGbc.gridx = 0;
+        statusGbc.gridy = 0;
+        statusGbc.anchor = GridBagConstraints.WEST;
+
+        // ===== CRIT_CHANCE =====
+        statusPanel.add(new JLabel("Crit Chance:"), statusGbc);
+        JTextField critChanceField = new JTextField(String.valueOf(p.getStatusNum(Status.CRIT_CHANCE)), 5);
+        statusGbc.gridx = 1;
+        statusPanel.add(critChanceField, statusGbc);
+
+        // ===== ARCANE_SPELL =====
+        statusGbc.gridx = 0;
+        statusGbc.gridy++;
+        statusPanel.add(new JLabel("Arcane Spell:"), statusGbc);
+        JTextField arcaneField = new JTextField(String.valueOf(p.getStatusNum(Status.ARCANE_SPELL)), 5);
+        statusGbc.gridx = 1;
+        statusPanel.add(arcaneField, statusGbc);
+
+        // Add the status panel inside the fields panel
+        fieldsGbc.gridx = 0;
+        fieldsGbc.gridy++;
+        fieldsGbc.gridwidth = 2;  // Make it span both columns
+        fieldsPanel.add(statusPanel, fieldsGbc);
+        
+        JScrollPane fieldsScroll = new JScrollPane(fieldsPanel);
+        fieldsScroll.setPreferredSize(new Dimension(300, 150));
+        fieldsScroll.getVerticalScrollBar().setUnitIncrement(8);
+        fieldsScroll.setBorder(BorderFactory.createTitledBorder("Fields"));
+
+        // Add "Fields" panel to the main panel
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;  // Span across both columns in main layout
+        panel.add(fieldsScroll, gbc);
+        
         // Apply and Cancel Buttons
         gbc.gridy++;
         gbc.gridx = 0;
-        gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         JButton applyButton = new JButton("Apply");
         applyButton.addActionListener(e -> {
@@ -1590,11 +1826,18 @@ public enum Item {
         	Effect terrain = (Field.Effect) terrainBox.getSelectedItem();
             f.terrain = terrain == null ? null : f.new FieldEffect(terrain);
             
-            if (gravityBox.isSelected()) {
-            	if (!f.contains(f.fieldEffects, Effect.GRAVITY)) f.fieldEffects.add(f.new FieldEffect(Effect.GRAVITY));
-            } else {
-            	f.remove(f.fieldEffects, Effect.GRAVITY);
+            for (int i = 0; i < fieldEffects.length; i++) {
+            	Pair<Effect, JCheckBox> pair = fieldEffects[i];
+                Effect first = pair.getFirst();
+                JCheckBox second = pair.getSecond();
+                
+            	if (second.isSelected()) {
+            		if (!f.contains(f.fieldEffects, first)) f.fieldEffects.add(f.new FieldEffect(first));
+            	} else {
+            		f.remove(f.fieldEffects, first);
+            	}
             }
+            
             p.type1 = (PType) type1Box.getSelectedItem();
             p.type2 = (PType) type2Box.getSelectedItem();
             p.status = (Status) statusBox.getSelectedItem();
@@ -1619,6 +1862,42 @@ public enum Item {
                     	p.removeStatus(st);
                     }
                 }
+            }
+            
+            try {
+                p.weight = Math.max(0.1, Math.min(9999.9, Double.parseDouble(weightField.getText())));
+            } catch (NumberFormatException ex) {
+                p.weight = 0.1;
+            }
+
+            try {
+                p.currentHP = Math.max(1, Math.min(p.getStat(0), Integer.parseInt(hpField.getText())));
+            } catch (NumberFormatException ex) {
+                p.currentHP = 1;
+            }
+
+            p.magCount = magCountBox.isSelected() ? 1 : 0;
+            p.moveMultiplier = (Integer) moveMultBox.getSelectedItem();
+            p.rollCount = (Integer) rollBox.getSelectedItem();
+            p.metronome = (Integer) metroBox.getSelectedItem();
+            p.lastMoveUsed = (Move) lastBox.getSelectedItem();
+            p.disabledMove = (Move) disabledBox.getSelectedItem();
+            p.illusion = illusionBox.isSelected();
+
+            try {
+                p.removeStatus(Status.CRIT_CHANCE);
+                int crit = Integer.parseInt(critChanceField.getText());
+                if (crit != 0) p.addStatus(Status.CRIT_CHANCE, crit);
+            } catch (NumberFormatException ex) {
+                p.removeStatus(Status.CRIT_CHANCE);
+            }
+
+            try {
+                p.removeStatus(Status.ARCANE_SPELL);
+                int arcane = Integer.parseInt(arcaneField.getText());
+                if (arcane > 0) p.addStatus(Status.ARCANE_SPELL, arcane);
+            } catch (NumberFormatException ex) {
+                p.removeStatus(Status.ARCANE_SPELL);
             }
             
             SwingUtilities.getWindowAncestor(panel).dispose();
