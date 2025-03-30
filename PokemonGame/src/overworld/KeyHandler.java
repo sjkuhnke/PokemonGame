@@ -423,11 +423,16 @@ public class KeyHandler implements KeyListener {
 				gp.gameState = GamePanel.PLAY_STATE;
 			}
 			if (gp.ui.subState > 1 && gp.ui.subState < 7 && gp.ui.bagState == 0) { // Menus for handling the 7 top menu options
-				gp.ui.subState = 0;
-				gp.ui.partySelectedNum = -1;
-				gp.ui.selectedBagNum = -1;
-				gp.ui.partyNum = 0;
-				gp.ui.commandNum = 0;
+				if (gp.ui.subState == 2 && code == KeyEvent.VK_D) {
+					dPressed = true;
+				}else {
+					gp.ui.subState = 0;
+					gp.ui.partySelectedNum = -1;
+					gp.ui.selectedBagNum = -1;
+					gp.ui.partyNum = 0;
+					gp.ui.commandNum = 0;
+					gp.ui.partySelectedItem = -1;
+				}
 			} else if (gp.ui.subState == 7) { // Pokemon summary move info screen
 				if (code == KeyEvent.VK_S && gp.ui.nicknaming < 0) {
 					if (gp.ui.moveSummaryNum == -1) {
