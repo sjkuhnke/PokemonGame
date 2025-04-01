@@ -3079,12 +3079,25 @@ public class UI extends AbstractUI {
 				partySelectedNum = -1;
 			}
 		}
+		if (gp.keyH.dPressed) {
+			gp.keyH.dPressed = false;
+			if (partySelectedItem == -1) {
+				partySelectedItem = partyNum;
+			} else {
+				if (partySelectedItem != partyNum) {
+					gp.player.p.swapItem(partySelectedItem, partyNum);
+				}
+				partySelectedItem = -1;
+			}
+			
+			
+		}
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			subState = 7;
 		}
 		
-		drawToolTips("Info", "Swap", "Back", "Back");
+		drawToolTips("Info", "Swap", "Back", "Item");
 	}
 	
 	private void showBag() {

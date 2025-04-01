@@ -1655,4 +1655,13 @@ public class Player extends Trainer implements Serializable {
 		
 		return newPlayer;
 	}
+	public void swapItem(int a, int b) {
+		//Pokemon temp = team[a];
+		//team[a] = team[b];
+		//team[b] = temp
+		Item temp = team[a].item; 
+		team[a].item = team[b].item;
+		team[b].item = temp;
+		
+	}
 }
