@@ -116,6 +116,7 @@ public enum Ability {
 	SHELL_ARMOR("This Pokemon cannot be Critical hit."),
 	SHIELD_DUST("Blocks the added effects of attacks taken and is immune to entry hazards."),
 	SIMPLE("The stat changes the Pokemon receives are doubled."),
+	SKILL_LINK("Makes multi-hit moves always hit the maximum amount."),
 	SLEIGHT_OF_HAND("Gives priority to MAGIC moves when at full HP."),
 	SLUSH_RUSH("Boosts the Pokemon's Speed stat in SNOW."),
 	SNIPER("Powers up moves if they become critical hits."),

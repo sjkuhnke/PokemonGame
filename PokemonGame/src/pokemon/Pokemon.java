@@ -2604,7 +2604,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 			
 			if (Move.getDraining().contains(move)) {
 				int healAmount = Math.min(damage, foe.currentHP);
-				healAmount = Math.max((int) Math.ceil(healAmount / 2.0), 1);
+				if (move == Move.BLOODSHED_CLEAVE) {
+					healAmount = (int) Math.max((int) Math.ceil(healAmount / 1.5), this.getHPAmount(1.0/4));
+				} else {
+					healAmount = Math.max((int) Math.ceil(healAmount / 2.0), 1);
+				}
+				
 				if (item == Item.BIG_ROOT) healAmount *= 1.3;
 				heal(healAmount, this.nickname + " sucked HP from " + foe.nickname + "!");
 			}

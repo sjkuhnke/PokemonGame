@@ -58,6 +58,7 @@ public enum Move {
 	BLAST_BURN(150,90,0,0,1,0,PType.FIRE,"User must rest after using this move",false,5),
 	BLAZE_KICK(90,100,10,1,0,0,PType.FIRE,"% chance to Burn foe",true,10),
 	BLIZZARD(110,70,20,0,1,0,PType.ICE,"% chance to Frostbite foe, doesn't check accuracy in SNOW",false,5),
+	BLOODSHED_CLEAVE(90,100,0,0,0,0,PType.GHOST,"Heals either 75% damage dealt to foe or 25% of user's max HP; whichever is greater ",true,10),
 	BLUE_FLARE(130,85,20,0,1,0,PType.FIRE,"% chance to Burn foe",false,5),
 	BODY_PRESS(80,100,0,0,0,0,PType.FIGHTING,"Uses user's Defense stat instead of Attack",true,10),
 	BODY_SLAM(85,100,30,0,0,0,PType.NORMAL,"% chance to Paralyze foe",true,15),
@@ -66,7 +67,7 @@ public enum Move {
 	BRANCH_POKE(40,100,0,0,0,0,PType.GRASS,"A normal attack",true,35),
 	BRAVE_BIRD(120,100,0,0,0,0,PType.FLYING,"User takes 1/3 of damage inflicted",true,10),
 	BREAKING_SWIPE(60,100,100,0,0,0,PType.DRAGON,"% chance to lower foe's Attack by 1",true,15),
-	BRICK_BREAK(75,100,-1,0,0,0,PType.FIGHTING,"Breaks Screen effects and bypasses Magic Reflect",true,15),
+	BRICK_BREAK(75,100,-1,0,0,0,PType.FIGHTING,"Breaks Screen effects and breaks Magic Reflect",true,15),
 	BRINE(-1,100,0,0,1,0,PType.WATER,"Damage is doubled if foe is below 50% HP",false,10),
 	BRUTAL_SWING(60,100,0,0,0,0,PType.DARK,"A normal attack",true,20),
 	BUBBLE(20,100,0,0,1,0,PType.WATER,"A normal attack",false,30),
@@ -397,7 +398,7 @@ public enum Move {
 	PROTECT(0,1000,0,0,2,4,PType.NORMAL,"Protects user, can't be used in succession",false,10),
 	PSYBEAM(65,100,10,0,1,0,PType.PSYCHIC,"% chance to confuse foe",false,20),
 	PSYCHIC(90,100,10,0,1,0,PType.PSYCHIC,"% chance to lower foe's Sp.Def by 1",false,10),
-	PSYCHIC_FANGS(85,100,-1,0,0,0,PType.PSYCHIC,"Breaks Screen effects and bypasses Magic Reflect",true,10),
+	PSYCHIC_FANGS(85,100,-1,0,0,0,PType.PSYCHIC,"Breaks Screen effects and breaks Magic Reflect",true,10),
 	PSYCHIC_NOISE(75,100,100,0,1,0,PType.PSYCHIC,"% to inflict foe with the Heal Block effect",false,10),
 	PSYCHIC_TERRAIN(0,1000,0,0,2,0,PType.PSYCHIC,"Changes the terrain to PSYCHIC for 5 turns",false,15),
 	PSYCHO_CUT(70,100,0,1,0,0,PType.PSYCHIC,"Boosted Crit rate",false,20),
@@ -905,6 +906,7 @@ public enum Move {
 		if (this == Move.DOUBLE_SLAP || this == Move.FURY_ATTACK ||this == Move.FURY_SWIPES || this == Move.ICICLE_SPEAR ||
 				this == Move.PIN_MISSILE || this == Move.ROCK_BLAST|| this == Move.SCALE_SHOT || this == Move.SPIKE_CANNON ||
 				this == Move.SHOOTING_STARS || this == Move.BULLET_SEED || this == Move.FLASH_DARTS || this == Move.MAGIC_MISSILES) {
+			if (user.ability == Ability.SKILL_LINK) return 5;
 			int randomNum = (int) (Math.random() * 100) + 1; // Generate a random number between 1 and 100 (inclusive)
 			if (user.getItem() == Item.LOADED_DICE) {
 				if (randomNum <= 50) {
@@ -1212,6 +1214,7 @@ public enum Move {
 		result.add(DREAM_EATER);
 		result.add(ABSORB);
 		result.add(DRAIN_PUNCH);
+		result.add(BLOODSHED_CLEAVE);
 		
 		return result;
 	}
