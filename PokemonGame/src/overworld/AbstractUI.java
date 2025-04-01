@@ -27,6 +27,7 @@ public abstract class AbstractUI {
 	public int moveSummaryNum = -1;
 	public int moveSwapNum = -1;
 	public int partySelectedNum = -1;
+	public int partySelectedItem = -1;
 	public int moveOption = -1;
 	public Font marumonica;
 	public Font creattion;
@@ -249,9 +250,20 @@ public abstract class AbstractUI {
 					g2.drawRoundRect(x + 8, y + 8, partyWidth - 4, partyHeight - 4, 18, 18);
 				}
 				g2.drawImage(p.isFainted() && !egg ? p.getFaintedSprite() : p.getSprite(), x + (gp.tileSize / 4), y + (gp.tileSize / 2), null);
+				if (partySelectedItem == i || (partySelectedItem != -1 && partyNum == i)) {
+					g2.setColor(new Color(10, 10, 10, 180));
+					g2.fillOval(x + 18, y + 81, 30, 30);	
+				}
 				if (p.item != null) {
 					g2.drawImage(p.item.getImage(), x + (gp.tileSize / 4) + 8, y + 84, null);
 				}
+				
+				if(partySelectedItem == i ){
+					g2.setColor(new Color(200, 100, 100, 255));
+					g2.drawOval(x + 18, y + 81, 30, 30);
+				}
+				
+				
 				g2.setColor(Color.BLACK);
 				g2.setFont(g2.getFont().deriveFont(24F));
 				g2.drawString(p.nickname, getCenterAlignedTextX(p.nickname, (int) (x + (partyWidth * 0.75) - 12)), y + gp.tileSize);
