@@ -198,11 +198,11 @@ Trainer Classes:
 Ace Trainer (mixed types/dragon)
 Actor (Light/Normal)
 Actress (Light/Normal)
-Team Nuke Grunt redo
-Team Nuke Admin redo
-Team Nuke Boss redo
-Rival Scott redo
-Rival Fred redo
+Team Nuke Grunt
+Team Nuke Admin
+Team Nuke Boss
+Rival Scott
+Rival Fred
 Athlete (Fire/Electric)
 Backpacker/Hiker (Ground/Rock/Steel)
 Burglar (Crook/Dark)

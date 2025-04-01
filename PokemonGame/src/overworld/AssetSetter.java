@@ -1943,6 +1943,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 46, 50, "", "", 309);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 30, 55, "", "", 310);
 		
+		mapNum = 140;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 37, 64, "", "", 395);
+		
 		mapNum = 144;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 14, 17, "I've got strength like a boulder, and my Pokemon are even tougher!", "Looks like I've still got some training to do... but I'll be back!", 316);

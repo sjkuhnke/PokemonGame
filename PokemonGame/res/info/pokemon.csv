@@ -156,7 +156,7 @@
 194|Poof         |GHOST   |null    |FRIENDLY_GHOST    |LEVITATE          |PRANKSTER         |[55, 60, 80, 75, 65, 65]      |0.2   |135|
 195|Hast         |GHOST   |STEEL   |FRIENDLY_GHOST    |LEVITATE          |PRANKSTER         |[65, 70, 120, 60, 120, 65]    |200.5 |45 |
 196|Poov         |GHOST   |DARK    |CURSED_BODY       |ADAPTABILITY      |PERISH_BODY       |[75, 85, 45, 60, 55, 79]      |3.4   |95 |
-197|Grust        |GHOST   |DARK    |CURSED_BODY       |ANGER_POINT       |PERISH_BODY       |[115, 105, 55, 105, 60, 59]   |20.7  |35 |
+197|Grust        |GHOST   |DARK    |CURSED_BODY       |ANGER_POINT       |PERISH_BODY       |[130, 105, 55, 80, 60, 69]   |20.7  |35 |
 169|Cluuz        |GHOST   |POISON  |LEVITATE          |LEVITATE          |PRESSURE          |[60, 42, 58, 105, 97, 73]     |0.5   |175|
 170|Zurrclu      |GHOST   |ROCK    |LEVITATE          |LEVITATE          |PRESSURE          |[80, 90, 96, 71, 85, 58]      |199.1 |55 |
 171|Zurroaratr   |GHOST   |ROCK    |LEVITATE          |LEVITATE          |PRESSURE          |[100, 109, 110, 67, 99, 55]   |600.3 |15 |
@@ -181,9 +181,9 @@
 214|Droid        |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[50, 70, 55, 50, 50, 55]      |99.9  |135|
 215|Armoid       |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[65, 75, 105, 50, 75, 60]     |149.9 |95 |
 216|Soldrota     |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[70, 115, 115, 90, 75, 65]    |199.9 |45 |
-228|Tinkie       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SPARKLY_SURGE     |SUPER_LUCK        |[55, 76, 55, 54, 90, 60]      |10.0  |45 |
-229|Shawar       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SPARKLY_SURGE     |SUPER_LUCK        |[75, 80, 75, 60, 90, 75]      |100.0 |35 |
-230|Shaboom      |MAGIC   |GALACTIC|SPARKLY_SURGE     |SPARKLY_SURGE     |SUPER_LUCK        |[100, 100, 100, 100, 100, 100]|292.3 |25 |
+228|Tinkie       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SKILL_LINK        |SUPER_LUCK        |[55, 76, 55, 54, 90, 60]      |10.0  |45 |
+229|Shawar       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SKILL_LINK        |SUPER_LUCK        |[75, 80, 75, 60, 90, 75]      |100.0 |35 |
+230|Shaboom      |MAGIC   |GALACTIC|SPARKLY_SURGE     |SKILL_LINK        |SUPER_LUCK        |[100, 100, 100, 100, 100, 100]|292.3 |25 |
 231|Dragee       |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |ILLUMINATION      |[80, 40, 57, 63, 59, 51]      |50.2  |45 |
 232|Draga        |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |ILLUMINATION      |[85, 75, 80, 90, 75, 60]      |103.4 |35 |
 233|Drageye      |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |ILLUMINATION      |[95, 85, 90, 115, 125, 90]    |247.2 |25 |

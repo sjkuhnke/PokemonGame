@@ -477,6 +477,8 @@ public enum Item {
     private static JComboBox<Pokemon> userMons;
     private static JComboBox<Pokemon> foeMons;
     private static JSpinner userLevel;
+    private static Field field;
+    private static JButton okButton;
 	
 	Item(int id, int cost, int sell, Color color, int pocket, Object o, String desc) {
 		this.id = id;
@@ -954,7 +956,7 @@ public enum Item {
 	        JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
 	        JComboBox<Item> foeItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
 	        
-	        Field field = Pokemon.field.clone();
+	        field = Pokemon.field.clone();
 	        
 	        AutoCompleteDecorator.decorate(userItem);
 	        AutoCompleteDecorator.decorate(foeItem);
@@ -1267,7 +1269,7 @@ public enum Item {
             contentPanel.add(calc, BorderLayout.CENTER);
 
             // Create "OK" button
-            JButton okButton = new JButton("OK");
+            okButton = new JButton("OK");
             okButton.addActionListener(e -> calcFrame.dispose()); // Close when clicked
 
             // Make OK button the default button for Enter key
@@ -1285,6 +1287,7 @@ public enum Item {
 		}
 		
 		if (calc != null) {
+			field = Pokemon.field.clone();
 			ActionListener[] listeners = userMons.getActionListeners();
 			for (ActionListener al : listeners) {
 			    userMons.removeActionListener(al);
@@ -1373,6 +1376,9 @@ public enum Item {
         
         if (display) {
         	calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
+        	// Make OK button the default button for Enter key
+            JRootPane rootPane = calcFrame.getRootPane();
+            rootPane.setDefaultButton(okButton);
         	calcFrame.setVisible(true);
         }
 		
