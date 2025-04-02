@@ -24,7 +24,7 @@ import pokemon.Task;
 
 public class KeyHandler implements KeyListener {
 
-	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed, ctrlPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed, ctrlPressed, kUpPressed, kDownPressed, kLeftPressed, kRightPressed, kSPressed, kWPressed, kDPressed, kAPressed;
 	
 	GamePanel gp;
 	
@@ -35,10 +35,12 @@ public class KeyHandler implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
-
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
+		
+		handleKeyStrokes(code);
 		
 		if (gp.ui.showMessage) {
 			messageState(code);
@@ -140,27 +142,35 @@ public class KeyHandler implements KeyListener {
 		
 		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
 			upPressed = false;
+			kUpPressed = false;
 		}
 		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
 			downPressed = false;
+			kDownPressed = false;
 		}
 		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
 			leftPressed = false;
+			kLeftPressed = false;
 		}
 		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
 			rightPressed = false;
+			kRightPressed = false;
 		}
 		if (code == KeyEvent.VK_D) {
 			dPressed = false;
+			kDPressed = false;
 		}
 		if (code == KeyEvent.VK_S) {
 			sPressed = false;
+			kSPressed = false;
 		}
 		if (code == KeyEvent.VK_W) {
 			wPressed = false;
+			kWPressed = false;
 		}
 		if (code == KeyEvent.VK_A) {
 			aPressed = false;
+			kAPressed = false;
 		}
 		if (code == KeyEvent.VK_TAB) {
 			tabPressed = false;
@@ -957,7 +967,7 @@ public class KeyHandler implements KeyListener {
         public TransferableImage(Image image) {
             this.image = image;
         }
-
+        
         @Override
         public DataFlavor[] getTransferDataFlavors() {
             return new DataFlavor[]{DataFlavor.imageFlavor};
@@ -976,5 +986,31 @@ public class KeyHandler implements KeyListener {
             return image;
         }
     }
-
+    
+    private void handleKeyStrokes(int code) {
+    	if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			kUpPressed = true;
+		}
+		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			kDownPressed = true;
+		}
+		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+			kLeftPressed = true;
+		}
+		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+			kRightPressed = true;
+		}
+		if (code == KeyEvent.VK_D) {
+			kDPressed = true;
+		}
+		if (code == KeyEvent.VK_S) {
+			kSPressed = true;
+		}
+		if (code == KeyEvent.VK_W) {
+			kWPressed = true;
+		}
+		if (code == KeyEvent.VK_A) {
+			kAPressed = true;
+		}
+    }   
 }
