@@ -282,6 +282,7 @@ public class UI extends AbstractUI {
 			drawDialogueScreen(above);
 			drawToolTips("OK", null, null, null);
 		}
+		drawKeyStrokes();
 	}
 
 	private void drawTask() {

@@ -481,7 +481,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		g2.drawString(String.format("Map: %d", currentMap), x, y);
 	}
-
+	
 	public boolean determineLightOverlay() {
 		return (currentMap == 38 || currentMap == 166) && !player.p.flag[3][8];
 	}
