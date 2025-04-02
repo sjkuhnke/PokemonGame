@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 import javax.imageio.ImageIO;
 
 import entity.Entity;
@@ -114,6 +115,42 @@ public abstract class AbstractUI {
 	public void drawSubWindow(int x, int y, int width, int height) {
 		drawSubWindow(x, y, width, height, 200);		
 	}
+	public void drawButton(int x, int y, char key, boolean pressed) {
+		int width = gp.tileSize;
+		int height = gp.tileSize;
+        if (pressed) {
+        	
+        	g2.setColor(new Color(255,255,255,150));
+            g2.fillRoundRect(x, y, width, height, 35, 35);
+    		Color background = new Color(0, 0, 0, 200);
+    		g2.setColor(background);
+    		g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+       
+        } else {
+            drawSubWindow(x, y, width, height);
+        }
+        x += 14;
+        y += 32;
+        g2.setColor(pressed ? Color.black: Color.white);
+        g2.setFont(g2.getFont().deriveFont(30.F));
+        g2.drawString(String.valueOf(key), x, y);
+        
+	}
+		
+	public void drawKeyStrokes() {
+		if (!gp.keyH.shiftPressed) {
+			return;
+		}
+		drawButton(gp.tileSize, 0, 'W', gp.keyH.kWPressed);
+		drawButton(0, gp.tileSize, 'A', gp.keyH.kAPressed);
+		drawButton(gp.tileSize, gp.tileSize,'S', gp.keyH.kSPressed);
+		drawButton(gp.tileSize * 2, gp.tileSize,'D', gp.keyH.kDPressed);
+		
+		drawButton(gp.tileSize, gp.tileSize * 2, '\u2191', gp.keyH.kUpPressed);
+		drawButton(0, gp.tileSize * 3, '\u2190', gp.keyH.kLeftPressed);
+		drawButton(gp.tileSize, gp.tileSize * 3,'\u2193', gp.keyH.kDownPressed);
+		drawButton(gp.tileSize * 2, gp.tileSize * 3 ,'\u2192', gp.keyH.kRightPressed);		
+	}
 	
 	public int getTextX(String text) {
 	    FontMetrics metrics = g2.getFontMetrics(); // Assuming g2 is your Graphics2D object
@@ -180,6 +217,7 @@ public abstract class AbstractUI {
 		int height = gp.tileSize*10;
 		
 		drawSubWindow(x, y, width, height);
+		
 		
 		if (!showMoveOptions && !showIVOptions && !showBoxSummary &&
 				(currentTask == null || currentTask.type == Task.PARTY || currentTask.type == Task.REGIONAL_TRADE || currentTask.type == Task.EVO_INFO)) {
@@ -1375,6 +1413,7 @@ public abstract class AbstractUI {
 	    }
 
 	    drawToolTips(null, editable ? "Close" : null, "Close", null);
+	    
 	}
 
 }

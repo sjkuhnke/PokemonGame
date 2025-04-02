@@ -199,6 +199,7 @@ public class BattleUI extends AbstractUI {
 		if (dialogueState == DIALOGUE_STATE) {
 			drawDialogueState();
 		}
+		drawKeyStrokes();
 	}
 
 	protected void endTask() {
