@@ -79,7 +79,7 @@ public class Task {
 	public int start; // x for teleport
 	public int finish; // y for teleport
 	public Pokemon p; // the pokemon taking damage, or announcing an ability, or being sent out
-	public Pokemon evo;
+	public Pokemon foe;
 	public Ability ability;
 	public Status status;
 	public Move move;
@@ -255,9 +255,9 @@ public class Task {
 		return t;
 	}
 	
-	public static void addEvoTask(Pokemon p, Pokemon result, int index) {
+	public static void addEvoTask(Pokemon p, int result, int index) {
 		Task t = createTask(Task.EVO, p.nickname + " is evolving!\nDo you want to evolve your " + p.nickname + "?", p);
-		t.evo = result;
+		t.counter = result;
 		insertTask(t, index);
 	}
 	

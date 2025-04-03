@@ -100,7 +100,7 @@ public class Egg extends Pokemon {
 	}
 	
 	public Pokemon hatch() {
-		Pokemon p = new Pokemon(this.id, this);
+		Pokemon p = this.evolve(this.id);
 		p.nickname = p.name();
 		p.metAt = PlayerCharacter.getMetAt();
 		return p;

@@ -249,83 +249,30 @@ public class Pokemon implements RoleAssignable, Serializable {
 		this.fieldEffects = new ArrayList<>();
 	}
 
-	public Pokemon(int i, Pokemon pokemon) {
+	public Pokemon evolve(int i) {
+		int oldHP = this.getStat(0);
 		id = i;
+		if (this.nickname.equals(this.name)) nickname = getName();
 		name = getName();
-		nickname = pokemon.nickname;
-		if (pokemon.nickname.equals(pokemon.name)) nickname = name;
-		
-		baseStats = new int[6];
-		stats = new int[6];
-		level = pokemon.level;
-		statStages = pokemon.statStages.clone();
-		ivs = pokemon.ivs;
-		nat = pokemon.nat;
 		
 		baseStats = getBaseStats();
 		setStats();
 		setTypes();
-		this.abilitySlot = pokemon.abilitySlot;
 		setAbility(abilitySlot);
 		this.weight = getWeight();
 		
-		this.slot = pokemon.slot;
-		
 		expMax = setExpMax();
-		exp = 0;
 		
 		currentHP = this.getStat(0);
-		moveset = pokemon.moveset;
-		
-		status = pokemon.status;
-		vStatuses = new ArrayList<StatusEffect>(pokemon.vStatuses);
-		
-		shiny = pokemon.shiny;
-		impressive = pokemon.impressive;
-		trainer = pokemon.trainer;
-		lastMoveUsed = pokemon.lastMoveUsed;
-		
-		happiness = pokemon.happiness;
-		headbuttCrit = pokemon.headbuttCrit;
-		tailCrit = pokemon.tailCrit;
-		spaceEat = pokemon.spaceEat;
 		catchRate = getCatchRate();
-		happinessCap = pokemon.happinessCap;
-		item = pokemon.item;
-		loseItem = pokemon.loseItem;
-		lostItem = pokemon.lostItem;
-		consumedItem = pokemon.consumedItem;
-		ball = pokemon.ball;
-		
-		confusionCounter = pokemon.confusionCounter;
-	    sleepCounter = pokemon.sleepCounter;
-	    perishCount = pokemon.perishCount;
-	    magCount = pokemon.magCount;
-	    spunCount = pokemon.spunCount;
-	    outCount = pokemon.outCount;
-	    rollCount = pokemon.rollCount;
-	    encoreCount = pokemon.encoreCount;
-	    disabledCount = pokemon.disabledCount;
-	    tauntCount = pokemon.tauntCount;
-	    tormentCount = pokemon.tormentCount;
-	    healBlockCount = pokemon.healBlockCount;
-	    toxic = pokemon.toxic;
-	    
-	    battled = pokemon.battled;
-	    success = pokemon.success;
-	    illusion = pokemon.illusion;
-	    
-	    disabledMove = pokemon.disabledMove;
-	    slot = pokemon.slot;
-		
-		metAt = pokemon.metAt;
-		
-		moveMultiplier = pokemon.moveMultiplier;
-		
-		visible = pokemon.visible;
-		spriteVisible = pokemon.spriteVisible;
 		
 		setSprites();
+		
+		int hpDif = oldHP - this.currentHP;
+        this.currentHP -= hpDif;
+        this.verifyHP();
+        
+        return this;
 	}
 	
 	public Pokemon(int i, int l, boolean o, boolean t, Item item) {
@@ -987,6 +934,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this.level == 100) this.exp = 0;
 		
 		Task t = Task.addTask(Task.LEVEL_UP, this.nickname + " leveled up to " + this.level + "!", this);
+		t.start = this.expMax;
 		t.setFinish(amt);
 		
 		ArrayList<Task> check = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.ui.tasks;
@@ -1071,294 +1019,307 @@ public class Pokemon implements RoleAssignable, Serializable {
 
 	private void checkEvo(Player player, int index) {
 		if (this.item == Item.EVERSTONE) return;
-		Pokemon result = null;
+		int result = -1;
 		int area = player.currentMap;
 		if (area >= 95 && area <= 99) area = 35; // electric tunnel
 		if (id == 1 && level >= 18) {
-			result = new Pokemon(2, this);
+			result = id + 1;
 		} else if (id == 2 && level >= 36) {
-			result = new Pokemon(3, this);
+			result = id + 1;
 		} else if (id == 4 && level >= 16) {
-			result = new Pokemon(5, this);
+			result = id + 1;
 		} else if (id == 5 && level >= 36) {
-			result = new Pokemon(6, this);
+			result = id + 1;
 		} else if (id == 7 && level >= 17) {
-			result = new Pokemon(8, this);
+			result = id + 1;
 		} else if (id == 8 && level >= 36) {
-			result = new Pokemon(9, this);
+			result = id + 1;
 		} else if (id == 10 && level >= 18) {
-			result = new Pokemon(11, this);
+			result = id + 1;
 		} else if (id == 11 && level >= 36) {
-			result = new Pokemon(id + 1, this);		
+			result = id + 1;
 		} else if (id == 13 && level >= 17) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 14 && level >= 32) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 16 && knowsMove(Move.BULK_UP)) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 17 && area == 100) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 19 && level >= 20) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 20 && level >= 40) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 22 && level >= 18) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 23 && (area == 80 || area == 83 || area == 90 || (area >= 100 && area <= 103))) {
-			result = new Pokemon(25, this);
+			result = 25;
 		} else if (id == 23 && level >= 32) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 26 && level >= 28) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 29 && happiness >= 160) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 32 && level >= 20) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 33 && happiness >= 160) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 35 && level >= 20) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 36 && area == 35) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 41 && level >= 15) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 42 && level >= 39) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 44 && level >= 16) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 48 && level >= 22) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 49 && area == 35) {
-			result = new Pokemon(id + 2, this);
+			result = 51;
 		} else if (id == 49 && knowsMove(Move.ROCK_BLAST)) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 52 && level >= 30) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 53 && (area == 80 || area == 83 || area == 90 || (area >= 100 && area <= 103))) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 55 && level >= 34) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 57 && level >= 36) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 59 && happiness >= 160) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 66 && level >= 48) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 68 && level >= 32) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 69 && level >= 44) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 71 && level >= 31) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 73 && level >= 30) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 75 && level >= 32) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 76 && level >= 42) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 78 && level >= 35) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 80 && level >= 40) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 82 && level >= 32) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 83 && level >= 52) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 85 && level >= 18) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 86 && level >= 30) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 90 && level >= 30) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 92 && level >= 35) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 94 && level >= 16) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 95 && level >= 36) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 98 && level >= 35) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 99 && level >= 55) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 101 && level >= 20) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 102 && level >= 42) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 104 && level >= 24) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 106 && level >= 25) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 111 && level >= 30) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 112 && area == 35) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 114 && level >= 28) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 115 && level >= 48) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 117 && level >= 19) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 120 && level >= 30) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 121 && happiness >= 250) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 123 && level >= 30) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 124 && happiness >= 250) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 126 && level >= 30) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 127 && happiness >= 250) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 129 && level >= 20) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 134 && happiness >= 160) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 135 && level >= 30) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 137 && level >= 20) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 143 && happiness >= 250) { // ?? maybe stone???? idfk
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 144 && area == 77) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 146 && level >= 39) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 151 && level >= 22) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 153 && level >= 22) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 154 && happiness >= 160) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 156 && level >= 32) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 158 && level >= 30) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 161 && happiness >= 250) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 163 && level >= 25) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 164 && level >= 36) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 166 && level >= 30) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 167 && level >= 50) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 169 && level >= 33) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 171 && level >= 20) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 172 && level >= 48) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 174 && happiness >= 160) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 179 && level >= 30) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 181 && level >= 25) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 182 && level >= 50) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 184 && level >= 26) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 185 && level >= 50) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 187 && level >= 36) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 188 && level >= 55) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 190 && level >= 40) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 191 && level >= 60) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 195 && area == 100) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 197 && level >= 32) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 199 && level >= 25) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 200 && level >= 50) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 202 && level >= 35) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 203 && level >= 55) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 205 && level >= 22) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 206 && area == 35) {
-			result = new Pokemon(208, this);
+			result = 208;
 		} else if (id == 206 && knowsMove(Move.ROCK_BLAST)) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 209 && level >= 20) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 211 && level >= 40) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 213 && level >= 40) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 217 && level >= 20) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 218 && level >= 45) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 221 && happiness >= 250) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 223 && level >= 16) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 224 && level >= 36) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 226 && level >= 32) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 238 && level >= 39) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 239 && headbuttCrit >= 5) {
-		    result = new Pokemon(id + 1, this);
+		    result = id + 1;
 		} else if (id == 241 && level >= 35) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 243 && level >= 16) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 244 && level >= 36) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 251 && level >= 32) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 252 && level >= 41) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 254 && level >= 32) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 255 && level >= 41) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 257 && tailCrit >= 5) {
-		    result = new Pokemon(id + 1, this);
+		    result = id + 1;
 		} else if (id == 259 && level >= 26) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 261 && spaceEat >= 25) {
-		    result = new Pokemon(id + 1, this);
-		} else if (id == 265 && level >= 42) {
-            result = new Pokemon(id + 1, this);
+		    result = id + 1;
+		} else if (id == 263 && spaceEat >= 25) {
+		    result = id + 1;
+		} else if (id == 265 && level >= 42 && (area == 100 || area == 99) && hasPartyMember('E') && hasPartyMember('S')) {
+            result = id + 1;
 		} else if (id == 267 && level >= 42) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 269 && level >= 7) {
-            result = new Pokemon(272, this);
+            result = 272;
 		} else if (id == 270 && level >= 10) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 272 && level >= 10) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 274 && level >= 33) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 276 && level >= 33) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 279 && level >= 50) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 282 && level >= 50) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 292 && happiness >= 160) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
 		} else if (id == 293 && level >= 18) {
-			result = new Pokemon(id + 1, this);
+			result = id + 1;
 		} else if (id == 295 && level >= 28) {
-            result = new Pokemon(id + 1, this);
+            result = id + 1;
         }
 		
-		if (result != null) {
+		if (result > 0) {
 			Task.addEvoTask(this, result, index);
 	    }
+	}
+
+	private boolean hasPartyMember(char c) {
+		Player pl = this.getPlayer();
+		String search = "-" + c;
+		for (Pokemon p : pl.getTeam()) {
+			if (p.name.contains(search)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void setStats() {
@@ -3127,9 +3088,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public void awardxp(int amt) {
 	    if (this.fainted) return;
 	    if (!this.playerOwned()) return;
-	    Player player = (Player) this.trainer;
+	    Player player = this.getPlayer();
 
-	    ArrayList<Pokemon> teamCopy = new ArrayList<>(Arrays.asList(player.getTeam()));
 	    player.handleExpShare();
 	    int numBattled = player.getBattled();
 	    if (numBattled == 0) return;
@@ -3137,7 +3097,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    int remainingExp = amt % numBattled;
 
 	    // Award experience points to each battled Pokemon
-	    for (Pokemon p : teamCopy) {
+	    for (Pokemon p : player.getTeam()) {
 	        if (p != null && p.battled) {
 	            int expAwarded = expPerPokemon;
 	            if (remainingExp > 0) {
@@ -3146,16 +3106,24 @@ public class Pokemon implements RoleAssignable, Serializable {
 	            }
 	            if (p.level < 100) {
 	            	if (p.item == Item.LUCKY_EGG) expAwarded = (int) Math.ceil(expAwarded * 1.5);
-	                p.exp += expAwarded;
+	            	
+	            	int totalExp = p.exp + expAwarded;
 	                String flavor = p.item == Item.LUCKY_EGG ? "a boosted " : p.item == Item.EXP_SHARE && !p.visible ? "a shared " : "";
                 	Task t = Task.addTask(Task.EXP, p.nickname + " gained " + flavor + expAwarded + " experience points!", p);
-                	t.setFinish(Math.min(p.exp, expMax));
-	            }
-	            while (p.exp >= p.expMax) {
-	                // Pokemon has leveled up, check for evolution
-	                p.levelUp(player);
-	                int index = Arrays.asList(player.getTeam()).indexOf(p);
-	                p = player.team[index];
+                	t.setFinish(Math.min(totalExp, expMax));
+                	
+                	while (totalExp >= p.expMax) {
+                		p.levelUp(player);
+                		totalExp -= p.expMax;
+                		
+                		if (totalExp > 0) {
+                			int nextTarget = Math.min(totalExp, p.expMax);
+                			Task followUp = Task.addTask(Task.EXP, "", p);
+                			followUp.setFinish(nextTarget);
+                		}
+                	}
+                	
+                	p.exp = totalExp;
 	            }
 	        }
 	    }
@@ -7535,7 +7503,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (damageIndex >= 0) {
 			t = Task.createTask(Task.DAMAGE, message, this);
 			t.wipe = true;
-			t.evo = foe;
+			t.foe = foe;
 			Task.setTask(damageIndex, t);
 		} else {
 			t = Task.addTask(Task.DAMAGE, message, this);
@@ -8334,7 +8302,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		case 257: return "Seviper -> Hissimitar\n(5+ Tail Move Crits in Trainer Battles)";
 		case 259: return "Gulpin -> Swalot (lv. 26)";
 		case 261: return "Gulpin-X -> Swalot-X\n(25+ Galactic Moves Eaten in Trainer Battles)";
-		case 263: return "Plasamp -> Genieova ()";
+		case 263: return "Plasamp -> Genieova\n(lv. near either meteor with E and S form in the party)";
 		case 265: return "Elgyem -> Beheeyem (lv. 42)";
 		case 267: return "Elgyem-E -> Beheeyem-E (lv. 42)";
 		case 269: return "Caterpie -> Metapod-X (lv. 7)";

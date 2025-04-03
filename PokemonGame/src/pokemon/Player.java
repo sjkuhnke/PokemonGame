@@ -936,7 +936,7 @@ public class Player extends Trainer implements Serializable {
 	        	} else {
 	        		gp.gameState = GamePanel.RARE_CANDY_STATE;
 	        		Task t = Task.addTask(Task.EVO_ITEM, "", p);
-	        		t.evo = new Pokemon(p.getEvolved(item), p);
+	        		t.counter = p.getEvolved(item);
 	        		Task.addTask(Task.CLOSE, "");
 	        	}
 				break;
@@ -1656,12 +1656,37 @@ public class Player extends Trainer implements Serializable {
 		return newPlayer;
 	}
 	public void swapItem(int a, int b) {
-		//Pokemon temp = team[a];
-		//team[a] = team[b];
-		//team[b] = temp
 		Item temp = team[a].item; 
 		team[a].item = team[b].item;
 		team[b].item = temp;
+	}
+
+	public void evolve(Pokemon p, int counter, GamePanel gp) {
+		String oldNickname = p.nickname;
+		int oldID = p.id;
+		p.evolve(counter);
 		
+        Task text = Task.createTask(Task.TEXT, oldNickname + " evolved into " + p.name() + "!");
+        Task.insertTask(text, 0);
+        pokedex[p.id] = 2;
+        if (oldID == 129) {
+        	gp.player.p.catchPokemon(new Pokemon(131, p.level, true, false), false);
+        }
+        
+        if (p.slot == 0) {
+        	gp.battleUI.userHP = p.currentHP;
+        	gp.battleUI.maxUserHP = p.getStat(0);
+        }
+        int i = p.checkMove(1, 0);
+        p.checkMove(i, p.level);
+        
+        ArrayList<Task> tasks = gp.getTasks();
+        tasks.removeIf(task -> task.type == Task.EVO);
+        for (int j = 1; j < tasks.size(); j++) {
+        	Task t = tasks.get(j);
+        	if (t.message.contains(oldNickname)) {
+        		t.message = t.message.replace(oldNickname, p.nickname);
+        	}
+        }
 	}
 }

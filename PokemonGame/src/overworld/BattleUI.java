@@ -272,7 +272,7 @@ public class BattleUI extends AbstractUI {
 				return;
 			}
 			currentDialogue = currentTask.message;
-			if (currentTask.wipe) currentTask.evo.spriteVisible = true;
+			if (currentTask.wipe) currentTask.foe.spriteVisible = true;
 			if (currentTask.p == user) {
 				if (userHP > currentTask.finish) userHP--;
 				if (userHP < currentTask.finish) userHP++;
@@ -400,21 +400,22 @@ public class BattleUI extends AbstractUI {
 			break;
 		case Task.EXP:
 			currentDialogue = currentTask.message;
-			if (currentTask.p.isVisible()) {
-				if (userExp < currentTask.finish) userExp++;
-				if (userExp == currentTask.finish) {
-					endTask();
-				}
-			} else {
-				endTask();
-			}
+		    if (currentTask.p.isVisible()) {
+		        if (userExp < currentTask.finish) {
+		            userExp++;
+		        } else {
+		            endTask();
+		        }
+		    } else {
+		        endTask();
+		    }
 			break;
 		case Task.LEVEL_UP:
 			currentDialogue = currentTask.message;
 			if (currentTask.p.isVisible()) {
 				userLevel++;
-				userExp = user.exp;
-				userExpMax = user.expMax;
+				userExp = 0;
+				userExpMax = currentTask.start;
 				userHP += currentTask.finish;
 				maxUserHP += currentTask.finish;
 			}

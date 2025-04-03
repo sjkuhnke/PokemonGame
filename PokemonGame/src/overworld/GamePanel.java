@@ -525,5 +525,16 @@ public class GamePanel extends JPanel implements Runnable {
         	JOptionPane.showMessageDialog(null, "Error writing object to file: " + ex.getMessage());
         }
 	}
+	
+	public ArrayList<Task> getTasks() {
+		switch(gameState) {
+		case BATTLE_STATE:
+			return battleUI.tasks;
+		case SIM_BATTLE_STATE:
+			return simBattleUI.tasks;
+		
+		}
+		return ui.tasks;
+	}
 
 }

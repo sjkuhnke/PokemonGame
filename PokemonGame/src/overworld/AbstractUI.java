@@ -9,8 +9,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 
 import javax.imageio.ImageIO;
 
@@ -217,7 +215,6 @@ public abstract class AbstractUI {
 		int height = gp.tileSize*10;
 		
 		drawSubWindow(x, y, width, height);
-		
 		
 		if (!showMoveOptions && !showIVOptions && !showBoxSummary &&
 				(currentTask == null || currentTask.type == Task.PARTY || currentTask.type == Task.REGIONAL_TRADE || currentTask.type == Task.EVO_INFO)) {
@@ -1089,33 +1086,7 @@ public abstract class AbstractUI {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				Pokemon oldP = t.p;
-				Pokemon newP = t.evo;
-				int hpDif = oldP.getStat(0) - oldP.currentHP;
-		        newP.currentHP -= hpDif;
-		        newP.moveMultiplier = newP.moveMultiplier;
-		        Task text = Task.createTask(Task.TEXT, oldP.nickname + " evolved into " + newP.name() + "!");
-		        Task.insertTask(text, 0);
-		        newP.exp = oldP.exp;
-		        gp.player.p.pokedex[newP.id] = 2;
-		        if (oldP.id == 129) {
-		        	gp.player.p.catchPokemon(new Pokemon(131, oldP.level, true, false), false);
-		        }
-		        
-		        // Update player team
-		        int index = Arrays.asList(gp.player.p.getTeam()).indexOf(oldP);
-                gp.player.p.team[index] = newP;
-                if (index == 0) {
-                	oldP.setVisible(false);
-                	newP.battled = true;
-                	gp.player.p.current = newP;
-                	gp.battleUI.user = newP;
-                	gp.battleUI.userHP = newP.currentHP;
-                	gp.battleUI.maxUserHP = newP.getStat(0);
-                }
-                int i = newP.checkMove(1, 0);
-                newP.checkMove(i, newP.level);
-		        
+				gp.player.p.evolve(currentTask.p, currentTask.counter, gp);
 		        currentTask = null;
 			}
 		}
