@@ -298,7 +298,8 @@ public class UI extends AbstractUI {
 			showMoveOptions = true;
 			break;
 		case Task.EVO_ITEM:
-			evolveMon();
+			gp.player.p.evolve(currentTask.p, currentTask.counter, gp);
+			currentTask = null;
 			break;
 		case Task.EVO:
 			drawEvolution(currentTask);
@@ -565,7 +566,7 @@ public class UI extends AbstractUI {
 			
 			Task t = Task.addTask(Task.BET_BATTLE, "");
 			t.p = ut.getCurrent();
-			t.evo = ft.getCurrent();
+			t.foe = ft.getCurrent();
 			t.trainers = new Trainer[] {ut, ft};
 			t.start = odds[0];
 			t.finish = odds[1];
@@ -4798,34 +4799,6 @@ public class UI extends AbstractUI {
 		}
 		
 		drawToolTips(wText, "Swap", "Back", "Party");
-	}
-	
-	private void evolveMon() {
-		Task t = currentTask;
-		Pokemon oldP = t.p;
-		Pokemon newP = t.evo;
-		int hpDif = oldP.getStat(0) - oldP.currentHP;
-        newP.currentHP -= hpDif;
-        newP.moveMultiplier = newP.moveMultiplier;
-        Task text = Task.createTask(Task.TEXT, oldP.nickname + " evolved into " + newP.name() + "!");
-        Task.insertTask(text, 0);
-        newP.exp = oldP.exp;
-        gp.player.p.pokedex[newP.id] = 2;
-        
-        // Update player team
-        int index = Arrays.asList(gp.player.p.getTeam()).indexOf(oldP);
-        gp.player.p.team[index] = newP;
-        if (index == 0) {
-        	oldP.setVisible(false);
-        	gp.player.p.setCurrent(newP);
-        	gp.battleUI.user = newP;
-        	gp.battleUI.userHP = newP.currentHP;
-        	gp.battleUI.maxUserHP = newP.getStat(0);
-        }
-        int i = newP.checkMove(1, 0);
-        newP.checkMove(i, newP.level);
-        
-        currentTask = null;
 	}
 	
 	private ArrayList<BufferedImage> extractFrames(String path) {

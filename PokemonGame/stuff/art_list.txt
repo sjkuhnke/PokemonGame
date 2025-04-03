@@ -5,8 +5,6 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 203 Fireshard-E (First stage is lowkey the most important, these 2 can wait)
 204 Blastflames-E (First stage is lowkey the most important, these 2 can wait)
 289 Dusk Skater*
-158 Poov*
-159 Grust*
 177 Minishoo*
 178 Glittleshoo*
 171 Wormite*
