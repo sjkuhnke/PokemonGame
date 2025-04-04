@@ -101,7 +101,7 @@ public class NPC_Prize_Shop extends Entity {
 	public List<Pair<Item, Integer>> getWinItems() {
 		int available = 0;
 		int badges = gp.player.p.badges;
-		if (badges > 5) available += 2;
+		if (badges > 5) available++;
 		if (badges > 4) available++;
 		if (badges > 3) available++;
 		if (badges > 2) available++;
@@ -115,8 +115,7 @@ public class NPC_Prize_Shop extends Entity {
 			new Pair<>(Item.TM96, 40),
 			new Pair<>(Item.TM21, 60),
 			new Pair<>(Item.TM70, 75),
-			new Pair<>(Item.TM64, 100),
-			new Pair<>(Item.TM94, 150)
+			new Pair<>(Item.TM94, 100)
 		);
 		
 		ArrayList<Pair<Item, Integer>> result = new ArrayList<>();

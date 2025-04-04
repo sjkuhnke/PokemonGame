@@ -914,6 +914,11 @@ public class KeyHandler implements KeyListener {
 	}
 	
 	public void resetKeys() {
+		resetKeys(true);
+	}   
+	
+	// only reset shift if it's resetting keys while opening a new seperate UI (like calc)
+	public void resetKeys(boolean resetShift) {
 		upPressed = false;
 		downPressed = false;
 		leftPressed = false;
@@ -923,6 +928,11 @@ public class KeyHandler implements KeyListener {
 		dPressed = false;
 		aPressed = false;
 		ctrlPressed = false;
+		if (resetShift) shiftPressed = false;
+		kSPressed = false;
+		kWPressed = false;
+		kDPressed = false;
+		kAPressed = false;
 	}
 	
 	 private void takeScreenshot() {
@@ -1012,5 +1022,5 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_A) {
 			kAPressed = true;
 		}
-    }   
+    }
 }

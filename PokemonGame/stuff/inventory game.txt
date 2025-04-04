@@ -22,7 +22,10 @@ Rockmite
 Arthra Team:
 Butterfree-X Bronzong-X Hissimitar Suvinero Bouncerog Winagrow
 Unused Boss Pokemon:
-Curlatoral Crystallor Cairnasaur Ramant Boulderoar Raptorex Pyrator Magmaclang Lafloo Houndoom Fireblion Megawatt Thunderzap Spinaquata Gyarados Barbaracle Hast Zurroaratr Conkeldurr Soldrota
+Curlatoral Crystallor Cairnasaur Ramant Boulderoar Raptorex Pyrator Magmaclang Lafloo Houndoom Fireblion Thunderzap Spinaquata Shelnado Gyarados Batorali Barbaracle Hast Conkeldurr
+
+Nova Team:
+Clefable Swalot-X Starmie Genieova Stellarock Beheeyem-E
 
 Game2.72: Encounters and TN base stuff done 3/27
 Game2.721: Items for Mt Splinkty done 3/29
@@ -87,6 +90,10 @@ Tips:
 Light types are weak to grass/grass types counter the new light type
 Magic types and normal types have an interesting interaction because they're weak to each other (justify?)
 Galactic types are really strong, but can get beat by the new light types as well as rock and flying
+
+Settings:
+Show/Hide tooltips in the overworld
+Prompt disable for buying stuff in the shop
 
 Hummingspark -> Sparklet/Chivick/Shimmick/Hummisong/Throchirp   Chivick
 Flashclaw -> Humbrill/Billumina/Photochili   Humbrill

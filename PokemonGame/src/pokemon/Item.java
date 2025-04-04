@@ -804,6 +804,9 @@ public enum Item {
 	}
 
 	public static void useCalc(Pokemon p, Pokemon[] box, Pokemon f, boolean display) {
+		if (Pokemon.gp != null) {
+			Pokemon.gp.keyH.resetKeys();
+		}
 		Trainer pl = p.trainer;
 		if (calc == null) {
 			calc = new JPanel();

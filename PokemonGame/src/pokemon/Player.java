@@ -1670,7 +1670,7 @@ public class Player extends Trainer implements Serializable {
         Task.insertTask(text, 0);
         pokedex[p.id] = 2;
         if (oldID == 129) {
-        	gp.player.p.catchPokemon(new Pokemon(131, p.level, true, false), false);
+        	gp.player.p.catchPokemon(p.evolve(131));
         }
         
         if (p.slot == 0) {
