@@ -995,7 +995,7 @@ public class AssetSetter {
 		
 		mapNum = 140;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(62, 65, Item.TM34, mapNum); // magic tomb TODO: replace
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 65, Item.TM64, mapNum); // close combat
 		gp.obj[mapNum][objIndex] = MintSetup(46, 60, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(40, 54, Item.MAX_ELIXIR, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 51, Item.TM35, mapNum); // flamethrower
@@ -1967,7 +1967,6 @@ public class AssetSetter {
 		mapNum = 148;
 		index = 0;
 		//gp.npc[mapNum][index] = NPCSetup(TRIWANDOLIZ, 50, 68, 326);
-		
 		
 		mapNum = 149;
 		index = 0;

@@ -260,7 +260,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void openBox(NPC_PC target) {
-		keyH.resetKeys();
+		keyH.resetKeys(false);
 		
 		if (player.p.boxLabels == null) {
 			player.p.boxLabels = player.p.setupBoxLabels();

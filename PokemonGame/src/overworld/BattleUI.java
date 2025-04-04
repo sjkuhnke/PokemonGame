@@ -802,7 +802,7 @@ public class BattleUI extends AbstractUI {
 		if (commandNum == 1) {
 			g2.drawRoundRect(x, y, width, height, 10, 10);
 			if (gp.keyH.wPressed && !showFoeSummary) {
-				gp.keyH.resetKeys();
+				gp.keyH.resetKeys(false);
 				currentDialogue = "";
 				cancellableParty = true;
 				subState = PARTY_SELECTION_STATE;

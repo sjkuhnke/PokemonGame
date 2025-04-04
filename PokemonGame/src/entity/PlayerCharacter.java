@@ -398,7 +398,6 @@ public class PlayerCharacter extends Entity {
 		}
 		if (keyH.aPressed) {
 			if (keyH.ctrlPressed) {
-				gp.keyH.resetKeys();
 				resetSpriteNum();
 				Item.useCalc(p.getCurrent(), null, null, true);
 			} else {
@@ -603,7 +602,7 @@ public class PlayerCharacter extends Entity {
 			npc.speak(0);
 			if (npc.scriptIndex >= 0) {
 				SwingUtilities.invokeLater(() -> {
-					gp.keyH.resetKeys();
+					gp.keyH.resetKeys(false);
 					gp.setTaskState();
 					gp.script.runScript(npc);
 				});
@@ -721,7 +720,7 @@ public class PlayerCharacter extends Entity {
 		if (!p.flag[0][0]) { // Before talking to Dad first
 			gp.ui.showMessage("It's a machine housing three rare Pokemon!");
 		} else if (p.flag[0][0] && !p.flag[0][1]) { // After talking to Dad and before picking a starter
-			gp.keyH.resetKeys();
+			gp.keyH.resetKeys(false);
 			gp.gameState = GamePanel.STARTER_STATE;
 		} else if (p.flag[0][1] && !p.flag[0][4]) { // After picking a starter and before the first gate
 			gp.ui.showMessage(Item.breakString("There are two Pokemon still inside the machine. Wonder what Dad will do with them?", 42));
