@@ -9,10 +9,10 @@ public class T_Invisible extends NPC_Trainer {
 	}
 	
 	public void getImage() {
-		down1 = setup("/npc/trainer1");
-		up1 = setup("/npc/trainer2");
-		left1 = setup("/npc/trainer3");
-		right1 = setup("/npc/trainer4");
+		down1 = setup("/npc/invisible1");
+		up1 = setup("/npc/invisible2");
+		left1 = setup("/npc/invisible3");
+		right1 = setup("/npc/invisible4");
 	}
 
 }

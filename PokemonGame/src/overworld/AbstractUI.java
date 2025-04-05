@@ -111,7 +111,7 @@ public abstract class AbstractUI {
 	}
 
 	public void drawSubWindow(int x, int y, int width, int height) {
-		drawSubWindow(x, y, width, height, 200);		
+		drawSubWindow(x, y, width, height, 200);
 	}
 	public void drawButton(int x, int y, char key, boolean pressed) {
 		int width = gp.tileSize;

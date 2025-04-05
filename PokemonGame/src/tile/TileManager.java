@@ -1362,7 +1362,6 @@ public class TileManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void loadMap(String filePath, int map, boolean canFly) {
