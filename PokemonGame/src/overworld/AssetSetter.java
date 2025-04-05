@@ -360,6 +360,8 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(79, 39, Item.RARE_CANDY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(71, 46, Item.ADRENALINE_ORB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(21, 75, Item.ABSORB_BULB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(21, 80, Item.GRASSY_SEED, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(24, 86, Item.ABSORB_BULB, mapNum);
 		
 		mapNum = 13;
 		objIndex = 0;
@@ -392,6 +394,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(49, 30, Item.GRASSY_SEED, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(48, 39, Item.TINY_MUSHROOM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 59, Item.ELECTRIC_SEED, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(79, 63, Item.SALAC_BERRY, mapNum, 2, 5);
 		
 		mapNum = 14;
 		objIndex = 0;
@@ -418,17 +421,18 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(22, 27, Item.TM27, mapNum); // taunt
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 27, Item.TM14, mapNum); // drain punch
 		gp.obj[mapNum][objIndex] = ObjSetup(46, 28, Item.BOTTLE_CAP, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(34, 37, Item.RING_TARGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(34, 37, Item.POTION, mapNum);
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(60, 41, Item.WEAKNESS_POLICY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(60, 43, Item.PP_MAX, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(62, 43, Item.ICE_STONE, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(63, 32, Item.BLUNDER_POLICY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 32, Item.BLUNDER_POLICY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 32, Item.FULL_RESTORE, mapNum);
 		if (gp.player.p.choiceChoice != null) {
 			gp.player.p.itemsCollected[mapNum][objIndex] = false;
 			gp.obj[mapNum][objIndex] = ObjSetup(77, 41, gp.player.p.choiceChoice, mapNum);
 		}
+		gp.obj[mapNum][objIndex] = ObjSetup(78, 42, Item.ELECTRIC_SEED, mapNum);
 		
 		mapNum = 17;
 		objIndex = 0;
@@ -560,6 +564,7 @@ public class AssetSetter {
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(64, 70, Item.TM30, mapNum); // u-turn
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 69, Item.TM53, mapNum); // volt switch
+		gp.obj[mapNum][objIndex] = ObjSetup(75, 66, Item.SPARKLY_SEED, mapNum);
 		
 		mapNum = 35;
 		objIndex = 0;
@@ -677,6 +682,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(8, 25, Item.WATER_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(8, 14, Item.STAR_PIECE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 22, Item.ADRENALINE_ORB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(70, 6, Item.CUSTAP_BERRY, mapNum, 2, 5);
 		
 		mapNum = 78;
 		objIndex = 0;
@@ -943,7 +949,7 @@ public class AssetSetter {
 		
 		mapNum = 124;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(12, 15, Item.FULL_RESTORE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(12, 15, Item.WATER_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(18, 26, Item.FOCUS_SASH, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(17, 32, Item.PP_MAX, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(8, 40, Item.FULL_HEAL, mapNum);
@@ -955,12 +961,14 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 69, Item.AIR_BALLOON, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(61, 72, Item.THROAT_SPRAY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(84, 93, Item.ELIXIR, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(91, 89, Item.BURN_HEAL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(91, 83, Item.RAWST_BERRY, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(84, 79, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = MintSetup(91, 89, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(91, 83, Item.BURN_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(84, 79, Item.GOLD_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = MintSetup(79, 58, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(13, 27, Item.ABILITY_PATCH, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 25, Item.RED_CARD, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(74, 79, Item.ADRENALINE_ORB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(77, 70, Item.LEAF_STONE, mapNum);
 		
 		mapNum = 137;
 		objIndex = 0;
@@ -975,6 +983,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(41, 73, Item.DAMP_ROCK, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 74, Item.ICY_ROCK, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(41, 52, Item.TM93, mapNum); // earth power
+		gp.obj[mapNum][objIndex] = ObjSetup(89, 71, Item.PSYCHIC_SEED, mapNum);
 		
 		mapNum = 138;
 		objIndex = 0;
@@ -985,6 +994,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(48, 76, Item.RARE_CANDY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(55, 58, Item.HYPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(57, 69, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 72, Item.NUGGET, mapNum);
 		
 		mapNum = 139;
 		objIndex = 0;
@@ -992,6 +1002,9 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(37, 50, Item.GOLD_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(31, 70, Item.MAX_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 60, Item.MAX_REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(64, 59, Item.CELL_BATTERY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(51, 62, Item.BLUNDER_POLICY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 58, Item.WEAKNESS_POLICY, mapNum);
 		
 		mapNum = 140;
 		objIndex = 0;
@@ -1000,12 +1013,14 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(40, 54, Item.MAX_ELIXIR, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 51, Item.TM35, mapNum); // flamethrower
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 43, Item.GOLD_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 59, Item.BIG_NUGGET, mapNum);
 		
 		mapNum = 141;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(23, 73, Item.TM78, mapNum); // swords dance
 		gp.obj[mapNum][objIndex] = ObjSetup(23, 67, Item.GOLD_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 59, Item.RED_CARD, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 64, Item.FIRE_STONE, mapNum);
 		
 		mapNum = 144;
 		objIndex = 0;
@@ -1079,6 +1094,10 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 87, Item.FOCUS_SASH, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(50, 70, Item.RAZOR_CLAW, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(55, 81, Item.NUGGET, mapNum);
+		
+		mapNum = 181;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 40, Item.RING_TARGET, mapNum);
 	}
 
 	public void setNPC() {
@@ -1844,9 +1863,9 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 25, 21, "Climbing mountains builds strength. Let's see if you can match mine!", "That was a solid battle. I'll be even tougher next time!", 276); // DH
 		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_LEFT, 24, 24, "Fishing requires patience, but battling? That's where I make a splash!", "You're like a storm at sea... I couldn't keep up!", 281);
-		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_LEFT, 17, 22, "The water's my home, and my Pokemon rule it! Let's battle!", "Wow, you're amazing! I couldn't even stay afloat in that battle!", 280);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_RIGHT, 18, 21, "The water's my home, and my Pokemon rule it! Let's battle!", "Wow, you're amazing! I couldn't even stay afloat in that battle!", 280);
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_LEFT, 22, 32, "Think you can keep up with the flow of my Water Pokemon? Let's see!", "Looks like I'm all washed up... but I'll be back stronger!", 283);
-		gp.npc[mapNum][index] = NPCSetup(ACTRESS_RIGHT, 16, 32, "", "", 277); // DI
+		gp.npc[mapNum][index] = NPCSetup(ACTRESS_LEFT, 16, 32, "", "", 277); // DI
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 12, 43, "You'll need more than luck to outmatch me. I'm bringing the heat!", "You may have cooled me down this time, but I'm coming back hotter than ever!", 278); // DJ
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 24, 43, "My speed, my power, my Pokemon - everything's at its peak! Bring it on!", "I've gotta admit, you've got some serious skills. Respect!", 279); // DK
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_UP, 16, 39, "The waves and I are in sync - let's ride this battle out!", "Wiped out! Guess I need to catch some new moves.", 284, UP + LEFT + RIGHT);

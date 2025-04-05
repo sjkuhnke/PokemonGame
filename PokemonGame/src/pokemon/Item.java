@@ -1646,8 +1646,6 @@ public enum Item {
 				new Pair<Effect, JCheckBox>(Effect.AURORA_VEIL, null),
 				new Pair<Effect, JCheckBox>(Effect.LUCKY_CHANT, null),
 				new Pair<Effect, JCheckBox>(Effect.TAILWIND, null),
-				new Pair<Effect, JCheckBox>(Effect.WATER_SPORT, null),
-				new Pair<Effect, JCheckBox>(Effect.MUD_SPORT, null),
 				new Pair<Status, JCheckBox>(Status.MAGIC_REFLECT, null),
 				new Pair<Status, JCheckBox>(Status.POSSESSED, null),
 				new Pair<Status, JCheckBox>(Status.MUTE, null),

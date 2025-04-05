@@ -99,7 +99,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 56;
+	public static final int VERSION = 57;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -1670,7 +1670,8 @@ public class Player extends Trainer implements Serializable {
         Task.insertTask(text, 0);
         pokedex[p.id] = 2;
         if (oldID == 129) {
-        	gp.player.p.catchPokemon(p.evolve(131));
+        	Pokemon shedinja = p.clone();
+        	catchPokemon(shedinja.evolve(131), false);
         }
         
         if (p.slot == 0) {
