@@ -134,7 +134,7 @@ public class PlayerCharacter extends Entity {
 				return;
 			}
 			
-			if (spriteCounter > 8) {
+			if (spriteCounter > 12 - speed) {
 				spriteNum++;
 				if (spriteNum > 4) {
 					spriteNum = 1;
