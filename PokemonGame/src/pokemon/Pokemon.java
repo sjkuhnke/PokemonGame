@@ -1052,9 +1052,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			result = id + 1;
 		} else if (id == 22 && level >= 18) {
 			result = id + 1;
-		} else if (id == 23 && (area == 80 || area == 83 || area == 90 || (area >= 100 && area <= 103))) {
+		} else if (id == 23 && level >= 32 && this.getStat(2) > this.getStat(4)) {
 			result = 25;
-		} else if (id == 23 && level >= 32) {
+		} else if (id == 23 && level >= 32 && this.getStat(4) > this.getStat(2)) {
 			result = id + 1;
 		} else if (id == 26 && level >= 28) {
 			result = id + 1;
@@ -4846,7 +4846,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	public void verifyHP() {
-		if (currentHP > this.getStat(0)) currentHP = this.getStat(0);
+		if (currentHP > this.getStat(0) || currentHP < 0) currentHP = this.getStat(0);
 	}
 	
 	/**
@@ -8091,7 +8091,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    clonedPokemon.role = this.role;
 	    
 	    // Trainer
-	    //clonedPokemon.trainer = this.trainer.clone();
+	    clonedPokemon.trainer = this.trainer;
 	    
 	    return clonedPokemon;
 	}
@@ -8172,7 +8172,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		case 19: return "Sheabear -> Dualbear (lv. 20)";
 		case 20: return "Dualbear -> Spacebear (lv. 40)";
 		case 22: return "Bealtle -> Centatle (lv. 18)";
-		case 23: return "Centatle -> Curlatoral (lv. 32)\nCentatle -> Millistone (lv. up in Shadow Ravine)";
+		case 23: return "Centatle -> Curlatoral (lv. 32 with SpD > Def)\nCentatle -> Millistone (lv. 32 with Def > SpD)";
 		case 26: return "Sapwin -> Treewin (lv. 28)";
 		case 27: return "Treewin -> Winagrow (Leaf Stone)";
 		case 29: return "Budew -> Roselia (160+ happiness)";
@@ -8622,9 +8622,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (nickname.equals(name())) nickname = getName();
 		name = getName();
 		setAbility();
+		setStats();
 		setTypes();
 		setSprites();
 		setAbility();
+		verifyHP();
 		if (this.nat == null) {
 			double[] natureCheck = new double[5];
 			for (int i = 0; i < natureCheck.length; i++) {

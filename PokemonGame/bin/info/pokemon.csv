@@ -19,8 +19,8 @@
 41 |Sheabear     |NORMAL  |null    |ADAPTABILITY      |ANGER_POINT       |SCRAPPY           |[55, 55, 55, 55, 55, 55]      |65.7  |125|
 42 |Dualbear     |NORMAL  |MAGIC   |ADAPTABILITY      |SHIELD_DUST       |SCRAPPY           |[75, 75, 75, 75, 75, 75]      |65.8  |100|
 43 |Spacebear    |NORMAL  |GALACTIC|ADAPTABILITY      |LEVITATE          |SCRAPPY           |[80, 60, 75, 135, 85, 80]     |90.9  |50 |
-19 |Bealtle      |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[33, 44, 33, 23, 29, 38]      |0.9   |255|
-20 |Centatle     |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[55, 68, 70, 41, 61, 80]      |2.0   |200|
+19 |Bealtle      |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[33, 44, 29, 23, 33, 38]      |0.9   |255|
+20 |Centatle     |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[52, 66, 61, 41, 75, 80]      |2.0   |200|
 21 |Curlatoral   |BUG     |null    |POISON_HEAL       |COMPOUND_EYES     |THREATENING       |[80, 70, 80, 55, 120, 100]    |50.7  |125|
 22 |Millistone   |BUG     |ROCK    |ROUGH_SKIN        |COMPOUND_EYES     |THREATENING       |[80, 120, 120, 35, 80, 70]    |90.5  |125|
 26 |Sapwin       |GRASS   |null    |ANGER_POINT       |CHLOROPHYLL       |GUTS              |[65, 90, 85, 50, 30, 55]      |100.5 |75 |
