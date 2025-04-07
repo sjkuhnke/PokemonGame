@@ -36,6 +36,7 @@ public class NPC_Pokemon extends Entity {
 		int direction = new Random().nextInt(4);
 		boolean visible = new Random().nextBoolean();
 		if (visible) {
+			this.spriteNum = 1;
 			switch (direction) {
 			case 0:
 				this.direction = "down";
@@ -51,7 +52,8 @@ public class NPC_Pokemon extends Entity {
 				break;
 			}
 		} else {
-			this.direction = "down2";
+			this.spriteNum = 2;
+			this.direction = "down";
 		}
 		
 	}

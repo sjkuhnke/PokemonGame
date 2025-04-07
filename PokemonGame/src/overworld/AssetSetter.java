@@ -830,7 +830,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(57, 54, Item.EUPHORIAN_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 35, Item.ABILITY_CAPSULE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 39, Item.HM06, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(41, 72, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 45, Item.STAR_PIECE, mapNum);
 		
 		mapNum = 104;
 		objIndex = 0;
@@ -1260,10 +1260,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_UP, 53, 53, "My brother's a top angler! Look what he caught!", "Guess we need to hit the creek.", 29);
 		gp.npc[mapNum][index] = NPCSetup(HIKER_UP, 76, 47, "Bet you're not ready for the weight of this battle.", "Even mountains can be climbed, I guess.", 30);
 		
-		gp.npc[mapNum][index] = NPCSetup(FRED_UP, "Fred", 26, 67, "", mapNum, 32,
-				"Tch, I lost? How did that happen?\n"
-				+ "Wait... you know Scott? Ugh, should've figured. Maybe I should've taken you more seriously.\n"
-				+ "But I just got unlucky this time. Next time, you won't be so fortunate.", 34);
+		gp.npc[mapNum][index] = NPCSetup(FRED_UP, "Fred", 26, 67, "", mapNum, -1, "", 34);
 		
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_LEFT, 40, 66, "You cannot escape fate. It's already decided.", "Your future is bright... but I'll be ready to change it next time.", 31);
 		gp.npc[mapNum][index] = NPCSetup(EXPLORER_LEFT, 34, 67, "I've scaled icy peaks, but this battle might be the real challenge.", "Even explorers get lost sometimes. I'll find my way back.", 32, LEFT + UP + RIGHT);
@@ -3276,7 +3273,7 @@ public class AssetSetter {
 		 */
 		
 		if (flag[6][6] && !flag[7][0]) {
-			gp.npc[124][21] = NPCSetup(ARTHRA_UP, "Arthra", 25, 84, "", 124.1);
+			gp.npc[124][21] = NPCSetup(ARTHRA_UP, "Arthra", 31, 78, "Finn! There you are - finally!", 124.1);
 		} else {
 			gp.npc[124][21] = null;
 		}

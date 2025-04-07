@@ -293,58 +293,67 @@ public class Script {
 		});
 		
 		scriptMap.put(11.0, (npc) -> { // fred 1
-			if (npc.worldX < 39 * gp.tileSize || npc.worldY > gp.tileSize * 65) {
-				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
-				if (player.worldX < 39 * gp.tileSize) {
-					Task.addTask(Task.TURN, player, "", Task.RIGHT);
-				} else {
+			if (!p.flag[1][0]) {
+				if (npc.worldX < 39 * gp.tileSize || npc.worldY > gp.tileSize * 65) {
+					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+					if (player.worldX < 39 * gp.tileSize) {
+						Task.addTask(Task.TURN, player, "", Task.RIGHT);
+					} else {
+						Task.addTask(Task.TURN, player, "", Task.LEFT);
+					}
+					Task.addNPCMoveTask('x', 39 * gp.tileSize, player, false, 1);
+					if (player.worldY < 64 * gp.tileSize) {
+						Task.addTask(Task.TURN, player, "", Task.DOWN);
+						Task.addNPCMoveTask('y', 64 * gp.tileSize, player, false, 1);
+					}
 					Task.addTask(Task.TURN, player, "", Task.LEFT);
-				}
-				Task.addNPCMoveTask('x', 39 * gp.tileSize, player, false, 1);
-				if (player.worldY < 64 * gp.tileSize) {
+					Task.addNPCMoveTask('x', 32 * gp.tileSize, npc, false, 6);
+					Task.addTask(Task.TURN, npc, "", Task.UP);
+					Task.addNPCMoveTask('y', 65 * gp.tileSize, npc, false, 4);
+					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+					Task.addNPCMoveTask('x', 33 * gp.tileSize, npc, false, 4);
+					Task.addTask(Task.TURN, npc, "", Task.UP);
+					Task.addNPCMoveTask('y', 64 * gp.tileSize, npc, false, 4);
+					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+					Task.addNPCMoveTask('x', 34 * gp.tileSize, npc, false, 2);
+					Task.addTask(Task.SLEEP, npc, "", 60);
+					Task.addTask(Task.TURN, npc, "", Task.DOWN);
+					Task.addTask(Task.SLEEP, npc, "", 30);
+					Task.addTask(Task.TURN, gp.npc[11][9], "", Task.UP);
+					Task.addTask(Task.SLEEP, npc, "", 30);
+					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+					Task.addTask(Task.SLEEP, npc, "", 60);
+					Task.addTask(Task.TURN, npc, "", Task.DOWN);
+					Task.addTask(Task.SLEEP, npc, "", 15);
+					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+					Task.addTask(Task.SLEEP, npc, "", 15);
+					Task.addTask(Task.SPOT, npc, "");
+					Task.addTask(Task.TURN, npc, "", Task.DOWN);
+					Task.addNPCMoveTask('y', 66 * gp.tileSize, npc, false, 4);
 					Task.addTask(Task.TURN, player, "", Task.DOWN);
-					Task.addNPCMoveTask('y', 64 * gp.tileSize, player, false, 1);
+					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+					Task.addNPCMoveTask('x', 39 * gp.tileSize, npc, false, 4);
+					Task.addTask(Task.TURN, npc, "", Task.UP);
+					Task.addTask(Task.SLEEP, npc, "", 30);
+					Task.addTask(Task.INTERACTIVE, gp.iTile[11][0], "", 0);
+					Task.addTask(Task.SLEEP, npc, "", 15);
+					Task.addNPCMoveTask('y', 65 * gp.tileSize, npc, false, 2);
+					Task.addTask(Task.SLEEP, npc, "", 15);
+					Task.addTask(Task.DIALOGUE, npc, "Heh, you must be pretty tough to make it this far, but don't get too full of yourself.");
+					Task.addTask(Task.DIALOGUE, npc, "I'll gladly put an end to your winning streak right here.");
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "Back for more, huh? Go back home, bud.");
 				}
-				Task.addTask(Task.TURN, player, "", Task.LEFT);
-				Task.addNPCMoveTask('x', 32 * gp.tileSize, npc, false, 6);
-				Task.addTask(Task.TURN, npc, "", Task.UP);
-				Task.addNPCMoveTask('y', 65 * gp.tileSize, npc, false, 4);
-				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
-				Task.addNPCMoveTask('x', 33 * gp.tileSize, npc, false, 4);
-				Task.addTask(Task.TURN, npc, "", Task.UP);
-				Task.addNPCMoveTask('y', 64 * gp.tileSize, npc, false, 4);
-				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
-				Task.addNPCMoveTask('x', 34 * gp.tileSize, npc, false, 2);
-				Task.addTask(Task.SLEEP, npc, "", 60);
-				Task.addTask(Task.TURN, npc, "", Task.DOWN);
-				Task.addTask(Task.SLEEP, npc, "", 30);
-				Task.addTask(Task.TURN, gp.npc[11][9], "", Task.UP);
-				Task.addTask(Task.SLEEP, npc, "", 30);
-				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
-				Task.addTask(Task.SLEEP, npc, "", 60);
-				Task.addTask(Task.TURN, npc, "", Task.DOWN);
-				Task.addTask(Task.SLEEP, npc, "", 15);
-				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
-				Task.addTask(Task.SLEEP, npc, "", 15);
-				Task.addTask(Task.SPOT, npc, "");
-				Task.addTask(Task.TURN, npc, "", Task.DOWN);
-				Task.addNPCMoveTask('y', 66 * gp.tileSize, npc, false, 4);
-				Task.addTask(Task.TURN, player, "", Task.DOWN);
-				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
-				Task.addNPCMoveTask('x', 39 * gp.tileSize, npc, false, 4);
-				Task.addTask(Task.TURN, npc, "", Task.UP);
-				Task.addTask(Task.SLEEP, npc, "", 30);
-				Task.addTask(Task.INTERACTIVE, gp.iTile[11][0], "", 0);
-				Task.addTask(Task.SLEEP, npc, "", 15);
-				Task.addNPCMoveTask('y', 65 * gp.tileSize, npc, false, 2);
-				Task.addTask(Task.SLEEP, npc, "", 15);
-				Task.addTask(Task.DIALOGUE, npc, "Heh, you must be pretty tough to make it this far, but don't get too full of yourself.");
-				Task.addTask(Task.DIALOGUE, npc, "I'll gladly put an end to your winning streak right here.");
+				Task.addTask(Task.DIALOGUE, npc, "You're just another weak trainer in my way.");
+				Task.addTask(Task.BATTLE, "", 34);
 			} else {
-				Task.addTask(Task.DIALOGUE, npc, "Back for more, huh? Go back home, bud.");
+				Task.addTask(Task.DIALOGUE, npc, "Tch, I lost? How did that happen?");
+				Task.addTask(Task.DIALOGUE, npc, "Wait... you know Scott? Ugh, should've figured. Maybe I should've taken you more seriously.");
+				Task.addTask(Task.DIALOGUE, npc, "But I just got unlucky this time. Next time, you won't be so fortunate.");
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.UPDATE, "");
+				Task.addTask(Task.FLASH_OUT, "");
 			}
-			Task.addTask(Task.DIALOGUE, npc, "You're just another weak trainer in my way.");
-			Task.addTask(Task.BATTLE, "", 34);
 		});
 		
 		scriptMap.put(13.0, (npc) -> { // photon
@@ -1277,6 +1286,24 @@ public class Script {
 			Task.addTask(Task.FLASH_IN, "");
 			Task.addTask(Task.UPDATE, "");
 			Task.addTask(Task.FLASH_OUT, "");
+		});
+		
+		scriptMap.put(124.1, (npc) -> { // arthra cutscene
+			Task.addTask(Task.TURN, player, "", Task.UP);
+			Task.addNPCMoveTask('y', 81 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.TURN, player, "", Task.RIGHT);
+			Task.addNPCMoveTask('y', 84 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.TURN, npc, "", Task.LEFT);
+			Task.addNPCMoveTask('x', 27 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.TURN, player, "", Task.DOWN);
+			Task.addNPCMoveTask('x', 25 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.TURN, npc, "", Task.UP);
+			
+			// TODO: make merlin come out of the gym because he sensed his granddaughter was here or something and then he agrees to help you guys, they head off to Splinkty
+			Task.addTask(Task.DIALOGUE, npc, "A massive beam of light just shot up from Mt. Splinkty. The whole sky lit up like a spotlight, and not the fun kind.");
+			Task.addTask(Task.DIALOGUE, npc, "I don't know what Team Eclipse is doing up there, but it's big. Bigger than the mountain, even.");
+			Task.addTask(Task.DIALOGUE, npc, "I'm heading there now. If you've still got that Rock Climb, meet me at the summit. Don't dawdle - we don’t have time for curtain calls.");
+			p.flag[7][0] = true;
 		});
 
 		scriptMap.put(146.0, (npc) -> { // TODO splinkty gauntlet
