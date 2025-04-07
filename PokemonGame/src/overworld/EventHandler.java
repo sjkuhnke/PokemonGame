@@ -798,17 +798,20 @@ public class EventHandler {
 			
 			// Rawwar Houses
 			if (hit(124,11,51)) teleport(181, 31, 45,false);
-			if (hit(181,31,46)) teleport(135, 11, 52,false);
+			if (hit(181,31,46)) teleport(124, 11, 52,false);
 			if (hit(124,13,63)) teleport(182, 31, 45,false);
-			if (hit(182,31,46)) teleport(135, 13, 64,false);
+			if (hit(182,31,46)) teleport(124, 13, 64,false);
 			if (hit(124,18,63)) teleport(183, 31, 45,false);
-			if (hit(183,31,46)) teleport(135, 18, 64,false);
+			if (hit(183,31,46)) teleport(124, 18, 64,false);
 			if (hit(124,23,63)) teleport(184, 31, 45,false);
-			if (hit(184,31,46)) teleport(135, 23, 64,false);
+			if (hit(184,31,46)) teleport(124, 23, 64,false);
 			if (hit(124,28,63)) teleport(185, 31, 45,false);
-			if (hit(185,31,46)) teleport(135, 28, 64,false);
+			if (hit(185,31,46)) teleport(124, 28, 64,false);
 			if (hit(124,36,69)) teleport(186, 31, 45,false);
-			if (hit(186,31,46)) teleport(135, 36, 70,false);
+			if (hit(186,31,46)) teleport(124, 36, 70,false);
+			
+			// Cutscene with Scott
+			if (gp.player.p.flag[6][6] && !gp.player.p.flag[7][0] && hit(125,25,83)) gp.player.interactNPC(gp.npc[124][21], false);
 			
 			// Joseph 1A
 			if (hit(124,91,76)) teleport(137, 60, 76,false);
