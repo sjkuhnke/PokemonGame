@@ -812,7 +812,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(78, 52, Item.DUSK_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 41, Item.ROOM_SERVICE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(26, 51, Item.ADRENALINE_ORB, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(54, 70, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(58, 63, Item.RUSTY_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = SetupChest(45, 44, mapNum);
 		
 		mapNum = 102;
@@ -1072,6 +1072,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(67, 69, Item.FOCUS_SASH, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 76, Item.DAMAGED_MOSS, mapNum);
 		gp.obj[mapNum][objIndex] = MintSetup(52, 69, mapNum);
+		gp.obj[mapNum][objIndex] = MintSetup(57, 68, mapNum);
 		
 		mapNum = 146;
 		objIndex = 0;
@@ -1080,6 +1081,21 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = SetupChest(51, 34, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(70, 46, Item.SPARKLY_SEED, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(68, 35, Item.ABILITY_PATCH, mapNum);
+		
+		mapNum = 147;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 51, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(51, 59, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 54, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 55, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 56, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 51, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(51, 62, Item.NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 70, Item.EJECT_PACK, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 74, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 48, Item.EJECT_BUTTON, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 65, Item.BIG_NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 65, Item.GOLD_BOTTLE_CAP, mapNum);
 		
 		mapNum = 163;
 		objIndex = 0;

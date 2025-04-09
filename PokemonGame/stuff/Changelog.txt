@@ -375,3 +375,21 @@ Made Mental Herb remove the Possessed effect from Abduct/Take Over and updated i
 Added AI switching out when toxiced with a 5% * (toxic counter - 1) chance each turn
 Changed crit stages from (5% -> 12.5% -> 25% -> 100%) to (5% -> 12.5% -> 25% -> 50% -> 100%) to better mirror real Pokemon
 Fixed Toxic Debris and Rockfall Frenzy still announcing that they failed when there's max layers (changed to silently fail since they're passive effects)
+Made certain Key Items unusable to prevent confusion for players
+Fixed bug with player Pokemon being able to wrap/trap the opponent staying on after they switch
+Made item swapping text for your party have line breaks
+Fixed Rocky Helmet damage (1/8 -> 1/6 HP)
+Changed Poov's abilities (Adaptability/Anger Point/(Pressure) -> Cursed Body/Adaptability/(Perish Body))
+Changed Grust's abilities (Adaptability/Anger Point/(Pressure) -> Cursed Body/Anger Point/(Perish Body))
+Made Shadow Ravine -1 and -2 accessible after the 5th gym (only need Slow Fall, don't need Rock Climb anymore)
+Added 2 new Pokemon: Plasamp and Geniova!
+Added Plasamp to Splinky 3A, Cell Park, Electric Tunnel (1A), Route 31, Shadow Ravine (0A)
+Tweaked encounter table for Splinkty 3A and 3B to make room for Plasamp in 3A
+Fixed Icy Serpent's trainer name (was Icy Serpant, oops)
+REDID CALC TO ADD EVERY TRAINER TO IT!! TO SEARCH FOR A POKEMON TYPE `<PokemonName> (<start typing trainer name`!!
+Added fixed IVs to each static encounter so they're the same on every save file
+Added fixed Natures to every Trainer Pokemon so they're both different (other than just Serious) but consistent across all save files
+Added `[slot]` to the toString for Pokemon so they're easier to find and keep track of in the calc
+Fixed beat up displaying hits correctly, even 1
+Made trainer doc be able to have custom manual natures for Pokemon, I haven't done any of that yet fr but it's possible to set now
+TODO: everything AFTER Revamped calc w every trainer, made IV/natures fixed for trainers

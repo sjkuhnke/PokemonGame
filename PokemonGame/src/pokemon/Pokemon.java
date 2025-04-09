@@ -558,8 +558,8 @@ public class Pokemon implements RoleAssignable, Serializable {
         	}
         	// 5% * toxic counter - 1 chance to swap
         	if (this.status == Status.TOXIC) {
-        		int chance = (this.toxic - 1) * 5;
-        		if (checkSecondary(chance)) {
+        		double chance = (this.toxic - 1) * 5;
+        		if (checkSecondary((int) chance)) {
 	        		String rsn = "[Toxiced : " + String.format("%.1f", chance) + "%]";
 	        		System.out.println(rsn);
 	        		if (switchRsn != null) {
@@ -1590,10 +1590,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (foe.status != Status.TOXIC) foe.toxic = 0;
 		
 		if (this.hasStatus(Status.FLINCHED) && this.ability != Ability.INNER_FOCUS) {
-			if (foe.getItem() == Item.MENTAL_HERB) {
-				Task.addTask(Task.TEXT, foe.nickname + " didn't flinch due to its Mental Herb!");
-				foe.removeStatus(Status.FLINCHED);
-				foe.consumeItem(this);
+			if (this.getItem() == Item.MENTAL_HERB) {
+				Task.addTask(Task.TEXT, this.nickname + " didn't flinch due to its Mental Herb!");
+				this.removeStatus(Status.FLINCHED);
+				this.consumeItem(foe);
 			} else {
 				Task.addTask(Task.TEXT, this.nickname + " flinched!");
 				this.removeStatus(Status.FLINCHED);
@@ -7410,14 +7410,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (field.contains(this.getFieldEffects(), Effect.STEALTH_ROCKS)) {
 				double multiplier = getEffectiveMultiplier(PType.ROCK, null, null);
 				double damage = (this.getHPAmount(1.0/8)) * multiplier;
-				this.damage((int) Math.max(Math.floor(damage), 1), foe);
-				Task.addTask(Task.TEXT, "Pointed stones dug into " + this.nickname + "!");
+				this.damage((int) Math.max(Math.floor(damage), 1), foe, "Pointed stones dug into " + this.nickname + "!");
 			}
 			if (field.contains(this.getFieldEffects(), Effect.SPIKES) && this.isGrounded()) {
 				double layers = field.getLayers(this.getFieldEffects(), Effect.SPIKES);
 				double damage = (this.getHPAmount(1.0/8) * (layers + 1) / 2);
-				this.damage((int) Math.max(Math.floor(damage), 1), foe);
-				Task.addTask(Task.TEXT, this.nickname + " was hurt by Spikes!");
+				this.damage((int) Math.max(Math.floor(damage), 1), foe, this.nickname + " was hurt by Spikes!");
 			}
 			
 			if (field.contains(this.getFieldEffects(), Effect.TOXIC_SPIKES) && this.isGrounded()) {
@@ -7473,7 +7471,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 	
 	private void checkStarborn(Pokemon foe) {
-		if (this.ability == Ability.STARBORN && field.contains(field.fieldEffects, Effect.AURORA)) {
+		if (this.ability == Ability.STARBORN && field.contains(this.getFieldEffects(), Effect.AURORA)) {
 			Task.addAbilityTask(this);
 			stat(this, 2, 1, foe);
 		}
