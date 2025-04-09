@@ -2729,6 +2729,7 @@ public class UI extends AbstractUI {
 		        		showMessage("It won't have any effect.");
 		        	}
 					showIVOptions = false;
+					moveOption = -1;
 				}
 			} else if (currentItem == Item.RUSTY_BOTTLE_CAP) {
 				if (moveOption >= 0) {
@@ -2742,6 +2743,7 @@ public class UI extends AbstractUI {
 		        		showMessage("It won't have any effect.");
 		        	}
 					showIVOptions = false;
+					moveOption = -1;
 				}
 			}
 		}

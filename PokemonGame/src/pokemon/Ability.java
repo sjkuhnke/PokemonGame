@@ -181,7 +181,7 @@ public enum Ability {
 	public static Ability getEnum(String string) {
 		// Normalize the string
 	    String normalized = string.toUpperCase().replace(' ', '_');
-	    normalized = string.replace('\'', '1');
+	    normalized = normalized.replace('\'', '1');
 	    
 	    try {
 	        return Ability.valueOf(normalized);
