@@ -781,7 +781,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEAN_LOOK) && foe.hasStatus(Status.TRAPPED)) bestMoves.removeIf(Move.MEAN_LOOK::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.FOCUS_ENERGY) && this.getStatusNum(Status.CRIT_CHANCE) > 2) bestMoves.removeIf(Move.FOCUS_ENERGY::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENCORE) && foe.hasStatus(Status.ENCORED)) bestMoves.removeIf(Move.ENCORE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.DISABLE) && foe.disabledMove != null) bestMoves.removeIf(Move.DISABLE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.DISABLE) && foe.disabledMove == null) bestMoves.removeIf(Move.DISABLE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.NO_RETREAT) && this.hasStatus(Status.NO_SWITCH)) bestMoves.removeIf(Move.NO_RETREAT::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEMENTO) && ((this.currentHP * 1.0 / this.getStat(0))) > 0.25) bestMoves.removeIf(Move.MEMENTO::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.CURSE) && (this.currentHP * 1.0 / this.getStat(0)) <= 0.55 && this.isType(PType.GHOST)) bestMoves.removeIf(Move.CURSE::equals);
