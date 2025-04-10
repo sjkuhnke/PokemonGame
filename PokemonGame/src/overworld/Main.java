@@ -1,11 +1,13 @@
 package overworld;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.net.URL;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +16,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -43,11 +47,27 @@ public class Main {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
 		
+		loadIcon(4);
+		
 		gp = new GamePanel(window);
 		
 		window.setTitle(gp.gameTitle);
 		
 		showStartupMenu(window);
+	}
+	
+	private static void loadIcon(int image) {
+		try {
+		    URL iconURL = Main.class.getResource("/gen/icon" + image + ".png");
+		    if (iconURL != null) {
+		        Image icon = ImageIO.read(iconURL);
+		        window.setIconImage(icon);
+		    } else {
+		        System.out.println("Icon resource not found!");
+		    }
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
 	}
 	
 	private static void showStartupMenu(JFrame window) {
