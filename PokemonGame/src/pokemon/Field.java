@@ -415,7 +415,7 @@ public class Field {
 	}
 	
 	public boolean equals(FieldEffect fe, Effect e, Pokemon affected) {
-		if (e.isWeather && affected.getItem() != Item.UTILITY_UMBRELLA) return equals(fe, e);
+		if (affected == null || (e.isWeather && affected.getItem() != Item.UTILITY_UMBRELLA)) return equals(fe, e);
 		return false;
 	}
 	

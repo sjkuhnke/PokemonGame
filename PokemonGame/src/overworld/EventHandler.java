@@ -810,7 +810,7 @@ public class EventHandler {
 			if (hit(124,36,69)) teleport(186, 31, 45,false);
 			if (hit(186,31,46)) teleport(124, 36, 70,false);
 			
-			// Cutscene with Scott
+			// Cutscene with Arthra
 			if (gp.player.p.flag[6][6] && !gp.player.p.flag[7][0] && hit(125,25,83)) gp.player.interactNPC(gp.npc[124][21], false);
 			
 			// Joseph 1A
