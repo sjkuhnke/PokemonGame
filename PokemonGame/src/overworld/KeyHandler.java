@@ -746,6 +746,7 @@ public class KeyHandler implements KeyListener {
 					if (gp.ui.partySelectedNum >= 0) {
 						gp.ui.partySelectedNum = -1;
 					} else {
+						gp.ui.partySelectedItem = -1;
 						gp.ui.partyNum = 0;
 						gp.ui.showBoxParty = false;
 					}
@@ -773,8 +774,19 @@ public class KeyHandler implements KeyListener {
 		
 		if (code == KeyEvent.VK_D) {
 			if (!gp.ui.showBoxSummary && !gp.ui.release && gp.ui.nicknaming < 0) {
-				gp.ui.partyNum = 0;
-				gp.ui.showBoxParty = !gp.ui.showBoxParty;
+				if (!gp.ui.showBoxParty) {
+					gp.ui.showBoxParty = true;
+					gp.ui.partyNum = 0;
+				} else {
+					if (gp.ui.partySelectedItem == -1) {
+						gp.ui.partySelectedItem = gp.ui.partyNum;
+					} else {
+						if (gp.ui.partySelectedItem != gp.ui.partyNum) {
+							gp.player.p.swapItem(gp.ui.partySelectedItem, gp.ui.partyNum);
+						}
+						gp.ui.partySelectedItem = -1;
+					}
+				}
 			} else {
 				dPressed = true;
 			}

@@ -271,7 +271,7 @@ public class UI extends AbstractUI {
 		if (showBoxParty) {
 			drawParty(null);
 			String sText = partySelectedNum >= 0 ? "Deselect" : "Close";
-			drawToolTips("Info", "Swap", sText, "Close");
+			drawToolTips("Info", "Swap", sText, "Item");
 		}
 		
 		if (showBoxSummary) {
