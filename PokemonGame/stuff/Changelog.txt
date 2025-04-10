@@ -392,4 +392,41 @@ Added fixed Natures to every Trainer Pokemon so they're both different (other th
 Added `[slot]` to the toString for Pokemon so they're easier to find and keep track of in the calc
 Fixed beat up displaying hits correctly, even 1
 Made trainer doc be able to have custom manual natures for Pokemon, I haven't done any of that yet fr but it's possible to set now
-TODO: everything AFTER Revamped calc w every trainer, made IV/natures fixed for trainers
+Made opening calc reset keys on windows so there isn't persistant shift/tab/ctrl pressed etc
+Gave Opwing Pin Missile
+Gave Arbok Toxic Spikes
+Gave Shookwat line access to Electric Terrain via TM (oops)
+Gave Swalot Acid Armor
+Gave Psycorboratr Bulk Up via TM
+Redid some ability descriptions to make them all consistent
+Made the crit check box make crittable moves bold and red font when selected
+Redid "More" button with all of the new moves and features
+Made switch out AI when they have a resist more complicated (basically, the greater resist they have in the back the more likely to switch)
+Made calc show that the move that's tormented, heal blocked, muted, or disabled does 0 damage
+Added item swapping in the party (press 'D' to swap items)
+Gave Grust a signature move "Bloodshed Cleave" that heals itself by either 25% of its max HP or 75% of the damage dealt, whichever is greater
+Shuffled Poov/Grust's movebank around to better fit thematically
+Gave Grust Swords Dance by TM
+Added visual keystrokes to any UI when holding shift
+Changed evolution to not create a new Pokemon with the evo's ID but the previous Pokemon's attributes but instead use the same instance and just update the ID, stats, typings, etc on the same object!
+Fixed the combination of gaining exp and leveling up animation to now animate the remaining exp going up after leveling up!
+Moved Close Combat to Mt. St. Joseph instead of being in the prize shop
+Gave Rick 1 a Bugop instead of Magie (to give Arthra Cinneroph instead of Suvinero to fit her theme better) and made his Shookwat/Megawatt his ace instead
+Added Skill Link and gave it to the Tinkie line as their second ability
+Gave Glittleshoo Trick
+Changed Bealtle's base stats: 33 Def, 29 SpD -> 29 Def, 33 SpD
+Changed Centatle's base stats: 55 HP, 68 Atk, 70 Def, 61 SpD -> 52 HP, 66 Atk, 61 Def, 75 SpD
+Changed Centatle's evo methods to: Centatle -> Curlatoral when SpD > Def, Centatle -> Millistone when Def > SpD
+Added the last stat berry, Custap Berry, and Salac Berry to the overworld
+Changed player's running animation to cycle sprites twice as fast when running
+Added map name and map number to debug screen in overworld
+Fixed Shadow Ball's SpD dropping chance from 30 -> 20%
+Changed Dual Chop's accuracy from 90 -> 100%
+Gave each hit in Dual Chop a boosted crit rate
+Added encounters to Splinkty 2A Fishing/Surfing, and Splinkty H
+Gave Flamehox line Will-O-Wisp via TM (oops)
+Gave Rocky-E line Facade via TM (oops)
+Fixed Bottle Cap IV menus not resetting the move selected number (they used the same counter variable)
+Fixed Mental Herb accidentally removing the foe's flinch condition instead of the holder's
+Made the text for taking entry hazard damage not show up if you have Magic Guard/Scaly Skin
+Fixed office workers saying "Team Nuke" instead of the updated "Team Eclipse"
