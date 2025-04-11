@@ -297,6 +297,7 @@ public class GamePanel extends JPanel implements Runnable {
 		battleUI.tasks = new ArrayList<>();
 		battleUI.currentTask = null;
 		battleUI.tempUser = null;
+		battleUI.tempFoe = null;
 		battleUI.weather = null;
 		battleUI.terrain = null;
 		battleUI.moveNum = 0;
@@ -308,6 +309,7 @@ public class GamePanel extends JPanel implements Runnable {
 		simBattleUI.tasks = new ArrayList<>();
 		simBattleUI.currentTask = null;
 		simBattleUI.tempUser = null;
+		simBattleUI.tempFoe = null;
 		simBattleUI.weather = null;
 		simBattleUI.terrain = null;
 		simBattleUI.moveNum = 0;
@@ -535,6 +537,12 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		}
 		return ui.tasks;
+	}
+
+	public BattleUI getBattleUI() {
+		if (gameState == BATTLE_STATE) return battleUI;
+		if (gameState == SIM_BATTLE_STATE) return simBattleUI;
+		return null;
 	}
 
 }

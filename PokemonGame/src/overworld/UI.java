@@ -270,8 +270,9 @@ public class UI extends AbstractUI {
 		
 		if (showBoxParty) {
 			drawParty(null);
-			String sText = partySelectedNum >= 0 ? "Deselect" : "Close";
-			drawToolTips("Info", "Swap", sText, "Item");
+			String sText = partySelectedNum >= 0 || itemSwapP != null ? "Deselect" : "Close";
+			drawToolTips("Info", "Swap", sText, "Close");
+			drawBoxToolTips(true);
 		}
 		
 		if (showBoxSummary) {
@@ -2280,8 +2281,16 @@ public class UI extends AbstractUI {
 			
 			if (i < cBox.length && cBox[i] != null) {
 				g2.drawImage(cBox[i].getSprite(), cX, cY, null);
+				int itemX = cX + 4;
+				int itemY = cY + 56;
+				if (!showBoxParty && (cBox[i] == itemSwapP || (itemSwapP != null && i == boxNum))) {
+					drawItemSelectBackground(itemX - 6, itemY - 6);
+				}
 				if (cBox[i].item != null) {
-					g2.drawImage(cBox[i].item.getImage(), cX - 6, cY + 62, null);
+					g2.drawImage(cBox[i].item.getImage(), itemX, itemY, null);
+				}
+				if (cBox[i] == itemSwapP) {
+					drawItemSelectBorder(itemX - 6, itemY - 6);
 				}
 			}
 			
@@ -2327,6 +2336,31 @@ public class UI extends AbstractUI {
 				if (selected.item != null) {
 					g2.drawImage(selected.item.getImage(), selectX - 6, selectY + 62, null);
 				}
+			}
+		}
+		
+		if (itemSwapP != null) {
+			int selectX = gp.tileSize;
+			int selectY = gp.tileSize * 2;
+			int selectWidth = gp.tileSize;
+			int selectHeight = gp.tileSize;
+			
+			Item item = itemSwapP.item;
+			
+			drawSubWindow(selectX, selectY, selectWidth, selectHeight);
+			
+			selectX += 8;
+			selectY += 8;
+			selectWidth -= 16;
+			selectHeight -= 16;
+			
+			g2.setColor(new Color(100, 100, 220, 200));
+			g2.fillRoundRect(selectX, selectY, selectWidth, selectHeight, 10, 10);
+			g2.setColor(g2.getColor().darker());
+			g2.drawRoundRect(selectX, selectY, selectWidth, selectHeight, 10, 10);
+			
+			if (item != null) {
+				g2.drawImage(item.getImage(), selectX + 4, selectY + 4, null);
 			}
 		}
 		
@@ -2600,6 +2634,38 @@ public class UI extends AbstractUI {
 			drawToolTips("OK", null, "Back", "Back");
 		}
 		
+		if (gp.keyH.dPressed) {
+			if (!showBoxSummary && !release && nicknaming < 0) { // in idle box/party
+				gp.keyH.dPressed = false;
+				if (gp.keyH.ctrlPressed) {
+					if (!showBoxParty) { // party is closed
+						if (itemSwapP == null) { // no pokemon has been selected to swap items yet
+							itemSwapP = cBox[boxNum];
+						} else {
+							Pokemon swap = cBox[boxNum];
+							if (swap != null && itemSwapP != swap) {
+								gp.player.p.swapItem(itemSwapP, swap);
+								itemSwapP = null;
+							}
+						}
+					} else { // party is open
+						if (itemSwapP == null) {
+							itemSwapP = gp.player.p.team[partyNum];
+						} else {
+							Pokemon swap = gp.player.p.team[partyNum];
+							if (swap != null && itemSwapP != swap) {
+								gp.player.p.swapItem(itemSwapP, swap);
+								itemSwapP = null;
+							}
+						}
+					}
+				} else {
+					showBoxParty = !showBoxParty;
+					partyNum = 0;
+				}
+			}
+		}
+		
 		if (nicknaming >= 0 && !showBoxSummary && !gauntlet) {
 			currentDialogue = "Change box's name?";
 			drawDialogueScreen(true);
@@ -2617,7 +2683,7 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		drawBoxToolTips();
+		drawBoxToolTips(false);
 	}
 
 	private int getHighlightWidth(String boxText) {
@@ -3089,7 +3155,7 @@ public class UI extends AbstractUI {
 				partySelectedItem = partyNum;
 			} else {
 				if (partySelectedItem != partyNum) {
-					gp.player.p.swapItem(partySelectedItem, partyNum);
+					gp.player.p.swapItem(gp.player.p.team[partySelectedItem], gp.player.p.team[partyNum]);
 				}
 				partySelectedItem = -1;
 			}
@@ -4778,11 +4844,11 @@ public class UI extends AbstractUI {
 		drawToolTips("Pick", null, "Back", null);
 	}
 
-	private void drawBoxToolTips() {
-		if (!gp.keyH.shiftPressed || showBoxSummary || showBoxParty || release) return;
+	private void drawBoxToolTips(boolean party) {
+		if (!gp.keyH.shiftPressed || showBoxSummary || (showBoxParty && !party) || release) return;
 		int x = 0;
 		int y = gp.tileSize * 9;
-		int width = gp.tileSize * 8;
+		int width = (int) (party ? gp.tileSize * 3.5 : gp.tileSize * 9.5);
 		int height = (int) (gp.tileSize * 1.5);
 		
 		drawSubWindow(x, y, width, height);
@@ -4791,7 +4857,10 @@ public class UI extends AbstractUI {
 		x += gp.tileSize / 2;
 		y += gp.tileSize;
 		
-		g2.drawString("[Ctrl]+[W] Release   [Ctrl]+[A] Calc", x, y);
+		String toolTips = party ? "[Ctrl]+[D] Item" : "[Ctrl]+[W] Release  [Ctrl]+[A] Calc  [Ctrl]+[D] Item";
+		g2.drawString(toolTips, x, y);
+		
+		if (party) return;
 		
 		String wText;
 		if (boxNum >= 0) {

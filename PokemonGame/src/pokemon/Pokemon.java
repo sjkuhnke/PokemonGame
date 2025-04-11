@@ -9038,6 +9038,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			t.team = team;
 			t.current = t.team[0];
+			t.setSlots();
 			if (t.item == Item.CALCULATOR) {
 				if (t.getName().contains("Scott")) {
 					t.item = scottItem;
@@ -9317,7 +9318,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 						if (next.trainer.hasNext()) {
 							boolean userSide = !next.trainer.hasUser(p1);
 							next = next.trainer.next(foe, userSide);
-							Task.addSwapInTask(next, next.currentHP, false);
+							Task.addSwapInTask(next, false);
 							next.swapIn(foe, true);
 						} else {
 				            break;

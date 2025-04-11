@@ -1042,7 +1042,7 @@ public class Script {
 				Task.addTask(Task.FLASH_OUT, "");
 				Task.addTask(Task.SHAKE, "", 100);
 				
-				Task.addCameraMoveTask('y', -400, 2);
+				Task.addCameraMoveTask('y', -500, 2);
 				
 				Task.addTask(Task.SHAKE, "", 50);
 				

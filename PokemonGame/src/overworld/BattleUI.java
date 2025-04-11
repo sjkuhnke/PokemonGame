@@ -29,14 +29,17 @@ public class BattleUI extends AbstractUI {
 	
 	// Pointers for tasks
 	public Pokemon tempUser;
+	public Pokemon tempFoe;
 	public int userHP;
 	public int foeHP;
 	public int maxUserHP;
+	public int maxFoeHP;
 	public Status userStatus;
 	public Status foeStatus;
 	public int userExp;
 	public int userExpMax;
 	public int userLevel;
+	public int foeLevel;
 	public Move foeMove;
 	public FieldEffect weather;
 	public FieldEffect terrain;
@@ -304,14 +307,20 @@ public class BattleUI extends AbstractUI {
 				drawUserPokeball(true);
 			} else {
 				foe = currentTask.p;
-				foeHP = currentTask.start == -1 ? foe.currentHP : currentTask.start;
-				foeStatus = currentTask.status;
+				foeHP = tempFoe == null ? foe.currentHP : tempFoe.currentHP;
+				maxFoeHP = tempFoe == null ? foe.getStat(0) : tempFoe.getStat(0);
+				foeStatus = tempFoe == null ? foe.status : tempFoe.status;
+				foeLevel = tempFoe == null ? foe.level : tempFoe.level;
 				drawFoePokeball(true);
 			}
 			if (counter >= 100) {
 				counter = 0;
 				if (currentTask.p.playerOwned()) moveNum = 0;
-				tempUser = null;
+				if (currentTask.wipe) {
+					tempUser = null;
+				} else {
+					tempFoe = null;
+				}
 				currentTask = null;
 			}
 			break;
@@ -441,6 +450,7 @@ public class BattleUI extends AbstractUI {
 				this.maxUserHP = currentTask.p.getStat(0);
 			} else {
 				foe.setSprites();
+				this.maxFoeHP = currentTask.p.getStat(0);
 			}
 			currentTask = null;
 			break;
@@ -470,7 +480,7 @@ public class BattleUI extends AbstractUI {
 		if (!user.isVisible()) return;
 		drawHPImage(user);
 		drawHPBar(user, userHP, maxUserHP);
-		drawNameLabel(user);
+		drawNameLabel(user, userLevel);
 		if (user.spriteVisible) drawUserSprite();
 		drawUserHP();
 		drawStatus(user);
@@ -481,8 +491,8 @@ public class BattleUI extends AbstractUI {
 	protected void drawFoe() {
 		if (!foe.isVisible()) return;
 		drawHPImage(foe);
-		drawHPBar(foe, foeHP, foe.getStat(0));
-		drawNameLabel(foe);
+		drawHPBar(foe, foeHP, maxFoeHP);
+		drawNameLabel(foe, foeLevel);
 		if (foe.spriteVisible) drawFoeSprite();
 		drawStatus(foe);
 		drawTypes(foe);
@@ -613,7 +623,6 @@ public class BattleUI extends AbstractUI {
 	    Pokemon.field = field;
 	    userHP = user.currentHP;
 	    maxUserHP = user.getStat(0);
-	    foeHP = foe.currentHP;
 	    aura = false;
 		
 		if (foe.trainerOwned() && staticID == -1) {
@@ -716,7 +725,7 @@ public class BattleUI extends AbstractUI {
 		
 	}
 	
-	protected void drawNameLabel(Pokemon p) {
+	protected void drawNameLabel(Pokemon p, int level) {
 		g2.setColor(Color.BLACK);
 		g2.setFont(g2.getFont().deriveFont(24F));
 		
@@ -739,7 +748,6 @@ public class BattleUI extends AbstractUI {
 			levelY = 70;
 		}
 		g2.drawString(p.nickname, x, y);
-		int level = p.playerOwned() ? userLevel : p.level;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		g2.drawString(level + "", levelX, levelY);
 	}
@@ -1232,7 +1240,7 @@ public class BattleUI extends AbstractUI {
 				if (foe.trainer.hasNext()) {
 					boolean userSide = foe.trainer.hasUser(user);
 					next = foe.trainer.next(user, userSide);
-					Task.addSwapInTask(next, next.currentHP, false);
+					Task.addSwapInTask(next, false);
 					next.swapIn(user, true);
 					user.getPlayer().clearBattled();
 					user.battled = true;
@@ -1533,8 +1541,10 @@ public class BattleUI extends AbstractUI {
 			foeStatus = foe.status;
 		} else {
 			foe.setVisible(true);
-			foeStatus = foe.status;
 			foeHP = foe.currentHP;
+		    maxFoeHP = foe.getStat(0);
+		    foeLevel = foe.level;
+			foeStatus = foe.status;
 			showMessage("A wild " + foe.nickname + " appeared!");
 		}
 	}

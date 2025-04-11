@@ -38,6 +38,7 @@ public abstract class AbstractUI {
 	public int boxSwapNum;
 	public boolean showBoxParty;
 	public boolean showBoxSummary;
+	public Pokemon itemSwapP;
 	
 	public Task currentTask;
 	public ArrayList<Task> tasks;
@@ -285,19 +286,17 @@ public abstract class AbstractUI {
 					g2.drawRoundRect(x + 8, y + 8, partyWidth - 4, partyHeight - 4, 18, 18);
 				}
 				g2.drawImage(p.isFainted() && !egg ? p.getFaintedSprite() : p.getSprite(), x + (gp.tileSize / 4), y + (gp.tileSize / 2), null);
-				if (partySelectedItem == i || (partySelectedItem != -1 && partyNum == i)) {
-					g2.setColor(new Color(10, 10, 10, 180));
-					g2.fillOval(x + 18, y + 81, 30, 30);	
+				
+				boolean drawItemSelect = partySelectedItem == i || (gp.gameState == GamePanel.BOX_STATE && itemSwapP == p);
+				if (drawItemSelect || (partyNum == i && (partySelectedItem != -1 || gp.gameState == GamePanel.BOX_STATE && itemSwapP != null))) {
+					drawItemSelectBackground(x + 14, y + 78);
 				}
 				if (p.item != null) {
 					g2.drawImage(p.item.getImage(), x + (gp.tileSize / 4) + 8, y + 84, null);
 				}
-				
-				if(partySelectedItem == i ){
-					g2.setColor(new Color(200, 100, 100, 255));
-					g2.drawOval(x + 18, y + 81, 30, 30);
+				if (drawItemSelect) {
+					drawItemSelectBorder(x + 14, y + 78);
 				}
-				
 				
 				g2.setColor(Color.BLACK);
 				g2.setFont(g2.getFont().deriveFont(24F));
@@ -338,6 +337,21 @@ public abstract class AbstractUI {
 		}
 	}
 	
+	public void drawItemSelectBackground(int x, int y) {
+		g2.setColor(new Color(10, 10, 10, 180));
+		g2.fillOval(x, y, 36, 36);	
+	}
+	
+	public void drawItemSelectBorder(int x, int y) {
+		g2.setStroke(new BasicStroke(5));
+		g2.setColor(Color.WHITE);
+		g2.drawOval(x, y, 36, 36);
+		g2.setStroke(new BasicStroke(3));
+		g2.setColor(new Color(120, 120, 235));
+		g2.drawOval(x, y, 36, 36);
+		g2.setStroke(new BasicStroke(5));
+	}
+
 	public Color getHPBarColor(double hpRatio) {
 		if (hpRatio < 0.25) {
 			return Color.red;
