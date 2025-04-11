@@ -255,7 +255,7 @@ public class Player extends Trainer implements Serializable {
 		if (!amulet && this.current.item == Item.AMULET_COIN) {
 			amulet = true;
 		}
-		Task.addSwapInTask(current, current.currentHP, true);
+		Task.addSwapInTask(current, true);
 		if (this.current.hasStatus(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
 		Pokemon.field.switches++;
 	}
@@ -1457,12 +1457,6 @@ public class Player extends Trainer implements Serializable {
 		}
 	}
 	
-	public void setSlots() {
-		for (int i = 0; i < 6; i++) {
-			if (team[i] != null) team[i].slot = i;
-		}
-	}
-	
 	private void updateBerries() {
 		if (statBerries == null) setupStatBerries();
 		if (resistBerries == null || arrayContains(resistBerries, null)) setupResistBerries();
@@ -1655,10 +1649,11 @@ public class Player extends Trainer implements Serializable {
 		
 		return newPlayer;
 	}
-	public void swapItem(int a, int b) {
-		Item temp = team[a].item; 
-		team[a].item = team[b].item;
-		team[b].item = temp;
+	
+	public void swapItem(Pokemon a, Pokemon b) {
+		Item temp = a.item;
+		a.item = b.item;
+		b.item = temp;
 	}
 
 	public void evolve(Pokemon p, int counter, GamePanel gp) {

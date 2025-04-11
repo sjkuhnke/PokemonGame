@@ -3241,7 +3241,7 @@ public class AssetSetter {
 			if (!flag[5][5] && gp.ui.tasks.isEmpty()) {
 				gp.npc[103][1].worldX = 51 * gp.tileSize;
 				gp.npc[103][1].worldY = 41 * gp.tileSize;
-				gp.npc[103][1].direction = "down";
+				gp.npc[103][1].setDirection("down");
 			}
 		}
 		if (flag[5][5]) {

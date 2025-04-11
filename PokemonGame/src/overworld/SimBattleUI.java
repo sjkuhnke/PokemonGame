@@ -444,6 +444,7 @@ public class SimBattleUI extends BattleUI {
 	    userHP = user.currentHP;
 	    maxUserHP = user.getStat(0);
 	    foeHP = foe.currentHP;
+	    maxFoeHP = foe.getStat(0);
 	    aura = false;
 		
 	    Task.addSwapInTask(foe, false);
@@ -506,7 +507,7 @@ public class SimBattleUI extends BattleUI {
 	}
 	
 	@Override
-	protected void drawNameLabel(Pokemon p) {
+	protected void drawNameLabel(Pokemon p, int level) {
 		g2.setColor(Color.BLACK);
 		g2.setFont(g2.getFont().deriveFont(24F));
 		
@@ -529,7 +530,6 @@ public class SimBattleUI extends BattleUI {
 			levelY = 70;
 		}
 		g2.drawString(p.nickname, x, y);
-		int level = p == user ? userLevel : p.level;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		g2.drawString(level + "", levelX, levelY);
 	}
@@ -589,6 +589,7 @@ public class SimBattleUI extends BattleUI {
 				userHP = user.currentHP;
 				foeHP = foe.currentHP;
 				maxUserHP = user.getStat(0);
+				maxFoeHP = foe.getStat(0);
 				userStatus = user.status;
 				foeStatus = foe.status;
 				userLevel = user.level;
@@ -885,7 +886,7 @@ public class SimBattleUI extends BattleUI {
 				if (next.trainer.hasNext()) {
 					boolean userSide = next.trainer.hasUser(user);
 					next = next.trainer.next(foe, userSide);
-					Task.addSwapInTask(next, next.currentHP, userSide);
+					Task.addSwapInTask(next, userSide);
 					next.swapIn(foe, true);
 				} else {
 		            break;

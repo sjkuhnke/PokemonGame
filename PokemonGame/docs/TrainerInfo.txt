@@ -4,9 +4,7 @@ Trainers:
 Route 22------------------------------------------
 
 Rival Scott 1
-*Twigle (Lv. 7) @ Miracle Seed          / Quirky  /   Rough Skin     /   Pound, Withdraw, Razor Leaf, 
-*Lagma (Lv. 7) @ Charcoal               / Gentle  /   Dry Skin       /   Tackle, Harden, Ember, 
-*Lizish (Lv. 7) @ Mystic Water          / Bold    /   Protean        /   Scratch, Growl, Water Gun, 
+Lagma (Lv. 7) @ Charcoal                / Gentle  /   Dry Skin       /   Tackle, Harden, Ember, 
 
 Youngster York
 Hammo (Lv. 14) @ None                   / Timid   /   Mouthwater     /   Covet, Leer, Mach Punch, Double Slap
@@ -273,9 +271,7 @@ Gelb Forest (1A)----------------------------------
 
 Rival Fred 1
 Otterpor (Lv. 20) @ Leftovers           / Jolly   /   Water Veil     /   Confusion, Aqua Ring, Water Pulse, Aqua Veil
-*Torgged (Lv. 20) @ Miracle Seed        / Gentle  /   Rough Skin     /   Smack Down, Headbutt, Razor Leaf, Sand Attack
-*Maguide (Lv. 20) @ Charcoal            / Hasty   /   Dry Skin       /   Smokescreen, Incinerate, Headbutt, Flame Wheel
-*Iguaton (Lv. 20) @ Mystic Water        / Mild    /   Protean        /   Bubblebeam, Mud Sport, Bite, Mean Look
+Torgged (Lv. 20) @ Miracle Seed         / Gentle  /   Rough Skin     /   Smack Down, Headbutt, Razor Leaf, Sand Attack
 
 Psychic Kaytlynne
 Inkay (Lv. 18) @ Black Glasses          / Mild    /   Contrary       /   Payback, Pluck, Psybeam, Swagger
@@ -323,9 +319,7 @@ Route 26------------------------------------------
 Rival Scott 2
 Charjabug (Lv. 29) @ Lum Berry          / Gentle  /   Static         /   Spark, Bug Bite, Sticky Web, Bite
 Ekans-S (Lv. 29) @ Belue Berry          / Quiet   /   Shed Skin      /   Glare, Hex, Air Cutter, Wrap
-*Torgged (Lv. 30) @ Sitrus Berry        / Sassy   /   Rough Skin     /   Magnitude, Smack Down, Mega Drain, Sleep Powder
-*Maguide (Lv. 30) @ Sitrus Berry        / Jolly   /   Dry Skin       /   Bulldoze, Headbutt, Lava Plume, Iron Defense
-*Iguaton (Lv. 30) @ Sitrus Berry        / Rash    /   Protean        /   Aqua Jet, Fire Fang, Bite, Cut
+Maguide (Lv. 30) @ Sitrus Berry         / Jolly   /   Dry Skin       /   Bulldoze, Headbutt, Lava Plume, Iron Defense
 Rhynee (Lv. 31) @ Luminous Moss         / Bold    /   Sand Stream    /   Aerial Ace, Bulldoze, Stealth Rock, Stomp
 
 Burglar Jeroen
@@ -683,9 +677,7 @@ Kleine Village------------------------------------
 Rival Fred 2
 Flamehox (Lv. 32) @ Passho Berry        / Quirky  /   Flame Body     /   Will-O-Wisp, Double Team, Flame Wheel, Mud-Slap
 Gyarados-E (Lv. 31) @ Air Balloon       / Hardy   /   Volt Vortex    /   Crunch, Tackle, Zing Zap, Dragon Rage
-*Torgged (Lv. 33) @ Expert Belt         / Timid   /   Rough Skin     /   Scorching Sands, Rock Tomb, Sleep Powder, Mega Drain
-*Maguide (Lv. 33) @ Expert Belt         / Quiet   /   Dry Skin       /   Captivate, Iron Head, Bulldoze, Lava Plume
-*Iguaton (Lv. 33) @ Expert Belt         / Rash    /   Protean        /   Bite, Breaking Swipe, Fire Fang, Aqua Jet
+Torgged (Lv. 33) @ Expert Belt          / Timid   /   Rough Skin     /   Scorching Sands, Rock Tomb, Sleep Powder, Mega Drain
 Otterpor (Lv. 33) @ Rocky Helmet        / Lonely  /   Water Veil     /   Psybeam, Bubblebeam, Aqua Veil, Confuse Ray
 
 Possessed Trainer 1
@@ -1155,9 +1147,7 @@ Dompster-S (Lv. 48) @ Power Herb        / Adamant /   Illumination   /   Unseen 
 Rival Scott 3
 Hatterene (Lv. 50) @ Enigma Berry       / Adamant /   Magic Bounce   /   Healing Circle, Psychic, Quick Spell, Calm Mind
 Arbok-S (Lv. 50) @ Leftovers            / Sassy   /   Pressure       /   Protect, Bitter Malice, Hurricane, Light Drain
-*Tortugis (Lv. 51) @ Rocky Helmet       / Relaxed /   Rough Skin     /   Rockfall Frenzy, Scorching Sands, Leaf Storm, Breaking Swipe
-*Magron (Lv. 51) @ Life Orb             / Serious /   Dry Skin       /   Fire Blast, Earth Power, Radio Burst, Molten Steelspike
-*Dragave (Lv. 51) @ Leftovers           / Impish  /   Protean        /   Channeling Blow, Liquidation, Bulk Up, Ice Spinner
+Magron (Lv. 51) @ Life Orb              / Serious /   Dry Skin       /   Fire Blast, Earth Power, Radio Burst, Molten Steelspike
 Vikavolt (Lv. 50) @ Utility Umbrella    / Impish  /   Levitate       /   Volt Switch, Radio Burst, Bug Buzz, Sticky Web
 Rhypolar (Lv. 51) @ Assault Vest        / Rash    /   Sand Stream    /   Stone Edge, Body Press, U-Turn, Magnitude
 
@@ -1401,9 +1391,7 @@ Rival Fred 3
 Blastflames (Lv. 60) @ Mysticola Berry  / Gentle  /   Levitate       /   Will-O-Wisp, Dragon Pulse, Flamethrower, Volt Switch
 Gyarados-E (Lv. 59) @ Rindo Berry       / Mild    /   Motor Drive    /   Rain Dance, Volt Tackle, Ice Spinner, Waterfall
 Wormatron-S (Lv. 60) @ Clear Amulet     / Lax     /   Adaptability   /   Sucker Punch, Body Slam, Earthquake, Coil
-*Tortugis (Lv. 60) @ Leftovers          / Quiet   /   Rough Skin     /   Spiky Shield, Rockfall Frenzy, Leaf Storm, Earth Power
-*Magron (Lv. 60) @ Blunder Policy       / Docile  /   Dry Skin       /   Fire Blast, Earth Power, Focus Blast, Molten Steelspike
-*Dragave (Lv. 60) @ Chesto Berry        / Jolly   /   Protean        /   Liquidation, Sky Uppercut, Bulk Up, Rest
+Tortugis (Lv. 60) @ Leftovers           / Quiet   /   Rough Skin     /   Spiky Shield, Rockfall Frenzy, Leaf Storm, Earth Power
 Stellarock (Lv. 59) @ Loaded Dice       / Bold    /   Huge Power     /   Shooting Stars, Rock Blast, Drain Punch, Cosmic Power
 Psylotter (Lv. 61) @ Blunder Policy     / Calm    /   Water Veil     /   Blizzard, Hypnosis, Hydro Vortex, Psychic Noise
 
@@ -1482,9 +1470,7 @@ Rival Scott 4
 Hatterene (Lv. 63) @ Light Clay         / Naive   /   Sleight Of Hand/   Magic Missiles, Nuzzle, Reflect, Light Screen
 Arbok-S (Lv. 62) @ Wiki Berry           / Calm    /   Pressure       /   Aeroblast, Frostbind, Volt Switch, Hex
 Drageye (Lv. 62) @ Chesto Berry         / Jolly   /   Multiscale     /   Chromo Beam, Dragon Pulse, Fiery Dance, Rest
-*Tortugis (Lv. 63) @ Eject Pack         / Naughty /   Regenerator    /   Grassy Terrain, Leaf Storm, Earth Power, U-Turn
-*Magron (Lv. 63) @ Life Orb             / Lax     /   Drought        /   Weather Ball, Earth Power, Radio Burst, Molten Steelspike
-*Dragave (Lv. 63) @ Life Orb            / Careful /   Protean        /   Poison Jab, Liquidation, Radiant Break, Channeling Blow
+Magron (Lv. 63) @ Life Orb              / Lax     /   Drought        /   Weather Ball, Earth Power, Radio Burst, Molten Steelspike
 Vikavolt (Lv. 64) @ Shell Bell          / Quirky  /   Speed Boost    /   Light Drain, Bug Buzz, Calm Mind, Thunderbolt
 Rhypolar (Lv. 64) @ Galaxeed Berry      / Rash    /   Sand Stream    /   Earthquake, Shore Up, Smack Down, Body Press
 
@@ -1890,7 +1876,7 @@ Roserade (Lv. 71) @ Big Root            / Quiet   /   Technician     /   Giga Dr
 
 Mt. St. Joseph (3A)-------------------------------
 
-Explorer Stacey
+Hiker Stacey
 Azumarill (Lv. 72) @ Choice Band        / Hasty   /   Huge Power     /   Flip Turn, Knock Off, Trick Tackle, Quick Attack
 Bushewe (Lv. 71) @ Eject Pack           / Lax     /   Grassy Surge   /   Leaf Storm, Chromo Beam, Leech Seed, Earth Power
 Crobat (Lv. 72) @ Grassy Seed           / Impish  /   Strong Jaw     /   Acrobatics, Cross Poison, Crunch, Magic Fang
@@ -2039,9 +2025,7 @@ Rival Fred 4
 Stellarock (Lv. 77) @ Loaded Dice       / Brave   /   Huge Power     /   Shooting Stars, Rock Blast, Drain Punch, Bulk Up
 Gyarados-E (Lv. 76) @ Weakness Policy   / Serious /   Volt Vortex    /   Dragon Dance, Waterfall, Volt Tackle, Breaking Swipe
 Wormatron-S (Lv. 77) @ Rocky Helmet     / Hardy   /   Adaptability   /   Glare, Breaking Swipe, Earth Power, Dark Pulse
-*Tortugis (Lv. 77) @ Sitrus Berry       / Calm    /   Rough Skin     /   Spiky Shield, Giga Drain, Head Smash, Earth Power
-*Magron (Lv. 77) @ Sitrus Berry         / Quirky  /   Dry Skin       /   Steel Beam, Flare Blitz, Eruption, Stealth Rock
-*Dragave (Lv. 77) @ Sitrus Berry        / Modest  /   Protean        /   Close Combat, Double-Edge, Wave Crash, Outrage
+Tortugis (Lv. 77) @ Sitrus Berry        / Calm    /   Rough Skin     /   Spiky Shield, Giga Drain, Head Smash, Earth Power
 Blastflames (Lv. 76) @ Choice Scarf     / Relaxed /   Levitate       /   Eruption, Draco Meteor, Volt Switch, Dark Pulse
 Psylotter (Lv. 78) @ Leftovers          / Rash    /   Water Veil     /   Aqua Veil, Scald, Psychic, Calm Mind
 

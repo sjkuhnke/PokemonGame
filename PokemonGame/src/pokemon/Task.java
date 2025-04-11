@@ -295,22 +295,16 @@ public class Task {
 		t.setAbility(p.ability);
 	}
 	
-	public static void addSwapInTask(Pokemon p, int start, boolean playerSide) {
+	public static void addSwapInTask(Pokemon p, boolean playerSide) {
+		if (gp.gameState != GamePanel.BATTLE_STATE && gp.gameState != GamePanel.SIM_BATTLE_STATE) return;
 		String message = p.playerOwned() ? "Go! " + p.nickname + "!" : p.trainer.toString() + " sends out " + p.nickname + "!";
 		Task t = addTask(Task.SWAP_IN, message, p);
 		if (t != null) {
-			t.start = start;
-			t.status = p.status;
 			t.wipe = playerSide;
 			if (p.shiny) {
 				addTask(Task.SHINY, "", p);
 			}
 		}
-	}
-	
-	public static void addSwapInTask(Pokemon p, boolean playerSide) {
-		if (gp.gameState != GamePanel.BATTLE_STATE && gp.gameState != GamePanel.SIM_BATTLE_STATE) return;
-		addSwapInTask(p, -1, playerSide);
 	}
 	
 	public static void addSwapOutTask(Pokemon p, boolean playerSide) {
