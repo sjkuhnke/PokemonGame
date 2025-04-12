@@ -311,7 +311,7 @@ Before Battle:
 
 ""
 ""
-"Victory isn't given. It's earned through sweat, speed, and serious sparks!"
+""
 "Fire fuels my will. Electricity charges my drive. Let's make this battle electric!"
 "I play to win, and I battle with everything I've got - so get ready to sweat!"
 "This is no game! My Fire and Electric types are ready to shock and scorch you!"
@@ -322,7 +322,7 @@ After Battle:
 
 ""
 ""
-"Guess I hit my limit... but limits are meant to be broken!"
+""
 "You've got speed and smarts. I respect that!"
 "Even the strongest burn out sometimes. I'll be back - faster and stronger!"
 "A shocking loss... but it's not the end. I'll keep improving!"

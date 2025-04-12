@@ -702,6 +702,12 @@ public class EventHandler {
 			if (hit(109,32,34)) teleport(112, 31, 45,false);
 			if (hit(112,31,46)) teleport(109, 32, 35,false);
 			
+			// Glurg Town Houses
+			if (hit(109,38,35)) teleport(187, 31, 45,false);
+			if (hit(187,31,46)) teleport(109, 38, 36,false);
+			if (hit(109,18,34)) teleport(188, 31, 45,false);
+			if (hit(188,31,46)) teleport(109, 18, 35,false);
+			
 			// Route 35
 			if (hit(109,6,36)) teleport(114, 36, 40,false);
 			if (hit(114,37,40)) teleport(109, 7, 36,false);

@@ -1834,7 +1834,7 @@ public class AssetSetter {
 		mapNum = 109;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 76, 89, "I've hiked through mountains, and my Pokemon are as tough as rock!", "Guess I've got to go back to training in the mountains...", 235);
-		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 67, 72, "", "", 236);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_RIGHT, 67, 72, "Victory isn't given. It's earned through sweat, speed, and serious sparks!", "Guess I hit my limit... but limits are meant to be broken!", 236);
 		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_RIGHT, 49, 44, "Don't underestimate me just because I'm young! I'm tougher than I look!", "I lost this time, but next time I'll be ready!", 237);
 		
 		gp.npc[mapNum][index] = NPCSetup(SCOTT_DOWN, 21, 40, "Hey, it's been a while, hasn't it? How have you been?\n" // before beating
