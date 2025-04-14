@@ -2342,7 +2342,7 @@ public class UI extends AbstractUI {
 			if (selected != null) {
 				g2.drawImage(selected.getSprite(), selectX, selectY, null);
 				if (selected.item != null) {
-					g2.drawImage(selected.item.getImage(), selectX - 6, selectY + 62, null);
+					g2.drawImage(selected.item.getImage(), selectX + 4, selectY + 56, null);
 				}
 			}
 		}

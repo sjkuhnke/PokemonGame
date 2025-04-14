@@ -542,7 +542,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public BattleUI getBattleUI() {
 		if (gameState == BATTLE_STATE) return battleUI;
 		if (gameState == SIM_BATTLE_STATE) return simBattleUI;
-		return null;
+		return simBattleUI;
 	}
 
 }

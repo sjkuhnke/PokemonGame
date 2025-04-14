@@ -781,6 +781,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEAN_LOOK) && foe.hasStatus(Status.TRAPPED)) bestMoves.removeIf(Move.MEAN_LOOK::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.FOCUS_ENERGY) && this.getStatusNum(Status.CRIT_CHANCE) > 2) bestMoves.removeIf(Move.FOCUS_ENERGY::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENCORE) && foe.hasStatus(Status.ENCORED)) bestMoves.removeIf(Move.ENCORE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAUNT) && foe.hasStatus(Status.TAUNTED)) bestMoves.removeIf(Move.ENCORE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TORMENT) && foe.hasStatus(Status.TORMENTED)) bestMoves.removeIf(Move.ENCORE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.DISABLE) && foe.disabledMove == null) bestMoves.removeIf(Move.DISABLE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.NO_RETREAT) && this.hasStatus(Status.NO_SWITCH)) bestMoves.removeIf(Move.NO_RETREAT::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEMENTO) && ((this.currentHP * 1.0 / this.getStat(0))) > 0.25) bestMoves.removeIf(Move.MEMENTO::equals);
@@ -2530,6 +2532,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 				message += "\nIt's super effective!";
 				field.superEffective++;
 				if (foeAbility == Ability.SOLID_ROCK || foeAbility == Ability.FILTER) damage /= 2;
+				if (foeAbility == Ability.ANTICIPATION && foe.illusion) {
+					damage /= 2;
+					Task.addAbilityTask(foe);
+					Task.addTask(Task.TEXT, foe.nickname + " anticipated the attack!");
+					foe.illusion = false;
+				}
 				if (item == Item.EXPERT_BELT) damage *= 1.2;
 				if (foe.getItem() != null && foe.checkTypeResistBerry(moveType)) {
 					Task.addTask(Task.TEXT, foe.nickname + " ate its " + foe.item.toString() + " to weaken the attack!");
@@ -5950,6 +5958,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (multiplier > 1) {
 			if (foeAbility == Ability.SOLID_ROCK || foeAbility == Ability.FILTER) damage /= 2;
+			if (foeAbility == Ability.ANTICIPATION && foe.illusion) damage /= 2;
 			if (item == Item.EXPERT_BELT) damage *= 1.2;
 			if (mode != 0 && foe.getItem() != null && foe.checkTypeResistBerry(moveType)) damage /= 2;
 		}
@@ -7373,6 +7382,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (shuddered) {
 				Task.addAbilityTask(this);
 				Task.addTask(Task.TEXT, nickname + " shuddered!");
+				this.illusion = true;
+			} else {
+				this.illusion = false;
 			}
 		} else if (this.ability == Ability.TRACE) {
 			if (this.getItem() != Item.ABILITY_SHIELD) {

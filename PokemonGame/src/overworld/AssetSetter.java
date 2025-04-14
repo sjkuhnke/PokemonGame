@@ -429,7 +429,6 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(62, 32, Item.BLUNDER_POLICY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 32, Item.FULL_RESTORE, mapNum);
 		if (gp.player.p.choiceChoice != null) {
-			gp.player.p.itemsCollected[mapNum][objIndex] = false;
 			gp.obj[mapNum][objIndex] = ObjSetup(77, 41, gp.player.p.choiceChoice, mapNum);
 		}
 		gp.obj[mapNum][objIndex] = ObjSetup(78, 42, Item.ELECTRIC_SEED, mapNum);
@@ -991,7 +990,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(91, 83, Item.BURN_HEAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(84, 79, Item.GOLD_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = MintSetup(79, 58, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(13, 27, Item.ABILITY_PATCH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(13, 27, Item.ABILITY_CAPSULE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 25, Item.RED_CARD, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(74, 79, Item.ADRENALINE_ORB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(77, 70, Item.LEAF_STONE, mapNum);
@@ -3258,7 +3257,7 @@ public class AssetSetter {
 		 */
 		if (map == 16 && gp.player.p.choiceChoice != null) {
 			objIndex = 10;
-			gp.obj[map][10] = ObjSetup(77, 41, gp.player.p.choiceChoice, map);
+			if (gp.obj[map][10] == null) gp.obj[map][10] = ObjSetup(77, 41, gp.player.p.choiceChoice, map);
 		}
 		
 		if (flag[5][8] && !flag[6][0]) {

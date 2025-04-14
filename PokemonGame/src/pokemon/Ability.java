@@ -6,7 +6,7 @@ public enum Ability {
 	AMBUSH("Gives priority to the first move when this Pokemon enters battle."),
 	ANALYTIC("Boosts move power when the Pokemon moves last."),
 	ANGER_POINT("Maxes Attack after taking a critical hit."),
-	ANTICIPATION("Senses an opposing Pokemon's dangerous moves."),
+	ANTICIPATION("Senses the foe's supereffective moves, reducing damage from the first one if it exists."),
 	INSOMNIA("Prevents the Pokemon from falling asleep."),
 	BATTLE_ARMOR("This Pokemon cannot be Critical hit."),
 	BEAST_BOOST("Boosts the Pokemon's highest stat every time it faints a foe."),
