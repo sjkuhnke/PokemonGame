@@ -817,7 +817,7 @@ public class EventHandler {
 			if (hit(186,31,46)) teleport(124, 36, 70,false);
 			
 			// Cutscene with Arthra
-			if (gp.player.p.flag[6][6] && !gp.player.p.flag[7][0] && hit(125,25,83)) gp.player.interactNPC(gp.npc[124][21], false);
+			if (gp.player.p.flag[6][6] && !gp.player.p.flag[7][0] && hit(124,25,83)) gp.player.interactNPC(gp.npc[124][21], false);
 			
 			// Joseph 1A
 			if (hit(124,91,76)) teleport(137, 60, 76,false);
@@ -898,8 +898,8 @@ public class EventHandler {
 			if (hit(149,56,71)) gp.iTile[149][0] = null;
 			if (hit(149,42,71)) gp.iTile[149][1] = null;
 			if (hit(149,39,65)) gp.iTile[149][2] = null;
-			if (hit(149,51,63) && gp.player.p.flag[7][1]) gp.iTile[149][3] = null; // beat rick, unlock fred gate
-			if (hit(149,54,62) && gp.player.p.flag[7][2]) gp.iTile[149][4] = null; // beat fred, unlock maxwell gate
+			if (hit(149,51,63) && gp.player.p.flag[7][2]) gp.iTile[149][3] = null; // beat rick, unlock fred gate
+			if (hit(149,54,62) && gp.player.p.flag[7][3]) gp.iTile[149][4] = null; // beat fred, unlock maxwell gate
 			if (hit(149,49,59)) gp.aSetter.updateNPC(149); // clear all tn members TODO: replace with maxwell updating npc to make him a block, and after having a long convo with him it'll have update task
 			
 			// Rawwar City -> Route 37 gate

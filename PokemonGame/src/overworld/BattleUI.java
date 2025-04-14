@@ -30,6 +30,10 @@ public class BattleUI extends AbstractUI {
 	// Pointers for tasks
 	public Pokemon tempUser;
 	public Pokemon tempFoe;
+	public String userName;
+	public String foeName;
+	public PType[] userType;
+	public PType[] foeType;
 	public int userHP;
 	public int foeHP;
 	public int maxUserHP;
@@ -304,6 +308,8 @@ public class BattleUI extends AbstractUI {
 				userExp = tempUser == null ? user.exp : tempUser.exp;
 				userExpMax = tempUser == null ? user.expMax : tempUser.expMax;
 				userLevel = tempUser == null ? user.level : tempUser.level;
+				userName = tempUser == null ? user.nickname : tempUser.nickname;
+				userType = tempFoe == null ? new PType[] {user.type1, user.type2} : new PType[] {tempFoe.type1, tempFoe.type2};
 				drawUserPokeball(true);
 			} else {
 				foe = currentTask.p;
@@ -311,6 +317,8 @@ public class BattleUI extends AbstractUI {
 				maxFoeHP = tempFoe == null ? foe.getStat(0) : tempFoe.getStat(0);
 				foeStatus = tempFoe == null ? foe.status : tempFoe.status;
 				foeLevel = tempFoe == null ? foe.level : tempFoe.level;
+				foeName = tempFoe == null ? foe.nickname : tempFoe.nickname;
+				foeType = tempFoe == null ? new PType[] {foe.type1, foe.type2} : new PType[] {tempFoe.type1, tempFoe.type2};
 				drawFoePokeball(true);
 			}
 			if (counter >= 100) {
@@ -447,10 +455,14 @@ public class BattleUI extends AbstractUI {
 		case Task.SPRITE:
 			if (currentTask.p == user) {
 				user.setSprites();
-				this.maxUserHP = currentTask.p.getStat(0);
+				maxUserHP = currentTask.p.getStat(0);
+				userName = currentTask.p.nickname;
+				userType = currentTask.types;
 			} else {
 				foe.setSprites();
-				this.maxFoeHP = currentTask.p.getStat(0);
+				maxFoeHP = currentTask.p.getStat(0);
+				foeName = currentTask.p.nickname;
+				foeType = currentTask.types;
 			}
 			currentTask = null;
 			break;
@@ -458,6 +470,20 @@ public class BattleUI extends AbstractUI {
 			message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 64);
 			showMessage(message);
 			currentTask.p.spriteVisible = currentTask.wipe;
+			break;
+		case Task.EVOLUTION:
+		case Task.TYPES:
+			if (!currentTask.message.isEmpty()) {
+				showMessage(currentTask.message);
+			}
+			if (currentTask.p == user) {
+				userType = currentTask.types;
+				userName = currentTask.p.nickname;
+			} else {
+				foeType = currentTask.types;
+				foeName = currentTask.p.nickname;
+			}
+			endTask();
 			break;
 		}
 	}
@@ -558,7 +584,7 @@ public class BattleUI extends AbstractUI {
 	}
 
 	protected void drawTypes(Pokemon p) {
-		PType[] types = Pokemon.getTypes(p.id);
+		PType[] types = p == user ? userType : foeType;
 		if (p.playerOwned()) {
 			g2.drawImage(types[0].getImage(), 340, 298, null);
 			if (types[1] != null) g2.drawImage(types[1].getImage(), 364, 298, null);
@@ -733,7 +759,7 @@ public class BattleUI extends AbstractUI {
 		int y;
 		int levelX;
 		int levelY;
-		String name = p.nickname;
+		String name = p == user ? userName : foeName;
 		g2.setFont(g2.getFont().deriveFont(getFontSize(name, gp.tileSize * 2.5F)));
 		
 		if (p.playerOwned()) {
@@ -747,7 +773,7 @@ public class BattleUI extends AbstractUI {
 			levelX = 416;
 			levelY = 70;
 		}
-		g2.drawString(p.nickname, x, y);
+		g2.drawString(name, x, y);
 		g2.setFont(g2.getFont().deriveFont(24F));
 		g2.drawString(level + "", levelX, levelY);
 	}
@@ -1545,6 +1571,8 @@ public class BattleUI extends AbstractUI {
 		    maxFoeHP = foe.getStat(0);
 		    foeLevel = foe.level;
 			foeStatus = foe.status;
+			foeName = foe.nickname;
+			foeType = new PType[] {foe.type1, foe.type2};
 			showMessage("A wild " + foe.nickname + " appeared!");
 		}
 	}

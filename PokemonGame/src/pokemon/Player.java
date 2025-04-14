@@ -1661,7 +1661,8 @@ public class Player extends Trainer implements Serializable {
 		int oldID = p.id;
 		p.evolve(counter);
 		
-        Task text = Task.createTask(Task.TEXT, oldNickname + " evolved into " + p.name() + "!");
+        Task text = Task.createTask(Task.EVOLUTION, oldNickname + " evolved into " + p.name() + "!", p);
+        text.types = new PType[] {p.type1, p.type2};
         Task.insertTask(text, 0);
         pokedex[p.id] = 2;
         if (oldID == 129) {

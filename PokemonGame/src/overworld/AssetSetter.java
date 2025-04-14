@@ -1848,7 +1848,7 @@ public class AssetSetter {
 				+ "I spent so long training my psychic powers, trying to predict your moves... but I forgot something really important.\n"
 				+ "It's not about reading your mind - it's about training my Pokemon. They're the ones doing the battling, after all.\n"
 				+ "Guess I still have a lot to learn. But don't worry! Next time, I'll focus on them, and I'll definitely beat you!", 242);
-		gp.npc[mapNum][index] = NPCSetup(BREEDER, null, 44, 39, "Thank god! I found this abandoned egg here, and I'm not sure what to do with it.", 109.0, 167, "Please raise it with love and care!");
+		gp.npc[mapNum][index] = NPCSetup(BREEDER, "Breeder", 44, 39, "Thank god! I found this abandoned egg here, and I'm not sure what to do with it.", 109.0, 167, "Please raise it with love and care!");
 		gp.npc[mapNum][index++] = null; // scott cutscene
 		
 		mapNum = 110;
@@ -1932,8 +1932,9 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 21, 57, "Sorry, can't let you in here. The nurse is out with a fever. Ironic, isn't it?");
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 10, 60, "Not so fast, bucko. This shop's already been ransacked once, we're not trusting anyone for the time being.");
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 16, 74, "The clerk is sick - advised to quarantine him. Come back later!");
-		gp.npc[mapNum][index] = null; // merlin
-		gp.npc[mapNum][index] = null; // arthra
+		gp.npc[mapNum][index++] = null; // merlin
+		gp.npc[mapNum][index++] = null; // arthra
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 1, 1, "");
 		
 		mapNum = 127;
 		index = 0;
@@ -2035,7 +2036,8 @@ public class AssetSetter {
 		mapNum = 146;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 79, 27, "", "", -1);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 82, 27, "Inside there is quite the function in there. You are only allowed to bring 10 of your strongest Pokemon, and that's it. Good luck.", mapNum);
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, "Arthra", 82, 27, "Took you long enough. What, did you have to hike back down for trail mix?", 146.0);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 83, 27, "You've come a long way, Finn. Arthra may not say it, but she's impressed.", 146.1);
 		
 		mapNum = 148;
 		index = 0;
@@ -3197,8 +3199,8 @@ public class AssetSetter {
 		
 		// electric tunnel guards
 		if (flag[4][5] && !flag[5][2]) {
-			gp.npc[33][0] = NPCSetup(BLOCK_DOWN, null, 62, 17, "There's some scary aliens wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.");
-			gp.npc[36][11] = NPCSetup(BLOCK_DOWN, null, 62, 17, "There's some scary aliens wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.");
+			if (gp.npc[33][0] == null) gp.npc[33][0] = NPCSetup(BLOCK_DOWN, null, 62, 17, "There's some scary aliens wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.");
+			if (gp.npc[36][11] == null) gp.npc[36][11] = NPCSetup(BLOCK_DOWN, null, 62, 17, "There's some scary aliens wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.");
 		} else {
 			gp.npc[33][0] = null;
 			gp.npc[36][11] = null;
@@ -3218,7 +3220,7 @@ public class AssetSetter {
 		if (!flag[5][3] && gp.player.p.grustCount >= 10) {
 			int x = flag[5][2] ? 46 : 47;
 			int y = flag[5][2] ? 60 : 3;
-			gp.npc[107][0] = NPCSetup(RICK, "Rick", x, y, "", 107.1, 162,
+			if (gp.npc[107][0] == null) gp.npc[107][0] = NPCSetup(RICK, "Rick", x, y, "", 107.1, 162,
 					"So you got lucky. Fine. You want to play hero? Then go ahead - I'll even tell you where we are hiding!\n"
 					+ "The rest of us are below Electric Tunnel, deep underground, working on another piece of the puzzle.\n"
 					+ "But don't get your hopes up. Maxwell's already started, and by the time you get there, it'll be too late to stop us.\n"
@@ -3277,7 +3279,7 @@ public class AssetSetter {
 			gp.npc[138][0] = null;
 			gp.npc[138][1] = null;
 			gp.npc[124][15] = null;
-			gp.npc[124][20] = gp.npc[124][20] = NPCSetup(MERLIN, "Merlin", 25, 83, "Well now, I had a feeling you'd show up sooner or later. And here I was thinking I'd have to clean up that mess myself.", 124.0);
+			if (gp.npc[124][20] == null) gp.npc[124][20] = gp.npc[124][20] = NPCSetup(MERLIN, "Merlin", 25, 83, "Well now, I had a feeling you'd show up sooner or later. And here I was thinking I'd have to clean up that mess myself.", 124.0);
 		}
 		
 		if (flag[6][5] || !flag[6][4]) {
@@ -3289,22 +3291,31 @@ public class AssetSetter {
 		 */
 		
 		if (flag[6][6] && !flag[7][0]) {
-			gp.npc[124][21] = NPCSetup(ARTHRA_UP, "Arthra", 31, 78, "Finn! There you are - finally!", 124.1);
+			if (gp.npc[124][21] == null) gp.npc[124][21] = NPCSetup(ARTHRA_DOWN, "Arthra", 31, 78, "Finn! There you are - finally!", 124.1);
 		} else {
 			gp.npc[124][21] = null;
+		}
+		
+		if (flag[7][1] && !flag[7][0]) {
+			gp.npc[124][22].worldX = 25 * gp.tileSize;
+			gp.npc[124][22].worldY = (int) (82.75 * gp.tileSize);
+		}
+		
+		if (flag[7][0]) {
+			gp.npc[124][22] = null;
 		}
 		
 		/**
 		 * All of this is old and should be removed/reworked
 		 */
-		if (flag[7][5]) {
+		if (flag[7][6]) {
 			gp.npc[146][1] = null;
 			for (int i = 1; i < gp.npc[1].length; i++) {
 				gp.npc[149][i] = null;
 			}
 		}
 		
-		if (map == 107 && flag[7][5]) {
+		if (map == 107 && flag[7][6]) {
 			gp.tileM.openGhostlyBluePortals();
 		}
 		

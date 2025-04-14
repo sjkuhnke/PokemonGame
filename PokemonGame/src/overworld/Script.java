@@ -1289,8 +1289,7 @@ public class Script {
 		});
 		
 		scriptMap.put(124.1, (npc) -> { // arthra cutscene
-			Task.addTask(Task.TURN, player, "", Task.UP);
-			Task.addNPCMoveTask('y', 81 * gp.tileSize, npc, false, 4);
+			p.flag[7][1] = true;
 			Task.addTask(Task.TURN, player, "", Task.RIGHT);
 			Task.addNPCMoveTask('y', 84 * gp.tileSize, npc, false, 4);
 			Task.addTask(Task.TURN, npc, "", Task.LEFT);
@@ -1299,23 +1298,50 @@ public class Script {
 			Task.addNPCMoveTask('x', 25 * gp.tileSize, npc, false, 4);
 			Task.addTask(Task.TURN, npc, "", Task.UP);
 			
-			// TODO: make merlin come out of the gym because he sensed his granddaughter was here or something and then he agrees to help you guys, they head off to Splinkty
-			Task.addTask(Task.DIALOGUE, npc, "A massive beam of light just shot up from Mt. Splinkty. The whole sky lit up like a spotlight, and not the fun kind.");
+			Task.addTask(Task.DIALOGUE, npc, "A massive beam of light just shot up from Mt. Splinkty! The whole sky lit up like a spotlight, and not the fun kind.");
 			Task.addTask(Task.DIALOGUE, npc, "I don't know what Team Eclipse is doing up there, but it's big. Bigger than the mountain, even.");
-			Task.addTask(Task.DIALOGUE, npc, "I'm heading there now. If you've still got that Rock Climb, meet me at the summit. Don't dawdle - we don’t have time for curtain calls.");
-			p.flag[7][0] = true;
+			Task.addTask(Task.DIALOGUE, gp.npc[124][22], "..Arthra? Is that you?");
+			Task.addTask(Task.TURN, player, "", Task.LEFT);
+			Task.addNPCMoveTask('x', 26 * gp.tileSize, player, false, 4);
+			Task.addTask(Task.FLASH_IN, "");
+			Task.addTask(Task.UPDATE, "");
+			Task.addTask(Task.FLASH_OUT, "");
+			Task.addTask(Task.TURN, player, "", Task.DOWN);
+			Task.addTask(Task.DIALOGUE, npc, "Grandpa! It's so good to see you.");
+			Task.addTask(Task.TURN, player, "", Task.LEFT);
+			Task.addTask(Task.DIALOGUE, gp.npc[124][22], "Arthra! I felt the shift all the way inside the Gym. It was like the air itself cracked open.");
+			Task.addTask(Task.DIALOGUE, gp.npc[124][22], "If Team Eclipse is behind this, then we can't waste any more time. Mt. Splinkty won't wait for us.");
+			Task.addTask(Task.TURN, player, "", Task.DOWN);
+			Task.addTask(Task.DIALOGUE, npc, "Glad you're here, Grandpa. I was just about to head out myself.");
+			Task.addTask(Task.TURN, player, "", Task.LEFT);
+			Task.addTask(Task.DIALOGUE, gp.npc[124][22], "Then let's not waste another heartbeat. We'll meet you at the summit, Finn.");
+			Task t = Task.addTask(Task.FLAG, "");
+			t.start = 7;
+			t.finish = 0;
+			Task.addTask(Task.FLASH_IN, "");
+			Task.addTask(Task.UPDATE, "");
+			Task.addTask(Task.FLASH_OUT, "");
+			
 		});
 
-		scriptMap.put(146.0, (npc) -> { // TODO splinkty gauntlet
+		scriptMap.put(146.0, (npc) -> {
+			Task.addTask(Task.DIALOGUE, npc, "Anyway, this is it. Inside, they've corrupted the PC, only letting you access your Gauntlet Box.");
+			Task.addTask(Task.DIALOGUE, npc, "You've used one before I'm sure, so I'll keep this short.");
+			Task.addTask(Task.DIALOGUE, npc, "Once you're inside, you're locked in with your party and up to four extra Pokemon you place in the Gauntlet Box.");
+			Task.addTask(Task.DIALOGUE, npc, "No PC access. No going back. Once you go in, that's all you've got.");
+			Task.addTask(Task.DIALOGUE, npc, "So prep wisely. We'll handle anything and anyone that tries to come up after you.");
 			int selected = p.getAmountSelected();
-			String message = "Are you ready to fight as soon as you step into this room?";
 			if (selected < Player.GAUNTLET_BOX_SIZE) { // Not enough selected
-				message = "You don't have 10 Pokemon selected to bring! You'll be at a huge disadvantage!\nYou can choose what Pokemon to bring using the Gauntlet Box in this PC (press [\u2191] when selecting a box).\n" + message;
+				String message = "Hey dumbass, you don't have 4 Pokemon selected to bring in the Gauntlet Box.\nYou can choose what Pokemon to bring using the Gauntlet Box in this PC (press [\u2191] when selecting a box).";
+				for (String s : message.split("\n")) {
+					Task.addTask(Task.DIALOGUE, npc, s);
+				}
 			}
-			for (String s : message.split("\n")) {
-				Task.addTask(Task.TEXT, s);
-			}
-			Task.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?", 0);
+			Task.addTask(Task.CONFIRM, "Are you ready to battle as soon as you enter? There's no going back once I let you in.", 0);
+		});
+		
+		scriptMap.put(146.1, (npc) -> {
+			Task.addTask(Task.DIALOGUE, npc, "I'll be right here. Go on - show them why the mountain trembled.");
 		});
 	}
 	

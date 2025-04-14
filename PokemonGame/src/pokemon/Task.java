@@ -67,6 +67,8 @@ public class Task {
 	public static final int PAYOUT = 53;
 	public static final int PARLAY = 54;
 	public static final int INTERACTIVE = 55;
+	public static final int TYPES = 56;
+	public static final int EVOLUTION = 57;
 	
 	public static GamePanel gp;
 	
@@ -85,6 +87,7 @@ public class Task {
 	public Move move;
 	public FieldEffect fe;
 	public Item item;
+	public PType[] types;
 	
 	public Entity e;
 	public Trainer[] trainers;
@@ -293,6 +296,12 @@ public class Task {
 		if (p == null) return;
 		Task t = addTask(Task.ABILITY, "[" + p.nickname + "'s " + p.ability + "]:", p);
 		t.setAbility(p.ability);
+	}
+	
+	public static void addTypeTask(String message, Pokemon p) {
+		if (p == null) return;
+		Task t = addTask(Task.TYPES, message, p);
+		t.types = new PType[] {p.type1, p.type2};
 	}
 	
 	public static void addSwapInTask(Pokemon p, boolean playerSide) {

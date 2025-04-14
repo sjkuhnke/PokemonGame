@@ -515,7 +515,7 @@ public class SimBattleUI extends BattleUI {
 		int y;
 		int levelX;
 		int levelY;
-		String name = p.nickname;
+		String name = p == user ? userName : foeName;
 		g2.setFont(g2.getFont().deriveFont(getFontSize(name, gp.tileSize * 2.5F)));
 		
 		if (p == user) { // same as above
@@ -529,7 +529,7 @@ public class SimBattleUI extends BattleUI {
 			levelX = 416;
 			levelY = 70;
 		}
-		g2.drawString(p.nickname, x, y);
+		g2.drawString(name, x, y);
 		g2.setFont(g2.getFont().deriveFont(24F));
 		g2.drawString(level + "", levelX, levelY);
 	}

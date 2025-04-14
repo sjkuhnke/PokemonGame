@@ -62,6 +62,17 @@ public class Main {
 		    if (iconURL != null) {
 		        Image icon = ImageIO.read(iconURL);
 		        window.setIconImage(icon);
+		        
+		        if (icon != null && System.getProperty("os.name").toLowerCase().contains("mac")) {
+		            try {
+		                // Reflectively load Apple EAWT Application class (safe even if not on mac)
+		                Class<?> appClass = Class.forName("com.apple.eawt.Application");
+		                Object appInstance = appClass.getMethod("getApplication").invoke(null);
+		                appClass.getMethod("setDockIconImage", Image.class).invoke(appInstance, icon);
+		            } catch (Exception e) {
+		                System.out.println("Unable to set dock icon on macOS: " + e.getMessage());
+		            }
+		        }
 		    } else {
 		        System.out.println("Icon resource not found!");
 		    }
@@ -196,7 +207,7 @@ public class Main {
 		    		// Update the npcs to the current game state on the current map
 		    		gp.aSetter.updateNPC(gp.currentMap);
 		    		
-		    		if (gp.currentMap == 107 && gp.player.p.flag[7][5]) {
+		    		if (gp.currentMap == 107 && gp.player.p.flag[7][6]) {
 		    			gp.tileM.openGhostlyBluePortals();
 		    		}
 		    		
