@@ -536,7 +536,7 @@ public class TileManager {
 		setup(278, true);
 		setup(279, true);
 		setup(280, true);
-		setup(281, false);
+		setup(281, false, OVER);
 		setup(282, true);
 		setup(283, false);
 		setup(284, true);

@@ -290,6 +290,7 @@ public class UI extends AbstractUI {
 		if (currentTask == null) return;
 		switch(currentTask.type) {
 		case Task.LEVEL_UP:
+		case Task.EVOLUTION:
 		case Task.TEXT:
 			showMessage(Item.breakString(currentTask.message, 42));
 			break;
@@ -1368,8 +1369,12 @@ public class UI extends AbstractUI {
 				gp.keyH.wPressed = false;
 				switch (type) {
 				case 0: // gauntlet at top of splinkty
+					Task.addTask(Task.DIALOGUE, gp.npc[146][1], "Don't screw this up, Finn.");
 					currentTask = null;
-					gp.eHandler.teleport(149, 49, 76, false);
+					Task t = Task.addTask(Task.TELEPORT, "");
+					t.counter = 149;
+					t.start = 49;
+					t.finish = 76;
 					break;
 				case 1: // regional trade confirm
 					Task.addTask(Task.TEXT, "You traded for " + currentTask.p.name() + "!");
@@ -1402,7 +1407,7 @@ public class UI extends AbstractUI {
 					currentTask = null;
 					break;
 				case 5: // guy eddie
-					Task t = Task.addTask(Task.TELEPORT, "");
+					t = Task.addTask(Task.TELEPORT, "");
 					t.counter = 124;
 					t.start = 36;
 					t.finish = 79;
@@ -1453,6 +1458,9 @@ public class UI extends AbstractUI {
 				gp.gameState = GamePanel.PLAY_STATE;
 				switch (type) {
 				case 0:
+					showMessage("Hurry up Finn, This is urgent!");
+					tasks.clear();
+					break;
 				case 2:
 					showMessage("Come back when you're ready!");
 					tasks.clear();
@@ -3501,13 +3509,7 @@ public class UI extends AbstractUI {
 				gp.player.p.currentMap = currentTask.counter;
 				gp.eHandler.canTouchEvent = !currentTask.wipe;
 				currentTask = null;
-			} else {
-				if (tasks.isEmpty()) {
-					gp.gameState = GamePanel.PLAY_STATE;
-				} else {
-					gp.gameState = GamePanel.TASK_STATE;
-				}
-				
+			} else {				
 				gp.currentMap = gp.eHandler.tempMap;
 				gp.player.worldX = gp.tileSize * gp.eHandler.tempCol;
 				gp.player.worldY = gp.tileSize * gp.eHandler.tempRow;
@@ -3531,6 +3533,12 @@ public class UI extends AbstractUI {
 			PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
 			Main.window.setTitle(gp.gameTitle + " - " + PlayerCharacter.currentMapName);
 			if (!currentMap.equals(PlayerCharacter.currentMapName)) showAreaName();
+			
+			if (tasks.isEmpty()) {
+				gp.gameState = GamePanel.PLAY_STATE;
+			} else {
+				gp.gameState = GamePanel.TASK_STATE;
+			}
 		}
 	}
 	
