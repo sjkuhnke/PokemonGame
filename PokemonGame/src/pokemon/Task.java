@@ -310,6 +310,7 @@ public class Task {
 		Task t = addTask(Task.SWAP_IN, message, p);
 		if (t != null) {
 			t.wipe = playerSide;
+			t.foe = p.clone();
 			if (p.shiny) {
 				addTask(Task.SHINY, "", p);
 			}

@@ -302,6 +302,7 @@ public class BattleUI extends AbstractUI {
 			currentDialogue = currentTask.message;
 			if (currentTask.wipe) { // player side
 				user = currentTask.p;
+				tempUser = currentTask.foe;
 				userHP = tempUser == null ? user.currentHP : tempUser.currentHP;
 				maxUserHP = tempUser == null ? user.getStat(0) : tempUser.getStat(0);
 				userStatus = tempUser == null ? user.status : tempUser.status;
@@ -309,10 +310,11 @@ public class BattleUI extends AbstractUI {
 				userExpMax = tempUser == null ? user.expMax : tempUser.expMax;
 				userLevel = tempUser == null ? user.level : tempUser.level;
 				userName = tempUser == null ? user.nickname : tempUser.nickname;
-				userType = tempFoe == null ? new PType[] {user.type1, user.type2} : new PType[] {tempFoe.type1, tempFoe.type2};
+				userType = tempFoe == null ? new PType[] {user.type1, user.type2} : new PType[] {tempUser.type1, tempUser.type2};
 				drawUserPokeball(true);
 			} else {
 				foe = currentTask.p;
+				tempFoe = currentTask.foe;
 				foeHP = tempFoe == null ? foe.currentHP : tempFoe.currentHP;
 				maxFoeHP = tempFoe == null ? foe.getStat(0) : tempFoe.getStat(0);
 				foeStatus = tempFoe == null ? foe.status : tempFoe.status;
@@ -1348,7 +1350,6 @@ public class BattleUI extends AbstractUI {
 				if (cancellableParty && !user.isFainted()) {
 					foeMove = foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
 				}
-				tempUser = gp.player.p.team[partyNum].clone();
 				if (baton) {
 					gp.player.p.team[partyNum].statStages = user.statStages.clone();
 					gp.player.p.team[partyNum].vStatuses = new ArrayList<>(user.vStatuses);
