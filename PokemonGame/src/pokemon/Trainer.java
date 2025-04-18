@@ -124,11 +124,6 @@ public class Trainer implements Serializable {
 	
 	public Pokemon next(Pokemon other, boolean userSide) {
 		current = getNext(other);
-		if (userSide) {
-			Pokemon.gp.getBattleUI().tempUser = current.clone();
-		} else {
-			Pokemon.gp.getBattleUI().tempFoe = current.clone();
-		}
 		return current;
 	}
 	
@@ -261,11 +256,6 @@ public class Trainer implements Serializable {
 	public Pokemon swapOut(Pokemon foe, Move m, boolean baton, boolean userSide) {
 		Pokemon result = getSwap(foe, m);
 		if (result != current) {
-			if (userSide) {
-				Pokemon.gp.getBattleUI().tempUser = result.clone();
-			} else {
-				Pokemon.gp.getBattleUI().tempFoe = result.clone();
-			}
 			int[] oldStats = current.statStages.clone();
 			ArrayList<StatusEffect> oldVStatuses = new ArrayList<>(current.vStatuses);
 			int perishCount = current.perishCount;

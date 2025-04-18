@@ -21,17 +21,12 @@ Make Bipedice Ice/Ground (not Ground/Ice) and redo moveset
 Kissyfishy making out as a Ying-Yang thing
 Add Heart Swap
 Give Ingrain its own status effect and make it grounded as well
+Give infestation to some struggling ghost types
 
 (Not sure about these)
 Make Poison not resist Bug
 Make Magic weak to Dark
 Make Rock not resist Poison
-
-Make Galactic weak to Dragon
-Make Galactic resist Dark
-Make Psychic resist Poison?
-Make Dark resist Magic
-Make Fighting no longer resist Magic
 
 New Story
 Add Klara and Fred's house to Sicab City
@@ -39,15 +34,8 @@ Add Klara and Fred's house to Sicab City
 Make map05 (lava lake) to the left 3-4 tiles
 
 CRUISE
-Covert cloak blocks all secondary effects including drops from foe's Close Combat which is bad, gotta rework
 Infinite loop when 2 mons have empathic link and one boosts, test with Mt St Joseph TN fight
-Make 'D' in the party screen swap items
 GETTING SWITCHED OUT FIRST ALLOWS YOU TO STILL ACT (Metronome calling Dragon Tail, test with a sleeping mon with sleep talk + whirlwind)
-Fix double evolution prompts happening when a Pokemon eligible to evolve levels up twice
-Fix Wish + add Future Sight
-
-[ Turn ] [ Switch ]
-[ Info ] [ Sheet ]
 
 Make Aromatherapy have AI
 Make hazards not be clickable if the foe only has 1 mon left
@@ -135,8 +123,3 @@ Radiant Break: Spirit Break rename
 -Luster Purge
 -Moonblast
 -Play Rough
-
-Search all removed moves and redo the trainer/set movesets
-Search all removed TM moves and redo the trainer/set movesets
-Quickly scroll through all Pokemon with edited TM/level up learnsets and search for them in trainers.csv and sets.txt
-Go through sets.txt and decide if any of them should get any of the new items

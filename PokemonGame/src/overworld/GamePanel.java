@@ -534,7 +534,6 @@ public class GamePanel extends JPanel implements Runnable {
 			return battleUI.tasks;
 		case SIM_BATTLE_STATE:
 			return simBattleUI.tasks;
-		
 		}
 		return ui.tasks;
 	}

@@ -137,7 +137,6 @@ public enum Move {
 	DRAGON_RUSH(100,75,20,0,0,0,PType.DRAGON,"% chance of causing foe to flinch",true,10),
 	DRAGON_TAIL(60,90,-1,0,0,-6,PType.DRAGON,"Switches out foe randomly, always moves last",true,10),
 	DRAIN_PUNCH(75,100,0,0,0,0,PType.FIGHTING,"Heals 50% of damage dealt to foe",true,10),
-	DRAINING_KISS(50,100,0,0,1,0,PType.LIGHT,"Heals 75% of damage dealt to foe",true,10),
 	DREAM_EATER(100,100,0,0,1,0,PType.PSYCHIC,"Only works if target is asleep. Heals 50% of damage dealt to foe",false,15),
 	DRILL_PECK(80,100,0,1,0,0,PType.FLYING,"Boosted Crit rate",true,20),
 	DRILL_RUN(80,95,0,1,0,0,PType.GROUND,"Boosted Crit rate",true,15),
@@ -148,7 +147,6 @@ public enum Move {
 	ELECTRIC_TERRAIN(0,1000,0,0,2,0,PType.ELECTRIC,"Sets the terrain to ELECTRIC for 5 turns",false,10),
 	ELECTRO_BALL(-1,100,0,0,1,0,PType.ELECTRIC,"Power is higher the faster the user is than the target",false,10),
 	ELECTROWEB(55,95,100,0,1,0,PType.ELECTRIC,"% chance to lower foe's Speed by 1",false,15),
-	ELEMENTAL_SPARKLE(45,90,0,0,1,0,PType.MAGIC,"A random Grass, Fire, or Water move is also used",false,10),
 	EMBER(40,100,10,0,1,0,PType.FIRE,"% chance to Burn foe",false,25),
 	ENCORE(0,100,0,0,2,0,PType.NORMAL,"Causes foe to use their last used move for 4 turns",false,5),
 	ENDEAVOR(0,100,0,-999,0,0,PType.NORMAL,"Sets the foe's health equal to the user's, fails if foe's health is greater than user's",true,5),
@@ -220,9 +218,6 @@ public enum Move {
 	GLACIATE(65,95,100,0,1,0,PType.ICE,"% chance to lower foe's Speed by 1",false,10),
 	GLARE(0,100,0,0,2,0,PType.NORMAL,"Paralyzes foe",false,10),
 	GLITTER_DANCE(0,1000,0,0,2,0,PType.LIGHT,"Raises user's Sp.Atk and Speed by 1",false,10),
-	GLITTERING_SWORD(95,100,20,0,0,0,PType.LIGHT,"% chance to lower foe's Defense by 1",true,10),
-	GLITTERING_TORNADO(55,100,30,0,1,0,PType.LIGHT,"% chance to lower foe's Accuracy by 1",false,25),
-	GLITZY_GLOW(80,100,30,0,1,0,PType.LIGHT,"% chance to raise user's Sp.Def by 1",false,15),
 	GRASS_KNOT(-1,100,0,0,1,0,PType.GRASS,"Damage is based on how heavy foe is",true,20),
 	GRASS_WHISTLE(0,55,0,0,2,0,PType.GRASS,"Foe falls asleep",false,15),
 	GRASSY_TERRAIN(0,1000,0,0,2,0,PType.GRASS,"Sets the terrain to GRASSY for 5 turns",false,10),
@@ -308,10 +303,7 @@ public enum Move {
 	LOW_SWEEP(65,100,100,0,0,0,PType.FIGHTING,"% chance to lower foe's Speed by 1",true,15),
 	LUCKY_CHANT(0,1000,0,0,2,0,PType.NORMAL,"Protects user's team from Critical Hits for 8 turns",false,30),
 	LUNAR_DANCE(0,1000,0,0,2,0,PType.PSYCHIC,"User faints. The next Pokemon sent in will be fully healed",false,10),
-	LUSTER_PURGE(70,100,50,0,1,0,PType.LIGHT,"% chance to lower foe's Sp.Def by 1",false,10),
 	MACH_PUNCH(40,100,0,0,0,1,PType.FIGHTING,"Always goes first",true,15),
-	MAGIC_BLAST(30,95,0,0,1,0,PType.MAGIC,"A random Rock, Ground or Grass move is also used",false,10),
-	MAGIC_CRASH(110,80,100,0,0,0,PType.MAGIC,"% to inflict foe with a random Status condition. User must rest after using",true,5),
 	MAGIC_FANG(70,95,75,0,0,0,PType.MAGIC,"% to flinch foe if this move is Super-Effective against it, bypasses Magic Reflect",true,10),
 	MAGIC_MISSILES(25,90,0,0,1,0,PType.MAGIC,"Hits 2-5 times, does Physical damage",false,15),
 	MAGIC_POWDER(0,100,0,0,2,0,PType.MAGIC,"Changes foe's type to MAGIC",false,15),
@@ -343,7 +335,6 @@ public enum Move {
 	MIST_BALL(70,100,50,0,1,0,PType.PSYCHIC,"% chance to lower foe's Sp.Atk by 1",false,15),
 	MOLTEN_CONSUME(50,100,100,0,0,0,PType.FIRE,"% chance to Burn foe",true,5),
 	MOLTEN_STEELSPIKE(100,90,30,0,1,0,PType.STEEL,"% chance to Burn foe",false,10),
-	MOONBLAST(95,100,30,0,1,0,PType.LIGHT,"% chance to lower foe's Sp.Atk",false,5),
 	MOONLIGHT(0,1000,0,0,2,0,PType.LIGHT,"Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather",false,5),
 	MORNING_SUN(0,1000,0,0,2,0,PType.LIGHT,"Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather",false,5),
 	MORTAL_SPIN(30,100,100,0,0,0,PType.POISON,"% to poison foe, and frees user of being Spun, Leech Seed, and Hazards",true,15),
@@ -379,7 +370,6 @@ public enum Move {
 	PISTOL_POP(110,70,0,0,0,0,PType.STEEL,"A normal attack",false,5),
 	PLASMA_FISTS(100,100,0,0,0,0,PType.ELECTRIC,"A normal attack",true,10),
 	PLAY_NICE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack by 1",false,25),
-	PLAY_ROUGH(90,90,10,0,0,0,PType.LIGHT,"% chance to lower foe's Attack by 1",true,10),
 	PLUCK(60,100,100,0,0,0,PType.FLYING,"% chance to eat foe's berry",true,20),
 	POISON_FANG(50,100,50,0,0,0,PType.POISON,"% to Toxic foe",true,15),
 	POISON_GAS(0,80,0,0,2,0,PType.POISON,"Poisons foe",true,30),
@@ -494,17 +484,14 @@ public enum Move {
 	SPACE_BEAM(60,100,30,0,1,0,PType.GALACTIC,"% chance to lower foe's Sp.Def",false,20),
 	SPACIAL_REND(100,95,0,1,1,0,PType.GALACTIC,"Boosted Crit rate",false,5),
 	SPARK(65,100,30,0,0,0,PType.ELECTRIC,"% to Paralyze foe",true,20),
-	SPARKLE_STRIKE(80,1000,0,0,0,0,PType.MAGIC,"This attack never misses",true,15),
 	SPARKLING_ARIA(90,100,100,0,1,0,PType.WATER,"% to cure user of its Burn if it has one",false,10),
 	SPARKLING_TERRAIN(0,1000,0,0,2,0,PType.MAGIC,"Sets the terrain to SPARKLY for 5 turns",false,10),
 	SPARKLING_WATER(0,1000,0,0,2,0,PType.WATER,"Raises Sp.Def by 2. Turns into Sparkling Aria when used by Kissyfishy-D",false,15),
-	SPARKLY_SWIRL(70,100,10,0,1,0,PType.MAGIC,"% chance to lower all of foe's stats by 1",false,15),
 	SPECTRAL_THIEF(90,100,100,0,0,0,PType.GHOST,"% to steal any stat boosts foe has",true,10),
 	SPELLBIND(0,100,0,0,2,0,PType.MAGIC,"Traps non-MAGIC foe for 4-5 turns, lowers foe's Def and SpD by 1 every turn, 2 if Binding Band was held",false,10),
 	SPIKE_CANNON(25,100,0,0,0,0,PType.NORMAL,"Hits 2-5 times",false,15),
 	SPIKES(0,1000,0,0,2,0,PType.GROUND,"Lays spikes on the opponents side. Depending on the layers laid (1-3) will damage any grounded foe (1/8, 1/6, 1/4) upon switch-in",false,20),
 	SPIKY_SHIELD(0,1000,0,0,2,4,PType.GRASS,"User protects itself, can't be used in succession. Damages foe if they make contact",false,10),
-	SPIRIT_BREAK(75,100,100,0,0,0,PType.LIGHT,"% chance to lower foe's Sp.Atk by 1",true,15),
 	SPLASH(0,1000,0,0,2,0,PType.NORMAL,"This attack does nothing",false,40),
 	SPOTLIGHT_RAY(80,100,100,0,1,0,PType.LIGHT,"% to encore foe for 2 turns",false,5),
 	STAFF_JAB(75,90,100,0,0,0,PType.BUG,"% to lower foe's Attack by 2",true,15),
@@ -530,7 +517,6 @@ public enum Move {
 	SUMMIT_STRIKE(70,95,100,0,0,0,PType.FIGHTING,"% to lower foe's Defense by one stage. 30% to flinch foe",true,15),
 	SUNNY_BURST(80,100,100,0,1,0,PType.LIGHT,"% to turn weather to SUNNY",false,5),
 	SUNNY_DAY(0,1000,0,0,2,0,PType.FIRE,"Changes the weather to SUNNY for 5 turns",false,5),
-	SUNNY_DOOM(80,100,0,0,1,0,PType.LIGHT,"If this attack faints foe, causes weather to turn SUNNY",false,5),
 	SUNSTEEL_STRIKE(100,100,0,0,0,0,PType.STEEL,"A normal attack",true,5),
 	SUPER_FANG(0,90,0,-999,0,0,PType.NORMAL,"Halves foe's remaining HP",true,10),
 	SUPERCHARGED_SPLASH(10,100,75,0,1,0,PType.WATER,"% chance to raise user's Sp.Atk by 2. Turns into Thunder when used by Kissyfishy-D",false,15),
@@ -563,7 +549,7 @@ public enum Move {
 	THUNDER(110,70,30,0,1,0,PType.ELECTRIC,"% of Paralyzing foe, doesn't check accuracy in RAIN",false,5),
 	THUNDER_FANG(65,95,10,0,0,0,PType.ELECTRIC,"% of Paralyzing and/or flinching foe",true,15),
 	THUNDER_PUNCH(75,100,20,0,0,0,PType.ELECTRIC,"% of Paralyzing foe",true,15),
-	THUNDER_WAVE(0,90,0,0,2,0,PType.ELECTRIC,"Paralyzes foe, ELECTRIC Pokemon can't miss this move",false,15),
+	THUNDER_WAVE(0,90,0,0,2,0,PType.ELECTRIC,"Paralyzes foe, accuracy is 100% for ELECTRIC Pokemon",false,15),
 	THUNDERBOLT(90,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false,10),
 	THUNDERSHOCK(40,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false,30),
 	TICKLE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack and Defense by 1",false,20),
@@ -577,7 +563,6 @@ public enum Move {
 	TRICK_ROOM(0,1000,0,0,2,-7,PType.PSYCHIC,"Speed order is reversed for 6 turns",false,5),
 	TRICK_TACKLE(90,90,-1,0,0,0,PType.MAGIC,"Swaps items with a unique foe, meaning it won't swap items back unless the user switches out",true,15),
 	TWINEEDLE(25,100,50,0,0,0,PType.BUG,"% chance to Poison foe",false,20),
-	TWINKLE_TACKLE(85,90,20,0,0,0,PType.MAGIC,"% chance to lower foe's Attack and Sp.Atk by 1",true,10),
 	TWISTER(40,100,10,0,1,0,PType.DRAGON,"% of causing foe to flinch",false,20),
 	U$TURN(70,100,0,0,0,0,PType.BUG,"Causes user to switch out after use",true,15),
 	UNSEEN_STRANGLE(60,100,100,0,0,3,PType.DARK,"% to cause foe to flinch and will always go first, only works on user's first turn out",true,5),
@@ -611,7 +596,7 @@ public enum Move {
 	WHIP_SMASH(100,100,-1,0,0,0,PType.NORMAL,"Lowers user's Defense by 1",true,5),
 	WHIRLPOOL(35,95,100,0,1,0,PType.WATER,"% to spin non-WATER foes for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
 	WHIRLWIND(0,1000,0,0,2,-6,PType.FLYING,"Forces foe to switch out to a random teammate, always goes last",false,20),
-	WILL$O$WISP(0,85,0,0,2,0,PType.FIRE,"Burns foe, FIRE Pokemon can't miss this move",false,15),
+	WILL$O$WISP(0,85,0,0,2,0,PType.FIRE,"Burns foe, accuracy is 100% for FIRE Pokemon",false,15),
 	WING_ATTACK(60,100,0,0,0,0,PType.FLYING,"A normal attack",true,35),
 	WISH(0,1000,0,0,2,0,PType.NORMAL,"Heals a Pokemon by 50% of the user's max HP the next turn",false,10),
 	WITHDRAW(0,1000,0,0,2,0,PType.WATER,"Raises user's Defense by 1",false,35),
@@ -985,7 +970,6 @@ public enum Move {
 		result.add(PSYCHO_CUT);
 		result.add(RAZOR_SHELL);
 		result.add(SACRED_SWORD);
-		result.add(GLITTERING_SWORD);
 		result.add(SOLSTICE_BLADE);
 		result.add(SWORD_OF_DAWN);
 		result.add(SWORD_SPIN);
@@ -1274,7 +1258,7 @@ public enum Move {
 					if (m == Move.BRICK_BREAK || m == Move.PSYCHIC_FANGS) return true;
 				}
 				// Foe inflicting status moves (potentially add checks for if they're already statused)
-				if (m == Move.MAGIC_CRASH || m == Move.MOLTEN_CONSUME || m == Move.NUZZLE || m == Move.MORTAL_SPIN || m == Move.VENOM_SPIT) {
+				if (m == Move.MAGICAL_CRASH || m == Move.MOLTEN_CONSUME || m == Move.NUZZLE || m == Move.MORTAL_SPIN || m == Move.VENOM_SPIT) {
 					return true;
 				}
 				// Spin moves

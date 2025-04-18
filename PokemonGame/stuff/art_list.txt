@@ -1,9 +1,9 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-202 Flamehead-E
-203 Fireshard-E (First stage is lowkey the most important, these 2 can wait)
-204 Blastflames-E (First stage is lowkey the most important, these 2 can wait)
+233 Relomidel*
+234 Relopamil*
+235 Dragowrath*
 289 Dusk Skater*
 177 Minishoo*
 178 Glittleshoo*
@@ -18,10 +18,7 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 168 Rhypolar*
 213 Nightrex*
 214 Shadowsaur*
-235 Dragowrath*
 240 Scraftagon*
-233 Relomidel
-234 Relopamil
 108 Sparkitten
 109 Fireblion
 110 Flamebless
@@ -93,15 +90,10 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 Overworld Pokemon Sprites (* are the ones that already have battle sprites, probably best to do that first)
 ================================================================================
 ----- Most Urgent -----
-Flamehox-E
-Fever Dream
 Dusk Skater
-Grust
 
 ----- Less Urgent -----
 Whiskeroar
-
------ FAR Less Urgent -----
 Legendaries
 
 ================================================================================
@@ -114,14 +106,9 @@ I'd just go down the list from the top for anything not starred
 NPC Overworld Sprites (Preferred Order, can be changed around if needed) [16xN where N is a number in the range [8, 32]]
 * = I have the sprites for them already, just should be redone in your style (bc it's far better)
 ================================================================================
-*Rival Scott
-*Rival Fred
 Astronomer (Galactic)
 *Team Nuke Grunt
-*Team Nuke Admin
 Ryder (THE CHAMPION!!)
-Professor Dad
-Professor Assistant/Research/Scientist
 Custom Player Sprite
 Custom Player Surfing Sprite?
 Custom Player Lavasurfing Sprite?
@@ -137,9 +124,12 @@ Mother
 *Nova
 Elite Four Poison (A chemist)
 Elite Four Ground (Your mom, same sprite as above)
-Elite Four Steel (?)
 -------------------------------------------------------------
 
 ================================================================================
 Tiles
 ================================================================================
+Tree (2x2)
+Bush
+Small Tree (1x1)
+Fallen Tree

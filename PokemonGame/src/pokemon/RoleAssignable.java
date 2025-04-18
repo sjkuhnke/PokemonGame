@@ -151,7 +151,7 @@ public interface RoleAssignable {
 		
 		// SUN SETTER
 		if (abilities.contains(Ability.DROUGHT) || moveset.contains(Move.SUNNY_DAY)
-				|| moveset.contains(Move.SUNNY_DOOM)) {
+				|| moveset.contains(Move.SUNNY_BURST)) {
             role |= Role.SUN_SETTER;
         }
 		

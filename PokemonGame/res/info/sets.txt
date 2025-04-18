@@ -76,7 +76,7 @@ Ability: Insect Feeder
 - Photon Geyser
 - Volt Switch
 - Aeroblast
-- Elemental Sparkle/Heat Wave/Star Storm/Bug Buzz/Energy Ball
+- Heat Wave/Star Storm/Bug Buzz/Energy Ball
 
 Pigoga @ Rocky Helmet/Leftovers/Wacan Berry
 Impish Nature
@@ -116,7 +116,7 @@ Ability: Rock Head
 - Head Smash
 - Double-Edge
 - Volt Tackle
-- Ice Spinner/Close Combat/Spirit Break/Earthquake/Poison Jab
+- Ice Spinner/Close Combat/Radiant Break/Earthquake/Poison Jab
 
 Hamthorno @ Loaded Dice
 Adamant Nature
@@ -337,10 +337,10 @@ Ability: Moxie
 Bushewe @ Assault Vest
 Timid Nature
 Ability: Serene Grace
-- Glitzy Glow
+- Spotlight Ray
 - Energy Ball
 - Extrasensory/Ice Beam/Earth Power
-- Draining Kiss/Volt Switch
+- Volt Switch
 
 Bushewe @ Leftovers
 Modest/Bold Nature
@@ -428,7 +428,7 @@ Ability: Flash Fire
 - Photon Geyser
 - Overheat/Draco Meteor
 - Glitter Dance/Magic Reflect
-- Vanishing Act/Elemental Sparkle/Magic Tomb
+- Vanishing Act/Magic Tomb
 
 Bluebunn @ Focus Sash
 Timid Nature
@@ -723,7 +723,7 @@ Timid/Modest Nature
 Ability: Torrent
 - Hydro Pump
 - Glitter Dance
-- Moonblast
+- Chromo Beam
 - Magic Reflect/Ice Beam/Freeze-Dry
 
 Bouncerog @ Life Orb/Expert Belt
@@ -731,7 +731,7 @@ Modest Nature
 Ability: Slush Rush
 - Blizzard
 - Calm Mind/Magic Reflect
-- Draining Kiss/Moonblast
+- Spotlight Ray/Chromo Beam/Light Drain
 - Hydro Pump/Sparkling Aria
 
 Bouncerog @ Sitrus Berry/Expert Belt
@@ -740,14 +740,14 @@ Ability: Swift Swim
 - Hydro Pump/Scald
 - Magic Reflect/Flip Turn/U-Turn
 - Calm Mind/Focus Blast
-- Moonblast
+- Chromo Beam
 
 Bouncerog @ Assault Vest
 Calm Nature
 Ability: Torrent
 - Scald
 - U-Turn
-- Draining Kiss/Moonblast
+- Spotlight Ray/Light Drain
 - Focus Blast/Freeze-Dry
 
 Opwing @ Lum Berry
@@ -780,7 +780,7 @@ Ability: Magic Bounce
 - Trick Room
 - Healing Wish
 - Psyshock
-- Elemental Sparkle
+- Protect
 
 Hatterene @ Leftovers
 Bold Nature
@@ -836,7 +836,7 @@ Ability: Psychic Surge
 - Expanding Force
 - Petal Dance/Energy Ball
 - Blizzard
-- Moonblast
+- Light Drain
 
 Florlion @ Light Clay
 Bold Nature

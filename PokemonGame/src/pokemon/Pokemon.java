@@ -1950,9 +1950,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (move == Move.BLIZZARD) acc = 1000;
 		}
 		
-		if (move == Move.FROSTBIND && this.isType(PType.ICE)) acc = 1000;
-		if (move == Move.THUNDER_WAVE && this.isType(PType.ELECTRIC)) acc = 1000;
-		if (move == Move.WILL$O$WISP && this.isType(PType.FIRE)) acc = 1000;
+		if (move == Move.FROSTBIND && this.isType(PType.ICE)) acc = 100;
+		if (move == Move.THUNDER_WAVE && this.isType(PType.ELECTRIC)) acc = 100;
+		if (move == Move.WILL$O$WISP && this.isType(PType.FIRE)) acc = 100;
 		if (move == Move.TOXIC && this.isType(PType.POISON)) acc = 1000;
 		
 		if (foe.ability == Ability.WONDER_SKIN && move.cat == 2 && acc <= 100) acc = 50;
@@ -2208,11 +2208,17 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			
 			if (move.cat == 2) {
-				statusEffect(foe, move, player, enemy);
-				this.impressive = false;
-				this.moveMultiplier = 1;
-				this.metronome = 0;
-				return;
+				if (this.ability == Ability.PRANKSTER && foe.isType(PType.DARK) && (move.accuracy <= 100 || move == Move.TOXIC)) {
+					Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...\n(Dark Types are immune to Pranskter status moves.)");
+					endMove();
+					return;
+				} else {
+					statusEffect(foe, move, player, enemy);
+					this.impressive = false;
+					this.moveMultiplier = 1;
+					this.metronome = 0;
+					return;
+				}
 			}
 			
 			if ((moveType == PType.WATER && (foe.getItem() == Item.ABSORB_BULB || foe.getItem() == Item.LUMINOUS_MOSS))
@@ -2842,7 +2848,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.faint(true, foe);
 		}
 		if (move == Move.HYPER_BEAM || move == Move.BLAST_BURN || move == Move.FRENZY_PLANT || move == Move.GIGA_IMPACT
-				|| move == Move.HYDRO_CANNON || move == Move.MAGIC_CRASH || move == Move.SWORD_OF_DAWN) {
+				|| move == Move.HYDRO_CANNON || move == Move.MAGICAL_CRASH || move == Move.SWORD_OF_DAWN) {
 			if (move == Move.SWORD_OF_DAWN && foe.isFainted()) {
 				// Nothing: don't have to rest
 			} else {
@@ -2879,27 +2885,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.consumeItem(this);
 			foe.addStatus(Status.SWITCHING);
 		}
-		
-		if (move == Move.MAGIC_BLAST) {
-			ArrayList<Move> moves = new ArrayList<>();
-			for (Move cand : Move.getAllMoves()) {
-				if (cand.mtype == PType.ROCK || cand.mtype == PType.GRASS || cand.mtype == PType.GROUND) {
-					moves.add(cand);
-				}
-			}
-			Move[] validMoves = moves.toArray(new Move[moves.size()]);
-			this.move(foe, validMoves[new Random().nextInt(validMoves.length)], first);
-		}
-		if (move == Move.ELEMENTAL_SPARKLE) {
-			ArrayList<Move> moves = new ArrayList<>();
-			for (Move cand : Move.getAllMoves()) {
-				if (cand.mtype == PType.FIRE || cand.mtype == PType.WATER || cand.mtype == PType.GRASS) {
-					moves.add(cand);
-				}
-			}
-			Move[] validMoves = moves.toArray(new Move[moves.size()]);
-			this.move(foe, validMoves[new Random().nextInt(validMoves.length)], first);
-		}
+
 		endMove();
 		return;
 	}
@@ -3438,10 +3424,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(foe, 4, -1, this);
 		} else if (move == Move.SOLSTICE_BLADE) {
 			stat(foe, 1, -1, this);
-		} else if (move == Move.GLITTERING_TORNADO) {
-			stat(foe, 5, -1, this);
-		} else if (move == Move.GLITZY_GLOW) {
-			stat(this, 3, 1, foe);
 		} else if (move == Move.GUNK_SHOT) {
 			foe.poison(false, this);
 		} else if (move == Move.HEADBUTT && first) {
@@ -3560,11 +3542,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(foe, 1, -1, this);
 		} else if (move == Move.LOW_SWEEP) {
 			stat(foe, 4, -1, this);
-		} else if (move == Move.LUSTER_PURGE) {
-			stat(foe, 3, -1, this);
     	} else if (move == Move.STAFF_JAB) {
     		stat(foe, 0, -2, this);
-		} else if (move == Move.MAGIC_CRASH) {
+		} else if (move == Move.MAGICAL_CRASH) {
 			int randomNum = new Random().nextInt(5);
 			switch (randomNum) {
 			case 0:
@@ -3636,8 +3616,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Task.addTask(Task.TEXT, fe.toString() + " disappeared from " + this.nickname + "'s side!");
 				this.getFieldEffects().remove(fe);
 			}
-		} else if (move == Move.MOONBLAST) {
-			stat(foe, 2, -1, this);
 		} else if (move == Move.MUD_BOMB) {
 			stat(foe, 5, -1, this);
 		} else if (move == Move.MUD_SHOT) {
@@ -3652,8 +3630,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.addStatus(Status.FLINCHED);
 		} else if (move == Move.NIGHT_DAZE) {
 			stat(foe, 5, -1, this);
-		} else if (move == Move.PLAY_ROUGH) {
-			stat(foe, 0, -1, this);
 		} else if (move == Move.POISON_FANG) {
 			foe.toxic(false, this);
 		} else if (move == Move.POISON_JAB) {
@@ -3765,10 +3741,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 				status = Status.HEALTHY;
 				Task.addTask(Task.STATUS, Status.HEALTHY, nickname + " was cured of its burn!", this);
 			}
-		} else if (move == Move.SPARKLY_SWIRL) {
-			for (int i = 0; i < 5; ++i) {
-				stat(foe, i, -1, this);
-			}
 		} else if (move == Move.SPECTRAL_THIEF) {
 			for (int i = 0; i < 7; ++i) {
 				if (foe.statStages[i] > 0) {
@@ -3863,8 +3835,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.confuse(false, this);
 		} else if (move == Move.WATERFALL && first) {
 			foe.addStatus(Status.FLINCHED);
-		} else if (move == Move.SPIRIT_BREAK) {
-			stat(this, 2, -1, foe);
 		} else if (move == Move.ZEN_HEADBUTT && first) {
 			foe.addStatus(Status.FLINCHED);
 		} else if (move == Move.ROCK_SLIDE && first) {
@@ -5469,8 +5439,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 		Ability foeAbility = foe.ability;
 		boolean contact = move.contact;
 		
-		int magicDamage = 0;
-		
 		if (this.hasStatus(Status.TORMENTED) && move == this.lastMoveUsed) {
 			return 0;
 		}
@@ -5482,31 +5450,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			moveType = move.mtype;
 			critChance = move.critChance;
 			contact = move.contact;
-		}
-		
-		if (mode == 0 && (move == Move.MAGIC_BLAST || move == Move.ELEMENTAL_SPARKLE)) {
-			if (move == Move.MAGIC_BLAST) {
-				ArrayList<Move> moves = new ArrayList<>();
-				for (Move cand : Move.getAllMoves()) {
-					if (cand.mtype == PType.ROCK || cand.mtype == PType.GRASS || cand.mtype == PType.GROUND) {
-						moves.add(cand);
-					}
-				}
-				Move[] validMoves = moves.toArray(new Move[moves.size()]);
-				Move pickMove = validMoves[new Random().nextInt(validMoves.length)];
-				magicDamage = calcWithTypes(foe, pickMove, first, mode, crit, field);
-			}
-			if (move == Move.ELEMENTAL_SPARKLE) {
-				ArrayList<Move> moves = new ArrayList<>();
-				for (Move cand : Move.getAllMoves()) {
-					if (cand.mtype == PType.FIRE || cand.mtype == PType.WATER || cand.mtype == PType.GRASS) {
-						moves.add(cand);
-					}
-				}
-				Move[] validMoves = moves.toArray(new Move[moves.size()]);
-				Move pickMove = validMoves[new Random().nextInt(validMoves.length)];
-				magicDamage = calcWithTypes(foe, pickMove, first, mode, crit, field);
-			}
 		}
 		
 		if (mode == 0 && (move == Move.SLEEP_TALK || move == Move.SNORE)) {
@@ -5548,7 +5491,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN, this))
 				|| move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY || move == Move.METEOR_BEAM || move == Move.HYPER_BEAM
 				|| move == Move.BLAST_BURN || move == Move.FRENZY_PLANT || move == Move.GIGA_IMPACT
-				|| move == Move.HYDRO_CANNON || move == Move.MAGIC_CRASH) {
+				|| move == Move.HYDRO_CANNON || move == Move.MAGICAL_CRASH) {
 			if (mode == 0 && this.getItem() != Item.POWER_HERB) bp *= 0.5;
 		}
 		
@@ -5990,9 +5933,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 
 		if (mode == 0 && damage >= foe.currentHP) damage = foe.currentHP; // Check for kill
-		if (mode == 0 && damage < foe.currentHP && move == Move.SWORD_OF_DAWN && this.getItem() != Item.POWER_HERB) bp *= 0.5; 
-		
-		if (mode == 0 && (move == Move.MAGIC_BLAST || move == Move.ELEMENTAL_SPARKLE)) damage += magicDamage;
+		if (mode == 0 && damage < foe.currentHP && move == Move.SWORD_OF_DAWN && this.getItem() != Item.POWER_HERB) bp *= 0.5;
 		
 		if ((move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) && mode == 0) {
 			Random rand = new Random();
