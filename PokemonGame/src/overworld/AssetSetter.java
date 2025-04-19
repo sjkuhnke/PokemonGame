@@ -3341,7 +3341,7 @@ public class AssetSetter {
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;
-		result.trainer = mapNum;
+		result.scriptIndex = mapNum;
 		
 		result.setItems(false, (Item[]) null);
 		
