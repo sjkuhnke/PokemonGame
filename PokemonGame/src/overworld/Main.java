@@ -827,7 +827,7 @@ public class Main {
 	            	while (cat.length() < 10) {
 	            		cat += " ";
 	            	}
-	            	String bp = " " + m.formatbp(null, null);
+	            	String bp = " " + m.formatbp(null, null, Pokemon.field);
 	            	while (bp.length() < 5) {
 	            		bp += " ";
 	            	}

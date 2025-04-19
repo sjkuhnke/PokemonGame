@@ -164,7 +164,7 @@ public class TrainerLookupPanel extends JPanel {
 				JButton moveButton = new JGradientButton(m.toString());
 				
 				moveButton.setBackground(m == Move.HIDDEN_POWER || m == Move.RETURN ? p.determineHPType().getColor() : m.mtype.getColor());
-				moveButton.addActionListener(e -> JOptionPane.showMessageDialog(null, m.getMoveSummary(p, null), m.toString() + " Details", JOptionPane.PLAIN_MESSAGE));
+				moveButton.addActionListener(e -> JOptionPane.showMessageDialog(null, m.getMoveSummary(p, null, Pokemon.field), m.toString() + " Details", JOptionPane.PLAIN_MESSAGE));
 				
 				movesPanel.add(moveButton);
 			}

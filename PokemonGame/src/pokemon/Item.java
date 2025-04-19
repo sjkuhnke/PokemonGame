@@ -146,7 +146,7 @@ public enum Item {
 	LEFTOVERS(50,0,0,new Color(227, 96, 91),Item.HELD_ITEM,null,"An item that restores the user's HP gradually throughout a battle."),
 	BLACK_SLUDGE(51,0,0,new Color(144, 138, 169),Item.HELD_ITEM,null,"If the holder is a Poison type, this sludge will gradually restore its HP. It damages any other type."),
 	EVIOLITE(52,0,0,new Color(186, 141, 190),Item.HELD_ITEM,null,"A mysterious evolutionary lump that boosts the Defense and Sp. Def stats when held by a Pokemon that can still evolve."),
-	EVERSTONE(53,100,0,new Color(179, 200, 210),Item.HELD_ITEM,null,"A Pokemon holding this peculiar stone is prevented from evolving."),
+	EVERSTONE(53,100,0,new Color(179, 200, 210),Item.HELD_ITEM,null,"A Pokemon holding this peculiar stone is prevented from evolving."), // TODO make untrickable/un knockoffable
 	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
 	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
 	DAMP_ROCK(54,750,0,new Color(37, 99, 179),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to rain, the rain will persist for longer than usual."),
@@ -210,7 +210,7 @@ public enum Item {
 	LAGGING_TAIL(324,0,0,Color.BLACK,Item.HELD_ITEM,null,"A tremendously heavy item that makes the holder move slower than usual."),
 	BINDING_BAND(340,0,0,Color.BLACK,Item.HELD_ITEM,null,"This band boosts the damage of the binding effect caused by binding moves used by the holder."),
 	GRIP_CLAW(341,0,0,Color.BLACK,Item.HELD_ITEM,null,"When the holder uses moves that deal damage over several turns, such as Bind or Wrap, their effects will last longer than usual."),
-	RING_TARGET(344,0,0,Color.BLACK,Item.HELD_ITEM,null,"When held, moves that would normally have no effect due to type matchups will still hit the holder."),
+	RING_TARGET(344,0,0,Color.BLACK,Item.HELD_ITEM,null,"When held, moves that would normally have no effect due to type matchups will still hit the holder."), // TODO: make ignore immunities from abilities too
 	STICKY_BARB(347,0,0,Color.BLACK,Item.HELD_ITEM,null,"A clingy barb damages the holder every turn and will latch on to Pokemon that make direct contact with the holder."),
 	UTILITY_UMBRELLA(348,0,0,Color.BLACK,Item.HELD_ITEM,null,"This sturdy umbrella protects the holder from the effects of all weather."),
 	FOCUS_SASH(81,0,500,new Color(232, 80, 80),Item.HELD_ITEM,null,"If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP, but only once."),
@@ -947,13 +947,13 @@ public enum Item {
 	        }
 	        
 	        infoButton.addActionListener(e -> {
-	        	JOptionPane.showMessageDialog(null, ((Pokemon) userMons.getSelectedItem()).showSummary(false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+	        	JOptionPane.showMessageDialog(null, ((Pokemon) userMons.getSelectedItem()).showSummary(field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
 	        });
 	        
 	        fInfoButton.addActionListener(e -> {
 	        	Pokemon foe = (Pokemon) foeMons.getSelectedItem();
 	        	if (foe.getSprite() == null) foe.setSprites();
-	        	JOptionPane.showMessageDialog(null, ((Pokemon) foeMons.getSelectedItem()).showSummary(false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+	        	JOptionPane.showMessageDialog(null, ((Pokemon) foeMons.getSelectedItem()).showSummary(field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
 	        });
 	        
 	        JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
@@ -1407,8 +1407,8 @@ public enum Item {
         		PType mtype = move.mtype;
         		if (move == Move.HIDDEN_POWER) mtype = current.determineHPType();
 				if (move == Move.RETURN) mtype = current.determineHPType();
-				if (move == Move.WEATHER_BALL) mtype = current.determineWBType();
-				if (move == Move.TERRAIN_PULSE) mtype = current.determineTPType();
+				if (move == Move.WEATHER_BALL) mtype = current.determineWBType(field);
+				if (move == Move.TERRAIN_PULSE) mtype = current.determineTPType(field);
 				if (move.isAttack()) {
 					if (mtype == PType.NORMAL) {
 						if (current.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
@@ -1448,7 +1448,7 @@ public enum Item {
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
 			    		if (current.moveset[kndex] != null) {
-	    	                JOptionPane.showMessageDialog(null, current.moveset[kndex].move.getMoveSummary(current, foe), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+	    	                JOptionPane.showMessageDialog(null, current.moveset[kndex].move.getMoveSummary(current, foe, field), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 	        			}
 			    	} else {
 			    		Move[] allMoves = Move.values();

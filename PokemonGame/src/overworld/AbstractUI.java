@@ -608,8 +608,8 @@ public abstract class AbstractUI {
 					} else {
 						PType mtype = m.move.mtype;
 						if (m.move == Move.HIDDEN_POWER || m.move == Move.RETURN) mtype = p.determineHPType();
-						if (m.move == Move.WEATHER_BALL) mtype = p.determineWBType();
-						if (m.move == Move.TERRAIN_PULSE) mtype = p.determineTPType();
+						if (m.move == Move.WEATHER_BALL) mtype = p.determineWBType(Pokemon.field);
+						if (m.move == Move.TERRAIN_PULSE) mtype = p.determineTPType(Pokemon.field);
 						if (m.move.isAttack()) {
 							if (mtype == PType.NORMAL) {
 								if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
@@ -777,8 +777,8 @@ public abstract class AbstractUI {
 		PType type = move.mtype;
 		if (p != null && p.headbuttCrit >= 0) {
 			if (move == Move.HIDDEN_POWER || move == Move.RETURN) type = p.determineHPType();
-			if (move == Move.WEATHER_BALL) type = p.determineWBType();
-			if (move == Move.TERRAIN_PULSE) type = p.determineTPType();
+			if (move == Move.WEATHER_BALL) type = p.determineWBType(Pokemon.field);
+			if (move == Move.TERRAIN_PULSE) type = p.determineTPType(Pokemon.field);
 			if (move.isAttack()) {
 				if (type == PType.NORMAL) {
 					if (p.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
@@ -794,7 +794,7 @@ public abstract class AbstractUI {
 		x += gp.tileSize * 1.5;
 		y += gp.tileSize * 0.75;
 		g2.setFont(g2.getFont().deriveFont(24F));
-		g2.drawString("Power: " + move.formatbp(p, foe), x, y);
+		g2.drawString("Power: " + move.formatbp(p, foe, Pokemon.field), x, y);
 		
 		x += gp.tileSize * 2.5;
 		g2.drawString("Acc: " + move.getAccuracy(), x, y);
@@ -953,8 +953,8 @@ public abstract class AbstractUI {
 			x += gp.tileSize * 11 / 6;
 			PType mtype = m.mtype;
 			if (m == Move.HIDDEN_POWER || m == Move.RETURN) mtype = p.determineHPType();
-			if (m == Move.WEATHER_BALL) mtype = p.determineWBType();
-			if (m == Move.TERRAIN_PULSE) mtype = p.determineTPType();
+			if (m == Move.WEATHER_BALL) mtype = p.determineWBType(Pokemon.field);
+			if (m == Move.TERRAIN_PULSE) mtype = p.determineTPType(Pokemon.field);
 			if (m.isAttack()) {
 				if (mtype == PType.NORMAL) {
 					if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
@@ -988,8 +988,8 @@ public abstract class AbstractUI {
 				g2.setFont(g2.getFont().deriveFont(24F));
 				PType mtype = ms.move.mtype;
 				if (ms.move == Move.HIDDEN_POWER || ms.move == Move.RETURN) mtype = p.determineHPType();
-				if (ms.move == Move.WEATHER_BALL) mtype = p.determineWBType();
-				if (ms.move == Move.TERRAIN_PULSE) mtype = p.determineTPType();
+				if (ms.move == Move.WEATHER_BALL) mtype = p.determineWBType(Pokemon.field);
+				if (ms.move == Move.TERRAIN_PULSE) mtype = p.determineTPType(Pokemon.field);
 				if (ms.move.isAttack()) {
 					if (mtype == PType.NORMAL) {
 						if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;

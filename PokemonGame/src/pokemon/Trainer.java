@@ -137,7 +137,7 @@ public class Trainer implements Serializable {
 				for (Moveslot m : p.moveset) {
 					if (m != null) {
 						Move move = m.move;
-						int effectiveBP = (int) (move.getbp(p, other) * getEffective(other, p, move.mtype, move, false) * ((move.mtype == p.type1 || move.mtype == p.type2) ? 1.5 : 1));
+						int effectiveBP = (int) (move.getbp(p, other, Pokemon.field) * getEffective(other, p, move.mtype, move, false) * ((move.mtype == p.type1 || move.mtype == p.type2) ? 1.5 : 1));
 						if (effectiveBP > highestBP) {
 							//highestBPMove = move;
 							highestBP = effectiveBP;
@@ -297,30 +297,32 @@ public class Trainer implements Serializable {
 			if (foe.ability == Ability.NORMALIZE) type = PType.NORMAL;
 		}
 		if (!onlyCheckAbility) multiplier = p.getEffectiveMultiplier(type, m, foe);
-		if (p.ability == Ability.DRY_SKIN && type == PType.WATER) multiplier = 0;
-		if (p.ability == Ability.BLACK_HOLE && (type == PType.LIGHT || type == PType.GALACTIC)) multiplier = 0;
-		if (p.ability == Ability.ILLUMINATION && (type == PType.GHOST || type == PType.DARK || type == PType.LIGHT || type == PType.GALACTIC)) multiplier *= 0.5;
-		if (p.ability == Ability.FLASH_FIRE && type == PType.FIRE) multiplier = 0;
-		if (p.ability == Ability.FRIENDLY_GHOST && type == PType.GHOST) multiplier = 0;
-		if (p.ability == Ability.GALACTIC_AURA && (type == PType.ICE || type == PType.PSYCHIC)) multiplier *= 0.5;
-		if (p.ability == Ability.UNWAVERING && (type == PType.DARK || type == PType.GHOST)) multiplier *= 0.5;
-		if (p.ability == Ability.JUSTIFIED && type == PType.DARK) multiplier *= 2;
-		if (p.ability == Ability.INSECT_FEEDER && type == PType.BUG) multiplier = 0;
-		if (p.ability == Ability.LEVITATE && type == PType.GROUND) multiplier = 0;
+		Ability pAbility = p.ability;
+		if (foe.ability == Ability.MOLD_BREAKER) pAbility = Ability.NULL;
+		if (pAbility == Ability.DRY_SKIN && type == PType.WATER) multiplier = 0;
+		if (pAbility == Ability.BLACK_HOLE && (type == PType.LIGHT || type == PType.GALACTIC)) multiplier = 0;
+		if (pAbility == Ability.ILLUMINATION && (type == PType.GHOST || type == PType.DARK || type == PType.LIGHT || type == PType.GALACTIC)) multiplier *= 0.5;
+		if (pAbility == Ability.FLASH_FIRE && type == PType.FIRE) multiplier = 0;
+		if (pAbility == Ability.FRIENDLY_GHOST && type == PType.GHOST) multiplier = 0;
+		if (pAbility == Ability.GALACTIC_AURA && (type == PType.ICE || type == PType.PSYCHIC)) multiplier *= 0.5;
+		if (pAbility == Ability.UNWAVERING && (type == PType.DARK || type == PType.GHOST)) multiplier *= 0.5;
+		if (pAbility == Ability.JUSTIFIED && type == PType.DARK) multiplier *= 2;
+		if (pAbility == Ability.INSECT_FEEDER && type == PType.BUG) multiplier = 0;
+		if (pAbility == Ability.LEVITATE && type == PType.GROUND) multiplier = 0;
 		if (p.getItem() == Item.AIR_BALLOON && type == PType.GROUND) multiplier = 0;
 		if (p.getItem() == Item.SNOWBALL && type == PType.ICE) multiplier = 0;
 		if (p.getItem() == Item.ABSORB_BULB && type == PType.WATER) multiplier = 0;
 		if (p.getItem() == Item.LUMINOUS_MOSS && type == PType.WATER) multiplier = 0;
 		if (p.getItem() == Item.CELL_BATTERY && type == PType.ELECTRIC) multiplier = 0;
-		if (p.ability == Ability.LIGHTNING_ROD && type == PType.ELECTRIC) multiplier = 0;
-		if (p.ability == Ability.MOTOR_DRIVE && type == PType.ELECTRIC) multiplier = 0;
-		if (p.ability == Ability.SAP_SIPPER && type == PType.GRASS) multiplier = 0;
-		if (p.ability == Ability.HEAT_COMPACTION && type == PType.FIRE) multiplier = 0;
-		if (p.ability == Ability.THICK_FAT && (type == PType.FIRE || type == PType.ICE)) multiplier *= 0.5;
-		if (p.ability == Ability.VOLT_ABSORB && type == PType.ELECTRIC) multiplier = 0;
-		if (p.ability == Ability.WATER_ABSORB && type == PType.WATER) multiplier = 0;
-		if (p.ability == Ability.MOSAIC_WINGS && multiplier == 1.0) multiplier = 0.5;
-		if (p.ability == Ability.WONDER_GUARD && multiplier < 2.0) multiplier = 0;
+		if (pAbility == Ability.LIGHTNING_ROD && type == PType.ELECTRIC) multiplier = 0;
+		if (pAbility == Ability.MOTOR_DRIVE && type == PType.ELECTRIC) multiplier = 0;
+		if (pAbility == Ability.SAP_SIPPER && type == PType.GRASS) multiplier = 0;
+		if (pAbility == Ability.HEAT_COMPACTION && type == PType.FIRE) multiplier = 0;
+		if (pAbility == Ability.THICK_FAT && (type == PType.FIRE || type == PType.ICE)) multiplier *= 0.5;
+		if (pAbility == Ability.VOLT_ABSORB && type == PType.ELECTRIC) multiplier = 0;
+		if (pAbility == Ability.WATER_ABSORB && type == PType.WATER) multiplier = 0;
+		if (pAbility == Ability.MOSAIC_WINGS && multiplier == 1.0) multiplier = 0.5;
+		if (pAbility == Ability.WONDER_GUARD && multiplier < 2.0) multiplier = 0;
 		
 		if (m != null && m.critChance < 0 && multiplier > 0) return 1;
 		

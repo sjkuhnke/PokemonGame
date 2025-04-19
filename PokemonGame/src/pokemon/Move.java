@@ -702,8 +702,8 @@ public enum Move {
 		this.id = globalID++;
 	}
 
-	public String formatbp(Pokemon user, Pokemon foe) {
-		double bp = getbp(user, foe);
+	public String formatbp(Pokemon user, Pokemon foe, Field field) {
+		double bp = getbp(user, foe, field);
 		if (bp == 0 || this.cat == 2 || this == Move.MAGNITUDE) return "--";
 		return String.format("%.0f", bp);
 	}
@@ -719,13 +719,13 @@ public enum Move {
 		return result;
 	}
 	
-	public double getbp(Pokemon user, Pokemon foe) {
+	public double getbp(Pokemon user, Pokemon foe, Field field) {
 		PType type = mtype;
 		if (user != null) {
 			if (this == Move.HIDDEN_POWER) type = user.determineHPType();
 			if (this == Move.RETURN) type = user.determineHPType();
-			if (this == Move.WEATHER_BALL) type = user.determineWBType();
-			if (this == Move.TERRAIN_PULSE) type = user.determineTPType();
+			if (this == Move.WEATHER_BALL) type = user.determineWBType(field);
+			if (this == Move.TERRAIN_PULSE) type = user.determineTPType(field);
 		}
 		double bp = basePower;
 		if (bp == -1) {
@@ -740,7 +740,7 @@ public enum Move {
 						|| this == Move.HEAVY_SLAM || this == Move.GYRO_BALL) return 0;
 				foe = new Pokemon(1, 1, false, false);
 			}
-			bp = user.determineBasePower(foe, this, faster, null, false);
+			bp = user.determineBasePower(foe, this, faster, null, foe.ability, field, false);
 		}
 		if (user != null && bp > 0) {
 			if (type == PType.NORMAL) {
@@ -808,11 +808,7 @@ public enum Move {
 		
 	}
 	
-	public JPanel getMoveSummary() {
-		return getMoveSummary(null, null);
-	}
-	
-	public JPanel getMoveSummary(Pokemon user, Pokemon foe) {
+	public JPanel getMoveSummary(Pokemon user, Pokemon foe, Field field) {
 	    JPanel result = new JPanel();
 	    result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
 
@@ -822,8 +818,8 @@ public enum Move {
 	    PType type = mtype;
 	    if (this == Move.HIDDEN_POWER) type = user.determineHPType();
 		if (this == Move.RETURN) type = user.determineHPType();
-		if (this == Move.WEATHER_BALL) type = user.determineWBType();
-		if (this == Move.TERRAIN_PULSE) type = user.determineTPType();
+		if (this == Move.WEATHER_BALL) type = user.determineWBType(field);
+		if (this == Move.TERRAIN_PULSE) type = user.determineTPType(field);
 		if (this.isAttack()) {
 			if (type == PType.NORMAL) {
 				if (user.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
@@ -843,7 +839,7 @@ public enum Move {
 
 	    // Power
 	    JLabel powerLabel = new JLabel("Power");
-	    JLabel powerValueLabel = new JLabel(formatbp(user, foe));
+	    JLabel powerValueLabel = new JLabel(formatbp(user, foe, field));
 
 	    // Accuracy
 	    JLabel accuracyLabel = new JLabel("Acc");
@@ -1278,7 +1274,7 @@ public enum Move {
 					return true;
 				}
 				// Ability changing moves
-				if (m == Move.SLOW_FALL && me.ability != Ability.LEVITATE) {
+				if (m == Move.SLOW_FALL && foe.ability != Ability.LEVITATE) {
 					return true;
 				}
 				// Arcane Spell

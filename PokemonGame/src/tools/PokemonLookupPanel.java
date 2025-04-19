@@ -46,7 +46,7 @@ public class PokemonLookupPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (p != null) {
-					JOptionPane.showMessageDialog(null, p.showSummary(false, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, p.showSummary(Pokemon.field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
 				} else {
 					JOptionPane.showMessageDialog(null, "No Pokemon selected!");
 				}

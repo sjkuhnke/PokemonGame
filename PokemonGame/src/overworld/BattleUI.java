@@ -1089,8 +1089,8 @@ public class BattleUI extends AbstractUI {
 		        PType mtype = move.mtype;
 		        if (move == Move.HIDDEN_POWER) mtype = user.determineHPType();
 				if (move == Move.RETURN) mtype = user.determineHPType();
-				if (move == Move.WEATHER_BALL) mtype = user.determineWBType();
-				if (move == Move.TERRAIN_PULSE) mtype = user.determineTPType();
+				if (move == Move.WEATHER_BALL) mtype = user.determineWBType(Pokemon.field);
+				if (move == Move.TERRAIN_PULSE) mtype = user.determineTPType(Pokemon.field);
 				if (move.isAttack()) {
 					if (mtype == PType.NORMAL) {
 						if (user.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;

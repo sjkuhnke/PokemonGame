@@ -136,7 +136,7 @@ public class NPC_Prize_Shop extends Entity {
 			result.add(new Pair<Integer, Integer>(pokemon.get(0), winStreaks.get(0)));
 			result.add(new Pair<Integer, Integer>(pokemon.get(1), winStreaks.get(1)));
 		}
-		Random random = new Random(gp.aSetter.generateSeed(gp.player.p.getID(), this.worldX / gp.tileSize, this.worldY / gp.tileSize, this.trainer));
+		Random random = new Random(gp.aSetter.generateSeed(gp.player.p.getID(), this.worldX / gp.tileSize, this.worldY / gp.tileSize, (int) this.scriptIndex));
 		ArrayList<Integer> bank = new ArrayList<>();
 		for (int i = 0; i < badges + 1; i++) {
 			int id = 0;

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -35,7 +34,6 @@ import javax.swing.BoxLayout;
 import javax.swing.GrayFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -1829,8 +1827,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (move == Move.HIDDEN_POWER) moveType = determineHPType();
 		if (move == Move.RETURN) moveType = determineHPType();
-		if (move == Move.WEATHER_BALL) moveType = determineWBType();
-		if (move == Move.TERRAIN_PULSE) moveType = determineTPType();
+		if (move == Move.WEATHER_BALL) moveType = determineWBType(field);
+		if (move == Move.TERRAIN_PULSE) moveType = determineTPType(field);
 		
 		if (this.ability == Ability.NORMALIZE && moveType != PType.NORMAL) {
 			moveType = PType.NORMAL;
@@ -2129,7 +2127,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				return;
 			}
 			
-			if (moveType == PType.GROUND && !foe.isGrounded() && move.cat != 2) {
+			if (moveType == PType.GROUND && !foe.isGrounded(foeAbility) && move.cat != 2) {
 				if (foeAbility == Ability.LEVITATE) Task.addAbilityTask(foe);
 				Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 				endMove();
@@ -2165,7 +2163,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			
-			if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded() && move.hasPriority(this) && move.accuracy <= 100 && move != Move.GRAVITY_PUNCH) {
+			if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded(foeAbility) && move.hasPriority(this) && move.accuracy <= 100 && move != Move.GRAVITY_PUNCH) {
 				Task.addTask(Task.TEXT, foe.nickname + " is protected by the Psychic Terrain!");
 				endMove();
 				this.moveMultiplier = 1;
@@ -2236,7 +2234,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			
 			if (move.basePower < 0) {
-				bp = determineBasePower(foe, move, first, team, true);
+				bp = determineBasePower(foe, move, first, team, foeAbility, field, true);
 			}
 			
 			if (move == Move.ROLLOUT || move == Move.ICE_BALL) {
@@ -5539,8 +5537,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (move == Move.HIDDEN_POWER) moveType = determineHPType();
 		if (move == Move.RETURN) moveType = determineHPType();
-		if (move == Move.WEATHER_BALL) moveType = determineWBType();
-		if (move == Move.TERRAIN_PULSE) moveType = determineTPType();
+		if (move == Move.WEATHER_BALL) moveType = determineWBType(field);
+		if (move == Move.TERRAIN_PULSE) moveType = determineTPType(field);
 		
 		if (this.ability == Ability.NORMALIZE && moveType != PType.NORMAL) {
 			moveType = PType.NORMAL;
@@ -5597,7 +5595,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			return 0;
 		}
 		
-		if (moveType == PType.GROUND && !foe.isGrounded(field) && move.cat != 2) {
+		if (moveType == PType.GROUND && !foe.isGrounded(field, foeAbility) && move.cat != 2) {
 			return 0;
 		}
 		
@@ -5615,7 +5613,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		
-		if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded(field) && move.hasPriority(this) && move != Move.GRAVITY_PUNCH) {
+		if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded(field, foeAbility) && move.hasPriority(this) && move != Move.GRAVITY_PUNCH) {
 			return 0;
 		}
 		
@@ -5639,7 +5637,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (move.basePower < 0) {
-			bp = determineBasePower(foe, move, first, null, false);
+			bp = determineBasePower(foe, move, first, null, foeAbility, field, false);
 		}
 		
 		if (this.getItem() == Item.METRONOME && move == this.lastMoveUsed) bp *= (1 + (Math.min(1.0, (this.metronome + 1) * 0.2)));
@@ -6584,7 +6582,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 	}
 	
-	public int determineBasePower(Pokemon foe, Move move, boolean first, Pokemon[] team, boolean announce) {
+	public int determineBasePower(Pokemon foe, Move move, boolean first, Pokemon[] team, Ability foeAbility, Field field, boolean announce) {
 		int bp = 0;
 		if (move == Move.ABYSSAL_CHOP) {
 		    if (foe.status == Status.PARALYZED) {
@@ -6629,7 +6627,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			hpRatio *= 150;
 			bp = Math.max((int) hpRatio, 1);
 		} else if (move == Move.EXPANDING_FORCE) {
-			if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded()) {
+			if (field != null && field.equals(field.terrain, Effect.PSYCHIC) && isGrounded()) {
 				bp = 120;
 			} else {
 				bp = 80;
@@ -6733,7 +6731,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (announce) this.moveMultiplier *= 2;
 			}
 		} else if (move == Move.RISING_VOLTAGE) {
-			if (field.equals(field.terrain, Effect.ELECTRIC) && foe.isGrounded()) {
+			if (field != null && field.equals(field.terrain, Effect.ELECTRIC) && foe.isGrounded(foeAbility)) {
 				bp = 140;
 			} else {
 				bp = 70;
@@ -6782,10 +6780,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			hpRatio *= 150;
 			bp = Math.max((int) hpRatio, 1);
 		} else if (move == Move.WEATHER_BALL) {
-			bp = field.weather != null ? 100 : 50;
+			bp = field != null && field.weather != null ? 100 : 50;
 			
 		} else if (move == Move.TERRAIN_PULSE) {
-			bp = field.terrain != null ? 100 : 50;
+			bp = field != null && field.terrain != null ? 100 : 50;
 		}
 		
 		return bp;
@@ -6853,7 +6851,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return nat.toString();
 	}
 
-	public JPanel showSummary(boolean takeItem, JPanel panel) {
+	public JPanel showSummary(Field field, JPanel panel) {
 	    JPanel teamMemberPanel = new JPanel();
 	    teamMemberPanel.setLayout(new BoxLayout(teamMemberPanel, BoxLayout.Y_AXIS));
 	    
@@ -6938,8 +6936,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 	                PType mtype = move.mtype;
 	                if (move == Move.HIDDEN_POWER) mtype = this.determineHPType();
 					if (move == Move.RETURN) mtype = this.determineHPType();
-					if (move == Move.WEATHER_BALL) mtype = this.determineWBType();
-					if (move == Move.TERRAIN_PULSE) mtype = this.determineTPType();
+					if (move == Move.WEATHER_BALL) mtype = this.determineWBType(field);
+					if (move == Move.TERRAIN_PULSE) mtype = this.determineTPType(field);
 					if (move.isAttack()) {
 						if (mtype == PType.NORMAL) {
 							if (this.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
@@ -6954,7 +6952,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	                moveButton.setForeground(moveset[i].getPPColor());
 	                int index = i;
 	                moveButton.addActionListener(e -> {
-			            JOptionPane.showMessageDialog(null, moveset[index].move.getMoveSummary(this, null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+			            JOptionPane.showMessageDialog(null, moveset[index].move.getMoveSummary(this, null, field), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 	                });
 	            }
 	            movesPanel.add(moveButton);
@@ -7040,11 +7038,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    	    }
 	    	});
 	    	itemPanel.add(new JLabel(new ImageIcon(this.item.getImage())));
-	    	if (takeItem) {
-	    		itemPanel.add(takeButton);
-	    	} else {
-	    		itemPanel.add(itemLabel);
-	    	}
+	    	itemPanel.add(itemLabel);
 	    	itemDesc.setText("<html>" + Item.breakString(this.item.getDesc(), Math.max(this.ability.desc.length() - 4, 50)).replace("\n", "<br>") + "</html>");
 	    	teamMemberPanel.add(itemPanel);
 	    	itemDescPanel.add(itemDesc);
@@ -7163,8 +7157,9 @@ public class Pokemon implements RoleAssignable, Serializable {
         throw new IllegalStateException("The algorithm returned an array of " + Arrays.toString(ivs) + " which resulted in HP " + tempPokemon.determineHPType() + " instead of " + hpType);
     }
 	
-	public PType determineWBType() {
+	public PType determineWBType(Field field) {
 		PType result = PType.NORMAL;
+		if (field == null) return result;
 		if (field.equals(field.weather, Effect.SUN, this)) result = PType.FIRE;
 		if (field.equals(field.weather, Effect.RAIN, this)) result = PType.WATER;
 		if (field.equals(field.weather, Effect.SNOW, this)) result = PType.ICE;
@@ -7173,8 +7168,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return result;
 	}
 	
-	public PType determineTPType() {
+	public PType determineTPType(Field field) {
 		PType result = PType.NORMAL;
+		if (field == null) return result;
 		if (field.equals(field.terrain, Effect.GRASSY)) result = PType.GRASS;
 		if (field.equals(field.terrain, Effect.ELECTRIC)) result = PType.ELECTRIC;
 		if (field.equals(field.terrain, Effect.PSYCHIC)) result = PType.PSYCHIC;
@@ -7311,8 +7307,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 						PType mtype = move.mtype;
 						if (move == Move.HIDDEN_POWER) mtype = foe.determineHPType();
 						if (move == Move.RETURN) mtype = foe.determineHPType();
-						if (move == Move.WEATHER_BALL) mtype = foe.determineWBType();
-						if (move == Move.TERRAIN_PULSE) mtype = foe.determineTPType();
+						if (move == Move.WEATHER_BALL) mtype = foe.determineWBType(field);
+						if (move == Move.TERRAIN_PULSE) mtype = foe.determineTPType(field);
 						double multiplier = getEffectiveMultiplier(mtype, move, foe);
 						
 						if (multiplier > 1) shuddered = true;
@@ -7671,16 +7667,24 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public boolean isGrounded() {
 		return isGrounded(field);
 	}
-
+	
+	public boolean isGrounded(Ability ability) {
+		return isGrounded(field, ability);
+	}
+	
 	public boolean isGrounded(Field field) {
+		return isGrounded(field, this.ability);
+	}
+
+	public boolean isGrounded(Field field, Ability ability) {
 		boolean result = true;
 		if (this.isType(PType.FLYING)) result = false;
 		if (this.getItem() == Item.AIR_BALLOON) result = false;
-		if (this.ability == Ability.LEVITATE) result = false;
+		if (ability == Ability.LEVITATE) result = false;
 		if (this.magCount > 0) result = false;
 		if (this.hasStatus(Status.SMACK_DOWN)) result = true;
 		if (this.getItem() == Item.IRON_BALL) result = true;
-		if (field.contains(field.fieldEffects, Effect.GRAVITY)) result = true;
+		if (field != null && field.contains(field.fieldEffects, Effect.GRAVITY)) result = true;
 		return result;
 	}
 	
@@ -7736,72 +7740,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	public void clearStatuses() {
 	    vStatuses.removeIf(effect -> effect.status != Status.ARCANE_SPELL);
-	}
-	
-	public int displayMoveOptions(Move move, Player p) {
-		Pokemon pokemon = this;
-	    String[] moves = new String[4];
-	    JGradientButton[] buttons = new JGradientButton[4];
-	    JPanel panel = new JPanel();
-	    int[] choice = new int[1];
-	    choice[0] = -1;
-	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-	    JLabel label = new JLabel(pokemon.nickname + " wants to learn " + move.toString() + ".");
-	    JLabel label2 = new JLabel("Select a move to replace:");
-	    JGradientButton learnButton = new JGradientButton(move.toString());
-	    learnButton.setBackground(move.mtype.getColor());
-	    panel.add(label);
-	    panel.add(learnButton);
-	    panel.add(label2);
-	    List<Move> movebankList = this.movebankAsList();
-	    for (int i = 0; i < 4; i++) {
-	        if (pokemon.moveset[i] != null) {
-	            moves[i] = pokemon.moveset[i].move.toString();
-	        } else {
-	            moves[i] = "";
-	        }
-	        buttons[i] = new JGradientButton(moves[i]);
-	        if (pokemon.moveset[i] != null) buttons[i].setBackground(pokemon.moveset[i].move.mtype.getColor());
-	        if (!p.hasTM(pokemon.moveset[i].move) && !movebankList.contains(pokemon.moveset[i].move)) {
-	        	buttons[i].setSolidGradient(true);
-	        }
-	        
-	        if (moves[i].equals("")) {
-	            buttons[i].setEnabled(false);
-	        }
-	        int index = i;
-	        buttons[i].addMouseListener(new MouseAdapter() {
-	        	@Override
-			    public void mouseClicked(MouseEvent e) {
-			    	if (SwingUtilities.isRightMouseButton(e)) {
-			            JOptionPane.showMessageDialog(null, moveset[index].move.getMoveSummary(pokemon, null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
-			        } else {
-		        		choice[0] = index;
-		                JDialog dialog = (JDialog) SwingUtilities.getWindowAncestor((JButton) e.getSource());
-		                dialog.dispose();
-			        }
-			    }
-	        });
-	        panel.add(buttons[i]);
-	    }
-	    learnButton.addMouseListener(new MouseAdapter() {
-        	@Override
-		    public void mouseClicked(MouseEvent e) {
-		    	if (SwingUtilities.isRightMouseButton(e)) {
-		            JOptionPane.showMessageDialog(null, move.getMoveSummary(pokemon, null), "Move Description", JOptionPane.INFORMATION_MESSAGE);
-		        } else {
-		        	choice[0] = JOptionPane.CLOSED_OPTION;
-	                JDialog dialog = (JDialog) SwingUtilities.getWindowAncestor((JButton) e.getSource());
-	                dialog.dispose();
-		        }
-		    }
-        });
-
-	    JOptionPane optionPane = new JOptionPane(panel, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-	    JDialog dialog = optionPane.createDialog("Learn New Move");
-	    dialog.setVisible(true);
-	    int result = choice[0];
-	    return result == JOptionPane.CLOSED_OPTION ? JOptionPane.CLOSED_OPTION : choice[0];
 	}
 	
 	public ArrayList<Move> movebankAsList() {
