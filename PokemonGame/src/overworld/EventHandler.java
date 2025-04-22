@@ -66,10 +66,10 @@ public class EventHandler {
 			if (hit(2,31,46)) teleport(0, 27, 54,false);
 			
 			// Route 23 <-> Poppy Grove gate
-			if (hit(0,20,10)) teleport(3, 31, 45,false);
+			if (hit(0,20,10,false)) teleport(3, 31, 45,false);
 			if (hit(3,31,46)) teleport(0, 20, 11,false);
 			if (hit(3,31,33)) teleport(4, 74, 84,false);
-			if (hit(4,74,85)) teleport(3, 31, 34,false);
+			if (hit(4,74,85,false)) teleport(3, 31, 34,false);
 			
 			// Poppy Grove PC
 			if (hit(4,69,71)) teleport(5, 31, 45,false);
@@ -94,19 +94,19 @@ public class EventHandler {
 			if (hit(9,31,46)) teleport(4, 81, 62,false);
 			
 			// Route 24 pt. 1 gate
-			if (hit(4,7,68)) teleport(10, 36, 40,false);
+			if (hit(4,7,68,false)) teleport(10, 36, 40,false);
 			if (hit(10,37,40)) teleport(4, 8, 68,false);
 			if (hit(10,22,40)) teleport(11, 91, 49,false);
-			if (hit(11,92,49)) teleport(10, 23, 40,false);
+			if (hit(11,92,49,false)) teleport(10, 23, 40,false);
 			
 			// Cutscene with Fred 1
 			if (!gp.player.p.flag[1][0] && hit(11,39,64)) gp.player.interactNPC(gp.npc[11][7], false);
 			
 			// Route 25 gate
-			if (hit(11,24,17)) teleport(12, 31, 45,false);
+			if (hit(11,24,17,false)) teleport(12, 31, 45,false);
 			if (hit(12,31,46)) teleport(11, 24, 18,false);
 			if (hit(12,31,33)) teleport(13, 28, 89,false);
-			if (hit(13,28,90)) teleport(12, 31, 34,false);
+			if (hit(13,28,90,false)) teleport(12, 31, 34,false);
 			
 			// Energy Plant A
 			if (hit(13,19,85)) teleport(14, 34, 49,false);
@@ -150,10 +150,10 @@ public class EventHandler {
 			if (hit(21,53,47)) gp.iTile[21][4] = null;
 			
 			// Bannana Grove to Route 40 gate
-			if (hit(0,17,78)) teleport(23, 31, 34,false);
+			if (hit(0,17,78,false)) teleport(23, 31, 34,false);
 			if (hit(23,31,33)) teleport(0, 17, 77,false);
 			if (hit(23,31,46)) teleport(22, 71, 8,false);
-			if (hit(22,71,7)) teleport(23, 31, 45,false);
+			if (hit(22,71,7,false)) teleport(23, 31, 45,false);
 			
 			// Route 26 to Mt. Splinkty
 			if (hit(13,27,5)) teleport(24, 56, 84,false);
@@ -168,10 +168,10 @@ public class EventHandler {
 			if (hit(178,31,46)) teleport(4, 23, 54, false);
 			
 			// Sicab River to gate to Peaceful Park
-			if (hit(13,86,74)) teleport(167, 23, 40,false);
+			if (hit(13,86,74,false)) teleport(167, 23, 40,false);
 			if (hit(167,22,40)) teleport(13, 85, 74,false);
 			if (hit(167,37,40)) teleport(33, 10, 68,false);
-			if (hit(33,9,68)) teleport(167, 36, 40,false);
+			if (hit(33,9,68,false)) teleport(167, 36, 40,false);
 			
 			// Mt. Splinkty
 			if (hit(24,73,63)) teleport(25, 73, 69,true);
@@ -230,10 +230,10 @@ public class EventHandler {
 			if (hit(31,51,82)) teleport(28, 87, 45,false);
 			
 			// Kleine Village Gate
-			if (hit(28,93,46)) teleport(34, 23, 40,false);
+			if (hit(28,93,46,false)) teleport(34, 23, 40,false);
 			if (hit(34,22,40)) teleport(28, 92, 46,false);
 			if (hit(34,37,40)) teleport(33, 8, 13,false);
-			if (hit(33,7,13)) teleport(34, 36, 40,false);
+			if (hit(33,7,13,false)) teleport(34, 36, 40,false);
 			
 			// Electric Tunnel
 			if (hit(33,62,16)) teleport(35, 11, 72,false);
@@ -243,10 +243,10 @@ public class EventHandler {
 			if (hit(36,15,45)) teleport(35, 90, 68,false);
 			
 			// Schrice City Gate
-			if (hit(36,93,41)) teleport(37, 23, 40,false);
+			if (hit(36,93,41,false)) teleport(37, 23, 40,false);
 			if (hit(37,22,40)) teleport(36, 92, 41,false);
 			if (hit(37,37,40)) teleport(38, 7, 47,false);
-			if (hit(38,6,47)) teleport(37, 36, 40,false);
+			if (hit(38,6,47,false)) teleport(37, 36, 40,false);
 			
 			// Schrice PC
 			if (hit(38,49,54)) teleport(39, 31, 45,false);
@@ -380,54 +380,54 @@ public class EventHandler {
 			if (hit(73,31,46)) teleport(38, 18, 37,false);
 			
 			// Route 41/Peaceful park gate
-			if (hit(28,81,89)) teleport(74, 31, 34,false);
+			if (hit(28,81,89,false)) teleport(74, 31, 34,false);
 			if (hit(74,31,33)) teleport(28, 81, 88,false);
 			if (hit(74,31,46)) teleport(33, 33, 34,false);
-			if (hit(33,33,33)) teleport(74, 31, 45,false);
+			if (hit(33,33,33,false)) teleport(74, 31, 45,false);
 			
 			// Route 36/Peaceful park gate
-			if (hit(4,17,11)) teleport(75, 36, 40,false);
+			if (hit(4,17,11,false)) teleport(75, 36, 40,false);
 			if (hit(75,37,40)) teleport(4, 18, 11,false);
 			if (hit(75,22,40)) teleport(33, 55, 84,false);
-			if (hit(33,56,84)) teleport(75, 23, 40,false);
+			if (hit(33,56,84,false)) teleport(75, 23, 40,false);
 			
 			// Route 30/Mindagan Lake gate
-			if (hit(38,42,90)) teleport(76, 31, 34,false);
+			if (hit(38,42,90,false)) teleport(76, 31, 34,false);
 			if (hit(76,31,33)) teleport(38, 42, 89,false);
 			if (hit(76,31,46)) teleport(77, 48, 8,false);
-			if (hit(77,48,7)) teleport(76, 31, 45,false);
+			if (hit(77,48,7,false)) teleport(76, 31, 45,false);
 			
 			// Mindagan Cavern
 			if (hit(77,83,32)) teleport(78, 58, 74,false);
 			if (hit(78,58,75)) teleport(77, 83, 33,false);
 			
 			// Route 31/Mindagan Lake gate
-			if (hit(77,56,74)) teleport(79, 31, 34,false);
+			if (hit(77,56,74,false)) teleport(79, 31, 34,false);
 			if (hit(79,31,33)) teleport(77, 56, 73,false);
 			if (hit(79,31,46)) teleport(80, 32, 8,false);
-			if (hit(80,32,7)) teleport(79, 31, 45,false);
+			if (hit(80,32,7,false)) teleport(79, 31, 45,false);
 			
 			// Route 42/Shadow Ravine gate
-			if (hit(80,47,85)) teleport(81, 31, 34,false);
+			if (hit(80,47,85,false)) teleport(81, 31, 34,false);
 			if (hit(81,31,33)) teleport(80, 47, 84,false);
 			if (hit(81,31,46)) teleport(0, 85, 6,false);
-			if (hit(0,85,5)) teleport(81, 31, 45,false);
+			if (hit(0,85,5,false)) teleport(81, 31, 45,false);
 			
 			// Shadow Ravine 0
 			if (hit(80,41,43)) teleport(90, 51, 9,true);
 			if (hit(90,51,9)) teleport(80, 41, 43,true);
 			
 			// Shadow Ravine/Shadow Ravine 1A gate
-			if (hit(83,6,70)) teleport(82, 36, 40,false);
+			if (hit(83,6,70,false)) teleport(82, 36, 40,false);
 			if (hit(82,37,40)) teleport(83, 7, 70,false);
 			if (hit(82,22,40)) teleport(80, 92, 51,false);
-			if (hit(80,93,51)) teleport(82, 23, 40,false);
+			if (hit(80,93,51,false)) teleport(82, 23, 40,false);
 			
 			// Route 32/Frenco City gate
-			if (hit(85,6,67)) teleport(84, 36, 40,false);
+			if (hit(85,6,67,false)) teleport(84, 36, 40,false);
 			if (hit(84,37,40)) teleport(85, 7, 67,false);
 			if (hit(84,22,40)) teleport(83, 92, 51,false);
-			if (hit(83,93,51)) teleport(84, 23, 40,false);
+			if (hit(83,93,51,false)) teleport(84, 23, 40,false);
 			
 			// Frenco City PC
 			if (hit(85,43,75)) teleport(86, 31, 45,false);
@@ -586,10 +586,10 @@ public class EventHandler {
 			if (hit(103,57,60)) teleport(102, 59, 53,true);
 			
 			// Route 33 -> Ghostly Woods Gate -> Ghostly Woods
-			if (hit(85,86,22)) teleport(106, 31, 45,false);
+			if (hit(85,86,22,false)) teleport(106, 31, 45,false);
 			if (hit(106,31,46)) teleport(85, 86, 23,false);
 			if (hit(106,31,33)) teleport(107, 49, 92,false);
-			if (hit(107,49,93)) teleport(106, 31, 34,false);
+			if (hit(107,49,93,false)) teleport(106, 31, 34,false);
 			
 			// Arthra Cutscene
 			if (gp.player.p.flag[4][5] && !gp.player.p.flag[5][0] && hit(107,49,92)) gp.player.interactNPC(gp.npc[107][12], false);
@@ -673,10 +673,10 @@ public class EventHandler {
 			if (gp.player.p.flag[5][3] && !gp.player.p.flag[5][4] && hit(103,47,35)) gp.player.interactNPC(gp.npc[103][0], false);
 			
 			// Ghostly Woods -> Route 34 Gate -> Route 34
-			if (hit(107,45,18)) teleport(108, 31, 45,false);
+			if (hit(107,45,18,false)) teleport(108, 31, 45,false);
 			if (hit(108,31,46)) teleport(107, 45, 19,false);
 			if (hit(108,31,33)) teleport(109, 73, 92,false);
-			if (hit(109,73,93)) teleport(108, 31, 34,false);
+			if (hit(109,73,93,false)) teleport(108, 31, 34,false);
 			
 			// Route 34
 			if (hit(109,87,84)) teleport(110, 42, 87,false); // bypass
@@ -709,16 +709,16 @@ public class EventHandler {
 			if (hit(188,31,46)) teleport(109, 18, 35,false);
 			
 			// Route 35
-			if (hit(109,6,36)) teleport(114, 36, 40,false);
+			if (hit(109,6,36,false)) teleport(114, 36, 40,false);
 			if (hit(114,37,40)) teleport(109, 7, 36,false);
 			if (hit(114,22,40)) teleport(115, 91, 77,false);
-			if (hit(115,92,77)) teleport(114, 23, 40,false);
+			if (hit(115,92,77,false)) teleport(114, 23, 40,false);
 			
 			// Schrice City/Route 35 Gate
-			if (hit(115,19,78)) teleport(116, 36, 40,false);
+			if (hit(115,19,78,false)) teleport(116, 36, 40,false);
 			if (hit(116,37,40)) teleport(115, 20, 78,false);
 			if (hit(116,22,40)) teleport(38, 78, 47,false);
-			if (hit(38,79,47)) teleport(116, 23, 40,false);
+			if (hit(38,79,47,false)) teleport(116, 23, 40,false);
 			
 			// Gym 6
 			if (hit(109,15,42)) teleport(113, 53, 68,false);
@@ -736,11 +736,10 @@ public class EventHandler {
 			if (hit(118,31,46)) teleport(109, 12, 35,false);
 			
 			// New Minnow Town -> Route 43 Gate
-			if (hit(0,92,49)) teleport(120, 23, 40,false);
+			if (hit(0,92,49,false)) teleport(120, 23, 40,false);
 			if (hit(120,22,40)) teleport(0, 91, 49,false);
-			
 			if (hit(120,37,40)) teleport(119, 8, 49,false);
-			if (hit(119,7,49)) teleport(120, 36, 40,false);
+			if (hit(119,7,49,false)) teleport(120, 36, 40,false);
 			
 			// Berry Shoppe House
 			if (hit(85,32,63)) teleport(53, 31, 45,false);
@@ -754,10 +753,10 @@ public class EventHandler {
 			if (hit(122,31,46)) teleport(121, 31, 34,false);
 			
 			// Route 37 Gate
-			if (hit(11,20,93)) teleport(123, 31, 34,false);
+			if (hit(11,20,93,false)) teleport(123, 31, 34,false);
 			if (hit(123,31,33)) teleport(11, 20, 92,false);
 			if (hit(123,31,46)) teleport(124, 22, 9,false);
-			if (hit(124,22,8)) teleport(123, 31, 45,false);
+			if (hit(124,22,8,false)) teleport(123, 31, 45,false);
 			
 			// Rawwar City PC
 			if (hit(124,21,56)) teleport(125, 31, 45,false);
@@ -903,22 +902,22 @@ public class EventHandler {
 			if (hit(149,49,59)) gp.aSetter.updateNPC(149); // clear all tn members TODO: replace with maxwell updating npc to make him a block, and after having a long convo with him it'll have update task
 			
 			// Rawwar City -> Route 37 gate
-			if (hit(124,16,47)) teleport(179, 31, 34,false);
+			if (hit(124,16,47,false)) teleport(179, 31, 34,false);
 			if (hit(179,31,33)) teleport(124, 16, 46,false);
 			if (hit(179,31,46)) teleport(124, 16, 52,false);
-			if (hit(124,16,51)) teleport(179, 31, 45,false);
+			if (hit(124,16,51,false)) teleport(179, 31, 45,false);
 			
 			// Rawwar City -> Route 38 gate
-			if (hit(124,42,82)) teleport(180, 23, 40,false);
+			if (hit(124,42,82,false)) teleport(180, 23, 40,false);
 			if (hit(180,22,40)) teleport(124, 41, 82,false);
 			if (hit(180,37,40)) teleport(124, 47, 82,false);
-			if (hit(124,46,82)) teleport(180, 36, 40,false);
+			if (hit(124,46,82,false)) teleport(180, 36, 40,false);
 			
 			// Rawwar City -> Route 39 gate
-			if (hit(124,32,92)) teleport(151, 31, 34,false);
+			if (hit(124,32,92,false)) teleport(151, 31, 34,false);
 			if (hit(151,31,33)) teleport(124, 32, 91,false);
 			if (hit(151,31,46)) teleport(152, 30, 8,false);
-			if (hit(152,30,7)) teleport(151, 31, 45,false);
+			if (hit(152,30,7,false)) teleport(151, 31, 45,false);
 			
 			// Iron Town PC
 			if (hit(152,37,72)) teleport(153, 31, 45,false);
@@ -932,12 +931,27 @@ public class EventHandler {
 	
 	public boolean hit(int map, int col, int row) {
 		if (map != gp.currentMap) return false;
+		return hit(map, col, row, true);
+	}
+	
+	public boolean hit(int map, int col, int row, boolean deflt) {
+		if (map != gp.currentMap) return false;
 		if (!canTouchEvent) return false;
 		boolean hit = false;
 		
 		if (map == gp.currentMap) {
 			gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
 			gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
+			if (!deflt && !eventRect[map][col][row].modified) {
+				eventRect[map][col][row].x = gp.tileSize / 8;
+				eventRect[map][col][row].y = gp.tileSize / 8;
+	 			eventRect[map][col][row].width = gp.tileSize * 3 / 4;
+	 			eventRect[map][col][row].height = gp.tileSize * 3 / 4;
+	 			eventRect[map][col][row].eventRectDefaultX = eventRect[map][col][row].x;
+	 			eventRect[map][col][row].eventRectDefaultY = eventRect[map][col][row].y;
+	 			eventRect[map][col][row].modified = true;
+	 			
+			}
 			eventRect[map][col][row].x = col*gp.tileSize + eventRect[map][col][row].x;
 			eventRect[map][col][row].y = row*gp.tileSize + eventRect[map][col][row].y;
 			

@@ -146,7 +146,7 @@ public enum Item {
 	LEFTOVERS(50,0,0,new Color(227, 96, 91),Item.HELD_ITEM,null,"An item that restores the user's HP gradually throughout a battle."),
 	BLACK_SLUDGE(51,0,0,new Color(144, 138, 169),Item.HELD_ITEM,null,"If the holder is a Poison type, this sludge will gradually restore its HP. It damages any other type."),
 	EVIOLITE(52,0,0,new Color(186, 141, 190),Item.HELD_ITEM,null,"A mysterious evolutionary lump that boosts the Defense and Sp. Def stats when held by a Pokemon that can still evolve."),
-	EVERSTONE(53,100,0,new Color(179, 200, 210),Item.HELD_ITEM,null,"A Pokemon holding this peculiar stone is prevented from evolving."), // TODO make untrickable/un knockoffable
+	EVERSTONE(53,100,0,new Color(179, 200, 210),Item.HELD_ITEM,null,"A Pokemon holding this peculiar stone is prevented from evolving; can't be stolen or removed."),
 	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
 	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
 	DAMP_ROCK(54,750,0,new Color(37, 99, 179),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to rain, the rain will persist for longer than usual."),
@@ -210,7 +210,7 @@ public enum Item {
 	LAGGING_TAIL(324,0,0,Color.BLACK,Item.HELD_ITEM,null,"A tremendously heavy item that makes the holder move slower than usual."),
 	BINDING_BAND(340,0,0,Color.BLACK,Item.HELD_ITEM,null,"This band boosts the damage of the binding effect caused by binding moves used by the holder."),
 	GRIP_CLAW(341,0,0,Color.BLACK,Item.HELD_ITEM,null,"When the holder uses moves that deal damage over several turns, such as Bind or Wrap, their effects will last longer than usual."),
-	RING_TARGET(344,0,0,Color.BLACK,Item.HELD_ITEM,null,"When held, moves that would normally have no effect due to type matchups will still hit the holder."), // TODO: make ignore immunities from abilities too
+	RING_TARGET(344,0,0,Color.BLACK,Item.HELD_ITEM,null,"When held, moves that would normally have no effect due to abilities or type matchups will still hit the holder."),
 	STICKY_BARB(347,0,0,Color.BLACK,Item.HELD_ITEM,null,"A clingy barb damages the holder every turn and will latch on to Pokemon that make direct contact with the holder."),
 	UTILITY_UMBRELLA(348,0,0,Color.BLACK,Item.HELD_ITEM,null,"This sturdy umbrella protects the holder from the effects of all weather."),
 	FOCUS_SASH(81,0,500,new Color(232, 80, 80),Item.HELD_ITEM,null,"If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP, but only once."),
@@ -851,28 +851,31 @@ public enum Item {
 	        	if (!(pl instanceof Player)) {
 	        		add.setCalcNickname();
 	        	}
-	    		userMons.addItem(add.clone());
-	    		if (pokemon.id == 150) {
-	        		Pokemon kD = pokemon.clone();
-	        		int oHP = kD.getStat(0);
-					kD.id = 237;
-					kD.setName(kD.getName());
-					if (kD.nickname == kD.name()) kD.nickname = kD.getName();
-					
-					kD.baseStats = kD.getBaseStats();
-					kD.setStats();
-					kD.weight = kD.getWeight();
-					int nHP = kD.getStat(0);
-					kD.currentHP += nHP - oHP;
-					kD.setTypes();
-					kD.setSprites();
-					kD.setAbility(kD.abilitySlot);
-					userMons.addItem(kD);
-	        	}
+	    		if (!(pokemon instanceof Egg)) {
+	    			userMons.addItem(add.clone());
+	    			
+	    			if (pokemon.id == 150) {
+		        		Pokemon kD = pokemon.clone();
+		        		int oHP = kD.getStat(0);
+						kD.id = 237;
+						kD.setName(kD.getName());
+						if (kD.nickname == kD.name()) kD.nickname = kD.getName();
+						
+						kD.baseStats = kD.getBaseStats();
+						kD.setStats();
+						kD.weight = kD.getWeight();
+						int nHP = kD.getStat(0);
+						kD.currentHP += nHP - oHP;
+						kD.setTypes();
+						kD.setSprites();
+						kD.setAbility(kD.abilitySlot);
+						userMons.addItem(kD);
+		        	}
+	    		}
 	        }
 	        if (box != null) {
 				for (Pokemon q : box) {
-					if (q != null) {
+					if (q != null && !(q instanceof Egg)) {
 						userMons.addItem(q.clone());
 					}
 				}
@@ -881,7 +884,7 @@ public enum Item {
 	        	Player player = (Player) pl;
 	        	if (player.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
 	        		for (Pokemon q : player.gauntletBox) {
-	    				if (q != null) {
+	    				if (q != null && !(q instanceof Egg)) {
 	    					userMons.addItem(q.clone());
 	    				}
 	    			}
@@ -1302,28 +1305,31 @@ public enum Item {
 	        	if (!(pl instanceof Player)) {
 	        		add.setCalcNickname();
 	        	}
-	    		userMons.addItem(add.clone());
-	    		if (pokemon.id == 150) {
-	        		Pokemon kD = pokemon.clone();
-	        		int oHP = kD.getStat(0);
-					kD.id = 237;
-					kD.setName(kD.getName());
-					if (kD.nickname == kD.name()) kD.nickname = kD.getName();
-					
-					kD.baseStats = kD.getBaseStats();
-					kD.setStats();
-					kD.weight = kD.getWeight();
-					int nHP = kD.getStat(0);
-					kD.currentHP += nHP - oHP;
-					kD.setTypes();
-					kD.setSprites();
-					kD.setAbility(kD.abilitySlot);
-					userMons.addItem(kD);
+	        	if (!(pokemon instanceof Egg)) {
+	        		userMons.addItem(add.clone());
+	        		
+		    		if (pokemon.id == 150) {
+		        		Pokemon kD = pokemon.clone();
+		        		int oHP = kD.getStat(0);
+						kD.id = 237;
+						kD.setName(kD.getName());
+						if (kD.nickname == kD.name()) kD.nickname = kD.getName();
+						
+						kD.baseStats = kD.getBaseStats();
+						kD.setStats();
+						kD.weight = kD.getWeight();
+						int nHP = kD.getStat(0);
+						kD.currentHP += nHP - oHP;
+						kD.setTypes();
+						kD.setSprites();
+						kD.setAbility(kD.abilitySlot);
+						userMons.addItem(kD);
+		        	}
 	        	}
 	        }
 	        if (box != null) {
 				for (Pokemon q : box) {
-					if (q != null) {
+					if (q != null && !(q instanceof Egg)) {
 						userMons.addItem(q.clone());
 					}
 				}
@@ -1332,7 +1338,7 @@ public enum Item {
 	        	Player player = (Player) pl;
 	        	if (player.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
 	        		for (Pokemon q : player.gauntletBox) {
-	    				if (q != null) {
+	    				if (q != null && !(q instanceof Egg)) {
 	    					userMons.addItem(q.clone());
 	    				}
 	    			}
@@ -1956,7 +1962,7 @@ public enum Item {
 		addLabeledInput.accept("Ability", abilityInput);
 		
 		JComboBox<Nature> natures = new JComboBox<>(Nature.values());
-		if (p != null) natures.setSelectedItem(p);
+		if (p != null) natures.setSelectedItem(p.nat);
 		addLabeledInput.accept("Nature", natures);
 		
 		@SuppressWarnings("unchecked")

@@ -1441,7 +1441,7 @@ public class AssetSetter {
 		
 		mapNum = 28;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(MILLIE, "Millie", 62, 46, "EEK! Wait... your eyes aren't radioactive green.", 28.0);
+		gp.npc[mapNum][index] = NPCSetup(MILLIE, "Millie", 62, 46, "EEK! Wait... your eyes aren't radioactive green.", ALL, 28.0, -1, null);
 		gp.npc[mapNum][index++] = null; // replace with millie_up when we have it
 		gp.npc[mapNum][index] = NPCSetup(UP_XURKITREE, null, 82, 22, "Zzzzt.", 28.3, -1, "", 387);
 		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, "Fred", 82, 32, "Ugh... Can't... Move... glrglg....");
