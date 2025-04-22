@@ -136,7 +136,7 @@ Gave Walrein Ice Beam via Level Up
 Gave Sheltor + Shelnado Frostbind at lv 39 and 63 respectively
 Gave Grust Frostbind at lv 60
 Added sprites for Flamehox, Fireshard, Blastflames, Tiowoo, Magwoo, Lafloo!
-CHANGED WILL-O-WISP, THUNDER WAVE, and FROSTBIND to not miss if the user is Fire, Electric or Ice type respectively to match TOXIC!!
+CHANGED WILL-O-WISP, THUNDER WAVE, and FROSTBIND to have 100% accuracty if the user is Fire, Electric or Ice type respectively to be similar to TOXIC!! (Although Toxic will never miss, these still can)
 Updated Toxic's description to state that it bypasses accuracy checks if the user is Poison type
 Gave Shookwat Shock Wave at lv 21
 Fixed Move Option being reset when using PP Up/PP Max
@@ -430,3 +430,17 @@ Fixed Bottle Cap IV menus not resetting the move selected number (they used the 
 Fixed Mental Herb accidentally removing the foe's flinch condition instead of the holder's
 Made the text for taking entry hazard damage not show up if you have Magic Guard/Scaly Skin
 Fixed office workers saying "Team Nuke" instead of the updated "Team Eclipse"
+ADDED GAME ICON to taskbar/gamepanel, for mac too!
+Added item swapping in the box too (press 'Ctrl + D' to swap items)
+Finally fixed the foe battle UI mons sometimes incorrectly showing their information (status of wrong team member and more)
+Gave Kleinowl Aurora Veil and Psychic Noise via level up and Conkeldurr Power-up Punch
+Fixed choice item selection logic hopefully for good
+Made type changing show dynamically in the Battle UI (Protean, Soak/Magic Powder, etc)
+Fixed Weak Armor not proccing if the user is fainted
+Fixed leveling up to 100 from 99 getting the remaining xp still
+Made cave tile exit draw the cave part over npcs (for Splinkty 8th gym split gauntlet)
+Buffed Anticipation to half damage from the first super effective move if the anticipation user shudders
+Tweaked where the held item is drawn in the box UI
+Added AI for Taunt/Torment to not click if the foe is already taunted/tormented
+Added overworld sprite for Grust and Flamehox-E finally
+Fixed Weather Ball/Terrain Pulse etc to have their colors, types, base power shown correctly based on the custom field in the calc

@@ -300,7 +300,7 @@ public abstract class AbstractUI {
 				
 				g2.setColor(Color.BLACK);
 				g2.setFont(g2.getFont().deriveFont(24F));
-				g2.drawString(p.nickname, getCenterAlignedTextX(p.nickname, (int) (x + (partyWidth * 0.75) - 12)), y + gp.tileSize);
+				g2.drawString(p.getNickname(), getCenterAlignedTextX(p.getNickname(), (int) (x + (partyWidth * 0.75) - 12)), y + gp.tileSize);
 				if (!egg) {
 					int barX = (x + gp.tileSize * 2) - 4;
 					int barY = (int) (y + (gp.tileSize * 1.25));
@@ -432,150 +432,138 @@ public abstract class AbstractUI {
 		}
 		
 		// Ability
-		if (!egg) {
-			g2.setFont(g2.getFont().deriveFont(24F));
-			x += gp.tileSize * 4.5;
-			String abilityLabel = "Ability:";
-			g2.drawString(abilityLabel, getCenterAlignedTextX(abilityLabel, x), y);
-			y += gp.tileSize / 2;
-			String ability = p.ability.toString();
-			g2.drawString(ability, getCenterAlignedTextX(ability, x), y);
-			
-			g2.setFont(g2.getFont().deriveFont(16F));
-			String[] abilityDesc = Item.breakString(p.ability.desc, 32).split("\n");
-			y += gp.tileSize / 4;
-			for (String s : abilityDesc) {
-				y += gp.tileSize / 2 - 4;
-				g2.drawString(s, getCenterAlignedTextX(s, x), y);
-			}
+		g2.setFont(g2.getFont().deriveFont(24F));
+		x += gp.tileSize * 4.5;
+		String abilityLabel = egg ? "Hatch Status:" : "Ability:";
+		g2.drawString(abilityLabel, getCenterAlignedTextX(abilityLabel, x), y);
+		y += gp.tileSize / 2;
+		String ability = egg ? ((Egg)p).getSteps() + " cycles remaining" : p.ability.toString();
+		g2.drawString(ability, getCenterAlignedTextX(ability, x), y);
+		
+		g2.setFont(g2.getFont().deriveFont(16F));
+		String desc = egg ? ((Egg)p).getHatchDesc() : p.ability.desc;
+		String[] abilityDesc = Item.breakString(desc, 32).split("\n");
+		y += gp.tileSize / 4;
+		for (String s : abilityDesc) {
+			y += gp.tileSize / 2 - 4;
+			g2.drawString(s, getCenterAlignedTextX(s, x), y);
 		}
 		
 		// Nickname + Level
 		int barWidth = (int) (gp.tileSize * 3.75);
 		int barHeight = gp.tileSize / 4;
-		if (!egg) {
-			g2.setFont(g2.getFont().deriveFont(24F));
-			x = startX - gp.tileSize / 2;
-			startX = x;
-			y = startY;
-			y += gp.tileSize * 2.5;
-			String name = p.nickname + " Lv. " + p.level;
-			g2.drawString(name, getCenterAlignedTextX(name, x + (barWidth / 2)), y);
-		}
+		g2.setFont(g2.getFont().deriveFont(24F));
+		x = startX - gp.tileSize / 2;
+		startX = x;
+		y = startY;
+		y += gp.tileSize * 2.5;
+		String name = egg ? "Egg" : p.nickname + " Lv. " + p.level;
+		g2.drawString(name, getCenterAlignedTextX(name, x + (barWidth / 2)), y);
 		
 		// Exp
-		if (!egg) {
-			x = startX;
-			y += gp.tileSize / 4;
-			g2.setColor(Color.BLACK);
-			g2.fillRoundRect(x, y, barWidth, barHeight, 10, 10);
-			g2.setColor(new Color(210, 200, 205));
-			g2.fillRoundRect(x + 3, y + 3, barWidth - 6, barHeight - 6, 10, 10);
-			g2.setColor(Color.BLUE.brighter());
-			double xpWidth = (p.exp * 1.0 / p.expMax) * (barWidth - 6);
-			g2.fillRoundRect(x + 3, y + 3, (int) xpWidth, barHeight - 6, 2, 2);
-			
-			g2.setFont(g2.getFont().deriveFont(16F));
-			g2.setColor(Color.WHITE);
-			y += gp.tileSize * 0.75 - 4;
-			String difference = p.level < 100 ? p.expMax - p.exp + "" : "--";
-			String xp = difference + " points to lv. up";
-			g2.drawString(xp, getCenterAlignedTextX(xp, x + (barWidth / 2)), y);
-		}
+		x = startX;
+		y += gp.tileSize / 4;
+		g2.setColor(Color.BLACK);
+		g2.fillRoundRect(x, y, barWidth, barHeight, 10, 10);
+		g2.setColor(new Color(210, 200, 205));
+		g2.fillRoundRect(x + 3, y + 3, barWidth - 6, barHeight - 6, 10, 10);
+		g2.setColor(Color.BLUE.brighter());
+		double xpWidth = (p.exp * 1.0 / p.expMax) * (barWidth - 6);
+		g2.fillRoundRect(x + 3, y + 3, (int) xpWidth, barHeight - 6, 2, 2);
+		
+		g2.setFont(g2.getFont().deriveFont(16F));
+		g2.setColor(Color.WHITE);
+		y += gp.tileSize * 0.75 - 4;
+		String difference = egg ? "??" :  p.level < 100 ? p.expMax - p.exp + "" : "--";
+		String xp = difference + " points to lv. up";
+		g2.drawString(xp, getCenterAlignedTextX(xp, x + (barWidth / 2)), y);
 		
 		
 		// Friendship
 		g2.setFont(g2.getFont().deriveFont(24F));
 		x = (int) (startX + gp.tileSize * 7);
-		if (egg) {
-			x -= gp.tileSize * 1.5;
-			y += gp.tileSize / 2;
-		}
-		String friendshipLabel = egg ? "Hatch Status:" : "Friendship:";
+		String friendshipLabel = "Friendship:";
 		g2.drawString(friendshipLabel, getCenterAlignedTextX(friendshipLabel, x), y);
 		
 		y += gp.tileSize / 2;
 		String happinessCap = p.happiness >= 255 ? 0 + "" : p.happinessCap + "";
-        String friendship = egg ? ((Egg)p).getSteps() + " cycles remaining" : p.happiness + " (" + happinessCap + " remaining)";
+        String friendship = egg ? "???" : p.happiness + " (" + happinessCap + " remaining)";
         g2.drawString(friendship, getCenterAlignedTextX(friendship, x), y);
         
         g2.setFont(g2.getFont().deriveFont(16F));
         y += gp.tileSize / 2;
-        String friendshipDesc = egg ? ((Egg)p).getHatchDesc() : p.getHappinessDesc();
+        String friendshipDesc = egg ? "" : p.getHappinessDesc();
         g2.drawString(friendshipDesc, getCenterAlignedTextX(friendshipDesc, x), y);
         
         // HP Label
         g2.setFont(g2.getFont().deriveFont(24F));
         x = startX;
         y -= gp.tileSize / 4 + 4;
-        if (!egg) {
-        	String hp = p.currentHP + " / " + p.getStat(0) + " HP";
-    		g2.drawString(hp, getCenterAlignedTextX(hp, x + (barWidth / 2)), y);
-        }
-		
+        String hp = egg ? "" : p.currentHP + " / " + p.getStat(0) + " HP";
+    	g2.drawString(hp, getCenterAlignedTextX(hp, x + (barWidth / 2)), y);
+    	
 		// Stats
 		y += gp.tileSize;
-		if (!egg) {
-			for (int i = 0; i < 6; i++) {
-				int sY = y;
-				g2.setFont(g2.getFont().deriveFont(24F));
-				g2.setColor(Color.WHITE);
-				x = startX;
-				String type = Pokemon.getStatType(i, false);
-				type += p.getStat(i);
-	        	
-	        	if (i != 0) {
-	        	    if (p.nat.getStat(i - 1) == 1.1) {
-	        	        g2.setColor(Color.red.darker());
-	        	        g2.drawString("\u2191", x - 15, y);
-	        	    } else if (p.nat.getStat(i - 1) == 0.9) {
-	        	    	g2.setColor(Color.blue);
-	        	    	g2.drawString("\u2193", x - 15, y);
-	        	    }
-	        	}
-	        	g2.drawString(type, x, y);
-	        	
-	        	x += gp.tileSize * 1.5;
-	        	y -= 3;
-	        	g2.setFont(g2.getFont().deriveFont(16F));
-	        	g2.setColor(Color.WHITE);
-	        	String iv = "IV: " + p.getIVs()[i];
-	        	g2.drawString(iv, x, y);
-	        	
-	        	x += gp.tileSize;
-	        	int statWidth = 3 * gp.tileSize;
-	        	int statHeight = gp.tileSize / 2;
-	        	y -= gp.tileSize / 3;
-	        	g2.setColor(Color.BLACK);
-	        	g2.fillRect(x, y, statWidth, statHeight);
-	        	g2.setColor(Color.WHITE);
-	        	g2.fillRect(x + 2, y + 2, statWidth - 4, statHeight - 4);
-	        	double bar = Math.min(p.getBaseStat(i) * 1.0 / 200, 1.0);
-	        	g2.setColor(Pokemon.getColor(p.getBaseStat(i)));
-	        	g2.fillRect(x + 2, y + 2, (int) ((statWidth - 4) * bar), statHeight - 4);
-	        	x += 4;
-	        	y += (gp.tileSize / 2) - 4;
-	        	g2.setColor(Color.BLACK);
-	        	g2.drawString(p.getBaseStat(i) + "", x, y);
-	        	
-	        	y = sY + gp.tileSize / 2;
-			}
+		for (int i = 0; i < 6; i++) {
+			int sY = y;
+			g2.setFont(g2.getFont().deriveFont(24F));
+			g2.setColor(Color.WHITE);
+			x = startX;
+			String type = Pokemon.getStatType(i, false);
+			int stat = p.getStat(i);
+			type += egg ? "??" : stat;
+        	
+        	if (i != 0 && !egg) {
+        	    if (p.nat.getStat(i - 1) == 1.1) {
+        	        g2.setColor(Color.red.darker());
+        	        g2.drawString("\u2191", x - 15, y);
+        	    } else if (p.nat.getStat(i - 1) == 0.9) {
+        	    	g2.setColor(Color.blue);
+        	    	g2.drawString("\u2193", x - 15, y);
+        	    }
+        	}
+        	g2.drawString(type, x, y);
+        	
+        	x += gp.tileSize * 1.5;
+        	y -= 3;
+        	g2.setFont(g2.getFont().deriveFont(16F));
+        	g2.setColor(Color.WHITE);
+        	String iv = egg ? "??" : p.getIVs()[i] + "";
+        	String siv = "IV: " + iv;
+        	g2.drawString(siv, x, y);
+        	
+        	x += gp.tileSize;
+        	int statWidth = 3 * gp.tileSize;
+        	int statHeight = gp.tileSize / 2;
+        	y -= gp.tileSize / 3;
+        	g2.setColor(Color.BLACK);
+        	g2.fillRect(x, y, statWidth, statHeight);
+        	g2.setColor(Color.WHITE);
+        	g2.fillRect(x + 2, y + 2, statWidth - 4, statHeight - 4);
+        	int baseStat = egg ? 0 : p.getBaseStat(i);
+        	double bar = Math.min(baseStat * 1.0 / 200, 1.0);
+        	g2.setColor(Pokemon.getColor(p.getBaseStat(i)));
+        	g2.fillRect(x + 2, y + 2, (int) ((statWidth - 4) * bar), statHeight - 4);
+        	x += 4;
+        	y += (gp.tileSize / 2) - 4;
+        	g2.setColor(Color.BLACK);
+        	String baseStatString = egg ? "??" : baseStat + "";
+        	g2.drawString(baseStatString, x, y);
+        	
+        	y = sY + gp.tileSize / 2;
 		}
 		
 		// Nature
-		if (!egg) {
-			x = startX;
-			y += gp.tileSize / 4;
-			g2.setFont(g2.getFont().deriveFont(24F));
-			g2.setColor(Color.WHITE);
-			String nature = p.getNature() + " Nature";
-			g2.drawString(nature, x, y);
-		}
+		x = startX;
+		y += gp.tileSize / 4;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.setColor(Color.WHITE);
+		String nature = p.getNature() + " Nature";
+		g2.drawString(nature, x, y);
 		
 		// Met At
 		x += gp.tileSize * 3;
 		int metY = y;
-		if (egg) y += gp.tileSize * 2;
 		if (p.metAt != null) {
 			int centerX = x + (int) (gp.tileSize * 1.25);
 			y -= gp.tileSize / 4;
@@ -645,87 +633,85 @@ public abstract class AbstractUI {
 		}
 		
 		if (nicknaming < 0) {
-			if (!egg) {
-				if (gp.keyH.wPressed && moveSummaryNum == -1) {
-					gp.keyH.wPressed = false;
+			if (!egg && gp.keyH.wPressed && moveSummaryNum == -1) {
+				gp.keyH.wPressed = false;
+				moveSummaryNum = 0;
+			}
+			
+			if (!egg && gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				moveSummaryNum--;
+				if (moveSummaryNum < 0) {
+					int index = 3;
+					while (p.moveset[index] == null) {
+						index--;
+					}
+					moveSummaryNum = index;
+				}
+			}
+			
+			if (!egg && gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				if (moveSummaryNum < 3 && p.moveset[moveSummaryNum + 1] != null) {
+					moveSummaryNum++;
+				} else {
 					moveSummaryNum = 0;
 				}
-				
-				if (gp.keyH.upPressed) {
-					gp.keyH.upPressed = false;
-					moveSummaryNum--;
-					if (moveSummaryNum < 0) {
-						int index = 3;
-						while (p.moveset[index] == null) {
+			}
+			
+			if (moveSummaryNum < 0 && !showBoxSummary && !gp.battleUI.showFoeSummary && !gp.simBattleUI.showFoeSummary) {
+				if (gp.keyH.leftPressed) {
+					gp.keyH.leftPressed = false;
+					if (partyNum > 0) {
+						partyNum--;
+					} else {
+						int index = 5;
+						while (gp.player.p.team[index] == null) {
 							index--;
 						}
-						moveSummaryNum = index;
+						partyNum = index;
 					}
 				}
 				
-				if (gp.keyH.downPressed) {
-					gp.keyH.downPressed = false;
-					if (moveSummaryNum < 3 && p.moveset[moveSummaryNum + 1] != null) {
-						moveSummaryNum++;
+				if (gp.keyH.rightPressed) {
+					gp.keyH.rightPressed = false;
+					if (partyNum < 5 && gp.player.p.team[partyNum + 1] != null) {
+						partyNum++;
 					} else {
-						moveSummaryNum = 0;
+						partyNum = 0;
 					}
 				}
-				
-				if (moveSummaryNum < 0 && !showBoxSummary && !gp.battleUI.showFoeSummary && !gp.simBattleUI.showFoeSummary) {
-					if (gp.keyH.leftPressed) {
-						gp.keyH.leftPressed = false;
-						if (partyNum > 0) {
-							partyNum--;
-						} else {
-							int index = 5;
-							while (gp.player.p.team[index] == null) {
-								index--;
-							}
-							partyNum = index;
+			}
+			
+			if (gp.keyH.aPressed) {
+				gp.keyH.aPressed = false;
+				if (p.playerOwned()) {
+					if (moveSummaryNum < 0) {
+						if (p.item != null && foe == null) {
+							showMessage("Took " + p.nickname + "'s " + p.item + ".");
+							gp.player.p.bag.add(p.item);
+							p.item = null;
 						}
-					}
-					
-					if (gp.keyH.rightPressed) {
-						gp.keyH.rightPressed = false;
-						if (partyNum < 5 && gp.player.p.team[partyNum + 1] != null) {
-							partyNum++;
-						} else {
-							partyNum = 0;
-						}
-					}
-				}
-				
-				if (gp.keyH.aPressed) {
-					gp.keyH.aPressed = false;
-					if (p.playerOwned()) {
-						if (moveSummaryNum < 0) {
-							if (p.item != null && foe == null) {
-								showMessage("Took " + p.nickname + "'s " + p.item + ".");
-								gp.player.p.bag.add(p.item);
-								p.item = null;
+					} else {
+						if (moveSwapNum > -1) {
+							if (moveSummaryNum != moveSwapNum) {
+								Moveslot temp = p.moveset[moveSummaryNum];
+								p.moveset[moveSummaryNum] = p.moveset[moveSwapNum];
+								p.moveset[moveSwapNum] = temp;
 							}
+							moveSwapNum = -1;
 						} else {
-							if (moveSwapNum > -1) {
-								if (moveSummaryNum != moveSwapNum) {
-									Moveslot temp = p.moveset[moveSummaryNum];
-									p.moveset[moveSummaryNum] = p.moveset[moveSwapNum];
-									p.moveset[moveSwapNum] = temp;
-								}
-								moveSwapNum = -1;
-							} else {
-								moveSwapNum = moveSummaryNum;
-							}
+							moveSwapNum = moveSummaryNum;
 						}
 					}
 				}
-				
-				if (gp.keyH.dPressed) {
-					gp.keyH.dPressed = false;
-					if (foe == null) {
-						nickname = new StringBuilder(p.nickname);
-						setNicknaming(true);
-					}
+			}
+			
+			if (!egg && gp.keyH.dPressed) {
+				gp.keyH.dPressed = false;
+				if (foe == null) {
+					nickname = new StringBuilder(p.nickname);
+					setNicknaming(true);
 				}
 			}
 			

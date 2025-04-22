@@ -306,7 +306,7 @@ public class Trainer implements Serializable {
 		if (pAbility == Ability.FRIENDLY_GHOST && type == PType.GHOST) multiplier = 0;
 		if (pAbility == Ability.GALACTIC_AURA && (type == PType.ICE || type == PType.PSYCHIC)) multiplier *= 0.5;
 		if (pAbility == Ability.UNWAVERING && (type == PType.DARK || type == PType.GHOST)) multiplier *= 0.5;
-		if (pAbility == Ability.JUSTIFIED && type == PType.DARK) multiplier *= 2;
+		if (pAbility == Ability.JUSTIFIED && type == PType.DARK) multiplier *= 0.5;
 		if (pAbility == Ability.INSECT_FEEDER && type == PType.BUG) multiplier = 0;
 		if (pAbility == Ability.LEVITATE && type == PType.GROUND) multiplier = 0;
 		if (p.getItem() == Item.AIR_BALLOON && type == PType.GROUND) multiplier = 0;
@@ -323,6 +323,8 @@ public class Trainer implements Serializable {
 		if (pAbility == Ability.WATER_ABSORB && type == PType.WATER) multiplier = 0;
 		if (pAbility == Ability.MOSAIC_WINGS && multiplier == 1.0) multiplier = 0.5;
 		if (pAbility == Ability.WONDER_GUARD && multiplier < 2.0) multiplier = 0;
+		if (pAbility == Ability.MYSTIC_ABSORB && type == PType.MAGIC) multiplier = 0;
+		if (pAbility == Ability.DJINN1S_FAVOR && type == PType.MAGIC) multiplier = 0;
 		
 		if (m != null && m.critChance < 0 && multiplier > 0) return 1;
 		

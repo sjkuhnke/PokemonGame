@@ -110,23 +110,23 @@ Spacebear -> Teddinaut/Ursanaut   Teddinaut
 Bealtle -> Minipede   Minipede
 Centatle -> Morphopede/Milimace   Morphopede
 Curlatoral -> Megapede/Centinel   Megapede
-Millistone -> Purpypede/Terrapleura
-Sapwin -> Rootle/Ferndish
+Millistone -> Purpypede/Terrapleura/Millicudgel/Millimace/Cudgelpede
+Sapwin -> Rootle/Ferndish/Sapwin
 Treewin -> Kappalm/Shrubbully
 Winagrow -> Serpenge/Verdrake
 Busheep ->
 Ramant ->
 Bushewe ->
-Bugik -> Bealiddle/Beatiny/Centidden
-Swordik -> Scarabit/Scimitarb/Spartipede/Scarabrute
-Ninjakik -> Bedental/Bidentalis/Beadental/Gladipede/Vermarshal
+Bugik -> Bealiddle/Beatiny/Centidden/Scarabit   Scarabit
+Swordik -> Scimitarb/Spartipede/Scarabrute   Spartipede
+Ninjakik -> Bedental/Bidentalis/Beadental/Gladipede/Vermarshal   Gladipede
 Bluebunn -> Willolagos/Willagos
 Rocky -> Sedinister/Sedister
 Boulder -> Metaslate
 Blaster -> Sedisoftra
 Crystallor -> Obsidicite/Prismodon
 Carinx -> Asmethyst/Asmethiss
-Carinator -> Aspomancer/Geobra
+Carinator -> Aspomancer/Geobra/Aspomator
 Cairnasaur -> Kobraturgy
 Pebblepup -> Sabretite/Sabore/Bitiger/Kiteeth/Sabare/Machairoc/Sabrunt
 Boulderoar -> Staglodon/Graniteeth/Saberock/Stalagbite/Statatrox/Terratooth
@@ -142,13 +142,13 @@ Tricercil -> Topazatops
 Froshrog -> Flashrog/Amphibulb/Ribblink
 Bouncerog -> Blitzoad
 Bugop -> Lunymph
-Opwing -> Feromoth
+Opwing -> Fearomoth
 Otterpor -> Whotter/Odder
 Psylotter -> Foresott/Torrentor/Lutrineer
 Florline -> Kitturf/Mosscelot
 Florlion -> Oncaroma/Osceloma/Osceroma
-Psycorb -> Psycorb/Orbronze/Atocule
-Psyballs -> Silvidol/Silvicle/Orbitin/Atomene
+Psycorb -> Psycorb/Atocule
+Psyballs -> Orbitin/Atomene
 Psycorboratr -> Auracle/Spheracle/Attomicaze
 Tigrette -> Benglow
 Flameruff -> 
