@@ -519,7 +519,7 @@ public enum Move {
 	SUNNY_DAY(0,1000,0,0,2,0,PType.FIRE,"Changes the weather to SUNNY for 5 turns",false,5),
 	SUNSTEEL_STRIKE(100,100,0,0,0,0,PType.STEEL,"A normal attack",true,5),
 	SUPER_FANG(0,90,0,-999,0,0,PType.NORMAL,"Halves foe's remaining HP",true,10),
-	SUPERCHARGED_SPLASH(10,100,75,0,1,0,PType.WATER,"% chance to raise user's Sp.Atk by 2. Turns into Thunder when used by Kissyfishy-D",false,15),
+	SUPERCHARGED_SPLASH(10,100,75,0,1,0,PType.WATER,"% chance to raise user's Sp.Atk by 3. Turns into Thunder when used by Kissyfishy-D",false,15),
 	SUPERNOVA_EXPLOSION(200,100,0,0,1,0,PType.GALACTIC,"User faints",false,5),
 	SUPERPOWER(120,100,100,0,0,0,PType.FIGHTING,"% of lowering user's Attack and Defense by 1",true,5),
 	SUPERSONIC(0,55,0,0,2,0,PType.NORMAL,"Confuses foe",false,20),

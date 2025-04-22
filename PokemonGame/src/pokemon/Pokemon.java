@@ -7233,7 +7233,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Task.addAbilityTask(this);
 			field.setTerrain(field.new FieldEffect(Effect.SPARKLY));
 			if (this.getItem() == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
-		} else if (this.ability == Ability.GRAVITATION) {
+		} else if (this.ability == Ability.GRAVITATION && field.contains(field.fieldEffects, Effect.GRAVITY)) {
 			Task.addAbilityTask(this);
 			field.setEffect(field.new FieldEffect(Effect.GRAVITY));
 		} else if (this.ability == Ability.COSMIC_WARP) {

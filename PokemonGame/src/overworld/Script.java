@@ -707,14 +707,16 @@ public class Script {
 					p.flag[2][7] = true;
 				} else {
 					p.bag.remove(Item.WIRE_CUTTERS);
-					p.flag[2][11] = true;
 					Task.addTask(Task.TEXT, "You used the wire cutters to set it free!");
 					Task.addTask(Task.FLASH_IN, "");
 					Task.addTask(Task.UPDATE, "");
 					Task.addTask(Task.FLASH_OUT, "");
 					Task.addTask(Task.DIALOGUE, npc, "Bzzz....Zzzzttt..... ZUZUZUURRKIII!!!");
-					Task.addTask(Task.DIALOGUE, npc, "(The mysterious creature seems shell-shocked, and is now lashing out at everything around it!)");
-					Task t = Task.addTask(Task.BATTLE, "", 387);
+					Task.addTask(Task.TEXT, "(The mysterious creature seems shell-shocked, and is now lashing out at everything around it!)");
+					Task t = Task.addTask(Task.FLAG, "");
+					t.start = 2;
+					t.finish = 11;
+					t = Task.addTask(Task.BATTLE, "", 387);
 					t.start = 284;
 				}	
 			}

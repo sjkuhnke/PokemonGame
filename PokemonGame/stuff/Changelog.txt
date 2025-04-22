@@ -89,7 +89,7 @@ Fixed Move BP in MovesInfo.txt
 Gave Bluebunn Light Of Ruin at lv 62
 Gave Clefable Genesis Supernova at lv 65
 Fixed some miscellaneous tiles
-Gave Magikarp-E return for consistency with a trainer
+Gave Magikarp-E return via TM for consistency with a trainer
 Changed the calc to just take a Pokemon and then fill in the rest of the team instead of a specific player (for sim)
 Added Sports Betting table in the casino!
 Added dialogue for trainers in 6 gym split up through Rayna!
@@ -98,7 +98,7 @@ Increased max blackjack hand size from 5 -> 7
 Added "Doubling" to the blackjack table!
 Added a TON of blackjack statistics for players to analyze their play
 Added a Simulation Battle UI and built it extending the Battle UI for watching 2 npcs fight with AI to bet on!
-Added [Ctrl] + [Shift] + [S] to print the current tasks out in the console for debugging
+Added [Ctrl] + [Shift] to print the current tasks out in the console for debugging
 FIXED Kissyfishy-D visually (HP bar being wrong on player side, sprites not being set correctly, nicknames not being set correctly)
 Added a bunch of statistic fields to the Field class that keep track of turns, crits, etc
 REMOVED the hard coded side field effects (Player side, Foe side) and added them in the Trainer class to hold the effects diagonally
@@ -210,13 +210,11 @@ Floodlight: Status/--/1000/15 Creates a hazard that lowers the evasion of opposi
 Rainbow Flash: 45/100 special +1 priority
 *Light Speed: 80/100 physical +2 priority
 Aurora Glow: Status/1000/5 Field effect that lasts 5 turns, heals all Light/Ice/Galactic types in the back too for 1/8 HP every turn
-MAKE AN ABILITY FOR DUALMOOSE THAT SETS THIS UP ON SWITCH-IN, remove magic bounce make the aurora ability the default one, snow cloak secondary, sparkly surge hidden
 Flash Darts: Physical/25/90/15 Strikes 2-5 times in succession
 Sword of Dawn: Physical/150/90/5 Must recharge after use unless it KOs the target
 *Spotlight Ray: Special/80/100 Encores opponent for 2 turns
 Sunny Burst: Sunny Doom rename
 Solstice Blade: Glittering Sword rename
-MAKE SOLSTICE BLADE DO 1.5x in SUN AND 0.5x in OTHER WEATHER
 Radiant Break: Spirit Break rename
 Gave Ludicolo Encore on evo as well
 Fixed a path tile in Gelb Forest
@@ -290,13 +288,13 @@ Added Everglow ability which sets up Aurora Glow for 5 turns
 Changed Hatterene's Hidden Ability: Unwavering -> Mystic Rift
 Changed Minishoo/Glittleshoo's Hidden Abilities: Mirror Armor -> Mystic Rift
 Added Mystic Rift: sets Magic Room for 5 turns
-Updated Mental Herb to include its Flinch-removing effect as well
+Updated Mental Herb desc to include its Flinch-removing effect as well
 Added Disable and distributed to a bunch of Pokemon
 Added Magic Room and distributed to a bunch of Pokemon
 Added Psychic Noise and distributed to a bunch of Pokemon
 Added Future Sight and distributed to a bunch of Pokemon
 Added Poltergeist and distributed to a bunch of Pokemon
-Fixed set damage moves being able to crit/be super effective/resisted (in text only; still works correctly damage-wise)
+Fixed set damage moves being able to crit/be super effective/resisted (in text only; still worked correctly damage-wise)
 Added the following factors effecting the Base Power when viewing a move summary:
 - Arcane Spell
 - Metronome (item)
@@ -375,8 +373,6 @@ Made Mental Herb remove the Possessed effect from Abduct/Take Over and updated i
 Added AI switching out when toxiced with a 5% * (toxic counter - 1) chance each turn
 Changed crit stages from (5% -> 12.5% -> 25% -> 100%) to (5% -> 12.5% -> 25% -> 50% -> 100%) to better mirror real Pokemon
 Fixed Toxic Debris and Rockfall Frenzy still announcing that they failed when there's max layers (changed to silently fail since they're passive effects)
-Made certain Key Items unusable to prevent confusion for players
-Fixed bug with player Pokemon being able to wrap/trap the opponent staying on after they switch
 Made item swapping text for your party have line breaks
 Fixed Rocky Helmet damage (1/8 -> 1/6 HP)
 Changed Poov's abilities (Adaptability/Anger Point/(Pressure) -> Cursed Body/Adaptability/(Perish Body))
@@ -444,3 +440,78 @@ Tweaked where the held item is drawn in the box UI
 Added AI for Taunt/Torment to not click if the foe is already taunted/tormented
 Added overworld sprite for Grust and Flamehox-E finally
 Fixed Weather Ball/Terrain Pulse etc to have their colors, types, base power shown correctly based on the custom field in the calc
+Made Millie 1 spin randomly to show that she's not a trainer but is looking around frantically
+FIXED GATE WARP COLLISION SO THE HITBOX FOR WARPING IS BIG ENOUGH while still keeping warps working properly for the 5th gym
+Made Everstone unable to be tricked/stolen/knocked off for counterplay to Trick Tackle
+Made Ring Target also ignore ability immunities for the holder (Water Absorb/Lightning Rod/Levitate etc.)
+Fixed Rough Skin/Iron Barbs/Rocky Helmet text showing even when the affected is immune (Magic Guard/Scaly Skin)
+Fixed AI seeing that Justified gives a dark resist (was accidentally showing a dark weakness)
+Gave HammyBoy and Hamthorno Belly Drum and gave Hamthorno Spikes
+Put Nincada at a 10% chance on Route 36
+CHANGED A BATCH OF FAKEMON's NAMES IN THIS UPDATE, the following table will show their old -> new names (this changelog will be the last time I reference their old names)
+Hummingspark  |Chivick
+Flashclaw     |Humbrill
+Magestiflash  |Huminescence
+Pigo          |Scigeon
+Pigonat       |Thieven
+Pigoga        |Armoraven
+HammyBoy      |Grunswine
+Hamthorno     |Hoghoncho
+Sheabear      |Teddull
+Dualbear      |Teddician
+Spacebear     |Teddinaut
+Bealtle       |Minipede
+Centatle      |Centinel
+Curlatoral    |Milimace
+Millistone    |Milipleura
+Treewin       |Kappalm
+Winagrow      |Serpenge
+Bugik         |Scarabit
+Swordik       |Spartipede
+Ninjakik      |Gladipede
+Bluebunn      |Willolagos
+Rocky         |Sedinister
+Boulder       |Metaslate
+Blaster       |Sedisoftra
+Crystallor    |Prismodon
+Carinx        |Asmethiss
+Carinator     |Aspomancer
+Cairnasaur    |Kobraturgy
+Pebblepup     |Sabore
+Boulderoar    |Saberock
+Fightorex     |Rexisilt
+Raptorex      |Pterator
+Kleinowl      |Snowlet
+Hootowl       |Nixnerva
+Dualmoose     |Cervora
+Grondor       |Grislush
+Bipedice      |Thalarctic
+Tricerpup     |Ceramber
+Tricercil     |Topazatops
+Bugop         |Lunymph
+Opwing        |Fearomoth
+Otterpor      |Whotter
+Psylotter     |Lutrineer
+Florline      |Mosscelot
+Florlion      |Osceloma
+Tigrette      |Benglow
+Iglite        |Sember
+Blaxer        |Kaboon
+Pyrator       |Detonape
+Rocky-E       |Sedinister-E
+Boulder-E     |Metaslate-E
+Blaster-E     |Sedisoftra-E
+Crystallor-E  |Primodon-E
+Iglite-S      |Sember-S
+Blaxer-S      |Kaboon-S
+Pyrator-S     |Detonape-S
+Added dialogue for trainers in 7 gym split up through Merlin!
+Fixed trying to switch to an Egg in battle showing "Egg" instead of the Pokemon inside's nickname
+Fixed Supercharged Splash's description saying that it raises by 3 stages of SpA instead of 2
+Fixed Gravitation not announcing if Gravity is already in effect
+Fixed Cage Critter's weak and attack dialogue to show that it's being said by it
+Fixed Battle UI letting you still highlight the catch window against static boss fights (even though the window is invisible, looks like the cursor just disappears)
+Added calc showing greyed moves if they aren't valid moves to click (encored/choice locked etc.)
+Made calc move buttons a fixed size
+
+Demo 1.1 Released

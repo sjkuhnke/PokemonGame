@@ -657,13 +657,6 @@ public class BattleUI extends AbstractUI {
 			Task.addSwapInTask(foe, false);
 			foeFainted = foe.trainer.getNumFainted();
 		}
-		if (staticID == 162) {
-			Task.addTask(Task.TEXT, foe.nickname + "'s aura is radiating!");
-	    	for (int i = 0; i < 5; i++) {
-	    		foe.stat(foe, i, 1, new Pokemon(1, 1, false, false));
-	    	}
-	    	aura = true;
-	    }
 		if (staticID == 205 || staticID == 210 || staticID == 197 || staticID == 202) {
 			Task.addTask(Task.TEXT, foe.nickname + " is surrounded by immense electricity!");
 	    	for (int i = 0; i < 5; i++) {
@@ -671,7 +664,7 @@ public class BattleUI extends AbstractUI {
 	    	}
 	    	aura = true;
 	    }
-		if (Pokemon.isUltraBeast(staticID)) {
+		if (Pokemon.isUltraBeast(staticID) || staticID == 159) { // grusts aren't catchable in the forest
 			aura = true;
 		}
 		Task.addSwapInTask(user, true);
@@ -1339,9 +1332,9 @@ public class BattleUI extends AbstractUI {
 			gp.keyH.aPressed = false;
 			Pokemon select = gp.player.p.team[partyNum];
 			if (select.isFainted()) {
-				currentDialogue = select.nickname + " has no energy to battle!";
+				currentDialogue = select.getNickname() + " has no energy to battle!";
 			} else if (select == select.trainer.getCurrent()) {
-				currentDialogue = select.nickname + " is already out!";
+				currentDialogue = select.getNickname() + " is already out!";
 			} else if (cancellableParty && user.isTrapped(foe)) {
         		currentDialogue = "You are trapped and cannot switch!";
 			} else {
