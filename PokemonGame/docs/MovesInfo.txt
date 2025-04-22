@@ -75,7 +75,7 @@
  Dragon Rage        | Special  | --  | 100 | 10 PP : Always does 40 HP damage
  Dragon Rush        | Physical | 100 | 75  | 10 PP : 20% chance of causing foe to flinch
  Dragon Tail        | Physical | 60  | 90  | 10 PP : Switches out foe randomly, always moves last
- Dual Chop          | Physical | 40  | 90  | 15 PP : Attacks twice
+ Dual Chop          | Physical | 40  | 100 | 15 PP : Attacks twice, each hit has a boosted Crit rate
  Hp Dragon          | Special  | 60  | 100 | 15 PP : Calc only move
  Outrage            | Physical | 120 | 100 | 10 PP : User is locked into this move for 2-3 turns, Confuses user when the effect is done
  Return Dragon      | Physical | 70  | 100 | 15 PP : Calc only move
@@ -103,7 +103,7 @@
  Thunder            | Special  | 110 | 70  | 5 PP  : 30% of Paralyzing foe, doesn't check accuracy in RAIN
  Thunder Fang       | Physical | 65  | 95  | 15 PP : 10% of Paralyzing and/or flinching foe
  Thunder Punch      | Physical | 75  | 100 | 15 PP : 20% of Paralyzing foe
- Thunder Wave       | Status   | --  | 90  | 15 PP : Paralyzes foe, ELECTRIC Pokemon can't miss this move
+ Thunder Wave       | Status   | --  | 90  | 15 PP : Paralyzes foe, accuracy is 100% for ELECTRIC Pokemon
  Thunderbolt        | Special  | 90  | 100 | 10 PP : 10% of Paralyzing foe
  Thundershock       | Special  | 40  | 100 | 30 PP : 10% of Paralyzing foe
  Volt Switch        | Special  | 70  | 100 | 10 PP : Causes user to switch out after use
@@ -116,7 +116,7 @@
  Aura Sphere        | Special  | 90  | --  | 15 PP : This attack always hits
  Beefy Bash         | Physical | 100 | 85  | 5 PP  : 50% chance to paralyze foe, moves last
  Body Press         | Physical | 80  | 100 | 10 PP : Uses user's Defense stat instead of Attack
- Brick Break        | Physical | 75  | 100 | 15 PP : Breaks Screen effects and bypasses Magic Reflect
+ Brick Break        | Physical | 75  | 100 | 15 PP : Breaks Screen effects and breaks Magic Reflect
  Bulk Up            | Status   | --  | --  | 10 PP : Raises user's Attack and Defense by 1
  Channeling Blow    | Physical | 65  | 100 | 15 PP : This move always crits
  Circle Throw       | Physical | 60  | 90  | 10 PP : Switches out foe randomly, always moves last
@@ -187,7 +187,7 @@
  Sacred Fire        | Physical | 100 | 95  | 5 PP  : 50% chance to Burn foe
  Sunny Day          | Status   | --  | --  | 5 PP  : Changes the weather to SUNNY for 5 turns
  V-Create           | Physical | 180 | 95  | 5 PP  : Lowers user's Defense, Sp.Def, and Speed by 1
- Will-O-Wisp        | Status   | --  | 85  | 15 PP : Burns foe, FIRE Pokemon can't miss this move
+ Will-O-Wisp        | Status   | --  | 85  | 15 PP : Burns foe, accuracy is 100% for FIRE Pokemon
 =============================================================================================================
                                                   Flying
 =============================================================================================================
@@ -245,6 +245,7 @@
 =============================================================================================================
  Astonish           | Physical | 30  | 100 | 15 PP : 30% chance of causing foe to flinch
  Bitter Malice      | Special  | 75  | 100 | 10 PP : 30% chance to Frostbite foe
+ Bloodshed Cleave   | Physical | 90  | 100 | 10 PP : Heals either 75% damage dealt to foe or 25% of user's max HP; whichever is greater 
  Confuse Ray        | Status   | --  | 100 | 10 PP : Confuses foe
  Curse              | Status   | --  | --  | 10 PP : User loses half of its total HP. In exchance, foe takes 1/4 of its max HP at the end of every turn
  Destiny Bond       | Status   | --  | --  | 5 PP  : Always goes first; can't be used twice in a row. If foe knocks out user the same turn, foe faints as well
@@ -258,7 +259,7 @@
  Phantom Force      | Physical | 100 | 100 | 10 PP : A two turn attack. User vanishes on the first, and attacks on the second. Hits through protect.
  Poltergeist        | Physical | 110 | 90  | 5 PP  : Fails if the target isn't holding an item
  Return Ghost       | Physical | 70  | 100 | 15 PP : Calc only move
- Shadow Ball        | Special  | 80  | 100 | 15 PP : 30% to lower foe's Sp.Def by 1
+ Shadow Ball        | Special  | 80  | 100 | 15 PP : 20% to lower foe's Sp.Def by 1
  Shadow Claw        | Physical | 80  | 100 | 15 PP : Boosted crit rate
  Shadow Punch       | Physical | 80  | --  | 20 PP : This attack never misses
  Shadow Sneak       | Physical | 40  | 100 | 15 PP : Always attacks first
@@ -361,36 +362,27 @@
  Charm              | Status   | --  | 100 | 15 PP : Lowers foe's Attack by 2
  Chromo Beam        | Special  | 80  | 100 | 5 PP  : 30% chance to double in Base Power
  Dazzling Gleam     | Special  | 80  | 100 | 10 PP : A normal attack
- Draining Kiss      | Special  | 50  | 100 | 10 PP : Heals 75% of damage dealt to foe
  Flash              | Status   | --  | --  | 10 PP : Lowers foe's Accuracy by 1, and raises user's Sp.Atk by 1
  Flash Darts        | Physical | 25  | 90  | 15 PP : Hits 2-5 times, each hit has a boosted crit rate
  Flash Ray          | Special  | 40  | 100 | 25 PP : 50% chance to lower foe's Accuracy by 1
  Floodlight         | Status   | --  | --  | 10 PP : Sets a floodlight on opponents side. This will cause a foe switching in to have their Evasion lowered by 1 stage
  Geomancy           | Status   | --  | --  | 5 PP  : Charges on the first turn, raises user's Sp.Atk, Sp.Def and Speed by 2 on the second
  Glitter Dance      | Status   | --  | --  | 10 PP : Raises user's Sp.Atk and Speed by 1
- Glittering Sword   | Physical | 95  | 100 | 10 PP : 20% chance to lower foe's Defense by 1
- Glittering Tornado | Special  | 55  | 100 | 25 PP : 30% chance to lower foe's Accuracy by 1
- Glitzy Glow        | Special  | 80  | 100 | 15 PP : 30% chance to raise user's Sp.Def by 1
  Hp Light           | Special  | 60  | 100 | 15 PP : Calc only move
  Light Beam         | Special  | 60  | 100 | 15 PP : 20% chance to raise user's Sp.Atk by 1
  Light Drain        | Special  | 75  | 100 | 10 PP : Heals 50% of damage dealt
  Light Of Ruin      | Special  | 140 | 90  | 5 PP  : User takes 1/3 of damage dealt as recoil
  Light Speed        | Physical | 80  | 100 | 5 PP  : Always goes first
- Luster Purge       | Special  | 70  | 100 | 10 PP : 50% chance to lower foe's Sp.Def by 1
- Moonblast          | Special  | 95  | 100 | 5 PP  : 30% chance to lower foe's Sp.Atk
  Moonlight          | Status   | --  | --  | 5 PP  : Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather
  Morning Sun        | Status   | --  | --  | 5 PP  : Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather
  Photon Geyser      | Special  | 130 | 90  | 5 PP  : Lowers user's Sp.Atk by 2
- Play Rough         | Physical | 90  | 90  | 10 PP : 10% chance to lower foe's Attack by 1
  Prismatic Laser    | Special  | 100 | 100 | 10 PP : A normal attack
  Radiant Break      | Physical | 75  | 100 | 15 PP : 100% chance to lower foe's Sp.Atk by 1
  Rainbow Flash      | Special  | 50  | 100 | 10 PP : Always goes first
  Return Light       | Physical | 70  | 100 | 15 PP : Calc only move
  Solstice Blade     | Physical | 95  | 100 | 10 PP : 20% chance to lower foe's Defense by 1, 1.5x damage in SUN and 0.5x damage in other weathers
- Spirit Break       | Physical | 75  | 100 | 15 PP : 100% chance to lower foe's Sp.Atk by 1
  Spotlight Ray      | Special  | 80  | 100 | 5 PP  : 100% to encore foe for 2 turns
  Sunny Burst        | Special  | 80  | 100 | 5 PP  : 100% to turn weather to SUNNY
- Sunny Doom         | Special  | 80  | 100 | 5 PP  : If this attack faints foe, causes weather to turn SUNNY
  Sweet Kiss         | Status   | --  | 75  | 10 PP : Confuses foe
  Sword Of Dawn      | Physical | 150 | 90  | 5 PP  : User must rest unless this attack KOs foe
 =============================================================================================================
@@ -401,14 +393,11 @@
  Aurora Boost       | Status   | --  | --  | 10 PP : Raises user's Defense and Sp.Def by 1, and user's Sp.Atk by 2
  Deck Change        | Status   | --  | 100 | 5 PP  : Swaps the foe's Attack and SpA stats
  Disenchant         | Special  | 70  | 100 | 15 PP : Clears all stat changes on foe before attacking
- Elemental Sparkle  | Special  | 45  | 90  | 10 PP : A random Grass, Fire, or Water move is also used
  Foresight          | Status   | --  | --  | 35 PP : Indentifies foe, replacing their Ghost typing with Normal if they have it. It also raises user's Accuracy by 1 stage
  Healing Circle     | Status   | --  | --  | 10 PP : Creates a circle on the user's side that heals incoming Pokemon for 25% of their HP, lasts 8 turns
  Hex Claw           | Physical | 75  | 100 | 10 PP : 100% chance to disable the target's last used move for 3 turns
  Hocus Pocus        | Special  | 70  | 95  | 10 PP : 20% to inflict foe with a random Status condition
  Hp Magic           | Special  | 60  | 100 | 15 PP : Calc only move
- Magic Blast        | Special  | 30  | 95  | 10 PP : A random Rock, Ground or Grass move is also used
- Magic Crash        | Physical | 110 | 80  | 5 PP  : 100% to inflict foe with a random Status condition. User must rest after using
  Magic Fang         | Physical | 70  | 95  | 10 PP : 75% to flinch foe if this move is Super-Effective against it, bypasses Magic Reflect
  Magic Missiles     | Special  | 25  | 90  | 15 PP : Hits 2-5 times, does Physical damage
  Magic Powder       | Status   | --  | 100 | 15 PP : Changes foe's type to MAGIC
@@ -421,14 +410,11 @@
  Quick Spell        | Special  | 40  | 100 | 15 PP : Always attacks first
  Return Magic       | Physical | 70  | 100 | 15 PP : Calc only move
  Sea Dragon         | Status   | --  | --  | 5 PP  : Transforms Kissyfishy into Kissyfishy-D: raised Atk, SpAtk, Acc by 1 if Kissyfishy-D
- Sparkle Strike     | Physical | 80  | --  | 15 PP : This attack never misses
  Sparkling Terrain  | Status   | --  | --  | 10 PP : Sets the terrain to SPARKLY for 5 turns
- Sparkly Swirl      | Special  | 70  | 100 | 15 PP : 10% chance to lower all of foe's stats by 1
  Spellbind          | Status   | --  | 100 | 10 PP : Traps non-MAGIC foe for 4-5 turns, lowers foe's Def and SpD by 1 every turn, 2 if Binding Band was held
  Swift              | Special  | 60  | --  | 20 PP : This attack never misses
  Trick              | Status   | --  | 100 | 10 PP : Swaps the user's and foe's held items
  Trick Tackle       | Physical | 90  | 90  | 15 PP : Swaps items with a unique foe, meaning it won't swap items back unless the user switches out
- Twinkle Tackle     | Physical | 85  | 90  | 10 PP : 20% chance to lower foe's Attack and Sp.Atk by 1
  Vanishing Act      | Special  | 100 | 100 | 10 PP : 30% to confuse foe, a two turn attack. User vanishes on the first, and attacks on the second. Hits through protect.
  Vitriolic Hex      | Special  | 60  | 100 | 20 PP : 100% chance to decrease foe's crit stage by 1
 =============================================================================================================
@@ -588,7 +574,7 @@
  Mist Ball          | Special  | 70  | 100 | 15 PP : 50% chance to lower foe's Sp.Atk by 1
  Psybeam            | Special  | 65  | 100 | 20 PP : 10% chance to confuse foe
  Psychic            | Special  | 90  | 100 | 10 PP : 10% chance to lower foe's Sp.Def by 1
- Psychic Fangs      | Physical | 85  | 100 | 10 PP : Breaks Screen effects and bypasses Magic Reflect
+ Psychic Fangs      | Physical | 85  | 100 | 10 PP : Breaks Screen effects and breaks Magic Reflect
  Psychic Noise      | Special  | 75  | 100 | 10 PP : 100% to inflict foe with the Heal Block effect
  Psychic Terrain    | Status   | --  | --  | 15 PP : Changes the terrain to PSYCHIC for 5 turns
  Psycho Cut         | Physical | 70  | 100 | 20 PP : Boosted Crit rate

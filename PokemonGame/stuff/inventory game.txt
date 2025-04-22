@@ -1,24 +1,3 @@
-HammyBoy
-Magmaclang (1%)
-Fireshard
-Magwoo/Lafloo
-Sparkitten
-Conkeldurr
-Houndoom
-Barkflare
-Splame
-Wattwo
-Superchargo
-
-Route 39
-Spacebear
-Shawar?
-Clefairy
-Draga
-Nebulimb
-Consodust
-Rockmite
-
 Arthra Team:
 Butterfree-X Bronzong-X Hissimitar Suvinero Bouncerog Winagrow
 Unused Boss Pokemon:
@@ -47,12 +26,6 @@ Game2.89: Trainers and teams are added 6/21
 Game2.9: League is beatable 7/1
 
 All interior walls should all be over the player
-
-Trainers to redo:
-139-141
-149-203
-257
-270-275
 
 Player: Finn
 Dad: Stellan Lund
@@ -108,9 +81,9 @@ Sheabear -> Grisly/Teddull   Teddull
 Dualbear -> Teddician/Sorcerbear   Teddician
 Spacebear -> Teddinaut/Ursanaut   Teddinaut
 Bealtle -> Minipede   Minipede
-Centatle -> Morphopede/Milimace   Morphopede
-Curlatoral -> Megapede/Centinel   Megapede
-Millistone -> Purpypede/Terrapleura/Millicudgel/Millimace/Cudgelpede
+Centatle -> Morphopede/Centinel   Centinel
+Curlatoral -> Megapede/Milimace   Milimace
+Millistone -> Purpypede/Terrapleura/Milicudgel/Cudgelpede   Milipleura
 Sapwin -> Rootle/Ferndish/Sapwin
 Treewin -> Kappalm/Shrubbully
 Winagrow -> Serpenge/Verdrake
@@ -151,12 +124,12 @@ Psycorb -> Psycorb/Atocule
 Psyballs -> Orbitin/Atomene
 Psycorboratr -> Auracle/Spheracle/Attomicaze
 Tigrette -> Benglow
-Flameruff -> 
-Barkflare -> 
+Flameruff -> Flaruff
+Barkflare -> Eruffion
 Iglite -> Sember
 Blaxer -> Kaboon
 Pyrator -> Detonape
-Magmaclang -> Apie
+Magmaclang -> Apierition
 Shookwat ->
 Wattwo ->
 Megawatt -> Mechamo
@@ -200,6 +173,20 @@ Drillatron ->
 Wormite ->
 Wormbot ->
 Wormatron ->
+
+Reddit posts:
+Hissimitar
+Flamehox line
+Tiowoo line
+Sparkdust line
+Shookwat line
+Poof line
+Poov line
+Poof-E line
+Plasamp line
+Elgyem-E line
+UP mons
+Electric fossil line
 
 Trainer Classes:
 Ace Trainer (mixed types/dragon)
