@@ -80,7 +80,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	// id fields
 	public int id;
-	private String name;
+	public String name;
 	public String nickname;
 	
 	// stat fields

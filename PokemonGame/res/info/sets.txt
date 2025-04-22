@@ -62,7 +62,7 @@ Ability: Swift Swim
 - Drain Punch
 - Ice Spinner
 
-Magestiflash @ Life Orb/Focus Sash
+Huminescence @ Life Orb/Focus Sash
 Modest/Timid Nature
 Ability: Radiant
 - Prismatic Laser
@@ -70,7 +70,7 @@ Ability: Radiant
 - Glitter Dance/Volt Switch/Calm Mind
 - Ice Beam/Magic Tomb
 
-Magestiflash @ Choice Specs
+Huminescence @ Choice Specs
 Modest Nature
 Ability: Insect Feeder
 - Photon Geyser
@@ -78,7 +78,7 @@ Ability: Insect Feeder
 - Aeroblast
 - Heat Wave/Star Storm/Bug Buzz/Energy Ball
 
-Pigoga @ Rocky Helmet/Leftovers/Wacan Berry
+Armoraven @ Rocky Helmet/Leftovers/Wacan Berry
 Impish Nature
 Ability: Iron Barbs
 - Defog/Spikes
@@ -86,7 +86,7 @@ Ability: Iron Barbs
 - Roost
 - U-Turn
 
-Pigoga @ Weakness Policy/Sitrus Berry
+Armoraven @ Weakness Policy/Sitrus Berry
 Jolly/Adamant Nature
 Ability: Tough Claws
 - Acrobatics
@@ -94,7 +94,7 @@ Ability: Tough Claws
 - Zing Zap/Earthquake
 - Iron Head/Ice Spinner
 
-HammyBoy @ Eviolite
+Grunswine @ Eviolite
 Impish/Careful Nature
 Ability: Mouthwater
 - Super Fang/Body Slam
@@ -102,7 +102,7 @@ Ability: Mouthwater
 - Baton Pass/Drain Punch/Mach Punch
 - Bulldoze/Earthquake
 
-Hamthorno @ Chople Berry/Rocky Helmet/Leftovers
+Hoghoncho @ Chople Berry/Rocky Helmet/Leftovers
 Impish/Careful Nature
 Ability: Rough Skin
 - Stealth Rock
@@ -110,7 +110,7 @@ Ability: Rough Skin
 - Stockpile/Sandstorm
 - Close Combat/Ice Spinner
 
-Hamthorno @ Choice Band/Assault Vest
+Hoghoncho @ Choice Band/Assault Vest
 Adamant Nature
 Ability: Rock Head
 - Head Smash
@@ -118,7 +118,7 @@ Ability: Rock Head
 - Volt Tackle
 - Ice Spinner/Close Combat/Radiant Break/Earthquake/Poison Jab
 
-Hamthorno @ Loaded Dice
+Hoghoncho @ Loaded Dice
 Adamant Nature
 Ability: Solid Rock
 - Rock Blast
@@ -126,7 +126,7 @@ Ability: Solid Rock
 - Swords Dance
 - Earthquake
 
-Spacebear @ Choice Specs/Choice Scarf
+Teddinaut @ Choice Specs/Choice Scarf
 Timid Nature
 Ability: Adaptability
 - Genesis Supernova
@@ -134,7 +134,7 @@ Ability: Adaptability
 - Trick
 - Focus Blast/Dazzling Gleam
 
-Spacebear @ Coba Berry/Charti Berry/Focus Sash
+Teddinaut @ Coba Berry/Charti Berry/Focus Sash
 Timid Nature
 Ability: Levitate
 - Desolate Void/Star Storm/Galaxy Blast
@@ -142,7 +142,7 @@ Ability: Levitate
 - Radio Burst/Memento/Thunder Wave
 - Knock Off/Encore/Tri-Attack
 
-Spacebear @ Power Herb/Blunder Policy
+Teddinaut @ Power Herb/Blunder Policy
 Timid Nature
 Ability: Scrappy
 - Hyper Beam
@@ -150,7 +150,7 @@ Ability: Scrappy
 - Blizzard/Hydro Pump
 - Calm Mind/Charge Beam
 
-Curlatoral @ Focus Sash
+Milimace @ Focus Sash
 Impish Nature
 Ability: Threatening
 - First Impression
@@ -158,7 +158,7 @@ Ability: Threatening
 - Toxic Spikes
 - U-Turn/Thunder Wave
 
-Curlatoral @ Toxic Orb
+Milimace @ Toxic Orb
 Impish Nature
 Ability: Poison Heal
 - Fatal Bind/Toxic
@@ -166,7 +166,7 @@ Ability: Poison Heal
 - U-Turn/Taunt
 - X-Scissor/Liquidation
 
-Curlatoral @ Toxic Orb
+Milimace @ Toxic Orb
 Careful Nature
 Ability: Poison Heal
 - Coil/Quiver Dance
@@ -174,7 +174,7 @@ Ability: Poison Heal
 - Pin Missile
 - Sticky Web/Toxic Spikes
 
-Millistone @ Rocky Helmet
+Milipleura @ Rocky Helmet
 Impish Nature
 Ability: Rough Skin
 - Stealth Rock
@@ -182,7 +182,7 @@ Ability: Rough Skin
 - Earthquake
 - Rock Wrecker
 
-Millistone @ Lum Berry/Leftovers/Expert Belt/Red Card
+Milipleura @ Lum Berry/Leftovers/Expert Belt/Red Card
 Adamant Nature
 Ability: Compound Eyes
 - Swords Dance
@@ -190,7 +190,7 @@ Ability: Compound Eyes
 - Rock Polish/Ice Spinner
 - Earthquake
 
-Millistone @ Assault Vest/Choice Band
+Milipleura @ Assault Vest/Choice Band
 Adamant Nature
 Ability: Threatening
 - First Impression
@@ -198,15 +198,15 @@ Ability: Threatening
 - Rock Wrecker
 - Earthquake
 
-Treewin @ Eviolite
+Kappalm @ Eviolite
 Careful/Impish Nature
 Ability: Guts
 - Knock Off
 - Wood Hammer/Leaf Blade
 - Drain Punch/Mach Punch
-- Bulk Up
+- Bulk Up/Stealth Rock
 
-Winagrow @ Pamtre Berry
+Serpenge @ Pamtre Berry
 Timid Nature
 Ability: Terrify
 - Draco Meteor
@@ -214,7 +214,7 @@ Ability: Terrify
 - Spiky Shield/Stealth Rock
 - Thunderbolt
 
-Winagrow @ Power Herb/Yache Berry
+Serpenge @ Power Herb/Yache Berry
 Modest Nature
 Ability: Chlorophyll
 - Sunny Day
@@ -222,7 +222,7 @@ Ability: Chlorophyll
 - Solar Beam
 - Flamethrower
 
-Winagrow @ Leftovers
+Serpenge @ Leftovers
 Bold/Calm Nature
 Ability: Competitive
 - Giga Drain
@@ -366,7 +366,7 @@ Ability: Speed Boost
 - Baton Pass/Close Combat
 - Sky Uppercut/Sword Spin/Acrobatics
 
-Ninjakik @ Assault Vest
+Gladipede @ Assault Vest
 Adamant/Impish Nature
 Ability: Justified
 - First Impression/U-Turn
@@ -374,7 +374,7 @@ Ability: Justified
 - Sacred Sword/Close Combat
 - Leaf Blade/Stone Edge/Poison Jab
 
-Ninjakik @ Choice Band
+Gladipede @ Choice Band
 Jolly/Adamant Nature
 Ability: Threatening
 - U-Turn
@@ -406,7 +406,7 @@ Ability: Rain Dish
 - Flip Turn/U-Turn
 - Ice Beam/Giga Drain/Scald
 
-Bluebunn @ Life Orb
+Willolagos @ Life Orb
 Timid Nature
 Ability: Magic Guard
 - Light Of Ruin
@@ -414,7 +414,7 @@ Ability: Magic Guard
 - Glitter Dance
 - Magic Reflect/Will-O-Wisp
 
-Bluebunn @ Choice Specs/Choice Scarf
+Willolagos @ Choice Specs/Choice Scarf
 Timid/Modest Nature
 Ability: Flash Fire
 - Prismatic Laser
@@ -422,7 +422,7 @@ Ability: Flash Fire
 - Trick/Volt Switch
 - Ice Beam/Flamethrower/Fiery Dance
 
-Bluebunn @ Pamtre Berry
+Willolagos @ Pamtre Berry
 Timid Nature
 Ability: Flash Fire
 - Photon Geyser
@@ -430,7 +430,7 @@ Ability: Flash Fire
 - Glitter Dance/Magic Reflect
 - Vanishing Act/Magic Tomb
 
-Bluebunn @ Focus Sash
+Willolagos @ Focus Sash
 Timid Nature
 Ability: Magic Bounce
 - Thunder Wave/Will-O-Wisp
@@ -438,7 +438,7 @@ Ability: Magic Bounce
 - Volt Switch/Prismatic Laser
 - Blizzard/Ice Beam
 
-Bluebunn @ Power Herb
+Willolagos @ Power Herb
 Modest/Timid Nature
 Ability: Magic Guard
 - Geomancy
@@ -446,7 +446,7 @@ Ability: Magic Guard
 - Magic Tomb
 - Dark Pulse/Galaxy Blast/Tri-Attack/Psyshock/Focus Blast/Shadow Ball/Surf
 
-Bluebunn @ Light Clay
+Willolagos @ Light Clay
 Timid/Calm Nature
 Ability: Magic Bounce
 - Light Screen
@@ -454,7 +454,7 @@ Ability: Magic Bounce
 - Magic Reflect/Photon Geyser/Magic Tomb
 - Volt Switch
 
-Blaster @ Custap Berry/Red Card
+Sedisoftra @ Custap Berry/Red Card
 Adamant/Impish Nature
 Ability: Sturdy
 - Stealth Rock
@@ -462,7 +462,7 @@ Ability: Sturdy
 - Earthquake
 - Stone Edge/Rock Tomb
 
-Blaster @ Loaded Dice
+Sedisoftra @ Loaded Dice
 Adamant Nature
 Ability: Unerodible
 - Rock Blast
@@ -470,7 +470,7 @@ Ability: Unerodible
 - Earthquake
 - Drain Punch
 
-Blaster @ Leftovers
+Sedisoftra @ Leftovers
 Careful Nature
 Ability: Solid Rock
 - Stealth Rock/Bulk Up
@@ -478,7 +478,7 @@ Ability: Solid Rock
 - Earthquake
 - Ice Spinner
 
-Crystallor @ Light Clay
+Prismodon @ Light Clay
 Bold Nature
 Ability: Sturdy
 - Stealth Rock
@@ -486,7 +486,7 @@ Ability: Sturdy
 - Light Screen
 - Knock Off/Diamond Storm/Photon Geyser
 
-Crystallor @ White Herb
+Prismodon @ White Herb
 Timid Nature
 Ability: Filter
 - Diamond Storm
@@ -494,7 +494,7 @@ Ability: Filter
 - Prismatic Laser
 - Earth Power/Lava Surf
 
-Crystallor @ Power Herb
+Prismodon @ Power Herb
 Modest Nature
 Ability: Filter
 - Meteor Beam
@@ -502,7 +502,7 @@ Ability: Filter
 - Prismatic Laser
 - Earth Power/Ice Beam
 
-Cairnasaur @ Choice Band/Choice Scarf
+Kobraturgy @ Choice Band/Choice Scarf
 Jolly Nature
 Ability: Rock Head
 - Rock Wrecker
@@ -510,7 +510,7 @@ Ability: Rock Head
 - U-Turn
 - Psychic Fangs
 
-Cairnasaur @ Leftovers
+Kobraturgy @ Leftovers
 Jolly Nature
 Ability: Rock Head
 - Rock Wrecker
@@ -518,7 +518,7 @@ Ability: Rock Head
 - Psychic Fangs
 - Earthquake/Crunch
 
-Cairnasaur @ Rocky Helmet
+Kobraturgy @ Rocky Helmet
 Impish/Careful Nature
 Ability: Intimidate/Regenerator
 - Stealth Rock
@@ -526,7 +526,7 @@ Ability: Intimidate/Regenerator
 - Rock Wrecker
 - Thunder Wave/Taunt
 
-Boulderoar @ Focus Sash/Red Card/Rocky Helmet
+Saberock @ Focus Sash/Red Card/Rocky Helmet
 Adamant/Jolly/Impish/Careful Nature
 Ability: Intimidate
 - Stealth Rock
@@ -534,7 +534,7 @@ Ability: Intimidate
 - Parting Shot/U-Turn
 - Accelerock/Stone Edge/Taunt
 
-Boulderoar @ Loaded Dice
+Saberock @ Loaded Dice
 Jolly Nature
 Ability: Technician
 - Rock Polish/Flame Charge/Accelerock
@@ -542,7 +542,7 @@ Ability: Technician
 - Bite
 - Swords Dance
 
-Boulderoar @ Liechi Berry
+Saberock @ Liechi Berry
 Adamant Nature
 Ability: Sturdy
 - Swords Dance
@@ -550,7 +550,7 @@ Ability: Sturdy
 - Accelerock/Stone Edge
 - Close Combat
 
-Raptorex @ Choice Specs/Assault Vest
+Pterator @ Choice Specs/Assault Vest
 Timid Nature
 Ability: No Guard
 - Focus Blast
@@ -558,7 +558,7 @@ Ability: No Guard
 - Vacuum Wave
 - Blizzard/Star Storm
 
-Raptorex @ Life Orb
+Pterator @ Life Orb
 Timid Nature
 Ability: Adaptability
 - Calm Mind
@@ -566,7 +566,7 @@ Ability: Adaptability
 - Focus Blast
 - Knock Off/Earth Power/Vacuum Wave
 
-Raptorex @ Flame Orb
+Pterator @ Flame Orb
 Jolly Nature
 Ability: Guts
 - Bulk Up/U-Turn
@@ -574,7 +574,7 @@ Ability: Guts
 - Brave Bird
 - Knock Off
 
-Hootowl @ Light Clay/Icy Rock
+Nixnerva @ Light Clay/Icy Rock
 Bold Nature
 Ability: Snow Warning
 - Aurora Veil
@@ -582,7 +582,7 @@ Ability: Snow Warning
 - Freezing Glare
 - Blizzard
 
-Hootowl @ Choice Scarf
+Nixnerva @ Choice Scarf
 Modest Nature
 Ability: Snow Warning
 - Trick/Volt Switch
@@ -590,7 +590,7 @@ Ability: Snow Warning
 - Freezing Glare
 - Blizzard
 
-Dualmoose @ Sitrus Berry
+Cervora @ Sitrus Berry
 Timid Nature
 Ability: Sparkly Surge
 - Aurora Boost
@@ -622,7 +622,7 @@ Ability: Tinted Lens
 - Bug Buzz
 - Ice Beam
 
-Bipedice @ Flame Orb
+Thalarctic @ Flame Orb
 Adamant Nature
 Ability: Guts
 - Ice Spinner/Icicle Crash/Ice Punch
@@ -630,7 +630,7 @@ Ability: Guts
 - Swords Dance/Bulk Up/U-Turn
 - Ice Shard/Mach Punch
 
-Bipedice @ Assault Vest/Choice Band
+Thalarctic @ Assault Vest/Choice Band
 Adamant Nature
 Ability: Guts
 - Ice Spinner
@@ -638,7 +638,7 @@ Ability: Guts
 - Earthquake/U-Turn
 - Ice Shard
 
-Bipedice @ Loaded Dice
+Thalarctic @ Loaded Dice
 Jolly Nature
 Ability: Slush Rush
 - Icicle Spear
@@ -646,7 +646,7 @@ Ability: Slush Rush
 - Swords Dance/Bulk Up/Earthquake
 - Close Combat/Drain Punch
 
-Bipedice @ Power Herb
+Thalarctic @ Power Herb
 Adamant Nature
 Ability: Refrigerate
 - Swords Dance
@@ -654,7 +654,7 @@ Ability: Refrigerate
 - Acrobatics/Ice Shard/Mach Punch
 - Earthquake/Close Combat
 
-Tricercil @ Choice Band
+Topazatops @ Choice Band
 Adamant Nature
 Ability: Rock Head
 - Head Smash
@@ -662,7 +662,7 @@ Ability: Rock Head
 - Mach Punch
 - Earthquake
 
-Tricercil @ Lum Berry/White Herb
+Topazatops @ Lum Berry/White Herb
 Impish/Adamant Nature
 Ability: Rock Head
 - Head Smash
@@ -670,7 +670,7 @@ Ability: Rock Head
 - Close Combat
 - Meteor Assault
 
-Tricercil @ Leftovers
+Topazatops @ Leftovers
 Impish/Careful Nature
 Ability: Rock Head
 - Head Smash
@@ -678,7 +678,7 @@ Ability: Rock Head
 - Stealth Rock/Spiky Shield
 - Body Press
 
-Tricercil @ Leftovers
+Topazatops @ Leftovers
 Careful Nature
 Ability: Sand Force
 - Stealth Rock/Thunder Wave/Toxic
@@ -686,7 +686,7 @@ Ability: Sand Force
 - Circle Throw
 - Ice Spinner/Rock Tomb
 
-Tricercil @ Rocky Helmet
+Topazatops @ Rocky Helmet
 Impish Nature
 Ability: Rough Skin
 - Rest
@@ -750,7 +750,7 @@ Ability: Torrent
 - Spotlight Ray/Light Drain
 - Focus Blast/Freeze-Dry
 
-Opwing @ Lum Berry
+Fearomoth @ Lum Berry
 Jolly Nature
 Ability: Technician
 - Feint Attack
@@ -758,7 +758,7 @@ Ability: Technician
 - U-Turn/Swords Dance
 - Aerial Ace/Flame Charge
 
-Opwing @ Life Orb/Silver Powder
+Fearomoth @ Life Orb/Silver Powder
 Adamant Nature
 Ability: Terrify
 - First Impression
@@ -806,7 +806,7 @@ Ability: Sleight Of Hand
 - Psychic
 - Photon Geyser
 
-Psylotter @ Choice Specs
+Lutrineer @ Choice Specs
 Modest Nature
 Ability: Swift Swim
 - Water Spout
@@ -814,7 +814,7 @@ Ability: Swift Swim
 - Freeze-Dry
 - Psyshock/Trick
 
-Psylotter @ Damp Rock
+Lutrineer @ Damp Rock
 Bold/Calm Nature
 Ability: Hydration
 - Scald
@@ -822,7 +822,7 @@ Ability: Hydration
 - Rest
 - Calm Mind
 
-Florlion @ Leftovers
+Osceloma @ Leftovers
 Bold/Calm Nature
 Ability: Grassy Surge
 - Leech Seed
@@ -830,7 +830,7 @@ Ability: Grassy Surge
 - U-Turn/Psyshock
 - Leaf Storm
 
-Florlion @ Choice Specs
+Osceloma @ Choice Specs
 Modest Nature
 Ability: Psychic Surge
 - Expanding Force
@@ -838,7 +838,7 @@ Ability: Psychic Surge
 - Blizzard
 - Light Drain
 
-Florlion @ Light Clay
+Osceloma @ Light Clay
 Bold Nature
 Ability: Grassy Surge
 - Reflect
@@ -846,7 +846,7 @@ Ability: Grassy Surge
 - Thunder Wave/U-Turn
 - Leaf Storm
 
-Florlion @ Sitrus Berry
+Osceloma @ Sitrus Berry
 Modest Nature
 Ability: Unburden
 - Leech Seed/Earth Power

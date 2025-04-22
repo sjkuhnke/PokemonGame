@@ -99,7 +99,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 57;
+	public static final int VERSION = 58;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -1239,6 +1239,7 @@ public class Player extends Trainer implements Serializable {
 		while (starter >= 3) starter--;
 		updateBoxes();
 		updateBerries();
+		updateNames();
 		if (id == null) setID(gp.player.currentSave);
 		if (blackjackStats == null) blackjackStats = new int[20];
 		if (coinBadges == null) coinBadges = new boolean[12];
@@ -1591,6 +1592,28 @@ public class Player extends Trainer implements Serializable {
 				}
 			}
 			p.shiftMoveset();
+		}
+		
+		scanner.close();
+		
+	}
+	
+	public void updateNames() {
+		Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/names.txt"));
+		ArrayList<String> names = new ArrayList<>();
+		
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+			String[] namesArray = line.split("\\|");
+			names.add(namesArray[0].trim());
+		}
+		
+		for (Pokemon p : getAllPokemon()) {
+			boolean notNicknamed = p.name.equals(p.nickname);
+			p.setName(p.getName());
+			if (notNicknamed && names.contains(p.nickname)) {
+				p.nickname = p.name;
+			}
 		}
 		
 		scanner.close();

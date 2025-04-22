@@ -1,6 +1,6 @@
 Route 22 (Standard)
 ===================================================================
-24% Pigo (Lv. 2)
+24% Scigeon (Lv. 2)
 16% Hammo (Lv. 2 - 4)
 18% Bealtle (Lv. 2 - 3)
 10% Sapwin (Lv. 2 - 4)
@@ -9,12 +9,12 @@ Route 22 (Standard)
 ===================================================================
 Bananaville Meadow (Standard)
 ===================================================================
-4% Pigo (Lv. 2)
+4% Scigeon (Lv. 2)
 5% Hammo (Lv. 2 - 4)
-7% Hummingspark (Lv. 2 - 3)
+7% Chivick (Lv. 2 - 3)
 7% Busheep (Lv. 2 - 4)
 4% Caterpie (Lv. 3)
-5% Sheabear (Lv. 2)
+5% Teddull (Lv. 2)
 5% Hatenna (Lv. 2 - 4)
 5% Psycorb (Lv. 2 - 3)
 1% Tigrette (Lv. 2 - 4)
@@ -24,7 +24,7 @@ Bananaville Meadow (Standard)
 3% Timburr (Lv. 2 - 3)
 3% Cleffa (Lv. 2 - 4)
 5% Minishoo (Lv. 3)
-3% Fightorex (Lv. 3)
+3% Rexisilt (Lv. 3)
 6% Scraggy (Lv. 2)
 8% Abra (Lv. 2 - 4)
 7% Solosis-X (Lv. 2 - 3)
@@ -32,12 +32,12 @@ Bananaville Meadow (Standard)
 ===================================================================
 Route 23 (Standard)
 ===================================================================
-24% Hummingspark (Lv. 2 - 3)
-14% Pigo (Lv. 3 - 4)
+24% Chivick (Lv. 2 - 3)
+14% Scigeon (Lv. 3 - 4)
 24% Hammo (Lv. 4)
 14% Sewaddle (Lv. 2 - 3)
 6% Busheep (Lv. 3 - 5)
-9% Bugik (Lv. 2 - 3)
+9% Scarabit (Lv. 2 - 3)
 9% Caterpie (Lv. 2 - 3)
 ===================================================================
 Route 42 (Standard)
@@ -71,23 +71,23 @@ Route 42 (Surf)
 ===================================================================
 Route 24 (pt. 1) (Standard)
 ===================================================================
-12% Sheabear (Lv. 6)
+12% Teddull (Lv. 6)
 5% Budew (Lv. 4 - 6)
 12% Lotad (Lv. 4 - 6)
 10% Grubbin (Lv. 4 - 6)
 5% Busheep (Lv. 5 - 7)
-23% Rocky (Lv. 5 - 7)
-7% Bugop (Lv. 5 - 6)
+23% Sedinister (Lv. 5 - 7)
+7% Lunymph (Lv. 5 - 6)
 9% Ralts (Lv. 4 - 6)
 6% Elelamb (Lv. 5 - 7)
 11% Shroodle (Lv. 4 - 6)
 ===================================================================
 Route 40 (Standard)
 ===================================================================
-9% Hummingspark (Lv. 5 - 6)
-15% Iglite (Lv. 4 - 6)
-6% Bugop (Lv. 5 - 6)
-5% Carinx (Lv. 5 - 6)
+9% Chivick (Lv. 5 - 6)
+15% Sember (Lv. 4 - 6)
+6% Lunymph (Lv. 5 - 6)
+5% Asmethiss (Lv. 5 - 6)
 14% Houndour (Lv. 5 - 6)
 10% Tiowoo (Lv. 5 - 6)
 6% Rhypo (Lv. 6)
@@ -100,7 +100,7 @@ Route 43 (Standard)
 ===================================================================
 7% Sewaddle (Lv. 2 - 3)
 9% Lotad (Lv. 2 - 3)
-16% Kleinowl (Lv. 2 - 3)
+16% Snowlet (Lv. 2 - 3)
 14% Froshrog (Lv. 2 - 4)
 9% Ralts (Lv. 2 - 3)
 11% Sparkdust (Lv. 2 - 3)
@@ -110,8 +110,8 @@ Route 43 (Standard)
 ===================================================================
 Route 24 (pt. 2) (Standard)
 ===================================================================
-20% Hummingspark (Lv. 12 - 13)
-3% Pebblepup (Lv. 14)
+20% Chivick (Lv. 12 - 13)
+3% Sabore (Lv. 14)
 10% Hatenna (Lv. 12 - 14)
 9% Inkay (Lv. 13 - 14)
 5% Cleffa (Lv. 12 - 13)
@@ -131,10 +131,10 @@ Gelb Forest (1A) (Standard)
 10% Sewaddle (Lv. 12 - 16)
 5% Grubbin (Lv. 14 - 17)
 11% Lotad (Lv. 13 - 15)
-3% Bluebunn (Lv. 15 - 17)
+3% Willolagos (Lv. 15 - 17)
 8% Busheep (Lv. 14 - 18)
-4% Bugik (Lv. 12 - 14)
-1% Swordik (Lv. 15 - 16)
+4% Scarabit (Lv. 12 - 14)
+1% Spartipede (Lv. 15 - 16)
 1% Psycorb (Lv. 14 - 17)
 5% Nincada (Lv. 12 - 15)
 5% Cluuz (Lv. 14 - 17)
@@ -161,8 +161,8 @@ Gelb Forest (2A) (Standard)
 7% Sewaddle (Lv. 13 - 16)
 5% Grubbin (Lv. 14 - 17)
 8% Busheep (Lv. 15 - 18)
-8% Bugik (Lv. 13 - 14)
-3% Swordik (Lv. 15 - 17)
+8% Scarabit (Lv. 13 - 14)
+3% Spartipede (Lv. 15 - 17)
 7% Psycorb (Lv. 15 - 17)
 13% Cluuz (Lv. 15 - 18)
 7% Zubat (Lv. 16 - 18)
@@ -174,10 +174,10 @@ Gelb Forest (2A) (Standard)
 Route 25 (Standard)
 ===================================================================
 15% Hammo (Lv. 12 - 14)
-15% Sheabear (Lv. 13 - 16)
+15% Teddull (Lv. 13 - 16)
 13% Busheep (Lv. 12 - 15)
 15% Ekans (Lv. 15)
-9% Florline (Lv. 12 - 15)
+9% Mosscelot (Lv. 12 - 15)
 9% Timburr (Lv. 13 - 16)
 5% Rhypo (Lv. 13 - 15)
 7% Seviper (Lv. 15)
@@ -210,7 +210,7 @@ Sicab City (Surf)
 ===================================================================
 50% Staryu (Lv. 20)
 25% Lilyray (Lv. 20)
-20% Otterpor (Lv. 20)
+20% Whotter (Lv. 20)
 5% Ali (Lv. 20)
 ===================================================================
 Energy Plant (pt. 1) (Standard)
@@ -245,10 +245,10 @@ Energy Plant (pt. 2) (Surf)
 Route 26 (Standard)
 ===================================================================
 16% Sapwin (Lv. 16 - 19)
-10% Sheabear (Lv. 17 - 19)
-11% Bluebunn (Lv. 17)
-11% Rocky (Lv. 15 - 19)
-10% Florline (Lv. 16 - 18)
+10% Teddull (Lv. 17 - 19)
+11% Willolagos (Lv. 17)
+11% Sedinister (Lv. 15 - 19)
+10% Mosscelot (Lv. 16 - 18)
 10% Ralts (Lv. 16 - 18)
 5% Sparkdust (Lv. 17 - 18)
 10% Scraggy (Lv. 16 - 18)
@@ -257,9 +257,9 @@ Route 26 (Standard)
 ===================================================================
 Route 45 (Standard)
 ===================================================================
-10% Pebblepup (Lv. 17 - 20)
-14% Fightorex (Lv. 17 - 20)
-8% Blaxer (Lv. 17 - 20)
+10% Sabore (Lv. 17 - 20)
+14% Rexisilt (Lv. 17 - 20)
+8% Kaboon (Lv. 17 - 20)
 12% Flamehox (Lv. 18 - 19)
 8% Houndour (Lv. 17 - 18)
 12% Wormite (Lv. 16 - 18)
@@ -270,8 +270,8 @@ Route 45 (Standard)
 ===================================================================
 Mt. Splinkty (1A) (Standard)
 ===================================================================
-25% Rocky (Lv. 19 - 21)
-15% Carinx (Lv. 20 - 21)
+25% Sedinister (Lv. 19 - 21)
+15% Asmethiss (Lv. 20 - 21)
 15% Zubat (Lv. 20 - 21)
 10% Poof (Lv. 20 - 21)
 5% Scraggy (Lv. 19 - 21)
@@ -296,12 +296,12 @@ Mt. Splinkty (1A) (Surf)
 ===================================================================
 Mt. Splinkty (2A) (Standard)
 ===================================================================
-10% Rocky (Lv. 21 - 22)
-5% Carinx (Lv. 22 - 23)
-15% Blaxer (Lv. 22 - 23)
-15% Tricerpup (Lv. 23)
+10% Sedinister (Lv. 21 - 22)
+5% Asmethiss (Lv. 22 - 23)
+15% Kaboon (Lv. 22 - 23)
+15% Ceramber (Lv. 23)
 15% Diggie (Lv. 21 - 22)
-10% Grondor (Lv. 22 - 23)
+10% Grislush (Lv. 22 - 23)
 15% Bronzor-X (Lv. 21 - 22)
 15% Sneasel-H (Lv. 23)
 ===================================================================
@@ -322,19 +322,19 @@ Mt. Splinkty (2A) (Surf)
 ===================================================================
 Mt. Splinkty (2B) (Standard)
 ===================================================================
-20% Rocky (Lv. 21 - 22)
-20% Carinx (Lv. 22 - 23)
+20% Sedinister (Lv. 21 - 22)
+20% Asmethiss (Lv. 22 - 23)
 5% Poof (Lv. 21 - 22)
 10% Zubat (Lv. 20 - 22)
-10% Blaxer (Lv. 21 - 22)
-10% Tricerpup (Lv. 22)
+10% Kaboon (Lv. 21 - 22)
+10% Ceramber (Lv. 22)
 5% Glimmet (Lv. 21 - 22)
 10% Bronzor-X (Lv. 20 - 22)
 10% Sneasel-H (Lv. 22)
 ===================================================================
 Mt. Splinkty (3B) (Standard)
 ===================================================================
-15% Bugop (Lv. 20 - 21)
+15% Lunymph (Lv. 20 - 21)
 20% Poof (Lv. 20 - 21)
 30% Zubat (Lv. 20 - 21)
 20% Diggie (Lv. 21)
@@ -349,12 +349,12 @@ Mt. Splinkty (3A) (Standard)
 ===================================================================
 Mt. Splinkty (H) (Standard)
 ===================================================================
-7% Carinator (Lv. 35 - 40)
+7% Aspomancer (Lv. 35 - 40)
 13% Bronzong-X (Lv. 36 - 42)
 5% Hast (Lv. 35 - 41)
-7% Dualbear (Lv. 35 - 39)
+7% Teddician (Lv. 35 - 39)
 8% Hattrem (Lv. 35 - 39)
-12% Dualmoose (Lv. 38 - 40)
+12% Cervora (Lv. 38 - 40)
 13% Splame (Lv. 36 - 42)
 20% Shawar (Lv. 35 - 40)
 15% Plasamp (Lv. 33 - 36)
@@ -404,18 +404,18 @@ Route 41 (Surf)
 ===================================================================
 50% Staryu (Lv. 30)
 25% Daray (Lv. 30)
-20% Otterpor (Lv. 25)
+20% Whotter (Lv. 25)
 5% Ali (Lv. 30)
 ===================================================================
 Route 41 (Standard)
 ===================================================================
 10% Froshrog (Lv. 22 - 24)
 15% Sparkitten (Lv. 24 - 26)
-9% Pigonat (Lv. 22 - 25)
+9% Thieven (Lv. 22 - 25)
 10% Arbok (Lv. 24 - 27)
-7% Dualmoose (Lv. 23 - 27)
-11% Grondor (Lv. 24 - 27)
-10% Florline (Lv. 23 - 26)
+7% Cervora (Lv. 23 - 27)
+11% Grislush (Lv. 24 - 27)
+10% Mosscelot (Lv. 23 - 26)
 12% Seviper (Lv. 23 - 26)
 10% Azumarill (Lv. 23 - 26)
 6% Shroodle (Lv. 22 - 25)
@@ -423,10 +423,11 @@ Route 41 (Standard)
 Route 36 (Standard)
 ===================================================================
 10% Bealtle (Lv. 13 - 14)
-15% Bugik (Lv. 14)
-15% Fightorex (Lv. 16)
+15% Scarabit (Lv. 14)
+15% Rexisilt (Lv. 16)
 10% Psycorb (Lv. 15 - 16)
-10% Iglite (Lv. 14 - 15)
+5% Sember (Lv. 14 - 15)
+5% Nincada (Lv. 13 - 14)
 10% Tiowoo (Lv. 15 - 17)
 5% Sparkitten (Lv. 16)
 5% Butterfree-X (Lv. 14 - 15)
@@ -444,13 +445,13 @@ Route 36 (Surf)
 ===================================================================
 50% Staryu (Lv. 20)
 25% Lilyray (Lv. 20)
-20% Otterpor (Lv. 20)
+20% Whotter (Lv. 20)
 5% Ali (Lv. 20)
 ===================================================================
 Route 28 (Standard)
 ===================================================================
 10% Sapwin (Lv. 23 - 24)
-10% Pigonat (Lv. 23 - 24)
+10% Thieven (Lv. 23 - 24)
 15% Charjabug (Lv. 24)
 15% Elelamb (Lv. 22 - 24)
 25% Twigzap (Lv. 17 - 18)
@@ -473,51 +474,51 @@ Electric Tunnel (1A) (Standard)
 ===================================================================
 Route 29 (Standard)
 ===================================================================
-11% Flashclaw (Lv. 25 - 27)
+11% Humbrill (Lv. 25 - 27)
 9% Roselia (Lv. 23 - 26)
-17% Bluebunn (Lv. 26)
+17% Willolagos (Lv. 26)
 9% Hatenna (Lv. 24 - 27)
 7% Kirlia (Lv. 24 - 27)
 4% Elelamb (Lv. 24 - 26)
 20% Twigzap (Lv. 17 - 18)
 6% Snom (Lv. 21 - 23)
-4% Kleinowl (Lv. 24 - 25)
+4% Snowlet (Lv. 24 - 25)
 9% Solosis-X (Lv. 24 - 26)
 4% Azumarill (Lv. 24 - 26)
 ===================================================================
 Icy Fields (Standard)
 ===================================================================
-19% Kleinowl (Lv. 24 - 26)
-12% Dualmoose (Lv. 25 - 27)
+19% Snowlet (Lv. 24 - 26)
+12% Cervora (Lv. 25 - 27)
 18% Snom (Lv. 22 - 25)
-18% Grondor (Lv. 25 - 27)
+18% Grislush (Lv. 25 - 27)
 9% Froshrog (Lv. 25 - 27)
 8% Poov (Lv. 25 - 27)
 16% Sneasel (Lv. 25 - 27)
 ===================================================================
 Icy Path (Standard)
 ===================================================================
-11% Boulder (Lv. 26 - 30)
-2% Crystallor (Lv. 28 - 32)
-9% Kleinowl (Lv. 22 - 24)
-2% Hootowl (Lv. 27 - 32)
+11% Metaslate (Lv. 26 - 30)
+2% Primodon (Lv. 28 - 32)
+9% Snowlet (Lv. 22 - 24)
+2% Nixnerva (Lv. 27 - 32)
 6% Snom (Lv. 19 - 21)
 1% Frosmoth (Lv. 27 - 32)
 14% Sneasel (Lv. 27 - 30)
 5% Solosis-X (Lv. 25 - 28)
-14% Grondor (Lv. 26 - 30)
-9% Dualmoose (Lv. 27 - 29)
+14% Grislush (Lv. 26 - 30)
+9% Cervora (Lv. 27 - 29)
 5% Poov (Lv. 26 - 29)
 4% Gulpin-X (Lv. 24 - 26)
-8% Carinx (Lv. 25 - 29)
+8% Asmethiss (Lv. 25 - 29)
 5% Magwoo (Lv. 26 - 30)
 5% Diggie (Lv. 25 - 28)
 ===================================================================
 Route 30 (Standard)
 ===================================================================
-15% Flashclaw (Lv. 29 - 30)
+15% Humbrill (Lv. 29 - 30)
 15% Whiskie (Lv. 27 - 29)
-20% Bluebunn (Lv. 29)
+20% Willolagos (Lv. 29)
 15% Psycorb (Lv. 28 - 30)
 25% Tigrette (Lv. 30)
 10% Sneasel (Lv. 29 - 30)
@@ -536,14 +537,14 @@ Route 30 (Surf)
 20% Staryu (Lv. 25)
 35% Spheal (Lv. 25)
 20% Lilyray (Lv. 25)
-10% Otterpor (Lv. 25)
+10% Whotter (Lv. 25)
 5% Ali (Lv. 25)
 10% Froshrog (Lv. 25)
 ===================================================================
 Peaceful Park (Standard)
 ===================================================================
 6% Centatle (Lv. 29 - 31)
-5% Treewin (Lv. 31 - 33)
+5% Kappalm (Lv. 31 - 33)
 5% Roselia (Lv. 30 - 31)
 5% Swadloon (Lv. 30 - 31)
 11% Snom (Lv. 25 - 27)
@@ -571,14 +572,14 @@ Peaceful Park (Surf)
 ===================================================================
 50% Staryu (Lv. 20)
 25% Lilyray (Lv. 20)
-20% Otterpor (Lv. 20)
+20% Whotter (Lv. 20)
 5% Ali (Lv. 20)
 ===================================================================
 Mindagan Lake (Surf)
 ===================================================================
 8% Spheal (Lv. 20 - 25)
 15% Froshrog (Lv. 20 - 25)
-18% Otterpor (Lv. 20 - 25)
+18% Whotter (Lv. 20 - 25)
 13% Lilyray (Lv. 20 - 25)
 5% Daray (Lv. 20 - 25)
 21% Staryu (Lv. 20 - 25)
@@ -608,11 +609,11 @@ Mindagan Cavern (1A) (Standard)
 Sicab River (Standard)
 ===================================================================
 4% Centatle (Lv. 29 - 31)
-4% Treewin (Lv. 31 - 33)
+4% Kappalm (Lv. 31 - 33)
 6% Snom (Lv. 25 - 27)
 8% Tigrette (Lv. 30 - 32)
 5% Flameruff (Lv. 29 - 31)
-6% Fightorex (Lv. 29 - 31)
+6% Rexisilt (Lv. 29 - 31)
 6% Flamehox (Lv. 29 - 31)
 5% Kadabra (Lv. 30 - 32)
 5% Elgyem (Lv. 28 - 30)
@@ -620,7 +621,7 @@ Sicab River (Standard)
 3% Sparkitten (Lv. 30)
 4% Butterfree-X (Lv. 30 - 32)
 3% Scraggy (Lv. 28 - 31)
-6% Florline (Lv. 28 - 31)
+6% Mosscelot (Lv. 28 - 31)
 8% Splame (Lv. 29 - 32)
 9% Sneasel-H (Lv. 30 - 31)
 10% Azumarill (Lv. 30 - 32)
@@ -640,17 +641,17 @@ Sicab River (Surf)
 ===================================================================
 50% Staryu (Lv. 20)
 25% Lilyray (Lv. 20)
-20% Otterpor (Lv. 20)
+20% Whotter (Lv. 20)
 5% Ali (Lv. 20)
 ===================================================================
 Route 31 (Standard)
 ===================================================================
 10% Swadloon (Lv. 29 - 32)
-14% Swordik (Lv. 31 - 33)
-17% Bugop (Lv. 28 - 29)
+14% Spartipede (Lv. 31 - 33)
+17% Lunymph (Lv. 28 - 29)
 16% Poov (Lv. 28 - 29)
-12% Pebblepup (Lv. 30 - 32)
-10% Tricerpup (Lv. 30 - 32)
+12% Sabore (Lv. 30 - 32)
+10% Ceramber (Lv. 30 - 32)
 5% Kadabra (Lv. 29 - 32)
 10% Grafaiai (Lv. 29 - 32)
 6% Plasamp (Lv. 23)
@@ -692,11 +693,11 @@ Shadow Ravine (0A) (Standard)
 ===================================================================
 Route 32 (Standard)
 ===================================================================
-10% Flashclaw (Lv. 30 - 32)
-10% Pigonat (Lv. 29 - 31)
-10% Opwing (Lv. 30 - 32)
+10% Humbrill (Lv. 30 - 32)
+10% Thieven (Lv. 29 - 31)
+10% Fearomoth (Lv. 30 - 32)
 15% Psycorb (Lv. 30 - 31)
-10% Fightorex (Lv. 31 - 32)
+10% Rexisilt (Lv. 31 - 32)
 10% Houndoom (Lv. 30 - 32)
 15% Glimmet (Lv. 30 - 32)
 10% Capsakid (Lv. 30 - 32)
@@ -741,7 +742,7 @@ Electric Tunnel (0A) (Surf)
 ===================================================================
 Electric Tunnel (-1A) (Standard)
 ===================================================================
-15% Carinator (Lv. 35 - 38)
+15% Aspomancer (Lv. 35 - 38)
 16% Hast-E (Lv. 35 - 38)
 19% Armoid-E (Lv. 35 - 38)
 15% Fireshard-E (Lv. 35 - 38)
@@ -795,7 +796,7 @@ Shadow Ravine (H) (Standard)
 Shadow Ravine (-1A) (Standard)
 ===================================================================
 15% Drillatron (Lv. 33 - 36)
-15% Opwing (Lv. 33 - 36)
+15% Fearomoth (Lv. 33 - 36)
 20% Wormbot-S (Lv. 32 - 35)
 10% Cluuz-S (Lv. 33 - 36)
 10% Blaxer-S (Lv. 32 - 35)
@@ -805,7 +806,7 @@ Shadow Ravine (-1A) (Standard)
 Shadow Ravine (-1A) (Fish)
 ===================================================================
 20% Drillatron (Lv. 33 - 36)
-20% Opwing (Lv. 33 - 36)
+20% Fearomoth (Lv. 33 - 36)
 25% Wormbot-S (Lv. 32 - 35)
 10% Cluuz-S (Lv. 33 - 36)
 10% Blaxer-S (Lv. 32 - 35)
@@ -814,7 +815,7 @@ Shadow Ravine (-1A) (Fish)
 Shadow Ravine (-1A) (Surf)
 ===================================================================
 20% Drillatron (Lv. 33 - 36)
-20% Opwing (Lv. 33 - 36)
+20% Fearomoth (Lv. 33 - 36)
 25% Wormbot-S (Lv. 32 - 35)
 10% Cluuz-S (Lv. 33 - 36)
 10% Blaxer-S (Lv. 32 - 35)
@@ -872,8 +873,8 @@ Shadow Path (Standard)
 ===================================================================
 Route 33 (Standard)
 ===================================================================
-15% Dualbear (Lv. 34 - 38)
-11% Florline (Lv. 34 - 38)
+15% Teddician (Lv. 34 - 38)
+11% Mosscelot (Lv. 34 - 38)
 13% Barkflare (Lv. 35 - 39)
 13% Houndoom (Lv. 35 - 39)
 15% Splame (Lv. 35 - 39)
@@ -889,7 +890,7 @@ Route 33 (Fish)
 ===================================================================
 Route 33 (Surf)
 ===================================================================
-30% Psylotter (Lv. 35 - 38)
+30% Lutrineer (Lv. 35 - 38)
 40% Shelnado (Lv. 34 - 38)
 15% Lilyray (Lv. 37 - 39)
 15% Spinaquata (Lv. 37 - 39)
@@ -897,11 +898,11 @@ Route 33 (Surf)
 Ghostly Woods (Standard)
 ===================================================================
 5% Curlatoral (Lv. 36 - 39)
-7% Treewin (Lv. 36 - 39)
+7% Kappalm (Lv. 36 - 39)
 10% Grust (Lv. 37 - 40)
 12% Cluuz (Lv. 35 - 38)
 2% Zurrclu (Lv. 37 - 40)
-5% Opwing (Lv. 36 - 39)
+5% Fearomoth (Lv. 36 - 39)
 2% Hattrem (Lv. 36 - 39)
 11% Arbok (Lv. 36 - 39)
 9% Golbat (Lv. 35 - 38)
@@ -915,11 +916,11 @@ Ghostly Woods (Standard)
 ===================================================================
 Route 34 (0A) (Standard)
 ===================================================================
-15% Carinator (Lv. 40 - 42)
-11% Grondor (Lv. 37 - 41)
-2% Bipedice (Lv. 41 - 44)
-11% Boulderoar (Lv. 40 - 43)
-10% Tricerpup (Lv. 41 - 44)
+15% Aspomancer (Lv. 40 - 42)
+11% Grislush (Lv. 37 - 41)
+2% Thalarctric (Lv. 41 - 44)
+11% Saberock (Lv. 40 - 43)
+10% Ceramber (Lv. 41 - 44)
 14% Rhynee (Lv. 40 - 43)
 14% Armoid (Lv. 40 - 43)
 17% Rockmite (Lv. 40 - 42)
@@ -934,7 +935,7 @@ Route 35 (Standard)
 13% Kirlia (Lv. 40 - 42)
 5% Gardevoir (Lv. 42 - 44)
 14% Tigrette (Lv. 41 - 44)
-12% Magestiflash (Lv. 40 - 43)
+12% Huminescence (Lv. 40 - 43)
 13% Busheep (Lv. 41 - 44)
 21% Sparkitten (Lv. 40 - 43)
 9% Cumin (Lv. 40 - 43)
@@ -958,8 +959,8 @@ Gelb Cavern (Standard)
 11% Blobmo (Lv. 35)
 16% Rockmite (Lv. 37 - 41)
 15% Plasamp (Lv. 37 - 41)
-11% Carinator (Lv. 37 - 41)
-11% Tricerpup (Lv. 36 - 40)
+11% Aspomancer (Lv. 37 - 41)
+11% Ceramber (Lv. 36 - 40)
 14% Rhynee (Lv. 37 - 41)
 ===================================================================
 Gelb Cavern (Fish)
@@ -987,119 +988,143 @@ Gelb Cavern (Lava)
 ===================================================================
 Route 37 (Standard)
 ===================================================================
-12% Ninjakik (Lv. 45 - 48)
-9% Drillatron (Lv. 45 - 48)
-17% Wattwo (Lv. 43 - 45)
-16% Armoid (Lv. 44 - 47)
-17% Psyballs (Lv. 44 - 47)
-12% Tigrette (Lv. 43 - 46)
-17% Raptorex (Lv. 45 - 48)
+11% Gladipede (Lv. 47 - 50)
+8% Drillatron (Lv. 47 - 50)
+12% Wattwo (Lv. 45 - 47)
+14% Armoid (Lv. 46 - 49)
+14% Psyballs (Lv. 45 - 47)
+9% Tigrette (Lv. 45 - 47)
+13% Pterator (Lv. 47 - 50)
+8% Electroram (Lv. 45 - 47)
+5% Flamigo (Lv. 46 - 49)
+6% Scrafty (Lv. 45 - 48)
 ===================================================================
 Route 37 (Surf)
 ===================================================================
-13% Lombre (Lv. 42 - 45)
-10% Ludicolo (Lv. 45 - 48)
-15% Bouncerog (Lv. 46 - 48)
-7% Sheltor (Lv. 42 - 44)
-5% Shelnado (Lv. 45 - 48)
-8% Lilyray (Lv. 40 - 44)
-7% Daray (Lv. 42 - 46)
-9% Spinaquata (Lv. 44 - 48)
-8% Ali (Lv. 44 - 47)
-11% Sealeo (Lv. 40 - 43)
-7% Walrein (Lv. 44 - 47)
+13% Lombre (Lv. 44 - 47)
+10% Ludicolo (Lv. 47 - 50)
+15% Bouncerog (Lv. 48 - 50)
+7% Sheltor (Lv. 44 - 46)
+5% Shelnado (Lv. 47 - 50)
+6% Lilyray (Lv. 42 - 46)
+7% Daray (Lv. 44 - 48)
+9% Spinaquata (Lv. 46 - 50)
+8% Ali (Lv. 46 - 49)
+3% Batorali (Lv. 48 - 50)
+10% Sealeo (Lv. 42 - 45)
+7% Walrein (Lv. 46 - 49)
 ===================================================================
 Route 37 (Fish)
 ===================================================================
-20% Malamar (Lv. 40 - 44)
-10% Sheltor (Lv. 40 - 42)
-8% Shelnado (Lv. 43 - 46)
-40% Gyarados (Lv. 44 - 47)
-22% Barbaracle (Lv. 44 - 47)
+17% Malamar (Lv. 42 - 46)
+10% Sheltor (Lv. 42 - 44)
+8% Shelnado (Lv. 45 - 47)
+35% Gyarados (Lv. 46 - 49)
+20% Barbaracle (Lv. 46 - 49)
+10% Ali (Lv. 46 - 49)
 ===================================================================
 Route 38 (Standard)
 ===================================================================
-9% HammyBoy (Lv. 45 - 49)
+9% Grunswine (Lv. 48 - 52)
 1% Magmaclang (Lv. 50)
-14% Fireshard (Lv. 44 - 48)
-17% Lafloo (Lv. 45 - 49)
-15% Sparkitten (Lv. 40 - 44)
-4% Conkeldurr (Lv. 45 - 49)
-7% Houndoom (Lv. 45 - 48)
-18% Barkflare (Lv. 44 - 48)
-3% Splame (Lv. 45 - 48)
-8% Wattwo (Lv. 43 - 47)
-4% Superchargo (Lv. 48 - 49)
+12% Fireshard (Lv. 47 - 51)
+15% Lafloo (Lv. 48 - 52)
+12% Sparkitten (Lv. 43 - 47)
+4% Conkeldurr (Lv. 48 - 52)
+5% Houndoom (Lv. 48 - 51)
+15% Barkflare (Lv. 47 - 51)
+3% Splame (Lv. 48 - 51)
+5% Wattwo (Lv. 46 - 50)
+3% Superchargo (Lv. 51 - 52)
+5% Sneasler (Lv. 50 - 52)
+8% Seviper (Lv. 48 - 51)
+3% Hissimitar (Lv. 51 - 53)
 ===================================================================
 Mt. St. Joseph (1A) (Standard)
 ===================================================================
-10% Crystallor (Lv. 46 - 50)
-9% Cairnasaur (Lv. 46 - 50)
-8% Boulderoar (Lv. 44 - 48)
-7% Tricerpup (Lv. 42 - 47)
-14% Fireshard (Lv. 44 - 48)
-17% Lafloo (Lv. 45 - 49)
-13% Fireblion (Lv. 50)
-10% Houndoom (Lv. 45 - 49)
-12% Pyrator (Lv. 46 - 50)
+8% Primodon (Lv. 49 - 53)
+7% Kobraturgy (Lv. 49 - 53)
+6% Saberock (Lv. 47 - 51)
+5% Topazatops (Lv. 50 - 53)
+11% Fireshard (Lv. 47 - 51)
+12% Lafloo (Lv. 48 - 52)
+12% Fireblion (Lv. 52 - 53)
+7% Houndoom (Lv. 48 - 52)
+10% Detonape (Lv. 49 - 53)
+13% Reuniclus-X (Lv. 50 - 53)
+5% Glimmora (Lv. 49 - 52)
+4% Barkflare (Lv. 48 - 51)
 ===================================================================
 Mt. St. Joseph (2A) (Standard)
 ===================================================================
-11% Blaster (Lv. 48 - 52)
-8% Cairnasaur (Lv. 48 - 52)
-9% Boulderoar (Lv. 46 - 50)
-5% Tricerpup (Lv. 44 - 47)
-15% Fireshard (Lv. 46 - 50)
-18% Lafloo (Lv. 47 - 51)
-14% Flamebless (Lv. 50 - 52)
-7% Houndoom (Lv. 47 - 51)
-13% Pyrator (Lv. 48 - 52)
+8% Sedisoftra (Lv. 51 - 55)
+5% Kobraturgy (Lv. 51 - 55)
+4% Saberock (Lv. 49 - 53)
+3% Topazatops (Lv. 51 - 55)
+12% Fireshard (Lv. 49 - 53)
+14% Lafloo (Lv. 50 - 54)
+12% Flamebless (Lv. 53 - 55)
+5% Houndoom (Lv. 50 - 54)
+11% Detonape (Lv. 51 - 55)
+12% Reuniclus-X (Lv. 52 - 55)
+8% Sneasler (Lv. 52 - 55)
+6% Despenero (Lv. 51 - 54)
 ===================================================================
 Mt. St. Joseph (2B) (Standard)
 ===================================================================
-11% Blaster (Lv. 48 - 52)
-8% Cairnasaur (Lv. 48 - 52)
-9% Boulderoar (Lv. 46 - 50)
-5% Tricerpup (Lv. 44 - 47)
-15% Fireshard (Lv. 46 - 50)
-18% Lafloo (Lv. 47 - 51)
-14% Flamebless (Lv. 50 - 52)
-7% Houndoom (Lv. 47 - 51)
-13% Pyrator (Lv. 48 - 52)
+8% Sedisoftra (Lv. 51 - 55)
+6% Kobraturgy (Lv. 51 - 55)
+8% Saberock (Lv. 49 - 53)
+5% Topazatops (Lv. 51 - 55)
+10% Fireshard (Lv. 49 - 53)
+12% Lafloo (Lv. 50 - 54)
+12% Flamebless (Lv. 53 - 55)
+6% Houndoom (Lv. 50 - 54)
+10% Detonape (Lv. 51 - 55)
+9% Reuniclus-X (Lv. 52 - 55)
+10% Crobat (Lv. 52 - 55)
+4% Despenero (Lv. 51 - 54)
 ===================================================================
 Mt. St. Joseph (3A) (Standard)
 ===================================================================
-8% Blaster (Lv. 50 - 54)
-8% Crystallor (Lv. 50 - 54)
-9% Cairnasaur (Lv. 50 - 54)
-8% Boulderoar (Lv. 48 - 52)
-20% Fireshard (Lv. 48 - 52)
-14% Lafloo (Lv. 50 - 54)
-6% Fireblion (Lv. 52 - 54)
-6% Flamebless (Lv. 52 - 54)
-5% Houndoom (Lv. 49 - 53)
-16% Pyrator (Lv. 50 - 54)
+5% Sedisoftra (Lv. 53 - 57)
+5% Primodon (Lv. 53 - 57)
+6% Kobraturgy (Lv. 53 - 57)
+5% Saberock (Lv. 51 - 55)
+14% Fireshard (Lv. 51 - 55)
+12% Lafloo (Lv. 53 - 57)
+6% Fireblion (Lv. 55 - 57)
+6% Flamebless (Lv. 55 - 57)
+5% Houndoom (Lv. 52 - 56)
+13% Detonape (Lv. 53 - 57)
+11% Reuniclus-X (Lv. 52 - 57)
+12% Swalot-X (Lv. 54 - 57)
 ===================================================================
 Mt. St. Joseph (3B) (Standard)
 ===================================================================
-8% Blaster (Lv. 50 - 54)
-8% Crystallor (Lv. 50 - 54)
-9% Cairnasaur (Lv. 50 - 54)
-8% Boulderoar (Lv. 48 - 52)
-20% Fireshard (Lv. 48 - 52)
-14% Lafloo (Lv. 50 - 54)
-6% Fireblion (Lv. 52 - 54)
-6% Flamebless (Lv. 52 - 54)
-5% Houndoom (Lv. 49 - 53)
-16% Pyrator (Lv. 50 - 54)
+5% Sedisoftra (Lv. 53 - 57)
+5% Primodon (Lv. 53 - 57)
+6% Kobraturgy (Lv. 53 - 57)
+5% Saberock (Lv. 51 - 55)
+18% Fireshard (Lv. 51 - 55)
+10% Lafloo (Lv. 53 - 57)
+6% Fireblion (Lv. 55 - 57)
+6% Flamebless (Lv. 55 - 57)
+5% Houndoom (Lv. 52 - 56)
+9% Detonape (Lv. 53 - 57)
+15% Reuniclus-X (Lv. 52 - 57)
+10% Despenero (Lv. 53 - 57)
 ===================================================================
 Mt. St. Joseph (4A) (Standard)
 ===================================================================
-30% Blastflames (Lv. 60 - 65)
-25% Fireblion (Lv. 65)
-25% Flamebless (Lv. 65)
-5% Houndoom (Lv. 58 - 63)
-15% Pyrator (Lv. 60 - 65)
+15% Blastflames (Lv. 65 - 70)
+20% Fireblion (Lv. 70)
+20% Flamebless (Lv. 70)
+5% Houndoom (Lv. 63 - 68)
+10% Detonape (Lv. 65 - 70)
+10% Reuniclus-X (Lv. 65 - 70)
+10% Despenero (Lv. 65 - 70)
+10% Grust (Lv. 65 - 70)
 ===================================================================
 Mt. St. Joseph (1A) (Lava)
 ===================================================================
@@ -1108,27 +1133,27 @@ Mt. St. Joseph (1A) (Lava)
 ===================================================================
 Mt. St. Joseph (2A) (Lava)
 ===================================================================
-100% Iglite (Lv. 100)
+100% Sember (Lv. 100)
 ===================================================================
 Mt. St. Joseph (2B) (Lava)
 ===================================================================
-100% Iglite (Lv. 100)
+100% Sember (Lv. 100)
 ===================================================================
 Mt. St. Joseph (3A) (Lava)
 ===================================================================
-100% Iglite (Lv. 100)
+100% Sember (Lv. 100)
 ===================================================================
 Mt. St. Joseph (3B) (Lava)
 ===================================================================
-100% Iglite (Lv. 100)
+100% Sember (Lv. 100)
 ===================================================================
 Mt. St. Joseph (4A) (Lava)
 ===================================================================
-100% Iglite (Lv. 100)
+100% Sember (Lv. 100)
 ===================================================================
 Mt. St. Joseph (4B) (Lava)
 ===================================================================
-100% Iglite (Lv. 100)
+100% Sember (Lv. 100)
 ===================================================================
 Route 44 (Standard)
 ===================================================================
@@ -1136,18 +1161,36 @@ Route 44 (Standard)
 ===================================================================
 Mt. Splinkty (Outside) (Standard)
 ===================================================================
-6% Treewin (Lv. 33 - 35)
-11% Dualbear (Lv. 30 - 32)
-8% Bluebunn (Lv. 29 - 32)
-5% Swordik (Lv. 31 - 34)
+6% Kappalm (Lv. 33 - 35)
+11% Teddician (Lv. 30 - 32)
+8% Willolagos (Lv. 29 - 32)
+5% Spartipede (Lv. 31 - 34)
 7% Hattrem (Lv. 32 - 33)
 5% Sparkitten (Lv. 28 - 31)
 4% Arbok (Lv. 30 - 32)
 15% Minishoo (Lv. 29 - 32)
-7% Dualmoose (Lv. 30)
+7% Cervora (Lv. 30)
 10% Consodust (Lv. 29 - 34)
 14% Splame (Lv. 31 - 34)
 8% Tinkie (Lv. 24 - 25)
+===================================================================
+Route 39 (Standard)
+===================================================================
+6% Teddinaut (Lv. 60 - 64)
+8% Clefable (Lv. 58 - 63)
+5% Drageye (Lv. 61 - 62)
+5% Galactasolder (Lv. 62 - 67)
+3% Cosmocrash (Lv. 61 - 65)
+7% Stellarock (Lv. 62 - 66)
+6% Swalot-X (Lv. 60 - 63)
+8% Zoroark (Lv. 61 - 63)
+10% Despenero (Lv. 60 - 63)
+4% Grafaiai (Lv. 59 - 62)
+6% Sneasler (Lv. 61 - 64)
+9% Rhypolar (Lv. 62 - 65)
+8% Grust (Lv. 60 - 62)
+9% Hissimitar (Lv. 61 - 65)
+6% Drillatron (Lv. 60 - 64)
 ===================================================================
 1,Twigle,1,20.00%
 2,Torgged,0,0.00%
@@ -1158,25 +1201,25 @@ Mt. Splinkty (Outside) (Standard)
 7,Lizish,0,0.00%
 8,Iguaton,0,0.00%
 9,Dragave,0,0.00%
-10,Hummingspark,4,15.00%
-11,Flashclaw,3,12.00%
-12,Magestiflash,1,12.00%
-13,Pigo,3,14.00%
-14,Pigonat,3,9.67%
-15,Pigoga,0,0.00%
+10,Chivick,4,15.00%
+11,Humbrill,3,12.00%
+12,Huminescence,1,12.00%
+13,Scigeon,3,14.00%
+14,Thieven,3,9.67%
+15,Armoraven,0,0.00%
 16,Hammo,4,15.00%
-17,HammyBoy,1,9.00%
-18,Hamthorno,0,0.00%
-19,Sheabear,4,10.50%
-20,Dualbear,3,11.00%
-21,Spacebear,0,0.00%
+17,Grunswine,1,9.00%
+18,Hoghoncho,0,0.00%
+19,Teddull,4,10.50%
+20,Teddician,3,11.00%
+21,Teddinaut,1,6.00%
 22,Bealtle,4,12.50%
 23,Centatle,3,6.00%
 24,Curlatoral,1,5.00%
 25,Millistone,0,0.00%
 26,Sapwin,5,12.00%
-27,Treewin,4,5.50%
-28,Winagrow,0,0.00%
+27,Kappalm,4,5.50%
+28,Serpenge,0,0.00%
 29,Budew,3,9.67%
 30,Roselia,3,5.33%
 31,Roserade,0,0.00%
@@ -1189,82 +1232,82 @@ Mt. Splinkty (Outside) (Standard)
 38,Busheep,7,8.57%
 39,Ramant,0,0.00%
 40,Bushewe,0,0.00%
-41,Bugik,4,9.00%
-42,Swordik,4,5.75%
-43,Ninjakik,1,12.00%
+41,Scarabit,4,9.00%
+42,Spartipede,4,5.75%
+43,Gladipede,1,11.00%
 44,Lotad,5,34.40%
 45,Lombre,2,11.00%
 46,Ludicolo,2,11.00%
-47,Bluebunn,5,11.80%
-48,Rocky,5,17.80%
-49,Boulder,1,11.00%
-50,Blaster,4,9.50%
-51,Crystallor,4,7.00%
-52,Carinx,5,10.60%
-53,Carinator,4,12.00%
-54,Cairnasaur,5,8.60%
-55,Pebblepup,3,8.33%
-56,Boulderoar,6,8.83%
-57,Fightorex,5,9.60%
-58,Raptorex,1,17.00%
-59,Kleinowl,4,12.00%
-60,Hootowl,1,2.00%
-61,Dualmoose,5,9.40%
+47,Willolagos,5,11.80%
+48,Sedinister,5,17.80%
+49,Metaslate,1,11.00%
+50,Sedisoftra,4,6.50%
+51,Primodon,4,5.00%
+52,Asmethiss,5,10.60%
+53,Aspomancer,4,12.00%
+54,Kobraturgy,5,6.00%
+55,Sabore,3,8.33%
+56,Saberock,6,6.50%
+57,Rexisilt,5,9.60%
+58,Pterator,1,13.00%
+59,Snowlet,4,12.00%
+60,Nixnerva,1,2.00%
+61,Cervora,5,9.40%
 62,Snom,6,8.67%
 63,Frosmoth,1,1.00%
-64,Grondor,5,12.80%
-65,Bipedice,1,2.00%
-66,Tricerpup,8,9.13%
-67,Tricercil,0,0.00%
+64,Grislush,5,12.80%
+65,Thalarctric,1,2.00%
+66,Ceramber,5,11.20%
+67,Topazatops,3,4.33%
 68,Spheal,4,22.00%
-69,Sealeo,1,11.00%
+69,Sealeo,1,10.00%
 70,Walrein,1,7.00%
 71,Froshrog,9,14.78%
 72,Bouncerog,1,15.00%
-73,Bugop,4,11.25%
-74,Opwing,5,14.00%
+73,Lunymph,4,11.25%
+74,Fearomoth,5,14.00%
 75,Hatenna,4,9.00%
 76,Hattrem,3,5.67%
 77,Hatterene,0,0.00%
-78,Otterpor,7,18.29%
-79,Psylotter,1,30.00%
-80,Florline,5,9.20%
-81,Florlion,0,0.00%
+78,Whotter,7,18.29%
+79,Lutrineer,1,30.00%
+80,Mosscelot,5,9.20%
+81,Osceloma,0,0.00%
 82,Psycorb,6,8.83%
-83,Psyballs,1,17.00%
+83,Psyballs,1,14.00%
 84,Psycorboratr,0,0.00%
 85,Ralts,3,9.33%
 86,Kirlia,2,10.00%
 87,Gardevoir,1,5.00%
 88,Gallade,0,0.00%
-89,Tigrette,7,11.86%
+89,Tigrette,7,11.43%
 90,Inkay,13,13.23%
-91,Malamar,2,15.00%
+91,Malamar,2,13.50%
 92,Flameruff,4,8.75%
-93,Barkflare,2,15.50%
-94,Iglite,8,78.13%
-95,Blaxer,3,11.00%
-96,Pyrator,6,14.17%
+93,Barkflare,3,10.67%
+94,Sember,8,77.50%
+95,Kaboon,3,11.00%
+96,Detonape,6,10.50%
 97,Magmaclang,1,1.00%
 98,Flamehox,4,42.00%
-99,Fireshard,6,16.33%
-100,Blastflames,2,40.00%
+99,Fireshard,6,12.83%
+100,Blastflames,2,32.50%
 101,Tiowoo,2,10.00%
 102,Magwoo,2,4.50%
-103,Lafloo,8,24.75%
+103,Lafloo,8,21.88%
 104,Houndour,2,11.00%
-105,Houndoom,9,7.67%
+105,Houndoom,9,6.78%
 106,Sparkdust,2,8.00%
 107,Splame,5,10.60%
-108,Sparkitten,8,9.38%
-109,Fireblion,4,12.50%
-110,Flamebless,5,13.00%
+108,Sparkitten,8,9.00%
+109,Fireblion,4,11.00%
+110,Flamebless,5,11.20%
 111,Shookwat,2,37.50%
-112,Wattwo,2,12.50%
+112,Wattwo,2,8.50%
 113,Megawatt,0,0.00%
 114,Elelamb,4,7.25%
-115,Electroram,0,0.00%
-116,Superchargo,1,4.00%
+115,Electroram,1,8.00%
+116,Superchargo,1,3.00%
 117,Twigzap,3,18.67%
 118,Shockbranch,2,3.50%
 119,Thunderzap,0,0.00%
@@ -1277,25 +1320,25 @@ Mt. Splinkty (Outside) (Standard)
 126,Whiskie,2,12.50%
 127,Whiskers,1,9.00%
 128,Whiskeroar,0,0.00%
-129,Nincada,3,7.00%
+129,Nincada,4,6.50%
 130,Ninjask,1,2.00%
 131,Shedinja,0,0.00%
 132,Sheltor,16,14.38%
 133,Shelnado,5,18.00%
-134,Lilyray,11,21.45%
+134,Lilyray,11,21.27%
 135,Daray,5,15.40%
 136,Spinaquata,2,12.00%
 137,Magikarp,15,26.00%
-138,Gyarados,3,23.33%
+138,Gyarados,3,21.67%
 139,Staryu,14,32.21%
 140,Starmie,1,14.00%
-141,Ali,16,13.50%
-142,Batorali,0,0.00%
+141,Ali,17,13.29%
+142,Batorali,1,3.00%
 143,Posho,8,19.00%
 144,Shomp,1,18.00%
 145,Poshorump,0,0.00%
 146,Binacle,11,17.91%
-147,Barbaracle,1,22.00%
+147,Barbaracle,1,20.00%
 148,Durfish,9,19.67%
 149,Dompster,1,12.00%
 150,Kissyfishy,5,26.20%
@@ -1303,11 +1346,11 @@ Mt. Splinkty (Outside) (Standard)
 152,Arbok,3,8.33%
 153,Zubat,6,13.00%
 154,Golbat,1,9.00%
-155,Crobat,0,0.00%
+155,Crobat,1,10.00%
 156,Poof,3,11.67%
 157,Hast,2,5.50%
 158,Poov,4,9.75%
-159,Grust,1,10.00%
+159,Grust,3,9.33%
 160,Cluuz,4,13.75%
 161,Zurrclu,1,2.00%
 162,Zurroaratr,0,0.00%
@@ -1316,35 +1359,35 @@ Mt. Splinkty (Outside) (Standard)
 165,Conkeldurr,1,4.00%
 166,Rhypo,4,7.00%
 167,Rhynee,2,14.00%
-168,Rhypolar,0,0.00%
+168,Rhypolar,1,9.00%
 169,Diggie,5,12.40%
-170,Drillatron,6,17.00%
+170,Drillatron,7,15.29%
 171,Wormite,2,12.50%
 172,Wormbot,3,11.00%
 173,Wormatron,0,0.00%
 174,Cleffa,3,6.67%
 175,Clefairy,2,9.50%
-176,Clefable,1,5.00%
+176,Clefable,2,6.50%
 177,Minishoo,4,8.25%
 178,Glittleshoo,1,7.00%
 179,Zorua,2,7.50%
-180,Zoroark,1,7.00%
+180,Zoroark,2,7.50%
 181,Droid,2,11.00%
-182,Armoid,2,15.00%
+182,Armoid,2,14.00%
 183,Soldrota,0,0.00%
 184,Tinkie,3,12.67%
 185,Shawar,3,18.00%
 186,Shaboom,0,0.00%
 187,Dragee,1,25.00%
 188,Draga,2,18.00%
-189,Drageye,0,0.00%
+189,Drageye,1,5.00%
 190,Blobmo,4,9.00%
 191,Nebulimb,0,0.00%
-192,Galactasolder,0,0.00%
+192,Galactasolder,1,5.00%
 193,Consodust,2,8.00%
-194,Cosmocrash,0,0.00%
+194,Cosmocrash,1,3.00%
 195,Rockmite,5,13.80%
-196,Stellarock,0,0.00%
+196,Stellarock,1,7.00%
 197,Poof-E,2,13.50%
 198,Hast-E,6,16.33%
 199,Droid-E,2,10.50%
@@ -1387,30 +1430,30 @@ Mt. Splinkty (Outside) (Standard)
 236,Solaroxyous,0,0.00%
 237,Kissyfishy-D,0,0.00%
 238,Scraggy,6,6.50%
-239,Scrafty,0,0.00%
+239,Scrafty,1,6.00%
 240,Scraftagon,0,0.00%
 241,Glimmet,8,9.87%
-242,Glimmora,2,9.50%
+242,Glimmora,3,8.00%
 243,Abra,2,9.50%
 244,Kadabra,3,5.00%
 245,Alakazam,0,0.00%
-246,Flamigo,1,4.00%
+246,Flamigo,2,4.50%
 247,Sneasel,3,13.33%
 248,Weavile,0,0.00%
 249,Sneasel-H,6,13.50%
-250,Sneasler,0,0.00%
+250,Sneasler,3,6.33%
 251,Solosis,0,0.00%
 252,Duosion,0,0.00%
 253,Reuniclus,0,0.00%
 254,Solosis-X,7,7.14%
 255,Duosion-X,0,0.00%
-256,Reuniclus-X,0,0.00%
-257,Seviper,4,7.50%
-258,Hissimitar,0,0.00%
+256,Reuniclus-X,6,11.67%
+257,Seviper,5,7.60%
+258,Hissimitar,2,6.00%
 259,Gulpin,0,0.00%
 260,Swalot,0,0.00%
 261,Gulpin-X,7,9.14%
-262,Swalot-X,0,0.00%
+262,Swalot-X,2,9.00%
 263,Plasamp,9,9.00%
 264,Genieova,0,0.00%
 265,Elgyem,3,8.00%
@@ -1428,7 +1471,7 @@ Mt. Splinkty (Outside) (Standard)
 277,Bronzong-X,1,13.00%
 278,Capsakid,7,6.71%
 279,Scovillain,0,0.00%
-280,Despenero,0,0.00%
+280,Despenero,5,8.00%
 281,Capsakid-S,7,12.29%
 282,Scovillain-S,2,8.50%
 283,Despenero-S,0,0.00%
@@ -1444,4 +1487,4 @@ Mt. Splinkty (Outside) (Standard)
 293,Marill,1,12.00%
 294,Azumarill,4,7.00%
 295,Shroodle,4,6.25%
-296,Grafaiai,2,12.00%
+296,Grafaiai,3,9.33%
