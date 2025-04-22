@@ -3102,7 +3102,7 @@ public class AssetSetter {
 		if (flag[2][11]) {
 			gp.npc[28][2] = SetupStaticEncounter(284, 82, 22, 387, "Bzzz....Zzzzttt..... ZUZUZUURRKIII!!!");
 		} else {
-			gp.npc[28][2] = NPCSetup(UP_XURKITREE, null, 82, 22, "Zzzzt.", 28.3, -1, "", 387);
+			gp.npc[28][2] = NPCSetup(UP_XURKITREE, "Critter", 82, 22, "Zzzzt.", 28.3, -1, "", 387);
 		}
 		if (flag[2][12]) {
 			gp.npc[28][2] = null;

@@ -1425,7 +1425,15 @@ public enum Item {
 					}
 				}
 		        Color color = mtype.getColor();
+		        moves[k].setSolid(false);
         		moves[k].setBackground(color);
+        		moves[k].setFont(new Font("Arial", Font.BOLD, 12));
+        		moves[k].setPreferredSize(new Dimension(120, 26));
+        		if (!current.getValidMoveset().contains(move)) {
+        			moves[k].setSolid(true);
+        			moves[k].setBackground(Color.GRAY);
+        			moves[k].setFont(new Font("Arial", Font.PLAIN, 12));
+        		}
         		int minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, -1, crit, field);
         		int maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, 1, crit, field);
         		double minDamageD = minDamage * 1.0 / foe.getStat(0);
