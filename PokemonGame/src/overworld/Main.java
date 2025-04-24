@@ -126,6 +126,7 @@ public class Main {
 	        }
 	        if (gp.player.p.visor) gp.player.setupPlayerImages(true);
 	        gp.ui.drawLightOverlay = gp.determineLightOverlay();
+	        gp.ui.drawLight = gp.determineMachineLight();
 	        ois.close();
 	    } catch (IOException | ClassNotFoundException e) {
 	        // If there's an error reading the file, create a new Player object
@@ -349,12 +350,13 @@ public class Main {
 					writer.write(header.toString());
 				}
 				StringBuilder rowBuilder = new StringBuilder();
-	            String pokemonName = Pokemon.getName(id++);
+	            String pokemonName = Pokemon.getName(id + 1);
 	            rowBuilder.append(String.format("#%03d %-20s", id, pokemonName));
 	            for (boolean canLearn : row) {
 	                rowBuilder.append(canLearn ? "Y     " : "N     ");
 	            }
 	            rowBuilder.append("\n");
+	            id++;
 	            writer.write(rowBuilder.toString());
 			}
 			writer.write("====================================================================================\n");

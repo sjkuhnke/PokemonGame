@@ -1080,6 +1080,21 @@ public class PlayerCharacter extends Entity {
 		} else if (code.equals("MVFX")) {
 			p.deleteInvalidMoves();
 			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("dicklover")) {
+			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
+				Pokemon pokemon = new Pokemon(i, 1, true, false);
+				pokemon.nat = Nature.SERIOUS;
+				pokemon.ivs = new int[] {0, 0, 0, 0, 0, 0};
+				pokemon.setStats();
+				pokemon.verifyHP();
+				p.catchPokemon(pokemon, false);
+			}
+			SwingUtilities.getWindowAncestor(cheats).dispose();
+		} else if (code.equals("leveldown")) {
+			p.current.level = Math.max(p.current.level - 1, 1);
+			p.current.setStats();
+			p.current.verifyHP();
+			SwingUtilities.getWindowAncestor(cheats).dispose();
 		}
 	}
 

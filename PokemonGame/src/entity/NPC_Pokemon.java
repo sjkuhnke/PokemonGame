@@ -57,5 +57,23 @@ public class NPC_Pokemon extends Entity {
 		}
 		
 	}
+	
+	public void facePlayer(String playerDirection) {
+		this.spriteNum = 1;
+		switch(playerDirection) {
+			case "up":
+				this.direction = "down";
+				break;
+			case "down":
+				this.direction = "up";
+				break;
+			case "left":
+				this.direction = "right";
+				break;
+			case "right":
+				this.direction = "left";
+				break;
+		}
+	}
 
 }
