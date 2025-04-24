@@ -213,32 +213,32 @@ public enum Item {
 	RING_TARGET(344,0,0,Color.BLACK,Item.HELD_ITEM,null,"When held, moves that would normally have no effect due to abilities or type matchups will still hit the holder."),
 	STICKY_BARB(347,0,0,Color.BLACK,Item.HELD_ITEM,null,"A clingy barb damages the holder every turn and will latch on to Pokemon that make direct contact with the holder."),
 	UTILITY_UMBRELLA(348,0,0,Color.BLACK,Item.HELD_ITEM,null,"This sturdy umbrella protects the holder from the effects of all weather."),
-	FOCUS_SASH(81,0,500,new Color(232, 80, 80),Item.HELD_ITEM,null,"If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP, but only once."),
+	FOCUS_SASH(81,0,400,new Color(232, 80, 80),Item.HELD_ITEM,null,"If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP, but only once."),
 	AIR_BALLOON(82,0,300,new Color(232, 72, 72),Item.HELD_ITEM,null,"This balloon makes the holder float in the air. If the holder is hit with an attack, the balloon will burst."),
-	EJECT_BUTTON(331,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the holder is damaged by an attack, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team."),
-	EJECT_PACK(332,0,0,Color.BLACK,Item.HELD_ITEM,null,"If the holder's stats are lowered, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team."),
+	EJECT_BUTTON(331,0,500,Color.BLACK,Item.HELD_ITEM,null,"If the holder is damaged by an attack, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team."),
+	EJECT_PACK(332,0,500,Color.BLACK,Item.HELD_ITEM,null,"If the holder's stats are lowered, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team."),
 	POWER_HERB(83,0,50,new Color(253, 80, 77),Item.HELD_ITEM,null,"A herb that allows the holder to immediately use a move that normally requires a turn to charge or recharge, but only once."),
 	WHITE_HERB(84,0,50,new Color(242, 242, 242),Item.HELD_ITEM,null,"A herb that will restore any lowered stat in battle, but only once."),
 	MENTAL_HERB(92,0,50,Color.BLACK,Item.HELD_ITEM,null,"An item to be held by a Pokemon. The holder shakes off move-binding effects, flinching, and possession to move freely. It can be used only once."),
-	MIRROR_HERB(333,0,0,Color.BLACK,Item.HELD_ITEM,null,"This herb will allow the holder to mirror an opponent's stat increases to boost its own stats - but only once."),
-	ELECTRIC_SEED(334,2,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Electric Terrain, the holder will use this seed to boost its own Defense stat."),
-	GRASSY_SEED(335,2,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Grassy Terrain, the holder will use this seed to boost its own Defense stat."),
-	PSYCHIC_SEED(336,2,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Psychic Terrain, the holder will use this seed to boost its own Sp. Def stat."),
-	SPARKLY_SEED(337,2,0,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Sparkly Terrain, the holder will use this seed to boost its own Sp. Def stat."),
+	MIRROR_HERB(333,0,50,Color.BLACK,Item.HELD_ITEM,null,"This herb will allow the holder to mirror an opponent's stat increases to boost its own stats - but only once."),
+	ELECTRIC_SEED(334,2,250,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Electric Terrain, the holder will use this seed to boost its own Defense stat."),
+	GRASSY_SEED(335,2,250,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Grassy Terrain, the holder will use this seed to boost its own Defense stat."),
+	PSYCHIC_SEED(336,2,250,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Psychic Terrain, the holder will use this seed to boost its own Sp. Def stat."),
+	SPARKLY_SEED(337,2,250,Color.BLACK,Item.HELD_ITEM,null,"If the terrain becomes Sparkly Terrain, the holder will use this seed to boost its own Sp. Def stat."),
 	WEAKNESS_POLICY(85,0,400,new Color(215, 233, 195),Item.HELD_ITEM,null,"If the holder is hit with a move it's weak to, this policy sharply boosts its Attack and Sp. Atk stats."),
 	BLUNDER_POLICY(86,0,400,new Color(239, 239, 178),Item.HELD_ITEM,null,"If the holder misses with a move due to low accuracy, this policy will sharply boost its Speed stat."),
-	ROOM_SERVICE(338,0,0,Color.BLACK,Item.HELD_ITEM,null,"If Trick Room takes effect, this item will lower the holder's Speed stat."),
+	ROOM_SERVICE(338,0,100,Color.BLACK,Item.HELD_ITEM,null,"If Trick Room takes effect, this item will lower the holder's Speed stat."),
 	RED_CARD(87,0,250,new Color(216, 35, 22),Item.HELD_ITEM,null,"If the holder is damaged by an attack, the mysterious power of this card can remove the attacker from the battle."),
 	THROAT_SPRAY(88,0,150,new Color(96, 120, 168),Item.HELD_ITEM,null,"If the holder uses a sound-based move, this throat spray will boost its Sp. Atk stat."),
-	ADRENALINE_ORB(326,1,0,Color.BLACK,Item.HELD_ITEM,null,"This orb will boost the Speed of the Pokemon by 1 stage when it is intimidated."),
-	ABSORB_BULB(327,3,0,Color.BLACK,Item.HELD_ITEM,372,"This single-use bulb will absorb any Water-type attack and boost the Sp. Atk stat of the holder. Any other attack will damage the item."),
-	CELL_BATTERY(328,3,0,Color.BLACK,Item.HELD_ITEM,373,"This single-use battery will absorb any Electric-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
-	LUMINOUS_MOSS(329,3,0,Color.BLACK,Item.HELD_ITEM,374,"This single-use moss will absorb any Water-type attack and boost the Sp. Def stat of the holder. Any other attack will damage the item."),
-	SNOWBALL(330,3,0,Color.BLACK,Item.HELD_ITEM,375,"This single-use ball of snow will absorb any Ice-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
-	DAMAGED_BULB(372,1,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use bulb boosts the Sp. Atk stat if the holder is damaged by a Water-type attack."),
-	DAMAGED_BATTERY(373,1,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use battery boosts the Attack stat if the holder is damaged by an Electric-type attack."),
-	DAMAGED_MOSS(374,1,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use moss boosts the Sp. Def stat if the holder is damaged by a Water-type move."),
-	DAMAGED_SNOWBALL(375,1,0,Color.BLACK,Item.HELD_ITEM,null,"This single-use ball of snow boosts the Attack stat if the holder is damaged by an Ice-type move."),
+	ADRENALINE_ORB(326,1,75,Color.BLACK,Item.HELD_ITEM,null,"This orb will boost the Speed of the Pokemon by 1 stage when it is intimidated."),
+	ABSORB_BULB(327,3,320,Color.BLACK,Item.HELD_ITEM,372,"This single-use bulb will absorb any Water-type attack and boost the Sp. Atk stat of the holder. Any other attack will damage the item."),
+	CELL_BATTERY(328,3,275,Color.BLACK,Item.HELD_ITEM,373,"This single-use battery will absorb any Electric-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
+	LUMINOUS_MOSS(329,3,335,Color.BLACK,Item.HELD_ITEM,374,"This single-use moss will absorb any Water-type attack and boost the Sp. Def stat of the holder. Any other attack will damage the item."),
+	SNOWBALL(330,3,300,Color.BLACK,Item.HELD_ITEM,375,"This single-use ball of snow will absorb any Ice-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
+	DAMAGED_BULB(372,1,25,Color.BLACK,Item.HELD_ITEM,null,"This single-use bulb boosts the Sp. Atk stat if the holder is damaged by a Water-type attack."),
+	DAMAGED_BATTERY(373,1,30,Color.BLACK,Item.HELD_ITEM,null,"This single-use battery boosts the Attack stat if the holder is damaged by an Electric-type attack."),
+	DAMAGED_MOSS(374,1,25,Color.BLACK,Item.HELD_ITEM,null,"This single-use moss boosts the Sp. Def stat if the holder is damaged by a Water-type move."),
+	DAMAGED_SNOWBALL(375,1,30,Color.BLACK,Item.HELD_ITEM,null,"This single-use ball of snow boosts the Attack stat if the holder is damaged by an Ice-type move."),
 	HM01(93,0,0,Color.BLACK,Item.TMS,Move.CUT,"Teaches a Pokemon this move."),
 	HM02(94,0,0,Color.BLACK,Item.TMS,Move.ROCK_SMASH,"Teaches a Pokemon this move."),
 	HM03(95,0,0,Color.BLACK,Item.TMS,Move.VINE_CROSS,"Teaches a Pokemon this move."),
@@ -922,8 +922,9 @@ public enum Item {
 	        for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
 	        	foeMons.addItem(new Pokemon(k, 50, false, true));
 	        }
-	        for (Trainer tr : Trainer.trainers) {
-	        	if (tr != null) {
+	        for (int i = 0; i < Trainer.trainers.length; i++) {
+	        	Trainer tr = Trainer.trainers[i];
+	        	if (tr != null && !Pokemon.gp.player.p.trainersBeat[i]) {
 	        		for (Pokemon po : tr.getTeam()) {
 	            		Pokemon add = po.clone();
 	            		add.setCalcNickname();
@@ -1970,7 +1971,11 @@ public enum Item {
 		addLabeledInput.accept("Ability", abilityInput);
 		
 		JComboBox<Nature> natures = new JComboBox<>(Nature.values());
-		if (p != null) natures.setSelectedItem(p.nat);
+		if (p != null) {
+			natures.setSelectedItem(p.nat);
+		} else {
+			natures.setSelectedItem(Nature.SERIOUS);
+		}
 		addLabeledInput.accept("Nature", natures);
 		
 		@SuppressWarnings("unchecked")

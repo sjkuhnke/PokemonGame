@@ -2810,6 +2810,12 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(49, 66, 3, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(54, 62, 3, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(49, 60, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 52, 11, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 52, 12, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 51, 11, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 51, 12, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 50, 11, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 50, 12, mapNum, map);
 		
 		mapNum = 150;
 		iIndex = 0;
@@ -4113,6 +4119,12 @@ public class AssetSetter {
 			break;
 		case 10:
 			result = new IceBlock(gp);
+			break;
+		case 11:
+			result = new Beam(gp, 1);
+			break;
+		case 12:
+			result = new Beam(gp, 2);
 			break;
 		}
 		

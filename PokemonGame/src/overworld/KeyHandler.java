@@ -436,9 +436,9 @@ public class KeyHandler implements KeyListener {
 				gp.gameState = GamePanel.PLAY_STATE;
 			}
 			if (gp.ui.subState > 1 && gp.ui.subState < 7 && gp.ui.bagState == 0) { // Menus for handling the 7 top menu options
-				if (gp.ui.subState == 2 && code == KeyEvent.VK_D) {
+				if ((gp.ui.subState == 2 || gp.ui.subState == 3) && code == KeyEvent.VK_D) {
 					dPressed = true;
-				}else {
+				} else {
 					gp.ui.subState = 0;
 					gp.ui.partySelectedNum = -1;
 					gp.ui.selectedBagNum = -1;

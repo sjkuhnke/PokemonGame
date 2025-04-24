@@ -823,20 +823,28 @@ public abstract class AbstractUI {
 		
 	}
 
-	public float getFontSize(String moveName, float targetWidth) {
-	    float fontSize = g2.getFont().getSize2D(); // Default font size
+	public float getFontSize(String text, float targetWidth) {
+		float fontSize = g2.getFont().getSize2D(); // Default font size
 
 	    FontMetrics metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
-	    int textWidth = metrics.stringWidth(moveName);
+	    int textWidth = metrics.stringWidth(text);
 
 	    // Reduce font size until the text fits within the target width
 	    while (textWidth > targetWidth && fontSize > 1) {
 	        fontSize -= 1; // Decrease font size
 	        metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
-	        textWidth = metrics.stringWidth(moveName);
+	        textWidth = metrics.stringWidth(text);
 	    }
 
 	    return fontSize;
+	}
+	
+	public int getTextWidth(String text) {
+		float fontSize = g2.getFont().getSize2D(); // Default font size
+
+	    FontMetrics metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
+	    int textWidth = metrics.stringWidth(text);
+	    return textWidth;
 	}
 
 	public void setNickname(Pokemon p, boolean above) {

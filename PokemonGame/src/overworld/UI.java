@@ -78,6 +78,7 @@ public class UI extends AbstractUI {
 	public int tmDexNum;
 	public int starAmt;
 	public int premier;
+	public Item tmCheck;
 	
 	public int remindNum;
 	public boolean drawFlash;
@@ -109,6 +110,9 @@ public class UI extends AbstractUI {
 	private String[][] letter;
 	private int maxLine = 13;
 	public int pageNum = 0;
+	
+	public Fog fog;
+	public boolean drawLight;
 	
 	private Random rand = new Random();
 	
@@ -150,6 +154,7 @@ public class UI extends AbstractUI {
 		
 		lightFrames = extractFrames("/battle/light.gif");
 		interactIcon = setup("/interactive/interact", 3);
+		fog = new Fog(gp);
 	}
 
 	@Override
@@ -177,6 +182,10 @@ public class UI extends AbstractUI {
 			opacity = Math.min(opacity, 1.0f);
 			drawLightDistortion(opacity);
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+		}
+		
+		if (drawLight) {
+			fog.draw(g2);
 		}
 		
 		if (drawFlash) {
@@ -2285,6 +2294,13 @@ public class UI extends AbstractUI {
 				g2.fillRoundRect(cX - 2, cY - 2, spriteWidth - 10, spriteHeight - 10, 10, 10);
 				g2.setColor(g2.getColor().darker());
 				g2.drawRoundRect(cX - 2, cY - 2, spriteWidth - 10, spriteHeight - 10, 10, 10);
+			} else if (tmCheck != null && cBox[i] != null) {
+				int canUse = cBox[i].canUseItem(tmCheck);
+				Color backgroundColor = canUse == 0 ? new Color(210, 35, 15, 200) : canUse == 1 ? new Color(15, 210, 40, 200) : new Color(230, 220, 50, 200);
+				g2.setColor(backgroundColor);
+				g2.fillRoundRect(cX - 2, cY - 2, spriteWidth - 10, spriteHeight - 10, 10, 10);
+				g2.setColor(g2.getColor().darker());
+				g2.drawRoundRect(cX - 2, cY - 2, spriteWidth - 10, spriteHeight - 10, 10, 10);
 			}
 			
 			if (i < cBox.length && cBox[i] != null) {
@@ -2370,6 +2386,12 @@ public class UI extends AbstractUI {
 			if (item != null) {
 				g2.drawImage(item.getImage(), selectX + 4, selectY + 4, null);
 			}
+		}
+		
+		if (tmCheck != null) {
+			int selectX = (int) (gp.tileSize * 14.25);
+			int selectY = 0;
+			drawTMCheckWindow(selectX, selectY);
 		}
 		
 		if (!showBoxSummary && !showBoxParty && !release && nicknaming < 0) {
@@ -2694,6 +2716,33 @@ public class UI extends AbstractUI {
 		drawBoxToolTips(false);
 	}
 
+	private void drawTMCheckWindow(int selectX, int selectY) {
+		int selectWidth = (int) (gp.tileSize * 1.75);
+		int selectHeight = (int) (gp.tileSize * 1.75);
+		
+		Item tm = tmCheck;
+		
+		drawSubWindow(selectX, selectY, selectWidth, selectHeight);
+		
+		selectX += 8;
+		selectY += 8;
+		selectWidth -= 16;
+		selectHeight -= 16;
+		
+		g2.setColor(new Color(230, 220, 50, 200));
+		g2.fillRoundRect(selectX, selectY, selectWidth, selectHeight, 10, 10);
+		g2.setColor(g2.getColor().darker());
+		g2.drawRoundRect(selectX, selectY, selectWidth, selectHeight, 10, 10);
+		
+		g2.drawImage(tm.getImage2(), selectX + 10, selectY - 4, null);
+		selectY += gp.tileSize + 12;
+		selectX += selectWidth / 2;
+		String text = tm.getMove().toString();
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(Math.min(getFontSize(text, selectWidth + 15), 16)));
+		g2.drawString(text, getCenterAlignedTextX(text, selectX), selectY);
+	}
+
 	private int getHighlightWidth(String boxText) {
 		float fontSize = g2.getFont().getSize2D(); // Default font size
 
@@ -2810,6 +2859,7 @@ public class UI extends AbstractUI {
 					if (currentPokemon.ivs[moveOption] > 0) {
 						currentPokemon.ivs[moveOption] = 0;
 						currentPokemon.setStats();
+						currentPokemon.verifyHP();
 			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + " IV was set to 0!", 42));
 			        	gp.player.p.bag.remove(currentItem);
 		        		currentItems = gp.player.p.getItems(currentPocket);
@@ -3221,6 +3271,12 @@ public class UI extends AbstractUI {
 				textY += 32;
 			}
 		}
+		if (tmCheck != null) {
+			int selectX = (int) (gp.tileSize * 4.25);
+			int selectY = (int) (gp.tileSize * 0.75);
+			drawTMCheckWindow(selectX, selectY);
+		}
+		
 		g2.setFont(g2.getFont().deriveFont(32F));
 		
 		x += gp.tileSize;
@@ -3241,6 +3297,15 @@ public class UI extends AbstractUI {
 				if (currentPocket != Item.TMS) itemString += " x " + current.getCount();
 				g2.drawString(itemString, x + gp.tileSize / 2, y);
 				y += gp.tileSize / 2;
+				if (currentPocket == Item.TMS && tmCheck == current.getItem()) {
+					int borderX = x - 8;
+					int borderY = y - gp.tileSize - 4;
+					int borderWidth = getTextWidth(itemString) + 4;
+					int borderHeight = (int) (gp.tileSize * 0.75);
+					g2.setPaint(new GradientPaint(borderX,borderY,new Color(255,215,0),borderX+borderWidth,borderY+borderWidth,new Color(255,255,210)));
+					g2.drawRoundRect(borderX, borderY, borderWidth, borderHeight, 25, 25);
+					g2.setColor(Color.WHITE);
+				}
 			}
 		}
 		// Down Arrow
@@ -3278,6 +3343,15 @@ public class UI extends AbstractUI {
 				gp.keyH.wPressed = false;
 				bagState = 1;
 			}
+			if (gp.keyH.dPressed && currentPocket == Item.TMS) {
+				gp.keyH.dPressed = false;
+				Item tm = currentItems.get(bagNum[currentPocket - 1]).getItem();
+				if (tmCheck == null || tmCheck != tm) {
+					tmCheck = tm;
+				} else {
+					tmCheck = null;
+				}
+			}
 		}
 		
 		if (bagState == 1) {
@@ -3288,7 +3362,7 @@ public class UI extends AbstractUI {
 			drawMoveSummary(gp.tileSize / 2, (int) (gp.tileSize * 6.5), null, null, null, currentItems.get(bagNum[currentPocket - 1]).getItem().getMove());
 		}
 		
-		drawToolTips("OK", "Swap", "Back", "Back");
+		drawToolTips("OK", "Swap", "Back", currentPocket == Item.TMS ? "Check" : null);
 	}
 	
 	private int indexOf(int[] array, int target) {
@@ -3349,6 +3423,7 @@ public class UI extends AbstractUI {
 					bagState = 0;
 					gp.player.p.visor = !gp.player.p.visor;
 					gp.player.setupPlayerImages(gp.player.p.visor);
+					drawLight = gp.determineMachineLight();
 				} else if (currentItem == Item.LETTER) {
 					gp.gameState = GamePanel.LETTER_STATE;
 				} else if (!currentItem.isUsable()) {
@@ -3520,6 +3595,7 @@ public class UI extends AbstractUI {
 				gp.eHandler.canTouchEvent = !gp.eHandler.tempCooldown;
 				
 				drawLightOverlay = gp.determineLightOverlay();
+				drawLight = gp.determineMachineLight();
 			}
 			gp.player.spriteNum = 1;
 			gp.player.p.surf = false;

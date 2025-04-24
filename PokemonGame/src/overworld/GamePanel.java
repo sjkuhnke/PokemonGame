@@ -487,6 +487,22 @@ public class GamePanel extends JPanel implements Runnable {
 	public boolean determineLightOverlay() {
 		return (currentMap == 38 || currentMap == 166) && !player.p.flag[3][8];
 	}
+	
+	public boolean determineMachineLight() {
+		if (player.p.flag[6][6] && !player.p.flag[7][5]) {
+			int mult = player.p.visor ? 2 : 1;
+			if (currentMap == 13 || currentMap == 28 || currentMap == 146 || currentMap == 149) { // in splinkty 5A or outside splinkty
+				ui.fog.setIntensity(0.75 * mult);
+			} else if (currentMap == 24 || currentMap == 25 || currentMap == 26 || currentMap == 145 || currentMap == 27 || currentMap == 148) { // in splinkty rest
+				ui.fog.setIntensity(1 * mult);
+			} else {
+				ui.fog.setIntensity(2 * mult);
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public void setTaskState() {
 		ui.checkTasks = false;
