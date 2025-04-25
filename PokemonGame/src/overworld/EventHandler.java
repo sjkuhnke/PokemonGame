@@ -897,9 +897,14 @@ public class EventHandler {
 			if (hit(149,56,71)) gp.iTile[149][0] = null;
 			if (hit(149,42,71)) gp.iTile[149][1] = null;
 			if (hit(149,39,65)) gp.iTile[149][2] = null;
-			if (hit(149,51,63) && gp.player.p.flag[7][2]) gp.iTile[149][3] = null; // beat rick, unlock fred gate
-			if (hit(149,54,62) && gp.player.p.flag[7][3]) gp.iTile[149][4] = null; // beat fred, unlock maxwell gate
-			if (hit(149,49,59)) gp.aSetter.updateNPC(149); // clear all tn members TODO: replace with maxwell updating npc to make him a block, and after having a long convo with him it'll have update task
+			
+			// Cutscene with Rick 3
+			if (!gp.player.p.flag[7][2] && hit(149,49,65)) gp.player.interactNPC(gp.npc[149][14], false);
+			// Cutscene with Fred 4
+			if (!gp.player.p.flag[7][3] && hit(149,49,58)) gp.player.interactNPC(gp.npc[149][15], false);
+			// Cutscene with Maxwell 2
+			if (!gp.player.p.flag[7][4] && hit(149,49,51)) gp.player.interactNPC(gp.npc[149][16], false);
+			if (gp.player.p.flag[7][4] && !gp.player.p.flag[7][5] && hit(149,50,49)) gp.player.interactNPC(gp.npc[149][16], false);
 			
 			// Rawwar City -> Route 37 gate
 			if (hit(124,16,47,false)) teleport(179, 31, 34,false);

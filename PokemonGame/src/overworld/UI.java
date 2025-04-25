@@ -177,7 +177,7 @@ public class UI extends AbstractUI {
 		g2.setColor(Color.WHITE);
 		
 		if (drawLightOverlay) {
-			float opacity = gp.currentMap == 38 ? 0.8f : 1.4f;
+			float opacity = gp.currentMap == 38 ? 0.7f : 1.4f;
 			opacity /= gp.player.p.visor ? 4 : 1;
 			opacity = Math.min(opacity, 1.0f);
 			drawLightDistortion(opacity);

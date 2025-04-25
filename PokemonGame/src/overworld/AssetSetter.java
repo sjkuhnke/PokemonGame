@@ -2058,9 +2058,12 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 36, 65, "", "", 340);
 		gp.npc[mapNum][index] = NPCSetup(TN_DOWN, 39, 59, "", "", 341);
 		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 42, 65, "", "", 342);
-		gp.npc[mapNum][index] = NPCSetup(RICK, 49, 62, "", "", 343);
-		gp.npc[mapNum][index] = NPCSetup(FRED_DOWN, 53, 61, "", "", 344);
-		gp.npc[mapNum][index] = NPCSetup(MAXWELL, 49, 56, "", "", 345);
+		gp.npc[mapNum][index] = NPCSetup(RICK, "Rick", 49, 61, "", 149.0, 226, "Ghh... again? You really are a thorn in our side.\n"
+				+ "Go ahead, then. Keep charging in like you're unstoppable. But every step you take is exactly what Maxwell wants...", 343);
+		gp.npc[mapNum][index] = NPCSetup(FRED_UP, "Fred", 49, 55, "", 149.1, 227, "You don’t get it... you never did...\n"
+				+ "He's in the core chamber now. The machine's almost online. You're too late.\n"
+				+ "But... maybe, just maybe, you'll get one last act before the end.", 344);
+		gp.npc[mapNum][index] = NPCSetup(MAXWELL, "Maxwell", 49, 49, "", 149.2, -1, "", 345);
 		
 		mapNum = 150;
 		index = 0;
@@ -2808,14 +2811,21 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(49, 68, 3, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(49, 67, 3, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(49, 66, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 62, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 60, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 52, 11, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 52, 12, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 51, 11, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 51, 12, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 50, 11, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 50, 12, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 45, 11, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 45, 12, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 44, 11, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 44, 12, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 43, 11, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 43, 12, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 42, 11, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 42, 12, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 41, 11, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 41, 12, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 40, 11, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 40, 12, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 39, 11, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 39, 12, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 50, 3, 1, mapNum, map);
 		
 		mapNum = 150;
 		iIndex = 0;
@@ -3310,18 +3320,32 @@ public class AssetSetter {
 			gp.npc[124][22] = null;
 		}
 		
-		/**
-		 * All of this is old and should be removed/reworked
-		 */
-		if (flag[7][6]) {
-			gp.npc[146][1] = null;
-			for (int i = 1; i < gp.npc[1].length; i++) {
+		if (flag[7][2]) {
+			if (gp.npc[149][14] != null) gp.npc[149][14].worldY = 63 * gp.tileSize;
+		}
+		
+		if (flag[7][3]) {
+			if (gp.npc[149][15] != null) gp.npc[149][15].worldY = 57 * gp.tileSize;
+		}
+		
+		if (flag[7][4]) {
+			for (int i = 3; i <= 16; i++) {
+				gp.iTile[149][i] = null;
+			}
+		}
+		
+		if (flag[7][5]) {
+			for (int i = 1; i <= 16; i++) {
 				gp.npc[149][i] = null;
 			}
 		}
 		
 		if (map == 107 && flag[7][6]) {
 			gp.tileM.openGhostlyBluePortals();
+		}
+		
+		if (map == 149) {
+			gp.ui.drawLight = gp.determineMachineLight();
 		}
 		
 		gp.setRenderableNPCs();
