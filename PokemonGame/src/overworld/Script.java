@@ -1162,7 +1162,7 @@ public class Script {
 			}
 		});
 		
-		scriptMap.put(129.0, (npc) -> {
+		scriptMap.put(129.0, (npc) -> { // coin guy prize shop
 			if (!p.flag[6][1]) {
 				Task.addTask(Task.DIALOGUE, npc, "Oh, you haven't gotten any coins yet?");
 				Task.addTask(Task.DIALOGUE, npc, "Here, it's on the house!");
@@ -1186,7 +1186,7 @@ public class Script {
 						"Bested Robin in Poppy Grove! Lemme see your case real quick.",
 						"Beat Stanford, huh? I got a shiny reward for you, kid!",
 						"Ah, a shiny new badge! Made quick work of Millie, I see! Guess that calls for a bonus, bub.",
-						"4 badges, huh?  You're halfway through the gyms, and that’s no easy feat. Here's a little something for your troubles.",
+						"4 badges, huh?  You're halfway through the gyms, and that's no easy feat. Here's a little something for your troubles.",
 						"Bested Millie's own mom too? You took down that family no trouble! Pass me your case!",
 						"What's that? You beat both Maxwell and Rayna? Wow, I really underestimated you! Here!",
 						"Defeated our resident gambler Merlin? Heck yeah, I never trusted him anyways, heard he always cheated at Blackjack.",
@@ -1326,7 +1326,7 @@ public class Script {
 			
 		});
 
-		scriptMap.put(146.0, (npc) -> {
+		scriptMap.put(146.0, (npc) -> { // arthra top of splinkty gauntlet
 			Task.addTask(Task.DIALOGUE, npc, "Anyway, this is it. Inside, they've corrupted the PC, only letting you access your Gauntlet Box.");
 			Task.addTask(Task.DIALOGUE, npc, "You've used one before I'm sure, so I'll keep this short.");
 			Task.addTask(Task.DIALOGUE, npc, "Once you're inside, you're locked in with your party and up to four extra Pokemon you place in the Gauntlet Box.");
@@ -1342,8 +1342,108 @@ public class Script {
 			Task.addTask(Task.CONFIRM, "Are you ready to battle as soon as you enter? There's no going back once I let you in.", 0);
 		});
 		
-		scriptMap.put(146.1, (npc) -> {
+		scriptMap.put(146.1, (npc) -> { // merlin top of splinkty
 			Task.addTask(Task.DIALOGUE, npc, "I'll be right here. Go on - show them why the mountain trembled.");
+		});
+		
+		scriptMap.put(149.0, (npc) -> { // rick 3 cutscene
+			Task.addNPCMoveTask('y', 64 * gp.tileSize, player, false, 4);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.DIALOGUE, npc, "Well, look who's back to play hero again.");
+			Task.addNPCMoveTask('y', 62 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.DIALOGUE, npc, "You just keep crawling into places you don't belong. I told you before - we're summoning forces way beyond your comprehension.");
+			Task.addTask(Task.DIALOGUE, npc, "The machine behind me? It's the real deal. You won't be walking out of here once it's finished.");
+			Task.addNPCMoveTask('y', 63 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.DIALOGUE, npc, "But I'm not letting you even get that far. Let's see if your luck's finally run out.");
+			Task.addTask(Task.BATTLE, "", 343);
+		});
+		
+		scriptMap.put(149.1, (npc) -> { // fred 4 cutscene
+			Task.addNPCMoveTask('y', 58 * gp.tileSize, player, false, 4);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.DIALOGUE, npc, "You again.");
+			Task.addTask(Task.TURN, npc, "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.DIALOGUE, npc, "You just couldn't leave it alone, huh? I gave you a chance back at Shadow Path, but now you're charging into the heart of everything?");
+			Task.addNPCMoveTask('y', 57 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.DIALOGUE, npc, "This isn't just another mission, Finn. Maxwell's about to rewrite everything. And I'm not letting you stop that.");
+			Task.addTask(Task.DIALOGUE, npc, "You'll have to go through me. And this time? I'm not holding back.");
+			Task.addTask(Task.BATTLE, "", 344);
+		});
+		
+		scriptMap.put(149.2, (npc) -> { // maxwell 2 cutscene
+			if (!p.flag[7][4]) {
+				Task.addNPCMoveTask('y', 51 * gp.tileSize, player, false, 4);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "So... you've arrived. The little pest that keeps gnawing at the edges of greatness.");
+				Task.addTask(Task.DIALOGUE, npc, "Did you enjoy the show so far? The lights, the shadows, the chaos?");
+				Task.addTask(Task.DIALOGUE, npc, "Come, Finn. Don't be afraid.");
+				Task.addTask(Task.TURN, player, "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 50 * gp.tileSize, player, false, 4);
+				Task.addTask(Task.TURN, player, "", Task.UP);
+				Task.addTask(Task.DIALOGUE, npc, "Stand beside me. Just for a moment.");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addNPCMoveTask('y', 49 * gp.tileSize, player, false, 4);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, npc, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addCameraMoveTask('y', 200, 4);
+				Task.addTask(Task.SLEEP, "", 60);
+				Task.addTask(Task.DIALOGUE, npc, "Look at what we've built. The culmination of years... decades of silence, research, and sacrifice.");
+				Task.addTask(Task.SLEEP, "", 120);
+				Task.addTask(Task.DIALOGUE, npc, "This machine - this Earth Core Gauntlet - will reshape everything. Not with noise or fire... but with memory.");
+				Task.addTask(Task.SLEEP, "", 60);
+				Task.addCameraMoveTask('y', 0, 4);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, player, "", Task.LEFT);
+				Task.addTask(Task.DIALOGUE, npc, "The Earth remembers, Finn. I've given it a voice. A will. A weapon.");
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addTask(Task.DIALOGUE, npc, "And you, the one who's clawed your way through shadows and rubble... you want to silence it?");
+				Task.addTask(Task.DIALOGUE, npc, "Then go on. Let's see what you've learned after all this time.");
+				Task.addTask(Task.BATTLE, "", 345);
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "No... no, this can't be. You were just... noise. An obstacle.");
+				Task.addTask(Task.DIALOGUE, npc, "You’ve undone everything... again...");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "*sigh* Very well...");
+				Task.addTask(Task.DIALOGUE, npc, "It’s over. Team Eclipse... is finished.");
+				Task.addTask(Task.DIALOGUE, npc, "You’ve broken our machine. Or perhaps I should say... I have.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, player, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 60);
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.UPDATE, "");
+				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.SHAKE, "", 100);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, player, "", Task.LEFT);
+				Task.addTask(Task.DIALOGUE, npc, "But even now... it’s too late.");
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addTask(Task.DIALOGUE, npc, "You felt it, didn’t you? That rumble beneath your feet. That shift in the air.");
+				Task.addTask(Task.DIALOGUE, npc, "The Earth has already answered. The summoning is complete.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "Whatever happens next... is no longer in my hands. Or yours.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addTask(Task.DIALOGUE, npc, "So take your little victory, Finn. You earned it.");
+				Task.addTask(Task.DIALOGUE, npc, "But remember this - the Earth doesn’t forget. And neither do I...");
+				Task t = Task.addTask(Task.FLAG, "");
+				t.start = 7;
+				t.finish = 5;
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.UPDATE, "");
+				Task.addTask(Task.FLASH_OUT, "");
+			}
 		});
 	}
 	

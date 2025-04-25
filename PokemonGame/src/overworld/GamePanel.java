@@ -403,6 +403,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public Pokemon encounterPokemon(String area, char type, boolean random) {
+		if (currentMap == 149) return null;
 	    ArrayList<Encounter> encounters = Encounter.getEncounters(area, type, random);
 
 	    // Calculate the total encounter chance for the route
@@ -489,7 +490,8 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public boolean determineMachineLight() {
-		if (player.p.flag[6][6] && !player.p.flag[7][5]) {
+		if (player.p.flag[6][6] && !player.p.flag[7][4]) {
+			if (currentMap == 128) return false;
 			int mult = player.p.visor ? 2 : 1;
 			if (currentMap == 13 || currentMap == 28 || currentMap == 146 || currentMap == 149) { // in splinkty 5A or outside splinkty
 				ui.fog.setIntensity(0.75 * mult);

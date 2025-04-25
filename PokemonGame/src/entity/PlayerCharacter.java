@@ -485,6 +485,11 @@ public class PlayerCharacter extends Entity {
 		gp.setTaskState();
 		
 		Pokemon foe = gp.encounterPokemon(area, type, p.random);
+		if (foe == null) {
+			gp.ui.checkTasks = true;
+			gp.gameState = GamePanel.PLAY_STATE;
+			return;
+		}
 		Task.addStartBattleTask(-2, -1, foe, type);
 	}
 	
