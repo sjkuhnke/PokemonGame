@@ -29,7 +29,7 @@ public class AssetSetter {
 	private static final int ROBIN_UP = -26;
 	private static final int CHEF_UP = -25;
 	private static final int CHEF_DOWN = -24;
-//	private static final int UP_BUZZWOLE = -23;
+	private static final int DRAGOWRATH = -23;
 	private static final int NPC_BALL = -22;
 	private static final int STAR_SHOP = -21;
 	private static final int GRANDFATHER = -20;
@@ -1096,6 +1096,10 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(60, 65, Item.BIG_NUGGET, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(53, 65, Item.GOLD_BOTTLE_CAP, mapNum);
 		
+		mapNum = 149;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 50, Item.DESTINY_KNOT, mapNum);
+		
 		mapNum = 163;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(28, 39, Item.RUSTY_BOTTLE_CAP, mapNum);
@@ -2037,6 +2041,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 79, 27, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, "Arthra", 82, 27, "Took you long enough. What, did you have to hike back down for trail mix?", 146.0);
 		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 83, 27, "You've come a long way, Finn. Arthra may not say it, but she's impressed.", 146.1);
+		gp.npc[mapNum][index] = NPCSetup(DRAGOWRATH, "Dragowrath", 81, 15, "", 146.2);
 		
 		mapNum = 148;
 		index = 0;
@@ -3340,12 +3345,37 @@ public class AssetSetter {
 			}
 		}
 		
+		if (flag[7][5] && !flag[7][6]) {
+			if (gp.npc[146][1] != null) {
+				gp.npc[146][1].worldY = 28 * gp.tileSize;
+				gp.npc[146][1].setDirection("up");
+				gp.npc[146][2].worldY = 28 * gp.tileSize;
+				gp.npc[146][2].setDirection("up");
+			}
+		}
+		
+		if (flag[7][6]) {
+			gp.npc[146][3] = null;
+		}
+		
+		if (flag[7][6] && !flag[7][7]) {
+			if (gp.npc[146][1] != null) {
+				gp.npc[146][1].setDirection("right");
+				gp.npc[146][2].setDirection("down");
+			}
+		}
+		
 		if (map == 107 && flag[7][6]) {
 			gp.tileM.openGhostlyBluePortals();
 		}
 		
 		if (map == 149) {
 			gp.ui.drawLight = gp.determineMachineLight();
+		}
+		
+		if (flag[7][7]) {
+			gp.npc[146][1] = null;
+			gp.npc[146][2] = null;
 		}
 		
 		gp.setRenderableNPCs();
@@ -4007,6 +4037,10 @@ public class AssetSetter {
 				break;
 			case MANIAC_DOWN:
 				result.setupImages("/npc/maniac");
+				result.setDirection("down");
+				break;
+			case DRAGOWRATH:
+				result.down1 = result.setup("/overworlds/291_0");
 				result.setDirection("down");
 				break;
 		}

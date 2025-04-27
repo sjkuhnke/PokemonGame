@@ -905,6 +905,10 @@ public class EventHandler {
 			// Cutscene with Maxwell 2
 			if (!gp.player.p.flag[7][4] && hit(149,49,51)) gp.player.interactNPC(gp.npc[149][16], false);
 			if (gp.player.p.flag[7][4] && !gp.player.p.flag[7][5] && hit(149,50,49)) gp.player.interactNPC(gp.npc[149][16], false);
+			if (hit(149,50,63)) teleport(149, 49, 69,false);
+			
+			// Cutscene with Dragowrath
+			if (!gp.player.p.flag[7][6] && hit(146,82,27)) gp.player.interactNPC(gp.npc[146][3], false);
 			
 			// Rawwar City -> Route 37 gate
 			if (hit(124,16,47,false)) teleport(179, 31, 34,false);

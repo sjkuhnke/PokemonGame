@@ -950,6 +950,7 @@ public class PlayerCharacter extends Entity {
 			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("GASTLY")) {
 			p.ghost = !p.ghost;
+			inTallGrass = false;
 			String onoff = p.ghost ? "on!" : "off.";
 			JOptionPane.showMessageDialog(null, "Walk-through-walls mode was turned " + onoff);
 			SwingUtilities.getWindowAncestor(cheats).dispose();
