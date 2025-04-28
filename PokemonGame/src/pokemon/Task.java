@@ -1,8 +1,10 @@
 package pokemon;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import entity.Entity;
+import object.TemplateParticle;
 import overworld.GamePanel;
 import pokemon.Field.FieldEffect;
 
@@ -69,6 +71,7 @@ public class Task {
 	public static final int INTERACTIVE = 55;
 	public static final int TYPES = 56;
 	public static final int EVOLUTION = 57;
+	public static final int PARTICLE = 58;
 	
 	public static GamePanel gp;
 	
@@ -91,6 +94,8 @@ public class Task {
 	
 	public Entity e;
 	public Trainer[] trainers;
+	public Color color;
+	public ArrayList<TemplateParticle> particleList;
 	
 	public Task(int type, String message) {
 		this(type, message, null);
@@ -385,5 +390,19 @@ public class Task {
 		t.finish = dest;
 		t.counter = frameInc;
 		t.wipe = follow;
+	}
+	
+	public static void addParticleTask(Entity npc, String path, Color color, int amt) {
+		Task t = addTask(PARTICLE, npc, path);
+		t.counter = 180;
+		t.start = t.counter;
+		t.color = color;
+		t.particleList = new ArrayList<>();
+		
+		for (int i = 0; i < amt; i++) {
+			TemplateParticle p = new TemplateParticle(gp, t.e, t.color, t.message);
+			p.spawnDelay = i;
+			t.particleList.add(p);
+		}
 	}
 }
