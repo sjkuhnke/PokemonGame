@@ -1,5 +1,6 @@
 package overworld;
 
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Consumer;
@@ -1327,23 +1328,51 @@ public class Script {
 		});
 
 		scriptMap.put(146.0, (npc) -> { // arthra top of splinkty gauntlet
-			Task.addTask(Task.DIALOGUE, npc, "Anyway, this is it. Inside, they've corrupted the PC, only letting you access your Gauntlet Box.");
-			Task.addTask(Task.DIALOGUE, npc, "You've used one before I'm sure, so I'll keep this short.");
-			Task.addTask(Task.DIALOGUE, npc, "Once you're inside, you're locked in with your party and up to four extra Pokemon you place in the Gauntlet Box.");
-			Task.addTask(Task.DIALOGUE, npc, "No PC access. No going back. Once you go in, that's all you've got.");
-			Task.addTask(Task.DIALOGUE, npc, "So prep wisely. We'll handle anything and anyone that tries to come up after you.");
-			int selected = p.getAmountSelected();
-			if (selected < Player.GAUNTLET_BOX_SIZE) { // Not enough selected
-				String message = "Hey dumbass, you don't have 4 Pokemon selected to bring in the Gauntlet Box.\nYou can choose what Pokemon to bring using the Gauntlet Box in this PC (press [\u2191] when selecting a box).";
-				for (String s : message.split("\n")) {
-					Task.addTask(Task.DIALOGUE, npc, s);
+			if (!p.flag[7][6]) {
+				Task.addTask(Task.DIALOGUE, npc, "Took you long enough. What, did you have to hike back down for trail mix?");
+				Task.addTask(Task.DIALOGUE, npc, "Anyway, this is it. Inside, they've corrupted the PC, only letting you access your Gauntlet Box.");
+				Task.addTask(Task.DIALOGUE, npc, "You've used one before I'm sure, so I'll keep this short.");
+				Task.addTask(Task.DIALOGUE, npc, "Once you're inside, you're locked in with your party and up to four extra Pokemon you place in the Gauntlet Box.");
+				Task.addTask(Task.DIALOGUE, npc, "No PC access. No going back. Once you go in, that's all you've got.");
+				Task.addTask(Task.DIALOGUE, npc, "So prep wisely. We'll handle anything and anyone that tries to come up after you.");
+				int selected = p.getAmountSelected();
+				if (selected < Player.GAUNTLET_BOX_SIZE) { // Not enough selected
+					String message = "Hey dumbass, you don't have 4 Pokemon selected to bring in the Gauntlet Box.\nYou can choose what Pokemon to bring using the Gauntlet Box in this PC (press [\u2191] when selecting a box).";
+					for (String s : message.split("\n")) {
+						Task.addTask(Task.DIALOGUE, npc, s);
+					}
 				}
+				Task.addTask(Task.CONFIRM, "Are you ready to battle as soon as you enter? There's no going back once I let you in.", 0);
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "Merlin's pushing himself too hard, as usual. I'm making sure he doesn't keel over before the real fight starts.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "Don't worry about us. We'll catch up when the time's right.");
+				Task.addTask(Task.DIALOGUE, npc, "But you - you've got to move. Head straight into Ghostly Woods.");
+				Task.addTask(Task.DIALOGUE, npc, "The heart of the forest - where all the possessed Pokemon were acting weird - that's where that Eclipse machine is.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "I don't like it... I feel like something worse than Eclipse is guarding it. Stay sharp, okay?");
 			}
-			Task.addTask(Task.CONFIRM, "Are you ready to battle as soon as you enter? There's no going back once I let you in.", 0);
 		});
 		
 		scriptMap.put(146.1, (npc) -> { // merlin top of splinkty
-			Task.addTask(Task.DIALOGUE, npc, "I'll be right here. Go on - show them why the mountain trembled.");
+			if (!p.flag[7][6]) {
+				Task.addTask(Task.DIALOGUE, npc, "You've come a long way, Finn. Arthra may not say it, but she's impressed.");
+				Task.addTask(Task.DIALOGUE, npc, "I'll be right here. Go on - show them why the mountain trembled.");
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "Hff... This old vessel's not what it used to be. The protection spell took more out of me than I thought.");
+				Task.addTask(Task.DIALOGUE, npc, "I'm afraid I'll be of little use in battle for now. Arthra's insisted I stay here until I recover a sliver of strength.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "But you - you're still strong. You have to head to the heart of Ghostly Woods.");
+				Task.addTask(Task.DIALOGUE, npc, "That cursed machine Team Eclipse built - it's the nexus of all this madness.");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.TURN, npc, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.DIALOGUE, npc, "If you can destroy it, we may still have a chance to stop Dragowrath from gaining more power.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "And... be careful. Something alien stirs in that forest. Something just as bad as even Dragowrath's wrath.");
+			}
 		});
 		
 		scriptMap.put(149.0, (npc) -> { // rick 3 cutscene
@@ -1451,27 +1480,29 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, gp.npc[146][1], "Finn! Finally! Are you okay -");
 			Task.addTask(Task.SPOT, gp.npc[146][1], "");
 			Task.addTask(Task.SHAKE, "", 200);
-			Task.addTask(Task.DIALOGUE, npc, "...Pathetic. Every last one of them - pawns, weaklings, hollow shells.");
+			Task.addTask(Task.DIALOGUE, npc, "...Pathetic. Every last one of them - pawns, weaklings, hollow shells.", 1);
 			Task.addTask(Task.TURN, player, "", Task.UP);
 			Task.addTask(Task.SPOT, player, "");
 			Task.addNPCMoveTask('y', 24 * gp.tileSize, npc, false, 4);
 			Task.addTask(Task.SLEEP, "", 15);
-			Task.addTask(Task.DIALOGUE, npc, "Minions? Bah! They were never worthy to begin with.");
-			Task.addTask(Task.DIALOGUE, npc, "The universe... the stars... the endless reaches of power... and I'm expected to leave it in the hands of insects?");
-			Task.addTask(Task.DIALOGUE, npc, "No. No more games. No more middlemen. I will take this world myself. Tear it free from the crust. Mold it anew.");
-			Task.addTask(Task.DIALOGUE, npc, "And when the last mind bends to my will... when every heart forgets its former self... then, and only then, will this wretched sphere know its place.");
+			Task.addTask(Task.SPEAK, npc, "Minions? Bah! They were never worthy to begin with.", 1);
+			Task.addTask(Task.SPEAK, npc, "The universe... the stars... the endless reaches of power... and I'm expected to leave it in the hands of insects?", 1);
+			Task.addTask(Task.SPEAK, npc, "No. No more games. No more middlemen. I will take this world myself. Tear it free from the crust. Mold it anew.", 1);
+			Task.addTask(Task.SPEAK, npc, "And when the last mind bends to my will... when every heart forgets its former self... then, and only then, will this wretched sphere know its place.", 1);
 			Task.addTask(Task.SLEEP, "", 30);
-			Task.addTask(Task.DIALOGUE, npc, "I am its beginning. I am its end.");
+			Task.addTask(Task.SPEAK, npc, "I am its beginning. I am its end.", 1);
 			Task.addTask(Task.SLEEP, "", 60);
-			Task.addTask(Task.DIALOGUE, npc, "Hide if you wish. Struggle if you dare. But know this - your fates are already mine.");
+			Task.addTask(Task.SPEAK, npc, "Hide if you wish. Struggle if you dare. But know this - your fates are already mine.", 1);
 			Task.addTask(Task.FLASH_IN, "");
 			Task.addTask(Task.UPDATE, "");
 			Task.addTask(Task.FLASH_OUT, "");
 			
-			Task.addTask(Task.SLEEP, "", 15);
 			Task.addTask(Task.TURN, player, "", Task.DOWN);
-			Task.addTask(Task.TURN, gp.npc[146][1], "", Task.RIGHT);
+			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "Azarath Metrio Zynthos!");
+			Task.addParticleTask(gp.npc[146][2], "smoke", new Color(237, 19, 223), 100);
 			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "Hff... That should hold for a little while. Mind protection spell - basic, but enough to stop him from sinking his teeth into your heads... for now.");
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.TURN, gp.npc[146][2], "", Task.RIGHT);
 			Task.addTask(Task.SLEEP, "", 30);
 			Task.addTask(Task.TURN, gp.npc[146][2], "", Task.DOWN);
 			Task.addTask(Task.SLEEP, "", 30);
@@ -1543,7 +1574,11 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "Meteorite energy.");
 			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "Pure meteorite energy, unfiltered by human hands. It acts as both lock and key. Without it, their spirits remain dormant, sleeping beneath the earth.");
 			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "And lately... there's been no shortage of fallen stars crashing into this region.");
-			Task.addTask(Task.SLEEP, "", 60);
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.TURN, gp.npc[146][1], "", Task.UP);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.TURN, gp.npc[146][1], "", Task.RIGHT);
+			Task.addTask(Task.SLEEP, "", 10);
 			Task.addTask(Task.DIALOGUE, gp.npc[146][1], "...Wait. The Electric and Shadow meteorites. The ones mutating Pokemon near their impact sites?");
 			Task.addTask(Task.DIALOGUE, gp.npc[146][1], "You're saying those things - they carry enough energy to wake the offspring?!");
 			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "Not just wake them. Shape them. Twist them, if misused.");
@@ -1554,9 +1589,10 @@ public class Script {
 			Task.addTask(Task.SLEEP, "", 15);
 			Task.addTask(Task.DIALOGUE, gp.npc[146][1], "That's why the Pokemon in Ghostly Woods started going berserk. It wasn't random. They were experimenting.");
 			Task.addTask(Task.DIALOGUE, gp.npc[146][1], "Testing if they could possess Pokemon - before moving onto... people.");
-			Task.addTask(Task.SLEEP, "", 90);
-			Task.addTask(Task.TURN, gp.npc[146][1], "", Task.RIGHT);
+			Task.addTask(Task.SLEEP, "", 30);
 			Task.addTask(Task.TURN, gp.npc[146][2], "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.TURN, gp.npc[146][1], "", Task.RIGHT);
 			Task.addTask(Task.SLEEP, "", 15);
 			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "And now that Eclipse is gone, Dragowrath has no leash. No patience left.");
 			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "He'll go after the meteorite energy himself.");
@@ -1577,7 +1613,7 @@ public class Script {
 			Task.addTask(Task.SLEEP, "", 10);
 			Task.addTask(Task.DIALOGUE, gp.npc[146][1], "Then what are we waiting for? Let's go dragon hunting.");
 			Task.addTask(Task.SLEEP, "", 20);
-			Task.addTask(Task.TURN, gp.npc[146][1], "", Task.LEFT);
+			Task.addTask(Task.TURN, gp.npc[146][2], "", Task.DOWN);
 			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "Easy to say. Not so easy to do.");
 			Task.addTask(Task.SLEEP, "", 10);
 			Task.addTask(Task.TURN, gp.npc[146][2], "", Task.UP);

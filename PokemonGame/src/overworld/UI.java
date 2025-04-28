@@ -35,6 +35,7 @@ import javax.swing.SwingUtilities;
 import entity.Entity;
 import entity.NPC_Prize_Shop;
 import entity.PlayerCharacter;
+import object.TemplateParticle;
 import object.TreasureChest;
 import pokemon.*;
 import util.Pair;
@@ -142,6 +143,8 @@ public class UI extends AbstractUI {
 			creattion = Font.createFont(Font.TRUETYPE_FONT, is);
 			is = getClass().getResourceAsStream("/font/monsier-la-doulaise.ttf");
 			monsier = Font.createFont(Font.TRUETYPE_FONT, is);
+			is = getClass().getResourceAsStream("/font/cryptik.ttf");
+			cryptik = Font.createFont(Font.TRUETYPE_FONT, is);
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
@@ -452,6 +455,7 @@ public class UI extends AbstractUI {
 			}
 			break;
 		case Task.DIALOGUE: // for the npc speaking
+			g2.setFont(getFont());
 			if (currentTask.e.name == null) {
 				currentTask.type = Task.TEXT;
 				return;
@@ -460,6 +464,7 @@ public class UI extends AbstractUI {
 			drawNameLabel(above);
 			break;
 		case Task.SPEAK: // for the player speaking
+			g2.setFont(getFont());
 			showMessage(Item.breakString(currentTask.message, 42));
 			above = false;
 			drawNameLabel(above);
@@ -598,6 +603,38 @@ public class UI extends AbstractUI {
 			gp.player.interactWith(currentTask.e, currentTask.counter, true);
 			currentTask = null;
 			break;
+		case Task.PARTICLE:
+			drawParticles();
+			break;
+		}
+	}
+
+	private Font getFont() {
+		Font font;
+		switch (currentTask.counter) {
+		case 1:
+			font = cryptik;
+			break;
+		default:
+			font = marumonica;
+			break;
+		}
+		return font;
+	}
+
+	private void drawParticles() {
+		currentTask.counter--;
+		
+		float alpha = Math.max(0, currentTask.counter / (float)currentTask.start);
+
+		for (TemplateParticle p : currentTask.particleList) {
+			if (p.alive || !p.started) {
+				p.draw(g2, alpha);
+			}
+		}
+		
+		if (currentTask.counter <= 0) {
+			currentTask = null;
 		}
 	}
 

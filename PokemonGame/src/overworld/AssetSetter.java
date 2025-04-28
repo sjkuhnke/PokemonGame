@@ -2039,8 +2039,8 @@ public class AssetSetter {
 		mapNum = 146;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 79, 27, "", "", -1);
-		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, "Arthra", 82, 27, "Took you long enough. What, did you have to hike back down for trail mix?", 146.0);
-		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 83, 27, "You've come a long way, Finn. Arthra may not say it, but she's impressed.", 146.1);
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, "Arthra", 82, 27, "", 146.0);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 83, 27, "", 146.1);
 		gp.npc[mapNum][index] = NPCSetup(DRAGOWRATH, "Dragowrath", 81, 15, "", 146.2);
 		
 		mapNum = 148;
@@ -3345,7 +3345,7 @@ public class AssetSetter {
 			}
 		}
 		
-		if (flag[7][5] && !flag[7][6]) {
+		if (flag[7][5] && !flag[7][7]) {
 			if (gp.npc[146][1] != null) {
 				gp.npc[146][1].worldY = 28 * gp.tileSize;
 				gp.npc[146][1].setDirection("up");
