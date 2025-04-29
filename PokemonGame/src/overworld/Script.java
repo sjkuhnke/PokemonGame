@@ -317,17 +317,17 @@ public class Script {
 					Task.addNPCMoveTask('y', 64 * gp.tileSize, npc, false, 4);
 					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
 					Task.addNPCMoveTask('x', 34 * gp.tileSize, npc, false, 2);
-					Task.addTask(Task.SLEEP, npc, "", 60);
+					Task.addTask(Task.SLEEP, "", 60);
 					Task.addTask(Task.TURN, npc, "", Task.DOWN);
-					Task.addTask(Task.SLEEP, npc, "", 30);
+					Task.addTask(Task.SLEEP, "", 30);
 					Task.addTask(Task.TURN, gp.npc[11][9], "", Task.UP);
-					Task.addTask(Task.SLEEP, npc, "", 30);
+					Task.addTask(Task.SLEEP, "", 30);
 					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
-					Task.addTask(Task.SLEEP, npc, "", 60);
+					Task.addTask(Task.SLEEP, "", 60);
 					Task.addTask(Task.TURN, npc, "", Task.DOWN);
-					Task.addTask(Task.SLEEP, npc, "", 15);
+					Task.addTask(Task.SLEEP, "", 15);
 					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
-					Task.addTask(Task.SLEEP, npc, "", 15);
+					Task.addTask(Task.SLEEP, "", 15);
 					Task.addTask(Task.SPOT, npc, "");
 					Task.addTask(Task.TURN, npc, "", Task.DOWN);
 					Task.addNPCMoveTask('y', 66 * gp.tileSize, npc, false, 4);
@@ -335,11 +335,11 @@ public class Script {
 					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
 					Task.addNPCMoveTask('x', 39 * gp.tileSize, npc, false, 4);
 					Task.addTask(Task.TURN, npc, "", Task.UP);
-					Task.addTask(Task.SLEEP, npc, "", 30);
+					Task.addTask(Task.SLEEP, "", 30);
 					Task.addTask(Task.INTERACTIVE, gp.iTile[11][0], "", 0);
-					Task.addTask(Task.SLEEP, npc, "", 15);
+					Task.addTask(Task.SLEEP, "", 15);
 					Task.addNPCMoveTask('y', 65 * gp.tileSize, npc, false, 2);
-					Task.addTask(Task.SLEEP, npc, "", 15);
+					Task.addTask(Task.SLEEP, "", 15);
 					Task.addTask(Task.DIALOGUE, npc, "Heh, you must be pretty tough to make it this far, but don't get too full of yourself.");
 					Task.addTask(Task.DIALOGUE, npc, "I'll gladly put an end to your winning streak right here.");
 				} else {
@@ -1498,7 +1498,7 @@ public class Script {
 			Task.addTask(Task.FLASH_OUT, "");
 			
 			Task.addTask(Task.TURN, player, "", Task.DOWN);
-			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "Azarath Metrio Zynthos!");
+			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "Ancient flame, ancient mind - Form the circle, hold the line!");
 			Task.addParticleTask(gp.npc[146][2], "smoke", new Color(237, 19, 223), 100);
 			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "Hff... That should hold for a little while. Mind protection spell - basic, but enough to stop him from sinking his teeth into your heads... for now.");
 			Task.addTask(Task.SLEEP, "", 30);
@@ -1623,6 +1623,245 @@ public class Script {
 			Task.addTask(Task.TURN, gp.npc[146][2], "", Task.DOWN);
 			Task.addTask(Task.SLEEP, "", 20);
 			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "...we might just stand a chance yet.");
+		});
+		
+		scriptMap.put(107.2, (npc) -> { // arthra in ghostly woods heart
+			if (!p.flag[7][9] && !p.flag[7][10]) {
+				Task.addNPCMoveTask('y', 59 * gp.tileSize, player, false, 2);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SPOT, player, "");
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.UPDATE, "");
+				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.DIALOGUE, npc, "Finn! There you are!");
+				Task.addNPCMoveTask('y', 63 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.INTERACTIVE, gp.iTile[107][0], "", 0);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addNPCMoveTask('y', 61 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.DIALOGUE, npc, "C'mon Grandpa, hurry!");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "Hff... Hff...");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addNPCMoveTask('y', 63 * gp.tileSize, gp.npc[107][14], false, 2);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.LEFT);
+				Task.addNPCMoveTask('x', 50 * gp.tileSize, gp.npc[107][14], false, 2);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.UP);
+				Task.addTask(Task.TURN, npc, "", Task.UP);
+				Task.addNPCMoveTask('y', 60 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 51 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addNPCMoveTask('y', 61 * gp.tileSize, gp.npc[107][14], false, 4);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addNPCMoveTask('y', 60 * gp.tileSize, gp.npc[107][14], false, 4);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "Hff... You did it... the machine is down...");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 45);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "But the damage... it's already soaked into the land. The corruption won't fade so easily.");
+				Task.addTask(Task.SLEEP, "", 25);
+				Task.addTask(Task.TURN, npc, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 10);
+				if (player.worldX > 50 * gp.tileSize) {
+					Task.addTask(Task.TURN, player, "", Task.RIGHT);
+					Task.addNPCMoveTask('x', 50 * gp.tileSize, player, false, 2);
+				}
+				Task.addNPCMoveTask('y', 59 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, player, "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.DIALOGUE, npc, "Hold up... look!");
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addNPCMoveTask('x', 49 * gp.tileSize, player, false, 2);
+				Task.addNPCMoveTask('x', 50 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, npc, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.SPOT, npc, "");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "...Meteorite cores. Two of them.");
+				Task.addTask(Task.SLEEP, "", 60);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "One radiates Faith... unwavering belief, hope against the darkness.");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "The other, pure Logic... cold calculation, the unshakable pursuit of truth.");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addNPCMoveTask('x', 49 * gp.tileSize, gp.npc[107][14], false, 2);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "Both are powerful. Both could be the key to stopping Dragowrath.");
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "But only one can be awakened.");
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "Tell me, Finn. Which do you believe will triumph against the coming storm?");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.CONFIRM, npc, "Faith... or Logic?", 7);
+			} else {
+				boolean faith = p.flag[7][9];
+				if (faith) {
+					Task t = Task.addTask(Task.ITEM, "");
+					t.item = Item.FAITH_CORE;
+				} else {
+					Task t = Task.addTask(Task.ITEM, "");
+					t.item = Item.LOGIC_CORE;
+				}
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "So... You've made your choice...");
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "I had a feeling you would choose that path.");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.TURN, player, "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 5);
+				String[] dialogues = faith
+					? new String[] {
+						"Seriously?! Faith?!",
+						"Hope and prayers won't stop that monster. We need to think, plan, understand what we're up against!",
+						"...Whatever. Guess we'll see who's right.",
+						"Then we go to the Abandoned Tower.",
+						"The last sanctuary of the old faith - where the Spirit of Faith slumbers still."
+					}
+					: new String[] {
+						"Seriously?! Logic?!",
+						"You think you can out-think a monster like that?! It's bigger than reason! We need faith to beat it!",
+						"...Whatever. Guess we'll see who's right.",
+						"Then we seek the Deep Chasm.",
+						"Where the mind sharpens against the void - where the Spirit of Logic lies waiting."
+					}
+				;
+				
+				Task.addTask(Task.DIALOGUE, npc, dialogues[0]);
+				Task.addTask(Task.DIALOGUE, npc, dialogues[1]);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, dialogues[2]);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", faith ? Task.RIGHT : Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], dialogues[3]);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], dialogues[4]);
+				
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.DIALOGUE, npc, "So that's it, huh?");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addNPCMoveTask('y', 60 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.DIALOGUE, npc, "You go chasing your dreams... and I'm supposed to just stand here and let it happen?");
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "No.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "You have your own path to walk, Arthra.");
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "One not bound to Finn's choice... but born from your own spirit.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "...You really think I can do this?");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, npc, "Alone?");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "You're stronger than you know.");
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "And stubborn enough to change fate itself if you put your mind to it.");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 45);
+				Task.addTask(Task.DIALOGUE, npc, "Alright.");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "You and Finn go your way.");
+				Task.addTask(Task.DIALOGUE, npc, "I'll figure out mine.");
+				if (faith) { // move towards abandoned tower
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addNPCMoveTask('x', 52 * gp.tileSize, npc, false, 4);
+					Task.addTask(Task.SLEEP, "", 60);
+					Task.addTask(Task.TURN, npc, "", Task.LEFT);
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.DIALOGUE, npc, "I'm not just going to sit around waiting to be saved. If I can make a difference... then I will.");
+					Task.addTask(Task.SLEEP, "", 10);
+					Task.addTask(Task.TURN, npc, "", Task.UP);
+					Task.addTask(Task.SLEEP, "", 5);
+					Task.addNPCMoveTask('y', 59 * gp.tileSize, npc, false, 4);
+				} else { // go towards exit
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.TURN, npc, "", Task.DOWN);
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addNPCMoveTask('y', 62 * gp.tileSize, npc, false, 4);
+					Task.addTask(Task.TURN, gp.npc[107][14], "", Task.DOWN);
+					Task.addTask(Task.SLEEP, "", 60);
+					Task.addTask(Task.TURN, npc, "", Task.UP);
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.DIALOGUE, npc, "I'm not just going to sit around waiting to be saved. If I can make a difference... then I will.");
+					Task.addTask(Task.SLEEP, "", 10);
+					Task.addTask(Task.TURN, npc, "", Task.DOWN);
+					Task.addTask(Task.SLEEP, "", 5);
+					Task.addNPCMoveTask('y', 64 * gp.tileSize, npc, false, 4);
+				}
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.UPDATE, "");
+				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "Then it's decided.");
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "I'll walk with you, Finn - to the end of whatever road you have chosen.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "Whether it leads us to salvation... or ruin.");
+			}
+		});
+		
+		scriptMap.put(107.3, (npc) -> { // merlin in ghostly woods heart after logic/faith scene
+			Task.addTask(Task.TURN, player, "", Task.UP);
+			Task.addNPCMoveTask('y', 56 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.TURN, npc, "", Task.LEFT);
+			Task.addNPCMoveTask('x', 46 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.TURN, npc, "", Task.DOWN);
+			Task.addTask(Task.TURN, player, "", Task.LEFT);
+			Task.addNPCMoveTask('x', 46 * gp.tileSize, player, false, 1);
+			Task.addTask(Task.TURN, player, "", Task.UP);
+			Task.addNPCMoveTask('y', 58 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.DIALOGUE, npc, "Well, well. Look who decided to show up - the meddling pest who can't keep their nose out of Eclipse's business.");
+			Task.addTask(Task.TURN, player, "", Task.UP);
+			Task.addNPCMoveTask('y', 64 * gp.tileSize, player, false, 1);
+			Task.addNPCMoveTask('y', 61 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.DIALOGUE, npc, "Do you have any idea what you've done? Those ghosts were just the beginning!");
+			Task.addTask(Task.DIALOGUE, npc, "You may have beaten a few, but I can summon hundreds more if I want. Once I'm done with you, Ghostly Woods will be overrun!");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addNPCMoveTask('y', 63 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, npc, "Once we're done here, not even the bravest of trainers will stand in Team Eclipse's way.");
+			Task.addTask(Task.BATTLE, "", 234);
 		});
 	}
 	

@@ -874,7 +874,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = MintSetup(67, 34, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 60, Item.BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 57, Item.DAWN_STONE, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(50, 57, Item.DUSK_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(48, 59, Item.DUSK_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 59, Item.TM33, mapNum); // psychic fangs
 		gp.obj[mapNum][objIndex] = ObjSetup(18, 35, Item.PP_UP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(21, 72, Item.REPEL, mapNum);
@@ -1831,8 +1831,10 @@ public class AssetSetter {
 			gp.npc[mapNum][index] = NPCSetup(GRUST, xCoords[i-224], yCoords[i-224], "Groououuuooo!", "Gru...", i);
 		}
 		
-		gp.npc[mapNum][index] = SetupStaticEncounter(289, 50, 59, 391, "Xvringzzi!"); // UP Pheromosa
+		gp.npc[mapNum][index] = SetupStaticEncounter(289, 50, 59, 346, "Xvringzzi!"); // UP Pheromosa
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 49, 90, "Hmm... you can hide all you want, but I'll still spot you. Tricky little specters... there's nothing unnatural here...", 107.0, -1, "", 392);
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 1, 98, "", 107.2, -1, "");
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 1, 97, "", 107.3, -1, "");
 		
 		mapNum = 109;
 		index = 0;
@@ -2573,6 +2575,7 @@ public class AssetSetter {
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(50, 62, 0, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(42, 22, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 58, 13, mapNum, map);
 		
 		mapNum = 109;
 		iIndex = 0;
@@ -3376,6 +3379,28 @@ public class AssetSetter {
 		if (flag[7][7]) {
 			gp.npc[146][1] = null;
 			gp.npc[146][2] = null;
+			gp.npc[107][11] = null;
+		}
+		
+		if (flag[7][8]) {
+			if (gp.npc[107][13] != null) {
+				gp.npc[107][13].worldX = 50 * gp.tileSize;
+				gp.npc[107][13].worldY = 64 * gp.tileSize;
+			}
+			if (gp.npc[107][14] != null) {
+				gp.npc[107][14].worldX = 51 * gp.tileSize;
+				gp.npc[107][14].worldY = 64 * gp.tileSize;
+				gp.npc[107][14].setDirection("up");
+			}
+		}
+		
+		if (flag[7][9] || flag[7][10]) {
+			gp.npc[107][13] = null;
+			if (gp.npc[107][14] != null) {
+				gp.npc[107][14].worldX = 49 * gp.tileSize;
+				gp.npc[107][14].worldY = 60 * gp.tileSize;
+				gp.npc[107][14].setDirection(flag[7][9] ? "right" : "down");
+			}
 		}
 		
 		gp.setRenderableNPCs();
@@ -4183,6 +4208,10 @@ public class AssetSetter {
 			break;
 		case 12:
 			result = new Beam(gp, 2);
+			break;
+		case 13:
+			result = new Fuse_Box(gp);
+			result.setDirection("left");
 			break;
 		}
 		
