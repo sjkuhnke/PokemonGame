@@ -665,7 +665,19 @@ public class EventHandler {
 			if (hit(107,55,40)) teleport(107, 56, 81,true); // U
 			if (hit(107,56,83)) teleport(107, 50, 51,true); // V
 			if (hit(107,50,51)) teleport(107, 56, 83,true); // V
-			if (hit(107,52,59)) teleport(107, 76, 26,true); // W
+			if (hit(107,52,59)) {
+				if (!gp.player.p.flag[7][8]) {
+					gp.setTaskState();
+					Task t = Task.addTask(Task.TELEPORT, "");
+					t.counter = 107;
+					t.start = 50;
+					t.finish = 61;
+					t.wipe = false;
+					Task.addTask(Task.TEXT, "This portal seems to be jammed...");
+				} else {
+					teleport(107, 76, 26,true); // W
+				}
+			}
 			if (hit(107,76,26)) teleport(107, 52, 59,true); // W
 			if (hit(107,74,22)) teleport(107, 49, 83,true); // X'
 			

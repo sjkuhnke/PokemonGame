@@ -1105,11 +1105,11 @@ public class TileManager {
 		setup(846, true);
 		setup(847, true);
 		setup(848, true);
-//		setup(849, true);
-//		setup(850, true);
-//		setup(851, true);
-//		setup(852, true);
-//		setup(853, true);
+		setup(849, true);
+		setup(850, true);
+		setup(851, true);
+		setup(852, true);
+		setup(853, true);
 //		setup(854, true);
 //		setup(855, true);
 //		setup(856, true);

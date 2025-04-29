@@ -13,6 +13,7 @@ public class Fuse_Box extends InteractiveTile {
 		
 		down1 = setup("/interactive/fuse01");
 		up1 = setup("/interactive/fuse02");
+		left1 = setup("/interactive/fuse03");
 		destructible = false;
 		collision = true;
 	}

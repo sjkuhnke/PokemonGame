@@ -176,7 +176,7 @@ public enum Move {
 	FIRE_FANG(65,95,10,0,0,0,PType.FIRE,"% of flinching and/or Burning foe",true,15),
 	FIRE_PUNCH(75,100,20,0,0,0,PType.FIRE,"% to Burn foe",true,15),
 	FIRE_SPIN(35,85,100,0,1,0,PType.FIRE,"% to spin non-FIRE foes for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
-	FIRST_IMPRESSION(90,100,0,0,0,1,PType.BUG,"Always attacks first, fails after the first turn a user is out in battle",true,10),
+	FIRST_IMPRESSION(90,100,0,0,0,1,PType.BUG,"Always attacks first, can only be used on the first turn out",true,10),
 	FISSURE(0,30,0,-999,0,0,PType.GROUND,"If this move hits, it always K.Os foe",false,5),
 	FLAIL(-1,100,0,0,0,0,PType.NORMAL,"Power is higher the lower HP the user has",true,15),
 	FLAME_BURST(70,100,0,0,1,0,PType.FIRE,"A normal attack",false,15),

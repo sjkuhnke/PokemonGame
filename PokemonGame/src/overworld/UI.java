@@ -1408,7 +1408,8 @@ public class UI extends AbstractUI {
 		drawSubWindow(x, y, width, height);
 		x += gp.tileSize;
 		y += gp.tileSize;
-		g2.drawString("Yes", x, y);
+		String yes = type == 7 ? "Faith" : "Yes";
+		g2.drawString(yes, x, y);
 		if (commandNum == 0) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
@@ -1491,17 +1492,26 @@ public class UI extends AbstractUI {
 					}
 					currentTask = null;
 					break;
+				case 7: // faith
+					gp.player.p.flag[7][9] = true;
+					gp.player.p.flag[7][10] = false;
+					gp.script.runScript(currentTask.e);
+					currentTask = null;
+					break;
 				}
 			}
 		}
 		y += gp.tileSize;
-		g2.drawString("No", x, y);
+		String no = type == 7 ? "Logic" : "No";
+		g2.drawString(no, x, y);
 		if (commandNum == 1) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				currentTask = null;
-				gp.gameState = GamePanel.PLAY_STATE;
+				if (type != 7) {
+					currentTask = null;
+					gp.gameState = GamePanel.PLAY_STATE;
+				}
 				switch (type) {
 				case 0:
 					showMessage("Hurry up Finn, This is urgent!");
@@ -1514,12 +1524,19 @@ public class UI extends AbstractUI {
 				case 1:
 					showMessage("That's okay! Take your time, I get it.");
 					break;
+				case 7: // logic
+					gp.player.p.flag[7][10] = true;
+					gp.player.p.flag[7][9] = false;
+					gp.script.runScript(currentTask.e);
+					currentTask = null;
+					break;
 				}
 				commandNum = 0;
 			}
 		}
 		
-		if (gp.keyH.sPressed) {
+		if (gp.keyH.sPressed && type != 7) {
+			gp.keyH.sPressed = false;
 			currentTask = null;
 			tasks.clear();
 		}

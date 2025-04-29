@@ -825,6 +825,15 @@ public class PlayerCharacter extends Entity {
 			} else {
 				gp.ui.showMessage("The fuse box is whirring with power!");
 			}
+		} else if (gp.currentMap == 107) { // ghostly woods
+			if (!p.flag[7][7]) { // before beating UP Pheromosa
+				gp.ui.showMessage(Item.breakString("The machine hums with a sickly light. You can feel something - something wrong - pulsing inside it. An unseen force wards you away.", 42));
+			} else if (p.flag[7][7] && !p.flag[7][8]) { // after beating UP Pheromosa but before triggering the cutscene
+				p.flag[7][8] = true;
+				interactNPC(gp.npc[107][13], false);
+			} else { // after logic/faith cutscene
+				gp.ui.showMessage(Item.breakString("The machine lies silent and broken. Its twisted energy is gone... but an eerie residue lingers in the air.", 42));
+			}
 		}
 	}
 	
