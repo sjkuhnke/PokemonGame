@@ -12,7 +12,7 @@ Spacebear     |Teddinaut
 Bealtle       |Minipede
 Centatle      |Centinel
 Curlatoral    |Milimace
-Millistone    |Milipleura
+Millistone    |Milimace
 Treewin       |Kappalm
 Winagrow      |Serpenge
 Bugik         |Scarabit
@@ -50,7 +50,7 @@ Pyrator       |Detonape
 Rocky-E       |Sedinister-E
 Boulder-E     |Metaslate-E
 Blaster-E     |Sedisoftra-E
-Crystallor-E  |Primodon-E
+Crystallor-E  |Prismodon-E
 Iglite-S      |Sember-S
 Blaxer-S      |Kaboon-S
 Pyrator-S     |Detonape-S

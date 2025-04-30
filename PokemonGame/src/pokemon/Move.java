@@ -537,7 +537,7 @@ public enum Move {
 	TAIL_GLOW(0,1000,0,0,2,0,PType.BUG,"Raises user's Sp.Atk by 3",false,5),
 	TAIL_WHIP(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Defense by 1",false,35),
 	TAILWIND(0,1000,0,0,2,0,PType.FLYING,"Doubles Speed for user's team for 5 turns",false,10),
-	TAKE_DOWN(90,85,0,0,0,0,PType.NORMAL,"User takes 1/4 of damage dealt as recoil",true,20),
+	TAKE_DOWN(90,90,0,0,0,0,PType.NORMAL,"User takes 1/4 of damage dealt as recoil",true,20),
 	TAKE_OVER(0,100,0,0,2,0,PType.GHOST,"Foe's next attack is used on itself. Can be used once every other turn, and not on the first turn out.",false,5),
 	TAUNT(0,100,0,0,2,0,PType.DARK,"Causes foe to only be able to use attacking moves for 4 turns",false,20),
 	TEETER_DANCE(0,100,0,0,2,0,PType.NORMAL,"Confuses foe",false,20),
