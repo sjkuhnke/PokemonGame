@@ -190,6 +190,14 @@ public class AssetSetter {
 	private static final int ARTHRA_UP = 205;
 	private static final int ARTHRA_LEFT = 206;
 	private static final int ARTHRA_RIGHT = 207;
+	private static final int WARDEN_DOWN = 208;
+	private static final int WARDEN_UP = 209;
+	private static final int WARDEN_LEFT = 210;
+	private static final int WARDEN_RIGHT = 211;
+	private static final int DISCIPLE_DOWN = 212;
+	private static final int DISCIPLE_UP = 213;
+	private static final int DISCIPLE_LEFT = 214;
+	private static final int DISCIPLE_RIGHT = 215;
 //	private static final int T = 208;
 //	private static final int T = 209;
 	
@@ -198,6 +206,23 @@ public class AssetSetter {
 	private static final int LEFT = 4;
 	private static final int RIGHT = 8;
 	private static final int ALL = DOWN + UP + LEFT + RIGHT;
+	
+	private static final int CUT = 0;
+	private static final int ROCK_SMASH = 1;
+	private static final int STUMP = 2;
+	private static final int BARRIER = 3;
+	private static final int VINE_CROSS = 4;
+	private static final int VINE = 5;
+	private static final int STARTER_MACHINE = 6;
+	private static final int FUSE_1 = 7;
+	private static final int FUSE_2 = 8;
+	private static final int SNOWBALL = 9;
+	private static final int ICE_BLOCK = 10;
+	private static final int BEAM_1 = 11;
+	private static final int BEAM_2 = 12;
+	private static final int FUSE_3 = 13;
+	private static final int TORCH = 14;
+	private static final int GATE = 15;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -2030,13 +2055,25 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 14, 17, "I've got strength like a boulder, and my Pokemon are even tougher!", "Looks like I've still got some training to do... but I'll be back!", 316);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_LEFT, 24, 16, "Dragons bow to no one. You'll understand soon enough.", "Even the best fall. I'll rise again.", 317);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 40, 40, "", "", 318);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 50, 42, "", "", 319);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 55, 44, "", "", 320);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 46, 49, "", "", 321);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 54, 49, "", "", 322);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 57, 49, "", "", 323);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 57, 80, "", "", 324);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 40, 40, "Emotion clouds judgment. Let's see how clear your mind is.", "You parsed the problem. I'll admit that.", 318);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 50, 42, "This descent isn't physical. It's conceptual. Can you grasp that?", "You saw past the surface. Not bad.", 319);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 55, 44, "Your presence here is... statistically unlikely.", "And yet, you persist. Curious.", 320);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 46, 49, "I will test your process. Not your power.", "You computed well. Proceed.", 321);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 54, 49, "This gauntlet favors only the methodical.", "You were less chaotic than expected.", 322);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 57, 49, "Faith may lift you - but it won't unlock this place.", "A logical route forward. You've earned it.", 323);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 57, 80, "Prepare your calculations. This isn't a battle - it's an equation.", "You balanced the variables. Move on.", 324);
+		gp.npc[mapNum][index++] = ITileSetup(39, 29, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(44, 29, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(46, 28, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(51, 28, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(53, 27, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(58, 27, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(48, 64, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(53, 64, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(60, 58, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(66, 58, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(70, 61, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(74, 61, TORCH, mapNum, mapNum);
 		
 		mapNum = 146;
 		index = 0;
@@ -2067,7 +2104,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 42, 65, "", "", 342);
 		gp.npc[mapNum][index] = NPCSetup(RICK, "Rick", 49, 61, "", 149.0, 226, "Ghh... again? You really are a thorn in our side.\n"
 				+ "Go ahead, then. Keep charging in like you're unstoppable. But every step you take is exactly what Maxwell wants...", 343);
-		gp.npc[mapNum][index] = NPCSetup(FRED_UP, "Fred", 49, 55, "", 149.1, 227, "You don’t get it... you never did...\n"
+		gp.npc[mapNum][index] = NPCSetup(FRED_UP, "Fred", 49, 55, "", 149.1, 227, "You don't get it... you never did...\n"
 				+ "He's in the core chamber now. The machine's almost online. You're too late.\n"
 				+ "But... maybe, just maybe, you'll get one last act before the end.", 344);
 		gp.npc[mapNum][index] = NPCSetup(MAXWELL, "Maxwell", 49, 49, "", 149.2, -1, "", 345);
@@ -2132,73 +2169,108 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_LEFT, null, 36, 40, "Are you lost, bud? You do realize there's a freakin' VOLCANO behind me? Get a grip!");
 		
+		mapNum = 190;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 56, 85, "Do you carry faith, or merely the hope of it?", "Doubt is not defeat... but it is the first crack in your resolve.", 396);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 59, 85, "The Spirit does not guide those who hesitate.", "You walk, though your steps still falter. Let your soul steady.", 397);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 56, 81, "This tower reaches skyward - as must your belief.", "One more step upward. The heavens wait... or judge.", 398);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 59, 77, "I once questioned too. That's why I'm here - to test the ones who still do.", "You questioned me. And maybe... your answer was truer.", 399);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 59, 69, "Your aura trembles. Are you ready to let go of reason?", "The mind bends... but the spirit endures.", 400);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 56, 65, "Every battle is a sermon. Listen well.", "You heard more than most.", 401);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 56, 61, "You ascend not just in body, but in belief. Prove it.", "The light above shines a little closer now.", 402);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 59, 61, "I offer no welcome - only challenge. It is the same thing, in this place.", "Struggle is the holiest ritual.", 403);
+		gp.npc[mapNum][index++] = ITileSetup(56, 88, GATE, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(56, 84, GATE, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(56, 80, GATE, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(56, 76, GATE, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(56, 72, GATE, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(56, 68, GATE, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(56, 64, GATE, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(55, 89, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(60, 89, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(55, 85, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(60, 85, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(55, 81, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(60, 81, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(55, 77, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(60, 77, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(55, 73, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(60, 73, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(55, 69, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(60, 69, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(55, 65, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(60, 65, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(55, 61, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(60, 61, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(53, 58, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(61, 58, TORCH, mapNum, mapNum);
 	}
 
 	public void setInteractiveTile(int map) {
 		int mapNum = 0;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(60, 53, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(82, 59, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(33, 72, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 53, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(82, 59, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 72, ROCK_SMASH, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 27, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(70, 16, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(70, 17, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(70, 18, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(70, 19, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 27, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 16, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 17, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 18, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 19, VINE_CROSS, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 25, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 25, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 25, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 25, VINE_CROSS, mapNum, map);
 		
 		mapNum = 4;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(17, 63, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(16, 68, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(10, 68, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(17, 63, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(16, 68, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(10, 68, CUT, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(74, 43, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(75, 24, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(85, 72, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(74, 43, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(75, 24, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(85, 72, CUT, mapNum, map);
 		
 		gp.iTile[mapNum][iIndex] = SetupLockedDoor(66, 79, 13, mapNum, map);
 		
 		mapNum = 11;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(39, 65, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(13, 40, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(34, 35, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 65, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(13, 40, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 35, CUT, mapNum, map);
 		
 		SetupWhirlpool(mapNum, 15, 76, map);
 		SetupPit(mapNum, 56, 19, 168, 49, 55, map);
 		
 		mapNum = 13;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(86, 23, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(26, 7, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(25, 9, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(26, 9, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(27, 9, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(86, 23, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(26, 7, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(25, 9, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(26, 9, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 9, CUT, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(30, 10, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(30, 9, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(30, 8, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(30, 10, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(30, 9, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(30, 8, VINE_CROSS, mapNum, map);
 		
 		gp.iTile[mapNum][iIndex] = SetupLockedDoor(26, 64, 34, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupLockedDoor(19, 85, 36, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupLockedDoor(48, 57, 36, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupLockedDoor(15, 56, 47, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 22, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 23, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 24, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 24, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 24, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 25, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 26, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 22, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 23, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 24, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 24, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 24, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 25, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 26, VINE_CROSS, mapNum, map);
 		
 		mapNum = 14;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(33, 30, 8, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 30, FUSE_2, mapNum, map);
 		
 		mapNum = 15;
 		iIndex = 0;
@@ -2207,187 +2279,187 @@ public class AssetSetter {
 		mapNum = 16;
 		iIndex = 0;
 		SetupWhirlpool(mapNum, 65, 35, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(32, 27, 8, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 27, FUSE_2, mapNum, map);
 		
 		mapNum = 18;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(46, 40, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 33, 8, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 40, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 33, FUSE_2, mapNum, map);
 		
 		mapNum = 21;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 60, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 52, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 50, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 45, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 43, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 60, BARRIER, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 52, BARRIER, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 50, BARRIER, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 45, BARRIER, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 43, BARRIER, mapNum, map);
 		
 		mapNum = 22;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(55, 13, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 13, ROCK_SMASH, mapNum, map);
 		
 		mapNum = 24;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 70, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 78, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 43, 1, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(44, 55, 2, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 70, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 78, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 43, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(44, 55, UP, 1, mapNum, map);
 		SetupPit(mapNum, 49, 74, 147, 43, 49, map);
 		
 		mapNum = 25;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(73, 73, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 86, 1, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 80, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 79, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(46, 77, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(45, 77, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(45, 76, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(45, 75, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(73, 73, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 86, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 80, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 79, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 77, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 77, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 76, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 75, VINE_CROSS, mapNum, map);
 		
 		mapNum = 27;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 68, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(62, 68, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(61, 68, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(61, 69, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(60, 69, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(60, 70, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(59, 70, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 70, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 70, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 70, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 70, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(46, 70, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(55, 75, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(55, 76, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(55, 77, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(55, 78, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 68, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 68, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(61, 68, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(61, 69, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 69, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 70, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 70, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 70, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 70, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 70, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 70, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 70, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 75, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 76, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 77, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 78, VINE_CROSS, mapNum, map);
 		SetupPit(mapNum, 56, 82, 145, 39, 63, map);
 		
 		mapNum = 28;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(23, 42, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(23, 41, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(23, 40, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(26, 39, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(27, 39, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(28, 39, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(29, 39, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(23, 42, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(23, 41, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(23, 40, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(26, 39, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 39, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(28, 39, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(29, 39, VINE_CROSS, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(31, 40, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(31, 39, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(31, 38, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(31, 37, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 40, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 39, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 38, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 37, VINE_CROSS, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 36, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 37, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 38, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 39, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 40, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 41, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 42, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 36, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 37, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 38, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 39, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 40, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 41, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 42, VINE_CROSS, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(15, 53, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(29, 53, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(15, 53, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(29, 53, CUT, mapNum, map);
 		
 		mapNum = 33;
 		iIndex = 0;
 		SetupWhirlpool(mapNum, 68, 61, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(66, 17, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(66, 17, CUT, mapNum, map);
 		
 		mapNum = 35;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(57, 60, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(58, 60, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(59, 60, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(65, 62, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(66, 62, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(67, 62, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(68, 62, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(69, 62, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(81, 63, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(82, 63, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(83, 63, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 60, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 60, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 60, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(65, 62, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(66, 62, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(67, 62, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(68, 62, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(69, 62, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(81, 63, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(82, 63, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(83, 63, VINE_CROSS, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(76, 68, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(76, 69, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(76, 70, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(68, 75, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(69, 75, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(70, 75, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(71, 75, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(76, 68, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(76, 69, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(76, 70, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(68, 75, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(69, 75, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 75, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(71, 75, VINE_CROSS, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 53, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 52, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(58, 47, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(59, 47, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(60, 47, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(56, 56, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 53, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 52, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 47, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 47, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 47, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 56, VINE_CROSS, mapNum, map);
 		
 		SetupPit(mapNum, 58, 56, 95, 42, 49, map);
 		
 		mapNum = 38;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(42, 7, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(44, 8, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(42, 6, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(40, 7, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(41, 9, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(44, 6, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(46, 7, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 8, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 5, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(51, 9, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 10, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(51, 12, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(53, 5, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(41, 7, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(42, 8, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(43, 7, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(41, 16, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(40, 22, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(41, 27, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(56, 11, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(57, 15, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(55, 17, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(53, 23, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 26, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(57, 27, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(58, 8, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(61, 5, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 6, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(65, 8, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(67, 6, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(67, 13, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(66, 18, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(67, 26, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(67, 29, 9, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(66, 30, 9, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(42, 7, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(44, 8, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(42, 6, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 7, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 9, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(44, 6, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 7, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 8, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 5, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 9, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 10, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 12, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 5, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 7, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(42, 8, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(43, 7, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 16, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 22, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 27, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 11, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 15, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 17, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 23, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 26, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 27, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 8, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(61, 5, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 6, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(65, 8, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(67, 6, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(67, 13, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(66, 18, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(67, 26, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(67, 29, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(66, 30, SNOWBALL, mapNum, map);
 		
 		mapNum = 41;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = SetupLockedDoor(18, 30, 99, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupLockedDoor(44, 30, 100, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupLockedDoor(44, 30, 101, mapNum, map);
 		
 		mapNum = 52;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(27, 37, 6, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(28, 37, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 37, STARTER_MACHINE, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(28, 37, STARTER_MACHINE, mapNum, map);
 		
 		mapNum = 60;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(33, 40, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(34, 40, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(36, 40, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(39, 40, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(38, 41, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(35, 41, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(37, 41, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 40, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 40, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(36, 40, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 40, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 41, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 41, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(37, 41, ROCK_SMASH, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(27, 36, 7, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(31, 35, 8, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 38, 40, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 36, FUSE_1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 35, FUSE_2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 38, 41, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 37, 44, mapNum, map);
 		
 		mapNum = 78;
@@ -2396,76 +2468,76 @@ public class AssetSetter {
 		
 		mapNum = 80;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(26, 15, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(35, 48, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(35, 49, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(35, 50, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(32, 53, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(31, 53, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(37, 52, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(38, 52, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(39, 52, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(46, 52, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 52, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 52, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 54, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 55, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(55, 59, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(56, 59, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(59, 58, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(59, 57, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(70, 55, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(71, 55, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(72, 55, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(45, 60, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(46, 60, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(34, 64, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(33, 64, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(22, 69, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(21, 69, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(31, 71, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(32, 71, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(42, 74, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(43, 74, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(26, 15, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 48, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 49, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 50, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 53, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 53, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(37, 52, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 52, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 52, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 52, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 52, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 52, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 54, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 55, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 59, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 59, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 58, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 57, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 55, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(71, 55, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(72, 55, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 60, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 60, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 64, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 64, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(22, 69, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(21, 69, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 71, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 71, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(42, 74, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(43, 74, VINE_CROSS, mapNum, map);
 		
 		SetupPit(mapNum, 20, 61, 90, 45, 13, map); // top left
 		SetupPit(mapNum, 11, 70, 90, 30, 16, map); // bottom left
 		SetupPit(mapNum, 50, 64, 90, 58, 17, map); // middle
 		SetupPit(mapNum, 81, 61, 90, 68, 17, map); // right
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 62, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(20, 59, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(13, 70, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(81, 59, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 62, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(20, 59, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(13, 70, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(81, 59, VINE_CROSS, mapNum, map);
 		
 		mapNum = 83;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(17, 66, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(18, 66, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(19, 66, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(25, 61, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(25, 62, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(27, 73, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(27, 74, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(32, 66, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(33, 66, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(34, 66, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(31, 71, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(32, 71, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(41, 66, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(42, 66, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 66, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(51, 66, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(45, 69, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(45, 70, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(17, 66, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(18, 66, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(19, 66, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(25, 61, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(25, 62, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 73, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 74, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 66, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 66, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 66, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 71, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 71, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 66, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(42, 66, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 66, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 66, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 69, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 70, VINE_CROSS, mapNum, map);
 
 		mapNum = 85;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(17, 76, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(64, 67, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(75, 64, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(83, 66, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(85, 67, 0, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(17, 76, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(64, 67, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(75, 64, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(83, 66, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(85, 67, CUT, mapNum, map);
 		
 		mapNum = 90;
 		iIndex = 0;
@@ -2473,25 +2545,25 @@ public class AssetSetter {
 		SetupPit(mapNum, 29, 10, 101, 26, 51, map); // left
 		SetupPit(mapNum, 78, 11, 101, 75, 52, map); // right
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(34, 14, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(35, 14, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(40, 13, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(41, 13, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(58, 21, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(58, 22, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(59, 28, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(59, 29, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(59, 30, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(62, 17, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 17, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(73, 11, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(74, 11, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 14, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 14, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 13, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 13, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 21, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 22, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 28, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 29, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 30, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 17, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 17, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(73, 11, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(74, 11, VINE_CROSS, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 9, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 14, 2, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 34, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(57, 36, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 13, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 9, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 14, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 34, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(57, 36, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 13, RIGHT, 1, mapNum, map);
 		
 		mapNum = 95;
 		iIndex = 0;
@@ -2499,108 +2571,108 @@ public class AssetSetter {
 		
 		mapNum = 96;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(51, 56, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 56, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(46, 56, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(45, 56, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(44, 56, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 59, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 56, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 56, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 56, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 56, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(44, 56, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 59, VINE_CROSS, mapNum, map);
 		SetupPit(mapNum, 48, 61, 97, 45, 58, map);
 		SetupPit(mapNum, 39, 58, 97, 39, 54, map);
 		
 		mapNum = 97;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 43, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 44, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 50, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 49, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(46, 53, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 53, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 43, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 44, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 50, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 49, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 53, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 53, VINE_CROSS, mapNum, map);
 		SetupPit(mapNum, 48, 37, 98, 47, 48, map);
 		
 		mapNum = 101;
 		iIndex = 0;
 		SetupPit(mapNum, 49, 49, 102, 47, 37, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(25, 47, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(25, 48, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(29, 50, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(30, 50, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(34, 48, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(35, 48, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 34, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 35, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 36, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(64, 51, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(65, 51, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(69, 51, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(70, 51, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(71, 51, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(56, 59, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(56, 60, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(57, 65, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(57, 66, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(25, 47, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(25, 48, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(29, 50, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(30, 50, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 48, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 48, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 34, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 35, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 36, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(64, 51, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(65, 51, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(69, 51, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 51, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(71, 51, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 59, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 60, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 65, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 66, VINE_CROSS, mapNum, map);
 		
 		mapNum = 102;
 		iIndex = 0;
 		SetupPit(mapNum, 50, 57, 103, 50, 59, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 41, 2, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(49, 41, 2, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 41, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(49, 41, UP, 1, mapNum, map);
 		
 		mapNum = 103;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 38, 2, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(46, 59, 1, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 58, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 38, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(46, 59, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 58, DOWN, 1, mapNum, map);
 		
 		mapNum = 105;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(27, 16, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(32, 22, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(30, 29, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(31, 35, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(32, 42, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(35, 54, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(38, 53, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(38, 59, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(39, 65, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(41, 72, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(40, 80, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(41, 80, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(29, 39, 1, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(25, 42, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(19, 42, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(40, 49, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 16, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 22, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(30, 29, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(31, 35, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(32, 42, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 54, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 53, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 59, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 65, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 72, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 80, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 80, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(29, 39, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(25, 42, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(19, 42, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(40, 49, RIGHT, 1, mapNum, map);
 		
 		mapNum = 107;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 62, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(42, 22, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 58, 13, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 62, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(42, 22, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 58, FUSE_3, mapNum, map);
 		
 		mapNum = 109;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(77, 87, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(77, 84, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 40, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 38, 2, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(77, 87, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(77, 84, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 40, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 38, UP, 1, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(72, 81, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(73, 71, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(74, 71, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(64, 70, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 70, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 69, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(67, 63, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(67, 62, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(65, 60, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(64, 60, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(64, 59, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(61, 57, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(60, 57, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(64, 52, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(64, 51, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(64, 50, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 50, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(72, 81, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(73, 71, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(74, 71, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(64, 70, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 70, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 69, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(67, 63, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(67, 62, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(65, 60, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(64, 60, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(64, 59, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(61, 57, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 57, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(64, 52, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(64, 51, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(64, 50, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 50, VINE_CROSS, mapNum, map);
 		
 		SetupPit(mapNum, 72, 79, 110, 23, 85, map); // bottom
 		SetupPit(mapNum, 63, 67, 110, 28, 73, map); // middle
@@ -2608,322 +2680,322 @@ public class AssetSetter {
 		
 		mapNum = 110;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(33, 80, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(36, 81, 3, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(37, 81, 3, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(38, 81, 3, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 81, 3, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(33, 47, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 80, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(36, 81, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(37, 81, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(38, 81, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 81, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(33, 47, RIGHT, 1, mapNum, map);
 		
 		mapNum = 115;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(80, 82, 1, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(81, 82, 1, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(82, 82, 1, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 79, 2, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 80, 2, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(80, 82, LEFT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(81, 82, LEFT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(82, 82, LEFT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 79, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 80, UP, 2, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 68, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(31, 77, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 77, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(31, 84, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 84, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(38, 72, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 72, 3, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 68, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(31, 77, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 77, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(31, 84, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 84, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(38, 72, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 72, RIGHT, 2, mapNum, map);
 		
 		mapNum = 119;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(35, 87, 0, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(21, 46, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(22, 46, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(23, 46, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(24, 46, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(25, 46, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(26, 46, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(27, 46, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 87, CUT, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(21, 46, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(22, 46, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(23, 46, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(24, 46, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(25, 46, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(26, 46, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 46, VINE_CROSS, mapNum, map);
 		
 		mapNum = 124;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(55, 74, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(56, 74, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(57, 74, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(57, 80, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(58, 80, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(62, 76, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 76, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(60, 82, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(60, 83, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(52, 89, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(53, 89, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 89, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(62, 87, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 87, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(68, 88, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(68, 89, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(70, 79, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(70, 80, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(72, 84, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(73, 84, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(74, 84, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(83, 89, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(83, 90, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 74, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 74, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 74, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 80, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 80, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 76, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 76, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 82, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 83, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 89, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 89, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 89, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 87, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 87, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(68, 88, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(68, 89, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 79, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 80, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(72, 84, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(73, 84, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(74, 84, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(83, 89, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(83, 90, VINE_CROSS, mapNum, map);
 		
 		mapNum = 137;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(74, 80, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(79, 76, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(89, 76, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(74, 59, 1, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(69, 52, 2, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(74, 80, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(79, 76, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(89, 76, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(74, 59, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(69, 52, UP, 1, mapNum, map);
 		
 		mapNum = 138;
 		iIndex = 0;
 		SetupPit(mapNum, 32, 59, 137, 37, 48, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 52, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 56, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 71, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 74, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 52, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 56, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 71, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 74, RIGHT, 1, mapNum, map);
 		
 		mapNum = 139;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 72, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 69, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 65, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 61, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(40, 50, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(43, 57, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(39, 64, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(56, 67, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(55, 72, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 72, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(53, 72, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(53, 73, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(52, 73, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(51, 73, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 72, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 69, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 65, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 61, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 50, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(43, 57, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 64, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 67, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 72, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 72, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 72, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 73, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 73, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 73, VINE_CROSS, mapNum, map);
 		
 		mapNum = 140;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 50, 2, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 49, 2, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 48, 2, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 47, 2, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 50, UP, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 49, UP, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 48, UP, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 47, UP, 4, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(78, 60, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(78, 67, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(78, 60, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(78, 67, DOWN, 1, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 69, 1, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(31, 69, 1, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 69, 1, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(29, 69, 1, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 69, LEFT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(31, 69, LEFT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 69, LEFT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(29, 69, LEFT, 4, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(71, 55, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(65, 55, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 57, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 63, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(71, 55, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(65, 55, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 57, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 63, RIGHT, 1, mapNum, map);
 		
 		mapNum = 141;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(53, 63, 1, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 63, 3, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 63, 3, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 63, 3, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(64, 63, 3, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(53, 63, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 63, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 63, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 63, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(64, 63, RIGHT, 4, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(65, 77, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 80, 1, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(42, 80, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 77, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 75, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(26, 79, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(65, 77, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 80, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(42, 80, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 77, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 75, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(26, 79, RIGHT, 1, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 64, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 64, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 66, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 67, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 71, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 72, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(44, 64, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(45, 64, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(41, 62, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(41, 63, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 64, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 64, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 66, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 67, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 71, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 72, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(44, 64, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 64, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 62, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(41, 63, VINE_CROSS, mapNum, map);
 		
 		mapNum = 142;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 53, 2, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 54, 2, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 44, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 44, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(59, 40, 2, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 53, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 54, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 44, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 44, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(59, 40, UP, 1, mapNum, map);
 		
 		mapNum = 144;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(25, 24, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(26, 24, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 27, 2, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 28, 2, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 23, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(36, 18, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 55, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 53, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(59, 50, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 59, 2, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 63, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 64, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(63, 65, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(60, 80, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(61, 80, 4, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(62, 80, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(25, 24, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(26, 24, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 27, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 28, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 23, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(36, 18, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 55, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 53, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(59, 50, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 59, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 63, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 64, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(63, 65, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 80, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(61, 80, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 80, VINE_CROSS, mapNum, map);
 		SetupPit(mapNum, 64, 80, 144, 11, 28, map); // lower TODO dest
 		SetupPit(mapNum, 63, 67, 144, 11, 28, map); // middle TODO dest
 		SetupPit(mapNum, 72, 74, 144, 11, 28, map); // upper TODO dest
 		
 		mapNum = 145;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(62, 75, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 74, 1, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 75, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 74, LEFT, 1, mapNum, map);
 		SetupPit(mapNum, 44, 62, 24, 46, 74, map);
 		
 		mapNum = 146;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(57, 43, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(57, 48, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(59, 44, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 44, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(59, 49, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 49, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 42, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 42, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 47, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 47, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 43, 2, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 44, 2, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 45, 2, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(74, 40, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(74, 34, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(75, 34, 3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(80, 31, 2, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(80, 32, 2, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 44, 2, 5, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 43, 2, 5, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 42, 2, 5, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 41, 2, 5, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 40, 2, 5, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(57, 43, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(57, 48, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(59, 44, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 44, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(59, 49, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 49, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 42, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 42, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 47, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 47, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 43, UP, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 44, UP, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 45, UP, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(74, 40, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(74, 34, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(75, 34, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(80, 31, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(80, 32, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 44, UP, 5, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 43, UP, 5, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 42, UP, 5, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 41, UP, 5, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 40, UP, 5, mapNum, map);
 		
 		mapNum = 147;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(45, 59, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 48, 1, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 59, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 48, LEFT, 1, mapNum, map);
 		
 		mapNum = 149;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 68, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 67, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 66, 3, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 45, 11, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 45, 12, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 44, 11, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 44, 12, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 43, 11, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 43, 12, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 42, 11, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 42, 12, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 41, 11, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 41, 12, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 40, 11, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 40, 12, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 39, 11, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 39, 12, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 50, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 68, BARRIER, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 67, BARRIER, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 66, BARRIER, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 45, BEAM_1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 45, BEAM_2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 44, BEAM_1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 44, BEAM_2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 43, BEAM_1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 43, BEAM_2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 42, BEAM_1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 42, BEAM_2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 41, BEAM_1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 41, BEAM_2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 40, BEAM_1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 40, BEAM_2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 39, BEAM_1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 39, BEAM_2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 50, RIGHT, 1, mapNum, map);
 		
 		mapNum = 150;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 77, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 77, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(44, 76, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(56, 76, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(44, 75, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(46, 74, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 74, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(52, 74, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(53, 74, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(56, 74, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 73, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(43, 72, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 72, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(53, 72, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(51, 71, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(55, 71, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(45, 70, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 69, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(55, 69, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(46, 68, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 68, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(52, 68, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 67, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(52, 66, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 77, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 77, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(44, 76, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 76, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(44, 75, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 74, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 74, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 74, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 74, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 74, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 73, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(43, 72, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 72, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 72, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 71, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 71, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 70, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 69, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 69, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 68, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 68, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 68, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 67, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 66, ROCK_SMASH, mapNum, map);
 		
 		mapNum = 166;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 50, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 50, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 50, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 51, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 51, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 51, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 51, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(51, 51, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(52, 51, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(53, 51, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 52, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 52, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 53, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(47, 54, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(48, 56, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 56, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(53, 52, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(54, 53, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(55, 53, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(56, 53, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(56, 54, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(57, 54, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(57, 55, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(58, 55, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(58, 56, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(46, 46, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(45, 48, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(42, 46, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(40, 48, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(38, 42, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(39, 42, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(40, 42, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(38, 41, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(39, 41, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(40, 41, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(38, 33, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(40, 31, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(37, 29, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(34, 28, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(36, 26, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(40, 25, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(44, 27, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 45, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(52, 46, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(53, 48, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(56, 47, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(58, 50, 10, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(62, 49, 10, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 50, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 50, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 50, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 51, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 51, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 51, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 51, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 51, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 51, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 51, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 52, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 52, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 53, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 54, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 56, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 56, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 52, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(54, 53, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(55, 53, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 53, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 54, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 54, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(57, 55, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 55, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 56, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(46, 46, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 48, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(42, 46, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 48, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 42, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 42, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 42, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 41, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(39, 41, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 41, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 33, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 31, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(37, 29, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 28, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(36, 26, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 25, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(44, 27, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 45, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 46, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(53, 48, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(56, 47, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 50, ICE_BLOCK, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 49, ICE_BLOCK, mapNum, map);
 		
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(35, 31, 1, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 30, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(49, 47, 3, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(44, 50, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 57, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 51, 0, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 58, 3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(35, 31, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 30, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(49, 47, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(44, 50, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 57, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 51, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 58, RIGHT, 1, mapNum, map);
 		
 		mapNum = 168;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(66, 77, 0, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(66, 77, DOWN, 1, mapNum, map);
 	}
 
 	public void updateNPC(int map) {
@@ -3214,9 +3286,9 @@ public class AssetSetter {
 		/**
 		 * Sixth Split
 		 */
-		if (flag[5][0] && !flag[5][1]) {
+		if (flag[5][0] && !flag[5][1] && !flag[6][6]) {
 			gp.npc[107][12] = NPCSetup(ARTHRA_DOWN, "Arthra", 49, 90, "Ugh... alright, fine. Maybe you're not completely useless.", 107.0);
-		} else if (flag[5][1]) {
+		} else if (flag[5][1] || flag[6][6]) {
 			gp.npc[107][12] = null;
 		}
 		
@@ -3879,6 +3951,30 @@ public class AssetSetter {
 		case ARTHRA_RIGHT:
 			result = new T_AceTrainerF(gp, "right", team, messages);
 			break;
+		case WARDEN_DOWN:
+			result = new T_Warden(gp, "down", team, messages);
+			break;
+		case WARDEN_UP:
+			result = new T_Warden(gp, "up", team, messages);
+			break;
+		case WARDEN_LEFT:
+			result = new T_Warden(gp, "left", team, messages);
+			break;
+		case WARDEN_RIGHT:
+			result = new T_Warden(gp, "right", team, messages);
+			break;
+		case DISCIPLE_DOWN:
+			result = new T_Disciple(gp, "down", team, messages);
+			break;
+		case DISCIPLE_UP:
+			result = new T_Disciple(gp, "up", team, messages);
+			break;
+		case DISCIPLE_LEFT:
+			result = new T_Disciple(gp, "left", team, messages);
+			break;
+		case DISCIPLE_RIGHT:
+			result = new T_Disciple(gp, "right", team, messages);
+			break;
 		}
 		
 		result.worldX = gp.tileSize*x;
@@ -4169,49 +4265,55 @@ public class AssetSetter {
 		InteractiveTile result = null;
 		if (mapNum != map) return null;
 		switch (type) {
-		case 0:
+		case CUT:
 			result = new Cut_Tree(gp);
 			break;
-		case 1:
+		case ROCK_SMASH:
 			result = new Rock_Smash(gp);
 			break;
-		case 2:
+		case STUMP:
 			result = new Tree_Stump(gp);
 			break;
-		case 3:
+		case BARRIER:
 			result = new GymBarrier(gp);
 			break;
-		case 4:
+		case VINE_CROSS:
 			result = new Vine_Crossable(gp);
 			break;
-		case 5:
+		case VINE:
 			result = new Vine(gp);
 			break;
-		case 6:
+		case STARTER_MACHINE:
 			result = new Starter_Machine(gp);
 			break;
-		case 7:
+		case FUSE_1:
 			result = new Fuse_Box(gp);
 			break;
-		case 8:
+		case FUSE_2:
 			result = new Fuse_Box(gp);
 			result.setDirection("up");
 			break;
-		case 9:
+		case SNOWBALL:
 			result = new Snowball(gp);
 			break;
-		case 10:
+		case ICE_BLOCK:
 			result = new IceBlock(gp);
 			break;
-		case 11:
+		case BEAM_1:
 			result = new Beam(gp, 1);
 			break;
-		case 12:
+		case BEAM_2:
 			result = new Beam(gp, 2);
 			break;
-		case 13:
+		case FUSE_3:
 			result = new Fuse_Box(gp);
 			result.setDirection("left");
+			break;
+		case TORCH:
+			result = new Torch(gp);
+			break;
+		case GATE:
+			result = new Gate(gp);
 			break;
 		}
 		

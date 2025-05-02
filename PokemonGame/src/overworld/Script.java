@@ -1798,19 +1798,6 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "I'll figure out mine.");
 				if (faith) { // move towards abandoned tower
 					Task.addTask(Task.SLEEP, "", 15);
-					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
-					Task.addTask(Task.SLEEP, "", 15);
-					Task.addNPCMoveTask('x', 52 * gp.tileSize, npc, false, 4);
-					Task.addTask(Task.SLEEP, "", 60);
-					Task.addTask(Task.TURN, npc, "", Task.LEFT);
-					Task.addTask(Task.SLEEP, "", 15);
-					Task.addTask(Task.DIALOGUE, npc, "I'm not just going to sit around waiting to be saved. If I can make a difference... then I will.");
-					Task.addTask(Task.SLEEP, "", 10);
-					Task.addTask(Task.TURN, npc, "", Task.UP);
-					Task.addTask(Task.SLEEP, "", 5);
-					Task.addNPCMoveTask('y', 59 * gp.tileSize, npc, false, 4);
-				} else { // go towards exit
-					Task.addTask(Task.SLEEP, "", 15);
 					Task.addTask(Task.TURN, npc, "", Task.DOWN);
 					Task.addTask(Task.SLEEP, "", 15);
 					Task.addNPCMoveTask('y', 62 * gp.tileSize, npc, false, 4);
@@ -1823,6 +1810,19 @@ public class Script {
 					Task.addTask(Task.TURN, npc, "", Task.DOWN);
 					Task.addTask(Task.SLEEP, "", 5);
 					Task.addNPCMoveTask('y', 64 * gp.tileSize, npc, false, 4);
+				} else { // go towards exit
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addNPCMoveTask('x', 52 * gp.tileSize, npc, false, 4);
+					Task.addTask(Task.SLEEP, "", 60);
+					Task.addTask(Task.TURN, npc, "", Task.LEFT);
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.DIALOGUE, npc, "I'm not just going to sit around waiting to be saved. If I can make a difference... then I will.");
+					Task.addTask(Task.SLEEP, "", 10);
+					Task.addTask(Task.TURN, npc, "", Task.UP);
+					Task.addTask(Task.SLEEP, "", 5);
+					Task.addNPCMoveTask('y', 59 * gp.tileSize, npc, false, 4);
 				}
 				Task.addTask(Task.FLASH_IN, "");
 				Task.addTask(Task.UPDATE, "");

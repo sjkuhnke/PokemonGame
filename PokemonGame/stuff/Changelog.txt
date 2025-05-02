@@ -515,3 +515,18 @@ Added calc showing greyed moves if they aren't valid moves to click (encored/cho
 Made calc move buttons a fixed size
 
 Demo 1.1 Released
+Fixed Grusts facing the player in Ghostly Woods when talked to
+Removed 'D' press from Bag closing the bag (worked the same as 'S')
+Made pressing 'D' in TMs pocket "check" a TM, which can then be used in combo with the PC to see which Pokemon in your box can learn the move
+Fixed TM learnsets in the PokemonInfo doc showing the incorrect ID
+Changed sell price of Focus Sash (500 -> 400)
+Added sell prices for Eject Button, Eject Pack, Seeds, Mirror Herb, Room Service, Absorb Bulb-esque and Damaged version items (oops)
+Made the calc on game load NOT add any trainers to it that you haven't beat yet
+Fixed the "Add" button in the calc correctly picking the nature of the mon you added on, otherwise default to Serious instead of Adamant
+Allowed for certain areas to give you a "null" encounter (used for making "Cave" tiles not give you an encounter) which will skip the encounter sequence
+Fixed certain dialogues having the wrong apostraphe character
+Nerfed light opacity in Schrice City from 80% -> 70% to make it easier to find the Pokemon Center when you first get there
+Tweaked First Impression's description to make it more clear
+Fixed old names being shown in the evolution method text
+Fixed Sedinister-E's trainer name showing as "Rocky-E"
+Changed Take Down's accuracy 85 -> 90

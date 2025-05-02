@@ -4329,6 +4329,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.faint(true, foe);
 		} else if (move == Move.METAL_SOUND) {
 			stat(foe, 3, -2, this, announce);
+		} else if (move == Move.MIND_READER) {
+			if (announce) Task.addTask(Task.TEXT, this.nickname + " took aim at " + foe.nickname + "!");
+			stat(this, 5, 6, foe, announce);
 		} else if (move == Move.MINIMIZE) {
 			stat(this, 6, 2, foe, announce);
 		} else if (announce && (move == Move.MORNING_SUN || move == Move.MOONLIGHT || move == Move.SYNTHESIS)) {
@@ -9435,6 +9438,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	public int takeFutureSight(int stat, int level, int mode, Pokemon foe) {
+		if (this.isFainted() && mode == 0) return 0;
 		ArrayList<Task> tasks = mode == 0 ? gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.simBattleUI.tasks : null;
 		int damageIndex = tasks == null ? 0 : tasks.size();
 		boolean immune = false;

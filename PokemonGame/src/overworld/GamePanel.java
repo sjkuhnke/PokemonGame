@@ -86,6 +86,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public SimBattleUI simBattleUI = new SimBattleUI(this);
 	
 	public int gameState;
+
 	public static final int PLAY_STATE = 1;
 	public static final int DIALOGUE_STATE = 2;
 	public static final int BATTLE_STATE = 3;
@@ -521,6 +522,7 @@ public class GamePanel extends JPanel implements Runnable {
 		for (TreasureChest chest : chests) {
 			if (chest.map == currentMap) renderableNPCs.add(chest);
 		}
+		
 		renderableNPCs.add(player);
 		renderableNPCs.sort(Comparator.comparingInt(Entity::getWorldY));
 	}
