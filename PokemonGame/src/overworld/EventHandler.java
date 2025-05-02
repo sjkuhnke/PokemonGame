@@ -940,6 +940,16 @@ public class EventHandler {
 			if (hit(151,31,46)) teleport(152, 30, 8,false);
 			if (hit(152,30,7,false)) teleport(151, 31, 45,false);
 			
+			// Ghostly Woods -> A.T. gate
+			if (hit(107,82,10,false)) teleport(189, 31, 45,false);
+			if (hit(189,31,46)) teleport(107, 82, 11,false);
+			if (hit(189,31,33)) teleport(190, 58, 92,false);
+			if (hit(190,58,93,false)) teleport(189, 31, 34,false);
+			
+			// A.T. Path -> Abandoned Tower
+			if (hit(190,57,56,false)) teleport(190, 58, 92,false);
+			//if (hit(190,58,93)) teleport(189, 31, 34,false);
+			
 			// Iron Town PC
 			if (hit(152,37,72)) teleport(153, 31, 45,false);
 			if (hit(153,31,46)) teleport(152, 37, 73,false);

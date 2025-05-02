@@ -42,10 +42,12 @@ public class TileManager {
 	private static final int BOTTOM_FOURTH = 14;
 	private static final int LEFT_FOURTH = 15;
 	private static final int RIGHT_FOURTH = 16;
+	private static final int TOP_RIGHT_SKINNY_CORNER = 17;
+	private static final int TOP_LEFT_SKINNY_CORNER = 18;
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
-		tile = new Tile[900];
+		tile = new Tile[1000];
 		mapTileNum = new int[GamePanel.MAX_MAP][gp.maxWorldCol][gp.maxWorldRow];
 		canFly = new boolean[GamePanel.MAX_MAP];
 		isCave = new boolean[GamePanel.MAX_MAP];
@@ -242,10 +244,12 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 186, true);
 		loadMap("/maps/house01.txt", 187, true);
 		loadMap("/maps/house01.txt", 188, true);
+		loadMap("/maps/gate01.txt", 189, true);
+		loadMap("/maps/at_path.txt", 190, true);
 	}
 	
 	private void setupCollisionRectangles() {
-		collisionRectangles = new Rectangle[17];
+		collisionRectangles = new Rectangle[19];
 		collisionRectangles[FULL] = new Rectangle(0, 0, gp.tileSize, gp.tileSize); // full tile
 		collisionRectangles[TOP_HALF] = new Rectangle(0, 0, gp.tileSize, gp.tileSize / 2); // top half
 		collisionRectangles[BOTTOM_HALF] = new Rectangle(0, gp.tileSize / 2, gp.tileSize, gp.tileSize / 2); // bottom half
@@ -263,6 +267,8 @@ public class TileManager {
 		collisionRectangles[BOTTOM_FOURTH] = new Rectangle(0, gp.tileSize * 3 / 4, gp.tileSize, gp.tileSize / 4); // bottom fourth
 		collisionRectangles[LEFT_FOURTH] = new Rectangle(0, 0, gp.tileSize / 4, gp.tileSize); // top fourth
 		collisionRectangles[RIGHT_FOURTH] = new Rectangle(gp.tileSize * 3 / 4, 0, gp.tileSize / 4, gp.tileSize); // bottom fourth
+		collisionRectangles[TOP_RIGHT_SKINNY_CORNER] = new Rectangle(gp.tileSize * 3 / 4, 0, gp.tileSize / 4, gp.tileSize / 2); // bottom left corner
+		collisionRectangles[TOP_LEFT_SKINNY_CORNER] = new Rectangle(0, 0, gp.tileSize / 4, gp.tileSize / 2); // bottom right corner
 	}
 
 	public void getTileImage() {
@@ -1110,81 +1116,81 @@ public class TileManager {
 		setup(851, true);
 		setup(852, true);
 		setup(853, true);
-//		setup(854, true);
-//		setup(855, true);
-//		setup(856, true);
-//		setup(857, true);
-//		setup(858, true);
-//		setup(859, true);
-//		setup(860, true);
-//		setup(861, true);
-//		setup(862, true);
-//		setup(863, true);
-//		setup(864, true);
-//		setup(865, true);
-//		setup(866, true);
-//		setup(867, true);
-//		setup(868, true);
-//		setup(869, true);
-//		setup(870, true);
-//		setup(871, true);
-//		setup(872, true);
-//		setup(873, true);
-//		setup(874, true);
-//		setup(875, true);
-//		setup(876, true);
-//		setup(877, true);
-//		setup(878, true);
-//		setup(879, true);
-//		setup(880, true);
-//		setup(881, true);
-//		setup(882, true);
-//		setup(883, true);
-//		setup(884, true);
-//		setup(885, true);
-//		setup(886, true);
-//		setup(887, true);
-//		setup(888, true);
-//		setup(889, true);
-//		setup(890, true);
-//		setup(891, true);
-//		setup(892, true);
-//		setup(893, true);
-//		setup(894, true);
-//		setup(895, true);
-//		setup(896, true);
-//		setup(897, true);
-//		setup(898, true);
-//		setup(899, true);
-//		setup(900, true);
-//		setup(901, true);
-//		setup(902, true);
-//		setup(903, true);
-//		setup(904, true);
-//		setup(905, true);
-//		setup(906, true);
-//		setup(907, true);
-//		setup(908, true);
-//		setup(909, true);
-//		setup(910, true);
-//		setup(911, true);
-//		setup(912, true);
-//		setup(913, true);
-//		setup(914, true);
-//		setup(915, true);
-//		setup(916, true);
-//		setup(917, true);
-//		setup(918, true);
-//		setup(919, true);
-//		setup(920, true);
-//		setup(921, true);
-//		setup(922, true);
-//		setup(923, true);
-//		setup(924, true);
-//		setup(925, true);
-//		setup(926, true);
-//		setup(927, true);
-//		setup(928, true);
+		setup(854, false);
+		setup(855, false);
+		setup(856, false);
+		setup(857, false);
+		setup(858, false);
+		setup(859, false);
+		setup(860, false);
+		setup(861, false);
+		setup(862, false);
+		setup(863, false);
+		setup(864, false);
+		setup(865, false);
+		setup(866, false);
+		setup(867, false);
+		setup(868, false);
+		setup(869, false);
+		setup(870, true);
+		setup(871, true);
+		setup(872, true);
+		setup(873, true);
+		setup(874, true);
+		setup(875, true);
+		setup(876, true);
+		setup(877, true, OVER);
+		setup(878, true, OVER);
+		setup(879, true, OVER);
+		setup(880, true, OVER);
+		setup(881, true, OVER);
+		setup(882, false, OVER);
+		setup(883, false, OVER);
+		setup(884, false, OVER);
+		setup(885, false, OVER);
+		setup(886, false, OVER);
+		setup(887, false, OVER);
+		setup(888, false, OVER);
+		setup(889, false, OVER);
+		setup(890, false, OVER);
+		setup(891, false, OVER);
+		setup(892, false, OVER);
+		setup(893, false, OVER);
+		setup(894, false, OVER);
+		setup(895, true);
+		setup(896, true);
+		setup(897, true);
+		setup(898, true);
+		setup(899, true);
+		setup(900, false, OVER);
+		setup(901, false, OVER);
+		setup(902, true);
+		setup(903, true);
+		setup(904, true);
+		setup(905, true);
+		setup(906, true);
+		setup(907, false, OVER);
+		setup(908, false, OVER);
+		setup(909, true);
+		setup(910, true);
+		setup(911, true);
+		setup(912, true);
+		setup(913, true);
+		setup(914, false, OVER);
+		setup(915, true, RIGHT_FOURTH, OVER);
+		setup(916, true);
+		setup(917, true);
+		setup(918, false);
+		setup(919, true);
+		setup(920, true);
+		setup(921, true, LEFT_FOURTH, OVER);
+		setup(922, true, TOP_RIGHT_SKINNY_CORNER);
+		setup(923, true, TOP_HALF);
+		setup(924, true, TOP_HALF);
+		setup(925, false);
+		setup(926, true, TOP_HALF);
+		setup(927, true, TOP_HALF);
+		setup(928, true, TOP_LEFT_SKINNY_CORNER);
 //		setup(929, true);
 //		setup(930, true);
 //		setup(931, true);

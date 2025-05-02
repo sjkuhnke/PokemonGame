@@ -1250,11 +1250,11 @@ public class BattleUI extends AbstractUI {
 			}
 		}
 	    subState = TASK_STATE;
-		if (uMove != null || fMove != null) {
-			if (hasAlive()) faster.endOfTurn(slower);
-			if (hasAlive()) slower.endOfTurn(faster);
-			if (hasAlive()) field.endOfTurn(faster, slower);
-		}
+	    
+		if (hasAlive()) faster.endOfTurn(slower);
+		if (hasAlive()) slower.endOfTurn(faster);
+		if (hasAlive()) field.endOfTurn(faster, slower);
+		
 		Pokemon next = foe.trainer == null ? foe : foe.trainer.getCurrent();
 		while (next.isFainted()) {
 			if (foe.trainer != null) {

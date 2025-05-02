@@ -350,7 +350,7 @@ public class Main {
 					writer.write(header.toString());
 				}
 				StringBuilder rowBuilder = new StringBuilder();
-	            String pokemonName = Pokemon.getName(id + 1);
+	            String pokemonName = Pokemon.getName(id);
 	            rowBuilder.append(String.format("#%03d %-20s", id, pokemonName));
 	            for (boolean canLearn : row) {
 	                rowBuilder.append(canLearn ? "Y     " : "N     ");

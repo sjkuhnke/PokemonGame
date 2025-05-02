@@ -1244,6 +1244,12 @@ public class PMap extends JPanel {
 		case 188:
 			PlayerCharacter.currentMapName = "Glurg Town";
 			return 32;
+		case 189:
+			PlayerCharacter.currentMapName = "Ghostly Woods";
+			return 30;
+		case 190:
+			PlayerCharacter.currentMapName = "A.T. Path";
+			return 43;
 		}
 		
 		return -1;

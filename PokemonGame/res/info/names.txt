@@ -12,7 +12,7 @@ Spacebear     |Teddinaut
 Bealtle       |Minipede
 Centatle      |Centinel
 Curlatoral    |Milimace
-Millistone    |Milimace
+Millistone    |Milipleura
 Treewin       |Kappalm
 Winagrow      |Serpenge
 Bugik         |Scarabit
