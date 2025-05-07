@@ -231,7 +231,7 @@ public enum Item {
 	ROOM_SERVICE(338,0,100,Color.BLACK,Item.HELD_ITEM,null,"If Trick Room takes effect, this item will lower the holder's Speed stat."),
 	RED_CARD(87,0,250,new Color(216, 35, 22),Item.HELD_ITEM,null,"If the holder is damaged by an attack, the mysterious power of this card can remove the attacker from the battle."),
 	THROAT_SPRAY(88,0,150,new Color(96, 120, 168),Item.HELD_ITEM,null,"If the holder uses a sound-based move, this throat spray will boost its Sp. Atk stat."),
-	ADRENALINE_ORB(326,1,75,Color.BLACK,Item.HELD_ITEM,null,"This orb will boost the Speed of the Pokemon by 1 stage when it is intimidated."),
+	ADRENALINE_ORB(326,1,75,Color.BLACK,Item.HELD_ITEM,null,"This orb will boost the Speed of the Pokemon by 1 stage when it is intimidated, threatened or terrified."),
 	ABSORB_BULB(327,3,320,Color.BLACK,Item.HELD_ITEM,372,"This single-use bulb will absorb any Water-type attack and boost the Sp. Atk stat of the holder. Any other attack will damage the item."),
 	CELL_BATTERY(328,3,275,Color.BLACK,Item.HELD_ITEM,373,"This single-use battery will absorb any Electric-type attack and boost the Attack stat of the holder. Any other attack will damage the item."),
 	LUMINOUS_MOSS(329,3,335,Color.BLACK,Item.HELD_ITEM,374,"This single-use moss will absorb any Water-type attack and boost the Sp. Def stat of the holder. Any other attack will damage the item."),
@@ -482,6 +482,9 @@ public enum Item {
     private static JSpinner userLevel;
     private static Field field;
     private static JButton okButton;
+    
+    private static int userGen;
+    private static int foeGen;
 	
 	Item(int id, int cost, int sell, Color color, int pocket, Object o, String desc) {
 		this.id = id;
@@ -1241,7 +1244,7 @@ public enum Item {
 	        addButton.addActionListener(l -> {
 	        	Pokemon result = displayGenerator((Pokemon) userMons.getSelectedItem());
 	        	if (result != null) {
-	        		result.nickname = "Generated";
+	        		result.nickname = String.format("%s %d", "Generated", ++userGen);
 	        		userMons.insertItemAt(result, 0);
 	        	}
 	        });
@@ -1249,7 +1252,7 @@ public enum Item {
 	        fAddButton.addActionListener(l -> {
 	        	Pokemon result = displayGenerator((Pokemon) foeMons.getSelectedItem());
 	        	if (result != null) {
-	        		result.nickname = "Generated";
+	        		result.nickname = String.format("%s %d", "Generated", ++foeGen);
 	        		foeMons.insertItemAt(result, 0);
 	        	}
 	        });
@@ -1360,8 +1363,10 @@ public enum Item {
 		}
         
         if (f != null) {
-        	if (f.trainerOwned()) {        		
-        		int index = getPokemonIndex(f.trainer.getTeam()[0], foeMons);
+        	if (f.trainerOwned()) {
+        		Pokemon clone = f.trainer.getTeam()[0].clone();
+        		clone.setCalcNickname();
+        		int index = getPokemonIndex(clone, foeMons);
             	boolean remove = index >= 0;
             	if (!remove) index = 0;
             	
@@ -2207,6 +2212,14 @@ public enum Item {
 		if (pocket != OTHER) return true;
 		if (isTreasure() || isFossil()) {
 			return false;
+		}
+		return true;
+	}
+	
+	public boolean isSellable(int amt) {
+		if (pocket == KEY_ITEM) return false;
+		if (pocket == HELD_ITEM) {
+			if (getSell() == 0 && amt <= 1) return false;
 		}
 		return true;
 	}

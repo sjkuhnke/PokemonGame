@@ -59,6 +59,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public static final int POKEDEX_1_SIZE = 249;
 	public static final int POKEDEX_METEOR_SIZE = 18;
 	public static final int POKEDEX_2_SIZE = 9;
+
+	private static HashMap<Integer, Integer> meteorFormMap;
 	
 	// Database
 	private static int[] dexNos = new int[MAX_POKEMON];
@@ -1025,6 +1027,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this.item == Item.EVERSTONE) return;
 		int result = -1;
 		int area = player.currentMap;
+		boolean heart = (area == 99 || area == 100);
 		if (area >= 95 && area <= 99) area = 35; // electric tunnel
 		if (id == 1 && level >= 18) {
 			result = id + 1;
@@ -1282,9 +1285,9 @@ public class Pokemon implements RoleAssignable, Serializable {
             result = id + 1;
 		} else if (id == 261 && spaceEat >= 25) {
 		    result = id + 1;
-		} else if (id == 263 && spaceEat >= 25) {
+		} else if (id == 263 && heart && hasPartyMember('E') && hasPartyMember('S')) {
 		    result = id + 1;
-		} else if (id == 265 && level >= 42 && (area == 100 || area == 99) && hasPartyMember('E') && hasPartyMember('S')) {
+		} else if (id == 265 && level >= 42) {
             result = id + 1;
 		} else if (id == 267 && level >= 42) {
             result = id + 1;
@@ -7278,6 +7281,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 			} else {
 				stat(foe, 2, -1, this);
 			}
+			if (foe.getItem() == Item.ADRENALINE_ORB) {
+				Task.addTask(Task.TEXT, foe.nickname + " used its " + foe.item.toString() + " to boost its Speed!");
+				stat(foe, 4, 1, this);
+				foe.consumeItem(this);
+			}
 		} else if (this.ability == Ability.THREATENING) {
 			Task.addAbilityTask(this);
 			if (foe.ability == Ability.INNER_FOCUS || foe.ability == Ability.SCRAPPY || foe.ability == Ability.UNWAVERING) {
@@ -7285,6 +7293,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Task.addTask(Task.TEXT, foe.nickname + "'s Defense was not lowered!");
 			} else {
 				stat(foe, 1, -1, this);
+			}
+			if (foe.getItem() == Item.ADRENALINE_ORB) {
+				Task.addTask(Task.TEXT, foe.nickname + " used its " + foe.item.toString() + " to boost its Speed!");
+				stat(foe, 4, 1, this);
+				foe.consumeItem(this);
 			}
 		} else if (this.ability == Ability.STARBORN) {
 			this.checkStarborn(foe);
@@ -7347,7 +7360,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.swapIn(foe, false);
 			}
 		} else if (this.ability == Ability.TALENTED) {
-			if (arrayGreaterOrEqual(new int[] {0, 0, 0, 0, 0, 0, 0}, foe.statStages)) {
+			if (arrayGreaterOrEqual(foe.statStages, new int[] {0, 0, 0, 0, 0, 0, 0})) {
 				Task.addAbilityTask(this);
 				Task.addTask(Task.TEXT, this.nickname + " copied " + foe.nickname + "'s stat boosts!");
 				for (int i = 0; i < 7; ++i) {
@@ -8014,7 +8027,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Pokemon other = (Pokemon) obj;
-		return id == other.id && level == other.level && slot == other.slot && Objects.equals(trainer, other.trainer);
+		return id == other.id && level == other.level && slot == other.slot && Objects.equals(trainer, other.trainer) && toString().equals(other.toString());
 	}
 	
 
@@ -8081,7 +8094,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		case 19: return "Teddull -> Teddician (lv. 20)";
 		case 20: return "Teddician -> Teddinaut (lv. 40)";
 		case 22: return "Minipede -> Centinel (lv. 18)";
-		case 23: return "Centinel -> Milimace (lv. 32 with SpD > Def)\nCentinel -> Milimace (lv. 32 with Def > SpD)";
+		case 23: return "Centinel -> Milimace (lv. 32 with SpD > Def)\nCentinel -> Milipleura (lv. 32 with Def > SpD)";
 		case 26: return "Sapwin -> Kappalm (lv. 28)";
 		case 27: return "Kappalm -> Serpenge (Leaf Stone)";
 		case 29: return "Budew -> Roselia (160+ happiness)";
@@ -9562,6 +9575,31 @@ public class Pokemon implements RoleAssignable, Serializable {
 		String trainerName = this.trainer.getName();
 		String calcName = !playerOwned() && trainerName.equals(this.name) ? "Static" : trainerName;
 		this.nickname = String.format("%s [%d]", calcName, this.slot + 1);
+	}
+
+	public void convertToNonMeteorForm() {
+		if (meteorFormMap == null) {
+			int[] meteorIDs = new int[] {
+				197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 267, 268, // electric forms
+				215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 281, 282, 283  // shadow forms
+			};
+			int[] regularIDs = new int[] {
+				156, 157, 181, 182, 183, 98 , 99 , 100, 48 , 49 , 50 , 51 , 137, 138, 265, 266, // electric forms
+				148, 149, 171, 172, 173, 160, 161, 162, 94 , 95 , 96 , 151, 152, 278, 279, 280  // shadow forms
+			};
+			meteorFormMap = new HashMap<>();
+			
+			for (int i = 0; i < meteorIDs.length; i++) {
+				meteorFormMap.put(meteorIDs[i], regularIDs[i]);
+			}
+		}
+		
+		if (!meteorFormMap.containsKey(this.getID())) return;
+		
+		double currentHPPercentage = this.currentHP * 1.0 / this.getStat(0);
+		this.evolve(meteorFormMap.get(this.getID()));
+		this.currentHP = (int) Math.ceil(this.getStat(0) * currentHPPercentage);
+		this.setMoves();
 	}
 	
 }
