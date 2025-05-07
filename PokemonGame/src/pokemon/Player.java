@@ -1693,6 +1693,13 @@ public class Player extends Trainer implements Serializable {
         	catchPokemon(shedinja.evolve(131), false);
         }
         
+        if (oldID == 263) {
+        	for (Pokemon pok : team) {
+        		pok.convertToNonMeteorForm();
+        		pokedex[pok.id] = 2;
+        	}
+        }
+        
         if (p.slot == 0) {
         	gp.battleUI.userHP = p.currentHP;
         	gp.battleUI.maxUserHP = p.getStat(0);

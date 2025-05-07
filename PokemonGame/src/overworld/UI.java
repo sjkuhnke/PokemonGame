@@ -2372,6 +2372,13 @@ public class UI extends AbstractUI {
 				}
 			}
 			
+			// draw type icon when checking TMs for Hidden Power/Return
+			if (cBox[i] != null && (tmCheck == Item.TM26 || tmCheck == Item.TM99)) {
+				int iconX = cX + 56;
+				int iconY = cY + 56;
+				g2.drawImage(cBox[i].determineHPType().getImage(), iconX, iconY, null);
+			}
+			
 			g2.setColor(Color.WHITE);
 			if (i == boxNum) {
 				g2.drawRoundRect(cX - 8, cY - 8, spriteWidth, spriteHeight, 10, 10);
@@ -3358,10 +3365,11 @@ public class UI extends AbstractUI {
 					int borderHeight = (int) (gp.tileSize * 0.75);
 					g2.setPaint(new GradientPaint(borderX,borderY,new Color(255,215,0),borderX+borderWidth,borderY+borderWidth,new Color(255,255,210)));
 					g2.drawRoundRect(borderX, borderY, borderWidth, borderHeight, 25, 25);
-					g2.setColor(Color.WHITE);
 				}
 			}
 		}
+		
+		g2.setColor(Color.WHITE);
 		// Down Arrow
 		if (bagNum[currentPocket - 1] + 9 < currentItems.size()) {
 			int x2 = gp.tileSize * 5 + width;
@@ -3489,14 +3497,18 @@ public class UI extends AbstractUI {
 		}
 		y += gp.tileSize;
 		String option2 = currentPocket == Item.TMS ? "Info" : "Sell";
-		if (currentPocket == Item.KEY_ITEM) g2.setColor(Color.GRAY);
+		if (!currentItems.get(bagNum[currentPocket - 1]).getItem().isSellable(currentItems.get(bagNum[currentPocket - 1]).getCount())) g2.setColor(Color.GRAY);
 		g2.drawString(option2, x, y);
 		g2.setColor(Color.WHITE);
 		if (commandNum == 1) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				bagState = currentPocket == Item.TMS ? 3 : currentPocket == Item.KEY_ITEM ? 1 : 2;
+				if (!currentItems.get(bagNum[currentPocket - 1]).getItem().isSellable(currentItems.get(bagNum[currentPocket - 1]).getCount())) {
+					// do nothing
+				} else {
+					bagState = currentPocket == Item.TMS ? 3 : currentPocket == Item.KEY_ITEM ? 1 : 2;
+				}
 			}
 		}
 		y += gp.tileSize;

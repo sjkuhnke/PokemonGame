@@ -1342,7 +1342,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_M_UP, 71, 17, "You're about to see a trick you'll never forget.", "Well, that wasn't part of the act... I'll need to work on my tricks.", 363);
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 59, 28, "I'll bend your mind and your Pokemon to my will.", "You've shown surprising strength... but the stars still favor me.", 361);
 		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 79, 11, "The stars guide my team. Let's see if you can handle their cosmic power.", "The stars... must have misaligned this time.", 364);
-		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_UP, 82, 28, "My skills are legendary. Let's see if you can keep up.", "Looks like you've earned some respect... for now.", 365);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_UP, 82, 28, "My skills are legendary. Let's see if you can keep up.", "Looks like you've earned some respect... for now.", 365);
 		
 		mapNum = 14;
 		index = 0;
