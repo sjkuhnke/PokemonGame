@@ -627,7 +627,7 @@ public enum Item {
 	}
 	
 	public String getDesc() {
-		return Item.breakString(desc, 65);
+		return desc;
 	}
 	
 	public BufferedImage getImage() { return image; }

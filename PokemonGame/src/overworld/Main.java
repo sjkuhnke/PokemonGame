@@ -1064,7 +1064,7 @@ public class Main {
 				while(sell.length() < 5) {
 					sell += " ";
 				}
-				String desc = i.getDesc().replace("\n", " ");
+				String desc = i.getDesc();
 				writer.write(String.format("%s | %s | %s | %s | %s\n", item, pocket, buy, sell, desc));
 			}
 			
