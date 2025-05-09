@@ -530,3 +530,53 @@ Tweaked First Impression's description to make it more clear
 Fixed old names being shown in the evolution method text
 Fixed Sedinister-E's trainer name showing as "Rocky-E"
 Changed Take Down's accuracy 85 -> 90
+Fixed end of turn stuff (field, burn damage, etc) not ticking down when the player U-Turns out
+Fixed IDs being correct in PokemonInfo doc for TM learnsets
+Fixed Mind Reader not having any effect (oops)
+Fixed Future Sight still trying to damage a mon if they faint at the same time
+Added 1/4 horizontal corner collision for top left and top right of tiles
+Changed Frostbite icon from "FRZ" to "FRS"
+Put Grislush on Route 43 instead of Sewaddle
+Gave Pterator Heat Wave at lv 1
+Gave Nixnerva Heat Wave at 62 and moved Future Sight to 65
+Gave Shookwat Thunder Fang at lv 8, Discharge at 27
+Gave Wattwo Discharge at 27 and moved all the other moves down to fill in where Discharge was
+Gave Crobat Heat Wave at lv 1
+Gave Rick 1's Shookwat Spark instead of Thundershock
+Made Ace Trainer Lorayne a female Ace Trainer instead of Male
+Nerfed all of Nikola's levels to make him easier for the Ability Capsule right when you get to Schrice
+Fixed swapping views in SimBattleUI to also swap names and types
+Made checking Hidden Power and Return TM show the Hidden Power type icon in the bottom right corner in the box
+Made one-time obtainable held items not sellable if you only have 1 (can't sell your last Choice Band and stuff)
+Updated Adrenaline Orb's description and functionality to make it also give the speed boost on Threatening and Terrify
+Made the Generator name the generated Pokemon Generated 1, Generated 2, etc to make them separate
+Fixed calc with trainers that are present in the calc accurately finding the mon
+Finally implemented Plasamp's evo turning all E and S forms in your party back to their regular forms (only way to convert them!)
+Fixed Talented announcing if there isn't any stat boosts to copy
+Fixed Centinel's evo String showing both methods evolve into Milimace (instead of SpD > Def evolving into Milipleura)
+Added AbilitiesInfo.txt doc to show every ability in the game
+Added where to find EVERY TM in the game in ItemInfo.txt
+Changed Energy Plant pt. 1's encounters: Shookwat 50% -> 35%, Vupp 30% -> 15%, Droid 15% -> 20%, Droid-E 5% -> 15%, +Flamehox-E (15%)!
+Fixed Shadow Ravine -1A Fishing/Surfing encounters to be 80% Durfish-S, 20% Dompster-S (was previously the same as the regular -1A encounters)
+Gave Shaboom Flash Darts at lv 1 for consistency (Shawar gets it on evo)
+Made Cosmic Power and Teleport earlier in Elgyem's moveset to make room for Psybeam
+Changed Elgyem's typing from Galactic/None -> Galactic/Psychic to match Beheeyem
+Gave Elgyem Psybeam at 22 and moved Psychic Noise to 30, reshuffled everything else
+Gave Shookwat line Cut by TM
+Changed Night Daze to be Special instead of Physical (to match Pokemon games)
+Changed Bug Catcher Lucy's Fearomoth's Night Daze to be Darkest Lariat
+Changed Athlete Zeus's Despenero-S's Night Daze to be Throat Chop
+Gave Eclipse Grunt 0's Elgyem Teleport instead of Leer
+Gave Astronomer Kratos's Elgyem Psybeam instead of Teleport
+Changed all HM moves to tell the player if they have the move taught but don't have enough badges when they try it outside of battle
+Moved AI swapping (due to Eject Button) to be ABOVE the player's choice for switching out (with U-Turn) even though in normal Pokemon it stops the player from switching
+Made checkboxes on Welcome Menu be a 2 column grid and have black text outline to make more visible
+Made Fire Blast Thunder and Blizzard cost $4000 (instead of $1500)
+Made attempting to get healed do nothing if the Pokemon is fainted (to make Wish landing on a fainted Pokemon not say anything)
+Gave Teddician and Teddinaut Magic Powder at lv 1
+Changed calc field to be applied when getting the Pokemon's effective speed (tailwind, swift swim, etc)
+Made multi-hit moves not announce their hits at all when the foe has an eject button successfully used on them
+Fixed fainting due to Jaboca or Rowap berries actually cause the effected to faint instead of just being stuck on 0 HP
+Fixed text wrapping method and Entities and Item descriptions accidentally breaking the messages twice
+
+Demo 1.12 Released
