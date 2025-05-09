@@ -1180,6 +1180,7 @@ public class BattleUI extends AbstractUI {
 			// Check for swap (AI)
 			if (foe.trainer != null && foe.trainer.hasValidMembers() && slower.hasStatus(Status.SWITCHING)) {
 				slower = foe.trainer.swapOut(faster, null, false, false);
+				foeMove = null;
 				foeCanMove = false;
 			}
 			// Check for swap (player)
@@ -1230,6 +1231,7 @@ public class BattleUI extends AbstractUI {
 	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && faster.hasStatus(Status.SWITCHING)) {
 	        	faster = foe.trainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS, false);
 	        	foeCanMove = false;
+	        	foeMove = null;
 	        }
 			
 	        if (slower == user.trainer.getCurrent()) {

@@ -384,13 +384,13 @@ public class PlayerCharacter extends Entity {
 					for (Integer i : tileList) {
 						gp.tileM.tile[i].collision = false;
 					}
+				} else {
+					String surfaceType = isSurf ? "water" : "lava";
+					String moveName = move.toString();
+					String badgeWord = badgeReq == 1 ? "badge" : "badges";
+					String message = String.format("This %s can be crossed!\n(You need %d %s to use %s outside of battle!)", surfaceType, badgeReq, badgeWord, moveName);
+					gp.ui.showMessage(Item.breakString(message, 42));
 				}
-			} else {
-				String surfaceType = isSurf ? "water" : "lava";
-				String moveName = move.toString();
-				String badgeWord = badgeReq == 1 ? "badge" : "badges";
-				String message = String.format("This %s can be crossed!\n(You need %d %s to use %s outside of battle!)", surfaceType, badgeReq, badgeWord, moveName);
-				gp.ui.showMessage(message);
 			}
 		}
 	}
@@ -621,7 +621,7 @@ public class PlayerCharacter extends Entity {
 					"%s\n(You need %d %s to use %s outside of battle!)",
 					message, badgeReq, badgeWord, m.toString()
 				);
-				gp.ui.showMessage(fullMessage);
+				gp.ui.showMessage(Item.breakString(fullMessage, 42));
 			}
 		} else {
 			gp.ui.showMessage(message);
@@ -643,7 +643,7 @@ public class PlayerCharacter extends Entity {
 					"%s\n(You need %d %s to use %s outside of battle!)",
 					message, badgeReq, badgeWord, m.toString()
 				);
-				gp.ui.showMessage(fullMessage);
+				gp.ui.showMessage(Item.breakString(fullMessage, 42));
 			}
 		} else {
 			gp.ui.showMessage(message);
@@ -668,7 +668,7 @@ public class PlayerCharacter extends Entity {
 					"%s\n(You need %d %s to use %s outside of battle!)",
 					message, badgeReq, badgeWord, m.toString()
 				);
-				gp.ui.showMessage(fullMessage);
+				gp.ui.showMessage(Item.breakString(fullMessage, 42));
 			}
 		} else {
 			gp.ui.showMessage(message);
@@ -691,7 +691,7 @@ public class PlayerCharacter extends Entity {
 					"%s\n(You need %d %s to use %s outside of battle!)",
 					message, badgeReq, badgeWord, m.toString()
 				);
-				gp.ui.showMessage(fullMessage);
+				gp.ui.showMessage(Item.breakString(fullMessage, 42));
 			}
 		} else {
 			gp.ui.showMessage(message);
@@ -733,7 +733,7 @@ public class PlayerCharacter extends Entity {
 					"%s\n(You need %d %s to use %s outside of battle!)",
 					message, badgeReq, badgeWord, m.toString()
 				);
-				gp.ui.showMessage(fullMessage);
+				gp.ui.showMessage(Item.breakString(fullMessage, 42));
 			}
 		} else {
 			gp.ui.showMessage(message);
@@ -765,7 +765,7 @@ public class PlayerCharacter extends Entity {
 					"%s\n(You need %d %s to use %s outside of battle!)",
 					message, badgeReq, badgeWord, m.toString()
 				);
-				gp.ui.showMessage(fullMessage);
+				gp.ui.showMessage(Item.breakString(fullMessage, 42));
 			}
 		} else {
 			gp.ui.showMessage(message);

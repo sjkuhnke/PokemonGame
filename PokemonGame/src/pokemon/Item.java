@@ -61,7 +61,7 @@ public enum Item {
 	REPEL(0,10,5,new Color(0, 92, 5),Item.OTHER,null,"Prevents wild Pokemon encounters for 200 steps."),
 	POKEBALL(1,10,5,new Color(176, 0, 12),Item.BALLS,null,"A device for catching wild Pokemon. It's thrown like a ball at a Pokemon, comfortably encapsulating its target."),
 	GREAT_BALL(2,25,12,new Color(0, 0, 148),Item.BALLS,null,"A good, high-performance Poke Ball that provides a higher success rate for catching Pokemon than a standard Poke Ball."),
-	ULTRA_BALL(3,50,25,new Color(148, 171, 0),Item.BALLS,null,"An ultra-high-performance Poke Ball that provides a higher success rate for catching Pokemon than a Great Ball."),
+	ULTRA_BALL(3,50,25,new Color(148, 171, 0),Item.BALLS,null,"An ultra high-performance Poke Ball that provides a higher success rate for catching Pokemon than a Great Ball."),
 	MASTER_BALL(350,0,10000,Color.BLACK,Item.BALLS,null,"The very best Poke Ball with the ultimate level of performance. With it, you will catch any wild Pokemon without fail."),
 	CHERISH_BALL(351,0,1000,Color.BLACK,Item.BALLS,null,"A quite rare Poke Ball made to commemorate a special occasion of some sort."),
 	PREMIER_BALL(352,0,5,Color.BLACK,Item.BALLS,null,"A somewhat rare Poke Ball made to commemorate a special occasion of some sort."),
@@ -1043,7 +1043,7 @@ public enum Item {
 	        			current.statStages[index - 1] = amt;
 	        			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
 	        			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	        			if (index == 5) userSpeed.setText((current.getSpeed()) + "");
+	        			if (index == 5) userSpeed.setText((current.getSpeed(field)) + "");
 	        		});
 	        		statsPanel.add(userStages[i]);
 	        	}
@@ -1053,7 +1053,7 @@ public enum Item {
 	        		userHPP.setText(String.format("%.1f", percent) + "%");
 	        		statsPanel.add(userHPP);
 	        	} else if (i == 5) {
-	        		userSpeed.setText((userC.getSpeed()) + "");
+	        		userSpeed.setText((userC.getSpeed(field)) + "");
 	        		statsPanel.add(userSpeed);
 	        	} else {
 	        		statsPanel.add(blank);
@@ -1082,7 +1082,7 @@ public enum Item {
 	        			current.statStages[index - 1] = amt;
 	        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
 	        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	        			if (index == 5) foeSpeed.setText((current.getSpeed()) + "");
+	        			if (index == 5) foeSpeed.setText((current.getSpeed(field)) + "");
 	        		});
 	        		fStatsPanel.add(foeStages[i]);
 	        	}
@@ -1092,7 +1092,7 @@ public enum Item {
 	        		foeHPP.setText(String.format("%.1f", percent) + "%");
 	        		fStatsPanel.add(foeHPP);
 	        	} else if (i == 5) {
-	        		foeSpeed.setText((foeC.getSpeed()) + "");
+	        		foeSpeed.setText((foeC.getSpeed(field)) + "");
 	        		fStatsPanel.add(foeSpeed);
 	        	} else {
 	        		fStatsPanel.add(blank);
@@ -1517,7 +1517,7 @@ public enum Item {
 				double percent = current.currentHP * 100.0 / current.getStat(0);
         		HPP.setText(String.format("%.1f", percent) + "%");
 			}
-			if (i == 5) speed.setText(current.getSpeed() + "");
+			if (i == 5) speed.setText(current.getSpeed(field) + "");
 		}
 
         currentAbility.setSelectedItem(current.ability);
@@ -2230,36 +2230,51 @@ public enum Item {
 	
 	public static String breakString(String input, int maxChar) {
 	    if (input == null || maxChar <= 0) {
-	        return null; // Or handle this case according to your requirements
+	        return null;
 	    }
 
 	    StringBuilder result = new StringBuilder();
 	    StringBuilder currentLine = new StringBuilder();
 	    int currentLength = 0;
 
-	    for (String word : input.split("\\s+")) {
-	        // Check if the word contains a newline character
-	        if (word.contains("\n")) {
-	            // If it does, reset the current length
-	            currentLength = 0;
-	        }
+	    // Split on space and tab, keep \n embedded
+	    for (String word : input.split("[ \\t]+")) {
+	        // Split the word if it contains newline(s)
+	        String[] parts = word.split("\n", -1);
 
-	        if (currentLength + word.length() > maxChar) {
-	            result.append(currentLine.toString().trim()).append("\n");
-	            currentLine.setLength(0);
-	            currentLength = 0;
+	        for (int i = 0; i < parts.length; i++) {
+	            String part = parts[i];
+
+	            // Check if we need to wrap before adding this part
+	            if (currentLength + part.length() > maxChar) {
+	                result.append(currentLine.toString().trim()).append("\n");
+	                currentLine.setLength(0);
+	                currentLength = 0;
+	            }
+
+	            currentLine.append(part);
+	            currentLength += part.length();
+
+	            // If this part was followed by a \n, break the line
+	            if (i < parts.length - 1) {
+	                result.append(currentLine.toString().trim()).append("\n");
+	                currentLine.setLength(0);
+	                currentLength = 0;
+	            } else {
+	                currentLine.append(" ");
+	                currentLength += 1;
+	            }
 	        }
-	        currentLine.append(word).append(" ");
-	        currentLength += word.length() + 1; // Account for the added whitespace character
 	    }
 
-	    // Append the remaining part if any
+	    // Append any leftover line
 	    if (currentLine.length() > 0) {
 	        result.append(currentLine.toString().trim());
 	    }
 
 	    return result.toString();
 	}
+
 	
 	public static String getPocketName(int pocket) {
 		switch(pocket) {
