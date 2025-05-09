@@ -367,13 +367,10 @@ public class SimBattleUI extends BattleUI {
 	
 	@Override
 	protected void drawStatus(Pokemon p) {
-		PType[] types = p == user ? userType : foeType;
-		if (p == user) { // same as above
-			g2.drawImage(types[0].getImage(), 340, 298, null);
-			if (types[1] != null) g2.drawImage(types[1].getImage(), 364, 298, null);
+		if (p == user) { // changed p.playerOwned() to p == user
+			if (userStatus != Status.HEALTHY) g2.drawImage(userStatus.getImage(), 339, 326, null);
 		} else {
-			g2.drawImage(types[0].getImage(), 232, 50, null);
-			if (types[1] != null) g2.drawImage(types[1].getImage(), 256, 50, null);
+			if (foeStatus != Status.HEALTHY) g2.drawImage(foeStatus.getImage(), 232, 78, null);
 		}
 	}
 	
