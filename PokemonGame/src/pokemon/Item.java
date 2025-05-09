@@ -2237,15 +2237,15 @@ public enum Item {
 	    StringBuilder currentLine = new StringBuilder();
 	    int currentLength = 0;
 
-	    // Split on space and tab, keep \n embedded
+	    // split on spaces and tabs but not \n
 	    for (String word : input.split("[ \\t]+")) {
-	        // Split the word if it contains newline(s)
+	        // split the word if it contains \n
 	        String[] parts = word.split("\n", -1);
 
 	        for (int i = 0; i < parts.length; i++) {
 	            String part = parts[i];
 
-	            // Check if we need to wrap before adding this part
+	            // check if need to wrap before adding this part
 	            if (currentLength + part.length() > maxChar) {
 	                result.append(currentLine.toString().trim()).append("\n");
 	                currentLine.setLength(0);
@@ -2255,7 +2255,7 @@ public enum Item {
 	            currentLine.append(part);
 	            currentLength += part.length();
 
-	            // If this part was followed by a \n, break the line
+	            // if this part was followed by a \n break the line
 	            if (i < parts.length - 1) {
 	                result.append(currentLine.toString().trim()).append("\n");
 	                currentLine.setLength(0);
@@ -2267,7 +2267,7 @@ public enum Item {
 	        }
 	    }
 
-	    // Append any leftover line
+	    // append any leftover line
 	    if (currentLine.length() > 0) {
 	        result.append(currentLine.toString().trim());
 	    }
