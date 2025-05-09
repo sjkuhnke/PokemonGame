@@ -1,0 +1,107 @@
+HM01 Cut               : Given to you by the Poppy Grove Warehouse owner after beating Team Eclipse Admin Rick 1
+HM02 Rock Smash        : Given to you by Scott in Sicab Office (2A) after beating static Flamehox-E
+HM03 Vine Cross        : Given to you by Millie in Kleine Village outside her gym after beating Cage Critter
+HM04 Surf              : Given to you by the Principal of Schrice City School after beating Icy Serpant
+HM05 Slow Fall         : Given to you by Grandpa in Frenco City after saving him in his house from Team Eclipse Grunts
+HM06 Whirlpool         : Shadow Ravine (-3A)
+HM07 Rock Climb        : Given to you by Merlin in Rawwar City outside his gym after beating Fever Dream
+HM08 Lava Surf         : Given to you by Dad in New Minnow Town lab after coming back to Earth and returning his letter
+TM01 Super Fang        : Given to you by Stanford after beating him
+TM02 Radio Burst       : Cell Park
+TM03 Arcane Spell      : Given to you by Merlin after beating him
+TM04 Calm Mind         : Mindagan Lake
+TM05 Body Slam         : Peaceful Park
+TM06 Shadow Ball       : Shadow Ravine (1A)
+TM07 Focus Blast       : Mindagan Cavern (0A)
+TM08 Bulk Up           : Route 34 (1A)
+TM09 Leaf Blade        : Route 25 (Need Cut)
+TM10 Ice Beam          :
+TM11 Psyshock          : Given to you by Mindy after beating her
+TM12 Protect           : Schrice City shop
+TM13 Baton Pass        : Schrice City shop
+TM14 Taunt             : Energy Plant (pt. 2)
+TM15 Giga Impact       : Schrice City shop
+TM16 Hyper Beam        : Schrice City shop
+TM17 Solar Beam        : Route 24 (pt. 1) (Need Cut)
+TM18 Iron Head         : Route 39
+TM19 Photon Geyser     : Route 35
+TM20 Earthquake        : Shadow Path (Need Rock Climb)
+TM21 Throat Chop       : Rawwar City Prize Shop (4+ Badges)
+TM22 Fell Stinger      : Given to you by Millie after beating her
+TM23 Weather Ball      : Schrice City shop
+TM24 Terrain Pulse     : Schrice City shop
+TM25 Thunderbolt       : Electric Tunnel (-3A)
+TM26 Hidden Power      : Route 24 (pt. 1)
+TM27 Drain Punch       : Energy Plant (pt. 2)
+TM28 Flame Charge      : Route 40
+TM29 Liquidation       : Mindagan Lake
+TM30 U-Turn            : Peaceful Park
+TM31 False Swipe       : Poppy Grove
+TM32 Zing Zap          : Given to you by Photon in his lab after registering 3+ Pokemon in the E Pokedex
+TM33 Psychic Fangs     : Ghostly Woods
+TM34 Magic Tomb        : Shadow Ravine (-3A)
+TM35 Flamethrower      : Mt. St. Joseph (3A) (Need Rock Climb)
+TM36 Sludge Bomb       : Sicab City Tower (Need Surf)
+TM37 Rock Tomb         : Sicab Office (1A)
+TM38 Blizzard          : Rawwar City shop
+TM39 Psychic           : Rawwar City Prize Shop (2+ Badges)
+TM40 Facade            : Route 24 (pt. 2)
+TM41 Reflect           : Glurg Town shop
+TM42 Light Screen      : Glurg Town shop
+TM43 Spotlight Ray     : Given to you by Rayna after beating her
+TM44 Light Speed       : Route 31
+TM45 Will-O-Wisp       : Frenco City shop
+TM46 Fire Blast        : Rawwar City shop
+TM47 Star Storm        : Mt. Splinkty (Outside)
+TM48 Scald             : Route 30 (Need Surf)
+TM49 Rest              : Kleine Village shop
+TM50 Toxic             : Frenco City shop
+TM51 Sleep Talk        : Kleine Village shop
+TM52 Aerial Ace        : Given to you by Robin after beating him
+TM53 Volt Switch       : Peaceful Park (Need Whirlpool)
+TM54 Thunder Wave      : Frenco City shop
+TM55 Disenchant        : Mt. Splinkty (1A)
+TM56 Trick Tackle      : Mt. Splinkty (1A) (Need Surf)
+TM57 Defog             : Control Center (Need Rock Smash)
+TM58 Dragon Pulse      : Shadow Ravine (-2A) (Need Rock Climb)
+TM59 Body Press        : Route 32
+TM60 Freeze-Dry        : Given to you by Glacius after beating him
+TM61 Scorching Sands   : Route 26
+TM62 Bug Buzz          : Route 36 (Need Rock Smash)
+TM63 Thunder           : Rawwar City Shop
+TM64 Close Combat      : Mt. St. Joseph (3A)
+TM65 Shadow Claw       : Route 42 (Need Surf)
+TM66 Draco Meteor      : Iron Town somewhere
+TM67 Breaking Swipe    : Rawwar City Prize Shop (1+ Badges)
+TM68 Light Drain       : Energy Plant (pt. 1)
+TM69 Rock Polish       : Mt. Splinkty (1A)
+TM70 Hydro Pump        : Rawwar City Prize Shop (5+ Badges)
+TM71 Stone Edge        : Route 34 (1A) (Need Rock Climb)
+TM72 Ice Spinner       : Icy Path
+TM73 Gyro Ball         : Route 45
+TM74 Sunny Day         : Frenco City shop
+TM75 Rain Dance        : Frenco City shop
+TM76 Snowscape         : Frenco City shop
+TM77 Sandstorm         : Frenco City shop
+TM78 Swords Dance      : Mt. St. Joseph (3B) (Need Rock Climb)
+TM79 Grassy Terrain    : Frenco City shop
+TM80 Electric Terrain  : Frenco City shop
+TM81 Psychic Terrain   : Frenco City shop
+TM82 Sparkling Terrain : Frenco City shop
+TM83 Captivate         : Route 27
+TM84 Dark Pulse        : Schrice City School
+TM85 Power Gem         : Frenco City
+TM86 X-Scissor         : Route 29
+TM87 Poison Jab        : Shadow Ravine (0A)
+TM88 Galaxy Blast      : Outer Space
+TM89 Acrobatics        : Cell Park
+TM90 Iron Blast        : Mt. Splinkty (3A)
+TM91 Tri-Attack        : Glurg Town shop
+TM92 Meteor Assault    : Given to you by Nova after beating her
+TM93 Earth Power       : Mt. St. Joseph (1A)
+TM94 Hurricane         : Rawwar City Prize Shop (6+ Badges)
+TM95 Trick Room        : Frenco City shop
+TM96 Energy Ball       : Rawwar City Prize Shop (3+ Badges)
+TM97 Radiant Break     : Glurg Town shop
+TM98 Flip Turn         : Route 42 (Need Surf)
+TM99 Return            : Route 36 (Need Cut)

@@ -1,0 +1,163 @@
+--------------------------------------
+Abilities Info:
+--------------------------------------
+Adaptability       | Powers up moves of the same type.
+Ambush             | Gives priority to the first move when this Pokemon enters battle.
+Analytic           | Boosts move power when the Pokemon moves last.
+Anger Point        | Maxes Attack after taking a critical hit.
+Anticipation       | Senses the foe's supereffective moves, reducing damage from the first one if it exists.
+Insomnia           | Prevents the Pokemon from falling asleep.
+Battle Armor       | This Pokemon cannot be Critical hit.
+Beast Boost        | Boosts the Pokemon's highest stat every time it faints a foe.
+Black Hole         | Restores HP if hit by a LIGHT or GALACTIC move.
+Blaze              | Powers up FIRE moves in a pinch.
+Brainwash          | Forces the opponent's stat changes to have an opposite effect while the user is active.
+Chlorophyll        | Boosts the Pokemon's Speed stat in SUNSHINE.
+Clear Body         | Prevents other Pokemon from lowering its stats.
+Cloud Nine         | Nullifies the weather on switch-in.
+Cold Heart         | The Pokemon drains the warmth and soul from the area, negating any PSYCHIC attacks.
+Competitive        | Boosts the Pokemon's Sp. Atk stat when its stats are lowered.
+Compound Eyes      | The Pokemon's accuracy is boosted.
+Contrary           | Makes stat changes have an opposite effect.
+Corrosion          | The Pokemon can hit STEEL Pokemon with POISON moves, and can always Poison the target regardless of typing.
+Cosmic Warp        | Twists the dimensions for 4 turns when the Pokemon enters the battle, reversing the speed order.
+Cursed Body        | May disable a move used on the Pokemon.
+Defiant            | Boosts the Pokemon's Attack stat when its stats are lowered.
+Djinn's Favor      | Raises Sp. Atk if hit by a MAGIC move.
+Drizzle            | The Pokemon makes it RAIN when it enters a battle.
+Dry Skin           | Restores HP in RAIN or when hit by WATER moves, but reduces HP in SUN and is weaker to FIRE.
+Drought            | Turns the sunlight HARSH when it enters a battle.
+Electric Surge     | Turns the ground into ELECTRIC TERRAIN when the Pokemon enters a battle.
+Empathic Link      | The Pokemon gets a boost in Sp. Atk after the foe raises any stat.
+Everglow           | Sets up Aurora Glow effect when the Pokemon enters battle, healing all ally LIGHT, ICE and GALACTIC types.
+Illumination       | Grants the user all the resistances from the LIGHT type.
+Filter             | Reduces damage from supereffective attacks.
+Flame Body         | Contact with the Pokemon may burn the attacker.
+Flash Fire         | It powers up FIRE moves if it's hit by one.
+Fluffy             | Halves the damage from moves that make direct contact, but doubles that of FIRE moves.
+Friendly Ghost     | Gives full immunity to all GHOST moves.
+Full Force         | Boosts the Attack stat by 2 stages if the Pokemon's held item is used or lost.
+Galactic Aura      | Halves the damage of ICE and PSYCHIC moves.
+Galvanize          | NORMAL moves become ELECTRIC moves. The power of those moves is boosted a little.
+Glacier Aura       | Weakens the power of Physical moves.
+Gooey              | Contact with the Pokemon lowers the attacker's Speed stat.
+Grassy Surge       | Turns the ground into GRASSY TERRAIN when the Pokemon enters a battle.
+Gravitation        | Creates GRAVITY when the Pokemon enters a battle.
+Guts               | Boosts the Attack stat if the Pokemon has a status condition.
+Heat Compaction    | Raises Defense and Sp. Def if hit by an FIRE move.
+Huge Power         | Doubles the Pokemon's Attack stat.
+Hydration          | Cures the Pokemon's status conditions in RAIN.
+Hyper Cutter       | Prevents other Pokemon from lowering Attack stat.
+Ice Body           | The Pokemon gradually regains HP in SNOW.
+Icy Scales         | The Pokemon is protected by ice scales, which halve the damage from special moves.
+Illusion           | The Pokemon enters with an illusion that boosts damage and prevents non GHOST foes from escaping.
+Inner Focus        | The Pokemon is protected from flinching; ignores switch-in stat-lowering Abilities.
+Insect Feeder      | Restores HP if hit by a BUG move.
+Intimidate         | Lowers the opposing Pokemon's Attack stat.
+Iron Barbs         | Inflicts damage to the Pokemon on contact.
+Iron Fist          | Boosts the power of punching moves.
+Justified          | Halves damage from DARK moves and sharply boosts Attack when hit by one.
+Keen Eye           | Prevents the Pokemon from losing accuracy.
+Levitate           | Gives full immunity to all GROUND moves.
+Lightning Rod      | Raises Sp. Atk if hit by an ELECTRIC move.
+Magic Bounce       | Reflects status moves instead of getting hit by them.
+Magic Guard        | The Pokemon only takes damage from attacks.
+Magical            | Powers up MAGIC moves.
+Magma Armor        | Prevents the Pokemon from getting a frostbite.
+Merciless          | The Pokemon's attacks become critical hits if the target is poisoned.
+Mirror Armor       | Bounces back only the stat-lowering effects that the Pokemon receives.
+Mold Breaker       | Moves can be used on the target regardless of its Abilities.
+Moody              | Raises one stat sharply and lowers another every turn.
+Mosaic Wings       | Distorts type matchups to make non-super effective attacks resisted.
+Motor Drive        | Raises Speed if hit by an ELECTRIC move.
+Mouthwater         | Taunts the foe on switch-in for 4 turns.
+Moxie              | Boosts the Attack stat after knocking out any Pokemon.
+Multiscale         | Reduces damage the Pokemon takes when its HP is full.
+Mystic Absorb      | Restores HP if hit by a MAGIC move.
+Mystic Rift        | Creates a bizzare room for 5 turns when the Pokemon enters the battle, removing the effects of items.
+Natural Cure       | All status conditions heal when the Pokemon switches out.
+No Guard           | Ensures the Pokemon and its foe's attacks land.
+Normalize          | All the Pokemon's moves become Normal type. The power of those moves is boosted.
+Overgrow           | Powers up GRASS moves in a pinch.
+Parasocial         | The Pokemon borrows life force from anyone under its control.
+Perish Body        | When hit by a contact move, the Pokemon and the attacker will faint after three turns.
+Pickpocket         | Steals an item from the foe on switch-in if this Pokemon is not holding an item.
+Pixilate           | NORMAL moves become LIGHT moves. The power of those moves is boosted a little.
+Poison Heal        | Restores HP if the Pokemon is poisoned instead of losing HP.
+Poison Point       | Contact with the Pokemon may poison the attacker.
+Poison Touch       | May poison a target when the Pokemon makes contact.
+Prankster          | Gives priority to a status move.
+Pressure           | The Pokemon raises opposing Pokemon's PP usage.
+Protean            | Makes the Pokemon's type to the move type it's about to use.
+Psychic Aura       | Weakens the power of Special moves.
+Psychic Surge      | Turns the ground into PSYCHIC TERRAIN when the Pokemon enters a battle.
+Radiant            | Lowers foe's Accuracy when this Pokemon hits with a LIGHT move.
+Rain Dish          | The Pokemon gradually regains HP in RAIN.
+Rattled            | DARK, GHOST, and BUG moves scare the Pokemon and boost its Speed stat.
+Reckless           | Powers up moves that have recoil damage.
+Reforge            | Restores 1/16 HP at the end of each turn.
+Regenerator        | Restores a little HP when withdrawn from battle.
+Refrigerate        | NORMAL moves become ICE moves. The power of those moves is boosted a little.
+Rock Head          | Prevents recoil damage.
+Rough Skin         | Inflicts damage to the Pokemon on contact.
+Sand Force         | Boosts the power of moves in a SANDSTORM.
+Sand Rush          | Boosts the Pokemon's Speed stat in a SANDSTORM.
+Sand Stream        | The Pokemon summons a SANDSTORM when it enters a battle.
+Sand Veil          | When SANDSTORM is active, this Pokemon is evasive.
+Sap Sipper         | Raises Attack if hit by an GRASS move.
+Serene Grace       | Boosts the likelihood of additional effects occurring when attacking.
+Scaly Skin         | Lowers the foe's Attack, and this Pokemon only takes damage from attacks.
+Scrappy            | The Pokemon can hit GHOST Pokemon with NORMAL and FIGHTING moves; ignores switch-in stat-lowering Abilities.
+Shadow Tag         | This Pokemon steps on the opposing Pokemon's shadow to prevent it from escaping.
+Sharp Tail         | Boosts the power of Tail-using moves.
+Sharpness          | Boosts the power of Slicing moves.
+Shed Skin          | The Pokemon may heal its own status conditions.
+Sheer Force        | Removes additional effects to increase the power of moves when attacking.
+Shell Armor        | This Pokemon cannot be Critical hit.
+Shield Dust        | Blocks the added effects of attacks taken and is immune to entry hazards.
+Simple             | The stat changes the Pokemon receives are doubled.
+Skill Link         | Makes multi-hit moves always hit the maximum amount.
+Sleight Of Hand    | Gives priority to MAGIC moves when at full HP.
+Slush Rush         | Boosts the Pokemon's Speed stat in SNOW.
+Sniper             | Powers up moves if they become critical hits.
+Snow Cloak         | When SNOW is active, this Pokemon is evasive.
+Snow Warning       | The Pokemon makes it SNOW when it enters a battle.
+Solar Power        | Boosts the Sp. Atk stat in SUNNY weather, but HP decreases.
+Solid Rock         | Reduces damage from supereffective attacks.
+Sparkly Surge      | Turns the ground into SPARKLY TERRAIN when the Pokemon enters a battle.
+Speed Boost        | Its Speed stat is gradually boosted.
+Starborn           | Raises Sp. Atk stat by 1 if Aurora Glow is active.
+Static             | Contact with the Pokemon may paralyze the attacker.
+Steelworker        | Powers up STEEL moves.
+Sticky Hold        | Protects the Pokemon from item theft.
+Strong Jaw         | The Pokemon's strong jaw boosts the power of its biting moves.
+Sturdy             | It cannot be knocked out with one hit. One-hit KO moves cannot knock it out, either.
+Super Luck         | Heightens the critical-hit ratios of moves.
+Swarm              | Powers up BUG moves in a pinch.
+Swift Swim         | Boosts the Pokemon's Speed stat in RAIN.
+Synchronize        | Passes a burn, poison, or paralysis to the foe.
+Talented           | When the Pokemon enters a battle, it copies the foe's stat changes.
+Technician         | Powers up the Pokemon's weaker moves.
+Terrify            | Lowers the opposing Pokemon's Sp. Atk stat.
+Thick Fat          | Boosts resistance to FIRE and ICE moves.
+Threatening        | Lowers the opposing Pokemon's Defense stat.
+Tinted Lens        | Powers up "not very effective" moves.
+Torrent            | Powers up WATER moves in a pinch.
+Tough Claws        | Powers up moves that make direct contact.
+Toxic Debris       | Puts toxic spikes on the opposing side when hit by physical moves.
+Trace              | The Pokemon copies a foe's Ability.
+Type Master        | Grants STAB on all moves.
+Unaware            | Ignores the opposing Pokemon's stat changes.
+Unburden           | Doubles the Speed stat if the Pokemon's held item is used or lost.
+Unerodible         | Reduces damage from GRASS, WATER, and GROUND attacks.
+Unwavering         | Boosts resistance to DARK and GHOST moves; ignores switch-in stat-lowering Abilities.
+Volt Absorb        | Restores HP if hit by a ELECTRIC move.
+Volt Vortex        | Boosts the Pokemon's speed in ELECTRIC TERRAIN.
+Warm Heart         | The spiritual energy from this Pokemon melts away any ICE attacks.
+Water Absorb       | Restores HP if hit by a WATER move.
+Water Veil         | Prevents the Pokemon from getting a burn.
+Weak Armor         | Physical attacks to the Pokemon lower its Defense stat but sharply raise its Speed stat.
+White Hole         | Distorts the energy of any DRAGON attack through and across Ultra Space.
+Wonder Guard       | Only supereffective moves will hit.
+Wonder Skin        | Makes status moves more likely to miss.
+Null               | No Ability.

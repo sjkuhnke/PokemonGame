@@ -91,6 +91,7 @@ Leftovers              | Held Items | --    | --    | An item that restores the 
 Black Sludge           | Held Items | --    | --    | If the holder is a Poison type, this sludge will gradually restore its HP. It damages any other type.
 Eviolite               | Held Items | --    | --    | A mysterious evolutionary lump that boosts the Defense and Sp. Def stats when held by a Pokemon that can still evolve.
 Everstone              | Held Items | $100  | --    | A Pokemon holding this peculiar stone is prevented from evolving; can't be stolen or removed.
+Destiny Knot           | Held Items | --    | --    | An item that controls the destiny of the species of 2 Pokemon breeding.
 Exp Share              | Held Items | --    | --    | The holder gets a share of a battle's Exp. Points without battling.
 Lucky Egg              | Held Items | --    | --    | An egg filled with happiness that earns the holder extra Exp. Points.
 Damp Rock              | Held Items | $750  | --    | A rock that when the holder changes the weather to rain, the rain will persist for longer than usual.
@@ -157,32 +158,32 @@ Grip Claw              | Held Items | --    | --    | When the holder uses moves
 Ring Target            | Held Items | --    | --    | When held, moves that would normally have no effect due to abilities or type matchups will still hit the holder.
 Sticky Barb            | Held Items | --    | --    | A clingy barb damages the holder every turn and will latch on to Pokemon that make direct contact with the holder.
 Utility Umbrella       | Held Items | --    | --    | This sturdy umbrella protects the holder from the effects of all weather.
-Focus Sash             | Held Items | --    | $500  | If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP, but only once.
+Focus Sash             | Held Items | --    | $400  | If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP, but only once.
 Air Balloon            | Held Items | --    | $300  | This balloon makes the holder float in the air. If the holder is hit with an attack, the balloon will burst.
-Eject Button           | Held Items | --    | --    | If the holder is damaged by an attack, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team.
-Eject Pack             | Held Items | --    | --    | If the holder's stats are lowered, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team.
+Eject Button           | Held Items | --    | $500  | If the holder is damaged by an attack, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team.
+Eject Pack             | Held Items | --    | $500  | If the holder's stats are lowered, it will be switched out of battle to be replaced by another Pokemon of your choosing on your team.
 Power Herb             | Held Items | --    | $50   | A herb that allows the holder to immediately use a move that normally requires a turn to charge or recharge, but only once.
 White Herb             | Held Items | --    | $50   | A herb that will restore any lowered stat in battle, but only once.
 Mental Herb            | Held Items | --    | $50   | An item to be held by a Pokemon. The holder shakes off move-binding effects, flinching, and possession to move freely. It can be used only once.
-Mirror Herb            | Held Items | --    | --    | This herb will allow the holder to mirror an opponent's stat increases to boost its own stats - but only once.
-Electric Seed          | Held Items | $2    | --    | If the terrain becomes Electric Terrain, the holder will use this seed to boost its own Defense stat.
-Grassy Seed            | Held Items | $2    | --    | If the terrain becomes Grassy Terrain, the holder will use this seed to boost its own Defense stat.
-Psychic Seed           | Held Items | $2    | --    | If the terrain becomes Psychic Terrain, the holder will use this seed to boost its own Sp. Def stat.
-Sparkly Seed           | Held Items | $2    | --    | If the terrain becomes Sparkly Terrain, the holder will use this seed to boost its own Sp. Def stat.
+Mirror Herb            | Held Items | --    | $50   | This herb will allow the holder to mirror an opponent's stat increases to boost its own stats - but only once.
+Electric Seed          | Held Items | $2    | $250  | If the terrain becomes Electric Terrain, the holder will use this seed to boost its own Defense stat.
+Grassy Seed            | Held Items | $2    | $250  | If the terrain becomes Grassy Terrain, the holder will use this seed to boost its own Defense stat.
+Psychic Seed           | Held Items | $2    | $250  | If the terrain becomes Psychic Terrain, the holder will use this seed to boost its own Sp. Def stat.
+Sparkly Seed           | Held Items | $2    | $250  | If the terrain becomes Sparkly Terrain, the holder will use this seed to boost its own Sp. Def stat.
 Weakness Policy        | Held Items | --    | $400  | If the holder is hit with a move it's weak to, this policy sharply boosts its Attack and Sp. Atk stats.
 Blunder Policy         | Held Items | --    | $400  | If the holder misses with a move due to low accuracy, this policy will sharply boost its Speed stat.
-Room Service           | Held Items | --    | --    | If Trick Room takes effect, this item will lower the holder's Speed stat.
+Room Service           | Held Items | --    | $100  | If Trick Room takes effect, this item will lower the holder's Speed stat.
 Red Card               | Held Items | --    | $250  | If the holder is damaged by an attack, the mysterious power of this card can remove the attacker from the battle.
 Throat Spray           | Held Items | --    | $150  | If the holder uses a sound-based move, this throat spray will boost its Sp. Atk stat.
-Adrenaline Orb         | Held Items | $1    | --    | This orb will boost the Speed of the Pokemon by 1 stage when it is intimidated.
-Absorb Bulb            | Held Items | $3    | --    | This single-use bulb will absorb any Water-type attack and boost the Sp. Atk stat of the holder. Any other attack will damage the item.
-Cell Battery           | Held Items | $3    | --    | This single-use battery will absorb any Electric-type attack and boost the Attack stat of the holder. Any other attack will damage the item.
-Luminous Moss          | Held Items | $3    | --    | This single-use moss will absorb any Water-type attack and boost the Sp. Def stat of the holder. Any other attack will damage the item.
-Snowball               | Held Items | $3    | --    | This single-use ball of snow will absorb any Ice-type attack and boost the Attack stat of the holder. Any other attack will damage the item.
-Damaged Bulb           | Held Items | $1    | --    | This single-use bulb boosts the Sp. Atk stat if the holder is damaged by a Water-type attack.
-Damaged Battery        | Held Items | $1    | --    | This single-use battery boosts the Attack stat if the holder is damaged by an Electric-type attack.
-Damaged Moss           | Held Items | $1    | --    | This single-use moss boosts the Sp. Def stat if the holder is damaged by a Water-type move.
-Damaged Snowball       | Held Items | $1    | --    | This single-use ball of snow boosts the Attack stat if the holder is damaged by an Ice-type move.
+Adrenaline Orb         | Held Items | $1    | $75   | This orb will boost the Speed of the Pokemon by 1 stage when it is intimidated, threatened or terrified.
+Absorb Bulb            | Held Items | $3    | $320  | This single-use bulb will absorb any Water-type attack and boost the Sp. Atk stat of the holder. Any other attack will damage the item.
+Cell Battery           | Held Items | $3    | $275  | This single-use battery will absorb any Electric-type attack and boost the Attack stat of the holder. Any other attack will damage the item.
+Luminous Moss          | Held Items | $3    | $335  | This single-use moss will absorb any Water-type attack and boost the Sp. Def stat of the holder. Any other attack will damage the item.
+Snowball               | Held Items | $3    | $300  | This single-use ball of snow will absorb any Ice-type attack and boost the Attack stat of the holder. Any other attack will damage the item.
+Damaged Bulb           | Held Items | $1    | $25   | This single-use bulb boosts the Sp. Atk stat if the holder is damaged by a Water-type attack.
+Damaged Battery        | Held Items | $1    | $30   | This single-use battery boosts the Attack stat if the holder is damaged by an Electric-type attack.
+Damaged Moss           | Held Items | $1    | $25   | This single-use moss boosts the Sp. Def stat if the holder is damaged by a Water-type move.
+Damaged Snowball       | Held Items | $1    | $30   | This single-use ball of snow boosts the Attack stat if the holder is damaged by an Ice-type move.
 HM01 Cut               | TMs        | --    | --    | Teaches a Pokemon this move.
 HM02 Rock Smash        | TMs        | --    | --    | Teaches a Pokemon this move.
 HM03 Vine Cross        | TMs        | --    | --    | Teaches a Pokemon this move.
@@ -228,7 +229,7 @@ TM34 Magic Tomb        | TMs        | --    | --    | Teaches a Pokemon this mov
 TM35 Flamethrower      | TMs        | --    | --    | Teaches a Pokemon this move.
 TM36 Sludge Bomb       | TMs        | --    | --    | Teaches a Pokemon this move.
 TM37 Rock Tomb         | TMs        | --    | --    | Teaches a Pokemon this move.
-TM38 Blizzard          | TMs        | $1500 | --    | Teaches a Pokemon this move.
+TM38 Blizzard          | TMs        | $4000 | --    | Teaches a Pokemon this move.
 TM39 Psychic           | TMs        | --    | --    | Teaches a Pokemon this move.
 TM40 Facade            | TMs        | --    | --    | Teaches a Pokemon this move.
 TM41 Reflect           | TMs        | $1000 | --    | Teaches a Pokemon this move.
@@ -236,7 +237,7 @@ TM42 Light Screen      | TMs        | $1000 | --    | Teaches a Pokemon this mov
 TM43 Spotlight Ray     | TMs        | --    | --    | Teaches a Pokemon this move.
 TM44 Light Speed       | TMs        | $1000 | --    | Teaches a Pokemon this move.
 TM45 Will-O-Wisp       | TMs        | $1000 | --    | Teaches a Pokemon this move.
-TM46 Fire Blast        | TMs        | $1500 | --    | Teaches a Pokemon this move.
+TM46 Fire Blast        | TMs        | $4000 | --    | Teaches a Pokemon this move.
 TM47 Star Storm        | TMs        | --    | --    | Teaches a Pokemon this move.
 TM48 Scald             | TMs        | --    | --    | Teaches a Pokemon this move.
 TM49 Rest              | TMs        | $1500 | --    | Teaches a Pokemon this move.
@@ -253,7 +254,7 @@ TM59 Body Press        | TMs        | --    | --    | Teaches a Pokemon this mov
 TM60 Freeze-Dry        | TMs        | --    | --    | Teaches a Pokemon this move.
 TM61 Scorching Sands   | TMs        | --    | --    | Teaches a Pokemon this move.
 TM62 Bug Buzz          | TMs        | --    | --    | Teaches a Pokemon this move.
-TM63 Thunder           | TMs        | $1500 | --    | Teaches a Pokemon this move.
+TM63 Thunder           | TMs        | $4000 | --    | Teaches a Pokemon this move.
 TM64 Close Combat      | TMs        | $1500 | --    | Teaches a Pokemon this move.
 TM65 Shadow Claw       | TMs        | --    | --    | Teaches a Pokemon this move.
 TM66 Draco Meteor      | TMs        | $2000 | --    | Teaches a Pokemon this move.
@@ -384,6 +385,119 @@ Big Nugget             | Other      | --    | $2000 | A big nugget of pure gold 
 Star Piece             | Other      | --    | --    | A small shard of a beautiful gem that gives off a distinctly red sparkle. It can be sold at a high price.
 Relic Gold             | Other      | --    | $2500 | A gold coin used by an ancient civilization about 3,000 years ago.
 Relic Silver           | Other      | --    | $650  | A silver coin used by an ancient civilization about 3,000 years ago.
+Faith Core             | Key Items  | --    | --    | A fragment of ancient energy, pulsing with quiet warmth. Said to embody the undying spirit of belief.
+Logic Core             | Key Items  | --    | --    | A shard of crystallized thought, sharp and cold to the touch. It hums with the relentless force of reason.
+
+--------------------------------------
+TM Locations:
+--------------------------------------
+HM01 Cut               : Given to you by the Poppy Grove Warehouse owner after beating Team Eclipse Admin Rick 1
+HM02 Rock Smash        : Given to you by Scott in Sicab Office (2A) after beating static Flamehox-E
+HM03 Vine Cross        : Given to you by Millie in Kleine Village outside her gym after beating Cage Critter
+HM04 Surf              : Given to you by the Principal of Schrice City School after beating Icy Serpant
+HM05 Slow Fall         : Given to you by Grandpa in Frenco City after saving him in his house from Team Eclipse Grunts
+HM06 Whirlpool         : Shadow Ravine (-3A)
+HM07 Rock Climb        : Given to you by Merlin in Rawwar City outside his gym after beating Fever Dream
+HM08 Lava Surf         : Given to you by Dad in New Minnow Town lab after coming back to Earth and returning his letter
+TM01 Super Fang        : Given to you by Stanford after beating him
+TM02 Radio Burst       : Cell Park
+TM03 Arcane Spell      : Given to you by Merlin after beating him
+TM04 Calm Mind         : Mindagan Lake
+TM05 Body Slam         : Peaceful Park
+TM06 Shadow Ball       : Shadow Ravine (1A)
+TM07 Focus Blast       : Mindagan Cavern (0A)
+TM08 Bulk Up           : Route 34 (1A)
+TM09 Leaf Blade        : Route 25 (Need Cut)
+TM10 Ice Beam          :
+TM11 Psyshock          : Given to you by Mindy after beating her
+TM12 Protect           : Schrice City shop
+TM13 Baton Pass        : Schrice City shop
+TM14 Taunt             : Energy Plant (pt. 2)
+TM15 Giga Impact       : Schrice City shop
+TM16 Hyper Beam        : Schrice City shop
+TM17 Solar Beam        : Route 24 (pt. 1) (Need Cut)
+TM18 Iron Head         : Route 39
+TM19 Photon Geyser     : Route 35
+TM20 Earthquake        : Shadow Path (Need Rock Climb)
+TM21 Throat Chop       : Rawwar City Prize Shop (4+ Badges)
+TM22 Fell Stinger      : Given to you by Millie after beating her
+TM23 Weather Ball      : Schrice City shop
+TM24 Terrain Pulse     : Schrice City shop
+TM25 Thunderbolt       : Electric Tunnel (-3A)
+TM26 Hidden Power      : Route 24 (pt. 1)
+TM27 Drain Punch       : Energy Plant (pt. 2)
+TM28 Flame Charge      : Route 40
+TM29 Liquidation       : Mindagan Lake
+TM30 U-Turn            : Peaceful Park
+TM31 False Swipe       : Poppy Grove
+TM32 Zing Zap          : Given to you by Photon in his lab after registering 3+ Pokemon in the E Pokedex
+TM33 Psychic Fangs     : Ghostly Woods
+TM34 Magic Tomb        : Shadow Ravine (-3A)
+TM35 Flamethrower      : Mt. St. Joseph (3A) (Need Rock Climb)
+TM36 Sludge Bomb       : Sicab City Tower (Need Surf)
+TM37 Rock Tomb         : Sicab Office (1A)
+TM38 Blizzard          : Rawwar City shop
+TM39 Psychic           : Rawwar City Prize Shop (2+ Badges)
+TM40 Facade            : Route 24 (pt. 2)
+TM41 Reflect           : Glurg Town shop
+TM42 Light Screen      : Glurg Town shop
+TM43 Spotlight Ray     : Given to you by Rayna after beating her
+TM44 Light Speed       : Route 31
+TM45 Will-O-Wisp       : Frenco City shop
+TM46 Fire Blast        : Rawwar City shop
+TM47 Star Storm        : Mt. Splinkty (Outside)
+TM48 Scald             : Route 30 (Need Surf)
+TM49 Rest              : Kleine Village shop
+TM50 Toxic             : Frenco City shop
+TM51 Sleep Talk        : Kleine Village shop
+TM52 Aerial Ace        : Given to you by Robin after beating him
+TM53 Volt Switch       : Peaceful Park (Need Whirlpool)
+TM54 Thunder Wave      : Frenco City shop
+TM55 Disenchant        : Mt. Splinkty (1A)
+TM56 Trick Tackle      : Mt. Splinkty (1A) (Need Surf)
+TM57 Defog             : Control Center (Need Rock Smash)
+TM58 Dragon Pulse      : Shadow Ravine (-2A) (Need Rock Climb)
+TM59 Body Press        : Route 32
+TM60 Freeze-Dry        : Given to you by Glacius after beating him
+TM61 Scorching Sands   : Route 26
+TM62 Bug Buzz          : Route 36 (Need Rock Smash)
+TM63 Thunder           : Rawwar City Shop
+TM64 Close Combat      : Mt. St. Joseph (3A)
+TM65 Shadow Claw       : Route 42 (Need Surf)
+TM66 Draco Meteor      : Iron Town somewhere
+TM67 Breaking Swipe    : Rawwar City Prize Shop (1+ Badges)
+TM68 Light Drain       : Energy Plant (pt. 1)
+TM69 Rock Polish       : Mt. Splinkty (1A)
+TM70 Hydro Pump        : Rawwar City Prize Shop (5+ Badges)
+TM71 Stone Edge        : Route 34 (1A) (Need Rock Climb)
+TM72 Ice Spinner       : Icy Path
+TM73 Gyro Ball         : Route 45
+TM74 Sunny Day         : Frenco City shop
+TM75 Rain Dance        : Frenco City shop
+TM76 Snowscape         : Frenco City shop
+TM77 Sandstorm         : Frenco City shop
+TM78 Swords Dance      : Mt. St. Joseph (3B) (Need Rock Climb)
+TM79 Grassy Terrain    : Frenco City shop
+TM80 Electric Terrain  : Frenco City shop
+TM81 Psychic Terrain   : Frenco City shop
+TM82 Sparkling Terrain : Frenco City shop
+TM83 Captivate         : Route 27
+TM84 Dark Pulse        : Schrice City School
+TM85 Power Gem         : Frenco City
+TM86 X-Scissor         : Route 29
+TM87 Poison Jab        : Shadow Ravine (0A)
+TM88 Galaxy Blast      : Outer Space
+TM89 Acrobatics        : Cell Park
+TM90 Iron Blast        : Mt. Splinkty (3A)
+TM91 Tri-Attack        : Glurg Town shop
+TM92 Meteor Assault    : Given to you by Nova after beating her
+TM93 Earth Power       : Mt. St. Joseph (1A)
+TM94 Hurricane         : Rawwar City Prize Shop (6+ Badges)
+TM95 Trick Room        : Frenco City shop
+TM96 Energy Ball       : Rawwar City Prize Shop (3+ Badges)
+TM97 Radiant Break     : Glurg Town shop
+TM98 Flip Turn         : Route 42 (Need Surf)
+TM99 Return            : Route 36 (Need Cut)
 
 --------------------------------------
 Overworld Items:
@@ -423,12 +537,12 @@ Route 42------------------------------------------
 
 Elixir (89, 24)
 TM65 Shadow Claw (89, 10)
-Lax Mint (79, 11)
+Gentle Mint (79, 11)
 PP Up (80, 18)
 TM98 Flip Turn (71, 32)
 Chesto Berry (59, 36)
-Durin Berry (51, 27)
-Bluk Berry (52, 11)
+Spelon Berry (51, 27)
+Pamtre Berry (52, 11)
 Oran Berry (64, 9)
 Potion (57, 19)
 Potion (72, 14)
@@ -440,17 +554,14 @@ Rusty Bottle Cap (71, 9)
 Power Herb (80, 16)
 Mental Herb (91, 11)
 Treasure Chest (44, 26)
-  [PP Max]               |
+  [Big Nugget]           |
+  [Tiny Mushroom]        |
+  [Lax Mint]             |
+  [PP Up]                |
+  [Electric Crystal]     |
+  [Bottle Cap]           |
   [Star Piece]           |
-  [Big Mushroom]         |
-  [Relic Gold]           |
-  [Ice Stone]            |
-  [Adamant Mint]         |
-  [Thunder Scales Fossil]|
-  [Star Piece]           |
-  [Rare Candy]           |
-  [Ground Crystal]       |
-  [Max Revive]           |
+  [Dusk Stone]           |
 Tiny Mushroom (82, 28)
 PP Max (81, 7)
 
@@ -463,7 +574,7 @@ Bananaville Meadow--------------------------------
 Fire Stone (34, 76)
 Repel (23, 70)
 Potion (33, 64)
-Belue Berry (41, 42)
+Wepear Berry (41, 42)
 
 Poppy Grove---------------------------------------
 
@@ -484,21 +595,20 @@ Repel (9, 72)
 Great Ball (9, 75)
 Oran Berry (43, 80)
 Bright Powder (43, 67)
-Kasib Berry (35, 58)
-Wacan Berry (13, 78)
-Hasty Mint (29, 47)
+Galaxeed Berry (35, 58)
+Chilan Berry (13, 78)
+Brave Mint (29, 47)
 Treasure Chest (50, 49)
-  [Ability Patch]        |
-  [Timid Mint]           |
-  [Star Piece]           |
-  [Rock Crystal]         |
-  [Big Nugget]           |
-  [Tiny Mushroom]        |
+  [Bottle Cap]           |
+  [Brave Mint]           |
   [PP Up]                |
-  [Valiant Gem]          |
-  [Relic Silver]         |
-  [Nugget]               |
-  [Relic Silver]         |
+  [Relic Gold]           |
+  [Tiny Mushroom]        |
+  [Ghost Crystal]        |
+  [Thunder Scales Fossil]|
+  [Star Piece]           |
+  [Relic Gold]           |
+  [Star Piece]           |
 Iron Ball (26, 57)
 Float Stone (26, 51)
 Sticky Barb (19, 67)
@@ -512,7 +622,7 @@ Shed Shell (77, 32)
 Focus Sash (74, 25)
 Lum Berry (44, 8)
 Dawn Stone (76, 27)
-Hasty Mint (53, 35)
+Quiet Mint (53, 35)
 Big Mushroom (26, 34)
 Big Nugget (30, 7)
 TM62 Bug Buzz (58, 24)
@@ -545,17 +655,14 @@ Grip Claw (50, 66)
 TM40 Facade (80, 53)
 Silver Powder (46, 41)
 Treasure Chest (51, 25)
-  [Bottle Cap]           |
-  [Euphorian Gem]        |
-  [Rusty Bottle Cap]     |
-  [PP Max]               |
-  [Big Nugget]           |
-  [Steel Crystal]        |
-  [PP Up]                |
-  [Lonely Mint]          |
-  [Euphorian Gem]        |
-  [Ability Capsule]      |
+  [Ice Stone]            |
+  [Brave Mint]           |
   [Nugget]               |
+  [Fire Crystal]         |
+  [Star Piece]           |
+  [Bottle Cap]           |
+  [Big Nugget]           |
+  [Max Revive]           |
 Rash Mint (58, 38)
 PP Max (77, 27)
 Rare Candy (79, 39)
@@ -571,7 +678,7 @@ Grassy Seed (30, 75)
 Leaf Stone (25, 78)
 Full Heal (16, 69)
 Repel (26, 57)
-Occa Berry (13, 66)
+Colbur Berry (13, 66)
 Absorb Bulb (21, 75)
 Grassy Seed (21, 80)
 Absorb Bulb (24, 86)
@@ -587,8 +694,8 @@ Repel (15, 34)
 Revive (32, 22)
 Euphorian Gem (35, 26)
 Binding Band (35, 32)
-Yache Berry (42, 37)
-Coba Berry (38, 30)
+Mysticola Berry (42, 37)
+Occa Berry (38, 30)
 Oran Berry (14, 49)
 
 Route 26------------------------------------------
@@ -596,13 +703,13 @@ Route 26------------------------------------------
 Full Heal (35, 35)
 TM61 Scorching Sands (20, 48)
 Freeze Heal (20, 45)
-Impish Mint (35, 30)
+Rash Mint (35, 30)
 Wide Lens (26, 8)
 Ganlon Berry (43, 30)
 Apicot Berry (16, 47)
 Mental Herb (39, 34)
 Dusk Stone (31, 8)
-Calm Mint (36, 37)
+Serious Mint (36, 37)
 
 Sicab City----------------------------------------
 
@@ -622,19 +729,17 @@ Repel (71, 28)
 Super Potion (58, 28)
 Ultra Ball (51, 8)
 Room Service (80, 8)
-Watmel Berry (70, 35)
+Belue Berry (70, 35)
 Treasure Chest (46, 44)
-  [Bold Mint]            |
-  [Relic Silver]         |
-  [Rare Candy]           |
-  [Tiny Mushroom]        |
   [Star Piece]           |
-  [Bottle Cap]           |
-  [Euphorian Gem]        |
+  [Revive]               |
+  [Star Piece]           |
+  [Adamant Mint]         |
   [Tiny Mushroom]        |
-  [Ice Crystal]          |
-  [Ability Capsule]      |
-  [Relic Gold]           |
+  [Fire Stone]           |
+  [Star Piece]           |
+  [Nugget]               |
+  [Magic Crystal]        |
 Grassy Seed (49, 30)
 Tiny Mushroom (48, 39)
 
@@ -642,17 +747,16 @@ Sicab River---------------------------------------
 
 Throat Spray (69, 79)
 Treasure Chest (74, 79)
-  [Thunder Scales Fossil]|
-  [Dusk Stone]           |
-  [Light Crystal]        |
+  [Ability Patch]        |
+  [Bottle Cap]           |
+  [Big Mushroom]         |
   [Star Piece]           |
-  [Revive]               |
-  [Tiny Mushroom]        |
-  [Star Piece]           |
-  [Calm Mint]            |
-  [Gold Bottle Cap]      |
+  [Relic Silver]         |
+  [Big Mushroom]         |
+  [Euphorian Gem]        |
+  [Bold Mint]            |
   [PP Up]                |
-  [PP Up]                |
+  [Psychic Crystal]      |
 Lax Mint (80, 80)
 Electric Seed (72, 59)
 Salac Berry (79, 63)
@@ -661,7 +765,7 @@ Energy Plant (pt. 1)------------------------------
 
 TM68 Light Drain (29, 48)
 Safety Goggles (43, 44)
-Brave Mint (41, 35)
+Quiet Mint (41, 35)
 PP Up (39, 48)
 Magnet (21, 43)
 Wise Glasses (43, 30)
@@ -688,6 +792,7 @@ PP Max (60, 43)
 Ice Stone (62, 43)
 Blunder Policy (62, 32)
 Full Restore (72, 32)
+Choice Specs (77, 41)
 Electric Seed (78, 42)
 
 Sicab Office (1A)---------------------------------
@@ -724,28 +829,26 @@ TM56 Trick Tackle (76, 43)
 Light Clay (81, 57)
 Heavy-Duty Boots (87, 57)
 Treasure Chest (58, 50)
-  [Nugget]               |
-  [Ice Stone]            |
-  [Bottle Cap]           |
+  [Tiny Mushroom]        |
   [Ability Patch]        |
-  [Fire Crystal]         |
-  [PP Up]                |
+  [Star Piece]           |
+  [Sassy Mint]           |
+  [Fire Stone]           |
   [Relic Gold]           |
-  [Lonely Mint]          |
-  [Bottle Cap]           |
+  [Big Nugget]           |
+  [Galactic Crystal]     |
 Star Piece (67, 44)
-Brave Mint (44, 60)
+Naive Mint (44, 60)
 Treasure Chest (74, 38)
   [Relic Gold]           |
+  [Rash Mint]            |
+  [Big Mushroom]         |
+  [Dragon Crystal]       |
   [Dusk Stone]           |
-  [Nugget]               |
+  [Bottle Cap]           |
   [Big Nugget]           |
-  [PP Up]                |
-  [Max Revive]           |
-  [Big Nugget]           |
-  [Flying Crystal]       |
-  [Star Piece]           |
-  [Relaxed Mint]         |
+  [Relic Silver]         |
+  [Rare Candy]           |
 Star Piece (56, 62)
 Star Piece (49, 57)
 Damaged Snowball (86, 59)
@@ -774,7 +877,7 @@ Bold Mint (60, 86)
 Mt. Splinkty (3B)---------------------------------
 
 Star Piece (62, 69)
-Relaxed Mint (54, 69)
+Brave Mint (54, 69)
 
 Mt. Splinkty (3A)---------------------------------
 
@@ -785,7 +888,7 @@ Bottle Cap (39, 68)
 
 Route 27------------------------------------------
 
-Payapa Berry (18, 46)
+Rindo Berry (18, 46)
 Antidote (15, 43)
 TM83 Captivate (25, 46)
 Hyper Potion (52, 43)
@@ -793,7 +896,7 @@ Gold Bottle Cap (43, 37)
 Dawn Stone (51, 37)
 PP Up (28, 29)
 Big Root (47, 48)
-Spelon Berry (42, 26)
+Watmel Berry (42, 26)
 Psychic Seed (24, 39)
 
 Cell Park-----------------------------------------
@@ -804,13 +907,13 @@ Great Ball (95, 27)
 Rusty Bottle Cap (75, 29)
 Hyper Potion (70, 23)
 Ability Capsule (66, 24)
-Wepear Berry (79, 19)
+Durin Berry (79, 19)
 Euphorian Gem (82, 19)
 TM02 Radio Burst (84, 22)
 
 Route 41------------------------------------------
 
-Naughty Mint (73, 65)
+Brave Mint (73, 65)
 Impish Mint (86, 85)
 Water Stone (67, 71)
 Repel (89, 75)
@@ -832,8 +935,8 @@ Nugget (38, 21)
 Spell Tag (68, 11)
 Wiki Berry (56, 11)
 Red Card (73, 21)
-Colbur Berry (71, 24)
-Babiri Berry (75, 22)
+Haban Berry (71, 24)
+Chople Berry (75, 22)
 
 Peaceful Park-------------------------------------
 
@@ -842,11 +945,11 @@ Repel (48, 82)
 Adrenaline Orb (39, 75)
 Leaf Stone (16, 76)
 Max Elixir (14, 39)
-Serious Mint (35, 43)
+Careful Mint (35, 43)
 TM05 Body Slam (42, 39)
 Life Orb (51, 52)
-Chople Berry (57, 56)
-Galaxeed Berry (57, 78)
+Babiri Berry (57, 56)
+Wacan Berry (57, 78)
 TM30 U-Turn (64, 70)
 TM53 Volt Switch (72, 69)
 Sparkly Seed (75, 66)
@@ -884,13 +987,13 @@ Revive (89, 52)
 TM86 X-Scissor (64, 20)
 Air Balloon (33, 32)
 White Herb (65, 40)
-Kebia Berry (83, 51)
+Charti Berry (83, 51)
 Protective Pads (38, 47)
 Zoom Lens (49, 32)
 
 Schrice City--------------------------------------
 
-Brave Mint (16, 34)
+Naive Mint (16, 34)
 Hyper Potion (41, 34)
 Ultra Ball (42, 46)
 TM84 Dark Pulse (16, 43)
@@ -922,9 +1025,9 @@ Route 30------------------------------------------
 
 Ability Capsule (34, 75)
 TM48 Scald (35, 77)
-Lonely Mint (54, 78)
+Careful Mint (54, 78)
 Max Elixir (54, 79)
-Chilan Berry (48, 67)
+Roseli Berry (48, 67)
 Eject Button (40, 73)
 Damaged Bulb (39, 85)
 
@@ -963,21 +1066,21 @@ Custap Berry (70, 6)
 
 Mindagan Cavern (1A)------------------------------
 
-Calm Mint (54, 69)
-Modest Mint (58, 69)
-Timid Mint (60, 69)
+Modest Mint (54, 69)
+Careful Mint (58, 69)
+Bold Mint (60, 69)
 
 Route 31------------------------------------------
 
-Naughty Mint (22, 11)
+Hasty Mint (22, 11)
 TM44 Light Speed (21, 25)
 Hyper Potion (28, 18)
 Absorb Bulb (35, 13)
 Bottle Cap (39, 11)
 Max Elixir (23, 34)
-Rindo Berry (17, 30)
+Kasib Berry (17, 30)
 Tiny Mushroom (44, 18)
-Mild Mint (43, 28)
+Calm Mint (43, 28)
 Kee Berry (49, 27)
 Maranga Berry (50, 23)
 Mirror Herb (54, 34)
@@ -985,19 +1088,19 @@ Punching Glove (56, 40)
 
 Shadow Ravine (1A)--------------------------------
 
-Serious Mint (25, 55)
+Lax Mint (25, 55)
 PP Up (27, 72)
 TM06 Shadow Ball (87, 46)
 Ability Capsule (15, 69)
-Passho Berry (50, 81)
-Charti Berry (43, 79)
+Tanga Berry (50, 81)
+Coba Berry (43, 79)
 Nugget (52, 58)
 Star Piece (30, 43)
 Damaged Bulb (83, 57)
 
 Shadow Ravine (1B)--------------------------------
 
-Gentle Mint (24, 79)
+Jolly Mint (24, 79)
 Euphorian Gem (21, 54)
 PP Up (10, 56)
 Mirror Herb (33, 57)
@@ -1016,7 +1119,7 @@ Starf Berry (75, 63)
 
 Frenco City---------------------------------------
 
-Hasty Mint (16, 55)
+Careful Mint (16, 55)
 TM85 Power Gem (47, 60)
 Max Potion (45, 70)
 PP Up (15, 76)
@@ -1029,7 +1132,7 @@ Petticoat Gem (72, 42)
 Valiant Gem (92, 39)
 Hyper Potion (82, 26)
 Throat Spray (91, 29)
-Shuca Berry (80, 31)
+Yache Berry (80, 31)
 Focus Sash (82, 62)
 Tiny Mushroom (74, 62)
 Mental Herb (93, 54)
@@ -1038,7 +1141,7 @@ Shadow Ravine (0A)--------------------------------
 
 Dusk Stone (56, 20)
 TM87 Poison Jab (48, 18)
-Rash Mint (55, 9)
+Calm Mint (55, 9)
 Gold Bottle Cap (29, 8)
 PP Max (66, 37)
 Rare Candy (68, 19)
@@ -1050,7 +1153,7 @@ Star Piece (60, 37)
 Electric Tunnel (0A)------------------------------
 
 Electric Seed (44, 63)
-Hasty Mint (57, 62)
+Adamant Mint (57, 62)
 Hyper Potion (56, 48)
 Damaged Battery (48, 46)
 
@@ -1065,7 +1168,7 @@ Cell Battery (50, 43)
 
 Electric Tunnel (-2A)-----------------------------
 
-Gentle Mint (42, 53)
+Timid Mint (42, 53)
 Max Potion (46, 47)
 Paralyze Heal (56, 48)
 Repel (59, 59)
@@ -1099,20 +1202,20 @@ Room Service (39, 41)
 Adrenaline Orb (26, 51)
 Rusty Bottle Cap (58, 63)
 Treasure Chest (45, 44)
-  [Relic Silver]         |
-  [Big Mushroom]         |
-  [Jolly Mint]           |
-  [Big Nugget]           |
+  [Star Piece]           |
+  [Dawn Stone]           |
+  [Gold Bottle Cap]      |
+  [Nugget]               |
   [Tiny Mushroom]        |
-  [Fire Stone]           |
-  [Ability Patch]        |
-  [Big Mushroom]         |
-  [Magic Crystal]        |
-  [PP Max]               |
+  [Rare Candy]           |
+  [Relic Gold]           |
+  [Poison Crystal]       |
+  [Naughty Mint]         |
+  [Big Nugget]           |
 
 Shadow Ravine (-2A)-------------------------------
 
-Careful Mint (39, 56)
+Adamant Mint (39, 56)
 TM58 Dragon Pulse (37, 49)
 Revive (42, 38)
 Eject Button (56, 40)
@@ -1120,7 +1223,7 @@ Eject Button (56, 40)
 Shadow Ravine (-3A)-------------------------------
 
 TM34 Magic Tomb (44, 36)
-Lax Mint (56, 42)
+Quiet Mint (56, 42)
 Gold Bottle Cap (39, 56)
 Euphorian Gem (57, 54)
 Ability Capsule (51, 35)
@@ -1154,11 +1257,11 @@ Bottle Cap (78, 66)
 Grassy Seed (78, 56)
 Euphorian Gem (73, 26)
 Relaxed Mint (60, 26)
-Timid Mint (50, 26)
+Rash Mint (50, 26)
 Ice Stone (49, 35)
 Leaf Stone (27, 28)
 Luminous Moss (38, 41)
-Lonely Mint (31, 33)
+Serious Mint (31, 33)
 Bottle Cap (20, 32)
 Psychic Seed (17, 67)
 Elixir (19, 78)
@@ -1167,33 +1270,33 @@ Hyper Potion (56, 82)
 Full Heal (83, 70)
 Max Elixir (69, 51)
 Rare Candy (69, 32)
-Mild Mint (67, 34)
+Calm Mint (67, 34)
 Bottle Cap (54, 60)
 Dawn Stone (43, 57)
-Dusk Stone (50, 57)
+Dusk Stone (48, 59)
 TM33 Psychic Fangs (34, 59)
 PP Up (18, 35)
 Repel (21, 72)
 Ultra Ball (13, 54)
 White Herb (17, 37)
-Calm Mint (59, 63)
+Modest Mint (59, 63)
 Bottle Cap (42, 70)
 PP Max (47, 48)
 Rare Candy (51, 48)
 Max Elixir (54, 43)
 Big Mushroom (71, 81)
-Pamtre Berry (63, 74)
+Bluk Berry (63, 74)
 Star Piece (25, 80)
 Tiny Mushroom (25, 51)
 
 Route 34 (1A)-------------------------------------
 
 TM71 Stone Edge (79, 79)
-Impish Mint (87, 91)
+Adamant Mint (87, 91)
 PP Up (82, 92)
 Bottle Cap (76, 66)
 Gold Bottle Cap (61, 50)
-Mysticola Berry (68, 87)
+Payapa Berry (68, 87)
 TM08 Bulk Up (60, 49)
 Big Mushroom (75, 83)
 Adrenaline Orb (67, 59)
@@ -1205,9 +1308,9 @@ Damaged Snowball (50, 39)
 
 Route 34 (0A)-------------------------------------
 
-Sassy Mint (40, 45)
+Jolly Mint (40, 45)
 Big Nugget (19, 74)
-Quiet Mint (16, 77)
+Naive Mint (16, 77)
 PP Up (20, 68)
 Rocky Helmet (28, 74)
 Ability Capsule (47, 51)
@@ -1227,23 +1330,22 @@ Hyper Potion (62, 65)
 Ultra Ball (78, 76)
 Air Balloon (56, 65)
 Choice Scarf (48, 66)
-Serious Mint (35, 88)
+Lonely Mint (35, 88)
 Bottle Cap (57, 82)
 Max Elixir (77, 88)
 TM19 Photon Geyser (35, 79)
 Full Restore (26, 70)
 Micle Berry (29, 84)
-Tanga Berry (42, 67)
+Passho Berry (42, 67)
 Treasure Chest (34, 62)
-  [Rusty Bottle Cap]     |
-  [Star Piece]           |
-  [Bold Mint]            |
-  [Fighting Crystal]     |
   [Big Nugget]           |
-  [PP Up]                |
-  [Relic Gold]           |
+  [Dark Crystal]         |
   [Euphorian Gem]        |
-  [Revive]               |
+  [Big Nugget]           |
+  [Tiny Mushroom]        |
+  [Ability Capsule]      |
+  [Gold Bottle Cap]      |
+  [Modest Mint]          |
 Mirror Herb (62, 79)
 Focus Sash (56, 78)
 Big Nugget (40, 75)
@@ -1266,7 +1368,7 @@ Pecha Berry (29, 69)
 Chesto Berry (30, 68)
 Persim Berry (30, 66)
 Wiki Berry (12, 87)
-Haban Berry (21, 87)
+Shuca Berry (21, 87)
 Fire Stone (18, 90)
 Metronome (29, 87)
 Damaged Bulb (37, 79)
@@ -1284,15 +1386,15 @@ Red Card (24, 25)
 
 Route 38------------------------------------------
 
-Roseli Berry (48, 88)
-Jolly Mint (54, 84)
+Kebia Berry (48, 88)
+Serious Mint (54, 84)
 Air Balloon (66, 69)
 Throat Spray (61, 72)
 Elixir (84, 93)
-Adamant Mint (91, 89)
+Impish Mint (91, 89)
 Burn Heal (91, 83)
 Gold Bottle Cap (84, 79)
-Timid Mint (79, 58)
+Calm Mint (79, 58)
 Adrenaline Orb (74, 79)
 Leaf Stone (77, 70)
 
@@ -1320,7 +1422,7 @@ Mt. St. Joseph (2A)-------------------------------
 
 White Herb (35, 56)
 Bottle Cap (36, 76)
-Modest Mint (39, 68)
+Sassy Mint (39, 68)
 Gentle Mint (51, 50)
 Rare Candy (48, 76)
 Hyper Potion (55, 58)
@@ -1340,7 +1442,7 @@ Weakness Policy (39, 58)
 Mt. St. Joseph (3A)-------------------------------
 
 TM64 Close Combat (62, 65)
-Rash Mint (46, 60)
+Naughty Mint (46, 60)
 Max Elixir (40, 54)
 TM35 Flamethrower (51, 51)
 Gold Bottle Cap (39, 43)
@@ -1361,17 +1463,15 @@ Rusty Bottle Cap (11, 15)
 Big Mushroom (22, 44)
 White Herb (14, 42)
 Treasure Chest (10, 42)
-  [Ability Capsule]      |
-  [Star Piece]           |
-  [Water Crystal]        |
-  [Leaf Stone]           |
-  [Calm Mint]            |
-  [Revive]               |
-  [Ability Capsule]      |
-  [Dusk Scales Fossil]   |
+  [Gold Bottle Cap]      |
   [Nugget]               |
-  [Relic Gold]           |
+  [Petticoat Gem]        |
+  [Brave Mint]           |
+  [PP Up]                |
+  [Revive]               |
+  [Tiny Mushroom]        |
   [Star Piece]           |
+  [Ice Crystal]          |
 Damaged Snowball (18, 10)
 Jaboca Berry (11, 22)
 Rowap Berry (16, 26)
@@ -1379,17 +1479,15 @@ Rowap Berry (16, 26)
 Mt. Splinkty (2A)---------------------------------
 
 Treasure Chest (57, 62)
-  [PP Up]                |
-  [Hasty Mint]           |
-  [Star Piece]           |
-  [Ice Stone]            |
-  [Bottle Cap]           |
   [Relic Silver]         |
-  [PP Max]               |
   [Nugget]               |
-  [Relic Silver]         |
-  [Dark Crystal]         |
-  [Tiny Mushroom]        |
+  [Modest Mint]          |
+  [Dusk Stone]           |
+  [Nugget]               |
+  [Nugget]               |
+  [Max Revive]           |
+  [Ability Patch]        |
+  [Grass Crystal]        |
 Star Piece (52, 61)
 Damaged Moss (67, 62)
 Star Piece (39, 60)
@@ -1398,25 +1496,23 @@ Hyper Potion (43, 70)
 Big Mushroom (46, 77)
 Focus Sash (67, 69)
 Damaged Moss (66, 76)
-Relaxed Mint (52, 69)
-Mild Mint (57, 68)
+Mild Mint (52, 69)
+Rash Mint (57, 68)
 
 Mt. Splinkty (Outside)----------------------------
 
 Eviolite (67, 48)
 TM47 Star Storm (89, 38)
 Treasure Chest (51, 34)
+  [Tiny Mushroom]        |
+  [Revive]               |
+  [Fire Stone]           |
+  [Relaxed Mint]         |
   [Star Piece]           |
-  [PP Up]                |
-  [Nugget]               |
-  [Max Revive]           |
-  [Star Piece]           |
-  [Poison Crystal]       |
-  [Star Piece]           |
-  [Relic Silver]         |
-  [Petticoat Gem]        |
-  [Bold Mint]            |
-  [Relic Silver]         |
+  [Big Mushroom]         |
+  [Bottle Cap]           |
+  [Gold Bottle Cap]      |
+  [Bug Crystal]          |
 Sparkly Seed (70, 46)
 Ability Patch (68, 35)
 
@@ -1435,6 +1531,10 @@ Eject Button (52, 48)
 Big Nugget (60, 65)
 Gold Bottle Cap (53, 65)
 
+Mt. Splinkty (5A)---------------------------------
+
+Destiny Knot (54, 50)
+
 Icy Path------------------------------------------
 
 Ice Stone (41, 45)
@@ -1443,36 +1543,32 @@ TM72 Ice Spinner (49, 44)
 Euphorian Gem (47, 56)
 White Herb (38, 27)
 Treasure Chest (41, 51)
-  [Star Piece]           |
-  [PP Up]                |
-  [Timid Mint]           |
-  [Petticoat Gem]        |
-  [Gold Bottle Cap]      |
+  [Jolly Mint]           |
   [Relic Silver]         |
-  [Revive]               |
-  [Bottle Cap]           |
-  [Bottle Cap]           |
-  [Galactic Crystal]     |
-  [Bottle Cap]           |
+  [PP Up]                |
+  [Ice Stone]            |
+  [Tiny Mushroom]        |
+  [Gold Bottle Cap]      |
+  [Tiny Mushroom]        |
+  [Water Crystal]        |
 Snowball (62, 50)
 
 Gelb Cavern---------------------------------------
 
-Modest Mint (54, 61)
+Impish Mint (54, 61)
 Treasure Chest (61, 64)
-  [Grass Crystal]        |
-  [Tiny Mushroom]        |
-  [Euphorian Gem]        |
-  [Rare Candy]           |
-  [Tiny Mushroom]        |
-  [Rusty Bottle Cap]     |
-  [Relic Gold]           |
-  [Brave Mint]           |
-  [Nugget]               |
+  [Mild Mint]            |
+  [Dusk Stone]           |
+  [PP Up]                |
+  [Relic Silver]         |
+  [Relic Silver]         |
   [Revive]               |
+  [Relic Silver]         |
+  [Rock Crystal]         |
+  [Big Nugget]           |
 Gold Bottle Cap (49, 74)
-Jolly Mint (65, 73)
-Lax Mint (66, 81)
+Serious Mint (65, 73)
+Gentle Mint (66, 81)
 Focus Sash (56, 87)
 Focus Sash (59, 88)
 Focus Sash (64, 88)

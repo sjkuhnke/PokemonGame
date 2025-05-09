@@ -910,7 +910,7 @@ public class Script {
 			}
 		});
 		
-		scriptMap.put(91.0, (npc) -> {
+		scriptMap.put(91.0, (npc) -> { // grandpa frenco
 			if (!p.flag[4][2]) {
 				p.flag[4][2] = true;
 				Task.addTask(Task.DIALOGUE, npc, "Oh... thank Arceus you're here. I was afraid I wouldn't make it through this.");
@@ -1272,7 +1272,7 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "She sees the world in black and white. Heroes and villains, tricks and truths. But magic, real magic, lies in the in-between.");
 			Task.addTask(Task.DIALOGUE, npc, "You, though... You're full of surprises. And I do love a good surprise.");
 			Task.addTask(Task.DIALOGUE, npc, "Here, consider this a reward for your performance.");
-			Task t = Task.addTask(Task.ITEM, "Obtained HM07 Rock Climb!");
+			Task t = Task.addTask(Task.ITEM, "");
 			t.item = Item.HM07;
 			Task.addTask(Task.DIALOGUE, npc, "You'll need this if you want to keep climbing higher once you defeat me. Just don't let the heights get to your head.");
 			Task.addTask(Task.DIALOGUE, npc, "Now then, you've come all this way. Might as well see if your magic can match mine.");

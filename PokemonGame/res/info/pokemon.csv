@@ -262,7 +262,7 @@
 158|Swalot-X     |GALACTIC|POISON  |BLACK_HOLE        |STICKY_HOLD       |SIMPLE            |[150, 39, 80, 93, 95, 40]     |999.9 |65 |
 221|Plasamp      |GALACTIC|STEEL   |STARBORN          |LEVITATE          |MYSTIC_ABSORB     |[60, 55, 70, 90, 70, 65]      |88.1  |50 |
 222|Genieova     |GALACTIC|STEEL   |STARBORN          |LEVITATE          |DJINN1S_FAVOR     |[90, 70, 105, 120, 95, 90]    |619.2 |15 |
-184|Elgyem       |GALACTIC|null    |COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[55, 55, 55, 85, 55, 30]      |19.8  |125|
+184|Elgyem       |GALACTIC|PSYCHIC |COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[55, 55, 55, 85, 55, 30]      |19.8  |125|
 185|Beheeyem     |GALACTIC|PSYCHIC |COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[75, 75, 75, 125, 95, 40]     |76.1  |70 |
 -12|Elgyem-E     |GALACTIC|ELECTRIC|COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[75, 55, 55, 75, 45, 30]      |49.3  |125|
 -13|Beheeyem-E   |GALACTIC|ELECTRIC|COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[95, 85, 70, 130, 65, 40]     |145.9 |70 |
@@ -286,7 +286,7 @@
 236|Shocky Spire |WATER   |STEEL   |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[233, 59, 89, 83, 67, 59]     |1200.0|5  |
 237|Dust Sorcerer|GROUND  |FLYING  |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[79, 61, 79, 127, 131, 113]   |101.1 |5  |
 238|Fever Dream  |FIRE    |ICE     |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[103, 131, 101, 79, 97, 79]   |495.3 |5  |
-239|Dusk Skater  |DARK    |STEEL   |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[82, 115, 74, 75, 64, 90]     |81.6  |5  |
+239|Dusk Skater  |DARK    |STEEL   |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[67, 113, 59, 131, 71, 149]   |256.3 |5  |
 248|Necrozma     |LIGHT   |DARK    |SCRAPPY           |UNBURDEN          |TALENTED          |[97, 107, 111, 147, 99, 119]  |507.1 |3  |
 0  |Necrozma-Ult |LIGHT   |DARK    |SCRAPPY           |UNBURDEN          |TALENTED          |[97, 147, 97, 187, 97, 129]   |507.1 |3  |
 104|Azurill      |WATER   |NORMAL  |THICK_FAT         |HUGE_POWER        |SAP_SIPPER        |[50, 20, 40, 20, 40, 20]      |4.4   |150|

@@ -346,7 +346,7 @@ public enum Move {
 	MYSTICAL_FIRE(75,100,100,0,1,0,PType.FIRE,"% chance to lower foe's Sp.Atk by 1",false,10),
 	NASTY_PLOT(0,1000,0,0,2,0,PType.DARK,"Raises user's Sp.Atk by 2",false,5),
 	NEEDLE_ARM(90,100,30,0,0,0,PType.GRASS,"% chance to Flinch foe",true,10),
-	NIGHT_DAZE(85,95,40,0,0,0,PType.DARK,"% chance to lower foe's Accuracy by 1",false,10),
+	NIGHT_DAZE(85,95,40,0,1,0,PType.DARK,"% chance to lower foe's Accuracy by 1",false,10),
 	NIGHT_SHADE(0,100,0,-999,1,0,PType.GHOST,"Deals damage equal to user's level",false,15),
 	NIGHT_SLASH(70,100,0,1,0,0,PType.DARK,"Boosted Crit rate",true,15),
 	NIGHTMARE(0,100,0,0,2,0,PType.GHOST,"Foe loses 1/4 of max HP each turn; wears off when foe wakes up",false,15),
