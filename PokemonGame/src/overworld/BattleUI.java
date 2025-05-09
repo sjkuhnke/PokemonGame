@@ -1177,17 +1177,17 @@ public class BattleUI extends AbstractUI {
 			faster = faster.trainer.getCurrent();
 			if (slower.trainer != null) slower = slower.trainer.getCurrent();
 			
+			// Check for swap (AI)
+			if (foe.trainer != null && foe.trainer.hasValidMembers() && slower.hasStatus(Status.SWITCHING)) {
+				slower = foe.trainer.swapOut(faster, null, false, false);
+				foeCanMove = false;
+			}
 			// Check for swap (player)
 			if (user.trainer.hasValidMembers() && hasAlive() && faster.hasStatus(Status.SWITCHING)) {
 				Task t = Task.addTask(Task.PARTY, "");
 				t.wipe = faster.lastMoveUsed == Move.BATON_PASS;
 				subState = TASK_STATE;
 	        	return;
-			}
-			// Check for swap (AI)
-			if (foe.trainer != null && foe.trainer.hasValidMembers() && slower.hasStatus(Status.SWITCHING)) {
-				slower = foe.trainer.swapOut(faster, null, false, false);
-				foeCanMove = false;
 			}
 			
 	        if (!(foe.trainer != null && slower != foe.trainer.getCurrent()) && foeCanMove) {
@@ -1220,17 +1220,17 @@ public class BattleUI extends AbstractUI {
 				slower = slower.trainer.getCurrent();
 				foeMove = null;
 			}
-			// Check for swap (AI)
-	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && faster.hasStatus(Status.SWITCHING)) {
-	        	faster = foe.trainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS, false);
-	        	foeCanMove = false;
-	        }
 	        // Check for swap (player)
  			if (user.trainer.hasValidMembers() && hasAlive() && slower.hasStatus(Status.SWITCHING)) {
  				Task.addTask(Task.PARTY, "");
  				subState = TASK_STATE;
  	        	return;
  			}
+ 			// Check for swap (AI)
+	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && faster.hasStatus(Status.SWITCHING)) {
+	        	faster = foe.trainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS, false);
+	        	foeCanMove = false;
+	        }
 			
 	        if (slower == user.trainer.getCurrent()) {
 	        	slower.moveInit(faster, uMove, false);
@@ -1251,7 +1251,7 @@ public class BattleUI extends AbstractUI {
 		}
 	    subState = TASK_STATE;
 	    
-		if (hasAlive()) faster.endOfTurn(slower);
+	    if (hasAlive()) faster.endOfTurn(slower);
 		if (hasAlive()) slower.endOfTurn(faster);
 		if (hasAlive()) field.endOfTurn(faster, slower);
 		
@@ -1339,8 +1339,9 @@ public class BattleUI extends AbstractUI {
         		currentDialogue = "You are trapped and cannot switch!";
 			} else {
 				subState = TASK_STATE;
-				if (user.isFainted()) foeMove = null;
-				if (cancellableParty && !user.isFainted()) {
+				boolean fainted = user.isFainted();
+				if (fainted) foeMove = null;
+				if (cancellableParty && !fainted){
 					foeMove = foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
 				}
 				if (baton) {
@@ -1362,7 +1363,7 @@ public class BattleUI extends AbstractUI {
 				commandNum = 0;
 				dialogueCounter = 0;
 				baton = false;
-				turn(null, foeMove);
+				if (!fainted) turn(null, foeMove);
 				//foeMove = null;
 			}
 		}

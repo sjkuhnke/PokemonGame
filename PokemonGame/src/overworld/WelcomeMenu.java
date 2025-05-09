@@ -44,6 +44,7 @@ public class WelcomeMenu extends JPanel {
 	public WelcomeMenu(JFrame window, GamePanel gp) {
 	    this.setPreferredSize(new Dimension(gp.screenWidth, gp.screenHeight));
 	    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+	    
 	    Color textColor = null;
 
 	    try {
@@ -66,8 +67,15 @@ public class WelcomeMenu extends JPanel {
 	    subtitleLabel.setForeground(textColor);
 	    subtitleLabel.setOutlineColor(Color.BLACK);
 
-	    JPanel checkBoxPanel = new JPanel(new GridLayout(0, 1));
+	    JPanel checkBoxPanel = new JPanel(new GridLayout(0, 2));
 	    checkBoxPanel.setOpaque(false);
+	    checkBoxPanel.setPreferredSize(new Dimension(400, 120));
+	    checkBoxPanel.setMaximumSize(new Dimension(400, 120));
+	    
+	    JPanel checkBoxContainer = new JPanel();
+	    checkBoxContainer.setLayout(new FlowLayout(FlowLayout.LEFT));
+	    checkBoxContainer.setOpaque(false);
+	    checkBoxContainer.add(checkBoxPanel);
 
 	    JPanel iconPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	    iconPanel.setOpaque(false);
@@ -90,29 +98,23 @@ public class WelcomeMenu extends JPanel {
 	    generateDoc.setForeground(textColor);
 	    generateDoc.setOutlineColor(Color.BLACK);
 
-	    JCheckBox trainersCheckBox = new JCheckBox("Trainers");
-	    trainersCheckBox.setOpaque(false);
-	    trainersCheckBox.setForeground(textColor);
-	    JCheckBox pokemonCheckBox = new JCheckBox("Pokemon");
-	    pokemonCheckBox.setOpaque(false);
-	    pokemonCheckBox.setForeground(textColor);
-	    JCheckBox encountersCheckBox = new JCheckBox("Encounters");
-	    encountersCheckBox.setOpaque(false);
-	    encountersCheckBox.setForeground(textColor);
-	    JCheckBox movesCheckBox = new JCheckBox("Moves");
-	    movesCheckBox.setOpaque(false);
-	    movesCheckBox.setForeground(textColor);
-	    JCheckBox defensiveTypesBox = new JCheckBox("Defensive Types");
-	    defensiveTypesBox.setOpaque(false);
-	    defensiveTypesBox.setForeground(textColor);
-	    JCheckBox offensiveTypesBox = new JCheckBox("Offensive Types");
-	    offensiveTypesBox.setOpaque(false);
-	    offensiveTypesBox.setForeground(textColor);
-	    JCheckBox itemsCheckBox = new JCheckBox("Items");
-	    itemsCheckBox.setOpaque(false);
-	    itemsCheckBox.setForeground(textColor);
+	    OutlineCheckBox trainersCheckBox = new OutlineCheckBox("Trainers", textColor);
+	    styleCheckBox(trainersCheckBox);
+	    OutlineCheckBox pokemonCheckBox = new OutlineCheckBox("Pokemon", textColor);
+	    styleCheckBox(pokemonCheckBox);
+	    OutlineCheckBox encountersCheckBox = new OutlineCheckBox("Encounters", textColor);
+	    styleCheckBox(encountersCheckBox);
+	    OutlineCheckBox movesCheckBox = new OutlineCheckBox("Moves", textColor);
+	    styleCheckBox(movesCheckBox);
+	    OutlineCheckBox defensiveTypesBox = new OutlineCheckBox("Defensive Types", textColor);
+	    styleCheckBox(defensiveTypesBox);
+	    OutlineCheckBox offensiveTypesBox = new OutlineCheckBox("Offensive Types", textColor);
+	    styleCheckBox(offensiveTypesBox);
+	    OutlineCheckBox itemsCheckBox = new OutlineCheckBox("Items", textColor);
+	    styleCheckBox(itemsCheckBox);
+	    OutlineCheckBox abilitiesCheckBox = new OutlineCheckBox("Abilities", textColor);
+	    styleCheckBox(abilitiesCheckBox);
 
-	    checkBoxPanel.add(generateDoc);
 	    checkBoxPanel.add(trainersCheckBox);
 	    checkBoxPanel.add(pokemonCheckBox);
 	    checkBoxPanel.add(encountersCheckBox);
@@ -120,6 +122,7 @@ public class WelcomeMenu extends JPanel {
 	    checkBoxPanel.add(defensiveTypesBox);
 	    checkBoxPanel.add(offensiveTypesBox);
 	    checkBoxPanel.add(itemsCheckBox);
+	    checkBoxPanel.add(abilitiesCheckBox);
 
 	    optionsPanel = new JPanel(new GridLayout(2, 2));
 
@@ -189,6 +192,12 @@ public class WelcomeMenu extends JPanel {
 	    lastModifiedPanel.setPreferredSize(new Dimension(400, 10));
 	    lastModifiedPanel.setOpaque(false);
 	    lastModifiedPanel.add(lastModifiedLabel);
+	    
+	    // Add the last modified label below the icon panel
+	    JPanel generateDocsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    generateDocsPanel.setPreferredSize(new Dimension(400, 10));
+	    generateDocsPanel.setOpaque(false);
+	    generateDocsPanel.add(generateDoc);
 
 	    if (fileName.getItemCount() != 0) fileName.setSelectedIndex(0);
 
@@ -209,7 +218,8 @@ public class WelcomeMenu extends JPanel {
 	            movesCheckBox.isSelected(),
 	            defensiveTypesBox.isSelected(),
 	            offensiveTypesBox.isSelected(),
-	            itemsCheckBox.isSelected()
+	            itemsCheckBox.isSelected(),
+	            abilitiesCheckBox.isSelected()
 	        };
 
 	        gp.player.currentSave = save;
@@ -244,7 +254,8 @@ public class WelcomeMenu extends JPanel {
 	            movesCheckBox.isSelected(),
 	            defensiveTypesBox.isSelected(),
 	            offensiveTypesBox.isSelected(),
-	            itemsCheckBox.isSelected()
+	            itemsCheckBox.isSelected(),
+	            abilitiesCheckBox.isSelected()
 	        };
 
 	        save += ".dat";
@@ -267,9 +278,19 @@ public class WelcomeMenu extends JPanel {
 	    add(subtitleLabel);
 	    add(locationPanel);
 	    add(iconPanel);
-	    add(lastModifiedPanel);  // Add the last modified label below the icon panel
-	    add(checkBoxPanel);
+	    add(lastModifiedPanel);
+	    add(generateDocsPanel);
+	    add(checkBoxContainer);
 	    add(optionsPanel);
+	}
+	
+	private void styleCheckBox(JCheckBox box) {
+		box.setOpaque(false);
+		box.setFont(box.getFont().deriveFont(16F));
+		box.setContentAreaFilled(false);
+		box.setBorderPainted(false);
+		box.setFocusPainted(false);
+		box.setMaximumSize(new Dimension(Integer.MAX_VALUE, box.getPreferredSize().height));
 	}
 
 	
@@ -485,6 +506,65 @@ public class WelcomeMenu extends JPanel {
             super.paint(g);
             forceTransparent = false;
 
+        }
+    }
+    
+    public class OutlineCheckBox extends JCheckBox {
+
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private Color outlineColor = Color.BLACK;
+        private Color textColor = Color.WHITE;
+
+        public OutlineCheckBox(String text, Color textColor) {
+            super(text);
+            setOpaque(false);
+            setContentAreaFilled(false);
+            setBorderPainted(false);
+            setFocusPainted(false);
+            this.textColor = textColor;
+        }
+
+        public void setOutlineColor(Color outlineColor) {
+            this.outlineColor = outlineColor;
+            repaint();
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            // Get the text and icon positioning
+            String text = getText();
+            FontMetrics fm = g.getFontMetrics();
+
+            // Calculate text position
+            Insets insets = getInsets();
+            int iconWidth = 18;
+            int x = insets.left + iconWidth;
+            int y = (getHeight() + fm.getAscent()) / 2 - 2;
+
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setFont(getFont());
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // Draw outline
+            g2.setColor(outlineColor);
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    if (dx != 0 || dy != 0) {
+                        g2.drawString(text, x + dx, y + dy);
+                    }
+                }
+            }
+
+            // Draw main text
+            g2.setColor(textColor);
+            g2.drawString(text, x, y);
+
+            g2.dispose();
         }
     }
 

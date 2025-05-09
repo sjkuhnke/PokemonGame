@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JLabel;
@@ -319,75 +320,8 @@ public class PlayerCharacter extends Entity {
 					pickUpObject(objIndex);
 				}
 			}
-			
-			if (p.hasMove(Move.SURF) && !p.surf) {
-				int result = gp.cChecker.checkTileType(this);
-				if (gp.tileM.getWaterTiles().contains(result)) {
-					int x = 0;
-					int y = 0;
-					switch (direction) {
-					case "down":
-						worldY += gp.tileSize;
-						x = worldX + gp.tileSize / 2;
-						y = worldY;
-						break;
-					case "up":
-						worldY -= gp.tileSize;
-						x = worldX + gp.tileSize / 2;
-						y = worldY;
-						break;
-					case "left":
-						worldX -= gp.tileSize;
-						x = worldX;
-						y = worldY;
-						break;
-					case "right":
-						worldX += gp.tileSize;
-						x = worldX + gp.tileSize;
-						y = worldY;
-						break;
-					}
-					p.surf = true;
-					generateParticle(x, y, new Color(50,184,255), 6, 1, 20);
-					for (Integer i : gp.tileM.getWaterTiles()) {
-						gp.tileM.tile[i].collision = false;
-					}
-				}
-			}
-			if (p.hasMove(Move.LAVA_SURF) && !p.lavasurf) {
-				int result = gp.cChecker.checkTileType(this);
-				if (gp.tileM.getLavaTiles().contains(result)) {
-					int x = 0;
-					int y = 0;
-					switch (direction) {
-					case "down":
-						worldY += gp.tileSize;
-						x = worldX + gp.tileSize / 2;
-						y = worldY;
-						break;
-					case "up":
-						worldY -= gp.tileSize;
-						x = worldX + gp.tileSize / 2;
-						y = worldY;
-						break;
-					case "left":
-						worldX -= gp.tileSize;
-						x = worldX;
-						y = worldY;
-						break;
-					case "right":
-						worldX += gp.tileSize;
-						x = worldX + gp.tileSize;
-						y = worldY;
-						break;
-					}
-					p.lavasurf = true;
-					generateParticle(x, y, new Color(255,48,48), 6, 1, 20);
-					for (Integer i : gp.tileM.getLavaTiles()) {
-						gp.tileM.tile[i].collision = false;
-					}
-				}
-			}
+			trySurfing(Move.SURF, true);
+			trySurfing(Move.LAVA_SURF, false);
 			
 			// Check iTiles
 			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
@@ -408,6 +342,55 @@ public class PlayerCharacter extends Entity {
 						startWild(currentMapName, 'F');
 					}
 				}
+			}
+		}
+	}
+	
+	private void trySurfing(Move move, boolean isSurf) {
+		if ((p.knowsMove(move) || p.ghost) && ((isSurf && !p.surf) || (!isSurf && !p.lavasurf))) {
+			int badgeReq = p.getRequiredBadges(move);
+			int result = gp.cChecker.checkTileType(this);
+			List<Integer> tileList = isSurf ? gp.tileM.getWaterTiles() : gp.tileM.getLavaTiles();
+			if (tileList.contains(result)) {
+				if (p.badges >= badgeReq) {
+					int x = 0, y = 0;
+					switch (direction) {
+						case "down":
+							worldY += gp.tileSize;
+							x = worldX + gp.tileSize / 2;
+							y = worldY;
+							break;
+						case "up":
+							worldY -= gp.tileSize;
+							x = worldX + gp.tileSize / 2;
+							y = worldY;
+							break;
+						case "left":
+							worldX -= gp.tileSize;
+							x = worldX;
+							y = worldY;
+							break;
+						case "right":
+							worldX += gp.tileSize;
+							x = worldX + gp.tileSize;
+							y = worldY;
+							break;
+					}
+					
+					Color c = isSurf ? new Color(50,184,255) : new Color(255,48,48);
+					if (isSurf) p.surf = true; else p.lavasurf = true;
+					generateParticle(x, y, c, 6, 1, 20);
+					
+					for (Integer i : tileList) {
+						gp.tileM.tile[i].collision = false;
+					}
+				}
+			} else {
+				String surfaceType = isSurf ? "water" : "lava";
+				String moveName = move.toString();
+				String badgeWord = badgeReq == 1 ? "badge" : "badges";
+				String message = String.format("This %s can be crossed!\n(You need %d %s to use %s outside of battle!)", surfaceType, badgeReq, badgeWord, moveName);
+				gp.ui.showMessage(message);
 			}
 		}
 	}
@@ -620,105 +603,173 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	private void interactCutTree(int i, boolean override) {
-		if (override || p.hasMove(Move.CUT)) {
-			gp.keyH.wPressed = false;
-			Cut_Tree temp = (Cut_Tree) gp.iTile[gp.currentMap][i];
-			gp.iTile[gp.currentMap][i] = new Tree_Stump(gp);
-			gp.iTile[gp.currentMap][i].worldX = temp.worldX;
-			gp.iTile[gp.currentMap][i].worldY = temp.worldY;
-			
-			generateParticle(temp);
+		String message = "This tree looks like it can be cut down!";
+		Move m = Move.CUT;
+		if (override || p.knowsMove(m)) {
+			int badgeReq = p.getRequiredBadges(m);
+			if (p.badges >= badgeReq) {
+				gp.keyH.wPressed = false;
+				Cut_Tree temp = (Cut_Tree) gp.iTile[gp.currentMap][i];
+				gp.iTile[gp.currentMap][i] = new Tree_Stump(gp);
+				gp.iTile[gp.currentMap][i].worldX = temp.worldX;
+				gp.iTile[gp.currentMap][i].worldY = temp.worldY;
+				
+				generateParticle(temp);
+			} else {
+				String badgeWord = badgeReq == 1 ? "badge" : "badges";
+				String fullMessage = String.format(
+					"%s\n(You need %d %s to use %s outside of battle!)",
+					message, badgeReq, badgeWord, m.toString()
+				);
+				gp.ui.showMessage(fullMessage);
+			}
 		} else {
-			gp.ui.showMessage("This tree looks like it can be cut down!");
+			gp.ui.showMessage(message);
 		}
-		
 	}
 	
 	private void interactRockSmash(int i, boolean override) {
-		if (override || p.hasMove(Move.ROCK_SMASH)) {
-			gp.keyH.wPressed = false;
-			generateParticle(gp.iTile[gp.currentMap][i]);
-			gp.iTile[gp.currentMap][i] = null;
+		String message = "This rock looks like it can be broken!";
+		Move m = Move.ROCK_SMASH;
+		if (override || p.knowsMove(m)) {
+			int badgeReq = p.getRequiredBadges(m);
+			if (p.badges >= badgeReq) {
+				gp.keyH.wPressed = false;
+				generateParticle(gp.iTile[gp.currentMap][i]);
+				gp.iTile[gp.currentMap][i] = null;
+			} else {
+				String badgeWord = badgeReq == 1 ? "badge" : "badges";
+				String fullMessage = String.format(
+					"%s\n(You need %d %s to use %s outside of battle!)",
+					message, badgeReq, badgeWord, m.toString()
+				);
+				gp.ui.showMessage(fullMessage);
+			}
 		} else {
-			gp.ui.showMessage("This rock looks like it can be broken!");
+			gp.ui.showMessage(message);
 		}
-		
 	}
 	
 	private void interactVines(int i, boolean override) {
-		if (override || p.hasMove(Move.VINE_CROSS)) {
-			gp.keyH.wPressed = false;
-			Vine_Crossable temp = (Vine_Crossable) gp.iTile[gp.currentMap][i];
-			gp.iTile[gp.currentMap][i] = new Vine(gp);
-			gp.iTile[gp.currentMap][i].worldX = temp.worldX;
-			gp.iTile[gp.currentMap][i].worldY = temp.worldY;
-			generateParticle(temp);
+		String message = "This gap looks like it can be crossed!";
+		Move m = Move.VINE_CROSS;
+		if (override || p.knowsMove(m)) {
+			int badgeReq = p.getRequiredBadges(m);
+			if (p.badges >= badgeReq) {
+				gp.keyH.wPressed = false;
+				Vine_Crossable temp = (Vine_Crossable) gp.iTile[gp.currentMap][i];
+				gp.iTile[gp.currentMap][i] = new Vine(gp);
+				gp.iTile[gp.currentMap][i].worldX = temp.worldX;
+				gp.iTile[gp.currentMap][i].worldY = temp.worldY;
+				generateParticle(temp);
+			} else {
+				String badgeWord = badgeReq == 1 ? "badge" : "badges";
+				String fullMessage = String.format(
+					"%s\n(You need %d %s to use %s outside of battle!)",
+					message, badgeReq, badgeWord, m.toString()
+				);
+				gp.ui.showMessage(fullMessage);
+			}
 		} else {
-			gp.ui.showMessage("This gap looks like it can be crossed!");
+			gp.ui.showMessage(message);
 		}
 	}
 	
 	private void interactPit(int i, boolean override) {
-		if (override || p.hasMove(Move.SLOW_FALL)) {
-			gp.keyH.wPressed = false;
-			Pit pit = (Pit) gp.iTile[gp.currentMap][i];
-			gp.eHandler.teleport(pit.mapDest, pit.xDest, pit.yDest, false);
-			generateParticle(pit);
+		String message = "This pit looks deep!\nI can't even see the bottom!";
+		Move m = Move.SLOW_FALL;
+		if (override || p.knowsMove(m)) {
+			int badgeReq = p.getRequiredBadges(m);
+			if (p.badges >= badgeReq) {
+				gp.keyH.wPressed = false;
+				Pit pit = (Pit) gp.iTile[gp.currentMap][i];
+				gp.eHandler.teleport(pit.mapDest, pit.xDest, pit.yDest, false);
+				generateParticle(pit);
+			} else {
+				String badgeWord = badgeReq == 1 ? "badge" : "badges";
+				String fullMessage = String.format(
+					"%s\n(You need %d %s to use %s outside of battle!)",
+					message, badgeReq, badgeWord, m.toString()
+				);
+				gp.ui.showMessage(fullMessage);
+			}
 		} else {
-			gp.ui.showMessage("This pit looks deep!\nI can't even see the bottom!");
+			gp.ui.showMessage(message);
 		}
-		
 	}
 	
 	private void interactWhirlpool(int i, boolean override) {
-		if (override || p.hasMove(Move.WHIRLPOOL)) {
-			gp.keyH.wPressed = false;
-			int offset = gp.tileSize / 2;
-			int x = gp.iTile[gp.currentMap][i].worldX + offset;
-			int y = gp.iTile[gp.currentMap][i].worldY + offset;
-			for (int j = 0; j < 3; j++) {
-				generateParticle(x, y, new Color(50,184,255), 6, 1, 20);
-				x += getTileForwardX();
-				y += getTileForwardY();
-			}
-			switch (direction) {
-			case "down":
-				worldY += gp.tileSize * 3.75;
-				break;
-			case "up":
-				worldY -= gp.tileSize * 3.75;
-				break;
-			case "left":
-				worldX -= gp.tileSize * 3.75;
-				break;
-			case "right":
-				worldX += gp.tileSize * 3.75;
-				break;
+		String message = "This water vortex can be crossed!";
+		Move m = Move.WHIRLPOOL;
+		if (override || p.knowsMove(m)) {
+			int badgeReq = p.getRequiredBadges(m);
+			if (p.badges >= badgeReq) {
+				gp.keyH.wPressed = false;
+				int offset = gp.tileSize / 2;
+				int x = gp.iTile[gp.currentMap][i].worldX + offset;
+				int y = gp.iTile[gp.currentMap][i].worldY + offset;
+				for (int j = 0; j < 3; j++) {
+					generateParticle(x, y, new Color(50,184,255), 6, 1, 20);
+					x += getTileForwardX();
+					y += getTileForwardY();
+				}
+				switch (direction) {
+				case "down":
+					worldY += gp.tileSize * 3.75;
+					break;
+				case "up":
+					worldY -= gp.tileSize * 3.75;
+					break;
+				case "left":
+					worldX -= gp.tileSize * 3.75;
+					break;
+				case "right":
+					worldX += gp.tileSize * 3.75;
+					break;
+				}
+			} else {
+				String badgeWord = badgeReq == 1 ? "badge" : "badges";
+				String fullMessage = String.format(
+					"%s\n(You need %d %s to use %s outside of battle!)",
+					message, badgeReq, badgeWord, m.toString()
+				);
+				gp.ui.showMessage(fullMessage);
 			}
 		} else {
-			gp.ui.showMessage("This water vortex can be crossed!");
+			gp.ui.showMessage(message);
 		}
-		
 	}
 	
 	private void interactRockClimb(int i, boolean override) {
-		if (override || p.hasMove(Move.ROCK_CLIMB)) {
-			gp.keyH.wPressed = false;
-			Rock_Climb rc = (Rock_Climb) gp.iTile[gp.currentMap][i];
-			int offset = gp.tileSize / 2;
-			int x = rc.worldX + offset;
-			int y = rc.worldY + offset;
-			for (int j = 0; j < rc.amt; j++) {
-				generateParticle(x, y, new Color(112, 69, 35), 6, 1, 20);
-				x += getTileForwardX();
-				y += getTileForwardY();
+		String message = "This wall looks like it can be scaled!";
+		Move m = Move.ROCK_CLIMB;
+		if (override || p.knowsMove(m)) {
+			int badgeReq = p.getRequiredBadges(m);
+			if (p.badges >= badgeReq) {
+				gp.keyH.wPressed = false;
+				Rock_Climb rc = (Rock_Climb) gp.iTile[gp.currentMap][i];
+				int offset = gp.tileSize / 2;
+				int x = rc.worldX + offset;
+				int y = rc.worldY + offset;
+				for (int j = 0; j < rc.amt; j++) {
+					generateParticle(x, y, new Color(112, 69, 35), 6, 1, 20);
+					x += getTileForwardX();
+					y += getTileForwardY();
+				}
+				int inverse = this.direction == rc.direction ? 1 : -1;
+				this.worldX += ((rc.deltaX * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaX * inverse));
+				this.worldY += ((rc.deltaY * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaY * inverse));
+			} else {
+				String badgeWord = badgeReq == 1 ? "badge" : "badges";
+				String fullMessage = String.format(
+					"%s\n(You need %d %s to use %s outside of battle!)",
+					message, badgeReq, badgeWord, m.toString()
+				);
+				gp.ui.showMessage(fullMessage);
 			}
-			int inverse = this.direction == rc.direction ? 1 : -1;
-			this.worldX += ((rc.deltaX * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaX * inverse));
-			this.worldY += ((rc.deltaY * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaY * inverse));
 		} else {
-			gp.ui.showMessage("This wall looks like it can be scaled!");
-		}	
+			gp.ui.showMessage(message);
+		}
 	}
 	
 	private void interactStarterMachine(int i) {

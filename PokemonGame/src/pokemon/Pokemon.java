@@ -7626,6 +7626,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 	
 	private void heal(double amt, String message) {
+		if (this.isFainted()) return;
 		if (this.hasStatus(Status.HEAL_BLOCK)) return;
 		Task t = Task.createTask(Task.DAMAGE, message, this);
 		currentHP += amt;

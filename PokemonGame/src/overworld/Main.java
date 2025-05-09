@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -185,6 +186,7 @@ public class Main {
 		    		if (selectedOptions[4]) writeDefensiveTypes();
 		    		if (selectedOptions[5]) writeOffensiveTypes();
 		    		if (selectedOptions[6]) writeItems(gp);
+		    		if (selectedOptions[7]) writeAbilities();
 		    		
 		    		window.add(gp);
 		    		gp.requestFocusInWindow();
@@ -1066,6 +1068,19 @@ public class Main {
 				writer.write(String.format("%s | %s | %s | %s | %s\n", item, pocket, buy, sell, desc));
 			}
 			
+			// TM Locations section
+			writer.write("\n--------------------------------------\n");
+			writer.write("TM Locations:\n");
+			writer.write("--------------------------------------\n");
+			try (Scanner scanner = new Scanner(Main.class.getResourceAsStream("/info/tm_locations.txt"))) {
+				while (scanner.hasNextLine()) {
+					writer.write(scanner.nextLine() + "\n");
+				}
+			} catch (Exception ex) {
+				writer.write("Could not load TM Locations file.\n");
+				ex.printStackTrace();
+			}
+			
 			boolean[][] tempItemsCollected = gp.player.p.itemsCollected.clone();
 			gp.player.p.itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 			gp.aSetter.setObject();
@@ -1138,6 +1153,29 @@ public class Main {
 			gp.player.p.itemsCollected = tempItemsCollected;
 			gp.aSetter.setObject();
 			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	private static void writeAbilities() {
+		try {
+			FileWriter writer = new FileWriter("./docs/AbilitiesInfo.txt");
+			writer.write("--------------------------------------\n");
+			writer.write("Abilities Info:\n");
+			writer.write("--------------------------------------\n");
+			Ability[] allAbilities = Ability.values();
+			for (Ability a : allAbilities) {
+				String ability = a.toString();
+				while (ability.length() < 18) {
+					ability += " ";
+				}
+				String desc = a.desc;
+				writer.write(String.format("%s | %s\n", ability, desc));
+			}
+			
+			writer.close();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
