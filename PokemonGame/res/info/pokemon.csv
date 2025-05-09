@@ -230,9 +230,9 @@
 244|Vorsuitex    |ICE     |LIGHT   |SNOW_WARNING      |SNOW_WARNING      |SNOW_WARNING      |[80, 5, 130, 150, 180, 80]    |100.9 |3  |
 242|Kleinyeti    |ICE     |MAGIC   |SLUSH_RUSH        |SLUSH_RUSH        |SLUSH_RUSH        |[25, 400, 35, 5, 50, 95]      |2.3   |3  |
 241|Triwandoliz  |POISON  |MAGIC   |PROTEAN           |PROTEAN           |PROTEAN           |[75, 85, 90, 134, 105, 126]   |86.5  |3  |
-245|Relomidel    |ICE     |DRAGON  |GLACIER_AURA      |GLACIER_AURA      |PRESSURE          |[100, 70, 150, 150, 100, 110] |750.5 |3  |
-246|Relopamil    |PSYCHIC |DRAGON  |PSYCHIC_AURA      |PSYCHIC_AURA      |PRESSURE          |[100, 150, 100, 100, 130, 100]|705.2 |3  |
-247|Dragowrath   |GALACTIC|DRAGON  |GALACTIC_AURA     |GALACTIC_AURA     |PRESSURE          |[90, 95, 105, 200, 110, 100]  |956.4 |3  |
+245|Relomidel    |ICE     |DRAGON  |COLD_HEART        |COLD_HEART        |PRESSURE          |[100, 70, 150, 150, 100, 110] |750.5 |3  |
+246|Relopamil    |PSYCHIC |DRAGON  |WARM_HEART        |WARM_HEART        |PRESSURE          |[100, 150, 100, 100, 130, 100]|705.2 |3  |
+247|Dragowrath   |GALACTIC|DRAGON  |WHITE_HOLE        |WHITE_HOLE        |PRESSURE          |[90, 95, 105, 200, 110, 100]  |956.4 |3  |
 249|Solaroxyous  |FIRE    |GALACTIC|DROUGHT           |DROUGHT           |DROUGHT           |[190, 75, 120, 90, 120, 75]   |9999.9|3  |
 0  |Kissyfishy-D |WATER   |DRAGON  |ADAPTABILITY      |WATER_VEIL        |INTIMIDATE        |[160, 100, 75, 100, 75, 90]   |895.4 |3  |
 89 |Scraggy      |DARK    |FIGHTING|INTIMIDATE        |MOXIE             |SHED_SKIN         |[50, 75, 70, 35, 70, 48]      |26.0  |180|

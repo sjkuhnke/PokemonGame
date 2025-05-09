@@ -2819,10 +2819,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 					}
 				}
 			}
-			if (move == Move.POP_POP && hit == numHits) {
-				Task.addTask(Task.TEXT, "Hit " + hits + " time(s)!");
-			} else if ((hit == numHits && hit > 1) || (move == Move.BEAT_UP && numHits == 1)) {
-				Task.addTask(Task.TEXT, "Hit " + hit + " time(s)!");
+			if (!foeEject) {
+				if (move == Move.POP_POP && hit == numHits) {
+					Task.addTask(Task.TEXT, "Hit " + hits + " time(s)!");
+				} else if ((hit == numHits && hit > 1) || (move == Move.BEAT_UP && numHits == 1)) {
+					Task.addTask(Task.TEXT, "Hit " + hit + " time(s)!");
+				}
 			}
 			
 			if (first && this.getItem() == Item.KING1S_ROCK && foe.ability != Ability.SHIELD_DUST && !foe.hasStatus(Status.FLINCHED) && checkSecondary(10)) {
@@ -6309,20 +6311,20 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (result) System.out.println(this.nickname + " had swap at the end of the turn (bad)");
 	}
 
-	public int getSpeed() {
+	public int getSpeed(Field field) {
 		double speed = this.getStat(5) * this.asModifier(4);
 		if (this.status == Status.PARALYZED) speed *= 0.5;
 		if (this.getItem() == Item.IRON_BALL) speed *= 0.5;
 		if (this.getItem() == Item.CHOICE_SCARF) speed *= 1.5;
 		if (this.ability == Ability.UNBURDEN && consumedItem) speed *= 2;
-		if (checkAbilitySpeedBoost(this.ability)) speed *= 2;
+		if (checkAbilitySpeedBoost(this.ability, field)) speed *= 2;
 		return (int) speed;
 	}
 	
 	public Pokemon getFaster(Pokemon other, int thisP, int otherP) {
-		int speed1 = this.getSpeed();
+		int speed1 = this.getSpeed(field);
 		if (field.contains(this.getFieldEffects(), Effect.TAILWIND)) speed1 *= 2;
-		int speed2 = other.getSpeed();
+		int speed2 = other.getSpeed(field);
 		if (field.contains(other.getFieldEffects(), Effect.TAILWIND)) speed2 *= 2;
 		
 		if (thisP > otherP) return this;
@@ -6344,7 +6346,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return faster;
 	}
 	
-	private boolean checkAbilitySpeedBoost(Ability ability) {
+	private boolean checkAbilitySpeedBoost(Ability ability, Field field) {
 		if (field.equals(field.weather, Effect.SUN, this) && ability == Ability.CHLOROPHYLL) return true;
 		if (field.equals(field.weather, Effect.RAIN, this) && ability == Ability.SWIFT_SWIM) return true;
 		if (field.equals(field.weather, Effect.SANDSTORM, this) && ability == Ability.SAND_RUSH) return true;
@@ -6628,7 +6630,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			if (this.id == 1 && this.level == 1 && !trainerOwned()) bp = 80;
 		} else if (move == Move.ELECTRO_BALL) {
-			double speedRatio = foe.getSpeed() * 1.0 / this.getSpeed();
+			double speedRatio = foe.getSpeed(field) * 1.0 / this.getSpeed(field);
 			if (speedRatio > 1) {
 				bp = 40;
 			} else if (speedRatio >= 0.501 && speedRatio <= 1) {
@@ -6692,7 +6694,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				bp = 120;
 			}
 		} else if (move == Move.GYRO_BALL) {
-			double speedRatio = foe.getSpeed() * 1.0 / this.getSpeed();
+			double speedRatio = foe.getSpeed(field) * 1.0 / this.getSpeed(field);
 			bp = (int) Math.min(150, (25 * speedRatio) + 1);
 		} else if (move == Move.HEAT_CRASH || move == Move.HEAVY_SLAM) {
 			double weightRatio = foe.calcWeight() * 1.0 / this.calcWeight();
@@ -7622,6 +7624,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 					if (consume) this.consumeItem(foe);
 				}
 			}
+		}
+		if (foe.currentHP <= 0) { // Check for kill
+			foe.faint(true, this);
 		}
 	}
 	
