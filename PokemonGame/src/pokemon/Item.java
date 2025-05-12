@@ -1783,6 +1783,17 @@ public enum Item {
         AutoCompleteDecorator.decorate(lastBox);
         fieldsGbc.gridx = 1;
         fieldsPanel.add(lastBox, fieldsGbc);
+        
+        // ===== Choice Move =====
+        fieldsGbc.gridx = 0;
+        fieldsGbc.gridy++;
+        fieldsPanel.add(new JLabel("Choice Move:"), fieldsGbc);
+        JComboBox<Move> choiceBox = new JComboBox<>(Move.values());
+        choiceBox.insertItemAt(null, 0);
+        choiceBox.setSelectedItem(p.choiceMove);
+        AutoCompleteDecorator.decorate(choiceBox);
+        fieldsGbc.gridx = 1;
+        fieldsPanel.add(choiceBox, fieldsGbc);
 
         // ===== Disabled Move =====
         fieldsGbc.gridx = 0;
@@ -1911,6 +1922,7 @@ public enum Item {
             p.rollCount = (Integer) rollBox.getSelectedItem();
             p.metronome = (Integer) metroBox.getSelectedItem();
             p.lastMoveUsed = (Move) lastBox.getSelectedItem();
+            p.choiceMove = (Move) choiceBox.getSelectedItem();
             p.disabledMove = (Move) disabledBox.getSelectedItem();
             p.illusion = illusionBox.isSelected();
 

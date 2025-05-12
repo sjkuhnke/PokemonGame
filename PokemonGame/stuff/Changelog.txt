@@ -531,7 +531,6 @@ Fixed old names being shown in the evolution method text
 Fixed Sedinister-E's trainer name showing as "Rocky-E"
 Changed Take Down's accuracy 85 -> 90
 Fixed end of turn stuff (field, burn damage, etc) not ticking down when the player U-Turns out
-Fixed IDs being correct in PokemonInfo doc for TM learnsets
 Fixed Mind Reader not having any effect (oops)
 Fixed Future Sight still trying to damage a mon if they faint at the same time
 Added 1/4 horizontal corner collision for top left and top right of tiles
@@ -544,7 +543,7 @@ Gave Wattwo Discharge at 27 and moved all the other moves down to fill in where 
 Gave Crobat Heat Wave at lv 1
 Gave Rick 1's Shookwat Spark instead of Thundershock
 Made Ace Trainer Lorayne a female Ace Trainer instead of Male
-Nerfed all of Nikola's levels to make him easier for the Ability Capsule right when you get to Schrice
+Nerfed all of Bird Keeper Nikola's levels to make him easier for the Ability Capsule right when you get to Schrice
 Fixed swapping views in SimBattleUI to also swap names and types
 Made checking Hidden Power and Return TM show the Hidden Power type icon in the bottom right corner in the box
 Made one-time obtainable held items not sellable if you only have 1 (can't sell your last Choice Band and stuff)

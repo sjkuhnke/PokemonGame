@@ -290,7 +290,7 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "You may have heard of the item before, but this one is special! It heals your Pokemon a whopping 25% of any damage dealt!");
 			Task.addTask(Task.DIALOGUE, npc, "I'm willing to part with it, but for a price. You see, my Cleffa and Azurill will only evolve when they're happy enough...");
 			Task.addTask(Task.DIALOGUE, npc, "But they're far too weak to train on their own, so I'd like to use the unique item to this region, being the Euphorian Gem!");
-			Task.addTask(Task.CONFIRM, "If you have 2 Euphorian Gems to give me, I'll give you this Shell Bell. Do we have a deal?", 6);
+			Task.addTask(Task.CONFIRM, npc, "If you have 2 Euphorian Gems to give me, I'll give you this Shell Bell. Do we have a deal?", 6);
 		});
 		
 		scriptMap.put(11.0, (npc) -> { // fred 1
@@ -628,7 +628,7 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, s);
 			}
 			Task.addTask(Task.DIALOGUE, npc, "Trust me, I had to fight off some of them, they hit hard. Especially the stunt doubles...");
-			Task.addTask(Task.CONFIRM, "There won't be any leaving until it's clear! Are you SURE you're ready?", 2);
+			Task.addTask(Task.CONFIRM, npc, "There won't be any leaving until it's clear! Are you SURE you're ready?", 2);
 			// Millie 2
 			Task.addTask(Task.TURN, player, "", Task.LEFT);
 			Task.addTask(Task.DIALOGUE, npc, "There's this weird kid that's been in a trance blocking the way to the tower. He hasn't moved an inch, almost like he's guarding the place.");
@@ -1342,7 +1342,7 @@ public class Script {
 						Task.addTask(Task.DIALOGUE, npc, s);
 					}
 				}
-				Task.addTask(Task.CONFIRM, "Are you ready to battle as soon as you enter? There's no going back once I let you in.", 0);
+				Task.addTask(Task.CONFIRM, npc, "Are you ready to battle as soon as you enter? There's no going back once I let you in.", 0);
 			} else {
 				Task.addTask(Task.DIALOGUE, npc, "Merlin's pushing himself too hard, as usual. I'm making sure he doesn't keel over before the real fight starts.");
 				Task.addTask(Task.SLEEP, "", 15);
@@ -1710,7 +1710,8 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "But only one can be awakened.");
 				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "Tell me, Finn. Which do you believe will triumph against the coming storm?");
 				Task.addTask(Task.SLEEP, "", 10);
-				Task.addTask(Task.CONFIRM, npc, "Faith... or Logic?", 7);
+				gp.ui.commandNum = -1; // set to -1 so the player has to arrow key first
+				Task.addTask(Task.CONFIRM, gp.npc[107][14], "Faith... or Logic?", 7);
 			} else {
 				boolean faith = p.flag[7][9];
 				if (faith) {
