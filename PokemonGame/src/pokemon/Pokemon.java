@@ -162,6 +162,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	// battle fields
 	public Move lastMoveUsed;
+	public Move choiceMove;
 	public Move disabledMove;
 	public int slot;
 	
@@ -469,6 +470,11 @@ public class Pokemon implements RoleAssignable, Serializable {
         // Find the maximum damage value
         int maxDamage = Collections.max(moveToDamage.values());
         
+        Ability foeAbility = foe.ability;
+        if (foe.getItem() != Item.ABILITY_SHIELD && this.ability == Ability.MOLD_BREAKER) {
+			foeAbility = Ability.NULL;
+		}
+        
         if (tr.hasValidMembers() && !isTrapped(foe)) {
         	// 25% chance to swap in a partner if they resist and you don't
         	ArrayList<Move> damagingMoveset = foe.getDamagingMoveset();
@@ -477,10 +483,11 @@ public class Pokemon implements RoleAssignable, Serializable {
         	if (check != null && check.cat != 2 && !tr.resists(this, foe, check.mtype, check)
         			&& tr.hasResist(foe, check.mtype, check)) {
         		double chance = ((1 - Trainer.getEffective(tr.getBestResist(foe, check.mtype, check), foe, check.mtype, check, false)) / 2) * 100;
+        		boolean faster = this == this.getFaster(foe, 0, 0);
         		if (only1Move) {
         			chance *= 2;
         		} else {
-        			if (this == this.getFaster(foe, 0, 0)) chance /= 2;
+        			if (faster) chance /= 2;
             		if (this.impressive) chance /= 2;
         		}
         		if (checkSecondary((int) Math.round(chance))) {
@@ -489,6 +496,10 @@ public class Pokemon implements RoleAssignable, Serializable {
         			if (switchRsn != null) {
         				switchRsn.setFirst(this);
             			switchRsn.setSecond(rsn);
+        			}
+        			if (faster) {
+        				Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+            	        if (pivotMove != null) return pivotMove;
         			}
                 	this.addStatus(Status.SWAP);
                 	return only1Move ? check : Move.SPLASH;
@@ -505,6 +516,8 @@ public class Pokemon implements RoleAssignable, Serializable {
         				switchRsn.setFirst(this);
             			switchRsn.setSecond(rsn);
         			}
+        			Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+        	        if (pivotMove != null) return pivotMove;
         			this.addStatus(Status.SWAP);
             		return Move.GROWL;
         		}
@@ -512,8 +525,8 @@ public class Pokemon implements RoleAssignable, Serializable {
         	// 20% chance to swap if the most damage you do is 1/5 or less to target
         	if (maxDamage <= foe.currentHP * 1.0 / 5) {
         		double chance = 20;
-        		if (this == this.getFaster(foe, 0, 0) && !validMoves.contains(Move.U$TURN) && !validMoves.contains(Move.VOLT_SWITCH) &&
-        				!validMoves.contains(Move.FLIP_TURN) && !validMoves.contains(Move.PARTING_SHOT) && !validMoves.contains(Move.BATON_PASS)) chance /= 2;
+        		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+        		if (this == this.getFaster(foe, 0, 0) && pivotMove == null) chance /= 2;
         		if (this.impressive) chance /= 2;
         		if (checkSecondary((int) chance)) {
         			String rsn = "[Damage i do is 1/5 or less : " + String.format("%.1f", chance) + "%]";
@@ -522,11 +535,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         				switchRsn.setFirst(this);
             			switchRsn.setSecond(rsn);
         			}
-        			if (validMoves.contains(Move.U$TURN)) return Move.U$TURN;
-        			if (validMoves.contains(Move.VOLT_SWITCH)) return Move.VOLT_SWITCH;
-        			if (validMoves.contains(Move.FLIP_TURN)) return Move.FLIP_TURN;
-        			if (validMoves.contains(Move.PARTING_SHOT)) return Move.PARTING_SHOT;
-        			if (validMoves.contains(Move.BATON_PASS)) return Move.BATON_PASS;
+        			if (pivotMove != null) return pivotMove;
         			this.addStatus(Status.SWAP);
             		return Move.GROWL;
         		}
@@ -541,6 +550,8 @@ public class Pokemon implements RoleAssignable, Serializable {
         	            switchRsn.setFirst(this);
         	            switchRsn.setSecond(rsn);
         	        }
+        	        Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+        	        if (pivotMove != null) return pivotMove;
         	        this.addStatus(Status.SWAP);
         	        return Move.GROWL;
         		}
@@ -553,6 +564,8 @@ public class Pokemon implements RoleAssignable, Serializable {
     				switchRsn.setFirst(this);
         			switchRsn.setSecond(rsn);
     			}
+        		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+    	        if (pivotMove != null) return pivotMove;
         		this.addStatus(Status.SWAP);
         		return Move.GROWL;
         	}
@@ -566,6 +579,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    				switchRsn.setFirst(this);
 	        			switchRsn.setSecond(rsn);
 	    			}
+	        		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+        	        if (pivotMove != null) return pivotMove;
 	        		this.addStatus(Status.SWAP);
 	        		return Move.GROWL;
         		}
@@ -585,7 +600,8 @@ public class Pokemon implements RoleAssignable, Serializable {
         	if (moveKills) {
         		double chance = (this.currentHP * 1.0 / this.getStat(0)) * 100;
         		chance *= 0.6;
-        		if (this == this.getFaster(foe, 0, 0)) chance /= 2;
+        		boolean faster = this == this.getFaster(foe, 0, 0);
+        		if (faster) chance /= 2;
         		if (maxDamage >= foe.currentHP) chance /= 1.5;
         		if (hasResist) {
         			chance *= 1.5;
@@ -598,6 +614,10 @@ public class Pokemon implements RoleAssignable, Serializable {
         			if (switchRsn != null) {
         				switchRsn.setFirst(this);
             			switchRsn.setSecond(rsn);
+        			}
+        			if (faster) {
+        				Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+            	        if (pivotMove != null) return pivotMove;
         			}
         			this.addStatus(Status.SWAP);
             		return Move.moveOfType(type);
@@ -810,6 +830,16 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (e.getKey().cat == 2) return false;
 		}
 		return true;
+	}
+	
+	public Move hasPivotMove(Pokemon foe, Ability foeAbility, ArrayList<Move> validMoveset) {
+		for (Move m : validMoveset) {
+			if (m.isPivotMove()) {
+				double mult = Trainer.getEffective(foe, this, m.mtype, m, false);
+				if (!m.isMagicBounceEffected(foeAbility, m.accuracy) && mult > 0) return m;
+			}
+		}
+		return null;
 	}
 	
 	public int getID() {
@@ -1491,6 +1521,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 				!Move.getNoComboMoves().contains(move) && move != Move.STRUGGLE
 				&& move != Move.FUSION_BOLT && move != Move.FUSION_FLARE) this.lastMoveUsed = move;
 		
+		if (this.choiceMove == null && this.item != null && this.item.isChoiceItem()) {
+			this.choiceMove = move;
+			if (move == Move.FAILED_SUCKER) this.choiceMove = Move.SUCKER_PUNCH;
+		}
+		
 		if (move == Move.SUCKER_PUNCH && !first) move = Move.FAILED_SUCKER;
 		
 		if (move == Move.FAILED_SUCKER) this.lastMoveUsed = Move.SUCKER_PUNCH;
@@ -1610,7 +1645,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.removeStatus(Status.CHARGING);
 				this.removeStatus(Status.SEMI_INV);
 				this.spriteVisible = true;
-				//this.lastMoveUsed = null;
+				this.lastMoveUsed = null;
 				this.rollCount = 1;
 				this.metronome = -1;
 				return;
@@ -1650,7 +1685,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (move == this.disabledMove) {
 			Task.addTask(Task.TEXT, this.nickname + "'s " + move + " is disabled!");
-			//this.lastMoveUsed = null;
+			this.lastMoveUsed = null;
 			this.impressive = false;
 			this.rollCount = 1;
 			this.metronome = -1;
@@ -1868,9 +1903,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		
-		if (foeAbility == Ability.MAGIC_BOUNCE && move.cat == 2 && (acc <= 100 || move == Move.WHIRLWIND || move == Move.ROAR || move == Move.STEALTH_ROCK
-				|| move == Move.SPIKES || move == Move.TOXIC_SPIKES || move == Move.TOXIC || move == Move.STICKY_WEB || move == Move.YAWN
-				|| move == Move.FLOODLIGHT)) {
+		if (foe.getItem() != Item.ABILITY_SHIELD &&
+				(move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || this.ability == Ability.MOLD_BREAKER)) {
+			foeAbility = Ability.NULL;
+		}
+		
+		if (move.isMagicBounceEffected(foeAbility, acc)) {
 			useMove(move, foe);
 			Task.addAbilityTask(foe);
 			foe.move(this, move, true);
@@ -1963,11 +2001,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (foe.ability == Ability.WONDER_SKIN && move.cat == 2 && acc <= 100) acc = 50;
 		
 		if (move == Move.POP_POP) acc = 1000;
-		
-		if (foe.getItem() != Item.ABILITY_SHIELD &&
-				(move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || this.ability == Ability.MOLD_BREAKER)) {
-			foeAbility = Ability.NULL;
-		}
 		
 		if (this.ability != Ability.NO_GUARD && foeAbility != Ability.NO_GUARD) {
 			int accEv = this.statStages[5] - foe.statStages[6];
@@ -2593,7 +2626,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (Move.getDraining().contains(move)) {
 				int healAmount = Math.min(damage, foe.currentHP);
 				if (move == Move.BLOODSHED_CLEAVE) {
-					healAmount = (int) Math.max((int) Math.ceil(healAmount / 1.5), this.getHPAmount(1.0/4));
+					healAmount = (int) Math.max((int) Math.ceil(healAmount / 2.0), this.getHPAmount(1.0/4));
 				} else {
 					healAmount = Math.max((int) Math.ceil(healAmount / 2.0), 1);
 				}
@@ -3209,6 +3242,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (!(foe.ability == Ability.STICKY_HOLD && this.ability != Ability.MOLD_BREAKER)) {
 					if ((this.item != null || foe.item != null) && (this.item != Item.EVERSTONE && foe.item != Item.EVERSTONE)) {
 						Task.addTask(Task.TEXT, this.nickname + " switched items with its target!");
+						this.choiceMove = null;
+						foe.choiceMove = null;
 						Item userItem = this.item;
 						Item foeItem = foe.item;
 						if (userItem != null) Task.addTask(Task.TEXT, foe.nickname + " obtained a " + userItem.toString() + "!");
@@ -3444,7 +3479,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.HEAT_WAVE) {
 			foe.burn(false, this);
 		} else if (move == Move.HEX_CLAW) {
-			if (foe.disabledMove == null && foe.lastMoveUsed != null && foe.lastMoveUsed.pp > 0) {
+			if (!foe.isFainted() && foe.disabledMove == null && foe.lastMoveUsed != null && foe.lastMoveUsed.pp > 0) {
 				foe.disabledMove = foe.lastMoveUsed;
 				foe.disabledCount = 3;
 				Task.addTask(Task.TEXT, foe.nickname + "'s " + foe.disabledMove + " was disabled!");
@@ -4705,6 +4740,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (!(foe.ability == Ability.STICKY_HOLD && this.ability != Ability.MOLD_BREAKER)) {
 				if ((this.item != null || foe.item != null) && (this.item != Item.EVERSTONE && foe.item != Item.EVERSTONE)) {
 					if (announce) Task.addTask(Task.TEXT, this.nickname + " switched items with its target!");
+					this.choiceMove = null;
+					foe.choiceMove = null;
 					Item userItem = this.item;
 					Item foeItem = foe.item;
 					if (userItem != null) if (announce) Task.addTask(Task.TEXT, foe.nickname + " obtained a " + userItem.toString() + "!");
@@ -5403,6 +5440,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		healBlockCount = 0;
 		consumedItem = false;
 		this.lastMoveUsed = null;
+		this.choiceMove = null;
 		this.tricked = null;
 		this.moveMultiplier = 1;
 		this.clearStatuses();
@@ -7450,7 +7488,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.handleEjectPack(userStages, this);
 		}
 		
-		if (gp.player.p.pokedex[this.id] < 1) gp.player.p.pokedex[this.id] = 1;
+		if (gp.gameState != GamePanel.SIM_BATTLE_STATE && gp.player.p.pokedex[this.id] < 1) gp.player.p.pokedex[this.id] = 1;
 		
 	}
 	
@@ -7894,7 +7932,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (moveslot != null) {
 				Move m = moveslot.move;
 				if ((hasStatus(Status.TORMENTED) && m == this.lastMoveUsed) || (hasStatus(Status.MUTE) && Move.getSound().contains(m)) || (moveslot.currentPP == 0) 
-						|| (this.getItem() != null && this.item.isChoiceItem() && this.lastMoveUsed != null && this.lastMoveUsed != m) || (this.getItem() == Item.ASSAULT_VEST && m.cat == 2)
+						|| (this.getItem() != null && this.item.isChoiceItem() && this.choiceMove != null && this.choiceMove != m) || (this.getItem() == Item.ASSAULT_VEST && m.cat == 2)
 						|| (this.hasStatus(Status.LOCKED) && m != this.lastMoveUsed) || (this.hasStatus(Status.ENCORED) && m != this.lastMoveUsed)
 						|| (this.hasStatus(Status.CHARGING) && m != this.lastMoveUsed) || (this.hasStatus(Status.SEMI_INV) && m != this.lastMoveUsed)
 						|| hasStatus(Status.HEAL_BLOCK) && m.isHealing() || m == this.disabledMove) {
@@ -8005,6 +8043,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    
 	    // Clone battle fields
 	    clonedPokemon.lastMoveUsed = this.lastMoveUsed;
+	    clonedPokemon.choiceMove = this.choiceMove;
 	    clonedPokemon.disabledMove = this.disabledMove;
 	    clonedPokemon.slot = this.slot;
 

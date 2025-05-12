@@ -1406,6 +1406,7 @@ public class UI extends AbstractUI {
 		int width = gp.tileSize * 3;
 		int height = (int) (gp.tileSize * 2.5);
 		drawSubWindow(x, y, width, height);
+		if (currentTask.e != null) drawNameLabel(true);
 		x += gp.tileSize;
 		y += gp.tileSize;
 		String yes = type == 7 ? "Faith" : "Yes";
@@ -1544,7 +1545,7 @@ public class UI extends AbstractUI {
 		if (gp.keyH.upPressed || gp.keyH.downPressed) {
 			gp.keyH.upPressed = false;
 			gp.keyH.downPressed = false;
-			commandNum = 1 - commandNum;
+			commandNum = 1 - Math.abs(commandNum);
 		}
 		
 		drawToolTips("OK", null, "Back", null);
@@ -2373,7 +2374,7 @@ public class UI extends AbstractUI {
 			}
 			
 			// draw type icon when checking TMs for Hidden Power/Return
-			if (cBox[i] != null && (tmCheck == Item.TM26 || tmCheck == Item.TM99)) {
+			if (i < cBox.length && cBox[i] != null && (tmCheck == Item.TM26 || tmCheck == Item.TM99)) {
 				int iconX = cX + 56;
 				int iconY = cY + 56;
 				g2.drawImage(cBox[i].determineHPType().getImage(), iconX, iconY, null);

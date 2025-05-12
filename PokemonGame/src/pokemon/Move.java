@@ -58,7 +58,7 @@ public enum Move {
 	BLAST_BURN(150,90,0,0,1,0,PType.FIRE,"User must rest after using this move",false,5),
 	BLAZE_KICK(90,100,10,1,0,0,PType.FIRE,"% chance to Burn foe",true,10),
 	BLIZZARD(110,70,20,0,1,0,PType.ICE,"% chance to Frostbite foe, doesn't check accuracy in SNOW",false,5),
-	BLOODSHED_CLEAVE(90,100,0,0,0,0,PType.GHOST,"Heals either 75% damage dealt to foe or 25% of user's max HP; whichever is greater ",true,10),
+	BLOODSHED_CLEAVE(90,100,0,0,0,0,PType.GHOST,"Heals either 50% damage dealt to foe or 25% of user's max HP; whichever is greater",true,10),
 	BLUE_FLARE(130,85,20,0,1,0,PType.FIRE,"% chance to Burn foe",false,5),
 	BODY_PRESS(80,100,0,0,0,0,PType.FIGHTING,"Uses user's Defense stat instead of Attack",true,10),
 	BODY_SLAM(85,100,30,0,0,0,PType.NORMAL,"% chance to Paralyze foe",true,15),
@@ -1315,6 +1315,17 @@ public enum Move {
 		} else {
 			return false;
 		}
+	}
+
+	public boolean isPivotMove() {
+		return this == Move.U$TURN || this == Move.VOLT_SWITCH || this == Move.FLIP_TURN || this == Move.PARTING_SHOT || this == Move.BATON_PASS;
+	}
+
+	public boolean isMagicBounceEffected(Ability foeAbility, int acc) {
+		if (foeAbility != Ability.MAGIC_BOUNCE) return false;
+		return this.cat == 2 && (acc <= 100 || this == Move.WHIRLWIND || this == Move.ROAR || this == Move.STEALTH_ROCK
+			|| this == Move.SPIKES || this == Move.TOXIC_SPIKES || this == Move.TOXIC || this == Move.STICKY_WEB || this == Move.YAWN
+			|| this == Move.FLOODLIGHT);
 	}
 
 }

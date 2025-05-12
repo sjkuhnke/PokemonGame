@@ -38,8 +38,8 @@
 38 |Busheep      |GRASS   |null    |ANTICIPATION      |FLUFFY            |CHLOROPHYLL       |[60, 50, 100, 75, 105, 60]    |15.8  |230|
 39 |Ramant       |GRASS   |null    |MOXIE             |DEFIANT           |RECKLESS          |[70, 130, 95, 45, 80, 100]    |87.7  |85 |
 40 |Bushewe      |GRASS   |LIGHT   |SERENE_GRACE      |COMPETITIVE       |GRASSY_SURGE      |[70, 45, 80, 130, 95, 100]    |55.6  |100|
-35 |Scarabit     |BUG     |FIGHTING|HYPER_CUTTER      |SWARM             |THREATENING       |[40, 60, 65, 30, 50, 70]      |6.0   |200|
-36 |Spartipede   |BUG     |FIGHTING|HYPER_CUTTER      |JUSTIFIED         |THREATENING       |[53, 95, 85, 30, 53, 85]      |45.5  |85 |
+35 |Scarabit     |BUG     |FIGHTING|HYPER_CUTTER      |SWARM             |ANTICIPATION      |[40, 60, 65, 30, 50, 70]      |6.0   |200|
+36 |Spartipede   |BUG     |FIGHTING|HYPER_CUTTER      |JUSTIFIED         |SHARPNESS         |[53, 95, 85, 30, 53, 85]      |45.5  |85 |
 37 |Gladipede    |BUG     |FIGHTING|SPEED_BOOST       |JUSTIFIED         |THREATENING       |[63, 120, 90, 62, 65, 105]    |90.1  |50 |
 60 |Lotad        |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |HYDRATION         |[40, 30, 30, 40, 50, 30]      |5.7   |255|
 61 |Lombre       |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |HYDRATION         |[60, 50, 50, 60, 70, 50]      |71.7  |120|
