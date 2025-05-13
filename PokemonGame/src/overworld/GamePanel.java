@@ -24,6 +24,7 @@ import javax.swing.Timer;
 import entity.*;
 import object.*;
 import pokemon.*;
+import puzzle.*;
 import tile.*;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -75,6 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public NPC_Pokemon[] grusts = new NPC_Pokemon[10];
 	public boolean checkSpin = false;
+	public PuzzleManager puzzleM = new PuzzleManager(this);
 	
 	public TileManager tileM = new TileManager(this);
 	
@@ -126,6 +128,7 @@ public class GamePanel extends JPanel implements Runnable {
 		Pokemon.readTMsFromCSV();
 		
 		Player.setupPokedex();
+		puzzleM.setup(true); // TODO: for testing
 	}
 	
 	public void startGameThread() {

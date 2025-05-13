@@ -2204,6 +2204,9 @@ public class AssetSetter {
 		gp.npc[mapNum][index++] = ITileSetup(60, 61, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(53, 58, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(61, 58, TORCH, mapNum, mapNum);
+		
+		mapNum = 191;
+		index = 0;
 	}
 
 	public void setInteractiveTile(int map) {
