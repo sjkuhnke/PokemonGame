@@ -872,7 +872,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return getTypes(id)[1];
 	}
 	
-	private boolean isType(PType type) {
+	public boolean isType(PType type) {
 		return this.type1 == type || this.type2 == type;
 	}
 	
@@ -2165,7 +2165,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			
-			if (moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST && foe.getItem() != Item.RING_TARGET) {
+			if (foe.getItem() != Item.RING_TARGET &&
+					(moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST) ||
+					(moveType == PType.ICE && foeAbility == Ability.WARM_HEART) ||
+					(moveType == PType.PSYCHIC && foeAbility == Ability.COLD_HEART)) {
 				Task.addAbilityTask(foe);
 				Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 				endMove();
@@ -5637,7 +5640,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (foe.getItem() != Item.RING_TARGET) return 0;
 		}
 		
-		if (moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST) {
+		if ((moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST) ||
+				(moveType == PType.ICE && foeAbility == Ability.WARM_HEART) ||
+				(moveType == PType.PSYCHIC && foeAbility == Ability.COLD_HEART)) {
 			if (foe.getItem() != Item.RING_TARGET) return 0;
 		}
 		

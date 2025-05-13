@@ -579,3 +579,16 @@ Fixed fainting due to Jaboca or Rowap berries actually cause the effected to fai
 Fixed text wrapping method and Entities and Item descriptions accidentally breaking the messages twice
 
 Demo 1.12 Released
+Changed Scarabit's Hidden Ability (Threatening -> Anticipation)
+Changed Spartipede's Hidden Ability (Threatening -> Sharpness)
+Changed confirm UI (Yes/No options) to also draw the name title of the NPC asking (if applicable)
+FIXED GAME-CRASHING BUG WHEN ACCESSING GAUNTLET BOX
+Changed choice locked to always lock the user no matter what (previously was linked to the last used move which would reset when sleeping/flinching)
+Added choice lock move dropdown box in the "More" section in the calc
+Nerfed Bloodshed Cleave to heal 50% of damage dealt (instead of 75%)
+Made AI smarter by always using a pivot move instead of hard switching if they have one, they won't do nothing (Magic Bounce/immunity) and are faster
+Made getting flinched/getting disabled reset your last used move so you can't be encored (to match fully para/self hit confusion/sleep), may change
+Made Hex Claw not announce the disable if the move kills the foe
+Fixed bug with Pokedex updated "seen" on Pokemon you see when battle betting (wasn't intended)
+
+Demo 1.13 Released
