@@ -225,6 +225,8 @@ public class AssetSetter {
 	private static final int GATE = 15;
 	private static final int PAINTING = 16;
 	private static final int PAINTING_COLOR = 17;
+	private static final int SPIKE_1 = 18;
+	private static final int SPIKE_2 = 19;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -2217,6 +2219,21 @@ public class AssetSetter {
 		gp.npc[mapNum][index++] = ITileSetup(53, 67, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(48, 57, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(52, 57, TORCH, mapNum, mapNum);
+		
+		mapNum = 192;
+		index = 0;
+		gp.npc[mapNum][index++] = ITileSetup(59, 39, SPIKE_1, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(40, 27, SPIKE_1, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(43, 23, SPIKE_1, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(50, 51, SPIKE_2, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(73, 50, SPIKE_2, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(58, 45, SPIKE_2, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(70, 40, SPIKE_2, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(47, 33, SPIKE_2, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(72, 29, SPIKE_2, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(38, 27, SPIKE_2, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(44, 25, SPIKE_2, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(60, 15, SPIKE_2, mapNum, mapNum);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -3232,6 +3249,9 @@ public class AssetSetter {
 			gp.npc[39][2] = null;
 			gp.npc[39][3] = null;
 		}
+		
+		gp.ui.drawLightOverlay = gp.determineLightOverlay();
+		
 		if (flag[3][1]) {
 			gp.npc[38][0] = NPCSetup(EXPLORER_DOWN, "Ice Master", 53, 7, "Ah, I see you've returned. This petticoat gem... I once found it in the frozen north.", 38.0, 106, "The ice teaches patience, but it also teaches strength.");
 		}
@@ -4386,6 +4406,12 @@ public class AssetSetter {
 			break;
 		case PAINTING_COLOR:
 			result = new Painting(gp, null);
+			break;
+		case SPIKE_1:
+			result = new Spike(gp, false);
+			break;
+		case SPIKE_2:
+			result = new Spike(gp, true);
 			break;
 		}
 		

@@ -74,16 +74,18 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	public void update() {
-		if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-			spriteCounter++;
-			if (keyH.upPressed) {
-				direction = "up";
-			} else if (keyH.downPressed) {
-				direction = "down";
-			} else if (keyH.leftPressed) {
-				direction = "left";
-			} else if (keyH.rightPressed) {
-				direction = "right";
+		if ((keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) || ice) {
+			if (!ice) {
+				spriteCounter++;
+				if (keyH.upPressed) {
+					direction = "up";
+				} else if (keyH.downPressed) {
+					direction = "down";
+				} else if (keyH.leftPressed) {
+					direction = "left";
+				} else if (keyH.rightPressed) {
+					direction = "right";
+				}
 			}
 			
 			collisionOn = false;
@@ -253,7 +255,7 @@ public class PlayerCharacter extends Entity {
 			resetSpriteNum();
 			gp.gameState = GamePanel.MENU_STATE;
 		}
-		if (keyH.sPressed) {
+		if (keyH.sPressed || ice) {
 			speed = 8;
 		} else {
 			speed = 4;

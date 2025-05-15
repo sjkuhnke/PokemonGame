@@ -1218,7 +1218,7 @@ public class TileManager {
 		setup(953, false);
 		setup(954, false);
 		setup(955, false);
-//		setup(956, true);
+
 //		setup(957, true);
 //		setup(958, true);
 //		setup(959, true);
@@ -1278,6 +1278,9 @@ public class TileManager {
 			
 			tile[511] = new GrassTile();
 			tile[511].image = ImageIO.read(getClass().getResourceAsStream("/tiles/511.png"));
+			
+			tile[956] = new IceTile();
+			tile[956].image = ImageIO.read(getClass().getResourceAsStream("/tiles/956.png"));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -1493,7 +1496,6 @@ public class TileManager {
 		for (int i = 0; i < xCoords.length; i++) {
 			mapTileNum[107][xCoords[i]][yCoords[i]] = 483;
 		}
-		// TODO: clear arthra and merlin from Mt Splinkty Peak
 	}
 	
 	public void addName(String name, int map) {

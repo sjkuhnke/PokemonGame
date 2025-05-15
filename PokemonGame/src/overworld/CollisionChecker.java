@@ -36,6 +36,12 @@ public class CollisionChecker {
 	    } else {
 	        entity.inTallGrass = false;
 	    }
+	    
+	    if (gp.tileM.tile[tileNum1] instanceof IceTile || gp.tileM.tile[tileNum2] instanceof IceTile) {
+	    	entity.ice = true;
+	    } else {
+	    	entity.ice = false;
+	    }
 
 	    int delta = entity.speed / 2;
 
@@ -92,6 +98,7 @@ public class CollisionChecker {
 	        boolean touching = isTouching(entityArea, tileCollisionArea, direction, delta);
 	        if (touching && (tile.collisionDirection.equals("all") || !tile.collisionDirection.equals(direction))) {
 	            entity.collisionOn = true;
+	            entity.ice = false;
 	        }
 	    }
 	}
@@ -138,6 +145,7 @@ public class CollisionChecker {
 					entity.solidArea.y -= entity.speed;
 					if (entity.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)) {
 						entity.collisionOn = true;
+						entity.ice = false;
 						index = i;
 					}
 					break;
@@ -145,6 +153,7 @@ public class CollisionChecker {
 					entity.solidArea.y += entity.speed;
 					if (entity.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)) {
 						entity.collisionOn = true;
+						entity.ice = false;
 						index = i;
 					}
 					break;
@@ -152,6 +161,7 @@ public class CollisionChecker {
 					entity.solidArea.x -= entity.speed;
 					if (entity.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)) {
 						entity.collisionOn = true;
+						entity.ice = false;
 						index = i;
 					}
 					break;
@@ -159,6 +169,7 @@ public class CollisionChecker {
 					entity.solidArea.x += entity.speed;
 					if (entity.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)) {
 						entity.collisionOn = true;
+						entity.ice = false;
 						index = i;
 					}
 					break;
@@ -204,6 +215,7 @@ public class CollisionChecker {
 
 	            if (entityRange.intersects(targetRange) && target[gp.currentMap][i].collision) {
 	                entity.collisionOn = true;
+	                entity.ice = false;
 	                index = i;
 	            }
 	        }

@@ -4882,6 +4882,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	public void verifyHP() {
+		System.out.println("HP updated");
 		if (currentHP > this.getStat(0) || currentHP < 0) currentHP = this.getStat(0);
 	}
 	

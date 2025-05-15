@@ -3661,8 +3661,6 @@ public class UI extends AbstractUI {
 				gp.player.p.currentMap = gp.eHandler.tempMap;
 				gp.eHandler.canTouchEvent = !gp.eHandler.tempCooldown;
 				
-				drawLightOverlay = gp.determineLightOverlay();
-				drawLight = gp.determineMachineLight();
 			}
 			gp.player.spriteNum = 1;
 			gp.player.p.surf = false;

@@ -34,6 +34,7 @@ public class Entity {
 	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collisionOn = false;
 	public boolean inTallGrass;
+	public boolean ice;
 	
 	public int trainer = -1;
 	public boolean collision = true;

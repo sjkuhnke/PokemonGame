@@ -290,7 +290,6 @@ public class GamePanel extends JPanel implements Runnable {
 		if (trainer > -1 && Trainer.getTrainer(trainer).update) {
 			if (id == 159) player.p.grustCount++;
 			aSetter.updateNPC(currentMap);
-			if (id == 285) ui.drawLightOverlay = determineLightOverlay();
 		}
 
 		player.p.resetTeam();
