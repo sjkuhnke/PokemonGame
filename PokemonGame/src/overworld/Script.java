@@ -1904,16 +1904,6 @@ public class Script {
 			} else {
 				
 			}
-			Task.addTask(Task.DIALOGUE, npc, "This is the last shrine to the First Light.");
-			Task.addTask(Task.DIALOGUE, npc, "Long ago, those who believed built this tower to reach toward the heavens... to hold faith even when the skies fell silent.");
-			Task.addTask(Task.DIALOGUE, npc, "The guardians within will not yield easily.");
-			Task.addTask(Task.DIALOGUE, npc, "They will test the strength of your heart - and the purity of your conviction.");
-			Task.addTask(Task.SLEEP, "", 15);
-			Task.addTask(Task.DIALOGUE, npc, "Remember... true faith does not mean blind hope.");
-			Task.addTask(Task.DIALOGUE, npc, "It means standing firm even when all else falls away.");
-			Task.addTask(Task.SLEEP, "", 25);
-			Task.addTask(Task.DIALOGUE, npc, "I cannot walk this trial for you, Finn.");
-			Task.addTask(Task.DIALOGUE, npc, "But I will walk beside you... to the end.");
 		});
 	}
 	
