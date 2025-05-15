@@ -126,8 +126,6 @@ public class Main {
 				}
 	        }
 	        if (gp.player.p.visor) gp.player.setupPlayerImages(true);
-	        gp.ui.drawLightOverlay = gp.determineLightOverlay();
-	        gp.ui.drawLight = gp.determineMachineLight();
 	        ois.close();
 	    } catch (IOException | ClassNotFoundException e) {
 	        // If there's an error reading the file, create a new Player object
@@ -209,10 +207,6 @@ public class Main {
 		    		
 		    		// Update the npcs to the current game state on the current map
 		    		gp.aSetter.updateNPC(gp.currentMap);
-		    		
-		    		if (gp.currentMap == 107 && gp.player.p.flag[7][6]) {
-		    			gp.tileM.openGhostlyBluePortals();
-		    		}
 		    		
 		    		gp.player.p.setupPuzzles(gp, gp.currentMap);
 		    		
