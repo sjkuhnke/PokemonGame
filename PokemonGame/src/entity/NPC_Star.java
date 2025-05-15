@@ -20,7 +20,7 @@ public class NPC_Star extends Entity {
 	}
 	
 	private void setDialogue() {
-		dialogues[0] = Item.breakString("I've come here in search of rare Star Pieces. Have any to trade me?", 42);
+		dialogues[0] = Item.breakString("I've come here in search of rare Star Pieces. Have any to trade me?", 43);
 	}
 	
 	public void speak(int mode) {

@@ -947,8 +947,8 @@ public class EventHandler {
 			if (hit(190,58,93,false)) teleport(189, 31, 34,false);
 			
 			// A.T. Path -> Abandoned Tower
-			if (hit(190,57,56,false)) teleport(190, 58, 92,false);
-			//if (hit(190,58,93)) teleport(189, 31, 34,false);
+			if (hit(190,57,56,false)) teleport(191, 50, 67,false);
+			if (hit(191,50,68)) teleport(190, 57, 57,false);
 			
 			// Iron Town PC
 			if (hit(152,37,72)) teleport(153, 31, 45,false);

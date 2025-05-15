@@ -86,6 +86,8 @@ public class CatchingPuzzle extends Puzzle {
 		double poisonDefensiveMultiplier = (poisonDefensiveMultiplier1 + poisonDefensiveMultiplier2) / 2;
 		int poisonDefensiveIndex = (int) (poisonDefensiveMultiplier * 2) - 1;
 		clues[7] = clueBank[7][poisonDefensiveIndex];
+		
+		clues = shuffle(clues);
 	}
 
 	@Override
@@ -95,7 +97,7 @@ public class CatchingPuzzle extends Puzzle {
 	}
 
 	@Override
-	public void update() {
+	public void update(Object obj) {
 		// TODO Auto-generated method stub
 
 	}

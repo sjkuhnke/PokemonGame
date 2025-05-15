@@ -223,6 +223,8 @@ public class AssetSetter {
 	private static final int FUSE_3 = 13;
 	private static final int TORCH = 14;
 	private static final int GATE = 15;
+	private static final int PAINTING = 16;
+	private static final int PAINTING_COLOR = 17;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -2055,6 +2057,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 14, 17, "I've got strength like a boulder, and my Pokemon are even tougher!", "Looks like I've still got some training to do... but I'll be back!", 316);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_LEFT, 24, 16, "Dragons bow to no one. You'll understand soon enough.", "Even the best fall. I'll rise again.", 317);
+		gp.npc[mapNum][index++] = null; // merlin guide - in updateNPC
 		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 40, 40, "Emotion clouds judgment. Let's see how clear your mind is.", "You parsed the problem. I'll admit that.", 318);
 		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 50, 42, "This descent isn't physical. It's conceptual. Can you grasp that?", "You saw past the surface. Not bad.", 319);
 		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 55, 44, "Your presence here is... statistically unlikely.", "And yet, you persist. Curious.", 320);
@@ -2171,6 +2174,7 @@ public class AssetSetter {
 		
 		mapNum = 190;
 		index = 0;
+		gp.npc[mapNum][index++] = null; // merlin guide - in updateNPC
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 56, 85, "Do you carry faith, or merely the hope of it?", "Doubt is not defeat... but it is the first crack in your resolve.", 396);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 59, 85, "The Spirit does not guide those who hesitate.", "You walk, though your steps still falter. Let your soul steady.", 397);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 56, 81, "This tower reaches skyward - as must your belief.", "One more step upward. The heavens wait... or judge.", 398);
@@ -2207,6 +2211,12 @@ public class AssetSetter {
 		
 		mapNum = 191;
 		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, "Guard", 50, 57, "", mapNum);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 50, 99, "");
+		gp.npc[mapNum][index++] = ITileSetup(47, 67, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(53, 67, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(48, 57, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(52, 57, TORCH, mapNum, mapNum);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -3478,6 +3488,59 @@ public class AssetSetter {
 			}
 		}
 		
+		if (flag[7][9] && !flag[7][12]) { // merlin guide faith route
+			if (gp.npc[190][0] == null) gp.npc[190][0] = NPCSetup(MERLIN, "Merlin", 56, 89, "", 190.0);
+		} else {
+			gp.npc[190][0] = null;
+		}
+		
+		if (flag[7][10] && !flag[7][12]) { // merlin guide logic route
+			if (gp.npc[144][2] == null) gp.npc[144][2] = NPCSetup(MERLIN, "Merlin", 23, 22, "", 144.0);
+		} else {
+			gp.npc[144][2] = null;
+		}
+		
+		if ((map == 190 && flag[7][9]) || (map == 144 && flag[7][10])) { // to remove merlin from the ghostly woods heart
+			gp.player.p.flag[7][11] = true;
+		}
+		
+		if (flag[7][11]) {
+			gp.npc[107][14] = null;
+		}
+		
+		if (flag[7][9] && map == 190) {
+			gp.npc[190][1] = NPCSetup(DISCIPLE_RIGHT, 56, 85, "Do you carry faith, or merely the hope of it?", "Doubt is not defeat... but it is the first crack in your resolve.", 396);
+			gp.npc[190][2] = NPCSetup(DISCIPLE_LEFT, 59, 85, "The Spirit does not guide those who hesitate.", "You walk, though your steps still falter. Let your soul steady.", 397);
+			gp.npc[190][3] = NPCSetup(DISCIPLE_RIGHT, 56, 81, "This tower reaches skyward - as must your belief.", "One more step upward. The heavens wait... or judge.", 398);
+			gp.npc[190][4] = NPCSetup(DISCIPLE_LEFT, 59, 77, "I once questioned too. That's why I'm here - to test the ones who still do.", "You questioned me. And maybe... your answer was truer.", 399);
+			gp.npc[190][5] = NPCSetup(DISCIPLE_LEFT, 59, 69, "Your aura trembles. Are you ready to let go of reason?", "The mind bends... but the spirit endures.", 400);
+			gp.npc[190][6] = NPCSetup(DISCIPLE_RIGHT, 56, 65, "Every battle is a sermon. Listen well.", "You heard more than most.", 401);
+			gp.npc[190][7] = NPCSetup(DISCIPLE_RIGHT, 56, 61, "You ascend not just in body, but in belief. Prove it.", "The light above shines a little closer now.", 402);
+			gp.npc[190][8] = NPCSetup(DISCIPLE_LEFT, 59, 61, "I offer no welcome - only challenge. It is the same thing, in this place.", "Struggle is the holiest ritual.", 403);
+		} else {
+			for (int i = 1; i < 9; i++) {
+				gp.npc[190][i] = null;
+			}
+		}
+		
+		if (flag[7][10] && map == 144) {
+			gp.npc[144][3] = NPCSetup(WARDEN_RIGHT, 40, 40, "Emotion clouds judgment. Let's see how clear your mind is.", "You parsed the problem. I'll admit that.", 318);
+			gp.npc[144][4] = NPCSetup(WARDEN_LEFT, 50, 42, "This descent isn't physical. It's conceptual. Can you grasp that?", "You saw past the surface. Not bad.", 319);
+			gp.npc[144][5] = NPCSetup(WARDEN_UP, 55, 44, "Your presence here is... statistically unlikely.", "And yet, you persist. Curious.", 320);
+			gp.npc[144][6] = NPCSetup(WARDEN_RIGHT, 46, 49, "I will test your process. Not your power.", "You computed well. Proceed.", 321);
+			gp.npc[144][7] = NPCSetup(WARDEN_RIGHT, 54, 49, "This gauntlet favors only the methodical.", "You were less chaotic than expected.", 322);
+			gp.npc[144][8] = NPCSetup(WARDEN_LEFT, 57, 49, "Faith may lift you - but it won't unlock this place.", "A logical route forward. You've earned it.", 323);
+			gp.npc[144][9] = NPCSetup(WARDEN_UP, 57, 80, "Prepare your calculations. This isn't a battle - it's an equation.", "You balanced the variables. Move on.", 324);
+		} else {
+			for (int i = 3; i < 10; i++) {
+				gp.npc[144][i] = null;
+			}
+		}
+		
+		if (flag[7][12]) {
+			gp.npc[191][1] = null;
+		}
+		
 		gp.setRenderableNPCs();
 	}
 	
@@ -3523,7 +3586,7 @@ public class AssetSetter {
 		
 		String messages[] = dialogue.split("\n");
 		for (int i = 0; i < messages.length; i++) {
-			messages[i] = Item.breakString(messages[i], 42);
+			messages[i] = Item.breakString(messages[i], 43);
 		}
 		
 		switch (type) {
@@ -4013,7 +4076,7 @@ public class AssetSetter {
 	private Entity NPCSetup(int type, String name, int x, int y, String message, double scriptIndex, int flag, String altDialogue) {
 		String messages[] = message.split("\n");
 		for (int i = 0; i < messages.length; i++) {
-			messages[i] = Item.breakString(messages[i], 42);
+			messages[i] = Item.breakString(messages[i], 43);
 		}
 		Entity result = new NPC_Block(gp, name, messages, scriptIndex, flag, altDialogue);
 		
@@ -4318,6 +4381,12 @@ public class AssetSetter {
 		case GATE:
 			result = new Gate(gp);
 			break;
+		case PAINTING:
+			result = new Painting(gp, "main");
+			break;
+		case PAINTING_COLOR:
+			result = new Painting(gp, null);
+			break;
 		}
 		
 		result.worldX = gp.tileSize*x;
@@ -4444,7 +4513,7 @@ public class AssetSetter {
 		
 		String messages[] = message.split("\n");
 		for (int i = 0; i < messages.length; i++) {
-			messages[i] = Item.breakString(messages[i], 42);
+			messages[i] = Item.breakString(messages[i], 43);
 		}
 		
 		NPC_Pokemon result = new NPC_Pokemon(gp, id, t, id == 159, messages);

@@ -246,6 +246,8 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 188, true);
 		loadMap("/maps/gate01.txt", 189, true);
 		loadMap("/maps/at_path.txt", 190, true);
+		loadMap("/maps/at01A.txt", 191, false);
+		loadMap("/maps/icepuzzle1test.txt", 192, false);
 	}
 	
 	private void setupCollisionRectangles() {
@@ -1191,33 +1193,31 @@ public class TileManager {
 		setup(926, true, TOP_HALF);
 		setup(927, true, TOP_HALF);
 		setup(928, true, TOP_LEFT_SKINNY_CORNER);
-//		setup(929, true);
-//		setup(930, true);
-//		setup(931, true);
-//		setup(932, true);
-//		setup(933, true);
-//		setup(934, true);
-//		setup(935, true);
-//		setup(936, true);
-//		setup(937, true);
-//		setup(938, true);
-//		setup(939, true);
-//		setup(940, true);
-//		setup(941, true);
-//		setup(942, true);
-//		setup(943, true);
-//		setup(944, true);
-//		setup(945, true);
-//		setup(946, true);
-//		setup(947, true);
-//		setup(948, true);
-//		setup(949, true);
-//		setup(950, true);
-//		setup(951, true);
-//		setup(952, true);
-//		setup(953, true);
-//		setup(954, true);
-//		setup(955, true);
+		setup(929, true);
+		setup(930, true);
+		setup(931, true);
+		setup(932, true);
+		setup(933, true);
+		setup(934, true);
+		setup(935, true, TOP_HALF);
+		setup(936, false);
+		setup(937, true, TOP_HALF);
+		setup(938, true);
+		setup(939, true);
+		setup(940, true);
+		setup(941, true);
+		setup(942, true);
+		
+		setup(946, false);
+		setup(947, true);
+		setup(948, true);
+		setup(949, true);
+		setup(950, true);
+		setup(951, false);
+		setup(952, true);
+		setup(953, false);
+		setup(954, false);
+		setup(955, false);
 //		setup(956, true);
 //		setup(957, true);
 //		setup(958, true);
@@ -1310,6 +1310,10 @@ public class TileManager {
 		setupCliff(336, 3);
 		
 		setupCliff(372, 2);
+		
+		setupCliff(943, 3);
+		setupCliff(944, 4);
+		setupCliff(945, 2);
 	}
 	
 	private void setupCliff(int index, int collisionType) {

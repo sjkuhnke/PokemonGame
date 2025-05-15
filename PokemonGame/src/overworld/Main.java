@@ -214,6 +214,8 @@ public class Main {
 		    			gp.tileM.openGhostlyBluePortals();
 		    		}
 		    		
+		    		gp.player.p.setupPuzzles(gp, gp.currentMap);
+		    		
 		    		gp.startGameThread();
 		        }
 		    });

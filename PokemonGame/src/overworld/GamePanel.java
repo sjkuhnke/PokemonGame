@@ -128,7 +128,6 @@ public class GamePanel extends JPanel implements Runnable {
 		Pokemon.readTMsFromCSV();
 		
 		Player.setupPokedex();
-		puzzleM.setup(true); // TODO: for testing
 	}
 	
 	public void startGameThread() {
