@@ -121,7 +121,7 @@ public class UI extends AbstractUI {
 	public static final int MAX_SHOP_ROW = 4;
 	
 	public static final int ITEMS = 0;
-	
+	public static final int MAX_TEXTBOX = 43;
 	
 	public UI(GamePanel gp) {
 		this.gp = gp;
@@ -304,7 +304,7 @@ public class UI extends AbstractUI {
 		case Task.LEVEL_UP:
 		case Task.EVOLUTION:
 		case Task.TEXT:
-			showMessage(Item.breakString(currentTask.message, 42));
+			showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
 			break;
 		case Task.MOVE:
 			currentMove = currentTask.move;
@@ -374,12 +374,12 @@ public class UI extends AbstractUI {
 			drawHiddenPowerScreen(gp.player.p.team);
 			break;
 		case Task.FOSSIL:
-			currentDialogue = Item.breakString(currentTask.message, 42);
+			currentDialogue = Item.breakString(currentTask.message, MAX_TEXTBOX);
 			drawDialogueScreen(true);
 			drawFossilScreen(gp.player.p.bag);
 			break;
 		case Task.CONFIRM:
-			currentDialogue = Item.breakString(currentTask.message, 42);
+			currentDialogue = Item.breakString(currentTask.message, MAX_TEXTBOX);
 			drawDialogueScreen(true);
 			drawConfirmWindow(currentTask.counter);
 			break;
@@ -460,12 +460,12 @@ public class UI extends AbstractUI {
 				currentTask.type = Task.TEXT;
 				return;
 			}
-			showMessage(Item.breakString(currentTask.message, 42));
+			showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
 			drawNameLabel(above);
 			break;
 		case Task.SPEAK: // for the player speaking
 			g2.setFont(getFont());
-			showMessage(Item.breakString(currentTask.message, 42));
+			showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
 			above = false;
 			drawNameLabel(above);
 			break;
@@ -473,7 +473,7 @@ public class UI extends AbstractUI {
 			drawItemSum();
 			break;
 		case Task.SHAKE:
-			if (!currentTask.message.isEmpty()) showMessage(Item.breakString(currentTask.message, 42));
+			if (!currentTask.message.isEmpty()) showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
 			drawShake();
 			break;
 		case Task.MOVE_CAMERA:
@@ -1349,7 +1349,7 @@ public class UI extends AbstractUI {
 			String itemName = currentTask.item.toString();
 			if (currentTask.counter > 1 && itemName.contains("Berry")) itemName = itemName.replace("Berry", "Berries");
 			String message = "Put " + descriptor + itemName + " in the " + Item.getPocketName(currentTask.item.getPocket()) + " pocket!";
-			currentDialogue = Item.breakString(message, 42);
+			currentDialogue = Item.breakString(message, MAX_TEXTBOX);
 			image = bagIcons[currentTask.item.getPocket() - 1];
 		}
 		drawDialogueScreen(true);
@@ -1496,7 +1496,7 @@ public class UI extends AbstractUI {
 				case 7: // faith
 					gp.player.p.flag[7][9] = true;
 					gp.player.p.flag[7][10] = false;
-					gp.script.runScript(currentTask.e);
+					gp.script.runScript(gp.npc[107][13]);
 					currentTask = null;
 					break;
 				}
@@ -1528,7 +1528,7 @@ public class UI extends AbstractUI {
 				case 7: // logic
 					gp.player.p.flag[7][10] = true;
 					gp.player.p.flag[7][9] = false;
-					gp.script.runScript(currentTask.e);
+					gp.script.runScript(gp.npc[107][13]);
 					currentTask = null;
 					break;
 				}
@@ -2907,7 +2907,7 @@ public class UI extends AbstractUI {
 					if (currentPokemon.ivs[moveOption] < 31) {
 						currentPokemon.ivs[moveOption] = 31;
 						currentPokemon.setStats();
-			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + " IV was maxed out!", 42));
+			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + " IV was maxed out!", MAX_TEXTBOX));
 			        	gp.player.p.bag.remove(currentItem);
 		        		currentItems = gp.player.p.getItems(currentPocket);
 		        	} else {
@@ -2922,7 +2922,7 @@ public class UI extends AbstractUI {
 						currentPokemon.ivs[moveOption] = 0;
 						currentPokemon.setStats();
 						currentPokemon.verifyHP();
-			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + " IV was set to 0!", 42));
+			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + " IV was set to 0!", MAX_TEXTBOX));
 			        	gp.player.p.bag.remove(currentItem);
 		        		currentItems = gp.player.p.getItems(currentPocket);
 		        	} else {
@@ -3108,7 +3108,7 @@ public class UI extends AbstractUI {
 	                oos.close();
 	                showMessage("Game saved sucessfully!");
 	            } catch (IOException ex) {
-	            	String message = Item.breakString("Error: " + ex.getMessage(), 42);
+	            	String message = Item.breakString("Error: " + ex.getMessage(), MAX_TEXTBOX);
 	            	showMessage(message);
 	            }
 			}

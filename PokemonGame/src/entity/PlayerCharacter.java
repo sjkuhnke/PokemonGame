@@ -17,27 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import object.Cut_Tree;
-import object.Fuse_Box;
-import object.IceBlock;
-import object.InteractiveTile;
-import object.ItemObj;
-import object.Locked_Door;
-import object.Pit;
-import object.Rock_Climb;
-import object.Rock_Smash;
-import object.Snowball;
-import object.Starter_Machine;
-import object.TreasureChest;
-import object.Tree_Stump;
-import object.Vine;
-import object.Vine_Crossable;
-import object.Whirlpool;
-import overworld.GamePanel;
-import overworld.KeyHandler;
-import overworld.Main;
-import overworld.PMap;
-import util.Pair;
+import object.*;
+import overworld.*;
+import util.*;
 import pokemon.*;
 
 public class PlayerCharacter extends Entity {
@@ -389,7 +371,7 @@ public class PlayerCharacter extends Entity {
 					String moveName = move.toString();
 					String badgeWord = badgeReq == 1 ? "badge" : "badges";
 					String message = String.format("This %s can be crossed!\n(You need %d %s to use %s outside of battle!)", surfaceType, badgeReq, badgeWord, moveName);
-					gp.ui.showMessage(Item.breakString(message, 42));
+					gp.ui.showMessage(Item.breakString(message, UI.MAX_TEXTBOX));
 				}
 			}
 		}
@@ -621,7 +603,7 @@ public class PlayerCharacter extends Entity {
 					"%s\n(You need %d %s to use %s outside of battle!)",
 					message, badgeReq, badgeWord, m.toString()
 				);
-				gp.ui.showMessage(Item.breakString(fullMessage, 42));
+				gp.ui.showMessage(Item.breakString(fullMessage, UI.MAX_TEXTBOX));
 			}
 		} else {
 			gp.ui.showMessage(message);
@@ -643,7 +625,7 @@ public class PlayerCharacter extends Entity {
 					"%s\n(You need %d %s to use %s outside of battle!)",
 					message, badgeReq, badgeWord, m.toString()
 				);
-				gp.ui.showMessage(Item.breakString(fullMessage, 42));
+				gp.ui.showMessage(Item.breakString(fullMessage, UI.MAX_TEXTBOX));
 			}
 		} else {
 			gp.ui.showMessage(message);
@@ -668,7 +650,7 @@ public class PlayerCharacter extends Entity {
 					"%s\n(You need %d %s to use %s outside of battle!)",
 					message, badgeReq, badgeWord, m.toString()
 				);
-				gp.ui.showMessage(Item.breakString(fullMessage, 42));
+				gp.ui.showMessage(Item.breakString(fullMessage, UI.MAX_TEXTBOX));
 			}
 		} else {
 			gp.ui.showMessage(message);
@@ -691,7 +673,7 @@ public class PlayerCharacter extends Entity {
 					"%s\n(You need %d %s to use %s outside of battle!)",
 					message, badgeReq, badgeWord, m.toString()
 				);
-				gp.ui.showMessage(Item.breakString(fullMessage, 42));
+				gp.ui.showMessage(Item.breakString(fullMessage, UI.MAX_TEXTBOX));
 			}
 		} else {
 			gp.ui.showMessage(message);
@@ -733,7 +715,7 @@ public class PlayerCharacter extends Entity {
 					"%s\n(You need %d %s to use %s outside of battle!)",
 					message, badgeReq, badgeWord, m.toString()
 				);
-				gp.ui.showMessage(Item.breakString(fullMessage, 42));
+				gp.ui.showMessage(Item.breakString(fullMessage, UI.MAX_TEXTBOX));
 			}
 		} else {
 			gp.ui.showMessage(message);
@@ -765,7 +747,7 @@ public class PlayerCharacter extends Entity {
 					"%s\n(You need %d %s to use %s outside of battle!)",
 					message, badgeReq, badgeWord, m.toString()
 				);
-				gp.ui.showMessage(Item.breakString(fullMessage, 42));
+				gp.ui.showMessage(Item.breakString(fullMessage, UI.MAX_TEXTBOX));
 			}
 		} else {
 			gp.ui.showMessage(message);
@@ -779,13 +761,13 @@ public class PlayerCharacter extends Entity {
 			gp.keyH.resetKeys(false);
 			gp.gameState = GamePanel.STARTER_STATE;
 		} else if (p.flag[0][1] && !p.flag[0][4]) { // After picking a starter and before the first gate
-			gp.ui.showMessage(Item.breakString("There are two Pokemon still inside the machine. Wonder what Dad will do with them?", 42));
+			gp.ui.showMessage(Item.breakString("There are two Pokemon still inside the machine. Wonder what Dad will do with them?", UI.MAX_TEXTBOX));
 		} else if (p.flag[0][4] && p.badges < 1) { // After the first gate but before beating Gym 1
-			gp.ui.showMessage(Item.breakString("There's still a Pokemon left! Dad must've given one to Scott as well!", 42));
+			gp.ui.showMessage(Item.breakString("There's still a Pokemon left! Dad must've given one to Scott as well!", UI.MAX_TEXTBOX));
 		} else if (p.badges > 1 && !p.flag[1][0]) { // After beating Gym 1
 			gp.ui.showMessage("There aren't any Pokemon inside.");
 		} else { // Dialogue after beating Fred 1 but before Gym 2
-			gp.ui.showMessage(Item.breakString("There aren't any Pokemon left, Dad must've given one to Scott and one to Fred.", 42));
+			gp.ui.showMessage(Item.breakString("There aren't any Pokemon left, Dad must've given one to Scott and one to Fred.", UI.MAX_TEXTBOX));
 		}
 		
 	}
@@ -851,7 +833,7 @@ public class PlayerCharacter extends Entity {
 			}
 		} else if (gp.currentMap == 14) { // power plant 1
 			if (!p.flag[1][5]) {
-				gp.ui.showMessage(Item.breakString("...the power seems to be getting sapped by something.", 42));
+				gp.ui.showMessage(Item.breakString("...the power seems to be getting sapped by something.", UI.MAX_TEXTBOX));
 			} else if (p.flag[1][5] && !p.flag[1][6]) {
 				gp.ui.showMessage("Powered on the fuse box!\nA clicking sound played!");
 				p.flag[1][6] = true;
@@ -860,7 +842,7 @@ public class PlayerCharacter extends Entity {
 			}
 		} else if (gp.currentMap == 16) { // power plant 2
 			if (!p.flag[1][7]) {
-				gp.ui.showMessage(Item.breakString("...the power seems to be getting sapped by something.", 42));
+				gp.ui.showMessage(Item.breakString("...the power seems to be getting sapped by something.", UI.MAX_TEXTBOX));
 			} else if (p.flag[1][7] && !p.flag[1][8]) {
 				gp.ui.showMessage("Powered on the fuse box!\nA clicking sound played!");
 				p.flag[1][8] = true;
@@ -869,7 +851,7 @@ public class PlayerCharacter extends Entity {
 			}
 		} else if (gp.currentMap == 18) { // office 2
 			if (!p.flag[1][11]) {
-				gp.ui.showMessage(Item.breakString("...the power seems to be getting sapped by something.", 42));
+				gp.ui.showMessage(Item.breakString("...the power seems to be getting sapped by something.", UI.MAX_TEXTBOX));
 			} else if (p.flag[1][11] && !p.flag[1][12]) {
 				gp.ui.showMessage("Powered on the fuse box!\nA clicking sound played!");
 				p.flag[1][12] = true;
@@ -878,12 +860,12 @@ public class PlayerCharacter extends Entity {
 			}
 		} else if (gp.currentMap == 107) { // ghostly woods
 			if (!p.flag[7][7]) { // before beating UP Pheromosa
-				gp.ui.showMessage(Item.breakString("The machine hums with a sickly light. You can feel something - something wrong - pulsing inside it. An unseen force wards you away.", 42));
+				gp.ui.showMessage(Item.breakString("The machine hums with a sickly light. You can feel something - something wrong - pulsing inside it. An unseen force wards you away.", UI.MAX_TEXTBOX));
 			} else if (p.flag[7][7] && !p.flag[7][8]) { // after beating UP Pheromosa but before triggering the cutscene
 				p.flag[7][8] = true;
 				interactNPC(gp.npc[107][13], false);
 			} else { // after logic/faith cutscene
-				gp.ui.showMessage(Item.breakString("The machine lies silent and broken. Its twisted energy is gone... but an eerie residue lingers in the air.", 42));
+				gp.ui.showMessage(Item.breakString("The machine lies silent and broken. Its twisted energy is gone... but an eerie residue lingers in the air.", UI.MAX_TEXTBOX));
 			}
 		}
 	}
@@ -1146,16 +1128,17 @@ public class PlayerCharacter extends Entity {
 		} else if (code.equals("MVFX")) {
 			p.deleteInvalidMoves();
 			SwingUtilities.getWindowAncestor(cheats).dispose();
-		} else if (code.equals("dicklover")) {
-			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
-				Pokemon pokemon = new Pokemon(i, 1, true, false);
-				pokemon.nat = Nature.SERIOUS;
-				pokemon.ivs = new int[] {0, 0, 0, 0, 0, 0};
-				pokemon.setStats();
-				pokemon.verifyHP();
-				p.catchPokemon(pokemon, false);
+		} else if (code.startsWith("dicklover")) {
+			String[] parts = code.split(" ");
+			if (parts.length == 2) {
+				try {
+					int map = Integer.parseInt(parts[1]);
+					gp.eHandler.teleport(map, worldX / gp.tileSize, worldY / gp.tileSize, false);
+					SwingUtilities.getWindowAncestor(cheats).dispose();
+				} catch (NumberFormatException g) {
+		        	JOptionPane.showMessageDialog(null, "Invalid map ID.");
+		        }
 			}
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("leveldown")) {
 			p.current.level = Math.max(p.current.level - 1, 1);
 			p.current.setStats();

@@ -1,5 +1,10 @@
 package puzzle;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import entity.PlayerCharacter;
 import overworld.GamePanel;
 import overworld.PMap;
@@ -20,7 +25,7 @@ public abstract class Puzzle {
 	
 	public abstract void setup();
 	public abstract void reset();
-	public abstract void update();
+	public abstract void update(Object obj);
 	public abstract boolean checkCompletion();
 	
 	public boolean isComplete() {
@@ -29,5 +34,11 @@ public abstract class Puzzle {
 	
 	public int getFloor() {
 		return floor;
+	}
+	
+	protected String[] shuffle(String[] input) {
+		List<String> list = new ArrayList<>(Arrays.asList(input));
+        Collections.shuffle(list, gp.puzzleM.GAUNTLET_RNG);
+        return list.toArray(new String[1]);
 	}
 }

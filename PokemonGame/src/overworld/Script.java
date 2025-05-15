@@ -1841,28 +1841,79 @@ public class Script {
 		});
 		
 		scriptMap.put(107.3, (npc) -> { // merlin in ghostly woods heart after logic/faith scene
-			Task.addTask(Task.TURN, player, "", Task.UP);
-			Task.addNPCMoveTask('y', 56 * gp.tileSize, npc, false, 4);
-			Task.addTask(Task.TURN, npc, "", Task.LEFT);
-			Task.addNPCMoveTask('x', 46 * gp.tileSize, npc, false, 4);
-			Task.addTask(Task.TURN, npc, "", Task.DOWN);
-			Task.addTask(Task.TURN, player, "", Task.LEFT);
-			Task.addNPCMoveTask('x', 46 * gp.tileSize, player, false, 1);
-			Task.addTask(Task.TURN, player, "", Task.UP);
-			Task.addNPCMoveTask('y', 58 * gp.tileSize, npc, false, 4);
-			Task.addTask(Task.SLEEP, "", 30);
-			Task.addTask(Task.DIALOGUE, npc, "Well, well. Look who decided to show up - the meddling pest who can't keep their nose out of Eclipse's business.");
-			Task.addTask(Task.TURN, player, "", Task.UP);
-			Task.addNPCMoveTask('y', 64 * gp.tileSize, player, false, 1);
-			Task.addNPCMoveTask('y', 61 * gp.tileSize, npc, false, 4);
-			Task.addTask(Task.SLEEP, "", 30);
-			Task.addTask(Task.DIALOGUE, npc, "Do you have any idea what you've done? Those ghosts were just the beginning!");
-			Task.addTask(Task.DIALOGUE, npc, "You may have beaten a few, but I can summon hundreds more if I want. Once I'm done with you, Ghostly Woods will be overrun!");
+			p.flag[7][11] = true;
+			boolean faith = p.flag[7][9];
+			if (faith) {
+				Task.addTask(Task.DIALOGUE, npc, "The road of faith lies ahead, Finn.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "Seed the Abandoned Tower - a relic of the old world, steeped in the hopes and prayers of those who came before us.");
+				Task.addTask(Task.DIALOGUE, npc, "There, your chosen path will be tested.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "I'll await you near its gates.");
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.UPDATE, "");
+				Task.addTask(Task.FLASH_OUT, "");
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "You have chosen the path of logic, Finn.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "Head toward the Deep Chasm - a place where thought alone clings to the edges of existence.");
+				Task.addTask(Task.DIALOGUE, npc, "There, reason must prove itself against the void.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "I'll meet you near the entrance.");
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.UPDATE, "");
+				Task.addTask(Task.FLASH_OUT, "");
+			}
+		});
+		
+		scriptMap.put(190.0, (npc) -> { // merlin guide faith route
+			Task.addTask(Task.DIALOGUE, npc, "This is the last shrine to the First Light.");
+			Task.addTask(Task.DIALOGUE, npc, "Long ago, those who believed built this tower to reach toward the heavens... to hold faith even when the skies fell silent.");
+			Task.addTask(Task.DIALOGUE, npc, "The guardians within will not yield easily.");
+			Task.addTask(Task.DIALOGUE, npc, "They will test the strength of your heart - and the purity of your conviction.");
 			Task.addTask(Task.SLEEP, "", 15);
-			Task.addNPCMoveTask('y', 63 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.DIALOGUE, npc, "Remember... true faith does not mean blind hope.");
+			Task.addTask(Task.DIALOGUE, npc, "It means standing firm even when all else falls away.");
+			Task.addTask(Task.SLEEP, "", 25);
+			Task.addTask(Task.DIALOGUE, npc, "I cannot walk this trial for you, Finn.");
+			Task.addTask(Task.DIALOGUE, npc, "But I will walk beside you... to the end.");
+		});
+		
+		scriptMap.put(144.0, (npc) -> { // merlin guide logic route
+			Task.addTask(Task.DIALOGUE, npc, "Beyond here lies the Deep Chasm.");
+			Task.addTask(Task.DIALOGUE, npc, "When the First Light faltered, those who doubted carved this place - not with belief, but with understanding.");
+			Task.addTask(Task.DIALOGUE, npc, "The guardians within were born from pure thought - shaped by knowledge... and fear.");
 			Task.addTask(Task.SLEEP, "", 15);
-			Task.addTask(Task.DIALOGUE, npc, "Once we're done here, not even the bravest of trainers will stand in Team Eclipse's way.");
-			Task.addTask(Task.BATTLE, "", 234);
+			Task.addTask(Task.DIALOGUE, npc, "Logic will guide you, but it will also challenge you.");
+			Task.addTask(Task.DIALOGUE, npc, "Beware: reason without compassion can be as deadly as ignorance.");
+			Task.addTask(Task.SLEEP, "", 25);
+			Task.addTask(Task.DIALOGUE, npc, "This is your trial to bear, Finn.");
+			Task.addTask(Task.DIALOGUE, npc, "I will follow where you lead... whatever end awaits.");
+		});
+		
+		scriptMap.put(191.0, (npc) -> { // tower guard faith route
+			if (p.flag[7][9] && !p.flag[7][16]) { // finn has faith and needs to attempt the gauntlet
+				
+				if (!p.flag[7][12]) { // player hasn't done the cutscene with Merlin yet
+					
+				}
+			} else {
+				
+			}
+			Task.addTask(Task.DIALOGUE, npc, "This is the last shrine to the First Light.");
+			Task.addTask(Task.DIALOGUE, npc, "Long ago, those who believed built this tower to reach toward the heavens... to hold faith even when the skies fell silent.");
+			Task.addTask(Task.DIALOGUE, npc, "The guardians within will not yield easily.");
+			Task.addTask(Task.DIALOGUE, npc, "They will test the strength of your heart - and the purity of your conviction.");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, npc, "Remember... true faith does not mean blind hope.");
+			Task.addTask(Task.DIALOGUE, npc, "It means standing firm even when all else falls away.");
+			Task.addTask(Task.SLEEP, "", 25);
+			Task.addTask(Task.DIALOGUE, npc, "I cannot walk this trial for you, Finn.");
+			Task.addTask(Task.DIALOGUE, npc, "But I will walk beside you... to the end.");
 		});
 	}
 	

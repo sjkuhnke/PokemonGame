@@ -96,6 +96,7 @@ public class Player extends Trainer implements Serializable {
 	public int version;
 	private Integer id;
 	public boolean amulet;
+	public int puzzle;
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
@@ -795,10 +796,10 @@ public class Player extends Trainer implements Serializable {
 				Item old = p.item;
 				bag.add(old);
         		p.item = item;
-	        	gp.ui.showMessage(Item.breakString(p.nickname + " swapped its " + old.toString() + " for a " + p.item.toString() + "!", 42));
+	        	gp.ui.showMessage(Item.breakString(p.nickname + " swapped its " + old.toString() + " for a " + p.item.toString() + "!", UI.MAX_TEXTBOX));
         	} else {
         		p.item = item;
-        		gp.ui.showMessage(Item.breakString(p.nickname + " was given " + item.toString() + " to hold!", 42));
+        		gp.ui.showMessage(Item.breakString(p.nickname + " was given " + item.toString() + " to hold!", UI.MAX_TEXTBOX));
         	}
 			gp.ui.selectedBagNum = -1;
 		} else {
@@ -849,7 +850,7 @@ public class Player extends Trainer implements Serializable {
 	        	} else {
 	        		Status temp = p.status;
 	        		p.status = Status.HEALTHY;
-		        	gp.ui.showMessage(Item.breakString(p.nickname + " was cured of its " + temp.getName() + "!", 45));
+		        	gp.ui.showMessage(Item.breakString(p.nickname + " was cured of its " + temp.getName() + "!", UI.MAX_TEXTBOX));
 	        	}
 				break;
 				
@@ -900,7 +901,7 @@ public class Player extends Trainer implements Serializable {
 	        		String natureOld = p.nat == null ? "null" : p.getNature();
 		        	p.nat = item.getNature();
 		        	p.setStats();
-		        	gp.ui.showMessage(Item.breakString(p.nickname + "'s nature was changed from " + natureOld + " to " + p.getNature() + "!", 42));
+		        	gp.ui.showMessage(Item.breakString(p.nickname + "'s nature was changed from " + natureOld + " to " + p.getNature() + "!", UI.MAX_TEXTBOX));
 	        	}
 				break;
 				
@@ -945,13 +946,13 @@ public class Player extends Trainer implements Serializable {
 			case ABILITY_CAPSULE:
 				boolean swappable = p.canUseItem(item) == 1;
 	    		if (!swappable) {
-	        		gp.ui.showMessage(Item.breakString(p.nickname + " only has one ability, it won't have any effect.", 40));
+	        		gp.ui.showMessage(Item.breakString(p.nickname + " only has one ability, it won't have any effect.", UI.MAX_TEXTBOX));
 	        		return;
 	        	} else {
 	        		Ability oldAbility = p.ability;
 	        		p.abilitySlot = 1 - p.abilitySlot;
 	        		p.setAbility();
-	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was swapped from " + oldAbility + " to " + p.ability + "!", 40));
+	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was swapped from " + oldAbility + " to " + p.ability + "!", UI.MAX_TEXTBOX));
 	        	}
 				break;
 				
@@ -959,7 +960,7 @@ public class Player extends Trainer implements Serializable {
 			case ABILITY_PATCH:
 				boolean swappable2 = p.canUseItem(item) == 1;
 	    		if (!swappable2) {
-	        		gp.ui.showMessage(Item.breakString(p.nickname + " doesn't have a hidden ability, it won't have any effect.", 40));
+	        		gp.ui.showMessage(Item.breakString(p.nickname + " doesn't have a hidden ability, it won't have any effect.", UI.MAX_TEXTBOX));
 	        		return;
 	        	} else {
 	        		Ability oldAbility = p.ability;
@@ -969,7 +970,7 @@ public class Player extends Trainer implements Serializable {
 	        			p.abilitySlot = 2;
 	        		}
 	        		p.setAbility();
-	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was changed from " + oldAbility + " to " + p.ability + "!", 40));
+	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was changed from " + oldAbility + " to " + p.ability + "!", UI.MAX_TEXTBOX));
 	        	}
 				break;
 				
@@ -1201,10 +1202,10 @@ public class Player extends Trainer implements Serializable {
 				PType type = PType.values()[item.getID() - 284];
 				int[] optimalIVs = Pokemon.determineOptimalIVs(type);
 				if (arrayEquals(optimalIVs, p.ivs)) {
-					gp.ui.showMessage(Item.breakString(p.nickname + " already has the optimized IVs for the " + type.toString() + " power!", 40));
+					gp.ui.showMessage(Item.breakString(p.nickname + " already has the optimized IVs for the " + type.toString() + " power!", UI.MAX_TEXTBOX));
 					return;
 				} else {
-					gp.ui.showMessage(Item.breakString(p.nickname + "'s IVs were optimized to the " + type.toString() + " power!", 40));
+					gp.ui.showMessage(Item.breakString(p.nickname + "'s IVs were optimized to the " + type.toString() + " power!", UI.MAX_TEXTBOX));
 					p.ivs = optimalIVs;
 					p.setStats();
 				}
@@ -1478,7 +1479,7 @@ public class Player extends Trainer implements Serializable {
 			statBerries[count] = Item.getItem(i);
 			count++;
 		}
-        List<Item> berryList = Arrays.asList(statBerries);
+        List<Item> berryList = new ArrayList<>(Arrays.asList(statBerries));
         Collections.shuffle(berryList);
         statBerries = berryList.toArray(new Item[1]);
 	}
@@ -1490,7 +1491,7 @@ public class Player extends Trainer implements Serializable {
 			resistBerries[count] = Item.getItem(i);
 			count++;
 		}
-        List<Item> berryList = Arrays.asList(resistBerries);
+        List<Item> berryList = new ArrayList<>(Arrays.asList(resistBerries));
         Collections.shuffle(berryList);
         resistBerries = berryList.toArray(new Item[1]);
 	}
@@ -1502,7 +1503,7 @@ public class Player extends Trainer implements Serializable {
 			crystals[count] = Item.getItem(i);
 			count++;
 		}
-        List<Item> crystalList = Arrays.asList(crystals);
+        List<Item> crystalList = new ArrayList<>(Arrays.asList(crystals));
         Collections.shuffle(crystalList);
         crystals = crystalList.toArray(new Item[1]);
 	}
@@ -1715,5 +1716,13 @@ public class Player extends Trainer implements Serializable {
         		t.message = t.message.replace(oldNickname, p.nickname);
         	}
         }
+	}
+	
+	public void setupPuzzles(GamePanel gp, int map) {
+		if (map >= 191 && map <= 196) {
+			gp.puzzleM.initGauntletSeed(id, puzzle);
+			gp.puzzleM.setup(true);
+		}
+		// TODO: maps for deep chasm and same logic
 	}
 }
