@@ -1251,7 +1251,34 @@ public class PMap extends JPanel {
 			PlayerCharacter.currentMapName = "A.T. Path";
 			return 43;
 		case 191:
-			PlayerCharacter.currentMapName = "Abandoned Tower (1A)";
+			if (y <= 55) {
+				PlayerCharacter.currentMapName = "Abandoned Tower (1B)";
+			} else {
+				PlayerCharacter.currentMapName = "Abandoned Tower (1A)";
+			}
+			return 44;
+		case 192:
+			if (y <= 55) {
+				PlayerCharacter.currentMapName = "Abandoned Tower (2A)";
+			} else {
+				PlayerCharacter.currentMapName = "Abandoned Tower (2B)";
+			}
+			return 44;
+		case 193:
+			if (x <= 63) {
+				PlayerCharacter.currentMapName = "Abandoned Tower (3A)";
+			} else {
+				PlayerCharacter.currentMapName = "Abandoned Tower (3B)";
+			}
+			return 44;
+		case 194:
+			PlayerCharacter.currentMapName = "Abandoned Tower (4A)";
+			return 44;
+		case 195:
+			PlayerCharacter.currentMapName = "Abandoned Tower (5A)";
+			return 44;
+		case 196:
+			PlayerCharacter.currentMapName = "Abandoned Tower (6A)";
 			return 44;
 		}
 		

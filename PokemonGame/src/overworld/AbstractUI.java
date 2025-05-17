@@ -35,6 +35,7 @@ public abstract class AbstractUI {
 	public int counter = 0;
 	public boolean showMoveOptions;
 	public boolean showIVOptions;
+	public boolean gauntlet;
 	
 	public int boxSwapNum;
 	public boolean showBoxParty;
@@ -1333,8 +1334,8 @@ public abstract class AbstractUI {
 	            gp.keyH.leftPressed = false;
 	            if (parlays[gp.ui.areaCounter] > -1) {
 	            	if (parlays[gp.ui.areaCounter] == 0) {
-	            		if (gp.player.p.coins >= parlayBet) {
-	                    	gp.player.p.coins -= parlayBet;
+	            		if (gp.player.p.getBetCurrency(gauntlet) >= parlayBet) {
+	                    	gp.player.p.addBetCurrency(gauntlet, -parlayBet);
 	                    	parlays[gp.ui.areaCounter]--;
 	    	                sheetFilled = true;
 	    	                coinColor = Color.WHITE;
@@ -1343,7 +1344,7 @@ public abstract class AbstractUI {
 	                    }
 	            	} else {
 	            		parlays[gp.ui.areaCounter]--;
-	            		gp.player.p.coins += parlayBet;
+	            		gp.player.p.addBetCurrency(gauntlet, parlayBet);
 	            		coinColor = Color.WHITE;
 	            	}
 	                if (gp.ui.areaCounter < maxBet) {
@@ -1359,8 +1360,8 @@ public abstract class AbstractUI {
 	            gp.keyH.rightPressed = false;
 	            if (parlays[gp.ui.areaCounter] < 1) {
 	            	if (parlays[gp.ui.areaCounter] == 0) {
-	            		if (gp.player.p.coins >= parlayBet) {
-	                    	gp.player.p.coins -= parlayBet;
+	            		if (gp.player.p.getBetCurrency(gauntlet) >= parlayBet) {
+	            			gp.player.p.addBetCurrency(gauntlet, -parlayBet);
 	                    	parlays[gp.ui.areaCounter]++;
 	    	                sheetFilled = true;
 	    	                coinColor = Color.WHITE;
@@ -1369,7 +1370,7 @@ public abstract class AbstractUI {
 	                    }
 	            	} else {
 	            		parlays[gp.ui.areaCounter]++;
-	            		gp.player.p.coins += parlayBet;
+	            		gp.player.p.addBetCurrency(gauntlet, parlayBet);
 	            		coinColor = Color.WHITE;
 	            	}
 	                if (gp.ui.areaCounter < maxBet) {
@@ -1394,6 +1395,10 @@ public abstract class AbstractUI {
 
 	    drawToolTips(null, editable ? "Close" : null, "Close", null);
 	    
+	}
+	
+	public String getBetCurrencyName(boolean gauntlet) {
+		return gauntlet ? "Orbs" : "Coins";
 	}
 
 }

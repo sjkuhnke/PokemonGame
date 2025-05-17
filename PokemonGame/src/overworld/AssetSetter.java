@@ -21,6 +21,8 @@ public class AssetSetter {
 	public ArrayList<Entity> clerks = new ArrayList<>();
 	public HashMap<Item, Integer> itemMap = new HashMap<>();
 	
+	private static final int LOGIC_DRAGON = -33;
+	private static final int FAITH_DRAGON = -32;
 	private static final int BREEDER = -31;
 	private static final int PHOTON = -30;
 	private static final int SCIENTIST_UP = -29;
@@ -227,6 +229,8 @@ public class AssetSetter {
 	private static final int PAINTING_COLOR = 17;
 	private static final int SPIKE_1 = 18;
 	private static final int SPIKE_2 = 19;
+	private static final int PAINTING_RESET = 20;
+	private static final int PAINTING_BET = 21;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -2213,14 +2217,106 @@ public class AssetSetter {
 		
 		mapNum = 191;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, "Guard", 50, 57, "", mapNum);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, "Guard", 50, 73, "", mapNum);
 		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 50, 99, "");
-		gp.npc[mapNum][index++] = ITileSetup(47, 67, TORCH, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(53, 67, TORCH, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(48, 57, TORCH, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(52, 57, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 36, 44, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 39, 37, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 43, 38, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 47, 35, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 48, 39, "", "", 1);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 55, 34, "", "", 1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 46, 74, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 48, 47, "This is where the test begins, Finn.", 191.1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 41, 46, "", "", -1);
+		gp.npc[mapNum][index++] = ITileSetup(47, 83, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(53, 83, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(48, 73, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(52, 73, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(42, 41, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(51, 40, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(46, 35, TORCH, mapNum, mapNum);
 		
 		mapNum = 192;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 50, 65, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 49, 61, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 54, 61, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 52, 50, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 56, 50, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 45, 43, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 48, 65, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 53, "", "", -1);
+		gp.npc[mapNum][index++] = ITileSetup(51, 66, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(55, 64, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(50, 51, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(46, 50, TORCH, mapNum, mapNum);
+		
+		mapNum = 193;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 57, 24, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 48, 19, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 45, 32, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 57, 33, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 52, 39, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 57, 39, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 56, 51, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 50, 57, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 24, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 66, 39, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 66, 33, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, "Disciple", 38, 35, "Ah... hello there traveler...", mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(63, 17, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(59, 25, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(50, 34, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(46, 35, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(38, 38, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(58, 45, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(44, 50, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(47, 53, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(53, 53, TORCH, mapNum, mapNum);
+		
+		mapNum = 194;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 50, 47, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 53, 50, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 50, 53, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 47, 50, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 48, 41, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 52, 38, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 41, 51, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 38, 49, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 38, 52, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 59, 52, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 59, 48, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 48, 58, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 52, 58, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 53, 46, "", "", -1);
+		gp.npc[mapNum][index++] = ITileSetup(50, 46, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(54, 50, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(50, 54, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(46, 50, TORCH, mapNum, mapNum);
+		
+		mapNum = 195;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, "Disciple", 46, 49, "You're very close to the peak, child...", mapNum);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 46, 55, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 54, 55, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 46, 57, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 54, 57, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 54, 49, "", "", -1);
+		gp.npc[mapNum][index++] = ITileSetup(50, 56, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(49, 46, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(51, 46, TORCH, mapNum, mapNum);
+		
+		mapNum = 196;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(FAITH_DRAGON, "Relopamil", 50, 47, "", mapNum);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 50, 99, "Try and capture the ancient beast with the special ball I gave you!");
+		gp.npc[mapNum][index] = NPCSetup(DRAGOWRATH, "Dragowrath", 50, 1, "", 196.1);
+		gp.npc[mapNum][index++] = ITileSetup(48, 47, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(52, 47, TORCH, mapNum, mapNum);
+		
+		mapNum = 197;
 		index = 0;
 		gp.npc[mapNum][index++] = ITileSetup(59, 39, SPIKE_1, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(40, 27, SPIKE_1, mapNum, mapNum);
@@ -3026,6 +3122,37 @@ public class AssetSetter {
 		mapNum = 168;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(66, 77, DOWN, 1, mapNum, map);
+		
+		mapNum = 191;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 45, PAINTING_RESET, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 32, PAINTING, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 37, PAINTING_COLOR, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(35, 37, PAINTING_COLOR, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(44, 32, PAINTING_COLOR, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 32, PAINTING_COLOR, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 37, PAINTING_COLOR, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(62, 37, PAINTING_COLOR, mapNum, map);
+		
+		mapNum = 193;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(52, 29, PAINTING_RESET, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 51, PAINTING, mapNum, map);
+		
+		mapNum = 194;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 53, PAINTING_RESET, mapNum, map);
+		
+		mapNum = 195;
+		iIndex = 0;
+		if (gp.iTile[mapNum][iIndex] == null) {
+			gp.iTile[mapNum][iIndex] = ITileSetup(50, 54, PAINTING_RESET, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(50, 48, PAINTING, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(50, 34, PAINTING_BET, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(64, 48, PAINTING_BET, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(50, 62, PAINTING_BET, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(36, 48, PAINTING_BET, mapNum, map);
+		}
 	}
 
 	public void updateNPC(int map) {
@@ -3559,6 +3686,27 @@ public class AssetSetter {
 		
 		if (flag[7][12]) {
 			gp.npc[191][1] = null;
+		}
+		
+		if (flag[7][13]) {
+			gp.npc[191][9] = null;
+		}
+		
+		if (flag[7][13]) {
+			if (gp.npc[196][1] != null) {
+				gp.npc[196][1].worldY = gp.tileSize * 50;
+				gp.npc[196][1].direction = "up";
+			}
+		}
+		
+		if (flag[7][15]) {
+			gp.npc[196][0] = null;
+			if (gp.npc[196][2] != null) gp.npc[196][2].worldY = gp.tileSize * 35;
+		}
+		
+		if (flag[7][16]) {
+			gp.npc[196][1] = null;
+			gp.npc[196][2] = null;
 		}
 		
 		gp.setRenderableNPCs();
@@ -4250,6 +4398,17 @@ public class AssetSetter {
 				result.down1 = result.setup("/overworlds/291_0");
 				result.setDirection("down");
 				break;
+			case DISCIPLE_DOWN:
+				result.setupImages("/npc/disciple");
+				result.setDirection("down");
+				break;
+			case LOGIC_DRAGON:
+				result.setupImages("/overworlds/233_0");
+				break;
+			case FAITH_DRAGON:
+				result.setupImages("/overworlds/234_");
+				result.setDirection("down");
+				break;
 		}
 		
 		result.worldX = gp.tileSize*x;
@@ -4406,6 +4565,12 @@ public class AssetSetter {
 			break;
 		case PAINTING_COLOR:
 			result = new Painting(gp, null);
+			break;
+		case PAINTING_RESET:
+			result = new Painting(gp, "reset");
+			break;
+		case PAINTING_BET:
+			result = new Painting(gp, "bet");
 			break;
 		case SPIKE_1:
 			result = new Spike(gp, false);

@@ -271,7 +271,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		ui.isGauntlet = target.isGauntlet();
 		ui.npc = target;
-		if (ui.isGauntlet) ui.gauntlet = true;
+		ui.gauntlet = ui.isGauntlet;
 		ui.boxSwapNum = -1;
 		gameState = GamePanel.BOX_STATE;
 	}
@@ -285,11 +285,49 @@ public class GamePanel extends JPanel implements Runnable {
 
 
 	public void endBattle(int trainer, int id) {
-		if (trainer > -1 && !player.p.wiped() && trainer != 256) player.p.trainersBeat[trainer] = true;
-		
-		if (trainer > -1 && Trainer.getTrainer(trainer).update) {
-			if (id == 159) player.p.grustCount++;
-			aSetter.updateNPC(currentMap);
+		boolean wiped = player.p.wiped();
+		if (!wiped) {
+			if (trainer > -1 && trainer != 256) {
+				player.p.trainersBeat[trainer] = true;
+				
+				Trainer t = Trainer.getTrainer(trainer);
+				
+				if (t.getFlagIndex() != 0) {
+		        	player.p.flag[t.getFlagX()][t.getFlagY()] = true;
+		        }
+				
+				if (trainer > -1 && t.update) {
+					if (id == 159) player.p.grustCount++;
+					aSetter.updateNPC(currentMap);
+				}
+				
+				if (id == 234 && !player.p.flag[7][16]) {
+					if (t.getCurrent().isFainted()) { // player killed the faith dragon
+						player.p.trainersBeat[trainer] = false;
+						player.p.flag[7][15] = false;
+						t.reset();
+						setTaskState();
+						Task.addTask(Task.DIALOGUE, npc[196][1], "Finn... you failed...");
+						Task.addTask(Task.DIALOGUE, npc[196][1], "Oh Arceus, what do we do?!");
+						int[] loc = puzzleM.FAITH_START;
+						Task task = Task.addTask(Task.TELEPORT, "");
+						task.counter = loc[0];
+						task.start = loc[1];
+						task.finish = loc[2];
+						puzzleM.doReset(true);
+						Task.addTask(Task.TURN, player, "", Task.UP);
+					} else {
+						player.p.tempTeam = player.p.team;
+						player.p.team = new Pokemon[6];
+						player.p.team[0] = t.getCurrent();
+						player.p.setCurrent();
+						player.interactNPC(npc[196][2], false);
+					}
+				}
+			}
+		}
+		if (id == 235) {
+			player.interactNPC(npc[196][2], false);
 		}
 
 		player.p.resetTeam();

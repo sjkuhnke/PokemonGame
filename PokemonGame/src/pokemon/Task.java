@@ -72,6 +72,7 @@ public class Task {
 	public static final int TYPES = 56;
 	public static final int EVOLUTION = 57;
 	public static final int PARTICLE = 58;
+	public static final int RESET = 59;
 	
 	public static GamePanel gp;
 	

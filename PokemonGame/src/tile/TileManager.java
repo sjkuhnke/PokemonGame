@@ -246,8 +246,13 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 188, true);
 		loadMap("/maps/gate01.txt", 189, true);
 		loadMap("/maps/at_path.txt", 190, true);
-		loadMap("/maps/at01A.txt", 191, false);
-		loadMap("/maps/icepuzzle1test.txt", 192, false);
+		loadMap("/maps/at01.txt", 191, false);
+		loadMap("/maps/at02.txt", 192, false);
+		loadMap("/maps/at03.txt", 193, false);
+		loadMap("/maps/at04.txt", 194, false);
+		loadMap("/maps/at05.txt", 195, false);
+		loadMap("/maps/at06.txt", 196, false);
+		loadMap("/maps/icepuzzle1test.txt", 197, false);
 	}
 	
 	private void setupCollisionRectangles() {
@@ -1200,7 +1205,7 @@ public class TileManager {
 		setup(933, true);
 		setup(934, true);
 		setup(935, true, TOP_HALF);
-		setup(936, false);
+
 		setup(937, true, TOP_HALF);
 		setup(938, true);
 		setup(939, true);
@@ -1219,8 +1224,8 @@ public class TileManager {
 		setup(954, false);
 		setup(955, false);
 
-//		setup(957, true);
-//		setup(958, true);
+		setup(957, true);
+		setup(958, false);
 //		setup(959, true);
 //		setup(960, true);
 //		setup(961, true);
@@ -1278,6 +1283,9 @@ public class TileManager {
 			
 			tile[511] = new GrassTile();
 			tile[511].image = ImageIO.read(getClass().getResourceAsStream("/tiles/511.png"));
+			
+			tile[936] = new CaveTile();
+			tile[936].image = ImageIO.read(getClass().getResourceAsStream("/tiles/936.png"));
 			
 			tile[956] = new IceTile();
 			tile[956].image = ImageIO.read(getClass().getResourceAsStream("/tiles/956.png"));

@@ -357,7 +357,7 @@ public class BattleUI extends AbstractUI {
 			}
 			if (counter >= 100) {
 				counter = 0;
-				if (currentTask.p.playerOwned() && hasAlive()) {
+				if (currentTask.p.playerOwned() && hasAlive() && !gp.player.p.wiped()) {
 					Task.addTask(Task.PARTY, "");
 				}
 				endTask();
@@ -630,7 +630,7 @@ public class BattleUI extends AbstractUI {
 				if (tasks.isEmpty()) {
 					user.setVisible(false);
 					gp.endBattle(index, staticID);
-					gp.gameState = GamePanel.PLAY_STATE;
+					if (gp.gameState != GamePanel.TASK_STATE) gp.gameState = GamePanel.PLAY_STATE;
 				}
 				break;
 			case MOVE_MESSAGE_STATE:
@@ -665,6 +665,13 @@ public class BattleUI extends AbstractUI {
 	    	aura = true;
 	    }
 		if (Pokemon.isUltraBeast(staticID) || staticID == 159) { // grusts aren't catchable in the forest
+			aura = true;
+		}
+		if (staticID == 235) { // dragowrath
+			Task.addTask(Task.TEXT, foe.nickname + "'s aura flared to life!");
+	    	for (int i = 0; i < 5; i++) {
+	    		foe.stat(foe, i, 6, null);
+	    	}
 			aura = true;
 		}
 		Task.addSwapInTask(user, true);
@@ -1276,9 +1283,6 @@ public class BattleUI extends AbstractUI {
 		            	user.getPlayer().bag.add(foe.trainer.getItem());
 		            	message += "\nYou were given " + foe.trainer.getItem().toString() + "!";
 		            }
-					if (foe.trainer.getFlagIndex() != 0) {
-		            	user.getPlayer().flag[foe.trainer.getFlagX()][foe.trainer.getFlagY()] = true;
-		            }
 					Task.addTask(Task.END, message);
 		            if (foe.trainer.getMoney() == 500 && user.getPlayer().badges < 8) {
 		            	user.getPlayer().badges++;
@@ -1298,10 +1302,15 @@ public class BattleUI extends AbstractUI {
 			}
 		}
 	    if (user.getPlayer().wiped()) {
-	    	int loss = gp.player.p.getMoney() >= 500 ? 500 : gp.player.p.getMoney();
-	    	Task.addTask(Task.TEXT, "You have no more Pokemon that can fight!\nYou lost $" + loss + "!");
-			Task t = Task.addTask(Task.END, "");
-			t.setWipe(true);
+	    	boolean fullWipe = staticID != 235;
+	    	if (fullWipe) {
+	    		int loss = gp.player.p.getMoney() >= 500 ? 500 : gp.player.p.getMoney();
+		    	Task.addTask(Task.TEXT, "You have no more Pokemon that can fight!\nYou lost $" + loss + "!");
+		    	Task t = Task.addTask(Task.END, "");
+				t.setWipe(true);
+	    	} else { // dragowrath
+	    		Task.addTask(Task.END, "You have no more Pokemon that can fight!");
+	    	}
 		}
 	}
 	

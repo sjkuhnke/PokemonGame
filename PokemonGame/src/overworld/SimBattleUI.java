@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import pokemon.*;
+import puzzle.Puzzle;
 import util.Pair;
 
 public class SimBattleUI extends BattleUI {
@@ -63,7 +64,7 @@ public class SimBattleUI extends BattleUI {
 		g2.setFont(g2.getFont().deriveFont(24F));
 		g2.setColor(Color.BLACK);
 		
-		g2.drawString("Coins: " + gp.player.p.coins, x, y);
+		g2.drawString(getBetCurrencyName(gauntlet) + ": " + gp.player.p.getBetCurrency(gauntlet), x, y);
 		y += 28;
 		
 		g2.drawString("Bet: " + battleBet, x, y);
@@ -125,7 +126,7 @@ public class SimBattleUI extends BattleUI {
 					if (battleBet > 0) {
 						betPayout = 0;
 						battleBet--;
-						gp.player.p.coins++;
+						gp.player.p.addBetCurrency(gauntlet, 1);
 					} else {
 						cooldownCounter++;
 						if (cooldownCounter >= 125) {
@@ -153,7 +154,7 @@ public class SimBattleUI extends BattleUI {
 						if (battleBet > 0) {
 							battleBet--;
 						}
-						gp.player.p.coins++;
+						gp.player.p.addBetCurrency(gauntlet, 1);
 						if (!awarded) {
 							gp.player.p.gamesWon++;
 							gp.player.p.winStreak++;
@@ -286,7 +287,7 @@ public class SimBattleUI extends BattleUI {
 		} else {
 			if (commandNum > 0) {
 				commandNum--;
-				gp.player.p.coins++;
+				gp.player.p.addBetCurrency(gauntlet, 1);
 			} else {
 				cooldownCounter++;
 				if (cooldownCounter >= 120) {
@@ -417,6 +418,10 @@ public class SimBattleUI extends BattleUI {
 				subState = TASK_STATE;
 				break;
 			case END_STATE:
+				if (gauntlet) {
+					Puzzle puzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
+					puzzle.update(gp.player.p.getBetCurrency(gauntlet));
+				}
 				if (tasks.isEmpty()) {
 					user.setVisible(false);
 					gp.saveGame();

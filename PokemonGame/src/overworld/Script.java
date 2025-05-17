@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 
 import entity.*;
 import pokemon.*;
+import puzzle.Puzzle;
 
 public class Script {
 	
@@ -1897,12 +1898,189 @@ public class Script {
 		
 		scriptMap.put(191.0, (npc) -> { // tower guard faith route
 			if (p.flag[7][9] && !p.flag[7][16]) { // finn has faith and needs to attempt the gauntlet
+				Task.addTask(Task.DIALOGUE, npc, "Traveler of faith...");
+				Task.addTask(Task.DIALOGUE, npc, "Beyond these doors lies the trial of the soul.");
+				Task.addTask(Task.DIALOGUE, npc, "This tower was raised by those who clung to hope even when the heavens fell silent.");
+				Task.addTask(Task.DIALOGUE, npc, "Their prayers built these walls. Their dreams carved these stones.");
+				Task.addTask(Task.DIALOGUE, npc, "Within, you will find no exit until your spirit proves worthy.");
+				Task.addTask(Task.DIALOGUE, npc, "You must bring 10 Pokemon total, no more - and no less.");
 				
-				if (!p.flag[7][12]) { // player hasn't done the cutscene with Merlin yet
-					
+				if (!p.hasFullPartyAndGauntletBox()) { // Not enough selected
+					Task.addTask(Task.DIALOGUE, npc, "...");
+					Task.addTask(Task.DIALOGUE, npc, "You do not have 10 Pokemon selected to bring.");
+					Task.addTask(Task.DIALOGUE, npc, "You can choose what Pokemon to bring using the Gauntlet Box in the PC here (press [\u2191] when selecting a box at the top).");
+					Task.addTask(Task.DIALOGUE, npc, "Please ensure that your party is full of 6 Pokemon and your Gauntlet Box is full of 4 extra Pokemon.");
+				} else {
+					gp.ui.commandNum = 1;
+					Task.addTask(Task.CONFIRM, npc, "Are you prepared to stake your soul upon your faith?", 11);
 				}
 			} else {
-				
+				Task.addTask(Task.DIALOGUE, npc, "You... don't have faith... be gone...");
+			}
+		});
+		
+		scriptMap.put(191.1, (npc) -> { // merlin in AT 1B
+			p.heal();
+			Task.addTask(Task.DIALOGUE, npc, "I've got your team all healed up. You have to be prepared for these guards.");
+			Task.addTask(Task.DIALOGUE, npc, "These spirits... the Disciples... they whisper things. Fragments. A letter here, a silence there.");
+			Task.addTask(Task.DIALOGUE, npc, "Pieces of something... familiar. A name? A word? Hm...");
+			Task.addTask(Task.DIALOGUE, npc, "And those paintings on the walls... one of them must be right. But which?");
+			Task.addTask(Task.DIALOGUE, npc, "They're like reflections in a broken mirror - colors all blurred, meanings scattered.");
+			Task.addTask(Task.DIALOGUE, npc, "If I were to guess - and guessing is half of wisdom - I'd say... each phantom offers you a part of the answer.");
+			Task.addTask(Task.DIALOGUE, npc, "Speak to them. Gather their hints. Listen closely.");
+			Task.addTask(Task.DIALOGUE, npc, "When you pick your painting, bring your answer to him - the one who waits in the grand painting. Only then will we see if you've stirred his memory...");
+			Task.addTask(Task.DIALOGUE, npc, "...Oh, and if you lose your way... there's a blank canvas here. It might help... orm aybe it just reflects your own uncertainty. Hahh... hard to tell with these things.");
+			Task.addTask(Task.DIALOGUE, npc, "I'll wait here, I'm too weak holding this mind-control spell from gnawing at our minds to battle anyone. We'll reconnect once you make it to the top.");
+		});
+		
+		scriptMap.put(193.0, (npc) -> { // temple ball guy in AT 3A
+			if (!p.bag.contains(Item.TEMPLE_BALL)) {
+				Puzzle currentPuzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
+				if (currentPuzzle.isLocked()) {
+					Task.addTask(Task.DIALOGUE, npc, "You used my Temple Ball..?");
+					Task.addTask(Task.DIALOGUE, npc, "You must pray that its the species he required.");
+					Task.addTask(Task.DIALOGUE, npc, "I can't give you another until you cast the reset spell on this place.");
+					Task.addTask(Task.DIALOGUE, npc, "Find the empty painting to try again.");
+					return;
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "You'll need this.");
+					Task t = Task.addTask(Task.ITEM, "");
+					t.item = Item.TEMPLE_BALL;
+					Task.addTask(Task.DIALOGUE, npc, "The Temple Ball will catch any Pokemon here without fail.");
+				}
+			}
+			Task.addTask(Task.DIALOGUE, npc, "Catch the correct Pokemon in the Temple Ball and show him.");
+		});
+		
+		scriptMap.put(195.0, (npc) -> { // temple orb guy in AT 5A
+			Puzzle currentPuzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
+			if (!currentPuzzle.isLocked()) {
+				Task.addTask(Task.DIALOGUE, npc, "You'll need these orbs to reach master.");
+				Task t = Task.addTask(Task.ITEM, "");
+				t.item = Item.TEMPLE_ORB;
+				t.counter = 25;
+				Task.addTask(Task.DIALOGUE, npc, "But that won't be enough. You need to prove you have faith - faith in the odds.");
+				currentPuzzle.setLocked(true);
+			} else {
+				if (currentPuzzle.isLost()) {
+					Task.addTask(Task.DIALOGUE, npc, "But you're out of orbs..?");
+					Task.addTask(Task.DIALOGUE, npc, "I pray for you. You aren't strong enough to meet him.");
+					Task.addTask(Task.DIALOGUE, npc, "I can't give you any more until you cast the reset spell on this place.");
+					Task.addTask(Task.DIALOGUE, npc, "Find the empty painting to try again.");
+					return;
+				}
+			}
+			Task.addTask(Task.DIALOGUE, npc, "Gamble against master using his paintings until you have 100 or more orbs. He's testing your will...");
+		});
+		
+		scriptMap.put(196.0, (npc) -> { // faith dragon in 6A
+			if (!p.flag[7][13]) {
+				p.flag[7][13] = true;
+				Task.addTask(Task.TEXT, "The ancient being is in a deep slumber... its body radiates a warm, sacred aura.");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SPOT, player, "");
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.UPDATE, "");
+				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "So it wasn't just a legend... it truly is Relopamil. The dragon of faith.");
+				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "I've never seen it with my own eyes until now... but I can feel it. The divine presence.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addNPCMoveTask('y', 49 * gp.tileSize, gp.npc[196][1], false, 2);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.TURN, player, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 45);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "You've brought the Faith Core, yes? Then we mustn't delay. Dragowrath's power grows by the minute...");
+				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "Let's awaken Relopamil, before it's too late.");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, player, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "By the sacred breath... awaken, Relopamil. The world needs you once more.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.SLEEP, "", 60);
+				Task.addTask(Task.SPOT, gp.npc[196][1], "");
+				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "It's awakening...!");
+		        Task.addTask(Task.SLEEP, "", 10);
+		        Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 5);
+		        Task.addTask(Task.DIALOGUE, gp.npc[196][1], "Here, quick! Take this - it's a Temple Ball. Forged long ago by the founders of the old faith.");
+		        Task.addTask(Task.DIALOGUE, gp.npc[196][1], "It will ensure Relopamil joins you, without resistance!");
+		        Task t = Task.addTask(Task.ITEM, "");
+		        t.item = Item.TEMPLE_BALL;
+		        Task.addTask(Task.SLEEP, "", 15);
+		        Task.addTask(Task.TURN, player, "", Task.UP);
+		        Task.addTask(Task.SLEEP, "", 15);
+			}
+			Task.addTask(Task.DIALOGUE, npc, "DRAAAGH!");
+			Task t = Task.addTask(Task.BATTLE, "", 405);
+			t.start = 234;
+		});
+		
+		scriptMap.put(196.1, (npc) -> { // dragowrath AT
+			if (!p.flag[7][16]) {
+				p.flag[7][16] = true;
+				Task.addTask(Task.SPOT, gp.npc[196][1], "");
+				Task.addTask(Task.SPOT, player, "");
+				Task.addNPCMoveTask('y', 46 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.SPEAK, npc, "You dare...", 1);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "Dragowrath! No - this place is sacred!");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.SPEAK, npc, "You awaken my child... as if it belongs to you. As if your brittle faith is worthy of such power.", 1);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.SPEAK, npc, "Relopamil was born of me. Molded from me. Do you think your trembling hope can sever my bloodline?", 1);
+				Task.addTask(Task.SPEAK, npc, "Let me show you what true will looks like.", 1);
+				Task t = Task.addTask(Task.BATTLE, "", 406);
+				t.start = 235;
+			} else {
+				p.heal();
+				p.team = p.tempTeam;
+				p.setCurrent();
+				p.tempTeam = null;
+				Task.addTask(Task.SPEAK, npc, "So... this is the fruit of your faith. Weak. Broken. Not enough.", 1);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.SPEAK, npc, "You believed it would be enough. Just as she did.", 1);
+				Task.addTask(Task.SPEAK, npc, "Arthra, too, raised her voice to the skies. She, too thought belief alone could change the world.", 1);
+				Task.addTask(Task.SPEAK, npc, "She was wrong. And now, she suffers for it.", 1);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.SPEAK, player, "(What...?)");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.SPEAK, npc, "You still don't understand, do you.", 1);
+				Task.addTask(Task.SPEAK, npc, "You were born in a world that clings to stories. But stories don't win wars.", 1);
+				Task.addTask(Task.SPEAK, npc, "I will show you a world that no longer needs you... or them.", 1);
+				Task.addTask(Task.SLEEP, "", 15);
+		        Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "Ngh - no... not yet...!");
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addParticleTask(gp.npc[196][1], "smoke", new Color(66, 252, 231), 100);
+				Task.addTask(Task.SLEEP, "", 5);
+				int diff = 52 * gp.tileSize - player.worldX;
+				Task.addNPCMoveTask('x', 52 * gp.tileSize, player, false, diff / 2);
+				Task.addTask(Task.TURN, player, "", Task.LEFT);
+				Task.addNPCMoveTask('y', 48 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.SPEAK, npc, "Your time is over, Merlin. You placed your faith in the wrong vessel.", 1);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "Hrk - Nngh... G-Get... get them out of here!");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "Sanctum Arum... Portalis Verum...!");
+				Task t = Task.addTask(Task.TELEPORT, "");
+				t.counter = 0;
+				t.start = 70;
+				t.finish = 70;
+				t.color = Color.WHITE;
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
 			}
 		});
 	}
