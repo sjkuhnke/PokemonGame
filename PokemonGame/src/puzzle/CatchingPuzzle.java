@@ -18,7 +18,7 @@ public class CatchingPuzzle extends Puzzle {
 		// has a weather associated with their type or not
 		{"The skies shift to welcome it - clouds part, or gather, or burn.", "No storm nor stillness heeds its name. It walks apart from the winds."},
 		// has a terrain associated with their type or not
-		{"The earth blooms or pulses in its wake. The terrain changes - not for you, but for it.", "It walks on plain stone. The ground knows no song for it."},
+		{"The earth blooms or pulses in its wake. The terrain changes - not for you, but for it.", "It walks on plain stone. The terrain knows no song for it."},
 		// whether this pokemon is a physical, special or mixed attacker
 		{"Its blows are felt, not seen. Steel, bone, and motion define it.", "It strikes with the seen or the unseen - I cannot say which.", "Its power is not in the flesh, but in the mind and soul."},
 		// can still evolve or not
@@ -36,6 +36,9 @@ public class CatchingPuzzle extends Puzzle {
 	public void setup() {
 		correct = gp.encounterPokemon(area, 'G', false);
 		setClues();
+		for (int i = 0; i <= 7; i++) {
+			gp.npc[floor][i].altDialogue = clues[i];
+		}
 	}
 
 	private void setClues() {
@@ -92,20 +95,14 @@ public class CatchingPuzzle extends Puzzle {
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
+		super.reset();
 
 	}
 
 	@Override
 	public void update(Object obj) {
-		// TODO Auto-generated method stub
-
+		if (isLocked()) return;
+		isComplete = ((Pokemon) obj).id == correct.id;
+		setLocked(true);
 	}
-
-	@Override
-	public boolean checkCompletion() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

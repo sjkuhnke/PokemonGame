@@ -8,10 +8,12 @@ import overworld.GamePanel;
 public class Painting extends InteractiveTile {
 	
 	String color;
+	boolean isColor;
 	
 	public Painting(GamePanel gp, String color) {
 		super(gp);
 		this.color = color;
+		this.isColor = color == null;
 		down1 = setup("/interactive/painting");
 		down2 = setup("/interactive/red");
 		down3 = setup("/interactive/orange");
@@ -19,6 +21,9 @@ public class Painting extends InteractiveTile {
 		up1 = setup("/interactive/green");
 		up2 = setup("/interactive/blue");
 		up3 = setup("/interactive/purple");
+		up4 = setup("/interactive/reset");
+		left1 = setup("/interactive/bj_painting");
+		left2 = setup("/interactive/battle_painting");
 	}
 	
 	@Override
@@ -31,6 +36,8 @@ public class Painting extends InteractiveTile {
 			worldX - gp.tileSize*3 + gp.offsetX < gp.player.worldX + gp.player.screenX &&
 			worldY + gp.tileSize*3 + gp.offsetY > gp.player.worldY - gp.player.screenY &&
 			worldY - gp.tileSize*3 + gp.offsetY < gp.player.worldY + gp.player.screenY) {
+			
+			if (color == null) System.out.println(String.format("%d, %d", worldX / gp.tileSize, worldY / gp.tileSize));
 			
 			switch(color) {
 			case "main":
@@ -47,6 +54,12 @@ public class Painting extends InteractiveTile {
 				image = up2;break;
 			case "purple":
 				image = up3;break;
+			case "reset":
+				image = up4;break;
+			case "bj":
+				image = left1;break;
+			case "battle":
+				image = left2;break;
 			}
 			
 			int width = image.getWidth() * gp.scale;
@@ -60,11 +73,27 @@ public class Painting extends InteractiveTile {
 	}
 	
 	public boolean isColorPainting() {
-		return !this.color.equals("main");
+		return this.isColor;
 	}
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	public String getColor() {
+		return this.color;
+	}
+
+	public boolean isMainPainting() {
+		return this.color.equals("main");
+	}
+	
+	public boolean isResetPainting() {
+		return this.color.equals("reset");
+	}
+	
+	public boolean isBetPainting() {
+		return this.color.equals("bet") || this.color.equals("bj") || this.color.equals("battle");
 	}
 
 }

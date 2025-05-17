@@ -35,9 +35,11 @@ import javax.swing.SwingUtilities;
 import entity.Entity;
 import entity.NPC_Prize_Shop;
 import entity.PlayerCharacter;
+import object.Painting;
 import object.TemplateParticle;
 import object.TreasureChest;
 import pokemon.*;
+import puzzle.Puzzle;
 import util.Pair;
 
 public class UI extends AbstractUI {
@@ -70,7 +72,6 @@ public class UI extends AbstractUI {
 	public boolean isGauntlet;
 	public Pokemon currentBoxP;
 	public boolean release;
-	public boolean gauntlet;
 	
 	public int dexNum[] = new int[4];
 	public int dexMode;
@@ -486,12 +487,12 @@ public class UI extends AbstractUI {
 			drawSleep();
 			break;
 		case Task.BLACKJACK:
-			Task.addTask(Task.TEXT, "Come play again soon, okay?");
+			if (!currentTask.wipe) Task.addTask(Task.TEXT, "Come play again soon, okay?");
 			// Remove all existing components from the JFrame
 		    Main.window.getContentPane().removeAll();
 
 		    // Create and add the BlackjackPanel
-		    BlackjackPanel bjPanel = new BlackjackPanel(gp);
+		    BlackjackPanel bjPanel = new BlackjackPanel(gp, currentTask.wipe);
 		    Main.window.getContentPane().add(bjPanel);
 
 		    // Set focus on the BlackjackPanel
@@ -568,13 +569,15 @@ public class UI extends AbstractUI {
 				p.setFirst(avg);
 				System.out.println(String.format("Average %s: %.1f", p.getSecond(), p.getFirst()));
 			}
+			gauntlet = currentTask.wipe;
+			gp.simBattleUI.gauntlet = currentTask.wipe;
 			
 			int winStreak = gp.player.p.winStreak;
 			gp.player.p.winStreak = 0;
-			gp.player.p.coins--;
+			gp.player.p.addBetCurrency(gauntlet, -1);
 			gp.saveGame();
 			gp.player.p.winStreak = winStreak;
-			gp.player.p.coins++;
+			gp.player.p.addBetCurrency(gauntlet, 1);
 			
 			parlays = new int[MAX_PARLAYS];
 			sheetFilled = false;
@@ -605,6 +608,10 @@ public class UI extends AbstractUI {
 			break;
 		case Task.PARTICLE:
 			drawParticles();
+			break;
+		case Task.RESET:
+			gp.puzzleM.reset(currentTask.wipe);
+			currentTask = null;
 			break;
 		}
 	}
@@ -638,7 +645,7 @@ public class UI extends AbstractUI {
 		}
 	}
 
-	private void drawBetBattle() {		
+	private void drawBetBattle() {
 		Trainer ut = currentTask.trainers[0];
 		Trainer ft = currentTask.trainers[1];
 		
@@ -696,12 +703,12 @@ public class UI extends AbstractUI {
 			int prevBet = parlayBet;
 			int activeBets = getActiveBets();
 			parlayBet++;
-			if (parlayBet > gp.player.p.getMaxParlayBet(activeBets)) parlayBet = 1;
+			if (parlayBet > gp.player.p.getMaxParlayBet(gauntlet, activeBets)) parlayBet = 1;
 			
 			coinColor = Color.WHITE;
 			
 			int diff = (parlayBet - prevBet);
-			gp.player.p.coins -= diff * activeBets;
+			gp.player.p.addBetCurrency(gauntlet, -(diff * activeBets));
 		}
 		
 		if (gp.keyH.downPressed) {
@@ -709,12 +716,12 @@ public class UI extends AbstractUI {
 			int prevBet = parlayBet;
 			int activeBets = getActiveBets();
 			parlayBet--;
-			if (parlayBet < 1) parlayBet = gp.player.p.getMaxParlayBet(activeBets);
+			if (parlayBet < 1) parlayBet = gp.player.p.getMaxParlayBet(gauntlet, activeBets);
 			
 			coinColor = Color.WHITE;
 			
 			int diff = (prevBet - parlayBet);
-			gp.player.p.coins += diff * activeBets;
+			gp.player.p.addBetCurrency(gauntlet, diff * activeBets);
 		}
 		
 		if (gp.keyH.sPressed) {
@@ -831,7 +838,7 @@ public class UI extends AbstractUI {
 		g2.setFont(g2.getFont().deriveFont(28F));
 		g2.setColor(coinColor);
 		
-		String coinText = gp.player.p.coins + " Coins";
+		String coinText = gp.player.p.getBetCurrency(gauntlet) + " " + getBetCurrencyName(gauntlet);
 		g2.drawString(coinText, getRightAlignedTextX(coinText, x), y);
 	}
 
@@ -934,7 +941,7 @@ public class UI extends AbstractUI {
 		y += gp.tileSize * 1.35;
 		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(32F));
-		battleBet = battleBet > gp.player.p.coins ? gp.player.p.coins : battleBet;
+		battleBet = battleBet > gp.player.p.getBetCurrency(gauntlet) ? gp.player.p.getBetCurrency(gauntlet) : battleBet;
 		g2.drawString(battleBet + "", x, y);
 		
 		int y2 = y += gp.tileSize / 4;
@@ -968,7 +975,7 @@ public class UI extends AbstractUI {
 			starterConfirm = false;
 			currentTask = null;
 			
-			gp.player.p.coins -= battleBet;
+			gp.player.p.addBetCurrency(gauntlet, -battleBet);
 			
 			gp.simBattleUI.simOdds = odds;
 			gp.simBattleUI.odds = new int[] { calculateOdds(odds, 0), calculateOdds(odds, 1) };
@@ -1406,7 +1413,7 @@ public class UI extends AbstractUI {
 		int width = gp.tileSize * 3;
 		int height = (int) (gp.tileSize * 2.5);
 		drawSubWindow(x, y, width, height);
-		if (currentTask.e != null) drawNameLabel(true);
+		if (currentTask.e != null && currentTask.e.name != null) drawNameLabel(true);
 		x += gp.tileSize;
 		y += gp.tileSize;
 		String yes = type == 7 ? "Faith" : "Yes";
@@ -1497,6 +1504,59 @@ public class UI extends AbstractUI {
 					gp.player.p.flag[7][9] = true;
 					gp.player.p.flag[7][10] = false;
 					gp.script.runScript(gp.npc[107][13]);
+					currentTask = null;
+					break;
+				case 8: // picking color painting
+					Painting painting = (Painting) currentTask.e;
+					Puzzle p = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
+					p.update(painting);
+					currentTask = null;
+					break;
+				case 9: // checking main painting
+					p = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
+					p.sendToNext();
+					currentTask = null;
+					break;
+				case 10: // reset painting
+					int[] loc = gp.puzzleM.FAITH_START;
+					t = Task.addTask(Task.TELEPORT, "");
+					t.counter = loc[0];
+					t.start = loc[1];
+					t.finish = loc[2];
+					gp.puzzleM.doReset(true);
+					Task.addTask(Task.TURN, gp.player, "", Task.UP);
+					currentTask = null;
+					break;
+				case 11: // abandoned tower entrance
+					if (!gp.player.p.flag[7][12]) { // player hasn't done the cutscene with Merlin yet
+						gp.player.p.flag[7][12] = true;
+						gp.npc[191][1].worldY = 83 * gp.tileSize;
+						gp.npc[191][1].direction = "up";
+						Task.addTask(Task.TURN, gp.player, "", Task.DOWN);
+						Task.addNPCMoveTask('y', 77 * gp.tileSize, gp.npc[191][1], false, 4);
+						Task.addTask(Task.DIALOGUE, gp.npc[191][1], "This is where your path truly begins, Finn.");
+						Task.addTask(Task.SLEEP, "", 10);
+						Task.addTask(Task.TURN, gp.player, "", Task.RIGHT);
+						Task.addTask(Task.SLEEP, "", 5);
+						Task.addNPCMoveTask('x', 51 * gp.tileSize, gp.player, false, 2);
+						Task.addTask(Task.TURN, gp.player, "", Task.DOWN);
+						Task.addNPCMoveTask('y', (int) (73.75 * gp.tileSize), gp.npc[191][1], false, 2);
+						Task.addTask(Task.TURN, gp.player, "", Task.LEFT);
+						Task.addTask(Task.SLEEP, "", 30);
+						Task.addTask(Task.TURN, gp.npc[191][1], "", Task.RIGHT);
+						Task.addTask(Task.DIALOGUE, gp.npc[191][1], "You and I, we're in this together.");
+						Task.addTask(Task.SLEEP, "", 15);
+						Task.addTask(Task.DIALOGUE, gp.npc[191][1], "But remember: Faith is not blind. It is a choice - made again and again, even in the darkness.");
+						Task.addTask(Task.SLEEP, "", 15);
+						Task.addTask(Task.TURN, gp.npc[191][1], "", Task.UP);
+						Task.addTask(Task.SLEEP, "", 15);
+						Task.addTask(Task.DIALOGUE, gp.npc[191][1], "Let's do this.");
+					}
+					t = Task.addTask(Task.TELEPORT, "");
+					t.counter = 191;
+					t.start = 49;
+					t.finish = 47;
+					gp.puzzleM.doReset(true);
 					currentTask = null;
 					break;
 				}
@@ -3633,7 +3693,8 @@ public class UI extends AbstractUI {
 	
 	public void drawTransition() {
 		counter++;
-		g2.setColor(new Color(0,0,0,counter*5));
+		Color base = currentTask != null && currentTask.color != null ? currentTask.color : Color.BLACK;
+		g2.setColor(new Color(base.getRed(),base.getGreen(),base.getBlue(),counter*5));
 		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		
 		if (counter == 50) {

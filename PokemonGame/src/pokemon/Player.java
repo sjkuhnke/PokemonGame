@@ -50,6 +50,7 @@ public class Player extends Trainer implements Serializable {
 	public Pokemon[][] boxes;
 	public Pokemon[] gauntletBox;
 	public String[] boxLabels;
+	public Pokemon[] tempTeam;
 	private int numBattled;
 	private int posX;
 	private int posY;
@@ -92,15 +93,15 @@ public class Player extends Trainer implements Serializable {
 	public int winStreak;
 	public int[] blackjackStats; // 0: games played, 1: games won, 2: games pushed, 3: busts, 4: bust wins, 5: blackjacks 6: doubles 7: double wins, 8: coins won, 9: coins lost: 10: highest coin, 11: highest win streak, 12: lose streak, 13: high lose strk
 	public boolean[] coinBadges;
+	public HashMap<Integer, Boolean> puzzlesLocked;
 	public int currentBox;
 	public int version;
 	private Integer id;
 	public boolean amulet;
-	public int puzzle;
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 59;
+	public static final int VERSION = 61;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -138,6 +139,7 @@ public class Player extends Trainer implements Serializable {
 		
 		blackjackStats = new int[20];
 		coinBadges = new boolean[12];
+		puzzlesLocked = new HashMap<>();
 		
 		setupStatBerries();
         setupResistBerries();
@@ -488,7 +490,7 @@ public class Player extends Trainer implements Serializable {
 			{"Robin", "Scott 3", "Grandpa", "UP Shookwat", "Gift E/S", "Gym 5"},
 			{"Arthra 1", "Arthra Talk", "Rick 2", "Fred 3", "Maxwell 1", "UP Splame", "Scott 4", "Glurg Gift", "Gym 6", "Maxwell After"},
 			{"Scott Scene", "Coins", "Autosave Casino", "Magmaclang", "UP Buzzwole", "Rock Climb", "Gym 7", "Shake 1", "Shake 2", "Shake 3", "Shake 4", "Shake 5", "Shake 6", "Shake 7", "Shake 8", "Shake 9", "Shake 10", "Shake 11", "Shake 12"},
-			{"Arthra Scene", "Merlin coming", "Rick 3", "Fred 4", "Maxwell 2", "Machine", "Dragowrath S1", "UP Pheromosa", "Dissemble Machine", "Faith", "Logic", "Merlin Guide", "Guard", "", "", "", "", "", "", "", "", "", "", ""},
+			{"Arthra Scene", "Merlin coming", "Rick 3", "Fred 4", "Maxwell 2", "Machine", "Dragowrath S1", "UP Pheromosa", "Dissemble Machine", "Faith", "Logic", "Merlin Guide", "Guard", "Awake", "Relomidel", "Relopamil", "Drago S2", "Ryder Shack", "", "", "", "", "", ""},
 			{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""},			
 		};
 		
@@ -725,6 +727,14 @@ public class Player extends Trainer implements Serializable {
 			if (p != null) result++;
 		}
 		return result;
+	}
+	
+	public boolean hasFullPartyAndGauntletBox() {
+		int result = getAmountSelected();
+		for (Pokemon p : team) {
+			if (p != null) result++;
+		}
+		return result >= 10;
 	}
 
 	public ArrayList<Pokemon> getAllPokemon() {
@@ -1244,6 +1254,7 @@ public class Player extends Trainer implements Serializable {
 		if (id == null) setID(gp.player.currentSave);
 		if (blackjackStats == null) blackjackStats = new int[20];
 		if (coinBadges == null) coinBadges = new boolean[12];
+		if (puzzlesLocked == null) puzzlesLocked = new HashMap<>();
 		version = VERSION;
 	}
 
@@ -1566,10 +1577,10 @@ public class Player extends Trainer implements Serializable {
 		return result;
 	}
 
-	public int getMaxParlayBet(int activeBets) {
+	public int getMaxParlayBet(boolean gauntlet, int activeBets) {
 		if (activeBets == 0) return getMaxBet();
 		
-		return Math.min(Math.max(1, coins / activeBets), 100);
+		return Math.min(Math.max(1, getBetCurrency(gauntlet) / activeBets), 100);
 	}
 
 	public void deleteInvalidMoves() {
@@ -1720,9 +1731,20 @@ public class Player extends Trainer implements Serializable {
 	
 	public void setupPuzzles(GamePanel gp, int map) {
 		if (map >= 191 && map <= 196) {
-			gp.puzzleM.initGauntletSeed(id, puzzle);
 			gp.puzzleM.setup(true);
 		}
 		// TODO: maps for deep chasm and same logic
+	}
+	
+	public int getBetCurrency(boolean gauntlet) {
+		return gauntlet ? bag.getCount(Item.TEMPLE_ORB) : coins;
+	}
+	
+	public void addBetCurrency(boolean gauntlet, int amt) {
+		if (gauntlet) {
+			bag.add(Item.TEMPLE_ORB, amt);
+		} else {
+			coins += amt;
+		}
 	}
 }

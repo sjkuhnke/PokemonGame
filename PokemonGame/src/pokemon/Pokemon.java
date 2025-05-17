@@ -44,6 +44,7 @@ import overworld.GamePanel;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
 import pokemon.Field.FieldEffect;
+import puzzle.Puzzle;
 import util.Pair;
 
 public class Pokemon implements RoleAssignable, Serializable {
@@ -4915,7 +4916,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		int a = amt;
 		if (p.ability == Ability.SIMPLE) a *= 2;
 		if (p.ability == Ability.CONTRARY) a *= -1;
-		if (foe.ability == Ability.BRAINWASH) a *= -1;
+		if (foe != null && foe.ability == Ability.BRAINWASH) a *= -1;
 		String type = "";
 		if (i == 0) type = "Attack";
 		if (i == 1) type = "Defense";
@@ -4970,7 +4971,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else {
 			if (announce) Task.addTask(Task.TEXT, p.nickname + "'s " + type + amount + "!");
 		}
-		if (foe.ability == Ability.EMPATHIC_LINK && a > 0) {
+		if (foe != null && foe.ability == Ability.EMPATHIC_LINK && a > 0) {
 			if (announce) Task.addAbilityTask(foe);
 			foe.stat(foe, 2, 1, this, announce);
 		}
@@ -4984,10 +4985,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (this != p) {
-			if (p.ability == Ability.DEFIANT && foe.ability != Ability.BRAINWASH && a < 0) {
+			if (p.ability == Ability.DEFIANT && foe != null && foe.ability != Ability.BRAINWASH && a < 0) {
 				if (announce) Task.addAbilityTask(p);
 				stat(p, 0, 2, foe, announce);
-			} else if (p.ability == Ability.COMPETITIVE && foe.ability != Ability.BRAINWASH && a < 0) {
+			} else if (p.ability == Ability.COMPETITIVE && foe != null && foe.ability != Ability.BRAINWASH && a < 0) {
 				if (announce) Task.addAbilityTask(p);
 				stat(p, 2, 2, foe, announce);
 			}
@@ -8425,6 +8426,12 @@ public class Pokemon implements RoleAssignable, Serializable {
         	ballBonus = 2;
         	break;
         case MASTER_BALL:
+        	return true;
+        case TEMPLE_BALL:
+        	Puzzle puzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
+        	if (puzzle != null) {
+        		puzzle.update(foe);
+        	}
         	return true;
         case BEAST_BALL:
         	ballBonus = isUltraBeast(foe.id) ? 5 : 0.1;

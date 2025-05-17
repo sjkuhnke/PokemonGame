@@ -21,6 +21,7 @@ import object.*;
 import overworld.*;
 import util.*;
 import pokemon.*;
+import puzzle.Puzzle;
 
 public class PlayerCharacter extends Entity {
 	
@@ -407,6 +408,8 @@ public class PlayerCharacter extends Entity {
 			interactSnowball(index, override);
 		} else if (target instanceof IceBlock) {
 			interactIceBlock(index, override);
+		} else if (target instanceof Painting) {
+			interactPainting((Painting) target);
 		}
 	}
 
@@ -878,7 +881,7 @@ public class PlayerCharacter extends Entity {
 			generateParticle(gp.iTile[gp.currentMap][i]);
 			gp.iTile[gp.currentMap][i] = null;
 		} else {
-			gp.ui.showMessage("This pile of snow looks like it can be\nshoveled!");
+			gp.ui.showMessage(Item.breakString("This pile of snow looks like it can be shoveled!", UI.MAX_TEXTBOX));
 		}
 		
 	}
@@ -889,9 +892,59 @@ public class PlayerCharacter extends Entity {
 			generateParticle(gp.iTile[gp.currentMap][i]);
 			gp.iTile[gp.currentMap][i] = null;
 		} else {
-			gp.ui.showMessage("This block of ice looks like it can be\nbroken!");
+			gp.ui.showMessage(Item.breakString("This block of ice looks like it can be broken!", UI.MAX_TEXTBOX));
 		}
 		
+	}
+	
+	private void interactPainting(Painting painting) {
+		gp.setTaskState();
+		Puzzle current = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
+		if (painting.isColorPainting()) {
+			if (current.isLocked()) {
+				Task.addTask(Task.TEXT, "The painting is a glowing " + painting.getColor() + "...");
+				if (current.isLost()) {
+					Task.addTask(Task.TEXT, "I think I picked the wrong painting...");
+				}
+			} else {
+				gp.ui.commandNum = 1;
+				Task.addTask(Task.TEXT, "The painting is a vibrant " + painting.getColor() + "!");
+				Task.addTask(Task.CONFIRM, painting, "Do you pick the " + painting.getColor() + " painting?", 8);
+			}
+		} else {
+			if (painting.isMainPainting()) {
+				if (current.getFloor() == 195) current.update(p.getBetCurrency(true));
+				if (current.isComplete()) {
+					Task.addTask(Task.TEXT, "...The painting erupted in light!");
+					Entity dragon = new Entity(gp, "Dragon");
+					gp.ui.commandNum = 1;
+					Task.addTask(Task.DIALOGUE, dragon, "Good work child...");
+					Task.addTask(Task.CONFIRM, dragon, "Are you ready to move on to the next room?", 9);
+				} else {
+					Task.addTask(Task.TEXT, "...the painting is as still as the night.");
+				}
+			} else if (painting.isResetPainting()) {
+				gp.ui.commandNum = 1;
+				Task.addTask(Task.TEXT, "...the painting is dull and empty.");
+				Task.addTask(Task.CONFIRM, "Would you like to reset the gauntlet?", 10);
+			} else if (painting.isBetPainting()) {
+				gp.keyH.wPressed = false;
+				if (painting.getColor().equals("bj")) {
+					Task t = Task.addTask(Task.BLACKJACK, "");
+					t.wipe = true;
+				} else if (painting.getColor().equals("battle")) {
+					if (Pokemon.sets.isEmpty()) {
+						gp.ui.showMessage("Loading sets...");
+						SwingUtilities.invokeLater(() -> {
+							Pokemon.loadCompetitiveSets();
+						});
+					}
+					gp.ui.showMessage("Calculating odds...");
+					Task t = Task.addTask(Task.ODDS, "");
+					t.wipe = true;
+				}
+			}
+		}
 	}
 	
 	private int getTileForwardX() {

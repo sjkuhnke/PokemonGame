@@ -947,8 +947,33 @@ public class EventHandler {
 			if (hit(190,58,93,false)) teleport(189, 31, 34,false);
 			
 			// A.T. Path -> Abandoned Tower
-			if (hit(190,57,56,false)) teleport(191, 50, 67,false);
-			if (hit(191,50,68)) teleport(190, 57, 57,false);
+			if (hit(190,57,56,false)) teleport(191, 50, 83,false);
+			if (hit(191,50,84)) teleport(190, 57, 57,false);
+			
+			// AT 1A -> 1B
+			if (hit(191,50,72)) teleport(191, 49, 47,false);
+			
+			// AT 2A -> 3A
+			if (hit(192,54,60)) teleport(193, 69, 39,true);
+			if (hit(193,69,39)) teleport(192, 54, 60,true);
+			
+			// AT 3A -> 2B
+			if (hit(193,64,34)) teleport(192, 48, 54,true);
+			if (hit(192,48,54)) teleport(193, 64, 34,true);
+			
+			// AT 2B -> 3B
+			if (hit(192,44,41)) teleport(193, 61, 15,true);
+			if (hit(193,61,15)) teleport(192, 44, 41,true);
+			
+			// AT 4A -> 5A
+			if (hit(194,50,36)) teleport(195, 50, 36,true);
+			if (hit(195,50,36)) teleport(194, 50, 36,true);
+			if (hit(194,64,50)) teleport(195, 64, 50,true);
+			if (hit(195,64,50)) teleport(194, 64, 50,true);
+			if (hit(194,50,64)) teleport(195, 50, 64,true);
+			if (hit(195,50,64)) teleport(194, 50, 64,true);
+			if (hit(194,36,50)) teleport(195, 36, 50,true);
+			if (hit(195,36,50)) teleport(194, 36, 50,true);
 			
 			// Iron Town PC
 			if (hit(152,37,72)) teleport(153, 31, 45,false);

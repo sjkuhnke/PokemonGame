@@ -44,6 +44,10 @@ public class Bag implements Serializable {
 		count[item.getID()] -= amt;
 	}
 	
+	public void removeAll(Item item) {
+		count[item.getID()] = 0;
+	}
+	
 	public ArrayList<Entry> getItems() {
 		ArrayList<Entry> items = new ArrayList<>();
 		for (int i : itemList) {
@@ -85,6 +89,10 @@ public class Bag implements Serializable {
 
 	public boolean contains(Item item) {
 		return count[item.getID()] > 0;
+	}
+
+	public int getCount(Item item) {
+		return count[item.getID()];
 	}
 
 }

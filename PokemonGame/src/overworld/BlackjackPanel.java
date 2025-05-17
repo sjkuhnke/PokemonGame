@@ -12,6 +12,7 @@ import javax.swing.*;
 
 import pokemon.CompoundIcon;
 import pokemon.Player;
+import puzzle.Puzzle;
 import pokemon.CompoundIcon.Axis;
 
 public class BlackjackPanel extends JPanel {
@@ -39,6 +40,9 @@ public class BlackjackPanel extends JPanel {
 	private Card[] foeCards;
 	private int bet;
 	
+	private boolean gauntlet;
+	private String currency;
+	
 	private Image backgroundImage;
 	
 	private static final int MAX_BET = 100;
@@ -50,8 +54,10 @@ public class BlackjackPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	
-	public BlackjackPanel(GamePanel gp) {
+	public BlackjackPanel(GamePanel gp, boolean gauntlet) {
 		this.gp = gp;
+		this.gauntlet = gauntlet;
+		currency = gauntlet ? "orbs" : "coins";
 		p = gp.player.p;
 		deck = new Card[DECK_SIZE];
 		initializeDeck();
@@ -91,9 +97,9 @@ public class BlackjackPanel extends JPanel {
 		startButton.setVisible(false);
 		leaveButton.setVisible(false);
 		statsButton.setVisible(false);
-		currentBetText.setText("Bet: " + bet + " coins");
-		p.coins -= bet;
-		coinText.setText(p.coins + " coins");
+		currentBetText.setText("Bet: " + bet + " " + currency);
+		p.addBetCurrency(gauntlet, -bet);
+		coinText.setText(p.getBetCurrency(gauntlet) + " " + currency);
 		p.blackjackStats[0]++;
 		
 		userCards[getHandSize(userCards)] = dealCard();
@@ -116,10 +122,10 @@ public class BlackjackPanel extends JPanel {
 		doubleButton.setVisible(false);
 		startButton.setVisible(true);
 		leaveButton.setVisible(true);
-		statsButton.setVisible(true);
+		statsButton.setVisible(!gauntlet);
 		bet = 0;
-		currentBetText.setText("Bet: -- coins");
-		coinText.setText(p.coins + " coins");
+		currentBetText.setText("Bet: -- " + currency);
+		coinText.setText(p.getBetCurrency(gauntlet) + " " + currency);
 		gamesWonText.setText(p.gamesWon + " games won");
 		winStreakText.setText("Current Win Streak: " + p.winStreak);
 		
@@ -171,16 +177,16 @@ public class BlackjackPanel extends JPanel {
 		statsButton = new JButton("Stats");
 		statsButton.setBounds(335, 5, 80, 30);
 		this.add(statsButton);
-		statsButton.setVisible(true);
+		statsButton.setVisible(!gauntlet);
 		
-		currentBetText = new JLabel("Bet: -- coins");
+		currentBetText = new JLabel("Bet: -- " + currency);
 		currentBetText.setBounds(600, 30, 150, 20);
 		currentBetText.setHorizontalAlignment(SwingConstants.RIGHT);
 		this.add(currentBetText);
 		currentBetText.setVisible(true);
 		currentBetText.setForeground(Color.WHITE);
 		
-		coinText = new JLabel("<html><strong>" + p.coins + "</strong> coins</html>");
+		coinText = new JLabel("<html><strong>" + p.getBetCurrency(gauntlet) + "</strong> " + currency + "</html>");
 		coinText.setBounds(600, 5, 150, 20);
 		coinText.setHorizontalAlignment(SwingConstants.RIGHT);
 		this.add(coinText);
@@ -230,27 +236,27 @@ public class BlackjackPanel extends JPanel {
 		});
 		
 		doubleButton.addActionListener(e -> {
-			if (p.coins >= bet) {
-				p.coins -= bet;
+			if (p.getBetCurrency(gauntlet) >= bet) {
+				p.addBetCurrency(gauntlet, -bet);
 				bet *= 2;
 				
-				currentBetText.setText("Bet: " + bet + " coins");
-				coinText.setText(p.coins + " coins");
+				currentBetText.setText("Bet: " + bet + " " + currency);
+				coinText.setText(p.getBetCurrency(gauntlet) + " " + currency);
 				
 				p.blackjackStats[6]++;
 				
 				boolean good = hit();
 				if (good) stand(true);
 			} else {
-				JOptionPane.showMessageDialog(this, "You don't have enough coins!");
+				JOptionPane.showMessageDialog(this, "You don't have enough " + currency + "!");
 			}
 		});
 		
 		
 		startButton.addActionListener(e -> {
-			if (p.coins > 0) {
+			if (p.getBetCurrency(gauntlet) > 0) {
 		        // Input a bet
-		        String betInput = JOptionPane.showInputDialog(this, "Enter your bet (between 1 and " + Math.min(p.coins, MAX_BET) + " coins):");
+		        String betInput = JOptionPane.showInputDialog(this, "Enter your bet (between 1 and " + Math.min(p.getBetCurrency(gauntlet), MAX_BET) + " " + currency + "):");
 
 		        // Check if the user clicked cancel or entered an empty string
 		        if (betInput != null && !betInput.trim().isEmpty()) {
@@ -258,7 +264,7 @@ public class BlackjackPanel extends JPanel {
 		                bet = Integer.parseInt(betInput);
 
 		                // Check if the bet is within the allowed range
-		                if (bet >= 1 && bet <= Math.min(p.coins, MAX_BET)) {
+		                if (bet >= 1 && bet <= Math.min(p.getBetCurrency(gauntlet), MAX_BET)) {
 		                	if (!gp.player.p.flag[6][2]) {
 		    					int answer = JOptionPane.showOptionDialog(null,
 		    							"Would you like to save the game?\n(Won't show this message again:\nWill save every time)",
@@ -275,14 +281,14 @@ public class BlackjackPanel extends JPanel {
 		                    startGame();
 		                    gp.saveGame();
 		                } else {
-		                    JOptionPane.showMessageDialog(this, "Invalid bet. Please enter a value between 1 and " + Math.min(p.coins, MAX_BET) + ".");
+		                    JOptionPane.showMessageDialog(this, "Invalid bet. Please enter a value between 1 and " + Math.min(p.getBetCurrency(gauntlet), MAX_BET) + ".");
 		                }
 		            } catch (NumberFormatException ex) {
 		                JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid number.");
 		            }
 		        }
 		    } else {
-		        JOptionPane.showMessageDialog(this, "You don't have enough coins!");
+		        JOptionPane.showMessageDialog(this, "You don't have enough " + currency + "!");
 		    }
 		});
 		
@@ -347,7 +353,7 @@ public class BlackjackPanel extends JPanel {
 			int handTotal = getHandTotal(userCards);
 			if (handTotal > 21) {
 				JOptionPane.showMessageDialog(null, "Player busts with a hand total of " + handTotal + "!");
-				JOptionPane.showMessageDialog(null, "Dealer won " + bet * 2 + " coins!");
+				JOptionPane.showMessageDialog(null, "Dealer won " + bet * 2 + " " + currency + "!");
 				p.blackjackStats[3]++;
 				loseGame();
 				endGame();
@@ -386,11 +392,11 @@ public class BlackjackPanel extends JPanel {
 				if (dbl) p.blackjackStats[7]++;
 			} else if (playerTotal == dealerTotal) {
 				JOptionPane.showMessageDialog(null, "It's a push. Bet was returned.");
-				p.coins += bet;
+				p.addBetCurrency(gauntlet, bet);
 				p.blackjackStats[2]++;
 				if (dbl) p.blackjackStats[7]++;
 			} else {
-				JOptionPane.showMessageDialog(null, "Dealer won " + bet * 2 + " coins!");
+				JOptionPane.showMessageDialog(null, "Dealer won " + bet * 2 + " " + currency + "!");
 				loseGame();
 			}
 		} else {
@@ -420,8 +426,8 @@ public class BlackjackPanel extends JPanel {
 	}
 
 	private void winGame(int amt) {
-		JOptionPane.showMessageDialog(this, "You won " + amt + " coins!");
-		p.coins += amt;
+		JOptionPane.showMessageDialog(this, "You won " + amt + " " + currency + "!");
+		p.addBetCurrency(gauntlet, amt);
 		p.winStreak++;
 		p.gamesWon++;
 		p.blackjackStats[1]++;
@@ -589,6 +595,11 @@ public class BlackjackPanel extends JPanel {
 	private void exitBlackjack() {
 		Main.window.remove(this);
 		Main.window.add(gp);
+		
+		if (gauntlet) {
+			Puzzle puzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
+			puzzle.update(p.getBetCurrency(gauntlet));
+		}
 		
 		gp.requestFocusInWindow();
 

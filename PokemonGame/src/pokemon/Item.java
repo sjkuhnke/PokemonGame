@@ -63,6 +63,7 @@ public enum Item {
 	GREAT_BALL(2,25,12,new Color(0, 0, 148),Item.BALLS,null,"A good, high-performance Poke Ball that provides a higher success rate for catching Pokemon than a standard Poke Ball."),
 	ULTRA_BALL(3,50,25,new Color(148, 171, 0),Item.BALLS,null,"An ultra high-performance Poke Ball that provides a higher success rate for catching Pokemon than a Great Ball."),
 	MASTER_BALL(350,0,10000,Color.BLACK,Item.BALLS,null,"The very best Poke Ball with the ultimate level of performance. With it, you will catch any wild Pokemon without fail."),
+	TEMPLE_BALL(385,0,0,Color.BLACK,Item.BALLS,null,"A rare and ancient Poke Ball filled with mystique, you can catch any wild Pokemon without fail."),
 	CHERISH_BALL(351,0,1000,Color.BLACK,Item.BALLS,null,"A quite rare Poke Ball made to commemorate a special occasion of some sort."),
 	PREMIER_BALL(352,0,5,Color.BLACK,Item.BALLS,null,"A somewhat rare Poke Ball made to commemorate a special occasion of some sort."),
 	HEAL_BALL(353,15,7,Color.BLACK,Item.BALLS,null,"A remedial Poke Ball that fully heals a Pokemon caught with it."),
@@ -102,6 +103,7 @@ public enum Item {
 	MAX_ELIXIR(41,250,200,new Color(246, 255, 120),Item.MEDICINE,null,"Restores PP of all moves on a Pokemon."),
 	PP_UP(42,2500,1000,new Color(150, 51, 156),Item.MEDICINE,null,"Increases max PP of a selected move by 20%."),
 	PP_MAX(43,0,1500,new Color(142, 230, 21),Item.MEDICINE,null,"Increases max PP of a selected move by its max PP, which is 160%."),
+	TEMPLE_ORB(386,0,0,Color.BLACK,Item.OTHER,null,"A rare orb used by an ancient diety as currency for gambling."),
 	RUSTY_BOTTLE_CAP(282,300,150,Color.BLACK,Item.OTHER,null,"Lowers an IV of choosing to 0."),
 	BOTTLE_CAP(27,1000,500,new Color(192, 192, 192),Item.OTHER,null,"Maxes out an IV of choosing."),
 	GOLD_BOTTLE_CAP(28,0,1000,new Color(255, 215, 0),Item.OTHER,null,"Maxes out all IVs of a Pokemon."),
@@ -564,7 +566,7 @@ public enum Item {
 	}
 	
 	private void addToBallsTable() {
-		if (balls == null) balls = new Item[24];
+		if (balls == null) balls = new Item[25];
 		balls[ballID++] = this;
 	}
 
