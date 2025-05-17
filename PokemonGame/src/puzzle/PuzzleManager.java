@@ -19,7 +19,7 @@ public class PuzzleManager {
 		faithPuzzles = new Puzzle[3];
 		setupPuzzle(true, 0, new ColorPuzzle(gp, 191), 50, 67);
 		setupPuzzle(true, 1, new CatchingPuzzle(gp, 193), 50, 50);
-		setupPuzzle(true, 2, new GamblingPuzzle(gp, 195), 50, 50);
+		setupPuzzle(true, 2, new GamblingPuzzle(gp, 195), 50, 49);
 		logicPuzzles = new Puzzle[1];
 	}
 	
