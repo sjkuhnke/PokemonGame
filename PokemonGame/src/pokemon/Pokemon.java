@@ -252,7 +252,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	public Pokemon evolve(int i) {
-		int oldHP = this.getStat(0);
+		int hpLost = this.getStat(0) - this.currentHP;
 		id = i;
 		if (this.nickname.equals(this.name)) nickname = getName();
 		name = getName();
@@ -265,13 +265,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		expMax = setExpMax();
 		
-		currentHP = this.getStat(0);
 		catchRate = getCatchRate();
 		
 		setSprites();
 		
-		int hpDif = oldHP - this.currentHP;
-        this.currentHP -= hpDif;
+        this.currentHP = this.getStat(0) - hpLost;
         this.verifyHP();
         
         return this;
@@ -4883,7 +4881,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	public void verifyHP() {
-		System.out.println("HP updated");
 		if (currentHP > this.getStat(0) || currentHP < 0) currentHP = this.getStat(0);
 	}
 	

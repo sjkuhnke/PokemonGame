@@ -3,6 +3,7 @@ package puzzle;
 import object.InteractiveTile;
 import object.Painting;
 import overworld.GamePanel;
+import pokemon.Item;
 
 public class GamblingPuzzle extends Puzzle {
 	
@@ -14,7 +15,6 @@ public class GamblingPuzzle extends Puzzle {
 
 	@Override
 	public void setup() {
-		if (gp.currentMap == floor) gp.aSetter.setInteractiveTile(floor);
 		bets = shuffle(bets);
 		InteractiveTile[] paintings = gp.iTile[floor];
 		int index = 0;
@@ -38,6 +38,12 @@ public class GamblingPuzzle extends Puzzle {
 			if (amt <= 0) lost = true;
 			if (amt >= 100) isComplete = true;
 		}
+	}
+	
+	@Override
+	public void sendToNext() {
+		super.sendToNext();
+		gp.player.p.bag.remove(Item.TEMPLE_ORB, 100);
 	}
 
 }

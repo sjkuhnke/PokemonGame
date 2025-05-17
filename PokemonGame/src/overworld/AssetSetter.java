@@ -2310,9 +2310,9 @@ public class AssetSetter {
 		
 		mapNum = 196;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(FAITH_DRAGON, "Relopamil", 50, 47, "", mapNum);
-		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 50, 99, "Try and capture the ancient beast with the special ball I gave you!");
-		gp.npc[mapNum][index] = NPCSetup(DRAGOWRATH, "Dragowrath", 50, 1, "", 196.1);
+		gp.npc[mapNum][index] = NPCSetup(FAITH_DRAGON, "Relopamil", 50, 47, "", mapNum, -1, "", 405);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 50, 99, "", 196.2);
+		gp.npc[mapNum][index] = NPCSetup(DRAGOWRATH, "Dragowrath", 50, 1, "", 196.1, -1, "", 406);
 		gp.npc[mapNum][index++] = ITileSetup(48, 47, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(52, 47, TORCH, mapNum, mapNum);
 		
@@ -3152,6 +3152,9 @@ public class AssetSetter {
 			gp.iTile[mapNum][iIndex] = ITileSetup(64, 48, PAINTING_BET, mapNum, map);
 			gp.iTile[mapNum][iIndex] = ITileSetup(50, 62, PAINTING_BET, mapNum, map);
 			gp.iTile[mapNum][iIndex] = ITileSetup(36, 48, PAINTING_BET, mapNum, map);
+			if (mapNum == 195) {
+				gp.puzzleM.getCurrentPuzzle(mapNum).setup();
+			}
 		}
 	}
 

@@ -2083,6 +2083,16 @@ public class Script {
 				Task.addTask(Task.TURN, player, "", Task.DOWN);
 			}
 		});
+		
+		scriptMap.put(196.2, (npc) -> {// dragowrath AT
+			if (p.bag.contains(Item.TEMPLE_BALL)) {
+				Task.addTask(Task.DIALOGUE, npc, "Try and capture the ancient beast with the special ball I gave you!");
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "Here, take this and capture the beast! Quick!");
+				Task t = Task.addTask(Task.ITEM, "");
+		        t.item = Item.TEMPLE_BALL;
+			}
+		});
 	}
 	
 	public int getUnregisteredBasePokemon(Random random) {
