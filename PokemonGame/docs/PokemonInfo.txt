@@ -629,7 +629,7 @@ E - Poison Fang
 
 Evolutions:
 Centinel -> Milimace (lv. 32 with SpD > Def)
-Centinel -> Milimace (lv. 32 with Def > SpD)
+Centinel -> Milipleura (lv. 32 with Def > SpD)
 
 ===================
 #021 - Milimace                                                                                        [024]
@@ -1113,7 +1113,7 @@ Type:
 Bug / Fighting
 
 Ability:
-Hyper Cutter / Swarm / (Threatening)
+Hyper Cutter / Swarm / (Anticipation)
 
 Base Stats:
 40 HP / 60 Atk / 65 Def / 30 SpA / 50 SpD / 70 Spe / 315 BST
@@ -1136,7 +1136,7 @@ Type:
 Bug / Fighting
 
 Ability:
-Hyper Cutter / Justified / (Threatening)
+Hyper Cutter / Justified / (Sharpness)
 
 Base Stats:
 53 HP / 95 Atk / 85 Def / 30 SpA / 53 SpD / 85 Spe / 401 BST
@@ -1347,6 +1347,7 @@ Level Up:
 E - Hocus Pocus
 E - Disable
 1 - Knock Off
+1 - Magic Powder
 1 - Double Kick
 3 - Tackle
 5 - Growl
@@ -1396,6 +1397,7 @@ E - Desolate Void
 1 - Disable
 1 - Healing Circle
 1 - Knock Off
+1 - Magic Powder
 1 - Double Kick
 3 - Tackle
 5 - Growl
@@ -2951,7 +2953,8 @@ E - Aurora Beam
 53 - Freezing Glare
 56 - Quick Spell
 59 - Expanding Force
-62 - Future Sight
+62 - Heat Wave
+65 - Future Sight
 
 ===================
 #086 - Solosis-X                                                                                       [254]
@@ -4265,6 +4268,7 @@ Base Stats:
 
 Level Up:
 E - Confuse Ray
+1 - Heat Wave
 1 - Cross Poison
 1 - Tailwind
 1 - Toxic
@@ -4289,8 +4293,9 @@ E - Confuse Ray
 39 - Leech Life
 41 - Cross Poison
 44 - Haze
-48 - Fly
-52 - Venoshock
+47 - Fly
+50 - Nasty Plot
+53 - Venoshock
 59 - Brave Bird
 
 ===================
@@ -5740,14 +5745,15 @@ Base Stats:
 Level Up:
 1 - Thundershock
 4 - Charge
-8 - Wrap
+6 - Wrap
+8 - Thunder Fang
 11 - Endure
 14 - Spark
 16 - Thunder Wave
 18 - Coil
 21 - Shock Wave
 25 - Scary Face
-27 - Thunder Fang
+27 - Discharge
 
 Evolutions:
 Shookwat -> Wattwo (lv. 30)
@@ -5768,21 +5774,21 @@ Level Up:
 E - Double Hit
 1 - Thundershock
 4 - Charge
-8 - Wrap
+6 - Wrap
+8 - Thunder Fang
 11 - Endure
 14 - Spark
 16 - Thunder Wave
 18 - Coil
 21 - Shock Wave
 25 - Scary Face
-27 - Thunder Fang
+27 - Discharge
 30 - Parabolic Charge
-34 - Discharge
-37 - Magnet Rise
-42 - Thunder Punch
-45 - Curse
-50 - Thunderbolt
-55 - Rising Voltage
+34 - Magnet Rise
+37 - Thunder Punch
+42 - Curse
+45 - Thunderbolt
+50 - Rising Voltage
 
 Evolutions:
 Wattwo -> Megawatt (lv. up in Electric Tunnel)
@@ -6366,6 +6372,7 @@ Base Stats:
 
 Level Up:
 E - Air Slash
+1 - Heat Wave
 1 - Sky Uppercut
 1 - Vacuum Wave
 1 - Karate Chop
@@ -6416,6 +6423,7 @@ Level Up:
 23 - Light Beam
 25 - Icy Wind
 27 - Bubblebeam
+29 - Rapid Spin
 31 - Shooting Stars
 34 - Flip Turn
 36 - Recover
@@ -6464,7 +6472,7 @@ E - Galaxy Blast
 #184 - Elgyem                                                                                          [265]
 ===================
 Type:
-Galactic / None
+Galactic / Psychic
 
 Ability:
 Cosmic Warp / Parasocial / (Analytic)
@@ -6476,20 +6484,21 @@ Level Up:
 1 - Confusion
 1 - Leer
 5 - Psywave
-9 - Cosmic Power
-11 - Teleport
+7 - Cosmic Power
+10 - Teleport
 13 - Comet Punch
 15 - Disable
 17 - Confuse Ray
-20 - Hypnosis
-23 - Trick Room
+19 - Hypnosis
+22 - Psybeam
+24 - Trick Room
 26 - Space Beam
 28 - Dream Eater
-30 - Abduct
+30 - Psychic Noise
 32 - Simple Beam
 34 - Recover
 36 - Galaxy Blast
-38 - Psychic Noise
+38 - Abduct
 40 - Radio Burst
 
 Evolutions:
@@ -6515,20 +6524,21 @@ E - Skill Swap
 1 - Confusion
 1 - Leer
 5 - Psywave
-9 - Cosmic Power
-11 - Teleport
+7 - Cosmic Power
+10 - Teleport
 13 - Comet Punch
 15 - Disable
 17 - Confuse Ray
-20 - Hypnosis
-23 - Trick Room
+19 - Hypnosis
+22 - Psybeam
+24 - Trick Room
 26 - Space Beam
 28 - Dream Eater
-30 - Abduct
+30 - Psychic Noise
 32 - Simple Beam
 34 - Recover
 36 - Galaxy Blast
-38 - Psychic Noise
+38 - Abduct
 40 - Radio Burst
 44 - Star Storm
 46 - Aurora Glow
@@ -6643,6 +6653,7 @@ E - Ice Fang
 48 - Aurora Glow
 50 - Ice Beam
 53 - Psychic Fangs
+55 - Belly Drum
 57 - Hydro Pump
 60 - Sheer Cold
 
@@ -8131,13 +8142,15 @@ Base Stats:
 Level Up:
 E - Magical Crash
 1 - Rock Blast
+1 - Flash Darts
 1 - Magic Powder
 1 - Shooting Stars
 1 - Lucky Chant
-4 - Swift
-6 - Rainbow Flash
-8 - Deck Change
-10 - Tailwind
+3 - Swift
+5 - Rainbow Flash
+7 - Wish
+9 - Deck Change
+11 - Tailwind
 13 - Flash
 15 - Vitriolic Hex
 18 - Aurora Glow
@@ -8545,10 +8558,71 @@ Ability:
 Beast Boost / None / (None)
 
 Base Stats:
-82 HP / 115 Atk / 74 Def / 75 SpA / 64 SpD / 90 Spe / 500 BST
+67 HP / 113 Atk / 59 Def / 131 SpA / 71 SpD / 149 Spe / 590 BST
 
 Level Up:
-1 - Confusion
+1 - Feint
+1 - Magnet Bomb
+1 - Teeter Dance
+1 - Brutal Swing
+1 - Fake Out
+1 - Mirror Move
+1 - Entrainment
+1 - Double Kick
+1 - Fake Tears
+1 - Beat Up
+1 - Low Kick
+3 - Metal Claw
+3 - Flatter
+7 - Agility
+7 - Rapid Spin
+11 - Payback
+13 - Electroweb
+13 - Drill Run
+13 - Feint Attack
+17 - Stomp
+17 - Bounce
+19 - Snarl
+19 - Taunt
+19 - Torment
+23 - Gyro Ball
+23 - Night Slash
+27 - Magnet Rise
+27 - Metal Sound
+27 - Mirror Shot
+29 - Low Sweep
+29 - Sucker Punch
+31 - Thief
+31 - Encore
+37 - Tailwind
+37 - Bullet Punch
+43 - Switcheroo
+43 - Flash Cannon
+43 - Iron Defense
+47 - Smart Strike
+47 - Nasty Plot
+47 - Hi Jump Kick
+51 - Dragon Dance
+51 - Lunar Dance
+51 - Fiery Dance
+53 - Knock Off
+53 - Parting Shot
+57 - Psychic Noise
+57 - Stealth Rock
+57 - Dark Pulse
+59 - Endeavor
+59 - Petal Dance
+63 - Night Daze
+63 - Extreme Speed
+63 - Rising Voltage
+67 - Throat Chop
+67 - Shift Gear
+73 - False Surrender
+73 - Iron Blast
+79 - Foul Play
+83 - Unseen Strangle
+89 - Steel Beam
+97 - Quiver Dance
 
 ===================
 #240 - Diftery                                                                                         [229]
@@ -8753,7 +8827,7 @@ Type:
 Ice / Dragon
 
 Ability:
-Glacier Aura / None / (Pressure)
+Cold Heart / None / (Pressure)
 
 Base Stats:
 100 HP / 70 Atk / 150 Def / 150 SpA / 100 SpD / 110 Spe / 680 BST
@@ -8774,7 +8848,7 @@ Type:
 Psychic / Dragon
 
 Ability:
-Psychic Aura / None / (Pressure)
+Warm Heart / None / (Pressure)
 
 Base Stats:
 100 HP / 150 Atk / 100 Def / 100 SpA / 130 SpD / 100 Spe / 680 BST
@@ -8797,7 +8871,7 @@ Type:
 Galactic / Dragon
 
 Ability:
-Galactic Aura / None / (Pressure)
+White Hole / None / (Pressure)
 
 Base Stats:
 90 HP / 95 Atk / 105 Def / 200 SpA / 110 SpD / 100 Spe / 700 BST
@@ -10630,9 +10704,9 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 #108 Sparkitten          Y     Y     N     N     N     N     Y     Y     Y     N     N     Y     Y     Y     N     N     N     N     N     Y     N     N     N     N     Y     N     Y     N     N     N     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     N     Y     N     N     N     Y     Y     N     N     Y     Y     Y     Y     Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     Y     N     Y     N     N     Y     N     N     N     Y     N     Y     N     N     N     Y     N     N     N     Y     Y     N     N     N     N     Y     N     N     Y     N     Y     N     Y     N     Y     N     Y     
 #109 Fireblion           Y     Y     N     N     N     N     Y     Y     Y     N     N     N     Y     Y     N     N     N     N     N     Y     N     Y     Y     Y     Y     N     Y     N     N     N     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     N     Y     N     N     N     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     Y     N     Y     N     Y     Y     N     Y     N     Y     Y     N     Y     N     Y     N     Y     N     Y     Y     N     N     Y     Y     N     Y     N     N     N     Y     N     N     N     Y     Y     N     N     Y     N     Y     Y     Y     Y     N     Y     N     Y     N     Y     N     Y     
 #110 Flamebless          Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     Y     Y     Y     N     N     Y     Y     Y     N     N     Y     Y     Y     N     Y     N     N     N     Y     Y     Y     Y     N     Y     N     Y     Y     Y     Y     Y     Y     N     N     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     Y     N     Y     Y     N     Y     N     N     Y     Y     N     Y     N     N     N     Y     N     N     N     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     N     Y     N     Y     Y     Y     N     Y     
-#111 Shookwat            N     N     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     Y     N     N     N     Y     Y     N     N     N     Y     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     
-#112 Wattwo              N     Y     N     N     N     N     Y     N     Y     N     N     N     N     Y     N     Y     N     N     Y     Y     N     Y     Y     Y     N     Y     N     N     Y     N     N     N     Y     Y     N     N     Y     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     N     N     N     Y     N     N     N     Y     N     N     N     N     Y     N     N     Y     Y     N     N     N     Y     Y     N     N     Y     Y     N     N     N     N     Y     Y     N     N     Y     N     N     Y     N     N     N     N     N     Y     
-#113 Megawatt            N     Y     N     N     N     N     Y     N     Y     Y     N     N     N     Y     Y     Y     N     N     Y     Y     N     Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     Y     Y     N     Y     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     Y     N     N     Y     N     N     N     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     N     N     Y     Y     N     N     Y     Y     N     N     N     N     Y     Y     N     N     Y     N     N     Y     N     N     N     Y     N     Y     
+#111 Shookwat            Y     N     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     Y     N     N     N     Y     Y     N     N     N     Y     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     
+#112 Wattwo              Y     Y     N     N     N     N     Y     N     Y     N     N     N     N     Y     N     Y     N     N     Y     Y     N     Y     Y     Y     N     Y     N     N     Y     N     N     N     Y     Y     N     N     Y     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     N     N     N     Y     N     N     N     Y     N     N     N     N     Y     N     N     Y     Y     N     N     N     Y     Y     N     N     Y     Y     N     N     N     N     Y     Y     N     N     Y     N     N     Y     N     N     N     N     N     Y     
+#113 Megawatt            Y     Y     N     N     N     N     Y     N     Y     Y     N     N     N     Y     Y     Y     N     N     Y     Y     N     Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     Y     Y     N     Y     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     Y     N     N     Y     N     N     N     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     N     N     Y     Y     N     N     Y     Y     N     N     N     N     Y     Y     N     N     Y     N     N     Y     N     N     N     Y     N     Y     
 #114 Elelamb             N     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     N     N     N     N     N     N     N     Y     Y     Y     N     Y     N     Y     N     Y     N     N     N     Y     N     N     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     N     N     Y     N     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     N     N     N     Y     
 #115 Electroram          N     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     N     Y     N     Y     N     N     N     Y     Y     Y     N     Y     Y     Y     N     Y     N     N     N     Y     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     Y     Y     N     Y     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     Y     Y     N     N     Y     N     Y     N     N     N     Y     N     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     N     N     N     Y     
 #116 Superchargo         N     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     Y     N     N     Y     Y     N     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     Y     N     Y     Y     Y     N     Y     N     N     Y     Y     Y     N     N     Y     N     N     N     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     Y     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     Y     Y     N     N     Y     N     Y     Y     N     N     Y     N     Y     N     Y     N     N     N     Y     N     N     Y     Y     N     N     N     N     N     Y     
@@ -10824,12 +10898,12 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 #281 Capsakid-S          Y     Y     Y     N     N     N     N     Y     Y     N     N     N     N     Y     N     N     Y     N     N     Y     N     Y     N     N     Y     Y     N     N     Y     N     Y     Y     N     Y     N     Y     N     Y     N     N     N     N     N     Y     N     N     N     Y     N     N     N     N     Y     Y     N     N     Y     N     Y     Y     N     N     N     N     N     Y     N     N     N     N     N     N     Y     N     N     Y     N     N     N     N     N     Y     Y     N     N     Y     Y     N     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     Y     N     Y     
 #282 Scovillain-S        Y     Y     Y     N     N     N     Y     Y     Y     N     N     N     N     Y     N     N     Y     N     N     Y     N     Y     N     N     Y     Y     N     N     Y     N     Y     Y     N     Y     N     Y     N     Y     N     N     Y     N     Y     Y     N     N     N     Y     N     N     N     N     Y     Y     N     N     Y     N     Y     Y     N     N     N     Y     N     Y     Y     N     N     N     N     N     Y     N     N     Y     N     N     N     N     N     Y     Y     N     N     Y     Y     N     N     N     N     Y     N     Y     Y     N     Y     N     N     N     Y     N     N     Y     Y     N     Y     
 #283 Despenero-S         Y     Y     Y     N     N     N     Y     Y     Y     N     N     N     N     Y     N     N     Y     N     N     Y     N     Y     Y     Y     Y     Y     N     N     Y     N     Y     Y     N     Y     N     Y     N     Y     N     N     Y     N     Y     Y     Y     N     N     Y     N     N     N     N     Y     Y     N     N     Y     N     Y     Y     N     N     N     Y     N     Y     Y     N     N     N     N     Y     Y     N     N     Y     N     N     Y     N     N     Y     Y     N     N     Y     Y     N     N     N     N     Y     N     Y     Y     N     Y     N     Y     N     Y     N     N     Y     Y     N     Y     
-#284 Cage Critter        N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     
-#285 Icy Serpent         N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     
-#286 Shocky Spire        N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     
-#287 Dust Sorcerer       N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     
-#288 Fever Dream         N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     
-#289 Dusk Skater         N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     
+#284 Cage Critter        Y     Y     Y     Y     Y     Y     Y     N     N     Y     Y     Y     N     Y     Y     N     N     Y     Y     Y     Y     Y     N     Y     Y     N     Y     N     N     Y     Y     Y     Y     Y     N     N     N     Y     N     N     N     Y     N     Y     N     Y     Y     Y     Y     Y     Y     N     N     N     Y     N     Y     N     Y     N     N     Y     Y     N     Y     Y     N     Y     N     Y     Y     N     N     Y     N     Y     N     N     N     N     Y     N     Y     Y     Y     N     N     Y     N     N     N     N     Y     Y     N     Y     Y     Y     Y     Y     Y     N     Y     Y     N     N     Y     
+#285 Icy Serpent         Y     Y     Y     Y     Y     Y     Y     N     Y     N     Y     N     Y     N     N     Y     Y     Y     Y     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     Y     N     Y     N     N     Y     Y     Y     N     Y     N     Y     Y     Y     Y     Y     Y     Y     Y     Y     N     N     Y     N     N     Y     N     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     N     Y     N     N     Y     Y     Y     Y     N     Y     Y     N     Y     Y     Y     Y     Y     N     N     Y     N     N     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     N     Y     Y     Y     N     Y     
+#286 Shocky Spire        Y     Y     Y     Y     Y     Y     Y     N     Y     Y     N     N     Y     Y     Y     Y     N     Y     Y     Y     N     Y     Y     Y     N     Y     N     Y     Y     N     Y     Y     Y     Y     N     N     Y     Y     Y     Y     Y     N     N     N     Y     Y     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     N     Y     Y     N     N     Y     Y     Y     Y     Y     Y     Y     Y     N     Y     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     N     Y     N     Y     Y     Y     Y     Y     N     N     N     Y     Y     
+#287 Dust Sorcerer       N     Y     Y     Y     Y     Y     Y     Y     N     Y     Y     Y     N     Y     Y     N     N     Y     Y     Y     Y     N     N     Y     Y     N     Y     Y     N     N     Y     Y     Y     Y     N     Y     Y     Y     N     Y     N     Y     N     Y     Y     Y     Y     Y     Y     Y     Y     N     N     N     Y     N     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     N     Y     Y     N     Y     N     N     Y     N     N     Y     N     Y     N     N     Y     Y     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     Y     Y     N     Y     Y     Y     Y     Y     Y     N     N     Y     
+#288 Fever Dream         Y     Y     Y     N     N     N     Y     Y     N     Y     N     N     Y     N     Y     Y     N     Y     N     Y     Y     Y     Y     N     N     Y     N     Y     Y     Y     Y     N     N     Y     Y     Y     Y     Y     N     Y     N     N     Y     Y     Y     Y     N     Y     Y     Y     N     N     Y     Y     N     Y     Y     Y     Y     Y     N     N     N     Y     N     N     Y     Y     Y     Y     N     Y     Y     N     Y     Y     Y     N     Y     Y     N     Y     Y     Y     Y     Y     N     N     N     N     N     N     N     Y     Y     N     Y     N     N     Y     N     N     N     N     Y     N     Y     
+#289 Dusk Skater         Y     Y     Y     N     Y     N     Y     N     N     N     Y     N     N     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     N     Y     N     Y     Y     Y     N     N     Y     Y     Y     Y     Y     Y     N     Y     N     N     N     Y     Y     Y     Y     Y     Y     Y     Y     Y     N     N     Y     N     Y     Y     Y     Y     Y     Y     Y     Y     Y     Y     N     N     N     Y     Y     Y     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     Y     Y     N     Y     Y     N     Y     Y     Y     Y     Y     Y     Y     Y     Y     Y     Y     N     Y     N     Y     Y     Y     
 #290 Necrozma            N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     
 #291 Necrozma-Ult        N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     
 #292 Azurill             N     N     N     Y     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     Y     N     Y     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     N     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     Y     

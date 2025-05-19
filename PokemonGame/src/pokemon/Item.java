@@ -1816,6 +1816,15 @@ public enum Item {
         illusionBox.setSelected(p.illusion);
         fieldsGbc.gridx = 1;
         fieldsPanel.add(illusionBox, fieldsGbc);
+        
+        // ===== Illusion =====
+        fieldsGbc.gridx = 0;
+        fieldsGbc.gridy++;
+        fieldsPanel.add(new JLabel("Consumed Item:"), fieldsGbc);
+        JCheckBox consumedBox = new JCheckBox();
+        consumedBox.setSelected(p.consumedItem);
+        fieldsGbc.gridx = 1;
+        fieldsPanel.add(consumedBox, fieldsGbc);
 
         // 🔹 Status Effects Panel (Nested inside "Fields")
         JPanel statusPanel = new JPanel(new GridBagLayout());
@@ -1927,6 +1936,7 @@ public enum Item {
             p.choiceMove = (Move) choiceBox.getSelectedItem();
             p.disabledMove = (Move) disabledBox.getSelectedItem();
             p.illusion = illusionBox.isSelected();
+            p.consumedItem = consumedBox.isSelected();
 
             try {
                 p.removeStatus(Status.CRIT_CHANCE);

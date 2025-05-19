@@ -1247,7 +1247,7 @@ public class BattleUI extends AbstractUI {
 				slower = slower.trainer.getCurrent();
 	        }
 	        // Check for swap (AI)
-	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && faster.hasStatus(Status.SWITCHING)) {
+	        if (foe.trainer != null && foe.trainer.hasValidMembers() && faster.hasStatus(Status.SWITCHING)) {
 	        	faster = foe.trainer.swapOut(slower, null, false, false);
 	        }
 	        // Check for swap

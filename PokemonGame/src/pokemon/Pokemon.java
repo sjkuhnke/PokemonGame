@@ -1506,9 +1506,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.metronome = 0;
 		}
 		
+		Move prevMove = this.lastMoveUsed;
+		
 		if (this.hasStatus(Status.TORMENTED) && move == this.lastMoveUsed) {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the torment!");
-			this.lastMoveUsed = null;
+			this.lastMoveUsed = prevMove;
 			this.impressive = false;
 			this.rollCount = 1;
 			this.metronome = 0;
@@ -1563,7 +1565,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					
 				} else {
 					this.impressive = false;
-					this.lastMoveUsed = null;
+					this.lastMoveUsed = prevMove;
 					this.removeStatus(Status.LOCKED);
 					this.removeStatus(Status.CHARGING);
 					this.removeStatus(Status.SEMI_INV);
@@ -1602,7 +1604,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					this.removeStatus(Status.CHARGING);
 					this.removeStatus(Status.SEMI_INV);
 					this.spriteVisible = true;
-					this.lastMoveUsed = null;
+					this.lastMoveUsed = prevMove;
 					this.rollCount = 1;
 					this.metronome = 0;
 					this.moveMultiplier = 1;
@@ -1621,7 +1623,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.removeStatus(Status.CHARGING);
 			this.removeStatus(Status.SEMI_INV);
 			this.spriteVisible = true;
-			this.lastMoveUsed = null;
+			this.lastMoveUsed = prevMove;
 			this.rollCount = 1;
 			this.metronome = 0;
 			return;
@@ -1644,7 +1646,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.removeStatus(Status.CHARGING);
 				this.removeStatus(Status.SEMI_INV);
 				this.spriteVisible = true;
-				this.lastMoveUsed = null;
+				this.lastMoveUsed = prevMove;
 				this.rollCount = 1;
 				this.metronome = -1;
 				return;
@@ -1666,7 +1668,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (this.hasStatus(Status.TAUNTED) && move.cat == 2 && move != Move.METRONOME) {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the taunt!");
-			this.lastMoveUsed = null;
+			this.lastMoveUsed = prevMove;
 			this.impressive = false;
 			this.rollCount = 1;
 			this.metronome = 0;
@@ -1675,7 +1677,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (this.hasStatus(Status.HEAL_BLOCK) && move.isHealing()) {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the Heal Block!");
-			this.lastMoveUsed = null;
+			this.lastMoveUsed = prevMove;
 			this.impressive = false;
 			this.rollCount = 1;
 			this.metronome = 0;
@@ -1684,7 +1686,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (move == this.disabledMove) {
 			Task.addTask(Task.TEXT, this.nickname + "'s " + move + " is disabled!");
-			this.lastMoveUsed = null;
+			this.lastMoveUsed = prevMove;
 			this.impressive = false;
 			this.rollCount = 1;
 			this.metronome = -1;
@@ -1693,7 +1695,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (this.hasStatus(Status.MUTE) && Move.getSound().contains(move)) {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the throat chop!");
-			this.lastMoveUsed = null;
+			this.lastMoveUsed = prevMove;
 			this.impressive = false;
 			this.rollCount = 1;
 			this.metronome = 0;
@@ -2818,7 +2820,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			
 			
 			if (move.isPhysical()) {
-				if (foeAbility == Ability.WEAK_ARMOR && !this.isFainted()) {
+				if (foeAbility == Ability.WEAK_ARMOR && !foe.isFainted()) {
 					Task.addAbilityTask(foe);
 					stat(foe, 1, -1, this);
 					stat(foe, 4, 2, this);
@@ -3346,7 +3348,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(this, 2, 1, this);
 		} else if (move == Move.CONFUSION) {
 			foe.confuse(false, this);
-		} else if (move == Move.CORE_ENFORCER && !first) {
+		} else if (move == Move.CORE_ENFORCER && !first && !foe.isFainted()) {
 			if (foe.getItem() != Item.ABILITY_SHIELD) {
 				foe.ability = Ability.NULL;
 				Task.addTask(Task.TEXT, foe.nickname + "'s Ability was suppressed!");	
@@ -7291,7 +7293,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			FieldEffect effect = field.new FieldEffect(Effect.TRICK_ROOM);
 			effect.turns = 4;
 			field.setEffect(effect);
-			this.checkSeed(foe, Item.ROOM_SERVICE, Effect.TRICK_ROOM);
 		} else if (this.ability == Ability.MYSTIC_RIFT) {
 			Task.addAbilityTask(this);
 			FieldEffect effect = field.new FieldEffect(Effect.MAGIC_ROOM);
@@ -7424,6 +7425,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		this.checkSeed(foe, Item.ELECTRIC_SEED, Effect.ELECTRIC);
 		this.checkSeed(foe, Item.PSYCHIC_SEED, Effect.PSYCHIC);
 		this.checkSeed(foe, Item.SPARKLY_SEED, Effect.SPARKLY);
+		this.checkSeed(foe, Item.ROOM_SERVICE, Effect.TRICK_ROOM);
 		if (this.getItem() == Item.AIR_BALLOON) {
 			Task.addTask(Task.TEXT, this.nickname + " floated on its Air Balloon!");
 		}
