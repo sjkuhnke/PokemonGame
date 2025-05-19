@@ -4136,6 +4136,7 @@ public class UI extends AbstractUI {
 		
 		currentDialogue = currentTask.message;
 		drawDialogueScreen(true);
+		drawNameLabel(true);
 		drawSubWindow(x, y, width, height);
 		
 		boolean hasTM = bag.contains(Item.TINY_MUSHROOM);

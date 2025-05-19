@@ -23,12 +23,12 @@ Normal - Rock
 ===========================
 Deals 2x to:
 
-Magic
-Galactic
-Bug
 Flying
 Fire
+Magic
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -44,11 +44,11 @@ Normal - Fire
 ===========================
 Deals 2x to:
 
-Magic
-Steel
 Grass
-Bug
+Steel
+Magic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -64,10 +64,10 @@ Normal - Water
 ===========================
 Deals 2x to:
 
-Magic
-Rock
 Ground
+Rock
 Fire
+Magic
 
 ----------
 Deals 1/2x to:
@@ -82,11 +82,11 @@ Normal - Grass
 ===========================
 Deals 2x to:
 
-Magic
+Ground
 Water
 Light
 Rock
-Ground
+Magic
 
 ----------
 Deals 1/2x to:
@@ -102,11 +102,11 @@ Normal - Ice
 ===========================
 Deals 2x to:
 
-Magic
-Grass
-Dragon
 Ground
+Grass
 Flying
+Dragon
+Magic
 
 ----------
 Deals 1/2x to:
@@ -122,10 +122,10 @@ Normal - Electric
 ===========================
 Deals 2x to:
 
-Magic
+Flying
 Steel
 Water
-Flying
+Magic
 
 ----------
 Deals 1/2x to:
@@ -141,12 +141,12 @@ Normal - Fighting
 ===========================
 Deals 2x to:
 
-Magic
-Steel
-Normal
 Dark
+Steel
 Rock
+Magic
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -162,16 +162,16 @@ Normal - Poison
 ===========================
 Deals 2x to:
 
-Magic (!!)
 Grass
 Water
+Magic (!!)
 
 ----------
 Deals 1/2x to:
 
 Steel
-Ghost
 Rock
+Ghost
 
 ----------
 Deals 0x to:
@@ -182,12 +182,12 @@ Normal - Ground
 ===========================
 Deals 2x to:
 
-Magic
+Electric
 Steel
+Poison
 Rock
 Fire
-Poison
-Electric
+Magic
 
 ----------
 Deals 1/2x to:
@@ -202,11 +202,11 @@ Normal - Flying
 ===========================
 Deals 2x to:
 
-Magic
 Grass
+Fighting
+Magic
 Galactic
 Bug
-Fighting
 
 ----------
 Deals 1/2x to:
@@ -223,9 +223,9 @@ Normal - Psychic
 ===========================
 Deals 2x to:
 
-Magic
-Fighting
 Poison
+Fighting
+Magic
 
 ----------
 Deals 1/2x to:
@@ -240,11 +240,11 @@ Normal - Bug
 ===========================
 Deals 2x to:
 
-Magic
-Grass
-Light
-Psychic
 Dark
+Grass
+Psychic
+Light
+Magic
 
 ----------
 Deals 1/2x to:
@@ -261,10 +261,10 @@ Normal - Ghost
 ===========================
 Deals 2x to:
 
-Magic
-Psychic
-Ghost
 Electric
+Psychic
+Magic
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -279,8 +279,8 @@ Normal - Dragon
 ===========================
 Deals 2x to:
 
-Magic
 Dragon
+Magic
 Galactic
 
 ----------
@@ -297,9 +297,9 @@ Normal - Steel
 ===========================
 Deals 2x to:
 
-Magic
 Light
 Rock
+Magic
 Ice
 
 ----------
@@ -316,8 +316,8 @@ Normal - Dark
 ===========================
 Deals 2x to:
 
-Magic
 Psychic
+Magic
 Ghost
 
 ----------
@@ -333,11 +333,11 @@ Normal - Light
 ===========================
 Deals 2x to:
 
-Magic
 Dark
-Ghost
+Magic
 Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -353,10 +353,10 @@ Normal - Magic
 ===========================
 Deals 2x to:
 
-Magic
 Steel
-Normal
 Dragon
+Magic
+Normal
 
 ----------
 Deals 1/2x to:
@@ -371,10 +371,10 @@ Normal - Galactic
 ===========================
 Deals 2x to:
 
-Magic
-Fighting
 Ground
 Fire
+Fighting
+Magic
 
 ----------
 Deals 1/2x to:
@@ -391,12 +391,12 @@ Rock - Normal
 ===========================
 Deals 2x to:
 
-Magic
-Galactic
-Bug
 Flying
 Fire
+Magic
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -412,18 +412,18 @@ Rock - None
 ===========================
 Deals 2x to:
 
-Galactic
-Bug
 Flying
 Fire
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
 
+Ground
 Steel
 Fighting
-Ground
 
 ----------
 Deals 0x to:
@@ -434,13 +434,13 @@ Rock - Fire
 ===========================
 Deals 2x to:
 
-Steel
 Grass
-Galactic
-Bug (!!)
 Flying
+Steel
 Fire
+Galactic
 Ice (!!)
+Bug (!!)
 
 ----------
 Deals 1/2x to:
@@ -455,13 +455,13 @@ Rock - Water
 ===========================
 Deals 2x to:
 
-Galactic
-Bug
-Rock
 Ground
 Flying
+Rock
 Fire (!!)
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -476,15 +476,15 @@ Rock - Grass
 ===========================
 Deals 2x to:
 
-Water
-Light
-Galactic
-Bug
-Rock
 Ground
 Flying
+Water
+Light
+Rock
 Fire
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -500,14 +500,14 @@ Rock - Ice
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Galactic
-Bug
 Ground
+Grass
 Flying (!!)
+Dragon
 Fire
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -523,13 +523,13 @@ Rock - Electric
 ===========================
 Deals 2x to:
 
+Flying (!!)
 Steel
 Water
-Galactic
-Bug
-Flying (!!)
 Fire
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -545,15 +545,15 @@ Rock - Fighting
 ===========================
 Deals 2x to:
 
-Steel
-Normal
 Dark
-Galactic
-Bug
-Rock
 Flying
+Steel
+Rock
 Fire
+Galactic
 Ice (!!)
+Normal
+Bug
 
 ----------
 Deals 1/2x to:
@@ -568,20 +568,20 @@ Rock - Poison
 ===========================
 Deals 2x to:
 
-Magic
 Grass
-Water
-Galactic
-Bug
 Flying
+Water
 Fire
+Magic
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
 
-Steel
 Ground
+Steel
 
 ----------
 Deals 0x to:
@@ -592,15 +592,15 @@ Rock - Ground
 ===========================
 Deals 2x to:
 
-Steel
-Galactic
-Bug
-Rock
-Flying
-Fire (!!)
-Ice
-Poison
 Electric
+Flying
+Steel
+Poison
+Rock
+Fire (!!)
+Galactic
+Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -616,12 +616,12 @@ Rock - Flying
 Deals 2x to:
 
 Grass
-Galactic (!!)
-Bug (!!)
-Fighting
 Flying
 Fire
+Fighting
+Galactic (!!)
 Ice
+Bug (!!)
 
 ----------
 Deals 1/2x to:
@@ -637,13 +637,13 @@ Rock - Psychic
 ===========================
 Deals 2x to:
 
-Galactic
-Bug
-Fighting
 Flying
-Fire
-Ice
 Poison
+Fire
+Fighting
+Galactic
+Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -658,15 +658,15 @@ Rock - Bug
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic
 Dark
-Galactic
-Bug
+Grass
 Flying
+Psychic
+Light
 Fire
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -683,14 +683,14 @@ Rock - Ghost
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Galactic
-Bug
-Flying
-Fire
-Ice
 Electric
+Flying
+Psychic
+Fire
+Galactic
+Ice
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -705,12 +705,12 @@ Rock - Dragon
 ===========================
 Deals 2x to:
 
-Dragon
-Galactic (!!)
-Bug
 Flying
+Dragon
 Fire
+Galactic (!!)
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -726,13 +726,13 @@ Rock - Steel
 ===========================
 Deals 2x to:
 
-Light
-Galactic
-Bug
-Rock
 Flying
+Light
+Rock
 Fire
+Galactic
 Ice (!!)
+Bug
 
 ----------
 Deals 1/2x to:
@@ -748,13 +748,13 @@ Rock - Dark
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Galactic
-Bug
 Flying
+Psychic
 Fire
+Galactic
 Ice
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -771,12 +771,12 @@ Rock - Light
 Deals 2x to:
 
 Dark
-Ghost
-Galactic (!!)
-Bug
 Flying
 Fire
+Galactic (!!)
 Ice (!!)
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -792,14 +792,14 @@ Rock - Magic
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dragon
-Galactic
-Bug
 Flying
+Steel
+Dragon
 Fire
+Galactic
 Ice
+Normal
+Bug
 
 ----------
 Deals 1/2x to:
@@ -814,13 +814,13 @@ Rock - Galactic
 ===========================
 Deals 2x to:
 
-Galactic
-Bug
-Fighting
 Ground
 Flying
 Fire (!!)
+Fighting
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -836,11 +836,11 @@ Fire - Normal
 ===========================
 Deals 2x to:
 
-Magic
-Steel
 Grass
-Bug
+Steel
+Magic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -856,13 +856,13 @@ Fire - Rock
 ===========================
 Deals 2x to:
 
-Steel
 Grass
-Galactic
-Bug (!!)
 Flying
+Steel
 Fire
+Galactic
 Ice (!!)
+Bug (!!)
 
 ----------
 Deals 1/2x to:
@@ -877,17 +877,17 @@ Fire - None
 ===========================
 Deals 2x to:
 
-Steel
 Grass
-Bug
+Steel
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
 
 Water
-Dragon
 Rock
+Dragon
 Fire
 
 ----------
@@ -900,13 +900,13 @@ Fire - Water
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Bug
-Rock
 Ground
+Grass
+Steel
+Rock
 Fire
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -923,21 +923,21 @@ Fire - Grass
 ===========================
 Deals 2x to:
 
-Steel
+Ground
 Grass
+Steel
 Water
 Light
-Bug
 Rock
-Ground
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
 
 Dragon
-Galactic
 Fire
+Galactic
 
 ----------
 Deals 0x to:
@@ -948,13 +948,13 @@ Fire - Ice
 ===========================
 Deals 2x to:
 
-Steel
-Grass (!!)
-Dragon
-Bug
 Ground
+Grass (!!)
 Flying
+Steel
+Dragon
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -971,12 +971,12 @@ Fire - Electric
 ===========================
 Deals 2x to:
 
-Steel (!!)
 Grass
-Water
-Bug
 Flying
+Steel (!!)
+Water
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -992,13 +992,13 @@ Fire - Fighting
 ===========================
 Deals 2x to:
 
-Steel (!!)
-Grass
-Normal
 Dark
-Bug
+Grass
+Steel (!!)
 Rock
 Ice (!!)
+Normal
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1014,12 +1014,12 @@ Fire - Poison
 ===========================
 Deals 2x to:
 
-Magic
-Steel
 Grass (!!)
+Steel
 Water
-Bug
+Magic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1035,14 +1035,14 @@ Fire - Ground
 ===========================
 Deals 2x to:
 
-Steel (!!)
 Grass
-Bug
+Electric
+Steel (!!)
+Poison
 Rock
 Fire
 Ice
-Poison
-Electric
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1058,12 +1058,12 @@ Fire - Flying
 ===========================
 Deals 2x to:
 
-Steel
 Grass (!!)
-Galactic
-Bug (!!)
+Steel
 Fighting
+Galactic
 Ice
+Bug (!!)
 
 ----------
 Deals 1/2x to:
@@ -1079,12 +1079,12 @@ Fire - Psychic
 ===========================
 Deals 2x to:
 
-Steel
 Grass
-Bug
+Steel
+Poison
 Fighting
 Ice
-Poison
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1099,19 +1099,19 @@ Fire - Bug
 ===========================
 Deals 2x to:
 
-Steel
-Grass (!!)
-Light
-Psychic
 Dark
-Bug
+Grass (!!)
+Steel
+Psychic
+Light
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
 
-Galactic
 Fire
+Galactic
 
 ----------
 Deals 0x to:
@@ -1122,13 +1122,13 @@ Fire - Ghost
 ===========================
 Deals 2x to:
 
-Steel
 Grass
+Electric
+Steel
 Psychic
+Ice
 Ghost
 Bug
-Ice
-Electric
 
 ----------
 Deals 1/2x to:
@@ -1143,12 +1143,12 @@ Fire - Dragon
 ===========================
 Deals 2x to:
 
-Steel
 Grass
+Steel
 Dragon
 Galactic
-Bug
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1163,12 +1163,12 @@ Fire - Steel
 ===========================
 Deals 2x to:
 
-Steel
 Grass
+Steel
 Light
-Bug
 Rock
 Ice (!!)
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1185,12 +1185,12 @@ Fire - Dark
 ===========================
 Deals 2x to:
 
-Steel
 Grass
+Steel
 Psychic
+Ice
 Ghost
 Bug
-Ice
 
 ----------
 Deals 1/2x to:
@@ -1206,13 +1206,13 @@ Fire - Light
 ===========================
 Deals 2x to:
 
-Steel
-Grass
 Dark
-Ghost
+Grass
+Steel
 Galactic
-Bug
 Ice (!!)
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1228,12 +1228,12 @@ Fire - Magic
 ===========================
 Deals 2x to:
 
-Steel (!!)
 Grass
-Normal
+Steel (!!)
 Dragon
-Bug
 Ice
+Normal
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1248,13 +1248,13 @@ Fire - Galactic
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Bug
-Fighting
 Ground
+Grass
+Steel
 Fire
+Fighting
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1270,10 +1270,10 @@ Water - Normal
 ===========================
 Deals 2x to:
 
-Magic
-Rock
 Ground
+Rock
 Fire
+Magic
 
 ----------
 Deals 1/2x to:
@@ -1288,13 +1288,13 @@ Water - Rock
 ===========================
 Deals 2x to:
 
-Galactic
-Bug
-Rock
 Ground
 Flying
+Rock
 Fire (!!)
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1309,13 +1309,13 @@ Water - Fire
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Bug
-Rock
 Ground
+Grass
+Steel
+Rock
 Fire
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1332,8 +1332,8 @@ Water - None
 ===========================
 Deals 2x to:
 
-Rock
 Ground
+Rock
 Fire
 
 ----------
@@ -1341,8 +1341,8 @@ Deals 1/2x to:
 
 Grass
 Water
-Dragon
 Poison
+Dragon
 
 ----------
 Deals 0x to:
@@ -1353,18 +1353,18 @@ Water - Grass
 ===========================
 Deals 2x to:
 
+Ground (!!)
 Water
 Light
 Rock (!!)
-Ground (!!)
 Fire
 
 ----------
 Deals 1/2x to:
 
 Grass
-Dragon
 Poison
+Dragon
 
 ----------
 Deals 0x to:
@@ -1375,11 +1375,11 @@ Water - Ice
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Rock
 Ground (!!)
+Grass
 Flying
+Rock
+Dragon
 Fire
 
 ----------
@@ -1396,11 +1396,11 @@ Water - Electric
 ===========================
 Deals 2x to:
 
+Ground
+Flying
 Steel
 Water
 Rock
-Ground
-Flying
 Fire
 
 ----------
@@ -1418,13 +1418,13 @@ Water - Fighting
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dark
-Rock (!!)
 Ground
+Dark
+Steel
+Rock (!!)
 Fire
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -1439,12 +1439,12 @@ Water - Poison
 ===========================
 Deals 2x to:
 
-Magic
+Ground
 Grass
 Water
 Rock
-Ground
 Fire
+Magic
 
 ----------
 Deals 1/2x to:
@@ -1460,12 +1460,12 @@ Water - Ground
 ===========================
 Deals 2x to:
 
-Steel
-Rock (!!)
 Ground
-Fire (!!)
-Poison
 Electric
+Steel
+Poison
+Rock (!!)
+Fire (!!)
 
 ----------
 Deals 1/2x to:
@@ -1481,13 +1481,13 @@ Water - Flying
 ===========================
 Deals 2x to:
 
+Ground
 Grass
+Rock
+Fire
+Fighting
 Galactic
 Bug
-Rock
-Fighting
-Ground
-Fire
 
 ----------
 Deals 1/2x to:
@@ -1502,11 +1502,11 @@ Water - Psychic
 ===========================
 Deals 2x to:
 
-Rock
-Fighting
 Ground
-Fire
 Poison
+Rock
+Fire
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -1521,12 +1521,12 @@ Water - Bug
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic
-Dark
-Rock
 Ground
+Dark
+Grass
+Psychic
+Light
+Rock
 Fire
 
 ----------
@@ -1543,12 +1543,12 @@ Water - Ghost
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Rock
 Ground
-Fire
 Electric
+Psychic
+Rock
+Fire
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -1563,11 +1563,11 @@ Water - Dragon
 ===========================
 Deals 2x to:
 
-Dragon
-Galactic
-Rock
 Ground
+Rock
+Dragon
 Fire
+Galactic
 
 ----------
 Deals 1/2x to:
@@ -1582,9 +1582,9 @@ Water - Steel
 ===========================
 Deals 2x to:
 
+Ground
 Light
 Rock (!!)
-Ground
 Fire
 Ice
 
@@ -1602,11 +1602,11 @@ Water - Dark
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Rock
 Ground
+Psychic
+Rock
 Fire
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -1621,13 +1621,13 @@ Water - Light
 ===========================
 Deals 2x to:
 
-Dark
-Ghost
-Galactic
-Rock
 Ground
+Dark
+Rock
 Fire
+Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -1643,12 +1643,12 @@ Water - Magic
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dragon
-Rock
 Ground
+Steel
+Rock
+Dragon
 Fire
+Normal
 
 ----------
 Deals 1/2x to:
@@ -1664,10 +1664,10 @@ Water - Galactic
 ===========================
 Deals 2x to:
 
-Rock
-Fighting
 Ground (!!)
+Rock
 Fire (!!)
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -1682,11 +1682,11 @@ Grass - Normal
 ===========================
 Deals 2x to:
 
-Magic
+Ground
 Water
 Light
 Rock
-Ground
+Magic
 
 ----------
 Deals 1/2x to:
@@ -1702,15 +1702,15 @@ Grass - Rock
 ===========================
 Deals 2x to:
 
-Water
-Light
-Galactic
-Bug
-Rock
 Ground
 Flying
+Water
+Light
+Rock
 Fire
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1726,21 +1726,21 @@ Grass - Fire
 ===========================
 Deals 2x to:
 
-Steel
+Ground
 Grass
+Steel
 Water
 Light
-Bug
 Rock
-Ground
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
 
 Dragon
-Galactic
 Fire
+Galactic
 
 ----------
 Deals 0x to:
@@ -1751,18 +1751,18 @@ Grass - Water
 ===========================
 Deals 2x to:
 
+Ground (!!)
 Water
 Light
 Rock (!!)
-Ground (!!)
 Fire
 
 ----------
 Deals 1/2x to:
 
 Grass
-Dragon
 Poison
+Dragon
 
 ----------
 Deals 0x to:
@@ -1773,22 +1773,22 @@ Grass - None
 ===========================
 Deals 2x to:
 
+Ground
 Water
 Light
 Rock
-Ground
 
 ----------
 Deals 1/2x to:
 
-Steel
 Grass
+Flying
+Steel
+Poison
 Dragon
+Fire
 Galactic
 Bug
-Flying
-Fire
-Poison
 
 ----------
 Deals 0x to:
@@ -1799,13 +1799,13 @@ Grass - Ice
 ===========================
 Deals 2x to:
 
+Ground (!!)
 Grass
+Flying
 Water
-Dragon
 Light
 Rock
-Ground (!!)
-Flying
+Dragon
 
 ----------
 Deals 1/2x to:
@@ -1822,12 +1822,12 @@ Grass - Electric
 ===========================
 Deals 2x to:
 
+Ground
+Flying
 Steel
 Water (!!)
 Light
 Rock
-Ground
-Flying
 
 ----------
 Deals 1/2x to:
@@ -1844,21 +1844,21 @@ Grass - Fighting
 ===========================
 Deals 2x to:
 
+Ground
+Dark
 Steel
-Normal
 Water
 Light
-Dark
 Rock (!!)
-Ground
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
 
+Flying
 Galactic
 Bug
-Flying
 
 ----------
 Deals 0x to:
@@ -1869,12 +1869,12 @@ Grass - Poison
 ===========================
 Deals 2x to:
 
-Magic
+Ground
 Grass
 Water (!!)
 Light
 Rock
-Ground
+Magic
 
 ----------
 Deals 1/2x to:
@@ -1891,22 +1891,22 @@ Grass - Ground
 ===========================
 Deals 2x to:
 
+Ground
+Electric
 Steel
 Water
 Light
-Rock (!!)
-Ground
-Fire
 Poison
-Electric
+Rock (!!)
+Fire
 
 ----------
 Deals 1/2x to:
 
 Grass
+Flying
 Galactic
 Bug
-Flying
 
 ----------
 Deals 0x to:
@@ -1917,14 +1917,14 @@ Grass - Flying
 ===========================
 Deals 2x to:
 
+Ground
 Grass
 Water
 Light
-Galactic
-Bug
 Rock
 Fighting
-Ground
+Galactic
+Bug
 
 ----------
 Deals 1/2x to:
@@ -1940,12 +1940,12 @@ Grass - Psychic
 ===========================
 Deals 2x to:
 
+Ground
 Water
 Light
+Poison
 Rock
 Fighting
-Ground
-Poison
 
 ----------
 Deals 1/2x to:
@@ -1960,22 +1960,22 @@ Grass - Bug
 ===========================
 Deals 2x to:
 
+Ground
+Dark
 Grass
+Psychic
 Water
 Light (!!)
-Psychic
-Dark
 Rock
-Ground
 
 ----------
 Deals 1/2x to:
 
-Steel
-Galactic
 Flying
-Fire
+Steel
 Poison
+Fire
+Galactic
 
 ----------
 Deals 0x to:
@@ -1986,13 +1986,13 @@ Grass - Ghost
 ===========================
 Deals 2x to:
 
-Water
-Light
-Psychic
-Ghost
-Rock
 Ground
 Electric
+Psychic
+Water
+Light
+Rock
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -2007,12 +2007,12 @@ Grass - Dragon
 ===========================
 Deals 2x to:
 
-Water
-Dragon
-Light
-Galactic
-Rock
 Ground
+Water
+Light
+Rock
+Dragon
+Galactic
 
 ----------
 Deals 1/2x to:
@@ -2028,10 +2028,10 @@ Grass - Steel
 ===========================
 Deals 2x to:
 
+Ground
 Water
 Light (!!)
 Rock (!!)
-Ground
 Ice
 
 ----------
@@ -2049,12 +2049,12 @@ Grass - Dark
 ===========================
 Deals 2x to:
 
+Ground
+Psychic
 Water
 Light
-Psychic
-Ghost
 Rock
-Ground
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -2070,22 +2070,22 @@ Grass - Light
 ===========================
 Deals 2x to:
 
+Ground
+Dark
 Water
 Light
-Dark
-Ghost
-Galactic
 Rock
-Ground
+Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
 
-Steel
 Grass
-Bug
+Steel
 Fire
+Bug
 
 ----------
 Deals 0x to:
@@ -2096,13 +2096,13 @@ Grass - Magic
 ===========================
 Deals 2x to:
 
+Ground
 Steel
-Normal
 Water
-Dragon
 Light
 Rock
-Ground
+Dragon
+Normal
 
 ----------
 Deals 1/2x to:
@@ -2118,12 +2118,12 @@ Grass - Galactic
 ===========================
 Deals 2x to:
 
+Ground (!!)
 Water
 Light
 Rock
-Fighting
-Ground (!!)
 Fire
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -2139,11 +2139,11 @@ Ice - Normal
 ===========================
 Deals 2x to:
 
-Magic
-Grass
-Dragon
 Ground
+Grass
 Flying
+Dragon
+Magic
 
 ----------
 Deals 1/2x to:
@@ -2159,14 +2159,14 @@ Ice - Rock
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Galactic
-Bug
 Ground
+Grass
 Flying (!!)
+Dragon
 Fire
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -2182,13 +2182,13 @@ Ice - Fire
 ===========================
 Deals 2x to:
 
-Steel
-Grass (!!)
-Dragon
-Bug
 Ground
+Grass (!!)
 Flying
+Steel
+Dragon
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -2205,11 +2205,11 @@ Ice - Water
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Rock
 Ground (!!)
+Grass
 Flying
+Rock
+Dragon
 Fire
 
 ----------
@@ -2226,13 +2226,13 @@ Ice - Grass
 ===========================
 Deals 2x to:
 
+Ground (!!)
 Grass
+Flying
 Water
-Dragon
 Light
 Rock
-Ground (!!)
-Flying
+Dragon
 
 ----------
 Deals 1/2x to:
@@ -2249,10 +2249,10 @@ Ice - None
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
 Ground
+Grass
 Flying
+Dragon
 
 ----------
 Deals 1/2x to:
@@ -2271,12 +2271,12 @@ Ice - Electric
 ===========================
 Deals 2x to:
 
-Steel
+Ground
 Grass
+Flying (!!)
+Steel
 Water
 Dragon
-Ground
-Flying (!!)
 
 ----------
 Deals 1/2x to:
@@ -2291,15 +2291,15 @@ Ice - Fighting
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Normal
-Dragon
-Dark
-Rock
 Ground
+Dark
+Grass
 Flying
+Steel
+Rock
+Dragon
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -2314,12 +2314,12 @@ Ice - Poison
 ===========================
 Deals 2x to:
 
-Magic
+Ground
 Grass (!!)
+Flying
 Water
 Dragon
-Ground
-Flying
+Magic
 
 ----------
 Deals 1/2x to:
@@ -2335,15 +2335,15 @@ Ice - Ground
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Dragon
-Rock
 Ground
-Flying
-Fire
-Poison
+Grass
 Electric
+Flying
+Steel
+Poison
+Rock
+Dragon
+Fire
 
 ----------
 Deals 1/2x to:
@@ -2358,13 +2358,13 @@ Ice - Flying
 ===========================
 Deals 2x to:
 
+Ground
 Grass (!!)
+Flying
 Dragon
+Fighting
 Galactic
 Bug
-Fighting
-Ground
-Flying
 
 ----------
 Deals 1/2x to:
@@ -2381,12 +2381,12 @@ Ice - Psychic
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Fighting
 Ground
+Grass
 Flying
 Poison
+Dragon
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -2401,13 +2401,13 @@ Ice - Bug
 ===========================
 Deals 2x to:
 
-Grass (!!)
-Dragon
-Light
-Psychic
-Dark
 Ground
+Dark
+Grass (!!)
 Flying
+Psychic
+Light
+Dragon
 
 ----------
 Deals 1/2x to:
@@ -2424,13 +2424,13 @@ Ice - Ghost
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Psychic
-Ghost
 Ground
-Flying
+Grass
 Electric
+Flying
+Psychic
+Dragon
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -2445,11 +2445,11 @@ Ice - Dragon
 ===========================
 Deals 2x to:
 
+Ground
 Grass
+Flying
 Dragon (!!)
 Galactic
-Ground
-Flying
 
 ----------
 Deals 1/2x to:
@@ -2465,12 +2465,12 @@ Ice - Steel
 ===========================
 Deals 2x to:
 
+Ground
 Grass
-Dragon
+Flying
 Light
 Rock
-Ground
-Flying
+Dragon
 Ice
 
 ----------
@@ -2489,12 +2489,12 @@ Ice - Dark
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Psychic
-Ghost
 Ground
+Grass
 Flying
+Psychic
+Dragon
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -2509,14 +2509,14 @@ Ice - Light
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Dark
-Ghost
-Galactic
 Ground
+Dark
+Grass
 Flying
+Dragon
+Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -2533,12 +2533,12 @@ Ice - Magic
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Normal
-Dragon (!!)
 Ground
+Grass
 Flying
+Steel
+Dragon (!!)
+Normal
 
 ----------
 Deals 1/2x to:
@@ -2553,12 +2553,12 @@ Ice - Galactic
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Fighting
 Ground (!!)
+Grass
 Flying
+Dragon
 Fire
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -2575,10 +2575,10 @@ Electric - Normal
 ===========================
 Deals 2x to:
 
-Magic
+Flying
 Steel
 Water
-Flying
+Magic
 
 ----------
 Deals 1/2x to:
@@ -2594,13 +2594,13 @@ Electric - Rock
 ===========================
 Deals 2x to:
 
+Flying (!!)
 Steel
 Water
-Galactic
-Bug
-Flying (!!)
 Fire
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -2616,12 +2616,12 @@ Electric - Fire
 ===========================
 Deals 2x to:
 
-Steel (!!)
 Grass
-Water
-Bug
 Flying
+Steel (!!)
+Water
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -2637,11 +2637,11 @@ Electric - Water
 ===========================
 Deals 2x to:
 
+Ground
+Flying
 Steel
 Water
 Rock
-Ground
-Flying
 Fire
 
 ----------
@@ -2659,12 +2659,12 @@ Electric - Grass
 ===========================
 Deals 2x to:
 
+Ground
+Flying
 Steel
 Water (!!)
 Light
 Rock
-Ground
-Flying
 
 ----------
 Deals 1/2x to:
@@ -2681,12 +2681,12 @@ Electric - Ice
 ===========================
 Deals 2x to:
 
-Steel
+Ground
 Grass
+Flying (!!)
+Steel
 Water
 Dragon
-Ground
-Flying (!!)
 
 ----------
 Deals 1/2x to:
@@ -2701,17 +2701,17 @@ Electric - None
 ===========================
 Deals 2x to:
 
+Flying
 Steel
 Water
-Flying
 
 ----------
 Deals 1/2x to:
 
 Grass
+Electric
 Dragon
 Ghost
-Electric
 
 ----------
 Deals 0x to:
@@ -2723,13 +2723,13 @@ Electric - Fighting
 ===========================
 Deals 2x to:
 
-Steel (!!)
-Normal
-Water
 Dark
-Rock
 Flying
+Steel (!!)
+Water
+Rock
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -2745,17 +2745,17 @@ Electric - Poison
 ===========================
 Deals 2x to:
 
-Magic
-Steel
 Grass
-Water (!!)
 Flying
+Steel
+Water (!!)
+Magic
 
 ----------
 Deals 1/2x to:
 
-Ghost
 Ground
+Ghost
 
 ----------
 Deals 0x to:
@@ -2766,13 +2766,13 @@ Electric - Ground
 ===========================
 Deals 2x to:
 
+Electric
+Flying
 Steel (!!)
 Water
-Rock
-Flying
-Fire
 Poison
-Electric
+Rock
+Fire
 
 ----------
 Deals 1/2x to:
@@ -2788,13 +2788,13 @@ Electric - Flying
 ===========================
 Deals 2x to:
 
-Steel
 Grass
+Flying
+Steel
 Water
+Fighting
 Galactic
 Bug
-Fighting
-Flying
 
 ----------
 Deals 1/2x to:
@@ -2810,11 +2810,11 @@ Electric - Psychic
 ===========================
 Deals 2x to:
 
+Flying
 Steel
 Water
-Fighting
-Flying
 Poison
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -2829,13 +2829,13 @@ Electric - Bug
 ===========================
 Deals 2x to:
 
-Steel
+Dark
 Grass
+Flying
+Steel
+Psychic
 Water
 Light
-Psychic
-Dark
-Flying
 
 ----------
 Deals 1/2x to:
@@ -2851,12 +2851,12 @@ Electric - Ghost
 ===========================
 Deals 2x to:
 
-Steel
-Water
-Psychic
-Ghost
-Flying
 Electric
+Flying
+Steel
+Psychic
+Water
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -2871,11 +2871,11 @@ Electric - Dragon
 ===========================
 Deals 2x to:
 
+Flying
 Steel
 Water
 Dragon
 Galactic
-Flying
 
 ----------
 Deals 1/2x to:
@@ -2890,11 +2890,11 @@ Electric - Steel
 ===========================
 Deals 2x to:
 
+Flying
 Steel
 Water
 Light
 Rock
-Flying
 Ice
 
 ----------
@@ -2911,11 +2911,11 @@ Electric - Dark
 ===========================
 Deals 2x to:
 
-Steel
-Water
-Psychic
-Ghost
 Flying
+Steel
+Psychic
+Water
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -2930,13 +2930,13 @@ Electric - Light
 ===========================
 Deals 2x to:
 
+Dark
+Flying
 Steel
 Water
-Dark
-Ghost
 Galactic
-Flying
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -2952,11 +2952,11 @@ Electric - Magic
 ===========================
 Deals 2x to:
 
+Flying
 Steel (!!)
-Normal
 Water
 Dragon
-Flying
+Normal
 
 ----------
 Deals 1/2x to:
@@ -2971,12 +2971,12 @@ Electric - Galactic
 ===========================
 Deals 2x to:
 
-Steel
-Water
-Fighting
 Ground
 Flying
+Steel
+Water
 Fire
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -2991,12 +2991,12 @@ Fighting - Normal
 ===========================
 Deals 2x to:
 
-Magic
-Steel
-Normal
 Dark
+Steel
 Rock
+Magic
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -3012,15 +3012,15 @@ Fighting - Rock
 ===========================
 Deals 2x to:
 
-Steel
-Normal
 Dark
-Galactic
-Bug
-Rock
 Flying
+Steel
+Rock
 Fire
+Galactic
 Ice (!!)
+Normal
+Bug
 
 ----------
 Deals 1/2x to:
@@ -3035,13 +3035,13 @@ Fighting - Fire
 ===========================
 Deals 2x to:
 
-Steel (!!)
-Grass
-Normal
 Dark
-Bug
+Grass
+Steel (!!)
 Rock
 Ice (!!)
+Normal
+Bug
 
 ----------
 Deals 1/2x to:
@@ -3057,13 +3057,13 @@ Fighting - Water
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dark
-Rock (!!)
 Ground
+Dark
+Steel
+Rock (!!)
 Fire
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -3078,21 +3078,21 @@ Fighting - Grass
 ===========================
 Deals 2x to:
 
+Ground
+Dark
 Steel
-Normal
 Water
 Light
-Dark
 Rock (!!)
-Ground
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
 
+Flying
 Galactic
 Bug
-Flying
 
 ----------
 Deals 0x to:
@@ -3103,15 +3103,15 @@ Fighting - Ice
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Normal
-Dragon
-Dark
-Rock
 Ground
+Dark
+Grass
 Flying
+Steel
+Rock
+Dragon
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -3126,13 +3126,13 @@ Fighting - Electric
 ===========================
 Deals 2x to:
 
-Steel (!!)
-Normal
-Water
 Dark
-Rock
 Flying
+Steel (!!)
+Water
+Rock
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -3148,20 +3148,20 @@ Fighting - None
 ===========================
 Deals 2x to:
 
-Steel
-Normal
 Dark
+Steel
 Rock
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
 
-Magic
+Flying
 Psychic
+Magic
 Galactic
 Bug
-Flying
 
 ----------
 Deals 0x to:
@@ -3173,14 +3173,14 @@ Fighting - Poison
 ===========================
 Deals 2x to:
 
-Magic
-Steel
-Grass
-Normal
-Water
 Dark
+Grass
+Steel
+Water
 Rock
+Magic
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -3197,21 +3197,21 @@ Fighting - Ground
 ===========================
 Deals 2x to:
 
-Steel (!!)
-Normal
 Dark
+Electric
+Steel (!!)
+Poison
 Rock (!!)
 Fire
 Ice
-Poison
-Electric
+Normal
 
 ----------
 Deals 1/2x to:
 
+Flying
 Galactic
 Bug
-Flying
 
 ----------
 Deals 0x to:
@@ -3222,15 +3222,15 @@ Fighting - Flying
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Normal
 Dark
-Galactic
-Bug
+Grass
+Steel
 Rock
 Fighting
+Galactic
 Ice
+Normal
+Bug
 
 ----------
 Deals 1/2x to:
@@ -3245,19 +3245,19 @@ Fighting - Psychic
 ===========================
 Deals 2x to:
 
-Steel
-Normal
 Dark
+Steel
+Poison
 Rock
 Fighting
 Ice
-Poison
+Normal
 
 ----------
 Deals 1/2x to:
 
-Magic
 Psychic
+Magic
 
 ----------
 Deals 0x to:
@@ -3268,21 +3268,21 @@ Fighting - Bug
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Normal
-Light
-Psychic
 Dark (!!)
+Grass
+Steel
+Psychic
+Light
 Rock
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
 
-Ghost
-Galactic
 Flying
+Galactic
+Ghost
 
 ----------
 Deals 0x to:
@@ -3293,14 +3293,14 @@ Fighting - Ghost
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Psychic
 Dark
-Ghost
+Electric
+Steel
+Psychic
 Rock
 Ice
-Electric
+Normal
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -3315,13 +3315,13 @@ Fighting - Dragon
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dragon
 Dark
-Galactic
+Steel
 Rock
+Dragon
+Galactic
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -3337,12 +3337,12 @@ Fighting - Steel
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Light
 Dark
+Steel
+Light
 Rock (!!)
 Ice (!!)
+Normal
 
 ----------
 Deals 1/2x to:
@@ -3358,13 +3358,13 @@ Fighting - Dark
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Psychic
 Dark
-Ghost
+Steel
+Psychic
 Rock
 Ice
+Normal
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -3380,13 +3380,13 @@ Fighting - Light
 ===========================
 Deals 2x to:
 
-Steel
-Normal
 Dark (!!)
-Ghost
-Galactic
+Steel
 Rock
+Galactic
 Ice (!!)
+Normal
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -3402,12 +3402,12 @@ Fighting - Magic
 ===========================
 Deals 2x to:
 
-Steel (!!)
-Normal (!!)
-Dragon
 Dark
+Steel (!!)
 Rock
+Dragon
 Ice
+Normal (!!)
 
 ----------
 Deals 1/2x to:
@@ -3423,14 +3423,14 @@ Fighting - Galactic
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dark
-Rock
-Fighting
 Ground
+Dark
+Steel
+Rock
 Fire
+Fighting
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -3445,16 +3445,16 @@ Poison - Normal
 ===========================
 Deals 2x to:
 
-Magic (!!)
 Grass
 Water
+Magic (!!)
 
 ----------
 Deals 1/2x to:
 
 Steel
-Ghost
 Rock
+Ghost
 
 ----------
 Deals 0x to:
@@ -3465,20 +3465,20 @@ Poison - Rock
 ===========================
 Deals 2x to:
 
-Magic
 Grass
-Water
-Galactic
-Bug
 Flying
+Water
 Fire
+Magic
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
 
-Steel
 Ground
+Steel
 
 ----------
 Deals 0x to:
@@ -3489,12 +3489,12 @@ Poison - Fire
 ===========================
 Deals 2x to:
 
-Magic
-Steel
 Grass (!!)
+Steel
 Water
-Bug
+Magic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -3510,12 +3510,12 @@ Poison - Water
 ===========================
 Deals 2x to:
 
-Magic
+Ground
 Grass
 Water
 Rock
-Ground
 Fire
+Magic
 
 ----------
 Deals 1/2x to:
@@ -3531,12 +3531,12 @@ Poison - Grass
 ===========================
 Deals 2x to:
 
-Magic
+Ground
 Grass
 Water (!!)
 Light
 Rock
-Ground
+Magic
 
 ----------
 Deals 1/2x to:
@@ -3553,12 +3553,12 @@ Poison - Ice
 ===========================
 Deals 2x to:
 
-Magic
+Ground
 Grass (!!)
+Flying
 Water
 Dragon
-Ground
-Flying
+Magic
 
 ----------
 Deals 1/2x to:
@@ -3574,17 +3574,17 @@ Poison - Electric
 ===========================
 Deals 2x to:
 
-Magic
-Steel
 Grass
-Water (!!)
 Flying
+Steel
+Water (!!)
+Magic
 
 ----------
 Deals 1/2x to:
 
-Ghost
 Ground
+Ghost
 
 ----------
 Deals 0x to:
@@ -3595,14 +3595,14 @@ Poison - Fighting
 ===========================
 Deals 2x to:
 
-Magic
-Steel
-Grass
-Normal
-Water
 Dark
+Grass
+Steel
+Water
 Rock
+Magic
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -3619,18 +3619,18 @@ Poison - None
 ===========================
 Deals 2x to:
 
-Magic
 Grass
 Water
+Magic
 
 ----------
 Deals 1/2x to:
 
-Psychic
-Ghost
-Rock
 Ground
+Psychic
 Poison
+Rock
+Ghost
 
 ----------
 Deals 0x to:
@@ -3642,14 +3642,14 @@ Poison - Ground
 ===========================
 Deals 2x to:
 
-Magic
-Steel
 Grass
+Electric
+Steel
 Water
+Poison
 Rock
 Fire
-Poison
-Electric
+Magic
 
 ----------
 Deals 1/2x to:
@@ -3664,12 +3664,12 @@ Poison - Flying
 ===========================
 Deals 2x to:
 
-Magic
 Grass (!!)
 Water
+Fighting
+Magic
 Galactic
 Bug
-Fighting
 
 ----------
 Deals 1/2x to:
@@ -3686,11 +3686,11 @@ Poison - Psychic
 ===========================
 Deals 2x to:
 
-Magic
 Grass
 Water
-Fighting
 Poison
+Fighting
+Magic
 
 ----------
 Deals 1/2x to:
@@ -3706,19 +3706,19 @@ Poison - Bug
 ===========================
 Deals 2x to:
 
-Magic
+Dark
 Grass (!!)
+Psychic
 Water
 Light
-Psychic
-Dark
+Magic
 
 ----------
 Deals 1/2x to:
 
 Steel
-Ghost
 Poison
+Ghost
 
 ----------
 Deals 0x to:
@@ -3729,12 +3729,12 @@ Poison - Ghost
 ===========================
 Deals 2x to:
 
-Magic
 Grass
-Water
-Psychic
-Ghost
 Electric
+Psychic
+Water
+Magic
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -3749,10 +3749,10 @@ Poison - Dragon
 ===========================
 Deals 2x to:
 
-Magic
 Grass
 Water
 Dragon
+Magic
 Galactic
 
 ----------
@@ -3769,11 +3769,11 @@ Poison - Steel
 ===========================
 Deals 2x to:
 
-Magic
 Grass
 Water
 Light
 Rock
+Magic
 Ice
 
 ----------
@@ -3790,10 +3790,10 @@ Poison - Dark
 ===========================
 Deals 2x to:
 
-Magic
 Grass
-Water
 Psychic
+Water
+Magic
 Ghost
 
 ----------
@@ -3809,13 +3809,13 @@ Poison - Light
 ===========================
 Deals 2x to:
 
-Magic
+Dark
 Grass
 Water
-Dark
-Ghost
+Magic
 Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -3831,12 +3831,12 @@ Poison - Magic
 ===========================
 Deals 2x to:
 
-Magic
-Steel
 Grass
-Normal
+Steel
 Water
 Dragon
+Magic
+Normal
 
 ----------
 Deals 1/2x to:
@@ -3852,12 +3852,12 @@ Poison - Galactic
 ===========================
 Deals 2x to:
 
-Magic
+Ground
 Grass
 Water
-Fighting
-Ground
 Fire
+Fighting
+Magic
 
 ----------
 Deals 1/2x to:
@@ -3874,12 +3874,12 @@ Ground - Normal
 ===========================
 Deals 2x to:
 
-Magic
+Electric
 Steel
+Poison
 Rock
 Fire
-Poison
-Electric
+Magic
 
 ----------
 Deals 1/2x to:
@@ -3894,15 +3894,15 @@ Ground - Rock
 ===========================
 Deals 2x to:
 
-Steel
-Galactic
-Bug
-Rock
-Flying
-Fire (!!)
-Ice
-Poison
 Electric
+Flying
+Steel
+Poison
+Rock
+Fire (!!)
+Galactic
+Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -3917,14 +3917,14 @@ Ground - Fire
 ===========================
 Deals 2x to:
 
-Steel (!!)
 Grass
-Bug
+Electric
+Steel (!!)
+Poison
 Rock
 Fire
 Ice
-Poison
-Electric
+Bug
 
 ----------
 Deals 1/2x to:
@@ -3940,12 +3940,12 @@ Ground - Water
 ===========================
 Deals 2x to:
 
-Steel
-Rock (!!)
 Ground
-Fire (!!)
-Poison
 Electric
+Steel
+Poison
+Rock (!!)
+Fire (!!)
 
 ----------
 Deals 1/2x to:
@@ -3961,22 +3961,22 @@ Ground - Grass
 ===========================
 Deals 2x to:
 
+Ground
+Electric
 Steel
 Water
 Light
-Rock (!!)
-Ground
-Fire
 Poison
-Electric
+Rock (!!)
+Fire
 
 ----------
 Deals 1/2x to:
 
 Grass
+Flying
 Galactic
 Bug
-Flying
 
 ----------
 Deals 0x to:
@@ -3987,15 +3987,15 @@ Ground - Ice
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Dragon
-Rock
 Ground
-Flying
-Fire
-Poison
+Grass
 Electric
+Flying
+Steel
+Poison
+Rock
+Dragon
+Fire
 
 ----------
 Deals 1/2x to:
@@ -4010,13 +4010,13 @@ Ground - Electric
 ===========================
 Deals 2x to:
 
+Electric
+Flying
 Steel (!!)
 Water
-Rock
-Flying
-Fire
 Poison
-Electric
+Rock
+Fire
 
 ----------
 Deals 1/2x to:
@@ -4032,21 +4032,21 @@ Ground - Fighting
 ===========================
 Deals 2x to:
 
-Steel (!!)
-Normal
 Dark
+Electric
+Steel (!!)
+Poison
 Rock (!!)
 Fire
 Ice
-Poison
-Electric
+Normal
 
 ----------
 Deals 1/2x to:
 
+Flying
 Galactic
 Bug
-Flying
 
 ----------
 Deals 0x to:
@@ -4057,14 +4057,14 @@ Ground - Poison
 ===========================
 Deals 2x to:
 
-Magic
-Steel
 Grass
+Electric
+Steel
 Water
+Poison
 Rock
 Fire
-Poison
-Electric
+Magic
 
 ----------
 Deals 1/2x to:
@@ -4079,11 +4079,11 @@ Ground - None
 ===========================
 Deals 2x to:
 
+Electric
 Steel
+Poison
 Rock
 Fire
-Poison
-Electric
 
 ----------
 Deals 1/2x to:
@@ -4102,15 +4102,15 @@ Ground - Flying
 ===========================
 Deals 2x to:
 
-Steel
 Grass
+Electric
+Steel
+Poison
+Rock
+Fire
+Fighting
 Galactic
 Bug
-Rock
-Fighting
-Fire
-Poison
-Electric
 
 ----------
 Deals 1/2x to:
@@ -4125,12 +4125,12 @@ Ground - Psychic
 ===========================
 Deals 2x to:
 
-Steel
-Rock
-Fighting
-Fire
-Poison (!!)
 Electric
+Steel
+Poison (!!)
+Rock
+Fire
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -4145,21 +4145,21 @@ Ground - Bug
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Light
-Psychic
 Dark
+Grass
+Electric
+Steel
+Psychic
+Light
+Poison
 Rock
 Fire
-Poison
-Electric
 
 ----------
 Deals 1/2x to:
 
-Galactic
 Flying
+Galactic
 
 ----------
 Deals 0x to:
@@ -4170,13 +4170,13 @@ Ground - Ghost
 ===========================
 Deals 2x to:
 
+Electric (!!)
 Steel
 Psychic
-Ghost
+Poison
 Rock
 Fire
-Poison
-Electric (!!)
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -4191,13 +4191,13 @@ Ground - Dragon
 ===========================
 Deals 2x to:
 
-Steel
-Dragon
-Galactic
-Rock
-Fire
-Poison
 Electric
+Steel
+Poison
+Rock
+Dragon
+Fire
+Galactic
 
 ----------
 Deals 1/2x to:
@@ -4212,13 +4212,13 @@ Ground - Steel
 ===========================
 Deals 2x to:
 
+Electric
 Steel
 Light
+Poison
 Rock (!!)
 Fire
 Ice
-Poison
-Electric
 
 ----------
 Deals 1/2x to:
@@ -4233,13 +4233,13 @@ Ground - Dark
 ===========================
 Deals 2x to:
 
+Electric
 Steel
 Psychic
-Ghost
+Poison
 Rock
 Fire
-Poison
-Electric
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -4255,15 +4255,15 @@ Ground - Light
 ===========================
 Deals 2x to:
 
-Steel
 Dark
-Ghost
-Galactic
+Electric
+Steel
+Poison
 Rock
 Fire
+Galactic
 Ice
-Poison
-Electric
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -4280,13 +4280,13 @@ Ground - Magic
 ===========================
 Deals 2x to:
 
-Steel (!!)
-Normal
-Dragon
-Rock
-Fire
-Poison
 Electric
+Steel (!!)
+Poison
+Rock
+Dragon
+Fire
+Normal
 
 ----------
 Deals 1/2x to:
@@ -4301,13 +4301,13 @@ Ground - Galactic
 ===========================
 Deals 2x to:
 
-Steel
-Rock
-Fighting
 Ground
-Fire (!!)
-Poison
 Electric
+Steel
+Poison
+Rock
+Fire (!!)
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -4322,11 +4322,11 @@ Flying - Normal
 ===========================
 Deals 2x to:
 
-Magic
 Grass
+Fighting
+Magic
 Galactic
 Bug
-Fighting
 
 ----------
 Deals 1/2x to:
@@ -4344,12 +4344,12 @@ Flying - Rock
 Deals 2x to:
 
 Grass
-Galactic (!!)
-Bug (!!)
-Fighting
 Flying
 Fire
+Fighting
+Galactic (!!)
 Ice
+Bug (!!)
 
 ----------
 Deals 1/2x to:
@@ -4365,12 +4365,12 @@ Flying - Fire
 ===========================
 Deals 2x to:
 
-Steel
 Grass (!!)
-Galactic
-Bug (!!)
+Steel
 Fighting
+Galactic
 Ice
+Bug (!!)
 
 ----------
 Deals 1/2x to:
@@ -4386,13 +4386,13 @@ Flying - Water
 ===========================
 Deals 2x to:
 
+Ground
 Grass
+Rock
+Fire
+Fighting
 Galactic
 Bug
-Rock
-Fighting
-Ground
-Fire
 
 ----------
 Deals 1/2x to:
@@ -4407,14 +4407,14 @@ Flying - Grass
 ===========================
 Deals 2x to:
 
+Ground
 Grass
 Water
 Light
-Galactic
-Bug
 Rock
 Fighting
-Ground
+Galactic
+Bug
 
 ----------
 Deals 1/2x to:
@@ -4430,13 +4430,13 @@ Flying - Ice
 ===========================
 Deals 2x to:
 
+Ground
 Grass (!!)
+Flying
 Dragon
+Fighting
 Galactic
 Bug
-Fighting
-Ground
-Flying
 
 ----------
 Deals 1/2x to:
@@ -4453,13 +4453,13 @@ Flying - Electric
 ===========================
 Deals 2x to:
 
-Steel
 Grass
+Flying
+Steel
 Water
+Fighting
 Galactic
 Bug
-Fighting
-Flying
 
 ----------
 Deals 1/2x to:
@@ -4475,15 +4475,15 @@ Flying - Fighting
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Normal
 Dark
-Galactic
-Bug
+Grass
+Steel
 Rock
 Fighting
+Galactic
 Ice
+Normal
+Bug
 
 ----------
 Deals 1/2x to:
@@ -4498,12 +4498,12 @@ Flying - Poison
 ===========================
 Deals 2x to:
 
-Magic
 Grass (!!)
 Water
+Fighting
+Magic
 Galactic
 Bug
-Fighting
 
 ----------
 Deals 1/2x to:
@@ -4520,15 +4520,15 @@ Flying - Ground
 ===========================
 Deals 2x to:
 
-Steel
 Grass
+Electric
+Steel
+Poison
+Rock
+Fire
+Fighting
 Galactic
 Bug
-Rock
-Fighting
-Fire
-Poison
-Electric
 
 ----------
 Deals 1/2x to:
@@ -4544,17 +4544,17 @@ Flying - None
 Deals 2x to:
 
 Grass
+Fighting
 Galactic
 Bug
-Fighting
 
 ----------
 Deals 1/2x to:
 
+Electric
 Steel
 Rock
 Ice
-Electric
 
 ----------
 Deals 0x to:
@@ -4566,10 +4566,10 @@ Flying - Psychic
 Deals 2x to:
 
 Grass
+Poison
+Fighting (!!)
 Galactic
 Bug
-Fighting (!!)
-Poison
 
 ----------
 Deals 1/2x to:
@@ -4584,13 +4584,13 @@ Flying - Bug
 ===========================
 Deals 2x to:
 
-Grass (!!)
-Light
-Psychic
 Dark
+Grass (!!)
+Psychic
+Light
+Fighting
 Galactic
 Bug
-Fighting
 
 ----------
 Deals 1/2x to:
@@ -4607,12 +4607,12 @@ Flying - Ghost
 Deals 2x to:
 
 Grass
-Psychic
-Ghost
-Galactic
-Bug
-Fighting
 Electric
+Psychic
+Fighting
+Galactic
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -4629,9 +4629,9 @@ Deals 2x to:
 
 Grass
 Dragon
+Fighting
 Galactic (!!)
 Bug
-Fighting
 
 ----------
 Deals 1/2x to:
@@ -4649,17 +4649,17 @@ Deals 2x to:
 
 Grass
 Light
-Galactic
-Bug
 Rock
 Fighting
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
 
-Steel
 Electric
+Steel
 
 ----------
 Deals 0x to:
@@ -4672,10 +4672,10 @@ Deals 2x to:
 
 Grass
 Psychic
-Ghost
-Galactic
-Bug
 Fighting
+Galactic
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -4690,13 +4690,13 @@ Flying - Light
 ===========================
 Deals 2x to:
 
-Grass
 Dark
-Ghost
-Galactic (!!)
-Bug
+Grass
 Fighting
+Galactic (!!)
 Ice
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -4712,13 +4712,13 @@ Flying - Magic
 ===========================
 Deals 2x to:
 
-Steel
 Grass
-Normal
+Steel
 Dragon
-Galactic
-Bug
 Fighting
+Galactic
+Normal
+Bug
 
 ----------
 Deals 1/2x to:
@@ -4733,12 +4733,12 @@ Flying - Galactic
 ===========================
 Deals 2x to:
 
+Ground
 Grass
+Fire
+Fighting (!!)
 Galactic
 Bug
-Fighting (!!)
-Ground
-Fire
 
 ----------
 Deals 1/2x to:
@@ -4756,9 +4756,9 @@ Psychic - Normal
 ===========================
 Deals 2x to:
 
-Magic
-Fighting
 Poison
+Fighting
+Magic
 
 ----------
 Deals 1/2x to:
@@ -4773,13 +4773,13 @@ Psychic - Rock
 ===========================
 Deals 2x to:
 
-Galactic
-Bug
-Fighting
 Flying
-Fire
-Ice
 Poison
+Fire
+Fighting
+Galactic
+Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -4794,12 +4794,12 @@ Psychic - Fire
 ===========================
 Deals 2x to:
 
-Steel
 Grass
-Bug
+Steel
+Poison
 Fighting
 Ice
-Poison
+Bug
 
 ----------
 Deals 1/2x to:
@@ -4814,11 +4814,11 @@ Psychic - Water
 ===========================
 Deals 2x to:
 
-Rock
-Fighting
 Ground
-Fire
 Poison
+Rock
+Fire
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -4833,12 +4833,12 @@ Psychic - Grass
 ===========================
 Deals 2x to:
 
+Ground
 Water
 Light
+Poison
 Rock
 Fighting
-Ground
-Poison
 
 ----------
 Deals 1/2x to:
@@ -4853,12 +4853,12 @@ Psychic - Ice
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Fighting
 Ground
+Grass
 Flying
 Poison
+Dragon
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -4873,11 +4873,11 @@ Psychic - Electric
 ===========================
 Deals 2x to:
 
+Flying
 Steel
 Water
-Fighting
-Flying
 Poison
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -4892,19 +4892,19 @@ Psychic - Fighting
 ===========================
 Deals 2x to:
 
-Steel
-Normal
 Dark
+Steel
+Poison
 Rock
 Fighting
 Ice
-Poison
+Normal
 
 ----------
 Deals 1/2x to:
 
-Magic
 Psychic
+Magic
 
 ----------
 Deals 0x to:
@@ -4915,11 +4915,11 @@ Psychic - Poison
 ===========================
 Deals 2x to:
 
-Magic
 Grass
 Water
-Fighting
 Poison
+Fighting
+Magic
 
 ----------
 Deals 1/2x to:
@@ -4935,12 +4935,12 @@ Psychic - Ground
 ===========================
 Deals 2x to:
 
-Steel
-Rock
-Fighting
-Fire
-Poison (!!)
 Electric
+Steel
+Poison (!!)
+Rock
+Fire
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -4956,10 +4956,10 @@ Psychic - Flying
 Deals 2x to:
 
 Grass
+Poison
+Fighting (!!)
 Galactic
 Bug
-Fighting (!!)
-Poison
 
 ----------
 Deals 1/2x to:
@@ -4974,14 +4974,14 @@ Psychic - None
 ===========================
 Deals 2x to:
 
-Fighting
 Poison
+Fighting
 
 ----------
 Deals 1/2x to:
 
-Magic
 Psychic
+Magic
 
 ----------
 Deals 0x to:
@@ -4993,12 +4993,12 @@ Psychic - Bug
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic
 Dark
-Fighting
+Grass
+Psychic
+Light
 Poison
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -5013,11 +5013,11 @@ Psychic - Ghost
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Fighting
-Poison
 Electric
+Psychic
+Poison
+Fighting
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5033,10 +5033,10 @@ Psychic - Dragon
 ===========================
 Deals 2x to:
 
-Dragon
-Galactic
-Fighting
 Poison
+Dragon
+Fighting
+Galactic
 
 ----------
 Deals 1/2x to:
@@ -5053,10 +5053,10 @@ Psychic - Steel
 Deals 2x to:
 
 Light
+Poison
 Rock
 Fighting
 Ice
-Poison
 
 ----------
 Deals 1/2x to:
@@ -5073,9 +5073,9 @@ Psychic - Dark
 Deals 2x to:
 
 Psychic
-Ghost
-Fighting
 Poison
+Fighting
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5092,11 +5092,11 @@ Psychic - Light
 Deals 2x to:
 
 Dark
-Ghost
-Galactic
-Fighting
-Ice
 Poison
+Fighting
+Galactic
+Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5112,16 +5112,16 @@ Psychic - Magic
 Deals 2x to:
 
 Steel
-Normal
+Poison
 Dragon
 Fighting
-Poison
+Normal
 
 ----------
 Deals 1/2x to:
 
-Magic
 Dark
+Magic
 
 ----------
 Deals 0x to:
@@ -5132,10 +5132,10 @@ Psychic - Galactic
 ===========================
 Deals 2x to:
 
-Fighting (!!)
 Ground
-Fire
 Poison
+Fire
+Fighting (!!)
 
 ----------
 Deals 1/2x to:
@@ -5150,11 +5150,11 @@ Bug - Normal
 ===========================
 Deals 2x to:
 
-Magic
-Grass
-Light
-Psychic
 Dark
+Grass
+Psychic
+Light
+Magic
 
 ----------
 Deals 1/2x to:
@@ -5171,15 +5171,15 @@ Bug - Rock
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic
 Dark
-Galactic
-Bug
+Grass
 Flying
+Psychic
+Light
 Fire
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -5196,19 +5196,19 @@ Bug - Fire
 ===========================
 Deals 2x to:
 
-Steel
-Grass (!!)
-Light
-Psychic
 Dark
-Bug
+Grass (!!)
+Steel
+Psychic
+Light
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
 
-Galactic
 Fire
+Galactic
 
 ----------
 Deals 0x to:
@@ -5219,12 +5219,12 @@ Bug - Water
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic
-Dark
-Rock
 Ground
+Dark
+Grass
+Psychic
+Light
+Rock
 Fire
 
 ----------
@@ -5241,22 +5241,22 @@ Bug - Grass
 ===========================
 Deals 2x to:
 
+Ground
+Dark
 Grass
+Psychic
 Water
 Light (!!)
-Psychic
-Dark
 Rock
-Ground
 
 ----------
 Deals 1/2x to:
 
-Steel
-Galactic
 Flying
-Fire
+Steel
 Poison
+Fire
+Galactic
 
 ----------
 Deals 0x to:
@@ -5267,13 +5267,13 @@ Bug - Ice
 ===========================
 Deals 2x to:
 
-Grass (!!)
-Dragon
-Light
-Psychic
-Dark
 Ground
+Dark
+Grass (!!)
 Flying
+Psychic
+Light
+Dragon
 
 ----------
 Deals 1/2x to:
@@ -5290,13 +5290,13 @@ Bug - Electric
 ===========================
 Deals 2x to:
 
-Steel
+Dark
 Grass
+Flying
+Steel
+Psychic
 Water
 Light
-Psychic
-Dark
-Flying
 
 ----------
 Deals 1/2x to:
@@ -5312,21 +5312,21 @@ Bug - Fighting
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Normal
-Light
-Psychic
 Dark (!!)
+Grass
+Steel
+Psychic
+Light
 Rock
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
 
-Ghost
-Galactic
 Flying
+Galactic
+Ghost
 
 ----------
 Deals 0x to:
@@ -5337,19 +5337,19 @@ Bug - Poison
 ===========================
 Deals 2x to:
 
-Magic
+Dark
 Grass (!!)
+Psychic
 Water
 Light
-Psychic
-Dark
+Magic
 
 ----------
 Deals 1/2x to:
 
 Steel
-Ghost
 Poison
+Ghost
 
 ----------
 Deals 0x to:
@@ -5360,21 +5360,21 @@ Bug - Ground
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Light
-Psychic
 Dark
+Grass
+Electric
+Steel
+Psychic
+Light
+Poison
 Rock
 Fire
-Poison
-Electric
 
 ----------
 Deals 1/2x to:
 
-Galactic
 Flying
+Galactic
 
 ----------
 Deals 0x to:
@@ -5385,13 +5385,13 @@ Bug - Flying
 ===========================
 Deals 2x to:
 
-Grass (!!)
-Light
-Psychic
 Dark
+Grass (!!)
+Psychic
+Light
+Fighting
 Galactic
 Bug
-Fighting
 
 ----------
 Deals 1/2x to:
@@ -5407,12 +5407,12 @@ Bug - Psychic
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic
 Dark
-Fighting
+Grass
+Psychic
+Light
 Poison
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -5427,21 +5427,21 @@ Bug - None
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic
 Dark
+Grass
+Psychic
+Light
 
 ----------
 Deals 1/2x to:
 
-Steel
-Ghost
-Galactic
-Fighting
 Flying
-Fire
+Steel
 Poison
+Fire
+Fighting
+Galactic
+Ghost
 
 ----------
 Deals 0x to:
@@ -5452,12 +5452,12 @@ Bug - Ghost
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic (!!)
 Dark
-Ghost
+Grass
 Electric
+Psychic (!!)
+Light
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5472,11 +5472,11 @@ Bug - Dragon
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Light
-Psychic
 Dark
+Grass
+Psychic
+Light
+Dragon
 Galactic
 
 ----------
@@ -5493,10 +5493,10 @@ Bug - Steel
 ===========================
 Deals 2x to:
 
-Grass
-Light (!!)
-Psychic
 Dark
+Grass
+Psychic
+Light (!!)
 Rock
 Ice
 
@@ -5515,17 +5515,17 @@ Bug - Dark
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic (!!)
 Dark
+Grass
+Psychic (!!)
+Light
 Ghost
 
 ----------
 Deals 1/2x to:
 
-Galactic
 Fighting
+Galactic
 
 ----------
 Deals 0x to:
@@ -5536,13 +5536,13 @@ Bug - Light
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic
 Dark (!!)
-Ghost
+Grass
+Psychic
+Light
 Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5559,13 +5559,13 @@ Bug - Magic
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Normal
-Dragon
-Light
-Psychic
 Dark
+Grass
+Steel
+Psychic
+Light
+Dragon
+Normal
 
 ----------
 Deals 1/2x to:
@@ -5581,13 +5581,13 @@ Bug - Galactic
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic
-Dark
-Fighting
 Ground
+Dark
+Grass
+Psychic
+Light
 Fire
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -5603,10 +5603,10 @@ Ghost - Normal
 ===========================
 Deals 2x to:
 
-Magic
-Psychic
-Ghost
 Electric
+Psychic
+Magic
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5621,14 +5621,14 @@ Ghost - Rock
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Galactic
-Bug
-Flying
-Fire
-Ice
 Electric
+Flying
+Psychic
+Fire
+Galactic
+Ice
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -5643,13 +5643,13 @@ Ghost - Fire
 ===========================
 Deals 2x to:
 
-Steel
 Grass
+Electric
+Steel
 Psychic
+Ice
 Ghost
 Bug
-Ice
-Electric
 
 ----------
 Deals 1/2x to:
@@ -5664,12 +5664,12 @@ Ghost - Water
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Rock
 Ground
-Fire
 Electric
+Psychic
+Rock
+Fire
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5684,13 +5684,13 @@ Ghost - Grass
 ===========================
 Deals 2x to:
 
-Water
-Light
-Psychic
-Ghost
-Rock
 Ground
 Electric
+Psychic
+Water
+Light
+Rock
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5705,13 +5705,13 @@ Ghost - Ice
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Psychic
-Ghost
 Ground
-Flying
+Grass
 Electric
+Flying
+Psychic
+Dragon
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5726,12 +5726,12 @@ Ghost - Electric
 ===========================
 Deals 2x to:
 
-Steel
-Water
-Psychic
-Ghost
-Flying
 Electric
+Flying
+Steel
+Psychic
+Water
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5746,14 +5746,14 @@ Ghost - Fighting
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Psychic
 Dark
-Ghost
+Electric
+Steel
+Psychic
 Rock
 Ice
-Electric
+Normal
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5768,12 +5768,12 @@ Ghost - Poison
 ===========================
 Deals 2x to:
 
-Magic
 Grass
-Water
-Psychic
-Ghost
 Electric
+Psychic
+Water
+Magic
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5788,13 +5788,13 @@ Ghost - Ground
 ===========================
 Deals 2x to:
 
+Electric (!!)
 Steel
 Psychic
-Ghost
+Poison
 Rock
 Fire
-Poison
-Electric (!!)
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5810,12 +5810,12 @@ Ghost - Flying
 Deals 2x to:
 
 Grass
-Psychic
-Ghost
-Galactic
-Bug
-Fighting
 Electric
+Psychic
+Fighting
+Galactic
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -5830,11 +5830,11 @@ Ghost - Psychic
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Fighting
-Poison
 Electric
+Psychic
+Poison
+Fighting
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5850,12 +5850,12 @@ Ghost - Bug
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic (!!)
 Dark
-Ghost
+Grass
 Electric
+Psychic (!!)
+Light
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5870,15 +5870,15 @@ Ghost - None
 ===========================
 Deals 2x to:
 
+Electric
 Psychic
 Ghost
-Electric
 
 ----------
 Deals 1/2x to:
 
-Light
 Dark
+Light
 
 ----------
 Deals 0x to:
@@ -5890,11 +5890,11 @@ Ghost - Dragon
 ===========================
 Deals 2x to:
 
-Dragon
-Psychic
-Ghost
-Galactic
 Electric
+Psychic
+Dragon
+Galactic
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5909,12 +5909,12 @@ Ghost - Steel
 ===========================
 Deals 2x to:
 
-Light
+Electric
 Psychic
-Ghost
+Light
 Rock
 Ice
-Electric
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5929,15 +5929,15 @@ Ghost - Dark
 ===========================
 Deals 2x to:
 
+Electric
 Psychic (!!)
 Ghost (!!)
-Electric
 
 ----------
 Deals 1/2x to:
 
-Light
 Dark
+Light
 
 ----------
 Deals 0x to:
@@ -5948,12 +5948,12 @@ Ghost - Light
 ===========================
 Deals 2x to:
 
-Psychic
 Dark
-Ghost (!!)
+Electric
+Psychic
 Galactic
 Ice
-Electric
+Ghost (!!)
 
 ----------
 Deals 1/2x to:
@@ -5969,12 +5969,12 @@ Ghost - Magic
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dragon
-Psychic
-Ghost
 Electric
+Steel
+Psychic
+Dragon
+Normal
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -5990,12 +5990,12 @@ Ghost - Galactic
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Fighting
 Ground
-Fire
 Electric
+Psychic
+Fire
+Fighting
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -6011,8 +6011,8 @@ Dragon - Normal
 ===========================
 Deals 2x to:
 
-Magic
 Dragon
+Magic
 Galactic
 
 ----------
@@ -6029,12 +6029,12 @@ Dragon - Rock
 ===========================
 Deals 2x to:
 
-Dragon
-Galactic (!!)
-Bug
 Flying
+Dragon
 Fire
+Galactic (!!)
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -6050,12 +6050,12 @@ Dragon - Fire
 ===========================
 Deals 2x to:
 
-Steel
 Grass
+Steel
 Dragon
 Galactic
-Bug
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -6070,11 +6070,11 @@ Dragon - Water
 ===========================
 Deals 2x to:
 
-Dragon
-Galactic
-Rock
 Ground
+Rock
+Dragon
 Fire
+Galactic
 
 ----------
 Deals 1/2x to:
@@ -6089,12 +6089,12 @@ Dragon - Grass
 ===========================
 Deals 2x to:
 
-Water
-Dragon
-Light
-Galactic
-Rock
 Ground
+Water
+Light
+Rock
+Dragon
+Galactic
 
 ----------
 Deals 1/2x to:
@@ -6110,11 +6110,11 @@ Dragon - Ice
 ===========================
 Deals 2x to:
 
+Ground
 Grass
+Flying
 Dragon (!!)
 Galactic
-Ground
-Flying
 
 ----------
 Deals 1/2x to:
@@ -6130,11 +6130,11 @@ Dragon - Electric
 ===========================
 Deals 2x to:
 
+Flying
 Steel
 Water
 Dragon
 Galactic
-Flying
 
 ----------
 Deals 1/2x to:
@@ -6149,13 +6149,13 @@ Dragon - Fighting
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dragon
 Dark
-Galactic
+Steel
 Rock
+Dragon
+Galactic
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -6171,10 +6171,10 @@ Dragon - Poison
 ===========================
 Deals 2x to:
 
-Magic
 Grass
 Water
 Dragon
+Magic
 Galactic
 
 ----------
@@ -6191,13 +6191,13 @@ Dragon - Ground
 ===========================
 Deals 2x to:
 
-Steel
-Dragon
-Galactic
-Rock
-Fire
-Poison
 Electric
+Steel
+Poison
+Rock
+Dragon
+Fire
+Galactic
 
 ----------
 Deals 1/2x to:
@@ -6214,9 +6214,9 @@ Deals 2x to:
 
 Grass
 Dragon
+Fighting
 Galactic (!!)
 Bug
-Fighting
 
 ----------
 Deals 1/2x to:
@@ -6232,10 +6232,10 @@ Dragon - Psychic
 ===========================
 Deals 2x to:
 
-Dragon
-Galactic
-Fighting
 Poison
+Dragon
+Fighting
+Galactic
 
 ----------
 Deals 1/2x to:
@@ -6251,11 +6251,11 @@ Dragon - Bug
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Light
-Psychic
 Dark
+Grass
+Psychic
+Light
+Dragon
 Galactic
 
 ----------
@@ -6272,11 +6272,11 @@ Dragon - Ghost
 ===========================
 Deals 2x to:
 
-Dragon
-Psychic
-Ghost
-Galactic
 Electric
+Psychic
+Dragon
+Galactic
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -6309,17 +6309,17 @@ Dragon - Steel
 ===========================
 Deals 2x to:
 
-Dragon
 Light
-Galactic
 Rock
+Dragon
+Galactic
 Ice
 
 ----------
 Deals 1/2x to:
 
-Magic
 Steel
+Magic
 
 ----------
 Deals 0x to:
@@ -6330,10 +6330,10 @@ Dragon - Dark
 ===========================
 Deals 2x to:
 
-Dragon
 Psychic
-Ghost
+Dragon
 Galactic
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -6348,11 +6348,11 @@ Dragon - Light
 ===========================
 Deals 2x to:
 
-Dragon
 Dark
-Ghost
+Dragon
 Galactic (!!)
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -6369,9 +6369,9 @@ Dragon - Magic
 Deals 2x to:
 
 Steel
-Normal
 Dragon (!!)
 Galactic
+Normal
 
 ----------
 Deals 1/2x to:
@@ -6387,11 +6387,11 @@ Dragon - Galactic
 ===========================
 Deals 2x to:
 
-Dragon
-Galactic
-Fighting
 Ground
+Dragon
 Fire
+Fighting
+Galactic
 
 ----------
 Deals 1/2x to:
@@ -6407,9 +6407,9 @@ Steel - Normal
 ===========================
 Deals 2x to:
 
-Magic
 Light
 Rock
+Magic
 Ice
 
 ----------
@@ -6426,13 +6426,13 @@ Steel - Rock
 ===========================
 Deals 2x to:
 
-Light
-Galactic
-Bug
-Rock
 Flying
+Light
+Rock
 Fire
+Galactic
 Ice (!!)
+Bug
 
 ----------
 Deals 1/2x to:
@@ -6448,12 +6448,12 @@ Steel - Fire
 ===========================
 Deals 2x to:
 
-Steel
 Grass
+Steel
 Light
-Bug
 Rock
 Ice (!!)
+Bug
 
 ----------
 Deals 1/2x to:
@@ -6470,9 +6470,9 @@ Steel - Water
 ===========================
 Deals 2x to:
 
+Ground
 Light
 Rock (!!)
-Ground
 Fire
 Ice
 
@@ -6490,10 +6490,10 @@ Steel - Grass
 ===========================
 Deals 2x to:
 
+Ground
 Water
 Light (!!)
 Rock (!!)
-Ground
 Ice
 
 ----------
@@ -6511,12 +6511,12 @@ Steel - Ice
 ===========================
 Deals 2x to:
 
+Ground
 Grass
-Dragon
+Flying
 Light
 Rock
-Ground
-Flying
+Dragon
 Ice
 
 ----------
@@ -6535,11 +6535,11 @@ Steel - Electric
 ===========================
 Deals 2x to:
 
+Flying
 Steel
 Water
 Light
 Rock
-Flying
 Ice
 
 ----------
@@ -6556,12 +6556,12 @@ Steel - Fighting
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Light
 Dark
+Steel
+Light
 Rock (!!)
 Ice (!!)
+Normal
 
 ----------
 Deals 1/2x to:
@@ -6577,11 +6577,11 @@ Steel - Poison
 ===========================
 Deals 2x to:
 
-Magic
 Grass
 Water
 Light
 Rock
+Magic
 Ice
 
 ----------
@@ -6598,13 +6598,13 @@ Steel - Ground
 ===========================
 Deals 2x to:
 
+Electric
 Steel
 Light
+Poison
 Rock (!!)
 Fire
 Ice
-Poison
-Electric
 
 ----------
 Deals 1/2x to:
@@ -6621,17 +6621,17 @@ Deals 2x to:
 
 Grass
 Light
-Galactic
-Bug
 Rock
 Fighting
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
 
-Steel
 Electric
+Steel
 
 ----------
 Deals 0x to:
@@ -6643,10 +6643,10 @@ Steel - Psychic
 Deals 2x to:
 
 Light
+Poison
 Rock
 Fighting
 Ice
-Poison
 
 ----------
 Deals 1/2x to:
@@ -6662,10 +6662,10 @@ Steel - Bug
 ===========================
 Deals 2x to:
 
-Grass
-Light (!!)
-Psychic
 Dark
+Grass
+Psychic
+Light (!!)
 Rock
 Ice
 
@@ -6684,12 +6684,12 @@ Steel - Ghost
 ===========================
 Deals 2x to:
 
-Light
+Electric
 Psychic
-Ghost
+Light
 Rock
 Ice
-Electric
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -6704,17 +6704,17 @@ Steel - Dragon
 ===========================
 Deals 2x to:
 
-Dragon
 Light
-Galactic
 Rock
+Dragon
+Galactic
 Ice
 
 ----------
 Deals 1/2x to:
 
-Magic
 Steel
+Magic
 
 ----------
 Deals 0x to:
@@ -6732,11 +6732,11 @@ Ice
 ----------
 Deals 1/2x to:
 
-Magic
+Electric
 Steel
 Water
 Fire
-Electric
+Magic
 
 ----------
 Deals 0x to:
@@ -6747,11 +6747,11 @@ Steel - Dark
 ===========================
 Deals 2x to:
 
-Light
 Psychic
-Ghost
+Light
 Rock
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -6766,12 +6766,12 @@ Steel - Light
 ===========================
 Deals 2x to:
 
-Light
 Dark
-Ghost
-Galactic
+Light
 Rock
+Galactic
 Ice (!!)
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -6789,11 +6789,11 @@ Steel - Magic
 Deals 2x to:
 
 Steel
-Normal
-Dragon
 Light
 Rock
+Dragon
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -6809,11 +6809,11 @@ Steel - Galactic
 ===========================
 Deals 2x to:
 
+Ground
 Light
 Rock
-Fighting
-Ground
 Fire
+Fighting
 Ice
 
 ----------
@@ -6830,8 +6830,8 @@ Dark - Normal
 ===========================
 Deals 2x to:
 
-Magic
 Psychic
+Magic
 Ghost
 
 ----------
@@ -6847,13 +6847,13 @@ Dark - Rock
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Galactic
-Bug
 Flying
+Psychic
 Fire
+Galactic
 Ice
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -6869,12 +6869,12 @@ Dark - Fire
 ===========================
 Deals 2x to:
 
-Steel
 Grass
+Steel
 Psychic
+Ice
 Ghost
 Bug
-Ice
 
 ----------
 Deals 1/2x to:
@@ -6890,11 +6890,11 @@ Dark - Water
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Rock
 Ground
+Psychic
+Rock
 Fire
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -6909,12 +6909,12 @@ Dark - Grass
 ===========================
 Deals 2x to:
 
+Ground
+Psychic
 Water
 Light
-Psychic
-Ghost
 Rock
-Ground
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -6930,12 +6930,12 @@ Dark - Ice
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Psychic
-Ghost
 Ground
+Grass
 Flying
+Psychic
+Dragon
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -6950,11 +6950,11 @@ Dark - Electric
 ===========================
 Deals 2x to:
 
-Steel
-Water
-Psychic
-Ghost
 Flying
+Steel
+Psychic
+Water
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -6969,13 +6969,13 @@ Dark - Fighting
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Psychic
 Dark
-Ghost
+Steel
+Psychic
 Rock
 Ice
+Normal
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -6991,10 +6991,10 @@ Dark - Poison
 ===========================
 Deals 2x to:
 
-Magic
 Grass
-Water
 Psychic
+Water
+Magic
 Ghost
 
 ----------
@@ -7010,13 +7010,13 @@ Dark - Ground
 ===========================
 Deals 2x to:
 
+Electric
 Steel
 Psychic
-Ghost
+Poison
 Rock
 Fire
-Poison
-Electric
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7034,10 +7034,10 @@ Deals 2x to:
 
 Grass
 Psychic
-Ghost
-Galactic
-Bug
 Fighting
+Galactic
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -7053,9 +7053,9 @@ Dark - Psychic
 Deals 2x to:
 
 Psychic
-Ghost
-Fighting
 Poison
+Fighting
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7071,17 +7071,17 @@ Dark - Bug
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic (!!)
 Dark
+Grass
+Psychic (!!)
+Light
 Ghost
 
 ----------
 Deals 1/2x to:
 
-Galactic
 Fighting
+Galactic
 
 ----------
 Deals 0x to:
@@ -7092,15 +7092,15 @@ Dark - Ghost
 ===========================
 Deals 2x to:
 
+Electric
 Psychic (!!)
 Ghost (!!)
-Electric
 
 ----------
 Deals 1/2x to:
 
-Light
 Dark
+Light
 
 ----------
 Deals 0x to:
@@ -7111,10 +7111,10 @@ Dark - Dragon
 ===========================
 Deals 2x to:
 
-Dragon
 Psychic
-Ghost
+Dragon
 Galactic
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7129,11 +7129,11 @@ Dark - Steel
 ===========================
 Deals 2x to:
 
-Light
 Psychic
-Ghost
+Light
 Rock
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7154,10 +7154,10 @@ Ghost
 ----------
 Deals 1/2x to:
 
-Light
 Dark
-Galactic
+Light
 Fighting
+Galactic
 
 ----------
 Deals 0x to:
@@ -7168,11 +7168,11 @@ Dark - Light
 ===========================
 Deals 2x to:
 
-Psychic
 Dark
-Ghost (!!)
+Psychic
 Galactic
 Ice
+Ghost (!!)
 
 ----------
 Deals 1/2x to:
@@ -7189,9 +7189,9 @@ Dark - Magic
 Deals 2x to:
 
 Steel
-Normal
-Dragon
 Psychic
+Dragon
+Normal
 Ghost
 
 ----------
@@ -7208,11 +7208,11 @@ Dark - Galactic
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Fighting
 Ground
+Psychic
 Fire
+Fighting
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7228,11 +7228,11 @@ Light - Normal
 ===========================
 Deals 2x to:
 
-Magic
 Dark
-Ghost
+Magic
 Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7249,12 +7249,12 @@ Light - Rock
 Deals 2x to:
 
 Dark
-Ghost
-Galactic (!!)
-Bug
 Flying
 Fire
+Galactic (!!)
 Ice (!!)
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -7270,13 +7270,13 @@ Light - Fire
 ===========================
 Deals 2x to:
 
-Steel
-Grass
 Dark
-Ghost
+Grass
+Steel
 Galactic
-Bug
 Ice (!!)
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -7292,13 +7292,13 @@ Light - Water
 ===========================
 Deals 2x to:
 
-Dark
-Ghost
-Galactic
-Rock
 Ground
+Dark
+Rock
 Fire
+Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7314,22 +7314,22 @@ Light - Grass
 ===========================
 Deals 2x to:
 
+Ground
+Dark
 Water
 Light
-Dark
-Ghost
-Galactic
 Rock
-Ground
+Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
 
-Steel
 Grass
-Bug
+Steel
 Fire
+Bug
 
 ----------
 Deals 0x to:
@@ -7340,14 +7340,14 @@ Light - Ice
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Dark
-Ghost
-Galactic
 Ground
+Dark
+Grass
 Flying
+Dragon
+Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7364,13 +7364,13 @@ Light - Electric
 ===========================
 Deals 2x to:
 
+Dark
+Flying
 Steel
 Water
-Dark
-Ghost
 Galactic
-Flying
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7386,13 +7386,13 @@ Light - Fighting
 ===========================
 Deals 2x to:
 
-Steel
-Normal
 Dark (!!)
-Ghost
-Galactic
+Steel
 Rock
+Galactic
 Ice (!!)
+Normal
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7408,13 +7408,13 @@ Light - Poison
 ===========================
 Deals 2x to:
 
-Magic
+Dark
 Grass
 Water
-Dark
-Ghost
+Magic
 Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7430,15 +7430,15 @@ Light - Ground
 ===========================
 Deals 2x to:
 
-Steel
 Dark
-Ghost
-Galactic
+Electric
+Steel
+Poison
 Rock
 Fire
+Galactic
 Ice
-Poison
-Electric
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7455,13 +7455,13 @@ Light - Flying
 ===========================
 Deals 2x to:
 
-Grass
 Dark
-Ghost
-Galactic (!!)
-Bug
+Grass
 Fighting
+Galactic (!!)
 Ice
+Ghost
+Bug
 
 ----------
 Deals 1/2x to:
@@ -7478,11 +7478,11 @@ Light - Psychic
 Deals 2x to:
 
 Dark
-Ghost
-Galactic
-Fighting
-Ice
 Poison
+Fighting
+Galactic
+Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7497,13 +7497,13 @@ Light - Bug
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic
 Dark (!!)
-Ghost
+Grass
+Psychic
+Light
 Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7520,12 +7520,12 @@ Light - Ghost
 ===========================
 Deals 2x to:
 
-Psychic
 Dark
-Ghost (!!)
+Electric
+Psychic
 Galactic
 Ice
-Electric
+Ghost (!!)
 
 ----------
 Deals 1/2x to:
@@ -7541,11 +7541,11 @@ Light - Dragon
 ===========================
 Deals 2x to:
 
-Dragon
 Dark
-Ghost
+Dragon
 Galactic (!!)
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7561,12 +7561,12 @@ Light - Steel
 ===========================
 Deals 2x to:
 
-Light
 Dark
-Ghost
-Galactic
+Light
 Rock
+Galactic
 Ice (!!)
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7583,11 +7583,11 @@ Light - Dark
 ===========================
 Deals 2x to:
 
-Psychic
 Dark
-Ghost (!!)
+Psychic
 Galactic
 Ice
+Ghost (!!)
 
 ----------
 Deals 1/2x to:
@@ -7604,17 +7604,17 @@ Light - None
 Deals 2x to:
 
 Dark
-Ghost
 Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
 
 Steel
 Light
-Bug
 Fire
+Bug
 
 ----------
 Deals 0x to:
@@ -7626,13 +7626,13 @@ Light - Magic
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dragon
 Dark
-Ghost
+Steel
+Dragon
 Galactic
 Ice
+Normal
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7647,13 +7647,13 @@ Light - Galactic
 ===========================
 Deals 2x to:
 
-Dark
-Ghost
-Galactic
-Fighting
 Ground
+Dark
 Fire
+Fighting
+Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7670,10 +7670,10 @@ Magic - Normal
 ===========================
 Deals 2x to:
 
-Magic
 Steel
-Normal
 Dragon
+Magic
+Normal
 
 ----------
 Deals 1/2x to:
@@ -7688,14 +7688,14 @@ Magic - Rock
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dragon
-Galactic
-Bug
 Flying
+Steel
+Dragon
 Fire
+Galactic
 Ice
+Normal
+Bug
 
 ----------
 Deals 1/2x to:
@@ -7710,12 +7710,12 @@ Magic - Fire
 ===========================
 Deals 2x to:
 
-Steel (!!)
 Grass
-Normal
+Steel (!!)
 Dragon
-Bug
 Ice
+Normal
+Bug
 
 ----------
 Deals 1/2x to:
@@ -7730,12 +7730,12 @@ Magic - Water
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dragon
-Rock
 Ground
+Steel
+Rock
+Dragon
 Fire
+Normal
 
 ----------
 Deals 1/2x to:
@@ -7751,13 +7751,13 @@ Magic - Grass
 ===========================
 Deals 2x to:
 
+Ground
 Steel
-Normal
 Water
-Dragon
 Light
 Rock
-Ground
+Dragon
+Normal
 
 ----------
 Deals 1/2x to:
@@ -7773,12 +7773,12 @@ Magic - Ice
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Normal
-Dragon (!!)
 Ground
+Grass
 Flying
+Steel
+Dragon (!!)
+Normal
 
 ----------
 Deals 1/2x to:
@@ -7793,11 +7793,11 @@ Magic - Electric
 ===========================
 Deals 2x to:
 
+Flying
 Steel (!!)
-Normal
 Water
 Dragon
-Flying
+Normal
 
 ----------
 Deals 1/2x to:
@@ -7812,12 +7812,12 @@ Magic - Fighting
 ===========================
 Deals 2x to:
 
-Steel (!!)
-Normal (!!)
-Dragon
 Dark
+Steel (!!)
 Rock
+Dragon
 Ice
+Normal (!!)
 
 ----------
 Deals 1/2x to:
@@ -7833,12 +7833,12 @@ Magic - Poison
 ===========================
 Deals 2x to:
 
-Magic
-Steel
 Grass
-Normal
+Steel
 Water
 Dragon
+Magic
+Normal
 
 ----------
 Deals 1/2x to:
@@ -7854,13 +7854,13 @@ Magic - Ground
 ===========================
 Deals 2x to:
 
-Steel (!!)
-Normal
-Dragon
-Rock
-Fire
-Poison
 Electric
+Steel (!!)
+Poison
+Rock
+Dragon
+Fire
+Normal
 
 ----------
 Deals 1/2x to:
@@ -7875,13 +7875,13 @@ Magic - Flying
 ===========================
 Deals 2x to:
 
-Steel
 Grass
-Normal
+Steel
 Dragon
-Galactic
-Bug
 Fighting
+Galactic
+Normal
+Bug
 
 ----------
 Deals 1/2x to:
@@ -7897,16 +7897,16 @@ Magic - Psychic
 Deals 2x to:
 
 Steel
-Normal
+Poison
 Dragon
 Fighting
-Poison
+Normal
 
 ----------
 Deals 1/2x to:
 
-Magic
 Dark
+Magic
 
 ----------
 Deals 0x to:
@@ -7917,13 +7917,13 @@ Magic - Bug
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Normal
-Dragon
-Light
-Psychic
 Dark
+Grass
+Steel
+Psychic
+Light
+Dragon
+Normal
 
 ----------
 Deals 1/2x to:
@@ -7939,12 +7939,12 @@ Magic - Ghost
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dragon
-Psychic
-Ghost
 Electric
+Steel
+Psychic
+Dragon
+Normal
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -7961,9 +7961,9 @@ Magic - Dragon
 Deals 2x to:
 
 Steel
-Normal
 Dragon (!!)
 Galactic
+Normal
 
 ----------
 Deals 1/2x to:
@@ -7980,11 +7980,11 @@ Magic - Steel
 Deals 2x to:
 
 Steel
-Normal
-Dragon
 Light
 Rock
+Dragon
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -8001,9 +8001,9 @@ Magic - Dark
 Deals 2x to:
 
 Steel
-Normal
-Dragon
 Psychic
+Dragon
+Normal
 Ghost
 
 ----------
@@ -8020,13 +8020,13 @@ Magic - Light
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dragon
 Dark
-Ghost
+Steel
+Dragon
 Galactic
 Ice
+Normal
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -8042,15 +8042,15 @@ Magic - None
 Deals 2x to:
 
 Steel
-Normal
 Dragon
+Normal
 
 ----------
 Deals 1/2x to:
 
-Magic
 Dark
 Poison
+Magic
 
 ----------
 Deals 0x to:
@@ -8061,12 +8061,12 @@ Magic - Galactic
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dragon
-Fighting
 Ground
+Steel
+Dragon
 Fire
+Fighting
+Normal
 
 ----------
 Deals 1/2x to:
@@ -8081,10 +8081,10 @@ Galactic - Normal
 ===========================
 Deals 2x to:
 
-Magic
-Fighting
 Ground
 Fire
+Fighting
+Magic
 
 ----------
 Deals 1/2x to:
@@ -8101,13 +8101,13 @@ Galactic - Rock
 ===========================
 Deals 2x to:
 
-Galactic
-Bug
-Fighting
 Ground
 Flying
 Fire (!!)
+Fighting
+Galactic
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -8123,13 +8123,13 @@ Galactic - Fire
 ===========================
 Deals 2x to:
 
-Steel
-Grass
-Bug
-Fighting
 Ground
+Grass
+Steel
 Fire
+Fighting
 Ice
+Bug
 
 ----------
 Deals 1/2x to:
@@ -8145,10 +8145,10 @@ Galactic - Water
 ===========================
 Deals 2x to:
 
-Rock
-Fighting
 Ground (!!)
+Rock
 Fire (!!)
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -8163,12 +8163,12 @@ Galactic - Grass
 ===========================
 Deals 2x to:
 
+Ground (!!)
 Water
 Light
 Rock
-Fighting
-Ground (!!)
 Fire
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -8184,12 +8184,12 @@ Galactic - Ice
 ===========================
 Deals 2x to:
 
-Grass
-Dragon
-Fighting
 Ground (!!)
+Grass
 Flying
+Dragon
 Fire
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -8206,12 +8206,12 @@ Galactic - Electric
 ===========================
 Deals 2x to:
 
-Steel
-Water
-Fighting
 Ground
 Flying
+Steel
+Water
 Fire
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -8226,14 +8226,14 @@ Galactic - Fighting
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dark
-Rock
-Fighting
 Ground
+Dark
+Steel
+Rock
 Fire
+Fighting
 Ice
+Normal
 
 ----------
 Deals 1/2x to:
@@ -8248,12 +8248,12 @@ Galactic - Poison
 ===========================
 Deals 2x to:
 
-Magic
+Ground
 Grass
 Water
-Fighting
-Ground
 Fire
+Fighting
+Magic
 
 ----------
 Deals 1/2x to:
@@ -8270,13 +8270,13 @@ Galactic - Ground
 ===========================
 Deals 2x to:
 
-Steel
-Rock
-Fighting
 Ground
-Fire (!!)
-Poison
 Electric
+Steel
+Poison
+Rock
+Fire (!!)
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -8291,12 +8291,12 @@ Galactic - Flying
 ===========================
 Deals 2x to:
 
+Ground
 Grass
+Fire
+Fighting (!!)
 Galactic
 Bug
-Fighting (!!)
-Ground
-Fire
 
 ----------
 Deals 1/2x to:
@@ -8314,10 +8314,10 @@ Galactic - Psychic
 ===========================
 Deals 2x to:
 
-Fighting (!!)
 Ground
-Fire
 Poison
+Fire
+Fighting (!!)
 
 ----------
 Deals 1/2x to:
@@ -8332,13 +8332,13 @@ Galactic - Bug
 ===========================
 Deals 2x to:
 
-Grass
-Light
-Psychic
-Dark
-Fighting
 Ground
+Dark
+Grass
+Psychic
+Light
 Fire
+Fighting
 
 ----------
 Deals 1/2x to:
@@ -8354,12 +8354,12 @@ Galactic - Ghost
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Fighting
 Ground
-Fire
 Electric
+Psychic
+Fire
+Fighting
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -8375,11 +8375,11 @@ Galactic - Dragon
 ===========================
 Deals 2x to:
 
-Dragon
-Galactic
-Fighting
 Ground
+Dragon
 Fire
+Fighting
+Galactic
 
 ----------
 Deals 1/2x to:
@@ -8395,11 +8395,11 @@ Galactic - Steel
 ===========================
 Deals 2x to:
 
+Ground
 Light
 Rock
-Fighting
-Ground
 Fire
+Fighting
 Ice
 
 ----------
@@ -8416,11 +8416,11 @@ Galactic - Dark
 ===========================
 Deals 2x to:
 
-Psychic
-Ghost
-Fighting
 Ground
+Psychic
 Fire
+Fighting
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -8436,13 +8436,13 @@ Galactic - Light
 ===========================
 Deals 2x to:
 
-Dark
-Ghost
-Galactic
-Fighting
 Ground
+Dark
 Fire
+Fighting
+Galactic
 Ice
+Ghost
 
 ----------
 Deals 1/2x to:
@@ -8459,12 +8459,12 @@ Galactic - Magic
 ===========================
 Deals 2x to:
 
-Steel
-Normal
-Dragon
-Fighting
 Ground
+Steel
+Dragon
 Fire
+Fighting
+Normal
 
 ----------
 Deals 1/2x to:
@@ -8479,9 +8479,9 @@ Galactic - None
 ===========================
 Deals 2x to:
 
-Fighting
 Ground
 Fire
+Fighting
 
 ----------
 Deals 1/2x to:

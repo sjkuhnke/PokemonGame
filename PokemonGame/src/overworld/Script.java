@@ -2064,12 +2064,10 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "Ngh - no... not yet...!");
 				Task.addTask(Task.SLEEP, "", 5);
 				Task.addParticleTask(gp.npc[196][1], "smoke", new Color(66, 252, 231), 100);
-				Task.addTask(Task.SLEEP, "", 5);
 				int diff = 52 * gp.tileSize - player.worldX;
 				Task.addNPCMoveTask('x', 52 * gp.tileSize, player, false, diff / 2);
 				Task.addTask(Task.TURN, player, "", Task.LEFT);
 				Task.addNPCMoveTask('y', 48 * gp.tileSize, npc, false, 4);
-				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.SPEAK, npc, "Your time is over, Merlin. You placed your faith in the wrong vessel.", 1);
 				Task.addTask(Task.SLEEP, "", 5);
 				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "Hrk - Nngh... G-Get... get them out of here!");
