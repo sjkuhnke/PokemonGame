@@ -231,6 +231,7 @@ public class AssetSetter {
 	private static final int SPIKE_2 = 19;
 	private static final int PAINTING_RESET = 20;
 	private static final int PAINTING_BET = 21;
+	private static final int SPIKE_SWITCH = 22;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -1176,6 +1177,10 @@ public class AssetSetter {
 		mapNum = 181;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(31, 40, Item.RING_TARGET, mapNum);
+		
+		mapNum = 200;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(24, 55, Item.TM10, mapNum);
 	}
 
 	public void setNPC() {
@@ -2321,18 +2326,7 @@ public class AssetSetter {
 		
 		mapNum = 197;
 		index = 0;
-		gp.npc[mapNum][index++] = ITileSetup(59, 39, SPIKE_1, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(40, 27, SPIKE_1, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(43, 23, SPIKE_1, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(50, 51, SPIKE_2, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(73, 50, SPIKE_2, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(58, 45, SPIKE_2, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(70, 40, SPIKE_2, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(47, 33, SPIKE_2, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(72, 29, SPIKE_2, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(38, 27, SPIKE_2, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(44, 25, SPIKE_2, mapNum, mapNum);
-		gp.npc[mapNum][index++] = ITileSetup(60, 15, SPIKE_2, mapNum, mapNum);
+		
 	}
 
 	public void setInteractiveTile(int map) {
@@ -3159,6 +3153,32 @@ public class AssetSetter {
 				gp.puzzleM.getCurrentPuzzle(mapNum).setup();
 			}
 		}
+		
+		mapNum = 197;
+		iIndex = 0;
+		
+		mapNum = 198;
+		iIndex = 0;
+		
+		mapNum = 199;
+		iIndex = 0;
+		
+		mapNum = 200;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(48, 53, SPIKE_SWITCH, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 16, SPIKE_SWITCH, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(59, 39, SPIKE_1, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(40, 27, SPIKE_1, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(43, 23, SPIKE_1, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 51, SPIKE_2, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(73, 50, SPIKE_2, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(58, 45, SPIKE_2, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(70, 40, SPIKE_2, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(47, 33, SPIKE_2, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(72, 29, SPIKE_2, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(38, 27, SPIKE_2, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(44, 25, SPIKE_2, mapNum, mapNum);
+		gp.iTile[mapNum][iIndex] = ITileSetup(60, 15, SPIKE_2, mapNum, mapNum);
 	}
 
 	public void updateNPC(int map) {
@@ -4581,6 +4601,9 @@ public class AssetSetter {
 			break;
 		case SPIKE_2:
 			result = new Spike(gp, true);
+			break;
+		case SPIKE_SWITCH:
+			result = new Spike_Switch(gp);
 			break;
 		}
 		

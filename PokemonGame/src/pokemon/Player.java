@@ -98,10 +98,11 @@ public class Player extends Trainer implements Serializable {
 	public int version;
 	private Integer id;
 	public boolean amulet;
+	public boolean spike;
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 61;
+	public static final int VERSION = 62;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -1733,7 +1734,13 @@ public class Player extends Trainer implements Serializable {
 		if (map >= 191 && map <= 196) {
 			gp.puzzleM.setup(true);
 		}
-		// TODO: maps for deep chasm and same logic
+		if (map >= 197 && map <= 202) {
+			gp.puzzleM.setup(false);
+			if (spike) {
+				gp.eHandler.toggleSpikes(map);
+				spike = true;
+			}
+		}
 	}
 	
 	public int getBetCurrency(boolean gauntlet) {

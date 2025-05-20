@@ -3438,7 +3438,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		} else if (move == Move.WHIRLPOOL) {
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
-				if (!foe.isType(PType.FIRE)) {
+				if (!foe.isType(PType.WATER)) {
 					foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8);
 					foe.spunCount = (((int) (Math.random() * 2)) + 4);
 					if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
@@ -6235,6 +6235,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this) && field.weatherTurns > 1) {
+			Task.addAbilityTask(this);
 			this.damage(getHPAmount(1.0/8), f, this.nickname + " was hurt!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, f);

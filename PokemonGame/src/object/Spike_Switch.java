@@ -5,40 +5,27 @@ import java.awt.image.BufferedImage;
 
 import overworld.GamePanel;
 
-public class Spike extends InteractiveTile {
+public class Spike_Switch extends Spike {
 	
 	GamePanel gp;
 	
-	public Spike(GamePanel gp, boolean toggle) {
+	public Spike_Switch(GamePanel gp) {
 		super(gp);
 		
 		this.gp = gp;
-		down1 = setup("/interactive/spike1_1");
-		down2 = setup("/interactive/spike1_2");
-		up1 = setup("/interactive/spike2_1");
-		up2 = setup("/interactive/spike2_2");
+		down1 = setup("/interactive/spike_switch1");
+		down2 = setup("/interactive/spike_switch2");
 		
 		destructible = false;
-		collision = true;
-		
-		if (toggle) {
-			this.toggle();
-		} else {
-			direction = "up";
-		}
+		collision = false;
 	}
 	
-	public Spike(GamePanel gp) {
-		super(gp);
-	}
-
+	@Override
 	public void toggle() {
 		if (this.spriteNum == 1) {
 			this.spriteNum = 2;
-			this.collision = false;
 		} else if (this.spriteNum == 2) {
 			this.spriteNum = 1;
-			this.collision = true;
 		}
 	}
 
@@ -53,15 +40,8 @@ public class Spike extends InteractiveTile {
 			worldY + gp.tileSize*3 + gp.offsetY > gp.player.worldY - gp.player.screenY &&
 			worldY - gp.tileSize*3 + gp.offsetY < gp.player.worldY + gp.player.screenY) {
 			
-			switch(direction) {
-			case "down":
-				if (spriteNum == 1) image = down1;
-				if (spriteNum == 2) image = down2;
-				break;
-			case "up":
-				if (spriteNum == 1) image = up1;
-				if (spriteNum == 2) image = up2;
-			}
+			if (spriteNum == 1) image = down1;
+			if (spriteNum == 2) image = down2;
 			
 			int width = image.getWidth() * gp.scale;
 			int wOffset = (width - gp.tileSize) / 2;

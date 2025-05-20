@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public int currentMap = 0;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
-	public static final int MAX_MAP = 200;
+	public static final int MAX_MAP = 220;
 	public static final int MAX_FLAG = 24; // should not be >31
 	
 	public int offsetX;
@@ -285,6 +285,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
 	public void endBattle(int trainer, int id) {
+		player.resetSpriteNum();
 		boolean wiped = player.p.wiped();
 		if (!wiped) {
 			if (trainer > -1 && trainer != 256) {
@@ -295,6 +296,16 @@ public class GamePanel extends JPanel implements Runnable {
 				if (t.getFlagIndex() != 0) {
 		        	player.p.flag[t.getFlagX()][t.getFlagY()] = true;
 		        }
+				
+				if (t.getItem() != null) {
+					Item item = t.getItem();
+					setTaskState();
+					Task task = Task.addTask(Task.ITEM, "");
+					task.item = item;
+					if (item == Item.TEMPLE_ORB) {
+						task.counter = 10;
+					}
+				}
 				
 				if (trainer > -1 && t.update) {
 					if (id == 159) player.p.grustCount++;

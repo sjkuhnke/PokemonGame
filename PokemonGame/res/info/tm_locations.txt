@@ -15,7 +15,7 @@ TM06 Shadow Ball       : Shadow Ravine (1A)
 TM07 Focus Blast       : Mindagan Cavern (0A)
 TM08 Bulk Up           : Route 34 (1A)
 TM09 Leaf Blade        : Route 25 (Need Cut)
-TM10 Ice Beam          :
+TM10 Ice Beam          : Deep Chasm (-3A)
 TM11 Psyshock          : Given to you by Mindy after beating her
 TM12 Protect           : Schrice City shop
 TM13 Baton Pass        : Schrice City shop

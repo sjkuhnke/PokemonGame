@@ -1061,14 +1061,14 @@ public abstract class AbstractUI {
 						Task t = Task.createTask(Task.TEXT, p.nickname + " did not learn " + m.toString() + ".");
 						Task.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
 					} else {
-						Task t = Task.createTask(Task.TEXT, Item.breakString(p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!", 44));
+						Task t = Task.createTask(Task.TEXT, p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!");
 						Task.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
 					}
 				} else {
 					if (moveOption == 0) {
 						gp.ui.showMessage(p.nickname + " did not learn " + m.toString() + ".");
 					} else {
-						gp.ui.showMessage(Item.breakString(p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!", 44));
+						gp.ui.showMessage(Item.breakString(p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!", UI.MAX_TEXTBOX));
 					}
 				}
 				if (moveOption > 0) p.moveset[moveOption - 1] = new Moveslot(m);

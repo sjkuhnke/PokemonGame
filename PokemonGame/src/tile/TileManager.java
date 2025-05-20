@@ -252,7 +252,7 @@ public class TileManager {
 		loadMap("/maps/at04.txt", 194, false);
 		loadMap("/maps/at05.txt", 195, false);
 		loadMap("/maps/at06.txt", 196, false);
-		loadMap("/maps/icepuzzle1test.txt", 197, false);
+		loadMap("/maps/chasm04.txt", 200, false);
 	}
 	
 	private void setupCollisionRectangles() {
@@ -1225,34 +1225,23 @@ public class TileManager {
 		setup(955, false);
 
 		setup(957, true);
-		setup(958, false);
-//		setup(959, true);
-//		setup(960, true);
-//		setup(961, true);
-//		setup(962, true);
-//		setup(963, true);
-//		setup(964, true);
-//		setup(965, true);
-//		setup(966, true);
-//		setup(967, true);
-//		setup(968, true);
-//		setup(969, true);
-//		setup(970, true);
-//		setup(971, true);
-//		setup(972, true);
-//		setup(973, true);
-//		setup(974, true);
-//		setup(975, true);
-//		setup(976, true);
-//		setup(977, true);
-//		setup(978, true);
-//		setup(979, true);
-//		setup(980, true);
-//		setup(981, true);
-//		setup(982, true);
-//		setup(983, true);
-//		setup(984, true);
-//		setup(985, true);
+
+		setup(959, true);
+		setup(960, true);
+		setup(961, true, TOP_FOURTH);
+		setup(962, true);
+		setup(963, true);
+		setup(964, false);
+		setup(965, true);
+		setup(966, true);
+		setup(967, true);
+		setup(968, true);
+		setup(969, false);
+		setup(970, true);
+		setup(971, true);
+		setup(972, true, TOP_FOURTH);
+		setup(973, false);
+
 //		setup(986, true);
 //		setup(987, true);
 //		setup(988, true);
@@ -1290,45 +1279,61 @@ public class TileManager {
 			tile[956] = new IceTile();
 			tile[956].image = ImageIO.read(getClass().getResourceAsStream("/tiles/956.png"));
 			
+			tile[958] = new CaveTile();
+			tile[958].image = ImageIO.read(getClass().getResourceAsStream("/tiles/958.png"));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		setupCliff(37, 2);
-		setupCliff(38, 2);
-		setupCliff(39, 2);
-		setupCliff(40, 1);
-		setupCliff(41, 1);
-		setupCliff(42, 1);
-		setupCliff(43, 4);
-		setupCliff(44, 4);
-		setupCliff(45, 4);
-		setupCliff(46, 3);
-		setupCliff(47, 3);
-		setupCliff(48, 3);
+		setupCliff(37, 2, new Tile());
+		setupCliff(38, 2, new Tile());
+		setupCliff(39, 2, new Tile());
+		setupCliff(40, 1, new Tile());
+		setupCliff(41, 1, new Tile());
+		setupCliff(42, 1, new Tile());
+		setupCliff(43, 4, new Tile());
+		setupCliff(44, 4, new Tile());
+		setupCliff(45, 4, new Tile());
+		setupCliff(46, 3, new Tile());
+		setupCliff(47, 3, new Tile());
+		setupCliff(48, 3, new Tile());
 		
-		setupCliff(325, 2);
-		setupCliff(326, 2);
-		setupCliff(327, 2);
-		setupCliff(328, 1);
-		setupCliff(329, 1);
-		setupCliff(330, 1);
-		setupCliff(331, 4);
-		setupCliff(332, 4);
-		setupCliff(333, 4);
-		setupCliff(334, 3);
-		setupCliff(335, 3);
-		setupCliff(336, 3);
+		setupCliff(325, 2, new Tile());
+		setupCliff(326, 2, new Tile());
+		setupCliff(327, 2, new Tile());
+		setupCliff(328, 1, new Tile());
+		setupCliff(329, 1, new Tile());
+		setupCliff(330, 1, new Tile());
+		setupCliff(331, 4, new Tile());
+		setupCliff(332, 4, new Tile());
+		setupCliff(333, 4, new Tile());
+		setupCliff(334, 3, new Tile());
+		setupCliff(335, 3, new Tile());
+		setupCliff(336, 3, new Tile());
 		
-		setupCliff(372, 2);
+		setupCliff(372, 2, new Tile());
 		
-		setupCliff(943, 3);
-		setupCliff(944, 4);
-		setupCliff(945, 2);
+		setupCliff(943, 3, new Tile());
+		setupCliff(944, 4, new Tile());
+		setupCliff(945, 2, new Tile());
+		
+		setupCliff(974, 2, new IceTile());
+		setupCliff(975, 2, new IceTile());
+		setupCliff(976, 2, new IceTile());
+		setupCliff(977, 1, new IceTile());
+		setupCliff(978, 1, new IceTile());
+		setupCliff(979, 1, new IceTile());
+		setupCliff(980, 3, new IceTile());
+		setupCliff(981, 3, new IceTile());
+		setupCliff(982, 3, new IceTile());
+		setupCliff(983, 4, new IceTile());
+		setupCliff(984, 4, new IceTile());
+		setupCliff(985, 4, new IceTile());
 	}
 	
-	private void setupCliff(int index, int collisionType) {
-		tile[index] = new Tile();
+	private void setupCliff(int index, int collisionType, Tile gen) {
+		tile[index] = gen;
 		String imageName = index + "";
 		while (imageName.length() < 3) imageName = "0" + imageName;
 		try {
