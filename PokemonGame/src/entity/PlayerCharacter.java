@@ -141,6 +141,7 @@ public class PlayerCharacter extends Entity {
 				}
 			}
 			if (p.steps == 202 && p.repel) {
+				resetSpriteNum();
 				p.repel = false;
 				if (p.bag.contains(0)) {
 					gp.gameState = GamePanel.USE_REPEL_STATE;
@@ -163,6 +164,7 @@ public class PlayerCharacter extends Entity {
 					Egg e = pair.getFirst();
 					boolean hatch = e.step(fast);
 					if (hatch) {
+						resetSpriteNum();
 						int index = pair.getSecond();
 						Pokemon h = e.hatch();
 						p.pokedex[h.id] = 2;
@@ -252,7 +254,7 @@ public class PlayerCharacter extends Entity {
 			if (gp.grusts[index] != null) gp.grusts[index].turnRandom();
 		}
 		
-		if (keyH.dPressed) {
+		if (keyH.dPressed && !ice) {
 			resetSpriteNum();
 			gp.gameState = GamePanel.MENU_STATE;
 		}
@@ -380,7 +382,7 @@ public class PlayerCharacter extends Entity {
 		}
 	}
 
-	private void resetSpriteNum() {
+	public void resetSpriteNum() {
 		spriteCounter = 8;
 		spriteNum = 1;
 	}

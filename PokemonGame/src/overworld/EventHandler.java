@@ -1,5 +1,7 @@
 package overworld;
 
+import entity.Entity;
+import object.Spike;
 import pokemon.*;
 
 public class EventHandler {
@@ -51,7 +53,7 @@ public class EventHandler {
 			int xDistance = Math.abs(gp.player.worldX - previousEventX);
 			int yDistance = Math.abs(gp.player.worldY - previousEventY);
 			int distance = Math.max(xDistance, yDistance);
-			if (distance >= gp.tileSize) {
+			if (distance >= (gp.tileSize * 1.25)) {
 				canTouchEvent = true;
 			}
 		}
@@ -975,6 +977,10 @@ public class EventHandler {
 			if (hit(194,36,50)) teleport(195, 36, 50,true);
 			if (hit(195,36,50)) teleport(194, 36, 50,true);
 			
+			// Chasm -3A switches
+			if (hit(200,48,53)) toggleSpikes(200);
+			if (hit(200,60,16)) toggleSpikes(200);
+			
 			// Iron Town PC
 			if (hit(152,37,72)) teleport(153, 31, 45,false);
 			if (hit(153,31,46)) teleport(152, 37, 73,false);
@@ -984,7 +990,7 @@ public class EventHandler {
 			if (hit(154,31,46)) teleport(152, 44, 82,false);
 		}
 	}
-	
+
 	public boolean hit(int map, int col, int row) {
 		if (map != gp.currentMap) return false;
 		return hit(map, col, row, true);
@@ -1050,5 +1056,16 @@ public class EventHandler {
 		gp.setTaskState();
 		Task.addTask(Task.SHAKE, "", intensity);
 		p.flag[flagX][flagY] = true;
+	}
+	
+	public void toggleSpikes(int map) {
+		canTouchEvent = false;
+		gp.player.p.spike = !gp.player.p.spike;
+		for (Entity iTile : gp.iTile[map]) {
+			if (iTile != null && iTile instanceof Spike) {
+				Spike spike = (Spike) iTile;
+				spike.toggle();
+			}
+		}
 	}
 }

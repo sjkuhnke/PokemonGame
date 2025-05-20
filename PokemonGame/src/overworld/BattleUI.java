@@ -1235,7 +1235,7 @@ public class BattleUI extends AbstractUI {
  	        	return;
  			}
  			// Check for swap (AI)
-	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && faster.hasStatus(Status.SWITCHING)) {
+	        if (foe.trainer != null && foe.trainer.hasValidMembers() && faster.hasStatus(Status.SWITCHING)) {
 	        	faster = foe.trainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS, false);
 	        	foeCanMove = false;
 	        	foeMove = null;
@@ -1279,10 +1279,6 @@ public class BattleUI extends AbstractUI {
 					if (user.getPlayer().amulet) money *= 1.5;
 					user.getPlayer().setMoney(user.getPlayer().getMoney() + money);
 					String message = foe.trainer.toString() + " was defeated!\nWon $" + money + "!";
-					if (foe.trainer.getItem() != null) {
-		            	user.getPlayer().bag.add(foe.trainer.getItem());
-		            	message += "\nYou were given " + foe.trainer.getItem().toString() + "!";
-		            }
 					Task.addTask(Task.END, message);
 		            if (foe.trainer.getMoney() == 500 && user.getPlayer().badges < 8) {
 		            	user.getPlayer().badges++;
