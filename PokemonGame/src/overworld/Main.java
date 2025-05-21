@@ -566,6 +566,7 @@ public class Main {
 			writer.write("Trainers:\n");
 			writer.write("*** Note: if the Scott/Fred have 3 starters listed, regenerate docs after you picked your starter. ***\n");
 			Map<String, ArrayList<Trainer>> trainerMap = new LinkedHashMap<>();
+			Map<Trainer, Entity> trainerNPCMap = new HashMap<>();
 			for (int loc = 0; loc < npc.length; loc++) {
 				for (int col = 0; col < npc[loc].length; col++) {
 					Entity e = npc[loc][col];
@@ -582,6 +583,7 @@ public class Main {
 						list.add(tr);
 						trainerMap.put(location, list);
 					}
+					trainerNPCMap.put(tr, e);
 				}
 			}
 			
@@ -596,16 +598,22 @@ public class Main {
 				for (Trainer tr : trainers) {
 					writer.write("\n");
 					
+					StringBuilder trainerName = new StringBuilder();
+					trainerName.append(tr.getName());
 					if (tr.toString().equals(tr.getTeam()[0].name())) {
-	                    writer.write(tr.getName() + " (");
+	                    trainerName.append(" (");
 	                    for (int i = 0; i < 6; i++) {
-	                        writer.write(String.valueOf(tr.getTeam()[0].ivs[i]));
-	                        if (i < 5) writer.write(", ");
+	                        trainerName.append(String.valueOf(tr.getTeam()[0].ivs[i]));
+	                        if (i < 5) trainerName.append(", ");
 	                    }
-	                    writer.write(")\n");
-	                } else {
-	                    writer.write(tr.getName() + "\n");
+	                    trainerName.append(")");
 	                }
+					Entity corresponding = trainerNPCMap.get(tr);
+					trainerName.append(String.format(" | X: %d, Y: %d, Facing: %s", corresponding.worldX / gp.tileSize, corresponding.worldY / gp.tileSize, corresponding.direction));
+					trainerName.append(corresponding.isSpin() ? "*" : "");
+					
+					trainerName.append("\n");
+					writer.write(trainerName.toString());
 					
 					for (Pokemon p : tr.getTeam()) {
 						String pName = p.name() + " (Lv. " + p.level + ")";

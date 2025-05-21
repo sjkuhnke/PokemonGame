@@ -309,4 +309,8 @@ public class Entity {
 			return name;
 		}
 	}
+
+	public boolean isSpin() {
+		return spin != 0;
+	}
 }
