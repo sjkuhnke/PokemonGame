@@ -1929,7 +1929,7 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "If I were to guess - and guessing is half of wisdom - I'd say... each phantom offers you a part of the answer.");
 			Task.addTask(Task.DIALOGUE, npc, "Speak to them. Gather their hints. Listen closely.");
 			Task.addTask(Task.DIALOGUE, npc, "When you pick your painting, bring your answer to him - the one who waits in the grand painting. Only then will we see if you've stirred his memory...");
-			Task.addTask(Task.DIALOGUE, npc, "...Oh, and if you lose your way... there's a blank canvas here. It might help... orm aybe it just reflects your own uncertainty. Hahh... hard to tell with these things.");
+			Task.addTask(Task.DIALOGUE, npc, "...Oh, and if you lose your way... there's a blank canvas here. It might help... or maybe it just reflects your own uncertainty. Hahh... hard to tell with these things.");
 			Task.addTask(Task.DIALOGUE, npc, "I'll wait here, I'm too weak holding this mind-control spell from gnawing at our minds to battle anyone. We'll reconnect once you make it to the top.");
 		});
 		
@@ -1950,6 +1950,7 @@ public class Script {
 				}
 			}
 			Task.addTask(Task.DIALOGUE, npc, "Catch the correct Pokemon in the Temple Ball and show him.");
+			Task.addTask(Task.DIALOGUE, npc, "If you're unsure which... talk to the spirits. They will give you hints... objective hints...");
 		});
 		
 		scriptMap.put(195.0, (npc) -> { // temple orb guy in AT 5A
@@ -2063,7 +2064,7 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "Ngh - no... not yet...!");
 				Task.addTask(Task.SLEEP, "", 5);
-				Task.addParticleTask(gp.npc[196][1], "smoke", new Color(66, 252, 231), 100);
+				Task.addParticleTask(gp.npc[196][1], "totem", new Color(66, 252, 231), 100);
 				int diff = 52 * gp.tileSize - player.worldX;
 				Task.addNPCMoveTask('x', 52 * gp.tileSize, player, false, diff / 2);
 				Task.addTask(Task.TURN, player, "", Task.LEFT);

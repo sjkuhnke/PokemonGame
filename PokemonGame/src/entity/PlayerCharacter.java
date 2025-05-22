@@ -935,15 +935,19 @@ public class PlayerCharacter extends Entity {
 					Task t = Task.addTask(Task.BLACKJACK, "");
 					t.wipe = true;
 				} else if (painting.getColor().equals("battle")) {
-					if (Pokemon.sets.isEmpty()) {
-						gp.ui.showMessage("Loading sets...");
-						SwingUtilities.invokeLater(() -> {
-							Pokemon.loadCompetitiveSets();
-						});
+					if (p.getBetCurrency(true) > 0) {
+						if (Pokemon.sets.isEmpty()) {
+							gp.ui.showMessage("Loading sets...");
+							SwingUtilities.invokeLater(() -> {
+								Pokemon.loadCompetitiveSets();
+							});
+						}
+						gp.ui.showMessage("Calculating odds...");
+						Task t = Task.addTask(Task.ODDS, "");
+						t.wipe = true;
+					} else {
+						Task.addTask(Task.TEXT, "I'm sorry, you don't have enough orbs to bet with.");
 					}
-					gp.ui.showMessage("Calculating odds...");
-					Task t = Task.addTask(Task.ODDS, "");
-					t.wipe = true;
 				}
 			}
 		}

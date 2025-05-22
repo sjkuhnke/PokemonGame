@@ -3316,6 +3316,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was wrapped by " + this.nickname + "!");
 			}
+		} else if (move == Move.BITTER_MALICE) {
+			foe.freeze(false, this);
 		} else if (move == Move.BITE && first) {
 			foe.addStatus(Status.FLINCHED);
 		} else if (move == Move.BREAKING_SWIPE) {

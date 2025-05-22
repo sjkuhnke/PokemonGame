@@ -1827,7 +1827,7 @@ public class AssetSetter {
 		
 		mapNum = 94;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "There have been 2 meteorites that have crashed into our region.", mapNum, 132, "You should explore the Hearts of the ELECTRIC TUNNEL and SHADOW\nRAVINE. They're really pretty.");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "There have been 2 meteorites that have crashed into our region.", mapNum, 132, "You should explore the Hearts of the ELECTRIC TUNNEL and SHADOW RAVINE. They're really pretty.");
 		
 		mapNum = 103;
 		index = 0;
@@ -4419,8 +4419,7 @@ public class AssetSetter {
 				result.setDirection("down");
 				break;
 			case DRAGOWRATH:
-				result.down1 = result.setup("/overworlds/291_0");
-				result.setDirection("down");
+				result = new NPC_Dragowrath(gp, name, messages, scriptIndex, flag, altDialogue);
 				break;
 			case DISCIPLE_DOWN:
 				result.setupImages("/npc/disciple");

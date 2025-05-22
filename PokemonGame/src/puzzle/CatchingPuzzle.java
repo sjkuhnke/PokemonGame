@@ -10,7 +10,7 @@ public class CatchingPuzzle extends Puzzle {
 	
 	private static String[][] clueBank = new String[][] {
 		// whether or not it resists, neutral, or is weak to fighting
-		{"Martial force stumbles against it - fists find no purchase.", "It weathers strikes from Fighting-types like any other - no shield of spirit nor body.", "It cannot withstand the discipline of combat - fighting moves find their mark."},
+		{"Martial force stumbles against it - fists find no purpose.", "It weathers strikes from Fighting-types like any other - no shield of spirit nor body.", "It cannot withstand the discipline of combat - fighting moves find their mark."},
 		// can/can't learn earthquake
 		{"The ground has heard its cry before... the earth has shook - and answered.", "It walks lightly - the earth knows it not."},
 		// can/can't learn surf
