@@ -1950,7 +1950,9 @@ public class Script {
 				}
 			}
 			Task.addTask(Task.DIALOGUE, npc, "Catch the correct Pokemon in the Temple Ball and show him.");
-			Task.addTask(Task.DIALOGUE, npc, "If you're unsure which... talk to the spirits. They will give you hints... objective hints...");
+			Task.addTask(Task.DIALOGUE, npc, "If you're unsure which... talk to the spirits. They will give you objective hints on the Pokemon's aspects...");
+			Task.addTask(Task.DIALOGUE, npc, "There are 4 hints that apply to the Pokemon's typing in some way, 2 that apply to their moves, 1 for their stats, and 1 miscellaneous hint.");
+			Task.addTask(Task.DIALOGUE, npc, "Also, critically, each individual hint applies to more than one Pokemon, at the least.");
 		});
 		
 		scriptMap.put(195.0, (npc) -> { // temple orb guy in AT 5A

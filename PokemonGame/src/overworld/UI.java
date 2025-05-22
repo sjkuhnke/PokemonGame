@@ -1518,6 +1518,9 @@ public class UI extends AbstractUI {
 					currentTask = null;
 					break;
 				case 10: // reset painting
+					if (gp.currentMap == 194 || gp.currentMap == 195) {
+						gp.player.p.bag.remove(Item.TEMPLE_BALL, 25);
+					}
 					int[] loc = gp.puzzleM.FAITH_START;
 					t = Task.addTask(Task.TELEPORT, "");
 					t.counter = loc[0];
