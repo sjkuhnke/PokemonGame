@@ -227,11 +227,13 @@ public class AssetSetter {
 	private static final int GATE = 15;
 	private static final int PAINTING = 16;
 	private static final int PAINTING_COLOR = 17;
-	private static final int SPIKE_1 = 18;
-	private static final int SPIKE_2 = 19;
-	private static final int PAINTING_RESET = 20;
-	private static final int PAINTING_BET = 21;
+	private static final int PAINTING_RESET = 18;
+	private static final int PAINTING_BET = 19;
+	private static final int STATUE = 20;
+	private static final int STATUE_RESET = 21;
 	private static final int SPIKE_SWITCH = 22;
+	private static final int SPIKE_1 = 23;
+	private static final int SPIKE_2 = 24;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -2269,6 +2271,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 57, 39, "Battle me, and I'll light one corner of your path through the veil.", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 56, 51, "Not all here belong. Only one is chosen by our master. I will help you see which.", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 50, 57, "You must act with clarity, not chance. I'll offer a clue, if you win.", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 40, 51, "", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 24, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 66, 39, "We were once alive. What are you, if not a ghost of your own convictions?", "You feel more solid now. More real.", 0);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 66, 33, "To believe is to fight with nothing but light in your hands.", "You held the light. Even in shadow.", 0);
@@ -2309,7 +2312,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, "Disciple", 46, 49, "You're very close to the peak, child...", mapNum);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 46, 55, "Faith is not always free. But I can give you what you need - if you prove yourself.", "You've earned my offering. Take it, and gamble wisely.", 0);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 54, 55, "You look desperate for orbs. Fight me, and I will spare a handful.", "The orbs are yours. They carry no promise, only chance.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 46, 57, "You hunger for progress, not spirit. I'll feed your ambition - briefly.", "reed tested, will rewarded. Spend these wisely.", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 46, 57, "You hunger for progress, not spirit. I'll feed your ambition - briefly.", "Greed tested, will rewarded. Spend these wisely.", 0);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 54, 57, "One more battle, one more bet. I deal in faith... and orb.", "Let these orbs guide your luck. But luck is not faith.", 0);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 54, 49, "", "", -1);
 		gp.npc[mapNum][index++] = ITileSetup(50, 56, TORCH, mapNum, mapNum);
@@ -2326,7 +2329,56 @@ public class AssetSetter {
 		
 		mapNum = 197;
 		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, "Guard", 50, 75, "", mapNum);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 44, 99, "");
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 55, 75, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 60, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 49, 63, "", 197.1);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 59, 54, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 48, 52, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 65, 49, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 40, 47, "", "", 0, LEFT + RIGHT + DOWN);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 76, 40, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 78, 36, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 71, 36, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 64, 39, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 35, 38, "", "", 0);
 		
+		mapNum = 198;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 41, 31, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 39, 43, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 75, 32, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 55, 56, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 68, 57, "", "", 0, ALL);
+		
+		mapNum = 199;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 58, 74, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 62, 78, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 58, 82, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 54, 78, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 57, 64, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 56, 65, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 60, 65, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 59, 64, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 48, 58, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 42, 61, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 40, 34, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 37, 35, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 43, 35, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 60, 75, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 58, 57, "", "", -1);
+		
+		mapNum = 200;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 53, 85, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 53, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 30, 28, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 77, 50, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 38, 50, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 62, 15, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 35, 10, "", "", 0);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -2968,9 +3020,9 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(60, 80, VINE_CROSS, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(61, 80, VINE_CROSS, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(62, 80, VINE_CROSS, mapNum, map);
-		SetupPit(mapNum, 64, 80, 144, 11, 28, map); // lower TODO dest
-		SetupPit(mapNum, 63, 67, 144, 11, 28, map); // middle TODO dest
-		SetupPit(mapNum, 72, 74, 144, 11, 28, map); // upper TODO dest
+		SetupPit(mapNum, 64, 80, 197, 32, 90, map); // bottom left
+		SetupPit(mapNum, 72, 74, 197, 50, 81, map); // middle
+		SetupPit(mapNum, 63, 67, 197, 32, 71, map); // top left
 		
 		mapNum = 145;
 		iIndex = 0;
@@ -3156,12 +3208,17 @@ public class AssetSetter {
 		
 		mapNum = 197;
 		iIndex = 0;
+		SetupPit(mapNum, 69, 29, 198, 42, 32, map);
 		
 		mapNum = 198;
 		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 32, STATUE_RESET, mapNum, map);
+		SetupPit(mapNum, 58, 70, 199, 58, 78, map);
+		LoadInteractiveTilesFromMap(203, 969, ICE_BLOCK, mapNum, map);
 		
 		mapNum = 199;
 		iIndex = 0;
+		SetupPit(mapNum, 58, 34, 200, 50, 86, map);
 		
 		mapNum = 200;
 		iIndex = 0;
@@ -4425,12 +4482,15 @@ public class AssetSetter {
 				result.setupImages("/npc/disciple");
 				result.setDirection("down");
 				break;
+			case WARDEN_DOWN:
+				result.setupImages("/npc/warden");
+				result.setDirection("down");
+				break;
 			case LOGIC_DRAGON:
-				result.setupImages("/overworlds/233_0");
+				result = new NPC_Dragon(gp, name, 233, scriptIndex, flag);
 				break;
 			case FAITH_DRAGON:
-				result.setupImages("/overworlds/234_");
-				result.setDirection("down");
+				result = new NPC_Dragon(gp, name, 234, scriptIndex, flag);
 				break;
 		}
 		
@@ -4595,6 +4655,12 @@ public class AssetSetter {
 		case PAINTING_BET:
 			result = new Painting(gp, "bet");
 			break;
+		case STATUE:
+			result = new Statue(gp, false);
+			break;
+		case STATUE_RESET:
+			result = new Statue(gp, true);
+			break;
 		case SPIKE_1:
 			result = new Spike(gp, false);
 			break;
@@ -4757,5 +4823,18 @@ public class AssetSetter {
 		objIndex++;
 		
 		return result;
+	}
+	
+	private void LoadInteractiveTilesFromMap(int targetMap, int targetTile, int iTileType, int mapNum, int map) {
+		if (mapNum != map) return;
+		for (int col = 0; col < gp.maxWorldCol; col++) {
+			for (int row = 0; row < gp.maxWorldRow; row++) {
+				int tile = gp.tileM.mapTileNum[targetMap][row][col];
+				if (tile == targetTile) { // an ice block should go here
+					gp.iTile[mapNum][iIndex] = ITileSetup(row, col, iTileType, mapNum, map);
+				}
+			}
+		}
+		
 	}
 }

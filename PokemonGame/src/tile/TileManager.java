@@ -252,7 +252,11 @@ public class TileManager {
 		loadMap("/maps/at04.txt", 194, false);
 		loadMap("/maps/at05.txt", 195, false);
 		loadMap("/maps/at06.txt", 196, false);
+		loadMap("/maps/chasm01.txt", 197, false);
+		loadMap("/maps/chasm02.txt", 198, false);
+		loadMap("/maps/chasm03.txt", 199, false);
 		loadMap("/maps/chasm04.txt", 200, false);
+		loadMap("/maps/chasm02_iceblocks.txt", 203, false);
 	}
 	
 	private void setupCollisionRectangles() {
@@ -1231,7 +1235,7 @@ public class TileManager {
 		setup(961, true, TOP_FOURTH);
 		setup(962, true);
 		setup(963, true);
-		setup(964, false);
+
 		setup(965, true);
 		setup(966, true);
 		setup(967, true);
@@ -1242,7 +1246,7 @@ public class TileManager {
 		setup(972, true, TOP_FOURTH);
 		setup(973, false);
 
-//		setup(986, true);
+		setup(986, false);
 //		setup(987, true);
 //		setup(988, true);
 //		setup(989, true);
@@ -1281,6 +1285,9 @@ public class TileManager {
 			
 			tile[958] = new CaveTile();
 			tile[958].image = ImageIO.read(getClass().getResourceAsStream("/tiles/958.png"));
+			
+			tile[964] = new CaveTile();
+			tile[964].image = ImageIO.read(getClass().getResourceAsStream("/tiles/964.png"));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
