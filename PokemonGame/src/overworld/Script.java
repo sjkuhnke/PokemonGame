@@ -1897,7 +1897,7 @@ public class Script {
 		});
 		
 		scriptMap.put(191.0, (npc) -> { // tower guard faith route
-			if (p.flag[7][9] && !p.flag[7][16]) { // finn has faith and needs to attempt the gauntlet
+			if (p.flag[7][9] && !p.flag[7][15]) { // finn has faith and needs to attempt the gauntlet
 				Task.addTask(Task.DIALOGUE, npc, "Traveler of faith...");
 				Task.addTask(Task.DIALOGUE, npc, "Beyond these doors lies the trial of the soul.");
 				Task.addTask(Task.DIALOGUE, npc, "This tower was raised by those who clung to hope even when the heavens fell silent.");
@@ -1951,7 +1951,7 @@ public class Script {
 			}
 			Task.addTask(Task.DIALOGUE, npc, "Catch the correct Pokemon in the Temple Ball and show him.");
 			Task.addTask(Task.DIALOGUE, npc, "If you're unsure which... talk to the spirits. They will give you objective hints on the Pokemon's aspects...");
-			Task.addTask(Task.DIALOGUE, npc, "There are 4 hints that apply to the Pokemon's typing in some way, 2 that apply to their moves, 1 for their stats, and 1 miscellaneous hint.");
+			Task.addTask(Task.DIALOGUE, npc, "There are 4 hints that apply to the Pokemon's typing in some way, 2 that apply to their moves, 2 for their stats, and 1 miscellaneous hint.");
 			Task.addTask(Task.DIALOGUE, npc, "Also, critically, each individual hint applies to more than one Pokemon, at the least.");
 		});
 		
@@ -1959,7 +1959,7 @@ public class Script {
 			Puzzle currentPuzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
 			if (!currentPuzzle.isLocked()) {
 				Task.addTask(Task.DIALOGUE, npc, "You'll need these orbs to reach master.");
-				Task t = Task.addTask(Task.ITEM, "");
+				Task t = Task.addTask(Task.ITEM, "You got 25 Temple Orbs!");
 				t.item = Item.TEMPLE_ORB;
 				t.counter = 25;
 				Task.addTask(Task.DIALOGUE, npc, "But that won't be enough. You need to prove you have faith - faith in the odds.");
@@ -2009,10 +2009,11 @@ public class Script {
 				Task.addTask(Task.FLASH_OUT, "");
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.AWAKE, npc, "");
 				Task.addTask(Task.FLASH_OUT, "");
-				Task.addTask(Task.SLEEP, "", 60);
+				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.SPOT, gp.npc[196][1], "");
-				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "It's awakening...!");
+				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "It's awake...!");
 		        Task.addTask(Task.SLEEP, "", 10);
 		        Task.addTask(Task.TURN, player, "", Task.DOWN);
 				Task.addTask(Task.SLEEP, "", 5);
@@ -2092,6 +2093,29 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "Here, take this and capture the beast! Quick!");
 				Task t = Task.addTask(Task.ITEM, "");
 		        t.item = Item.TEMPLE_BALL;
+			}
+		});
+		
+		scriptMap.put(197.0, (npc) -> { // chasm guard logic route
+			if (p.flag[7][10] && !p.flag[7][14]) { // finn has logic and needs to attempt the gauntlet
+				Task.addTask(Task.DIALOGUE, npc, "Seeker of logic...");
+				Task.addTask(Task.DIALOGUE, npc, "Before you lies the Chasm - a wound carved by thought itself.");
+				Task.addTask(Task.DIALOGUE, npc, "Here, those who abandoned faith sought to survive through reason alone.");
+				Task.addTask(Task.DIALOGUE, npc, "They built nothing. They prayed to nothing. Only understanding held them back from the void.");
+				Task.addTask(Task.DIALOGUE, npc, "Inside, you will find no mercy. No second chances.");
+				Task.addTask(Task.DIALOGUE, npc, "You must bring 10 Pokemon total, no more - and no less.");
+				
+				if (!p.hasFullPartyAndGauntletBox()) { // Not enough selected
+					Task.addTask(Task.DIALOGUE, npc, "...");
+					Task.addTask(Task.DIALOGUE, npc, "You do not have 10 Pokemon selected to bring.");
+					Task.addTask(Task.DIALOGUE, npc, "You can choose what Pokemon to bring using the Gauntlet Box in the PC here (press [\u2191] when selecting a box at the top).");
+					Task.addTask(Task.DIALOGUE, npc, "Please ensure that your party is full of 6 Pokemon and your Gauntlet Box is full of 4 extra Pokemon.");
+				} else {
+					gp.ui.commandNum = 1;
+					Task.addTask(Task.CONFIRM, npc, "Are you prepared to face the void armed only with logic?", 12);
+				}
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "You... aren't worthy... be gone...");
 			}
 		});
 	}

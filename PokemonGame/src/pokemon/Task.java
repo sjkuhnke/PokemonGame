@@ -73,6 +73,8 @@ public class Task {
 	public static final int EVOLUTION = 57;
 	public static final int PARTICLE = 58;
 	public static final int RESET = 59;
+	public static final int I_TILE = 60; // counter: what iTile map to set up
+	public static final int AWAKE = 61;
 	
 	public static GamePanel gp;
 	

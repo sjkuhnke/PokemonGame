@@ -32,12 +32,8 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.SwingUtilities;
 
-import entity.Entity;
-import entity.NPC_Prize_Shop;
-import entity.PlayerCharacter;
-import object.Painting;
-import object.TemplateParticle;
-import object.TreasureChest;
+import entity.*;
+import object.*;
 import pokemon.*;
 import puzzle.Puzzle;
 import util.Pair;
@@ -611,6 +607,14 @@ public class UI extends AbstractUI {
 			break;
 		case Task.RESET:
 			gp.puzzleM.reset(currentTask.wipe);
+			currentTask = null;
+			break;
+		case Task.I_TILE:
+			gp.aSetter.setInteractiveTile(currentTask.counter);
+			currentTask = null;
+			break;
+		case Task.AWAKE:
+			((NPC_Dragon) currentTask.e).awake();
 			currentTask = null;
 			break;
 		}
@@ -1517,16 +1521,16 @@ public class UI extends AbstractUI {
 					p.sendToNext();
 					currentTask = null;
 					break;
-				case 10: // reset painting
+				case 10: // reset gauntlet
 					if (gp.currentMap == 194 || gp.currentMap == 195) {
-						gp.player.p.bag.remove(Item.TEMPLE_BALL, 25);
+						gp.player.p.bag.remove(Item.TEMPLE_ORB, 25);
 					}
-					int[] loc = gp.puzzleM.FAITH_START;
+					int[] loc = currentTask.wipe ? gp.puzzleM.FAITH_START : gp.puzzleM.LOGIC_START;
 					t = Task.addTask(Task.TELEPORT, "");
 					t.counter = loc[0];
 					t.start = loc[1];
 					t.finish = loc[2];
-					gp.puzzleM.doReset(true);
+					gp.puzzleM.doReset(currentTask.wipe);
 					Task.addTask(Task.TURN, gp.player, "", Task.UP);
 					currentTask = null;
 					break;
@@ -1560,6 +1564,45 @@ public class UI extends AbstractUI {
 					t.start = 49;
 					t.finish = 47;
 					gp.puzzleM.doReset(true);
+					currentTask = null;
+					break;
+				case 12: // deep chasm entrance
+					if (!gp.player.p.flag[7][12]) { // player hasn't done the cutscene with Merlin yet
+						gp.player.p.flag[7][12] = true;
+						gp.npc[197][1].worldY = 82 * gp.tileSize;
+						gp.npc[197][1].direction = "up";
+						Task.addTask(Task.TURN, gp.player, "", Task.LEFT);
+						Task.addNPCMoveTask('y', 77 * gp.tileSize, gp.npc[197][1], false, 4);
+						Task.addTask(Task.TURN, gp.npc[197][1], "", Task.RIGHT);
+						Task.addNPCMoveTask('x', 47 * gp.tileSize, gp.npc[197][1], false, 4);
+						Task.addTask(Task.DIALOGUE, gp.npc[197][1], "This is where your path truly begins, Finn.");
+						Task.addTask(Task.SLEEP, "", 10);
+						Task.addTask(Task.TURN, gp.player, "", Task.RIGHT);
+						Task.addTask(Task.SLEEP, "", 5);
+						Task.addNPCMoveTask('x', 51 * gp.tileSize, gp.player, false, 2);
+						Task.addTask(Task.TURN, gp.player, "", Task.LEFT);
+						Task.addNPCMoveTask('x', 48 * gp.tileSize, gp.npc[197][1], false, 4);
+						Task.addTask(Task.TURN, gp.npc[197][1], "", Task.UP);
+						Task.addNPCMoveTask('y', (int) (75.75 * gp.tileSize), gp.npc[197][1], false, 4);
+						Task.addTask(Task.TURN, gp.npc[197][1], "", Task.RIGHT);
+						Task.addNPCMoveTask('x', 50 * gp.tileSize, gp.npc[197][1], false, 2);
+						Task.addTask(Task.SLEEP, "", 10);
+						Task.addTask(Task.TURN, gp.npc[197][1], "", Task.UP);
+						Task.addTask(Task.SLEEP, "", 30);
+						Task.addTask(Task.TURN, gp.npc[197][1], "", Task.RIGHT);
+						Task.addTask(Task.DIALOGUE, gp.npc[197][1], "You and I, we're in this together.");
+						Task.addTask(Task.SLEEP, "", 15);
+						Task.addTask(Task.DIALOGUE, gp.npc[197][1], "The mind can be a weapon... or a prison, Finn. Trust in your wit - but trust in yourself more.");
+						Task.addTask(Task.SLEEP, "", 15);
+						Task.addTask(Task.TURN, gp.npc[197][1], "", Task.UP);
+						Task.addTask(Task.SLEEP, "", 15);
+						Task.addTask(Task.DIALOGUE, gp.npc[197][1], "Let's do this.");
+					}
+					t = Task.addTask(Task.TELEPORT, "");
+					t.counter = 197;
+					t.start = 51;
+					t.finish = 63;
+					gp.puzzleM.doReset(false);
 					currentTask = null;
 					break;
 				}

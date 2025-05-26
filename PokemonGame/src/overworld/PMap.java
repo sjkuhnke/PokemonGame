@@ -1280,6 +1280,28 @@ public class PMap extends JPanel {
 		case 196:
 			PlayerCharacter.currentMapName = "Abandoned Tower (6A)";
 			return 44;
+		case 197:
+			if (y <= 66) {
+				PlayerCharacter.currentMapName = "Deep Chasm (0B)";
+			} else {
+				PlayerCharacter.currentMapName = "Deep Chasm (0A)";
+			}
+			return 42;
+		case 198:
+			PlayerCharacter.currentMapName = "Deep Chasm (-1A)";
+			return 42;
+		case 199:
+			PlayerCharacter.currentMapName = "Deep Chasm (-2A)";
+			return 42;
+		case 200:
+			PlayerCharacter.currentMapName = "Deep Chasm (-3A)";
+			return 42;
+		case 201:
+			PlayerCharacter.currentMapName = "Deep Chasm (-4A)";
+			return 42;
+		case 202:
+			PlayerCharacter.currentMapName = "Deep Chasm (-5A)";
+			return 42;
 		}
 		
 		return -1;

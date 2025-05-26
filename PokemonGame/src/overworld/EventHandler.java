@@ -53,7 +53,8 @@ public class EventHandler {
 			int xDistance = Math.abs(gp.player.worldX - previousEventX);
 			int yDistance = Math.abs(gp.player.worldY - previousEventY);
 			int distance = Math.max(xDistance, yDistance);
-			if (distance >= (gp.tileSize * 1.25)) {
+			int cooldown = (int) (gp.player.ice ? gp.tileSize * 1.25 : gp.tileSize);
+			if (distance >= cooldown) {
 				canTouchEvent = true;
 			}
 		}
@@ -976,6 +977,13 @@ public class EventHandler {
 			if (hit(195,50,64)) teleport(194, 50, 64,true);
 			if (hit(194,36,50)) teleport(195, 36, 50,true);
 			if (hit(195,36,50)) teleport(194, 36, 50,true);
+			
+			// Route 44 -> Deep Chasm Ladder
+			if (hit(144,79,79)) teleport(197, 83, 83,true);
+			if (hit(197,83,83)) teleport(144, 79, 79,true);
+			
+			// Chasm 1A -> 1B
+			if (hit(197,50,74)) teleport(197, 51, 63,false);
 			
 			// Chasm -3A switches
 			if (hit(200,48,53)) toggleSpikes(200);

@@ -66,6 +66,12 @@ public abstract class Puzzle {
         return list.toArray(new String[1]);
 	}
 	
+	protected String[][] shuffle(String[][] input) {
+		List<String[]> list = new ArrayList<>(Arrays.asList(input));
+        Collections.shuffle(list, random);
+        return list.toArray(new String[1][]);
+	}
+	
 	public void setNextLocation(int x, int y) {
 		nextLoc = new int[] {x, y};
 	}

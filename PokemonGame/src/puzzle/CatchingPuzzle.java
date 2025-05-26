@@ -6,78 +6,83 @@ import pokemon.*;
 public class CatchingPuzzle extends Puzzle {
 	
 	private Pokemon correct;
-	private String[] clues;
+	private String[][] clues;
 	
 	private static String[][] clueBank = new String[][] {
 		// whether or not it resists, neutral, or is weak to fighting
-		{"Martial force stumbles against it - fists find no purpose.", "It weathers strikes from Fighting-types like any other - no shield of spirit nor body.", "It cannot withstand the discipline of combat - fighting moves find their mark."},
+		{"Does it resist combat, fall to it, or deal with it normally?", "Martial force stumbles against it - fists find no purpose.", "It weathers strikes from Fighting-types like any other - no shield of spirit nor body.", "It cannot withstand the discipline of combat - fighting moves find their mark."},
 		// can/can't learn earthquake
-		{"The ground has heard its cry before... the earth has shook - and answered.", "It walks lightly - the earth knows it not."},
+		{"Was the ground itself able to be moved by it?", "The ground has heard its cry before... the earth has shook - and answered.", "It walks lightly - the earth knows it not."},
 		// can/can't learn surf
-		{"It has crossed waters deeper than doubt itself.", "Its path ends at the shore. The tide never claimed it."},
+		{"Can it cross the waters, or do the waves bar its path?", "It has crossed waters deeper than doubt itself.", "Its path ends at the shore. The tide never claimed it."},
 		// has a weather associated with their type or not
-		{"The skies shift to welcome it - clouds part, or gather, or burn.", "No storm nor stillness heeds its name. It walks apart from the winds."},
+		{"Does the forecast heed its coming?", "The skies shift to welcome it - clouds part, or gather, or burn.", "No storm nor stillness heeds its name. It walks apart from the winds."},
 		// has a terrain associated with their type or not
-		{"The earth blooms or pulses in its wake. The terrain changes - not for you, but for it.", "It walks on plain stone. The terrain knows no song for it."},
+		{"Does it have a deeper touch to the land?", "The earth blooms or pulses in its wake. The terrain changes - not for you, but for it.", "It walks on plain stone. The terrain knows no song for it."},
 		// whether this pokemon is a physical, special or mixed attacker
-		{"Its blows are felt, not seen. Steel, bone, and motion define it.", "It strikes with the seen or the unseen - I cannot say which.", "Its power is not in the flesh, but in the mind and soul."},
+		{"How does it strike? Through flesh, mind, or both?", "Its blows are felt, not seen. Steel, bone, and motion define it.", "It strikes with the seen or the unseen - I cannot say which.", "Its power is not in the flesh, but in the mind and soul."},
 		// can still evolve or not
-		{"It has not yet reached its final form. Faith still shapes it.", "It is complete. No more growth, only purpose."},
+		{"Has it reached its full potential, or is it still becoming?", "It has not yet reached its final form. Faith still shapes it.", "It is complete. No more growth, only purpose."},
 		// is super effective against poison, neutral against poison or weak against poison
-		{"It dares strike poison, but its efforts are dulled - the toxins endure its touch.", "It walks beside poison - neither friend nor foe. Its blows are met as neutral.", "It purges corruption with ease - poison flees before it."},
+		{"What does it do to poison offensively - ignore it or destroy it?", "It dares strike poison, but its efforts are dulled - the toxins endure its touch.", "It walks beside poison - neither friend nor foe. Its blows are met as neutral.", "It purges corruption with ease - poison flees before it."},
+		// speed tier: >=100, 100 > s > 60, <= 60?
+		{"Does it outpace others, crawl behind, or walk with the crowd?", "It blurs the eye and bends time — few see it coming before it is gone. It is able to hit at least 259 Speed.", "It keeps pace with fate. Neither first nor last to act, hits between 259 and 171 Speed at its maximum.", "It moves with gravity — not by haste, but by inevitability. Is unable to hit anything higher than 171 Speed."}
 	};
 	
 	public CatchingPuzzle(GamePanel gp, int floor) {
 		super(gp, floor);
-		this.clues = new String[clueBank.length];
+		this.clues = new String[clueBank.length][2];
 	}
 
 	@Override
 	public void setup() {
 		correct = gp.encounterPokemon(area, 'G', false);
 		setClues();
-		for (int i = 0; i <= 7; i++) {
-			gp.npc[floor][i].altDialogue = clues[i];
+		for (int i = 0; i <= 8; i++) {
+			gp.npc[floor][i].altDialogue = String.format("%s\n...\n%s", clues[i][0], clues[i][1]);
 		}
 	}
 
 	private void setClues() {
+		for (int i = 0; i < clueBank.length; i++) {
+			clues[i][0] = clueBank[i][0];
+		}
 		/**
 		 * 
 		 */
 		double fightingMultiplier = correct.getEffectiveMultiplier(PType.FIGHTING, null, null);
-		clues[0] = fightingMultiplier < 1.0 ? clueBank[0][0] : fightingMultiplier > 1.0 ? clueBank[0][2] : clueBank[0][1];
+		clues[0][1] = fightingMultiplier < 1.0 ? clueBank[0][1] : fightingMultiplier > 1.0 ? clueBank[0][3] : clueBank[0][2];
 		/**
 		 * 
 		 */
 		boolean learnEarthquake = Item.TM20.getLearned(correct);
-		clues[1] = learnEarthquake ? clueBank[1][0] : clueBank[1][1];
+		clues[1][1] = learnEarthquake ? clueBank[1][1] : clueBank[1][2];
 		/**
 		 * 
 		 */
 		boolean learnSurf = Item.HM04.getLearned(correct);
-		clues[2] = learnSurf ? clueBank[2][0] : clueBank[2][1];
+		clues[2][1] = learnSurf ? clueBank[2][1] : clueBank[2][2];
 		/**
 		 * 
 		 */
 		boolean hasWeather = correct.isType(PType.FIRE) || correct.isType(PType.WATER) || correct.isType(PType.ICE) || correct.isType(PType.ROCK);
-		clues[3] = hasWeather ? clueBank[3][0] : clueBank[3][1];
+		clues[3][1] = hasWeather ? clueBank[3][1] : clueBank[3][2];
 		/**
 		 * 
 		 */
 		boolean hasTerrain = correct.isType(PType.GRASS) || correct.isType(PType.ELECTRIC) || correct.isType(PType.PSYCHIC) || correct.isType(PType.MAGIC);
-		clues[4] = hasTerrain ? clueBank[4][0] : clueBank[4][1];
+		clues[4][1] = hasTerrain ? clueBank[4][1] : clueBank[4][2];
 		/**
 		 * 
 		 */
 		int attackType = Integer.compare(correct.getBaseStat(3), correct.getBaseStat(1));
-		attackType++; // to go from [-1, 1] to [0, 2]
-		clues[5] = clueBank[5][attackType];
+		attackType += 2; // to go from [-1, 1] to [1, 3]
+		clues[5][1] = clueBank[5][attackType];
 		/**
 		 * 
 		 */
 		boolean canEvolve = correct.canEvolve();
-		clues[6] = canEvolve ? clueBank[6][0] : clueBank[6][1];
+		clues[6][1] = canEvolve ? clueBank[6][1] : clueBank[6][2];
 		/**
 		 * 
 		 */
@@ -85,10 +90,16 @@ public class CatchingPuzzle extends Puzzle {
 		test.type1 = PType.POISON;
 		test.type2 = null;
 		double poisonDefensiveMultiplier1 = test.getEffectiveMultiplier(correct.type1, null, null);
-		double poisonDefensiveMultiplier2 = correct.type2 != null ? test.getEffectiveMultiplier(correct.type2, null, test) : 1.0;
+		double poisonDefensiveMultiplier2 = correct.type2 != null ? test.getEffectiveMultiplier(correct.type2, null, null) : 1.0;
 		double poisonDefensiveMultiplier = (poisonDefensiveMultiplier1 + poisonDefensiveMultiplier2) / 2;
-		int poisonDefensiveIndex = (int) (poisonDefensiveMultiplier * 2) - 1;
-		clues[7] = clueBank[7][poisonDefensiveIndex];
+		int poisonDefensiveIndex = (int) (poisonDefensiveMultiplier * 2);
+		clues[7][1] = clueBank[7][poisonDefensiveIndex];
+		/**
+		 * 
+		 */
+		int speed = correct.getBaseStat(5);
+		int speedIndex = speed >= 100 ? 1 : speed > 60 ? 2 : 3;
+		clues[8][1] = clueBank[8][speedIndex];
 		
 		clues = shuffle(clues);
 	}

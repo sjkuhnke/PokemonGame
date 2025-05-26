@@ -388,6 +388,7 @@ public class PlayerCharacter extends Entity {
 	}
 
 	public void interactWith(Entity target, int index, boolean override) {
+		resetSpriteNum();
 		if (target instanceof Cut_Tree) {
 			interactCutTree(index, override);
 		} else if (target instanceof Rock_Smash) {
@@ -412,6 +413,8 @@ public class PlayerCharacter extends Entity {
 			interactIceBlock(index, override);
 		} else if (target instanceof Painting) {
 			interactPainting((Painting) target);
+		} else if (target instanceof Statue) {
+			interactStatue((Statue) target);
 		}
 	}
 
@@ -928,7 +931,8 @@ public class PlayerCharacter extends Entity {
 			} else if (painting.isResetPainting()) {
 				gp.ui.commandNum = 1;
 				Task.addTask(Task.TEXT, "...the painting is dull and empty.");
-				Task.addTask(Task.CONFIRM, "Would you like to reset the gauntlet?", 10);
+				Task t = Task.addTask(Task.CONFIRM, "Would you like to reset the gauntlet and go back to the first room?", 10);
+				t.wipe = true;
 			} else if (painting.isBetPainting()) {
 				gp.keyH.wPressed = false;
 				if (painting.getColor().equals("bj")) {
@@ -949,6 +953,33 @@ public class PlayerCharacter extends Entity {
 						Task.addTask(Task.TEXT, "I'm sorry, you don't have enough orbs to bet with.");
 					}
 				}
+			}
+		}
+	}
+	
+	private void interactStatue(Statue statue) {
+		gp.setTaskState();
+		Puzzle current = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
+		if (statue.isReset()) {
+			if (gp.currentMap == 198) {
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.I_TILE, "", 198);
+				Task.addTask(Task.FLASH_OUT, "");
+			} else {
+				gp.ui.commandNum = 1;
+				Task.addTask(Task.TEXT, "...the statue pedestal is dull and empty.");
+				Task t = Task.addTask(Task.CONFIRM, "Would you like to reset the gauntlet and go back to the first room?", 10);
+				t.wipe = false;
+			}
+		} else {
+			if (current.isComplete()) {
+				Task.addTask(Task.TEXT, "...The statue came to life!");
+				Entity dragon = new Entity(gp, "Dragon");
+				gp.ui.commandNum = 1;
+				Task.addTask(Task.DIALOGUE, dragon, "Good work child...");
+				Task.addTask(Task.CONFIRM, dragon, "Are you ready to move on to the next room?", 9);
+			} else {
+				Task.addTask(Task.TEXT, "...the statue is as quiet as the void.");
 			}
 		}
 	}
