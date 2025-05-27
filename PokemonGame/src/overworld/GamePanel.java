@@ -335,10 +335,33 @@ public class GamePanel extends JPanel implements Runnable {
 						player.interactNPC(npc[196][2], false);
 					}
 				}
+				if (id == 233 && !player.p.flag[7][16]) {
+					if (t.getCurrent().isFainted()) { // player killed the logic dragon
+						player.p.trainersBeat[trainer] = false;
+						player.p.flag[7][14] = false;
+						t.reset();
+						setTaskState();
+						Task.addTask(Task.DIALOGUE, npc[202][1], "Finn... you failed...");
+						Task.addTask(Task.DIALOGUE, npc[202][1], "Oh Arceus, what do we do?!");
+						int[] loc = puzzleM.LOGIC_START;
+						Task task = Task.addTask(Task.TELEPORT, "");
+						task.counter = loc[0];
+						task.start = loc[1];
+						task.finish = loc[2];
+						puzzleM.doReset(false);
+						Task.addTask(Task.TURN, player, "", Task.UP);
+					} else {
+						player.p.tempTeam = player.p.team;
+						player.p.team = new Pokemon[6];
+						player.p.team[0] = t.getCurrent();
+						player.p.setCurrent();
+						player.interactNPC(npc[202][2], false);
+					}
+				}
 			}
 		}
 		if (id == 235) {
-			player.interactNPC(npc[196][2], false);
+			player.interactNPC(npc[currentMap][2], false);
 		}
 
 		player.p.resetTeam();

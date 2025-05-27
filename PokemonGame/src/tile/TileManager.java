@@ -256,6 +256,8 @@ public class TileManager {
 		loadMap("/maps/chasm02.txt", 198, false);
 		loadMap("/maps/chasm03.txt", 199, false);
 		loadMap("/maps/chasm04.txt", 200, false);
+		loadMap("/maps/chasm05.txt", 201, false);
+		loadMap("/maps/chasm06.txt", 202, false);
 		loadMap("/maps/chasm02_iceblocks.txt", 203, false);
 	}
 	
@@ -1243,7 +1245,7 @@ public class TileManager {
 		setup(969, false);
 		setup(970, true);
 		setup(971, true);
-		setup(972, true, TOP_FOURTH);
+		setup(972, true);
 		setup(973, false);
 
 		setup(986, false);

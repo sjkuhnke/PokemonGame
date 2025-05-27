@@ -2272,6 +2272,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 56, 51, "Not all here belong. Only one is chosen by our master. I will help you see which.", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 50, 57, "You must act with clarity, not chance. I'll offer a clue, if you win.", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 40, 51, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 36, 43, "", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 24, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 66, 39, "We were once alive. What are you, if not a ghost of your own convictions?", "You feel more solid now. More real.", 0);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 66, 33, "To believe is to fight with nothing but light in your hands.", "You held the light. Even in shadow.", 0);
@@ -2333,7 +2334,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 44, 99, "");
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 55, 75, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 60, "", "", -1);
-		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 49, 63, "", 197.1);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 49, 62, "", 197.1);
 		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 59, 54, "", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 48, 52, "", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 65, 49, "", "", 0);
@@ -2379,6 +2380,30 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 38, 50, "", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 62, 15, "", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 35, 10, "", "", 0);
+		
+		mapNum = 201;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 54, 26, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 51, 15, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 77, 37, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 47, 45, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 61, 43, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 39, 52, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 41, 59, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 43, 54, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 53, 61, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 42, 45, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 74, 31, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 55, 56, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, "Warden", 76, 49, "Ah... hello there traveler...", mapNum);
+		
+		mapNum = 202;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(LOGIC_DRAGON, "Relomidel", 50, 47, "", mapNum, -1, "", 404);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 50, 99, "", 202.2);
+		gp.npc[mapNum][index] = NPCSetup(DRAGOWRATH, "Dragowrath", 50, 1, "", 202.1, -1, "", 406);
+		gp.npc[mapNum][index++] = ITileSetup(48, 47, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(52, 47, TORCH, mapNum, mapNum);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -3222,6 +3247,7 @@ public class AssetSetter {
 		
 		mapNum = 200;
 		iIndex = 0;
+		SetupPit(mapNum, 75, 29, 201, 74, 34, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(48, 53, SPIKE_SWITCH, mapNum, mapNum);
 		gp.iTile[mapNum][iIndex] = ITileSetup(60, 16, SPIKE_SWITCH, mapNum, mapNum);
 		gp.iTile[mapNum][iIndex] = ITileSetup(59, 39, SPIKE_1, mapNum, mapNum);
@@ -3236,6 +3262,11 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(38, 27, SPIKE_2, mapNum, mapNum);
 		gp.iTile[mapNum][iIndex] = ITileSetup(44, 25, SPIKE_2, mapNum, mapNum);
 		gp.iTile[mapNum][iIndex] = ITileSetup(60, 15, SPIKE_2, mapNum, mapNum);
+		
+		mapNum = 201;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 37, STATUE_RESET, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(51, 50, STATUE, mapNum, map);
 	}
 
 	public void updateNPC(int map) {
@@ -3767,16 +3798,19 @@ public class AssetSetter {
 		
 		if (flag[7][12]) {
 			gp.npc[191][1] = null;
+			gp.npc[197][1] = null;
 		}
 		
 		if (flag[7][13]) {
 			gp.npc[191][9] = null;
-		}
-		
-		if (flag[7][13]) {
+			gp.npc[197][4] = null;
 			if (gp.npc[196][1] != null) {
 				gp.npc[196][1].worldY = gp.tileSize * 50;
 				gp.npc[196][1].direction = "up";
+			}
+			if (gp.npc[202][1] != null) {
+				gp.npc[202][1].worldY = gp.tileSize * 50;
+				gp.npc[202][1].direction = "up";
 			}
 		}
 		
@@ -3785,9 +3819,16 @@ public class AssetSetter {
 			if (gp.npc[196][2] != null) gp.npc[196][2].worldY = gp.tileSize * 35;
 		}
 		
+		if (flag[7][14]) {
+			gp.npc[202][0] = null;
+			if (gp.npc[202][2] != null) gp.npc[202][2].worldY = gp.tileSize * 35;
+		}
+		
 		if (flag[7][16]) {
 			gp.npc[196][1] = null;
 			gp.npc[196][2] = null;
+			gp.npc[202][1] = null;
+			gp.npc[202][2] = null;
 		}
 		
 		gp.setRenderableNPCs();
@@ -4487,10 +4528,10 @@ public class AssetSetter {
 				result.setDirection("down");
 				break;
 			case LOGIC_DRAGON:
-				result = new NPC_Dragon(gp, name, 233, scriptIndex, flag);
+				result = new NPC_Dragon(gp, name, 233, scriptIndex, flag, 8);
 				break;
 			case FAITH_DRAGON:
-				result = new NPC_Dragon(gp, name, 234, scriptIndex, flag);
+				result = new NPC_Dragon(gp, name, 234, scriptIndex, flag, 5);
 				break;
 		}
 		

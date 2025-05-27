@@ -8,21 +8,24 @@ import overworld.GamePanel;
 public class NPC_Dragon extends NPC_Block {
 	
 	private BufferedImage[] images;
-	private static final int SIZE = 5;
+	private int size;
 	private int ticks = 0;
 	private boolean awake;
 	private int id;
 	
-	public NPC_Dragon(GamePanel gp, String name, int id, double scriptIndex, int flag) {
+	public NPC_Dragon(GamePanel gp, String name, int id, double scriptIndex, int flag, int size) {
 		super(gp, name, new String[] {""}, scriptIndex, flag, "");
 		this.id = id;
+		this.size = size;
 		this.awake = false;
 		getImages();
 	}
 	
 	public void getImages() {
-		images = new BufferedImage[SIZE];
-		for (int i = 0; i < SIZE; i++) {
+		images = new BufferedImage[size];
+		images[0] = setup("/overworlds/" + id + "_0_1");
+		images[1] = setup("/overworlds/" + id + "_0_2");
+		for (int i = 2; i < size; i++) {
 			images[i] = setup("/overworlds/" + id + "_" + i);
 		}
 	}
@@ -42,7 +45,7 @@ public class NPC_Dragon extends NPC_Block {
 			worldY + gp.tileSize*2 + gp.offsetY > gp.player.worldY - gp.player.screenY &&
 			worldY - gp.tileSize*2 + gp.offsetY < gp.player.worldY + gp.player.screenY) {
 			
-			image = awake ? images[spriteNum] : images[0];
+			image = awake ? images[spriteNum + 1] : images[spriteNum - 1];
 			
 			int width = image.getWidth() * gp.scale;
 			int wOffset = (width - gp.tileSize) / 2;
@@ -53,12 +56,20 @@ public class NPC_Dragon extends NPC_Block {
 			g2.drawImage(image, screenX - wOffset, screenY - hOffset, width, height, null);
 		}
 		
+		ticks++;
 		if (awake) {
-			ticks++;
-			if (ticks >= 12) {
+			if (ticks >= 18) {
 				ticks = 0;
 				spriteNum++;
-				if (spriteNum > SIZE - 1) {
+				if (spriteNum > size - 2) {
+					spriteNum = 1;
+				}
+			}
+		} else {
+			if (ticks >= 90) {
+				ticks = 0;
+				spriteNum++;
+				if (spriteNum > 2) {
 					spriteNum = 1;
 				}
 			}

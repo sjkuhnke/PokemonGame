@@ -26,7 +26,9 @@ public class CatchingPuzzle extends Puzzle {
 		// is super effective against poison, neutral against poison or weak against poison
 		{"What does it do to poison offensively - ignore it or destroy it?", "It dares strike poison, but its efforts are dulled - the toxins endure its touch.", "It walks beside poison - neither friend nor foe. Its blows are met as neutral.", "It purges corruption with ease - poison flees before it."},
 		// speed tier: >=100, 100 > s > 60, <= 60?
-		{"Does it outpace others, crawl behind, or walk with the crowd?", "It blurs the eye and bends time — few see it coming before it is gone. It is able to hit at least 259 Speed.", "It keeps pace with fate. Neither first nor last to act, hits between 259 and 171 Speed at its maximum.", "It moves with gravity — not by haste, but by inevitability. Is unable to hit anything higher than 171 Speed."}
+		{"Does it outpace others, crawl behind, or walk with the crowd?", "It blurs the eye and bends time — few see it coming before it is gone. It is able to hit at least 259 Speed.", "It keeps pace with fate. Neither first nor last to act, hits between 259 and 171 Speed at its maximum.", "It moves with gravity — not by haste, but by inevitability. Is unable to hit anything higher than 171 Speed."},
+		// can/can't learn trick tackle
+		{"Can it weave deceit into its assault - especially when Tackling the opponent?", "It strikes not only with power, but with guile - its hands take as they give.", "Its battle style is honest, perhaps too honest - Trick Tackle is beyond its means."},
 	};
 	
 	public CatchingPuzzle(GamePanel gp, int floor) {
@@ -38,7 +40,7 @@ public class CatchingPuzzle extends Puzzle {
 	public void setup() {
 		correct = gp.encounterPokemon(area, 'G', false);
 		setClues();
-		for (int i = 0; i <= 8; i++) {
+		for (int i = 0; i <= 9; i++) {
 			gp.npc[floor][i].altDialogue = String.format("%s\n...\n%s", clues[i][0], clues[i][1]);
 		}
 	}
@@ -100,6 +102,12 @@ public class CatchingPuzzle extends Puzzle {
 		int speed = correct.getBaseStat(5);
 		int speedIndex = speed >= 100 ? 1 : speed > 60 ? 2 : 3;
 		clues[8][1] = clueBank[8][speedIndex];
+		
+		/**
+		 * 
+		 */
+		boolean learnTrickTackle = Item.TM56.getLearned(correct);
+		clues[9][1] = learnTrickTackle ? clueBank[9][1] : clueBank[9][2];
 		
 		clues = shuffle(clues);
 	}
