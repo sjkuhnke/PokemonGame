@@ -2078,15 +2078,15 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 10);
 				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "Sanctum Arum... Portalis Verum...!");
 				Task t = Task.addTask(Task.TELEPORT, "");
-				t.counter = 0;
-				t.start = 70;
-				t.finish = 70;
+				t.counter = 186;
+				t.start = 33;
+				t.finish = 42;
 				t.color = Color.WHITE;
 				Task.addTask(Task.TURN, player, "", Task.DOWN);
 			}
 		});
 		
-		scriptMap.put(196.2, (npc) -> {// dragowrath AT
+		scriptMap.put(196.2, (npc) -> { // merlin 6A AT
 			if (p.bag.contains(Item.TEMPLE_BALL)) {
 				Task.addTask(Task.DIALOGUE, npc, "Try and capture the ancient beast with the special ball I gave you!");
 			} else {
@@ -2116,6 +2116,245 @@ public class Script {
 				}
 			} else {
 				Task.addTask(Task.DIALOGUE, npc, "You... aren't worthy... be gone...");
+			}
+		});
+		
+		scriptMap.put(201.0, (npc) -> { // temple ball guy in Chasm -4A
+			if (!p.bag.contains(Item.TEMPLE_BALL)) {
+				Puzzle currentPuzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
+				if (currentPuzzle.isLocked()) {
+					Task.addTask(Task.DIALOGUE, npc, "You used my Temple Ball..?");
+					Task.addTask(Task.DIALOGUE, npc, "You must pray that its the species he required.");
+					Task.addTask(Task.DIALOGUE, npc, "I can't give you another until you cast the reset spell on this place.");
+					Task.addTask(Task.DIALOGUE, npc, "Find the empty statue pedestal to try again.");
+					return;
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "You'll need this.");
+					Task t = Task.addTask(Task.ITEM, "");
+					t.item = Item.TEMPLE_BALL;
+					Task.addTask(Task.DIALOGUE, npc, "The Temple Ball will catch any Pokemon here without fail.");
+				}
+			}
+			Task.addTask(Task.DIALOGUE, npc, "Catch the correct Pokemon in the Temple Ball and show him.");
+			Task.addTask(Task.DIALOGUE, npc, "If you're unsure which... talk to the spirits. They will give you objective hints on the Pokemon's aspects...");
+			Task.addTask(Task.DIALOGUE, npc, "There are 4 hints that apply to the Pokemon's typing in some way, 2 that apply to their moves, 2 for their stats, and 1 miscellaneous hint.");
+			Task.addTask(Task.DIALOGUE, npc, "Also, critically, each individual hint applies to more than one Pokemon, at the least.");
+		});
+		
+		scriptMap.put(202.0, (npc) -> { // logic dragon in -5A
+			if (!p.flag[7][13]) {
+				p.flag[7][13] = true;
+				Task.addTask(Task.TEXT, "The ancient being lies dormant... its mind is unreachable, like a locked door behind glass.");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SPOT, player, "");
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.UPDATE, "");
+				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.DIALOGUE, gp.npc[202][1], "So this is it. Relomidel, the Logic Dragon.");
+				Task.addTask(Task.DIALOGUE, gp.npc[202][1], "All calculations led here. Yet now that I stand before it... even I feel... small.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addNPCMoveTask('y', 49 * gp.tileSize, gp.npc[202][1], false, 2);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.TURN, player, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 45);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[202][1], "You've brought the Logic Core, didn't you? Then there's no time to hesitate.");
+				Task.addTask(Task.DIALOGUE, gp.npc[202][1], "Dragowrath's presence grows - the framework is unraveling. We need Relomidel.");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, player, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[202][1], "Code of the First Mind... awaken now. Logic eternal, emerge.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.AWAKE, npc, "");
+				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.SPOT, gp.npc[202][1], "");
+				Task.addTask(Task.DIALOGUE, gp.npc[202][1], "It's awake...!");
+		        Task.addTask(Task.SLEEP, "", 10);
+		        Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 5);
+		        Task.addTask(Task.DIALOGUE, gp.npc[202][1], "Here, quick! Take this - it's a Temple Ball. Forged long ago by the founders of the First Light.");
+		        Task.addTask(Task.DIALOGUE, gp.npc[202][1], "It will ensure Relomidel joins you, without resistance!");
+		        Task t = Task.addTask(Task.ITEM, "");
+		        t.item = Item.TEMPLE_BALL;
+		        Task.addTask(Task.SLEEP, "", 15);
+		        Task.addTask(Task.TURN, player, "", Task.UP);
+		        Task.addTask(Task.SLEEP, "", 15);
+			}
+			Task.addTask(Task.DIALOGUE, npc, "DRAAAGH!");
+			Task t = Task.addTask(Task.BATTLE, "", 404);
+			t.start = 233;
+		});
+		
+		scriptMap.put(202.1, (npc) -> { // dragowrath Deep Chasm
+			if (!p.flag[7][16]) {
+				p.flag[7][16] = true;
+				Task.addTask(Task.SPOT, gp.npc[202][1], "");
+				Task.addTask(Task.SPOT, player, "");
+				Task.addNPCMoveTask('y', 46 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.SPEAK, npc, "So. You found it. My child.", 1);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.DIALOGUE, gp.npc[202][1], "Dragowrath?! Here?! No - this place is shielded - !");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.SPEAK, npc, "Shielded by what? Knowledge? You think wisdom can bar my path?", 1);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.SPEAK, npc, "You awaken Relomidel as if it is your servant. As if it has not tasted my breath before.", 1);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.SPEAK, npc, "That Dragon is of me. Every thought, every pattern... spun from my design.", 1);
+				Task.addTask(Task.SPEAK, npc, "And now you claim it - like a formula you've proven. Let me show you what you've miscalculated.", 1);
+				Task t = Task.addTask(Task.BATTLE, "", 406);
+				t.start = 235;
+			} else {
+				p.heal();
+				p.team = p.tempTeam;
+				p.setCurrent();
+				p.tempTeam = null;
+				Task.addTask(Task.SPEAK, npc, "This is logic? This is your answer?", 1);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.SPEAK, npc, "Like her - so sure the mind alone could save her people.", 1);
+				Task.addTask(Task.SPEAK, npc, "Arthra. She followed the same flawed algorithm.", 1);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.SPEAK, player, "(What...?)");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.SPEAK, npc, "You cling to systems. Patterns. Structures.", 1);
+				Task.addTask(Task.SPEAK, npc, "But the universe is not a theorem. It is a will. And mine is supreme.", 1);
+				Task.addTask(Task.SPEAK, npc, "I will erase your scaffolds. Tear down your frameworks. The age of thought is over.", 1);
+				Task.addTask(Task.SLEEP, "", 15);
+		        Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[202][1], "Nngh - we're not done yet...!");
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addParticleTask(gp.npc[202][1], "totem", new Color(66, 252, 231), 100);
+				int diff = 52 * gp.tileSize - player.worldX;
+				Task.addNPCMoveTask('x', 52 * gp.tileSize, player, false, diff / 2);
+				Task.addTask(Task.TURN, player, "", Task.LEFT);
+				Task.addNPCMoveTask('y', 48 * gp.tileSize, npc, false, 4);
+				Task.addTask(Task.SPEAK, npc, "You spent your life chasing knowledge, old man. And still... you understand nothing.", 1);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.DIALOGUE, gp.npc[202][1], "Hrk - Nngh... G-Get... get them out of here!");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.DIALOGUE, gp.npc[202][1], "Veritas fractum... Apertus nexum...!");
+				Task t = Task.addTask(Task.TELEPORT, "");
+				t.counter = 186;
+				t.start = 33;
+				t.finish = 42;
+				t.color = Color.WHITE;
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+			}
+		});
+		
+		scriptMap.put(202.2, (npc) -> { // merlin 6A AT
+			if (p.bag.contains(Item.TEMPLE_BALL)) {
+				Task.addTask(Task.DIALOGUE, npc, "Try and capture the ancient beast with the special ball I gave you!");
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "Here, take this and capture the beast! Quick!");
+				Task t = Task.addTask(Task.ITEM, "");
+		        t.item = Item.TEMPLE_BALL;
+			}
+		});
+		
+		scriptMap.put(186.0, (npc) -> { // arthra after getting wiped by dragowrath
+			if (!p.flag[7][17]) {
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addTask(Task.SPOT, npc, "");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, player, "", Task.RIGHT);
+				Task.addTask(Task.DIALOGUE, npc, "Finn! You're okay!");
+				Task.addTask(Task.DIALOGUE, npc, "I - I wasn't sure if you'd made it...!");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "I heard Merlin's voice... in my head.");
+				Task.addTask(Task.DIALOGUE, npc, "It was like a whisper carried on the wind. Casting a spell.");
+				Task.addTask(Task.DIALOGUE, npc, "I captured the Legendary Dragon, but Dragowrath destroyed me and it both.");
+				Task.addTask(Task.DIALOGUE, npc, "Then everything went white.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.DIALOGUE, npc, "You were with him. What happened?");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.SPEAK, player, "He... saved us. He used the last of his power to teleport us away.");
+				Task.addTask(Task.SPEAK, player, "Dragowrath tried to take him. Possess him. I think it worked.");
+				Task.addTask(Task.SPEAK, player, "But he fought it off long enough to protect us.");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, npc, "No... Merlin...");
+				Task.addTask(Task.SLEEP, "", 60);
+				Task.addTask(Task.TURN, player, "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.SPEAK, player, "We need to do something. We need to save him - and save the world from Dragowrath's grasp.");
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.SPEAK, player, "But I don't know what. Your belief wasn't right. My belief wasn't right. Everything is wrong, everything is hopeless.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "All this time, I was so sure I was right.");
+				if (p.flag[7][10]) {
+					Task.addTask(Task.DIALOGUE, npc, "That faith was the only path forward.");
+					Task.addTask(Task.DIALOGUE, npc, "But you made it just as far believing in logic. In your own way. We both did.");
+				} else if (p.flag[7][9]) {
+					Task.addTask(Task.DIALOGUE, npc, "That logic was the only path forward.");
+					Task.addTask(Task.DIALOGUE, npc, "But you made it just as far believing in faith. In your own way. We both did.");
+				}
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 25);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addTask(Task.DIALOGUE, npc, "Maybe... maybe it's not about one or the other.");
+				Task.addTask(Task.DIALOGUE, npc, "Maybe true strength is in knowing when to believe... and when to think.");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.DIALOGUE, npc, "Balance. That's what we were missing.");
+				Task.addTask(Task.SLEEP, "", 25);
+				Task.addTask(Task.DIALOGUE, npc, "I thought I had to do this all on my own. That being worthy meant proving myself...");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, player, "", Task.RIGHT);
+				Task.addTask(Task.DIALOGUE, npc, "But the truth is... I need you. I can't do this without you.");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 25);
+				Task.addTask(Task.SPEAK, player, "...");
+				Task.addTask(Task.SPEAK, player, "You're right, Arthra. I need you too. We need each other.");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, npc, "Dragowrath's still out there. And it's stronger than ever.");
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addTask(Task.TURN, npc, "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.DIALOGUE, npc, "But remember what it said before leaving - \"This world is mine, and the stars will follow.\"");
+				Task.addTask(Task.TURN, player, "", Task.RIGHT);
+				Task.addTask(Task.DIALOGUE, npc, "It's not here anymore. It's in space.");
+				Task.addTask(Task.DIALOGUE, npc, "And there's only one space station left with a working launch... Iron Town.");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, npc, "We have to go. For Merlin. For the world.");
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "Dragowrath's still out there. And it's stronger than ever.");
+				Task.addTask(Task.DIALOGUE, npc, "But remember what it said before leaving - \"This world is mine, and the stars will follow.\"");
+				Task.addTask(Task.DIALOGUE, npc, "It's not here anymore. It's in space.");
+				Task.addTask(Task.DIALOGUE, npc, "And there's only one space station left with a working launch... Iron Town.");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, npc, "We have to go. For Merlin. For the world.");
+				Task.addTask(Task.DIALOGUE, npc, "Head south from this city. It's a treacherous route, so be prepared.");
+				Task.addTask(Task.DIALOGUE, npc, "I'll follow suit soon - I just need a second to prepare myself.");
 			}
 		});
 	}

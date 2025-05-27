@@ -21,7 +21,7 @@ public class PuzzleManager {
 		setupPuzzle(true, 1, new CatchingPuzzle(gp, 193), 50, 50);
 		setupPuzzle(true, 2, new GamblingPuzzle(gp, 195), 50, 49);
 		logicPuzzles = new Puzzle[1];
-		//setupPuzzle(false, 0, new CatchingPuzzle(gp, 201), 50, 49);
+		setupPuzzle(false, 0, new CatchingPuzzle(gp, 201), 50, 49);
 	}
 	
 	private void setupPuzzle(boolean faith, int i, Puzzle puzzle, int x, int y) {
