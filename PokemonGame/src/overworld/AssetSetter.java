@@ -2188,6 +2188,10 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_LEFT, null, 36, 40, "Are you lost, bud? You do realize there's a freakin' VOLCANO behind me? Get a grip!");
 		
+		mapNum = 186;
+		index = 0;
+		gp.npc[mapNum][index++] = null; // arthra after catching a legendary
+		
 		mapNum = 190;
 		index = 0;
 		gp.npc[mapNum][index++] = null; // merlin guide - in updateNPC
@@ -3829,6 +3833,16 @@ public class AssetSetter {
 			gp.npc[196][2] = null;
 			gp.npc[202][1] = null;
 			gp.npc[202][2] = null;
+		}
+		
+		if (flag[7][16] && !flag[7][18]) {
+			if (gp.npc[186][0] == null) gp.npc[186][0] = NPCSetup(ARTHRA_DOWN, "Arthra", 34, 42, "", 186.0);
+		} else {
+			gp.npc[186][0] = null;
+		}
+		
+		if (flag[7][17]) { // route 39
+			gp.npc[151][0] = null;
 		}
 		
 		gp.setRenderableNPCs();

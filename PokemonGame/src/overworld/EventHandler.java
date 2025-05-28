@@ -989,6 +989,9 @@ public class EventHandler {
 			if (hit(200,48,53)) toggleSpikes(200);
 			if (hit(200,60,16)) toggleSpikes(200);
 			
+			// Cutscene with Arthra after catching a legendary
+			if (!gp.player.p.flag[7][17] && hit(186,33,42)) gp.player.interactNPC(gp.npc[186][0], false);
+			
 			// Iron Town PC
 			if (hit(152,37,72)) teleport(153, 31, 45,false);
 			if (hit(153,31,46)) teleport(152, 37, 73,false);
