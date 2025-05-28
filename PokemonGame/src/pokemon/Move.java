@@ -85,6 +85,7 @@ public enum Move {
 	CHARGE(0,1000,0,0,2,0,PType.ELECTRIC,"User's next electric-type attack damage is doubled. Raises user's Sp.Def by 1",false,20),
 	CHARGE_BEAM(50,90,70,0,1,0,PType.ELECTRIC,"% chance to raise user's Sp.Atk by 1",false,10),
 	CHARM(0,100,0,0,2,0,PType.LIGHT,"Lowers foe's Attack by 2",false,15),
+	CHILLY_RECEPTION(0,1000,0,0,2,0,PType.ICE,"Sets SNOW and then causes user to switch out",false,10),
 	CHROMO_BEAM(80,100,0,0,1,0,PType.LIGHT,"30% chance to double in Base Power",false,5),
 	CIRCLE_THROW(60,90,-1,0,0,-6,PType.FIGHTING,"Switches out foe randomly, always moves last",true,10),
 	CLOSE_COMBAT(120,100,-1,0,0,0,PType.FIGHTING,"Lowers user's Defense and Sp.Def by 1",true,5),

@@ -2250,6 +2250,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			
+			if (move == Move.CHILLY_RECEPTION) {
+				Task t = Task.createTask(Task.TEXT, this.nickname + " is preparing to tell a chillingly bad joke!");
+				Task.insertTask(t, damageIndex++);
+			}
+			
 			if (move == Move.DISENCHANT && !arrayEquals(foe.statStages, new int[7])) {
 				foe.statStages = new int[7];
 				Task t = Task.createTask(Task.TEXT, foe.nickname + " stat changes were eliminated!");
@@ -4055,6 +4060,16 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (!this.hasStatus(Status.CHARGED)) this.addStatus(Status.CHARGED);
 		} else if (move == Move.CHARM) {
 			stat(foe, 0, -2, this, announce);
+		} else if (announce && move == Move.CHILLY_RECEPTION) {
+			boolean success = field.setWeather(field.new FieldEffect(Effect.SNOW));
+			if (success && item == Item.ICY_ROCK) field.weatherTurns = 8;
+			if (this.trainerOwned() && enemy.hasValidMembers()) {
+				Task.addTask(Task.TEXT, this.nickname + " went back to " + enemy.toString() + "!");
+				this.addStatus(Status.SWITCHING);
+			} else if (this.playerOwned() && player.hasValidMembers()) {
+				Task.addTask(Task.TEXT, this.nickname + " went back to you!");
+				this.addStatus(Status.SWITCHING);
+			}
 		} else if (move == Move.COIL) {
 			stat(this, 0, 1, foe, announce);
 			stat(this, 1, 1, foe, announce);

@@ -1951,7 +1951,7 @@ public class Script {
 			}
 			Task.addTask(Task.DIALOGUE, npc, "Catch the correct Pokemon in the Temple Ball and show him.");
 			Task.addTask(Task.DIALOGUE, npc, "If you're unsure which... talk to the spirits. They will give you objective hints on the Pokemon's aspects...");
-			Task.addTask(Task.DIALOGUE, npc, "There are 4 hints that apply to the Pokemon's typing in some way, 2 that apply to their moves, 2 for their stats, and 1 miscellaneous hint.");
+			Task.addTask(Task.DIALOGUE, npc, "There are 4 hints that apply to the Pokemon's typing in some way, 3 that apply to their moves, 2 for their stats, and 1 miscellaneous hint.");
 			Task.addTask(Task.DIALOGUE, npc, "Also, critically, each individual hint applies to more than one Pokemon, at the least.");
 		});
 		
@@ -2048,9 +2048,10 @@ public class Script {
 				t.start = 235;
 			} else {
 				p.heal();
+				Pokemon[] tempTeam = p.team;
 				p.team = p.tempTeam;
 				p.setCurrent();
-				p.tempTeam = null;
+				p.tempTeam = tempTeam; // preserve the legendary dragon here
 				Task.addTask(Task.SPEAK, npc, "So... this is the fruit of your faith. Weak. Broken. Not enough.", 1);
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.SPEAK, npc, "You believed it would be enough. Just as she did.", 1);
@@ -2137,7 +2138,7 @@ public class Script {
 			}
 			Task.addTask(Task.DIALOGUE, npc, "Catch the correct Pokemon in the Temple Ball and show him.");
 			Task.addTask(Task.DIALOGUE, npc, "If you're unsure which... talk to the spirits. They will give you objective hints on the Pokemon's aspects...");
-			Task.addTask(Task.DIALOGUE, npc, "There are 4 hints that apply to the Pokemon's typing in some way, 2 that apply to their moves, 2 for their stats, and 1 miscellaneous hint.");
+			Task.addTask(Task.DIALOGUE, npc, "There are 4 hints that apply to the Pokemon's typing in some way, 3 that apply to their moves, 2 for their stats, and 1 miscellaneous hint.");
 			Task.addTask(Task.DIALOGUE, npc, "Also, critically, each individual hint applies to more than one Pokemon, at the least.");
 		});
 		
@@ -2215,9 +2216,10 @@ public class Script {
 				t.start = 235;
 			} else {
 				p.heal();
+				Pokemon[] tempTeam = p.team;
 				p.team = p.tempTeam;
 				p.setCurrent();
-				p.tempTeam = null;
+				p.tempTeam = tempTeam; // preserve the legendary dragon here
 				Task.addTask(Task.SPEAK, npc, "This is logic? This is your answer?", 1);
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.SPEAK, npc, "Like her - so sure the mind alone could save her people.", 1);
@@ -2264,6 +2266,7 @@ public class Script {
 		
 		scriptMap.put(186.0, (npc) -> { // arthra after getting wiped by dragowrath
 			if (!p.flag[7][17]) {
+				p.flag[7][17] = true;
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.TURN, npc, "", Task.LEFT);
 				Task.addTask(Task.SPOT, npc, "");

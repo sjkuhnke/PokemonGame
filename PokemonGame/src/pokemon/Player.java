@@ -491,7 +491,7 @@ public class Player extends Trainer implements Serializable {
 			{"Robin", "Scott 3", "Grandpa", "UP Shookwat", "Gift E/S", "Gym 5"},
 			{"Arthra 1", "Arthra Talk", "Rick 2", "Fred 3", "Maxwell 1", "UP Splame", "Scott 4", "Glurg Gift", "Gym 6", "Maxwell After"},
 			{"Scott Scene", "Coins", "Autosave Casino", "Magmaclang", "UP Buzzwole", "Rock Climb", "Gym 7", "Shake 1", "Shake 2", "Shake 3", "Shake 4", "Shake 5", "Shake 6", "Shake 7", "Shake 8", "Shake 9", "Shake 10", "Shake 11", "Shake 12"},
-			{"Arthra Scene", "Merlin coming", "Rick 3", "Fred 4", "Maxwell 2", "Machine", "Dragowrath S1", "UP Pheromosa", "Dissemble Machine", "Faith", "Logic", "Merlin Guide", "Guard", "Awake", "Relomidel", "Relopamil", "Drago S2", "Ryder Shack", "", "", "", "", "", ""},
+			{"Arthra Scene", "Merlin coming", "Rick 3", "Fred 4", "Maxwell 2", "Machine", "Dragowrath S1", "UP Pheromosa", "Dissemble Machine", "Faith", "Logic", "Merlin Guide", "Guard", "Awake", "Relomidel", "Relopamil", "Drago S2", "Arthra after", "Ryder Shack", "Ryder Possessed", "", "", "", ""},
 			{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""},			
 		};
 		
