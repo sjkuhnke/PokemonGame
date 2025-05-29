@@ -1096,9 +1096,8 @@ public class BattleUI extends AbstractUI {
 						if (user.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
 						if (user.ability == Ability.REFRIGERATE) mtype = PType.ICE;
 						if (user.ability == Ability.PIXILATE) mtype = PType.LIGHT;
-					} else {
-						if (user.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
 					}
+					if (user.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
 				}
 		        Color color = mtype.getColor();
 		        if (!user.moveUsable(moves[i].move)) color = new Color(100, 100, 100, 200);

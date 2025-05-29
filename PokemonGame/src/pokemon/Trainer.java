@@ -24,7 +24,7 @@ public class Trainer implements Serializable {
 	transient ArrayList<FieldEffect> effects;
 	transient Item[] teamItems;
 	
-	public static final int MAX_TRAINERS = 420;
+	public static final int MAX_TRAINERS = 500;
 	public static Trainer[] trainers = new Trainer[MAX_TRAINERS];
 	
 	public Trainer(String name, Pokemon[] team, int money) {
@@ -293,9 +293,8 @@ public class Trainer implements Serializable {
 			if (foe.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
 			if (foe.ability == Ability.REFRIGERATE) type = PType.ICE;
 			if (foe.ability == Ability.PIXILATE) type = PType.LIGHT;
-		} else {
-			if (foe.ability == Ability.NORMALIZE) type = PType.NORMAL;
 		}
+		if (foe.ability == Ability.NORMALIZE) type = PType.NORMAL;
 		if (!onlyCheckAbility) multiplier = p.getEffectiveMultiplier(type, m, foe);
 		Ability pAbility = p.ability;
 		if (foe.ability == Ability.MOLD_BREAKER) pAbility = Ability.NULL;

@@ -1873,7 +1873,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (move == Move.WEATHER_BALL) moveType = determineWBType(field);
 		if (move == Move.TERRAIN_PULSE) moveType = determineTPType(field);
 		
-		if (this.ability == Ability.NORMALIZE && moveType != PType.NORMAL) {
+		if (this.ability == Ability.NORMALIZE) {
 			moveType = PType.NORMAL;
 			bp *= 1.2;
 		}
@@ -2166,10 +2166,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			
-			if (foe.getItem() != Item.RING_TARGET &&
-					(moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST) ||
-					(moveType == PType.ICE && foeAbility == Ability.WARM_HEART) ||
-					(moveType == PType.PSYCHIC && foeAbility == Ability.COLD_HEART)) {
+			if (foe.getItem() != Item.RING_TARGET
+					&& (moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST)
+					|| (moveType == PType.ICE && foeAbility == Ability.WARM_HEART)
+					|| (moveType == PType.PSYCHIC && foeAbility == Ability.COLD_HEART)
+					&& !(move.cat == 2 && acc > 100)) {
 				Task.addAbilityTask(foe);
 				Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 				endMove();
@@ -5617,7 +5618,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (move == Move.WEATHER_BALL) moveType = determineWBType(field);
 		if (move == Move.TERRAIN_PULSE) moveType = determineTPType(field);
 		
-		if (this.ability == Ability.NORMALIZE && moveType != PType.NORMAL) {
+		if (this.ability == Ability.NORMALIZE) {
 			moveType = PType.NORMAL;
 			bp *= 1.2;
 		}
@@ -7025,9 +7026,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 							if (this.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
 							if (this.ability == Ability.REFRIGERATE) mtype = PType.ICE;
 							if (this.ability == Ability.PIXILATE) mtype = PType.LIGHT;
-						} else {
-							if (this.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
 						}
+						if (this.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
 					}
 			        Color color = mtype.getColor();
 	                moveButton.setBackground(color);
