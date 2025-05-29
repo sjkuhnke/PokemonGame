@@ -94,7 +94,7 @@ public enum Move {
 	COMET_PUNCH(55,100,0,0,0,0,PType.GALACTIC,"A normal attack",true,15),
 	CONFUSE_RAY(0,100,0,0,2,0,PType.GHOST,"Confuses foe",false,10),
 	CONFUSION(50,100,10,0,1,0,PType.PSYCHIC,"% chance to Confuse foe",false,25),
-	CORE_ENFORCER(100,100,100,0,1,0,PType.GALACTIC,"% to supress foe's ability if they already moved for the turn",false,10),
+	CORE_ENFORCER(100,100,100,0,1,0,PType.GALACTIC,"% to suppress foe's ability if they already moved for the turn",false,10),
 	COSMIC_POWER(0,1000,0,0,2,0,PType.GALACTIC,"Raises user's Def and Sp.Def by 1",false,10),
 	COTTON_GUARD(0,1000,0,0,2,0,PType.GRASS,"Raises user's Defense by 3",false,5),
 	COVET(60,100,-1,0,0,0,PType.NORMAL,"Steals opponents item if user doesn't have one",true,25),
@@ -235,7 +235,7 @@ public enum Move {
 	HAZE(0,1000,0,0,2,0,PType.ICE,"Clears all stat changes on the field",false,25),
 	HEAD_SMASH(150,80,0,0,0,0,PType.ROCK,"User takes 1/2 of damage inflicted",true,5),
 	HEADBUTT(70,100,30,0,0,0,PType.NORMAL,"% chance of causing foe to flinch",true,15),
-	HEAL_PULSE(0,1000,0,0,2,0,PType.PSYCHIC,"Heals foe by 50% HP",false,10),
+	HEAL_PULSE(0,1000,0,0,2,0,PType.PSYCHIC,"Heals 1/2 of foe's max HP",false,10),
 	HEALING_CIRCLE(0,1000,0,0,2,0,PType.MAGIC,"Creates a circle on the user's side that heals incoming Pokemon for 25% of their HP, lasts 8 turns",false,10),
 	HEALING_WISH(0,1000,0,0,2,0,PType.PSYCHIC,"User faints. The next Pokemon sent in will be fully healed",false,5),
 	HEAT_CRASH(-1,100,0,0,0,0,PType.FIRE,"Damage is based on how heavy the user is compared to the foe",true,10),
@@ -743,12 +743,11 @@ public enum Move {
 			}
 			bp = user.determineBasePower(foe, this, faster, null, foe.ability, field, false);
 		}
-		if (user != null && bp > 0) {
+		if (user != null && bp > 0 && user.headbuttCrit >= 0) {
 			if (type == PType.NORMAL) {
 				if (user.ability == Ability.GALVANIZE || user.ability == Ability.REFRIGERATE || user.ability == Ability.PIXILATE) bp *= 1.2;
-			} else {
-				if (user.ability == Ability.NORMALIZE) bp *= 1.2;
 			}
+			if (user.ability == Ability.NORMALIZE) bp *= 1.2;
 			if (user.getItem() == Item.METRONOME && this == user.lastMoveUsed) bp *= (1 + (Math.min(1.0, (user.metronome + 1) * 0.2)));
 			int arcane = user.getStatusNum(Status.ARCANE_SPELL);
 			if (arcane != 0) {
@@ -826,9 +825,8 @@ public enum Move {
 				if (user.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
 				if (user.ability == Ability.REFRIGERATE) type = PType.ICE;
 				if (user.ability == Ability.PIXILATE) type = PType.LIGHT;
-			} else {
-				if (user.ability == Ability.NORMALIZE) type = PType.NORMAL;
 			}
+			if (user.ability == Ability.NORMALIZE) type = PType.NORMAL;
 		}
         Color color = type.getColor();
 	    JGradientButton typeButton = new JGradientButton(type.toString());

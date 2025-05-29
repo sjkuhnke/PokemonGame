@@ -1431,9 +1431,8 @@ public enum Item {
 						if (current.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
 						if (current.ability == Ability.REFRIGERATE) mtype = PType.ICE;
 						if (current.ability == Ability.PIXILATE) mtype = PType.LIGHT;
-					} else {
-						if (current.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
 					}
+					if (current.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
 				}
 		        Color color = mtype.getColor();
 		        moves[k].setSolid(false);

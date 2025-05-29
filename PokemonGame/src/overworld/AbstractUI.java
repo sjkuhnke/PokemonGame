@@ -605,9 +605,8 @@ public abstract class AbstractUI {
 								if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
 								if (p.ability == Ability.REFRIGERATE) mtype = PType.ICE;
 								if (p.ability == Ability.PIXILATE) mtype = PType.LIGHT;
-							} else {
-								if (p.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
 							}
+							if (p.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
 						}
 						Color color = mtype.getColor();
 						g2.setColor(color);
@@ -772,9 +771,8 @@ public abstract class AbstractUI {
 					if (p.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
 					if (p.ability == Ability.REFRIGERATE) type = PType.ICE;
 					if (p.ability == Ability.PIXILATE) type = PType.LIGHT;
-				} else {
-					if (p.ability == Ability.NORMALIZE) type = PType.NORMAL;
 				}
+				if (p.ability == Ability.NORMALIZE) type = PType.NORMAL;
 			}
 		}
 		g2.drawImage(type.getImage2(), x, y, null);
@@ -956,9 +954,8 @@ public abstract class AbstractUI {
 					if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
 					if (p.ability == Ability.REFRIGERATE) mtype = PType.ICE;
 					if (p.ability == Ability.PIXILATE) mtype = PType.LIGHT;
-				} else {
-					if (p.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
 				}
+				if (p.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
 			}
 			Color color = mtype.getColor();
 			g2.setColor(color);
