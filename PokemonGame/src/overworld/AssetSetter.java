@@ -21,6 +21,8 @@ public class AssetSetter {
 	public ArrayList<Entity> clerks = new ArrayList<>();
 	public HashMap<Item, Integer> itemMap = new HashMap<>();
 	
+	private static final int ALAKAZAM_RIGHT = -35;
+	private static final int ALAKAZAM_DOWN = -34;
 	private static final int LOGIC_DRAGON = -33;
 	private static final int FAITH_DRAGON = -32;
 	private static final int BREEDER = -31;
@@ -38,7 +40,7 @@ public class AssetSetter {
 	private static final int UP_XURKITREE = -19;
 	private static final int RYDER_UP = -18;
 	private static final int RYDER_DOWN = -17;
-	private static final int ALAKAZAM = -16;
+	//private static final int ALAKAZAM = -16;
 	private static final int KLARA = -15;
 	private static final int AVERY = -14;
 	private static final int GRANDMOTHER = -13;
@@ -1306,7 +1308,7 @@ public class AssetSetter {
 		
 		mapNum = 10;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM, "Alakazam", 30, 38, "Vxxxvhh...");
+		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_DOWN, "Alakazam", 30, 38, "Vxxxvhh...");
 		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, "Ryder", 29, 38, "Oh! Uh, mabuhay!", mapNum);
 		
 		mapNum = 11;
@@ -1601,7 +1603,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE, 31, 37, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 36, 35, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, "Ryder", 28, 41, "Howdy there! Glad to see you could make it in this weather.", mapNum);
-		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM, "Alakazam", 27, 41, "Vxxxvhh...");
+		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_DOWN, "Alakazam", 27, 41, "Vxxxvhh...");
 		
 		mapNum = 41;
 		index = 0;
@@ -2151,6 +2153,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 48, 46, "", "", 357);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 44, 54, "", "", 358);
 		
+		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_RIGHT, "Alakazam", 66, 31, "");
+		
 		// Nurses
 		gp.npc[153][index] = NPCSetup(NPC_NURSE, 31, 37, "", "", -1);
 		gp.npc[153][index] = NPCSetup(NPC_PC, 36, 35, "", "", -1);
@@ -2275,8 +2279,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 57, 39, "Battle me, and I'll light one corner of your path through the veil.", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 56, 51, "Not all here belong. Only one is chosen by our master. I will help you see which.", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 50, 57, "You must act with clarity, not chance. I'll offer a clue, if you win.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 40, 51, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 36, 43, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 40, 51, "The false ones mimic the true. Let me help you filter.", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 36, 43, "You'll need more than instinct. I offer the truth.", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 24, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 66, 39, "We were once alive. What are you, if not a ghost of your own convictions?", "You feel more solid now. More real.", 0);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 66, 33, "To believe is to fight with nothing but light in your hands.", "You held the light. Even in shadow.", 0);
@@ -2339,39 +2343,39 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 55, 75, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 60, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 49, 62, "", 197.1);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 59, 54, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 48, 52, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 65, 49, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 40, 47, "", "", 0, LEFT + RIGHT + DOWN);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 76, 40, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 78, 36, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 71, 36, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 64, 39, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 35, 38, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 59, 54, "Observe your footing - even a wrong step reveals a truth.", "Faltering isn't failure. It's correction in motion.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 48, 52, "Every path here obeys logic. Can you say the same for yourself?", "Even flawed steps follow a pattern.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 65, 49, "No divinity guards this maze. Only your decisions.", "You chose well - this time.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 40, 47, "Reflex without thought is just noise. Let's see if you can think.", "The silence after is always louder.", 0, LEFT + RIGHT + DOWN);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 76, 40, "This maze has no faith to lean on. Just ice and intellect.", "I see. You're not slipping after all.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 78, 36, "You want to ascend? Then prove your logic is sound.", "A solid premise. A tested conclusion.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 71, 36, "I won't offer riddles - only resistance.", "A clear result. That is all.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 64, 39, "No spirits here. Just minds honed by reality.", "You applied force... and found the answer.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 35, 38, "Uncertainty is the enemy. Precision is your ally.", "Consider this a controlled experiment.", 0);
 		
 		mapNum = 198;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 41, 31, "", "", -1);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 39, 43, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 75, 32, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 55, 56, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 68, 57, "", "", 0, ALL);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 39, 43, "Every break you make clears the way. Or traps you further.", "One shattered tile at a time, progress is made.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 75, 32, "Collapse what you must - so long as you can still stand.", "It held. You held.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 55, 56, "What breaks reveals what's solid.", "Yes. You understood the structure.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 68, 57, "Be deliberate. Overthinking is as dangerous as guessing.", "Efficient. Respectable.", 0, ALL);
 		
 		mapNum = 199;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 58, 74, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 62, 78, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 58, 82, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 54, 78, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 57, 64, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 56, 65, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 60, 65, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 59, 64, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 48, 58, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 42, 61, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 40, 34, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 37, 35, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 43, 35, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 58, 74, "You stepped in - and we already knew you'd come.", "You were prepared. So were we.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 62, 78, "This isn't faith. This is force, in sequence.", "Expected outcome: resistance broken.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 58, 82, "Patterns repeat - so do ambushes.", "Your adaptations are worth noting.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 54, 78, "You walked in alone. Did you calculate that risk?", "A misstep, but you recovered.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 57, 64, "Here's some more. The problem isn't finished yet.", "Your variables resolved cleanly.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 56, 65, "We learn from your errors. Do you?", "Your answer was efficient.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 60, 65, "Every loss sharpens the next trial.", "Statistically impressive.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 59, 64, "You persist. That in itself is data.", "The result: you endure.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 48, 58, "Single combat. Pure input. Clean output.", "You delivered a correct result.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 42, 61, "We are not meant to stop you. Just to test your proofs.", "Proof accepted.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 40, 34, "Three trials. One decision tree.", "You've reached the leaf node.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 37, 35, "Together, we present the last function.", "Your logic held. You're through.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 43, 35, "Predict, adapt, overcome. That's all that matters.", "As expected. Proceed.", 0);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 60, 75, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 58, 57, "", "", -1);
 		
@@ -2379,24 +2383,24 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 53, 85, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 53, "", "", -1);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 30, 28, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 77, 50, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 38, 50, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 62, 15, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 35, 10, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 30, 28, "You can't see the way, but the map is in your mind.", "You found structure in the blur.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 77, 50, "Even confusion follows rules. Find them.", "You've charted the logic beneath the haze.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 38, 50, "Clarity isn't given - it's earned through iteration.", "Iteration successful.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 62, 15, "The world's messy. Precision is rebellion.", "Your calculations brought you here.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 35, 10, "You're almost there. Reduce the noise.", "Signal acquired. You're through.", 0);
 		
 		mapNum = 201;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 54, 26, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 51, 15, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 77, 37, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 47, 45, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 61, 43, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 39, 52, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 41, 59, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 43, 54, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 53, 61, "", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 42, 45, "", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 54, 26, "There is one correct candidate. I have isolated it.", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 51, 15, "Capture without data is foolish. Let's run a test.", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 77, 37, "Only logic will pierce this puzzle. You may use mine.", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 47, 45, "You're here for a specific result. I can narrow the field.", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 61, 43, "I've excluded several options. Defeat me, and I'll show you.", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 39, 52, "Not all outcomes are viable. One is verifiable.", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 41, 59, "This isn't trial-and-error. I have a clue you'll want.", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 43, 54, "Let's refine your search parameters.", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 53, 61, "You know the goal. Let's eliminate the distractions.", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 42, 45, "Data before action. Win, and I'll share mine.", "", 0);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 74, 31, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 55, 56, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, "Warden", 76, 49, "Ah... hello there traveler...", mapNum);
@@ -3416,7 +3420,7 @@ public class AssetSetter {
 				gp.npc[13][4] = null;
 			}
 			if (!flag[2][1]) {
-				gp.npc[13][5] = NPCSetup(ALAKAZAM, "Alakazam", 27, 6, "Vxxxvhh...");
+				gp.npc[13][5] = NPCSetup(ALAKAZAM_DOWN, "Alakazam", 27, 6, "Vxxxvhh...");
 				gp.npc[13][6] = NPCSetup(RYDER_DOWN, "Ryder", 26, 6, "Hello my friend! Just the person I was looking for!", 13.2);
 			} else {
 				gp.npc[13][5] = null;
@@ -3428,7 +3432,7 @@ public class AssetSetter {
 		if (flag[2][1]) {
 			if (!flag[2][3]) {
 				gp.npc[13][7] = NPCSetup(RYDER_UP, "Ryder", 89, 19, "You shouldn't be seeing this");
-				gp.npc[13][8] = NPCSetup(ALAKAZAM, "Alakazam", 90, 19, "Vxxxvhh...");
+				gp.npc[13][8] = NPCSetup(ALAKAZAM_DOWN, "Alakazam", 90, 19, "Vxxxvhh...");
 			} else {
 				gp.npc[13][7] = null;
 				gp.npc[13][8] = null;
@@ -4436,8 +4440,13 @@ public class AssetSetter {
 			case TN_DOWN:
 				result.setupImages("/npc/tn");
 				break;
-			case ALAKAZAM:
+			case ALAKAZAM_DOWN:
 				result.setupImages("/npc/alakazam");
+				result.setDirection("down");
+				break;
+			case ALAKAZAM_RIGHT:
+				result.setupImages("/npc/alakazam");
+				result.setDirection("right");
 				break;
 			case SCOTT_DOWN:
 				result.setupImages("/npc/scott", true);

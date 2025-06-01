@@ -2120,6 +2120,21 @@ public class Script {
 			}
 		});
 		
+		scriptMap.put(197.1, (npc) -> { // merlin in Deep Chasm 0B
+			p.heal();
+			Task.addTask(Task.DIALOGUE, npc, "Your team's healed up. I've done what I can to shield us from the noise - the static, the pressure... you feel it too, don't you?");
+			Task.addTask(Task.DIALOGUE, npc, "This place... it's not like the tower where Arthra is. No whispers. Just cold, unrelenting silence. A silence that thinks.");
+			Task.addTask(Task.DIALOGUE, npc, "The Wardens here don't test your spirit - they dissect your logic. Strip away impulse. Demand pure, mechanical thought.");
+			Task.addTask(Task.DIALOGUE, npc, "First, here, a maze. Winding, shifting. Simple on the surface, but every wrong step adds up. Errors compound.");
+			Task.addTask(Task.DIALOGUE, npc, "Then ice blocks... thin, cracking. The puzzle breaks under miscalculation. Every move a variable. Misplace one and-back you go.");
+			Task.addTask(Task.DIALOGUE, npc, "After that, the trap tightens. Battles. Rapid. Relentless. One after another. No room for breath - just sequence.");
+			Task.addTask(Task.DIALOGUE, npc, "Next, a grid of logic gates, hidden as ice and spikes. Press one switch, another reacts. Cause and effect. Plan or perish.");
+			Task.addTask(Task.DIALOGUE, npc, "And finally... a puzzle of deduction. One correct form among many. Clues scattered like fragments of an algorithm.");
+			Task.addTask(Task.DIALOGUE, npc, "The Wardens... they don't *say* much. But they *think*. And they want *you* to think, too. No faith. No feeling. Just precision.");
+			Task.addTask(Task.DIALOGUE, npc, "I'll stay here, focus on holding the line against the mental pull. I can't fight - not while keeping the static out of our heads.");
+			Task.addTask(Task.DIALOGUE, npc, "So go. Keep your thoughts clear. Analyze, adapt, and above all - don't act without reason.");
+		});
+		
 		scriptMap.put(201.0, (npc) -> { // temple ball guy in Chasm -4A
 			if (!p.bag.contains(Item.TEMPLE_BALL)) {
 				Puzzle currentPuzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
