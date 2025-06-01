@@ -5588,9 +5588,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (move == Move.BLIZZARD) acc = 1000;
 		}
 		
-		if (move == Move.FROSTBIND && this.isType(PType.ICE)) acc = 1000;
-		if (move == Move.WILL$O$WISP && this.isType(PType.FIRE)) acc = 1000;
-		if (move == Move.THUNDER_WAVE && this.isType(PType.ELECTRIC)) acc = 1000;
+		if (move == Move.FROSTBIND && this.isType(PType.ICE)) acc = 100;
+		if (move == Move.WILL$O$WISP && this.isType(PType.FIRE)) acc = 100;
+		if (move == Move.THUNDER_WAVE && this.isType(PType.ELECTRIC)) acc = 100;
 		if (move == Move.TOXIC && this.isType(PType.POISON)) acc = 1000;
 		
 		if (foe.ability == Ability.WONDER_SKIN && move.cat == 2 && acc <= 100) acc = 50;
