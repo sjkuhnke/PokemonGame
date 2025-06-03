@@ -672,6 +672,13 @@ public class BattleUI extends AbstractUI {
 	    	for (int i = 0; i < 5; i++) {
 	    		foe.stat(foe, i, 6, null);
 	    	}
+	    	for (Pokemon p : user.getPlayer().team) {
+	    		if (p != null && p.item != null) {
+	    			p.lostItem = p.item;
+		    		p.item = null;
+		    		Task.addTask(Task.TEXT, p.nickname + " dropped its " + p.lostItem.toString() + " in a panic!");
+	    		}
+	    	}
 			aura = true;
 		}
 		Task.addSwapInTask(user, true);

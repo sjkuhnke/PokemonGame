@@ -720,12 +720,16 @@ public enum Item {
 	}
 	
 	public boolean getLearned(Pokemon p) {
-		int index1 = p.id - 1;
+		return getLearned(p.id);
+	}
+	
+	public boolean getLearned(int id) {
+		int index1 = id - 1;
 		int index2 = this.id - 93;
 		
 		//writeTMCSV(tm);
 		
-		return p.getLearned(index1, index2);
+		return Pokemon.getLearned(index1, index2);
 		
 	}
 	
