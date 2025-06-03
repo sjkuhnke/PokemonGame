@@ -5105,7 +5105,7 @@ public class UI extends AbstractUI {
 		if (!gp.keyH.shiftPressed || showBoxSummary || (showBoxParty && !party) || release) return;
 		int x = 0;
 		int y = gp.tileSize * 9;
-		int width = (int) (party ? gp.tileSize * 3.5 : gp.tileSize * 9.5);
+		int width = (int) (party ? gp.tileSize * 3.5 : gp.tileSize * 10.5);
 		int height = (int) (gp.tileSize * 1.5);
 		
 		drawSubWindow(x, y, width, height);

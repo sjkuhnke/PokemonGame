@@ -629,6 +629,7 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, s);
 			}
 			Task.addTask(Task.DIALOGUE, npc, "Trust me, I had to fight off some of them, they hit hard. Especially the stunt doubles...");
+			gp.ui.commandNum = 1;
 			Task.addTask(Task.CONFIRM, npc, "There won't be any leaving until it's clear! Are you SURE you're ready?", 2);
 			// Millie 2
 			Task.addTask(Task.TURN, player, "", Task.LEFT);
@@ -1343,6 +1344,7 @@ public class Script {
 						Task.addTask(Task.DIALOGUE, npc, s);
 					}
 				}
+				gp.ui.commandNum = 1;
 				Task.addTask(Task.CONFIRM, npc, "Are you ready to battle as soon as you enter? There's no going back once I let you in.", 0);
 			} else {
 				Task.addTask(Task.DIALOGUE, npc, "Merlin's pushing himself too hard, as usual. I'm making sure he doesn't keel over before the real fight starts.");

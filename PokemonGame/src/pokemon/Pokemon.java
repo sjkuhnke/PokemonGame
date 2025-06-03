@@ -775,6 +775,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.contains(Move.TRICK) && this.getItem() != null && this.getItem().isTrickable()) bestMoves.add(Move.TRICK);
 		if (bestMoves.contains(Move.SWITCHEROO) && this.getItem() != null && this.getItem().isTrickable()) bestMoves.add(Move.SWITCHEROO);
 		if (bestMoves.contains(Move.TRICK_TACKLE) && this.tricked != foe && this.getItem() != null && this.getItem().isTrickable()) bestMoves.add(Move.TRICK_TACKLE);
+		if (bestMoves.contains(Move.TRICK) && foe.getItem() == Item.EVERSTONE) bestMoves.removeIf(Move.TRICK::equals);
+		if (bestMoves.contains(Move.SWITCHEROO) && foe.getItem() == Item.EVERSTONE) bestMoves.removeIf(Move.SWITCHEROO::equals);
+		if (bestMoves.contains(Move.TRICK_TACKLE) && foe.getItem() == Item.EVERSTONE) bestMoves.removeIf(Move.TRICK_TACKLE::equals);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TRICK_ROOM) && field.contains(field.fieldEffects, Effect.TRICK_ROOM)) bestMoves.removeIf(Move.TRICK_ROOM::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_ROOM) && field.contains(field.fieldEffects, Effect.MAGIC_ROOM)) bestMoves.removeIf(Move.MAGIC_ROOM::equals);
@@ -939,7 +942,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return abilities[id - 1][slot];
 	}
 	
-	public boolean getLearned(int row, int col) {
+	public static boolean getLearned(int row, int col) {
 		return tms[row][col];
 	}
 	
@@ -2170,6 +2173,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					&& (moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST)
 					|| (moveType == PType.ICE && foeAbility == Ability.WARM_HEART)
 					|| (moveType == PType.PSYCHIC && foeAbility == Ability.COLD_HEART)
+					|| (moveType == PType.DRAGON && foeAbility == Ability.WHITE_HOLE)
 					&& !(move.cat == 2 && acc > 100)) {
 				Task.addAbilityTask(foe);
 				Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
@@ -5661,7 +5665,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if ((moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST) ||
 				(moveType == PType.ICE && foeAbility == Ability.WARM_HEART) ||
-				(moveType == PType.PSYCHIC && foeAbility == Ability.COLD_HEART)) {
+				(moveType == PType.PSYCHIC && foeAbility == Ability.COLD_HEART) ||
+				(moveType == PType.DRAGON && foeAbility == Ability.WHITE_HOLE)) {
 			if (foe.getItem() != Item.RING_TARGET) return 0;
 		}
 		
@@ -8827,14 +8832,16 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 				Pokemon pokemon = staticEnc ? new Pokemon(id, level, true) : new Pokemon(id, level, false, true);				
 				pokemon.moveset = moves;
-				if (staticEnc) {
-					pokemon.setStaticIVs();
-				} else {
-					if (nature == null) {
-						long seed = pokemon.generateSeed(pokemon.id, pokemon.level, pokemon.moveset);
-						pokemon.setNature(seed);
+				if (pokemon.id != 235) { // dragowrath always has perfect iv's and a neutral nature
+					if (staticEnc) {
+						pokemon.setStaticIVs();
 					} else {
-						pokemon.nat = nature;
+						if (nature == null) {
+							long seed = pokemon.generateSeed(pokemon.id, pokemon.level, pokemon.moveset);
+							pokemon.setNature(seed);
+						} else {
+							pokemon.nat = nature;
+						}
 					}
 				}
 				
@@ -8935,6 +8942,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			if (thisMovebank.contains(m)) movesValid[i] = true;
+			if (m == Move.ENDURE) movesValid[i] = true; // endure is a universal move tutor move
 		}
 		
 		boolean movesetValid = true;
@@ -8946,14 +8954,21 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		int pokemonChecked = 1;
 		int prevoID = this.id;
-		while (!movesetValid && pokemonChecked < 3) { // check prevos
+		while (!movesetValid && pokemonChecked < 4) { // check prevos
 			prevoID--;
 			String evolvedString = Pokemon.getEvolveString(prevoID);
-			if (evolvedString != null && (evolvedString.contains(Pokemon.getName(this.id)) || evolvedString.contains(Pokemon.getName(this.id - 1)))) {
+			if (evolvedString != null && (evolvedString.contains(Pokemon.getName(this.id)) || evolvedString.contains(Pokemon.getName(this.id - 1)) || evolvedString.contains(Pokemon.getName(this.id - 2)))) {
 				ArrayList<Move> prevoMovebank = Pokemon.getMovebankAtLevel(prevoID, this.level);
 				for (int i = 0; i < this.moveset.length; i++) {
 					if (!movesValid[i]) {
 						Move m = this.moveset[i].move;
+						int tmIndex = tmMoves.indexOf(m);
+						if (tmIndex >= 0) {
+							Item tmItem = tms.get(tmIndex);
+							if (tmItem.getLearned(prevoID)) {
+								movesValid[i] = true;
+							}
+						}
 						if (prevoMovebank.contains(m)) movesValid[i] = true;
 					}
 				}
