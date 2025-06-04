@@ -92,7 +92,7 @@ public class Main {
 		window.setVisible(true);
 	}
 
-	public static void loadSave(JFrame window, String fileName, WelcomeMenu welcomeMenu, boolean[] selectedOptions) {
+	public static void loadSave(JFrame window, String fileName, WelcomeMenu welcomeMenu, boolean[] selectedOptions, boolean nuzlocke) {
 		try {
 			// Check if the directory exists, create it if not
             Path savesDirectory = Paths.get("./saves/");
@@ -130,6 +130,7 @@ public class Main {
 	    } catch (IOException | ClassNotFoundException e) {
 	        // If there's an error reading the file, create a new Player object
 	        gp.player.p = new Player(gp);
+	        if (nuzlocke) gp.player.p.setupNuzlocke();
 	    }
 		
 		PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / gp.tileSize), (int) Math.round(gp.player.worldY * 1.0 / gp.tileSize));

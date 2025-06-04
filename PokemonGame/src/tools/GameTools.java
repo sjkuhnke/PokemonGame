@@ -6,9 +6,10 @@ import overworld.GamePanel;
 import pokemon.Pokemon;
 import tile.TileManager;
 
-public class Driver {
+public class GameTools {
 	
 	static GamePanel gp;
+	static DefaultComboBoxModel<Pokemon> allPokemon;
 
 	public static void main(String[] args) {
 		gp = new GamePanel(null);
@@ -38,6 +39,7 @@ public class Driver {
 	public static void load() {
 		loadPokemon();
 		new TileManager(gp);
+		setupAllPokemon();
 	}
 	
 	public static void loadPokemon() {
@@ -45,6 +47,14 @@ public class Driver {
 		Pokemon.readMovebanksFromCSV();
 		Pokemon.readTrainersFromCSV();
 		Pokemon.readEntiresFromCSV();
+	}
+	
+	public static void setupAllPokemon() {
+		Pokemon[] p = new Pokemon[Pokemon.MAX_POKEMON];
+		for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
+			p[k - 1] = new Pokemon(k, 50, true, false);
+		}
+		allPokemon = new DefaultComboBoxModel<>(p);
 	}
 
 }

@@ -10,8 +10,10 @@ public class Bag implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public int[] itemList;
 	public int[] count;
+	public Player p;
 	
-	public Bag() {
+	public Bag(Player p) {
+		this.p = p;
 		Item[] items = Item.values();
 		itemList = setupItemList(items);
 		count = new int[items.length];
@@ -28,11 +30,14 @@ public class Bag implements Serializable {
 	}
 
 	public void add(Item item) {
-		count[item.getID()]++;
+		add(item, 1);
 	}
 	
 	public void add(Item item, int amt) {
 		count[item.getID()] += amt;
+		if (item.isBall()) {
+			if (p.nuzlocke) p.nuzlockeStarted = true;
+		}
 	}
 	
 	public void remove(Item item) {

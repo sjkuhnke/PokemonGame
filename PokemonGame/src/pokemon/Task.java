@@ -213,6 +213,7 @@ public class Task {
 	}
 	
 	public static Task addTask(int type, Status status, String string, Pokemon p) {
+		if (gp != null && gp.gameState != GamePanel.BATTLE_STATE && gp.gameState != GamePanel.SIM_BATTLE_STATE) return null;
 		Task t = addTask(type, string, p);
 		t.status = status;
 		return t;

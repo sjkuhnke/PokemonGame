@@ -165,6 +165,7 @@ public enum Item {
 	LIFE_ORB(62,0,0,new Color(184, 72, 144),Item.HELD_ITEM,null,"An orb that boosts the power of the holder's moves, but at the cost of some HP."),
 	FLAME_ORB(63,0,0,new Color(225, 3, 3),Item.HELD_ITEM,null,"A bizarre orb that gives off heat when touched and will afflict the holder with a burn during battle."),
 	TOXIC_ORB(64,0,0,new Color(148, 112, 172),Item.HELD_ITEM,null,"A bizarre orb that exudes toxins when touched and will badly poison the holder during battle."),
+	FROST_ORB(387,0,0,new Color(148, 112, 172),Item.HELD_ITEM,null,"A bizarre orb that gives off extreme cold when touched and will frostbite the holder during battle."),
 	ROCKY_HELMET(65,0,0,new Color(241, 188, 27),Item.HELD_ITEM,null,"If another Pokemon makes direct contact with the holder, that Pokemon will be damaged."),
 	PROTECTIVE_PADS(342,0,0,Color.BLACK,Item.HELD_ITEM,null,"These pads protect the holder from effects triggered by making direct contact with another Pokemon."),
 	PUNCHING_GLOVE(343,0,0,Color.BLACK,Item.HELD_ITEM,null,"This protective glove boosts the power of the holder's punching moves and prevents direct contact with targets."),
@@ -349,7 +350,13 @@ public enum Item {
 	TM97(197,1000,0,Color.BLACK,Item.TMS,Move.RADIANT_BREAK,"Teaches a Pokemon this move."),
 	TM98(198,0,0,Color.BLACK,Item.TMS,Move.FLIP_TURN,"Teaches a Pokemon this move."),
 	TM99(199,0,0,Color.BLACK,Item.TMS,Move.RETURN,"Teaches a Pokemon this move."),
+	INFINITE_REPEL(393,0,0,Color.BLACK,Item.KEY_ITEM,true,"Toggles infinite repel"),
+	HEALING_PACK(388,0,0,Color.BLACK,Item.KEY_ITEM,true,"Heals your team to full!"),
+	POCKET_PC(389,0,0,Color.BLACK,Item.KEY_ITEM,true,"Opens the PC from anywhere (if not in a gauntlet!)"),
+	RARE_CANDY_BOX(390,0,0,Color.BLACK,Item.KEY_ITEM,true,"Elevates a Pokemon by 1 level"),
 	EDGE_KIT(44,0,0,new Color(232, 52, 54),Item.KEY_ITEM,true,"Edges ;) your Pokemon until they're about to bust :{D"),
+	STATUS_KIT(391,0,0,Color.BLACK,Item.KEY_ITEM,true,"Inflicts a status of your choosing (if not immune to that status)"),
+	DAMAGE_KIT(392,0,0,Color.BLACK,Item.KEY_ITEM,true,"Damages a Pokemon by 1 HP (won't cause it to faint)"),
 	CALCULATOR(200,0,0,Color.BLACK,Item.KEY_ITEM,true,"Calculates damage simulating a battle"),
 	DEX_NAV(263,0,0,Color.BLACK,Item.KEY_ITEM,true,"Shows wild Pokemon nearby"),
 	CHERI_BERRY(221,10,2,new Color(232, 96, 80),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to free itself from paralysis."),
@@ -699,6 +706,7 @@ public enum Item {
 	        }
 	        result = sb.toString().trim();
 	        result = result.replace("Pp", "PP");
+	        result = result.replace("Pc", "PC");
 	    }
 
 	    return result;
@@ -2344,6 +2352,7 @@ public enum Item {
 		return this != null
 				&& this.isChoiceItem() || this == Item.RING_TARGET
 				|| this == Item.FLAME_ORB || this == Item.TOXIC_ORB
+				|| this == Item.FROST_ORB
 				|| this == Item.LAGGING_TAIL || this == Item.IRON_BALL
 				|| this == Item.STICKY_BARB;
 	}

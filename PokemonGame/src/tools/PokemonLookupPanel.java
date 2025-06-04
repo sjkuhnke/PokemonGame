@@ -60,15 +60,12 @@ public class PokemonLookupPanel extends JPanel {
 	private void initialize() {
 		setLayout(new BorderLayout());
 		
-		pokemonComboBox = new JComboBox<>();
+		pokemonComboBox = new JComboBox<>(GameTools.allPokemon);
 		idField = new JTextField(10);
 		summaryButton = new JButton("Summary");
 		
 		selectedPokemon = new JLabel("N/A");
 		
-		for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
-			pokemonComboBox.addItem(new Pokemon(k, 50, true, false));
-		}
 		AutoCompleteDecorator.decorate(pokemonComboBox);
 	}
 	

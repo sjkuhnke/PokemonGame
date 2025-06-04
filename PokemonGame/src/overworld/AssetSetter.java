@@ -577,6 +577,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 39, Item.PSYCHIC_SEED, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(77, 80, Item.GRASSY_SEED, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(75, 71, Item.DAMAGED_MOSS, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(91, 59, Item.FROST_ORB, mapNum);
 		
 		mapNum = 33;
 		objIndex = 0;
@@ -3156,23 +3157,25 @@ public class AssetSetter {
 		
 		mapNum = 149;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 68, BARRIER, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 67, BARRIER, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 66, BARRIER, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 45, BEAM_1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 45, BEAM_2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 44, BEAM_1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 44, BEAM_2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 43, BEAM_1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 43, BEAM_2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 42, BEAM_1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 42, BEAM_2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 41, BEAM_1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 41, BEAM_2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 40, BEAM_1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 40, BEAM_2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(49, 39, BEAM_1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 39, BEAM_2, mapNum, map);
+		if (!gp.player.p.flag[7][5]) {
+			gp.iTile[mapNum][iIndex] = ITileSetup(49, 68, BARRIER, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(49, 67, BARRIER, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(49, 66, BARRIER, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(49, 45, BEAM_1, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(50, 45, BEAM_2, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(49, 44, BEAM_1, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(50, 44, BEAM_2, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(49, 43, BEAM_1, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(50, 43, BEAM_2, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(49, 42, BEAM_1, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(50, 42, BEAM_2, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(49, 41, BEAM_1, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(50, 41, BEAM_2, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(49, 40, BEAM_1, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(50, 40, BEAM_2, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(49, 39, BEAM_1, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(50, 39, BEAM_2, mapNum, map);
+		}
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 50, RIGHT, 1, mapNum, map);
 		
 		mapNum = 150;

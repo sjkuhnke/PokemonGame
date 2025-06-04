@@ -478,6 +478,7 @@ public enum Move {
 	SNARL(55,95,100,0,1,0,PType.DARK,"% chance to lower foe's Sp.Atk",false,15),
 	SNORE(85,100,0,0,1,0,PType.NORMAL,"This attack only works if the user is asleep",false,25),
 	SNOWSCAPE(0,1000,0,0,2,0,PType.ICE,"Sets the weather to SNOW for 5 turns",false,10),
+	SNOW_PLUME(80,100,30,0,1,0,PType.ICE,"% to Frostbite foe",false,15),
 	SOAK(0,100,0,0,2,0,PType.WATER,"Changes foe's type to WATER",false,15),
 	SOLAR_BEAM(120,100,0,0,1,0,PType.GRASS,"User must charge up on the first turn, attacks on the second. No charge in SUN",false,10),
 	SOLAR_BLADE(125,100,0,0,0,0,PType.GRASS,"User must charge up on the first turn, attacks on the second. No charge in SUN",true,10),

@@ -78,7 +78,7 @@ public class Script {
 				}
 				if (!p.flag[0][20] && amt >= 1) {
 					String plural = amt > 1 ? "s!" : "!";
-					Task.addTask(Task.DIALOGUE, npc, "Oh nice! You've seen " + amt + " form" + plural);
+					Task.addTask(Task.DIALOGUE, npc, "Oh nice! You've caught " + amt + " form" + plural);
 					Task.addTask(Task.DIALOGUE, npc, "Here son, take this for helping me out! You'd get better use out of it than me, anyways!");
 					Task t = Task.addTask(Task.ITEM, "");
 					t.item = Item.AMULET_COIN;
@@ -498,7 +498,7 @@ public class Script {
 				}
 				if (!p.flag[1][21] && amt >= 3) {
 					String plural = amt > 1 ? "s!" : "!";
-					Task.addTask(Task.DIALOGUE, npc, "Wow! You've already seen " + amt + " form" + plural);
+					Task.addTask(Task.DIALOGUE, npc, "Wow! You've already caught " + amt + " form" + plural);
 					Task.addTask(Task.DIALOGUE, npc, "Here, I have a special Electric-type move as a gift for helping me out!");
 					Task t = Task.addTask(Task.ITEM, "");
 					t.item = Item.TM32;
@@ -830,7 +830,7 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "I brought a couple Flamigo as travel buddies from my home region, and I'm entrusting one to help you out with the Ice-types!");
 			Task.addTask(Task.TEXT, "You received Flamigo!");
 			Pokemon p = new Pokemon(246, 35, true, false);
-			t = Task.addTask(Task.GIFT, "", p);
+			Task.addTask(Task.GIFT, "", p);
 			Task.addTask(Task.DIALOGUE, npc, "...Just probably don't let it get hit by an Ice move. Anyways, toodles, and good luck kid!");
 			Task.addTask(Task.FLASH_IN, "");
 			Task.addTask(Task.UPDATE, "");

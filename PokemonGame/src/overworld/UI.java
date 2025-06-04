@@ -277,6 +277,10 @@ public class UI extends AbstractUI {
 			showIVOptions();
 		}
 		
+		if (showStatusOptions) {
+			showStatusOptions();
+		}
+		
 		if (showBoxParty) {
 			drawParty(null);
 			String sText = partySelectedNum >= 0 || itemSwapP != null ? "Deselect" : "Close";
@@ -329,9 +333,9 @@ public class UI extends AbstractUI {
 			break;
 		case Task.GIFT:
 			// currentTask.wipe = Gift is egg
-			gp.player.p.catchPokemon(currentTask.p, !currentTask.wipe);
+			boolean result = gp.player.p.catchPokemon(currentTask.p, !currentTask.wipe);
 			currentTask.p.item = currentTask.item;
-			if (!currentTask.wipe) setNicknaming(true);
+			if (!currentTask.wipe && result) setNicknaming(true);
 			currentTask = null;
 			break;
 		case Task.NICKNAME:
@@ -2942,7 +2946,7 @@ public class UI extends AbstractUI {
 		}
 		
 		if (currentTask == null) {
-			if (gp.player.p.bag.count[Item.RARE_CANDY.getID()] <= 0) {
+			if (currentItem == Item.RARE_CANDY && gp.player.p.bag.count[Item.RARE_CANDY.getID()] <= 0) {
 				gp.gameState = GamePanel.MENU_STATE;
 				currentItems = gp.player.p.getItems(currentPocket);
 				bagState = 0;
@@ -2973,6 +2977,7 @@ public class UI extends AbstractUI {
 			        		m.currentPP = m.maxPP;
 				        	showMessage(m.move.toString() + "'s PP was restored!");
 				        	gp.player.p.bag.remove(currentItem);
+				        	moveOption = -1;
 			        		currentItems = gp.player.p.getItems(currentPocket);
 			        	} else {
 			        		showMessage("It won't have any effect.");
@@ -3091,20 +3096,138 @@ public class UI extends AbstractUI {
 		drawToolTips("OK", null, "Back", "Back");
 	}
 	
+	private void showStatusOptions() {
+		drawStatusOptions(currentPokemon, currentHeader);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (moveOption >= 0) {
+				currentPokemon.status = Status.HEALTHY;
+				Status status = Status.getNonVolStatuses().get(moveOption);
+				switch(status) {
+				case BURNED:
+					if (currentPokemon.isType(PType.FIRE)) {
+						showMessage("It won't have any effect.");
+					} else {
+						currentPokemon.burn(false, null);
+						if (currentPokemon.status == status) showMessage(currentPokemon + " was burned!");
+					}
+					break;
+				case ASLEEP:
+					if (currentPokemon.isType(PType.PSYCHIC) && !gp.player.p.bag.contains(Item.TM49)) { // doesn't have rest
+						showMessage("It won't have any effect.");
+					} else {
+						currentPokemon.sleep(false, null);
+						if (currentPokemon.status == status) showMessage(currentPokemon + " was slept!");
+					}
+					break;
+				case PARALYZED:
+					if (currentPokemon.isType(PType.ELECTRIC)) {
+						showMessage("It won't have any effect.");
+					} else {
+						currentPokemon.paralyze(false, null);
+						if (currentPokemon.status == status) showMessage(currentPokemon + " was paralyzed!");
+					}
+					break;
+				case FROSTBITE:
+					if (currentPokemon.isType(PType.ICE)) {
+						showMessage("It won't have any effect.");
+					} else {
+						currentPokemon.freeze(false, null);
+						if (currentPokemon.status == status) showMessage(currentPokemon + " was frostbitten!");
+					}
+					break;
+				case POISONED:
+					if (currentPokemon.isType(PType.POISON) || currentPokemon.isType(PType.STEEL)) {
+						showMessage("It won't have any effect.");
+					} else {
+						currentPokemon.poison(false, null);
+						if (currentPokemon.status == status) showMessage(currentPokemon + " was poisoned!");
+					}
+					break;
+				case TOXIC:
+					if (currentPokemon.isType(PType.POISON) || currentPokemon.isType(PType.STEEL)) {
+						showMessage("It won't have any effect.");
+					} else {
+						currentPokemon.toxic(false, null);
+						if (currentPokemon.status == status) showMessage(currentPokemon + " was badly poisoned!");
+					}
+					break;
+				default:
+					break;
+				}
+				showStatusOptions = false;
+				moveOption = -1;
+			}
+		}
+	}
+	
+	public void drawStatusOptions(Pokemon p, String header) {
+		int x = (int) (gp.tileSize * 5.5);
+		int y = gp.tileSize * 2;
+		int width = gp.tileSize * 5;
+		int height = gp.tileSize * 8;
+		drawSubWindow(x, y, width, height);
+		
+		int ivWidth = gp.tileSize * 4;
+		int ivHeight = (int) (gp.tileSize * 7 / 8);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.drawString(header, x, y);
+		y += gp.tileSize / 2;
+		
+		ArrayList<Status> statuses = Status.getNonVolStatuses();
+		
+		for (int i = 0; i < statuses.size(); i++) {
+			Status status = statuses.get(i);
+			g2.setFont(g2.getFont().deriveFont(24F));
+			g2.setColor(status.getColor());
+			g2.fillRoundRect(x, y, ivWidth, ivHeight, 10, 10);
+			g2.setColor(status.getTextColor());
+	        String text = status.getName();
+	        g2.drawString(text, getCenterAlignedTextX(text, x + ivWidth / 2), y + gp.tileSize / 2);
+	        if (moveOption == i) {
+	            g2.setColor(Color.RED);
+	            g2.drawRoundRect(x - 2, y - 2, ivWidth + 4, ivHeight + 4, 10, 10);
+	        }
+	        y += gp.tileSize;
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			moveOption--;
+			if (moveOption < 0) {
+				moveOption = statuses.size() - 1;
+			}
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			moveOption++;
+			if (moveOption >= statuses.size()) {
+				moveOption = 0;
+			}
+		}
+		
+		drawToolTips("OK", null, "Back", "Back");
+	}
+	
 	private void useRareCandy(Pokemon pokemon) {
         if (pokemon.getLevel() == 100) {
             showMessage("It won't have any effect.");
             return;
         }
         gp.player.p.elevate(pokemon);
-        gp.player.p.bag.remove(Item.RARE_CANDY);
+        if (currentItem == Item.RARE_CANDY) gp.player.p.bag.remove(Item.RARE_CANDY);
 	}
 
 	private void useItem() {
 		drawItemUsingScreen();
 		drawParty(currentItem);
-		if (gp.keyH.wPressed && !showMoveOptions && !showIVOptions) {
-			if (currentItem == Item.RARE_CANDY) {
+		if (gp.keyH.wPressed && !showMoveOptions && !showIVOptions && !showStatusOptions) {
+			if (currentItem == Item.RARE_CANDY || currentItem == Item.RARE_CANDY_BOX) {
 				gp.gameState = GamePanel.RARE_CANDY_STATE;
 			} else {
 				gp.keyH.wPressed = false;
@@ -3560,10 +3683,11 @@ public class UI extends AbstractUI {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
+				boolean inGauntlet = !gp.canFly();
 				currentItem = currentItems.get(bagNum[currentPocket - 1]).getItem();
 				if (currentItem == Item.REPEL) {
 					if (!gp.player.p.repel) {
-						useRepel();
+						gp.player.useRepel();
 				    } else {
 				    	showMessage("It won't have any effect.");
 				    }
@@ -3595,6 +3719,30 @@ public class UI extends AbstractUI {
 					drawLight = gp.determineMachineLight();
 				} else if (currentItem == Item.LETTER) {
 					gp.gameState = GamePanel.LETTER_STATE;
+				} else if (currentItem == Item.HEALING_PACK) {
+					if (inGauntlet) {
+						boolean flag = gp.player.p.flag[1][2];
+						showMessage("Can't use this " + (flag ? "now!" : "yet!"));
+					} else {
+						gp.player.p.heal();
+						showMessage("Your Pokemon were restored to full health!");
+					}
+					bagState = 0;
+				} else if (currentItem == Item.POCKET_PC) {
+					if (inGauntlet) {
+						boolean flag = gp.player.p.flag[1][2];
+						showMessage("Can't use this " + (flag ? "now!" : "yet!"));
+					} else {
+						bagState = 0;
+						NPC_PC pc = new NPC_PC(gp);
+						gp.openBox(pc);
+					}
+				} else if (currentItem == Item.INFINITE_REPEL) {
+					gp.player.p.steps = gp.player.p.repel ? 0 : 5000;
+					gp.player.p.repel = !gp.player.p.repel;
+					String onoff = gp.player.p.repel ? "on!" : "off.";
+					showMessage("Repel mode was turned " + onoff);
+					bagState = 0;
 				} else if (!currentItem.isUsable()) {
 					// do nothing
 				} else {
@@ -4685,7 +4833,7 @@ public class UI extends AbstractUI {
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				gp.gameState = GamePanel.PLAY_STATE;
-				useRepel();
+				gp.player.useRepel();
 			}
 		}
 		y += gp.tileSize;
@@ -4700,13 +4848,6 @@ public class UI extends AbstractUI {
 		}
 		
 		drawToolTips("OK", null, "Back", "Back");
-	}
-	
-	private void useRepel() {
-		gp.player.p.repel = true;
-		gp.player.p.steps = 1;
-		gp.player.p.bag.remove(Item.REPEL);
-		currentItems = gp.player.p.getItems(currentPocket);
 	}
 
 	public void showAreaName() {

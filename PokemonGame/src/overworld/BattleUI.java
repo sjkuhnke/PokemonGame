@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
+import entity.PlayerCharacter;
 import pokemon.*;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
@@ -63,6 +64,7 @@ public class BattleUI extends AbstractUI {
 	protected Field field;
 	protected boolean baton;
 	protected boolean aura;
+	public boolean invalidEncounter;
 	public char encType;
 	
 	public boolean cancellableParty;
@@ -369,7 +371,7 @@ public class BattleUI extends AbstractUI {
 				currentTask = null;
 				return;
 			}
-			if (currentTask.wipe) wipe();
+			if (currentTask.wipe) gp.wipe(user, foe);
 			subState = END_STATE;
 			break;
 		case Task.PARTY:
@@ -652,6 +654,10 @@ public class BattleUI extends AbstractUI {
 	    userHP = user.currentHP;
 	    maxUserHP = user.getStat(0);
 	    aura = false;
+	    invalidEncounter = false;
+	    if (gp.player.p.nuzlocke && !gp.player.p.canCatchPokemonHere(PlayerCharacter.getMetAt())) {
+			invalidEncounter = true;
+		}
 		
 		if (foe.trainerOwned() && staticID == -1) {
 			Task.addSwapInTask(foe, false);
@@ -1014,6 +1020,7 @@ public class BattleUI extends AbstractUI {
 	
 	protected void drawCatchWindow() {
 		if (foe.trainerOwned() && (staticID < 0 || aura)) return;
+		if (invalidEncounter) return;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		int x = gp.screenWidth - (gp.tileSize * 4);
 		int y = (int) (gp.screenHeight - (gp.tileSize * 5.5));
@@ -1123,6 +1130,15 @@ public class BattleUI extends AbstractUI {
 		}
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
+			if (gp.player.p.nuzlocke && user.level > Trainer.getLevelCap(gp.getEffectiveBadges(foe))) {
+				if (user.getPlayer().hasValidMembers()) {
+					subState = MOVE_MESSAGE_STATE;
+					showMessage(user.nickname + " is over the level cap: switch it out!");
+				} else {
+					wipe();
+				}
+				return;
+			}
 			
 			if (moves[moveNum].currentPP == 0 && !user.movesetEmpty()) {
 				subState = MOVE_MESSAGE_STATE;
@@ -1188,7 +1204,10 @@ public class BattleUI extends AbstractUI {
 			if (fMove != null && uMove == Move.SUCKER_PUNCH && fMove.cat == 2) uMove = Move.FAILED_SUCKER;
 			faster.moveInit(slower, uMove, true);
 			faster = faster.trainer.getCurrent();
-			if (slower.trainer != null) slower = slower.trainer.getCurrent();
+			if (slower.trainer != null && slower != slower.trainer.getCurrent()) {
+				slower = slower.trainer.getCurrent();
+				foeCanMove = false;
+			}
 			
 			// Check for swap (AI)
 			if (foe.trainer != null && foe.trainer.hasValidMembers() && slower.hasStatus(Status.SWITCHING)) {
@@ -1304,18 +1323,24 @@ public class BattleUI extends AbstractUI {
 			}
 		}
 	    if (user.getPlayer().wiped()) {
-	    	boolean fullWipe = staticID != 235;
-	    	if (fullWipe) {
-	    		int loss = gp.player.p.getMoney() >= 500 ? 500 : gp.player.p.getMoney();
-		    	Task.addTask(Task.TEXT, "You have no more Pokemon that can fight!\nYou lost $" + loss + "!");
-		    	Task t = Task.addTask(Task.END, "");
-				t.setWipe(true);
-	    	} else { // dragowrath
-	    		Task.addTask(Task.END, "You have no more Pokemon that can fight!");
-	    	}
+	    	wipe();
 		}
 	}
 	
+	private void wipe() {
+		subState = TASK_STATE;
+		boolean fullWipe = staticID != 235;
+    	if (fullWipe) {
+    		if (user.getPlayer().nuzlocke) user.getPlayer().isValidNuzlocke = false; // player wiped
+    		int loss = gp.player.p.getMoney() >= 500 ? 500 : gp.player.p.getMoney();
+	    	Task.addTask(Task.TEXT, "You have no more Pokemon that can fight!\nYou lost $" + loss + "!");
+	    	Task t = Task.addTask(Task.END, "");
+			t.setWipe(true);
+    	} else { // dragowrath
+    		Task.addTask(Task.END, "You have no more Pokemon that can fight!");
+    	}
+	}
+
 	protected boolean hasAlive() {
 		if (!foe.isFainted()) return true;
 		
@@ -1324,17 +1349,6 @@ public class BattleUI extends AbstractUI {
 		}
 
 		return false;
-	}
-	
-	protected void wipe() {
-		gp.endBattle(-1, -1);
-		user.getPlayer().setMoney(user.getPlayer().getMoney() - 500);
-		gp.eHandler.teleport(Player.spawn[0], Player.spawn[1], Player.spawn[2], false);
-		user.trainer.heal();
-		if (foe.trainer != null) {
-			foe.trainer.reset();
-		}
-		Item.useCalc(gp.player.p.current, null, null, false);
 	}
 	
 	@Override
@@ -1350,6 +1364,16 @@ public class BattleUI extends AbstractUI {
 				currentDialogue = select.getNickname() + " is already out!";
 			} else if (cancellableParty && user.isTrapped(foe)) {
         		currentDialogue = "You are trapped and cannot switch!";
+			} else if (gp.player.p.nuzlocke && select.level > Trainer.getLevelCap(gp.getEffectiveBadges(foe))) {
+				Pokemon current = user.getPlayer().getCurrent();
+				user.getPlayer().setCurrent(select);
+				boolean hasValid = user.getPlayer().hasValidMembers();
+				user.getPlayer().setCurrent(current);
+				if (hasValid) {
+					currentDialogue = select.nickname + " is over the level cap!";
+				} else {
+					wipe();
+				}
 			} else {
 				subState = TASK_STATE;
 				boolean fainted = user.isFainted();

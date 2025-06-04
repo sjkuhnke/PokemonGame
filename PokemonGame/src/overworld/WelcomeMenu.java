@@ -223,27 +223,49 @@ public class WelcomeMenu extends JPanel {
 	        };
 
 	        gp.player.currentSave = save;
-	        Main.loadSave(window, save, this, selectedOptions);
+	        Main.loadSave(window, save, this, selectedOptions, false);
 	    });
 
 	    newGameButton.addActionListener(e -> {
 	        String save = null;
+	        boolean nuzlocke = false;
 
 	        ArrayList<String> filesFinal = getDatFiles();
+	        
+	        JPanel panel = new JPanel(new BorderLayout(5, 5));
 
+	        JPanel inputPanel = new JPanel(new GridLayout(0, 1));
+	        JTextField saveField = new JTextField();
+	        JCheckBox nuzlockeBox = new JCheckBox("Enable Nuzlocke Mode");
+	        
+	        inputPanel.add(new JLabel("Enter a new save file name (A-Z, 0-9, _, and - are permitted, ≤ 20 characters):"));
+	        inputPanel.add(saveField);
+	        inputPanel.add(nuzlockeBox);
+
+	        panel.add(inputPanel, BorderLayout.CENTER);
+
+	        int result;
 	        do {
-	            save = JOptionPane.showInputDialog(this, "Enter a new save file name (A-Z, 0-9, _, and - are permitted, <= 20 characters):");
+	            result = JOptionPane.showConfirmDialog(
+	                null, 
+	                panel, 
+	                "Create New Save", 
+	                JOptionPane.OK_CANCEL_OPTION, 
+	                JOptionPane.PLAIN_MESSAGE
+	            );
 
-	            if (save == null) {
-	                return;
+	            if (result != JOptionPane.OK_OPTION) {
+	                return; // user cancelled
 	            }
+
+	            save = saveField.getText().trim();
+	            nuzlocke = nuzlockeBox.isSelected();
 
 	            if (!isValidFileName(save)) {
-	                JOptionPane.showMessageDialog(this, "Invalid file name. Please use only alphanumeric characters, underscores, and hyphens, and ensure the length is no more than 20 characters.");
-	            }
-	            if (filesFinal.contains(save + ".dat")) {
-	                JOptionPane.showMessageDialog(this, "Save file already exists! Select the save file and press 'Continue'");
-	                save = "$";
+	                JOptionPane.showMessageDialog(null, "Invalid file name. Please use only A-Z, 0-9, underscores (_), and hyphens (-), and make sure it's ≤ 20 characters.");
+	            } else if (filesFinal.contains(save + ".dat")) {
+	                JOptionPane.showMessageDialog(null, "Save file already exists! Select it and press 'Continue'.");
+	                save = "$"; // force re-prompt
 	            }
 	        } while (!isValidFileName(save));
 
@@ -261,7 +283,7 @@ public class WelcomeMenu extends JPanel {
 	        save += ".dat";
 	        gp.player.currentSave = save;
 
-	        Main.loadSave(window, save, this, selectedOptions);
+	        Main.loadSave(window, save, this, selectedOptions, nuzlocke);
 	    });
 
 	    manageButton.addActionListener(e -> {

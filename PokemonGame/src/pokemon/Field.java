@@ -305,14 +305,14 @@ public class Field {
 		if (effect.effect == Effect.TRICK_ROOM) {
 			if (contains(fieldEffects, effect.effect)) {
 				removeEffect(fieldEffects, effect.effect);
-				Task.addTask(Task.TEXT, "The bizarre area returned to normal!");
+				Task.addTask(Task.TEXT, "The twisted dimensions returned to normal!");
 				return;
 			}
 		}
 		if (effect.effect == Effect.MAGIC_ROOM) {
 			if (contains(fieldEffects, effect.effect)) {
 				removeEffect(fieldEffects, effect.effect);
-				Task.addTask(Task.TEXT, "The twisted dimensions returned to normal!");
+				Task.addTask(Task.TEXT, "The bizzare area returned to normal!");
 				return;
 			}
 		}

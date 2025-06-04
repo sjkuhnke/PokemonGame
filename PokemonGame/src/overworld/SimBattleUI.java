@@ -941,11 +941,6 @@ public class SimBattleUI extends BattleUI {
 	}
 	
 	@Override
-	protected void wipe() {
-		super.wipe();
-	}
-	
-	@Override
 	public void drawParty(Item item) {
 		super.drawParty(item);
 	}
