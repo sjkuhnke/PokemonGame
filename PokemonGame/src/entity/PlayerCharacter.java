@@ -167,15 +167,21 @@ public class PlayerCharacter extends Entity {
 						resetSpriteNum();
 						int index = pair.getSecond();
 						Pokemon h = e.hatch();
-						p.pokedex[h.id] = 2;
-						p.team[index] = h;
-						if (index == 0) gp.player.p.setCurrent(h);
-						gp.setTaskState();
-						Task.addTask(Task.TEXT, "Oh?");
-						Task.addTask(Task.TEXT, h.name() + " hatched from the egg!");
-						Task t = Task.addTask(Task.NICKNAME, "Would you like to nickname " + h.name() + "?", h);
-						t.wipe = true; // to reset the nickname when the task gets up
-						break;
+						if (p.nuzlocke && h instanceof Egg) {
+							gp.setTaskState();
+							Task.addTask(Task.TEXT, Item.breakString("Oh... the Egg is trying to hatch, but you've already gotten an encounter here! Try somewhere else!", UI.MAX_TEXTBOX));
+							e.steps = 1;
+						} else {
+							p.pokedex[h.id] = 2;
+							p.team[index] = h;
+							if (index == 0) gp.player.p.setCurrent(h);
+							gp.setTaskState();
+							Task.addTask(Task.TEXT, "Oh?");
+							Task.addTask(Task.TEXT, h.name() + " hatched from the egg!");
+							Task t = Task.addTask(Task.NICKNAME, "Would you like to nickname " + h.name() + "?", h);
+							t.wipe = true; // to reset the nickname when the task gets up
+							break;	
+						}
 					}
 				}
 				p.steps++;
@@ -202,12 +208,7 @@ public class PlayerCharacter extends Entity {
 					for (Integer i : gp.tileM.getWaterTiles()) {
 						gp.tileM.tile[i].collision = true;
 					}
-					int snapX = (int) Math.round(worldX * 1.0 / gp.tileSize);
-					int snapY = (int) Math.round(worldY * 1.0 / gp.tileSize);
-					snapX *= gp.tileSize;
-					snapY *= gp.tileSize;
-					this.worldX = snapX;
-					this.worldY = snapY;
+					snapToTile();
 				}
 			}
 			if (p.lavasurf) {
@@ -231,12 +232,7 @@ public class PlayerCharacter extends Entity {
 					for (Integer i : gp.tileM.getLavaTiles()) {
 						gp.tileM.tile[i].collision = true;
 					}
-					int snapX = (int) Math.round(worldX * 1.0 / gp.tileSize);
-					int snapY = (int) Math.round(worldY * 1.0 / gp.tileSize);
-					snapX *= gp.tileSize;
-					snapY *= gp.tileSize;
-					this.worldX = snapX;
-					this.worldY = snapY;
+					snapToTile();
 				}
 			}
 			String currentMap = currentMapName;
@@ -333,6 +329,22 @@ public class PlayerCharacter extends Entity {
 		}
 	}
 	
+	public void useRepel() {
+		p.repel = true;
+		p.steps = 1;
+		p.bag.remove(Item.REPEL);
+		gp.ui.currentItems = p.getItems(gp.ui.currentPocket);
+	}
+	
+	private void snapToTile() {
+		int snapX = (int) Math.round(worldX * 1.0 / gp.tileSize);
+		int snapY = (int) Math.round(worldY * 1.0 / gp.tileSize);
+		snapX *= gp.tileSize;
+		snapY *= gp.tileSize;
+		this.worldX = snapX;
+		this.worldY = snapY;
+	}
+
 	private void trySurfing(Move move, boolean isSurf) {
 		if ((p.knowsMove(move) || p.ghost) && ((isSurf && !p.surf) || (!isSurf && !p.lavasurf))) {
 			int badgeReq = p.getRequiredBadges(move);
@@ -431,6 +443,10 @@ public class PlayerCharacter extends Entity {
 		int trainer = entity.trainer;
 		if (trainer == -1) return;
 		if (p.wiped()) return;
+		if (p.nuzlocke && p.hasPokemonOverLevelCap()) {
+			gp.wipe(true, null, null);
+			return;
+		}
 		if (gp.ui.tasksContainsTask(Task.DIALOGUE)) return;
 		
 		gp.ui.npc = entity;
@@ -457,6 +473,11 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	public void startWild(String area, char type) {
+		if (p.wiped()) return;
+		if (p.nuzlocke && p.hasPokemonOverLevelCap()) {
+			gp.wipe(true, null, null);
+			return;
+		}
 		gp.setTaskState();
 		
 		Pokemon foe = gp.encounterPokemon(area, type, p.random);
@@ -465,6 +486,7 @@ public class PlayerCharacter extends Entity {
 			gp.gameState = GamePanel.PLAY_STATE;
 			return;
 		}
+		
 		Task.addStartBattleTask(-2, -1, foe, type);
 	}
 	
@@ -535,6 +557,8 @@ public class PlayerCharacter extends Entity {
     	moneyLabel.setText("$" + p.getMoney());
     	JLabel badgesLabel = new JLabel();
     	badgesLabel.setText(p.badges + " Badges");
+    	JLabel levelCap = new JLabel();
+    	levelCap.setText("Level Cap: " + Trainer.getLevelCap(p.badges));
     	
     	JTextField cheats = new JTextField();
     	cheats.addActionListener(e -> {
@@ -544,6 +568,7 @@ public class PlayerCharacter extends Entity {
     	
     	playerInfo.add(moneyLabel);
     	playerInfo.add(badgesLabel);
+    	if (p.nuzlocke) playerInfo.add(levelCap);
     	playerInfo.add(cheats);
     	
     	JOptionPane.showMessageDialog(null, playerInfo, "Player Info", JOptionPane.PLAIN_MESSAGE);
@@ -748,9 +773,13 @@ public class PlayerCharacter extends Entity {
 					x += getTileForwardX();
 					y += getTileForwardY();
 				}
+				
 				int inverse = this.direction == rc.direction ? 1 : -1;
-				this.worldX += ((rc.deltaX * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaX * inverse));
-				this.worldY += ((rc.deltaY * gp.tileSize * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaY * inverse));
+				int finalX = (int) (rc.worldX + ((rc.deltaX * gp.tileSize * 0.75 * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaX * inverse)));
+				int finalY = (int) (rc.worldY + (rc.deltaY * gp.tileSize * 0.75 * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaY * inverse));
+				
+				this.worldX = finalX;
+				this.worldY = finalY;
 			} else {
 				String badgeWord = badgeReq == 1 ? "badge" : "badges";
 				String fullMessage = String.format(
@@ -1278,9 +1307,9 @@ public class PlayerCharacter extends Entity {
 	}
 
 	public static String getMetAt() {
-		int parenthesisIndex = PlayerCharacter.currentMapName.indexOf('(');
-		return (parenthesisIndex == -1 || PlayerCharacter.currentMapName.contains("pt.")) ?
-				PlayerCharacter.currentMapName.trim() : PlayerCharacter.currentMapName.substring(0, parenthesisIndex).trim();
+		int parenthesisIndex = currentMapName.indexOf('(');
+		return (parenthesisIndex == -1 || currentMapName.contains("pt.")) ?
+				currentMapName.trim() : currentMapName.substring(0, parenthesisIndex).trim();
 	}
 	
 	public void setClerkItems() {

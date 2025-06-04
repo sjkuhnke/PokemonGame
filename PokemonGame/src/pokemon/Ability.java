@@ -136,7 +136,7 @@ public enum Ability {
 	SUPER_LUCK("Heightens the critical-hit ratios of moves."),
 	SWARM("Powers up BUG moves in a pinch."),
 	SWIFT_SWIM("Boosts the Pokemon's Speed stat in RAIN."),
-	SYNCHRONIZE("Passes a burn, poison, or paralysis to the foe."),
+	SYNCHRONIZE("Passes a burn, poison, frostbite, or paralysis to the foe."),
 	TALENTED("When the Pokemon enters a battle, it copies the foe's stat changes."),
 	TECHNICIAN("Powers up the Pokemon's weaker moves."),
 	TERRIFY("Lowers the opposing Pokemon's Sp. Atk stat."),

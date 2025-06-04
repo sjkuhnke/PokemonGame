@@ -2,6 +2,7 @@ package pokemon;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.IOException;
@@ -100,9 +101,14 @@ public class Player extends Trainer implements Serializable {
 	public boolean amulet;
 	public boolean spike;
 	
+	public boolean nuzlocke;
+	public boolean nuzlockeStarted;
+	public boolean isValidNuzlocke;
+	public ArrayList<String> nuzlockeEncounters;
+	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 63;
+	public static final int VERSION = 64;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -122,7 +128,7 @@ public class Player extends Trainer implements Serializable {
 		gauntletBox = new Pokemon[GAUNTLET_BOX_SIZE];
 		boxLabels = setupBoxLabels();
 
-		bag = new Bag();
+		bag = new Bag(this);
 		currentMap = spawn[0];
 		posX = spawn[1];
 		posY = spawn[2];
@@ -157,15 +163,36 @@ public class Player extends Trainer implements Serializable {
 	public int getID() {
 		return this.id;
 	}
+	
+	public void setupNuzlocke() {
+		this.nuzlocke = true;
+		this.nuzlockeStarted = false;
+		this.isValidNuzlocke = true;
+		this.nuzlockeEncounters = new ArrayList<>();
+		this.bag.add(Item.INFINITE_REPEL);
+		this.bag.add(Item.HEALING_PACK);
+		this.bag.add(Item.POCKET_PC);
+		this.bag.add(Item.RARE_CANDY_BOX);
+		this.bag.add(Item.EDGE_KIT);
+		this.bag.add(Item.STATUS_KIT);
+		this.bag.add(Item.DAMAGE_KIT);
+	}
 
-	public void catchPokemon(Pokemon p, boolean nickname, Item ball) {
-		if (p == null) return;
+	public boolean catchPokemon(Pokemon p, boolean nickname, Item ball) {
+		if (p == null) return false;
 		boolean egg = p instanceof Egg;
-	    if (p == null || (p.isFainted() && !egg)) return;
+	    if (p == null || (p.isFainted() && !egg)) return false;
 	    boolean hasNull = false;
 	    Task t = null;
 	    int index = 1;
+	    String metAt = PlayerCharacter.getMetAt();
 	    if (nickname) {
+	    	if (nuzlocke && !canCatchPokemonHere(metAt)) {
+	    		String s = egg ? "receive " : "catch ";
+	    		t = Task.createTask(Task.END, Item.breakString("Cannot " + s + p.name() + ", you've already gotten an encounter at " + metAt + "!", UI.MAX_TEXTBOX));
+	        	Task.insertTask(t, 0);
+	    		return false;
+	    	}
 	    	t = Task.createTask(Task.NICKNAME, "Would you like to nickname " + p.name() + "?", p);
 		    if (Pokemon.gp.gameState != GamePanel.PLAY_STATE) Task.insertTask(t, 0);
 	    } else {
@@ -178,7 +205,7 @@ public class Player extends Trainer implements Serializable {
 	    if (item == Item.FRIEND_BALL) p.happiness = Math.max(200, p.happiness);
 	    p.ball = ball;
 	    p.trainer = this;
-	    p.metAt = PlayerCharacter.getMetAt();
+	    p.metAt = metAt;
 	    for (int i = 0; i < team.length; i++) {
 	        if (team[i] == null) {
 	            hasNull = true;
@@ -216,7 +243,6 @@ public class Player extends Trainer implements Serializable {
 	                	t = Task.createTask(Task.END, s + p.name() + ", sent to box " + (i + 1) + "!");
 	                	Task.insertTask(t, index);
 	                }
-	                return;  // Exit the method after catching the Pokemon
 	            }
 	        }
 	        if (nickname || egg) {
@@ -224,16 +250,27 @@ public class Player extends Trainer implements Serializable {
 	        	Task.insertTask(t, index);
 	        }
 	    }
+	    if (nuzlocke) {
+	    	removeEncounterArea(metAt);
+	    }
+	    return true;
 	}
 	
-	public void catchPokemon(Pokemon p, boolean nickname) {
-		catchPokemon(p, nickname, Item.POKEBALL);
+	public boolean catchPokemon(Pokemon p, boolean nickname) {
+		return catchPokemon(p, nickname, Item.POKEBALL);
 	}
 	
-	public void catchPokemon(Pokemon p) {
-		catchPokemon(p, true);
+	public boolean catchPokemon(Pokemon p) {
+		return catchPokemon(p, true);
 	}
-
+	
+	public boolean canCatchPokemonHere(String location) {
+		return !this.nuzlockeEncounters.contains(location);
+	}
+	
+	public void removeEncounterArea(String location) {
+		if (!this.nuzlockeEncounters.contains(location)) this.nuzlockeEncounters.add(location);
+	}
 
 	public void swapToFront(Pokemon pokemon, int index) {
 		if (!current.isFainted()) {
@@ -448,6 +485,7 @@ public class Player extends Trainer implements Serializable {
 		JTextField coins = new JTextField(this.coins + "");
 		JComboBox<Integer> badges = new JComboBox<>();
 		JComboBox<String> starter = new JComboBox<>();
+		JButton nuzlockeInfo = new JButton("Nuzlocke Info");
 		JButton pokedexButton = new JButton("Pokedex");
 		JButton bagButton = new JButton("Bag");
 		JCheckBox[] locations = new JCheckBox[12];
@@ -472,6 +510,11 @@ public class Player extends Trainer implements Serializable {
 		}
 		starter.setSelectedIndex(this.starter);
 		result.add(starter);
+		
+		nuzlockeInfo.addActionListener(e -> {
+			showNuzlockeInfo();
+		});
+		if (nuzlocke) result.add(nuzlockeInfo);
 		
 		pokedexButton.addActionListener(e -> {
 			showPokedexModifier();
@@ -609,6 +652,37 @@ public class Player extends Trainer implements Serializable {
 		result.add(confirm);
 		
 		return result;
+	}
+	
+	private void showNuzlockeInfo() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(0, 2));
+		
+		JLabel nuzlockeLabel = new JLabel("Nuzlocke:");
+		JLabel nuzlockeAns = new JLabel(String.valueOf(nuzlocke));
+		
+		if (nuzlocke) {
+			JLabel nuzlockeStartedLabel = new JLabel("Nuzlocke Started?");
+			JLabel nuzlockeStartedAns = new JLabel(String.valueOf(nuzlockeStarted));
+			JLabel nuzlockeValidLabel = new JLabel("Nuzlocke Is Valid?");
+			JLabel nuzlockeValidAns = new JLabel(String.valueOf(isValidNuzlocke));
+			
+			panel.add(nuzlockeLabel);
+			panel.add(nuzlockeAns);
+			panel.add(nuzlockeStartedLabel);
+			panel.add(nuzlockeStartedAns);
+			panel.add(nuzlockeValidLabel);
+			panel.add(nuzlockeValidAns);
+			
+			for (int i = 0; i < nuzlockeEncounters.size(); i++) {
+				JLabel label = new JLabel("#" + (i+1));
+				JLabel labelAns = new JLabel(nuzlockeEncounters.get(i));
+				panel.add(label);
+				panel.add(labelAns);
+			}
+		}
+		
+		JOptionPane.showMessageDialog(null, panel, "Nuzlocke Info", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	private void showPokedexModifier() {
@@ -1221,6 +1295,17 @@ public class Player extends Trainer implements Serializable {
 					p.setStats();
 				}
 				break;
+			case DAMAGE_KIT:
+				if (p.currentHP > 1) {
+	        		p.currentHP--;
+				}
+				return;
+			case STATUS_KIT:
+        		gp.ui.currentPokemon = p;
+        		gp.ui.currentHeader = "Which status to inflict?";
+        		gp.ui.moveOption = -1;
+        		gp.ui.showStatusOptions = true;
+				return;
 			default:
 				return;
 			}
@@ -1261,10 +1346,10 @@ public class Player extends Trainer implements Serializable {
 
 	private void updateBag() {
 		Item[] items = Item.values();
-		if (bag.itemList != null && items.length == bag.itemList.length) return;
+		if (bag.itemList != null && items.length == bag.itemList.length && bag.p != null) return;
 		
 		int[] counts = bag.count;
-		bag = new Bag();
+		bag = new Bag(this);
 		for (int i = 0; i < counts.length; i++) {
 			if (i < bag.count.length) bag.count[i] = counts[i];
 		}
@@ -1753,5 +1838,13 @@ public class Player extends Trainer implements Serializable {
 		} else {
 			coins += amt;
 		}
+	}
+
+	public boolean hasPokemonOverLevelCap() {
+		int levelCap = Trainer.getLevelCap(badges);
+		for (Pokemon p : team) {
+			if (p != null && p.level > levelCap) return true;
+		}
+		return false;
 	}
 }

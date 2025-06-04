@@ -101,7 +101,7 @@
  Shock Wave         | Special  | 60  | --  | 20 PP : This attack never misses
  Spark              | Physical | 65  | 100 | 20 PP : 30% to Paralyze foe
  Thunder            | Special  | 110 | 70  | 5 PP  : 30% of Paralyzing foe, doesn't check accuracy in RAIN
- Thunder Fang       | Physical | 65  | 95  | 15 PP : 10% of Paralyzing and/or flinching foe
+ Thunder Fang       | Physical | 65  | 95  | 15 PP : 20% of Paralyzing and/or flinching foe
  Thunder Punch      | Physical | 75  | 100 | 15 PP : 20% of Paralyzing foe
  Thunder Wave       | Status   | --  | 90  | 15 PP : Paralyzes foe, accuracy is 100% for ELECTRIC Pokemon
  Thunderbolt        | Special  | 90  | 100 | 10 PP : 10% of Paralyzing foe
@@ -118,7 +118,7 @@
  Body Press         | Physical | 80  | 100 | 10 PP : Uses user's Defense stat instead of Attack
  Brick Break        | Physical | 75  | 100 | 15 PP : Breaks Screen effects and breaks Magic Reflect
  Bulk Up            | Status   | --  | --  | 10 PP : Raises user's Attack and Defense by 1
- Channeling Blow    | Physical | 65  | 100 | 15 PP : This move always crits
+ Channeling Blow    | Physical | 75  | 100 | 15 PP : This move always crits
  Circle Throw       | Physical | 60  | 90  | 10 PP : Switches out foe randomly, always moves last
  Close Combat       | Physical | 120 | 100 | 5 PP  : Lowers user's Defense and Sp.Def by 1
  Cross Chop         | Physical | 100 | 80  | 5 PP  : Boosted Crit rate
@@ -163,7 +163,7 @@
  Eruption           | Special  | 150 | 100 | 5 PP  : Power is higher the more HP the user has
  Fiery Dance        | Special  | 80  | 100 | 10 PP : 50% chance to raise user's Sp.Atk by 1
  Fire Blast         | Special  | 110 | 85  | 5 PP  : 10% chance to Burn foe
- Fire Fang          | Physical | 65  | 95  | 15 PP : 10% of flinching and/or Burning foe
+ Fire Fang          | Physical | 65  | 95  | 15 PP : 20% of flinching and/or Burning foe
  Fire Punch         | Physical | 75  | 100 | 15 PP : 20% to Burn foe
  Fire Spin          | Special  | 35  | 85  | 15 PP : 100% to spin non-FIRE foes for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch
  Flame Burst        | Special  | 70  | 100 | 15 PP : A normal attack
@@ -223,7 +223,7 @@
  Black Hole Eclipse | Special  | 140 | 100 | 5 PP  : 100% chance to raise user's Sp.Def by 1, user must charge on the first turn
  Comet Crash        | Physical | 80  | 90  | 5 PP  : Damage is doubled if user's HP is full
  Comet Punch        | Physical | 55  | 100 | 15 PP : A normal attack
- Core Enforcer      | Special  | 100 | 100 | 10 PP : 100% to supress foe's ability if they already moved for the turn
+ Core Enforcer      | Special  | 100 | 100 | 10 PP : 100% to suppress foe's ability if they already moved for the turn
  Cosmic Power       | Status   | --  | --  | 10 PP : Raises user's Def and Sp.Def by 1
  Dark Void          | Status   | --  | 80  | 10 PP : Causes foe to sleep
  Desolate Void      | Special  | 65  | 85  | 10 PP : 50% chance to Paralyze, Sleep or Frostbite foe
@@ -247,7 +247,7 @@
  Bitter Malice      | Special  | 75  | 100 | 10 PP : 30% chance to Frostbite foe
  Bloodshed Cleave   | Physical | 90  | 100 | 10 PP : Heals either 50% damage dealt to foe or 25% of user's max HP; whichever is greater
  Confuse Ray        | Status   | --  | 100 | 10 PP : Confuses foe
- Curse              | Status   | --  | --  | 10 PP : User loses half of its total HP. In exchance, foe takes 1/4 of its max HP at the end of every turn
+ Curse              | Status   | --  | --  | 10 PP : If user is GHOST type: User loses 1/2 max HP, then foe loses 1/4 max HP at the end of every turn; if not GHOST type: Raises user's Attack, Defense by 1 but lowers user's Speed by 1
  Destiny Bond       | Status   | --  | --  | 5 PP  : Always goes first; can't be used twice in a row. If foe knocks out user the same turn, foe faints as well
  Hex                | Special  | 65  | 100 | 10 PP : Damage is doubled if the foe has a status condition
  Hp Ghost           | Special  | 60  | 100 | 15 PP : Calc only move
@@ -259,7 +259,7 @@
  Phantom Force      | Physical | 100 | 100 | 10 PP : A two turn attack. User vanishes on the first, and attacks on the second. Hits through protect.
  Poltergeist        | Physical | 110 | 90  | 5 PP  : Fails if the target isn't holding an item
  Return Ghost       | Physical | 70  | 100 | 15 PP : Calc only move
- Shadow Ball        | Special  | 80  | 100 | 15 PP : 20% to lower foe's Sp.Def by 1
+ Shadow Ball        | Special  | 80  | 100 | 15 PP : 30% to lower foe's Sp.Def by 1
  Shadow Claw        | Physical | 80  | 100 | 15 PP : Boosted crit rate
  Shadow Punch       | Physical | 80  | --  | 20 PP : This attack never misses
  Shadow Sneak       | Physical | 40  | 100 | 15 PP : Always attacks first
@@ -336,14 +336,15 @@
  Aurora Beam        | Special  | 75  | 100 | 20 PP : 10% chance to lower foe's Attack by 1
  Aurora Veil        | Status   | --  | --  | 10 PP : Can only be used in SNOW, reduces both physical and special damage on user's team recieved for 5 turns
  Blizzard           | Special  | 110 | 70  | 5 PP  : 20% chance to Frostbite foe, doesn't check accuracy in SNOW
+ Chilly Reception   | Status   | --  | --  | 10 PP : Sets SNOW and then causes user to switch out
  Freeze-Dry         | Special  | 70  | 100 | 15 PP : 10% chance to Frostbite foe, super effective against WATER types too
- Frostbind          | Status   | --  | 90  | 10 PP : Inflicts foe with Frostbite, ICE Pokemon can't miss this move
+ Frostbind          | Status   | --  | 90  | 10 PP : Inflicts foe with Frostbite, accuracy is 100% for FIRE Pokemon
  Glaciate           | Special  | 65  | 95  | 10 PP : 100% chance to lower foe's Speed by 1
  Haze               | Status   | --  | --  | 25 PP : Clears all stat changes on the field
  Hp Ice             | Special  | 60  | 100 | 15 PP : Calc only move
  Ice Ball           | Physical | 30  | 90  | 20 PP : Attacks up to 5 times, damage doubles each time. While active, user cannot switch out
  Ice Beam           | Special  | 90  | 100 | 10 PP : 10% chance to Frostbite foe
- Ice Fang           | Physical | 65  | 95  | 15 PP : 10% chance to Flinch and/or Frostbite foe
+ Ice Fang           | Physical | 65  | 95  | 15 PP : 20% chance to Flinch and/or Frostbite foe
  Ice Punch          | Physical | 75  | 100 | 15 PP : 20% chance to Frostbite foe
  Ice Shard          | Physical | 40  | 100 | 15 PP : Always goes first
  Ice Spinner        | Physical | 80  | 100 | 10 PP : 100% chance to remove the terrain if there is any
@@ -353,6 +354,7 @@
  Powder Snow        | Special  | 40  | 100 | 25 PP : 50% chance to Frostbite foe
  Return Ice         | Physical | 70  | 100 | 15 PP : Calc only move
  Sheer Cold         | Special  | --  | 30  | 5 PP  : If this move hits, it always K.Os foe. Doesn't effect ICE types
+ Snow Plume         | Special  | 80  | 100 | 15 PP : 30% to Frostbite foe
  Snowscape          | Status   | --  | --  | 10 PP : Sets the weather to SNOW for 5 turns
 =============================================================================================================
                                                   Light
@@ -398,7 +400,7 @@
  Hex Claw           | Physical | 75  | 100 | 10 PP : 100% chance to disable the target's last used move for 3 turns
  Hocus Pocus        | Special  | 70  | 95  | 10 PP : 20% to inflict foe with a random Status condition
  Hp Magic           | Special  | 60  | 100 | 15 PP : Calc only move
- Magic Fang         | Physical | 70  | 95  | 10 PP : 75% to flinch foe if this move is Super-Effective against it, bypasses Magic Reflect
+ Magic Fang         | Physical | 70  | 95  | 10 PP : 75% to flinch foe if this move is Super-Effective against it, breaks Magic Reflect
  Magic Missiles     | Special  | 25  | 90  | 15 PP : Hits 2-5 times, does Physical damage
  Magic Powder       | Status   | --  | 100 | 15 PP : Changes foe's type to MAGIC
  Magic Reflect      | Status   | --  | --  | 5 PP  : Foe's next attack will be reflected against them. Can be used every other turn, and not on the first turn out.
@@ -564,7 +566,7 @@
  Freezing Glare     | Special  | 90  | 100 | 10 PP : 30% chance to Frostbite foe
  Future Sight       | Special  | 120 | 100 | 10 PP : Attacks the foe 2 turns after this move is used
  Gravity Punch      | Physical | 40  | 100 | 5 PP  : Always goes first with extra priority. Still works in PSYCHIC TERRAIN.
- Heal Pulse         | Status   | --  | --  | 10 PP : Heals foe by 50% HP
+ Heal Pulse         | Status   | --  | --  | 10 PP : Heals 1/2 of foe's max HP
  Healing Wish       | Status   | --  | --  | 5 PP  : User faints. The next Pokemon sent in will be fully healed
  Hp Psychic         | Special  | 60  | 100 | 15 PP : Calc only move
  Hypnosis           | Status   | --  | 60  | 10 PP : Causes foe to sleep

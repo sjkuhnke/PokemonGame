@@ -15,7 +15,7 @@ public class Egg extends Pokemon {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	int steps;
+	public int steps;
 	
 	public Egg(int i, int steps) {
 		super(i, 1, true, false);
@@ -100,10 +100,19 @@ public class Egg extends Pokemon {
 	}
 	
 	public Pokemon hatch() {
+		String metAt = PlayerCharacter.getMetAt();
+		if (gp.player.p.nuzlocke) {
+			if (!gp.player.p.canCatchPokemonHere(metAt)) {
+				return this;
+			} else {
+				gp.player.p.removeEncounterArea(metAt);
+			}
+		}
 		Pokemon p = this.clone();
 		p.setSprites();
 		p.nickname = p.name();
-		p.metAt = PlayerCharacter.getMetAt();
+		p.metAt = metAt;
+		
 		return p;
 	}
 

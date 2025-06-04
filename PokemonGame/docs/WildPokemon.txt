@@ -371,7 +371,7 @@ Route 27 (Standard)
 5% Zorua (Lv. 23 - 24)
 5% Minishoo (Lv. 23 - 24)
 12% Hatenna (Lv. 21 - 23)
-12% Butterfree-X (Lv. 23 - 24)
+12% Butterfree-X (Lv. 22 - 24)
 12% Capsakid (Lv. 22 - 24)
 ===================================================================
 Cell Park (Standard)
@@ -394,6 +394,19 @@ Cell Park (Standard)
 7% Elgyem (Lv. 22 - 25)
 8% Elgyem-E (Lv. 22 - 25)
 ===================================================================
+Route 41 (Standard)
+===================================================================
+10% Froshrog (Lv. 22 - 24)
+15% Sparkitten (Lv. 24 - 26)
+9% Thieven (Lv. 22 - 25)
+10% Arbok (Lv. 24 - 27)
+7% Cervora (Lv. 23 - 27)
+11% Grislush (Lv. 24 - 27)
+10% Mosscelot (Lv. 23 - 26)
+12% Seviper (Lv. 23 - 26)
+10% Azumarill (Lv. 23 - 26)
+6% Shroodle (Lv. 22 - 25)
+===================================================================
 Route 41 (Fish)
 ===================================================================
 25% Spheal (Lv. 21 - 23)
@@ -407,19 +420,6 @@ Route 41 (Surf)
 25% Daray (Lv. 30)
 20% Whotter (Lv. 25)
 5% Ali (Lv. 30)
-===================================================================
-Route 41 (Standard)
-===================================================================
-10% Froshrog (Lv. 22 - 24)
-15% Sparkitten (Lv. 24 - 26)
-9% Thieven (Lv. 22 - 25)
-10% Arbok (Lv. 24 - 27)
-7% Cervora (Lv. 23 - 27)
-11% Grislush (Lv. 24 - 27)
-10% Mosscelot (Lv. 23 - 26)
-12% Seviper (Lv. 23 - 26)
-10% Azumarill (Lv. 23 - 26)
-6% Shroodle (Lv. 22 - 25)
 ===================================================================
 Route 36 (Standard)
 ===================================================================
@@ -1150,7 +1150,26 @@ Mt. St. Joseph (4B) (Lava)
 ===================================================================
 Route 44 (Standard)
 ===================================================================
-20% Twigle (Lv. 1)
+5% Armoraven (Lv. 53 - 58)
+5% Milipleura (Lv. 54 - 58)
+4% Kappalm (Lv. 53 - 57)
+2% Serpenge (Lv. 56 - 58)
+7% Roserade (Lv. 53 - 58)
+2% Busheep (Lv. 42 - 48)
+8% Bushewe (Lv. 54 - 59)
+10% Psycorboratr (Lv. 55 - 60)
+7% Seviper (Lv. 48 - 51)
+2% Hissimitar (Lv. 54 - 60)
+5% Despenero (Lv. 53 - 58)
+5% Shedinja (Lv. 48 - 50)
+4% Swalot-X (Lv. 54 - 58)
+5% Glimmora (Lv. 52 - 57)
+8% Grust (Lv. 54 - 58)
+3% Saberock (Lv. 52 - 56)
+6% Sneasler (Lv. 54 - 59)
+4% Flamigo (Lv. 52 - 55)
+2% Clefable (Lv. 52 - 57)
+6% Wormatron (Lv. 53 - 58)
 ===================================================================
 Mt. Splinkty (Outside) (Standard)
 ===================================================================
@@ -1182,27 +1201,46 @@ Route 39 (Standard)
 6% Sneasler (Lv. 61 - 64)
 9% Rhypolar (Lv. 62 - 65)
 8% Grust (Lv. 60 - 62)
-9% Hissimitar (Lv. 61 - 65)
+9% Scraftagon (Lv. 61 - 65)
 6% Drillatron (Lv. 60 - 64)
 ===================================================================
 A.T. Path (Standard)
 ===================================================================
-20% Twigle (Lv. 1)
+6% Armoraven (Lv. 56 - 61)
+5% Grunswine (Lv. 54 - 58)
+1% Hoghoncho (Lv. 57 - 62)
+4% Milimace (Lv. 55 - 59)
+3% Kappalm (Lv. 55 - 59)
+1% Serpenge (Lv. 58 - 60)
+8% Roserade (Lv. 55 - 60)
+4% Leavanny (Lv. 54 - 58)
+2% Busheep (Lv. 44 - 50)
+8% Ramant (Lv. 56 - 61)
+8% Gladipede (Lv. 57 - 62)
+5% Zurrclu (Lv. 52 - 55)
+3% Zurroaratr (Lv. 56 - 62)
+5% Shedinja (Lv. 50)
+6% Willolagos (Lv. 53 - 57)
+8% Grafaiai (Lv. 54 - 58)
+9% Hast (Lv. 56 - 60)
+9% Butterfree-X (Lv. 55 - 59)
+5% Bronzong-X (Lv. 57 - 62)
 ===================================================================
 Abandoned Tower (1A) (Standard)
 ===================================================================
-6% Aspomancer (Lv. 57 - 62)
+4% Aspomancer (Lv. 57 - 62)
 3% Kobraturgy (Lv. 60 - 65)
-6% Nixnerva (Lv. 59 - 64)
-5% Cervora (Lv. 58 - 63)
-5% Frosmoth (Lv. 59 - 65)
+5% Nixnerva (Lv. 59 - 64)
+4% Cervora (Lv. 58 - 63)
+4% Frosmoth (Lv. 59 - 65)
 6% Hatterene (Lv. 60 - 64)
 4% Lutrineer (Lv. 60 - 65)
-6% Osceloma (Lv. 60 - 65)
+5% Osceloma (Lv. 60 - 65)
 1% Psycorboratr (Lv. 61 - 66)
 4% Gardevoir (Lv. 60 - 65)
 4% Gallade (Lv. 60 - 65)
-3% Benglow (Lv. 58 - 64)
+4% Butterfree-X (Lv. 58 - 64)
+6% Alakazam (Lv. 60 - 65)
 5% Malamar (Lv. 59 - 64)
 5% Splame (Lv. 60 - 65)
 6% Poshorump (Lv. 61 - 66)
@@ -1211,23 +1249,24 @@ Abandoned Tower (1A) (Standard)
 5% Zurrclu (Lv. 57 - 63)
 2% Zurroaratr (Lv. 60 - 66)
 6% Glittleshoo (Lv. 59 - 64)
-7% Zoroark (Lv. 60 - 65)
+6% Zoroark (Lv. 60 - 65)
 3% Drageye (Lv. 64 - 65)
 ===================================================================
 Abandoned Tower (1B) (Standard)
 ===================================================================
-6% Aspomancer (Lv. 57 - 62)
+4% Aspomancer (Lv. 57 - 62)
 3% Kobraturgy (Lv. 60 - 65)
-6% Nixnerva (Lv. 59 - 64)
-5% Cervora (Lv. 58 - 63)
-5% Frosmoth (Lv. 59 - 65)
+5% Nixnerva (Lv. 59 - 64)
+4% Cervora (Lv. 58 - 63)
+4% Frosmoth (Lv. 59 - 65)
 6% Hatterene (Lv. 60 - 64)
 4% Lutrineer (Lv. 60 - 65)
-6% Osceloma (Lv. 60 - 65)
+5% Osceloma (Lv. 60 - 65)
 1% Psycorboratr (Lv. 61 - 66)
 4% Gardevoir (Lv. 60 - 65)
 4% Gallade (Lv. 60 - 65)
-3% Benglow (Lv. 58 - 64)
+4% Butterfree-X (Lv. 58 - 64)
+6% Alakazam (Lv. 60 - 65)
 5% Malamar (Lv. 59 - 64)
 5% Splame (Lv. 60 - 65)
 6% Poshorump (Lv. 61 - 66)
@@ -1236,23 +1275,24 @@ Abandoned Tower (1B) (Standard)
 5% Zurrclu (Lv. 57 - 63)
 2% Zurroaratr (Lv. 60 - 66)
 6% Glittleshoo (Lv. 59 - 64)
-7% Zoroark (Lv. 60 - 65)
+6% Zoroark (Lv. 60 - 65)
 3% Drageye (Lv. 64 - 65)
 ===================================================================
 Abandoned Tower (2A) (Standard)
 ===================================================================
-6% Aspomancer (Lv. 57 - 62)
+4% Aspomancer (Lv. 57 - 62)
 3% Kobraturgy (Lv. 60 - 65)
-6% Nixnerva (Lv. 59 - 64)
-5% Cervora (Lv. 58 - 63)
-5% Frosmoth (Lv. 59 - 65)
+5% Nixnerva (Lv. 59 - 64)
+4% Cervora (Lv. 58 - 63)
+4% Frosmoth (Lv. 59 - 65)
 6% Hatterene (Lv. 60 - 64)
 4% Lutrineer (Lv. 60 - 65)
-6% Osceloma (Lv. 60 - 65)
+5% Osceloma (Lv. 60 - 65)
 1% Psycorboratr (Lv. 61 - 66)
 4% Gardevoir (Lv. 60 - 65)
 4% Gallade (Lv. 60 - 65)
-3% Benglow (Lv. 58 - 64)
+4% Butterfree-X (Lv. 58 - 64)
+6% Alakazam (Lv. 60 - 65)
 5% Malamar (Lv. 59 - 64)
 5% Splame (Lv. 60 - 65)
 6% Poshorump (Lv. 61 - 66)
@@ -1261,23 +1301,24 @@ Abandoned Tower (2A) (Standard)
 5% Zurrclu (Lv. 57 - 63)
 2% Zurroaratr (Lv. 60 - 66)
 6% Glittleshoo (Lv. 59 - 64)
-7% Zoroark (Lv. 60 - 65)
+6% Zoroark (Lv. 60 - 65)
 3% Drageye (Lv. 64 - 65)
 ===================================================================
 Abandoned Tower (2B) (Standard)
 ===================================================================
-6% Aspomancer (Lv. 57 - 62)
+4% Aspomancer (Lv. 57 - 62)
 3% Kobraturgy (Lv. 60 - 65)
-6% Nixnerva (Lv. 59 - 64)
-5% Cervora (Lv. 58 - 63)
-5% Frosmoth (Lv. 59 - 65)
+5% Nixnerva (Lv. 59 - 64)
+4% Cervora (Lv. 58 - 63)
+4% Frosmoth (Lv. 59 - 65)
 6% Hatterene (Lv. 60 - 64)
 4% Lutrineer (Lv. 60 - 65)
-6% Osceloma (Lv. 60 - 65)
+5% Osceloma (Lv. 60 - 65)
 1% Psycorboratr (Lv. 61 - 66)
 4% Gardevoir (Lv. 60 - 65)
 4% Gallade (Lv. 60 - 65)
-3% Benglow (Lv. 58 - 64)
+4% Butterfree-X (Lv. 58 - 64)
+6% Alakazam (Lv. 60 - 65)
 5% Malamar (Lv. 59 - 64)
 5% Splame (Lv. 60 - 65)
 6% Poshorump (Lv. 61 - 66)
@@ -1286,23 +1327,24 @@ Abandoned Tower (2B) (Standard)
 5% Zurrclu (Lv. 57 - 63)
 2% Zurroaratr (Lv. 60 - 66)
 6% Glittleshoo (Lv. 59 - 64)
-7% Zoroark (Lv. 60 - 65)
+6% Zoroark (Lv. 60 - 65)
 3% Drageye (Lv. 64 - 65)
 ===================================================================
 Abandoned Tower (3A) (Standard)
 ===================================================================
-6% Aspomancer (Lv. 57 - 62)
+4% Aspomancer (Lv. 57 - 62)
 3% Kobraturgy (Lv. 60 - 65)
-6% Nixnerva (Lv. 59 - 64)
-5% Cervora (Lv. 58 - 63)
-5% Frosmoth (Lv. 59 - 65)
+5% Nixnerva (Lv. 59 - 64)
+4% Cervora (Lv. 58 - 63)
+4% Frosmoth (Lv. 59 - 65)
 6% Hatterene (Lv. 60 - 64)
 4% Lutrineer (Lv. 60 - 65)
-6% Osceloma (Lv. 60 - 65)
+5% Osceloma (Lv. 60 - 65)
 1% Psycorboratr (Lv. 61 - 66)
 4% Gardevoir (Lv. 60 - 65)
 4% Gallade (Lv. 60 - 65)
-3% Benglow (Lv. 58 - 64)
+4% Butterfree-X (Lv. 58 - 64)
+6% Alakazam (Lv. 60 - 65)
 5% Malamar (Lv. 59 - 64)
 5% Splame (Lv. 60 - 65)
 6% Poshorump (Lv. 61 - 66)
@@ -1311,23 +1353,24 @@ Abandoned Tower (3A) (Standard)
 5% Zurrclu (Lv. 57 - 63)
 2% Zurroaratr (Lv. 60 - 66)
 6% Glittleshoo (Lv. 59 - 64)
-7% Zoroark (Lv. 60 - 65)
+6% Zoroark (Lv. 60 - 65)
 3% Drageye (Lv. 64 - 65)
 ===================================================================
 Abandoned Tower (3B) (Standard)
 ===================================================================
-6% Aspomancer (Lv. 57 - 62)
+4% Aspomancer (Lv. 57 - 62)
 3% Kobraturgy (Lv. 60 - 65)
-6% Nixnerva (Lv. 59 - 64)
-5% Cervora (Lv. 58 - 63)
-5% Frosmoth (Lv. 59 - 65)
+5% Nixnerva (Lv. 59 - 64)
+4% Cervora (Lv. 58 - 63)
+4% Frosmoth (Lv. 59 - 65)
 6% Hatterene (Lv. 60 - 64)
 4% Lutrineer (Lv. 60 - 65)
-6% Osceloma (Lv. 60 - 65)
+5% Osceloma (Lv. 60 - 65)
 1% Psycorboratr (Lv. 61 - 66)
 4% Gardevoir (Lv. 60 - 65)
 4% Gallade (Lv. 60 - 65)
-3% Benglow (Lv. 58 - 64)
+4% Butterfree-X (Lv. 58 - 64)
+6% Alakazam (Lv. 60 - 65)
 5% Malamar (Lv. 59 - 64)
 5% Splame (Lv. 60 - 65)
 6% Poshorump (Lv. 61 - 66)
@@ -1336,23 +1379,24 @@ Abandoned Tower (3B) (Standard)
 5% Zurrclu (Lv. 57 - 63)
 2% Zurroaratr (Lv. 60 - 66)
 6% Glittleshoo (Lv. 59 - 64)
-7% Zoroark (Lv. 60 - 65)
+6% Zoroark (Lv. 60 - 65)
 3% Drageye (Lv. 64 - 65)
 ===================================================================
 Abandoned Tower (4A) (Standard)
 ===================================================================
-6% Aspomancer (Lv. 57 - 62)
+4% Aspomancer (Lv. 57 - 62)
 3% Kobraturgy (Lv. 60 - 65)
-6% Nixnerva (Lv. 59 - 64)
-5% Cervora (Lv. 58 - 63)
-5% Frosmoth (Lv. 59 - 65)
+5% Nixnerva (Lv. 59 - 64)
+4% Cervora (Lv. 58 - 63)
+4% Frosmoth (Lv. 59 - 65)
 6% Hatterene (Lv. 60 - 64)
 4% Lutrineer (Lv. 60 - 65)
-6% Osceloma (Lv. 60 - 65)
+5% Osceloma (Lv. 60 - 65)
 1% Psycorboratr (Lv. 61 - 66)
 4% Gardevoir (Lv. 60 - 65)
 4% Gallade (Lv. 60 - 65)
-3% Benglow (Lv. 58 - 64)
+4% Butterfree-X (Lv. 58 - 64)
+6% Alakazam (Lv. 60 - 65)
 5% Malamar (Lv. 59 - 64)
 5% Splame (Lv. 60 - 65)
 6% Poshorump (Lv. 61 - 66)
@@ -1361,23 +1405,24 @@ Abandoned Tower (4A) (Standard)
 5% Zurrclu (Lv. 57 - 63)
 2% Zurroaratr (Lv. 60 - 66)
 6% Glittleshoo (Lv. 59 - 64)
-7% Zoroark (Lv. 60 - 65)
+6% Zoroark (Lv. 60 - 65)
 3% Drageye (Lv. 64 - 65)
 ===================================================================
 Abandoned Tower (5A) (Standard)
 ===================================================================
-6% Aspomancer (Lv. 57 - 62)
+4% Aspomancer (Lv. 57 - 62)
 3% Kobraturgy (Lv. 60 - 65)
-6% Nixnerva (Lv. 59 - 64)
-5% Cervora (Lv. 58 - 63)
-5% Frosmoth (Lv. 59 - 65)
+5% Nixnerva (Lv. 59 - 64)
+4% Cervora (Lv. 58 - 63)
+4% Frosmoth (Lv. 59 - 65)
 6% Hatterene (Lv. 60 - 64)
 4% Lutrineer (Lv. 60 - 65)
-6% Osceloma (Lv. 60 - 65)
+5% Osceloma (Lv. 60 - 65)
 1% Psycorboratr (Lv. 61 - 66)
 4% Gardevoir (Lv. 60 - 65)
 4% Gallade (Lv. 60 - 65)
-3% Benglow (Lv. 58 - 64)
+4% Butterfree-X (Lv. 58 - 64)
+6% Alakazam (Lv. 60 - 65)
 5% Malamar (Lv. 59 - 64)
 5% Splame (Lv. 60 - 65)
 6% Poshorump (Lv. 61 - 66)
@@ -1386,23 +1431,24 @@ Abandoned Tower (5A) (Standard)
 5% Zurrclu (Lv. 57 - 63)
 2% Zurroaratr (Lv. 60 - 66)
 6% Glittleshoo (Lv. 59 - 64)
-7% Zoroark (Lv. 60 - 65)
+6% Zoroark (Lv. 60 - 65)
 3% Drageye (Lv. 64 - 65)
 ===================================================================
 Abandoned Tower (6A) (Standard)
 ===================================================================
-6% Aspomancer (Lv. 57 - 62)
+4% Aspomancer (Lv. 57 - 62)
 3% Kobraturgy (Lv. 60 - 65)
-6% Nixnerva (Lv. 59 - 64)
-5% Cervora (Lv. 58 - 63)
-5% Frosmoth (Lv. 59 - 65)
+5% Nixnerva (Lv. 59 - 64)
+4% Cervora (Lv. 58 - 63)
+4% Frosmoth (Lv. 59 - 65)
 6% Hatterene (Lv. 60 - 64)
 4% Lutrineer (Lv. 60 - 65)
-6% Osceloma (Lv. 60 - 65)
+5% Osceloma (Lv. 60 - 65)
 1% Psycorboratr (Lv. 61 - 66)
 4% Gardevoir (Lv. 60 - 65)
 4% Gallade (Lv. 60 - 65)
-3% Benglow (Lv. 58 - 64)
+4% Butterfree-X (Lv. 58 - 64)
+6% Alakazam (Lv. 60 - 65)
 5% Malamar (Lv. 59 - 64)
 5% Splame (Lv. 60 - 65)
 6% Poshorump (Lv. 61 - 66)
@@ -1411,10 +1457,220 @@ Abandoned Tower (6A) (Standard)
 5% Zurrclu (Lv. 57 - 63)
 2% Zurroaratr (Lv. 60 - 66)
 6% Glittleshoo (Lv. 59 - 64)
-7% Zoroark (Lv. 60 - 65)
+6% Zoroark (Lv. 60 - 65)
 3% Drageye (Lv. 64 - 65)
 ===================================================================
-1,Twigle,2,20.00%
+Deep Chasm (0A) (Standard)
+===================================================================
+4% Milipleura (Lv. 60 - 65)
+6% Prismodon (Lv. 59 - 64)
+5% Saberock (Lv. 58 - 63)
+3% Pterator (Lv. 59 - 65)
+6% Nixnerva (Lv. 59 - 64)
+5% Cervora (Lv. 58 - 63)
+5% Frosmoth (Lv. 59 - 65)
+4% Thalarctic (Lv. 60 - 65)
+4% Topazatops (Lv. 61 - 66)
+4% Walrein (Lv. 58 - 64)
+3% Bouncerog (Lv. 59 - 65)
+5% Fearomoth (Lv. 59 - 64)
+2% Ali (Lv. 57 - 63)
+2% Batorali (Lv. 60 - 66)
+3% Dompster (Lv. 61 - 65)
+3% Crobat (Lv. 59 - 63)
+3% Grust (Lv. 60 - 65)
+3% Zurrclu (Lv. 57 - 63)
+2% Zurroaratr (Lv. 60 - 66)
+4% Drillatron (Lv. 59 - 64)
+5% Wormatron (Lv. 60 - 65)
+4% Consodust (Lv. 56 - 60)
+2% Cosmocrash (Lv. 61 - 67)
+4% Weavile (Lv. 60 - 65)
+2% Bronzong-X (Lv. 60 - 65)
+4% Zoroark (Lv. 60 - 65)
+3% Shaboom (Lv. 64 - 65)
+===================================================================
+Deep Chasm (0B) (Standard)
+===================================================================
+4% Milipleura (Lv. 60 - 65)
+6% Prismodon (Lv. 59 - 64)
+5% Saberock (Lv. 58 - 63)
+3% Pterator (Lv. 59 - 65)
+6% Nixnerva (Lv. 59 - 64)
+5% Cervora (Lv. 58 - 63)
+5% Frosmoth (Lv. 59 - 65)
+4% Thalarctic (Lv. 60 - 65)
+4% Topazatops (Lv. 61 - 66)
+4% Walrein (Lv. 58 - 64)
+3% Bouncerog (Lv. 59 - 65)
+5% Fearomoth (Lv. 59 - 64)
+2% Ali (Lv. 57 - 63)
+2% Batorali (Lv. 60 - 66)
+3% Dompster (Lv. 61 - 65)
+3% Crobat (Lv. 59 - 63)
+3% Grust (Lv. 60 - 65)
+3% Zurrclu (Lv. 57 - 63)
+2% Zurroaratr (Lv. 60 - 66)
+4% Drillatron (Lv. 59 - 64)
+5% Wormatron (Lv. 60 - 65)
+4% Consodust (Lv. 56 - 60)
+2% Cosmocrash (Lv. 61 - 67)
+4% Weavile (Lv. 60 - 65)
+2% Bronzong-X (Lv. 60 - 65)
+4% Zoroark (Lv. 60 - 65)
+3% Shaboom (Lv. 64 - 65)
+===================================================================
+Deep Chasm (-1A) (Standard)
+===================================================================
+4% Milipleura (Lv. 60 - 65)
+6% Prismodon (Lv. 59 - 64)
+5% Saberock (Lv. 58 - 63)
+3% Pterator (Lv. 59 - 65)
+6% Nixnerva (Lv. 59 - 64)
+5% Cervora (Lv. 58 - 63)
+5% Frosmoth (Lv. 59 - 65)
+4% Thalarctic (Lv. 60 - 65)
+4% Topazatops (Lv. 61 - 66)
+4% Walrein (Lv. 58 - 64)
+3% Bouncerog (Lv. 59 - 65)
+5% Fearomoth (Lv. 59 - 64)
+2% Ali (Lv. 57 - 63)
+2% Batorali (Lv. 60 - 66)
+3% Dompster (Lv. 61 - 65)
+3% Crobat (Lv. 59 - 63)
+3% Grust (Lv. 60 - 65)
+3% Zurrclu (Lv. 57 - 63)
+2% Zurroaratr (Lv. 60 - 66)
+4% Drillatron (Lv. 59 - 64)
+5% Wormatron (Lv. 60 - 65)
+4% Consodust (Lv. 56 - 60)
+2% Cosmocrash (Lv. 61 - 67)
+4% Weavile (Lv. 60 - 65)
+2% Bronzong-X (Lv. 60 - 65)
+4% Zoroark (Lv. 60 - 65)
+3% Shaboom (Lv. 64 - 65)
+===================================================================
+Deep Chasm (-2A) (Standard)
+===================================================================
+4% Milipleura (Lv. 60 - 65)
+6% Prismodon (Lv. 59 - 64)
+5% Saberock (Lv. 58 - 63)
+3% Pterator (Lv. 59 - 65)
+6% Nixnerva (Lv. 59 - 64)
+5% Cervora (Lv. 58 - 63)
+5% Frosmoth (Lv. 59 - 65)
+4% Thalarctic (Lv. 60 - 65)
+4% Topazatops (Lv. 61 - 66)
+4% Walrein (Lv. 58 - 64)
+3% Bouncerog (Lv. 59 - 65)
+5% Fearomoth (Lv. 59 - 64)
+2% Ali (Lv. 57 - 63)
+2% Batorali (Lv. 60 - 66)
+3% Dompster (Lv. 61 - 65)
+3% Crobat (Lv. 59 - 63)
+3% Grust (Lv. 60 - 65)
+3% Zurrclu (Lv. 57 - 63)
+2% Zurroaratr (Lv. 60 - 66)
+4% Drillatron (Lv. 59 - 64)
+5% Wormatron (Lv. 60 - 65)
+4% Consodust (Lv. 56 - 60)
+2% Cosmocrash (Lv. 61 - 67)
+4% Weavile (Lv. 60 - 65)
+2% Bronzong-X (Lv. 60 - 65)
+4% Zoroark (Lv. 60 - 65)
+3% Shaboom (Lv. 64 - 65)
+===================================================================
+Deep Chasm (-3A) (Standard)
+===================================================================
+4% Milipleura (Lv. 60 - 65)
+6% Prismodon (Lv. 59 - 64)
+5% Saberock (Lv. 58 - 63)
+3% Pterator (Lv. 59 - 65)
+6% Nixnerva (Lv. 59 - 64)
+5% Cervora (Lv. 58 - 63)
+5% Frosmoth (Lv. 59 - 65)
+4% Thalarctic (Lv. 60 - 65)
+4% Topazatops (Lv. 61 - 66)
+4% Walrein (Lv. 58 - 64)
+3% Bouncerog (Lv. 59 - 65)
+5% Fearomoth (Lv. 59 - 64)
+2% Ali (Lv. 57 - 63)
+2% Batorali (Lv. 60 - 66)
+3% Dompster (Lv. 61 - 65)
+3% Crobat (Lv. 59 - 63)
+3% Grust (Lv. 60 - 65)
+3% Zurrclu (Lv. 57 - 63)
+2% Zurroaratr (Lv. 60 - 66)
+4% Drillatron (Lv. 59 - 64)
+5% Wormatron (Lv. 60 - 65)
+4% Consodust (Lv. 56 - 60)
+2% Cosmocrash (Lv. 61 - 67)
+4% Weavile (Lv. 60 - 65)
+2% Bronzong-X (Lv. 60 - 65)
+4% Zoroark (Lv. 60 - 65)
+3% Shaboom (Lv. 64 - 65)
+===================================================================
+Deep Chasm (-4A) (Standard)
+===================================================================
+4% Milipleura (Lv. 60 - 65)
+6% Prismodon (Lv. 59 - 64)
+5% Saberock (Lv. 58 - 63)
+3% Pterator (Lv. 59 - 65)
+6% Nixnerva (Lv. 59 - 64)
+5% Cervora (Lv. 58 - 63)
+5% Frosmoth (Lv. 59 - 65)
+4% Thalarctic (Lv. 60 - 65)
+4% Topazatops (Lv. 61 - 66)
+4% Walrein (Lv. 58 - 64)
+3% Bouncerog (Lv. 59 - 65)
+5% Fearomoth (Lv. 59 - 64)
+2% Ali (Lv. 57 - 63)
+2% Batorali (Lv. 60 - 66)
+3% Dompster (Lv. 61 - 65)
+3% Crobat (Lv. 59 - 63)
+3% Grust (Lv. 60 - 65)
+3% Zurrclu (Lv. 57 - 63)
+2% Zurroaratr (Lv. 60 - 66)
+4% Drillatron (Lv. 59 - 64)
+5% Wormatron (Lv. 60 - 65)
+4% Consodust (Lv. 56 - 60)
+2% Cosmocrash (Lv. 61 - 67)
+4% Weavile (Lv. 60 - 65)
+2% Bronzong-X (Lv. 60 - 65)
+4% Zoroark (Lv. 60 - 65)
+3% Shaboom (Lv. 64 - 65)
+===================================================================
+Deep Chasm (-5A) (Standard)
+===================================================================
+4% Milipleura (Lv. 60 - 65)
+6% Prismodon (Lv. 59 - 64)
+5% Saberock (Lv. 58 - 63)
+3% Pterator (Lv. 59 - 65)
+6% Nixnerva (Lv. 59 - 64)
+5% Cervora (Lv. 58 - 63)
+5% Frosmoth (Lv. 59 - 65)
+4% Thalarctic (Lv. 60 - 65)
+4% Topazatops (Lv. 61 - 66)
+4% Walrein (Lv. 58 - 64)
+3% Bouncerog (Lv. 59 - 65)
+5% Fearomoth (Lv. 59 - 64)
+2% Ali (Lv. 57 - 63)
+2% Batorali (Lv. 60 - 66)
+3% Dompster (Lv. 61 - 65)
+3% Crobat (Lv. 59 - 63)
+3% Grust (Lv. 60 - 65)
+3% Zurrclu (Lv. 57 - 63)
+2% Zurroaratr (Lv. 60 - 66)
+4% Drillatron (Lv. 59 - 64)
+5% Wormatron (Lv. 60 - 65)
+4% Consodust (Lv. 56 - 60)
+2% Cosmocrash (Lv. 61 - 67)
+4% Weavile (Lv. 60 - 65)
+2% Bronzong-X (Lv. 60 - 65)
+4% Zoroark (Lv. 60 - 65)
+3% Shaboom (Lv. 64 - 65)
+===================================================================
+1,Twigle,0,0.00%
 2,Torgged,0,0.00%
 3,Tortugis,0,0.00%
 4,Lagma,0,0.00%
@@ -1428,81 +1684,81 @@ Abandoned Tower (6A) (Standard)
 12,Huminescence,1,12.00%
 13,Scigeon,3,14.00%
 14,Thieven,3,9.67%
-15,Armoraven,0,0.00%
+15,Armoraven,2,5.50%
 16,Hammo,4,15.00%
-17,Grunswine,1,9.00%
-18,Hoghoncho,0,0.00%
+17,Grunswine,2,7.00%
+18,Hoghoncho,1,1.00%
 19,Teddull,4,10.50%
 20,Teddician,3,11.00%
 21,Teddinaut,1,6.00%
 22,Minipede,4,12.50%
 23,Centinel,3,6.00%
-24,Milimace,1,5.00%
-25,Milipleura,0,0.00%
+24,Milimace,2,4.50%
+25,Milipleura,8,4.12%
 26,Sapwin,5,12.00%
-27,Kappalm,4,5.50%
-28,Serpenge,0,0.00%
+27,Kappalm,6,4.83%
+28,Serpenge,2,1.50%
 29,Budew,3,9.67%
 30,Roselia,3,5.33%
-31,Roserade,0,0.00%
+31,Roserade,2,7.50%
 32,Sewaddle,3,10.33%
 33,Swadloon,3,7.67%
-34,Leavanny,0,0.00%
+34,Leavanny,1,4.00%
 35,Grubbin,3,6.67%
 36,Charjabug,3,9.67%
 37,Vikavolt,0,0.00%
-38,Busheep,7,8.57%
-39,Ramant,0,0.00%
-40,Bushewe,0,0.00%
+38,Busheep,9,7.11%
+39,Ramant,1,8.00%
+40,Bushewe,1,8.00%
 41,Scarabit,4,9.00%
 42,Spartipede,4,5.75%
-43,Gladipede,1,11.00%
+43,Gladipede,2,9.50%
 44,Lotad,5,34.40%
 45,Lombre,2,11.00%
 46,Ludicolo,2,11.00%
-47,Willolagos,5,11.80%
+47,Willolagos,6,10.83%
 48,Sedinister,5,17.80%
 49,Metaslate,1,11.00%
 50,Sedisoftra,4,6.50%
-51,Prismodon,4,5.00%
+51,Prismodon,11,5.64%
 52,Asmethiss,5,10.60%
-53,Aspomancer,13,7.85%
+53,Aspomancer,13,6.46%
 54,Kobraturgy,14,4.07%
 55,Sabore,3,8.33%
-56,Saberock,6,6.50%
+56,Saberock,14,5.50%
 57,Rexisilt,5,9.60%
-58,Pterator,1,13.00%
+58,Pterator,8,4.25%
 59,Snowlet,4,12.00%
-60,Nixnerva,10,5.60%
-61,Cervora,14,6.57%
+60,Nixnerva,17,5.24%
+61,Cervora,21,5.62%
 62,Snom,6,8.67%
-63,Frosmoth,10,4.60%
+63,Frosmoth,17,4.24%
 64,Grislush,6,11.83%
-65,Thalarctic,1,2.00%
+65,Thalarctic,8,3.75%
 66,Ceramber,5,11.20%
-67,Topazatops,3,4.33%
+67,Topazatops,10,4.10%
 68,Spheal,4,22.00%
 69,Sealeo,1,10.00%
-70,Walrein,1,7.00%
+70,Walrein,8,4.38%
 71,Froshrog,9,14.78%
-72,Bouncerog,1,15.00%
+72,Bouncerog,8,4.50%
 73,Lunymph,4,11.25%
-74,Fearomoth,3,10.00%
+74,Fearomoth,10,6.50%
 75,Hatenna,4,9.00%
 76,Hattrem,3,5.67%
 77,Hatterene,9,6.00%
 78,Whotter,7,18.29%
 79,Lutrineer,10,6.60%
 80,Mosscelot,5,9.20%
-81,Osceloma,9,6.00%
+81,Osceloma,9,5.00%
 82,Psycorb,6,8.83%
 83,Psyballs,1,14.00%
-84,Psycorboratr,9,1.00%
+84,Psycorboratr,10,1.90%
 85,Ralts,3,9.33%
 86,Kirlia,2,10.00%
 87,Gardevoir,10,4.10%
 88,Gallade,9,4.00%
-89,Benglow,16,6.69%
+89,Benglow,7,11.43%
 90,Inkay,13,13.23%
 91,Malamar,11,6.55%
 92,Flameruff,4,8.75%
@@ -1544,7 +1800,7 @@ Abandoned Tower (6A) (Standard)
 128,Whiskeroar,0,0.00%
 129,Nincada,4,6.50%
 130,Ninjask,1,2.00%
-131,Shedinja,0,0.00%
+131,Shedinja,2,5.00%
 132,Sheltor,16,14.38%
 133,Shelnado,5,18.00%
 134,Lilyray,11,21.27%
@@ -1554,28 +1810,28 @@ Abandoned Tower (6A) (Standard)
 138,Gyarados,3,21.67%
 139,Staryu,14,32.21%
 140,Starmie,1,14.00%
-141,Ali,17,13.29%
-142,Batorali,1,3.00%
+141,Ali,24,10.00%
+142,Batorali,8,2.13%
 143,Posho,8,19.00%
 144,Shomp,1,18.00%
 145,Poshorump,9,6.00%
 146,Binacle,11,17.91%
 147,Barbaracle,1,20.00%
 148,Durfish,9,19.67%
-149,Dompster,1,12.00%
+149,Dompster,8,4.13%
 150,Kissyfishy,5,26.20%
 151,Ekans,4,9.25%
 152,Arbok,3,8.33%
 153,Zubat,6,13.00%
 154,Golbat,1,9.00%
-155,Crobat,1,10.00%
+155,Crobat,8,3.88%
 156,Poof,3,11.67%
-157,Hast,11,4.27%
+157,Hast,12,4.67%
 158,Poov,4,9.75%
-159,Grust,12,5.33%
+159,Grust,20,4.65%
 160,Cluuz,4,13.75%
-161,Zurrclu,10,4.70%
-162,Zurroaratr,9,2.00%
+161,Zurrclu,18,4.06%
+162,Zurroaratr,17,2.06%
 163,Timburr,3,10.67%
 164,Gurdurr,1,19.00%
 165,Conkeldurr,1,4.00%
@@ -1583,31 +1839,31 @@ Abandoned Tower (6A) (Standard)
 167,Rhynee,2,14.00%
 168,Rhypolar,1,9.00%
 169,Diggie,5,12.40%
-170,Drillatron,5,13.40%
+170,Drillatron,12,7.92%
 171,Wormite,2,12.50%
 172,Wormbot,3,11.00%
-173,Wormatron,0,0.00%
+173,Wormatron,8,5.13%
 174,Cleffa,3,6.67%
 175,Clefairy,2,9.50%
-176,Clefable,2,6.50%
+176,Clefable,3,5.00%
 177,Minishoo,4,8.25%
 178,Glittleshoo,10,6.10%
 179,Zorua,2,7.50%
-180,Zoroark,11,7.09%
+180,Zoroark,18,5.39%
 181,Droid,2,13.50%
 182,Armoid,2,14.00%
 183,Soldrota,0,0.00%
 184,Tinkie,3,12.67%
 185,Shawar,3,18.00%
-186,Shaboom,0,0.00%
+186,Shaboom,7,3.00%
 187,Dragee,1,25.00%
 188,Draga,2,18.00%
 189,Drageye,10,3.20%
 190,Blobmo,4,9.00%
 191,Nebulimb,0,0.00%
 192,Galactasolder,1,5.00%
-193,Consodust,2,8.00%
-194,Cosmocrash,1,3.00%
+193,Consodust,9,4.89%
+194,Cosmocrash,8,2.13%
 195,Rockmite,5,13.80%
 196,Stellarock,1,7.00%
 197,Poof-E,2,13.50%
@@ -1653,29 +1909,29 @@ Abandoned Tower (6A) (Standard)
 237,Kissyfishy-D,0,0.00%
 238,Scraggy,6,6.50%
 239,Scrafty,1,6.00%
-240,Scraftagon,0,0.00%
+240,Scraftagon,1,9.00%
 241,Glimmet,8,9.87%
-242,Glimmora,3,8.00%
+242,Glimmora,4,7.25%
 243,Abra,2,9.50%
 244,Kadabra,3,5.00%
-245,Alakazam,0,0.00%
-246,Flamigo,2,4.50%
+245,Alakazam,9,6.00%
+246,Flamigo,3,4.33%
 247,Sneasel,3,13.33%
-248,Weavile,0,0.00%
+248,Weavile,7,4.00%
 249,Sneasel-H,6,13.50%
-250,Sneasler,3,6.33%
+250,Sneasler,4,6.25%
 251,Solosis,0,0.00%
 252,Duosion,0,0.00%
 253,Reuniclus,0,0.00%
 254,Solosis-X,7,7.14%
 255,Duosion-X,0,0.00%
 256,Reuniclus-X,6,11.67%
-257,Seviper,5,7.60%
-258,Hissimitar,2,6.00%
+257,Seviper,6,7.50%
+258,Hissimitar,2,2.50%
 259,Gulpin,0,0.00%
 260,Swalot,0,0.00%
 261,Gulpin-X,7,9.14%
-262,Swalot-X,2,9.00%
+262,Swalot-X,3,7.33%
 263,Plasamp,9,9.00%
 264,Genieova,0,0.00%
 265,Elgyem,3,8.00%
@@ -1686,14 +1942,14 @@ Abandoned Tower (6A) (Standard)
 270,Metapod,0,0.00%
 271,Butterfree,0,0.00%
 272,Metapod-X,0,0.00%
-273,Butterfree-X,4,6.25%
+273,Butterfree-X,14,5.00%
 274,Bronzor,0,0.00%
 275,Bronzong,0,0.00%
 276,Bronzor-X,6,14.83%
-277,Bronzong-X,1,13.00%
+277,Bronzong-X,9,3.56%
 278,Capsakid,7,6.71%
 279,Scovillain,0,0.00%
-280,Despenero,5,8.00%
+280,Despenero,6,7.50%
 281,Capsakid-S,7,12.29%
 282,Scovillain-S,2,8.50%
 283,Despenero-S,0,0.00%
@@ -1709,4 +1965,4 @@ Abandoned Tower (6A) (Standard)
 293,Marill,1,12.00%
 294,Azumarill,4,7.00%
 295,Shroodle,4,6.25%
-296,Grafaiai,3,9.33%
+296,Grafaiai,4,9.00%

@@ -226,7 +226,7 @@ public class KeyHandler implements KeyListener {
 			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
 				if ((gp.battleUI.foe.trainerOwned() && gp.battleUI.commandNum > 1) || ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.commandNum >= 0) && !gp.battleUI.showFoeSummary) {
 					gp.battleUI.commandNum -= 2;
-					if (gp.battleUI.commandNum < 0 && gp.battleUI.aura) {
+					if (gp.battleUI.commandNum < 0 && (gp.battleUI.aura || gp.battleUI.invalidEncounter)) {
 						gp.battleUI.commandNum += 2;
 					}
 				}
@@ -807,10 +807,11 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
-			if (gp.ui.showMoveOptions || gp.ui.showIVOptions) {
+			if (gp.ui.showMoveOptions || gp.ui.showIVOptions || gp.ui.showStatusOptions) {
 				gp.ui.moveOption = -1;
 				gp.ui.showIVOptions = false;
 				gp.ui.showMoveOptions = false;
+				gp.ui.showStatusOptions = false;
 			} else {
 				gp.gameState = GamePanel.MENU_STATE;
 				gp.ui.subState = 3;

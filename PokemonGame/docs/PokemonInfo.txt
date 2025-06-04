@@ -710,7 +710,7 @@ Type:
 Bug / None
 
 Ability:
-Shield Dust / None / (Swarm)
+Rattled / Shield Dust / (Swarm)
 
 Base Stats:
 45 HP / 30 Atk / 35 Def / 20 SpA / 20 SpD / 45 Spe / 195 BST
@@ -765,6 +765,7 @@ E - Lucky Chant
 1 - Iron Defense
 1 - Deck Change
 1 - Quick Spell
+1 - Magic Fang
 1 - Metronome
 1 - Psychic Noise
 1 - Tackle
@@ -1095,9 +1096,10 @@ E - Pin Missile
 22 - Struggle Bug
 29 - Fell Stinger
 32 - Cross Poison
-36 - Leaf Blade
-39 - X-Scissor
-42 - Entrainment
+35 - Leaf Blade
+38 - X-Scissor
+40 - Entrainment
+42 - Switcheroo
 45 - Knock Off
 47 - Swords Dance
 50 - Psycho Cut
@@ -2427,7 +2429,8 @@ E - Iron Defense
 17 - Mud Shot
 20 - Dig
 23 - Heavy Slam
-26 - Metal Sound
+25 - Metal Sound
+28 - Stealth Rock
 30 - Iron Tail
 33 - Spikes
 36 - Shore Up
@@ -2461,9 +2464,11 @@ E - Dual Chop
 12 - Wrap
 14 - Smack Down
 17 - Mud Shot
+20 - Iron Defense
 20 - Dig
 23 - Heavy Slam
-26 - Metal Sound
+25 - Metal Sound
+28 - Stealth Rock
 30 - Iron Tail
 33 - Spikes
 36 - Shore Up
@@ -2914,6 +2919,7 @@ Level Up:
 20 - Night Shade
 25 - Aurora Veil
 30 - Psychic Noise
+35 - Snow Plume
 
 Evolutions:
 Snowlet -> Nixnerva (160+ happiness)
@@ -2940,7 +2946,8 @@ E - Aurora Beam
 20 - Psybeam
 22 - Scary Face
 25 - Snowscape
-29 - Night Shade
+28 - Night Shade
+30 - Snow Plume
 32 - Aurora Glow
 34 - Mist Ball
 37 - Ice Beam
@@ -3730,6 +3737,7 @@ Level Up:
 45 - Belly Drum
 50 - Superpower
 55 - Perish Song
+60 - Wave Crash
 
 ===================
 #107 - Asmethiss                                                                                       [052]
@@ -5337,6 +5345,7 @@ E - Needle Arm
 10 - Grassy Terrain
 10 - Electric Terrain
 15 - Leech Seed
+20 - Chilly Reception
 23 - Thunder Punch
 27 - Thunder Wave
 30 - Grass Knot
@@ -5376,6 +5385,7 @@ E - Parabolic Charge
 45 - Leaf Storm
 50 - Nasty Plot
 55 - Forests Curse
+60 - Chilly Reception
 65 - Leech Seed
 
 ===================
@@ -5717,11 +5727,12 @@ E - Silver Wind
 1 - Lucky Chant
 4 - Stun Spore
 8 - Infestation
-12 - Haze
-16 - Defog
-21 - Aurora Beam
-24 - Snowscape
-28 - Aurora Veil
+10 - Haze
+13 - Defog
+17 - Aurora Beam
+20 - Snowscape
+23 - Snow Plume
+27 - Aurora Veil
 32 - Bug Buzz
 36 - Ice Beam
 39 - Tailwind
@@ -6394,7 +6405,7 @@ E - Air Slash
 50 - Aeroblast
 53 - Knock Off
 57 - Dragon Pulse
-60 - Calm Mind
+60 - Aura Sphere
 63 - Brave Bird
 
 ===================
@@ -6546,7 +6557,8 @@ E - Skill Swap
 52 - Dark Void
 57 - Core Enforcer
 60 - Expanding Force
-65 - Black Hole Eclipse
+64 - Black Hole Eclipse
+67 - Future Sight
 
 ===================
 #186 - Spheal                                                                                          [068]
@@ -6570,8 +6582,9 @@ Level Up:
 13 - Ice Ball
 17 - Brine
 21 - Aurora Beam
-25 - Covet
-28 - Body Slam
+24 - Covet
+27 - Snow Plume
+29 - Body Slam
 31 - Rest
 31 - Snore
 
@@ -6601,8 +6614,9 @@ E - Frostbind
 13 - Ice Ball
 17 - Brine
 21 - Aurora Beam
-25 - Covet
-28 - Body Slam
+24 - Covet
+27 - Snow Plume
+29 - Body Slam
 31 - Rest
 31 - Snore
 33 - Flip Turn
@@ -6639,8 +6653,9 @@ E - Ice Fang
 13 - Ice Ball
 17 - Brine
 21 - Aurora Beam
-25 - Covet
-28 - Body Slam
+24 - Covet
+27 - Snow Plume
+29 - Body Slam
 31 - Rest
 31 - Snore
 33 - Flip Turn
@@ -7071,6 +7086,7 @@ Level Up:
 38 - Night Slash
 40 - Fake Out
 42 - Icicle Spear
+45 - Knock Off
 
 Evolutions:
 Sneasel -> Weavile (Razor Claw)
@@ -7095,6 +7111,7 @@ E - Switcheroo
 1 - Beat Up
 1 - Quick Attack
 1 - Agility
+1 - Low Kick
 1 - Scratch
 1 - Leer
 1 - Taunt
@@ -7113,6 +7130,7 @@ E - Switcheroo
 56 - Nasty Plot
 58 - False Surrender
 60 - Icicle Crash
+63 - Knock Off
 
 ===================
 #202 - Sneasel-H                                                                                       [249]
@@ -7225,7 +7243,8 @@ Level Up:
 25 - Vitriolic Hex
 27 - Spellbind
 28 - Encore
-30 - Rainbow Flash
+28 - Rainbow Flash
+30 - Snow Plume
 32 - Alchemy
 33 - Snowscape
 35 - Frostbind
@@ -7300,10 +7319,11 @@ E - Submission
 38 - Submission
 42 - Trick Tackle
 45 - Ice Spinner
-50 - Close Combat
-55 - Icicle Crash
-60 - Fissure
-65 - Superpower
+50 - Superpower
+53 - Fissure
+56 - Icicle Crash
+60 - Double-Edge
+65 - Close Combat
 
 ===================
 #207 - Ceramber                                                                                        [066]
@@ -7982,6 +8002,7 @@ Level Up:
 25 - Mist Ball
 25 - Topsy-Turvy
 30 - Aurora Glow
+35 - Comet Punch
 
 Evolutions:
 Blobmo -> Nebulimb (lv. 40)
@@ -7999,7 +8020,7 @@ Base Stats:
 125 HP / 45 Atk / 50 Def / 45 SpA / 115 SpD / 40 Spe / 420 BST
 
 Level Up:
-E - Comet Punch
+E - Seismic Toss
 1 - Cosmic Power
 1 - Splash
 1 - Space Beam
@@ -8008,7 +8029,8 @@ E - Comet Punch
 25 - Mist Ball
 25 - Topsy-Turvy
 30 - Aurora Glow
-40 - Comet Punch
+35 - Comet Punch
+40 - Seismic Toss
 43 - Bulk Up
 45 - Desolate Void
 49 - Shooting Stars
@@ -8040,7 +8062,9 @@ E - Star-Struck Arrow
 15 - Radio Burst
 25 - Mist Ball
 25 - Topsy-Turvy
-40 - Comet Punch
+30 - Aurora Glow
+35 - Comet Punch
+40 - Seismic Toss
 43 - Bulk Up
 45 - Desolate Void
 49 - Shooting Stars
@@ -8830,16 +8854,56 @@ Ability:
 Cold Heart / None / (Pressure)
 
 Base Stats:
-100 HP / 70 Atk / 150 Def / 150 SpA / 100 SpD / 110 Spe / 680 BST
+120 HP / 150 Atk / 100 Def / 80 SpA / 130 SpD / 100 Spe / 680 BST
 
 Level Up:
-1 - Absorb
-1 - Supersonic
-5 - Astonish
-10 - Mean Look
-15 - Poison Fang
-20 - Bite
-25 - Wing Attack
+1 - Tailwind
+1 - Steel Wing
+1 - Powder Snow
+1 - Night Shade
+1 - Twister
+1 - Bite
+2 - Metal Claw
+4 - Haze
+6 - Icy Wind
+8 - Aurora Glow
+10 - Curse
+13 - Dragon Rage
+15 - Shadow Sneak
+15 - Dragon Breath
+17 - Whirlwind
+19 - Snowscape
+21 - Aurora Beam
+23 - Ice Fang
+25 - Agility
+28 - Fire Fang
+28 - Thunder Fang
+28 - Magic Fang
+30 - Snow Plume
+32 - Ice Shard
+35 - Dual Chop
+36 - Poison Fang
+38 - Bitter Malice
+40 - Dragon Tail
+41 - Crunch
+43 - Ice Punch
+46 - Frostbind
+48 - Fly
+50 - Glaciate
+53 - Aurora Veil
+55 - Dragon Rush
+58 - Icicle Spear
+61 - Phantom Force
+65 - Blizzard
+68 - Dragon Claw
+73 - Roost
+76 - Outrage
+79 - Dragon Dance
+83 - Icicle Crash
+86 - Dragon Ascent
+90 - Scale Shot
+93 - Draco Meteor
+100 - Sheer Cold
 
 ===================
 #246 - Relopamil                                                                                       [234]
@@ -8851,18 +8915,59 @@ Ability:
 Warm Heart / None / (Pressure)
 
 Base Stats:
-100 HP / 150 Atk / 100 Def / 100 SpA / 130 SpD / 100 Spe / 680 BST
+120 HP / 80 Atk / 130 Def / 150 SpA / 100 SpD / 100 Spe / 680 BST
 
 Level Up:
-1 - Charge
-3 - Thundershock
-5 - Growl
-7 - Baby-Doll Eyes
-10 - Flash
-13 - Mud Bomb
-16 - Shock Wave
-23 - Headbutt
-26 - Thunder Wave
+1 - Tailwind
+1 - Aura Sphere
+1 - Rainbow Flash
+1 - Confusion
+1 - Wrap
+1 - Twister
+1 - Hypnosis
+2 - Flame Burst
+4 - Teleport
+6 - Psybeam
+8 - Sunny Day
+9 - Psywave
+10 - Coil
+13 - Dragon Rage
+15 - Mystical Fire
+15 - Dragon Breath
+17 - Reflect
+17 - Light Screen
+19 - Psychic Terrain
+21 - Extrasensory
+23 - Stored Power
+25 - Agility
+28 - Aqua Ring
+28 - Heal Pulse
+28 - Amnesia
+30 - Psychic Noise
+32 - Skill Swap
+35 - Mind Reader
+36 - Mist Ball
+38 - Zen Headbutt
+40 - Dragon Tail
+41 - Fiery Dance
+43 - Dream Eater
+46 - Healing Wish
+48 - Bounce
+50 - Psyshock
+53 - Trick Room
+55 - Dragon Rush
+58 - Calm Mind
+61 - Dragon Claw
+65 - Psychic
+68 - Dragon Pulse
+73 - Rest
+76 - Outrage
+79 - Dragon Dance
+83 - Expanding Force
+86 - Heat Wave
+90 - Scale Shot
+93 - Draco Meteor
+100 - Future Sight
 
 ===================
 #247 - Dragowrath                                                                                      [235]
@@ -8874,18 +8979,48 @@ Ability:
 White Hole / None / (Pressure)
 
 Base Stats:
-90 HP / 95 Atk / 105 Def / 200 SpA / 110 SpD / 100 Spe / 700 BST
+110 HP / 100 Atk / 100 Def / 160 SpA / 100 SpD / 130 Spe / 700 BST
 
 Level Up:
-1 - Charge
-3 - Thundershock
-5 - Growl
-7 - Baby-Doll Eyes
-10 - Flash
-13 - Mud Bomb
-16 - Shock Wave
-23 - Headbutt
-26 - Thunder Wave
+1 - Dragon Tail
+1 - Genesis Supernova
+1 - Twister
+1 - Smokescreen
+1 - Gust
+1 - Shooting Stars
+4 - Dragon Breath
+7 - Double Team
+10 - Cosmic Power
+10 - Desolate Void
+12 - Dragon Rage
+15 - Mean Look
+17 - Radio Burst
+20 - Space Beam
+21 - Rainbow Flash
+24 - Whirlwind
+27 - Dark Void
+29 - Screech
+30 - Dragon Darts
+32 - Glare
+34 - Galaxy Blast
+37 - Prismatic Laser
+40 - Abduct
+43 - Agility
+46 - Spacial Rend
+48 - Gravity
+50 - Dragon Pulse
+53 - Star Storm
+55 - Aurora Glow
+58 - Dragon Rush
+60 - Aura Sphere
+64 - Black Hole Eclipse
+67 - Outrage
+70 - Dragon Dance
+75 - Tail Glow
+80 - Aeroblast
+86 - Core Enforcer
+90 - Draco Meteor
+95 - Supernova Explosion
 
 ===================
 #248 - Necrozma                                                                                        [290]
@@ -9732,6 +9867,7 @@ E - Parabolic Charge
 33 - Magnitude
 36 - Rock Blast
 38 - Thunderbolt
+40 - Stealth Rock
 42 - Rock Slide
 45 - Iron Defense
 49 - Power Gem
@@ -10279,7 +10415,7 @@ Type:
 Bug / None
 
 Ability:
-Shed Skin / None / (Swarm)
+Shed Skin / Shield Dust / (Swarm)
 
 Base Stats:
 50 HP / 20 Atk / 55 Def / 25 SpA / 25 SpD / 30 Spe / 205 BST
@@ -10299,7 +10435,7 @@ Type:
 Bug / Flying
 
 Ability:
-Compound Eyes / None / (Tinted Lens)
+Compound Eyes / Shield Dust / (Tinted Lens)
 
 Base Stats:
 60 HP / 45 Atk / 50 Def / 95 SpA / 80 SpD / 70 Spe / 400 BST
@@ -10609,7 +10745,7 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 ====================================================================================
 ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM02  TM03  TM04  TM05  TM06  TM07  TM08  TM09  TM10  TM11  TM12  TM13  TM14  TM15  TM16  TM17  TM18  TM19  TM20  TM21  TM22  TM23  TM24  TM25  TM26  TM27  TM28  TM29  TM30  TM31  TM32  TM33  TM34  TM35  TM36  TM37  TM38  TM39  TM40  TM41  TM42  TM43  TM44  TM45  TM46  TM47  TM48  TM49  TM50  TM51  TM52  TM53  TM54  TM55  TM56  TM57  TM58  TM59  TM60  TM61  TM62  TM63  TM64  TM65  TM66  TM67  TM68  TM69  TM70  TM71  TM72  TM73  TM74  TM75  TM76  TM77  TM78  TM79  TM80  TM81  TM82  TM83  TM84  TM85  TM86  TM87  TM88  TM89  TM90  TM91  TM92  TM93  TM94  TM95  TM96  TM97  TM98  TM99  
 ====================================================================================
-#025 Milipleura          Y     N     Y     N     N     N     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     Y     Y     Y     Y     N     N     Y     N     Y     Y     Y     N     N     N     Y     N     N     N     Y     Y     N     Y     N     N     Y     Y     N     Y     N     Y     N     N     N     N     N     N     N     Y     Y     Y     Y     N     Y     N     N     N     N     Y     N     Y     Y     N     N     N     N     Y     N     Y     N     Y     Y     Y     N     N     N     Y     Y     Y     N     N     N     Y     N     Y     Y     Y     N     N     N     N     Y     Y     N     N     Y     N     N     Y     
+#025 Milipleura          Y     N     Y     N     N     N     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     Y     Y     Y     Y     N     N     Y     N     Y     Y     Y     N     N     N     Y     N     N     N     Y     Y     N     Y     N     N     Y     Y     Y     N     N     Y     N     N     N     N     N     N     N     Y     Y     Y     Y     N     Y     N     N     N     N     Y     N     Y     Y     N     N     N     N     Y     N     Y     N     Y     Y     Y     N     N     N     Y     Y     Y     N     N     N     Y     N     Y     Y     Y     N     N     N     N     Y     Y     N     N     Y     N     N     Y     
 #026 Sapwin              Y     Y     Y     N     N     N     Y     N     N     N     N     N     Y     N     N     Y     Y     N     N     Y     N     Y     N     N     Y     Y     N     Y     Y     N     Y     Y     N     N     Y     Y     N     N     Y     Y     N     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     Y     N     Y     N     Y     N     N     Y     N     N     N     N     Y     Y     N     Y     N     N     N     Y     Y     N     Y     Y     N     N     N     Y     N     N     N     N     Y     N     Y     Y     N     Y     N     N     N     Y     N     N     Y     N     N     Y     
 #027 Kappalm             Y     Y     Y     N     N     N     Y     N     N     N     N     N     Y     N     N     Y     Y     N     N     Y     N     Y     Y     N     Y     Y     N     Y     Y     N     Y     Y     N     Y     Y     Y     N     N     Y     Y     N     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     Y     N     Y     N     Y     N     Y     Y     N     N     N     N     Y     Y     N     Y     N     N     N     Y     Y     N     Y     Y     N     N     N     Y     N     N     N     N     Y     N     Y     Y     N     Y     N     N     N     Y     N     N     Y     N     N     Y     
 #028 Serpenge            Y     Y     Y     N     Y     N     Y     N     N     N     Y     Y     Y     Y     N     N     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     N     Y     Y     N     Y     Y     Y     Y     Y     Y     N     N     Y     Y     Y     Y     Y     N     Y     N     Y     Y     N     N     N     N     N     Y     Y     N     Y     N     Y     Y     N     Y     Y     Y     Y     Y     Y     N     N     N     Y     Y     Y     Y     Y     Y     N     N     Y     Y     N     Y     Y     N     N     N     Y     N     N     N     N     Y     Y     Y     Y     N     Y     N     N     N     Y     Y     N     Y     N     N     Y     
@@ -10619,9 +10755,9 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 #032 Sewaddle            Y     N     Y     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     Y     Y     N     Y     N     Y     N     N     N     Y     Y     N     Y     N     Y     N     N     N     Y     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     Y     Y     Y     Y     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     N     Y     N     N     N     Y     N     N     Y     Y     N     N     N     N     N     N     N     N     Y     N     N     Y     
 #033 Swadloon            Y     N     Y     N     N     N     N     N     N     N     N     Y     N     N     N     Y     Y     N     N     Y     Y     N     Y     N     Y     N     N     N     Y     Y     N     Y     N     Y     N     N     N     Y     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     Y     Y     Y     Y     N     N     N     N     N     N     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     Y     N     N     N     Y     N     N     N     Y     N     N     Y     Y     N     N     N     N     N     N     N     N     Y     N     N     Y     
 #034 Leavanny            Y     N     Y     N     N     N     N     N     N     N     N     Y     N     N     N     Y     Y     N     N     Y     Y     N     Y     N     Y     N     N     Y     Y     Y     N     Y     N     Y     N     N     N     Y     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     Y     N     N     N     N     Y     Y     Y     Y     N     N     N     Y     N     N     N     N     N     Y     N     Y     Y     N     Y     N     N     N     N     N     N     Y     Y     N     N     Y     Y     N     N     N     Y     N     N     Y     Y     N     Y     N     N     N     N     N     N     Y     N     N     Y     
-#035 Grubbin             Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     Y     N     N     N     N     N     Y     N     Y     N     Y     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     Y     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     Y     
-#036 Charjabug           Y     N     Y     N     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     N     Y     Y     N     Y     N     N     Y     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     Y     N     Y     Y     Y     Y     N     N     N     N     N     N     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     Y     N     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     Y     
-#037 Vikavolt            Y     N     Y     N     Y     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     N     Y     Y     N     Y     N     N     Y     N     Y     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     N     N     N     Y     N     Y     Y     Y     N     N     N     N     Y     N     Y     Y     Y     Y     N     N     Y     N     N     N     N     Y     Y     N     N     N     N     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     Y     N     N     Y     Y     N     Y     N     N     N     N     Y     N     Y     N     N     Y     
+#035 Grubbin             Y     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     Y     N     N     N     N     N     Y     N     Y     N     Y     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     Y     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     Y     
+#036 Charjabug           Y     N     Y     N     N     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     N     Y     Y     N     Y     N     N     Y     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     Y     N     Y     Y     Y     Y     N     N     N     N     N     N     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     Y     N     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     Y     
+#037 Vikavolt            Y     N     Y     N     Y     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     N     Y     Y     N     Y     N     N     Y     N     Y     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     N     N     N     Y     N     Y     Y     Y     N     N     N     N     Y     N     Y     Y     Y     Y     N     N     Y     N     N     N     N     Y     Y     N     N     N     N     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     Y     N     N     Y     Y     N     Y     N     N     N     N     Y     N     Y     N     N     Y     
 #038 Busheep             N     Y     Y     N     N     N     N     N     N     N     N     N     Y     N     N     N     Y     N     N     Y     Y     N     N     N     Y     Y     N     N     N     N     Y     Y     N     Y     N     Y     N     Y     N     Y     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     Y     Y     N     N     N     N     Y     N     N     N     N     N     N     N     N     Y     N     N     N     N     Y     Y     Y     N     N     N     Y     N     N     N     Y     N     N     N     Y     N     N     N     Y     N     Y     N     N     Y     N     N     Y     
 #039 Ramant              N     Y     Y     N     N     N     Y     N     N     N     N     N     Y     N     N     Y     Y     N     N     Y     Y     N     Y     N     Y     Y     N     Y     N     N     Y     Y     N     Y     N     Y     N     Y     N     Y     N     N     N     N     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     N     Y     N     Y     Y     N     Y     N     Y     Y     N     N     N     N     N     Y     N     Y     Y     N     N     N     Y     Y     Y     Y     N     Y     Y     Y     Y     N     N     Y     N     N     N     Y     N     Y     N     Y     Y     Y     N     N     Y     N     N     Y     
 #040 Bushewe             N     Y     Y     N     Y     Y     Y     N     N     Y     N     Y     Y     Y     N     N     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     N     N     N     Y     Y     Y     Y     N     Y     N     Y     N     Y     N     Y     N     N     Y     N     Y     N     Y     Y     Y     Y     Y     N     Y     N     Y     N     Y     N     Y     Y     Y     N     N     Y     Y     Y     N     N     Y     N     N     N     N     Y     N     N     N     N     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     N     Y     N     N     Y     Y     N     Y     N     Y     N     Y     Y     Y     N     Y     
@@ -10645,7 +10781,7 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 #055 Sabore              Y     Y     N     N     N     N     Y     N     Y     N     N     N     Y     Y     N     N     N     N     N     Y     N     Y     N     N     N     Y     N     Y     Y     N     N     N     N     Y     N     Y     Y     Y     Y     N     Y     N     N     Y     Y     N     Y     Y     Y     N     N     N     Y     N     Y     N     Y     Y     Y     N     N     N     N     Y     N     Y     N     N     Y     N     N     N     Y     N     N     N     Y     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     Y     Y     N     Y     N     N     N     Y     N     Y     N     N     N     Y     N     Y     
 #056 Saberock            Y     Y     N     N     N     N     Y     N     Y     N     N     N     Y     Y     Y     N     N     N     N     Y     N     Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     Y     N     Y     Y     Y     Y     N     Y     N     Y     Y     Y     N     Y     Y     Y     N     N     Y     Y     Y     Y     N     Y     Y     Y     N     N     N     N     Y     N     Y     Y     N     Y     N     N     Y     Y     N     N     N     Y     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     Y     Y     N     Y     Y     Y     Y     Y     N     Y     N     N     Y     Y     N     Y     
 #057 Rexisilt            Y     Y     N     N     N     N     Y     N     Y     N     N     N     Y     N     Y     Y     N     N     Y     Y     N     Y     N     N     N     Y     N     Y     N     N     N     Y     N     Y     Y     Y     N     Y     Y     N     Y     Y     Y     N     Y     N     Y     Y     Y     N     N     N     N     Y     N     N     Y     N     Y     Y     N     N     N     Y     N     Y     Y     N     Y     N     N     Y     Y     N     Y     N     Y     N     Y     Y     Y     Y     Y     Y     Y     Y     N     N     Y     N     Y     N     Y     Y     Y     N     Y     Y     Y     N     Y     N     N     N     Y     N     Y     
-#058 Pterator            Y     Y     N     N     Y     N     Y     N     Y     Y     N     N     Y     Y     Y     Y     N     N     Y     Y     N     Y     Y     Y     N     Y     N     Y     N     N     N     Y     N     Y     Y     Y     N     Y     Y     N     Y     N     Y     N     Y     Y     Y     Y     N     Y     Y     Y     N     Y     Y     N     Y     N     Y     Y     N     N     Y     Y     Y     Y     Y     N     Y     N     N     Y     Y     Y     Y     N     Y     N     Y     Y     Y     Y     Y     Y     Y     Y     N     N     Y     N     Y     N     Y     Y     Y     N     Y     Y     Y     N     Y     Y     N     Y     Y     N     Y     
+#058 Pterator            Y     Y     N     N     Y     N     Y     N     Y     Y     N     Y     Y     Y     Y     Y     N     N     Y     Y     N     Y     Y     Y     N     Y     N     Y     N     N     N     Y     N     Y     Y     Y     N     Y     Y     N     Y     N     Y     N     Y     Y     Y     Y     N     Y     Y     Y     N     Y     Y     N     Y     N     Y     Y     N     N     Y     Y     Y     Y     Y     N     Y     N     N     Y     Y     Y     Y     N     Y     N     Y     Y     Y     Y     Y     Y     Y     Y     N     N     Y     N     Y     N     Y     Y     Y     N     Y     Y     Y     N     Y     Y     N     Y     Y     N     Y     
 #059 Snowlet             N     N     N     N     Y     N     N     N     N     Y     Y     N     N     Y     N     N     N     Y     Y     Y     N     N     N     N     N     N     N     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     Y     N     Y     Y     N     N     Y     N     Y     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     Y     Y     Y     N     N     Y     
 #060 Nixnerva            N     N     N     N     Y     Y     N     N     N     Y     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     N     N     Y     N     N     Y     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     N     Y     Y     N     Y     Y     N     N     N     N     Y     N     Y     N     Y     Y     Y     N     Y     N     Y     Y     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     N     N     Y     N     Y     N     Y     N     N     Y     Y     Y     Y     N     N     Y     Y     Y     N     N     Y     
 #061 Cervora             N     Y     Y     Y     Y     Y     Y     N     N     Y     Y     Y     Y     Y     Y     N     N     Y     Y     Y     N     N     Y     N     N     N     Y     Y     N     N     Y     Y     Y     Y     N     Y     N     Y     N     Y     N     Y     Y     N     N     Y     Y     N     Y     Y     Y     N     N     N     Y     N     Y     N     Y     N     N     Y     Y     Y     Y     N     N     Y     Y     N     Y     N     N     N     N     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     N     N     Y     Y     N     Y     Y     N     N     Y     N     Y     Y     N     Y     N     Y     Y     Y     N     Y     
@@ -10694,9 +10830,9 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM02  TM03  TM04  TM05  TM06  TM07  TM08  TM09  TM10  TM11  TM12  TM13  TM14  TM15  TM16  TM17  TM18  TM19  TM20  TM21  TM22  TM23  TM24  TM25  TM26  TM27  TM28  TM29  TM30  TM31  TM32  TM33  TM34  TM35  TM36  TM37  TM38  TM39  TM40  TM41  TM42  TM43  TM44  TM45  TM46  TM47  TM48  TM49  TM50  TM51  TM52  TM53  TM54  TM55  TM56  TM57  TM58  TM59  TM60  TM61  TM62  TM63  TM64  TM65  TM66  TM67  TM68  TM69  TM70  TM71  TM72  TM73  TM74  TM75  TM76  TM77  TM78  TM79  TM80  TM81  TM82  TM83  TM84  TM85  TM86  TM87  TM88  TM89  TM90  TM91  TM92  TM93  TM94  TM95  TM96  TM97  TM98  TM99  
 ====================================================================================
 #100 Blastflames         Y     Y     N     N     Y     N     Y     Y     N     N     N     N     Y     Y     N     N     N     N     N     Y     N     Y     Y     Y     Y     Y     Y     Y     N     N     Y     N     Y     Y     N     Y     N     Y     Y     Y     Y     N     Y     N     Y     N     Y     Y     N     N     N     N     Y     Y     N     N     Y     N     Y     Y     Y     N     N     N     Y     Y     Y     N     Y     N     Y     Y     Y     Y     Y     N     N     N     Y     N     Y     Y     Y     N     Y     N     N     N     N     N     N     Y     Y     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     N     Y     
-#101 Tiowoo              N     N     N     N     N     N     N     Y     N     N     N     N     Y     Y     N     N     N     N     Y     Y     N     N     N     N     Y     Y     N     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     Y     N     Y     N     N     N     Y     Y     N     Y     Y     N     Y     N     Y     N     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     Y     N     Y     Y     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     Y     N     N     N     N     Y     Y     N     N     N     N     N     N     N     Y     
-#102 Magwoo              N     Y     N     N     N     N     Y     Y     N     N     N     N     Y     Y     N     Y     N     N     Y     Y     N     N     N     N     Y     Y     N     Y     N     N     Y     Y     N     Y     Y     N     N     N     N     N     N     N     Y     Y     Y     N     Y     Y     Y     N     N     N     Y     Y     N     Y     Y     N     Y     N     Y     N     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     Y     N     Y     Y     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     Y     Y     Y     N     N     Y     Y     N     Y     N     N     N     N     N     Y     
-#103 Lafloo              N     Y     N     N     N     N     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     Y     Y     Y     N     N     Y     Y     N     Y     Y     N     N     N     N     N     N     N     Y     Y     Y     N     Y     Y     Y     N     N     N     Y     Y     N     Y     Y     N     Y     N     Y     N     N     N     N     Y     Y     N     Y     N     Y     N     N     Y     N     N     Y     N     Y     Y     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     Y     Y     Y     N     N     Y     Y     N     Y     N     N     N     N     N     Y     
+#101 Tiowoo              N     N     N     N     N     N     N     Y     N     N     N     N     Y     Y     N     N     N     N     Y     Y     N     N     N     N     Y     Y     N     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     N     N     Y     N     N     N     Y     Y     N     Y     Y     N     Y     N     Y     N     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     Y     N     Y     Y     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     Y     N     N     N     N     Y     Y     N     N     N     N     N     N     N     Y     
+#102 Magwoo              N     Y     N     N     N     N     Y     Y     N     N     N     N     Y     Y     N     Y     N     N     Y     Y     N     N     N     N     Y     Y     N     Y     N     N     Y     Y     N     Y     Y     N     N     N     N     N     N     N     Y     Y     Y     N     N     Y     Y     N     N     N     Y     Y     N     Y     Y     N     Y     N     Y     N     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     Y     N     Y     Y     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     Y     Y     Y     N     N     Y     Y     N     Y     N     N     N     N     N     Y     
+#103 Lafloo              N     Y     N     N     N     N     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     Y     Y     Y     N     N     Y     Y     N     Y     Y     N     N     N     N     N     N     N     Y     Y     Y     N     N     Y     Y     N     N     N     Y     Y     N     Y     Y     N     Y     N     Y     N     N     N     N     Y     Y     N     Y     N     Y     N     N     Y     N     N     Y     N     Y     Y     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     Y     Y     Y     N     N     Y     Y     N     Y     N     N     N     N     N     Y     
 #104 Houndour            N     N     N     N     N     N     Y     Y     Y     N     N     N     Y     Y     N     N     N     N     N     Y     N     Y     N     N     Y     N     Y     N     Y     N     Y     N     N     Y     N     Y     N     N     N     N     Y     N     Y     Y     N     N     N     Y     N     N     N     N     Y     Y     N     N     Y     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     Y     
 #105 Houndoom            N     N     N     N     N     N     Y     Y     Y     N     Y     N     Y     Y     N     N     N     N     N     Y     N     Y     N     Y     Y     N     Y     N     Y     N     Y     N     N     Y     N     Y     N     N     N     N     Y     N     Y     Y     N     N     N     Y     N     N     N     N     Y     Y     N     N     Y     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     N     N     N     Y     N     N     N     Y     
 #106 Sparkdust           N     N     Y     N     Y     Y     N     Y     N     N     Y     N     N     Y     N     N     N     N     Y     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     Y     N     N     N     N     N     Y     N     Y     Y     Y     N     N     Y     N     N     Y     Y     N     Y     Y     Y     Y     Y     Y     Y     N     N     Y     Y     Y     N     Y     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     N     Y     N     N     N     Y     
@@ -10710,9 +10846,9 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 #114 Elelamb             N     N     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     N     N     N     N     N     N     N     Y     Y     Y     N     Y     N     Y     N     Y     N     N     N     Y     N     N     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     N     N     Y     N     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     N     N     N     Y     
 #115 Electroram          N     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     N     Y     N     Y     N     N     N     Y     Y     Y     N     Y     Y     Y     N     Y     N     N     N     Y     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     Y     Y     N     Y     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     Y     Y     N     N     Y     N     Y     N     N     N     Y     N     Y     N     Y     N     N     N     N     N     N     N     Y     N     N     N     N     N     Y     
 #116 Superchargo         N     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     Y     N     N     Y     Y     N     Y     Y     N     N     Y     N     Y     N     N     N     Y     Y     Y     N     Y     Y     Y     N     Y     N     N     Y     Y     Y     N     N     Y     N     N     N     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     Y     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     Y     Y     N     N     Y     N     Y     Y     N     N     Y     N     Y     N     Y     N     N     N     Y     N     N     Y     Y     N     N     N     N     N     Y     
-#117 Twigzap             N     N     Y     N     N     N     N     N     N     N     N     N     N     Y     N     N     Y     N     N     Y     N     Y     N     N     Y     N     N     N     N     Y     Y     Y     Y     Y     N     Y     N     Y     Y     Y     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     N     Y     Y     Y     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     N     Y     N     N     N     N     N     Y     Y     N     N     Y     Y     Y     Y     N     Y     N     N     N     N     N     Y     N     N     N     N     N     N     Y     N     N     Y     
-#118 Shockbranch         Y     Y     Y     N     N     N     Y     N     N     N     N     N     N     Y     N     Y     Y     N     N     Y     N     Y     N     N     Y     Y     N     N     Y     Y     Y     Y     Y     Y     N     Y     N     Y     Y     Y     N     N     N     N     Y     N     N     Y     N     Y     N     N     N     N     N     N     Y     N     Y     Y     Y     Y     N     Y     N     N     N     N     N     N     Y     Y     Y     N     N     Y     N     N     N     Y     N     Y     Y     N     N     Y     Y     Y     Y     Y     Y     Y     N     Y     Y     N     Y     N     N     N     Y     N     N     Y     N     N     Y     
-#119 Thunderzap          Y     Y     Y     N     N     N     Y     N     N     N     N     N     N     Y     N     Y     Y     N     N     Y     N     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     N     N     N     N     Y     N     N     Y     N     Y     N     N     N     Y     N     N     Y     N     Y     Y     Y     Y     Y     Y     N     Y     Y     N     N     N     Y     Y     Y     N     N     Y     N     N     Y     Y     N     Y     Y     N     N     Y     Y     Y     Y     Y     Y     Y     N     Y     Y     N     Y     N     N     N     Y     N     N     Y     N     N     Y     
+#117 Twigzap             N     N     Y     N     N     N     N     N     N     N     N     N     N     Y     N     N     Y     N     N     Y     N     Y     N     N     Y     N     N     N     N     Y     Y     Y     Y     Y     N     Y     N     Y     Y     Y     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     N     Y     Y     Y     Y     N     N     N     N     N     N     N     N     Y     N     Y     N     N     Y     N     N     N     N     N     Y     Y     Y     N     Y     Y     Y     Y     N     Y     N     N     N     N     N     Y     N     N     N     N     N     N     Y     N     N     Y     
+#118 Shockbranch         Y     Y     Y     N     N     N     Y     N     N     N     N     N     N     Y     N     Y     Y     N     N     Y     N     Y     N     N     Y     Y     N     N     Y     Y     Y     Y     Y     Y     N     Y     N     Y     Y     Y     N     N     N     N     Y     N     N     Y     N     Y     N     N     N     N     N     N     Y     N     Y     Y     Y     Y     N     Y     N     N     N     N     N     N     Y     Y     Y     N     N     Y     N     N     N     Y     N     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     Y     N     Y     Y     N     Y     N     N     N     Y     N     N     Y     N     N     Y     
+#119 Thunderzap          Y     Y     Y     N     N     N     Y     N     N     N     N     N     N     Y     N     Y     Y     N     N     Y     N     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     N     N     N     N     Y     N     N     Y     N     Y     N     N     N     Y     N     N     Y     N     Y     Y     Y     Y     Y     Y     N     Y     Y     N     N     N     Y     Y     Y     N     N     Y     N     N     Y     Y     N     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     Y     N     Y     Y     N     Y     N     N     N     Y     N     N     Y     N     N     Y     
 #120 Magie               Y     Y     N     N     N     N     Y     N     Y     N     N     N     Y     N     N     N     N     N     N     Y     Y     N     N     N     N     Y     N     N     N     Y     N     N     N     Y     N     Y     Y     Y     Y     N     Y     N     N     N     Y     N     N     Y     Y     N     N     N     N     N     N     N     Y     N     Y     Y     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     Y     N     N     N     Y     Y     N     N     N     N     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     
 #121 Cumin               Y     Y     N     N     N     N     Y     N     Y     N     N     N     Y     Y     N     N     N     N     Y     Y     Y     N     N     N     N     Y     N     Y     N     Y     N     N     N     Y     N     Y     Y     Y     Y     Y     Y     N     N     N     Y     N     N     Y     Y     N     Y     Y     N     N     N     N     Y     N     Y     Y     N     N     N     Y     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     Y     Y     N     N     N     Y     Y     N     N     N     N     Y     N     N     Y     Y     N     Y     Y     N     N     Y     N     N     N     Y     N     Y     
 #122 Cinneroph           Y     Y     Y     N     N     N     Y     N     Y     N     Y     N     Y     Y     Y     Y     Y     N     Y     Y     Y     N     Y     Y     N     Y     N     Y     N     Y     N     N     Y     Y     N     Y     Y     Y     Y     Y     Y     N     N     N     Y     N     N     Y     Y     N     Y     Y     N     N     N     N     Y     N     Y     Y     Y     N     Y     Y     N     N     N     N     N     N     Y     Y     Y     N     N     N     N     N     Y     Y     Y     N     N     N     Y     Y     N     N     N     Y     Y     Y     N     Y     Y     N     Y     Y     Y     Y     Y     N     N     N     Y     N     Y     
@@ -10812,12 +10948,12 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 #204 Blastflames-E       Y     Y     N     N     Y     N     Y     Y     Y     N     N     N     Y     Y     Y     N     N     Y     N     Y     N     Y     N     Y     Y     Y     N     Y     N     N     Y     Y     Y     Y     N     Y     N     N     N     Y     Y     N     Y     N     Y     N     N     Y     N     N     N     N     Y     Y     N     Y     Y     N     Y     N     Y     Y     Y     N     Y     Y     Y     N     Y     N     Y     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     Y     N     N     Y     N     N     Y     Y     Y     N     N     N     Y     Y     Y     N     Y     N     N     N     N     N     Y     
 #205 Sedinister-E        Y     Y     N     N     N     N     Y     N     Y     N     N     N     Y     N     N     N     N     N     N     Y     N     Y     N     N     N     Y     N     Y     N     N     Y     Y     Y     Y     N     Y     N     N     N     Y     N     N     N     N     Y     N     N     Y     N     Y     N     N     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     N     Y     N     Y     N     Y     N     Y     N     N     Y     Y     N     N     Y     Y     N     N     N     Y     N     N     Y     N     N     Y     N     Y     Y     N     N     N     N     Y     N     Y     N     N     Y     N     N     Y     
 #206 Metaslate-E         Y     Y     N     N     N     N     Y     N     Y     N     N     N     Y     Y     N     N     N     N     N     Y     N     Y     N     N     N     Y     N     Y     N     N     Y     Y     Y     Y     Y     Y     N     N     N     Y     N     N     N     N     Y     N     N     Y     N     Y     N     N     N     N     N     N     Y     Y     Y     N     Y     Y     N     Y     N     Y     Y     N     Y     N     Y     N     Y     N     N     Y     Y     Y     N     Y     Y     N     N     N     Y     N     N     Y     N     N     Y     Y     Y     Y     N     N     N     Y     Y     N     Y     N     N     Y     N     N     Y     
-#207 Sedisoftra-E        Y     Y     N     N     N     N     Y     Y     Y     N     N     N     Y     Y     Y     N     N     N     N     Y     N     Y     N     Y     Y     Y     Y     Y     N     N     Y     Y     Y     Y     Y     Y     N     N     N     Y     N     N     N     N     Y     N     N     Y     N     Y     Y     N     N     N     N     N     Y     Y     Y     N     Y     Y     Y     Y     N     Y     Y     N     Y     N     Y     N     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     N     Y     N     N     Y     N     N     Y     Y     Y     Y     N     Y     N     Y     Y     N     Y     N     N     Y     N     N     Y     
-#208 Prismodon-E         Y     Y     N     N     N     N     Y     Y     Y     N     Y     N     Y     Y     Y     N     N     N     N     Y     N     Y     Y     N     Y     Y     Y     Y     N     N     Y     Y     Y     Y     Y     Y     N     N     N     Y     N     N     N     N     Y     N     N     Y     Y     Y     Y     Y     N     N     N     N     Y     Y     Y     N     Y     Y     Y     Y     N     Y     Y     N     Y     N     Y     Y     Y     Y     Y     Y     Y     N     N     Y     Y     Y     N     N     Y     N     N     Y     N     N     Y     Y     Y     Y     N     Y     N     Y     Y     Y     Y     N     N     Y     Y     N     Y     
+#207 Sedisoftra-E        Y     Y     N     N     N     N     Y     Y     Y     N     N     N     Y     Y     Y     N     N     N     N     Y     N     Y     N     Y     Y     Y     Y     Y     N     N     Y     Y     Y     Y     Y     Y     N     N     N     Y     N     N     N     N     Y     N     N     Y     N     Y     Y     N     N     Y     N     N     Y     Y     Y     N     Y     Y     Y     Y     N     Y     Y     N     Y     N     Y     N     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     N     Y     N     N     Y     N     N     Y     Y     Y     Y     N     Y     N     Y     Y     N     Y     N     N     Y     N     N     Y     
+#208 Prismodon-E         Y     Y     N     N     N     N     Y     Y     Y     N     Y     N     Y     Y     Y     N     N     N     N     Y     N     Y     Y     N     Y     Y     Y     Y     N     N     Y     Y     Y     Y     Y     Y     N     N     N     Y     N     N     N     N     Y     N     N     Y     Y     Y     Y     Y     N     Y     N     N     Y     Y     Y     N     Y     Y     Y     Y     N     Y     Y     N     Y     N     Y     Y     Y     Y     Y     Y     Y     N     N     Y     Y     Y     N     N     Y     N     N     Y     N     N     Y     Y     Y     Y     N     Y     N     Y     Y     Y     Y     N     N     Y     Y     N     Y     
 #209 Magikarp-E          N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     
 #210 Gyarados-E          Y     N     N     Y     Y     Y     N     N     Y     N     N     N     Y     N     N     N     N     Y     N     Y     N     Y     Y     Y     N     Y     N     Y     N     N     N     N     Y     Y     N     N     Y     N     Y     Y     Y     N     Y     N     N     Y     N     Y     N     N     N     N     N     Y     N     Y     Y     N     Y     Y     Y     Y     N     N     Y     Y     N     N     N     N     Y     N     N     Y     Y     N     N     Y     Y     Y     N     N     Y     N     N     N     N     Y     N     N     N     N     N     N     N     N     N     Y     N     N     N     Y     N     N     N     N     Y     
-#211 Shockfang           Y     Y     Y     Y     N     N     Y     N     Y     N     N     N     Y     N     N     N     N     Y     N     Y     N     Y     N     N     N     Y     N     Y     N     Y     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     Y     N     Y     N     N     N     Y     N     N     N     N     Y     N     N     Y     Y     Y     N     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     Y     Y     Y     N     N     N     N     Y     N     N     Y     Y     N     Y     Y     N     N     Y     Y     N     Y     N     N     N     N     N     Y     
-#212 Electrocobra        Y     Y     Y     Y     N     N     Y     N     Y     Y     Y     N     Y     N     N     N     N     Y     N     Y     N     Y     Y     Y     N     Y     N     Y     N     Y     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     Y     N     Y     N     N     N     Y     N     N     Y     N     Y     N     N     Y     Y     Y     N     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     N     Y     Y     Y     Y     N     N     N     Y     Y     Y     Y     N     N     N     N     Y     N     N     Y     Y     N     Y     Y     N     N     Y     Y     N     Y     N     N     N     N     N     Y     
+#211 Shockfang           Y     Y     Y     Y     N     Y     Y     N     Y     N     N     N     Y     N     N     N     N     Y     N     Y     N     Y     N     N     N     Y     N     Y     N     Y     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     Y     N     Y     N     N     N     Y     N     N     N     N     Y     N     N     Y     Y     Y     N     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     N     Y     N     Y     Y     N     N     N     Y     Y     Y     Y     N     N     N     N     Y     N     N     Y     Y     N     Y     Y     N     N     Y     Y     N     Y     N     N     N     N     N     Y     
+#212 Electrocobra        Y     Y     Y     Y     N     Y     Y     N     Y     Y     Y     N     Y     N     N     N     N     Y     N     Y     N     Y     Y     Y     N     Y     N     Y     N     Y     N     Y     Y     Y     N     N     N     N     Y     Y     Y     N     Y     N     Y     N     N     N     Y     N     N     Y     N     Y     N     N     Y     Y     Y     N     Y     Y     N     N     Y     Y     N     N     Y     Y     Y     N     Y     Y     Y     Y     N     N     N     Y     Y     Y     Y     N     N     N     N     Y     N     N     Y     Y     N     Y     Y     N     N     Y     Y     N     Y     N     N     N     N     N     Y     
 #213 Nightrex            Y     Y     N     N     Y     N     Y     N     Y     N     N     N     Y     Y     N     Y     Y     N     N     Y     N     Y     N     N     N     Y     N     Y     Y     Y     N     Y     N     Y     N     Y     Y     Y     Y     Y     Y     N     Y     Y     Y     N     N     Y     Y     N     N     N     N     Y     N     N     Y     N     Y     Y     N     Y     N     Y     Y     Y     N     N     N     Y     N     Y     Y     N     Y     N     N     N     Y     Y     Y     N     N     Y     Y     Y     N     N     N     N     N     Y     N     Y     Y     N     Y     Y     N     N     Y     N     N     N     Y     N     Y     
 #214 Shadowsaur          Y     Y     N     N     Y     N     Y     N     Y     N     N     N     Y     Y     N     Y     Y     N     N     Y     N     Y     Y     N     N     Y     N     Y     Y     Y     N     Y     N     Y     N     Y     Y     Y     Y     Y     Y     N     Y     Y     Y     N     N     Y     Y     N     N     N     N     Y     N     N     Y     N     Y     Y     N     Y     N     Y     Y     Y     Y     N     N     Y     N     Y     Y     Y     Y     N     N     N     Y     Y     Y     N     N     Y     Y     Y     N     N     N     N     N     Y     N     Y     Y     N     Y     Y     N     Y     Y     N     N     N     Y     N     Y     
 #215 Durfish-S           N     Y     Y     Y     Y     Y     N     N     N     N     Y     Y     Y     Y     N     N     N     Y     N     Y     Y     Y     N     N     Y     N     Y     Y     N     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     Y     Y     N     Y     Y     Y     Y     N     Y     Y     Y     Y     N     Y     Y     N     N     Y     Y     Y     N     N     Y     Y     N     Y     Y     N     Y     Y     Y     Y     N     Y     N     N     Y     Y     Y     N     N     Y     Y     Y     Y     Y     N     N     N     Y     Y     Y     Y     N     N     Y     Y     N     Y     Y     N     Y     N     Y     Y     Y     Y     Y     
@@ -10851,9 +10987,9 @@ ID   Name               HM01  HM02  HM03  HM04  HM05  HM06  HM07  HM08  TM01  TM
 #240 Scraftagon          N     Y     N     N     N     N     Y     N     Y     Y     N     N     N     N     Y     Y     N     N     N     Y     N     Y     Y     N     N     Y     N     Y     Y     N     N     N     N     Y     Y     Y     N     Y     N     Y     Y     N     N     Y     Y     N     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     Y     N     N     N     Y     Y     Y     Y     N     Y     N     N     Y     N     Y     Y     N     N     N     Y     N     N     Y     Y     N     Y     Y     N     N     N     N     N     Y     N     N     Y     N     Y     N     N     Y     N     Y     N     N     Y     N     Y     
 #241 Glimmet             N     N     N     N     Y     N     Y     Y     N     N     N     N     N     Y     Y     N     N     N     Y     Y     N     N     N     N     Y     N     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     Y     N     Y     Y     N     N     N     Y     Y     N     N     N     N     Y     N     Y     Y     Y     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     Y     N     Y     N     N     Y     Y     N     Y     N     N     N     N     N     Y     N     Y     N     Y     N     N     Y     Y     N     Y     N     N     Y     N     N     Y     
 #242 Glimmora            N     N     N     N     Y     Y     Y     Y     N     N     N     N     N     Y     Y     N     N     N     Y     Y     N     N     N     Y     Y     N     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     Y     N     Y     Y     N     N     N     Y     Y     N     N     N     N     Y     N     Y     Y     Y     N     N     N     Y     N     N     N     N     N     Y     N     N     N     N     N     N     N     Y     N     Y     N     N     Y     Y     N     Y     N     N     N     N     N     Y     N     Y     N     Y     N     N     Y     Y     N     Y     N     N     Y     N     N     Y     
-#243 Abra                N     N     Y     N     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     N     N     N     N     N     Y     N     N     N     N     Y     Y     Y     Y     Y     Y     N     N     N     N     Y     N     Y     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     Y     Y     Y     N     Y     N     N     N     N     N     Y     N     N     N     Y     Y     N     N     Y     
-#244 Kadabra             N     N     Y     N     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     Y     Y     Y     Y     Y     N     N     N     N     Y     N     Y     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     Y     Y     N     N     Y     N     N     N     N     Y     Y     N     N     N     Y     Y     N     N     Y     
-#245 Alakazam            N     N     Y     N     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     Y     Y     N     Y     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     Y     Y     Y     Y     Y     N     N     N     N     Y     N     Y     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     Y     Y     N     N     Y     N     N     N     N     Y     Y     N     N     N     Y     Y     N     N     Y     
+#243 Abra                N     N     Y     N     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     N     N     N     Y     Y     N     N     N     N     N     N     N     Y     N     Y     N     N     Y     Y     Y     Y     Y     Y     N     N     N     N     Y     N     Y     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     Y     Y     Y     N     Y     N     N     N     N     N     Y     N     N     N     Y     Y     N     N     Y     
+#244 Kadabra             N     N     Y     N     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     Y     Y     N     Y     N     N     N     N     N     N     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     Y     N     N     Y     Y     Y     Y     Y     Y     N     N     N     N     Y     N     Y     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     Y     Y     N     N     Y     N     N     N     N     Y     Y     N     N     N     Y     Y     N     N     Y     
+#245 Alakazam            N     N     Y     N     Y     N     N     N     N     Y     Y     Y     N     Y     Y     N     N     N     Y     Y     N     Y     N     Y     N     N     N     N     N     N     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     Y     N     N     Y     Y     Y     Y     Y     Y     N     N     N     N     Y     N     Y     N     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     Y     Y     N     N     N     N     N     Y     Y     N     N     Y     N     N     N     N     Y     Y     N     N     N     Y     Y     N     N     Y     
 #246 Flamigo             Y     Y     N     N     Y     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     Y     Y     Y     Y     N     N     N     N     N     Y     N     N     N     N     Y     N     Y     Y     Y     Y     Y     N     N     N     N     N     N     N     Y     N     N     N     N     N     N     N     N     Y     N     Y     Y     N     N     N     Y     Y     N     N     N     Y     N     N     Y     N     N     N     N     N     N     N     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     Y     N     N     N     N     Y     N     N     Y     N     Y     
 #247 Sneasel             Y     Y     N     N     N     N     Y     N     Y     N     N     Y     N     Y     Y     N     N     Y     N     Y     Y     Y     N     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     N     N     N     Y     N     N     N     Y     N     N     N     N     Y     Y     Y     Y     N     N     N     Y     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     N     Y     N     Y     Y     Y     N     Y     N     N     N     N     Y     Y     N     Y     Y     N     Y     N     N     N     N     N     N     N     Y     N     Y     
 #248 Weavile             Y     Y     N     N     N     N     Y     N     Y     N     N     Y     N     Y     Y     N     N     Y     N     Y     Y     Y     Y     N     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     N     N     N     Y     N     N     N     Y     N     N     N     N     Y     Y     Y     Y     N     N     N     Y     N     N     N     Y     N     N     N     N     Y     N     N     N     N     N     N     Y     N     Y     Y     Y     N     Y     N     N     N     N     Y     Y     N     Y     Y     N     Y     N     N     N     N     N     N     N     Y     N     Y     

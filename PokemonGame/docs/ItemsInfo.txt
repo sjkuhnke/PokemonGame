@@ -109,6 +109,7 @@ Ability Shield         | Held Items | --    | --    | This cute and rather uniqu
 Life Orb               | Held Items | --    | --    | An orb that boosts the power of the holder's moves, but at the cost of some HP.
 Flame Orb              | Held Items | --    | --    | A bizarre orb that gives off heat when touched and will afflict the holder with a burn during battle.
 Toxic Orb              | Held Items | --    | --    | A bizarre orb that exudes toxins when touched and will badly poison the holder during battle.
+Frost Orb              | Held Items | --    | --    | A bizarre orb that gives off extreme cold when touched and will frostbite the holder during battle.
 Rocky Helmet           | Held Items | --    | --    | If another Pokemon makes direct contact with the holder, that Pokemon will be damaged.
 Protective Pads        | Held Items | --    | --    | These pads protect the holder from effects triggered by making direct contact with another Pokemon.
 Punching Glove         | Held Items | --    | --    | This protective glove boosts the power of the holder's punching moves and prevents direct contact with targets.
@@ -410,7 +411,7 @@ TM06 Shadow Ball       : Shadow Ravine (1A)
 TM07 Focus Blast       : Mindagan Cavern (0A)
 TM08 Bulk Up           : Route 34 (1A)
 TM09 Leaf Blade        : Route 25 (Need Cut)
-TM10 Ice Beam          :
+TM10 Ice Beam          : Deep Chasm (-3A)
 TM11 Psyshock          : Given to you by Mindy after beating her
 TM12 Protect           : Schrice City shop
 TM13 Baton Pass        : Schrice City shop
@@ -556,14 +557,14 @@ Rusty Bottle Cap (71, 9)
 Power Herb (80, 16)
 Mental Herb (91, 11)
 Treasure Chest (44, 26)
-  [Dusk Stone]           |
-  [Electric Crystal]     |
   [Star Piece]           |
-  [PP Up]                |
+  [Dusk Stone]           |
   [Tiny Mushroom]        |
-  [Lax Mint]             |
-  [Bottle Cap]           |
   [Big Nugget]           |
+  [PP Up]                |
+  [Bottle Cap]           |
+  [Lax Mint]             |
+  [Electric Crystal]     |
 Tiny Mushroom (82, 28)
 PP Max (81, 7)
 
@@ -601,15 +602,15 @@ Galaxeed Berry (35, 58)
 Chilan Berry (13, 78)
 Brave Mint (29, 47)
 Treasure Chest (50, 49)
+  [Tiny Mushroom]        |
+  [Thunder Scales Fossil]|
+  [Brave Mint]           |
   [Relic Gold]           |
   [Star Piece]           |
-  [Thunder Scales Fossil]|
+  [Relic Gold]           |
   [Bottle Cap]           |
   [Star Piece]           |
   [Ghost Crystal]        |
-  [Tiny Mushroom]        |
-  [Relic Gold]           |
-  [Brave Mint]           |
   [PP Up]                |
 Iron Ball (26, 57)
 Float Stone (26, 51)
@@ -657,14 +658,14 @@ Grip Claw (50, 66)
 TM40 Facade (80, 53)
 Silver Powder (46, 41)
 Treasure Chest (51, 25)
-  [Star Piece]           |
-  [Ice Stone]            |
-  [Bottle Cap]           |
-  [Fire Crystal]         |
   [Max Revive]           |
-  [Big Nugget]           |
-  [Brave Mint]           |
   [Nugget]               |
+  [Brave Mint]           |
+  [Fire Crystal]         |
+  [Big Nugget]           |
+  [Bottle Cap]           |
+  [Ice Stone]            |
+  [Star Piece]           |
 Rash Mint (58, 38)
 PP Max (77, 27)
 Rare Candy (79, 39)
@@ -733,14 +734,14 @@ Ultra Ball (51, 8)
 Room Service (80, 8)
 Belue Berry (70, 35)
 Treasure Chest (46, 44)
+  [Tiny Mushroom]        |
   [Star Piece]           |
   [Nugget]               |
-  [Fire Stone]           |
   [Magic Crystal]        |
-  [Star Piece]           |
   [Adamant Mint]         |
   [Star Piece]           |
-  [Tiny Mushroom]        |
+  [Star Piece]           |
+  [Fire Stone]           |
   [Revive]               |
 Grassy Seed (49, 30)
 Tiny Mushroom (48, 39)
@@ -749,16 +750,16 @@ Sicab River---------------------------------------
 
 Throat Spray (69, 79)
 Treasure Chest (74, 79)
-  [Euphorian Gem]        |
+  [Big Mushroom]         |
   [Bold Mint]            |
+  [Big Mushroom]         |
   [Ability Patch]        |
-  [Bottle Cap]           |
-  [Big Mushroom]         |
-  [Star Piece]           |
-  [PP Up]                |
   [Relic Silver]         |
+  [Star Piece]           |
   [Psychic Crystal]      |
-  [Big Mushroom]         |
+  [Euphorian Gem]        |
+  [Bottle Cap]           |
+  [PP Up]                |
 Lax Mint (80, 80)
 Electric Seed (72, 59)
 Salac Berry (79, 63)
@@ -831,26 +832,26 @@ TM56 Trick Tackle (76, 43)
 Light Clay (81, 57)
 Heavy-Duty Boots (87, 57)
 Treasure Chest (58, 50)
+  [Relic Gold]           |
   [Big Nugget]           |
-  [Tiny Mushroom]        |
+  [Ability Patch]        |
   [Galactic Crystal]     |
   [Star Piece]           |
-  [Ability Patch]        |
   [Sassy Mint]           |
-  [Relic Gold]           |
+  [Tiny Mushroom]        |
   [Fire Stone]           |
 Star Piece (67, 44)
 Naive Mint (44, 60)
 Treasure Chest (74, 38)
-  [Big Nugget]           |
-  [Relic Gold]           |
-  [Rare Candy]           |
   [Dusk Stone]           |
-  [Big Mushroom]         |
-  [Dragon Crystal]       |
+  [Rash Mint]            |
+  [Big Nugget]           |
+  [Rare Candy]           |
   [Relic Silver]         |
   [Bottle Cap]           |
-  [Rash Mint]            |
+  [Big Mushroom]         |
+  [Relic Gold]           |
+  [Dragon Crystal]       |
 Star Piece (56, 62)
 Star Piece (49, 57)
 Damaged Snowball (86, 59)
@@ -860,6 +861,7 @@ Air Balloon (75, 82)
 Power Herb (43, 79)
 Big Nugget (52, 52)
 Tiny Mushroom (43, 65)
+Lonely Mint (49, 44)
 
 Mt. Splinkty (2B)---------------------------------
 
@@ -922,6 +924,7 @@ Repel (89, 75)
 Tiny Mushroom (89, 68)
 Grassy Seed (77, 80)
 Damaged Moss (75, 71)
+Frost Orb (91, 59)
 
 Kleine Village------------------------------------
 
@@ -1204,23 +1207,24 @@ Room Service (39, 41)
 Adrenaline Orb (26, 51)
 Rusty Bottle Cap (58, 63)
 Treasure Chest (45, 44)
-  [Dawn Stone]           |
-  [Poison Crystal]       |
   [Big Nugget]           |
+  [Nugget]               |
+  [Dawn Stone]           |
   [Naughty Mint]         |
+  [Star Piece]           |
   [Gold Bottle Cap]      |
   [Relic Gold]           |
-  [Rare Candy]           |
-  [Nugget]               |
+  [Poison Crystal]       |
   [Tiny Mushroom]        |
-  [Star Piece]           |
+  [Rare Candy]           |
 
 Shadow Ravine (-2A)-------------------------------
 
 Adamant Mint (39, 56)
-TM58 Dragon Pulse (37, 49)
+Gold Bottle Cap (37, 49)
 Revive (42, 38)
 Eject Button (56, 40)
+Rare Candy (58, 48)
 
 Shadow Ravine (-3A)-------------------------------
 
@@ -1231,6 +1235,7 @@ Euphorian Gem (57, 54)
 Ability Capsule (51, 35)
 HM06 Whirlpool (51, 39)
 Star Piece (40, 45)
+Big Nugget (42, 60)
 
 Team Eclipse Base---------------------------------
 
@@ -1258,7 +1263,7 @@ Damaged Moss (84, 66)
 Bottle Cap (78, 66)
 Grassy Seed (78, 56)
 Euphorian Gem (73, 26)
-Relaxed Mint (60, 26)
+Big Mushroom (43, 65)
 Rash Mint (50, 26)
 Ice Stone (49, 35)
 Leaf Stone (27, 28)
@@ -1307,6 +1312,7 @@ Glurg Town----------------------------------------
 
 Gold Bottle Cap (45, 32)
 Damaged Snowball (50, 39)
+Tiny Mushroom (54, 41)
 
 Route 34 (0A)-------------------------------------
 
@@ -1317,7 +1323,7 @@ PP Up (20, 68)
 Rocky Helmet (28, 74)
 Ability Capsule (47, 51)
 Full Heal (43, 77)
-Burn Heal (32, 51)
+Eject Pack (32, 51)
 Ability Capsule (18, 69)
 Dusk Stone (29, 81)
 Star Piece (25, 77)
@@ -1333,24 +1339,25 @@ Ultra Ball (78, 76)
 Air Balloon (56, 65)
 Choice Scarf (48, 66)
 Lonely Mint (35, 88)
-Bottle Cap (57, 82)
+Eject Button (57, 82)
 Max Elixir (77, 88)
 TM19 Photon Geyser (35, 79)
 Full Restore (26, 70)
 Micle Berry (29, 84)
 Passho Berry (42, 67)
 Treasure Chest (34, 62)
-  [Big Nugget]           |
-  [Euphorian Gem]        |
-  [Tiny Mushroom]        |
-  [Ability Capsule]      |
-  [Dark Crystal]         |
-  [Gold Bottle Cap]      |
-  [Big Nugget]           |
   [Modest Mint]          |
+  [Ability Capsule]      |
+  [Big Nugget]           |
+  [Big Nugget]           |
+  [Gold Bottle Cap]      |
+  [Dark Crystal]         |
+  [Tiny Mushroom]        |
+  [Euphorian Gem]        |
 Mirror Herb (62, 79)
 Focus Sash (56, 78)
 Big Nugget (40, 75)
+Nugget (41, 88)
 
 Mindagan Cavern (0A)------------------------------
 
@@ -1411,7 +1418,7 @@ Power Herb (70, 67)
 Euphorian Gem (64, 81)
 Adamant Mint (73, 81)
 Max Elixir (78, 71)
-Repel (87, 79)
+Throat Spray (87, 79)
 Rare Candy (86, 62)
 Heat Rock (44, 75)
 Smooth Rock (37, 75)
@@ -1419,6 +1426,9 @@ Damp Rock (41, 73)
 Icy Rock (39, 74)
 TM93 Earth Power (41, 52)
 Psychic Seed (89, 71)
+Electric Seed (69, 57)
+Air Balloon (79, 59)
+Petticoat Gem (45, 60)
 
 Mt. St. Joseph (2A)-------------------------------
 
@@ -1427,19 +1437,24 @@ Bottle Cap (36, 76)
 Sassy Mint (39, 68)
 Gentle Mint (51, 50)
 Rare Candy (48, 76)
-Hyper Potion (55, 58)
+Full Restore (55, 58)
 Bottle Cap (57, 69)
-Nugget (55, 72)
+Valiant Gem (55, 72)
+Nugget (58, 62)
+Red Card (64, 71)
+Throat Spray (46, 58)
+Bottle Cap (62, 74)
 
 Mt. St. Joseph (2B)-------------------------------
 
-Euphorian Gem (45, 70)
+Nugget (45, 70)
 Gold Bottle Cap (37, 50)
 Max Potion (31, 70)
 Max Revive (43, 60)
 Cell Battery (64, 59)
 Blunder Policy (51, 62)
 Weakness Policy (39, 58)
+Repel (55, 70)
 
 Mt. St. Joseph (3A)-------------------------------
 
@@ -1449,6 +1464,10 @@ Max Elixir (40, 54)
 TM35 Flamethrower (51, 51)
 Gold Bottle Cap (39, 43)
 Big Nugget (62, 59)
+Focus Sash (51, 39)
+Star Piece (45, 47)
+Sassy Mint (67, 56)
+Room Service (71, 59)
 
 Mt. St. Joseph (3B)-------------------------------
 
@@ -1456,6 +1475,14 @@ TM78 Swords Dance (23, 73)
 Gold Bottle Cap (23, 67)
 Red Card (43, 59)
 Fire Stone (57, 64)
+Elixir (52, 60)
+Tiny Mushroom (51, 74)
+Max Potion (38, 67)
+Blunder Policy (52, 76)
+Power Herb (47, 79)
+Hyper Potion (40, 77)
+Weakness Policy (66, 80)
+White Herb (65, 71)
 
 Gelb Forest (2A)----------------------------------
 
@@ -1465,31 +1492,47 @@ Rusty Bottle Cap (11, 15)
 Big Mushroom (22, 44)
 White Herb (14, 42)
 Treasure Chest (10, 42)
+  [Gold Bottle Cap]      |
   [Petticoat Gem]        |
   [Tiny Mushroom]        |
-  [Ice Crystal]          |
-  [Nugget]               |
-  [Revive]               |
   [Star Piece]           |
   [Brave Mint]           |
-  [Gold Bottle Cap]      |
+  [Ice Crystal]          |
+  [Revive]               |
   [PP Up]                |
+  [Nugget]               |
 Damaged Snowball (18, 10)
 Jaboca Berry (11, 22)
 Rowap Berry (16, 26)
+Big Mushroom (29, 17)
+
+Route 44------------------------------------------
+
+Bottle Cap (40, 16)
+Max Elixir (39, 42)
+Hyper Potion (44, 51)
+Hyper Potion (47, 48)
+Rare Candy (58, 76)
+Grassy Seed (51, 26)
+Red Card (69, 58)
+Absorb Bulb (79, 63)
+Cell Battery (59, 63)
+Luminous Moss (63, 51)
+Rare Candy (53, 39)
+Repel (58, 24)
 
 Mt. Splinkty (2A)---------------------------------
 
 Treasure Chest (57, 62)
-  [Ability Patch]        |
   [Nugget]               |
   [Nugget]               |
+  [Modest Mint]          |
   [Nugget]               |
   [Grass Crystal]        |
+  [Ability Patch]        |
   [Max Revive]           |
-  [Modest Mint]          |
-  [Dusk Stone]           |
   [Relic Silver]         |
+  [Dusk Stone]           |
 Star Piece (52, 61)
 Damaged Moss (67, 62)
 Star Piece (39, 60)
@@ -1506,17 +1549,21 @@ Mt. Splinkty (Outside)----------------------------
 Eviolite (67, 48)
 TM47 Star Storm (89, 38)
 Treasure Chest (51, 34)
-  [Bottle Cap]           |
-  [Bug Crystal]          |
-  [Revive]               |
-  [Relaxed Mint]         |
-  [Tiny Mushroom]        |
-  [Big Mushroom]         |
-  [Star Piece]           |
-  [Fire Stone]           |
   [Gold Bottle Cap]      |
+  [Revive]               |
+  [Fire Stone]           |
+  [Big Mushroom]         |
+  [Bug Crystal]          |
+  [Relaxed Mint]         |
+  [Bottle Cap]           |
+  [Star Piece]           |
+  [Tiny Mushroom]        |
 Sparkly Seed (70, 46)
 Ability Patch (68, 35)
+Big Mushroom (45, 66)
+Star Piece (50, 54)
+Rare Candy (67, 37)
+Rash Mint (81, 35)
 
 Mt. Splinkty (H)----------------------------------
 
@@ -1533,9 +1580,15 @@ Eject Button (52, 48)
 Big Nugget (60, 65)
 Gold Bottle Cap (53, 65)
 
+Mt. Splinkty (4A)---------------------------------
+
+Sparkly Seed (56, 71)
+Star Piece (46, 66)
+
 Mt. Splinkty (5A)---------------------------------
 
 Destiny Knot (54, 50)
+Mirror Herb (45, 70)
 
 Icy Path------------------------------------------
 
@@ -1545,29 +1598,35 @@ TM72 Ice Spinner (49, 44)
 Euphorian Gem (47, 56)
 White Herb (38, 27)
 Treasure Chest (41, 51)
+  [Jolly Mint]           |
   [Gold Bottle Cap]      |
+  [Water Crystal]        |
+  [Relic Silver]         |
+  [Tiny Mushroom]        |
+  [Tiny Mushroom]        |
   [Ice Stone]            |
   [PP Up]                |
-  [Water Crystal]        |
-  [Tiny Mushroom]        |
-  [Tiny Mushroom]        |
-  [Relic Silver]         |
-  [Jolly Mint]           |
 Snowball (62, 50)
+Psychic Seed (62, 56)
+Air Balloon (48, 58)
+Snowball (37, 59)
+Rusty Bottle Cap (44, 31)
+Rare Candy (34, 27)
+Adamant Mint (39, 56)
 
 Gelb Cavern---------------------------------------
 
 Impish Mint (54, 61)
 Treasure Chest (61, 64)
-  [Revive]               |
-  [Relic Silver]         |
-  [Relic Silver]         |
-  [PP Up]                |
-  [Big Nugget]           |
-  [Dusk Stone]           |
   [Rock Crystal]         |
   [Relic Silver]         |
   [Mild Mint]            |
+  [Relic Silver]         |
+  [PP Up]                |
+  [Revive]               |
+  [Big Nugget]           |
+  [Relic Silver]         |
+  [Dusk Stone]           |
 Gold Bottle Cap (49, 74)
 Serious Mint (65, 73)
 Gentle Mint (66, 81)
@@ -1577,3 +1636,13 @@ Focus Sash (64, 88)
 Focus Sash (67, 87)
 Razor Claw (50, 70)
 Nugget (55, 81)
+
+A.T. Path-----------------------------------------
+
+Tiny Mushroom (53, 91)
+Big Nugget (61, 55)
+Throat Spray (57, 51)
+
+Deep Chasm (-3A)----------------------------------
+
+TM10 Ice Beam (24, 55)

@@ -35,6 +35,7 @@ public abstract class AbstractUI {
 	public int counter = 0;
 	public boolean showMoveOptions;
 	public boolean showIVOptions;
+	public boolean showStatusOptions;
 	public boolean gauntlet;
 	
 	public int boxSwapNum;
@@ -219,7 +220,7 @@ public abstract class AbstractUI {
 		
 		drawSubWindow(x, y, width, height);
 		
-		if (!showMoveOptions && !showIVOptions && !showBoxSummary &&
+		if (!showMoveOptions && !showIVOptions && !showBoxSummary && !showStatusOptions &&
 				(currentTask == null || currentTask.type == Task.PARTY || currentTask.type == Task.REGIONAL_TRADE || currentTask.type == Task.EVO_INFO)) {
 			int maxPartyIndex = 0;
 			for (int i = 1; i < gp.player.p.team.length; i++) {

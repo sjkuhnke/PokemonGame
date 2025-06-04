@@ -282,7 +282,30 @@ public class GamePanel extends JPanel implements Runnable {
 		removePanel();
 		addPanel(map, true);
 	}
-
+	
+	public void wipe(Pokemon user, Pokemon foe) {
+		wipe(false, user, foe);
+	}
+	
+	public void wipe(boolean overLevelCap, Pokemon user, Pokemon foe) {
+		if (!overLevelCap) {
+			endBattle(-1, -1);
+			user.getPlayer().setMoney(user.getPlayer().getMoney() - 500);
+			user.trainer.heal();
+			if (foe.trainer != null) {
+				foe.trainer.reset();
+			}
+		}
+		setTaskState();
+		Task t = Task.addTask(Task.TELEPORT, "");
+		t.counter = Player.spawn[0];
+		t.start = Player.spawn[1];
+		t.finish = Player.spawn[2];
+		t.wipe = false;
+		if (overLevelCap) Task.addTask(Task.TEXT, "You have at least 1 team member that is over the level cap of " + Trainer.getLevelCap(player.p.badges) + "!");
+		
+		Item.useCalc(player.p.current, null, null, false);
+	}
 
 	public void endBattle(int trainer, int id) {
 		player.resetSpriteNum();
@@ -358,6 +381,8 @@ public class GamePanel extends JPanel implements Runnable {
 						player.interactNPC(npc[202][2], false);
 					}
 				}
+			} else if (trainer < 0) {
+				if (player.p.nuzlocke) player.p.removeEncounterArea(PlayerCharacter.getMetAt());
 			}
 		}
 		if (id == 235) {
@@ -630,11 +655,33 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		return ui.tasks;
 	}
+	
+	public AbstractUI getActiveUI() {
+		if (gameState == BATTLE_STATE) return battleUI;
+		if (gameState == SIM_BATTLE_STATE) return simBattleUI;
+		return ui;
+	}
 
 	public BattleUI getBattleUI() {
 		if (gameState == BATTLE_STATE) return battleUI;
 		if (gameState == SIM_BATTLE_STATE) return simBattleUI;
 		return simBattleUI;
+	}
+
+	public boolean canFly() {
+		boolean canFly = true;
+		if (!player.p.flag[1][2]) canFly = false;
+		if (!tileM.canFly[currentMap]) canFly = false;
+		if (currentMap == 18 && !player.p.flag[1][13]) canFly = false; // Sicab Office Scott
+		if (currentMap == 28 && !player.p.flag[2][10]) canFly = false; // Kleine Village Cage Critter
+		if (currentMap == 44 && player.p.flag[3][12] && !player.p.flag[4][0]) canFly = false; // After beating Glacius but still needing to do Robin cutscene
+		if (currentMap == 113 && player.p.flag[5][8] && !player.p.flag[6][0]) canFly = false; // After beating Rayna but still needing to do Scott cutscene
+		if (currentMap == 128 && player.p.flag[6][6] && !player.p.flag[7][0]) canFly = false; // After beating Merlin but still needing to do Arthra cutscene
+		return canFly;
+	}
+
+	public int getEffectiveBadges(Pokemon foe) {
+		return foe.trainerOwned() && foe.trainer.getMoney() == 500 ? player.p.badges + 1 : player.p.badges;
 	}
 
 }
