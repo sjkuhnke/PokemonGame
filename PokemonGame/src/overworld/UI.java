@@ -332,7 +332,7 @@ public class UI extends AbstractUI {
 			currentTask = null;
 			break;
 		case Task.GIFT:
-			// currentTask.wipe = Gift is egg
+			// currentTask.wipe = gift is egg
 			boolean result = gp.player.p.catchPokemon(currentTask.p, !currentTask.wipe);
 			currentTask.p.item = currentTask.item;
 			if (!currentTask.wipe && result) setNicknaming(true);
