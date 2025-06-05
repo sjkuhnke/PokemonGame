@@ -1287,14 +1287,14 @@ public abstract class AbstractUI {
 	        g2.setFont(g2.getFont().deriveFont(14F));
 	        g2.setColor(parlays[i] != 0 ? Color.WHITE : Color.GRAY);
 	        if (editable || parlays[i] != 0) {
-	        	g2.drawString("-" + parlayBet + " " + gp.player.p.getBetCurrency(gauntlet), (int) (x - gp.tileSize * 2.6), (int) (y - gp.tileSize * 0.75));
+	        	g2.drawString("-" + parlayBet + " " + getBetCurrencyName(gauntlet), (int) (x - gp.tileSize * 2.6), (int) (y - gp.tileSize * 0.75));
 	        }
 
 	        // Calculate Payout if bet is placed
 	        if (parlays[i] != 0) {
 	        	int payout = SimBattleUI.calculateParlayPayout(parlays, null, null, parlayBet, -1);
 	            g2.setColor(Color.GREEN);
-	            g2.drawString("+" + payout + " " + gp.player.p.getBetCurrency(gauntlet), (int) (x + gp.tileSize * 1.6), (int) (y - gp.tileSize * 0.75));
+	            g2.drawString("+" + payout + " " + getBetCurrencyName(gauntlet), (int) (x + gp.tileSize * 1.6), (int) (y - gp.tileSize * 0.75));
 	        }
 
 	        g2.setStroke(new BasicStroke(3));

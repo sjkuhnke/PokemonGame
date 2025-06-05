@@ -1331,7 +1331,7 @@ public class BattleUI extends AbstractUI {
 		subState = TASK_STATE;
 		boolean fullWipe = staticID != 235;
     	if (fullWipe) {
-    		if (user.getPlayer().nuzlocke) user.getPlayer().isValidNuzlocke = false; // player wiped
+    		user.getPlayer().invalidateNuzlocke("Player wiped to " + (foe.trainerOwned() ? foe.trainer.getName() : "a wild " + foe.getName()));
     		int loss = gp.player.p.getMoney() >= 500 ? 500 : gp.player.p.getMoney();
 	    	Task.addTask(Task.TEXT, "You have no more Pokemon that can fight!\nYou lost $" + loss + "!");
 	    	Task t = Task.addTask(Task.END, "");

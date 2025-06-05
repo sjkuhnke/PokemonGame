@@ -84,6 +84,7 @@ public class Player extends Trainer implements Serializable {
 	public int grustCount;
 	public int scottItem;
 	public int ballPurchase;
+	public Item registeredItem;
 	public Item[] resistBerries;
 	public Item[] statBerries;
 	public Item[] crystals;
@@ -105,10 +106,11 @@ public class Player extends Trainer implements Serializable {
 	public boolean nuzlockeStarted;
 	public boolean isValidNuzlocke;
 	public ArrayList<String> nuzlockeEncounters;
+	public ArrayList<String> invalidReasons;
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 64;
+	public static final int VERSION = 65;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -187,7 +189,7 @@ public class Player extends Trainer implements Serializable {
 	    int index = 1;
 	    String metAt = PlayerCharacter.getMetAt();
 	    if (nickname) {
-	    	if (nuzlocke && !canCatchPokemonHere(metAt)) {
+	    	if (nuzlocke && !canCatchPokemonHere(metAt, p)) {
 	    		String s = egg ? "receive " : "catch ";
 	    		t = Task.createTask(Task.END, Item.breakString("Cannot " + s + p.name() + ", you've already gotten an encounter at " + metAt + "!", UI.MAX_TEXTBOX));
 	        	Task.insertTask(t, 0);
@@ -243,9 +245,10 @@ public class Player extends Trainer implements Serializable {
 	                	t = Task.createTask(Task.END, s + p.name() + ", sent to box " + (i + 1) + "!");
 	                	Task.insertTask(t, index);
 	                }
+	                break;
 	            }
 	        }
-	        if (nickname || egg) {
+	        if (empty < 0 && (nickname || egg)) {
 	        	t = Task.createTask(Task.END, "Cannot catch " + p.name() + ", all boxes are full.");
 	        	Task.insertTask(t, index);
 	        }
@@ -264,12 +267,34 @@ public class Player extends Trainer implements Serializable {
 		return catchPokemon(p, true);
 	}
 	
-	public boolean canCatchPokemonHere(String location) {
-		return !this.nuzlockeEncounters.contains(location);
+	public boolean canCatchPokemonHere(String location, Pokemon p) {
+		return !isDupes(p) && !this.nuzlockeEncounters.contains(location);
 	}
 	
 	public void removeEncounterArea(String location) {
 		if (!this.nuzlockeEncounters.contains(location)) this.nuzlockeEncounters.add(location);
+	}
+	
+	private boolean isDupes(Pokemon p) {
+		if (p == null) return false;
+		if (pokedex[p.id] == 2) return true;
+		int pokemonChecked = 1;
+		int prevoID = this.id;
+		while (pokemonChecked < 4) { // check prevos
+			prevoID--;
+			String evolvedString = Pokemon.getEvolveString(prevoID);
+			if (evolvedString != null && (evolvedString.contains(Pokemon.getName(this.id)) || evolvedString.contains(Pokemon.getName(this.id - 1)) || evolvedString.contains(Pokemon.getName(this.id - 2)))) {
+				if (pokedex[prevoID] == 2) return true;
+			}
+			pokemonChecked++;
+		}
+		return false;
+	}
+
+	public void invalidateNuzlocke(String string) {
+		if (!nuzlocke) return;
+		isValidNuzlocke = false;
+		invalidReasons.add(string);
 	}
 
 	public void swapToFront(Pokemon pokemon, int index) {
@@ -349,6 +374,7 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	public void elevate(Pokemon pokemon) {
+		if (nuzlocke && pokemon.isFainted()) return;
 		int expAmt = pokemon.expMax - pokemon.exp;
     	pokemon.exp += expAmt;
     	while (pokemon.exp >= pokemon.expMax) {
@@ -654,7 +680,7 @@ public class Player extends Trainer implements Serializable {
 		return result;
 	}
 	
-	private void showNuzlockeInfo() {
+	public void showNuzlockeInfo() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 2));
 		
@@ -673,6 +699,19 @@ public class Player extends Trainer implements Serializable {
 			panel.add(nuzlockeStartedAns);
 			panel.add(nuzlockeValidLabel);
 			panel.add(nuzlockeValidAns);
+			
+			panel.add(new JLabel("_____________"));
+			panel.add(new JLabel("_____________"));
+			
+			for (int i = 0; i < invalidReasons.size(); i++) {
+				JLabel label = new JLabel("Reason #" + (i+1));
+				JLabel labelAns = new JLabel(invalidReasons.get(i));
+				panel.add(label);
+				panel.add(labelAns);
+			}
+			
+			panel.add(new JLabel("_____________"));
+			panel.add(new JLabel("_____________"));
 			
 			for (int i = 0; i < nuzlockeEncounters.size(); i++) {
 				JLabel label = new JLabel("#" + (i+1));
@@ -947,6 +986,9 @@ public class Player extends Trainer implements Serializable {
 	        		return;
 	        	} else {
 	        		p.fainted = false;
+	        		if (nuzlocke) {
+	        			invalidateNuzlocke("Used " + item.toString() + " on " + p.getName() + ".");
+	        		}
 	        		if (item == Item.REVIVE) {
 	        			p.currentHP = p.getStat(0) / 2;
 	        		} else {
@@ -1324,6 +1366,7 @@ public class Player extends Trainer implements Serializable {
 
 	public void update(GamePanel gp) {
 		if (this.trainersBeat.length != MAX_TRAINERS) updateTrainers();
+		invalidReasons = new ArrayList<>();
 		updateItems(gp.obj.length, gp.obj[1].length);
 		updateFlags();
 		updatePokedex();

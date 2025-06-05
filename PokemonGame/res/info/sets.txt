@@ -358,7 +358,7 @@ Ability: Grassy Surge
 - Thunder Wave/Photon Geyser/Volt Switch
 - Leaf Storm
 
-Ninjakik @ Focus Sash
+Gladipede @ Focus Sash
 Adamant Nature
 Ability: Speed Boost
 - No Retreat
