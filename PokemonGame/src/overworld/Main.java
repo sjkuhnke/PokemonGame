@@ -198,6 +198,9 @@ public class Main {
 		                public void windowClosing(WindowEvent e) {
 		                	int option = JOptionPane.showConfirmDialog(window, "Are you sure you want to exit?\nAny unsaved progress will be lost!", "Confirm Exit", JOptionPane.YES_NO_OPTION);
 		                    if (option == JOptionPane.YES_OPTION) {
+		                    	if (gp.gameState == GamePanel.BATTLE_STATE) {
+		                    		gp.saveScum("Save scummed in battle against " + (gp.battleUI.foe.trainerOwned() ? gp.battleUI.foe.trainer.getName() : "a wild " + gp.battleUI.foe.getName()));
+		                    	}
 		                        // Close the application
 		                        System.exit(0);
 		                    }

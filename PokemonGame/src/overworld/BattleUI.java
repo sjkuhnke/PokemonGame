@@ -631,7 +631,7 @@ public class BattleUI extends AbstractUI {
 			case END_STATE:
 				if (tasks.isEmpty()) {
 					user.setVisible(false);
-					gp.endBattle(index, staticID);
+					gp.endBattle(index, staticID, foe);
 					if (gp.gameState != GamePanel.TASK_STATE) gp.gameState = GamePanel.PLAY_STATE;
 				}
 				break;
@@ -655,7 +655,7 @@ public class BattleUI extends AbstractUI {
 	    maxUserHP = user.getStat(0);
 	    aura = false;
 	    invalidEncounter = false;
-	    if (gp.player.p.nuzlocke && !gp.player.p.canCatchPokemonHere(PlayerCharacter.getMetAt())) {
+	    if (gp.player.p.nuzlocke && !gp.player.p.canCatchPokemonHere(PlayerCharacter.getMetAt(), foe)) {
 			invalidEncounter = true;
 		}
 		
@@ -1331,7 +1331,9 @@ public class BattleUI extends AbstractUI {
 		subState = TASK_STATE;
 		boolean fullWipe = staticID != 235;
     	if (fullWipe) {
-    		user.getPlayer().invalidateNuzlocke("Player wiped to " + (foe.trainerOwned() ? foe.trainer.getName() : "a wild " + foe.getName()));
+    		String message = "Player wiped to " + (foe.trainerOwned() ? foe.trainer.getName() : "a wild " + foe.getName());
+    		gp.saveScum(message); // for if they save scum
+    		gp.player.p.invalidateNuzlocke(message); // for if they don't save scum
     		int loss = gp.player.p.getMoney() >= 500 ? 500 : gp.player.p.getMoney();
 	    	Task.addTask(Task.TEXT, "You have no more Pokemon that can fight!\nYou lost $" + loss + "!");
 	    	Task t = Task.addTask(Task.END, "");

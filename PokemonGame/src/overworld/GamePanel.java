@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -289,7 +291,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void wipe(boolean overLevelCap, Pokemon user, Pokemon foe) {
 		if (!overLevelCap) {
-			endBattle(-1, -1);
+			endBattle(-1, -1, foe);
 			user.getPlayer().setMoney(user.getPlayer().getMoney() - 500);
 			user.trainer.heal();
 			if (foe.trainer != null) {
@@ -307,7 +309,7 @@ public class GamePanel extends JPanel implements Runnable {
 		Item.useCalc(player.p.current, null, null, false);
 	}
 
-	public void endBattle(int trainer, int id) {
+	public void endBattle(int trainer, int id, Pokemon foe) {
 		player.resetSpriteNum();
 		boolean wiped = player.p.wiped();
 		if (!wiped) {
@@ -382,7 +384,7 @@ public class GamePanel extends JPanel implements Runnable {
 					}
 				}
 			} else if (trainer < 0) {
-				if (player.p.nuzlocke) player.p.removeEncounterArea(PlayerCharacter.getMetAt());
+				if (player.p.nuzlocke) player.p.removeEncounterArea(PlayerCharacter.getMetAt(), foe);
 			}
 		}
 		if (id == 235) {
@@ -624,7 +626,7 @@ public class GamePanel extends JPanel implements Runnable {
 		renderableNPCs.sort(Comparator.comparingInt(Entity::getWorldY));
 	}
 	
-	public void saveGame() {
+	public void saveGame(Player p) {
 		Path savesDirectory = Paths.get("./saves/");
         if (!Files.exists(savesDirectory)) {
             try {
@@ -635,14 +637,38 @@ public class GamePanel extends JPanel implements Runnable {
         }
         
     	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves/" + player.currentSave))) {
-        	player.p.setPosX(player.worldX);
-        	player.p.setPosY(player.worldY);
-        	player.p.currentMap = currentMap;
-            oos.writeObject(player.p);
+    		if (p == player.p) {
+    			p.setPosX(player.worldX);
+            	p.setPosY(player.worldY);
+            	p.currentMap = currentMap;
+    		}
+            oos.writeObject(p);
             oos.close();
         } catch (IOException ex) {
         	JOptionPane.showMessageDialog(null, "Error writing object to file: " + ex.getMessage());
         }
+	}
+	
+	public void saveScum(String reason) {
+		// Check if the directory exists, create it if not
+        Path savesDirectory = Paths.get("./saves/");
+        if (!Files.exists(savesDirectory)) {
+            try {
+				Files.createDirectories(savesDirectory);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        }
+        
+		ObjectInputStream ois;
+		try {
+			ois = new ObjectInputStream(new FileInputStream("./saves/" + player.currentSave));
+			Player temp = (Player) ois.readObject();
+			temp.invalidateNuzlocke(reason);
+			saveGame(temp);
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public ArrayList<Task> getTasks() {

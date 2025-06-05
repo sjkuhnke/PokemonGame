@@ -576,7 +576,7 @@ public class UI extends AbstractUI {
 			int winStreak = gp.player.p.winStreak;
 			gp.player.p.winStreak = 0;
 			gp.player.p.addBetCurrency(gauntlet, -1);
-			gp.saveGame();
+			gp.saveGame(gp.player.p);
 			gp.player.p.winStreak = winStreak;
 			gp.player.p.addBetCurrency(gauntlet, 1);
 			

@@ -22,9 +22,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -62,6 +66,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public static final int POKEDEX_2_SIZE = 9;
 
 	private static HashMap<Integer, Integer> meteorFormMap;
+	private static Map<String, HashSet<String>> evolutionMap;
+	private static Map<String, Integer> nameToID = new HashMap<>();
 	
 	// Database
 	private static int[] dexNos = new int[MAX_POKEMON];
@@ -912,6 +918,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	public static String getName(int id) {
 		return names[id - 1];
+	}
+	
+	public static Integer getIDFromName(String name) {
+		Integer result = nameToID.get(name);
+		if (result == null) System.err.println("The name " + name + " does not have an ID associated with it.");
+		return result;
 	}
 	
 	public int getDexNo() {
@@ -2700,7 +2712,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (!foe.isFainted() && (moveType == PType.WATER && (foe.getItem() == Item.DAMAGED_BULB || foe.getItem() == Item.DAMAGED_MOSS))
 					|| (moveType == PType.ELECTRIC && foe.getItem() == Item.DAMAGED_BATTERY)
 					|| (moveType == PType.ICE && foe.getItem() == Item.DAMAGED_SNOWBALL)) {
-				Task.addTask(Task.TEXT, foe.nickname + " used its " + foe.item.toString() + " to boost its " + Pokemon.getStatType(foe.item.getStat() + 1, true) + "!");
+				Task.addTask(Task.TEXT, foe.nickname + " used its " + foe.item.toString() + " to boost its " + getStatType(foe.item.getStat() + 1, true) + "!");
 				stat(foe, foe.item.getStat(), 1, this);
 				foe.consumeItem(this);
 			}
@@ -6848,7 +6860,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			int f = this.happiness;
 			bp = (int) (-3.0 / 14450 * f * f + 11.0 / 34 * f + 1);
 		} else if (move == Move.REVENGE) {
-			if (!first || this.headbuttCrit < 0) {
+			if (first || this.headbuttCrit < 0) {
 				bp = 60;
 			} else {
 				bp = 120;
@@ -8163,8 +8175,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	public static String getEvolveString(int id) {
 		switch (id) {
-		case 1: return "Twigle -> Torrged (lv. 18)";
-		case 2: return "Torrged -> Tortugis (lv. 36)";
+		case 1: return "Twigle -> Torgged (lv. 18)";
+		case 2: return "Torgged -> Tortugis (lv. 36)";
 		case 4: return "Lagma -> Maguide (lv. 16)";
 		case 5: return "Maguide -> Magron (lv. 36)";
 		case 7: return "Lizish -> Iguaton (lv. 17)";
@@ -8326,7 +8338,56 @@ public class Pokemon implements RoleAssignable, Serializable {
 		default:
 			return null;
 		}
-	} 
+	}
+	
+	public ArrayList<String> getEvolutionFamily() {
+		// BFS to find all connected Pokemon
+	    LinkedHashSet<String> familySet = new LinkedHashSet<>();
+	    Queue<String> queue = new LinkedList<>();
+	    String startName = getName(this.id);
+	    queue.add(startName);
+	    familySet.add(startName);
+
+	    while (!queue.isEmpty()) {
+	        String current = queue.poll();
+	        HashSet<String> neighbors = evolutionMap.getOrDefault(current, new HashSet<>());
+
+	        for (String neighbor : neighbors) {
+	            if (!familySet.contains(neighbor)) {
+	                familySet.add(neighbor);
+	                queue.add(neighbor);
+	            }
+	        }
+	    }
+
+		return new ArrayList<>(familySet);
+	}
+	
+	public static Map<String, HashSet<String>> getEvolutionMap() {
+		Map<String, HashSet<String>> result = new HashMap<>();
+		
+		// build the bidirectional evolution map
+	    for (int i = 1; i <= MAX_POKEMON; i++) {
+	        String evolveStr = getEvolveString(i);
+	        if (evolveStr == null) continue;
+
+	        String baseName = getName(i);
+	        String[] lines = evolveStr.split("\n");
+
+	        for (String line : lines) {
+	            String[] parts = line.split("->");
+	            if (parts.length == 2) {
+	                String evolvedName = parts[1].split("\\(")[0].trim();
+
+	                // Initialize sets if not already present
+	                result.computeIfAbsent(baseName, k -> new HashSet<String>()).add(evolvedName);
+	                result.computeIfAbsent(evolvedName, k -> new HashSet<String>()).add(baseName);
+	            }
+	        }
+	    }
+	    
+	    return result;
+	}
 
 	public boolean isTrapped(Pokemon foe) {
 		if (this.hasStatus(Status.CHARGING) || this.hasStatus(Status.RECHARGE) || this.hasStatus(Status.LOCKED) || this.hasStatus(Status.SEMI_INV)) {
@@ -8468,10 +8529,10 @@ public class Pokemon implements RoleAssignable, Serializable {
         case BEAST_BALL:
         	ballBonus = isUltraBeast(foe.id) ? 5 : 0.1;
         case QUICK_BALL:
-        	ballBonus = Pokemon.field.turns == 0 ? 5 : 1;
+        	ballBonus = field.turns == 0 ? 5 : 1;
         	break;
         case TIMER_BALL:
-        	ballBonus = Math.min(1 + (0.3 * Pokemon.field.turns), 4);
+        	ballBonus = Math.min(1 + (0.3 * field.turns), 4);
         	break;
         case REPEAT_BALL:
         	ballBonus = this.getPlayer().pokedex[foe.id] == 2 ? 3.5 : 1;
@@ -8697,6 +8758,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				String[] tokens = line.split("\\|");
 				dexNos[i] = Integer.parseInt(tokens[0].trim());
 				names[i] = tokens[1].trim();
+				nameToID.put(names[i], i);
 				types[i][0] = PType.valueOf(tokens[2].trim());
 				types[i][1] = tokens[3].trim().equals("null") ? null : PType.valueOf(tokens[3].trim());
 				abilities[i][0] = Ability.valueOf(tokens[4].trim());
@@ -8712,6 +8774,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
+        
+        evolutionMap = getEvolutionMap();
     }
 	
 	public static void readMovebanksFromCSV() {
@@ -8863,7 +8927,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				pokemon.validateMoveset(index, name);
 				
 				if (type != null) {
-					pokemon.ivs = Pokemon.determineOptimalIVs(type);
+					pokemon.ivs = determineOptimalIVs(type);
 				}
 				
 				boolean abilitySet = false;
@@ -8938,7 +9002,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	private void validateMoveset(int index, String name) {
-		ArrayList<Move> thisMovebank = Pokemon.getMovebankAtLevel(this.id, this.level);
+		ArrayList<Move> thisMovebank = getMovebankAtLevel(this.id, this.level);
 		ArrayList<Move> tmMoves = Item.getTMMoves();
 		ArrayList<Item> tms = Item.getTMs();
 		boolean[] movesValid = new boolean[this.moveset.length];
@@ -8971,9 +9035,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		int prevoID = this.id;
 		while (!movesetValid && pokemonChecked < 4) { // check prevos
 			prevoID--;
-			String evolvedString = Pokemon.getEvolveString(prevoID);
-			if (evolvedString != null && (evolvedString.contains(Pokemon.getName(this.id)) || evolvedString.contains(Pokemon.getName(this.id - 1)) || evolvedString.contains(Pokemon.getName(this.id - 2)))) {
-				ArrayList<Move> prevoMovebank = Pokemon.getMovebankAtLevel(prevoID, this.level);
+			String evolvedString = getEvolveString(prevoID);
+			if (evolvedString != null && (evolvedString.contains(getName(this.id)) || evolvedString.contains(getName(this.id - 1)) || evolvedString.contains(getName(this.id - 2)))) {
+				ArrayList<Move> prevoMovebank = getMovebankAtLevel(prevoID, this.level);
 				for (int i = 0; i < this.moveset.length; i++) {
 					if (!movesValid[i]) {
 						Move m = this.moveset[i].move;
@@ -9011,7 +9075,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 
 	private static ArrayList<Move> getMovebankAtLevel(int id, int level) {
 		ArrayList<Move> forgottenMoves = new ArrayList<>();
-		Node[] movebank = Pokemon.getMovebank(id);
+		Node[] movebank = getMovebank(id);
         for (int i = 0; i <= level; i++) {
         	if (i < movebank.length) {
         		Node move = movebank[i];
@@ -9194,14 +9258,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 		int id;
 		boolean sprite = false;
 		do {
-			id = rand.nextInt(Pokemon.MAX_POKEMON) + 1;
+			id = rand.nextInt(MAX_POKEMON) + 1;
 			try {
 				ImageIO.read(Pokemon.class.getResourceAsStream("/sprites/" + String.format("%03d", id) + ".png"));
 				sprite = true;
 			} catch (Exception e) {
 				sprite = false;
 			}
-		} while (Pokemon.getEvolveString(id) != null || !sprite);
+		} while (getEvolveString(id) != null || !sprite);
 		
 		Item item;
 		do {
@@ -9406,7 +9470,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public static void loadCompetitiveSets() {
 		Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/sets.txt"));
 		
-		int currentID = 1;
 		boolean newID = true;
 		
 		while (scanner.hasNextLine()) {
@@ -9429,22 +9492,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				moves[i] = moveLine.substring(2).trim();
 			}
 			
-			String currentName = null;
-			boolean nameFound = false;
-			do {
-				try {
-					currentName = Pokemon.getName(currentID);
-				} catch (ArrayIndexOutOfBoundsException e) {
-					System.err.println(name);
-					e.printStackTrace();
-				}
-				newID = true;
-				nameFound = name.equals(currentName);
-				if (!nameFound) {
-					newID = true;
-					currentID++;
-				}
-			} while (!nameFound);
+			Integer id = getIDFromName(name);
 			
 			String[] abilityOptions = abilities.split("/");
 			Ability[] as = new Ability[abilityOptions.length];
@@ -9464,7 +9512,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				ns[i] = Nature.getEnum(natureOptions[i]);
 			}
 			
-			Set set = new Set(currentID);
+			Set set = new Set(id);
 			
 			for (int i = 0; i < moves.length; i++) {
 				String[] moveStrings = moves[i].split("/");
@@ -9482,12 +9530,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 			set.setRole(RoleAssignable.assignRole(set));
 			
 			if (newID) {
-				compIDs.add(currentID);
+				compIDs.add(id);
 			}
 			
-			ArrayList<Set> setOptions = sets.getOrDefault(currentID, new ArrayList<>());
+			ArrayList<Set> setOptions = sets.getOrDefault(id, new ArrayList<>());
 			setOptions.add(set);
-			sets.put(currentID, setOptions);
+			sets.put(id, setOptions);
 			
 			if (scanner.hasNextLine()) scanner.nextLine();
 		}
@@ -9530,8 +9578,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public static int getRandomBasePokemon(Random random) {
 		int id = 0;
 		do {
-			id = random.nextInt(Pokemon.MAX_POKEMON) + 1;
-		} while (Pokemon.getEvolveString(id - 1) != null || Pokemon.getEvolveString(id - 2) == null || Pokemon.getEvolveString(id - 2).contains(Pokemon.getName(id)) || Pokemon.getCatchRate(id) <= 5);
+			id = random.nextInt(MAX_POKEMON) + 1;
+		} while (getEvolveString(id - 1) != null || getEvolveString(id - 2) == null || getEvolveString(id - 2).contains(getName(id)) || getCatchRate(id) <= 5);
 		
 		return id;
 	}

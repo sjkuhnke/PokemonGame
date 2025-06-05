@@ -171,6 +171,7 @@ public class Player extends Trainer implements Serializable {
 		this.nuzlockeStarted = false;
 		this.isValidNuzlocke = true;
 		this.nuzlockeEncounters = new ArrayList<>();
+		invalidReasons = new ArrayList<>();
 		this.bag.add(Item.INFINITE_REPEL);
 		this.bag.add(Item.HEALING_PACK);
 		this.bag.add(Item.POCKET_PC);
@@ -191,7 +192,8 @@ public class Player extends Trainer implements Serializable {
 	    if (nickname) {
 	    	if (nuzlocke && !canCatchPokemonHere(metAt, p)) {
 	    		String s = egg ? "receive " : "catch ";
-	    		t = Task.createTask(Task.END, Item.breakString("Cannot " + s + p.name() + ", you've already gotten an encounter at " + metAt + "!", UI.MAX_TEXTBOX));
+	    		String reason = isDupes(p) ? p.name() + " is a dupe!" : "you've already gotten an encounter at " + metAt + "!";
+	    		t = Task.createTask(Task.END, Item.breakString("Cannot " + s + p.name() + ", " + reason , UI.MAX_TEXTBOX));
 	        	Task.insertTask(t, 0);
 	    		return false;
 	    	}
@@ -254,7 +256,7 @@ public class Player extends Trainer implements Serializable {
 	        }
 	    }
 	    if (nuzlocke) {
-	    	removeEncounterArea(metAt);
+	    	removeEncounterArea(metAt, null);
 	    }
 	    return true;
 	}
@@ -271,22 +273,18 @@ public class Player extends Trainer implements Serializable {
 		return !isDupes(p) && !this.nuzlockeEncounters.contains(location);
 	}
 	
-	public void removeEncounterArea(String location) {
-		if (!this.nuzlockeEncounters.contains(location)) this.nuzlockeEncounters.add(location);
+	public void removeEncounterArea(String location, Pokemon p) {
+		if (canCatchPokemonHere(location, p)) {
+			this.nuzlockeEncounters.add(location);
+		}
 	}
 	
-	private boolean isDupes(Pokemon p) {
+	public boolean isDupes(Pokemon p) {
 		if (p == null) return false;
 		if (pokedex[p.id] == 2) return true;
-		int pokemonChecked = 1;
-		int prevoID = this.id;
-		while (pokemonChecked < 4) { // check prevos
-			prevoID--;
-			String evolvedString = Pokemon.getEvolveString(prevoID);
-			if (evolvedString != null && (evolvedString.contains(Pokemon.getName(this.id)) || evolvedString.contains(Pokemon.getName(this.id - 1)) || evolvedString.contains(Pokemon.getName(this.id - 2)))) {
-				if (pokedex[prevoID] == 2) return true;
-			}
-			pokemonChecked++;
+		ArrayList<String> evoFamily = p.getEvolutionFamily();
+		for (String s : evoFamily) {
+			if (pokedex[Pokemon.getIDFromName(s)] == 2) return true;
 		}
 		return false;
 	}
@@ -1366,7 +1364,6 @@ public class Player extends Trainer implements Serializable {
 
 	public void update(GamePanel gp) {
 		if (this.trainersBeat.length != MAX_TRAINERS) updateTrainers();
-		invalidReasons = new ArrayList<>();
 		updateItems(gp.obj.length, gp.obj[1].length);
 		updateFlags();
 		updatePokedex();
