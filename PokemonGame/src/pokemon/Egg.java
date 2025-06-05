@@ -102,7 +102,7 @@ public class Egg extends Pokemon {
 	public Pokemon hatch() {
 		String metAt = PlayerCharacter.getMetAt();
 		if (gp.player.p.nuzlocke) {
-			if (!gp.player.p.canCatchPokemonHere(metAt)) {
+			if (!gp.player.p.canCatchPokemonHere(metAt, this)) {
 				return this;
 			} else {
 				gp.player.p.removeEncounterArea(metAt);

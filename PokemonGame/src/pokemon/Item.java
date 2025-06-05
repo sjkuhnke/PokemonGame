@@ -2252,7 +2252,6 @@ public enum Item {
 	}
 	
 	public boolean isSellable(int amt) {
-		if (pocket == KEY_ITEM) return false;
 		if (pocket == HELD_ITEM) {
 			if (getSell() == 0 && amt <= 1) return false;
 		}

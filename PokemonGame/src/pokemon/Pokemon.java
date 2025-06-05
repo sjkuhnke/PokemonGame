@@ -3766,6 +3766,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.SMACK_DOWN && !foe.hasStatus(Status.SMACK_DOWN)) {
 			foe.addStatus(Status.SMACK_DOWN);
 			Task.addTask(Task.TEXT, foe.nickname + " was grounded!");
+		} else if (move == Move.SNOW_PLUME) {
+			foe.freeze(false, this);
 		} else if (move == Move.SLUDGE_WAVE) {
 			foe.poison(false, this);
 		} else if (move == Move.SPOTLIGHT_RAY) {
@@ -9427,10 +9429,22 @@ public class Pokemon implements RoleAssignable, Serializable {
 				moves[i] = moveLine.substring(2).trim();
 			}
 			
-			while (!name.equals(Pokemon.getName(currentID))) {
-				currentID++;
+			String currentName = null;
+			boolean nameFound = false;
+			do {
+				try {
+					currentName = Pokemon.getName(currentID);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					System.err.println(name);
+					e.printStackTrace();
+				}
 				newID = true;
-			}
+				nameFound = name.equals(currentName);
+				if (!nameFound) {
+					newID = true;
+					currentID++;
+				}
+			} while (!nameFound);
 			
 			String[] abilityOptions = abilities.split("/");
 			Ability[] as = new Ability[abilityOptions.length];

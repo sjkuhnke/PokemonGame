@@ -77,6 +77,7 @@ public class UI extends AbstractUI {
 	public int starAmt;
 	public int premier;
 	public Item tmCheck;
+	public boolean wasAPressed;
 	
 	public int remindNum;
 	public boolean drawFlash;
@@ -3237,6 +3238,88 @@ public class UI extends AbstractUI {
 		
 		drawToolTips("Use", null, "Back", "Back");
 	}
+	
+	public void useItem(Item item, boolean wasAPressed) {
+		this.wasAPressed = wasAPressed;
+		boolean inGauntlet = !gp.canFly();
+		if (item == Item.REPEL) {
+			if (!gp.player.p.repel) {
+				gp.player.useRepel();
+		    } else {
+		    	showMessage("It won't have any effect.");
+		    }
+			bagState = 0;
+		} else if (item == Item.CALCULATOR) {
+			Item.useCalc(gp.player.p.getCurrent(), null, null, true);
+		} else if (item == Item.DEX_NAV) {
+			encounters = Encounter.getAllEncounters();
+			gp.gameState = GamePanel.DEX_NAV_STATE;
+		} else if (item == Item.FISHING_ROD) {
+			int result = gp.cChecker.checkTileType(gp.player);
+			if (result == 3 || (result >= 24 && result <= 36) || (result >= 313 && result <= 324)) {
+				gp.gameState = GamePanel.PLAY_STATE;
+				bagState = 0;
+				subState = 0;
+				gp.player.startWild(PlayerCharacter.currentMapName, 'F');
+			} else {
+				showMessage("Can't use now!");
+			}
+		} else if (item == Item.VISOR) {
+			if (gp.player.p.visor) {
+				showMessage("You took off the visor.");
+			} else {
+				showMessage("You put on the visor!");
+			}
+			bagState = 0;
+			gp.player.p.visor = !gp.player.p.visor;
+			gp.player.setupPlayerImages(gp.player.p.visor);
+			drawLight = gp.determineMachineLight();
+		} else if (item == Item.LETTER) {
+			gp.gameState = GamePanel.LETTER_STATE;
+		} else if (item == Item.HEALING_PACK) {
+			if (inGauntlet) {
+				boolean flag = gp.player.p.flag[1][2];
+				showMessage("Can't use this " + (flag ? "now!" : "yet!"));
+			} else {
+				gp.player.p.heal();
+				showMessage("Your Pokemon were restored to full health!");
+			}
+			bagState = 0;
+		} else if (item == Item.POCKET_PC) {
+			if (inGauntlet) {
+				boolean flag = gp.player.p.flag[1][2];
+				showMessage("Can't use this " + (flag ? "now!" : "yet!"));
+			} else {
+				bagState = 0;
+				NPC_PC pc = new NPC_PC(gp);
+				gp.openBox(pc);
+			}
+		} else if (item == Item.INFINITE_REPEL) {
+			gp.player.p.steps = gp.player.p.repel ? 1 : 5000;
+			gp.player.p.repel = !gp.player.p.repel;
+			String onoff = gp.player.p.repel ? "on!" : "off.";
+			showMessage("Repel mode was turned " + onoff);
+			bagState = 0;
+		} else if (!item.isUsable()) {
+			// do nothing
+		} else {
+			currentItem = item;
+			gp.gameState = GamePanel.USE_ITEM_STATE;
+		}
+	}
+	
+	public void goBackInBag() {
+		if (wasAPressed) {
+			gp.gameState = GamePanel.PLAY_STATE;
+		} else {
+			gp.gameState = GamePanel.MENU_STATE;
+			currentItems = gp.player.p.getItems(currentPocket);
+			subState = 3;
+			bagState = 0;
+			commandNum = 0;
+			pageNum = 0;
+		}
+	}
 
 	private void drawItemUsingScreen() {
 		int x = gp.tileSize*3;
@@ -3582,10 +3665,26 @@ public class UI extends AbstractUI {
 			}
 			if (i < currentItems.size()) {
 				Bag.Entry current = currentItems.get(i);
+				
 				g2.drawImage(current.getItem().getImage(), x - 4, y, null);
 				y += gp.tileSize / 2;
 				String itemString = current.getItem().toString();
-				if (currentPocket != Item.TMS) itemString += " x " + current.getCount();
+				if (currentPocket != Item.TMS && currentPocket != Item.KEY_ITEM) itemString += " x " + current.getCount();
+				
+				if (currentPocket == Item.KEY_ITEM && current.getItem() == gp.player.p.registeredItem) {
+					int starX = x + gp.tileSize * 6;
+					int starY = y;
+					int starWidth = (gp.tileSize * 2 / 3) - 4;
+					g2.setFont(g2.getFont().deriveFont(40F));
+				    GradientPaint starPaint = new GradientPaint(
+				        starX + 6, starY - 6, new Color(255, 215, 0), // Start point and color
+				        starX +  - 10, starY - starWidth + 10, new Color(245, 225, 210) // End point and color
+				    );
+				    g2.setPaint(starPaint);
+				    g2.drawString('\u2605' + "", starX, starY + 2);
+				    g2.setFont(g2.getFont().deriveFont(32F));
+				}
+				
 				g2.drawString(itemString, x + gp.tileSize / 2, y);
 				y += gp.tileSize / 2;
 				if (currentPocket == Item.TMS && tmCheck == current.getItem()) {
@@ -3675,94 +3774,41 @@ public class UI extends AbstractUI {
 		
 		x += gp.tileSize;
 		y += gp.tileSize;
+		
+		Bag.Entry entryItem = currentItems.get(bagNum[currentPocket - 1]);
+		
 		String option1 = currentPocket == Item.BERRY || currentPocket == Item.HELD_ITEM ? "Give" : "Use";
-		if (!currentItems.get(bagNum[currentPocket - 1]).getItem().isUsable()) g2.setColor(Color.GRAY);
+		if (!entryItem.getItem().isUsable()) g2.setColor(Color.GRAY);
 		g2.drawString(option1, x, y);
 		g2.setColor(Color.WHITE);
 		if (commandNum == 0) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				boolean inGauntlet = !gp.canFly();
-				currentItem = currentItems.get(bagNum[currentPocket - 1]).getItem();
-				if (currentItem == Item.REPEL) {
-					if (!gp.player.p.repel) {
-						gp.player.useRepel();
-				    } else {
-				    	showMessage("It won't have any effect.");
-				    }
-					bagState = 0;
-				} else if (currentItem == Item.CALCULATOR) {
-					Item.useCalc(gp.player.p.getCurrent(), null, null, true);
-				} else if (currentItem == Item.DEX_NAV) {
-					encounters = Encounter.getAllEncounters();
-					gp.gameState = GamePanel.DEX_NAV_STATE;
-				} else if (currentItem == Item.FISHING_ROD) {
-					int result = gp.cChecker.checkTileType(gp.player);
-					if (result == 3 || (result >= 24 && result <= 36) || (result >= 313 && result <= 324)) {
-						gp.gameState = GamePanel.PLAY_STATE;
-						bagState = 0;
-						subState = 0;
-						gp.player.startWild(PlayerCharacter.currentMapName, 'F');
-					} else {
-						showMessage("Can't use now!");
-					}
-				} else if (currentItem == Item.VISOR) {
-					if (gp.player.p.visor) {
-						showMessage("You took off the visor.");
-					} else {
-						showMessage("You put on the visor!");
-					}
-					bagState = 0;
-					gp.player.p.visor = !gp.player.p.visor;
-					gp.player.setupPlayerImages(gp.player.p.visor);
-					drawLight = gp.determineMachineLight();
-				} else if (currentItem == Item.LETTER) {
-					gp.gameState = GamePanel.LETTER_STATE;
-				} else if (currentItem == Item.HEALING_PACK) {
-					if (inGauntlet) {
-						boolean flag = gp.player.p.flag[1][2];
-						showMessage("Can't use this " + (flag ? "now!" : "yet!"));
-					} else {
-						gp.player.p.heal();
-						showMessage("Your Pokemon were restored to full health!");
-					}
-					bagState = 0;
-				} else if (currentItem == Item.POCKET_PC) {
-					if (inGauntlet) {
-						boolean flag = gp.player.p.flag[1][2];
-						showMessage("Can't use this " + (flag ? "now!" : "yet!"));
-					} else {
-						bagState = 0;
-						NPC_PC pc = new NPC_PC(gp);
-						gp.openBox(pc);
-					}
-				} else if (currentItem == Item.INFINITE_REPEL) {
-					gp.player.p.steps = gp.player.p.repel ? 0 : 5000;
-					gp.player.p.repel = !gp.player.p.repel;
-					String onoff = gp.player.p.repel ? "on!" : "off.";
-					showMessage("Repel mode was turned " + onoff);
-					bagState = 0;
-				} else if (!currentItem.isUsable()) {
-					// do nothing
-				} else {
-					gp.gameState = GamePanel.USE_ITEM_STATE;
-				}
+				currentItem = entryItem.getItem();
+				useItem(currentItem, false);
 			}
 		}
 		y += gp.tileSize;
-		String option2 = currentPocket == Item.TMS ? "Info" : "Sell";
-		if (!currentItems.get(bagNum[currentPocket - 1]).getItem().isSellable(currentItems.get(bagNum[currentPocket - 1]).getCount())) g2.setColor(Color.GRAY);
+		String option2 = currentPocket == Item.TMS ? "Info" : currentPocket == Item.KEY_ITEM ? "Reg" : "Sell";
+		if (!entryItem.getItem().isSellable(entryItem.getCount())) g2.setColor(Color.GRAY);
 		g2.drawString(option2, x, y);
 		g2.setColor(Color.WHITE);
 		if (commandNum == 1) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				if (!currentItems.get(bagNum[currentPocket - 1]).getItem().isSellable(currentItems.get(bagNum[currentPocket - 1]).getCount())) {
+				if (!entryItem.getItem().isSellable(entryItem.getCount())) {
 					// do nothing
 				} else {
-					bagState = currentPocket == Item.TMS ? 3 : currentPocket == Item.KEY_ITEM ? 1 : 2;
+					if (currentPocket == Item.KEY_ITEM) {
+						gp.player.p.registeredItem = entryItem.getItem();
+						showMessage(entryItem.getItem().toString() + " was registered for [A]!");
+						commandNum = 0;
+						bagState = 0;
+					} else {
+						bagState = currentPocket == Item.TMS ? 3 : currentPocket == Item.KEY_ITEM ? 1 : 2;
+					}
 				}
 			}
 		}

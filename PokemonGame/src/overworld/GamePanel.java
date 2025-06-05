@@ -553,8 +553,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		g2.drawString("[\u2190][\u2191][\u2192][\u2193] Move    [TAB] Speedup    [ENTER] Screenshot", x, y);
 		
-		String aText = player.p.fish ? "Fish" : null;
-		ui.drawToolTips("Talk", aText, "Run", "Menu");
+		ui.drawToolTips("Talk", "Use", "Run", "Menu");
 		
 		x = (int) (screenWidth - tileSize * 4.25);
 		y = 0;

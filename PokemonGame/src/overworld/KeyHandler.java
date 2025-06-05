@@ -418,10 +418,7 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
 			gp.ui.showMessage = false;
 			if (gp.gameState == GamePanel.USE_ITEM_STATE) {
-				gp.gameState = GamePanel.MENU_STATE;
-				gp.ui.subState = 3;
-				gp.ui.bagState = 0;
-				gp.ui.commandNum = 0;
+				gp.ui.goBackInBag();
 			} else if (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
 				if (gp.ui.currentTask != null && gp.ui.currentTask.type != Task.SHAKE) {
 					gp.ui.currentTask = null;
@@ -813,10 +810,7 @@ public class KeyHandler implements KeyListener {
 				gp.ui.showMoveOptions = false;
 				gp.ui.showStatusOptions = false;
 			} else {
-				gp.gameState = GamePanel.MENU_STATE;
-				gp.ui.subState = 3;
-				gp.ui.bagState = 0;
-				gp.ui.commandNum = 0;
+				gp.ui.goBackInBag();
 			}
 		}
 	}
@@ -838,9 +832,7 @@ public class KeyHandler implements KeyListener {
 	private void useRareCandyState(int code) {
 		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
 			if (gp.ui.currentTask == null) {
-				gp.gameState = GamePanel.MENU_STATE;
-				gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
-				gp.ui.bagState = 0;
+				gp.ui.goBackInBag();
 			}
 		}
 		
@@ -878,7 +870,7 @@ public class KeyHandler implements KeyListener {
 	
 	private void dexNavState(int code) {
 		if (code == KeyEvent.VK_S) {
-			gp.gameState = GamePanel.MENU_STATE;
+			gp.ui.goBackInBag();
 		}
 	}
 	
@@ -887,8 +879,7 @@ public class KeyHandler implements KeyListener {
 			wPressed = true;
 		}
 		if (code == KeyEvent.VK_S) {
-			gp.gameState = GamePanel.MENU_STATE;
-			gp.ui.pageNum = 0;
+			gp.ui.goBackInBag();
 		}
 	}
 	
