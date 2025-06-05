@@ -134,7 +134,7 @@ public class BlackjackPanel extends JPanel {
 		userCardIcons.setVisible(false);
 		foeCardIcons.setVisible(false);
 		
-		gp.saveGame();
+		gp.saveGame(gp.player.p);
 	}
 
 	private void resetDeck() {
@@ -279,7 +279,7 @@ public class BlackjackPanel extends JPanel {
 		    					}
 		    				}
 		                    startGame();
-		                    gp.saveGame();
+		                    gp.saveGame(gp.player.p);
 		                } else {
 		                    JOptionPane.showMessageDialog(this, "Invalid bet. Please enter a value between 1 and " + Math.min(p.getBetCurrency(gauntlet), MAX_BET) + ".");
 		                }

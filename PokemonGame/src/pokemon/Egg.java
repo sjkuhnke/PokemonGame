@@ -105,7 +105,7 @@ public class Egg extends Pokemon {
 			if (!gp.player.p.canCatchPokemonHere(metAt, this)) {
 				return this;
 			} else {
-				gp.player.p.removeEncounterArea(metAt);
+				gp.player.p.removeEncounterArea(metAt, null);
 			}
 		}
 		Pokemon p = this.clone();
