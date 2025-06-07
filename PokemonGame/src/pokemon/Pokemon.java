@@ -325,7 +325,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return setMiniSprite();
 	}
 	
-	protected BufferedImage setSprite() {
+	public BufferedImage setSprite() {
 		BufferedImage image = null;
 		
 		String folder = shiny ? "/shiny/" : "/sprites/";
@@ -2518,6 +2518,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					defenseStat = foe.getStat(4);
 					if (field.equals(field.weather, Effect.SANDSTORM, this) && foe.isType(PType.ROCK)) defenseStat *= 1.5;
 				}
+				if (!move.isPhysical() && foe.getItem() == Item.ASSAULT_VEST) defenseStat *= 1.5;
 				if (foe.getItem() == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
 				
 				damage = calc(attackStat, defenseStat, bp, this.level);
@@ -8216,7 +8217,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		case 66: return "Ceramber -> Topazatops (lv. 48)";
 		case 68: return "Spheal -> Sealeo (lv. 32)";
 		case 69: return "Sealeo -> Walrein (lv. 44)";
-		case 71: return "Froshrog -> Bouncerog (lv. 32)";
+		case 71: return "Froshrog -> Bouncerog (lv. 31)";
 		case 73: return "Lunymph -> Fearomoth (lv. 30)";
 		case 75: return "Hatenna -> Hattrem (lv. 32)";
 		case 76: return "Hattrem -> Hatterene (lv. 42)";
@@ -8329,9 +8330,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		case 274: return "Bronzor -> Bronzong (lv. 33)";
 		case 276: return "Bronzor-X -> Bronzong-X (lv. 33)";
 		case 278: return "Capsakid -> Scovillain (Fire Stone)";
-		case 279: return "Scovillain -> Kerbernero (lv. 50)";
+		case 279: return "Scovillain -> Despenero (lv. 50)";
 		case 281: return "Capsakid-S -> Scovillain-S (Fire Stone)";
-		case 282: return "Scovillain-S -> Kerbernero-S (lv. 50)";
+		case 282: return "Scovillain-S -> Despenero-S (lv. 50)";
 		case 292: return "Azurill -> Marill (160+ happiness)";
 		case 293: return "Marill -> Azumarill (lv. 18)";
 		case 295: return "Shroodle -> Grafaiai (lv. 28)";

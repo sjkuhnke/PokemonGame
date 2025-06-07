@@ -35,7 +35,7 @@ public class Egg extends Pokemon {
 	}
 	
 	@Override
-	protected BufferedImage setSprite() {
+	public BufferedImage setSprite() {
 		BufferedImage image = null;
 		
 		try {
