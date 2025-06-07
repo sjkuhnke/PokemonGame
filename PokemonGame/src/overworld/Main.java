@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import docs.TrainerDoc;
 import entity.Entity;
 import entity.PlayerCharacter;
 import object.ItemObj;
@@ -178,7 +179,10 @@ public class Main {
 						}
 		            }
 		            
-		    		if (selectedOptions[0]) writeTrainers(gp);
+		    		if (selectedOptions[0]) {
+		    			writeTrainers(gp);
+		    			TrainerDoc.writeTrainersToExcel(gp);
+		    		}
 		    		if (selectedOptions[1]) writePokemon();
 		    		if (selectedOptions[2]) writeEncounters();
 		    		if (selectedOptions[3]) writeMoves();
@@ -566,30 +570,14 @@ public class Main {
 	private static void writeTrainers(GamePanel gp) {
 		try {
 			FileWriter writer = new FileWriter("./docs/TrainerInfo.txt");
-			Entity[][] npc = gp.npc;
 			writer.write("Trainers:\n");
 			writer.write("*** Note: if the Scott/Fred have 3 starters listed, regenerate docs after you picked your starter. ***\n");
-			Map<String, ArrayList<Trainer>> trainerMap = new LinkedHashMap<>();
-			Map<Trainer, Entity> trainerNPCMap = new HashMap<>();
-			for (int loc = 0; loc < npc.length; loc++) {
-				for (int col = 0; col < npc[loc].length; col++) {
-					Entity e = npc[loc][col];
-					if (e == null || e.trainer < 0) continue;
-					if (loc != 0 && e.trainer == 0) continue;
-					PMap.getLoc(loc, e.worldX / gp.tileSize, e.worldY / gp.tileSize);
-					String location = PlayerCharacter.currentMapName;
-					Trainer tr = Trainer.getTrainer(e.trainer);
-					if (trainerMap.containsKey(location)) {
-						ArrayList<Trainer> list = trainerMap.get(location);
-						list.add(tr);
-					} else {
-						ArrayList<Trainer> list = new ArrayList<>();
-						list.add(tr);
-						trainerMap.put(location, list);
-					}
-					trainerNPCMap.put(tr, e);
-				}
-			}
+			Map<?, ?>[] maps = TrainerDoc.getTrainerLocationMap(gp);
+			
+			@SuppressWarnings("unchecked")
+			Map<String, ArrayList<Trainer>> trainerMap = (Map<String, ArrayList<Trainer>>) maps[0];
+			@SuppressWarnings("unchecked")
+			Map<Trainer, Entity> trainerNPCMap = (Map<Trainer, Entity>) maps[1];
 			
 			for (Map.Entry<String, ArrayList<Trainer>> e : trainerMap.entrySet()) {
 				ArrayList<Trainer> trainers = e.getValue();

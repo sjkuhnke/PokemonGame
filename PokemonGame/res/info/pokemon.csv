@@ -169,8 +169,8 @@
 115|Diggie       |GROUND  |null    |SAND_RUSH         |TOUGH_CLAWS       |MOLD_BREAKER      |[37, 85, 47, 23, 63, 78]      |29.0  |200|
 116|Drillatron   |GROUND  |LIGHT   |SAND_FORCE        |TOUGH_CLAWS       |MOLD_BREAKER      |[65, 128, 55, 80, 55, 120]    |55.1  |45 |
 69 |Wormite      |GROUND  |null    |SAND_VEIL         |RATTLED           |REGENERATOR       |[45, 60, 55, 35, 25, 55]      |40.3  |255|
-70 |Wormbot      |GROUND  |STEEL   |SAND_VEIL         |RATTLED           |REGENERATOR       |[50, 80, 100, 60, 35, 60]     |100.6 |195|
-71 |Wormatron    |GROUND  |DRAGON  |SAND_VEIL         |ROUGH_SKIN        |REGENERATOR       |[60, 100, 120, 105, 70, 65]   |185.3 |45 |
+70 |Wormbot      |GROUND  |STEEL   |SAND_VEIL         |RATTLED           |REGENERATOR       |[50, 80, 100, 60, 35, 60]     |163.6 |195|
+71 |Wormatron    |GROUND  |DRAGON  |SAND_VEIL         |ROUGH_SKIN        |REGENERATOR       |[60, 100, 120, 105, 70, 65]   |245.3 |45 |
 57 |Cleffa       |GALACTIC|LIGHT   |MAGIC_GUARD       |UNAWARE           |CLOUD_NINE        |[50, 25, 28, 45, 55, 15]      |6.6   |150|
 58 |Clefairy     |GALACTIC|LIGHT   |MAGIC_GUARD       |UNAWARE           |CLOUD_NINE        |[70, 45, 48, 60, 65, 35]      |16.5  |150|
 59 |Clefable     |GALACTIC|LIGHT   |MAGIC_GUARD       |UNAWARE           |CLOUD_NINE        |[95, 70, 73, 95, 90, 60]      |88.2  |25 |
