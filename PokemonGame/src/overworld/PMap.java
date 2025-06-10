@@ -1296,6 +1296,12 @@ public class PMap extends JPanel {
 		case 202:
 			PlayerCharacter.currentMapName = "Deep Chasm (-5A)";
 			return 42;
+		case 203:
+			PlayerCharacter.currentMapName = "Deep Chasm (-2A)";
+			return 42;
+		case 204:
+			PlayerCharacter.currentMapName = "Iron Town";
+			return 39;
 		}
 		
 		return -1;

@@ -90,6 +90,7 @@ public class Player extends Trainer implements Serializable {
 	public Item[] crystals;
 	public int secondStarter;
 	public Item choiceChoice;
+	public Nursery nursery;
 	public int coins;
 	public int gamesWon;
 	public int winStreak;
@@ -255,7 +256,7 @@ public class Player extends Trainer implements Serializable {
 	        	Task.insertTask(t, index);
 	        }
 	    }
-	    if (nuzlocke) {
+	    if (nuzlocke && !egg) {
 	    	removeEncounterArea(metAt, null);
 	    }
 	    return true;

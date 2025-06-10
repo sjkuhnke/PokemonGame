@@ -48,6 +48,7 @@ import overworld.GamePanel;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
 import pokemon.Field.FieldEffect;
+import pokemon.Nursery.EggGroup;
 import puzzle.Puzzle;
 import util.Pair;
 
@@ -80,6 +81,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	private static Node[][] movebanks = new Node[MAX_POKEMON][101];
 	private static String[] entries = new String[MAX_POKEMON];
 	private static boolean[][] tms = new boolean[MAX_POKEMON][107];
+	private static EggGroup[][] egg_groups = new EggGroup[MAX_POKEMON][2];
 	
 	private static ArrayList<Integer> rivalIndices = new ArrayList<>();
 	
@@ -960,6 +962,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	public static boolean[][] getTMTable() {
 		return tms;
+	}
+	
+	public static ArrayList<EggGroup> getEggGroup(int id) {
+		return new ArrayList<>(Arrays.asList(egg_groups[id - 1]));
 	}
 	
 	public int getLevel() {
@@ -8771,6 +8777,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			    }
 				weights[i] = Double.parseDouble(tokens[8].trim());
 				catch_rates[i] = Integer.parseInt(tokens[9].trim());
+				egg_groups[i][0] = EggGroup.valueOf(tokens[10].trim());
+				egg_groups[i][1] = EggGroup.valueOf(tokens[11].trim());
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -9766,6 +9774,17 @@ public class Pokemon implements RoleAssignable, Serializable {
 		this.evolve(meteorFormMap.get(this.getID()));
 		this.currentHP = (int) Math.ceil(this.getStat(0) * currentHPPercentage);
 		this.setMoves();
+	}
+
+	public boolean isCompatible(Pokemon pokemon) {
+		ArrayList<EggGroup> p1Groups = getEggGroup(this.id);
+		ArrayList<EggGroup> p2Groups = getEggGroup(pokemon.id);
+		
+		for (EggGroup eg : p1Groups) {
+			if (p2Groups.contains(eg)) return true;
+		}
+		
+		return false;
 	}
 	
 }

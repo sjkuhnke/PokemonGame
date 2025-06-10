@@ -259,6 +259,7 @@ public class TileManager {
 		loadMap("/maps/chasm05.txt", 201, false);
 		loadMap("/maps/chasm06.txt", 202, false);
 		loadMap("/maps/chasm02_iceblocks.txt", 203, false);
+		loadMap("/maps/house01.txt", 204, true);
 	}
 	
 	private void setupCollisionRectangles() {

@@ -2377,6 +2377,35 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "I'll follow suit soon - I just need a second to prepare myself.");
 			}
 		});
+		
+		scriptMap.put(152.0, (npc) -> {
+			if (p.flag[7][22]) {
+				if (p.nursery == null) {
+					Task.addTask(Task.DIALOGUE, npc, "Hey there - I don't believe we've met! Welcome to Xhenos's quaint little Pokemon nursery!");
+					Task.addTask(Task.DIALOGUE, npc, "Head inside and talk to my daughter to get started!");
+				} else {
+					p.nursery.interactOutside(npc);
+				}
+			} else {
+				Entity question = new Entity(gp, "???");
+				Task.addTask(Task.DIALOGUE, question, "...");
+			}
+		});
+		
+		scriptMap.put(204.0, (npc) -> {
+			if (p.flag[7][22]) {
+				if (p.nursery == null) {
+					Task.addTask(Task.DIALOGUE, npc, "Hi, nice to meet you. Welcome to our Pokemon nursery.");
+					p.nursery = new Nursery();
+					Task.addTask(Task.DIALOGUE, npc, "We can hold up to 2 Pokemon to keep here and play.");
+					Task.addTask(Task.DIALOGUE, npc, "Would you like to deposit any Pokemon?");
+					Task.addTask(Task.NURSERY_DEPOSIT, "");
+				}
+			} else {
+				Entity question = new Entity(gp, "???");
+				Task.addTask(Task.DIALOGUE, question, "...");
+			}
+		});
 	}
 	
 	public int getUnregisteredBasePokemon(Random random) {

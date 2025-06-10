@@ -2201,6 +2201,7 @@ public class AssetSetter {
 		
 		mapNum = 152;
 		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(GRANDFATHER, "Day Care Dad", 30, 68, "", mapNum);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 29, 16, "", "", 347);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 29, 22, "", "", 348);
 		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 24, 24, "", "", 349);
@@ -2223,7 +2224,7 @@ public class AssetSetter {
 		// Clerks
 		gp.npc[154][index] = NPCSetup(NPC_CLERK, 30, 39, "", "", -1);
 		gp.npc[154][index] = NPCSetup(NPC_BALL, 30, 38, "", "", -1);
-		gp.npc[155][index] = SetupClerk(NPC_MARKET, 34, 38, Item.TM46, Item.TM63);
+		gp.npc[155][index] = SetupClerk(NPC_MARKET, 31, 4, Item.TM66);
 		
 		mapNum = 161;
 		index = 0;
@@ -2473,6 +2474,11 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(DRAGOWRATH, "Dragowrath", 50, 1, "", 202.1, -1, "", 406);
 		gp.npc[mapNum][index++] = ITileSetup(48, 47, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(52, 47, TORCH, mapNum, mapNum);
+		
+		mapNum = 204;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(BREEDER, "D.C. Daughter", 31, 41, "", mapNum);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 34, 42, "", "", -1);
 	}
 
 	public void setInteractiveTile(int map) {
