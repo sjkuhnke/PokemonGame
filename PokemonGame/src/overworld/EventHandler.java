@@ -999,6 +999,22 @@ public class EventHandler {
 			// Iron Town Shop
 			if (hit(152,44,81)) teleport(154, 31, 45,false);
 			if (hit(154,31,46)) teleport(152, 44, 82,false);
+			
+			// Iron Town Houses
+			if (hit(152,50,68)) teleport(155, 31, 45,false);
+			if (hit(155,31,46)) teleport(152, 50, 69,false);
+			if (hit(152,52,76)) teleport(156, 31, 45,false);
+			if (hit(156,31,46)) teleport(152, 52, 77,false);
+			if (hit(152,38,80)) teleport(157, 31, 45,false);
+			if (hit(157,31,46)) teleport(152, 38, 81,false);
+			
+			if (hit(152,67,82)) teleport(158, 31, 45,false);
+			if (hit(158,31,46)) teleport(152, 67, 83,false);
+			if (hit(158,31,37)) teleport(152, 67, 77,false);
+			if (hit(152,67,78)) teleport(158, 31, 38,false);
+			
+			if (hit(152,26,68)) teleport(204, 31, 45,false);
+			if (hit(204,31,46)) teleport(152, 26, 69,false);
 		}
 	}
 

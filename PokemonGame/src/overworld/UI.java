@@ -622,6 +622,8 @@ public class UI extends AbstractUI {
 			((NPC_Dragon) currentTask.e).awake();
 			currentTask = null;
 			break;
+		case Task.NURSERY_DEPOSIT:
+			drawNurseryDeposit();
 		}
 	}
 
@@ -1225,6 +1227,39 @@ public class UI extends AbstractUI {
 		System.out.println("Odds of " + currentTask.trainers[1].getName() + " winning: " + currentTask.finish);
 		
 		currentTask = null;
+	}
+	
+	private void drawNurseryDeposit() {
+		drawParty(null);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			
+			if (partyNum == 0) {
+            	if (gp.player.p.team[partyNum + 1] == null) {
+            		showMessage("That's your last Pokemon!");
+                    return;
+            	}
+            }
+            if (gp.player.p.teamWouldBeFainted(partyNum)) {
+            	showMessage("That's your last Pokemon!");
+                return;
+            }
+			
+			Pokemon p = gp.player.p.team[partyNum];
+			gp.player.p.team[partyNum] = null;
+            gp.player.p.shiftTeamForward(partyNum);
+            
+            if (partyNum == 0) gp.player.p.setCurrent();
+            
+			gp.player.p.nursery.deposit(p);
+			
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			currentTask = null;
+		}
 	}
 	
 	private void drawSpot() {
