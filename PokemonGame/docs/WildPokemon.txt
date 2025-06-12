@@ -173,14 +173,14 @@ Gelb Forest (2A) (Standard)
 ===================================================================
 Route 25 (Standard)
 ===================================================================
-15% Hammo (Lv. 12 - 14)
-15% Teddull (Lv. 13 - 16)
+13% Hammo (Lv. 12 - 14)
+14% Teddull (Lv. 13 - 16)
 13% Busheep (Lv. 12 - 15)
 15% Ekans (Lv. 15)
 9% Mosscelot (Lv. 12 - 15)
 9% Timburr (Lv. 13 - 16)
 5% Rhypo (Lv. 13 - 15)
-7% Seviper (Lv. 15)
+10% Seviper (Lv. 15)
 12% Marill (Lv. 12 - 15)
 ===================================================================
 Route 25 (Fish)
@@ -245,12 +245,13 @@ Energy Plant (pt. 2) (Surf)
 ===================================================================
 Route 26 (Standard)
 ===================================================================
-16% Sapwin (Lv. 16 - 19)
+15% Sapwin (Lv. 16 - 19)
 10% Teddull (Lv. 17 - 19)
 11% Willolagos (Lv. 17)
-11% Sedinister (Lv. 15 - 19)
+8% Sedinister (Lv. 15 - 19)
 10% Mosscelot (Lv. 16 - 18)
-10% Ralts (Lv. 16 - 18)
+9% Ralts (Lv. 16 - 17)
+5% Benglow (Lv. 16 - 18)
 5% Sparkdust (Lv. 17 - 18)
 10% Scraggy (Lv. 16 - 18)
 12% Sneasel-H (Lv. 17 - 19)
@@ -1186,6 +1187,40 @@ Mt. Splinkty (Outside) (Standard)
 14% Splame (Lv. 31 - 34)
 8% Tinkie (Lv. 24 - 25)
 ===================================================================
+Mt. Splinkty (4A) (Standard)
+===================================================================
+3% Aspomancer (Lv. 50 - 54)
+4% Kobraturgy (Lv. 53 - 58)
+13% Bronzong-X (Lv. 54 - 59)
+5% Hast (Lv. 53 - 59)
+7% Teddinaut (Lv. 53 - 58)
+8% Hatterene (Lv. 54 - 57)
+12% Cervora (Lv. 53 - 56)
+13% Splame (Lv. 54 - 59)
+20% Shaboom (Lv. 55 - 60)
+15% Plasamp (Lv. 51 - 55)
+===================================================================
+Shadow Cavern (Standard)
+===================================================================
+10% Hast-E (Lv. 50 - 55)
+9% Soldrota-E (Lv. 50 - 55)
+9% Fireshard-E (Lv. 50 - 54)
+3% Metaslate-E (Lv. 48 - 51)
+4% Sedisoftra-E (Lv. 50 - 55)
+4% Prismodon-E (Lv. 50 - 55)
+8% Beheeyem-E (Lv. 50 - 55)
+11% Wormatron-S (Lv. 50 - 55)
+8% Cluuz-S (Lv. 50 - 55)
+4% Zurrclu-S (Lv. 50 - 55)
+2% Zurroaratr-S (Lv. 50 - 55)
+10% Detonape-S (Lv. 50 - 55)
+9% Arbok-S (Lv. 50 - 55)
+3% Capsakid-S (Lv. 46 - 50)
+2% Scovillain-S (Lv. 48 - 52)
+2% Despenero-S (Lv. 50 - 55)
+1% Electrocobra (Lv. 55)
+1% Shadowsaur (Lv. 55)
+===================================================================
 Route 39 (Standard)
 ===================================================================
 6% Teddinaut (Lv. 60 - 64)
@@ -1685,17 +1720,17 @@ Deep Chasm (-5A) (Standard)
 13,Scigeon,3,14.00%
 14,Thieven,3,9.67%
 15,Armoraven,2,5.50%
-16,Hammo,4,15.00%
+16,Hammo,4,14.50%
 17,Grunswine,2,7.00%
 18,Hoghoncho,1,1.00%
-19,Teddull,4,10.50%
+19,Teddull,4,10.25%
 20,Teddician,3,11.00%
-21,Teddinaut,1,6.00%
+21,Teddinaut,2,6.50%
 22,Minipede,4,12.50%
 23,Centinel,3,6.00%
 24,Milimace,2,4.50%
 25,Milipleura,8,4.12%
-26,Sapwin,5,12.00%
+26,Sapwin,5,11.80%
 27,Kappalm,6,4.83%
 28,Serpenge,2,1.50%
 29,Budew,3,9.67%
@@ -1717,20 +1752,20 @@ Deep Chasm (-5A) (Standard)
 45,Lombre,2,11.00%
 46,Ludicolo,2,11.00%
 47,Willolagos,6,10.83%
-48,Sedinister,5,17.80%
+48,Sedinister,5,17.20%
 49,Metaslate,1,11.00%
 50,Sedisoftra,4,6.50%
 51,Prismodon,11,5.64%
 52,Asmethiss,5,10.60%
-53,Aspomancer,13,6.46%
-54,Kobraturgy,14,4.07%
+53,Aspomancer,14,6.21%
+54,Kobraturgy,15,4.07%
 55,Sabore,3,8.33%
 56,Saberock,14,5.50%
 57,Rexisilt,5,9.60%
 58,Pterator,8,4.25%
 59,Snowlet,4,12.00%
 60,Nixnerva,17,5.24%
-61,Cervora,21,5.62%
+61,Cervora,22,5.91%
 62,Snom,6,8.67%
 63,Frosmoth,17,4.24%
 64,Grislush,6,11.83%
@@ -1746,7 +1781,7 @@ Deep Chasm (-5A) (Standard)
 74,Fearomoth,10,6.50%
 75,Hatenna,4,9.00%
 76,Hattrem,3,5.67%
-77,Hatterene,9,6.00%
+77,Hatterene,10,6.20%
 78,Whotter,7,18.29%
 79,Lutrineer,10,6.60%
 80,Mosscelot,5,9.20%
@@ -1754,11 +1789,11 @@ Deep Chasm (-5A) (Standard)
 82,Psycorb,6,8.83%
 83,Psyballs,1,14.00%
 84,Psycorboratr,10,1.90%
-85,Ralts,3,9.33%
+85,Ralts,3,9.00%
 86,Kirlia,2,10.00%
 87,Gardevoir,10,4.10%
 88,Gallade,9,4.00%
-89,Benglow,7,11.43%
+89,Benglow,8,10.63%
 90,Inkay,13,13.23%
 91,Malamar,11,6.55%
 92,Flameruff,4,8.75%
@@ -1776,7 +1811,7 @@ Deep Chasm (-5A) (Standard)
 104,Houndour,2,11.00%
 105,Houndoom,9,6.78%
 106,Sparkdust,2,8.00%
-107,Splame,14,7.00%
+107,Splame,15,7.40%
 108,Sparkitten,8,9.00%
 109,Fireblion,4,11.00%
 110,Flamebless,5,11.20%
@@ -1826,7 +1861,7 @@ Deep Chasm (-5A) (Standard)
 154,Golbat,1,9.00%
 155,Crobat,8,3.88%
 156,Poof,3,11.67%
-157,Hast,12,4.67%
+157,Hast,13,4.69%
 158,Poov,4,9.75%
 159,Grust,20,4.65%
 160,Cluuz,4,13.75%
@@ -1855,7 +1890,7 @@ Deep Chasm (-5A) (Standard)
 183,Soldrota,0,0.00%
 184,Tinkie,3,12.67%
 185,Shawar,3,18.00%
-186,Shaboom,7,3.00%
+186,Shaboom,8,5.13%
 187,Dragee,1,25.00%
 188,Draga,2,18.00%
 189,Drageye,10,3.20%
@@ -1867,36 +1902,36 @@ Deep Chasm (-5A) (Standard)
 195,Rockmite,5,13.80%
 196,Stellarock,1,7.00%
 197,Poof-E,2,13.50%
-198,Hast-E,6,16.33%
+198,Hast-E,7,15.43%
 199,Droid-E,2,15.50%
 200,Armoid-E,6,16.17%
-201,Soldrota-E,0,0.00%
+201,Soldrota-E,1,9.00%
 202,Flamehox-E,3,15.00%
-203,Fireshard-E,6,14.50%
+203,Fireshard-E,7,13.71%
 204,Blastflames-E,0,0.00%
 205,Sedinister-E,2,20.00%
-206,Metaslate-E,6,14.33%
-207,Sedisoftra-E,1,4.00%
-208,Prismodon-E,1,4.00%
+206,Metaslate-E,7,12.71%
+207,Sedisoftra-E,2,4.00%
+208,Prismodon-E,2,4.00%
 209,Magikarp-E,6,61.67%
 210,Gyarados-E,5,22.00%
 211,Shockfang,0,0.00%
-212,Electrocobra,1,1.00%
+212,Electrocobra,2,1.00%
 213,Nightrex,0,0.00%
-214,Shadowsaur,1,1.00%
+214,Shadowsaur,2,1.00%
 215,Durfish-S,9,39.22%
 216,Dompster-S,4,14.25%
 217,Wormite-S,1,12.00%
 218,Wormbot-S,6,18.50%
-219,Wormatron-S,2,11.00%
-220,Cluuz-S,8,14.63%
-221,Zurrclu-S,3,5.33%
-222,Zurroaratr-S,2,3.50%
+219,Wormatron-S,3,11.00%
+220,Cluuz-S,9,13.89%
+221,Zurrclu-S,4,5.00%
+222,Zurroaratr-S,3,3.00%
 223,Sember-S,2,16.00%
 224,Kaboon-S,5,27.00%
-225,Detonape-S,5,29.00%
+225,Detonape-S,6,25.83%
 226,Ekans-S,3,15.00%
-227,Arbok-S,6,13.33%
+227,Arbok-S,7,12.71%
 228,Soarwhell,0,0.00%
 229,Diftery,0,0.00%
 230,Vorsuitex,0,0.00%
@@ -1926,18 +1961,18 @@ Deep Chasm (-5A) (Standard)
 254,Solosis-X,7,7.14%
 255,Duosion-X,0,0.00%
 256,Reuniclus-X,6,11.67%
-257,Seviper,6,7.50%
+257,Seviper,6,8.00%
 258,Hissimitar,2,2.50%
 259,Gulpin,0,0.00%
 260,Swalot,0,0.00%
 261,Gulpin-X,7,9.14%
 262,Swalot-X,3,7.33%
-263,Plasamp,9,9.00%
+263,Plasamp,10,9.60%
 264,Genieova,0,0.00%
 265,Elgyem,3,8.00%
 266,Beheeyem,0,0.00%
 267,Elgyem-E,9,13.22%
-268,Beheeyem-E,2,12.00%
+268,Beheeyem-E,3,10.67%
 269,Caterpie,3,9.33%
 270,Metapod,0,0.00%
 271,Butterfree,0,0.00%
@@ -1946,13 +1981,13 @@ Deep Chasm (-5A) (Standard)
 274,Bronzor,0,0.00%
 275,Bronzong,0,0.00%
 276,Bronzor-X,6,14.83%
-277,Bronzong-X,9,3.56%
+277,Bronzong-X,10,4.50%
 278,Capsakid,7,6.71%
 279,Scovillain,0,0.00%
 280,Despenero,6,7.50%
-281,Capsakid-S,7,12.29%
-282,Scovillain-S,2,8.50%
-283,Despenero-S,0,0.00%
+281,Capsakid-S,8,11.13%
+282,Scovillain-S,3,6.33%
+283,Despenero-S,1,2.00%
 284,Cage Critter,0,0.00%
 285,Icy Serpent,0,0.00%
 286,Shocky Spire,0,0.00%

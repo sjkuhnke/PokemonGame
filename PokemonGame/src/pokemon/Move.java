@@ -373,7 +373,7 @@ public enum Move {
 	PLAY_NICE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack by 1",false,25),
 	PLUCK(60,100,100,0,0,0,PType.FLYING,"% chance to eat foe's berry",true,20),
 	POISON_FANG(50,100,50,0,0,0,PType.POISON,"% to Toxic foe",true,15),
-	POISON_GAS(0,80,0,0,2,0,PType.POISON,"Poisons foe",true,30),
+	POISON_GAS(0,90,0,0,2,0,PType.POISON,"Poisons foe",true,30),
 	POISON_JAB(80,100,30,0,0,0,PType.POISON,"% to Poison foe",true,20),
 	POISON_POWDER(0,75,0,0,2,0,PType.POISON,"Poisons foe",false,35),
 	POISON_STING(15,100,30,0,0,0,PType.POISON,"% chance to Poison foe",false,35),

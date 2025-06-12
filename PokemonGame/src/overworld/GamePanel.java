@@ -181,16 +181,15 @@ public class GamePanel extends JPanel implements Runnable {
 			FPS = 60;
 		}
 		if (keyH.ctrlPressed && keyH.shiftPressed) {
+			System.out.println("------------------------------------------");
+			System.out.println("GAME STATE: " + gameState);
 			if (gameState == BATTLE_STATE) {
-				System.out.println("------------------------------------------");
 				System.out.println("Current Task: " + battleUI.currentTask);
 				System.out.println(battleUI.tasks.toString());
 			} else if (gameState == SIM_BATTLE_STATE) {
-				System.out.println("------------------------------------------");
 				System.out.println("Current Task: " + simBattleUI.currentTask);
 				System.out.println(simBattleUI.tasks.toString());
 			} else {
-				System.out.println("------------------------------------------");
 				System.out.println("Current Task: " + ui.currentTask);
 				System.out.println(ui.tasks.toString());
 			}

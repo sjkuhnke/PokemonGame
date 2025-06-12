@@ -186,7 +186,7 @@ public class PlayerCharacter extends Entity {
 					}
 				}
 				if (p.nursery != null) {
-					p.nursery.checkForEgg();
+					p.nursery.checkForEgg(gp);
 				}
 				p.steps++;
 			}

@@ -1417,13 +1417,13 @@ Grust (Lv. 65) @ None                   / Quiet   /   Perish Body    /   Night S
 Grust 4 (30, 31, 28, 30, 31, 31) | X: 61, Y: 76, Facing: right
 Grust (Lv. 67) @ None                   / Hardy   /   Cursed Body    /   Take Over, Destiny Bond, Poltergeist, Close Combat
 
-Grust 5 (31, 31, 13, 14, 31, 8) | X: 61, Y: 70, Facing: right
+Grust 5 (31, 31, 13, 14, 31, 8) | X: 61, Y: 70, Facing: down
 Grust (Lv. 68) @ None                   / Hasty   /   Anger Point    /   Sucker Punch, Bloodshed Cleave, Bulk Up, Destiny Bond
 
 Grust 6 (31, 20, 31, 31, 28, 13) | X: 79, Y: 59, Facing: down
 Grust (Lv. 65) @ None                   / Calm    /   Anger Point    /   Minimize, Sucker Punch, Bloodshed Cleave, Frostbind
 
-Grust 7 (8, 31, 31, 15, 19, 31) | X: 42, Y: 77, Facing: down
+Grust 7 (8, 31, 31, 15, 19, 31) | X: 42, Y: 77, Facing: left
 Grust (Lv. 64) @ None                   / Mild    /   Anger Point    /   X-Scissor, Mean Look, Bloodshed Cleave, Night Slash
 
 Grust 8 (31, 31, 31, 2, 3, 27) | X: 75, Y: 44, Facing: down
