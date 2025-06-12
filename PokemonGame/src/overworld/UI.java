@@ -624,6 +624,10 @@ public class UI extends AbstractUI {
 			break;
 		case Task.NURSERY_DEPOSIT:
 			drawNurseryDeposit();
+			break;
+		case Task.NURSERY_WITHDRAW:
+			drawNurseryWithdraw();
+			break;
 		}
 	}
 
@@ -1253,12 +1257,89 @@ public class UI extends AbstractUI {
             if (partyNum == 0) gp.player.p.setCurrent();
             
 			gp.player.p.nursery.deposit(p);
-			
+			Task.addTask(Task.TEXT, "Deposited " + p.getNickname() + "!");
+			if (!gp.player.p.nursery.isFull()) {
+				Task.addTask(Task.DIALOGUE, npc, "We can hold up to 2 Pokemon. Would you like to deposit a Pokemon?");
+				Task.addTask(Task.NURSERY_DEPOSIT, "");
+			}
+			currentTask = null;
+			partyNum = 0;
 		}
 		
 		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
 			currentTask = null;
+			gp.gameState = GamePanel.PLAY_STATE;
+			partyNum = 0;
+		}
+	}
+	
+	private void drawNurseryWithdraw() {
+		currentDialogue = currentTask.message;
+		drawDialogueScreen(true);
+		
+		int x = gp.tileSize * 3;
+		int y = gp.tileSize * 5;
+		int width = gp.tileSize * 10;
+		int height = gp.tileSize * 6;
+		drawSubWindow(x, y, width, height);
+		
+		Pokemon[] pokemon = gp.player.p.nursery.getPokemon();
+		for (int i = 0; i < pokemon.length; i++) {
+			Pokemon p = pokemon[i];
+			if (p != null) {
+				int pX = x + gp.tileSize / 2;
+				int pY = y + gp.tileSize / 2;
+				int pWidth = gp.tileSize * 9;
+				int pHeight = gp.tileSize * 2;
+				drawSubWindow(pX, pY, pWidth, pHeight);
+				
+				if (p.getSprite() == null) {
+					p.setSprites();
+				}
+				
+				g2.setFont(g2.getFont().deriveFont(32F));
+				pX += gp.tileSize / 2;
+				
+				if (commandNum == i) g2.drawString(">", pX, pY + gp.tileSize);
+				
+				pX += gp.tileSize / 2;
+				pY += gp.tileSize / 2;
+				g2.drawImage(p.getSprite(), pX, pY, null);
+				pX += gp.tileSize * 2;
+				pY += gp.tileSize;
+				g2.drawString(p.getNickname() + " Lv. " + p.getLevel(), pX, pY);
+				
+				y += pHeight + gp.tileSize / 2;
+			}
+		}
+		
+		if (gp.keyH.upPressed || gp.keyH.downPressed) {
+			gp.keyH.upPressed = false;
+			gp.keyH.downPressed = false;
+			commandNum = 1 - commandNum;
+			if (pokemon[commandNum] == null) {
+				commandNum = 0;
+			}
+		}
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			Pokemon withdraw = pokemon[commandNum];
+			gp.player.p.addPokemon(gp.player.p.nursery.withdraw(withdraw));
+			Task.addTask(Task.TEXT, "Withdrew " + withdraw.getNickname() + "!");
+			if (!gp.player.p.nursery.isEmpty()) {
+				Task.addTask(Task.NURSERY_WITHDRAW, npc, "Would you like to withdraw a Pokemon?");
+			}
+			currentTask = null;
+			commandNum = 0;
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			currentTask = null;
+			gp.gameState = GamePanel.PLAY_STATE;
+			commandNum = 0;
 		}
 	}
 	

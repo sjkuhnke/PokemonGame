@@ -138,7 +138,7 @@
  No Retreat         | Status   | --  | --  | 5 PP  : Raises all of user's stats by 1, user can't switch out. Can only be used once
  Power-Up Punch     | Physical | 40  | 100 | 10 PP : 100% chance to raise user's Attack by 1
  Return Fighting    | Physical | 70  | 100 | 15 PP : Calc only move
- Revenge            | Physical | 120 | 100 | 10 PP : Power is doubled if user is slower than foe
+ Revenge            | Physical | 60  | 100 | 10 PP : Power is doubled if user is slower than foe
  Reversal           | Physical | --  | 100 | 15 PP : Deals more damage the lower the user's HP is
  Rock Smash         | Physical | 40  | 100 | 30 PP : 100% to lower foe's Defense by 1
  Sacred Sword       | Physical | 90  | 100 | 10 PP : Ignores Defense and Evasion changes of foe

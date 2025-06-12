@@ -186,9 +186,8 @@ public class Player extends Trainer implements Serializable {
 		if (p == null) return false;
 		boolean egg = p instanceof Egg;
 	    if (p == null || (p.isFainted() && !egg)) return false;
-	    boolean hasNull = false;
-	    Task t = null;
 	    int index = 1;
+	    Task t = null;
 	    String metAt = PlayerCharacter.getMetAt();
 	    if (nickname) {
 	    	if (nuzlocke && !canCatchPokemonHere(metAt, p)) {
@@ -211,7 +210,37 @@ public class Player extends Trainer implements Serializable {
 	    p.ball = ball;
 	    p.trainer = this;
 	    p.metAt = metAt;
-	    for (int i = 0; i < team.length; i++) {
+	    
+	    int place = addPokemon(p);
+	    if (place == 0) { // party
+	    	if (nickname || egg) {
+            	String s = egg ? "Received " : "Caught ";
+            	t = Task.createTask(Task.END, s + p.name() + ", added to party!");
+            	Task.insertTask(t, index);
+            }
+	    } else if (place == -1) {
+	    	if (nickname || egg) {
+	        	t = Task.createTask(Task.END, "Cannot catch " + p.name() + ", all boxes are full.");
+	        	Task.insertTask(t, index);
+	    	}
+	    } else {
+	    	if (nickname || egg) {
+            	String s = egg ? "Received " : "Caught ";
+            	t = Task.createTask(Task.END, s + p.name() + ", sent to box " + place + "!");
+            	Task.insertTask(t, index);
+            }
+	    }
+	    
+	    if (nuzlocke && !egg) {
+	    	removeEncounterArea(metAt, null);
+	    }
+	    return true;
+	}
+	
+	public int addPokemon(Pokemon p) {
+		boolean hasNull = false;
+		
+		for (int i = 0; i < team.length; i++) {
 	        if (team[i] == null) {
 	            hasNull = true;
 	            break;
@@ -222,13 +251,8 @@ public class Player extends Trainer implements Serializable {
 	            if (team[i] == null) {
 	                team[i] = p;
 	                p.slot = i;
-	                if (nickname || egg) {
-	                	String s = egg ? "Received " : "Caught ";
-	                	t = Task.createTask(Task.END, s + p.name() + ", added to party!");
-	                	Task.insertTask(t, index);
-	                }
 	                current = team[0];
-	                break;
+	                return 0;
 	            }
 	        }
 	    } else {
@@ -243,25 +267,13 @@ public class Player extends Trainer implements Serializable {
 	            }
 	            if (empty >= 0) {
 	                boxes[i][empty] = p;
-	                if (nickname || egg) {
-	                	String s = egg ? "Received " : "Caught ";
-	                	t = Task.createTask(Task.END, s + p.name() + ", sent to box " + (i + 1) + "!");
-	                	Task.insertTask(t, index);
-	                }
-	                break;
+	                return i + 1;
 	            }
 	        }
-	        if (empty < 0 && (nickname || egg)) {
-	        	t = Task.createTask(Task.END, "Cannot catch " + p.name() + ", all boxes are full.");
-	        	Task.insertTask(t, index);
-	        }
 	    }
-	    if (nuzlocke && !egg) {
-	    	removeEncounterArea(metAt, null);
-	    }
-	    return true;
+	    return -1;
 	}
-	
+
 	public boolean catchPokemon(Pokemon p, boolean nickname) {
 		return catchPokemon(p, nickname, Item.POKEBALL);
 	}
@@ -864,6 +876,12 @@ public class Player extends Trainer implements Serializable {
         }
 		for (Pokemon p : gauntletBox) {
 			if (p != null) result.add(p);
+		}
+		if (nursery != null) {
+			for (Pokemon p : nursery.getPokemon()) {
+				if (p != null) result.add(p);
+			}
+			if (nursery.getEgg() != null) result.add(nursery.getEgg());
 		}
 		return result;
 	}

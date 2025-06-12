@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import entity.Entity;
+import overworld.GamePanel;
 
 public class Nursery implements Serializable {
 	
@@ -38,7 +39,7 @@ public class Nursery implements Serializable {
 	private Pokemon[] pokemon;
 	private int size;
 	private int state;
-	private Pokemon egg;
+	private Egg egg;
 	
 	public static final int NOT_FULL = -1;
 	public static final int SAME_SPECIES = 0;
@@ -54,6 +55,7 @@ public class Nursery implements Serializable {
 	public boolean deposit(Pokemon p) {
 		if (isFull()) return false;
 		
+		p.heal();
 		pokemon[size++] = p;
 		
 		determineCompatibility();
@@ -121,6 +123,14 @@ public class Nursery implements Serializable {
 		return size >= pokemon.length;
 	}
 	
+	public boolean isEmpty() {
+		return size == 0;
+	}
+	
+	public int getSize() {
+		return size;
+	}
+	
 	public Pokemon[] getPokemon() {
 		return pokemon;
 	}
@@ -149,6 +159,7 @@ public class Nursery implements Serializable {
 			Task.addTask(Task.DIALOGUE, npc, "Here - I have no use for it, hatch it and see what's inside!");
 			Task.addTask(Task.GIFT, "", egg);
 			egg = null;
+			npc.setDirection("down");
 			determineCompatibility();
 			break;
 		}
@@ -159,12 +170,12 @@ public class Nursery implements Serializable {
 		if (state != NOT_FULL && state != EGG) {
 			Task.addTask(Task.DIALOGUE, npc, "Ah yes, about your Pokemon.");
 			Task.addTask(Task.DIALOGUE, npc, "...");
+			Task.addTask(Task.DIALOGUE, npc, "Your " + pokemon[0].getNickname() + " and your " + pokemon[1].getNickname() + " are both doing well.");
 		}
 		switch (state) {
 		case NOT_FULL:
 			Task.addTask(Task.DIALOGUE, npc, "We can hold up to 2 Pokemon. Would you like to deposit a Pokemon?");
 			Task.addTask(Task.NURSERY_DEPOSIT, npc, "");
-			Task.addTask(Task.NURSERY_WITHDRAW, npc, "Would you like to withdraw a Pokemon?");
 			break;
 		case SAME_SPECIES:
 		case DIFFERENT_SPECIES:
@@ -177,7 +188,7 @@ public class Nursery implements Serializable {
 		}
 	}
 	
-	public void checkForEgg() {
+	public void checkForEgg(GamePanel gp) {
 		if (state == NOT_FULL || state == NOT_COMPATIBLE || state == EGG) return;
 		int chance = 0;
 		switch (state) {
@@ -190,12 +201,12 @@ public class Nursery implements Serializable {
 		}
 		
 		if (new Random().nextInt(100) < chance) {
-			createEgg();
+			createEgg(gp);
 			state = EGG;
 		}
 	}
 
-	private void createEgg() {
+	private void createEgg(GamePanel gp) {
 		Pokemon parent1 = pokemon[0];
 		Pokemon parent2 = pokemon[1];
 
@@ -233,7 +244,9 @@ public class Nursery implements Serializable {
 			nature = Nature.getRandomNature();
 		}
 		
-		int[] ivs = new int[6];
+		egg = new Egg(id, 3);
+		
+		int[] ivs = egg.ivs.clone();
 		boolean useDK = p1DestinyKnot || p2DestinyKnot;
 		int inheritedIVs = useDK ? 5 : 3;
 		
@@ -253,5 +266,15 @@ public class Nursery implements Serializable {
 		egg.setAbility();
 		egg.nat = nature;
 		egg.ball = ball;
+		
+		gp.npc[152][0].setDirection("left");
+	}
+	
+	public boolean hasEgg() {
+		return state == EGG;
+	}
+	
+	public Egg getEgg() {
+		return egg;
 	}
 }

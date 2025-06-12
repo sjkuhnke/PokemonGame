@@ -2400,6 +2400,8 @@ public class Script {
 					Task.addTask(Task.DIALOGUE, npc, "We can hold up to 2 Pokemon to keep here and play.");
 					Task.addTask(Task.DIALOGUE, npc, "Would you like to deposit any Pokemon?");
 					Task.addTask(Task.NURSERY_DEPOSIT, "");
+				} else {
+					p.nursery.interactInside(npc);
 				}
 			} else {
 				Entity question = new Entity(gp, "???");

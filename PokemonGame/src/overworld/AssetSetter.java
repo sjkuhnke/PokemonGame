@@ -3918,6 +3918,10 @@ public class AssetSetter {
 			gp.npc[151][0] = null;
 		}
 		
+		if (gp.player.p.nursery != null) {
+			gp.npc[152][0].setDirection(gp.player.p.nursery.hasEgg() ? "left" : "down");
+		}
+		
 		gp.setRenderableNPCs();
 	}
 	

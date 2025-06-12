@@ -18,7 +18,7 @@ Level Up:
 15 - Smack Down
 
 Evolutions:
-Twigle -> Torrged (lv. 18)
+Twigle -> Torgged (lv. 18)
 
 ===================
 #002 - Torgged                                                                                         [002]
@@ -46,7 +46,7 @@ E - Headbutt
 31 - Rock Tomb
 
 Evolutions:
-Torrged -> Tortugis (lv. 36)
+Torgged -> Tortugis (lv. 36)
 
 ===================
 #003 - Tortugis                                                                                        [003]
@@ -2808,7 +2808,7 @@ Level Up:
 30 - Aurora Beam
 
 Evolutions:
-Froshrog -> Bouncerog (lv. 32)
+Froshrog -> Bouncerog (lv. 31)
 
 ===================
 #082 - Bouncerog                                                                                       [072]
@@ -3492,7 +3492,7 @@ E - Fire Fang
 60 - Burn Up
 
 Evolutions:
-Scovillain -> Kerbernero (lv. 50)
+Scovillain -> Despenero (lv. 50)
 
 ===================
 #100 - Despenero                                                                                       [280]
@@ -8897,11 +8897,11 @@ Level Up:
 65 - Blizzard
 68 - Dragon Claw
 73 - Roost
-76 - Outrage
+76 - Scale Shot
 79 - Dragon Dance
 83 - Icicle Crash
 86 - Dragon Ascent
-90 - Scale Shot
+90 - Outrage
 93 - Draco Meteor
 100 - Sheer Cold
 
@@ -8959,13 +8959,13 @@ Level Up:
 58 - Calm Mind
 61 - Dragon Claw
 65 - Psychic
-68 - Dragon Pulse
-73 - Rest
+68 - Scale Shot
+73 - Dragon Dance
 76 - Outrage
-79 - Dragon Dance
+79 - Rest
 83 - Expanding Force
 86 - Heat Wave
-90 - Scale Shot
+90 - Dragon Pulse
 93 - Draco Meteor
 100 - Future Sight
 
@@ -9444,7 +9444,7 @@ E - Knock Off
 55 - Obstruct
 
 Evolutions:
-Scovillain-S -> Kerbernero-S (lv. 50)
+Scovillain-S -> Despenero-S (lv. 50)
 
 ===================
 #011 - Despenero-S                                                                                     [283]

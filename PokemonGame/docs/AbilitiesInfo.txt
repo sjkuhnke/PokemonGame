@@ -135,7 +135,7 @@ Sturdy             | It cannot be knocked out with one hit. One-hit KO moves can
 Super Luck         | Heightens the critical-hit ratios of moves.
 Swarm              | Powers up BUG moves in a pinch.
 Swift Swim         | Boosts the Pokemon's Speed stat in RAIN.
-Synchronize        | Passes a burn, poison, or paralysis to the foe.
+Synchronize        | Passes a burn, poison, frostbite, or paralysis to the foe.
 Talented           | When the Pokemon enters a battle, it copies the foe's stat changes.
 Technician         | Powers up the Pokemon's weaker moves.
 Terrify            | Lowers the opposing Pokemon's Sp. Atk stat.
