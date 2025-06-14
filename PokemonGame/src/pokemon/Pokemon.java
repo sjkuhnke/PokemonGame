@@ -67,7 +67,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public static final int POKEDEX_2_SIZE = 9;
 
 	private static HashMap<Integer, Integer> meteorFormMap;
-	private static Map<String, HashSet<String>> evolutionMap;
+	private static Map<String, HashSet<String>> forwardEvoMap;
+	private static Map<String, HashSet<String>> reverseEvoMap;
 	private static Map<String, Integer> nameToID = new HashMap<>();
 	
 	// Database
@@ -8352,12 +8353,15 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    LinkedHashSet<String> familySet = new LinkedHashSet<>();
 	    Queue<String> queue = new LinkedList<>();
 	    String startName = getName(this.id);
+	    
 	    queue.add(startName);
 	    familySet.add(startName);
 
 	    while (!queue.isEmpty()) {
 	        String current = queue.poll();
-	        HashSet<String> neighbors = evolutionMap.getOrDefault(current, new HashSet<>());
+	        HashSet<String> neighbors = new HashSet<>();
+	        neighbors.addAll(forwardEvoMap.getOrDefault(current, new HashSet<String>()));
+	        neighbors.addAll(reverseEvoMap.getOrDefault(current, new HashSet<String>()));
 
 	        for (String neighbor : neighbors) {
 	            if (!familySet.contains(neighbor)) {
@@ -8370,8 +8374,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return new ArrayList<>(familySet);
 	}
 	
-	public static Map<String, HashSet<String>> getEvolutionMap() {
-		Map<String, HashSet<String>> result = new HashMap<>();
+	public static void setEvolutionMaps() {
+		forwardEvoMap = new HashMap<>();
+		reverseEvoMap = new HashMap<>();
 		
 		// build the bidirectional evolution map
 	    for (int i = 1; i <= MAX_POKEMON; i++) {
@@ -8387,13 +8392,45 @@ public class Pokemon implements RoleAssignable, Serializable {
 	                String evolvedName = parts[1].split("\\(")[0].trim();
 
 	                // Initialize sets if not already present
-	                result.computeIfAbsent(baseName, k -> new HashSet<String>()).add(evolvedName);
-	                result.computeIfAbsent(evolvedName, k -> new HashSet<String>()).add(baseName);
+	                forwardEvoMap.computeIfAbsent(baseName, k -> new HashSet<String>()).add(evolvedName);
+	                reverseEvoMap.computeIfAbsent(evolvedName, k -> new HashSet<String>()).add(baseName);
 	            }
 	        }
 	    }
-	    
-	    return result;
+	}
+	
+	public int getBabyStage() {
+		ArrayList<String> family = getEvolutionFamily();
+		String base = null;
+		
+		for (String name : family) {
+			HashSet<String> parents = reverseEvoMap.getOrDefault(name, new HashSet<String>());
+			if (parents.isEmpty()) {
+				base = name;
+				break;
+			}
+		}
+		if (base == null) base = family.get(0); // fallback
+		return getIDFromName(base);
+	}
+	
+	public int getFinalEvolution() {
+	    ArrayList<String> family = getEvolutionFamily();
+	    String finalForm = null;
+
+	    for (String name : family) {
+	        HashSet<String> children = forwardEvoMap.getOrDefault(name, new HashSet<>());
+	        if (children.isEmpty()) {
+	            finalForm = name;
+	            break;
+	        }
+	    }
+
+	    if (finalForm == null) {
+	        finalForm = family.get(family.size() - 1); // fallback
+	    }
+
+	    return getIDFromName(finalForm);
 	}
 
 	public boolean isTrapped(Pokemon foe) {
@@ -8765,7 +8802,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				String[] tokens = line.split("\\|");
 				dexNos[i] = Integer.parseInt(tokens[0].trim());
 				names[i] = tokens[1].trim();
-				nameToID.put(names[i], i);
+				nameToID.put(names[i], i + 1);
 				types[i][0] = PType.valueOf(tokens[2].trim());
 				types[i][1] = tokens[3].trim().equals("null") ? null : PType.valueOf(tokens[3].trim());
 				abilities[i][0] = Ability.valueOf(tokens[4].trim());
@@ -8784,7 +8821,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			e.printStackTrace();
 		}
         
-        evolutionMap = getEvolutionMap();
+        setEvolutionMaps();
     }
 	
 	public static void readMovebanksFromCSV() {

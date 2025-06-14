@@ -171,7 +171,7 @@ public class PlayerCharacter extends Entity {
 						if (p.nuzlocke && h instanceof Egg) {
 							gp.setTaskState();
 							Task.addTask(Task.TEXT, Item.breakString("Oh... the Egg is trying to hatch, but you've already gotten an encounter here! Try somewhere else!", UI.MAX_TEXTBOX));
-							e.steps = 1;
+							e.cycles = 1;
 						} else {
 							p.pokedex[h.id] = 2;
 							p.team[index] = h;

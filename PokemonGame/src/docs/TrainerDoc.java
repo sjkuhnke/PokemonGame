@@ -19,11 +19,16 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class TrainerDoc {
+	
+	private static BufferedImage[] sprites = new BufferedImage[Pokemon.MAX_POKEMON];
+	
 	public static void writeTrainersToExcel(GamePanel gp) {
 		Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("Trainer Teams");
@@ -133,7 +138,8 @@ public class TrainerDoc {
 	    return style;
 	}
 	
-	private static void insertImage(Sheet sheet, byte[] imageBytes, int col, int row, int colSpan, int rowSpan, Workbook wb) {
+	private static void insertImage(Sheet sheet, byte[] imageBytes, int col, int row, int colSpan, int rowSpan, double scaleX, double scaleY) {
+		Workbook wb = sheet.getWorkbook();
 	    int pictureIdx = wb.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
 	    CreationHelper helper = wb.getCreationHelper();
 	    Drawing<?> drawing = sheet.createDrawingPatriarch();
@@ -142,7 +148,9 @@ public class TrainerDoc {
 	    anchor.setRow1(row);
 	    anchor.setCol2(col + colSpan);
 	    anchor.setRow2(row + rowSpan);
-	    drawing.createPicture(anchor, pictureIdx);
+	    
+	    Picture pict = drawing.createPicture(anchor, pictureIdx);
+	    pict.resize(scaleX, scaleY); // Scales it relative to the anchor box size
 	}
 	
 	private static int writeTeam(Sheet sheet, Trainer tr, Entity npc, int startRow, GamePanel gp) {
@@ -177,7 +185,7 @@ public class TrainerDoc {
 			if (down1 != null) {
 				trainerBytes = imageToBytes(npc.down1, "png");
 				if (trainerBytes != null) {
-		            insertImage(sheet, trainerBytes, 7, nameRow.getRowNum(), 1, 1, sheet.getWorkbook());
+		            insertImage(sheet, trainerBytes, 7, nameRow.getRowNum(), 1, 1, 1, 1);
 		        }
 			} else {
 				System.out.println(npc + "'s down1 is null");
@@ -192,6 +200,7 @@ public class TrainerDoc {
 
 	    // Pokémon info in a horizontal block per team member
 	    Row nameRow2 = sheet.createRow(startRow++);
+	    Row typeRow = sheet.createRow(startRow++);
 	    Row spriteRow = sheet.createRow(startRow++);
 	    Row spriteRow2 = sheet.createRow(startRow++); // needed for image height
 	    Row itemRow = sheet.createRow(startRow++);
@@ -217,6 +226,20 @@ public class TrainerDoc {
 
 	        // Sprite image
 	        try {
+	        	BufferedImage type1 = p.type1.getImage2();
+	        	BufferedImage type2 = p.type2 != null ? p.type2.getImage2() : null;
+	        	
+	        	BufferedImage typeImage = combineIcons(type1, type2);
+	        	byte[] typeBytes = imageToBytes(typeImage, "png");
+	        	
+	        	sheet.addMergedRegion(new CellRangeAddress(
+	        			typeRow.getRowNum(), typeRow.getRowNum(), col, col + 1
+		        ));
+	        	
+	        	typeRow.setHeight((short) 384);
+	        	
+	        	insertImage(sheet, typeBytes, col, typeRow.getRowNum(), 2, 1, 0.5, 1);
+	        	
 	        	// Set square size for sprite cells (adjust as needed)
 	        	int spritePixelSize = 80; // Desired image dimension in pixels
 	        	int charWidth = (int)(spritePixelSize * 256 / 7.001); // Excel column width
@@ -231,10 +254,10 @@ public class TrainerDoc {
 	        	    spriteRow.getRowNum(), spriteRow2.getRowNum(), col, col + 1
 	        	));
 	        	
-		        byte[] spriteBytes = imageToBytes(p.setSprite(), "png");
+		        byte[] spriteBytes = imageToBytes(getCachedSprite(p), "png");
 		        if (spriteBytes != null) {
 		            // Insert sprite as 2x2 image
-		            insertImage(sheet, spriteBytes, col, spriteRow.getRowNum(), 2, 2, sheet.getWorkbook());
+		            insertImage(sheet, spriteBytes, col, spriteRow.getRowNum(), 2, 2, 1, 1);
 		        }
 	
 		        // Item
@@ -250,7 +273,7 @@ public class TrainerDoc {
 		                sheet.setColumnWidth(col + 1, charWidth); // match width for consistent spacing
 		                itemRow.setHeight((short) 372);             // match row height
 
-		                insertImage(sheet, itemImg, col + 1, itemRow.getRowNum(), 1, 1, sheet.getWorkbook());
+		                insertImage(sheet, itemImg, col + 1, itemRow.getRowNum(), 1, 1, 1, 1);
 		            }
 		        }
 	        } catch (IOException e) {
@@ -323,6 +346,13 @@ public class TrainerDoc {
 	    return startRow;
 	}
 	
+	private static BufferedImage getCachedSprite(Pokemon p) {
+	    if (sprites[p.id - 1] == null) {
+	        sprites[p.id - 1] = p.setSprite();
+	    }
+	    return sprites[p.id - 1];
+	}
+	
 	private static byte[] imageToBytes(BufferedImage image, String formatName) throws IOException {
 	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	    ImageIO.write(image, formatName, baos); // formatName can be "png", "jpg", etc.
@@ -330,5 +360,19 @@ public class TrainerDoc {
 	    byte[] imageBytes = baos.toByteArray();
 	    baos.close();
 	    return imageBytes;
+	}
+	
+	private static BufferedImage combineIcons(BufferedImage type1, BufferedImage type2) {
+	    int width = 96;  // 2 x 24
+	    int height = 48;
+	    BufferedImage combined = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D g = combined.createGraphics();
+	    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	    g.drawImage(type1, 0, 0, null);
+	    if (type2 != null) {
+	        g.drawImage(type2, 48, 0, null);
+	    }
+	    g.dispose();
+	    return combined;
 	}
 }
