@@ -1414,10 +1414,10 @@ Grust (Lv. 66) @ None                   / Calm    /   Cursed Body    /   Night S
 Grust 3 (12, 31, 31, 31, 28, 19) | X: 62, Y: 81, Facing: down
 Grust (Lv. 65) @ None                   / Quiet   /   Perish Body    /   Night Slash, Bulk Up, Bloodshed Cleave, Protect
 
-Grust 4 (30, 31, 28, 30, 31, 31) | X: 61, Y: 76, Facing: right
+Grust 4 (30, 31, 28, 30, 31, 31) | X: 61, Y: 76, Facing: down
 Grust (Lv. 67) @ None                   / Hardy   /   Cursed Body    /   Take Over, Destiny Bond, Poltergeist, Close Combat
 
-Grust 5 (31, 31, 13, 14, 31, 8) | X: 61, Y: 70, Facing: down
+Grust 5 (31, 31, 13, 14, 31, 8) | X: 61, Y: 70, Facing: right
 Grust (Lv. 68) @ None                   / Hasty   /   Anger Point    /   Sucker Punch, Bloodshed Cleave, Bulk Up, Destiny Bond
 
 Grust 6 (31, 20, 31, 31, 28, 13) | X: 79, Y: 59, Facing: down
@@ -1429,10 +1429,10 @@ Grust (Lv. 64) @ None                   / Mild    /   Anger Point    /   X-Sciss
 Grust 8 (31, 31, 31, 2, 3, 27) | X: 75, Y: 44, Facing: down
 Grust (Lv. 66) @ None                   / Bashful /   Cursed Body    /   Torment, Destiny Bond, Bloodshed Cleave, Sucker Punch
 
-Grust 9 (18, 0, 31, 31, 4, 31) | X: 60, Y: 42, Facing: left
+Grust 9 (18, 0, 31, 31, 4, 31) | X: 60, Y: 42, Facing: down
 Grust (Lv. 67) @ None                   / Hardy   /   Perish Body    /   Take Over, Close Combat, Bloodshed Cleave, Destiny Bond
 
-Grust 10 (20, 31, 31, 1, 24, 31) | X: 17, Y: 72, Facing: down
+Grust 10 (20, 31, 31, 1, 24, 31) | X: 17, Y: 72, Facing: right
 Grust (Lv. 65) @ None                   / Naughty /   Cursed Body    /   Will-O-Wisp, Bloodshed Cleave, Sucker Punch, Minimize
 
 Dusk Skater (10, 31, 21, 2, 31, 31) | X: 50, Y: 59, Facing: down

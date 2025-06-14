@@ -1239,6 +1239,10 @@ public class UI extends AbstractUI {
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			
+			if (gp.player.p.team[partyNum] instanceof Egg) {
+				showMessage("We can't take Eggs here! Only hatched Pokemon!");
+                return;
+			}
 			if (partyNum == 0) {
             	if (gp.player.p.team[partyNum + 1] == null) {
             		showMessage("That's your last Pokemon!");
@@ -1289,26 +1293,32 @@ public class UI extends AbstractUI {
 			Pokemon p = pokemon[i];
 			if (p != null) {
 				int pX = x + gp.tileSize / 2;
-				int pY = y + gp.tileSize / 2;
+				int pY = y + gp.tileSize / 4;
 				int pWidth = gp.tileSize * 9;
-				int pHeight = gp.tileSize * 2;
+				int pHeight = (int) (gp.tileSize * 2.5);
 				drawSubWindow(pX, pY, pWidth, pHeight);
 				
 				if (p.getSprite() == null) {
 					p.setSprites();
 				}
 				
+				if (p.item != null) {
+					g2.drawImage(p.item.getImage2(), (int) (pX + pWidth - gp.tileSize * 1.5), (int) (pY + gp.tileSize * 0.75), null);
+				}
+				
 				g2.setFont(g2.getFont().deriveFont(32F));
 				pX += gp.tileSize / 2;
+				pY += gp.tileSize / 2;
 				
 				if (commandNum == i) g2.drawString(">", pX, pY + gp.tileSize);
 				
 				pX += gp.tileSize / 2;
-				pY += gp.tileSize / 2;
 				g2.drawImage(p.getSprite(), pX, pY, null);
 				pX += gp.tileSize * 2;
 				pY += gp.tileSize;
-				g2.drawString(p.getNickname() + " Lv. " + p.getLevel(), pX, pY);
+				String label = p.getNickname() + " Lv. " + p.getLevel();
+				g2.setFont(g2.getFont().deriveFont(getFontSize(label, pWidth - gp.tileSize * 4)));
+				g2.drawString(label, pX, pY);
 				
 				y += pHeight + gp.tileSize / 2;
 			}

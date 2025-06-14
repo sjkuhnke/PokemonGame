@@ -73,7 +73,7 @@ public class Nursery implements Serializable {
 				}
 			}
 			if (sameSpecies) {
-				if (Pokemon.getEggGroup(pokemon[0].id).contains(EggGroup.UNDISCOVERED)) {
+				if (!Pokemon.getEggGroup(pokemon[0].id).contains(EggGroup.UNDISCOVERED)) {
 					state = SAME_SPECIES;
 				} else {
 					state = NOT_COMPATIBLE;
@@ -152,7 +152,7 @@ public class Nursery implements Serializable {
 			Task.addTask(Task.DIALOGUE, npc, "The two don't really seem to like each other very much.");
 			break;
 		case NOT_COMPATIBLE:
-			Task.addTask(Task.DIALOGUE, npc, "The two prefer to player with other Pokemon more than with each other.");
+			Task.addTask(Task.DIALOGUE, npc, "The two prefer to play with other Pokemon more than with each other.");
 			break;
 		case EGG:
 			Task.addTask(Task.DIALOGUE, npc, "Your Pokemon made an egg! I couldn't believe it with my own eyes!");
@@ -223,7 +223,7 @@ public class Nursery implements Serializable {
 						(!p1DestinyKnot && p2DestinyKnot) ? parent2 :
 						Math.random() < 0.5 ? parent1 : parent2;
 		
-		int id = parent.id;
+		int id = parent.getBabyStage();
 		
 		int abilitySlot = parent.abilitySlot;
 		double r = Math.random();
@@ -244,7 +244,7 @@ public class Nursery implements Serializable {
 			nature = Nature.getRandomNature();
 		}
 		
-		egg = new Egg(id, 3);
+		egg = new Egg(id);
 		
 		int[] ivs = egg.ivs.clone();
 		boolean useDK = p1DestinyKnot || p2DestinyKnot;
@@ -260,7 +260,6 @@ public class Nursery implements Serializable {
 		
 		Item ball = parent.ball;
 		
-		egg = new Egg(id, 3);
 		egg.ivs = ivs;
 		egg.abilitySlot = ability;
 		egg.setAbility();

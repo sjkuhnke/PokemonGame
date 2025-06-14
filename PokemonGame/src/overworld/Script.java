@@ -1086,7 +1086,7 @@ public class Script {
 				index = 2;
 			}
 			
-			Egg result = new Egg(ids[index], 3);
+			Egg result = new Egg(ids[index]);
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		});
@@ -1258,7 +1258,7 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "You're the Professor's kid, right? Here, he asked me to give you this if you ever passed by.");
 				Random random = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 				int id = getUnregisteredBasePokemon(random);
-				Egg egg = new Egg(id, 3);
+				Egg egg = new Egg(id);
 				Task.addTask(Task.GIFT, "", egg);
 				Task.addTask(Task.DIALOGUE, npc, "Let me know if you want to check any strange evolution progress!");
 			} else {

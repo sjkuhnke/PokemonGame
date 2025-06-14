@@ -15,16 +15,27 @@ public class Egg extends Pokemon {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public int steps;
+	public int cycles;
 	
-	public Egg(int i, int steps) {
-		super(i, 1, true, false);
+	public Egg(int id) {
+		super(id, 1, true, false);
 		
 		this.nickname = "Egg";
 		
-		this.steps = steps;
+		int catchRate = Pokemon.getCatchRate(this.getFinalEvolution());
+		this.cycles = computeEggCycles(catchRate);
 		
 		setSprites();
+	}
+	
+	private int computeEggCycles(int catchRate) {
+	    double minCycles = 2;
+	    double maxCycles = 20;
+	    double logMin = Math.log(3);
+	    double logMax = Math.log(255);
+	    double scale = (Math.log(catchRate) - logMin) / (logMax - logMin);
+	    double cycles = maxCycles - scale * (maxCycles - minCycles);
+	    return (int)Math.round(cycles);
 	}
 	
 	@Override
@@ -53,7 +64,6 @@ public class Egg extends Pokemon {
 	@Override
 	public BufferedImage setMiniSprite() {
 		BufferedImage image = null;
-		
 		
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/minisprites/egg.png"));
@@ -87,16 +97,16 @@ public class Egg extends Pokemon {
 	
 	public boolean step(boolean fast) {
 		int dec = fast ? 2 : 1;
-		this.steps -= dec;
-		if (this.steps <= 0) {
-			this.steps = 0;
+		this.cycles -= dec;
+		if (this.cycles <= 0) {
+			this.cycles = 0;
 			return true;
 		}
 		return false;
 	}
 	
 	public int getSteps() {
-		return this.steps;
+		return this.cycles;
 	}
 	
 	public Pokemon hatch() {
@@ -117,13 +127,13 @@ public class Egg extends Pokemon {
 	}
 
 	public String getHatchDesc() {
-		if (steps < 3) {
+		if (cycles < 3) {
 			return "This Egg looks ready to hatch at any moment!";
-		} else if (steps >= 3 && steps < 6) {
+		} else if (cycles >= 3 && cycles < 6) {
 			return "Sounds can be heard coming from inside! It will hatch soon!";
-		} else if (steps >= 6 && steps < 11) {
+		} else if (cycles >= 6 && cycles < 11) {
 			return "It appears to move occasionally. It may be close to hatching.";
-		} else if (steps >= 11 && steps < 41) {
+		} else if (cycles >= 11 && cycles < 41) {
 			return "What will hatch from this? It doesn't seem close to hatching.";
 		} else {
 			return "It looks like this Egg will take a long time to hatch.";
