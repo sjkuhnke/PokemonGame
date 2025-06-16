@@ -924,7 +924,7 @@ public abstract class AbstractUI {
 	}
 	
 	public void drawMoveOptions(Move m, Pokemon p, String header) {
-		ArrayList<Move> movebankList = p.movebankAsList();
+		ArrayList<Move> movebankList = Pokemon.getMovebankAtLevel(p.id, p.level);
 		
 		int x = gp.tileSize * 4;
 		int y = 0;

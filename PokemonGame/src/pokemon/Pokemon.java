@@ -9119,7 +9119,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 	}
 
-	private static ArrayList<Move> getMovebankAtLevel(int id, int level) {
+	public static ArrayList<Move> getMovebankAtLevel(int id, int level) {
 		ArrayList<Move> forgottenMoves = new ArrayList<>();
 		Node[] movebank = getMovebank(id);
         for (int i = 0; i <= level; i++) {

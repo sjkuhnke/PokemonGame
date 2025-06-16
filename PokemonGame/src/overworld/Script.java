@@ -447,6 +447,10 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "...");
 				Task.addTask(Task.DIALOGUE, npc, "Now you can teleport instantly to any town you've already been! Use it to get back to the city in time, and the doors to the center should be open.");
 				Task.addTask(Task.DIALOGUE, npc, "At least if my calculations are correct.");
+				if (p.nuzlocke) {
+					Task.addTask(Task.DIALOGUE, npc, "You're NUZLOCKING?!?! You must be insane.");
+					Task.addTask(Task.DIALOGUE, npc, "But cool! Your Pocket PC and Healing Pack should work starting now too!");
+				}
 				Task.addTask(Task.DIALOGUE, npc, "God speed kid, and tell your dad I said hi!");
 				p.flag[1][2] = true;
 			} else if (!p.flag[1][19]) {
