@@ -497,7 +497,11 @@ public class PlayerCharacter extends Entity {
 	}
 
 	private void interactPC(NPC_PC target) {
-		if (!target.isGauntlet()) target.direction = "up";
+		if (!target.isGauntlet()) {
+			target.direction = "up";
+		} else {
+			p.heal();
+		}
 		
 		gp.openBox(target);
 	}

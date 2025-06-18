@@ -1,14 +1,6 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-233 Relomidel*
-234 Relopamil*
-235 Dragowrath*
-289 Dusk Skater*
-177 Minishoo*
-178 Glittleshoo*
-171 Wormite*
-172 Wormbot*
 173 Wormatron*
 217 Wormite-S*
 218 Wormbot-S*
@@ -22,11 +14,6 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 108 Sparkitten
 109 Fireblion
 110 Flamebless
-169 Diggie*
-170 Drillatron*
-114 Elelamb
-115 Electroram
-116 Superchargo
 120 Magie
 121 Cumin
 122 Cinneroph
@@ -36,9 +23,6 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 126 Whiskie
 127 Whiskers
 128 Whiskeroar
-117 Twigzap
-118 Shockbranch
-119 Thunderzap
 134 Lilyray
 135 Daray
 136 Spinaquata
@@ -89,10 +73,6 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
 Overworld Pokemon Sprites (* are the ones that already have battle sprites, probably best to do that first)
 ================================================================================
------ Most Urgent -----
-Dusk Skater
-
------ Less Urgent -----
 Whiskeroar
 Legendaries
 
@@ -107,7 +87,6 @@ NPC Overworld Sprites (Preferred Order, can be changed around if needed) [16xN w
 * = I have the sprites for them already, just should be redone in your style (bc it's far better)
 ================================================================================
 Astronomer (Galactic)
-*Team Nuke Grunt
 Ryder (THE CHAMPION!!)
 Custom Player Sprite
 Custom Player Surfing Sprite?

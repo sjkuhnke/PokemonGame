@@ -3786,9 +3786,6 @@ public class UI extends AbstractUI {
 			if (i == bagNum[currentPocket - 1]) {
 				g2.drawString(">", (x - gp.tileSize / 2) - 2, y + gp.tileSize / 2);
 			}
-			if (i == selectedBagNum) {
-				g2.setColor(Color.BLUE.brighter());
-			}
 			if (i < currentItems.size()) {
 				Bag.Entry current = currentItems.get(i);
 				
@@ -3809,6 +3806,10 @@ public class UI extends AbstractUI {
 				    g2.setPaint(starPaint);
 				    g2.drawString('\u2605' + "", starX, starY + 2);
 				    g2.setFont(g2.getFont().deriveFont(32F));
+				}
+				
+				if (i == selectedBagNum) {
+					g2.setColor(Color.BLUE.brighter());
 				}
 				
 				g2.drawString(itemString, x + gp.tileSize / 2, y);

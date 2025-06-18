@@ -1145,9 +1145,9 @@ public class Player extends Trainer implements Serializable {
 			case EDGE_KIT:
 				if (p.expMax - p.exp != 1) {
 	        		p.exp = p.expMax - 1;
-	        		gp.ui.showMessage(p.nickname + " successfully EDGED!");
+	        		gp.ui.showMessage(p.nickname + " successfully edged!");
 	        	} else {
-	        		gp.ui.showMessage(p.nickname + " is already edged :>");
+	        		gp.ui.showMessage(p.nickname + " is already edged.");
 	        	}
 				return;
 			
