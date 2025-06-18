@@ -36,7 +36,7 @@ public enum Move {
 	AQUA_RING(0,1000,0,0,2,0,PType.WATER,"Restores a small amount of HP at the end of every turn",false,15),
 	AQUA_TAIL(90,90,0,0,0,0,PType.WATER,"A normal attack",true,10),
 	AQUA_VEIL(0,1000,0,0,2,4,PType.WATER,"User protects itself, can't be used in succession. Lowers foe's SpA by 1 if they use a move into the protect.",false,5),
-	ARCANE_SPELL(90,95,100,0,1,0,PType.MAGIC,"% to lower the Base Power of all foe's moves by 10",false,10),
+	ARCANE_SPELL(90,95,100,0,1,0,PType.MAGIC,"% to lower the Base Power of all foe's moves by 10; effect is preserved even if foe switches out",false,10),
 	AROMATHERAPY(0,1000,0,0,2,0,PType.GRASS,"Cures team of any status conditions",false,5),
 	ASTONISH(30,100,30,0,0,0,PType.GHOST,"% chance of causing foe to flinch",true,15),
 	AURA_SPHERE(90,1000,0,0,1,0,PType.FIGHTING,"This attack always hits",false,15),
@@ -996,6 +996,7 @@ public enum Move {
 		result.add(SHADOW_PUNCH);
 		result.add(SKY_UPPERCUT);
 		result.add(THUNDER_PUNCH);
+		result.add(HAMMER_ARM);
 		result.add(METEOR_MASH);
 		result.add(PLASMA_FISTS);
 		result.add(SUCKER_PUNCH);

@@ -175,18 +175,20 @@ Wormbot ->
 Wormatron ->
 
 Reddit posts:
-Hissimitar
-Flamehox line
-Tiowoo line
-Sparkdust line
 Shookwat line
+Flamehox-E line
 Poof line
 Poov line
 Poof-E line
 Plasamp line
 Elgyem-E line
+Minishoo line
+Diggie line
+Elelamb line
+Twigzap line
 UP mons
 Electric fossil line
+BOX ART LEGENDARIES
 
 Trainer Classes:
 Ace Trainer (mixed types/dragon)
