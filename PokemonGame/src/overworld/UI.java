@@ -11,14 +11,9 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -3529,26 +3524,7 @@ public class UI extends AbstractUI {
 				subState = 0;
 				commandNum = 0;
 				
-				Path savesDirectory = Paths.get("./saves/");
-	            if (!Files.exists(savesDirectory)) {
-	                try {
-						Files.createDirectories(savesDirectory);
-					} catch (IOException e) {
-						showMessage("The /saves/ folder could not be created.\nIf you are playing this game in your downloads,\ntry moving it to another folder.");
-					}
-	            }
-	            
-		    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves/" + gp.player.currentSave))) {
-	            	gp.player.p.setPosX(gp.player.worldX);
-	            	gp.player.p.setPosY(gp.player.worldY);
-	            	gp.player.p.currentMap = gp.currentMap;
-	                oos.writeObject(gp.player.p);
-	                oos.close();
-	                showMessage("Game saved sucessfully!");
-	            } catch (IOException ex) {
-	            	String message = Item.breakString("Error: " + ex.getMessage(), MAX_TEXTBOX);
-	            	showMessage(message);
-	            }
+				gp.saveGame(gp.player.p);
 			}
 		}
 		y += gp.tileSize;

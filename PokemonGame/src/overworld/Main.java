@@ -1,12 +1,11 @@
 package overworld;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.nio.file.*;
 import java.util.ArrayList;
@@ -37,6 +36,7 @@ import pokemon.PType;
 import pokemon.Player;
 import pokemon.Pokemon;
 import pokemon.Trainer;
+import util.SaveManager;
 import pokemon.Node;
 
 public class Main {
@@ -94,19 +94,10 @@ public class Main {
 	}
 
 	public static void loadSave(JFrame window, String fileName, WelcomeMenu welcomeMenu, boolean[] selectedOptions, boolean nuzlocke) {
-		try {
-			// Check if the directory exists, create it if not
-            Path savesDirectory = Paths.get("./saves/");
-            if (!Files.exists(savesDirectory)) {
-                try {
-					Files.createDirectories(savesDirectory);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-            }
-            
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./saves/" + fileName));
-	        gp.player.p = (Player) ois.readObject();
+		Player player = SaveManager.loadPlayer(fileName);
+		if (player != null) {
+			gp.player.p = player;
+			
         	for (Pokemon p : gp.player.p.getTeam()) {
 	            if (p != null) {
 	            	p.clearVolatile();
@@ -127,8 +118,8 @@ public class Main {
 				}
 	        }
 	        if (gp.player.p.visor) gp.player.setupPlayerImages(true);
-	        ois.close();
-	    } catch (IOException | ClassNotFoundException e) {
+
+	    } else {
 	        // If there's an error reading the file, create a new Player object
 	        gp.player.p = new Player(gp);
 	        if (nuzlocke) gp.player.p.setupNuzlocke();
@@ -170,31 +161,32 @@ public class Main {
 		        if (alpha >= 95) {
 		            timer.stop();
 		    		
-		            Path docsDirectory = Paths.get("./docs/");
-					if (!Files.exists(docsDirectory)) {
-		                try {
-							Files.createDirectories(docsDirectory);
-						} catch (IOException f) {
-							f.printStackTrace();
-						}
-		            }
+		            Path docsDirectory = SaveManager.getDocsDirectory();
 		            
 		    		if (selectedOptions[0]) {
-		    			writeTrainers(gp);
-		    			TrainerDoc.writeTrainersToExcel(gp);
+		    			writeTrainers(gp, docsDirectory);
+		    			TrainerDoc.writeTrainersToExcel(gp, docsDirectory);
 		    		}
-		    		if (selectedOptions[1]) writePokemon();
-		    		if (selectedOptions[2]) writeEncounters();
-		    		if (selectedOptions[3]) writeMoves();
-		    		if (selectedOptions[4]) writeDefensiveTypes();
-		    		if (selectedOptions[5]) writeOffensiveTypes();
-		    		if (selectedOptions[6]) writeItems(gp);
-		    		if (selectedOptions[7]) writeAbilities();
+		    		if (selectedOptions[1]) writePokemon(docsDirectory);
+		    		if (selectedOptions[2]) writeEncounters(docsDirectory);
+		    		if (selectedOptions[3]) writeMoves(docsDirectory);
+		    		if (selectedOptions[4]) writeDefensiveTypes(docsDirectory);
+		    		if (selectedOptions[5]) writeOffensiveTypes(docsDirectory);
+		    		if (selectedOptions[6]) writeItems(gp, docsDirectory);
+		    		if (selectedOptions[7]) writeAbilities(docsDirectory);
 		    		
 		    		window.add(gp);
 		    		gp.requestFocusInWindow();
 		    		
 		    		window.pack();
+		    		
+		    		if (hasAnyChecked(selectedOptions)) {
+		    			try {
+							Desktop.getDesktop().open(docsDirectory.toFile());
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+		    		}
 		    		
 		    		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		    		window.addWindowListener(new WindowAdapter() {
@@ -226,9 +218,17 @@ public class Main {
 		});
 	}
 
-	private static void writePokemon() {
+	private static boolean hasAnyChecked(boolean[] options) {
+		for (boolean b : options) {
+			if (b) return true;
+		}
+		return false;
+	}
+
+	private static void writePokemon(Path dir) {
 		try {
-			FileWriter writer = new FileWriter("./docs/PokemonInfo.txt");
+			Path outPath = dir.resolve("PokemonInfo.txt");
+			FileWriter writer = new FileWriter(outPath.toFile());
 			
 			int[] ids = new int[Pokemon.POKEDEX_1_SIZE + Pokemon.POKEDEX_METEOR_SIZE * 2 + Pokemon.POKEDEX_2_SIZE + 2];
 			int counter = 0;
@@ -321,9 +321,9 @@ public class Main {
 			}
 			writer.close();
 			
-			writeTMLearn();
-			//writeUnusedMoves();
-			//writeTypeStats();
+			writeTMLearn(dir);
+			//writeUnusedMoves(dir);
+			//writeTypeStats(dir);
 			
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -331,9 +331,10 @@ public class Main {
 		
 	}
 	
-	private static void writeTMLearn() {
+	private static void writeTMLearn(Path dir) {
 		try {
-			FileWriter writer = new FileWriter("./docs/PokemonInfo.txt", true);
+			Path outPath = dir.resolve("PokemonInfo.txt");
+			FileWriter writer = new FileWriter(outPath.toFile(), true);
 			writer.write("TM Learnsets:\n");
 			
 			boolean[][] tms = Pokemon.getTMTable();
@@ -373,9 +374,10 @@ public class Main {
 	}
 
 	@SuppressWarnings("unused")
-	private static void writeTypeStats() {
+	private static void writeTypeStats(Path dir) {
 		try {
-			FileWriter writer = new FileWriter("./docs/PokemonInfo.txt", true);
+			Path outPath = dir.resolve("PokemonInfo.txt");
+			FileWriter writer = new FileWriter(outPath.toFile(), true);
 			writer.write("Stats:\n");
 			ArrayList<PType> types = new ArrayList<>(Arrays.asList(PType.values()));
 			types.remove(PType.UNKNOWN);
@@ -430,9 +432,10 @@ public class Main {
     }
 
 	@SuppressWarnings("unused")
-	private static void writeUnusedMoves() {
+	private static void writeUnusedMoves(Path dir) {
 		try {
-			FileWriter writer = new FileWriter("./docs/PokemonInfo.txt", true);
+			Path outPath = dir.resolve("PokemonInfo.txt");
+			FileWriter writer = new FileWriter(outPath.toFile(), true);
 			writer.write("Unused moves:\n");
 			ArrayList<Move> unused = new ArrayList<>();
 			ArrayList<Move> unusedButTM = new ArrayList<>();
@@ -567,9 +570,10 @@ public class Main {
 		
 	}
 	
-	private static void writeTrainers(GamePanel gp) {
+	private static void writeTrainers(GamePanel gp, Path dir) {
 		try {
-			FileWriter writer = new FileWriter("./docs/TrainerInfo.txt");
+			Path outPath = dir.resolve("TrainerInfo.txt");
+			FileWriter writer = new FileWriter(outPath.toFile());
 			writer.write("Trainers:\n");
 			writer.write("*** Note: if the Scott/Fred have 3 starters listed, regenerate docs after you picked your starter. ***\n");
 			Map<?, ?>[] maps = TrainerDoc.getTrainerLocationMap(gp);
@@ -651,7 +655,7 @@ public class Main {
 			writer.write("\n");
 			
 			writer.close();
-			//writeTrainerUsageStats();
+			//writeTrainerUsageStats(dir);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -659,9 +663,10 @@ public class Main {
 	}
 	
 	@SuppressWarnings("unused")
-	private static void writeTrainerUsageStats() {
+	private static void writeTrainerUsageStats(Path dir) {
 		try {
-			FileWriter writer = new FileWriter("./docs/TrainerInfo.txt", true);
+			Path outPath = dir.resolve("TrainerInfo.txt");
+			FileWriter writer = new FileWriter(outPath.toFile(), true);
 			writer.write("Stats:\n");
 			int[] occurences = new int[Pokemon.MAX_POKEMON + 1];
 			int totalPokemon = 0;
@@ -713,9 +718,10 @@ public class Main {
 		}
 	}
 
-	private static void writeEncounters() {
+	private static void writeEncounters(Path dir) {
 		try {
-			FileWriter writer = new FileWriter("./docs/WildPokemon.txt");
+			Path outPath = dir.resolve("WildPokemon.txt");
+			FileWriter writer = new FileWriter(outPath.toFile());
 			
 			ArrayList<Encounter> allEncounters = new ArrayList<>();
 			int[] amounts = new int[Pokemon.MAX_POKEMON + 1];
@@ -792,9 +798,10 @@ public class Main {
 		return result;
 	}
 	
-	private static void writeMoves() {
+	private static void writeMoves(Path dir) {
 		try {
-			FileWriter writer = new FileWriter("./docs/MovesInfo.txt");
+			Path outPath = dir.resolve("MovesInfo.txt");
+			FileWriter writer = new FileWriter(outPath.toFile());
 			
 			ArrayList<Move> moves = new ArrayList<>(Arrays.asList(Move.values()));
 			Map<PType, List<Move>> movesByType = new HashMap<>();
@@ -868,9 +875,10 @@ public class Main {
 		
 	}
 	
-	private static void writeDefensiveTypes() {
+	private static void writeDefensiveTypes(Path dir) {
 		try {
-            FileWriter writer = new FileWriter("./docs/DefensiveTypings.txt");
+			Path outPath = dir.resolve("DefensiveTypings.txt");
+            FileWriter writer = new FileWriter(outPath.toFile());
 
             PType[] types = PType.values();
             ArrayList<PType> arrayListTypes = new ArrayList<>(Arrays.asList(types));
@@ -950,9 +958,10 @@ public class Main {
 		
 	}
 	
-	private static void writeOffensiveTypes() {
+	private static void writeOffensiveTypes(Path dir) {
 		try {
-            FileWriter writer = new FileWriter("./docs/OffensiveTypings.txt");
+			Path outPath = dir.resolve("OffensiveTypings.txt");
+            FileWriter writer = new FileWriter(outPath.toFile());
 
             PType[] types = PType.values();
             ArrayList<PType> arrayListTypes = new ArrayList<>(Arrays.asList(types));
@@ -1033,9 +1042,10 @@ public class Main {
 		
 	}
 	
-	private static void writeItems(GamePanel gp) {
+	private static void writeItems(GamePanel gp, Path dir) {
 		try {
-			FileWriter writer = new FileWriter("./docs/ItemsInfo.txt");
+			Path outPath = dir.resolve("ItemsInfo.txt");
+			FileWriter writer = new FileWriter(outPath.toFile());
 			writer.write("--------------------------------------\n");
 			writer.write("Items Info:\n");
 			writer.write("Item | Pocket | Buy | Sell | Description");
@@ -1155,9 +1165,10 @@ public class Main {
 		
 	}
 	
-	private static void writeAbilities() {
+	private static void writeAbilities(Path dir) {
 		try {
-			FileWriter writer = new FileWriter("./docs/AbilitiesInfo.txt");
+			Path outPath = dir.resolve("AbilitiesInfo.txt");
+			FileWriter writer = new FileWriter(outPath.toFile());
 			writer.write("--------------------------------------\n");
 			writer.write("Abilities Info:\n");
 			writer.write("--------------------------------------\n");

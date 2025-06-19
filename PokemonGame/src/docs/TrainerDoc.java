@@ -24,12 +24,15 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 
 public class TrainerDoc {
 	
 	private static BufferedImage[] sprites = new BufferedImage[Pokemon.MAX_POKEMON];
+	private static Path docsDirectory;
 	
-	public static void writeTrainersToExcel(GamePanel gp) {
+	public static void writeTrainersToExcel(GamePanel gp, Path dir) {
+		docsDirectory = dir;
 		Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("Trainer Teams");
 
@@ -90,7 +93,8 @@ public class TrainerDoc {
 		    rowIndex++; // Blank row between locations
 		}
 		
-		try (FileOutputStream fileOut = new FileOutputStream("./docs/TrainerInfo.xlsx")) {
+		Path outPath = docsDirectory.resolve("TrainerInfo.xlsx");
+		try (FileOutputStream fileOut = new FileOutputStream(outPath.toFile())) {
 		    wb.write(fileOut);
 		    wb.close();
 		} catch (Exception ex) {

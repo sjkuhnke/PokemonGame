@@ -1494,7 +1494,7 @@ public class AssetSetter {
 		
 		mapNum = 23;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 45, "Wow, there's a lot of lava over there. It's definitely not safe for any newbie trainers. If I see any of them coming this way... I swear to god...");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 45, "Wow, there's a lot of lava over there. It's definitely not safe for any newbie trainers. If I see any of them coming this way... I swear to Arceus...");
 		
 		mapNum = 24;
 		index = 0;
@@ -2405,39 +2405,39 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 55, 75, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 60, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 49, 62, "", 197.1);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 59, 54, "Observe your footing - even a wrong step reveals a truth.", "Faltering isn't failure. It's correction in motion.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 48, 52, "Every path here obeys logic. Can you say the same for yourself?", "Even flawed steps follow a pattern.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 65, 49, "No divinity guards this maze. Only your decisions.", "You chose well - this time.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 40, 47, "Reflex without thought is just noise. Let's see if you can think.", "The silence after is always louder.", 0, LEFT + RIGHT + DOWN);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 76, 40, "This maze has no faith to lean on. Just ice and intellect.", "I see. You're not slipping after all.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 78, 36, "You want to ascend? Then prove your logic is sound.", "A solid premise. A tested conclusion.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 71, 36, "I won't offer riddles - only resistance.", "A clear result. That is all.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 64, 39, "No spirits here. Just minds honed by reality.", "You applied force... and found the answer.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 35, 38, "Uncertainty is the enemy. Precision is your ally.", "Consider this a controlled experiment.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 59, 54, "Observe your footing - even a wrong step reveals a truth.", "Faltering isn't failure. It's correction in motion.", 448);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 48, 52, "Every path here obeys logic. Can you say the same for yourself?", "Even flawed steps follow a pattern.", 449);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 65, 49, "No divinity guards this maze. Only your decisions.", "You chose well - this time.", 450);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 40, 47, "Reflex without thought is just noise. Let's see if you can think.", "The silence after is always louder.", 452, LEFT + RIGHT + DOWN);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 76, 40, "This maze has no faith to lean on. Just ice and intellect.", "I see. You're not slipping after all.", 451);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 78, 36, "You want to ascend? Then prove your logic is sound.", "A solid premise. A tested conclusion.", 453);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 71, 36, "I won't offer riddles - only resistance.", "A clear result. That is all.", 454);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 64, 39, "No spirits here. Just minds honed by reality.", "You applied force... and found the answer.", 455);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 35, 38, "Uncertainty is the enemy. Precision is your ally.", "Consider this a controlled experiment.", 456);
 		
 		mapNum = 198;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 41, 31, "", "", -1);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 39, 43, "Every break you make clears the way. Or traps you further.", "One shattered tile at a time, progress is made.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 75, 32, "Collapse what you must - so long as you can still stand.", "It held. You held.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 55, 56, "What breaks reveals what's solid.", "Yes. You understood the structure.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 68, 57, "Be deliberate. Overthinking is as dangerous as guessing.", "Efficient. Respectable.", 0, ALL);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 39, 43, "Every break you make clears the way. Or traps you further.", "One shattered tile at a time, progress is made.", 457);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 75, 32, "Collapse what you must - so long as you can still stand.", "It held. You held.", 458);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 55, 56, "What breaks reveals what's solid.", "Yes. You understood the structure.", 459);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 68, 57, "Be deliberate. Overthinking is as dangerous as guessing.", "Efficient. Respectable.", 460, ALL);
 		
 		mapNum = 199;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 58, 74, "You stepped in - and we already knew you'd come.", "You were prepared. So were we.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 62, 78, "This isn't faith. This is force, in sequence.", "Expected outcome: resistance broken.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 58, 82, "Patterns repeat - so do ambushes.", "Your adaptations are worth noting.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 54, 78, "You walked in alone. Did you calculate that risk?", "A misstep, but you recovered.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 57, 64, "Here's some more. The problem isn't finished yet.", "Your variables resolved cleanly.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 56, 65, "We learn from your errors. Do you?", "Your answer was efficient.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 60, 65, "Every loss sharpens the next trial.", "Statistically impressive.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 59, 64, "You persist. That in itself is data.", "The result: you endure.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 48, 58, "Single combat. Pure input. Clean output.", "You delivered a correct result.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 42, 61, "We are not meant to stop you. Just to test your proofs.", "Proof accepted.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 40, 34, "Three trials. One decision tree.", "You've reached the leaf node.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 37, 35, "Together, we present the last function.", "Your logic held. You're through.", 0);
-		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 43, 35, "Predict, adapt, overcome. That's all that matters.", "As expected. Proceed.", 0);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 58, 74, "You stepped in - and we already knew you'd come.", "You were prepared. So were we.", 461);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 62, 78, "This isn't faith. This is force, in sequence.", "Expected outcome: resistance broken.", 462);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 58, 82, "Patterns repeat - so do ambushes.", "Your adaptations are worth noting.", 463);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 54, 78, "You walked in alone. Did you calculate that risk?", "A misstep, but you recovered.", 464);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 57, 64, "Here's some more. The problem isn't finished yet.", "Your variables resolved cleanly.", 465);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 56, 65, "We learn from your errors. Do you?", "Your answer was efficient.", 466);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 60, 65, "Every loss sharpens the next trial.", "Statistically impressive.", 467);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 59, 64, "You persist. That in itself is data.", "The result: you endure.", 468);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 48, 58, "Single combat. Pure input. Clean output.", "You delivered a correct result.", 469);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_UP, 42, 61, "We are not meant to stop you. Just to test your proofs.", "Proof accepted.", 470);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_DOWN, 40, 34, "Three trials. One decision tree.", "You've reached the leaf node.", 471);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_RIGHT, 37, 35, "Together, we present the last function.", "Your logic held. You're through.", 472);
+		gp.npc[mapNum][index] = NPCSetup(WARDEN_LEFT, 43, 35, "Predict, adapt, overcome. That's all that matters.", "As expected. Proceed.", 473);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 60, 75, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 58, 57, "", "", -1);
 		

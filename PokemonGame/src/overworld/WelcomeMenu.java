@@ -5,22 +5,15 @@ import javax.swing.*;
 import entity.PlayerCharacter;
 import pokemon.Player;
 import pokemon.Pokemon;
+import util.SaveManager;
 import pokemon.JGradientButton;
 
 import java.awt.*;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.nio.file.DirectoryStream;
 import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.attribute.FileTime;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Random;
 
@@ -149,19 +142,8 @@ public class WelcomeMenu extends JPanel {
 	        String name = (String) fileName.getSelectedItem();
 
 	        if (name != null) {
-	            try {
-	                // Check if the directory exists, create it if not
-	                Path savesDirectory = Paths.get("./saves/");
-	                if (!Files.exists(savesDirectory)) {
-	                    try {
-	                        Files.createDirectories(savesDirectory);
-	                    } catch (IOException f) {
-	                        f.printStackTrace();
-	                    }
-	                }
-
-	                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./saves/" + name));
-	                Player current = (Player) ois.readObject();
+	        	Player current = SaveManager.loadPlayer(name);
+	        	if (current != null) {
 	                for (int i = 0; i < 6; i++) {
 	                    Pokemon p = current.team[i];
 	                    icons[i].setIcon(getMiniSprite(p));
@@ -170,10 +152,9 @@ public class WelcomeMenu extends JPanel {
 	                PMap.getLoc(current.currentMap, (int) Math.round(current.getPosX() * 1.0 / 48), (int) Math.round(current.getPosY() * 1.0 / 48));
 	                location.setText("     " + PlayerCharacter.currentMapName);
 	                repaint();
-	                ois.close();
 
 	                // Set the last modified time of the selected file
-	                File saveFile = new File("./saves/" + name);
+	                File saveFile = new File(SaveManager.getSavePath(name).toString());
 	                long lastModified = saveFile.lastModified();
 	                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm");
 	                String lastModifiedStr = "    " + sdf.format(new Date(lastModified));
@@ -181,8 +162,8 @@ public class WelcomeMenu extends JPanel {
 	                // Update the last modified label
 	                lastModifiedLabel.setText(lastModifiedStr);
 
-	            } catch (IOException | ClassNotFoundException | ClassCastException f) {
-	                f.printStackTrace();
+	            } else {
+	                System.err.println("SaveManager returned a null player from loadSave");
 	            }
 	        }
 	    });
@@ -317,38 +298,7 @@ public class WelcomeMenu extends JPanel {
 
 	
 	private ArrayList<String> getDatFiles() {
-		ArrayList<String> fileNames = new ArrayList<>();
-
-		// Check if the directory exists, create it if not
-        Path savesDirectory = Paths.get("./saves/");
-        if (!Files.exists(savesDirectory)) {
-            try {
-				Files.createDirectories(savesDirectory);
-			} catch (IOException f) {
-				f.printStackTrace();
-			}
-        }
-
-        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get("./saves/"), "*.dat")) {
-            for (Path path : directoryStream) {
-                fileNames.add(path.getFileName().toString());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        // Sort the file names based on the last modified time
-        fileNames.sort(Comparator.comparing(path -> {
-            try {
-            	FileTime time = Files.getLastModifiedTime(Paths.get("./saves/" + path));
-                return time.toMillis();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return 0L;
-            }
-        }).reversed());
-
-        return fileNames;
+		return SaveManager.getSaveFiles();
 	}
 
 	public void paintComponent(Graphics g) {
@@ -386,9 +336,7 @@ public class WelcomeMenu extends JPanel {
             		
             	} while (!isValidFileName(newFileName));
             	try {
-                    Path oldPath = Paths.get("./saves/" + name);
-                    Path newPath = oldPath.resolveSibling(newFileName + ".dat");
-                    Files.move(oldPath, newPath);
+                    SaveManager.renameSave(name, newFileName + ".dat");
                     updateFileList(fileNames);
                 } catch (FileAlreadyExistsException e) {
                     JOptionPane.showMessageDialog(this, "File with the specified name already exists. Please choose a different name.");
@@ -403,7 +351,7 @@ public class WelcomeMenu extends JPanel {
                         JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     try {
-                        Files.delete(Paths.get("./saves/" + name));
+                        SaveManager.deleteSave(name);
                         updateFileList(fileNames);
                     } catch (IOException ex) {
                         ex.printStackTrace();
