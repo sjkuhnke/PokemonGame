@@ -1,1 +1,8 @@
 /bin/
+/tools/prod/Pokemon_Xhenos.exe
+/tools/build/jre/
+/tools/Output/PokemonXhenosInstaller.exe
+/releases/*
+!/releases/.gitkeep
+/tools/dist/*
+!/releases/.gitkeep

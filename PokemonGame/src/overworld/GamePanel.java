@@ -4,14 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
@@ -28,6 +21,7 @@ import object.*;
 import pokemon.*;
 import puzzle.*;
 import tile.*;
+import util.SaveManager;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -626,47 +620,29 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void saveGame(Player p) {
-		Path savesDirectory = Paths.get("./saves/");
-        if (!Files.exists(savesDirectory)) {
-            try {
-				Files.createDirectories(savesDirectory);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-        }
-        
-    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves/" + player.currentSave))) {
+    	try {
     		if (p == player.p) {
     			p.setPosX(player.worldX);
             	p.setPosY(player.worldY);
             	p.currentMap = currentMap;
     		}
-            oos.writeObject(p);
-            oos.close();
+    		SaveManager.savePlayer(p, player.currentSave);
+    		if (gameState == MENU_STATE || gameState == PLAY_STATE) ui.showMessage("Game saved sucessfully!");
         } catch (IOException ex) {
-        	JOptionPane.showMessageDialog(null, "Error writing object to file: " + ex.getMessage());
+        	if (gameState == MENU_STATE || gameState == PLAY_STATE) {
+        		String message = Item.breakString("Error: " + ex.getMessage(), UI.MAX_TEXTBOX);
+            	ui.showMessage(message);
+        	} else {
+        		JOptionPane.showMessageDialog(null, "Error writing object to file: " + ex.getMessage());
+        	}
         }
 	}
 	
 	public void saveScum(String reason) {
-		// Check if the directory exists, create it if not
-        Path savesDirectory = Paths.get("./saves/");
-        if (!Files.exists(savesDirectory)) {
-            try {
-				Files.createDirectories(savesDirectory);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-        }
-        
-		ObjectInputStream ois;
-		try {
-			ois = new ObjectInputStream(new FileInputStream("./saves/" + player.currentSave));
-			Player temp = (Player) ois.readObject();
+		Player temp = SaveManager.loadPlayer(player.currentSave);
+		if (temp != null) {
 			temp.invalidateNuzlocke(reason);
 			saveGame(temp);
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
 		}
 	}
 	

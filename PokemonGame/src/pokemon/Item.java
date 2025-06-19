@@ -183,10 +183,10 @@ public enum Item {
 	SAFETY_GOGGLES(321,0,0,Color.BLACK,Item.HELD_ITEM,null,"These goggles protect the holder from both weather-related damage and powder."),
 	HEAVY$DUTY_BOOTS(75,0,0,new Color(97, 97, 97),Item.HELD_ITEM,null,"These boots protect the holder from the effects of entry hazards set on the battlefield."),
 	FOCUS_BAND(76,0,0,new Color(232, 80, 80),Item.HELD_ITEM,null,"When the holder is hit with a move that should knock it out, it may be able to endure with 1 HP."),
-	KING1S_ROCK(77,0,200,new Color(224, 206, 58),Item.HELD_ITEM,null,"It may cause the target to flinch whenever the holder successfully inflicts damage on them with an attack."),
-	SHED_SHELL(78,0,200,new Color(243, 241, 140),Item.HELD_ITEM,null,"Hard and sturdy, this discarded carapace enables the holder to switch out of battle without fail."),
-	MUSCLE_BAND(79,0,150,new Color(225, 200, 50),Item.HELD_ITEM,null,"This headband exudes strength, slightly boosting the power of the holder's physical moves."),
-	WISE_GLASSES(80,0,150,new Color(92, 105, 117),Item.HELD_ITEM,null,"This thick pair of glasses slightly boosts the power of the holder's special moves."),
+	KING1S_ROCK(77,0,0,new Color(224, 206, 58),Item.HELD_ITEM,null,"It may cause the target to flinch whenever the holder successfully inflicts damage on them with an attack."),
+	SHED_SHELL(78,0,0,new Color(243, 241, 140),Item.HELD_ITEM,null,"Hard and sturdy, this discarded carapace enables the holder to switch out of battle without fail."),
+	MUSCLE_BAND(79,0,0,new Color(225, 200, 50),Item.HELD_ITEM,null,"This headband exudes strength, slightly boosting the power of the holder's physical moves."),
+	WISE_GLASSES(80,0,0,new Color(92, 105, 117),Item.HELD_ITEM,null,"This thick pair of glasses slightly boosts the power of the holder's special moves."),
 	BLACK_BELT(201,0,0,PType.FIGHTING.getColor(),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."),
 	BLACK_GLASSES(202,0,0,PType.DARK.getColor(),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."),
 	CHARCOAL(203,0,0,PType.FIRE.getColor(),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."),
@@ -824,6 +824,7 @@ public enum Item {
 	}
 
 	public static void useCalc(Pokemon p, Pokemon[] box, Pokemon f, boolean display) {
+		if (p == null) return;
 		if (Pokemon.gp != null) {
 			Pokemon.gp.keyH.resetKeys();
 		}
