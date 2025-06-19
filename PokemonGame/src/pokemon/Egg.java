@@ -22,13 +22,13 @@ public class Egg extends Pokemon {
 		
 		this.nickname = "Egg";
 		
-		int catchRate = Pokemon.getCatchRate(this.getFinalEvolution());
-		this.cycles = computeEggCycles(catchRate);
+		this.cycles = computeEggCycles(this.getFinalEvolution());
 		
 		setSprites();
 	}
 	
-	public static int computeEggCycles(int catchRate) {
+	public static int computeEggCycles(int finalEvo) {
+		int catchRate = Pokemon.getCatchRate(finalEvo);
 	    double minCycles = 2;
 	    double maxCycles = 20;
 	    double logMin = Math.log(3);
