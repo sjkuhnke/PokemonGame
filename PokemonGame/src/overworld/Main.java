@@ -29,6 +29,7 @@ import entity.PlayerCharacter;
 import object.ItemObj;
 import object.TreasureChest;
 import pokemon.Ability;
+import pokemon.Egg;
 import pokemon.Encounter;
 import pokemon.Item;
 import pokemon.Move;
@@ -38,6 +39,7 @@ import pokemon.Pokemon;
 import pokemon.Trainer;
 import util.SaveManager;
 import pokemon.Node;
+import pokemon.Nursery.EggGroup;
 
 public class Main {
 	public static JFrame window;
@@ -317,6 +319,18 @@ public class Main {
 					writer.write("Evolutions:\n");
 					writer.write(p.getEvolveString() + "\n\n");
 				}
+				
+				writer.write(String.format("%-13s| %s lbs\n", "Weight", p.weight));
+				writer.write(String.format("%-13s| %d\n", "Catch Rate", p.catchRate));
+				writer.write(String.format("%-13s| %d\n", "Egg Cycles", Egg.computeEggCycles(p.catchRate)));
+
+				ArrayList<EggGroup> eggGroups = Pokemon.getEggGroup(i);
+				String eggGroupStr = eggGroups.get(0).equals(eggGroups.get(1)) ?
+				    eggGroups.get(0).toString() :
+				    eggGroups.get(0) + ", " + eggGroups.get(1);
+				writer.write(String.format("%-13s| %s\n", "Egg Group(s)", eggGroupStr));
+				
+				writer.write("\n");
 				
 			}
 			writer.close();

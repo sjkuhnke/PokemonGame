@@ -8712,7 +8712,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			result.add("Perish in " + perishCount);
 		}
 		if (illusion) {
-			result.add("Illusion");
+			result.add(ability == Ability.ILLUSION ? "Illusion" : ability == Ability.ANTICIPATION ? "Anticipation" : ".");
 		}
 		if (disabledCount > 0) {
 			result.add(disabledMove.toString());

@@ -13,19 +13,19 @@
 10 |Scigeon      |NORMAL  |FLYING  |INSOMNIA          |INSECT_FEEDER     |AMBUSH            |[56, 61, 65, 20, 29, 45]      |5.5   |245|FLYING      |FLYING      |
 11 |Thieven      |NORMAL  |FLYING  |INSOMNIA          |INSECT_FEEDER     |AMBUSH            |[66, 76, 76, 40, 50, 78]      |40.9  |150|FLYING      |FLYING      |
 12 |Armoraven    |STEEL   |FLYING  |BATTLE_ARMOR      |TOUGH_CLAWS       |IRON_BARBS        |[76, 95, 100, 56, 80, 81]     |129.2 |85 |FLYING      |FLYING      |
-16 |Hammo        |NORMAL  |null    |MOUTHWATER        |THICK_FAT         |UNAWARE           |[99, 61, 51, 40, 79, 20]      |95.6  |255|FIELD       |HUMAN_LIKE  |
-17 |Grunswine    |NORMAL  |null    |MOUTHWATER        |THICK_FAT         |UNAWARE           |[150, 79, 75, 43, 108, 35]    |445.9 |190|FIELD       |HUMAN_LIKE  |
-18 |Hoghoncho    |NORMAL  |ROCK    |ROUGH_SKIN        |ROCK_HEAD         |SOLID_ROCK        |[150, 105, 110, 40, 85, 45]   |205.0 |100|FIELD       |HUMAN_LIKE  |
-41 |Teddull      |NORMAL  |null    |ADAPTABILITY      |ANGER_POINT       |SCRAPPY           |[55, 55, 55, 55, 55, 55]      |65.7  |125|FIELD       |HUMAN_LIKE  |
-42 |Teddician    |NORMAL  |MAGIC   |ADAPTABILITY      |SHIELD_DUST       |SCRAPPY           |[75, 75, 75, 75, 75, 75]      |65.8  |100|FIELD       |HUMAN_LIKE  |
-43 |Teddinaut    |NORMAL  |GALACTIC|ADAPTABILITY      |LEVITATE          |SCRAPPY           |[80, 60, 75, 135, 85, 80]     |90.9  |50 |FIELD       |HUMAN_LIKE  |
+16 |Hammo        |NORMAL  |null    |MOUTHWATER        |THICK_FAT         |UNAWARE           |[99, 61, 51, 40, 79, 20]      |95.6  |255|FIELD       |HUMAN$LIKE  |
+17 |Grunswine    |NORMAL  |null    |MOUTHWATER        |THICK_FAT         |UNAWARE           |[150, 79, 75, 43, 108, 35]    |445.9 |190|FIELD       |HUMAN$LIKE  |
+18 |Hoghoncho    |NORMAL  |ROCK    |ROUGH_SKIN        |ROCK_HEAD         |SOLID_ROCK        |[150, 105, 110, 40, 85, 45]   |205.0 |100|FIELD       |HUMAN$LIKE  |
+41 |Teddull      |NORMAL  |null    |ADAPTABILITY      |ANGER_POINT       |SCRAPPY           |[55, 55, 55, 55, 55, 55]      |65.7  |125|FIELD       |HUMAN$LIKE  |
+42 |Teddician    |NORMAL  |MAGIC   |ADAPTABILITY      |SHIELD_DUST       |SCRAPPY           |[75, 75, 75, 75, 75, 75]      |65.8  |100|FIELD       |HUMAN$LIKE  |
+43 |Teddinaut    |NORMAL  |GALACTIC|ADAPTABILITY      |LEVITATE          |SCRAPPY           |[80, 60, 75, 135, 85, 80]     |90.9  |50 |FIELD       |HUMAN$LIKE  |
 19 |Minipede     |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[33, 44, 29, 23, 33, 38]      |0.9   |255|BUG         |MINERAL     |
 20 |Centinel     |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[52, 66, 61, 41, 75, 80]      |2.0   |200|BUG         |MINERAL     |
 21 |Milimace     |BUG     |null    |POISON_HEAL       |COMPOUND_EYES     |THREATENING       |[80, 70, 80, 55, 120, 100]    |50.7  |125|BUG         |MINERAL     |
 22 |Milipleura   |BUG     |ROCK    |ROUGH_SKIN        |COMPOUND_EYES     |THREATENING       |[80, 120, 120, 35, 80, 70]    |90.5  |125|BUG         |MINERAL     |
-26 |Sapwin       |GRASS   |null    |ANGER_POINT       |CHLOROPHYLL       |GUTS              |[65, 90, 85, 50, 30, 55]      |100.5 |75 |GRASS       |HUMAN_LIKE  |
-27 |Kappalm      |GRASS   |FIGHTING|ANGER_POINT       |CHLOROPHYLL       |GUTS              |[100, 120, 110, 55, 35, 55]   |399.9 |50 |GRASS       |HUMAN_LIKE  |
-28 |Serpenge     |GRASS   |DRAGON  |COMPETITIVE       |CHLOROPHYLL       |TERRIFY           |[120, 75, 80, 115, 80, 90]    |412.5 |30 |GRASS       |HUMAN_LIKE  |
+26 |Sapwin       |GRASS   |null    |ANGER_POINT       |CHLOROPHYLL       |GUTS              |[65, 90, 85, 50, 30, 55]      |100.5 |75 |GRASS       |HUMAN$LIKE  |
+27 |Kappalm      |GRASS   |FIGHTING|ANGER_POINT       |CHLOROPHYLL       |GUTS              |[100, 120, 110, 55, 35, 55]   |399.9 |50 |GRASS       |HUMAN$LIKE  |
+28 |Serpenge     |GRASS   |DRAGON  |COMPETITIVE       |CHLOROPHYLL       |TERRIFY           |[120, 75, 80, 115, 80, 90]    |412.5 |30 |GRASS       |HUMAN$LIKE  |
 29 |Budew        |GRASS   |POISON  |POISON_POINT      |NATURAL_CURE      |CORROSION         |[40, 30, 35, 50, 70, 55]      |2.6   |255|FAIRY       |GRASS       |
 30 |Roselia      |GRASS   |POISON  |POISON_POINT      |NATURAL_CURE      |CORROSION         |[50, 60, 45, 100, 80, 65]     |4.4   |150|FAIRY       |GRASS       |
 31 |Roserade     |GRASS   |POISON  |TECHNICIAN        |NATURAL_CURE      |CORROSION         |[70, 60, 65, 125, 105, 90]    |32.0  |75 |FAIRY       |GRASS       |
@@ -38,9 +38,9 @@
 38 |Busheep      |GRASS   |null    |ANTICIPATION      |FLUFFY            |CHLOROPHYLL       |[60, 50, 100, 75, 105, 60]    |15.8  |230|GRASS       |FIELD       |
 39 |Ramant       |GRASS   |null    |MOXIE             |DEFIANT           |RECKLESS          |[70, 130, 95, 45, 80, 100]    |87.7  |85 |GRASS       |FIELD       |
 40 |Bushewe      |GRASS   |LIGHT   |SERENE_GRACE      |COMPETITIVE       |GRASSY_SURGE      |[70, 45, 80, 130, 95, 100]    |55.6  |100|GRASS       |FIELD       |
-35 |Scarabit     |BUG     |FIGHTING|HYPER_CUTTER      |SWARM             |ANTICIPATION      |[40, 60, 65, 30, 50, 70]      |6.0   |200|BUG         |HUMAN_LIKE  |
-36 |Spartipede   |BUG     |FIGHTING|HYPER_CUTTER      |JUSTIFIED         |SHARPNESS         |[53, 95, 85, 30, 53, 85]      |45.5  |85 |BUG         |HUMAN_LIKE  |
-37 |Gladipede    |BUG     |FIGHTING|SPEED_BOOST       |JUSTIFIED         |THREATENING       |[63, 120, 90, 62, 65, 105]    |90.1  |50 |BUG         |HUMAN_LIKE  |
+35 |Scarabit     |BUG     |FIGHTING|HYPER_CUTTER      |SWARM             |ANTICIPATION      |[40, 60, 65, 30, 50, 70]      |6.0   |200|BUG         |HUMAN$LIKE  |
+36 |Spartipede   |BUG     |FIGHTING|HYPER_CUTTER      |JUSTIFIED         |SHARPNESS         |[53, 95, 85, 30, 53, 85]      |45.5  |85 |BUG         |HUMAN$LIKE  |
+37 |Gladipede    |BUG     |FIGHTING|SPEED_BOOST       |JUSTIFIED         |THREATENING       |[63, 120, 90, 62, 65, 105]    |90.1  |50 |BUG         |HUMAN$LIKE  |
 60 |Lotad        |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |HYDRATION         |[40, 30, 30, 40, 50, 30]      |5.7   |255|WATER_1     |GRASS       |
 61 |Lombre       |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |HYDRATION         |[60, 50, 50, 60, 70, 50]      |71.7  |120|WATER_1     |GRASS       |
 62 |Ludicolo     |WATER   |GRASS   |SWIFT_SWIM        |RAIN_DISH         |HYDRATION         |[80, 70, 70, 90, 100, 70]     |121.3 |45 |WATER_1     |GRASS       |
@@ -54,8 +54,8 @@
 109|Kobraturgy   |ROCK    |PSYCHIC |ROCK_HEAD         |REGENERATOR       |INTIMIDATE        |[99, 120, 80, 80, 76, 80]     |252.9 |30 |MINERAL     |DRAGON      |
 130|Sabore       |ROCK    |null    |INTIMIDATE        |TECHNICIAN        |STURDY            |[55, 90, 60, 45, 50, 80]      |40.6  |100|MINERAL     |FIELD       |
 131|Saberock     |ROCK    |DARK    |INTIMIDATE        |TECHNICIAN        |STURDY            |[75, 111, 75, 90, 64, 85]     |190.0 |35 |MINERAL     |FIELD       |
-180|Rexisilt     |FIGHTING|GROUND  |NO_GUARD          |GUTS              |ADAPTABILITY      |[52, 72, 69, 77, 56, 67]      |62.5  |65 |MONSTER     |HUMAN_LIKE  |
-181|Pterator     |FIGHTING|FLYING  |NO_GUARD          |GUTS              |ADAPTABILITY      |[66, 74, 85, 106, 95, 97]     |190.3 |45 |MONSTER     |HUMAN_LIKE  |
+180|Rexisilt     |FIGHTING|GROUND  |NO_GUARD          |GUTS              |ADAPTABILITY      |[52, 72, 69, 77, 56, 67]      |62.5  |65 |MONSTER     |HUMAN$LIKE  |
+181|Pterator     |FIGHTING|FLYING  |NO_GUARD          |GUTS              |ADAPTABILITY      |[66, 74, 85, 106, 95, 97]     |190.3 |45 |MONSTER     |HUMAN$LIKE  |
 84 |Snowlet      |ICE     |PSYCHIC |SNOW_CLOAK        |MOUTHWATER        |SNOW_WARNING      |[60, 15, 40, 80, 73, 55]      |4.5   |75 |FLYING      |FAIRY       |
 85 |Nixnerva     |ICE     |PSYCHIC |SNOW_CLOAK        |ICE_BODY          |SNOW_WARNING      |[85, 30, 65, 120, 120, 75]    |89.5  |45 |FLYING      |FAIRY       |
 204|Cervora      |ICE     |MAGIC   |EVERGLOW          |SNOW_CLOAK        |SPARKLY_SURGE     |[90, 64, 67, 85, 71, 58]      |100.0 |35 |FIELD       |FAIRY       |
@@ -82,18 +82,18 @@
 132|Psycorb      |PSYCHIC |null    |PSYCHIC_SURGE     |LEVITATE          |TRACE             |[25, 20, 63, 55, 62, 25]      |75.0  |125|MINERAL     |AMORPHOUS   |
 133|Psyballs     |PSYCHIC |STEEL   |PSYCHIC_SURGE     |LEVITATE          |TRACE             |[50, 70, 90, 70, 90, 30]      |175.0 |75 |MINERAL     |AMORPHOUS   |
 134|Psycorboratr |PSYCHIC |STEEL   |PSYCHIC_SURGE     |LEVITATE          |TRACE             |[100, 140, 100, 70, 100, 40]  |275.0 |25 |MINERAL     |AMORPHOUS   |
-63 |Ralts        |PSYCHIC |LIGHT   |SYNCHRONIZE       |TRACE             |PIXILATE          |[28, 25, 25, 65, 55, 40]      |14.6  |235|HUMAN_LIKE  |FAIRY       |
-64 |Kirlia       |PSYCHIC |LIGHT   |SYNCHRONIZE       |TRACE             |PIXILATE          |[38, 35, 35, 95, 85, 50]      |44.5  |120|HUMAN_LIKE  |FAIRY       |
-65 |Gardevoir    |PSYCHIC |LIGHT   |EMPATHIC_LINK     |TRACE             |PIXILATE          |[68, 65, 65, 125, 115, 80]    |106.7 |45 |HUMAN_LIKE  |FAIRY       |
-66 |Gallade      |PSYCHIC |FIGHTING|SHARPNESS         |JUSTIFIED         |INNER_FOCUS       |[68, 125, 65, 65, 115, 63]    |114.6 |45 |HUMAN_LIKE  |FAIRY       |
+63 |Ralts        |PSYCHIC |LIGHT   |SYNCHRONIZE       |TRACE             |PIXILATE          |[28, 25, 25, 65, 55, 40]      |14.6  |235|HUMAN$LIKE  |FAIRY       |
+64 |Kirlia       |PSYCHIC |LIGHT   |SYNCHRONIZE       |TRACE             |PIXILATE          |[38, 35, 35, 95, 85, 50]      |44.5  |120|HUMAN$LIKE  |FAIRY       |
+65 |Gardevoir    |PSYCHIC |LIGHT   |EMPATHIC_LINK     |TRACE             |PIXILATE          |[68, 65, 65, 125, 115, 80]    |106.7 |45 |HUMAN$LIKE  |FAIRY       |
+66 |Gallade      |PSYCHIC |FIGHTING|SHARPNESS         |JUSTIFIED         |INNER_FOCUS       |[68, 125, 65, 65, 115, 63]    |114.6 |45 |HUMAN$LIKE  |FAIRY       |
 83 |Benglow      |LIGHT   |NORMAL  |SIMPLE            |NORMALIZE         |PIXILATE          |[65, 79, 67, 103, 72, 69]     |250.4 |65 |FIELD       |FIELD       |
 137|Inkay        |PSYCHIC |DARK    |CONTRARY          |BRAINWASH         |ILLUMINATION      |[53, 54, 53, 37, 46, 45]      |7.7   |190|WATER_1     |WATER_2     |
 138|Malamar      |PSYCHIC |DARK    |CONTRARY          |BRAINWASH         |ILLUMINATION      |[86, 92, 88, 68, 75, 73]      |103.6 |80 |WATER_1     |WATER_2     |
 52 |Flameruff    |FIRE    |NORMAL  |INTIMIDATE        |FLASH_FIRE        |RECKLESS          |[46, 74, 68, 48, 58, 81]      |21.0  |75 |FIELD       |FIELD       |
 53 |Barkflare    |FIRE    |NORMAL  |INTIMIDATE        |FLASH_FIRE        |RECKLESS          |[65, 103, 82, 66, 79, 100]    |93.6  |50 |FIELD       |FIELD       |
-54 |Sember       |FIRE    |null    |FLAME_BODY        |FLASH_FIRE        |UNBURDEN          |[30, 20, 40, 103, 30, 83]     |10.0  |195|FIELD       |HUMAN_LIKE  |
-55 |Kaboon       |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[43, 88, 50, 74, 52, 93]      |145.6 |100|FIELD       |HUMAN_LIKE  |
-56 |Detonape     |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[65, 115, 55, 106, 75, 100]   |195.0 |50 |FIELD       |HUMAN_LIKE  |
+54 |Sember       |FIRE    |null    |FLAME_BODY        |FLASH_FIRE        |UNBURDEN          |[30, 20, 40, 103, 30, 83]     |10.0  |195|FIELD       |HUMAN$LIKE  |
+55 |Kaboon       |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[43, 88, 50, 74, 52, 93]      |145.6 |100|FIELD       |HUMAN$LIKE  |
+56 |Detonape     |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[65, 115, 55, 106, 75, 100]   |195.0 |50 |FIELD       |HUMAN$LIKE  |
 191|Magmaclang   |FIRE    |GHOST   |STEELWORKER       |STEELWORKER       |STEELWORKER       |[105, 35, 120, 90, 90, 65]    |165.3 |80 |AMORPHOUS   |AMORPHOUS   |
 209|Flamehox     |FIRE    |GROUND  |FLAME_BODY        |FLAME_BODY        |SAND_VEIL         |[70, 53, 70, 55, 60, 52]      |290.2 |55 |FIELD       |MONSTER     |
 210|Fireshard    |FIRE    |FLYING  |INTIMIDATE        |INTIMIDATE        |SAND_VEIL         |[75, 75, 75, 90, 75, 70]      |301.3 |35 |FIELD       |MONSTER     |
@@ -123,9 +123,9 @@
 145|Vupp         |ELECTRIC|NORMAL  |ELECTRIC_SURGE    |MOTOR_DRIVE       |GALVANIZE         |[30, 45, 25, 35, 40, 60]      |10.1  |100|FIELD       |FIELD       |
 146|Vinnie       |ELECTRIC|LIGHT   |ELECTRIC_SURGE    |MOTOR_DRIVE       |GALVANIZE         |[75, 95, 60, 95, 60, 105]     |45.1  |65 |FIELD       |FIELD       |
 147|Suvinero     |ELECTRIC|MAGIC   |ELECTRIC_SURGE    |MOTOR_DRIVE       |GALVANIZE         |[75, 105, 70, 95, 75, 125]    |51.0  |35 |FIELD       |FIELD       |
-148|Whiskie      |FIGHTING|NORMAL  |GUTS              |MOXIE             |NO_GUARD          |[35, 65, 45, 15, 40, 45]      |35.6  |100|FIELD       |HUMAN_LIKE  |
-149|Whiskers     |FIGHTING|LIGHT   |GUTS              |MOXIE             |NO_GUARD          |[95, 125, 105, 25, 75, 50]    |100.9 |65 |FIELD       |HUMAN_LIKE  |
-150|Whiskeroar   |FIGHTING|MAGIC   |ADAPTABILITY      |JUSTIFIED         |NO_GUARD          |[95, 130, 100, 85, 75, 55]    |145.1 |35 |FIELD       |HUMAN_LIKE  |
+148|Whiskie      |FIGHTING|NORMAL  |GUTS              |MOXIE             |NO_GUARD          |[35, 65, 45, 15, 40, 45]      |35.6  |100|FIELD       |HUMAN$LIKE  |
+149|Whiskers     |FIGHTING|LIGHT   |GUTS              |MOXIE             |NO_GUARD          |[95, 125, 105, 25, 75, 50]    |100.9 |65 |FIELD       |HUMAN$LIKE  |
+150|Whiskeroar   |FIGHTING|MAGIC   |ADAPTABILITY      |JUSTIFIED         |NO_GUARD          |[95, 130, 100, 85, 75, 55]    |145.1 |35 |FIELD       |HUMAN$LIKE  |
 78 |Nincada      |BUG     |GROUND  |COMPOUND_EYES     |TINTED_LENS       |SWARM             |[31, 45, 90, 30, 30, 40]      |12.1  |255|BUG         |BUG         |
 79 |Ninjask      |BUG     |FLYING  |SPEED_BOOST       |TINTED_LENS       |SWARM             |[61, 90, 45, 50, 50, 160]     |26.5  |120|BUG         |BUG         |
 80 |Shedinja     |BUG     |GHOST   |WONDER_GUARD      |WONDER_GUARD      |WONDER_GUARD      |[1, 90, 45, 30, 30, 40]       |2.6   |45 |MINERAL     |MINERAL     |
@@ -160,9 +160,9 @@
 169|Cluuz        |GHOST   |POISON  |LEVITATE          |LEVITATE          |PRESSURE          |[60, 42, 58, 105, 97, 73]     |0.5   |175|AMORPHOUS   |MINERAL     |
 170|Zurrclu      |GHOST   |ROCK    |LEVITATE          |LEVITATE          |PRESSURE          |[80, 90, 96, 71, 85, 58]      |199.1 |55 |AMORPHOUS   |MINERAL     |
 171|Zurroaratr   |GHOST   |ROCK    |LEVITATE          |LEVITATE          |PRESSURE          |[100, 109, 110, 67, 99, 55]   |600.3 |15 |AMORPHOUS   |MINERAL     |
-72 |Timburr      |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[75, 80, 55, 25, 35, 35]      |27.6  |180|HUMAN_LIKE  |HUMAN_LIKE  |
-73 |Gurdurr      |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[85, 105, 85, 40, 50, 40]     |88.2  |90 |HUMAN_LIKE  |HUMAN_LIKE  |
-74 |Conkeldurr   |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[105, 140, 95, 55, 65, 45]    |191.8 |45 |HUMAN_LIKE  |HUMAN_LIKE  |
+72 |Timburr      |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[75, 80, 55, 25, 35, 35]      |27.6  |180|HUMAN$LIKE  |HUMAN$LIKE  |
+73 |Gurdurr      |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[85, 105, 85, 40, 50, 40]     |88.2  |90 |HUMAN$LIKE  |HUMAN$LIKE  |
+74 |Conkeldurr   |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[105, 140, 95, 55, 65, 45]    |191.8 |45 |HUMAN$LIKE  |HUMAN$LIKE  |
 75 |Rhypo        |GROUND  |null    |RATTLED           |SAND_FORCE        |ROUGH_SKIN        |[51, 65, 89, 30, 66, 15]      |49.5  |235|FIELD       |MINERAL     |
 76 |Rhynee       |GROUND  |null    |SAND_STREAM       |SAND_FORCE        |ROUGH_SKIN        |[57, 73, 112, 55, 95, 20]     |295.1 |175|FIELD       |MINERAL     |
 77 |Rhypolar     |GROUND  |FIGHTING|SAND_STREAM       |SAND_FORCE        |ROUGH_SKIN        |[75, 100, 145, 70, 95, 25]    |489.1 |45 |FIELD       |MINERAL     |
@@ -178,9 +178,9 @@
 68 |Glittleshoo  |MAGIC   |FLYING  |SERENE_GRACE      |NATURAL_CURE      |MYSTIC_RIFT       |[70, 45, 75, 135, 115, 80]    |75.1  |55 |FAIRY       |FLYING      |
 117|Zorua        |NORMAL  |GHOST   |ILLUSION          |ILLUMINATION      |ADAPTABILITY      |[35, 60, 40, 85, 40, 70]      |27.6  |75 |FIELD       |FIELD       |
 118|Zoroark      |NORMAL  |GHOST   |ILLUSION          |ILLUMINATION      |ADAPTABILITY      |[55, 100, 60, 125, 60, 110]   |178.8 |45 |FIELD       |FIELD       |
-214|Droid        |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[50, 70, 55, 50, 50, 55]      |99.9  |135|HUMAN_LIKE  |HUMAN_LIKE  |
-215|Armoid       |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[65, 75, 105, 50, 75, 60]     |149.9 |95 |HUMAN_LIKE  |HUMAN_LIKE  |
-216|Soldrota     |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[70, 115, 115, 90, 75, 65]    |199.9 |45 |HUMAN_LIKE  |HUMAN_LIKE  |
+214|Droid        |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[50, 70, 55, 50, 50, 55]      |99.9  |135|HUMAN$LIKE  |HUMAN$LIKE  |
+215|Armoid       |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[65, 75, 105, 50, 75, 60]     |149.9 |95 |HUMAN$LIKE  |HUMAN$LIKE  |
+216|Soldrota     |STEEL   |null    |SNIPER            |VOLT_ABSORB       |FULL_FORCE        |[70, 115, 115, 90, 75, 65]    |199.9 |45 |HUMAN$LIKE  |HUMAN$LIKE  |
 228|Tinkie       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SKILL_LINK        |SUPER_LUCK        |[55, 76, 55, 54, 90, 60]      |10.0  |45 |FAIRY       |ALIEN       |
 229|Shawar       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SKILL_LINK        |SUPER_LUCK        |[75, 80, 75, 60, 90, 75]      |100.0 |35 |FAIRY       |ALIEN       |
 230|Shaboom      |MAGIC   |GALACTIC|SPARKLY_SURGE     |SKILL_LINK        |SUPER_LUCK        |[100, 100, 100, 100, 100, 100]|292.3 |25 |FAIRY       |ALIEN       |
@@ -196,9 +196,9 @@
 224|Stellarock   |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |MOLD_BREAKER      |[80, 75, 180, 65, 80, 60]     |1000.5|35 |ALIEN       |MINERAL     |
 -10|Poof-E       |GHOST   |ELECTRIC|FRIENDLY_GHOST    |COMPETITIVE       |LEVITATE          |[40, 35, 70, 85, 85, 85]      |1.0   |135|AMORPHOUS   |AMORPHOUS   |
 -11|Hast-E       |GHOST   |ELECTRIC|FRIENDLY_GHOST    |COMPETITIVE       |LEVITATE          |[45, 75, 70, 150, 45, 115]    |145.2 |45 |AMORPHOUS   |AMORPHOUS   |
--7 |Droid-E      |FIGHTING|ELECTRIC|SNIPER            |IRON_FIST         |FULL_FORCE        |[40, 75, 70, 30, 30, 85]      |94.9  |135|HUMAN_LIKE  |HUMAN_LIKE  |
--8 |Armoid-E     |FIGHTING|ELECTRIC|SNIPER            |IRON_FIST         |FULL_FORCE        |[50, 100, 75, 45, 55, 105]    |144.9 |95 |HUMAN_LIKE  |HUMAN_LIKE  |
--9 |Soldrota-E   |FIGHTING|ELECTRIC|SNIPER            |IRON_FIST         |FULL_FORCE        |[75, 145, 85, 50, 65, 110]    |194.9 |45 |HUMAN_LIKE  |HUMAN_LIKE  |
+-7 |Droid-E      |FIGHTING|ELECTRIC|SNIPER            |IRON_FIST         |FULL_FORCE        |[40, 75, 70, 30, 30, 85]      |94.9  |135|HUMAN$LIKE  |HUMAN$LIKE  |
+-8 |Armoid-E     |FIGHTING|ELECTRIC|SNIPER            |IRON_FIST         |FULL_FORCE        |[50, 100, 75, 45, 55, 105]    |144.9 |95 |HUMAN$LIKE  |HUMAN$LIKE  |
+-9 |Soldrota-E   |FIGHTING|ELECTRIC|SNIPER            |IRON_FIST         |FULL_FORCE        |[75, 145, 85, 50, 65, 110]    |194.9 |45 |HUMAN$LIKE  |HUMAN$LIKE  |
 -14|Flamehox-E   |FIRE    |ELECTRIC|STATIC            |FLAME_BODY        |ADAPTABILITY      |[60, 65, 50, 75, 50, 60]      |97.4  |55 |FIELD       |MONSTER     |
 -15|Fireshard-E  |FIRE    |ELECTRIC|LEVITATE          |FLAME_BODY        |ADAPTABILITY      |[90, 70, 80, 85, 65, 70]      |301.3 |35 |FIELD       |MONSTER     |
 -16|Blastflames-E|FIRE    |ELECTRIC|LEVITATE          |FLAME_BODY        |ADAPTABILITY      |[95, 90, 90, 120, 90, 75]     |345.0 |15 |FIELD       |MONSTER     |
@@ -220,9 +220,9 @@
 -12|Cluuz-S      |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[55, 42, 38, 110, 110, 80]    |0.4   |175|AMORPHOUS   |AMORPHOUS   |
 -13|Zurrclu-S    |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[80, 70, 50, 100, 100, 80]    |36.5  |55 |AMORPHOUS   |AMORPHOUS   |
 -14|Zurroaratr-S |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[95, 75, 65, 123, 97, 85]     |80.5  |15 |AMORPHOUS   |AMORPHOUS   |
--4 |Sember-S     |FIRE    |DARK    |FLASH_FIRE        |SUPER_LUCK        |FLAME_BODY        |[30, 20, 40, 83, 50, 83]      |19.4  |195|FIELD       |HUMAN_LIKE  |
--5 |Kaboon-S     |FIGHTING|DARK    |GUTS              |SUPER_LUCK        |FLAME_BODY        |[67, 88, 70, 40, 72, 63]      |78.5  |100|FIELD       |HUMAN_LIKE  |
--6 |Detonape-S   |FIGHTING|DARK    |GUTS              |SUPER_LUCK        |FLAME_BODY        |[115, 115, 75, 46, 90, 75]    |205.3 |50 |FIELD       |HUMAN_LIKE  |
+-4 |Sember-S     |FIRE    |DARK    |FLASH_FIRE        |SUPER_LUCK        |FLAME_BODY        |[30, 20, 40, 83, 50, 83]      |19.4  |195|FIELD       |HUMAN$LIKE  |
+-5 |Kaboon-S     |FIGHTING|DARK    |GUTS              |SUPER_LUCK        |FLAME_BODY        |[67, 88, 70, 40, 72, 63]      |78.5  |100|FIELD       |HUMAN$LIKE  |
+-6 |Detonape-S   |FIGHTING|DARK    |GUTS              |SUPER_LUCK        |FLAME_BODY        |[115, 115, 75, 46, 90, 75]    |205.3 |50 |FIELD       |HUMAN$LIKE  |
 -7 |Ekans-S      |FLYING  |GHOST   |SHED_SKIN         |LIGHTNING_ROD     |PRESSURE          |[35, 40, 54, 65, 64, 30]      |3.9   |255|FLYING      |DRAGON      |
 -8 |Arbok-S      |FLYING  |GHOST   |SHED_SKIN         |LIGHTNING_ROD     |PRESSURE          |[80, 40, 90, 115, 90, 75]     |17.5  |90 |FLYING      |DRAGON      |
 243|Soarwhell    |WATER   |FLYING  |DRIZZLE           |DRIZZLE           |DRIZZLE           |[80, 30, 170, 72, 170, 78]    |800.4 |5  |FLYING      |DRAGON      |
@@ -240,9 +240,9 @@
 91 |Scraftagon   |DRAGON  |FIGHTING|SCALY_SKIN        |MOXIE             |SHED_SKIN         |[70, 110, 120, 45, 120, 90]   |92.6  |45 |FIELD       |DRAGON      |
 198|Glimmet      |ROCK    |POISON  |TOXIC_DEBRIS      |TOXIC_DEBRIS      |CORROSION         |[48, 35, 42, 105, 60, 60]     |17.6  |70 |MINERAL     |MINERAL     |
 199|Glimmora     |ROCK    |POISON  |TOXIC_DEBRIS      |TOXIC_DEBRIS      |CORROSION         |[83, 55, 90, 130, 81, 86]     |99.2  |25 |MINERAL     |MINERAL     |
-46 |Abra         |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[25, 20, 15, 105, 55, 90]     |43.0  |200|HUMAN_LIKE  |HUMAN_LIKE  |
-47 |Kadabra      |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[40, 35, 30, 120, 70, 105]    |124.6 |100|HUMAN_LIKE  |HUMAN_LIKE  |
-48 |Alakazam     |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[55, 50, 45, 135, 95, 120]    |105.8 |50 |HUMAN_LIKE  |HUMAN_LIKE  |
+46 |Abra         |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[25, 20, 15, 105, 55, 90]     |43.0  |200|HUMAN$LIKE  |HUMAN$LIKE  |
+47 |Kadabra      |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[40, 35, 30, 120, 70, 105]    |124.6 |100|HUMAN$LIKE  |HUMAN$LIKE  |
+48 |Alakazam     |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[55, 50, 45, 135, 95, 120]    |105.8 |50 |HUMAN$LIKE  |HUMAN$LIKE  |
 220|Flamigo      |FLYING  |FIGHTING|SCRAPPY           |UNBURDEN          |TALENTED          |[82, 115, 74, 75, 64, 90]     |81.6  |100|FLYING      |FLYING      |
 200|Sneasel      |DARK    |ICE     |INNER_FOCUS       |KEEN_EYE          |PICKPOCKET        |[55, 95, 55, 35, 75, 115]     |61.7  |60 |FIELD       |FIELD       |
 201|Weavile      |DARK    |ICE     |TECHNICIAN        |PRESSURE          |PICKPOCKET        |[70, 120, 65, 45, 85, 125]    |75.0  |45 |FIELD       |FIELD       |
@@ -262,10 +262,10 @@
 158|Swalot-X     |GALACTIC|POISON  |BLACK_HOLE        |STICKY_HOLD       |SIMPLE            |[150, 39, 80, 93, 95, 40]     |999.9 |65 |AMORPHOUS   |ALIEN       |
 221|Plasamp      |GALACTIC|STEEL   |STARBORN          |LEVITATE          |MYSTIC_ABSORB     |[60, 55, 70, 90, 70, 65]      |88.1  |50 |ALIEN       |ALIEN       |
 222|Genieova     |GALACTIC|STEEL   |STARBORN          |LEVITATE          |DJINN1S_FAVOR     |[90, 70, 105, 120, 95, 90]    |619.2 |15 |ALIEN       |ALIEN       |
-184|Elgyem       |GALACTIC|PSYCHIC |COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[55, 55, 55, 85, 55, 30]      |19.8  |125|ALIEN       |HUMAN_LIKE  |
-185|Beheeyem     |GALACTIC|PSYCHIC |COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[75, 75, 75, 125, 95, 40]     |76.1  |70 |ALIEN       |HUMAN_LIKE  |
--12|Elgyem-E     |GALACTIC|ELECTRIC|COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[75, 55, 55, 75, 45, 30]      |49.3  |125|ALIEN       |HUMAN_LIKE  |
--13|Beheeyem-E   |GALACTIC|ELECTRIC|COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[95, 85, 70, 130, 65, 40]     |145.9 |70 |ALIEN       |HUMAN_LIKE  |
+184|Elgyem       |GALACTIC|PSYCHIC |COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[55, 55, 55, 85, 55, 30]      |19.8  |125|ALIEN       |HUMAN$LIKE  |
+185|Beheeyem     |GALACTIC|PSYCHIC |COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[75, 75, 75, 125, 95, 40]     |76.1  |70 |ALIEN       |HUMAN$LIKE  |
+-12|Elgyem-E     |GALACTIC|ELECTRIC|COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[75, 55, 55, 75, 45, 30]      |49.3  |125|ALIEN       |HUMAN$LIKE  |
+-13|Beheeyem-E   |GALACTIC|ELECTRIC|COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[95, 85, 70, 130, 65, 40]     |145.9 |70 |ALIEN       |HUMAN$LIKE  |
 23 |Caterpie     |BUG     |null    |RATTLED           |SHIELD_DUST       |SWARM             |[45, 30, 35, 20, 20, 45]      |6.4   |255|BUG         |BUG         |
 -1 |Metapod      |BUG     |null    |SHED_SKIN         |SHIELD_DUST       |SWARM             |[50, 20, 55, 25, 25, 30]      |21.8  |120|BUG         |BUG         |
 -2 |Butterfree   |BUG     |FLYING  |COMPOUND_EYES     |SHIELD_DUST       |TINTED_LENS       |[60, 45, 50, 95, 80, 70]      |70.5  |45 |BUG         |BUG         |
