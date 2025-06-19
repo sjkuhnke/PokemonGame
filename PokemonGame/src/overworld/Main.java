@@ -322,7 +322,7 @@ public class Main {
 				
 				writer.write(String.format("%-13s| %s lbs\n", "Weight", p.weight));
 				writer.write(String.format("%-13s| %d\n", "Catch Rate", p.catchRate));
-				writer.write(String.format("%-13s| %d\n", "Egg Cycles", Egg.computeEggCycles(p.catchRate)));
+				writer.write(String.format("%-13s| %d\n", "Egg Cycles", Egg.computeEggCycles(p.getFinalEvolution())));
 
 				ArrayList<EggGroup> eggGroups = Pokemon.getEggGroup(i);
 				String eggGroupStr = eggGroups.get(0).equals(eggGroups.get(1)) ?
