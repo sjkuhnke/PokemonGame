@@ -3967,7 +3967,7 @@ public class AssetSetter {
 		
 		String messages[] = dialogue.split("\n");
 		for (int i = 0; i < messages.length; i++) {
-			messages[i] = Item.breakString(messages[i], 43);
+			messages[i] = Item.breakString(messages[i], UI.MAX_TEXTBOX);
 		}
 		
 		switch (type) {
@@ -4457,7 +4457,7 @@ public class AssetSetter {
 	private Entity NPCSetup(int type, String name, int x, int y, String message, double scriptIndex, int flag, String altDialogue) {
 		String messages[] = message.split("\n");
 		for (int i = 0; i < messages.length; i++) {
-			messages[i] = Item.breakString(messages[i], 43);
+			messages[i] = Item.breakString(messages[i], UI.MAX_TEXTBOX);
 		}
 		Entity result = new NPC_Block(gp, name, messages, scriptIndex, flag, altDialogue);
 		
@@ -4933,7 +4933,7 @@ public class AssetSetter {
 		
 		String messages[] = message.split("\n");
 		for (int i = 0; i < messages.length; i++) {
-			messages[i] = Item.breakString(messages[i], 43);
+			messages[i] = Item.breakString(messages[i], UI.MAX_TEXTBOX);
 		}
 		
 		NPC_Pokemon result = new NPC_Pokemon(gp, id, t, id == 159, messages);

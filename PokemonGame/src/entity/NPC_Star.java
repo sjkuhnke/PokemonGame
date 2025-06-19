@@ -1,6 +1,7 @@
 package entity;
 
 import overworld.GamePanel;
+import overworld.UI;
 import pokemon.Item;
 
 public class NPC_Star extends Entity {
@@ -20,7 +21,7 @@ public class NPC_Star extends Entity {
 	}
 	
 	private void setDialogue() {
-		dialogues[0] = Item.breakString("I've come here in search of rare Star Pieces. Have any to trade me?", 43);
+		dialogues[0] = Item.breakString("I've come here in search of rare Star Pieces. Have any to trade me?", UI.MAX_TEXTBOX);
 	}
 	
 	public void speak(int mode) {

@@ -20,7 +20,7 @@ public class Nursery implements Serializable {
 	public enum EggGroup implements Serializable {
 		UNDISCOVERED(),
 		MONSTER(),
-		HUMAN_LIKE(),
+		HUMAN$LIKE(),
 		WATER_1(),
 		WATER_2(),
 		WATER_3(),
@@ -34,6 +34,39 @@ public class Nursery implements Serializable {
 		DRAGON(),
 		ALIEN(),
 		;
+		
+		@Override
+		public String toString() {
+			String name = super.toString();
+		    name = name.replace('$', '-'); // Replace '$' with '-'
+		    name = name.toLowerCase().replace('_', ' '); // Convert underscores to spaces
+		    String[] words = name.split(" ");
+		    StringBuilder sb = new StringBuilder();
+		    for (int i = 0; i < words.length; i++) {
+		        String word = words[i];
+		        if (word.contains("-")) {
+		            String[] hyphenWords = word.split("-");
+		            for (int j = 0; j < hyphenWords.length; j++) {
+		                sb.append(Character.toUpperCase(hyphenWords[j].charAt(0)))
+		                  .append(hyphenWords[j].substring(1));
+		                if (j < hyphenWords.length - 1) {
+		                    sb.append('-');
+		                }
+		            }
+		        } else {
+		            sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1));
+		        }
+		        if (i < words.length - 1) { // Check if there's a next word
+		            char nextChar = name.charAt(name.indexOf(word) + word.length());
+		            if (nextChar == ' ' || nextChar == '-') {
+		                sb.append(nextChar); // Keep the space or hyphen
+		            } else {
+		                sb.append(" "); // Add a space if the next character is not space or hyphen
+		            }
+		        }
+		    }
+		    return sb.toString().trim();
+		}
 	}
 	
 	private Pokemon[] pokemon;

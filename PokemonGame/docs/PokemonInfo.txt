@@ -20,6 +20,10 @@ Level Up:
 Evolutions:
 Twigle -> Torgged (lv. 18)
 
+Weight       | 55.1 lbs
+Catch Rate   | 255
+Egg Group(s) | Grass, Monster
+
 ===================
 #002 - Torgged                                                                                         [002]
 ===================

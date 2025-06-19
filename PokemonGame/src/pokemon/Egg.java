@@ -28,7 +28,7 @@ public class Egg extends Pokemon {
 		setSprites();
 	}
 	
-	private int computeEggCycles(int catchRate) {
+	public static int computeEggCycles(int catchRate) {
 	    double minCycles = 2;
 	    double maxCycles = 20;
 	    double logMin = Math.log(3);

@@ -1829,7 +1829,7 @@ public enum Item {
         fieldsGbc.gridx = 1;
         fieldsPanel.add(illusionBox, fieldsGbc);
         
-        // ===== Illusion =====
+        // ===== Consumed Item =====
         fieldsGbc.gridx = 0;
         fieldsGbc.gridy++;
         fieldsPanel.add(new JLabel("Consumed Item:"), fieldsGbc);
