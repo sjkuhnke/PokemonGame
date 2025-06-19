@@ -5,4 +5,4 @@
 /releases/*
 !/releases/.gitkeep
 /tools/dist/*
-!/releases/.gitkeep
+!/tools/dist/.gitkeep
