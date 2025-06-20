@@ -1820,6 +1820,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					this.faint(true, foe);
 				}
 			}
+			this.removeStatus(Status.LOCKED);
 			this.impressive = false;
 			this.moveMultiplier = 1;
 			this.rollCount = 1;
