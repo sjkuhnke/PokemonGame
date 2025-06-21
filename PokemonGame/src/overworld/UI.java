@@ -3905,8 +3905,13 @@ public class UI extends AbstractUI {
 					// do nothing
 				} else {
 					if (currentPocket == Item.KEY_ITEM) {
-						gp.player.p.registeredItem = entryItem.getItem();
-						showMessage(entryItem.getItem().toString() + " was registered for [A]!");
+						if (gp.player.p.registeredItem == entryItem.getItem()) {
+							gp.player.p.registeredItem = null;
+							showMessage(entryItem.getItem().toString() + " was unregistered for [A].");
+						} else {
+							gp.player.p.registeredItem = entryItem.getItem();
+							showMessage(entryItem.getItem().toString() + " was registered for [A]!");
+						}
 						commandNum = 0;
 						bagState = 0;
 					} else {
