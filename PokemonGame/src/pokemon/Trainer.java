@@ -310,8 +310,7 @@ public class Trainer implements Serializable {
 		if (pAbility == Ability.UNWAVERING && (type == PType.DARK || type == PType.GHOST)) multiplier *= 0.5;
 		if (pAbility == Ability.JUSTIFIED && type == PType.DARK) multiplier *= 0.5;
 		if (pAbility == Ability.INSECT_FEEDER && type == PType.BUG) multiplier = 0;
-		if (pAbility == Ability.LEVITATE && type == PType.GROUND) multiplier = 0;
-		if (p.getItem() == Item.AIR_BALLOON && type == PType.GROUND) multiplier = 0;
+		if (!p.isGrounded(Pokemon.field, pAbility) && type == PType.GROUND) multiplier = 0;
 		if (p.getItem() == Item.SNOWBALL && type == PType.ICE) multiplier = 0;
 		if (p.getItem() == Item.ABSORB_BULB && type == PType.WATER) multiplier = 0;
 		if (p.getItem() == Item.LUMINOUS_MOSS && type == PType.WATER) multiplier = 0;

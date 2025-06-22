@@ -2921,7 +2921,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		
-		if ((move == Move.VOLT_SWITCH || move == Move.FLIP_TURN || move == Move.U$TURN) && !this.isFainted()) {
+		if (!foeEject && (move == Move.VOLT_SWITCH || move == Move.FLIP_TURN || move == Move.U$TURN) && !this.isFainted()) {
 			if (this.trainerOwned() && enemy.hasValidMembers()) {
 				Task.addTask(Task.TEXT, this.nickname + " went back to " + enemy.toString() + "!");
 			}
@@ -6164,7 +6164,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			
 		}
 		if (this.hasStatus(Status.DROWSY)) {
-			this.sleep(false, f);
+			this.sleep(true, f);
 			this.removeStatus(Status.DROWSY);
 		}
 		if (this.ability == Ability.PARASOCIAL && !f.isFainted()
