@@ -1234,6 +1234,7 @@ public enum Move {
 		if (foe.ability == Ability.SHIELD_DUST && me.ability != Ability.MOLD_BREAKER) sec = 0;
 		if (Pokemon.field.equals(Pokemon.field.terrain, Effect.SPARKLY) && me.isGrounded()) sec *= 2;
 		if (me.ability == Ability.SERENE_GRACE) sec *= 2;
+		if (sec < 0) sec = 100;
 		if (m == Move.MAGIC_FANG && effectiveness < 2) return false;
 		
 		// *** unimplemented moves primarily used for secondary effects: Circle Throw, Dragon Tail, Fatal Bind, Spectral Thief ***
@@ -1312,7 +1313,7 @@ public enum Move {
 				
 				return false;
 			}
-			return new Random().nextInt(100) < sec;
+			return m.secondary > 0 && new Random().nextInt(100) < sec;
 		} else {
 			return false;
 		}
