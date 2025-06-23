@@ -310,7 +310,7 @@ public class WelcomeMenu extends JPanel {
 	}
 	
 	private void manageFile(String name, JComboBox<String> fileNames) {
-        String[] options = {"Rename", "Delete", "Cancel"};
+        String[] options = {"Rename", "Delete", "Open Location", "Cancel"};
         int choice = JOptionPane.showOptionDialog(this,
                 "Select an action for " + name + ":",
                 "File Management",
@@ -358,7 +358,10 @@ public class WelcomeMenu extends JPanel {
                     }
                 }
                 break;
-            case 2: // Cancel
+            case 2: // Open File Location
+            	SaveManager.showInExplorer(name);
+            	break;
+            case 3: // Cancel
                 break;
         }
     }

@@ -96,6 +96,34 @@ public class SaveManager {
         if (newFile.exists()) return false;
         return oldFile.renameTo(newFile);
     }
+    
+	public static void showInExplorer(String name) {
+    	File file = getSaveFile(name);
+    	if (file != null && file.exists()) {
+    		try {
+    			String os = System.getProperty("os.name").toLowerCase();
+    			ProcessBuilder pb;
+    			
+				if (os.contains("win")) {
+					pb = new ProcessBuilder("explorer", "/select,", file.getAbsolutePath());
+				} else if (os.contains("mac")) {
+					pb = new ProcessBuilder("open", "-R", file.getAbsolutePath());
+				} else {
+					System.err.println("Unsupported OS " + os);
+					return;
+				}
+				pb.start();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    	} else {
+    		System.err.println("File " + name + " not found.");
+    	}
+    }
+    
+    public static File getSaveFile(String name) {
+    	return new File(SAVE_DIR + File.separator + name);
+    }
 
     public static Path getSavePath(String name) {
     	return Paths.get(SAVE_DIR, name);

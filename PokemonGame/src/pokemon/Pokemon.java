@@ -847,7 +847,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		for (Move m : validMoveset) {
 			if (m.isPivotMove()) {
 				double mult = Trainer.getEffective(foe, this, m.mtype, m, false);
-				if (!m.isMagicBounceEffected(foeAbility, m.accuracy) && mult > 0) return m;
+				if (!m.isMagicBounceEffected(this, foe, foeAbility, m.accuracy) && mult > 0) return m;
 			}
 		}
 		return null;
@@ -1932,7 +1932,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foeAbility = Ability.NULL;
 		}
 		
-		if (move.isMagicBounceEffected(foeAbility, acc)) {
+		if (move.isMagicBounceEffected(this, foe, foeAbility, acc)) {
 			useMove(move, foe);
 			Task.addAbilityTask(foe);
 			foe.move(this, move, true);
