@@ -201,6 +201,18 @@ public class TrainerDoc {
 	    sheet.addMergedRegion(new CellRangeAddress(nameRow.getRowNum(), nameRow.getRowNum(), 0, 2));
 	    sheet.addMergedRegion(new CellRangeAddress(nameRow.getRowNum(), nameRow.getRowNum(), 3, 4));
 	    sheet.addMergedRegion(new CellRangeAddress(nameRow.getRowNum(), nameRow.getRowNum(), 5, 6));
+	    
+	    Row rewardRow = sheet.createRow(startRow++);
+	    Cell moneyCell = rewardRow.createCell(colStart);
+	    Cell rewardCell = rewardRow.createCell(1);
+	    
+	    moneyCell.setCellValue("$" + tr.getMoney());
+	    moneyCell.setCellStyle(makeStyle(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
+	    
+	    if (tr.getItem() != null) rewardCell.setCellValue("Gives: " + tr.getItem().toString());
+	    rewardCell.setCellStyle(makeStyle(sheet.getWorkbook(), false, true, 12, IndexedColors.BLACK.getIndex()));
+	    
+	    sheet.addMergedRegion(new CellRangeAddress(rewardRow.getRowNum(), rewardRow.getRowNum(), 1, 4));
 
 	    // Pokémon info in a horizontal block per team member
 	    Row nameRow2 = sheet.createRow(startRow++);

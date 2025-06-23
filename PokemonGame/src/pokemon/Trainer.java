@@ -262,7 +262,6 @@ public class Trainer implements Serializable {
 			int[] oldStats = current.statStages.clone();
 			ArrayList<StatusEffect> oldVStatuses = new ArrayList<>(current.vStatuses);
 			int perishCount = current.perishCount;
-			int magCount = current.magCount;
 			swap(current, result, userSide);
 			if (baton) {
 				result.statStages = oldStats;
@@ -270,7 +269,6 @@ public class Trainer implements Serializable {
 				result.removeStatus(Status.SWITCHING);
 				result.removeStatus(Status.SWAP);
 				result.perishCount = perishCount;
-				result.magCount = magCount;
 			}
 			result.swapIn(foe, true);
 			foe.removeStatus(Status.TRAPPED);
