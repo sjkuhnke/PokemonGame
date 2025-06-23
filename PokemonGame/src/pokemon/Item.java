@@ -1686,6 +1686,8 @@ public enum Item {
 				new Pair<Status, JCheckBox>(Status.MAGIC_REFLECT, null),
 				new Pair<Status, JCheckBox>(Status.POSSESSED, null),
 				new Pair<Status, JCheckBox>(Status.MUTE, null),
+				new Pair<Status, JCheckBox>(Status.MAGNET_RISE, null),
+				new Pair<Status, JCheckBox>(Status.TAUNTED, null),
 				new Pair<Status, JCheckBox>(Status.TORMENTED, null),
 				new Pair<Status, JCheckBox>(Status.SMACK_DOWN, null),
 				new Pair<Status, JCheckBox>(Status.HEAL_BLOCK, null),
@@ -1750,15 +1752,6 @@ public enum Item {
         JTextField hpField = new JTextField(String.valueOf(p.currentHP), 10);
         fieldsGbc.gridx = 1;
         fieldsPanel.add(hpField, fieldsGbc);
-
-        // ===== Magnet Rise (boolean) =====
-        fieldsGbc.gridx = 0;
-        fieldsGbc.gridy++;
-        fieldsPanel.add(new JLabel("Magnet Rise:"), fieldsGbc);
-        JCheckBox magCountBox = new JCheckBox();
-        magCountBox.setSelected(p.magCount > 0);
-        fieldsGbc.gridx = 1;
-        fieldsPanel.add(magCountBox, fieldsGbc);
 
         // ===== Move Multiplier =====
         fieldsGbc.gridx = 0;
@@ -1940,7 +1933,6 @@ public enum Item {
                 p.currentHP = 1;
             }
 
-            p.magCount = magCountBox.isSelected() ? 1 : 0;
             p.moveMultiplier = (Integer) moveMultBox.getSelectedItem();
             p.rollCount = (Integer) rollBox.getSelectedItem();
             p.metronome = (Integer) metroBox.getSelectedItem();

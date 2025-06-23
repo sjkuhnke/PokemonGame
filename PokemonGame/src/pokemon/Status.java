@@ -53,6 +53,7 @@ public enum Status {
 	ARCANE_SPELL("",Color.BLACK,Color.BLACK),
 	SPELLBIND("",Color.BLACK,Color.BLACK),
 	DECK_CHANGE("",Color.BLACK,Color.BLACK),
+	MAGNET_RISE("",Color.BLACK,Color.BLACK),
 	;
 	
 	Status(String name, Color color, Color textColor) {

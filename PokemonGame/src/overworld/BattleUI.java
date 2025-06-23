@@ -1388,7 +1388,6 @@ public class BattleUI extends AbstractUI {
 					gp.player.p.team[partyNum].vStatuses = new ArrayList<>(user.vStatuses);
 					gp.player.p.team[partyNum].removeStatus(Status.SWITCHING);
 					gp.player.p.team[partyNum].removeStatus(Status.SWAP);
-					gp.player.p.team[partyNum].magCount = user.magCount;
 					gp.player.p.team[partyNum].perishCount = user.perishCount;
 				}
 				gp.player.p.swapToFront(gp.player.p.team[partyNum], partyNum);

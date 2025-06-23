@@ -143,7 +143,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 	private int confusionCounter;
 	private int sleepCounter;
 	public int perishCount;
-	public int magCount;
 	public int moveMultiplier;
 	private int spunCount;
 	private int outCount;
@@ -820,7 +819,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.CURSE) && (this.currentHP * 1.0 / this.getStat(0)) <= 0.55 && this.isType(PType.GHOST)) bestMoves.removeIf(Move.CURSE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.PERISH_SONG) && (this.perishCount > 0 || foe.perishCount > 0)) bestMoves.removeIf(Move.PERISH_SONG::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.NIGHTMARE) && (foe.status != Status.ASLEEP || foe.hasStatus(Status.NIGHTMARE))) bestMoves.removeIf(Move.NIGHTMARE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGNET_RISE) && this.magCount > 0) bestMoves.removeIf(Move.MAGNET_RISE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGNET_RISE) && this.hasStatus(Status.MAGNET_RISE)) bestMoves.removeIf(Move.MAGNET_RISE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MIRROR_MOVE) && foe.lastMoveUsed == null) bestMoves.removeIf(Move.MIRROR_MOVE::equals);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.TELEPORT) && (this.trainer == null || !this.trainer.hasValidMembers())) bestMoves.removeIf(Move.TELEPORT::equals);
@@ -2249,8 +2248,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 				return; // Check for immunity 
 			}
 			
-			if (foe.magCount > 0) foe.magCount--;
-			
 			if (move == Move.DREAM_EATER && foe.status != Status.ASLEEP) {
 				Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 				endMove();
@@ -2448,34 +2445,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			
 			if (foeAbility == Ability.SHIELD_DUST || foe.getItem() == Item.COVERT_CLOAK) secChance = 0;
 			
-			// Use either physical or special attack/defense
-			if (move.isPhysical()) {
-				attackStat = this.getStat(1);
-				defenseStat = foe.getStat(2);
-				if (foeAbility != Ability.UNAWARE) attackStat *= this.asModifier(0);
-				if (move != Move.DARKEST_LARIAT && move != Move.SACRED_SWORD && this.ability != Ability.UNAWARE) defenseStat *= foe.asModifier(1);
-				if (move == Move.BODY_PRESS) attackStat = this.getStat(2) * this.asModifier(1);
-				if (move == Move.FOUL_PLAY) attackStat = foe.getStat(1) * foe.asModifier(0);
-				if (this.getItem() == Item.CHOICE_BAND) attackStat *= 1.5;
-				if (this.status == Status.BURNED && this.ability != Ability.GUTS && move != Move.FACADE) attackStat /= 2;
-				if (this.ability == Ability.GUTS && this.status != Status.HEALTHY) attackStat *= 1.5;
-				if (this.ability == Ability.HUGE_POWER) attackStat *= 2;
-				if (field.equals(field.weather, Effect.SNOW, this) && foe.isType(PType.ICE)) defenseStat *= 1.5;
-				if (field.contains(foe.getFieldEffects(), Effect.REFLECT) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL)) defenseStat *= 2;
-			} else {
-				attackStat = this.getStat(3);
-				defenseStat = foe.getStat(4);
-				if (foeAbility != Ability.UNAWARE) attackStat *= this.asModifier(2);
-				if (this.ability != Ability.UNAWARE) defenseStat *= foe.asModifier(3);
-				if (foe.getItem() == Item.ASSAULT_VEST) defenseStat *= 1.5;
-				if (move == Move.PSYSHOCK || move == Move.MAGIC_MISSILES) defenseStat = foe.getStat(2) * foe.asModifier(1);
-				if (this.getItem() == Item.CHOICE_SPECS) attackStat *= 1.5;
-				if (this.status == Status.FROSTBITE) attackStat /= 2;
-				if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackStat *= 1.5;
-				if (field.equals(field.weather, Effect.SANDSTORM, this) && foe.isType(PType.ROCK)) defenseStat *= 1.5;
-				if (field.contains(foe.getFieldEffects(), Effect.LIGHT_SCREEN) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL)) defenseStat *= 2;
-			}
-			
 			// Stab
 			if (moveType == this.type1 || moveType == this.type2 || this.ability == Ability.TYPE_MASTER) {
 				if (ability == Ability.ADAPTABILITY) {
@@ -2500,44 +2469,86 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.removeStatus(Status.LOADED);
 			}
 			
+			double attackMod = 1.0;
+			double defenseMod = 1.0;
+			boolean isCrit = false;
+			
+			if (move.isPhysical()) {
+				attackStat = this.getStat(1);
+				defenseStat = foe.getStat(2);
+			} else {
+				attackStat = this.getStat(3);
+				defenseStat = this.getStat(4);
+			}
+			
 			// Crit Check
 			critChance += this.getStatusNum(Status.CRIT_CHANCE);
 			if (this.ability == Ability.SUPER_LUCK) critChance++;
 			if (item == Item.SCOPE_LENS) critChance++;
-			if (this.ability == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC)) critChance = 4; 
-			if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && !field.contains(foe.getFieldEffects(), Effect.LUCKY_CHANT) && critCheck(critChance)) {
+			if (this.ability == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC)) critChance = 4;
+			
+			if (foe.ability != Ability.BATTLE_ARMOR &&
+					foe.ability != Ability.SHELL_ARMOR
+					&& !field.contains(foe.getFieldEffects(), Effect.LUCKY_CHANT)
+					&& critCheck(critChance)) {
+				
+				isCrit = true;
 				Task.addTask(Task.TEXT, "A critical hit!");
 				field.crits++;
 				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++;
 				if (foe.trainerOwned() && move.isTail()) tailCrit++;
-				if (move.isPhysical() && attackStat < this.getStat(1)) {
-					attackStat = this.getStat(1);
-					if (this.status == Status.BURNED) attackStat /= 2;
-				}
-				if (!move.isPhysical() && attackStat < this.getStat(3)) {
-					attackStat = this.getStat(3);
-					if (this.status == Status.FROSTBITE) attackStat /= 2;
-				}
-				if (move.isPhysical() && defenseStat > foe.getStat(2)) {
-					defenseStat = foe.getStat(2);
-					if (field.equals(field.weather, Effect.SNOW, this) && foe.isType(PType.ICE)) defenseStat *= 1.5;
-				}
-				if (!move.isPhysical() && defenseStat > foe.getStat(4)) {
-					defenseStat = foe.getStat(4);
-					if (field.equals(field.weather, Effect.SANDSTORM, this) && foe.isType(PType.ROCK)) defenseStat *= 1.5;
-				}
-				if (!move.isPhysical() && foe.getItem() == Item.ASSAULT_VEST) defenseStat *= 1.5;
-				if (foe.getItem() == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
+			}
+			
+			if (move.isPhysical()) {
+				attackStat = move == Move.BODY_PRESS ? this.getStat(2) : move == Move.FOUL_PLAY ? foe.getStat(1) : attackStat;
+				double attackModifier = move == Move.BODY_PRESS ? this.asModifier(1) : move == Move.FOUL_PLAY ? foe.asModifier(0) : this.asModifier(0);
+				if ((!isCrit || attackModifier > 1) && foeAbility != Ability.UNAWARE)
+					attackMod *= attackModifier;
 				
-				damage = calc(attackStat, defenseStat, bp, this.level);
+				if (this.getItem() == Item.CHOICE_BAND) attackMod *= 1.5;
+				if (this.status == Status.BURNED && this.ability != Ability.GUTS && move != Move.FACADE) attackMod /= 2;
+				if (this.ability == Ability.GUTS && this.status != Status.HEALTHY) attackMod *= 1.5;
+				if (this.ability == Ability.HUGE_POWER) attackMod *= 2;
+				
+				if (!isCrit || foe.asModifier(1) < 1) {
+					if (move != Move.DARKEST_LARIAT && move != Move.SACRED_SWORD && this.ability != Ability.UNAWARE)
+						defenseMod *= foe.asModifier(1);
+				}
+				if (field.equals(field.weather, Effect.SNOW, this) && foe.isType(PType.ICE)) defenseMod *= 1.5;
+				if (!isCrit && (field.contains(foe.getFieldEffects(), Effect.REFLECT) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) defenseMod *= 2;
+			} else {
+				if ((!isCrit || this.asModifier(2) > 1) && foeAbility != Ability.UNAWARE)
+					attackMod *= this.asModifier(2);
+				if (this.getItem() == Item.CHOICE_SPECS) attackMod *= 1.5;
+				if (this.status == Status.FROSTBITE) attackMod /= 2;
+				if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackMod *= 1.5;
+				
+				boolean usesDef = move == Move.PSYSHOCK || move == Move.MAGIC_MISSILES;
+				defenseStat = usesDef ? foe.getStat(2) : defenseStat;
+				double defenseModifier = usesDef ? foe.asModifier(1) : foe.asModifier(3);
+				if (!isCrit || defenseModifier > 1) {
+					if (this.ability != Ability.UNAWARE) defenseMod *= defenseModifier;
+				}
+				
+				Effect weather = usesDef ? Effect.SNOW : Effect.SANDSTORM;
+				PType weatherType = usesDef ? PType.ICE : PType.ROCK;
+				Effect screen = usesDef ? Effect.REFLECT : Effect.LIGHT_SCREEN;
+				
+				if (!usesDef && foe.getItem() == Item.ASSAULT_VEST) defenseMod *= 1.5;
+				if (field.equals(field.weather, weather, this) && foe.isType(weatherType)) defenseMod *= 1.5;
+				if (!isCrit && (field.contains(foe.getFieldEffects(), screen) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) defenseMod *= 2;
+			}
+			
+			if (foe.getItem() == Item.EVIOLITE && foe.canEvolve()) defenseMod *= 1.5;
+			
+			damage = calc(attackStat * attackMod, defenseStat * defenseMod, bp, this.level);
+			if (isCrit) {
 				damage *= 1.5;
 				if (this.ability == Ability.SNIPER) damage *= 1.5;
 				if (foeAbility == Ability.ANGER_POINT) {
 					Task.addAbilityTask(foe);
-					stat(foe, 0, 12, this); }
-			} else {
-				if (foe.getItem() == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
-				damage = calc(attackStat, defenseStat, bp, this.level);
+					stat(foe, 0, 12, this);
+				}
 			}
 			
 			if ((foeAbility == Ability.ICY_SCALES && !move.isPhysical()) || (foeAbility == Ability.MULTISCALE && foe.currentHP == foe.getStat(0))) damage /= 2;
@@ -4401,8 +4412,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.type2 = null;
 			if (announce) Task.addTypeTask(foe.nickname + "'s type changed to MAGIC!", foe);
 		} else if (announce && move == Move.MAGNET_RISE) {
-			if (this.magCount == 0) {
-				this.magCount = 5;
+			if (!this.hasStatus(Status.MAGNET_RISE)) {
+				this.addStatus(Status.MAGNET_RISE);
 				if (announce) Task.addTask(Task.TEXT, this.nickname + " floated with electromagnetism!");
 			} else {
 				fail = fail(announce);
@@ -5479,7 +5490,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 
 	public void clearVolatile() {
 		confusionCounter = 0;
-		magCount = 0;
 		toxic = 0;
 		perishCount = 0;
 		rollCount = 1;
@@ -5867,34 +5877,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE || move == Move.SOLSTICE_BLADE) bp *= 0.5;
 		}
 		
-		// Use either physical or special attack/defense
-		if (move.isPhysical()) {
-			attackStat = this.getStat(1);
-			defenseStat = foe.getStat(2);
-			if (foeAbility != Ability.UNAWARE) attackStat *= this.asModifier(0);
-			if (move != Move.DARKEST_LARIAT && move != Move.SACRED_SWORD && this.ability != Ability.UNAWARE) defenseStat *= foe.asModifier(1);
-			if (move == Move.BODY_PRESS) attackStat = this.getStat(2) * this.asModifier(1);
-			if (move == Move.FOUL_PLAY) attackStat = foe.getStat(1) * foe.asModifier(0);
-			if (this.getItem() == Item.CHOICE_BAND) attackStat *= 1.5;
-			if (this.status == Status.BURNED && this.ability != Ability.GUTS && move != Move.FACADE) attackStat /= 2;
-			if (this.ability == Ability.GUTS && this.status != Status.HEALTHY) attackStat *= 1.5;
-			if (this.ability == Ability.HUGE_POWER) attackStat *= 2;
-			if (field.equals(field.weather, Effect.SNOW, this) && foe.isType(PType.ICE)) defenseStat *= 1.5;
-			if (field.contains(foe.getFieldEffects(), Effect.REFLECT) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL)) defenseStat *= 2;
-		} else {
-			attackStat = this.getStat(3);
-			defenseStat = foe.getStat(4);
-			if (foeAbility != Ability.UNAWARE) attackStat *= this.asModifier(2);
-			if (this.ability != Ability.UNAWARE) defenseStat *= foe.asModifier(3);
-			if (mode != 0 && foe.getItem() == Item.ASSAULT_VEST) defenseStat *= 1.5;
-			if (move == Move.PSYSHOCK || move == Move.MAGIC_MISSILES) defenseStat = foe.getStat(2) * foe.asModifier(1);
-			if (this.getItem() == Item.CHOICE_SPECS) attackStat *= 1.5;
-			if (this.status == Status.FROSTBITE) attackStat /= 2;
-			if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackStat *= 1.5;
-			if (field.equals(field.weather, Effect.SANDSTORM, this) && foe.isType(PType.ROCK)) defenseStat *= 1.5;
-			if (field.contains(foe.getFieldEffects(), Effect.LIGHT_SCREEN) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL)) defenseStat *= 2;
-		}
-		
 		// Stab
 		if (moveType == this.type1 || moveType == this.type2 || this.ability == Ability.TYPE_MASTER || this.ability == Ability.PROTEAN) {
 			if (ability == Ability.ADAPTABILITY) {
@@ -5916,35 +5898,77 @@ public class Pokemon implements RoleAssignable, Serializable {
 		// Multi hit moves calc to use
 		if (mode == 0) bp *= move.getNumHits(this, this.trainer.team);
 		
+		double attackMod = 1.0;
+		double defenseMod = 1.0;
+		boolean isCrit = false;
+		
+		if (move.isPhysical()) {
+			attackStat = this.getStat(1);
+			defenseStat = foe.getStat(2);
+		} else {
+			attackStat = this.getStat(3);
+			defenseStat = this.getStat(4);
+		}
+		
 		// Crit Check
 		critChance += this.getStatusNum(Status.CRIT_CHANCE);
-		if (this.ability == Ability.SUPER_LUCK) critChance++;
-		if (foe.ability != Ability.BATTLE_ARMOR && foe.ability != Ability.SHELL_ARMOR && !field.contains(foe.getFieldEffects(), Effect.LUCKY_CHANT) &&
-				((mode == 0 && critChance >= 1 && critCheck(critChance)) || (mode != 0 && (critChance >= 4 || (crit && critChance >= 0))))) {
-			if (move.isPhysical() && attackStat < this.getStat(1)) {
-				attackStat = this.getStat(1);
-				if (this.status == Status.BURNED) attackStat /= 2;
+		if (this.ability == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC)) critChance = 4;
+		
+		if (foe.ability != Ability.BATTLE_ARMOR &&
+				foe.ability != Ability.SHELL_ARMOR &&
+				!field.contains(foe.getFieldEffects(), Effect.LUCKY_CHANT) &&
+				((mode == 0 && critChance >= 1 && critCheck(critChance)) ||
+				(mode != 0 && (critChance >= 4 || (crit && critChance >= 0))))) {
+			
+			isCrit = true;
+		}
+		
+		if (move.isPhysical()) {
+			attackStat = move == Move.BODY_PRESS ? this.getStat(2) : move == Move.FOUL_PLAY ? foe.getStat(1) : attackStat;
+			double attackModifier = move == Move.BODY_PRESS ? this.asModifier(1) : move == Move.FOUL_PLAY ? foe.asModifier(0) : this.asModifier(0);
+			if ((!isCrit || attackModifier > 1) && foeAbility != Ability.UNAWARE)
+				attackMod *= attackModifier;
+			
+			if (this.getItem() == Item.CHOICE_BAND) attackMod *= 1.5;
+			if (this.status == Status.BURNED && this.ability != Ability.GUTS && move != Move.FACADE) attackMod /= 2;
+			if (this.ability == Ability.GUTS && this.status != Status.HEALTHY) attackMod *= 1.5;
+			if (this.ability == Ability.HUGE_POWER) attackMod *= 2;
+			
+			if (!isCrit || foe.asModifier(1) < 1) {
+				if (move != Move.DARKEST_LARIAT && move != Move.SACRED_SWORD && this.ability != Ability.UNAWARE)
+					defenseMod *= foe.asModifier(1);
 			}
-			if (!move.isPhysical() && attackStat < this.getStat(3)) {
-				attackStat = this.getStat(3);
-				if (this.status == Status.FROSTBITE) attackStat /= 2;
+			if (field.equals(field.weather, Effect.SNOW, this) && foe.isType(PType.ICE)) defenseMod *= 1.5;
+			if (!isCrit && (field.contains(foe.getFieldEffects(), Effect.REFLECT) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) defenseMod *= 2;
+		} else {
+			if ((!isCrit || this.asModifier(2) > 1) && foeAbility != Ability.UNAWARE)
+				attackMod *= this.asModifier(2);
+			if (this.getItem() == Item.CHOICE_SPECS) attackMod *= 1.5;
+			if (this.status == Status.FROSTBITE) attackMod /= 2;
+			if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackMod *= 1.5;
+			
+			boolean usesDef = move == Move.PSYSHOCK || move == Move.MAGIC_MISSILES;
+			defenseStat = usesDef ? foe.getStat(2) : defenseStat;
+			double defenseModifier = usesDef ? foe.asModifier(1) : foe.asModifier(3);
+			if (!isCrit || defenseModifier > 1) {
+				if (this.ability != Ability.UNAWARE) defenseMod *= defenseModifier;
 			}
-			if (move.isPhysical() && defenseStat > foe.getStat(2)) {
-				defenseStat = foe.getStat(2);
-				if (field.equals(field.weather, Effect.SNOW, this) && foe.isType(PType.ICE)) defenseStat *= 1.5;
-				
-			}
-			if (!move.isPhysical() && defenseStat > foe.getStat(4)) {
-				defenseStat = foe.getStat(4);
-				if (field.equals(field.weather, Effect.SANDSTORM, this) && foe.isType(PType.ROCK)) defenseStat *= 1.5;
-			}
-			if (mode != 0 && foe.getItem() == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
-			damage = calc(attackStat, defenseStat, bp, this.level, mode);
+			
+			Effect weather = usesDef ? Effect.SNOW : Effect.SANDSTORM;
+			PType weatherType = usesDef ? PType.ICE : PType.ROCK;
+			Effect screen = usesDef ? Effect.REFLECT : Effect.LIGHT_SCREEN;
+			
+			if (!usesDef && foe.getItem() == Item.ASSAULT_VEST) defenseMod *= 1.5;
+			if (field.equals(field.weather, weather, this) && foe.isType(weatherType)) defenseMod *= 1.5;
+			if (!isCrit && (field.contains(foe.getFieldEffects(), screen) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) defenseMod *= 2;
+		}
+		
+		if (foe.getItem() == Item.EVIOLITE && foe.canEvolve()) defenseMod *= 1.5;
+		
+		damage = calc(attackStat * attackMod, defenseStat * defenseMod, bp, this.level, mode);
+		if (isCrit) {
 			damage *= 1.5;
 			if (this.ability == Ability.SNIPER) damage *= 1.5;
-		} else {
-			if (mode != 0 && foe.getItem() == Item.EVIOLITE && foe.canEvolve()) defenseStat *= 1.5;
-			damage = calc(attackStat, defenseStat, bp, this.level, mode);
 		}
 		
 		if ((foeAbility == Ability.ICY_SCALES && !move.isPhysical()) || (foeAbility == Ability.MULTISCALE && foe.currentHP == foe.getStat(0))) damage /= 2;
@@ -7814,7 +7838,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this.isType(PType.FLYING)) result = false;
 		if (this.getItem() == Item.AIR_BALLOON) result = false;
 		if (this.getItem() != Item.RING_TARGET && ability == Ability.LEVITATE) result = false;
-		if (this.magCount > 0) result = false;
+		if (this.hasStatus(Status.MAGNET_RISE)) result = false;
 		if (this.hasStatus(Status.SMACK_DOWN)) result = true;
 		if (this.getItem() == Item.IRON_BALL) result = true;
 		if (field != null && field.contains(field.fieldEffects, Effect.GRAVITY)) result = true;
@@ -8076,7 +8100,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    clonedPokemon.confusionCounter = this.confusionCounter;
 	    clonedPokemon.sleepCounter = this.sleepCounter;
 	    clonedPokemon.perishCount = this.perishCount;
-	    clonedPokemon.magCount = this.magCount;
 	    clonedPokemon.moveMultiplier = this.moveMultiplier;
 	    clonedPokemon.spunCount = this.spunCount;
 	    clonedPokemon.outCount = this.outCount;
@@ -8706,9 +8729,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (s.num != 0) add += " " + s.num;
 	    	result.add(add);
 	    }
-		if (magCount > 0) {
-			result.add("Magnet Rise");
-		}
 		if (perishCount > 0) {
 			result.add("Perish in " + perishCount);
 		}
