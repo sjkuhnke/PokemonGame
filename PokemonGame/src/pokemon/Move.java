@@ -1323,7 +1323,8 @@ public enum Move {
 		return this == Move.U$TURN || this == Move.VOLT_SWITCH || this == Move.FLIP_TURN || this == Move.PARTING_SHOT || this == Move.BATON_PASS;
 	}
 
-	public boolean isMagicBounceEffected(Ability foeAbility, int acc) {
+	public boolean isMagicBounceEffected(Pokemon user, Pokemon foe, Ability foeAbility, int acc) {
+		if (user == foe) return false;
 		if (foeAbility != Ability.MAGIC_BOUNCE) return false;
 		return this.cat == 2 && (acc <= 100 || this == Move.WHIRLWIND || this == Move.ROAR || this == Move.STEALTH_ROCK
 			|| this == Move.SPIKES || this == Move.TOXIC_SPIKES || this == Move.TOXIC || this == Move.STICKY_WEB || this == Move.YAWN
