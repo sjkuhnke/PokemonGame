@@ -1,8 +1,13 @@
 package util;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import javax.imageio.ImageIO;
 
 import pokemon.*;
 
@@ -115,5 +120,20 @@ public class SaveManager {
         }
 
         return docsPath;
+    }
+    
+    public static void saveScreenshot(BufferedImage image) {
+    	try {
+    		Path screenshotsDir = getDocsDirectory().getParent().resolve("screenshots");
+    		Files.createDirectories(screenshotsDir);
+    		
+    		String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+    		String fileName = "Screenshot_" + timestamp + ".png";
+    		
+    		File screenshotFile = new File(screenshotsDir.toFile(), fileName);
+    		ImageIO.write(image, "png", screenshotFile);
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
     }
 }

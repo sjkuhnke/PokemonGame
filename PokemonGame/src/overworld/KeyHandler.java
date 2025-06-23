@@ -10,17 +10,11 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import javax.imageio.ImageIO;
 
 import pokemon.Item;
 import pokemon.Pokemon;
 import pokemon.Task;
+import util.SaveManager;
 
 public class KeyHandler implements KeyListener {
 
@@ -931,26 +925,14 @@ public class KeyHandler implements KeyListener {
 	}
 	
 	 private void takeScreenshot() {
-        try {
-            // Create a BufferedImage from the JPanel's graphics
-            BufferedImage screenshot = new BufferedImage(gp.getWidth(), gp.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            gp.paint(screenshot.getGraphics());
+        // Create a BufferedImage from the JPanel's graphics
+        BufferedImage screenshot = new BufferedImage(gp.getWidth(), gp.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        gp.paint(screenshot.getGraphics());
 
-            // Save to a file
-            String fileName = "screenshot_" + System.currentTimeMillis() + ".png";
-            Path screenshotsDirectory = Paths.get("./screenshots/");
-            if (!Files.exists(screenshotsDirectory)) {
-                Files.createDirectories(screenshotsDirectory);
-            }
-            File screenshotFile = new File(screenshotsDirectory.toFile(), fileName);
-            ImageIO.write(screenshot, "png", screenshotFile);
+        SaveManager.saveScreenshot(screenshot);
 
-            // Copy to clipboard
-            copyImageToClipboard(screenshot);
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        // Copy to clipboard
+        copyImageToClipboard(screenshot);
     }
 
     private void copyImageToClipboard(BufferedImage image) {
@@ -984,7 +966,7 @@ public class KeyHandler implements KeyListener {
         }
 
         @Override
-        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
             if (!isDataFlavorSupported(flavor)) {
                 throw new UnsupportedFlavorException(flavor);
             }
