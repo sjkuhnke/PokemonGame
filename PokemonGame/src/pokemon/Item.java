@@ -98,7 +98,7 @@ public enum Item {
 	KLEINE_BAR(15,40,20,new Color(0, 55, 255),Item.MEDICINE,null,"Cures a Pokemon of any status condition."),
 	REVIVE(16,500,250,new Color(219, 194, 0),Item.MEDICINE,null,"Recovers a Pokemon from fainting with 50% HP."),
 	MAX_REVIVE(17,1000,500,new Color(219, 194, 0),Item.MEDICINE,null,"Recovers a Pokemon from fainting with full HP."),
-	RARE_CANDY(18,0,0,new Color(124, 54, 255),Item.MEDICINE,null,"Elevates a Pokemon by 1 level."),
+	RARE_CANDY(18,0,600,new Color(124, 54, 255),Item.MEDICINE,null,"Elevates a Pokemon by 1 level."),
 	ELIXIR(40,200,100,new Color(230, 146, 78),Item.MEDICINE,null,"Restores PP of a selected move."),
 	MAX_ELIXIR(41,250,200,new Color(246, 255, 120),Item.MEDICINE,null,"Restores PP of all moves on a Pokemon."),
 	PP_UP(42,2500,1000,new Color(150, 51, 156),Item.MEDICINE,null,"Increases max PP of a selected move by 20%."),

@@ -314,7 +314,7 @@ public enum Move {
 	MAGICAL_LEAF(60,1000,0,0,1,0,PType.GRASS,"This move will never miss",false,20),
 	MAGICAL_CRASH(110,95,100,0,0,0,PType.MAGIC,"% to inflict foe with a random Status condition. User must rest after using",true,5),
 	MAGNET_BOMB(60,1000,0,0,0,0,PType.STEEL,"This move will never miss",false,20),
-	MAGNET_RISE(0,1000,0,0,2,0,PType.STEEL,"User will float for 5 turns, causing it to be immune to all Ground-type attacks",false,10),
+	MAGNET_RISE(0,1000,0,0,2,0,PType.STEEL,"User will float until it switches out, causing it to be immune to all Ground-type attacks",false,10),
 	MAGNITUDE(-1,100,0,0,0,0,PType.GROUND,"A random Magnitude between 4-10 will be used, corresponding to its power",false,25),
 	MANA_PUNCH(80,100,100,0,0,0,PType.MAGIC,"% chance to raise a random stat by 1 or flinch foe",true,15),
 	MEAN_LOOK(0,100,0,0,2,0,PType.NORMAL,"Causes foe to be unable to switch",false,5),
