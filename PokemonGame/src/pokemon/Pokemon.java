@@ -3243,7 +3243,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (field.remove(foe.getFieldEffects(), Effect.AURORA_VEIL)) Task.addTask(Task.TEXT, this.nickname + " broke " + foe.nickname + "'s Aurora Veil wore off!");
 		} else if (move == Move.BURN_UP) {
 			if (this.type1 == PType.FIRE) type1 = PType.UNKNOWN;
-			if (this.type2 == PType.FIRE) type1 = null;
+			if (this.type2 == PType.FIRE) type2 = null;
 			Task.addTypeTask("", this);
 		} else if ((move == Move.CIRCLE_THROW || move == Move.DRAGON_TAIL) && !foe.isFainted()) {
 			if (foe.trainer != null) {
