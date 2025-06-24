@@ -637,12 +637,10 @@ public class Pokemon implements RoleAssignable, Serializable {
         ArrayList<Move> bestMoves = new ArrayList<>();
         for (Map.Entry<Move, Integer> entry : moveToDamage.entrySet()) {
         	Move move = entry.getKey();
-        	if (id == 237) {
-        		move = this.get150Move(move);
-        	}
+        	Move moveTest = id == 237 ? this.get150Move(move) : move;
         	int damage = entry.getValue();
         	
-        	if (damage >= maxDamage && (damage > 0 || validMoves.size() == 1 || (allMovesAreDamaging(moveToDamage) && maxDamage == 0)) && move.cat != 2) {
+        	if (damage >= maxDamage && (damage > 0 || validMoves.size() == 1 || (allMovesAreDamaging(moveToDamage) && maxDamage == 0)) && moveTest.cat != 2) {
         		bestMoves.add(move);
         		bestMoves.add(move);
         		bestMoves.add(move);
@@ -650,19 +648,19 @@ public class Pokemon implements RoleAssignable, Serializable {
         			bestMoves.add(move);
         		}
         	}
-        	if (move.cat == 2 || Move.treatAsStatus(move, this, foe)) {
-        		if (move.accuracy > 100) {
+        	if (moveTest.cat == 2 || Move.treatAsStatus(moveTest, this, foe)) {
+        		if (moveTest.accuracy > 100) {
         			Pokemon freshYou = this.clone();
         			freshYou.statStages = new int[freshYou.statStages.length];
         			Pokemon freshFoe = new Pokemon(1, 1, false, false);
         			int[] prevStatsF = freshYou.statStages.clone();
-        			freshYou.statusEffect(freshFoe, move, null, null, false);
+        			freshYou.statusEffect(freshFoe, moveTest, null, null, false);
         			int[] currentStatsF = freshYou.statStages.clone();
         			if (!arrayEquals(prevStatsF, currentStatsF)) {
         				Pokemon you = this.clone();
             			Pokemon foeClone = foe.clone(); // shouldn't matter
             			int[] prevStats = you.statStages.clone();
-            			you.statusEffect(foeClone, move, null, null, false);
+            			you.statusEffect(foeClone, moveTest, null, null, false);
             			int[] currentStats = you.statStages.clone();
             			if (arrayGreaterOrEqual(prevStats, currentStats)) {
             				// nothing: don't add
