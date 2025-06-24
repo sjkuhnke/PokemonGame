@@ -637,6 +637,9 @@ public class Pokemon implements RoleAssignable, Serializable {
         ArrayList<Move> bestMoves = new ArrayList<>();
         for (Map.Entry<Move, Integer> entry : moveToDamage.entrySet()) {
         	Move move = entry.getKey();
+        	if (id == 237) {
+        		move = this.get150Move(move);
+        	}
         	int damage = entry.getValue();
         	
         	if (damage >= maxDamage && (damage > 0 || validMoves.size() == 1 || (allMovesAreDamaging(moveToDamage) && maxDamage == 0)) && move.cat != 2) {
