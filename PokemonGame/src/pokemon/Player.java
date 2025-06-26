@@ -1842,6 +1842,7 @@ public class Player extends Trainer implements Serializable {
 		p.evolve(counter);
 		
         Task text = Task.createTask(Task.EVOLUTION, oldNickname + " evolved into " + p.name() + "!", p);
+        text.counter = oldID;
         text.types = new PType[] {p.type1, p.type2};
         Task.insertTask(text, 0);
         pokedex[p.id] = 2;
@@ -1865,7 +1866,7 @@ public class Player extends Trainer implements Serializable {
         p.checkMove(i, p.level);
         
         ArrayList<Task> tasks = gp.getTasks();
-        tasks.removeIf(task -> task.type == Task.EVO);
+        tasks.removeIf(task -> task.type == Task.EVO && task.p.slot == p.slot && task.counter == oldID);
         for (int j = 1; j < tasks.size(); j++) {
         	Task t = tasks.get(j);
         	if (t.message.contains(oldNickname)) {

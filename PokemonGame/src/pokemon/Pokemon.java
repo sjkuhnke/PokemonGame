@@ -5485,6 +5485,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			player.setBattled(player.getBattled() - 1);
 		}
 		if (announce) Task.addTask(Task.FAINT, this.nickname + " fainted!", this);
+		
+		if (this.playerOwned() && this.getPlayer().nuzlocke) gp.saveScum(this.toString() + " died to " + foe.toString() + (foe.trainerOwned() ? " (" + foe.trainer.getName() + ")": "" + " (Save Scum)"));
+		
 		foe.awardxp(getxpReward());
 		field.knockouts++;
 	}
@@ -9074,12 +9077,20 @@ public class Pokemon implements RoleAssignable, Serializable {
 		ArrayList<Move> tmMoves = Item.getTMMoves();
 		ArrayList<Item> tms = Item.getTMs();
 		boolean[] movesValid = new boolean[this.moveset.length];
+		HashSet<Move> seenMoves = new HashSet<>();
 		for (int i = 0; i < this.moveset.length; i++) {
 			if (this.moveset[i] == null) {
 				movesValid[i] = true;
 				continue;
 			}
 			Move m = this.moveset[i].move;
+			if (seenMoves.contains(m)) {
+				movesValid[i] = false;
+				System.err.println(index + " " + name + "'s " + this.name + " (ID " + this.id + ") has duplicate move: " + m + " in index " + i);
+				continue;
+			} else {
+				seenMoves.add(m);
+			}
 			int tmIndex = tmMoves.indexOf(m);
 			if (tmIndex >= 0) {
 				Item tmItem = tms.get(tmIndex);
