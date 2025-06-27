@@ -120,7 +120,10 @@ public class Player extends Trainer implements Serializable {
 	public static Pokemon[] pokedex3 = new Pokemon[Pokemon.POKEDEX_METEOR_SIZE]; // electric
 	public static Pokemon[] pokedex4 = new Pokemon[Pokemon.POKEDEX_2_SIZE]; // regional
 	
-	public static int[] spawn = new int[] {52, 31, 41}; // map, x, y
+	public static int[][] spawn = new int[][] { // map, x, y
+			new int[] {52, 31, 41},
+			new int[] {160, 41, 15},
+			}; 
 	
 	public Player(GamePanel gp) {
 		super(true);
@@ -132,9 +135,9 @@ public class Player extends Trainer implements Serializable {
 		boxLabels = setupBoxLabels();
 
 		bag = new Bag(this);
-		currentMap = spawn[0];
-		posX = spawn[1];
-		posY = spawn[2];
+		currentMap = spawn[0][0];
+		posX = spawn[0][1];
+		posY = spawn[0][2];
 		
 		starter = -1;
 		secondStarter = -1;

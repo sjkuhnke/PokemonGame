@@ -293,9 +293,10 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		setTaskState();
 		Task t = Task.addTask(Task.TELEPORT, "");
-		t.counter = Player.spawn[0];
-		t.start = Player.spawn[1];
-		t.finish = Player.spawn[2];
+		int spawnIndex = currentMap == 159 || currentMap == 160 ? 1 : 0; // in space or not
+		t.counter = Player.spawn[spawnIndex][0];
+		t.start = Player.spawn[spawnIndex][1];
+		t.finish = Player.spawn[spawnIndex][2];
 		t.wipe = false;
 		if (overLevelCap) Task.addTask(Task.TEXT, "You have at least 1 team member that is over the level cap of " + Trainer.getLevelCap(player.p.badges) + "!");
 		

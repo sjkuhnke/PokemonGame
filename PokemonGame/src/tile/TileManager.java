@@ -214,8 +214,8 @@ public class TileManager {
 		loadMap("/maps/house01.txt", 156, true);
 		loadMap("/maps/house01.txt", 157, true);
 		loadMap("/maps/house04.txt", 158, true);
-		loadMap("/maps/gym08.txt", 159, true);
-		loadMap("/maps/space01.txt", 160, true);
+		loadMap("/maps/gym08.txt", 159, false);
+		loadMap("/maps/space01.txt", 160, false);
 		loadMap("/maps/post.txt", 161, true);
 		loadMap("/maps/lab03.txt", 162, true);
 		loadMap("/maps/school02.txt", 163, true);
@@ -260,6 +260,7 @@ public class TileManager {
 		loadMap("/maps/chasm06.txt", 202, false);
 		loadMap("/maps/chasm02_iceblocks.txt", 203, false);
 		loadMap("/maps/house01.txt", 204, true);
+		loadMap("/maps/house05.txt", 205, true);
 	}
 	
 	private void setupCollisionRectangles() {
@@ -732,33 +733,33 @@ public class TileManager {
 		setup(458, true);
 		setup(459, true);
 		setup(460, true);
-		setup(461, true);
-		setup(462, true);
-		setup(463, true);
-		setup(464, true);
+		setup(461, true, OVER);
+		setup(462, true, OVER);
+		setup(463, true, OVER);
+		setup(464, false, OVER);
 		setup(465, true);
-		setup(466, true);
-		setup(467, true);
-		setup(468, true);
-		setup(469, true);
-		setup(470, true);
-		setup(471, true);
-		setup(472, true);
-		setup(473, true);
-		setup(474, true);
-		setup(475, true);
-		setup(476, true);
-		setup(477, true);
-		setup(478, true);
+		setup(466, false, OVER);
+		setup(467, true, OVER);
+		setup(468, true, OVER);
+		setup(469, true, OVER);
+		setup(470, true, OVER);
+		setup(471, true, OVER);
+		setup(472, true, OVER);
+		setup(473, true, OVER);
+		setup(474, true, OVER);
+		setup(475, true, OVER);
+		setup(476, true, OVER);
+		setup(477, true, RIGHT_HALF, OVER);
+		setup(478, true, LEFT_HALF, OVER);
 		setup(479, true);
 		setup(480, true);
-		setup(481, false);
-		setup(482, false);
+		setup(481, true, TOP_FOURTH);
+		setup(482, true, TOP_FOURTH);
 		setup(483, false);
 		setup(484, true);
-		setup(485, false);
-		setup(486, false);
-		setup(487, false);
+		setup(485, false, OVER);
+		setup(486, false, OVER);
+		setup(487, false, OVER);
 		setup(488, true);
 		setup(489, true);
 		setup(490, true);
@@ -826,8 +827,8 @@ public class TileManager {
 		setup(553, true);
 		setup(554, true);
 		setup(555, true);
-		setup(556, true);
-		setup(557, true);
+		setup(556, true, TOP_FOURTH);
+		setup(557, true, TOP_FOURTH);
 		setup(558, true);
 		setup(559, true);
 		setup(560, true);
@@ -1395,7 +1396,11 @@ public class TileManager {
 			}
 			if (collisionType == OVER || over == OVER) {
 				tile[index].drawAbove = true;
-				tile[index].mask = ImageIO.read(getClass().getResourceAsStream("/masks/" + imageName + ".png"));
+				try {
+					tile[index].mask = ImageIO.read(getClass().getResourceAsStream("/masks/" + imageName + ".png"));
+				} catch (IllegalArgumentException e) {
+					System.out.println(imageName + " is null!");
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -1497,7 +1502,20 @@ public class TileManager {
 		for (int i = 313; i < 325; i++) {
 			result.add(i);
 		}
-		
+		// spaceship water tiles
+		result.add(461);
+		result.add(462);
+		result.add(463);
+		result.add(467);
+		result.add(468);
+		result.add(469);
+		result.add(470);
+		result.add(471);
+		result.add(472);
+		result.add(473);
+		result.add(474);
+		result.add(475);
+		result.add(476);
 		return result;
 	}
 	

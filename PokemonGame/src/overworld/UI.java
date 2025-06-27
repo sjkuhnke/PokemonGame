@@ -84,8 +84,13 @@ public class UI extends AbstractUI {
 	// Light Distortion fields
 	public boolean drawLightOverlay;
 	private List<BufferedImage> lightFrames;
-	private int currentFrame;
-	private long lastFrameTime;
+	private int lightFrameIndex;
+	private long lightLastFrameTime;
+	
+	// Space GIF fields
+	private List<BufferedImage> spaceFrames;
+	private int spaceFrameIndex = 0;
+	private int spaceFrameCounter;
 	
 	// diagonal cutscene fields
 	private double errorX;
@@ -138,6 +143,8 @@ public class UI extends AbstractUI {
 			monsier = Font.createFont(Font.TRUETYPE_FONT, is);
 			is = getClass().getResourceAsStream("/font/cryptik.ttf");
 			cryptik = Font.createFont(Font.TRUETYPE_FONT, is);
+			is = getClass().getResourceAsStream("/font/consolas.ttf");
+			consolas = Font.createFont(Font.TRUETYPE_FONT, is);
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
@@ -149,6 +156,7 @@ public class UI extends AbstractUI {
 		}
 		
 		lightFrames = extractFrames("/battle/light.gif");
+		spaceFrames = extractFrames("/gen/space.gif");
 		interactIcon = setup("/interactive/interact", 3);
 		fog = new Fog(gp);
 	}
@@ -452,7 +460,7 @@ public class UI extends AbstractUI {
 			}
 			break;
 		case Task.DIALOGUE: // for the npc speaking
-			g2.setFont(getFont());
+			g2.setFont(getFont(currentTask.counter));
 			if (currentTask.e.name == null) {
 				currentTask.type = Task.TEXT;
 				return;
@@ -461,7 +469,7 @@ public class UI extends AbstractUI {
 			drawNameLabel(above);
 			break;
 		case Task.SPEAK: // for the player speaking
-			g2.setFont(getFont());
+			g2.setFont(getFont(currentTask.counter));
 			showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
 			above = false;
 			drawNameLabel(above);
@@ -623,14 +631,20 @@ public class UI extends AbstractUI {
 		case Task.NURSERY_WITHDRAW:
 			drawNurseryWithdraw();
 			break;
+		case Task.SPACE:
+			drawSpace();
+			break;
 		}
 	}
 
-	private Font getFont() {
+	private Font getFont(int type) {
 		Font font;
-		switch (currentTask.counter) {
+		switch (type) {
 		case 1:
 			font = cryptik;
+			break;
+		case 2:
+			font = consolas;
 			break;
 		default:
 			font = marumonica;
@@ -1392,14 +1406,14 @@ public class UI extends AbstractUI {
 		long currentTime = System.currentTimeMillis();
 		int totalFrames = lightFrames.size();
 		
-		if (currentTime - lastFrameTime > 75) {
-			currentFrame = (currentFrame + 1) % totalFrames;
-			lastFrameTime = currentTime;
+		if (currentTime - lightLastFrameTime > 75) {
+			lightFrameIndex = (lightFrameIndex + 1) % totalFrames;
+			lightLastFrameTime = currentTime;
 		}
 		
 		
-		BufferedImage current = lightFrames.get(currentFrame);
-		BufferedImage next = lightFrames.get((currentFrame + 1) % totalFrames);
+		BufferedImage current = lightFrames.get(lightFrameIndex);
+		BufferedImage next = lightFrames.get((lightFrameIndex + 1) % totalFrames);
 		
 		drawImageWithAlpha(current, alpha);
 		
@@ -4071,24 +4085,30 @@ public class UI extends AbstractUI {
 				gp.eHandler.canTouchEvent = !gp.eHandler.tempCooldown;
 				
 			}
-			gp.player.spriteNum = 1;
-			gp.player.p.surf = false;
-			gp.player.p.lavasurf = false;
-			
-			gp.aSetter.updateNPC(gp.eHandler.tempMap);
-			if (prevMap != gp.currentMap) gp.aSetter.resetNPCDirection(gp.currentMap);
-			gp.aSetter.setInteractiveTile(gp.currentMap);
-			
-			String currentMap = PlayerCharacter.currentMapName;
-			PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
-			Main.window.setTitle(gp.gameTitle + " - " + PlayerCharacter.currentMapName);
-			if (!currentMap.equals(PlayerCharacter.currentMapName)) showAreaName();
-			
-			if (tasks.isEmpty()) {
-				gp.gameState = GamePanel.PLAY_STATE;
-			} else {
-				gp.gameState = GamePanel.TASK_STATE;
-			}
+			warpPlayer(prevMap, gp.currentMap);
+		}
+	}
+	
+	private void warpPlayer(int prevMap, int newMap) {
+		gp.player.spriteNum = 1;
+		gp.offsetX = 0;
+		gp.offsetY = 0;
+		gp.player.p.surf = false;
+		gp.player.p.lavasurf = false;
+		
+		gp.aSetter.updateNPC(newMap);
+		if (prevMap != newMap) gp.aSetter.resetNPCDirection(newMap);
+		gp.aSetter.setInteractiveTile(newMap);
+		
+		String currentMap = PlayerCharacter.currentMapName;
+		PMap.getLoc(newMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
+		Main.window.setTitle(gp.gameTitle + " - " + PlayerCharacter.currentMapName);
+		if (!currentMap.equals(PlayerCharacter.currentMapName)) showAreaName();
+		
+		if (tasks.isEmpty()) {
+			gp.gameState = GamePanel.PLAY_STATE;
+		} else {
+			gp.gameState = GamePanel.TASK_STATE;
 		}
 	}
 	
@@ -5050,9 +5070,8 @@ public class UI extends AbstractUI {
 		
 		for (ArrayList<Encounter> es : encounters) {
 			int size = es.size();
-			
 			if (size > 0) {
-				int height = (((size / 9) + 1) * 2) * gp.tileSize;
+				int height = ((((size - 1) / 8) + 1) * 2) * gp.tileSize;
 				height += gp.tileSize / 2;
 				totalHeight += height;
 			}
@@ -5075,7 +5094,7 @@ public class UI extends AbstractUI {
 				index++;
 				continue;
 			}
-			int height = (((size / 9) + 1) * 2) * gp.tileSize;
+			int height = ((((size - 1) / 8) + 1) * 2) * gp.tileSize;
 			height += gp.tileSize / 2;
 			drawSubWindow(winX, y, width, height);
 			String label = labels[index];
@@ -5507,5 +5526,50 @@ public class UI extends AbstractUI {
 		}
 		
 		drawToolTips(null, null, "Close", null);
+	}
+	
+	private void drawSpace() {
+		drawSpaceBackground();
+		if (currentTask.e != null && currentTask.message != null && !currentTask.message.isEmpty()) {
+			g2.setFont(getFont(currentTask.finish));
+			showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
+			above = true;
+			drawNameLabel(above);
+		}
+		
+		if (currentTask.start > 0) {
+			Color base = currentTask.color;
+			g2.setColor(new Color(base.getRed(),base.getGreen(),base.getBlue(),counter*5));
+			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+		}
+		
+		counter++;
+		if (counter > currentTask.counter) {
+			counter = 0;
+			if (currentTask.start > 0) {
+				int prevMap = gp.currentMap;
+				gp.currentMap = currentTask.start;
+				gp.player.worldX = currentTask.start == 160 ? 41 * gp.tileSize : currentTask.start == 152 ? 66 * gp.tileSize : 50 * gp.tileSize;
+				gp.player.worldY = currentTask.start == 160 ? 15 * gp.tileSize : currentTask.start == 152 ? 76 * gp.tileSize : 50 * gp.tileSize;
+				gp.player.direction = "down";
+				warpPlayer(prevMap, gp.currentMap);
+			}
+			currentDialogue = null;
+			showMessage = false;
+			currentTask = null;
+		}
+	}
+	
+	private void drawSpaceBackground() {
+		if (spaceFrames == null || spaceFrames.isEmpty()) return;
+		
+		BufferedImage currentFrame = spaceFrames.get(spaceFrameIndex);
+		g2.drawImage(currentFrame, 0, 0, gp.screenWidth, gp.screenHeight, null);
+		
+		spaceFrameCounter++;
+		if (spaceFrameCounter >= 6) {
+			spaceFrameCounter = 0;
+			spaceFrameIndex = (spaceFrameIndex + 1) % spaceFrames.size();
+		}
 	}
 }

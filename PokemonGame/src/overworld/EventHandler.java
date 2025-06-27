@@ -943,6 +943,10 @@ public class EventHandler {
 			if (hit(151,31,46)) teleport(152, 30, 8,false);
 			if (hit(152,30,7,false)) teleport(151, 31, 45,false);
 			
+			// Route 39 -> R39 Shack
+			if (hit(152,68,25)) teleport(205, 31, 45,false);
+			if (hit(205,31,46)) teleport(152, 68, 26,false);
+			
 			// Ghostly Woods -> A.T. gate
 			if (hit(107,82,10,false)) teleport(189, 31, 45,false);
 			if (hit(189,31,46)) teleport(107, 82, 11,false);
@@ -1010,12 +1014,21 @@ public class EventHandler {
 			
 			if (hit(152,67,82)) teleport(158, 31, 45,false);
 			if (hit(158,31,46)) teleport(152, 67, 83,false);
-			if (hit(158,31,37)) teleport(152, 67, 77,false);
+			if (hit(158,31,37)) teleport(152, 67, 78,true);
 			if (hit(152,67,78)) teleport(158, 31, 38,false);
 			
 			if (hit(152,26,68)) teleport(204, 31, 45,false);
 			if (hit(204,31,46)) teleport(152, 26, 69,false);
+			
+			// Cutscene with Ryder in shack
+			if (!gp.player.p.flag[7][18] && hit(205,31,45)) gp.player.interactNPC(gp.npc[205][0], false);
+			
+			// Cutscene with Ryder/Arthra before Iron Town
+			if (!gp.player.p.flag[7][19] && hit(152,45,56)) gp.player.interactNPC(gp.npc[152][2], false);
+			
 		}
+		// Cutscene with Ryder/Arthra in front of Spaceship
+		if (!gp.player.p.flag[7][20] && hit(152,67,78,true)) gp.player.interactNPC(gp.npc[152][5], false);
 	}
 
 	public boolean hit(int map, int col, int row) {
@@ -1025,7 +1038,7 @@ public class EventHandler {
 	
 	public boolean hit(int map, int col, int row, boolean deflt) {
 		if (map != gp.currentMap) return false;
-		if (!canTouchEvent) return false;
+		if (!canTouchEvent && !deflt) return false;
 		boolean hit = false;
 		
 		if (map == gp.currentMap) {

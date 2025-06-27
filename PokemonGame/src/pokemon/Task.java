@@ -77,6 +77,7 @@ public class Task {
 	public static final int AWAKE = 61;
 	public static final int NURSERY_DEPOSIT = 62;
 	public static final int NURSERY_WITHDRAW = 63;
+	public static final int SPACE = 64;
 	
 	public static GamePanel gp;
 	

@@ -60,9 +60,9 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	public void setDefaultValues() {
-		gp.currentMap = Player.spawn[0];
-		worldX = gp.tileSize * Player.spawn[1];
-		worldY = gp.tileSize * Player.spawn[2];
+		gp.currentMap = Player.spawn[0][0];
+		worldX = gp.tileSize * Player.spawn[0][1];
+		worldY = gp.tileSize * Player.spawn[0][2];
 		speed = 4;
 		direction = "down";
 	}
@@ -611,6 +611,7 @@ public class PlayerCharacter extends Entity {
 	
 	public void interactNPC(Entity npc, boolean face) {
 		gp.keyH.wPressed = false;
+		resetSpriteNum();
 		if (face) npc.facePlayer(direction);
 		if (npc.flag == -1 || !p.flag[npc.getFlagX()][npc.getFlagY()]) {
 			gp.gameState = GamePanel.DIALOGUE_STATE;
@@ -786,8 +787,8 @@ public class PlayerCharacter extends Entity {
 				}
 				
 				int inverse = this.direction == rc.direction ? 1 : -1;
-				int finalX = (int) (rc.worldX + ((rc.deltaX * gp.tileSize * 0.75 * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaX * inverse)));
-				int finalY = (int) (rc.worldY + (rc.deltaY * gp.tileSize * 0.75 * inverse * rc.amt) + (gp.tileSize * 0.75 * rc.deltaY * inverse));
+				int finalX = (int) (rc.worldX + (rc.deltaX * gp.tileSize * inverse * rc.amt));
+				int finalY = (int) (rc.worldY + (rc.deltaY * gp.tileSize * inverse * rc.amt));
 				
 				this.worldX = finalX;
 				this.worldY = finalY;
