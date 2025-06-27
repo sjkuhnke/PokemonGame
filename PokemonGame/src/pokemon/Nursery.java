@@ -97,14 +97,7 @@ public class Nursery implements Serializable {
 	
 	private void determineCompatibility() {
 		if (isFull()) {
-			boolean sameSpecies = false;
-			ArrayList<String> evoFamily = pokemon[0].getEvolutionFamily();
-			for (String s : evoFamily) {
-				if (Pokemon.getIDFromName(s) == pokemon[1].id) {
-					sameSpecies = true;
-					break;
-				}
-			}
+			boolean sameSpecies = pokemon[0].isSameSpeciesAs(pokemon[1]);
 			if (sameSpecies) {
 				if (!Pokemon.getEggGroup(pokemon[0].id).contains(EggGroup.UNDISCOVERED)) {
 					state = SAME_SPECIES;

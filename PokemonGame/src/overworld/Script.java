@@ -2496,7 +2496,12 @@ public class Script {
 			Task.addTask(Task.SLEEP, "", 30);
 			Task.addTask(Task.DIALOGUE, npc, "Ugh... My head... it's like static, but... inside.");
 			Task.addTask(Task.DIALOGUE, npc, "I can hear voices that aren't mine. They're... loud. Angry. Calculating.");
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, npc, "Sus, dili ba sila makapakalma? Ang kalibutan na gani ang nakataya diri!");
 			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, npc, "Ugh, it's messing with my brain! I... I... Ni hindi ko na nga maintindihan ang sarili ko!");
+			Task.addTask(Task.DIALOGUE, npc, "Parang pinipiga at dinudurog ang mga iniisip ko laban sa mga pader ng sarili kong bungo...");
+			Task.addTask(Task.SLEEP, "", 30);
 			Task.addCameraMoveTask('y', 0, 4);
 			Task.addNPCMoveTask('y', 57 * gp.tileSize, player, false, 4);
 			Task.addTask(Task.TURN, gp.npc[152][3], "", Task.UP);

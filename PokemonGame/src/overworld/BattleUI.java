@@ -502,7 +502,7 @@ public class BattleUI extends AbstractUI {
 		}
 		drawCatchWindow();
 		drawActionScreen(user);
-		String dText = foe.trainerOwned() ? "Foe" : null;
+		String dText = foe.trainerOwned() ? "Foe" : commandNum < 0 && ballIndex >= 0 ? "Info" : null;
 		if (!showFoeSummary) drawToolTips("OK", "Calc", null, dText);
 	}
 
@@ -907,12 +907,21 @@ public class BattleUI extends AbstractUI {
 				if (showFoeSummary) foeSummary = null;
 				moveSummaryNum = -1;
 				showFoeSummary = !showFoeSummary;
+			} else {
+				if (commandNum < 0 && ballIndex >= 0) {
+					moveSummaryNum = -1;
+					showFoeSummary = !showFoeSummary;
+				}
 			}
 		}
 		
 		if (showFoeSummary) {
 			drawFoeSummaryParty();
-			drawSummary(foeSummary, user);
+			if (foe.trainerOwned()) {
+				drawSummary(foeSummary, user);
+			} else if (commandNum < 0) {
+				drawBallInfo();
+			}
 			if (gp.keyH.sPressed) {
 				gp.keyH.sPressed = false;
 				if (moveSummaryNum < 0) {
@@ -922,25 +931,70 @@ public class BattleUI extends AbstractUI {
 					moveSummaryNum = -1;
 				}
 			}
-			if (gp.keyH.leftPressed) {
-				gp.keyH.leftPressed = false;
-				if (foeSummary.trainer != null && moveSummaryNum < 0) {
-					int currentIndex = foeSummary.trainer.indexOf(foeSummary);
-					currentIndex = (currentIndex - 1 + foeSummary.trainer.team.length) % foeSummary.trainer.team.length;
-					foeSummary = foeSummary.trainer.team[currentIndex];
+			if (foe.trainerOwned()) {
+				if (gp.keyH.leftPressed) {
+					gp.keyH.leftPressed = false;
+					if (foeSummary.trainer != null && moveSummaryNum < 0) {
+						int currentIndex = foeSummary.trainer.indexOf(foeSummary);
+						currentIndex = (currentIndex - 1 + foeSummary.trainer.team.length) % foeSummary.trainer.team.length;
+						foeSummary = foeSummary.trainer.team[currentIndex];
+					}
 				}
-			}
-			if (gp.keyH.rightPressed) {
-				gp.keyH.rightPressed = false;
-				if (foeSummary.trainer != null && moveSummaryNum < 0) {
-					int currentIndex = foeSummary.trainer.indexOf(foeSummary);
-					currentIndex = (currentIndex + 1) % foeSummary.trainer.team.length;
-					foeSummary = foeSummary.trainer.team[currentIndex];
+				if (gp.keyH.rightPressed) {
+					gp.keyH.rightPressed = false;
+					if (foeSummary.trainer != null && moveSummaryNum < 0) {
+						int currentIndex = foeSummary.trainer.indexOf(foeSummary);
+						currentIndex = (currentIndex + 1) % foeSummary.trainer.team.length;
+						foeSummary = foeSummary.trainer.team[currentIndex];
+					}
 				}
 			}
 		}
 	}
 	
+	private void drawBallInfo() {
+		Entry ballEntry = balls.get(ballIndex);
+		int x = gp.tileSize*4;
+		int y = gp.tileSize*2;
+		int width = gp.tileSize*8;
+		int height = gp.tileSize*6;
+		
+		drawSubWindow(x, y, width, height, 250);
+		
+		int centerX = x + gp.tileSize * 4;
+		y += gp.tileSize;
+		
+		x += gp.tileSize / 2;
+		g2.setFont(g2.getFont().deriveFont(32F));
+		String ballTitle = ballEntry.getItem().toString();
+		g2.drawString(ballTitle, x, y);
+		
+		x = (int) (centerX + gp.tileSize * 2.5);
+		g2.drawImage(ballEntry.getItem().getImage2(), x, (int) (y - (gp.tileSize*0.75)), null);
+		
+		x -= 4;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		String amt = ballEntry.getCount() + " x";
+		g2.drawString(amt, getRightAlignedTextX(amt, x), y);
+		
+		x = centerX;
+		y += gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(22F));
+		String[] desc = Item.breakString(ballEntry.getItem().getDesc(), 38).split("\n");
+		int offset = (int) (gp.tileSize * 0.75);
+		for (String s : desc) {
+			g2.drawString(s, getCenterAlignedTextX(s, x), y);
+			y += offset;
+		}
+		
+		y += gp.tileSize / 2;
+		g2.setFont(g2.getFont().deriveFont(28F));
+		String formattedCatchRate = user.getCatchRateFormatted(foe, ballEntry, encType);
+		g2.drawString(formattedCatchRate, getCenterAlignedTextX(formattedCatchRate, x), y);
+		
+		drawToolTips("Use", null, "Back", "Back");
+	}
+
 	protected void drawFoeSummaryParty() {
 		if (!foe.trainerOwned()) return;
 		int windowWidth = gp.tileSize * 3;
@@ -1041,6 +1095,7 @@ public class BattleUI extends AbstractUI {
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				if (ballIndex >= 0) {
+					showFoeSummary = false;
 					Entry ballEntry = balls.get(ballIndex);
 					Task.addTask(Task.TEXT, "You threw a " + ballEntry.getItem().toString() + "!");
 					Task t = Task.addTask(Task.CATCH, "", foe);

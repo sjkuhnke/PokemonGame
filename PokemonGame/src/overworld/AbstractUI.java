@@ -106,7 +106,7 @@ public abstract class AbstractUI {
 	
 	private float getFontSize() {
 		String fontName = g2.getFont().getFamily();
-		if (fontName.equalsIgnoreCase(consolas.getFamily())) {
+		if (consolas != null && fontName.equalsIgnoreCase(consolas.getFamily())) {
 			return 22F;
 		} else {
 			return 28F;
