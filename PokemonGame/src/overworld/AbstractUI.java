@@ -32,6 +32,7 @@ public abstract class AbstractUI {
 	public Font creattion;
 	public Font monsier;
 	public Font cryptik;
+	public Font consolas;
 	public int counter = 0;
 	public boolean showMoveOptions;
 	public boolean showIVOptions;
@@ -92,14 +93,23 @@ public abstract class AbstractUI {
 		}
 		
 		drawSubWindow(x, y, width, height);
-		
-		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,28F));
+		float fontSize = getFontSize();
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,fontSize));
 		x += gp.tileSize;
 		y += gp.tileSize;
 		
 		for (String line : currentDialogue.split("\n")) {
 			g2.drawString(line, x, y);
 			y += 40;
+		}
+	}
+	
+	private float getFontSize() {
+		String fontName = g2.getFont().getFamily();
+		if (fontName.equalsIgnoreCase(consolas.getFamily())) {
+			return 22F;
+		} else {
+			return 28F;
 		}
 	}
 	

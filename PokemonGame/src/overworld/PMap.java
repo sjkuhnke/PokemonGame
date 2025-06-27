@@ -1302,6 +1302,9 @@ public class PMap extends JPanel {
 		case 204:
 			PlayerCharacter.currentMapName = "Iron Town";
 			return 39;
+		case 205:
+			PlayerCharacter.currentMapName = "Route 39";
+			return 38;
 		}
 		
 		return -1;

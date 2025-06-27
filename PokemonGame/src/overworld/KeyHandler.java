@@ -402,13 +402,16 @@ public class KeyHandler implements KeyListener {
 		}
 	}
 	
-	private void dialogueState(int code) {
+	private void dialogueState(int code) {		
 		if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
 			gp.gameState = GamePanel.PLAY_STATE;
 		}
 	}
 	
 	private void messageState(int code) {
+		if (gp.ui.currentTask != null && gp.ui.currentTask.type == Task.SPACE) {
+			return; // don't dismiss message on W/S during SPACE
+		}
 		if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
 			gp.ui.showMessage = false;
 			if (gp.gameState == GamePanel.USE_ITEM_STATE) {

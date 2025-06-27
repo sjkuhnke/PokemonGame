@@ -205,6 +205,7 @@ public class AssetSetter {
 //	private static final int T = 208;
 //	private static final int T = 209;
 	
+	private static final int DOWN_2 = 0;
 	private static final int DOWN = 1;
 	private static final int UP = 2;
 	private static final int LEFT = 4;
@@ -2202,20 +2203,25 @@ public class AssetSetter {
 		mapNum = 152;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(GRANDFATHER, "Day Care Dad", 30, 68, "", mapNum);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 29, 16, "", "", 347);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 29, 22, "", "", 348);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 24, 24, "", "", 349);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 32, 37, "", "", 350);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 39, 38, "", "", 351);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 51, 35, "", "", 352);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_DOWN, 50, 26, "", "", 353);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_LEFT, 57, 19, "", "", 354);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 59, 27, "", "", 355);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 56, 40, "", "", 356);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_RIGHT, 48, 46, "", "", 357);
-		gp.npc[mapNum][index] = NPCSetup(TRAINER_UP, 44, 54, "", "", 358);
-		
-		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_RIGHT, "Alakazam", 66, 31, "");
+		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_RIGHT, "Alakazam", 66, 31, "Vxxxvhh...", 152.1);
+		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, "Ryder", 44, 60, "", 152.2);
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_LEFT, "Arthra", 45, 60, "");
+		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_RIGHT, "Alakazam", 43, 60, "Vxxxvhh...");
+		gp.npc[mapNum][index] = NPCSetup(RYDER_UP, "Ryder", 66, 76, "", 152.3);
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_LEFT, "Arthra", 67, 76, "");
+		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_RIGHT, "Alakazam", 65, 76, "Vxxxvhh...");
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_RIGHT, 29, 16, "Energy's acting strange lately... surging from nowhere. You feel it too, right?", "That power - it's not natural. Like something's hijacking the flow itself... Be careful out there.", 347);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_UP, 29, 22, "When chaos strikes, only discipline remains. Let's see how yours stacks up.", "You're centered. Focused. I see why you're making it through when others are falling.", 348);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_DOWN, 24, 24, "The trees are whispering louder every day. The roots are restless.", "They say nature endures all... but even it's starting to crack.", 349);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_LEFT, 32, 37, "I thought fire would burn the fear away. But this... this is bigger than flame.", "You've got fire too - different kind. Keep it burning. The world needs it.", 350);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_UP, 39, 38, "The earth trembled last night. Not from tectonics - something else woke up.", "You stand firm. Like a mountain that won't budge, no matter the storm.", 351);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_LEFT, 51, 35, "The air's toxic. Not just here - everywhere. Something's tainting the whole region.", "You resisted it. Most don't. Either you've got antidote in your soul... or something stronger.", 352);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_RIGHT, 49, 26, "Logic, precision, control. That's how I fight. Let's see if it's enough against you.", "Even machines fail under pressure. But you... you adapted. That's strength.", 353);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_LEFT, 57, 19, "The spirits are all screaming. But it's not pain - it's warning.", "They've gone quiet now. Like they're watching you instead.", 354);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_UP, 59, 27, "The tides are all wrong. Moon's not even moving right anymore.", "You move like the current itself - steady and unyielding.", 355);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_UP, 56, 40, "Truth hides in the shadows. You only see what you're strong enough to face.", "You saw through me. Through all this. That's rare... and dangerous.", 356);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_RIGHT, 48, 46, "My Pokemon feel the pulses. Whatever's beneath us isn't sleeping anymore.", "You've got grounding. That's rarer than strength these days.", 357);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_UP, 44, 54, "I've heard the roars in the sky. You think it's the end? Nah... just a reckoning.", "That was no normal battle. I felt it. Like something ancient watching from above.", 358);
 		
 		// Nurses
 		gp.npc[153][index] = NPCSetup(NPC_NURSE, 31, 37, "", "", -1);
@@ -2224,7 +2230,7 @@ public class AssetSetter {
 		// Clerks
 		gp.npc[154][index] = NPCSetup(NPC_CLERK, 30, 39, "", "", -1);
 		gp.npc[154][index] = NPCSetup(NPC_BALL, 30, 38, "", "", -1);
-		gp.npc[155][index] = SetupClerk(NPC_MARKET, 31, 4, Item.TM66);
+		gp.npc[155][index] = SetupClerk(NPC_MARKET, 31, 41, Item.ABILITY_CAPSULE, Item.TM66);
 		
 		mapNum = 161;
 		index = 0;
@@ -2479,6 +2485,14 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(BREEDER, "D.C. Daughter", 31, 41, "", mapNum);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 34, 42, "", "", -1);
+		
+		mapNum = 205;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, "Ryder", 24, 43, "", mapNum);
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 31, 99, "");
+		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_RIGHT, "Alakazam", 29, 99, "");
+		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE, 31, 37, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 36, 36, "", "", -1);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -3211,6 +3225,45 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(48, 67, ROCK_SMASH, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(52, 66, ROCK_SMASH, mapNum, map);
 		
+		mapNum = 152;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 15, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 17, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 18, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(33, 17, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(33, 18, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(37, 17, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(28, 21, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(25, 27, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(24, 38, LEFT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(25, 38, LEFT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(26, 38, LEFT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 38, LEFT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(44, 36, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 36, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(46, 36, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 36, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(50, 31, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 25, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 25, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(45, 17, ROCK_SMASH, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(50, 21, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 19, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(58, 21, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 25, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 25, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 25, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(63, 25, RIGHT, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(68, 27, UP, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(68, 28, UP, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(68, 29, UP, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(68, 30, UP, 4, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(59, 32, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(64, 35, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 43, DOWN_2, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 45, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(46, 48, RIGHT, 1, mapNum, map);
+		
 		mapNum = 166;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(47, 50, ICE_BLOCK, mapNum, map);
@@ -3922,6 +3975,25 @@ public class AssetSetter {
 			gp.npc[152][0].setDirection(gp.player.p.nursery.hasEgg() ? "left" : "down");
 		}
 		
+		if (flag[7][18]) {
+			gp.npc[152][1] = null;
+			gp.npc[205][0] = null;
+			gp.npc[205][1] = null;
+			gp.npc[205][2] = null;
+		}
+		
+		if (flag[7][19]) {
+			gp.npc[152][2] = null;
+			gp.npc[152][3] = null;
+			gp.npc[152][4] = null;
+		}
+		
+		if (flag[7][20]) {
+			gp.npc[152][5] = null;
+			gp.npc[152][6] = null;
+			gp.npc[152][7] = null;
+		}
+		
 		gp.setRenderableNPCs();
 	}
 	
@@ -4599,6 +4671,14 @@ public class AssetSetter {
 			case ARTHRA_UP:
 				result.setupImages("/npc/arthra", true);
 				result.setDirection("up");
+				break;
+			case ARTHRA_LEFT:
+				result.setupImages("/npc/arthra", true);
+				result.setDirection("left");
+				break;
+			case ARTHRA_RIGHT:
+				result.setupImages("/npc/arthra", true);
+				result.setDirection("right");
 				break;
 			case RICK:
 				result.setupImages("/npc/rick", true);

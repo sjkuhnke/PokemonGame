@@ -12,6 +12,11 @@ public class Rock_Climb extends InteractiveTile {
 		this.amt = amt;
 		
 		switch (mode) {
+		case 0:
+			this.direction = "down";
+			this.down1 = setup("/interactive/rock_climb5");
+			this.deltaY = 1;
+			break;
 		case 1:
 			this.direction = "down";
 			this.down1 = setup("/interactive/rock_climb2");

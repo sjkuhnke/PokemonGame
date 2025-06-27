@@ -197,7 +197,7 @@ public class Script {
 				}
 				Task.addTask(Task.CONFIRM, npc, "Interested in coming to Rawwar City with me?", 5);
 			} else {
-				Task.addTask(Task.DIALOGUE, npc, "What..? You've never heard of me? I have the most famous restaurant in Xhenos!");
+				Task.addTask(Task.DIALOGUE, npc, "What...? You've never heard of me? I have the most famous restaurant in Xhenos!");
 			}
 		});
 		
@@ -1943,7 +1943,7 @@ public class Script {
 			if (!p.bag.contains(Item.TEMPLE_BALL)) {
 				Puzzle currentPuzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
 				if (currentPuzzle.isLocked()) {
-					Task.addTask(Task.DIALOGUE, npc, "You used my Temple Ball..?");
+					Task.addTask(Task.DIALOGUE, npc, "You used my Temple Ball...?");
 					Task.addTask(Task.DIALOGUE, npc, "You must pray that its the species he required.");
 					Task.addTask(Task.DIALOGUE, npc, "I can't give you another until you cast the reset spell on this place.");
 					Task.addTask(Task.DIALOGUE, npc, "Find the empty painting to try again.");
@@ -1972,7 +1972,7 @@ public class Script {
 				currentPuzzle.setLocked(true);
 			} else {
 				if (currentPuzzle.isLost()) {
-					Task.addTask(Task.DIALOGUE, npc, "But you're out of orbs..?");
+					Task.addTask(Task.DIALOGUE, npc, "But you're out of orbs...?");
 					Task.addTask(Task.DIALOGUE, npc, "I pray for you. You aren't strong enough to meet him.");
 					Task.addTask(Task.DIALOGUE, npc, "I can't give you any more until you cast the reset spell on this place.");
 					Task.addTask(Task.DIALOGUE, npc, "Find the empty painting to try again.");
@@ -2145,7 +2145,7 @@ public class Script {
 			if (!p.bag.contains(Item.TEMPLE_BALL)) {
 				Puzzle currentPuzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
 				if (currentPuzzle.isLocked()) {
-					Task.addTask(Task.DIALOGUE, npc, "You used my Temple Ball..?");
+					Task.addTask(Task.DIALOGUE, npc, "You used my Temple Ball...?");
 					Task.addTask(Task.DIALOGUE, npc, "You must pray that its the species he required.");
 					Task.addTask(Task.DIALOGUE, npc, "I can't give you another until you cast the reset spell on this place.");
 					Task.addTask(Task.DIALOGUE, npc, "Find the empty statue pedestal to try again.");
@@ -2382,7 +2382,7 @@ public class Script {
 			}
 		});
 		
-		scriptMap.put(152.0, (npc) -> {
+		scriptMap.put(152.0, (npc) -> { // nursery outside
 			if (p.flag[7][22]) {
 				if (p.nursery == null) {
 					Task.addTask(Task.DIALOGUE, npc, "Hey there - I don't believe we've met! Welcome to Xhenos's quaint little Pokemon nursery!");
@@ -2396,7 +2396,7 @@ public class Script {
 			}
 		});
 		
-		scriptMap.put(204.0, (npc) -> {
+		scriptMap.put(204.0, (npc) -> { // nursery inside
 			if (p.flag[7][22]) {
 				if (p.nursery == null) {
 					Task.addTask(Task.DIALOGUE, npc, "Hi, nice to meet you. Welcome to our Pokemon nursery.");
@@ -2411,6 +2411,200 @@ public class Script {
 				Entity question = new Entity(gp, "???");
 				Task.addTask(Task.DIALOGUE, question, "...");
 			}
+		});
+		
+		scriptMap.put(152.1, (npc) -> { // alakazam outside shack
+			Task.addTask(Task.TEXT, "Alakazam is standing firm. It won't let you pass.");
+			Task.addTask(Task.TEXT, "Maybe someone important is inside the shack nearby...");
+		});
+		
+		scriptMap.put(205.0, (npc) -> { // ryder inside shack
+			p.flag[7][18] = true;
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+			Task.addTask(Task.SPOT, npc, "");
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.TURN, player, "", Task.LEFT);
+			Task.addNPCMoveTask('x', 30 * gp.tileSize, player, false, 4);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.TURN, player, "", Task.RIGHT);
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.FLASH_IN, "");
+			Task.addNPCMoveTask('y', 45 * gp.tileSize, gp.npc[205][1], false, 2592);
+			Task.addTask(Task.FLASH_OUT, "");
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.TURN, player, "", Task.LEFT);
+			Task.addTask(Task.TURN, gp.npc[205][1], "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, npc, "Oh! Uh... finally. Someone not wearing sunglasses and lookin' like a zombie...");
+			Task.addTask(Task.SLEEP, "", 5);
+			Task.addNPCMoveTask('x', 30 * gp.tileSize, npc, false, 4);
+			Task.addTask(Task.TURN, player, "", Task.UP);
+			Task.addTask(Task.TURN, gp.npc[205][1], "", Task.UP);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.TURN, npc, "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, npc, "I've been holed up here all night. I thought it was just the paparazzi chasin' me again.");
+			Task.addTask(Task.DIALOGUE, npc, "My whole team and I had to fight 'em off - 'cept Alakazam. He's been standing guard.");
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addNPCMoveTask('y', 43 * gp.tileSize, gp.npc[205][1], false, 4);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.TURN, gp.npc[205][1], "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 5);
+			Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, gp.npc[205][1], "You really thought they were chasing you for autographs?!");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, gp.npc[205][1], "Ryder, all of Xhenos is under control. Dragowrath's doing. It's not fans dude, it's... possession.");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.TURN, npc, "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, npc, "Wait, what? You're saying the glowing-eyed mob and the sky laser are connected??");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, gp.npc[205][1], "Yes, Ryder. And look, we need you here. There's a space station in Iron Town. It might be the only way to reach Dragowrath.");
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, npc, "...We're going to space now?");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.TURN, npc, "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, npc, "...Guess it's not the weirdest thing that's happened this week.");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.FLASH_IN, "");
+			Task.addNPCMoveTask('y', 43 * gp.tileSize, gp.npc[205][2], false, 2688);
+			Task.addTask(Task.FLASH_OUT, "");
+			Task.addTask(Task.TURN, npc, "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, gp.npc[205][2], "Vxxxvhh...");
+			Task.addTask(Task.SLEEP, "", 25);
+			Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, npc, "...There he is. Finally. He's been weirdly quiet.");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.TURN, npc, "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, npc, "Well, you guys ready? Let's do this thing. To Iron Town we go!");
+			Task.addTask(Task.FLASH_IN, "");
+			Task.addTask(Task.UPDATE, "");
+			Task.addTask(Task.FLASH_OUT, "");
+		});
+		
+		scriptMap.put(152.2, (npc) -> { // ryder/arthra at iron town entrance
+			p.flag[7][19] = true;
+			Task.addCameraMoveTask('y', -120, 2);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.DIALOGUE, npc, "Ugh... My head... it's like static, but... inside.");
+			Task.addTask(Task.DIALOGUE, npc, "I can hear voices that aren't mine. They're... loud. Angry. Calculating.");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addCameraMoveTask('y', 0, 4);
+			Task.addNPCMoveTask('y', 57 * gp.tileSize, player, false, 4);
+			Task.addTask(Task.TURN, gp.npc[152][3], "", Task.UP);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, gp.npc[152][3], "He's feeling the pull. Dragowrath's possession. Same as the others.");
+			Task.addTask(Task.DIALOGUE, gp.npc[152][3], "It's starting to dig into his thoughts... rewriting them.");
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.TURN, gp.npc[152][3], "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addNPCMoveTask('y', 59 * gp.tileSize, player, false, 4);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.TURN, player, "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 5);
+			Task.addTask(Task.DIALOGUE, npc, "I thought I could resist it. Thought I was strong. But this thing - it doesn't break you... it rewires you.");
+			Task.addTask(Task.SLEEP, "", 25);
+			Task.addTask(Task.DIALOGUE, npc, "I can feel it trying to overwrite who I am.");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.TURN, player, "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 5);
+			Task.addTask(Task.TURN, gp.npc[152][3], "", Task.UP);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, gp.npc[152][3], "We need to move - fast. Before it finishes its grip.");
+			Task.addTask(Task.DIALOGUE, gp.npc[152][3], "Alakazam's the only thing keeping him grounded right now...");
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.TURN, player, "", Task.LEFT);
+			Task.addTask(Task.TURN, gp.npc[152][3], "", Task.LEFT);
+			Task.addCameraMoveTask('x', 60, 2);
+			Task.addTask(Task.SLEEP, "", 20);
+			Task.addTask(Task.DIALOGUE, gp.npc[152][4], "Vxxxvhh...");
+			Task.addTask(Task.SLEEP, "", 40);
+			Task.addCameraMoveTask('x', 0, 3);
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.TURN, player, "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 5);
+			Task.addTask(Task.TURN, gp.npc[152][3], "", Task.UP);
+			Task.addTask(Task.DIALOGUE, gp.npc[152][3], "...And I don't think that's going to last much longer.");
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, gp.npc[152][3], "We need to get him to the space center.");
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, gp.npc[152][3], "Now.");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.TURN, player, "", Task.LEFT);
+			Task.addTask(Task.TURN, gp.npc[152][3], "", Task.LEFT);
+			Task.addTask(Task.DIALOGUE, gp.npc[152][4], "Vxxxvhh...");
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.DIALOGUE, npc, "Alakazam... thank you.");
+			Task.addTask(Task.FLASH_IN, "");
+			Task.addTask(Task.UPDATE, "");
+			Task.addTask(Task.FLASH_OUT, "");
+		});
+		
+		scriptMap.put(152.3, (npc) -> { // ryder/arthra before spaceship
+			p.flag[7][20] = true;
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, npc, "Agh - it's happening-! I can't stop it... I can't-!");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, gp.npc[152][7], "Vxxxvhh!");
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addParticleTask(gp.npc[152][7], "smoke", new Color(252, 142, 140), 100);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.TURN, gp.npc[152][7], "", Task.UP);
+			Task.addTask(Task.SLEEP, "", 20);
+			Task.addTask(Task.DIALOGUE, gp.npc[152][6], "...Alakazam...?");
+			Task.addTask(Task.SLEEP, "", 20);
+			Task.addTask(Task.TURN, gp.npc[152][6], "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 45);
+			Task.addTask(Task.DIALOGUE, gp.npc[152][6], "...No. Ryder's gone. Alakazam's taken control of his body. He's piloting it like a shell.");
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.TURN, npc, "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 5);
+			Task.addTask(Task.TURN, gp.npc[152][6], "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, npc, "...Systems stable. Manual override engaged. Emotional core suppressed.", 2);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addTask(Task.DIALOGUE, npc, "I will fly the vessel. It is... the only logical solution.", 2);
+			Task.addTask(Task.SLEEP, "", 20);
+			Task.addTask(Task.TURN, gp.npc[152][6], "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, gp.npc[152][6], "He's not himself - but this might be the only way to get off the planet.");
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.TURN, gp.npc[152][6], "", Task.UP);
+			Task.addTask(Task.SLEEP, "", 10);
+			Task.addCameraMoveTask('y', 150, 2);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.DIALOGUE, npc, "Board now. The window for orbital alignment is short. We must depart.", 2);
+			Task t = Task.addTask(Task.TELEPORT, "");
+			t.counter = gp.currentMap;
+			t.start = player.worldX / gp.tileSize;
+			t.finish = player.worldY / gp.tileSize;
+			t.color = Color.BLACK;
+			Task.addTask(Task.SPACE, "", 432);
+			Task.addTask(Task.SPACE, gp.npc[152][6], "...This is really happening.", 200);
+			Task.addTask(Task.SPACE, "", 50);
+			Task.addTask(Task.SPACE, gp.npc[152][6], "We're in space.", 200);
+			Task.addTask(Task.SPACE, "", 25);
+			Task.addTask(Task.SPACE, gp.npc[152][6], "Fighting a space demon god thing.", 200);
+			Task.addTask(Task.SPACE, "", 75);
+			Task.addTask(Task.SPACE, gp.npc[152][6], "This is my destiny. This is me. This is us.", 200);
+			Task.addTask(Task.SPACE, "", 100);
+			t = Task.addTask(Task.SPACE, npc, "Trajectory stable. Combat probabilities... uncertain.", 200);
+			t.finish = 2;
+			Task.addTask(Task.SPACE, "", 50);
+			Task.addTask(Task.SPACE, gp.npc[152][6], "...Thanks for the vote of confidence, Alakazam.", 150);
+			Task.addTask(Task.SPACE, "", 300);
+			t = Task.addTask(Task.SPACE, "", 50);
+			t.start = 160;
+			t.color = Color.BLACK;
 		});
 	}
 	
