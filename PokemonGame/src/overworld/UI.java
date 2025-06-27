@@ -298,7 +298,9 @@ public class UI extends AbstractUI {
 		
 		if (showMessage) {
 			drawDialogueScreen(above);
-			drawToolTips("OK", null, null, null);
+			if (messageSkippable()) {
+				drawToolTips("OK", null, null, null);
+			}
 		}
 		drawKeyStrokes();
 	}
@@ -651,6 +653,10 @@ public class UI extends AbstractUI {
 			break;
 		}
 		return font;
+	}
+	
+	public boolean messageSkippable() {
+		return !(currentTask != null && currentTask.type == Task.SPACE);
 	}
 
 	private void drawParticles() {

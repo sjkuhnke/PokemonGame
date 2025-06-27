@@ -8569,11 +8569,19 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	public boolean getCapture(Pokemon foe, Entry ball, char encType) {
 		Random rand = new Random();
+		this.getPlayer().bag.remove(ball.getItem());
+		
+		gp.battleUI.setupBalls();
+		
+		int randomValue = rand.nextInt(255);
+        return randomValue <= getModifiedCatchRate(foe, ball, encType, true);
+	}
+	
+	public int getModifiedCatchRate(Pokemon foe, Entry ball, char encType, boolean sim) {
         double ballBonus = 0;
         int catchR = foe.catchRate;
         
         Item ballType = ball.getItem();
-        this.getPlayer().bag.remove(ball.getItem());
         
         switch (ballType) {
         case POKEBALL:
@@ -8591,15 +8599,18 @@ public class Pokemon implements RoleAssignable, Serializable {
         	ballBonus = 2;
         	break;
         case MASTER_BALL:
-        	return true;
+        	return 1000;
         case TEMPLE_BALL:
-        	Puzzle puzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
-        	if (puzzle != null) {
-        		puzzle.update(foe);
+        	if (!sim) {
+        		Puzzle puzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
+            	if (puzzle != null) {
+            		puzzle.update(foe);
+            	}
         	}
-        	return true;
+        	return 1000;
         case BEAST_BALL:
         	ballBonus = isUltraBeast(foe.id) ? 5 : 0.1;
+        	break;
         case QUICK_BALL:
         	ballBonus = field.turns == 0 ? 5 : 1;
         	break;
@@ -8637,7 +8648,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         	ballBonus = encType == 'F' ? 5 : 1;
         	break;
         case LOVE_BALL:
-        	ballBonus = this.id == foe.id ? 8 : 2; // eventually change to being same species -> then same egg group -> then 1
+        	ballBonus = this.isSameSpeciesAs(foe) ? 8 : this.isCompatible(foe) ? 4 : 1;
         	break;
         case LEVEL_BALL:
         	if (this.level < foe.level) {
@@ -8677,11 +8688,13 @@ public class Pokemon implements RoleAssignable, Serializable {
         catchRate *= statusBonus;
         int modifiedCatchRate = (int) Math.round(catchRate);
         
-        int randomValue = rand.nextInt(255);
-        
-        gp.battleUI.setupBalls();
-        
-        return randomValue <= modifiedCatchRate;
+       return Math.max(modifiedCatchRate, 1);
+	}
+	
+	public String getCatchRateFormatted(Pokemon foe, Entry ball, char encType) {
+		double catchRate = getModifiedCatchRate(foe, ball, encType, false);
+		catchRate = Math.min(catchRate, 255.0);
+		return String.format("%.3f", catchRate * 100.0 / 255) + "% to catch";
 	}
 
 	public static boolean isUltraBeast(int id) {
@@ -9854,6 +9867,16 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (p2Groups.contains(eg)) return true;
 		}
 		
+		return false;
+	}
+
+	public boolean isSameSpeciesAs(Pokemon other) {
+		ArrayList<String> evoFamily = this.getEvolutionFamily();
+		for (String s : evoFamily) {
+			if (Pokemon.getIDFromName(s) == other.id) {
+				return true;
+			}
+		}
 		return false;
 	}
 	

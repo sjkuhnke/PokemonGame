@@ -231,37 +231,37 @@ public class KeyHandler implements KeyListener {
 				}
 			}
 			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
-				if (!gp.battleUI.showFoeSummary) {
-					if (gp.battleUI.commandNum >= 0) {
+				if (gp.battleUI.commandNum >= 0) {
+					if (!gp.battleUI.showFoeSummary) {
 						if (gp.battleUI.commandNum % 2 == 1) {
 							gp.battleUI.commandNum--;
 						}
 					} else {
-						if ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.balls.size() > 1) {
-							if (--gp.battleUI.ballIndex < 0) {
-								gp.battleUI.ballIndex = gp.battleUI.balls.size() - 1;
-							}
-						}
+						leftPressed = true;
 					}
 				} else {
-					leftPressed = true;
+					if ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.balls.size() > 1) {
+						if (--gp.battleUI.ballIndex < 0) {
+							gp.battleUI.ballIndex = gp.battleUI.balls.size() - 1;
+						}
+					}
 				}
 			}
 			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
-				if (!gp.battleUI.showFoeSummary) {
-					if (gp.battleUI.commandNum >= 0) {
+				if (gp.battleUI.commandNum >= 0) {
+					if (!gp.battleUI.showFoeSummary) {
 						if (gp.battleUI.commandNum % 2 == 0) {
 							gp.battleUI.commandNum++;
 						}
 					} else {
-						if ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.balls.size() > 1) {
-							if (++gp.battleUI.ballIndex >= gp.battleUI.balls.size()) {
-								gp.battleUI.ballIndex = 0;
-							}
-						}
+						rightPressed = true;
 					}
 				} else {
-					rightPressed = true;
+					if ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.balls.size() > 1) {
+						if (++gp.battleUI.ballIndex >= gp.battleUI.balls.size()) {
+							gp.battleUI.ballIndex = 0;
+						}
+					}
 				}
 			}
 			if (code == KeyEvent.VK_S) {
@@ -409,10 +409,7 @@ public class KeyHandler implements KeyListener {
 	}
 	
 	private void messageState(int code) {
-		if (gp.ui.currentTask != null && gp.ui.currentTask.type == Task.SPACE) {
-			return; // don't dismiss message on W/S during SPACE
-		}
-		if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
+		if (gp.ui.messageSkippable() && ( code == KeyEvent.VK_W || code == KeyEvent.VK_S)) {
 			gp.ui.showMessage = false;
 			if (gp.gameState == GamePanel.USE_ITEM_STATE) {
 				gp.ui.goBackInBag();
