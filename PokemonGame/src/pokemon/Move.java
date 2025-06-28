@@ -751,7 +751,7 @@ public enum Move {
 			if (user.ability == Ability.NORMALIZE) bp *= 1.2;
 			if (user.getItem() == Item.METRONOME && this == user.lastMoveUsed) bp *= (1 + (Math.min(1.0, (user.metronome + 1) * 0.2)));
 			int arcane = user.getStatusNum(Status.ARCANE_SPELL);
-			if (arcane != 0) {
+			if (arcane != 0 && bp > 20) {
 				bp = Math.max(bp - arcane, 20);
 			}
 			if (Pokemon.field != null) {

@@ -65,7 +65,7 @@ public class Task {
 	public static final int ODDS = 49;
 	public static final int BET_BATTLE = 50;
 	public static final int GAME_STATE = 51; // counter: what game state to swtich to
-	private static final int SHINY = 52;
+	public static final int SHINY = 52;
 	public static final int PAYOUT = 53;
 	public static final int PARLAY = 54;
 	public static final int INTERACTIVE = 55;
@@ -198,6 +198,27 @@ public class Task {
 		case SHAKE: return "SHAKE";
 		case MOVE_CAMERA: return "MOVE_CAMERA";
 		case MOVE_NPC: return "MOVE_NPC";
+		case SLEEP: return "SLEEP";
+		case BLACKJACK: return "BLACKJACK";
+		case MUSHROOM: return "MUSHROOM";
+		case COIN: return "COIN";
+		case EVO_INFO: return "EVO_INFO";
+		case ODDS: return "ODDS";
+		case BET_BATTLE: return "BET_BATTLE";
+		case GAME_STATE: return "GAME_STATE";
+		case SHINY: return "SHINY";
+		case PAYOUT: return "PAYOUT";
+		case PARLAY: return "PARLAY";
+		case INTERACTIVE: return "INTERACTIVE";
+		case TYPES: return "TYPES";
+		case EVOLUTION: return "EVOLUTION";
+		case PARTICLE: return "PARTICLE";
+		case RESET: return "RESET";
+		case I_TILE: return "I_TILE";
+		case AWAKE: return "AWAKE";
+		case NURSERY_DEPOSIT: return "NURSERY_DEPOSIT";
+		case NURSERY_WITHDRAW: return "NURSERY_WITHDRAW";
+		case SPACE: return "SPACE";
 		default:
 			return "getTypeString() doesn't have a case for this type";
 		}
@@ -273,6 +294,7 @@ public class Task {
 	public static void addEvoTask(Pokemon p, int result, int index) {
 		Task t = createTask(Task.EVO, p.nickname + " is evolving!\nDo you want to evolve your " + p.nickname + "?", p);
 		t.counter = result;
+		t.start = p.id;
 		insertTask(t, index);
 	}
 	

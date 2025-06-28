@@ -139,33 +139,7 @@ public class WelcomeMenu extends JPanel {
 
 	    // Add ActionListener to update labels
 	    fileName.addActionListener(e -> {
-	        String name = (String) fileName.getSelectedItem();
-
-	        if (name != null) {
-	        	Player current = SaveManager.loadPlayer(name);
-	        	if (current != null) {
-	                for (int i = 0; i < 6; i++) {
-	                    Pokemon p = current.team[i];
-	                    icons[i].setIcon(getMiniSprite(p));
-	                }
-
-	                PMap.getLoc(current.currentMap, (int) Math.round(current.getPosX() * 1.0 / 48), (int) Math.round(current.getPosY() * 1.0 / 48));
-	                location.setText("     " + PlayerCharacter.currentMapName);
-	                repaint();
-
-	                // Set the last modified time of the selected file
-	                File saveFile = new File(SaveManager.getSavePath(name).toString());
-	                long lastModified = saveFile.lastModified();
-	                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm");
-	                String lastModifiedStr = "    " + sdf.format(new Date(lastModified));
-
-	                // Update the last modified label
-	                lastModifiedLabel.setText(lastModifiedStr);
-
-	            } else {
-	                System.err.println("SaveManager returned a null player from loadSave");
-	            }
-	        }
+	        loadPlayer(fileName, icons, location, lastModifiedLabel);
 	    });
 
 	    // Add the last modified label below the icon panel
@@ -274,7 +248,7 @@ public class WelcomeMenu extends JPanel {
 	            return;
 	        }
 
-	        manageFile(selectedFile, fileName);
+	        manageFile(selectedFile, fileName, icons, location, lastModifiedLabel);
 	    });
 
 	    add(titleLabel);
@@ -287,6 +261,37 @@ public class WelcomeMenu extends JPanel {
 	    add(optionsPanel);
 	}
 	
+	private void loadPlayer(JComboBox<String> fileNames, JLabel[] icons, OutlineLabel location, OutlineLabel lastModifiedLabel) {
+		String name = (String) fileNames.getSelectedItem();
+
+        if (name != null) {
+        	Player current = SaveManager.loadPlayer(name);
+        	if (current != null) {
+                for (int i = 0; i < 6; i++) {
+                    Pokemon p = current.team[i];
+                    icons[i].setIcon(getMiniSprite(p));
+                }
+
+                PMap.getLoc(current.currentMap, (int) Math.round(current.getPosX() * 1.0 / 48), (int) Math.round(current.getPosY() * 1.0 / 48));
+                location.setText("     " + PlayerCharacter.currentMapName);
+                repaint();
+
+                // Set the last modified time of the selected file
+                File saveFile = new File(SaveManager.getSavePath(name).toString());
+                long lastModified = saveFile.lastModified();
+                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+                String lastModifiedStr = "    " + sdf.format(new Date(lastModified));
+
+                // Update the last modified label
+                lastModifiedLabel.setText(lastModifiedStr);
+
+            } else {
+                System.err.println("SaveManager returned a null player from loadSave");
+            }
+        }
+		
+	}
+
 	private void styleCheckBox(JCheckBox box) {
 		box.setOpaque(false);
 		box.setFont(box.getFont().deriveFont(16F));
@@ -309,7 +314,7 @@ public class WelcomeMenu extends JPanel {
 	    return fileName.matches("[a-zA-Z0-9_\\-]+") && fileName.length() <= 20 && !fileName.trim().isEmpty();
 	}
 	
-	private void manageFile(String name, JComboBox<String> fileNames) {
+	private void manageFile(String name, JComboBox<String> fileNames, JLabel[] icons, OutlineLabel location, OutlineLabel lastModifiedLabel) {
         String[] options = {"Rename", "Delete", "Open Location", "Cancel"};
         int choice = JOptionPane.showOptionDialog(this,
                 "Select an action for " + name + ":",
@@ -353,6 +358,7 @@ public class WelcomeMenu extends JPanel {
                     try {
                         SaveManager.deleteSave(name);
                         updateFileList(fileNames);
+                        loadPlayer(fileNames, icons, location, lastModifiedLabel);
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }

@@ -131,15 +131,21 @@ public class TrainerDoc {
 	}
 	
 	private static CellStyle makeStyle(Workbook wb, boolean bold, boolean italic, int fontSize, short color) {
+		XSSFFont font = makeFont(wb, bold, italic, fontSize, color);
+
+	    CellStyle style = wb.createCellStyle();
+	    style.setFont(font);
+	    return style;
+	}
+	
+	private static XSSFFont makeFont(Workbook wb, boolean bold, boolean italic, int fontSize, short color) {
 		XSSFFont font = (XSSFFont) wb.createFont();
         font.setFontHeightInPoints((short) fontSize);
 	    font.setBold(bold);
 	    font.setItalic(italic);
 	    font.setColor(color);
-
-	    CellStyle style = wb.createCellStyle();
-	    style.setFont(font);
-	    return style;
+	    
+	    return font;
 	}
 	
 	private static void insertImage(Sheet sheet, byte[] imageBytes, int col, int row, int colSpan, int rowSpan, double scaleX, double scaleY) {
@@ -206,13 +212,34 @@ public class TrainerDoc {
 	    Cell moneyCell = rewardRow.createCell(colStart);
 	    Cell rewardCell = rewardRow.createCell(1);
 	    
-	    moneyCell.setCellValue("$" + tr.getMoney());
-	    moneyCell.setCellStyle(makeStyle(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
+	    moneyCell.setCellValue(tr.getMoney());
+	    
+	    XSSFCellStyle currencyStyle = (XSSFCellStyle) sheet.getWorkbook().createCellStyle();
+	    currencyStyle.setDataFormat(sheet.getWorkbook().createDataFormat().getFormat("$#,##0"));
+	    currencyStyle.setFont(makeFont(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
+	    moneyCell.setCellStyle(currencyStyle);
 	    
 	    if (tr.getItem() != null) rewardCell.setCellValue("Gives: " + tr.getItem().toString());
 	    rewardCell.setCellStyle(makeStyle(sheet.getWorkbook(), false, true, 12, IndexedColors.BLACK.getIndex()));
 	    
 	    sheet.addMergedRegion(new CellRangeAddress(rewardRow.getRowNum(), rewardRow.getRowNum(), 1, 4));
+	    
+	    // Item
+        int itemPixelSize = 24; // Desired image dimension in pixels
+    	int charWidth = (int)(itemPixelSize * 256 / 7.001); // Excel column width
+    	
+        if (tr.getItem() != null) {
+			try {
+				byte[] itemImg = imageToBytes(tr.getItem().getImage(), "png");
+				if (itemImg != null) {
+	                rewardRow.setHeight((short) 372); // match row height
+
+	                insertImage(sheet, itemImg, 5, rewardRow.getRowNum(), 1, 1, 1, 1);
+	            }
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        }
 
 	    // Pokémon info in a horizontal block per team member
 	    Row nameRow2 = sheet.createRow(startRow++);
@@ -258,7 +285,7 @@ public class TrainerDoc {
 	        	
 	        	// Set square size for sprite cells (adjust as needed)
 	        	int spritePixelSize = 80; // Desired image dimension in pixels
-	        	int charWidth = (int)(spritePixelSize * 256 / 7.001); // Excel column width
+	        	charWidth = (int)(spritePixelSize * 256 / 7.001); // Excel column width
 	        	
 	        	spriteRow.setHeight((short) 804);
 	        	spriteRow2.setHeight((short) 804);
@@ -277,7 +304,7 @@ public class TrainerDoc {
 		        }
 	
 		        // Item
-		        int itemPixelSize = 24; // Desired image dimension in pixels
+		        itemPixelSize = 24; // Desired image dimension in pixels
 	        	charWidth = (int)(itemPixelSize * 256 / 7.001); // Excel column width
 		        
 		        Cell itemCell = itemRow.createCell(col);

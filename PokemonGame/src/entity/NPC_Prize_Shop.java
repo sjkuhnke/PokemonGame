@@ -2,6 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -80,15 +81,23 @@ public class NPC_Prize_Shop extends Entity {
 	}
 	
 	public List<Pair<Item, Integer>> getCoinItems() {
-		return Arrays.asList(
+		int available = 0;
+		int badges = gp.player.p.badges;
+		if (badges > 4) available += 3; // air balloon, eject button and eject pack
+		if (badges > 3) available += 3; // weakness policy, blunder policy, red card
+		if (badges > 2) available++; // focus sash
+		if (badges > 1) available += 3; // white herb, power herb, throat spray
+		if (badges > 0) available += 3; // mental herb, mirror herb, room service
+		
+		List<Pair<Item, Integer>> items = Arrays.asList(
 			// coin items
-			new Pair<>(Item.WHITE_HERB, 5),
-			new Pair<>(Item.POWER_HERB, 5),
 			new Pair<>(Item.MENTAL_HERB, 5),
 			new Pair<>(Item.MIRROR_HERB, 5),
-			new Pair<>(Item.FOCUS_SASH, 10),
 			new Pair<>(Item.ROOM_SERVICE, 10),
+			new Pair<>(Item.WHITE_HERB, 5),
+			new Pair<>(Item.POWER_HERB, 5),
 			new Pair<>(Item.THROAT_SPRAY, 15),
+			new Pair<>(Item.FOCUS_SASH, 10),
 			new Pair<>(Item.BLUNDER_POLICY, 20),
 			new Pair<>(Item.WEAKNESS_POLICY, 20),
 			new Pair<>(Item.RED_CARD, 25),
@@ -96,6 +105,16 @@ public class NPC_Prize_Shop extends Entity {
 			new Pair<>(Item.EJECT_BUTTON, 30),
 			new Pair<>(Item.EJECT_PACK, 30)
 		);
+		
+		ArrayList<Pair<Item, Integer>> result = new ArrayList<>();
+		
+		for (int i = 0; i < available; i++) {
+			result.add(items.get(i));
+		}
+		
+		result.sort(Comparator.comparing(Pair<Item, Integer>::getSecond).thenComparing(pair -> pair.getFirst().getID()));
+		
+		return result;
 	}
 	
 	public List<Pair<Item, Integer>> getWinItems() {

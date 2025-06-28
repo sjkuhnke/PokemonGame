@@ -76,7 +76,6 @@ public class Player extends Trainer implements Serializable {
 	public boolean random = false;
 	public boolean ghost = false;
 	public int steps;
-	public boolean fish;
 	public boolean repel;
 	public boolean surf;
 	public boolean lavasurf;
@@ -286,7 +285,7 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	public boolean canCatchPokemonHere(String location, Pokemon p) {
-		return !isDupes(p) && !this.nuzlockeEncounters.contains(location);
+		return !p.trainerOwned() && !isDupes(p) && !this.nuzlockeEncounters.contains(location);
 	}
 	
 	public void removeEncounterArea(String location, Pokemon p) {
@@ -531,7 +530,6 @@ public class Player extends Trainer implements Serializable {
 		JCheckBox[] locations = new JCheckBox[12];
 		JButton importTrainers = new JButton("Import Trainers");
 		JButton importItems = new JButton("Import ObjectItems");
-		JCheckBox fish = new JCheckBox("Fishing Rod");
 		JComboBox<Integer> grustCount = new JComboBox<>();
 		
 		JButton confirm = new JButton("Confirm");
@@ -657,9 +655,6 @@ public class Player extends Trainer implements Serializable {
 		result.add(importTrainers);
 		result.add(importItems);
 		
-		fish.setSelected(this.fish);
-		result.add(fish);
-		
 		for (int i = 0; i < 11; i++) {
 			grustCount.addItem(i);
 		}
@@ -685,7 +680,6 @@ public class Player extends Trainer implements Serializable {
 			for (int i = 0; i < locations.length; i++) {
 				this.locations[i] = locations[i].isSelected();
 			}
-			this.fish = fish.isSelected();
 			this.grustCount = grustCount.getSelectedIndex();
 			SwingUtilities.getWindowAncestor(result).dispose();
 		});
@@ -1805,7 +1799,6 @@ public class Player extends Trainer implements Serializable {
 		newPlayer.random = random;
 		newPlayer.ghost = ghost;
 		newPlayer.steps = steps;
-		newPlayer.fish = fish;
 		newPlayer.repel = repel;
 		newPlayer.surf = surf;
 		newPlayer.lavasurf = lavasurf;
@@ -1845,7 +1838,6 @@ public class Player extends Trainer implements Serializable {
 		p.evolve(counter);
 		
         Task text = Task.createTask(Task.EVOLUTION, oldNickname + " evolved into " + p.name() + "!", p);
-        text.counter = oldID;
         text.types = new PType[] {p.type1, p.type2};
         Task.insertTask(text, 0);
         pokedex[p.id] = 2;
@@ -1861,7 +1853,7 @@ public class Player extends Trainer implements Serializable {
         	}
         }
         
-        if (p.slot == 0) {
+        if (p == getCurrent()) {
         	gp.battleUI.userHP = p.currentHP;
         	gp.battleUI.maxUserHP = p.getStat(0);
         }
@@ -1869,7 +1861,16 @@ public class Player extends Trainer implements Serializable {
         p.checkMove(i, p.level);
         
         ArrayList<Task> tasks = gp.getTasks();
-        tasks.removeIf(task -> task.type == Task.EVO && task.p.slot == p.slot && task.counter == oldID);
+        System.out.println(tasks.toString());
+        System.out.println("Before removal:");
+        for (Task task : tasks) {
+            if (task.type == Task.EVO) {
+                System.out.printf("Task - p.slot: %d, start: %d, name: %s\n",
+                    task.p.slot, task.start, task.p.name());
+            }
+        }
+        System.out.printf("oldID: %s, p.slot: %d\n", oldID, p.slot);
+        tasks.removeIf(task -> task.type == Task.EVO && task.p.slot == p.slot && task.start == oldID);
         for (int j = 1; j < tasks.size(); j++) {
         	Task t = tasks.get(j);
         	if (t.message.contains(oldNickname)) {

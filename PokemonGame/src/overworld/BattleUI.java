@@ -487,7 +487,6 @@ public class BattleUI extends AbstractUI {
 				foeType = currentTask.types;
 				foeName = currentTask.p.nickname;
 			}
-			endTask();
 			break;
 		}
 	}
@@ -537,8 +536,13 @@ public class BattleUI extends AbstractUI {
 	protected void drawUserParty() {
 		int x = 10;
 		int y = 10;
+		drawPartyIcons(user, x, y);
+	}
+	
+	private void drawPartyIcons(Pokemon current, int x, int y) {
 		int width = 20;
-		for (Pokemon p : user.getPlayer().getTeam()) {
+		Pokemon[] team = current.trainer.getSlotOrderedTeam();
+		for (Pokemon p : team) {
 			BufferedImage image;
 			if (p == null || p instanceof Egg) {
 				image = emptyIcon;
@@ -558,25 +562,8 @@ public class BattleUI extends AbstractUI {
 		if (!foe.trainerOwned()) return;
 		int x = gp.screenWidth - 130;
 		int y = 10;
-		int width = 20;
 		
-		int yellowIndex = foeFainted;
-		for (int i = 0; i < 6; i++) {
-		   BufferedImage image = ballIcon;
-
-		    if (i < foe.trainer.getTeam().length) {
-	            if (i < yellowIndex) {
-	                image = faintedIcon;
-	            }
-	            if (i == yellowIndex && foe.isVisible()) {
-	            	image = currentIcon;
-	            }
-		    } else {
-		    	image = emptyIcon;
-		    }
-		    g2.drawImage(image, x, y, null);
-            x += width;
-		}
+		drawPartyIcons(foe, x, y);
 	}
 
 	protected void drawStatus(Pokemon p) {

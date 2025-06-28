@@ -6,14 +6,24 @@ Make wild pokemon sometimes hold items (for balancing, can't covet bc it'll clea
 Remove the "first dialogue" thing from script npcs and make if the name is null then it'll put "???" as their name. this can be
 used to then not reveal the npc's name until they introduce themselves
 
+Moves stuff:
+Contact
+Crit Rate
+Priority
+Slicing
+Punching
+Tail
+No Combo (can't be used after a No Combo move)
+Sound
+Biting
+Healing (for Heal Block)
+
 Quality of Life
 Add exp trainer in Schrice City
-Add a nuzlocke check box when creating a new game
 Make NPCs tell about old features being updated (deletable HMs, updated moves, etc)
 
 Implementation/Bug Fixes
 Finish TMs (legendaries only)
-Add more sashes to Gym 5/6 split
 Encounters on R43 E over vine cross should be same as R43 W
 Swap in text say "forced out"/"forced in" on random switch ins (Whirlwind etc)
 Life Orb + Assault Vest behind optional trainer(s) in 5th gym split
@@ -37,7 +47,6 @@ Make map05 (lava lake) to the left 3-4 tiles
 
 CRUISE
 Infinite loop when 2 mons have empathic link and one boosts, test with Mt St Joseph TN fight
-GETTING SWITCHED OUT FIRST ALLOWS YOU TO STILL ACT (Metronome calling Dragon Tail, test with a sleeping mon with sleep talk + whirlwind)
 
 Make Aromatherapy have AI
 Make hazards not be clickable if the foe only has 1 mon left

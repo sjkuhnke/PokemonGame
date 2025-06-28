@@ -522,7 +522,6 @@ public class Script {
 		
 		scriptMap.put(32.0, (npc) -> { // fisherman
 			p.flag[1][17] = true;
-			p.fish = true;
 			Task.addTask(Task.DIALOGUE, npc, "Say, you look like you'd be great at fishing. Here, take this spare I got lying around. Maybe you'll fish up a Durfish!");
 			Task t = Task.addTask(Task.ITEM, "");
 			t.item = Item.FISHING_ROD;
@@ -1082,7 +1081,7 @@ public class Script {
 		
 		scriptMap.put(109.0, (npc) -> { // breeder
 			p.flag[5][7] = true;
-			Task.addTask(Task.TEXT, "Here, could you raise it for me?");
+			Task.addTask(Task.DIALOGUE, npc, "Here, could you raise it for me?");
 			int[] ids = new int[] {177, 179, 98};
 			Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 			int index = gift.nextInt(ids.length - 1);
