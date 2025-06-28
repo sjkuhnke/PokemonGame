@@ -175,6 +175,9 @@ public class GamePanel extends JPanel implements Runnable {
 			FPS = 60;
 		}
 		if (keyH.ctrlPressed && keyH.shiftPressed) {
+			if (battleUI.user != null) {
+				System.out.printf("User's Exp: %d | userExp: %d | userExpMax: %d\n", battleUI.user.exp, battleUI.userExp, battleUI.userExpMax);
+			}
 			System.out.println("------------------------------------------");
 			System.out.println("GAME STATE: " + gameState);
 			if (gameState == BATTLE_STATE) {

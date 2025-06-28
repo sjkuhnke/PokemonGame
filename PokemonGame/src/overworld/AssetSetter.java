@@ -467,10 +467,12 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(62, 43, Item.ICE_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(62, 32, Item.BLUNDER_POLICY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 32, Item.FULL_RESTORE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(78, 42, Item.ELECTRIC_SEED, mapNum);
 		if (gp.player.p.choiceChoice != null) {
 			gp.obj[mapNum][objIndex] = ObjSetup(77, 41, gp.player.p.choiceChoice, mapNum);
+		} else {
+			objIndex++;
 		}
-		gp.obj[mapNum][objIndex] = ObjSetup(78, 42, Item.ELECTRIC_SEED, mapNum);
 		
 		mapNum = 17;
 		objIndex = 0;
@@ -851,7 +853,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 70, Item.MAX_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(78, 52, Item.DUSK_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 41, Item.ROOM_SERVICE, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(26, 51, Item.ADRENALINE_ORB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(27, 49, Item.ADRENALINE_ORB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(58, 63, Item.RUSTY_BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = SetupChest(45, 44, mapNum);
 		
@@ -3756,8 +3758,7 @@ public class AssetSetter {
 		 * Seventh Split
 		 */
 		if (map == 16 && gp.player.p.choiceChoice != null) {
-			objIndex = 10;
-			if (gp.obj[map][10] == null) gp.obj[map][10] = ObjSetup(77, 41, gp.player.p.choiceChoice, map);
+			if (gp.obj[map][12] == null) gp.obj[map][12] = ObjSetup(77, 41, gp.player.p.choiceChoice, map);
 		}
 		
 		if (flag[5][8] && !flag[6][0]) {

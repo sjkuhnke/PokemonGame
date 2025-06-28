@@ -340,25 +340,7 @@ public class SimBattleUI extends BattleUI {
 	
 	@Override
 	protected void drawUserParty() {
-		int x = 10;
-		int y = 10;
-		int width = 20;
-		Pokemon[] team = user.trainer.getTeam();
-		for (int i = 0; i < 6; i++) { // changed user.getPlayer() to user.trainer
-			Pokemon p = i >= team.length ? null : team[i];
-			BufferedImage image;
-			if (p == null) {
-				image = emptyIcon;
-			} else if (p.isFainted() && !p.isVisible()) {
-				image = faintedIcon;
-			} else if (p.isVisible()) {
-				image = currentIcon;
-			} else {
-				image = ballIcon;
-			}
-			g2.drawImage(image, x, y, null);
-			x += width;
-		}
+		super.drawUserParty();
 	}
 	
 	@Override

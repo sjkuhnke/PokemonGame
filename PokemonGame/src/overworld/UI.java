@@ -73,6 +73,7 @@ public class UI extends AbstractUI {
 	public int premier;
 	public Item tmCheck;
 	public boolean wasAPressed;
+	public BufferedImage[] silhouettes = new BufferedImage[Pokemon.MAX_POKEMON];
 	
 	public int remindNum;
 	public boolean drawFlash;
@@ -5121,7 +5122,7 @@ public class UI extends AbstractUI {
 					g2.drawImage(p.getSprite(), x, y, null);
 				} else {
 					all = false;
-					g2.drawImage(getSilhouette(p.getSprite()), x, y, null);
+					g2.drawImage(getSilhouette(p), x, y, null);
 				}
 				g2.setFont(g2.getFont().deriveFont(16F));
 				g2.drawString(String.format("%.0f%%", e.getEncounterChance() * 100), x + 60, y + 75);
@@ -5156,7 +5157,9 @@ public class UI extends AbstractUI {
 		drawToolTips(null, null, "Back", null);
 	}
 	
-	private BufferedImage getSilhouette(BufferedImage sprite) {
+	private BufferedImage getSilhouette(Pokemon p) {
+		if (silhouettes[p.id - 1] != null) return silhouettes[p.id - 1];
+		BufferedImage sprite = p.getSprite();
 		int width = sprite.getWidth();
 	    int height = sprite.getHeight();
 	    BufferedImage silhouette = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);

@@ -494,4 +494,12 @@ public class Trainer implements Serializable {
 	public static int getLevelCap(int badges) {
 		return levelCaps[badges];
 	}
+	
+	public Pokemon[] getSlotOrderedTeam() {
+		Pokemon[] result = new Pokemon[6];
+		for (Pokemon p : team) {
+			if (p != null) result[p.slot] = p;
+		}
+		return result;
+	}
 }

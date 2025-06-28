@@ -979,7 +979,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 
 	public void levelUp(Player player) {
 		int oHP = this.getStat(0);
-		this.exp -= this.expMax;
 		++level;
 		awardHappiness(5, false);
 		
@@ -2165,9 +2164,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			
-			if (((moveType == PType.ELECTRIC && (foeAbility == Ability.MOTOR_DRIVE || foeAbility == Ability.LIGHTNING_ROD))
+			if ((((moveType == PType.ELECTRIC && (foeAbility == Ability.MOTOR_DRIVE || foeAbility == Ability.LIGHTNING_ROD))
 					|| (moveType == PType.GRASS && foeAbility == Ability.SAP_SIPPER) || (moveType == PType.FIRE && foeAbility == Ability.HEAT_COMPACTION))
-					|| (moveType == PType.MAGIC && foeAbility == Ability.DJINN1S_FAVOR)
+					|| (moveType == PType.MAGIC && foeAbility == Ability.DJINN1S_FAVOR))
 					&& !(move.cat == 2 && acc > 100)) {
 				if (foe.getItem() == Item.RING_TARGET) {
 					// nothing
@@ -2190,10 +2189,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			
 			if (foe.getItem() != Item.RING_TARGET
-					&& (moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST)
+					&& ((moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST)
 					|| (moveType == PType.ICE && foeAbility == Ability.WARM_HEART)
 					|| (moveType == PType.PSYCHIC && foeAbility == Ability.COLD_HEART)
-					|| (moveType == PType.DRAGON && foeAbility == Ability.WHITE_HOLE)
+					|| (moveType == PType.DRAGON && foeAbility == Ability.WHITE_HOLE))
 					&& !(move.cat == 2 && acc > 100)) {
 				Task.addAbilityTask(foe);
 				Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
@@ -2403,7 +2402,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			
 			int arcane = this.getStatusNum(Status.ARCANE_SPELL);
-			if (arcane != 0) {
+			if (arcane != 0 && bp > 20) {
 				bp = Math.max(bp - arcane, 20);
 			}
 			
@@ -2767,7 +2766,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (foe.currentHP <= 0) { // Check for kill
 				foe.faint(true, this);
 				if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
-				if (this.hasStatus(Status.BONDED)) {
+				if (foe.hasStatus(Status.BONDED)) {
 					this.damage(this.currentHP, foe, move, foe.nickname + " took its attacker down with it!", -1);
 					if (this.currentHP <= 0) {
 						this.faint(true, foe);
@@ -2911,8 +2910,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			
-			if (first && this.getItem() == Item.KING1S_ROCK && foe.ability != Ability.SHIELD_DUST && !foe.hasStatus(Status.FLINCHED) && checkSecondary(10)) {
-				foe.addStatus(Status.FLINCHED);
+			if (first && this.getItem() == Item.KING1S_ROCK && foe.ability != Ability.SHIELD_DUST && checkSecondary(10)) {
+				foe.flinch();
 			}
 		}
 		if (move.secondary < 0) {
@@ -3204,8 +3203,8 @@ public class Pokemon implements RoleAssignable, Serializable {
                 	t.setFinish(Math.min(totalExp, expMax));
                 	
                 	while (totalExp >= p.expMax && p.level < 100) {
-                		p.levelUp(player);
                 		totalExp -= p.expMax;
+                		p.levelUp(player);
                 		
                 		if (totalExp > 0 && p.level < 100) {
                 			int nextTarget = Math.min(totalExp, p.expMax);
@@ -3346,12 +3345,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 				stat(this, i, 1, foe);
 			}
 		} else if (move == Move.AIR_SLASH && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.ARCANE_SPELL) {
 			foe.incrementStatus(Status.ARCANE_SPELL, 10);
 			Task.addTask(Task.TEXT, "The spell caused " + foe.nickname + " to become weaker!");
 		} else if (move == Move.ASTONISH && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.AURORA_BEAM) {
 			stat(foe, 0, -1, this);
 		} else if (move == Move.BEEFY_BASH) {
@@ -3366,7 +3365,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.BITTER_MALICE) {
 			foe.freeze(false, this);
 		} else if (move == Move.BITE && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.BREAKING_SWIPE) {
 			stat(foe, 0, -1, this);
 		} else if (move == Move.BLAZE_KICK) {
@@ -3407,7 +3406,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.CRUNCH) {
 			stat(foe, 1, -1, this);
 		} else if (move == Move.DARK_PULSE && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.DESOLATE_VOID) {
 			Random random = new Random();
 			int type = random.nextInt(3);
@@ -3435,7 +3434,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.DIAMOND_STORM) {
 			stat(this, 1, 2, foe);
 		} else if (move == Move.DRAGON_RUSH && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.DRAGON_BREATH) {
 			foe.paralyze(false, this);
 		} else if (move == Move.DYNAMIC_PUNCH) {
@@ -3449,15 +3448,15 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.ENERGY_BALL) {
 			stat(foe, 3, -1, this);
 		} else if (move == Move.EXTRASENSORY && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.FAKE_OUT && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.UNSEEN_STRANGLE && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.FIERY_DANCE) {
 			stat(this, 2, 1, foe);
-		} else if (move == Move.FIERY_DANCE && first) {
-			foe.addStatus(Status.FLINCHED);
+		} else if (move == Move.FIERY_WRATH && first) {
+			foe.flinch();
 		} else if (move == Move.FIRE_BLAST) {
 			foe.burn(false, this);
 		} else if (move == Move.FATAL_BIND) {
@@ -3468,10 +3467,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (randomNum == 0) {
 				foe.burn(false, this);
 			} else if (randomNum == 1 && first) {
-				foe.addStatus(Status.FLINCHED);
-			}
-			 else if (randomNum == 2) {
-				if (first) foe.addStatus(Status.FLINCHED);
+				foe.flinch();
+			} else if (randomNum == 2) {
+				if (first) foe.flinch();
 				foe.burn(false, this);
 			}
 		} else if (move == Move.FIRE_PUNCH) {
@@ -3528,7 +3526,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.GUNK_SHOT) {
 			foe.poison(false, this);
 		} else if (move == Move.HEADBUTT && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.HEAT_WAVE) {
 			foe.burn(false, this);
 		} else if (move == Move.HEX_CLAW) {
@@ -3576,10 +3574,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (random) {
 				foe.confuse(false, this);
 			} else {
-				if (first) foe.addStatus(Status.FLINCHED);
+				if (first) foe.flinch();
 			}
 		} else if (move == Move.HYPER_FANG && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.INCINERATE) {
 			if (foe.item != null && foe.item.isBerry() && !(foe.ability == Ability.STICKY_HOLD && this.ability != Ability.MOLD_BREAKER)) {
 				Task.addTask(Task.TEXT, this.nickname + " incinerated " + foe.nickname + "'s " + foe.item.toString() + "!");
@@ -3592,16 +3590,15 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (randomNum == 0) {
 				foe.freeze(false, this);
 			} else if (randomNum == 1 && first) {
-				foe.addStatus(Status.FLINCHED);
-			}
-			 else if (randomNum == 2) {
-				if (first) foe.addStatus(Status.FLINCHED);
+				foe.flinch();
+			} else if (randomNum == 2) {
+				if (first) foe.flinch();
 				foe.freeze(false, this);
 			}
 		} else if (move == Move.ICE_PUNCH) {
 			foe.freeze(false, this);
 		} else if (move == Move.ICICLE_CRASH && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.ICE_SPINNER) {
 			if (field.terrain != null) {
 				field.terrain = null;
@@ -3621,9 +3618,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Task.addTask(Task.TEXT, foe.nickname + " was infested by " + this.nickname + "!");
 			}
 		} else if (move == Move.IRON_BLAST && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.IRON_HEAD && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.IRON_TAIL) {
 			stat(foe, 1, -1, this);
 		} else if (move == Move.JAW_LOCK) {
@@ -3686,13 +3683,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (foe.type1 == type) multiplier *= 2;
 				if (foe.type2 == type) multiplier *= 2;
 			}
-			if (multiplier > 1) foe.addStatus(Status.FLINCHED);
+			if (multiplier > 1) foe.flinch();
 		} else if (move == Move.MANA_PUNCH) {
 			int randomNum = new Random().nextInt(8);
 			if (randomNum < 7) {
 				stat(this, randomNum, 1, foe);
 			} else {
-				if (first) foe.addStatus(Status.FLINCHED);
+				if (first) foe.flinch();
 			}
 		} else if (move == Move.METAL_CLAW) {
 			stat(this, 0, 1, foe);
@@ -3728,7 +3725,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.MYSTICAL_FIRE) {
 			stat(foe, 2, -1, this);
 		} else if (move == Move.NEEDLE_ARM && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.NIGHT_DAZE) {
 			stat(foe, 5, -1, this);
 		} else if (move == Move.POISON_FANG) {
@@ -3813,7 +3810,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		    stat(foe, 1, -1, this);
 		    double random = Math.random();
 		    if (random < 0.3 && first) {
-		        foe.addStatus(Status.FLINCHED);
+		        foe.flinch();
 		    }
 		} else if (move == Move.SUNNY_BURST) {
 			boolean success = field.setWeather(field.new FieldEffect(Effect.SUN));
@@ -3821,7 +3818,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.NUZZLE) {
 			foe.paralyze(false, this);
 		} else if (move == Move.SKY_ATTACK && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.SLOW_FALL) {
 			if (foe.getItem() != Item.ABILITY_SHIELD) {
 				foe.ability = Ability.LEVITATE;
@@ -3858,7 +3855,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.STRUGGLE_BUG) {
 			stat(foe, 2, -1, this);
 		} else if (move == Move.STOMP && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.SUPERPOWER) {
 			stat(this, 0, -1, foe);
 			stat(this, 1, -1, foe);
@@ -3875,10 +3872,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (randomNum == 0) {
 				foe.paralyze(false, this);
 			} else if (randomNum == 1 && first) {
-				foe.addStatus(Status.FLINCHED);
-			}
-			 else if (randomNum == 2) {
-				if (first) foe.addStatus(Status.FLINCHED);
+				foe.flinch();
+			} else if (randomNum == 2) {
+				if (first) foe.flinch();
 				foe.paralyze(false, this);
 			}
 		} else if (move == Move.THUNDER_PUNCH) {
@@ -3909,7 +3905,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.TWINEEDLE) {
 			foe.poison(false, this);
 		} else if (move == Move.TWISTER && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.VENOM_SPIT) {
 			foe.paralyze(false, this);
 		} else if (move == Move.VENOSTEEL_CROSSCUT) {
@@ -3931,21 +3927,21 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.WATER_CLAP) {
 			foe.paralyze(false, this);
 		} else if (move == Move.WATER_SMACK && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.SUPERCHARGED_SPLASH) {
 			stat(this, 2, 3, foe);
 		} else if (move == Move.VANISHING_ACT) {
 			foe.confuse(false, this);
 		} else if (move == Move.WATERFALL && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.ZEN_HEADBUTT && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		} else if (move == Move.ROCK_SLIDE && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		}  else if (move == Move.ZAP_CANNON) {
 			foe.paralyze(false, this);
 		} else if (move == Move.ZING_ZAP && first) {
-			foe.addStatus(Status.FLINCHED);
+			foe.flinch();
 		}
 	}
 
@@ -4189,7 +4185,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		} else if (announce && move == Move.DESTINY_BOND) {
 			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success)) {
-				foe.addStatus(Status.BONDED);
+				this.addStatus(Status.BONDED);
 				if (announce) Task.addTask(Task.TEXT, this.nickname + " is ready to take its attacker down with it!");
 				lastMoveUsed = move;
 			} else { fail = fail(announce); }
@@ -4904,6 +4900,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		success = !fail;
 		return;
+	}
+	
+	private void flinch() {
+		if (!this.hasStatus(Status.FLINCHED)) this.addStatus(Status.FLINCHED);
 	}
 
 	private void checkSeed(Pokemon f, Item item, Effect effect) {
@@ -5841,7 +5841,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (mode == 0 && move == Move.CHROMO_BEAM && checkSecondary(this.ability == Ability.SERENE_GRACE || field.equals(field.terrain, Effect.SPARKLY) ? 60 : 30)) bp *= 2;
 		
 		int arcane = this.getStatusNum(Status.ARCANE_SPELL);
-		if (arcane != 0) {
+		if (arcane != 0 && bp > 20) {
 			bp = Math.max(bp - arcane, 20);
 		}
 		

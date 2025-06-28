@@ -1068,10 +1068,10 @@ public abstract class AbstractUI {
 				if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.RARE_CANDY_STATE) {
 					if (moveOption == 0) {
 						Task t = Task.createTask(Task.TEXT, p.nickname + " did not learn " + m.toString() + ".");
-						Task.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
+						Task.insertTask(t, 0);
 					} else {
 						Task t = Task.createTask(Task.TEXT, p.nickname + " learned " + m.toString() + " and forgot " + p.moveset[moveOption - 1].move.toString() + "!");
-						Task.insertTask(t, gp.battleUI.tasks.indexOf(gp.battleUI.currentTask) + 1);
+						Task.insertTask(t, 0);
 					}
 				} else {
 					if (moveOption == 0) {
@@ -1105,7 +1105,7 @@ public abstract class AbstractUI {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				gp.player.p.evolve(currentTask.p, currentTask.counter, gp);
+				gp.player.p.evolve(t.p, t.counter, gp);
 		        currentTask = null;
 			}
 		}
