@@ -1954,10 +1954,10 @@ public class UI extends AbstractUI {
 		int x = gp.tileSize / 2;
 		int y = gp.tileSize * 2;
 		int width = (int) (gp.tileSize * 6.5);
-		int height = gp.tileSize * 8;
+		int height = gp.tileSize * 9;
 		
 		int sumX = x + width - gp.tileSize;
-		int sumY = (int) (gp.tileSize * 3.25);
+		int sumY = (int) (gp.tileSize * 3.5);
 
 		ArrayList<Move> forgottenMoves = new ArrayList<>();
 		Node[] movebank = p.getMovebank();
@@ -1975,6 +1975,7 @@ public class UI extends AbstractUI {
         if (forgottenMoves.isEmpty()) {
             Task.addTask(Task.TEXT, "This Pokemon has not forgotten any moves.");
             currentTask = null;
+            partyNum = 0;
             return;
         }
         
@@ -1985,7 +1986,7 @@ public class UI extends AbstractUI {
         int moveWidth = gp.tileSize * 4;
         int moveHeight = (int) (gp.tileSize * 0.75);
         
-        for (int i = remindNum; i < remindNum + 8; i++) {
+        for (int i = remindNum; i < remindNum + 9; i++) {
         	g2.setColor(Color.WHITE);
 			if (i == remindNum) {
 				g2.drawString(">", (x - gp.tileSize / 2) - 2, y + gp.tileSize / 2);
@@ -2009,7 +2010,7 @@ public class UI extends AbstractUI {
 		drawMoveSummary(sumX, sumY, p, null, null, m);
 		
 		// Down Arrow
-		if (remindNum + 8 < forgottenMoves.size()) {
+		if (remindNum + 9 < forgottenMoves.size()) {
 			int x2 = sumX - 4;
 			int y2 = height + gp.tileSize;
 			int width2 = gp.tileSize / 2;
@@ -2040,15 +2041,19 @@ public class UI extends AbstractUI {
 		
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
-			if (remindNum > 0) {
-				remindNum--;
+			int amt = gp.keyH.ctrlPressed ? 5 : 1;
+			remindNum -= amt;
+			if (remindNum < 0) {
+				remindNum = 0;
 			}
 		}
 		
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
-			if (remindNum < forgottenMoves.size() - 1) {
-				remindNum++;
+			int amt = gp.keyH.ctrlPressed ? 5 : 1;
+			remindNum += amt;
+			if (remindNum > forgottenMoves.size() - 1) {
+				remindNum = forgottenMoves.size() - 1;
 			}
 		}
 		
@@ -3874,7 +3879,7 @@ public class UI extends AbstractUI {
 		} else if (bagState == 2) {
 			drawSellOptions();
 		} else if (bagState == 3) {
-			drawMoveSummary(gp.tileSize / 2, (int) (gp.tileSize * 6.5), null, null, null, currentItems.get(bagNum[currentPocket - 1]).getItem().getMove());
+			drawMoveSummary(gp.tileSize / 2, (int) (gp.tileSize * 6), null, null, null, currentItems.get(bagNum[currentPocket - 1]).getItem().getMove());
 		}
 		
 		drawToolTips("OK", "Swap", "Back", currentPocket == Item.TMS ? "Check" : null);

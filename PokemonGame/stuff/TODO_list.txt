@@ -6,18 +6,6 @@ Make wild pokemon sometimes hold items (for balancing, can't covet bc it'll clea
 Remove the "first dialogue" thing from script npcs and make if the name is null then it'll put "???" as their name. this can be
 used to then not reveal the npc's name until they introduce themselves
 
-Moves stuff:
-Contact
-Crit Rate
-Priority
-Slicing
-Punching
-Tail
-No Combo (can't be used after a No Combo move)
-Sound
-Biting
-Healing (for Heal Block)
-
 Quality of Life
 Add exp trainer in Schrice City
 Make NPCs tell about old features being updated (deletable HMs, updated moves, etc)

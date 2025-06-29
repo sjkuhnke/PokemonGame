@@ -285,7 +285,7 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	public boolean canCatchPokemonHere(String location, Pokemon p) {
-		return !p.trainerOwned() && !isDupes(p) && !this.nuzlockeEncounters.contains(location);
+		return (p == null || !p.trainerOwned()) && !isDupes(p) && !this.nuzlockeEncounters.contains(location);
 	}
 	
 	public void removeEncounterArea(String location, Pokemon p) {
@@ -394,6 +394,7 @@ public class Player extends Trainer implements Serializable {
     		if (pokemon.happiness < 255 && pokemon.happinessCap > 2) pokemon.awardHappiness(-3, false);
             // Pokemon has leveled up, check for evolution
             pokemon.levelUp(this);
+            pokemon.exp = 0;
         }
     	pokemon.fainted = false;
 	}
@@ -1861,15 +1862,6 @@ public class Player extends Trainer implements Serializable {
         p.checkMove(i, p.level);
         
         ArrayList<Task> tasks = gp.getTasks();
-        System.out.println(tasks.toString());
-        System.out.println("Before removal:");
-        for (Task task : tasks) {
-            if (task.type == Task.EVO) {
-                System.out.printf("Task - p.slot: %d, start: %d, name: %s\n",
-                    task.p.slot, task.start, task.p.name());
-            }
-        }
-        System.out.printf("oldID: %s, p.slot: %d\n", oldID, p.slot);
         tasks.removeIf(task -> task.type == Task.EVO && task.p.slot == p.slot && task.start == oldID);
         for (int j = 1; j < tasks.size(); j++) {
         	Task t = tasks.get(j);

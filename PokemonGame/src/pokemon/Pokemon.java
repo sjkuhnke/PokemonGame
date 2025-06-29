@@ -3175,7 +3175,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 	}
 
-	public void awardxp(int amt) {
+	public void awardExp(int amt) {
 	    if (this.fainted) return;
 	    if (!this.playerOwned()) return;
 	    Player player = this.getPlayer();
@@ -3224,7 +3224,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this.isFainted()) return;
 		int deduc = 0;
 		if (this.item == Item.SOOTHE_BELL && i > 0) i *= 2;
-		if (this.ball == Item.LUXURY_BALL) i *= 2;
+		if (this.ball == Item.LUXURY_BALL && i > 0) i *= 2;
 		if (!override) {
 			this.happinessCap -= i;
 			deduc = happinessCap < 0 ? Math.abs(happinessCap) : 0;
@@ -3242,7 +3242,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (field.remove(foe.getFieldEffects(), Effect.AURORA_VEIL)) Task.addTask(Task.TEXT, this.nickname + " broke " + foe.nickname + "'s Aurora Veil wore off!");
 		} else if (move == Move.BURN_UP) {
 			if (this.type1 == PType.FIRE) type1 = PType.UNKNOWN;
-			if (this.type2 == PType.FIRE) type2 = null;
+			if (this.type2 == PType.FIRE) type2 = PType.UNKNOWN;
 			Task.addTypeTask("", this);
 		} else if ((move == Move.CIRCLE_THROW || move == Move.DRAGON_TAIL) && !foe.isFainted()) {
 			if (foe.trainer != null) {
@@ -5488,7 +5488,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (this.playerOwned() && this.getPlayer().nuzlocke) gp.saveScum(this.toString() + " died to " + foe.toString() + (foe.trainerOwned() ? " (" + foe.trainer.getName() + ")": "" + " (Save Scum)"));
 		
-		foe.awardxp(getxpReward());
+		foe.awardExp(getxpReward());
 		field.knockouts++;
 	}
 

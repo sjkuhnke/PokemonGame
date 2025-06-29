@@ -7,18 +7,21 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import pokemon.Field.Effect;
+import util.Pair;
 
 public enum Move {
 	ABDUCT(0,100,0,0,2,0,PType.GALACTIC,"Abducts the foe and forces their next move to be used on themselves. Can be used once every other turn, and not on the first turn out.",false,5),
 	ABSORB(20,100,0,0,1,0,PType.GRASS,"Heals 50% of damage dealt to foe",false,25),
 	ABYSSAL_CHOP(-1,90,50,0,0,0,PType.DRAGON,"% chance to paralyse foe. Damage is doubled if foe is paralyzed",true,10),
-	ACCELEROCK(40,100,0,0,0,1,PType.ROCK,"Always goes first",true,15),
+	ACCELEROCK(40,100,0,0,0,1,PType.ROCK,"Increased priority",true,15),
 	ACID(40,100,10,0,1,0,PType.POISON,"% chance to lower foe's Sp.Def by 1",false,30),
 	ACID_ARMOR(0,1000,0,0,2,0,PType.POISON,"Raises user's Defense by 2",false,15),
 	ACID_SPRAY(40,100,100,0,1,0,PType.POISON,"% chance to lower foe's Sp.Def by 2",false,20),
@@ -32,7 +35,7 @@ public enum Move {
 	ALCHEMY(0,1000,0,0,2,0,PType.MAGIC,"Heals 33% HP, if user holds an item will remove it and heal 100%",false,10),
 	AMNESIA(0,1000,0,0,2,0,PType.PSYCHIC,"Raises user's Sp.Def by 2",false,20),
 	ANCIENT_POWER(60,100,10,0,1,0,PType.ROCK,"% chance to raise all of the user's stats by 1",false,5),
-	AQUA_JET(40,100,0,0,0,1,PType.WATER,"Always goes first",true,15),
+	AQUA_JET(40,100,0,0,0,1,PType.WATER,"Increased priority",true,15),
 	AQUA_RING(0,1000,0,0,2,0,PType.WATER,"Restores a small amount of HP at the end of every turn",false,15),
 	AQUA_TAIL(90,90,0,0,0,0,PType.WATER,"A normal attack",true,10),
 	AQUA_VEIL(0,1000,0,0,2,4,PType.WATER,"User protects itself, can't be used in succession. Lowers foe's SpA by 1 if they use a move into the protect.",false,5),
@@ -45,7 +48,7 @@ public enum Move {
 	AURORA_GLOW(0,1000,0,0,2,0,PType.LIGHT,"Creates a field effect that heals all LIGHT, ICE and GALACTIC Pokemon on your team for 1/8 HP for 5 turns",false,15),
 	AURORA_VEIL(0,1000,0,0,2,0,PType.ICE,"Can only be used in SNOW, reduces both physical and special damage on user's team recieved for 5 turns",false,10),
 	AUTOTOMIZE(0,1000,0,0,2,0,PType.STEEL,"Raises user's Speed by 2",false,15),
-	BABY$DOLL_EYES(0,100,0,0,2,1,PType.LIGHT,"Lowers foe's Attack by 1, moves first",false,30),
+	BABY$DOLL_EYES(0,100,0,0,2,1,PType.LIGHT,"Lowers foe's Attack by 1, increased priority",false,30),
 	BATON_PASS(0,1000,0,0,2,0,PType.NORMAL,"Causes user to switch and passes all stat changes with it",false,3),
 	BEAT_UP(12,100,0,0,0,0,PType.DARK,"Attacks once per healthy Pokemon on your team",false,10),
 	BEEFY_BASH(100,85,50,0,0,-1,PType.FIGHTING,"% chance to paralyze foe, moves last",true,5),
@@ -76,7 +79,7 @@ public enum Move {
 	BUG_BUZZ(90,100,10,0,1,0,PType.BUG,"% chance to lower foe's Sp.Def by 1",false,20),
 	BULK_UP(0,1000,0,0,2,0,PType.FIGHTING,"Raises user's Attack and Defense by 1",false,10),
 	BULLDOZE(60,100,100,0,0,0,PType.GROUND,"% chance to lower foe's Speed by 1",false,20),
-	BULLET_PUNCH(40,100,0,0,0,1,PType.STEEL,"Always goes first",true,15),
+	BULLET_PUNCH(40,100,0,0,0,1,PType.STEEL,"Increased priority",true,15),
 	BULLET_SEED(25,100,0,0,0,0,PType.GRASS,"Attacks 2-5 times",false,30),
 	BURN_UP(130,100,-1,0,1,0,PType.FIRE,"Causes user to lose its FIRE type if it has it",false,5),
 	CALM_MIND(0,1000,0,0,2,0,PType.PSYCHIC,"Raises user's Sp.Atk and Sp.Def by 1",false,10),
@@ -87,7 +90,7 @@ public enum Move {
 	CHARM(0,100,0,0,2,0,PType.LIGHT,"Lowers foe's Attack by 2",false,15),
 	CHILLY_RECEPTION(0,1000,0,0,2,0,PType.ICE,"Sets SNOW and then causes user to switch out",false,10),
 	CHROMO_BEAM(80,100,0,0,1,0,PType.LIGHT,"30% chance to double in Base Power",false,5),
-	CIRCLE_THROW(60,90,-1,0,0,-6,PType.FIGHTING,"Switches out foe randomly, always moves last",true,10),
+	CIRCLE_THROW(60,90,-1,0,0,-6,PType.FIGHTING,"Switches out foe randomly, usually moves last",true,10),
 	CLOSE_COMBAT(120,100,-1,0,0,0,PType.FIGHTING,"Lowers user's Defense and Sp.Def by 1",true,5),
 	COIL(0,1000,0,0,2,0,PType.POISON,"Raises user's Atk, Def, and Acc by 1",false,15),
 	COMET_CRASH(-1,90,0,0,0,0,PType.GALACTIC,"Damage is doubled if user's HP is full",true,5),
@@ -112,7 +115,7 @@ public enum Move {
 	DEFENSE_CURL(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Defense by 1",false,35),
 	DEFOG(0,100,0,0,2,0,PType.FLYING,"Lowers foe's Evasion by 1, clears all hazards, terrain and screens from both sides",false,15),
 	DESOLATE_VOID(65,85,50,0,1,0,PType.GALACTIC,"% chance to Paralyze, Sleep or Frostbite foe",false,10),
-	DESTINY_BOND(0,1000,0,0,2,1,PType.GHOST,"Always goes first; can't be used twice in a row. If foe knocks out user the same turn, foe faints as well",false,5),
+	DESTINY_BOND(0,1000,0,0,2,1,PType.GHOST,"Increased priority; can't be used twice in a row. If foe knocks out user the same turn, foe faints as well",false,5),
 	DETECT(0,1000,0,0,2,4,PType.FIGHTING,"Protects user, can't be used in succession",false,5),
 	DIAMOND_STORM(100,95,50,0,1,0,PType.ROCK,"% chance to raise user's Defense by 2",false,5),
 	DIG(80,100,0,0,0,0,PType.GROUND,"A two turn attack. Digs underground on the first, attacks on the second",true,15),
@@ -136,7 +139,7 @@ public enum Move {
 	DRAGON_PULSE(85,100,0,0,1,0,PType.DRAGON,"A normal attack",false,10),
 	DRAGON_RAGE(0,100,0,-999,1,0,PType.DRAGON,"Always does 40 HP damage",false,10),
 	DRAGON_RUSH(100,75,20,0,0,0,PType.DRAGON,"% chance of causing foe to flinch",true,10),
-	DRAGON_TAIL(60,90,-1,0,0,-6,PType.DRAGON,"Switches out foe randomly, always moves last",true,10),
+	DRAGON_TAIL(60,90,-1,0,0,-6,PType.DRAGON,"Switches out foe randomly, usally moves last",true,10),
 	DRAIN_PUNCH(75,100,0,0,0,0,PType.FIGHTING,"Heals 50% of damage dealt to foe",true,10),
 	DREAM_EATER(100,100,0,0,1,0,PType.PSYCHIC,"Only works if target is asleep. Heals 50% of damage dealt to foe",false,15),
 	DRILL_PECK(80,100,0,1,0,0,PType.FLYING,"Boosted Crit rate",true,20),
@@ -158,16 +161,16 @@ public enum Move {
 	EXPANDING_FORCE(-1,100,0,0,1,0,PType.PSYCHIC,"Power is 1.5x if the terrain is PSYCHIC",false,10),
 	EXPLOSION(250,100,0,0,0,0,PType.NORMAL,"User faints",false,5),
 	EXTRASENSORY(80,100,10,0,1,0,PType.PSYCHIC,"% chance of flinching foe",false,20),
-	EXTREME_SPEED(80,100,0,0,0,2,PType.NORMAL,"Always goes first",true,5),
+	EXTREME_SPEED(80,100,0,0,0,2,PType.NORMAL,"Increased priority",true,5),
 	FACADE(-1,100,0,0,0,0,PType.NORMAL,"Damage is doubled if the user has a status condition",true,20),
 	FAILED_SUCKER(0,100,0,0,0,0,PType.DARK,"If you're seeing this, something went horribly wrong",false,1),
-	FAKE_OUT(40,100,100,0,0,3,PType.NORMAL,"% chance to cause foe to flinch. Can only be used on the first turn out",true,10),
+	FAKE_OUT(40,100,100,0,0,3,PType.NORMAL,"% chance to cause foe to flinch. Increased priority, can only be used on the first turn out",true,10),
 	FAKE_TEARS(0,100,0,0,2,0,PType.DARK,"Lowers foe's Sp.Def by 2",false,20),
 	FALSE_SURRENDER(80,1000,0,0,0,0,PType.DARK,"This attack never misses",true,10),
 	FALSE_SWIPE(40,100,0,0,0,0,PType.NORMAL,"Always leaves the foe with at least 1 HP",true,35),
 	FATAL_BIND(70,85,100,0,0,0,PType.BUG,"% to cause the user and foe to faint in 3 turns",true,3),
 	FEATHER_DANCE(0,100,0,0,2,0,PType.FLYING,"Lowers foe's Attack by 2",false,15),
-	FEINT(30,100,0,0,0,2,PType.NORMAL,"Always goes first, and hits through protect",false,10),
+	FEINT(30,100,0,0,0,2,PType.NORMAL,"Increased priority, and hits through protect",false,10),
 	FEINT_ATTACK(60,1000,0,0,0,0,PType.DARK,"This attack always hits",true,20),
 	FELL_STINGER(50,100,0,0,0,0,PType.BUG,"Raises user's attack by 3 if it faints the foe",true,15),
 	FIELD_FLIP(0,1000,0,0,2,0,PType.PSYCHIC,"Swaps field effects on either side of the field",false,10),
@@ -177,7 +180,7 @@ public enum Move {
 	FIRE_FANG(65,95,20,0,0,0,PType.FIRE,"% of flinching and/or Burning foe",true,15),
 	FIRE_PUNCH(75,100,20,0,0,0,PType.FIRE,"% to Burn foe",true,15),
 	FIRE_SPIN(35,85,100,0,1,0,PType.FIRE,"% to spin non-FIRE foes for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
-	FIRST_IMPRESSION(90,100,0,0,0,1,PType.BUG,"Always attacks first, can only be used on the first turn out",true,10),
+	FIRST_IMPRESSION(90,100,0,0,0,1,PType.BUG,"Increased priority, can only be used on the first turn out",true,10),
 	FISSURE(0,30,0,-999,0,0,PType.GROUND,"If this move hits, it always K.Os foe",false,5),
 	FLAIL(-1,100,0,0,0,0,PType.NORMAL,"Power is higher the lower HP the user has",true,15),
 	FLAME_BURST(70,100,0,0,1,0,PType.FIRE,"A normal attack",false,15),
@@ -223,7 +226,7 @@ public enum Move {
 	GRASS_WHISTLE(0,55,0,0,2,0,PType.GRASS,"Foe falls asleep",false,15),
 	GRASSY_TERRAIN(0,1000,0,0,2,0,PType.GRASS,"Sets the terrain to GRASSY for 5 turns",false,10),
 	GRAVITY(0,1000,0,0,2,0,PType.GALACTIC,"Sets GRAVITY for 6 turns, in which the accuracy of all Pokemon is increased",false,10),
-	GRAVITY_PUNCH(40,100,0,0,0,2,PType.PSYCHIC,"Always goes first with extra priority. Still works in PSYCHIC TERRAIN.",true,5),
+	GRAVITY_PUNCH(40,100,0,0,0,2,PType.PSYCHIC,"Increased priority with extra priority. Still works in PSYCHIC TERRAIN.",true,5),
 	GROWL(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack by 1",false,35),
 	GROWTH(0,1000,0,0,2,0,PType.GRASS,"Raises user's Attack and Sp.Atk by 1, 2 each in the SUN",false,15),
 	GUILLOTINE(0,30,0,-999,0,0,PType.NORMAL,"If this move hits, it always K.Os foe",true,5),
@@ -263,7 +266,7 @@ public enum Move {
 	ICE_BEAM(90,100,10,0,1,0,PType.ICE,"% chance to Frostbite foe",false,10),
 	ICE_FANG(65,95,20,0,0,0,PType.ICE,"% chance of flinching and/or Frostbite foe",true,15),
 	ICE_PUNCH(75,100,20,0,0,0,PType.ICE,"% chance to Frostbite foe",true,15),
-	ICE_SHARD(40,100,0,0,0,1,PType.ICE,"Always goes first",false,15),
+	ICE_SHARD(40,100,0,0,0,1,PType.ICE,"Increased priority",false,15),
 	ICE_SPINNER(80,100,100,0,0,0,PType.ICE,"% chance to remove the terrain if there is any",true,10),
 	ICICLE_CRASH(85,90,30,0,0,0,PType.ICE,"% chance to cause foe to flinch",false,10),
 	ICICLE_SPEAR(25,100,0,0,0,0,PType.ICE,"Hits 2-5 times",false,25),
@@ -295,7 +298,7 @@ public enum Move {
 	LIGHT_DRAIN(75,100,0,0,1,0,PType.LIGHT,"Heals 50% of damage dealt",false,10),
 	LIGHT_OF_RUIN(140,90,0,0,1,0,PType.LIGHT,"User takes 1/3 of damage dealt as recoil",false,5),
 	LIGHT_SCREEN(0,1000,0,0,2,0,PType.PSYCHIC,"Creates a screen that halves special damage on user's team for 5 turns",false,15),
-	LIGHT_SPEED(80,100,0,0,0,2,PType.LIGHT,"Always goes first",false,5),
+	LIGHT_SPEED(80,100,0,0,0,2,PType.LIGHT,"Increased priority",true,5),
 	LIQUIDATION(85,100,20,0,0,0,PType.WATER,"% chance to lower foe's Defense by 1",true,10),
 	LOAD_FIREARMS(0,1000,0,0,2,0,PType.STEEL,"Raises user's Speed and Accuracy by 1, and doubles the power of a STEEL move if used next",false,10),
 	LOCK$ON(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Accuracy by 6",false,5),
@@ -304,7 +307,7 @@ public enum Move {
 	LOW_SWEEP(65,100,100,0,0,0,PType.FIGHTING,"% chance to lower foe's Speed by 1",true,15),
 	LUCKY_CHANT(0,1000,0,0,2,0,PType.NORMAL,"Protects user's team from Critical Hits for 8 turns",false,30),
 	LUNAR_DANCE(0,1000,0,0,2,0,PType.PSYCHIC,"User faints. The next Pokemon sent in will be fully healed",false,10),
-	MACH_PUNCH(40,100,0,0,0,1,PType.FIGHTING,"Always goes first",true,15),
+	MACH_PUNCH(40,100,0,0,0,1,PType.FIGHTING,"Increased priority",true,15),
 	MAGIC_FANG(70,95,75,0,0,0,PType.MAGIC,"% to flinch foe if this move is Super-Effective against it, breaks Magic Reflect",true,10),
 	MAGIC_MISSILES(25,90,0,0,1,0,PType.MAGIC,"Hits 2-5 times, does Physical damage",false,15),
 	MAGIC_POWDER(0,100,0,0,2,0,PType.MAGIC,"Changes foe's type to MAGIC",false,15),
@@ -395,14 +398,14 @@ public enum Move {
 	PSYCHO_CUT(70,100,0,1,0,0,PType.PSYCHIC,"Boosted Crit rate",false,20),
 	PSYSHOCK(80,100,0,0,1,0,PType.PSYCHIC,"Uses foe's Defense instead of Sp.Def in damage calculation",false,15),
 	PSYWAVE(0,100,0,-999,1,0,PType.PSYCHIC,"Deals damage equal to user's level",false,15),
-	QUICK_ATTACK(40,100,0,0,0,1,PType.NORMAL,"Always attacks first",true,15),
-	QUICK_SPELL(40,100,0,0,1,1,PType.MAGIC,"Always attacks first",false,15),
+	QUICK_ATTACK(40,100,0,0,0,1,PType.NORMAL,"Increased priority",true,15),
+	QUICK_SPELL(40,100,0,0,1,1,PType.MAGIC,"Increased priority",false,15),
 	QUIVER_DANCE(0,1000,0,0,2,0,PType.BUG,"Raises user's Sp.Atk, Sp.Def and Speed by 1 stage",false,10),
 	RADIANT_BREAK(75,100,100,0,0,0,PType.LIGHT,"% chance to lower foe's Sp.Atk by 1",true,15),
-	RADIO_BURST(40,100,0,0,1,1,PType.GALACTIC,"Always goes first",false,25),
+	RADIO_BURST(40,100,0,0,1,1,PType.GALACTIC,"Increased priority",false,25),
 	RAGE(-1,100,0,0,0,0,PType.NORMAL,"Power increases the more times this move is used in succession",true,20),
 	RAIN_DANCE(0,1000,0,0,2,0,PType.WATER,"Changes the weather to RAIN for 5 turns",false,5),
-	RAINBOW_FLASH(50,100,0,0,1,1,PType.LIGHT,"Always goes first",false,10),
+	RAINBOW_FLASH(50,100,0,0,1,1,PType.LIGHT,"Increased priority",false,10),
 	RAPID_SPIN(50,100,100,0,0,0,PType.NORMAL,"% to raise user's Speed by 1, and frees user of being Spun, Leech Seed, and Hazards",true,35),
 	RAZOR_LEAF(55,95,0,1,0,0,PType.GRASS,"Boosted Crit rate",false,25),
 	RAZOR_SHELL(75,95,50,0,0,0,PType.WATER,"% chance to lower foe's Defense by 1",true,10),
@@ -414,7 +417,7 @@ public enum Move {
 	REVENGE(-1,100,0,0,0,0,PType.FIGHTING,"Power is doubled if user is slower than foe",true,10),
 	REVERSAL(-1,100,0,0,0,0,PType.FIGHTING,"Deals more damage the lower the user's HP is",true,15),
 	RISING_VOLTAGE(-1,100,0,0,1,0,PType.ELECTRIC,"Power is 2x if the terrain is ELECTRIC and foe is grounded",false,20),
-	ROAR(0,1000,0,0,2,-6,PType.NORMAL,"Forces foe to switch out into a random teammate, always goes last",false,20),
+	ROAR(0,1000,0,0,2,-6,PType.NORMAL,"Forces foe to switch out into a random teammate, usually moves last",false,20),
 	ROCK_BLAST(25,90,0,0,0,0,PType.ROCK,"Hits 2-5 times",false,10),
 	ROCK_CLIMB(80,95,20,0,0,0,PType.ROCK,"% chance to confuse foe",true,10),
 	ROCK_POLISH(0,1000,0,0,2,0,PType.ROCK,"Raises user's Speed by 2",false,20),
@@ -447,7 +450,7 @@ public enum Move {
 	SHADOW_BALL(80,100,30,0,1,0,PType.GHOST,"% to lower foe's Sp.Def by 1",false,15),
 	SHADOW_CLAW(80,100,0,1,0,0,PType.GHOST,"Boosted crit rate",true,15),
 	SHADOW_PUNCH(80,1000,0,0,0,0,PType.GHOST,"This attack never misses",true,20),
-	SHADOW_SNEAK(40,100,0,0,0,1,PType.GHOST,"Always attacks first",true,15),
+	SHADOW_SNEAK(40,100,0,0,0,1,PType.GHOST,"Increased priority",true,15),
 	SHEER_COLD(0,30,0,-999,1,0,PType.ICE,"If this move hits, it always K.Os foe. Doesn't effect ICE types",false,5),
 	SHELL_SMASH(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Attack, Sp.Atk, and Speed by 2, at the cost of lowering its Defense and Sp.Def by 1",false,5),
 	SHIFT_GEAR(0,1000,0,0,2,0,PType.STEEL,"Raises user's Attack by 1 and Speed by 2",false,10),
@@ -515,7 +518,7 @@ public enum Move {
 	STRUGGLE_BUG(50,100,100,0,1,0,PType.BUG,"% chance to lower foe's Sp.Atk by 1",false,20),
 	STUN_SPORE(0,75,0,0,2,0,PType.GRASS,"Paralyzes foe",false,25),
 	SUBMISSION(80,90,0,0,0,0,PType.FIGHTING,"User takes 1/4 of damage inflicted as recoil",true,20),
-	SUCKER_PUNCH(70,100,0,0,0,2,PType.DARK,"Always attacks first. Fails if foe didn't use an attacking move",true,5),
+	SUCKER_PUNCH(70,100,0,0,0,2,PType.DARK,"Inreased priority, fails if foe didn't use an attacking move",true,5),
 	SUMMIT_STRIKE(70,95,100,0,0,0,PType.FIGHTING,"% to lower foe's Defense by one stage. 30% to flinch foe",true,15),
 	SUNNY_BURST(80,100,100,0,1,0,PType.LIGHT,"% to turn weather to SUNNY",false,5),
 	SUNNY_DAY(0,1000,0,0,2,0,PType.FIRE,"Changes the weather to SUNNY for 5 turns",false,5),
@@ -543,7 +546,7 @@ public enum Move {
 	TAKE_OVER(0,100,0,0,2,0,PType.GHOST,"Foe's next attack is used on itself. Can be used once every other turn, and not on the first turn out.",false,5),
 	TAUNT(0,100,0,0,2,0,PType.DARK,"Causes foe to only be able to use attacking moves for 4 turns",false,20),
 	TEETER_DANCE(0,100,0,0,2,0,PType.NORMAL,"Confuses foe",false,20),
-	TELEPORT(0,1000,0,0,2,-6,PType.PSYCHIC,"User switches out, bringing in a teammate for free. This always moves last",false,10),
+	TELEPORT(0,1000,0,0,2,-6,PType.PSYCHIC,"User switches out after use. Usually moves last",false,10),
 	TERRAIN_PULSE(-1,100,0,0,1,0,PType.NORMAL,"Type changes to match the current terrain, double BP if type of the move changes",false,10),
 	THIEF(60,100,-1,0,0,0,PType.DARK,"Steals opponents item if user doesn't have one",true,25),
 	THRASH(120,100,0,0,0,0,PType.NORMAL,"User is locked into this move for 2-3 turns, Confuses user when the effect is done",true,10),
@@ -567,19 +570,19 @@ public enum Move {
 	TWINEEDLE(25,100,50,0,0,0,PType.BUG,"% chance to Poison foe",false,20),
 	TWISTER(40,100,10,0,1,0,PType.DRAGON,"% of causing foe to flinch",false,20),
 	U$TURN(70,100,0,0,0,0,PType.BUG,"Causes user to switch out after use",true,15),
-	UNSEEN_STRANGLE(60,100,100,0,0,3,PType.DARK,"% to cause foe to flinch and will always go first, only works on user's first turn out",true,5),
+	UNSEEN_STRANGLE(60,100,100,0,0,3,PType.DARK,"% to cause foe to flinch. Increased priority, only works on user's first turn out",true,5),
 	V$CREATE(180,95,-1,0,0,0,PType.FIRE, "Lowers user's Defense, Sp.Def, and Speed by 1",true,5),
-	VACUUM_WAVE(40,100,0,0,1,1,PType.FIGHTING,"Always goes first",false,30),
+	VACUUM_WAVE(40,100,0,0,1,1,PType.FIGHTING,"Increased priority",false,30),
 	VANDALIZE(0,100,0,0,2,0,PType.NORMAL,"Steals the foe's ability",false,10),
 	VANISHING_ACT(100,100,30,0,1,0,PType.MAGIC,"% to confuse foe, a two turn attack. User vanishes on the first, and attacks on the second. Hits through protect.",false,10),
 	VENOM_DRENCH(0,100,0,0,2,0,PType.POISON,"Lowers a Poisoned/Badly Poisoned foe's Attack and Sp.Atk by 2",false,20),
-	VENOM_SPIT(40,100,100,0,0,1,PType.POISON,"% to Paralyze foe; always goes first",false,5),
+	VENOM_SPIT(40,100,100,0,0,1,PType.POISON,"% to Paralyze foe; increased priority",false,5),
 	VENOSHOCK(-1,100,0,0,1,0,PType.POISON,"Damage is doubled if foe is Poisoned or Badly Poisoned",false,10),
 	VENOSTEEL_CROSSCUT(100,90,20,1,0,0,PType.STEEL,"% to Paralyze or Badly Poison foe, boosted crit rate",true,10),
 	VINE_CROSS(70,95,100,0,0,0,PType.GRASS,"% chance to lower foe's Speed by 1",false,15),
 	VINE_WHIP(45,100,0,0,0,0,PType.GRASS,"A normal attack",true,25),
 	VISE_GRIP(55,100,0,0,0,0,PType.NORMAL,"A normal attack",true,30),
-	VITAL_THROW(60,1000,0,0,0,-1,PType.FIGHTING,"This attack never misses, but goes last",false,10),
+	VITAL_THROW(60,1000,0,0,0,-1,PType.FIGHTING,"This attack never misses, but usually moves last",false,10),
 	VITRIOLIC_HEX(60,100,100,0,1,0,PType.MAGIC,"% chance to decrease foe's crit stage by 1",false,20),
 	VOLT_SWITCH(70,100,0,0,1,0,PType.ELECTRIC,"Causes user to switch out after use",false,10),
 	VOLT_TACKLE(120,100,10,0,0,0,PType.ELECTRIC,"% to Paralyze foe. User takes 1/3 of damage dealt as recoil",true,5),
@@ -597,7 +600,7 @@ public enum Move {
 	WEATHER_BALL(-1,100,0,0,1,0,PType.NORMAL,"Type changes to match the current weather, double BP if type of the move changes",false,10),
 	WHIP_SMASH(100,100,-1,0,0,0,PType.NORMAL,"Lowers user's Defense by 1",true,5),
 	WHIRLPOOL(35,95,100,0,1,0,PType.WATER,"% to spin non-WATER foes for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
-	WHIRLWIND(0,1000,0,0,2,-6,PType.FLYING,"Forces foe to switch out to a random teammate, always goes last",false,20),
+	WHIRLWIND(0,1000,0,0,2,-6,PType.FLYING,"Forces foe to switch out to a random teammate, usually moves last",false,20),
 	WILL$O$WISP(0,85,0,0,2,0,PType.FIRE,"Burns foe, accuracy is 100% for FIRE Pokemon",false,15),
 	WING_ATTACK(60,100,0,0,0,0,PType.FLYING,"A normal attack",true,35),
 	WISH(0,1000,0,0,2,0,PType.NORMAL,"Heals a Pokemon by 50% of the user's max HP the next turn",false,10),
@@ -848,6 +851,18 @@ public enum Move {
 	    // PP
 	    JLabel ppLabel = new JLabel("PP");
 	    JLabel ppValueLabel = new JLabel(String.valueOf(pp));
+	    
+	    // Move Attributes
+	    JPanel attributesPanel = new JPanel(new GridLayout(0, 1));
+	    if (contact) {
+			attributesPanel.add(new JLabel("- Makes Contact"));
+		}
+		if (priority != 0) {
+			attributesPanel.add(new JLabel((priority > 0 ? "- +" : "- ") + priority + " Priority"));
+		}
+		if (critChance > 0) {
+			attributesPanel.add(new JLabel("- +" + critChance + " Crit Chance"));
+		}
 
 	    // Description
 	    JLabel descriptionLabel = new JLabel();
@@ -857,6 +872,31 @@ public enum Move {
 	    descriptionLabel.setOpaque(false);
 	    descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 	    descriptionLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+	    
+	    // Move Flags
+	    JPanel flagsPanel = new JPanel();
+	    StringBuilder flags = new StringBuilder();
+		
+		List<Pair<Boolean, String>> moveFlags = Arrays.asList(
+			new Pair<>(isSlicing(), "Slicing"),
+			new Pair<>(isPunching(), "Punching"),
+			new Pair<>(isTail(), "Tail"),
+			new Pair<>(getNoComboMoves().contains(this), "No Combo"),
+			new Pair<>(getSound().contains(this), "Sound"),
+			new Pair<>(isBiting(), "Biting"),
+			new Pair<>(isHealing(), "Healing")
+		);
+		
+		for (Pair<Boolean, String> flag : moveFlags) {
+			if (flag.getFirst()) {
+				if (flags.length() > 0) flags.append("  ");
+				flags.append("- ").append(flag.getSecond());
+			}
+		}
+		
+		if (flags.length() > 0) {
+			flagsPanel.add(new JLabel(flags.toString()));
+		}
 
 	    // Create a panel for the move summary
 	    JPanel moveSummaryPanel = new JPanel();
@@ -874,13 +914,19 @@ public enum Move {
 
 	    // Add the move summary panel to the result panel
 	    result.add(moveSummaryPanel);
-
+	    
+	    // Add the attributes panel
+	    result.add(attributesPanel);
+	    
 	    // Add the description area to the result panel
 	    JPanel descriptionArea = new JPanel();
 	    descriptionArea.add(descriptionLabel);
 	    descriptionArea.setBackground(new Color(225, 225, 225));
 	    result.add(descriptionArea);
-
+	    
+	    // Add the flags panel
+	    result.add(flagsPanel);
+	    
 	    return result;
 	}
 	public int getNumHits(Pokemon user, Pokemon[] team) {

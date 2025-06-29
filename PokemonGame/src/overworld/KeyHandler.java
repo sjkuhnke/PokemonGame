@@ -485,12 +485,7 @@ public class KeyHandler implements KeyListener {
 					gp.ui.sellAmt++;
 					if (gp.ui.sellAmt > gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell()) gp.ui.sellAmt = 1;
 				} else {
-					int amt;
-					if (ctrlPressed) {
-						amt = 5;
-					} else {
-						amt = 1;
-					}
+					int amt = ctrlPressed ? 5 : 1;
 					gp.ui.bagNum[gp.ui.currentPocket - 1] -= amt;
 					if (gp.ui.bagNum[gp.ui.currentPocket - 1] <= 0) {
 						gp.ui.bagNum[gp.ui.currentPocket - 1] = 0;
@@ -515,12 +510,7 @@ public class KeyHandler implements KeyListener {
 					gp.ui.sellAmt--;
 					if (gp.ui.sellAmt < 1) gp.ui.sellAmt = gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell();
 				} else {
-					int amt;
-					if (ctrlPressed) {
-						amt = 5;
-					} else {
-						amt = 1;
-					}
+					int amt = ctrlPressed ? 5 : 1;
 					if (gp.ui.currentItems.size() > 0) {
 						gp.ui.bagNum[gp.ui.currentPocket - 1] += amt;
 						if (gp.ui.bagNum[gp.ui.currentPocket - 1] >= gp.ui.currentItems.size() - 1) {

@@ -1005,7 +1005,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 69, Item.PECHA_BERRY, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = ObjSetup(30, 68, Item.CHESTO_BERRY, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = ObjSetup(30, 66, Item.PERSIM_BERRY, mapNum, 5, 10);
-		gp.obj[mapNum][objIndex] = ObjSetup(12, 87, Item.WIKI_BERRY, mapNum, 5, 10);
+		gp.obj[mapNum][objIndex] = ObjSetup(12, 87, Item.SITRUS_BERRY, mapNum, 5, 10);
 		gp.obj[mapNum][objIndex] = ResistBerrySetup(21, 87, mapNum, 5, 15);
 		gp.obj[mapNum][objIndex] = ObjSetup(18, 90, Item.FIRE_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 87, Item.METRONOME, mapNum);

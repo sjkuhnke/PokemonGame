@@ -766,6 +766,7 @@ Made the guard to Route 40 in the gate say "swear to Arceus" instead of "swear t
 Made saving the game save your saves in your AppData folder to help the issue of not having permission to save in certain systems
 Also makes it work easier with the .exe installer I made
 Made docs generate in your Documents folder on your PC and auto-open the folder whenever any new docs are created so you can find them easier
+Made screenshots go into your Documents folder as well instead of the same directory as where the game is
 Changed King's Rock, Shed Shell, Muscle Band and Wise Glasses to all sell for $0 since when they had a price they were sellable in the bag, which isn't intended since I previously made all only-1-of held items unsellable
 Made opening the calc with no Pokemon (the player doesn't even have the calc yet) not crash the game - will eventually remove the tooltip before you have calc too
 Gave Cervora Magic Reflect at lv 37
@@ -773,3 +774,54 @@ Gave Swimmer Anita's, Magician Monika's, Magician Yolanda's Cervora's Magic Refl
 Made Star Trade NPC, all other NPCs if not already overwritten, and static encounters use UI.MAX_TEXTBOX instead of an arbitrary number
 Made Anticipation have its own separate text in the Info screen in battle if it's active instead of just using Illusion
 Added Weight, Catch Rate, Egg Cycles, and Egg Groups in a table for each Pokemon in the PokemonInfo doc!
+Fixed Protecting against a Rollout unlocking you from Rollout
+Lowered the levels of Staryu's moves past lv 31 to make them more accessible before evolving, as well as made room for Abduct at lv 42 (new move for Staryu line)
+Gave Starmie Abduct at lv 1 as well
+Gave Azumarill Extreme Speed at lv 65
+Changed Swimmer Dionne's Starmie's Icy HP Ice -> Icy Wind
+Changed Black Belt Maxton's Starmie's Recover -> Abduct
+Changed Gentleman Dennis's Starmie's Recover -> Abduct
+Changed Hiker Stacy's Azumarill's Quick Attack -> Extreme Speed
+Made Trainer AI know that moves with positive Primary Effects (Knock Off, Dragon Tail, etc) should be treated as status moves
+Made Eject Button "cancel" Pivoting moves to match vanilla mechanics
+Made falling asleep from Yawn announce if it failed, blocked by Psychic typing, etc
+Fixed how AI sees ground immunity by recognizing if a Pokemon is ungrounded or not, instead of just Levitate and Air Balloon (to work with magnet rise, smack down, gravity and such)
+Added "Open Location" under the Manage button on the startup menu to open the location of a save file to help the player find it easier
+Fixed Magic Bounce not being able to bounce back status moves that are used on themselves (from Magic Reflect/Abduct)
+Buffed Magnet Rise to permanently levitate you (via a status effect) until you switch out instead of a counter
+Changed Knock Off's move description to make its effect and damage boost more clear
+Redid how crits are handled/calculated to work with a ton of niche cases like Psyshock, Foul Play, Body Press, etc. and for scalability
+Made Rare Candies sellable for $600 (instead of $0) since nuzlockers now have a key item for Rare Candies and not just 999x Rare Candy item
+Fixed AI knowing which move Kissyfishy-D is using (replaced base moves with the -D moves in the AI)
+Gave Osceloma Nasty Plot at lv 54 and moved Psychic Terrain and Energy Ball back a bit to make room
+Gave Zoroark Frostbind at lv 68
+Gave Hast-E Rising Voltage at lv 60
+Gave Sedisoftra-E Diamond Storm at lv 60 and moved Fire Blast to lv 58 to buff its viability a bit and make it closer to Prismodon-E viability
+Gave Diamond Storm to Glimmora at lv 60
+Gave Psycorboratr Body Slam via TM
+Fixed a critical game-crashing Burn Up bug with a Pokemon being Fire secondary typing (only applies to Scovillain/Despenero but it's fixed)
+Gave Lagma line Scald via TM since they already get Surf and Whirlpool
+Gave Fireblion Earthquake via TM since it already gets Drill Run by level up
+Fixed multiple Pokemon not being able to evolve on the same exp yield (1 Pokemon still can't evolve 2 different times from the same exp yield - this is intentional)
+Added checking for duplicate moves in a moveset to the moveset validator
+Made entering a cutscene reset your sprite
+Changed a bunch of "..?" to "...?" for consistency and proper syntax
+Fixed bug with Dex Nav window width being calculated slightly incorrectly
+Added pressing 'D' when hovering a Pokeball will show the ball's info and the catch change in % for the wild Pokemon you're fighting!
+Changed Love Ball to be same family: catch multiplier = 8, in compatible egg groups: catch mul = 4, otherwise just 1 instead of just checking if they're the same ID
+Added new sprites for Sheltor, Shelnado, Rhypo, Rhynee, Rhypolar
+Revamped Casino Coin held items to scale with your gym badges - meaning only certain items are available for purchase with more being available after each gym badge
+Fixed bug with Evolution text (<Pokemon> evolved into <New Species>!) and how it interacted with text that's supposed to show for learning a move
+Finally fixed the other Choice Item (the one you didn't pick in Sicab City tower) showing up correctly in Power Plant (pt.2)
+Fixed an Adrenaline Orb in Shadow Ravine -1A being on the same tile as the Slow Fall pit destination
+Fixed user/foe party to show the active Pokemon relative to what slot they are on your team (as opposed to always showing the first Pokemon in the line is active)
+Fixed a bug with Breeder lady in Glurg Town and one dialogue not having her nametag
+Removed the fishing boolean flag from the player class since it's a fully functional item now
+Added a buffer for Silhouette sprites so they only need to be loaded once to make Dex Nav less laggy
+Fixed a bug with deleting a save file not showing the new save file that's selected's team and location and last date modified
+Fixed Arcane Spell effect sometimes actually buffing a move's base power to the "minimum cap" of 20 BP (weak Eruption, multi-hit moves that are below 20 BP per hit, etc)
+Fixed checking if the trainer's Pokemon is a dupe for efficiency sake (unneccesary check)
+Fixed evolving your lead Pokemon that is not active anymore overwriting your active Pokemon's displayed HP and max HP (purely visual bug)
+Fixed a crucial bug with the Pokemon's exp points going into the negative after levelling up (recalculated exp too many times)
+Made Destiny Bond effect go on the user, not the target (since it targets itself anyways)
+Fixed Flinching being able to be applied more than once due to King's rock and the move also being able to flinch
