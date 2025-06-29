@@ -477,15 +477,17 @@ public class BattleUI extends AbstractUI {
 			break;
 		case Task.EVOLUTION:
 		case Task.TYPES:
-			if (!currentTask.message.isEmpty()) {
-				showMessage(currentTask.message);
-			}
 			if (currentTask.p == user) {
 				userType = currentTask.types;
 				userName = currentTask.p.nickname;
 			} else {
 				foeType = currentTask.types;
 				foeName = currentTask.p.nickname;
+			}
+			if (!currentTask.message.isEmpty()) {
+				showMessage(currentTask.message);
+			} else {
+				endTask();
 			}
 			break;
 		}
@@ -1161,7 +1163,9 @@ public class BattleUI extends AbstractUI {
 		        g2.fillRoundRect(x, y, width, height, 10, 10);
 		        g2.setColor(moves[i].getPPColor());
 		        String text = moves[i].move.toString();
+		        g2.setFont(g2.getFont().deriveFont(getFontSize(text, width + gp.tileSize / 2)));
 		        g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
+		        g2.setFont(g2.getFont().deriveFont(24F));
 		        String pp = showMoveSummary ? moves[i].move.cat == 2 ? "Status" : mtype.effectiveness(foe, user, moves[i].move) : moves[i].currentPP + " / " + moves[i].maxPP;
 		        g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
 		        if (moveNum == i) {
@@ -1201,7 +1205,7 @@ public class BattleUI extends AbstractUI {
         	turn(move, foeMove);
         }
 		if (showMoveSummary) {
-        	drawMoveSummary(gp.tileSize * 3, (int) (gp.tileSize * 2.5), user, foe, moves[moveNum], null);
+        	drawMoveSummary(gp.tileSize * 3, gp.tileSize * 2, user, foe, moves[moveNum], null);
         }
 	}
 	

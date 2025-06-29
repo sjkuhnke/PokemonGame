@@ -102,7 +102,7 @@ public enum Item {
 	ELIXIR(40,200,100,new Color(230, 146, 78),Item.MEDICINE,null,"Restores PP of a selected move."),
 	MAX_ELIXIR(41,250,200,new Color(246, 255, 120),Item.MEDICINE,null,"Restores PP of all moves on a Pokemon."),
 	PP_UP(42,2500,1000,new Color(150, 51, 156),Item.MEDICINE,null,"Increases max PP of a selected move by 20%."),
-	PP_MAX(43,0,1500,new Color(142, 230, 21),Item.MEDICINE,null,"Increases max PP of a selected move by its max PP, which is 160%."),
+	PP_MAX(43,0,1500,new Color(142, 230, 21),Item.MEDICINE,null,"Increases max PP of a selected move by its max PP, which is 60%."),
 	TEMPLE_ORB(386,0,0,Color.BLACK,Item.OTHER,null,"A rare orb used by an ancient diety as currency for gambling."),
 	RUSTY_BOTTLE_CAP(282,300,150,Color.BLACK,Item.OTHER,null,"Lowers an IV of choosing to 0."),
 	BOTTLE_CAP(27,1000,500,new Color(192, 192, 192),Item.OTHER,null,"Maxes out an IV of choosing."),
