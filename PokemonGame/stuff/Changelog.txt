@@ -825,3 +825,53 @@ Fixed evolving your lead Pokemon that is not active anymore overwriting your act
 Fixed a crucial bug with the Pokemon's exp points going into the negative after levelling up (recalculated exp too many times)
 Made Destiny Bond effect go on the user, not the target (since it targets itself anyways)
 Fixed Flinching being able to be applied more than once due to King's rock and the move also being able to flinch
+Added the following flags to the move summary UI(s):
+- Makes Contact
+- Priority Stage
+- Crit Stage
+- Slicing Move (Sharpness)
+- Punching Move (Iron Fist and Punching Glove)
+- Tail Move (Sharp Tail)
+- No Combo Move (meaning other moves or this move with this flag can't be used in succession with itself)
+- Sound Move (Throat Chop and Throat Spray)
+- Biting Move (Strong Jaw)
+- Healing Move (gets blocked by Heal Block effect)
+Reorganized and redesigned the move summary UI a bit to fit this info in a reasonable space (had to make the UI a little taller vertically but not too bad)
+Resized some UIs that relied on the move summary UI being a specific size, namely:
+- Pokedex moves summary
+- Learning a move (both hovering the move to learn and the move to forget)
+- Move reminder (also made the scroll pane taller/fit an extra move at once and now allows for holding [Ctrl] while scrolling to scroll 5x at once)
+- In battle (by pressing 'D')
+- Pokemon's summary
+- Info for TMs in bag
+Changed the second Wiki Berry tree (on Route 43, need Surf) to be a second Sitrus Berry tree
+Made Font Size scale in the selecting move screen in battle for long move names (FINALLY!)
+Fixed PP Max's description saying it increases a move by 160% to just 60% which is less confusing since PP Up says increases by 20%
+Fixed Luxury Ball not doubling friendship LOST (by fainting)
+Fixed Bug Catcher Maude giving $200 instead of $100
+Added what slot the Pokemon is in when you're looking at its summary in either your party or viewing the foe's party (for identical eggs differention)
+Changed having a status effect (Burn, Poison, etc.) in your party view making the background the color of the status instead of always yellow for all of them
+Tweaked the colors of Burn, Paralysis, Poison, and Toxic Poison due to above (also made Poison and Toxic Poison have a slightly different shade of purple)
+Fixed some minor formatting with where the status icon is in the Pokemon's summary view if they have one
+Changed dialogue for the gift -E/-S NPC in Frenco City and the Breeder that gives you a gift egg in Glurg Town to make it WAY better and more interesting
+Changed the gift egg that the aformentioned Breeder gives you to be [Minishoo/Zorua (or if you have either, guaranteed Flamehox)] -> to be one of randomly: [Zorua, Flamehox, Scraggy, Solosis-X, Seviper, Gulpin-X, Azurill] since Minishoo is already a gift elsewhere and to give it more variety
+Revamped the fossil NPC in Glurg Town to have way more interesting dialogue and to give you an Egg of the fossil ONLY ON NUZLOCKE MODE so you can potentially get both fossils guaranteed by hatching them in different locations!
+ADDED CUSTOM ITEM SORTING IN YOUR BAG POCKETS WITH A BUNCH OF PRESET SORTING MECHANISMS FOR YOU TO PICK FROM ([Ctrl] + [A]!), NAMELY:
+- Alphabetical (any pocket)
+- Reverse Alphabetical (any pocket)
+- Count (high -> low) (any pocket but TMs and Key Items)
+- Sell Price (high -> low) (any pocket but TMs and Key Items)
+- Default (the order in which i picked that every save defaults to) (any pocket)
+- Move type alphabetically (TMs only)
+- Move Base Power (high -> low) (TMs only)
+- Move Category (Phys -> Spec -> Stat) (TMs only)
+- Move Accuracy (high -> low) (TMs only)
+- Move Priority (high -> low) (TMs only)
+- Move PP (high -> low) (TMs only)
+- And probably more to come! Feel free to offer any suggestions!
+Made Healing Circle not clickable by AI if the user doesn't have any valid team members left
+Fixed Jaboca Berry and Kee Berry still printing that they activated if the holder fainted when they activated
+Fixed bug with trapping effects not being removed from yourself when you use a phazing move on the opponent (if you're wrapped and you Dragon Tail out the wrapper, for example, used to not remove the wrap effect from you)
+Made Tailwind show the effective speed stat of the affected Pokemon in the Calculator
+Added Unerodible ability as something for the AI to consider when checking for resists in the back since Superchargo is technically a Ground resist with it (should've had it in there from the start anyways)
+Removed the move that you're trying to learn name in the header since the move is literally right below that, so I formatted the header to all fit on one line just saying "<Pokemon> wants to learn:"

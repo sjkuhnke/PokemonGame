@@ -996,7 +996,7 @@ public abstract class AbstractUI {
 			gp.battleUI.currentTask = null;
 			return;
 		}
-		drawMoveOptions(m, p, p.nickname + " wants to learn\n" + m.toString() + ":");
+		drawMoveOptions(m, p, p.nickname + " wants to learn:");
 	}
 	
 	public void drawMoveOptions(Move m, Pokemon p, String header) {
@@ -1005,7 +1005,7 @@ public abstract class AbstractUI {
 		int x = gp.tileSize * 4;
 		int y = 0;
 		int width = gp.tileSize * 8;
-		int height = (int) (gp.tileSize * 4.5);
+		int height = (int) (gp.tileSize * 4);
 		if (m == null) {
 			y += gp.tileSize;
 		} else {
@@ -1021,11 +1021,9 @@ public abstract class AbstractUI {
 		x += gp.tileSize / 2;
 		y += gp.tileSize * 0.75;
 		g2.setFont(g2.getFont().deriveFont(24F));
-		for (String s : header.split("\n")) {
-			g2.drawString(s, getCenterAlignedTextX(s, (x - gp.tileSize / 2) + width / 2), y);
-			y += gp.tileSize / 2;
-		}
-		y -= gp.tileSize / 4;
+		g2.drawString(header, getCenterAlignedTextX(header, (x - gp.tileSize / 2) + width / 2), y);
+		y += gp.tileSize / 3;
+		
 		if (m != null) {
 			x += gp.tileSize * 11 / 6;
 			PType mtype = m.mtype;
@@ -1052,7 +1050,7 @@ public abstract class AbstractUI {
 	            g2.setColor(Color.RED);
 	            g2.drawRoundRect(x - 2, y - 2, moveWidth + 4, moveHeight + 4, 10, 10);
 	        }
-			y += gp.tileSize * 1.5;
+			y += gp.tileSize * 5 / 3;
 			x -= gp.tileSize * 11 / 6;
 		}
 		int startX = x;
