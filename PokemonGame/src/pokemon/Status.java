@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public enum Status {
-	BURNED("Burn", new Color(230, 9, 15), Color.BLACK),
-	PARALYZED("Paralysis", new Color(219, 216, 15), Color.BLACK),
+	BURNED("Burn", new Color(184, 34, 11), Color.BLACK),
+	PARALYZED("Paralysis", new Color(212, 202, 21), Color.BLACK),
 	ASLEEP("Sleep", new Color(105, 105, 102), Color.WHITE),
-	POISONED("Poison", new Color(68, 2, 161), Color.WHITE),
+	POISONED("Poison", new Color(154, 33, 194), Color.WHITE),
 	HEALTHY("", new Color(255, 255, 255), Color.BLACK),
 	FROSTBITE("Frostbite", new Color(150, 217, 214), Color.BLACK),
-	TOXIC("Toxic Poison", new Color(68, 2, 161), Color.WHITE),
+	TOXIC("Toxic Poison", new Color(99, 14, 156), Color.WHITE),
 	CONFUSED("CNF", new Color(32, 37, 61), Color.WHITE),
 	CURSED("CRS", new Color(30, 32, 41), Color.WHITE),
 	LEECHED("LCH", new Color(21, 143, 40), Color.BLACK),

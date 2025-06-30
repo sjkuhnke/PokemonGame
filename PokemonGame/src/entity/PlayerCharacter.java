@@ -170,7 +170,8 @@ public class PlayerCharacter extends Entity {
 						Pokemon h = e.hatch();
 						if (p.nuzlocke && h instanceof Egg) {
 							gp.setTaskState();
-							Task.addTask(Task.TEXT, Item.breakString("Oh... the Egg is trying to hatch, but you've already gotten an encounter here! Try somewhere else!", UI.MAX_TEXTBOX));
+							String message = p.isDupes(h) ? h.getName() + " Egg in slot " + (index+1) + " activates Dupes Clause!" : "you've already gotten an encounter here! Try somewhere else!";
+							Task.addTask(Task.TEXT, Item.breakString("Oh... the Egg is trying to hatch, but " + message, UI.MAX_TEXTBOX));
 							e.cycles = 1;
 						} else {
 							p.pokedex[h.id] = 2;
@@ -180,9 +181,9 @@ public class PlayerCharacter extends Entity {
 							Task.addTask(Task.TEXT, "Oh?");
 							Task.addTask(Task.TEXT, h.name() + " hatched from the egg!");
 							Task t = Task.addTask(Task.NICKNAME, "Would you like to nickname " + h.name() + "?", h);
-							t.wipe = true; // to reset the nickname when the task gets up
-							break;	
+							t.wipe = true; // to reset the nickname when the task gets up	
 						}
+						break;
 					}
 				}
 				if (p.nursery != null) {

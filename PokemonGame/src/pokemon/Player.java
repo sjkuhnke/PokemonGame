@@ -18,6 +18,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -691,10 +692,21 @@ public class Player extends Trainer implements Serializable {
 	
 	public void showNuzlockeInfo() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0, 2));
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+		JPanel nuzlockePanel = new JPanel();
+		nuzlockePanel.setLayout(new GridLayout(0, 2));
 		
 		JLabel nuzlockeLabel = new JLabel("Nuzlocke:");
 		JLabel nuzlockeAns = new JLabel(String.valueOf(nuzlocke));
+		
+		JPanel encounterPanel = new JPanel();
+		encounterPanel.setLayout(new BoxLayout(encounterPanel, BoxLayout.Y_AXIS));
+		
+		JPanel invalidPanel = new JPanel();
+		invalidPanel.setLayout(new BoxLayout(invalidPanel, BoxLayout.Y_AXIS));
+		
+		boolean invalid = false;
 		
 		if (nuzlocke) {
 			JLabel nuzlockeStartedLabel = new JLabel("Nuzlocke Started?");
@@ -702,33 +714,42 @@ public class Player extends Trainer implements Serializable {
 			JLabel nuzlockeValidLabel = new JLabel("Nuzlocke Is Valid?");
 			JLabel nuzlockeValidAns = new JLabel(String.valueOf(isValidNuzlocke));
 			
-			panel.add(nuzlockeLabel);
-			panel.add(nuzlockeAns);
-			panel.add(nuzlockeStartedLabel);
-			panel.add(nuzlockeStartedAns);
-			panel.add(nuzlockeValidLabel);
-			panel.add(nuzlockeValidAns);
-			
-			panel.add(new JLabel("_____________"));
-			panel.add(new JLabel("_____________"));
+			nuzlockePanel.add(nuzlockeLabel);
+			nuzlockePanel.add(nuzlockeAns);
+			nuzlockePanel.add(nuzlockeStartedLabel);
+			nuzlockePanel.add(nuzlockeStartedAns);
+			nuzlockePanel.add(nuzlockeValidLabel);
+			nuzlockePanel.add(nuzlockeValidAns);
 			
 			for (int i = 0; i < invalidReasons.size(); i++) {
-				JLabel label = new JLabel("Reason #" + (i+1));
+				//JLabel label = new JLabel("Reason #" + (i+1));
 				JLabel labelAns = new JLabel(invalidReasons.get(i));
-				panel.add(label);
-				panel.add(labelAns);
+				//invalidPanel.add(label);
+				invalidPanel.add(labelAns);
+				invalid = true;
 			}
-			
-			panel.add(new JLabel("_____________"));
-			panel.add(new JLabel("_____________"));
 			
 			for (int i = 0; i < nuzlockeEncounters.size(); i++) {
-				JLabel label = new JLabel("#" + (i+1));
+				//JLabel label = new JLabel("#" + (i+1));
 				JLabel labelAns = new JLabel(nuzlockeEncounters.get(i));
-				panel.add(label);
-				panel.add(labelAns);
+				//encounterPanel.add(label);
+				encounterPanel.add(labelAns);
 			}
 		}
+		
+		JScrollPane invalidScrollPane = new JScrollPane(invalidPanel);
+		invalidScrollPane.setPreferredSize(new Dimension(150, 100));
+		invalidScrollPane.getVerticalScrollBar().setUnitIncrement(8);
+		invalidScrollPane.setBorder(BorderFactory.createTitledBorder("Invalid Reasons:"));
+		
+		JScrollPane encounterScrollPane = new JScrollPane(encounterPanel);
+		encounterScrollPane.setPreferredSize(new Dimension(150, 200));
+		encounterScrollPane.getVerticalScrollBar().setUnitIncrement(8);
+		encounterScrollPane.setBorder(BorderFactory.createTitledBorder("Encounters:"));
+		
+		panel.add(nuzlockePanel);
+		if (invalid) panel.add(invalidScrollPane);
+		panel.add(encounterScrollPane);
 		
 		JOptionPane.showMessageDialog(null, panel, "Nuzlocke Info", JOptionPane.PLAIN_MESSAGE);
 	}
@@ -925,7 +946,8 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public void sellItem(Item item, int amt) {
-		bag.count[item.getID()] -= amt;
+		bag.remove(item, amt);
+		//bag.count[item.getID()] -= amt;
 		money += amt * item.getSell();
 	}
 
@@ -1358,10 +1380,12 @@ public class Player extends Trainer implements Serializable {
 				}
 				return;
 			case STATUS_KIT:
-        		gp.ui.currentPokemon = p;
-        		gp.ui.currentHeader = "Which status to inflict?";
-        		gp.ui.moveOption = -1;
-        		gp.ui.showStatusOptions = true;
+				if (!p.isFainted()) {
+					gp.ui.currentPokemon = p;
+	        		gp.ui.currentHeader = "Which status to inflict?";
+	        		gp.ui.moveOption = -1;
+	        		gp.ui.showStatusOptions = true;
+				}
 				return;
 			default:
 				return;

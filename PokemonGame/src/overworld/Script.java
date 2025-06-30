@@ -952,9 +952,13 @@ public class Script {
 		
 		scriptMap.put(94.0, (npc) -> { // gift e/s
 			p.flag[4][4] = true;
-			Task.addTask(Task.TEXT, "One makes Pokemon surge with electricity, and another casts them in a strange shadow.");
-			Task.addTask(Task.TEXT, "Here's a gift of one of the Pokemon affected!");
-			int[] ids = new int[] {197, 199, 202, 205, 209, 215, 217, 220, 223, 226};
+			Task.addTask(Task.TEXT, "They struck like lightning and silence - two meteorites, one from brilliance, one from void.");
+			Task.addTask(Task.TEXT, "The Heart of the Electric Tunnel crackles with restless current. Pokemon near it began to change...");
+			Task.addTask(Task.TEXT, "And deep within the Shadow Ravine, something darker took root. Pokemon warpedin ways no scientist can explain.");
+			Task.addTask(Task.TEXT, "They say the energy isn't from this world. Or myabe it is... just a part we were never meant to touch.");
+			Task.addTask(Task.TEXT, "Here. One of the altered Pokemon found its way to me. It feels wrong to keep it hidden.");
+			
+			int[] ids = new int[] {197, 199, 202, 205, 209, 215, 217, 220, 223, 226, 267, 281};
 			Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 			int index = -1;
 			int counter = 0;
@@ -1081,13 +1085,19 @@ public class Script {
 		
 		scriptMap.put(109.0, (npc) -> { // breeder
 			p.flag[5][7] = true;
-			Task.addTask(Task.DIALOGUE, npc, "Here, could you raise it for me?");
-			int[] ids = new int[] {177, 179, 98};
+			Task.addTask(Task.DIALOGUE, npc, "It was just sitting there in the dirt... no nest, no parents, nothing.");
+			Task.addTask(Task.DIALOGUE, npc, "It's warm though. Still alive. Still waiting.");
+			Task.addTask(Task.DIALOGUE, npc, "I'd take it with me, but I don't have the supplies - and my own team's too shaken to travel back.");
+			Task.addTask(Task.DIALOGUE, npc, "Could you... raise it instead? Give it a home?");
+			
 			Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
-			int index = gift.nextInt(ids.length - 1);
-			if (p.pokedex[ids[0]] == 2 || p.pokedex[ids[1]] == 2) {
-				index = 2;
-			}
+			int[] ids = new int[] {179, 98, 238, 254, 257, 261, 292}; // zorua, flamehox, scraggy, solosis-x, seviper, gulpin-x, azurill
+			int index = -1;
+			int counter = 0;
+			do {
+				counter++;
+				index = gift.nextInt(ids.length);
+			} while (p.pokedex[ids[index]] == 2 && counter < 100);
 			
 			Egg result = new Egg(ids[index]);
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
@@ -1150,8 +1160,17 @@ public class Script {
 		});
 		
 		scriptMap.put(118.0, (npc) -> { // fossil
-			Task.addTask(Task.DIALOGUE, npc, "Do you have any fossils for me to resurrect?");
-			Task.addTask(Task.FOSSIL, "Do you have any fossils for me to resurrect?");
+			if (p.nuzlocke) {
+				Task.addTask(Task.DIALOGUE, npc, "Normally, we'd use advanced machinery to reconstitute ancient Pokemon from fossilized cells...");
+				Task.addTask(Task.DIALOGUE, npc, "But those methods are too unstable right now.");
+				Task.addTask(Task.DIALOGUE, npc, "Instead, we've developed an incubation technique inspired by real-world surrogacy models!");
+				Task.addTask(Task.DIALOGUE, npc, "Give me your fossil, and I'll extract the embryo... the rest is up to you.");
+				Task.addTask(Task.FOSSIL, npc, "Are you ready to hatch history in your own hands?");
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "We extract genetic code from fossilized scales, then reconstruct the organism using modern cloning tech.");
+				Task.addTask(Task.DIALOGUE, npc, "It's science, sure - but there's a bit of magic to seeing ancient life stir again.");
+				Task.addTask(Task.FOSSIL, npc, "Got a fossil? Let's revive something long thought lost!");
+			}
 		});
 
 		scriptMap.put(127.0, (npc) -> { // blackjack
@@ -1230,7 +1249,7 @@ public class Script {
 			}
 			Task.addTask(Task.DIALOGUE, npc, "Here, grab a seat! You and your Pokemon look like you want some SPICE!");
 			for (Pokemon p : p.team) {
-				if (p != null && p.type1 != PType.FIRE && p.type2 != PType.FIRE) {
+				if (p != null && !p.isFainted() && p.type1 != PType.FIRE && p.type2 != PType.FIRE) {
 					p.status = Status.BURNED;
 				}
 			}

@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
+import pokemon.Bag.SortType;
 import pokemon.Item;
 import pokemon.Pokemon;
 import pokemon.Task;
@@ -484,6 +485,10 @@ public class KeyHandler implements KeyListener {
 				} else if (gp.ui.bagState == 2) { // sell
 					gp.ui.sellAmt++;
 					if (gp.ui.sellAmt > gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell()) gp.ui.sellAmt = 1;
+				} else if (gp.ui.bagState == 4) { // sort
+					if (gp.ui.commandNum > 0) {
+						gp.ui.commandNum--;
+					}
 				} else {
 					int amt = ctrlPressed ? 5 : 1;
 					gp.ui.bagNum[gp.ui.currentPocket - 1] -= amt;
@@ -509,6 +514,10 @@ public class KeyHandler implements KeyListener {
 				} else if (gp.ui.bagState == 2) { // sell
 					gp.ui.sellAmt--;
 					if (gp.ui.sellAmt < 1) gp.ui.sellAmt = gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell();
+				} else if (gp.ui.bagState == 4) { // sort
+					if (gp.ui.commandNum < SortType.getMaxSortOptions(gp.ui.currentPocket) - 1) {
+						gp.ui.commandNum++;
+					}
 				} else {
 					int amt = ctrlPressed ? 5 : 1;
 					if (gp.ui.currentItems.size() > 0) {

@@ -232,6 +232,8 @@ public abstract class AbstractUI {
 		
 		drawSubWindow(x, y, width, height);
 		
+		gp.player.p.setSlots();
+		
 		if (!showMoveOptions && !showIVOptions && !showBoxSummary && !showStatusOptions &&
 				(currentTask == null || currentTask.type == Task.PARTY || currentTask.type == Task.REGIONAL_TRADE || currentTask.type == Task.EVO_INFO ||
 				currentTask.type == Task.NURSERY_DEPOSIT)) {
@@ -289,7 +291,7 @@ public abstract class AbstractUI {
 				} else if (p.status == Status.HEALTHY) {
 					background = new Color(0, 220, 0, 200);
 				} else {
-					background = new Color(200, 200, 0, 200);
+					background = p.status.getColor();
 				}
 				if (partySelectedNum == i) background = new Color(100, 100, 220, 200);
 				if (partyNum == i) background = background.brighter();
@@ -392,6 +394,9 @@ public abstract class AbstractUI {
 		
 		drawSubWindow(x, y, width, height);
 		
+		int windowX = x;
+		int windowY = y;
+		
 		// ID
 		x += gp.tileSize / 2;
 		y += gp.tileSize * 0.75;
@@ -415,8 +420,8 @@ public abstract class AbstractUI {
 		g2.drawString(p.name(), x, y + gp.tileSize / 2);
 		
 		// Item
+		x += gp.tileSize * 3.5;
 		if (p.item != null) {
-			x += gp.tileSize * 3.5;
 			g2.drawString("@", x, y + gp.tileSize / 2);
 			x += gp.tileSize * 0.5;
 			g2.drawImage(scaleImage(p.item.getImage(), 2), x, y - gp.tileSize / 4, null);
@@ -424,13 +429,28 @@ public abstract class AbstractUI {
 			g2.setFont(g2.getFont().deriveFont(12F));
 			String item = foe == null ? "[A] Take " + p.item.toString() : p.item.toString();
 			g2.drawString(item, getCenterAlignedTextX(item, x + 8), y);
+			x -= gp.tileSize * 0.5;
 			y -= gp.tileSize;
 		}
 		
 		// Status
 		if (p.status != Status.HEALTHY) {
-			x += gp.tileSize * 3.25;
+			x += gp.tileSize * 2.5;
 			g2.drawImage(p.status.getImage(), x, y, null);
+		}
+		
+		// Slot
+		if (p.slot >= 0
+				&&
+				!(gp.gameState == GamePanel.BOX_STATE && gp.ui.showBoxSummary && !gp.ui.showBoxParty)) {
+			int slotX = windowX + width - gp.tileSize;
+			int slotY = windowY;
+			drawSubWindow(slotX, slotY, gp.tileSize, gp.tileSize);
+			slotX += gp.tileSize / 2;
+			slotY += gp.tileSize * 0.75;
+			String slotString = String.valueOf(p.slot + 1);
+			g2.setFont(g2.getFont().deriveFont(30F));
+			g2.drawString(slotString, getCenterAlignedTextX(slotString, slotX - 1), slotY);
 		}
 		
 		x = startX;

@@ -30,6 +30,7 @@ import javax.swing.SwingUtilities;
 import entity.*;
 import object.*;
 import pokemon.*;
+import pokemon.Bag.SortType;
 import puzzle.Puzzle;
 import util.Pair;
 
@@ -1872,29 +1873,9 @@ public class UI extends AbstractUI {
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			if (commandNum == 0) {
-				if (hasTSF) {
-					currentTask = null;
-					Task.addTask(Task.TEXT, "Okay! I'll go revive this ancient Pokemon!");
-					Task.addTask(Task.GIFT, "", new Pokemon(211, 20, true, false));
-					bag.remove(Item.THUNDER_SCALES_FOSSIL);
-					commandNum = 0;
-				} else {
-					Task.addTask(Task.TEXT, "You don't have any Thunder Scales Fossils for me to revive!");
-					Task.addTask(Task.FOSSIL, currentTask.message);
-					currentTask = null;
-				}
+				resurrectFossil(npc, bag, 211, hasTSF, Item.THUNDER_SCALES_FOSSIL);
 			} else if (commandNum == 1) {
-				if (hasDSF) {
-					currentTask = null;
-					Task.addTask(Task.TEXT, "Okay! I'll go revive this ancient Pokemon!");
-					Task.addTask(Task.GIFT, "", new Pokemon(213, 20, true, false));
-					bag.remove(Item.DUSK_SCALES_FOSSIL);
-					commandNum = 0;
-				} else {
-					Task.addTask(Task.TEXT, "You don't have any Dusk Scales Fossils for me to revive!");
-					Task.addTask(Task.FOSSIL, currentTask.message);
-					currentTask = null;
-				}
+				resurrectFossil(npc, bag, 213, hasDSF, Item.DUSK_SCALES_FOSSIL);
 			}
 		}
 		
@@ -1909,6 +1890,30 @@ public class UI extends AbstractUI {
 			gp.keyH.rightPressed = false;
 			commandNum = 1 - commandNum;
 		}
+	}
+	
+	private void resurrectFossil(Entity npc, Bag bag, int fossilID, boolean hasFossil, Item fossil) {
+		if (hasFossil) {
+			Pokemon p = null;
+			if (gp.player.p.nuzlocke) {
+				Task.addTask(Task.DIALOGUE, npc, "Carefully extracting DNA... transplanting into bio-incubation capsule...");
+				Task.addTask(Task.DIALOGUE, npc, "Success! Now it's an egg, and it'll hatch under your care.");
+				p = new Egg(fossilID);
+			} else {
+				String dialogue = fossil == Item.THUNDER_SCALES_FOSSIL ? "Spark levels stable..." : "Darkness levels normalized...";
+				Task.addTask(Task.DIALOGUE, npc, "Activating genetic reconstruction... " + dialogue);
+				Task.addTask(Task.DIALOGUE, npc, "Resurrection complete! The ancient Pokemon awakens once more!");
+				p = new Pokemon(fossilID, 20, true, false);
+			}
+			
+			Task.addTask(Task.GIFT, "", p);
+			bag.remove(fossil);
+			commandNum = 0;
+		} else {
+			Task.addTask(Task.DIALOGUE, npc, "You don't have any " + fossil.toString() + "s for me to work with!");
+			Task.addTask(Task.FOSSIL, npc, currentTask.message);
+		}
+		currentTask = null;
 	}
 
 	private void drawHiddenPowerScreen(Pokemon[] team) {
@@ -3848,22 +3853,27 @@ public class UI extends AbstractUI {
 		if (!showMoveOptions) {
 			if (gp.keyH.aPressed) {
 				gp.keyH.aPressed = false;
-				if (selectedBagNum == -1) {
-					selectedBagNum = bagNum[currentPocket - 1];
-				} else if (selectedBagNum == bagNum[currentPocket - 1]) {
-					selectedBagNum = -1;
+				if (bagState == 0 && gp.keyH.ctrlPressed) {
+					gp.keyH.ctrlPressed = false;
+					bagState = 4;
 				} else {
-					gp.player.p.moveItem(indexOf(gp.player.p.bag.itemList, currentItems.get(selectedBagNum).getItem().getID()), indexOf(gp.player.p.bag.itemList, currentItems.get(bagNum[currentPocket - 1]).getItem().getID()));
-					currentItems = gp.player.p.getItems(currentPocket);
-					selectedBagNum = -1;
-					if (bagNum[currentPocket - 1] > 0) bagNum[currentPocket - 1]--;
+					if (selectedBagNum == -1) {
+						selectedBagNum = bagNum[currentPocket - 1];
+					} else if (selectedBagNum == bagNum[currentPocket - 1]) {
+						selectedBagNum = -1;
+					} else {
+						gp.player.p.moveItem(indexOf(gp.player.p.bag.itemList, currentItems.get(selectedBagNum).getItem().getID()), indexOf(gp.player.p.bag.itemList, currentItems.get(bagNum[currentPocket - 1]).getItem().getID()));
+						currentItems = gp.player.p.getItems(currentPocket);
+						selectedBagNum = -1;
+						if (bagNum[currentPocket - 1] > 0) bagNum[currentPocket - 1]--;
+					}
 				}
 			}
 			if (bagState == 0 && !currentItems.isEmpty() && gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				bagState = 1;
 			}
-			if (gp.keyH.dPressed && currentPocket == Item.TMS) {
+			if (bagState == 0 && gp.keyH.dPressed && currentPocket == Item.TMS) {
 				gp.keyH.dPressed = false;
 				Item tm = currentItems.get(bagNum[currentPocket - 1]).getItem();
 				if (tmCheck == null || tmCheck != tm) {
@@ -3880,9 +3890,27 @@ public class UI extends AbstractUI {
 			drawSellOptions();
 		} else if (bagState == 3) {
 			drawMoveSummary(gp.tileSize / 2, (int) (gp.tileSize * 6), null, null, null, currentItems.get(bagNum[currentPocket - 1]).getItem().getMove());
+		} else if (bagState == 4) {
+			drawSortOptions();
 		}
 		
-		drawToolTips("OK", "Swap", "Back", currentPocket == Item.TMS ? "Check" : null);
+		if (gp.keyH.shiftPressed && bagState == 0) {
+			int toolX = 0;
+			int toolY = gp.tileSize * 9;
+			int toolWidth = gp.tileSize * 4;
+			int toolHeight = (int) (gp.tileSize * 1.5);
+			
+			drawSubWindow(toolX, toolY, toolWidth, toolHeight);
+			
+			toolX += gp.tileSize / 2;
+			toolY += gp.tileSize;
+			
+			g2.setFont(g2.getFont().deriveFont(24F));
+			g2.drawString("[Ctrl] + [A] Sort", toolX, toolY);
+		}		
+		
+		String dText = (bagState == 0 && currentPocket == Item.TMS) ? "Check" : "Back";
+		drawToolTips("OK", "Swap", "Back", dText);
 	}
 	
 	private int indexOf(int[] array, int target) {
@@ -3991,7 +4019,50 @@ public class UI extends AbstractUI {
 			commandNum = 0;
 			sellAmt = 1;
 		}
+	}
+	
+	private void drawSortOptions() {
+		SortType[] sortOptions = SortType.getSortOptions(currentPocket);
+		int sortChoices = sortOptions.length;
 		
+		int x = gp.tileSize * 6;
+		int y = (int) (gp.tileSize * 2.5);
+		int width = (int) (gp.tileSize * 9.25);
+		int height = (int) (gp.tileSize * 2 + (sortChoices * (gp.tileSize * 0.75)));
+		drawSubWindow(x, y, width, height, 255);
+		
+		int centerX = x + (width/2);
+		y += gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(32F));
+		
+		String title = "Sort Pocket?";
+		g2.drawString(title, getCenterAlignedTextX(title, centerX), y);
+		
+		y += gp.tileSize / 4;
+		g2.drawLine(x + gp.tileSize, y, x + width - gp.tileSize, y);
+		
+		y += gp.tileSize * 0.75;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		
+		for (int i = 0; i < sortChoices; i++) {
+			SortType option = sortOptions[i];
+			g2.drawString(option.getLabel(), getCenterAlignedTextX(option.getLabel(), centerX), y);
+			if (i == commandNum) {
+				g2.drawString(">", x + gp.tileSize, y - 2);
+				g2.drawString("<", x + width - gp.tileSize, y - 2);
+			}
+			y += gp.tileSize * 0.75;
+		}
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (sortOptions[commandNum] != SortType.BACK) {
+				gp.player.p.bag.sortPocket(currentPocket, sortOptions[commandNum]);
+				currentItems = gp.player.p.getItems(currentPocket);
+			}
+			commandNum = 0;
+			bagState = 0;
+		}
 	}
 	
 	private void drawCoinState() {
