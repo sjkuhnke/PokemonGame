@@ -222,6 +222,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		moveMultiplier = 1;
 		rollCount = 1;
 		metronome = 0;
+		slot = -1; // default
 		
 		status = Status.HEALTHY;
 		vStatuses = new ArrayList<StatusEffect>();
@@ -830,7 +831,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MIMIC) && foe.lastMoveUsed == null) bestMoves.removeIf(Move.MIMIC::equals);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.DECK_CHANGE) && foe.hasStatus(Status.DECK_CHANGE)) bestMoves.removeIf(Move.DECK_CHANGE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.HEALING_CIRCLE) && field.contains(this.getFieldEffects(), Effect.HEALING_CIRCLE)) bestMoves.removeIf(Move.HEALING_CIRCLE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.HEALING_CIRCLE) && (field.contains(this.getFieldEffects(), Effect.HEALING_CIRCLE) || (this.trainer == null || !this.trainer.hasValidMembers()))) bestMoves.removeIf(Move.HEALING_CIRCLE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPELLBIND) && foe.hasStatus(Status.SPELLBIND)) bestMoves.removeIf(Move.SPELLBIND::equals);
 		
 		return bestMoves;
@@ -2526,7 +2527,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				boolean usesDef = move == Move.PSYSHOCK || move == Move.MAGIC_MISSILES;
 				defenseStat = usesDef ? foe.getStat(2) : defenseStat;
 				double defenseModifier = usesDef ? foe.asModifier(1) : foe.asModifier(3);
-				if (!isCrit || defenseModifier > 1) {
+				if (!isCrit || defenseModifier < 1) {
 					if (this.ability != Ability.UNAWARE) defenseMod *= defenseModifier;
 				}
 				
@@ -2888,14 +2889,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Task.addAbilityTask(foe);
 				stat(foe, 0, 2, this);
 			}
-			if (!sheer) {
+			if (!sheer && !foe.isFainted()) {
 				if ((foe.getItem() == Item.JABOCA_BERRY && move.isPhysical()) || (foe.getItem() == Item.ROWAP_BERRY && !move.isPhysical())) {
 					foe.eatBerry(foe.item, true, this);
 				}
 				if ((foe.getItem() == Item.KEE_BERRY && move.isPhysical()) || (foe.getItem() == Item.MARANGA_BERRY && !move.isPhysical())) {
 					foe.eatBerry(foe.item, true, this);
 				}
-				if (foe.getItem() == Item.EJECT_BUTTON && !foe.isFainted()) {
+				if (foe.getItem() == Item.EJECT_BUTTON) {
 					if (foe.trainer != null && foe.trainer.hasValidMembers()) {
 						foeEject = true;
 						hit = numHits;
@@ -2961,9 +2962,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			int index = tasks.size();
 			boolean result = false;
 			if (this.trainerOwned() && enemy != null) {
-				result = enemy.swapRandom(foe);
+				result = enemy.swapRandom(this);
 			} else if (this.playerOwned()) {
-				result = player.swapRandom(foe);
+				result = player.swapRandom(this);
 			}
 			if (result) {
 				Task t = Task.createTask(Task.TEXT, foe.nickname + " held up its Red Card!");
@@ -3246,7 +3247,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Task.addTypeTask("", this);
 		} else if ((move == Move.CIRCLE_THROW || move == Move.DRAGON_TAIL) && !foe.isFainted()) {
 			if (foe.trainer != null) {
-				foe.trainer.swapRandom(foe);
+				foe.trainer.swapRandom(this);
 			}
 		} else if (move == Move.CLOSE_COMBAT) {
 			stat(this, 1, -1, foe);
@@ -4863,9 +4864,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (announce && (move == Move.WHIRLWIND || move == Move.ROAR)) {
 			boolean result = false;
 			if (foe.trainerOwned() && enemy != null) {
-				result = enemy.swapRandom(foe);
+				result = enemy.swapRandom(this);
 			} else if (foe.playerOwned()) {
-				result = player.swapRandom(foe);
+				result = player.swapRandom(this);
 			}
 			if (!result) fail = fail(announce);
 		} else if (announce && move == Move.WILL$O$WISP) {
@@ -5954,7 +5955,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			boolean usesDef = move == Move.PSYSHOCK || move == Move.MAGIC_MISSILES;
 			defenseStat = usesDef ? foe.getStat(2) : defenseStat;
 			double defenseModifier = usesDef ? foe.asModifier(1) : foe.asModifier(3);
-			if (!isCrit || defenseModifier > 1) {
+			if (!isCrit || defenseModifier < 1) {
 				if (this.ability != Ability.UNAWARE) defenseMod *= defenseModifier;
 			}
 			
@@ -6444,15 +6445,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this.getItem() == Item.IRON_BALL) speed *= 0.5;
 		if (this.getItem() == Item.CHOICE_SCARF) speed *= 1.5;
 		if (this.ability == Ability.UNBURDEN && consumedItem) speed *= 2;
+		if (field.contains(this.getFieldEffects(), Effect.TAILWIND)) speed *= 2;
 		if (checkAbilitySpeedBoost(this.ability, field)) speed *= 2;
 		return (int) speed;
 	}
 	
 	public Pokemon getFaster(Pokemon other, int thisP, int otherP) {
 		int speed1 = this.getSpeed(field);
-		if (field.contains(this.getFieldEffects(), Effect.TAILWIND)) speed1 *= 2;
 		int speed2 = other.getSpeed(field);
-		if (field.contains(other.getFieldEffects(), Effect.TAILWIND)) speed2 *= 2;
 		
 		if (thisP > otherP) return this;
 		if (otherP > thisP) return other;

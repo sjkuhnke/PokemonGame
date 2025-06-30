@@ -302,8 +302,12 @@ public class Trainer implements Serializable {
 		if (pAbility == Ability.DRY_SKIN && type == PType.WATER) multiplier = 0;
 		if (pAbility == Ability.BLACK_HOLE && (type == PType.LIGHT || type == PType.GALACTIC)) multiplier = 0;
 		if (pAbility == Ability.ILLUMINATION && (type == PType.GHOST || type == PType.DARK || type == PType.LIGHT || type == PType.GALACTIC)) multiplier *= 0.5;
+		if (pAbility == Ability.UNERODIBLE && (type == PType.GRASS || type == PType.WATER || type == PType.GROUND)) multiplier *= 0.25;
 		if (pAbility == Ability.FLASH_FIRE && type == PType.FIRE) multiplier = 0;
 		if (pAbility == Ability.FRIENDLY_GHOST && type == PType.GHOST) multiplier = 0;
+		if (pAbility == Ability.WARM_HEART && type == PType.ICE) multiplier = 0;
+		if (pAbility == Ability.COLD_HEART && type == PType.PSYCHIC) multiplier = 0;
+		if (pAbility == Ability.WHITE_HOLE && type == PType.DRAGON) multiplier = 0;
 		if (pAbility == Ability.GALACTIC_AURA && (type == PType.ICE || type == PType.PSYCHIC)) multiplier *= 0.5;
 		if (pAbility == Ability.UNWAVERING && (type == PType.DARK || type == PType.GHOST)) multiplier *= 0.5;
 		if (pAbility == Ability.JUSTIFIED && type == PType.DARK) multiplier *= 0.5;

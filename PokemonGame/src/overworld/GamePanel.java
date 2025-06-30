@@ -30,6 +30,8 @@ public class GamePanel extends JPanel implements Runnable {
 	 */
 	private static final long serialVersionUID = 1898610723315381969L;
 	
+	private Bag tempBag;
+	
 	public JFrame window;
 	
 	// SETTINGS
@@ -167,6 +169,7 @@ public class GamePanel extends JPanel implements Runnable {
 			player.update();
 			if (ticks % 5 == 0) {
 				updateEntity();
+				//updateTempBag();
 			}
 		}
 		if (keyH.tabPressed) {
@@ -190,6 +193,40 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 	
+	@SuppressWarnings("unused")
+	private void updateTempBag() {
+		Bag current = player.p.bag;
+	    if (!current.equals(tempBag)) {
+	        System.out.println("Bag has changed!");
+
+	        ArrayList<String> diffs = new ArrayList<>();
+	        for (int i = 0; i < current.count.length; i++) {
+	            int currentCount = current.count[i];
+	            int oldCount = (tempBag != null && i < tempBag.count.length) ? tempBag.count[i] : 0;
+
+	            if (currentCount != oldCount) {
+	                Item item = Item.getItem(i);
+	                String change = String.format(
+	                    "- %s: %d → %d (%s%d)",
+	                    item.toString(),
+	                    oldCount,
+	                    currentCount,
+	                    (currentCount > oldCount ? "+" : ""),
+	                    currentCount - oldCount
+	                );
+	                diffs.add(change);
+	            }
+	        }
+
+	        if (diffs.isEmpty()) {
+	            System.out.println("  (No count differences found — could be itemList structure)");
+	        } else {
+	            for (String s : diffs) System.out.println(s);
+	        }
+	    }
+		tempBag = (Bag) current.clone();
+	}
+
 	private void updateEntity() {
 		int index = new Random().nextInt(npc[1].length);
 		

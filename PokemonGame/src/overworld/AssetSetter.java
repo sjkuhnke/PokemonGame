@@ -1895,7 +1895,8 @@ public class AssetSetter {
 		
 		mapNum = 94;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "There have been 2 meteorites that have crashed into our region.", mapNum, 132, "You should explore the Hearts of the ELECTRIC TUNNEL and SHADOW RAVINE. They're really pretty.");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "They say two stars fell from the heavens... not long ago, but long enough to change everything.", mapNum, 132, "The Electric Tunnel still hums with one's power. The Shadow Ravine... it pulses with the other.\n"
+				+ "It's strange... the Pokemon don't seem hurt. Just changed. Like they heard something from the stars and answered.");
 		
 		mapNum = 103;
 		index = 0;
@@ -1959,7 +1960,7 @@ public class AssetSetter {
 				+ "I spent so long training my psychic powers, trying to predict your moves... but I forgot something really important.\n"
 				+ "It's not about reading your mind - it's about training my Pokemon. They're the ones doing the battling, after all.\n"
 				+ "Guess I still have a lot to learn. But don't worry! Next time, I'll focus on them, and I'll definitely beat you!", 242);
-		gp.npc[mapNum][index] = NPCSetup(BREEDER, "Breeder", 44, 39, "Thank god! I found this abandoned egg here, and I'm not sure what to do with it.", 109.0, 167, "Please raise it with love and care!");
+		gp.npc[mapNum][index] = NPCSetup(BREEDER, "Breeder", 44, 39, "Oh - thank goodness someone found me! I spotted something by the cliff's edge... and it turned out to be an egg.", 109.0, 167, "Please raise it with love and care!");
 		gp.npc[mapNum][index++] = null; // scott cutscene
 		
 		mapNum = 110;
@@ -1998,7 +1999,7 @@ public class AssetSetter {
 		
 		mapNum = 118;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_DOWN, "Scientist", 31, 41, "Hi! I can revive fossils for you!", mapNum);
+		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_DOWN, "Scientist", 31, 41, "Ah! A fellow fossil enthusiast, I presume?", mapNum);
 		
 		mapNum = 119;
 		index = 0;
