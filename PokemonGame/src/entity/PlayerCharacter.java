@@ -447,7 +447,7 @@ public class PlayerCharacter extends Entity {
 		if (trainer == -1) return;
 		if (p.wiped()) return;
 		if (p.nuzlocke && p.hasPokemonOverLevelCap()) {
-			gp.wipe(true, null, null);
+			gp.wipe(true, null, null, false);
 			return;
 		}
 		if (gp.ui.tasksContainsTask(Task.DIALOGUE)) return;
@@ -478,7 +478,7 @@ public class PlayerCharacter extends Entity {
 	public void startWild(String area, char type) {
 		if (p.wiped()) return;
 		if (p.nuzlocke && p.hasPokemonOverLevelCap()) {
-			gp.wipe(true, null, null);
+			gp.wipe(true, null, null, false);
 			return;
 		}
 		gp.setTaskState();

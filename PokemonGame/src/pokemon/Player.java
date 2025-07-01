@@ -111,7 +111,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 65;
+	public static final int VERSION = 66;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -574,7 +574,7 @@ public class Player extends Trainer implements Serializable {
 			{"Robin", "Scott 3", "Grandpa", "UP Shookwat", "Gift E/S", "Gym 5"},
 			{"Arthra 1", "Arthra Talk", "Rick 2", "Fred 3", "Maxwell 1", "UP Splame", "Scott 4", "Glurg Gift", "Gym 6", "Maxwell After"},
 			{"Scott Scene", "Coins", "Autosave Casino", "Magmaclang", "UP Buzzwole", "Rock Climb", "Gym 7", "Shake 1", "Shake 2", "Shake 3", "Shake 4", "Shake 5", "Shake 6", "Shake 7", "Shake 8", "Shake 9", "Shake 10", "Shake 11", "Shake 12"},
-			{"Arthra Scene", "Merlin coming", "Rick 3", "Fred 4", "Maxwell 2", "Machine", "Dragowrath S1", "UP Pheromosa", "Dissemble Machine", "Faith", "Logic", "Merlin Guide", "Guard", "Awake", "Relomidel", "Relopamil", "Drago S2", "Arthra after", "Ryder Shack", "Ryder Possessed", "", "", "", ""},
+			{"Arthra Scene", "Merlin coming", "Rick 3", "Fred 4", "Maxwell 2", "Machine", "Dragowrath S1", "UP Pheromosa", "Dissemble Machine", "Faith", "Logic", "Merlin Guide", "Guard", "Awake", "Relomidel", "Relopamil", "Drago S2", "Arthra after", "Ryder Shack", "Ryder Possessed", "Get in Ship", "Dragowrath", "Split for Nova", "Nova Scene", "Gym 8"},
 			{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""},			
 		};
 		
@@ -894,6 +894,9 @@ public class Player extends Trainer implements Serializable {
             }
         }
 		for (Pokemon p : gauntletBox) {
+			if (p != null) result.add(p);
+		}
+		for (Pokemon p : tempTeam) {
 			if (p != null) result.add(p);
 		}
 		if (nursery != null) {

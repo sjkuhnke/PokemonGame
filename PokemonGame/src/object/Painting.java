@@ -37,7 +37,7 @@ public class Painting extends InteractiveTile {
 			worldY + gp.tileSize*3 + gp.offsetY > gp.player.worldY - gp.player.screenY &&
 			worldY - gp.tileSize*3 + gp.offsetY < gp.player.worldY + gp.player.screenY) {
 			
-			if (color == null) System.out.println(String.format("%d, %d", worldX / gp.tileSize, worldY / gp.tileSize));
+			if (color == null) return;
 			
 			switch(color) {
 			case "main":
