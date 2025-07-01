@@ -168,6 +168,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public boolean spriteVisible;
 	public boolean consumedItem;
 	public boolean illusion;
+	public boolean script;
 	
 	// battle fields
 	public Move lastMoveUsed;
@@ -437,6 +438,16 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public Move bestMove(Pokemon foe, boolean first) {
 	    ArrayList<Move> validMoves = this.getValidMoveset();
 	    
+	    if (this.script) {
+	    	if (field.turns == 0) {
+	    		if (gp.currentMap == 160) {
+	    			return this.getStatusMove();
+	    		} else {
+	    			return this.moveset[0].move;
+	    		}
+	    	}
+	    }
+	    
 	    Pair<Pokemon, String> switchRsn = null;
 	    if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
 	    	if (gp.simBattleUI.p1Switch == null) {
@@ -647,6 +658,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         		bestMoves.add(move);
         		if (move.hasPriority(this) || move == Move.FELL_STINGER) {
         			bestMoves.add(move);
+        			if (this.script) return move;
         		}
         	}
         	if (moveTest.cat == 2 || Move.treatAsStatus(moveTest, this, foe)) {
@@ -3947,6 +3959,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	private boolean checkSecondary(int secondary) {
+		if (this.script) return secondary > 50;
 		double chance = (int) (Math.random()*100 + 1);
 		if (chance <= secondary) {
 			return true;
@@ -5168,6 +5181,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	private boolean hit(double d) {
+		if (this.script) {
+			return d >= 50;
+		}
 		double hitChance = (int) (Math.random()*100 + 1);
 		int acc = (int) Math.round(d);
 		if (hitChance <= acc) {
@@ -5179,6 +5195,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 
 	private boolean critCheck(int m) {
 		if (m < 0) return false;
+		if (this.script && m < 4) return false;
 		int critChance = (int)(Math.random()*100);
 		int baseCrit;
 		if (m == 1) {
@@ -8931,6 +8948,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 			String indexS = parts[0];
 			boolean staticEnc = false;
 			boolean update = false;
+			boolean script = false;
+			if (indexS.contains("$")) {
+				staticEnc = true;
+				update = true;
+				script = true;
+				indexS = indexS.replace("$", "");
+			}
 			if (indexS.contains("*")) {
 				staticEnc = true;
 				update = true;
@@ -9046,6 +9070,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			Trainer.trainers[index] = trainer;
 			trainer.update = update;
+			trainer.current.script = script;
 			
 			if (name.contains("Scott") || name.contains("Fred")) {
 				rivalIndices.add(index);
@@ -9878,6 +9903,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		return false;
+	}
+	
+	private Move getStatusMove() {
+		for (Moveslot m : this.moveset) {
+			if (m.move.cat == 2) return m.move;
+		}
+		return Move.SPLASH;
 	}
 	
 }

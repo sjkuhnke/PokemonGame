@@ -3634,6 +3634,11 @@ public class UI extends AbstractUI {
 			g2.drawString(">", textX- (25 + gp.tileSize), textY);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
+				if (gp.player.p.flag[7][20] && !gp.player.p.flag[7][21]) {
+					gp.gameState = GamePanel.PLAY_STATE;
+					showMessage("Can't open that right now!");
+					return;
+				}
 				currentItems = gp.player.p.getItems(currentPocket);
 				subState = 3;
 			}

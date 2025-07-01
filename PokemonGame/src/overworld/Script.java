@@ -2071,6 +2071,7 @@ public class Script {
 				Task t = Task.addTask(Task.BATTLE, "", 406);
 				t.start = 235;
 			} else {
+				p.current.fainted = false;
 				p.heal();
 				Pokemon[] tempTeam = p.team;
 				p.team = p.tempTeam;
@@ -2254,6 +2255,7 @@ public class Script {
 				Task t = Task.addTask(Task.BATTLE, "", 406);
 				t.start = 235;
 			} else {
+				p.current.fainted = false;
 				p.heal();
 				Pokemon[] tempTeam = p.team;
 				p.team = p.tempTeam;
@@ -2628,6 +2630,112 @@ public class Script {
 			t = Task.addTask(Task.SPACE, "", 50);
 			t.start = 160;
 			t.color = Color.BLACK;
+			
+			Task.addTask(Task.SLEEP, "", 90);
+			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "We're really here... in orbit. Above everything we've ever known.");
+			Task.addTask(Task.SLEEP, "", 45);
+			Task.addTask(Task.TURN, player, "", Task.RIGHT);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.TURN, gp.npc[160][0], "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "Dragowrath's near. You feel that?");
+			Task.addTask(Task.SLEEP, "", 45);
+			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "He's like a gravitational pull. Warping thoughts. Crushing willpower.");
+			Task.addTask(Task.SLEEP, "", 40);
+			Task.addTask(Task.TURN, gp.npc[160][0], "", Task.UP);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.TURN, gp.npc[160][0], "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 45);
+			Task.addTask(Task.TURN, gp.npc[160][0], "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 20);
+			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "You and I both tried. Alone, we failed. But maybe together...");
+			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "The dragons - Faith and Logic - they're not enemies. They're parts of a whole.");
+			Task.addTask(Task.SLEEP, "", 45);
+			Task.addTask(Task.TURN, gp.npc[160][0], "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 60);
+			Task.addTask(Task.TURN, gp.npc[160][0], "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 20);
+			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "Let them fight together. Use both in tandem. They were born for this.");
+			Task.addTask(Task.SLEEP, "", 20);
+			Task.addTask(Task.TURN, gp.npc[160][0], "", Task.RIGHT);
+			Task.addTask(Task.SLEEP, "", 75);
+			Task.addTask(Task.SPOT, gp.npc[160][0], "");
+			Task.addTask(Task.SLEEP, "", 5);
+			Task.addTask(Task.TURN, gp.npc[160][0], "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "Oh - one more thing. Don't bother giving them items. Something about this place... they just vanish.");
+			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "It's like space rejects them. You'll have to rely on their moves and your skill - as a trainer.");
+			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "You got this, Finn. And remember what Merlin taught us: belief only matters when it's paired with action.");
+			Pokemon[] tempTeam = p.team;
+			p.team = p.tempTeam;
+			p.tempTeam = tempTeam;
+			int trainerIndex = p.flag[7][14] ? 405 : 404;
+			p.team[1] = Trainer.trainers[trainerIndex].getCurrent();
+			p.team[0].fainted = false;
+			p.team[0].script = true;
+			p.team[1].fainted = false;
+			p.team[1].script = true;
+			p.team[1].setSprites();
+			p.team[1].ball = Item.TEMPLE_BALL;
+			p.team[1].trainer = p;
+			p.heal();
+			p.setCurrent();
+		});
+		
+		scriptMap.put(160.0, npc -> { // alakazam move reminder
+			Task.addTask(Task.TEXT, "Alakazam seems like it's trying to help your Pokemon remember ancient moves...");
+			Task.addTask(Task.PARTY, "");
+		});
+		
+		scriptMap.put(160.1, npc -> { // dragowrath final battle
+			if (!p.flag[7][21]) {
+				Task.addTask(Task.DIALOGUE, npc, "You claw your way to the heavens... and still think you can defy me?", 1);
+				Task.addTask(Task.DIALOGUE, npc, "Fools born of stardust. Worshipping balance. Bound by frail logic and faith.", 1);
+				Task.addTask(Task.DIALOGUE, npc, "My children turned from me. And now you wield them as weapons?", 1);
+				Task.addTask(Task.DIALOGUE, npc, "Let this cosmos be your grave. Perish along with the rest of your species and planet. Let silence claim your rebellion.", 1);
+				Task t = Task.addTask(Task.BATTLE, "", 489);
+				t.start = 235;
+			} else {
+				Task.addTask(Task.SLEEP, "", 60);
+				Task.addTask(Task.DIALOGUE, npc, "So... this is what it means... to lose.", 1);
+				Task.addTask(Task.SLEEP, "", 45);
+				Task.addTask(Task.DIALOGUE, npc, "Faith... and Logic... bound together. Not dominance... but unity.", 1);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "...Xhenos resists.", 1);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "...You resist.", 1);
+				Task.addTask(Task.SLEEP, "", 120);
+				Task.addTask(Task.DIALOGUE, npc, "You have earned back your world.", 1);
+				Task.addTask(Task.DIALOGUE, npc, "The broadcast will end.", 1);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addParticleTask(npc, "smoke", new Color(5, 5, 20), 50);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.DIALOGUE, npc, "My reach... severs.", 1);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "But I remain.", 1);
+				Task.addTask(Task.SLEEP, "", 50);
+				Task.addTask(Task.DIALOGUE, npc, "One day... you will seek me.", 1);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "A place where stars spiral backwards, where thought folds in on itself.", 1);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "There... I wait.", 1);
+				Task.addTask(Task.SLEEP, "", 20);
+				
+				// TODO: figure out which is the one the player caught and make that one null, just keep track of Arthra's in the other slot
+				p.team[0].fainted = false;
+				p.team[1].fainted = false;
+				p.heal();
+				Pokemon[] tempTeam = p.team;
+				p.team = p.tempTeam;
+				p.tempTeam = tempTeam;
+				p.setCurrent();
+				
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.UPDATE, "");
+				Task.addTask(Task.FLASH_OUT, "");
+				
+				Task.addTask(Task.SLEEP, "", 30);
+			}
 		});
 	}
 	

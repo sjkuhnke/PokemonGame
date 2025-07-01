@@ -345,7 +345,7 @@ public enum Item {
 	TM92(192,0,0,Color.BLACK,Item.TMS,Move.METEOR_ASSAULT,"Teaches a Pokemon this move."),
 	TM93(193,0,0,Color.BLACK,Item.TMS,Move.EARTH_POWER,"Teaches a Pokemon this move."),
 	TM94(194,0,0,Color.BLACK,Item.TMS,Move.HURRICANE,"Teaches a Pokemon this move."),
-	TM95(195,500,0,Color.BLACK,Item.TMS,Move.TRICK_ROOM,"Teaches a Pokemon this move."),
+	TM95(195,0,0,Color.BLACK,Item.TMS,Move.TRICK_ROOM,"Teaches a Pokemon this move."),
 	TM96(196,0,0,Color.BLACK,Item.TMS,Move.ENERGY_BALL,"Teaches a Pokemon this move."),
 	TM97(197,1000,0,Color.BLACK,Item.TMS,Move.RADIANT_BREAK,"Teaches a Pokemon this move."),
 	TM98(198,0,0,Color.BLACK,Item.TMS,Move.FLIP_TURN,"Teaches a Pokemon this move."),

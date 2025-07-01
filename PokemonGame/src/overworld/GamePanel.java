@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
 	public static final int MAX_MAP = 220;
-	public static final int MAX_FLAG = 24; // should not be >31
+	public static final int MAX_FLAG = 25; // should not be >31
 	
 	public int offsetX;
 	public int offsetY;
@@ -316,13 +316,13 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void wipe(Pokemon user, Pokemon foe) {
-		wipe(false, user, foe);
+		wipe(false, user, foe, true);
 	}
 	
-	public void wipe(boolean overLevelCap, Pokemon user, Pokemon foe) {
+	public void wipe(boolean overLevelCap, Pokemon user, Pokemon foe, boolean loseMoney) {
 		if (!overLevelCap) {
 			endBattle(-1, -1, foe);
-			user.getPlayer().setMoney(user.getPlayer().getMoney() - 500);
+			if (loseMoney) user.getPlayer().setMoney(user.getPlayer().getMoney() - 500);
 			user.trainer.heal();
 			if (foe.trainer != null) {
 				foe.trainer.reset();
@@ -409,6 +409,8 @@ public class GamePanel extends JPanel implements Runnable {
 					} else {
 						player.p.tempTeam = player.p.team;
 						player.p.team = new Pokemon[6];
+						t.getCurrent().fainted = false;
+						t.getCurrent().heal();
 						player.p.team[0] = t.getCurrent();
 						player.p.setCurrent();
 						player.interactNPC(npc[202][2], false);
@@ -419,7 +421,13 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 		}
 		if (id == 235) {
-			player.interactNPC(npc[currentMap][2], false);
+			if (currentMap == 160 && wiped) { // outer space
+				player.p.team[0].fainted = false;
+				player.p.team[1].fainted = false;
+				wipe(false, player.p.current, foe, false);
+			} else {
+				player.interactNPC(npc[currentMap][2], false);
+			}
 		}
 
 		player.p.resetTeam();
