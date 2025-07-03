@@ -47,7 +47,7 @@ public class TileManager {
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
-		tile = new Tile[1000];
+		tile = new Tile[1200];
 		mapTileNum = new int[GamePanel.MAX_MAP][gp.maxWorldCol][gp.maxWorldRow];
 		canFly = new boolean[GamePanel.MAX_MAP];
 		isCave = new boolean[GamePanel.MAX_MAP];
@@ -1253,47 +1253,136 @@ public class TileManager {
 		setup(973, false);
 
 		setup(986, false);
-//		setup(987, true);
-//		setup(988, true);
-//		setup(989, true);
-//		setup(990, true);
-//		setup(991, true);
-//		setup(992, true);
-//		setup(993, true);
-//		setup(994, true);
-//		setup(995, true);
-//		setup(996, true);
-//		setup(997, true);
-//		setup(998, true);
-//		setup(999, true);
+		setup(987, false);
+		setup(988, false);
+		setup(989, true);
+		setup(990, true);
+		setup(991, true);
+		setup(992, true);
+		setup(993, true, TOP_FOURTH);
+		setup(994, true);
+		setup(995, true);
+		setup(996, true);
+		setup(997, true);
+		setup(998, true);
+		setup(999, true);
+		setup(1000, false);
+		setup(1001, true);
+		setup(1002, true);
+		setup(1003, false);
+		setup(1004, true);
+		setup(1005, true);
+		setup(1006, true);
+		setup(1007, true);
+		setup(1008, true);
+		setup(1009, true);
+		setup(1010, true);
+		setup(1011, true);
+		setup(1012, true);
+		setup(1013, true);
+		setup(1014, true);
+		setup(1015, true);
+		setup(1016, true);
+
+		setup(1029, false);
+		setup(1030, false);
+		setup(1031, false);
+//		setup(1032, true);
+//		setup(1033, true);
+//		setup(1034, true);
+//		setup(1035, true);
+//		setup(1036, true);
+//		setup(1037, true);
+//		setup(1038, true);
+//		setup(1039, true);
+//		setup(1040, true);
+//		setup(1041, true);
+//		setup(1042, true);
+//		setup(1043, true);
+//		setup(1044, true);
+//		setup(1045, true);
+//		setup(1046, true);
+//		setup(1047, true);
+//		setup(1048, true);
+//		setup(1049, true);
+//		setup(1050, true);
+//		setup(1051, true);
+//		setup(1052, true);
+//		setup(1053, true);
+//		setup(1054, true);
+//		setup(1055, true);
+//		setup(1056, true);
+//		setup(1057, true);
+//		setup(1058, true);
+//		setup(1059, true);
+//		setup(1060, true);
+//		setup(1061, true);
+//		setup(1062, true);
+//		setup(1063, true);
+//		setup(1064, true);
+//		setup(1065, true);
+//		setup(1066, true);
+//		setup(1067, true);
+//		setup(1068, true);
+//		setup(1069, true);
+//		setup(1070, true);
+//		setup(1071, true);
+//		setup(1072, true);
+//		setup(1073, true);
+//		setup(1074, true);
+//		setup(1075, true);
+//		setup(1076, true);
+//		setup(1077, true);
+//		setup(1078, true);
+//		setup(1079, true);
+//		setup(1080, true);
+//		setup(1081, true);
+//		setup(1082, true);
+//		setup(1083, true);
+//		setup(1084, true);
+//		setup(1085, true);
+//		setup(1086, true);
+//		setup(1087, true);
+//		setup(1088, true);
+//		setup(1089, true);
+//		setup(1090, true);
+//		setup(1091, true);
+//		setup(1092, true);
+//		setup(1093, true);
+//		setup(1094, true);
+//		setup(1095, true);
+//		setup(1096, true);
+//		setup(1097, true);
+//		setup(1098, true);
+//		setup(1099, true);
 
 		try {
 			tile[7] = new GrassTile();
-			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/007.png"));
+			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0007.png"));
 			
 			tile[235] = new BuildingTile();
-			tile[235].image = ImageIO.read(getClass().getResourceAsStream("/tiles/235.png"));
+			tile[235].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0235.png"));
 			
 			tile[266] = new CaveTile();
-			tile[266].image = ImageIO.read(getClass().getResourceAsStream("/tiles/266.png"));
+			tile[266].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0266.png"));
 			
 			tile[363] = new GrassTile();
-			tile[363].image = ImageIO.read(getClass().getResourceAsStream("/tiles/363.png"));
+			tile[363].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0363.png"));
 			
 			tile[511] = new GrassTile();
-			tile[511].image = ImageIO.read(getClass().getResourceAsStream("/tiles/511.png"));
+			tile[511].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0511.png"));
 			
 			tile[936] = new CaveTile();
-			tile[936].image = ImageIO.read(getClass().getResourceAsStream("/tiles/936.png"));
+			tile[936].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0936.png"));
 			
 			tile[956] = new IceTile();
-			tile[956].image = ImageIO.read(getClass().getResourceAsStream("/tiles/956.png"));
+			tile[956].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0956.png"));
 			
 			tile[958] = new CaveTile();
-			tile[958].image = ImageIO.read(getClass().getResourceAsStream("/tiles/958.png"));
+			tile[958].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0958.png"));
 			
 			tile[964] = new CaveTile();
-			tile[964].image = ImageIO.read(getClass().getResourceAsStream("/tiles/964.png"));
+			tile[964].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0964.png"));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -1343,12 +1432,25 @@ public class TileManager {
 		setupCliff(983, 4, new IceTile());
 		setupCliff(984, 4, new IceTile());
 		setupCliff(985, 4, new IceTile());
+		
+		setupCliff(1017, 2, new Tile());
+		setupCliff(1018, 2, new Tile());
+		setupCliff(1019, 2, new Tile());
+		setupCliff(1020, 1, new Tile());
+		setupCliff(1021, 1, new Tile());
+		setupCliff(1022, 1, new Tile());
+		setupCliff(1023, 3, new Tile());
+		setupCliff(1024, 3, new Tile());
+		setupCliff(1025, 3, new Tile());
+		setupCliff(1026, 4, new Tile());
+		setupCliff(1027, 4, new Tile());
+		setupCliff(1028, 4, new Tile());
 	}
 	
 	private void setupCliff(int index, int collisionType, Tile gen) {
 		tile[index] = gen;
 		String imageName = index + "";
-		while (imageName.length() < 3) imageName = "0" + imageName;
+		while (imageName.length() < 4) imageName = "0" + imageName;
 		try {
 			tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
 			String direction = "";
@@ -1388,7 +1490,7 @@ public class TileManager {
 	public void setup(int index, boolean collision, int collisionType, int over) {
 		tile[index] = new Tile();
 		String imageName = index + "";
-		while (imageName.length() < 3) imageName = "0" + imageName;
+		while (imageName.length() < 4) imageName = "0" + imageName;
 		try {
 			tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
 			tile[index].collision = collision;
