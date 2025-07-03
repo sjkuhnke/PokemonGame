@@ -330,7 +330,7 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		setTaskState();
 		Task t = Task.addTask(Task.TELEPORT, "");
-		int spawnIndex = currentMap == 159 || currentMap == 160 ? 1 : 0; // in space or not
+		int spawnIndex = inSpace() ? 1 : 0; // in space or not
 		t.counter = Player.spawn[spawnIndex][0];
 		t.start = Player.spawn[spawnIndex][1];
 		t.finish = Player.spawn[spawnIndex][2];
@@ -728,6 +728,10 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public int getEffectiveBadges(Pokemon foe) {
 		return foe.trainerOwned() && foe.trainer.getMoney() == 500 ? player.p.badges + 1 : player.p.badges;
+	}
+	
+	public boolean inSpace() {
+		return currentMap == 159 || currentMap == 160 || currentMap == 206 || currentMap == 207;
 	}
 
 }

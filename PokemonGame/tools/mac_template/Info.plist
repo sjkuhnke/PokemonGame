@@ -4,7 +4,7 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>
-    <string>0.0.7</string>
+    <string>0.0.8</string>
     <key>CFBundleDisplayName</key>
     <string>Pokemon Xhenos</string>
     <key>CFBundleIdentifier</key>

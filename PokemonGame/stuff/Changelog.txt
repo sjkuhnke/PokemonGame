@@ -767,6 +767,7 @@ Made saving the game save your saves in your AppData folder to help the issue of
 Also makes it work easier with the .exe installer I made
 Made docs generate in your Documents folder on your PC and auto-open the folder whenever any new docs are created so you can find them easier
 Made screenshots go into your Documents folder as well instead of the same directory as where the game is
+Changed screenshots file naming to be Date_Time instead of System Milliseconds when the screenshot was captured
 Changed King's Rock, Shed Shell, Muscle Band and Wise Glasses to all sell for $0 since when they had a price they were sellable in the bag, which isn't intended since I previously made all only-1-of held items unsellable
 Made opening the calc with no Pokemon (the player doesn't even have the calc yet) not crash the game - will eventually remove the tooltip before you have calc too
 Gave Cervora Magic Reflect at lv 37

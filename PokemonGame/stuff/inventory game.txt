@@ -27,6 +27,35 @@ Game2.9: League is beatable 7/1
 
 All interior walls should all be over the player
 
+Teddinaut
+Clefairy
+Clefable
+Swalot-X
+Staryu
+Starmie
+Beheeyem
+Consodust
+Cosmocrash
+Plasamp
+Genieova
+Rockmite
+Stellarock
+Nebulimb
+Galactasolder
+Shawar
+Shaboom
+
+Lafloo
+Kobraturgy
+Sedisoftra
+Prismodon
+Zurrclu
+Zurroaratr
+Glimmora
+Reuniclus-X
+Bronzong
+Hast
+
 Player: Finn
 Dad: Stellan Lund
 Mom: Astrid Solberg

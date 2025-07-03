@@ -1199,7 +1199,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(36, 16, Item.PSYCHIC_SEED, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(44, 16, Item.PP_UP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(44, 14, Item.PP_MAX, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(56, 76, Item.RED_CARD, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(63, 74, Item.RED_CARD, mapNum);
 		gp.obj[mapNum][objIndex] = MintSetup(40, 13, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 35, Item.MAX_REVIVE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 27, Item.BOTTLE_CAP, mapNum);
@@ -2400,6 +2400,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_UP, "Alakazam", 38, 17, "Vxxxvhh...", mapNum);
 		gp.npc[mapNum][index] = NPCSetup(DRAGOWRATH, "Dragowrath", 54, 12, "", 160.1, -1, "", 489);
 		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, "Ryder", 37, 17, "...");
+		gp.npc[mapNum][index] = NPCSetup(NOVA, "Nova", 66, 60, "", 160.2);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 69, 51, "", "", -1);
 		
 		mapNum = 161;
 		index = 0;
@@ -4160,6 +4162,16 @@ public class AssetSetter {
 			gp.npc[152][5] = null;
 			gp.npc[152][6] = null;
 			gp.npc[152][7] = null;
+		}
+		
+		if (flag[7][21]) {
+			gp.npc[160][2] = null;
+		}
+		
+		if (flag[7][22]) {
+			gp.npc[160][0] = null;
+			gp.npc[160][1] = null;
+			gp.npc[160][3] = null;
 		}
 		
 		gp.setRenderableNPCs();

@@ -1026,6 +1026,24 @@ public class EventHandler {
 			// Cutscene with Ryder/Arthra before Iron Town
 			if (!gp.player.p.flag[7][19] && hit(152,45,56)) gp.player.interactNPC(gp.npc[152][2], false);
 			
+			// Outer Space 1 -> 2
+			if (hit(160,45,25)) teleport(206, 25, 32,false);
+			if (hit(206,25,33)) teleport(160, 45, 26,false);
+			if (hit(160,59,24)) teleport(206, 63, 24,false);
+			if (hit(206,63,25)) teleport(160, 59, 25,false);
+			if (hit(160,65,51)) teleport(206, 84, 89,false);
+			if (hit(206,84,90)) teleport(160, 65, 52,false);
+			
+			// Outer Space 2 -> 3
+			if (hit(206,34,17)) teleport(207, 48, 21,true);
+			if (hit(207,48,21)) teleport(206, 34, 17,true);
+			if (hit(206,11,19)) teleport(207, 14, 24,true);
+			if (hit(207,14,24)) teleport(206, 11, 19,true);
+			if (hit(206,15,12)) teleport(207, 19, 15,true);
+			if (hit(207,19,15)) teleport(206, 15, 12,true);
+			if (hit(206,18,24)) teleport(207, 24, 31,true);
+			if (hit(207,24,31)) teleport(206, 18, 24,true);
+			
 		}
 		// Cutscene with Ryder/Arthra in front of Spaceship
 		if (!gp.player.p.flag[7][20] && hit(152,67,78,true)) gp.player.interactNPC(gp.npc[152][5], false);
