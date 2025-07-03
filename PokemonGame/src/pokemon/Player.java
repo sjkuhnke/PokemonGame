@@ -896,8 +896,10 @@ public class Player extends Trainer implements Serializable {
 		for (Pokemon p : gauntletBox) {
 			if (p != null) result.add(p);
 		}
-		for (Pokemon p : tempTeam) {
-			if (p != null) result.add(p);
+		if (tempTeam != null) {
+			for (Pokemon p : tempTeam) {
+				if (p != null) result.add(p);
+			}
 		}
 		if (nursery != null) {
 			for (Pokemon p : nursery.getPokemon()) {
