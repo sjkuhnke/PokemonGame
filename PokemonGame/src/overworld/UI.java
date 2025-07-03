@@ -1531,28 +1531,23 @@ public class UI extends AbstractUI {
 
 	private void drawFlash(int i) {
 		if (i == 0) {
-			counter++;
 			g2.setColor(Color.WHITE);
 			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
-			if (counter >= 1) {
-				counter = 25;
-				drawFlash = false;
-				currentTask = null;
-			}
-			return;
-		} else if (!drawFlash) {
+		} else {
 			counter += i;
 			g2.setColor(new Color(255,255,255,Math.abs(counter * 10)));
 			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 			if (i > 0) {
 				if (counter >= 25) {
 					counter = 0;
+					currentTask = null;
 					drawFlash = true;
 				}
 			} else if (i < 0) {
 				if (counter <= 0) {
 					counter = 0;
 					currentTask = null;
+					drawFlash = false;
 				}
 			}
 		}
@@ -2033,8 +2028,19 @@ public class UI extends AbstractUI {
 		
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
-			Task t = Task.addTask(Task.MOVE, "", p);
-			t.move = m;
+			boolean learnedMove = false;
+            for (int k = 0; k < 4; k++) {
+                if (p.moveset[k] == null) {
+                	p.moveset[k] = new Moveslot(m);
+                	Task.addTask(Task.TEXT, p.nickname + " learned " + m + "!");
+                    learnedMove = true;
+                    break;
+                }
+            }
+            if (!learnedMove) {
+            	Task t = Task.addTask(Task.MOVE, "", p);
+    			t.move = m;
+            }
 			currentTask = null;
 		}
 		

@@ -2721,10 +2721,15 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "There... I wait.", 1);
 				Task.addTask(Task.SLEEP, "", 20);
 				
-				// TODO: figure out which is the one the player caught and make that one null, just keep track of Arthra's in the other slot
 				p.team[0].fainted = false;
 				p.team[1].fainted = false;
 				p.heal();
+				int id = p.flag[7][14] ? 233 : 234;
+				int removeIndex = p.team[0].id == id ? 0 : p.team[1].id == id ? 1 : -1;
+				if (removeIndex >= 0) {
+					p.team[removeIndex] = null;
+					p.shiftTeamForward(removeIndex);
+				}
 				Pokemon[] tempTeam = p.team;
 				p.team = p.tempTeam;
 				p.tempTeam = tempTeam;
@@ -2734,7 +2739,111 @@ public class Script {
 				Task.addTask(Task.UPDATE, "");
 				Task.addTask(Task.FLASH_OUT, "");
 				
+				gp.npc[160][0].worldX = 44 * gp.tileSize;
+				gp.npc[160][0].worldY = 17 * gp.tileSize;
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addNPCMoveTask('y', 14 * gp.tileSize, player, false, 4);
+				Task.addTask(Task.TURN, gp.npc[160][0], "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 50 * gp.tileSize, gp.npc[160][0], false, 4);
+				Task.addTask(Task.TURN, gp.npc[160][0], "", Task.UP);
+				Task.addNPCMoveTask('y', 16 * gp.tileSize, gp.npc[160][0], false, 4);
+				Task.addTask(Task.TURN, gp.npc[160][0], "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 54 * gp.tileSize, gp.npc[160][0], false, 4);
+				Task.addTask(Task.TURN, gp.npc[160][0], "", Task.UP);
 				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "...Did we really just do that?");
+				Task.addTask(Task.SLEEP, "", 45);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "I can't believe it. We actually won.");
+				Task.addTask(Task.SLEEP, "", 60);
+				Task.addTask(Task.TURN, player, "", Task.LEFT);
+				Task.addTask(Task.TURN, gp.npc[160][0], "", Task.LEFT);
+				Task.addTask(Task.FLASH_IN, "");
+				// ryder
+				Task.addTask(Task.TURN, gp.npc[160][3], "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 52 * gp.tileSize, gp.npc[160][3], false, 720); // 720
+				Task.addNPCMoveTask('y', 15 * gp.tileSize, gp.npc[160][3], false, 96); // 96
+				// alakazam
+				Task.addTask(Task.TURN, gp.npc[160][1], "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 52 * gp.tileSize, gp.npc[160][1], false, 672);
+				Task.addNPCMoveTask('y', 14 * gp.tileSize, gp.npc[160][1], false, 144);
+				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][3], "I feel like I was a USB stick and someone just pulled me out without ejecting...");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][3], "But... I'm me again. That voice inside my head - it's gone.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, gp.npc[160][1], "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, gp.npc[160][3], "", Task.UP);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][1], "Vxxxvhh...");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, gp.npc[160][3], "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, gp.npc[160][1], "", Task.RIGHT);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][3], "...He still talks weird though.");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.TURN, gp.npc[160][0], "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "Dragowrath's gone. But... we're still in orbit.");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.TURN, gp.npc[160][0], "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "And last I checked, none of us are certified to pilot a ship back to Earth.");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.TURN, player, "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][3], "Wait - so we're stuck here? Like... space pirates now?!");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, gp.npc[160][3], "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][3], "That's kinda based actually.");
+				Task.addTask(Task.SLEEP, "", 40);
+				Task.addTask(Task.TURN, gp.npc[160][3], "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][1], "Vxxxvhh...");
+				Task.addTask(Task.SLEEP, "", 35);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "He's right. There's a cave system just south of here. Artificial. Looks... inhabited.");
+				Task.addTask(Task.TURN, gp.npc[160][0], "", Task.UP);
+				Task.addTask(Task.TURN, gp.npc[160][3], "", Task.RIGHT);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "Let's start there. Someone must know something.");
+				Task.addTask(Task.SLEEP, "", 60);
+				Task.addTask(Task.TURN, gp.npc[160][0], "", Task.LEFT);
+				Task.addTask(Task.TURN, player, "", Task.LEFT);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][3], "I'll check out the ship. Maybe fix comms. Or at least figure out how to cook with zero gravity.");
+				Task.addTask(Task.SLEEP, "", 40);
+				Task.addTask(Task.TURN, gp.npc[160][3], "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 25);
+				Task.addTask(Task.TURN, gp.npc[160][3], "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][3], "...Please don't leave me alone with Alakazam too long.");
+				Task.addTask(Task.TURN, gp.npc[160][3], "", Task.UP);
+				Task.addTask(Task.TURN, gp.npc[160][1], "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 40);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][1], "Vxxxvhh...");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, gp.npc[160][0], "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][3], "NOPE. I'm out.");
+				Task.addTask(Task.SLEEP, "", 40);
+				Task.addTask(Task.TURN, gp.npc[160][0], "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, player, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "I'm going to search the land west of here. You try to head east.");
+				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "If we split up, we'll cover more ground.");
+				Task.addTask(Task.SLEEP, "", 45);
+				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "Until we meet again, Finn.");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task t = Task.addTask(Task.FLAG, "");
+				t.start = 7;
+				t.finish = 22;
+				Task.addTask(Task.FLASH_IN, "");
+				Task.addTask(Task.UPDATE, "");
+				Task.addTask(Task.FLASH_OUT, "");
 			}
 		});
 	}

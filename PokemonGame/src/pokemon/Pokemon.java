@@ -8951,7 +8951,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			boolean script = false;
 			if (indexS.contains("$")) {
 				staticEnc = true;
-				update = true;
 				script = true;
 				indexS = indexS.replace("$", "");
 			}
