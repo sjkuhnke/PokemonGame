@@ -232,8 +232,6 @@ public abstract class AbstractUI {
 		
 		drawSubWindow(x, y, width, height);
 		
-		gp.player.p.setSlots();
-		
 		if (!showMoveOptions && !showIVOptions && !showBoxSummary && !showStatusOptions &&
 				(currentTask == null || currentTask.type == Task.PARTY || currentTask.type == Task.REGIONAL_TRADE || currentTask.type == Task.EVO_INFO ||
 				currentTask.type == Task.NURSERY_DEPOSIT)) {
@@ -440,7 +438,7 @@ public abstract class AbstractUI {
 		}
 		
 		// Slot
-		if (p.slot >= 0
+		if (partyNum >= 0
 				&&
 				!(gp.gameState == GamePanel.BOX_STATE && gp.ui.showBoxSummary && !gp.ui.showBoxParty)) {
 			int slotX = windowX + width - gp.tileSize;
@@ -448,7 +446,7 @@ public abstract class AbstractUI {
 			drawSubWindow(slotX, slotY, gp.tileSize, gp.tileSize);
 			slotX += gp.tileSize / 2;
 			slotY += gp.tileSize * 0.75;
-			String slotString = String.valueOf(p.slot + 1);
+			String slotString = String.valueOf(partyNum + 1);
 			g2.setFont(g2.getFont().deriveFont(30F));
 			g2.drawString(slotString, getCenterAlignedTextX(slotString, slotX - 1), slotY);
 		}
@@ -1005,11 +1003,11 @@ public abstract class AbstractUI {
 		int x = gp.tileSize * 4;
 		int y = 0;
 		int width = gp.tileSize * 8;
-		int height = (int) (gp.tileSize * 4);
+		int height = (int) (gp.tileSize * 4.5);
 		if (m == null) {
 			y += gp.tileSize;
 		} else {
-			height += gp.tileSize * 2;
+			height += gp.tileSize * 1.5;
 		}
 		drawSubWindow(x, y, width, height);
 		if (moveOption == 0) {

@@ -780,7 +780,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.SAFEGUARD) && field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) bestMoves.removeIf(Move.SAFEGUARD::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.LUCKY_CHANT) && field.contains(this.getFieldEffects(), Effect.LUCKY_CHANT)) bestMoves.removeIf(Move.LUCKY_CHANT::equals);
 		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.HAZE) && arrayGreaterOrEqual(new int[] {0, 0, 0, 0, 0, 0, 0}, foe.statStages) && arrayGreaterOrEqual(statStages, new int[] {0, 0, 0, 0, 0, 0, 0})) bestMoves.removeIf(Move.HAZE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.HAZE) && !hasBoosts(foe.statStages) && arrayGreaterOrEqual(statStages, new int[] {0, 0, 0, 0, 0, 0, 0})) bestMoves.removeIf(Move.HAZE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.BELLY_DRUM) && this.currentHP < this.getStat(0) / 2) bestMoves.removeIf(Move.HAZE::equals);
 		
 		if (bestMoves.size() > 1 && (bestMoves.contains(Move.ROOST) || bestMoves.contains(Move.SYNTHESIS) || bestMoves.contains(Move.MOONLIGHT) || bestMoves.contains(Move.MORNING_SUN) ||
@@ -7504,7 +7504,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.swapIn(foe, false);
 			}
 		} else if (this.ability == Ability.TALENTED) {
-			if (arrayGreaterOrEqual(foe.statStages, new int[] {0, 0, 0, 0, 0, 0, 0})) {
+			if (hasBoosts(foe.statStages)) {
 				Task.addAbilityTask(this);
 				Task.addTask(Task.TEXT, this.nickname + " copied " + foe.nickname + "'s stat boosts!");
 				for (int i = 0; i < 7; ++i) {
@@ -8015,6 +8015,13 @@ public class Pokemon implements RoleAssignable, Serializable {
         //System.out.println(Arrays.toString(arr1) + " >= " + Arrays.toString(arr2));
         return true;
     }
+	
+	public boolean hasBoosts(int[] stages) {
+		for (int i = 0; i < stages.length; i++) {
+			if (stages[i] > 0) return true;
+		}
+		return false;
+	}
 	
 //	private boolean arrayEquals(Pokemon[] team, Pokemon[] team2) {
 //		if (team == team2) return true;
@@ -8591,7 +8598,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		gp.battleUI.setupBalls();
 		
 		int randomValue = rand.nextInt(255);
-        return randomValue <= getModifiedCatchRate(foe, ball, encType, true);
+        return randomValue <= getModifiedCatchRate(foe, ball, encType, false);
 	}
 	
 	public int getModifiedCatchRate(Pokemon foe, Entry ball, char encType, boolean sim) {
@@ -8709,7 +8716,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 	
 	public String getCatchRateFormatted(Pokemon foe, Entry ball, char encType) {
-		double catchRate = getModifiedCatchRate(foe, ball, encType, false);
+		double catchRate = getModifiedCatchRate(foe, ball, encType, true);
 		catchRate = Math.min(catchRate, 255.0);
 		return String.format("%.3f", catchRate * 100.0 / 255) + "% to catch";
 	}
@@ -9909,6 +9916,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (m.move.cat == 2) return m.move;
 		}
 		return Move.SPLASH;
+	}
+
+	public boolean isOverLevelCap(int badges) {
+		int levelCap = Trainer.getLevelCap(badges);
+		return level > levelCap;
 	}
 	
 }

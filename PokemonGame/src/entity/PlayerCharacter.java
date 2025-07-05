@@ -446,7 +446,7 @@ public class PlayerCharacter extends Entity {
 		int trainer = entity.trainer;
 		if (trainer == -1) return;
 		if (p.wiped()) return;
-		if (p.nuzlocke && p.hasPokemonOverLevelCap()) {
+		if (p.nuzlocke && p.wholeTeamOverLevelCap()) {
 			gp.wipe(true, null, null, false);
 			return;
 		}
@@ -477,7 +477,7 @@ public class PlayerCharacter extends Entity {
 	
 	public void startWild(String area, char type) {
 		if (p.wiped()) return;
-		if (p.nuzlocke && p.hasPokemonOverLevelCap()) {
+		if (p.nuzlocke && p.wholeTeamOverLevelCap()) {
 			gp.wipe(true, null, null, false);
 			return;
 		}
@@ -988,8 +988,7 @@ public class PlayerCharacter extends Entity {
 								Pokemon.loadCompetitiveSets();
 							});
 						}
-						gp.ui.showMessage("Calculating odds...");
-						Task t = Task.addTask(Task.ODDS, "");
+						Task t = Task.addTask(Task.ODDS, "Calculating odds...");
 						t.wipe = true;
 					} else {
 						Task.addTask(Task.TEXT, "I'm sorry, you don't have enough orbs to bet with.");

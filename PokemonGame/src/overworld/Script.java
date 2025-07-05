@@ -1953,7 +1953,8 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "If I were to guess - and guessing is half of wisdom - I'd say... each phantom offers you a part of the answer.");
 			Task.addTask(Task.DIALOGUE, npc, "Speak to them. Gather their hints. Listen closely.");
 			Task.addTask(Task.DIALOGUE, npc, "When you pick your painting, bring your answer to him - the one who waits in the grand painting. Only then will we see if you've stirred his memory...");
-			Task.addTask(Task.DIALOGUE, npc, "...Oh, and if you lose your way... there's a blank canvas here. It might help... or maybe it just reflects your own uncertainty. Hahh... hard to tell with these things.");
+			Task.addTask(Task.DIALOGUE, npc, "...Oh, and if you lose your way... there's a blank canvas here.");
+			Task.addTask(Task.DIALOGUE, npc, "It might help... or maybe it just reflects your own uncertainty. Hahh... hard to tell with these things.");
 			Task.addTask(Task.DIALOGUE, npc, "I'll wait here, I'm too weak holding this mind-control spell from gnawing at our minds to battle anyone. We'll reconnect once you make it to the top.");
 		});
 		

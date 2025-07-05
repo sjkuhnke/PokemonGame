@@ -359,14 +359,7 @@ public class SimBattleUI extends BattleUI {
 	
 	@Override
 	protected void drawTypes(Pokemon p) {
-		PType[] types = Pokemon.getTypes(p.id);
-		if (p == user) { // same as above
-			g2.drawImage(types[0].getImage(), 340, 298, null);
-			if (types[1] != null) g2.drawImage(types[1].getImage(), 364, 298, null);
-		} else {
-			g2.drawImage(types[0].getImage(), 232, 50, null);
-			if (types[1] != null) g2.drawImage(types[1].getImage(), 256, 50, null);
-		}
+		super.drawTypes(p);
 	}
 	
 	@Override

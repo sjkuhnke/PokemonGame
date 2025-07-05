@@ -394,8 +394,8 @@ public class BattleUI extends AbstractUI {
 			if (counter >= 75) {
 				counter = 0;
 				if (currentTask.wipe) {
-					user.getPlayer().catchPokemon(foe, true, currentTask.item);
-					setNicknaming(true);
+					boolean caught = user.getPlayer().catchPokemon(foe, true, currentTask.item);
+					if (caught) setNicknaming(true);
 				} else {
 					currentTask.p.setVisible(true);
 					Task.addTask(Task.TEXT, "Oh no, " + foe.name() + " broke free!");
@@ -578,7 +578,7 @@ public class BattleUI extends AbstractUI {
 
 	protected void drawTypes(Pokemon p) {
 		PType[] types = p == user ? userType : foeType;
-		if (p.playerOwned()) {
+		if (p == user) {
 			g2.drawImage(types[0].getImage(), 340, 298, null);
 			if (types[1] != null) g2.drawImage(types[1].getImage(), 364, 298, null);
 		} else {
@@ -644,7 +644,7 @@ public class BattleUI extends AbstractUI {
 	    maxUserHP = user.getStat(0);
 	    aura = false;
 	    invalidEncounter = false;
-	    if (gp.player.p.nuzlocke && !gp.player.p.canCatchPokemonHere(PlayerCharacter.getMetAt(), foe)) {
+	    if (gp.player.p.nuzlocke && !gp.player.p.canCatchPokemonHere(PlayerCharacter.getMetAt(), foe) && !gp.player.p.bag.contains(Item.TEMPLE_BALL)) {
 			invalidEncounter = true;
 		}
 		
@@ -1164,9 +1164,9 @@ public class BattleUI extends AbstractUI {
 		        if (!user.moveUsable(moves[i].move)) color = new Color(100, 100, 100, 200);
 		        g2.setColor(color);
 		        g2.fillRoundRect(x, y, width, height, 10, 10);
-		        g2.setColor(moves[i].getPPColor());
 		        String text = moves[i].move.toString();
 		        g2.setFont(g2.getFont().deriveFont(getFontSize(text, width + gp.tileSize / 2)));
+		        g2.setColor(moves[i].getPPColor());
 		        g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
 		        g2.setFont(g2.getFont().deriveFont(24F));
 		        String pp = showMoveSummary ? moves[i].move.cat == 2 ? "Status" : mtype.effectiveness(foe, user, moves[i].move) : moves[i].currentPP + " / " + moves[i].maxPP;

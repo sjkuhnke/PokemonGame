@@ -192,6 +192,11 @@ public class Player extends Trainer implements Serializable {
 	    int index = 1;
 	    Task t = null;
 	    String metAt = PlayerCharacter.getMetAt();
+	    p.clearVolatile();
+	    p.consumeItem(null);
+	    p.ball = ball;
+	    p.trainer = this;
+	    p.metAt = metAt;
 	    if (nickname) {
 	    	if (nuzlocke && !canCatchPokemonHere(metAt, p)) {
 	    		String s = egg ? "receive " : "catch ";
@@ -206,13 +211,8 @@ public class Player extends Trainer implements Serializable {
 	    	index = 0;
 	    }
 	    if (!egg) pokedex[p.id] = 2;
-	    p.clearVolatile();
-	    p.consumeItem(null);
 	    if (item == Item.HEAL_BALL) p.heal();
 	    if (item == Item.FRIEND_BALL) p.happiness = Math.max(200, p.happiness);
-	    p.ball = ball;
-	    p.trainer = this;
-	    p.metAt = metAt;
 	    
 	    int place = addPokemon(p);
 	    if (place == 0) { // party
@@ -957,6 +957,7 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public void useItem(Pokemon p, Item item, GamePanel gp) {
+		if (p == null) return;
 		if (item.getPocket() == Item.HELD_ITEM || item.getPocket() == Item.BERRY) {
 			if (p.item != null) {
 				Item old = p.item;
@@ -1735,8 +1736,8 @@ public class Player extends Trainer implements Serializable {
 		return Math.min(999, coins);
 	}
 	
-	public int getMaxBet() {
-		return Math.min(100, coins);
+	public int getMaxBet(boolean gauntlet) {
+		return Math.min(100, getBetCurrency(gauntlet));
 	}
 	
 	public ArrayList<Pokemon> getOrderedTeam() {
@@ -1750,7 +1751,7 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public int getMaxParlayBet(boolean gauntlet, int activeBets) {
-		if (activeBets == 0) return getMaxBet();
+		if (activeBets == 0) return getMaxBet(gauntlet);
 		
 		return Math.min(Math.max(1, getBetCurrency(gauntlet) / activeBets), 100);
 	}
@@ -1926,10 +1927,16 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public boolean hasPokemonOverLevelCap() {
-		int levelCap = Trainer.getLevelCap(badges);
 		for (Pokemon p : team) {
-			if (p != null && p.level > levelCap) return true;
+			if (p != null && p.isOverLevelCap(badges)) return true;
 		}
 		return false;
+	}
+	
+	public boolean wholeTeamOverLevelCap() {
+		for (Pokemon p : team) {
+			if (p != null && !p.isOverLevelCap(badges)) return false;
+		}
+		return true;
 	}
 }
