@@ -335,7 +335,13 @@ public class GamePanel extends JPanel implements Runnable {
 		t.start = Player.spawn[spawnIndex][1];
 		t.finish = Player.spawn[spawnIndex][2];
 		t.wipe = false;
-		if (overLevelCap) Task.addTask(Task.TEXT, "You have at least 1 team member that is over the level cap of " + Trainer.getLevelCap(player.p.badges) + "!");
+		player.p.bag.removeAll(Item.TEMPLE_BALL);
+		if (overLevelCap) {
+			String reason = "Whole team was over the level cap against " + (foe.trainer != null ? foe.trainer.getName() : "a wild " + foe.getName());
+			user.getPlayer().invalidateNuzlocke(reason);
+			saveScum(reason);
+			Task.addTask(Task.TEXT, "Your whole team is over the level cap of " + Trainer.getLevelCap(player.p.badges) + "!");
+		}
 		
 		Item.useCalc(player.p.current, null, null, false);
 	}
@@ -581,7 +587,9 @@ public class GamePanel extends JPanel implements Runnable {
 		x += tileSize / 2;
 		y += tileSize;
 		
-		g2.drawString("[Ctrl]+[A] Calc", x, y);
+		if (player.p.getCurrent() != null) {
+			g2.drawString("[Ctrl]+[A] Calc", x, y);
+		}
 		
 		width = tileSize * 12;
 		x -= tileSize / 2;

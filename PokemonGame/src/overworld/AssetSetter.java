@@ -2476,12 +2476,12 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, "Guard", 50, 73, "", mapNum);
 		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 50, 99, "");
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 36, 44, "You must earn your hint. My silence breaks only for the worthy.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 39, 37, "One shade among many hides the path. My defeat may cast light.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 43, 38, "Some truths are hidden in plain view. Strike me down, and one may reveal itself.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 47, 35, "The truth is painted in color. I guard one hue of it.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 48, 39, "One letter. One echo of the answer. Win, and you may hear it.", "", 1);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 55, 34, "This floor is painted in misdirection. I will reward your clarity... should you show it in battle.", "", 1);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 36, 44, "You must earn your hint. My silence breaks only for the worthy.", "", 407);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 39, 37, "One shade among many hides the path. My defeat may cast light.", "", 408);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 43, 38, "Some truths are hidden in plain view. Strike me down, and one may reveal itself.", "", 409);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 47, 35, "The truth is painted in color. I guard one hue of it.", "", 410);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 48, 39, "One letter. One echo of the answer. Win, and you may hear it.", "", 411);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 55, 34, "This floor is painted in misdirection. I will reward your clarity... should you show it in battle.", "", 412);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 46, 74, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 48, 47, "This is where the test begins, Finn.", 191.1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 41, 46, "", "", -1);
@@ -2495,12 +2495,12 @@ public class AssetSetter {
 		
 		mapNum = 192;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 50, 65, "You've chosen faith. But can you bear its weight?", "Still standing? Then so is your spirit.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 49, 61, "The divine calls in silence. Can you hear it above your fear?", "Quiet... listen again. Now, you begin to hear.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 54, 61, "Belief without pain is just convenience.", "You did not flee. That is enough, for now.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 52, 50, "Doubt festers in the heart. I am here to cut it out.", "Some wounds must open before they heal.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 56, 50, "You look up. But belief asks you to look inward.", "You glimpsed the flame. Don't turn away.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 45, 43, "Many climb seeking answers. Fewer accept the silence at the top.", "Faith is not always a voice. Sometimes, it is the absence.", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 50, 65, "You've chosen faith. But can you bear its weight?", "Still standing? Then so is your spirit.", 413);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 49, 61, "The divine calls in silence. Can you hear it above your fear?", "Quiet... listen again. Now, you begin to hear.", 414);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 54, 61, "Belief without pain is just convenience.", "You did not flee. That is enough, for now.", 415);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 52, 50, "Doubt festers in the heart. I am here to cut it out.", "Some wounds must open before they heal.", 416);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 56, 50, "You look up. But belief asks you to look inward.", "You glimpsed the flame. Don't turn away.", 417);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 45, 43, "Many climb seeking answers. Fewer accept the silence at the top.", "Faith is not always a voice. Sometimes, it is the absence.", 418);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 48, 65, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 53, "", "", -1);
 		gp.npc[mapNum][index++] = ITileSetup(51, 66, TORCH, mapNum, mapNum);
@@ -2510,19 +2510,19 @@ public class AssetSetter {
 		
 		mapNum = 193;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 57, 24, "Many spirits wander here, but only one holds the key. I know which.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 48, 19, "Catch wrongly, and all will unravel. Defeat me, and I'll point the way.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 45, 32, "It hides among false echoes. I shall help you hear the true one.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 57, 33, "A name unspoken... a mind uncovered. Defeat me, and I will whisper it.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 52, 39, "Only one Pokemon among them reflects your purpose. Let me test your aim.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 57, 39, "Battle me, and I'll light one corner of your path through the veil.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 56, 51, "Not all here belong. Only one is chosen by our master. I will help you see which.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 50, 57, "You must act with clarity, not chance. I'll offer a clue, if you win.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 40, 51, "The false ones mimic the true. Let me help you filter.", "", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 36, 43, "You'll need more than instinct. I offer the truth.", "", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 57, 24, "Many spirits wander here, but only one holds the key. I know which.", "", 421);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 48, 19, "Catch wrongly, and all will unravel. Defeat me, and I'll point the way.", "", 422);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 45, 32, "It hides among false echoes. I shall help you hear the true one.", "", 423);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 57, 33, "A name unspoken... a mind uncovered. Defeat me, and I will whisper it.", "", 424);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 52, 39, "Only one Pokemon among them reflects your purpose. Let me test your aim.", "", 425);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 57, 39, "Battle me, and I'll light one corner of your path through the veil.", "", 426);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 56, 51, "Not all here belong. Only one is chosen by our master. I will help you see which.", "", 427);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 50, 57, "You must act with clarity, not chance. I'll offer a clue, if you win.", "", 428);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 40, 51, "The false ones mimic the true. Let me help you filter.", "", 429);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 36, 43, "You'll need more than instinct. I offer the truth.", "", 430);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 52, 24, "", "", -1);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 66, 39, "We were once alive. What are you, if not a ghost of your own convictions?", "You feel more solid now. More real.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 66, 33, "To believe is to fight with nothing but light in your hands.", "You held the light. Even in shadow.", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 66, 39, "We were once alive. What are you, if not a ghost of your own convictions?", "You feel more solid now. More real.", 419);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 66, 33, "To believe is to fight with nothing but light in your hands.", "You held the light. Even in shadow.", 420);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, "Disciple", 38, 35, "Ah... hello there traveler...", mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(63, 17, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(59, 25, TORCH, mapNum, mapNum);
@@ -2536,19 +2536,19 @@ public class AssetSetter {
 		
 		mapNum = 194;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 50, 47, "This place remembers the faithful... and forgets the rest.", "You are remembered.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 53, 50, "Faith is not safety. It is leaping while the ground vanishes beneath you.", "You leapt. And somehow... did not fall.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 50, 53, "You cannot lie here. The Tower sees who you really are.", "The Tower has seen you. And it did not look away.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 47, 50, "Test after test. Battle after battle. But the real question is... what remains of you?", "More than I expected.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 48, 41, "We serve not out of fear, but awe. Do you understand the difference?", "You did not kneel. But you did not mock, either.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 52, 38, "You do not need to believe in gods. Only in purpose.", "And perhaps that purpose is forming now.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 41, 51, "The higher you go, the thinner the air. Faith is your only breath now.", "You still breathe. Even through despair.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 38, 49, "When the Spirit tested me, I broke. Let's see if you do better.", "Stronger than I was. I hope it's enough.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 38, 52, "Some come here expecting miracles. Others, punishment. What do you expect?", "Expectation is useless here. Only endurance matters.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 59, 52, "The divine does not reward victory. Only sincerity.", "You fought with something real. Keep it close.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 59, 48, "The tower bends time. Are you still the same person who entered?", "If not... perhaps that is your miracle.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 48, 58, "If you climb for power, you will fall. Climb for truth.", "Your steps did not falter. So truth walks with you.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 52, 58, "Your faith is unproven. Your will, unmeasured. Let us change that.", "The measure has been taken. You are... worthy to continue.", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 50, 47, "This place remembers the faithful... and forgets the rest.", "You are remembered.", 431);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 53, 50, "Faith is not safety. It is leaping while the ground vanishes beneath you.", "You leapt. And somehow... did not fall.", 432);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 50, 53, "You cannot lie here. The Tower sees who you really are.", "The Tower has seen you. And it did not look away.", 433);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 47, 50, "Test after test. Battle after battle. But the real question is... what remains of you?", "More than I expected.", 434);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 48, 41, "We serve not out of fear, but awe. Do you understand the difference?", "You did not kneel. But you did not mock, either.", 435);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 52, 38, "You do not need to believe in gods. Only in purpose.", "And perhaps that purpose is forming now.", 436);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 41, 51, "The higher you go, the thinner the air. Faith is your only breath now.", "You still breathe. Even through despair.", 439);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 38, 49, "When the Spirit tested me, I broke. Let's see if you do better.", "Stronger than I was. I hope it's enough.", 440);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 38, 52, "Some come here expecting miracles. Others, punishment. What do you expect?", "Expectation is useless here. Only endurance matters.", 441);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 59, 52, "The divine does not reward victory. Only sincerity.", "You fought with something real. Keep it close.", 437);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, 59, 48, "The tower bends time. Are you still the same person who entered?", "If not... perhaps that is your miracle.", 438);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 48, 58, "If you climb for power, you will fall. Climb for truth.", "Your steps did not falter. So truth walks with you.", 442);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 52, 58, "Your faith is unproven. Your will, unmeasured. Let us change that.", "The measure has been taken. You are... worthy to continue.", 443);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 53, 46, "", "", -1);
 		gp.npc[mapNum][index++] = ITileSetup(50, 46, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(54, 50, TORCH, mapNum, mapNum);
@@ -2558,10 +2558,10 @@ public class AssetSetter {
 		mapNum = 195;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_DOWN, "Disciple", 46, 49, "You're very close to the peak, child...", mapNum);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 46, 55, "Faith is not always free. But I can give you what you need - if you prove yourself.", "You've earned my offering. Take it, and gamble wisely.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 54, 55, "You look desperate for orbs. Fight me, and I will spare a handful.", "The orbs are yours. They carry no promise, only chance.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 46, 57, "You hunger for progress, not spirit. I'll feed your ambition - briefly.", "Greed tested, will rewarded. Spend these wisely.", 0);
-		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 54, 57, "One more battle, one more bet. I deal in faith... and orb.", "Let these orbs guide your luck. But luck is not faith.", 0);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 46, 55, "Faith is not always free. But I can give you what you need - if you prove yourself.", "You've earned my offering. Take it, and gamble wisely.", 444);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 54, 55, "You look desperate for orbs. Fight me, and I will spare a handful.", "The orbs are yours. They carry no promise, only chance.", 445);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_LEFT, 46, 57, "You hunger for progress, not spirit. I'll feed your ambition - briefly.", "Greed tested, will rewarded. Spend these wisely.", 446);
+		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 54, 57, "One more battle, one more bet. I deal in faith... and orb.", "Let these orbs guide your luck. But luck is not faith.", 447);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 54, 49, "", "", -1);
 		gp.npc[mapNum][index++] = ITileSetup(50, 56, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(49, 46, TORCH, mapNum, mapNum);
@@ -4048,7 +4048,7 @@ public class AssetSetter {
 		}
 		
 		if (flag[7][9] && !flag[7][12]) { // merlin guide faith route
-			if (gp.npc[190][0] == null) gp.npc[190][0] = NPCSetup(MERLIN, "Merlin", 56, 89, "", 190.0);
+			if (gp.npc[190][0] == null) gp.npc[190][0] = NPCSetup(MERLIN, "Merlin", 56, 90, "", 190.0);
 		} else {
 			gp.npc[190][0] = null;
 		}

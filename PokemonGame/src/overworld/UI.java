@@ -495,6 +495,7 @@ public class UI extends AbstractUI {
 			drawSleep();
 			break;
 		case Task.BLACKJACK:
+			gp.keyH.resetKeys();
 			if (!currentTask.wipe) Task.addTask(Task.TEXT, "Come play again soon, okay?");
 			// Remove all existing components from the JFrame
 		    Main.window.getContentPane().removeAll();
@@ -521,86 +522,91 @@ public class UI extends AbstractUI {
 			drawEvoInfoParty();
 			break;
 		case Task.ODDS:
-			ArrayList<Pokemon> t1Team = new ArrayList<>();
-			ArrayList<Item> t1Items = new ArrayList<>();
-			ArrayList<Pokemon> t2Team = new ArrayList<>();
-			ArrayList<Item> t2Items = new ArrayList<>();
-			
-			int teamSize = 3;
-			
-			for (int i = 0; i < teamSize; i++) {
-				Pokemon p = Pokemon.generateCompetitivePokemon(t1Team);
-				p.setSprites();
-				t1Team.add(p);
-				t1Items.add(p.item);
-			}
-			for (int i = 0; i < teamSize; i++) {
-				Pokemon p = Pokemon.generateCompetitivePokemon(t2Team);
-				p.setSprites();
-				t2Team.add(p);
-				t2Items.add(p.item);
-			}
-			
-			Trainer ut = new Trainer("Trainer A", t1Team.toArray(new Pokemon[1]), t1Items.toArray(new Item[1]), 0, 1);
-			Trainer ft = new Trainer("Trainer B", t2Team.toArray(new Pokemon[1]), t2Items.toArray(new Item[1]), 0, 2);
-			
-			int[] odds = Pokemon.simulateBattle(ut, ft);
-			//tasks.clear();
-			
-			System.out.println("Average Crits: " + String.format("%.1f", Pokemon.field.crits * 1.0 / 10));
-			System.out.println("Average Misses: " + String.format("%.1f", Pokemon.field.misses * 1.0 / 10));
-			System.out.println("Average Super Effective Hits: " + String.format("%.1f", Pokemon.field.superEffective * 1.0 / 10));
-			System.out.println("Average Switches: " + String.format("%.1f", Pokemon.field.switches * 1.0 / 10));
-			System.out.println("Average Knockouts: " + String.format("%.1f", Pokemon.field.knockouts * 1.0 / 10));
-			System.out.println("Average Turns: " + String.format("%.1f", Pokemon.field.turns * 1.0 / 10));
-			
-			ArrayList<Pair<Double, String>> parlay = new ArrayList<>(Arrays.asList(
-				new Pair<>(Pokemon.field.crits * 1.0 / 10, "crits"),
-				new Pair<>(Pokemon.field.misses * 1.0 / 10, "misses"),
-				new Pair<>(Pokemon.field.superEffective * 1.0 / 10, "super effective hits"),
-				new Pair<>(Pokemon.field.switches * 1.0 / 10, "switches"),
-				new Pair<>(Pokemon.field.knockouts * 1.0 / 10, "knockouts"),
-				new Pair<>(Pokemon.field.turns * 1.0 / 10, "total turns")
-			));
-			
-			System.out.println("------------------");
-			
-			for (Pair<Double, String> p : parlay) {
-				double avg = p.getFirst();
-				int add = 1;
-				if (avg % 1 == 0 && avg > 0) {
-					add = new Random().nextBoolean() ? 1 : -1;
+			if (currentTask.counter > 0) {
+				currentTask.counter -= 10;
+				showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
+			} else {
+				ArrayList<Pokemon> t1Team = new ArrayList<>();
+				ArrayList<Item> t1Items = new ArrayList<>();
+				ArrayList<Pokemon> t2Team = new ArrayList<>();
+				ArrayList<Item> t2Items = new ArrayList<>();
+				
+				int teamSize = 3;
+				
+				for (int i = 0; i < teamSize; i++) {
+					Pokemon p = Pokemon.generateCompetitivePokemon(t1Team);
+					p.setSprites();
+					t1Team.add(p);
+					t1Items.add(p.item);
 				}
-				avg += 0.5 * add;
-				avg = Math.round(avg);
-				avg -= 0.5;
-				p.setFirst(avg);
-				System.out.println(String.format("Average %s: %.1f", p.getSecond(), p.getFirst()));
+				for (int i = 0; i < teamSize; i++) {
+					Pokemon p = Pokemon.generateCompetitivePokemon(t2Team);
+					p.setSprites();
+					t2Team.add(p);
+					t2Items.add(p.item);
+				}
+				
+				Trainer ut = new Trainer("Trainer A", t1Team.toArray(new Pokemon[1]), t1Items.toArray(new Item[1]), 0, 1);
+				Trainer ft = new Trainer("Trainer B", t2Team.toArray(new Pokemon[1]), t2Items.toArray(new Item[1]), 0, 2);
+				
+				int[] odds = Pokemon.simulateBattle(ut, ft);
+				//tasks.clear();
+				
+				System.out.println("Average Crits: " + String.format("%.1f", Pokemon.field.crits * 1.0 / 10));
+				System.out.println("Average Misses: " + String.format("%.1f", Pokemon.field.misses * 1.0 / 10));
+				System.out.println("Average Super Effective Hits: " + String.format("%.1f", Pokemon.field.superEffective * 1.0 / 10));
+				System.out.println("Average Switches: " + String.format("%.1f", Pokemon.field.switches * 1.0 / 10));
+				System.out.println("Average Knockouts: " + String.format("%.1f", Pokemon.field.knockouts * 1.0 / 10));
+				System.out.println("Average Turns: " + String.format("%.1f", Pokemon.field.turns * 1.0 / 10));
+				
+				ArrayList<Pair<Double, String>> parlay = new ArrayList<>(Arrays.asList(
+					new Pair<>(Pokemon.field.crits * 1.0 / 10, "crits"),
+					new Pair<>(Pokemon.field.misses * 1.0 / 10, "misses"),
+					new Pair<>(Pokemon.field.superEffective * 1.0 / 10, "super effective hits"),
+					new Pair<>(Pokemon.field.switches * 1.0 / 10, "switches"),
+					new Pair<>(Pokemon.field.knockouts * 1.0 / 10, "knockouts"),
+					new Pair<>(Pokemon.field.turns * 1.0 / 10, "total turns")
+				));
+				
+				System.out.println("------------------");
+				
+				for (Pair<Double, String> p : parlay) {
+					double avg = p.getFirst();
+					int add = 1;
+					if (avg % 1 == 0 && avg > 0) {
+						add = new Random().nextBoolean() ? 1 : -1;
+					}
+					avg += 0.5 * add;
+					avg = Math.round(avg);
+					avg -= 0.5;
+					p.setFirst(avg);
+					System.out.println(String.format("Average %s: %.1f", p.getSecond(), p.getFirst()));
+				}
+				gauntlet = currentTask.wipe;
+				gp.simBattleUI.gauntlet = currentTask.wipe;
+				
+				int winStreak = gp.player.p.winStreak;
+				gp.player.p.winStreak = 0;
+				gp.player.p.addBetCurrency(gauntlet, -1);
+				gp.saveGame(gp.player.p);
+				gp.player.p.winStreak = winStreak;
+				gp.player.p.addBetCurrency(gauntlet, 1);
+				
+				parlays = new int[MAX_PARLAYS];
+				sheetFilled = false;
+				gp.simBattleUI.parlaySheet = parlay;
+				
+				Task t = Task.addTask(Task.BET_BATTLE, "");
+				t.p = ut.getCurrent();
+				t.foe = ft.getCurrent();
+				t.trainers = new Trainer[] {ut, ft};
+				t.start = odds[0];
+				t.finish = odds[1];
+				
+				gp.simBattleUI.weather = null;
+				gp.simBattleUI.terrain = null;
+				currentTask = null;
 			}
-			gauntlet = currentTask.wipe;
-			gp.simBattleUI.gauntlet = currentTask.wipe;
-			
-			int winStreak = gp.player.p.winStreak;
-			gp.player.p.winStreak = 0;
-			gp.player.p.addBetCurrency(gauntlet, -1);
-			gp.saveGame(gp.player.p);
-			gp.player.p.winStreak = winStreak;
-			gp.player.p.addBetCurrency(gauntlet, 1);
-			
-			parlays = new int[MAX_PARLAYS];
-			sheetFilled = false;
-			gp.simBattleUI.parlaySheet = parlay;
-			
-			Task t = Task.addTask(Task.BET_BATTLE, "");
-			t.p = ut.getCurrent();
-			t.foe = ft.getCurrent();
-			t.trainers = new Trainer[] {ut, ft};
-			t.start = odds[0];
-			t.finish = odds[1];
-			
-			gp.simBattleUI.weather = null;
-			gp.simBattleUI.terrain = null;
-			currentTask = null;
 			break;
 		case Task.BET_BATTLE:
 			showMessage = false;
@@ -833,7 +839,7 @@ public class UI extends AbstractUI {
 	        int netPayout = payout - amtPaid;
 
 	        // Display correct bets count and corresponding payout
-	        String payoutText = correct + " correct: " + (netPayout >= 0 ? "+" : "") + netPayout + " coins";
+	        String payoutText = correct + " correct: " + (netPayout >= 0 ? "+" : "") + netPayout + " " + getBetCurrencyName(gauntlet);
 	        g2.drawString(payoutText, x, y);
 	        y += lineSpacing;
 	    }
@@ -1019,25 +1025,25 @@ public class UI extends AbstractUI {
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
 			battleBet++;
-			if (battleBet > gp.player.p.getMaxBet()) battleBet = 1;
+			if (battleBet > gp.player.p.getMaxBet(gauntlet)) battleBet = 1;
 		}
 		
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
 			battleBet--;
-			if (battleBet < 1) battleBet = gp.player.p.getMaxBet();
+			if (battleBet < 1) battleBet = gp.player.p.getMaxBet(gauntlet);
 		}
 		
 		if (gp.keyH.leftPressed) {
 			gp.keyH.leftPressed = false;
-			int max = gp.player.p.getMaxBet();
+			int max = gp.player.p.getMaxBet(gauntlet);
 			battleBet -= max > 10 ? 10 : 1;
 			if (battleBet < 1) battleBet += max;
 		}
 		
 		if (gp.keyH.rightPressed) {
 			gp.keyH.rightPressed = false;
-			int max = gp.player.p.getMaxBet();
+			int max = gp.player.p.getMaxBet(gauntlet);
 			battleBet += max > 10 ? 10 : 1;
 			if (battleBet > max) battleBet -= max;
 		}
@@ -1208,7 +1214,7 @@ public class UI extends AbstractUI {
 		// Make sure the front Pokemon isn't fainted
 		int index = 0;
 		Pokemon user = gp.player.p.getCurrent();
-		while (user.isFainted()) {
+		while (user.isFainted() || (gp.player.p.nuzlocke && user.isOverLevelCap(gp.player.p.badges))) {
 			gp.player.p.swapToFront(gp.player.p.team[++index], index);
 			user = gp.player.p.getCurrent();
 		}
@@ -1487,7 +1493,9 @@ public class UI extends AbstractUI {
 		BufferedImage image = null;
 		if (!currentTask.wipe) { // showing item
 			if (currentTask.message.isEmpty()) {
-				currentDialogue = currentTask.item.isTM() ? "Obtained " + currentTask.item.toString() + "!" : "You got a " + currentTask.item.toString() + "!";
+				String count = currentTask.counter > 1 ? currentTask.counter + " " : "a ";
+				String plural = currentTask.counter > 1 ? "s" : "";
+				currentDialogue = currentTask.item.isTM() ? "Obtained " + currentTask.item.toString() + "!" : "You got " + count + currentTask.item.toString() + plural + "!";
 			} else {
 				currentDialogue = currentTask.message;
 			}
@@ -1604,8 +1612,7 @@ public class UI extends AbstractUI {
 							Pokemon.loadCompetitiveSets();
 						});
 					}
-					showMessage("Calculating odds...");
-					Task.addTask(Task.ODDS, "Done!");
+					Task.addTask(Task.ODDS, "Calculating odds...");
 					currentTask = null;
 					break;
 				case 5: // guy eddie
@@ -3374,6 +3381,7 @@ public class UI extends AbstractUI {
 	}
 	
 	private void useRareCandy(Pokemon pokemon) {
+		if (pokemon == null) return;
         if (pokemon.getLevel() == 100) {
             showMessage("It won't have any effect.");
             return;
