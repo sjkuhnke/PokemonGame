@@ -16,6 +16,7 @@ public class ColorPuzzle extends Puzzle {
 
 	@Override
 	public void setup() {
+		super.setup();
 		colors = shuffle(colors);
 		InteractiveTile[] paintings = gp.iTile[floor];
 		int index = 0;

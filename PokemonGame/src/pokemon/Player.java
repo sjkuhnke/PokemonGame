@@ -286,7 +286,7 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	public boolean canCatchPokemonHere(String location, Pokemon p) {
-		return (p == null || !p.trainerOwned()) && !isDupes(p) && !this.nuzlockeEncounters.contains(location);
+		return (p == null) || (!isDupes(p) && !this.nuzlockeEncounters.contains(location));
 	}
 	
 	public void removeEncounterArea(String location, Pokemon p) {
@@ -1902,10 +1902,10 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	public void setupPuzzles(GamePanel gp, int map) {
-		if (map >= 191 && map <= 196) {
+		if (map >= 191 && map <= 196 && !flag[7][15]) {
 			gp.puzzleM.setup(true);
 		}
-		if (map >= 197 && map <= 202) {
+		if (map >= 197 && map <= 202 && !flag[7][14]) {
 			gp.puzzleM.setup(false);
 			if (spike) {
 				gp.eHandler.toggleSpikes(map);

@@ -38,6 +38,7 @@ public class CatchingPuzzle extends Puzzle {
 
 	@Override
 	public void setup() {
+		super.setup();
 		correct = gp.encounterPokemon(area, 'G', false);
 		setClues();
 		for (int i = 0; i <= 9; i++) {

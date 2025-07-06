@@ -58,6 +58,13 @@ public class PuzzleManager {
 
 	public void doReset(boolean faith) {
 		Task t = Task.addTask(Task.RESET, "");
-		t.wipe = true;
+		t.wipe = faith;
+	}
+
+	public void sendToStart(int[] loc) {
+		Task t = Task.addTask(Task.TELEPORT, "");
+		t.counter = loc[0];
+		t.start = loc[1];
+		t.finish = loc[2];
 	}
 }

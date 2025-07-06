@@ -948,6 +948,10 @@ public class PlayerCharacter extends Entity {
 		gp.setTaskState();
 		Puzzle current = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
 		if (painting.isColorPainting()) {
+			if (painting.getColor() == null) {
+				gp.gameState = GamePanel.PLAY_STATE;
+				return;
+			}
 			if (current.isLocked()) {
 				Task.addTask(Task.TEXT, "The painting is a glowing " + painting.getColor() + "...");
 				if (current.isLost()) {
@@ -960,23 +964,35 @@ public class PlayerCharacter extends Entity {
 			}
 		} else {
 			if (painting.isMainPainting()) {
-				if (current.getFloor() == 195) current.update(p.getBetCurrency(true));
-				if (current.isComplete()) {
-					Task.addTask(Task.TEXT, "...The painting erupted in light!");
-					Entity dragon = new Entity(gp, "Dragon");
-					gp.ui.commandNum = 1;
-					Task.addTask(Task.DIALOGUE, dragon, "Good work child...");
-					Task.addTask(Task.CONFIRM, dragon, "Are you ready to move on to the next room?", 9);
+				if (!current.isStarted()) {
+					current.sendToNext();
 				} else {
-					Task.addTask(Task.TEXT, "...the painting is as still as the night.");
+					if (current.getFloor() == 195) current.update(p.getBetCurrency(true));
+					if (current.isComplete()) {
+						Task.addTask(Task.TEXT, "...The painting erupted in light!");
+						Entity dragon = new Entity(gp, "Dragon");
+						gp.ui.commandNum = 1;
+						Task.addTask(Task.DIALOGUE, dragon, "Good work child...");
+						Task.addTask(Task.CONFIRM, dragon, "Are you ready to move on to the next room?", 9);
+					} else {
+						Task.addTask(Task.TEXT, "...the painting is as still as the night.");
+					}
 				}
 			} else if (painting.isResetPainting()) {
-				gp.ui.commandNum = 1;
-				Task.addTask(Task.TEXT, "...the painting is dull and empty.");
-				Task t = Task.addTask(Task.CONFIRM, "Would you like to reset the gauntlet and go back to the first room?", 10);
-				t.wipe = true;
+				if (!current.isStarted()) {
+					gp.puzzleM.sendToStart(gp.puzzleM.FAITH_START);
+				} else {
+					gp.ui.commandNum = 1;
+					Task.addTask(Task.TEXT, "...the painting is dull and empty.");
+					Task t = Task.addTask(Task.CONFIRM, "Would you like to reset the gauntlet and go back to the first room?", 10);
+					t.wipe = true;
+				}
 			} else if (painting.isBetPainting()) {
 				gp.keyH.wPressed = false;
+				if (painting.getColor().equals("bet")) {
+					gp.gameState = GamePanel.PLAY_STATE;
+					return;
+				}
 				if (painting.getColor().equals("bj")) {
 					Task t = Task.addTask(Task.BLACKJACK, "");
 					t.wipe = true;
@@ -1007,20 +1023,28 @@ public class PlayerCharacter extends Entity {
 				Task.addTask(Task.I_TILE, "", 198);
 				Task.addTask(Task.FLASH_OUT, "");
 			} else {
-				gp.ui.commandNum = 1;
-				Task.addTask(Task.TEXT, "...the statue pedestal is dull and empty.");
-				Task t = Task.addTask(Task.CONFIRM, "Would you like to reset the gauntlet and go back to the first room?", 10);
-				t.wipe = false;
+				if (!current.isStarted()) {
+					gp.puzzleM.sendToStart(gp.puzzleM.LOGIC_START);
+				} else {
+					gp.ui.commandNum = 1;
+					Task.addTask(Task.TEXT, "...the statue pedestal is dull and empty.");
+					Task t = Task.addTask(Task.CONFIRM, "Would you like to reset the gauntlet and go back to the first room?", 10);
+					t.wipe = false;
+				}
 			}
 		} else {
-			if (current.isComplete()) {
-				Task.addTask(Task.TEXT, "...The statue came to life!");
-				Entity dragon = new Entity(gp, "Dragon");
-				gp.ui.commandNum = 1;
-				Task.addTask(Task.DIALOGUE, dragon, "Good work child...");
-				Task.addTask(Task.CONFIRM, dragon, "Are you ready to move on to the next room?", 9);
+			if (!current.isStarted()) {
+				current.sendToNext();
 			} else {
-				Task.addTask(Task.TEXT, "...the statue is as quiet as the void.");
+				if (current.isComplete()) {
+					Task.addTask(Task.TEXT, "...The statue came to life!");
+					Entity dragon = new Entity(gp, "Dragon");
+					gp.ui.commandNum = 1;
+					Task.addTask(Task.DIALOGUE, dragon, "Good work child...");
+					Task.addTask(Task.CONFIRM, dragon, "Are you ready to move on to the next room?", 9);
+				} else {
+					Task.addTask(Task.TEXT, "...the statue is as quiet as the void.");
+				}
 			}
 		}
 	}
