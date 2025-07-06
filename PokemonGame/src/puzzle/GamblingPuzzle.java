@@ -15,6 +15,7 @@ public class GamblingPuzzle extends Puzzle {
 
 	@Override
 	public void setup() {
+		super.setup();
 		bets = shuffle(bets);
 		InteractiveTile[] paintings = gp.iTile[floor];
 		int index = 0;
@@ -43,7 +44,7 @@ public class GamblingPuzzle extends Puzzle {
 	@Override
 	public void sendToNext() {
 		super.sendToNext();
-		gp.player.p.bag.remove(Item.TEMPLE_ORB, 100);
+		if (started) gp.player.p.bag.remove(Item.TEMPLE_ORB, 100);
 	}
 
 }

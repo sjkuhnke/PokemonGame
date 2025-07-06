@@ -7530,7 +7530,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		if (hazards) {
 			if (this.currentHP < this.getStat(0) && field.contains(this.getFieldEffects(), Effect.HEALING_CIRCLE)) {
-				this.heal(this.getHPAmount(1.0/4), this.nickname + " restored HP from the Healing Circle!");
+				this.heal(Math.max((this.getStat(0) - this.currentHP) * 1.0 / 2, 1), this.nickname + " restored HP from the Healing Circle!");
 			}
 		}
 		if (hazards && this.getItem() != Item.HEAVY$DUTY_BOOTS && this.ability != Ability.SHIELD_DUST) {
@@ -9027,15 +9027,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 					if (staticEnc) {
 						pokemon.setStaticIVs();
 					} else {
-						if (nature == null) {
-							long seed = pokemon.generateSeed(pokemon.id, pokemon.level, pokemon.moveset);
-							pokemon.setNature(seed);
-						} else {
-							pokemon.nat = nature;
-						}
+						long seed = pokemon.generateSeed(pokemon.id, pokemon.level, pokemon.moveset);
+						pokemon.setNature(seed);
 					}
 				}
-				
+				if (nature != null) {
+					pokemon.nat = nature;
+				}
 				pokemon.setStats();
 				pokemon.currentHP = pokemon.getStat(0);
 				pokemon.validateMoveset(index, name);

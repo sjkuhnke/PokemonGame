@@ -19,22 +19,27 @@ public abstract class Puzzle {
 	protected Random random;
 	protected int[] nextLoc;
 	protected boolean lost;
+	protected boolean started;
 	
 	public Puzzle(GamePanel gp, int floor) {
 		this.gp = gp;
 		this.floor = floor;
 		this.isComplete = false;
 		this.lost = false;
+		this.started = false;
 		PMap.getLoc(floor, 0, 0);
 		this.area = PlayerCharacter.currentMapName;
 		this.random = new Random();
 	}
 	
-	public abstract void setup();
+	public void setup() {
+		this.started = true;
+	}
 	
 	public void reset() {
 		this.isComplete = false;
 		this.lost = false;
+		this.started = false;
 	}
 	
 	public abstract void update(Object obj);
@@ -50,6 +55,10 @@ public abstract class Puzzle {
 	public boolean isLocked() {
 		Boolean result = gp.player.p.puzzlesLocked.get(floor);
 		return result == null ? false : result;
+	}
+	
+	public boolean isStarted() {
+		return started;
 	}
 	
 	public void setLocked(boolean locked) {

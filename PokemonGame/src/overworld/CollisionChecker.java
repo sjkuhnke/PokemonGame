@@ -30,7 +30,6 @@ public class CollisionChecker {
 	    tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
 
 	    if (gp.tileM.tile[tileNum1] instanceof GrassTile || gp.tileM.tile[tileNum2] instanceof GrassTile
-	        || gp.tileM.tile[tileNum1] instanceof BuildingTile || gp.tileM.tile[tileNum2] instanceof BuildingTile
 	        || gp.tileM.tile[tileNum1] instanceof CaveTile || gp.tileM.tile[tileNum2] instanceof CaveTile) {
 	        entity.inTallGrass = true;
 	    } else {

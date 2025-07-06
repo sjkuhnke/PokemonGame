@@ -3527,7 +3527,7 @@ public class AssetSetter {
 			gp.iTile[mapNum][iIndex] = ITileSetup(64, 48, PAINTING_BET, mapNum, map);
 			gp.iTile[mapNum][iIndex] = ITileSetup(50, 62, PAINTING_BET, mapNum, map);
 			gp.iTile[mapNum][iIndex] = ITileSetup(36, 48, PAINTING_BET, mapNum, map);
-			if (mapNum == 195) {
+			if (mapNum == 195 && !gp.player.p.flag[7][15]) {
 				gp.puzzleM.getCurrentPuzzle(mapNum).setup();
 			}
 		}
@@ -4115,11 +4115,13 @@ public class AssetSetter {
 		}
 		
 		if (flag[7][15]) {
+			gp.npc[191][0] = null;
 			gp.npc[196][0] = null;
 			if (gp.npc[196][2] != null) gp.npc[196][2].worldY = gp.tileSize * 35;
 		}
 		
 		if (flag[7][14]) {
+			gp.npc[197][0] = null;
 			gp.npc[202][0] = null;
 			if (gp.npc[202][2] != null) gp.npc[202][2].worldY = gp.tileSize * 35;
 		}

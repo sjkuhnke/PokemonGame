@@ -62,6 +62,8 @@ public class Painting extends InteractiveTile {
 				image = left2;break;
 			}
 			
+			if (image == null) return;
+			
 			int width = image.getWidth() * gp.scale;
 			int wOffset = (width - gp.tileSize) / 2;
 			

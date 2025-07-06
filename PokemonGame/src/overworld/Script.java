@@ -2124,7 +2124,7 @@ public class Script {
 		});
 		
 		scriptMap.put(197.0, (npc) -> { // chasm guard logic route
-			if (p.flag[7][10] && !p.flag[7][14]) { // finn has logic and needs to attempt the gauntlet
+			if (p.flag[7][10]) { // finn has logic and needs to attempt the gauntlet
 				Task.addTask(Task.DIALOGUE, npc, "Seeker of logic...");
 				Task.addTask(Task.DIALOGUE, npc, "Before you lies the Chasm - a wound carved by thought itself.");
 				Task.addTask(Task.DIALOGUE, npc, "Here, those who abandoned faith sought to survive through reason alone.");

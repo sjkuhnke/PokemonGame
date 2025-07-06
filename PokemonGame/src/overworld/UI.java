@@ -1673,13 +1673,10 @@ public class UI extends AbstractUI {
 					break;
 				case 10: // reset gauntlet
 					if (gp.currentMap == 194 || gp.currentMap == 195) {
-						gp.player.p.bag.remove(Item.TEMPLE_ORB, 25);
+						gp.player.p.bag.remove(Item.TEMPLE_ORB, Math.min(25, gp.player.p.bag.getCount(Item.TEMPLE_ORB)));
 					}
 					int[] loc = currentTask.wipe ? gp.puzzleM.FAITH_START : gp.puzzleM.LOGIC_START;
-					t = Task.addTask(Task.TELEPORT, "");
-					t.counter = loc[0];
-					t.start = loc[1];
-					t.finish = loc[2];
+					gp.puzzleM.sendToStart(loc);
 					gp.puzzleM.doReset(currentTask.wipe);
 					Task.addTask(Task.TURN, gp.player, "", Task.UP);
 					currentTask = null;

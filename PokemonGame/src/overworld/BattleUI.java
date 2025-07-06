@@ -76,6 +76,7 @@ public class BattleUI extends AbstractUI {
 	protected BufferedImage userHPBar;
 	protected BufferedImage foeHPBar;
 	protected BufferedImage currentIcon;
+	protected BufferedImage statusedIcon;
 	protected BufferedImage faintedIcon;
 	protected BufferedImage emptyIcon;
 
@@ -113,6 +114,7 @@ public class BattleUI extends AbstractUI {
 		foeHPBar = setup("/battle/foe_hp", 1);
 		ballIcon = setup("/icons/ball", 1);
 		currentIcon = setup("/icons/ballcurrent", 1);
+		statusedIcon = setup("/icons/ballstatus", 1);
 		faintedIcon = setup("/icons/ballfainted", 1);
 		emptyIcon = setup("/icons/empty", 1);
 	}
@@ -552,6 +554,8 @@ public class BattleUI extends AbstractUI {
 				image = faintedIcon;
 			} else if (p.isVisible()) {
 				image = currentIcon;
+			} else if (p.status != Status.HEALTHY) {
+				image = statusedIcon;
 			} else {
 				image = ballIcon;
 			}
@@ -894,25 +898,23 @@ public class BattleUI extends AbstractUI {
 		
 		if (gp.keyH.dPressed) {
 			gp.keyH.dPressed = false;
-			if (foe.trainerOwned()) {
+			if (commandNum < 0 && ballIndex >= 0) {
+				moveSummaryNum = -1;
+				showFoeSummary = !showFoeSummary;
+			} else if (foe.trainerOwned()) {
 				if (foeSummary == null && !showFoeSummary) foeSummary = foe;
 				if (showFoeSummary) foeSummary = null;
 				moveSummaryNum = -1;
 				showFoeSummary = !showFoeSummary;
-			} else {
-				if (commandNum < 0 && ballIndex >= 0) {
-					moveSummaryNum = -1;
-					showFoeSummary = !showFoeSummary;
-				}
 			}
 		}
 		
 		if (showFoeSummary) {
-			drawFoeSummaryParty();
-			if (foe.trainerOwned()) {
-				drawSummary(foeSummary, user);
-			} else if (commandNum < 0) {
+			if (commandNum < 0) {
 				drawBallInfo();
+			} else if (foe.trainerOwned()) {
+				drawFoeSummaryParty();
+				drawSummary(foeSummary, user);
 			}
 			if (gp.keyH.sPressed) {
 				gp.keyH.sPressed = false;
@@ -926,7 +928,7 @@ public class BattleUI extends AbstractUI {
 			if (foe.trainerOwned()) {
 				if (gp.keyH.leftPressed) {
 					gp.keyH.leftPressed = false;
-					if (foeSummary.trainer != null && moveSummaryNum < 0) {
+					if (foeSummary != null && foeSummary.trainer != null && moveSummaryNum < 0) {
 						int currentIndex = foeSummary.trainer.indexOf(foeSummary);
 						currentIndex = (currentIndex - 1 + foeSummary.trainer.team.length) % foeSummary.trainer.team.length;
 						foeSummary = foeSummary.trainer.team[currentIndex];
@@ -934,7 +936,7 @@ public class BattleUI extends AbstractUI {
 				}
 				if (gp.keyH.rightPressed) {
 					gp.keyH.rightPressed = false;
-					if (foeSummary.trainer != null && moveSummaryNum < 0) {
+					if (foeSummary != null && foeSummary.trainer != null && moveSummaryNum < 0) {
 						int currentIndex = foeSummary.trainer.indexOf(foeSummary);
 						currentIndex = (currentIndex + 1) % foeSummary.trainer.team.length;
 						foeSummary = foeSummary.trainer.team[currentIndex];

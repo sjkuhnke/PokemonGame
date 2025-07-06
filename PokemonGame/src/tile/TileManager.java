@@ -1287,8 +1287,8 @@ public class TileManager {
 		setup(1029, false);
 		setup(1030, false);
 		setup(1031, false);
-//		setup(1032, true);
-//		setup(1033, true);
+		setup(1032, false);
+		setup(1033, false);
 //		setup(1034, true);
 //		setup(1035, true);
 //		setup(1036, true);
@@ -1360,7 +1360,7 @@ public class TileManager {
 			tile[7] = new GrassTile();
 			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0007.png"));
 			
-			tile[235] = new BuildingTile();
+			tile[235] = new CaveTile();
 			tile[235].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0235.png"));
 			
 			tile[266] = new CaveTile();
@@ -1529,7 +1529,7 @@ public class TileManager {
 					String numbers[] = line.split(" ");
 					
 					int num = Integer.parseInt(numbers[col]);
-					if (!cave && num == 235 || num == 266) cave = true;
+					if (!cave && tile[num] instanceof CaveTile) cave = true;
 					
 					mapTileNum[map][col][row] = num;
 					col++;
