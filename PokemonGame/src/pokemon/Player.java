@@ -111,7 +111,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 66;
+	public static final int VERSION = 67;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	
@@ -1063,6 +1063,10 @@ public class Player extends Trainer implements Serializable {
 			case JOLLY_MINT:
 			case NAIVE_MINT:
 			case SERIOUS_MINT:
+				if ((p.id == 233 || p.id == 234) && !flag[7][21]) {
+					gp.ui.showMessage(p.nickname + " rejected the " + item.toString() + "!");
+					return;
+				}
 				boolean changeable = p.canUseItem(item) == 1;
 	    		if (!changeable) {
 	        		gp.ui.showMessage("It won't have any effect.");
@@ -1148,6 +1152,10 @@ public class Player extends Trainer implements Serializable {
 			case RUSTY_BOTTLE_CAP:
 			case BOTTLE_CAP:
 			case GOLD_BOTTLE_CAP:
+				if ((p.id == 233 || p.id == 234) && !flag[7][21]) {
+					gp.ui.showMessage(p.nickname + " rejected the " + item.toString() + "!");
+					return;
+				}
 				if (item == Item.BOTTLE_CAP) {
 	        		gp.ui.currentPokemon = p;
 	        		gp.ui.currentHeader = "Which IV to max out?";
@@ -1369,6 +1377,10 @@ public class Player extends Trainer implements Serializable {
 			case ROCK_CRYSTAL:
 			case STEEL_CRYSTAL:
 			case WATER_CRYSTAL:
+				if ((p.id == 233 || p.id == 234) && !flag[7][21]) {
+					gp.ui.showMessage(p.nickname + " rejected the " + item.toString() + "!");
+					return;
+				}
 				PType type = PType.values()[item.getID() - 284];
 				int[] optimalIVs = Pokemon.determineOptimalIVs(type);
 				if (arrayEquals(optimalIVs, p.ivs)) {
@@ -1630,8 +1642,7 @@ public class Player extends Trainer implements Serializable {
 			indices = new int[] {291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304};
 			break;
 		case 8:
-			indices = new int[] {};
-			System.out.println("Gym 8 isn't implemented yet for Player.beatGymTrainers()");
+			indices = new int[] {490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500, 501, 502, 503, 504, 505};
 			break;
 		default:
 			indices = new int[] {};

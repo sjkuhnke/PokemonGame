@@ -1289,7 +1289,7 @@ public class TileManager {
 		setup(1031, false);
 		setup(1032, false);
 		setup(1033, false);
-//		setup(1034, true);
+		setup(1034, false);
 //		setup(1035, true);
 //		setup(1036, true);
 //		setup(1037, true);

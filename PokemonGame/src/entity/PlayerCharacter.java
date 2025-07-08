@@ -500,9 +500,8 @@ public class PlayerCharacter extends Entity {
 	private void interactPC(NPC_PC target) {
 		if (!target.isGauntlet()) {
 			target.direction = "up";
-		} else {
-			p.heal();
 		}
+		p.heal();
 		
 		gp.openBox(target);
 	}
@@ -772,6 +771,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactRockClimb(int i, boolean override) {
 		String message = "This wall looks like it can be scaled!";
+		if (gp.inSpace()) override = true;
 		Move m = Move.ROCK_CLIMB;
 		if (override || p.knowsMove(m)) {
 			int badgeReq = p.getRequiredBadges(m);

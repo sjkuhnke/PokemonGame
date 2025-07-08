@@ -78,6 +78,7 @@ public class UI extends AbstractUI {
 	
 	public int remindNum;
 	public boolean drawFlash;
+	public Color flashColor;
 	
 	public int starter;
 	public boolean starterConfirm;
@@ -1538,12 +1539,17 @@ public class UI extends AbstractUI {
 	}
 
 	private void drawFlash(int i) {
+		if (flashColor == null) {
+			flashColor = currentTask.color == null ? Color.WHITE : currentTask.color;
+		}
 		if (i == 0) {
-			g2.setColor(Color.WHITE);
+			g2.setColor(flashColor);
 			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		} else {
 			counter += i;
-			g2.setColor(new Color(255,255,255,Math.abs(counter * 10)));
+			int alpha = flashColor.getAlpha();
+			alpha /= 25;
+			g2.setColor(new Color(flashColor.getRed(),flashColor.getGreen(),flashColor.getBlue(),Math.abs(counter * alpha)));
 			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 			if (i > 0) {
 				if (counter >= 25) {
@@ -1555,6 +1561,7 @@ public class UI extends AbstractUI {
 				if (counter <= 0) {
 					counter = 0;
 					currentTask = null;
+					flashColor = null;
 					drawFlash = false;
 				}
 			}
