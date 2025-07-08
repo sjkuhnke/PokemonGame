@@ -27,7 +27,6 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
@@ -2923,7 +2922,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			
-			if (first && this.getItem() == Item.KING1S_ROCK && foe.ability != Ability.SHIELD_DUST && checkSecondary(10)) {
+			if (first && this.getItem() == Item.KING1S_ROCK && foe.ability != Ability.SHIELD_DUST && foe.getItem() != Item.COVERT_CLOAK && checkSecondary(10)) {
 				foe.flinch();
 			}
 		}
@@ -7547,8 +7546,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			
 			if (field.contains(this.getFieldEffects(), Effect.TOXIC_SPIKES) && this.isGrounded()) {
 				int layers = field.getLayers(this.getFieldEffects(), Effect.TOXIC_SPIKES);
-				if (layers == 1) this.poison(false, this);
-				if (layers == 2) this.toxic(false, this);
+				if (layers == 1) this.poison(false, null);
+				if (layers == 2) this.toxic(false, null);
 				
 				if (this.isType(PType.POISON)) {
 					field.remove(this.getFieldEffects(), Effect.TOXIC_SPIKES);
@@ -8183,7 +8182,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Pokemon other = (Pokemon) obj;
-		return id == other.id && level == other.level && slot == other.slot && Objects.equals(trainer, other.trainer) && toString().equals(other.toString());
+		return id == other.id && level == other.level && slot == other.slot && toString().equals(other.toString());
 	}
 	
 
@@ -8750,14 +8749,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		switch (item) {
 		case ABILITY_CAPSULE:
 			if (abilitySlot == 2) return 2;
-			Pokemon test = new Pokemon(id, 1, false, false);
-	        test.setAbility(1 - abilitySlot);
-	        return ability == test.ability ? 0 : 1;
+			return this.ability == this.getAbility(1 - abilitySlot) ? 0 : 1;
 		case ABILITY_PATCH:
 			if (this.abilitySlot == 2) return 1;
-			Pokemon test2 = this.clone();
-			test2.setAbility(2);
-			return test2.ability == this.ability || test2.ability == Ability.NULL ? 0 : 1;
+			return this.ability == this.getAbility(2) || this.getAbility(2) == Ability.NULL ? 0 : 1;
 		default:
 			return -1;
 		}

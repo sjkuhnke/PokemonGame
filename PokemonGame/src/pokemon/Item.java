@@ -946,11 +946,18 @@ public enum Item {
 	        for (int i = 0; i < Trainer.trainers.length; i++) {
 	        	Trainer tr = Trainer.trainers[i];
 	        	if (tr != null && !Pokemon.gp.player.p.trainersBeat[i]) {
-	        		for (Pokemon po : tr.getTeam()) {
+	        		Pokemon[] newTeam = new Pokemon[tr.getTeam().length];
+	        		for (int j = 0; j < tr.getTeam().length; j++) {
+	        			Pokemon po = tr.getTeam()[j];
 	            		Pokemon add = po.clone();
 	            		add.setCalcNickname();
 	            		foeMons.addItem(add);
+	            		newTeam[j] = add;
 	            	}
+	        		Trainer newT = tr.shallowClone(Pokemon.gp);
+	        		for (Pokemon po : newTeam) {
+	        			po.trainer = newT;
+	        		}
 	        	}
 	        }
 	        AutoCompleteDecorator.decorate(foeMons);
@@ -1322,13 +1329,14 @@ public enum Item {
 			}
 			
 			userMons.removeAllItems();
+			ArrayList<Pokemon> addList = new ArrayList<>();
 			for (Pokemon pokemon : pl.getOrderedTeam()) {
 	        	Pokemon add = pokemon.clone();
 	        	if (!(pl instanceof Player)) {
 	        		add.setCalcNickname();
 	        	}
 	        	if (!(pokemon instanceof Egg)) {
-	        		userMons.addItem(add.clone());
+	        		addList.add(add);
 	        		
 		    		if (pokemon.id == 150) {
 		        		Pokemon kD = pokemon.clone();
@@ -1345,14 +1353,14 @@ public enum Item {
 						kD.setTypes();
 						kD.setSprites();
 						kD.setAbility(kD.abilitySlot);
-						userMons.addItem(kD);
+						addList.add(kD);
 		        	}
 	        	}
 	        }
 	        if (box != null) {
 				for (Pokemon q : box) {
 					if (q != null && !(q instanceof Egg)) {
-						userMons.addItem(q.clone());
+						addList.add(q.clone());
 					}
 				}
 			}
@@ -1361,10 +1369,15 @@ public enum Item {
 	        	if (player.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
 	        		for (Pokemon q : player.gauntletBox) {
 	    				if (q != null && !(q instanceof Egg)) {
-	    					userMons.addItem(q.clone());
+	    					addList.add(q.clone());
 	    				}
 	    			}
 	        	}
+	        }
+	        Trainer newT = pl.shallowClone(Pokemon.gp);
+	        for (Pokemon po : addList) {
+	        	po.trainer = newT;
+	        	userMons.addItem(po);
 	        }
 	        
 	        Pokemon userC = (Pokemon) userMons.getSelectedItem();
@@ -1387,6 +1400,7 @@ public enum Item {
             	
             	Pokemon[] team = f.trainer.getTeam();
             	int currentIndex = -1;
+            	Pokemon[] newTeam = new Pokemon[f.trainer.getTeam().length];
             	for (int i = 0; i < team.length; i++) {
             		Pokemon updatedMon = team[i].clone();
             		updatedMon.setCalcNickname();
@@ -1397,7 +1411,12 @@ public enum Item {
             			currentIndex = index + i;
             			if (!remove) currentIndex++;
             		}
+            		newTeam[i] = updatedMon;
             	}
+            	Trainer newT = f.trainer.shallowClone(Pokemon.gp);
+        		for (Pokemon po : newTeam) {
+        			po.trainer = newT;
+        		}
             	
             	if (currentIndex >= 0) {
             		foeMons.setSelectedItem(foeMons.getItemAt(currentIndex));

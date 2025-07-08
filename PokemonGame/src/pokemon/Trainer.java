@@ -20,6 +20,7 @@ public class Trainer implements Serializable {
 	int flagIndex;
 	public Pokemon current;
 	public boolean update;
+	public boolean cloned;
 	
 	transient ArrayList<FieldEffect> effects;
 	transient Item[] teamItems;
@@ -31,7 +32,7 @@ public class Trainer implements Serializable {
 	public static int[] levelCaps = new int[] {0, 0, 0, 0, 0, 0, 0, 100, 100};
 	
 	public Trainer(String name, Pokemon[] team, int money) {
-		this(name, team, money, null, 0);
+		this(name, team, money, null, 0, true);
 	}
 	
 	public Trainer(String name, Pokemon[] team, Item[] items, int money) {
@@ -47,7 +48,7 @@ public class Trainer implements Serializable {
 	}
 	
 	public Trainer(String name, Pokemon[] team, Item[] items, int money, Item item, int index) {
-		this(name, team, money, item, index);
+		this(name, team, money, item, index, true);
 		if (team.length != items.length) throw new IllegalArgumentException("Items array must be same length as team array");
 		for (int i = 0; i < team.length; i++) {
 			team[i].item = items[i];
@@ -57,14 +58,14 @@ public class Trainer implements Serializable {
 	}
 
 	public Trainer(String name, Pokemon[] team, int money, Item item) {
-		this(name, team, money, item, 0);
+		this(name, team, money, item, 0, true);
 	}
 	
 	public Trainer(String name, Pokemon[] team, int money, int index) {
-		this(name, team, money, null, index);
+		this(name, team, money, null, index, true);
 	}
 	
-	public Trainer(String name, Pokemon[] team, int money, Item item, int index) {
+	public Trainer(String name, Pokemon[] team, int money, Item item, int index, boolean setTrainers) {
 		this.name = name;
 		this.team = team;
 		this.money = money;
@@ -72,8 +73,10 @@ public class Trainer implements Serializable {
 		this.flagIndex = index;
 		current = team[0];
 		
-		for (Pokemon p : team) {
-			p.setTrainer(this);
+		if (setTrainers) {
+			for (Pokemon p : team) {
+				p.setTrainer(this);
+			}
 		}
 		
 		this.effects = new ArrayList<>();
@@ -401,14 +404,24 @@ public class Trainer implements Serializable {
 		for (int i = 0; i < this.team.length; i++) {
 			if (this.team[i] != null) newTeam[i] = this.team[i].clone();
 		}
-		Trainer result = new Trainer(this.name, newTeam, this.money, this.item, this.flagIndex);
+		Trainer result = new Trainer(this.name, newTeam, this.money, this.item, this.flagIndex, true);
 		
 		result.update = this.update;
 		result.effects = new ArrayList<>(this.effects);
+		result.cloned = true;
 		
 		return result;
 	}
-
+	
+	public Trainer shallowClone(GamePanel gp) {
+		Trainer result = new Trainer(this.name, this.team, this.money, this.item, this.flagIndex, false);
+		result.update = this.update;
+		if (this.effects != null) result.effects = new ArrayList<>(this.effects);
+		result.cloned = true;
+		
+		return result;
+	}
+	
 	public boolean hasUser(Pokemon user) {
 		for (Pokemon p : team) {
 			if (p == user) return true;

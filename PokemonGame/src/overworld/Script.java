@@ -2990,12 +2990,16 @@ public class Script {
 			Task.addTask(Task.SHAKE, "", 80);
 			Task.addTask(Task.SLEEP, "", 45);
 			Task.addNPCMoveTask('y', 11 * gp.tileSize, gp.npc[160][9], true, 2);
-			Task.addTask(Task.SLEEP, "", 90);
-			Task.addTask(Task.DIALOGUE, gp.npc[160][8], "What is that-?! Another of Dragowrath's...?");
-			Task.addTask(Task.SLEEP, "", 20);
+			Task.addTask(Task.SLEEP, "", 75);
 			Task.addNPCMoveTask('y', npc.worldY + 8, npc, false, 4);
-			Task.addTask(Task.SLEEP, "", 25);
+			Task.addTask(Task.SLEEP, "", 20);
 			Task.addTask(Task.DIALOGUE, npc, "...That's not Dragowrath. That's something worse.");
+			Task.addTask(Task.SLEEP, "", 45);
+			Task.addTask(Task.DIALOGUE, gp.npc[160][8], "What is that then-?! Another of Dragowrath's kind...?");
+			Task.addTask(Task.SLEEP, "", 75);
+			Task.addTask(Task.DIALOGUE, gp.npc[160][7], "No. Older. Hungrier.", 2);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.SHAKE, "", 90);
 		});
 	}
 	

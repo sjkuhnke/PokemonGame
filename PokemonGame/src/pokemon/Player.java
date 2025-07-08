@@ -1865,6 +1865,17 @@ public class Player extends Trainer implements Serializable {
 		
 		newPlayer.team = newTeam;
 		
+		newPlayer.cloned = true;
+		
+		return newPlayer;
+	}
+	
+	public Player shallowClone(GamePanel gp) {
+		Player newPlayer = new Player(gp);
+		newPlayer.team = this.team;
+		newPlayer.effects = this.effects == null ? new ArrayList<>() : new ArrayList<>(this.effects);
+		newPlayer.cloned = true;
+		
 		return newPlayer;
 	}
 	
