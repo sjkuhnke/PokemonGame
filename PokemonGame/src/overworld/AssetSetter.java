@@ -21,6 +21,9 @@ public class AssetSetter {
 	public ArrayList<Entity> clerks = new ArrayList<>();
 	public HashMap<Item, Integer> itemMap = new HashMap<>();
 	
+	private static final int NOVA_RIGHT = -39;
+	private static final int NOVA_UP = -38;
+	private static final int NOVA_DOWN = -37;
 	private static final int ALAKAZAM_UP = -36;
 	private static final int ALAKAZAM_RIGHT = -35;
 	private static final int ALAKAZAM_DOWN = -34;
@@ -39,9 +42,10 @@ public class AssetSetter {
 	private static final int STAR_SHOP = -21;
 	private static final int GRANDFATHER = -20;
 	private static final int UP_XURKITREE = -19;
+	private static final int RYDER_RIGHT = 8;
 	private static final int RYDER_UP = -18;
 	private static final int RYDER_DOWN = -17;
-	//private static final int ALAKAZAM = -16;
+	private static final int NECROZMA = -16;
 	private static final int KLARA = -15;
 	private static final int AVERY = -14;
 	private static final int GRANDMOTHER = -13;
@@ -51,7 +55,6 @@ public class AssetSetter {
 	private static final int BLOCK_UP = -9;
 	private static final int BLOCK_LEFT = -8;
 	private static final int BLOCK_RIGHT = -7;
-	
 	private static final int NPC_PC_GAUNTLET = -6;
 
 	private static final int GRUST = -5;
@@ -67,7 +70,6 @@ public class AssetSetter {
 	private static final int MINDY = 5;
 	private static final int RAYNA = 6;
 	private static final int MERLIN = 7;
-	private static final int NOVA = 8;
 	private static final int SCOTT_UP = 9;
 	private static final int SCOTT_DOWN = 10;
 	private static final int FRED_UP = 11;
@@ -2394,13 +2396,57 @@ public class AssetSetter {
 		gp.npc[154][index] = NPCSetup(NPC_BALL, 30, 38, "", "", -1);
 		gp.npc[155][index] = SetupClerk(NPC_MARKET, 31, 41, Item.ABILITY_CAPSULE, Item.TM66);
 		
+		mapNum = 159;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 49, 64, "", "", 490);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 46, 58, "", "", 491);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 50, 57, "", "", 492);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_DOWN, 48, 53, "", "", 493); // test
+		// left path
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_UP, 42, 59, "", "", 494);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 36, 64, "", "", 495);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 33, 57, "", "", 496); // double
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 38, 57, "", "", 497); // double
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 37, 48, "", "", 498);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 35, 45, "", "", 499);
+		// right path
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 54, 53, "", "", 500);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_UP, 53, 62, "", "", 501);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 55, 61, "", "", 502);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 57, 61, "", "", 503);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 56, 44, "", "", 504); // double
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 60, 44, "", "", 505); // double
+		
+		gp.npc[mapNum][index] = NPCSetup(NOVA_DOWN, 69, 60, "You made it to the core. Good.\n"
+				+ "I've seen worlds fall. Watched stars collapse into silence.\n"
+				+ "But you? You're just one little human. One spark in the void.\n"
+				+ "And yet you shook the stars. You silenced Dragowrath.\n"
+				+ "But I need to know if that was a fluke... or fate.\n"
+				+ "Show me you're worthy of rewriting the heavens. Show me why Earth deserves to be reclaimed.",
+				"...No tricks. No god-kid training wheels. Just grit.\n"
+				+ "You're the real deal, Finn. The kind of anomaly this universe doesn't get twice.\n"
+				+ "I always thought Dragowrath was the ceiling - the peak of what cosmic power could be.\n"
+				+ "But watching you? I'm not so sure anymore.\n"
+				+ "You've proven yourself. And I don't go back on my word.\n"
+				+ "I'll pilot the ship - get you and your friends off this floating death rock before the void takes a deeper interest.\n"
+				+ "Head back to the launch site - I'll meet you there once I've powered up the vessel. We don't have long.\n"
+				+ "There are... whispers in the gravity. Things watching. Lurking in the wake of Dragowrath's fall.\n"
+				+ "I don't want to be here when they arrive.\n"
+				+ "Go. Before the stars decide they're hungry again.", 506);
+		
 		mapNum = 160;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, "Arthra", 42, 15, "Be ready - Dragowrath always opens with Aurora Glow. It'll start healing every turn, like it's marking the battlefield as its own.\nAnd... somehow, it's already overflowing with power. All its stat stages are maxed out - it's like it's at the peak of its strength before we even begin.");
 		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_UP, "Alakazam", 38, 17, "Vxxxvhh...", mapNum);
 		gp.npc[mapNum][index] = NPCSetup(DRAGOWRATH, "Dragowrath", 54, 12, "", 160.1, -1, "", 489);
 		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, "Ryder", 37, 17, "...");
-		gp.npc[mapNum][index] = NPCSetup(NOVA, "Nova", 66, 60, "", 160.2);
+		gp.npc[mapNum][index] = NPCSetup(NOVA_RIGHT, "Nova", 69, 60, "", 160.2);
+		// npcs after beating Nova for the cutscene back
+		gp.npc[mapNum][index++] = null; // nova up
+		gp.npc[mapNum][index++] = null; // ryder right
+		gp.npc[mapNum][index++] = null; // alakazam right
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 37, 1, "");
+		gp.npc[mapNum][index] = NPCSetup(NECROZMA, "Necrozma", 38, 1, "", -1, -1, "", -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 69, 51, "", "", -1);
 		
 		mapNum = 161;
@@ -3568,6 +3614,103 @@ public class AssetSetter {
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(50, 37, STATUE_RESET, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(51, 50, STATUE, mapNum, map);
+		
+		mapNum = 206;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 29, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 30, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(33, 30, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(28, 24, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(37, 25, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(17, 32, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(11, 32, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(11, 29, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 18, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(29, 18, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(40, 13, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 13, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 13, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 13, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 30, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 35, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(37, 46, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(38, 46, LEFT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 46, LEFT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(35, 52, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 52, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(46, 52, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 52, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(50, 51, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 53, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 54, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(47, 55, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 62, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 64, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 68, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 62, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 70, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(40, 70, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(73, 62, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(76, 63, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(83, 83, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(83, 86, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(87, 82, LEFT, 1, mapNum, map);
+		
+		mapNum = 207;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(27, 15, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 16, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(25, 20, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(20, 25, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(18, 26, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(16, 28, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(17, 30, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(18, 35, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(25, 38, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 38, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(20, 36, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(40, 33, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 31, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 24, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(33, 24, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 29, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(33, 29, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 38, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(33, 38, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 18, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 17, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(57, 17, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(58, 17, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 16, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 16, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(58, 21, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 21, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(71, 18, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(73, 32, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(50, 26, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 32, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 41, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(45, 43, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(42, 37, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 36, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 36, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 36, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 40, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 40, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(69, 37, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 37, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(69, 41, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 41, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 43, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(65, 43, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 48, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 52, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(46, 54, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(36, 55, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(37, 55, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 65, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(67, 56, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(80, 56, LEFT, 1, mapNum, map);
 	}
 
 	public void updateNPC(int map) {
@@ -3974,6 +4117,10 @@ public class AssetSetter {
 			gp.npc[124][22] = null;
 		}
 		
+		if (flag[7][1]) {
+			gp.npc[128][14] = null; // merlin gym leader NPC
+		}
+		
 		if (flag[7][2]) {
 			if (gp.npc[149][14] != null) gp.npc[149][14].worldY = 63 * gp.tileSize;
 		}
@@ -4068,28 +4215,32 @@ public class AssetSetter {
 		}
 		
 		if (flag[7][9] && map == 190) {
-			gp.npc[190][1] = NPCSetup(DISCIPLE_RIGHT, 56, 85, "Do you carry faith, or merely the hope of it?", "Doubt is not defeat... but it is the first crack in your resolve.", 396);
-			gp.npc[190][2] = NPCSetup(DISCIPLE_LEFT, 59, 85, "The Spirit does not guide those who hesitate.", "You walk, though your steps still falter. Let your soul steady.", 397);
-			gp.npc[190][3] = NPCSetup(DISCIPLE_RIGHT, 56, 81, "This tower reaches skyward - as must your belief.", "One more step upward. The heavens wait... or judge.", 398);
-			gp.npc[190][4] = NPCSetup(DISCIPLE_LEFT, 59, 77, "I once questioned too. That's why I'm here - to test the ones who still do.", "You questioned me. And maybe... your answer was truer.", 399);
-			gp.npc[190][5] = NPCSetup(DISCIPLE_LEFT, 59, 69, "Your aura trembles. Are you ready to let go of reason?", "The mind bends... but the spirit endures.", 400);
-			gp.npc[190][6] = NPCSetup(DISCIPLE_RIGHT, 56, 65, "Every battle is a sermon. Listen well.", "You heard more than most.", 401);
-			gp.npc[190][7] = NPCSetup(DISCIPLE_RIGHT, 56, 61, "You ascend not just in body, but in belief. Prove it.", "The light above shines a little closer now.", 402);
-			gp.npc[190][8] = NPCSetup(DISCIPLE_LEFT, 59, 61, "I offer no welcome - only challenge. It is the same thing, in this place.", "Struggle is the holiest ritual.", 403);
+			if (map == 190 && gp.npc[190][1] == null) {
+				gp.npc[190][1] = NPCSetup(DISCIPLE_RIGHT, 56, 85, "Do you carry faith, or merely the hope of it?", "Doubt is not defeat... but it is the first crack in your resolve.", 396);
+				gp.npc[190][2] = NPCSetup(DISCIPLE_LEFT, 59, 85, "The Spirit does not guide those who hesitate.", "You walk, though your steps still falter. Let your soul steady.", 397);
+				gp.npc[190][3] = NPCSetup(DISCIPLE_RIGHT, 56, 81, "This tower reaches skyward - as must your belief.", "One more step upward. The heavens wait... or judge.", 398);
+				gp.npc[190][4] = NPCSetup(DISCIPLE_LEFT, 59, 77, "I once questioned too. That's why I'm here - to test the ones who still do.", "You questioned me. And maybe... your answer was truer.", 399);
+				gp.npc[190][5] = NPCSetup(DISCIPLE_LEFT, 59, 69, "Your aura trembles. Are you ready to let go of reason?", "The mind bends... but the spirit endures.", 400);
+				gp.npc[190][6] = NPCSetup(DISCIPLE_RIGHT, 56, 65, "Every battle is a sermon. Listen well.", "You heard more than most.", 401);
+				gp.npc[190][7] = NPCSetup(DISCIPLE_RIGHT, 56, 61, "You ascend not just in body, but in belief. Prove it.", "The light above shines a little closer now.", 402);
+				gp.npc[190][8] = NPCSetup(DISCIPLE_LEFT, 59, 61, "I offer no welcome - only challenge. It is the same thing, in this place.", "Struggle is the holiest ritual.", 403);
+			}
 		} else {
 			for (int i = 1; i < 9; i++) {
 				gp.npc[190][i] = null;
 			}
 		}
 		
-		if (flag[7][10] && map == 144) {
-			gp.npc[144][3] = NPCSetup(WARDEN_RIGHT, 40, 40, "Emotion clouds judgment. Let's see how clear your mind is.", "You parsed the problem. I'll admit that.", 318);
-			gp.npc[144][4] = NPCSetup(WARDEN_LEFT, 50, 42, "This descent isn't physical. It's conceptual. Can you grasp that?", "You saw past the surface. Not bad.", 319);
-			gp.npc[144][5] = NPCSetup(WARDEN_UP, 55, 44, "Your presence here is... statistically unlikely.", "And yet, you persist. Curious.", 320);
-			gp.npc[144][6] = NPCSetup(WARDEN_RIGHT, 46, 49, "I will test your process. Not your power.", "You computed well. Proceed.", 321);
-			gp.npc[144][7] = NPCSetup(WARDEN_RIGHT, 54, 49, "This gauntlet favors only the methodical.", "You were less chaotic than expected.", 322);
-			gp.npc[144][8] = NPCSetup(WARDEN_LEFT, 57, 49, "Faith may lift you - but it won't unlock this place.", "A logical route forward. You've earned it.", 323);
-			gp.npc[144][9] = NPCSetup(WARDEN_UP, 57, 80, "Prepare your calculations. This isn't a battle - it's an equation.", "You balanced the variables. Move on.", 324);
+		if (flag[7][10]) {
+			if (map == 144 && gp.npc[144][3] == null) {
+				gp.npc[144][3] = NPCSetup(WARDEN_RIGHT, 40, 40, "Emotion clouds judgment. Let's see how clear your mind is.", "You parsed the problem. I'll admit that.", 318);
+				gp.npc[144][4] = NPCSetup(WARDEN_LEFT, 50, 42, "This descent isn't physical. It's conceptual. Can you grasp that?", "You saw past the surface. Not bad.", 319);
+				gp.npc[144][5] = NPCSetup(WARDEN_UP, 55, 44, "Your presence here is... statistically unlikely.", "And yet, you persist. Curious.", 320);
+				gp.npc[144][6] = NPCSetup(WARDEN_RIGHT, 46, 49, "I will test your process. Not your power.", "You computed well. Proceed.", 321);
+				gp.npc[144][7] = NPCSetup(WARDEN_RIGHT, 54, 49, "This gauntlet favors only the methodical.", "You were less chaotic than expected.", 322);
+				gp.npc[144][8] = NPCSetup(WARDEN_LEFT, 57, 49, "Faith may lift you - but it won't unlock this place.", "A logical route forward. You've earned it.", 323);
+				gp.npc[144][9] = NPCSetup(WARDEN_UP, 57, 80, "Prepare your calculations. This isn't a battle - it's an equation.", "You balanced the variables. Move on.", 324);
+			}
 		} else {
 			for (int i = 3; i < 10; i++) {
 				gp.npc[144][i] = null;
@@ -4174,6 +4325,24 @@ public class AssetSetter {
 			gp.npc[160][0] = null;
 			gp.npc[160][1] = null;
 			gp.npc[160][3] = null;
+		}
+		
+		if (flag[7][23]) {
+			gp.npc[160][4] = null;
+		}
+		
+		if (flag[7][24]) {
+			gp.npc[159][16] = null;
+			if (gp.npc[160][5] == null) gp.npc[160][5] = NPCSetup(NOVA_UP, "Nova", 41, 14, "", 160.3);
+			if (gp.npc[160][6] == null) gp.npc[160][6] = NPCSetup(RYDER_RIGHT, "Ryder", 40, 13, "...");
+			if (gp.npc[160][7] == null) gp.npc[160][7] = NPCSetup(ALAKAZAM_RIGHT, "Alakazam", 39, 13, "Vxxxvhh...");
+		}
+		
+		/**
+		 * Elite Four Split
+		 */
+		if (flag[8][0]) {
+			gp.npc[160][8].worldY = gp.tileSize * 23;
 		}
 		
 		gp.setRenderableNPCs();
@@ -4277,7 +4446,7 @@ public class AssetSetter {
 		case MERLIN:
 			result = new GL_Merlin(gp, "down", team, messages);
 			break;
-		case NOVA:
+		case NOVA_DOWN:
 			result = new GL_Nova(gp, "down", team, messages);
 			break;
 		case SCOTT_DOWN:
@@ -4843,12 +5012,16 @@ public class AssetSetter {
 				result.setDirection("down");
 				break;
 			case RYDER_DOWN:
-				result.setupImages("/npc/block");
+				result.setupImages("/npc/ryder", true);
 				result.setDirection("down");
 				break;
 			case RYDER_UP:
-				result.setupImages("/npc/block");
+				result.setupImages("/npc/ryder", true);
 				result.setDirection("up");
+				break;
+			case RYDER_RIGHT:
+				result.setupImages("/npc/ryder", true);
+				result.setDirection("right");
 				break;
 			case ARTHRA_DOWN:
 				result.setupImages("/npc/arthra", true);
@@ -4881,6 +5054,9 @@ public class AssetSetter {
 			case DRAGOWRATH:
 				result = new NPC_Dragowrath(gp, name, messages, scriptIndex, flag, altDialogue);
 				break;
+			case NECROZMA:
+				result = new NPC_Necrozma(gp, name, messages, scriptIndex, flag, altDialogue);
+				break;
 			case DISCIPLE_DOWN:
 				result.setupImages("/npc/disciple");
 				result.setDirection("down");
@@ -4894,6 +5070,22 @@ public class AssetSetter {
 				break;
 			case FAITH_DRAGON:
 				result = new NPC_Dragon(gp, name, 234, scriptIndex, flag, 5);
+				break;
+			case MERLIN:
+				result.setupImages("/npc/merlin", true);
+				result.setDirection("down");
+				break;
+			case NOVA_DOWN:
+				result.setupImages("/npc/nova", true);
+				result.setDirection("down");
+				break;
+			case NOVA_UP:
+				result.setupImages("/npc/nova", true);
+				result.setDirection("up");
+				break;
+			case NOVA_RIGHT:
+				result.setupImages("/npc/nova", true);
+				result.setDirection("right");
 				break;
 		}
 		

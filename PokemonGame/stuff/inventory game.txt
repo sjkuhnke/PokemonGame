@@ -30,6 +30,7 @@ All interior walls should all be over the player
 Teddinaut
 Clefairy
 Clefable
+Gulpin-X
 Swalot-X
 Staryu
 Starmie
@@ -46,6 +47,7 @@ Shawar
 Shaboom
 
 Lafloo
+Aspomancer
 Kobraturgy
 Sedisoftra
 Prismodon

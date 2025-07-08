@@ -781,7 +781,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.LUCKY_CHANT) && field.contains(this.getFieldEffects(), Effect.LUCKY_CHANT)) bestMoves.removeIf(Move.LUCKY_CHANT::equals);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.HAZE) && !hasBoosts(foe.statStages) && arrayGreaterOrEqual(statStages, new int[] {0, 0, 0, 0, 0, 0, 0})) bestMoves.removeIf(Move.HAZE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.BELLY_DRUM) && this.currentHP < this.getStat(0) / 2) bestMoves.removeIf(Move.HAZE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.BELLY_DRUM) && this.currentHP < this.getStat(0) / 2) bestMoves.removeIf(Move.BELLY_DRUM::equals);
 		
 		if (bestMoves.size() > 1 && (bestMoves.contains(Move.ROOST) || bestMoves.contains(Move.SYNTHESIS) || bestMoves.contains(Move.MOONLIGHT) || bestMoves.contains(Move.MORNING_SUN) ||
 				bestMoves.contains(Move.RECOVER) || bestMoves.contains(Move.SLACK_OFF) || bestMoves.contains(Move.WISH) || bestMoves.contains(Move.REST) ||
@@ -2491,7 +2491,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				defenseStat = foe.getStat(2);
 			} else {
 				attackStat = this.getStat(3);
-				defenseStat = this.getStat(4);
+				defenseStat = foe.getStat(4);
 			}
 			
 			// Crit Check
@@ -2554,7 +2554,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			
 			if (foe.getItem() == Item.EVIOLITE && foe.canEvolve()) defenseMod *= 1.5;
 			
-			damage = calc(attackStat * attackMod, defenseStat * defenseMod, bp, this.level);
+			damage = calc(attackStat * attackMod, defenseStat * defenseMod, bp, this.level, this.script ? 1 : 0);
 			if (isCrit) {
 				damage *= 1.5;
 				if (this.ability == Ability.SNIPER) damage *= 1.5;
@@ -5929,7 +5929,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			defenseStat = foe.getStat(2);
 		} else {
 			attackStat = this.getStat(3);
-			defenseStat = this.getStat(4);
+			defenseStat = foe.getStat(4);
 		}
 		
 		// Crit Check
@@ -9092,11 +9092,17 @@ public class Pokemon implements RoleAssignable, Serializable {
 		long seed = generateSeed(this.id, this.level, this.moveset);
 		Random rand = new Random(seed);
 		for (int j = 0; j < 6; j++) { this.ivs[j] = rand.nextInt(32); }
+		if (id == 233 || id == 234) {
+			this.ivs[0] = 31;
+			this.ivs[4] = 31;
+		}
 		for (int k = 0; k < 3; k++) {
 			int index = -1;
+			int counter = 0;
 			do {
 				index = rand.nextInt(6);
-			} while (this.ivs[index] == 31);
+				counter++;
+			} while (this.ivs[index] == 31 && counter < 50);
 			this.ivs[index] = 31;
 		}
 		setNature(seed);		

@@ -1049,7 +1049,36 @@ public class EventHandler {
 			if (hit(207,19,15)) teleport(206, 15, 12,true);
 			if (hit(206,18,24)) teleport(207, 24, 31,true);
 			if (hit(207,24,31)) teleport(206, 18, 24,true);
+			if (hit(206,60,19)) teleport(207, 81, 26,true);
+			if (hit(207,81,26)) teleport(206, 60, 19,true);
+			if (hit(206,53,23)) teleport(207, 75, 32,true);
+			if (hit(207,75,32)) teleport(206, 53, 23,true);
+			if (hit(206,45,16)) teleport(207, 70, 23,true);
+			if (hit(207,70,23)) teleport(206, 45, 16,true);
+			if (hit(206,39,35)) teleport(207, 59, 40,true);
+			if (hit(207,59,40)) teleport(206, 39, 35,true);
+			if (hit(206,37,40)) teleport(207, 37, 41,true);
+			if (hit(207,37,41)) teleport(206, 37, 40,true);
+			if (hit(206,56,52)) teleport(207, 82, 46,true);
+			if (hit(207,82,46)) teleport(206, 56, 52,true);
+			if (hit(206,81,78)) teleport(207, 73, 56,true);
+			if (hit(207,73,56)) teleport(206, 81, 78,true);
+			if (hit(206,48,67)) teleport(207, 57, 65,true);
+			if (hit(207,57,65)) teleport(206, 48, 67,true);
 			
+			// Outer Space -> Gym 8
+			if (hit(160,66,59)) teleport(159, 48, 66,false);
+			if (hit(159,48,67)) teleport(160, 66, 60,false);
+			
+			// Outer Space 1 -> 2
+			if (hit(160,54,53)) teleport(206, 30, 93,false);
+			if (hit(206,30,94)) teleport(160, 54, 54,false);
+			
+			// Cutscene with Nova outside gym
+			if (!gp.player.p.flag[7][23] && hit(160,69,54,true)) gp.player.interactNPC(gp.npc[160][4], false);
+			
+			// Cutscene with everyone before going back to Earth
+			if (gp.player.p.flag[7][24] && !gp.player.p.flag[8][0] && (hit(160,37,17) || hit(160,38,17))) gp.player.interactNPC(gp.npc[160][5], false);
 		}
 		// Cutscene with Ryder/Arthra in front of Spaceship
 		if (!gp.player.p.flag[7][20] && hit(152,67,78,true)) gp.player.interactNPC(gp.npc[152][5], false);
