@@ -109,12 +109,15 @@ public class UI extends AbstractUI {
 	
 	private BufferedImage[] bagIcons;
 	
-	private String[][] letter;
+	private String[][][] letter = new String[2][][];
+	private int currentLetter;
 	private int maxLine = 13;
 	public int pageNum = 0;
 	
 	public Fog fog;
 	public boolean drawLight;
+	
+	public Font currentFont;
 	
 	private Random rand = new Random();
 	
@@ -135,7 +138,10 @@ public class UI extends AbstractUI {
 		
 		String[] message = loadText("/messages/letter1.txt").split("\n");
 		message = breakMessage(message, 53);
-		letter = splitMessage(message);
+		letter[0] = splitMessage(message);
+		message = loadText("/messages/letter2.txt").split("\n");
+		message = breakMessage(message, 73);
+		letter[1] = splitMessage(message);
 		
 		try {
 			InputStream is = getClass().getResourceAsStream("/font/marumonica.ttf");
@@ -148,6 +154,8 @@ public class UI extends AbstractUI {
 			cryptik = Font.createFont(Font.TRUETYPE_FONT, is);
 			is = getClass().getResourceAsStream("/font/consolas.ttf");
 			consolas = Font.createFont(Font.TRUETYPE_FONT, is);
+			is = getClass().getResourceAsStream("/font/kids-sketchy.ttf");
+			kids = Font.createFont(Font.TRUETYPE_FONT, is);
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
@@ -483,7 +491,10 @@ public class UI extends AbstractUI {
 			drawItemSum();
 			break;
 		case Task.SHAKE:
-			if (!currentTask.message.isEmpty()) showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
+			if (!currentTask.message.isEmpty()) {
+				showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
+				if (currentTask.e != null) drawNameLabel(true);
+			}
 			drawShake();
 			break;
 		case Task.MOVE_CAMERA:
@@ -1102,6 +1113,7 @@ public class UI extends AbstractUI {
 		
 		if (finished) {
 			target.spriteNum = 1;
+			gp.setRenderableNPCs();
 			currentTask = null;
 		} else {
 			if (moveX) {
@@ -1201,6 +1213,7 @@ public class UI extends AbstractUI {
 			counter = 0;
 			gp.offsetX = currentTask.start;
 			gp.offsetY = currentTask.finish;
+			showMessage = false;
 			currentTask = null;
 		}
 	}
@@ -3445,6 +3458,12 @@ public class UI extends AbstractUI {
 			gp.player.setupPlayerImages(gp.player.p.visor);
 			drawLight = gp.determineMachineLight();
 		} else if (item == Item.LETTER) {
+			currentFont = monsier;
+			currentLetter = 0;
+			gp.gameState = GamePanel.LETTER_STATE;
+		} else if (item == Item.LETTER_2) {
+			currentFont = kids;
+			currentLetter = 1;
 			gp.gameState = GamePanel.LETTER_STATE;
 		} else if (item == Item.HEALING_PACK) {
 			if (inGauntlet) {
@@ -4199,6 +4218,8 @@ public class UI extends AbstractUI {
 		gp.player.spriteNum = 1;
 		gp.offsetX = 0;
 		gp.offsetY = 0;
+		drawFlash = false;
+		flashColor = null;
 		gp.player.p.surf = false;
 		gp.player.p.lavasurf = false;
 		
@@ -5309,10 +5330,10 @@ public class UI extends AbstractUI {
 		int textX = x + (int) (gp.tileSize * 0.75);
 		int textY = (int) (y + gp.tileSize * 0.9);
 		
-		g2.setFont(monsier);
+		g2.setFont(currentFont);
 		g2.setColor(Color.BLACK);
 		
-		if (pageNum == 0) {
+		if (currentItem == Item.LETTER && pageNum == 0) {
 			g2.setFont(g2.getFont().deriveFont(24F));
 			String date = "9 /29/ 41";
 			int dateX = (int) (textX + width * 0.9);
@@ -5320,7 +5341,7 @@ public class UI extends AbstractUI {
 		}
 		
 		g2.setFont(g2.getFont().deriveFont(30F));		
-		String[] message = letter[pageNum];
+		String[] message = letter[currentLetter][pageNum];
 		
 		for (String s : message) {
 			g2.drawString(s, textX, textY);
@@ -5647,18 +5668,18 @@ public class UI extends AbstractUI {
 		
 		if (currentTask.start > 0) {
 			Color base = currentTask.color;
-			g2.setColor(new Color(base.getRed(),base.getGreen(),base.getBlue(),counter*5));
+			g2.setColor(new Color(base.getRed(),base.getGreen(),base.getBlue(),base.getAlpha() / currentTask.counter * counter));
 			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		}
 		
 		counter++;
 		if (counter > currentTask.counter) {
 			counter = 0;
-			if (currentTask.start > 0) {
+			if (currentTask.start > 0 && currentTask.wipe) {
 				int prevMap = gp.currentMap;
 				gp.currentMap = currentTask.start;
-				gp.player.worldX = currentTask.start == 160 ? 41 * gp.tileSize : currentTask.start == 152 ? 66 * gp.tileSize : 50 * gp.tileSize;
-				gp.player.worldY = currentTask.start == 160 ? 15 * gp.tileSize : currentTask.start == 152 ? 76 * gp.tileSize : 50 * gp.tileSize;
+				gp.player.worldX = currentTask.start == 160 ? 41 * gp.tileSize : currentTask.start == 152 ? 67 * gp.tileSize : 50 * gp.tileSize;
+				gp.player.worldY = currentTask.start == 160 ? 15 * gp.tileSize : currentTask.start == 152 ? 75 * gp.tileSize : 50 * gp.tileSize;
 				gp.player.direction = "down";
 				warpPlayer(prevMap, gp.currentMap);
 			}

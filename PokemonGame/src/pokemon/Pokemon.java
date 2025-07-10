@@ -3825,7 +3825,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		        foe.flinch();
 		    }
 		} else if (move == Move.SUNNY_BURST) {
-			boolean success = field.setWeather(field.new FieldEffect(Effect.SUN));
+			boolean success = field.setWeather(field.new FieldEffect(Effect.SUN), this, foe);
 			if (success && item == Item.HEAT_ROCK) field.weatherTurns = 8;
 		} else if (move == Move.NUZZLE) {
 			foe.paralyze(false, this);
@@ -4114,7 +4114,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.CHARM) {
 			stat(foe, 0, -2, this, announce);
 		} else if (announce && move == Move.CHILLY_RECEPTION) {
-			boolean success = field.setWeather(field.new FieldEffect(Effect.SNOW));
+			boolean success = field.setWeather(field.new FieldEffect(Effect.SNOW), this, foe);
 			if (success && item == Item.ICY_ROCK) field.weatherTurns = 8;
 			if (this.trainerOwned() && enemy.hasValidMembers()) {
 				Task.addTask(Task.TEXT, this.nickname + " went back to " + enemy.toString() + "!");
@@ -4330,7 +4330,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				stat(this, 2, 1, foe, announce);
 			}
 		} else if (announce && move == Move.SNOWSCAPE) {
-			boolean success = field.setWeather(field.new FieldEffect(Effect.SNOW));
+			boolean success = field.setWeather(field.new FieldEffect(Effect.SNOW), this, foe);
 			if (success && item == Item.ICY_ROCK) field.weatherTurns = 8;
 		} else if (move == Move.HARDEN) {
 			stat(this, 1, 1, foe, announce);
@@ -4568,7 +4568,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(this, 2, 2, foe, announce);
 			stat(this, 4, 2, foe, announce);
 		} else if (announce && move == Move.RAIN_DANCE) {
-			boolean success = field.setWeather(field.new FieldEffect(Effect.RAIN));
+			boolean success = field.setWeather(field.new FieldEffect(Effect.RAIN), this, foe);
 			if (success && item == Item.DAMP_ROCK) field.weatherTurns = 8;
 		} else if (move == Move.REBOOT) {
 			if (this.status != Status.HEALTHY || !this.vStatuses.isEmpty()) if (announce) Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " became healthy!", this);
@@ -4638,7 +4638,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				fail = fail(announce);
 			}
 		} else if (announce && move == Move.SANDSTORM) {
-			boolean success = field.setWeather(field.new FieldEffect(Effect.SANDSTORM));
+			boolean success = field.setWeather(field.new FieldEffect(Effect.SANDSTORM), this, foe);
 			if (success && item == Item.SMOOTH_ROCK) field.weatherTurns = 8;
 		} else if (move == Move.SCARY_FACE) {
 			stat(foe, 4, -2, this, announce);
@@ -4742,7 +4742,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}  else if (move == Move.STRING_SHOT) {
 			stat(foe, 4, -2, this, announce);
 		} else if (announce && move == Move.SUNNY_DAY) {
-			boolean success = field.setWeather(field.new FieldEffect(Effect.SUN));
+			boolean success = field.setWeather(field.new FieldEffect(Effect.SUN), this, foe);
 			if (success && item == Item.HEAT_ROCK) field.weatherTurns = 8;
 		} else if (announce && move == Move.SUPERSONIC) {
 			foe.confuse(true, this);
@@ -7348,19 +7348,19 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (this.ability == Ability.DROUGHT && !field.equals(field.weather, Effect.SUN)) {
 			Task.addAbilityTask(this);
-			field.setWeather(field.new FieldEffect(Effect.SUN));
+			field.setWeather(field.new FieldEffect(Effect.SUN), this, foe);
 			if (this.getItem() == Item.HEAT_ROCK) field.weatherTurns = 8;
 		} else if (this.ability == Ability.DRIZZLE && !field.equals(field.weather, Effect.RAIN)) {
 			Task.addAbilityTask(this);
-			field.setWeather(field.new FieldEffect(Effect.RAIN));
+			field.setWeather(field.new FieldEffect(Effect.RAIN), this, foe);
 			if (this.getItem() == Item.DAMP_ROCK) field.weatherTurns = 8;
 		} else if (this.ability == Ability.SAND_STREAM && !field.equals(field.weather, Effect.SANDSTORM)) {
 			Task.addAbilityTask(this);
-			field.setWeather(field.new FieldEffect(Effect.SANDSTORM));
+			field.setWeather(field.new FieldEffect(Effect.SANDSTORM), this, foe);
 			if (this.getItem() == Item.SMOOTH_ROCK) field.weatherTurns = 8;
 		} else if (this.ability == Ability.SNOW_WARNING && !field.equals(field.weather, Effect.SNOW)) {
 			Task.addAbilityTask(this);
-			field.setWeather(field.new FieldEffect(Effect.SNOW));
+			field.setWeather(field.new FieldEffect(Effect.SNOW), this, foe);
 			if (this.getItem() == Item.ICY_ROCK) field.weatherTurns = 8;
 		} else if (this.ability == Ability.CLOUD_NINE && field.weather != null) {
 			Task.addAbilityTask(this);

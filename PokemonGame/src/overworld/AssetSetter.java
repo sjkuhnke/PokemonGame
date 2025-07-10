@@ -2374,6 +2374,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(RYDER_UP, "Ryder", 66, 76, "", 152.3);
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_LEFT, "Arthra", 67, 76, "");
 		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_RIGHT, "Alakazam", 65, 76, "Vxxxvhh...");
+		gp.npc[mapNum][index++] = null; // nova after returning
+		gp.npc[mapNum][index++] = null; // arthra after returning
+		gp.npc[mapNum][index++] = null; // alakazam after returning
+		gp.npc[mapNum][index] = NPCSetup(ROBIN_UP, "Robin", 67, 99, "");
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_RIGHT, 29, 16, "Energy's acting strange lately... surging from nowhere. You feel it too, right?", "That power - it's not natural. Like something's hijacking the flow itself... Be careful out there.", 347);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_UP, 29, 22, "When chaos strikes, only discipline remains. Let's see how yours stacks up.", "You're centered. Focused. I see why you're making it through when others are falling.", 348);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_DOWN, 24, 24, "The trees are whispering louder every day. The roots are restless.", "They say nature endures all... but even it's starting to crack.", 349);
@@ -2447,6 +2451,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index++] = null; // alakazam right
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 37, 1, "");
 		gp.npc[mapNum][index] = NPCSetup(NECROZMA, "Necrozma", 38, 1, "", -1, -1, "", -1);
+		gp.npc[mapNum][index++] = null; // space guide
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 69, 51, "", "", -1);
 		
 		mapNum = 161;
@@ -4331,7 +4336,7 @@ public class AssetSetter {
 			gp.npc[160][4] = null;
 		}
 		
-		if (flag[7][24]) {
+		if (flag[7][24] && !flag[8][1]) {
 			gp.npc[159][16] = null;
 			if (gp.npc[160][5] == null) gp.npc[160][5] = NPCSetup(NOVA_UP, "Nova", 41, 14, "", 160.3);
 			if (gp.npc[160][6] == null) gp.npc[160][6] = NPCSetup(RYDER_RIGHT, "Ryder", 40, 13, "...");
@@ -4342,7 +4347,31 @@ public class AssetSetter {
 		 * Elite Four Split
 		 */
 		if (flag[8][0]) {
-			gp.npc[160][8].worldY = gp.tileSize * 23;
+			if (gp.npc[160][8] != null) gp.npc[160][8].worldY = gp.tileSize * 23;
+		}
+		
+		if (flag[7][24] && !flag[8][1]) {
+			if (gp.npc[152][8] == null) {
+				gp.npc[152][8] = NPCSetup(NOVA_DOWN, "Nova", 66, 75, "");
+				gp.npc[152][9] = NPCSetup(ARTHRA_DOWN, "Arthra", 68, 75, "");
+				gp.npc[152][10] = NPCSetup(ALAKAZAM_DOWN, "Alakazam", 65, 75, "");
+			}
+		} else {
+			gp.npc[152][8] = null;
+			gp.npc[152][9] = null;
+			gp.npc[152][10] = null;
+		}
+		
+		if (flag[8][1]) {
+			gp.npc[160][5] = null;
+			gp.npc[160][6] = null;
+			gp.npc[160][7] = null;
+			gp.npc[160][8] = null;
+			gp.npc[160][9] = null;
+			gp.npc[152][11] = null;
+			if (gp.npc[160][10] == null) gp.npc[160][10] = NPCSetup(ASTRONOMER_DOWN, "Astronaut", 42, 14, "", 160.4);
+		} else {
+			gp.npc[160][10] = null;
 		}
 		
 		gp.setRenderableNPCs();

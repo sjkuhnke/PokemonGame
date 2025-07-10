@@ -265,9 +265,14 @@ public class Field {
 		}
 	}
 	
-	public boolean setWeather(FieldEffect weather) {
+	public boolean setWeather(FieldEffect weather, Pokemon user, Pokemon foe) {
 		if (weather != null && weather.effect.isWeather) {
 	        if (this.weather == null || this.weather.effect != weather.effect) {
+	        	if (user.ability == Ability.CLOUD_NINE || foe.ability == Ability.CLOUD_NINE) {
+	        		Task.addAbilityTask(user.ability == Ability.CLOUD_NINE ? user : foe);
+	        		Task.addTask(Task.TEXT, "The weather couldn't be set!");
+	        		return false;
+	        	}
 	            Task t = Task.addTask(Task.WEATHER, "The weather became " + weather.toString() + "!");
 	            t.setEffect(weather);
 	            this.weather = weather;

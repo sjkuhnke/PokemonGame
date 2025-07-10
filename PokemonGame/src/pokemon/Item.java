@@ -452,6 +452,7 @@ public enum Item {
 	RELIC_SILVER(310,0,650,Color.BLACK,Item.OTHER,null,"A silver coin used by an ancient civilization about 3,000 years ago."),
 	FAITH_CORE(383,0,0,Color.BLACK,Item.KEY_ITEM,false,"A fragment of ancient energy, pulsing with quiet warmth. Said to embody the undying spirit of belief."),
 	LOGIC_CORE(384,0,0,Color.BLACK,Item.KEY_ITEM,false,"A shard of crystallized thought, sharp and cold to the touch. It hums with the relentless force of reason."),
+	LETTER_2(394,0,0,Color.BLACK,Item.KEY_ITEM,true,"A letter from your father delivered by Robin, it's notably urgent."),
 	;
 	
 	private int id;

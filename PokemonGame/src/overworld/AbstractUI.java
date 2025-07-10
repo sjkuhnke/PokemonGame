@@ -35,6 +35,7 @@ public abstract class AbstractUI {
 	public Font monsier;
 	public Font cryptik;
 	public Font consolas;
+	public Font kids;
 	public int counter = 0;
 	public boolean showMoveOptions;
 	public boolean showIVOptions;
