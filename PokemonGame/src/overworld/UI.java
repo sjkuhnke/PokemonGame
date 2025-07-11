@@ -3439,11 +3439,12 @@ public class UI extends AbstractUI {
 			gp.gameState = GamePanel.DEX_NAV_STATE;
 		} else if (item == Item.FISHING_ROD) {
 			int result = gp.cChecker.checkTileType(gp.player);
-			if (result == 3 || (result >= 24 && result <= 36) || (result >= 313 && result <= 324)) {
+			List<Integer> tileList = gp.tileM.getWaterTiles();
+			if (tileList.contains(result)) {
 				gp.gameState = GamePanel.PLAY_STATE;
 				bagState = 0;
 				subState = 0;
-				gp.player.startWild(PlayerCharacter.currentMapName, 'F');
+				gp.player.startFish(PlayerCharacter.currentMapName);
 			} else {
 				showMessage("Can't use now!");
 			}
@@ -5659,17 +5660,18 @@ public class UI extends AbstractUI {
 	
 	private void drawSpace() {
 		drawSpaceBackground();
-		if (currentTask.e != null && currentTask.message != null && !currentTask.message.isEmpty()) {
-			g2.setFont(getFont(currentTask.finish));
-			showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
-			above = true;
-			drawNameLabel(above);
-		}
 		
 		if (currentTask.start > 0) {
 			Color base = currentTask.color;
 			g2.setColor(new Color(base.getRed(),base.getGreen(),base.getBlue(),base.getAlpha() / currentTask.counter * counter));
 			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+		}
+		
+		if (currentTask.e != null && currentTask.message != null && !currentTask.message.isEmpty()) {
+			g2.setFont(getFont(currentTask.finish));
+			showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
+			above = true;
+			drawNameLabel(above);
 		}
 		
 		counter++;

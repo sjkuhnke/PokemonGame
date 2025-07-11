@@ -581,6 +581,7 @@ public class PlayerCharacter extends Entity {
     		playerInfo.add(nuzlockeInfo);
     	}
     	playerInfo.add(cheats);
+    	System.out.println(gp.tileM.lavaMaps.toString());
     	
     	JOptionPane.showMessageDialog(null, playerInfo, "Player Info", JOptionPane.PLAIN_MESSAGE);
 	}

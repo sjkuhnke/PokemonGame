@@ -1079,6 +1079,9 @@ public class EventHandler {
 			
 			// Cutscene with everyone before going back to Earth
 			if (gp.player.p.flag[7][24] && !gp.player.p.flag[8][0] && (hit(160,37,17) || hit(160,38,17))) gp.player.interactNPC(gp.npc[160][5], false);
+			
+			// Cutscene with Dad for Lava Surf
+			if (gp.player.p.flag[8][1] && !gp.player.p.flag[8][2] && hit(52,31,45)) gp.player.interactNPC(gp.npc[52][0], false);
 		}
 		// Cutscene with Ryder/Arthra in front of Spaceship
 		if (!gp.player.p.flag[7][20] && hit(152,67,78,true)) gp.player.interactNPC(gp.npc[152][5], false);
