@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -22,6 +23,7 @@ public class TileManager {
 	
 	public static Rectangle[] collisionRectangles;
 	public static String[] mapNames = new String[GamePanel.MAX_MAP];
+	public List<Integer> lavaMaps = new ArrayList<>();
 	
 	private static final int OVER = -1;
 	
@@ -1514,6 +1516,8 @@ public class TileManager {
 	public void loadMap(String filePath, int map, boolean canFly) {
 		addName(filePath, map);
 		boolean cave = false;
+		boolean lava = false;
+		List<Integer> lavaTiles = this.getLavaTiles();
 		try {
 			InputStream is = getClass().getResourceAsStream(filePath);
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -1530,6 +1534,10 @@ public class TileManager {
 					
 					int num = Integer.parseInt(numbers[col]);
 					if (!cave && tile[num] instanceof CaveTile) cave = true;
+					if (!lava && lavaTiles.contains(num)) {
+						lava = true;
+						lavaMaps.add(map);
+					}
 					
 					mapTileNum[map][col][row] = num;
 					col++;

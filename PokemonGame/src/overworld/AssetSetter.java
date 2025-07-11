@@ -1910,8 +1910,9 @@ public class AssetSetter {
 		
 		mapNum = 52;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(PROFESSOR, "Dad", 31, 36, "Well hiya there son!", mapNum); // Professor Dad
+		gp.npc[mapNum][index] = NPCSetup(PROFESSOR, "Dad", 31, 36, "", mapNum); // Professor Dad
 		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_UP, "Scientist", 31, 45, "Heh, you're definitely excited to head out there, but your Dad wanted to see you off before you start your adventure.");
+		gp.npc[mapNum][index++] = null; // arthra
 		
 		mapNum = 53;
 		index = 0;
@@ -4372,6 +4373,12 @@ public class AssetSetter {
 			if (gp.npc[160][10] == null) gp.npc[160][10] = NPCSetup(ASTRONOMER_DOWN, "Astronaut", 42, 14, "", 160.4);
 		} else {
 			gp.npc[160][10] = null;
+		}
+		
+		if (flag[8][1] && !flag[8][2]) { // arthra in lab
+			if (gp.npc[52][2] == null) gp.npc[52][2] = NPCSetup(ARTHRA_DOWN, "Arthra", 32, 37, "");
+		} else {
+			gp.npc[52][2] = null;
 		}
 		
 		gp.setRenderableNPCs();

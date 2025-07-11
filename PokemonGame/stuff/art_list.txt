@@ -91,8 +91,12 @@ Ryder (THE CHAMPION!!)
 Custom Player Sprite
 Custom Player Surfing Sprite?
 Custom Player Lavasurfing Sprite?
+Custom Player in space Sprite
 Female NPC Block
 Guard? Like for blocking your path in the gates would be nice
+Robin walking sprites
+Dad/Professor walking sprites
+
 Mother
 
 --- Gym Leaders ---

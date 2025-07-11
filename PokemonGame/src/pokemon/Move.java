@@ -1282,6 +1282,7 @@ public enum Move {
 		if (me.ability == Ability.SERENE_GRACE) sec *= 2;
 		if (sec < 0) sec = 100;
 		if (m == Move.MAGIC_FANG && effectiveness < 2) return false;
+		boolean faster = me.getFaster(foe, 0, 0) == me;
 		
 		// *** unimplemented moves primarily used for secondary effects: Circle Throw, Dragon Tail, Fatal Bind, Spectral Thief ***
 		if (sec > 0) {
@@ -1309,12 +1310,21 @@ public enum Move {
 				if (m == Move.RAPID_SPIN && !Pokemon.field.getHazards(me.getFieldEffects()).isEmpty()) {
 					return true;
 				}
+				// Flinch moves
+				if ((m == Move.AIR_SLASH || m == Move.ASTONISH || m == Move.BITE || m == Move.DARK_PULSE
+						|| m == Move.DRAGON_RUSH || m == Move.EXTRASENSORY || m == Move.FIERY_WRATH || m == Move.HEADBUTT
+						|| m == Move.HYPER_FANG || m == Move.ICICLE_CRASH || m == Move.IRON_BLAST || m == Move.IRON_HEAD
+						|| m == Move.NEEDLE_ARM || m == Move.ROCK_SLIDE || m == Move.SKY_ATTACK || m == Move.STOMP
+						|| m == Move.TWISTER || m == Move.WATER_SMACK || m == Move.WATERFALL || m == Move.ZEN_HEADBUTT
+						|| m == Move.ZING_ZAP) && faster) {
+					return new Random().nextInt(100) < sec;
+				}
 				// Self boosting moves (potentially add AI later if they're already at +6 in the stat by sending them through the other stat boosting check block in Pokemon.bestMove())
 				if (m == Move.FLAME_CHARGE || m == Move.POWER$UP_PUNCH || m == Move.SCALE_SHOT || m == Move.SWORD_SPIN || m == Move.TORNADO_SPIN) {
 					return true;
 				}
 				// Encore if they aren't
-				if (m == Move.SPOTLIGHT_RAY && !foe.hasStatus(Status.ENCORED)) {
+				if (m == Move.SPOTLIGHT_RAY && !foe.hasStatus(Status.ENCORED) && (!faster || foe.lastMoveUsed != null)) {
 					return true;
 				}
 				// Change weather to Sunny
@@ -1334,7 +1344,7 @@ public enum Move {
 					return true;
 				}
 				// Hex Claw
-				if (m == Move.HEX_CLAW && foe.disabledMove == null && (me.getFaster(foe, 0, 0) == foe || foe.lastMoveUsed != null)) {
+				if (m == Move.HEX_CLAW && foe.disabledMove == null && (!faster || foe.lastMoveUsed != null)) {
 					return true;
 				}
 				if (m == Move.SMACK_DOWN && !foe.isGrounded()) {
