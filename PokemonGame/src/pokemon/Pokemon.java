@@ -587,6 +587,19 @@ public class Pokemon implements RoleAssignable, Serializable {
         		this.addStatus(Status.SWAP);
         		return Move.GROWL;
         	}
+        	// 30% chance to swap if i'm yawned
+        	if (this.hasStatus(Status.DROWSY) && checkSecondary(30)) {
+        		String rsn = "[Drowsy : 30%]";
+        		System.out.println(rsn);
+        		if (switchRsn != null) {
+    				switchRsn.setFirst(this);
+        			switchRsn.setSecond(rsn);
+    			}
+        		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+    	        if (pivotMove != null) return pivotMove;
+        		this.addStatus(Status.SWAP);
+        		return Move.GROWL;
+        	}
         	// 5% * toxic counter - 1 chance to swap
         	if (this.status == Status.TOXIC) {
         		double chance = (this.toxic - 1) * 5;
@@ -1545,6 +1558,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the torment!");
 			this.lastMoveUsed = prevMove;
 			this.impressive = false;
+			this.removeStatus(Status.LOCKED);
+			this.removeStatus(Status.CHARGING);
+			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
 			this.metronome = 0;
 			return;
@@ -1703,6 +1719,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the taunt!");
 			this.lastMoveUsed = prevMove;
 			this.impressive = false;
+			this.removeStatus(Status.LOCKED);
+			this.removeStatus(Status.CHARGING);
+			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
 			this.metronome = 0;
 			return;
@@ -1712,6 +1731,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the Heal Block!");
 			this.lastMoveUsed = prevMove;
 			this.impressive = false;
+			this.removeStatus(Status.LOCKED);
+			this.removeStatus(Status.CHARGING);
+			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
 			this.metronome = 0;
 			return;
@@ -1721,6 +1743,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Task.addTask(Task.TEXT, this.nickname + "'s " + move + " is disabled!");
 			this.lastMoveUsed = prevMove;
 			this.impressive = false;
+			this.removeStatus(Status.LOCKED);
+			this.removeStatus(Status.CHARGING);
+			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
 			this.metronome = -1;
 			return;
@@ -1730,6 +1755,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the throat chop!");
 			this.lastMoveUsed = prevMove;
 			this.impressive = false;
+			this.removeStatus(Status.LOCKED);
+			this.removeStatus(Status.CHARGING);
+			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
 			this.metronome = 0;
 			return;
