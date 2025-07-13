@@ -3001,9 +3001,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			int index = tasks.size();
 			boolean result = false;
 			if (this.trainerOwned() && enemy != null) {
-				result = enemy.swapRandom(this);
+				result = enemy.swapRandom(foe);
 			} else if (this.playerOwned()) {
-				result = player.swapRandom(this);
+				result = player.swapRandom(foe);
 			}
 			if (result) {
 				Task t = Task.createTask(Task.TEXT, foe.nickname + " held up its Red Card!");
