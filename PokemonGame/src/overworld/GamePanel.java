@@ -727,7 +727,7 @@ public class GamePanel extends JPanel implements Runnable {
 		if (!player.p.flag[1][2]) canFly = false;
 		if (!tileM.canFly[currentMap]) canFly = false;
 		if (currentMap == 18 && !player.p.flag[1][13]) canFly = false; // Sicab Office Scott
-		if (currentMap == 28 && !player.p.flag[2][10]) canFly = false; // Kleine Village Cage Critter
+		if (currentMap == 28 && !player.p.flag[2][12]) canFly = false; // Kleine Village Cage Critter
 		if (currentMap == 44 && player.p.flag[3][12] && !player.p.flag[4][0]) canFly = false; // After beating Glacius but still needing to do Robin cutscene
 		if (currentMap == 113 && player.p.flag[5][8] && !player.p.flag[6][0]) canFly = false; // After beating Rayna but still needing to do Scott cutscene
 		if (currentMap == 128 && player.p.flag[6][6] && !player.p.flag[7][0]) canFly = false; // After beating Merlin but still needing to do Arthra cutscene

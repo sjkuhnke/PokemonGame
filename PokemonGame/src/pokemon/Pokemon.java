@@ -1763,6 +1763,18 @@ public class Pokemon implements RoleAssignable, Serializable {
 			return;
 		}
 		
+		if (move == Move.METRONOME) {
+			useMove(move, foe);
+			Move[] moves = Move.getAllMoves();
+			move = moves[new Random().nextInt(moves.length)];
+			bp = move.basePower;
+			acc = move.accuracy;
+			secChance = move.secondary;
+			moveType = move.mtype;
+			critChance = move.critChance;
+			contact = move.contact;
+		}
+		
 		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN, this))
 				|| this.hasStatus(Status.CHARGING) || move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY || move == Move.METEOR_BEAM) {
 			if (this.getItem() == Item.POWER_HERB) {
@@ -2002,17 +2014,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.impressive = false;
 			this.moveMultiplier = 1;
 			return;
-		}
-		if (move == Move.METRONOME) {
-			useMove(move, foe);
-			Move[] moves = Move.getAllMoves();
-			move = moves[new Random().nextInt(moves.length)];
-			bp = move.basePower;
-			acc = move.accuracy;
-			secChance = move.secondary;
-			moveType = move.mtype;
-			critChance = move.critChance;
-			contact = move.contact;
 		}
 		if (move == Move.SLEEP_TALK || (move == Move.SNORE && status != Status.ASLEEP)) {
 			useMove(move, foe);
