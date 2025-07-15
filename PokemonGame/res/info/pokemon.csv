@@ -47,8 +47,8 @@
 129|Willolagos   |MAGIC   |LIGHT   |MAGIC_GUARD       |FLASH_FIRE        |MAGIC_BOUNCE      |[60, 40, 39, 120, 95, 101]    |7.3   |80 |FAIRY       |FIELD       |
 125|Sedinister   |ROCK    |GROUND  |STURDY            |UNERODIBLE        |SOLID_ROCK        |[68, 72, 122, 20, 25, 18]     |104.4 |200|MINERAL     |MINERAL     |
 126|Metaslate    |ROCK    |GROUND  |STURDY            |UNERODIBLE        |SOLID_ROCK        |[87, 95, 143, 25, 30, 45]     |256.2 |130|MINERAL     |MINERAL     |
-127|Sedisoftra   |ROCK    |GROUND  |STURDY            |UNERODIBLE        |SOLID_ROCK        |[95, 110, 150, 70, 45, 55]    |337.2 |40 |MINERAL     |MINERAL     |
-128|Prismodon    |ROCK    |LIGHT   |STURDY            |FILTER            |MIRROR_ARMOR      |[90, 75, 50, 110, 150, 50]    |370.5 |35 |MINERAL     |MINERAL     |
+127|Sedisoftra   |ROCK    |GROUND  |STURDY            |UNERODIBLE        |SAND_STREAM       |[95, 110, 150, 70, 45, 55]    |337.2 |40 |MINERAL     |MINERAL     |
+128|Prismodon    |ROCK    |LIGHT   |STURDY            |FILTER            |SAND_STREAM       |[90, 75, 50, 110, 150, 50]    |370.5 |35 |MINERAL     |MINERAL     |
 107|Asmethiss    |ROCK    |PSYCHIC |SHED_SKIN         |REGENERATOR       |FILTER            |[62, 68, 45, 62, 65, 60]      |140.3 |120|MINERAL     |DRAGON      |
 108|Aspomancer   |ROCK    |PSYCHIC |SYNCHRONIZE       |REGENERATOR       |INTIMIDATE        |[72, 75, 73, 75, 70, 75]      |173.2 |65 |MINERAL     |DRAGON      |
 109|Kobraturgy   |ROCK    |PSYCHIC |ROCK_HEAD         |REGENERATOR       |INTIMIDATE        |[99, 120, 80, 80, 76, 80]     |252.9 |30 |MINERAL     |DRAGON      |
@@ -76,7 +76,7 @@
 50 |Hattrem      |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |SLEIGHT_OF_HAND   |UNWAVERING        |[57, 40, 65, 86, 73, 49]      |10.6  |120|FAIRY       |FAIRY       |
 51 |Hatterene    |PSYCHIC |MAGIC   |MAGIC_BOUNCE      |SLEIGHT_OF_HAND   |MYSTIC_RIFT       |[82, 65, 95, 136, 103, 29]    |11.2  |45 |FAIRY       |FAIRY       |
 189|Whotter      |WATER   |PSYCHIC |WATER_VEIL        |ANTICIPATION      |HYDRATION         |[55, 19, 66, 74, 99, 20]      |16.6  |75 |WATER_1     |FIELD       |
-190|Lutrineer    |WATER   |PSYCHIC |WATER_VEIL        |SWIFT_SWIM        |HYDRATION         |[71, 48, 87, 102, 106, 86]    |41.0  |45 |WATER_1     |FIELD       |
+190|Lutrineer    |WATER   |PSYCHIC |WATER_VEIL        |SWIFT_SWIM        |DRIZZLE           |[71, 48, 87, 102, 106, 86]    |41.0  |45 |WATER_1     |FIELD       |
 178|Mosscelot    |GRASS   |PSYCHIC |GRASSY_SURGE      |PSYCHIC_SURGE     |UNBURDEN          |[43, 43, 43, 88, 80, 43]      |13.1  |75 |GRASS       |FIELD       |
 179|Osceloma     |GRASS   |PSYCHIC |GRASSY_SURGE      |PSYCHIC_SURGE     |UNBURDEN          |[67, 72, 87, 96, 93, 104]     |115.5 |40 |GRASS       |FIELD       |
 132|Psycorb      |PSYCHIC |null    |PSYCHIC_SURGE     |LEVITATE          |TRACE             |[25, 20, 63, 55, 62, 25]      |75.0  |125|MINERAL     |AMORPHOUS   |
