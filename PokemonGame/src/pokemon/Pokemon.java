@@ -1775,6 +1775,25 @@ public class Pokemon implements RoleAssignable, Serializable {
 			contact = move.contact;
 		}
 		
+		if (move == Move.MIRROR_MOVE || move == Move.MIMIC) {
+			useMove(move, foe);
+			move = foe.lastMoveUsed;
+			if (move == null || move == Move.MIRROR_MOVE || move == Move.MIMIC) {
+				Task.addTask(Task.TEXT, "But it failed!");
+				this.impressive = false;
+				this.moveMultiplier = 1;
+				this.rollCount = 1;
+				this.metronome = 0;
+				return;
+			}
+			bp = move.basePower;
+			acc = move.accuracy;
+			secChance = move.secondary;
+			moveType = move.mtype;
+			critChance = move.critChance;
+			contact = move.contact;
+		}
+		
 		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN, this))
 				|| this.hasStatus(Status.CHARGING) || move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY || move == Move.METEOR_BEAM) {
 			if (this.getItem() == Item.POWER_HERB) {
@@ -1798,6 +1817,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.impressive = false;
 				this.rollCount = 1;
 				this.metronome = -1;
+				this.lastMoveUsed = move;
 				return;
 			} else {
 				move = this.lastMoveUsed;
@@ -1834,6 +1854,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.moveMultiplier = 1;
 				this.impressive = false;
 				this.rollCount = 1;
+				this.lastMoveUsed = move;
 				return;
 			} else {
 				move = this.lastMoveUsed;
@@ -1894,6 +1915,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (!this.hasStatus(Status.LOCKED)) {
 				this.addStatus(Status.LOCKED);
 				this.outCount = (int)(Math.random()*2) + 2;
+				this.lastMoveUsed = move;
 			}
 			this.outCount--;
 		}
@@ -1914,25 +1936,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 						}
 					}
 				}
-			}
-			bp = move.basePower;
-			acc = move.accuracy;
-			secChance = move.secondary;
-			moveType = move.mtype;
-			critChance = move.critChance;
-			contact = move.contact;
-		}
-		
-		if (move == Move.MIRROR_MOVE || move == Move.MIMIC) {
-			useMove(move, foe);
-			move = foe.lastMoveUsed;
-			if (move == null || move == Move.MIRROR_MOVE || move == Move.MIMIC) {
-				Task.addTask(Task.TEXT, "But it failed!");
-				this.impressive = false;
-				this.moveMultiplier = 1;
-				this.rollCount = 1;
-				this.metronome = 0;
-				return;
 			}
 			bp = move.basePower;
 			acc = move.accuracy;
