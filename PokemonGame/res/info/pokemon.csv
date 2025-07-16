@@ -259,7 +259,7 @@
 -6 |Gulpin       |POISON  |null    |STICKY_HOLD       |GOOEY             |SIMPLE            |[80, 43, 53, 43, 53, 40]      |22.7  |225|AMORPHOUS   |AMORPHOUS   |
 -7 |Swalot       |POISON  |null    |STICKY_HOLD       |GOOEY             |SIMPLE            |[120, 73, 83, 73, 83, 55]     |176.4 |75 |AMORPHOUS   |AMORPHOUS   |
 157|Gulpin-X     |GALACTIC|POISON  |BLACK_HOLE        |BLACK_HOLE        |BLACK_HOLE        |[75, 38, 63, 53, 58, 45]      |105.5 |200|AMORPHOUS   |ALIEN       |
-158|Swalot-X     |GALACTIC|POISON  |BLACK_HOLE        |STICKY_HOLD       |SIMPLE            |[150, 39, 80, 93, 95, 40]     |999.9 |65 |AMORPHOUS   |ALIEN       |
+158|Swalot-X     |GALACTIC|POISON  |BLACK_HOLE        |STICKY_HOLD       |CLOUD_NINE        |[150, 39, 80, 93, 95, 40]     |999.9 |65 |AMORPHOUS   |ALIEN       |
 221|Plasamp      |GALACTIC|STEEL   |STARBORN          |LEVITATE          |MYSTIC_ABSORB     |[60, 55, 70, 90, 70, 65]      |88.1  |50 |ALIEN       |ALIEN       |
 222|Genieova     |GALACTIC|STEEL   |STARBORN          |LEVITATE          |DJINN1S_FAVOR     |[90, 70, 105, 120, 95, 90]    |619.2 |15 |ALIEN       |ALIEN       |
 184|Elgyem       |GALACTIC|PSYCHIC |COSMIC_WARP       |PARASOCIAL        |ANALYTIC          |[55, 55, 55, 85, 55, 30]      |19.8  |125|ALIEN       |HUMAN$LIKE  |
