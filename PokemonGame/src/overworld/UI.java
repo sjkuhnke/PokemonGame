@@ -534,6 +534,7 @@ public class UI extends AbstractUI {
 			drawEvoInfoParty();
 			break;
 		case Task.ODDS:
+			boolean print = false;
 			if (currentTask.counter > 0) {
 				currentTask.counter -= 10;
 				showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
@@ -565,15 +566,17 @@ public class UI extends AbstractUI {
 				int[] adjustedOdds = adjustSimulatedOdds(odds);
 				//tasks.clear();
 				
-				System.out.println("Average Crits: " + String.format("%.1f", Pokemon.field.crits * 1.0 / 10));
-				System.out.println("Average Misses: " + String.format("%.1f", Pokemon.field.misses * 1.0 / 10));
-				System.out.println("Average Super Effective Hits: " + String.format("%.1f", Pokemon.field.superEffective * 1.0 / 10));
-				System.out.println("Average Switches: " + String.format("%.1f", Pokemon.field.switches * 1.0 / 10));
-				System.out.println("Average Knockouts: " + String.format("%.1f", Pokemon.field.knockouts * 1.0 / 10));
-				System.out.println("Average Turns: " + String.format("%.1f", Pokemon.field.turns * 1.0 / 10));
-				
-				System.out.println("Trainer A games won: " + odds[0]);
-				System.out.println("Trainer B games won: " + odds[1]);
+				if (print) {
+					System.out.println("Average Crits: " + String.format("%.1f", Pokemon.field.crits * 1.0 / 10));
+					System.out.println("Average Misses: " + String.format("%.1f", Pokemon.field.misses * 1.0 / 10));
+					System.out.println("Average Super Effective Hits: " + String.format("%.1f", Pokemon.field.superEffective * 1.0 / 10));
+					System.out.println("Average Switches: " + String.format("%.1f", Pokemon.field.switches * 1.0 / 10));
+					System.out.println("Average Knockouts: " + String.format("%.1f", Pokemon.field.knockouts * 1.0 / 10));
+					System.out.println("Average Turns: " + String.format("%.1f", Pokemon.field.turns * 1.0 / 10));
+					
+					System.out.println("Trainer A games won: " + odds[0]);
+					System.out.println("Trainer B games won: " + odds[1]);
+				}
 				
 				ArrayList<Pair<Double, String>> parlay = new ArrayList<>(Arrays.asList(
 					new Pair<>(Pokemon.field.crits * 1.0 / 10, "crits"),
@@ -588,15 +591,10 @@ public class UI extends AbstractUI {
 				
 				for (Pair<Double, String> p : parlay) {
 					double avg = p.getFirst();
-					int add = 1;
-					if (avg % 1 == 0 && avg > 0) {
-						add = new Random().nextBoolean() ? 1 : -1;
-					}
-					avg += 0.5 * add;
-					avg = Math.round(avg);
-					avg -= 0.5;
-					p.setFirst(avg);
-					System.out.println(String.format("Average %s: %.1f", p.getSecond(), p.getFirst()));
+					double randomizedLine = randomizeParlayLine(avg, p.getSecond());
+					p.setFirst(randomizedLine);
+					if (print) System.out.println(String.format("%s line: %.1f (was %.1f)", 
+			                   p.getSecond(), randomizedLine, avg));
 				}
 				gauntlet = currentTask.wipe;
 				gp.simBattleUI.gauntlet = currentTask.wipe;
@@ -756,8 +754,8 @@ public class UI extends AbstractUI {
 			gp.keyH.upPressed = false;
 			int prevBet = parlayBet;
 			int activeBets = getActiveBets();
-			parlayBet++;
-			if (parlayBet > gp.player.p.getMaxParlayBet(gauntlet, activeBets)) parlayBet = 1;
+			parlayBet += Player.BET_INC;
+			if (parlayBet > gp.player.p.getMaxParlayBet(gauntlet, activeBets)) parlayBet = 10;
 			
 			coinColor = Color.WHITE;
 			
@@ -769,8 +767,8 @@ public class UI extends AbstractUI {
 			gp.keyH.downPressed = false;
 			int prevBet = parlayBet;
 			int activeBets = getActiveBets();
-			parlayBet--;
-			if (parlayBet < 1) parlayBet = gp.player.p.getMaxParlayBet(gauntlet, activeBets);
+			parlayBet -= Player.BET_INC;
+			if (parlayBet < Player.BET_INC) parlayBet = gp.player.p.getMaxParlayBet(gauntlet, activeBets);
 			
 			coinColor = Color.WHITE;
 			
@@ -1040,27 +1038,27 @@ public class UI extends AbstractUI {
 		
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
-			battleBet++;
-			if (battleBet > gp.player.p.getMaxBet(gauntlet)) battleBet = 1;
+			battleBet += Player.BET_INC;
+			if (battleBet > gp.player.p.getMaxBet(gauntlet)) battleBet = Player.BET_INC;
 		}
 		
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
-			battleBet--;
-			if (battleBet < 1) battleBet = gp.player.p.getMaxBet(gauntlet);
+			battleBet -= Player.BET_INC;
+			if (battleBet < Player.BET_INC) battleBet = gp.player.p.getMaxBet(gauntlet);
 		}
 		
 		if (gp.keyH.leftPressed) {
 			gp.keyH.leftPressed = false;
 			int max = gp.player.p.getMaxBet(gauntlet);
-			battleBet -= max > 10 ? 10 : 1;
-			if (battleBet < 1) battleBet += max;
+			battleBet -= max > Player.BET_INC * 10 ? Player.BET_INC * 10 : Player.BET_INC;
+			if (battleBet < Player.BET_INC) battleBet += max;
 		}
 		
 		if (gp.keyH.rightPressed) {
 			gp.keyH.rightPressed = false;
 			int max = gp.player.p.getMaxBet(gauntlet);
-			battleBet += max > 10 ? 10 : 1;
+			battleBet += max > Player.BET_INC * 10 ? Player.BET_INC * 10 : Player.BET_INC;
 			if (battleBet > max) battleBet -= max;
 		}
 		
@@ -1151,6 +1149,38 @@ public class UI extends AbstractUI {
 	    adjustedTeam2Wins = Math.max(1, Math.min(99, adjustedTeam2Wins));
 	    
 	    return new int[]{adjustedTeam1Wins, adjustedTeam2Wins};
+	}
+	
+	public static double randomizeParlayLine(double originalAvg, String statName) {
+	    Random rand = new Random();
+	    
+	    // 1. Scale randomness - bigger averages get more variance
+	    double variance = 0.5 + (originalAvg * 0.2);
+	    
+	    // 2. Apply adjusted randomness (bell curve distribution)
+	    double randomized = originalAvg + (rand.nextGaussian() * variance);
+	    
+	    // 3. Convert to nearest 0.5 increment
+	    double result = Math.floor(randomized) + 0.5; // Always rounds down to X.5
+	    
+	    // 4. Special case: If original was exactly X.0 and we want ±0.5 variation
+	    if (originalAvg % 1 == 0) {
+	        result = originalAvg + (rand.nextBoolean() ? 0.5 : -0.5);
+	    }
+	    
+	    // 5. Enforce stat-specific minimums (all as .5 values)
+	    switch (statName) {
+	        case "turns":
+	            result = Math.max(3.5, result);
+	            break;
+	        case "knockouts":
+	            result = Math.max(1.5, result);
+	            break;
+	        default:
+	            result = Math.max(0.5, result); // Global minimum
+	    }
+	    
+	    return result;
 	}
 
 	private void drawSleep() {
@@ -1325,8 +1355,8 @@ public class UI extends AbstractUI {
 		gp.simBattleUI.user.setSprites();
 		gp.simBattleUI.foe.setSprites();
 		
-		System.out.println("Odds of " + currentTask.trainers[0].getName() + " winning: " + currentTask.start);
-		System.out.println("Odds of " + currentTask.trainers[1].getName() + " winning: " + currentTask.finish);
+//		System.out.println("Odds of " + currentTask.trainers[0].getName() + " winning: " + currentTask.start);
+//		System.out.println("Odds of " + currentTask.trainers[1].getName() + " winning: " + currentTask.finish);
 		
 		currentTask = null;
 	}
@@ -1754,7 +1784,7 @@ public class UI extends AbstractUI {
 					break;
 				case 10: // reset gauntlet
 					if (gp.currentMap == 194 || gp.currentMap == 195) {
-						gp.player.p.bag.remove(Item.TEMPLE_ORB, Math.min(25, gp.player.p.bag.getCount(Item.TEMPLE_ORB)));
+						gp.player.p.bag.remove(Item.TEMPLE_ORB, Math.min(250, gp.player.p.bag.getCount(Item.TEMPLE_ORB)));
 					}
 					int[] loc = currentTask.wipe ? gp.puzzleM.FAITH_START : gp.puzzleM.LOGIC_START;
 					gp.puzzleM.sendToStart(loc);
