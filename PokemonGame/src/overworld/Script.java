@@ -1341,6 +1341,7 @@ public class Script {
 					}
 				} else {
 					if (p.coins > 0) {
+						gp.ui.sellAmt = 0;
 						Task t = Task.addTask(Task.GAME_STATE, "");
 						t.counter = GamePanel.COIN_STATE;
 					} else {

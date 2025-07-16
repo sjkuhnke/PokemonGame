@@ -94,7 +94,7 @@ public class Player extends Trainer implements Serializable {
 	public int coins;
 	public int gamesWon;
 	public int winStreak;
-	public int[] blackjackStats; // 0: games played, 1: games won, 2: games pushed, 3: busts, 4: bust wins, 5: blackjacks 6: doubles 7: double wins, 8: coins won, 9: coins lost: 10: highest coin, 11: highest win streak, 12: lose streak, 13: high lose strk
+	public int[] blackjackStats; // 0: games played, 1: games won, 2: games pushed, 3: busts, 4: bust wins, 5: blackjacks 6: doubles 7: double wins, 8: coins won, 9: coins lost: 10: highest coin, 11: highest win streak, 12: lose streak, 13: high lose strk, 14: insurance offered, 15: insurance taken, 16: insurance won, 17: insurance profit, 18: missed bjs
 	public boolean[] coinBadges;
 	public HashMap<Integer, Boolean> puzzlesLocked;
 	public int currentBox;
