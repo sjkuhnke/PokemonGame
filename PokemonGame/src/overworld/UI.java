@@ -4200,7 +4200,7 @@ public class UI extends AbstractUI {
 	}
 	
 	private void drawCoinState() {
-		final int coinWorth = 50;
+		final int coinWorth = 10;
 		currentDialogue = "You have: " + gp.player.p.coins + " coins\nThe exchange rate is: 1 coin for $" + coinWorth;
 		
 		drawDialogueScreen(true);
@@ -4236,29 +4236,33 @@ public class UI extends AbstractUI {
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			gp.gameState = GamePanel.PLAY_STATE;
-			showMessage("Cashed in " + sellAmt + " coins for $" + money + "!");
-			gp.player.p.coins -= sellAmt;
-			gp.player.p.setMoney(gp.player.p.getMoney() + money);
-			sellAmt = 1;
+			if (sellAmt > 0) {
+				showMessage("Cashed in " + sellAmt + " coins for $" + money + "!");
+				gp.player.p.coins -= sellAmt;
+				gp.player.p.setMoney(gp.player.p.getMoney() + money);
+				sellAmt = 1;
+			} else {
+				showMessage("Come back soon!");
+			}
 		}
 		
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
 			sellAmt++;
-			if (sellAmt > gp.player.p.getMaxCoins()) sellAmt = 1;
+			if (sellAmt > gp.player.p.getMaxCoins()) sellAmt = 0;
 		}
 		
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
 			sellAmt--;
-			if (sellAmt < 1) sellAmt = gp.player.p.getMaxCoins();
+			if (sellAmt < 0) sellAmt = gp.player.p.getMaxCoins();
 		}
 		
 		if (gp.keyH.leftPressed) {
 			gp.keyH.leftPressed = false;
 			int max = gp.player.p.getMaxCoins();
 			sellAmt -= max > 10 ? 10 : 1;
-			if (sellAmt < 1) sellAmt += max;
+			if (sellAmt < 0) sellAmt += max;
 		}
 		
 		if (gp.keyH.rightPressed) {

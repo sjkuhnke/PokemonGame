@@ -2,8 +2,11 @@ package overworld;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -41,6 +44,7 @@ public class BlackjackPanel extends JPanel {
 	private Card[] userCards;
 	private Card[] foeCards;
 	private int bet;
+	private int lastBet;
 	
 	private boolean gauntlet;
 	private String currency;
@@ -119,20 +123,25 @@ public class BlackjackPanel extends JPanel {
 		// check for blackjacks
 		boolean playerBJ = isBlackjack(userCards);
 		boolean dealerBJ = isBlackjack(foeCards);
+		boolean offeredInsurance = false;
 		boolean insurance = false;
 		int insuranceBet = bet / 2;
 		
 		if (!playerBJ && foeCards[0].getRank() == 1 && bet / 2 > 0) { // dealer shows ace
+			offeredInsurance = true;
+			p.blackjackStats[14]++;
 			if (insuranceBet > 0 && p.getBetCurrency(gauntlet) >= insuranceBet) {
 				int choice = JOptionPane.showConfirmDialog(
 					null,
-					"Dealer shows an Ace. Would you like insurance? (Costs half your bet)",
+					"Dealer shows an Ace.\nWould you like insurance?\n(Costs half your bet)",
 					"Insurance",
 					JOptionPane.YES_NO_OPTION
 				);
 				if (choice == JOptionPane.YES_OPTION) {
 					insurance = true;
 					p.addBetCurrency(gauntlet, -insuranceBet);
+					p.blackjackStats[15]++;
+					p.blackjackStats[17] -= insuranceBet;
 				}
 			}
 		}
@@ -157,13 +166,17 @@ public class BlackjackPanel extends JPanel {
 				return;
 			} else {
 				if (insurance) {
-					JOptionPane.showMessageDialog(null, "Insurance pays 2:1!");
-					winGame(insuranceBet * 3);
+					int insuranceWin = insuranceBet * 2;
+					JOptionPane.showMessageDialog(null, "Insurance pays out!");
+					winGame(insuranceWin + bet);
+					p.blackjackStats[16]++;
+					p.blackjackStats[17] += insuranceWin;
 					endGame();
 					return;
 				}
 				JOptionPane.showMessageDialog(null, "Dealer has Blackjack, you lose.");
 				loseGame();
+				if (offeredInsurance) p.blackjackStats[18]++;
 				endGame();
 				return;
 			}
@@ -232,6 +245,17 @@ public class BlackjackPanel extends JPanel {
 		statsButton.setBounds(335, 5, 80, 30);
 		this.add(statsButton);
 		statsButton.setVisible(!gauntlet);
+		
+		JLabel rulesLabel = new JLabel(
+	        "<html><div style='color:#AAAAAA;font-size:10px;'>" +
+	        "• Min bet: 10 " + currency + "<br>" +
+	        "• Blackjack pays 3:2<br>" +
+	        "• Insurance pays 2:1<br>" +
+	        "• Dealer stands on 17+</div></html>"
+	    );
+	    rulesLabel.setBounds(gp.screenWidth - 200, gp.screenHeight - 150, 180, 120);
+	    rulesLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+	    this.add(rulesLabel);
 		
 		currentBetText = new JLabel("Bet: -- " + currency);
 		currentBetText.setBounds(600, 30, 150, 20);
@@ -311,7 +335,7 @@ public class BlackjackPanel extends JPanel {
 			if (p.getBetCurrency(gauntlet) > Player.BET_INC) {
 				int maxAllowed = p.getMaxBet(gauntlet);
 				spinnerModel = new SpinnerNumberModel(
-					Math.max(bet, 10),
+					Math.max(lastBet, Player.BET_INC),
 					Player.BET_INC,
 					maxAllowed,
 					Player.BET_INC
@@ -323,26 +347,39 @@ public class BlackjackPanel extends JPanel {
 				
 				betSpinner.addChangeListener(evt -> {
 					int value = (int)betSpinner.getValue();
-					if (value % 10 != 0) {
-						value = (value / 10) * 10;
-						betSpinner.setValue(Math.max(10, value));
+					if (value % Player.BET_INC != 0) {
+						value = (value / Player.BET_INC) * Player.BET_INC;
+						betSpinner.setValue(Math.max(Player.BET_INC, value));
 					}
 				});
 				
 				JPanel panel = new JPanel();
-				panel.add(new JLabel("Bet amount (10-" + maxAllowed + " " + currency + "):"));
-				panel.add(betSpinner);
+		        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		        
+		        JLabel label = new JLabel("Bet amount (" + Player.BET_INC + "-" + maxAllowed + " " + currency + "):");
+		        panel.add(label);
+		        
+		        panel.add(Box.createRigidArea(new Dimension(0, 5)));
+		        
+		        panel.add(betSpinner);
+		        
+		        // Create custom dialog instead of JOptionPane
+		        JDialog dialog = new JDialog((JFrame)null, "Place Your Bet", true);
+		        dialog.setContentPane(panel);
+		        
+		        // Add OK/Cancel buttons
+		        JPanel buttonPanel = new JPanel();
+		        JButton okButton = new JButton("OK");
+		        JButton cancelButton = new JButton("Cancel");
+		        
+		        // Set OK button as default
+		        dialog.getRootPane().setDefaultButton(okButton);
 				
-				int result = JOptionPane.showConfirmDialog(
-					null,
-					panel,
-					"Place Your Bet",
-					JOptionPane.OK_CANCEL_OPTION,
-					JOptionPane.PLAIN_MESSAGE
-				);
-				
-				if (result == JOptionPane.OK_OPTION) {
+				okButton.addActionListener(ev -> {
+					dialog.dispose();
 					bet = (int)betSpinner.getValue();
+					lastBet = bet;
 					
 					if (!gp.player.p.flag[6][2]) {
     					int answer = JOptionPane.showOptionDialog(null,
@@ -359,7 +396,32 @@ public class BlackjackPanel extends JPanel {
     				}
 					startGame();
                     gp.saveGame(gp.player.p);
-				}
+				});
+				
+				cancelButton.addActionListener(ev -> dialog.dispose());
+				
+				buttonPanel.add(okButton);
+				buttonPanel.add(cancelButton);
+				panel.add(buttonPanel);
+				
+				dialog.addComponentListener(new ComponentAdapter() {
+		            @Override
+		            public void componentShown(ComponentEvent e) {
+		                SwingUtilities.invokeLater(() -> {
+		                    betSpinner.requestFocusInWindow();
+		                    JComponent editor = betSpinner.getEditor();
+		                    if (editor instanceof JSpinner.DefaultEditor) {
+		                        JTextField textField = ((JSpinner.DefaultEditor)editor).getTextField();
+		                        textField.selectAll();
+		                    }
+		                });
+		            }
+		        });
+		        
+		        dialog.pack();
+		        dialog.setLocationRelativeTo(this);
+		        dialog.setVisible(true);
+		        
 		    } else {
 		        JOptionPane.showMessageDialog(this, "You don't have enough " + currency + "!");
 		    }
@@ -383,6 +445,13 @@ public class BlackjackPanel extends JPanel {
 			int winStreak = p.blackjackStats[11];
 			int loseStreak = p.blackjackStats[12];
 			int highLoseStreak = p.blackjackStats[13];
+			int insuranceOffered = p.blackjackStats[14];
+			int insuranceTaken = p.blackjackStats[15];
+			int insuranceDeclined = insuranceOffered - insuranceTaken;
+			int missedBJ = p.blackjackStats[18];
+			int correctDeclines = insuranceDeclined - missedBJ;
+			int insuranceWon = p.blackjackStats[16];
+			int insuranceProfit = p.blackjackStats[17];
 			
 			String stats = "Blackjack Stats:\n\n";
 			stats += "Total games played: " + games + "\n\n";
@@ -411,9 +480,41 @@ public class BlackjackPanel extends JPanel {
 			stats += "Total coins won: " + coinWin + "\n";
 			stats += "Total coins lost: " + coinLost + "\n";
 			stats += "Net coins: " + (netCoin >= 0 ? "+" + netCoin : netCoin) + "\n";
-			stats += "Highest wallet amount: " + maxCoin + "\n";
+			stats += "Highest wallet amount: " + maxCoin + "\n\n";
 			
-			JOptionPane.showMessageDialog(null, stats);
+			stats += "Insurance Times Offered: " + insuranceOffered + "\n";
+			stats += "Insurance Take Rate: " + String.format("%.1f%%\n", (insuranceTaken * 100.0 / insuranceOffered));
+			stats += "Insurance Win Rate: " + String.format("%.1f%%\n", (insuranceWon * 100.0 / insuranceTaken));
+			stats += "Insurance Net Profit: " + (insuranceProfit >= 0 ? "+" : "") + insuranceProfit + " " + currency + "\n\n";
+			
+			stats += "Insurance Times Declined: " + insuranceDeclined + "\n";
+			stats += "Missed BJ opporunities: " + missedBJ + " (" + 
+		               String.format("%.1f%%)\n", (missedBJ * 100.0 / insuranceDeclined));
+			stats += "Correct declines: " + correctDeclines + " (" +
+					String.format("%.1f%%)\n", (correctDeclines * 100.0 / insuranceDeclined));
+			
+			JTextArea textArea = new JTextArea(stats);
+		    textArea.setEditable(false);
+		    textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+		    textArea.setLineWrap(true);
+		    textArea.setWrapStyleWord(true);
+		    
+		    // Create a JScrollPane with the text area
+		    JScrollPane scrollPane = new JScrollPane(textArea);
+		    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		    scrollPane.setPreferredSize(new Dimension(500, 400));
+		    
+		    // Set unit increment to 16 pixels
+		    JScrollBar vertical = scrollPane.getVerticalScrollBar();
+		    vertical.setUnitIncrement(16);
+		    
+		    // Show in a JOptionPane
+		    JOptionPane.showMessageDialog(
+		        null,
+		        scrollPane,
+		        "Blackjack Statistics",
+		        JOptionPane.PLAIN_MESSAGE
+		    );
 		});
 	}
 		

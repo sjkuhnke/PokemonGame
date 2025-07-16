@@ -212,6 +212,8 @@ public class Main {
 		    		
 		    		gp.player.p.setupPuzzles(gp, gp.currentMap);
 		    		
+		    		gp.player.p.blackjackStats[18]--;
+		    		
 		    		gp.startGameThread();
 		        }
 		    });
