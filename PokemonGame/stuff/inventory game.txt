@@ -6,6 +6,8 @@ Curlatoral Crystallor Cairnasaur Ramant Boulderoar Raptorex Pyrator Magmaclang L
 Nova Team:
 Clefable Swalot-X Starmie Genieova Stellarock Beheeyem-E
 
+118 fully evolved pokemon (non-legendary)
+
 Game2.72: Encounters and TN base stuff done 3/27
 Game2.721: Items for Mt Splinkty done 3/29
 Game2.725: Ghostly woods stuff done 4/2

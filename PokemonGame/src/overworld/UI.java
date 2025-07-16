@@ -562,6 +562,7 @@ public class UI extends AbstractUI {
 				Trainer ft = new Trainer("Trainer B", t2Team.toArray(new Pokemon[1]), t2Items.toArray(new Item[1]), 0, 2);
 				
 				int[] odds = Pokemon.simulateBattle(ut, ft);
+				int[] adjustedOdds = adjustSimulatedOdds(odds);
 				//tasks.clear();
 				
 				System.out.println("Average Crits: " + String.format("%.1f", Pokemon.field.crits * 1.0 / 10));
@@ -570,6 +571,9 @@ public class UI extends AbstractUI {
 				System.out.println("Average Switches: " + String.format("%.1f", Pokemon.field.switches * 1.0 / 10));
 				System.out.println("Average Knockouts: " + String.format("%.1f", Pokemon.field.knockouts * 1.0 / 10));
 				System.out.println("Average Turns: " + String.format("%.1f", Pokemon.field.turns * 1.0 / 10));
+				
+				System.out.println("Trainer A games won: " + odds[0]);
+				System.out.println("Trainer B games won: " + odds[1]);
 				
 				ArrayList<Pair<Double, String>> parlay = new ArrayList<>(Arrays.asList(
 					new Pair<>(Pokemon.field.crits * 1.0 / 10, "crits"),
@@ -612,8 +616,8 @@ public class UI extends AbstractUI {
 				t.p = ut.getCurrent();
 				t.foe = ft.getCurrent();
 				t.trainers = new Trainer[] {ut, ft};
-				t.start = odds[0];
-				t.finish = odds[1];
+				t.start = adjustedOdds[0];
+				t.finish = adjustedOdds[1];
 				
 				gp.simBattleUI.weather = null;
 				gp.simBattleUI.terrain = null;
@@ -1090,6 +1094,63 @@ public class UI extends AbstractUI {
 	    if (americanOdds < -10000) americanOdds = -10000;
 
 	    return americanOdds;
+	}
+	
+	public static int[] adjustSimulatedOdds(int[] originalOdds) {
+		int totalGames = originalOdds[0] + originalOdds[1];
+		Random rand = new Random();
+	    
+	    // Scale up to 100 games (10x)
+	    double scaledTeam1Wins = originalOdds[0] * 10.0;
+	    double scaledTeam2Wins = originalOdds[1] * 10.0;
+	    double scaledTotal = totalGames * 10.0;
+	    
+	    // Apply randomness (0.85x to 1.15x multiplier)
+	    double randomFactor = 0.85 + rand.nextDouble() * 0.3; // Range: 0.85-1.15
+	    scaledTeam1Wins *= randomFactor;
+	    scaledTeam2Wins *= (2.0 - randomFactor); // Ensure total stays ~100
+	    
+	    // Clamp to avoid extremes (min 1 win, max 99 wins per team)
+	    scaledTeam1Wins = Math.max(1, Math.min(scaledTeam1Wins, scaledTotal - 1));
+	    scaledTeam2Wins = Math.max(1, Math.min(scaledTeam2Wins, scaledTotal - 1));
+	    
+	    // Normalize to 100 games (fix rounding errors from randomness)
+	    double normalizedTotal = scaledTeam1Wins + scaledTeam2Wins;
+	    scaledTeam1Wins = (scaledTeam1Wins / normalizedTotal) * 100;
+	    scaledTeam2Wins = (scaledTeam2Wins / normalizedTotal) * 100;
+	    
+	    // Apply probability compression (sigmoid-like curve)
+	    double compressExponent = 0.7; // Tweakable (0.5 = aggressive, 0.8 = mild)
+	    double team1Prob = scaledTeam1Wins / 100.0;
+	    double team2Prob = scaledTeam2Wins / 100.0;
+	    
+	    // Compress probabilities toward 50%
+	    if (team1Prob < 0.5) {
+	        team1Prob = 0.5 * Math.pow(team1Prob / 0.5, compressExponent);
+	    } else {
+	        team1Prob = 1 - 0.5 * Math.pow((1 - team1Prob) / 0.5, compressExponent);
+	    }
+	    
+	    if (team2Prob < 0.5) {
+	        team2Prob = 0.5 * Math.pow(team2Prob / 0.5, compressExponent);
+	    } else {
+	        team2Prob = 1 - 0.5 * Math.pow((1 - team2Prob) / 0.5, compressExponent);
+	    }
+	    
+	    // Normalize to ensure probabilities sum to 1
+	    double sum = team1Prob + team2Prob;
+	    team1Prob /= sum;
+	    team2Prob /= sum;
+	    
+	    // Convert back to win counts (out of 100)
+	    int adjustedTeam1Wins = (int) Math.round(team1Prob * 100);
+	    int adjustedTeam2Wins = (int) Math.round(team2Prob * 100);
+	    
+	    // Ensure we never return 0-100 or 100-0
+	    adjustedTeam1Wins = Math.max(1, Math.min(99, adjustedTeam1Wins));
+	    adjustedTeam2Wins = Math.max(1, Math.min(99, adjustedTeam2Wins));
+	    
+	    return new int[]{adjustedTeam1Wins, adjustedTeam2Wins};
 	}
 
 	private void drawSleep() {

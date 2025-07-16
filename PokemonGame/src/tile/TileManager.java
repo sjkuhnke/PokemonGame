@@ -1255,8 +1255,7 @@ public class TileManager {
 		setup(973, false);
 
 		setup(986, false);
-		setup(987, false);
-		setup(988, false);
+
 		setup(989, true);
 		setup(990, true);
 		setup(991, true);
@@ -1385,6 +1384,12 @@ public class TileManager {
 			
 			tile[964] = new CaveTile();
 			tile[964].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0964.png"));
+			
+			tile[987] = new CaveTile();
+			tile[987].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0987.png"));
+			
+			tile[988] = new CaveTile();
+			tile[988].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0988.png"));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
