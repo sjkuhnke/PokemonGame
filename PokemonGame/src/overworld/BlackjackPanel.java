@@ -34,6 +34,8 @@ public class BlackjackPanel extends JPanel {
 	private JLabel winStreakText;
 	private JLabel gamesWonText;
 	private JButton statsButton;
+	private JSpinner betSpinner;
+	private SpinnerNumberModel spinnerModel;
 	
 	private int currentIndex;
 	private Card[] userCards;
@@ -45,7 +47,6 @@ public class BlackjackPanel extends JPanel {
 	
 	private Image backgroundImage;
 	
-	private static final int MAX_BET = 100;
 	private static final int MAX_HAND_SIZE = 7;
 	private static final int DECK_SIZE = 52;
 	/**
@@ -114,6 +115,59 @@ public class BlackjackPanel extends JPanel {
 		foeCardIcons.setIcon(createHandIcon(foeCards));
 		userCardIcons.setVisible(true);
 		foeCardIcons.setVisible(true);
+		
+		// check for blackjacks
+		boolean playerBJ = isBlackjack(userCards);
+		boolean dealerBJ = isBlackjack(foeCards);
+		boolean insurance = false;
+		int insuranceBet = bet / 2;
+		
+		if (!playerBJ && foeCards[0].getRank() == 1 && bet / 2 > 0) { // dealer shows ace
+			if (insuranceBet > 0 && p.getBetCurrency(gauntlet) >= insuranceBet) {
+				int choice = JOptionPane.showConfirmDialog(
+					null,
+					"Dealer shows an Ace. Would you like insurance? (Costs half your bet)",
+					"Insurance",
+					JOptionPane.YES_NO_OPTION
+				);
+				if (choice == JOptionPane.YES_OPTION) {
+					insurance = true;
+					p.addBetCurrency(gauntlet, -insuranceBet);
+				}
+			}
+		}
+		
+		if (playerBJ || dealerBJ) {
+			foeCards[1].setVisible(true);
+			foeCardIcons.setIcon(createHandIcon(foeCards));
+			
+			if (playerBJ && dealerBJ) {
+				JOptionPane.showMessageDialog(null, "Both you and the dealer have Blackjack! It's a push.");
+				
+				p.addBetCurrency(gauntlet, bet);
+				p.blackjackStats[2]++;
+				p.blackjackStats[5]++;
+				endGame();
+				return;
+			} else if (playerBJ) {
+				JOptionPane.showMessageDialog(null, "Blackjack! You win 3:2 payout!");
+				winGame((int)(bet * 2.5));
+				p.blackjackStats[5]++;
+				endGame();
+				return;
+			} else {
+				if (insurance) {
+					JOptionPane.showMessageDialog(null, "Insurance pays 2:1!");
+					winGame(insuranceBet * 3);
+					endGame();
+					return;
+				}
+				JOptionPane.showMessageDialog(null, "Dealer has Blackjack, you lose.");
+				loseGame();
+				endGame();
+				return;
+			}
+		}
 	}
 	
 	private void endGame() {
@@ -254,39 +308,58 @@ public class BlackjackPanel extends JPanel {
 		
 		
 		startButton.addActionListener(e -> {
-			if (p.getBetCurrency(gauntlet) > 0) {
-		        // Input a bet
-		        String betInput = JOptionPane.showInputDialog(this, "Enter your bet (between 1 and " + Math.min(p.getBetCurrency(gauntlet), MAX_BET) + " " + currency + "):");
-
-		        // Check if the user clicked cancel or entered an empty string
-		        if (betInput != null && !betInput.trim().isEmpty()) {
-		            try {
-		                bet = Integer.parseInt(betInput);
-
-		                // Check if the bet is within the allowed range
-		                if (bet >= 1 && bet <= Math.min(p.getBetCurrency(gauntlet), MAX_BET)) {
-		                	if (!gp.player.p.flag[6][2]) {
-		    					int answer = JOptionPane.showOptionDialog(null,
-		    							"Would you like to save the game?\n(Won't show this message again:\nWill save every time)",
-		    				            "Save?",
-		    				            JOptionPane.YES_NO_OPTION,
-		    				            JOptionPane.QUESTION_MESSAGE,
-		    				            null, null, null);
-		    					if (answer == JOptionPane.YES_OPTION) {
-		    						gp.player.p.flag[6][2] = true;
-		    					} else {
-		    						return;
-		    					}
-		    				}
-		                    startGame();
-		                    gp.saveGame(gp.player.p);
-		                } else {
-		                    JOptionPane.showMessageDialog(this, "Invalid bet. Please enter a value between 1 and " + Math.min(p.getBetCurrency(gauntlet), MAX_BET) + ".");
-		                }
-		            } catch (NumberFormatException ex) {
-		                JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid number.");
-		            }
-		        }
+			if (p.getBetCurrency(gauntlet) > Player.BET_INC) {
+				int maxAllowed = p.getMaxBet(gauntlet);
+				spinnerModel = new SpinnerNumberModel(
+					Math.max(bet, 10),
+					Player.BET_INC,
+					maxAllowed,
+					Player.BET_INC
+				);
+				
+				betSpinner = new JSpinner(spinnerModel);
+				JSpinner.NumberEditor editor = new JSpinner.NumberEditor(betSpinner, "#");
+				betSpinner.setEditor(editor);
+				
+				betSpinner.addChangeListener(evt -> {
+					int value = (int)betSpinner.getValue();
+					if (value % 10 != 0) {
+						value = (value / 10) * 10;
+						betSpinner.setValue(Math.max(10, value));
+					}
+				});
+				
+				JPanel panel = new JPanel();
+				panel.add(new JLabel("Bet amount (10-" + maxAllowed + " " + currency + "):"));
+				panel.add(betSpinner);
+				
+				int result = JOptionPane.showConfirmDialog(
+					null,
+					panel,
+					"Place Your Bet",
+					JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE
+				);
+				
+				if (result == JOptionPane.OK_OPTION) {
+					bet = (int)betSpinner.getValue();
+					
+					if (!gp.player.p.flag[6][2]) {
+    					int answer = JOptionPane.showOptionDialog(null,
+    						"Would you like to save the game?\n(Won't show this message again:\nWill save every time)",
+    				         "Save?",
+    				         JOptionPane.YES_NO_OPTION,
+    				         JOptionPane.QUESTION_MESSAGE,
+    				         null, null, null);
+    					if (answer == JOptionPane.YES_OPTION) {
+    						gp.player.p.flag[6][2] = true;
+    					} else {
+    						return;
+    					}
+    				}
+					startGame();
+                    gp.saveGame(gp.player.p);
+				}
 		    } else {
 		        JOptionPane.showMessageDialog(this, "You don't have enough " + currency + "!");
 		    }
@@ -372,7 +445,6 @@ public class BlackjackPanel extends JPanel {
 	
 	private void stand(boolean dbl) {
 		int playerTotal = getHandTotal(userCards);
-		if (playerTotal == 21 && getHandSize(userCards) == 2) p.blackjackStats[5]++;
 		int dealerTotal = getHandTotal(foeCards);
 		int handSize = getHandSize(foeCards);
 		foeCards[1].setVisible(true);
@@ -568,6 +640,10 @@ public class BlackjackPanel extends JPanel {
 			}
 		}
 		
+	}
+	
+	private boolean isBlackjack(Card[] hand) {
+		return getHandSize(hand) == 2 && getHandTotal(hand) == 21;
 	}
 	
 	public BufferedImage getImage(String path) {

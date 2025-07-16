@@ -53,8 +53,8 @@ public abstract class AbstractUI {
 	
 	public static int MAX_PARLAYS = 6;
 	public boolean showParlays;
-	public int battleBet = 1;
-	public int parlayBet = 1;
+	public int battleBet = Player.BET_INC;
+	public int parlayBet = Player.BET_INC;
 	public int[] parlays;
 	public boolean sheetFilled;
 	

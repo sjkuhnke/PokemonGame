@@ -111,9 +111,10 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 68;
+	public static final int VERSION = 69;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
+	public static final int BET_INC = 10;
 	
 	public static Pokemon[] pokedex1 = new Pokemon[Pokemon.POKEDEX_1_SIZE]; // regular
 	public static Pokemon[] pokedex2 = new Pokemon[Pokemon.POKEDEX_METEOR_SIZE]; // shadow
@@ -571,7 +572,7 @@ public class Player extends Trainer implements Serializable {
 			{"Fred 1", "Researcher", "Teleport", "Ryder 1", "Fuse 1", "Rocky-E", "PP 1", "Poof-E", "PP 2", "Stanford", "TN Office", "Flamehox-E", "Office 2", "Scott", "Gyarados-E", "Fuse 2", "Stanford", "Fishing Rod", "Gym 2", "Photon Gift", "Res A Gift", "3+ E Forms", "All E Forms"},
 			{"Scott 2", "Ryder 2", "Gift Magic", "Regional", "Millie 1", "Millie 2", "Fred 2", "Chained Xurkitree", "Millie 3", "TN Splinkty", "Millie 4", "Free Xurkitree", "UP Xurkitree", "Millie 5", "Gift Fossil"},
 			{"Ryder 3", "Ice Master", "Ground Master", "I Unlock", "G Unlock", "I Clear", "G Clear", "Principal", "UP Cairnasaur", "Gift \"Starter\"", "Petticoat", "Valiant", "Gym 4"},
-			{"Robin", "Scott 3", "Grandpa", "UP Shookwat", "Gift E/S", "Gym 5"},
+			{"Robin", "Scott 3", "Grandpa", "UP Shookwat", "Gift E/S", "Gym 5", "Coin Update"},
 			{"Arthra 1", "Arthra Talk", "Rick 2", "Fred 3", "Maxwell 1", "UP Splame", "Scott 4", "Glurg Gift", "Gym 6", "Maxwell After"},
 			{"Scott Scene", "Coins", "Autosave Casino", "Magmaclang", "UP Buzzwole", "Rock Climb", "Gym 7", "Shake 1", "Shake 2", "Shake 3", "Shake 4", "Shake 5", "Shake 6", "Shake 7", "Shake 8", "Shake 9", "Shake 10", "Shake 11", "Shake 12"},
 			{"Arthra Scene", "Merlin coming", "Rick 3", "Fred 4", "Maxwell 2", "Machine", "Dragowrath S1", "UP Pheromosa", "Dissemble Machine", "Faith", "Logic", "Merlin Guide", "Guard", "Awake", "Relomidel", "Relopamil", "Drago S2", "Arthra after", "Ryder Shack", "Ryder Possessed", "Get in Ship", "Dragowrath", "Split for Nova", "Nova Scene", "Gym 8"},
@@ -1440,6 +1441,7 @@ public class Player extends Trainer implements Serializable {
 		if (blackjackStats == null) blackjackStats = new int[20];
 		if (coinBadges == null) coinBadges = new boolean[12];
 		if (puzzlesLocked == null) puzzlesLocked = new HashMap<>();
+		if (!flag[4][6]) updateCoins();
 		version = VERSION;
 	}
 
@@ -1465,6 +1467,13 @@ public class Player extends Trainer implements Serializable {
 			}
 		}
 		boxLabels = setupBoxLabels();
+	}
+	
+	// multiplies old coins and orbs by 10
+	private void updateCoins() {
+		flag[4][6] = true;
+		coins *= 10;
+		bag.count[Item.TEMPLE_ORB.getID()] *= 10;
 	}
 
 	public void setSprites() {
@@ -1744,11 +1753,23 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public int getMaxCoins() {
-		return Math.min(999, coins);
+		return Math.min(9999, coins);
 	}
 	
 	public int getMaxBet(boolean gauntlet) {
-		return Math.min(100, getBetCurrency(gauntlet));
+		int currentCurrency = getBetCurrency(gauntlet);
+		if (currentCurrency < BET_INC) return 0;
+		return Math.min(1000, (currentCurrency / BET_INC) * BET_INC);
+	}
+	
+	public int getMaxParlayBet(boolean gauntlet, int activeBets) {
+		if (activeBets == 0) return getMaxBet(gauntlet);
+		
+		int currentCurrency = getBetCurrency(gauntlet);
+		if (currentCurrency < BET_INC) return 0;
+		
+		int maxPerBet = (currentCurrency / activeBets / BET_INC) * BET_INC;
+		return Math.min(1000, Math.max(BET_INC, maxPerBet));
 	}
 	
 	public ArrayList<Pokemon> getOrderedTeam() {
@@ -1759,12 +1780,6 @@ public class Player extends Trainer implements Serializable {
 		}
 		
 		return result;
-	}
-
-	public int getMaxParlayBet(boolean gauntlet, int activeBets) {
-		if (activeBets == 0) return getMaxBet(gauntlet);
-		
-		return Math.min(Math.max(1, getBetCurrency(gauntlet) / activeBets), 100);
 	}
 
 	public void deleteInvalidMoves() {
