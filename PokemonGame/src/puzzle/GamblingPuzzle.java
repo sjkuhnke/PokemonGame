@@ -37,14 +37,14 @@ public class GamblingPuzzle extends Puzzle {
 		int amt = (Integer) obj;
 		if (isLocked()) {
 			if (amt <= 0) lost = true;
-			if (amt >= 100) isComplete = true;
+			if (amt >= 1000) isComplete = true;
 		}
 	}
 	
 	@Override
 	public void sendToNext() {
 		super.sendToNext();
-		if (started) gp.player.p.bag.remove(Item.TEMPLE_ORB, 100);
+		if (started) gp.player.p.bag.remove(Item.TEMPLE_ORB, 1000);
 	}
 
 }

@@ -365,7 +365,7 @@ public class GamePanel extends JPanel implements Runnable {
 					Task task = Task.addTask(Task.ITEM, "");
 					task.item = item;
 					if (item == Item.TEMPLE_ORB) {
-						task.counter = 10;
+						task.counter = 100;
 					}
 				}
 				

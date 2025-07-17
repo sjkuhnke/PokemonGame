@@ -998,7 +998,7 @@ public class PlayerCharacter extends Entity {
 					Task t = Task.addTask(Task.BLACKJACK, "");
 					t.wipe = true;
 				} else if (painting.getColor().equals("battle")) {
-					if (p.getBetCurrency(true) > 0) {
+					if (p.getBetCurrency(true) >= Player.BET_INC) {
 						if (Pokemon.sets.isEmpty()) {
 							gp.ui.showMessage("Loading sets...");
 							SwingUtilities.invokeLater(() -> {

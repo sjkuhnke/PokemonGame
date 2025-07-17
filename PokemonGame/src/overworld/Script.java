@@ -2098,9 +2098,9 @@ public class Script {
 			Puzzle currentPuzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
 			if (!currentPuzzle.isLocked()) {
 				Task.addTask(Task.DIALOGUE, npc, "You'll need these orbs to reach master.");
-				Task t = Task.addTask(Task.ITEM, "You got 25 Temple Orbs!");
+				Task t = Task.addTask(Task.ITEM, "You got 250 Temple Orbs!");
 				t.item = Item.TEMPLE_ORB;
-				t.counter = 25;
+				t.counter = 250;
 				Task.addTask(Task.DIALOGUE, npc, "But that won't be enough. You need to prove you have faith - faith in the odds.");
 				currentPuzzle.setLocked(true);
 			} else {
@@ -2112,7 +2112,7 @@ public class Script {
 					return;
 				}
 			}
-			Task.addTask(Task.DIALOGUE, npc, "Gamble against master using his paintings until you have 100 or more orbs. He's testing your will...");
+			Task.addTask(Task.DIALOGUE, npc, "Gamble against master using his paintings until you have 1000 or more orbs. He's testing your will...");
 		});
 		
 		scriptMap.put(196.0, (npc) -> { // faith dragon in 6A

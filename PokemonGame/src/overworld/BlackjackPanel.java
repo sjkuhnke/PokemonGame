@@ -332,7 +332,7 @@ public class BlackjackPanel extends JPanel {
 		
 		
 		startButton.addActionListener(e -> {
-			if (p.getBetCurrency(gauntlet) > Player.BET_INC) {
+			if (p.getBetCurrency(gauntlet) >= Player.BET_INC) {
 				int maxAllowed = p.getMaxBet(gauntlet);
 				spinnerModel = new SpinnerNumberModel(
 					Math.max(lastBet, Player.BET_INC),
