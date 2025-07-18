@@ -980,7 +980,7 @@ public class PlayerCharacter extends Entity {
 					}
 				}
 			} else if (painting.isResetPainting()) {
-				if (!current.isStarted()) {
+				if (current != null && !current.isStarted()) {
 					gp.puzzleM.sendToStart(gp.puzzleM.FAITH_START);
 				} else {
 					gp.ui.commandNum = 1;
