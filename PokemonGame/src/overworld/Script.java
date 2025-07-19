@@ -597,7 +597,7 @@ public class Script {
 						id = 98;
 						break;
 					}
-				} while (p.pokedex[id] == 2 && counter < 100);
+				} while (p.isDupes(id) && counter < 100);
 				Pokemon result = new Pokemon(id, 20, true, false);
 				Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 				Task.addTask(Task.GIFT, "", result);
@@ -722,7 +722,7 @@ public class Script {
 					id = 47;
 					break;
 				}
-			} while (p.pokedex[id] == 2 && counter < 100);
+			} while (p.isDupes(id) && counter < 100);
 			Pokemon result = new Pokemon(id, 15, true, false);
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
@@ -892,7 +892,7 @@ public class Script {
 					id = 213;
 					break;
 				}
-			} while (p.pokedex[id] == 2 && counter < 50);
+			} while (p.isDupes(id) && counter < 50);
 			Pokemon result = new Pokemon(id, 25, true, false);
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
@@ -914,7 +914,7 @@ public class Script {
 				id = 92;
 				break;
 			}
-			if (p.pokedex[id] == 2) {
+			if (p.isDupes(id)) {
 				Task.addTask(Task.DIALOGUE, npc, "Wait..... you have that one?!?!? Shit. Well, take this one instead bozo.");
 				boolean sparkitten = gift.nextBoolean();
 				if (sparkitten) {
@@ -1078,14 +1078,14 @@ public class Script {
 			do {
 				counter++;
 				index = gift.nextInt(ids.length);
-			} while (p.pokedex[ids[index]] == 2 && counter < 100);
+			} while (p.isDupes(index) && counter < 100);
 			
 			Pokemon result = new Pokemon(ids[index], 30, true, false);
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		});
 		
-		scriptMap.put(107.0, (npc) -> {
+		scriptMap.put(107.0, (npc) -> { // arthra ghostly woods
 			if (!p.flag[5][0]) {
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.TURN, npc, "", Task.DOWN);
@@ -1115,7 +1115,7 @@ public class Script {
 			}
 		});
 
-		scriptMap.put(107.1, (npc) -> {
+		scriptMap.put(107.1, (npc) -> { // rick ghostly woods
 			Task.addNPCMoveTask('y', 55 * gp.tileSize, npc, false, 96);
 			Task.addTask(Task.TURN, player, "", Task.UP);
 			Task.addNPCMoveTask('y', 56 * gp.tileSize, npc, false, 4);
@@ -1210,7 +1210,7 @@ public class Script {
 			do {
 				counter++;
 				index = gift.nextInt(ids.length);
-			} while (p.pokedex[ids[index]] == 2 && counter < 100);
+			} while (p.isDupes(index) && counter < 100);
 			
 			Egg result = new Egg(ids[index]);
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
@@ -3357,7 +3357,7 @@ public class Script {
 		do {
 			id = Pokemon.getRandomBasePokemon(random);
 			counter++;
-		} while (p.pokedex[id] == 2 && counter < 100);
+		} while (p.isDupes(id) && counter < 100);
 		
 		return id;
 	}

@@ -296,14 +296,19 @@ public class Player extends Trainer implements Serializable {
 		}
 	}
 	
-	public boolean isDupes(Pokemon p) {
-		if (p == null) return false;
-		if (pokedex[p.id] == 2) return true;
-		ArrayList<String> evoFamily = p.getEvolutionFamily();
+	public boolean isDupes(int id) {
+		if (pokedex[id] == 2) return true;
+		if (id < 1) return false;
+		ArrayList<String> evoFamily = Pokemon.getEvolutionFamily(id);
 		for (String s : evoFamily) {
 			if (pokedex[Pokemon.getIDFromName(s)] == 2) return true;
 		}
 		return false;
+	}
+	
+	public boolean isDupes(Pokemon p) {
+		if (p == null) return false;
+		return isDupes(p.id);
 	}
 
 	public void invalidateNuzlocke(String string) {
