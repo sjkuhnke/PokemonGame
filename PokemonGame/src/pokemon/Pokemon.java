@@ -6586,7 +6586,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.status = Status.ASLEEP;
 			this.sleepCounter = (int)(Math.random() * 3) + 1;
 			Task.addTask(Task.STATUS, Status.ASLEEP, this.nickname + " fell asleep!", this);
-			if (foe != null && this.getItem() == Item.CHESTO_BERRY || this.getItem() == Item.LUM_BERRY) {
+			if (foe != null && (this.getItem() == Item.CHESTO_BERRY || this.getItem() == Item.LUM_BERRY)) {
 				Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its sleep!", this);
 				this.status = Status.HEALTHY;
 				this.sleepCounter = 0;
@@ -6619,7 +6619,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (this.ability == Ability.SYNCHRONIZE && this != foe && foe != null) {
 				foe.paralyze(false, this, this);
 			}
-			if (foe != null && this.getItem() == Item.CHERI_BERRY || this.getItem() == Item.LUM_BERRY) {
+			if (foe != null && (this.getItem() == Item.CHERI_BERRY || this.getItem() == Item.LUM_BERRY)) {
 				Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its paralysis!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem(foe);
@@ -6661,7 +6661,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (this.ability == Ability.SYNCHRONIZE && this != foe && foe != null) {
 				foe.burn(false, this, this);
 			}
-			if (foe != null && this.getItem() == Item.RAWST_BERRY || this.getItem() == Item.LUM_BERRY) {
+			if (foe != null && (this.getItem() == Item.RAWST_BERRY || this.getItem() == Item.LUM_BERRY)) {
 				Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its burn!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem(foe);
@@ -6681,7 +6681,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (foe != null && foe.ability != Ability.CORROSION && (this.isType(PType.POISON) || this.isType(PType.STEEL))) {
+		if ((foe == null || foe.ability != Ability.CORROSION) && (this.isType(PType.POISON) || this.isType(PType.STEEL))) {
 			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...");
 			return;
 		}
@@ -6692,7 +6692,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (this.ability == Ability.SYNCHRONIZE && this != foe && foe != null) {
 				foe.poison(false, this, this);
 			}
-			if (foe != null && this.getItem() == Item.PECHA_BERRY || this.getItem() == Item.LUM_BERRY) {
+			if (foe != null && (this.getItem() == Item.PECHA_BERRY || this.getItem() == Item.LUM_BERRY)) {
 				Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its poison!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem(foe);
@@ -6708,7 +6708,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
 			return;
 		}
-		if (foe != null && foe.ability != Ability.CORROSION && (this.isType(PType.POISON) || this.isType(PType.STEEL))) {
+		if ((foe == null || foe.ability != Ability.CORROSION) && (this.isType(PType.POISON) || this.isType(PType.STEEL))) {
 			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...");
 			return;
 		}
@@ -6719,7 +6719,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Task.addAbilityTask(this);
 				foe.toxic(false, this);
 			}
-			if (foe != null && this.getItem() == Item.PECHA_BERRY || this.getItem() == Item.LUM_BERRY) {
+			if (foe != null && (this.getItem() == Item.PECHA_BERRY || this.getItem() == Item.LUM_BERRY)) {
 				Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its poison!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem(foe);
@@ -6757,7 +6757,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Task.addAbilityTask(this);
 				foe.freeze(false, this);
 			}
-			if (foe != null && this.getItem() == Item.ASPEAR_BERRY || this.getItem() == Item.LUM_BERRY) {
+			if (foe != null && (this.getItem() == Item.ASPEAR_BERRY || this.getItem() == Item.LUM_BERRY)) {
 				Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + this.item.toString() + " to cure its frostbite!", this);
 				this.status = Status.HEALTHY;
 				this.consumeItem(foe);
@@ -8432,10 +8432,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 	
 	public ArrayList<String> getEvolutionFamily() {
+		return getEvolutionFamily(this.id);
+	}
+	
+	public static ArrayList<String> getEvolutionFamily(int id) {
 		// BFS to find all connected Pokemon
 	    LinkedHashSet<String> familySet = new LinkedHashSet<>();
 	    Queue<String> queue = new LinkedList<>();
-	    String startName = getName(this.id);
+	    String startName = getName(id);
 	    
 	    queue.add(startName);
 	    familySet.add(startName);
