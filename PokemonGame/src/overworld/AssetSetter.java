@@ -7,6 +7,7 @@ import java.util.Random;
 import entity.*;
 import object.*;
 import pokemon.Item;
+import tile.TileManager;
 
 public class AssetSetter {
 
@@ -1203,13 +1204,13 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(44, 14, Item.PP_MAX, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(63, 74, Item.RED_CARD, mapNum);
 		gp.obj[mapNum][objIndex] = MintSetup(40, 13, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(34, 35, Item.MAX_REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(34, 35, Item.FIRE_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 27, Item.BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(56, 16, Item.AIR_BALLOON, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(57, 30, Item.ULTRA_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(71, 34, Item.NUGGET, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 47, Item.TINY_MUSHROOM, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(44, 46, Item.FIRE_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 46, Item.TM18, mapNum); // iron head
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 60, Item.LEAF_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(78, 79, Item.SPARKLY_SEED, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(80, 77, Item.GRASSY_SEED, mapNum);
@@ -1222,6 +1223,20 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(79, 53, Item.CELL_BATTERY, mapNum);
 		gp.obj[mapNum][objIndex] = SetupChest(78, 28, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(61, 82, Item.STAR_PIECE, mapNum);
+		
+		mapNum = 160;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(38, 43, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 25, Item.MAX_REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 34, Item.ADRENALINE_ORB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 15, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 19, Item.AIR_BALLOON, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(63, 23, Item.ABSORB_BULB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(68, 44, Item.GOLD_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 29, Item.LEAF_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 34, Item.LUMINOUS_MOSS, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(71, 63, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(56, 58, Item.BIG_NUGGET, mapNum);
 		
 		mapNum = 163;
 		objIndex = 0;
@@ -1410,6 +1425,110 @@ public class AssetSetter {
 		mapNum = 202;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(47, 48, Item.PP_MAX, mapNum);
+		
+		mapNum = 206;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 27, Item.GALACTIC_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(20, 26, Item.NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(33, 35, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 33, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 28, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(38, 23, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(33, 15, Item.RELIC_SILVER, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(24, 12, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(38, 18, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 24, Item.SNOWBALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(46, 39, Item.NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 40, Item.MAX_REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 38, Item.ROCK_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 27, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(9, 30, Item.WHITE_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(46, 14, Item.RELIC_GOLD, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(51, 12, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(45, 19, Item.DUSK_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 33, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 42, Item.GROUND_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 11, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 17, Item.PP_UP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 22, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 51, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(47, 63, Item.MAX_REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 59, Item.DARK_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(38, 43, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(36, 56, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 68, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 66, Item.NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(46, 69, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(79, 61, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(84, 79, Item.PSYCHIC_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(77, 83, Item.PP_MAX, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 85, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 76, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(61, 76, Item.STEEL_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(46, 88, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(24, 78, Item.NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 72, Item.RELIC_SILVER, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 74, Item.ROOM_SERVICE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 74, Item.EJECT_BUTTON, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 74, Item.EJECT_PACK, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 82, Item.GHOST_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(66, 57, Item.MAGIC_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(73, 60, Item.FIGHTING_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(63, 61, Item.MAX_REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 59, Item.RELIC_SILVER, mapNum);
+		
+		mapNum = 207;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(23, 28, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 36, Item.WATER_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 33, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(18, 38, Item.BUG_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(12, 33, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(17, 25, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(12, 24, Item.MIRROR_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(16, 14, Item.VALIANT_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(23, 18, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(18, 24, Item.RELIC_GOLD, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(22, 26, Item.LIGHT_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 27, Item.DRAGON_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 14, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 19, Item.MAX_REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(34, 22, Item.RELIC_SILVER, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 23, Item.ABILITY_PATCH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 21, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 21, Item.POISON_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 15, Item.PP_UP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 18, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(55, 9, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(66, 17, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(73, 19, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(76, 25, Item.GOLD_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(78, 32, Item.POWER_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 23, Item.PETTICOAT_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(69, 28, Item.MENTAL_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(58, 28, Item.RED_CARD, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 32, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(48, 46, Item.TM88, mapNum); // galaxy blast
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 41, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 32, Item.BLUNDER_POLICY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 50, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 56, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(49, 60, Item.RELIC_GOLD, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(64, 45, Item.WEAKNESS_POLICY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(71, 46, Item.GRASS_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(76, 28, Item.ICE_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 63, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 51, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 58, Item.BIG_NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 67, Item.RELIC_SILVER, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(72, 57, Item.FLYING_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(34, 32, Item.CELL_BATTERY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 31, Item.ELECTRIC_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 34, Item.SNOWBALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(73, 41, Item.ICE_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 84, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 75, Item.ABILITY_PATCH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(71, 84, Item.BIG_NUGGET, mapNum);
 	}
 
 	public void setNPC() {
@@ -5154,7 +5273,7 @@ public class AssetSetter {
 		
 		itemMap.put(item, itemMap.getOrDefault(item, 0) + 1);
 		
-		if (gp.tileM.tile[gp.tileM.mapTileNum[mapNum][x][y]].collision) {
+		if (gp.tileM.tile[gp.tileM.mapTileNum[mapNum][x][y]].collision && !gp.tileM.tile[gp.tileM.mapTileNum[mapNum][x][y]].collisionArea.equals(TileManager.collisionRectangles[TileManager.TOP_FOURTH])) {
 			System.out.println("Item " + item + " at " + x + ", " + y + " on map " + mapNum + " is in a wall");
 		}
 		
