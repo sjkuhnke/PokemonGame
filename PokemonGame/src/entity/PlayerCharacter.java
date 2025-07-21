@@ -1250,7 +1250,7 @@ public class PlayerCharacter extends Entity {
 				result.append(value).append(",");
 			}
 			try {
-				FileWriter writer = new FileWriter("./docs/trainers.txt");
+				FileWriter writer = new FileWriter("./trainers.txt");
 				writer.write(result.toString());
 				writer.close();
 			} catch (IOException e1) {
@@ -1268,7 +1268,7 @@ public class PlayerCharacter extends Entity {
 		    }
 
 			try {
-				FileWriter writer = new FileWriter("./docs/items.txt");
+				FileWriter writer = new FileWriter("./items.txt");
 				writer.write(result.toString());
 				writer.close();
 			} catch (IOException e1) {

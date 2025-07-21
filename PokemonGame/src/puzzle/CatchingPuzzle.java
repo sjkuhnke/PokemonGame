@@ -16,7 +16,7 @@ public class CatchingPuzzle extends Puzzle {
 		// can/can't learn surf
 		{"Can it cross the waters, or do the waves bar its path?", "It has crossed waters deeper than doubt itself.", "Its path ends at the shore. The tide never claimed it."},
 		// has a weather associated with their type or not
-		{"Does the forecast heed its coming?", "The skies shift to welcome it - clouds part, or gather, or burn.", "No storm nor stillness heeds its name. It walks apart from the winds."},
+		{"Does the forecast heed its coming?", "The skies shift to welcome it - clouds part, or gather, or burn.", "No storm nor sunshine heeds its name. It walks apart from the winds."},
 		// has a terrain associated with their type or not
 		{"Does it have a deeper touch to the land?", "The earth blooms or pulses in its wake. The terrain changes - not for you, but for it.", "It walks on plain stone. The terrain knows no song for it."},
 		// whether this pokemon is a physical, special or mixed attacker

@@ -2733,7 +2733,7 @@ public class UI extends AbstractUI {
 				g2.fillRoundRect(cX - 2, cY - 2, spriteWidth - 10, spriteHeight - 10, 10, 10);
 				g2.setColor(g2.getColor().darker());
 				g2.drawRoundRect(cX - 2, cY - 2, spriteWidth - 10, spriteHeight - 10, 10, 10);
-			} else if (tmCheck != null && cBox[i] != null) {
+			} else if (tmCheck != null && i < cBox.length && cBox[i] != null) {
 				int canUse = cBox[i].canUseItem(tmCheck);
 				Color backgroundColor = canUse == 0 ? new Color(210, 35, 15, 200) : canUse == 1 ? new Color(15, 210, 40, 200) : new Color(230, 220, 50, 200);
 				g2.setColor(backgroundColor);

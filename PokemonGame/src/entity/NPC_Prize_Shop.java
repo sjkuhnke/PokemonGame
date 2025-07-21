@@ -91,19 +91,19 @@ public class NPC_Prize_Shop extends Entity {
 		
 		List<Pair<Item, Integer>> items = Arrays.asList(
 			// coin items
-			new Pair<>(Item.MENTAL_HERB, 5),
-			new Pair<>(Item.MIRROR_HERB, 5),
-			new Pair<>(Item.ROOM_SERVICE, 10),
-			new Pair<>(Item.WHITE_HERB, 5),
-			new Pair<>(Item.POWER_HERB, 5),
-			new Pair<>(Item.THROAT_SPRAY, 15),
-			new Pair<>(Item.FOCUS_SASH, 10),
-			new Pair<>(Item.BLUNDER_POLICY, 20),
-			new Pair<>(Item.WEAKNESS_POLICY, 20),
-			new Pair<>(Item.RED_CARD, 25),
-			new Pair<>(Item.AIR_BALLOON, 25),
-			new Pair<>(Item.EJECT_BUTTON, 30),
-			new Pair<>(Item.EJECT_PACK, 30)
+			new Pair<>(Item.MENTAL_HERB, 50),
+			new Pair<>(Item.MIRROR_HERB, 50),
+			new Pair<>(Item.ROOM_SERVICE, 100),
+			new Pair<>(Item.WHITE_HERB, 50),
+			new Pair<>(Item.POWER_HERB, 50),
+			new Pair<>(Item.THROAT_SPRAY, 150),
+			new Pair<>(Item.FOCUS_SASH, 100),
+			new Pair<>(Item.BLUNDER_POLICY, 200),
+			new Pair<>(Item.WEAKNESS_POLICY, 200),
+			new Pair<>(Item.RED_CARD, 250),
+			new Pair<>(Item.AIR_BALLOON, 250),
+			new Pair<>(Item.EJECT_BUTTON, 300),
+			new Pair<>(Item.EJECT_PACK, 300)
 		);
 		
 		ArrayList<Pair<Item, Integer>> result = new ArrayList<>();

@@ -52,8 +52,8 @@ public class ItemObj extends Entity {
 			if (!drawItem) {
 				g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 			} else {
-				g2.setColor(Color.WHITE);
-				g2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
+//				g2.setColor(Color.WHITE);
+//				g2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
 				g2.drawImage(image, screenX + 12, screenY + 12, null);
 				g2.setFont(g2.getFont().deriveFont(10F));
 				g2.setColor(Color.BLACK);

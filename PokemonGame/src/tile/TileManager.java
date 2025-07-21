@@ -27,25 +27,25 @@ public class TileManager {
 	
 	private static final int OVER = -1;
 	
-	private static final int FULL = 0; // default, shouldn't ever be explicitly used
-	private static final int TOP_HALF = 1;
-	private static final int BOTTOM_HALF = 2;
-	private static final int LEFT_HALF = 3;
-	private static final int RIGHT_HALF = 4;
-	private static final int TOP_TWO_THIRDS = 5;
-	private static final int BOTTOM_TWO_THIRDS = 6;
-	private static final int LEFT_TWO_THIRDS = 7;
-	private static final int RIGHT_TWO_THIRDS = 8;
-	private static final int BOTTOM_LEFT_CORNER = 9;
-	private static final int BOTTOM_RIGHT_CORNER = 10;
-	private static final int TOP_THREE_FOURTHS = 11;
-	private static final int BOTTOM_THREE_FOURTHS = 12;
-	private static final int TOP_FOURTH = 13;
-	private static final int BOTTOM_FOURTH = 14;
-	private static final int LEFT_FOURTH = 15;
-	private static final int RIGHT_FOURTH = 16;
-	private static final int TOP_RIGHT_SKINNY_CORNER = 17;
-	private static final int TOP_LEFT_SKINNY_CORNER = 18;
+	public static final int FULL = 0; // default, shouldn't ever be explicitly used
+	public static final int TOP_HALF = 1;
+	public static final int BOTTOM_HALF = 2;
+	public static final int LEFT_HALF = 3;
+	public static final int RIGHT_HALF = 4;
+	public static final int TOP_TWO_THIRDS = 5;
+	public static final int BOTTOM_TWO_THIRDS = 6;
+	public static final int LEFT_TWO_THIRDS = 7;
+	public static final int RIGHT_TWO_THIRDS = 8;
+	public static final int BOTTOM_LEFT_CORNER = 9;
+	public static final int BOTTOM_RIGHT_CORNER = 10;
+	public static final int TOP_THREE_FOURTHS = 11;
+	public static final int BOTTOM_THREE_FOURTHS = 12;
+	public static final int TOP_FOURTH = 13;
+	public static final int BOTTOM_FOURTH = 14;
+	public static final int LEFT_FOURTH = 15;
+	public static final int RIGHT_FOURTH = 16;
+	public static final int TOP_RIGHT_SKINNY_CORNER = 17;
+	public static final int TOP_LEFT_SKINNY_CORNER = 18;
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
