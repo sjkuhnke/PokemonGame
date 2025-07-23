@@ -1386,5 +1386,11 @@ public enum Move {
 			|| this == Move.SPIKES || this == Move.TOXIC_SPIKES || this == Move.TOXIC || this == Move.STICKY_WEB || this == Move.YAWN
 			|| this == Move.FLOODLIGHT);
 	}
+	
+	public static ArrayList<Move> getMoveTutorMoves() {
+		ArrayList<Move> result = new ArrayList<>();
+		result.add(Move.ENDURE);
+		return result;
+	}
 
 }

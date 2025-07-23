@@ -2522,24 +2522,24 @@ public class AssetSetter {
 		
 		mapNum = 159;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 49, 64, "", "", 490);
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 46, 58, "", "", 491);
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 50, 57, "", "", 492);
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_DOWN, 48, 53, "", "", 493); // test
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 49, 64, "The void whispered of your coming... Let's see if you're worthy of the echo.", "The silence returns. I must listen closer next time.", 490);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 46, 58, "I once helped Dragowrath bend gravity to its will. Let's see if you can stand your ground.", "Seems you were heavier than expected.", 492);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 50, 57, "Every planet orbits something greater. Today, you orbit me.", "Looks like your gravity pulled me in instead...", 493);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_DOWN, 48, 53, "The stars burn billions of years... My team burns just as hot!", "A flare-out... I guess even stars have bad days.", 491); // test
 		// left path
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_UP, 42, 59, "", "", 494);
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 36, 64, "", "", 495);
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 33, 57, "", "", 496); // double
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 38, 57, "", "", 497); // double
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 37, 48, "", "", 498);
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 35, 45, "", "", 499);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_UP, 42, 59, "Time is relative. So is victory. But today, I predict mine.", "Guess I was looking at the wrong timeline.", 494);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 36, 64, "I mapped the cosmic currents. You? You're just space debris.", "Huh... space junk with surprising momentum.", 495);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 33, 57, "We've seen storms that span planets. Think you can compare?", "You're a force of nature, I'll give you that...", 496); // double
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 38, 57, "Dragowrath once consumed stars. We studied the collapse. Now, we test you.", "It's us who collapsed... into defeat.", 497); // double
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 37, 48, "You blaze in like a comet... but you'll burn out just as fast.", "Your tail's longer than expected... I didn't see the ending coming.", 498);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 35, 45, "I once tended Dragowrath's eternal flame. Now, I burn for Nova.", "Even fire must bow to starlight... Well fought.", 499);
 		// right path
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 54, 53, "", "", 500);
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_UP, 53, 62, "", "", 501);
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 55, 61, "", "", 502);
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 57, 61, "", "", 503);
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 56, 44, "", "", 504); // double
-		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 60, 44, "", "", 505); // double
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 54, 53, "You can't see what powers me... but you'll feel it.", "Back to the lab. Dark matter remains elusive - and so does victory.", 500);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_UP, 53, 62, "I paint with stardust, and today - you're the canvas!", "Turns out your colors were stronger than mine.", 501);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 55, 61, "I keep Nova's gym in perfect balance. One misstep, and you're space dust.", "Guess I'm the one out of sync...", 502);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 57, 61, "My team's got solar flares hotter than your ambition.", "Burned out... Should've checked the shielding.", 503);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 56, 44, "The spirits of the cosmos guide our hands. Prepare for prophecy fulfilled!", "The stars whispered of your strength... but we didn't believe them.", 504); // double
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 60, 44, "Observation changes outcome. And we're observing your loss.", "Hmm... maybe we measured wrong this time.", 505); // double
 		
 		gp.npc[mapNum][index] = NPCSetup(NOVA_DOWN, 69, 60, "You made it to the core. Good.\n"
 				+ "I've seen worlds fall. Watched stars collapse into silence.\n"
@@ -3071,7 +3071,7 @@ public class AssetSetter {
 		mapNum = 41;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = SetupLockedDoor(18, 30, 99, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupLockedDoor(44, 30, 101, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupLockedDoor(44, 30, 100, mapNum, map);
 		
 		mapNum = 52;
 		iIndex = 0;
