@@ -898,6 +898,13 @@ public abstract class AbstractUI {
 		if (flags.length() > 0) {
 			g2.drawString(flags.toString(), getCenterAlignedTextX(flags.toString(), x), y);
 		}
+		
+		x = startX + width - gp.tileSize * 2;
+		y -= gp.tileSize;
+		
+		if (move.isTM() && gp.player.p.hasTM(move)) {
+			g2.drawImage(Item.HM01.getImage2(), x, y, null);
+		}
 	}
 
 	public float getFontSize(String text, float targetWidth) {
@@ -1073,7 +1080,9 @@ public abstract class AbstractUI {
 					}
 				}
 				Color color = mtype.getColor();
-				if (!gp.player.p.hasTM(ms.move) && !movebankList.contains(ms.move)) {
+				boolean canRelearn = Move.getMoveTutorMoves().contains(ms.move) || movebankList.contains(ms.move) ||
+						(gp.player.p.hasTM(ms.move) && Pokemon.getLearned(p.id - 1, Item.getTMMoves().indexOf(ms.move)));
+				if (!canRelearn) {
 		        	g2.setPaint(new GradientPaint(x, y, color, x + moveWidth, y + moveHeight, new Color(245, 225, 210)));
 		        } else {
 		        	g2.setColor(color);	

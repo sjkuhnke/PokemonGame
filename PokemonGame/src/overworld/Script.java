@@ -1078,7 +1078,7 @@ public class Script {
 			do {
 				counter++;
 				index = gift.nextInt(ids.length);
-			} while (p.isDupes(index) && counter < 100);
+			} while (p.isDupes(ids[index]) && counter < 100);
 			
 			Pokemon result = new Pokemon(ids[index], 30, true, false);
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
@@ -1210,7 +1210,7 @@ public class Script {
 			do {
 				counter++;
 				index = gift.nextInt(ids.length);
-			} while (p.isDupes(index) && counter < 100);
+			} while (p.isDupes(ids[index]) && counter < 100);
 			
 			Egg result = new Egg(ids[index]);
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");

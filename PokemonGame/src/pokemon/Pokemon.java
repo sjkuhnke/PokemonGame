@@ -3886,12 +3886,15 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Task.addTask(Task.STATUS, Status.HEALTHY, nickname + " was cured of its burn!", this);
 			}
 		} else if (move == Move.SPECTRAL_THIEF) {
+			boolean stole = false;
 			for (int i = 0; i < 7; ++i) {
 				if (foe.statStages[i] > 0) {
+					stole = true;
 					stat(this, i, foe.statStages[i], foe);
 					foe.statStages[i] = 0;
 				}
 			}
+			if (stole) Task.addTask(Task.TEXT, this.nickname + " stole " + foe.nickname + "'s stat boosts!", this);
 		} else if (move == Move.RADIANT_BREAK) {
 			stat(foe, 2, -1, this);
 		} else if (move == Move.STEEL_WING) {
@@ -9179,7 +9182,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			if (thisMovebank.contains(m)) movesValid[i] = true;
-			if (m == Move.ENDURE) movesValid[i] = true; // endure is a universal move tutor move
+			if (Move.getMoveTutorMoves().contains(m)) movesValid[i] = true; // endure is a universal move tutor move
 		}
 		
 		boolean movesetValid = true;
