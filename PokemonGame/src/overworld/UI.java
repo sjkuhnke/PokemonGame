@@ -379,7 +379,7 @@ public class UI extends AbstractUI {
 			showMessage(currentTask.message);
 			break;
 		case Task.PARTY: // move reminder party
-			drawMoveReminderParty();
+			drawPartyTask();
 			break;
 		case Task.REMIND:
 			drawDialogueScreen(true);
@@ -2161,7 +2161,7 @@ public class UI extends AbstractUI {
 		
 		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
-			Task.addTask(Task.PARTY, "");
+			Task.addTask(Task.PARTY, "Teach # a move?", Task.REMIND);
 			currentTask = null;
 		}
 		
@@ -2186,13 +2186,31 @@ public class UI extends AbstractUI {
 		drawToolTips("OK", null, "Back", null);
 	}
 
-	private void drawMoveReminderParty() {
-		drawParty(null);
+	private void drawPartyTask() {
+		drawParty(currentTask.move, null);
 		
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			Pokemon p = gp.player.p.team[partyNum];
-			Task.addTask(Task.REMIND, "What move would you like to teach " + p.nickname + "?", p);
+			boolean skip = false;
+			if (currentTask.move != null) {
+				int move = p.canLearnMove(currentTask.move);
+				if (move == 0) {
+					Task.addTask(Task.TEXT, p.nickname + " can't learn " + currentTask.move + "!");
+					skip = true;
+				} else if (move == 2) {
+					Task.addTask(Task.TEXT, p.nickname + " already knows " + currentTask.move + "!");
+					skip = true;
+				} else if (move == -1) {
+					Task.addTask(Task.TEXT, "Error: currentTask.move was null");
+					skip = true;
+				}
+			}
+			if (!skip) {
+				String message = currentTask.message.replace("#", p.nickname);
+				Task t = Task.addTask(currentTask.counter, message, p); // pass in the Task type and Message in the Task.PARTY creation
+				t.setMove(currentTask.move);
+			}
 			remindNum = 0;
 			currentTask = null;
 		}

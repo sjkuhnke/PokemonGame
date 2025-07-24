@@ -223,11 +223,19 @@ public abstract class AbstractUI {
 	    return x;
 	}
 	
+	public void drawParty() {
+		drawParty(null);
+	}
+	
+	public void drawParty(Move move, Item item) {
+		drawParty(gp.tileSize*3, gp.tileSize, item, move);
+	}
+	
 	public void drawParty(Item item) {
-		drawParty(gp.tileSize*3, gp.tileSize, item);
+		drawParty(null, item);
 	}
 
-	public void drawParty(int x, int y, Item item) {
+	public void drawParty(int x, int y, Item item, Move move) {
 		int width = gp.tileSize*10;
 		int height = gp.tileSize*10;
 		
@@ -332,7 +340,7 @@ public abstract class AbstractUI {
 					String lvText = "Lv. " + p.level;
 					g2.setColor(Color.BLACK);
 					g2.drawString(lvText, getCenterAlignedTextX(lvText, x + 60), (int) (y + gp.tileSize * 2.75));
-					int canUseItem = p.canUseItem(item);
+					int canUseItem = move == null ? p.canUseItem(item) : p.canLearnMove(move);
 					String hpText = canUseItem == -1 ? p.currentHP + " / " + p.getStat(0) : canUseItem == 0 ? "NOT ABLE" : canUseItem == 2 ? "LEARNED" : "ABLE";
 					g2.drawString(hpText, getCenterAlignedTextX(hpText, (int) (x + (partyWidth * 0.75) - 12)), (int) (y + gp.tileSize * 2.25));
 					if (p.status != Status.HEALTHY) {

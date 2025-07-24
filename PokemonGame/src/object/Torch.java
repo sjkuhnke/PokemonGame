@@ -25,7 +25,8 @@ public class Torch extends InteractiveTile {
 	@Override
 	public void draw(Graphics2D g2) {
 		boolean dead = false;
-		if (!gp.player.p.flag[7][9] && !gp.player.p.flag[7][10]) {
+		if ((!gp.player.p.flag[7][9] && !gp.player.p.flag[7][10]) ||
+			(gp.player.p.flag[7][14] && gp.player.p.flag[7][15])) {
 			dead = true;
 			spriteNum = 3;
 		}
