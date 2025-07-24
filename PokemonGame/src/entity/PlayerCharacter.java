@@ -430,9 +430,11 @@ public class PlayerCharacter extends Entity {
 			interactPainting((Painting) target);
 		} else if (target instanceof Statue) {
 			interactStatue((Statue) target);
+		} else if (target instanceof IceChunk) {
+			interactIceChunk();
 		}
 	}
-
+	
 	private void trainerSpot(Entity entity) {
 		int trainer = entity.trainer;
 		if (p.trainersBeat[trainer]) return;
@@ -707,6 +709,7 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactPit(int i, boolean override) {
 		String message = "This pit looks deep!\nI can't even see the bottom!";
+		if (gp.currentMap >= 197 && gp.currentMap <= 202) override = true;
 		Move m = Move.SLOW_FALL;
 		if (override || p.knowsMove(m)) {
 			int badgeReq = p.getRequiredBadges(m);
@@ -1049,6 +1052,11 @@ public class PlayerCharacter extends Entity {
 			}
 		}
 	}
+	
+	private void interactIceChunk() {
+		gp.ui.showMessage(Item.breakString("The ice still whispers with the cold wind...", UI.MAX_TEXTBOX));
+	}
+
 	
 	private int getTileForwardX() {
 		switch (direction) {

@@ -241,6 +241,7 @@ public class AssetSetter {
 	private static final int SPIKE_SWITCH = 22;
 	private static final int SPIKE_1 = 23;
 	private static final int SPIKE_2 = 24;
+	private static final int ICE_CHUNK = 25;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -2277,6 +2278,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 88, 69, "I train with the intensity of a lightning storm! Let's see if you can keep up!", "You're fast... but next time, I'll be faster. Count on it!", 243);
 		gp.npc[mapNum][index] = NPCSetup(BLACK_BELT_DOWN, 62, 74, "Prepare yourself! My Pokemon fight with the heart of a true warrior!", "Impressive! I'll need to push myself even further!", 244);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_RIGHT, 41, 72, "Don't think my dragons will go easy on you. They're as tough as they come!", "I thought I had it all figured out... Guess I need to rethink my strategy.", 245);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 26, 70, "Hey there! You gotta be pretty tough to make it here with Xhenos's crazy weather, like me!", mapNum);
 		
 		mapNum = 118;
 		index = 0;
@@ -2303,7 +2305,7 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 25, 21, "Climbing mountains builds strength. Let's see if you can match mine!", "That was a solid battle. I'll be even tougher next time!", 276); // DH
 		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_LEFT, 24, 24, "Fishing requires patience, but battling? That's where I make a splash!", "You're like a storm at sea... I couldn't keep up!", 281);
-		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_RIGHT, 18, 21, "The water's my home, and my Pokemon rule it! Let's battle!", "Wow, you're amazing! I couldn't even stay afloat in that battle!", 280);
+		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_RIGHT, 18, 21, "The water's my home, and my Pokemon rule it! Let's battle!", "Wow, you're amazing! I couldn't even stay afloat in that battle!", 280, LEFT + RIGHT);
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_F_LEFT, 22, 32, "Think you can keep up with the flow of my Water Pokemon? Let's see!", "Looks like I'm all washed up... but I'll be back stronger!", 283);
 		gp.npc[mapNum][index] = NPCSetup(ACTRESS_LEFT, 16, 32, "Beauty, grace, and power - watch it all come together on this stage!", "The curtain falls on me this time... but the show must go on!", 277); // DI
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 12, 43, "You'll need more than luck to outmatch me. I'm bringing the heat!", "You may have cooled me down this time, but I'm coming back hotter than ever!", 278); // DJ
@@ -3706,12 +3708,28 @@ public class AssetSetter {
 		mapNum = 197;
 		iIndex = 0;
 		SetupPit(mapNum, 69, 29, 198, 42, 32, map);
+		if (gp.iTile[mapNum][iIndex] == null) {
+			if (mapNum == 197 && gp.player.p.flag[7][14]) {
+				gp.iTile[mapNum][iIndex] = ITileSetup(65, 49, ICE_CHUNK, mapNum, map);
+				gp.iTile[mapNum][iIndex] = ITileSetup(40, 47, ICE_CHUNK, mapNum, map);
+				gp.iTile[mapNum][iIndex] = ITileSetup(76, 40, ICE_CHUNK, mapNum, map);
+				gp.iTile[mapNum][iIndex] = ITileSetup(78, 36, ICE_CHUNK, mapNum, map);
+				gp.iTile[mapNum][iIndex] = ITileSetup(71, 36, ICE_CHUNK, mapNum, map);
+				gp.iTile[mapNum][iIndex] = ITileSetup(64, 39, ICE_CHUNK, mapNum, map);
+				gp.iTile[mapNum][iIndex] = ITileSetup(35, 38, ICE_CHUNK, mapNum, map);
+			}
+		}
 		
 		mapNum = 198;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(45, 32, STATUE_RESET, mapNum, map);
 		SetupPit(mapNum, 58, 70, 199, 58, 78, map);
 		LoadInteractiveTilesFromMap(203, 969, ICE_BLOCK, mapNum, map);
+		if (gp.iTile[mapNum][iIndex] == null) {
+			if (mapNum == 198 && gp.player.p.flag[7][14]) {
+				gp.iTile[mapNum][iIndex] = ITileSetup(75, 32, ICE_CHUNK, mapNum, map);
+			}
+		}
 		
 		mapNum = 199;
 		iIndex = 0;
@@ -3734,6 +3752,12 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(38, 27, SPIKE_2, mapNum, mapNum);
 		gp.iTile[mapNum][iIndex] = ITileSetup(44, 25, SPIKE_2, mapNum, mapNum);
 		gp.iTile[mapNum][iIndex] = ITileSetup(60, 15, SPIKE_2, mapNum, mapNum);
+		if (gp.iTile[mapNum][iIndex] == null) {
+			if (mapNum == 200 && gp.player.p.flag[7][14]) {
+				gp.iTile[mapNum][iIndex] = ITileSetup(35, 10, ICE_CHUNK, mapNum, map);
+				gp.iTile[mapNum][iIndex] = ITileSetup(62, 15, ICE_CHUNK, mapNum, map);
+			}
+		}
 		
 		mapNum = 201;
 		iIndex = 0;
@@ -4195,7 +4219,8 @@ public class AssetSetter {
 		 * Seventh Split
 		 */
 		if (map == 16 && gp.player.p.choiceChoice != null) {
-			if (gp.obj[map][12] == null) gp.obj[map][12] = ObjSetup(77, 41, gp.player.p.choiceChoice, map);
+			objIndex = 12;
+			if (gp.obj[map][objIndex] == null) gp.obj[map][objIndex] = ObjSetup(77, 41, gp.player.p.choiceChoice, map);
 		}
 		
 		if (flag[5][8] && !flag[6][0]) {
@@ -4394,12 +4419,24 @@ public class AssetSetter {
 			gp.npc[191][0] = null;
 			gp.npc[196][0] = null;
 			if (gp.npc[196][2] != null) gp.npc[196][2].worldY = gp.tileSize * 35;
+			for (int i = 2; i <= 7; i++) gp.npc[191][i] = null;
+			for (int i = 0; i <= 5; i++) gp.npc[192][i] = null;
+			for (int i = 0; i <= 9; i++) gp.npc[193][i] = null;
+			for (int i = 11; i <= 13; i++) gp.npc[193][i] = null;
+			for (int i = 0; i <= 12; i++) gp.npc[194][i] = null;
+			for (int i = 0; i <= 4; i++) gp.npc[195][i] = null;
 		}
 		
 		if (flag[7][14]) {
 			gp.npc[197][0] = null;
 			gp.npc[202][0] = null;
 			if (gp.npc[202][2] != null) gp.npc[202][2].worldY = gp.tileSize * 35;
+			for (int i = 5; i <= 13; i++) gp.npc[197][i] = null;
+			for (int i = 1; i <= 4; i++) gp.npc[198][i] = null;
+			for (int i = 0; i <= 12; i++) gp.npc[199][i] = null;
+			for (int i = 2; i <= 6; i++) gp.npc[200][i] = null;
+			for (int i = 0; i <= 9; i++) gp.npc[201][i] = null;
+			gp.npc[201][11] = null;
 		}
 		
 		if (flag[7][16]) {
@@ -5419,6 +5456,9 @@ public class AssetSetter {
 			break;
 		case SPIKE_SWITCH:
 			result = new Spike_Switch(gp);
+			break;
+		case ICE_CHUNK:
+			result = new IceChunk(gp);
 			break;
 		}
 		

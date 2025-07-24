@@ -1012,6 +1012,12 @@ public class Script {
 				}
 			}
 		});
+		
+		scriptMap.put(115.0, (npc) -> { // endure move tutor
+			Task.addTask(Task.TEXT, "I can teach your Pokemon how to be tough too, just like you and I brother!");
+			Task t = Task.addTask(Task.PARTY, "", Task.MOVE);
+			t.setMove(Move.ENDURE);
+		});
 
 		scriptMap.put(44.0, (npc) -> { // gym leader block
 			Task.addTask(Task.DIALOGUE, npc, "Leader Glacius said no battles until we can get things under control in the city.");
@@ -1060,7 +1066,7 @@ public class Script {
 		});
 		
 		scriptMap.put(93.0, (npc) -> { // move reminder
-			Task.addTask(Task.PARTY, "");
+			Task.addTask(Task.PARTY, "Teach # a move?", Task.REMIND);
 		});
 		
 		scriptMap.put(94.0, (npc) -> { // gift e/s
@@ -2445,7 +2451,7 @@ public class Script {
 				Task.addTask(Task.TURN, player, "", Task.DOWN);
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.SPEAK, player, "He... saved us. He used the last of his power to teleport us away.");
-				Task.addTask(Task.SPEAK, player, "Dragowrath tried to take him. Possess him. I think it worked.");
+				Task.addTask(Task.SPEAK, player, "Dragowrath tried to take him. End him. I think it worked.");
 				Task.addTask(Task.SPEAK, player, "But he fought it off long enough to protect us.");
 				Task.addTask(Task.SLEEP, "", 30);
 				Task.addTask(Task.TURN, npc, "", Task.DOWN);
@@ -2454,7 +2460,7 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 60);
 				Task.addTask(Task.TURN, player, "", Task.RIGHT);
 				Task.addTask(Task.SLEEP, "", 20);
-				Task.addTask(Task.SPEAK, player, "We need to do something. We need to save him - and save the world from Dragowrath's grasp.");
+				Task.addTask(Task.SPEAK, player, "We need to do something. We need to avenge him - and save the world from Dragowrath's grasp.");
 				Task.addTask(Task.SLEEP, "", 5);
 				Task.addTask(Task.TURN, npc, "", Task.LEFT);
 				Task.addTask(Task.SLEEP, "", 10);
@@ -2800,7 +2806,7 @@ public class Script {
 		
 		scriptMap.put(160.0, npc -> { // alakazam move reminder
 			Task.addTask(Task.TEXT, "Alakazam seems like it's trying to help your Pokemon remember ancient moves...");
-			Task.addTask(Task.PARTY, "");
+			Task.addTask(Task.PARTY, "Teach # a move?", Task.REMIND);
 		});
 		
 		scriptMap.put(160.1, npc -> { // dragowrath final battle

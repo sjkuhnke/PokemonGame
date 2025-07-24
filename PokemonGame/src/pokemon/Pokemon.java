@@ -8796,6 +8796,27 @@ public class Pokemon implements RoleAssignable, Serializable {
 			return -1;
 		}
 	}
+	
+	/**
+	 * Method for seeing if a Pokemon can learn a tutor move
+	 * 
+	 * (Can and will be expanded for more move tutor moves if applicable, right now it's universal for Endure)
+	 * 
+	 * @param move - move to be tutored
+	 * @return -1 if N/A, 0 if false, 1 if true, and 2 if already learned
+	 */
+	public int canLearnMove(Move move) {
+		if (move == null) return -1;
+		boolean learnable = move == Move.ENDURE;
+        boolean learned = this.knowsMove(move);
+        if (!learnable) {
+        	return 0;
+        } else if (learned) {
+        	return 2;
+        } else {
+        	return 1;
+        }
+	}
 
 	public ArrayList<String> getStatusLabels() {
 		ArrayList<String> result = new ArrayList<>();
