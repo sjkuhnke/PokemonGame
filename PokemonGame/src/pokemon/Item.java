@@ -1836,7 +1836,7 @@ public enum Item {
         // ===== Illusion =====
         fieldsGbc.gridx = 0;
         fieldsGbc.gridy++;
-        fieldsPanel.add(new JLabel("Illusion:"), fieldsGbc);
+        fieldsPanel.add(new JLabel(p.ability == Ability.ANTICIPATION ? "Anticipation:" : "Illusion:"), fieldsGbc);
         JCheckBox illusionBox = new JCheckBox();
         illusionBox.setSelected(p.illusion);
         fieldsGbc.gridx = 1;

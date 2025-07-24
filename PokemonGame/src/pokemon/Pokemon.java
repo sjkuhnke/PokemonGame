@@ -9843,7 +9843,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			damage = 0;
 		} else {
 			if (multiplier > 1) {
-				message += "\nIt's super effective!";
+				message += multiplier > 2 ? "\nIt's extremely effective!" : "\nIt's super effective!";
 				if (mode == 0) field.superEffective++;
 				if (this.ability == Ability.SOLID_ROCK || this.ability == Ability.FILTER) damage /= 2;
 				if (this.getItem() != null && this.checkTypeResistBerry(Move.FUTURE_SIGHT.mtype)) {
@@ -9855,7 +9855,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			if (multiplier < 1) {
-				message += "\nIt's not very effective...";
+				message += multiplier < 0.5 ? "\nIt's mostly ineffective..." : "\nIt's not very effective...";
 				if (ability == Ability.TINTED_LENS) damage *= 2;
 			}
 			
