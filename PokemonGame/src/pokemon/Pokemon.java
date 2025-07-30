@@ -601,7 +601,8 @@ public class Pokemon implements RoleAssignable, Serializable {
         		return Move.GROWL;
         	}
         	// 5% * toxic counter - 1 chance to swap
-        	if (this.status == Status.TOXIC) {
+        	if (this.status == Status.TOXIC && this.ability != Ability.MAGIC_GUARD &&
+        			this.ability != Ability.SCALY_SKIN && this.ability != Ability.POISON_HEAL) {
         		double chance = (this.toxic - 1) * 5;
         		if (checkSecondary((int) chance)) {
 	        		String rsn = "[Toxiced : " + String.format("%.1f", chance) + "%]";
@@ -837,8 +838,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEAN_LOOK) && foe.hasStatus(Status.TRAPPED)) bestMoves.removeIf(Move.MEAN_LOOK::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.FOCUS_ENERGY) && this.getStatusNum(Status.CRIT_CHANCE) > 2) bestMoves.removeIf(Move.FOCUS_ENERGY::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENCORE) && foe.hasStatus(Status.ENCORED)) bestMoves.removeIf(Move.ENCORE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAUNT) && foe.hasStatus(Status.TAUNTED)) bestMoves.removeIf(Move.ENCORE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TORMENT) && foe.hasStatus(Status.TORMENTED)) bestMoves.removeIf(Move.ENCORE::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAUNT) && foe.hasStatus(Status.TAUNTED)) bestMoves.removeIf(Move.TAUNT::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.TORMENT) && foe.hasStatus(Status.TORMENTED)) bestMoves.removeIf(Move.TORMENT::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.DISABLE) && foe.disabledMove == null) bestMoves.removeIf(Move.DISABLE::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.NO_RETREAT) && this.hasStatus(Status.NO_SWITCH)) bestMoves.removeIf(Move.NO_RETREAT::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEMENTO) && ((this.currentHP * 1.0 / this.getStat(0))) > 0.25) bestMoves.removeIf(Move.MEMENTO::equals);
@@ -6141,7 +6142,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (field.contains(foe.getFieldEffects(), Effect.FUTURE_SIGHT)) {
 					return -1;
 				} else {
-					return new Random().nextInt(4) != 1 ? 0 : damage;
+					return new Random().nextInt(4) == 1 ? 0 : damage;
 				}
 			}
 			attackStat = this.getStat(3);
@@ -7734,7 +7735,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			} else if (berry == Item.LANSAT_BERRY) {
 				Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
 				Task.addTask(Task.TEXT, this.nickname + "'s crit chance was heightened!");
-				this.incrementStatus(Status.CRIT_CHANCE, 1);
+				this.incrementStatus(Status.CRIT_CHANCE, 2);
 				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.JABOCA_BERRY || berry == Item.ROWAP_BERRY) {
 				foe.damage(foe.getHPAmount(1.0/8), this, this.nickname + " ate its " + berry.toString() + " to damage " + foe.nickname + "!");

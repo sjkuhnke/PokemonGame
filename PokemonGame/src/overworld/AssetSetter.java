@@ -1196,6 +1196,13 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(54, 50, Item.DESTINY_KNOT, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 70, Item.MIRROR_HERB, mapNum);
 		
+		mapNum = 150;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 74, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 74, Item.BIG_NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(51, 72, Item.RELIC_GOLD, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(46, 67, Item.STAR_PIECE, mapNum);
+		
 		mapNum = 152;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(34, 12, Item.FULL_RESTORE, mapNum);
@@ -1515,7 +1522,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(37, 50, Item.BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(42, 56, Item.STAR_PIECE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(49, 60, Item.RELIC_GOLD, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(64, 45, Item.WEAKNESS_POLICY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 45, Item.WEAKNESS_POLICY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(71, 46, Item.GRASS_CRYSTAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(76, 28, Item.ICE_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(44, 63, Item.FOCUS_SASH, mapNum);
@@ -2415,6 +2422,8 @@ public class AssetSetter {
 		mapNum = 140;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(HIKER_UP, 37, 64, "Get ready! My Pokemon are as tough as the volcano beneath your feet!", "Even the strongest mountains can crumble, I guess...", 395);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 41, 56, "You'll need more than a little luck to break through my rock-solid team!", "You're one tough trainer. I'll have to step up my game!", 507);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 54, 52, "You've got guts challenging me. Let's see if you've got the skill to back it up!", "You win this one, but don't think I'll be so easy to beat again!", 508);
 		
 		mapNum = 144;
 		index = 0;
@@ -2510,7 +2519,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_LEFT, 57, 19, "The spirits are all screaming. But it's not pain - it's warning.", "They've gone quiet now. Like they're watching you instead.", 354);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_UP, 59, 27, "The tides are all wrong. Moon's not even moving right anymore.", "You move like the current itself - steady and unyielding.", 355);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_UP, 56, 40, "Truth hides in the shadows. You only see what you're strong enough to face.", "You saw through me. Through all this. That's rare... and dangerous.", 356);
-		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_RIGHT, 48, 46, "My Pokemon feel the pulses. Whatever's beneath us isn't sleeping anymore.", "You've got grounding. That's rarer than strength these days.", 357);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_DOWN, 48, 46, "My Pokemon feel the pulses. Whatever's beneath us isn't sleeping anymore.", "You've got grounding. That's rarer than strength these days.", 357);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_UP, 44, 54, "I've heard the roars in the sky. You think it's the end? Nah... just a reckoning.", "That was no normal battle. I felt it. Like something ancient watching from above.", 358);
 		
 		// Nurses
@@ -3844,8 +3853,8 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 36, UP, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 36, RIGHT, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 36, LEFT, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 40, RIGHT, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 40, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 39, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 39, LEFT, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(69, 37, RIGHT, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 37, LEFT, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(69, 41, RIGHT, 2, mapNum, map);

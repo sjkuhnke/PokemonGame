@@ -669,7 +669,7 @@ public class Main {
 			writer.write("\n");
 			
 			writer.close();
-			//writeTrainerUsageStats(dir);
+			writeTrainerUsageStats(dir);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

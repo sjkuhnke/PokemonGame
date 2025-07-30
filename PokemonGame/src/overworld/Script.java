@@ -599,6 +599,10 @@ public class Script {
 					}
 				} while (p.isDupes(id) && counter < 100);
 				Pokemon result = new Pokemon(id, 20, true, false);
+				if (result.getAbility(2) != Ability.NULL) {
+					result.abilitySlot = 2;
+					result.setAbility();
+				}
 				Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 				Task.addTask(Task.GIFT, "", result);
 			} else if (p.flag[1][2] && !p.flag[1][16]) {
@@ -724,6 +728,10 @@ public class Script {
 				}
 			} while (p.isDupes(id) && counter < 100);
 			Pokemon result = new Pokemon(id, 15, true, false);
+			if (result.getAbility(2) != Ability.NULL) {
+				result.abilitySlot = 2;
+				result.setAbility();
+			}
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		});
@@ -894,6 +902,10 @@ public class Script {
 				}
 			} while (p.isDupes(id) && counter < 50);
 			Pokemon result = new Pokemon(id, 25, true, false);
+			if (result.getAbility(2) != Ability.NULL) {
+				result.abilitySlot = 2;
+				result.setAbility();
+			}
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		});
@@ -924,6 +936,10 @@ public class Script {
 				}
 			}
 			Pokemon result = new Pokemon(id, 30, true, false);
+			if (Math.random() < 0.4 && result.getAbility(2) != Ability.NULL) {
+				result.abilitySlot = 2;
+				result.setAbility();
+			}
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		});
@@ -946,6 +962,10 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "I brought a couple Flamigo as travel buddies from my home region, and I'm entrusting one to help you out with the Ice-types!");
 			Task.addTask(Task.TEXT, "You received Flamigo!");
 			Pokemon p = new Pokemon(246, 35, true, false);
+			if (Math.random() < 0.4) {
+				p.abilitySlot = 2;
+				p.setAbility();
+			}
 			Task.addTask(Task.GIFT, "", p);
 			Task.addTask(Task.DIALOGUE, npc, "...Just probably don't let it get hit by an Ice move. Anyways, toodles, and good luck kid!");
 			Task.addTask(Task.FLASH_IN, "");
@@ -1087,6 +1107,10 @@ public class Script {
 			} while (p.isDupes(ids[index]) && counter < 100);
 			
 			Pokemon result = new Pokemon(ids[index], 30, true, false);
+			if (result.getAbility(2) != Ability.NULL) {
+				result.abilitySlot = 2;
+				result.setAbility();
+			}
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		});
@@ -1219,6 +1243,10 @@ public class Script {
 			} while (p.isDupes(ids[index]) && counter < 100);
 			
 			Egg result = new Egg(ids[index]);
+			if (result.getAbility(2) != Ability.NULL) {
+				result.abilitySlot = 2;
+				result.setAbility();
+			}
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		});
@@ -1401,6 +1429,10 @@ public class Script {
 				Random random = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 				int id = getUnregisteredBasePokemon(random);
 				Egg egg = new Egg(id);
+				if (egg.getAbility(2) != Ability.NULL) {
+					egg.abilitySlot = 2;
+					egg.setAbility();
+				}
 				Task.addTask(Task.GIFT, "", egg);
 				Task.addTask(Task.DIALOGUE, npc, "Let me know if you want to check any strange evolution progress!");
 			} else {

@@ -5466,7 +5466,7 @@ public class UI extends AbstractUI {
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			pageNum++;
-			if (pageNum > letter.length - 1) {
+			if (pageNum > letter[currentLetter].length - 1) {
 				pageNum = 0;
 				gp.gameState = GamePanel.MENU_STATE;
 			}
