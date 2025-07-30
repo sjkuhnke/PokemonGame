@@ -629,7 +629,10 @@ public class GamePanel extends JPanel implements Runnable {
 		x += tileSize / 2;
 		y += tileSize;
 		
-		g2.drawString(String.format("Map: %s (%d)", TileManager.mapNames[currentMap],currentMap), x, y);
+		String mapName = String.format("Map: %s (%d)", TileManager.mapNames[currentMap],currentMap);
+		g2.setFont(g2.getFont().deriveFont(ui.getFontSize(mapName, width)));
+		
+		g2.drawString(mapName, x, y);
 	}
 	
 	public boolean determineLightOverlay() {

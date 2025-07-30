@@ -357,18 +357,18 @@ Before:
 
 ""
 ""
-"You'll need more than a little luck to break through my rock-solid team!"
 ""
 ""
-"You've got guts challenging me. Let's see if you've got the skill to back it up!"
+""
+""
 After:
 
 ""
 ""
-"You're one tough trainer. I'll have to step up my game!"
 ""
 ""
-"You win this one, but don't think I'll be so easy to beat again!"
+""
+""
 
 Burglar (Crook/Dark)
 Before Battle:
