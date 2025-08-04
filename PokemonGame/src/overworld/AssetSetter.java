@@ -907,7 +907,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(78, 66, Item.BOTTLE_CAP, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(78, 56, Item.GRASSY_SEED, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(73, 26, Item.EUPHORIAN_GEM, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(43, 65, Item.BIG_MUSHROOM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 65, Item.BIG_MUSHROOM, mapNum);
 		gp.obj[mapNum][objIndex] = MintSetup(50, 26, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(49, 35, Item.ICE_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(27, 28, Item.LEAF_STONE, mapNum);
