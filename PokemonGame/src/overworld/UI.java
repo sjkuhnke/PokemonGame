@@ -4783,7 +4783,7 @@ public class UI extends AbstractUI {
 		y += gp.tileSize * 0.75;
 		int price1 = randomPrice(random, 10, 1000);
 		String amt = "+$" + price1;
-		g2.drawString(amt, getCenterAlignedTextX(amt, x + buttonWidth / 2), y);
+		g2.drawString(amt, getCenterAlignedTextX(amt, x + buttonWidth / 2 - 8), y);
 		
 		item = Item.BIG_MUSHROOM;
 		x = startX;
