@@ -101,6 +101,7 @@ public enum Move {
 	COSMIC_POWER(0,1000,0,0,2,0,PType.GALACTIC,"Raises user's Def and Sp.Def by 1",false,10),
 	COTTON_GUARD(0,1000,0,0,2,0,PType.GRASS,"Raises user's Defense by 3",false,5),
 	COVET(60,100,-1,0,0,0,PType.NORMAL,"Steals opponents item if user doesn't have one",true,25),
+	COUNTER(0,100,0,-999,0,-5,PType.FIGHTING,"Deals double damage of a physical attack taken",true,20),
 	CROSS_CHOP(100,80,0,1,0,0,PType.FIGHTING,"Boosted Crit rate",true,5),
 	CROSS_POISON(90,100,10,1,0,0,PType.POISON,"% chance to Poison foe, boosted Crit rate",true,10),
 	CRUNCH(80,100,30,0,0,0,PType.DARK,"% chance to lower foe's Defense by 1",true,15),
@@ -284,7 +285,7 @@ public enum Move {
 	KNOCK_OFF(-1,100,-1,0,0,0,PType.DARK,"Damage is 1.5x if foe has an item and removes foe's item",true,15),
 	LAVA_LAIR(0,1000,0,0,2,4,PType.FIRE,"User protects itself, can't be used in succession. Burns foe if they make contact",false,5),
 	LAVA_PLUME(80,100,30,0,1,0,PType.FIRE,"% to Burn foe",false,15),
-	LAVA_SURF(90,100,0,0,1,0,PType.FIRE,"A normal attack",false,10),
+	LAVA_SURF(100,85,100,0,1,0,PType.FIRE,"% to supress foe's ability. Lowers both user and foe's Speed by 1, 30% to Burn foe",false,10),
 	LEAF_BLADE(90,100,0,1,0,0,PType.GRASS,"Boosted Crit rate",true,10),
 	LEAF_STORM(130,90,-1,0,1,0,PType.GRASS,"Lowers user's Sp.Atk by 2",false,5),
 	LEAF_TORNADO(65,90,50,0,1,0,PType.GRASS,"% to lower foe's Accuracy by 1",false,10),
@@ -324,6 +325,7 @@ public enum Move {
 	MEGA_DRAIN(40,100,0,0,1,0,PType.GRASS,"Heals 50% of damage dealt",false,15),
 	MEGAHORN(120,85,0,0,0,0,PType.BUG,"A normal attack",true,10),
 	MEMENTO(0,100,0,0,2,0,PType.DARK,"User faints. Foe's Attack and Sp.Atk are lowered by 2 stages",false,5),
+	METAL_BURST(0,100,0,-999,0,-5,PType.STEEL,"Deals 1.5x damage of the last attack taken",false,10),
 	METAL_CLAW(50,95,10,0,0,0,PType.STEEL,"% chance to raise user's Attack by 1",true,30),
 	METAL_SOUND(0,100,0,0,2,0,PType.STEEL,"Lowers foe's Sp.Def by 2",false,30),
 	METEOR_ASSAULT(120,100,-1,0,0,0,PType.GALACTIC,"Lowers user's Attack and Defense by 1",false,5),
@@ -334,6 +336,7 @@ public enum Move {
 	MIMIC(0,1000,0,0,2,0,PType.NORMAL,"Uses the move last used by the foe, fails if foe hasn't used a move yet",false,10),
 	MIND_READER(0,1000,0,0,2,0,PType.PSYCHIC,"Raises user's Accuracy by 6",false,5),
 	MINIMIZE(0,1000,0,0,2,0,PType.GHOST,"Raises user's Evasion by 2",false,5),
+	MIRROR_COAT(0,100,0,-999,1,-5,PType.PSYCHIC,"Deals double damage of a special attack taken",false,20),
 	MIRROR_MOVE(0,1000,0,0,2,0,PType.FLYING,"Uses the move last used by the foe, fails if foe hasn't used a move yet",false,15),
 	MIRROR_SHOT(65,85,100,0,1,0,PType.STEEL,"% chance to lower foe's Accuracy by 1",false,10),
 	MIST_BALL(70,100,50,0,1,0,PType.PSYCHIC,"% chance to lower foe's Sp.Atk by 1",false,15),
@@ -518,7 +521,7 @@ public enum Move {
 	STRUGGLE_BUG(50,100,100,0,1,0,PType.BUG,"% chance to lower foe's Sp.Atk by 1",false,20),
 	STUN_SPORE(0,75,0,0,2,0,PType.GRASS,"Paralyzes foe",false,25),
 	SUBMISSION(80,90,0,0,0,0,PType.FIGHTING,"User takes 1/4 of damage inflicted as recoil",true,20),
-	SUCKER_PUNCH(70,100,0,0,0,2,PType.DARK,"Inreased priority, fails if foe didn't use an attacking move",true,5),
+	SUCKER_PUNCH(70,100,0,0,0,1,PType.DARK,"Inreased priority, fails if foe didn't use an attacking move",true,5),
 	SUMMIT_STRIKE(70,95,100,0,0,0,PType.FIGHTING,"% to lower foe's Defense by one stage. 30% to flinch foe",true,15),
 	SUNNY_BURST(80,100,100,0,1,0,PType.LIGHT,"% to turn weather to SUNNY",false,5),
 	SUNNY_DAY(0,1000,0,0,2,0,PType.FIRE,"Changes the weather to SUNNY for 5 turns",false,5),
@@ -1001,6 +1004,10 @@ public enum Move {
 		return cat == 0;
 	}
 	
+	public boolean isSpecial() {
+		return cat == 1;
+	}
+	
 	public boolean isSlicing() {
 		ArrayList<Move> result = new ArrayList<>();
 		result.add(AERIAL_ACE);
@@ -1310,15 +1317,6 @@ public enum Move {
 				if (m == Move.RAPID_SPIN && !Pokemon.field.getHazards(me.getFieldEffects()).isEmpty()) {
 					return true;
 				}
-				// Flinch moves
-				if ((m == Move.AIR_SLASH || m == Move.ASTONISH || m == Move.BITE || m == Move.DARK_PULSE
-						|| m == Move.DRAGON_RUSH || m == Move.EXTRASENSORY || m == Move.FIERY_WRATH || m == Move.HEADBUTT
-						|| m == Move.HYPER_FANG || m == Move.ICICLE_CRASH || m == Move.IRON_BLAST || m == Move.IRON_HEAD
-						|| m == Move.NEEDLE_ARM || m == Move.ROCK_SLIDE || m == Move.SKY_ATTACK || m == Move.STOMP
-						|| m == Move.TWISTER || m == Move.WATER_SMACK || m == Move.WATERFALL || m == Move.ZEN_HEADBUTT
-						|| m == Move.ZING_ZAP) && faster) {
-					return new Random().nextInt(100) < sec;
-				}
 				// Self boosting moves (potentially add AI later if they're already at +6 in the stat by sending them through the other stat boosting check block in Pokemon.bestMove())
 				if (m == Move.FLAME_CHARGE || m == Move.POWER$UP_PUNCH || m == Move.SCALE_SHOT || m == Move.SWORD_SPIN || m == Move.TORNADO_SPIN) {
 					return true;
@@ -1368,6 +1366,15 @@ public enum Move {
 				}
 				
 				return false;
+			}
+			// Flinch moves
+			if (m == Move.AIR_SLASH || m == Move.ASTONISH || m == Move.BITE || m == Move.DARK_PULSE
+					|| m == Move.DRAGON_RUSH || m == Move.EXTRASENSORY || m == Move.FIERY_WRATH || m == Move.HEADBUTT
+					|| m == Move.HYPER_FANG || m == Move.ICICLE_CRASH || m == Move.IRON_BLAST || m == Move.IRON_HEAD
+					|| m == Move.NEEDLE_ARM || m == Move.ROCK_SLIDE || m == Move.SKY_ATTACK || m == Move.STOMP
+					|| m == Move.TWISTER || m == Move.WATER_SMACK || m == Move.WATERFALL || m == Move.ZEN_HEADBUTT
+					|| m == Move.ZING_ZAP) {
+				return faster ? new Random().nextInt(100) < sec : false;
 			}
 			return m.secondary > 0 && new Random().nextInt(100) < sec;
 		} else {

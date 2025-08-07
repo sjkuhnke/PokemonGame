@@ -4171,7 +4171,7 @@ public class AssetSetter {
 		// electric tunnel guards
 		if (flag[4][5] && !flag[5][2]) {
 			if (gp.npc[33][0] == null) gp.npc[33][0] = NPCSetup(BLOCK_DOWN, null, 62, 17, "There's some scary aliens wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.");
-			if (gp.npc[36][11] == null) gp.npc[36][11] = NPCSetup(BLOCK_DOWN, null, 62, 17, "There's some scary aliens wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.");
+			if (gp.npc[36][11] == null) gp.npc[36][11] = NPCSetup(BLOCK_DOWN, null, 15, 46, "There's some scary aliens wearing black in there somewhere. I heard one of their leaders went to Ghostly Woods and is planning something evil.");
 		} else {
 			gp.npc[33][0] = null;
 			gp.npc[36][11] = null;
