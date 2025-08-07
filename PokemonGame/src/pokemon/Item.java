@@ -2366,6 +2366,6 @@ public enum Item {
 				|| this == Item.FLAME_ORB || this == Item.TOXIC_ORB
 				|| this == Item.FROST_ORB
 				|| this == Item.LAGGING_TAIL || this == Item.IRON_BALL
-				|| this == Item.STICKY_BARB;
+				|| this == Item.STICKY_BARB || this == Item.BLACK_SLUDGE;
 	}
 }

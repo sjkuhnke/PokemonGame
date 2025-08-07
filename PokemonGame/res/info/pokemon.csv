@@ -63,8 +63,8 @@
 163|Frosmoth     |ICE     |BUG     |ICY_SCALES        |SHIELD_DUST       |TINTED_LENS       |[70, 65, 60, 125, 90, 65]     |92.6  |75 |BUG         |BUG         |
 205|Grislush     |GROUND  |ICE     |STURDY            |TECHNICIAN        |REFRIGERATE       |[80, 74, 87, 25, 96, 33]      |135.6 |135|FIELD       |FIELD       |
 206|Thalarctic   |FIGHTING|ICE     |GUTS              |SLUSH_RUSH        |REFRIGERATE       |[95, 130, 90, 45, 85, 40]     |208.1 |30 |FIELD       |FIELD       |
-207|Ceramber     |ROCK    |FIGHTING|ROCK_HEAD         |SAND_FORCE        |ROUGH_SKIN        |[65, 90, 120, 20, 65, 20]     |95.4  |100|MONSTER     |MINERAL     |
-208|Topazatops   |ROCK    |FIGHTING|ROCK_HEAD         |SAND_FORCE        |ROUGH_SKIN        |[114, 124, 130, 20, 130, 20]  |900.9 |30 |MONSTER     |MINERAL     |
+207|Ceramber     |ROCK    |FIGHTING|FORTIFY           |SAND_FORCE        |ROUGH_SKIN        |[65, 90, 120, 20, 65, 20]     |95.4  |100|MONSTER     |MINERAL     |
+208|Topazatops   |ROCK    |FIGHTING|FORTIFY           |SAND_FORCE        |ROUGH_SKIN        |[114, 124, 130, 20, 130, 20]  |900.9 |30 |MONSTER     |MINERAL     |
 186|Spheal       |ICE     |WATER   |UNAWARE           |THICK_FAT         |ICE_BODY          |[70, 40, 50, 55, 50, 25]      |87.1  |255|WATER_1     |FIELD       |
 187|Sealeo       |ICE     |WATER   |UNAWARE           |THICK_FAT         |ICE_BODY          |[90, 60, 70, 75, 70, 45]      |193.1 |120|WATER_1     |FIELD       |
 188|Walrein      |ICE     |WATER   |UNAWARE           |THICK_FAT         |ICE_BODY          |[110, 80, 90, 95, 90, 65]     |332.0 |45 |WATER_1     |FIELD       |
@@ -270,7 +270,7 @@
 -1 |Metapod      |BUG     |null    |SHED_SKIN         |SHIELD_DUST       |SWARM             |[50, 20, 55, 25, 25, 30]      |21.8  |120|BUG         |BUG         |
 -2 |Butterfree   |BUG     |FLYING  |COMPOUND_EYES     |SHIELD_DUST       |TINTED_LENS       |[60, 45, 50, 95, 80, 70]      |70.5  |45 |BUG         |BUG         |
 24 |Metapod-X    |BUG     |MAGIC   |WONDER_SKIN       |MAGICAL           |MAGIC_BOUNCE      |[50, 20, 50, 30, 30, 25]      |26.2  |120|BUG         |BUG         |
-25 |Butterfree-X |BUG     |MAGIC   |MOSAIC_WINGS      |MAGICAL           |SERENE_GRACE      |[60, 20, 55, 105, 90, 75]     |101.1 |40 |BUG         |BUG         |
+25 |Butterfree-X |BUG     |MAGIC   |MOSAIC_WINGS      |ENCHANTED_DUST    |SERENE_GRACE      |[60, 20, 55, 105, 90, 75]     |101.1 |40 |BUG         |BUG         |
 -8 |Bronzor      |STEEL   |PSYCHIC |LEVITATE          |UNWAVERING        |BATTLE_ARMOR      |[57, 24, 86, 24, 86, 23]      |133.4 |255|MINERAL     |MINERAL     |
 -9 |Bronzong     |STEEL   |PSYCHIC |LEVITATE          |UNWAVERING        |BATTLE_ARMOR      |[67, 89, 116, 79, 116, 33]    |412.3 |90 |MINERAL     |MINERAL     |
 113|Bronzor-X    |MAGIC   |null    |REFORGE           |WONDER_SKIN       |BATTLE_ARMOR      |[57, 14, 76, 44, 86, 23]      |104.7 |135|MINERAL     |MINERAL     |
