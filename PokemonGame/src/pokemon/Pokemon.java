@@ -677,7 +677,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         		bestMoves.add(move);
         		bestMoves.add(move);
         		bestMoves.add(move);
-        		if (move.hasPriority(this) || move == Move.FELL_STINGER) {
+        		if (move.hasPriority(this) || move == Move.FELL_STINGER || move == Move.COMET_PUNCH) {
         			bestMoves.add(move);
         			if (this.script) return move;
         		}
@@ -732,6 +732,11 @@ public class Pokemon implements RoleAssignable, Serializable {
         		}
         		if (move == Move.METAL_BURST && foeMaxDamage >= this.getStat(0) * 1.0 / 5) {
         			bestMoves.add(move);
+        			bestMoves.add(move);
+        		}
+        	}
+        	if (moveKills) {
+        		if (move == Move.DESTINY_BOND) {
         			bestMoves.add(move);
         		}
         	}
@@ -2041,6 +2046,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			fail();
 			this.impressive = false;
 			this.moveMultiplier = 1;
+			this.metronome = -1;
 			return;
 		}
 		if (move == Move.SLEEP_TALK || (move == Move.SNORE && status != Status.ASLEEP)) {
@@ -2055,6 +2061,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			useMove(move, foe);
 			fail();
 			this.moveMultiplier = 1;
+			this.metronome = -1;
 			return;
 		}
 		
@@ -2888,6 +2895,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (foe.currentHP <= 0) { // Check for kill
 				foe.faint(true, this);
 				if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
+				if (move == Move.COMET_PUNCH) stat(this, 4, 2, foe);
 				if (foe.hasStatus(Status.BONDED)) {
 					this.damage(this.currentHP, foe, move, foe.nickname + " took its attacker down with it!", -1);
 					if (this.currentHP <= 0) {
@@ -3582,7 +3590,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.FIRE_BLAST) {
 			foe.burn(false, this);
 		} else if (move == Move.FATAL_BIND) {
-			this.perishCount = (this.perishCount == 0) ? 4 : this.perishCount;
+			Task.addTask(Task.TEXT, foe.nickname + " will perish in 3 turns!");
 			foe.perishCount = (foe.perishCount == 0) ? 4 : foe.perishCount;
 		} else if (move == Move.FIRE_FANG) {
 			int randomNum = ((int) Math.random() * 3);
@@ -3598,21 +3606,24 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.burn(false, this);
 		} else if (move == Move.FIRE_SPIN) {
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
-				if (!foe.isType(PType.FIRE)) {
-					foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8);
-					foe.spunCount = (((int) (Math.random() * 2)) + 4);
-					if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
-					Task.addTask(Task.TEXT, foe.nickname + " was trapped in a fiery vortex!");
-				}
+				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8);
+				foe.spunCount = (((int) (Math.random() * 2)) + 4);
+				if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
+				Task.addTask(Task.TEXT, foe.nickname + " was trapped in a fiery vortex!");
+			}
+		} else if (move == Move.MAGMA_STORM) {
+			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
+				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8);
+				foe.spunCount = (((int) (Math.random() * 2)) + 4);
+				if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
+				Task.addTask(Task.TEXT, foe.nickname + " was trapped in a fiery vortex!");
 			}
 		} else if (move == Move.WHIRLPOOL) {
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
-				if (!foe.isType(PType.WATER)) {
-					foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8);
-					foe.spunCount = (((int) (Math.random() * 2)) + 4);
-					if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
-					Task.addTask(Task.TEXT, foe.nickname + " was trapped in a whirlpool vortex!");
-				}
+				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8);
+				foe.spunCount = (((int) (Math.random() * 2)) + 4);
+				if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
+				Task.addTask(Task.TEXT, foe.nickname + " was trapped in a whirlpool vortex!");
 			}
 		} else if (move == Move.WRAP) {
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
@@ -3641,6 +3652,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.freeze(false, this);
 		} else if (move == Move.FREEZING_GLARE) {
 			foe.freeze(false, this);
+		} else if (move == Move.GALAXY_BLAST) {
+			boolean stat = new Random().nextBoolean();
+			stat(foe, stat ? 2 : 3, -1, this);
 		} else if (move == Move.GLACIATE) {
 			stat(foe, 4, -1, this);
 		} else if (move == Move.SOLSTICE_BLADE) {
@@ -3939,6 +3953,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 				foe.encoreCount = 2;
 				Task.addTask(Task.TEXT, foe.nickname + " was encored!");
 			}
+		} else if (move == Move.STAR_STORM) {
+			Task.addTask(Task.TEXT, this.nickname + "'s crit chance was heightened!");
+			this.incrementStatus(Status.CRIT_CHANCE, 1);
 		} else if (move == Move.SUMMIT_STRIKE) {
 		    stat(foe, 1, -1, this);
 		    double random = Math.random();
@@ -4057,7 +4074,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (move == Move.VINE_CROSS) {
 			stat(foe, 4, -1, this);
 		} else if (move == Move.VITRIOLIC_HEX) {
-			foe.incrementStatus(Status.CRIT_CHANCE, -1);
+			if (!foe.isFainted()) {
+				Task.addTask(Task.TEXT, foe.nickname + "'s crit chance was lowered!");
+				foe.incrementStatus(Status.CRIT_CHANCE, -1);
+			}
 		} else if (move == Move.WATER_PULSE) {
 			foe.confuse(false, this);
 		} else if (move == Move.WATER_CLAP) {
@@ -8314,6 +8334,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    clonedPokemon.tailCrit = this.tailCrit;
 	    clonedPokemon.spaceEat = this.spaceEat;
 	    clonedPokemon.happinessCap = this.happinessCap;
+	    clonedPokemon.fortify = this.fortify;
+	    clonedPokemon.damageTaken = this.damageTaken == null ? null : this.damageTaken.clone();
 	    
 	    // Clone boolean fields
 	    clonedPokemon.shiny = this.shiny;
