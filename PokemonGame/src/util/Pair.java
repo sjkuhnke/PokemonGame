@@ -46,4 +46,9 @@ public class Pair<T, U> {
 		result = 31 * result + second.hashCode();
 		return result;
 	}
+	
+	@Override
+	public Pair<T, U> clone() {
+		return new Pair<>(this.getFirst(), this.getSecond());
+	}
 }
