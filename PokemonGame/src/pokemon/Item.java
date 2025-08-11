@@ -468,6 +468,7 @@ public enum Item {
 	private BufferedImage image;
 	private BufferedImage image2;
 	private BufferedImage backImage;
+	private BufferedImage outlineImage;
 	private Image greyImage;
 	private Image greyImage2;
 	
@@ -519,6 +520,11 @@ public enum Item {
 		image = setupImage(path + ".png");
 		image2 = scaleImage(image, 2);
 		if (isBall()) backImage = setupBackImage();
+		if (pocket == HELD_ITEM || pocket == BERRY) {
+			outlineImage = createOutlineImage(image,
+					Color.BLACK, 2,
+					Color.WHITE, 1);
+		}
 		
 		if (id >= 4 && id <= 8) {
 			switch(id) {
@@ -618,6 +624,75 @@ public enum Item {
         
         return result;
 	}
+	
+	public BufferedImage createOutlineImage(BufferedImage src, Object... colorThicknessPairs) {
+	    if (colorThicknessPairs.length % 2 != 0) {
+	        throw new IllegalArgumentException("Arguments must be in (Color, thickness) pairs.");
+	    }
+
+	    int srcW = src.getWidth();
+	    int srcH = src.getHeight();
+
+	    // Find largest thickness to size canvas
+	    int maxThickness = 0;
+	    for (int i = 1; i < colorThicknessPairs.length; i += 2) {
+	        int thickness = (int) colorThicknessPairs[i];
+	        maxThickness = Math.max(maxThickness, thickness);
+	    }
+
+	    int w = srcW + maxThickness * 2;
+	    int h = srcH + maxThickness * 2;
+	    BufferedImage outlined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+
+	    // Draw original in the center
+	    Graphics2D g2 = outlined.createGraphics();
+	    g2.drawImage(src, maxThickness, maxThickness, null);
+	    g2.dispose();
+
+	    // Process each outline layer
+	    for (int pairIndex = 0; pairIndex < colorThicknessPairs.length; pairIndex += 2) {
+	        Color borderColor = (Color) colorThicknessPairs[pairIndex];
+	        int thickness = (int) colorThicknessPairs[pairIndex + 1];
+	        int borderRGB = borderColor.getRGB();
+
+	        boolean skipFilledPixels = (pairIndex == 0); 
+	        // Only skip filled pixels on first layer (outermost)
+
+	        for (int y = 0; y < h; y++) {
+	            for (int x = 0; x < w; x++) {
+	                if (skipFilledPixels && (outlined.getRGB(x, y) >>> 24) != 0) {
+	                    // Skip pixels already opaque (sprite or previously drawn outline)
+	                    continue;
+	                }
+
+	                // Check neighbors within thickness radius for opaque src pixels
+	                boolean isBorder = false;
+	                for (int oy = -thickness; oy <= thickness && !isBorder; oy++) {
+	                    for (int ox = -thickness; ox <= thickness && !isBorder; ox++) {
+	                        int nx = x + ox;
+	                        int ny = y + oy;
+	                        if (nx >= 0 && nx < w && ny >= 0 && ny < h) {
+	                            int sx = nx - maxThickness;
+	                            int sy = ny - maxThickness;
+	                            if (sx >= 0 && sx < srcW && sy >= 0 && sy < srcH) {
+	                                if ((src.getRGB(sx, sy) >>> 24) != 0) {
+	                                    isBorder = true;
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+
+	                if (isBorder) {
+	                    outlined.setRGB(x, y, (borderRGB & 0x00FFFFFF) | (0xFF << 24));
+	                }
+	            }
+	        }
+	    }
+
+	    return outlined;
+	}
+
 
 	public int getCost() { return cost; }
 	
@@ -643,6 +718,7 @@ public enum Item {
 	public BufferedImage getImage() { return image; }
 	public BufferedImage getImage2() { return image2; }
 	public BufferedImage getBackImage() { return backImage; }
+	public BufferedImage getOutlineImage() { return outlineImage; }
 	
 	public Image getGreyImage() {
 		if (greyImage == null) greyImage = setupGreyImage(image);

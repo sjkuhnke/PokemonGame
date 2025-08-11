@@ -2135,6 +2135,22 @@ public class AssetSetter {
 		
 		mapNum = 88;
 		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 29, 45, "You thought you could save this old man? Too bad, you're too late!\n"
+				+ "Team Eclipse controls this place now. Get lost or get wrecked!",
+				"No way... How did you-\n"
+				+ "This isn't over... you'll never stop what's coming!", 183);
+		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 33, 45, "What do you think you're doing? Get out of here!\n"
+				+ "Gramps over there is the key to our plans, and I'm not letting you mess it up!",
+				"Impossible... How could this happen?\n"
+				+ "Go ahead, save the old man. It won't matter in the end!", 184);
+		gp.npc[mapNum][index] = NPCSetup(GRANDFATHER, "Grandpa", 31, 41, "Finn... is that you?", mapNum, 131, "I heard about what happened - thank you for stopping that alien Pokemon! It's good to see you safe.");
+		
+		mapNum = 90;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 48, 10, "I've climbed mountains tougher than you. Let's see if you can handle the pressure!", "Looks like even mountains can crumble sometimes...", 174);
+		
+		mapNum = 91;
+		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_RIGHT, 71, 63, "Prepare yourself... My mind and Pokemon are in perfect harmony!", "You've altered the future, but I'll be back to correct it!", 186);
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_UP, 85, 43, "You cannot resist the power of the mind. Let's see if you can survive!", "Hmph, perhaps my vision was clouded by arrogance.", 187, LEFT + DOWN);
 		gp.npc[mapNum][index] = NPCSetup(PSYCHIC_DOWN, 85, 63, "The stars have aligned for this battle... But will they favor you?", "Our minds were in sync, but you still won... impressive.", 188, LEFT + DOWN);
@@ -2153,22 +2169,6 @@ public class AssetSetter {
 				+ "It seems Millie's faith in you was well-placed. You've faced fear, doubt, and confusion - and emerged victorious.\n"
 				+ "Take the badge as a token of your mental fortitude.\n"
 				+ "Continue your journey with a clear mind. There are many more battles ahead, but you'll face them with strength and wisdom.", 194);
-		
-		mapNum = 90;
-		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(HIKER_RIGHT, 48, 10, "I've climbed mountains tougher than you. Let's see if you can handle the pressure!", "Looks like even mountains can crumble sometimes...", 174);
-		
-		mapNum = 91;
-		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(TN_RIGHT, 29, 45, "You thought you could save this old man? Too bad, you're too late!\n"
-				+ "Team Eclipse controls this place now. Get lost or get wrecked!",
-				"No way... How did you-\n"
-				+ "This isn't over... you'll never stop what's coming!", 183);
-		gp.npc[mapNum][index] = NPCSetup(TN_LEFT, 33, 45, "What do you think you're doing? Get out of here!\n"
-				+ "Gramps over there is the key to our plans, and I'm not letting you mess it up!",
-				"Impossible... How could this happen?\n"
-				+ "Go ahead, save the old man. It won't matter in the end!", 184);
-		gp.npc[mapNum][index] = NPCSetup(GRANDFATHER, "Grandpa", 31, 41, "Finn... is that you?", mapNum, 131, "I heard about what happened - thank you for stopping that alien Pokemon! It's good to see you safe.");
 		
 		mapNum = 92;
 		index = 0;

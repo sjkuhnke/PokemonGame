@@ -145,10 +145,10 @@ public class TileManager {
 		loadMap("/maps/map13.txt", 85, true);
 		loadMap("/maps/pc.txt", 86, true);
 		loadMap("/maps/mart.txt", 87, true);
-		loadMap("/maps/gym05.txt", 88, true);
+		loadMap("/maps/house01.txt", 88, true);
 		loadMap("/maps/house02.txt", 89, true); // pawn shop
 		loadMap("/maps/shadow0.txt", 90, true);
-		loadMap("/maps/house01.txt", 91, true);
+		loadMap("/maps/gym05.txt", 91, true);
 		loadMap("/maps/pphouse.txt", 92, true);
 		loadMap("/maps/house01.txt", 93, true); // move deletor
 		loadMap("/maps/house01.txt", 94, true); // gift e/s pokemon

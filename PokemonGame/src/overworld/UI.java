@@ -2768,6 +2768,7 @@ public class UI extends AbstractUI {
 					drawItemSelectBackground(itemX - 6, itemY - 6);
 				}
 				if (cBox[i].item != null) {
+					g2.drawImage(cBox[i].item.getOutlineImage(), itemX - 2, itemY - 2, null);
 					g2.drawImage(cBox[i].item.getImage(), itemX, itemY, null);
 				}
 				if (cBox[i] == itemSwapP) {
@@ -5662,7 +5663,7 @@ public class UI extends AbstractUI {
 		if (!gp.keyH.shiftPressed || showBoxSummary || (showBoxParty && !party) || release) return;
 		int x = 0;
 		int y = gp.tileSize * 9;
-		int width = (int) (party ? gp.tileSize * 3.5 : gp.tileSize * 10.5);
+		int width = (int) (party ? gp.tileSize * 3.5 : gp.tileSize * 9.5);
 		int height = (int) (gp.tileSize * 1.5);
 		
 		drawSubWindow(x, y, width, height);
