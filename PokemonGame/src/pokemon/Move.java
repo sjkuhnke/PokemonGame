@@ -438,7 +438,7 @@ public enum Move {
 	SACRED_FIRE(100,95,50,0,0,0,PType.FIRE,"% chance to Burn foe",false,5),
 	SACRED_SWORD(90,100,0,0,0,0,PType.FIGHTING,"Ignores Defense and Evasion changes of foe",true,10),
 	SAFEGUARD(0,1000,0,0,2,0,PType.NORMAL,"Protects user's team from Status effects for 8 turns",false,20),
-	SAMBAL_SEAR(80,100,30,0,1,0,PType.GRASS,"% chance to Burn foe",false,15),
+	SAMBAL_SEAR(80,100,30,0,1,0,PType.GRASS,"% chance to Burn foe, 1.5x damage in SUN",false,10),
 	SAND_ATTACK(0,100,0,0,2,0,PType.GROUND,"Lowers foe's Accuracy by 1",false,20),
 	SANDSTORM(0,1000,0,0,2,0,PType.ROCK,"Changes the weather to SANDSTORM for 5 turns",false,10),
 	SCALD(80,100,30,0,1,0,PType.WATER,"% chance to Burn foe",false,15),
@@ -771,7 +771,7 @@ public enum Move {
 			}
 			if (Pokemon.field != null) {
 				if (Pokemon.field.equals(Pokemon.field.weather, Effect.SUN, foe)) {
-					if (this == Move.SOLSTICE_BLADE) bp *= 1.5;
+					if (this == Move.SOLSTICE_BLADE || this == Move.SAMBAL_SEAR) bp *= 1.5;
 				}
 				if (Pokemon.field.equals(Pokemon.field.weather, Effect.RAIN, foe) || Pokemon.field.equals(Pokemon.field.weather, Effect.SNOW, foe)
 						|| Pokemon.field.equals(Pokemon.field.weather, Effect.SANDSTORM, foe)) {

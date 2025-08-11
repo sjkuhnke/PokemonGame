@@ -2511,6 +2511,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (moveType == PType.WATER) bp *= 0.5;
 				if (moveType == PType.FIRE) bp *= 1.5;
 				if (move == Move.SOLSTICE_BLADE) bp *= 1.5;
+				if (move == Move.SAMBAL_SEAR) bp *= 1.5;
 			}
 			
 			if (field.equals(field.weather, Effect.RAIN, foe)) {
@@ -6031,6 +6032,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (moveType == PType.WATER) bp *= 0.5;
 			if (moveType == PType.FIRE) bp *= 1.5;
 			if (move == Move.SOLSTICE_BLADE) bp *= 1.5;
+			if (move == Move.SAMBAL_SEAR) bp *= 1.5;
 		}
 		
 		if (field.equals(field.weather, Effect.RAIN, foe)) {
@@ -9595,7 +9597,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 	
 	private int determineHappiness(Player p) {
-		return Math.min(this.happiness + (50 * p.badges), 255);
+		return Math.min(this.happiness + (25 * p.badges), 255);
 	}
 	
 	public static Pokemon generateCompetitivePokemon() {

@@ -1054,7 +1054,7 @@ public class Script {
 			}
 		});
 		
-		scriptMap.put(91.0, (npc) -> { // grandpa frenco
+		scriptMap.put(88.0, (npc) -> { // grandpa frenco
 			if (!p.flag[4][2]) {
 				p.flag[4][2] = true;
 				Task.addTask(Task.DIALOGUE, npc, "Oh... thank Arceus you're here. I was afraid I wouldn't make it through this.");
@@ -1068,7 +1068,9 @@ public class Script {
 				Task.addTask(Task.FLASH_IN, "");
 				Task.addTask(Task.UPDATE, "");
 				Task.addTask(Task.FLASH_OUT, "");
+				Task.addTask(Task.SLEEP, "", 45);
 				Task.addTask(Task.TURN, player, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.DIALOGUE, npc, "Thank you Finn, I don't know what I would've done without you.");
 				Task.addTask(Task.DIALOGUE, npc, "They said something about summoning an Ultra Paradox Pokemon... I think it's some dangerous creature they're after.");
 				Task.addTask(Task.DIALOGUE, npc, "I heard they were headed for Peaceful Park next, something about unleashing that alien there, probably.");

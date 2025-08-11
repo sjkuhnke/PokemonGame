@@ -441,60 +441,60 @@ public class EventHandler {
 			if (hit(87,31,46)) teleport(85, 53, 76,false);
 			
 			// Frenco City Gym
-			if (hit(85,58,64)) teleport(88, 63, 67,false);
-			if (hit(88,63,68)) teleport(85, 58, 65,false);
+			if (hit(85,58,64)) teleport(91, 63, 67,false);
+			if (hit(91,63,68)) teleport(85, 58, 65,false);
 			
-			if (hit(88,63,64)) teleport(88, 75, 63,true); // A
-			if (hit(88,75,63)) teleport(88, 63, 64,true); // A
-			if (hit(88,71,67)) teleport(88, 81, 53,true); // B
-			if (hit(88,81,53)) teleport(88, 71, 67,true); // B
-			if (hit(88,75,67)) teleport(88, 51, 63,true); // C
-			if (hit(88,51,63)) teleport(88, 75, 67,true); // C
-			if (hit(88,75,57)) teleport(88, 51, 47,true); // D
-			if (hit(88,51,47)) teleport(88, 75, 57,true); // D
-			if (hit(88,71,57)) teleport(88, 81, 63,true); // E
-			if (hit(88,81,63)) teleport(88, 71, 57,true); // E
-			if (hit(88,81,67)) teleport(88, 55, 43,true); // F
-			if (hit(88,55,43)) teleport(88, 81, 67,true); // F
-			if (hit(88,85,67)) teleport(88, 41, 67,true); // G
-			if (hit(88,41,67)) teleport(88, 85, 67,true); // G
-			if (hit(88,71,53)) teleport(88, 55, 53,true); // H
-			if (hit(88,55,53)) teleport(88, 71, 53,true); // H
-			if (hit(88,75,53)) teleport(88, 85, 53,true); // I
-			if (hit(88,85,53)) teleport(88, 75, 53,true); // I
-			if (hit(88,85,57)) teleport(88, 51, 43,true); // J
-			if (hit(88,51,43)) teleport(88, 85, 57,true); // J
-			if (hit(88,41,53)) teleport(88, 55, 57,true); // K
-			if (hit(88,55,57)) teleport(88, 41, 53,true); // K
-			if (hit(88,75,43)) teleport(88, 41, 63,true); // L
-			if (hit(88,41,63)) teleport(88, 75, 43,true); // L
-			if (hit(88,71,47)) teleport(88, 81, 43,true); // M
-			if (hit(88,81,43)) teleport(88, 71, 47,true); // M
-			if (hit(88,75,47)) teleport(88, 45, 53,true); // N
-			if (hit(88,45,53)) teleport(88, 75, 47,true); // N
-			if (hit(88,45,57)) teleport(88, 81, 57,true); // O
-			if (hit(88,81,57)) teleport(88, 45, 57,true); // O
-			if (hit(88,81,47)) teleport(88, 41, 57,true); // P
-			if (hit(88,41,57)) teleport(88, 81, 47,true); // P
-			if (hit(88,41,47)) teleport(88, 85, 47,true); // Q
-			if (hit(88,85,47)) teleport(88, 41, 47,true); // Q
-			if (hit(88,41,43)) teleport(88, 63, 39,true); // R
-			if (hit(88,63,39)) teleport(88, 41, 43,true); // R
-			if (hit(88,45,43)) teleport(88, 55, 67,true); // S
-			if (hit(88,55,67)) teleport(88, 45, 43,true); // S
-			if (hit(88,45,67)) teleport(88, 51, 57,true); // T
-			if (hit(88,51,57)) teleport(88, 45, 67,true); // T
-			if (hit(88,51,67)) teleport(88, 45, 63,true); // U
-			if (hit(88,45,63)) teleport(88, 51, 67,true); // U
-			if (hit(88,67,37)) teleport(88, 61, 65,true); // V
+			if (hit(91,63,64)) teleport(91, 75, 63,true); // A
+			if (hit(91,75,63)) teleport(91, 63, 64,true); // A
+			if (hit(91,71,67)) teleport(91, 81, 53,true); // B
+			if (hit(91,81,53)) teleport(91, 71, 67,true); // B
+			if (hit(91,75,67)) teleport(91, 51, 63,true); // C
+			if (hit(91,51,63)) teleport(91, 75, 67,true); // C
+			if (hit(91,75,57)) teleport(91, 51, 47,true); // D
+			if (hit(91,51,47)) teleport(91, 75, 57,true); // D
+			if (hit(91,71,57)) teleport(91, 81, 63,true); // E
+			if (hit(91,81,63)) teleport(91, 71, 57,true); // E
+			if (hit(91,81,67)) teleport(91, 55, 43,true); // F
+			if (hit(91,55,43)) teleport(91, 81, 67,true); // F
+			if (hit(91,85,67)) teleport(91, 41, 67,true); // G
+			if (hit(91,41,67)) teleport(91, 85, 67,true); // G
+			if (hit(91,71,53)) teleport(91, 55, 53,true); // H
+			if (hit(91,55,53)) teleport(91, 71, 53,true); // H
+			if (hit(91,75,53)) teleport(91, 85, 53,true); // I
+			if (hit(91,85,53)) teleport(91, 75, 53,true); // I
+			if (hit(91,85,57)) teleport(91, 51, 43,true); // J
+			if (hit(91,51,43)) teleport(91, 85, 57,true); // J
+			if (hit(91,41,53)) teleport(91, 55, 57,true); // K
+			if (hit(91,55,57)) teleport(91, 41, 53,true); // K
+			if (hit(91,75,43)) teleport(91, 41, 63,true); // L
+			if (hit(91,41,63)) teleport(91, 75, 43,true); // L
+			if (hit(91,71,47)) teleport(91, 81, 43,true); // M
+			if (hit(91,81,43)) teleport(91, 71, 47,true); // M
+			if (hit(91,75,47)) teleport(91, 45, 53,true); // N
+			if (hit(91,45,53)) teleport(91, 75, 47,true); // N
+			if (hit(91,45,57)) teleport(91, 81, 57,true); // O
+			if (hit(91,81,57)) teleport(91, 45, 57,true); // O
+			if (hit(91,81,47)) teleport(91, 41, 57,true); // P
+			if (hit(91,41,57)) teleport(91, 81, 47,true); // P
+			if (hit(91,41,47)) teleport(91, 85, 47,true); // Q
+			if (hit(91,85,47)) teleport(91, 41, 47,true); // Q
+			if (hit(91,41,43)) teleport(91, 63, 39,true); // R
+			if (hit(91,63,39)) teleport(91, 41, 43,true); // R
+			if (hit(91,45,43)) teleport(91, 55, 67,true); // S
+			if (hit(91,55,67)) teleport(91, 45, 43,true); // S
+			if (hit(91,45,67)) teleport(91, 51, 57,true); // T
+			if (hit(91,51,57)) teleport(91, 45, 67,true); // T
+			if (hit(91,51,67)) teleport(91, 45, 63,true); // U
+			if (hit(91,45,63)) teleport(91, 51, 67,true); // U
+			if (hit(91,67,37)) teleport(91, 61, 65,true); // V
 			
 			// Frenco City Pawn Shop
 			if (hit(85,33,75)) teleport(89, 31, 45,false);
 			if (hit(89,31,46)) teleport(85, 33, 76,false);
 			
 			// Grandpa House
-			if (hit(85,24,80)) teleport(91, 31, 45,false);
-			if (hit(91,31,46)) teleport(85, 24, 81,false);
+			if (hit(85,24,80)) teleport(88, 31, 45,false);
+			if (hit(88,31,46)) teleport(85, 24, 81,false);
 			
 			// Peaceful park house
 			if (hit(33,32,89)) teleport(92, 31, 45,false);
