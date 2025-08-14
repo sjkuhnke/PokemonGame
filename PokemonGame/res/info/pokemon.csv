@@ -25,7 +25,7 @@
 22 |Milipleura   |BUG     |ROCK    |ROUGH_SKIN        |COMPOUND_EYES     |THREATENING       |[80, 120, 120, 35, 80, 70]    |90.5  |125|BUG         |MINERAL     |
 26 |Sapwin       |GRASS   |null    |ANGER_POINT       |CHLOROPHYLL       |GUTS              |[65, 90, 85, 50, 30, 55]      |100.5 |75 |GRASS       |HUMAN$LIKE  |
 27 |Kappalm      |GRASS   |FIGHTING|ANGER_POINT       |CHLOROPHYLL       |GUTS              |[100, 120, 110, 55, 35, 55]   |399.9 |50 |GRASS       |HUMAN$LIKE  |
-28 |Serpenge     |GRASS   |DRAGON  |COMPETITIVE       |CHLOROPHYLL       |TERRIFY           |[120, 75, 80, 115, 80, 90]    |412.5 |30 |GRASS       |HUMAN$LIKE  |
+28 |Serpenge     |GRASS   |DRAGON  |BERSERK           |CHLOROPHYLL       |TERRIFY           |[120, 75, 80, 115, 80, 90]    |412.5 |30 |GRASS       |HUMAN$LIKE  |
 29 |Budew        |GRASS   |POISON  |POISON_POINT      |NATURAL_CURE      |CORROSION         |[40, 30, 35, 50, 70, 55]      |2.6   |255|FAIRY       |GRASS       |
 30 |Roselia      |GRASS   |POISON  |POISON_POINT      |NATURAL_CURE      |CORROSION         |[50, 60, 45, 100, 80, 65]     |4.4   |150|FAIRY       |GRASS       |
 31 |Roserade     |GRASS   |POISON  |TECHNICIAN        |NATURAL_CURE      |CORROSION         |[70, 60, 65, 125, 105, 90]    |32.0  |75 |FAIRY       |GRASS       |
@@ -145,8 +145,8 @@
 161|Poshorump    |MAGIC   |DRAGON  |SWIFT_SWIM        |MAGIC_GUARD       |WONDER_SKIN       |[100, 95, 90, 95, 90, 90]     |954.5 |10 |WATER_2     |FAIRY       |
 174|Binacle      |WATER   |ROCK    |TOUGH_CLAWS       |SNIPER            |SHELL_ARMOR       |[42, 52, 67, 39, 56, 50]      |68.3  |120|WATER_3     |MINERAL     |
 175|Barbaracle   |WATER   |ROCK    |TOUGH_CLAWS       |SNIPER            |SHELL_ARMOR       |[72, 105, 115, 54, 86, 68]    |211.6 |45 |WATER_3     |MINERAL     |
-176|Durfish      |WATER   |GROUND  |ILLUMINATION      |PRANKSTER         |NULL              |[55, 60, 64, 62, 55, 49]      |6.8   |95 |WATER_2     |MONSTER     |
-177|Dompster     |WATER   |GROUND  |ILLUMINATION      |PRANKSTER         |NULL              |[70, 115, 100, 60, 80, 60]    |67.9  |35 |WATER_2     |MONSTER     |
+176|Durfish      |WATER   |GROUND  |ILLUMINATION      |PRANKSTER         |SLIPSTREAM        |[55, 60, 64, 62, 55, 49]      |6.8   |95 |WATER_2     |MONSTER     |
+177|Dompster     |WATER   |GROUND  |SEABED_SIFTER     |PRANKSTER         |SLIPSTREAM        |[70, 115, 100, 60, 80, 60]    |67.9  |35 |WATER_2     |MONSTER     |
 217|Kissyfishy   |WATER   |MAGIC   |SWIFT_SWIM        |REGENERATOR       |WONDER_SKIN       |[45, 45, 75, 60, 75, 100]     |10.6  |25 |WATER_2     |MONSTER     |
 44 |Ekans        |POISON  |DRAGON  |INTIMIDATE        |SHED_SKIN         |CORROSION         |[35, 60, 44, 40, 54, 55]      |15.2  |255|FIELD       |DRAGON      |
 45 |Arbok        |POISON  |DRAGON  |INTIMIDATE        |SHED_SKIN         |CORROSION         |[60, 110, 70, 55, 80, 80]     |143.3 |90 |FIELD       |DRAGON      |
@@ -212,11 +212,11 @@
 -18|Electrocobra |DRAGON  |ELECTRIC|STATIC            |REGENERATOR       |HYDRATION         |[90, 75, 75, 114, 70, 106]    |237.6 |45 |WATER_3     |DRAGON      |
 -17|Nightrex     |DRAGON  |DARK    |MOXIE             |DEFIANT           |PRESSURE          |[95, 105, 65, 35, 55, 75]     |145.8 |45 |WATER_3     |DRAGON      |
 -18|Shadowsaur   |DRAGON  |DARK    |MOXIE             |DEFIANT           |PRESSURE          |[134, 110, 101, 35, 85, 65]   |394.5 |45 |WATER_3     |DRAGON      |
--15|Durfish-S    |GROUND  |GHOST   |ILLUMINATION      |PRANKSTER         |NULL              |[60, 45, 52, 64, 65, 59]      |2.5   |90 |WATER_2     |MONSTER     |
--16|Dompster-S   |DRAGON  |GHOST   |ILLUMINATION      |PRANKSTER         |NULL              |[65, 135, 65, 50, 70, 100]    |94.2  |30 |WATER_2     |MONSTER     |
+-15|Durfish-S    |GROUND  |GHOST   |ILLUMINATION      |PRANKSTER         |SLIPSTREAM        |[60, 45, 52, 64, 65, 59]      |2.5   |90 |WATER_2     |MONSTER     |
+-16|Dompster-S   |DRAGON  |GHOST   |SHADOW_VEIL       |PRANKSTER         |SLIPSTREAM        |[65, 135, 65, 50, 70, 100]    |94.2  |30 |WATER_2     |MONSTER     |
 -1 |Wormite-S    |GROUND  |DARK    |ADAPTABILITY      |SAND_RUSH         |REGENERATOR       |[20, 50, 50, 35, 50, 70]      |5.6   |255|FIELD       |MINERAL     |
 -2 |Wormbot-S    |GROUND  |DARK    |ADAPTABILITY      |SAND_RUSH         |REGENERATOR       |[40, 75, 75, 60, 50, 85]      |46.6  |195|FIELD       |MINERAL     |
--3 |Wormatron-S  |GROUND  |DARK    |ADAPTABILITY      |SAND_RUSH         |REGENERATOR       |[100, 100, 90, 100, 50, 80]   |165.2 |45 |FIELD       |MINERAL     |
+-3 |Wormatron-S  |GROUND  |DARK    |ADAPTABILITY      |SAND_RUSH         |REGENERATOR       |[100, 115, 90, 85, 50, 80]    |165.2 |45 |FIELD       |MINERAL     |
 -12|Cluuz-S      |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[55, 42, 38, 110, 110, 80]    |0.4   |175|AMORPHOUS   |AMORPHOUS   |
 -13|Zurrclu-S    |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[80, 70, 50, 100, 100, 80]    |36.5  |55 |AMORPHOUS   |AMORPHOUS   |
 -14|Zurroaratr-S |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[95, 75, 65, 123, 97, 85]     |80.5  |15 |AMORPHOUS   |AMORPHOUS   |

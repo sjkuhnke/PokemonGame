@@ -71,7 +71,7 @@ TM62 Bug Buzz          : Route 36 (Need Rock Smash)
 TM63 Thunder           : Rawwar City Shop
 TM64 Close Combat      : Mt. St. Joseph (3A)
 TM65 Shadow Claw       : Route 42 (Need Surf)
-TM66 Draco Meteor      : Iron Town somewhere
+TM66 Draco Meteor      : Iron Town shop
 TM67 Breaking Swipe    : Rawwar City Prize Shop (1+ Badges)
 TM68 Light Drain       : Energy Plant (pt. 1)
 TM69 Rock Polish       : Mt. Splinkty (1A)
@@ -93,14 +93,14 @@ TM84 Dark Pulse        : Schrice City School
 TM85 Power Gem         : Frenco City
 TM86 X-Scissor         : Route 29
 TM87 Poison Jab        : Shadow Ravine (0A)
-TM88 Galaxy Blast      : Outer Space
+TM88 Galaxy Blast      : Given to you by Nova after beating her
 TM89 Acrobatics        : Cell Park
 TM90 Iron Blast        : Mt. Splinkty (3A)
 TM91 Tri-Attack        : Glurg Town shop
-TM92 Meteor Assault    : Given to you by Nova after beating her
+TM92 Meteor Assault    : Space Cavern (2A)
 TM93 Earth Power       : Mt. St. Joseph (1A)
 TM94 Hurricane         : Rawwar City Prize Shop (6+ Badges)
-TM95 Trick Room        : 
+TM95 Trick Room        : Abandoned Tower (5A)
 TM96 Energy Ball       : Rawwar City Prize Shop (3+ Badges)
 TM97 Radiant Break     : Glurg Town shop
 TM98 Flip Turn         : Route 42 (Need Surf)

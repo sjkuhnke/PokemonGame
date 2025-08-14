@@ -1516,7 +1516,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(69, 28, Item.MENTAL_HERB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(58, 28, Item.RED_CARD, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(50, 32, Item.RARE_CANDY, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(48, 46, Item.TM88, mapNum); // galaxy blast
+		gp.obj[mapNum][objIndex] = ObjSetup(48, 46, Item.TM92, mapNum); // meteor assault
 		gp.obj[mapNum][objIndex] = ObjSetup(41, 41, Item.RARE_CANDY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(42, 32, Item.BLUNDER_POLICY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(37, 50, Item.BOTTLE_CAP, mapNum);
@@ -2552,7 +2552,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_RIGHT, 56, 44, "The spirits of the cosmos guide our hands. Prepare for prophecy fulfilled!", "The stars whispered of your strength... but we didn't believe them.", 504); // double
 		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 60, 44, "Observation changes outcome. And we're observing your loss.", "Hmm... maybe we measured wrong this time.", 505); // double
 		
-		gp.npc[mapNum][index] = NPCSetup(NOVA_DOWN, 69, 60, "You made it to the core. Good.\n"
+		gp.npc[mapNum][index] = NPCSetup(NOVA_DOWN, 47, 41, "You made it to the core. Good.\n"
 				+ "I've seen worlds fall. Watched stars collapse into silence.\n"
 				+ "But you? You're just one little human. One spark in the void.\n"
 				+ "And yet you shook the stars. You silenced Dragowrath.\n"
