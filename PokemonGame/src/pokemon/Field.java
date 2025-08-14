@@ -78,6 +78,7 @@ public class Field {
 		MAGIC_ROOM(8, false, false),
 		FUTURE_SIGHT(3, false, false),
 		WISH(2, false, false),
+		ION(1, false, false),
 		;
 		
 		private Effect(int turns, boolean isWeather, boolean isTerrain) {
@@ -227,6 +228,8 @@ public class Field {
 				return new Color(168, 167, 122);
 			case FUTURE_SIGHT:
 				return new Color(249, 85, 135);
+			case ION:
+				return new Color(252, 246, 63);
 			default:
 				return new Color(150, 217, 214);
 			
@@ -307,6 +310,10 @@ public class Field {
 	}
 	
 	public void setEffect(FieldEffect effect) {
+		setEffect(effect, true);
+	}
+	
+	public void setEffect(FieldEffect effect, boolean announce) {
 		if (effect.effect == Effect.TRICK_ROOM) {
 			if (contains(fieldEffects, effect.effect)) {
 				removeEffect(fieldEffects, effect.effect);
@@ -323,9 +330,9 @@ public class Field {
 		}
 		if (!contains(fieldEffects, effect.effect)) {
 			fieldEffects.add(effect);
-			Task.addTask(Task.TEXT, effect.toString() + " took effect!");
+			if (announce) Task.addTask(Task.TEXT, effect.toString() + " took effect!");
 		} else {
-			Task.addTask(Task.TEXT, "But it failed!");
+			if (announce) Task.addTask(Task.TEXT, "But it failed!");
 		}
 	}
 	
@@ -447,7 +454,7 @@ public class Field {
 	        FieldEffect effect = iterator.next();
 	        if (effect.turns > 0) effect.turns--;
 	        if (effect.turns == 0) {
-	            Task.addTask(Task.TEXT, effect.effect.toString() + " wore off!");
+	            if (effect.effect != Effect.ION) Task.addTask(Task.TEXT, effect.effect.toString() + " wore off!");
 	            iterator.remove();
 	        }
 	    }

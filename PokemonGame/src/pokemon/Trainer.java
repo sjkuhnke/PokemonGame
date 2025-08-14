@@ -482,6 +482,7 @@ public class Trainer implements Serializable {
 				this.team[teamTemp[i].slot] = teamTemp[i];
 				teamTemp[i].clearVolatile();
 				teamTemp[i].vStatuses.clear();
+				teamTemp[i].abilityFlag = false;
 				
 				if (teamTemp[i].loseItem) {
 					teamTemp[i].item = null;

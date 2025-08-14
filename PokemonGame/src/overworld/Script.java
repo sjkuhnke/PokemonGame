@@ -3283,7 +3283,7 @@ public class Script {
 			t = Task.addTask(Task.SPACE, gp.npc[160][7], "He is not gone. Not yet.", 150);
 			t.finish = 2;
 			Task.addTask(Task.SPACE, "", 300);
-			Task.addTask(Task.SPACE, gp.npc[160][8], "...One in a billion, that guy.", 240);
+			Task.addTask(Task.SPACE, npc, "...One in a billion, that guy.", 240);
 			Task.addTask(Task.SPACE, "", 600);
 			t = Task.addTask(Task.SPACE, "", 50);
 			t.start = 152;

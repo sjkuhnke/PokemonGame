@@ -1553,14 +1553,10 @@ public enum Item {
         			moves[k].setBackground(Color.GRAY);
         			moves[k].setFont(new Font("Arial", Font.PLAIN, 12));
         		}
-        		int minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, -1, crit, field);
-        		int maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, 1, crit, field);
-        		double minDamageD = minDamage * 1.0 / foe.getStat(0);
-        		minDamageD *= 100;
-        		String formattedMinD = String.format("%.1f", minDamageD);
-        		double maxDamageD = maxDamage * 1.0 / foe.getStat(0);
-        		maxDamageD *= 100;
-        		String formattedMaxD = String.format("%.1f", maxDamageD);
+        		double minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, -1, crit, field).getSecond();
+        		double maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, 1, crit, field).getSecond();
+        		String formattedMinD = String.format("%.1f", minDamage);
+        		String formattedMaxD = String.format("%.1f", maxDamage);
         		damages[k].setText(formattedMinD + "% - " + formattedMaxD + "%");
         		boolean crittable = crit && current.moveset[k].move.cat != 2 && current.moveset[k].move.critChance >= 0;
         		damages[k].setForeground(crittable ? Color.RED : Color.BLACK);

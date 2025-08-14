@@ -170,6 +170,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public boolean consumedItem;
 	public boolean illusion;
 	public boolean script;
+	public boolean abilityFlag;
 	
 	// battle fields
 	public Move lastMoveUsed;
@@ -466,7 +467,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         Map<Move, Integer> moveToDamage = new HashMap<>();
 
         for (Move move : validMoves) {
-            int damage = calcWithTypes(foe, move, first, field);
+            int damage = calcWithTypes(foe, move, first, field).getFirst();
             moveToDamage.put(move, damage);
         }
         
@@ -502,7 +503,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         boolean moveKills = false;
 		boolean hasResist = false;
     	for (Move m : foe.getValidMoveset()) {
-    		int damage = foe.calcWithTypes(this, m, true, 0, false, field);
+    		int damage = foe.calcWithTypes(this, m, true, 0, false, field).getFirst();
     		hasResist = tr.hasResist(foe, m.mtype, m);
     		if (damage > foeMaxDamage) {
     			foeMaxDamage = damage;
@@ -563,7 +564,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         		}
         	}
         	// 20% chance to swap if the most damage you do is 1/5 or less to target
-        	if (maxDamage <= foe.getStat(0) * 1.0 / 5) {
+        	if (maxDamage <= foe.getStat(0) * 1.0 / 5 && !(foe.ability == Ability.SHADOW_VEIL && foe.illusion)) {
         		double chance = 20;
         		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
         		if (this == this.getFaster(foe, 0, 0) && pivotMove == null) chance /= 2;
@@ -739,10 +740,13 @@ public class Pokemon implements RoleAssignable, Serializable {
         		if (move == Move.DESTINY_BOND) {
         			bestMoves.add(move);
         		}
+        		if (move == Move.ENDURE) {
+        			bestMoves.add(move);
+        		}
         	}
         }
         
-        bestMoves = modifyStatus(bestMoves, foe);
+        bestMoves = modifyStatus(bestMoves, foe, moveKills);
     	if (bestMoves.isEmpty()) { // fallback: return a random valid move
     		int randomIndex = (int) (Math.random() * validMoves.size());
             return validMoves.get(randomIndex);
@@ -760,7 +764,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         return bestMoves.get(randomIndex);
     }
 
-	private ArrayList<Move> modifyStatus(ArrayList<Move> bestMoves, Pokemon foe) {
+	private ArrayList<Move> modifyStatus(ArrayList<Move> bestMoves, Pokemon foe, boolean moveKills) {
 		ArrayList<Move> checkForImmunity = new ArrayList<Move>(bestMoves);
 		Collections.shuffle(checkForImmunity);
 		for (Move m : checkForImmunity) {
@@ -768,6 +772,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.THUNDER_WAVE) && foe.isType(PType.GROUND)) bestMoves.removeIf(Move.THUNDER_WAVE::equals);
+		
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENDURE) && !moveKills) bestMoves.removeIf(Move.ENDURE::equals);
 		
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.STICKY_WEB) && field.contains(foe.getFieldEffects(), Effect.STICKY_WEBS)) bestMoves.removeIf(Move.STICKY_WEB::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.STEALTH_ROCK) && field.contains(foe.getFieldEffects(), Effect.STEALTH_ROCKS)) bestMoves.removeIf(Move.STEALTH_ROCK::equals);
@@ -2000,6 +2006,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			bp *= 1.2;
 		}
 		
+		if (field.contains(field.fieldEffects, Effect.ION) && moveType == PType.NORMAL) {
+			moveType = PType.ELECTRIC;
+		}
+		
 		if (this.ability == Ability.PROTEAN && moveType != PType.UNKNOWN) {
 			if (this.type1 == moveType && this.type2 == null) {
 				
@@ -2012,7 +2022,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (foe.getItem() != Item.ABILITY_SHIELD &&
-				(move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || this.ability == Ability.MOLD_BREAKER)) {
+				(move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || move == Move.SUNSTEEL_STRIKE || this.ability == Ability.MOLD_BREAKER)) {
 			foeAbility = Ability.NULL;
 		}
 		
@@ -2176,6 +2186,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		String message = msgTask == null ? "" : msgTask.message;
 		int hits = 0;
 		boolean foeEject = false;
+		boolean aboveHalfHP = foe.currentHP >= foe.getStat(0) / 2;
 		for (int hit = 1; hit <= numHits; hit++) {
 			if (hit > 1) bp = move.basePower;
 			if (move == Move.POP_POP) hits++;
@@ -2800,7 +2811,19 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Task.addTask(Task.TEXT, "It's a one-hit KO!");
 			}
 			
-			if (Move.getDraining().contains(move)) {
+			damage = Math.max(damage, 1);
+			
+			if (foeAbility == Ability.SHADOW_VEIL && foe.illusion) {
+				foe.abilityFlag = true;
+				foe.illusion = false;
+				Task.addAbilityTask(foe);
+				Task.addTask(Task.TEXT, "Its shroud served it as a decoy!");
+				damage = 0;
+				foe.damage((int)foe.getHPAmount(1.0/8), this, move, "", -1);
+				Task.addTask(Task.TEXT, foe.nickname + "'s shadow veil was broken!");
+			}
+			
+			if (Move.getDraining().contains(move) && damage > 0) {
 				int healAmount = Math.min(damage, foe.currentHP);
 				if (move == Move.BLOODSHED_CLEAVE) {
 					healAmount = (int) Math.max((int) Math.ceil(healAmount / 2.0), this.getHPAmount(1.0/4));
@@ -2812,18 +2835,16 @@ public class Pokemon implements RoleAssignable, Serializable {
 				heal(healAmount, this.nickname + " sucked HP from " + foe.nickname + "!");
 			}
 			
-			if (!sheer && this.getItem() == Item.SHELL_BELL && this.currentHP < this.getStat(0)) {
+			if (!sheer && this.getItem() == Item.SHELL_BELL && this.currentHP < this.getStat(0) && damage > 0) {
 				int healAmount = Math.min(damage, foe.currentHP);
 				healAmount = Math.max((int) Math.ceil(healAmount / 4.0), 1);
 				heal(healAmount, this.nickname + " recovered a little HP using its Shell Bell!");
 			}
 			
-			damage = Math.max(damage, 1);
-			
 			if (this.ability == Ability.SERENE_GRACE) secChance *= 2;
 			
 			int recoil = 0;
-			if (Move.getRecoil().contains(move) && ability != Ability.ROCK_HEAD) {
+			if (Move.getRecoil().contains(move) && ability != Ability.ROCK_HEAD && damage > 0) {
 				int denom = move == Move.HEAD_SMASH ? 2 : move == Move.SUBMISSION || move == Move.TAKE_DOWN ? 4 : 3;
 				recoil = Math.max(Math.floorDiv(damage, denom), 1);
 				if (damage >= foe.currentHP) recoil = Math.max(Math.floorDiv(foe.currentHP, 3), 1);
@@ -2845,15 +2866,17 @@ public class Pokemon implements RoleAssignable, Serializable {
 			String formattedPercent = String.format("%.1f", percent);
 			String damagePercentText = "(" + foe.nickname + " lost " + formattedPercent + "% of its HP.)";
 			
-			if (numHits > 1) {
-				if (hit == 1) {
-					foe.damage(damage, this, move, message + "\n" + damagePercentText, damageIndex, sturdy);
+			if (damage > 0) {
+				if (numHits > 1) {
+					if (hit == 1) {
+						foe.damage(damage, this, move, message + "\n" + damagePercentText, damageIndex, sturdy);
+					} else {
+						foe.damage(damage, this, move, damagePercentText, -1, sturdy);
+					}
 				} else {
-					foe.damage(damage, this, move, damagePercentText, -1, sturdy);
+					Task.addTask(Task.TEXT, damagePercentText);
+					foe.damage(damage, this, move, message, damageIndex, sturdy);
 				}
-			} else {
-				Task.addTask(Task.TEXT, damagePercentText);
-				foe.damage(damage, this, move, message, damageIndex, sturdy);
 			}
 			
 			// set damage taken field
@@ -3112,7 +3135,20 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.consumeItem(this);
 			foe.addStatus(Status.SWITCHING);
 		}
-
+		
+		if (!foeEject && !sheer && aboveHalfHP && foe.currentHP < foe.getStat(0) / 2 && !foe.isFainted()) {
+			if (foeAbility == Ability.BERSERK) {
+				Task.addAbilityTask(foe);
+				stat(foe, getHighestAttackingStat(), 2, this);
+			}
+			if (foeAbility == Ability.SLIPSTREAM) {
+				if (foe.trainer != null && foe.trainer.hasValidMembers()) {
+					Task.addAbilityTask(foe);
+					Task.addTask(Task.TEXT, foe.nickname + " went back to " + (foe.trainerOwned() ? foe.trainer.toString() : "you") + "!");
+					foe.addStatus(Status.SWITCHING);
+				}
+			}
+		}
 		endMove();
 		return;
 	}
@@ -3415,6 +3451,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(this, 2, -2, foe);
 		} else if (move == Move.PHOTON_GEYSER) {
 			stat(this, 2, -2, foe);
+		} else if (move == Move.PLASMA_FISTS) {
+			field.setEffect(field.new FieldEffect(Effect.ION), false);
+			Task.addTask(Task.TEXT, "A deluge of ions showered the battlefield!");
 		} else if (move == Move.SCALE_SHOT) {
 			stat(this, 1, -1, foe);
 			stat(this, 4, 1, foe);
@@ -3488,7 +3527,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.paralyze(false, this);
 		} else if (move == Move.BIND) {
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
-				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8);
+				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8, move);
 				foe.spunCount = (((int) (Math.random() * 2)) + 4);
 				if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was wrapped by " + this.nickname + "!");
@@ -3607,28 +3646,28 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.burn(false, this);
 		} else if (move == Move.FIRE_SPIN) {
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
-				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8);
+				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8, move);
 				foe.spunCount = (((int) (Math.random() * 2)) + 4);
 				if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was trapped in a fiery vortex!");
 			}
 		} else if (move == Move.MAGMA_STORM) {
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
-				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8);
+				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8, move);
 				foe.spunCount = (((int) (Math.random() * 2)) + 4);
 				if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was trapped in a fiery vortex!");
 			}
 		} else if (move == Move.WHIRLPOOL) {
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
-				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8);
+				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8, move);
 				foe.spunCount = (((int) (Math.random() * 2)) + 4);
 				if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was trapped in a whirlpool vortex!");
 			}
 		} else if (move == Move.WRAP) {
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
-				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8);
+				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8, move);
 				foe.spunCount = (((int) (Math.random() * 2)) + 4);
 				if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was wrapped by " + this.nickname + "!");
@@ -3749,7 +3788,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.burn(false, this);
 		}  else if (move == Move.INFESTATION) {
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
-				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8);
+				foe.addStatus(Status.SPUN, this.getItem() == Item.BINDING_BAND ? 6 : 8, move);
 				foe.spunCount = (((int) (Math.random() * 2)) + 4);
 				if (this.getItem() == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was infested by " + this.nickname + "!");
@@ -5191,7 +5230,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		if (foe != null && foe.ability == Ability.EMPATHIC_LINK && a > 0) {
 			if (announce) Task.addAbilityTask(foe);
-			foe.stat(foe, 2, 1, this, announce);
+			foe.stat(foe, getHighestAttackingStat(), 1, this, announce);
 		}
 		p.statStages[i] += a;
 		p.statStages[i] = p.statStages[i] < -6 ? -6 : p.statStages[i];
@@ -5709,11 +5748,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return damage;
 	}
 	
-	public int calcWithTypes(Pokemon foe, Move move, boolean first, Field field) {
+	public Pair<Integer, Double> calcWithTypes(Pokemon foe, Move move, boolean first, Field field) {
 		return calcWithTypes(foe, move, first, 0, false, field);
 	}
 	
-	public int calcWithTypes(Pokemon foe, Move move, boolean first, int mode, boolean crit, Field field) {
+	public Pair<Integer, Double> calcWithTypes(Pokemon foe, Move move, boolean first, int mode, boolean crit, Field field) {
 		double attackStat;
 		double defenseStat;
 		int damage = 0;
@@ -5726,7 +5765,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		boolean contact = move.contact;
 		
 		if (this.hasStatus(Status.TORMENTED) && move == this.lastMoveUsed) {
-			return 0;
+			return new Pair<>(0, 0.0);
 		}
 		
 		if (id == 237) {
@@ -5740,15 +5779,15 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (mode == 0 && (move == Move.SLEEP_TALK || move == Move.SNORE)) {
 			if (status != Status.ASLEEP || sleepCounter == 0) {
-				return 0;
+				return new Pair<>(0, 0.0);
 			} else {
-				return 999999;
+				return new Pair<>(999999, 0.0);
 			}
 		}
 		
 		if (mode == 0 && (move == Move.FIRST_IMPRESSION || move == Move.BELCH)) {
 			if (!this.impressive) {
-				return -1;
+				return new Pair<>(-1, 0.0);
 			} else {
 				bp *= 2;
 			}
@@ -5756,22 +5795,22 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (mode == 0 && (move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT)) {
 			if (!this.impressive) {
-				return -1;
+				return new Pair<>(-1, 0.0);
 			} else {
 				bp *= 6;
 			}
 		}
 		
 		if (this.hasStatus(Status.HEAL_BLOCK) && move.isHealing()) {
-			return 0;
+			return new Pair<>(0, 0.0);
 		}
 		
 		if (this.hasStatus(Status.MUTE) && Move.getSound().contains(move)) {
-			return 0;
+			return new Pair<>(0, 0.0);
 		}
 		
 		if (move == this.disabledMove) {
-			return 0;
+			return new Pair<>(0, 0.0);
 		}
 		
 		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN, this))
@@ -5803,10 +5842,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (move == Move.THUNDER_WAVE && this.isType(PType.ELECTRIC)) acc = 100;
 		if (move == Move.TOXIC && this.isType(PType.POISON)) acc = 1000;
 		
-		if (foeAbility == Ability.WONDER_SKIN && move.cat == 2 && acc <= 100) return -1;
+		if (foeAbility == Ability.WONDER_SKIN && move.cat == 2 && acc <= 100) return new Pair<>(-1, 0.0);
 		
 		if (foe.getItem() != Item.ABILITY_SHIELD &&
-				(move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || this.ability == Ability.MOLD_BREAKER)) {
+				(move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || move == Move.SUNSTEEL_STRIKE || this.ability == Ability.MOLD_BREAKER)) {
 			foeAbility = Ability.NULL;
 		}
 		
@@ -5819,7 +5858,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if ((field.equals(field.weather, Effect.SANDSTORM, this) && foeAbility == Ability.SAND_VEIL) ||
 					(field.equals(field.weather, Effect.SNOW, this) && foeAbility == Ability.SNOW_CLOAK)) accuracy *= 0.8;
 			if (!hit(accuracy)) {
-				return 1;
+				return new Pair<>(1, 0.0);
 			}
 		}
 		
@@ -5848,48 +5887,54 @@ public class Pokemon implements RoleAssignable, Serializable {
 			bp *= 1.2;
 		}
 		
+		if (field.contains(field.fieldEffects, Effect.ION) && moveType == PType.NORMAL) {
+			moveType = PType.ELECTRIC;
+		}
+		
 		if (foe.hasStatus(Status.MAGIC_REFLECT) && (move != Move.BRICK_BREAK && move != Move.MAGIC_FANG && move != Move.PSYCHIC_FANGS)) {
-			damage = this.calcWithTypes(this, move, false, mode, crit, field);
+			Pair<Integer, Double> dmg = this.calcWithTypes(this, move, false, mode, crit, field);
 			if (mode == 0) {
-				return 1 - damage;
+				dmg.setFirst(1 - dmg.getFirst());
+				return dmg;
 			} else {
-				return damage;
+				return dmg;
 			}
 		}
 		if (this.hasStatus(Status.POSSESSED) && this != foe) {
-			damage = this.calcWithTypes(this, move, false, mode, crit, field);
+			Pair<Integer, Double> dmg = this.calcWithTypes(this, move, false, mode, crit, field);
 			if (mode == 0) {
-				return 1 - damage;
+				dmg.setFirst(1 - dmg.getFirst());
+				return dmg;
 			} else {
-				return damage;
+				return dmg;
 			}
 		}
 		
 		if (moveType == PType.FIRE && foeAbility == Ability.FLASH_FIRE) {
-			if (foe.getItem() != Item.RING_TARGET) return 0;
+			if (foe.getItem() != Item.RING_TARGET) return new Pair<>(0, 0.0);
 		}
 		
 		if ((moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST) ||
 				(moveType == PType.ICE && foeAbility == Ability.WARM_HEART) ||
 				(moveType == PType.PSYCHIC && foeAbility == Ability.COLD_HEART) ||
 				(moveType == PType.DRAGON && foeAbility == Ability.WHITE_HOLE)) {
-			if (foe.getItem() != Item.RING_TARGET) return 0;
+			if (foe.getItem() != Item.RING_TARGET) return new Pair<>(0, 0.0);
 		}
 		
 		if ((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB) ||
 				(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE) ||
 				(moveType == PType.MAGIC && foeAbility == Ability.MYSTIC_ABSORB)) {
-			if (foe.getItem() != Item.RING_TARGET) return 0;
+			if (foe.getItem() != Item.RING_TARGET) return new Pair<>(0, 0.0);
 		}
 		
 		if ((moveType == PType.ELECTRIC && (foeAbility == Ability.MOTOR_DRIVE || foeAbility == Ability.LIGHTNING_ROD)) ||
 				(moveType == PType.GRASS && foeAbility == Ability.SAP_SIPPER) || (moveType == PType.FIRE && foeAbility == Ability.HEAT_COMPACTION) ||
 				(moveType == PType.MAGIC && foeAbility == Ability.DJINN1S_FAVOR)) {
-			if (foe.getItem() != Item.RING_TARGET) return 0;
+			if (foe.getItem() != Item.RING_TARGET) return new Pair<>(0, 0.0);
 		}
 		
 		if (moveType == PType.GROUND && !foe.isGrounded(field, foeAbility) && move.cat != 2) {
-			return 0;
+			return new Pair<>(0, 0.0);
 		}
 		
 		if (moveType != PType.GROUND && (move.cat != 2 || move == Move.THUNDER_WAVE)) {
@@ -5901,35 +5946,35 @@ public class Pokemon implements RoleAssignable, Serializable {
 				} else if (this.ability == Ability.CORROSION && moveType == PType.POISON) {
 					// Nothing: corrosion allows poison moves to hit steel
 				} else if (mode == 0 && (move == Move.COUNTER || move == Move.MIRROR_COAT || move == Move.METAL_BURST)) {
-					return -1;
+					return new Pair<>(-1, 0.0);
 				} else {
-					return 0;
+					return new Pair<>(0, 0.0);
 				}
 			}
 		}
 		
-		if (move == Move.COUNTER || move == Move.MIRROR_COAT || move == Move.METAL_BURST) return 0;
+		if (move == Move.COUNTER || move == Move.MIRROR_COAT || move == Move.METAL_BURST) return new Pair<>(0, 0.0);
 		
 		if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded(field, foeAbility) && move.hasPriority(this) && move != Move.GRAVITY_PUNCH) {
-			return 0;
+			return new Pair<>(0, 0.0);
 		}
 		
 		if (mode == 0 && move == Move.DREAM_EATER && foe.status != Status.ASLEEP) {
-			return -1;
+			return new Pair<>(-1, 0.0);
 		}
 		
 		if (move == Move.POLTERGEIST && foe.item == null) {
-			return 0;
+			return new Pair<>(0, 0.0);
 		}
 		
 		if (move.cat == 2) {
-			return 0;
+			return new Pair<>(0, 0.0);
 		}
 		
 		if ((moveType == PType.WATER && (foe.getItem() == Item.ABSORB_BULB || foe.getItem() == Item.LUMINOUS_MOSS))
 				|| (moveType == PType.ELECTRIC && foe.getItem() == Item.CELL_BATTERY)
 				|| (moveType == PType.ICE && foe.getItem() == Item.SNOWBALL)) {
-			return 0;
+			return new Pair<>(0, 0.0);
 		}
 		
 		if (move.basePower < 0) {
@@ -6208,7 +6253,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (foeAbility == Ability.WONDER_GUARD && multiplier <= 1 && moveType != PType.UNKNOWN) {
-			if (foe.getItem() != Item.RING_TARGET) return 0;
+			if (foe.getItem() != Item.RING_TARGET) return new Pair<>(0, 0.0);
 		}
 		
 		if (foeAbility == Ability.FLUFFY && moveType == PType.FIRE) multiplier *= 2;
@@ -6245,20 +6290,31 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (move == Move.ENDEAVOR) {
 			if (foe.currentHP > this.currentHP) {
 				damage = foe.currentHP - this.currentHP;
-			} else { return 0; } }
+			} else { return new Pair<>(0, 0.0); } }
 		if (move == Move.SUPER_FANG) damage = foe.currentHP / 2;
 		if (move == Move.DRAGON_RAGE) damage = 40;
 		if (mode == 0 && (move == Move.HORN_DRILL || move == Move.SHEER_COLD || move == Move.GUILLOTINE || move == Move.FISSURE)) {
 			if ((move == Move.SHEER_COLD && foe.isType(PType.ICE)) || foeAbility == Ability.STURDY || foe.level > this.level) {
-				return 0;
+				return new Pair<>(0, 0.0);
 			}
 			damage = foe.currentHP;
 		}
 		
 		damage = Math.max(damage, 1);
+		if (mode == 0 && foeAbility == Ability.SHADOW_VEIL && foe.illusion) {
+			damage = (int) foe.getHPAmount(1.0/8);
+		}
+		double damagePercent = damage * 100.0 / foe.getStat(0);
 		
+		boolean fullHP = foe.currentHP == foe.getStat(0);
+		boolean sturdy = false;
+		if (damage >= foe.currentHP && (move == Move.FALSE_SWIPE ||
+				(fullHP && (foeAbility == Ability.STURDY || foe.getItem() == Item.FOCUS_SASH)))) {
+			sturdy = true;
+		}
 
 		if (mode == 0 && damage >= foe.currentHP) damage = foe.currentHP; // Check for kill
+		if (mode == 0 && sturdy) damage--;
 		if (mode == 0 && damage < foe.currentHP && move == Move.SWORD_OF_DAWN && this.getItem() != Item.POWER_HERB) bp *= 0.5;
 		
 		if ((move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) && mode == 0) {
@@ -6266,15 +6322,15 @@ public class Pokemon implements RoleAssignable, Serializable {
 		    double hpPercent = this.currentHP * 1.0 / this.getStat(0);
 		    
 		    if (rand.nextDouble() < (hpPercent - 0.1)) {
-		        return 0;
+		        return new Pair<>(0, 0.0);
 		    }
 		}
 		if (move == Move.FUTURE_SIGHT) {
 			if (mode == 0) {
 				if (field.contains(foe.getFieldEffects(), Effect.FUTURE_SIGHT)) {
-					return -1;
+					return new Pair<>(-1, 0.0);
 				} else {
-					return new Random().nextInt(4) == 1 ? 0 : damage;
+					return new Random().nextInt(4) == 1 ? new Pair<>(0, 0.0) : new Pair<>(damage, damagePercent);
 				}
 			}
 			attackStat = this.getStat(3);
@@ -6282,9 +6338,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (this.status == Status.FROSTBITE) attackStat /= 2;
 			if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackStat *= 1.5;
 			if (this.isType(moveType)) attackStat *= 1.5;
-			return foe.takeFutureSight((int) attackStat, this.level, mode, this);
+			damage = foe.takeFutureSight((int) attackStat, this.level, mode, this);
+			damagePercent = damage * 100.0 / foe.getStat(0);
 		}
-		return damage;
+		return new Pair<>(damage, damagePercent);
 	}
 
 	public void endOfTurn(Pokemon f) {
@@ -6463,7 +6520,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.removeStatus(Status.SPUN);
 			} else {
 				StatusEffect spin = this.getStatus(Status.SPUN);
-				this.damage(getHPAmount(1.0/spin.num), f, this.nickname + " was hurt by being wrapped!");
+				this.damage(getHPAmount(1.0/spin.num), f, this.nickname + " was hurt by " + spin.getSpunName() + "!");
 				this.spunCount--;
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, f);
@@ -7559,9 +7616,19 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Task.addAbilityTask(this);
 			field.setTerrain(field.new FieldEffect(Effect.SPARKLY));
 			if (this.getItem() == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
-		} else if (this.ability == Ability.GRAVITATION && field.contains(field.fieldEffects, Effect.GRAVITY)) {
+		} else if (this.ability == Ability.GRAVITATION) {
 			Task.addAbilityTask(this);
-			field.setEffect(field.new FieldEffect(Effect.GRAVITY));
+			field.setEffect(field.new FieldEffect(Effect.GRAVITY), false);
+			Task.addTask(Task.TEXT, "Gravity is intensified!");
+		} else if (this.ability == Ability.SEABED_SIFTER && field.terrain != null) {
+			Task.addAbilityTask(this);
+			Task t = Task.addTask(Task.TERRAIN, "The terrain returned to normal!");
+            t.setEffect(null);
+            field.terrain = null;
+            int healAmt = this.getStat(0) - this.currentHP;
+            if (healAmt > 0) {
+            	this.heal(healAmt, this.nickname + "'s HP was restored!");
+            }
 		} else if (this.ability == Ability.COSMIC_WARP) {
 			Task.addAbilityTask(this);
 			FieldEffect effect = field.new FieldEffect(Effect.TRICK_ROOM);
@@ -7623,6 +7690,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (this.ability == Ability.ILLUSION) {
 			Task.addAbilityTask(this);
 			Task.addTask(Task.TEXT, this.nickname + " casts a terrifying illusion!");
+			this.illusion = true;
+		} else if (this.ability == Ability.SHADOW_VEIL && !this.abilityFlag) {
 			this.illusion = true;
 		} else if (this.ability == Ability.PICKPOCKET) {
 			if (this.item == null && foe.item != null && foe.ability != Ability.STICKY_HOLD && foe.item != Item.EVERSTONE) {
@@ -7793,7 +7862,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	private void checkStarborn(Pokemon foe) {
 		if (this.ability == Ability.STARBORN && field.contains(this.getFieldEffects(), Effect.AURORA)) {
 			Task.addAbilityTask(this);
-			stat(this, 2, 1, foe);
+			stat(this, getHighestAttackingStat(), 1, foe);
 		}
 	}
 
@@ -7832,7 +7901,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		Ability thisAbility = ability;
 		
 		if (this.getItem() != Item.ABILITY_SHIELD &&
-				(move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || foe.ability == Ability.MOLD_BREAKER)) {
+				(move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || move == Move.SUNSTEEL_STRIKE || foe.ability == Ability.MOLD_BREAKER)) {
 			thisAbility = Ability.NULL;
 		}
 		
@@ -8071,7 +8140,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 	
 	public void addStatus(Status status, int num) {
-		this.vStatuses.add(new StatusEffect(status, num));
+		addStatus(status, num, null);
+	}
+	
+	public void addStatus(Status status, int num, Move move) {
+		this.vStatuses.add(new StatusEffect(status, num, move));
 	}
 	
 	public void incrementStatus(Status status, int num) {
@@ -8346,6 +8419,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    clonedPokemon.success = this.success;
 	    clonedPokemon.consumedItem = this.consumedItem;
 	    clonedPokemon.illusion = this.illusion;
+	    clonedPokemon.abilityFlag = this.abilityFlag;
 	    
 	    // Clone battle fields
 	    clonedPokemon.lastMoveUsed = this.lastMoveUsed;
@@ -8990,7 +9064,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			result.add("Perish in " + perishCount);
 		}
 		if (illusion) {
-			result.add(ability == Ability.ILLUSION ? "Illusion" : ability == Ability.ANTICIPATION ? "Anticipation" : ".");
+			result.add(ability == Ability.ILLUSION ? "Illusion" : ability == Ability.ANTICIPATION ? "Anticipation" : ability == Ability.SHADOW_VEIL ? "Shadow Veil" : ".");
 		}
 		if (disabledCount > 0) {
 			result.add(disabledMove.toString());
@@ -9013,7 +9087,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 	
 	public int getHighestAttackingStat() {
-		return this.getStat(1) >= this.getStat(3) ? 1 : 3;
+		return this.getStat(1) >= this.getStat(3) ? 0 : 2;
 	}
 	
 	public void update() {

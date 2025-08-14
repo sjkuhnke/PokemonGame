@@ -1354,7 +1354,8 @@ public class BattleUI extends AbstractUI {
 					int money = foe.trainer.getMoney();
 					if (user.getPlayer().amulet) money *= 1.5;
 					user.getPlayer().setMoney(user.getPlayer().getMoney() + money);
-					String message = foe.trainer.toString() + " was defeated!\nWon $" + money + "!";
+					String message = foe.trainer.toString() + " was defeated!";
+					if (money > 0) message += "\nWon $" + money + "!";
 					Task.addTask(Task.END, message);
 		            if (foe.trainer.getMoney() == 500 && user.getPlayer().badges < 8) {
 		            	user.getPlayer().badges++;

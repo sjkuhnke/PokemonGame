@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>dist\\PokemonXhenos-v0.0.15.jar</jar>
+  <jar>dist\\PokemonXhenos-v0.0.18.jar</jar>
   <outfile>prod/Pokemon_Xhenos.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
