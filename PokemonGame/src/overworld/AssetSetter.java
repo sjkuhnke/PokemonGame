@@ -1413,7 +1413,7 @@ public class AssetSetter {
 		
 		mapNum = 200;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(24, 55, Item.TM10, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(24, 55, Item.TM10, mapNum); // ice beam
 		gp.obj[mapNum][objIndex] = ObjSetup(38, 47, Item.MENTAL_HERB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(76, 50, Item.FULL_RESTORE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(22, 35, Item.BIG_NUGGET, mapNum);
@@ -4142,8 +4142,8 @@ public class AssetSetter {
 		}
 		if (flag[4][2]) {
 			if (gp.npc[33][1] == null) gp.npc[33][1] = SetupStaticEncounter(286, 33, 61, 391, "Bloooghawooooooooarooo!");
-			gp.npc[91][0] = null;
-			gp.npc[91][1] = null;
+			gp.npc[88][0] = null;
+			gp.npc[88][1] = null;
 		} else {
 			gp.npc[33][1] = null;
 		}
@@ -4373,7 +4373,7 @@ public class AssetSetter {
 			gp.npc[107][14] = null;
 		}
 		
-		if (flag[7][9] && map == 190) {
+		if (flag[7][9]) {
 			if (map == 190 && gp.npc[190][1] == null) {
 				gp.npc[190][1] = NPCSetup(DISCIPLE_RIGHT, 56, 85, "Do you carry faith, or merely the hope of it?", "Doubt is not defeat... but it is the first crack in your resolve.", 396);
 				gp.npc[190][2] = NPCSetup(DISCIPLE_LEFT, 59, 85, "The Spirit does not guide those who hesitate.", "You walk, though your steps still falter. Let your soul steady.", 397);

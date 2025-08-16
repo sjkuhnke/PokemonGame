@@ -15,7 +15,7 @@ PrivilegesRequired=admin
 
 [Files]
 Source: "prod\Pokemon_Xhenos.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "dist\\PokemonXhenos-v0.0.18.jar"; DestDir: "{app}"; Flags: ignoreversion
+Source: "dist\\PokemonXhenos-v0.0.19.jar"; DestDir: "{app}"; Flags: ignoreversion
 Source: "build\jre\*"; DestDir: "{app}\jre"; Flags: recursesubdirs createallsubdirs
 
 [Icons]
