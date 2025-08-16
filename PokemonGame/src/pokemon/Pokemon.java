@@ -410,7 +410,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		int index = 0;
 		moveset = new Moveslot[4];
 		Node[] movebank = this.getMovebank();
-		for (int i = 1; i <= level && i <= movebank.length; i++) {
+		for (int i = 1; i <= level && i < movebank.length; i++) {
 			Node node = movebank[i];
 	        while (node != null) {
 	            moveset[index] = new Moveslot(node.data);
@@ -502,7 +502,9 @@ public class Pokemon implements RoleAssignable, Serializable {
         
         boolean moveKills = false;
 		boolean hasResist = false;
-    	for (Move m : foe.getValidMoveset()) {
+		ArrayList<Move> foeMoveset = foe.getValidMoveset();
+		Collections.shuffle(foeMoveset);
+    	for (Move m : foeMoveset) {
     		int damage = foe.calcWithTypes(this, m, true, 0, false, field).getFirst();
     		hasResist = tr.hasResist(foe, m.mtype, m);
     		if (damage > foeMaxDamage) {
@@ -526,10 +528,10 @@ public class Pokemon implements RoleAssignable, Serializable {
         		double chance = ((1 - Trainer.getEffective(tr.getBestResist(foe, check.mtype, check), foe, check.mtype, check, false)) / 2) * 100;
         		boolean faster = this == this.getFaster(foe, 0, 0);
         		if (only1Move) {
-        			chance *= 2;
+        			chance *= 4;
         		} else {
         			if (faster) chance /= 2;
-            		if (this.impressive) chance /= 2;
+            		if (this.impressive) chance /= 4;
         		}
         		if (checkSecondary((int) Math.round(chance))) {
         			String rsn = "[Partner resists : " + String.format("%.1f", chance) + "%]";
@@ -564,7 +566,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         		}
         	}
         	// 20% chance to swap if the most damage you do is 1/5 or less to target
-        	if (maxDamage <= foe.getStat(0) * 1.0 / 5 && !(foe.ability == Ability.SHADOW_VEIL && foe.illusion)) {
+        	if (maxDamage <= foe.getStat(0) * 1.0 / 5 && maxDamage < foe.currentHP && !(foe.ability == Ability.SHADOW_VEIL && foe.illusion)) {
         		double chance = 20;
         		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
         		if (this == this.getFaster(foe, 0, 0) && pivotMove == null) chance /= 2;
@@ -2661,7 +2663,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (this.ability == Ability.SNIPER) damage *= 1.5;
 				if (foeAbility == Ability.ANGER_POINT) {
 					Task.addAbilityTask(foe);
-					stat(foe, 0, 12, this);
+					stat(foe, getHighestAttackingStat(), 12, this);
 				}
 			}
 			
@@ -2929,7 +2931,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (!this.isFainted()) {
 					if (this.ability == Ability.MOXIE) {
 						Task.addAbilityTask(this);
-						stat(this, 0, 1, foe);
+						stat(this, getHighestAttackingStat(), 1, foe);
 					}
 					if (this.ability == Ability.BEAST_BOOST) {
 						Task.addAbilityTask(this);
@@ -6378,13 +6380,15 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (this.ability == Ability.WATER_VEIL) {
 				Task.addAbilityTask(this);
 				Task.addTask(Task.STATUS, Status.HEALTHY, nickname + " became healthy!", this);
+				this.status = Status.HEALTHY;
+			} else {
+				this.damage(getHPAmount(1.0/16), f, this.nickname + " was hurt by its burn!");
+				if (this.currentHP <= 0) { // Check for kill
+					this.faint(true, f);
+					return;
+				}
 			}
-			this.damage(getHPAmount(1.0/16), f, this.nickname + " was hurt by its burn!");
-			if (this.currentHP <= 0) { // Check for kill
-				this.faint(true, f);
-				return;
-			}
-			
+
 		} else if (this.status == Status.POISONED) {
 			if (this.ability == Ability.POISON_HEAL) {
 				if (this.currentHP < this.getStat(0)) {
@@ -6649,6 +6653,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this.hasStatus(Status.YAWNING)) {
 			this.removeStatus(Status.YAWNING);
 			this.addStatus(Status.DROWSY);
+		}
+		
+		if (this.status == Status.ASLEEP && this.ability == Ability.INSOMNIA) {
+			Task.addAbilityTask(this);
+			Task.addTask(Task.STATUS, Status.HEALTHY, nickname + " became healthy!", this);
+			this.status = Status.HEALTHY;
 		}
 		
 		checkBerry(f);

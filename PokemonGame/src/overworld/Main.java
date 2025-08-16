@@ -207,7 +207,7 @@ public class Main {
 		    		
 		    		gp.eHandler.p = gp.player.p;
 		    		
-		    		// Update the npcs to the current game state on the current map
+		    		// Update npcs to the current game state on the current map
 		    		gp.aSetter.updateNPC(gp.currentMap);
 		    		
 		    		gp.player.p.setupPuzzles(gp, gp.currentMap);

@@ -264,12 +264,14 @@ public class PlayerCharacter extends Entity {
 		} else {
 			speed = 4;
 		}
-		for (int i = 0; i < gp.npc[1].length; i++) {
-			int trainer = gp.npc[gp.currentMap][i] == null ? 0 : gp.npc[gp.currentMap][i].trainer;
-			if (gp.ticks % 4 == 0 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "down") trainerSpot(gp.npc[gp.currentMap][i]);
-			if (gp.ticks % 4 == 1 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "up") trainerSpot(gp.npc[gp.currentMap][i]);
-			if (gp.ticks % 4 == 2 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "left") trainerSpot(gp.npc[gp.currentMap][i]);
-			if (gp.ticks % 4 == 3 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "right") trainerSpot(gp.npc[gp.currentMap][i]);
+		if (!ice) {
+			for (int i = 0; i < gp.npc[1].length; i++) {
+				int trainer = gp.npc[gp.currentMap][i] == null ? 0 : gp.npc[gp.currentMap][i].trainer;
+				if (gp.ticks % 4 == 0 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "down") trainerSpot(gp.npc[gp.currentMap][i]);
+				if (gp.ticks % 4 == 1 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "up") trainerSpot(gp.npc[gp.currentMap][i]);
+				if (gp.ticks % 4 == 2 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "left") trainerSpot(gp.npc[gp.currentMap][i]);
+				if (gp.ticks % 4 == 3 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "right") trainerSpot(gp.npc[gp.currentMap][i]);
+			}
 		}
 		if (keyH.wPressed) {
 			// Check trainers

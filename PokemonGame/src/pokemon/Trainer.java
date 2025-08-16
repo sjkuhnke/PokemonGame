@@ -29,7 +29,7 @@ public class Trainer implements Serializable {
 	public static Trainer[] trainers = new Trainer[MAX_TRAINERS];
 	
 	private static int levelCapIndex = 0;
-	public static int[] levelCaps = new int[] {0, 0, 0, 0, 0, 0, 0, 100, 100};
+	public static int[] levelCaps = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 100};
 	
 	public Trainer(String name, Pokemon[] team, int money) {
 		this(name, team, money, null, 0, true);
