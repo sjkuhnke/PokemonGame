@@ -826,7 +826,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.REFLECT) && field.contains(this.getFieldEffects(), Effect.REFLECT)) bestMoves.removeIf(Move.REFLECT::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.LIGHT_SCREEN) && field.contains(this.getFieldEffects(), Effect.LIGHT_SCREEN)) bestMoves.removeIf(Move.LIGHT_SCREEN::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_VEIL) && (field.contains(this.getFieldEffects(), Effect.AURORA_VEIL) || !field.equals(field.weather, Effect.SNOW))) bestMoves.removeIf(Move.AURORA_VEIL::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_GLOW) && (field.contains(this.getFieldEffects(), Effect.AURORA))) bestMoves.removeIf(Move.AURORA_GLOW::equals);
+		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_GLOW) && (field.contains(this.getFieldEffects(), Effect.AURORA_GLOW))) bestMoves.removeIf(Move.AURORA_GLOW::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.SAFEGUARD) && field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) bestMoves.removeIf(Move.SAFEGUARD::equals);
 		if (bestMoves.size() > 1 && bestMoves.contains(Move.LUCKY_CHANT) && field.contains(this.getFieldEffects(), Effect.LUCKY_CHANT)) bestMoves.removeIf(Move.LUCKY_CHANT::equals);
 		
@@ -2024,7 +2024,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (foe.getItem() != Item.ABILITY_SHIELD &&
-				(move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || move == Move.SUNSTEEL_STRIKE || this.ability == Ability.MOLD_BREAKER)) {
+				(move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || move == Move.SUNSTEEL_STRIKE ||
+				move == Move.FUTURE_SIGHT || this.ability == Ability.MOLD_BREAKER)) {
 			foeAbility = Ability.NULL;
 		}
 		
@@ -2152,29 +2153,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.rollCount = 1;
 				this.metronome = -1;
 				return; // Check for miss
-			}
-		}
-		
-		if (move == Move.FUTURE_SIGHT) {
-			useMove(move, foe);
-			if (field.contains(foe.getFieldEffects(), Effect.FUTURE_SIGHT)) {
-				fail();
-				this.impressive	= false;
-				this.moveMultiplier = 1;
-				this.metronome = -1;
-				return;
-			} else {
-				Task.addTask(Task.TEXT, this.nickname + " foresaw an attack!");
-				FieldEffect effect = field.new FieldEffect(Effect.FUTURE_SIGHT);
-				attackStat = this.getStat(3);
-				if (this.getItem() == Item.CHOICE_SPECS) attackStat *= 1.5;
-				if (this.status == Status.FROSTBITE) attackStat /= 2;
-				if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackStat *= 1.5;
-				if (this.isType(moveType)) attackStat *= 1.5;
-				effect.stat = (int) attackStat;
-				effect.level = this.level;
-				foe.getFieldEffects().add(effect);
-				return;
 			}
 		}
 		
@@ -2510,6 +2488,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			
 			bp *= boostItemCheck(moveType);
 			
+			if (this.getItem() == Item.LIFE_ORB) bp *= 1.3;
+			
 			if (move == Move.CHROMO_BEAM && checkSecondary(this.ability == Ability.SERENE_GRACE || field.equals(field.terrain, Effect.SPARKLY) ? 60 : 30)) {
 				Task.insertTask(Task.createTask(Task.TEXT, this.nickname + " is going all out for this attack!"), damageIndex++);
 				bp *= 2;
@@ -2587,6 +2567,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			double attackMod = 1.0;
 			double defenseMod = 1.0;
 			boolean isCrit = false;
+			boolean critAnnounce = move != Move.FUTURE_SIGHT;
 			
 			if (move.isPhysical()) {
 				attackStat = this.getStat(1);
@@ -2609,7 +2590,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					&& critCheck(critChance)) {
 				
 				isCrit = true;
-				Task.addTask(Task.TEXT, "A critical hit!");
+				if (critAnnounce) Task.addTask(Task.TEXT, "A critical hit!");
 				field.crits++;
 				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++;
 				if (foe.trainerOwned() && move.isTail()) tailCrit++;
@@ -2655,6 +2636,27 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (!isCrit && (field.contains(foe.getFieldEffects(), screen) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) defenseMod *= 2;
 			}
 			
+			if (move == Move.FUTURE_SIGHT) {
+				useMove(move, foe);
+				if (field.contains(foe.getFieldEffects(), Effect.FUTURE_SIGHT)) {
+					fail();
+					this.impressive	= false;
+					this.moveMultiplier = 1;
+					this.metronome = -1;
+					return;
+				} else {
+					Task.addTask(Task.TEXT, this.nickname + " foresaw an attack!");
+					FieldEffect effect = field.new FieldEffect(Effect.FUTURE_SIGHT);
+					effect.stat = (int) (attackStat * attackMod);
+					effect.level = this.level;
+					effect.bp = (int) bp;
+					effect.crit = isCrit;
+					effect.ability = this.ability;
+					foe.getFieldEffects().add(effect);
+					return;
+				}
+			}
+			
 			if (foe.getItem() == Item.EVIOLITE && foe.canEvolve()) defenseMod *= 1.5;
 			
 			damage = calc(attackStat * attackMod, defenseStat * defenseMod, bp, this.level, this.script ? 1 : 0);
@@ -2663,7 +2665,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (this.ability == Ability.SNIPER) damage *= 1.5;
 				if (foeAbility == Ability.ANGER_POINT) {
 					Task.addAbilityTask(foe);
-					stat(foe, getHighestAttackingStat(), 12, this);
+					stat(foe, foe.getHighestAttackingStat(), 12, this);
 				}
 			}
 			
@@ -2747,7 +2749,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (foeAbility == Ability.GALACTIC_AURA && (moveType == PType.PSYCHIC || moveType == PType.ICE)) damage /= 2;
 			
 			if (multiplier > 1) {
-				message += "\nIt's super effective!";
+				message += multiplier > 2 ? "\nIt's extremely effective!" : "\nIt's super effective!";
 				field.superEffective++;
 				if (foeAbility == Ability.SOLID_ROCK || foeAbility == Ability.FILTER) damage /= 2;
 				if (foeAbility == Ability.ANTICIPATION && foe.illusion) {
@@ -2764,11 +2766,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			if (multiplier < 1) {
-				message += "\nIt's not very effective...";
+				message += multiplier < 0.5 ? "\nIt's mostly ineffective..." : "\nIt's not very effective...";
 				if (ability == Ability.TINTED_LENS) damage *= 2;
 			}
 			
-			if (this.getItem() == Item.LIFE_ORB) damage *= 1.3;
 			if (this.ability == Ability.ILLUSION && this.illusion) damage *= 1.2;
 			if (move == Move.NIGHT_SHADE || move == Move.SEISMIC_TOSS || move == Move.PSYWAVE) damage = this.level;
 			if (move == Move.ENDEAVOR) {
@@ -3141,7 +3142,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (!foeEject && !sheer && aboveHalfHP && foe.currentHP < foe.getStat(0) / 2 && !foe.isFainted()) {
 			if (foeAbility == Ability.BERSERK) {
 				Task.addAbilityTask(foe);
-				stat(foe, getHighestAttackingStat(), 2, this);
+				stat(foe, foe.getHighestAttackingStat(), 2, this);
 			}
 			if (foeAbility == Ability.SLIPSTREAM) {
 				if (foe.trainer != null && foe.trainer.hasValidMembers()) {
@@ -4232,8 +4233,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			    fail = fail(announce);
 			}
 		} else if (announce && move == Move.AURORA_GLOW) {
-			if (!(field.contains(this.getFieldEffects(), Effect.AURORA))) {
-				this.getFieldEffects().add(field.new FieldEffect(Effect.AURORA));
+			if (!(field.contains(this.getFieldEffects(), Effect.AURORA_GLOW))) {
+				this.getFieldEffects().add(field.new FieldEffect(Effect.AURORA_GLOW));
 				Task.addTask(Task.TEXT, "A glowing Aurora surrounded " + this.nickname + "'s team!");
 				this.checkStarborn(foe);
 				foe.checkStarborn(this);
@@ -5232,7 +5233,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		if (foe != null && foe.ability == Ability.EMPATHIC_LINK && a > 0) {
 			if (announce) Task.addAbilityTask(foe);
-			foe.stat(foe, getHighestAttackingStat(), 1, this, announce);
+			foe.stat(foe, foe.getHighestAttackingStat(), 1, this, announce);
 		}
 		p.statStages[i] += a;
 		p.statStages[i] = p.statStages[i] < -6 ? -6 : p.statStages[i];
@@ -6068,6 +6069,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		bp *= boostItemCheck(moveType);
 		
+		if (this.getItem() == Item.LIFE_ORB) bp *= 1.3;
+		
 		if (mode == 0 && move == Move.CHROMO_BEAM && checkSecondary(this.ability == Ability.SERENE_GRACE || field.equals(field.terrain, Effect.SPARKLY) ? 60 : 30)) bp *= 2;
 		
 		int arcane = this.getStatusNum(Status.ARCANE_SPELL);
@@ -6285,7 +6288,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (mode == 0 && this.getItem() == Item.THROAT_SPRAY && Move.getSound().contains(move)) damage *= 1.5;
 		
-		if (this.getItem() == Item.LIFE_ORB) damage *= 1.3;
 		if (this.ability == Ability.ILLUSION && this.illusion) damage *= 1.2;
 		if (this.ability == Ability.ANALYTIC && !first) damage *= 1.3;
 		if (move == Move.NIGHT_SHADE || move == Move.SEISMIC_TOSS || move == Move.PSYWAVE) damage = this.level;
@@ -6340,7 +6342,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (this.status == Status.FROSTBITE) attackStat /= 2;
 			if (this.ability == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackStat *= 1.5;
 			if (this.isType(moveType)) attackStat *= 1.5;
-			damage = foe.takeFutureSight((int) attackStat, this.level, mode, this);
+			damage = foe.takeFutureSight((int) bp, (int) attackStat, this.level, isCrit, this.ability, mode, this);
 			damagePercent = damage * 100.0 / foe.getStat(0);
 		}
 		return new Pair<>(damage, damagePercent);
@@ -7650,9 +7652,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			effect.turns = 5;
 			field.setEffect(effect);
 		} else if (this.ability == Ability.EVERGLOW) {
-			if (!(field.contains(this.getFieldEffects(), Effect.AURORA))) {
+			if (!(field.contains(this.getFieldEffects(), Effect.AURORA_GLOW))) {
 				Task.addAbilityTask(this);
-				this.getFieldEffects().add(field.new FieldEffect(Effect.AURORA));
+				this.getFieldEffects().add(field.new FieldEffect(Effect.AURORA_GLOW));
 				Task.addTask(Task.TEXT, "A glowing Aurora surrounded " + this.nickname + "'s team!");
 				foe.checkStarborn(this);
 			}
@@ -7870,7 +7872,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 	
 	private void checkStarborn(Pokemon foe) {
-		if (this.ability == Ability.STARBORN && field.contains(this.getFieldEffects(), Effect.AURORA)) {
+		if (this.ability == Ability.STARBORN && field.contains(this.getFieldEffects(), Effect.AURORA_GLOW)) {
 			Task.addAbilityTask(this);
 			stat(this, getHighestAttackingStat(), 1, foe);
 		}
@@ -10046,7 +10048,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}		
 	}
 
-	public int takeFutureSight(int stat, int level, int mode, Pokemon foe) {
+	public int takeFutureSight(int bp, int stat, int level, boolean isCrit, Ability ability, int mode, Pokemon foe) {
 		if (this.isFainted() && mode == 0) return 0;
 		ArrayList<Task> tasks = mode == 0 ? gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.simBattleUI.tasks : null;
 		int damageIndex = tasks == null ? 0 : tasks.size();
@@ -10064,12 +10066,17 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (field.contains(this.getFieldEffects(), Effect.LIGHT_SCREEN) || field.contains(this.getFieldEffects(), Effect.AURORA_VEIL)) defenseStat *= 2;
 		if (this.getItem() == Item.EVIOLITE && this.canEvolve()) defenseStat *= 1.5;
 		
-		int damage = this.calc(attackStat, defenseStat, Move.FUTURE_SIGHT.basePower, level, mode);
+		int damage = this.calc(attackStat, defenseStat, bp, level, mode);
 		damage = Math.max(damage, 1);
 		
 		double multiplier = this.getEffectiveMultiplier(Move.FUTURE_SIGHT.mtype, Move.FUTURE_SIGHT, null);
 		
 		if (this.ability == Ability.WONDER_GUARD && multiplier <= 1) {
+			if (mode == 0) Task.addAbilityTask(this);
+			immune = true; // Check for immunity
+		}
+		
+		if (this.ability == Ability.WARM_HEART) {
 			if (mode == 0) Task.addAbilityTask(this);
 			immune = true; // Check for immunity
 		}
@@ -10084,6 +10091,21 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		damage *= multiplier;
+		if (ability == Ability.ANALYTIC) damage *= 1.3;
+		
+		if (isCrit) {
+			damage *= 1.5;
+			if (ability == Ability.SNIPER) damage *= 1.5;
+			if (mode == 0) {
+				Task.addTask(Task.TEXT, "A critical hit!");
+				if (this.ability == Ability.ANGER_POINT) {
+					Task.addAbilityTask(this);
+					stat(this, getHighestAttackingStat(), 12, this);
+				}
+			}
+		}
+		
+		if (this.ability == Ability.ICY_SCALES || this.ability == Ability.MULTISCALE && foe.currentHP == foe.getStat(0)) damage /= 2;
 		
 		if (multiplier == 0) immune = true;
 		

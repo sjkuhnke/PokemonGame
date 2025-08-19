@@ -3162,7 +3162,7 @@ public class UI extends AbstractUI {
 		}
 		
 		if (nicknaming >= 0 && !showBoxSummary && !gauntlet) {
-			currentDialogue = "Change box's name?";
+			currentDialogue = "Change Box " + (cBoxIndex + 1) + "'s name?";
 			drawDialogueScreen(true);
 			setNickname(null, false);
 			if (nicknaming == 0) {

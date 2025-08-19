@@ -742,6 +742,10 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public boolean inSpace() {
+		return inSpace(currentMap);
+	}
+	
+	public boolean inSpace(int currentMap) {
 		return currentMap == 159 || currentMap == 160 || currentMap == 206 || currentMap == 207;
 	}
 

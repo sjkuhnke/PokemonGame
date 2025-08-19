@@ -72,9 +72,9 @@ public class Field {
 		LUCKY_CHANT(8, false, false),
 		WATER_SPORT(8, false, false),
 		MUD_SPORT(8, false, false),
-		AURORA(5, false, false),
+		AURORA_GLOW(5, false, false),
 		FLOODLIGHT(-1, false, false),
-		HEALING_CIRCLE(8, false, false),
+		HEALING_CIRCLE(10, false, false),
 		MAGIC_ROOM(8, false, false),
 		FUTURE_SIGHT(3, false, false),
 		WISH(2, false, false),
@@ -145,6 +145,9 @@ public class Field {
 		public int layers;
 		public int stat;
 		public int level;
+		public int bp;
+		public boolean crit;
+		public Ability ability;
 		
 		public FieldEffect(Effect effect) {
 			this.effect = effect;
@@ -216,7 +219,7 @@ public class Field {
 				return new Color(249, 85, 135);
 			case WATER_SPORT:
 				return new Color(99, 144, 240);
-			case AURORA:
+			case AURORA_GLOW:
 				return new Color(208, 47, 245);
 			case FLOODLIGHT:
 				return new Color(249, 255, 166);
@@ -237,7 +240,7 @@ public class Field {
 		}
 
 		public void handleAurora(Pokemon p) {
-			if (this.effect == Effect.AURORA) {
+			if (this.effect == Effect.AURORA_GLOW) {
 	        	ArrayList<Pokemon> team;
 	        	if (p.trainer != null) {
 	        		team = new ArrayList<>(p.trainer.getOrderedTeam());
@@ -254,7 +257,7 @@ public class Field {
 		public void handleFutureSight(Pokemon reciever, Pokemon foe) {
 			if (this.turns > 0) return;
 			if (this.effect == Effect.FUTURE_SIGHT) {
-				reciever.takeFutureSight(stat, level, 0, foe);
+				reciever.takeFutureSight(bp, stat, level, crit, ability, 0, foe);
 			}
 			
 		}
