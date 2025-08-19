@@ -165,7 +165,7 @@
 74 |Conkeldurr   |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[105, 140, 95, 55, 65, 45]    |191.8 |45 |HUMAN$LIKE  |HUMAN$LIKE  |
 75 |Rhypo        |GROUND  |null    |RATTLED           |SAND_FORCE        |ROUGH_SKIN        |[51, 65, 89, 30, 66, 15]      |49.5  |235|FIELD       |MINERAL     |
 76 |Rhynee       |GROUND  |null    |SAND_STREAM       |SAND_FORCE        |ROUGH_SKIN        |[57, 73, 112, 55, 95, 20]     |295.1 |175|FIELD       |MINERAL     |
-77 |Rhypolar     |GROUND  |FIGHTING|SAND_STREAM       |SAND_FORCE        |ROUGH_SKIN        |[75, 100, 145, 70, 95, 25]    |489.1 |45 |FIELD       |MINERAL     |
+77 |Rhypolar     |GROUND  |FIGHTING|SAND_STREAM       |SAND_FORCE        |ROUGH_SKIN        |[75, 100, 145, 70, 95, 25]    |889.1 |45 |FIELD       |MINERAL     |
 115|Diggie       |GROUND  |null    |SAND_RUSH         |TOUGH_CLAWS       |MOLD_BREAKER      |[37, 85, 47, 23, 63, 78]      |29.0  |200|FIELD       |FIELD       |
 116|Drillatron   |GROUND  |LIGHT   |SAND_FORCE        |TOUGH_CLAWS       |MOLD_BREAKER      |[65, 128, 55, 80, 55, 120]    |55.1  |45 |FIELD       |FIELD       |
 69 |Wormite      |GROUND  |null    |SAND_VEIL         |RATTLED           |REGENERATOR       |[45, 60, 55, 35, 25, 55]      |40.3  |255|FIELD       |MINERAL     |

@@ -1538,7 +1538,7 @@ public class TileManager {
 					String numbers[] = line.split(" ");
 					
 					int num = Integer.parseInt(numbers[col]);
-					if (!cave && tile[num] instanceof CaveTile) cave = true;
+					if (!cave && (tile[num] instanceof CaveTile || gp.inSpace(num))) cave = true;
 					if (!lava && lavaTiles.contains(num)) {
 						lava = true;
 						lavaMaps.add(map);
