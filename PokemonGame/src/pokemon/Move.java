@@ -317,7 +317,7 @@ public enum Move {
 	MAGIC_TOMB(85,100,10,0,1,0,PType.MAGIC,"% chance to lower foe's Attack and Sp.Atk by 1",true,10),
 	MAGICAL_LEAF(60,1000,0,0,1,0,PType.GRASS,"This move will never miss",false,20),
 	MAGICAL_CRASH(110,95,100,0,0,0,PType.MAGIC,"% to inflict foe with a random Status condition. User must rest after using",true,5),
-	MAGMA_STORM(100,75,100,0,1,0,PType.FIRE,"% to spin the foe for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,15),
+	MAGMA_STORM(100,75,100,0,1,0,PType.FIRE,"% to spin the foe for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,5),
 	MAGNET_BOMB(60,1000,0,0,0,0,PType.STEEL,"This move will never miss",false,20),
 	MAGNET_RISE(0,1000,0,0,2,0,PType.STEEL,"User will float until it switches out, causing it to be immune to all Ground-type attacks",false,10),
 	MAGNITUDE(-1,100,0,0,0,0,PType.GROUND,"A random Magnitude between 4-10 will be used, corresponding to its power",false,25),
