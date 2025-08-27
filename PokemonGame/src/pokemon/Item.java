@@ -104,6 +104,7 @@ public enum Item {
 	PP_UP(42,2500,1000,new Color(150, 51, 156),Item.MEDICINE,null,"Increases max PP of a selected move by 20%."),
 	PP_MAX(43,0,1500,new Color(142, 230, 21),Item.MEDICINE,null,"Increases max PP of a selected move by its max PP, which is 60%."),
 	TEMPLE_ORB(386,0,0,Color.BLACK,Item.OTHER,null,"A rare orb used by an ancient diety as currency for gambling."),
+	FABLE_CHARGE(396,0,0,Color.BLACK,Item.OTHER,true,"A shattered piece of the Fable Stone, which glows with ethereal hue. Wizards used them as cores for their wands, but these rare minerals have receded deep into the earth."),
 	RUSTY_BOTTLE_CAP(282,300,150,Color.BLACK,Item.OTHER,null,"Lowers an IV of choosing to 0."),
 	BOTTLE_CAP(27,1000,500,new Color(192, 192, 192),Item.OTHER,null,"Maxes out an IV of choosing."),
 	GOLD_BOTTLE_CAP(28,0,1000,new Color(255, 215, 0),Item.OTHER,null,"Maxes out all IVs of a Pokemon."),
@@ -117,8 +118,8 @@ public enum Item {
 	VALIANT_GEM(24,2000,500,new Color(72, 75, 219),Item.OTHER,null,"Grants Masculine energy to a Pokemon, evolving them into their male evolution."),
 	PETTICOAT_GEM(25,2000,500,new Color(204, 61, 140),Item.OTHER,null,"Grants Feminine energy to a Pokemon, evolving them into their female evolution."),
 	RAZOR_CLAW(265,1000,500,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon."),
-	ABILITY_CAPSULE(26,5000,1250,new Color(102, 7, 143),Item.OTHER,null,"Swaps a Pokemon's ability with its other possible ability."),
-	ABILITY_PATCH(91,10000,1500,Color.BLACK,Item.OTHER,null,"A patch that can be used to change the regular Ability of a Pokemon to a rarer Ability."),
+	ABILITY_CAPSULE(26,5000,2500,new Color(102, 7, 143),Item.OTHER,null,"Swaps a Pokemon's ability with its other possible ability."),
+	ABILITY_PATCH(91,10000,5000,Color.BLACK,Item.OTHER,null,"A patch that can be used to change the regular Ability of a Pokemon to a rarer Ability."),
 	LONELY_MINT(311,500,150,Color.BLACK,Item.MEDICINE,Nature.LONELY,"Changes a Pokemon's nature to +Atk, -Def"),
 	ADAMANT_MINT(29,2500,1000,new Color(113, 84, 255),Item.MEDICINE,Nature.ADAMANT,"Changes a Pokemon's nature to +Atk, -SpA"),
 	NAUGHTY_MINT(312,500,150,Color.BLACK,Item.MEDICINE,Nature.NAUGHTY,"Changes a Pokemon's nature to +Atk, -SpD"),
@@ -453,6 +454,7 @@ public enum Item {
 	FAITH_CORE(383,0,0,Color.BLACK,Item.KEY_ITEM,false,"A fragment of ancient energy, pulsing with quiet warmth. Said to embody the undying spirit of belief."),
 	LOGIC_CORE(384,0,0,Color.BLACK,Item.KEY_ITEM,false,"A shard of crystallized thought, sharp and cold to the touch. It hums with the relentless force of reason."),
 	LETTER_2(394,0,0,Color.BLACK,Item.KEY_ITEM,true,"A letter from your father delivered by Robin, it's notably urgent."),
+	FABLE_STONE(395,0,0,Color.BLACK,Item.KEY_ITEM,true,"A stone of fantastical luster and lapidary, humming with legendary energy. Its presence calls out to unknown forces beyond the veil."),
 	;
 	
 	private int id;

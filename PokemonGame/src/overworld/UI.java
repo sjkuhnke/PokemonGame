@@ -4101,14 +4101,15 @@ public class UI extends AbstractUI {
 		}
 		y += gp.tileSize;
 		String option2 = currentPocket == Item.TMS ? "Info" : currentPocket == Item.KEY_ITEM ? "Reg" : "Sell";
-		if (!entryItem.getItem().isSellable(entryItem.getCount())) g2.setColor(Color.GRAY);
+		boolean isSellable = currentPocket == Item.KEY_ITEM ? entryItem.getItem().isUsable() : entryItem.getItem().isSellable(entryItem.getCount());
+		if (!isSellable) g2.setColor(Color.GRAY);
 		g2.drawString(option2, x, y);
 		g2.setColor(Color.WHITE);
 		if (commandNum == 1) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				if (!entryItem.getItem().isSellable(entryItem.getCount())) {
+				if (!isSellable) {
 					// do nothing
 				} else {
 					if (currentPocket == Item.KEY_ITEM) {

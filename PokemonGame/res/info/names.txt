@@ -54,3 +54,8 @@ Crystallor-E  |Prismodon-E
 Iglite-S      |Sember-S
 Blaxer-S      |Kaboon-S
 Pyrator-S     |Detonape-S
+Soarwhell     |Blohadel
+Diftery       |Perilyte
+Vorsuitex     |Faulette
+Kleinyeti     |Sasquotta
+Triwandoliz   |Hueduu

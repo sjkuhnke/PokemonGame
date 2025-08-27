@@ -1369,7 +1369,7 @@ public class Script {
 					for (int i = 0; i < p.badges; i++) {
 						if (!p.coinBadges[i]) {
 							Task.addTask(Task.DIALOGUE, npc, messages[i]);
-							int coins = i > 4 ? 25 : i > 2 ? 20 : i > 0 ? 10 : 5;
+							int coins = i > 4 ? 250 : i > 2 ? 200 : i > 0 ? 100 : 50;
 							Task.addTask(Task.TEXT, "You received " + coins + " coins!");
 							p.coinBadges[i] = true;
 							p.coins += coins;
