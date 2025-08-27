@@ -225,11 +225,11 @@
 -6 |Detonape-S   |FIGHTING|DARK    |GUTS              |SUPER_LUCK        |FLAME_BODY        |[115, 115, 75, 46, 90, 75]    |205.3 |50 |FIELD       |HUMAN$LIKE  |
 -7 |Ekans-S      |FLYING  |GHOST   |SHED_SKIN         |LIGHTNING_ROD     |PRESSURE          |[35, 40, 54, 65, 64, 30]      |3.9   |255|FLYING      |DRAGON      |
 -8 |Arbok-S      |FLYING  |GHOST   |SHED_SKIN         |LIGHTNING_ROD     |PRESSURE          |[80, 40, 90, 115, 90, 75]     |17.5  |90 |FLYING      |DRAGON      |
-243|Soarwhell    |WATER   |FLYING  |DRIZZLE           |DRIZZLE           |DRIZZLE           |[80, 30, 170, 72, 170, 78]    |800.4 |5  |FLYING      |DRAGON      |
-240|Diftery      |DARK    |MAGIC   |TYPE_MASTER       |TYPE_MASTER       |TYPE_MASTER       |[45, 125, 40, 125, 100, 165]  |20.6  |3  |UNDISCOVERED|UNDISCOVERED|
-244|Vorsuitex    |ICE     |LIGHT   |SNOW_WARNING      |SNOW_WARNING      |SNOW_WARNING      |[80, 5, 130, 150, 180, 80]    |100.9 |3  |UNDISCOVERED|UNDISCOVERED|
-242|Kleinyeti    |ICE     |MAGIC   |SLUSH_RUSH        |SLUSH_RUSH        |SLUSH_RUSH        |[25, 400, 35, 5, 50, 95]      |2.3   |3  |UNDISCOVERED|UNDISCOVERED|
-241|Triwandoliz  |POISON  |MAGIC   |PROTEAN           |PROTEAN           |PROTEAN           |[75, 85, 90, 134, 105, 126]   |86.5  |3  |UNDISCOVERED|UNDISCOVERED|
+243|Blohadel     |WATER   |FIRE    |DRIZZLE           |DRIZZLE           |DRIZZLE           |[80, 30, 170, 72, 170, 78]    |800.4 |5  |FLYING      |DRAGON      |
+240|Perilyte     |ROCK    |MAGIC   |TYPE_MASTER       |TYPE_MASTER       |TYPE_MASTER       |[45, 125, 40, 125, 100, 165]  |20.6  |3  |UNDISCOVERED|UNDISCOVERED|
+244|Faulette     |DARK    |MAGIC   |SNOW_WARNING      |SNOW_WARNING      |SNOW_WARNING      |[80, 5, 130, 150, 180, 80]    |100.9 |3  |UNDISCOVERED|UNDISCOVERED|
+242|Sasquotta    |GROUND  |MAGIC   |SLUSH_RUSH        |SLUSH_RUSH        |SLUSH_RUSH        |[25, 400, 35, 5, 50, 95]      |2.3   |3  |UNDISCOVERED|UNDISCOVERED|
+241|Hueduu       |POISON  |MAGIC   |PROTEAN           |PROTEAN           |PROTEAN           |[75, 85, 90, 134, 105, 126]   |86.5  |3  |UNDISCOVERED|UNDISCOVERED|
 245|Relomidel    |ICE     |DRAGON  |COLD_HEART        |COLD_HEART        |PRESSURE          |[120, 150, 100, 80, 130, 100] |750.5 |3  |UNDISCOVERED|UNDISCOVERED|
 246|Relopamil    |PSYCHIC |DRAGON  |WARM_HEART        |WARM_HEART        |PRESSURE          |[120, 80, 130, 150, 100, 100] |705.2 |3  |UNDISCOVERED|UNDISCOVERED|
 247|Dragowrath   |GALACTIC|DRAGON  |WHITE_HOLE        |WHITE_HOLE        |PRESSURE          |[110, 100, 100, 160, 100, 130]|956.4 |3  |UNDISCOVERED|UNDISCOVERED|
