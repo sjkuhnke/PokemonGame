@@ -209,6 +209,7 @@ public class AssetSetter {
 //	private static final int T = 208;
 //	private static final int T = 209;
 	
+	private static final int DOWN_3 = -1;
 	private static final int DOWN_2 = 0;
 	private static final int DOWN = 1;
 	private static final int UP = 2;
@@ -3671,9 +3672,9 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(35, 31, LEFT, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 30, RIGHT, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(49, 47, RIGHT, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(44, 50, DOWN, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 57, DOWN, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 51, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(44, 50, DOWN_3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 57, DOWN_3, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 51, DOWN_3, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 58, RIGHT, 1, mapNum, map);
 		
 		mapNum = 168;

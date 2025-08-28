@@ -149,8 +149,8 @@ public class NPC_Prize_Shop extends Entity {
 	public List<Pair<Integer, Integer>> getPrizePokemon() {
 		int badges = gp.player.p.badges;
 		ArrayList<Pair<Integer, Integer>> result = new ArrayList<>();
-		ArrayList<Integer> pokemon = new ArrayList<>(   Arrays.asList(150, 143, 195, 184, 187, 190, 263, 232, 231));
-		ArrayList<Integer> winStreaks = new ArrayList<>(Arrays.asList(3,   4,   6,   7,   7,   8,   9,   10,  12 ));
+		ArrayList<Integer> pokemon = new ArrayList<>(   Arrays.asList(150, 143, 195, 184, 187, 190, 263));
+		ArrayList<Integer> winStreaks = new ArrayList<>(Arrays.asList(3,   4,   6,   7,   8,   9,   10));
 		if (badges > 5) {
 			result.add(new Pair<Integer, Integer>(pokemon.get(0), winStreaks.get(0)));
 			result.add(new Pair<Integer, Integer>(pokemon.get(1), winStreaks.get(1)));

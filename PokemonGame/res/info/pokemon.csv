@@ -103,8 +103,8 @@
 103|Lafloo       |FIRE    |ROCK    |SOLID_ROCK        |SOLID_ROCK        |MAGMA_ARMOR       |[90, 80, 95, 120, 95, 45]     |450.9 |50 |MINERAL     |MINERAL     |
 96 |Houndour     |FIRE    |DARK    |SOLAR_POWER       |FLASH_FIRE        |INTIMIDATE        |[45, 60, 30, 80, 50, 65]      |23.8  |120|FIELD       |FIELD       |
 97 |Houndoom     |FIRE    |DARK    |SOLAR_POWER       |FLASH_FIRE        |INTIMIDATE        |[75, 90, 50, 110, 80, 95]     |77.2  |45 |FIELD       |FIELD       |
-92 |Sparkdust    |MAGIC   |null    |MAGIC_GUARD       |SHIELD_DUST       |MAGIC_BOUNCE      |[40, 45, 40, 75, 65, 70]      |3.5   |50 |FIELD       |FAIRY       |
-93 |Splame       |MAGIC   |FIRE    |SLEIGHT_OF_HAND   |SHIELD_DUST       |MAGIC_BOUNCE      |[85, 45, 65, 145, 110, 55]    |5.5   |25 |FIELD       |FAIRY       |
+92 |Sparkdust    |MAGIC   |null    |MAGIC_GUARD       |SHIELD_DUST       |MAGIC_BOUNCE      |[40, 45, 40, 75, 65, 70]      |3.5   |100|FIELD       |FAIRY       |
+93 |Splame       |MAGIC   |FIRE    |SLEIGHT_OF_HAND   |SHIELD_DUST       |MAGIC_BOUNCE      |[85, 45, 65, 145, 110, 55]    |5.5   |50 |FIELD       |FAIRY       |
 110|Sparkitten   |FIRE    |LIGHT   |ANTICIPATION      |ANTICIPATION      |NULL              |[60, 70, 65, 70, 65, 70]      |16.0  |110|FIELD       |FIELD       |
 111|Fireblion    |FIRE    |null    |DROUGHT           |DROUGHT           |NULL              |[85, 105, 99, 40, 92, 89]     |295.5 |35 |FIELD       |FIELD       |
 112|Flamebless   |FIRE    |LIGHT   |COMPETITIVE       |COMPETITIVE       |NULL              |[70, 40, 55, 120, 115, 110]   |125.0 |35 |FIELD       |FIELD       |

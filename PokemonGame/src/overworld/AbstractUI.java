@@ -730,9 +730,7 @@ public abstract class AbstractUI {
 				if (p.playerOwned()) {
 					if (moveSummaryNum < 0) {
 						if (p.item != null && foe == null) {
-							showMessage("Took " + p.nickname + "'s " + p.item + ".");
-							gp.player.p.bag.add(p.item);
-							p.item = null;
+							gp.player.p.takeItem(p, this);
 						}
 					} else {
 						if (moveSwapNum > -1) {

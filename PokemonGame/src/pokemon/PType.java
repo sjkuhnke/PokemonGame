@@ -76,7 +76,9 @@ public enum PType {
 		double multiplier = foe.getEffectiveMultiplier(this, m, user);
 		
 		if (multiplier == 0) return "No Effect";
+		if (multiplier > 2) return "Extremely Effective";
 		if (multiplier > 1) return "Super Effective";
+		if (multiplier < 0.5) return "Mostly Ineffective";
 		if (multiplier < 1) return "Not Very Effective";
 		return "Effective";
 	}

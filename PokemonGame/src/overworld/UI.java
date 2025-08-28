@@ -805,12 +805,13 @@ public class UI extends AbstractUI {
 		int height = (int) (gp.tileSize * 3.25);
 		drawSubWindow(x, y, width, height);
 		
-		x += gp.tileSize;
+		x += gp.tileSize * 1.25;
 		y += gp.tileSize * 2;
 		y += 4;
 		g2.setFont(g2.getFont().deriveFont(30F));
-		g2.drawString(parlayBet + "", x, y);
+		g2.drawString(parlayBet + "", getCenterAlignedTextX(parlayBet + "", x), y);
 		
+		x -= gp.tileSize / 4;
 		int y2 = y += gp.tileSize / 4;
 		int width2 = gp.tileSize / 2;
 		int height2 = gp.tileSize / 2;
@@ -989,13 +990,14 @@ public class UI extends AbstractUI {
 		
 		g2.drawString(SimBattleUI.formatOdds(americanOdds), x, y);
 		
-		x += gp.tileSize;
+		x += gp.tileSize * 1.25;
 		y += gp.tileSize * 1.35;
 		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(32F));
 		battleBet = battleBet > gp.player.p.getBetCurrency(gauntlet) ? gp.player.p.getBetCurrency(gauntlet) : battleBet;
-		g2.drawString(battleBet + "", x, y);
+		g2.drawString(battleBet + "", getCenterAlignedTextX(battleBet + "", x), y);
 		
+		x -= gp.tileSize / 4;
 		int y2 = y += gp.tileSize / 4;
 		int width2 = gp.tileSize / 2;
 		int height2 = gp.tileSize / 2;
@@ -1329,6 +1331,8 @@ public class UI extends AbstractUI {
 		user.battled = true;
 		gp.battleUI.user = user;
 		gp.battleUI.foe = currentTask.p;
+		gp.battleUI.tempUser = gp.battleUI.user.clone();
+		gp.battleUI.tempFoe = gp.battleUI.foe.clone();
 		gp.battleUI.index = currentTask.counter;
 		gp.battleUI.staticID = currentTask.start;
 		gp.battleUI.partyNum = 0;
@@ -3138,8 +3142,12 @@ public class UI extends AbstractUI {
 							itemSwapP = cBox[boxNum];
 						} else {
 							Pokemon swap = cBox[boxNum];
-							if (swap != null && itemSwapP != swap) {
-								gp.player.p.swapItem(itemSwapP, swap);
+							if (swap != null) {
+								if (itemSwapP != swap) {
+									gp.player.p.swapItem(itemSwapP, swap);
+								} else {
+									gp.player.p.takeItem(swap, this);
+								}
 								itemSwapP = null;
 							}
 						}
@@ -3148,8 +3156,12 @@ public class UI extends AbstractUI {
 							itemSwapP = gp.player.p.team[partyNum];
 						} else {
 							Pokemon swap = gp.player.p.team[partyNum];
-							if (swap != null && itemSwapP != swap) {
-								gp.player.p.swapItem(itemSwapP, swap);
+							if (swap != null) {
+								if (itemSwapP != swap) {
+									gp.player.p.swapItem(itemSwapP, swap);
+								} else {
+									gp.player.p.takeItem(swap, this);
+								}
 								itemSwapP = null;
 							}
 						}
@@ -3874,11 +3886,11 @@ public class UI extends AbstractUI {
 			} else {
 				if (partySelectedItem != partyNum) {
 					gp.player.p.swapItem(gp.player.p.team[partySelectedItem], gp.player.p.team[partyNum]);
+				} else {
+					gp.player.p.takeItem(gp.player.p.team[partyNum], this);
 				}
 				partySelectedItem = -1;
 			}
-			
-			
 		}
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;

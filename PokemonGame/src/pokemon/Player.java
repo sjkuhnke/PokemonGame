@@ -38,6 +38,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import entity.Entity;
 import entity.NPC_Prize_Shop;
 import entity.PlayerCharacter;
+import overworld.AbstractUI;
 import overworld.GamePanel;
 import overworld.UI;
 import pokemon.Bag.Entry;
@@ -327,7 +328,6 @@ public class Player extends Trainer implements Serializable {
 			current.verifyHP();
 		}
 		Pokemon lead = current;
-		if (lead.hasStatus(Status.HEALING)) team[index].addStatus(Status.HEALING);
 		lead.clearVolatile();
 		if (lead.ability == Ability.ILLUSION) lead.illusion = true; // just here for calc
 		this.current = pokemon;
@@ -342,7 +342,6 @@ public class Player extends Trainer implements Serializable {
 			amulet = true;
 		}
 		Task.addSwapInTask(current, true);
-		if (this.current.hasStatus(Status.HEALING) && this.current.currentHP != this.current.getStat(0)) this.current.heal();
 		Pokemon.field.switches++;
 	}
 	
@@ -1980,5 +1979,12 @@ public class Player extends Trainer implements Serializable {
 			if (p != null && !p.isOverLevelCap(badges)) return false;
 		}
 		return true;
+	}
+
+	public void takeItem(Pokemon p, AbstractUI ui) {
+		if (p.item == null) return;
+		ui.showMessage("Took " + p.nickname + "'s " + p.item + ".");
+		bag.add(p.item);
+		p.item = null;
 	}
 }
