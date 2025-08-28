@@ -78,6 +78,8 @@ public class Field {
 		MAGIC_ROOM(8, false, false),
 		FUTURE_SIGHT(3, false, false),
 		WISH(2, false, false),
+		HEALING_WISH(-1, false, false),
+		LUNAR_DANCE(-1, false, false),
 		ION(1, false, false),
 		;
 		
@@ -231,6 +233,10 @@ public class Field {
 				return new Color(168, 167, 122);
 			case FUTURE_SIGHT:
 				return new Color(249, 85, 135);
+			case HEALING_WISH:
+				return new Color(232, 58, 111);
+			case LUNAR_DANCE:
+				return new Color(179, 5, 58);
 			case ION:
 				return new Color(252, 246, 63);
 			default:

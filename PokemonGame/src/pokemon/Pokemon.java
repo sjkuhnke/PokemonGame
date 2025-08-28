@@ -528,7 +528,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         		double chance = ((1 - Trainer.getEffective(tr.getBestResist(foe, check.mtype, check), foe, check.mtype, check, false)) / 2) * 100;
         		boolean faster = this == this.getFaster(foe, 0, 0);
         		if (only1Move) {
-        			chance *= 4;
+        			chance *= 3;
         		} else {
         			if (faster) chance /= 2;
             		if (this.impressive) chance /= 4;
@@ -762,7 +762,6 @@ public class Pokemon implements RoleAssignable, Serializable {
         		gp.simBattleUI.p2Moves = new Pair<>(this, bestMoves);
         	}
         }
-        System.out.println(bestMoves.toString());
         return bestMoves.get(randomIndex);
     }
 
@@ -1888,7 +1887,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (move == Move.FLY) Task.addTask(Task.SEMI_INV, this.nickname + " flew up high!", this);
 				if (move == Move.BOUNCE) Task.addTask(Task.SEMI_INV, this.nickname + " sprang up!", this);
 				if (move == Move.PHANTOM_FORCE || move == Move.VANISHING_ACT) Task.addTask(Task.SEMI_INV, this.nickname + " vanished instantly!", this);
-				this.addStatus(Status.SEMI_INV);
+				this.addStatus(Status.SEMI_INV, 0, move);
 				this.moveMultiplier = 1;
 				this.impressive = false;
 				this.rollCount = 1;
@@ -4550,10 +4549,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(this, 0, 1, foe, announce);
 		} else if (announce && move == Move.HYPNOSIS) {
 			foe.sleep(true, this);
-		} else if (announce && (move == Move.HEALING_WISH || move == Move.LUNAR_DANCE)) {
-			this.damage(this.currentHP, foe, move, "", -1);
-			this.faint(true, foe);
-			this.addStatus(Status.HEALING);
+		} else if (announce && move == Move.HEALING_WISH) {
+			if (field.contains(this.getFieldEffects(), Effect.HEALING_WISH)) {
+				fail = fail(announce);
+			} else {
+				this.damage(this.currentHP, foe, move, "", -1);
+				this.faint(true, foe);
+				this.getFieldEffects().add(field.new FieldEffect(Effect.HEALING_WISH));
+			}
 		} else if (announce && move == Move.INGRAIN) {
 			if (!(this.hasStatus(Status.AQUA_RING))) {
 			    this.addStatus(Status.AQUA_RING);
@@ -4603,6 +4606,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (announce) Task.addTask(Task.TEXT, "The Lucky Chant shielded the team from critical hits!");
 			} else {
 				fail = fail(announce);
+			}
+		} else if (announce && move == Move.LUNAR_DANCE) {
+			if (field.contains(this.getFieldEffects(), Effect.LUNAR_DANCE)) {
+				fail = fail(announce);
+			} else {
+				this.damage(this.currentHP, foe, move, "", -1);
+				this.faint(true, foe);
+				this.getFieldEffects().add(field.new FieldEffect(Effect.LUNAR_DANCE));
 			}
 		} else if (announce && move == Move.MAGIC_POWDER) {
 			foe.type1 = PType.MAGIC;
@@ -7806,6 +7817,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (this.currentHP < this.getStat(0) && field.contains(this.getFieldEffects(), Effect.HEALING_CIRCLE)) {
 				this.heal(Math.max((this.getStat(0) - this.currentHP) * 1.0 / 2, 1), this.nickname + " restored HP from the Healing Circle!");
 			}
+			if (field.contains(this.getFieldEffects(), Effect.LUNAR_DANCE) && !this.isFullyHealed(true)) {
+				this.healingWish(true);
+			}
+			if (field.contains(this.getFieldEffects(), Effect.HEALING_WISH) && !this.isFullyHealed(false)) {
+				this.healingWish(false);
+			}
 		}
 		if (hazards && this.getItem() != Item.HEAVY$DUTY_BOOTS && this.ability != Ability.SHIELD_DUST) {
 			if (field.contains(this.getFieldEffects(), Effect.STEALTH_ROCKS)) {
@@ -10251,6 +10268,40 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public boolean isOverLevelCap(int badges) {
 		int levelCap = Trainer.getLevelCap(badges);
 		return level > levelCap;
+	}
+
+	public boolean isFullyHealed(boolean checkPP) {
+		boolean ppGood = true;
+		if (checkPP) {
+			for (Moveslot m : this.moveset) {
+				if (m != null && m.currentPP < m.maxPP) {
+					ppGood = false;
+					break;
+				}
+			}
+		}
+		return this.status == Status.HEALTHY && this.currentHP == this.getStat(0) && ppGood;
+	}
+
+	public void healingWish(boolean restorePP) {
+		String move = restorePP ? "Lunar Dance" : "Healing Wish";
+		int healAmt = this.getStat(0) - this.currentHP;
+		if (healAmt > 0) {
+			heal(healAmt, this.nickname + "'s HP was restored by the " + move + "!");
+		}
+		if (this.status != Status.HEALTHY) {
+			this.status = Status.HEALTHY;
+			Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " became healthy" + (healAmt > 0 ? "" : " thanks to the " + move) + "!", this);
+		}
+		if (restorePP) {
+			for (Moveslot m : this.moveset) {
+				if (m != null) m.currentPP = m.maxPP;
+			}
+		}
+		Effect remove = restorePP ? Effect.LUNAR_DANCE : Effect.HEALING_WISH;
+		for (FieldEffect fe : this.getFieldEffects()) {
+			if (fe.effect == remove) this.getFieldEffects().remove(fe);
+		}
 	}
 	
 }

@@ -936,7 +936,7 @@ public class Script {
 				}
 			}
 			Pokemon result = new Pokemon(id, 30, true, false);
-			if (Math.random() < 0.4 && result.getAbility(2) != Ability.NULL) {
+			if (gift.nextDouble() < 0.4 && result.getAbility(2) != Ability.NULL) {
 				result.abilitySlot = 2;
 				result.setAbility();
 			}
@@ -962,7 +962,8 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "I brought a couple Flamigo as travel buddies from my home region, and I'm entrusting one to help you out with the Ice-types!");
 			Task.addTask(Task.TEXT, "You received Flamigo!");
 			Pokemon p = new Pokemon(246, 35, true, false);
-			if (Math.random() < 0.4) {
+			Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
+			if (gift.nextDouble() < 0.4) {
 				p.abilitySlot = 2;
 				p.setAbility();
 			}

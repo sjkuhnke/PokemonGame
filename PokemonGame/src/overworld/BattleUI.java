@@ -314,7 +314,7 @@ public class BattleUI extends AbstractUI {
 				userExpMax = tempUser == null ? user.expMax : tempUser.expMax;
 				userLevel = tempUser == null ? user.level : tempUser.level;
 				userName = tempUser == null ? user.nickname : tempUser.nickname;
-				userType = tempFoe == null ? new PType[] {user.type1, user.type2} : new PType[] {tempUser.type1, tempUser.type2};
+				userType = tempUser == null ? new PType[] {user.type1, user.type2} : new PType[] {tempUser.type1, tempUser.type2};
 				drawUserPokeball(true);
 			} else {
 				foe = currentTask.p;
@@ -384,7 +384,8 @@ public class BattleUI extends AbstractUI {
 			subState = PARTY_SELECTION_STATE;
 			break;
 		case Task.STATUS:
-			showMessage(currentTask.message);
+			message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 63);
+			showMessage(message);
 			if (currentTask.p == user) {
 				userStatus = currentTask.status;
 			} else {
@@ -1594,7 +1595,7 @@ public class BattleUI extends AbstractUI {
 	    
 	    for (FieldEffect fe : field.fieldEffects) {
 	    	String effect = fe.toString();
-	    	String turns = fe.turns + "/" + fe.effect.turns;
+	    	String turns = fe.turns < 0 || fe.effect.turns < 0 ? "" : fe.turns + "/" + fe.effect.turns;
 	    	g2.setColor(fe.getColor());
 	    	g2.drawString(effect, getCenterAlignedTextX(effect, middleX - gp.tileSize), y);
 	    	g2.setColor(Color.WHITE);

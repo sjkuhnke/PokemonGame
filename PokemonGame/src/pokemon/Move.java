@@ -307,7 +307,7 @@ public enum Move {
 	LOW_KICK(-1,100,0,0,0,0,PType.FIGHTING,"Damage is based on how heavy foe is",true,20),
 	LOW_SWEEP(65,100,100,0,0,0,PType.FIGHTING,"% chance to lower foe's Speed by 1",true,15),
 	LUCKY_CHANT(0,1000,0,0,2,0,PType.NORMAL,"Protects user's team from Critical Hits for 8 turns",false,30),
-	LUNAR_DANCE(0,1000,0,0,2,0,PType.PSYCHIC,"User faints. The next Pokemon sent in will be fully healed",false,10),
+	LUNAR_DANCE(0,1000,0,0,2,0,PType.PSYCHIC,"User faints. The next Pokemon sent in will be fully healed with their PP refreshed",false,10),
 	MACH_PUNCH(40,100,0,0,0,1,PType.FIGHTING,"Increased priority",true,15),
 	MAGIC_FANG(70,95,75,0,0,0,PType.MAGIC,"% to flinch foe if this move is Super-Effective against it, breaks Magic Reflect",true,10),
 	MAGIC_MISSILES(25,90,0,0,1,0,PType.MAGIC,"Hits 2-5 times, does Physical damage",false,15),
@@ -867,13 +867,13 @@ public enum Move {
 	    // Move Attributes
 	    JPanel attributesPanel = new JPanel(new GridLayout(0, 1));
 	    if (contact) {
-			attributesPanel.add(new JLabel("- Makes Contact"));
+			attributesPanel.add(new JLabel("Makes Contact"));
 		}
 		if (priority != 0) {
-			attributesPanel.add(new JLabel((priority > 0 ? "- +" : "- ") + priority + " Priority"));
+			attributesPanel.add(new JLabel((priority > 0 ? "+" : "") + priority + " Priority"));
 		}
 		if (critChance > 0) {
-			attributesPanel.add(new JLabel("- +" + critChance + " Crit Chance"));
+			attributesPanel.add(new JLabel("+" + critChance + " Crit Chance"));
 		}
 
 	    // Description

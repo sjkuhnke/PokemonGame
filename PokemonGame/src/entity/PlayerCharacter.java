@@ -130,26 +130,6 @@ public class PlayerCharacter extends Entity {
 				p.steps++;
 				cooldown++;
 			}
-			if (gp.ticks % 4 == 0 && (inTallGrass || p.surf || p.lavasurf) && !p.repel && cooldown > 2) {
-				Random r = new Random();
-				int random = r.nextInt(p.current != null && p.current.item == Item.CLEANSE_TAG ? 300 : 150);
-				if (random < speed) {
-					cooldown = 0;
-					char type = 'G';
-					if (p.surf) type = 'S';
-					if (p.lavasurf) type = 'L';
-					startWild(currentMapName, type);
-				}
-			}
-			if (p.steps == 202 && p.repel) {
-				resetSpriteNum();
-				p.repel = false;
-				if (p.bag.contains(0)) {
-					gp.gameState = GamePanel.USE_REPEL_STATE;
-				} else {
-					gp.ui.showMessage("Repel's effects wore off.");
-				}
-			}
 			if (p.steps % 129 == 0) {
 				ArrayList<Pair<Egg, Integer>> eggs = new ArrayList<>();
 				boolean fast = false;
@@ -238,6 +218,26 @@ public class PlayerCharacter extends Entity {
 						gp.tileM.tile[i].collision = true;
 					}
 					snapToTile();
+				}
+			}
+			if (gp.ticks % 4 == 0 && (inTallGrass || p.surf || p.lavasurf) && !p.repel && cooldown > 2) {
+				Random r = new Random();
+				int random = r.nextInt(p.current != null && p.current.item == Item.CLEANSE_TAG ? 300 : 150);
+				if (random < speed) {
+					cooldown = 0;
+					char type = 'G';
+					if (p.surf) type = 'S';
+					if (p.lavasurf) type = 'L';
+					startWild(currentMapName, type);
+				}
+			}
+			if (p.steps == 202 && p.repel) {
+				resetSpriteNum();
+				p.repel = false;
+				if (p.bag.contains(0)) {
+					gp.gameState = GamePanel.USE_REPEL_STATE;
+				} else {
+					gp.ui.showMessage("Repel's effects wore off.");
 				}
 			}
 			String currentMap = currentMapName;
