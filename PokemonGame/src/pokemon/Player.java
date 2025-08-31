@@ -75,6 +75,7 @@ public class Player extends Trainer implements Serializable {
 	@Deprecated
 	public boolean[] flags;
 	public boolean[] locations;
+	public boolean[] summons;
 	public boolean random = false;
 	public boolean ghost = false;
 	public int steps;
@@ -112,7 +113,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 73;
+	public static final int VERSION = 74;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
@@ -150,6 +151,7 @@ public class Player extends Trainer implements Serializable {
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 		trainersBeat = new boolean[MAX_TRAINERS];
 		locations[0] = true;
+		summons = new boolean[32];
 		effects = new ArrayList<>();
 		
 		blackjackStats = new int[20];
@@ -1445,6 +1447,7 @@ public class Player extends Trainer implements Serializable {
 		if (blackjackStats == null) blackjackStats = new int[20];
 		if (coinBadges == null) coinBadges = new boolean[12];
 		if (puzzlesLocked == null) puzzlesLocked = new HashMap<>();
+		if (summons == null) summons = new boolean[32];
 		if (!flag[4][6]) updateCoins();
 		version = VERSION;
 	}
@@ -1757,7 +1760,7 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public int getMaxCoins() {
-		return Math.min(9999, coins);
+		return Math.min(10000, coins);
 	}
 	
 	public int getMaxBet(boolean gauntlet) {
@@ -1986,5 +1989,26 @@ public class Player extends Trainer implements Serializable {
 		ui.showMessage("Took " + p.nickname + "'s " + p.item + ".");
 		bag.add(p.item);
 		p.item = null;
+	}
+
+	public void checkSummon(int newMap) {
+		if (!bag.contains(Item.FABLE_STONE)) return;
+		if (bag.getCount(Item.FABLE_CHARGE) < 5) return;
+		//                           blohadel perilyte faulette sasquotta hueduu
+		int[] validMaps = new int[] {  210,     150,     127,      209,    148 };
+		
+		boolean isSummonableMap = false;
+		int summonIndex = -1;
+		for (int i = 0; i < validMaps.length; i++) {
+			if (newMap == validMaps[i]) {
+				isSummonableMap = true;
+				summonIndex = i;
+				break;
+			}
+		}
+		if (!isSummonableMap) return;
+		if (summons[summonIndex]) return; // legendary already summoned here
+		
+		// TODO: prompt the user for if they want to summon and do summon stuff accordinly using summons
 	}
 }

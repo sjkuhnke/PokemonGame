@@ -367,6 +367,11 @@ public class GamePanel extends JPanel implements Runnable {
 					if (item == Item.TEMPLE_ORB) {
 						task.counter = 100;
 					}
+					if (item == Item.FABLE_STONE) {
+						task = Task.addTask(Task.ITEM, "");
+						task.item = Item.FABLE_CHARGE;
+						task.counter = 5;
+					}
 				}
 				
 				if (trainer > -1 && t.update) {
@@ -676,9 +681,9 @@ public class GamePanel extends JPanel implements Runnable {
 		renderableNPCs.sort(Comparator.comparingInt(Entity::getWorldY));
 	}
 	
-	public void saveGame(Player p) {
+	public void saveGame(Player p, boolean saveCoords) {
     	try {
-    		if (p == player.p) {
+    		if (saveCoords) {
     			p.setPosX(player.worldX);
             	p.setPosY(player.worldY);
             	p.currentMap = currentMap;
@@ -699,7 +704,7 @@ public class GamePanel extends JPanel implements Runnable {
 		Player temp = SaveManager.loadPlayer(player.currentSave);
 		if (temp != null) {
 			temp.invalidateNuzlocke(reason);
-			saveGame(temp);
+			saveGame(temp, false);
 		}
 	}
 	

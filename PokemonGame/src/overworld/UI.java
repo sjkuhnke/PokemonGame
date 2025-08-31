@@ -602,7 +602,7 @@ public class UI extends AbstractUI {
 				int winStreak = gp.player.p.winStreak;
 				gp.player.p.winStreak = 0;
 				gp.player.p.addBetCurrency(gauntlet, -1);
-				gp.saveGame(gp.player.p);
+				gp.saveGame(gp.player.p, true);
 				gp.player.p.winStreak = winStreak;
 				gp.player.p.addBetCurrency(gauntlet, 1);
 				
@@ -1172,11 +1172,12 @@ public class UI extends AbstractUI {
 	    
 	    // 5. Enforce stat-specific minimums (all as .5 values)
 	    switch (statName) {
-	        case "turns":
+	        case "total turns":
 	            result = Math.max(3.5, result);
 	            break;
 	        case "knockouts":
-	            result = Math.max(1.5, result);
+	            result = Math.max(3.5, result);
+	            result = Math.min(4.5, result);
 	            break;
 	        default:
 	            result = Math.max(0.5, result); // Global minimum
@@ -1797,76 +1798,33 @@ public class UI extends AbstractUI {
 					currentTask = null;
 					break;
 				case 11: // abandoned tower entrance
-					if (!gp.player.p.flag[7][12]) { // player hasn't done the cutscene with Merlin yet
-						gp.player.p.flag[7][12] = true;
-						gp.npc[191][1].worldY = 83 * gp.tileSize;
-						gp.npc[191][1].direction = "up";
-						Task.addTask(Task.TURN, gp.player, "", Task.DOWN);
-						Task.addNPCMoveTask('y', 77 * gp.tileSize, gp.npc[191][1], false, 4);
-						Task.addTask(Task.DIALOGUE, gp.npc[191][1], "This is where your path truly begins, Finn.");
-						Task.addTask(Task.SLEEP, "", 10);
-						Task.addTask(Task.TURN, gp.player, "", Task.RIGHT);
-						Task.addTask(Task.SLEEP, "", 5);
-						Task.addNPCMoveTask('x', 51 * gp.tileSize, gp.player, false, 2);
-						Task.addTask(Task.TURN, gp.player, "", Task.DOWN);
-						Task.addNPCMoveTask('y', (int) (73.75 * gp.tileSize), gp.npc[191][1], false, 2);
-						Task.addTask(Task.TURN, gp.player, "", Task.LEFT);
-						Task.addTask(Task.SLEEP, "", 30);
-						Task.addTask(Task.TURN, gp.npc[191][1], "", Task.RIGHT);
-						Task.addTask(Task.DIALOGUE, gp.npc[191][1], "You and I, we're in this together.");
-						Task.addTask(Task.SLEEP, "", 15);
-						Task.addTask(Task.DIALOGUE, gp.npc[191][1], "But remember: Faith is not blind. It is a choice - made again and again, even in the darkness.");
-						Task.addTask(Task.SLEEP, "", 15);
-						Task.addTask(Task.TURN, gp.npc[191][1], "", Task.UP);
-						Task.addTask(Task.SLEEP, "", 15);
-						Task.addTask(Task.DIALOGUE, gp.npc[191][1], "Let's do this.");
-					}
-					t = Task.addTask(Task.TELEPORT, "");
-					t.counter = 191;
-					t.start = 49;
-					t.finish = 47;
-					gp.puzzleM.doReset(true);
+					gp.script.runScript(npc, 191.011);
 					currentTask = null;
 					break;
 				case 12: // deep chasm entrance
-					if (!gp.player.p.flag[7][12]) { // player hasn't done the cutscene with Merlin yet
-						gp.player.p.flag[7][12] = true;
-						gp.npc[197][1].worldY = 82 * gp.tileSize;
-						gp.npc[197][1].direction = "up";
-						Task.addTask(Task.TURN, gp.player, "", Task.LEFT);
-						Task.addNPCMoveTask('y', 77 * gp.tileSize, gp.npc[197][1], false, 4);
-						Task.addTask(Task.TURN, gp.npc[197][1], "", Task.RIGHT);
-						Task.addNPCMoveTask('x', 47 * gp.tileSize, gp.npc[197][1], false, 4);
-						Task.addTask(Task.DIALOGUE, gp.npc[197][1], "This is where your path truly begins, Finn.");
-						Task.addTask(Task.SLEEP, "", 10);
-						Task.addTask(Task.TURN, gp.player, "", Task.RIGHT);
-						Task.addTask(Task.SLEEP, "", 5);
-						Task.addNPCMoveTask('x', 51 * gp.tileSize, gp.player, false, 2);
-						Task.addTask(Task.TURN, gp.player, "", Task.LEFT);
-						Task.addNPCMoveTask('x', 48 * gp.tileSize, gp.npc[197][1], false, 4);
-						Task.addTask(Task.TURN, gp.npc[197][1], "", Task.UP);
-						Task.addNPCMoveTask('y', (int) (75.75 * gp.tileSize), gp.npc[197][1], false, 4);
-						Task.addTask(Task.TURN, gp.npc[197][1], "", Task.RIGHT);
-						Task.addNPCMoveTask('x', 50 * gp.tileSize, gp.npc[197][1], false, 2);
-						Task.addTask(Task.SLEEP, "", 10);
-						Task.addTask(Task.TURN, gp.npc[197][1], "", Task.UP);
-						Task.addTask(Task.SLEEP, "", 30);
-						Task.addTask(Task.TURN, gp.npc[197][1], "", Task.RIGHT);
-						Task.addTask(Task.DIALOGUE, gp.npc[197][1], "You and I, we're in this together.");
-						Task.addTask(Task.SLEEP, "", 15);
-						Task.addTask(Task.DIALOGUE, gp.npc[197][1], "The mind can be a weapon... or a prison, Finn. Trust in your wit - but trust in yourself more.");
-						Task.addTask(Task.SLEEP, "", 15);
-						Task.addTask(Task.TURN, gp.npc[197][1], "", Task.UP);
-						Task.addTask(Task.SLEEP, "", 15);
-						Task.addTask(Task.DIALOGUE, gp.npc[197][1], "Let's do this.");
-					}
-					t = Task.addTask(Task.TELEPORT, "");
-					t.counter = 197;
-					t.start = 51;
-					t.finish = 63;
-					gp.puzzleM.doReset(false);
+					gp.script.runScript(npc, 197.012);
 					currentTask = null;
 					break;
+				case 13: // go to outer space
+					gp.script.runScript(npc, 152.413);
+					currentTask = null;
+					break;
+				case 14: // go back from outer space
+					gp.script.runScript(npc, 160.414);
+					currentTask = null;
+					break;
+				case 15: // go back from mystery peak
+					gp.script.runScript(npc, 208.015);
+					currentTask = null;
+					break;
+				case 16: // fable stone
+					Task.addTask(Task.FLASH_IN, "");
+					Task.addTask(Task.FLASH_OUT, "");
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.SHAKE, "", 180);
+					Task.addTask(Task.SLEEP, "", 30);
+					Task.addTask(Task.TEXT, "A powerful presence awaits...");
+					currentTask = null;
 				}
 			}
 		}
@@ -3715,7 +3673,7 @@ public class UI extends AbstractUI {
 				subState = 0;
 				commandNum = 0;
 				
-				gp.saveGame(gp.player.p);
+				gp.saveGame(gp.player.p, true);
 			}
 		}
 		y += gp.tileSize;
@@ -4243,12 +4201,13 @@ public class UI extends AbstractUI {
 		int height = (int) (gp.tileSize * 3.5);
 		drawSubWindow(x, y, width, height);
 		
-		x += gp.tileSize * 1.25;
+		x += gp.tileSize * 1.5;
 		y += gp.tileSize * 2;
 		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(32F));
-		g2.drawString(sellAmt + "", x, y);
+		g2.drawString(sellAmt + "", getCenterAlignedTextX(sellAmt + "", x), y);
 		
+		x -= gp.tileSize / 4;
 		int y2 = y += gp.tileSize / 4;
 		int width2 = gp.tileSize / 2;
 		int height2 = gp.tileSize / 2;
@@ -4358,7 +4317,10 @@ public class UI extends AbstractUI {
 		String currentMap = PlayerCharacter.currentMapName;
 		PMap.getLoc(newMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
 		Main.window.setTitle(gp.gameTitle + " - " + PlayerCharacter.currentMapName);
-		if (!currentMap.equals(PlayerCharacter.currentMapName)) showAreaName();
+		if (!currentMap.equals(PlayerCharacter.currentMapName)) {
+			showAreaName();
+			gp.player.p.checkSummon(newMap);
+		}
 		
 		if (tasks.isEmpty()) {
 			gp.gameState = GamePanel.PLAY_STATE;
@@ -5807,8 +5769,8 @@ public class UI extends AbstractUI {
 			if (currentTask.start > 0 && currentTask.wipe) {
 				int prevMap = gp.currentMap;
 				gp.currentMap = currentTask.start;
-				gp.player.worldX = currentTask.start == 160 ? 41 * gp.tileSize : currentTask.start == 152 ? 67 * gp.tileSize : 50 * gp.tileSize;
-				gp.player.worldY = currentTask.start == 160 ? 15 * gp.tileSize : currentTask.start == 152 ? 75 * gp.tileSize : 50 * gp.tileSize;
+				gp.player.worldX = currentTask.start == 160 ? 41 * gp.tileSize : currentTask.start == 152 ? 67 * gp.tileSize : currentTask.start == 208 ? 47 * gp.tileSize : 50 * gp.tileSize;
+				gp.player.worldY = currentTask.start == 160 ? 15 * gp.tileSize : currentTask.start == 152 ? 75 * gp.tileSize : currentTask.start == 208 ? 65 * gp.tileSize : 50 * gp.tileSize;
 				gp.player.direction = "down";
 				warpPlayer(prevMap, gp.currentMap);
 			}

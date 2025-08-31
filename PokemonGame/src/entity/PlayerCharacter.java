@@ -296,6 +296,8 @@ public class PlayerCharacter extends Entity {
 				} else if (target instanceof NPC_Pokemon) {
 					NPC_Pokemon pokemon = (NPC_Pokemon) target;
 					interactTrainer(target, pokemon.id, pokemon.spin);
+				} else if (target instanceof NPC_Dealer) {
+					interactDealer(((NPC_Dealer) target));
 				}
 			}
 			
@@ -420,6 +422,8 @@ public class PlayerCharacter extends Entity {
 			interactRockClimb(index, override);
 		} else if (target instanceof Starter_Machine) {
 			interactStarterMachine(index);
+		} else if (target instanceof CasinoTable) {
+			interactCasinoTable(index);
 		} else if (target instanceof Locked_Door) {
 			interactLockedDoor(index);
 		} else if (target instanceof Fuse_Box) {
@@ -436,7 +440,7 @@ public class PlayerCharacter extends Entity {
 			interactIceChunk();
 		}
 	}
-	
+
 	private void trainerSpot(Entity entity) {
 		int trainer = entity.trainer;
 		if (p.trainersBeat[trainer]) return;
@@ -634,6 +638,23 @@ public class PlayerCharacter extends Entity {
 			
 			npc.speak(1);
 		}
+	}
+	
+	public void interactDealer(NPC_Dealer npc) {
+		gp.keyH.wPressed = false;
+		resetSpriteNum();
+		npc.facePlayer(direction);
+		
+		gp.ui.npc = npc;
+		
+		gp.setTaskState();
+		gp.keyH.resetKeys(false);
+		npc.speak(0);
+	}
+	
+	private void interactCasinoTable(int i) {
+		CasinoTable table = (CasinoTable) gp.iTile[gp.currentMap][i];
+		interactDealer(table.getDealer());
 	}
 	
 	private void interactCutTree(int i, boolean override) {

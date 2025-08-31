@@ -1082,6 +1082,10 @@ public class EventHandler {
 			
 			// Cutscene with Dad for Lava Surf
 			if (gp.player.p.flag[8][1] && !gp.player.p.flag[8][2] && hit(52,31,45)) gp.player.interactNPC(gp.npc[52][0], false);
+			
+			// Mystery Peak 1A -> 1B
+			if (hit(208,54,36)) teleport(209, 49, 54,false);
+			if (hit(209,49,55)) teleport(208, 54, 37,false);
 		}
 		// Cutscene with Ryder/Arthra in front of Spaceship
 		if (!gp.player.p.flag[7][20] && hit(152,67,78,true)) gp.player.interactNPC(gp.npc[152][5], false);

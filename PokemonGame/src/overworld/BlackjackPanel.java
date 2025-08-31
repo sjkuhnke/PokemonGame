@@ -201,7 +201,7 @@ public class BlackjackPanel extends JPanel {
 		userCardIcons.setVisible(false);
 		foeCardIcons.setVisible(false);
 		
-		gp.saveGame(gp.player.p);
+		gp.saveGame(gp.player.p, true);
 	}
 
 	private void resetDeck() {
@@ -395,7 +395,7 @@ public class BlackjackPanel extends JPanel {
     					}
     				}
 					startGame();
-                    gp.saveGame(gp.player.p);
+                    gp.saveGame(gp.player.p, true);
 				});
 				
 				cancelButton.addActionListener(ev -> dialog.dispose());
