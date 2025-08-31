@@ -399,7 +399,7 @@ public class SimBattleUI extends BattleUI {
 				}
 				if (tasks.isEmpty()) {
 					user.setVisible(false);
-					gp.saveGame(gp.player.p);
+					gp.saveGame(gp.player.p, true);
 					Pokemon.field = new Field();
 					gp.gameState = GamePanel.PLAY_STATE;
 				}
@@ -889,7 +889,7 @@ public class SimBattleUI extends BattleUI {
 	}
 	
 	private void endSim(Trainer winner, Trainer loser) {
-		gp.saveGame(gp.player.p);
+		gp.saveGame(gp.player.p, true);
 		
 		boolean draw = winner == null || loser == null;
 		boolean win = draw ? false : winner.getFlagIndex() == choice;

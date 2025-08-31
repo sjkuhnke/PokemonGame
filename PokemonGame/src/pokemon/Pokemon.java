@@ -2133,7 +2133,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (foe.getItem() == Item.BRIGHT_POWDER) accuracy *= 0.9;
 			if (!hit(accuracy) || foe.hasStatus(Status.SEMI_INV) && acc <= 100) {
 				useMove(move, foe);
-				Task.addTask(Task.TEXT, this.nickname + "'s attack missed!");
+				Task.addTask(Task.TEXT, move.getMissString(this, foe));
 				field.misses++;
 				if (move == Move.HI_JUMP_KICK) {
 					this.damage(this.getStat(0) / 2.0, foe, this.nickname + " kept going and crashed!");
@@ -2184,7 +2184,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 						(field.equals(field.weather, Effect.SNOW, this) && foeAbility == Ability.SNOW_CLOAK)) accuracy *= 0.8;
 				if (foe.getItem() == Item.BRIGHT_POWDER) accuracy *= 0.9;
 				if (!hit(accuracy) || foe.hasStatus(Status.SEMI_INV) && acc <= 100) {
-					Task.addTask(Task.TEXT, this.nickname + "'s attack missed!");
+					Task.addTask(Task.TEXT, move.getMissString(this, foe));
 					field.misses++;
 					if (this.getItem() == Item.BLUNDER_POLICY) {
 						stat(this, 4, 2, foe);
@@ -5119,6 +5119,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 
 	private void checkSeed(Pokemon f, Item item, Effect effect) {
 		if (effect.isTerrain) {
+			this.checkTerraforge(f);
+			f.checkTerraforge(this);
 			if (!field.equals(field.terrain, effect)) return;
 		} else {
 			if (!field.contains(field.fieldEffects, effect)) return;
@@ -5735,6 +5737,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		setAbility();
 		this.weight = this.getWeight();
 		if (this.ability == Ability.NATURAL_CURE) this.status = Status.HEALTHY;
+		if (this.ability == Ability.TERRAFORGE) this.illusion = false;
 		
 	}
 	
@@ -7710,6 +7713,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		} else if (this.ability == Ability.STARBORN) {
 			this.checkStarborn(foe);
+		} else if (this.ability == Ability.TERRAFORGE) {
+			this.checkTerraforge(foe);
 		} else if (this.ability == Ability.ILLUSION) {
 			Task.addAbilityTask(this);
 			Task.addTask(Task.TEXT, this.nickname + " casts a terrifying illusion!");
@@ -7792,15 +7797,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} else if (this.ability == Ability.PRESSURE) {
 			Task.addAbilityTask(this);
 			Task.addTask(Task.TEXT, this.nickname + " is exerting its Pressure!");
-			if (hasBoosts(foe.statStages)) {
-				Task.addAbilityTask(this);
-				Task.addTask(Task.TEXT, this.nickname + " cleared " + foe.nickname + "'s stat boosts!");
-				for (int i = 0; i < 7; ++i) {
-					if (foe.statStages[i] > 0) {
-						foe.statStages[i] = 0;
-					}
-				}
-			}
 		} else if (this.ability == Ability.MOLD_BREAKER) {
 			Task.addAbilityTask(this);
 			Task.addTask(Task.TEXT, this.nickname + " breaks the mold!");
@@ -7892,6 +7888,23 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this.ability == Ability.STARBORN && field.contains(this.getFieldEffects(), Effect.AURORA_GLOW)) {
 			Task.addAbilityTask(this);
 			stat(this, getHighestAttackingStat(), 1, foe);
+		}
+	}
+	
+	public void checkTerraforge(Pokemon foe) {
+		if (this.ability == Ability.TERRAFORGE) {
+			boolean hasTerrain = field.terrain != null;
+			
+			if (hasTerrain != this.illusion) {
+				int direction = hasTerrain ? 1 : -1;
+				
+				Task.addAbilityTask(this);
+				Task.addTask(Task.TEXT, hasTerrain ? this.nickname + " is harnesing the terrain's power!" : this.nickname + "'s terrain power faded!");
+				for (int i = 0; i < 5; ++i) {
+					stat(this, i, direction, foe);
+				}
+				this.illusion = hasTerrain;
+			}
 		}
 	}
 
@@ -9093,7 +9106,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			result.add("Perish in " + perishCount);
 		}
 		if (illusion) {
-			result.add(ability == Ability.ILLUSION ? "Illusion" : ability == Ability.ANTICIPATION ? "Anticipation" : ability == Ability.SHADOW_VEIL ? "Shadow Veil" : ".");
+			result.add(ability == Ability.ILLUSION ? "Illusion" : ability == Ability.ANTICIPATION ? "Anticipation" : ability == Ability.SHADOW_VEIL ? "Shadow Veil" : ability == Ability.TERRAFORGE ? "Terraforge" : ".");
 		}
 		if (disabledCount > 0) {
 			result.add(disabledMove.toString());

@@ -22,6 +22,8 @@ public class AssetSetter {
 	public ArrayList<Entity> clerks = new ArrayList<>();
 	public HashMap<Item, Integer> itemMap = new HashMap<>();
 	
+	private static final int DEALER_B = -41;
+	private static final int DEALER = -40;
 	private static final int NOVA_RIGHT = -39;
 	private static final int NOVA_UP = -38;
 	private static final int NOVA_DOWN = -37;
@@ -243,6 +245,7 @@ public class AssetSetter {
 	private static final int SPIKE_1 = 23;
 	private static final int SPIKE_2 = 24;
 	private static final int ICE_CHUNK = 25;
+	private static final int CASINO_TABLE = 26;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -2341,8 +2344,8 @@ public class AssetSetter {
 		
 		mapNum = 127;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 27, 39, "Welcome to the Blackjack table!", 127.0);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 35, 39, "Welcome to the Sports Betting - Pokemon Edition table!", 127.1);
+		gp.npc[mapNum][index] = NPCSetup(DEALER_B, "Dealer", 28, 35, "");
+		gp.npc[mapNum][index] = NPCSetup(DEALER, "Gamemaster", 33, 42, "");
 		
 		mapNum = 128;
 		index = 0;
@@ -2510,6 +2513,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index++] = null; // arthra after returning
 		gp.npc[mapNum][index++] = null; // alakazam after returning
 		gp.npc[mapNum][index] = NPCSetup(ROBIN_UP, "Robin", 67, 99, "");
+		gp.npc[mapNum][index++] = null; // [152][12], astronaut to take you to space
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_RIGHT, 29, 16, "Energy's acting strange lately... surging from nowhere. You feel it too, right?", "That power - it's not natural. Like something's hijacking the flow itself... Be careful out there.", 347);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_UP, 29, 22, "When chaos strikes, only discipline remains. Let's see how yours stacks up.", "You're centered. Focused. I see why you're making it through when others are falling.", 348);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_DOWN, 24, 24, "The trees are whispering louder every day. The roots are restless.", "They say nature endures all... but even it's starting to crack.", 349);
@@ -2847,6 +2851,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_RIGHT, "Alakazam", 29, 99, "");
 		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE, 31, 37, "", "", -1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 36, 36, "", "", -1);
+		
+		mapNum = 208;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_DOWN, "Astronaut", 48, 65, "...Can't believe this place is really real.", mapNum);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -3235,7 +3243,7 @@ public class AssetSetter {
 		
 		mapNum = 101;
 		iIndex = 0;
-		SetupPit(mapNum, 49, 49, 102, 47, 37, map);
+		SetupPit(mapNum, 49, 49, 102, 47, 38, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(25, 47, VINE_CROSS, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(25, 48, VINE_CROSS, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(29, 50, VINE_CROSS, mapNum, map);
@@ -3382,6 +3390,12 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(74, 84, VINE_CROSS, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(83, 89, VINE_CROSS, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(83, 90, VINE_CROSS, mapNum, map);
+		
+		mapNum = 127;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 36, CASINO_TABLE, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(28, 37, CASINO_TABLE, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(29, 36, CASINO_TABLE, mapNum, map);
 		
 		mapNum = 137;
 		iIndex = 0;
@@ -3870,6 +3884,52 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(52, 65, RIGHT, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(67, 56, LEFT, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(80, 56, LEFT, 1, mapNum, map);
+		
+		mapNum = 208;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 70, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 71, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 67, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(36, 77, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(33, 68, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(35, 67, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(35, 64, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(33, 62, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(34, 60, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(36, 58, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(38, 57, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 59, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 59, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 58, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(40, 54, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(38, 53, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(34, 52, RIGHT, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(33, 52, RIGHT, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 52, RIGHT, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(31, 52, RIGHT, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 52, RIGHT, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(29, 52, RIGHT, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 81, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(67, 69, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(67, 68, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(66, 66, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(64, 64, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(67, 61, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(69, 58, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 58, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 60, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 60, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(54, 59, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(46, 53, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(49, 50, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 49, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(61, 41, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(58, 42, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 43, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(53, 44, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 41, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 41, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(67, 38, UP, 1, mapNum, map);
 	}
 
 	public void updateNPC(int map) {
@@ -4536,15 +4596,20 @@ public class AssetSetter {
 			gp.npc[160][8] = null;
 			gp.npc[160][9] = null;
 			gp.npc[152][11] = null;
-			if (gp.npc[160][10] == null) gp.npc[160][10] = NPCSetup(ASTRONOMER_DOWN, "Astronaut", 42, 14, "", 160.4);
-		} else {
-			gp.npc[160][10] = null;
 		}
 		
 		if (flag[8][1] && !flag[8][2]) { // arthra in lab
 			if (gp.npc[52][2] == null) gp.npc[52][2] = NPCSetup(ARTHRA_DOWN, "Arthra", 32, 37, "");
 		} else {
 			gp.npc[52][2] = null;
+		}
+		
+		if (flag[8][2]) {
+			if (gp.npc[152][12] == null) gp.npc[152][12] = NPCSetup(ASTRONOMER_DOWN, "Astronaut", 66, 75, "Hello there! I can take you to space commercially, for the cheap price of $500!", 152.4);
+			if (gp.npc[160][10] == null) gp.npc[160][10] = NPCSetup(ASTRONOMER_DOWN, "Astronaut", 41, 14, "Hello space pirate!", 160.4);
+		} else {
+			gp.npc[152][12] = null;
+			gp.npc[160][10] = null;
 		}
 		
 		gp.setRenderableNPCs();
@@ -5289,6 +5354,16 @@ public class AssetSetter {
 				result.setupImages("/npc/nova", true);
 				result.setDirection("right");
 				break;
+			case ASTRONOMER_DOWN:
+				result.setupImages("/npc/ace_trainer_m");
+				result.setDirection("down");
+				break;
+			case DEALER:
+				result = new NPC_Dealer(gp, name);
+				break;
+			case DEALER_B:
+				result = new NPC_DealerB(gp, name);
+				break;
 		}
 		
 		result.worldX = gp.tileSize*x;
@@ -5469,6 +5544,9 @@ public class AssetSetter {
 			break;
 		case ICE_CHUNK:
 			result = new IceChunk(gp);
+			break;
+		case CASINO_TABLE:
+			result = new CasinoTable(gp, gp.npc[127][0]);
 			break;
 		}
 		

@@ -455,6 +455,8 @@ public class Field {
 	            Task t = Task.addTask(Task.TERRAIN, "The terrain returned to normal!");
 	            t.setEffect(null);
 	            terrain = null;
+	            faster.checkTerraforge(slower);
+	            slower.checkTerraforge(faster);
 	        }
 	    }
 	    

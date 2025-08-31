@@ -536,6 +536,22 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "I think you might have went the wrong way...");
 				Task.addTask(Task.DIALOGUE, npc, "Are you looking for Mt. Splinkty? You have to go back to Route 26 and head North!");
 			} else {
+				if (!p.flag[2][15]) {
+					Pokemon[] vDex = p.getDexType(3);
+					int amt = 0;
+					for (Pokemon po : vDex) {
+						if (p.pokedex[po.id] == 2) amt++;
+					}
+					if (amt >= Pokemon.POKEDEX_2_SIZE) {
+						Task.addTask(Task.DIALOGUE, npc, "You did it! You got me all of the Xhenovian forms!");
+						Task.addTask(Task.DIALOGUE, npc, "Thank you so much for helping my research!");
+						Task.addTask(Task.DIALOGUE, npc, "Here, this is for you, use it wisely!");
+						Task t = Task.addTask(Task.ITEM, "");
+						t.item = Item.MASTER_BALL;
+						p.flag[2][15] = true;
+						return;
+					}
+				}
 				Task.addTask(Task.DIALOGUE, npc, "Got any Xhenovian forms to trade me?");
 				Task.addTask(Task.REGIONAL_TRADE, "");
 			}
@@ -1324,16 +1340,14 @@ public class Script {
 		});
 
 		scriptMap.put(127.0, (npc) -> { // blackjack
-			Task t = Task.addTask(Task.CONFIRM, "Would you like to play Blackjack?\n(Warning: Will Auto-Save)");
-			t.counter = 3;
+			Task.addTask(Task.CONFIRM, npc, "Would you like to play Blackjack?\n(Warning: Will Auto-Save)", 3);
 		});
 		
 		scriptMap.put(127.1, (npc) -> { // battle bet
 			if (p.coins > 0) {
-				Task t = Task.addTask(Task.CONFIRM, "Would you like to Battle Bet?\n(Warning: Will Auto-Save)");
-				t.counter = 4;
+				Task.addTask(Task.CONFIRM, npc, "Would you like to Battle Bet?\n(Warning: Will Auto-Save)", 4);
 			} else {
-				Task.addTask(Task.TEXT, "I'm sorry, you don't have any coins to bet with! Come back later!");
+				Task.addTask(Task.DIALOGUE, npc, "I'm sorry, you don't have any coins to bet with! Come back later!");
 			}
 		});
 		
@@ -2097,6 +2111,37 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "You... don't have faith... be gone...");
 			}
 		});
+		scriptMap.put(191.011, (npc) -> {
+			if (!gp.player.p.flag[7][12]) { // player hasn't done the cutscene with Merlin yet
+				gp.player.p.flag[7][12] = true;
+				gp.npc[191][1].worldY = 83 * gp.tileSize;
+				gp.npc[191][1].direction = "up";
+				Task.addTask(Task.TURN, gp.player, "", Task.DOWN);
+				Task.addNPCMoveTask('y', 77 * gp.tileSize, gp.npc[191][1], false, 4);
+				Task.addTask(Task.DIALOGUE, gp.npc[191][1], "This is where your path truly begins, Finn.");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, gp.player, "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addNPCMoveTask('x', 51 * gp.tileSize, gp.player, false, 2);
+				Task.addTask(Task.TURN, gp.player, "", Task.DOWN);
+				Task.addNPCMoveTask('y', (int) (73.75 * gp.tileSize), gp.npc[191][1], false, 2);
+				Task.addTask(Task.TURN, gp.player, "", Task.LEFT);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, gp.npc[191][1], "", Task.RIGHT);
+				Task.addTask(Task.DIALOGUE, gp.npc[191][1], "You and I, we're in this together.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[191][1], "But remember: Faith is not blind. It is a choice - made again and again, even in the darkness.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, gp.npc[191][1], "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[191][1], "Let's do this.");
+			}
+			Task t = Task.addTask(Task.TELEPORT, "");
+			t.counter = 191;
+			t.start = 49;
+			t.finish = 47;
+			gp.puzzleM.doReset(true);
+		});
 		
 		scriptMap.put(191.1, (npc) -> { // merlin in AT 1B
 			p.heal();
@@ -2299,6 +2344,44 @@ public class Script {
 			} else {
 				Task.addTask(Task.DIALOGUE, npc, "You... aren't worthy... be gone...");
 			}
+		});
+		scriptMap.put(197.012, (npc) -> {
+			if (!p.flag[7][12]) { // player hasn't done the cutscene with Merlin yet
+				p.flag[7][12] = true;
+				gp.npc[197][1].worldY = 82 * gp.tileSize;
+				gp.npc[197][1].direction = "up";
+				Task.addTask(Task.TURN, gp.player, "", Task.LEFT);
+				Task.addNPCMoveTask('y', 77 * gp.tileSize, gp.npc[197][1], false, 4);
+				Task.addTask(Task.TURN, gp.npc[197][1], "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 47 * gp.tileSize, gp.npc[197][1], false, 4);
+				Task.addTask(Task.DIALOGUE, gp.npc[197][1], "This is where your path truly begins, Finn.");
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, gp.player, "", Task.RIGHT);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addNPCMoveTask('x', 51 * gp.tileSize, gp.player, false, 2);
+				Task.addTask(Task.TURN, gp.player, "", Task.LEFT);
+				Task.addNPCMoveTask('x', 48 * gp.tileSize, gp.npc[197][1], false, 4);
+				Task.addTask(Task.TURN, gp.npc[197][1], "", Task.UP);
+				Task.addNPCMoveTask('y', (int) (75.75 * gp.tileSize), gp.npc[197][1], false, 4);
+				Task.addTask(Task.TURN, gp.npc[197][1], "", Task.RIGHT);
+				Task.addNPCMoveTask('x', 50 * gp.tileSize, gp.npc[197][1], false, 2);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, gp.npc[197][1], "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, gp.npc[197][1], "", Task.RIGHT);
+				Task.addTask(Task.DIALOGUE, gp.npc[197][1], "You and I, we're in this together.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[197][1], "The mind can be a weapon... or a prison, Finn. Trust in your wit - but trust in yourself more.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.TURN, gp.npc[197][1], "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, gp.npc[197][1], "Let's do this.");
+			}
+			Task t = Task.addTask(Task.TELEPORT, "");
+			t.counter = 197;
+			t.start = 51;
+			t.finish = 63;
+			gp.puzzleM.doReset(false);
 		});
 		
 		scriptMap.put(197.1, (npc) -> { // merlin in Deep Chasm 0B
@@ -3390,6 +3473,146 @@ public class Script {
 			Task.addTask(Task.UPDATE, "");
 			Task.addTask(Task.FLASH_OUT, "");
 		});
+		
+		scriptMap.put(152.4, (npc) -> { // astronaut going to space
+			if (p.getMoney() >= 500) {
+				Task.addTask(Task.CONFIRM, npc, "Pay $500 and go to space?", 13);
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "Oh, I'm sorry, you don't have enough money for me to take you!");
+			}
+		});
+		scriptMap.put(152.413, (npc) -> {
+			p.setMoney(p.getMoney() - 500);
+			Task.addTask(Task.DIALOGUE, npc, "Great! Let's go!");
+			Task t = Task.addTask(Task.TELEPORT, "");
+			t.counter = gp.currentMap;
+			t.start = player.worldX / gp.tileSize;
+			t.finish = player.worldY / gp.tileSize;
+			t.color = Color.BLACK;
+			Task.addTask(Task.SPACE, npc, "Strap in! We'll be there in no time!", 150);
+			Task.addTask(Task.SPACE, "", 120);
+			t = Task.addTask(Task.SPACE, "", 50);
+			t.start = 160;
+			t.color = Color.BLACK;
+			t.wipe = true;
+		});
+		
+		scriptMap.put(160.4, (npc) -> { // astronaut going back to earth
+			Task.addTask(Task.CONFIRM, npc, "Are you ready to head back to Earth?\n(Warning: Will save the game!)", 14);
+		});
+		scriptMap.put(160.414, (npc) -> { // confirm
+			p.setPosX(67 * gp.tileSize);
+        	p.setPosY(75 * gp.tileSize);
+        	p.currentMap = 152;
+			gp.saveGame(p, false);
+			Random random = new Random();
+			boolean mystery = random.nextDouble() < 0.05;
+			mystery = true;
+			Task.addTask(Task.DIALOGUE, npc, "Okay! I'll start up the ship, let's go!");
+			Task t = Task.addTask(Task.TELEPORT, "");
+			t.counter = gp.currentMap;
+			t.start = player.worldX / gp.tileSize;
+			t.finish = player.worldY / gp.tileSize;
+			t.color = Color.BLACK;
+			Task.addTask(Task.SPACE, npc, "Strap in tight - we'll be touching down soon!", 150);
+			Task.addTask(Task.SPACE, "", 100);
+			if (!mystery) {
+				if (!p.flag[8][11]) {
+					Task.addTask(Task.SPACE, npc, "You know... there's this old rumor among pilots.", 150);
+					Task.addTask(Task.SPACE, "", 60);
+					Task.addTask(Task.SPACE, npc, "They say sometimes ships don't land at the station at all...", 150);
+					Task.addTask(Task.SPACE, "", 60);
+					Task.addTask(Task.SPACE, npc, "Instead, they end up at some weird mountain that doesn't exist on any maps. Mystery Peak, they call it.", 150);
+					Task.addTask(Task.SPACE, "", 60);
+					Task.addTask(Task.SPACE, npc, "Never happened to me, though. Just a spooky story we tell to rookies.", 150);
+					Task.addTask(Task.SPACE, "", 120);
+					Task.addTask(Task.SPACE, npc, "Anyway - we're back safe on Earth. Enjoy the gravity!", 150);
+					Task.addTask(Task.SPACE, "", 60);
+				} else {
+					Task.addTask(Task.SPACE, "", 100);
+					Task.addTask(Task.SPACE, npc, "Alright, we're back on Earth. Enjoy the gravity!", 150);
+					Task.addTask(Task.SPACE, "", 60);
+				}
+				t = Task.addTask(Task.SPACE, "", 50);
+				t.start = 152;
+				t.color = Color.BLACK;
+				t.wipe = true;
+			} else {
+				t = Task.addTask(Task.SPACE, "", 60);
+				t.start = 1;
+				t.color = new Color(255, 50, 35, 200);
+				
+				Task.addTask(Task.SPACE, npc, "...Wait. Instruments are going haywire!", 60);
+				t = Task.addTask(Task.SPACE, npc, "...Wait. Instruments are going haywire!", 60);
+				t.start = 1;
+				t.color = new Color(255, 50, 35, 200);
+				
+				Task.addTask(Task.SPACE, npc, "", 60);
+				t = Task.addTask(Task.SPACE, "", 60);
+				t.start = 1;
+				t.color = new Color(255, 50, 35, 200);
+				
+				Task.addTask(Task.SPACE, npc, "This... this isn't right. The navigation system's locked onto something!", 60);
+				t = Task.addTask(Task.SPACE, npc, "This... this isn't right. The navigation system's locked onto something!", 60);
+				t.start = 1;
+				t.color = new Color(255, 50, 35, 200);
+				
+				Task.addTask(Task.SPACE, npc, "", 60);
+				t = Task.addTask(Task.SPACE, "", 60);
+				t.start = 1;
+				t.color = new Color(255, 50, 35, 200);
+				
+				if (!p.flag[8][12]) {
+					Task.addTask(Task.SPACE, npc, "No way... Mystery Peak?! That was supposed to just be a legend!", 60);
+					t = Task.addTask(Task.SPACE, npc, "No way... Mystery Peak?! That was supposed to just be a legend!", 60);
+					t.start = 1;
+					t.color = new Color(255, 50, 35, 200);
+					
+					Task.addTask(Task.SPACE, npc, "", 60);
+					t = Task.addTask(Task.SPACE, "", 60);
+					t.start = 1;
+					t.color = new Color(255, 50, 35, 200);
+				}
+				
+				Task.addTask(Task.SPACE, npc, "Hold on - we're not heading back to the station. Something's dragging us in!!", 60);
+				t = Task.addTask(Task.SPACE, npc, "Hold on - we're not heading back to the station. Something's dragging us in!!", 60);
+				t.start = 1;
+				t.color = new Color(255, 50, 35, 200);
+				
+				Task.addTask(Task.SPACE, npc, "", 60);
+				t = Task.addTask(Task.SPACE, "", 60);
+				t.start = 1;
+				t.color = new Color(255, 50, 35, 200);
+				
+				Task.addTask(Task.SPACE, npc, "", 60);
+				t = Task.addTask(Task.SPACE, "", 50);
+				t.start = 208;
+				t.color = Color.BLACK;
+				t.wipe = true;
+				p.flag[8][12] = true;
+			}
+			p.flag[8][11] = true;
+		});
+		
+		scriptMap.put(208.0, (npc) -> { // astronaut on mystery peak
+			Task.addTask(Task.CONFIRM, npc, "It's so strange here... ready to head home?", 15);
+		});
+		scriptMap.put(208.015, (npc) -> {
+			Task t = Task.addTask(Task.TELEPORT, "");
+			t.counter = gp.currentMap;
+			t.start = player.worldX / gp.tileSize;
+			t.finish = player.worldY / gp.tileSize;
+			t.color = Color.BLACK;
+			Task.addTask(Task.SPACE, npc, "Alright then, buckle in. The stars may have shown you what's possible, but the ground is where you'll stand tall.", 150);
+			Task.addTask(Task.SPACE, "", 60);
+			Task.addTask(Task.SPACE, npc, "Trajectory locked, next stop: home finally!", 150);
+			Task.addTask(Task.SPACE, "", 60);
+			
+			t = Task.addTask(Task.SPACE, "", 50);
+			t.start = 152;
+			t.color = Color.BLACK;
+			t.wipe = true;
+		});
 	}
 	
 	public int getUnregisteredBasePokemon(Random random) {
@@ -3402,9 +3625,12 @@ public class Script {
 		
 		return id;
 	}
-
+	
 	public void runScript(Entity npc) {
-		double key = npc.scriptIndex;
+		runScript(npc, npc.scriptIndex);
+	}
+
+	public void runScript(Entity npc, double key) {
 		boolean error = false;
 		if (key < 0) return;
 		if (!error && scriptMap.containsKey(key)) {
