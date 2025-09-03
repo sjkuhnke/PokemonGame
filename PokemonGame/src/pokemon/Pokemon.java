@@ -69,6 +69,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	private static Map<String, HashSet<String>> forwardEvoMap;
 	private static Map<String, HashSet<String>> reverseEvoMap;
 	private static Map<String, Integer> nameToID = new HashMap<>();
+	public static HashMap<Integer, Integer[]> legendaryMap = new HashMap<>();
 	
 	// Database
 	private static int[] dexNos = new int[MAX_POKEMON];
@@ -2103,6 +2104,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (field.equals(field.weather, Effect.SNOW, foe)) {
 			if (move == Move.BLIZZARD) acc = 1000;
 		}
+		
+		if (move == Move.FUTURE_SIGHT) acc = 1000;
 		
 		if (move == Move.FROSTBIND && this.isType(PType.ICE)) acc = 100;
 		if (move == Move.THUNDER_WAVE && this.isType(PType.ELECTRIC)) acc = 100;
@@ -6630,7 +6633,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(this, 4, 1, f);
 		}
 		
-		if (this.ability == Ability.FORTIFY && this.fortify < 2 && (this.damageTaken == null || this.damageTaken.getFirst() == 0)) {
+		if (this.ability == Ability.FORTIFY && !this.impressive && this.fortify < 2
+				&& (this.damageTaken == null || this.damageTaken.getFirst() == 0)
+				&& !this.hasStatus(Status.PROTECT)) {
 			Task.addAbilityTask(this);
 			stat(this, 1, 1, f);
 			fortify++;
@@ -9338,6 +9343,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 				PType type = null;
 				for (int j = 0; j < 4; j++) {
 					String moveString = j >= moveStrings.length ? "" : moveStrings[j];
+					if (moveString.equals("-")) {
+						moves = null; // just use default level up moveset
+						break;
+					}
 					if (moveString.contains("HIDDEN_POWER")) {
 						if (moveString.length() > 12) {
 							type = PType.valueOf(moveString.substring(13));
@@ -9357,8 +9366,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 					}
 					
 				}
-				Pokemon pokemon = staticEnc ? new Pokemon(id, level, true) : new Pokemon(id, level, false, true);				
-				pokemon.moveset = moves;
+				Pokemon pokemon = staticEnc ? new Pokemon(id, level, true) : new Pokemon(id, level, false, true);
+				if (moves != null) {
+					pokemon.moveset = moves;
+				}
 				if (pokemon.id != 235) { // dragowrath always has perfect iv's and a neutral nature
 					if (staticEnc) {
 						pokemon.setStaticIVs();
@@ -9410,6 +9421,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			Trainer.trainers[index] = trainer;
 			trainer.update = update;
+			trainer.staticEnc = staticEnc;
 			trainer.current.script = script;
 			
 			if (name.contains("Scott") || name.contains("Fred")) {

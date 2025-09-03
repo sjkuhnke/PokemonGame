@@ -20,6 +20,7 @@ public class Trainer implements Serializable {
 	int flagIndex;
 	public Pokemon current;
 	public boolean update;
+	public boolean staticEnc;
 	public boolean cloned;
 	
 	transient ArrayList<FieldEffect> effects;
@@ -406,6 +407,7 @@ public class Trainer implements Serializable {
 		Trainer result = new Trainer(this.name, newTeam, this.money, this.item, this.flagIndex, true);
 		
 		result.update = this.update;
+		result.staticEnc = this.staticEnc;
 		result.effects = new ArrayList<>(this.effects);
 		result.cloned = true;
 		

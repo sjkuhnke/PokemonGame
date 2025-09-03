@@ -38,7 +38,7 @@ public enum Ability {
 	FLAME_BODY("Contact with the Pokemon may burn the attacker."),
 	FLASH_FIRE("It powers up FIRE moves if it's hit by one."),
 	FLUFFY("Halves the damage from moves that make direct contact, but doubles that of FIRE moves."),
-	FORTIFY("At the end of each turn this Pokemon isn't hit by a damaging move, it gains +1 Defense (max 2 stacks)."),
+	FORTIFY("If this Pokemon doesn't take direct damage for the turn and doesn't protect itself, it gains +1 Defense (max 2 stacks)."),
 	FRIENDLY_GHOST("Gives full immunity to all GHOST moves."),
 	FULL_FORCE("Boosts the Attack stat by 2 stages if the Pokemon's held item is used or lost."),
 	GALACTIC_AURA("Halves the damage of ICE and PSYCHIC moves."),
