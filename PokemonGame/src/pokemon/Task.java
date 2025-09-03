@@ -13,6 +13,7 @@ public class Task {
 	public static final int UP = 1;
 	public static final int LEFT = 2;
 	public static final int RIGHT = 3;
+	
 	public static final int TEXT = 0;
 	public static final int DAMAGE = 1;
 	public static final int ABILITY = 2;
@@ -79,6 +80,7 @@ public class Task {
 	public static final int NURSERY_WITHDRAW = 63;
 	public static final int SPACE = 64;
 	public static final int SUMMON = 65;
+	public static final int MONEY = 66; // unused for task type
 	
 	public static GamePanel gp;
 	
@@ -98,6 +100,7 @@ public class Task {
 	public FieldEffect fe;
 	public Item item;
 	public PType[] types;
+	public int ui; // used for drawing extra ui components for a task
 	
 	public Entity e;
 	public Trainer[] trainers;
@@ -118,6 +121,7 @@ public class Task {
 		}
 		setPokemon(p);
 		start = -1;
+		ui = -1;
 	}
 	
 	public void setPokemon(Pokemon p) {

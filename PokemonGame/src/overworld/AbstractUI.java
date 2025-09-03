@@ -317,7 +317,10 @@ public abstract class AbstractUI {
 					drawItemSelectBackground(x + 14, y + 78);
 				}
 				if (p.item != null) {
-					g2.drawImage(p.item.getImage(), x + (gp.tileSize / 4) + 8, y + 84, null);
+					int itemX = x + (gp.tileSize / 4) + 8;
+					int itemY = y + 84;
+					g2.drawImage(p.item.getOutlineImage(), itemX - 2, itemY - 2, null);
+					g2.drawImage(p.item.getImage(), itemX, itemY, null);
 				}
 				if (drawItemSelect) {
 					drawItemSelectBorder(x + 14, y + 78);

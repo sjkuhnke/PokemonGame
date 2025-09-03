@@ -84,11 +84,11 @@ public enum Item {
 	MOON_BALL(368,0,250,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon that can be evolved using a Dawn or Dusk Stone."),
 	DREAM_BALL(369,0,500,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon that are asleep."),
 	BEAST_BALL(370,0,1000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is only effective at catching Ultra Paradox Pokemon."),
-	POTION(4,25,12,new Color(124, 0, 219),Item.MEDICINE,null,"Restores 20 HP to a Pokemon."),
-	SUPER_POTION(5,60,30,new Color(140, 24, 8),Item.MEDICINE,null,"Restores 60 HP to a Pokemon."),
-	HYPER_POTION(6,150,75,new Color(255, 0, 191),Item.MEDICINE,null,"Restores 200 HP."),
-	MAX_POTION(7,200,100,new Color(0, 21, 255),Item.MEDICINE,null,"Restores a Pokemon's HP to full."),
-	FULL_RESTORE(8,300,150,new Color(255, 196, 0),Item.MEDICINE,null,"Restores a Pokemon's HP to full and cures any status conditions."),
+	POTION(4,25,12,new Color(124, 0, 219),Item.MEDICINE,20,"Restores 20 HP to a Pokemon."),
+	SUPER_POTION(5,60,30,new Color(140, 24, 8),Item.MEDICINE,60,"Restores 60 HP to a Pokemon."),
+	HYPER_POTION(6,150,75,new Color(255, 0, 191),Item.MEDICINE,200,"Restores 200 HP."),
+	MAX_POTION(7,200,100,new Color(0, 21, 255),Item.MEDICINE,-1,"Restores a Pokemon's HP to full."),
+	FULL_RESTORE(8,300,150,new Color(255, 196, 0),Item.MEDICINE,-1,"Restores a Pokemon's HP to full and cures any status conditions."),
 	ANTIDOTE(9,10,5,new Color(157, 0, 255),Item.MEDICINE,null,"Cures a Pokemon of Poison."),
 	AWAKENING(10,10,5,new Color(63, 83, 92),Item.MEDICINE,null,"Cures a Pokemon of Sleep."),
 	BURN_HEAL(11,10,5,new Color(133, 15, 19),Item.MEDICINE,null,"Cures a Pokemon of Burn."),
@@ -148,29 +148,29 @@ public enum Item {
 	CHOICE_SPECS(49,0,0,new Color(238, 236, 100),Item.HELD_ITEM,null,"A pair of curious glasses that boost the holder's Sp. Atk stat but only allow the use of a single move."),
 	LEFTOVERS(50,0,0,new Color(227, 96, 91),Item.HELD_ITEM,null,"An item that restores the user's HP gradually throughout a battle."),
 	BLACK_SLUDGE(51,0,0,new Color(144, 138, 169),Item.HELD_ITEM,null,"If the holder is a Poison type, this sludge will gradually restore its HP. It damages any other type."),
-	EVIOLITE(52,0,0,new Color(186, 141, 190),Item.HELD_ITEM,null,"A mysterious evolutionary lump that boosts the Defense and Sp. Def stats when held by a Pokemon that can still evolve."),
-	EVERSTONE(53,100,0,new Color(179, 200, 210),Item.HELD_ITEM,null,"A Pokemon holding this peculiar stone is prevented from evolving; can't be stolen or removed."),
+	EVIOLITE(52,1,300,new Color(186, 141, 190),Item.HELD_ITEM,null,"A mysterious evolutionary lump that boosts the Defense and Sp. Def stats when held by a Pokemon that can still evolve."),
+	EVERSTONE(53,100,50,new Color(179, 200, 210),Item.HELD_ITEM,null,"A Pokemon holding this peculiar stone is prevented from evolving; can't be stolen or removed."),
 	DESTINY_KNOT(382,0,0,Color.BLACK,Item.HELD_ITEM,null,"An item that controls the destiny of the species of 2 Pokemon breeding."),
-	EXP_SHARE(89,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
-	LUCKY_EGG(90,0,0,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
-	DAMP_ROCK(54,750,0,new Color(37, 99, 179),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to rain, the rain will persist for longer than usual."),
-	HEAT_ROCK(55,750,0,new Color(209, 68, 61),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to harsh sunlight, the sunlight will persist for longer than usual."),
-	SMOOTH_ROCK(56,600,0,new Color(166, 124, 90),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to a sandstorm, the storm will persist for longer than usual."),
-	ICY_ROCK(57,600,0,new Color(130, 200, 232),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to snow, the snow will persist for longer than usual."),
+	EXP_SHARE(89,1,500,Color.BLACK,Item.HELD_ITEM,null,"The holder gets a share of a battle's Exp. Points without battling."),
+	LUCKY_EGG(90,1,1000,Color.BLACK,Item.HELD_ITEM,null,"An egg filled with happiness that earns the holder extra Exp. Points."),
+	DAMP_ROCK(54,750,175,new Color(37, 99, 179),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to rain, the rain will persist for longer than usual."),
+	HEAT_ROCK(55,750,175,new Color(209, 68, 61),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to harsh sunlight, the sunlight will persist for longer than usual."),
+	SMOOTH_ROCK(56,600,150,new Color(166, 124, 90),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to a sandstorm, the storm will persist for longer than usual."),
+	ICY_ROCK(57,600,150,new Color(130, 200, 232),Item.HELD_ITEM,null,"A rock that when the holder changes the weather to snow, the snow will persist for longer than usual."),
 	ASSAULT_VEST(58,0,0,new Color(194, 80, 84),Item.HELD_ITEM,null,"An offensive vest boosts the holder's Sp. Def stat but prevents the use of status moves."),
-	BRIGHT_POWDER(59,0,0,new Color(214, 234, 206),Item.HELD_ITEM,null,"A glittery powder that casts a tricky glare which lowers the accuracy of opposing Pokemon's moves."),
-	EXPERT_BELT(60,0,0,new Color(94, 90, 97),Item.HELD_ITEM,null,"A well-worn belt that slightly boosts the power of the holder's supereffective moves."),
-	METRONOME(345,0,0,Color.BLACK,Item.HELD_ITEM,null,"Boosts the power of a move that's used repeatedly. Once the chain is broken, the move's power returns to normal."),
-	TERRAIN_EXTENDER(61,0,0,new Color(212, 228, 229),Item.HELD_ITEM,null,"A held item that extends the duration of terrain caused by the holder's move or Ability."),
-	ABILITY_SHIELD(325,0,0,Color.BLACK,Item.HELD_ITEM,null,"This cute and rather unique-looking shield protects the holder from having its Ability changed by others."),
-	LIFE_ORB(62,0,0,new Color(184, 72, 144),Item.HELD_ITEM,null,"An orb that boosts the power of the holder's moves, but at the cost of some HP."),
-	FLAME_ORB(63,0,0,new Color(225, 3, 3),Item.HELD_ITEM,null,"A bizarre orb that gives off heat when touched and will afflict the holder with a burn during battle."),
-	TOXIC_ORB(64,0,0,new Color(148, 112, 172),Item.HELD_ITEM,null,"A bizarre orb that exudes toxins when touched and will badly poison the holder during battle."),
-	FROST_ORB(387,0,0,new Color(148, 112, 172),Item.HELD_ITEM,null,"A bizarre orb that gives off extreme cold when touched and will frostbite the holder during battle."),
-	ROCKY_HELMET(65,0,0,new Color(241, 188, 27),Item.HELD_ITEM,null,"If another Pokemon makes direct contact with the holder, that Pokemon will be damaged."),
-	PROTECTIVE_PADS(342,0,0,Color.BLACK,Item.HELD_ITEM,null,"These pads protect the holder from effects triggered by making direct contact with another Pokemon."),
-	PUNCHING_GLOVE(343,0,0,Color.BLACK,Item.HELD_ITEM,null,"This protective glove boosts the power of the holder's punching moves and prevents direct contact with targets."),
-	LIGHT_CLAY(66,0,0,new Color(183, 216, 126),Item.HELD_ITEM,null,"An item that when the holder uses protective moves like Light Screen or Reflect, their effects will last longer than usual."),
+	BRIGHT_POWDER(59,1,95,new Color(214, 234, 206),Item.HELD_ITEM,null,"A glittery powder that casts a tricky glare which lowers the accuracy of opposing Pokemon's moves."),
+	EXPERT_BELT(60,1,225,new Color(94, 90, 97),Item.HELD_ITEM,null,"A well-worn belt that slightly boosts the power of the holder's supereffective moves."),
+	METRONOME(345,1,150,Color.BLACK,Item.HELD_ITEM,null,"Boosts the power of a move that's used repeatedly. Once the chain is broken, the move's power returns to normal."),
+	TERRAIN_EXTENDER(61,1,200,new Color(212, 228, 229),Item.HELD_ITEM,null,"A held item that extends the duration of terrain caused by the holder's move or Ability."),
+	ABILITY_SHIELD(325,1,80,Color.BLACK,Item.HELD_ITEM,null,"This cute and rather unique-looking shield protects the holder from having its Ability changed by others."),
+	LIFE_ORB(62,1,500,new Color(184, 72, 144),Item.HELD_ITEM,null,"An orb that boosts the power of the holder's moves, but at the cost of some HP."),
+	FLAME_ORB(63,1,100,new Color(225, 3, 3),Item.HELD_ITEM,null,"A bizarre orb that gives off heat when touched and will afflict the holder with a burn during battle."),
+	TOXIC_ORB(64,1,100,new Color(148, 112, 172),Item.HELD_ITEM,null,"A bizarre orb that exudes toxins when touched and will badly poison the holder during battle."),
+	FROST_ORB(387,1,105,new Color(148, 112, 172),Item.HELD_ITEM,null,"A bizarre orb that gives off extreme cold when touched and will frostbite the holder during battle."),
+	ROCKY_HELMET(65,1,350,new Color(241, 188, 27),Item.HELD_ITEM,null,"If another Pokemon makes direct contact with the holder, that Pokemon will be damaged."),
+	PROTECTIVE_PADS(342,1,120,Color.BLACK,Item.HELD_ITEM,null,"These pads protect the holder from effects triggered by making direct contact with another Pokemon."),
+	PUNCHING_GLOVE(343,1,105,Color.BLACK,Item.HELD_ITEM,null,"This protective glove boosts the power of the holder's punching moves and prevents direct contact with targets."),
+	LIGHT_CLAY(66,1,90,new Color(183, 216, 126),Item.HELD_ITEM,null,"An item that when the holder uses protective moves like Light Screen or Reflect, their effects will last longer than usual."),
 	SHELL_BELL(346,0,0,Color.BLACK,Item.HELD_ITEM,null,"The holder restores 25% of the damage dealt with an attack back to itself."),
 	SOOTHE_BELL(67,0,0,new Color(198, 199, 202),Item.HELD_ITEM,null,"The comforting chime of this bell calms the holder, making it friendly."),
 	LOADED_DICE(68,0,0,new Color(144, 232, 16),Item.HELD_ITEM,null,"This loaded dice always rolls a good number, and holding one can ensure that the holder's multistrike moves hit more times."),
@@ -179,7 +179,7 @@ public enum Item {
 	ZOOM_LENS(349,0,0,Color.BLACK,Item.HELD_ITEM,null,"When the holder acts after its target, its move will be more accurate than usual."),
 	QUICK_CLAW(71,0,0,new Color(213, 189, 105),Item.HELD_ITEM,null,"This light, sharp claw lets the holder move first occasionally."),
 	BIG_ROOT(72,0,0,new Color(208, 161, 91),Item.HELD_ITEM,null,"This root boosts the amount of HP the holder restores to itself when it uses HP-stealing moves."),
-	CLEAR_AMULET(73,0,0,new Color(204, 204, 243),Item.HELD_ITEM,null,"This clear, sparkling amulet protects the holder from having its stats lowered by moves used against it or by other Pokemon's Abilities."),
+	CLEAR_AMULET(73,1,175,new Color(204, 204, 243),Item.HELD_ITEM,null,"This clear, sparkling amulet protects the holder from having its stats lowered by moves used against it or by other Pokemon's Abilities."),
 	COVERT_CLOAK(74,0,0,new Color(101, 136, 160),Item.HELD_ITEM,null,"This hooded cloak conceals the holder, tricking the eyes of its enemies and protecting it from the additional effects of moves."),
 	SAFETY_GOGGLES(321,0,0,Color.BLACK,Item.HELD_ITEM,null,"These goggles protect the holder from both weather-related damage and powder."),
 	HEAVY$DUTY_BOOTS(75,0,0,new Color(97, 97, 97),Item.HELD_ITEM,null,"These boots protect the holder from the effects of entry hazards set on the battlefield."),
@@ -188,35 +188,35 @@ public enum Item {
 	SHED_SHELL(78,0,0,new Color(243, 241, 140),Item.HELD_ITEM,null,"Hard and sturdy, this discarded carapace enables the holder to switch out of battle without fail."),
 	MUSCLE_BAND(79,0,0,new Color(225, 200, 50),Item.HELD_ITEM,null,"This headband exudes strength, slightly boosting the power of the holder's physical moves."),
 	WISE_GLASSES(80,0,0,new Color(92, 105, 117),Item.HELD_ITEM,null,"This thick pair of glasses slightly boosts the power of the holder's special moves."),
-	BLACK_BELT(201,0,0,PType.FIGHTING.getColor(),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."),
-	BLACK_GLASSES(202,0,0,PType.DARK.getColor(),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."),
-	CHARCOAL(203,0,0,PType.FIRE.getColor(),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."),
-	COSMIC_CORE(204,0,0,PType.GALACTIC.getColor(),Item.HELD_ITEM,null,"A mysterious core from the heart of the cosmos that boosts the power of Galactic-type moves."),
-	DRAGON_FANG(205,0,0,PType.DRAGON.getColor(),Item.HELD_ITEM,null,"This hard, sharp fang boosts the power of the holder's Dragon-type moves."),
-	ENCHANTED_AMULET(206,0,0,PType.MAGIC.getColor(),Item.HELD_ITEM,null,"An ancient amulet with mystical properties that boosts the power of Magic-type moves."),
-	GLOWING_PRISM(207,0,0,PType.LIGHT.getColor(),Item.HELD_ITEM,null,"A radiant prism that boosts the power of Light-type moves."),
-	HARD_STONE(208,0,0,PType.ROCK.getColor(),Item.HELD_ITEM,null,"A durable stone that boosts the power of the holder's Rock-type moves."),
-	MAGNET(209,0,0,PType.ELECTRIC.getColor(),Item.HELD_ITEM,null,"A powerful magnet that boosts the power of the holder's Electric-type moves."),
-	METAL_COAT(210,0,0,PType.STEEL.getColor(),Item.HELD_ITEM,null,"A special metallic coating that boosts the power of the holder's Steel-type moves."),
-	MIRACLE_SEED(211,0,0,PType.GRASS.getColor(),Item.HELD_ITEM,null,"A seed imbued with life-force that boosts the power of the holder's Grass-type moves."),
-	MYSTIC_WATER(212,0,0,PType.WATER.getColor(),Item.HELD_ITEM,null,"A teardrop-shaped gem boosts the power of the holder's Water-type moves."),
-	NEVER$MELT_ICE(213,0,0,PType.ICE.getColor(),Item.HELD_ITEM,null,"A heat-repelling piece of ice that boosts the power of the holder's Ice- type moves."),
-	POISON_BARB(214,0,0,PType.POISON.getColor(),Item.HELD_ITEM,null,"A small poisonous barb boosts the power of the holder's Poison-type moves."),
-	SHARP_BEAK(215,0,0,PType.FLYING.getColor(),Item.HELD_ITEM,null,"A long, sharp beak that boosts the power of the holder's Flying-type moves."),
-	SILK_SCARF(216,0,0,PType.NORMAL.getColor(),Item.HELD_ITEM,null,"A sumptuous scarf that boosts the power of the holder's Normal-type moves."),
-	SILVER_POWDER(217,0,0,PType.BUG.getColor(),Item.HELD_ITEM,null,"A pile of shiny silver powder that boosts the power of the holder's Bug-type moves."),
-	SOFT_SAND(218,0,0,PType.GROUND.getColor(),Item.HELD_ITEM,null,"A loose, silky sand that boosts the power of the holder's Ground-type moves."),
-	SPELL_TAG(219,0,0,PType.GHOST.getColor(),Item.HELD_ITEM,null,"A sinister, eerie tag that boosts the power of the holder's Ghost-type moves."),
-	TWISTED_SPOON(220,0,0,PType.PSYCHIC.getColor(),Item.HELD_ITEM,null,"This spoon is imbued with telekinetic energy and boosts the power of the holder's Psychic-type moves."),
+	BLACK_BELT(201,1,125,PType.FIGHTING.getColor(),Item.HELD_ITEM,null,"A belt that helps with focus and boosts the power of the holder's Fighting-type moves."),
+	BLACK_GLASSES(202,1,110,PType.DARK.getColor(),Item.HELD_ITEM,null,"A pair of shady- looking glasses that boost the power of the holder's Dark-type moves."),
+	CHARCOAL(203,1,60,PType.FIRE.getColor(),Item.HELD_ITEM,null,"A combustible fuel that boosts the power of the holder's Fire-type moves."),
+	COSMIC_CORE(204,1,250,PType.GALACTIC.getColor(),Item.HELD_ITEM,null,"A mysterious core from the heart of the cosmos that boosts the power of Galactic-type moves."),
+	DRAGON_FANG(205,1,185,PType.DRAGON.getColor(),Item.HELD_ITEM,null,"This hard, sharp fang boosts the power of the holder's Dragon-type moves."),
+	ENCHANTED_AMULET(206,1,225,PType.MAGIC.getColor(),Item.HELD_ITEM,null,"An ancient amulet with mystical properties that boosts the power of Magic-type moves."),
+	GLOWING_PRISM(207,1,75,PType.LIGHT.getColor(),Item.HELD_ITEM,null,"A radiant prism that boosts the power of Light-type moves."),
+	HARD_STONE(208,1,80,PType.ROCK.getColor(),Item.HELD_ITEM,null,"A durable stone that boosts the power of the holder's Rock-type moves."),
+	MAGNET(209,1,95,PType.ELECTRIC.getColor(),Item.HELD_ITEM,null,"A powerful magnet that boosts the power of the holder's Electric-type moves."),
+	METAL_COAT(210,1,125,PType.STEEL.getColor(),Item.HELD_ITEM,null,"A special metallic coating that boosts the power of the holder's Steel-type moves."),
+	MIRACLE_SEED(211,1,55,PType.GRASS.getColor(),Item.HELD_ITEM,null,"A seed imbued with life-force that boosts the power of the holder's Grass-type moves."),
+	MYSTIC_WATER(212,1,75,PType.WATER.getColor(),Item.HELD_ITEM,null,"A teardrop-shaped gem boosts the power of the holder's Water-type moves."),
+	NEVER$MELT_ICE(213,1,90,PType.ICE.getColor(),Item.HELD_ITEM,null,"A heat-repelling piece of ice that boosts the power of the holder's Ice- type moves."),
+	POISON_BARB(214,1,80,PType.POISON.getColor(),Item.HELD_ITEM,null,"A small poisonous barb boosts the power of the holder's Poison-type moves."),
+	SHARP_BEAK(215,1,85,PType.FLYING.getColor(),Item.HELD_ITEM,null,"A long, sharp beak that boosts the power of the holder's Flying-type moves."),
+	SILK_SCARF(216,1,100,PType.NORMAL.getColor(),Item.HELD_ITEM,null,"A sumptuous scarf that boosts the power of the holder's Normal-type moves."),
+	SILVER_POWDER(217,1,65,PType.BUG.getColor(),Item.HELD_ITEM,null,"A pile of shiny silver powder that boosts the power of the holder's Bug-type moves."),
+	SOFT_SAND(218,1,90,PType.GROUND.getColor(),Item.HELD_ITEM,null,"A loose, silky sand that boosts the power of the holder's Ground-type moves."),
+	SPELL_TAG(219,1,95,PType.GHOST.getColor(),Item.HELD_ITEM,null,"A sinister, eerie tag that boosts the power of the holder's Ghost-type moves."),
+	TWISTED_SPOON(220,1,115,PType.PSYCHIC.getColor(),Item.HELD_ITEM,null,"This spoon is imbued with telekinetic energy and boosts the power of the holder's Psychic-type moves."),
 	CLEANSE_TAG(371,0,0,Color.BLACK,Item.HELD_ITEM,null,"Helps keep wild Pokemon away when the holder is the head of the party."),
 	AMULET_COIN(339,0,0,Color.BLACK,Item.HELD_ITEM,null,"This coin doubles any prize money received as long as the holder joins the battle at least once."),
-	FLOAT_STONE(322,0,0,Color.BLACK,Item.HELD_ITEM,null,"This very light stone reduces the weight of the holder."),
-	IRON_BALL(323,0,0,Color.BLACK,Item.HELD_ITEM,null,"A ball of steel that lowers Speed and allows GROUND moves to hit FLYING and levitating holders."),
-	LAGGING_TAIL(324,0,0,Color.BLACK,Item.HELD_ITEM,null,"A tremendously heavy item that makes the holder move slower than usual."),
+	FLOAT_STONE(322,1,75,Color.BLACK,Item.HELD_ITEM,null,"This very light stone reduces the weight of the holder."),
+	IRON_BALL(323,1,230,Color.BLACK,Item.HELD_ITEM,null,"A ball of steel that lowers Speed and allows GROUND moves to hit FLYING and levitating holders."),
+	LAGGING_TAIL(324,1,260,Color.BLACK,Item.HELD_ITEM,null,"A tremendously heavy item that makes the holder move slower than usual."),
 	BINDING_BAND(340,0,0,Color.BLACK,Item.HELD_ITEM,null,"This band boosts the damage of the binding effect caused by binding moves used by the holder."),
 	GRIP_CLAW(341,0,0,Color.BLACK,Item.HELD_ITEM,null,"When the holder uses moves that deal damage over several turns, such as Bind or Wrap, their effects will last longer than usual."),
 	RING_TARGET(344,0,0,Color.BLACK,Item.HELD_ITEM,null,"When held, moves that would normally have no effect due to abilities or type matchups will still hit the holder."),
-	STICKY_BARB(347,0,0,Color.BLACK,Item.HELD_ITEM,null,"A clingy barb damages the holder every turn and will latch on to Pokemon that make direct contact with the holder."),
+	STICKY_BARB(347,1,120,Color.BLACK,Item.HELD_ITEM,null,"A clingy barb damages the holder every turn and will latch on to Pokemon that make direct contact with the holder."),
 	UTILITY_UMBRELLA(348,0,0,Color.BLACK,Item.HELD_ITEM,null,"This sturdy umbrella protects the holder from the effects of all weather."),
 	FOCUS_SASH(81,0,400,new Color(232, 80, 80),Item.HELD_ITEM,null,"If the holder has full HP and it is hit with a move that should knock it out, it will endure with 1 HP, but only once."),
 	AIR_BALLOON(82,0,300,new Color(232, 72, 72),Item.HELD_ITEM,null,"This balloon makes the holder float in the air. If the holder is hit with an attack, the balloon will burst."),
@@ -524,30 +524,8 @@ public enum Item {
 		if (isBall()) backImage = setupBackImage();
 		if (pocket == HELD_ITEM || pocket == BERRY) {
 			outlineImage = createOutlineImage(image,
-					Color.BLACK, 2,
-					Color.WHITE, 1);
-		}
-		
-		if (id >= 4 && id <= 8) {
-			switch(id) {
-				case 4:
-					healAmount = 20;
-					break;
-				case 5:
-					healAmount = 60;
-					break;
-				case 6:
-					healAmount = 200;
-					break;
-				case 7:
-					healAmount = -1;
-					break;
-				case 8:
-					healAmount = -1;
-					break;
-				default:
-					healAmount = 0;
-			}
+				Color.BLACK, 2,
+				Color.WHITE, 1);
 		}
 		
 		if (isMint()) addToMintTable();
@@ -2339,10 +2317,16 @@ public enum Item {
 	}
 	
 	public boolean isSellable(int amt) {
-		if (pocket == HELD_ITEM) {
-			if (getSell() == 0 && amt <= 1) return false;
-		}
-		return true;
+	    if (pocket != HELD_ITEM) return true;
+	    
+	    // Rule 1: Never sell unique held items (Choice Band etc.)
+	    if (getSell() == 0) return amt > 1;
+	    
+	    // Rule 2: Everstone logic - only sell if multiple
+	    if (healAmount == 0 && getSell() > 0 && getCost() > 0) return amt > 1;
+	    
+	    // Rule 3 & 4: Star shop items and Air Balloon are always sellable
+	    return healAmount > 0 || (getSell() > 0 && getCost() == 0);
 	}
 
 	private boolean isFossil() {

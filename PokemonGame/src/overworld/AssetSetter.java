@@ -24,6 +24,7 @@ public class AssetSetter {
 	public HashMap<Item, Integer> itemMap = new HashMap<>();
 	public HashMap<Integer, StaticSkeleton> legendarySkeletons = new HashMap<>();
 	
+	private static final int MINING = -42;
 	private static final int DEALER_B = -41;
 	private static final int DEALER = -40;
 	private static final int NOVA_RIGHT = -39;
@@ -2882,6 +2883,20 @@ public class AssetSetter {
 		mapNum = 208;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_DOWN, "Astronaut", 48, 65, "...Can't believe this place is really real.", mapNum);
+		
+		mapNum = 209;
+		index = 0;
+		sk = legendarySkeletons.get(231);
+		gp.npc[mapNum][index] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
+		
+		mapNum = 210;
+		index = 0;
+		sk = legendarySkeletons.get(228);
+		gp.npc[mapNum][index] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
+		
+		mapNum = 211;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(MINING, "Miner", 50, 59, "", mapNum);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -5411,6 +5426,9 @@ public class AssetSetter {
 				break;
 			case DEALER_B:
 				result = new NPC_DealerB(gp, name);
+				break;
+			case MINING:
+				result = new NPC_Mine(gp, name);
 				break;
 		}
 		
