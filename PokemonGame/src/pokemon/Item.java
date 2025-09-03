@@ -454,7 +454,7 @@ public enum Item {
 	FAITH_CORE(383,0,0,Color.BLACK,Item.KEY_ITEM,false,"A fragment of ancient energy, pulsing with quiet warmth. Said to embody the undying spirit of belief."),
 	LOGIC_CORE(384,0,0,Color.BLACK,Item.KEY_ITEM,false,"A shard of crystallized thought, sharp and cold to the touch. It hums with the relentless force of reason."),
 	LETTER_2(394,0,0,Color.BLACK,Item.KEY_ITEM,true,"A letter from your father delivered by Robin, it's notably urgent."),
-	FABLE_STONE(395,0,0,Color.BLACK,Item.KEY_ITEM,true,"A stone of fantastical luster and lapidary, humming with legendary energy. Its presence calls out to unknown forces beyond the veil."),
+	FABLE_STONE(395,0,0,Color.BLACK,Item.KEY_ITEM,true,"A stone of fantastical luster and lapidary, humming with legendary energy. Its presence calls out to unknown forces beyond the veil, seemingly needing 5 Fable Charges to activate."),
 	;
 	
 	private int id;
@@ -1470,7 +1470,7 @@ public enum Item {
 		}
         
         if (f != null) {
-        	if (f.trainerOwned()) {
+        	if (f.trainerOwned() && !f.trainer.catchable) {
         		Pokemon clone = f.trainer.getTeam()[0].clone();
         		clone.setCalcNickname();
         		int index = getPokemonIndex(clone, foeMons);

@@ -2639,7 +2639,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			
 			if (move == Move.FUTURE_SIGHT) {
-				useMove(move, foe);
 				if (field.contains(foe.getFieldEffects(), Effect.FUTURE_SIGHT)) {
 					fail();
 					this.impressive	= false;
@@ -9297,6 +9296,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			boolean staticEnc = false;
 			boolean update = false;
 			boolean script = false;
+			boolean catchable = false;
 			if (indexS.contains("$")) {
 				staticEnc = true;
 				script = true;
@@ -9310,6 +9310,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (indexS.contains("+")) {
 				update = true;
 				indexS = indexS.replace("+", "");
+			}
+			if (indexS.contains(">")) {
+				catchable = true;
+				indexS = indexS.replace(">", "");
 			}
 			int index = Integer.parseInt(indexS);
 			String name = parts[1];
@@ -9372,7 +9376,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 				if (pokemon.id != 235) { // dragowrath always has perfect iv's and a neutral nature
 					if (staticEnc) {
-						pokemon.setStaticIVs();
+						pokemon.setStaticIVs(catchable);
 					} else {
 						long seed = pokemon.generateSeed(pokemon.id, pokemon.level, pokemon.moveset);
 						pokemon.setNature(seed);
@@ -9422,6 +9426,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Trainer.trainers[index] = trainer;
 			trainer.update = update;
 			trainer.staticEnc = staticEnc;
+			trainer.catchable = catchable;
 			trainer.current.script = script;
 			
 			if (name.contains("Scott") || name.contains("Fred")) {
@@ -9436,9 +9441,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		scanner.close();
 	}
 
-	private void setStaticIVs() {
+	public void setStaticIVs(boolean notSet) {
 		long seed = generateSeed(this.id, this.level, this.moveset);
-		Random rand = new Random(seed);
+		Random rand = notSet ? new Random() : new Random(seed);
 		for (int j = 0; j < 6; j++) { this.ivs[j] = rand.nextInt(32); }
 		if (id == 233 || id == 234) {
 			this.ivs[0] = 31;
@@ -9453,7 +9458,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 			} while (this.ivs[index] == 31 && counter < 50);
 			this.ivs[index] = 31;
 		}
-		setNature(seed);		
+		if (notSet) {
+			setNature();
+		} else {
+			setNature(seed);
+		}
 	}
 
 	private long generateSeed(int i, int l, Moveslot[] moveset) {
