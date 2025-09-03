@@ -7,6 +7,7 @@ import java.util.Random;
 import entity.*;
 import object.*;
 import pokemon.Item;
+import pokemon.Pokemon;
 import tile.TileManager;
 
 public class AssetSetter {
@@ -21,6 +22,7 @@ public class AssetSetter {
 	
 	public ArrayList<Entity> clerks = new ArrayList<>();
 	public HashMap<Item, Integer> itemMap = new HashMap<>();
+	public HashMap<Integer, StaticSkeleton> legendarySkeletons = new HashMap<>();
 	
 	private static final int DEALER_B = -41;
 	private static final int DEALER = -40;
@@ -252,6 +254,20 @@ public class AssetSetter {
 		index = 0;
 		objIndex = 0;
 		iIndex = 0;
+	}
+	
+	public void setLegendarySkeletons() {
+		//                             blohadel perilyte faulette sasquotta hueduu
+		int[] validMaps = new int[] {    210,     150,     127,      209,    148 };
+		int[] legendaryIDs = new int[] { 228,     229,     230,      231,    232 };
+		int[] trainerIDs = new int[] {   509,     325,     511,      512,    326 };
+		
+		for (int i = 0; i < validMaps.length; i++) {
+			Pokemon.legendaryMap.put(validMaps[i], new Integer[] { legendaryIDs[i], trainerIDs[i] });
+		}
+		
+		
+		legendarySkeletons.put(229, new StaticSkeleton(229, 46, 66, 325, "test"));
 	}
 	
 	public void setObject() {
@@ -1205,7 +1221,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(57, 74, Item.STAR_PIECE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 74, Item.BIG_NUGGET, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(51, 72, Item.RELIC_GOLD, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(46, 67, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 66, Item.STAR_PIECE, mapNum);
 		
 		mapNum = 152;
 		objIndex = 0;
@@ -2493,7 +2509,8 @@ public class AssetSetter {
 		
 		mapNum = 150;
 		index = 0;
-		//gp.npc[mapNum][index] = NPCSetup(DIFTERY, 46, 66, 325);
+		StaticSkeleton sk = legendarySkeletons.get(229);
+		gp.npc[mapNum][index] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
 		
 		mapNum = 151;
 		index = 0;
@@ -4568,6 +4585,22 @@ public class AssetSetter {
 			if (gp.npc[160][5] == null) gp.npc[160][5] = NPCSetup(NOVA_UP, "Nova", 41, 14, "", 160.3);
 			if (gp.npc[160][6] == null) gp.npc[160][6] = NPCSetup(RYDER_RIGHT, "Ryder", 40, 13, "...");
 			if (gp.npc[160][7] == null) gp.npc[160][7] = NPCSetup(ALAKAZAM_RIGHT, "Alakazam", 39, 13, "Vxxxvhh...");
+		}
+		
+		/**
+		 * Summonable Legendaries
+		 */
+		for (Integer legendMap : Pokemon.legendaryMap.keySet()) {
+			if (gp.player.p.summonedLegendaries != null) {
+				if (gp.player.p.summonedLegendaries.containsKey(legendMap)) {
+					if (gp.npc[legendMap][0] == null) {
+						StaticSkeleton sk = legendarySkeletons.get(gp.player.p.summonedLegendaries.get(legendMap));
+						gp.npc[legendMap][0] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
+					}
+				} else {
+					gp.npc[legendMap][0] = null;
+				}
+			}
 		}
 		
 		/**

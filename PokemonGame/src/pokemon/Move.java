@@ -54,7 +54,7 @@ public enum Move {
 	BEEFY_BASH(100,85,50,0,0,-1,PType.FIGHTING,"% chance to paralyze foe, moves last",true,5),
 	BELCH(120,100,0,0,1,0,PType.POISON,"Only works on the first turn out",false,10),
 	BELLY_DRUM(0,1000,0,0,2,0,PType.NORMAL,"Maximizes Attack at the cost of 1/2 HP",false,10),
-	BIND(15,85,100,0,0,0,PType.NORMAL,"% to spin foe for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,20),
+	BIND(15,85,100,0,0,0,PType.NORMAL,"% to bind foe for 4-5 turns. While foe is bound, it takes 1/8 HP in damage, and cannot switch",true,20),
 	BITE(60,100,30,0,0,0,PType.DARK,"% chance of causing foe to flinch",true,20),
 	BITTER_MALICE(75,100,30,0,1,0,PType.GHOST,"% chance to Frostbite foe",false,10),
 	BLACK_HOLE_ECLIPSE(140,100,100,0,1,0,PType.GALACTIC,"% chance to raise user's Sp.Def by 1, user must charge on the first turn",false,5),
@@ -274,7 +274,7 @@ public enum Move {
 	ICY_WIND(55,95,100,0,1,0,PType.ICE,"% chance to lower foe's Speed by 1",false,15),
 	INCINERATE(60,100,100,0,1,0,PType.FIRE,"% to burn up foe's berry",false,15),
 	INFERNO(100,50,100,0,1,0,PType.FIRE,"% chance to Burn foe",false,5),
-	INFESTATION(20,100,100,0,1,0,PType.BUG,"% to spin foe for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,15),
+	INFESTATION(20,100,100,0,1,0,PType.BUG,"% to infest foe for 4-5 turns. While foe is infested, it takes 1/8 HP in damage, and cannot switch",true,15),
 	INGRAIN(0,1000,0,0,2,0,PType.GRASS,"Restores a small amount of HP at the end of every turn, user can't switch out",false,15),
 	IRON_BLAST(85,95,30,0,1,0,PType.STEEL,"% chance to cause foe to flinch",false,20),
 	IRON_DEFENSE(0,1000,0,0,2,0,PType.STEEL,"Raises user's Defense by 2",false,10),
@@ -611,7 +611,7 @@ public enum Move {
 	WITHDRAW(0,1000,0,0,2,0,PType.WATER,"Raises user's Defense by 1",false,35),
 	WOOD_HAMMER(120,100,0,0,0,0,PType.GRASS,"User takes 1/3 of damage inflicted",true,15),
 	WORRY_SEED(0,100,0,0,2,0,PType.GRASS,"Changes foe's ability to INSOMNIA",false,10),
-	WRAP(15,90,100,0,0,0,PType.NORMAL,"% to spin foe for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",true,20),
+	WRAP(15,90,100,0,0,0,PType.NORMAL,"% to wrap foe for 4-5 turns. While foe is wrapped, it takes 1/8 HP in damage, and cannot switch",true,20),
 	X$SCISSOR(80,100,0,1,0,0,PType.BUG,"Boosted crit rate",true,15),
 	YAWN(0,1000,0,0,2,0,PType.NORMAL,"Causes foe to fall asleep next turn",false,10),
 	ZAP_CANNON(120,50,100,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false,5),
@@ -1224,7 +1224,6 @@ public enum Move {
 		result.add(LEECH_LIFE);
 		result.add(MAGIC_FANG);
 
-		
 		if (result.contains(this)) {
 			return true;
 		}
@@ -1414,7 +1413,7 @@ public enum Move {
 		if (this.accuracy < 100) {
 			return pokemon.nickname + "'s attack missed!";
 		} else {
-			return foe.nickname + "avoided the attack!";
+			return foe.nickname + " avoided the attack!";
 		}
 		
 	}

@@ -658,6 +658,10 @@ public class UI extends AbstractUI {
 		case Task.SPACE:
 			drawSpace();
 			break;
+		case Task.SUMMON:
+			gp.player.p.summonLegendary(gp, gp.currentMap);
+			currentTask = null;
+			break;
 		}
 	}
 
@@ -1819,6 +1823,7 @@ public class UI extends AbstractUI {
 					break;
 				case 16: // fable stone
 					Task.addTask(Task.FLASH_IN, "");
+					Task.addTask(Task.SUMMON, "");
 					Task.addTask(Task.FLASH_OUT, "");
 					Task.addTask(Task.SLEEP, "", 15);
 					Task.addTask(Task.SHAKE, "", 180);
@@ -4319,7 +4324,7 @@ public class UI extends AbstractUI {
 		Main.window.setTitle(gp.gameTitle + " - " + PlayerCharacter.currentMapName);
 		if (!currentMap.equals(PlayerCharacter.currentMapName)) {
 			showAreaName();
-			gp.player.p.checkSummon(newMap);
+			gp.player.p.checkSummon(gp, newMap);
 		}
 		
 		if (tasks.isEmpty()) {

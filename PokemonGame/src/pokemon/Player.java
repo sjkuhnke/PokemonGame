@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -75,7 +76,6 @@ public class Player extends Trainer implements Serializable {
 	@Deprecated
 	public boolean[] flags;
 	public boolean[] locations;
-	public boolean[] summons;
 	public boolean random = false;
 	public boolean ghost = false;
 	public int steps;
@@ -99,6 +99,7 @@ public class Player extends Trainer implements Serializable {
 	public int[] blackjackStats; // 0: games played, 1: games won, 2: games pushed, 3: busts, 4: bust wins, 5: blackjacks 6: doubles 7: double wins, 8: coins won, 9: coins lost: 10: highest coin, 11: highest win streak, 12: lose streak, 13: high lose strk, 14: insurance offered, 15: insurance taken, 16: insurance won, 17: insurance profit, 18: missed bjs
 	public boolean[] coinBadges;
 	public HashMap<Integer, Boolean> puzzlesLocked;
+	public HashMap<Integer, Integer> summonedLegendaries;
 	public int currentBox;
 	public int version;
 	private Integer id;
@@ -124,9 +125,9 @@ public class Player extends Trainer implements Serializable {
 	public static Pokemon[] pokedex4 = new Pokemon[Pokemon.POKEDEX_2_SIZE]; // regional
 	
 	public static int[][] spawn = new int[][] { // map, x, y
-			new int[] {52, 31, 41},
-			new int[] {160, 41, 15},
-			}; 
+		new int[] {52, 31, 41},
+		new int[] {160, 41, 15},
+	}; 
 	
 	public Player(GamePanel gp) {
 		super(true);
@@ -151,7 +152,6 @@ public class Player extends Trainer implements Serializable {
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 		trainersBeat = new boolean[MAX_TRAINERS];
 		locations[0] = true;
-		summons = new boolean[32];
 		effects = new ArrayList<>();
 		
 		blackjackStats = new int[20];
@@ -1447,7 +1447,6 @@ public class Player extends Trainer implements Serializable {
 		if (blackjackStats == null) blackjackStats = new int[20];
 		if (coinBadges == null) coinBadges = new boolean[12];
 		if (puzzlesLocked == null) puzzlesLocked = new HashMap<>();
-		if (summons == null) summons = new boolean[32];
 		if (!flag[4][6]) updateCoins();
 		version = VERSION;
 	}
@@ -1991,24 +1990,37 @@ public class Player extends Trainer implements Serializable {
 		p.item = null;
 	}
 
-	public void checkSummon(int newMap) {
+	public void checkSummon(GamePanel gp, int map) {
 		if (!bag.contains(Item.FABLE_STONE)) return;
 		if (bag.getCount(Item.FABLE_CHARGE) < 5) return;
-		//                           blohadel perilyte faulette sasquotta hueduu
-		int[] validMaps = new int[] {  210,     150,     127,      209,    148 };
+		final int nuzlockeMap = 209;
 		
-		boolean isSummonableMap = false;
-		int summonIndex = -1;
-		for (int i = 0; i < validMaps.length; i++) {
-			if (newMap == validMaps[i]) {
-				isSummonableMap = true;
-				summonIndex = i;
-				break;
-			}
+		if (nuzlocke && map != nuzlockeMap) return;
+		
+		if (summonedLegendaries == null) {
+			summonedLegendaries = new HashMap<>();
 		}
-		if (!isSummonableMap) return;
-		if (summons[summonIndex]) return; // legendary already summoned here
 		
-		// TODO: prompt the user for if they want to summon and do summon stuff accordinly using summons
+		if (!Pokemon.legendaryMap.containsKey(map)) return;
+		if (summonedLegendaries.containsKey(map)) return;
+		
+		gp.setTaskState();
+		Task.addTask(Task.TEXT, "...Oh!");
+		Task.addTask(Task.TEXT, "It seems the Fable Stone is glowing with a legendary energy!");
+		Task.addTask(Task.CONFIRM, "Do you want to use 5 Fable Charges to activate the Fable Stone?", 16);
+	}
+	
+	public void summonLegendary(GamePanel gp, int map) {
+		bag.remove(Item.FABLE_CHARGE, 5);
+		int legendaryID;
+		if (nuzlocke) { // generate a random legendary
+			Random random = new Random(gp.aSetter.generateSeed(getID(), 50, 50, map)); // should always return the same seed for the same save file
+			List<Integer> allLegends = Pokemon.legendaryMap.values().stream().map(arr -> arr[0]).collect(Collectors.toList());
+			legendaryID = allLegends.get(random.nextInt(allLegends.size()));
+		} else {
+			legendaryID = Pokemon.legendaryMap.get(map)[0];
+		}
+		summonedLegendaries.put(map, legendaryID);
+		gp.aSetter.updateNPC(map);
 	}
 }

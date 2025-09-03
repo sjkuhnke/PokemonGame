@@ -14,7 +14,7 @@ public class CasinoTable extends InteractiveTile {
 		this.parent = parent;
 		
 		down1 = setup("/interactive/invisible");
-		collision = true;
+		collision = false;
 	}
 
 	public NPC_Dealer getDealer() {

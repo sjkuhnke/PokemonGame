@@ -7,8 +7,10 @@ import java.awt.Graphics2D;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -374,6 +376,19 @@ public class GamePanel extends JPanel implements Runnable {
 					}
 				}
 				
+				if (trainer > -1 && t.staticEnc) {
+					List<Integer> allLegends = Pokemon.legendaryMap.values().stream().map(arr -> arr[0]).collect(Collectors.toList());
+					if (allLegends.contains(id) && player.p.summonedLegendaries.containsKey(currentMap)) {
+						player.p.summonedLegendaries.remove(currentMap);
+						player.p.trainersBeat[trainer] = false;
+						Pokemon newP = new Pokemon(id, Trainer.trainers[trainer].team[0].level, true);
+						newP.slot = 0;
+						Trainer.trainers[trainer] = Trainer.trainers[trainer].clone();
+						Trainer.trainers[trainer].team[0] = newP;
+						Trainer.trainers[trainer].setCurrent();
+					}
+				}
+				
 				if (trainer > -1 && t.update) {
 					if (id == 159) player.p.grustCount++;
 					aSetter.updateNPC(currentMap);
@@ -531,6 +546,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void setupGame() {
+		aSetter.setLegendarySkeletons();
 		aSetter.setNPC();
 		aSetter.setObject();
 		aSetter.setInteractiveTile(currentMap);
