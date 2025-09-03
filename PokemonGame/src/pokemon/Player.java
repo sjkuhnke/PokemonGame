@@ -2007,8 +2007,12 @@ public class Player extends Trainer implements Serializable {
 		
 		gp.setTaskState();
 		Task.addTask(Task.TEXT, "...Oh!");
-		Task.addTask(Task.TEXT, "It seems the Fable Stone is glowing with a legendary energy!");
+		Task t = Task.addTask(Task.TEXT, "It seems the Fable Stone is glowing with a legendary energy!");
+		t.ui = Task.ITEM;
+		t.item = Item.FABLE_STONE;
 		Task.addTask(Task.CONFIRM, "Do you want to use 5 Fable Charges to activate the Fable Stone?", 16);
+		t.ui = Task.ITEM;
+		t.item = Item.FABLE_CHARGE;
 	}
 	
 	public void summonLegendary(GamePanel gp, int map) {

@@ -404,7 +404,9 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "You may have heard of the item before, but this one is special! It heals your Pokemon a whopping 25% of any damage dealt!");
 			Task.addTask(Task.DIALOGUE, npc, "I'm willing to part with it, but for a price. You see, my Cleffa and Azurill will only evolve when they're happy enough...");
 			Task.addTask(Task.DIALOGUE, npc, "But they're far too weak to train on their own, so I'd like to use the unique item to this region, being the Euphorian Gem!");
-			Task.addTask(Task.CONFIRM, npc, "If you have 2 Euphorian Gems to give me, I'll give you this Shell Bell. Do we have a deal?", 6);
+			Task t = Task.addTask(Task.CONFIRM, npc, "If you have 2 Euphorian Gems to give me, I'll give you this Shell Bell. Do we have a deal?", 6);
+			t.ui = Task.ITEM;
+			t.item = Item.EUPHORIAN_GEM;
 		});
 		
 		scriptMap.put(11.0, (npc) -> { // fred 1
@@ -3476,7 +3478,8 @@ public class Script {
 		
 		scriptMap.put(152.4, (npc) -> { // astronaut going to space
 			if (p.getMoney() >= 500) {
-				Task.addTask(Task.CONFIRM, npc, "Pay $500 and go to space?", 13);
+				Task t = Task.addTask(Task.CONFIRM, npc, "Pay $500 and go to space?", 13);
+				t.ui = Task.MONEY;
 			} else {
 				Task.addTask(Task.DIALOGUE, npc, "Oh, I'm sorry, you don't have enough money for me to take you!");
 			}

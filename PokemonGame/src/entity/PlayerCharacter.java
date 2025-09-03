@@ -298,6 +298,8 @@ public class PlayerCharacter extends Entity {
 					interactTrainer(target, pokemon.id, pokemon.spin);
 				} else if (target instanceof NPC_Dealer) {
 					interactDealer(((NPC_Dealer) target));
+				} else if (target instanceof NPC_Mine) {
+					interactMine(((NPC_Mine) target));
 				}
 			}
 			
@@ -655,6 +657,20 @@ public class PlayerCharacter extends Entity {
 	private void interactCasinoTable(int i) {
 		CasinoTable table = (CasinoTable) gp.iTile[gp.currentMap][i];
 		interactDealer(table.getDealer());
+	}
+	
+	private void interactMine(NPC_Mine mine) {
+		gp.keyH.wPressed = false;
+		resetSpriteNum();
+		mine.facePlayer(direction);
+		
+		gp.setTaskState();
+		if (p.getMoney() >= mine.PRICE) {
+			Task t = Task.addTask(Task.CONFIRM, mine, "Hi there! If you pay me $" + mine.PRICE + ", I'll head into my mine and see what I can dig up for you!\n(Warning: Will Auto-Save)", 17);
+			t.ui = Task.MONEY;
+		} else {
+			Task.addTask(Task.DIALOGUE, mine, "I'm sorry, you don't have enough money for my expert services. Come back with at least $" + mine.PRICE + "!");
+		}
 	}
 	
 	private void interactCutTree(int i, boolean override) {

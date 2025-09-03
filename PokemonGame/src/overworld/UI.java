@@ -313,6 +313,11 @@ public class UI extends AbstractUI {
 				drawToolTips("OK", null, null, null);
 			}
 		}
+		
+		if (currentTask != null) {
+			drawUIComponent(currentTask.ui);
+		}
+		
 		drawKeyStrokes();
 	}
 
@@ -661,6 +666,18 @@ public class UI extends AbstractUI {
 		case Task.SUMMON:
 			gp.player.p.summonLegendary(gp, gp.currentMap);
 			currentTask = null;
+			break;
+		}
+	}
+
+	private void drawUIComponent(int ui) {
+		if (ui < 0) return;
+		switch (ui) {
+		case Task.MONEY:
+			drawMoneyWindow(0, gp.screenHeight - gp.tileSize);
+			break;
+		case Task.ITEM:
+			drawItemWindow(gp.tileSize * 12, (int) (gp.tileSize * 2.5), currentTask.item.getImage2());
 			break;
 		}
 	}
@@ -1634,14 +1651,7 @@ public class UI extends AbstractUI {
 			image = bagIcons[currentTask.item.getPocket() - 1];
 		}
 		drawDialogueScreen(true);
-		int x = gp.tileSize * 12;
-		int y = (int) (gp.tileSize * 2.5);
-		int width = (int) (gp.tileSize * 1.5);
-		int height = (int) (gp.tileSize * 1.5);
-		drawSubWindow(x, y, width, height);
-		x += gp.tileSize / 4;
-		y += gp.tileSize / 4;
-		g2.drawImage(image, x, y, null);
+		drawItemWindow(gp.tileSize * 12, (int) (gp.tileSize * 2.5), image);
 		
 		if (gp.keyH.wPressed || gp.keyH.sPressed) {
 			gp.keyH.wPressed = false;
@@ -1649,6 +1659,15 @@ public class UI extends AbstractUI {
 			addItem = false;
 			currentTask = null;
 		}
+	}
+	
+	private void drawItemWindow(int x, int y, BufferedImage image) {
+		int width = (int) (gp.tileSize * 1.5);
+		int height = (int) (gp.tileSize * 1.5);
+		drawSubWindow(x, y, width, height);
+		x += gp.tileSize / 4;
+		y += gp.tileSize / 4;
+		g2.drawImage(image, x, y, null);
 	}
 
 	private void drawFlash(int i) {
@@ -1830,6 +1849,15 @@ public class UI extends AbstractUI {
 					Task.addTask(Task.SLEEP, "", 30);
 					Task.addTask(Task.TEXT, "A powerful presence awaits...");
 					currentTask = null;
+					break;
+				case 17:
+					((NPC_Mine) currentTask.e).startMine(gp.player.p);
+					currentTask = null;
+					break;
+				case 18: // mining minigame
+					((NPC_Mine) currentTask.e).mine(currentTask.wipe);
+					currentTask = null;
+					break;
 				}
 			}
 		}
@@ -1840,26 +1868,32 @@ public class UI extends AbstractUI {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				if (type != 7) {
-					currentTask = null;
-					gp.gameState = GamePanel.PLAY_STATE;
-				}
 				switch (type) {
 				case 0:
 					showMessage("Hurry up Finn, This is urgent!");
 					tasks.clear();
+					currentTask = null;
+					gp.gameState = GamePanel.PLAY_STATE;
 					break;
 				case 2:
 					showMessage("Come back when you're ready!");
 					tasks.clear();
+					currentTask = null;
+					gp.gameState = GamePanel.PLAY_STATE;
 					break;
 				case 1:
 					showMessage("That's okay! Take your time, I get it.");
+					currentTask = null;
+					gp.gameState = GamePanel.PLAY_STATE;
 					break;
 				case 7: // logic
 					gp.player.p.flag[7][10] = true;
 					gp.player.p.flag[7][9] = false;
 					gp.script.runScript(gp.npc[107][13]);
+					currentTask = null;
+					break;
+				case 18: // mining minigame
+					((NPC_Mine) currentTask.e).endMine();
 					currentTask = null;
 					break;
 				}
@@ -4552,6 +4586,7 @@ public class UI extends AbstractUI {
 		}
 		
 		if (items) {
+			drawMoneyWindow(x + width - gp.tileSize * 3, y - gp.tileSize);
 			int moneyX = x + width - gp.tileSize * 3;
 			int moneyY = y - gp.tileSize;
 			int moneyWidth = gp.tileSize * 3;
@@ -4565,6 +4600,18 @@ public class UI extends AbstractUI {
 		}
 		
 		drawToolTips("Buy", prize ? "Prev" : null, "Back", prize ? "Next" : "Back");
+	}
+
+	private void drawMoneyWindow(int x, int y) {
+		int width = gp.tileSize * 3;
+		int height = gp.tileSize;
+		
+		drawSubWindow(x, y, width, height);
+		x += 20;
+		y += gp.tileSize * 0.75;
+		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.drawString("$" + gp.player.p.getMoney(), x, y);
+		
 	}
 
 	private int getItemIndexOnSlot(int maxCol) {
