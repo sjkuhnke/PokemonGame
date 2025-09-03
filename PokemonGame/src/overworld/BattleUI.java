@@ -63,7 +63,7 @@ public class BattleUI extends AbstractUI {
 	protected int cooldownCounter = 0;
 	protected Field field;
 	protected boolean baton;
-	protected boolean aura;
+	protected boolean catchable;
 	public boolean invalidEncounter;
 	public char encType;
 	
@@ -534,7 +534,7 @@ public class BattleUI extends AbstractUI {
 	}
 
 	protected void drawCaughtIndicator() {
-		if (foe.trainerOwned() || user.getPlayer().pokedex[foe.id] != 2) return;
+		if ((foe.trainerOwned() && !catchable) || user.getPlayer().pokedex[foe.id] != 2) return;
 		g2.drawImage(ballIcon, 454, 50, null);
 	}
 	
@@ -566,7 +566,7 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	protected void drawFoeParty() {
-		if (!foe.trainerOwned()) return;
+		if (!foe.trainerOwned() || staticID >= 0) return;
 		int x = gp.screenWidth - 130;
 		int y = 10;
 		
@@ -647,7 +647,6 @@ public class BattleUI extends AbstractUI {
 	    Pokemon.field = field;
 	    userHP = user.currentHP;
 	    maxUserHP = user.getStat(0);
-	    aura = false;
 	    invalidEncounter = false;
 	    if (gp.player.p.nuzlocke && !gp.player.p.canCatchPokemonHere(PlayerCharacter.getMetAt(), foe) && !gp.player.p.bag.contains(Item.TEMPLE_BALL)) {
 			invalidEncounter = true;
@@ -662,17 +661,18 @@ public class BattleUI extends AbstractUI {
 	    	for (int i = 0; i < 5; i++) {
 	    		foe.stat(foe, i, 1, new Pokemon(1, 1, false, false));
 	    	}
-	    	aura = true;
 	    }
-		if (Pokemon.isUltraBeast(staticID) || staticID == 159) { // grusts aren't catchable in the forest
-			aura = true;
-		}
 		if (staticID == 235) { // dragowrath
 			Task.addTask(Task.TEXT, foe.nickname + "'s aura flared to life!");
 	    	for (int i = 0; i < 5; i++) {
 	    		foe.stat(foe, i, 6, null);
 	    	}
-			aura = true;
+		}
+		if (staticID == 229 && !catchable) { // perilyte boss battle
+			Task.addTask(Task.TEXT, foe.nickname + "'s aura flared to life!");
+	    	for (int i = 0; i < 5; i++) {
+	    		foe.stat(foe, i, 2, null);
+	    	}
 		}
 		Task.addSwapInTask(user, true);
 		if (staticID == 235) { // dragowrath
@@ -881,7 +881,7 @@ public class BattleUI extends AbstractUI {
 				gp.keyH.wPressed = false;
 				subState = TASK_STATE;
 				if (foe.trainerOwned()) {
-					Task.addTask(Task.TEXT, "No! There's no running from a trainer battle!");
+					Task.addTask(Task.TEXT, staticID < 0 ? "No! There's no running from a trainer battle!" : "The Pokemon's presense is keeping you from fleeing!");
 				} else {
 					Pokemon faster = user.getFaster(foe, 0, 0);
 					boolean isFaster = faster == user || user.getItem() == Item.SHED_SHELL || user.type1 == PType.GHOST || user.type2 == PType.GHOST;
@@ -902,7 +902,7 @@ public class BattleUI extends AbstractUI {
 			if (commandNum < 0 && ballIndex >= 0) {
 				moveSummaryNum = -1;
 				showFoeSummary = !showFoeSummary;
-			} else if (foe.trainerOwned()) {
+			} else if (foe.trainerOwned() && !catchable) {
 				if (foeSummary == null && !showFoeSummary) foeSummary = foe;
 				if (showFoeSummary) foeSummary = null;
 				moveSummaryNum = -1;
@@ -1068,7 +1068,7 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	protected void drawCatchWindow() {
-		if (foe.trainerOwned() && (staticID < 0 || aura)) return;
+		if (foe.trainerOwned() && (staticID < 0 || !catchable)) return;
 		if (invalidEncounter) return;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		int x = gp.screenWidth - (gp.tileSize * 4);
@@ -1652,6 +1652,7 @@ public class BattleUI extends AbstractUI {
 			showMessage("You are challenged by " + foe.trainer.toString() + "!");
 			foeStatus = foe.status;
 		} else {
+			catchable = staticID > 0 && foe.trainer.catchable;
 			foe.setVisible(true);
 			foeHP = foe.currentHP;
 		    maxFoeHP = foe.getStat(0);

@@ -266,8 +266,11 @@ public class AssetSetter {
 			Pokemon.legendaryMap.put(validMaps[i], new Integer[] { legendaryIDs[i], trainerIDs[i] });
 		}
 		
-		
-		legendarySkeletons.put(229, new StaticSkeleton(229, 46, 66, 325, "test"));
+		legendarySkeletons.put(228, new StaticSkeleton(228, 0, 0, 510, "Glublublerbe... bubblava!")); // blohadel
+		legendarySkeletons.put(229, new StaticSkeleton(229, 46, 66, 325, "Vrrrrlyigtt!")); // perilyte
+		legendarySkeletons.put(230, new StaticSkeleton(230, 31, 35, 511, "Jahahack! Jahacklehette!!")); // faulette
+		legendarySkeletons.put(231, new StaticSkeleton(231, 49, 45, 512, "Ohohquotta!")); // sasquotta
+		legendarySkeletons.put(232, new StaticSkeleton(232, 50, 68, 326, "Vouuudouhhh!!!")); // hueduu
 	}
 	
 	public void setObject() {
@@ -2207,6 +2210,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "They say two stars fell from the heavens... not long ago, but long enough to change everything.", mapNum, 132, "The Electric Tunnel still hums with one's power. The Shadow Ravine... it pulses with the other.\n"
 				+ "It's strange... the Pokemon don't seem hurt. Just changed. Like they heard something from the stars and answered.");
 		
+		mapNum = 102;
+		index = 0;
+		gp.npc[mapNum][index] = SetupStaticEncounter(229, 46, 32, 509, "Vrrrr... LYTE!");
+		
 		mapNum = 103;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(MAXWELL, "Maxwell", 47, 38, "...", mapNum, -1, "", 217);
@@ -2360,6 +2367,8 @@ public class AssetSetter {
 		
 		mapNum = 127;
 		index = 0;
+		StaticSkeleton sk = legendarySkeletons.get(230);
+		gp.npc[mapNum][index] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
 		gp.npc[mapNum][index] = NPCSetup(DEALER_B, "Dealer", 28, 35, "");
 		gp.npc[mapNum][index] = NPCSetup(DEALER, "Gamemaster", 33, 42, "");
 		
@@ -2479,7 +2488,8 @@ public class AssetSetter {
 		
 		mapNum = 148;
 		index = 0;
-		//gp.npc[mapNum][index] = NPCSetup(TRIWANDOLIZ, 50, 68, 326);
+		sk = legendarySkeletons.get(232);
+		gp.npc[mapNum][index] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
 		
 		mapNum = 149;
 		index = 0;
@@ -2509,7 +2519,7 @@ public class AssetSetter {
 		
 		mapNum = 150;
 		index = 0;
-		StaticSkeleton sk = legendarySkeletons.get(229);
+		sk = legendarySkeletons.get(229);
 		gp.npc[mapNum][index] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
 		
 		mapNum = 151;
@@ -2549,8 +2559,8 @@ public class AssetSetter {
 		gp.npc[153][index] = NPCSetup(NPC_PC, 36, 35, "", "", -1);
 		
 		// Clerks
-		gp.npc[154][index] = NPCSetup(NPC_CLERK, 30, 39, "", "", -1);
-		gp.npc[154][index] = NPCSetup(NPC_BALL, 30, 38, "", "", -1);
+		gp.npc[154][index] = NPCSetup(NPC_CLERK, 27, 39, "", "", -1);
+		gp.npc[154][index] = NPCSetup(NPC_BALL, 27, 38, "", "", -1);
 		gp.npc[155][index] = SetupClerk(NPC_MARKET, 31, 41, Item.ABILITY_CAPSULE, Item.TM66);
 		
 		mapNum = 159;
@@ -4595,12 +4605,17 @@ public class AssetSetter {
 				if (gp.player.p.summonedLegendaries.containsKey(legendMap)) {
 					if (gp.npc[legendMap][0] == null) {
 						StaticSkeleton sk = legendarySkeletons.get(gp.player.p.summonedLegendaries.get(legendMap));
+						sk.nuzlocke = gp.player.p.nuzlocke;
 						gp.npc[legendMap][0] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
 					}
 				} else {
 					gp.npc[legendMap][0] = null;
 				}
 			}
+		}
+		
+		if (flag[8][13]) { // perilyte 1
+			gp.npc[102][0] = null;
 		}
 		
 		/**
@@ -5579,7 +5594,7 @@ public class AssetSetter {
 			result = new IceChunk(gp);
 			break;
 		case CASINO_TABLE:
-			result = new CasinoTable(gp, gp.npc[127][0]);
+			result = new CasinoTable(gp, gp.npc[127][1]);
 			break;
 		}
 		

@@ -221,7 +221,7 @@ public class KeyHandler implements KeyListener {
 			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
 				if ((gp.battleUI.foe.trainerOwned() && gp.battleUI.commandNum > 1) || ((!gp.battleUI.foe.trainerOwned() || gp.battleUI.staticID >= 0) && gp.battleUI.commandNum >= 0) && !gp.battleUI.showFoeSummary) {
 					gp.battleUI.commandNum -= 2;
-					if (gp.battleUI.commandNum < 0 && (gp.battleUI.aura || gp.battleUI.invalidEncounter)) {
+					if (gp.battleUI.commandNum < 0 && (!gp.battleUI.catchable || gp.battleUI.invalidEncounter)) {
 						gp.battleUI.commandNum += 2;
 					}
 				}

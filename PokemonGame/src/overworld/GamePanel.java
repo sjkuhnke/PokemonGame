@@ -381,11 +381,7 @@ public class GamePanel extends JPanel implements Runnable {
 					if (allLegends.contains(id) && player.p.summonedLegendaries.containsKey(currentMap)) {
 						player.p.summonedLegendaries.remove(currentMap);
 						player.p.trainersBeat[trainer] = false;
-						Pokemon newP = new Pokemon(id, Trainer.trainers[trainer].team[0].level, true);
-						newP.slot = 0;
-						Trainer.trainers[trainer] = Trainer.trainers[trainer].clone();
-						Trainer.trainers[trainer].team[0] = newP;
-						Trainer.trainers[trainer].setCurrent();
+						Trainer.trainers[trainer] = Trainer.trainers[trainer].regeneratePokemon(id);
 					}
 				}
 				

@@ -7,6 +7,7 @@ public class StaticSkeleton {
 	private int y;
 	private int trainer;
 	private String text;
+	public boolean nuzlocke;
 	
 	public StaticSkeleton(int id, int x, int y, int trainer, String text) {
 		this.id = id;
@@ -21,11 +22,11 @@ public class StaticSkeleton {
 	}
 	
 	public int x() {
-		return x;
+		return nuzlocke ? 49 : x;
 	}
 	
 	public int y() {
-		return y;
+		return nuzlocke ? 45 : y;
 	}
 	
 	public int t() {

@@ -425,7 +425,7 @@ public class SimBattleUI extends BattleUI {
 	    maxUserHP = user.getStat(0);
 	    foeHP = foe.currentHP;
 	    maxFoeHP = foe.getStat(0);
-	    aura = false;
+	    catchable = false;
 		
 	    Task.addSwapInTask(foe, false);
 		foeFainted = foe.trainer.getNumFainted();

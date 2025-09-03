@@ -21,6 +21,7 @@ public class Trainer implements Serializable {
 	public Pokemon current;
 	public boolean update;
 	public boolean staticEnc;
+	public boolean catchable;
 	public boolean cloned;
 	
 	transient ArrayList<FieldEffect> effects;
@@ -408,6 +409,7 @@ public class Trainer implements Serializable {
 		
 		result.update = this.update;
 		result.staticEnc = this.staticEnc;
+		result.catchable = this.catchable;
 		result.effects = new ArrayList<>(this.effects);
 		result.cloned = true;
 		
@@ -519,6 +521,17 @@ public class Trainer implements Serializable {
 		for (Pokemon p : team) {
 			if (p != null) result[p.slot] = p;
 		}
+		return result;
+	}
+
+	public Trainer regeneratePokemon(int id) {
+		Pokemon base = this.team[0];
+		Pokemon newP = new Pokemon(id, base.level, true);
+		newP.slot = 0;
+		newP.setStaticIVs(true);
+		this.team[0] = newP;
+		Trainer result = this.clone();
+		result.cloned = false;
 		return result;
 	}
 }

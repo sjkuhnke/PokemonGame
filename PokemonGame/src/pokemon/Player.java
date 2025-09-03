@@ -1996,6 +1996,7 @@ public class Player extends Trainer implements Serializable {
 		final int nuzlockeMap = 209;
 		
 		if (nuzlocke && map != nuzlockeMap) return;
+		if (nuzlocke && nuzlockeEncounters.contains(PlayerCharacter.getMetAt())) return;
 		
 		if (summonedLegendaries == null) {
 			summonedLegendaries = new HashMap<>();

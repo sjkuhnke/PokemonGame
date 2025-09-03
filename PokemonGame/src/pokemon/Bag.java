@@ -51,7 +51,7 @@ public class Bag implements Serializable {
 	}
 	
 	public void remove(Item item, int amt) {
-		if (count[item.getID()] < amt) throw new IllegalArgumentException("You have less " + item.toString() + " then you're trying to remove (" + amt + ")");
+		if (count[item.getID()] < amt) System.err.println("You have less " + item.toString() + " then you're trying to remove (" + amt + ")");
 		count[item.getID()] -= amt;
 	}
 	
