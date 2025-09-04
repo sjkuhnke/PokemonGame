@@ -372,7 +372,7 @@ public class GamePanel extends JPanel implements Runnable {
 					if (item == Item.FABLE_STONE) {
 						task = Task.addTask(Task.ITEM, "");
 						task.item = Item.FABLE_CHARGE;
-						task.counter = 5;
+						task.counter = 3;
 					}
 				}
 				
@@ -598,15 +598,15 @@ public class GamePanel extends JPanel implements Runnable {
 		int width = tileSize * 4;
 		int height = (int) (tileSize * 1.5);
 		
-		ui.drawSubWindow(x, y, width, height);
+		boolean canCalc = player.p.getCurrent() != null;
+		
+		if (canCalc) ui.drawSubWindow(x, y, width, height);
 		
 		g2.setFont(g2.getFont().deriveFont(24F));
 		x += tileSize / 2;
 		y += tileSize;
 		
-		if (player.p.getCurrent() != null) {
-			g2.drawString("[Ctrl]+[A] Calc", x, y);
-		}
+		if (canCalc)g2.drawString("[Ctrl]+[A] Calc", x, y);
 		
 		width = tileSize * 12;
 		x -= tileSize / 2;

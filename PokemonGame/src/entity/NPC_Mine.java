@@ -12,10 +12,9 @@ import util.Pair;
 
 public class NPC_Mine extends Entity {
 	
-	public final int PRICE = 350;
+	public final int PRICE = 1000;
 	private final int FAIL_CHANCE = 10;
 	private ArrayList<Pair<Item, Integer>> items = new ArrayList<>();
-	private ArrayList<Item> inventory = new ArrayList<>();
 	private Random random;
 	private int totalWeight;
 	private final int defaultTotal;
@@ -80,9 +79,9 @@ public class NPC_Mine extends Entity {
 	    items.add(new Pair<>(Item.BLACK_BELT, 1));
 	    items.add(new Pair<>(Item.BLACK_GLASSES, 1));
 	    items.add(new Pair<>(Item.CHARCOAL, 1));
-	    items.add(new Pair<>(Item.COSMIC_CORE, 1));
+	    items.add(new Pair<>(Item.COSMIC_CORE, 3));
 	    items.add(new Pair<>(Item.DRAGON_FANG, 1));
-	    items.add(new Pair<>(Item.ENCHANTED_AMULET, 1));
+	    items.add(new Pair<>(Item.ENCHANTED_AMULET, 2));
 	    items.add(new Pair<>(Item.GLOWING_PRISM, 1));
 	    items.add(new Pair<>(Item.MAGNET, 1));
 	    items.add(new Pair<>(Item.MIRACLE_SEED, 1));
@@ -131,11 +130,13 @@ public class NPC_Mine extends Entity {
 			Task.addTask(Task.DIALOGUE, this, "AHHHHHHH!");
 			Task.addTask(Task.DIALOGUE, this, "What the hell is that?! We gotta get out of here!");
 			this.inventory.clear();
-			endMine();
+			endMine(perilyte);
 		} else {
 			int sleep = random.nextInt(320);
 			sleep += 20;
+			if (perilyte) sleep /= 4;
 			Task.addTask(Task.SLEEP, "", sleep);
+			
 			int sw = random.nextInt(3);
 			String speech;
 			switch (sw) {
@@ -145,6 +146,8 @@ public class NPC_Mine extends Entity {
 				speech = "Look! I found a ";break;
 			case 2:
 				speech = "What's this..? Oh, I dug up a ";break;
+			case 3:
+				speech = "Ohoh! We got something big here! A ";break;
 			default:
 				speech = "";break;
 			}
@@ -163,8 +166,6 @@ public class NPC_Mine extends Entity {
 			Pair<Item, Integer> fail = items.get(0);
 			fail.setSecond(fail.getSecond() + 1);
 			totalWeight++;
-			System.out.println("===============================\nTurns: " + turns);
-			System.out.println("Incremented fail to " + items.get(0).getSecond() + ", totalWeight: " + totalWeight);
 		}
 		int roll = random.nextInt(totalWeight);
 		
@@ -187,13 +188,20 @@ public class NPC_Mine extends Entity {
 		mine(p.hasPokemonID(229));
 	}
 	
-	public void endMine() {
+	public void endMine(boolean perilyte) {
 		Task.addTask(Task.SLEEP, "", 120);
 		Task.addTask(Task.FLASH_OUT, "");
 		if (this.inventory.isEmpty()) {
 			Task.addTask(Task.DIALOGUE, this, "...In my panic, I dropped everything and ran.");
 			Task.addTask(Task.DIALOGUE, this, "Sorry about that bud, I don't know what was down there but I didn't like it.");
 			Task.addTask(Task.DIALOGUE, this, "You gotta be my set of eyes for scary stuff like that and tell me when to stop!");
+			if (!perilyte) {
+				Task.addTask(Task.DIALOGUE, this, "Y'know, it's not very easy to do this alone. And I need you as my set of eyes.");
+				Task.addTask(Task.DIALOGUE, this, "...What? You've heard of Perilyte too? Yeah, they're extremely rare and the masters of mining. Even better than I.");
+				Task.addTask(Task.DIALOGUE, this, "If you had one... I bet it would love to help me mine. Would probably be a lot faster and safer!");
+				Task.addTask(Task.DIALOGUE, this, "I've seen a singular Perilyte before, and it ran from me deeper underground.");
+				Task.addTask(Task.DIALOGUE, this, "Would love to see one close up! I'm sure it would be plenty of help to us here!");
+			}
 		} else {
 			String message = this.inventory.size() >= 10 ? "That was quite the haul! Here's everything you got!" : "Alright! Here's what I dug up!";
 			Task.addTask(Task.DIALOGUE, this, message);
@@ -202,7 +210,9 @@ public class NPC_Mine extends Entity {
 			Task t = Task.addTask(Task.ITEM, "");
 			t.item = i;
 		}
-		this.resetMine();
+		if (!this.inventory.isEmpty()) {
+			Task.addTask(Task.ITEM_SUM, this, "");
+		}
 	}
 	
 	private void resetMine() {
