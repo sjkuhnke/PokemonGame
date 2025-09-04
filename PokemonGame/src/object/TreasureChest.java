@@ -15,7 +15,6 @@ import overworld.GamePanel;
 import pokemon.Item;
 
 public class TreasureChest extends ItemObj {
-	public ArrayList<Item> items;
 	public boolean open;
 	public int map;
 	
@@ -105,7 +104,7 @@ public class TreasureChest extends ItemObj {
 		itemList.addAll(addChestLoot());
 		Collections.shuffle(itemList);
 		
-		this.items = itemList;
+		this.inventory = itemList;
 	}
 
 	private ArrayList<Item> addChestLoot() {

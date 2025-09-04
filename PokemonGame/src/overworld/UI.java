@@ -413,6 +413,7 @@ public class UI extends AbstractUI {
 			drawFlash(1);
 			break;
 		case Task.FLASH_OUT:
+			if (counter == 0) counter = 25;
 			drawFlash(-1);
 			break;
 		case Task.ITEM:
@@ -1690,6 +1691,7 @@ public class UI extends AbstractUI {
 					drawFlash = true;
 				}
 			} else if (i < 0) {
+				drawFlash = false;
 				if (counter <= 0) {
 					counter = 0;
 					currentTask = null;
@@ -1893,7 +1895,7 @@ public class UI extends AbstractUI {
 					currentTask = null;
 					break;
 				case 18: // mining minigame
-					((NPC_Mine) currentTask.e).endMine();
+					((NPC_Mine) currentTask.e).endMine(currentTask.wipe);
 					currentTask = null;
 					break;
 				}
@@ -1901,7 +1903,7 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.sPressed && type != 7) {
+		if (gp.keyH.sPressed && type != 7 && type != 18) {
 			gp.keyH.sPressed = false;
 			currentTask = null;
 			tasks.clear();
@@ -4037,11 +4039,13 @@ public class UI extends AbstractUI {
 			}
 			if (bagState == 0 && gp.keyH.dPressed && currentPocket == Item.TMS) {
 				gp.keyH.dPressed = false;
-				Item tm = currentItems.get(bagNum[currentPocket - 1]).getItem();
-				if (tmCheck == null || tmCheck != tm) {
-					tmCheck = tm;
-				} else {
-					tmCheck = null;
+				if (!currentItems.isEmpty()) {
+					Item tm = currentItems.get(bagNum[currentPocket - 1]).getItem();
+					if (tmCheck == null || tmCheck != tm) {
+						tmCheck = tm;
+					} else {
+						tmCheck = null;
+					}
 				}
 			}
 		}
@@ -5753,42 +5757,74 @@ public class UI extends AbstractUI {
 	
 	private void drawItemSum() {
 		HashMap<Item, Integer> itemCounts = new HashMap<>();
+		Entity chest = currentTask.e;
 		
-		TreasureChest chest = (TreasureChest) currentTask.e;
-		
-		for (Item i : chest.items) {
+		for (Item i : chest.inventory) {
 			itemCounts.put(i, itemCounts.getOrDefault(i, 0) + 1);
 		}
 		
 		int itemCount = itemCounts.size();
 		
-		int x = gp.tileSize * 3;
-		int y = itemCount > 10 ? 0 : gp.tileSize / 2;
-		int width = gp.screenWidth - x*2;
-		int height;
+		int maxItemsPerColumn;
+		int fontSize;
 		
-		int itemX = x + gp.tileSize;
-		int itemY = (int) (y + gp.tileSize * 1.5);
-		int textHeight = gp.tileSize;
+		if (itemCount <= 12) {
+			maxItemsPerColumn = 12;
+			fontSize = 32;
+		} else if (itemCount <= 20) {
+			maxItemsPerColumn = 20;
+			fontSize = 24;
+		} else {
+			maxItemsPerColumn = 20;
+			fontSize = 24;
+		}
 		
-		height = (int) (itemCount * textHeight + gp.tileSize * 1.25);
-		if (itemCount > 9) height -= (gp.tileSize / 2) * (itemCount % 9);
+		int columns = Math.max(1, (int) Math.ceil(itemCount / (double) maxItemsPerColumn));
+		int itemsPerColumn = (int) Math.ceil(itemCount / (double) columns);
+		
+		int baseColumnWidth = (int) (gp.tileSize * 4.5);
+		int columnSpacing = gp.tileSize / 2;
+		
+		int width = Math.min(
+			gp.screenWidth,
+			(baseColumnWidth * columns) + (columnSpacing * (columns - 1)) + gp.tileSize * 3 + columnSpacing);
+		
+		int rowHeight = fontSize * 3/2 - gp.tileSize / 4;
+		int height = (int) (itemsPerColumn * rowHeight + gp.tileSize * 2);
+		
+		int x = Math.max(0,
+			(gp.screenWidth - width) / 2);
+		int y = Math.max(0,
+			(gp.screenHeight - height) / 2);
+		
 		drawSubWindow(x, y, width, height);
 		
+		int columnWidth = (width - columnSpacing * (columns - 1)) / columns;
+		
+		y += gp.tileSize / 4;
 		g2.setFont(g2.getFont().deriveFont(48F));
 		String text = "You got:";
-		g2.drawString(text, getCenterAlignedTextX(text, gp.screenWidth / 2), itemY);
+		g2.drawString(text, getCenterAlignedTextX(text, gp.screenWidth / 2), y + gp.tileSize);
 		
-		itemY += gp.tileSize / 2;
-		
-		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.setFont(g2.getFont().deriveFont((float)fontSize));
+		int currentColumn = 0;
+		int currentRow = 0;
 		
 		for (Map.Entry<Item, Integer> e : itemCounts.entrySet()) {
-			g2.drawImage(e.getKey().getImage(), itemX, itemY, null);
-			itemY += gp.tileSize / 2;
+			int columnX = x + (currentColumn * (columnWidth + (currentColumn > 0 ? 0 : columnSpacing))) + gp.tileSize / 2;
+			int rowY = (int) (y + gp.tileSize * 1.25 + (currentRow * rowHeight));
+			
+			g2.drawImage(e.getKey().getImage(), columnX, rowY, null);
+
 			String itemString = e.getValue() + " x " + e.getKey().toString();
-			g2.drawString(itemString, (int) (itemX + gp.tileSize * 0.75), itemY);
-			itemY += gp.tileSize / 3;
+			int textX = (int) (columnX + gp.tileSize * 0.75);
+			g2.drawString(itemString, textX, (int) (rowY + fontSize * 0.8));
+			
+			currentRow++;
+			if (currentRow >= itemsPerColumn) {
+				currentRow = 0;
+				currentColumn++;
+			}
 		}
 		
 		if (gp.keyH.sPressed) {

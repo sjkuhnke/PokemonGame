@@ -553,7 +553,7 @@ public class PlayerCharacter extends Entity {
 			gp.setTaskState();
 			chest.open();
 			
-			for (Item i : chest.items) {
+			for (Item i : chest.inventory) {
 				Task t = Task.addTask(Task.ITEM, "You found 1 " + i.toString() + "!");
 				t.item = i;
 			}

@@ -1152,8 +1152,7 @@ public class Main {
 					writer.write(String.format("%s (%d, %d)", itemString, x, y));
 					
 					if (chest) {
-						ArrayList<Item> chestItems = ((TreasureChest) i).items;
-						for (Item it : chestItems) {
+						for (Item it : i.inventory) {
 							String label = "\n  [";
 							label += it + "]";
 							while (label.length() < 26) label += " ";
