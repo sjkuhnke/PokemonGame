@@ -403,14 +403,14 @@ public class KeyHandler implements KeyListener {
 		}
 	}
 	
-	private void dialogueState(int code) {		
+	private void dialogueState(int code) {
 		if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
 			gp.gameState = GamePanel.PLAY_STATE;
 		}
 	}
 	
 	private void messageState(int code) {
-		if (gp.ui.messageSkippable() && ( code == KeyEvent.VK_W || code == KeyEvent.VK_S)) {
+		if (gp.ui.messageSkippable() && (code == KeyEvent.VK_W || code == KeyEvent.VK_S)) {
 			gp.ui.showMessage = false;
 			if (gp.gameState == GamePanel.USE_ITEM_STATE) {
 				gp.ui.goBackInBag();
@@ -419,6 +419,10 @@ public class KeyHandler implements KeyListener {
 					gp.ui.currentTask = null;
 				}
 			}
+		}
+		if ((gp.gameState == GamePanel.BOX_STATE || (gp.gameState == GamePanel.MENU_STATE && gp.ui.subState == 2))
+				&& code == KeyEvent.VK_D) {
+			gp.ui.showMessage = false;
 		}
 	}
 	

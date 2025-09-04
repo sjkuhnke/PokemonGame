@@ -626,6 +626,19 @@ public class Pokemon implements RoleAssignable, Serializable {
         		this.addStatus(Status.SWAP);
         		return Move.GROWL;
         	}
+        	// 40% chance to swap if i'm cursed
+        	if (this.hasStatus(Status.CURSED) && checkSecondary(40)) {
+        		String rsn = "[Cursed : 40%]";
+        		System.out.println(rsn);
+        		if (switchRsn != null) {
+    				switchRsn.setFirst(this);
+        			switchRsn.setSecond(rsn);
+    			}
+        		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+    	        if (pivotMove != null) return pivotMove;
+        		this.addStatus(Status.SWAP);
+        		return Move.GROWL;
+        	}
         	// 5% * toxic counter - 1 chance to swap
         	if (this.status == Status.TOXIC && this.ability != Ability.MAGIC_GUARD &&
         			this.ability != Ability.SCALY_SKIN && this.ability != Ability.POISON_HEAL) {
@@ -2295,6 +2308,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (getImmune(foe, moveType)) {
 					if (foe.getItem() == Item.RING_TARGET) {
 						// Nothing
+					} else if (move == Move.FUTURE_SIGHT) {
+						// Nothing
 					} else if (this.ability == Ability.SCRAPPY && (moveType == PType.NORMAL || moveType == PType.FIGHTING)) {
 						// Nothing: scrappy allows normal and fighting type moves to hit ghosts
 					} else if (this.ability == Ability.CORROSION && moveType == PType.POISON) {
@@ -2713,7 +2728,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (foe.type2 == type) multiplier *= 2;
 			}
 			
-			if (foeAbility == Ability.WONDER_GUARD && multiplier <= 1 && moveType != PType.UNKNOWN && foe.getItem() != Item.RING_TARGET) {
+			if (foeAbility == Ability.WONDER_GUARD && multiplier <= 1 && moveType != PType.UNKNOWN && foe.getItem() != Item.RING_TARGET
+					&& move != Move.FUTURE_SIGHT) {
 				Task.addAbilityTask(foe);
 				Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 				endMove();
@@ -3570,7 +3586,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(this, 2, 1, this);
 		} else if (move == Move.CONFUSION) {
 			foe.confuse(false, this);
-		} else if (move == Move.CORE_ENFORCER && !first && !foe.isFainted()) {
+		} else if (move == Move.CORE_ENFORCER && !first && foe.lastMoveUsed != null && !foe.isFainted()) {
 			if (foe.getItem() != Item.ABILITY_SHIELD) {
 				foe.ability = Ability.NULL;
 				Task.addTask(Task.TEXT, foe.nickname + "'s Ability was suppressed!");	

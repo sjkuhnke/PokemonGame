@@ -1253,7 +1253,7 @@ public class BattleUI extends AbstractUI {
 				foeCanMove = false;
 			}
 			
-			if (fMove != null && uMove == Move.SUCKER_PUNCH && fMove.cat == 2) uMove = Move.FAILED_SUCKER;
+			if (uMove == Move.SUCKER_PUNCH && (foeMove == null || fMove == null || fMove.cat == 2)) uMove = Move.FAILED_SUCKER;
 			faster.moveInit(slower, uMove, true);
 			faster = faster.trainer.getCurrent();
 			if (slower.trainer != null && slower != slower.trainer.getCurrent()) {
@@ -1298,7 +1298,7 @@ public class BattleUI extends AbstractUI {
 				foeCanMove = false;
 			}
 			
-			if (uMove != null && fMove == Move.SUCKER_PUNCH && uMove.cat == 2) fMove = Move.FAILED_SUCKER;
+			if (fMove == Move.SUCKER_PUNCH && (uMove == null || uMove.cat == 2)) fMove = Move.FAILED_SUCKER;
 			if (foeCanMove) {
 				faster.moveInit(slower, fMove, true);
 				if (faster.trainer != null) faster = faster.trainer.getCurrent();

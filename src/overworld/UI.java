@@ -1898,6 +1898,9 @@ public class UI extends AbstractUI {
 					((NPC_Mine) currentTask.e).endMine(currentTask.wipe);
 					currentTask = null;
 					break;
+				default:
+					currentTask = null;
+					gp.gameState = GamePanel.PLAY_STATE;
 				}
 				commandNum = 0;
 			}
