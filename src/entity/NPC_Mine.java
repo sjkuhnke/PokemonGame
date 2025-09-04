@@ -13,7 +13,7 @@ import util.Pair;
 public class NPC_Mine extends Entity {
 	
 	public final int PRICE = 1000;
-	private final int FAIL_CHANCE = 10;
+	private final int FAIL_CHANCE = 15;
 	private ArrayList<Pair<Item, Integer>> items = new ArrayList<>();
 	private Random random;
 	private int totalWeight;
@@ -39,8 +39,8 @@ public class NPC_Mine extends Entity {
 	}
 	
 	private void setupItems() {
-		items.add(new Pair<>(null, 10)); // FAIL 10%
-	    items.add(new Pair<>(Item.STAR_PIECE, 12));
+		items.add(new Pair<>(null, 15)); // FAIL 15%
+	    items.add(new Pair<>(Item.STAR_PIECE, 15));
 	    items.add(new Pair<>(Item.STICKY_BARB, 1));
 	    items.add(new Pair<>(Item.LIGHT_CLAY, 2));
 	    items.add(new Pair<>(Item.LAGGING_TAIL, 1));
@@ -68,10 +68,10 @@ public class NPC_Mine extends Entity {
 	    items.add(new Pair<>(Item.BOTTLE_CAP, 4));
 	    items.add(new Pair<>(Item.RUSTY_BOTTLE_CAP, 4));
 	    items.add(new Pair<>(Item.GOLD_BOTTLE_CAP, 2));
-	    items.add(new Pair<>(Item.FABLE_CHARGE, 4));
+	    items.add(new Pair<>(Item.FABLE_CHARGE, 5));
 	    items.add(new Pair<>(Item.RELIC_SILVER, 7));
 	    items.add(new Pair<>(Item.RELIC_GOLD, 3));
-	    items.add(new Pair<>(Item.NUGGET, 7));
+	    items.add(new Pair<>(Item.NUGGET, 8));
 	    items.add(new Pair<>(Item.BIG_NUGGET, 4));
 	    items.add(new Pair<>(Item.RAZOR_CLAW, 2));
 	    
@@ -93,6 +93,7 @@ public class NPC_Mine extends Entity {
 	    items.add(new Pair<>(Item.SILVER_POWDER, 1));
 	    items.add(new Pair<>(Item.SPELL_TAG, 1));
 	    items.add(new Pair<>(Item.TWISTED_SPOON, 1));
+	    items.add(new Pair<>(Item.TEMPLE_ORB, 5));
 	    
 	    items.add(new Pair<>(Item.BRIGHT_POWDER, 1));
 	    items.add(new Pair<>(Item.EXPERT_BELT, 1));
@@ -110,6 +111,26 @@ public class NPC_Mine extends Entity {
 	    items.add(new Pair<>(Item.PUNCHING_GLOVE, 1));
 	    items.add(new Pair<>(Item.CLEAR_AMULET, 1));
 	    
+	    items.add(new Pair<>(Item.ROCK_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.FIRE_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.WATER_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.GRASS_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.ICE_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.ELECTRIC_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.FIGHTING_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.POISON_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.GROUND_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.FLYING_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.PSYCHIC_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.BUG_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.GHOST_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.DRAGON_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.STEEL_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.DARK_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.LIGHT_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.MAGIC_CRYSTAL, 2));
+	    items.add(new Pair<>(Item.GALACTIC_CRYSTAL, 2));
+	    
 	    totalWeight = 0;
 	    for (Pair<Item, Integer> entry : items) {
 	    	totalWeight += entry.getSecond();
@@ -119,7 +140,7 @@ public class NPC_Mine extends Entity {
 	
 	public void mine(boolean perilyte) {
 		Item result = mineItem();
-		while (this.inventory.isEmpty() && result == null) {
+		while ((this.inventory.isEmpty() && result == null) || (!gp.player.p.flag[7][15] && result == Item.TEMPLE_ORB)) {
 			result = mineItem();
 		}
 		if (result == null && perilyte && random.nextBoolean()) { // if the player has a perilyte, reroll the failure once 50% of the time
@@ -164,7 +185,7 @@ public class NPC_Mine extends Entity {
 		turns++;
 		if (turns % 5 == 0) {
 			Pair<Item, Integer> fail = items.get(0);
-			fail.setSecond(fail.getSecond() + 1);
+			fail.setSecond(fail.getSecond() + 2);
 			totalWeight++;
 		}
 		int roll = random.nextInt(totalWeight);

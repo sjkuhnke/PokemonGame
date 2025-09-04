@@ -1363,45 +1363,56 @@ public class Script {
 				p.coins += 10;
 				p.flag[6][1] = true;
 			} else {
-				boolean newBadges = false;
-				for (int i = 0; i < p.badges; i++) {
-					if (!p.coinBadges[i]) {
-						newBadges = true;
-						break;
-					}
-				}
-				if (newBadges) {
-					Task.addTask(Task.DIALOGUE, npc, "Hey hey hey, what do we have here?");
-					Task.addTask(Task.DIALOGUE, npc, "Got some new badges, eh? Let me take a look!");
-					String[] messages = new String[] {
-						"Bested Robin in Poppy Grove! Lemme see your case real quick.",
-						"Beat Stanford, huh? I got a shiny reward for you, kid!",
-						"Ah, a shiny new badge! Made quick work of Millie, I see! Guess that calls for a bonus, bub.",
-						"4 badges, huh?  You're halfway through the gyms, and that's no easy feat. Here's a little something for your troubles.",
-						"Bested Millie's own mom too? You took down that family no trouble! Pass me your case!",
-						"What's that? You beat both Maxwell and Rayna? Wow, I really underestimated you! Here!",
-						"Defeated our resident gambler Merlin? Heck yeah, I never trusted him anyways, heard he always cheated at Blackjack.",
-						"Wow, all 8 badges! Can't believe you struck down the gyms! I got just the reward for a champion in the making like youse!"
-					};
+				if (p.bag.contains(Item.TEMPLE_ORB)) {
+					Task t = Task.addTask(Task.DIALOGUE, npc, "Ooh, you have some shiny Temple Orbs for me? That's awesome!");
+					t.ui = Task.ITEM;
+					t.item = Item.TEMPLE_ORB;
+					Task.addTask(Task.DIALOGUE, npc, "Those are really rare, and I'm a collector. I'll give you 100 coins for each!");
+					int coins = p.bag.getCount(Item.TEMPLE_ORB) * 100;
+					p.coins += coins;
+					p.bag.removeAll(Item.TEMPLE_ORB);
+					Task.addTask(Task.TEXT, "Traded in your Temple Orbs and got " + coins + " coins!");
+				} else {
+					boolean newBadges = false;
 					for (int i = 0; i < p.badges; i++) {
 						if (!p.coinBadges[i]) {
-							Task.addTask(Task.DIALOGUE, npc, messages[i]);
-							int coins = i > 4 ? 250 : i > 2 ? 200 : i > 0 ? 100 : 50;
-							Task.addTask(Task.TEXT, "You received " + coins + " coins!");
-							p.coinBadges[i] = true;
-							p.coins += coins;
+							newBadges = true;
+							break;
 						}
 					}
-				} else {
-					if (p.coins > 0) {
-						gp.ui.sellAmt = 0;
-						Task t = Task.addTask(Task.GAME_STATE, "");
-						t.counter = GamePanel.COIN_STATE;
+					if (newBadges) {
+						Task.addTask(Task.DIALOGUE, npc, "Hey hey hey, what do we have here?");
+						Task.addTask(Task.DIALOGUE, npc, "Got some new badges, eh? Let me take a look!");
+						String[] messages = new String[] {
+							"Bested Robin in Poppy Grove! Lemme see your case real quick.",
+							"Beat Stanford, huh? I got a shiny reward for you, kid!",
+							"Ah, a shiny new badge! Made quick work of Millie, I see! Guess that calls for a bonus, bub.",
+							"4 badges, huh?  You're halfway through the gyms, and that's no easy feat. Here's a little something for your troubles.",
+							"Bested Millie's own mom too? You took down that family no trouble! Pass me your case!",
+							"What's that? You beat both Maxwell and Rayna? Wow, I really underestimated you! Here!",
+							"Defeated our resident gambler Merlin? Heck yeah, I never trusted him anyways, heard he always cheated at Blackjack.",
+							"Wow, all 8 badges! Can't believe you struck down the gyms! I got just the reward for a champion in the making like youse!"
+						};
+						for (int i = 0; i < p.badges; i++) {
+							if (!p.coinBadges[i]) {
+								Task.addTask(Task.DIALOGUE, npc, messages[i]);
+								int coins = i > 4 ? 250 : i > 2 ? 200 : i > 0 ? 100 : 50;
+								Task.addTask(Task.TEXT, "You received " + coins + " coins!");
+								p.coinBadges[i] = true;
+								p.coins += coins;
+							}
+						}
 					} else {
-						Task.addTask(Task.DIALOGUE, npc, "Looks like your stash just ran dry, so I can't exchange air for anything. Come back when you're... a little richer.");
+						if (p.coins > 0) {
+							gp.ui.sellAmt = 0;
+							Task t = Task.addTask(Task.GAME_STATE, "");
+							t.counter = GamePanel.COIN_STATE;
+						} else {
+							Task.addTask(Task.DIALOGUE, npc, "Looks like your stash just ran dry, so I can't exchange air for anything. Come back when you're... a little richer.");
+						}
+						
 					}
-					
-				}
+				}	
 			}
 		});
 		
