@@ -267,6 +267,7 @@ public class TileManager {
 		loadMap("/maps/space03.txt", 207, false);
 		loadMap("/maps/mystery_peak.txt", 208, false);
 		loadMap("/maps/mystery_peakB.txt", 209, false);
+		loadMap("/maps/mindagan0B.txt", 209, false);
 		loadMap("/maps/shadow-2B.txt", 211, true);
 	}
 	

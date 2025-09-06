@@ -511,30 +511,32 @@ public class BattleUI extends AbstractUI {
 	}
 
 	protected void drawUser() {
-		if (!user.isVisible()) return;
-		drawHPImage(user);
-		drawHPBar(user, userHP, maxUserHP);
-		drawNameLabel(user, userLevel);
-		if (user.spriteVisible) drawUserSprite();
+		Pokemon draw = user.trainer == null ? user : user.trainer.findVisiblePokemon();
+		if (draw == null) return;
+		drawHPImage(draw);
+		drawHPBar(draw, userHP, maxUserHP);
+		drawNameLabel(draw, userLevel);
+		if (draw.spriteVisible) drawUserSprite(draw);
 		drawUserHP();
-		drawStatus(user);
-		drawTypes(user);
+		drawStatus(draw);
+		drawTypes(draw);
 		drawExpBar();
 	}
 
 	protected void drawFoe() {
-		if (!foe.isVisible()) return;
-		drawHPImage(foe);
-		drawHPBar(foe, foeHP, maxFoeHP);
-		drawNameLabel(foe, foeLevel);
-		if (foe.spriteVisible) drawFoeSprite();
-		drawStatus(foe);
-		drawTypes(foe);
+		Pokemon draw = foe.trainerOwned() ? foe.trainer.findVisiblePokemon() : foe;
+		if (draw == null || !draw.isVisible()) return;
+		drawHPImage(draw);
+		drawHPBar(draw, foeHP, maxFoeHP);
+		drawNameLabel(draw, foeLevel);
+		if (draw.spriteVisible) drawFoeSprite(draw);
+		drawStatus(draw);
+		drawTypes(draw);
 		drawCaughtIndicator();
 	}
 
 	protected void drawCaughtIndicator() {
-		if ((foe.trainerOwned() && !catchable) || user.getPlayer().pokedex[foe.id] != 2) return;
+		if (foe.playerOwned() || (foe.trainerOwned() && (!catchable || user.getPlayer().pokedex[foe.id] != 2))) return;
 		g2.drawImage(ballIcon, 454, 50, null);
 	}
 	
@@ -566,7 +568,7 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	protected void drawFoeParty() {
-		if (!foe.trainerOwned() || staticID >= 0) return;
+		if (!foe.trainerOwned() || staticID > 0) return;
 		int x = gp.screenWidth - 130;
 		int y = 10;
 		
@@ -582,8 +584,9 @@ public class BattleUI extends AbstractUI {
 	}
 
 	protected void drawTypes(Pokemon p) {
-		PType[] types = p == user ? userType : foeType;
-		if (p == user) {
+		boolean player = p.trainer == user.trainer;
+		PType[] types = player ? userType : foeType;
+		if (player) {
 			g2.drawImage(types[0].getImage(), 340, 298, null);
 			if (types[1] != null) g2.drawImage(types[1].getImage(), 364, 298, null);
 		} else {
@@ -656,22 +659,13 @@ public class BattleUI extends AbstractUI {
 			Task.addSwapInTask(foe, false);
 			foeFainted = foe.trainer.getNumFainted();
 		}
-		if (staticID == 205 || staticID == 210 || staticID == 197 || staticID == 202) {
-			Task.addTask(Task.TEXT, foe.nickname + " is surrounded by immense electricity!");
-	    	for (int i = 0; i < 5; i++) {
-	    		foe.stat(foe, i, 1, new Pokemon(1, 1, false, false));
-	    	}
-	    }
-		if (staticID == 235) { // dragowrath
-			Task.addTask(Task.TEXT, foe.nickname + "'s aura flared to life!");
-	    	for (int i = 0; i < 5; i++) {
-	    		foe.stat(foe, i, 6, null);
-	    	}
-		}
-		if (staticID == 229 && !catchable) { // perilyte boss battle
-			Task.addTask(Task.TEXT, foe.nickname + "'s aura flared to life!");
-	    	for (int i = 0; i < 5; i++) {
-	    		foe.stat(foe, i, 2, null);
+		if (foe.trainerOwned() && foe.trainer.boost > 0) {
+			String auraMessage = staticID == 205 || staticID == 210 || staticID == 197 || staticID == 202
+				? " is surrounded by immense electricity!"
+				: "'s aura flared to life!";
+			Task.addTask(Task.TEXT, foe.nickname + auraMessage);
+			for (int i = 0; i < 5; i++) {
+	    		foe.stat(foe, i, foe.trainer.boost, null);
 	    	}
 		}
 		Task.addSwapInTask(user, true);
@@ -725,12 +719,12 @@ public class BattleUI extends AbstractUI {
 		}
 	}
 	
-	protected void drawFoeSprite() {
-		g2.drawImage(foe.getFrontSprite(), 515, 70, null);
+	protected void drawFoeSprite(Pokemon p) {
+		g2.drawImage(p.getFrontSprite(), 515, 70, null);
 	}
 	
-	protected void drawUserSprite() {
-		g2.drawImage(user.getBackSprite(), 80, 235, null);
+	protected void drawUserSprite(Pokemon p) {
+		g2.drawImage(p.getBackSprite(), 80, 235, null);
 	}
 
 	protected void drawHPBar(Pokemon p, double amt, double maxHP) {
@@ -771,7 +765,7 @@ public class BattleUI extends AbstractUI {
 		int y;
 		int levelX;
 		int levelY;
-		String name = p == user ? userName : foeName;
+		String name = p.nickname;
 		g2.setFont(g2.getFont().deriveFont(getFontSize(name, gp.tileSize * 2.5F)));
 		
 		if (p.playerOwned()) {
@@ -1157,11 +1151,11 @@ public class BattleUI extends AbstractUI {
 				if (move == Move.TERRAIN_PULSE) mtype = user.determineTPType(Pokemon.field);
 				if (move.isAttack()) {
 					if (mtype == PType.NORMAL) {
-						if (user.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
-						if (user.ability == Ability.REFRIGERATE) mtype = PType.ICE;
-						if (user.ability == Ability.PIXILATE) mtype = PType.LIGHT;
+						if (user.getAbility(Pokemon.field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
+						if (user.getAbility(Pokemon.field) == Ability.REFRIGERATE) mtype = PType.ICE;
+						if (user.getAbility(Pokemon.field) == Ability.PIXILATE) mtype = PType.LIGHT;
 					}
-					if (user.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
+					if (user.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 				}
 		        Color color = mtype.getColor();
 		        if (!user.moveUsable(moves[i].move)) color = new Color(100, 100, 100, 200);
@@ -1220,8 +1214,8 @@ public class BattleUI extends AbstractUI {
 		int uP, fP;
 		uP = uMove == null ? 0 : uMove.getPriority(user);
 		fP = fMove == null ? 0 : fMove.getPriority(foe);
-		if (uMove != null && user.ability == Ability.PRANKSTER && uMove.cat == 2) ++uP;
-		if (fMove != null && foe.ability == Ability.PRANKSTER && fMove.cat == 2) ++fP;
+		if (uMove != null && user.getAbility(Pokemon.field) == Ability.PRANKSTER && uMove.cat == 2) ++uP;
+		if (fMove != null && foe.getAbility(Pokemon.field) == Ability.PRANKSTER && fMove.cat == 2) ++fP;
 		
 		if (uMove != null && uMove.priority < 1 && uMove.hasPriority(user)) ++uP;
 		if (fMove != null && fMove.priority < 1 && fMove.hasPriority(foe)) ++fP;
@@ -1443,7 +1437,7 @@ public class BattleUI extends AbstractUI {
 					gp.player.p.team[partyNum].removeStatus(Status.SWAP);
 					gp.player.p.team[partyNum].perishCount = user.perishCount;
 				}
-				gp.player.p.swapToFront(gp.player.p.team[partyNum], partyNum);
+				gp.player.p.swapToFront(gp.player.p.team[partyNum], partyNum, foe);
 				foe.removeStatus(Status.TRAPPED);
 				foe.removeStatus(Status.SPUN);
 				foe.removeStatus(Status.SPELLBIND);
@@ -1651,8 +1645,9 @@ public class BattleUI extends AbstractUI {
 		if (foe.trainerOwned() && staticID == -1) {
 			showMessage("You are challenged by " + foe.trainer.toString() + "!");
 			foeStatus = foe.status;
+			catchable = false;
 		} else {
-			catchable = staticID > 0 && foe.trainer.catchable;
+			catchable = (staticID > 0 && foe.trainer.catchable) || !foe.trainerOwned();
 			foe.setVisible(true);
 			foeHP = foe.currentHP;
 		    maxFoeHP = foe.getStat(0);

@@ -267,7 +267,7 @@ public class AssetSetter {
 			Pokemon.legendaryMap.put(validMaps[i], new Integer[] { legendaryIDs[i], trainerIDs[i] });
 		}
 		
-		legendarySkeletons.put(228, new StaticSkeleton(228, 0, 0, 510, "Glublublerbe... bubblava!")); // blohadel
+		legendarySkeletons.put(228, new StaticSkeleton(228, 54, 62, 510, "Glublublerbe... bubblava!")); // blohadel
 		legendarySkeletons.put(229, new StaticSkeleton(229, 46, 66, 325, "Vrrrrlyigtt!")); // perilyte
 		legendarySkeletons.put(230, new StaticSkeleton(230, 31, 35, 511, "Jahahack! Jahacklehette!!")); // faulette
 		legendarySkeletons.put(231, new StaticSkeleton(231, 49, 45, 512, "Ohohquotta!")); // sasquotta
@@ -1018,7 +1018,7 @@ public class AssetSetter {
 		
 		mapNum = 117;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(59, 76, Item.TM07, mapNum); // focus blast
+		gp.obj[mapNum][objIndex] = ObjSetup(80, 75, Item.TM07, mapNum); // focus blast
 		
 		mapNum = 119;
 		objIndex = 0;
@@ -3395,6 +3395,17 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 84, RIGHT, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(38, 72, RIGHT, 2, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 72, RIGHT, 2, mapNum, map);
+		
+		mapNum = 117;
+		iIndex = 0;
+		SetupWhirlpool(mapNum, 49, 40, map);
+		SetupWhirlpool(mapNum, 54, 40, map);
+		SetupWhirlpool(mapNum, 65, 40, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(70, 40, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(72, 55, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(68, 78, DOWN, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(13, 76, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(21, 51, UP, 1, mapNum, map);
 		
 		mapNum = 119;
 		iIndex = 0;

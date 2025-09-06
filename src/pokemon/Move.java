@@ -757,13 +757,13 @@ public enum Move {
 						|| this == Move.HEAVY_SLAM || this == Move.GYRO_BALL) return 0;
 				foe = new Pokemon(1, 1, false, false);
 			}
-			bp = user.determineBasePower(foe, this, faster, null, foe.ability, field, false);
+			bp = user.determineBasePower(foe, this, faster, null, foe.getAbility(field), field, false);
 		}
 		if (user != null && bp > 0 && user.headbuttCrit >= 0) {
 			if (type == PType.NORMAL) {
-				if (user.ability == Ability.GALVANIZE || user.ability == Ability.REFRIGERATE || user.ability == Ability.PIXILATE) bp *= 1.2;
+				if (user.getAbility(field) == Ability.GALVANIZE || user.getAbility(field) == Ability.REFRIGERATE || user.getAbility(field) == Ability.PIXILATE) bp *= 1.2;
 			}
-			if (user.ability == Ability.NORMALIZE) bp *= 1.2;
+			if (user.getAbility(field) == Ability.NORMALIZE) bp *= 1.2;
 			if (user.getItem() == Item.METRONOME && this == user.lastMoveUsed) bp *= (1 + (Math.min(1.0, (user.metronome + 1) * 0.2)));
 			int arcane = user.getStatusNum(Status.ARCANE_SPELL);
 			if (arcane != 0 && bp > 20) {
@@ -838,11 +838,11 @@ public enum Move {
 		if (this == Move.TERRAIN_PULSE) type = user.determineTPType(field);
 		if (this.isAttack()) {
 			if (type == PType.NORMAL) {
-				if (user.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
-				if (user.ability == Ability.REFRIGERATE) type = PType.ICE;
-				if (user.ability == Ability.PIXILATE) type = PType.LIGHT;
+				if (user.getAbility(field) == Ability.GALVANIZE) type = PType.ELECTRIC;
+				if (user.getAbility(field) == Ability.REFRIGERATE) type = PType.ICE;
+				if (user.getAbility(field) == Ability.PIXILATE) type = PType.LIGHT;
 			}
-			if (user.ability == Ability.NORMALIZE) type = PType.NORMAL;
+			if (user.getAbility(field) == Ability.NORMALIZE) type = PType.NORMAL;
 		}
         Color color = type.getColor();
 	    JGradientButton typeButton = new JGradientButton(type.toString());
@@ -945,7 +945,7 @@ public enum Move {
 		if (this == Move.DOUBLE_SLAP || this == Move.FURY_ATTACK ||this == Move.FURY_SWIPES || this == Move.ICICLE_SPEAR ||
 				this == Move.PIN_MISSILE || this == Move.ROCK_BLAST|| this == Move.SCALE_SHOT || this == Move.SPIKE_CANNON ||
 				this == Move.SHOOTING_STARS || this == Move.BULLET_SEED || this == Move.FLASH_DARTS || this == Move.MAGIC_MISSILES) {
-			if (user.ability == Ability.SKILL_LINK) return 5;
+			if (user.getAbility(Pokemon.field) == Ability.SKILL_LINK) return 5;
 			int randomNum = (int) (Math.random() * 100) + 1; // Generate a random number between 1 and 100 (inclusive)
 			if (user.getItem() == Item.LOADED_DICE) {
 				if (randomNum <= 50) {
@@ -1197,9 +1197,9 @@ public enum Move {
 	}
 
 	public boolean hasPriority(Pokemon p) {
-		return this.priority >= 1 || (this.cat == 2 && p.ability == Ability.PRANKSTER) ||
-			((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT) && p.ability == Ability.SLEIGHT_OF_HAND && p.currentHP == p.getStat(0)) ||
-			(p.impressive && p.ability == Ability.AMBUSH);
+		return this.priority >= 1 || (this.cat == 2 && p.getAbility(Pokemon.field) == Ability.PRANKSTER) ||
+			((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT) && p.getAbility(Pokemon.field) == Ability.SLEIGHT_OF_HAND && p.currentHP == p.getStat(0)) ||
+			(p.impressive && p.getAbility(Pokemon.field) == Ability.AMBUSH);
 	}
 	
 	public int getPriority(Pokemon p) {
@@ -1293,9 +1293,9 @@ public enum Move {
 		if (effectiveness == 0) return false;
 		int sec = m.secondary;
 		if (foe.getItem() == Item.COVERT_CLOAK) sec = 0;
-		if (foe.ability == Ability.SHIELD_DUST && me.ability != Ability.MOLD_BREAKER) sec = 0;
+		if (foe.getAbility(Pokemon.field) == Ability.SHIELD_DUST && me.getAbility(Pokemon.field) != Ability.MOLD_BREAKER) sec = 0;
 		if (Pokemon.field.equals(Pokemon.field.terrain, Effect.SPARKLY) && me.isGrounded()) sec *= 2;
-		if (me.ability == Ability.SERENE_GRACE) sec *= 2;
+		if (me.getAbility(Pokemon.field) == Ability.SERENE_GRACE) sec *= 2;
 		if (sec < 0) sec = 100;
 		if (m == Move.MAGIC_FANG && effectiveness < 2) return false;
 		boolean faster = me.getFaster(foe, 0, 0) == me;
@@ -1312,7 +1312,7 @@ public enum Move {
 						m == Move.RADIANT_BREAK || m == Move.STAFF_JAB || m == Move.STRUGGLE_BUG || m == Move.SUMMIT_STRIKE || m == Move.VINE_CROSS) {
 					return true;
 				}
-				if (foe.ability != Ability.STICKY_HOLD || me.ability == Ability.MOLD_BREAKER) {
+				if (foe.getAbility(Pokemon.field) != Ability.STICKY_HOLD || me.getAbility(Pokemon.field) == Ability.MOLD_BREAKER) {
 					if ((m == Move.BUG_BITE || m == Move.PLUCK || m == Move.INCINERATE) && foe.item != null && foe.item.isBerry()) return true;
 				}
 				if (Pokemon.field.hasScreens(foe.getFieldEffects(), foe)) {
@@ -1339,7 +1339,7 @@ public enum Move {
 					return true;
 				}
 				// Ability changing moves
-				if (m == Move.SLOW_FALL && foe.ability != Ability.LEVITATE) {
+				if (m == Move.SLOW_FALL && foe.getAbility(Pokemon.field) != Ability.LEVITATE) {
 					return true;
 				}
 				// Arcane Spell

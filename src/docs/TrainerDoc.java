@@ -14,6 +14,7 @@ import entity.PlayerCharacter;
 import org.apache.poi.ss.util.CellRangeAddress;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -208,6 +209,28 @@ public class TrainerDoc {
 	    sheet.addMergedRegion(new CellRangeAddress(nameRow.getRowNum(), nameRow.getRowNum(), 3, 4));
 	    sheet.addMergedRegion(new CellRangeAddress(nameRow.getRowNum(), nameRow.getRowNum(), 5, 6));
 	    
+	    Row ivRow = null;
+	    if (tr.staticEnc && !tr.catchable) {
+	    	ivRow = sheet.createRow(startRow++);
+	    	Cell ivTitleCell = ivRow.createCell(colStart);
+	    	ivTitleCell.setCellValue("IVs:");
+	    	
+	    	Cell ivCell = ivRow.createCell(1);
+	    	ivCell.setCellValue(Arrays.toString(tr.getCurrent().ivs));
+	    	
+	    	sheet.addMergedRegion(new CellRangeAddress(ivRow.getRowNum(), ivRow.getRowNum(), 1, 4));
+	    	
+	    	XSSFCellStyle ivStyle = (XSSFCellStyle) makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.GREY_80_PERCENT.getIndex());
+	    	ivTitleCell.setCellStyle(ivStyle);
+	    	ivCell.setCellStyle(ivStyle);
+	    	
+	    	if (tr.boost > 0) {
+	    		Cell omniCell = ivRow.createCell(5);
+		    	omniCell.setCellValue(tr.getBoostString());
+		    	omniCell.setCellStyle(makeStyle(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
+		    	sheet.addMergedRegion(new CellRangeAddress(ivRow.getRowNum(), ivRow.getRowNum(), 5, 11));
+	    	}
+	    }
 	    Row rewardRow = sheet.createRow(startRow++);
 	    Cell moneyCell = rewardRow.createCell(colStart);
 	    Cell rewardCell = rewardRow.createCell(1);

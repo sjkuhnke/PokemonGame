@@ -28,6 +28,7 @@ public class NPC_Dragon extends NPC_Block {
 		for (int i = 2; i < size; i++) {
 			images[i] = setup("/overworlds/" + id + "_" + i);
 		}
+		down1 = images[0];
 	}
 	
 	public void awake() {

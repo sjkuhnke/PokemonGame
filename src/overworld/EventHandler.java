@@ -743,8 +743,10 @@ public class EventHandler {
 			if (gp.player.p.flag[5][8] && !gp.player.p.flag[6][0] && hit(109,15,43)) gp.player.interactNPC(gp.npc[109][5], false);
 			
 			// Mindagan Cavern
-			if (hit(78,62,69)) teleport(117, 61, 72,true);
-			if (hit(117,61,72)) teleport(78, 62, 69,true);
+			if (hit(78,62,69)) teleport(117, 81, 72,true);
+			if (hit(117,81,72)) teleport(78, 62, 69,true);
+			if (hit(117,63,34)) teleport(210, 54, 69, false);
+			if (hit(210,54,70)) teleport(117, 63, 35, false);
 			
 			// Glurg Town Fossil Center
 			if (hit(109,12,34)) teleport(118, 31, 45,false);

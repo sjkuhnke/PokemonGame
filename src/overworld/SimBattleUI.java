@@ -350,7 +350,7 @@ public class SimBattleUI extends BattleUI {
 	
 	@Override
 	protected void drawStatus(Pokemon p) {
-		if (p == user) { // changed p.playerOwned() to p == user
+		if (p.trainer == user.trainer) { // changed p.playerOwned() to p == user
 			if (userStatus != Status.HEALTHY) g2.drawImage(userStatus.getImage(), 339, 326, null);
 		} else {
 			if (foeStatus != Status.HEALTHY) g2.drawImage(foeStatus.getImage(), 232, 78, null);
@@ -364,7 +364,7 @@ public class SimBattleUI extends BattleUI {
 	
 	@Override
 	protected void drawHPImage(Pokemon p) {
-		if (p == user) { // same as above
+		if (p.trainer == user.trainer) { // same as above
 			g2.drawImage(userHPBar, 302, 280, null);
 		} else {
 			g2.drawImage(foeHPBar, 222, 39, null);
@@ -452,13 +452,13 @@ public class SimBattleUI extends BattleUI {
 	}
 	
 	@Override
-	protected void drawFoeSprite() {
-		super.drawFoeSprite();
+	protected void drawFoeSprite(Pokemon p) {
+		super.drawFoeSprite(p);
 	}
 	
 	@Override
-	protected void drawUserSprite() {
-		super.drawUserSprite();
+	protected void drawUserSprite(Pokemon p) {
+		super.drawUserSprite(p);
 	}
 	
 	@Override
@@ -469,7 +469,7 @@ public class SimBattleUI extends BattleUI {
 		int y;
 		int width = amt == 0 ? 0 : Math.max((int) (hpRatio * 120), 1);
 		int height = 8;
-		if (p == user) { // same as above
+		if (p.trainer == user.trainer) { // same as above
 			x = 426;
 			y = 330;
 		} else {
@@ -495,10 +495,10 @@ public class SimBattleUI extends BattleUI {
 		int y;
 		int levelX;
 		int levelY;
-		String name = p == user ? userName : foeName;
+		String name = p.trainer == user.trainer ? userName : foeName;
 		g2.setFont(g2.getFont().deriveFont(getFontSize(name, gp.tileSize * 2.5F)));
 		
-		if (p == user) { // same as above
+		if (p.trainer == user.trainer) { // same as above
 			x = getRightAlignedTextX(name, 494);
 			y = 318;
 			levelX = 523;
@@ -777,8 +777,8 @@ public class SimBattleUI extends BattleUI {
 		int uP, fP;
 		uP = uMove == null ? 0 : uMove.getPriority(p1);
 		fP = fMove == null ? 0 : fMove.getPriority(p2);
-		if (uMove != null && p1.ability == Ability.PRANKSTER && uMove.cat == 2) ++uP;
-		if (fMove != null && p2.ability == Ability.PRANKSTER && fMove.cat == 2) ++fP;
+		if (uMove != null && p1.getAbility(Pokemon.field) == Ability.PRANKSTER && uMove.cat == 2) ++uP;
+		if (fMove != null && p2.getAbility(Pokemon.field) == Ability.PRANKSTER && fMove.cat == 2) ++fP;
 		
 		if (uMove != null && uMove.priority < 1 && uMove.hasPriority(p1)) ++uP;
 		if (fMove != null && fMove.priority < 1 && fMove.hasPriority(p2)) ++fP;

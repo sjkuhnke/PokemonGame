@@ -646,11 +646,11 @@ public abstract class AbstractUI {
 						if (m.move == Move.TERRAIN_PULSE) mtype = p.determineTPType(Pokemon.field);
 						if (m.move.isAttack()) {
 							if (mtype == PType.NORMAL) {
-								if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
-								if (p.ability == Ability.REFRIGERATE) mtype = PType.ICE;
-								if (p.ability == Ability.PIXILATE) mtype = PType.LIGHT;
+								if (p.getAbility(Pokemon.field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
+								if (p.getAbility(Pokemon.field) == Ability.REFRIGERATE) mtype = PType.ICE;
+								if (p.getAbility(Pokemon.field) == Ability.PIXILATE) mtype = PType.LIGHT;
 							}
-							if (p.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
+							if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 						}
 						Color color = mtype.getColor();
 						g2.setColor(color);
@@ -812,11 +812,11 @@ public abstract class AbstractUI {
 			if (move == Move.TERRAIN_PULSE) type = p.determineTPType(Pokemon.field);
 			if (move.isAttack()) {
 				if (type == PType.NORMAL) {
-					if (p.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
-					if (p.ability == Ability.REFRIGERATE) type = PType.ICE;
-					if (p.ability == Ability.PIXILATE) type = PType.LIGHT;
+					if (p.getAbility(Pokemon.field) == Ability.GALVANIZE) type = PType.ELECTRIC;
+					if (p.getAbility(Pokemon.field) == Ability.REFRIGERATE) type = PType.ICE;
+					if (p.getAbility(Pokemon.field) == Ability.PIXILATE) type = PType.LIGHT;
 				}
-				if (p.ability == Ability.NORMALIZE) type = PType.NORMAL;
+				if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) type = PType.NORMAL;
 			}
 		}
 		g2.drawImage(type.getImage2(), x, y, null);
@@ -1047,11 +1047,11 @@ public abstract class AbstractUI {
 			if (m == Move.TERRAIN_PULSE) mtype = p.determineTPType(Pokemon.field);
 			if (m.isAttack()) {
 				if (mtype == PType.NORMAL) {
-					if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
-					if (p.ability == Ability.REFRIGERATE) mtype = PType.ICE;
-					if (p.ability == Ability.PIXILATE) mtype = PType.LIGHT;
+					if (p.getAbility(Pokemon.field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
+					if (p.getAbility(Pokemon.field) == Ability.REFRIGERATE) mtype = PType.ICE;
+					if (p.getAbility(Pokemon.field) == Ability.PIXILATE) mtype = PType.LIGHT;
 				}
-				if (p.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
+				if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 			}
 			Color color = mtype.getColor();
 			g2.setColor(color);
@@ -1081,11 +1081,11 @@ public abstract class AbstractUI {
 				if (ms.move == Move.TERRAIN_PULSE) mtype = p.determineTPType(Pokemon.field);
 				if (ms.move.isAttack()) {
 					if (mtype == PType.NORMAL) {
-						if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
-						if (p.ability == Ability.REFRIGERATE) mtype = PType.ICE;
-						if (p.ability == Ability.PIXILATE) mtype = PType.LIGHT;
+						if (p.getAbility(Pokemon.field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
+						if (p.getAbility(Pokemon.field) == Ability.REFRIGERATE) mtype = PType.ICE;
+						if (p.getAbility(Pokemon.field) == Ability.PIXILATE) mtype = PType.LIGHT;
 					} else {
-						if (p.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
+						if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 					}
 				}
 				Color color = mtype.getColor();

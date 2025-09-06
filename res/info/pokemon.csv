@@ -157,9 +157,9 @@
 195|Hast         |GHOST   |STEEL   |FRIENDLY_GHOST    |LEVITATE          |PRANKSTER         |[65, 70, 120, 60, 120, 65]    |200.5 |45 |AMORPHOUS   |AMORPHOUS   |
 196|Poov         |GHOST   |DARK    |CURSED_BODY       |ADAPTABILITY      |PERISH_BODY       |[75, 85, 45, 60, 55, 79]      |3.4   |95 |AMORPHOUS   |AMORPHOUS   |
 197|Grust        |GHOST   |DARK    |CURSED_BODY       |ANGER_POINT       |PERISH_BODY       |[130, 105, 55, 80, 60, 69]    |20.7  |35 |AMORPHOUS   |AMORPHOUS   |
-169|Cluuz        |GHOST   |POISON  |LEVITATE          |LEVITATE          |PRESSURE          |[60, 42, 58, 105, 97, 73]     |0.5   |175|AMORPHOUS   |MINERAL     |
-170|Zurrclu      |GHOST   |ROCK    |LEVITATE          |LEVITATE          |PRESSURE          |[80, 90, 96, 71, 85, 58]      |199.1 |55 |AMORPHOUS   |MINERAL     |
-171|Zurroaratr   |GHOST   |ROCK    |LEVITATE          |LEVITATE          |PRESSURE          |[100, 109, 110, 67, 99, 55]   |600.3 |15 |AMORPHOUS   |MINERAL     |
+169|Cluuz        |GHOST   |POISON  |LEVITATE          |NEUTRALIZING_GAS  |PRESSURE          |[60, 42, 58, 105, 97, 73]     |0.5   |175|AMORPHOUS   |MINERAL     |
+170|Zurrclu      |GHOST   |ROCK    |LEVITATE          |NEUTRALIZING_GAS  |PRESSURE          |[80, 90, 96, 71, 85, 58]      |199.1 |55 |AMORPHOUS   |MINERAL     |
+171|Zurroaratr   |GHOST   |ROCK    |LEVITATE          |NEUTRALIZING_GAS  |PRESSURE          |[100, 109, 110, 67, 99, 55]   |600.3 |15 |AMORPHOUS   |MINERAL     |
 72 |Timburr      |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[75, 80, 55, 25, 35, 35]      |27.6  |180|HUMAN$LIKE  |HUMAN$LIKE  |
 73 |Gurdurr      |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[85, 105, 85, 40, 50, 40]     |88.2  |90 |HUMAN$LIKE  |HUMAN$LIKE  |
 74 |Conkeldurr   |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[105, 140, 95, 55, 65, 45]    |191.8 |45 |HUMAN$LIKE  |HUMAN$LIKE  |
@@ -217,9 +217,9 @@
 -1 |Wormite-S    |GROUND  |DARK    |ADAPTABILITY      |SAND_RUSH         |REGENERATOR       |[20, 50, 50, 35, 50, 70]      |5.6   |255|FIELD       |MINERAL     |
 -2 |Wormbot-S    |GROUND  |DARK    |ADAPTABILITY      |SAND_RUSH         |REGENERATOR       |[40, 75, 75, 60, 50, 85]      |46.6  |195|FIELD       |MINERAL     |
 -3 |Wormatron-S  |GROUND  |DARK    |ADAPTABILITY      |SAND_RUSH         |REGENERATOR       |[100, 115, 90, 85, 50, 80]    |165.2 |45 |FIELD       |MINERAL     |
--12|Cluuz-S      |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[55, 42, 38, 110, 110, 80]    |0.4   |175|AMORPHOUS   |AMORPHOUS   |
--13|Zurrclu-S    |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[80, 70, 50, 100, 100, 80]    |36.5  |55 |AMORPHOUS   |AMORPHOUS   |
--14|Zurroaratr-S |POISON  |DARK    |LEVITATE          |LEVITATE          |PRESSURE          |[95, 75, 65, 123, 97, 85]     |80.5  |15 |AMORPHOUS   |AMORPHOUS   |
+-12|Cluuz-S      |POISON  |DARK    |LEVITATE          |NEUTRALIZING_GAS  |PRESSURE          |[55, 42, 38, 110, 110, 80]    |0.4   |175|AMORPHOUS   |AMORPHOUS   |
+-13|Zurrclu-S    |POISON  |DARK    |LEVITATE          |NEUTRALIZING_GAS  |PRESSURE          |[80, 70, 50, 100, 100, 80]    |36.5  |55 |AMORPHOUS   |AMORPHOUS   |
+-14|Zurroaratr-S |POISON  |DARK    |LEVITATE          |NEUTRALIZING_GAS  |PRESSURE          |[95, 75, 65, 123, 97, 85]     |80.5  |15 |AMORPHOUS   |AMORPHOUS   |
 -4 |Sember-S     |FIRE    |DARK    |FLASH_FIRE        |SUPER_LUCK        |FLAME_BODY        |[30, 20, 40, 83, 50, 83]      |19.4  |195|FIELD       |HUMAN$LIKE  |
 -5 |Kaboon-S     |FIGHTING|DARK    |GUTS              |SUPER_LUCK        |FLAME_BODY        |[67, 88, 70, 40, 72, 63]      |78.5  |100|FIELD       |HUMAN$LIKE  |
 -6 |Detonape-S   |FIGHTING|DARK    |GUTS              |SUPER_LUCK        |FLAME_BODY        |[115, 115, 75, 46, 90, 75]    |205.3 |50 |FIELD       |HUMAN$LIKE  |

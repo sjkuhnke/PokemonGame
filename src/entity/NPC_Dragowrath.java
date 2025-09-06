@@ -23,6 +23,7 @@ public class NPC_Dragowrath extends NPC_Block {
 		for (int i = 0; i < SIZE; i++) {
 			images[i] = setup("/overworlds/235_" + i);
 		}
+		down1 = images[0];
 	}
 	
 	@Override

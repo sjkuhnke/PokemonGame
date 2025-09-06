@@ -81,6 +81,7 @@ public enum Ability {
 	MYSTIC_ABSORB("Restores HP if hit by a MAGIC move."),
 	MYSTIC_RIFT("Creates a bizzare room for 5 turns when the Pokemon enters the battle, removing the effects of items."),
 	NATURAL_CURE("All status conditions heal when the Pokemon switches out."),
+	NEUTRALIZING_GAS("While the Pokemon is active, the effects of all abilities will be nullified."),
 	NO_GUARD("Ensures the Pokemon and its foe's attacks land."),
 	NORMALIZE("All the Pokemon's moves become Normal type. The power of those moves is boosted."),
 	OVERGROW("Powers up GRASS moves by 20%, or 50% in a pinch."),
