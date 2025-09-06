@@ -1209,6 +1209,7 @@ public enum Item {
 	        		item = field.contains(field.fieldEffects, Effect.MAGIC_ROOM) ? Item.REPEL : item;
 	        	}
 	        	userCurrent.item = item;
+	        	
 	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
 	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
 	        });
@@ -1221,6 +1222,7 @@ public enum Item {
 	        		item = field.contains(field.fieldEffects, Effect.MAGIC_ROOM) ? Item.REPEL : item;
 	        	}
 	        	foeCurrent.item = item;
+	        	
 	        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
 	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
 	        });
@@ -1517,11 +1519,11 @@ public enum Item {
 				if (move == Move.TERRAIN_PULSE) mtype = current.determineTPType(field);
 				if (move.isAttack()) {
 					if (mtype == PType.NORMAL) {
-						if (current.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
-						if (current.ability == Ability.REFRIGERATE) mtype = PType.ICE;
-						if (current.ability == Ability.PIXILATE) mtype = PType.LIGHT;
+						if (current.getAbility(field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
+						if (current.getAbility(field) == Ability.REFRIGERATE) mtype = PType.ICE;
+						if (current.getAbility(field) == Ability.PIXILATE) mtype = PType.LIGHT;
 					}
-					if (current.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
+					if (current.getAbility(field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 				}
 		        Color color = mtype.getColor();
 		        moves[k].setSolid(false);
@@ -1691,6 +1693,7 @@ public enum Item {
             new Pair<>(Effect.GRAVITY, null),
             new Pair<>(Effect.TRICK_ROOM, null),
             new Pair<>(Effect.MAGIC_ROOM, null),
+            new Pair<>(Effect.NEUTRALIZING_GAS, null),
             new Pair<>(Effect.WATER_SPORT, null),
             new Pair<>(Effect.MUD_SPORT, null),
         };
@@ -1888,7 +1891,7 @@ public enum Item {
         // ===== Illusion =====
         fieldsGbc.gridx = 0;
         fieldsGbc.gridy++;
-        fieldsPanel.add(new JLabel(p.ability == Ability.ANTICIPATION ? "Anticipation:" : "Illusion:"), fieldsGbc);
+        fieldsPanel.add(new JLabel(p.getIllusionText()), fieldsGbc);
         JCheckBox illusionBox = new JCheckBox();
         illusionBox.setSelected(p.illusion);
         fieldsGbc.gridx = 1;

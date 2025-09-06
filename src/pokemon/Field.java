@@ -81,6 +81,7 @@ public class Field {
 		HEALING_WISH(-1, false, false),
 		LUNAR_DANCE(-1, false, false),
 		ION(1, false, false),
+		NEUTRALIZING_GAS(-1, false, false),
 		;
 		
 		private Effect(int turns, boolean isWeather, boolean isTerrain) {
@@ -239,6 +240,8 @@ public class Field {
 				return new Color(179, 5, 58);
 			case ION:
 				return new Color(252, 246, 63);
+			case NEUTRALIZING_GAS:
+				return new Color(194, 142, 212);
 			default:
 				return new Color(150, 217, 214);
 			
@@ -280,8 +283,8 @@ public class Field {
 	public boolean setWeather(FieldEffect weather, Pokemon user, Pokemon foe) {
 		if (weather != null && weather.effect.isWeather) {
 	        if (this.weather == null || this.weather.effect != weather.effect) {
-	        	if (user.ability == Ability.CLOUD_NINE || foe.ability == Ability.CLOUD_NINE) {
-	        		Task.addAbilityTask(user.ability == Ability.CLOUD_NINE ? user : foe);
+	        	if (user.getAbility(this) == Ability.CLOUD_NINE || foe.getAbility(this) == Ability.CLOUD_NINE) {
+	        		Task.addAbilityTask(user.getAbility(this) == Ability.CLOUD_NINE ? user : foe);
 	        		Task.addTask(Task.TEXT, "The weather couldn't be set!");
 	        		return false;
 	        	}
@@ -325,14 +328,14 @@ public class Field {
 	public void setEffect(FieldEffect effect, boolean announce) {
 		if (effect.effect == Effect.TRICK_ROOM) {
 			if (contains(fieldEffects, effect.effect)) {
-				removeEffect(fieldEffects, effect.effect);
+				remove(fieldEffects, effect.effect);
 				Task.addTask(Task.TEXT, "The twisted dimensions returned to normal!");
 				return;
 			}
 		}
 		if (effect.effect == Effect.MAGIC_ROOM) {
 			if (contains(fieldEffects, effect.effect)) {
-				removeEffect(fieldEffects, effect.effect);
+				remove(fieldEffects, effect.effect);
 				Task.addTask(Task.TEXT, "The bizzare area returned to normal!");
 				return;
 			}
@@ -419,16 +422,6 @@ public class Field {
 		return false;
 	}
 	
-	public boolean removeEffect(ArrayList<FieldEffect> side, Effect effect) {
-		for (FieldEffect e : side) {
-			if (e.effect == effect) {
-				side.remove(e);
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	public boolean equals(FieldEffect fe, Effect e) {
 		if (fe == null) return false;
 		if (fe.effect == e) return true;
@@ -437,6 +430,16 @@ public class Field {
 	
 	public boolean equals(FieldEffect fe, Effect e, Pokemon affected) {
 		if (affected == null || (e.isWeather && affected.getItem() != Item.UTILITY_UMBRELLA)) return equals(fe, e);
+		return false;
+	}
+	
+	public boolean remove(ArrayList<FieldEffect> side, Effect effect) {
+		for (FieldEffect e : side) {
+			if (e.effect == effect) {
+				side.remove(e);
+				return true;
+			}
+		}
 		return false;
 	}
 	
@@ -553,16 +556,6 @@ public class Field {
 				return;
 			}
 		}
-	}
-	
-	public boolean remove(ArrayList<FieldEffect> side, Effect effect) {
-		for (FieldEffect e : side) {
-			if (e.effect == effect) {
-				side.remove(e);
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	@Override

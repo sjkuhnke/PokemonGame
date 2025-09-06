@@ -102,7 +102,7 @@ public class Main {
 			
         	for (Pokemon p : gp.player.p.getTeam()) {
 	            if (p != null) {
-	            	p.clearVolatile();
+	            	p.clearVolatile(null);
 	            	p.vStatuses.clear();
 	            }
 	        }
@@ -610,19 +610,19 @@ public class Main {
 					
 					StringBuilder trainerName = new StringBuilder();
 					trainerName.append(tr.getName());
-					if (tr.toString().equals(tr.getTeam()[0].name())) {
-	                    trainerName.append(" (");
-	                    for (int i = 0; i < 6; i++) {
-	                        trainerName.append(String.valueOf(tr.getTeam()[0].ivs[i]));
-	                        if (i < 5) trainerName.append(", ");
-	                    }
-	                    trainerName.append(")");
+					if (tr.staticEnc && !tr.catchable) {
+	                    trainerName.append(" " + Arrays.toString(tr.getCurrent().ivs));
 	                }
 					Entity corresponding = trainerNPCMap.get(tr);
 					trainerName.append(String.format(" | X: %d, Y: %d, Facing: %s", corresponding.worldX / gp.tileSize, corresponding.worldY / gp.tileSize, corresponding.direction));
 					trainerName.append(corresponding.isSpin() ? "*" : "");
 					
 					trainerName.append("\n");
+					if (tr.boost > 0) {
+						trainerName.append("**");
+						trainerName.append(tr.getBoostString());
+						trainerName.append("**\n");
+					}
 					writer.write(trainerName.toString());
 					
 					for (Pokemon p : tr.getTeam()) {

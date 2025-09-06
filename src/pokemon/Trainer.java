@@ -23,6 +23,7 @@ public class Trainer implements Serializable {
 	public boolean staticEnc;
 	public boolean catchable;
 	public boolean cloned;
+	public int boost;
 	
 	transient ArrayList<FieldEffect> effects;
 	transient Item[] teamItems;
@@ -178,7 +179,7 @@ public class Trainer implements Serializable {
 			Pokemon.gp.gameState == GamePanel.SIM_BATTLE_STATE ? Pokemon.gp.simBattleUI.user : null;
 		boolean hasUser = this.hasUser(user);
 		
-		swap(current, team[index], hasUser);
+		swap(current, team[index], hasUser, foe);
 		foe.removeStatus(Status.TRAPPED);
 		foe.removeStatus(Status.SPUN);
 		foe.removeStatus(Status.SPELLBIND);
@@ -267,7 +268,7 @@ public class Trainer implements Serializable {
 			int[] oldStats = current.statStages.clone();
 			ArrayList<StatusEffect> oldVStatuses = new ArrayList<>(current.vStatuses);
 			int perishCount = current.perishCount;
-			swap(current, result, userSide);
+			swap(current, result, userSide, foe);
 			if (baton) {
 				result.statStages = oldStats;
 				result.vStatuses = oldVStatuses;
@@ -296,15 +297,15 @@ public class Trainer implements Serializable {
 			type = foe.determineHPType();
 		}
 		if (type == PType.NORMAL) {
-			if (foe.ability == Ability.GALVANIZE) type = PType.ELECTRIC;
-			if (foe.ability == Ability.REFRIGERATE) type = PType.ICE;
-			if (foe.ability == Ability.PIXILATE) type = PType.LIGHT;
+			if (foe.getAbility(Pokemon.field) == Ability.GALVANIZE) type = PType.ELECTRIC;
+			if (foe.getAbility(Pokemon.field) == Ability.REFRIGERATE) type = PType.ICE;
+			if (foe.getAbility(Pokemon.field) == Ability.PIXILATE) type = PType.LIGHT;
 		}
-		if (foe.ability == Ability.NORMALIZE) type = PType.NORMAL;
+		if (foe.getAbility(Pokemon.field) == Ability.NORMALIZE) type = PType.NORMAL;
 		if (!onlyCheckAbility) multiplier = p.getEffectiveMultiplier(type, m, foe);
-		Ability pAbility = p.ability;
-		if (foe.ability == Ability.MOLD_BREAKER) pAbility = Ability.NULL;
-		if (foe.ability == Ability.TINTED_LENS && multiplier < 1) multiplier *= 2;
+		Ability pAbility = p.getAbility(Pokemon.field);
+		if (foe.getAbility(Pokemon.field) == Ability.MOLD_BREAKER) pAbility = Ability.NULL;
+		if (foe.getAbility(Pokemon.field) == Ability.TINTED_LENS && multiplier < 1) multiplier *= 2;
 		if (pAbility == Ability.DRY_SKIN && type == PType.WATER) multiplier = 0;
 		if (pAbility == Ability.BLACK_HOLE && (type == PType.LIGHT || type == PType.GALACTIC)) multiplier = 0;
 		if (pAbility == Ability.ILLUMINATION && (type == PType.GHOST || type == PType.DARK || type == PType.LIGHT || type == PType.GALACTIC)) multiplier *= 0.5;
@@ -345,13 +346,13 @@ public class Trainer implements Serializable {
 		return getEffective(p, foe, type, m, false) < 1;
 	}
 	
-	private void swap(Pokemon oldP, Pokemon newP, boolean playerSide) {
+	private void swap(Pokemon oldP, Pokemon newP, boolean playerSide, Pokemon foe) {
+		oldP.clearVolatile(foe);
 		Task.addSwapOutTask(oldP, playerSide);
-		if (oldP.ability == Ability.REGENERATOR && !oldP.isFainted()) {
+		if (oldP.getAbility(Pokemon.field) == Ability.REGENERATOR && !oldP.isFainted()) {
 			oldP.currentHP += current.getStat(0) / 3;
 			oldP.verifyHP();
 		}
-		oldP.clearVolatile();
 		if (oldP.ability == Ability.ILLUSION) oldP.illusion = true; // just here for calc
 		this.current = newP;
 		Task.addSwapInTask(newP, playerSide);
@@ -482,7 +483,7 @@ public class Trainer implements Serializable {
 					teamTemp[i].currentHP = teamTemp[i].currentHP > teamTemp[i].getStat(0) ? teamTemp[i].getStat(0) : teamTemp[i].currentHP;
 				}
 				this.team[teamTemp[i].slot] = teamTemp[i];
-				teamTemp[i].clearVolatile();
+				teamTemp[i].clearVolatile(null);
 				teamTemp[i].vStatuses.clear();
 				teamTemp[i].abilityFlag = false;
 				
@@ -533,5 +534,16 @@ public class Trainer implements Serializable {
 		Trainer result = this.clone();
 		result.cloned = false;
 		return result;
+	}
+
+	public Pokemon findVisiblePokemon() {
+		for (Pokemon p : getOrderedTeam()) {
+			if (p.isVisible()) return p;
+		}
+		return null;
+	}
+
+	public String getBoostString() {
+		return "Gets a +" + boost + " omniboost at the start of battle!";
 	}
 }

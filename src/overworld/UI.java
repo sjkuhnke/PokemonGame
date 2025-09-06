@@ -1345,7 +1345,7 @@ public class UI extends AbstractUI {
 		int index = 0;
 		Pokemon user = gp.player.p.getCurrent();
 		while (user.isFainted() || (gp.player.p.nuzlocke && user.isOverLevelCap(gp.player.p.badges))) {
-			gp.player.p.swapToFront(gp.player.p.team[++index], index);
+			gp.player.p.swapToFront(gp.player.p.team[++index], index, null);
 			user = gp.player.p.getCurrent();
 		}
 		

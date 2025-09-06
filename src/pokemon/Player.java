@@ -114,7 +114,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 74;
+	public static final int VERSION = 75;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
@@ -196,7 +196,7 @@ public class Player extends Trainer implements Serializable {
 	    int index = 1;
 	    Task t = null;
 	    String metAt = PlayerCharacter.getMetAt();
-	    p.clearVolatile();
+	    p.clearVolatile(null);
 	    p.consumeItem(null);
 	    p.ball = ball;
 	    p.trainer = this;
@@ -320,17 +320,17 @@ public class Player extends Trainer implements Serializable {
 		invalidReasons.add(string);
 	}
 
-	public void swapToFront(Pokemon pokemon, int index) {
-		if (!current.isFainted()) {
-			Task.addSwapOutTask(current, true);
+	public void swapToFront(Pokemon pokemon, int index, Pokemon foe) {
+		Pokemon lead = current;
+		lead.clearVolatile(foe);
+		if (!lead.isFainted()) {
+			Task.addSwapOutTask(lead, true);
 		}
 		
-		if (current.ability == Ability.REGENERATOR && !current.isFainted()) {
-			current.currentHP += current.getStat(0) / 3;
-			current.verifyHP();
+		if (lead.getAbility(Pokemon.field) == Ability.REGENERATOR && !lead.isFainted()) {
+			lead.currentHP += current.getStat(0) / 3;
+			lead.verifyHP();
 		}
-		Pokemon lead = current;
-		lead.clearVolatile();
 		if (lead.ability == Ability.ILLUSION) lead.illusion = true; // just here for calc
 		this.current = pokemon;
 		
@@ -449,9 +449,8 @@ public class Player extends Trainer implements Serializable {
 		while (team[index] == null || team[index].isFainted() || team[index] == current) {
 			index = rand.nextInt(team.length);
 		}
-		current.clearVolatile();
 		
-		swapToFront(team[index], index);
+		swapToFront(team[index], index, foe);
 		
 		Task.addTask(Task.TEXT, current.nickname + " was dragged out!");
 		current.swapIn(foe, true);
