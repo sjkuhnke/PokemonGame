@@ -2368,8 +2368,7 @@ public class AssetSetter {
 		
 		mapNum = 127;
 		index = 0;
-		StaticSkeleton sk = legendarySkeletons.get(230);
-		gp.npc[mapNum][index] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
+		gp.npc[mapNum][index++] = null; // faulette
 		gp.npc[mapNum][index] = NPCSetup(DEALER_B, "Dealer", 28, 35, "");
 		gp.npc[mapNum][index] = NPCSetup(DEALER, "Gamemaster", 33, 42, "");
 		
@@ -2489,8 +2488,7 @@ public class AssetSetter {
 		
 		mapNum = 148;
 		index = 0;
-		sk = legendarySkeletons.get(232);
-		gp.npc[mapNum][index] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
+		gp.npc[mapNum][index++] = null; // hueduu
 		
 		mapNum = 149;
 		index = 0;
@@ -2520,8 +2518,7 @@ public class AssetSetter {
 		
 		mapNum = 150;
 		index = 0;
-		sk = legendarySkeletons.get(229);
-		gp.npc[mapNum][index] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
+		gp.npc[mapNum][index++] = null; // perilyte
 		
 		mapNum = 151;
 		index = 0;
@@ -2886,13 +2883,11 @@ public class AssetSetter {
 		
 		mapNum = 209;
 		index = 0;
-		sk = legendarySkeletons.get(231);
-		gp.npc[mapNum][index] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
+		gp.npc[mapNum][index++] = null; // sasquotta/random legend for nuzlockes
 		
 		mapNum = 210;
 		index = 0;
-		sk = legendarySkeletons.get(228);
-		gp.npc[mapNum][index] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
+		gp.npc[mapNum][index++] = null; // blohadel
 		
 		mapNum = 211;
 		index = 0;
@@ -3157,7 +3152,7 @@ public class AssetSetter {
 		
 		mapNum = 78;
 		iIndex = 0;
-		SetupPit(mapNum, 58, 71, 117, 61, 74, map);
+		SetupPit(mapNum, 58, 71, 117, 80, 73, map);
 		
 		mapNum = 80;
 		iIndex = 0;

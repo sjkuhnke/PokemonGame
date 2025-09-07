@@ -387,6 +387,7 @@ public class PlayerCharacter extends Entity {
 					
 					Color c = isSurf ? new Color(50,184,255) : new Color(255,48,48);
 					if (isSurf) p.surf = true; else p.lavasurf = true;
+					gp.keyH.wPressed = false;
 					generateParticle(x, y, c, 6, 1, 20);
 					
 					for (Integer i : tileList) {
