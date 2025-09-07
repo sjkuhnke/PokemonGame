@@ -1991,11 +1991,6 @@ public class Player extends Trainer implements Serializable {
 
 	public void checkSummon(GamePanel gp, int map) {
 		if (!bag.contains(Item.FABLE_STONE)) return;
-		if (bag.getCount(Item.FABLE_CHARGE) < 5) {
-			Task.addTask(Task.TEXT, "...Oh...");
-			Task.addTask(Task.TEXT, "The Fable Stone is glowing faintly... but doesn't seem to have enough charge.");
-			return;
-		}
 		final int nuzlockeMap = 209;
 		
 		if (nuzlocke && map != nuzlockeMap) return;
@@ -2009,6 +2004,13 @@ public class Player extends Trainer implements Serializable {
 		if (summonedLegendaries.containsKey(map)) return;
 		
 		gp.setTaskState();
+		
+		if (bag.getCount(Item.FABLE_CHARGE) < 5) {
+			Task.addTask(Task.TEXT, "...Oh...");
+			Task.addTask(Task.TEXT, "The Fable Stone is glowing faintly... but doesn't seem to have enough charge.");
+			return;
+		}
+		
 		Task.addTask(Task.TEXT, "...Oh!");
 		Task t = Task.addTask(Task.TEXT, "It seems the Fable Stone is glowing with a legendary energy!");
 		t.ui = Task.ITEM;

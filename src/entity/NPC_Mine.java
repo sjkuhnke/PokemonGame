@@ -158,7 +158,7 @@ public class NPC_Mine extends Entity {
 			if (perilyte) sleep /= 4;
 			Task.addTask(Task.SLEEP, "", sleep);
 			
-			int sw = random.nextInt(3);
+			int sw = random.nextInt(4);
 			String speech;
 			switch (sw) {
 			case 0:
@@ -180,13 +180,16 @@ public class NPC_Mine extends Entity {
 			t.wipe = perilyte;
 		}
 	}
-	
+
 	private Item mineItem() {
 		turns++;
 		if (turns % 5 == 0) {
 			Pair<Item, Integer> fail = items.get(0);
 			fail.setSecond(fail.getSecond() + 2);
 			totalWeight++;
+			Task.addTask(Task.SLEEP, "", 15);
+			Task.addTask(Task.DIALOGUE, this, "Going deeper...");
+			Task.addTask(Task.SLEEP, "", 30);
 		}
 		int roll = random.nextInt(totalWeight);
 		
@@ -224,7 +227,7 @@ public class NPC_Mine extends Entity {
 				Task.addTask(Task.DIALOGUE, this, "Would love to see one close up! I'm sure it would be plenty of help to us here!");
 			}
 		} else {
-			String message = this.inventory.size() >= 10 ? "That was quite the haul! Here's everything you got!" : "Alright! Here's what I dug up!";
+			String message = this.inventory.size() >= 20 ? "That was quite the haul! Here's everything you got!" : "Alright! Here's what I dug up!";
 			Task.addTask(Task.DIALOGUE, this, message);
 		}
 		for (Item i : this.inventory) {

@@ -438,7 +438,8 @@ public class GamePanel extends JPanel implements Runnable {
 						player.interactNPC(npc[202][2], false);
 					}
 				}
-			} else if (trainer < 0) {
+			}
+			if (battleUI.catchable) {
 				if (player.p.nuzlocke && player.p.nuzlockeStarted) player.p.removeEncounterArea(PlayerCharacter.getMetAt(), foe);
 			}
 		}
