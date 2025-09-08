@@ -38,6 +38,7 @@ public abstract class AbstractUI {
 	public Font kids;
 	public int counter = 0;
 	public boolean showMoveOptions;
+	public Move currentMove;
 	public boolean showIVOptions;
 	public boolean showStatusOptions;
 	public boolean gauntlet;
@@ -1168,6 +1169,7 @@ public abstract class AbstractUI {
 				}
 				if (moveOption > 0) p.moveset[moveOption - 1] = new Moveslot(m);
 				moveOption = -1;
+				currentMove = null;
 				showMoveOptions = false;
 				currentTask = null;
 			}

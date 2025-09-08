@@ -16,7 +16,7 @@ public enum Ability {
 	BRAINWASH("Forces the opponent's stat changes to have an opposite effect while the user is active."),
 	CHLOROPHYLL("Boosts the Pokemon's Speed stat in SUNSHINE."),
 	CLEAR_BODY("Prevents other Pokemon from lowering its stats."),
-	CLOUD_NINE("Nullifies the weather on switch-in and while it's active."),
+	CLOUD_NINE("Prevents weather from getting set and clears it on switch-in."),
 	COLD_HEART("Immune to all PSYCHIC moves."),
 	COMPETITIVE("Boosts the Pokemon's Sp. Atk stat when its stats are lowered."),
 	COMPOUND_EYES("The Pokemon's accuracy is boosted."),

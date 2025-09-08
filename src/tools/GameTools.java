@@ -37,16 +37,9 @@ public class GameTools {
 	}
 	
 	public static void load() {
-		loadPokemon();
+		Pokemon.readTrainersFromCSV();
 		new TileManager(gp);
 		setupAllPokemon();
-	}
-	
-	public static void loadPokemon() {
-		Pokemon.readInfoFromCSV();
-		Pokemon.readMovebanksFromCSV();
-		Pokemon.readTrainersFromCSV();
-		Pokemon.readEntiresFromCSV();
 	}
 	
 	public static void setupAllPokemon() {

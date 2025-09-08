@@ -320,10 +320,10 @@ public class Trainer implements Serializable {
 		if (pAbility == Ability.JUSTIFIED && type == PType.DARK) multiplier *= 0.5;
 		if (pAbility == Ability.INSECT_FEEDER && type == PType.BUG) multiplier = 0;
 		if (!p.isGrounded(Pokemon.field, pAbility) && type == PType.GROUND) multiplier = 0;
-		if (p.getItem() == Item.SNOWBALL && type == PType.ICE) multiplier = 0;
-		if (p.getItem() == Item.ABSORB_BULB && type == PType.WATER) multiplier = 0;
-		if (p.getItem() == Item.LUMINOUS_MOSS && type == PType.WATER) multiplier = 0;
-		if (p.getItem() == Item.CELL_BATTERY && type == PType.ELECTRIC) multiplier = 0;
+		if (p.getItem(Pokemon.field) == Item.SNOWBALL && type == PType.ICE) multiplier = 0;
+		if (p.getItem(Pokemon.field) == Item.ABSORB_BULB && type == PType.WATER) multiplier = 0;
+		if (p.getItem(Pokemon.field) == Item.LUMINOUS_MOSS && type == PType.WATER) multiplier = 0;
+		if (p.getItem(Pokemon.field) == Item.CELL_BATTERY && type == PType.ELECTRIC) multiplier = 0;
 		if (pAbility == Ability.LIGHTNING_ROD && type == PType.ELECTRIC) multiplier = 0;
 		if (pAbility == Ability.MOTOR_DRIVE && type == PType.ELECTRIC) multiplier = 0;
 		if (pAbility == Ability.SAP_SIPPER && type == PType.GRASS) multiplier = 0;
@@ -484,6 +484,7 @@ public class Trainer implements Serializable {
 				}
 				this.team[teamTemp[i].slot] = teamTemp[i];
 				teamTemp[i].clearVolatile(null);
+				if (teamTemp[i].status == Status.ASLEEP) teamTemp[i].sleepCounter = (int)(Math.random() * 3) + 1;
 				teamTemp[i].vStatuses.clear();
 				teamTemp[i].abilityFlag = false;
 				

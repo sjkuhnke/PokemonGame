@@ -951,6 +951,7 @@ public class PlayerCharacter extends Entity {
 			} else if (p.flag[1][11] && !p.flag[1][12]) {
 				gp.ui.showMessage("Powered on the fuse box!\nA clicking sound played!");
 				p.flag[1][12] = true;
+				gp.aSetter.setInteractiveTile(gp.currentMap);
 			} else {
 				gp.ui.showMessage("The fuse box is whirring with power!");
 			}
