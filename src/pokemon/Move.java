@@ -764,7 +764,7 @@ public enum Move {
 				if (user.getAbility(field) == Ability.GALVANIZE || user.getAbility(field) == Ability.REFRIGERATE || user.getAbility(field) == Ability.PIXILATE) bp *= 1.2;
 			}
 			if (user.getAbility(field) == Ability.NORMALIZE) bp *= 1.2;
-			if (user.getItem() == Item.METRONOME && this == user.lastMoveUsed) bp *= (1 + (Math.min(1.0, (user.metronome + 1) * 0.2)));
+			if (user.getItem(field) == Item.METRONOME && this == user.lastMoveUsed) bp *= (1 + (Math.min(1.0, (user.metronome + 1) * 0.2)));
 			int arcane = user.getStatusNum(Status.ARCANE_SPELL);
 			if (arcane != 0 && bp > 20) {
 				bp = Math.max(bp - arcane, 20);
@@ -947,7 +947,7 @@ public enum Move {
 				this == Move.SHOOTING_STARS || this == Move.BULLET_SEED || this == Move.FLASH_DARTS || this == Move.MAGIC_MISSILES) {
 			if (user.getAbility(Pokemon.field) == Ability.SKILL_LINK) return 5;
 			int randomNum = (int) (Math.random() * 100) + 1; // Generate a random number between 1 and 100 (inclusive)
-			if (user.getItem() == Item.LOADED_DICE) {
+			if (user.getItem(Pokemon.field) == Item.LOADED_DICE) {
 				if (randomNum <= 50) {
 					return 4;
 				} else {
@@ -1292,7 +1292,7 @@ public enum Move {
 		double effectiveness = Trainer.getEffective(foe, me, m.mtype, m, false);
 		if (effectiveness == 0) return false;
 		int sec = m.secondary;
-		if (foe.getItem() == Item.COVERT_CLOAK) sec = 0;
+		if (foe.getItem(Pokemon.field) == Item.COVERT_CLOAK) sec = 0;
 		if (foe.getAbility(Pokemon.field) == Ability.SHIELD_DUST && me.getAbility(Pokemon.field) != Ability.MOLD_BREAKER) sec = 0;
 		if (Pokemon.field.equals(Pokemon.field.terrain, Effect.SPARKLY) && me.isGrounded()) sec *= 2;
 		if (me.getAbility(Pokemon.field) == Ability.SERENE_GRACE) sec *= 2;

@@ -514,8 +514,8 @@ public class AssetSetter {
 		mapNum = 18;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(49, 33, Item.ELIXIR, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(43, 35, Item.RARE_CANDY, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(46, 39, Item.SPARKLY_SEED, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 33, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(45, 35, Item.SPARKLY_SEED, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(48, 44, Item.NUGGET, mapNum);
 		
 		mapNum = 22;
@@ -1771,11 +1771,13 @@ public class AssetSetter {
 		
 		mapNum = 18;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, "Scott", 53, 35, "Can't... keep... fighting...", 18.0);
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_UP, "Scott", 53, 35, "Can't... keep... fighting...", mapNum);
 		gp.npc[mapNum][index++] = null;
 		gp.npc[mapNum][index] = SetupStaticEncounter(202, 53, 34, 368, "Dgrughhh!");
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_RIGHT, 45, 38, "You might think you stand a chance... but that's a fantasy.", "Guess dragons aren't invincible after all. This time.", 146);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 46, 33, "That was an impressive battle! I found a rare MAGIC Pokemon, but after watching that, you'd be a better trainer. Here!", 18.1, 66, "Enjoy all the wonders of the MAGIC type!");
+		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_DOWN, null, 47, 33, "That was an impressive battle! I found a rare MAGIC Pokemon, but after watching that, you'd be a better trainer. Here!", 18.1, 66, "Enjoy all the wonders of the MAGIC type!");
+		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_RIGHT, null, 49, 34, "", 18.2);
+		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, null, 51, 35, "", 18.3);
 		
 		mapNum = 21;
 		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_DOWN, 55, 60, "A fine battle calls for refinement and skill. Let's proceed with grace.", "Well played, my friend. A loss is but a lesson in disguise.", 56);
@@ -2313,7 +2315,6 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 88, 69, "I train with the intensity of a lightning storm! Let's see if you can keep up!", "You're fast... but next time, I'll be faster. Count on it!", 243);
 		gp.npc[mapNum][index] = NPCSetup(BLACK_BELT_DOWN, 62, 74, "Prepare yourself! My Pokemon fight with the heart of a true warrior!", "Impressive! I'll need to push myself even further!", 244);
 		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_RIGHT, 41, 72, "Don't think my dragons will go easy on you. They're as tough as they come!", "I thought I had it all figured out... Guess I need to rethink my strategy.", 245);
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 26, 70, "Hey there! You gotta be pretty tough to make it here with Xhenos's crazy weather, like me!", mapNum);
 		
 		mapNum = 118;
 		index = 0;
@@ -2973,6 +2974,7 @@ public class AssetSetter {
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(46, 40, ROCK_SMASH, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(54, 33, FUSE_2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupBarrier(50, 40, 44, mapNum, map);
 		
 		mapNum = 21;
 		iIndex = 0;
@@ -5436,6 +5438,17 @@ public class AssetSetter {
 			case MINING:
 				result = new NPC_Mine(gp, name);
 				break;
+			case GENTLEMAN_RIGHT:
+				result.setupImages("/npc/gentleman");
+				result.setDirection("right");
+				break;
+			case MANIAC_UP:
+				result.setupImages("/npc/maniac");
+				result.setDirection("up");
+				break;
+			case MAGICIAN_F_DOWN:
+				result.setupImages("/npc/magician_f");
+				result.setDirection("down");
 		}
 		
 		result.worldX = gp.tileSize*x;

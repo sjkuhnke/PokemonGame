@@ -754,6 +754,31 @@ public class Script {
 			Task.addTask(Task.GIFT, "", result);
 		});
 		
+		scriptMap.put(18.2, (npc) -> { // endure move tutor
+			if (!p.flag[1][23]) {
+				Task.addTask(Task.TEXT, "Phew... I thought I was fried circuits for sure.");
+				Task.addTask(Task.TEXT, "Those Team Eclipse thugs and the wild Electric forms really pushed us to the brink.");
+				Task.addTask(Task.TEXT, "Still, we held on, and here we are - standing. That's the secret, y'know?");
+				Task.addTask(Task.TEXT, "Endure long enough, and you'll always find another turn.");
+				Task.addTask(Task.TEXT, "I can teach your Pokemon that same survival instinct.");
+				p.flag[1][23] = true;
+			}
+			Task.addTask(Task.TEXT, "Want me to show one of them how to Endure?");
+			Task t = Task.addTask(Task.PARTY, "", Task.MOVE);
+			t.setMove(Move.ENDURE);
+		});
+		
+		scriptMap.put(18.3, (npc) -> {
+			if (!p.flag[1][24]) {
+				p.flag[1][24] = true;
+				Task.addTask(Task.TEXT, "This office has seen its fair share of... messes. Power surges, Eclipse grunts, broken coffee machines.");
+				Task.addTask(Task.TEXT, "But I specialize in cleaing up a different kind of mess - bad moves.");
+				Task.addTask(Task.TEXT, "If your Pokemon is stuck with a move you don't want, I can help it forget. Clean slate, fresh start.");
+			}
+			Task.addTask(Task.TEXT, "So... want me to tidy up a moveset for you?");
+			Task.addTask(Task.PARTY, "", Task.DELETE_MOVE);
+		});
+		
 		scriptMap.put(28.0, (npc) -> { // millie 1 and 2
 			Task.addTask(Task.DIALOGUE, npc, "I'm Millie, kind of a big deal here. I've starred in several movies and TV stuff!");
 			Task.addTask(Task.DIALOGUE, npc, "You've probably heard of Magikarp Jump: The Motion Picture, and Mystery Doors of the Magical Land: The Animated Series.");
@@ -1050,12 +1075,6 @@ public class Script {
 					Task.addTask(Task.DIALOGUE, npc, "Now, go find the cause of the extreme light outside with your new tools and put a stop to it!");
 				}
 			}
-		});
-		
-		scriptMap.put(115.0, (npc) -> { // endure move tutor
-			Task.addTask(Task.TEXT, "I can teach your Pokemon how to be tough too, just like you and I brother!");
-			Task t = Task.addTask(Task.PARTY, "", Task.MOVE);
-			t.setMove(Move.ENDURE);
 		});
 
 		scriptMap.put(44.0, (npc) -> { // gym leader block

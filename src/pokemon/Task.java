@@ -81,6 +81,7 @@ public class Task {
 	public static final int SPACE = 64;
 	public static final int SUMMON = 65;
 	public static final int MONEY = 66; // unused for task type
+	public static final int DELETE_MOVE = 67;
 	
 	public static GamePanel gp;
 	
@@ -224,6 +225,9 @@ public class Task {
 		case NURSERY_DEPOSIT: return "NURSERY_DEPOSIT";
 		case NURSERY_WITHDRAW: return "NURSERY_WITHDRAW";
 		case SPACE: return "SPACE";
+		case SUMMON: return "SUMMON";
+		case MONEY: return "MONEY";
+		case DELETE_MOVE: return "DELETE_MOVE";
 		default:
 			return "getTypeString() doesn't have a case for this type";
 		}

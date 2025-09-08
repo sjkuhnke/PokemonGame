@@ -347,7 +347,7 @@ public class BattleUI extends AbstractUI {
 			} else {
 				counter++;
 			}
-			if (counter >= 50) {
+			if (counter >= 100) {
 				counter = 0;
 				endTask();
 			}
@@ -393,6 +393,7 @@ public class BattleUI extends AbstractUI {
 			}
 			break;
 		case Task.CATCH:
+			currentDialogue = currentTask.message;
 			drawFoePokeball(false, currentTask.item);
 			if (counter >= 75) {
 				counter = 0;
@@ -536,7 +537,7 @@ public class BattleUI extends AbstractUI {
 	}
 
 	protected void drawCaughtIndicator() {
-		if (foe.playerOwned() || (foe.trainerOwned() && (!catchable || user.getPlayer().pokedex[foe.id] != 2))) return;
+		if (foe.playerOwned() || (foe.trainerOwned() && !catchable) || user.getPlayer().pokedex[foe.id] != 2) return;
 		g2.drawImage(ballIcon, 454, 50, null);
 	}
 	
@@ -695,8 +696,10 @@ public class BattleUI extends AbstractUI {
 				foe.spriteVisible = true;
 			}
 		} else {
-			currentTask.p.setVisible(false);
-			g2.drawImage(ballType.getImage2(), 570, 188, null);
+			if (counter >= 50) {
+				currentTask.p.setVisible(false);
+				g2.drawImage(ballType.getImage2(), 570, 188, null);
+			}
 		}
 	}
 	
@@ -714,8 +717,10 @@ public class BattleUI extends AbstractUI {
 				user.spriteVisible = true;
 			}
 		} else {
-			currentTask.p.setVisible(false);
-			g2.drawImage(currentTask.p.ball.getBackImage(), 133, 348, null);
+			if (counter >= 50) {
+				currentTask.p.setVisible(false);
+				g2.drawImage(currentTask.p.ball.getBackImage(), 133, 348, null);
+			}
 		}
 	}
 	
@@ -878,7 +883,7 @@ public class BattleUI extends AbstractUI {
 					Task.addTask(Task.TEXT, staticID < 0 ? "No! There's no running from a trainer battle!" : "The Pokemon's presense is keeping you from fleeing!");
 				} else {
 					Pokemon faster = user.getFaster(foe, 0, 0);
-					boolean isFaster = faster == user || user.getItem() == Item.SHED_SHELL || user.type1 == PType.GHOST || user.type2 == PType.GHOST;
+					boolean isFaster = faster == user || user.getItem(field) == Item.SHED_SHELL || user.type1 == PType.GHOST || user.type2 == PType.GHOST;
 					
 					if (isFaster || new Random().nextBoolean()) {
 						Task.addTask(Task.END, "Got away safely!");
@@ -1086,8 +1091,7 @@ public class BattleUI extends AbstractUI {
 				if (ballIndex >= 0) {
 					showFoeSummary = false;
 					Entry ballEntry = balls.get(ballIndex);
-					Task.addTask(Task.TEXT, "You threw a " + ballEntry.getItem().toString() + "!");
-					Task t = Task.addTask(Task.CATCH, "", foe);
+					Task t = Task.addTask(Task.CATCH, "You threw a " + ballEntry.getItem().toString() + "!", foe);
 					t.item = ballEntry.getItem();
 					t.setWipe(user.getCapture(foe, ballEntry, encType));
 					subState = TASK_STATE;

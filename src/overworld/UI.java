@@ -56,7 +56,6 @@ public class UI extends AbstractUI {
 	public boolean showArea;
 	public int areaCounter;
 	public Pokemon currentPokemon;
-	public Move currentMove;
 	public String currentHeader;
 	
 	public int boxNum;
@@ -667,6 +666,9 @@ public class UI extends AbstractUI {
 		case Task.SUMMON:
 			gp.player.p.summonLegendary(gp, gp.currentMap);
 			currentTask = null;
+			break;
+		case Task.DELETE_MOVE:
+			drawDeleteMove();
 			break;
 		}
 	}
@@ -2198,6 +2200,11 @@ public class UI extends AbstractUI {
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			Pokemon p = gp.player.p.team[partyNum];
+			if (p instanceof Egg) {
+				Task.addTask(Task.TEXT, "That's an Egg!");
+				currentTask = null;
+				return;
+			}
 			boolean skip = false;
 			if (currentTask.move != null) {
 				int move = p.canLearnMove(currentTask.move);
@@ -2216,6 +2223,7 @@ public class UI extends AbstractUI {
 				String message = currentTask.message.replace("#", p.nickname);
 				Task t = Task.addTask(currentTask.counter, message, p); // pass in the Task type and Message in the Task.PARTY creation
 				t.setMove(currentTask.move);
+				moveOption = -1;
 			}
 			remindNum = 0;
 			currentTask = null;
@@ -2224,6 +2232,7 @@ public class UI extends AbstractUI {
 		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
 			currentTask = null;
+			partyNum = 0;
 		}
 		
 		drawToolTips("OK", null, "Back", null);
@@ -3271,6 +3280,19 @@ public class UI extends AbstractUI {
 			drawTask();
 		}
 	}
+	
+	private void drawDeleteMove() {
+		currentPokemon = currentTask.p;
+		currentHeader = "Which move to delete?";
+		showMoveOptions();
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			currentTask = null;
+			showMoveOptions = false;
+			moveOption = -1;
+		}
+	}
 
 	private void showMoveOptions() {
 		if (currentMove == null) {
@@ -3305,6 +3327,15 @@ public class UI extends AbstractUI {
 			    		} else {
 			    			showMessage("It won't have any effect.");
 			    		}
+					} else if (currentTask != null && currentTask.type == Task.DELETE_MOVE) {
+						if (moveOption - 1 == 0 && currentPokemon.moveset[moveOption] == null) {
+							Task.addTask(Task.TEXT, "That's " + currentPokemon.nickname + "'s last move!");
+						} else {
+							Task.addTask(Task.TEXT, currentPokemon.nickname + "'s " + currentPokemon.moveset[moveOption - 1].move.toString() + " was deleted!");
+							currentPokemon.moveset[moveOption - 1] = null;
+							currentPokemon.shiftMoveset();
+						}
+						currentTask = null;
 					}
 					showMoveOptions = false;
 				}
@@ -3312,7 +3343,7 @@ public class UI extends AbstractUI {
 		} else {
 			drawMoveOptions(currentMove, currentPokemon);
 		}
-		drawToolTips("OK", null, null, null);
+		drawToolTips("OK", null, currentTask != null && currentTask.type == Task.DELETE_MOVE ? "Back" : null, null);
 	}
 	
 	private void showIVOptions() {
@@ -5387,12 +5418,13 @@ public class UI extends AbstractUI {
 				Encounter e = es.get(i);
 				int id = e.getId();
 				Pokemon p = new Pokemon(id, 5, false, false);
-				if (gp.player.p.pokedex[id] == 2) {
+				if (gp.player.p.nuzlocke ? gp.player.p.isDupes(id) : gp.player.p.pokedex[id] == 2) {
 					g2.drawImage(p.getSprite(), x, y, null);
 				} else {
 					all = false;
 					g2.drawImage(getSilhouette(p), x, y, null);
 				}
+				
 				g2.setFont(g2.getFont().deriveFont(16F));
 				g2.drawString(String.format("%.0f%%", e.getEncounterChance() * 100), x + 60, y + 75);
 				if ((i + 1) % 8 == 0) {
