@@ -2409,6 +2409,34 @@ public class Pokemon implements RoleAssignable, Serializable {
 				bp = determineBasePower(foe, move, first, team, foeAbility, field, true);
 			}
 			
+			if (this.getAbility(field) == Ability.JACKPOT) {
+				int dice = new Random().nextInt(6);
+				if (this.getItem() == Item.LOADED_DICE) dice += 2;
+				dice = Math.min(5, dice);
+				double mul;
+				switch(dice) {
+				case 0:mul = 0.5;break;
+				case 1:mul = 0.75;break;
+				case 2:mul = 1;break;
+				case 3:mul = 1.25;break;
+				case 4:mul = 1.5;break;
+				case 5:mul = 2;break;
+				default:mul = 0;break;
+				}
+				Task t = Task.createTask(Task.ABILITY, "[" + this.nickname + "'s " + this.ability + "]:", this);
+				t.setAbility(this.ability);
+				Task.insertTask(t, damageIndex++);
+				t = Task.createTask(Task.TEXT, this.nickname + " rolled a dice to determine its move's power!");
+				Task.insertTask(t, damageIndex++);
+				t = Task.createTask(Task.TEXT, "...");
+				Task.insertTask(t, damageIndex++);
+				t = Task.createTask(Task.TEXT, this.nickname + " rolled a " + (dice + 1) + "!");
+				Task.insertTask(t, damageIndex++);
+				t = Task.createTask(Task.TEXT, "The move is " + ((int)(mul*100)) + "% as strong!");
+				Task.insertTask(t, damageIndex++);
+				bp *= mul;
+			}
+			
 			if (move == Move.ROLLOUT || move == Move.ICE_BALL) {
 				if (!this.hasStatus(Status.LOCKED)) {
 					this.addStatus(Status.LOCKED);
@@ -2967,6 +2995,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 				if (foe.getItem() == Item.ENIGMA_BERRY) {
 					foe.eatBerry(foe.item, true, this);
+				}
+				if (foe.getAbility(field) == Ability.GLASS_GUARD && !foe.hasStatus(Status.MAGIC_REFLECT)) {
+					Task.addAbilityTask(foe);
+					foe.addStatus(Status.MAGIC_REFLECT);
+					Task.addTask(Task.TEXT, "A magical reflection surrounds " + foe.nickname + "!");
 				}
 			}
 			
@@ -5710,15 +5743,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 		this.battled = false;
 		awardHappiness(-3, false);
 		this.status = Status.HEALTHY;
-		this.removeStatus(Status.LOCKED);
-		this.removeStatus(Status.SWITCHING);
-		this.removeStatus(Status.SPUN);
-		this.removeStatus(Status.SPELLBIND);
-		this.removeStatus(Status.RECHARGE);
-		this.removeStatus(Status.CHARGING);
-		this.removeStatus(Status.NO_SWITCH);
-		this.removeStatus(Status.TRAPPED);
-		this.removeStatus(Status.SEMI_INV);
 		foe.removeStatus(Status.SPUN);
 		foe.removeStatus(Status.SPELLBIND);
 		foe.removeStatus(Status.TRAPPED);
@@ -5727,6 +5751,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			player.setBattled(player.getBattled() - 1);
 		}
 		if (announce) Task.addTask(Task.FAINT, this.nickname + " fainted!", this);
+		this.clearVolatile(foe);
 		
 		if (this.playerOwned() && this.getPlayer().nuzlocke) gp.saveScum(this.toString() + " died to " + foe.toString() + (foe.trainerOwned() ? " (" + foe.trainer.getName() + ")": "" + " (Save Scum)"));
 		
@@ -10258,7 +10283,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, foe);
 				}
-				if (multiplier > 1 && this.isFainted()) {
+				if (multiplier > 1 && !this.isFainted()) {
 					if (this.getItem() == Item.WEAKNESS_POLICY) {
 						Task.addTask(Task.TEXT, this.nickname + " used its " + this.item.toString() + "!");
 						stat(foe, 0, 2, this);
