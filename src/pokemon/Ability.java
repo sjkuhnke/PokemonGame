@@ -44,6 +44,7 @@ public enum Ability {
 	GALACTIC_AURA("Halves the damage of ICE and PSYCHIC moves."),
 	GALVANIZE("NORMAL moves become ELECTRIC moves. The power of those moves is boosted a little."),
 	GLACIER_AURA("Weakens the power of Physical moves."),
+	GLASS_GUARD("When hit by a supereffective attack, the Pokemon creates a Magic Reflect for itself."),
 	GOOEY("Contact with the Pokemon lowers the attacker's Speed stat."),
 	GRASSY_SURGE("Turns the ground into GRASSY TERRAIN when the Pokemon enters a battle."),
 	GRAVITATION("Creates GRAVITY when the Pokemon enters a battle."),
@@ -60,7 +61,7 @@ public enum Ability {
 	INTIMIDATE("Lowers the opposing Pokemon's Attack stat."),
 	IRON_BARBS("Inflicts damage to the Pokemon on contact."),
 	IRON_FIST("Boosts the power of punching moves."),
-	JACKPOT(""), // TODO
+	JACKPOT("Rolls a dice with each attack corresponding to its power: 50% - 200% (Loaded Dice = 100% - 200%)."),
 	JUSTIFIED("Halves damage from DARK moves and sharply boosts Attack when hit by one."),
 	KEEN_EYE("Prevents the Pokemon from losing accuracy."),
 	LEVITATE("Gives full immunity to all GROUND moves."),
