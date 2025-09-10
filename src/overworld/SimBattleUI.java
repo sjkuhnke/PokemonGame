@@ -771,8 +771,8 @@ public class SimBattleUI extends BattleUI {
 		p2Moves = null;
 		p1Switch = null;
 		p2Switch = null;
-		Move uMove = p1.bestMove(p2, !fFaster);
-		Move fMove = p2.bestMove(p1, fFaster);
+		Move uMove = p1.bestMove2(p2, !fFaster);
+		Move fMove = p2.bestMove2(p1, fFaster);
 		
 		int uP, fP;
 		uP = uMove == null ? 0 : uMove.getPriority(p1);
@@ -809,13 +809,13 @@ public class SimBattleUI extends BattleUI {
 		boolean slowCanMove = true;
 		
 		if (faster.hasStatus(Status.SWAP)) {
-			faster = faster.trainer.swapOut(slower, fastMove, false, faster.trainer.hasUser(user));
+			faster = faster.trainer.swapOut2(slower, faster.getStatusNum(Status.SWAP), fastMove, false, faster.trainer.hasUser(user));
 			fastMove = null;
 			fastCanMove = false;
 		}
 		
 		if (slower.hasStatus(Status.SWAP)) {
-			slower = slower.trainer.swapOut(faster, slowMove, false, slower.trainer.hasUser(user));
+			slower = slower.trainer.swapOut2(faster, slower.getStatusNum(Status.SWAP), slowMove, false, slower.trainer.hasUser(user));
 			slowMove = null;
 			slowCanMove = false;
 		}

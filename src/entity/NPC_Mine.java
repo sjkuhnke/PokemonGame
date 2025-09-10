@@ -205,11 +205,13 @@ public class NPC_Mine extends Entity {
 	public void startMine(Player p) {
 		p.setMoney(p.getMoney() - PRICE);
 		gp.saveGame(p, true);
+		boolean perilyte = p.hasPokemonID(229);
+		if (perilyte) Task.addTask(Task.DIALOGUE, this, "Ooh! A Perilyte in the flesh! It looks thrilled to help!");
 		Task.addTask(Task.DIALOGUE, this, "Just tell me when to quit so I don't accidentally lose all of your items!");
 		Task t = Task.addTask(Task.FLASH_IN, "");
 		t.color = Color.BLACK;
 		this.resetMine();
-		mine(p.hasPokemonID(229));
+		mine(perilyte);
 	}
 	
 	public void endMine(boolean perilyte) {

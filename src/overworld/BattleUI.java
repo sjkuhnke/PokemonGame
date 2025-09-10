@@ -211,6 +211,18 @@ public class BattleUI extends AbstractUI {
 			drawDialogueState();
 		}
 		drawKeyStrokes();
+		if (gp.keyH.shiftPressed && foe.trainerOwned()) {
+			StringBuilder sb = new StringBuilder();
+			for (Pokemon p : foe.trainer.getTeam()) {
+				if (p != null) {
+					sb.append("[");
+					sb.append(p + ": ");
+					sb.append(p.scorePokemon(user, null, false, 0.0, field));
+					sb.append("], ");
+				}
+			}
+			System.out.println(sb.toString());
+		}
 	}
 
 	protected void endTask() {
@@ -1203,7 +1215,7 @@ public class BattleUI extends AbstractUI {
         	Move move = moves[moveNum].move;
     		if (user.movesetEmpty()) move = Move.STRUGGLE;
 			
-        	foeMove = foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
+        	foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
         	
         	showMoveSummary = false;
         	turn(move, foeMove);
@@ -1246,7 +1258,7 @@ public class BattleUI extends AbstractUI {
 		
 		if (faster == user) { // player Pokemon is faster
 			if (slower.hasStatus(Status.SWAP)) { // AI wants to swap out
-				slower = foe.trainer.swapOut(user, fMove, false, false);
+				slower = foe.trainer.swapOut2(user, slower.getStatusNum(Status.SWAP), fMove, false, false);
 				foeMove = null;
 				foeCanMove = false;
 			}
@@ -1291,7 +1303,7 @@ public class BattleUI extends AbstractUI {
  			}
 		} else { // enemy Pokemon is faster
 			if (faster.hasStatus(Status.SWAP)) { // AI wants to swap out
-				faster = foe.trainer.swapOut(slower, fMove, false, false);
+				faster = foe.trainer.swapOut2(slower, faster.getStatusNum(Status.SWAP), fMove, false, false);
 				foeMove = null;
 				foeCanMove = false;
 			}
@@ -1432,7 +1444,7 @@ public class BattleUI extends AbstractUI {
 				boolean fainted = user.isFainted();
 				if (fainted) foeMove = null;
 				if (cancellableParty && !fainted){
-					foeMove = foe.trainerOwned() ? foe.bestMove(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
+					foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
 				}
 				if (baton) {
 					gp.player.p.team[partyNum].statStages = user.statStages.clone();

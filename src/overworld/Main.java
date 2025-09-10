@@ -212,8 +212,6 @@ public class Main {
 		    		
 		    		gp.player.p.setupPuzzles(gp, gp.currentMap);
 		    		
-		    		gp.player.p.setupNuzlocke();
-		    		
 		    		gp.startGameThread();
 		        }
 		    });

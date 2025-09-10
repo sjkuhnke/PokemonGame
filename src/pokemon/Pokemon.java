@@ -468,7 +468,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         Map<Move, Integer> moveToDamage = new HashMap<>();
 
         for (Move move : validMoves) {
-            int damage = calcWithTypes(foe, move, first, field).getFirst();
+            int damage = calcWithTypes(foe, move, first, field, true).getFirst();
             moveToDamage.put(move, damage);
         }
         
@@ -506,7 +506,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		ArrayList<Move> foeMoveset = foe.getValidMoveset();
 		Collections.shuffle(foeMoveset);
     	for (Move m : foeMoveset) {
-    		int damage = foe.calcWithTypes(this, m, true, 0, false, field).getFirst();
+    		int damage = foe.calcWithTypes(this, m, true, 0, false, field, true).getFirst();
     		hasResist = tr.hasResist(foe, m.mtype, m);
     		if (damage > foeMaxDamage) {
     			foeMaxDamage = damage;
@@ -778,6 +778,261 @@ public class Pokemon implements RoleAssignable, Serializable {
         }
         return bestMoves.get(randomIndex);
     }
+	
+	public Move bestMove2(Pokemon foe, boolean first) {
+	    ArrayList<Move> validMoves = this.getValidMoveset();
+	    
+	    if (this.script) {
+	    	if (field.turns == 0) {
+	    		if (gp.currentMap == 160) {
+	    			return this.getStatusMove();
+	    		} else {
+	    			return this.moveset[0].move;
+	    		}
+	    	}
+	    }
+	    
+	    Pair<Pokemon, String> switchRsn = null;
+	    if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
+	    	if (gp.simBattleUI.p1Switch == null) {
+	    		gp.simBattleUI.p1Switch = new Pair<>(null, null);
+	    		switchRsn = gp.simBattleUI.p1Switch;
+	    	} else {
+	    		gp.simBattleUI.p2Switch = new Pair<>(null, null);
+	    		switchRsn = gp.simBattleUI.p2Switch;
+	    	}
+	    }
+	    
+	    Trainer tr = this.trainer;
+	    
+        // Calculate and store the damage values of each move
+        Map<Move, Integer> moveToDamage = new HashMap<>();
+
+        for (Move move : validMoves) {
+            int damage = calcWithTypes(foe, move, first, field, true).getFirst();
+            moveToDamage.put(move, damage);
+        }
+        
+        // Check if there are no valid moves with non-zero PP
+        if (moveToDamage.isEmpty()) {
+        	// 100% chance to swap in a partner if you can only struggle
+        	if (tr.hasValidMembers() && !isTrapped(foe)) {
+        		String rsn = "[All valid moves have 0 PP : 100%]";
+        		System.out.println(rsn);
+        		if (switchRsn != null) {
+    				switchRsn.setFirst(this);
+        			switchRsn.setSecond(rsn);
+    			}
+        		this.addStatus(Status.SWAP);
+        		return Move.GROWL;
+        	} else {
+        		return Move.STRUGGLE;
+        	}
+        }
+        
+        // Find the maximum damage value
+        int maxDamage = Collections.max(moveToDamage.values());
+        boolean iKill = maxDamage >= foe.currentHP;
+        
+        Ability foeAbility = foe.ability;
+        if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
+			foeAbility = Ability.NULL;
+		}
+        
+        Move strongestMove = null;
+        int foeMaxDamage = Integer.MIN_VALUE;
+        
+        boolean foeCanKO = false;
+		ArrayList<Move> foeMoveset = foe.getValidMoveset();
+		Collections.shuffle(foeMoveset);
+    	for (Move m : foeMoveset) {
+    		int damage = foe.calcWithTypes(this, m, true, 0, false, field, false).getFirst();
+    		if (damage > foeMaxDamage) {
+    			foeMaxDamage = damage;
+    			strongestMove = m;
+    		}
+    		if (damage >= this.currentHP) {
+    			foeCanKO = true;
+    			strongestMove = m;
+    			break;
+    		}
+    	}
+        
+        if (tr.hasValidMembers() && !isTrapped(foe)) {
+        	double hpPercent = this.currentHP * 1.0 / this.getStat(0);
+        	StringBuilder sb = new StringBuilder("===========================================\n");
+        	int currentScore = this.scorePokemon(foe, strongestMove, foeCanKO, hpPercent, field);
+        	
+        	HashMap<Pokemon, Integer> scoreMap = new HashMap<>();
+        	for (int i = 0; i < tr.team.length; i++) {
+        		Pokemon ally = tr.team[i];
+        		if (ally != null && ally != this) {
+        			int allyScore = ally.scorePokemon(foe, strongestMove, foeCanKO, hpPercent, field);
+        			scoreMap.put(ally, allyScore);
+        		}
+        	}
+        	
+        	// Debug: print all scores
+			sb.append("[" + this + ": " + currentScore + "], ");
+        	for (Map.Entry<Pokemon, Integer> e : scoreMap.entrySet()) {
+        		sb.append("[" + e.getKey() + ": " + e.getValue() + "], ");
+        	}
+        	System.out.println(sb.toString());
+        	
+        	HashMap<Pokemon, Double> weights = new HashMap<>();
+        	double totalWeight = 0;
+        	for (Map.Entry<Pokemon, Integer> e : scoreMap.entrySet()) {
+        		int allyScore = e.getValue();
+        		if (allyScore > currentScore && allyScore > 0) {
+        			double w = allyScore - currentScore;
+        			weights.put(e.getKey(), w);
+        			totalWeight += w;
+        		}
+        	}
+        	
+        	if (!weights.isEmpty()) {
+        		// Debug: print switch chances
+        		System.out.println("SWITCH CHANCES:");
+        		for (Map.Entry<Pokemon, Integer> e : scoreMap.entrySet()) {
+        			Pokemon p = e.getKey();
+        			double chance = weights.containsKey(p) ? (weights.get(p) / totalWeight * 100.0) : 0.0;
+        			System.out.printf("%s: %.1f%%\n", p, chance);
+        		}
+        		
+        		double r = Math.random() * totalWeight;
+        		Pokemon chosen = null;
+        		int chosenScore = Integer.MIN_VALUE;
+        		int chosenSlot = -1;
+        		for (int i = 0; i < tr.team.length; i++) {
+        			Pokemon ally = tr.team[i];
+        			if (ally != null && weights.containsKey(ally)) {
+        				r -= weights.get(ally);
+        				if (r <= 0) {
+        					chosen = ally;
+        					chosenSlot = i;
+        					chosenScore = scoreMap.get(ally);
+        					break;
+        				}
+        			}
+        		}
+        		
+        		if (chosen != null) {
+        			double diff = chosenScore - currentScore;
+        			double chance = Math.min(95, Math.abs(diff) / 2);
+        			chance = Math.max(0, chance);
+        			System.out.println(chance + "% to switch");
+        			
+        			if (Math.random() * 100 <= chance) {
+        				String rsn = "[Score diff switch : " + String.format("%.1f", chance) + "%]";
+            			System.out.println(rsn);
+            			if (switchRsn != null) {
+            				switchRsn.setFirst(this);
+            				switchRsn.setSecond(rsn);
+            			}
+            			this.addStatus(Status.SWAP, chosenSlot);
+            			if (first || !foeCanKO) {
+            				Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+                	        if (pivotMove != null) return pivotMove;
+            			}
+        			}        			
+        		}
+        	}
+        }
+        
+        // Filter moves based on conditions and max damage
+        ArrayList<Move> bestMoves = new ArrayList<>();
+        for (Map.Entry<Move, Integer> entry : moveToDamage.entrySet()) {
+        	Move move = entry.getKey();
+        	Move moveTest = id == 237 ? this.get150Move(move) : move;
+        	int damage = entry.getValue();
+        	if (damage >= maxDamage && (damage > 0 || validMoves.size() == 1 || (allMovesAreDamaging(moveToDamage) && maxDamage == 0)) && moveTest.cat != 2) {
+        		bestMoves.add(move);
+        		bestMoves.add(move);
+        		bestMoves.add(move);
+        		if (move.hasPriority(this) || move == Move.FELL_STINGER || move == Move.COMET_PUNCH) {
+        			bestMoves.add(move);
+        			if (this.script) return move;
+        		}
+        	}
+        	if (moveTest.cat == 2 || Move.treatAsStatus(moveTest, this, foe)) {
+        		if (moveTest.accuracy > 100) {
+        			Pokemon freshYou = this.clone();
+        			freshYou.statStages = new int[freshYou.statStages.length];
+        			Pokemon freshFoe = new Pokemon(1, 1, false, false);
+        			int[] prevStatsF = freshYou.statStages.clone();
+        			freshYou.statusEffect(freshFoe, moveTest, null, null, false);
+        			int[] currentStatsF = freshYou.statStages.clone();
+        			if (!arrayEquals(prevStatsF, currentStatsF)) {
+        				Pokemon you = this.clone();
+            			Pokemon foeClone = foe.clone(); // shouldn't matter
+            			int[] prevStats = you.statStages.clone();
+            			you.statusEffect(foeClone, moveTest, null, null, false);
+            			int[] currentStats = you.statStages.clone();
+            			if (arrayGreaterOrEqual(prevStats, currentStats)) {
+            				// nothing: don't add
+            			} else {
+            				bestMoves.add(move);
+            				if (maxDamage < foe.currentHP / 4) {
+                    			bestMoves.add(move);
+                    		}
+            			}
+        			} else {
+        				bestMoves.add(move);
+            			if (maxDamage < foe.currentHP / 4) {
+                			bestMoves.add(move);
+                		}
+        			}
+        		} else {
+        			bestMoves.add(move);
+        			if (maxDamage < foe.currentHP / 4) {
+            			bestMoves.add(move);
+            		}
+        		}
+        	}
+        	if (move == Move.SEA_DRAGON && id == 150) {
+        		bestMoves.add(move);
+        	}
+        	
+        	if (!iKill && !foeCanKO && strongestMove != null && damage >= 0) {
+        		if (move == Move.COUNTER && strongestMove.isPhysical()) {
+        			bestMoves.add(move);
+        			bestMoves.add(move);
+        		}
+        		if (move == Move.MIRROR_COAT && strongestMove.isSpecial()) {
+        			bestMoves.add(move);
+        			bestMoves.add(move);
+        		}
+        		if (move == Move.METAL_BURST && foeMaxDamage >= this.getStat(0) * 1.0 / 5) {
+        			bestMoves.add(move);
+        			bestMoves.add(move);
+        		}
+        	}
+        	if (foeCanKO) {
+        		if (move == Move.DESTINY_BOND) {
+        			bestMoves.add(move);
+        		}
+        		if (move == Move.ENDURE) {
+        			bestMoves.add(move);
+        		}
+        	}
+        }
+        
+        bestMoves = modifyStatus(bestMoves, foe, foeCanKO);
+    	if (bestMoves.isEmpty()) { // fallback: return a random valid move
+    		int randomIndex = (int) (Math.random() * validMoves.size());
+            return validMoves.get(randomIndex);
+    	}
+        int randomIndex = (int) (Math.random() * bestMoves.size());
+        
+        if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
+        	if (gp.simBattleUI.p1Moves == null) {
+        		gp.simBattleUI.p1Moves = new Pair<>(this, bestMoves);
+        	} else {
+        		gp.simBattleUI.p2Moves = new Pair<>(this, bestMoves);
+        	}
+        }
+        return bestMoves.get(randomIndex);
+    }
 
 	private ArrayList<Move> modifyStatus(ArrayList<Move> bestMoves, Pokemon foe, boolean moveKills) {
 		ArrayList<Move> checkForImmunity = new ArrayList<Move>(bestMoves);
@@ -927,6 +1182,79 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		return null;
+	}
+	
+	public int scorePokemon(Pokemon foe, Move move, boolean foeCanKO, double hpPercent, Field field) {
+		int score = 0;
+		
+		if (this.isFainted()) return Integer.MIN_VALUE;
+		
+		// --- Basic survivability ---
+		//score += (int) ((this.currentHP * 100.0) / this.getStat(0));
+		
+		// --- Offense potential ---
+		ArrayList<Move> moves = this.getValidMoveset();
+		double maxDamageP = 0;
+		boolean iKill = false;
+		boolean isFaster = false;
+		double foeHPPercent = foe.currentHP * 100.0 / foe.getStat(0);
+		for (Move m : moves) {
+			if (!iKill || !isFaster) {
+				boolean tempFaster = this.getFaster(foe, m.hasPriority(this) ? 1 : m.priority, 0) == this;
+				double dmgP = this.calcWithTypes(foe, m, tempFaster, field, false).getSecond();
+				if (dmgP >= maxDamageP) {
+					maxDamageP = dmgP;
+					iKill = maxDamageP >= foeHPPercent;
+					isFaster = tempFaster;
+				}
+			}
+		}
+		score += Math.min(Math.min(maxDamageP, foeHPPercent), 100);
+		
+		// --- Defensive matchup ---
+		double foeMaxDamageP = 0;
+		double foeDamageMoveP = 0;
+		if (foeCanKO) {
+			foeMaxDamageP = foe.calcWithTypes(this, move, !isFaster, field, false).getSecond();
+		} else {
+			for (Move m : foe.getValidMoveset()) {
+				double dmgP = foe.calcWithTypes(this, m, !isFaster, field, false).getSecond();
+				foeMaxDamageP = Math.max(foeMaxDamageP, dmgP);
+				if (m == move) foeDamageMoveP = dmgP;
+			}
+		}
+		
+		if (foeCanKO) {
+			score -= Math.min(foeMaxDamageP, 100) * 2 * hpPercent;
+		} else if (move != null) {
+			score -= Math.min(foeMaxDamageP, 100) - Math.min(foeDamageMoveP, 100) / 2;
+		} else {
+			score -= Math.min(foeMaxDamageP, 100);
+		}
+		
+		if (foeMaxDamageP < 1.0) {
+			score += 50;
+		} else if (foeMaxDamageP < 20.0) {
+			score += 30;
+		}
+		
+		// --- Kill Check/Speed Check ---
+		if (iKill) {
+			if (isFaster) score += 50;
+			else score += 20;
+		} else {
+			if (isFaster) score += 20;
+			else score -= 20;
+		}
+		
+		// --- Statuses ---
+		score -= this.toxic * 5;
+		if (this.hasStatus(Status.LEECHED)) score -= 20;
+		if (this.hasStatus(Status.DROWSY)) score -= 60;
+		if (this.hasStatus(Status.CURSED)) score -= 80;
+		if (this.perishCount > 0) score -= (4 - this.perishCount) * 30;
+		
+		return score;
 	}
 	
 	public int getID() {
@@ -5820,11 +6148,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return damage;
 	}
 	
-	public Pair<Integer, Double> calcWithTypes(Pokemon foe, Move move, boolean first, Field field) {
-		return calcWithTypes(foe, move, first, 0, false, field);
+	public Pair<Integer, Double> calcWithTypes(Pokemon foe, Move move, boolean first, Field field, boolean checkAcc) {
+		return calcWithTypes(foe, move, first, 0, false, field, checkAcc);
 	}
 	
-	public Pair<Integer, Double> calcWithTypes(Pokemon foe, Move move, boolean first, int mode, boolean crit, Field field) {
+	public Pair<Integer, Double> calcWithTypes(Pokemon foe, Move move, boolean first, int mode, boolean crit, Field field, boolean checkAcc) {
 		double attackStat;
 		double defenseStat;
 		int damage = 0;
@@ -5921,7 +6249,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foeAbility = Ability.NULL;
 		}
 		
-		if (mode == 0 && this.ability != Ability.NO_GUARD && foeAbility != Ability.NO_GUARD && acc < 100) {
+		if (checkAcc && mode == 0 && this.ability != Ability.NO_GUARD && foeAbility != Ability.NO_GUARD && acc < 100) {
 			int accEv = this.statStages[5] - foe.statStages[6];
 			if (move == Move.DARKEST_LARIAT || move == Move.SACRED_SWORD) accEv += foe.statStages[6];
 			accEv = accEv > 6 ? 6 : accEv;
@@ -5964,7 +6292,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (foe.hasStatus(Status.MAGIC_REFLECT) && (move != Move.BRICK_BREAK && move != Move.MAGIC_FANG && move != Move.PSYCHIC_FANGS)) {
-			Pair<Integer, Double> dmg = this.calcWithTypes(this, move, false, mode, crit, field);
+			Pair<Integer, Double> dmg = this.calcWithTypes(this, move, false, mode, crit, field, true);
 			if (mode == 0) {
 				dmg.setFirst(1 - dmg.getFirst());
 				return dmg;
@@ -5973,7 +6301,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		if (this.hasStatus(Status.POSSESSED) && this != foe) {
-			Pair<Integer, Double> dmg = this.calcWithTypes(this, move, false, mode, crit, field);
+			Pair<Integer, Double> dmg = this.calcWithTypes(this, move, false, mode, crit, field, true);
 			if (mode == 0) {
 				dmg.setFirst(1 - dmg.getFirst());
 				return dmg;
@@ -9896,13 +10224,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 				boolean slowCanMove = true;
 				
 				if (faster.hasStatus(Status.SWAP)) {
-					faster = faster.trainer.swapOut(slower, fastMove, false, false);
+					faster = faster.trainer.swapOut2(slower, faster.getStatusNum(Status.SWAP), fastMove, false, false);
 					fastMove = null;
 					fastCanMove = false;
 				}
 				
 				if (slower.hasStatus(Status.SWAP)) {
-					slower = slower.trainer.swapOut(faster, slowMove, false, false);
+					slower = slower.trainer.swapOut2(faster, slower.getStatusNum(Status.SWAP), slowMove, false, false);
 					slowMove = null;
 					slowCanMove = false;
 				}
