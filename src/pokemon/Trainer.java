@@ -132,8 +132,23 @@ public class Trainer implements Serializable {
 	}
 	
 	public Pokemon next(Pokemon other, boolean userSide) {
-		current = getNext(other);
+		current = getNext2(other);
 		return current;
+	}
+	
+	private Pokemon getNext2(Pokemon other) {
+		int bestScore = Integer.MIN_VALUE;
+		Pokemon next = null;
+		for (Pokemon p : team) {
+			if (!p.isFainted() && p != current) {
+				int score = p.scorePokemon(other, null, false, 0.0, Pokemon.field);
+				if (score > bestScore) {
+					bestScore = score;
+					next = p;
+				}
+			}
+		}
+		return next;
 	}
 	
 	private Pokemon getNext(Pokemon other) {
@@ -264,6 +279,28 @@ public class Trainer implements Serializable {
 	
 	public Pokemon swapOut(Pokemon foe, Move m, boolean baton, boolean userSide) {
 		Pokemon result = getSwap(foe, m);
+		if (result != current) {
+			int[] oldStats = current.statStages.clone();
+			ArrayList<StatusEffect> oldVStatuses = new ArrayList<>(current.vStatuses);
+			int perishCount = current.perishCount;
+			swap(current, result, userSide, foe);
+			if (baton) {
+				result.statStages = oldStats;
+				result.vStatuses = oldVStatuses;
+				result.removeStatus(Status.SWITCHING);
+				result.removeStatus(Status.SWAP);
+				result.perishCount = perishCount;
+			}
+			result.swapIn(foe, true);
+			foe.removeStatus(Status.TRAPPED);
+			foe.removeStatus(Status.SPUN);
+			foe.removeStatus(Status.SPELLBIND);
+		}
+		return result;
+	}
+	
+	public Pokemon swapOut2(Pokemon foe, int slot, Move m, boolean baton, boolean userSide) {
+		Pokemon result = team[slot];
 		if (result != current) {
 			int[] oldStats = current.statStages.clone();
 			ArrayList<StatusEffect> oldVStatuses = new ArrayList<>(current.vStatuses);

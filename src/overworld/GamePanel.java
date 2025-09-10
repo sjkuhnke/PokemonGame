@@ -376,7 +376,7 @@ public class GamePanel extends JPanel implements Runnable {
 					}
 				}
 				
-				if (trainer > -1 && t.staticEnc) {
+				if (trainer > -1 && player.p.summonedLegendaries != null && t.staticEnc) {
 					List<Integer> allLegends = Pokemon.legendaryMap.values().stream().map(arr -> arr[0]).collect(Collectors.toList());
 					if (allLegends.contains(id) && player.p.summonedLegendaries.containsKey(currentMap)) {
 						player.p.summonedLegendaries.remove(currentMap);

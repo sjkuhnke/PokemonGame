@@ -177,11 +177,16 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "All rested up? Route 43 just opened up now that you've got Lava Surf.");
 				Task.addTask(Task.DIALOGUE, npc, "Scott and Fred are out there, waiting...");
 				Task.addTask(Task.SLEEP, "", 15);
-				Task.addTask(Task.DIALOGUE, npc, "Once you reach the end, you'll hit Checkpoint Charlie - the gate to the Leviathan League");
+				Task.addTask(Task.DIALOGUE, npc, "Once you reach the end, you'll hit Checkpoint Charlie - the gate to the Leviathan League.");
 				Task.addTask(Task.DIALOGUE, npc, "And don't be surprised if someone you know is waiting for you at the top.");
 				Task.addTask(Task.DIALOGUE, npc, "The League has a funny way of recognizing greatness... before it's even official.");
-			} else if (p.flag[0][5] && !p.flag[0][21]) {
+				Task.addTask(Task.SLEEP, "", 20);
+				if (!p.flag[0][21]) Task.addTask(Task.DIALOGUE, npc, "Also...");
+			} else {
 				Task.addTask(Task.DIALOGUE, npc, "Well hiya there son!");
+				Task.addTask(Task.DIALOGUE, npc, "How's it going?");
+			}
+			if (p.flag[0][5] && !p.flag[0][21]) {
 				Task.addTask(Task.DIALOGUE, npc, "Have you seen any new Shadow forms? Can I take a look?");
 				Pokemon[] sDex = p.getDexType(1);
 				int amt = 0;
@@ -203,9 +208,6 @@ public class Script {
 					t.item = Item.MASTER_BALL;
 					p.flag[0][21] = true;
 				}
-			} else {
-				Task.addTask(Task.DIALOGUE, npc, "Well hiya there son!");
-				Task.addTask(Task.DIALOGUE, npc, "How's it going?");
 			}
 		});
 		
@@ -1376,10 +1378,10 @@ public class Script {
 			if (!p.flag[6][1]) {
 				Task.addTask(Task.DIALOGUE, npc, "Oh, you haven't gotten any coins yet?");
 				Task.addTask(Task.DIALOGUE, npc, "Here, it's on the house!");
-				Task.addTask(Task.DIALOGUE, npc, "You received 10 Coins!");
+				Task.addTask(Task.DIALOGUE, npc, "You received 100 Coins!");
 				Task.addTask(Task.DIALOGUE, npc, "Yes, now don't go spend them all in one place. Or do! I don't care!");
 				Task.addTask(Task.DIALOGUE, npc, "But come back when you get more badges. Perhaps I'll have a reward for you!");
-				p.coins += 10;
+				p.coins += 100;
 				p.flag[6][1] = true;
 			} else {
 				if (p.bag.contains(Item.TEMPLE_ORB)) {

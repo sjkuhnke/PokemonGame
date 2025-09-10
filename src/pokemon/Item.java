@@ -448,7 +448,7 @@ public enum Item {
 	BIG_MUSHROOM(305,0,0,Color.BLACK,Item.OTHER,null,"A large and rare mushroom. It is sought after by collectors."), // 1500
 	NUGGET(306,0,500,Color.BLACK,Item.OTHER,null,"A nugget of pure gold that gives off a lustrous gleam. It can be sold at a high price."),
 	BIG_NUGGET(307,0,2000,Color.BLACK,Item.OTHER,null,"A big nugget of pure gold that gives off a lustrous gleam. It can be sold at a very high price."),
-	STAR_PIECE(308,0,0,Color.BLACK,Item.OTHER,null,"A small shard of a beautiful gem that gives off a distinctly red sparkle. It can be sold at a high price."),
+	STAR_PIECE(308,0,0,Color.BLACK,Item.OTHER,null,"A small shard of a beautiful gem that gives off a distinctly red sparkle. It's used as a currency for a certain collector."),
 	RELIC_GOLD(309,0,2500,Color.BLACK,Item.OTHER,null,"A gold coin used by an ancient civilization about 3,000 years ago."),
 	RELIC_SILVER(310,0,650,Color.BLACK,Item.OTHER,null,"A silver coin used by an ancient civilization about 3,000 years ago."),
 	FAITH_CORE(383,0,0,Color.BLACK,Item.KEY_ITEM,false,"A fragment of ancient energy, pulsing with quiet warmth. Said to embody the undying spirit of belief."),
@@ -1204,11 +1204,7 @@ public enum Item {
 	        userItem.addActionListener(l -> {
 	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
 	        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	        	Item item = (Item) userItem.getSelectedItem();
-	        	if (item != null) {
-	        		item = field.contains(field.fieldEffects, Effect.MAGIC_ROOM) ? Item.REPEL : item;
-	        	}
-	        	userCurrent.item = item;
+	        	userCurrent.item = (Item) userItem.getSelectedItem();
 	        	
 	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
 	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
@@ -1217,11 +1213,7 @@ public enum Item {
 	        foeItem.addActionListener(l -> {
 	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
 	        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	        	Item item = (Item) foeItem.getSelectedItem();
-	        	if (item != null) {
-	        		item = field.contains(field.fieldEffects, Effect.MAGIC_ROOM) ? Item.REPEL : item;
-	        	}
-	        	foeCurrent.item = item;
+	        	foeCurrent.item = (Item) foeItem.getSelectedItem();
 	        	
 	        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
 	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
@@ -1535,8 +1527,8 @@ public enum Item {
         			moves[k].setBackground(Color.GRAY);
         			moves[k].setFont(new Font("Arial", Font.PLAIN, 12));
         		}
-        		double minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, -1, crit, field).getSecond();
-        		double maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, 1, crit, field).getSecond();
+        		double minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, -1, crit, field, false).getSecond();
+        		double maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, 1, crit, field, false).getSecond();
         		String formattedMinD = String.format("%.1f", minDamage);
         		String formattedMaxD = String.format("%.1f", maxDamage);
         		damages[k].setText(formattedMinD + "% - " + formattedMaxD + "%");
@@ -1609,15 +1601,7 @@ public enum Item {
 		}
 
         currentAbility.setSelectedItem(current.ability);
-        if (current.item == Item.REPEL) {
-        	Item item = (Item) currentItem.getSelectedItem();
-        	if (item != null) {
-        		item = field.contains(field.fieldEffects, Effect.MAGIC_ROOM) ? Item.REPEL : item;
-        	}
-        	current.item = item;
-        } else {
-        	currentItem.setSelectedItem(current.item);
-        }
+        currentItem.setSelectedItem(current.item);
         if (calcFrame != null) calcFrame.pack();
 	}
 	
@@ -2393,7 +2377,7 @@ public enum Item {
 		case BALLS:
 			return "Balls";
 		case TMS:
-			return "TMs";
+			return "TMs & HMs";
 		case HELD_ITEM:
 			return "Held Items";
 		case BERRY:
