@@ -217,7 +217,7 @@ public class BattleUI extends AbstractUI {
 				if (p != null) {
 					sb.append("[");
 					sb.append(p + ": ");
-					sb.append(p.scorePokemon(user, null, false, 0.0, field));
+					sb.append(p.scorePokemon(user, null, false, 0.0, field, 0));
 					sb.append("], ");
 				}
 			}

@@ -141,7 +141,7 @@ public class Trainer implements Serializable {
 		Pokemon next = null;
 		for (Pokemon p : team) {
 			if (!p.isFainted() && p != current) {
-				int score = p.scorePokemon(other, null, false, 0.0, Pokemon.field);
+				int score = p.scorePokemon(other, null, false, 0.0, Pokemon.field, 0);
 				if (score > bestScore) {
 					bestScore = score;
 					next = p;
@@ -438,7 +438,7 @@ public class Trainer implements Serializable {
 		return -1;
 	}
 	
-	public Trainer clone() {		
+	public Trainer clone() {
 		Pokemon[] newTeam = new Pokemon[this.team.length];
 		for (int i = 0; i < this.team.length; i++) {
 			if (this.team[i] != null) newTeam[i] = this.team[i].clone();
@@ -454,7 +454,7 @@ public class Trainer implements Serializable {
 		return result;
 	}
 	
-	public Trainer shallowClone(GamePanel gp) {
+	public Trainer shallowClone() {
 		Trainer result = new Trainer(this.name, this.team, this.money, this.item, this.flagIndex, false);
 		result.update = this.update;
 		if (this.effects != null) result.effects = new ArrayList<>(this.effects);
