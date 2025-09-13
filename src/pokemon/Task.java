@@ -255,13 +255,17 @@ public class Task {
 	public static Task addTask(int type, String string, Pokemon p) {
 		if (gp != null && gp.gameState == GamePanel.BATTLE_STATE) {
 			Task t = createTask(type, string, p);
-			gp.battleUI.tasks.add(t);
-			gp.battleUI.checkTasks = true;
+			if (Pokemon.createTask) {
+				gp.battleUI.tasks.add(t);
+				gp.battleUI.checkTasks = true;
+			}
 			return t;
 		} else if (gp != null && gp.gameState == GamePanel.SIM_BATTLE_STATE) {
 			Task t = createTask(type, string, p);
-			gp.simBattleUI.tasks.add(t);
-			gp.simBattleUI.checkTasks = true;
+			if (Pokemon.createTask) {
+				gp.simBattleUI.tasks.add(t);
+				gp.simBattleUI.checkTasks = true;
+			}
 			return t;
 		} else if (gp != null && (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE)) {
 			Task t = createTask(type, string, p);
@@ -272,12 +276,14 @@ public class Task {
 			gp.ui.tasks.add(t);
 			gp.ui.checkTasks = true;
 			return t;
-		} else {
+		} else if (gp != null) {
 			if (type == Task.TEXT) {
 				gp.ui.showMessage(string);
 			}
 			System.out.println("GameState wasn't Task or Rare Candy state, it was: " + gp.gameState);
 			return null;
+		} else {
+			return createTask(type, string, p);
 		}
 	}
 	
