@@ -141,7 +141,7 @@ public class Trainer implements Serializable {
 		Pokemon next = null;
 		for (Pokemon p : team) {
 			if (!p.isFainted() && p != current) {
-				int score = p.scorePokemon(other, null, false, 0.0, Pokemon.field, 0);
+				int score = p.scorePokemon(other, null, false, 0.0, Pokemon.field, null);
 				if (score > bestScore) {
 					bestScore = score;
 					next = p;
@@ -583,5 +583,9 @@ public class Trainer implements Serializable {
 
 	public String getBoostString() {
 		return "Gets a +" + boost + " omniboost at the start of battle!";
+	}
+
+	public String getBattleName() {
+		return toString();
 	}
 }

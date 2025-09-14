@@ -2033,4 +2033,9 @@ public class Player extends Trainer implements Serializable {
 		summonedLegendaries.put(map, legendaryID);
 		gp.aSetter.updateNPC(map);
 	}
+	
+	@Override
+	public String getBattleName() {
+		return "you";
+	}
 }
