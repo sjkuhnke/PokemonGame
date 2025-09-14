@@ -27,7 +27,7 @@ public class IsUsefulSecondaryTest {
         Move toxic = Move.TOXIC;
         foe.status = Status.HEALTHY;
 
-        boolean useful = user.isUsefulEffect(foe, toxic, field, 10);
+        boolean useful = user.isUsefulEffect(foe, toxic, false, field, 10);
 
         assertTrue("Toxic should be useful when foe is healthy", useful);
     }
@@ -37,7 +37,7 @@ public class IsUsefulSecondaryTest {
         Move flamethrower = Move.FLAMETHROWER; // has burn chance
         foe.item = Item.COVERT_CLOAK;
 
-        boolean useful = user.isUsefulEffect(foe, flamethrower, field, 50);
+        boolean useful = user.isUsefulEffect(foe, flamethrower, false, field, 50);
 
         assertFalse("Flamethrower burn blocked by Covert Cloak", useful);
     }
@@ -47,7 +47,7 @@ public class IsUsefulSecondaryTest {
         Move flamethrower = Move.FLAMETHROWER;
         foe.ability = Ability.SHIELD_DUST;
 
-        boolean useful = user.isUsefulEffect(foe, flamethrower, field, 50);
+        boolean useful = user.isUsefulEffect(foe, flamethrower, false, field, 50);
 
         assertFalse("Flamethrower burn blocked by Shield Dust", useful);
     }
@@ -56,7 +56,7 @@ public class IsUsefulSecondaryTest {
     public void testFlamethrower() {
         Move flamethrower = Move.FLAMETHROWER;
 
-        boolean useful = user.isUsefulEffect(foe, flamethrower, field, 50);
+        boolean useful = user.isUsefulEffect(foe, flamethrower, false, field, 50);
 
         assertTrue("Flamethrower should be useful", useful);
     }
@@ -66,7 +66,7 @@ public class IsUsefulSecondaryTest {
         Move flamethrower = Move.FLAMETHROWER;
         user.ability = Ability.SERENE_GRACE;
 
-        boolean useful = user.isUsefulEffect(foe, flamethrower, field, 50);
+        boolean useful = user.isUsefulEffect(foe, flamethrower, false, field, 50);
 
         assertTrue("Serene Grace should allow Flamethrower to be useful", useful);
     }
@@ -76,7 +76,7 @@ public class IsUsefulSecondaryTest {
         Move thunderbolt = Move.THUNDERBOLT;
         foe.type1 = PType.GROUND; // immune
 
-        boolean useful = user.isUsefulEffect(foe, thunderbolt, field, 0);
+        boolean useful = user.isUsefulEffect(foe, thunderbolt, false, field, 0);
 
         assertFalse("Thunderbolt vs Ground immune foe should be not useful", useful);
     }
@@ -86,7 +86,7 @@ public class IsUsefulSecondaryTest {
         field.setHazard(user.getFieldEffects(), field.new FieldEffect(Effect.STEALTH_ROCKS)); // fake hazard on user’s side
 
         Move spin = Move.RAPID_SPIN;
-        boolean useful = user.isUsefulEffect(foe, spin, field, 10);
+        boolean useful = user.isUsefulEffect(foe, spin, false, field, 10);
 
         assertTrue("Rapid Spin should be useful when hazards exist", useful);
     }
@@ -94,7 +94,7 @@ public class IsUsefulSecondaryTest {
     @Test
     public void testQuiverDance() {
         Move spin = Move.QUIVER_DANCE;
-        boolean useful = user.isUsefulEffect(foe, spin, field, 0);
+        boolean useful = user.isUsefulEffect(foe, spin, false, field, 0);
 
         assertTrue("Quiver Dance should be useful if would give a boost", useful);
     }
@@ -104,7 +104,7 @@ public class IsUsefulSecondaryTest {
         foe.item = Item.LEFTOVERS;
 
         Move knockOff = Move.KNOCK_OFF;
-        boolean useful = user.isUsefulEffect(foe, knockOff, field, 20);
+        boolean useful = user.isUsefulEffect(foe, knockOff, false, field, 20);
 
         assertTrue("Knock Off should be useful if foe has item", useful);
     }
@@ -114,7 +114,7 @@ public class IsUsefulSecondaryTest {
         user.currentHP = 1;
         Move drum = Move.BELLY_DRUM;
 
-        boolean useful = user.isUsefulEffect(foe, drum, field, 10);
+        boolean useful = user.isUsefulEffect(foe, drum, false, field, 10);
 
         assertFalse("Belly Drum self-HP loss should not count as useful", useful);
     }
@@ -122,7 +122,7 @@ public class IsUsefulSecondaryTest {
     @Test
     public void testRainDance() {
         Move spin = Move.RAIN_DANCE;
-        boolean useful = user.isUsefulEffect(foe, spin, field, 10);
+        boolean useful = user.isUsefulEffect(foe, spin, false, field, 10);
 
         assertTrue("Rain Dance should be useful on no weather", useful);
     }
