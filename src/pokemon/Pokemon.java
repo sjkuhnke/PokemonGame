@@ -861,6 +861,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         	StringBuilder sb = new StringBuilder("===========================================\n");
         	
         	int currentScore = this.scorePokemon(foe, strongestMove, foeMaxDamage, field, moveScores);
+        	currentScore = Math.max(-100, currentScore); // TODO: floor the currentScore at -100 so it isn't as likely to switch
         	
         	HashMap<Pokemon, Integer> scoreMap = new HashMap<>();
         	for (int i = 0; i < tr.team.length; i++) {
@@ -1256,6 +1257,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		double damagePercent = dmgPair.getSecond();
 		double foeHPPercent = foe.currentHP * 100.0 / foe.getStat(0);
 		
+		if (damage < 0) return -50; // for moves like Fake Out
+		
 		// --- Kill Potential ---
 		boolean willKill = damagePercent >= foeHPPercent;
 		
@@ -1263,6 +1266,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		score += Math.min(Math.min(foeHPPercent, damagePercent), 100);
 		
 		// --- Accuracy Factor ---
+		// TODO: calculate effective accuracy after Compound Eyes/Gravity/Wide Lens etc
 		double accuracyFactor = 1.0;
 		if (move.accuracy > 100) {
 			accuracyFactor = 1.0;
@@ -1303,7 +1307,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		// --- Secondary Effects/Status Moves ---
 		if (move.cat == 2 || move.secondary != 0) {
 			int howUseful = this.isUsefulEffect(foe, move, isFaster, field, damage);
-			if (howUseful > -1) {
+			if (howUseful > 0) {
 				int secChance = move.secondary == 0 ? move.cat == 2 ? 100 : move.secondary < 0 ? 100 : move.secondary : 100;
 				if (move.secondary > 0) {
 					if (this.getAbility(field) == Ability.SERENE_GRACE) secChance *= 2;
@@ -1314,7 +1318,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					 * FURTHERMORE: ADD AI FOR MAGIC BOUNCE MONS TO SWITCH IN IF FOE HAS USEFUL HAZARD TOO!
 					 */
 				}
-				score += Math.max(1.0, secChance) / 5;
+				score += Math.max(1.0, secChance) / 5 / howUseful;
 			} else {
 				score -= 10;
 			}
@@ -1367,12 +1371,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 	 * damage the AI's current Pokemon is taking - so might make Counter/Mirror Coat look more/less appealing than they actually
 	 * are. Still a decent baseline since Counter will appear high if they are a physical attacker and vice versa, which is still
 	 * a good heuristic.)
-	 * @return:
-	 * -1 if the move isn't useful on both the active Pokemon and the randomly checked one in the back if it exists
-	 * 0 if the move is useful on only the Pokemon in the back, not the active one (score it less)
-	 * 1 if the move is useful on the active Pokemon
+	 * @return num of Pokemon the effect is useful on, 0 if the move isn't useful
 	 */
 	public int isUsefulEffect(Pokemon foe, Move move, boolean isFaster, Field field, int damage) {
+		int numChecked = 0;
 		try {
 			for (int attempt = 0; attempt < 2; attempt++) {
 				boolean isBackCheck = (attempt > 0);
@@ -1390,6 +1392,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 						break;
 					}
 				}
+				numChecked++;
 				
 				Pokemon youClone = this.clone();
 				Pokemon foeClone = foe.clone();
@@ -1422,7 +1425,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Pokemon oldCurrent = foeTrainerClone == null ? null : foeTrainerClone.current;
 				
 				if (move.cat != 2) { // attacking move, check for primary/secondary effect
-					if (damage == 0) return -1; // foe is immune to the move, can't proc secondary effect
+					if (damage == 0) return 0; // foe is immune to the move, can't proc secondary effect
 					createTask = false;
 					
 					if (move.secondary < 0) { // check primary effect
@@ -1437,6 +1440,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 						if (youClone.getAbility(fieldClone) == Ability.SERENE_GRACE) sec *= 2;
 						
 						if (sec > 0) { // check secondary effect
+							if (youClone.getAbility(fieldClone) == Ability.PRANKSTER && foeClone.isType(PType.DARK) && move.accuracy <= 100) {
+								continue; // dark types are immune to prankster
+							}
 							youClone.secondaryEffect(foeClone, move, isFaster, fieldClone);
 						}
 					}
@@ -1475,14 +1481,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 					|| (foeTrainerClone != null && oldCurrent != null && foeTrainerClone.current != oldCurrent); // for force switching moves
 					
 					if (useful) {
-						return isBackCheck ? 0 : 1;
+						return numChecked;
 					}
 				}
 			} finally {
 				createTask = true;
 			}
 		
-		return -1;
+		return 0;
 	}
 	
 	public int getID() {
@@ -3580,7 +3586,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			
 			if (contact) {
-				if (foeAbility == Ability.ROUGH_SKIN || foeAbility == Ability.IRON_BARBS) {
+				if ((foeAbility == Ability.ROUGH_SKIN || foeAbility == Ability.IRON_BARBS) && this.getAbility(field) != Ability.MAGIC_GUARD && this.getAbility(field) != Ability.SCALY_SKIN) {
 					Task.addAbilityTask(foe);
 					this.damage(this.getHPAmount(1.0/8), foe, this.nickname + " was hurt!");
 				}
@@ -7589,7 +7595,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.perishCount--;
 			Task.addTask(Task.TEXT, this.nickname + "'s perish count fell to " + this.perishCount + "!");
 			if (this.perishCount == 0) {
-				this.damage(this.currentHP, f, "");
+				this.damage(this.currentHP, f, Move.PERISH_SONG, "", -1);
 				this.faint(true, f);
 				return;
 			}
@@ -8681,7 +8687,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Task.addAbilityTask(this);
 			field.setTerrain(field.new FieldEffect(Effect.SPARKLY));
 			if (this.getItem(field) == Item.TERRAIN_EXTENDER) field.terrainTurns = 8;
-		} else if (this.getAbility(field) == Ability.GRAVITATION) {
+		} else if (this.getAbility(field) == Ability.GRAVITATION && !field.contains(field.fieldEffects, Effect.GRAVITY)) {
 			Task.addAbilityTask(this);
 			field.setEffect(field.new FieldEffect(Effect.GRAVITY), false);
 			Task.addTask(Task.TEXT, "Gravity is intensified!");

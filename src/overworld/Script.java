@@ -3542,7 +3542,6 @@ public class Script {
 			gp.saveGame(p, false);
 			Random random = new Random();
 			boolean mystery = random.nextDouble() < 0.05;
-			mystery = true;
 			Task.addTask(Task.DIALOGUE, npc, "Okay! I'll start up the ship, let's go!");
 			Task t = Task.addTask(Task.TELEPORT, "");
 			t.counter = gp.currentMap;
