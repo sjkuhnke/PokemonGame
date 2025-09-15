@@ -354,7 +354,7 @@ public class Task {
 	}
 	
 	public static void addSwapInTask(Pokemon p, boolean playerSide) {
-		if (gp.gameState != GamePanel.BATTLE_STATE && gp.gameState != GamePanel.SIM_BATTLE_STATE) return;
+		if (gp == null || (gp.gameState != GamePanel.BATTLE_STATE && gp.gameState != GamePanel.SIM_BATTLE_STATE)) return;
 		String message = p.playerOwned() ? "Go! " + p.nickname + "!" : p.trainer.toString() + " sends out " + p.nickname + "!";
 		Task t = addTask(Task.SWAP_IN, message, p);
 		if (t != null) {
@@ -367,6 +367,7 @@ public class Task {
 	}
 	
 	public static void addSwapOutTask(Pokemon p, boolean playerSide) {
+		if (!Pokemon.createTask) return;
 		String message = p.playerOwned() ? p.nickname + ", come back!" : p.trainer.toString() + " withdrew " + p.nickname + "!";
 		if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
 			String rsn = "";

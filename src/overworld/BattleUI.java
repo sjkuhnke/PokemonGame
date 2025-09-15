@@ -211,18 +211,6 @@ public class BattleUI extends AbstractUI {
 			drawDialogueState();
 		}
 		drawKeyStrokes();
-		if (gp.keyH.shiftPressed && foe.trainerOwned()) {
-			StringBuilder sb = new StringBuilder();
-			for (Pokemon p : foe.trainer.getTeam()) {
-				if (p != null) {
-					sb.append("[");
-					sb.append(p + ": ");
-					sb.append(p.scorePokemon(user, null, false, 0.0, field, null));
-					sb.append("], ");
-				}
-			}
-			System.out.println(sb.toString());
-		}
 	}
 
 	protected void endTask() {
