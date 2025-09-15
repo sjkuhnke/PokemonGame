@@ -854,20 +854,19 @@ public class Pokemon implements RoleAssignable, Serializable {
         HashMap<Move, Integer> moveScores = new HashMap<>();
         double totalPositiveWeight = 0.0;
         for (Move move : validMoves) {
-        	moveScores.put(move, scoreMove(move, foe, field, foeCanKO));
+        	moveScores.put(move, scoreMove(move, foe, field, foeCanKO, strongestMove, foeMaxDamage));
         }
         
         if (tr.hasValidMembers() && !isTrapped(foe)) {
-        	double hpPercent = this.currentHP * 1.0 / this.getStat(0);
         	StringBuilder sb = new StringBuilder("===========================================\n");
         	
-        	int currentScore = this.scorePokemon(foe, strongestMove, foeCanKO, hpPercent, field, moveScores);
+        	int currentScore = this.scorePokemon(foe, strongestMove, foeMaxDamage, field, moveScores);
         	
         	HashMap<Pokemon, Integer> scoreMap = new HashMap<>();
         	for (int i = 0; i < tr.team.length; i++) {
         		Pokemon ally = tr.team[i];
         		if (ally != null && ally != this) {
-        			int allyScore = ally.scorePokemon(foe, strongestMove, foeCanKO, hpPercent, field, null);
+        			int allyScore = ally.scorePokemon(foe, strongestMove, foeMaxDamage, field, null);
         			scoreMap.put(ally, allyScore);
         		}
         	}
@@ -1156,7 +1155,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return null;
 	}
 	
-	public int scorePokemon(Pokemon foe, Move move, boolean foeCanKO, double hpPercent, Field field, HashMap<Move, Integer> moveScores) {
+	public int scorePokemon(Pokemon foe, Move move, int foeMaxDamage, Field field, HashMap<Move, Integer> moveScores) {
 		int score = 0;
 		
 		if (this.isFainted()) return Integer.MIN_VALUE;
@@ -1182,6 +1181,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 //		}
 //		score += Math.min(Math.min(maxDamageP, foeHPPercent), 100);
 		
+		boolean foeCanKO = foeMaxDamage >= this.currentHP;
+		
 		// --- Defensive matchup ---
 		double foeMaxDamageP = 0;
 		double foeDamageMoveP = 0;
@@ -1197,6 +1198,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (foeCanKO) {
+			double hpPercent = this.currentHP * 1.0 / this.getStat(0);
 			score -= Math.min(foeMaxDamageP, 100) * 2 * hpPercent;
 		} else if (move != null) {
 			score -= Math.min(foeMaxDamageP, 100) - Math.min(foeDamageMoveP, 100) / 2;
@@ -1221,7 +1223,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (moveScores == null) {
 			moveScores = new HashMap<>();
 			for (Move m : this.getValidMoveset()) {
-				moveScores.put(m, scoreMove(m, foe, field, foeCanKO));
+				moveScores.put(m, scoreMove(m, foe, field, foeCanKO, move, foeMaxDamage));
 			}
 		}
 		
@@ -1243,7 +1245,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return score;
 	}
 	
-	private int scoreMove(Move move, Pokemon foe, Field field, boolean foeCanKO) {
+	private int scoreMove(Move move, Pokemon foe, Field field, boolean foeCanKO, Move foeStrongestMove, int foeMaxDamage) {
 //		Move move = ms.move;
 		double score = 0.0;
 		
@@ -1291,20 +1293,26 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		
+		double hpPercentage = (double) this.currentHP / this.getStat(0);
+		
 		// Penalize recoil moves at low HP
 		if (Move.getRecoil().contains(move)) {
-			double hpFrac = (double) this.currentHP / this.getStat(0);
-			score -= 10.0 * (1.0 - hpFrac);
+			score -= 10.0 * (1.0 - hpPercentage);
 		}
 		
 		// --- Secondary Effects/Status Moves ---
 		if (move.cat == 2 || move.secondary != 0) {
-			if (this.isUsefulEffect(foe, move, isFaster, field, damage)) {
+			int howUseful = this.isUsefulEffect(foe, move, isFaster, field, damage);
+			if (howUseful > -1) {
 				int secChance = move.secondary == 0 ? move.cat == 2 ? 100 : move.secondary < 0 ? 100 : move.secondary : 100;
 				if (move.secondary > 0) {
 					if (this.getAbility(field) == Ability.SERENE_GRACE) secChance *= 2;
 					if (field.equals(field.terrain, Effect.SPARKLY)) secChance *= 2;
 					secChance = Math.min(100, secChance);
+					/* TODO: add heuristics for certain status moves to give them bonuses:
+					 * - Hazards: check how many Pokemon in the back the hazard effects - make score # * n effected, if 0 (!foe.hasValidMembers) then make negative score (no progress)
+					 * FURTHERMORE: ADD AI FOR MAGIC BOUNCE MONS TO SWITCH IN IF FOE HAS USEFUL HAZARD TOO!
+					 */
 				}
 				score += Math.max(1.0, secChance) / 5;
 			} else {
@@ -1312,19 +1320,64 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		
+		// --- Custom Heuristics ---
+		if (!willKill && !foeCanKO && foeStrongestMove != null && foeMaxDamage >= 0) {
+			double foeDamagePercent = foeMaxDamage * 100.0 / this.getStat(0);
+    		if (move == Move.COUNTER && foeStrongestMove.isPhysical() || move == Move.MIRROR_COAT && foeStrongestMove.isSpecial()) {
+    			score += foeDamagePercent * 2;
+    		}
+    		if (move == Move.METAL_BURST && foeMaxDamage >= this.getStat(0) * 1.0 / 5) {
+    			score += foeDamagePercent * 1.5;
+    		}
+    	}
+    	if (foeCanKO) {
+    		if (move == Move.DESTINY_BOND) {
+    			score += 25;
+    		}
+    		if (move == Move.ENDURE) {
+    			score += 20;
+    		}
+    	}
+    	
+    	/* TODO: Heuristics to add:
+    	 * - Aromatherapy/when to use
+    	 * - Healing Wish/Lunar Dance when to use
+    	 * - Circle Throw/Dragon Tail when to use
+    	 */
+		
 		// --- Tie Break: prefer moves with more PP left ---
 //		score += (ms.currentPP / (double) ms.maxPP) * 1.0;
 		
 		return (int) Math.round(score);
 	}
 	
-	public boolean isUsefulEffect(Pokemon foe, Move move, boolean isFaster, Field field, int damage) {
-		boolean useful = false;
-		
+	/**
+	 * A method for the Trainer AI to determine if its status/secondary/primary effect moves are useful
+	 * outside of just dealing damage.
+	 * 
+	 * The AI will clone theirs and the opposing side's Pokemon, then test use the move in question, and
+	 * determine if anything has changed (field effects, statuses, etc). If nothing changed against the foe's active
+	 * Pokemon, then the AI will check one random alive Pokemon to see if the move might effect them too
+	 * @param foe: the (usually player's) active Pokemon to check against
+	 * @param move: the AI's move to check
+	 * @param isFaster: whether or not the AI's Pokemon is faster than the players'
+	 * @param field: the field that we're testing on
+	 * @param damage: the max damage that the AI is anticipating from the opposing Pokemon
+	 * (Note with this: if the AI is checking the Pokemon in the back they will still see that this param is the max
+	 * damage the AI's current Pokemon is taking - so might make Counter/Mirror Coat look more/less appealing than they actually
+	 * are. Still a decent baseline since Counter will appear high if they are a physical attacker and vice versa, which is still
+	 * a good heuristic.)
+	 * @return:
+	 * -1 if the move isn't useful on both the active Pokemon and the randomly checked one in the back if it exists
+	 * 0 if the move is useful on only the Pokemon in the back, not the active one (score it less)
+	 * 1 if the move is useful on the active Pokemon
+	 */
+	public int isUsefulEffect(Pokemon foe, Move move, boolean isFaster, Field field, int damage) {
 		try {
-			for (int attempt = 0; attempt < 2 && !useful; attempt++) {
-				if (attempt > 0) { // check someone in the back now if it exists
-					if (move.cat == 2 && foe.trainer != null && foe.trainer.hasValidMembers()) {
+			for (int attempt = 0; attempt < 2; attempt++) {
+				boolean isBackCheck = (attempt > 0);
+				if (isBackCheck) { // check someone in the back now if it exists
+					if (move.cat == 2 && foe.trainer != null && foe.trainer.hasValidMembers() && !foe.isTrapped(this)) {
 						Random rand = new Random();
 						Pokemon back;
 						do {
@@ -1340,6 +1393,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				
 				Pokemon youClone = this.clone();
 				Pokemon foeClone = foe.clone();
+				foeClone.visible = true; // assume foe is active
 				Trainer youTrainerClone = this.trainer == null ? null : this.trainer.shallowClone();
 				Trainer foeTrainerClone = foe.trainer == null ? null : foe.trainer.shallowClone();
 				youClone.trainer = youTrainerClone;
@@ -1365,14 +1419,15 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Effect beforeTerrain = fieldClone.terrain == null ? null : fieldClone.terrain.effect;
 				PType foeBeforeType1 = foeClone.type1, foeBeforeType2 = foeClone.type2;
 				Move foeBeforeDisabled = foeClone.disabledMove;
+				Pokemon oldCurrent = foeTrainerClone == null ? null : foeTrainerClone.current;
 				
 				if (move.cat != 2) { // attacking move, check for primary/secondary effect
-					if (damage == 0) return false; // foe is immune to the move, can't proc secondary effect
-					
+					if (damage == 0) return -1; // foe is immune to the move, can't proc secondary effect
 					createTask = false;
+					
 					if (move.secondary < 0) { // check primary effect
 						youClone.primaryEffect(foeClone, move, foe.getItem(fieldClone) == Item.EJECT_BUTTON, fieldClone);
-					} else { // check secondary effect
+					} else {
 						// covert cloak or shield dust make secondary 0
 						// sparkly terrain + grounded or serene grace make secondary 2x
 						int sec = move.secondary;
@@ -1381,7 +1436,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 						if (fieldClone.equals(fieldClone.terrain, Effect.SPARKLY) && youClone.isGrounded()) sec *= 2;
 						if (youClone.getAbility(fieldClone) == Ability.SERENE_GRACE) sec *= 2;
 						
-						if (sec > 0) {
+						if (sec > 0) { // check secondary effect
 							youClone.secondaryEffect(foeClone, move, isFaster, fieldClone);
 						}
 					}
@@ -1393,10 +1448,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Effect afterWeather = fieldClone.weather == null ? null : fieldClone.weather.effect;
 				Effect afterTerrain = fieldClone.terrain == null ? null : fieldClone.terrain.effect;
 				
-				useful =
+				boolean useful =
 					youBeforeID != youClone.id
-					|| foeClone.getFieldEffects().size() > foeBeforeFE && move != Move.BRICK_BREAK && move != Move.PSYCHIC_FANGS
-					|| youClone.getFieldEffects().size() < youBeforeFE && (move == Move.RAPID_SPIN || move == Move.DEFOG)
+					|| ((move == Move.BRICK_BREAK || move == Move.PSYCHIC_FANGS) // brick break + psychic fangs should check if they can break screens
+						? foeClone.getFieldEffects().size() < foeBeforeFE
+						: foeClone.getFieldEffects().size() > foeBeforeFE)
+					|| ((move == Move.RAPID_SPIN || move == Move.DEFOG) // rapid spin/defog should check if they can clear hazards on your side
+						? youClone.getFieldEffects().size() < youBeforeFE
+						: youClone.getFieldEffects().size() > youBeforeFE)
 					|| foeClone.status != foeBeforeStatus && foeClone.status != Status.HEALTHY
 					|| youClone.status != youBeforeStatus && youBeforeStatus == Status.HEALTHY
 					|| youClone.vStatuses.size() != youBeforeV.size()
@@ -1404,7 +1463,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 					|| !Arrays.equals(foeBeforeStages, foeClone.statStages) && Arrays.stream(foeClone.statStages).sum() < Arrays.stream(foeBeforeStages).sum()
 					|| !Arrays.equals(youBeforeStages, youClone.statStages) && Arrays.stream(youClone.statStages).sum() > Arrays.stream(youBeforeStages).sum()
 					|| youClone.currentHP > youBeforeHP && move != Move.BELLY_DRUM && move != Move.CURSE && move != Move.HEALING_WISH && move != Move.LUNAR_DANCE && move != Move.MEMENTO
-					|| (youClone.fainted && (move == Move.HEALING_WISH || move == Move.LUNAR_DANCE || move == Move.MEMENTO))
 					|| (youClone.item != youBeforeItem && !youClone.item.isTrickable())
 					|| (foeClone.item != foeBeforeItem && (foeClone.item == null || foeClone.item.isTrickable()))
 					|| fieldClone.fieldEffects.size() > fieldBeforeFE
@@ -1413,13 +1471,18 @@ public class Pokemon implements RoleAssignable, Serializable {
 					|| (foeClone.disabledMove != null && foeBeforeDisabled == null)
 					|| foeClone.perishCount > foeBeforePerish
 					|| afterWeather != beforeWeather
-					|| afterTerrain != beforeTerrain;
+					|| afterTerrain != beforeTerrain
+					|| (foeTrainerClone != null && oldCurrent != null && foeTrainerClone.current != oldCurrent); // for force switching moves
+					
+					if (useful) {
+						return isBackCheck ? 0 : 1;
+					}
 				}
 			} finally {
 				createTask = true;
 			}
 		
-		return useful;
+		return -1;
 	}
 	
 	public int getID() {
@@ -8860,7 +8923,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.handleEjectPack(userStages, this);
 		}
 		
-		if (gp.gameState != GamePanel.SIM_BATTLE_STATE && gp.player.p.pokedex[this.id] < 1) gp.player.p.pokedex[this.id] = 1;
+		if (gp != null && gp.gameState != GamePanel.SIM_BATTLE_STATE && gp.player.p.pokedex[this.id] < 1) gp.player.p.pokedex[this.id] = 1;
 		
 	}
 	

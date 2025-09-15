@@ -141,7 +141,7 @@ public class Trainer implements Serializable {
 		Pokemon next = null;
 		for (Pokemon p : team) {
 			if (!p.isFainted() && p != current) {
-				int score = p.scorePokemon(other, null, false, 0.0, Pokemon.field, null);
+				int score = p.scorePokemon(other, null, 0, Pokemon.field, null);
 				if (score > bestScore) {
 					bestScore = score;
 					next = p;
@@ -190,8 +190,8 @@ public class Trainer implements Serializable {
 			index = rand.nextInt(team.length);
 		}
 		
-		Pokemon user = Pokemon.gp.gameState == GamePanel.BATTLE_STATE ? Pokemon.gp.battleUI.user :
-			Pokemon.gp.gameState == GamePanel.SIM_BATTLE_STATE ? Pokemon.gp.simBattleUI.user : null;
+		Pokemon user = Pokemon.gp != null ? Pokemon.gp.gameState == GamePanel.BATTLE_STATE ? Pokemon.gp.battleUI.user :
+			Pokemon.gp.gameState == GamePanel.SIM_BATTLE_STATE ? Pokemon.gp.simBattleUI.user : null : null;
 		boolean hasUser = this.hasUser(user);
 		
 		swap(current, team[index], hasUser, foe);
