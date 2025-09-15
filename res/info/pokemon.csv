@@ -225,7 +225,7 @@
 -6 |Detonape-S   |FIGHTING|DARK    |GUTS              |SUPER_LUCK        |FLAME_BODY        |[115, 115, 75, 46, 90, 75]    |205.3 |50 |FIELD       |HUMAN$LIKE  |
 -7 |Ekans-S      |FLYING  |GHOST   |SHED_SKIN         |LIGHTNING_ROD     |PRESSURE          |[35, 40, 54, 65, 64, 30]      |3.9   |255|FLYING      |DRAGON      |
 -8 |Arbok-S      |FLYING  |GHOST   |SHED_SKIN         |LIGHTNING_ROD     |PRESSURE          |[80, 40, 90, 115, 90, 75]     |17.5  |90 |FLYING      |DRAGON      |
-244|Blohadel     |WATER   |FIRE    |GLASS_GUARD       |GLASS_GUARD       |NULL              |[140, 25, 150, 77, 150, 58]   |9500.4|3  |UNDISCOVERED|UNDISCOVERED|
+244|Blohadel     |FIRE    |WATER   |GLASS_GUARD       |GLASS_GUARD       |NULL              |[140, 25, 150, 77, 150, 58]   |9500.4|3  |UNDISCOVERED|UNDISCOVERED|
 240|Perilyte     |ROCK    |MAGIC   |TYPE_MASTER       |TYPE_MASTER       |NULL              |[70, 125, 60, 125, 75, 145]   |820.6 |3  |UNDISCOVERED|UNDISCOVERED|
 241|Faulette     |DARK    |MAGIC   |JACKPOT           |JACKPOT           |NULL              |[80, 75, 85, 155, 85, 120]    |251.9 |3  |UNDISCOVERED|UNDISCOVERED|
 243|Sasquotta    |GROUND  |MAGIC   |TERRAFORGE        |TERRAFORGE        |NULL              |[125, 110, 130, 55, 90, 90]   |3830.3|3  |UNDISCOVERED|UNDISCOVERED|
