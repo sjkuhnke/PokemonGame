@@ -7,6 +7,7 @@ import java.util.Random;
 
 import overworld.GamePanel;
 import pokemon.Field.FieldEffect;
+import util.Pair;
 
 public class Trainer implements Serializable {
 	/**
@@ -141,7 +142,7 @@ public class Trainer implements Serializable {
 		Pokemon next = null;
 		for (Pokemon p : team) {
 			if (!p.isFainted() && p != current) {
-				int score = p.scorePokemon(other, null, 0, Pokemon.field, null);
+				int score = p.scorePokemon(other, null, new Pair<>(0, 0.0), Pokemon.field, null);
 				if (score > bestScore) {
 					bestScore = score;
 					next = p;
@@ -448,7 +449,7 @@ public class Trainer implements Serializable {
 		result.update = this.update;
 		result.staticEnc = this.staticEnc;
 		result.catchable = this.catchable;
-		result.effects = new ArrayList<>(this.effects);
+		result.effects = Field.deepCloneEffects(this.effects);
 		result.cloned = true;
 		
 		return result;
@@ -457,7 +458,7 @@ public class Trainer implements Serializable {
 	public Trainer shallowClone() {
 		Trainer result = new Trainer(this.name, this.team, this.money, this.item, this.flagIndex, false);
 		result.update = this.update;
-		if (this.effects != null) result.effects = new ArrayList<>(this.effects);
+		if (this.effects != null) result.effects = Field.deepCloneEffects(this.effects);
 		result.cloned = true;
 		
 		return result;
