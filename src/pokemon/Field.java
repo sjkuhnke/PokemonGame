@@ -384,7 +384,6 @@ public class Field {
 				Task.addTask(Task.TEXT, "But it failed!");
 				return false;
 			}
-			
 		} else if (hazard.effect == Effect.SPIKES) {
 			int layers = getLayers(side, Effect.SPIKES);
 			if (layers == 0) {
@@ -400,7 +399,6 @@ public class Field {
 				Task.addTask(Task.TEXT, "But it failed!");
 				return false;
 			}
-			
 		} else if (hazard.effect == Effect.FLOODLIGHT) {
 			if (!contains(side, Effect.FLOODLIGHT)) {
 				Task.addTask(Task.TEXT, "An overwhelmingly bright light was placed on the Pokemon's side!");
@@ -566,7 +564,16 @@ public class Field {
 		result.weatherTurns = this.weatherTurns;
 		result.terrainTurns = this.terrainTurns;
 		
-		result.fieldEffects = new ArrayList<>(this.fieldEffects);
+		result.fieldEffects = deepCloneEffects(this.fieldEffects);
+		
+		return result;
+	}
+	
+	public static ArrayList<FieldEffect> deepCloneEffects(ArrayList<FieldEffect> effects) {
+		ArrayList<FieldEffect> result = new ArrayList<>(effects.size());
+		for (FieldEffect fe : effects) {
+			result.add(fe.clone());
+		}
 		
 		return result;
 	}

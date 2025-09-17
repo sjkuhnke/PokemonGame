@@ -13,8 +13,8 @@ import util.Pair;
 public class SimBattleUI extends BattleUI {
 	
 	public ArrayList<Pair<Double, String>> parlaySheet;
-	public Pair<Pokemon, ArrayList<Move>> p1Moves;
-	public Pair<Pokemon, ArrayList<Move>> p2Moves;
+	public Pair<Pokemon, Double> p1Moves;
+	public Pair<Pokemon, Double> p2Moves;
 	public Pair<Pokemon, String> p1Switch;
 	public Pair<Pokemon, String> p2Switch;
 	
