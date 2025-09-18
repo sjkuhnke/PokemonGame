@@ -1418,4 +1418,13 @@ public enum Move {
 		
 	}
 
+	public boolean isHazard() {
+		return
+			this == Move.STEALTH_ROCK ||
+			this == Move.SPIKES ||
+			this == Move.TOXIC_SPIKES ||
+			this == Move.STICKY_WEB ||
+			this == Move.FLOODLIGHT;
+	}
+
 }

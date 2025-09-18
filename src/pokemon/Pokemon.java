@@ -465,6 +465,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    }
 	    
 	    Trainer tr = this.trainer;
+	    boolean canSwitch = tr.canSwitch(foe);
 	    
         // Calculate and store the damage values of each move
         Map<Move, Integer> moveToDamage = new HashMap<>();
@@ -477,7 +478,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         // Check if there are no valid moves with non-zero PP
         if (moveToDamage.isEmpty()) {
         	// 100% chance to swap in a partner if you can only struggle
-        	if (tr.hasValidMembers() && !isTrapped(foe)) {
+        	if (canSwitch) {
         		String rsn = "[All valid moves have 0 PP : 100%]";
         		System.out.println(rsn);
         		if (switchRsn != null) {
@@ -521,7 +522,7 @@ public class Pokemon implements RoleAssignable, Serializable {
     		}
     	}
         
-        if (tr.hasValidMembers() && !isTrapped(foe)) {
+        if (canSwitch) {
         	// 25% chance to swap in a partner if they resist and you don't
         	ArrayList<Move> damagingMoveset = foe.getDamagingMoveset();
         	boolean only1Move = damagingMoveset.size() == 1;
@@ -806,11 +807,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    }
 	    
 	    Trainer tr = this.trainer;
+	    boolean canSwitch = tr.canSwitch(foe);
         
         // Check if there are no valid moves with non-zero PP
         if (validMoves.isEmpty()) {
         	// 100% chance to swap in a partner if you can only struggle
-        	if (tr.hasValidMembers() && !isTrapped(foe)) {
+        	if (canSwitch) {
         		String rsn = "[All valid moves have 0 PP : 100%]";
         		System.out.println(rsn);
         		if (switchRsn != null) {
@@ -860,11 +862,11 @@ public class Pokemon implements RoleAssignable, Serializable {
         	moveScores.put(move, scoreMove(move, foe, field, foeCanKO, strongestMove, foeMaxDamagePair));
         }
         
-        if (tr.hasValidMembers() && !isTrapped(foe)) {
+        if (canSwitch) {
         	StringBuilder sb = new StringBuilder("===========================================\n");
         	
         	int currentScore = this.scorePokemon(foe, strongestMove, foeMaxDamagePair, field, moveScores);
-        	currentScore = Math.max(-100, currentScore); // TODO: floor the currentScore at -100 so it isn't as likely to switch
+        	currentScore = Math.max(-100, currentScore);
         	
         	HashMap<Pokemon, Integer> scoreMap = new HashMap<>();
         	for (int i = 0; i < tr.team.length; i++) {
@@ -921,7 +923,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         		
         		if (chosen != null) {
         			double diff = chosenScore - currentScore;
-        			double chance = Math.min(95, Math.abs(diff) / 1.5);
+        			double chance = Math.min(95, Math.abs(diff) / 2);
         			chance = Math.max(0, chance);
         			System.out.printf("%.1f%% to switch\n", chance);
         			
@@ -932,12 +934,12 @@ public class Pokemon implements RoleAssignable, Serializable {
             				switchRsn.setFirst(this);
             				switchRsn.setSecond(rsn);
             			}
-            			this.addStatus(Status.SWAP, chosenSlot);
             			if (first || !foeCanKO) {
             				Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
                 	        if (pivotMove != null) return pivotMove;
             			}
-        			}        			
+            			this.addStatus(Status.SWAP, chosenSlot);
+        			}
         		}
         	}
         }
@@ -1198,6 +1200,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 				double dmgP = foe.calcWithTypes(this, m, foeIsFaster, field, false).getSecond();
 				foeMaxDamageP = Math.max(foeMaxDamageP, dmgP);
 				if (m == move) foeDamageMoveP = dmgP;
+				
+				if (m.isHazard() && this.getAbility(field) == Ability.MAGIC_BOUNCE) {
+					if (isHazardUseful(m, this, field)) {
+						score += 50;
+					}
+				}
 			}
 		}
 		
@@ -1317,21 +1325,55 @@ public class Pokemon implements RoleAssignable, Serializable {
 					if (field.equals(field.terrain, Effect.SPARKLY)) secChance *= 2;
 					secChance = Math.min(100, secChance);
 				}
-				score += Math.max(1.0, secChance) / 5 / howUseful;
-				/* TODO: add heuristics for certain status moves to give them bonuses:
-				 * - Hazards: check how many Pokemon in the back the hazard effects - make score # * n effected, if 0 (!foe.hasValidMembers) then make negative score (no progress)
-				 * FURTHERMORE: ADD AI FOR MAGIC BOUNCE MONS TO SWITCH IN IF FOE HAS USEFUL HAZARD TOO!
-				 */
-				if (move == Move.DISABLE) {
-					ArrayList<Move> damagingMoveset = foe.getDamagingMoveset();
-					if (damagingMoveset.size() == 1) {
-						score += 30;
-					}
-					// TODO: see how much hp percent the foe does with their strongest move and whether or not we should disable it (scale the score accordingly) also based on their damaging moveset size (smaller amt of damaging moves should encourage disable)
+				score += Math.max(1.0, secChance) / 4 / howUseful;
+				
+				// --- Custom status move heuristics ---
+				Ability foeAbility = foe.ability;
+		        if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
+					foeAbility = Ability.NULL;
 				}
-				if (move == Move.ENCORE) {
-					if (foe.getValidMoveset().size() == 1) {
-						score -= 30;
+				if (move.isMagicBounceEffected(this, foe, foeAbility, move.accuracy)) {
+					score -= 10 * (foe != null && foe.trainer.canSwitch(this) ? 1 : 3); // if foe can switch, decrease it by less
+				} else {
+					if (move.isHazard()) {
+						if (!isHazardUseful(move, foe, field)) {
+							score -= 20;
+						} else {
+							if (foe.trainer != null) {
+								for (Pokemon mon : foe.trainer.team) {
+									if (mon == null || mon.isFainted()) continue;
+									
+									if (mon.getItem(field) == Item.HEAVY$DUTY_BOOTS) continue;
+									if (mon.getAbility(field) == Ability.SHIELD_DUST) continue;
+									if ((move == Move.SPIKES || move == Move.STEALTH_ROCK || move == Move.TOXIC_SPIKES)
+											&& (mon.getAbility(field) == Ability.MAGIC_GUARD || mon.getAbility(field) == Ability.SCALY_SKIN)) continue;
+									if ((move == Move.SPIKES || move == Move.STICKY_WEB || move == Move.TOXIC_SPIKES)
+											&& !mon.isGrounded()) continue;
+									if (move == Move.TOXIC_SPIKES && mon.isType(PType.POISON)) continue;
+									
+									score += (8.0 * (move == Move.STEALTH_ROCK ? mon.getEffectiveMultiplier(PType.ROCK, Move.STEALTH_ROCK, null) : 1));
+								}
+							}
+						}
+					} else if (move == Move.DISABLE || move == Move.TORMENT) {
+						ArrayList<Move> damagingMoveset = foe.getDamagingMoveset();
+						if (foe.getValidMoveset().size() == 1) {
+							score += 50;
+						} else if (damagingMoveset.size() == 1) {
+							score += 30;
+						} else if (foe.lastMoveUsed == foeStrongestMove || isFaster) {
+							score += (int)(foeMaxDamage.getSecond() * (damagingMoveset.size() * 1.0 / -5 + 1.3));
+						}
+					} else if (move == Move.ENCORE) {
+						if (foe.getValidMoveset().size() == 1) {
+							score -= 30;
+						}
+					} else if (move == Move.TAUNT) {
+						if (foe.getDamagingMoveset().size() < foe.getValidMoveset().size()) {
+							score += 10;
+						} else {
+							score -= 20;
+						}
 					}
 				}
 			} else {
@@ -1354,6 +1396,10 @@ public class Pokemon implements RoleAssignable, Serializable {
     		}
     		if (move == Move.ENDURE) {
     			score += 20;
+    		}
+    		// pick a last-ditch move
+    		if (move.hasPriority(foe) && this.getFaster(foe, 0, 0) == foe) {
+    			score += 40;
     		}
     	}
     	
@@ -1393,7 +1439,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			for (int attempt = 0; attempt < 2; attempt++) {
 				boolean isBackCheck = (attempt > 0);
 				if (isBackCheck) { // check someone in the back now if it exists
-					if (move.cat == 2 && foe.trainer != null && foe.trainer.hasValidMembers() && !foe.isTrapped(this)) {
+					if (move.cat == 2 && foe.trainer != null && foe.trainer.canSwitch(foe)) {
 						Random rand = new Random();
 						Pokemon back;
 						do {
@@ -1503,6 +1549,26 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		
 		return 0;
+	}
+	
+	public boolean isHazardUseful(Move move, Pokemon foe, Field field) {
+		if (foe.trainer == null || !foe.trainer.hasValidMembers()) return false;
+		
+		ArrayList<FieldEffect> effects = foe.getFieldEffects();
+		switch(move) {
+		case STEALTH_ROCK:
+			return effects.stream().noneMatch(fe -> fe.effect == Effect.STEALTH_ROCKS);
+		case SPIKES:
+			return field.getLayers(effects, Effect.SPIKES) < 3;
+		case TOXIC_SPIKES:
+			return field.getLayers(effects, Effect.TOXIC_SPIKES) < 2;
+		case STICKY_WEB:
+			return effects.stream().noneMatch(fe -> fe.effect == Effect.STICKY_WEBS);
+		case FLOODLIGHT:
+			return effects.stream().noneMatch(fe -> fe.effect == Effect.FLOODLIGHT);
+		default:
+			return false;
+		}
 	}
 	
 	public int getID() {
@@ -8736,7 +8802,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			FieldEffect effect = field.new FieldEffect(Effect.MAGIC_ROOM);
 			effect.turns = 5;
 			field.setEffect(effect);
-		} else if (this.getAbility(field) == Ability.NEUTRALIZING_GAS) {
+		} else if (this.getAbility(field) == Ability.NEUTRALIZING_GAS && !field.contains(field.fieldEffects, Effect.NEUTRALIZING_GAS)) {
 			Task.addAbilityTask(this);
 			Task.addTask(Task.TEXT, "Neutralizing gas filled the area!");
 			field.setEffect(field.new FieldEffect(Effect.NEUTRALIZING_GAS), false);
