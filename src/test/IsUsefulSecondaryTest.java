@@ -168,6 +168,14 @@ public class IsUsefulSecondaryTest {
     	foe.ability = Ability.MAGIC_BOUNCE;
     	int use = user.isUsefulEffect(foe, Move.STEALTH_ROCK, false, field, 0);
     	
-    	assertFalse("Hazards shouldn't be use == 1 if foe has Magic Bounce", use == 1);
+    	assertTrue("Hazards shouldn't be use == 1 if foe has Magic Bounce", use == 2);
+    }
+    
+    @Test
+    public void testTauntAgainstMagicBounce() {
+    	foe.ability = Ability.MAGIC_BOUNCE;
+    	int use = user.isUsefulEffect(foe, Move.TAUNT, false, field, 0);
+    	
+    	assertTrue("Hazards shouldn't be use == 1 if foe has Magic Bounce", use == 2);
     }
 }

@@ -680,6 +680,16 @@ public class BattleUI extends AbstractUI {
 	    	}
 		}
 		
+		if (user.getAbility(field) == Ability.NEUTRALIZING_GAS) {
+			Task.addAbilityTask(user);
+			Task.addTask(Task.TEXT, "Neutralizing gas filled the area!");
+			field.setEffect(field.new FieldEffect(Effect.NEUTRALIZING_GAS), false);
+		} else if (foe.getAbility(field) == Ability.NEUTRALIZING_GAS) {
+			Task.addAbilityTask(foe);
+			Task.addTask(Task.TEXT, "Neutralizing gas filled the area!");
+			field.setEffect(field.new FieldEffect(Effect.NEUTRALIZING_GAS), false);
+		}
+		
 	    Pokemon fasterInit = user.getFaster(foe, 0, 0);
 		Pokemon slowerInit = fasterInit == user ? foe : user;
 		fasterInit.swapIn(slowerInit, true);
@@ -1593,9 +1603,10 @@ public class BattleUI extends AbstractUI {
 	    
 	    for (FieldEffect fe : field.fieldEffects) {
 	    	String effect = fe.toString();
-	    	String turns = fe.turns < 0 || fe.effect.turns < 0 ? "" : fe.turns + "/" + fe.effect.turns;
+	    	boolean showTurns = !(fe.turns < 0 || fe.effect.turns < 0);
+	    	String turns = showTurns ? fe.turns + "/" + fe.effect.turns : "";
 	    	g2.setColor(fe.getColor());
-	    	g2.drawString(effect, getCenterAlignedTextX(effect, middleX - gp.tileSize), y);
+	    	g2.drawString(effect, getCenterAlignedTextX(effect, middleX - (showTurns ? gp.tileSize : 0)), y);
 	    	g2.setColor(Color.WHITE);
 	    	g2.drawString(turns, getCenterAlignedTextX(turns, middleX + gp.tileSize), y);
 	    	y += gp.tileSize / 2;

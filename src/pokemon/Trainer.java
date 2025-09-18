@@ -217,6 +217,10 @@ public class Trainer implements Serializable {
 		return result;
 	}
 	
+	public boolean canSwitch(Pokemon foe) {
+		return hasValidMembers() && !current.isTrapped(foe);
+	}
+	
 	public boolean wiped() {
 		boolean result = true;
 		for (int i = 0; i < team.length; i++) {
