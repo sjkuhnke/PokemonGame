@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
@@ -936,7 +937,10 @@ public class Pokemon implements RoleAssignable, Serializable {
             			}
             			if (first || !foeCanKO) {
             				Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-                	        if (pivotMove != null) return pivotMove;
+                	        if (pivotMove != null) {
+                	        	this.addStatus(Status.SWAP, -chosenSlot);
+                	        	return pivotMove;
+                	        }
             			}
             			this.addStatus(Status.SWAP, chosenSlot);
         			}
@@ -1154,11 +1158,32 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public Move hasPivotMove(Pokemon foe, Ability foeAbility, ArrayList<Move> validMoveset) {
 		for (Move m : validMoveset) {
 			if (m.isPivotMove()) {
-				double mult = Trainer.getEffective(foe, this, m.mtype, m, false);
-				if (!m.isMagicBounceEffected(this, foe, foeAbility, m.accuracy) && mult > 0) return m;
+				if (isUsefulPivot(foe, foeAbility, m)) return m;
 			}
 		}
 		return null;
+	}
+	
+	public boolean isUsefulPivot(Pokemon foe, Ability foeAbility, Move m) {
+		if (m.cat == 2) {
+			// prankster check
+			if (this.getAbility(field) == Ability.PRANKSTER
+				&& foe.isType(PType.DARK)
+				&& m.accuracy <= 100) {
+				return false;
+			}
+			// magic bounce check
+			if (m.isMagicBounceEffected(this, foe, foeAbility, m.accuracy)) {
+				return false;
+			}
+			return true;
+		} else {
+			double mult = Trainer.getEffective(foe, this, m.mtype, m, false);
+			if (mult > 0) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public int scorePokemon(Pokemon foe, Move move, Pair<Integer, Double> foeMaxDamage, Field field, HashMap<Move, Integer> moveScores) {
@@ -1213,7 +1238,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			double hpPercent = this.currentHP * 1.0 / this.getStat(0);
 			score -= Math.min(foeMaxDamageP, 100) * 2 * hpPercent;
 		} else if (move != null) {
-			score -= Math.min(foeMaxDamageP, 100) - Math.min(foeDamageMoveP, 100) / 2;
+			score -= foeMaxDamageP + foeDamageMoveP / 2;
 		} else {
 			score -= Math.min(foeMaxDamageP, 100);
 		}
@@ -1315,6 +1340,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 			score -= 10.0 * (1.0 - hpPercentage);
 		}
 		
+		Ability foeAbility = foe.ability;
+        if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
+			foeAbility = Ability.NULL;
+		}
+		
 		// --- Secondary Effects/Status Moves ---
 		if (move.cat == 2 || move.secondary != 0) {
 			int howUseful = this.isUsefulEffect(foe, move, isFaster, field, damage);
@@ -1328,10 +1358,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 				score += Math.max(1.0, secChance) / 4 / howUseful;
 				
 				// --- Custom status move heuristics ---
-				Ability foeAbility = foe.ability;
-		        if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
-					foeAbility = Ability.NULL;
-				}
 				if (move.isMagicBounceEffected(this, foe, foeAbility, move.accuracy)) {
 					score -= 10 * (foe != null && foe.trainer.canSwitch(this) ? 1 : 3); // if foe can switch, decrease it by less
 				} else {
@@ -1398,8 +1424,12 @@ public class Pokemon implements RoleAssignable, Serializable {
     			score += 20;
     		}
     		// pick a last-ditch move
-    		if (move.hasPriority(foe) && this.getFaster(foe, 0, 0) == foe) {
-    			score += 40;
+    		if (move.hasPriority(foe) && this.getFaster(foe, 0, 0) == foe && (move.cat == 2 || damagePercent > 0)) {
+    			score += 55;
+    		}
+    	} else {
+    		if (move == Move.DESTINY_BOND || move == Move.ENDURE) {
+    			score -= 20;
     		}
     	}
     	
@@ -1408,6 +1438,10 @@ public class Pokemon implements RoleAssignable, Serializable {
     	 * - Healing Wish/Lunar Dance when to use
     	 * - Circle Throw/Dragon Tail when to use
     	 */
+    	if (move.isPivotMove() && isUsefulPivot(foe, foeAbility, move)) {
+    		score += 25;
+    	}
+    	
 		
 		// --- Tie Break: prefer moves with more PP left ---
 //		score += (ms.currentPP / (double) ms.maxPP) * 1.0;
@@ -1500,14 +1534,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 						if (youClone.getAbility(fieldClone) == Ability.SERENE_GRACE) sec *= 2;
 						
 						if (sec > 0) { // check secondary effect
-							if (youClone.getAbility(fieldClone) == Ability.PRANKSTER && foeClone.isType(PType.DARK) && move.accuracy <= 100) {
-								continue; // dark types are immune to prankster
-							}
 							youClone.secondaryEffect(foeClone, move, isFaster, fieldClone);
 						}
 					}
 				} else { // status move
 					createTask = false;
+					if (youClone.getAbility(fieldClone) == Ability.PRANKSTER && foeClone.isType(PType.DARK) && move.accuracy <= 100) {
+						continue; // dark types are immune to prankster
+					}
 					youClone.statusEffect(foeClone, move, fieldClone);
 				}
 				
@@ -7419,7 +7453,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Random rand = new Random();
 		    double hpPercent = this.currentHP * 1.0 / this.getStat(0);
 		    
-		    if (rand.nextDouble() < (hpPercent - 0.1)) {
+		    if ((this.trainer != null && !this.trainer.hasValidMembers()) || rand.nextDouble() < (hpPercent - 0.1)) {
 		        return new Pair<>(0, 0.0);
 		    }
 		}
@@ -9341,15 +9375,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	public boolean removeStatus(Status status) {
 		boolean worked = false;
-		ArrayList<StatusEffect> result = new ArrayList<>(this.vStatuses);
-		for (int i = 0; i < this.vStatuses.size(); i++) {
-			StatusEffect se = this.vStatuses.get(i);
+		Iterator<StatusEffect> it = this.vStatuses.iterator();
+		while (it.hasNext()) {
+			StatusEffect se = it.next();
 			if (se.status == status) {
-				result.remove(i);
+				it.remove(); // exception thrown here
 				worked = true;
 			}
 		}
-		this.vStatuses = result;
 		return worked;
 	}
 	
@@ -10976,14 +11009,17 @@ public class Pokemon implements RoleAssignable, Serializable {
 				boolean fastCanMove = true;
 				boolean slowCanMove = true;
 				
-				if (faster.hasStatus(Status.SWAP)) {
-					faster = faster.trainer.swapOut2(slower, faster.getStatusNum(Status.SWAP), fastMove, false, false);
+				int fasterSwitchSlot = faster.getStatusNum(Status.SWAP);
+				int slowerSwitchSlot = slower.getStatusNum(Status.SWAP);
+				
+				if (fasterSwitchSlot > 0) {
+					faster = faster.trainer.swapOut2(slower, fasterSwitchSlot, false, false);
 					fastMove = null;
 					fastCanMove = false;
 				}
 				
-				if (slower.hasStatus(Status.SWAP)) {
-					slower = slower.trainer.swapOut2(faster, slower.getStatusNum(Status.SWAP), slowMove, false, false);
+				if (slowerSwitchSlot > 0) {
+					slower = slower.trainer.swapOut2(faster, slowerSwitchSlot, false, false);
 					slowMove = null;
 					slowCanMove = false;
 				}
@@ -10998,11 +11034,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 				
 				// Check for swap
 				if (faster.trainer.hasValidMembers() && fastCanMove && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
-					faster = faster.trainer.swapOut(slower, null, faster.lastMoveUsed == Move.BATON_PASS, false);
+					faster = faster.trainer.swapOut2(slower, fasterSwitchSlot, faster.lastMoveUsed == Move.BATON_PASS, false);
 				}
 				// Check for swap
 				if (slower.trainer.hasValidMembers() && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
-					slower = slower.trainer.swapOut(faster, null, false, false);
+					slower = slower.trainer.swapOut2(faster, 0, false, false);
 					slowCanMove = false;
 				}
 				
@@ -11014,11 +11050,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 		        
 		        // Check for swap
 		        if (slower.trainer.hasValidMembers() && slowCanMove && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
-		        	slower = slower.trainer.swapOut(faster, null, slower.lastMoveUsed == Move.BATON_PASS, false);
+		        	slower = slower.trainer.swapOut2(faster, 0, slower.lastMoveUsed == Move.BATON_PASS, false);
 		        }
 		    	// Check for swap
 		 		if (faster.trainer.hasValidMembers() && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
-		 			faster = faster.trainer.swapOut(slower, null, false, false);
+		 			faster = faster.trainer.swapOut2(slower, 0, false, false);
 		 		}
 				
 				if (fastMove != null || slowMove != null) {

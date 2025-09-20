@@ -1975,11 +1975,17 @@ public class Player extends Trainer implements Serializable {
 		return false;
 	}
 	
-	public boolean wholeTeamOverLevelCap() {
+	public boolean wholeTeamOverLevelCap(int money) {
 		for (Pokemon p : team) {
-			if (p != null && !p.isOverLevelCap(badges)) return false;
+			if (p != null) {
+				if (money == 500) { // for gym leaders, can't have a single member over level cap
+					if (p.isOverLevelCap(badges)) return true;
+				} else { // for every other battle, whole team can't be over level cap
+					if (!p.isOverLevelCap(badges)) return false;
+				}
+			}
 		}
-		return true;
+		return money == 500 ? false : true;
 	}
 
 	public void takeItem(Pokemon p, AbstractUI ui) {
@@ -2037,5 +2043,14 @@ public class Player extends Trainer implements Serializable {
 	@Override
 	public String getBattleName() {
 		return "you";
+	}
+
+	public String getPokemonOverLevelCap() {
+		StringBuilder sb = new StringBuilder();
+		for (Pokemon p : team) {
+			if (p != null && p.isOverLevelCap(badges)) sb.append(p + ", ");
+		}
+		String result = sb.toString();
+		return result.substring(0, result.length() - 2);
 	}
 }

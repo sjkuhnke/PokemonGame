@@ -457,8 +457,10 @@ public class PlayerCharacter extends Entity {
 		int trainer = entity.trainer;
 		if (trainer == -1) return;
 		if (p.wiped()) return;
-		if (p.nuzlocke && p.wholeTeamOverLevelCap()) {
-			gp.wipe(true, null, null, false);
+		Pokemon foe = Trainer.getTrainer(trainer).getCurrent();
+		int money = Trainer.getTrainer(trainer).getMoney();
+		if (p.nuzlocke && p.wholeTeamOverLevelCap(money)) {
+			gp.wipe(true, p.current, foe, false);
 			return;
 		}
 		if (gp.ui.tasksContainsTask(Task.DIALOGUE)) return;
@@ -470,8 +472,6 @@ public class PlayerCharacter extends Entity {
 		
 		if (!p.trainersBeat[trainer]) {
 			gp.setTaskState();
-			
-			Pokemon foe = Trainer.getTrainer(trainer).getCurrent();
 			
 			Task.addTrainerTask(entity, id, foe, !(entity instanceof NPC_GymLeader));
 			
@@ -488,13 +488,13 @@ public class PlayerCharacter extends Entity {
 	
 	public void startWild(String area, char type) {
 		if (p.wiped()) return;
-		if (p.nuzlocke && p.wholeTeamOverLevelCap()) {
-			gp.wipe(true, null, null, false);
+		Pokemon foe = gp.encounterPokemon(area, type, p.random);
+		if (p.nuzlocke && p.wholeTeamOverLevelCap(0)) {
+			gp.wipe(true, p.current, foe, false);
 			return;
 		}
 		gp.setTaskState();
 		
-		Pokemon foe = gp.encounterPokemon(area, type, p.random);
 		if (foe == null) {
 			gp.ui.checkTasks = true;
 			gp.gameState = GamePanel.PLAY_STATE;
