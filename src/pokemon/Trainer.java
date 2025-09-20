@@ -310,7 +310,7 @@ public class Trainer implements Serializable {
 	}
 	
 	public Pokemon swapOut2(Pokemon foe, int slot, boolean baton, boolean userSide) {
-		Pokemon result = slot == 0 ? getNext2(foe) : team[Math.abs(slot)];
+		Pokemon result = slot == 999 ? getNext2(foe) : team[Math.abs(slot)];
 		if (result != current) {
 			int[] oldStats = current.statStages.clone();
 			ArrayList<StatusEffect> oldVStatuses = new ArrayList<>(current.vStatuses);

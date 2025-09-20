@@ -1253,10 +1253,10 @@ public class BattleUI extends AbstractUI {
 		slower = faster == user ? foe : user;
 		
 		boolean foeCanMove = true;
-		int switchSlot = foe.getStatusNum(Status.SWAP);
+		int switchSlot = foe.hasStatus(Status.SWAP) ? foe.getStatusNum(Status.SWAP) : 999;
 		
 		if (faster == user) { // player Pokemon is faster
-			if (switchSlot > 0) { // AI wants to swap out
+			if (switchSlot != 999) { // AI wants to swap out
 				slower = foe.trainer.swapOut2(user, switchSlot, false, false);
 				foeMove = null;
 				foeCanMove = false;
@@ -1301,7 +1301,7 @@ public class BattleUI extends AbstractUI {
  	        	return;
  			}
 		} else { // enemy Pokemon is faster
-			if (switchSlot > 0) { // AI wants to swap out
+			if (switchSlot != 999) { // AI wants to swap out
 				faster = foe.trainer.swapOut2(slower, switchSlot, false, false);
 				foeMove = null;
 				foeCanMove = false;

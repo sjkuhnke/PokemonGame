@@ -513,7 +513,7 @@ public class AssetSetter {
 		
 		mapNum = 18;
 		objIndex = 0;
-		gp.obj[mapNum][objIndex] = ObjSetup(49, 33, Item.ELIXIR, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(49, 36, Item.ELIXIR, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(41, 33, Item.RARE_CANDY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 35, Item.SPARKLY_SEED, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(48, 44, Item.NUGGET, mapNum);

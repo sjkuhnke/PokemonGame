@@ -6179,10 +6179,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Task.addTask(Task.TEXT, this.nickname + "'s Ability Shield blocked the ability change!");
 				foe.ability = Ability.NULL;
 			} else {
-				this.ability = foe.ability;
-				Task.addTask(Task.TEXT, this.nickname + "'s ability became " + this.ability.toString() + "!");
-				this.swapIn(this, false);
-				foe.ability = Ability.NULL;
+				if (foe.ability == Ability.NULL) {
+					fail = fail();
+				} else {
+					this.ability = foe.ability;
+					Task.addTask(Task.TEXT, this.nickname + "'s ability became " + this.ability.toString() + "!");
+					this.swapIn(this, false);
+					foe.ability = Ability.NULL;
+				}
 			}
 			break;
 		case WATER_SPORT:
@@ -11009,16 +11013,16 @@ public class Pokemon implements RoleAssignable, Serializable {
 				boolean fastCanMove = true;
 				boolean slowCanMove = true;
 				
-				int fasterSwitchSlot = faster.getStatusNum(Status.SWAP);
-				int slowerSwitchSlot = slower.getStatusNum(Status.SWAP);
+				int fasterSwitchSlot = faster.hasStatus(Status.SWAP) ? faster.getStatusNum(Status.SWAP) : 999;
+				int slowerSwitchSlot = slower.hasStatus(Status.SWAP) ? slower.getStatusNum(Status.SWAP) : 999;
 				
-				if (fasterSwitchSlot > 0) {
+				if (fasterSwitchSlot != 999) {
 					faster = faster.trainer.swapOut2(slower, fasterSwitchSlot, false, false);
 					fastMove = null;
 					fastCanMove = false;
 				}
 				
-				if (slowerSwitchSlot > 0) {
+				if (slowerSwitchSlot != 999) {
 					slower = slower.trainer.swapOut2(faster, slowerSwitchSlot, false, false);
 					slowMove = null;
 					slowCanMove = false;

@@ -1276,6 +1276,7 @@ public enum Move {
 		result.add(SYNTHESIS);
 		result.add(STRENGTH_SAP);
 		result.add(WISH);
+		result.add(ALCHEMY);
 		if (result.contains(this)) {
 			return true;
 		}

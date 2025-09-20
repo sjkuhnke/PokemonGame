@@ -1396,8 +1396,8 @@ public class TileManager {
 		setup(1131, true);
 		setup(1132, true);
 		setup(1133, true);
-//		setup(1134, true);
-//		setup(1135, true);
+		setup(1134, false, OVER);
+		setup(1135, false, OVER);
 //		setup(1136, true);
 //		setup(1137, true);
 //		setup(1138, true);
