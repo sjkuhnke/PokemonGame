@@ -1392,7 +1392,7 @@ public enum Move {
 	}
 
 	public boolean isPivotMove() {
-		return this == Move.U$TURN || this == Move.VOLT_SWITCH || this == Move.FLIP_TURN || this == Move.PARTING_SHOT || this == Move.BATON_PASS;
+		return this == Move.U$TURN || this == Move.VOLT_SWITCH || this == Move.FLIP_TURN || this == Move.PARTING_SHOT || this == Move.BATON_PASS || this == Move.TELEPORT || this == Move.CHILLY_RECEPTION;
 	}
 
 	public boolean isMagicBounceEffected(Pokemon user, Pokemon foe, Ability foeAbility, int acc) {

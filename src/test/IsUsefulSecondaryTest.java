@@ -60,6 +60,12 @@ public class IsUsefulSecondaryTest {
 
         assertTrue("Flamethrower should be use == 1", use == 1);
     }
+    
+    @Test
+    public void testMagicReflectOnFirstTurn() {
+    	int use = user.isUsefulEffect(foe, Move.MAGIC_REFLECT, true, field, 0);
+    	assertTrue("Magic Reflect shouldn't be useful on first turn out", use == 0);
+    }
 
     @Test
     public void testSereneGraceDoublesChance() {

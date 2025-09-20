@@ -140,15 +140,20 @@ public class Trainer implements Serializable {
 	private Pokemon getNext2(Pokemon other) {
 		int bestScore = Integer.MIN_VALUE;
 		Pokemon next = null;
+		StringBuilder sb = new StringBuilder("______________\n");
+		sb.append("FREE SWITCH\n");
+		sb.append("______________\n");
 		for (Pokemon p : team) {
 			if (!p.isFainted() && p != current) {
 				int score = p.scorePokemon(other, null, new Pair<>(0, 0.0), Pokemon.field, null);
+				sb.append("[" + p + ": " + score + "], ");
 				if (score > bestScore) {
 					bestScore = score;
 					next = p;
 				}
 			}
 		}
+		System.out.println(sb.toString() + "\n");
 		return next;
 	}
 	
@@ -304,8 +309,8 @@ public class Trainer implements Serializable {
 		return result;
 	}
 	
-	public Pokemon swapOut2(Pokemon foe, int slot, Move m, boolean baton, boolean userSide) {
-		Pokemon result = team[slot];
+	public Pokemon swapOut2(Pokemon foe, int slot, boolean baton, boolean userSide) {
+		Pokemon result = slot == 0 ? getNext2(foe) : team[Math.abs(slot)];
 		if (result != current) {
 			int[] oldStats = current.statStages.clone();
 			ArrayList<StatusEffect> oldVStatuses = new ArrayList<>(current.vStatuses);
