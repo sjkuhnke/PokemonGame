@@ -808,16 +808,16 @@ public class SimBattleUI extends BattleUI {
 		boolean fastCanMove = true;
 		boolean slowCanMove = true;
 		
-		int fasterSwitchSlot = faster.getStatusNum(Status.SWAP);
-		int slowerSwitchSlot = slower.getStatusNum(Status.SWAP);
+		int fasterSwitchSlot = faster.hasStatus(Status.SWAP) ? faster.getStatusNum(Status.SWAP) : 999;
+		int slowerSwitchSlot = slower.hasStatus(Status.SWAP) ? slower.getStatusNum(Status.SWAP) : 999;
 		
-		if (fasterSwitchSlot > 0) {
+		if (fasterSwitchSlot != 999) {
 			faster = faster.trainer.swapOut2(slower, fasterSwitchSlot, false, faster.trainer.hasUser(user));
 			fastMove = null;
 			fastCanMove = false;
 		}
 		
-		if (slowerSwitchSlot > 0) {
+		if (slowerSwitchSlot != 999) {
 			slower = slower.trainer.swapOut2(faster, slowerSwitchSlot, false, slower.trainer.hasUser(user));
 			slowMove = null;
 			slowCanMove = false;
