@@ -44,6 +44,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
+import overworld.BattleUI;
 import overworld.GamePanel;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
@@ -938,11 +939,11 @@ public class Pokemon implements RoleAssignable, Serializable {
             			if (first || !foeCanKO) {
             				Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
                 	        if (pivotMove != null) {
-                	        	this.addStatus(Status.SWAP, -chosenSlot);
+                	        	this.addStatus(Status.SWAP, -(chosenSlot + 1));
                 	        	return pivotMove;
                 	        }
             			}
-            			this.addStatus(Status.SWAP, chosenSlot);
+            			this.addStatus(Status.SWAP, chosenSlot + 1);
         			}
         		}
         	}
@@ -1282,11 +1283,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return score;
 	}
 	
-	private int scoreMove(Move move, Pokemon foe, Field field, boolean foeCanKO, Move foeStrongestMove, Pair<Integer, Double> foeMaxDamage) {
+	public int scoreMove(Move move, Pokemon foe, Field field, boolean foeCanKO, Move foeStrongestMove, Pair<Integer, Double> foeMaxDamage) {
 //		Move move = ms.move;
 		double score = 0.0;
 		
-		boolean isFaster = this.getFaster(foe, move.hasPriority(this) ? 1 : move.priority, 0) == this;
+		boolean isFaster = this.getFaster(foe, move.hasPriority(this) ? 1 : move.priority, foeStrongestMove.hasPriority(foe) ? 1 : move.priority) == this;
 		
 		Pair<Integer, Double> dmgPair = this.calcWithTypes(foe, move, isFaster, field, false);
 		int damage = dmgPair.getFirst();
@@ -1333,23 +1334,36 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		
-		double hpPercentage = (double) this.currentHP / this.getStat(0);
-		
 		// Penalize recoil moves at low HP
 		if (Move.getRecoil().contains(move)) {
-			score -= 10.0 * (1.0 - hpPercentage);
+			if (ability != Ability.ROCK_HEAD && ability != Ability.MAGIC_GUARD && ability != Ability.SCALY_SKIN) {
+				int denom = move == Move.HEAD_SMASH ? 2 : move == Move.SUBMISSION || move == Move.TAKE_DOWN ? 4 : 3;
+				int recoil = Math.max(Math.floorDiv(damage, denom), 1);
+				if (recoil >= this.currentHP) score -= 45; // user will die from this move
+			}
 		}
 		
 		Ability foeAbility = foe.ability;
         if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
 			foeAbility = Ability.NULL;
 		}
-		
+        
 		// --- Secondary Effects/Status Moves ---
 		if (move.cat == 2 || move.secondary != 0) {
 			int howUseful = this.isUsefulEffect(foe, move, isFaster, field, damage);
 			if (howUseful > 0) {
-				int secChance = move.secondary == 0 ? move.cat == 2 ? 100 : move.secondary < 0 ? 100 : move.secondary : 100;
+				int secChance;
+				if (move.secondary == 0) {
+					if (move.cat == 2) {
+						secChance = 100;
+					} else {
+						secChance = 0;
+					}
+				} else if (move.secondary < 0) {
+					secChance = 100;
+				} else {
+					secChance = move.secondary;
+				}
 				if (move.secondary > 0) {
 					if (this.getAbility(field) == Ability.SERENE_GRACE) secChance *= 2;
 					if (field.equals(field.terrain, Effect.SPARKLY)) secChance *= 2;
@@ -1436,7 +1450,6 @@ public class Pokemon implements RoleAssignable, Serializable {
     	/* TODO: Heuristics to add:
     	 * - Aromatherapy/when to use
     	 * - Healing Wish/Lunar Dance when to use
-    	 * - Circle Throw/Dragon Tail when to use
     	 */
     	if (move.isPivotMove() && isUsefulPivot(foe, foeAbility, move)) {
     		score += 25;
@@ -1556,18 +1569,17 @@ public class Pokemon implements RoleAssignable, Serializable {
 					|| ((move == Move.RAPID_SPIN || move == Move.DEFOG) // rapid spin/defog should check if they can clear hazards on your side
 						? youClone.getFieldEffects().size() < youBeforeFE
 						: youClone.getFieldEffects().size() > youBeforeFE)
-					|| foeClone.status != foeBeforeStatus && foeClone.status != Status.HEALTHY
-					|| youClone.status != youBeforeStatus && youBeforeStatus == Status.HEALTHY
-					|| youClone.vStatuses.size() != youBeforeV.size()
-					|| foeClone.vStatuses.size() != foeBeforeV.size()
-					|| !Arrays.equals(foeBeforeStages, foeClone.statStages) && Arrays.stream(foeClone.statStages).sum() < Arrays.stream(foeBeforeStages).sum()
-					|| !Arrays.equals(youBeforeStages, youClone.statStages) && Arrays.stream(youClone.statStages).sum() > Arrays.stream(youBeforeStages).sum()
-					|| youClone.currentHP > youBeforeHP && move != Move.BELLY_DRUM && move != Move.CURSE && move != Move.HEALING_WISH && move != Move.LUNAR_DANCE && move != Move.MEMENTO
-					|| (youClone.item != youBeforeItem && (youClone.item != null && !youClone.item.isTrickable()))
-					|| (foeClone.item != foeBeforeItem && (foeClone.item == null || foeClone.item.isTrickable()))
+					|| (foeClone.status != foeBeforeStatus && foeClone.status != Status.HEALTHY)
+					|| (youClone.status != youBeforeStatus && youBeforeStatus == Status.HEALTHY)
+					|| (youClone.vStatuses.size() != youBeforeV.size())
+					|| (foeClone.vStatuses.size() != foeBeforeV.size())
+					|| (!Arrays.equals(foeBeforeStages, foeClone.statStages) && Arrays.stream(foeClone.statStages).sum() < Arrays.stream(foeBeforeStages).sum())
+					|| (!Arrays.equals(youBeforeStages, youClone.statStages) && Arrays.stream(youClone.statStages).sum() > Arrays.stream(youBeforeStages).sum())
+					|| (youClone.currentHP > youBeforeHP && move != Move.BELLY_DRUM && move != Move.CURSE && move != Move.HEALING_WISH && move != Move.LUNAR_DANCE && move != Move.MEMENTO)
+					|| ((youClone.item != youBeforeItem || foeClone.item != foeBeforeItem) && ((foeBeforeItem != null && !foeBeforeItem.isTrickable() && foeClone.item == null) || (youBeforeItem != null && youBeforeItem.isTrickable()) || (youClone.item != null && !youClone.item.isTrickable())))
 					|| fieldClone.fieldEffects.size() > fieldBeforeFE
 					|| foeClone.getAbility(fieldClone) != foeBeforeAbility
-					|| foeClone.type1 != foeBeforeType1 || foeClone.type2 != foeBeforeType2
+					|| (foeClone.type1 != foeBeforeType1 || foeClone.type2 != foeBeforeType2)
 					|| (foeClone.disabledMove != null && foeBeforeDisabled == null)
 					|| foeClone.perishCount > foeBeforePerish
 					|| afterWeather != beforeWeather
@@ -4174,6 +4186,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 			field.setEffect(field.new FieldEffect(Effect.ION), false);
 			Task.addTask(Task.TEXT, "A deluge of ions showered the battlefield!");
 			break;
+		case ROCKFALL_FRENZY:
+			if (field.getLayers(foe.getFieldEffects(), Effect.STEALTH_ROCKS) < 1) {
+				field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.STEALTH_ROCKS));
+			}
+			break;
 		case SCALE_SHOT:
 			stat(this, 1, -1, foe);
 			stat(this, 4, 1, foe);
@@ -4850,11 +4867,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 		case ROCK_TOMB:
 			stat(foe, 4, -1, this);
 			break;
-		case ROCKFALL_FRENZY:
-			if (field.getLayers(foe.getFieldEffects(), Effect.STEALTH_ROCKS) < 1) {
-				field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.STEALTH_ROCKS));
-			}
-			break;
 		case SACRED_FIRE:
 			foe.burn(false, this);
 			break;
@@ -5125,7 +5137,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		switch (move) {
 		case ABDUCT:
 		case TAKE_OVER:
-			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success) && !foe.hasStatus(Status.POSSESSED)) {
+			if (this.impressive) {
+				fail = fail();
+				Task.addTask(Task.TEXT, "(" + move + " fails when used on the first turn out.)");
+			} else if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success) && !foe.hasStatus(Status.POSSESSED)) {
 				foe.addStatus(Status.POSSESSED);
 				Task.addTask(Task.TEXT, this.nickname + " posessed " + foe.nickname + "!");
 				if (foe.getItem(field) == Item.MENTAL_HERB) {
@@ -5138,7 +5153,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.lastMoveUsed = move;
 			break;
 		case MAGIC_REFLECT:
-			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success) && !hasStatus(Status.MAGIC_REFLECT)) {
+			if (this.impressive) {
+				fail = fail();
+				Task.addTask(Task.TEXT, "(" + move + " fails when used on the first turn out.)");
+			} else if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success) && !hasStatus(Status.MAGIC_REFLECT)) {
 				this.addStatus(Status.MAGIC_REFLECT);
 				Task.addTask(Task.TEXT, "A magical reflection surrounds " + this.nickname + "!");
 			} else { fail = fail(); }
@@ -7266,7 +7284,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (moveType == PType.STEEL && this.hasStatus(Status.LOADED)) bp *= 2;
 		
 		// Multi hit moves calc to use
-		if (mode == 0) bp *= move.getNumHits(this, this.trainer.team);
+		if (mode == 0) bp *= move.getNumHits(this, this.trainer == null ? null : this.trainer.team);
 		
 		double attackMod = 1.0;
 		double defenseMod = 1.0;
@@ -7453,7 +7471,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (mode == 0 && sturdy) damage--;
 		if (mode == 0 && damage < foe.currentHP && move == Move.SWORD_OF_DAWN && this.getItem(field) != Item.POWER_HERB) bp *= 0.5;
 		
-		if ((move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) && mode == 0) {
+		if ((move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION || move == Move.STEEL_BEAM) && mode == 0) {
 			Random rand = new Random();
 		    double hpPercent = this.currentHP * 1.0 / this.getStat(0);
 		    
@@ -11013,16 +11031,16 @@ public class Pokemon implements RoleAssignable, Serializable {
 				boolean fastCanMove = true;
 				boolean slowCanMove = true;
 				
-				int fasterSwitchSlot = faster.hasStatus(Status.SWAP) ? faster.getStatusNum(Status.SWAP) : 999;
-				int slowerSwitchSlot = slower.hasStatus(Status.SWAP) ? slower.getStatusNum(Status.SWAP) : 999;
+				int fasterSwitchSlot = faster.hasStatus(Status.SWAP) ? faster.getStatusNum(Status.SWAP) : BattleUI.FREE_SWITCH;
+				int slowerSwitchSlot = slower.hasStatus(Status.SWAP) ? slower.getStatusNum(Status.SWAP) : BattleUI.FREE_SWITCH;
 				
-				if (fasterSwitchSlot != 999) {
+				if (fasterSwitchSlot > 0) {
 					faster = faster.trainer.swapOut2(slower, fasterSwitchSlot, false, false);
 					fastMove = null;
 					fastCanMove = false;
 				}
 				
-				if (slowerSwitchSlot != 999) {
+				if (slowerSwitchSlot > 0) {
 					slower = slower.trainer.swapOut2(faster, slowerSwitchSlot, false, false);
 					slowMove = null;
 					slowCanMove = false;
@@ -11042,7 +11060,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 				// Check for swap
 				if (slower.trainer.hasValidMembers() && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
-					slower = slower.trainer.swapOut2(faster, 0, false, false);
+					slower = slower.trainer.swapOut2(faster, BattleUI.FREE_SWITCH, false, false);
 					slowCanMove = false;
 				}
 				
@@ -11054,11 +11072,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 		        
 		        // Check for swap
 		        if (slower.trainer.hasValidMembers() && slowCanMove && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
-		        	slower = slower.trainer.swapOut2(faster, 0, slower.lastMoveUsed == Move.BATON_PASS, false);
+		        	slower = slower.trainer.swapOut2(faster, BattleUI.FREE_SWITCH, slower.lastMoveUsed == Move.BATON_PASS, false);
 		        }
 		    	// Check for swap
 		 		if (faster.trainer.hasValidMembers() && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
-		 			faster = faster.trainer.swapOut2(slower, 0, false, false);
+		 			faster = faster.trainer.swapOut2(slower, BattleUI.FREE_SWITCH, false, false);
 		 		}
 				
 				if (fastMove != null || slowMove != null) {

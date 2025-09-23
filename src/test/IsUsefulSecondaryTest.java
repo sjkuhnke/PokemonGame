@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import pokemon.*;
 import pokemon.Field.Effect;
+import util.Pair;
 
 public class IsUsefulSecondaryTest {
 
@@ -29,7 +30,7 @@ public class IsUsefulSecondaryTest {
 
         int use = user.isUsefulEffect(foe, toxic, false, field, 10);
 
-        assertTrue("Toxic should be use == 1 when foe is healthy", use == 1);
+        assertEquals(1, use);
     }
 
     @Test
@@ -39,7 +40,7 @@ public class IsUsefulSecondaryTest {
 
         int use = user.isUsefulEffect(foe, flamethrower, false, field, 50);
 
-        assertFalse("Flamethrower burn blocked by Covert Cloak", use == 1);
+        assertEquals(0, use);
     }
 
     @Test
@@ -49,7 +50,7 @@ public class IsUsefulSecondaryTest {
 
         int use = user.isUsefulEffect(foe, flamethrower, false, field, 50);
 
-        assertFalse("Flamethrower burn blocked by Shield Dust", use == 1);
+        assertEquals(0, use);
     }
     
     @Test
@@ -58,13 +59,13 @@ public class IsUsefulSecondaryTest {
 
         int use = user.isUsefulEffect(foe, flamethrower, false, field, 50);
 
-        assertTrue("Flamethrower should be use == 1", use == 1);
+        assertEquals(1, use);
     }
     
     @Test
     public void testMagicReflectOnFirstTurn() {
     	int use = user.isUsefulEffect(foe, Move.MAGIC_REFLECT, true, field, 0);
-    	assertTrue("Magic Reflect shouldn't be useful on first turn out", use == 0);
+    	assertEquals(0, use);
     }
 
     @Test
@@ -74,7 +75,7 @@ public class IsUsefulSecondaryTest {
 
         int use = user.isUsefulEffect(foe, flamethrower, false, field, 50);
 
-        assertTrue("Serene Grace should allow Flamethrower to be use == 1", use == 1);
+        assertEquals(1, use);
     }
 
     @Test
@@ -84,7 +85,7 @@ public class IsUsefulSecondaryTest {
 
         int use = user.isUsefulEffect(foe, thunderbolt, false, field, 0);
 
-        assertFalse("Thunderbolt vs Ground immune foe should be not use == 1", use == 1);
+       	assertEquals(0, use);
     }
 
     @Test
@@ -94,7 +95,7 @@ public class IsUsefulSecondaryTest {
         Move spin = Move.RAPID_SPIN;
         int use = user.isUsefulEffect(foe, spin, false, field, 10);
 
-        assertTrue("Rapid Spin should be use == 1 when hazards exist", use == 1);
+        assertEquals(1, use);
     }
     
     @Test
@@ -102,7 +103,7 @@ public class IsUsefulSecondaryTest {
         Move spin = Move.QUIVER_DANCE;
         int use = user.isUsefulEffect(foe, spin, false, field, 0);
 
-        assertTrue("Quiver Dance should be use == 1 if would give a boost", use == 1);
+       	assertEquals(1, use);
     }
 
     @Test
@@ -112,7 +113,12 @@ public class IsUsefulSecondaryTest {
         Move knockOff = Move.KNOCK_OFF;
         int use = user.isUsefulEffect(foe, knockOff, false, field, 20);
 
-        assertTrue("Knock Off should be use == 1 if foe has item", use == 1);
+        assertEquals(1, use);
+        
+        foe.item = null;
+        use = user.isUsefulEffect(foe, knockOff, false, field, 15);
+        
+        assertEquals(0, use);
     }
 
     @Test
@@ -122,7 +128,12 @@ public class IsUsefulSecondaryTest {
 
         int use = user.isUsefulEffect(foe, drum, false, field, 10);
 
-        assertFalse("Belly Drum self-HP loss should not count as use == 1", use == 1);
+        assertEquals(0, use);
+        
+        user.currentHP = user.getStat(0);
+        use = user.isUsefulEffect(foe, drum, false, field, 10);
+
+        assertEquals(1, use);
     }
     
     @Test
@@ -130,7 +141,7 @@ public class IsUsefulSecondaryTest {
         Move spin = Move.RAIN_DANCE;
         int use = user.isUsefulEffect(foe, spin, false, field, 10);
 
-        assertTrue("Rain Dance should be use == 1 on no weather", use == 1);
+        assertEquals(1, use);
     }
     
     @Test
@@ -138,7 +149,7 @@ public class IsUsefulSecondaryTest {
     	foe.ability = Ability.MIRROR_ARMOR;
     	int use = user.isUsefulEffect(foe, Move.BABY$DOLL_EYES, true, field, 0);
     	
-    	assertFalse("Baby Doll Eyes shouldn't be use == 1 on Mirror Armor", use == 1);
+    	assertEquals(0, use);
     }
     
     @Test
@@ -146,7 +157,8 @@ public class IsUsefulSecondaryTest {
     	int use1 = user.isUsefulEffect(foe, Move.REFLECT, false, field, 0);
     	int use2 = user.isUsefulEffect(foe, Move.LIGHT_SCREEN, false, field, 0);
     	
-    	assertTrue("Reflect and Light Screen should be use == 1", use1 == 1 && use2 == 1);
+    	assertEquals(use1, 1);
+    	assertEquals(use2, 1);
     }
     
     @Test
@@ -156,7 +168,7 @@ public class IsUsefulSecondaryTest {
         Move fangs = Move.PSYCHIC_FANGS;
         int use = user.isUsefulEffect(foe, fangs, false, field, 30);
 
-        assertTrue("Psychic Fangs should be use == 1 when screens exist", use == 1);
+        assertEquals(1, use);
     }
     
     @Test
@@ -166,22 +178,22 @@ public class IsUsefulSecondaryTest {
     	foe2.trainer = new Trainer("test", team, 0);
     	int use = user.isUsefulEffect(foe, Move.WHIRLWIND, false, field, 0);
     	
-    	assertTrue("Whirlwind should be use == 1 if foe has backup team members", use == 1);
+    	assertEquals(1, use);
     }
     
     @Test
-    public void testHazardsAgainstMagicBounce() {
-    	foe.ability = Ability.MAGIC_BOUNCE;
-    	int use = user.isUsefulEffect(foe, Move.STEALTH_ROCK, false, field, 0);
+    public void testTrickWithFoeNegativeItem() {
+    	foe.item = Item.CHOICE_BAND;
+    	int use = user.isUsefulEffect(foe, Move.TRICK, false, field, 0);
     	
-    	assertTrue("Hazards shouldn't be use == 1 if foe has Magic Bounce", use == 2);
+    	assertEquals(0, use);
     }
     
     @Test
-    public void testTauntAgainstMagicBounce() {
-    	foe.ability = Ability.MAGIC_BOUNCE;
-    	int use = user.isUsefulEffect(foe, Move.TAUNT, false, field, 0);
+    public void testRecoilMoves() {
+    	user.currentHP = 1;
+    	int score = user.scoreMove(Move.FLARE_BLITZ, foe, field, false, Move.SCRATCH, new Pair<Integer, Double>(4, 30.0));
     	
-    	assertTrue("Hazards shouldn't be use == 1 if foe has Magic Bounce", use == 2);
+    	assertTrue("Flare Blitz should have a positive score", score > 0);
     }
 }

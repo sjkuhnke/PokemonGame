@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import overworld.BattleUI;
 import overworld.GamePanel;
 import pokemon.Field.FieldEffect;
 import util.Pair;
@@ -310,7 +311,7 @@ public class Trainer implements Serializable {
 	}
 	
 	public Pokemon swapOut2(Pokemon foe, int slot, boolean baton, boolean userSide) {
-		Pokemon result = slot == 999 ? getNext2(foe) : team[Math.abs(slot)];
+		Pokemon result = slot == BattleUI.FREE_SWITCH ? getNext2(foe) : team[Math.abs(slot) - 1];
 		if (result != current) {
 			int[] oldStats = current.statStages.clone();
 			ArrayList<StatusEffect> oldVStatuses = new ArrayList<>(current.vStatuses);
