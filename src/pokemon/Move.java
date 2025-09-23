@@ -430,7 +430,7 @@ public enum Move {
 	ROCK_THROW(50,90,0,0,0,0,PType.ROCK,"A normal attack",false,15),
 	ROCK_TOMB(60,95,100,0,0,0,PType.ROCK,"% to lower foe's Speed by 1",false,15),
 	ROCK_WRECKER(150,90,0,0,0,0,PType.ROCK,"User takes 1/3 of damage dealt as recoil",false,5),
-	ROCKFALL_FRENZY(75,95,100,0,1,0,PType.ROCK,"% to set up Stealth Rocks on foe's side",false,10),
+	ROCKFALL_FRENZY(75,95,-1,0,1,0,PType.ROCK,"Sets up Stealth Rocks on foe's side",false,10),
 	ROLLOUT(-1,90,0,0,0,0,PType.ROCK,"Attacks up to 5 times, damage doubles each time. While active, user cannot switch out",true,20),
 	ROOST(0,1000,0,0,2,0,PType.FLYING,"Restores 1/2 of user's max HP and causes user to lose its FLYING type for the rest of the turn",false,5),
 	ROOT_KICK(60,95,0,0,0,0,PType.ROCK,"A normal attack",true,20),
