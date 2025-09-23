@@ -2302,7 +2302,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(ACTOR_UP, 54, 43, "Every move, every attack - it's all part of my grand show!", "A little setback, that's all. The show must go on!", 254);
 		gp.npc[mapNum][index] = NPCSetup(RAYNA, 53, 30, "It's... you! You're Finn!\n"
 				+ "I've been keeping an eye on you ever since you got in the way of Team Eclipse.\n"
-				+ "Have you let your light carve a path for you to success? You've come so far to my little neck in the woods.\n"
+				+ "Have you let your light carve a path for you to succeed? You've come so far to my little neck in the woods.\n"
 				+ "But this battle? It's different. You'll be facing the strength and purity of Light Pokemon, which means you'll need more than just brute force to win.\n"
 				+ "Are you ready to keep shining? Let's see if your light burns bright enough to stand against mine.",
 				"Wow... You really outshone me today! I can't believe how strong of a trainer you are.\n"

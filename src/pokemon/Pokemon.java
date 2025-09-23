@@ -51,6 +51,7 @@ import pokemon.Field.Effect;
 import pokemon.Field.FieldEffect;
 import pokemon.Nursery.EggGroup;
 import puzzle.Puzzle;
+import util.DeepClonable;
 import util.Pair;
 
 public class Pokemon implements RoleAssignable, Serializable {
@@ -176,6 +177,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public boolean illusion;
 	public boolean script;
 	public boolean abilityFlag;
+	public boolean cloned;
 	
 	// battle fields
 	public Move lastMoveUsed;
@@ -868,7 +870,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         	StringBuilder sb = new StringBuilder("===========================================\n");
         	
         	int currentScore = this.scorePokemon(foe, strongestMove, foeMaxDamagePair, field, moveScores);
-        	currentScore = Math.max(-100, currentScore);
+        	//currentScore = Math.max(-100, currentScore);
         	
         	HashMap<Pokemon, Integer> scoreMap = new HashMap<>();
         	for (int i = 0; i < tr.team.length; i++) {
@@ -1166,6 +1168,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 	
 	public boolean isUsefulPivot(Pokemon foe, Ability foeAbility, Move m) {
+		if (this.trainer == null || !this.trainer.hasValidMembers()) return false;
 		if (m.cat == 2) {
 			// prankster check
 			if (this.getAbility(field) == Ability.PRANKSTER
@@ -1212,7 +1215,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 //			}
 //		}
 //		score += Math.min(Math.min(maxDamageP, foeHPPercent), 100);
-		
+		if (foeMaxDamage == null) foeMaxDamage = new Pair<>(0, 0.0);
 		boolean foeCanKO = foeMaxDamage.getFirst() >= this.currentHP;
 		
 		// --- Defensive matchup ---
@@ -1255,7 +1258,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this.hasStatus(Status.LEECHED)) score -= 20;
 		if (this.hasStatus(Status.DROWSY)) score -= 60;
 		if (this.hasStatus(Status.CURSED)) score -= 80;
-		if (this.perishCount > 0) score -= (4 - this.perishCount) * 30;
+		if (this.perishCount > 0) score -= Math.pow((4 - this.perishCount), 2) * 20;
 		
 		// --- Offense potential/Move Scores ---
 		if (moveScores == null) {
@@ -1287,7 +1290,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 //		Move move = ms.move;
 		double score = 0.0;
 		
-		boolean isFaster = this.getFaster(foe, move.hasPriority(this) ? 1 : move.priority, foeStrongestMove.hasPriority(foe) ? 1 : move.priority) == this;
+		boolean isFaster = this.getFaster(foe, move.hasPriority(this) ? 1 : move.priority, foeStrongestMove != null && foeStrongestMove.hasPriority(foe) ? 1 : 0) == this;
 		
 		Pair<Integer, Double> dmgPair = this.calcWithTypes(foe, move, isFaster, field, false);
 		int damage = dmgPair.getFirst();
@@ -1414,7 +1417,11 @@ public class Pokemon implements RoleAssignable, Serializable {
 						} else {
 							score -= 20;
 						}
-					}
+					} else if (move == Move.DESTINY_BOND) {
+		    			score += 25;
+		    		} else if (move == Move.ENDURE) {
+		    			score += 20;
+		    		}
 				}
 			} else {
 				score -= 10;
@@ -1431,12 +1438,6 @@ public class Pokemon implements RoleAssignable, Serializable {
     		}
     	}
     	if (foeCanKO) {
-    		if (move == Move.DESTINY_BOND) {
-    			score += 25;
-    		}
-    		if (move == Move.ENDURE) {
-    			score += 20;
-    		}
     		// pick a last-ditch move
     		if (move.hasPriority(foe) && this.getFaster(foe, 0, 0) == foe && (move.cat == 2 || damagePercent > 0)) {
     			score += 55;
@@ -1508,13 +1509,15 @@ public class Pokemon implements RoleAssignable, Serializable {
 				Trainer foeTrainerClone = foe.trainer == null ? null : foe.trainer.shallowClone();
 				youClone.trainer = youTrainerClone;
 				foeClone.trainer = foeTrainerClone;
+				if (youTrainerClone != null) youTrainerClone.setCurrent(youClone);
+				if (foeTrainerClone != null) foeTrainerClone.setCurrent(foeClone);
 				Field fieldClone = field.clone();
 				
 				int youBeforeID = youClone.id;
 				int[] youBeforeStages = youClone.statStages.clone();
 				int[] foeBeforeStages = foeClone.statStages.clone();
-				ArrayList<StatusEffect> youBeforeV = new ArrayList<>(youClone.vStatuses);
-				ArrayList<StatusEffect> foeBeforeV = new ArrayList<>(foeClone.vStatuses);
+				ArrayList<StatusEffect> youBeforeV = DeepClonable.deepCloneList(youClone.vStatuses);
+				ArrayList<StatusEffect> foeBeforeV = DeepClonable.deepCloneList(foeClone.vStatuses);
 				Status youBeforeStatus = youClone.status;
 				Status foeBeforeStatus = foeClone.status;
 				int youBeforeHP = youClone.currentHP;
@@ -9678,6 +9681,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    
 	    // Trainer
 	    clonedPokemon.trainer = this.trainer;
+	    clonedPokemon.cloned = true;
 	    
 	    return clonedPokemon;
 	}

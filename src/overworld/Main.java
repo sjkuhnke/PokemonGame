@@ -336,7 +336,7 @@ public class Main {
 			writer.close();
 			
 			writeTMLearn(dir);
-			//writeUnusedMoves(dir);
+			writeUnusedMoves(dir);
 			//writeTypeStats(dir);
 			
 		} catch (IOException e1) {

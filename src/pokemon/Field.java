@@ -12,6 +12,8 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import util.*;
+
 public class Field {
 	
 	public FieldEffect weather;
@@ -142,7 +144,7 @@ public class Field {
 		}
 	}
 	
-	public class FieldEffect {
+	public class FieldEffect implements DeepClonable<FieldEffect> {
 		public int turns;
 		public Effect effect;
 		public int layers;
@@ -277,6 +279,11 @@ public class Field {
 				reciever.takeWish(stat);
 			}
 			
+		}
+
+		@Override
+		public FieldEffect deepClone() {
+			return this.clone();
 		}
 	}
 	
@@ -564,16 +571,7 @@ public class Field {
 		result.weatherTurns = this.weatherTurns;
 		result.terrainTurns = this.terrainTurns;
 		
-		result.fieldEffects = deepCloneEffects(this.fieldEffects);
-		
-		return result;
-	}
-	
-	public static ArrayList<FieldEffect> deepCloneEffects(ArrayList<FieldEffect> effects) {
-		ArrayList<FieldEffect> result = new ArrayList<>(effects.size());
-		for (FieldEffect fe : effects) {
-			result.add(fe.clone());
-		}
+		result.fieldEffects = DeepClonable.deepCloneList(this.fieldEffects);
 		
 		return result;
 	}

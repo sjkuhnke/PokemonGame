@@ -1,6 +1,8 @@
 package pokemon;
 
-public class StatusEffect {
+import util.DeepClonable;
+
+public class StatusEffect implements DeepClonable<StatusEffect> {
 	
 	public Status status;
 	public int num;
@@ -32,5 +34,15 @@ public class StatusEffect {
 		default:
 			return "being spun";
 		}
+	}
+	
+	@Override
+	public StatusEffect clone() {
+		return new StatusEffect(this.status, this.num, this.move);
+	}
+
+	@Override
+	public StatusEffect deepClone() {
+		return this.clone();
 	}
 }
