@@ -8,7 +8,7 @@ import java.util.Random;
 import overworld.BattleUI;
 import overworld.GamePanel;
 import pokemon.Field.FieldEffect;
-import util.Pair;
+import util.*;
 
 public class Trainer implements Serializable {
 	/**
@@ -192,6 +192,7 @@ public class Trainer implements Serializable {
 	public boolean swapRandom(Pokemon foe) {
 		if (!hasValidMembers()) return false;
 		Random rand = new Random();
+		boolean oldCloned = current.cloned;
 		int index = rand.nextInt(team.length);
 		while (team[index] == null || team[index].isFainted() || team[index] == current) {
 			index = rand.nextInt(team.length);
@@ -205,7 +206,7 @@ public class Trainer implements Serializable {
 		foe.removeStatus(Status.TRAPPED);
 		foe.removeStatus(Status.SPUN);
 		foe.removeStatus(Status.SPELLBIND);
-		current.swapIn(foe, true);
+		if (!oldCloned) current.swapIn(foe, true);
 		return true;
 		
 	}
@@ -404,7 +405,7 @@ public class Trainer implements Serializable {
 		if (oldP.ability == Ability.ILLUSION) oldP.illusion = true; // just here for calc
 		this.current = newP;
 		Task.addSwapInTask(newP, playerSide);
-		Pokemon.field.switches++;
+		if (!oldP.cloned) Pokemon.field.switches++;
 	}
 
 	public void setCurrent(Pokemon newCurrent) {
@@ -459,7 +460,7 @@ public class Trainer implements Serializable {
 		result.update = this.update;
 		result.staticEnc = this.staticEnc;
 		result.catchable = this.catchable;
-		result.effects = Field.deepCloneEffects(this.effects);
+		result.effects = DeepClonable.deepCloneList(this.effects);
 		result.cloned = true;
 		
 		return result;
@@ -468,7 +469,7 @@ public class Trainer implements Serializable {
 	public Trainer shallowClone() {
 		Trainer result = new Trainer(this.name, this.team, this.money, this.item, this.flagIndex, false);
 		result.update = this.update;
-		if (this.effects != null) result.effects = Field.deepCloneEffects(this.effects);
+		if (this.effects != null) result.effects = DeepClonable.deepCloneList(this.effects);
 		result.cloned = true;
 		
 		return result;
