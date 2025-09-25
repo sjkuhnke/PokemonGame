@@ -823,7 +823,7 @@ public class Pokemon implements RoleAssignable, Serializable {
     				switchRsn.setFirst(this);
         			switchRsn.setSecond(rsn);
     			}
-        		this.addStatus(Status.SWAP);
+        		this.addStatus(Status.SWAP, BattleUI.FREE_SWITCH);
         		return Move.GROWL;
         	} else {
         		return Move.STRUGGLE;
@@ -1283,6 +1283,16 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (bestAttack != Integer.MIN_VALUE) score += bestAttack;
 		if (bestStatus != Integer.MIN_VALUE) score += bestStatus;
 		
+		if (score < 0) {
+			if (this.getItem(field) == Item.RED_CARD) {
+				int boosts = 0;
+				for (Integer stat : foe.statStages) {
+					boosts += stat;
+				}
+				score += Math.pow(boosts * 2, 2);
+			}
+		}
+		
 		return score;
 	}
 	
@@ -1398,7 +1408,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 								}
 							}
 						}
-					} else if (move == Move.DISABLE || move == Move.TORMENT) {
+					} else if (move == Move.DISABLE || move == Move.TORMENT || move == Move.HEX_CLAW) {
 						ArrayList<Move> damagingMoveset = foe.getDamagingMoveset();
 						if (foe.getValidMoveset().size() == 1) {
 							score += 50;
@@ -1407,7 +1417,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 						} else if (foe.lastMoveUsed == foeStrongestMove || isFaster) {
 							score += (int)(foeMaxDamage.getSecond() * (damagingMoveset.size() * 1.0 / -5 + 1.3));
 						}
-					} else if (move == Move.ENCORE) {
+					} else if (move == Move.ENCORE || move == Move.SPOTLIGHT_RAY) {
 						if (foe.getValidMoveset().size() == 1) {
 							score -= 30;
 						}
@@ -1421,6 +1431,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		    			score += 25;
 		    		} else if (move == Move.ENDURE) {
 		    			score += 20;
+		    		} else if (move == Move.TRICK || move == Move.SWITCHEROO || move == Move.TRICK_TACKLE) {
+		    			if (this.getItem(field) != null && this.getItem(field).isTrickable()) {
+		    				score += 25;
+		    			}
 		    		}
 				}
 			} else {
@@ -2503,6 +2517,80 @@ public class Pokemon implements RoleAssignable, Serializable {
 			contact = move.contact;
 		}
 		
+		if (id == 237) {
+			Move oldMove = move;
+			move = get150Move(move);
+			if (move != oldMove) {
+				for (Moveslot m : this.moveset) {
+					if (m != null && m.move == oldMove) {
+						m.currentPP--;
+						if (m.currentPP == 0) {
+							if (this.getItem(field) == Item.LEPPA_BERRY) {
+								this.eatBerry(this.item, true, foe, m.move);
+							} else {
+								encoreCount = 0;
+							}
+						}
+					}
+				}
+			}
+			bp = move.basePower;
+			acc = move.accuracy;
+			secChance = move.secondary;
+			moveType = move.mtype;
+			critChance = move.critChance;
+			contact = move.contact;
+		}
+		
+		if (move == Move.HIDDEN_POWER) moveType = determineHPType();
+		if (move == Move.RETURN) moveType = determineHPType();
+		if (move == Move.WEATHER_BALL) moveType = determineWBType(field);
+		if (move == Move.TERRAIN_PULSE) moveType = determineTPType(field);
+		
+		if (this.getAbility(field) == Ability.NORMALIZE) {
+			moveType = PType.NORMAL;
+			bp *= 1.2;
+		}
+		
+		if (this.getAbility(field) == Ability.PIXILATE && moveType == PType.NORMAL) {
+			moveType = PType.LIGHT;
+			bp *= 1.2;
+		}
+		
+		if (this.getAbility(field) == Ability.GALVANIZE && moveType == PType.NORMAL) {
+			moveType = PType.ELECTRIC;
+			bp *= 1.2;
+		}
+		
+		if (this.getAbility(field) == Ability.REFRIGERATE && moveType == PType.NORMAL) {
+			moveType = PType.ICE;
+			bp *= 1.2;
+		}
+		
+		if (field.contains(field.fieldEffects, Effect.ION) && moveType == PType.NORMAL) {
+			moveType = PType.ELECTRIC;
+		}
+		
+		if (this.getAbility(field) == Ability.PROTEAN && moveType != PType.UNKNOWN) {
+			if (this.type1 == moveType && this.type2 == null) {
+				
+			} else {
+				this.type1 = moveType;
+				this.type2 = null;
+				Task.addAbilityTask(this);
+				Task.addTypeTask(this.nickname + "'s type was updated to " + this.type1.toString() + "!", this);
+			}
+		}
+		
+		if (move == Move.FAILED_SUCKER) {
+			useMove(move, foe);
+			fail();
+			this.impressive = false;
+			this.moveMultiplier = 1;
+			this.metronome = -1;
+			return;
+		}
+		
 		if (move == Move.MIRROR_MOVE || move == Move.MIMIC) {
 			useMove(move, foe);
 			move = foe.lastMoveUsed;
@@ -2648,71 +2736,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.outCount--;
 		}
 		
-		if (id == 237) {
-			Move oldMove = move;
-			move = get150Move(move);
-			if (move != oldMove) {
-				for (Moveslot m : this.moveset) {
-					if (m != null && m.move == oldMove) {
-						m.currentPP--;
-						if (m.currentPP == 0) {
-							if (this.getItem(field) == Item.LEPPA_BERRY) {
-								this.eatBerry(this.item, true, foe, m.move);
-							} else {
-								encoreCount = 0;
-							}
-						}
-					}
-				}
-			}
-			bp = move.basePower;
-			acc = move.accuracy;
-			secChance = move.secondary;
-			moveType = move.mtype;
-			critChance = move.critChance;
-			contact = move.contact;
-		}
-		
-		if (move == Move.HIDDEN_POWER) moveType = determineHPType();
-		if (move == Move.RETURN) moveType = determineHPType();
-		if (move == Move.WEATHER_BALL) moveType = determineWBType(field);
-		if (move == Move.TERRAIN_PULSE) moveType = determineTPType(field);
-		
-		if (this.getAbility(field) == Ability.NORMALIZE) {
-			moveType = PType.NORMAL;
-			bp *= 1.2;
-		}
-		
-		if (this.getAbility(field) == Ability.PIXILATE && moveType == PType.NORMAL) {
-			moveType = PType.LIGHT;
-			bp *= 1.2;
-		}
-		
-		if (this.getAbility(field) == Ability.GALVANIZE && moveType == PType.NORMAL) {
-			moveType = PType.ELECTRIC;
-			bp *= 1.2;
-		}
-		
-		if (this.getAbility(field) == Ability.REFRIGERATE && moveType == PType.NORMAL) {
-			moveType = PType.ICE;
-			bp *= 1.2;
-		}
-		
-		if (field.contains(field.fieldEffects, Effect.ION) && moveType == PType.NORMAL) {
-			moveType = PType.ELECTRIC;
-		}
-		
-		if (this.getAbility(field) == Ability.PROTEAN && moveType != PType.UNKNOWN) {
-			if (this.type1 == moveType && this.type2 == null) {
-				
-			} else {
-				this.type1 = moveType;
-				this.type2 = null;
-				Task.addAbilityTask(this);
-				Task.addTypeTask(this.nickname + "'s type was updated to " + this.type1.toString() + "!", this);
-			}
-		}
-		
 		if (foe.getItem(field) != Item.ABILITY_SHIELD &&
 				(move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || move == Move.SUNSTEEL_STRIKE ||
 				move == Move.FUTURE_SIGHT || this.getAbility(field) == Ability.MOLD_BREAKER)) {
@@ -2744,19 +2767,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 			Task.addTask(Task.TEXT, move + " was used on itself!");
 			return;
 		}
-		if (move == Move.FAILED_SUCKER) {
-			useMove(Move.SUCKER_PUNCH, foe);
-			fail();
-			this.impressive = false;
-			this.moveMultiplier = 1;
-			this.metronome = -1;
-			return;
-		}
-		if (move == Move.SLEEP_TALK || (move == Move.SNORE && status != Status.ASLEEP)) {
+		if ((move == Move.SLEEP_TALK || move == Move.SNORE) && status != Status.ASLEEP) {
 			useMove(move, foe);
 			fail();
 			this.impressive = false;
 			this.moveMultiplier = 1;
+			this.metronome = -1;
 			return;
 		}
 		
@@ -2765,14 +2781,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			fail();
 			this.moveMultiplier = 1;
 			this.metronome = -1;
-			return;
-		}
-		
-		if ((move == Move.MAGIC_REFLECT || move == Move.ABDUCT || move == Move.TAKE_OVER) && this.impressive) {
-			useMove(move, foe);
-			fail();
-			this.impressive	= false;
-			this.moveMultiplier = 1;
 			return;
 		}
 		
@@ -3891,6 +3899,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	private void useMove(Move move, Pokemon foe) {
+		if (move == Move.FAILED_SUCKER) move = Move.SUCKER_PUNCH;
 		announceUseMove(move);
 		for (Moveslot m : this.moveset) {
 			if (m != null && m.move == move) {
@@ -6842,7 +6851,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this.playerOwned() && this.getPlayer().nuzlocke) gp.saveScum(this.toString() + " died to " + foe.toString() + (foe.trainerOwned() ? " (" + foe.trainer.getName() + ")": "" + " (Save Scum)"));
 		
 		foe.awardExp(getxpReward());
-		field.knockouts++;
+		if (!this.cloned) field.knockouts++;
 	}
 
 	public void clearVolatile(Pokemon foe) {
