@@ -459,7 +459,7 @@ public class PlayerCharacter extends Entity {
 		if (p.wiped()) return;
 		Pokemon foe = Trainer.getTrainer(trainer).getCurrent();
 		int money = Trainer.getTrainer(trainer).getMoney();
-		if (p.nuzlocke && p.wholeTeamOverLevelCap(money)) {
+		if (p.nuzlocke && (money == 500 ? p.hasPokemonOverLevelCap() : p.wholeTeamOverLevelCap())) {
 			gp.wipe(true, p.current, foe, false);
 			return;
 		}
@@ -489,7 +489,7 @@ public class PlayerCharacter extends Entity {
 	public void startWild(String area, char type) {
 		if (p.wiped()) return;
 		Pokemon foe = gp.encounterPokemon(area, type, p.random);
-		if (p.nuzlocke && p.wholeTeamOverLevelCap(0)) {
+		if (p.nuzlocke && p.wholeTeamOverLevelCap()) {
 			gp.wipe(true, p.current, foe, false);
 			return;
 		}

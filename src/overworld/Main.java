@@ -336,7 +336,7 @@ public class Main {
 			writer.close();
 			
 			writeTMLearn(dir);
-			writeUnusedMoves(dir);
+			//writeUnusedMoves(dir);
 			//writeTypeStats(dir);
 			
 		} catch (IOException e1) {
@@ -457,7 +457,7 @@ public class Main {
 			Map<Pokemon, Move> sigTwo = new HashMap<>();
 			Map<Pokemon, Move> sigThree = new HashMap<>();
 			Map<Move, Integer> moveCount = new HashMap<>();
-			for (Move m : Move.values()) {
+			for (Move m : Move.getAllMoves()) {
 				moveCount.put(m, 0);
 			}
 			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {

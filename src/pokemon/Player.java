@@ -1975,17 +1975,13 @@ public class Player extends Trainer implements Serializable {
 		return false;
 	}
 	
-	public boolean wholeTeamOverLevelCap(int money) {
+	public boolean wholeTeamOverLevelCap() {
 		for (Pokemon p : team) {
 			if (p != null) {
-				if (money == 500) { // for gym leaders, can't have a single member over level cap
-					if (p.isOverLevelCap(badges)) return true;
-				} else { // for every other battle, whole team can't be over level cap
-					if (!p.isOverLevelCap(badges)) return false;
-				}
+				if (!p.isOverLevelCap(badges)) return false;
 			}
 		}
-		return money == 500 ? false : true;
+		return true;
 	}
 
 	public void takeItem(Pokemon p, AbstractUI ui) {
