@@ -24,6 +24,7 @@ public class TreasureChest extends ItemObj {
 	
 	static {
 		resourcePool.put(Item.RARE_CANDY, 5);
+		resourcePool.put(Item.EUPHORIAN_GEM, 6);
         resourcePool.put(Item.REVIVE, 10);
         resourcePool.put(Item.MAX_REVIVE, 8);
         resourcePool.put(Item.PP_UP, 12);
@@ -42,7 +43,6 @@ public class TreasureChest extends ItemObj {
         treasurePool.put(Item.RELIC_GOLD, 8);
         treasurePool.put(Item.RELIC_SILVER, 14);
         
-        stonePool.put(Item.EUPHORIAN_GEM, 6);
         stonePool.put(Item.LEAF_STONE, 3);
         stonePool.put(Item.FIRE_STONE, 2);
         stonePool.put(Item.WATER_STONE, 3);
@@ -110,7 +110,7 @@ public class TreasureChest extends ItemObj {
 	private ArrayList<Item> addChestLoot() {
 		ArrayList<Item> loot = new ArrayList<>();
 		
-		loot.addAll(pickRandomItems(resourcePool, 1, 4));   // Pick 1-4 from resources
+		loot.addAll(pickRandomItems(resourcePool, 2, 4));   // Pick 1-4 from resources
         loot.addAll(pickRandomItems(treasurePool, 4, 6));   // Pick 4-6 from treasure
         loot.addAll(pickRandomItems(stonePool, 1, 2));      // Pick 1-2 from stones
         loot.add(randomMint());

@@ -450,10 +450,26 @@ public class Trainer implements Serializable {
 		return -1;
 	}
 	
+	/**
+	 * Usage: for SimBattle battle betting and for after catching a Legendary
+	 * and the game needs to generate a new one when you summon another of the
+	 * same species (and therefore same Trainer).
+	 * <br><br>
+	 * <b>NOTE:</b> The new team Pokemon will be cloned copies of the originals, but
+	 * will not have the {@code cloned} tag like usual cloned Pokemon will (explicitly set).
+	 * This is because the SimBattle needs to calculate how many switches
+	 * would happen on average, and {@code cloned} Pokemon don't count for counting switches
+	 * since the AI uses {@code cloned} Pokemon to make decisions with.
+	 * 
+	 * @return a cloned Trainer with a deep cloned team of Pokemon and a deep cloned {@code effects} ArrayList
+	 */
 	public Trainer clone() {
 		Pokemon[] newTeam = new Pokemon[this.team.length];
 		for (int i = 0; i < this.team.length; i++) {
-			if (this.team[i] != null) newTeam[i] = this.team[i].clone();
+			if (this.team[i] != null) {
+				newTeam[i] = this.team[i].clone();
+				newTeam[i].cloned = false;
+			}
 		}
 		Trainer result = new Trainer(this.name, newTeam, this.money, this.item, this.flagIndex, true);
 		

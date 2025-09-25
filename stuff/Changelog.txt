@@ -876,3 +876,20 @@ Fixed bug with trapping effects not being removed from yourself when you use a p
 Made Tailwind show the effective speed stat of the affected Pokemon in the Calculator
 Added Unerodible ability as something for the AI to consider when checking for resists in the back since Superchargo is technically a Ground resist with it (should've had it in there from the start anyways)
 Removed the move that you're trying to learn name in the header since the move is literally right below that, so I formatted the header to all fit on one line just saying "<Pokemon> wants to learn:"
+Fixed TM58 Dragon Pulse location in Item Info doc
+Moved TM95 Trick Room from the Frenco City shop to Abandoned Tower (8th gym split) since Ice Beam is only in the Deep Chasm, to mirror
+Sprite for Wormatron added!
+Gave Metapod Electroweb at 11 and moved Iron Defense to 9 (from 11), and gave it Sticky Web at 15
+Gave Butterfree Electroweb at 17 and Sticky Web at 55
+Gave Metapod-X Electroweb at 15 and Sticky Web at 20
+Gave Butterfree-X Electroweb as move reminder (lv 1) and Sticky Web at 60
+Changed Ace Trainer Avianna's Butterfree-X's Tailwind -> Electroweb
+Made move reminder just teach you the move if you have an empty slot instead of asking which move to forget
+Fixed Battle Betting to actually display "Calculating odds..." properly while it's, yknow, calculating odds
+Fixed the tooltips showing that you can press [Ctrl] + [A] for calc before you have a Pokemon
+Made getting items after a battle support plurals ("You got 3 Fable Charges!")
+Wrote a method for checking if a Pokemon has any boosts so that way Talented can not announce for sure unless they have boosts
+Changed Magician Laurita's Buterfree-X's Deck Change -> Sticky Web
+Changed Lady Serapha's Butterfree's Quiver Dance -> Sticky Web
+Added a statused icon for the team icons in the Battle UI (a darker red Pokeball)
+Reworked Healing Circle to make it restore 50% of the Pokemon's missing HP instead of 25% of their max HP on switch in

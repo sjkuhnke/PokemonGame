@@ -4444,8 +4444,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foe.burn(false, this);
 			break;
 		case FATAL_BIND:
-			Task.addTask(Task.TEXT, foe.nickname + " will perish in 3 turns!");
-			foe.perishCount = (foe.perishCount == 0) ? 4 : foe.perishCount;
+			if (!foe.isFainted()) {
+				Task.addTask(Task.TEXT, foe.nickname + " will perish in 3 turns!");
+				foe.perishCount = (foe.perishCount == 0) ? 4 : foe.perishCount;
+			}
 			break;
 		case FIRE_FANG:
 			int randomNum = ((int) Math.random() * 3);
