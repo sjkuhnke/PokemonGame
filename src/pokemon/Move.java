@@ -164,7 +164,6 @@ public enum Move {
 	EXTRASENSORY(80,100,10,0,1,0,PType.PSYCHIC,"% chance of flinching foe",false,20),
 	EXTREME_SPEED(80,100,0,0,0,2,PType.NORMAL,"Increased priority",true,5),
 	FACADE(-1,100,0,0,0,0,PType.NORMAL,"Damage is doubled if the user has a status condition",true,20),
-	FAILED_SUCKER(0,100,0,0,0,0,PType.DARK,"If you're seeing this, something went horribly wrong",false,1),
 	FAKE_OUT(40,100,100,0,0,3,PType.NORMAL,"% chance to cause foe to flinch. Increased priority, can only be used on the first turn out",true,10),
 	FAKE_TEARS(0,100,0,0,2,0,PType.DARK,"Lowers foe's Sp.Def by 2",false,20),
 	FALSE_SURRENDER(80,1000,0,0,0,0,PType.DARK,"This attack never misses",true,10),
@@ -518,7 +517,6 @@ public enum Move {
 	STRENGTH(80,100,0,0,0,0,PType.NORMAL,"A normal attack",true,10),
 	STRENGTH_SAP(0,100,0,0,2,0,PType.GRASS,"Heals user an HP amount equal to foe's Attack stat; lowers foe's Attack by 1",false,10),
 	STRING_SHOT(0,100,0,0,2,0,PType.BUG,"Lowers foe's Speed by 2",false,25),
-	STRUGGLE(40,1000,0,0,0,0,PType.UNKNOWN,"Deals 25% of user's max HP as recoil",true,1),
 	STRUGGLE_BUG(50,100,100,0,1,0,PType.BUG,"% chance to lower foe's Sp.Atk by 1",false,20),
 	STUN_SPORE(0,75,0,0,2,0,PType.GRASS,"Paralyzes foe",false,25),
 	SUBMISSION(80,90,0,0,0,0,PType.FIGHTING,"User takes 1/4 of damage inflicted as recoil",true,20),
@@ -618,6 +616,9 @@ public enum Move {
 	ZEN_HEADBUTT(80,90,30,0,0,0,PType.PSYCHIC,"% of causing foe to flinch",true,15),
 	ZING_ZAP(80,100,30,0,0,0,PType.ELECTRIC,"% of causing foe to flinch",true,15),
 	
+	STRUGGLE(40,1000,0,0,0,0,PType.UNKNOWN,"Deals 25% of user's max HP as recoil",true,1),
+	FAILED_SUCKER(0,100,0,0,0,0,PType.DARK,"If you're seeing this, something went horribly wrong",false,1),
+	
 	HP_ROCK(60,100,0,0,1,0,PType.ROCK,"Calc only move",false,15),
 	HP_FIRE(60,100,0,0,1,0,PType.FIRE,"Calc only move",false,15),
 	HP_WATER(60,100,0,0,1,0,PType.WATER,"Calc only move",false,15),
@@ -687,7 +688,7 @@ public enum Move {
 	public int secondary;
 	
 	private static int globalID = 0;
-	public static final int DUMMY_MOVES_AMOUNT = 45;
+	public static final int DUMMY_MOVES_AMOUNT = 47;
 	
 	public static Move[] getAllMoves() {
 		Move[] allMoves = values();
