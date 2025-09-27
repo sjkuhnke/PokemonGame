@@ -4308,7 +4308,7 @@ public class UI extends AbstractUI {
 				showMessage("Cashed in " + sellAmt + " coins for $" + money + "!");
 				gp.player.p.coins -= sellAmt;
 				gp.player.p.setMoney(gp.player.p.getMoney() + money);
-				sellAmt = 1;
+				sellAmt = 0;
 			} else {
 				showMessage("Come back soon!");
 			}
