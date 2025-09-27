@@ -387,6 +387,11 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "That's hello where I come from. I'm Ryder, adventurer extraordinaire at the ripe old age of 16.");
 			Task.addTask(Task.DIALOGUE, npc, "Say, you look like a competent Pokemon trainer. Mind taking care of something for me?");
 			Pokemon abra = new Pokemon(243, 15, true, false);
+			Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
+			if (gift.nextDouble() < 0.4 && abra.getAbility(2) != Ability.NULL) {
+				abra.abilitySlot = 2;
+				abra.setAbility();
+			}
 			Task.addTask(Task.TEXT, "You recieved " + abra.name() + "!");
 			Task.addTask(Task.GIFT, "", abra);
 			Task.addTask(Task.DIALOGUE, npc, "Yeah, I noticed Abra seems to gain a new ability here, probably because of that new magic type I've been hearing about.");

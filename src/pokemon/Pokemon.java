@@ -1301,7 +1301,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		double score = 0.0;
 		
 		boolean isFaster = this.getFaster(foe, move.hasPriority(this) ? 1 : move.priority, foeStrongestMove != null && foeStrongestMove.hasPriority(foe) ? 1 : 0) == this;
-		
+		if (move == Move.MIMIC || move == Move.MIRROR_MOVE) {
+			move = isFaster ? foe.lastMoveUsed : foeStrongestMove;
+		}
+		if (move == null) return -10;
 		Pair<Integer, Double> dmgPair = this.calcWithTypes(foe, move, isFaster, field, false);
 		int damage = dmgPair.getFirst();
 		double damagePercent = dmgPair.getSecond();
@@ -3094,6 +3097,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 				bp = determineBasePower(foe, move, first, this.trainer == null ? null : this.trainer.team, foeAbility, field, true);
 			}
 			
+			if (this.getAbility(field) == Ability.TECHNICIAN && bp <= 60) {
+				bp *= 1.5;
+			}
+			
 			if (this.getAbility(field) == Ability.JACKPOT) {
 				int dice = new Random().nextInt(6);
 				if (this.getItem(field) == Item.LOADED_DICE) dice += 2;
@@ -3159,10 +3166,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 					bp *= 2;
 				}
 				this.lastMoveUsed = move;
-			}
-			
-			if (this.getAbility(field) == Ability.TECHNICIAN && bp <= 60) {
-				bp *= 1.5;
 			}
 			
 			if (this.getAbility(field) == Ability.TOUGH_CLAWS && contact) {
@@ -7148,6 +7151,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			bp = determineBasePower(foe, move, first, null, foeAbility, field, false);
 		}
 		
+		if (this.getAbility(field) == Ability.TECHNICIAN && bp <= 60) {
+			bp *= 1.5;
+		}
+		
 		if (this.getItem(field) == Item.METRONOME && move == this.lastMoveUsed) bp *= (1 + (Math.min(1.0, (this.metronome + 1) * 0.2)));
 		
 		if (this.getItem(field) == Item.PROTECTIVE_PADS) contact = false;
@@ -7168,10 +7175,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (move == Move.FUSION_FLARE && this.lastMoveUsed == Move.FUSION_BOLT) {
 			bp *= 2;
-		}
-		
-		if (this.getAbility(field) == Ability.TECHNICIAN && bp <= 60) {
-			bp *= 1.5;
 		}
 		
 		if (this.getAbility(field) == Ability.TOUGH_CLAWS && contact) {

@@ -26,9 +26,10 @@ public class StatusEffect implements DeepClonable<StatusEffect> {
 		case BIND:
 			return "being bound";
 		case WHIRLPOOL:
+			return "the vortex";
 		case FIRE_SPIN:
 		case MAGMA_STORM:
-			return "the vortex";
+			return "the fiery vortex";
 		case INFESTATION:
 			return "being infested";
 		default:
