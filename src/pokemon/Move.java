@@ -522,7 +522,7 @@ public enum Move {
 	SUBMISSION(80,90,0,0,0,0,PType.FIGHTING,"User takes 1/4 of damage inflicted as recoil",true,20),
 	SUCKER_PUNCH(70,100,0,0,0,1,PType.DARK,"Inreased priority, fails if foe didn't use an attacking move",true,5),
 	SUMMIT_STRIKE(70,95,100,0,0,0,PType.FIGHTING,"% to lower foe's Defense by one stage. 30% to flinch foe",true,15),
-	SUNNY_BURST(80,100,100,0,1,0,PType.LIGHT,"% to turn weather to SUNNY",false,5),
+	SUNNY_BURST(80,100,100,0,1,0,PType.LIGHT,"% to turn weather to SUNNY for 5 turns",false,5),
 	SUNNY_DAY(0,1000,0,0,2,0,PType.FIRE,"Changes the weather to SUNNY for 5 turns",false,5),
 	SUNSTEEL_STRIKE(100,100,0,0,0,0,PType.STEEL,"Ignores the foe's ability",true,5),
 	SUPER_FANG(0,90,0,-999,0,0,PType.NORMAL,"Halves foe's remaining HP",true,10),
