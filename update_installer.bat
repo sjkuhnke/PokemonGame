@@ -38,7 +38,7 @@ if not exist releases (
 )
 
 :: Copy final installer to releases with versioned filename
-copy /Y "tools\Output\PokemonXhenosInstaller.exe" "releases\PokemonXhenosInstaller_%VERSION%.exe"
+copy /Y "tools\Output\PokemonXhenosInstaller.exe" "releases\PokemonXhenosInstaller_v%VERSION%.exe"
 
 echo.
 echo === Creating macOS .app bundle ===
