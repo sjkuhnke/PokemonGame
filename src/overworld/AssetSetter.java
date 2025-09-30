@@ -2206,7 +2206,7 @@ public class AssetSetter {
 		
 		mapNum = 93;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "Would you like to remember a move? Which Pokemon should remember?", mapNum);
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "", mapNum);
 		
 		mapNum = 94;
 		index = 0;

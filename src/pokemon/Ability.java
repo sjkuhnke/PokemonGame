@@ -160,7 +160,7 @@ public enum Ability {
 	TYPE_MASTER("Grants STAB on all moves."),
 	UNAWARE("Ignores the opposing Pokemon's stat changes."),
 	UNBURDEN("Doubles the Speed stat if the Pokemon's held item is used or lost."),
-	UNERODIBLE("Reduces damage from GRASS, WATER, and GROUND attacks by 0.25x."),
+	UNERODIBLE("Quarters damage taken from GRASS, WATER, and GROUND attacks."),
 	UNWAVERING("Halves damage from DARK and GHOST moves; ignores switch-in stat-lowering Abilities."),
 	VOLT_ABSORB("Restores 1/4 of max HP if hit by a ELECTRIC move."),
 	VOLT_VORTEX("Doubles the Pokemon's speed in ELECTRIC TERRAIN."),

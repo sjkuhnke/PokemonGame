@@ -875,7 +875,7 @@ public abstract class AbstractUI {
 		int offset = (int) (gp.tileSize * 0.6);
 		if (desc.length > 3) {
 			g2.setFont(g2.getFont().deriveFont(20F));
-			desc = Item.breakString(move.getDescription(), 58).split("\n");
+			desc = Item.breakString(move.getDescription(), 56).split("\n");
 			offset = (int) (gp.tileSize * 0.5);
 		}
 		y += (3 - desc.length) * (gp.tileSize / 4);
