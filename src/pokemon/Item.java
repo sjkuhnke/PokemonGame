@@ -118,7 +118,7 @@ public enum Item {
 	VALIANT_GEM(24,2000,500,new Color(72, 75, 219),Item.OTHER,null,"Grants Masculine energy to a Pokemon, evolving them into their male evolution."),
 	PETTICOAT_GEM(25,2000,500,new Color(204, 61, 140),Item.OTHER,null,"Grants Feminine energy to a Pokemon, evolving them into their female evolution."),
 	RAZOR_CLAW(265,1000,500,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon."),
-	ABILITY_CAPSULE(26,5000,2500,new Color(102, 7, 143),Item.OTHER,null,"Swaps a Pokemon's ability with its other possible ability."),
+	ABILITY_CAPSULE(26,5000,2500,new Color(102, 7, 143),Item.OTHER,null,"Swaps a Pokemon's ability with its other regular ability."),
 	ABILITY_PATCH(91,10000,5000,Color.BLACK,Item.OTHER,null,"A patch that can be used to change the regular Ability of a Pokemon to a rarer Ability."),
 	LONELY_MINT(311,500,150,Color.BLACK,Item.MEDICINE,Nature.LONELY,"Changes a Pokemon's nature to +Atk, -Def"),
 	ADAMANT_MINT(29,2500,1000,new Color(113, 84, 255),Item.MEDICINE,Nature.ADAMANT,"Changes a Pokemon's nature to +Atk, -SpA"),

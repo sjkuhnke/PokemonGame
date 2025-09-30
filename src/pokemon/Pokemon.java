@@ -1541,12 +1541,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (youTrainerClone != null) youTrainerClone.setCurrent(youClone);
 				if (foeTrainerClone != null) foeTrainerClone.setCurrent(foeClone);
 				Field fieldClone = field.clone();
+				youClone.vStatuses = DeepClonable.deepCloneList(youClone.vStatuses);
+				foeClone.vStatuses = DeepClonable.deepCloneList(foeClone.vStatuses);
 				
 				int youBeforeID = youClone.id;
 				int[] youBeforeStages = youClone.statStages.clone();
 				int[] foeBeforeStages = foeClone.statStages.clone();
-				ArrayList<StatusEffect> youBeforeV = DeepClonable.deepCloneList(youClone.vStatuses);
-				ArrayList<StatusEffect> foeBeforeV = DeepClonable.deepCloneList(foeClone.vStatuses);
+				ArrayList<StatusEffect> youBeforeV = youClone.vStatuses;
+				ArrayList<StatusEffect> foeBeforeV = foeClone.vStatuses;
 				Status youBeforeStatus = youClone.status;
 				Status foeBeforeStatus = foeClone.status;
 				int youBeforeHP = youClone.currentHP;
