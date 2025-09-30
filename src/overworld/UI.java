@@ -3645,6 +3645,14 @@ public class UI extends AbstractUI {
 			String onoff = gp.player.p.repel ? "on!" : "off.";
 			showMessage("Repel mode was turned " + onoff);
 			bagState = 0;
+		} else if (item == Item.MOVE_ENCYCLOPEDIA) {
+			if (inGauntlet) {
+				showMessage("Can't use this now!");
+			} else {
+				gp.setTaskState();
+				Task.addTask(Task.PARTY, "Teach # a move?", Task.REMIND);
+				bagState = 0;
+			}
 		} else if (!item.isUsable()) {
 			// do nothing
 		} else {

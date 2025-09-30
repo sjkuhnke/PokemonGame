@@ -146,7 +146,7 @@ public class Trainer implements Serializable {
 		sb.append("______________\n");
 		for (Pokemon p : team) {
 			if (!p.isFainted() && p != current) {
-				int score = p.scorePokemon(other, null, new Pair<>(0, 0.0), Pokemon.field, null);
+				int score = p.scorePokemon(other, null, new Pair<>(0, 0.0), false, Pokemon.field, null);
 				sb.append("[" + p + ": " + score + "], ");
 				if (score > bestScore) {
 					bestScore = score;

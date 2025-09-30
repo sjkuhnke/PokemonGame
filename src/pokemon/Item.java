@@ -359,6 +359,7 @@ public enum Item {
 	STATUS_KIT(391,0,0,Color.BLACK,Item.KEY_ITEM,true,"Inflicts a status of your choosing (if not immune to that status)"),
 	DAMAGE_KIT(392,0,0,Color.BLACK,Item.KEY_ITEM,true,"Damages a Pokemon by 1 HP (won't cause it to faint)"),
 	CALCULATOR(200,0,0,Color.BLACK,Item.KEY_ITEM,true,"Calculates damage simulating a battle"),
+	MOVE_ENCYCLOPEDIA(397,0,0,Color.BLACK,Item.KEY_ITEM,true,"Teaches a Pokemon a move they've forgotten"),
 	DEX_NAV(263,0,0,Color.BLACK,Item.KEY_ITEM,true,"Shows wild Pokemon nearby"),
 	CHERI_BERRY(221,10,2,new Color(232, 96, 80),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to free itself from paralysis."),
 	CHESTO_BERRY(222,10,2,new Color(144, 112, 224),Item.BERRY,null,"If a Pokemon holds one of these Berries, it will be able to wake itself from sleep."),

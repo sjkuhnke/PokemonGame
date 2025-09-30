@@ -1133,7 +1133,16 @@ public class Script {
 		});
 		
 		scriptMap.put(93.0, (npc) -> { // move reminder
-			Task.addTask(Task.PARTY, "Teach # a move?", Task.REMIND);
+			if (p.nuzlocke && !p.flag[4][7]) {
+				Task.addTask(Task.TEXT, "Hello there! I'm the move reminder, I can teach any Pokemon a move they've forgotten!");
+				Task.addTask(Task.TEXT, "I know that having to come to me every time isn't always convenient, so here, I made this item for use on-the-go!");
+				Task t = Task.addTask(Task.ITEM, "");
+				t.item = Item.MOVE_ENCYCLOPEDIA;
+				p.flag[4][7] = true;
+			} else {
+				Task.addTask(Task.TEXT, "Would you like to remember a move? Which Pokemon should remember?");
+				Task.addTask(Task.PARTY, "Teach # a move?", Task.REMIND);
+			}
 		});
 		
 		scriptMap.put(94.0, (npc) -> { // gift e/s
