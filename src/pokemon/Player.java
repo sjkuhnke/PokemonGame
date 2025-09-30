@@ -1124,9 +1124,10 @@ public class Player extends Trainer implements Serializable {
 				
 			// Ability Capsule
 			case ABILITY_CAPSULE:
-				boolean swappable = p.canUseItem(item) == 1;
-	    		if (!swappable) {
-	        		gp.ui.showMessage(Item.breakString(p.nickname + " only has one ability, it won't have any effect.", UI.MAX_TEXTBOX));
+				int usable = p.canUseItem(item);
+	    		if (usable != 1) {
+	    			String message = usable == 2 ? p.nickname + " has its hidden ability, use an Ability Patch to swap back to its regular ability!" : p.nickname + " only has one ability, it won't have any effect.";
+	        		gp.ui.showMessage(Item.breakString(message, UI.MAX_TEXTBOX));
 	        		return;
 	        	} else {
 	        		Ability oldAbility = p.ability;

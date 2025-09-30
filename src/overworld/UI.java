@@ -45,7 +45,6 @@ public class UI extends AbstractUI {
 	public int currentPocket = Item.MEDICINE;
 	public int bagState;
 	public int sellAmt = 1;
-	public Item currentItem;
 	public ArrayList<Bag.Entry> currentItems;
 	
 	public int btX = 0;

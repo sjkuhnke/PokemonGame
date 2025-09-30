@@ -39,6 +39,7 @@ public abstract class AbstractUI {
 	public int counter = 0;
 	public boolean showMoveOptions;
 	public Move currentMove;
+	public Item currentItem;
 	public boolean showIVOptions;
 	public boolean showStatusOptions;
 	public boolean gauntlet;
@@ -345,7 +346,7 @@ public abstract class AbstractUI {
 					g2.setColor(Color.BLACK);
 					g2.drawString(lvText, getCenterAlignedTextX(lvText, x + 60), (int) (y + gp.tileSize * 2.75));
 					int canUseItem = move == null ? p.canUseItem(item) : p.canLearnMove(move);
-					String hpText = canUseItem == -1 ? p.currentHP + " / " + p.getStat(0) : canUseItem == 0 ? "NOT ABLE" : canUseItem == 2 ? "LEARNED" : "ABLE";
+					String hpText = canUseItem == -1 ? p.currentHP + " / " + p.getStat(0) : canUseItem == 0 ? "NOT ABLE" : canUseItem == 2 ? currentItem == null ? "LEARNED" : "NOT ABLE" : "ABLE";
 					g2.drawString(hpText, getCenterAlignedTextX(hpText, (int) (x + (partyWidth * 0.75) - 12)), (int) (y + gp.tileSize * 2.25));
 					if (p.status != Status.HEALTHY) {
 						g2.drawImage(p.status.getImage(), (int) (x + gp.tileSize * 2.5) + 4, (int) (y + gp.tileSize * 2.25) + 8, null);
