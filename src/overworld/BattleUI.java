@@ -1193,7 +1193,7 @@ public class BattleUI extends AbstractUI {
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			if (gp.player.p.nuzlocke && user.level > Trainer.getLevelCap(gp.getEffectiveBadges(foe))) {
-				if (user.getPlayer().hasValidMembers()) {
+				if (user.getPlayer().canSwitch(foe)) {
 					subState = MOVE_MESSAGE_STATE;
 					showMessage(user.nickname + " is over the level cap: switch it out!");
 				} else {

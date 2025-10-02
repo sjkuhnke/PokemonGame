@@ -40,6 +40,8 @@ public class PlayerCharacter extends Entity {
 	private int cooldown;
 	
 	public static String currentMapName;
+	private int SPEED_1 = gp.tileSize / 12;
+	private int SPEED_2 = gp.tileSize / 6;
 	
 	public PlayerCharacter(GamePanel gp, KeyHandler keyH) {
 		super(gp, null);
@@ -63,7 +65,7 @@ public class PlayerCharacter extends Entity {
 		gp.currentMap = Player.spawn[0][0];
 		worldX = gp.tileSize * Player.spawn[0][1];
 		worldY = gp.tileSize * Player.spawn[0][2];
-		speed = 4;
+		speed = SPEED_1;
 		direction = "down";
 	}
 	public void getPlayerImage() {
@@ -116,12 +118,13 @@ public class PlayerCharacter extends Entity {
 					worldX += speed;
 					break;
 				}
-			} else if (speed == 8) {
-				speed = 4;
+			} else if (speed == SPEED_2) {
+				speed = SPEED_1;
 				return;
 			}
 			
-			if (spriteCounter > 12 - speed) {
+			int spriteCheck = speed == SPEED_1 ? 8 : 4;
+			if (spriteCounter > spriteCheck) {
 				spriteNum++;
 				if (spriteNum > 4) {
 					spriteNum = 1;
@@ -260,9 +263,9 @@ public class PlayerCharacter extends Entity {
 			gp.gameState = GamePanel.MENU_STATE;
 		}
 		if (keyH.sPressed || ice) {
-			speed = 8;
+			speed = SPEED_2;
 		} else {
-			speed = 4;
+			speed = SPEED_1;
 		}
 		if (!ice) {
 			for (int i = 0; i < gp.npc[1].length; i++) {

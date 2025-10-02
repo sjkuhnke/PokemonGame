@@ -197,7 +197,7 @@ public enum Move {
 	FLIP_TURN(60,100,0,0,0,0,PType.WATER,"Causes user to switch out after use",true,10),
 	FLY(100,100,0,0,0,0,PType.FLYING,"Goes into the air on the first turn, and attacks on the second",true,5),
 	FOCUS_BLAST(120,70,10,0,1,0,PType.FIGHTING,"% to lower foe's Sp.Def",false,5),
-	FOCUS_ENERGY(0,1000,0,0,2,0,PType.NORMAL,"Boosts the user's crit rate by 2",false,20),
+	FOCUS_ENERGY(0,1000,0,0,2,0,PType.NORMAL,"Boosts the user's crit rate by 2 (max crit rate is 4)",false,20),
 	FORCE_PALM(60,100,30,0,0,0,PType.FIGHTING,"% chance to Paralyze foe",true,10),
 	FORESIGHT(0,1000,0,0,2,0,PType.MAGIC,"Indentifies foe, replacing their Ghost typing with Normal if they have it. It also raises user's Accuracy by 1 stage",false,35),
 	FORESTS_CURSE(0,100,0,0,2,0,PType.GRASS,"Changes foe's type to GRASS",false,20),

@@ -712,6 +712,7 @@ Made starting a Nuzlocke automatically give you the following QOL items:
 - Edge Kit: leaves your Pokemon at 1 xp to leveling up (to use before Gym Fights)
 - Status Kit: inflicts a status of your choosing on the Pokemon (provided it effects them)
 - Damage Kit: subtracts 1 HP from the Pokemon (won't go < 1)
+- Move Encyclopedia: Given by the move reminder to teach a forgotten move anywhere (doesn't work in gauntlets)
 Tweaked Professor and Photon's dex checking dialogue to say "caught" instead of "seen" to reflect that they're looking for caught Pokemon not seen
 Fixed using Elixir resetting your move selected index
 Updated Synchronize's description to say that it also passes a frostbite since it does
@@ -1100,3 +1101,12 @@ Fixed Sleep Talk/Snore logic not checking correctly if you were asleep, and made
 Gave Lafloo Stealth Rock at lv 65 and redistributed surrounding moves a bit
 Changed Athlete Gutierre's Lafloo's Rock Polish -> Stealth Rock
 Fixed the Technician check before all other BP multipliers (so a move like Incinerate will get the Technician boost before the Charcoal boost, so it'll be 108 BP instead of 72 BP previously (60 * 1.5 * 1.2))
+Gave Toxic Spikes to Zurrclu-S and Zurroaratr-S at lv 1
+Changed Athelete Vanadis's Magron's Dry Skin, Light Clay and Light Screen -> Blaze, Life Orb and Fire Blast
+Fixed Poison Touch being blocked by Shield Dust
+Fixed King's Rock being blocked by Shield Dust/Covert Cloak
+Fixed Radiant being blocked by Shield Dust/Covert Cloak
+Made AI not click Fake Out/Unseen Strangle for its effect against Shield Dust, Inner Focus, Mental Herb or Covert Cloak
+Made Full Force not activate if the Pokemon faints at the same time as consuming its item
+Fixed using Ability Capsule on a Pokemon that has its hidden displaying the right message/label
+Tweaked Ability Capsule's description to make it more clear
