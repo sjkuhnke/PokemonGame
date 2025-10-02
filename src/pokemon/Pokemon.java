@@ -4949,8 +4949,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 			break;
 		case STAR_STORM:
-			Task.addTask(Task.TEXT, this.nickname + "'s crit chance was heightened!");
-			this.incrementStatus(Status.CRIT_CHANCE, 1);
+			if (this.getStatusNum(Status.CRIT_CHANCE) < 4) {
+				Task.addTask(Task.TEXT, this.nickname + "'s crit chance was heightened!");
+				this.incrementStatus(Status.CRIT_CHANCE, 1);
+			}
 			break;
 		case SUMMIT_STRIKE:
 		    stat(foe, 1, -1, this);
@@ -5534,8 +5536,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 			fail = field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.FLOODLIGHT));
 			break;
 		case FOCUS_ENERGY:
-			this.incrementStatus(Status.CRIT_CHANCE, 2);
-			Task.addTask(Task.TEXT, this.nickname + " is tightening its focus!");
+			int critChance = this.getStatusNum(Status.CRIT_CHANCE);
+			if (critChance < 4) {
+				this.incrementStatus(Status.CRIT_CHANCE, 2);
+				Task.addTask(Task.TEXT, this.nickname + " is tightening its focus!");
+			} else {
+				fail = fail();
+			}
 			break;
 		case FORESIGHT:
 			if (foe.type1 == PType.GHOST) foe.type1 = PType.NORMAL;
@@ -8002,7 +8009,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				return;
 			}
 			this.status = Status.ASLEEP;
-			this.sleepCounter = (int)(Math.random() * 3) + 1;
+			this.setSleepCounter();
 			Task.addAbilityTask(ability);
 			Task.addTask(Task.STATUS, Status.ASLEEP, this.nickname + " fell asleep!", this);
 			if (this.getAbility(field) == Ability.SYNCHRONIZE && this != foe && foe != null) {
@@ -8019,6 +8026,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 	}
 	
+	public void setSleepCounter() {
+		this.sleepCounter = (int)(Math.random() * 3) + 1;
+	}
+
 	public void paralyze(boolean announce, Pokemon foe) {
 		this.paralyze(announce, foe, null);
 	}
@@ -9238,10 +9249,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 				stat(this, 5, 1, foe);
 				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.LANSAT_BERRY) {
-				Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
-				Task.addTask(Task.TEXT, this.nickname + "'s crit chance was heightened!");
-				this.incrementStatus(Status.CRIT_CHANCE, 2);
-				if (consume) this.consumeItem(foe);
+				if (this.getStatusNum(Status.CRIT_CHANCE) < 4) {
+					Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
+					Task.addTask(Task.TEXT, this.nickname + "'s crit chance was heightened!");
+					this.incrementStatus(Status.CRIT_CHANCE, 2);
+					if (consume) this.consumeItem(foe);
+				}
 			} else if (berry == Item.JABOCA_BERRY || berry == Item.ROWAP_BERRY) {
 				foe.damage(foe.getHPAmount(1.0/8), this, this.nickname + " ate its " + berry.toString() + " to damage " + foe.nickname + "!");
 				if (consume) this.consumeItem(foe);

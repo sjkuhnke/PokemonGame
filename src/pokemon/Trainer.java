@@ -549,7 +549,7 @@ public class Trainer implements Serializable {
 				}
 				this.team[teamTemp[i].slot] = teamTemp[i];
 				teamTemp[i].clearVolatile(null);
-				if (teamTemp[i].status == Status.ASLEEP) teamTemp[i].sleepCounter = (int)(Math.random() * 3) + 1;
+				if (teamTemp[i].status == Status.ASLEEP) teamTemp[i].setSleepCounter();
 				teamTemp[i].vStatuses.clear();
 				teamTemp[i].abilityFlag = false;
 				
