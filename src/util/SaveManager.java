@@ -1,5 +1,6 @@
 package util;
 
+import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.*;
@@ -160,6 +161,7 @@ public class SaveManager {
     		
     		File screenshotFile = new File(screenshotsDir.toFile(), fileName);
     		ImageIO.write(image, "png", screenshotFile);
+    		Desktop.getDesktop().open(screenshotsDir.toFile());
     	} catch (IOException e) {
     		e.printStackTrace();
     	}

@@ -196,8 +196,7 @@ public class Player extends Trainer implements Serializable {
 	    int index = 1;
 	    Task t = null;
 	    String metAt = PlayerCharacter.getMetAt();
-	    p.clearVolatile(null);
-	    p.consumeItem(null);
+	    p.reset();
 	    p.ball = ball;
 	    p.trainer = this;
 	    p.metAt = metAt;
@@ -1126,7 +1125,7 @@ public class Player extends Trainer implements Serializable {
 			case ABILITY_CAPSULE:
 				int usable = p.canUseItem(item);
 	    		if (usable != 1) {
-	    			String message = usable == 2 ? p.nickname + " has its hidden ability, use an Ability Patch to swap back to its regular ability!" : p.nickname + " only has one ability, it won't have any effect.";
+	    			String message = usable == 2 ? p.nickname + " has its hidden ability, use an Ability Patch to swap back to its regular ability!" : p.nickname + " only has one regular ability, it won't have any effect.";
 	        		gp.ui.showMessage(Item.breakString(message, UI.MAX_TEXTBOX));
 	        		return;
 	        	} else {

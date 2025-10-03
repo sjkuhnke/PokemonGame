@@ -533,35 +533,8 @@ public class Trainer implements Serializable {
 		Pokemon[] teamTemp = Arrays.copyOf(this.team, this.team.length);
 		for (int i = 0; i < teamTemp.length; i++) {
 			if (teamTemp[i] != null) {
-				if (teamTemp[i].id == 237) {
-					teamTemp[i].id = 150;
-					teamTemp[i].setSprites();
-					if (teamTemp[i].nickname.equals(teamTemp[i].name())) teamTemp[i].nickname = teamTemp[i].getName();
-					teamTemp[i].setName(teamTemp[i].getName());
-					
-					teamTemp[i].baseStats = teamTemp[i].getBaseStats();
-					teamTemp[i].setStats();
-					teamTemp[i].weight = teamTemp[i].getWeight();
-					teamTemp[i].setTypes();
-					teamTemp[i].setAbility(teamTemp[i].abilitySlot);
-					if (teamTemp[i].ability == Ability.ILLUSION) teamTemp[i].illusion = true; // just here for calc
-					teamTemp[i].currentHP = teamTemp[i].currentHP > teamTemp[i].getStat(0) ? teamTemp[i].getStat(0) : teamTemp[i].currentHP;
-				}
+				teamTemp[i].reset();
 				this.team[teamTemp[i].slot] = teamTemp[i];
-				teamTemp[i].clearVolatile(null);
-				if (teamTemp[i].status == Status.ASLEEP) teamTemp[i].setSleepCounter();
-				teamTemp[i].vStatuses.clear();
-				teamTemp[i].abilityFlag = false;
-				
-				if (teamTemp[i].loseItem) {
-					teamTemp[i].item = null;
-					teamTemp[i].loseItem = false;
-				}
-				if (teamTemp[i].lostItem != null) {
-					teamTemp[i].item = teamTemp[i].lostItem;
-					teamTemp[i].lostItem = null;
-					if (teamTemp[i].item == Item.POTION) teamTemp[i].item = null;
-				}
 			}
 		}
 		this.setCurrent(this.team[0]);

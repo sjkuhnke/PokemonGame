@@ -196,4 +196,18 @@ public class IsUsefulSecondaryTest {
     	
     	assertTrue("Flare Blitz should have a positive score", score > 0);
     }
+    
+    @Test
+    public void testHealingWish() {
+    	int use = user.isUsefulEffect(foe, Move.HEALING_WISH, false, field, 0);
+    	
+    	assertEquals(0, use);
+    }
+    
+    @Test
+    public void testAromatherapy() {
+    	int use = user.isUsefulEffect(foe, Move.AROMATHERAPY, false, field, 0);
+    	
+    	assertEquals(0, use);
+    }
 }

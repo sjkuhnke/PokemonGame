@@ -430,7 +430,7 @@ public class SimBattleUI extends BattleUI {
 	    Task.addSwapInTask(foe, false);
 		foeFainted = foe.trainer.getNumFainted();
 		Task.addSwapInTask(user, true);
-	    Pokemon fasterInit = user.getFaster(foe, 0, 0);
+	    Pokemon fasterInit = user.getFaster(foe, 0, 0, field);
 		Pokemon slowerInit = fasterInit == user ? foe : user;
 		fasterInit.swapIn(slowerInit, true);
 		slowerInit.swapIn(fasterInit, true);
@@ -765,7 +765,7 @@ public class SimBattleUI extends BattleUI {
 	public void turn() {
 		Pokemon p1 = user;
 		Pokemon p2 = foe;
-		boolean fFaster = p1.getFaster(p2, 0, 0) == p2;
+		boolean fFaster = p1.getFaster(p2, 0, 0, field) == p2;
 		
 		p1Moves = null;
 		p2Moves = null;
@@ -797,7 +797,7 @@ public class SimBattleUI extends BattleUI {
 		if (uMove == null || fMove == null) {
 			faster = uMove == null ? p1 : p2;
 		} else {
-			faster = p1.getFaster(p2, uP, fP);
+			faster = p1.getFaster(p2, uP, fP, field);
 		}
 		
 		slower = faster == p1 ? p2 : p1;

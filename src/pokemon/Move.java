@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -726,15 +727,15 @@ public enum Move {
 		return String.format("%.0f", bp);
 	}
 	
-	public String getAccuracy() {
-		String result = "";
-		if (accuracy > 100) {
-			result += "--";
-		} else {
-			result += accuracy;
+	public String getAccuracy(Pokemon user, Pokemon foe, Field field) {
+		double acc = user == null ? accuracy : user.getEffectiveAccuracy(this, foe, field) * 100;
+		if (acc > 100.0) {
+			return "--";
 		}
 		
-		return result;
+		DecimalFormat df = new DecimalFormat("0.#");
+		
+		return df.format(acc);
 	}
 	
 	public double getbp(Pokemon user, Pokemon foe, Field field) {
@@ -748,7 +749,7 @@ public enum Move {
 		double bp = basePower;
 		if (bp == -1) {
 			if (this == Move.STORED_POWER && foe == null) return 20;
-			boolean faster = user == null || foe == null ? true : user.getFaster(foe, 0, 0) == user;
+			boolean faster = user == null || foe == null ? true : user.getFaster(foe, 0, 0, field) == user;
 			if (user == null || user.headbuttCrit < 0) {
 				if (this == Move.FLAIL || this == Move.REVERSAL	|| this == Move.RETURN || this == Move.FRUSTRATION) return 0;
 				user = new Pokemon(1, 1, false, false);
@@ -859,7 +860,7 @@ public enum Move {
 
 	    // Accuracy
 	    JLabel accuracyLabel = new JLabel("Acc");
-	    JLabel accuracyValueLabel = new JLabel(getAccuracy());
+	    JLabel accuracyValueLabel = new JLabel(getAccuracy(user, foe, field));
 
 	    // PP
 	    JLabel ppLabel = new JLabel("PP");
@@ -1300,7 +1301,7 @@ public enum Move {
 		if (me.getAbility(Pokemon.field) == Ability.SERENE_GRACE) sec *= 2;
 		if (sec < 0) sec = 100;
 		if (m == Move.MAGIC_FANG && effectiveness < 2) return false;
-		boolean faster = me.getFaster(foe, 0, 0) == me;
+		boolean faster = me.getFaster(foe, 0, 0, Pokemon.field) == me;
 		
 		// *** unimplemented moves primarily used for secondary effects: Circle Throw, Dragon Tail, Fatal Bind, Spectral Thief ***
 		if (sec > 0) {
