@@ -1528,8 +1528,8 @@ public enum Item {
         			moves[k].setBackground(Color.GRAY);
         			moves[k].setFont(new Font("Arial", Font.PLAIN, 12));
         		}
-        		double minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, -1, crit, field, false).getSecond();
-        		double maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0) == current, 1, crit, field, false).getSecond();
+        		double minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0, field) == current, -1, crit, field, false).getSecond();
+        		double maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0, field) == current, 1, crit, field, false).getSecond();
         		String formattedMinD = String.format("%.1f", minDamage);
         		String formattedMaxD = String.format("%.1f", maxDamage);
         		damages[k].setText(formattedMinD + "% - " + formattedMaxD + "%");

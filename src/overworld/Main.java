@@ -852,7 +852,7 @@ public class Main {
 	            	while (bp.length() < 5) {
 	            		bp += " ";
 	            	}
-	            	String acc = " " + m.getAccuracy();
+	            	String acc = " " + m.getAccuracy(null, null, Pokemon.field);
 	            	while (acc.length() < 5) {
 	            		acc += " ";
 	            	}

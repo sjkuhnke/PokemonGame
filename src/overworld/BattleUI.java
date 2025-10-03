@@ -692,7 +692,7 @@ public class BattleUI extends AbstractUI {
 			field.setEffect(field.new FieldEffect(Effect.NEUTRALIZING_GAS), false);
 		}
 		
-	    Pokemon fasterInit = user.getFaster(foe, 0, 0);
+	    Pokemon fasterInit = user.getFaster(foe, 0, 0, field);
 		Pokemon slowerInit = fasterInit == user ? foe : user;
 		fasterInit.swapIn(slowerInit, true);
 		slowerInit.swapIn(fasterInit, true);
@@ -894,7 +894,7 @@ public class BattleUI extends AbstractUI {
 				if (foe.trainerOwned()) {
 					Task.addTask(Task.TEXT, staticID < 0 ? "No! There's no running from a trainer battle!" : "The Pokemon's presense is keeping you from fleeing!");
 				} else {
-					Pokemon faster = user.getFaster(foe, 0, 0);
+					Pokemon faster = user.getFaster(foe, 0, 0, field);
 					boolean isFaster = faster == user || user.getItem(field) == Item.SHED_SHELL || user.type1 == PType.GHOST || user.type2 == PType.GHOST;
 					
 					if (isFaster || new Random().nextBoolean()) {
@@ -1078,9 +1078,15 @@ public class BattleUI extends AbstractUI {
 		
 	}
 	
+	public boolean shouldDrawCatchWindow() {
+		if (foe.trainerOwned() && (staticID < 0 || !catchable)) return false;
+		if (invalidEncounter) return false;
+		if (!user.spriteVisible) return false;
+		return true;
+	}
+	
 	protected void drawCatchWindow() {
-		if (foe.trainerOwned() && (staticID < 0 || !catchable)) return;
-		if (invalidEncounter) return;
+		if (!shouldDrawCatchWindow()) return;
 		g2.setFont(g2.getFont().deriveFont(24F));
 		int x = gp.screenWidth - (gp.tileSize * 4);
 		int y = (int) (gp.screenHeight - (gp.tileSize * 5.5));
@@ -1215,7 +1221,7 @@ public class BattleUI extends AbstractUI {
         	Move move = moves[moveNum].move;
     		if (user.movesetEmpty()) move = Move.STRUGGLE;
 			
-        	foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
+        	foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0, field) == foe) : foe.randomMove();
         	
         	showMoveSummary = false;
         	turn(move, foeMove);
@@ -1249,7 +1255,7 @@ public class BattleUI extends AbstractUI {
 		if (uMove == null || fMove == null) {
 			faster = uMove == null ? user : foe;
 		} else {
-			faster = user.getFaster(foe, uP, fP);
+			faster = user.getFaster(foe, uP, fP, field);
 		}
 		
 		slower = faster == user ? foe : user;
@@ -1445,7 +1451,7 @@ public class BattleUI extends AbstractUI {
 				boolean fainted = user.isFainted();
 				if (fainted) foeMove = null;
 				if (cancellableParty && !fainted){
-					foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0) == foe) : foe.randomMove();
+					foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0, field) == foe) : foe.randomMove();
 				}
 				if (baton) {
 					gp.player.p.team[partyNum].statStages = user.statStages.clone();

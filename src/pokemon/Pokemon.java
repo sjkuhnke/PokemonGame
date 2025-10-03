@@ -534,7 +534,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         	if (check != null && check.cat != 2 && !tr.resists(this, foe, check.mtype, check)
         			&& tr.hasResist(foe, check.mtype, check)) {
         		double chance = ((1 - Trainer.getEffective(tr.getBestResist(foe, check.mtype, check), foe, check.mtype, check, false)) / 2) * 100;
-        		boolean faster = this == this.getFaster(foe, 0, 0);
+        		boolean faster = this == this.getFaster(foe, 0, 0, field);
         		if (only1Move) {
         			chance *= 3;
         		} else {
@@ -577,7 +577,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         	if (maxDamage <= foe.getStat(0) * 1.0 / 5 && maxDamage < foe.currentHP && !(foe.getAbility(field) == Ability.SHADOW_VEIL && foe.illusion)) {
         		double chance = 20;
         		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-        		if (this == this.getFaster(foe, 0, 0) && pivotMove == null) chance /= 2;
+        		if (this == this.getFaster(foe, 0, 0, field) && pivotMove == null) chance /= 2;
         		if (this.impressive) chance /= 2;
         		if (checkSecondary((int) chance)) {
         			String rsn = "[Damage i do is 1/5 or less : " + String.format("%.1f", chance) + "%]";
@@ -666,7 +666,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         	if (moveKills) {
         		double chance = (this.currentHP * 1.0 / this.getStat(0)) * 100;
         		chance *= 0.6;
-        		boolean faster = this == this.getFaster(foe, 0, 0);
+        		boolean faster = this == this.getFaster(foe, 0, 0, field);
         		if (faster) chance /= 2;
         		if (maxDamage >= foe.currentHP) chance /= 1.5;
         		if (hasResist) {
@@ -849,6 +849,7 @@ public class Pokemon implements RoleAssignable, Serializable {
     		if (damage >= this.currentHP) {
     			foeCanKO = true;
     			strongestMove = m;
+    			System.out.println("Enemy can KO me with " + strongestMove);
     			break;
     		}
     	}
@@ -1220,7 +1221,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		// --- Defensive matchup ---
 		double foeMaxDamageP = 0;
 		double foeDamageMoveP = 0;
-		boolean foeIsFaster = this.getFaster(foe, 0, 0) == foe;
+		boolean foeIsFaster = this.getFaster(foe, 0, 0, field) == foe;
 		if (foeCanKO) {
 			foeMaxDamageP = foe.calcWithTypes(this, move, foeIsFaster, field, false).getSecond();
 		} else {
@@ -1300,7 +1301,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 //		Move move = ms.move;
 		double score = 0.0;
 		
-		boolean isFaster = this.getFaster(foe, move.hasPriority(this) ? 1 : move.priority, foeStrongestMove != null && foeStrongestMove.hasPriority(foe) ? 1 : 0) == this;
+		boolean isFaster = this.getFaster(foe, move.hasPriority(this) ? 1 : move.priority, foeStrongestMove != null && foeStrongestMove.hasPriority(foe) ? 1 : 0, field) == this;
 		if (move == Move.MIMIC || move == Move.MIRROR_MOVE) {
 			move = isFaster ? foe.lastMoveUsed : foeStrongestMove;
 		}
@@ -1318,35 +1319,39 @@ public class Pokemon implements RoleAssignable, Serializable {
 		// --- Damage Score ---
 		score += Math.min(Math.min(foeHPPercent, damagePercent), 100);
 		
-		// --- Accuracy Factor ---
-		// TODO: calculate effective accuracy after Compound Eyes/Gravity/Wide Lens etc
-		double accuracyFactor = 1.0;
-		if (move.accuracy > 100) {
-			accuracyFactor = 1.0;
-		} else {
-			accuracyFactor = Math.max(0.25, move.accuracy / 100.0);
+		Ability foeAbility = foe.ability;
+        if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
+			foeAbility = Ability.NULL;
 		}
-		score *= accuracyFactor;
 		
-		if (willKill) {
-			if (isFaster) {
-				score += 50; // fast kill
-			} else {
-				score += 20; // slow kill
-			}
+		// --- Accuracy Factor ---
+		double accuracy = getEffectiveAccuracy(move, foe, field, foeAbility, isFaster);
+		score *= accuracy;
+		if (accuracy < 0.9) { // accuracy penalty
+			score -= (1.0 - accuracy) * 40;
 		}
 		
 		// --- Killing Move ---
 		if (willKill) {
 			score += 40;
-			score += (move.accuracy <= 100) ? (move.accuracy / 100.0) * 10.0 : 20.0;
+			if (accuracy >= 100) { // perfectly accurate moves get a big boost
+				score += 50;
+			} else {
+				score += accuracy * 30.0;
+			}
+			
+			if (isFaster) {
+				score += 50; // fast kill
+			} else {
+				score += 20; // slow kill
+			}
 			
 			if (move.hasPriority(this)) {
 				score += 12 + move.priority * 3;
 			}
 			
 			if (move == Move.FELL_STINGER || move == Move.COMET_PUNCH) {
-				score += 20;
+				score += 25;
 			}
 		}
 		
@@ -1357,11 +1362,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 				int recoil = Math.max(Math.floorDiv(damage, denom), 1);
 				if (recoil >= this.currentHP) score -= 45; // user will die from this move
 			}
-		}
-		
-		Ability foeAbility = foe.ability;
-        if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
-			foeAbility = Ability.NULL;
 		}
         
 		// --- Secondary Effects/Status Moves ---
@@ -1452,9 +1452,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			    		}
 					}
 				}
-			} else {
+			} else if (move.cat == 2) {
 				score -= 10;
-			}
+			} // don't decrease any score for damaging moves
 		}
 		
 		// --- Custom Heuristics ---
@@ -1468,7 +1468,7 @@ public class Pokemon implements RoleAssignable, Serializable {
     	}
     	if (foeCanKO) {
     		// pick a last-ditch move
-    		if (move.hasPriority(foe) && this.getFaster(foe, 0, 0) == foe && (move.cat == 2 || damagePercent > 0)) {
+    		if (move.hasPriority(foe) && this.getFaster(foe, 0, 0, field) == foe && (move.cat == 2 || damagePercent > 0)) {
     			score += 55;
     		}
     	} else {
@@ -2809,32 +2809,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			return;
 		}
 		
-		if (!foe.hasStatus(Status.SEMI_INV)) {
-			if (this.getAbility(field) == Ability.COMPOUND_EYES) acc *= 1.3;
-			if (item == Item.WIDE_LENS) acc *= 1.1;
-			if (item == Item.ZOOM_LENS && !first) acc *= 1.2;
-			if (field.contains(field.fieldEffects, Effect.GRAVITY)) acc = acc * 5 / 3;
-		}
-		
-		if (field.equals(field.weather, Effect.SUN, foe)) {
-			if (move == Move.THUNDER || move == Move.HURRICANE) acc = 50;
-		}
-		
-		if (field.equals(field.weather, Effect.RAIN, foe)) {
-			if (move == Move.THUNDER || move == Move.HURRICANE) acc = 1000;
-		}
-		
-		if (field.equals(field.weather, Effect.SNOW, foe)) {
-			if (move == Move.BLIZZARD) acc = 1000;
-		}
-		
-		if (move == Move.FUTURE_SIGHT) acc = 1000;
-		
-		if (move == Move.FROSTBIND && this.isType(PType.ICE)) acc = 100;
-		if (move == Move.THUNDER_WAVE && this.isType(PType.ELECTRIC)) acc = 100;
-		if (move == Move.WILL$O$WISP && this.isType(PType.FIRE)) acc = 100;
-		if (move == Move.TOXIC && this.isType(PType.POISON)) acc = 1000;
-		
 		if (foeAbility == Ability.WONDER_SKIN && move.cat == 2 && acc <= 100) {
 			useMove(move, foe);
 			Task.addAbilityTask(foe);
@@ -2845,40 +2819,31 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.metronome = -1;
 			return; // Check for immunity
 		}
+		double effectiveAccuracy = getEffectiveAccuracy(move, foe, field, foeAbility, first);
 		
-		if (move == Move.POP_POP) acc = 1000;
-		
-		if (this.ability != Ability.NO_GUARD && foeAbility != Ability.NO_GUARD) {
-			int accEv = this.statStages[5] - foe.statStages[6];
-			if (move == Move.DARKEST_LARIAT || move == Move.SACRED_SWORD) accEv += foe.statStages[6];
-			accEv = accEv > 6 ? 6 : accEv;
-			accEv = accEv < -6 ? -6 : accEv;
-			double accuracy = acc * asAccModifier(accEv);
-			if ((field.equals(field.weather, Effect.SANDSTORM, this) && foeAbility == Ability.SAND_VEIL) ||
-					(field.equals(field.weather, Effect.SNOW, this) && foeAbility == Ability.SNOW_CLOAK)) accuracy *= 0.8;
-			if (foe.getItem(field) == Item.BRIGHT_POWDER) accuracy *= 0.9;
-			if (!hit(accuracy) || foe.hasStatus(Status.SEMI_INV) && acc <= 100) {
-				useMove(move, foe);
-				Task.addTask(Task.TEXT, move.getMissString(this, foe));
-				field.misses++;
-				if (move == Move.HI_JUMP_KICK) {
-					this.damage(this.getStat(0) / 2.0, foe, this.nickname + " kept going and crashed!");
-					if (this.currentHP < 0) {
-						this.faint(true, foe);
-					}
+		if (move == Move.POP_POP) effectiveAccuracy = 1.1;
+
+		if (effectiveAccuracy <= 1.0 && (!hit(effectiveAccuracy * 100) || foe.hasStatus(Status.SEMI_INV))) {
+			useMove(move, foe);
+			Task.addTask(Task.TEXT, move.getMissString(this, foe));
+			field.misses++;
+			if (move == Move.HI_JUMP_KICK) {
+				this.damage(this.getStat(0) / 2.0, foe, this.nickname + " kept going and crashed!");
+				if (this.currentHP < 0) {
+					this.faint(true, foe);
 				}
-				if (this.getItem(field) == Item.BLUNDER_POLICY) {
-					Task.addTask(Task.TEXT, this.nickname + " used its " + item.toString() + "!");
-					stat(this, 4, 2, foe);
-					this.consumeItem(foe);
-				}
-				endMove();
-				this.removeStatus(Status.LOCKED);
-				this.moveMultiplier = 1;
-				this.rollCount = 1;
-				this.metronome = -1;
-				return; // Check for miss
 			}
+			if (this.getItem(field) == Item.BLUNDER_POLICY) {
+				Task.addTask(Task.TEXT, this.nickname + " used its " + item.toString() + "!");
+				stat(this, 4, 2, foe);
+				this.consumeItem(foe);
+			}
+			endMove();
+			this.removeStatus(Status.LOCKED);
+			this.moveMultiplier = 1;
+			this.rollCount = 1;
+			this.metronome = -1;
+			return; // Check for miss
 		}
 		
 		int numHits = move.getNumHits(this, this.trainer == null ? null : this.trainer.team);
@@ -2900,16 +2865,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 				break;
 			}
 			
-			if (move == Move.POP_POP && this.ability != Ability.NO_GUARD && foeAbility != Ability.NO_GUARD) {
-				acc = Move.POP_POP.accuracy;
-				int accEv = this.statStages[5] - foe.statStages[6];
-				accEv = accEv > 6 ? 6 : accEv;
-				accEv = accEv < -6 ? -6 : accEv;
-				double accuracy = acc * asAccModifier(accEv);
-				if ((field.equals(field.weather, Effect.SANDSTORM, this) && foeAbility == Ability.SAND_VEIL) ||
-						(field.equals(field.weather, Effect.SNOW, this) && foeAbility == Ability.SNOW_CLOAK)) accuracy *= 0.8;
-				if (foe.getItem(field) == Item.BRIGHT_POWDER) accuracy *= 0.9;
-				if (!hit(accuracy) || foe.hasStatus(Status.SEMI_INV) && acc <= 100) {
+			if (move == Move.POP_POP) {
+				if (effectiveAccuracy <= 1.0 && (!hit(effectiveAccuracy) || foe.hasStatus(Status.SEMI_INV))) {
 					Task.addTask(Task.TEXT, move.getMissString(this, foe));
 					field.misses++;
 					if (this.getItem(field) == Item.BLUNDER_POLICY) {
@@ -4091,6 +4048,61 @@ public class Pokemon implements RoleAssignable, Serializable {
 			this.consumeItem(foe);
 			this.addStatus(Status.SWITCHING);
 		}
+	}
+	
+	public double getEffectiveAccuracy(Move move, Pokemon foe, Field field) {
+		Ability foeAbility = foe == null ? null : foe.ability;
+		if (foeAbility != null) {
+			if (foe.getItem(field) != Item.ABILITY_SHIELD &&
+					(move == Move.FUSION_BOLT || move == Move.FUSION_FLARE || move == Move.SUNSTEEL_STRIKE || this.getAbility(field) == Ability.MOLD_BREAKER)) {
+				foeAbility = Ability.NULL;
+			}
+		}
+		boolean isFaster = this.getFaster(foe, move.hasPriority(this) ? 1 : move.priority, 0, field) == this;
+		return getEffectiveAccuracy(move, foe, field, foeAbility, isFaster);
+	}
+	
+	public double getEffectiveAccuracy(Move move, Pokemon foe, Field field, Ability foeAbility, boolean first) {
+		int acc = move.accuracy;
+		if (acc > 100) return 1.1;
+		
+		if (field.equals(field.weather, Effect.SUN, foe)) {
+			if (move == Move.THUNDER || move == Move.HURRICANE) acc = 50;
+		}
+		if (field.equals(field.weather, Effect.RAIN, foe)) {
+			if (move == Move.THUNDER || move == Move.HURRICANE) return 1.1;
+		}
+		if (field.equals(field.weather, Effect.SNOW, foe)) {
+			if (move == Move.BLIZZARD) return 1.1;
+		}
+		
+		if (move == Move.FUTURE_SIGHT) return 1.1;
+		
+		if (move == Move.FROSTBIND && this.isType(PType.ICE)) acc = 100;
+		if (move == Move.THUNDER_WAVE && this.isType(PType.ELECTRIC)) acc = 100;
+		if (move == Move.WILL$O$WISP && this.isType(PType.FIRE)) acc = 100;
+		if (move == Move.TOXIC && this.isType(PType.POISON)) return 1.1;
+		
+		if (this.getAbility(field) == Ability.NO_GUARD || foeAbility == Ability.NO_GUARD) return 1.1;
+		
+		double accuracy = acc * 1.0 / 100.0;
+		if (this.getAbility(field) == Ability.COMPOUND_EYES) accuracy *= 1.3;
+		if (this.item == Item.WIDE_LENS) accuracy *= 1.1;
+		if (this.item == Item.ZOOM_LENS && !first) accuracy *= 1.2;
+		if (field.contains(field.fieldEffects, Effect.GRAVITY)) accuracy *= 5.0 / 3.0;
+		
+		boolean ignoreFoeEv = foe == null || this.getAbility(field) == Ability.UNAWARE || move == Move.DARKEST_LARIAT || move == Move.SACRED_SWORD;
+		int accEv = this.statStages[5] - (ignoreFoeEv ? 0 : foe.statStages[6]);
+		accEv = Math.max(-6, Math.min(6, accEv));
+		accuracy *= asAccModifier(accEv);
+		
+		if ((field.equals(field.weather, Effect.SANDSTORM, this) && foeAbility == Ability.SAND_VEIL) ||
+			(field.equals(field.weather, Effect.SNOW, this) && foeAbility == Ability.SNOW_CLOAK)) {
+			accuracy *= 0.8;
+		}
+		if (foe != null && foe.getItem(field) == Item.BRIGHT_POWDER) accuracy *= 0.9;
+		
+		return Math.min(1.0, accuracy);
 	}
 
 	public void awardExp(int amt) {
@@ -6325,7 +6337,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		int statRaw = item.getStat();
 		if (statRaw > this.statStages.length) return;
 		
-		Pokemon faster = this.getFaster(f, 0, 0);
+		Pokemon faster = this.getFaster(f, 0, 0, field);
 		Pokemon slower = faster == this ? f : this;
 		
 		int stat = Math.abs(statRaw);
@@ -6557,17 +6569,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 	}
 
-	private boolean hit(double d) {
+	private boolean hit(double acc) {
 		if (this.script) {
-			return d >= 50;
+			return acc >= 50;
 		}
-		double hitChance = (int) (Math.random()*100 + 1);
-		int acc = (int) Math.round(d);
-		if (hitChance <= acc) {
-			return true;
-		} else {
-			return false;
-		}
+		double roll = Math.random() * 100.0;
+		return roll < acc;
 	}
 
 	private boolean critCheck(int m) {
@@ -7909,7 +7916,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return (int) speed;
 	}
 	
-	public Pokemon getFaster(Pokemon other, int thisP, int otherP) {
+	public Pokemon getFaster(Pokemon other, int thisP, int otherP, Field field) {
+		if (other == null) return this;
 		int speed1 = this.getSpeed(field);
 		int speed2 = other.getSpeed(field);
 		
@@ -11045,7 +11053,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			while (!t1.wiped() && !t2.wiped()) {
 				Pokemon p1 = t1.getCurrent();
 				Pokemon p2 = t2.getCurrent();
-				boolean fFaster = p1.getFaster(p2, 0, 0) == p2;
+				boolean fFaster = p1.getFaster(p2, 0, 0, field) == p2;
 				
 				Move uMove = p1.bestMove2(p2, !fFaster);
 				Move fMove = p2.bestMove2(p1, fFaster);
@@ -11073,7 +11081,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (uMove == null || fMove == null) {
 					faster = uMove == null ? p1 : p2;
 				} else {
-					faster = p1.getFaster(p2, uP, fP);
+					faster = p1.getFaster(p2, uP, fP, field);
 				}
 				
 				slower = faster == p1 ? p2 : p1;
@@ -11601,6 +11609,39 @@ public class Pokemon implements RoleAssignable, Serializable {
 			: ability == Ability.SHADOW_VEIL ? "Shadow Veil"
 			: ability == Ability.TERRAFORGE ? "Terraforge"
 			: ".";
+	}
+
+	public void reset() {
+		if (this.id == 237) {
+			this.id = 150;
+			this.setSprites();
+			if (this.nickname.equals(this.name())) this.nickname = this.getName();
+			this.setName(this.getName());
+			
+			this.baseStats = this.getBaseStats();
+			this.setStats();
+			this.weight = this.getWeight();
+			this.setTypes();
+			this.setAbility(this.abilitySlot);
+			this.currentHP = this.currentHP > this.getStat(0) ? this.getStat(0) : this.currentHP;
+		}
+		
+		this.clearVolatile(null);
+		if (this.ability == Ability.ILLUSION) this.illusion = true; // just here for calc
+		if (this.status == Status.ASLEEP) this.setSleepCounter();
+		this.vStatuses.clear();
+		this.abilityFlag = false;
+		
+		if (this.loseItem) {
+			this.item = null;
+			this.loseItem = false;
+		}
+		if (this.lostItem != null) {
+			this.item = this.lostItem;
+			this.lostItem = null;
+			if (this.item == Item.POTION) this.item = null;
+		}
+		
 	}
 	
 }
