@@ -46,23 +46,31 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int screenWidth = tileSize * maxScreenCol;
 	public final int screenHeight = tileSize * maxScreenRow;
 	
+	// WORLD SETTINGS
 	public final int maxWorldCol = 100;
 	public final int maxWorldRow = 100;
 	public int currentMap = 0;
-	public final int worldWidth = tileSize * maxWorldCol;
-	public final int worldHeight = tileSize * maxWorldRow;
-	public static final int MAX_MAP = 220;
-	public static final int MAX_FLAG = 25; // should not be >31
 	
+	// SCREEN SETTINGS
 	public int offsetX;
 	public int offsetY;
 	
+	// CONSTANTS
 	public final String gameTitle = "Pokemon Xhenos";
+	public static final int MAX_MAP = 220;
+	public static final int MAX_FLAG = 25; // should not be >31
 	
+	// SYSTEM
 	public KeyHandler keyH = new KeyHandler(this);
+	Sound sound = new Sound();
+	public int FPS = 60;
+	public int ticks;
+	
+	Thread gameThread;
+	
+	// ENTITY AND OBJECT
 	public AssetSetter aSetter = new AssetSetter(this);
 	public EventHandler eHandler = new EventHandler(this);
-	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public PlayerCharacter player = new PlayerCharacter(this, keyH);
 	public Script script;
@@ -80,9 +88,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public TileManager tileM = new TileManager(this);
 	
-	public int FPS = 60;
-	public int ticks;
-	
+	// UIS
 	public UI ui = new UI(this);
 	public BattleUI battleUI = new BattleUI(this);
 	public SimBattleUI simBattleUI = new SimBattleUI(this);
@@ -294,6 +300,21 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		
 		g2.dispose();
+	}
+	
+	public void playMusic(int i) {
+		sound.setFile(i);
+		sound.play();
+		sound.loop();
+	}
+	
+	public void stopMusic() {
+		sound.stop();
+	}
+	
+	public void playSE(int i) {
+		sound.setFile(i);
+		sound.play();
 	}
 	
 	public void openBox(NPC_PC target) {
@@ -561,6 +582,7 @@ public class GamePanel extends JPanel implements Runnable {
 		aSetter.setObject();
 		aSetter.setInteractiveTile(currentMap);
 		
+		playMusic(0);
 		script = new Script(this);
 		
 		gameState = PLAY_STATE;
