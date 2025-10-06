@@ -17,6 +17,7 @@ import pokemon.*;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
 import pokemon.Field.FieldEffect;
+import util.ToolTip;
 
 public class BattleUI extends AbstractUI {
 	
@@ -1074,7 +1075,9 @@ public class BattleUI extends AbstractUI {
 		
 		x += gp.tileSize;
 		y += gp.tileSize * 0.75;
-		g2.drawString("[A]", x, y);
+		
+		ToolTip calcKey = new ToolTip(gp, "", "", gp.config.aKey);
+		g2.drawString(calcKey.toString(), x, y);
 		
 	}
 	

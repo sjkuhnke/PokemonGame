@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import entity.Entity;
 import pokemon.*;
 import util.Pair;
+import util.ToolTip;
 
 public abstract class AbstractUI {
 	
@@ -1245,70 +1246,64 @@ public abstract class AbstractUI {
 	
 	public void drawToolTips(String w, String a, String s, String d) {
 		drawToolTips(0, (int) (gp.tileSize * 10.5), w, a, s, d);
-	}	
+	}
+	
+	public void drawToolTipBar(int x, int y, ArrayList<ToolTip> tips) {
+		if (tips.isEmpty()) return;
+		
+		g2.setFont(g2.getFont().deriveFont(24F));
+		FontMetrics keyMetrics = g2.getFontMetrics();
+		FontMetrics labelMetrics = g2.getFontMetrics(g2.getFont().deriveFont(20F));
+		int totalWidth = gp.tileSize;
+		for (int i = 0; i < tips.size(); i++) {
+			ToolTip tip = tips.get(i);
+			int keyWidth = keyMetrics.stringWidth(tip.key);
+			int labelWidth = labelMetrics.stringWidth(tip.label);
+			totalWidth += keyWidth + gp.tileSize/4 + labelWidth + gp.tileSize/2;
+		}
+		
+		int height = (int) (gp.tileSize * 1.5);
+		drawSubWindow(x, y, totalWidth, height);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize;
+		for (int i = 0; i < tips.size(); i++) {
+			ToolTip tip = tips.get(i);
+			
+			g2.setFont(g2.getFont().deriveFont(24F));
+			
+			g2.drawString(tip.key, x, y);
+			x += keyMetrics.stringWidth(tip.key) + gp.tileSize / 4;
+			
+			g2.setFont(g2.getFont().deriveFont(20F));
+			g2.drawString(tip.label, x, y);
+			x += labelMetrics.stringWidth(tip.label) + gp.tileSize / 2;
+		}
+	}
 	
 	public void drawToolTips(int x, int y, String w, String a, String s, String d) {
 		if (!gp.keyH.shiftPressed) return;
-		int num = 0;
+		
+		ArrayList<ToolTip> tips = new ArrayList<>();
 		boolean sdSame = false;
+		
 		if (s != null && s.equals(d)) {
 			sdSame = true;
 			d = null;
 		}
 		
-		if (w != null) num++;
-		if (a != null) num++;
-		if (s != null) num++;
-		if (d != null) num++;
-		
-		int width = (int) (gp.tileSize * 1.5 * num + gp.tileSize * 2);
-		if (sdSame) width += gp.tileSize;
-		int height = (int) (gp.tileSize * 1.5);
-		drawSubWindow(x, y, width, height);
-		
-		int textWidth = (int) (gp.tileSize * 1.10);
-		
-		x += gp.tileSize / 2;
-		y += gp.tileSize;
-		if (w != null) {
-			g2.setFont(g2.getFont().deriveFont(24F));
-			g2.drawString("[W]", x, y);
-			x += gp.tileSize * 0.75;
-			g2.setFont(g2.getFont().deriveFont(getFontSize(w, textWidth)));
-			g2.drawString(w, x, y);
-			x += gp.tileSize * 1.15;
-		}
-		
+		if (w != null) tips.add(new ToolTip(gp, w, "", gp.config.wKey));
+		if (a != null) tips.add(new ToolTip(gp, a, "", gp.config.aKey));
 		if (s != null) {
-			g2.setFont(g2.getFont().deriveFont(24F));
-			g2.drawString("[S]", x, y);
-			x += gp.tileSize * 0.65;
 			if (sdSame) {
-				x -= gp.tileSize * 0.2;
-				g2.drawString("/[D]", x, y);
-				x += gp.tileSize * 0.85;
+				tips.add(new ToolTip(gp, s, "/", gp.config.sKey, gp.config.dKey));
+			} else {
+				tips.add(new ToolTip(gp, s, "", gp.config.sKey));
 			}
-			g2.setFont(g2.getFont().deriveFont(getFontSize(s, textWidth)));
-			g2.drawString(s, x, y);
-			x += gp.tileSize * 1.25;
 		}
+		if (d != null) tips.add(new ToolTip(gp, d, "", gp.config.dKey));
 		
-		if (a != null) {
-			g2.setFont(g2.getFont().deriveFont(24F));
-			g2.drawString("[A]", x, y);
-			x += gp.tileSize * 0.65;
-			g2.setFont(g2.getFont().deriveFont(getFontSize(a, textWidth)));
-			g2.drawString(a, x, y);
-			x += gp.tileSize * 1.25;
-		}
-		
-		if (d != null) {
-			g2.setFont(g2.getFont().deriveFont(24F));
-			g2.drawString("[D]", x, y);
-			x += gp.tileSize * 0.65;
-			g2.setFont(g2.getFont().deriveFont(getFontSize(d, textWidth)));
-			g2.drawString(d, x, y);
-		}
+		drawToolTipBar(x, y, tips);
 	}
 	
 	public void drawParlaySheet(boolean editable) {

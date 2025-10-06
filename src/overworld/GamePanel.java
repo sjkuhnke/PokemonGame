@@ -24,6 +24,7 @@ import pokemon.*;
 import puzzle.*;
 import tile.*;
 import util.SaveManager;
+import util.ToolTip;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -62,7 +63,9 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	// SYSTEM
 	public KeyHandler keyH = new KeyHandler(this);
-	Sound sound = new Sound();
+	public Config config = new Config(this);
+	Sound music = new Sound();
+	Sound sfx = new Sound();
 	public int FPS = 60;
 	public int ticks;
 	
@@ -303,18 +306,18 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void playMusic(int i) {
-		sound.setFile(i);
-		sound.play();
-		sound.loop();
+		music.setFile(i);
+		music.play();
+		music.loop();
 	}
 	
 	public void stopMusic() {
-		sound.stop();
+		music.stop();
 	}
 	
 	public void playSE(int i) {
-		sound.setFile(i);
-		sound.play();
+		sfx.setFile(i);
+		sfx.play();
 	}
 	
 	public void openBox(NPC_PC target) {
@@ -581,7 +584,7 @@ public class GamePanel extends JPanel implements Runnable {
 		aSetter.setNPC();
 		aSetter.setObject();
 		aSetter.setInteractiveTile(currentMap);
-		
+		config.loadConfig();
 		playMusic(0);
 		script = new Script(this);
 		
@@ -629,37 +632,33 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	private void drawOverworldToolTips(Graphics2D g2) {
 		if (!keyH.shiftPressed || gameState != PLAY_STATE) return;
-		int x = 0;
-		int y = (int) (tileSize * 7.5);
-		int width = tileSize * 4;
-		int height = (int) (tileSize * 1.5);
 		
 		boolean canCalc = player.p.getCurrent() != null;
 		
-		if (canCalc) ui.drawSubWindow(x, y, width, height);
+		if (canCalc) {
+			ArrayList<ToolTip> calcTips = new ArrayList<>();
+			calcTips.add(new ToolTip(this, "Calc", "+", config.ctrlKey, config.aKey));
+			
+			int x = 0;
+			int y = (int) (tileSize * 7.5);
+			ui.drawToolTipBar(x, y, calcTips);
+		}
 		
-		g2.setFont(g2.getFont().deriveFont(24F));
-		x += tileSize / 2;
-		y += tileSize;
+		ArrayList<ToolTip> moveTips = new ArrayList<>();
+		moveTips.add(new ToolTip(this, "Move", "", config.upKey, config.leftKey, config.downKey, config.rightKey));
+		moveTips.add(new ToolTip(this, "Speedup", "", config.speedupKey));
+		moveTips.add(new ToolTip(this, "Screenshot", "", config.screenshotKey));
 		
-		if (canCalc)g2.drawString("[Ctrl]+[A] Calc", x, y);
-		
-		width = tileSize * 12;
-		x -= tileSize / 2;
-		y += tileSize / 2;
-		
-		ui.drawSubWindow(x, y, width, height);
-		
-		x += tileSize / 2;
-		y += tileSize;
-		
-		g2.drawString("[\u2190][\u2191][\u2192][\u2193] Move    [TAB] Speedup    [ENTER] Screenshot", x, y);
+		int x = 0;
+		int y = (int) (tileSize * 9);
+		ui.drawToolTipBar(x, y, moveTips);
 		
 		ui.drawToolTips("Talk", "Use", "Run", "Menu");
 		
 		x = (int) (screenWidth - tileSize * 4.25);
 		y = 0;
-		width = (int) (tileSize * 4.25);
+		int width = (int) (tileSize * 4.25);
+		int height = (int) (tileSize * 1.5);
 		ui.drawSubWindow(x, y, width, height);
 		
 		g2.setFont(g2.getFont().deriveFont(28F));
